@@ -115,11 +115,11 @@ procman_data_new (void)
 	pd->config.bg_color.blue= gnome_config_get_int
 		("procman/Config/bg_blue=0");
 	pd->config.frame_color.red = gnome_config_get_int
-		("procman/Config/frame_red=64000");
+		("procman/Config/frame_red=65280");
 	pd->config.frame_color.green = gnome_config_get_int
-		("procman/Config/frame_green=64000");
+		("procman/Config/frame_green=65280");
 	pd->config.frame_color.blue = gnome_config_get_int
-		("procman/Config/frame_blue=64000");
+		("procman/Config/frame_blue=65280");
 	pd->config.cpu_color.red = gnome_config_get_int
 		("procman/Config/cpu_red=65535");
 	pd->config.cpu_color.green = gnome_config_get_int

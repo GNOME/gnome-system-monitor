@@ -339,8 +339,9 @@ create_sys_view (ProcData *procdata)
 	GtkWidget *disk_frame;
 	GtkWidget *color_picker;
 	GtkWidget *scrolled, *clist;
-	gchar *titles[4] = {_("Disk Name"),
+	gchar *titles[5] = {_("Disk Name"),
 			    _("Mount Directory"),
+			    _("Used Space"),
 			    _("Free Space"),
 			    _("Total Space")};
 	LoadGraph *cpu_graph, *mem_graph;
@@ -414,7 +415,7 @@ create_sys_view (ProcData *procdata)
 			    GTK_SIGNAL_FUNC (cb_mem_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, 0, 0, 0, 0);
 	
-	label = gtk_label_new (_("Memory Used :"));
+	label = gtk_label_new (_("Memory Used / Total :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
@@ -434,7 +435,7 @@ create_sys_view (ProcData *procdata)
 			    GTK_SIGNAL_FUNC (cb_swap_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, 0, 0, 0, 0);
 			  
-	label = gtk_label_new (_("Swap Used :"));
+	label = gtk_label_new (_("Swap Used / Total :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
@@ -459,28 +460,35 @@ create_sys_view (ProcData *procdata)
 					GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 	gtk_container_add (GTK_CONTAINER (disk_frame), scrolled);
 	 
-	clist = gtk_clist_new_with_titles (4, titles);
+	clist = gtk_clist_new_with_titles (5, titles);
 	gtk_widget_show (clist);
 	gtk_container_add (GTK_CONTAINER (scrolled), clist);
-  	gtk_container_set_border_width (GTK_CONTAINER (clist), 4);
+  	gtk_container_set_border_width (GTK_CONTAINER (clist), GNOME_PAD_SMALL);
   	
   	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 0, TRUE);
+  	gtk_clist_set_column_justification (GTK_CLIST (clist), 0, GTK_JUSTIFY_CENTER);
   	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 1, TRUE);
+  	gtk_clist_set_column_justification (GTK_CLIST (clist), 1, GTK_JUSTIFY_CENTER);
   	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 2, TRUE);
+  	gtk_clist_set_column_justification (GTK_CLIST (clist), 2, GTK_JUSTIFY_CENTER);
   	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 3, TRUE);
+  	gtk_clist_set_column_justification (GTK_CLIST (clist), 3, GTK_JUSTIFY_CENTER);
+  	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 4, TRUE);
+  	gtk_clist_set_column_justification (GTK_CLIST (clist), 4, GTK_JUSTIFY_CENTER);
   	
   	gtk_widget_show_all (scrolled);
   	
   	entry = glibtop_get_mountlist (&mountlist, 0);
 	for (i=0; i < mountlist.number; i++) {
 		glibtop_fsusage usage;
-		gchar *text[4];
+		gchar *text[5];
 		
 		glibtop_get_fsusage (&usage, entry[i].mountdir);
 		text[0] = g_strdup (entry[i].devname);
 		text[1] = g_strdup (entry[i].mountdir);
-		text[2] = get_size_string (usage.bfree / 2);
-		text[3] = get_size_string (usage.blocks / 2);
+		text[2] = get_size_string ((usage.blocks - usage.bfree) / 2);
+		text[3] = get_size_string (usage.bfree / 2);
+		text[4] = get_size_string (usage.blocks / 2);
 		/* Hmm, usage.blocks == 0 seems to get rid of /proc and all
 		** the other useless entries */
 		if (usage.blocks != 0)
@@ -490,6 +498,7 @@ create_sys_view (ProcData *procdata)
 		g_free (text[1]);
 		g_free (text[2]);
 		g_free (text[3]);
+		g_free (text[4]);
 	}
 	
 	glibtop_free (entry);
