@@ -644,7 +644,7 @@ static void
 refresh_list (ProcData *data, unsigned *pid_list, gint n)
 {
 	ProcData *procdata = data;
-	GList *list = procdata->info;
+	GList *list = g_list_copy (procdata->info);
 	gint i = 0;
 	ETreePath root_node;
 	
@@ -759,7 +759,6 @@ proctable_update_list (ProcData *data)
 	n = proclist.number;
 	procdata->proc_num = n;
 	
-	/*FIXME: should make sure that we don't divide by zero here*/ 
 	glibtop_get_cpu (&cpu);
 	total_time = cpu.total - total_time_last;
 	total_time_last = cpu.total;

@@ -42,6 +42,7 @@ struct _ProcConfig
 {
         gboolean        show_more_info;
         gboolean	show_kill_warning;
+        gboolean	show_hide_message;
         gboolean	show_tree;
         gboolean	show_icons;
  	gint		update_interval;

@@ -23,9 +23,9 @@
 #include <gnome.h>
 #include <procman.h>
 
-
-GtkWidget * procdialog_create_kill_dialog (ProcData *data);
-void procdialog_create_renice_dialog (ProcData *data);
-void procdialog_create_memmaps_dialog (ProcData *data);
+GtkWidget*		procdialog_create_hide_dialog (ProcData *data);
+GtkWidget*		procdialog_create_kill_dialog (ProcData *data);
+void 			procdialog_create_renice_dialog (ProcData *data);
+void 			procdialog_create_memmaps_dialog (ProcData *data);
 
 #endif

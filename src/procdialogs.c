@@ -25,9 +25,114 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 #include "procdialogs.h"
+#include "favorites.h"
+#include "proctable.h"
 
 GtkWidget *renice_spinbutton;
 GtkWidget *renice_dialog;
+
+static void
+cb_show_hide_message_toggled (GtkToggleButton *button, gpointer data)
+{
+	ProcData *procdata = data;
+	gboolean toggle_state;
+	
+	toggle_state = gtk_toggle_button_get_active (button);
+	
+	procdata->config.show_hide_message = toggle_state;	
+
+}
+
+static void
+cb_hide_process_clicked (GtkButton *button, gpointer data)
+{
+	ProcData *procdata = data;
+	ProcInfo *info;
+	
+	info = e_tree_memory_node_get_data (procdata->memory, 
+					    procdata->selected_node);
+					   
+	add_to_blacklist (procdata, info->cmd);
+	proctable_update_all (procdata);
+
+}
+
+static void
+cb_hide_cancel_clicked (GtkButton *button, gpointer data)
+{
+
+}
+
+
+GtkWidget *
+procdialog_create_hide_dialog (ProcData *data)
+{
+	ProcData *procdata = data;
+	GtkWidget *messagebox1;
+	GtkWidget *dialog_vbox1;
+  	GtkWidget *hbox1;
+  	GtkWidget *checkbutton1;
+  	GtkWidget *button5;
+  	GtkWidget *button6;
+  	GtkWidget *dialog_action_area1;
+  	gchar *text = _("This will block a process from \n"
+  			"being displayed. To reshow a \n"
+  			"process choose Hidden \n"
+  			"Processes in the Edit menu");
+
+  	/* We create it with an OK button, and then remove the button, to work
+     	around a bug in gnome-libs. */
+ 	messagebox1 = gnome_message_box_new (text,
+                              		     GNOME_MESSAGE_BOX_WARNING,
+                              		     GNOME_STOCK_BUTTON_OK, NULL);
+  	gtk_container_remove (GTK_CONTAINER (GNOME_DIALOG (messagebox1)->action_area), 
+  			      GNOME_DIALOG (messagebox1)->buttons->data);
+  	GNOME_DIALOG (messagebox1)->buttons = NULL;
+  	
+  	gtk_window_set_title (GTK_WINDOW (messagebox1), _("Hide Process"));
+  	gtk_window_set_modal (GTK_WINDOW (messagebox1), TRUE);
+  	gtk_window_set_policy (GTK_WINDOW (messagebox1), FALSE, FALSE, FALSE);
+  
+    	dialog_vbox1 = GNOME_DIALOG (messagebox1)->vbox;
+  	
+
+  	hbox1 = gtk_hbox_new (FALSE, 0);
+  	gtk_widget_show (hbox1);
+  	gtk_box_pack_end (GTK_BOX (dialog_vbox1), hbox1, TRUE, TRUE, 0);
+
+  	checkbutton1 = gtk_check_button_new_with_label (_("Show this dialog next time."));
+  	gtk_widget_show (checkbutton1);
+  	gtk_box_pack_end (GTK_BOX (hbox1), checkbutton1, FALSE, FALSE, 0);
+    	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbutton1), TRUE);
+
+  	gnome_dialog_append_button (GNOME_DIALOG (messagebox1), _("Hide Process"));
+  	button5 = GTK_WIDGET (g_list_last (GNOME_DIALOG (messagebox1)->buttons)->data);
+  	gtk_widget_show (button5);
+  	GTK_WIDGET_SET_FLAGS (button5, GTK_CAN_DEFAULT);
+
+  	gnome_dialog_append_button (GNOME_DIALOG (messagebox1), GNOME_STOCK_BUTTON_CANCEL);
+  	button6 = GTK_WIDGET (g_list_last (GNOME_DIALOG (messagebox1)->buttons)->data);
+  	gtk_widget_show (button6);
+    	GTK_WIDGET_SET_FLAGS (button6, GTK_CAN_DEFAULT);
+
+  	dialog_action_area1 = GNOME_DIALOG (messagebox1)->action_area;
+  	
+
+  	gtk_signal_connect (GTK_OBJECT (checkbutton1), "toggled",
+                      	    GTK_SIGNAL_FUNC (cb_show_hide_message_toggled),
+                      	    procdata);
+        gtk_signal_connect (GTK_OBJECT (button5), "clicked",
+                      	    GTK_SIGNAL_FUNC (cb_hide_process_clicked),
+                      	    procdata);
+  	gtk_signal_connect (GTK_OBJECT (button6), "clicked",
+                      	    GTK_SIGNAL_FUNC (cb_hide_cancel_clicked),
+                      	    NULL);
+
+
+  	gtk_widget_grab_default (button6);
+  	return messagebox1;
+
+}
 
 static void
 cb_show_kill_warning_toggled (GtkToggleButton *button, gpointer data)
@@ -50,6 +155,8 @@ cb_kill_process_clicked (GtkButton *button, gpointer data)
 	info = e_tree_memory_node_get_data (procdata->memory, 
 					    procdata->selected_node);
 	kill (info->pid, SIGTERM);
+	
+	proctable_update_all (procdata);
 
 }
 
@@ -102,7 +209,7 @@ procdialog_create_kill_dialog (ProcData *data)
   	gtk_widget_show (button5);
   	GTK_WIDGET_SET_FLAGS (button5, GTK_CAN_DEFAULT);
 
-  	gnome_dialog_append_button (GNOME_DIALOG (messagebox1), _("Cancel"));
+  	gnome_dialog_append_button (GNOME_DIALOG (messagebox1), GNOME_STOCK_BUTTON_CANCEL);
   	button6 = GTK_WIDGET (g_list_last (GNOME_DIALOG (messagebox1)->buttons)->data);
   	gtk_widget_show (button6);
     	GTK_WIDGET_SET_FLAGS (button6, GTK_CAN_DEFAULT);
@@ -171,8 +278,7 @@ procdialog_create_renice_dialog (ProcData *data)
 	GtkWidget *dialog;
 	GtkWidget *dialog_vbox;
 	GtkWidget *vbox;
-	GtkWidget *alignment;
-  	GtkWidget *hbox;
+ 	GtkWidget *hbox;
   	GtkWidget *label;
   	GtkObject *adjustment;
   	GtkWidget *renicebutton;

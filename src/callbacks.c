@@ -98,10 +98,20 @@ cb_hide_process (GtkMenuItem *menuitem, gpointer data)
 	
 	if (!procdata->selected_node)
 		return;
-	
-	info = e_tree_memory_node_get_data (procdata->memory, procdata->selected_node);
-	add_to_blacklist (procdata, info->cmd);
-	proctable_update_all (procdata);
+		
+	if (procdata->config.show_hide_message)
+	{	
+		GtkWidget *dialog;
+		dialog = procdialog_create_hide_dialog (procdata);
+		gtk_widget_show (dialog);
+	}
+	else
+	{
+		info = e_tree_memory_node_get_data (procdata->memory, 
+						    procdata->selected_node);
+		add_to_blacklist (procdata, info->cmd);
+		proctable_update_all (procdata);
+	}
 	
 }
 

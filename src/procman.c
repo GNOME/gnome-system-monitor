@@ -68,6 +68,8 @@ procman_data_new (void)
 		gnome_config_get_bool ("procman/Config/show_tree=TRUE");
 	procdata->config.show_kill_warning = 
 		gnome_config_get_bool ("procman/Config/kill_dialog=TRUE");
+	procdata->config.show_hide_message = 
+		gnome_config_get_bool ("procman/Config/hide_message=TRUE");
 	procdata->config.show_icons = 
 		gnome_config_get_bool ("procman/Config/show_icons=TRUE");
 	procdata->config.update_interval = 
@@ -101,6 +103,7 @@ procman_save_config (ProcData *data)
 	gnome_config_set_int ("procman/Config/view_as",data->config.whose_process);
 	gnome_config_set_bool ("procman/Config/more_info", data->config.show_more_info);
 	gnome_config_set_bool ("procman/Config/kill_dialog", data->config.show_kill_warning);
+	gnome_config_set_bool ("procman/Config/hide_message", data->config.show_hide_message);
 	gnome_config_set_bool ("procman/Config/show_tree", data->config.show_tree);
 	gnome_config_set_bool ("procman/Config/show_icons", data->config.show_icons);
 	gnome_config_set_int ("procman/Config/update_interval", data->config.update_interval);
@@ -115,8 +118,7 @@ main (int argc, char *argv[])
 {
 	GtkWidget *app1;
 	ProcData *procdata;
-	gchar *path;
-
+	
 #ifdef ENABLE_NLS
 	bindtextdomain (PACKAGE, PACKAGE_LOCALE_DIR);
 	textdomain (PACKAGE);
