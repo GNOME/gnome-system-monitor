@@ -257,7 +257,7 @@ renice_accept (GtkButton *button, gpointer data)
 	if (new_nice_value == -100)
 		return;		
 	
-	renice (procdata, procdata->selected_pid, new_nice_value);
+	renice (procdata, procdata->selected_process->pid, new_nice_value);
 	
 	gnome_dialog_close (GNOME_DIALOG (renice_dialog));	
 	
