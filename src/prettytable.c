@@ -1,5 +1,6 @@
 #include <config.h>
 #include <libgnome/libgnome.h>
+#define WNCK_I_KNOW_THIS_IS_UNSTABLE 
 #include <libwnck/libwnck.h>
 #include <dirent.h>
 #include <sys/stat.h>
@@ -12,7 +13,6 @@
 void free_entry (gpointer key, gpointer value, gpointer data);
 void free_value (gpointer key, gpointer value, gpointer data);
 void free_key (gpointer key, gpointer value, gpointer data);
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE 
 WnckScreen *screen = NULL;
 
 static gboolean

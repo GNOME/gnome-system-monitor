@@ -465,17 +465,18 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 	
 	if (selected) {
-		g_print ("row selected \n");
 		gtk_tree_model_get (model, &iter, COL_POINTER, &info, -1);
 		if (info)
 			procdata->selected_process = info;
-		g_print ("%s \n", info->name);
 		if (procdata->config.show_more_info == TRUE)
 			infoview_update (procdata);
 		update_sensitivity (procdata, TRUE);
+		/*if (procdata->config.show_more_info == TRUE)
+			infoview_update (procdata);
+	
+		update_memmaps_dialog (procdata);*/
 	}
 	else {
-		g_print ("no selected \n");
 		procdata->selected_process = NULL;
 		update_sensitivity (procdata, FALSE);
 	}
@@ -488,44 +489,15 @@ cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event,
 {
         ProcData *procdata = data;
 
-        do_popup_menu (procdata, event);
+	if (event->type == GDK_2BUTTON_PRESS) 
+		toggle_infoview (procdata);
+	else
+        	do_popup_menu (procdata, event);
 
         return FALSE;
 
 }
 #if 0
-
-void
-cb_table_selected (ETree *tree, int row, ETreePath path, gpointer data)
-{
-
-	ProcData *procdata = data;
-	ProcInfo *info;
-	
-	if (!tree)
-		return;
-	if (row == -1)
-	{
-		update_sensitivity (procdata, FALSE);
-		return;
-	}
-		
-	
-	info = e_tree_memory_node_get_data (procdata->memory, path);
-	procdata->selected_pid = info->pid;
-	procdata->selected_node = path;
-	
-		
-	update_sensitivity (procdata, TRUE);
-		
-	if (procdata->config.show_more_info == TRUE)
-		infoview_update (procdata);
-	
-	update_memmaps_dialog (procdata);
-		 
-
-
-}
 
 gint
 cb_tree_key_press (ETree *tree, int row, ETreePath path, int col,
@@ -584,25 +556,6 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 	}
 
 }
-#if 0
-static gchar *
-get_size_string (gint size)
-{
-	gfloat fsize;
-
-	fsize = (gfloat) size;
-	if (fsize < 1024.0) 
-		return g_strdup_printf (_("%d K"), (int)fsize);
-		
-	fsize /= 1024.0;
-	if (fsize < 1024.0)
-		return g_strdup_printf (_("%.2f MB"), fsize);
-	
-	fsize /= 1024.0;
-	return g_strdup_printf (_("%.2f GB"), fsize);
-
-}
-#endif
 
 gint
 cb_update_disks (gpointer data)

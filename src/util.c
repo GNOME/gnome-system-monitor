@@ -183,6 +183,7 @@ exec_su (gchar *exec_path, gchar *user, gchar *pwd)
 gint
 su_run_with_password (gchar *exec_path, gchar *password)
 {
+	g_print ("exev su \n");
 	return exec_su (exec_path, "root", password);
 }
 

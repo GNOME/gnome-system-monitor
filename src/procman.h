@@ -22,7 +22,6 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gnome.h>
 
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
 
 typedef struct _ProcConfig ProcConfig;
 typedef struct _PrettyTable PrettyTable;

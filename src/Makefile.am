@@ -23,7 +23,7 @@ procman_SOURCES = \
 	memmaps.c memmaps.h
 
 procman_LDADD =  \
-	@PROCMAN_LIBS@ $(INTLLIBS) $(LIBGTOP_LIBS) -lpthread
+	@PROCMAN_LIBS@ $(INTLLIBS) $(LIBGTOP_LIBS) 
 
 specdir = $(datadir)/procman
 

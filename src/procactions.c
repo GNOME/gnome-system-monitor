@@ -38,7 +38,7 @@ renice (ProcData *procdata, int pid, int nice)
 	
 	errno = 0;
 	error = setpriority (PRIO_PROCESS, pid, nice);
-#if 0
+
 	if (error == -1)
 	{
 		switch (errno) {
@@ -50,6 +50,7 @@ renice (ProcData *procdata, int pid, int nice)
 				break;
 			case EPERM:
 				error_msg = g_strdup_printf (_("You do not have permission to change the priority of this process. You can enter the root password to gain the necessary permission."));
+				g_print ("root stuff \n");
 				procdialog_create_root_password_dialog (1, procdata, 
 									pid, nice,
 									error_msg);
@@ -66,7 +67,7 @@ renice (ProcData *procdata, int pid, int nice)
 				break;
 		}
 	}
-#endif	
+	
 }
 
 void
@@ -89,7 +90,7 @@ kill_process (ProcData *procdata, int sig)
 	   Added sigterm fail over to sigkill 
 	*/
         error = kill (info->pid, sig);
-#if 0
+
 	if (error == -1)
 	{
 		switch (errno) {
@@ -118,7 +119,7 @@ kill_process (ProcData *procdata, int sig)
 			
                 	}
 	}
-#endif
+
 	proctable_update_all (procdata);		
 	
 }
