@@ -52,7 +52,7 @@ kill_process (ProcData *procdata)
 	/* FIXME: if SIGTERM don't work the try SIGKILL. Give a error dialog
 	** if still an error (like permission denied
 	*/
-	error = kill (info->pid, SIGKTERM);
+	error = kill (info->pid, SIGTERM);
 	if (error == -1)
 	{
 		switch (errno) {

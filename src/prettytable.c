@@ -158,7 +158,7 @@ gchar *pretty_table_get_name (PrettyTable *pretty_table, const gchar *command) {
 	gchar *pretty_name;
 
 	if (!pretty_table)
-		return g_strdup (command);
+		return NULL;
 	pretty_name = g_hash_table_lookup (pretty_table->cmdline_to_prettyname, command);
 	if (pretty_name)
 		return g_strdup (pretty_name);
@@ -167,7 +167,7 @@ gchar *pretty_table_get_name (PrettyTable *pretty_table, const gchar *command) {
 	if (pretty_name)
 		return g_strdup (pretty_name);
 
-	return g_strdup (command);
+	return NULL;
 }
 
 GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command) {
