@@ -1,5 +1,5 @@
 # Note that this is NOT a relocatable package
-%define ver      0.7
+%define ver      0.8
 %define  RELEASE 1
 %define  rel     %{?CUSTOM_RELEASE} %{!?CUSTOM_RELEASE:%RELEASE}
 %define prefix   /usr
