@@ -62,7 +62,7 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
 	}, 
 	GNOMEUIINFO_SEPARATOR,
 	{
-	 GNOME_APP_UI_ITEM, N_("Hidden _Processes..."), N_("View and edit the list of hidden process"),
+	 GNOME_APP_UI_ITEM, N_("Hidden _Processes..."), N_("View and edit your list of hidden processes"),
 	 cb_show_hidden_processes, NULL, NULL, 0, 0,
 	 'p', GDK_CONTROL_MASK
 	},
@@ -72,7 +72,7 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
 static GnomeUIInfo view1_menu_uiinfo[] =
 {
 	{
-	 GNOME_APP_UI_ITEM, N_("_Memory Maps..."), N_("View the memory maps associated with a processes"),
+	 GNOME_APP_UI_ITEM, N_("_Memory Maps..."), N_("View the memory maps associated with a process"),
 	 cb_show_memory_maps, NULL, NULL, 0, 0,
 	 'm', GDK_CONTROL_MASK
 	},
@@ -518,7 +518,7 @@ create_main_window (ProcData *procdata)
 	gtk_accel_group_attach (accel, GTK_OBJECT (app));
 	gtk_accel_group_unref (accel);
 
-	gtk_window_set_default_size (GTK_WINDOW (app), 460, 495);
+	gtk_window_set_default_size (GTK_WINDOW (app), 440, 495);
 	gtk_window_set_policy (GTK_WINDOW (app), FALSE, TRUE, TRUE);
 	
 	gnome_app_create_menus_with_data (GNOME_APP (app), menubar1_uiinfo, procdata);
