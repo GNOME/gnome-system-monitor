@@ -78,6 +78,9 @@ cb_info_button_pressed			(GtkButton	*button,
 void		cb_search (GtkEditable *editable, gpointer data);
 				
 void		cb_table_selected (ETree *tree,int row,ETreePath path,gpointer data);
+
+gint		cb_tree_key_press (ETree *tree, int row, ETreePath path, int col,
+		   		   GdkEvent *event, gpointer data);
 					 
 void 
 cb_double_click				(ETree		*tree,

@@ -134,7 +134,7 @@ popup_menu_renice (GtkMenuItem *menuitem, gpointer data)
 	
 	procdialog_create_renice_dialog (procdata);
 	
-	gtk_menu_popdown (GTK_MENU (popup_menu));
+	/*gtk_menu_popdown (GTK_MENU (popup_menu));*/
 }
 
 static void
@@ -144,7 +144,7 @@ popup_menu_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
 	
 	create_memmaps_dialog (procdata);
 	
-	gtk_menu_popdown (GTK_MENU (popup_menu));
+	/*gtk_menu_popdown (GTK_MENU (popup_menu));*/
 }
 
 static void
@@ -170,7 +170,7 @@ popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
 		proctable_update_all (procdata);
 	}
 	
-	gtk_menu_popdown (GTK_MENU (popup_menu));
+	/*gtk_menu_popdown (GTK_MENU (popup_menu));*/
 	
 }
 
@@ -186,7 +186,7 @@ static void popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
 	else
 		kill_process (procdata);
 	
-	gtk_menu_popdown (GTK_MENU (popup_menu));	
+	/*gtk_menu_popdown (GTK_MENU (popup_menu));*/	
 }
 
 GtkWidget*
@@ -387,16 +387,15 @@ create_main_window (ProcData *data)
 	gtk_signal_connect (GTK_OBJECT (infobutton), "clicked",
 			    GTK_SIGNAL_FUNC (cb_info_button_pressed),
 			    procdata);
-        gtk_signal_connect (GTK_OBJECT (procdata->tree), "right_click",
-                            GTK_SIGNAL_FUNC (cb_right_click), procdata);
-	gtk_signal_connect (GTK_OBJECT (procdata->tree), "cursor_activated",
+        gtk_signal_connect (GTK_OBJECT (procdata->tree), "cursor_activated",
 			    GTK_SIGNAL_FUNC (cb_table_selected), procdata);
 	gtk_signal_connect (GTK_OBJECT (procdata->tree), "double_click",
 			    GTK_SIGNAL_FUNC (cb_double_click), procdata);
         gtk_signal_connect (GTK_OBJECT (procdata->tree), "right_click",
                             GTK_SIGNAL_FUNC (cb_right_click), procdata);
 
-
+	gtk_signal_connect (GTK_OBJECT (procdata->tree), "key_press",
+			    GTK_SIGNAL_FUNC (cb_tree_key_press), procdata);
 	
 #if 1
 	procdata->timeout = gtk_timeout_add (procdata->config.update_interval,

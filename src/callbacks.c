@@ -283,6 +283,24 @@ cb_table_selected (ETree *tree, int row, ETreePath path, gpointer data)
 
 }
 
+gint
+cb_tree_key_press (ETree *tree, int row, ETreePath path, int col,
+		   GdkEvent *event, gpointer data)
+{
+	ProcData *procdata = data;
+		
+	switch (event->key.keyval) {
+	case GDK_Return:
+	case GDK_space:
+		toggle_infoview (procdata);
+		break;
+	default:
+	}
+		
+	return FALSE;
+		
+}
+
 void
 cb_double_click (ETree *tree, int row, ETreePath path, int col, 
 		 GdkEvent *event, gpointer data)
