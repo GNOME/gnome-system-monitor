@@ -104,12 +104,6 @@ struct _LoadGraph {
     gboolean cpu_initialized;       
 };
 
-enum
-{
-	NEEDS_REMOVAL,
-	NEEDS_ADDITION,
-	NEEDS_NOTHING
-};
 
 struct _ProcInfo
 {
