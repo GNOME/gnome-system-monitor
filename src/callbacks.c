@@ -121,17 +121,26 @@ cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 		NULL
 	};
 
+	static const gchar *documenters[] = {
+		"Bill Day",
+		"Sun Microsystems",
+		NULL
+	};
+
 	PROCMAN_GETTEXT_ARRAY_INIT(authors);
 
 	gtk_show_about_dialog (
 		NULL,
 		"name",			_("System Monitor"),
-		"comments",		_("System resources monitor"),
+		"comments",		_("View current processes and monitor "
+					  "system state"),
 		"version",		VERSION,
-		"copyright",		"(C) 2001 - 2004 Kevin Vandersloot",
-		"logo-icon-name",	"procman",
+		"copyright",		"Copyright \xc2\xa9 2001-2004 "
+					"Kevin Vandersloot",
+		"logo-icon-name",	"gnome-monitor",
 		"authors",		authors,
-		"translator-credits",	_("translator_credits"),
+		"documenters",		documenters,
+		"translator-credits",	_("translator-credits"),
 		NULL
 		);
 }

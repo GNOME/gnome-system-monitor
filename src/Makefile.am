@@ -34,13 +34,9 @@ specdir = $(datadir)/procman
 schemadir   = @GCONF_SCHEMA_FILE_DIR@
 schema_DATA = gnome-system-monitor.schemas	
 
-pixmapdir   = $(datadir)/pixmaps
-pixmap_DATA = procman.png
-
 EXTRA_DIST = \
 	README.hacking \
-	$(schema_DATA)	\
-	$(pixmap_DATA)
+	$(schema_DATA)	
 
 install-data-local:
 	-GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) \

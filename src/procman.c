@@ -499,7 +499,7 @@ main (int argc, char *argv[])
 	procman = gnome_program_init ("gnome-system-monitor", VERSION, 
 				      LIBGNOMEUI_MODULE, argc, argv,
 				      GNOME_PARAM_APP_DATADIR,DATADIR, NULL);
-	gtk_window_set_default_icon_name ("procman");
+	gtk_window_set_default_icon_name ("gnome-monitor");
 		    
 	gconf_init (argc, argv, NULL);
 			    
