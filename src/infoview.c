@@ -25,6 +25,7 @@
 #include "infoview.h"
 #include "procdialogs.h"
 #include "memmaps.h"
+#include "e-clipped-label.h"
 
 
 GtkWidget *infobox;
@@ -51,11 +52,7 @@ infoview_create (ProcData *data)
 
 	
 	infobox = gtk_vbox_new (FALSE, 0);
-	
-	separator = gtk_hseparator_new ();
-	gtk_box_pack_start (GTK_BOX (infobox), separator, FALSE, FALSE, 0);
-	
-	
+		
 	main_frame = gtk_frame_new (NULL);
 	gtk_frame_set_label_align (GTK_FRAME (main_frame), 0.0, 0.5);
 	gtk_container_set_border_width (GTK_CONTAINER (main_frame), GNOME_PAD_SMALL);
@@ -87,10 +84,10 @@ infoview_create (ProcData *data)
 			  0, GNOME_PAD_SMALL, 0);
 	
 	cmd_event_box = gtk_event_box_new ();
-	gtk_table_attach (GTK_TABLE (info_table), cmd_event_box, 1, 2, 0, 1, GTK_FILL,
-			  0, GNOME_PAD_SMALL, 0);
+	gtk_table_attach (GTK_TABLE (info_table), cmd_event_box, 1, 2, 0, 1, 
+			  GTK_EXPAND | GTK_FILL, 0, GNOME_PAD_SMALL, 0);
 	
-	cmd_label = gtk_label_new ("");
+	cmd_label = e_clipped_label_new (" ");
 	gtk_misc_set_alignment (GTK_MISC (cmd_label), 0.0, 0.5);
 	gtk_container_add (GTK_CONTAINER (cmd_event_box), cmd_label);
 	
@@ -140,8 +137,8 @@ infoview_create (ProcData *data)
 	gtk_table_attach (GTK_TABLE (mem_table), memshared_label, 1, 2, 2, 3, GTK_FILL, 
 			  0, GNOME_PAD_SMALL, 0);
 			  
-	/*separator = gtk_hseparator_new ();
-	gtk_box_pack_start (GTK_BOX (infobox), separator, FALSE, FALSE, 0);*/
+	separator = gtk_hseparator_new ();
+	gtk_box_pack_start (GTK_BOX (infobox), separator, FALSE, FALSE, GNOME_PAD_SMALL);
 	
 	procdata->infobox = infobox;
 
@@ -208,10 +205,10 @@ infoview_update (ProcData *data)
 	** This is here so that when the user has to tooltip showing and we do an
 	** update here, the tooltip will go away if we call gtk_tooltip_set_tip
 	*/
-	gtk_label_get (GTK_LABEL (cmd_label), &command);
-	if (g_strcasecmp (info->cmd, command))
+	command = e_clipped_label_get_text (E_CLIPPED_LABEL (cmd_label));
+	if (g_strcasecmp (info->arguments, command))
 		gtk_tooltips_set_tip (cmd_tooltip, cmd_event_box, info->arguments, NULL);
-	gtk_label_set_text (GTK_LABEL (cmd_label), info->cmd);
+	e_clipped_label_set_text (E_CLIPPED_LABEL (cmd_label), info->arguments);
 	string = g_strdup_printf ("%d", info->nice);
 	gtk_label_set_text (GTK_LABEL (nice_label), string);
 	g_free (string); 

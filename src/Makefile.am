@@ -19,6 +19,7 @@ procman_SOURCES = \
 	prettytable.c prettytable.h \
 	memmaps.c memmaps.h \
 	favorites.c favorites.h \
+	e-clipped-label.c e-clipped-label.h \
 	defaulttable.h
 
 procman_LDADD = $(GNOME_LIBDIR) $(GNOMEUI_LIBS) \
