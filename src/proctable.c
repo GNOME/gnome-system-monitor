@@ -345,8 +345,12 @@ find_parent (ProcData *data, gint pid)
 	while (list)
 	{
 		ProcInfo *info = list->data;
-		if (pid == info->pid)
-			return info;
+		if (pid == info->pid) {
+			if (info->visible)
+				return info;
+			else
+				return NULL;
+		}
 		list = g_list_next (list);
 	}
 	return NULL;
@@ -405,6 +409,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	}
 	info->is_blacklisted = FALSE;
 	
+	/* Don't show threads */
 	if (!procdata->config.show_threads && info->is_thread)
 		return; 
 
@@ -526,6 +531,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	gint pcpu;
 	gboolean is_blacklisted, was_blacklisted;
 	
+	
 	glibtop_get_proc_state (&procstate, pid);
 	glibtop_get_proc_mem (&procmem, pid);
 	glibtop_get_proc_uid (&procuid, pid);
@@ -584,21 +590,23 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 		insert_info_to_tree (info, procdata);
 		return 1;
 	}
-#if 0
+
 	if (procdata->config.whose_process == RUNNING_PROCESSES)
 	{
 		/* process started running */
-		if (newinfo->running && (!newinfo->node)) {
+		if (newinfo->running && (!newinfo->visible)) {
 			insert_info_to_tree (info, procdata);
 			return 1;
 		}
 		/* process was running but not anymore */
-		else if ((!newinfo->running) && newinfo->node) {
+		else if ((!newinfo->running) && newinfo->visible) {
 			remove_info_from_tree (info, procdata);
 			return -1;
 		}
+		else if (!newinfo->running)
+			return 0;
 	}
-#endif	
+	
 
 #if 0
 	if (newinfo->visible) {
@@ -639,13 +647,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 		g_free (memrss);
 	}
 	newinfo->mem = procmem.size;
-	newinfo->cpu = pcpu;	
-	/*		
-	else if (status == 1)
-		insert_info_to_tree (oldinfo, procdata);
-	else if (status == -1)
-		remove_info_from_tree (oldinfo, procdata);
-	*/		
+	newinfo->cpu = pcpu;
 			
 	return 0;
 }

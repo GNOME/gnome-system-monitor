@@ -260,7 +260,6 @@ procman_data_new (void)
 		("/apps/procman/swap_blue", 18595);
 		
 	pd->config.whose_process = 0;
-	pd->config.show_more_info = FALSE;
 
 	get_blacklist (pd, client);
 

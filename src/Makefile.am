@@ -1,7 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
 INCLUDES = \
-	-I/usr/include/gtk-2.0 \
 	-I$(top_srcdir)/intl \
 	-DPROCMAN_DATADIR=\"$(datadir)/procman/\" \
 	@PROCMAN_CFLAGS@ \
