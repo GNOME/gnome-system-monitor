@@ -54,7 +54,6 @@ infoview_create (ProcData *data)
 	infobox = gtk_vbox_new (FALSE, 0);
 		
 	main_frame = gtk_frame_new (NULL);
-	gtk_frame_set_label_align (GTK_FRAME (main_frame), 0.0, 0.5);
 	gtk_container_set_border_width (GTK_CONTAINER (main_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (infobox), main_frame, FALSE, FALSE, 0);
 	
@@ -63,7 +62,6 @@ infoview_create (ProcData *data)
 	gtk_container_add (GTK_CONTAINER (main_frame), main_hbox);
 	
 	info_frame = gtk_frame_new (_("Process Info"));
-	gtk_frame_set_label_align (GTK_FRAME (info_frame), 0.5, 0.5);
 	gtk_container_set_border_width (GTK_CONTAINER (info_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (main_hbox), info_frame, TRUE, TRUE, 0);
 	
@@ -104,7 +102,6 @@ infoview_create (ProcData *data)
 			  0, GNOME_PAD_SMALL, 0);
 	
 	mem_frame = gtk_frame_new (_("Memory Usage"));
-	gtk_frame_set_label_align (GTK_FRAME (mem_frame), 0.5, 0.5);
 	gtk_container_set_border_width (GTK_CONTAINER (mem_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (main_hbox), mem_frame, TRUE, TRUE, 0);
 	

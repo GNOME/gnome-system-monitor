@@ -349,13 +349,11 @@ create_sys_view (ProcData *procdata)
 	vbox = gtk_vbox_new (FALSE, 0);
 	
 	cpu_frame = gtk_frame_new (_("% CPU Usage History"));
-	gtk_frame_set_label_align (GTK_FRAME (cpu_frame), 0.5, 0.5);
 	gtk_widget_show (cpu_frame);
 	gtk_container_set_border_width (GTK_CONTAINER (cpu_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), cpu_frame, TRUE, TRUE, 0);
 	
 	mem_frame = gtk_frame_new (_("% Memory / Swap Usage History"));
-	gtk_frame_set_label_align (GTK_FRAME (mem_frame), 0.5, 0.5);
 	gtk_container_set_border_width (GTK_CONTAINER (mem_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), mem_frame, TRUE, TRUE, 0);
 	
@@ -446,7 +444,6 @@ create_sys_view (ProcData *procdata)
 	procdata->mem_graph = mem_graph;
 					
 	disk_frame = gtk_frame_new (_("Disks"));
-	gtk_frame_set_label_align (GTK_FRAME (disk_frame), 0.5, 0.5);
 	gtk_container_set_border_width (GTK_CONTAINER (disk_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), disk_frame, FALSE, TRUE, 0);
 	

@@ -581,7 +581,6 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), proc_box, tab_label);
 	
 	frame = gtk_frame_new (_("General"));
-	gtk_frame_set_label_align (GTK_FRAME (frame), 0.5, 0.5);
 	gtk_box_pack_start (GTK_BOX (proc_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
@@ -610,7 +609,6 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
 	
 	frame = gtk_frame_new (_("Advanced"));
-	gtk_frame_set_label_align (GTK_FRAME (frame), 0.5, 0.5);
 	gtk_box_pack_start (GTK_BOX (proc_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
@@ -642,7 +640,6 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label);
 	
 	frame = gtk_frame_new (_("Graphs"));
-	gtk_frame_set_label_align (GTK_FRAME (frame), 0.5, 0.5);
 	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
 	table = gtk_table_new (2, 3, FALSE);
@@ -697,7 +694,6 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 			  
 	
 	frame = gtk_frame_new (_("Disks"));
-	gtk_frame_set_label_align (GTK_FRAME (frame), 0.5, 0.5);
 	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
 	table = gtk_table_new (2, 1, FALSE);
