@@ -573,7 +573,7 @@ create_sys_view (ProcData *procdata)
 	gtk_tree_view_column_set_title (col, _(titles[4]));
 		
 	
-	cell = gtk_cell_renderer_progress_new ();
+	cell = procman_cell_renderer_progress_new ();
 	gtk_tree_view_column_pack_start (col, cell, TRUE);
 	gtk_tree_view_column_set_attributes (col, cell,
 					     "value", 6,

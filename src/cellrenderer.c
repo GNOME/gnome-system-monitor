@@ -22,26 +22,26 @@
 #include <stdlib.h>
 #include "cellrenderer.h"
 
-static void gtk_cell_renderer_progress_init       (GtkCellRendererProgress      *celltext);
-static void gtk_cell_renderer_progress_class_init (GtkCellRendererProgressClass *class);
-static void gtk_cell_renderer_progress_finalize   (GObject                  *object);
+static void procman_cell_renderer_progress_init       (ProcmanCellRendererProgress      *celltext);
+static void procman_cell_renderer_progress_class_init (ProcmanCellRendererProgressClass *class);
+static void procman_cell_renderer_progress_finalize   (GObject                  *object);
 
-static void gtk_cell_renderer_progress_get_property(GObject                  *object,
+static void procman_cell_renderer_progress_get_property(GObject                  *object,
 						  guint                     param_id,
 						  GValue                   *value,
 						  GParamSpec               *pspec);
-static void gtk_cell_renderer_progress_set_property(GObject                  *object,
+static void procman_cell_renderer_progress_set_property(GObject                  *object,
 						  guint                     param_id,
 						  const GValue             *value,
 						  GParamSpec               *pspec);
-static void gtk_cell_renderer_progress_get_size    (GtkCellRenderer          *cell,
+static void procman_cell_renderer_progress_get_size    (GtkCellRenderer          *cell,
 					       GtkWidget                *widget,
 					       GdkRectangle             *cell_area,
 					       gint                     *x_offset,
 					       gint                     *y_offset,
 					       gint                     *width,
 					       gint                     *height);
-static void gtk_cell_renderer_progress_render      (GtkCellRenderer          *cell,
+static void procman_cell_renderer_progress_render      (GtkCellRenderer          *cell,
 					       GdkWindow                *window,
 					       GtkWidget                *widget,
 					       GdkRectangle             *background_area,
@@ -54,14 +54,14 @@ enum {
   PROP_VALUE
 }; 
 
-struct _GtkCellRendererProgressPriv {
+struct _ProcmanCellRendererProgressPriv {
 	double   value;
 };
 
 static gpointer parent_class;
 
 GtkType
-gtk_cell_renderer_progress_get_type (void)
+procman_cell_renderer_progress_get_type (void)
 {
 	static GtkType cell_progress_type = 0;
 
@@ -69,18 +69,18 @@ gtk_cell_renderer_progress_get_type (void)
 	{
 		static const GTypeInfo cell_progress_info =
 		{
-			sizeof (GtkCellRendererProgressClass),
+			sizeof (ProcmanCellRendererProgressClass),
 			NULL,		/* base_init */
 			NULL,		/* base_finalize */
-			(GClassInitFunc) gtk_cell_renderer_progress_class_init,
+			(GClassInitFunc) procman_cell_renderer_progress_class_init,
 			NULL,		/* class_finalize */
 			NULL,		/* class_data */
-			sizeof (GtkCellRendererProgress),
+			sizeof (ProcmanCellRendererProgress),
 			0,              /* n_preallocs */
-			(GInstanceInitFunc) gtk_cell_renderer_progress_init,
+			(GInstanceInitFunc) procman_cell_renderer_progress_init,
 		};
 		cell_progress_type = g_type_register_static (GTK_TYPE_CELL_RENDERER,
-                                               "GtkCellRendererProgress",
+                                               "ProcmanCellRendererProgress",
                                                &cell_progress_info, 0);
 	}
 
@@ -88,30 +88,30 @@ gtk_cell_renderer_progress_get_type (void)
 }
 
 static void
-gtk_cell_renderer_progress_init (GtkCellRendererProgress *cellprogress)
+procman_cell_renderer_progress_init (ProcmanCellRendererProgress *cellprogress)
 {
-	GtkCellRendererProgressPriv *priv;
+	ProcmanCellRendererProgressPriv *priv;
 	
-    cellprogress->priv = (GtkCellRendererProgressPriv*)g_new0(GtkCellRendererProgressPriv, 1);
+    cellprogress->priv = (ProcmanCellRendererProgressPriv*)g_new0(ProcmanCellRendererProgressPriv, 1);
     
 	cellprogress->priv->value = 0;
 }
 
 static void
-gtk_cell_renderer_progress_class_init (GtkCellRendererProgressClass *class)
+procman_cell_renderer_progress_class_init (ProcmanCellRendererProgressClass *class)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (class);
 	GtkCellRendererClass *cell_class = GTK_CELL_RENDERER_CLASS (class);
 
 	parent_class = g_type_class_peek_parent (class);
   
-	object_class->finalize = gtk_cell_renderer_progress_finalize;
+	object_class->finalize = procman_cell_renderer_progress_finalize;
   
-	object_class->get_property = gtk_cell_renderer_progress_get_property;
-	object_class->set_property = gtk_cell_renderer_progress_set_property;
+	object_class->get_property = procman_cell_renderer_progress_get_property;
+	object_class->set_property = procman_cell_renderer_progress_set_property;
 
-	cell_class->get_size = gtk_cell_renderer_progress_get_size;
-	cell_class->render = gtk_cell_renderer_progress_render;
+	cell_class->get_size = procman_cell_renderer_progress_get_size;
+	cell_class->render = procman_cell_renderer_progress_render;
   
 	g_object_class_install_property (object_class,
                                    PROP_VALUE,
@@ -123,12 +123,12 @@ gtk_cell_renderer_progress_class_init (GtkCellRendererProgressClass *class)
 }
 
 static void
-gtk_cell_renderer_progress_get_property (GObject        *object,
+procman_cell_renderer_progress_get_property (GObject        *object,
                                          guint           param_id,
                                          GValue         *value,
                                          GParamSpec     *pspec)
 {
-	GtkCellRendererProgress *cellprogress = GTK_CELL_RENDERER_PROGRESS (object);
+	ProcmanCellRendererProgress *cellprogress = PROCMAN_CELL_RENDERER_PROGRESS (object);
 
 	switch (param_id)
 	{
@@ -141,13 +141,13 @@ gtk_cell_renderer_progress_get_property (GObject        *object,
 }
 
 static void
-gtk_cell_renderer_progress_set_property (GObject      *object,
+procman_cell_renderer_progress_set_property (GObject      *object,
 				     guint         param_id,
 				     const GValue *value,
 				     GParamSpec   *pspec)
 {
-	GtkCellRendererProgress *cellprogress = 
-        GTK_CELL_RENDERER_PROGRESS (object);
+	ProcmanCellRendererProgress *cellprogress = 
+        PROCMAN_CELL_RENDERER_PROGRESS (object);
 
 	switch (param_id)
 	{
@@ -161,7 +161,7 @@ gtk_cell_renderer_progress_set_property (GObject      *object,
 }
 
 static void
-gtk_cell_renderer_progress_get_size (GtkCellRenderer *cell,
+procman_cell_renderer_progress_get_size (GtkCellRenderer *cell,
 				 GtkWidget       *widget,
 				 GdkRectangle    *cell_area,
 				 gint            *x_offset,
@@ -169,7 +169,7 @@ gtk_cell_renderer_progress_get_size (GtkCellRenderer *cell,
 				 gint            *width,
 				 gint            *height)
 {
-	GtkCellRendererProgress *cellprogress = (GtkCellRendererProgress *) cell;
+	ProcmanCellRendererProgress *cellprogress = (ProcmanCellRendererProgress *) cell;
 
 /* Always return 1 here. Doesn't make to much sense,
  * but providing the real width would make it
@@ -182,13 +182,13 @@ gtk_cell_renderer_progress_get_size (GtkCellRenderer *cell,
 }
 
 GtkCellRenderer*
-gtk_cell_renderer_progress_new (void)
+procman_cell_renderer_progress_new (void)
 {
-	return GTK_CELL_RENDERER (g_object_new (gtk_cell_renderer_progress_get_type (), NULL));
+	return GTK_CELL_RENDERER (g_object_new (procman_cell_renderer_progress_get_type (), NULL));
 }
 
 static void
-gtk_cell_renderer_progress_render (GtkCellRenderer    *cell,
+procman_cell_renderer_progress_render (GtkCellRenderer    *cell,
 			       GdkWindow          *window,
 			       GtkWidget          *widget,
 			       GdkRectangle       *background_area,
@@ -196,7 +196,7 @@ gtk_cell_renderer_progress_render (GtkCellRenderer    *cell,
 			       GdkRectangle       *expose_area,
 			       guint               flags)
 {
-	GtkCellRendererProgress *cellprogress = (GtkCellRendererProgress *) cell;
+	ProcmanCellRendererProgress *cellprogress = (ProcmanCellRendererProgress *) cell;
 	GtkStateType state;
 	GdkGC *gc;
 	GdkColor color;
@@ -259,9 +259,9 @@ gtk_cell_renderer_progress_render (GtkCellRenderer    *cell,
 }
 
 static void
-gtk_cell_renderer_progress_finalize (GObject *object)
+procman_cell_renderer_progress_finalize (GObject *object)
 {
-	GtkCellRendererProgress *cellprogress = GTK_CELL_RENDERER_PROGRESS (object);
+	ProcmanCellRendererProgress *cellprogress = PROCMAN_CELL_RENDERER_PROGRESS (object);
 	g_free(cellprogress->priv);
   
 	(* G_OBJECT_CLASS (parent_class)->finalize) (object);

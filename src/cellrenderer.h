@@ -26,24 +26,24 @@
 
 G_BEGIN_DECLS
 
-#define GTK_TYPE_CELL_RENDERER_PROGRESS           (gtk_cell_renderer_get_type ())
-#define GTK_CELL_RENDERER_PROGRESS(obj)		      (G_TYPE_CHECK_INSTANCE_CAST ((obj), GTK_TYPE_CELL_RENDERER_PROGRESS, GtkCellRendererProgress))
+#define PROCMAN_TYPE_CELL_RENDERER_PROGRESS           (procman_cell_renderer_progress_get_type ())
+#define PROCMAN_CELL_RENDERER_PROGRESS(obj)		      (G_TYPE_CHECK_INSTANCE_CAST ((obj), PROCMAN_TYPE_CELL_RENDERER_PROGRESS, ProcmanCellRendererProgress))
 
-typedef struct _GtkCellRendererProgress      GtkCellRendererProgress;
-typedef struct _GtkCellRendererProgressClass GtkCellRendererProgressClass;
-typedef struct _GtkCellRendererProgressPriv  GtkCellRendererProgressPriv;
+typedef struct _ProcmanCellRendererProgress      ProcmanCellRendererProgress;
+typedef struct _ProcmanCellRendererProgressClass ProcmanCellRendererProgressClass;
+typedef struct _ProcmanCellRendererProgressPriv  ProcmanCellRendererProgressPriv;
 
-struct _GtkCellRendererProgress {
+struct _ProcmanCellRendererProgress {
 	GtkCellRenderer parent_instance;
-	GtkCellRendererProgressPriv* priv;
+	ProcmanCellRendererProgressPriv* priv;
 };
 
-struct _GtkCellRendererProgressClass{
+struct _ProcmanCellRendererProgressClass{
 	GtkCellRendererClass parent_class;
 };
 
-GtkType gtk_cell_renderer_progress_get_type (void) G_GNUC_CONST;
-GtkCellRenderer* gtk_cell_renderer_progress_new(void);
+GtkType procman_cell_renderer_progress_get_type (void) G_GNUC_CONST;
+GtkCellRenderer* procman_cell_renderer_progress_new(void);
 
 G_END_DECLS
 
