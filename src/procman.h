@@ -19,16 +19,16 @@
 #ifndef _PROCMAN_H_
 #define _PROCMAN_H_
 
+
 #include <gnome.h>
 #include <gal/e-table/e-table.h>
 #include <gal/e-table/e-tree.h>
 #include <gal/e-table/e-tree-memory.h>
 
-#include "load-graph.h"
-
 
 typedef struct _ProcConfig ProcConfig;
 typedef struct _PrettyTable PrettyTable;
+typedef struct _LoadGraph LoadGraph;
 typedef struct _ProcInfo ProcInfo;
 typedef struct _ProcData ProcData;
 
@@ -39,6 +39,8 @@ enum
 	RUNNING_PROCESSES,
 	FAVORITE_PROCESSES,
 };
+
+#define NCPUSTATES 4
 
 struct _ProcConfig
 {
@@ -55,10 +57,11 @@ struct _ProcConfig
 	gchar		*tree_state_file;
 	gchar		*memmaps_state_file;
 	gint		current_tab;
-	gchar		*cpu_color;
-	gchar		*mem_color;
-	gchar		*bg_color;
-	gchar		*frame_color;
+	GdkColor	cpu_color;
+	GdkColor	mem_color;
+	GdkColor	swap_color;
+	GdkColor	bg_color;
+	GdkColor	frame_color;
 };
 
 struct _PrettyTable {
@@ -66,6 +69,38 @@ struct _PrettyTable {
 	GHashTable *cmdline_to_prettyicon;
 	GHashTable *name_to_prettyicon; /* lower case */
 	GHashTable *name_to_prettyname;
+};
+
+struct _LoadGraph {
+    
+    guint n;
+    gint type;
+    guint speed;
+    guint draw_width, draw_height;
+    guint num_points;
+
+    guint allocated;
+
+    GdkColor *colors;
+    gfloat **data, **odata;
+    guint data_size;
+    guint *pos;
+
+    gint colors_allocated;
+    GtkWidget *main_widget;
+    GtkWidget *disp;
+    GtkWidget *label;
+    GtkWidget *mem_label;
+    GtkWidget *swap_label;
+    GdkPixmap *pixmap;
+    GdkGC *gc;
+    int timer_index;
+    
+    gboolean draw;
+
+    long cpu_time [NCPUSTATES];
+    long cpu_last [NCPUSTATES];
+    int cpu_initialized;       
 };
 
 struct _ProcInfo

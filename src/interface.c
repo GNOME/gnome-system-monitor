@@ -337,6 +337,7 @@ create_sys_view (ProcData *procdata)
 	GtkWidget *label,*cpu_label;
 	GtkWidget *hbox, *table;
 	GtkWidget *disk_frame;
+	GtkWidget *color_picker;
 	GtkWidget *scrolled, *clist;
 	gchar *titles[4] = {_("Disk Name"),
 			    _("Mount Directory"),
@@ -350,7 +351,7 @@ create_sys_view (ProcData *procdata)
 	vbox = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox);
 	
-	hbox1 = gtk_hbox_new (TRUE, 0);
+	hbox1 = gtk_hbox_new (FALSE, 0);
 	gtk_widget_show (hbox1);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox1, TRUE, TRUE, 0);
 	
@@ -360,15 +361,13 @@ create_sys_view (ProcData *procdata)
 	gtk_container_set_border_width (GTK_CONTAINER (cpu_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (hbox1), cpu_frame, TRUE, TRUE, 0);
 	
-	mem_frame = gtk_frame_new (_("Memory Usage History"));
+	mem_frame = gtk_frame_new (_("Memory / Swap Usage History"));
 	gtk_frame_set_label_align (GTK_FRAME (mem_frame), 0.5, 0.5);
 	gtk_container_set_border_width (GTK_CONTAINER (mem_frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (hbox1), mem_frame, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox1), mem_frame, FALSE, TRUE, 0);
 	
 	#if 1 
-	cpu_graph = load_graph_new (CPU_GRAPH, procdata->config.bg_color,
-				    procdata->config.frame_color, 
-				    procdata->config.cpu_color);
+	cpu_graph = load_graph_new (CPU_GRAPH, procdata);
 	gtk_container_add (GTK_CONTAINER (cpu_frame), cpu_graph->main_widget);
 	gtk_container_set_border_width (GTK_CONTAINER (cpu_graph->main_widget), 
 					GNOME_PAD_SMALL);
@@ -377,7 +376,16 @@ create_sys_view (ProcData *procdata)
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (cpu_graph->main_widget), hbox, FALSE, FALSE, 0);
 	
-	label = gtk_label_new (_("% CPU Used :"));
+	color_picker = gnome_color_picker_new ();
+	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
+				    cpu_graph->colors[2].red,
+				    cpu_graph->colors[2].green,
+				    cpu_graph->colors[2].blue, 0);
+	gtk_signal_connect (GTK_OBJECT (color_picker), "color_set",
+			    GTK_SIGNAL_FUNC (cb_cpu_color_changed), procdata);
+	gtk_box_pack_start (GTK_BOX (hbox), color_picker, FALSE, FALSE, 0);
+	
+	label = gtk_label_new (_("CPU Used :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 	
@@ -389,46 +397,52 @@ create_sys_view (ProcData *procdata)
 	
 	procdata->cpu_graph = cpu_graph;
 	
-	mem_graph = load_graph_new (MEM_GRAPH, procdata->config.bg_color,
-				    procdata->config.frame_color,
-				    procdata->config.mem_color);
+	mem_graph = load_graph_new (MEM_GRAPH, procdata);
 	gtk_container_add (GTK_CONTAINER (mem_frame), mem_graph->main_widget);
 	gtk_container_set_border_width (GTK_CONTAINER (mem_graph->main_widget), 
 					GNOME_PAD_SMALL);
 					
-	table = gtk_table_new (2, 2, FALSE);
+	table = gtk_table_new (2, 3, FALSE);
 	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), table, FALSE, FALSE, 0);
 	
-	/*hbox = gtk_hbox_new (FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), hbox, FALSE, FALSE, 0);*/
+	color_picker = gnome_color_picker_new ();
+	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
+				    mem_graph->colors[2].red,
+				    mem_graph->colors[2].green,
+				    mem_graph->colors[2].blue, 0);
+	gtk_signal_connect (GTK_OBJECT (color_picker), "color_set",
+			    GTK_SIGNAL_FUNC (cb_mem_color_changed), procdata);
+	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, 0, 0, 0, 0);
 	
 	label = gtk_label_new (_("Memory Used :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	/*gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);*/
-	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
 	
-	mem_graph->memused_label = gtk_label_new ("");
-	gtk_misc_set_padding (GTK_MISC (mem_graph->memused_label), GNOME_PAD_SMALL, 0);
-	gtk_misc_set_alignment (GTK_MISC (mem_graph->memused_label), 0.0, 0.5);
-	/*gtk_box_pack_start (GTK_BOX (hbox), mem_graph->memused_label, FALSE, FALSE, 0);*/
-	gtk_table_attach (GTK_TABLE (table), mem_graph->memused_label, 1, 2, 0, 1, 
+	mem_graph->mem_label = gtk_label_new ("");
+	gtk_misc_set_padding (GTK_MISC (mem_graph->mem_label), GNOME_PAD_SMALL, 0);
+	gtk_misc_set_alignment (GTK_MISC (mem_graph->mem_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), mem_graph->mem_label, 2, 3, 0, 1, 
 			  GTK_FILL, 0, 0, 0);
 	
-	/*hbox = gtk_hbox_new (FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), hbox, FALSE, FALSE, 0);*/
-	
-	label = gtk_label_new (_("Memory Available :"));
+	color_picker = gnome_color_picker_new ();
+	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
+				    mem_graph->colors[3].red,
+				    mem_graph->colors[3].green,
+				    mem_graph->colors[3].blue, 0);
+	gtk_signal_connect (GTK_OBJECT (color_picker), "color_set",
+			    GTK_SIGNAL_FUNC (cb_swap_color_changed), procdata);
+	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, 0, 0, 0, 0);
+			  
+	label = gtk_label_new (_("Swap Used :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	/*gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);*/
-	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
 	
-	mem_graph->memtotal_label = gtk_label_new ("");
-	gtk_misc_set_padding (GTK_MISC (mem_graph->memtotal_label), GNOME_PAD_SMALL, 0);
-	gtk_misc_set_alignment (GTK_MISC (mem_graph->memtotal_label), 0.0, 0.5);
-	/*gtk_box_pack_start (GTK_BOX (hbox), mem_graph->memtotal_label, FALSE, FALSE, 0);*/
-	gtk_table_attach (GTK_TABLE (table), mem_graph->memtotal_label, 1, 2, 1, 2, 
+	mem_graph->swap_label = gtk_label_new ("");
+	gtk_misc_set_padding (GTK_MISC (mem_graph->swap_label), GNOME_PAD_SMALL, 0);
+	gtk_misc_set_alignment (GTK_MISC (mem_graph->swap_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), mem_graph->swap_label, 2, 3, 1, 2, 
 			  GTK_FILL, 0, 0, 0);	
 	
 	

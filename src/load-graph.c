@@ -12,6 +12,8 @@
 #include <glibtop.h>
 #include <glibtop/cpu.h>
 #include <glibtop/mem.h>
+#include <glibtop/swap.h>
+#include "procman.h"
 #include "load-graph.h"
 
 
@@ -47,7 +49,7 @@ load_graph_draw (LoadGraph *g)
 	GdkColormap *colormap;
 
 	colormap = gdk_window_get_colormap (g->disp->window);
-	for (i = 0; i < 3; i++) {
+	for (i = 0; i < g->n + 2; i++) {
 	    gdk_color_alloc (colormap, &(g->colors [i]));
 	}
 
@@ -62,21 +64,13 @@ load_graph_draw (LoadGraph *g)
 			g->disp->allocation.width,
 			g->disp->allocation.height);
 			
-    /* draw frame */
-    gdk_gc_set_foreground (g->gc, &(g->colors [1]));
-    gdk_draw_rectangle (g->pixmap,
-    			g->gc,
-    			FALSE, FRAME_WIDTH, FRAME_WIDTH,
-    			g->draw_width,
-    			g->disp->allocation.height - 2 * FRAME_WIDTH);
-
     for (i = 0; i < g->num_points; i++)
 	g->pos [i] = g->draw_height;
 
     /* FIXME: try to do some averaging here to smooth out the graph */
     for (j = 0; j < g->n; j++) {
         float delx = (float)g->draw_width / ( g->num_points - 1);
-        gdk_gc_set_foreground (g->gc, &(g->colors [2]));
+        gdk_gc_set_foreground (g->gc, &(g->colors [j + 2]));
 
 	for (i = 0; i < g->num_points - 1; i++) {
 	    
@@ -92,6 +86,14 @@ load_graph_draw (LoadGraph *g)
 	}
 	g->pos[g->num_points - 1] -= g->data [g->num_points - 1] [j];
     }
+    
+    /* draw frame */
+    gdk_gc_set_foreground (g->gc, &(g->colors [1]));
+    gdk_draw_rectangle (g->pixmap,
+    			g->gc,
+    			FALSE, FRAME_WIDTH, FRAME_WIDTH,
+    			g->draw_width,
+    			g->disp->allocation.height - 2 * FRAME_WIDTH);
 	
     gdk_draw_pixmap (g->disp->window,
 		     g->disp->style->fg_gc [GTK_WIDGET_STATE(g->disp)],
@@ -118,10 +120,10 @@ get_size_string (gint size)
 		
 	fsize /= 1024.0;
 	if (fsize < 1024.0)
-		return g_strdup_printf ("%.2f MB", fsize);
+		return g_strdup_printf ("%.0f MB", fsize);
 	
 	fsize /= 1024.0;
-	return g_strdup_printf ("%.2f GB", fsize);
+	return g_strdup_printf ("%.0f GB", fsize);
 
 }
 
@@ -178,29 +180,42 @@ static void
 get_memory (gfloat data [1], LoadGraph *g)
 {
     float user, shared, buffer, free;
-    gchar *text;
+    float swap_used;
+    gchar *text1, *text2, *text;
 
     glibtop_mem mem;
+    glibtop_swap swap;
 	
     glibtop_get_mem (&mem);
+    glibtop_get_swap (&swap);
 	
     user = mem.used - mem.buffer - mem.shared;
+    
+    swap_used = (float)swap.used / (float)swap.total;
 	
     user    = user   / (float)mem.total;
     shared  = mem.shared / mem.total;
     buffer  = mem.buffer / mem.total;
     free    = mem.free / mem.total;
     
-    text = get_size_string (mem.total);
-    gtk_label_set_text (GTK_LABEL (g->memtotal_label), text);
+    text1 = get_size_string (mem.total);
+    text2 = get_size_string (mem.used);
+    text = g_strdup_printf ("%s / %s", text2, text1);
+    gtk_label_set_text (GTK_LABEL (g->mem_label), text);
     g_free (text);
-    text = get_size_string (mem.used);
-    gtk_label_set_text (GTK_LABEL (g->memused_label), text);
+    g_free (text1);
+    g_free (text2);
+    
+    text1 = get_size_string (swap.total);
+    text2 = get_size_string (swap.used);
+    text = g_strdup_printf ("%s / %s", text2, text1);
+    gtk_label_set_text (GTK_LABEL (g->swap_label), text);
     g_free (text);
+    g_free (text1);
+    g_free (text2);
     
     data [0] = user;
-    /*data [1] = shared;
-    data [2] = buffer;*/
+    data [1] = swap_used;
 }
 
 /* Updates the load graph when the timeout expires */
@@ -349,7 +364,7 @@ load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
 }
 
 LoadGraph *
-load_graph_new (gint type, gchar *bg_color, gchar *frame_color, gchar *fg_color)
+load_graph_new (gint type, ProcData *procdata)
 {
     LoadGraph *g;
 
@@ -361,18 +376,27 @@ load_graph_new (gint type, gchar *bg_color, gchar *frame_color, gchar *fg_color)
     	g->n = 1;
     	break;
     case MEM_GRAPH:
-    	g->n = 1;
+    	g->n = 2;
     	break;
     }
 	
     g->speed  = 500;
     g->num_points = 50;
-
-    g->colors = g_new0 (GdkColor, 3);
-    gdk_color_parse (bg_color, &g->colors[0]);
-    gdk_color_parse (frame_color, &g->colors[1]);
-    gdk_color_parse (fg_color, &g->colors[2]);
     
+    g->colors = g_new0 (GdkColor, g->n + 2);
+
+    g->colors[0] = procdata->config.bg_color;
+    g->colors[1] = procdata->config.frame_color;
+    switch (type) {
+    case CPU_GRAPH:
+    	g->colors[2] = procdata->config.cpu_color;
+    	break;
+    case MEM_GRAPH:
+    	g->colors[2] = procdata->config.mem_color;
+    	g->colors[3] = procdata->config.swap_color;
+    	break;
+    }
+    	    
     g->timer_index = -1;
     
     g->draw = FALSE;

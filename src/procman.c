@@ -108,14 +108,36 @@ procman_data_new (void)
 		gnome_config_get_int ("procman/Config/update_interval=3000");
 	pd->config.whose_process = gnome_config_get_int ("procman/Config/view_as=1");
 	pd->config.current_tab = gnome_config_get_int ("procman/Config/current_tab=0");
-	pd->config.bg_color = gnome_config_get_string 
-		("procman/Config/bg_color=#000000");
-	pd->config.cpu_color = gnome_config_get_string
-		("procman/Config/cpu_color=#ff0000");
-	pd->config.mem_color = gnome_config_get_string
-		("procman/Config/mem_color=#ff0000");
-	pd->config.frame_color = gnome_config_get_string
-		("procman/Config/frame_color=#848484");
+	pd->config.bg_color.red = gnome_config_get_int
+		("procman/Config/bg_red=0");
+	pd->config.bg_color.green = gnome_config_get_int
+		("procman/Config/bg_green=0");
+	pd->config.bg_color.blue= gnome_config_get_int
+		("procman/Config/bg_blue=0");
+	pd->config.frame_color.red = gnome_config_get_int
+		("procman/Config/frame_red=64000");
+	pd->config.frame_color.green = gnome_config_get_int
+		("procman/Config/frame_green=64000");
+	pd->config.frame_color.blue = gnome_config_get_int
+		("procman/Config/frame_blue=64000");
+	pd->config.cpu_color.red = gnome_config_get_int
+		("procman/Config/cpu_red=65535");
+	pd->config.cpu_color.green = gnome_config_get_int
+		("procman/Config/cpu_green=591");
+	pd->config.cpu_color.blue = gnome_config_get_int
+		("procman/Config/cpu_blue=0");
+	pd->config.mem_color.red = gnome_config_get_int
+		("procman/Config/mem_red=65535");
+	pd->config.mem_color.green = gnome_config_get_int
+		("procman/Config/mem_green=591");
+	pd->config.mem_color.blue = gnome_config_get_int
+		("procman/Config/mem_blue=0");
+	pd->config.swap_color.red = gnome_config_get_int
+		("procman/Config/swap_red=1363");
+	pd->config.swap_color.green = gnome_config_get_int
+		("procman/Config/swap_green=52130");
+	pd->config.swap_color.blue = gnome_config_get_int
+		("procman/Config/swap_blue=18595");
 	
 	procman_get_save_files (pd);
 #if 0	
@@ -181,10 +203,27 @@ procman_save_config (ProcData *data)
 	gnome_config_set_bool ("procman/Config/show_threads", data->config.show_threads);
 	gnome_config_set_int ("procman/Config/update_interval", data->config.update_interval);
 	gnome_config_set_int ("procman/Config/current_tab", data->config.current_tab);
-	gnome_config_set_string ("procman/Config/bg_color", data->config.bg_color);
+	/*gnome_config_set_string ("procman/Config/bg_color", data->config.bg_color);
 	gnome_config_set_string ("procman/Config/cpu_color", data->config.cpu_color);
 	gnome_config_set_string ("procman/Config/mem_color", data->config.mem_color);
-	gnome_config_set_string ("procman/Config/frame_color", data->config.frame_color);
+	gnome_config_set_string ("procman/Config/swap_color", data->config.swap_color);
+	gnome_config_set_string ("procman/Config/frame_color", data->config.frame_color);*/
+	
+	gnome_config_set_int ("procman/Config/bg_red", data->config.bg_color.red);
+	gnome_config_set_int ("procman/Config/bg_green", data->config.bg_color.green);
+	gnome_config_set_int ("procman/Config/bg_blue", data->config.bg_color.blue);
+	gnome_config_set_int ("procman/Config/frame_red", data->config.frame_color.red);
+	gnome_config_set_int ("procman/Config/frame_green", data->config.frame_color.green);
+	gnome_config_set_int ("procman/Config/frame_blue", data->config.frame_color.blue);
+	gnome_config_set_int ("procman/Config/cpu_red", data->config.cpu_color.red);
+	gnome_config_set_int ("procman/Config/cpu_green", data->config.cpu_color.green);
+	gnome_config_set_int ("procman/Config/cpu_blue", data->config.cpu_color.blue);
+	gnome_config_set_int ("procman/Config/mem_red", data->config.mem_color.red);
+	gnome_config_set_int ("procman/Config/mem_green", data->config.mem_color.green);
+	gnome_config_set_int ("procman/Config/mem_blue", data->config.mem_color.blue);
+	gnome_config_set_int ("procman/Config/swap_red", data->config.swap_color.red);
+	gnome_config_set_int ("procman/Config/swap_green", data->config.swap_color.green);
+	gnome_config_set_int ("procman/Config/swap_blue", data->config.swap_color.blue);
 	
 	save_blacklist (data);
 	gnome_config_sync ();

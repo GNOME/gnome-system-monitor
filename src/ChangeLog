@@ -1,3 +1,29 @@
+2001-08-22  Kevin Vandersloot <kfv101@psu.edu>
+
+	Ability to save colors
+
+	* procman.h: the config variables for the colors are now
+	GdkColors
+
+2001-08-22  Kevin Vandersloot <kfv101@psu.edu>
+
+	Some UI to change the cpu/mem/swap colors. Still need to
+	save to disk though
+
+	* callbacks.c cb_[cpu,mem,swap]_color_changed: callback for
+	the gnome color pickers, change the current colors
+
+	* interface.c: add the color pickers. Add the swap used label
+	as a caption to the now Memory / Swap graph.
+
+	* load-graph.c: # of colors is now g->n + 2 ie one for each
+	graphed item, one for background and one for frame. Draw frame
+	after data so it is on top. calculate swap in get_memory
+
+	* procman.c: new config variable for the swap color.
+
+	* procman.h: move the LoadGraph structure here.
+
 2001-08-21  Kevin Vandersloot <kfv101@psu.edu>
 
 	Configurable colors for the graphs. Need to add UI in the

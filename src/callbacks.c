@@ -30,6 +30,7 @@
 #include "memmaps.h"
 #include "favorites.h"
 #include "procactions.h"
+#include "load-graph.h"
 
 void
 cb_properties_activate                (GtkMenuItem     *menuitem,
@@ -326,6 +327,54 @@ cb_search (GtkEditable *editable, gpointer data)
 	proctable_search_table (procdata, text);
 	
 	g_free (text);
+}
+
+void		
+cb_cpu_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
+		      guint a, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	procdata->cpu_graph->colors[2].red = r;
+	procdata->cpu_graph->colors[2].green = g;
+	procdata->cpu_graph->colors[2].blue = b;
+	procdata->config.cpu_color.red = r;
+	procdata->config.cpu_color.green = g;
+	procdata->config.cpu_color.blue = b;	
+	procdata->cpu_graph->colors_allocated = FALSE;
+
+}
+
+void		
+cb_mem_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
+		      guint a, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	procdata->mem_graph->colors[2].red = r;
+	procdata->mem_graph->colors[2].green = g;
+	procdata->mem_graph->colors[2].blue = b;
+	procdata->config.mem_color.red = r;
+	procdata->config.mem_color.green = g;
+	procdata->config.mem_color.blue = b;	
+	procdata->mem_graph->colors_allocated = FALSE;
+
+}
+
+void		
+cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
+		       guint a, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	procdata->mem_graph->colors[3].red = r;
+	procdata->mem_graph->colors[3].green = g;
+	procdata->mem_graph->colors[3].blue = b;
+	procdata->config.swap_color.red = r;
+	procdata->config.swap_color.green = g;
+	procdata->config.swap_color.blue = b;	
+	procdata->mem_graph->colors_allocated = FALSE;
+
 }
 
 void

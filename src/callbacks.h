@@ -69,16 +69,21 @@ void		popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data);
 void 		popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data);
 void 		popup_menu_about_process (GtkMenuItem *menuitem, gpointer data);
 
-gint		cb_right_click (ETree *tree, int row, ETreePath path,
-                                int col, GdkEvent *event, gpointer data);
 void		cb_info_button_pressed (GtkButton *button, gpointer user_data);
 void		cb_search (GtkEditable *editable, gpointer data);
-				
-void		cb_table_selected (ETree *tree,int row,ETreePath path,gpointer data);
 
+void		cb_cpu_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
+				      guint a, gpointer data);
+void		cb_mem_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
+				      guint a, gpointer data);
+void		cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
+				      guint a, gpointer data);
+				
+gint		cb_right_click (ETree *tree, int row, ETreePath path,
+                                int col, GdkEvent *event, gpointer data);
+void		cb_table_selected (ETree *tree,int row,ETreePath path,gpointer data);
 gint		cb_tree_key_press (ETree *tree, int row, ETreePath path, int col,
 		   		   GdkEvent *event, gpointer data);
-					 
 void 		cb_double_click	(ETree	*tree, int row, ETreePath path,
 				 int col, GdkEvent *event, gpointer data);
 					 
