@@ -293,7 +293,7 @@ load_graph_alloc (LoadGraph *g)
 
     if (g->allocated)
 	return;
-
+    
     g->data = g_new0 (gfloat *, g->num_points);
     g->odata = g_new0 (gfloat *, g->num_points);
     g->pos = g_new0 (guint, g->num_points);
@@ -346,6 +346,9 @@ load_graph_configure (GtkWidget *widget, GdkEventConfigure *event,
 		     0, 0,
 		     c->disp->allocation.width,
 		     c->disp->allocation.height);
+		     
+    load_graph_draw (c);
+    
     return TRUE;
     event = NULL;
 }
@@ -355,7 +358,7 @@ load_graph_expose (GtkWidget *widget, GdkEventExpose *event,
 		   gpointer data_ptr)
 {
     LoadGraph *g = (LoadGraph *) data_ptr;
-	
+    	
     gdk_draw_pixmap (widget->window,
 		     widget->style->fg_gc [GTK_WIDGET_STATE(widget)],
 		     g->pixmap,

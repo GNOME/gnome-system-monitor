@@ -1,5 +1,18 @@
 2001-08-03  Kevin Vandersloot <kfv101@psu.edu>
 
+	* load-graph.c: call load_graph_draw on the configure event. This
+	removes the slight delay in drawing when switching tabs.
+
+	* callbacks.c (cb_switch_page): remove the calls to load_graph_draw
+	here since they did not help and the graph was not visible at that
+	point so their effects were not noticable.
+
+	* procman.c: make the default grid color a light green. Hopefully
+	people dont' find it too ugly. Please someone provide me with a way
+	to make a nice looking graph. I need help here. Pleeeease.
+
+2001-08-03  Kevin Vandersloot <kfv101@psu.edu>
+
 	* procdialogs.c: cosmetic improvements to the prefs dialog
 	mainly making the two tabs have similar layouts.
 
