@@ -30,8 +30,7 @@
 #include "procdialogs.h"
 #include "callbacks.h"
 
-int nice_value;
-int kill_signal;
+static int nice_value = 0;
 
 static void
 renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)

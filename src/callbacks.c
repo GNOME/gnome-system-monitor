@@ -381,7 +381,7 @@ cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 	g_free (color);
 }
 
-ProcInfo *selected_process = NULL;
+static ProcInfo *selected_process = NULL;
 
 static void
 get_last_selected (GtkTreeModel *model, GtkTreePath *path, 
@@ -488,14 +488,14 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 
 }
 
-GList *old_disks = NULL;
+static GList *old_disks = NULL;
 
 static gboolean
 compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
 	GHashTable *new_disks = data;
 	GtkTreeIter *old_iter;
-	glibtop_mountentry *entry = NULL;
+	glibtop_mountentry *entry;
 	gchar *old_name;
 	
 	gtk_tree_model_get (model, iter, 1, &old_name, -1);
@@ -536,17 +536,18 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 	else {
 		old_iter = gtk_tree_iter_copy (iter);
 		old_disks = g_list_append (old_disks, old_iter);
+		g_free (old_name);
+		return FALSE;
 	}
-	
-	g_free (old_name);
-	return FALSE;
 }
 
 static GdkPixbuf*
-get_icon_for_device(GnomeIconTheme *icontheme, char *mountpoint, char *type)
+get_icon_for_device(GnomeIconTheme *icontheme, const char *mountpoint,
+		    const char *type)
 {
 	GdkPixbuf *tmp, *pixbuf;
-	char *i_type, *path;
+	const char *i_type;
+	char *path;
 	int size = 24;
 	
 	if (strstr(mountpoint,"/zip"))
@@ -598,7 +599,11 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 	glibtop_get_fsusage (&usage, entry->mountdir);
 	
 	/* Hmm, usage.blocks == 0 seems to get rid of /proc and all
-	** the other useless entries */
+	** the other useless entries
+	** glibtop_get_mountlist(&buf, FALSE) in libgtop2.8 is now sane.
+	** so this test will be removed
+	** TODO: remove this test
+	*/
 	if (usage.blocks != 0) {
 		GtkTreeIter row;
 		float percentage, btotal, bfree, bused;
@@ -655,7 +660,7 @@ cb_update_disks (gpointer data)
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->disk_list));
 	
-	entry = glibtop_get_mountlist (&mountlist, 0);
+	entry = glibtop_get_mountlist (&mountlist, FALSE);
 	
 	new_disks = g_hash_table_new (g_str_hash, g_str_equal);
 	for (i=0; i < mountlist.number; i++) {

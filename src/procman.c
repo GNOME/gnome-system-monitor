@@ -23,7 +23,6 @@
 #include <libgnomeui/gnome-window-icon.h>
 #include <gconf/gconf-client.h>
 #include <glibtop.h>
-#include <pthread.h>
 #include "load-graph.h"
 #include "procman.h"
 #include "interface.h"
@@ -32,10 +31,8 @@
 #include "favorites.h"
 #include "callbacks.h"
 
-GtkWidget *app;
+static GtkWidget *app = NULL;
 static int simple_view = FALSE;
-pthread_t thread;
-
 
 struct poptOption options[] = {
   {

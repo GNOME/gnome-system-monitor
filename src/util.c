@@ -150,7 +150,7 @@ int vasprintf(char **ptr, const char *format, va_list ap)
 #endif
 #endif
 
-static int root;			/* if we are root, no password is
+static int root = 0;			/* if we are root, no password is
                                            required */
 
 static gint

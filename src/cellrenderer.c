@@ -58,7 +58,7 @@ struct _ProcmanCellRendererProgressPriv {
 	double   value;
 };
 
-static gpointer parent_class;
+static gpointer parent_class = NULL;
 
 GtkType
 procman_cell_renderer_progress_get_type (void)

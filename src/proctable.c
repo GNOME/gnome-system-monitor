@@ -48,13 +48,8 @@
 
 
 
-gint total_time = 0;
-gint total_time_last = 0;
-gint total_time_meter = 0;
-gint total_time_last_meter = 0;
-gint cpu_time_last = 0;
-gint cpu_time = 0;
-gfloat pcpu_last = 0.0;
+static gint total_time = 0;
+static gint total_time_last = 0;
 
 static gint
 sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer data)

@@ -23,6 +23,8 @@
 #include <gnome.h>
 #include <procman.h>
 
+extern int kill_signal;
+
 void			procdialog_create_hide_dialog (ProcData *data);
 void			procdialog_create_kill_dialog (ProcData *data, int signal);
 void 			procdialog_create_renice_dialog (ProcData *data);

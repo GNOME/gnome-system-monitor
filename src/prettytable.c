@@ -14,7 +14,7 @@ void free_entry (gpointer key, gpointer value, gpointer data);
 void free_value (gpointer key, gpointer value, gpointer data);
 void free_key (gpointer key, gpointer value, gpointer data);
 
-WnckScreen *screen = NULL;
+static WnckScreen *screen = NULL;
 
 
 static void

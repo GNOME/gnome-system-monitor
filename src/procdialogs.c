@@ -32,10 +32,11 @@
 #include "util.h"
 #include "load-graph.h"
 
-GtkWidget *renice_dialog = NULL;
-GtkWidget *prefs_dialog = NULL;
-gint new_nice_value = 0;
-int kill_signal = SIGTERM;
+static GtkWidget *renice_dialog = NULL;
+static GtkWidget *prefs_dialog = NULL;
+static gint new_nice_value = 0;
+
+/* public */ int kill_signal = SIGTERM;
 
 static void
 cb_show_hide_message_toggled (GtkToggleButton *button, gpointer data)

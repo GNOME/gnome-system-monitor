@@ -88,7 +88,7 @@ add_new_maps (gpointer key, gpointer value, gpointer data)
 	g_free (info);
 }
 
-GList *old_maps = NULL;
+static GList *old_maps = NULL;
 
 static gboolean
 compare_memmaps (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)

@@ -155,11 +155,11 @@ static GnomeUIInfo popup_menu_uiinfo[] =
 gchar *moreinfolabel = N_("More _Info >>");
 gchar *lessinfolabel = N_("<< Less _Info");
 
-GtkWidget *infobutton;
-GtkWidget *infolabel;
-GtkWidget *endprocessbutton;
-GtkWidget *popup_menu;
-GtkWidget *sys_pane;
+static GtkWidget *infobutton = NULL;
+static GtkWidget *infolabel = NULL;
+static GtkWidget *endprocessbutton = NULL;
+static GtkWidget *popup_menu = NULL;
+static GtkWidget *sys_pane = NULL;
 
 gint
 get_sys_pane_pos (void)

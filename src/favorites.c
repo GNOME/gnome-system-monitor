@@ -25,9 +25,9 @@
 #include "favorites.h"
 #include "proctable.h"
 
-GtkWidget *blacklist_dialog = NULL;
-GtkWidget *proctree = NULL;
-gint initial_blacklist_num = 0; /* defined in order to prune off entries from config file */
+static GtkWidget *blacklist_dialog = NULL;
+static GtkWidget *proctree = NULL;
+static gint initial_blacklist_num = 0; /* defined in order to prune off entries from config file */
 
 void
 add_to_blacklist (ProcData *procdata, gchar *name)
@@ -47,7 +47,7 @@ add_to_blacklist (ProcData *procdata, gchar *name)
 		
 }
 
-GList *removed_processes = NULL;
+static GList *removed_processes = NULL;
 
 static void
 add_single_to_blacklist (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
@@ -258,7 +258,7 @@ create_tree (ProcData *procdata)
 
 }
 
-GList *removed_iters = NULL;
+static GList *removed_iters = NULL;
 
 static void
 insert_all_of_same_name_from_tree (gchar *name, ProcData *procdata)
