@@ -2,6 +2,7 @@
 
 INCLUDES = \
 	-I$(top_srcdir)/intl \
+	-DPROCMAN_DATADIR=\"$(datadir)/procman/\" \
 	$(GNOME_INCLUDEDIR) \
 	$(LIBGTOP_INCS) \
 	$(GAL_CFLAGS)
@@ -22,3 +23,9 @@ procman_SOURCES = \
 procman_LDADD = $(GNOME_LIBDIR) $(GNOMEUI_LIBS) \
 	$(INTLLIBS) $(LIBGTOP_LIBS) $(GAL_LIBS)
 
+specdir = $(datadir)/procman
+spec_DATA = \
+	proctable.etspec
+
+EXTRA_DIST = \
+	$(spec_DATA)

@@ -190,7 +190,7 @@ create_main_window (ProcData *data)
 	
 	status_hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_end (GTK_BOX (vbox1), status_hbox, FALSE, FALSE, 0);
-
+	
 	status_frame = gtk_frame_new (NULL);
 	gtk_box_pack_start (GTK_BOX (status_hbox), status_frame, TRUE, TRUE, 0);
 	meter_hbox = gtk_hbox_new (FALSE, 0);

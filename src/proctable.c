@@ -37,19 +37,12 @@
 #include "infoview.h"
 #include "memmaps.h"
 
-/*
-gchar * titles[NUM_COLUMNS] = 
-{
-	N_("Name"),
-	N_("User"),
-	N_("Memory"),
-	N_("% cpu"),
-	N_("PID")
-};
-*/
-
 #define NUM_COLUMNS 12
 
+gint total_time = 0;
+gint total_time_last = 0;
+gint cpu_time_last = 0;
+gint cpu_time = 0;
 
 #define SPEC "<ETableSpecification cursor-mode=\"line\" selection-mode=\"single\" draw-focus=\"true\">                    	       \
   <ETableColumn model_col=\"0\" _title=\"Process Name\"   expansion=\"1.0\" minimum_width=\"20\" resizable=\"true\" cell=\"tree-string\" compare=\"string\"/> \
@@ -74,11 +67,6 @@ gchar * titles[NUM_COLUMNS] =
 	        <grouping> <leaf column=\"0\" ascending=\"true\"/> </grouping>    \
         </ETableState> \
 </ETableSpecification>"
-
-gint total_time = 0;
-gint total_time_last = 0;
-gint cpu_time_last = 0;
-gint cpu_time = 0;
 
 
 static GdkPixbuf *
@@ -285,21 +273,21 @@ proctable_new_extras ()
 	
 	extras = e_table_extras_new ();
 	
-	cell = e_cell_size_new (NULL, GTK_JUSTIFY_RIGHT);
+	cell = e_cell_size_new (NULL, GTK_JUSTIFY_CENTER);
 	e_table_extras_add_cell (extras, "memory", cell);
-	cell = e_cell_number_new (NULL, GTK_JUSTIFY_RIGHT);
+	cell = e_cell_number_new (NULL, GTK_JUSTIFY_CENTER);
 	e_table_extras_add_cell (extras, "cpu", cell);
 	cell = e_cell_number_new (NULL, GTK_JUSTIFY_RIGHT);
 	e_table_extras_add_cell (extras, "pid", cell);
-	cell = e_cell_size_new (NULL, GTK_JUSTIFY_RIGHT);
+	cell = e_cell_size_new (NULL, GTK_JUSTIFY_CENTER);
 	e_table_extras_add_cell (extras, "vmsize", cell);
-	cell = e_cell_size_new (NULL, GTK_JUSTIFY_RIGHT);
+	cell = e_cell_size_new (NULL, GTK_JUSTIFY_CENTER);
 	e_table_extras_add_cell (extras, "memres", cell);
-	cell = e_cell_size_new (NULL, GTK_JUSTIFY_RIGHT);
+	cell = e_cell_size_new (NULL, GTK_JUSTIFY_CENTER);
 	e_table_extras_add_cell (extras, "memshared", cell);
-	cell = e_cell_size_new (NULL, GTK_JUSTIFY_RIGHT);
+	cell = e_cell_size_new (NULL, GTK_JUSTIFY_CENTER);
 	e_table_extras_add_cell (extras, "memrss", cell);
-	cell = e_cell_number_new (NULL, GTK_JUSTIFY_RIGHT);
+	cell = e_cell_number_new (NULL, GTK_JUSTIFY_CENTER);
 	e_table_extras_add_cell (extras, "nice", cell);
 	
 	return extras;
@@ -330,15 +318,20 @@ proctable_new (ProcData *data)
 				    	     proctable_value_is_empty,
 				    	     proctable_value_to_string,
 				    	     procdata);
-				    	     
+	
+					    	     
 	e_tree_memory_set_expanded_default(E_TREE_MEMORY(model), TRUE);
 
 	extras = proctable_new_extras ();
 	
 	etmm = E_TREE_MEMORY(model);
-	
+#if 0	
+	scrolled = e_tree_scrolled_new_from_spec_file (model, extras,
+						       "proctable.etspec", NULL);
+						       //PROCMAN_DATADIR "proctable.etstate");
+#else
 	scrolled = e_tree_scrolled_new (model, extras, SPEC, NULL);
-	
+#endif	
 	proctree = GTK_WIDGET (e_tree_scrolled_get_tree (E_TREE_SCROLLED (scrolled)));
 	
 	e_tree_load_state (E_TREE (proctree), procdata->config.tree_state_file);
