@@ -183,19 +183,18 @@ get_memory (gfloat data [1], LoadGraph *g)
     glibtop_swap swap;
 	
     glibtop_get_mem (&mem);
+     
     glibtop_get_swap (&swap);
 	
-    user = mem.used - mem.buffer - mem.shared;
-    
     swap_used = (float)swap.used / (float)swap.total;
-	
-    user    = user   / (float)mem.total;
-    shared  = mem.shared / mem.total;
-    buffer  = mem.buffer / mem.total;
-    free    = mem.free / mem.total;
+    
+    user    = (float)mem.user / (float)mem.total;
+    shared  = (float)mem.shared / (float)mem.total;
+    buffer  = (float)mem.buffer / (float)mem.total;
+    free    = (float)mem.free / (float)mem.total;
     
     text1 = get_size_string (mem.total);
-    text2 = get_size_string (mem.used);
+    text2 = get_size_string (mem.user);
     gtk_label_set_text (GTK_LABEL (g->memused_label), text2);
     gtk_label_set_text (GTK_LABEL (g->memtotal_label), text1);
     g_free (text1);
