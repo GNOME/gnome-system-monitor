@@ -501,11 +501,9 @@ main (int argc, char *argv[])
 	poptContext pctx;
 	char **args;
 	
-#ifdef ENABLE_NLS
 	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
-#endif
 
 	procman = gnome_program_init ("procman", VERSION, LIBGNOMEUI_MODULE, argc, argv, 
 			    	      GNOME_PARAM_POPT_TABLE, options, NULL);
