@@ -53,21 +53,25 @@ procman_data_new (void)
 	procdata->tree = NULL;
 	procdata->model = NULL;
 	procdata->memory = NULL;
-	procdata->infoview = g_new0 (InfoView, 1);
+	procdata->infobox = NULL;
 	procdata->info = NULL;
 	procdata->proc_num = 0;
 	procdata->selected_pid = -1;
 	procdata->selected_node = NULL;
 	procdata->timeout = -1;
 	
-	procdata->config.show_more_info = gnome_config_get_bool ("procman/Config/more_info=FALSE");
-	procdata->config.show_kill_warning = gnome_config_get_bool ("procman/Config/kill_dialog=TRUE");
-	procdata->config.update_interval = gnome_config_get_int ("procman/Config/update_interval=3000");
+	procdata->config.show_more_info = 
+		gnome_config_get_bool ("procman/Config/more_info=FALSE");
+	procdata->config.show_tree = 
+		gnome_config_get_bool ("procman/Config/show_tree=FALSE");
+	procdata->config.show_kill_warning = 
+		gnome_config_get_bool ("procman/Config/kill_dialog=TRUE");
+	procdata->config.update_interval = 
+		gnome_config_get_int ("procman/Config/update_interval=3000");
 	procdata->config.whose_process = gnome_config_get_int ("procman/Config/view_as=0");
 	
 	
 	procman_get_save_files (procdata);
-	//procdata->config.tree_state_file = procman_get_save_file ();
 	
 
 	return procdata;
@@ -84,7 +88,7 @@ procman_save_config (ProcData *data)
 	gnome_config_set_int ("procman/Config/view_as",data->config.whose_process);
 	gnome_config_set_bool ("procman/Config/more_info", data->config.show_more_info);
 	gnome_config_set_bool ("procman/Config/kill_dialog", data->config.show_kill_warning);
-	
+	gnome_config_set_bool ("procman/Config/show_tree", data->config.show_tree);
 	gnome_config_set_int ("procman/Config/update_interval", data->config.update_interval);
 	
 

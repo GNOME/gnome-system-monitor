@@ -24,14 +24,14 @@
 #include "memmaps.h"
 
 
-static void
-add_separator (GtkWidget *box)
-{
-	GtkWidget *separator;
-	
-	separator = gtk_vseparator_new ();
-	gtk_box_pack_start (GTK_BOX (box), separator, TRUE, FALSE, 0);
-}
+GtkWidget *infobox;
+GtkWidget *main_frame;
+GtkWidget *cmd_label;
+GtkWidget *status_label;
+GtkWidget *nice_label;
+GtkWidget *memtotal_label;
+GtkWidget *memrss_label;
+GtkWidget *memshared_label;
 
 static void
 memmaps_button_clicked (GtkButton *button, gpointer data)
@@ -56,21 +56,13 @@ GtkWidget *
 infoview_create (ProcData *data)
 {
 	ProcData *procdata = data;
-	GtkWidget *infobox;
 	GtkWidget *separator;
-	GtkWidget *main_frame;
-	GtkWidget *main_vbox;
-	GtkWidget *info_hbox, *mem_hbox;
+	GtkWidget *infobox;
+	GtkWidget *main_hbox;
 	GtkWidget *info_frame, *mem_frame;
-	GtkWidget *nice_button;
+	GtkWidget *info_table, *mem_table;
 	GtkWidget *label;
-	GtkWidget *cmd_entry;
-	GtkWidget *status_entry;
-	GtkWidget *nice_entry;
-	GtkWidget *memtotal_entry;
-	GtkWidget *memrss_entry;
-	GtkWidget *memshared_entry;
-	GtkWidget *memmaps_button;
+
 	
 	infobox = gtk_vbox_new (FALSE, 0);
 	
@@ -83,110 +75,73 @@ infoview_create (ProcData *data)
 	gtk_container_set_border_width (GTK_CONTAINER (main_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (infobox), main_frame, FALSE, FALSE, 0);
 	
-	
-	main_vbox = gtk_vbox_new (FALSE, 0);
-	gtk_container_add (GTK_CONTAINER (main_frame), main_vbox);
+
+	main_hbox = gtk_hbox_new (TRUE, 0);
+	gtk_container_add (GTK_CONTAINER (main_frame), main_hbox);
 	
 	info_frame = gtk_frame_new (_("Process Info"));
 	gtk_frame_set_label_align (GTK_FRAME (info_frame), 0.5, 0.5);
 	gtk_container_set_border_width (GTK_CONTAINER (info_frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (main_vbox), info_frame, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (main_hbox), info_frame, TRUE, TRUE, 0);
 	
-	info_hbox = gtk_hbox_new (FALSE, 0);
-	gtk_container_add (GTK_CONTAINER (info_frame), info_hbox);
+	info_table = gtk_table_new (3, 2, TRUE);
+	gtk_container_add (GTK_CONTAINER (info_frame), info_table);
 	
 	label = gtk_label_new (_("Command : "));
-	gtk_box_pack_start (GTK_BOX (info_hbox), label, TRUE, FALSE, 0);
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-	
-	cmd_entry = gtk_entry_new ();
-	gtk_entry_set_editable (GTK_ENTRY (cmd_entry), FALSE);
-	gtk_widget_set_usize (cmd_entry, 60, -2);
-	gtk_box_pack_start (GTK_BOX (info_hbox), cmd_entry, TRUE, FALSE, 0);
-	
-	add_separator (info_hbox);
-	
+	gtk_table_attach_defaults (GTK_TABLE (info_table), label, 0, 1, 0, 1);
 	label = gtk_label_new (_("Status : "));
-	gtk_box_pack_start (GTK_BOX (info_hbox), label, TRUE, FALSE, 0);
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-	
-	status_entry = gtk_entry_new ();
-	gtk_entry_set_editable (GTK_ENTRY (status_entry), FALSE);
-	gtk_widget_set_usize (status_entry, 60, -2);
-	gtk_box_pack_start (GTK_BOX (info_hbox), status_entry, TRUE, FALSE, 0);
-	
-	add_separator (info_hbox);
-	
+	gtk_table_attach_defaults (GTK_TABLE (info_table), label, 0, 1, 1, 2);
 	label = gtk_label_new (_("Nice Value : "));
-	gtk_box_pack_start (GTK_BOX (info_hbox), label, TRUE, FALSE, 0);
+	gtk_table_attach_defaults (GTK_TABLE (info_table), label, 0, 1, 2, 3);
+			  
+	cmd_label = gtk_label_new ("");
+	gtk_table_attach_defaults (GTK_TABLE (info_table), cmd_label, 1, 2, 0, 1);
+	status_label = gtk_label_new ("");
+	gtk_table_attach_defaults (GTK_TABLE (info_table), status_label, 1, 2, 1, 2);
+	nice_label = gtk_label_new ("");
+	gtk_table_attach_defaults (GTK_TABLE (info_table), nice_label, 1, 2, 2, 3);
 	
-	nice_entry = gtk_entry_new ();
-	gtk_entry_set_editable (GTK_ENTRY (nice_entry), FALSE);
-	gtk_widget_set_usize (nice_entry, 35, -2);
-	gtk_box_pack_start (GTK_BOX (info_hbox), nice_entry, TRUE, FALSE, 0);
-	
-	nice_button = gtk_button_new_with_label (_("Renice ..."));
-	gtk_box_pack_start (GTK_BOX (info_hbox), nice_button, TRUE, FALSE, 0);
-	
-		
 	mem_frame = gtk_frame_new (_("Memory Usage"));
 	gtk_frame_set_label_align (GTK_FRAME (mem_frame), 0.5, 0.5);
 	gtk_container_set_border_width (GTK_CONTAINER (mem_frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (main_vbox), mem_frame, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (main_hbox), mem_frame, TRUE, TRUE, 0);
 	
-	mem_hbox = gtk_hbox_new (FALSE, 0);
-	gtk_container_add (GTK_CONTAINER (mem_frame), mem_hbox);
+	mem_table = gtk_table_new (3, 2, FALSE);
+	gtk_container_add (GTK_CONTAINER (mem_frame), mem_table);
+	
 	
 	label = gtk_label_new (_("Total : "));
-	gtk_box_pack_start (GTK_BOX (mem_hbox), label, TRUE, FALSE, 0);
-	
-	memtotal_entry = gtk_entry_new ();
-	gtk_entry_set_editable (GTK_ENTRY (memtotal_entry), FALSE);
-	gtk_widget_set_usize (memtotal_entry, 50, -2);
-	gtk_box_pack_start (GTK_BOX (mem_hbox), memtotal_entry, TRUE, FALSE, 0);
-	
-	add_separator (mem_hbox);
-	
+	gtk_table_attach_defaults (GTK_TABLE (mem_table), label, 0, 1, 0, 1);
 	label = gtk_label_new (_("RSS : "));
-	gtk_box_pack_start (GTK_BOX (mem_hbox), label, TRUE, FALSE, 0);
-	
-	memrss_entry = gtk_entry_new ();
-	gtk_entry_set_editable (GTK_ENTRY (memrss_entry), FALSE);
-	gtk_widget_set_usize (memrss_entry, 50, -2);
-	gtk_box_pack_start (GTK_BOX (mem_hbox), memrss_entry, TRUE, FALSE, 0);
-	
-	add_separator (mem_hbox);
-	
+	gtk_table_attach_defaults (GTK_TABLE (mem_table), label, 0, 1, 1, 2);
 	label = gtk_label_new (_("Shared : "));
-	gtk_box_pack_start (GTK_BOX (mem_hbox), label, TRUE, FALSE, 0);
+	gtk_table_attach_defaults (GTK_TABLE (mem_table), label, 0, 1, 2, 3);
+			  
+	memtotal_label = gtk_label_new ("");
+	gtk_table_attach_defaults (GTK_TABLE (mem_table), memtotal_label, 1, 2, 0, 1);
+	memrss_label = gtk_label_new ("");
+	gtk_table_attach_defaults (GTK_TABLE (mem_table), memrss_label, 1, 2, 1, 2);
+	memshared_label = gtk_label_new ("");
+	gtk_table_attach_defaults (GTK_TABLE (mem_table), memshared_label, 1, 2, 2, 3);
 	
-	memshared_entry = gtk_entry_new ();
-	gtk_entry_set_editable (GTK_ENTRY (memshared_entry), FALSE);
-	gtk_widget_set_usize (memshared_entry, 50, -2);
-	gtk_box_pack_start (GTK_BOX (mem_hbox), memshared_entry, TRUE, FALSE, 0);
-	
-	add_separator (mem_hbox);
-	
-	memmaps_button = gtk_button_new_with_label (_("Memory Maps ..."));
-	gtk_box_pack_start (GTK_BOX (mem_hbox), memmaps_button, TRUE, FALSE, 0);
-	
-	procdata->infoview->main_frame = main_frame;
+	procdata->infobox = infobox;
+	/*procdata->infoview->main_frame = main_frame;
 	procdata->infoview->infobox = infobox;
 	procdata->infoview->cmd_entry = cmd_entry;
 	procdata->infoview->status_entry = status_entry;
 	procdata->infoview->nice_entry = nice_entry;
 	procdata->infoview->memtotal_entry = memtotal_entry;
 	procdata->infoview->memrss_entry = memrss_entry;
-	procdata->infoview->memshared_entry = memshared_entry;
+	procdata->infoview->memshared_entry = memshared_entry;*/
 	
 	if (procdata->selected_pid == -1)
 		gtk_widget_set_sensitive (infobox, FALSE);
 	
-	gtk_signal_connect (GTK_OBJECT (nice_button), "clicked",
+	/*gtk_signal_connect (GTK_OBJECT (nice_button), "clicked",
 			    GTK_SIGNAL_FUNC (nice_button_clicked), procdata);
 			   
 	gtk_signal_connect (GTK_OBJECT (memmaps_button), "clicked",
-			    GTK_SIGNAL_FUNC (memmaps_button_clicked), procdata);
+			    GTK_SIGNAL_FUNC (memmaps_button_clicked), procdata);*/
 	
 	return infobox;
 	
@@ -229,7 +184,6 @@ infoview_update (ProcData *data)
 {
 	ProcData *procdata = data;
 	ProcInfo *info;
-	InfoView *infoview = procdata->infoview;
 	gchar *string;
 	
 	if (!procdata->selected_node)
@@ -240,24 +194,26 @@ infoview_update (ProcData *data)
 	
 	if (!info)
 	{
-		if (GTK_WIDGET_SENSITIVE (procdata->infoview->infobox))
-			gtk_widget_set_sensitive (procdata->infoview->infobox, FALSE);
+		if (GTK_WIDGET_SENSITIVE (procdata->infobox))
+			gtk_widget_set_sensitive (procdata->infobox, FALSE);
 		return;
 	}
 	
-	gtk_frame_set_label (GTK_FRAME (infoview->main_frame), info->name);
-	gtk_entry_set_text (GTK_ENTRY (infoview->status_entry), info->status);
-	gtk_entry_set_text (GTK_ENTRY (infoview->cmd_entry), info->cmd);
+	gtk_frame_set_label (GTK_FRAME (main_frame), info->name);
+	gtk_label_set_text (GTK_LABEL (status_label), info->status);
+	gtk_label_set_text (GTK_LABEL (cmd_label), info->cmd);
 	string = g_strdup_printf ("%d", info->nice);
-	gtk_entry_set_text (GTK_ENTRY (infoview->nice_entry), string);
+	gtk_label_set_text (GTK_LABEL (nice_label), string);
 	g_free (string); 
 	string = get_size_string (info->mem);
-	gtk_entry_set_text (GTK_ENTRY (infoview->memtotal_entry), string);
+	gtk_label_set_text (GTK_LABEL (memtotal_label), string);
 	g_free (string);
 	string = get_size_string (info->memrss);
-	gtk_entry_set_text (GTK_ENTRY (infoview->memrss_entry), string);
+	gtk_label_set_text (GTK_LABEL (memrss_label), string);
 	g_free (string);
 	string = get_size_string (info->memshared);
-	gtk_entry_set_text (GTK_ENTRY (infoview->memshared_entry), string);
+	gtk_label_set_text (GTK_LABEL (memshared_label), string);
 	g_free (string);
+	
+	
 }

@@ -27,7 +27,6 @@
 
 
 typedef struct _ProcConfig ProcConfig;
-typedef struct _InfoView InfoView;
 typedef struct _ProcInfo ProcInfo;
 typedef struct _ProcData ProcData;
 
@@ -41,23 +40,11 @@ struct _ProcConfig
 {
         gboolean        show_more_info;
         gboolean	show_kill_warning;
+        gboolean	show_tree;
  	gint		update_interval;
 	gint		whose_process;
 	gchar		*tree_state_file;
 	gchar		*memmaps_state_file;
-};
-
-
-struct _InfoView
-{
-	GtkWidget 	*infobox;
-	GtkWidget 	*main_frame;
-	GtkWidget 	*cmd_entry;
-	GtkWidget 	*status_entry;
-	GtkWidget 	*nice_entry;
-	GtkWidget 	*memtotal_entry;
-	GtkWidget 	*memrss_entry;
-	GtkWidget 	*memshared_entry;
 };
 
 
@@ -86,7 +73,7 @@ struct _ProcData
 	GtkWidget	*tree;
 	ETreeModel	*model;
 	ETreeMemory	*memory;
-	InfoView	*infoview;
+	GtkWidget	*infobox;
 	ProcConfig	config;
 	ETreePath	selected_node;
 	gint		selected_pid;

@@ -141,6 +141,7 @@ create_main_window (ProcData *data)
 	gtk_widget_show_all (alignment1);
 	
 	scrolled = proctable_new (procdata);
+	/*gtk_widget_set_usize (scrolled, 400, 400);*/
 	gtk_box_pack_start (GTK_BOX (vbox1), scrolled, TRUE, TRUE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (scrolled), GNOME_PAD_SMALL);
 	
@@ -157,8 +158,7 @@ create_main_window (ProcData *data)
 	gtk_box_pack_end (GTK_BOX (hbox2), infobutton, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (infobutton), GNOME_PAD_SMALL);
 	gtk_misc_set_padding (GTK_MISC (GTK_BIN (infobutton)->child), 2, 2);
-	//gtk_widget_set_sensitive (infobutton, FALSE);
-
+	
 	gtk_widget_show_all (hbox2);
 
 	/* This is just to get rid of some GNome-UI criticals - just
@@ -174,7 +174,7 @@ create_main_window (ProcData *data)
 	if (procdata->config.show_more_info == TRUE)
 		gtk_widget_show_all (infobox);
 	
-	status_hbox = gtk_hbox_new (TRUE, 0);
+	status_hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_end (GTK_BOX (vbox1), status_hbox, FALSE, FALSE, 0);
 
 	status_frame = gtk_frame_new (NULL);
@@ -254,7 +254,7 @@ toggle_infoview (ProcData *data)
 		
 	if (procdata->config.show_more_info == FALSE)
 	{
-		gtk_widget_show_all (procdata->infoview->infobox);
+		gtk_widget_show_all (procdata->infobox);
 		procdata->config.show_more_info = TRUE;	
 		infoview_update (procdata);
 		gtk_label_set_text (label, _("Less Info"));
@@ -262,7 +262,7 @@ toggle_infoview (ProcData *data)
 	}			
 	else
 	{
-		gtk_widget_hide (procdata->infoview->infobox);
+		gtk_widget_hide (procdata->infobox);
 		procdata->config.show_more_info = FALSE;
 		gtk_label_set_text (label, _("More Info"));
 	}
@@ -274,7 +274,6 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 {
 
 	gtk_widget_set_sensitive (endprocessbutton, sensitivity);
-	gtk_widget_set_sensitive (infobutton, sensitivity);
-	gtk_widget_set_sensitive (data->infoview->infobox, sensitivity);
+	gtk_widget_set_sensitive (data->infobox, sensitivity);
 }	
 

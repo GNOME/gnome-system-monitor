@@ -1,3 +1,19 @@
+2001-07-07 Kevin Vandersloot <kfv101@psu.edu>
+
+	*infoview.c (infoview_create): much improved info viewer
+
+	*procman.h: removed infoview structure. Now the widgets are
+	accessed as global variables deffined in infoview.c
+
+	*procman.h: added new configuration variable to show the tree. 
+	No UI to change it but one can do that in the .gnome 
+	configuration file.
+
+	*proctable.c (insert_info_to_tree): Use the new configration
+	variable to show the tree. Also check to see if parent process
+	has same memory total as well as same name to deterimine if it
+	is a thread.
+
 2001-07-05 Kevin Vandersloot <kfv101@psu.edu>
 
 	*proctable.c (remove_children_from_tree): remove the 

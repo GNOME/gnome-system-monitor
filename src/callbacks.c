@@ -169,8 +169,8 @@ cb_table_selected (ETree *tree, int row, ETreePath path, gpointer data)
 		return;
 	if (row == -1)
 	{
-		if (GTK_WIDGET_SENSITIVE (procdata->infoview->infobox))
-			gtk_widget_set_sensitive (procdata->infoview->infobox, FALSE);
+		if (GTK_WIDGET_SENSITIVE (procdata->infobox))
+			gtk_widget_set_sensitive (procdata->infobox, FALSE);
 		update_sensitivity (procdata, FALSE);
 		return;
 	}
@@ -180,8 +180,6 @@ cb_table_selected (ETree *tree, int row, ETreePath path, gpointer data)
 	procdata->selected_pid = info->pid;
 	procdata->selected_node = path;
 	
-	/*if (!GTK_WIDGET_SENSITIVE (procdata->infoview->infobox))
-		*/
 		
 	update_sensitivity (procdata, TRUE);
 		

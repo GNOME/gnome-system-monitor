@@ -475,21 +475,20 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath root_node)
 	ProcInfo *parentinfo = NULL;
 	ETreePath node;
 	
-	#if 1 /* do the tree */
 	parentinfo = find_parent (procdata, info->parent_pid);
-	if (parentinfo)
+	if (parentinfo && procdata->config.show_tree)
 	{
 		node = e_tree_memory_node_insert (procdata->memory, 
 						  parentinfo->node, 0, info);
 		/* Ha Ha - don't expand different threads - check to see if parent has
-		** same name - I don't know if this is too smart though.
+		** same name and same mem usage - I don't know if this is too smart though.
 		*/
-		if (!g_strcasecmp (info->name, parentinfo->name))
+		if (!g_strcasecmp (info->name, parentinfo->name) && 
+		    ( parentinfo->mem == info->mem))
 			e_tree_node_set_expanded (E_TREE (procdata->tree),
 					  	  parentinfo->node, FALSE);
 	}
 	else
-	#endif
 		node = e_tree_memory_node_insert (procdata->memory, root_node,
 						  0, info);
 	
@@ -540,6 +539,7 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 					 "cursor_activated",
 					  -1, NULL); 
 	}
+	g_print ("%s %d \n",info->name, info->pid);
 	e_tree_memory_node_remove (procdata->memory, info->node);
 }
 	 
