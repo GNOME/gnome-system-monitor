@@ -169,8 +169,10 @@ exec_su (gchar *exec_path, gchar *user, gchar *pwd)
 		sleep (1);
 		g_print ("begin \n");
 		error = fork ();
-		if (error != -1)
+		if (error == 0) {
 			error = execlp ("su", "su", "-m", user_p, "-c", exec_p, NULL);
+			exit (0);
+		}
 		g_print ("end \n");
 		/*_exit (0);*/
 	}
