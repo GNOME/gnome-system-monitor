@@ -70,8 +70,9 @@ procdialog_create_hide_dialog (ProcData *data)
 	GtkWidget *dialog_vbox1;
   	GtkWidget *hbox1;
   	GtkWidget *checkbutton1;
-  	gchar *text = _("This action will block a process from being displayed. \n To reshow a process choose Hidden Processes in the Edit menu");
-
+  	gchar *text = _("Are you sure you want to hide this process?\n"
+  			"(Choose 'Hidden Processes' in the Settings menu to reshow)");
+  			
   	messagebox1 = gtk_message_dialog_new (NULL,
  					      GTK_DIALOG_MODAL,
  					      GTK_MESSAGE_WARNING,
