@@ -45,7 +45,7 @@ void		cb_preferences_activate (GtkMenuItem *menuitem, gpointer user_data);
 void		cb_about_activate (GtkMenuItem *menuitem, gpointer user_data);
 
 void		cb_app_exit (GtkObject *object, gpointer user_data); 
-void		cb_app_delete (GtkWidget *window, GdkEventAny *ev, gpointer data);
+gboolean	cb_app_delete (GtkWidget *window, GdkEventAny *event, gpointer data);
 #if 0
 gboolean	cb_close_simple_dialog (GnomeDialog *dialog, gpointer data);
 #endif                                        

@@ -571,11 +571,20 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	}
 	
 	if (info->visible) {
+		GtkTreePath *path;
 		mem = get_size_string (info->mem);
 		vmsize = get_size_string (info->vmsize);
 		memres = get_size_string (info->memres);
 		memshared = get_size_string (info->memshared);
 		memrss = get_size_string (info->memrss);
+		/* This is a hack to catch an ugly bug */
+		path = gtk_tree_model_get_path (model, &info->node);
+		if (path == NULL) {
+			g_print ("damn error %s %d\n", info->name, info->pid);
+			g_assert (0);
+			return;
+		}
+		gtk_tree_path_free (path);
 		gtk_tree_store_set (GTK_TREE_STORE (model), &info->node, 
 				    COL_STATUS, info->status,
 				    COL_MEM, mem,

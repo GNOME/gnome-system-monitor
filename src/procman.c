@@ -505,7 +505,8 @@ main (int argc, char *argv[])
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	procman = gnome_program_init ("procman", VERSION, LIBGNOMEUI_MODULE, argc, argv, 
+	procman = gnome_program_init ("gnome-system-monitor", VERSION, 
+				      LIBGNOMEUI_MODULE, argc, argv, 
 			    	      GNOME_PARAM_POPT_TABLE, options, NULL);
 	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/procman.png");
 		    

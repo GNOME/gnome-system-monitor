@@ -140,11 +140,11 @@ cb_app_exit (GtkObject *object, gpointer user_data)
 	
 }
 
-void		
-cb_app_delete (GtkWidget *window, GdkEventAny *ev, gpointer data)
+gboolean		
+cb_app_delete (GtkWidget *window, GdkEventAny *event, gpointer data)
 {
 	ProcData *procdata = data;
-	
+
 	procman_save_config (procdata);
 	if (procdata->timeout != -1)
 		gtk_timeout_remove (procdata->timeout);
@@ -156,6 +156,8 @@ cb_app_delete (GtkWidget *window, GdkEventAny *ev, gpointer data)
 		gtk_timeout_remove (procdata->disk_timeout);
 		
 	gtk_main_quit ();
+	
+	return FALSE;
 	
 }
 #if 0
