@@ -10,36 +10,24 @@
 #include "defaulttable.h"
 #include "proctable.h"
 
-void free_entry (gpointer key, gpointer value, gpointer data);
-void free_value (gpointer key, gpointer value, gpointer data);
-void free_key (gpointer key, gpointer value, gpointer data);
-
-static WnckScreen *screen = NULL;
-
-
 static void
 new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 {
 	ProcData *procdata = data;
 	ProcInfo *info;
-	GHashTable *hash = procdata->pretty_table->app_hash;
+	GHashTable * const hash = procdata->pretty_table->app_hash;
 	gint pid;
 	GdkPixbuf *icon = NULL, *tmp = NULL;
 	GList *list = NULL;
 	WnckWindow *window;
-	gchar *text;
 	
 	pid = wnck_application_get_pid (app);
 	if (pid == 0)
 		return;
 	
 	/* Check to see if the pid has already been added */	
-	text = g_strdup_printf ("%d", pid);
-	if (g_hash_table_lookup (hash, text)) {
-		g_free (text);
+	if (g_hash_table_lookup (hash, GINT_TO_POINTER(pid)))
 		return;
-	}
-	g_free (text);
 		
 	/* Hack - wnck_application_get_icon always returns the default icon */
 #if 0	
@@ -71,52 +59,39 @@ new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 			GtkTreeModel *model;
 			model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 			gtk_tree_store_set (GTK_TREE_STORE (model), &info->node,
-                            		            COL_PIXBUF, info->pixbuf, -1);
-                }
+					    COL_PIXBUF, info->pixbuf, -1);
+		}
 	}
 						
-	g_hash_table_insert (hash, g_strdup_printf ("%d", pid), icon);
-		
-	
-}	
+	g_hash_table_insert (hash, GINT_TO_POINTER(pid), icon);
+}
 
 static void
 application_finished (WnckScreen *screen, WnckApplication *app, gpointer data)
 {
-
-	ProcData *procdata = data;
-	GHashTable *hash = procdata->pretty_table->app_hash;
+	ProcData * const procdata = data;
+	GHashTable * const hash = procdata->pretty_table->app_hash;
 	gint pid;
-	gpointer p1, p2;
-	GdkPixbuf *icon;
-	gchar *id, *orig_id;
+	gpointer orig_pid, icon;
 
 	pid =  wnck_application_get_pid (app);
 	if (pid == 0)
 		return;
-	
-	id = g_strdup_printf ("%d", pid);
-	if (g_hash_table_lookup_extended (hash, id, &p1, &p2)) {
-		orig_id = p1;
-		icon = p2;
-		g_hash_table_remove (hash, orig_id);
-		if (orig_id) 
-			g_free (orig_id);
+		
+	if (g_hash_table_lookup_extended (hash, GINT_TO_POINTER(pid),
+					  &orig_pid, &icon)) {
+		g_hash_table_remove (hash, orig_pid);
 		if (icon)
 			g_object_unref (G_OBJECT (icon));
 	}
-	
-	
-	g_free (id);
-
-	
 }
 
 PrettyTable *pretty_table_new (ProcData *procdata) 
 {
+	WnckScreen *screen;
 	PrettyTable *pretty_table = g_new(PrettyTable, 1);
 	
-	pretty_table->app_hash = g_hash_table_new (g_str_hash, g_str_equal);
+	pretty_table->app_hash = g_hash_table_new (g_direct_hash, g_direct_equal);
 	pretty_table->default_hash = g_hash_table_new (g_str_hash, g_str_equal);
 
 	screen = wnck_screen_get_default ();
@@ -131,55 +106,55 @@ PrettyTable *pretty_table_new (ProcData *procdata)
 	return pretty_table;
 }
 
-void pretty_table_add_table (PrettyTable *pretty_table, const gchar *table[]) 
+void pretty_table_add_table (PrettyTable *pretty_table, const gchar * const table[]) 
 {
 	/* Table format:
 
 	const gchar *table[] = {
-			"X", "X Window System", "x.png",
-			"bash" "Bourne Again Shell", "bash.png",
+			"X", "x.png",
+			"bash", "bash.png",
 			NULL};
 	*/
-	gint i = 0;
-	gchar *command, *prettyicon;
-	gchar *text;
-	
-	while (table[i] && table[i + 1] && table[i + 2]) {
-		/* pretty_table_free frees all string in the tables */
-		command = g_strdup (table[i]); 
-		/* pretty_table_free frees all string in the tables */
-		text = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, "pixmaps/",
-						  TRUE, NULL);
-		if (text) {
-			GdkPixbuf *tmp = NULL, *icon = NULL;
-			prettyicon = g_malloc (strlen (table[i + 2]) + strlen (text) + 1);
-			sprintf (prettyicon, "%s%s", text, table[i + 2]);
-			if (prettyicon) {
-				tmp = gdk_pixbuf_new_from_file (prettyicon, NULL);
-				g_free (prettyicon);		
-			}
-			if (tmp) {
-				icon =  gdk_pixbuf_scale_simple (tmp, 16, 16, 
-										 GDK_INTERP_HYPER);
-				g_object_unref (G_OBJECT (tmp));
-			}
+	size_t i;
+	gchar *datadir;
+
+	datadir = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, "pixmaps/",
+					     TRUE, NULL);
+
+	for(i = 0; table[i] && table[i + 1]; i += 2) {
+		const char * const process  = table[i];
+		const char * const icon = table[i + 1];
+		GdkPixbuf *tmp;
+		gchar *prettyicon;
+
+		prettyicon = g_build_filename (datadir, icon, NULL);
+		tmp = gdk_pixbuf_new_from_file (prettyicon, NULL);
+		g_free (prettyicon);
+
+		if (tmp) {
+			GdkPixbuf *icon = gdk_pixbuf_scale_simple (tmp, 16, 16,
+									   GDK_INTERP_HYPER);
+			g_object_unref (G_OBJECT (tmp));
+
 			if (icon) {
-				g_hash_table_insert (pretty_table->default_hash, 
-					                       command, icon);
-			};
-			g_free (text);
+				/* pretty_table_free frees all string
+				   in the tables */
+				gchar *command = g_strdup (process);
+				g_hash_table_insert (pretty_table->default_hash,
+						     command, icon);
+			}
 		}
-		i += 3;
 	}
 
-	return;
+	g_free(datadir);
+
 }
 
-GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command, gint pid) 
+GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table,
+				  const gchar *command, gint pid)
 {
-	GdkPixbuf *icon = NULL;
-	gchar *text;
-	
+	GdkPixbuf *icon;
+
 	if (!pretty_table) 
 		return NULL;
 
@@ -187,33 +162,26 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command, gin
 	icon = g_hash_table_lookup (pretty_table->default_hash, command);
 	if (icon)
 		return icon;
-	
-	text = g_strdup_printf ("%d", pid);
-	icon = g_hash_table_lookup (pretty_table->app_hash, text);
-	g_free (text);
-	
+
+	icon = g_hash_table_lookup (pretty_table->app_hash, GINT_TO_POINTER(pid));
+
 	return icon;
-	
 }
 
-void free_entry (gpointer key, gpointer value, gpointer data) {
-	if (key)
-		g_free (key);
-	
-	if (value)
-		g_free (value);
+#if 0
+static void free_entry (gpointer key, gpointer value, gpointer data) {
+	g_free (key);
+	g_free (value);
 }
 
-void free_value (gpointer key, gpointer value, gpointer data) {
-	if (value)
-		g_free (value);
+static void free_value (gpointer key, gpointer value, gpointer data) {
+	g_free (value);
 }
 
-void free_key (gpointer key, gpointer value, gpointer data) {
-	if (key)
-		g_free (key);
+static void free_key (gpointer key, gpointer value, gpointer data) {
+	g_free (key);
 }
-
+#endif
 
 void pretty_table_free (PrettyTable *pretty_table) {
 	if (!pretty_table)
