@@ -393,38 +393,24 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 /* Kind of a hack. When a parent process is removed we remove all the info
 ** pertaining to the child processes and then readd them later
 */
-static gboolean
+static void
 remove_children_from_tree (ProcData *procdata, GtkTreeModel *model,
 			   GtkTreeIter *parent)
 {
-	GtkTreeIter *child;
 	ProcInfo *child_info;
-	g_print ("remove child from tree \n");
-	if (gtk_tree_model_iter_children (model, child, parent)) {
-		remove_children_from_tree (procdata, model, child);
-	}
-	else {
-		g_print ("child \n");
-		gtk_tree_model_get (model, child, COL_POINTER, &child_info, -1);
+	
+	do {
+		GtkTreeIter child;
+		
+		if (gtk_tree_model_iter_children (model, &child, parent))
+			remove_children_from_tree (procdata, model, &child);
+		
+		gtk_tree_model_get (model, parent, COL_POINTER, &child_info, -1);
 		if (child_info) {
-			g_print ("name %s\n", child_info->name);
 			procdata->info = g_list_remove (procdata->info, child_info);
 			proctable_free_info (child_info);
 		}
-	}	
-#if 0
-	if (info->node == procdata->selected_node)
-	{
-		procdata->selected_node = NULL;
-		/* simulate a "unselected" signal */
-		gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), 
-					 "cursor_activated",
-					  -1, NULL); 					  
-	}
-	procdata->info = g_list_remove (procdata->info, info);
-	proctable_free_info (info);
-#endif	
-	return FALSE;
+	} while (gtk_tree_model_iter_next (model, parent));
 		
 }
 
@@ -432,19 +418,15 @@ static void
 remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 {
 	GtkTreeModel *model;
-	GtkTreeIter *child_node;
-	gint i = 0;
+	GtkTreeIter child;
 	
-	/*if (!info->node)
-		return;*/
 	g_return_if_fail (info);
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 	
-	/*while (gtk_tree_model_iter_nth_child (model, child_node, &info->node, i)) {
-		remove_children_from_tree (procdata, model, child_node);
-		i++;
-	}*/	
+	/* remove all children from tree. They will be added again in refresh_list */
+	if (gtk_tree_model_iter_children (model, &child, &info->node))
+		remove_children_from_tree (procdata, model, &child);
 				
 	gtk_tree_store_remove (GTK_TREE_STORE (model), &info->node);
 	info->visible = FALSE;	

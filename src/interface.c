@@ -233,7 +233,7 @@ create_proc_view (ProcData *procdata)
 	scrolled = proctable_new (procdata);
 	if (!scrolled)
 		return NULL;
-	/*gtk_widget_set_usize (scrolled, 400, 400);*/
+	
 	gtk_box_pack_start (GTK_BOX (vbox1), scrolled, TRUE, TRUE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (scrolled), GNOME_PAD_SMALL);
 	g_timer_stop (timer);
@@ -426,7 +426,7 @@ create_sys_view (ProcData *procdata)
   		col = gtk_tree_view_column_new_with_attributes (titles[i],
 						    		cell,
 						     		"text", i,
-						     		 NULL);
+						     		NULL);
 		gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_RESIZABLE);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (disk_tree), col);
 	}

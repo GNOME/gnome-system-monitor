@@ -252,8 +252,8 @@ procdialog_create_renice_dialog (ProcData *data)
 		
 	dialog = gtk_dialog_new_with_buttons (_("Change Priority"), NULL,
 				              GTK_DIALOG_DESTROY_WITH_PARENT,
-				              _("Change _Priority"), 100,
 				              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				              _("Change _Priority"), 100,
 				              NULL);
   	renice_dialog = dialog;
   	
