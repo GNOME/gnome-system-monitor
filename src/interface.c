@@ -633,7 +633,7 @@ create_main_window (ProcData *procdata)
 	gtk_widget_show (tab_label2);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label2);
 	
-	appbar1 = gnome_appbar_new (FALSE, TRUE, GNOME_PREFERENCES_NEVER);
+	appbar1 = gtk_statusbar_new();
 	gnome_app_set_statusbar (GNOME_APP (app), appbar1);
 	
 	g_signal_connect (G_OBJECT (app), "delete_event",

@@ -120,6 +120,7 @@ cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 	const gchar *authors[] = {
 				 _("Kevin Vandersloot"),
 				 _("Jorgen Scheibengruber - nicer devices treeview"),
+				 _("Benoît Dejean - maintainer"),
 				NULL
 				 };
 

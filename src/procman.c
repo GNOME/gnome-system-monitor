@@ -370,7 +370,7 @@ procman_free_data (ProcData *procdata)
 
 	proctable_free_table (procdata);
 	
-	//pretty_table_free (procdata->pretty_table);
+	/* pretty_table_free (procdata->pretty_table); */
 	
 	g_free (procdata);
 	
@@ -585,6 +585,8 @@ main (int argc, char *argv[])
 	gtk_main ();
 	
 	procman_free_data (procdata);
+
+	glibtop_close ();
 
 	return 0;
 }
