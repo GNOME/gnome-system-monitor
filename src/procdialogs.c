@@ -766,37 +766,66 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 }
 
 
+
+typedef gboolean (*GnomesuExecFunc) (char *commandline);
+
+
+static GnomesuExecFunc G_GNUC_CONST
+procman_get_gnomesu_exec(void)
+{
+	static gboolean is_init = FALSE;
+	static gpointer gnomesu_exec = NULL;
+
+	if(!is_init) {
+		GModule *libgnomesu;
+
+		libgnomesu = g_module_open ("libgnomesu.so.0",
+					    G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
+
+		if(libgnomesu) {
+			if(g_module_symbol (libgnomesu, "gnomesu_exec", &gnomesu_exec)) {
+				g_module_make_resident(libgnomesu);
+			}
+			else {
+				g_warning("Cannot found gnomesu_exec : %s", g_module_error());
+				g_module_close(libgnomesu);
+			}
+		}
+
+		is_init = TRUE;
+	}
+
+	return (GnomesuExecFunc)gnomesu_exec;
+}
+
+
+
 /*
 ** type determines whether if dialog is for killing process (type=0) or renice (type=other).
 ** extra_value is not used for killing and is priority for renice
 */
 void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint pid, 
-					     gint extra_value, gchar *text)
+					     gint extra_value)
 {
-	GModule *mod;
-	gpointer gnomesu_exec;
-	gboolean has_libgnomesu = FALSE;
-	typedef gboolean (*GnomesuExecFunc) (char *commandline);
+	GnomesuExecFunc gnomesu_exec;
 
-	/* Attempt to use libgnomesu */
-	mod = g_module_open ("libgnomesu.so.0", G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
-	if (mod) {
-		if (g_module_symbol (mod, "gnomesu_exec", &gnomesu_exec)) {
-			gchar *command;
+	gnomesu_exec = procman_get_gnomesu_exec ();
 
-			has_libgnomesu = TRUE;
-			if (type == 0)
-				command = g_strdup_printf ("kill -s %d %d", extra_value, pid);
-			else
-				command = g_strdup_printf ("renice %d %d", extra_value, pid);
-			((GnomesuExecFunc) gnomesu_exec) (command);
-			g_free (command);
-		}
+	if(gnomesu_exec)
+	{
+		gchar command[80];
 
-		g_module_close (mod);
+		if (type == 0)
+			g_snprintf (command, sizeof command,
+				    "kill -s %d %d", extra_value, pid);
+		else
+			g_snprintf (command, sizeof command,
+				    "renice %d %d", extra_value, pid);
+
+		gnomesu_exec (command);
 	}
-
-	if (!has_libgnomesu) {
+	else
+	{
 		if (type == 0)
 			g_warning(_("Cannot kill process with pid %d with signal %d"),
 				  pid, extra_value);

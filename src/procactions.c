@@ -64,25 +64,12 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 				g_free (error_msg);
 				break;
 			case EPERM:
-				error_msg = g_strdup_printf (_("Process Name: %s \n\nYou do not have permission to change the priority of this process. You can enter the root password to gain the necessary permission."), info->name);
 				procdialog_create_root_password_dialog (1, procdata, 
-									info->pid, nice_value,
-									error_msg);
-				g_free (error_msg);
+									info->pid, nice_value);
 				break;
 			case EACCES:
-				error_msg = g_strdup_printf (
-					_("Process Name: %s\n\n"
-					  "You must be root to decrease a nice "
-					  "value of this process or set a nice "
-					  "value less than 0. "
-					  "You can enter the root password to "
-					  "gain the necessary permission."),
-					info->name);
 				procdialog_create_root_password_dialog (1, procdata, 
-									info->pid, nice_value,
-									error_msg);
-				g_free (error_msg);
+									info->pid, nice_value);
 				break;
 			default:
 				break;
@@ -112,7 +99,6 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
 	ProcInfo *info;
 	int error;
 	GtkWidget *dialog;
-        gchar *error_msg;
 	
 	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 	g_return_if_fail (info);
@@ -129,11 +115,8 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
 			case ESRCH:
 				break;
 			case EPERM:
-				error_msg = g_strdup_printf (_("Process Name: %s \n\nYou do not have permission to end this process. You can enter the root password to gain the necessary permission."), info->name);
 				procdialog_create_root_password_dialog (0, procdata, 
-									info->pid, kill_signal,
-									error_msg);
-				g_free (error_msg);
+									info->pid, kill_signal);
 				break;	
 			default: 
 				error = kill (info->pid, SIGKILL);
