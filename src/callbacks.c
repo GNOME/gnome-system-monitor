@@ -144,7 +144,7 @@ cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 			 
 	about = gnome_about_new (_("System Monitor"), VERSION,
 				 _("(C) 2001 Kevin Vandersloot"),
-				 _("Simple process viewer using libgtop"),
+				 _("System resources monitor"),
 				 authors,
 				 documenters,
 				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,

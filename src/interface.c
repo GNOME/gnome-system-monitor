@@ -434,7 +434,7 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (mem_graph_box), mem_graph->main_widget, 
 			    TRUE, TRUE, 0);
 	
-	table = gtk_table_new (2, 6, FALSE);
+	table = gtk_table_new (2, 7, FALSE);
 	gtk_table_set_row_spacings (GTK_TABLE (table), 6);
 	gtk_table_set_col_spacings (GTK_TABLE (table), 12);
 	gtk_box_pack_start (GTK_BOX (mem_graph_box), table, 
@@ -467,6 +467,11 @@ create_sys_view (ProcData *procdata)
 	gtk_table_attach (GTK_TABLE (table), mem_graph->memtotal_label, 4, 5, 0, 1, 
 			  GTK_FILL, 0, 0, 0);
 	
+	mem_graph->mempercent_label = gtk_label_new ("");
+	gtk_misc_set_alignment (GTK_MISC (mem_graph->mempercent_label), 1.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), mem_graph->mempercent_label, 5, 6, 0, 1, 
+			  GTK_FILL, 0, 0, 0);
+			  
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
 				    mem_graph->colors[3].red,
@@ -494,6 +499,11 @@ create_sys_view (ProcData *procdata)
 	gtk_table_attach (GTK_TABLE (table), mem_graph->swaptotal_label, 4, 5, 1, 2, 
 			  GTK_FILL, 0, 0, 0);	
 	
+	mem_graph->swappercent_label = gtk_label_new ("");
+	gtk_misc_set_alignment (GTK_MISC (mem_graph->swappercent_label), 1.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), mem_graph->swappercent_label, 5, 6, 1, 2, 
+			  GTK_FILL, 0, 0, 0);
+			  
 	procdata->mem_graph = mem_graph;
 	gtk_widget_show_all (vbox);
 

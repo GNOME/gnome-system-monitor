@@ -90,8 +90,10 @@ struct _LoadGraph {
     GtkWidget *cpu_labels[GLIBTOP_NCPU];
     GtkWidget *memused_label;
     GtkWidget *memtotal_label;
+    GtkWidget *mempercent_label;
     GtkWidget *swapused_label;
     GtkWidget *swaptotal_label;
+    GtkWidget *swappercent_label;
     GdkPixmap *pixmap;
     GdkGC *gc;
     int timer_index;

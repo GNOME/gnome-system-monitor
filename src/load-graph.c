@@ -195,7 +195,8 @@ get_memory (gfloat data [1], LoadGraph *g)
 {
     float user, shared, buffer, free;
     float swap_used;
-    gchar *text1, *text2;
+    float mempercent, swappercent;
+    gchar *text1, *text2, *text3;
 
     glibtop_mem mem;
     glibtop_swap swap;
@@ -205,25 +206,34 @@ get_memory (gfloat data [1], LoadGraph *g)
     glibtop_get_swap (&swap);
 	
     swap_used = (float)swap.used / (float)swap.total;
-    
+    swappercent = CLAMP(100.0f * swap_used, 0.0f, 100.0f);
+
     user    = (float)mem.user / (float)mem.total;
     shared  = (float)mem.shared / (float)mem.total;
     buffer  = (float)mem.buffer / (float)mem.total;
     free    = (float)mem.free / (float)mem.total;
+    mempercent = CLAMP(100.0f * mem.used / mem.total, 0.0f, 100.0f);
     
+
     text1 = get_size_string (mem.total);
     text2 = get_size_string (mem.user);
+    text3 = g_strdup_printf ("  %.1f %%", mempercent);
     gtk_label_set_text (GTK_LABEL (g->memused_label), text2);
     gtk_label_set_text (GTK_LABEL (g->memtotal_label), text1);
+    gtk_label_set_text (GTK_LABEL (g->mempercent_label), text3);
     g_free (text1);
     g_free (text2);
+    g_free (text3);
     
     text1 = get_size_string (swap.total);
     text2 = get_size_string (swap.used);
+    text3 = g_strdup_printf ("  %.1f %%", swappercent);
     gtk_label_set_text (GTK_LABEL (g->swapused_label), text2);
     gtk_label_set_text (GTK_LABEL (g->swaptotal_label), text1);
+    gtk_label_set_text (GTK_LABEL (g->swappercent_label), text3);
     g_free (text1);
     g_free (text2);
+    g_free (text3);
     
     data [0] = user;
     data [1] = swap_used;
