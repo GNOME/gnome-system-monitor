@@ -1,17 +1,13 @@
 # Note that this is NOT a relocatable package
-%define ver      1.1.2
-%define  RELEASE 1
-%define  rel     %{?CUSTOM_RELEASE} %{!?CUSTOM_RELEASE:%RELEASE}
-%define prefix   /usr
 
 Summary: Simple process monitor
 Name: procman
-Version: %ver
-Release: %rel
+Version: 1.1.2
+Release: 1
 Copyright: GPL
 Group: Applications/System
 Source: http://www.personal.psu.edu/kfv101/procman/source/procman-%{ver}.tar.gz
-BuildRoot: /var/tmp/procman-root
+BuildRoot: %{_tmppath}/%{name}-root
 Requires: libgnomeui >= 1.106.0
 Requires: libgtop >= 1.90.0
 Requires: libwnck >= 0.1
@@ -23,31 +19,38 @@ Procman is a simple process and system monitor.
 %setup -q
 
 %build
-if [ ! -f configure ]; then
-        CFLAGS="$RPM_OPT_FLAGS" ./autogen.sh $MYARCH_FLAGS --prefix=%prefix
-else
-        CFLAGS="$RPM_OPT_FLAGS" ./configure $MYARCH_FLAGS --prefix=%prefix
-fi
+%configure
 
-if [ "$SMP" != "" ]; then
-  make -j$SMP MAKE="make -j$SMP"
-else
-  make
-fi
-
+make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make -k prefix=$RPM_BUILD_ROOT%{prefix} install
+export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
+%makeinstall
+unset GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL
+
+%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%post
+export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
+gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/procman.schemas > /dev/null
+
+%files -f %{name}.lang
 %defattr(-, root, root)
 
-%{prefix}/bin/procman
-%{prefix}/share/gnome/apps/System/procman.desktop
-%{prefix}/share/locale/*/LC_MESSAGES/*.mo
-%{prefix}/share/pixmaps/procman.png
+%{_bindir}/procman
+%{_datadir}/gnome/apps/System/procman.desktop
+%{_datadir}/share/pixmaps/procman.png
+%{_sysconfdir}/gconf/schemas/*
+
+%changelog
+
+* Thu Jan 10 2002 Havoc Pennington <hp@pobox.com>
+- make spec "Red Hat style"
+- add GConf stuff
+- langify
+
