@@ -32,9 +32,36 @@ void
 renice (int pid, int nice)
 {
 	int error;
+	gchar *error_msg;
+	GtkWidget *dialog;
 	
-	/* FIXME: give a message box with the error messages */
+	errno = 0;
 	error = setpriority (PRIO_PROCESS, pid, nice);
+	if (error == -1)
+	{
+		switch (errno) {
+			case ESRCH:
+				error_msg = g_strdup_printf (_("No such process."));
+				dialog = gnome_error_dialog (error_msg);
+				gnome_dialog_run(GNOME_DIALOG (dialog));
+				g_free (error_msg);
+				break;
+			case EPERM:
+				error_msg = g_strdup_printf (_("You do not have permission to change the priority of this process."));
+				dialog = gnome_error_dialog (error_msg);
+				gnome_dialog_run(GNOME_DIALOG (dialog));
+				g_free(error_msg);
+				break;
+			case EACCES:
+				error_msg = g_strdup_printf (_("You must be root to renice a process lower than 0."));
+				dialog = gnome_error_dialog (error_msg);
+				gnome_dialog_run(GNOME_DIALOG (dialog));
+				g_free(error_msg);
+				break;
+			default:
+				break;
+		}
+	}
 	
 }
 
@@ -44,26 +71,57 @@ kill_process (ProcData *procdata)
 
 	ProcInfo *info;
 	int error;
+	GtkWidget *dialog;
+        gchar *error_msg;
+	gchar *error_critical;
+
 
 	if (!procdata->selected_node)
 		return;
 		
 	info = e_tree_memory_node_get_data (procdata->memory, 
 					    procdata->selected_node);
-	/* FIXME: if SIGTERM don't work the try SIGKILL. Give a error dialog
-	** if still an error (like permission denied
+	/* Author:  Tige Chastian
+	   Date:  8/18/01 
+	   Added dialogs for errors on kill.  
+	   Added sigterm fail over to sigkill 
 	*/
-	error = kill (info->pid, SIGKILL);
+        error = kill (info->pid, SIGTERM);
 	if (error == -1)
 	{
 		switch (errno) {
-		case EPERM:
-			g_print ("acces denied \n");
-			break;
-		default:
-			g_print ("error \n");
-		}
+			case ESRCH:
+				break;
+			case EPERM:
+				g_print ("You must be root to do that! \n");
+				error_msg = g_strdup_printf (_("You do not have permission to end this process"));
+				dialog = gnome_error_dialog (error_msg);
+				gnome_dialog_run(GNOME_DIALOG (dialog));
+				g_free(error_msg);
+				break;	
+			default: 
+				error = kill (info->pid, SIGKILL);
+				if (error == -1)
+				{
+					switch (errno) {
+					case ESRCH:
+						break;
+					case EPERM:
+						error_msg = g_strdup_printf (_("You do not have permission to end this process"));
+						dialog = gnome_error_dialog (error_msg);
+						gnome_dialog_run(GNOME_DIALOG (dialog));
+						g_free(error_msg);
+						break;
+					default:
+						error_critical = g_strdup_printf (_("An error occured while killing the process."));
+						dialog = gnome_error_dialog (error_critical);
+						g_free (error_critical);
+					}
+				}
+			
+                	}
 	}
+
 	proctable_update_all (procdata);		
 	
 }
