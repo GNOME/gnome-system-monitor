@@ -313,10 +313,12 @@ static void
 fill_tree_with_info (ProcData *procdata)
 {
 	GList *blacklist = procdata->blacklist;
+	ETreeModel *model;
 	
 	if (!memory)
 		return;
-		
+	
+	model = e_tree_get_model (E_TREE (tree));		
 	root_node = e_tree_memory_node_insert (memory, NULL, 0, NULL);
 	e_tree_root_node_set_visible (E_TREE(tree), FALSE);
 	
@@ -326,6 +328,9 @@ fill_tree_with_info (ProcData *procdata)
 		e_tree_memory_node_insert (memory, root_node, 0, blacklist->data);
 		blacklist = g_list_next (blacklist);
 	}
+
+	e_tree_model_pre_change (model);
+	e_tree_model_node_changed (model, root_node);
 }
 
 static ETableExtras *
