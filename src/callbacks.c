@@ -320,7 +320,7 @@ cb_search (GtkEditable *editable, gpointer data)
 	text = gtk_editable_get_chars (editable, 0, -1);
 	
 	proctable_search_table (procdata, text);
-	
+	gtk_widget_grab_focus (GTK_WIDGET (editable));
 	g_free (text);
 }
 
