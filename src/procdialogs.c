@@ -17,6 +17,10 @@
  *
  */
 
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif
+
 #include <signal.h>
 #include <sys/time.h>
 #include <sys/resource.h>
@@ -175,9 +179,9 @@ procdialog_create_renice_dialog (ProcData *data)
   	GtkWidget *cancelbutton;
   	GtkWidget *dialog_action_area;
   	gchar *text = 
-  	      "The nice value refers to the priority of a "
+  	      _("The nice value refers to the priority of a "
   	      "process. A lower nice value corresponds to a "
-  	      "higher priority";
+  	      "higher priority");
 	
 	if (!procdata->selected_node)
 		return;
@@ -196,7 +200,7 @@ procdialog_create_renice_dialog (ProcData *data)
     	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
     	gtk_box_pack_start (GTK_BOX (dialog_vbox), vbox, TRUE, TRUE, 0);
     	
-    	label = gtk_label_new (text);
+    	label = gtk_label_new (_(text));
     	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
     	gtk_widget_show (label);
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);

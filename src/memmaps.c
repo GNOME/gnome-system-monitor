@@ -1,3 +1,6 @@
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif
 
 #include <gnome.h>
 #include <gal/e-table/e-tree-memory.h>
