@@ -504,9 +504,9 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 		
 		glibtop_get_fsusage (&usage, entry->mountdir);
 
-		btotal = (float)usage.blocks * 512;
-		bfree = (float)usage.bfree * 512;
-		bused = (float)(usage.blocks  - usage.bfree) * 512;
+		btotal = (float)usage.blocks * usage.block_size;
+		bfree = (float)usage.bfree * usage.block_size;
+		bused = (float)(usage.blocks  - usage.bfree) * usage.block_size;
 		percentage = (float) (usage.blocks - usage.bfree) / (float) usage.blocks;
 		
 		used = get_size_string (bused);
@@ -599,9 +599,9 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 		GtkTreeIter row;
 		float percentage, btotal, bfree, bused;
 
-		btotal = (float)usage.blocks * 512;
-		bfree = (float)usage.bfree * 512;
-		bused = (float)(usage.blocks  - usage.bfree) * 512;
+		btotal = (float)usage.blocks * usage.block_size;
+		bfree = (float)usage.bfree * usage.block_size;
+		bused = (float)(usage.blocks  - usage.bfree) * usage.block_size;
 		percentage = (float) (usage.blocks - usage.bfree) / (float) usage.blocks;
 		
 	/*  Load an icon corresponding to the type of the device */
