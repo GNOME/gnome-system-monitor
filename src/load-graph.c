@@ -25,8 +25,9 @@ load_graph_draw (LoadGraph *g)
 {
     guint i, j;
     
-    g_return_if_fail (g->disp->window);
-
+    if (!g->disp->window) 
+    	return;
+    
     g->draw_width = g->disp->allocation.width - 2 * FRAME_WIDTH;
     g->draw_height = g->disp->allocation.height - 2 * FRAME_WIDTH;
     
@@ -99,8 +100,7 @@ load_graph_draw (LoadGraph *g)
 		     g->disp->allocation.width,
 		     g->disp->allocation.height);
 
-    for (i = 0; i < g->num_points; i++)
-	memcpy (g->odata [i], g->data [i], g->data_size);
+    
 }
 
 static gchar *
@@ -208,6 +208,9 @@ load_graph_update (LoadGraph *g)
 {
     guint i, j;
 
+    for (i = 0; i < g->num_points; i++)
+	memcpy (g->odata [i], g->data [i], g->data_size);
+
     switch (g->type) {
     case CPU_GRAPH:
     	get_load (g->data [0], g);
@@ -222,7 +225,8 @@ load_graph_update (LoadGraph *g)
 	    g->data [i+1][j] = g->odata [i][j];
 
     if (g->draw)
-        load_graph_draw (g);
+    	load_graph_draw (g);
+    	
     return TRUE;
 }
 
@@ -335,6 +339,10 @@ load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
     load_graph_stop (g);
 
     object_list = g_list_remove (object_list, g);
+    
+    if (g->timer_index != -1)
+    	gtk_timeout_remove (g->timer_index);
+    
     return;
     widget = NULL;
 }

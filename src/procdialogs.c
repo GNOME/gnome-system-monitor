@@ -546,6 +546,9 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 	gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
 	
 	gtk_widget_show_all (main_vbox);
+	
+	gnome_dialog_set_default (GNOME_DIALOG (dialog), 0);
+	gtk_widget_grab_focus (entry);
 		
 	if (title)
 		g_free (title);	

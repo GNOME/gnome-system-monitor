@@ -62,12 +62,11 @@ static int root;			/* if we are root, no password is
                                            required */
 
 static gint
-exec_su (gchar *exec_path, gchar *user, gchar *pwd, gint test)
+exec_su (gchar *exec_path, gchar *user, gchar *pwd)
 {
 	gchar *exec_p, *user_p;  /* command to execute, user name */
 	pid_t pid;
 	int t_fd;
-	gint error, child_pid, options, loc;
 	
 	exec_p = g_strdup (exec_path);
 
@@ -176,8 +175,8 @@ exec_su (gchar *exec_path, gchar *user, gchar *pwd, gint test)
 }
 
 void
-su_run_with_password (gchar *exec_path, gchar *password, gint test)
+su_run_with_password (gchar *exec_path, gchar *password)
 {
-	exec_su (exec_path, "root", password, test);
+	exec_su (exec_path, "root", password);
 }
 

@@ -306,8 +306,8 @@ create_proc_view (ProcData *procdata)
 	
 	/* Make the menu visible */
         gtk_widget_show (popup_menu);
-	
-	return vbox1;
+        
+        return vbox1;
 }
 
 static gchar *
@@ -334,7 +334,7 @@ create_sys_view (ProcData *procdata)
 	GtkWidget *vbox;
 	GtkWidget *hbox1;
 	GtkWidget *cpu_frame, *mem_frame;
-	GtkWidget *label,*cpu_label, *mem_label;
+	GtkWidget *label,*cpu_label;
 	GtkWidget *hbox, *table;
 	GtkWidget *disk_frame;
 	GtkWidget *scrolled, *clist;
@@ -355,11 +355,13 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (vbox), hbox1, TRUE, TRUE, 0);
 	
 	cpu_frame = gtk_frame_new (_("CPU Usage History"));
+	gtk_frame_set_label_align (GTK_FRAME (cpu_frame), 0.5, 0.5);
 	gtk_widget_show (cpu_frame);
 	gtk_container_set_border_width (GTK_CONTAINER (cpu_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (hbox1), cpu_frame, TRUE, TRUE, 0);
 	
 	mem_frame = gtk_frame_new (_("Memory Usage History"));
+	gtk_frame_set_label_align (GTK_FRAME (mem_frame), 0.5, 0.5);
 	gtk_container_set_border_width (GTK_CONTAINER (mem_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (hbox1), mem_frame, TRUE, TRUE, 0);
 	

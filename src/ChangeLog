@@ -1,3 +1,18 @@
+2001-08-20  Kevin Vandersloot <kfv101@psu.edu>
+
+	* load-graph.c: fix the bug where the graph would initialize the data
+	on first view. Save the old data in the update not in the drawing.
+	Chnage the g_return_if_fail to a regular return since I know
+	why this routine is called after disp is NULL and it is harmless. 
+
+	* util.c: remove some ddebugging stuff
+
+	* procdialogs.c: make the entry default to focus, and the enter
+	button be default
+
+	* interface.c: make the frame labels for the cpu and mem graphs
+	be centered
+
 2001-08-19  Kevin Vandersloot <kfv101@psu.edu>
 
 	* util.c: get the root stuff working! No need to do an extra
