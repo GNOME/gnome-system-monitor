@@ -5,6 +5,10 @@
 #include <gnome.h>
 #include <glibtop/procopenfiles.h>
 #include <sys/stat.h>
+#include <netdb.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
 #include "procman.h"
 #include "openfiles.h"
 #include "proctable.h"
@@ -39,6 +43,30 @@ get_type_name(enum glibtop_file_type t)
 }
 
 
+
+static char *
+friendlier_hostname(const char *dotted_quad, int port)
+{
+	struct in_addr addr4;
+	struct hostent *host;
+
+	if(inet_pton(AF_INET, dotted_quad, &addr4) <= 0)
+		goto failsafe;
+
+
+	host = gethostbyaddr(&addr4, sizeof addr4, AF_INET);
+
+	if(!host)
+		goto failsafe;
+
+	return g_strdup_printf("%s:%d", host->h_name, port);
+
+ failsafe:
+	return g_strdup_printf("%s:%d", dotted_quad, port);
+}
+
+
+
 static void
 add_new_files (gpointer key, gpointer value, gpointer data)
 {
@@ -47,20 +75,20 @@ add_new_files (gpointer key, gpointer value, gpointer data)
 	GtkTreeModel *model = data;
 	GtkTreeIter row;
 
-	const char *object = "";
-	char buf[100];
-
+	char *object;
 
 	if(openfiles->type == GLIBTOP_FILE_TYPE_FILE)
 	{
-		object = openfiles->info.file.name;
+		object = g_strdup(openfiles->info.file.name);
 	}
 	else if(openfiles->type == GLIBTOP_FILE_TYPE_INETSOCKET)
 	{
-		object = buf;
-		g_snprintf(buf, sizeof buf, "%s:%d",
-			   openfiles->info.sock.dest_host,
-			   openfiles->info.sock.dest_port);
+		object = friendlier_hostname(openfiles->info.sock.dest_host,
+					     openfiles->info.sock.dest_port);
+	}
+	else
+	{
+		object = g_strdup("");
 	}
 
 	gtk_list_store_insert (GTK_LIST_STORE (model), &row, 0);
@@ -70,6 +98,8 @@ add_new_files (gpointer key, gpointer value, gpointer data)
 			    COL_OBJECT, object,
 			    COL_OPENFILE_STRUCT, g_memdup(openfiles, sizeof(*openfiles)),
 			    -1);
+
+	g_free(object);
 }
 
 static GList *old_maps = NULL;
@@ -182,7 +212,7 @@ create_openfiles_tree (ProcData *procdata)
 	GtkCellRenderer *cell;
 	gint i;
 
-	static gchar *title[] = {
+	static const gchar *title[] = {
 		/* Translators: "FD" here means "File Descriptor". Please use
                    a very short translation if possible, and at most
                    2-3 characters for it to be able to fit in the UI. */
