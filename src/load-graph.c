@@ -452,6 +452,9 @@ load_graph_new (gint type, ProcData *procdata)
 void
 load_graph_start (LoadGraph *g)
 {
+    if (!g)
+    	return;
+    	
     if (g->timer_index == -1)
         g->timer_index = gtk_timeout_add (g->speed,
 				      (GtkFunction) load_graph_update, g);
@@ -464,7 +467,9 @@ load_graph_stop (LoadGraph *g)
 {
     /*if (g->timer_index != -1)
 	gtk_timeout_remove (g->timer_index);
-    
+    	
     g->timer_index = -1;*/
+    if (!g)
+    	return;
     g->draw = FALSE;
 }
