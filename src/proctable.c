@@ -145,6 +145,24 @@ get_selinux_context (gint pid)
 	return NULL;
 }
 
+
+static void
+set_proctree_reorderable(ProcData *procdata)
+{
+	GList *columns, *col;
+	GtkTreeView *proctree;
+
+	proctree = GTK_TREE_VIEW(procdata->tree);
+
+	columns = gtk_tree_view_get_columns (proctree);
+
+	for(col = columns; col; col = col->next)
+		gtk_tree_view_column_set_reorderable(col->data, TRUE);
+
+	g_list_free(columns);
+}
+
+
 GtkWidget *
 proctable_new (ProcData * const procdata)
 {
@@ -218,8 +236,26 @@ proctable_new (ProcData * const procdata)
 	gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 	gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
 
+
 	for (i = 1; i < NUM_COLUMNS - 2; i++) {
 		cell_renderer = gtk_cell_renderer_text_new ();
+
+		switch(i)
+		{
+		case COL_MEM:
+		case COL_VMSIZE:
+		case COL_MEMRES:
+		case COL_MEMSHARED:
+		case COL_MEMRSS:
+		case COL_MEMXSERVER:
+		case COL_CPU:
+		case COL_NICE:
+		case COL_PID:
+			g_object_set(G_OBJECT(cell_renderer),
+				     "xalign", 1.0f,
+				     NULL);
+		}
+
 		column = gtk_tree_view_column_new ();
 		gtk_tree_view_column_pack_start (column, cell_renderer, FALSE);
 		gtk_tree_view_column_set_attributes (column, cell_renderer,
@@ -279,7 +315,10 @@ proctable_new (ProcData * const procdata)
 					 sort_ints,
 					 GINT_TO_POINTER (COL_MEMXSERVER),
 					 NULL);
+
 	procdata->tree = proctree;
+
+	set_proctree_reorderable(procdata);
 
 	procman_get_tree_state (procdata->client, proctree, "/apps/procman/proctree");
 
@@ -956,7 +995,6 @@ proctable_search_table (ProcData *procdata, gchar *string)
 	GList *list = procdata->info;
 	GtkWidget *dialog;
 	GtkTreeModel *model;
-	gchar *error;
 	static gint increment = 0;
 	gint index;
 	static gchar *last = NULL;
@@ -1019,13 +1057,12 @@ proctable_search_table (ProcData *procdata, gchar *string)
 	}
 
 	if (index == increment) {
-		error = g_strdup_printf (_("%s could not be found."), string);
 		dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
 						 GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-						 "%s", error, NULL);
+						 _("%s could not be found."), string,
+						 NULL);
 		gtk_dialog_run (GTK_DIALOG (dialog));
 		gtk_widget_destroy (dialog);
-		g_free (error);
 	}
 	else {
 		/* no more cases found. Start the search anew */

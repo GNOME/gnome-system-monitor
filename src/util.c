@@ -285,3 +285,16 @@ su_run_with_password (gchar *exec_path, gchar *password)
 {
 	return exec_su (exec_path, "root", password);
 }
+
+#if 1
+void _procman_array_gettext_init(const char * strings[], size_t n)
+{
+	size_t i;
+
+	for(i = 0; i < n; ++i)
+	{
+		if(strings[i] != NULL)
+			strings[i] = _(strings[i]);
+	}
+}
+#endif

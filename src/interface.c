@@ -124,29 +124,29 @@ static GnomeUIInfo popup_menu_uiinfo[] =
 {
 	{
  	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), N_("Change the importance (nice value) of a process"),
-	 popup_menu_renice, NULL, NULL, 0, NULL,
+	 cb_renice, NULL, NULL, 0, NULL,
 	 0, 0
 	},
 	{
  	  GNOME_APP_UI_ITEM, N_("_Memory Maps"), N_("View the memory maps associated with a process"),
-	 popup_menu_show_memory_maps, NULL, NULL, 0, NULL,
+	 cb_show_memory_maps, NULL, NULL, 0, NULL,
 	 0, 0
 	},
 	GNOMEUIINFO_SEPARATOR,
 	{
  	  GNOME_APP_UI_ITEM, N_("_Hide Process"), N_("Hide a process"),
-	 popup_menu_hide_process, NULL, NULL, 0, NULL,
+	 cb_hide_process, NULL, NULL, 0, NULL,
 	 0, 0
 	},
 	GNOMEUIINFO_SEPARATOR,
 	{
  	  GNOME_APP_UI_ITEM, N_("_End Process"), N_("Force a process to finish"),
-	 popup_menu_end_process, NULL, NULL, 0, NULL,
+	 cb_end_process, NULL, NULL, 0, NULL,
 	 0, 0
 	},
 	{
  	  GNOME_APP_UI_ITEM, N_("_Kill Process"), N_("Force a process to finish now"),
-	 popup_menu_kill_process, NULL, NULL, 0, NULL,
+	 cb_kill_process, NULL, NULL, 0, NULL,
 	 0, 0
 	},
 	GNOMEUIINFO_END

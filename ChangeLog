@@ -1,3 +1,19 @@
+2004-11-27  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/interface.c:
+	* src/callbacks.c: (kill_process_helper), (cb_renice),
+	(cb_end_process), (cb_kill_process),
+	(cb_end_process_button_pressed):
+	* src/callbacks.h: Removed duplicate callbacks.
+
+	* src/proctable.c: (set_proctree_reorderable), (proctable_new),
+	(proctable_search_table): Columns are now reorderable, though i still
+	don't know how to save/restore user-defined order. See #125857.
+	Right-align some columns (memory and CPU). See #122766.
+	
+	* src/util.c: (_procman_array_gettext_init):
+	* src/util.h: Added.
+
 2004-11-24  Christoffer Olsen  <co@deworks.net>
 
 	* Bug Buddy can now identify procman's version

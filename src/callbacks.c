@@ -38,6 +38,17 @@
 #include "load-graph.h"
 #include "cellrenderer.h"
 
+
+static void
+kill_process_helper(ProcData *procdata, int sig)
+{
+	if (procdata->config.show_kill_warning)
+		procdialog_create_kill_dialog (procdata, sig);
+	else
+		kill_process (procdata, sig);
+}
+
+
 void
 cb_preferences_activate (GtkMenuItem *menuitem, gpointer user_data)
 {
@@ -53,31 +64,20 @@ cb_renice (GtkMenuItem *menuitem, gpointer data)
 	ProcData * const procdata = data;
 
 	procdialog_create_renice_dialog (procdata);
-
 }
 
 
 void
 cb_end_process (GtkMenuItem *menuitem, gpointer data)
 {
-	ProcData * const procdata = data;
-
-	if (procdata->config.show_kill_warning)
-		procdialog_create_kill_dialog (procdata, SIGTERM);
-	else
-		kill_process (procdata, SIGTERM);
+	kill_process_helper(data, SIGTERM);
 }
 
 
 void
 cb_kill_process (GtkMenuItem *menuitem, gpointer data)
 {
-	ProcData * const procdata = data;
-
-	if (procdata->config.show_kill_warning)
-		procdialog_create_kill_dialog (procdata, SIGKILL);
-	else
-		kill_process (procdata, SIGKILL);
+	kill_process_helper(data, SIGKILL);
 }
 
 
@@ -197,24 +197,6 @@ cb_app_delete (GtkWidget *window, GdkEventAny *event, gpointer data)
 }
 
 
-#if 0
-gboolean
-cb_close_simple_dialog (GnomeDialog *dialog, gpointer data)
-{
-	ProcData * const procdata = data;
-
-	if (procdata->timeout != -1)
-		gtk_timeout_remove (procdata->timeout);
-
-	gtk_main_quit ();
-
-	return FALSE;
-
-}
-#endif
-
-
-
 void
 cb_proc_combo_changed (GtkComboBox *combo, gpointer data)
 {
@@ -232,96 +214,9 @@ cb_proc_combo_changed (GtkComboBox *combo, gpointer data)
 
 
 void
-popup_menu_renice (GtkMenuItem *menuitem, gpointer data)
-{
-	ProcData * const procdata = data;
-
-	procdialog_create_renice_dialog (procdata);
-}
-
-
-void
-popup_menu_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
-{
-	ProcData * const procdata = data;
-
-	create_memmaps_dialog (procdata);
-}
-
-
-void
-popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
-{
-	ProcData * const procdata = data;
-
-	if (procdata->config.show_hide_message)
-		procdialog_create_hide_dialog (procdata);
-	else
-		add_selected_to_blacklist (procdata);
-}
-
-
-void
-popup_menu_end_process (GtkMenuItem *menuitem, gpointer data)
-{
-	ProcData * const procdata = data;
-
-	if (procdata->config.show_kill_warning)
-		procdialog_create_kill_dialog (procdata, SIGTERM);
-	else
-		kill_process (procdata, SIGTERM);
-}
-
-
-void
-popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
-{
-	ProcData * const procdata = data;
-
-	if (procdata->config.show_kill_warning)
-		procdialog_create_kill_dialog (procdata, SIGKILL);
-	else
-		kill_process (procdata, SIGKILL);
-
-}
-
-
-#if 0
-void
-popup_menu_about_process (GtkMenuItem *menuitem, gpointer data)
-{
-	ProcData * const procdata = data;
-	ProcInfo *info = NULL;
-	gchar *name;
-
-	if (!procdata->selected_node)
-		return;
-
-	info = e_tree_memory_node_get_data (procdata->memory,
-					    procdata->selected_node);
-	g_return_if_fail (info != NULL);
-
-	/* FIXME: this is lame. GNOME help browser sucks balls. There should be a way
-	to first check man pages, then info pages and give a nice error message if nothing
-	exists */
-	name = g_strdup_printf("man:%s", info->cmd);
-	gnome_url_show (name);
-	g_free (name);
-}
-#endif
-
-
-void
 cb_end_process_button_pressed (GtkButton *button, gpointer data)
 {
-
-	ProcData * const procdata = data;
-
-	if (procdata->config.show_kill_warning)
-		procdialog_create_kill_dialog (procdata, SIGTERM);
-	else
-		kill_process (procdata, SIGTERM);
-
+	kill_process_helper(data, SIGTERM);
 }
 
 
