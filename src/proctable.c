@@ -22,6 +22,7 @@
 #endif
 
 #include <string.h>
+#include <math.h>
 #include <glib/gi18n.h>
 #include <glibtop.h>
 #include <glibtop/proclist.h>
@@ -423,6 +424,32 @@ find_parent (ProcData *procdata, guint pid)
 }
 
 
+
+static char *
+format_duration_for_display (double d)
+{
+	double minutes, seconds, centiseconds;
+
+	centiseconds = 100.0 * modf(d, &seconds);
+
+	if(seconds < 60.0)
+	{
+		minutes = 0.0;
+	}
+	else
+	{
+		minutes = seconds / 60.0;
+		seconds = fmod(seconds, 60.0);
+	}
+
+	return g_strdup_printf(
+		"%02u:%02u.%02u",
+		(unsigned) minutes,
+		(unsigned) seconds,
+		(unsigned) centiseconds);
+}
+
+
 static void
 update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info)
 {
@@ -435,7 +462,7 @@ update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info
 	memrss	   = gnome_vfs_format_file_size_for_display (info->memrss);
 	memxserver = gnome_vfs_format_file_size_for_display (info->memxserver);
 
-	cpu_time = g_strdup_printf("%0.1fs", info->cpu_time_last / procdata->frequency);
+	cpu_time = format_duration_for_display (info->cpu_time_last / procdata->frequency);
 
 	gtk_tree_store_set (store, &info->node,
 			    COL_STATUS, info->status,
