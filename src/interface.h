@@ -22,6 +22,7 @@
 
 #include <procman.h>
 
-GtkWidget* create_main_window (ProcData *data);
+GtkWidget* 	create_main_window (ProcData *data);
+void		toggle_infoview (ProcData *data);
 
 #endif

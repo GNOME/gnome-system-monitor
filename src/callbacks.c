@@ -146,24 +146,8 @@ cb_info_button_pressed			(GtkButton	*button,
 					 gpointer	user_data)
 {
 	ProcData *procdata = user_data;
-	GtkLabel *label;
 	
-	label = GTK_LABEL (button->child);
-		
-	if (procdata->config.show_more_info == FALSE)
-	{
-		gtk_widget_show_all (procdata->infoview->infobox);
-		procdata->config.show_more_info = TRUE;	
-		infoview_update (procdata);
-		gtk_label_set_text (label, _("Less Info"));
-		
-	}			
-	else
-	{
-		gtk_widget_hide (procdata->infoview->infobox);
-		procdata->config.show_more_info = FALSE;
-		gtk_label_set_text (label, _("More Info"));
-	}
+	toggle_infoview (procdata);
 
 }	
 
@@ -214,8 +198,18 @@ cb_update_selected_row (ETree *tree, int row, ETreePath path, gpointer data)
 	
 	if (procdata->config.show_more_info == TRUE)
 		infoview_update (procdata);
-		
+		 
 
+
+}
+
+void
+cb_double_click (ETree *tree, int row, ETreePath path, int col, 
+		 GdkEvent *event, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	toggle_infoview (procdata);
 
 }
 	

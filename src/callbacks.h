@@ -18,8 +18,8 @@
  */
  
  
-#ifndef _INTERFACE_H_
-#define _INTERFACE_H_
+#ifndef _CALLBACKS_H_
+#define _CALLBACKS_H_
 
 #include <gnome.h>
 #include "procman.h"
@@ -69,6 +69,14 @@ void
 cb_update_selected_row			(ETree		*tree,
 					 int		row,
 					 ETreePath	path,
+					 gpointer	data);
+					 
+void 
+cb_double_click				(ETree		*tree,
+					 int		row,
+					 ETreePath	path,
+					 int		col,
+					 GdkEvent	*event,
 					 gpointer	data);
 					 
 

@@ -72,6 +72,8 @@ static GnomeUIInfo menubar1_uiinfo[] =
 	GNOMEUIINFO_END
 };
 
+GtkWidget *infobutton;
+
 GtkWidget*
 create_main_window (ProcData *data)
 {
@@ -88,7 +90,6 @@ create_main_window (ProcData *data)
 	GtkWidget *label;
 	GtkWidget *hbox2;
 	GtkWidget *button3;
-	GtkWidget *button4;
 	GtkWidget *appbar1;
 	GtkWidget *status_hbox;
 	GtkWidget *statusbar;
@@ -147,10 +148,10 @@ create_main_window (ProcData *data)
 	gtk_box_pack_start (GTK_BOX (hbox2), button3, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (button3), GNOME_PAD_SMALL);
 
-	button4 = gtk_button_new_with_label (_("More Info"));
-	gtk_box_pack_end (GTK_BOX (hbox2), button4, FALSE, FALSE, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (button4), GNOME_PAD_SMALL);
-	gtk_misc_set_padding (GTK_MISC (GTK_BIN (button4)->child), 2, 2);
+	infobutton = gtk_button_new_with_label (_("More Info"));
+	gtk_box_pack_end (GTK_BOX (hbox2), infobutton, FALSE, FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (infobutton), GNOME_PAD_SMALL);
+	gtk_misc_set_padding (GTK_MISC (GTK_BIN (infobutton)->child), 2, 2);
 
 	gtk_widget_show_all (hbox2);
 
@@ -209,7 +210,7 @@ create_main_window (ProcData *data)
 
 	gtk_signal_connect (GTK_OBJECT (button3), "clicked",
 			    GTK_SIGNAL_FUNC (cb_end_process_button_pressed), procdata);
-	gtk_signal_connect (GTK_OBJECT (button4), "pressed",
+	gtk_signal_connect (GTK_OBJECT (infobutton), "pressed",
 			    GTK_SIGNAL_FUNC (cb_info_button_pressed),
 			    procdata);
 
@@ -217,6 +218,8 @@ create_main_window (ProcData *data)
 			    GTK_SIGNAL_FUNC (cb_table_selected), button3);
 	gtk_signal_connect (GTK_OBJECT (procdata->tree), "cursor_activated",
 			    GTK_SIGNAL_FUNC (cb_update_selected_row), procdata);
+	gtk_signal_connect (GTK_OBJECT (procdata->tree), "double_click",
+			    GTK_SIGNAL_FUNC (cb_double_click), procdata);
 
 
 #if 1
@@ -232,3 +235,27 @@ create_main_window (ProcData *data)
 	return app;
 }
 
+
+void
+toggle_infoview (ProcData *data)
+{
+	ProcData *procdata = data;
+	GtkLabel *label;
+	
+	label = GTK_LABEL (GTK_BUTTON (infobutton)->child);
+		
+	if (procdata->config.show_more_info == FALSE)
+	{
+		gtk_widget_show_all (procdata->infoview->infobox);
+		procdata->config.show_more_info = TRUE;	
+		infoview_update (procdata);
+		gtk_label_set_text (label, _("Less Info"));
+		
+	}			
+	else
+	{
+		gtk_widget_hide (procdata->infoview->infobox);
+		procdata->config.show_more_info = FALSE;
+		gtk_label_set_text (label, _("More Info"));
+	}
+}
