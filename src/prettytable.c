@@ -79,7 +79,7 @@ gint pretty_table_load_path (PrettyTable *pretty_table, gchar *path, gboolean re
 				g_hash_table_insert (pretty_table->cmdline_to_prettyname, tmp1, tmp2);
 				g_hash_table_insert (pretty_table->cmdline_to_prettyicon, tmp1, tmp3);
 				tmp4 = g_strdup (tmp2);
-				//g_strdown (tmp4);
+				g_strdown (tmp4);
 				g_hash_table_insert (pretty_table->name_to_prettyicon, tmp4, tmp3);
 				gnome_desktop_entry_free (entry);
 			}
