@@ -30,16 +30,22 @@
 #include "procdialogs.h"
 
 int kill_signal;
+int nice_value;
 
-void
-renice (ProcData *procdata, int pid, int nice)
+static void
+renice_single_process (ETreePath node, gpointer data)
 {
+	ProcData *procdata = data;
+	ProcInfo *info = NULL;
 	gint error;
 	gchar *error_msg;
 	GtkWidget *dialog;
 	
+	info = e_tree_memory_node_get_data (procdata->memory, node);
+	g_return_if_fail (info);
+	
 	errno = 0;
-	error = setpriority (PRIO_PROCESS, pid, nice);
+	error = setpriority (PRIO_PROCESS, info->pid, nice_value);
 	if (error == -1)
 	{
 		switch (errno) {
@@ -50,23 +56,33 @@ renice (ProcData *procdata, int pid, int nice)
 				g_free (error_msg);
 				break;
 			case EPERM:
-				error_msg = g_strdup_printf (_("You do not have permission to change the priority of this process. You can enter the root password to gain the necessary permission."));
+				error_msg = g_strdup_printf (_("Process Name : %s \n\nYou do not have permission to change the priority of this process. You can enter the root password to gain the necessary permission."), info->name);
 				procdialog_create_root_password_dialog (1, procdata, 
-									pid, nice,
+									info->pid, nice_value,
 									error_msg);
 				g_free (error_msg);
 				break;
 			case EACCES:
-				error_msg = g_strdup_printf (_("You must be root to renice a process lower than 0. You can enter the root password to gain the necessary permission."));
+				error_msg = g_strdup_printf (_("Process Name : %s \n\nYou must be root to renice a process lower than 0. You can enter the root password to gain the necessary permission."), info->name);
 				procdialog_create_root_password_dialog (1, procdata, 
-									pid, nice,
+									info->pid, nice_value,
 									error_msg);
 				g_free (error_msg);
 				break;
 			default:
 				break;
 		}
-	}
+	}		
+	
+}
+
+void renice (ProcData *procdata, int pid, int nice)
+{
+	nice_value = nice;
+	
+	e_tree_selected_path_foreach (E_TREE (procdata->tree), renice_single_process, procdata);
+
+	proctable_update_all (procdata);
 	
 }
 
@@ -133,7 +149,6 @@ remove_item (ETreePath node, gpointer data)
 void
 kill_process (ProcData *procdata, int sig)
 {
-	ProcInfo *info;
 	
 	if (!procdata->selected_node)
 		return;
