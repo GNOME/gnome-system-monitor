@@ -331,7 +331,7 @@ proctable_new (ProcData *data)
 						       //PROCMAN_DATADIR "proctable.etstate");
 #else
 	scrolled = e_tree_scrolled_new (model, extras, SPEC, NULL);
-#endif	
+#endif
 	proctree = GTK_WIDGET (e_tree_scrolled_get_tree (E_TREE_SCROLLED (scrolled)));
 	
 	e_tree_load_state (E_TREE (proctree), procdata->config.tree_state_file);

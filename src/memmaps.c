@@ -293,8 +293,14 @@ create_memmaps_tree (ProcData *procdata)
 				    	     procdata);
 				    	     
 	memory = E_TREE_MEMORY(model);
-	
+
+#if 1
+	scrolled = e_tree_scrolled_new_from_spec_file (model, NULL,
+						       "memmaps.etspec", NULL);
+						       //PROCMAN_DATADIR "memmaps.etstate");
+#else	
 	scrolled = e_tree_scrolled_new (model, NULL, MEMMAPSSPEC, NULL);
+#endif
 	
 	tree = GTK_WIDGET (e_tree_scrolled_get_tree (E_TREE_SCROLLED (scrolled)));
 	
