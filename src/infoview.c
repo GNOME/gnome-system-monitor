@@ -21,6 +21,7 @@
 #include "procman.h"
 #include "infoview.h"
 #include "procdialogs.h"
+#include "memmaps.h"
 
 
 static void
@@ -36,7 +37,8 @@ static void
 memmaps_button_clicked (GtkButton *button, gpointer data)
 {
 	ProcData *procdata = data;
-	/*procdialog_create_memmaps_dialog (procdata);*/
+	
+	create_memmaps_dialog (procdata);
 }
 
 static void
@@ -228,6 +230,7 @@ infoview_update (ProcData *data)
 	ProcData *procdata = data;
 	ProcInfo *info;
 	InfoView *infoview = procdata->infoview;
+	gchar *string;
 	
 	if (!procdata->selected_node)
 		return;
@@ -243,16 +246,18 @@ infoview_update (ProcData *data)
 	}
 	
 	gtk_frame_set_label (GTK_FRAME (infoview->main_frame), info->name);
-	gtk_entry_set_text (GTK_ENTRY (infoview->status_entry),
-			    g_strdup(info->status));
-	gtk_entry_set_text (GTK_ENTRY (infoview->cmd_entry),
-			    g_strdup (info->cmd));
-	gtk_entry_set_text (GTK_ENTRY (infoview->nice_entry),
-			    g_strdup_printf ("%d", info->nice));
-	gtk_entry_set_text (GTK_ENTRY (infoview->memtotal_entry),
-			    get_size_string (info->mem));
-	gtk_entry_set_text (GTK_ENTRY (infoview->memrss_entry),
-			    get_size_string (info->memrss));
-	gtk_entry_set_text (GTK_ENTRY (infoview->memshared_entry),
-			    get_size_string (info->memshared));
+	gtk_entry_set_text (GTK_ENTRY (infoview->status_entry), info->status);
+	gtk_entry_set_text (GTK_ENTRY (infoview->cmd_entry), info->cmd);
+	string = g_strdup_printf ("%d", info->nice);
+	gtk_entry_set_text (GTK_ENTRY (infoview->nice_entry), string);
+	g_free (string); 
+	string = get_size_string (info->mem);
+	gtk_entry_set_text (GTK_ENTRY (infoview->memtotal_entry), string);
+	g_free (string);
+	string = get_size_string (info->memrss);
+	gtk_entry_set_text (GTK_ENTRY (infoview->memrss_entry), string);
+	g_free (string);
+	string = get_size_string (info->memshared);
+	gtk_entry_set_text (GTK_ENTRY (infoview->memshared_entry), string);
+	g_free (string);
 }

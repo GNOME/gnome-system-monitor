@@ -16,6 +16,7 @@ procman_SOURCES = \
 	infoview.c infoview.h \
 	procdialogs.c procdialogs.h \
 	prettytable.c prettytable.h \
+	memmaps.c memmaps.h \
 	defaulttable.h
 
 procman_LDADD = $(GNOME_LIBDIR) $(GNOMEUI_LIBS) \

@@ -1,3 +1,25 @@
+2001-07-03 Kevin Vandersloot <kfv101@psu.edu>
+
+	*memmaps.[c,h]: create and handle the memmaps dialog. Lots
+	of code stolen from gtop
+
+	*callback.s (cb_table_selected): call update memmaps function
+
+	*infoview.c (memmaps_button_click): open the dialog
+
+	*procman.c (procman_data_new, procman_get_save_files): add config
+	file for the memmaps e-tree
+
+	*procman.h: added memmaps config file name to config structure
+
+	*proctable.c (update_all): call update memmaps function
+
+	*proctable.c: changed e-tree spec to "single" selection mode so
+	only one row can be selected
+
+	*infoview.c (infoview_update): don't duplicate strings for entry
+	widgets. This leaks memory.
+
 2001-06-30 Kevin Vandersloot <kfv101@psu.edu>
 
 	*proctable.c (insert_info_to_tree): check to see if parent has

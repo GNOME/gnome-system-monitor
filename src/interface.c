@@ -105,7 +105,7 @@ create_main_window (ProcData *data)
 
 	app = gnome_app_new ("procman", NULL);
 	gtk_window_set_default_size (GTK_WINDOW (app), 460, 475);
-
+	gtk_window_set_policy (GTK_WINDOW (app), FALSE, TRUE, TRUE);
 
 	gnome_app_create_menus_with_data (GNOME_APP (app), menubar1_uiinfo, procdata);
 

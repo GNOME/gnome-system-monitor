@@ -28,6 +28,7 @@
 #include "proctable.h"
 #include "infoview.h"
 #include "procdialogs.h"
+#include "memmaps.h"
 
 
 
@@ -186,6 +187,8 @@ cb_table_selected (ETree *tree, int row, ETreePath path, gpointer data)
 		
 	if (procdata->config.show_more_info == TRUE)
 		infoview_update (procdata);
+	
+	update_memmaps_dialog (procdata);
 		 
 
 

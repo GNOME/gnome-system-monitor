@@ -44,6 +44,7 @@ struct _ProcConfig
  	gint		update_interval;
 	gint		whose_process;
 	gchar		*tree_state_file;
+	gchar		*memmaps_state_file;
 };
 
 

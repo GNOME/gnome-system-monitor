@@ -35,6 +35,7 @@
 #include "procman.h"
 #include "proctable.h"
 #include "infoview.h"
+#include "memmaps.h"
 
 /*
 gchar * titles[NUM_COLUMNS] = 
@@ -50,7 +51,7 @@ gchar * titles[NUM_COLUMNS] =
 #define NUM_COLUMNS 11
 
 
-#define SPEC "<ETableSpecification cursor-mode=\"line\" selection-mode=\"browse\" draw-focus=\"true\">                    	       \
+#define SPEC "<ETableSpecification cursor-mode=\"line\" selection-mode=\"single\" draw-focus=\"true\">                    	       \
   <ETableColumn model_col=\"0\" _title=\"Process Name\"   expansion=\"1.0\" minimum_width=\"20\" resizable=\"true\" cell=\"tree-string\" compare=\"string\"/> \
   <ETableColumn model_col=\"1\" _title=\"User\" expansion=\"1.0\" minimum_width=\"20\" resizable=\"true\" cell=\"string\"      compare=\"string\"/> \
   <ETableColumn model_col=\"2\" _title=\"Memory\"     expansion=\"1.0\" minimum_width=\"20\" resizable=\"true\" cell=\"memory\"      compare=\"integer\"/> \
@@ -137,6 +138,7 @@ proctable_get_value (ETreeModel *model, ETreePath path, int column, void *data)
 		return GINT_TO_POINTER (info->nice);
 	}
 	}
+	g_assert_not_reached ();
 	return NULL;
 
 	
@@ -477,11 +479,11 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath *root_node)
 		node = e_tree_memory_node_insert (procdata->memory, 
 						  parentinfo->node, 0, info);
 		/* Ha Ha - don't expand different threads - check to see if parent has
-		** same name - I don't know if this is too smart
+		** same name - I don't know if this is too smart though.
 		*/
 		if (g_strcasecmp (info->name, parentinfo->name))
-		e_tree_node_set_expanded (E_TREE (procdata->tree),
-					  parentinfo->node, TRUE);
+			e_tree_node_set_expanded (E_TREE (procdata->tree),
+					  	  parentinfo->node, TRUE);
 	}
 	else
 	#endif
@@ -660,6 +662,8 @@ proctable_update_all (ProcData *data)
 	
 	if (procdata->config.show_more_info)
 		infoview_update (procdata);
+		
+	update_memmaps_dialog (procdata);
 
 
 }

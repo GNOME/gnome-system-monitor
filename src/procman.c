@@ -28,15 +28,16 @@
 #include "interface.h"
 #include "defaulttable.h"
 
-static gchar *
-procman_get_save_file (void)
+static void
+procman_get_save_files (ProcData *procdata)
 {
-	gchar *file, *homedir;
+	gchar *homedir;
 	
 	homedir = g_get_home_dir ();
-	file = g_strconcat (homedir, "/.gnome/", "procman_header_state", NULL);
-	
-	return file;
+	procdata->config.tree_state_file = g_strconcat (homedir, "/.gnome/", 
+							"procman_header_state", NULL);
+	procdata->config.memmaps_state_file = g_strconcat (homedir, "/.gnome/",
+							   "procman_memmaps_state", NULL);
 
 }
 
@@ -65,8 +66,8 @@ procman_data_new (void)
 	procdata->config.whose_process = gnome_config_get_int ("procman/Config/view_as=0");
 	
 	
-
-	procdata->config.tree_state_file = procman_get_save_file ();
+	procman_get_save_files (procdata);
+	//procdata->config.tree_state_file = procman_get_save_file ();
 	
 
 	return procdata;
