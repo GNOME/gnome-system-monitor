@@ -540,6 +540,8 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 			glibtop_proc_args procargs;
 		
 			g_free (newinfo->name);
+			g_free (newinfo->cmd);
+			g_free (newinfo->name_utf8);
 			arguments = glibtop_get_proc_args (&procargs, pid, 0);	
 			get_process_name (procdata, newinfo, procstate.cmd, arguments);
 			if (arguments)
@@ -550,7 +552,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 			if (newinfo->is_thread)	{
 				name = g_strjoin (NULL, info->name, _(" (thread)"), NULL);
 				g_free (info->name_utf8);
-				info->name_utf8 = g_strdup (name);
+				info->name_utf8 =  e_utf8_from_locale_strin (name);
 				g_free (name);
 			}
 		}
@@ -681,7 +683,7 @@ get_info (ProcData *procdata, gint pid)
 			
 			name = g_strjoin (NULL, info->name, _(" (thread)"), NULL);
 			g_free (info->name_utf8);
-			info->name_utf8 = g_strdup (name);
+			info->name_utf8 = e_utf8_from_locale_string (name);
 			g_free (name);
 			info->is_thread = TRUE;
 		}

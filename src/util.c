@@ -73,14 +73,17 @@ exec_su (gchar *exec_path, gchar *user, gchar *pwd)
 #if 0
 	if (asprintf (&exec_p, "%s&", exec_path) < 0) {
 		perror ("Unable to allocate memory chunk");
+		g_free (exec_p);
 		return 0;
 	}
 #endif
 
 	user_p = (user ? user : "root");
 
-	if ((pwd == NULL) || (*pwd == '\0'))
+	if ((pwd == NULL) || (*pwd == '\0')) {
+		g_free (exec_p);
 		return 0;
+	}
 
 	/*
 	 * Make su think we're sending the password from a terminal:
@@ -108,6 +111,7 @@ exec_su (gchar *exec_path, gchar *user, gchar *pwd)
 
 		if (WIFEXITED (status) && WEXITSTATUS (status) && (WEXITSTATUS(status) < 255)) {
 /*			error_box (_("Incorrect password.")); */
+			g_free (exec_p);
 			return -1;
 		}
 		else {
