@@ -269,16 +269,11 @@ proctable_new (ProcData *data)
 static void
 proctable_free_info (ProcInfo *info)
 {
-	if (!info)
-		return;
-	if (info->name)
-		g_free (info->name);
-	if (info->arguments)
-		g_free (info->arguments);
-	if (info->user)
-		g_free (info->user);
-	if (info->status)
-		g_free (info->status);
+	if (!info) return;
+	g_free (info->name);
+	g_free (info->arguments);
+	g_free (info->user);
+	g_free (info->status);
 	g_free (info);
 }
 
@@ -430,7 +425,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	if (!procdata->config.show_threads && info->is_thread)
 		return;
 	else if (info->is_thread)
-		name = g_strconcat (info->name, _(" (thread)"), NULL);
+		name = g_strdup_printf(_("%s (thread)"), info->name);
 	else
 		name = g_strdup (info->name);
 
@@ -498,9 +493,8 @@ static void
 remove_children_from_tree (ProcData *procdata, GtkTreeModel *model,
 			   GtkTreeIter *parent)
 {
-	ProcInfo *child_info;
-
 	do {
+		ProcInfo *child_info;
 		GtkTreeIter child;
 
 		if (gtk_tree_model_iter_children (model, &child, parent))
@@ -775,9 +769,9 @@ get_info (ProcData *procdata, gint pid)
 
 
 static gboolean
-find_match_in_new_list (gint pid, unsigned *pid_list, gint n)
+find_match_in_new_list (gint pid, const unsigned *pid_list, guint n)
 {
-	gint i = 0;
+	guint i;
 
 	for (i=0; i<n; i++){
 		if (pid_list[i] == pid) return TRUE;
@@ -788,7 +782,7 @@ find_match_in_new_list (gint pid, unsigned *pid_list, gint n)
 
 
 static void
-refresh_list (ProcData *data, unsigned *pid_list, gint n)
+refresh_list (ProcData *data, const unsigned *pid_list, guint n)
 {
 	ProcData *procdata = data;
 	GList *list, *removal_list = NULL;
@@ -949,7 +943,8 @@ proctable_search_table (ProcData *procdata, gchar *string)
 	GtkWidget *dialog;
 	GtkTreeModel *model;
 	gchar *error;
-	static gint increment = 0, index;
+	static gint increment = 0;
+	gint index;
 	static gchar *last = NULL;
 
 	if (!g_strcasecmp (string, ""))
