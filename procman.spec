@@ -57,4 +57,5 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}/share/gnome/help/procman/C/*.html
 %{prefix}/share/gnome/help/procman/C/*.dat
 %{prefix}/share/gnome/help/procman/C/*.sgml
+%{prefix}/share/gnome/help/procman/C/figures/*.png
 
