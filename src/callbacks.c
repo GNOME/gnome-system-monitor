@@ -284,9 +284,8 @@ popup_menu_about_process (GtkMenuItem *menuitem, gpointer data)
 	g_free (name);
 					    
 }
-
-
 #endif
+
 void
 cb_end_process_button_pressed          (GtkButton       *button,
                                         gpointer         data)

@@ -116,7 +116,6 @@ struct _ProcInfo
 	GdkPixbuf	*pixbuf;
 	gchar		*name;
 	gchar		*user;
-	gchar		*cmd;
 	gchar		*arguments;
 	gint		mem;
 	gint		cpu;

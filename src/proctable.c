@@ -122,7 +122,8 @@ proctable_new (ProcData *data)
 	GtkTreeSelection *selection;
 	GtkTreeViewColumn *column;
   	GtkCellRenderer *cell_renderer;
-	static gchar *title[] = {N_("Icon "), N_("Process Name"), N_("User"), N_("Status"),
+	static gchar *title[] = {N_("Icon "), N_("Process Name"), N_("Arguments"),
+				 N_("User"), N_("Status"),
 				 N_("Memory"), N_("VM Size"), N_("Resident Memory"),
 				 N_("Shared Memory"), N_("RSS Memory"),
 				 N_("% CPU"), N_("Nice"), N_("ID"), "POINTER"};
@@ -134,7 +135,7 @@ proctable_new (ProcData *data)
                                   	GTK_POLICY_AUTOMATIC);
 	
 	model = gtk_tree_store_new (NUM_COLUMNS, GDK_TYPE_PIXBUF, G_TYPE_STRING, 
-				    G_TYPE_STRING, G_TYPE_STRING,
+				    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_INT, G_TYPE_INT, G_TYPE_INT,
@@ -259,8 +260,6 @@ proctable_free_info (ProcInfo *info)
 		return;
 	if (info->name)
 		g_free (info->name);
-	if (info->cmd)
-		g_free (info->cmd);
 	if (info->arguments)
 		g_free (info->arguments);
 	if (info->user)
@@ -300,7 +299,6 @@ get_process_status (ProcInfo *info, char *state)
 static void
 get_process_name (ProcData *procdata, ProcInfo *info, gchar *cmd, gchar *args)
 {
-	gchar *name = NULL;
 	gchar *command = NULL;
 	gint i, n = 0, len, newlen;
 	gboolean done = FALSE;
@@ -331,22 +329,13 @@ get_process_name (ProcData *procdata, ProcInfo *info, gchar *cmd, gchar *args)
 		command[newlen] = '\0';
 	}
 	
-	if (!name && command)
-		name = g_strdup (command);
-	else if (!name && !command)
-		name = g_strdup (cmd);
-		
-	info->name = g_strdup (name);
-	
-	if (command) 
-		info->cmd = g_strdup (command);
-	else
-		info->cmd = g_strdup (cmd);
+	if (command)
+		info->name = g_strdup (command);
+	else if (!command)
+		info->name = g_strdup (cmd);
 		
 	if (command)
 		g_free (command);
-	if (name)
-		g_free (name);
 
 }
 
@@ -405,6 +394,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 {
 	GtkTreeModel *model;
 	GtkTreeIter row;
+	gchar *name;
 	gchar *mem, *vmsize, *memres, *memshared, *memrss;
 	
 	/* Don't show process if it is not running */
@@ -418,7 +408,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 
 
 	/* Don't show processes that user has blacklisted */
-	if (is_process_blacklisted (procdata, info->cmd))
+	if (is_process_blacklisted (procdata, info->name))
 	{	
 		info->is_blacklisted = TRUE;
 		return;
@@ -428,7 +418,11 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	/* Don't show threads */
 	if (!procdata->config.show_threads && info->is_thread)
 		return; 
-
+	else if (info->is_thread) 
+		name = g_strconcat (info->name, _(" (thread)"), NULL);
+	else
+		name = g_strdup (info->name);
+			
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 	if (info->has_parent && procdata->config.show_tree) {
 		GtkTreePath *parent_node = gtk_tree_model_get_path (model, &info->parent_node);
@@ -450,7 +444,8 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	memshared = get_size_string (info->memshared);
 	memrss = get_size_string (info->memrss);
 	gtk_tree_store_set (GTK_TREE_STORE (model), &row, COL_PIXBUF, info->pixbuf, 
-							  COL_NAME, info->name,
+							  COL_NAME, name,
+							  COL_ARGS, info->arguments,
 							  COL_USER, info->user,
 							  COL_STATUS, info->status,
 							  COL_MEM, mem,
@@ -595,7 +590,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 		g_free (newinfo->status);
 	get_process_status (newinfo, &procstate.state);
 	
-	is_blacklisted = is_process_blacklisted (procdata, newinfo->cmd);
+	is_blacklisted = is_process_blacklisted (procdata, newinfo->name);
 	was_blacklisted = newinfo->is_blacklisted;
 	newinfo->is_blacklisted = is_blacklisted;
 	
@@ -742,15 +737,9 @@ get_info (ProcData *procdata, gint pid)
 		** same name and same mem usage - I don't know if this is too smart though.
 		*/
 
-		if (!g_strcasecmp (info->cmd, parentinfo->cmd) && 
+		if (!g_strcasecmp (info->name, parentinfo->name) && 
 		    ( parentinfo->mem == info->mem))
 		{
-			gchar *name;
-			
-			name = g_strjoin (NULL, info->name, _(" (thread)"), NULL);
-			g_free (info->name);
-			info->name = g_strdup (name);
-			g_free (name);
 			info->is_thread = TRUE;
 		}
 		else

@@ -31,7 +31,6 @@
 #endif
 
 GtkWidget *infobox;
-GtkWidget *main_frame;
 GtkWidget *cmd_event_box;
 GtkWidget *cmd_label;
 GtkWidget *status_label;
@@ -55,13 +54,8 @@ infoview_create (ProcData *data)
 	
 	infobox = gtk_vbox_new (FALSE, 0);
 		
-	main_frame = gtk_frame_new (NULL);
-	gtk_container_set_border_width (GTK_CONTAINER (main_frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (infobox), main_frame, FALSE, FALSE, 0);
-	
-
 	main_hbox = gtk_hbox_new (FALSE, 0);
-	gtk_container_add (GTK_CONTAINER (main_frame), main_hbox);
+	gtk_box_pack_start (GTK_BOX (infobox), main_hbox, FALSE, FALSE, 0);
 	
 	info_frame = gtk_frame_new (_("Process Info"));
 	gtk_container_set_border_width (GTK_CONTAINER (info_frame), GNOME_PAD_SMALL);
@@ -87,7 +81,6 @@ infoview_create (ProcData *data)
 	gtk_table_attach (GTK_TABLE (info_table), cmd_event_box, 1, 2, 0, 1, 
 			  GTK_FILL|GTK_EXPAND, 0, GNOME_PAD_SMALL, 0);
 	
-	/*cmd_label = e_clipped_label_new (" ");*/
 	cmd_label = gtk_label_new ("");
 	gtk_misc_set_alignment (GTK_MISC (cmd_label), 0.0, 0.5);
 	gtk_container_add (GTK_CONTAINER (cmd_event_box), cmd_label);
@@ -162,24 +155,9 @@ infoview_update (ProcData *data)
 
 	info = procdata->selected_process;	
 
-	if (!info)
-	{
-		if (GTK_WIDGET_SENSITIVE (procdata->infobox))
-			gtk_widget_set_sensitive (procdata->infobox, FALSE);
-		return;
-	}
-	
-	gtk_frame_set_label (GTK_FRAME (main_frame), info->name);
+	gtk_label_set_text (GTK_LABEL (cmd_label), info->name);
 	gtk_label_set_text (GTK_LABEL (status_label), info->status);
-	/* ugh. don't update the tooltip if the selected process has not changed.
-	** This is here so that when the user has to tooltip showing and we do an
-	** update here, the tooltip will go away if we call gtk_tooltip_set_tip
-	*/
-	/*command = e_clipped_label_get_text (E_CLIPPED_LABEL (cmd_label));
-	if (g_strcasecmp (info->arguments, command))
-		gtk_tooltips_set_tip (cmd_tooltip, cmd_event_box, info->arguments, NULL);
-	e_clipped_label_set_text (E_CLIPPED_LABEL (cmd_label), info->arguments);*/
-
+	
 	if (info->nice < -7)
 		string = g_strdup_printf (_("Very High  ( Nice %d )"), info->nice);
 	else if (info->nice < -2)

@@ -25,6 +25,7 @@ enum
 {
 	COL_PIXBUF = 0,
 	COL_NAME,
+	COL_ARGS,
 	COL_USER,
 	COL_STATUS,
 	COL_MEM,
