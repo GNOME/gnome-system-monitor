@@ -19,8 +19,10 @@ add_new_maps (gpointer key, gpointer value, gpointer data)
 	GtkTreeIter row;
 	MemmapsInfo *info = g_new0 (MemmapsInfo, 1);
 	gchar *format = (sizeof (void*) == 8) ? "%016lx" : "%08lx";
+	gchar *vmsize_fmt = "%luK";
 	unsigned long vmstart;
 	unsigned long vmend;
+	unsigned long vmsize;
 	char flags[5];
 	unsigned long vmoffset;
 	short dev_major;
@@ -30,6 +32,7 @@ add_new_maps (gpointer key, gpointer value, gpointer data)
 		
 	vmstart = memmaps->start;
 	vmend = memmaps->end;
+	vmsize = (memmaps->end - memmaps->start)/1024;
 	vmoffset = memmaps->offset;
 	dev_minor = memmaps->device & 255;
 	dev_major = (memmaps->device >> 8) & 255;
@@ -54,7 +57,8 @@ add_new_maps (gpointer key, gpointer value, gpointer data)
                 	
         info->vmstart = g_strdup_printf (format, vmstart);
         info->vmend = g_strdup_printf (format, vmend);
-        info->flags = g_strdup (flags);
+        info->vmsize = g_strdup_printf (vmsize_fmt, vmsize);
+	info->flags = g_strdup (flags);
         info->vmoffset = g_strdup_printf (format, vmoffset);
         info->device = g_strdup_printf ("%02hx:%02hx", dev_major, dev_minor);
         info->inode = g_strdup_printf ("%ld", inode);
@@ -64,14 +68,16 @@ add_new_maps (gpointer key, gpointer value, gpointer data)
                 		    0, info->filename, 
 				    1, info->vmstart,
 				    2, info->vmend,
-				    3, info->flags,
-				    4, info->vmoffset,
-				    5, info->device,
-				    6, info->inode,
+				    3, info->vmsize,
+				    4, info->flags,
+				    5, info->vmoffset,
+				    6, info->device,
+				    7, info->inode,
 				    -1);
         g_free (info->filename);
 	g_free (info->vmstart);
 	g_free (info->vmend);
+	g_free (info->vmsize);
 	g_free (info->flags);
 	g_free (info->device);
 	g_free (info->vmoffset);
@@ -170,7 +176,7 @@ close_memmaps_dialog (GtkDialog *dialog, gint id, gpointer data)
 	gint timer;
 	
 	client = g_object_get_data (G_OBJECT (tree), "client");
-	procman_save_tree_state (client, tree, "/apps/procman/memmapstree");
+	procman_save_tree_state (client, tree, "/apps/procman/memmapstree2");
 	
 	timer = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (tree), "timer"));
 	gtk_timeout_remove (timer);
@@ -188,18 +194,20 @@ create_memmaps_tree (ProcData *procdata)
 	GtkTreeViewColumn *column;
   	GtkCellRenderer *cell;
   	gint i;
-  	static gchar *title[] = {N_("Filename"), N_("VM Start"), N_("VM End"), 
-				 N_("Flags"), N_("VM offset"), N_("Device"), N_("Inode")};
+  	static gchar *title[] = {N_("Filename"), N_("VM Start"), N_("VM End"),
+                                 N_("VM Size"), N_("Flags"), N_("VM offset"),
+                                 N_("Device"), N_("Inode")};
 	                             	
-        model = gtk_list_store_new (7, G_TYPE_STRING, G_TYPE_STRING, 
-				    G_TYPE_STRING, G_TYPE_STRING,
-				    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+        model = gtk_list_store_new (8, G_TYPE_STRING, G_TYPE_STRING,
+                                    G_TYPE_STRING, G_TYPE_STRING,
+                                    G_TYPE_STRING, G_TYPE_STRING,
+                                    G_TYPE_STRING, G_TYPE_STRING);
 				    
 	tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree), TRUE);
   	g_object_unref (G_OBJECT (model));
   	
-  	for (i = 0; i < 7; i++) {
+  	for (i = 0; i < 8; i++) {
   		cell = gtk_cell_renderer_text_new ();
   		column = gtk_tree_view_column_new_with_attributes (title[i],
 						    		   cell,
@@ -214,7 +222,7 @@ create_memmaps_tree (ProcData *procdata)
 					        0,
 					        GTK_SORT_ASCENDING);*/
 					      
-	procman_get_tree_state (procdata->client, tree, "/apps/procman/memmapstree");
+	procman_get_tree_state (procdata->client, tree, "/apps/procman/memmapstree2");
 	
 	return tree;
 		

@@ -12,6 +12,7 @@ enum
 	COL_FILENAME,
 	COL_VMSTART,
 	COL_VMEND,
+	COL_VMSZ,
 	COL_FLAGS,
 	COL_VMOFFSET,
 	COL_DEVICE,
@@ -23,6 +24,7 @@ struct _MemmapsInfo
 	gchar                   *filename;
         gchar			*vmstart;
         gchar			*vmend;
+        gchar			*vmsize;
         gchar			*flags;
         gchar			*vmoffset;
         gchar			*device;

@@ -526,6 +526,7 @@ static void
 update_info (ProcData *procdata, ProcInfo *info, gint pid)
 {
 	GtkTreeModel *model;
+	GtkTreePath *path;
 	glibtop_proc_state procstate;
 	glibtop_proc_mem procmem;
 	glibtop_proc_uid procuid;
@@ -573,6 +574,16 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	}
 	
 	if (info->visible) {
+		GdkRectangle rect, vis_rect;
+		path = gtk_tree_model_get_path (model, &info->node);
+		gtk_tree_view_get_cell_area (GTK_TREE_VIEW (procdata->tree),
+								      path, 	NULL, &rect);
+		gtk_tree_view_get_visible_rect (GTK_TREE_VIEW (procdata->tree),
+									   &vis_rect);
+		gtk_tree_path_free (path);
+		/* Don't update if row is not visible. Small performance improvement */
+		if ((rect.y < 0) || (rect.y > vis_rect.height))
+			return;
 		mem = get_size_string (info->mem);
 		vmsize = get_size_string (info->vmsize);
 		memres = get_size_string (info->memres);
