@@ -73,6 +73,8 @@ add_new_maps (gpointer key, gpointer value, gpointer data)
 				    5, info->vmoffset,
 				    6, info->device,
 				    7, info->inode,
+				    8, vmsize,
+			            9, inode,
 				    -1);
         g_free (info->filename);
 	g_free (info->vmstart);
@@ -186,6 +188,35 @@ close_memmaps_dialog (GtkDialog *dialog, gint id, gpointer data)
 	return ;
 }
 
+static gint
+sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer data)
+{
+	gint col = GPOINTER_TO_INT (data);
+	gint a=0, b=0;
+	
+	switch (col) {
+	case COL_VMSZ:
+		gtk_tree_model_get (model, itera, 8, &a, -1);
+		gtk_tree_model_get (model, iterb, 8, &b, -1);
+		break;
+	case COL_INODE:
+		gtk_tree_model_get (model, itera, 9, &a, -1);
+		gtk_tree_model_get (model, iterb, 9, &b, -1);
+		break;
+	default:
+		a = 0;
+		b = 0;
+		break;
+	}
+
+	if (a > b)
+		return -1;
+	else if (a < b)
+		return 1;
+        else
+                return 0;	
+}
+
 static GtkWidget *
 create_memmaps_tree (ProcData *procdata)
 {
@@ -198,16 +229,18 @@ create_memmaps_tree (ProcData *procdata)
                                  N_("VM Size"), N_("Flags"), N_("VM offset"),
                                  N_("Device"), N_("Inode")};
 	                             	
-        model = gtk_list_store_new (8, G_TYPE_STRING, G_TYPE_STRING,
+        model = gtk_list_store_new (NUM_MMAP_COL+2, 
+				    G_TYPE_STRING, G_TYPE_STRING,
                                     G_TYPE_STRING, G_TYPE_STRING,
                                     G_TYPE_STRING, G_TYPE_STRING,
-                                    G_TYPE_STRING, G_TYPE_STRING);
+                                    G_TYPE_STRING, G_TYPE_STRING,
+				     G_TYPE_INT, G_TYPE_INT);
 				    
 	tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree), TRUE);
   	g_object_unref (G_OBJECT (model));
   	
-  	for (i = 0; i < 8; i++) {
+  	for (i = 0; i < NUM_MMAP_COL; i++) {
   		cell = gtk_cell_renderer_text_new ();
   		column = gtk_tree_view_column_new_with_attributes (title[i],
 						    		   cell,
@@ -218,6 +251,16 @@ create_memmaps_tree (ProcData *procdata)
 		gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
 	}
 	
+	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
+					 COL_VMSZ,
+					 sort_ints,
+					 GINT_TO_POINTER (COL_VMSZ),
+					 NULL);
+	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
+					 COL_INODE,
+					 sort_ints,
+					 GINT_TO_POINTER (COL_INODE),
+					 NULL);
 	/*gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model),
 					        0,
 					        GTK_SORT_ASCENDING);*/

@@ -17,6 +17,7 @@ enum
 	COL_VMOFFSET,
 	COL_DEVICE,
 	COL_INODE,
+	NUM_MMAP_COL,
 };
 
 struct _MemmapsInfo
