@@ -22,6 +22,7 @@ procman_SOURCES = \
 	e-clipped-label.c e-clipped-label.h \
 	procactions.c procactions.h \
 	load-graph.c load-graph.h \
+	util.c util.h \
 	defaulttable.h
 
 procman_LDADD = $(GNOME_LIBDIR) $(GNOMEUI_LIBS) \

@@ -27,6 +27,7 @@
 #include "procactions.h"
 #include "procman.h"
 #include "proctable.h"
+#include "procdialogs.h"
 
 void
 renice (int pid, int nice)
@@ -74,6 +75,7 @@ kill_process (ProcData *procdata)
 	GtkWidget *dialog;
         gchar *error_msg;
 	gchar *error_critical;
+	gint retval;
 
 
 	if (!procdata->selected_node)
@@ -93,11 +95,13 @@ kill_process (ProcData *procdata)
 			case ESRCH:
 				break;
 			case EPERM:
-				g_print ("You must be root to do that! \n");
-				error_msg = g_strdup_printf (_("You do not have permission to end this process"));
-				dialog = gnome_error_dialog (error_msg);
-				gnome_dialog_run(GNOME_DIALOG (dialog));
+				error_msg = g_strdup_printf (_("You do not have permission to end this process.\n Would you like to enter the superuser (root) password\n to gain the necessary permission?"));
+				dialog = gnome_ok_cancel_dialog (error_msg, NULL, NULL);
+				retval = gnome_dialog_run(GNOME_DIALOG (dialog));
 				g_free(error_msg);
+				if (!retval) 
+					procdialog_create_root_password_dialog (0, procdata, 
+										info->pid, 0);
 				break;	
 			default: 
 				error = kill (info->pid, SIGKILL);
@@ -105,12 +109,6 @@ kill_process (ProcData *procdata)
 				{
 					switch (errno) {
 					case ESRCH:
-						break;
-					case EPERM:
-						error_msg = g_strdup_printf (_("You do not have permission to end this process"));
-						dialog = gnome_error_dialog (error_msg);
-						gnome_dialog_run(GNOME_DIALOG (dialog));
-						g_free(error_msg);
 						break;
 					default:
 						error_critical = g_strdup_printf (_("An error occured while killing the process."));

@@ -27,6 +27,7 @@
 #include "callbacks.h"
 #include "prettytable.h"
 #include "procactions.h"
+#include "util.h"
 
 GtkWidget *renice_dialog;
 gint new_nice_value = 0;
@@ -500,3 +501,80 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 
 	gtk_widget_show_all (dialog);
 }
+
+/*
+** type determines whether if dialog is for killing process (type=0) or renice (type=other).
+** extra_value is not used for killing and is priority for renice
+*/
+void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint pid, 
+					     gint extra_value)
+{
+	GtkWidget *dialog;
+	GtkWidget *main_vbox;
+	GtkWidget *hbox;
+	GtkWidget *entry;
+	GtkWidget *label;
+	gchar *title = NULL;
+	gchar *command;
+	gchar *password, *blank;
+	gint retval;
+	
+	if (type == 0)
+		title = g_strdup (_("End Process"));
+	else
+		title = g_strdup (_("Change Priority"));
+		
+	dialog = gnome_dialog_new (title, title, 
+				   GNOME_STOCK_BUTTON_CANCEL, NULL);
+	gnome_dialog_close_hides (GNOME_DIALOG (dialog), TRUE);
+	
+	main_vbox = GNOME_DIALOG (dialog)->vbox;
+	
+	label = gtk_label_new (_("Please enter the superuser (root) password."));
+	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, GNOME_PAD);
+	gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
+	
+	hbox = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+	
+	label = gtk_label_new (_("Password :"));
+	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+	
+	entry = gtk_entry_new ();
+	gtk_entry_set_visibility (GTK_ENTRY (entry), FALSE);
+	gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
+	
+	gtk_widget_show_all (main_vbox);
+		
+	if (title)
+		g_free (title);	
+	
+	gnome_dialog_editable_enters (GNOME_DIALOG (dialog), GTK_EDITABLE (entry));	
+	retval = gnome_dialog_run_and_close (GNOME_DIALOG (dialog));
+	
+	if (retval == 0) {
+		password = gtk_entry_get_text (GTK_ENTRY (entry));
+		
+		if (!password)
+			password = "";
+		blank = g_strdup (password);
+		if (strlen (blank))
+			memset (blank, ' ', strlen (blank));
+
+		gtk_entry_set_text (GTK_ENTRY (entry), blank);
+		gtk_entry_set_text (GTK_ENTRY (entry), "");
+		g_free (blank);
+		
+		if (type == 0)
+			command = g_strdup_printf ("kill %d", pid);
+		else
+			command = g_strdup_printf ("renice %d %d", extra_value, pid);
+			
+		su_run_with_password (command, password);
+		g_free (command);
+	}
+	
+	
+}
+

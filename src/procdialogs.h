@@ -26,7 +26,11 @@
 GtkWidget*		procdialog_create_hide_dialog (ProcData *data);
 void			procdialog_create_kill_dialog (ProcData *data);
 void 			procdialog_create_renice_dialog (ProcData *data);
+void			procdialog_create_root_password_dialog (gint type, 
+								ProcData *procdata,
+								gint pid, gint extra_value);
 void 			procdialog_create_memmaps_dialog (ProcData *data);
-void			procdialog_create_preferences_dialog (ProcData *data)
-;
+void			procdialog_create_preferences_dialog (ProcData *data);
+
 #endif
+
