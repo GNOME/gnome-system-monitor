@@ -23,6 +23,7 @@
 
 #include "procman.h"
 #include "infoview.h"
+#include "util.h"
 #if 0
 #include "procdialogs.h"
 #include "memmaps.h"
@@ -148,37 +149,6 @@ infoview_create (ProcData *data)
 
 }
 
-
-/* stolen from gal */
-static gchar *
-get_size_string (gint size)
-{
-	gfloat fsize;
-
-	if (size < 1024) 
-	{
-		return g_strdup_printf (_("%d bytes"), size);
-
-	} 
-	else 
-	{
-		fsize = ((gfloat) size) / 1024.0;
-		if (fsize < 1024.0) 
-		{
-			return g_strdup_printf (_("%d K"), (int)fsize);
-		} 
-		else 
-		{
-			fsize /= 1024.0;
-			return g_strdup_printf (_("%.1f MB"), fsize);
-		}
-      	}
-
-
-
-}
-
-
 void
 infoview_update (ProcData *data)
 {
@@ -187,18 +157,17 @@ infoview_update (ProcData *data)
 	gchar *string;
 	gchar *command;
 	
-	if (!procdata->selected_node)
-		return;
-
+	return;
+#if 0
 	info = e_tree_memory_node_get_data (procdata->memory, procdata->selected_node);	
-	
+#endif	
 	if (!info)
 	{
 		if (GTK_WIDGET_SENSITIVE (procdata->infobox))
 			gtk_widget_set_sensitive (procdata->infobox, FALSE);
 		return;
 	}
-	
+#if 0	
 	gtk_frame_set_label (GTK_FRAME (main_frame), info->name);
 	gtk_label_set_text (GTK_LABEL (status_label), info->status);
 	/* ugh. don't update the tooltip if the selected process has not changed.
@@ -209,6 +178,7 @@ infoview_update (ProcData *data)
 	if (g_strcasecmp (info->arguments, command))
 		gtk_tooltips_set_tip (cmd_tooltip, cmd_event_box, info->arguments, NULL);
 	e_clipped_label_set_text (E_CLIPPED_LABEL (cmd_label), info->arguments);
+#endif
 	if (info->nice < -7)
 		string = g_strdup_printf (_("Very High  ( Nice %d )"), info->nice);
 	else if (info->nice < -2)
