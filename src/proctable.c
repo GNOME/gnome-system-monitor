@@ -547,29 +547,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	glibtop_get_proc_time (&proctime, pid);
 	newcputime = proctime.utime + proctime.stime;
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-		
-	/* This is here for delay loading. The process has been added to the tree, but
-	** we haven't been able to get the icon yet thus newinfo->pixbuf is NULL. Once
-	** the .desktop file is done the info->has_desktop_file will be changed to 1 or 0
-	*/
-	if (procdata->pretty_table && !info->pixbuf 
-	    && info->has_icon == -1 && info->visible)
-	{
-		info->pixbuf = pretty_table_get_icon (procdata->pretty_table, 
-						      procstate.cmd, pid);
-							
-		if (info->pixbuf) {
-			info->has_icon = 1;
-			gtk_tree_store_set (GTK_TREE_STORE (model), &info->node, 
-			    		    COL_PIXBUF, info->pixbuf,
-			    		    -1);	
-		}
-		else
-			info->has_icon = 0;
-		
 
-	}
-	
 	info->mem = procmem.size;
 	info->vmsize = procmem.vsize;
 	info->memres = procmem.resident;
@@ -649,19 +627,6 @@ get_info (ProcData *procdata, gint pid)
 	glibtop_get_proc_time (&proctime, pid);
 	newcputime = proctime.utime + proctime.stime;
 
-	info->has_icon = -1;	
-
-	if (procdata->desktop_load_finished) {
-		info->pixbuf = pretty_table_get_icon (procdata->pretty_table, procstate.cmd, pid);
-		
-		if (info->pixbuf)
-			info->has_icon = 1;
-		else
-			info->has_icon = 0;
-	}
-	else
-		info->pixbuf = NULL;
-
 	arguments = glibtop_get_proc_args (&procargs, pid, 0);	
 	get_process_name (procdata, info, procstate.cmd, arguments);
 	if (arguments)
@@ -689,7 +654,9 @@ get_info (ProcData *procdata, gint pid)
 	info->cpu_time_last = newcputime;
 	info->nice = procuid.nice;
 	get_process_status (info, &procstate.state);
-
+	
+	info->pixbuf = pretty_table_get_icon (procdata->pretty_table, info->name, pid);
+	
 	parentinfo = find_parent (procdata, info->parent_pid);
 	if (parentinfo) {
 		/* Ha Ha - don't expand different threads - check to see if parent has

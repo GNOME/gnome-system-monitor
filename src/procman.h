@@ -67,10 +67,8 @@ struct _ProcConfig
 };
 
 struct _PrettyTable {
-	GHashTable *cmdline_to_prettyname;
-	GHashTable *cmdline_to_prettyicon;
-	GHashTable *name_to_prettyicon; /* lower case */
-	GHashTable *name_to_prettyname;
+	GHashTable *app_hash;		/* apps gotten from libwnck */      
+	GHashTable *default_hash; 	/* defined in defaulttable.h */
 };
 
 struct _LoadGraph {
@@ -131,7 +129,6 @@ struct _ProcInfo
 	gboolean	running;
 	gboolean	is_thread;
 	gboolean	is_blacklisted;
-	gint		has_icon;	
 };
 
 struct _ProcData
@@ -153,7 +150,6 @@ struct _ProcData
 	GList		*favorites;
 	GList		*blacklist;
 	gint		blacklist_num;
-	gboolean	desktop_load_finished;
 };
 
 void		procman_save_config (ProcData *data);
