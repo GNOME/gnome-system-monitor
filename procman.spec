@@ -49,8 +49,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %{prefix}/bin/procman
 %{prefix}/share/gnome/apps/System/procman.desktop
-%{prefix}/share/procman/proctable.etspec
-%{prefix}/share/procman/memmaps.etspec
-%{prefix}/share/procman/simple.etspec
 %{prefix}/share/locale/*/LC_MESSAGES/*.mo
 %{prefix}/share/pixmaps/procman.png

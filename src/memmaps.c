@@ -216,7 +216,8 @@ update_memmaps_dialog (GtkWidget *tree)
 	
 	g_hash_table_foreach (new_maps, add_new_maps, model);
 	
-	//get_memmaps_list (info, tree);
+	g_hash_table_destroy (new_maps);
+	glibtop_free (memmaps);
 }
 
 static void

@@ -570,6 +570,7 @@ cb_update_disks (gpointer data)
 	
 	g_hash_table_foreach (new_disks, add_new_disks, model);
 
+	g_hash_table_destroy (new_disks);
 	glibtop_free (entry);
 	
 	return TRUE;

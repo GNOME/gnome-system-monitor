@@ -1,7 +1,9 @@
 #include <config.h>
 #include <libgnome/libgnome.h>
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE 
-#include <libwnck/libwnck.h>
+#ifdef USE_WNCK
+  #define WNCK_I_KNOW_THIS_IS_UNSTABLE 
+  #include <libwnck/libwnck.h>
+#endif
 #include <dirent.h>
 #include <sys/stat.h>
 #include <stdio.h>
@@ -13,7 +15,9 @@
 void free_entry (gpointer key, gpointer value, gpointer data);
 void free_value (gpointer key, gpointer value, gpointer data);
 void free_key (gpointer key, gpointer value, gpointer data);
-WnckScreen *screen = NULL;
+#ifdef USE_WNCK
+  WnckScreen *screen = NULL;
+#endif
 
 static gboolean
 compare_strings (gconstpointer a, gconstpointer b)
@@ -38,6 +42,7 @@ prettytable_load_async (void *data)
 	
 }
 
+#ifdef USE_WNCK
 static void
 new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 {
@@ -89,21 +94,27 @@ application_finished (WnckScreen *screen, WnckApplication *app, gpointer data)
 	g_hash_table_remove (hash, &pid);
 	
 }
+#endif
 
 PrettyTable *pretty_table_new (ProcData *procdata) {
 	PrettyTable *pretty_table = NULL;
 	gchar *path;
 	
+#ifdef USE_WNCK
 	screen = wnck_screen_get (0);
-	
+#endif	
+
 	pretty_table = g_malloc (sizeof (PrettyTable));
 	
 	pretty_table->cmdline_to_prettyicon = g_hash_table_new (g_str_hash, g_str_equal);
 	
+#ifdef USE_WNCK	
 	g_signal_connect (G_OBJECT (screen), "application_opened",
 			  G_CALLBACK (new_application), procdata);
 	g_signal_connect (G_OBJECT (screen), "application_closed",
 			  G_CALLBACK (application_finished), procdata);
+#endif
+
 	return pretty_table;
 }
 
@@ -210,6 +221,8 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command, gin
 	if (!icon_path)
 		return NULL;
 #endif	
+
+#ifdef USE_WNCK
 	text = g_strdup_printf ("%d", pid);
 	tmp_pixbuf = g_hash_table_lookup (pretty_table->cmdline_to_prettyicon, 
 		     text);
@@ -222,9 +235,11 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command, gin
 	
 	icon = gdk_pixbuf_scale_simple (tmp_pixbuf, 16, 16, GDK_INTERP_HYPER);
 	
-			
-
 	return icon;
+#else
+	return NULL;
+#endif
+
 }
 
 void free_entry (gpointer key, gpointer value, gpointer data) {
