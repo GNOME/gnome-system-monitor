@@ -70,7 +70,14 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 				g_free (error_msg);
 				break;
 			case EACCES:
-				error_msg = g_strdup_printf (_("Process Name: %s \n\nYou must be root to renice a process lower than 0. You can enter the root password to gain the necessary permission."), info->name);
+				error_msg = g_strdup_printf (
+					_("Process Name: %s\n\n"
+					  "You must be root to decrease a nice "
+					  "value of this process or set a nice "
+					  "value less than 0. "
+					  "You can enter the root password to "
+					  "gain the necessary permission."),
+					info->name);
 				procdialog_create_root_password_dialog (1, procdata, 
 									info->pid, nice_value,
 									error_msg);
