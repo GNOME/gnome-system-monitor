@@ -1,3 +1,19 @@
+2004-11-30  Benoît Dejean  <tazforever@dlfp.org>
+
+	* configure.in: Depends on libgtop-2.8.2.
+	
+	* src/procman.h:
+	* src/proctable.c: (remove_children_from_tree), (update_info),
+	(refresh_list): Removed que queue tag. Instead of tagging - then iterating
+	to find tagged ProcInfo, uses a removal_list and addition_list. This is
+	also a great speedup !
+	
+	ProcInfo is fully updated only when needed (is_visible and is displayed).
+	I think this is safe.
+		
+	gnome-system-monitor seems a bit faster : 2.6.0 eats 35% CPU with 200 processes
+	refresh every sec, where current uses about 27% CPU on my ibook 1GHZ.
+
 2004-11-28  Benoît Dejean  <tazforever@dlfp.org>
 
 	* src/interface.c: (sort_bytes):

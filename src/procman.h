@@ -141,7 +141,6 @@ struct _ProcInfo
 
 	guint		pid;
 
-	guint		queue		: 2;
 	guint		is_visible	: 1;
 	guint		is_running	: 1;
 	guint		is_thread	: 1;

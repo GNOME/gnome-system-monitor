@@ -53,8 +53,8 @@
 #endif
 
 
-static guint64 total_time = 0;
-static guint64 total_time_last = 0;
+static guint64 total_time = 1;
+static guint64 total_time_last = 1;
 
 
 static gint
@@ -519,20 +519,20 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 */
 static void
 remove_children_from_tree (ProcData *procdata, GtkTreeModel *model,
-			   GtkTreeIter *parent)
+			   GtkTreeIter *parent, GPtrArray *addition_list)
 {
 	do {
 		ProcInfo *child_info;
 		GtkTreeIter child;
 
 		if (gtk_tree_model_iter_children (model, &child, parent))
-			remove_children_from_tree (procdata, model, &child);
+			remove_children_from_tree (procdata, model, &child, addition_list);
 
 		gtk_tree_model_get (model, parent, COL_POINTER, &child_info, -1);
 		if (child_info) {
 			if (procdata->selected_process == child_info)
 				procdata->selected_process = NULL;
-			child_info->queue = NEEDS_ADDITION;
+			g_ptr_array_add(addition_list, child_info);
 			child_info->is_visible = FALSE;
 		}
 	} while (gtk_tree_model_iter_next (model, parent));
@@ -594,32 +594,9 @@ remove_info_from_list (ProcInfo *info, ProcData *procdata)
 static void
 update_info (ProcData *procdata, ProcInfo *info)
 {
-	GtkTreeModel *model;
 	glibtop_proc_state procstate;
-	glibtop_proc_uid procuid;
-	glibtop_proc_time proctime;
-	guint pcpu;
 
 	glibtop_get_proc_state (&procstate, info->pid);
-	glibtop_get_proc_uid (&procuid, info->pid);
-	glibtop_get_proc_time (&proctime, info->pid);
-
-	get_process_memory_info(info);
-
-	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-
-	if (total_time != 0) {
-		pcpu = (proctime.rtime - info->cpu_time_last) * 100 / total_time;
-		pcpu = MIN(pcpu, 100);
-	}
-	else
-		pcpu = 0;
-
-	info->cpu_time_last = proctime.rtime;
-	info->pcpu = pcpu;
-
-	info->nice = procuid.nice;
-
 	get_process_status (info, &procstate);
 
 	if (procdata->config.whose_process == ACTIVE_PROCESSES)	{
@@ -643,6 +620,23 @@ update_info (ProcData *procdata, ProcInfo *info)
 		GtkTreePath *path;
 		gchar *mem, *vmsize, *memres, *memshared, *memrss, *memxserver;
 
+		GtkTreeModel *model;
+		glibtop_proc_uid procuid;
+		glibtop_proc_time proctime;
+
+		glibtop_get_proc_uid (&procuid, info->pid);
+		glibtop_get_proc_time (&proctime, info->pid);
+
+		get_process_memory_info(info);
+
+		info->pcpu = (proctime.rtime - info->cpu_time_last) * 100 / total_time;
+		info->pcpu = MIN(info->pcpu, 100);
+
+		info->cpu_time_last = proctime.rtime;
+		info->nice = procuid.nice;
+
+
+		model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 		path = gtk_tree_model_get_path (model, &info->node);
 		gtk_tree_view_get_cell_area (GTK_TREE_VIEW (procdata->tree),
 					     path, NULL, &rect);
@@ -779,10 +773,11 @@ get_info (ProcData *procdata, gint pid)
 
 
 static void
-refresh_list (ProcData *procdata, const unsigned *pid_list, guint n)
+refresh_list (ProcData *procdata, const unsigned *pid_list, const guint n)
 {
 	GHashTable *pid_hash;
 	GList *list;
+	GPtrArray *addition_list = g_ptr_array_new ();
 	GPtrArray *removal_list = g_ptr_array_new ();
 	GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 	guint i;
@@ -794,7 +789,7 @@ refresh_list (ProcData *procdata, const unsigned *pid_list, guint n)
 		info = proctable_find_process (pid_list[i], procdata);
 		if (!info) {
 			info = get_info (procdata, pid_list[i]);
-			info->queue = NEEDS_ADDITION;
+			g_ptr_array_add(addition_list, info);
 			procdata->info = g_list_append (procdata->info, info);
 			g_hash_table_insert(procdata->pids, GINT_TO_POINTER(info->pid), info);
 		}
@@ -822,12 +817,11 @@ refresh_list (ProcData *procdata, const unsigned *pid_list, guint n)
 		if(!g_hash_table_lookup(pid_hash, GINT_TO_POINTER(info->pid)))
 		{
 			g_ptr_array_add (removal_list, info);
-			info->queue = NEEDS_REMOVAL;
 			/* remove all children from tree */
 			if (info->is_visible) {
 				GtkTreeIter child;
 				if (gtk_tree_model_iter_children (model, &child, &info->node))
-					remove_children_from_tree (procdata, model, &child);
+					remove_children_from_tree (procdata, model, &child, addition_list);
 			}
 		}
 	}
@@ -836,22 +830,13 @@ refresh_list (ProcData *procdata, const unsigned *pid_list, guint n)
 
 
 	/* Add or remove processes from the tree */
-	for(list = procdata->info; list; list = g_list_next (list)) {
-		ProcInfo * const info = list->data;
-
-		if (info->queue == NEEDS_REMOVAL) {
-			remove_info_from_tree (info, procdata);
-			info->queue = NEEDS_NOTHING;
-		} else if (info->queue == NEEDS_ADDITION) {
-			insert_info_to_tree (info, procdata);
-			info->queue = NEEDS_NOTHING;
-		}
-	}
+	g_ptr_array_foreach(removal_list,  (GFunc) remove_info_from_tree, procdata);
+	g_ptr_array_foreach(addition_list, (GFunc) insert_info_to_tree  , procdata);
 
 	/* Remove processes from the internal GList */
-	for(i = 0; i < removal_list->len; ++i)
-		remove_info_from_list (removal_list->pdata[i], procdata);
+	g_ptr_array_foreach(removal_list,  (GFunc) remove_info_from_list, procdata);
 
+	g_ptr_array_free (addition_list, TRUE);
 	g_ptr_array_free (removal_list, TRUE);
 }
 
