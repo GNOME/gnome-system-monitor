@@ -14,6 +14,7 @@
 #include <glibtop/swap.h>
 #include "procman.h"
 #include "load-graph.h"
+#include "util.h"
 
 
 static GList *object_list = NULL;
@@ -117,26 +118,6 @@ load_graph_draw (LoadGraph *g)
     
 }
 
-static gchar *
-get_size_string (gint size)
-{
-	gfloat fsize;
-
-	fsize = (gfloat) size;
-	if (fsize < 1024.0)
-		return g_strdup_printf (_("%d bytes"), (int)fsize);
-	fsize /= 1024.0;
-	if (fsize < 1024.0) 
-		return g_strdup_printf (_("%d K"), (int)fsize);
-		
-	fsize /= 1024.0;
-	if (fsize < 1024.0)
-		return g_strdup_printf (_("%.0f MB"), fsize);
-	
-	fsize /= 1024.0;
-	return g_strdup_printf (_("%.0f GB"), fsize);
-
-}
 
 static void
 get_load (gfloat data [2], LoadGraph *g)

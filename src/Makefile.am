@@ -14,7 +14,8 @@ procman_SOURCES = \
 	interface.c interface.h \
 	callbacks.c callbacks.h \
 	load-graph.c load-graph.h \
-	proctable.c proctable.h
+	proctable.c proctable.h \
+	util.h util.c
 
 procman_LDADD =  \
 	@PROCMAN_LIBS@ $(INTLLIBS) $(LIBGTOP_LIBS) -lpthread

@@ -22,14 +22,6 @@
 #endif
 
 #include <string.h>
-#if 0
-#include <gal/e-table/e-cell-number.h>
-#include <gal/e-table/e-cell-size.h>
-#include <gal/e-table/e-tree-memory.h>
-#include <gal/e-table/e-tree-memory-callbacks.h>
-#include <gal/e-table/e-tree-scrolled.h>
-#include <gal/widgets/e-unicode.h>
-#endif
 #include <glibtop.h>
 #include <glibtop/proclist.h>
 #include <glibtop/xmalloc.h>
@@ -81,7 +73,7 @@ proctable_new (ProcData *data)
                                   	GTK_POLICY_AUTOMATIC,
                                   	GTK_POLICY_AUTOMATIC);
 	
-	model = gtk_tree_store_new (NUM_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT,
+	model = gtk_tree_store_new (NUM_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_INT, G_TYPE_INT);
 				    
   	smodel = gtk_tree_model_sort_new_with_model (GTK_TREE_MODEL (model));
@@ -349,11 +341,14 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	}
 #endif	
 	if (newinfo->visible) {
+		gchar *mem;
 		model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
+		mem = get_size_string (newinfo->mem);
 		gtk_tree_store_set (GTK_TREE_STORE (model), &newinfo->node, 
-			    2, newinfo->mem,
+			    2, mem,
 			    3, newinfo->cpu,
 			   -1);	
+		g_free (mem);
 		/*g_print ("%s \n", newinfo->name);*/
 	}
 		
@@ -496,6 +491,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 {
 	GtkTreeModel *model;
 	GtkTreeIter row;
+	gchar *mem;
 	
 	/* Don't show process if it is not running */
 	if (procdata->config.whose_process == RUNNING_PROCESSES && 
@@ -525,13 +521,14 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	else
 		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0);
 	
-	
+	mem = get_size_string (info->mem);
 	gtk_tree_store_set (GTK_TREE_STORE (model), &row, 0, info->name,
 							  1, info->user,
-							  2, info->mem,
+							  2, mem,
 							  3, info->cpu,
 							  4, info->pid,
 							  -1);
+	g_free (mem);
 	info->node = row;
 	info->visible = TRUE;
 }
