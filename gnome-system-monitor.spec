@@ -2,7 +2,7 @@
 
 Summary: Simple process monitor
 Name: gnome-system-monitor
-Version: 2.0.3
+Version: 2.0.4
 Release: 1
 Copyright: GPL
 Group: Applications/System
