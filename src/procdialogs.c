@@ -595,7 +595,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 	
 	update = (gfloat) procdata->config.update_interval;
-	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.25, 100.0, 0.25, 1.0, 1.0);
+	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.50, 
+							  100.0, 0.25, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
 	gtk_signal_connect (GTK_OBJECT (spin_button), "focus_out_event",
 			    GTK_SIGNAL_FUNC (update_update_interval), procdata);
@@ -622,15 +623,6 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
 			    GTK_SIGNAL_FUNC (show_commands_toggled), procdata);
 	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
-	
-#if 0
-	check_button = gtk_check_button_new_with_label (_("Never Show Icons or Application Names \n ( faster startup time )"));
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
-				    !procdata->config.load_desktop_files);
-	gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
-			    GTK_SIGNAL_FUNC (show_icons_toggled), procdata);			    
-	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
-#endif
 	
 	check_button = gtk_check_button_new_with_label (_("Show Threads"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
@@ -663,7 +655,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 			  GTK_FILL|GTK_EXPAND, 0, 0, GNOME_PAD_SMALL);
 			  
 	update = (gfloat) procdata->config.graph_update_interval;
-	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.25, 100.0, 0.25, 1.0, 1.0);
+	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.25, 
+							  100.0, 0.25, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
 	gtk_signal_connect (GTK_OBJECT (spin_button), "focus_out_event",
 			    GTK_SIGNAL_FUNC (update_graph_update_interval), procdata);
@@ -718,7 +711,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 			  GTK_FILL|GTK_EXPAND, 0, 0, GNOME_PAD_SMALL);
 			  
 	update = (gfloat) procdata->config.disks_update_interval;
-	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.25, 100.0, 0.25, 1.0, 1.0);
+	adjustment = (GtkAdjustment *) gtk_adjustment_new (update / 1000.0, 1.0, 
+							   100.0, 1.0, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 0);
 	gtk_signal_connect (GTK_OBJECT (spin_button), "focus_out_event",
 			    GTK_SIGNAL_FUNC (update_disks_update_interval), procdata);

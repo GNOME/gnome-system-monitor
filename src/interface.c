@@ -432,6 +432,7 @@ create_sys_view (ProcData *procdata)
 	procdata->mem_graph = mem_graph;
 					
 	disk_frame = gtk_frame_new (_("Disks"));
+	gtk_frame_set_label_align (GTK_FRAME (disk_frame), 0.5, 0.5);
 	gtk_container_set_border_width (GTK_CONTAINER (disk_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), disk_frame, FALSE, TRUE, 0);
 	
