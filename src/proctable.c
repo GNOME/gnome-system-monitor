@@ -105,7 +105,7 @@ proctable_get_value (ETreeModel *model, ETreePath path, int column, void *data)
 
 	switch (column) {
 	case COL_NAME: {
-		return info->name;
+		return info->name_utf8;
 	}
 	case COL_USER: {
 		return info->user;
@@ -385,6 +385,8 @@ proctable_free_info (ProcInfo *info)
 		return;
 	if (info->name)
 		g_free (info->name);
+	if (info->name_utf8)
+		g_free (info->name_utf8);
 	if (info->cmd)
 		g_free (info->cmd);
 	if (info->arguments)
@@ -465,7 +467,8 @@ get_process_name (ProcData *procdata, ProcInfo *info, gchar *cmd, gchar *args)
 	else if (!name && !command)
 		name = g_strdup (cmd);
 		
-	info->name = e_utf8_from_locale_string (name);
+	info->name_utf8 = e_utf8_from_locale_string (name);
+	info->name = g_strdup (name);
 	
 	if (command) 
 		info->cmd = g_strdup (command);

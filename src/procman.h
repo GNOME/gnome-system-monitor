@@ -109,6 +109,7 @@ struct _ProcInfo
 	ETreePath	node;
 	GdkPixbuf	*pixbuf;
 	gchar		*name;
+	gchar		*name_utf8;
 	gchar		*user;
 	gchar		*cmd;
 	gchar		*arguments;

@@ -1,5 +1,15 @@
 2001-08-25  Kevin Vandersloot <kfv101@psu.edu>
 
+	Fix bug #59548 by only showing utf8 names for the e-tree
+	* procman.h: add name_utf8 string to ProcInfo structure
+
+	* proctable.c (get_name): do the utf8 thing on the name for the
+	name_utf8 string and g_strdup the name for the info->name
+	(proctable_get_value): return info->name_utf8 here instead
+	of info->name.
+
+2001-08-25  Kevin Vandersloot <kfv101@psu.edu>
+
 	* memmaps.c: connect to the "close" signal since "destroy" was
 	causing corruption when save the e-tree state file. Try to
 	raise the dialog if it already exists. For the close button
