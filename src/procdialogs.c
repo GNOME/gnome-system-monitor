@@ -322,21 +322,6 @@ show_tree_toggled (GtkToggleButton *button, gpointer data)
 }
 
 static void
-show_commands_toggled (GtkToggleButton *button, gpointer data)
-{
-	ProcData *procdata = data;
-	gboolean toggled;
-	
-	toggled = gtk_toggle_button_get_active (button);
-	
-	procdata->config.show_pretty_names = toggled;
-
-	proctable_clear_tree (procdata);
-	proctable_update_all (procdata);
-	
-}
-
-static void
 show_threads_toggled (GtkToggleButton *button, gpointer data)
 {
 	ProcData *procdata = data;
@@ -567,13 +552,6 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), vbox);
 	
-	check_button = gtk_check_button_new_with_label (_("Show Application Names"));
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
-				    procdata->config.show_pretty_names);
-	gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
-			    GTK_SIGNAL_FUNC (show_commands_toggled), procdata);
-	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
-	
 	check_button = gtk_check_button_new_with_label (_("Show Threads"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
 				    procdata->config.show_threads);
@@ -703,8 +681,7 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 	else
 		title = g_strdup (_("Change Priority"));
 		
-	dialog = gnome_dialog_new (title, title, 
-				   GNOME_STOCK_BUTTON_CANCEL, NULL);
+	dialog = gnome_dialog_new (title, GNOME_STOCK_BUTTON_CANCEL, title, NULL);
 	gnome_dialog_close_hides (GNOME_DIALOG (dialog), TRUE);
 	
 	main_vbox = GNOME_DIALOG (dialog)->vbox;
@@ -737,7 +714,7 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 	gnome_dialog_editable_enters (GNOME_DIALOG (dialog), GTK_EDITABLE (entry));	
 	retval = gnome_dialog_run_and_close (GNOME_DIALOG (dialog));
 	
-	if (retval == 0) {
+	if (retval == 1) {
 		password = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
 		
 		if (!password)
