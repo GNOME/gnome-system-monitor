@@ -100,8 +100,8 @@ struct _LoadGraph {
     
     gboolean draw;
 
-    long cpu_time [GLIBTOP_NCPU] [NCPUSTATES];
-    long cpu_last [GLIBTOP_NCPU] [NCPUSTATES];
+    guint64 cpu_time [GLIBTOP_NCPU] [NCPUSTATES];
+    guint64 cpu_last [GLIBTOP_NCPU] [NCPUSTATES];
     gboolean cpu_initialized;       
 };
 
@@ -125,10 +125,10 @@ struct _ProcInfo
 	gchar		*user;
 	gchar		*arguments;
 	gint		mem;
-	gint		cpu;
+	guint8		pcpu;
 	gint		pid;
 	gint		parent_pid;
-	gint		cpu_time_last;
+	guint64		cpu_time_last;
 	gint		nice;
 	gint		vmsize;
 	gint		memres;

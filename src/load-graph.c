@@ -122,7 +122,7 @@ load_graph_draw (LoadGraph *g)
 static void
 get_load (gfloat data [2], LoadGraph *g)
 {
-	gint i;
+	guint i;
 
 	glibtop_cpu cpu;
 
@@ -144,10 +144,9 @@ get_load (gfloat data [2], LoadGraph *g)
 
 	if (!g->cpu_initialized) {
 		for (i=0; i<g->n; i++) {
-			g->cpu_last [i][0] = g->cpu_time [i][0];
-			g->cpu_last [i][1] = g->cpu_time [i][1];
-			g->cpu_last [i][2] = g->cpu_time [i][2];
-			g->cpu_last [i][3] = g->cpu_time [i][3];
+			memcpy(g->cpu_last[i], g->cpu_time[i],
+			       sizeof g->cpu_last[i]);
+
 			data[i] = -1;
 		}
 		g->cpu_initialized = TRUE;
@@ -165,10 +164,7 @@ get_load (gfloat data [2], LoadGraph *g)
 		sys  = g->cpu_time [i][2] - g->cpu_last [i][2];
 		free = g->cpu_time [i][3] - g->cpu_last [i][3];
 
-		g->cpu_last [i][0] = g->cpu_time [i][0];
-		g->cpu_last [i][1] = g->cpu_time [i][1];
-		g->cpu_last [i][2] = g->cpu_time [i][2];
-		g->cpu_last [i][3] = g->cpu_time [i][3];
+		memcpy(g->cpu_last [i], g->cpu_time [i], sizeof g->cpu_last[i]);
 
 		total = MAX(usr + nice + sys + free, 1.0f);
 
@@ -246,10 +242,10 @@ load_graph_update (LoadGraph *g)
 		memcpy (g->odata [i], g->data [i], g->data_size);
 
 	switch (g->type) {
-	case CPU_GRAPH:
+	case LOAD_GRAPH_CPU:
 		get_load (g->data[0], g);
 		break;
-	case MEM_GRAPH:
+	case LOAD_GRAPH_MEM:
 		get_memory (g->data [0], g);
 		break;
 	}
@@ -300,21 +296,18 @@ load_graph_alloc (LoadGraph *g)
 	if (g->allocated)
 		return;
 
-	g->data = g_new0 (gfloat *, g->num_points);
-	g->odata = g_new0 (gfloat *, g->num_points);
+	g->data = g_new (gfloat *, g->num_points);
+	g->odata = g_new (gfloat *, g->num_points);
 	g->pos = g_new0 (guint, g->num_points);
 
 	g->data_size = sizeof (gfloat) * g->n;
 
 	for (i = 0; i < g->num_points; i++) {
-		g->data [i] = g_malloc0 (g->data_size);
-		g->odata [i] = g_malloc0 (g->data_size);
-	}
 
-	for (j = 0; j < g->n; j++) {
-		for (i = 0; i < g->num_points; i++) {
-			g->data [i][j] = -1;
-		}
+		g->data [i] = g_malloc (g->data_size);
+		for(j = 0; j < g->n; j++) g->data [i][j] = -1;
+
+		g->odata [i] = g_malloc0 (g->data_size);
 	}
 
 	g->allocated = TRUE;
@@ -397,13 +390,13 @@ load_graph_new (gint type, ProcData *procdata)
 
 	g->type = type;
 	switch (type) {
-	case CPU_GRAPH:
+	case LOAD_GRAPH_CPU:
 		if (procdata->config.num_cpus == 0)
 			g->n = 1;
 		else
 			g->n = procdata->config.num_cpus;
 		break;
-	case MEM_GRAPH:
+	case LOAD_GRAPH_MEM:
 		g->n = 2;
 		break;
 	}
@@ -416,11 +409,11 @@ load_graph_new (gint type, ProcData *procdata)
 	g->colors[0] = procdata->config.bg_color;
 	g->colors[1] = procdata->config.frame_color;
 	switch (type) {
-	case CPU_GRAPH:
+	case LOAD_GRAPH_CPU:
 		for (i=0;i<g->n;i++)
 			g->colors[2+i] = procdata->config.cpu_color[i];
 		break;
-	case MEM_GRAPH:
+	case LOAD_GRAPH_MEM:
 		g->colors[2] = procdata->config.mem_color;
 		g->colors[3] = procdata->config.swap_color;
 		break;

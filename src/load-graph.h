@@ -5,8 +5,8 @@
 
 enum
 {
-	CPU_GRAPH,
-	MEM_GRAPH
+	LOAD_GRAPH_CPU,
+	LOAD_GRAPH_MEM
 };
 
 

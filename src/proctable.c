@@ -50,12 +50,14 @@ static gint total_time = 0;
 static gint total_time_last = 0;
 
 
+#define PROCMAN_CMP(X, Y) (((X) == (Y)) ? 0 : (((X) < (Y)) ? -1 : 1))
+
+
 static gint
 sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer data)
 {
 	ProcInfo *infoa = NULL, *infob = NULL;
-	gint col = GPOINTER_TO_INT (data);
-	gint a, b;
+	const gint col = GPOINTER_TO_INT (data);
 
 	gtk_tree_model_get (model, itera, COL_POINTER, &infoa, -1);
 	gtk_tree_model_get (model, iterb, COL_POINTER, &infob, -1);
@@ -64,53 +66,38 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 
 	switch (col) {
 	case COL_MEM:
-		a = infoa->mem;
-		b = infob->mem;
-		break;
+		return PROCMAN_CMP(infoa->mem, infob->mem);
+
 	case COL_CPU:
-		a = infoa->cpu;
-		b = infob->cpu;
-		break;
+		return PROCMAN_CMP(infoa->pcpu, infoa->pcpu);
+
 	case COL_PID:
-		a = infoa->pid;
-		b = infob->pid;
-		break;
+		return PROCMAN_CMP(infoa->pid, infob->pid);
+
 	case COL_NICE:
-		a = infoa->nice;
-		b = infob->nice;
-		break;
+		return PROCMAN_CMP(infoa->nice, infob->nice);
+
 	case COL_VMSIZE:
-		a = infoa->vmsize;
-		b = infob->vmsize;
-		break;
+		return PROCMAN_CMP(infoa->vmsize, infob->vmsize);
+
 	case COL_MEMRES:
-		a = infoa->memres;
-		b = infob->memres;
-		break;
+		return PROCMAN_CMP(infoa->memres, infoa->memres);
+
 	case COL_MEMSHARED:
-		a = infoa->memshared;
-		b = infob->memshared;
-		break;
+		return PROCMAN_CMP(infoa->memshared, infob->memshared);
+
 	case COL_MEMRSS:
-		a = infoa->memrss;
-		b = infob->memrss;
-		break;
+		return PROCMAN_CMP(infoa->memrss, infob->memrss);
+
 	case COL_MEMXSERVER:
-		a = infoa->memxserver;
-		b = infob->memxserver;
-		break;
+		return PROCMAN_CMP(infoa->memxserver, infob->memxserver);
+
 	default:
 		return 0;
-		break;
 	}
-
-	if (a > b)
-		return -1;
-	else if (a < b)
-		return 1;
-	else
-		return 0;
 }
+
+
 
 
 GtkWidget *
@@ -443,7 +430,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 			    COL_MEMSHARED, memshared,
 			    COL_MEMRSS, memrss,
 			    COL_MEMXSERVER, memxserver,
-			    COL_CPU, info->cpu,
+			    COL_CPU, info->pcpu,
 			    COL_PID, info->pid,
 			    COL_NICE, info->nice,
 			    -1);
@@ -546,8 +533,8 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	glibtop_proc_uid procuid;
 	glibtop_proc_time proctime;
 	gchar *mem, *vmsize, *memres, *memshared, *memrss, *memxserver;
-	gint newcputime;
-	gint pcpu;
+	guint64 newcputime;
+	guint8 pcpu;
 	WnckResourceUsage xresources;
 
 	glibtop_get_proc_state (&procstate, pid);
@@ -578,10 +565,10 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	else
 		pcpu = 0;
 
-	pcpu = CLAMP(pcpu, 0, 100);
+	pcpu = MIN(pcpu, 100);
 
 	info->cpu_time_last = newcputime;
-	info->cpu = pcpu;
+	info->pcpu = pcpu;
 	info->nice = procuid.nice;
 
 	get_process_status (info, &procstate);
@@ -631,7 +618,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 				    COL_MEMSHARED, memshared,
 				    COL_MEMRSS, memrss,
 				    COL_MEMXSERVER, memxserver,
-				    COL_CPU, info->cpu,
+				    COL_CPU, info->pcpu,
 				    COL_NICE, info->nice,
 				    -1);
 		g_free (mem);
@@ -655,7 +642,7 @@ get_info (ProcData *procdata, gint pid)
 	glibtop_proc_args procargs;
 	struct passwd *pwd;
 	gchar *arguments;
-	gint newcputime, i;
+	guint64 newcputime, i;
 	WnckResourceUsage xresources;
 
 	glibtop_get_proc_state (&procstate, pid);
@@ -702,7 +689,7 @@ get_info (ProcData *procdata, gint pid)
 	 */
 	info->mem += info->memxserver;
 
-	info->cpu = 0;
+	info->pcpu = 0;
 	info->pid = pid;
 	info->parent_pid = procuid.ppid;
 	info->cpu_time_last = newcputime;

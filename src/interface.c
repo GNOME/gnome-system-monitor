@@ -372,7 +372,7 @@ create_sys_view (ProcData *procdata)
 	cpu_graph_box = gtk_vbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (cpu_hbox), cpu_graph_box, TRUE, TRUE, 0);
 
-	cpu_graph = load_graph_new (CPU_GRAPH, procdata);
+	cpu_graph = load_graph_new (LOAD_GRAPH_CPU, procdata);
 	gtk_box_pack_start (GTK_BOX (cpu_graph_box), cpu_graph->main_widget, TRUE, TRUE, 0);
 
 	sizegroup = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -432,7 +432,7 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (mem_hbox), mem_graph_box, TRUE, TRUE, 0);
 
 
-	mem_graph = load_graph_new (MEM_GRAPH, procdata);
+	mem_graph = load_graph_new (LOAD_GRAPH_MEM, procdata);
 	gtk_box_pack_start (GTK_BOX (mem_graph_box), mem_graph->main_widget, 
 			    TRUE, TRUE, 0);
 	

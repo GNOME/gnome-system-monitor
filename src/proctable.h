@@ -17,8 +17,8 @@
  *
  */
 
-#ifndef _PROCTABLE_H_
-#define _PROCTABLE_H_
+#ifndef _PROCMAN_PROCTABLE_H_
+#define _PROCMAN_PROCTABLE_H_
 
 
 enum
@@ -54,4 +54,4 @@ void		proctable_free_table (ProcData *data);
 void		proctable_search_table (ProcData *procdata, gchar *string);
 
 
-#endif
+#endif /* _PROCMAN_PROCTABLE_H_ */

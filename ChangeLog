@@ -1,3 +1,23 @@
+2004-10-29  Benoît Dejean  <tazforever@dlfp.org>
+
+	* * s/(MEM|CPU)_GRAPH/LOAD_GRAPH_$1/g
+
+	* src/load-graph.c: (get_load), (load_graph_update),
+	(load_graph_alloc), (load_graph_new): Replace a bunch of = with memcpy.
+	Tuned loops.
+	
+	* src/procman.h: cpu_time, cpu_last, cpu_time_last are guint64.
+	cpu -> guint8 pcpu
+	
+	* src/proctable.c: (sort_ints), (insert_info_to_tree),
+	(update_info), (get_info): Updated.
+	
+	libgtop struct have a lot of guint64 members. currently they are boxed
+	into gint which is obviously bad. More work has to be done to fix all of
+	this.
+	
+	* src/proctable.h: Stronger #ifdef.
+
 2004-10-28  Benoît Dejean  <tazforever@dlfp.org>
 
 	* src/memmaps.c: (vmoff_tostring): Renamed vmoff_strdup_printf.
