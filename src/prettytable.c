@@ -112,7 +112,7 @@ PrettyTable *pretty_table_new (ProcData *procdata) {
 	pretty_table->default_hash = g_hash_table_new (g_str_hash, g_str_equal);
 	
 #ifdef USE_WNCK
-	screen = wnck_screen_get (0);
+	screen = wnck_screen_get_default ();
 	wnck_screen_force_update (screen);
 	list = wnck_screen_get_windows (screen);
 	while (list) {
