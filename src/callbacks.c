@@ -368,10 +368,10 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 
 	if (num == 0) {
 		if (procdata->timeout == -1)
-			procdata->timeout = gtk_timeout_add (procdata->config.update_interval,
-							     cb_timeout, procdata);
-		load_graph_stop (procdata->cpu_graph);
-		load_graph_stop (procdata->mem_graph);
+			procdata->timeout = gtk_timeout_add (
+				procdata->config.update_interval,
+				cb_timeout, procdata);
+
 		if (procdata->selected_process)
 			update_sensitivity (procdata, TRUE);
 	}
@@ -380,14 +380,22 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 			gtk_timeout_remove (procdata->timeout);
 			procdata->timeout = -1;
 		}
-		load_graph_start (procdata->cpu_graph);
-		load_graph_start (procdata->mem_graph);
-		load_graph_draw (procdata->cpu_graph);
-		load_graph_draw (procdata->mem_graph);
+
 		if (procdata->selected_process)
 			update_sensitivity (procdata, FALSE);
 	}
 
+
+	if (num == 1) {
+		load_graph_start (procdata->cpu_graph);
+		load_graph_start (procdata->mem_graph);
+		load_graph_draw (procdata->cpu_graph);
+		load_graph_draw (procdata->mem_graph);
+	}
+	else {
+		load_graph_stop (procdata->cpu_graph);
+		load_graph_stop (procdata->mem_graph);
+	}
 }
 
 
