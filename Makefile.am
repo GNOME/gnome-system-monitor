@@ -5,15 +5,15 @@ SUBDIRS = po src
 EXTRA_DIST = \
 	procman.desktop.in \
 	procman.spec \
-	xml-i18n-extract.in \
-	xml-i18n-merge.in \
-	xml-i18n-update.in \
+	intltool-extract.in \
+	intltool-merge.in \
+	intltool-update.in \
 	HACKING 
 
 Applicationsdir = $(datadir)/gnome/apps/System
 Applications_in_files = procman.desktop.in
 Applications_DATA = $(Applications_in_files:.desktop.in=.desktop)
-@XML_I18N_MERGE_DESKTOP_RULE@
+@INTLTOOL_DESKTOP_RULE@
 
 install-data-local:
 	@$(NORMAL_INSTALL)

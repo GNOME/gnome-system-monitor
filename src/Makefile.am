@@ -1,7 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
 INCLUDES = \
-	-I$(top_srcdir)/intl \
 	-DPROCMAN_DATADIR=\"$(datadir)/procman/\" \
 	@PROCMAN_CFLAGS@ 
 
@@ -22,8 +21,7 @@ procman_SOURCES = \
 	favorites.c favorites.h \
 	defaulttable.h
 
-procman_LDADD =  \
-	@PROCMAN_LIBS@ $(INTLLIBS) 
+procman_LDADD = @PROCMAN_LIBS@
 
 specdir = $(datadir)/procman
 

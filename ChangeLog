@@ -1,3 +1,12 @@
+2001-12-08  Gediminas Paulauskas <menesis@delfi.lt>
+
+	* configure.in, Makefile.am: use intltool instead of xml-i18n-tools;
+	define GETTEXT_PACKAGE
+	* acconfig.h: add template for GETTEXT_PACKAGE
+	* src/procan.c: get translated messages in UTF-8 codeset.
+	* src/Makefile.am: (INCLUDES): remove intl
+	(procman_LDADD): remove $(INTLLIBS)
+
 2001-12-03  Jesus Bravo Alvarez  <jba@pobox.com>
 
 	* configure.in: Added gl (Galician) to ALL_LINGUAS
