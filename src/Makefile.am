@@ -3,8 +3,7 @@
 INCLUDES = \
 	-I$(top_srcdir)/intl \
 	-DPROCMAN_DATADIR=\"$(datadir)/procman/\" \
-	@PROCMAN_CFLAGS@ \
-	$(LIBGTOP_INCS)
+	@PROCMAN_CFLAGS@ 
 
 bin_PROGRAMS = procman
 
@@ -24,7 +23,7 @@ procman_SOURCES = \
 	defaulttable.h
 
 procman_LDADD =  \
-	@PROCMAN_LIBS@ $(INTLLIBS) $(LIBGTOP_LIBS) 
+	@PROCMAN_LIBS@ $(INTLLIBS) 
 
 specdir = $(datadir)/procman
 
