@@ -294,11 +294,10 @@ create_sys_view (ProcData *procdata)
 	GtkListStore *model;
 	GtkTreeViewColumn *col;
 	GtkCellRenderer *cell;
-	gchar *titles[5] = {_("Disk Name"),
+	gchar *titles[5] = {_("Name"),
+			    _("Directory"),
 			    _("Used Space"),
-			    _("Free Space"),
-			    _("Total Space"),
-			    _("Mount Directory")
+			    _("Total Space")
 			    };
 	LoadGraph *cpu_graph, *mem_graph;
 	gint i;
@@ -353,9 +352,8 @@ create_sys_view (ProcData *procdata)
 					GNOME_PAD_SMALL);
 	
 	
-	table = gtk_table_new (2, 3, FALSE);
+	table = gtk_table_new (2, 6, FALSE);
 	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), table, FALSE, FALSE, 0);
-
 	
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
@@ -365,19 +363,34 @@ create_sys_view (ProcData *procdata)
 	gtk_signal_connect (GTK_OBJECT (color_picker), "color_set",
 			    GTK_SIGNAL_FUNC (cb_mem_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, 0, 0, 0, 0);
-
 	
-	label = gtk_label_new (_("Memory Used / Total :"));
+	label = gtk_label_new (_("Memory"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
 	
-	mem_graph->mem_label = gtk_label_new ("");
-	gtk_misc_set_padding (GTK_MISC (mem_graph->mem_label), GNOME_PAD_SMALL, 0);
-	gtk_misc_set_alignment (GTK_MISC (mem_graph->mem_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), mem_graph->mem_label, 2, 3, 0, 1, 
+	label = gtk_label_new (_("Used :"));
+	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1, GTK_FILL, 0, 0, 0);
+	
+	mem_graph->memused_label = gtk_label_new ("");
+	gtk_misc_set_padding (GTK_MISC (mem_graph->memused_label), GNOME_PAD_SMALL, 0);
+	gtk_misc_set_alignment (GTK_MISC (mem_graph->memused_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), mem_graph->memused_label, 3, 4, 0, 1, 
 			  GTK_FILL, 0, 0, 0);
-
+	
+	label = gtk_label_new (_("Total :"));
+	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), label, 4, 5, 0, 1, GTK_FILL, 0, 0, 0);
+	
+	mem_graph->memtotal_label = gtk_label_new ("");
+	gtk_misc_set_padding (GTK_MISC (mem_graph->memtotal_label), GNOME_PAD_SMALL, 0);
+	gtk_misc_set_alignment (GTK_MISC (mem_graph->memtotal_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), mem_graph->memtotal_label, 5, 6, 0, 1, 
+			  GTK_FILL, 0, 0, 0);
+	
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
 				    mem_graph->colors[3].red,
@@ -387,21 +400,37 @@ create_sys_view (ProcData *procdata)
 			    GTK_SIGNAL_FUNC (cb_swap_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, 0, 0, 0, 0);
 			  
-	label = gtk_label_new (_("Swap Used / Total :"));
+	label = gtk_label_new (_("Swap"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
 	
-	mem_graph->swap_label = gtk_label_new ("");
-	gtk_misc_set_padding (GTK_MISC (mem_graph->swap_label), GNOME_PAD_SMALL, 0);
-	gtk_misc_set_alignment (GTK_MISC (mem_graph->swap_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), mem_graph->swap_label, 2, 3, 1, 2, 
+	label = gtk_label_new (_("Used :"));
+	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2, GTK_FILL, 0, 0, 0);
+	
+	mem_graph->swapused_label = gtk_label_new ("");
+	gtk_misc_set_padding (GTK_MISC (mem_graph->swapused_label), GNOME_PAD_SMALL, 0);
+	gtk_misc_set_alignment (GTK_MISC (mem_graph->swapused_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), mem_graph->swapused_label, 3, 4, 1, 2, 
+			  GTK_FILL, 0, 0, 0);
+			  
+	label = gtk_label_new (_("Total :"));
+	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), label, 4, 5, 1, 2, GTK_FILL, 0, 0, 0);
+	
+	mem_graph->swaptotal_label = gtk_label_new ("");
+	gtk_misc_set_padding (GTK_MISC (mem_graph->swaptotal_label), GNOME_PAD_SMALL, 0);
+	gtk_misc_set_alignment (GTK_MISC (mem_graph->swaptotal_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), mem_graph->swaptotal_label, 5, 6, 1, 2, 
 			  GTK_FILL, 0, 0, 0);	
 	
 	procdata->mem_graph = mem_graph;
 	gtk_widget_show_all (vbox);
 				
-	disk_frame = gtk_frame_new (_("Disks"));
+	disk_frame = gtk_frame_new (_("Devices"));
 	gtk_container_set_border_width (GTK_CONTAINER (disk_frame), GNOME_PAD_SMALL);
 	gtk_paned_add2 (GTK_PANED (vpane), disk_frame);
 	
@@ -421,7 +450,7 @@ create_sys_view (ProcData *procdata)
   	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (disk_tree), TRUE);
   	g_object_unref (G_OBJECT (model));
   	
-  	for (i = 0; i < 5; i++) {
+  	for (i = 0; i < 4; i++) {
   		cell = gtk_cell_renderer_text_new ();
   		col = gtk_tree_view_column_new_with_attributes (titles[i],
 						    		cell,

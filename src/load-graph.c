@@ -192,17 +192,15 @@ get_memory (gfloat data [1], LoadGraph *g)
     
     text1 = get_size_string (mem.total);
     text2 = get_size_string (mem.used);
-    text = g_strdup_printf ("%s / %s", text2, text1);
-    gtk_label_set_text (GTK_LABEL (g->mem_label), text);
-    g_free (text);
+    gtk_label_set_text (GTK_LABEL (g->memused_label), text2);
+    gtk_label_set_text (GTK_LABEL (g->memtotal_label), text1);
     g_free (text1);
     g_free (text2);
     
     text1 = get_size_string (swap.total);
     text2 = get_size_string (swap.used);
-    text = g_strdup_printf ("%s / %s", text2, text1);
-    gtk_label_set_text (GTK_LABEL (g->swap_label), text);
-    g_free (text);
+    gtk_label_set_text (GTK_LABEL (g->swapused_label), text2);
+    gtk_label_set_text (GTK_LABEL (g->swaptotal_label), text1);
     g_free (text1);
     g_free (text2);
     

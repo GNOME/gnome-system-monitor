@@ -512,13 +512,12 @@ cb_update_disks (gpointer data)
 	entry = glibtop_get_mountlist (&mountlist, 0);
 	for (i=0; i < mountlist.number; i++) {
 		glibtop_fsusage usage;
-		gchar *text[5];
+		gchar *text[4];
 				
 		glibtop_get_fsusage (&usage, entry[i].mountdir);
 		text[0] = g_strdup (entry[i].devname);
-		text[4] = g_strdup (entry[i].mountdir);
-		text[1] = get_size_string ((float)(usage.blocks - usage.bfree) * 512);
-		text[2] = get_size_string ((float) usage.bfree * 512);
+		text[1] = g_strdup (entry[i].mountdir);
+		text[2] = get_size_string ((float)(usage.blocks - usage.bfree) * 512);
 		text[3] = get_size_string ((float) usage.blocks * 512);
 		/* Hmm, usage.blocks == 0 seems to get rid of /proc and all
 		** the other useless entries */
@@ -530,8 +529,7 @@ cb_update_disks (gpointer data)
 					    0, text[0],
 					    1, text[1],
 					    2, text[2],
-					    3, text[3],
-					    4, text[4], -1);
+					    3, text[3], -1);
 			if (selected_disk && !g_strcasecmp (selected_disk, text[0])) {
 				GtkTreePath *path;
 				g_print ("selected disk %s \n", text[0]);
@@ -549,7 +547,6 @@ cb_update_disks (gpointer data)
 		g_free (text[1]);
 		g_free (text[2]);
 		g_free (text[3]);
-		g_free (text[4]);
 	}
 	
 	glibtop_free (entry);

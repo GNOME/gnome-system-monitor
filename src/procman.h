@@ -92,8 +92,10 @@ struct _LoadGraph {
     GtkWidget *main_widget;
     GtkWidget *disp;
     GtkWidget *label;
-    GtkWidget *mem_label;
-    GtkWidget *swap_label;
+    GtkWidget *memused_label;
+    GtkWidget *memtotal_label;
+    GtkWidget *swapused_label;
+    GtkWidget *swaptotal_label;
     GdkPixmap *pixmap;
     GdkGC *gc;
     int timer_index;
