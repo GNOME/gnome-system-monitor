@@ -1,39 +1,25 @@
 ## Process this file with automake to produce Makefile.in
 
 INCLUDES = \
+	-I/usr/include/gtk-2.0 \
 	-I$(top_srcdir)/intl \
 	-DPROCMAN_DATADIR=\"$(datadir)/procman/\" \
-	$(GNOME_INCLUDEDIR) \
-	$(LIBGTOP_INCS) \
-	$(GAL_CFLAGS)
+	@PROCMAN_CFLAGS@ \
+	$(LIBGTOP_INCS)
 
 bin_PROGRAMS = procman
 
 procman_SOURCES = \
-	procman.c  procman.h\
+	procman.c  procman.h \
 	interface.c interface.h \
 	callbacks.c callbacks.h \
-	proctable.c proctable.h \
-	infoview.c infoview.h \
-	procdialogs.c procdialogs.h \
-	prettytable.c prettytable.h \
-	memmaps.c memmaps.h \
-	favorites.c favorites.h \
-	e-clipped-label.c e-clipped-label.h \
-	procactions.c procactions.h \
 	load-graph.c load-graph.h \
-	util.c util.h \
-	defaulttable.h
+	proctable.c proctable.h
 
-procman_LDADD = $(GNOME_LIBDIR) $(GNOMEUI_LIBS) \
-	$(INTLLIBS) $(LIBGTOP_LIBS) $(GAL_LIBS) -lpthread
+procman_LDADD =  \
+	@PROCMAN_LIBS@ $(INTLLIBS) $(LIBGTOP_LIBS) -lpthread
 
 specdir = $(datadir)/procman
-spec_DATA = \
-	proctable.etspec \
-	simple.etspec \
-	memmaps.etspec
 
 EXTRA_DIST = \
-	README.hacking \
-	$(spec_DATA)
+	README.hacking 

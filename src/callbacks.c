@@ -21,21 +21,26 @@
 #  include <config.h>
 #endif
 
+#if 0
 #include <gnome.h>
+#endif
 #include <glibtop/xmalloc.h>
 #include <glibtop/mountlist.h>
 #include <glibtop/fsusage.h>
 #include <signal.h>
 #include "callbacks.h"
 #include "interface.h"
+#if 0
 #include "proctable.h"
 #include "infoview.h"
 #include "procdialogs.h"
 #include "memmaps.h"
 #include "favorites.h"
 #include "procactions.h"
+#endif
 #include "load-graph.h"
 
+#if 0
 void
 cb_properties_activate                (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
@@ -167,7 +172,7 @@ cb_about_activate                     (GtkMenuItem     *menuitem,
 				 
 	gtk_widget_show (about);  
 }
-
+#endif
 
 void
 cb_app_exit (GtkObject *object, gpointer user_data)
@@ -182,7 +187,7 @@ void
 cb_app_delete (GtkWidget *window, GdkEventAny *ev, gpointer data)
 {
 	ProcData *procdata = data;
-	
+#if 0	
 	if (procdata)
 	{
 		procman_save_config (procdata);
@@ -195,11 +200,13 @@ cb_app_delete (GtkWidget *window, GdkEventAny *ev, gpointer data)
 		gtk_timeout_remove (procdata->mem_graph->timer_index);
 	if (procdata->disk_timeout != -1)
 		gtk_timeout_remove (procdata->disk_timeout);
-	
+#endif	
+	if (procdata->timeout != -1)
+		gtk_timeout_remove (procdata->timeout);
 	gtk_main_quit ();
 	
 }
-
+#if 0
 gboolean	
 cb_close_simple_dialog (GnomeDialog *dialog, gpointer data)
 {
@@ -520,7 +527,7 @@ cb_double_click (ETree *tree, int row, ETreePath path, int col,
 	toggle_infoview (procdata);
 
 }
-
+#endif
 void		
 cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page, 
 		gint num, gpointer data)
@@ -535,8 +542,8 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 			 			     	     cb_timeout, procdata);
 		load_graph_stop (procdata->cpu_graph);
 		load_graph_stop (procdata->mem_graph);
-		if (procdata->selected_node)
-			update_sensitivity (procdata, TRUE);
+		/*if (procdata->selected_node)
+			update_sensitivity (procdata, TRUE);*/
 	}
 	else {
 		if (procdata->timeout != -1 ) {
@@ -545,12 +552,12 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 		}
 		load_graph_start (procdata->cpu_graph);
 		load_graph_start (procdata->mem_graph);
-		if (procdata->selected_node)
-			update_sensitivity (procdata, FALSE);
+		/*if (procdata->selected_node)
+			update_sensitivity (procdata, FALSE);*/
 	}
 
 }
-
+#if 0
 static gchar *
 get_size_string (gint size)
 {
@@ -620,7 +627,7 @@ cb_update_disks (gpointer data)
 	
 	return TRUE;
 }
-	
+#endif	
 gint
 cb_timeout (gpointer data)
 {
@@ -630,3 +637,5 @@ cb_timeout (gpointer data)
 	
 	return TRUE;
 }
+
+
