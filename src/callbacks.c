@@ -478,41 +478,29 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 
 
 static GdkPixbuf*
-get_icon_for_device(GnomeIconTheme *icontheme, const char *mountpoint)
+get_icon_for_device(const char *mountpoint)
 {
 	GdkPixbuf *pixbuf;
+	GtkIconTheme *icon_theme;
 	GnomeVFSVolumeMonitor* monitor;
 	GnomeVFSVolume* volume;
-	char *i_type;
-	char *path;
-	int size = 24;
+	char *icon_name;
 
 	monitor = gnome_vfs_get_volume_monitor();
 	volume = gnome_vfs_volume_monitor_get_volume_for_path(monitor, mountpoint);
 
-	if(!volume) return NULL;
-
-	i_type = gnome_vfs_volume_get_icon(volume);
-	gnome_vfs_volume_unref(volume);
-
-	path = gnome_icon_theme_lookup_icon(icontheme, i_type, 24, NULL, &size);
-
-	g_free(i_type);
-
-	if(!path) return NULL;
-
-	pixbuf = gdk_pixbuf_new_from_file(path, NULL);
-
-	g_free(path);
-
-	if (pixbuf && size != 24)
+	if(!volume)
 	{
-		GdkPixbuf *scaled;
-		scaled = gdk_pixbuf_scale_simple (pixbuf, 24, 24,
-						  GDK_INTERP_HYPER);
-		g_object_unref(pixbuf);
-		pixbuf = scaled;
+		g_warning("Cannont get volume for mount point '%s'", mountpoint);
+		return NULL;
 	}
+
+	icon_name = gnome_vfs_volume_get_icon(volume);
+	icon_theme = gtk_icon_theme_get_default ();
+	pixbuf = gtk_icon_theme_load_icon (icon_theme, icon_name, 24, 0, NULL);
+
+	gnome_vfs_volume_unref(volume);
+	g_free (icon_name);
 
 	return pixbuf;
 }
@@ -527,27 +515,15 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 	glibtop_fsusage usage;
 	gchar *text[6];
 	GdkPixbuf *pixbuf;
-	GnomeIconTheme *icontheme;
 	GtkTreeIter row;
 	float percentage, btotal, bfree, bused;
 
 	glibtop_get_fsusage (&usage, entry->mountdir);
 
-	/* Hmm, usage.blocks == 0 seems to get rid of /proc and all
-	** the other useless entries
-	** glibtop_get_mountlist(&buf, FALSE) in libgtop2.8 is now sane.
-	** so this test will be removed
-	** TODO: remove this test
-	*/
-	if (usage.blocks == 0)	return;
-
-
-	icontheme = gnome_icon_theme_new();
-
 	fsusage_stats(&usage, &bused, &bfree, &btotal, &percentage);
 
 	/*  Load an icon corresponding to the type of the device */
-	pixbuf = get_icon_for_device(icontheme, entry->mountdir);
+	pixbuf = get_icon_for_device(entry->mountdir);
 
 	text[0] = g_strdup (entry->devname);
 	text[1] = g_strdup (entry->mountdir);
@@ -578,7 +554,6 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 	g_free (text[5]);
 
 	if(pixbuf) g_object_unref (pixbuf);
-	g_object_unref (icontheme);
 }
 
 
