@@ -224,6 +224,8 @@ create_tree (ProcData *procdata)
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                   	GTK_POLICY_AUTOMATIC,
                                   	GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
+					     GTK_SHADOW_IN);
 	
 	model = gtk_tree_store_new (1, G_TYPE_STRING);
 	
@@ -370,7 +372,7 @@ void create_blacklist_dialog (ProcData *procdata)
    		}
 
 		blacklist_dialog = gtk_dialog_new_with_buttons (_("Hidden Processes"), 
-								NULL,
+								GTK_WINDOW (procdata->app),
 								GTK_DIALOG_DESTROY_WITH_PARENT,
 						     		GTK_STOCK_CLOSE, 
 						     		GTK_RESPONSE_CLOSE,
@@ -381,7 +383,7 @@ void create_blacklist_dialog (ProcData *procdata)
 		gtk_dialog_set_has_separator (GTK_DIALOG (blacklist_dialog), FALSE);
 		
 		vbox = GTK_DIALOG (blacklist_dialog)->vbox;
-		gtk_box_set_spacing (GTK_BOX (vbox), 2);
+		gtk_box_set_spacing (GTK_BOX (vbox), 12);
 		
 		main_vbox = gtk_vbox_new (FALSE, 12);
 		gtk_box_pack_start (GTK_BOX (vbox), main_vbox, TRUE, TRUE, 0);

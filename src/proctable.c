@@ -997,10 +997,18 @@ proctable_search_table (ProcData *procdata, gchar *string)
 	}
 
 	if (index == increment) {
-		dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
+	        /*translators: primary alert message*/
+		dialog = gtk_message_dialog_new (GTK_WINDOW (procdata->app),
+						 GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_MODAL,
 						 GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-						 _("%s could not be found."), string,
+						 _("Could not find \"%s\""), string,
 						 NULL);
+		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+							  _("There are no processes "
+							    "containing the searched string. "
+							    "Please note that the search is "
+							    "performed only on processes showed "
+							    "processes list."));
 		gtk_dialog_run (GTK_DIALOG (dialog));
 		gtk_widget_destroy (dialog);
 	}

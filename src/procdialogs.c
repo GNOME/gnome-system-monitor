@@ -451,6 +451,7 @@ create_proc_field_page (ProcData *procdata)
 {
 	GtkWidget *vbox;
 	GtkWidget *scrolled;
+	GtkWidget *label;
 	GtkWidget *tree = procdata->tree, *treeview;
 	GList *columns = NULL;
 	GtkListStore *model;
@@ -459,6 +460,10 @@ create_proc_field_page (ProcData *procdata)
 
 	vbox = gtk_vbox_new (FALSE, 6);
 	
+	label = gtk_label_new_with_mnemonic (_("Processes i_nfo showed in list:"));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
+
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                   	GTK_POLICY_AUTOMATIC,
@@ -471,6 +476,7 @@ create_proc_field_page (ProcData *procdata)
 	treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
 	gtk_container_add (GTK_CONTAINER (scrolled), treeview);
 	g_object_unref (G_OBJECT (model));
+	gtk_label_set_mnemonic_widget (GTK_LABEL (label), treeview);
 	
 	column = gtk_tree_view_column_new ();
 	
@@ -550,7 +556,11 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 					      GTK_DIALOG_DESTROY_WITH_PARENT,
 					      GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 					      NULL);
-	gtk_window_set_default_size (GTK_WINDOW (dialog), 400,  375);
+	/* FIXME: we should not declare the window size, but let it's   */
+	/* driven by window childs. The problem is that the fields list */
+	/* have to show at least 4 items to respect HIG. I don't know   */
+	/* any function to set list height by contents/items inside it. */
+	gtk_window_set_default_size (GTK_WINDOW (dialog), 400, 420);
 	gtk_container_set_border_width (GTK_CONTAINER (dialog), 6);
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 	prefs_dialog = dialog;

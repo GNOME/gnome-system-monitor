@@ -330,52 +330,55 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 	ProcData * const procdata = data;
 	GtkWidget *memmapsdialog;
 	GtkWidget *dialog_vbox, *vbox;
-	GtkWidget *cmd_hbox;
 	GtkWidget *label;
 	GtkWidget *scrolled;
 	GtkWidget *tree;
 	ProcInfo *info;
 	gint timer;
+	gchar *tmp;
 
 	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 	g_return_if_fail (info);
 
-	memmapsdialog = gtk_dialog_new_with_buttons (_("Memory Maps"), NULL,
+	memmapsdialog = gtk_dialog_new_with_buttons (_("Memory Maps"), GTK_WINDOW (procdata->app),
 						     GTK_DIALOG_DESTROY_WITH_PARENT,
 						     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 						     NULL);
+	/*FIXME: maybe the window title could be "Memory Maps - PROCESS_NAME" ?*/
 	gtk_window_set_resizable (GTK_WINDOW (memmapsdialog), TRUE);
 	gtk_window_set_default_size (GTK_WINDOW (memmapsdialog), 575, 400);
 	gtk_dialog_set_has_separator (GTK_DIALOG (memmapsdialog), FALSE);
-	gtk_container_set_border_width (GTK_CONTAINER (memmapsdialog), 5);
+	gtk_container_set_border_width (GTK_CONTAINER (memmapsdialog), 6);
 
 	vbox = GTK_DIALOG (memmapsdialog)->vbox;
-	gtk_box_set_spacing (GTK_BOX (vbox), 2);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
+	gtk_box_set_spacing (GTK_BOX (vbox), 12);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 
 	dialog_vbox = gtk_vbox_new (FALSE, 6);
-	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 12);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 0);
 	gtk_box_pack_start (GTK_BOX (vbox), dialog_vbox, TRUE, TRUE, 0);
 
-	cmd_hbox = gtk_hbox_new (FALSE, 12);
-	gtk_box_pack_start (GTK_BOX (dialog_vbox), cmd_hbox, FALSE, FALSE, 0);
-
-	label = gtk_label_new (_("Process name:"));
-	gtk_box_pack_start (GTK_BOX (cmd_hbox),label, FALSE, FALSE, 0);
-
-	label = gtk_label_new ("");
-	gtk_label_set_text (GTK_LABEL (label), info->name);
-	gtk_box_pack_start (GTK_BOX (cmd_hbox),label, FALSE, FALSE, 0);
+	tmp = g_strdup_printf (_("_Memory maps for process \"%s\":"), info->name);
+	/*FIXME: maybe we could add PID ?*/
+	/* "_Memory maps for process \"%s\" (PID %d):"*/
+	label = gtk_label_new (NULL);
+	gtk_label_set_text_with_mnemonic (GTK_LABEL (label), tmp);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_box_pack_start (GTK_BOX (dialog_vbox), label, FALSE, TRUE, 0);
+	g_free (tmp);
 
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
 					GTK_POLICY_AUTOMATIC,
 					GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
+					     GTK_SHADOW_IN);
 
 	tree = create_memmaps_tree (procdata);
 	gtk_container_add (GTK_CONTAINER (scrolled), tree);
 	g_object_set_data (G_OBJECT (tree), "selected_info", info);
 	g_object_set_data (G_OBJECT (tree), "client", procdata->client);
+	gtk_label_set_mnemonic_widget (GTK_LABEL (label), tree);
 
 	gtk_box_pack_start (GTK_BOX (dialog_vbox), scrolled, TRUE, TRUE, 0);
 	gtk_widget_show_all (scrolled);
