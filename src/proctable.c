@@ -431,21 +431,28 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	memres = get_size_string (info->memres);
 	memshared = get_size_string (info->memshared);
 	memrss = get_size_string (info->memrss);
-	gtk_tree_store_set (GTK_TREE_STORE (model), &row, COL_PIXBUF, info->pixbuf, 
-							  COL_NAME, name,
-							  COL_ARGS, info->arguments,
-							  COL_USER, info->user,
-							  COL_STATUS, info->status,
-							  COL_MEM, mem,
-							  COL_VMSIZE, vmsize,
-							  COL_MEMRES, memres,
-							  COL_MEMSHARED, memshared,
-							  COL_MEMRSS, memrss,
-							  COL_CPU, info->cpu,
-							  COL_PID, info->pid,
-							  COL_NICE, info->nice,
-							  COL_POINTER, info,
-							  -1);
+
+        /* COL_POINTER must be set first, because GtkTreeStore
+         * will call sort_ints as soon as we set the column
+         * that we're sorting on.
+         */
+        
+	gtk_tree_store_set (GTK_TREE_STORE (model), &row,
+                            COL_POINTER, info,
+                            COL_PIXBUF, info->pixbuf, 
+                            COL_NAME, name,
+                            COL_ARGS, info->arguments,
+                            COL_USER, info->user,
+                            COL_STATUS, info->status,
+                            COL_MEM, mem,
+                            COL_VMSIZE, vmsize,
+                            COL_MEMRES, memres,
+                            COL_MEMSHARED, memshared,
+                            COL_MEMRSS, memrss,
+                            COL_CPU, info->cpu,
+                            COL_PID, info->pid,
+                            COL_NICE, info->nice,
+                            -1);
 	g_free (mem);
 	g_free (vmsize);
 	g_free (memres);
