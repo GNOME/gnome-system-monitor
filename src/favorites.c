@@ -411,49 +411,63 @@ void create_blacklist_dialog (ProcData *procdata)
 	GtkWidget *button;
 	GtkWidget *scrolled;
 	GtkWidget *label;
+	GtkWidget *dialog;
+	gchar *message;
 	
 
-	if (blacklist_dialog)
+	if (procdata->blacklist_num == 0 )
 	{
-		gdk_window_raise(blacklist_dialog->window);
-      		return;
-   	}
+		message = g_strdup_printf(_("No processes are currently hidden."));
+		dialog = gnome_error_dialog (message);
+		gnome_dialog_run(GNOME_DIALOG (dialog));
+		g_free (message);
+	}
+	
+	else
+	{
 
-	blacklist_dialog = gnome_dialog_new (_("Manage Hidden Processes"), 
+		if (blacklist_dialog)
+		{
+			gdk_window_raise(blacklist_dialog->window);
+      			return;
+   		}
+
+		blacklist_dialog = gnome_dialog_new (_("Manage Hidden Processes"), 
 					     GNOME_STOCK_BUTTON_CLOSE, NULL);
-	gtk_window_set_policy (GTK_WINDOW (blacklist_dialog), FALSE, TRUE, FALSE);
-	gtk_window_set_default_size (GTK_WINDOW (blacklist_dialog), 320, 375);
+		gtk_window_set_policy (GTK_WINDOW (blacklist_dialog), FALSE, TRUE, FALSE);
+		gtk_window_set_default_size (GTK_WINDOW (blacklist_dialog), 320, 375);
+		
+		main_vbox = GNOME_DIALOG (blacklist_dialog)->vbox;
 	
-	main_vbox = GNOME_DIALOG (blacklist_dialog)->vbox;
-	
-	label = gtk_label_new (_("These are the processes you have chosen to hide. You can reshow a process by removing it from this list."));
-	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
-	
-	frame = gtk_frame_new (_("Hidden Processes"));
-  	gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
+		label = gtk_label_new (_("These are the processes you have chosen to hide. You can reshow a process by removing it from this list."));
+		gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+		gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
+		
+		frame = gtk_frame_new (_("Hidden Processes"));
+  		gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   	
-  	inner_vbox = gtk_vbox_new (FALSE, 0);
-  	gtk_container_add (GTK_CONTAINER (frame), inner_vbox);
+  		inner_vbox = gtk_vbox_new (FALSE, 0);
+  		gtk_container_add (GTK_CONTAINER (frame), inner_vbox);
   	
-  	scrolled = create_tree (procdata);
-  	gtk_box_pack_start (GTK_BOX (inner_vbox), scrolled, TRUE, TRUE, 0);
-  	gtk_container_set_border_width (GTK_CONTAINER (scrolled), GNOME_PAD_SMALL);
+  		scrolled = create_tree (procdata);
+  		gtk_box_pack_start (GTK_BOX (inner_vbox), scrolled, TRUE, TRUE, 0);
+  		gtk_container_set_border_width (GTK_CONTAINER (scrolled), GNOME_PAD_SMALL);
   	
-  	hbox = gtk_hbox_new (FALSE, 0);
-  	gtk_box_pack_end (GTK_BOX (inner_vbox), hbox, FALSE, FALSE, 0);
+  		hbox = gtk_hbox_new (FALSE, 0);
+  		gtk_box_pack_end (GTK_BOX (inner_vbox), hbox, FALSE, FALSE, 0);
   	
-  	button = gtk_button_new_with_label (_("Remove From List"));
-  	gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  	gtk_container_set_border_width (GTK_CONTAINER (button), GNOME_PAD_SMALL);
+  		button = gtk_button_new_with_label (_("Remove From List"));
+  		gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  		gtk_container_set_border_width (GTK_CONTAINER (button), GNOME_PAD_SMALL);
   	
-  	gtk_signal_connect (GTK_OBJECT (button), "clicked",
+  		gtk_signal_connect (GTK_OBJECT (button), "clicked",
   			    GTK_SIGNAL_FUNC (remove_button_clicked), procdata);
-  	gtk_signal_connect (GTK_OBJECT (blacklist_dialog), "clicked",
+  		gtk_signal_connect (GTK_OBJECT (blacklist_dialog), "clicked",
 			    GTK_SIGNAL_FUNC (close_button_pressed), procdata);
-	gtk_signal_connect (GTK_OBJECT (blacklist_dialog), "destroy",
+		gtk_signal_connect (GTK_OBJECT (blacklist_dialog), "destroy",
 			    GTK_SIGNAL_FUNC (close_blacklist_dialog), procdata);
   	
-  	gtk_widget_show_all (blacklist_dialog);
+  		gtk_widget_show_all (blacklist_dialog);
+	}
   	
 }
