@@ -106,7 +106,6 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
 	int error;
 	GtkWidget *dialog;
         gchar *error_msg;
-	gchar *error_critical;
 	
 	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 	g_return_if_fail (info);

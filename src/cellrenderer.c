@@ -1,6 +1,6 @@
 /* gtkcellrenderer.c
  * Copyright (C) 2002 Naba Kumar <kh_naba@users.sourceforge.net>
- * heavily modified by Jörgen Scheibengruber <mfcn@gmx.de>
+ * heavily modified by JÃ¶rgen Scheibengruber <mfcn@gmx.de>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -90,10 +90,7 @@ procman_cell_renderer_progress_get_type (void)
 static void
 procman_cell_renderer_progress_init (ProcmanCellRendererProgress *cellprogress)
 {
-	ProcmanCellRendererProgressPriv *priv;
-	
-    cellprogress->priv = (ProcmanCellRendererProgressPriv*)g_new0(ProcmanCellRendererProgressPriv, 1);
-    
+	cellprogress->priv = g_new0(ProcmanCellRendererProgressPriv, 1);
 	cellprogress->priv->value = 0;
 }
 
@@ -169,8 +166,6 @@ procman_cell_renderer_progress_get_size (GtkCellRenderer *cell,
 				 gint            *width,
 				 gint            *height)
 {
-	ProcmanCellRendererProgress *cellprogress = (ProcmanCellRendererProgress *) cell;
-
 /* Always return 1 here. Doesn't make to much sense,
  * but providing the real width would make it
  * impossible for the bar to shrink again.
@@ -199,7 +194,6 @@ procman_cell_renderer_progress_render (GtkCellRenderer    *cell,
 	ProcmanCellRendererProgress *cellprogress = (ProcmanCellRendererProgress *) cell;
 	GtkStateType state;
 	GdkGC *gc;
-	GdkColor color;
 	PangoLayout *layout;
 	PangoRectangle logical_rect;
 	char *text; 

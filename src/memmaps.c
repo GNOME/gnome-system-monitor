@@ -5,9 +5,11 @@
 #include <gnome.h>
 #include <glibtop/procmap.h>
 #include <sys/stat.h>
+
 #include "procman.h"
 #include "memmaps.h"
 #include "proctable.h"
+#include "util.h"
 
 
 static void
@@ -224,9 +226,20 @@ create_memmaps_tree (ProcData *procdata)
 	GtkTreeViewColumn *column;
   	GtkCellRenderer *cell;
   	gint i;
-  	static gchar *title[] = {N_("Filename"), N_("VM Start"), N_("VM End"),
-                                 N_("VM Size"), N_("Flags"), N_("VM Offset"),
-                                 N_("Device"), N_("Inode")};
+
+	static const gchar *titles[] = {
+	  N_("Filename"),
+	  N_("VM Start"),
+	  N_("VM End"),
+	  N_("VM Size"),
+	  N_("Flags"),
+	  N_("VM Offset"),
+	  N_("Device"),
+	  N_("Inode")
+	};
+
+	PROCMAN_GETTEXT_ARRAY_INIT(titles);
+
 	                             	
         model = gtk_list_store_new (NUM_MMAP_COL+2, 
 				    G_TYPE_STRING, G_TYPE_STRING,
@@ -241,7 +254,7 @@ create_memmaps_tree (ProcData *procdata)
   	
   	for (i = 0; i < NUM_MMAP_COL; i++) {
   		cell = gtk_cell_renderer_text_new ();
-  		column = gtk_tree_view_column_new_with_attributes (title[i],
+  		column = gtk_tree_view_column_new_with_attributes (titles[i],
 						    		   cell,
 						     		   "text", i,
 						     		   NULL);

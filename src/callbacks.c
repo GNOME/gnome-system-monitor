@@ -117,16 +117,19 @@ cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 	gchar     *file;
 
 
-	const gchar *authors[] = {
-				 _("Kevin Vandersloot"),
-				 _("Jorgen Scheibengruber - nicer devices treeview"),
-				 _("Benoît Dejean - maintainer"),
-				NULL
-				 };
-
-	const gchar *documenters[] = {
-				 NULL
+	static const gchar *authors[] = {
+		N_("Kevin Vandersloot"),
+		N_("Jorgen Scheibengruber - nicer devices treeview"),
+		N_("Benoît Dejean - maintainer"),
+		NULL
 	};
+
+	static const gchar *documenters[] = {
+		NULL
+	};
+
+	PROCMAN_GETTEXT_ARRAY_INIT(authors);
+	PROCMAN_GETTEXT_ARRAY_INIT(documenters);
 
 	const gchar *translator_credits = _("translator_credits");
 	

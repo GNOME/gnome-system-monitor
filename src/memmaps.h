@@ -1,9 +1,5 @@
-
-#ifndef _MEMMAPS_H_
-#define _MEMMAPS_H_
-
-
-    
+#ifndef _PROCMAN_MEMMAPS_H_
+#define _PROCMAN_MEMMAPS_H_
 
 typedef struct _MemmapsInfo MemmapsInfo;
 
@@ -17,7 +13,7 @@ enum
 	COL_VMOFFSET,
 	COL_DEVICE,
 	COL_INODE,
-	NUM_MMAP_COL,
+	NUM_MMAP_COL
 };
 
 struct _MemmapsInfo
@@ -34,5 +30,4 @@ struct _MemmapsInfo
 
 void 		create_memmaps_dialog (ProcData *procdata);
 
-
-#endif
+#endif /* _PROCMAN_MEMMAPS_H_ */

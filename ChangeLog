@@ -1,3 +1,34 @@
+2004-10-23  Benoît Dejean  <tazforever@dlfp.org>
+
+	* po/POTFILES.in: Updated.
+
+	* src/cellrenderer.h:
+	* src/cellrenderer.c: (procman_cell_renderer_progress_init),
+	(procman_cell_renderer_progress_get_size),
+	(procman_cell_renderer_progress_render): UTF-8-ified. Removed unused
+	variables.
+	
+	* src/prettytable.c: (application_finished), (pretty_table_new),
+	(pretty_table_get_icon):
+	* src/procactions.c: (kill_single_process):
+	* src/procdialogs.c: (procdialog_create_hide_dialog):
+	* src/callbacks.c: (cb_about_activate):
+	* src/infoview.c: (infoview_update):
+	* src/memmaps.c: (create_memmaps_tree):
+	* src/procman.c: (main):
+	* src/proctable.c: (proctable_new):
+	* src/interface.c: (create_sys_view): Removed unused variables.
+	Used PROCMAN_GETTEXT_ARRAY_INIT.
+	
+	* src/memmaps.h:
+	* src/interface.h: 
+	* src/proctable.h:
+	* src/load-graph.h: Stronger ifndef.
+	Removed non-ANSI enum trailing comma.
+	
+	* src/util.h: Added PROCMAN_GETTEXT_ARRAY_INIT(array) macro to initialize
+	i18n strings arrays. Closes #134136.
+
 2004-10-22  Benoît Dejean  <tazforever@dlfp.org>
 
 	* src/callbacks.c: (cb_about_activate): New description. Closes #131801.

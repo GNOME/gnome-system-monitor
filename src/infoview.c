@@ -178,7 +178,6 @@ infoview_update (ProcData *data)
 	ProcData *procdata = data;
 	ProcInfo *info;
 	gchar *string;
-	gchar *command;
 
 	if (!procdata->selected_process) {
 		update_sensitivity (procdata, FALSE);

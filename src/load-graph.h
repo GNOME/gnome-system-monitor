@@ -6,7 +6,7 @@
 enum
 {
 	CPU_GRAPH,
-	MEM_GRAPH,
+	MEM_GRAPH
 };
 
 

@@ -89,7 +89,6 @@ application_finished (WnckScreen *screen, WnckApplication *app, gpointer data)
 	gint pid;
 	gpointer p1, p2;
 	GdkPixbuf *icon;
-	WnckWindow *window;
 	gchar *id, *orig_id;
 
 	pid =  wnck_application_get_pid (app);
@@ -115,10 +114,7 @@ application_finished (WnckScreen *screen, WnckApplication *app, gpointer data)
 
 PrettyTable *pretty_table_new (ProcData *procdata) 
 {
-	PrettyTable *pretty_table = NULL;
-	GList *list = NULL;
-	
-	pretty_table = g_malloc (sizeof (PrettyTable));
+	PrettyTable *pretty_table = g_new(PrettyTable, 1);
 	
 	pretty_table->app_hash = g_hash_table_new (g_str_hash, g_str_equal);
 	pretty_table->default_hash = g_hash_table_new (g_str_hash, g_str_equal);
@@ -181,8 +177,7 @@ void pretty_table_add_table (PrettyTable *pretty_table, const gchar *table[])
 
 GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command, gint pid) 
 {
-	GdkPixbuf *icon = NULL, *tmp_pixbuf = NULL;
-	gchar *icon_path = NULL;
+	GdkPixbuf *icon = NULL;
 	gchar *text;
 	
 	if (!pretty_table) 

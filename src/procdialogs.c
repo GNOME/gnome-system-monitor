@@ -77,8 +77,10 @@ procdialog_create_hide_dialog (ProcData *data)
 	GtkWidget *label;
 	GtkWidget *align;
 	GtkWidget *icon;
-	gchar *header  = _("Are you sure you want to hide this process?");
-	gchar *message = _("If you hide a process, you can unhide it by selecting 'Hidden Processes' in the Edit menu.");
+	const gchar *header  = _("Are you sure you want to hide this process?");
+	const gchar *message = _("If you hide a process, you can unhide it by "
+				 "selecting 'Hidden Processes' in the Edit "
+				 "menu.");
 	gchar *title;
 		  			
   	messagebox1 = gtk_dialog_new ();
@@ -106,7 +108,7 @@ procdialog_create_hide_dialog (ProcData *data)
 	gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
 	gtk_widget_show (vbox);
 	
-	title = g_strconcat ("<b>", _(header), "</b>", NULL);
+	title = g_strdup_printf("<b>%s</b>", header);
 	label = gtk_label_new (title);  
 	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);

@@ -128,16 +128,29 @@ proctable_new (ProcData *data)
 	GtkTreeSelection *selection;
 	GtkTreeViewColumn *column;
   	GtkCellRenderer *cell_renderer;
-	static gchar *title[] = {N_("Process Name"), N_("Arguments"),
-				 N_("User"), N_("Status"),
-				 N_("Memory"), N_("VM Size"), N_("Resident Memory"),
-				 N_("Shared Memory"), N_("RSS Memory"),
-                                 N_("X Server Memory"),
-				 /* xgettext:no-c-format */
-				 N_("% CPU"),
-				 N_("Nice"), N_("ID"), NULL, "POINTER"};
+
+	static const gchar *titles[] = {
+		N_("Process Name"),
+		N_("Arguments"),
+		N_("User"),
+		N_("Status"),
+		N_("Memory"),
+		N_("VM Size"),
+		N_("Resident Memory"),
+		N_("Shared Memory"),
+		N_("RSS Memory"),
+		N_("X Server Memory"),
+		/* xgettext:no-c-format */ N_("% CPU"),
+		N_("Nice"),
+		N_("ID"),
+		NULL,
+		"POINTER"
+	};
+
 	gint i;
 	
+	PROCMAN_GETTEXT_ARRAY_INIT(titles);
+
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                   	GTK_POLICY_AUTOMATIC,
@@ -170,7 +183,7 @@ proctable_new (ProcData *data)
 	gtk_tree_view_column_set_attributes (column, cell_renderer,
 					     "text", COL_NAME,
 					     NULL);
-	gtk_tree_view_column_set_title (column, _(title[0]));
+	gtk_tree_view_column_set_title (column, titles[0]);
 	gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
 	gtk_tree_view_column_set_resizable (column, TRUE);
 	gtk_tree_view_column_set_min_width (column, 1);
@@ -184,7 +197,7 @@ proctable_new (ProcData *data)
   		gtk_tree_view_column_set_attributes (column, cell_renderer,
 					     	"text", i,
 					     	NULL);
-		gtk_tree_view_column_set_title (column, _(title[i]));
+		gtk_tree_view_column_set_title (column, titles[i]);
   		gtk_tree_view_column_set_sort_column_id (column, i);
 		gtk_tree_view_column_set_resizable (column, TRUE);
 		gtk_tree_view_column_set_min_width (column, 1);

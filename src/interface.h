@@ -17,8 +17,8 @@
  *
  */
 
-#ifndef _INTERFACE_H_
-#define _INTERFACE_H_
+#ifndef _PROCMAN_INTERFACE_H_
+#define _PROCMAN_INTERFACE_H_
 
 #include <procman.h>
 
@@ -28,4 +28,5 @@ GtkWidget*	create_simple_view_dialog (ProcData *procdata);
 void		toggle_infoview (ProcData *data);
 void		update_sensitivity (ProcData *data, gboolean sensitivity);
 void            do_popup_menu(ProcData *data, GdkEventButton *event);
-#endif
+
+#endif /* _PROCMAN_INTERFACE_H_ */

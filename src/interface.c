@@ -28,6 +28,7 @@
 #include <signal.h>
 #include <gdk/gdkkeysyms.h>
 #include <math.h>
+
 #include "procman.h"
 #include "callbacks.h"
 #include "interface.h"
@@ -36,6 +37,7 @@
 #include "procactions.h"
 #include "load-graph.h"
 #include "cellrenderer.h"
+#include "util.h"
 
 void	cb_toggle_tree (GtkMenuItem *menuitem, gpointer data);
 void	cb_toggle_threads (GtkMenuItem *menuitem, gpointer data);
@@ -323,7 +325,7 @@ create_sys_view (ProcData *procdata)
 	GtkWidget *cpu_hbox, *mem_hbox, *disk_hbox;
 	GtkWidget *cpu_graph_box, *mem_graph_box;
 	GtkWidget *label,*cpu_label, *spacer;
-	GtkWidget *hbox, *table;
+	GtkWidget *table;
 	GtkWidget *color_picker;
 	GtkWidget *scrolled;
 	GtkWidget *disk_tree;
@@ -331,14 +333,19 @@ create_sys_view (ProcData *procdata)
 	GtkTreeViewColumn *col;
 	GtkCellRenderer *cell;
 	GtkSizeGroup *sizegroup;
-	gchar *titles[5] = {_("Name"),
-			    _("Directory"),
-				_("Type"),
-			    _("Total"),
-			    _("Used"),
-				};
+
+	static const gchar *titles[5] = {
+	  N_("Name"),
+	  N_("Directory"),
+	  N_("Type"),
+	  N_("Total"),
+	  N_("Used"),
+	};
+
 	LoadGraph *cpu_graph, *mem_graph;
 	gint i;
+
+	PROCMAN_GETTEXT_ARRAY_INIT(titles);
 	
 	vpane = gtk_vpaned_new ();
 	sys_pane = vpane;
@@ -374,7 +381,7 @@ create_sys_view (ProcData *procdata)
 
 	sizegroup = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 	for (i=0;i<procdata->config.num_cpus; i++) {
-		GtkWidget *temp_hbox;
+		GtkWidget *temp_hbox, *hbox = NULL;
 		gchar *text;
 		/* Two per row */
 		if (fabs(fmod(i,2) - 0) < .01) {
@@ -580,7 +587,7 @@ create_sys_view (ProcData *procdata)
 	gtk_tree_view_column_set_attributes (col, cell,
 					     "text", 5,
 					     NULL);
-	gtk_tree_view_column_set_title (col, _(titles[4]));
+	gtk_tree_view_column_set_title (col, titles[4]);
 		
 	
 	cell = procman_cell_renderer_progress_new ();

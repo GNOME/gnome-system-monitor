@@ -535,9 +535,9 @@ main (int argc, char *argv[])
 	GnomeProgram *procman;
 	GConfClient *client;
 	ProcData *procdata;
-	GValue value = {0,};
+	/* GValue value = {0,};
 	poptContext pctx;
-	char **args;
+	char **args; */
 	
 	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -578,7 +578,7 @@ main (int argc, char *argv[])
 		 
 	
 	if (!app)
-		return 0;  
+		return 1;  
 			
  	gtk_widget_show (app);	
  	
