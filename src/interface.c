@@ -40,6 +40,7 @@
 #include "favorites.h"
 #endif
 #include "load-graph.h"
+#include "cellrenderer.h"
 
 static GnomeUIInfo file1_menu_uiinfo[] =
 {
@@ -265,6 +266,42 @@ create_proc_view (ProcData *procdata)
         return vbox1;
 }
 
+static int
+sort_bytes (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer data)
+{
+	int col = GPOINTER_TO_INT (data);
+	float btotal1, btotal2, bfree1, bfree2;
+	float a, b;
+	
+	btotal1 = btotal2 = bfree1 = bfree2 = 0.0;
+	gtk_tree_model_get (model, itera, 7, &btotal1, 8, &bfree1, -1);
+	gtk_tree_model_get (model, iterb, 7, &btotal2, 8, &bfree2, -1);
+
+	switch (col)
+	{
+		case 4: 
+			a = btotal1;
+			b = btotal2;
+			break;
+		case 5: 
+			a = btotal1 - bfree1;
+			b = btotal2 - bfree2;
+			break;
+		case 6: 
+			a = bfree1;
+			b = bfree2;
+			break;
+		default:
+			a = 0;
+			b = 0;
+	}
+
+	if (a > b)
+		return -1;
+	else if (a < b)
+		return 1;
+	return 0;	
+}
 
 static GtkWidget *
 create_sys_view (ProcData *procdata)
@@ -281,11 +318,13 @@ create_sys_view (ProcData *procdata)
 	GtkTreeStore *model;
 	GtkTreeViewColumn *col;
 	GtkCellRenderer *cell;
+	gchar *tmp;
 	gchar *titles[5] = {_("Name"),
 			    _("Directory"),
-			    _("Used Space"),
-			    _("Total Space")
-			    };
+				_("Type"),
+			    _("Total"),
+			    _("Used"),
+				};
 	LoadGraph *cpu_graph, *mem_graph;
 	gint i;
 	
@@ -297,20 +336,33 @@ create_sys_view (ProcData *procdata)
 	gtk_paned_pack1 (GTK_PANED (vpane), vbox, TRUE, FALSE);
 
 	/* xgettext:no-c-format */
-	cpu_frame = gtk_frame_new (_("% CPU Usage History"));
+	label = gtk_label_new (NULL);
+	gtk_widget_show (label);
+	tmp = g_strdup_printf ("%s", _("CPU History"));
+	gtk_label_set_markup (GTK_LABEL (label), tmp);
+	g_free (tmp);
+	cpu_frame = gtk_frame_new (NULL);
+	gtk_frame_set_label_widget (GTK_FRAME (cpu_frame), label);
+	gtk_frame_set_shadow_type (GTK_FRAME (cpu_frame), GTK_SHADOW_NONE);
 	gtk_widget_show (cpu_frame);
-	gtk_container_set_border_width (GTK_CONTAINER (cpu_frame), GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (cpu_frame), 6);
 	gtk_box_pack_start (GTK_BOX (vbox), cpu_frame, TRUE, TRUE, 0);
 	
 	/* xgettext:no-c-format */
-	mem_frame = gtk_frame_new (_("% Memory / Swap Usage History"));
-	gtk_container_set_border_width (GTK_CONTAINER (mem_frame), GNOME_PAD_SMALL);
+	label = gtk_label_new (NULL);
+	gtk_widget_show (label);
+	tmp = g_strdup_printf ("%s", _("Memory / Swap Usage History"));
+	gtk_label_set_markup (GTK_LABEL (label), tmp);
+	g_free (tmp);
+	mem_frame = gtk_frame_new (NULL);
+	gtk_frame_set_shadow_type (GTK_FRAME (mem_frame), GTK_SHADOW_NONE);
+	gtk_frame_set_label_widget (GTK_FRAME (mem_frame), label);
+	gtk_container_set_border_width (GTK_CONTAINER (mem_frame), 6);
 	gtk_box_pack_start (GTK_BOX (vbox), mem_frame, TRUE, TRUE, 0);
 	
 	cpu_graph = load_graph_new (CPU_GRAPH, procdata);
 	gtk_container_add (GTK_CONTAINER (cpu_frame), cpu_graph->main_widget);
-	gtk_container_set_border_width (GTK_CONTAINER (cpu_graph->main_widget), 
-					GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (cpu_graph->main_widget), 6);
 					
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (cpu_graph->main_widget), hbox, FALSE, FALSE, 0);
@@ -337,8 +389,7 @@ create_sys_view (ProcData *procdata)
 	
 	mem_graph = load_graph_new (MEM_GRAPH, procdata);
 	gtk_container_add (GTK_CONTAINER (mem_frame), mem_graph->main_widget);
-	gtk_container_set_border_width (GTK_CONTAINER (mem_graph->main_widget), 
-					GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (mem_graph->main_widget), 6);
 	
 	
 	table = gtk_table_new (2, 6, FALSE);
@@ -418,21 +469,29 @@ create_sys_view (ProcData *procdata)
 	
 	procdata->mem_graph = mem_graph;
 	gtk_widget_show_all (vbox);
-				
-	disk_frame = gtk_frame_new (_("Devices"));
-	gtk_container_set_border_width (GTK_CONTAINER (disk_frame), GNOME_PAD_SMALL);
+	
+	label = gtk_label_new (NULL);
+	gtk_widget_show (label);
+	tmp = g_strdup_printf ("%s", _("Devices"));
+	gtk_label_set_markup (GTK_LABEL (label), tmp);
+	g_free (tmp);			
+	disk_frame = gtk_frame_new (NULL);
+	gtk_frame_set_shadow_type (GTK_FRAME (disk_frame), GTK_SHADOW_NONE);
+	gtk_frame_set_label_widget (GTK_FRAME (disk_frame), label);
+	gtk_container_set_border_width (GTK_CONTAINER (disk_frame), 6);
 
 	gtk_paned_pack2 (GTK_PANED (vpane), disk_frame, TRUE, TRUE);
 	
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), 
 					GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-	gtk_container_set_border_width (GTK_CONTAINER (scrolled), GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (scrolled), 6);
 	gtk_container_add (GTK_CONTAINER (disk_frame), scrolled);
 	 
-	model = gtk_tree_store_new (5, G_TYPE_STRING, G_TYPE_STRING,
+	model = gtk_tree_store_new (9, GDK_TYPE_PIXBUF, G_TYPE_STRING, 
+					   G_TYPE_STRING, G_TYPE_STRING,
 				       G_TYPE_STRING, G_TYPE_STRING,
-				       G_TYPE_STRING); 
+					G_TYPE_FLOAT, G_TYPE_FLOAT, G_TYPE_FLOAT);
 				       
 	disk_tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
 	procdata->disk_list = disk_tree;
@@ -440,19 +499,62 @@ create_sys_view (ProcData *procdata)
   	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (disk_tree), TRUE);
   	g_object_unref (G_OBJECT (model));
   	
-  	for (i = 0; i < 4; i++) {
+ 	col = gtk_tree_view_column_new ();
+  	cell = gtk_cell_renderer_pixbuf_new ();
+	gtk_tree_view_column_pack_start (col, cell, FALSE);
+	gtk_tree_view_column_set_attributes (col, cell,
+					     "pixbuf", 0,
+					     NULL);
+		
+	cell = gtk_cell_renderer_text_new ();
+	gtk_tree_view_column_pack_start (col, cell, FALSE);
+	gtk_tree_view_column_set_attributes (col, cell,
+					     "text", 1,
+					     NULL);
+	gtk_tree_view_column_set_title (col, titles[0]);
+	gtk_tree_view_column_set_sort_column_id (col, 1);
+	gtk_tree_view_column_set_resizable (col, TRUE);
+	gtk_tree_view_append_column (GTK_TREE_VIEW (disk_tree), col);
+								
+  	for (i = 1; i < 4	; i++) {
   		cell = gtk_cell_renderer_text_new ();
   		col = gtk_tree_view_column_new_with_attributes (titles[i],
 						    		cell,
-						     		"text", i,
+						     		"text", i + 1,
 						     		NULL);
 		gtk_tree_view_column_set_resizable (col, TRUE);
+		gtk_tree_view_column_set_sort_column_id (col, i + 1);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (disk_tree), col);
 	}
-  	
+	
+	col = gtk_tree_view_column_new ();	
+
+	cell = gtk_cell_renderer_text_new ();
+	gtk_tree_view_column_pack_start (col, cell, FALSE);
+	gtk_tree_view_column_set_attributes (col, cell,
+					     "text", 5,
+					     NULL);
+	gtk_tree_view_column_set_title (col, _(titles[4]));
+		
+	
+	cell = gtk_cell_renderer_progress_new ();
+	gtk_tree_view_column_pack_start (col, cell, TRUE);
+	gtk_tree_view_column_set_attributes (col, cell,
+					     "value", 6,
+					     NULL);
+	
+	gtk_tree_view_append_column (GTK_TREE_VIEW (disk_tree), col);
+	gtk_tree_view_column_set_resizable (col, TRUE);
+	gtk_tree_view_column_set_sort_column_id (col, 5);
+	
+	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
+					 4, sort_bytes, GINT_TO_POINTER (4), NULL);
+	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
+					 5, sort_bytes, GINT_TO_POINTER (5), NULL);
+	
 	gtk_widget_show_all (disk_frame);
   	
-  	procman_get_tree_state (procdata->client, disk_tree, "/apps/procman/disktree");
+  	procman_get_tree_state (procdata->client, disk_tree, "/apps/procman/disktreenew");
   	
   	cb_update_disks (procdata);
   	procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,

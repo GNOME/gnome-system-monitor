@@ -35,6 +35,7 @@
 #include "memmaps.h"
 #include "favorites.h"
 #include "load-graph.h"
+#include "cellrenderer.h"
 
 void
 cb_preferences_activate               (GtkMenuItem     *menuitem,
@@ -121,7 +122,8 @@ cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 
 	const gchar *authors[] = {
 				 _("Kevin Vandersloot (kfv101@psu.edu)"),
-				 _("Erik Johnsson (zaphod@linux.nu) - icon support"),
+				 _("Jörgen Scheibengruber <mfcn@gmx.de> - nicer devices treeview"),
+				_("Erik Johnsson (zaphod@linux.nu) - initial icon support"),
 				 NULL
 				 };
 
@@ -513,25 +515,36 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 	glibtop_mountentry *entry = NULL;
 	gchar *old_name;
 	
-	gtk_tree_model_get (model, iter, 0, &old_name, -1);
+	gtk_tree_model_get (model, iter, 1, &old_name, -1);
 		
 	entry = g_hash_table_lookup (new_disks, old_name);
 	if (entry) {
 		glibtop_fsusage usage;
-		gchar *used, *total;
+		gchar *used, *total, *unused;
+		float percentage, bused, bfree, btotal;
 		
 		glibtop_get_fsusage (&usage, entry->mountdir);
+
+		btotal = (float)usage.blocks * 512;
+		bfree = (float)usage.bfree * 512;
+		bused = (float)(usage.blocks  - usage.bfree) * 512;
+		percentage = (float) (usage.blocks - usage.bfree) / (float) usage.blocks;
 		
-		used = get_size_string ((float)(usage.blocks - usage.bfree) * 512);
-		total = get_size_string ((float) usage.blocks * 512);
+		used = get_size_string (bused);
+		total = get_size_string (btotal);
+		unused = get_size_string (bfree);
 		
 		gtk_tree_store_set (GTK_TREE_STORE (model), iter,
-				    2, used,
-				    3, total, -1);
+				    4, total,
+				    5, used,
+					6, percentage,
+					7, btotal,
+					8, bfree, -1);
 		g_hash_table_remove (new_disks, old_name);
 		
 		g_free (used);
 		g_free (total);
+		g_free (unused);
 
 		g_free (old_name);
 			
@@ -548,37 +561,103 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 	
 }
 
+static GdkPixbuf*
+get_icon_for_device(GnomeIconTheme *icontheme, char *mountpoint, char *type)
+{
+	GdkPixbuf *tmp, *pixbuf;
+	char *i_type, *path;
+	int size = 24;
+	
+	if (strstr(mountpoint,"/zip"))
+		i_type = "gnome-dev-zipdisk";
+	else 
+	if (strstr(mountpoint,"/floppy"))
+		i_type = "gnome-dev-floppy";
+	else 
+	if (strstr(type,"iso9660"))
+		i_type = "gnome-dev-cdrom";
+	else 
+	if (strstr(type, "smbfs"))
+		i_type = "gnome-fs-smb";
+	else
+	if (strstr(type, "nfs"))
+		i_type = "gnome-fs-nfs";
+	else 
+		i_type = "gnome-dev-harddisk";
+
+	if (!(path = gnome_icon_theme_lookup_icon(icontheme, i_type, 24, NULL, &size)))
+		return NULL;
+
+	if (!(tmp = gdk_pixbuf_new_from_file(path, NULL)))
+		return NULL;
+
+	g_free(path);
+	
+	if (size != 24)
+	{	
+		pixbuf = gdk_pixbuf_scale_simple (tmp, 24, 24, 
+						GDK_INTERP_HYPER);
+		g_object_unref(tmp);
+		return pixbuf;
+	}
+	return tmp;
+}
+
 static void
 add_new_disks (gpointer key, gpointer value, gpointer data)
 {
 	glibtop_mountentry *entry = value;
 	GtkTreeModel *model = data;
 	glibtop_fsusage usage;
-	gchar *text[4];
-				
+	gchar *text[5];
+	GdkPixbuf *pixbuf = NULL;
+	GnomeIconTheme *icontheme;
+	icontheme  = gnome_icon_theme_new();
+	
 	glibtop_get_fsusage (&usage, entry->mountdir);
-	text[0] = g_strdup (entry->devname);
-	text[1] = g_strdup (entry->mountdir);
-	text[2] = get_size_string ((float)(usage.blocks - usage.bfree) * 512);
-	text[3] = get_size_string ((float) usage.blocks * 512);
+	
 	/* Hmm, usage.blocks == 0 seems to get rid of /proc and all
 	** the other useless entries */
 	if (usage.blocks != 0) {
 		GtkTreeIter row;
-			
+		float percentage, btotal, bfree, bused;
+
+		btotal = (float)usage.blocks * 512;
+		bfree = (float)usage.bfree * 512;
+		bused = (float)(usage.blocks  - usage.bfree) * 512;
+		percentage = (float) (usage.blocks - usage.bfree) / (float) usage.blocks;
+		
+	/*  Load an icon corresponding to the type of the device */
+		pixbuf = get_icon_for_device(icontheme, entry->mountdir, entry->type);
+	
+		text[0] = g_strdup (entry->devname);
+		text[1] = g_strdup (entry->mountdir);
+		text[2] = g_strdup (entry->type);
+		text[3] = get_size_string (btotal);
+		text[4] = get_size_string (bused);
+		text[5] = get_size_string (bfree);
+		
 		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0); 
 		gtk_tree_store_set (GTK_TREE_STORE (model), &row,
-					    0, text[0],
-					    1, text[1],
-					    2, text[2],
-					    3, text[3], -1);
-		
+					    	0, pixbuf,
+						1, text[0],
+					    	2, text[1],
+					    	3, text[2],
+					    	4, text[3],
+					    	5, text[4],
+						6, percentage,
+						7, btotal,
+						8, bfree, -1);
+						
+		g_free (text[0]);
+		g_free (text[1]);
+		g_free (text[2]);
+		g_free (text[3]);
+		g_free (text[4]);
+		g_free (text[5]);
+		if (pixbuf)
+			g_object_unref (pixbuf);
 	}
-		
-	g_free (text[0]);
-	g_free (text[1]);
-	g_free (text[2]);
-	g_free (text[3]);
 }
 
 gint

@@ -56,11 +56,13 @@ infoview_create (ProcData *data)
 	gtk_box_pack_start (GTK_BOX (infobox), main_hbox, FALSE, FALSE, 0);
 	
 	info_frame = gtk_frame_new (_("Process Info"));
+	gtk_frame_set_shadow_type (GTK_FRAME (info_frame), GTK_SHADOW_NONE);
 	gtk_container_set_border_width (GTK_CONTAINER (info_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (main_hbox), info_frame, TRUE, TRUE, 0);
 	
 	info_table = gtk_table_new (3, 2, FALSE);
 	gtk_container_add (GTK_CONTAINER (info_frame), info_table);
+	gtk_container_set_border_width (GTK_CONTAINER (mem_table), 6);
 	
 	label = gtk_label_new (_("Command : "));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
@@ -90,12 +92,13 @@ infoview_create (ProcData *data)
 			  0, GNOME_PAD_SMALL, 0);
 	
 	mem_frame = gtk_frame_new (_("Memory Usage"));
+	gtk_frame_set_shadow_type (GTK_FRAME (mem_frame), GTK_SHADOW_NONE);
 	gtk_container_set_border_width (GTK_CONTAINER (mem_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (main_hbox), mem_frame, TRUE, TRUE, 0);
 	
 	mem_table = gtk_table_new (3, 2, FALSE);
 	gtk_container_add (GTK_CONTAINER (mem_frame), mem_table);
-	
+	gtk_container_set_border_width (GTK_CONTAINER (mem_table), 6);
 	
 	label = gtk_label_new (_("Total : "));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
