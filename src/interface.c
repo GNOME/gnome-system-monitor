@@ -190,6 +190,7 @@ create_proc_view (ProcData *procdata)
 	GtkWidget *label;
 	GtkWidget *hbox2;
 	GtkWidget *infobutton;
+	const char *msg;
 
 	vbox1 = gtk_vbox_new (FALSE, 18);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox1), 12);
@@ -245,7 +246,8 @@ create_proc_view (ProcData *procdata)
 	g_signal_connect (G_OBJECT (endprocessbutton), "clicked",
 			  G_CALLBACK (cb_end_process_button_pressed), procdata);
 
-	infolabel = gtk_label_new_with_mnemonic (_("More _Info"));
+	msg = infoview_toggle_button_get_msg(procdata);
+	infolabel = gtk_label_new_with_mnemonic (msg);
 	infobutton = gtk_button_new ();
 	gtk_container_add (GTK_CONTAINER (infobutton), infolabel);
 	gtk_box_pack_start (GTK_BOX (hbox2), infobutton, FALSE, FALSE, 0);
@@ -703,18 +705,22 @@ create_main_window (ProcData *procdata)
 void
 toggle_infoview (ProcData *procdata)
 {
+	const char *msg;
+
+	msg = infoview_toggle_button_get_msg(procdata);
+
 	if (procdata->config.show_more_info)
 	{
 		gtk_widget_hide (procdata->infobox);
 		gtk_label_set_text_with_mnemonic (GTK_LABEL (infolabel),
-						  _("More _Info >>"));
+						  msg);
 	}
 	else
 	{
 		infoview_update (procdata);
 		gtk_widget_show_all (procdata->infobox);
 		gtk_label_set_text_with_mnemonic (GTK_LABEL (infolabel),
-						  _("<< Less _Info"));
+						  msg);
 	}
 
 	procdata->config.show_more_info = ! procdata->config.show_more_info;

@@ -531,7 +531,7 @@ main (int argc, char *argv[])
 		 
 	g_return_val_if_fail(procdata->app != NULL, 1);
 			
- 	gtk_widget_show_all(procdata->app);
+ 	gtk_widget_show(procdata->app);
  	
 	gtk_main ();
 	

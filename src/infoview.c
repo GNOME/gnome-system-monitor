@@ -210,3 +210,13 @@ infoview_update (ProcData *data)
 	gtk_label_set_text (GTK_LABEL (memshared_label), string);
 	g_free (string);
 }
+
+
+
+const char *
+infoview_toggle_button_get_msg(ProcData *procdata)
+{
+	return (procdata->config.show_more_info
+		? _("More _Info >>")
+		: _("<< Less _Info"));
+}
