@@ -1,3 +1,12 @@
+2001-11-13  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.c: call gconf_value_free to plug mem leaks
+
+	* proctable.c: free GtkTreePaths
+
+	* prettytable.c: don't unref the pixbuf since we don't
+	want to do that until exit. Fixes crash on clearing tree
+
 2001-11-12  Kevin Vandersloot <kfv101@psu.edu>
 
 	* memmaps.c: make updating work here in the same fashion

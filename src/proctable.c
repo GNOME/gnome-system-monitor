@@ -420,6 +420,8 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 			gtk_tree_view_expand_row (GTK_TREE_VIEW (procdata->tree),
 					  parent_node,
 					  FALSE);
+					  
+		gtk_tree_path_free (parent_node);
 	}	
 	else
 		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0);
@@ -760,14 +762,15 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 	while (i < n)
 	{
 		ProcInfo *oldinfo;
+		
 		/* New process with higher pid than any previous one */
 		if (!list)
 		{
 			ProcInfo *info;
-			
 			info = get_info (procdata, pid_list[i]);
 			insert_info_to_tree (info, procdata);
 			procdata->info = g_list_append (procdata->info, info);
+			
 			i++;
 			continue;
 		}
@@ -879,19 +882,16 @@ proctable_clear_tree (ProcData *data)
 {
 	ProcData *procdata = data;
 	GtkTreeModel *model;
-	g_print ("begin clear \n");
-	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-	gtk_tree_store_clear (GTK_TREE_STORE (model));
-	g_print ("end clear \n");
-	proctable_free_table (procdata);
-	g_print ("freed \n");
-#if 0	
-	gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), "cursor_activated", -1, NULL);
-	procdata->selected_node = NULL;
-	procdata->selected_pid = -1;
 	
-	e_tree_memory_node_remove (procdata->memory, rootnode);
-#endif	
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
+	
+	gtk_tree_store_clear (GTK_TREE_STORE (model));
+	
+	proctable_free_table (procdata);
+	
+	update_sensitivity (procdata, FALSE);
+	
+
 }
 
 void		
@@ -954,6 +954,8 @@ proctable_search_table (ProcData *procdata, gchar *string)
 			}
 			else
 				index --;
+				
+			gtk_tree_path_free (node);
 		}
 		
 		if (strstr (info->user, string) && info->visible)
@@ -969,6 +971,8 @@ proctable_search_table (ProcData *procdata, gchar *string)
 			}
 			else
 				index --;
+				
+			gtk_tree_path_free (node);
 		}
 		
 		list = g_list_next (list);

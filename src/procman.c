@@ -157,6 +157,7 @@ gconf_client_get_int_with_default (gchar *key, gint def)
 	}
 	else {
 		retval = gconf_value_get_int(value);
+		gconf_value_free (value);
 		return retval;
 	}
 		
@@ -174,6 +175,7 @@ gconf_client_get_bool_with_default (gchar *key, gboolean def)
 	}
 	else {
 		retval = gconf_value_get_bool(value);
+		gconf_value_free (value);
 		return retval;
 	}
 		

@@ -222,7 +222,7 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command, gin
 	
 	icon = gdk_pixbuf_scale_simple (tmp_pixbuf, 16, 16, GDK_INTERP_HYPER);
 	
-	gdk_pixbuf_unref (tmp_pixbuf);		
+			
 
 	return icon;
 }
