@@ -71,7 +71,7 @@ procdialog_create_hide_dialog (ProcData *data)
        /*translators: secondary alert messagex*/
        message = g_strdup_printf (_("Hidden processes are no longer visible "
 				    "in the processes list. You can re-enable "
-				    "them selecting the \"Hidden Processes\" "
+				    "them by selecting the \"Hidden Processes\" "
 				    "entry in the View menu."));
        gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (hide_alert_dialog),
 						 message);

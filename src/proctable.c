@@ -1003,12 +1003,11 @@ proctable_search_table (ProcData *procdata, gchar *string)
 						 GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 						 _("Could not find \"%s\""), string,
 						 NULL);
-		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-							  _("There are no processes "
-							    "containing the searched string. "
-							    "Please note that the search is "
-							    "performed only on processes showed "
-							    "processes list."));
+		gtk_message_dialog_format_secondary_text (
+			GTK_MESSAGE_DIALOG (dialog),
+			_("There are no processes containing the searched string. "
+			  "Please note that the search is performed only on "
+			  "processes shown in the process list."));
 		gtk_dialog_run (GTK_DIALOG (dialog));
 		gtk_widget_destroy (dialog);
 	}
