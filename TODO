@@ -1,85 +1,21 @@
--- Things for 1.0 --
+-- 1.2 porting stuff --
+[x] right click menu
+[x] make search work
+[x] make sorting work for non strings
+[ ] make disk table update
+[ ] renice doesn't seem to renice
+[ ] root access stuff
+[ ] save and restore tree state
+[ ] add the extra columns not shown by default
+[x] memaps dialog needs porting to tree view
+[ ] hidden processes and hidden processes dialog 
 
-[x] Get %cpu done right
-[x] Icons for processes
-      A preliminary patch to do this by reading in all 
-      the .desktop files has been done by Erik Johnsson <zaphod@linux.nu>.
-[x] Get the more info interface done along with updating the values 
-    	correctly - This is not quite acceptable. Perhaps doing the items
-	as a e-table will help. Done - I like the look now using all
-	labels.
-[x] Throw in a few more column displays such as nice, process state.
-    But do not show them by default. It is easy to add them with e-table.
-[x] Maybe a cpu meter on top?
-[x] right click menu - send some signals - at least kill
-[x] save the e-table state
-[x] remove the process meter on the bottom ( or make it the cpu meter ?)
-[x] dialog notifying the user the end process button will not save
-    any data ( of course with the "show dialog next time" option )
-[x] need to create spec file in order to build packages. I don't
-    know anything about packages for other distros than RedHat.
-    Neither do I know anything about RedHat packages at the moment.
-[x] need a .desktop entry
-[ ] need an icon :) I have no skills at doing this.
-    Perhaps we can just steal the one that Ximian uses right now for gtop
-[x] process tree - almost done except for bug in that children don't show
-    up - Done!
-[x] put some system info in the status bar like %cpu %mem %swapped
-[x] memmaps dialog
-[x] menu stuff
-[ ] make sure everything is navigatable by keyboard and we have
-    accelerators - only problem is e-tree which can't seem to accept
-    focus until you click on it
-[ ] Fix bugs of course.
-[x] Add the ability to have favorite processes. This would involve a lot
-    of things like storing the names in a config file and designing
-    a favorites editor. I think this could be pretty neat.
-    Done. Instead of doing favorites I did a blacklist where you can
-    select processes which you don't care about.
-[x] simple dialog when user chooses to hide a process explaining the
-    idea just like the end process dialog.
-[x] clean up renice dialog. Provide error messages when renice don't
-    work.
-[x] If user click on hidden process in edit menu give a dialog if there
-    are no hidden processes.
-[x] simple dialog if search failed
-[x] somehow display command arguments. The UI is tricky. Perhaps do this
-    as a tooltip to the command argument in the info viewer - hmm I kinda
-    like that.
-[x] Provide a new function to end a process and call that instead of 
-    duplicating code. I think we should send SIGKILL instead of SIGTERM.
-[x] custimization of colors for the graph (including background)
-[x] split settings dialog into notebooks -"Process Listing" "System Monitor"
-    "Advanced"
-[x] graphs need to be beautified
-[x] swap needs to get into graph (I guess the Mem graph)
-[x] need to update the disk usage on a periodic basis
-[x] don't hard code the update intervals. Put the in the config
-    file, but don't necessarily make them visible in the UI. Geeks
-    should expect to go mucking around into config files to change
-    things. That's what makes a geek in the first place.
-[x] Make the renice dialog have options like "important" "very important"
-    instead of the nice value (maybe still give the option somehow to
-    manually set the nice value). Keep the spin button but put a label
-    saying "high" etc.
-[x] hook up renice to su stuff
-[x] feedback if root password is wrong. Preferably return to the password
-    dialog.
-[x] I'm thinking of maybe doing a graphical system monitor
-    thingamabob like memory usage, cpu usage, disk space. This would be
-    a separate tab or just a seperate screen. The View: menu could
-    become a View as: like nautilus.
-[x] How about delay loading the icons to improve startup time? Also
-    be smart about reading the .desktop files. If the user wants to
-    get back the icons while procman has started, then read the files
-    rather than doing nothing and requiring a restart. I think these
-    two would go hand in hand. 
-
--- Post 1.0 --
-[ ] Port to GNOME 2.0. I think I will use the gtk tree widget instead
-    of e-tree and remove the depenency on Gal. GConf for the cofig
-    stuff.
-[ ] Should be able to drag a process to "end process" button and 
+-- 1.2 new features --
+[ ] Should be able to drag a process to "end process" button and
     "more info" button and do the appropriate action
-[ ] Should be able to select multiple processes and kill em etc.
 [ ] color rows depending on cpu usage 
+
+-- later --
+[ ] Perhaps a custom view like show only processes using above 10 MB etc
+    but perhaps it's a feature overkill (it's a process viewer after all
+    - it should probably remain simple)
