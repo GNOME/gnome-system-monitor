@@ -30,7 +30,7 @@ get_type_name(enum glibtop_file_type t)
 	case GLIBTOP_FILE_TYPE_PIPE:
 		return _("pipe");
 	case GLIBTOP_FILE_TYPE_INETSOCKET:
-		return _("internet connection");
+		return _("network connection");
 	case GLIBTOP_FILE_TYPE_LOCALSOCKET:
 		return _("local socket");
 	default:
