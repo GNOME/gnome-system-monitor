@@ -272,28 +272,37 @@ proctable_free_info (ProcInfo *info)
 }
 
 static void
-get_process_status (ProcInfo *info, char *state)
+get_process_status (ProcInfo *info, const glibtop_proc_state *buf)
 {
-	if (info->status)
-		g_free (info->status);
-		
-	if (!g_strcasecmp (state, "r"))
-	{
-		info->status = g_strdup_printf (_("Running"));
-		info->running = TRUE;
-		return;
-	}
-	else if (!g_strcasecmp (state, "t"))
-	{
-		info->status = g_strdup_printf (_("Stopped"));
-		info->running = FALSE;
-	}
-	else
-	{
-		info->status = g_strdup_printf (_("Sleeping"));
-		info->running = FALSE;
-	}
+	g_free (info->status);
 
+	switch(buf->state)
+	{
+	case GLIBTOP_PROCESS_RUNNING:
+		info->status = g_strdup (_("Running"));
+		info->running = TRUE;
+		break;
+
+	case GLIBTOP_PROCESS_STOPPED:
+		info->status = g_strdup (_("Stopped"));
+		info->running = FALSE;
+		break;
+
+	case GLIBTOP_PROCESS_ZOMBIE:
+		info->status = g_strdup (_("Zombie"));
+		info->running = FALSE;
+		break;
+
+	case GLIBTOP_PROCESS_UNINTERRUPTIBLE:
+		info->status = g_strdup (_("Uninterruptible"));
+		info->running = FALSE;
+		break;
+
+	default:
+		info->status = g_strdup (_("Sleeping"));
+		info->running = FALSE;
+		break;
+	  }
 }
 
 static void
@@ -493,9 +502,7 @@ void
 remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 {
 	GtkTreeModel *model;
-	GtkTreeIter iter, child;
-	GtkTreePath *node;
-	GList *children;
+	GtkTreeIter iter;
 	
 	g_return_if_fail (info);
 	
@@ -584,7 +591,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	info->cpu = pcpu;	
 	info->nice = procuid.nice;
 
-	get_process_status (info, (char *) &procstate.state);
+	get_process_status (info, &procstate);
 
 	if (procdata->config.whose_process == ACTIVE_PROCESSES)	{
 
@@ -644,7 +651,6 @@ static ProcInfo *
 get_info (ProcData *procdata, gint pid)
 {
 	ProcInfo *info = g_new0 (ProcInfo, 1);
-	ProcInfo *parentinfo = NULL;
 	glibtop_proc_state procstate;
 	glibtop_proc_time proctime;
 	glibtop_proc_mem procmem;
@@ -669,6 +675,7 @@ get_info (ProcData *procdata, gint pid)
         
 	arguments = glibtop_get_proc_args (&procargs, pid, 0);	
 	get_process_name (procdata, info, procstate.cmd, arguments);
+
 	if (arguments)
 	{
 		for (i = 0; i < procargs.size; i++)
@@ -676,16 +683,16 @@ get_info (ProcData *procdata, gint pid)
 			if (!arguments[i])
 				arguments[i] = ' ';
 		}
-		info->arguments = g_strdup (arguments);
-		g_free (arguments);
+		info->arguments = arguments;
 	}
 	else
 		info->arguments = g_strdup ("");
 	
 	if (pwd && pwd->pw_name)
-		info->user = g_strdup_printf ("%s", pwd->pw_name);
+		info->user = g_strdup(pwd->pw_name);
 	else
 		info->user = NULL;
+
 	info->mem = procmem.size;
 	info->vmsize = procmem.vsize;
 	info->memres = procmem.resident;
@@ -703,7 +710,7 @@ get_info (ProcData *procdata, gint pid)
 	info->parent_pid = procuid.ppid;
 	info->cpu_time_last = newcputime;
 	info->nice = procuid.nice;
-	get_process_status (info, (char *) &procstate.state);
+	get_process_status (info, &procstate);
 	
 	info->pixbuf = pretty_table_get_icon (procdata->pretty_table, info->name, pid);
 	

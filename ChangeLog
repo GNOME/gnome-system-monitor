@@ -1,5 +1,15 @@
 2004-10-22  Benoît Dejean  <tazforever@dlfp.org>
 
+	* .cvsignore:
+	* help/C/.cvsignore: Updated.
+	
+	* src/proctable.c: (get_process_status): Fixed glibtop_proc_state.state
+	usage. Closes #153600. Change prototype. This disables a dirty hack and
+	makes gsm procstate works everywhere.
+	(remove_info_from_tree),(update_info), (get_info): Small cleanups.
+
+2004-10-22  Benoît Dejean  <tazforever@dlfp.org>
+
 	* src/proctable.c: (get_process_name): Fixed empty process name. This is
 	because of a small change in libgtop. If cmdline is empty, libgtop now
 	returns "" instead of NULL (this was not documented at all).
