@@ -167,6 +167,7 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 	const gchar *key = gconf_entry_get_key (entry);
 	GConfValue *value = gconf_entry_get_value (entry);
 	const gchar *color = gconf_value_get_string (value);
+	gint i;
 
 	if (!g_strcasecmp (key, "/apps/procman/bg_color")) {
 		gdk_color_parse (color, &procdata->config.bg_color);
@@ -179,8 +180,19 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 		procdata->mem_graph->colors[1] = procdata->config.frame_color;
 	}
 	else if (!g_strcasecmp (key, "/apps/procman/cpu_color")) {
-		gdk_color_parse (color, &procdata->config.cpu_color);
-		procdata->cpu_graph->colors[2] = procdata->config.cpu_color;
+		gdk_color_parse (color, &procdata->config.cpu_color[0]);
+		procdata->cpu_graph->colors[2] = procdata->config.cpu_color[0];
+	}
+	else if (g_strrstr (key, "/apps/procman/cpu_color")) {
+		for (i=1;i<GLIBTOP_NCPU;i++) {
+			gchar *cpu_key;
+			cpu_key = g_strdup_printf ("/apps/procman/cpu_color%d",i);
+			if (!g_strcasecmp (key, cpu_key)) {
+				gdk_color_parse (color, &procdata->config.cpu_color[i]);
+				procdata->cpu_graph->colors[i+2] = procdata->config.cpu_color[i];
+			}
+			g_free (cpu_key);
+		}
 	}
 	else if (!g_strcasecmp (key, "/apps/procman/mem_color")) {
 		gdk_color_parse (color, &procdata->config.mem_color);
@@ -203,6 +215,8 @@ procman_data_new (GConfClient *client)
 	ProcData *pd;
 	gchar *color;
 	gint swidth, sheight;
+	gint i;
+	glibtop_cpu cpu;
 	
 	pd = g_new0 (ProcData, 1);
 	
@@ -274,9 +288,22 @@ procman_data_new (GConfClient *client)
 		color = g_strdup ("#f25915e815e8");
 	gconf_client_notify_add (client, "/apps/procman/cpu_color", 
 			  	 color_changed_cb, pd, NULL, NULL);
-	gdk_color_parse(color, &pd->config.cpu_color);
+	gdk_color_parse(color, &pd->config.cpu_color[0]);
 	g_free (color);
 	
+	for (i=1;i<GLIBTOP_NCPU;i++) {
+		gchar *key;
+		key = g_strdup_printf ("/apps/procman/cpu_color%d", i);
+		
+		color = gconf_client_get_string (client, key, NULL);
+		if (!color)
+			color = g_strdup ("#f25915e815e8");
+		gconf_client_notify_add (client, key, 
+			  	 color_changed_cb, pd, NULL, NULL);
+		gdk_color_parse(color, &pd->config.cpu_color[i]);
+		g_free (color);
+		g_free (key);
+	}
 	color = gconf_client_get_string (client, "/apps/procman/mem_color", NULL);
 	if (!color)
 		color = g_strdup ("#f25915e815e8");
@@ -321,7 +348,17 @@ procman_data_new (GConfClient *client)
 	if (pd->config.pane_pos == 0)
 		pd->config.pane_pos = 300;
 	
-
+	/* Determinie number of cpus since libgtop doesn't really tell you*/
+	pd->config.num_cpus = 0;
+	glibtop_get_cpu (&cpu);
+	i=0;
+    	while (i < GLIBTOP_NCPU && cpu.xcpu_total[i] != 0) {
+    	    pd->config.num_cpus ++;
+    	    i++;
+    	}
+    	if (pd->config.num_cpus == 0)
+    		pd->config.num_cpus = 1;
+    	
 	return pd;
 
 }

@@ -27,6 +27,7 @@
 #include <string.h>
 #include <signal.h>
 #include <gdk/gdkkeysyms.h>
+#include <math.h>
 #include "procman.h"
 #include "callbacks.h"
 #include "interface.h"
@@ -322,6 +323,17 @@ make_title_label (const char *text)
   return label;
 }
 
+/* Make sure the cpu labels don't jump around. From the clock applet */
+static void
+cpu_size_request (GtkWidget *box, GtkRequisition *req, ProcData *procdata)
+{
+	if (req->width > procdata->cpu_label_fixed_width)
+		procdata->cpu_label_fixed_width = req->width;
+		
+	req->width = procdata->cpu_label_fixed_width;
+	
+}
+
 static GtkWidget *
 create_sys_view (ProcData *procdata)
 {
@@ -338,6 +350,7 @@ create_sys_view (ProcData *procdata)
 	GtkTreeStore *model;
 	GtkTreeViewColumn *col;
 	GtkCellRenderer *cell;
+	GtkSizeGroup *sizegroup;
 	gchar *titles[5] = {_("Name"),
 			    _("Directory"),
 				_("Type"),
@@ -379,29 +392,45 @@ create_sys_view (ProcData *procdata)
 	cpu_graph = load_graph_new (CPU_GRAPH, procdata);
 	gtk_box_pack_start (GTK_BOX (cpu_graph_box), cpu_graph->main_widget, TRUE, TRUE, 0);
 
-	hbox = gtk_hbox_new (FALSE, 12);
-	gtk_box_pack_start (GTK_BOX (cpu_graph_box), hbox, FALSE, FALSE, 0);
-
-	color_picker = gnome_color_picker_new ();
-	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
-				    cpu_graph->colors[2].red,
-				    cpu_graph->colors[2].green,
-				    cpu_graph->colors[2].blue, 0);
-	g_signal_connect (G_OBJECT (color_picker), "color_set",
-			    G_CALLBACK (cb_cpu_color_changed), procdata);
-	gtk_box_pack_start (GTK_BOX (hbox), color_picker, FALSE, FALSE, 0);
+	sizegroup = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+	for (i=0;i<procdata->config.num_cpus; i++) {
+		GtkWidget *temp_hbox;
+		/* Two per row */
+		if (fabs(fmod(i,2) - 0) < .01) {
+			hbox = gtk_hbox_new (FALSE, 12);
+			gtk_box_pack_start (GTK_BOX (cpu_graph_box), hbox, FALSE, FALSE, 0);
+		}
+		
+		temp_hbox = gtk_hbox_new (FALSE, 6);
+		gtk_box_pack_start (GTK_BOX (hbox), temp_hbox, FALSE, FALSE, 0);
+		gtk_size_group_add_widget (sizegroup, temp_hbox);
+		g_signal_connect (G_OBJECT (temp_hbox), "size_request",
+					 G_CALLBACK (cpu_size_request), procdata);
+		
+		color_picker = gnome_color_picker_new ();
+		gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
+				    cpu_graph->colors[2+i].red,
+				    cpu_graph->colors[2+i].green,
+				    cpu_graph->colors[2+i].blue, 0);
+		g_signal_connect (G_OBJECT (color_picker), "color_set",
+			    G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
+		gtk_box_pack_start (GTK_BOX (temp_hbox), color_picker, FALSE, FALSE, 0);
+		
+		gchar *text = g_strdup_printf (_("CPU%d:"), i+1);
+		label = gtk_label_new (text);
+		gtk_box_pack_start (GTK_BOX (temp_hbox), label, FALSE, FALSE, 0);
+		g_free (text);
+		
+		cpu_label = gtk_label_new (NULL);
+		gtk_box_pack_start (GTK_BOX (temp_hbox), cpu_label, FALSE, FALSE, 0);
+		cpu_graph->cpu_labels[i] = cpu_label;
+		
+	}
 	
-	label = gtk_label_new (_("Used CPU:"));
-	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 	
-	cpu_label = gtk_label_new ("");
-	gtk_box_pack_start (GTK_BOX (hbox), cpu_label, FALSE, FALSE, 0);
-	cpu_graph->label = cpu_label;
 	
 	procdata->cpu_graph = cpu_graph;
 
-
-	/******************************************/
 
 	mem_box = gtk_vbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox), mem_box, TRUE, TRUE, 0);

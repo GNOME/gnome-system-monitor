@@ -22,6 +22,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gnome.h>
 #include <gconf/gconf-client.h>
+#include <glibtop/cpu.h>
 
 typedef struct _ProcConfig ProcConfig;
 typedef struct _PrettyTable PrettyTable;
@@ -53,13 +54,14 @@ struct _ProcConfig
  	gint		disks_update_interval;
 	gint		whose_process;
 	gint		current_tab;
-	GdkColor	cpu_color;
+	GdkColor	cpu_color[GLIBTOP_NCPU];
 	GdkColor	mem_color;
 	GdkColor	swap_color;
 	GdkColor	bg_color;
 	GdkColor	frame_color;
 	gboolean	simple_view;
 	gint		pane_pos;
+	gint 		num_cpus;
 };
 
 struct _PrettyTable {
@@ -74,7 +76,6 @@ struct _LoadGraph {
     guint speed;
     guint draw_width, draw_height;
     guint num_points;
-    guint num_datasets;
     guint num_cpus;
 
     guint allocated;
@@ -87,7 +88,7 @@ struct _LoadGraph {
     gint colors_allocated;
     GtkWidget *main_widget;
     GtkWidget *disp;
-    GtkWidget *label;
+    GtkWidget *cpu_labels[GLIBTOP_NCPU];
     GtkWidget *memused_label;
     GtkWidget *memtotal_label;
     GtkWidget *swapused_label;
@@ -98,8 +99,8 @@ struct _LoadGraph {
     
     gboolean draw;
 
-    long cpu_time [NCPUSTATES];
-    long cpu_last [NCPUSTATES];
+    long cpu_time [GLIBTOP_NCPU] [NCPUSTATES];
+    long cpu_last [GLIBTOP_NCPU] [NCPUSTATES];
     int cpu_initialized;       
 };
 
@@ -138,6 +139,7 @@ struct _ProcData
 	ProcConfig	config;
 	LoadGraph	*cpu_graph;
 	LoadGraph	*mem_graph;
+	gint		cpu_label_fixed_width;
 	ProcInfo	*selected_process;
 	GtkTreeSelection *selection;
 	gint		timeout;

@@ -125,50 +125,64 @@ get_load (gfloat data [2], LoadGraph *g)
     float usr, nice, sys, free;
     float total;
     gchar *text;
-
+    gint i;
+  
     glibtop_cpu cpu;
 	
     glibtop_get_cpu (&cpu);
-   
-    g->cpu_time [0] = cpu.user;
-    g->cpu_time [1] = cpu.nice;
-    g->cpu_time [2] = cpu.sys;
-    g->cpu_time [3] = cpu.idle;
-
+  
+    for (i=0; i<g->n; i++) {
+    	if (g->n == 1) {
+    		g->cpu_time [i][0] = cpu.user;
+    		g->cpu_time [i][1] = cpu.nice;
+    		g->cpu_time [i][2] = cpu.sys;
+    		g->cpu_time [i][3] = cpu.idle;
+    	} else {
+    		g->cpu_time [i][0] = cpu.xcpu_user[i];
+    		g->cpu_time [i][1] = cpu.xcpu_nice[i];
+    		g->cpu_time [i][2] = cpu.xcpu_sys[i];
+    		g->cpu_time [i][3] = cpu.xcpu_idle[i];
+    	}
+    }
     if (!g->cpu_initialized) {
-    	g->cpu_last [0] = g->cpu_time [0];
-    	g->cpu_last [1] = g->cpu_time [1];
-    	g->cpu_last [2] = g->cpu_time [2];
-    	g->cpu_last [3] = g->cpu_time [3];
-	data[0] = -1;
+        for (i=0; i<g->n; i++) {
+    		g->cpu_last [i][0] = g->cpu_time [i][0];
+    		g->cpu_last [i][1] = g->cpu_time [i][1];
+    		g->cpu_last [i][2] = g->cpu_time [i][2];
+    		g->cpu_last [i][3] = g->cpu_time [i][3];
+    		data[i] = -1;
+    	}
 	g->cpu_initialized = 1;
 	return;
     }
 
-    usr  = g->cpu_time [0] - g->cpu_last [0];
-    nice = g->cpu_time [1] - g->cpu_last [1];
-    sys  = g->cpu_time [2] - g->cpu_last [2];
-    free = g->cpu_time [3] - g->cpu_last [3];
+    for (i=0; i<g->n; i++) {
+    	usr  = g->cpu_time [i][0] - g->cpu_last [i][0];
+    	nice = g->cpu_time [i][1] - g->cpu_last [i][1];
+    	sys  = g->cpu_time [i][2] - g->cpu_last [i][2];
+    	free = g->cpu_time [i][3] - g->cpu_last [i][3];
+    	
+    	total = usr + nice + sys + free;
 
-    total = usr + nice + sys + free;
+    	g->cpu_last [i][0] = g->cpu_time [i][0];
+    	g->cpu_last [i][1] = g->cpu_time [i][1];
+    	g->cpu_last [i][2] = g->cpu_time [i][2];
+    	g->cpu_last [i][3] = g->cpu_time [i][3];
 
-    g->cpu_last [0] = g->cpu_time [0];
-    g->cpu_last [1] = g->cpu_time [1];
-    g->cpu_last [2] = g->cpu_time [2];
-    g->cpu_last [3] = g->cpu_time [3];
+    	if (!total) total = 1.0;
 
-    if (!total) total = 1.0;
+    	usr  = usr  / total;
+    	nice = nice / total;
+    	sys  = sys  / total;
+    	free = free / total;
 
-    usr  = usr  / total;
-    nice = nice / total;
-    sys  = sys  / total;
-    free = free / total;
-
-    data[0] = usr + sys + nice;
-    
-    text = g_strdup_printf ("%.2f %s", 100.0 *(usr + sys + nice), "%");
-    gtk_label_set_text (GTK_LABEL (g->label), text);
-    g_free (text);
+    	data[i] = usr + sys + nice;
+    	
+	text = g_strdup_printf ("%.1f%%", 100.0*data[i]);
+    	gtk_label_set_text (GTK_LABEL (g->cpu_labels[i]), text);
+    	g_free (text);
+    }
+   
     
 }
 
@@ -222,7 +236,7 @@ load_graph_update (LoadGraph *g)
 
     switch (g->type) {
     case CPU_GRAPH:
-    	get_load (g->data [0], g);
+    	get_load (g->data[0], g);
     	break;
     case MEM_GRAPH:
     	get_memory (g->data [0], g);
@@ -366,29 +380,21 @@ LoadGraph *
 load_graph_new (gint type, ProcData *procdata)
 {
     LoadGraph *g;
-    glibtop_cpu cpu;
     gint i = 0;
    
     g = g_new0 (LoadGraph, 1);
     
-    g->num_cpus = 1;
-    /* Get # of cpus */
-    glibtop_get_cpu (&cpu);
-    while (i < GLIBTOP_NCPU && cpu.xcpu_total[i] != 0) {
-    	g->num_cpus ++;
-    	i++;
-    }
-
     g->type = type;
     switch (type) {
     case CPU_GRAPH:
-    	g->n = 1;
-	g->num_datasets = g->num_cpus;
+    	if (procdata->config.num_cpus == 0)
+	    g->n = 1;
+	else
+	    g->n = procdata->config.num_cpus;
 	break;
     case MEM_GRAPH:
     	g->n = 2;
-	g->num_datasets = 1;
-    	break;
+	break;
     }
 	
     g->speed  = procdata->config.graph_update_interval;
@@ -400,7 +406,8 @@ load_graph_new (gint type, ProcData *procdata)
     g->colors[1] = procdata->config.frame_color;
     switch (type) {
     case CPU_GRAPH:
-    	g->colors[2] = procdata->config.cpu_color;
+    	for (i=0;i<g->n;i++)
+    		g->colors[2+i] = procdata->config.cpu_color[i];
     	break;
     case MEM_GRAPH:
     	g->colors[2] = procdata->config.mem_color;

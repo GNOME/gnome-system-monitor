@@ -120,8 +120,8 @@ cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 
 
 	const gchar *authors[] = {
-				 _("Kevin Vandersloot (kfv101@psu.edu)"),
-				 _("Jorgen Scheibengruber <mfcn@gmx.de> - nicer devices treeview"),
+				 _("Kevin Vandersloot"),
+				 _("Jorgen Scheibengruber - nicer devices treeview"),
 				NULL
 				 };
 
@@ -365,13 +365,19 @@ void
 cb_cpu_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 		      guint a, gpointer data)
 {
-	ProcData *procdata = data;
-	GConfClient *client = procdata->client;
+	gint i = GPOINTER_TO_INT (data);
+	GConfClient *client = gconf_client_get_default ();
+	gchar *key;
 	gchar *color;
 	
 	color = g_strdup_printf("#%04x%04x%04x", r, g, b);
-	gconf_client_set_string (client, "/apps/procman/cpu_color", color, NULL);
+	if (i == 0)
+		key = g_strdup ("/apps/procman/cpu_color");
+	else
+		key = g_strdup_printf ("/apps/procman/cpu_color%d", i);
+	gconf_client_set_string (client, key, color, NULL);
 	g_free (color);
+	g_free (key);
 }
 
 void		
