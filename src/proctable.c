@@ -304,9 +304,8 @@ get_process_name (ProcData *procdata, ProcInfo *info, gchar *cmd, gchar *args)
 	gboolean done = FALSE;
 						  
 	/* strip the absolute path from the arguments */	
-	if (args)
+	if (args && (len = strlen(args)))
 	{
-		len = strlen (args);
 		i = len;
 		while (!done)
 		{
@@ -330,13 +329,9 @@ get_process_name (ProcData *procdata, ProcInfo *info, gchar *cmd, gchar *args)
 	}
 	
 	if (command)
-		info->name = g_strdup (command);
-	else if (!command)
+		info->name = command;
+	else
 		info->name = g_strdup (cmd);
-		
-	if (command)
-		g_free (command);
-
 }
 
 ProcInfo *

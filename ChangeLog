@@ -1,3 +1,11 @@
+2004-10-22  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/proctable.c: (get_process_name): Fixed empty process name. This is
+	because of a small change in libgtop. If cmdline is empty, libgtop now
+	returns "" instead of NULL (this was not documented at all).
+	Now : if procargs is NULL or "", the process name is given by procstate, else
+	procargs is parsed.
+
 2004-10-21  Benoît Dejean  <tazforever@dlfp.org>
 
 	* src/procactions.c: (renice_single_process),
