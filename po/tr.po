@@ -5,35 +5,39 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: procman 0.10.2\n"
-"POT-Creation-Date: 2001-11-08 07:27-0500\n"
-"PO-Revision-Date: 2001-11-08 23:30+0200\n"
+"POT-Creation-Date: 2001-11-14 15:51-0500\n"
+"PO-Revision-Date: 2001-11-15 07:49+0200\n"
 "Last-Translator: Nilgün Belma Bugüner <nilgun@fide.org>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: procman.desktop.in.h:1 src/callbacks.c:133
-msgid "Process Manager"
-msgstr "Süreç Yönetici"
+#: procman.desktop.in.h:1 src/interface.c:487
+msgid "Procman System Monitor"
+msgstr "Procman Sistem Gözlemcisi"
 
 #: procman.desktop.in.h:2
-msgid "View Running Processes"
-msgstr "Çalışan Süreçleri Göster"
+msgid "View current processes and monitor system state"
+msgstr "Çalışan süreçleri ve sistem durumunu gösterir"
 
-#: src/callbacks.c:128
+#: src/callbacks.c:119
 msgid "Kevin Vandersloot (kfv101@psu.edu)"
 msgstr "Kevin Vandersloot (kfv101@psu.edu)"
 
-#: src/callbacks.c:129
+#: src/callbacks.c:120
 msgid "Erik Johnsson (zaphod@linux.nu) - icon support"
 msgstr "Erik Johnsson (zaphod@linux.nu) - simge desteği"
 
-#: src/callbacks.c:134
+#: src/callbacks.c:124
+msgid "Process Manager"
+msgstr "Süreç Yönetici"
+
+#: src/callbacks.c:125
 msgid "(C) 2001 Kevin Vandersloot"
 msgstr "(C) 2001 Kevin Vandersloot"
 
-#: src/callbacks.c:135
+#: src/callbacks.c:126
 msgid "Simple process viewer using libgtop"
 msgstr "libgtop kullanan basit bir süreç gösterici"
 
@@ -61,15 +65,15 @@ msgstr "Sawfish Pencere Yöneticisi"
 msgid "..."
 msgstr "..."
 
-#: src/favorites.c:271
+#: src/favorites.c:294
 msgid "No processes are currently hidden."
 msgstr "Şu anda gizli süreç yok."
 
-#: src/favorites.c:286
+#: src/favorites.c:309
 msgid "Manage Hidden Processes"
 msgstr "Gizli Süreçleri Yönet"
 
-#: src/favorites.c:297
+#: src/favorites.c:320
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
@@ -77,11 +81,11 @@ msgstr ""
 "Bunlar gizlemeyi tercih ettiğiniz süreçlerdir. Listeden kaldırarak bir "
 "süreci tekrar görünür duruma getirebilirsiniz."
 
-#: src/favorites.c:301
+#: src/favorites.c:324
 msgid "Hidden Processes"
 msgstr "Gizli Süreçler"
 
-#: src/favorites.c:314
+#: src/favorites.c:337
 msgid "_Remove From List"
 msgstr "Listeden _Kaldır"
 
@@ -150,7 +154,7 @@ msgstr "Önceliği _Değiştir"
 msgid "Change the importance (nice value) of a process"
 msgstr "Bir sürecin önceliğini değiştirir"
 
-#: src/interface.c:58 src/procdialogs.c:95
+#: src/interface.c:58 src/procdialogs.c:96
 msgid "_Hide Process"
 msgstr "Süreci _Gizle"
 
@@ -166,7 +170,7 @@ msgstr "Süreci _Sonlandır"
 msgid "Force a process to finish."
 msgstr "Bir süreci sonlandırır."
 
-#: src/interface.c:69 src/procdialogs.c:144
+#: src/interface.c:69 src/procdialogs.c:145
 msgid "_Kill Process"
 msgstr "Süreci Ö_ldür"
 
@@ -218,15 +222,15 @@ msgstr "Sadece etkin süreçleri gösterir"
 msgid "Change Priority ..."
 msgstr "Önceliği Değiştir ..."
 
-#: src/interface.c:141 src/memmaps.c:232
+#: src/interface.c:141 src/memmaps.c:315
 msgid "Memory Maps"
 msgstr "Bellek Eşlemler"
 
-#: src/interface.c:147 src/procdialogs.c:81
+#: src/interface.c:147 src/procdialogs.c:82
 msgid "Hide Process"
 msgstr "Süreci Gizle"
 
-#: src/interface.c:153 src/procdialogs.c:147 src/procdialogs.c:664
+#: src/interface.c:153 src/procdialogs.c:148 src/procdialogs.c:679
 msgid "End Process"
 msgstr "Süreci Sonlandır"
 
@@ -234,7 +238,7 @@ msgstr "Süreci Sonlandır"
 msgid "Force a process to finish"
 msgstr "Bir süreci sonlandırır"
 
-#: src/interface.c:158 src/procdialogs.c:143
+#: src/interface.c:158 src/procdialogs.c:144 src/procdialogs.c:677
 msgid "Kill Process"
 msgstr "Süreci Öldür"
 
@@ -263,179 +267,193 @@ msgid "More _Info"
 msgstr "_Daha Fazla Bilgi"
 
 #: src/interface.c:297
-msgid "Disk Name"
-msgstr "Disk İsmi"
+msgid "Name"
+msgstr "İsim"
 
 #: src/interface.c:298
-msgid "Used Space"
-msgstr "Kullanılan Alan"
+msgid "Directory"
+msgstr "Dizin"
 
 #: src/interface.c:299
-msgid "Free Space"
-msgstr "Boş Alan"
+msgid "Used Space"
+msgstr "Kullanılan Alan"
 
 #: src/interface.c:300
 msgid "Total Space"
 msgstr "Toplam Alan"
 
-#: src/interface.c:301
-msgid "Mount Directory"
-msgstr "Bağlama Dizini"
-
-#: src/interface.c:313
+#: src/interface.c:312
 msgid "% CPU Usage History"
 msgstr "%% CPU Kullanım Geçmişi"
 
-#: src/interface.c:318
+#: src/interface.c:317
 msgid "% Memory / Swap Usage History"
 msgstr "%% Bellek / Takas Kullanım Geçmişi"
 
-#: src/interface.c:339
+#: src/interface.c:338
 msgid "CPU Used :"
 msgstr "Kullanılan CPU:"
 
-#: src/interface.c:370
-msgid "Memory Used / Total :"
-msgstr "Kullanılan / Toplam Bellek:"
+#: src/interface.c:367 src/proctable.c:126 src/proctable.etspec.h:5
+msgid "Memory"
+msgstr "Bellek"
 
-#: src/interface.c:390
-msgid "Swap Used / Total :"
-msgstr "Kullanılan / Toplam Takas:"
+#: src/interface.c:372 src/interface.c:408
+msgid "Used :"
+msgstr "Kullanılan:"
 
-#: src/interface.c:404 src/procdialogs.c:615
-msgid "Disks"
-msgstr "Disk"
+#: src/interface.c:383 src/interface.c:419
+msgid "Total :"
+msgstr "Toplam:"
 
-#: src/interface.c:458
-msgid "Procman System Monitor"
-msgstr "Procman Sistem Gözlemcisi"
+#: src/interface.c:403
+msgid "Swap"
+msgstr "Takas"
 
-#: src/interface.c:478 src/procdialogs.c:502
+#: src/interface.c:433 src/procdialogs.c:627
+msgid "Devices"
+msgstr "Aygıt"
+
+#: src/interface.c:507 src/procdialogs.c:516
 msgid "Process _Listing"
 msgstr "Süreç _Listeleme"
 
-#: src/interface.c:487 src/procdialogs.c:557
+#: src/interface.c:516 src/procdialogs.c:570
 msgid "System _Monitor"
 msgstr "Sistem Gözle_mcisi"
 
-#: src/interface.c:549
+#: src/interface.c:578
 msgid "Application Manager"
 msgstr "Uygulama Yöneticisi"
 
-#: src/interface.c:559
+#: src/interface.c:588
 msgid "Running Applications"
 msgstr "Çalışan Uygulamalar"
 
-#: src/interface.c:578
+#: src/interface.c:607
 msgid "_Close Application"
 msgstr "Uygulamayı _Kapat"
 
-#: src/memmaps.c:166 src/memmaps.etspec.h:2
+#: src/memmaps.c:247 src/memmaps.etspec.h:2
 msgid "Filename"
 msgstr "Dosya adı"
 
-#: src/memmaps.c:166 src/memmaps.etspec.h:6
+#: src/memmaps.c:247 src/memmaps.etspec.h:6
 msgid "VM Start"
 msgstr "VM başlangıç"
 
-#: src/memmaps.c:166 src/memmaps.etspec.h:5
+#: src/memmaps.c:247 src/memmaps.etspec.h:5
 msgid "VM End"
 msgstr "VM bitiş"
 
-#: src/memmaps.c:167 src/memmaps.etspec.h:3
+#: src/memmaps.c:248 src/memmaps.etspec.h:3
 msgid "Flags"
 msgstr "Bayraklar"
 
-#: src/memmaps.c:167 src/memmaps.etspec.h:7
+#: src/memmaps.c:248 src/memmaps.etspec.h:7
 msgid "VM offset"
 msgstr "VM offset"
 
-#: src/memmaps.c:167 src/memmaps.etspec.h:1
+#: src/memmaps.c:248 src/memmaps.etspec.h:1
 msgid "Device"
 msgstr "Aygıt"
 
-#: src/memmaps.c:167 src/memmaps.etspec.h:4
+#: src/memmaps.c:248 src/memmaps.etspec.h:4
 msgid "Inode"
 msgstr "Dosya indeksi"
 
-#: src/memmaps.c:247
+#: src/memmaps.c:330
 msgid "Process Name :"
 msgstr "Süreç İsmi:"
 
-#: src/procactions.c:46
+#: src/procactions.c:54
 msgid "No such process."
 msgstr "Böyle bir işlem yok"
 
-#: src/procactions.c:52
+#: src/procactions.c:60
+#, c-format
 msgid ""
+"Process Name : %s \n"
+"\n"
 "You do not have permission to change the priority of this process. You can "
 "enter the root password to gain the necessary permission."
 msgstr ""
+"Süreç İsmi: %s\n"
+"\n"
 "Bu sürecin öceliğini değiştirmek için yetkiniz yok. Gerekli hakları elde "
 "etmek için root parolanızı girmelisiniz"
 
-#: src/procactions.c:60
+#: src/procactions.c:67
+#, c-format
 msgid ""
+"Process Name : %s \n"
+"\n"
 "You must be root to renice a process lower than 0. You can enter the root "
 "password to gain the necessary permission."
 msgstr ""
+"Süreç İsmi: %s\n"
+"\n"
 "Bu süreci 0 dan daha düşük bir iyileme seviyesine getirme yetkiniz yok. "
-"Gerekli hakları elde etmek için root parolanızı girmelisiniz"
+"Gerekli hakları elde etmek için root parolanızı girmelisiniz."
 
-#: src/procactions.c:100
+#: src/procactions.c:119
+#, c-format
 msgid ""
+"Process Name : %s \n"
+"\n"
 "You do not have permission to end this process. You can enter the root "
 "password to gain the necessary permission."
 msgstr ""
+"Süreç İsmi: %s\n"
+"\n"
 "Bu süreci sonlandırmak için yetkiniz yok. Gerekli hakları elde etmek için "
-"root parolanızı girmelisiniz"
+"root parolanızı girmelisiniz."
 
-#: src/procactions.c:114
+#: src/procactions.c:133
 msgid "An error occured while killing the process."
 msgstr "Süreç öldürülürken bir hata oluştu"
 
 #: src/procdialogs.c:73
 msgid ""
-"This action will block a process from being displayed. \n"
-" To reshow a process choose Hidden Processes in the Edit menu"
+"Are you sure you want to hide this process?\n"
+"(Choose 'Hidden Processes' in the Settings menu to reshow)"
 msgstr ""
-"Bu gösterilen süreçlerden birini bloklayacaktır. Gizli bir süreci\n"
-"görünür yapmak için menüden Düzenle -> Gizli Süreçler\n"
-"öğesini seçiniz."
+"Bu süreci gizlemek istediğinizden emin misiniz?\n"
+"(Yeniden görünür olması için Ayarlar menüsünden 'Gizli Süreçler'i seçiniz.)"
 
-#: src/procdialogs.c:90 src/procdialogs.c:167
+#: src/procdialogs.c:91 src/procdialogs.c:168
 msgid "Show this dialog next time."
 msgstr "Bu iletişim kutusunu hep göster."
 
-#: src/procdialogs.c:148
+#: src/procdialogs.c:149
 msgid "_End Process"
 msgstr "Sür_eci Sonlandır"
 
-#: src/procdialogs.c:155
+#: src/procdialogs.c:156
 msgid "Unsaved data will be lost."
 msgstr "Kaydedilmemiş veriler kaybolacak."
 
-#: src/procdialogs.c:190
+#: src/procdialogs.c:191
 msgid "( Very High Priority )"
 msgstr "( Çok Yüksek Öncelik )"
 
-#: src/procdialogs.c:192
+#: src/procdialogs.c:193
 msgid "( High Priority )"
 msgstr "( Yüksek Öncelik )"
 
-#: src/procdialogs.c:194
+#: src/procdialogs.c:195
 msgid "( Normal Priority )"
 msgstr "( Normal Öncelik )"
 
-#: src/procdialogs.c:196
+#: src/procdialogs.c:197
 msgid "( Low Priority )"
 msgstr "( Düşük Öncelik )"
 
-#: src/procdialogs.c:198
+#: src/procdialogs.c:199
 msgid "( Very Low Priority)"
 msgstr "( Çok Düşük Öncelik )"
 
-#: src/procdialogs.c:241
+#: src/procdialogs.c:242
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -443,148 +461,139 @@ msgstr ""
 "İyileştirme değeri süreç öncelikleri ile ilgilidir. Düşük iyileştirme değeri "
 "daha yüksek bir önceliğe karşılık gelir."
 
-#: src/procdialogs.c:253 src/procdialogs.c:666
+#: src/procdialogs.c:254 src/procdialogs.c:682
 msgid "Change Priority"
 msgstr "Önceliği Değiştir"
 
-#: src/procdialogs.c:255
+#: src/procdialogs.c:257
 msgid "Change _Priority"
 msgstr "Ön_celiği Değiştir"
 
-#: src/procdialogs.c:275
+#: src/procdialogs.c:276
 msgid "Nice Value :"
 msgstr "İyileme Değeri:"
 
-#: src/procdialogs.c:489
+#: src/procdialogs.c:503
 msgid "Preferences"
 msgstr "Tercihler"
 
-#: src/procdialogs.c:506
+#: src/procdialogs.c:520
 msgid "General"
 msgstr "Genel"
 
-#: src/procdialogs.c:516 src/procdialogs.c:567 src/procdialogs.c:622
+#: src/procdialogs.c:530 src/procdialogs.c:580 src/procdialogs.c:634
 msgid "Update Speed ( seconds ) :"
 msgstr "Güncelleme Hızı (saniye):"
 
-#: src/procdialogs.c:527
+#: src/procdialogs.c:541
 msgid "Show Process Dependencies"
 msgstr "Süreç Bağımlılıklarını Göster"
 
-#: src/procdialogs.c:534
+#: src/procdialogs.c:548
 msgid "Advanced"
 msgstr "Gelişmiş"
 
-#: src/procdialogs.c:541
-msgid "Show Application Names"
-msgstr "Uygulama İsimlerini Göster"
-
-#: src/procdialogs.c:548
+#: src/procdialogs.c:555
 msgid "Show Threads"
 msgstr "Konuları Göster"
 
-#: src/procdialogs.c:561
+#: src/procdialogs.c:564
+msgid "Process _Fields"
+msgstr "Süreç _Alanları"
+
+#: src/procdialogs.c:574
 msgid "Graphs"
 msgstr "Grafikler"
 
-#: src/procdialogs.c:582
+#: src/procdialogs.c:595
 msgid "Background Color :"
 msgstr "Artalan Rengi:"
 
-#: src/procdialogs.c:598
+#: src/procdialogs.c:611
 msgid "Grid Color :"
 msgstr "Izgara Rengi:"
 
-#: src/procdialogs.c:683
+#: src/procdialogs.c:698
 msgid "Root Password :"
 msgstr "Root Parolası:"
 
-#: src/procdialogs.c:721
+#: src/procdialogs.c:736
 msgid "Wrong Password."
 msgstr "Parola Yanlış."
 
-#: src/procman.c:45
+#: src/procman.c:46
 msgid "show simple dialog to end processes and logout"
 msgstr "süreci sonlandırıp sistemi bırakmak için basit bir dialog göster"
 
-#: src/proctable.c:103
+#: src/proctable.c:125
 msgid "Icon "
 msgstr "Simge "
 
-#: src/proctable.c:103 src/proctable.etspec.h:7
+#: src/proctable.c:125 src/proctable.etspec.h:7
 msgid "Process Name"
 msgstr "Süreç İsmi"
 
-#: src/proctable.c:103 src/proctable.etspec.h:12
+#: src/proctable.c:125 src/proctable.etspec.h:12
 msgid "User"
 msgstr "Kullanıcı"
 
-#: src/proctable.c:104 src/proctable.etspec.h:5
-msgid "Memory"
-msgstr "Bellek"
+#: src/proctable.c:125 src/proctable.etspec.h:11
+msgid "Status"
+msgstr "Durum"
 
-#: src/proctable.c:104 src/proctable.etspec.h:3
+#: src/proctable.c:126 src/proctable.etspec.h:13
+msgid "VM Size"
+msgstr "VM Boyutu"
+
+#: src/proctable.c:126 src/proctable.etspec.h:9
+msgid "Resident Memory"
+msgstr "Yerleşik Bellek"
+
+#: src/proctable.c:127 src/proctable.etspec.h:10
+msgid "Shared Memory"
+msgstr "Paylaşımlı Bellek"
+
+#: src/proctable.c:127 src/proctable.etspec.h:8
+msgid "RSS Memory"
+msgstr "RSS Belleği"
+
+#: src/proctable.c:128 src/proctable.etspec.h:3
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: src/proctable.c:104 src/proctable.etspec.h:4
+#: src/proctable.c:128 src/proctable.etspec.h:6
+msgid "Nice"
+msgstr "İyileştirme"
+
+#: src/proctable.c:128 src/proctable.etspec.h:4
 msgid "ID"
 msgstr "Kimlik"
 
-#: src/proctable.c:218
+#: src/proctable.c:266
 msgid "Running"
 msgstr "Çalışan"
 
-#: src/proctable.c:224
+#: src/proctable.c:272
 msgid "Stopped"
 msgstr "Durdurulan"
 
-#: src/proctable.c:229
+#: src/proctable.c:277
 msgid "Sleeping"
 msgstr "Beklemede"
 
-#: src/proctable.c:658
+#: src/proctable.c:731
 msgid " (thread)"
 msgstr " (konu)"
 
-#: src/proctable.c:908
+#: src/proctable.c:985
 #, c-format
 msgid "%s could not be found."
 msgstr "%s bulunamadı"
 
-#: src/proctable.c:910
-#, c-format
-msgid "No more instances of %s could be found."
-msgstr "Çalışan bir %s yok."
-
 #: src/proctable.etspec.h:1 src/simple.etspec.h:1
 msgid " "
 msgstr " "
-
-#: src/proctable.etspec.h:6
-msgid "Nice"
-msgstr "İyileştirme"
-
-#: src/proctable.etspec.h:8
-msgid "RSS Memory"
-msgstr "RSS Belleği"
-
-#: src/proctable.etspec.h:9
-msgid "Resident Memory"
-msgstr "Yerleşik Bellek"
-
-#: src/proctable.etspec.h:10
-msgid "Shared Memory"
-msgstr "Paylaşımlı Bellek"
-
-#: src/proctable.etspec.h:11
-msgid "Status"
-msgstr "Durum"
-
-#: src/proctable.etspec.h:13
-msgid "VM Size"
-msgstr "VM Boyutu"
 
 #: src/simple.etspec.h:2
 msgid "Application Name"
