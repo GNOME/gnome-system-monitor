@@ -6,10 +6,11 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <string.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
 #include "prettytable.h"
 #include "defaulttable.h"
 #include "proctable.h"
-#include <gdk-pixbuf/gdk-pixbuf.h>
 
 
 static void

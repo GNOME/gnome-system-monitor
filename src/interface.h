@@ -20,8 +20,10 @@
 #ifndef _PROCMAN_INTERFACE_H_
 #define _PROCMAN_INTERFACE_H_
 
+#include <glib/gtypes.h>
+#include <gtk/gtk.h>
 #include "procman.h"
-#include <glib.h>
+
 
 void		create_main_window (ProcData *data) G_GNUC_INTERNAL;
 void		toggle_infoview (ProcData *data) G_GNUC_INTERNAL;

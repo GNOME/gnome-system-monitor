@@ -21,8 +21,9 @@
 #ifndef _PROCMAN_CALLBACKS_H_
 #define _PROCMAN_CALLBACKS_H_
 
-#include "procman.h"
 #include <gtk/gtk.h>
+#include "procman.h"
+
 
 void		cb_properties_activate (GtkMenuItem *menuitem, gpointer user_data) G_GNUC_INTERNAL;
 

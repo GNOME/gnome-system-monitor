@@ -21,6 +21,7 @@
 #define _INFOVIEW_H_
 
 #include <gtk/gtk.h>
+#include <glib/gtypes.h>
 #include "procman.h"
 
 typedef struct _Infoview Infoview;

@@ -1,9 +1,10 @@
-#include "util.h"
-
 #include <config.h>
 
 #include <glib/gi18n.h>
 #include <stddef.h>
+
+#include "util.h"
+
 
 void _procman_array_gettext_init(const char * strings[], size_t n)
 {

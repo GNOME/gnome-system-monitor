@@ -21,8 +21,10 @@
 #define _FAVORITES_H_
 
 
-#include "procman.h"
 #include <gconf/gconf-client.h>
+#include <glib/gtypes.h>
+
+#include "procman.h"
 
 void 		save_blacklist (ProcData *procdata, GConfClient *client) G_GNUC_INTERNAL;
 void		add_to_blacklist (ProcData *procdata, gchar *name) G_GNUC_INTERNAL;
