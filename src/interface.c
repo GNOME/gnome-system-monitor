@@ -186,20 +186,20 @@ create_proc_view (ProcData *procdata)
   	
   	glade_menuitem = gtk_menu_item_new_with_label ("All Processes");
   	gtk_widget_show (glade_menuitem);
-  	/*gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
-  			    GTK_SIGNAL_FUNC (cb_all_process_menu_clicked), procdata);*/
+  	gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
+  			    GTK_SIGNAL_FUNC (cb_all_process_menu_clicked), procdata);
   	gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
   	
   	glade_menuitem = gtk_menu_item_new_with_label ("My Processes");
   	gtk_widget_show (glade_menuitem);
-  	/*gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
-  			    GTK_SIGNAL_FUNC (cb_my_process_menu_clicked), procdata);*/
+  	gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
+  			    GTK_SIGNAL_FUNC (cb_my_process_menu_clicked), procdata);
   	gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
   	
   	glade_menuitem = gtk_menu_item_new_with_label ("Running Processes");
   	gtk_widget_show (glade_menuitem);
-  	/*gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
-  			    GTK_SIGNAL_FUNC (cb_running_process_menu_clicked), procdata);*/
+  	gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
+  			    GTK_SIGNAL_FUNC (cb_running_process_menu_clicked), procdata);
   	gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
  	
   	gtk_menu_set_active (GTK_MENU (optionmenu1_menu), procdata->config.whose_process);
@@ -225,10 +225,10 @@ create_proc_view (ProcData *procdata)
 	gtk_container_set_border_width (GTK_CONTAINER (scrolled), GNOME_PAD_SMALL);
 	
 	gtk_widget_show_all (scrolled);
-#if 0
+
 	infobox = infoview_create (procdata);
 	gtk_box_pack_start (GTK_BOX (vbox1), infobox, FALSE, FALSE, 0);
-#endif	
+
 	hbox2 = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox2, FALSE, FALSE, 0);
 	

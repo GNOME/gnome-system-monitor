@@ -30,8 +30,8 @@
 #include <signal.h>
 #include "callbacks.h"
 #include "interface.h"
-#if 0
 #include "proctable.h"
+#if 0
 #include "infoview.h"
 #include "procdialogs.h"
 #include "memmaps.h"
@@ -220,7 +220,7 @@ cb_close_simple_dialog (GnomeDialog *dialog, gpointer data)
 	return FALSE;
 
 }
-
+#endif
 void
 cb_all_process_menu_clicked 		(GtkWidget	*widget,
 					 gpointer	data)
@@ -255,7 +255,7 @@ cb_running_process_menu_clicked		(GtkWidget	*widget,
 	proctable_update_all (procdata);
 }				
 
-
+#if 0
 void
 cb_favorites_menu_clicked (GtkWidget *widget, gpointer data)
 {
@@ -467,6 +467,17 @@ cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 	procdata->mem_graph->colors_allocated = FALSE;
 
 }
+#endif
+void
+cb_row_selected (GtkTreeView *tree, GtkTreePath *path,
+                 GtkTreeViewColumn *column, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	g_print ("row selected \n");
+	
+}
+#if 0
 
 void
 cb_table_selected (ETree *tree, int row, ETreePath path, gpointer data)

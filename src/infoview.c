@@ -17,16 +17,17 @@
  *
  */
 
-#ifdef HAVE_CONFIG_H
-#  include <config.h>
-#endif
+
+#include <config.h>
+
 
 #include "procman.h"
 #include "infoview.h"
+#if 0
 #include "procdialogs.h"
 #include "memmaps.h"
 #include "e-clipped-label.h"
-
+#endif
 
 GtkWidget *infobox;
 GtkWidget *main_frame;
@@ -85,7 +86,8 @@ infoview_create (ProcData *data)
 	gtk_table_attach (GTK_TABLE (info_table), cmd_event_box, 1, 2, 0, 1, 
 			  GTK_FILL|GTK_EXPAND, 0, GNOME_PAD_SMALL, 0);
 	
-	cmd_label = e_clipped_label_new (" ");
+	/*cmd_label = e_clipped_label_new (" ");*/
+	cmd_label = gtk_label_new ("");
 	gtk_misc_set_alignment (GTK_MISC (cmd_label), 0.0, 0.5);
 	gtk_container_add (GTK_CONTAINER (cmd_event_box), cmd_label);
 	

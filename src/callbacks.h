@@ -78,6 +78,9 @@ void		cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 				      guint a, gpointer data);
 #endif
 
+void		cb_row_selected (GtkTreeView *tree, GtkTreePath *path,
+                                 GtkTreeViewColumn *column, gpointer data);
+
 #if 0				
 gint		cb_right_click (ETree *tree, int row, ETreePath path,
                                 int col, GdkEvent *event, gpointer data);
