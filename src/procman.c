@@ -23,6 +23,7 @@
 #include <libgnomeui/gnome-window-icon.h>
 #include <gconf/gconf-client.h>
 #include <glibtop.h>
+#include <glibtop/close.h>
 #include "load-graph.h"
 #include "procman.h"
 #include "interface.h"

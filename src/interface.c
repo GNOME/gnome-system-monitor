@@ -761,27 +761,23 @@ create_simple_view_dialog (ProcData *procdata)
 }
 
 void
-toggle_infoview (ProcData *data)
+toggle_infoview (ProcData *procdata)
 {
-	ProcData *procdata = data;
-	GtkWidget *label;
-
-	label = infolabel;
-		
-	if (procdata->config.show_more_info == FALSE)
+	if (procdata->config.show_more_info)
+	{
+		gtk_widget_hide (procdata->infobox);
+		gtk_label_set_text_with_mnemonic (GTK_LABEL (infolabel),
+						  _("More _Info >>"));
+	}
+	else
 	{
 		infoview_update (procdata);
 		gtk_widget_show_all (procdata->infobox);
-		procdata->config.show_more_info = TRUE;	
-		gtk_label_set_text_with_mnemonic (GTK_LABEL (label),_("More _Info >>"));
- 				
-	}			
-	else
-	  {
-		gtk_widget_hide (procdata->infobox);
-		procdata->config.show_more_info = FALSE;
- 		gtk_label_set_text_with_mnemonic (GTK_LABEL (label),_("<< Less _Info"));
+		gtk_label_set_text_with_mnemonic (GTK_LABEL (infolabel),
+						  _("<< Less _Info"));
 	}
+
+	procdata->config.show_more_info = ! procdata->config.show_more_info;
 }
 
 void
