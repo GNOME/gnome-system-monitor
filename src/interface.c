@@ -256,36 +256,25 @@ sort_bytes (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointe
 {
 	int col = GPOINTER_TO_INT (data);
 	float btotal1, btotal2, bfree1, bfree2;
-	float a, b;
-	
-	btotal1 = btotal2 = bfree1 = bfree2 = 0.0;
-	gtk_tree_model_get (model, itera, 7, &btotal1, 8, &bfree1, -1);
-	gtk_tree_model_get (model, iterb, 7, &btotal2, 8, &bfree2, -1);
+
+	btotal1 = btotal2 = bfree1 = bfree2 = 0.0f;
+	gtk_tree_model_get (model, itera, 8, &btotal1, 9, &bfree1, -1);
+	gtk_tree_model_get (model, iterb, 8, &btotal2, 9, &bfree2, -1);
 
 	switch (col)
 	{
-		case 4: 
-			a = btotal1;
-			b = btotal2;
-			break;
-		case 5: 
-			a = btotal1 - bfree1;
-			b = btotal2 - bfree2;
-			break;
-		case 6: 
-			a = bfree1;
-			b = bfree2;
-			break;
-		default:
-			a = 0;
-			b = 0;
-	}
+		case 4:
+			return PROCMAN_CMP(btotal1, btotal2);
 
-	if (a > b)
-		return -1;
-	else if (a < b)
-		return 1;
-	return 0;	
+		case 5:
+			return PROCMAN_CMP(bfree1, bfree2);
+
+		case 6:
+			return PROCMAN_CMP(btotal1 - bfree1, btotal2 - bfree2);
+
+		default:
+			return 0;
+	}
 }
 
 static GtkWidget *
@@ -330,11 +319,12 @@ create_sys_view (ProcData *procdata)
 	GtkCellRenderer *cell;
 	GtkSizeGroup *sizegroup;
 
-	static const gchar *titles[5] = {
-	  N_("Name"),
+	static const gchar *titles[] = {
+	  N_("Device"),
 	  N_("Directory"),
 	  N_("Type"),
 	  N_("Total"),
+	  N_("Free"),
 	  N_("Used"),
 	};
 
@@ -535,12 +525,19 @@ create_sys_view (ProcData *procdata)
 
 	gtk_box_pack_start (GTK_BOX (disk_hbox), scrolled, TRUE, TRUE, 0);
 
-	 
-	model = gtk_tree_store_new (9, GDK_TYPE_PIXBUF, G_TYPE_STRING, 
-					   G_TYPE_STRING, G_TYPE_STRING,
-				       G_TYPE_STRING, G_TYPE_STRING,
-					G_TYPE_FLOAT, G_TYPE_FLOAT, G_TYPE_FLOAT);
-				       
+
+	model = gtk_tree_store_new (10,
+				    GDK_TYPE_PIXBUF,
+				    G_TYPE_STRING, // device name
+				    G_TYPE_STRING, // directory
+				    G_TYPE_STRING, // type
+				    G_TYPE_STRING, // total
+				    G_TYPE_STRING, // free
+				    G_TYPE_STRING, // used
+				    G_TYPE_FLOAT,
+				    G_TYPE_FLOAT,
+				    G_TYPE_FLOAT);
+
 	disk_tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
 	procdata->disk_list = disk_tree;
 	gtk_container_add (GTK_CONTAINER (scrolled), disk_tree);
@@ -564,7 +561,7 @@ create_sys_view (ProcData *procdata)
 	gtk_tree_view_column_set_resizable (col, TRUE);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (disk_tree), col);
 								
-  	for (i = 1; i < 4	; i++) {
+  	for (i = 1; i < 5	; i++) {
   		cell = gtk_cell_renderer_text_new ();
   		col = gtk_tree_view_column_new_with_attributes (titles[i],
 						    		cell,
@@ -580,26 +577,29 @@ create_sys_view (ProcData *procdata)
 	cell = gtk_cell_renderer_text_new ();
 	gtk_tree_view_column_pack_start (col, cell, FALSE);
 	gtk_tree_view_column_set_attributes (col, cell,
-					     "text", 5,
+					     "text", 6,
 					     NULL);
-	gtk_tree_view_column_set_title (col, titles[4]);
+	gtk_tree_view_column_set_title (col, titles[5]);
 		
 	
 	cell = procman_cell_renderer_progress_new ();
 	gtk_tree_view_column_pack_start (col, cell, TRUE);
 	gtk_tree_view_column_set_attributes (col, cell,
-					     "value", 6,
+					     "value", 7,
 					     NULL);
 	
 	gtk_tree_view_append_column (GTK_TREE_VIEW (disk_tree), col);
 	gtk_tree_view_column_set_resizable (col, TRUE);
-	gtk_tree_view_column_set_sort_column_id (col, 5);
+	gtk_tree_view_column_set_sort_column_id (col, 6);
 	
 	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
 					 4, sort_bytes, GINT_TO_POINTER (4), NULL);
 	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
 					 5, sort_bytes, GINT_TO_POINTER (5), NULL);
-	
+	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
+					 6, sort_bytes, GINT_TO_POINTER (6), NULL);
+
+
 	gtk_widget_show_all (disk_box);
   	
   	procman_get_tree_state (procdata->client, disk_tree, "/apps/procman/disktreenew");

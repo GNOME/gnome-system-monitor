@@ -122,7 +122,7 @@ cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 
 
 	static const gchar *authors[] = {
-		N_("Kevin Vandersloot"),
+		"Kevin Vandersloot",
 		N_("Jorgen Scheibengruber - nicer devices treeview"),
 		N_("Benoît Dejean - maintainer"),
 		NULL
@@ -151,7 +151,7 @@ cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 
 
 	about = gnome_about_new (_("System Monitor"), VERSION,
-				 _("(C) 2001 Kevin Vandersloot"),
+				 "(C) 2001 Kevin Vandersloot",
 				 _("System resources monitor"),
 				 authors,
 				 documenters,
@@ -446,7 +446,7 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 	entry = g_hash_table_lookup (new_disks, old_name);
 	if (entry) {
 		glibtop_fsusage usage;
-		gchar *used, *total;
+		gchar *used, *total, *free;
 		float percentage, bused, bfree, btotal;
 
 		glibtop_get_fsusage (&usage, entry->mountdir);
@@ -454,19 +454,22 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 		fsusage_stats(&usage, &bused, &bfree, &btotal, &percentage);
 
 		used = gnome_vfs_format_file_size_for_display (bused);
+		free = gnome_vfs_format_file_size_for_display (bfree);
 		total = gnome_vfs_format_file_size_for_display (btotal);
 
 		gtk_tree_store_set (GTK_TREE_STORE (model), iter,
 				    4, total,
-				    5, used,
-				    6, percentage,
-				    7, btotal,
-				    8, bfree,
+				    5, free,
+				    6, used,
+				    7, percentage,
+				    8, btotal,
+				    9, bfree,
 				    -1);
 
 		g_hash_table_remove (new_disks, old_name);
 
 		g_free (used);
+		g_free (free);
 		g_free (total);
 	}
 	else {
@@ -524,7 +527,7 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 	GtkTreeModel * const model = data;
 
 	glibtop_fsusage usage;
-	gchar *text[5];
+	gchar *text[6];
 	GdkPixbuf *pixbuf;
 	GnomeIconTheme *icontheme;
 	GtkTreeIter row;
@@ -552,7 +555,8 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 	text[1] = g_strdup (entry->mountdir);
 	text[2] = g_strdup (entry->type);
 	text[3] = gnome_vfs_format_file_size_for_display (btotal);
-	text[4] = gnome_vfs_format_file_size_for_display (bused);
+	text[4] = gnome_vfs_format_file_size_for_display (bfree);
+	text[5] = gnome_vfs_format_file_size_for_display (bused);
 
 	gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0);
 	gtk_tree_store_set (GTK_TREE_STORE (model), &row,
@@ -562,9 +566,10 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 			    3, text[2],
 			    4, text[3],
 			    5, text[4],
-			    6, percentage,
-			    7, btotal,
-			    8, bfree,
+			    6, text[5],
+			    7, percentage,
+			    8, btotal,
+			    9, bfree,
 			    -1);
 
 	g_free (text[0]);
@@ -572,6 +577,7 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 	g_free (text[2]);
 	g_free (text[3]);
 	g_free (text[4]);
+	g_free (text[5]);
 
 	g_object_unref (pixbuf);
 	g_object_unref (icontheme);

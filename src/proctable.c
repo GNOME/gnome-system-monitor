@@ -57,9 +57,6 @@ static gint total_time = 0;
 static gint total_time_last = 0;
 
 
-#define PROCMAN_CMP(X, Y) (((X) == (Y)) ? 0 : (((X) < (Y)) ? -1 : 1))
-
-
 static gint
 sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer data)
 {

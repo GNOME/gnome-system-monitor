@@ -18,4 +18,6 @@ if(!is_init) { \
  } \
 } G_STMT_END
 
+#define PROCMAN_CMP(X, Y) (((X) == (Y)) ? 0 : (((X) < (Y)) ? -1 : 1))
+
 #endif /* _PROCAMN_UTIL_H_ */
