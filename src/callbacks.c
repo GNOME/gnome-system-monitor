@@ -476,70 +476,107 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 
 }
 
+static gboolean
+compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
+{
+	GHashTable *new_disks = data;
+	glibtop_mountentry *entry = NULL;
+	gchar *old_name;
+	
+	gtk_tree_model_get (model, iter, 0, &old_name, -1);
+		
+	entry = g_hash_table_lookup (new_disks, old_name);
+	if (entry) {
+		glibtop_fsusage usage;
+		gchar *used, *total;
+		
+		glibtop_get_fsusage (&usage, entry->mountdir);
+		
+		used = get_size_string ((float)(usage.blocks - usage.bfree) * 512);
+		total = get_size_string ((float) usage.blocks * 512);
+		
+		gtk_list_store_set (GTK_LIST_STORE (model), iter,
+				    2, used,
+				    3, total, -1);
+		g_hash_table_remove (new_disks, old_name);
+		
+		g_free (used);
+		g_free (total);
+			
+		return FALSE;
+		
+	}
+	
+	gtk_list_store_remove (GTK_LIST_STORE (model), iter);
+	return FALSE;
+	
+}
+
+static void
+add_new_disks (gpointer key, gpointer value, gpointer data)
+{
+	glibtop_mountentry *entry = value;
+	GtkTreeModel *model = data;
+	glibtop_fsusage usage;
+	gchar *text[4];
+				
+	glibtop_get_fsusage (&usage, entry->mountdir);
+	text[0] = g_strdup (entry->devname);
+	text[1] = g_strdup (entry->mountdir);
+	text[2] = get_size_string ((float)(usage.blocks - usage.bfree) * 512);
+	text[3] = get_size_string ((float) usage.blocks * 512);
+	/* Hmm, usage.blocks == 0 seems to get rid of /proc and all
+	** the other useless entries */
+	if (usage.blocks != 0) {
+		GtkTreeIter row;
+			
+		gtk_list_store_insert (GTK_LIST_STORE (model), &row, 0); 
+		gtk_list_store_set (GTK_LIST_STORE (model), &row,
+					    0, text[0],
+					    1, text[1],
+					    2, text[2],
+					    3, text[3], -1);
+		
+	}
+		
+	g_free (text[0]);
+	g_free (text[1]);
+	g_free (text[2]);
+	g_free (text[3]);
+}
+
 gint
 cb_update_disks (gpointer data)
 {
 	ProcData *procdata = data;
 	GtkTreeModel *model;
+	GtkTreePath *path;
 	GtkTreeIter iter;
-	GtkTreeSelection *selection;
 	glibtop_mountentry *entry;
 	glibtop_mountlist mountlist;
-	gboolean selected;
-	gchar *selected_disk = NULL;
+	GHashTable *new_disks = NULL;
 	gint i;
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->disk_list));
 	
-	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (procdata->disk_list));
-	selected = gtk_tree_selection_get_selected (selection, NULL, &iter);
-	
-	if (selected) {
-		gtk_tree_model_get (model, &iter, 0, &selected_disk, -1);
-	}
-	
-	gtk_list_store_clear (GTK_LIST_STORE (model));
-	
 	entry = glibtop_get_mountlist (&mountlist, 0);
+	
+	new_disks = g_hash_table_new (g_str_hash, g_str_equal);
 	for (i=0; i < mountlist.number; i++) {
-		glibtop_fsusage usage;
-		gchar *text[4];
-				
-		glibtop_get_fsusage (&usage, entry[i].mountdir);
-		text[0] = g_strdup (entry[i].devname);
-		text[1] = g_strdup (entry[i].mountdir);
-		text[2] = get_size_string ((float)(usage.blocks - usage.bfree) * 512);
-		text[3] = get_size_string ((float) usage.blocks * 512);
-		/* Hmm, usage.blocks == 0 seems to get rid of /proc and all
-		** the other useless entries */
-		if (usage.blocks != 0) {
-			GtkTreeIter row;
-			
-			gtk_list_store_insert (GTK_LIST_STORE (model), &row, 0); 
-			gtk_list_store_set (GTK_LIST_STORE (model), &row,
-					    0, text[0],
-					    1, text[1],
-					    2, text[2],
-					    3, text[3], -1);
-			if (selected_disk && !g_strcasecmp (selected_disk, text[0])) {
-				GtkTreePath *path;
-				g_print ("selected disk %s \n", text[0]);
-				path = gtk_tree_model_get_path (model, &row);
-				gtk_tree_view_set_cursor (GTK_TREE_VIEW (procdata->disk_list),
-							  path,
-							  NULL,
-							  FALSE);
-			}
-		}
-		
-		
-		
-		g_free (text[0]);
-		g_free (text[1]);
-		g_free (text[2]);
-		g_free (text[3]);
+		g_hash_table_insert (new_disks, entry[i].devname, &entry[i]);
 	}
 	
+	/*path = gtk_tree_path_new_root ();
+  	if (!gtk_tree_model_get_iter (model, &iter, path) == FALSE) {
+  		g_print ("compare \n");
+    		compare_disks (model, path, &iter, new_disks);
+		gtk_tree_path_free (path);
+	}*/
+	
+	gtk_tree_model_foreach (model, compare_disks, new_disks);
+	
+	g_hash_table_foreach (new_disks, add_new_disks, model);
+
 	glibtop_free (entry);
 	
 	return TRUE;
