@@ -1,3 +1,28 @@
+2001-08-16  Kevin Vandersloot <kfv101@psu.edu>
+
+	Beginnings of graphical display of cpu history and mem usage.
+	Remove the cpu/mem/swap meters from the main window and add
+	back the app-bar. Now there are two notebook tabs for 
+	the process list and the sys monitor
+
+	* callbacks.c (cb_switch_page): new callback when the tab is
+	switched. Turn off the process updating or cpu/mem updating
+	when relevant.
+	
+	* interface.c: seperate the process tab UI from the sysmon. Add
+	them as seperate tabs.
+
+	* procman.[c,h]: add new gint config variable indicating the
+	current tab
+
+	* load-graph.[c,h]: code stolen and modified from the multiload
+	applet.
+
+2001-08-14  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c (proctable_search_table): put up an error message
+	if the search string was not found.
+
 2001-08-13  Kevin Vandersloot <kfv101@psu.edu>
 
 	* proctable.c (proctable_update_progress_bars): save the 

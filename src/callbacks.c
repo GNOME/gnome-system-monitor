@@ -145,7 +145,7 @@ cb_app_destroy                        (GtkObject       *object,
 		procman_save_config (procdata);
 	}
 	gtk_timeout_remove (procdata->timeout);
-	gtk_timeout_remove (procdata->meter_timeout);
+	/*gtk_timeout_remove (procdata->meter_timeout);*/
 	gtk_main_quit ();
 	
 }
@@ -383,6 +383,35 @@ cb_double_click (ETree *tree, int row, ETreePath path, int col,
 	ProcData *procdata = data;
 	
 	toggle_infoview (procdata);
+
+}
+
+void		
+cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page, 
+		gint num, gpointer data)
+{
+	ProcData *procdata = data;
+		
+	procdata->config.current_tab = num;
+	g_print ("%d \n", num);
+	
+	if (num == 0) {
+		g_print ("tab 1 selected \n");
+		if (procdata->timeout == -1) 
+			procdata->timeout = gtk_timeout_add (procdata->config.update_interval,
+			 			     	     cb_timeout, procdata);
+		load_graph_stop (procdata->cpu_graph);
+		load_graph_stop (procdata->mem_graph);
+	}
+	else {
+		g_print ("tab 2 selected \n");
+		if (procdata->timeout != -1 ) {
+			gtk_timeout_remove (procdata->timeout);
+			procdata->timeout = -1;
+		}
+		load_graph_start (procdata->cpu_graph);
+		load_graph_start (procdata->mem_graph);
+	}
 
 }
 	

@@ -107,6 +107,7 @@ procman_data_new (void)
 	procdata->config.update_interval = 
 		gnome_config_get_int ("procman/Config/update_interval=3000");
 	procdata->config.whose_process = gnome_config_get_int ("procman/Config/view_as=1");
+	procdata->config.current_tab = gnome_config_get_int ("procman/Config/current_tab=0");
 	
 	
 	procman_get_save_files (procdata);
@@ -172,6 +173,7 @@ procman_save_config (ProcData *data)
 	gnome_config_set_bool ("procman/Config/show_pretty_names", data->config.show_pretty_names);
 	gnome_config_set_bool ("procman/Config/show_threads", data->config.show_threads);
 	gnome_config_set_int ("procman/Config/update_interval", data->config.update_interval);
+	gnome_config_set_int ("procman/Config/current_tab", data->config.current_tab);
 
 	save_blacklist (data);
 	gnome_config_sync ();

@@ -24,6 +24,8 @@
 #include <gal/e-table/e-tree.h>
 #include <gal/e-table/e-tree-memory.h>
 
+#include "load-graph.h"
+
 
 typedef struct _ProcConfig ProcConfig;
 typedef struct _PrettyTable PrettyTable;
@@ -53,6 +55,7 @@ struct _ProcConfig
 	gint		whose_process;
 	gchar		*tree_state_file;
 	gchar		*memmaps_state_file;
+	gint		current_tab;
 };
 
 struct _PrettyTable {
@@ -92,6 +95,8 @@ struct _ProcData
 	ETreeMemory	*memory;
 	GtkWidget	*infobox;
 	ProcConfig	config;
+	LoadGraph	*cpu_graph;
+	LoadGraph	*mem_graph;
 	ETreePath	selected_node;
 	gint		selected_pid;
 	gint		timeout;

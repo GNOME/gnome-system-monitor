@@ -926,7 +926,7 @@ proctable_update_progress_meters (ProcData *procdata)
 	float memtotal, memused, swaptotal, swapused;
 	float pcpu;
 	
-	
+		
 	/* FIXME: should make sure that we don't divide by zero here */
 	glibtop_get_cpu (&cpu);
 	cpu_time = cpu.user + cpu.sys - cpu_time_last;
@@ -934,20 +934,23 @@ proctable_update_progress_meters (ProcData *procdata)
 	total_time_meter = cpu.total - total_time_last_meter;
 	pcpu = (float) cpu_time / (total_time_meter);
 	total_time_last_meter = cpu.total;
-	gtk_progress_bar_update (GTK_PROGRESS_BAR (procdata->cpumeter), (pcpu + pcpu_last) / 2);
+	/*gtk_progress_bar_update (GTK_PROGRESS_BAR (procdata->cpumeter), (pcpu + pcpu_last) / 2);*/
+	gtk_progress_bar_update (GTK_PROGRESS_BAR (procdata->cpumeter), 0.5);
 	pcpu_last = pcpu;
 	
 	glibtop_get_mem (&mem);
 	memused = (float) mem.used;
 	memtotal = (float) mem.total;
-	gtk_progress_bar_update (GTK_PROGRESS_BAR (procdata->memmeter), memused / memtotal);
+	/*gtk_progress_bar_update (GTK_PROGRESS_BAR (procdata->memmeter), memused / memtotal);*/
+	gtk_progress_bar_update (GTK_PROGRESS_BAR (procdata->memmeter), 0.5);
 	
 	glibtop_get_swap (&swap);
 	swapused = (float) swap.used;
 	swaptotal = (float) swap.total;
-	gtk_progress_bar_update (GTK_PROGRESS_BAR (procdata->swapmeter), 
+	/*gtk_progress_bar_update (GTK_PROGRESS_BAR (procdata->swapmeter), 
 				  swapused / swaptotal);
-
+	*/
+	gtk_progress_bar_update (GTK_PROGRESS_BAR (procdata->swapmeter), 0.5);
 }
 
 void 
