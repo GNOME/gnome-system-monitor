@@ -468,7 +468,6 @@ cb_table_selected (ETree *tree, int row, ETreePath path, gpointer data)
 	ProcData *procdata = data;
 	ProcInfo *info;
 	
-	
 	if (!tree)
 		return;
 	if (row == -1)

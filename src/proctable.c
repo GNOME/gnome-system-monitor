@@ -981,7 +981,6 @@ proctable_update_all (ProcData *data)
 	ETreeModel *model = procdata->model;
 	ETreePath root_node;
 
-	
 	root_node = e_tree_model_get_root (model);
 	/* create a root node if it don't exist */
 	if (!root_node)
