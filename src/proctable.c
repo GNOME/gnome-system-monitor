@@ -772,6 +772,12 @@ get_info (ProcData *procdata, gint pid)
 
 
 
+static void cb_exclude(ProcInfo* info, GPtrArray *addition)
+{
+	g_ptr_array_remove_fast (addition, info);
+}
+
+
 static void
 refresh_list (ProcData *procdata, const unsigned *pid_list, const guint n)
 {
@@ -828,6 +834,7 @@ refresh_list (ProcData *procdata, const unsigned *pid_list, const guint n)
 
 	g_hash_table_destroy(pid_hash);
 
+	g_ptr_array_foreach(removal_list, (GFunc) cb_exclude, addition_list);
 
 	/* Add or remove processes from the tree */
 	g_ptr_array_foreach(removal_list,  (GFunc) remove_info_from_tree, procdata);
