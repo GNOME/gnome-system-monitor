@@ -166,6 +166,7 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command, gin
 	GdkPixbuf *icon = NULL, *tmp_pixbuf = NULL;
 	gchar *icon_path = NULL;
 	GError *error;
+	gchar *text;
 	gint test;
 	
 	if (!pretty_table) 
@@ -209,8 +210,10 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command, gin
 	if (!icon_path)
 		return NULL;
 #endif	
+	text = g_strdup_printf ("%d", pid);
 	tmp_pixbuf = g_hash_table_lookup (pretty_table->cmdline_to_prettyicon, 
-		     g_strdup_printf ("%d", pid));
+		     text);
+	g_free (text);
 	
 	/*if (!tmp_pixbuf)
 		tmp_pixbuf = gdk_pixbuf_new_from_file (icon_path, NULL);*/

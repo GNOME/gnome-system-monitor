@@ -158,6 +158,7 @@ create_tree (ProcData *procdata)
 	GtkWidget *tree;
 	GtkTreeStore *model;
 	GtkTreeViewColumn *column;
+	GtkTreeSelection *selection;
   	GtkCellRenderer *cell_renderer;
 		
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
@@ -170,6 +171,9 @@ create_tree (ProcData *procdata)
 	tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree), TRUE);
   	g_object_unref (G_OBJECT (model));
+  	
+  	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree));
+  	gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
   	
   	cell_renderer = gtk_cell_renderer_text_new ();
   	column = gtk_tree_view_column_new_with_attributes ("hello",
@@ -197,24 +201,42 @@ create_tree (ProcData *procdata)
 }
 
 static void
+remove_item (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
+{
+	ProcData *procdata = data;
+	gchar *process = NULL;
+	
+	gtk_tree_model_get (model, iter, 0, &process, -1);
+	
+	if (process)
+		remove_from_blacklist (procdata, process);
+}
+
+static void
 remove_button_clicked (GtkButton *button, gpointer data)
 {
 	ProcData *procdata = data;
 	GtkTreeModel *model;
-	GtkTreeSelection *selection;
+	GtkTreeSelection *selection = NULL;
 	GtkTreeIter iter;
 	gchar *process = NULL;
 	gboolean selected;
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (proctree));
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
-	selected = gtk_tree_selection_get_selected (selection, NULL, &iter);
+	
+	if (!selection)
+		return;
+		
+	gtk_tree_selection_selected_foreach (selection, remove_item, procdata); 
+	
+	/*selected = gtk_tree_selection_get_selected (selection, NULL, &iter);
 	if (!selected)
 		return;
 	gtk_tree_model_get (model, &iter, 0, &process, -1);
 	
 	if (process)
-		remove_from_blacklist (procdata, process);
+		remove_from_blacklist (procdata, process);*/
 		
 	proctable_update_all (procdata);
 	
