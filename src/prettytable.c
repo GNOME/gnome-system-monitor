@@ -1,9 +1,9 @@
+#include <config.h>
 #include <libgnome/libgnome.h>
 #include <dirent.h>
 #include <sys/stat.h>
 #include <stdio.h>
 #include <string.h>
-#include <config.h>
 #include "prettytable.h"
 #include "defaulttable.h"
 #include "proctable.h"
