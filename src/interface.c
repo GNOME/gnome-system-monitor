@@ -352,7 +352,7 @@ create_sys_view (ProcData *procdata)
 	gtk_container_set_border_width (GTK_CONTAINER (vpane), 6);
 
 	vbox = gtk_vbox_new (FALSE, 18);
-	gtk_paned_pack1 (GTK_PANED (vpane), vbox, TRUE, FALSE);
+	gtk_paned_pack1 (GTK_PANED (vpane), vbox, FALSE, FALSE);
 
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 
