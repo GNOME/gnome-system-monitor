@@ -6,11 +6,9 @@
 #include <config.h>
 #include "prettytable.h"
 
-gboolean age (gpointer key, gpointer value, gpointer data);
 void free_entry (gpointer key, gpointer value, gpointer data);
 void free_value (gpointer key, gpointer value, gpointer data);
 void free_key (gpointer key, gpointer value, gpointer data);
-void free_cached_pixbuf_value (gpointer key, gpointer value, gpointer data);
 
 PrettyTable *pretty_table_new (void) {
 	PrettyTable *pretty_table;
@@ -20,9 +18,7 @@ PrettyTable *pretty_table_new (void) {
 	pretty_table->cmdline_to_prettyname = g_hash_table_new (g_str_hash, g_str_equal);
 	pretty_table->cmdline_to_prettyicon = g_hash_table_new (g_str_hash, g_str_equal);
 	pretty_table->name_to_prettyicon = g_hash_table_new (g_str_hash, g_str_equal);
-#if 0
-	pretty_table->cache = g_hash_table_new (g_str_hash, g_str_equal);
-#endif
+
 	return pretty_table;
 }
 
@@ -118,24 +114,10 @@ gchar *pretty_table_get_name (PrettyTable *pretty_table, const gchar *command) {
 	return g_strdup (pretty_name);
 }
 
-#if 0
-gboolean age (gpointer key, gpointer value, gpointer data) {
-	CachedPixbuf *cached_pixbuf = value;
-
-	if (cached_pixbuf_age (cached_pixbuf))
-		return TRUE;
-	
-	return FALSE;
-}
-#endif
-
 GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command) {
 	GdkPixbuf *icon = NULL, *tmp_pixbuf = NULL;
-	CachedPixbuf *cached_pixbuf;
 	gchar *icon_path = NULL;
-#if 0
-	g_hash_table_foreach_remove (pretty_table->cache, age, NULL);
-#endif
+
 	icon_path = g_hash_table_lookup (pretty_table->cmdline_to_prettyicon, command);
 	if (!icon_path) {
 		gchar *tmp1;
@@ -150,26 +132,14 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command) {
 
 	if (!icon_path)
 		return NULL;
-#if 0
-	cached_pixbuf = g_hash_table_lookup (pretty_table->cache, icon_path); /* try the cache */
-	if (cached_pixbuf) {
-		cached_pixbuf_renew (cached_pixbuf);
 
-		return cached_pixbuf->pixbuf;
-	}
-#endif
 	tmp_pixbuf = gdk_pixbuf_new_from_file (icon_path);
 	if (!tmp_pixbuf)
 		return NULL;
 
 	icon = gdk_pixbuf_scale_simple (tmp_pixbuf, 16, 16, GDK_INTERP_NEAREST);
 	gdk_pixbuf_unref (tmp_pixbuf);
-#if 0
-	cached_pixbuf = cached_pixbuf_new_with_pixbuf_and_max_age (icon, 100);
-	g_hash_table_insert (pretty_table->cache, icon_path, cached_pixbuf); /* store a pointer in the cache */
 
-	g_message ("cached %s @ %p", icon_path, cached_pixbuf);
-#endif
 	return icon;
 }
 
@@ -190,12 +160,7 @@ void free_key (gpointer key, gpointer value, gpointer data) {
 	if (key)
 		g_free (key);
 }
-#if 0
-void free_cached_pixbuf_value (gpointer key, gpointer value, gpointer data) {
-	if (value)
-		cached_pixbuf_free ((CachedPixbuf *)value);
-}
-#endif
+
 
 void pretty_table_free (PrettyTable *pretty_table) {
 	if (!pretty_table)
@@ -207,59 +172,8 @@ void pretty_table_free (PrettyTable *pretty_table) {
 	g_hash_table_destroy (pretty_table->cmdline_to_prettyicon);
 	g_hash_table_foreach (pretty_table->name_to_prettyicon, free_key, NULL);
 	g_hash_table_destroy (pretty_table->name_to_prettyicon);
-#if 0
-	g_hash_table_foreach (pretty_table->cache, free_cached_pixbuf_value, NULL);
-	g_hash_table_destroy (pretty_table->cache);
-#endif
+
 	g_free (pretty_table);
 }
-#if 0
-CachedPixbuf *cached_pixbuf_new (void) {
-	CachedPixbuf *cached_pixbuf;
-	
-	cached_pixbuf = g_malloc (sizeof (CachedPixbuf));
-	
-	cached_pixbuf->age = 0;
-	
-	return cached_pixbuf;
-}
 
-
-CachedPixbuf *cached_pixbuf_new_with_pixbuf_and_max_age (GdkPixbuf *pixbuf, gint max_age) {
-	CachedPixbuf *cached_pixbuf;
-	
-	cached_pixbuf = cached_pixbuf_new ();
-	
-	cached_pixbuf->pixbuf = pixbuf;
-	cached_pixbuf->max_age = max_age;
-
-	return cached_pixbuf;
-}
-
-gboolean cached_pixbuf_age (CachedPixbuf *cached_pixbuf) {
-	cached_pixbuf->age++;
-	if (cached_pixbuf->age > cached_pixbuf->max_age) {
-		cached_pixbuf_free (cached_pixbuf);
-
-		return TRUE;
-	}
-	
-	return FALSE;
-}
-
-void cached_pixbuf_renew (CachedPixbuf *cached_pixbuf) {
-	cached_pixbuf->age = 0;
-}
-
-void cached_pixbuf_free (CachedPixbuf *cached_pixbuf) {
-	if (!cached_pixbuf)
-		return;
-
-	g_message ("freed cached pixbuf @ %p", cached_pixbuf);
-	
-	gdk_pixbuf_unref (cached_pixbuf->pixbuf);
-	g_free (cached_pixbuf);
-}
-
-#endif
 

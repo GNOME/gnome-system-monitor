@@ -438,6 +438,8 @@ update_info (ProcInfo *info, gint pid)
 		newinfo->cpu = 0;
 	newinfo->cpu_time_last = newcputime;
 	newinfo->nice = procuid.nice;
+	if (newinfo->status)
+		g_free (newinfo->status);
 	newinfo->status = get_process_status (&procstate.state);
 }
 
