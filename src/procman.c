@@ -214,8 +214,6 @@ procman_data_new (void)
 
 	get_blacklist (pd);
 	
-	load_desktop_files (pd);	
-	
 	pd->config.simple_view = simple_view;	
 	if (pd->config.simple_view) {
 		pd->config.width = 325;

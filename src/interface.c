@@ -368,7 +368,6 @@ create_sys_view (ProcData *procdata)
 	gtk_container_set_border_width (GTK_CONTAINER (cpu_graph->main_widget), 
 					GNOME_PAD_SMALL);
 					
-	gtk_box_pack_start (GTK_BOX (cpu_graph->main_widget), alignment, FALSE, FALSE, 0);*/
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (cpu_graph->main_widget), hbox, FALSE, FALSE, 0);
 	
@@ -397,7 +396,7 @@ create_sys_view (ProcData *procdata)
 	gtk_container_set_border_width (GTK_CONTAINER (mem_graph->main_widget), 
 					GNOME_PAD_SMALL);
 	
-	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), alignment, FALSE, FALSE, 0);*/	
+	
 	table = gtk_table_new (2, 3, FALSE);
 	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), table, FALSE, FALSE, 0);
 	
