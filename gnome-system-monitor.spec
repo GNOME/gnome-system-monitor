@@ -2,7 +2,7 @@
 
 Summary: Simple process monitor
 Name: gnome-system-monitor
-Version: 1.1.3
+Version: 1.1.4
 Release: 1
 Copyright: GPL
 Group: Applications/System
@@ -11,6 +11,7 @@ BuildRoot: %{_tmppath}/%{name}-root
 Requires: libgnomeui >= 1.106.0
 Requires: libgtop >= 1.90.0
 Requires: libwnck >= 0.1
+Obsoletes: procman
 
 %description
 Procman is a simple process and system monitor.

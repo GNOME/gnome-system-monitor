@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = po src 
+SUBDIRS = po src help omf-install
 
 EXTRA_DIST = \
 	gnome-system-monitor.desktop.in \
@@ -8,7 +8,8 @@ EXTRA_DIST = \
 	intltool-extract.in \
 	intltool-merge.in \
 	intltool-update.in \
-	HACKING 
+	HACKING \
+	xmldocs.make
 
 Applicationsdir = $(datadir)/applications
 Applications_in_files = gnome-system-monitor.desktop.in
