@@ -1,3 +1,22 @@
+2001-07-08 Kevin Vandersloot <kfv101@psu.edu>
+
+	*proctable.c (inset_info_to_tree): comment out the call
+	to not expand the parent node. I think this might be
+	causing a crash. Also add the term (thread) to any thread
+	processes.
+
+	*interface.c(create_main_window), infoview.c: instead of 
+	setting certain widgets insensitive at startup, just send 
+	an "unselect" signal.
+
+	*interface.c: add menu items for renice and memory maps.
+
+	*memmaps.c: changed cmd_label to command_label since I used
+	the same variable in the infoview.
+
+	*memmaps.c (create_memmaps_dialog): check to see if dialog
+	already exists. Don't show two dialogs.
+
 2001-07-07 Kevin Vandersloot <kfv101@psu.edu>
 
 	*infoview.c (infoview_create): much improved info viewer

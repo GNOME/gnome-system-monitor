@@ -10,7 +10,7 @@
 #include "memmaps.h"
 
 GtkWidget *memmapsdialog = NULL;
-GtkWidget *cmd_label;
+GtkWidget *command_label;
 GtkWidget *tree = NULL;
 ETreeModel *model = NULL;
 ETreeMemory *memory = NULL;
@@ -224,7 +224,7 @@ update_memmaps_dialog (ProcData *procdata)
 	if (!info)
 		return;
 
-	gtk_label_set_text (GTK_LABEL (cmd_label), info->name);
+	gtk_label_set_text (GTK_LABEL (command_label), info->name);
 	
 	if (memmaps_list)
 		clear_memmaps (procdata);
@@ -329,6 +329,9 @@ void create_memmaps_dialog (ProcData *procdata)
 	GtkWidget *closebutton;
 	GtkWidget *scrolled;
 
+	if (memmapsdialog)
+		return;
+
 	memmapsdialog = gnome_dialog_new (_("Memory Maps"), NULL);
 	gtk_window_set_policy (GTK_WINDOW (memmapsdialog), FALSE, TRUE, FALSE);
 	gtk_widget_set_usize (memmapsdialog, 575, 400);
@@ -345,9 +348,9 @@ void create_memmaps_dialog (ProcData *procdata)
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (cmd_hbox),label, FALSE, FALSE, 0);
 	
-	cmd_label = gtk_label_new ("");
-	gtk_misc_set_padding (GTK_MISC (cmd_label), GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (cmd_hbox),cmd_label, FALSE, FALSE, 0);
+	command_label = gtk_label_new ("");
+	gtk_misc_set_padding (GTK_MISC (command_label), GNOME_PAD_SMALL, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (cmd_hbox),command_label, FALSE, FALSE, 0);
 	
 	gtk_widget_show_all (alignment);
 	

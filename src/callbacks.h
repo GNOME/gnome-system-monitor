@@ -32,6 +32,12 @@ cb_properties_activate                (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
 void
+cb_show_memory_maps (GtkMenuItem *menuitem, gpointer data);
+
+void
+cb_renice (GtkMenuItem *menuitem, gpointer data);
+
+void
 cb_preferences_activate               (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 

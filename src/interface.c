@@ -41,12 +41,21 @@ static GnomeUIInfo file1_menu_uiinfo[] =
 
 static GnomeUIInfo edit1_menu_uiinfo[] =
 {
- 	GNOMEUIINFO_MENU_PROPERTIES_ITEM (cb_properties_activate, NULL),
+ 	{
+ 	  GNOME_APP_UI_ITEM, N_("Renice..."), "",
+	 cb_renice, NULL, NULL, 0, 0,
+	 'n', 0
+	},
 	GNOMEUIINFO_END
 };
 
 static GnomeUIInfo view1_menu_uiinfo[] =
 {
+	{
+	 GNOME_APP_UI_ITEM, N_("Memory Maps..."), "",
+	 cb_show_memory_maps, NULL, NULL, 0, 0,
+	 'm', 0
+	},
 	GNOMEUIINFO_END
 };
 
@@ -108,7 +117,7 @@ create_main_window (ProcData *data)
 	gtk_window_set_policy (GTK_WINDOW (app), FALSE, TRUE, TRUE);
 
 	gnome_app_create_menus_with_data (GNOME_APP (app), menubar1_uiinfo, procdata);
-
+	
 	vbox1 = gtk_vbox_new (FALSE, 0);
 	gnome_app_set_contents (GNOME_APP (app), vbox1);
 
@@ -150,7 +159,6 @@ create_main_window (ProcData *data)
 	hbox2 = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox2, FALSE, FALSE, 0);
 	endprocessbutton = gtk_button_new_with_label (_("End Process"));
-	gtk_widget_set_sensitive (endprocessbutton, FALSE);
 	gtk_box_pack_start (GTK_BOX (hbox2), endprocessbutton, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (endprocessbutton), GNOME_PAD_SMALL);
 
@@ -237,7 +245,10 @@ create_main_window (ProcData *data)
 	gtk_widget_show (vbox1);	 
 	gtk_widget_show (app);
 
-		
+	/* Makes sure everything that should be insensitive is at start */
+	gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), 
+					 "cursor_activated",
+					  -1, NULL);	
 	
 	
 	return app;
@@ -275,5 +286,7 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 
 	gtk_widget_set_sensitive (endprocessbutton, sensitivity);
 	gtk_widget_set_sensitive (data->infobox, sensitivity);
+	gtk_widget_set_sensitive (edit1_menu_uiinfo[0].widget, sensitivity);
+	gtk_widget_set_sensitive (view1_menu_uiinfo[0].widget, sensitivity);
 }	
 

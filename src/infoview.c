@@ -33,24 +33,6 @@ GtkWidget *memtotal_label;
 GtkWidget *memrss_label;
 GtkWidget *memshared_label;
 
-static void
-memmaps_button_clicked (GtkButton *button, gpointer data)
-{
-	ProcData *procdata = data;
-	
-	create_memmaps_dialog (procdata);
-}
-
-static void
-nice_button_clicked (GtkButton *button, gpointer data)
-{
-
-	ProcData *procdata = data;
-	procdialog_create_renice_dialog (procdata);
-	
-}
-
-
 
 GtkWidget *
 infoview_create (ProcData *data)
@@ -125,24 +107,8 @@ infoview_create (ProcData *data)
 	gtk_table_attach_defaults (GTK_TABLE (mem_table), memshared_label, 1, 2, 2, 3);
 	
 	procdata->infobox = infobox;
-	/*procdata->infoview->main_frame = main_frame;
-	procdata->infoview->infobox = infobox;
-	procdata->infoview->cmd_entry = cmd_entry;
-	procdata->infoview->status_entry = status_entry;
-	procdata->infoview->nice_entry = nice_entry;
-	procdata->infoview->memtotal_entry = memtotal_entry;
-	procdata->infoview->memrss_entry = memrss_entry;
-	procdata->infoview->memshared_entry = memshared_entry;*/
-	
-	if (procdata->selected_pid == -1)
-		gtk_widget_set_sensitive (infobox, FALSE);
-	
-	/*gtk_signal_connect (GTK_OBJECT (nice_button), "clicked",
-			    GTK_SIGNAL_FUNC (nice_button_clicked), procdata);
-			   
-	gtk_signal_connect (GTK_OBJECT (memmaps_button), "clicked",
-			    GTK_SIGNAL_FUNC (memmaps_button_clicked), procdata);*/
-	
+
+		
 	return infobox;
 	
 

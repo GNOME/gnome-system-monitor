@@ -49,6 +49,23 @@ cb_preferences_activate               (GtkMenuItem     *menuitem,
 
 }
 
+void
+cb_renice (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	procdialog_create_renice_dialog (procdata);
+	
+}
+
+void
+cb_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	create_memmaps_dialog (procdata);
+}
+
 
 void
 cb_about_activate                     (GtkMenuItem     *menuitem,
