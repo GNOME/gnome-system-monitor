@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: procman 0.6\n"
-"POT-Creation-Date: 2001-07-14 11:05+0200\n"
-"PO-Revision-Date: 2001-07-14 11:05+0200\n"
+"POT-Creation-Date: 2001-07-31 20:20+0200\n"
+"PO-Revision-Date: 2001-07-31 20:15+0200\n"
 "Last-Translator: Carlos Perelló Marín <carlos@gnome-db.org>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,79 +17,87 @@ msgstr ""
 msgid "Renice..."
 msgstr "Cambiar prioridad..."
 
-#: src/interface.c:50
+#: src/interface.c:50 src/procdialogs.c:94 src/procdialogs.c:110
 msgid "Hide Process"
 msgstr "Ocultar proceso"
 
-#: src/interface.c:60
+#: src/interface.c:56
+msgid "Hidden Processes..."
+msgstr "Procesos ocultos..."
+
+#: src/interface.c:66
 msgid "Memory Maps..."
 msgstr "Mapas de memoria..."
 
-#: src/interface.c:70
+#: src/interface.c:77
 msgid "Add to favorites"
 msgstr "Añadir a favoritos"
 
-#: src/interface.c:97
+#: src/interface.c:105
 msgid "F_avorites"
 msgstr "F_avoritos"
 
-#: src/interface.c:109
+#: src/interface.c:117
 msgid "More Info >>"
 msgstr "Más información >>"
 
-#: src/interface.c:110
+#: src/interface.c:118
 msgid "<< Less Info"
 msgstr "<< Menos información"
 
-#: src/interface.c:162
+#: src/interface.c:158
+msgid "Search :"
+msgstr "Buscar :"
+
+#: src/interface.c:171
 msgid "All Processes"
 msgstr "Todos los procesos"
 
-#: src/interface.c:168
+#: src/interface.c:177
 msgid "My Processes"
 msgstr "Mis procesos"
 
-#: src/interface.c:174
+#: src/interface.c:183
 msgid "Running Processes"
 msgstr "Procesos en ejecución"
 
-#: src/interface.c:180
+#: src/interface.c:189
 msgid "Favorites"
 msgstr "Favoritos"
 
-#: src/interface.c:189
+#: src/interface.c:198
 msgid "View:"
 msgstr "Ver:"
 
-#: src/interface.c:204 src/procdialogs.c:84 src/procdialogs.c:100
+#: src/interface.c:213 src/procdialogs.c:193 src/procdialogs.c:209
 msgid "End Process"
 msgstr "Finalizar proceso"
 
-#: src/interface.c:239
+#: src/interface.c:248
 msgid "CPU :"
 msgstr "CPU :"
 
-#: src/interface.c:251
+#: src/interface.c:260
 msgid "Memory Used :"
 msgstr "Memoria utilizada :"
 
-#: src/interface.c:263
+#: src/interface.c:272
 msgid "Swap Used :"
 msgstr "Memoria de intercambio utilizada :"
 
-#: procman.desktop.in.h:1 src/callbacks.c:113
+#: procman.desktop.in.h:1 src/callbacks.c:133
 msgid "Process Manager"
 msgstr "Gestor de procesos"
 
-#: src/callbacks.c:114
+#: src/callbacks.c:134
 msgid "(C) 2001 Kevin Vandersloot"
 msgstr "(C) 2001 Kevin Vandersloot"
 
-#: src/callbacks.c:116
+#: src/callbacks.c:136
 msgid "Simple process viewer using libgtop"
 msgstr "Visualizador simple de procesos empleando libgtop"
 
-#: src/proctable.c:345
+#: src/proctable.c:348
 msgid ""
 "Procman could not find the e-tree spec file.\n"
 "There should be a file called proctable.etspec in\n"
@@ -97,21 +105,19 @@ msgstr ""
 "Procman no ha podido encontrar el archivo spec del e-tree.\n"
 "Debe de haber un archivo llamado proctable.etspec en\n"
 
-#: src/proctable.c:396
+#: src/proctable.c:399
 msgid "Running"
 msgstr "Ejecutándose"
 
-#: src/proctable.c:402
+#: src/proctable.c:405
 msgid "Stopped"
 msgstr "Parado"
 
-#: src/proctable.c:407
+#: src/proctable.c:410
 msgid "Sleeping"
 msgstr "Durmiendo"
 
-#. e_tree_node_set_expanded (E_TREE (procdata->tree),
-#. parentinfo->node, FALSE);
-#: src/proctable.c:569
+#: src/proctable.c:581
 msgid " (thread)"
 msgstr " (hilo)"
 
@@ -147,40 +153,84 @@ msgstr "RSS : "
 msgid "Shared : "
 msgstr "Compartida : "
 
-#. We create it with an OK button, and then remove the button, to work
-#. around a bug in gnome-libs.
-#: src/procdialogs.c:77
-msgid "Unsaved data will be lost"
-msgstr "Los datos no guardados se perderán"
+#: src/procdialogs.c:80
+msgid ""
+"This will block a process from \n"
+"being displayed. To reshow a \n"
+"process choose Hidden \n"
+"Processes in the Edit menu"
+msgstr ""
+"Esto ocultará un proceso. Para \n"
+"volver a mostrarlo seleccione \n"
+"Procesos ocultos en el menú Editar"
 
-#: src/procdialogs.c:95
+#: src/procdialogs.c:105 src/procdialogs.c:204
 msgid "Show this dialog next time."
 msgstr "Mostrar este diálogo la próxima vez."
 
-#: src/procdialogs.c:105 src/procdialogs.c:228
-msgid "Cancel"
-msgstr "Cancelar"
+#. We create it with an OK button, and then remove the button, to work
+#. around a bug in gnome-libs.
+#: src/procdialogs.c:186
+msgid "Unsaved data will be lost"
+msgstr "Los datos no guardados se perderán"
 
-#: src/procdialogs.c:182
+#: src/procdialogs.c:291
 msgid ""
-"The nice value refers to the priority of a process. A lower nice value "
-"corresponds to a higher priority"
+"The nice value refers to the \n"
+"priority of a process. A lower \n"
+"nice value corresponds to a \n"
+"higher priority."
 msgstr ""
 "Cuanto más pequeño sea el valor de la prioridad mayor será la prioridad del "
 "proceso."
 
-#: src/procdialogs.c:195
+#: src/procdialogs.c:305
 msgid "Change Priority"
 msgstr "Cambia la prioridad"
 
-#. gtk_container_add (GTK_CONTAINER (alignment), hbox);
-#: src/procdialogs.c:215
+#: src/procdialogs.c:329
 msgid "Nice Value :"
 msgstr "Prioridad :"
 
-#: src/procdialogs.c:226
+#: src/procdialogs.c:337
 msgid "Renice"
 msgstr "Cambiar prioridad"
+
+#: src/procdialogs.c:452
+msgid "Preferences"
+msgstr "Preferencias"
+
+#: src/procdialogs.c:456
+msgid "General"
+msgstr "General"
+
+#: src/procdialogs.c:467
+msgid "Update Speed ( seconds ) :"
+msgstr "Velocidad de actualización (segundos) :"
+
+#: src/procdialogs.c:477
+msgid "Show Process Dependencies"
+msgstr "Mostrar dependencias del proceso"
+
+#: src/procdialogs.c:484
+msgid "Advanced"
+msgstr "Avanzado"
+
+#: src/procdialogs.c:492
+msgid "Show Application Names"
+msgstr "Mostrar nombres de las aplicaciones"
+
+#: src/procdialogs.c:499
+msgid ""
+"Never Show Icons or Application Names \n"
+" ( faster startup time - requires restart)"
+msgstr ""
+"Nunca mostrar iconos o nombres de aplicaciones \n"
+" (hace el arranque más rápido - requiere reiniciar)"
+
+#: src/procdialogs.c:506
+msgid "Show Threads"
+msgstr "Mostrar hilos"
 
 #: src/defaulttable.h:8
 msgid "X window system"
@@ -295,9 +345,32 @@ msgstr "Usuario"
 msgid "VM Size"
 msgstr "Tamaño memoria virtual"
 
+#: src/favorites.c:415
+msgid "Manage Hidden Processes"
+msgstr "Gestionar procesos ocultos"
+
+#: src/favorites.c:422
+msgid ""
+"These are the processes you have chosen to hide. You can reshow a process by "
+"removing it from this list."
+msgstr ""
+"Estos son los procesos que ha seleccionado para ocultar. Puede volver a "
+"mostrar un proceso eliminandolo de esta lista."
+
+#: src/favorites.c:426
+msgid "Hidden Processes"
+msgstr "Procesos ocultos"
+
+#: src/favorites.c:439
+msgid "Remove From List"
+msgstr "Eliminar de la lista"
+
 #: procman.desktop.in.h:2
 msgid "View Running Processes"
 msgstr "Muestra los procesos en ejecución"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
 
 #~ msgid "Nice :"
 #~ msgstr "Prioridad :"

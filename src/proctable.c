@@ -17,6 +17,10 @@
  *
  */
 
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif
+
 #include <gal/e-table/e-cell-number.h>
 #include <gal/e-table/e-cell-size.h>
 #include <gal/e-table/e-tree-memory.h>
