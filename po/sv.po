@@ -7,144 +7,374 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
-"POT-Creation-Date: 2001-07-02 10:00+0200\n"
-"PO-Revision-Date: 2001-07-02 10:28+0200\n"
+"POT-Creation-Date: 2001-08-02 00:11+0200\n"
+"PO-Revision-Date: 2001-08-02 00:13+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/interface.c:124
+#: src/interface.c:45
+msgid "Renice..."
+msgstr "Ändra nice-värde..."
+
+#: src/interface.c:50 src/procdialogs.c:94 src/procdialogs.c:110
+msgid "Hide Process"
+msgstr "Dölj process"
+
+#: src/interface.c:56
+msgid "Hidden Processes..."
+msgstr "Dolda processer..."
+
+#: src/interface.c:66
+msgid "Memory Maps..."
+msgstr "Minneskartor..."
+
+#: src/interface.c:77
+msgid "Add to favorites"
+msgstr "Lägg till i favoriter"
+
+#: src/interface.c:105
+msgid "F_avorites"
+msgstr "F_avoriter"
+
+#: src/interface.c:117
+msgid "More Info >>"
+msgstr "Mer information >>"
+
+#: src/interface.c:118
+msgid "<< Less Info"
+msgstr "<< Mindre information"
+
+#: src/interface.c:158
+msgid "Search :"
+msgstr "Sök:"
+
+#: src/interface.c:171
 msgid "All Processes"
 msgstr "Alla processer"
 
-#: src/interface.c:129
+#: src/interface.c:177
 msgid "My Processes"
 msgstr "Mina processer"
 
-#: src/interface.c:137
+#: src/interface.c:183
+msgid "Running Processes"
+msgstr "Körande processer"
+
+#: src/interface.c:189
+msgid "Favorites"
+msgstr "Favoriter"
+
+#: src/interface.c:198
 msgid "View:"
 msgstr "Visa:"
 
-#: src/interface.c:151 src/procdialogs.c:80 src/procdialogs.c:96
+#: src/interface.c:213 src/procdialogs.c:193 src/procdialogs.c:209
 msgid "End Process"
 msgstr "Avsluta process"
 
-#: src/interface.c:156 src/interface.c:267
-msgid "More Info"
-msgstr "Mer information"
-
-#: src/interface.c:184
+#: src/interface.c:248
 msgid "CPU :"
 msgstr "CPU:"
 
-#: src/interface.c:195
+#: src/interface.c:260
 msgid "Memory Used :"
 msgstr "Använt minne:"
 
-#: src/interface.c:206
+#: src/interface.c:272
 msgid "Swap Used :"
 msgstr "Använt växlingsminne:"
 
-#: src/interface.c:260
-msgid "Less Info"
-msgstr "Mindre information"
-
-#: src/callbacks.c:64
+#: procman.desktop.in.h:1 src/callbacks.c:133
 msgid "Process Manager"
 msgstr "Processhanterare"
 
-#: src/callbacks.c:65
+#: src/callbacks.c:134
 msgid "(C) 2001 Kevin Vandersloot"
 msgstr "© 2001 Kevin Vandersloot"
 
-#: src/callbacks.c:67
+#: src/callbacks.c:136
 msgid "Simple process viewer using libgtop"
 msgstr "Enkel processvisare som använder libgtop"
 
-#: src/proctable.c:369
+#: src/proctable.c:352
+msgid ""
+"Procman could not find the e-tree spec file.\n"
+"There should be a file called proctable.etspec in\n"
+msgstr ""
+"Procman kunde inte hitta e-tree-specfilen.\n"
+"Det bör finnas en fil som heter proctable.etspec i\n"
+
+#: src/proctable.c:403
 msgid "Running"
 msgstr "Kör"
 
-#: src/proctable.c:371
+#: src/proctable.c:409
 msgid "Stopped"
 msgstr "Stoppad"
 
-#: src/proctable.c:373
+#: src/proctable.c:414
 msgid "Sleeping"
 msgstr "Sover"
 
-#: src/infoview.c:88
+#: src/proctable.c:592
+msgid " (thread)"
+msgstr " (tråd)"
+
+#: src/infoview.c:67
 msgid "Process Info"
 msgstr "Processinformation"
 
-#: src/infoview.c:96
+#: src/infoview.c:75
 msgid "Command : "
 msgstr "Kommando: "
 
-#: src/infoview.c:107
+#: src/infoview.c:79
 msgid "Status : "
 msgstr "Status: "
 
-#: src/infoview.c:118
+#: src/infoview.c:83
 msgid "Nice Value : "
 msgstr "Nice-värde: "
 
-#: src/infoview.c:126
-msgid "Renice ..."
-msgstr "Ändra nice-värde..."
-
-#: src/infoview.c:130
+#: src/infoview.c:101
 msgid "Memory Usage"
 msgstr "Minnesanvändning"
 
-#: src/infoview.c:138
+#: src/infoview.c:110
 msgid "Total : "
 msgstr "Totalt: "
 
-#: src/infoview.c:148
+#: src/infoview.c:114
 msgid "RSS : "
 msgstr "RSS: "
 
-#: src/infoview.c:158
+#: src/infoview.c:118
 msgid "Shared : "
 msgstr "Delat: "
 
-#: src/infoview.c:168
-msgid "Memory Maps ..."
-msgstr "Minneskartor..."
+#: src/procdialogs.c:80
+msgid ""
+"This will block a process from \n"
+"being displayed. To reshow a \n"
+"process choose Hidden \n"
+"Processes in the Edit menu"
+msgstr ""
+"Detta kommer att hindra en process\n"
+"från att visas. För att visa en\n"
+"process igen väljer du Dolda processer\n"
+"i Redigera-menyn"
 
-#. We create it with an OK button, and then remove the button, to work
-#. around a bug in gnome-libs.
-#: src/procdialogs.c:73
-msgid "Unsaved data will be lost"
-msgstr "Osparad data kommer att förloras"
-
-#: src/procdialogs.c:91
+#: src/procdialogs.c:105 src/procdialogs.c:204
 msgid "Show this dialog next time."
 msgstr "Visa denna dialog nästa gång."
 
-#: src/procdialogs.c:101 src/procdialogs.c:217
-msgid "Cancel"
-msgstr "Avbryt"
+#. We create it with an OK button, and then remove the button, to work
+#. around a bug in gnome-libs.
+#: src/procdialogs.c:186
+msgid "Unsaved data will be lost"
+msgstr "Osparad data kommer att förloras"
 
-#: src/procdialogs.c:178
-msgid "The nice value is the priority"
-msgstr "Nice-värdet är prioriteten"
+#: src/procdialogs.c:291
+msgid ""
+"The nice value refers to the \n"
+"priority of a process. A lower \n"
+"nice value corresponds to a \n"
+"higher priority."
+msgstr ""
+"Nice-värdet har med prioriteten\n"
+"hos en process att göra. Ett lågt\n"
+"nice-värde motsvarar hög prioritet."
 
-#: src/procdialogs.c:189
+#: src/procdialogs.c:305
 msgid "Change Priority"
 msgstr "Ändra prioritet"
 
-#: src/procdialogs.c:204
-msgid "Nice :"
-msgstr "Nice:"
+#: src/procdialogs.c:329
+msgid "Nice Value :"
+msgstr "Nice-värde:"
 
-#: src/procdialogs.c:215
+#: src/procdialogs.c:337
 msgid "Renice"
 msgstr "Ändra nice-värde"
 
-#: procman.desktop.in:4
+#: src/procdialogs.c:452
+msgid "Preferences"
+msgstr "Inställningar"
+
+#: src/procdialogs.c:456
+msgid "General"
+msgstr "Allmänt"
+
+#: src/procdialogs.c:467
+msgid "Update Speed ( seconds ) :"
+msgstr "Uppdateringshastighet (sekunder):"
+
+#: src/procdialogs.c:477
+msgid "Show Process Dependencies"
+msgstr "Visa processberoenden"
+
+#: src/procdialogs.c:484
+msgid "Advanced"
+msgstr "Avancerat"
+
+#: src/procdialogs.c:492
+msgid "Show Application Names"
+msgstr "Visa programnamn"
+
+#: src/procdialogs.c:499
+msgid ""
+"Never Show Icons or Application Names \n"
+" ( faster startup time )"
+msgstr ""
+"Visa aldrig ikoner eller programnamn\n"
+" (snabbare uppstartstid)"
+
+#: src/procdialogs.c:506
+msgid "Show Threads"
+msgstr "Visa trådar"
+
+#: src/defaulttable.h:8
+msgid "X window system"
+msgstr "X Window-systemet"
+
+#: src/defaulttable.h:9
+msgid "bourne again shell"
+msgstr "bash"
+
+#: src/defaulttable.h:10
+msgid "gnome-session"
+msgstr "gnome-session"
+
+#: src/defaulttable.h:11
+msgid "Galeon Web Browser"
+msgstr "Webbläsaren Galeon"
+
+#: src/defaulttable.h:12
+msgid "Sawfish Window Manager"
+msgstr "Fönsterhanteraren Sawfish"
+
+#: src/memmaps.c:316
+msgid ""
+"Procman could not find the e-tree spec file.\n"
+"There should be a file called memmaps.etspec in\n"
+msgstr ""
+"Procman kunde inte hitta e-tree-specfilen.\n"
+"Det bör finnas en fil som heter memmaps.etspec i\n"
+
+#: src/memmaps.c:362
+msgid "Memory Maps"
+msgstr "Minneskartor"
+
+#: src/memmaps.c:374
+msgid "Process Name :"
+msgstr "Processnamn:"
+
+#: src/memmaps.etspec.h:1
+msgid "Device"
+msgstr "Enhet"
+
+#: src/memmaps.etspec.h:2
+msgid "Filename"
+msgstr "Filnamn"
+
+#: src/memmaps.etspec.h:3
+msgid "Flags"
+msgstr "Flaggor"
+
+#: src/memmaps.etspec.h:4
+msgid "Inode"
+msgstr "Inod"
+
+#: src/memmaps.etspec.h:5
+msgid "VM End"
+msgstr "VM-slut"
+
+#: src/memmaps.etspec.h:6
+msgid "VM Start"
+msgstr "VM-start"
+
+#: src/memmaps.etspec.h:7
+msgid "VM offset"
+msgstr "VM-offset"
+
+#: src/proctable.etspec.h:1
+msgid " "
+msgstr " "
+
+#: src/proctable.etspec.h:3
+#, no-c-format
+msgid "% CPU"
+msgstr "% CPU"
+
+#: src/proctable.etspec.h:4
+msgid "ID"
+msgstr "ID"
+
+#: src/proctable.etspec.h:5
+msgid "Memory"
+msgstr "Minne"
+
+#: src/proctable.etspec.h:6
+msgid "Nice"
+msgstr "Nice"
+
+#: src/proctable.etspec.h:7
+msgid "Process Name"
+msgstr "Processnamn"
+
+#: src/proctable.etspec.h:8
+msgid "RSS Memory"
+msgstr "RSS-minne"
+
+#: src/proctable.etspec.h:9
+msgid "Resident Memory"
+msgstr "Beständigt minne"
+
+#: src/proctable.etspec.h:10
+msgid "Shared Memory"
+msgstr "Delat minne"
+
+#: src/proctable.etspec.h:11
+msgid "Status"
+msgstr "Status"
+
+#: src/proctable.etspec.h:12
+msgid "User"
+msgstr "Användare"
+
+#: src/proctable.etspec.h:13
+msgid "VM Size"
+msgstr "VM-storlek"
+
+#: src/favorites.c:418
+msgid "Manage Hidden Processes"
+msgstr "Hantera dolda processer"
+
+#: src/favorites.c:425
+msgid ""
+"These are the processes you have chosen to hide. You can reshow a process by "
+"removing it from this list."
+msgstr ""
+"Detta är processer som du har valt att dölja. Du kan visa en process igen "
+"genom att ta bort den från denna lista."
+
+#: src/favorites.c:429
+msgid "Hidden Processes"
+msgstr "Dolda processer"
+
+#: src/favorites.c:442
+msgid "Remove From List"
+msgstr "Ta bort från listan"
+
+#: procman.desktop.in.h:2
 msgid "View Running Processes"
 msgstr "Visa körande processer"
+
+#~ msgid "Cancel"
+#~ msgstr "Avbryt"
+
+#~ msgid "The nice value is the priority"
+#~ msgstr "Nice-värdet är prioriteten"
