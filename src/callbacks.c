@@ -128,7 +128,7 @@ cb_about (GtkAction *action, gpointer data)
 		NULL
 	};
 
-	static const gchar *documenters[] = {
+	static const gchar * const documenters[] = {
 		"Bill Day",
 		"Sun Microsystems",
 		NULL
