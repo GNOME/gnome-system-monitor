@@ -36,6 +36,15 @@ add_to_blacklist (ProcData *procdata, gchar *name)
 	procdata->blacklist = g_list_append (procdata->blacklist, process);
 	procdata->blacklist_num++;
 	
+	if (blacklist_dialog) {
+		GtkTreeModel *model;
+		GtkTreeIter row;
+		
+		model = gtk_tree_view_get_model (GTK_TREE_VIEW (proctree));
+		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0);
+		gtk_tree_store_set (GTK_TREE_STORE (model), &row, 0, name, -1);
+	}
+		
 }
 
 static void
@@ -192,8 +201,7 @@ create_tree (ProcData *procdata)
 	model = gtk_tree_store_new (1, G_TYPE_STRING);
 	
 	tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
-	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree), TRUE);
-  	g_object_unref (G_OBJECT (model));
+	g_object_unref (G_OBJECT (model));
   	
   	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree));
   	gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
@@ -223,16 +231,22 @@ create_tree (ProcData *procdata)
 
 }
 
+GList *removed_iters = NULL;
+
 static void
 remove_item (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
 	ProcData *procdata = data;
+	GtkTreeIter *iter_copy;
 	gchar *process = NULL;
 	
 	gtk_tree_model_get (model, iter, 0, &process, -1);
 	
 	if (process)
 		remove_from_blacklist (procdata, process);
+	
+	iter_copy = gtk_tree_iter_copy (iter);	
+	removed_iters = g_list_append (removed_iters, iter_copy);
 }
 
 static void
@@ -241,30 +255,22 @@ remove_button_clicked (GtkButton *button, gpointer data)
 	ProcData *procdata = data;
 	GtkTreeModel *model;
 	GtkTreeSelection *selection = NULL;
-	GtkTreeIter iter;
-	gchar *process = NULL;
-	gboolean selected;
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (proctree));
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
 	
-	if (!selection)
-		return;
-		
 	gtk_tree_selection_selected_foreach (selection, remove_item, procdata); 
 	
-	/*selected = gtk_tree_selection_get_selected (selection, NULL, &iter);
-	if (!selected)
-		return;
-	gtk_tree_model_get (model, &iter, 0, &process, -1);
-	
-	if (process)
-		remove_from_blacklist (procdata, process);*/
+	while (removed_iters) {
+		GtkTreeIter *iter = removed_iters->data;
 		
-	proctable_update_all (procdata);
+		gtk_tree_store_remove (GTK_TREE_STORE (model), iter);
+		gtk_tree_iter_free (iter);
+		
+		removed_iters = g_list_next (removed_iters);
+	}
 	
-	gtk_tree_store_clear (GTK_TREE_STORE (model));
-	fill_tree_with_info (procdata, proctree);
+	proctable_update_all (procdata);
 	
 }
 

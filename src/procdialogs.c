@@ -229,7 +229,6 @@ void
 procdialog_create_renice_dialog (ProcData *data)
 {
 	ProcData *procdata = data;
-	ProcInfo *info;
 	GtkWidget *dialog = NULL;
 	GtkWidget *dialog_vbox;
 	GtkWidget *vbox;
@@ -240,14 +239,7 @@ procdialog_create_renice_dialog (ProcData *data)
   	GtkWidget *hscale;
   	gchar *text = 
   	      _("The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority.");
-#if 0	
-	if (!procdata->selected_process)
-		return;
-		
-	info = procdata->selected_process;
-	if (!info)
-		return;
-#endif		
+
 	if (renice_dialog)
 		return;
 		
@@ -517,17 +509,14 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_widget_show (tab_label);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), proc_box, tab_label);
 	
-	frame = gtk_frame_new (_("General"));
-	gtk_box_pack_start (GTK_BOX (proc_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
-	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (frame), vbox);
+	gtk_box_pack_start (GTK_BOX (proc_box), vbox, FALSE, FALSE, GNOME_PAD_SMALL);
 	
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 	
-	label = gtk_label_new (_("Update Speed ( seconds ) :"));
+	label = gtk_label_new (_("Update Interval ( seconds ) :"));
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 	
 	update = (gfloat) procdata->config.update_interval;
@@ -544,13 +533,6 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
 			    GTK_SIGNAL_FUNC (show_tree_toggled), procdata);
 	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
-	
-	frame = gtk_frame_new (_("Advanced"));
-	gtk_box_pack_start (GTK_BOX (proc_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
-	
-	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (frame), vbox);
 	
 	check_button = gtk_check_button_new_with_label (_("Show Threads"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
@@ -651,7 +633,10 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	
 	gtk_widget_show_all (dialog);
 	
-	gtk_notebook_set_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab);
+	if (procdata->config.current_tab == 0)
+		gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 0);
+	else
+		gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 2);
 }
 
 /*
