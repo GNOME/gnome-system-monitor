@@ -70,6 +70,14 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
 	 cb_kill_process, NULL, NULL, 0, 0,
 	 'k', GDK_CONTROL_MASK
 	},
+	GNOMEUIINFO_SEPARATOR,
+	{
+	 GNOME_APP_UI_ITEM, N_("_Hidden Processes"), 
+	 		    N_("View and edit your list of hidden processes"),
+	 cb_show_hidden_processes, NULL, NULL, 0, 0,
+	 'p', GDK_CONTROL_MASK
+	},
+	GNOMEUIINFO_MENU_PREFERENCES_ITEM (cb_preferences_activate, NULL),
 	GNOMEUIINFO_END
 };
 
@@ -80,17 +88,6 @@ static GnomeUIInfo view1_menu_uiinfo[] =
 	 cb_show_memory_maps, NULL, NULL, 0, 0,
 	 'm', GDK_CONTROL_MASK
 	},
-	GNOMEUIINFO_END
-};
-
-static GnomeUIInfo settings1_menu_uiinfo[] =
-{
-	{
-	 GNOME_APP_UI_ITEM, N_("_Hidden Processes"), N_("View and edit your list of hidden processes"),
-	 cb_show_hidden_processes, NULL, NULL, 0, 0,
-	 'p', GDK_CONTROL_MASK
-	},
-	GNOMEUIINFO_MENU_PREFERENCES_ITEM (cb_preferences_activate, NULL),
 	GNOMEUIINFO_END
 };
 
@@ -105,7 +102,6 @@ static GnomeUIInfo menubar1_uiinfo[] =
 	GNOMEUIINFO_MENU_FILE_TREE (file1_menu_uiinfo),
 	GNOMEUIINFO_MENU_EDIT_TREE (edit1_menu_uiinfo),
 	GNOMEUIINFO_MENU_VIEW_TREE (view1_menu_uiinfo),
-	GNOMEUIINFO_MENU_SETTINGS_TREE (settings1_menu_uiinfo),
 	GNOMEUIINFO_MENU_HELP_TREE (help1_menu_uiinfo),
 	GNOMEUIINFO_END
 };

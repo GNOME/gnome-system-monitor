@@ -94,6 +94,7 @@ view_as_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer d
 	GConfValue *value = gconf_entry_get_value (entry);
 	
 	procdata->config.whose_process = gconf_value_get_int (value);
+	procdata->config.whose_process = CLAMP (procdata->config.whose_process, 0, 2);
 	proctable_clear_tree (procdata);
 	proctable_update_all (procdata);
 	
@@ -120,20 +121,28 @@ timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer 
 	ProcData *procdata = data;
 	const gchar *key = gconf_entry_get_key (entry);
 	GConfValue *value = gconf_entry_get_value (entry);
-	
+
 	if (!g_strcasecmp (key, "/apps/procman/update_interval")) {
 		procdata->config.update_interval = gconf_value_get_int (value);
+		procdata->config.update_interval = 
+			MAX (procdata->config.update_interval, 1000);
 		gtk_timeout_remove (procdata->timeout);
-		procdata->timeout = gtk_timeout_add (procdata->config.update_interval, cb_timeout,
-					     procdata);
+		procdata->timeout = gtk_timeout_add (procdata->config.update_interval, 
+						     cb_timeout, procdata);
 	}
 	else if (!g_strcasecmp (key, "/apps/procman/graph_update_interval")){
+		procdata->config.graph_update_interval = gconf_value_get_int (value);
+		procdata->config.graph_update_interval = 
+			MAX (procdata->config.graph_update_interval, 
+			     250);
 		gtk_timeout_remove (procdata->cpu_graph->timer_index);
 		procdata->cpu_graph->timer_index = -1;
-		procdata->cpu_graph->speed = gconf_value_get_int (value);
+		procdata->cpu_graph->speed = procdata->config.graph_update_interval;
+		
+	
 		gtk_timeout_remove (procdata->mem_graph->timer_index);
 		procdata->mem_graph->timer_index = -1;
-		procdata->mem_graph->speed = gconf_value_get_int (value);
+		procdata->mem_graph->speed = procdata->config.graph_update_interval;
 	
 		load_graph_start (procdata->cpu_graph);
 		load_graph_start (procdata->mem_graph);	
@@ -141,9 +150,12 @@ timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer 
 	else {
 		
 		procdata->config.disks_update_interval = gconf_value_get_int (value);
+		procdata->config.disks_update_interval = 
+			MAX (procdata->config.disks_update_interval, 1000);	
 		gtk_timeout_remove (procdata->disk_timeout);
-		procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
-  						   cb_update_disks, procdata);	
+		procdata->disk_timeout = 
+			gtk_timeout_add (procdata->config.disks_update_interval,
+  					 cb_update_disks, procdata);	
 		
 	}
 }
@@ -190,6 +202,7 @@ procman_data_new (GConfClient *client)
 
 	ProcData *pd;
 	gchar *color;
+	gint swidth, sheight;
 	
 	pd = g_new0 (ProcData, 1);
 	
@@ -241,31 +254,46 @@ procman_data_new (GConfClient *client)
 	pd->config.pane_pos = gconf_client_get_int (client, "/apps/procman/pane_pos", NULL);
 
 	color = gconf_client_get_string (client, "/apps/procman/bg_color", NULL);
+	if (!color)
+		color = g_strdup ("#000000");
 	gconf_client_notify_add (client, "/apps/procman/bg_color", 
 			  	 color_changed_cb, pd, NULL, NULL);
 	gdk_color_parse(color, &pd->config.bg_color);
 	g_free (color);
+	
 	color = gconf_client_get_string (client, "/apps/procman/frame_color", NULL);
+	if (!color)
+		color = g_strdup ("#231e89aa2805");
 	gconf_client_notify_add (client, "/apps/procman/frame_color", 
 			  	 color_changed_cb, pd, NULL, NULL);
 	gdk_color_parse(color, &pd->config.frame_color);
 	g_free (color);
+	
 	color = gconf_client_get_string (client, "/apps/procman/cpu_color", NULL);
+	if (!color)
+		color = g_strdup ("#f25915e815e8");
 	gconf_client_notify_add (client, "/apps/procman/cpu_color", 
 			  	 color_changed_cb, pd, NULL, NULL);
 	gdk_color_parse(color, &pd->config.cpu_color);
 	g_free (color);
+	
 	color = gconf_client_get_string (client, "/apps/procman/mem_color", NULL);
+	if (!color)
+		color = g_strdup ("#f25915e815e8");
 	gconf_client_notify_add (client, "/apps/procman/mem_color", 
 			  	 color_changed_cb, pd, NULL, NULL);
 	gdk_color_parse(color, &pd->config.mem_color);
 	
 	g_free (color);
+	
 	color = gconf_client_get_string (client, "/apps/procman/swap_color", NULL);
+	if (!color)
+		color = g_strdup ("#212fe32b212f");
 	gconf_client_notify_add (client, "/apps/procman/swap_color", 
 			  	 color_changed_cb, pd, NULL, NULL);
 	gdk_color_parse(color, &pd->config.swap_color);
 	g_free (color);
+	
 	get_blacklist (pd, client);
 
 	pd->config.simple_view = FALSE;	
@@ -279,6 +307,20 @@ procman_data_new (GConfClient *client)
 		pd->config.show_threads = FALSE;
 		pd->config.current_tab = 0;
 	}	
+	
+	/* Sanity checks */
+	swidth = gdk_screen_width ();
+	sheight = gdk_screen_height ();
+	pd->config.width = CLAMP (pd->config.width, 50, swidth);
+	pd->config.height = CLAMP (pd->config.height, 50, sheight);
+	pd->config.update_interval = MAX (pd->config.update_interval, 1000);
+	pd->config.graph_update_interval = MAX (pd->config.graph_update_interval, 250);
+	pd->config.disks_update_interval = MAX (pd->config.disks_update_interval, 1000);
+	pd->config.whose_process = CLAMP (pd->config.whose_process, 0, 2);
+	pd->config.current_tab = CLAMP (pd->config.current_tab, 0, 1);
+	if (pd->config.pane_pos == 0)
+		pd->config.pane_pos = 300;
+	
 
 	return pd;
 
@@ -309,6 +351,9 @@ procman_get_tree_state (GConfClient *client, GtkWidget *tree, gchar *prefix)
 	
 	g_return_val_if_fail (tree, FALSE);
 	g_return_val_if_fail (prefix, FALSE);
+	
+	if (!gconf_client_dir_exists (client, prefix, NULL)) 
+		return FALSE;
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
 	
