@@ -28,5 +28,10 @@ procman_LDADD =  \
 
 specdir = $(datadir)/procman
 
+pixmapdir = $(datadir)/pixmaps
+pixmap_DATA = \
+	procman.png
+	
 EXTRA_DIST = \
-	README.hacking 
+	README.hacking \
+	$(pixmap_DATA)

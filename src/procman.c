@@ -20,6 +20,7 @@
 #include <config.h>
 
 #include <gnome.h>
+#include <libgnomeui/gnome-window-icon.h>
 #include <gconf/gconf-client.h>
 #include <glibtop.h>
 #include <pthread.h>
@@ -479,6 +480,7 @@ main (int argc, char *argv[])
 
 	procman = gnome_program_init ("procman", VERSION, LIBGNOMEUI_MODULE, argc, argv, 
 			    	      GNOME_PARAM_POPT_TABLE, options, NULL);
+	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/procman.png");
 	/*gnome_init ("procman", VERSION, argc, argv);*/
 	g_print ("gconf init \n");
 	g_timer_start (timer);		    

@@ -36,4 +36,4 @@
 /* LibGTop server version, increased each time the protocol changes. */
 #undef LIBGTOP_SERVER_VERSION
 
-
+#undef GNOME_ICONDIR
