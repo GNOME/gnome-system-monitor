@@ -51,18 +51,18 @@ static GnomeUIInfo file1_menu_uiinfo[] =
 static GnomeUIInfo edit1_menu_uiinfo[] =
 {
  	{
- 	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), NULL,
+ 	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), N_("Change the priority of a process"),
 	 cb_renice, NULL, NULL, 0, 0,
 	 'r', GDK_CONTROL_MASK
 	},
 	{
-	 GNOME_APP_UI_ITEM, N_("_Hide Process"), NULL,
+	 GNOME_APP_UI_ITEM, N_("_Hide Process"), N_("Hide a process"),
 	 cb_hide_process, NULL, NULL, 0, 0,
 	 'h', GDK_CONTROL_MASK
 	}, 
 	GNOMEUIINFO_SEPARATOR,
 	{
-	 GNOME_APP_UI_ITEM, N_("Hidden _Processes..."), NULL,
+	 GNOME_APP_UI_ITEM, N_("Hidden _Processes..."), N_("View and edit the list of hidden process"),
 	 cb_show_hidden_processes, NULL, NULL, 0, 0,
 	 'p', GDK_CONTROL_MASK
 	},
@@ -72,7 +72,7 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
 static GnomeUIInfo view1_menu_uiinfo[] =
 {
 	{
-	 GNOME_APP_UI_ITEM, N_("_Memory Maps..."), NULL,
+	 GNOME_APP_UI_ITEM, N_("_Memory Maps..."), N_("View the memory maps associated with a processes"),
 	 cb_show_memory_maps, NULL, NULL, 0, 0,
 	 'm', GDK_CONTROL_MASK
 	},
@@ -338,6 +338,7 @@ create_sys_view (ProcData *procdata)
 	GtkWidget *disk_frame;
 	GtkWidget *color_picker;
 	GtkWidget *scrolled, *clist;
+	GtkWidget *alignment;
 	gchar *titles[5] = {_("Disk Name"),
 			    _("Mount Directory"),
 			    _("Used Space"),
@@ -366,9 +367,11 @@ create_sys_view (ProcData *procdata)
 	gtk_container_set_border_width (GTK_CONTAINER (cpu_graph->main_widget), 
 					GNOME_PAD_SMALL);
 					
-	
+	/*alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+	gtk_box_pack_start (GTK_BOX (cpu_graph->main_widget), alignment, FALSE, FALSE, 0);*/
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (cpu_graph->main_widget), hbox, FALSE, FALSE, 0);
+	/*gtk_container_add (GTK_CONTAINER (alignment), hbox);*/
 	
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
@@ -395,9 +398,12 @@ create_sys_view (ProcData *procdata)
 	gtk_container_add (GTK_CONTAINER (mem_frame), mem_graph->main_widget);
 	gtk_container_set_border_width (GTK_CONTAINER (mem_graph->main_widget), 
 					GNOME_PAD_SMALL);
-					
+	
+	/*alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), alignment, FALSE, FALSE, 0);*/	
 	table = gtk_table_new (2, 3, FALSE);
 	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), table, FALSE, FALSE, 0);
+	/*gtk_container_add (GTK_CONTAINER (alignment), table);*/
 	
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
