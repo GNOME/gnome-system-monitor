@@ -566,13 +566,6 @@ cb_update_disks (gpointer data)
 		g_hash_table_insert (new_disks, entry[i].devname, &entry[i]);
 	}
 	
-	/*path = gtk_tree_path_new_root ();
-  	if (!gtk_tree_model_get_iter (model, &iter, path) == FALSE) {
-  		g_print ("compare \n");
-    		compare_disks (model, path, &iter, new_disks);
-		gtk_tree_path_free (path);
-	}*/
-	
 	gtk_tree_model_foreach (model, compare_disks, new_disks);
 	
 	g_hash_table_foreach (new_disks, add_new_disks, model);
