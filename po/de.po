@@ -1,45 +1,48 @@
-# German translation of procman.
-# Copyright (C) 2001, 2002 Free Software Foundation, Inc.
+# German GNOME System Monitor translation.
+# Copyright (C) 2001-2003 Free Software Foundation, Inc.
 # Christian Meyer <chrisime@gnome.org>, 2001, 2002.
+# Christian Neumair <chris@gnome-de.org>, 2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: procman HEAD\n"
-"POT-Creation-Date: 2003-01-07 15:30+0100\n"
-"PO-Revision-Date: 2003-01-07 15:32+0100\n"
-"Last-Translator: Benjamin Greiner <nadaschauher@gmx.de>\n"
+"Project-Id-Version: gnome-system-monitor HEAD\n"
+"POT-Creation-Date: 2003-06-07 16:42+0200\n"
+"PO-Revision-Date: 2003-06-07 16:42+0200\n"
+"Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:146 src/interface.c:476
+#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:147 src/interface.c:605
 msgid "System Monitor"
 msgstr "System-Monitor"
 
 #: gnome-system-monitor.desktop.in.h:2
 msgid "View current processes and monitor system state"
-msgstr "Aktuelle Prozesse betrachten und Systemzustand überwachen"
+msgstr "Momentan laufende Prozesse betrachten und Systemzustand überwachen"
 
-#: src/callbacks.c:123
+#: src/callbacks.c:124
 msgid "Kevin Vandersloot (kfv101@psu.edu)"
 msgstr "Kevin Vandersloot (kfv101@psu.edu)"
 
-#: src/callbacks.c:124
-msgid "Erik Johnsson (zaphod@linux.nu) - icon support"
-msgstr "Erik Johnsson (zaphod@linux.nu) - Symbole"
+#: src/callbacks.c:125
+msgid "Jorgen Scheibengruber <mfcn@gmx.de> - nicer devices treeview"
+msgstr "Jörgern Scheibengruber <mfcn@gmx.de> - schönere Geräte-Baumansicht"
 
-#: src/callbacks.c:132
+#: src/callbacks.c:133
 msgid "translator_credits"
-msgstr "Christian Meyer <chrisime@gnome.org>"
+msgstr ""
+"Christian Meyer <chrisime@gnome.org>\n"
+"Christian Neumair <chris@gnome-de.org>"
 
-#: src/callbacks.c:147
+#: src/callbacks.c:148
 msgid "(C) 2001 Kevin Vandersloot"
 msgstr "© 2001 Kevin Vandersloot"
 
-#: src/callbacks.c:148
+#: src/callbacks.c:149
 msgid "Simple process viewer using libgtop"
-msgstr "Einfacher Prozessbetrachter, der auf libgtop aufbaut"
+msgstr "Einfacher Prozessbetrachter, der auf libgtop aufsetzt"
 
 #: src/defaulttable.h:8
 msgid "X window system"
@@ -47,7 +50,7 @@ msgstr "X-Window-System"
 
 #: src/defaulttable.h:9
 msgid "bourne again shell"
-msgstr "Bourne Again Shell"
+msgstr "Bourne-Again-Shell"
 
 #: src/defaulttable.h:10
 msgid "Gnome-Session"
@@ -55,13 +58,13 @@ msgstr "GNOME-Sitzung"
 
 #: src/favorites.c:343
 msgid "No processes are currently hidden."
-msgstr "Keine Prozesse sind derzeit versteckt"
+msgstr "Derzeit sind keine Prozesse verborgen."
 
 #: src/favorites.c:361
 msgid "Manage Hidden Processes"
-msgstr "Versteckte Prozesse verwalten"
+msgstr "Verborgene Prozesse verwalten"
 
-#: src/favorites.c:372
+#: src/favorites.c:376
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
@@ -69,291 +72,308 @@ msgstr ""
 "Dies sind die Prozesse, die Sie verbergen möchten. Sie können einen Prozess "
 "wieder anzeigen, indem Sie ihn von der Liste entfernen."
 
-#: src/favorites.c:376
-msgid "Hidden Processes"
-msgstr "Versteckte Prozesse"
+#: src/favorites.c:386
+msgid "_Hidden Processes:"
+msgstr "_Verborgene Prozesse:"
 
-#: src/favorites.c:389
+#: src/favorites.c:396
 msgid "_Remove From List"
-msgstr "Von Liste entfe_rnen"
+msgstr "Aus Liste _entfernen"
 
-#: src/infoview.c:58
+#: src/infoview.c:80
 msgid "Process Info"
 msgstr "Prozessinfo"
 
-#: src/infoview.c:65
-msgid "Command : "
-msgstr "Befehl: "
+#: src/infoview.c:94
+msgid "Command:"
+msgstr "Befehl:"
 
-#: src/infoview.c:69
-msgid "Status : "
-msgstr "Status: "
+#: src/infoview.c:98
+msgid "Status:"
+msgstr "Status:"
 
-#: src/infoview.c:73
-msgid "Priority : "
+#: src/infoview.c:102
+msgid "Priority:"
 msgstr "Priorität:"
 
-#: src/infoview.c:92
+#: src/infoview.c:126
 msgid "Memory Usage"
 msgstr "Speicherverbrauch"
 
-#: src/infoview.c:100
-msgid "Total : "
-msgstr "Insgesamt: "
+#: src/infoview.c:140
+msgid "Total:"
+msgstr "Gesamt:"
 
-#: src/infoview.c:104
-msgid "RSS : "
+#: src/infoview.c:144
+msgid "RSS:"
 msgstr "RSS:"
 
-#: src/infoview.c:108
-msgid "Shared : "
-msgstr "Geteilt: "
+#: src/infoview.c:148
+msgid "Shared:"
+msgstr "Gemeinsam: "
 
-#: src/infoview.c:156
+#: src/infoview.c:193
 #, c-format
-msgid "Very High  ( Nice %d )"
-msgstr "Sehr groß (Priorität %d)"
+msgid "Very high - nice %d"
+msgstr "Sehr hoch - Nice %d"
 
-#: src/infoview.c:158
+#: src/infoview.c:195
 #, c-format
-msgid "High  ( Nice %d )"
-msgstr "Groß (Priorität %d)"
+msgid "High - nice %d"
+msgstr "Hoch - Nice %d"
 
-#: src/infoview.c:160
+#: src/infoview.c:197
 #, c-format
-msgid "Normal  ( Nice %d )"
-msgstr "Normal (Priorität %d)"
+msgid "Normal - nice %d"
+msgstr "Normal - Nice %d"
 
-#: src/infoview.c:162
+#: src/infoview.c:199
 #, c-format
-msgid "Low  ( Nice %d )"
-msgstr "Niedrig (Priorität %d)"
+msgid "Low - nice %d"
+msgstr "Niedrig - nice %d"
 
-#: src/infoview.c:164
+#: src/infoview.c:201
 #, c-format
-msgid "Very Low  ( Nice %d )"
-msgstr "Sehr klein (Priorität %d)"
+msgid "Very low - nice %d"
+msgstr "Sehr niedrig - Nice %d"
 
-#: src/interface.c:53
+#: src/interface.c:52
 msgid "_Change Priority..."
-msgstr "Priorität än_dern..."
+msgstr "_Priorität ändern..."
 
-#: src/interface.c:53 src/interface.c:133
+#: src/interface.c:52 src/interface.c:143
 msgid "Change the importance (nice value) of a process"
-msgstr "Die Priorität (Nice-Wert) eines Prozesses ändern"
+msgstr "Die Priorität (den Nice-Wert) eines Prozesses ändern"
 
-#: src/interface.c:58 src/procdialogs.c:96
+#: src/interface.c:57 src/procdialogs.c:100
 msgid "_Hide Process"
-msgstr "Prozess ver_stecken"
+msgstr "Prozess ve_rbergen"
 
-#: src/interface.c:58 src/interface.c:144
+#: src/interface.c:57 src/interface.c:154
 msgid "Hide a process"
-msgstr "Einen Prozess verstecken"
+msgstr "Einen Prozess verbergen"
 
-#: src/interface.c:64 src/interface.c:240
+#: src/interface.c:63 src/interface.c:249
 msgid "End _Process"
 msgstr "Prozess _beenden"
 
-#: src/interface.c:64
+#: src/interface.c:63
 msgid "Force a process to finish."
-msgstr "Einen Prozess zwingen, sich zu beenden."
+msgstr "Das Beenden eines Prozesses erzwingen."
 
-#: src/interface.c:69 src/procdialogs.c:146 src/procdialogs.c:724
+#: src/interface.c:68 src/procdialogs.c:150 src/procdialogs.c:835
 msgid "_Kill Process"
 msgstr "Prozess _abwürgen"
 
-#: src/interface.c:69
+#: src/interface.c:68
 msgid "Force a process to finish now."
 msgstr "Einen Prozess zwingen, sich jetzt zu beenden."
 
-#: src/interface.c:75
+#: src/interface.c:74
 msgid "_Hidden Processes"
-msgstr "_Versteckte Prozesse"
+msgstr "_Verborgene Prozesse"
 
-#: src/interface.c:76
+#: src/interface.c:75
 msgid "View and edit your list of hidden processes"
-msgstr "Die Liste der versteckten Prozesse betrachten und bearbeiten"
+msgstr "Die Liste der verborgenen Prozesse anzeigen / bearbeiten"
 
-#: src/interface.c:87
+#: src/interface.c:86
 msgid "_Memory Maps"
 msgstr "_Speicherfelder"
 
-#: src/interface.c:87 src/interface.c:138
+#: src/interface.c:86 src/interface.c:148
 msgid "View the memory maps associated with a process"
-msgstr "Die Speicherfelder betrachten, die einem Prozess angehören"
+msgstr "Die Speicherfelder anzeigen, die einem Prozess angehören"
 
-#: src/interface.c:113
+#: src/interface.c:92
+msgid "Process _Dependencies"
+msgstr "Prozess_abhängigkeiten anzeigen"
+
+#: src/interface.c:92
+msgid "Display a tree showing process dependencies"
+msgstr "Einen Baum anzeigen, der die Prozessabhängigkeiten anzeigt"
+
+#: src/interface.c:97
+msgid "_Threads"
+msgstr "_Threads"
+
+#: src/interface.c:97
+msgid "Display threads (subprocesses)"
+msgstr "Threads anzeigen (Subprozesse)"
+
+#: src/interface.c:123
 msgid "All Processes"
 msgstr "Alle Prozesse"
 
-#: src/interface.c:113
+#: src/interface.c:123
 msgid "View processes being run by all users"
-msgstr "Prozesse aller Benutzer betrachten"
+msgstr "Von allen Benutzern ausgeführte Prozesse anzeigen"
 
-#: src/interface.c:118
+#: src/interface.c:128
 msgid "My Processes"
 msgstr "Meine Prozesse"
 
-#: src/interface.c:118
+#: src/interface.c:128
 msgid "View processes being run by you"
-msgstr "Ihre eigenen Prozesse betrachten"
+msgstr "Von Ihnen ausgeführte Prozesse anzeigen"
 
-#: src/interface.c:123
+#: src/interface.c:133
 msgid "Active Processes"
 msgstr "Laufende Prozesse"
 
-#: src/interface.c:123
+#: src/interface.c:133
 msgid "View only active processes"
 msgstr "Nur laufende Prozesse betrachten"
 
-#: src/interface.c:133
+#: src/interface.c:143
 msgid "Change Priority ..."
 msgstr "Priorität ändern..."
 
-#: src/interface.c:138 src/memmaps.c:257
+#: src/interface.c:148 src/memmaps.c:306
 msgid "Memory Maps"
 msgstr "Speicherfelder"
 
-#: src/interface.c:144 src/procdialogs.c:82
+#: src/interface.c:154 src/procdialogs.c:82
 msgid "Hide Process"
-msgstr "Prozess verstecken"
+msgstr "Prozess verbergen"
 
-#: src/interface.c:150 src/procdialogs.c:149 src/procdialogs.c:727
+#: src/interface.c:160 src/procdialogs.c:153 src/procdialogs.c:838
 msgid "End Process"
 msgstr "Prozess beenden"
 
-#: src/interface.c:150
+#: src/interface.c:160
 msgid "Force a process to finish"
-msgstr "Einen Prozess zwingen, sich zu beenden"
+msgstr "Das Beenden einen Prozesses erzwingen"
 
-#: src/interface.c:155 src/procdialogs.c:145 src/procdialogs.c:723
+#: src/interface.c:165 src/procdialogs.c:149 src/procdialogs.c:834
 msgid "Kill Process"
 msgstr "Prozess töten"
 
-#: src/interface.c:155
+#: src/interface.c:165
 msgid "Force a process to finish now"
-msgstr "Einen Prozess zwingen, sich jetzt zu beenden"
+msgstr "Das unmittelbare Beenden einen Prozesses erzwingen"
 
-#: src/interface.c:162
+#: src/interface.c:172
 msgid "More _Info >>"
 msgstr "Mehr _Info >>"
 
-#: src/interface.c:163
+#: src/interface.c:173
 msgid "<< Less _Info"
 msgstr "<< Weniger _Info"
 
-#: src/interface.c:198
-msgid "Sea_rch :"
-msgstr "_Suchen:"
+#: src/interface.c:208
+msgid "Sea_rch:"
+msgstr "_Suche:"
 
-#: src/interface.c:218
-msgid "Vie_w"
-msgstr "_Ansicht"
+#: src/interface.c:227
+msgid "Vie_w:"
+msgstr "A_nsicht:"
 
-#: src/interface.c:248
+#: src/interface.c:254
 msgid "More _Info"
 msgstr "Mehr _Info"
 
-#: src/interface.c:284
+#: src/interface.c:342
 msgid "Name"
 msgstr "Name"
 
-#: src/interface.c:285
+#: src/interface.c:343
 msgid "Directory"
 msgstr "Verzeichnis"
 
-#: src/interface.c:286
-msgid "Used Space"
-msgstr "Benutzter Speicher"
+#: src/interface.c:344
+msgid "Type"
+msgstr "Typ"
 
-#: src/interface.c:287
-msgid "Total Space"
-msgstr "Speicher insgesamt"
+#: src/interface.c:345
+msgid "Total"
+msgstr "Gesamt"
 
-#: src/interface.c:300
-#, no-c-format
-msgid "% CPU Usage History"
-msgstr "CPU-Verbrauch in % (Chronik)"
+#: src/interface.c:346
+msgid "Used"
+msgstr "Belegt"
 
-#: src/interface.c:306
-#, no-c-format
-msgid "% Memory / Swap Usage History"
-msgstr "Speicher- und Swap-Verbauch in % (Chronik)"
+#: src/interface.c:367
+msgid "CPU History"
+msgstr "CPU-Chronik"
 
-#: src/interface.c:327
-msgid "CPU Used :"
-msgstr "CPU-Last:"
+#: src/interface.c:395
+msgid "Used CPU:"
+msgstr "Belegte CPU:"
 
-#: src/interface.c:356 src/proctable.c:128
-msgid "Memory"
-msgstr "Speicher"
+#: src/interface.c:410
+msgid "Memory and Swap History"
+msgstr "Speicher- und Auslagerungschronik"
 
-#: src/interface.c:361 src/interface.c:397
-msgid "Used :"
-msgstr "Belegt:"
+#: src/interface.c:443
+msgid "Used memory:"
+msgstr "Belegter Speicher:"
 
-# "Summe" ist kürzer.
-#: src/interface.c:372 src/interface.c:408
-msgid "Total :"
-msgstr "Insgesamt:"
+#: src/interface.c:452 src/interface.c:479
+msgid "of"
+msgstr "von"
 
-#: src/interface.c:392
-msgid "Swap"
-msgstr "Auslagerung"
+#: src/interface.c:470
+msgid "Used swap:"
+msgstr "Belegter Auslagerungsspeicher:"
 
-#: src/interface.c:422 src/procdialogs.c:657
+#: src/interface.c:500 src/procdialogs.c:762
 msgid "Devices"
 msgstr "Geräte"
 
-#: src/interface.c:489 src/procdialogs.c:529
-msgid "Process _Listing"
-msgstr "Prozess_liste"
+#: src/interface.c:617 src/procdialogs.c:601
+msgid "Process Listing"
+msgstr "Prozessliste"
 
-#: src/interface.c:495 src/procdialogs.c:592
-msgid "System _Monitor"
-msgstr "System-_Monitor"
+#: src/interface.c:623 src/procdialogs.c:681
+msgid "Resource Monitor"
+msgstr "Ressourcenmonitor"
 
-#: src/interface.c:549
+#: src/interface.c:681
 msgid "Application Manager"
 msgstr "Anwendungsverwaltung"
 
-#: src/interface.c:559
+#: src/interface.c:687
 msgid "Running Applications"
 msgstr "Laufende Anwendungen"
 
-#: src/interface.c:578
+#: src/interface.c:706
 msgid "_Close Application"
 msgstr "Anwendungen s_chließen"
 
-#: src/memmaps.c:191
+#: src/memmaps.c:228
 msgid "Filename"
 msgstr "Dateiname"
 
-#: src/memmaps.c:191
+#: src/memmaps.c:228
 msgid "VM Start"
 msgstr "VM-Beginn"
 
-#: src/memmaps.c:191
+#: src/memmaps.c:228
 msgid "VM End"
 msgstr "VM-Ende"
 
-#: src/memmaps.c:192
+#: src/memmaps.c:229 src/proctable.c:128
+msgid "VM Size"
+msgstr "VM-Größe"
+
+#: src/memmaps.c:229
 msgid "Flags"
 msgstr "Optionen"
 
-#: src/memmaps.c:192
+#: src/memmaps.c:229
 msgid "VM offset"
-msgstr "VM-Offset"
+msgstr "VM-Versatz"
 
-#: src/memmaps.c:192
+#: src/memmaps.c:230
 msgid "Device"
 msgstr "Gerät"
 
-#: src/memmaps.c:192
+#: src/memmaps.c:230
 msgid "Inode"
 msgstr "Inode"
 
-#: src/memmaps.c:272
+#: src/memmaps.c:322
 msgid "Process Name :"
 msgstr "Prozessname:"
 
@@ -371,9 +391,9 @@ msgid ""
 msgstr ""
 "Prozessname: %s \n"
 "\n"
-"Sie haben nicht die nötigen Rechte, um die Priorität dieses Prozesses zu "
-"ändern. Sie können das Root-Passwort eingeben, um die erforderlichen Rechte "
-"zu erhalten."
+"Sie haben nicht die nötigen Zugriffsrechte, um die Priorität dieses "
+"Prozesses zu ändern. Diese können Sie durch Eingabe des »root«-Passworts "
+"erlangen."
 
 #: src/procactions.c:74
 #, c-format
@@ -385,9 +405,9 @@ msgid ""
 msgstr ""
 "Prozessname: %s \n"
 "\n"
-"Sie müssen Root sein, um die Priorität des Prozesses kleiner als 0 zu "
-"setzen. Sie können das Root-Passwort eingeben, um die erforderlichen Rechte "
-"zu erhalten."
+"Sie müssen »root« sein, um die Priorität den Nice-Wert auf weniger als 0 "
+"festzulegen. Die dazu nötigen Zugriffsrechte können Sie durch Eingabe des "
+"»root«-Passworts erlangen."
 
 #: src/procactions.c:126
 #, c-format
@@ -399,12 +419,12 @@ msgid ""
 msgstr ""
 "Prozessname: %s \n"
 "\n"
-"Sie haben nicht die nötigen Rechte, um diesen Prozess zu beenden. Sie können "
-"das Root-Passwort eingeben, um die erforderlichen Rechte zu erhalten."
+"Sie haben nicht die nötigen Zugriffsrechte, um diesen Prozess zu beenden. "
+"Diese können Sie durch Eingabe des »root«-Passworts erlangen."
 
 #: src/procactions.c:145
 msgid "An error occured while killing the process."
-msgstr "Ein Fehler trat während des Tötens des Prozesses auf."
+msgstr "Beim Abwürgen des Prozesses trat ein Fehler auf."
 
 #: src/procdialogs.c:73
 msgid ""
@@ -412,128 +432,116 @@ msgid ""
 "(Choose 'Hidden Processes' in the Settings menu to reshow)"
 msgstr ""
 "Sind Sie sicher, dass Sie diesen Prozess verbergen wollen?\n"
-"(Wählen Sie »Versteckte Prozesse« im Menü Einstellungen, um ihn wieder "
+"(Wählen Sie »Verborgene Prozesse« im Menü Einstellungen, um ihn wieder "
 "anzuzeigen)"
 
-#: src/procdialogs.c:91 src/procdialogs.c:169
+#: src/procdialogs.c:95 src/procdialogs.c:177
 msgid "Show this dialog next time."
 msgstr "Diesen Dialog das nächste Mal anzeigen."
 
-#: src/procdialogs.c:150 src/procdialogs.c:728
+#: src/procdialogs.c:154 src/procdialogs.c:839
 msgid "_End Process"
-msgstr "Prozess be_enden"
+msgstr "Prozess _beenden"
 
-#: src/procdialogs.c:157
+#: src/procdialogs.c:161
 msgid "Unsaved data will be lost."
-msgstr "Ungesicherte Daten werden verlorengehen."
+msgstr "Ungesicherte Daten gehen dabei verloren."
 
-#: src/procdialogs.c:192
+#: src/procdialogs.c:200
 msgid "( Very High Priority )"
 msgstr "(Sehr hohe Priorität)"
 
-#: src/procdialogs.c:194
+#: src/procdialogs.c:202
 msgid "( High Priority )"
 msgstr "(Hohe Priorität)"
 
-#: src/procdialogs.c:196
+#: src/procdialogs.c:204
 msgid "( Normal Priority )"
 msgstr "(Normale Priorität)"
 
-#: src/procdialogs.c:198
+#: src/procdialogs.c:206
 msgid "( Low Priority )"
 msgstr "(Niedrige Priorität)"
 
-#: src/procdialogs.c:200
+#: src/procdialogs.c:208
 msgid "( Very Low Priority)"
 msgstr "(Sehr niedrige Priorität)"
 
-#: src/procdialogs.c:243
+#: src/procdialogs.c:251
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
 msgstr ""
-"Der Prioritäts-(»Nice«-)Wert definiert die Priorität eines Prozesses. Ein kleinerer "
-"Prioritätswert entspricht einer höheren Priorität."
+"Der Nice-Wert eines Prozesses legt dessen Priorität fest, wobei ein kleiner "
+"Nice-Wert einer hohen Priorität entspricht."
 
-#: src/procdialogs.c:251 src/procdialogs.c:732
+#: src/procdialogs.c:259 src/procdialogs.c:843
 msgid "Change Priority"
 msgstr "Priorität ändern"
 
-#: src/procdialogs.c:254 src/procdialogs.c:733
+#: src/procdialogs.c:262 src/procdialogs.c:844
 msgid "Change _Priority"
 msgstr "_Priorität ändern"
 
-#: src/procdialogs.c:273
+#: src/procdialogs.c:282
 msgid "Nice Value :"
 msgstr "Prioritätswert: "
 
-#: src/procdialogs.c:472
+#: src/procdialogs.c:544
 msgid "Icon"
-msgstr "Icon"
+msgstr "Symbol"
 
-#: src/procdialogs.c:516
+#: src/procdialogs.c:587
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: src/procdialogs.c:540
-msgid "Update Interval ( seconds ) :"
-msgstr "Auffrischintervall (Sekunden):"
+#: src/procdialogs.c:608
+msgid "Behavior"
+msgstr "Verhalten"
 
-#: src/procdialogs.c:550 src/procdialogs.c:616
-msgid "_Set"
-msgstr "_Festlegen"
+#: src/procdialogs.c:627 src/procdialogs.c:707
+msgid "_Update Interval ( seconds ) :"
+msgstr "_Aktualisieren alle (in Sekunden):"
 
-#: src/procdialogs.c:556
-msgid "Show Process Dependencies"
-msgstr "Prozessabhängigkeiten zeigen"
+#: src/procdialogs.c:643
+msgid "Show warning dialog when ending or _killing processes"
+msgstr "Beim _Beenden oder Abwürgen eines Prozesses Warndialog anzeigen"
 
-#: src/procdialogs.c:563
-msgid "Show Threads"
-msgstr "Threads zeigen"
+#: src/procdialogs.c:653
+msgid "Show warning dialog when _hiding processes"
+msgstr "Beim _Verbergen eines Prozesses Warndialog anzeigen"
 
-#: src/procdialogs.c:570
-msgid "Show warning dialog when ending or killing processes"
-msgstr "Warnung-Dialog zeigen wenn ein Prozess beendet oder getötet wird"
+#: src/procdialogs.c:663
+msgid "Process Fields"
+msgstr "Prozessfelder"
 
-#: src/procdialogs.c:577
-msgid "Show warning dialog when hiding processes"
-msgstr "Warnung-Dialog zeigen wenn ein Prozess versteckt wird"
-
-#: src/procdialogs.c:586
-msgid "Process _Fields"
-msgstr "Prozess_felder"
-
-#: src/procdialogs.c:596
+#: src/procdialogs.c:688
 msgid "Graphs"
 msgstr "Graphen"
 
-#: src/procdialogs.c:605 src/procdialogs.c:663
-msgid "Update Speed ( seconds ) :"
-msgstr "Auffrischintervall (Sekunden):"
+#: src/procdialogs.c:724
+msgid "_Background Color:"
+msgstr "_Hintergrundfarbe:"
 
-#: src/procdialogs.c:625
-msgid "Background Color :"
-msgstr "Hintergrundfarbe:"
+#: src/procdialogs.c:743
+msgid "_Grid Color:"
+msgstr "_Gitterfarbe:"
 
-#: src/procdialogs.c:641
-msgid "Grid Color :"
-msgstr "Gitterlinenfarbe:"
+#: src/procdialogs.c:781
+msgid "Update _Interval ( seconds ) :"
+msgstr "A_ktualisieren alle (in Sekunden):"
 
-#: src/procdialogs.c:676
-msgid "Se_t"
-msgstr "Fest_legen"
-
-#: src/procdialogs.c:752
+#: src/procdialogs.c:863
 msgid "Root Password :"
-msgstr "Root-Passwort:"
+msgstr "»root«-Passwort:"
 
-#: src/procdialogs.c:797
+#: src/procdialogs.c:908
 msgid "Wrong Password."
 msgstr "Falsches Passwort."
 
 #: src/procman.c:46
 msgid "show simple dialog to end processes and logout"
-msgstr "Einfachen Dialog zum Beenden von Prozessen oder zur Abmeldung anzeigen"
+msgstr "Einfachen Dialog zum Beenden von Prozessen oder zum Abmelden anzeigen"
 
 #: src/proctable.c:126
 msgid "Process Name"
@@ -552,8 +560,8 @@ msgid "Status"
 msgstr "Status"
 
 #: src/proctable.c:128
-msgid "VM Size"
-msgstr "VM-Größe"
+msgid "Memory"
+msgstr "Speicher"
 
 #: src/proctable.c:128
 msgid "Resident Memory"
@@ -574,29 +582,29 @@ msgstr "% CPU"
 
 #: src/proctable.c:132
 msgid "Nice"
-msgstr "Priorität"
+msgstr "Nice-Wert"
 
 #: src/proctable.c:132
 msgid "ID"
 msgstr "Kennung"
 
-#: src/proctable.c:272
+#: src/proctable.c:270
 msgid "Running"
 msgstr "Läuft"
 
-#: src/proctable.c:278
+#: src/proctable.c:276
 msgid "Stopped"
 msgstr "Angehalten"
 
-#: src/proctable.c:283
+#: src/proctable.c:281
 msgid "Sleeping"
 msgstr "Schläft"
 
-#: src/proctable.c:412
+#: src/proctable.c:410
 msgid " (thread)"
 msgstr " (Thread)"
 
-#: src/proctable.c:938
+#: src/proctable.c:947
 #, c-format
 msgid "%s could not be found."
 msgstr "%s konnte nicht gefunden werden."
