@@ -574,7 +574,12 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath root_node)
 		if (!g_strcasecmp (info->cmd, parentinfo->cmd) && 
 		    ( parentinfo->mem == info->mem))
 		{
-			info->name = g_strjoin (NULL, info->name, _(" (thread)"), NULL);
+			gchar *name;
+			
+			name = g_strjoin (NULL, info->name, _(" (thread)"), NULL);
+			g_free (info->name);
+			info->name = g_strdup (name);
+			g_free (name);
 			if (!procdata->config.show_threads)
 				return NULL;
 		}

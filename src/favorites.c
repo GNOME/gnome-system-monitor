@@ -193,8 +193,12 @@ void get_blacklist (ProcData *procdata)
 		gchar *process;
 		
 		process = gnome_config_get_string (config);
+		g_free (config);
 		if (process)
+		{
 			add_to_blacklist (procdata, process);
+			g_free (process);
+		}
 		else
 			done = TRUE;
 		i++;
