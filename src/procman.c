@@ -146,6 +146,7 @@ procman_data_new (void)
 	pd->info = NULL;
 	pd->proc_num = 0;
 	pd->selected_pid = -1;
+	pd->selected_process = NULL;
 	pd->timeout = -1;
 	pd->favorites = NULL;
 	pd->blacklist = NULL;
@@ -167,7 +168,7 @@ procman_data_new (void)
 	pd->config.graph_update_interval = 500;
 	pd->config.disks_update_interval = 5000;
 	pd->config.whose_process = 0;
-	pd->config.current_tab = 0;
+	pd->config.current_tab = 1;
 	pd->config.pane_pos = 300;
 	pd->config.bg_color.red = 0;
 	pd->config.bg_color.green = 0;

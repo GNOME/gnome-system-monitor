@@ -472,8 +472,8 @@ create_sys_view (ProcData *procdata)
 	gtk_widget_show_all (disk_frame);
   	
   	cb_update_disks (procdata);
-  	/*procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
-  						  cb_update_disks, procdata);*/
+  	procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
+  						  cb_update_disks, procdata);
  						  
 	return vpane;
 }
@@ -718,7 +718,7 @@ void do_popup_menu (ProcData *data, GdkEvent *event)
                 }
         }
 }
-
+#endif
 void
 update_sensitivity (ProcData *data, gboolean sensitivity)
 {
@@ -726,11 +726,11 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 	
 	if (!data->config.simple_view) {
 		gtk_widget_set_sensitive (data->infobox, sensitivity);
-		gtk_widget_set_sensitive (edit1_menu_uiinfo[0].widget, sensitivity);
+		/*gtk_widget_set_sensitive (edit1_menu_uiinfo[0].widget, sensitivity);
 		gtk_widget_set_sensitive (edit1_menu_uiinfo[1].widget, sensitivity);
 		gtk_widget_set_sensitive (view1_menu_uiinfo[0].widget, sensitivity);
 		gtk_widget_set_sensitive (edit1_menu_uiinfo[3].widget, sensitivity);
-		gtk_widget_set_sensitive (edit1_menu_uiinfo[4].widget, sensitivity);
+		gtk_widget_set_sensitive (edit1_menu_uiinfo[4].widget, sensitivity);*/
 	}
 }	
-#endif
+

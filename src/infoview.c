@@ -157,28 +157,29 @@ infoview_update (ProcData *data)
 	gchar *string;
 	gchar *command;
 	
-	return;
-#if 0
-	info = e_tree_memory_node_get_data (procdata->memory, procdata->selected_node);	
-#endif	
+	if (!procdata->selected_process)
+		return;
+
+	info = procdata->selected_process;	
+
 	if (!info)
 	{
 		if (GTK_WIDGET_SENSITIVE (procdata->infobox))
 			gtk_widget_set_sensitive (procdata->infobox, FALSE);
 		return;
 	}
-#if 0	
+	
 	gtk_frame_set_label (GTK_FRAME (main_frame), info->name);
 	gtk_label_set_text (GTK_LABEL (status_label), info->status);
 	/* ugh. don't update the tooltip if the selected process has not changed.
 	** This is here so that when the user has to tooltip showing and we do an
 	** update here, the tooltip will go away if we call gtk_tooltip_set_tip
 	*/
-	command = e_clipped_label_get_text (E_CLIPPED_LABEL (cmd_label));
+	/*command = e_clipped_label_get_text (E_CLIPPED_LABEL (cmd_label));
 	if (g_strcasecmp (info->arguments, command))
 		gtk_tooltips_set_tip (cmd_tooltip, cmd_event_box, info->arguments, NULL);
-	e_clipped_label_set_text (E_CLIPPED_LABEL (cmd_label), info->arguments);
-#endif
+	e_clipped_label_set_text (E_CLIPPED_LABEL (cmd_label), info->arguments);*/
+
 	if (info->nice < -7)
 		string = g_strdup_printf (_("Very High  ( Nice %d )"), info->nice);
 	else if (info->nice < -2)

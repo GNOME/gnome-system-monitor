@@ -470,11 +470,32 @@ cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 }
 #endif
 void
-cb_row_selected (GtkTreeView *tree, gpointer data)
+cb_row_selected (GtkTreeSelection *selection, gpointer data)
 {
 	ProcData *procdata = data;
+	ProcInfo *info;
+	GtkTreeIter iter;
+	GtkTreeModel *model;
+	gboolean selected = FALSE;
 	
-	g_print ("row selected \n");
+	selected = gtk_tree_selection_get_selected (selection, NULL, &iter);
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
+	
+	if (selected) {
+		g_print ("row selected \n");
+		gtk_tree_model_get (model, &iter, COL_POINTER, &info, -1);
+		if (info)
+			procdata->selected_process = info;
+		g_print ("%s \n", info->name);
+		if (procdata->config.show_more_info == TRUE)
+			infoview_update (procdata);
+		update_sensitivity (procdata, TRUE);
+	}
+	else {
+		g_print ("no selected \n");
+		procdata->selected_process = NULL;
+		update_sensitivity (procdata, FALSE);
+	}
 	
 }
 #if 0
@@ -593,22 +614,22 @@ cb_update_disks (gpointer data)
 {
 	ProcData *procdata = data;
 	GtkTreeModel *model;
-	
+	GtkTreeIter iter;
+	GtkTreeSelection *selection;
 	glibtop_mountentry *entry;
 	glibtop_mountlist mountlist;
-	/*float old_adj_hval = GTK_CLIST (clist)->hadjustment->value;
-        float old_adj_vval = GTK_CLIST (clist)->vadjustment->value;
-        gint old_hoffset = GTK_CLIST (clist)->hoffset;
-        gint old_voffset = GTK_CLIST (clist)->voffset;*/
-        GtkAdjustment *old;
+	gboolean selected;
+	gchar *selected_disk = NULL;
 	gint i;
-	
-	/*gtk_clist_freeze (GTK_CLIST (clist));
-	gtk_clist_clear (GTK_CLIST (clist));*/
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->disk_list));
 	
-	old = gtk_tree_view_get_vadjustment (GTK_TREE_VIEW (procdata->disk_list));
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (procdata->disk_list));
+	selected = gtk_tree_selection_get_selected (selection, NULL, &iter);
+	
+	if (selected) {
+		gtk_tree_model_get (model, &iter, 0, &selected_disk, -1);
+	}
 	
 	gtk_list_store_clear (GTK_LIST_STORE (model));
 	
@@ -635,7 +656,18 @@ cb_update_disks (gpointer data)
 					    2, text[2],
 					    3, text[3],
 					    4, text[4], -1);
+			if (selected_disk && !g_strcasecmp (selected_disk, text[0])) {
+				GtkTreePath *path;
+				g_print ("selected disk %s \n", text[0]);
+				path = gtk_tree_model_get_path (model, &row);
+				gtk_tree_view_set_cursor (GTK_TREE_VIEW (procdata->disk_list),
+							  path,
+							  NULL,
+							  FALSE);
+			}
 		}
+		
+		
 		
 		g_free (text[0]);
 		g_free (text[1]);
@@ -643,16 +675,6 @@ cb_update_disks (gpointer data)
 		g_free (text[3]);
 		g_free (text[4]);
 	}
-	
-	/*GTK_CLIST (clist)->hadjustment->value = old_adj_hval;
-        GTK_CLIST (clist)->vadjustment->value = old_adj_vval;
-
-        GTK_CLIST (clist)->hoffset = old_hoffset;
-        GTK_CLIST (clist)->voffset = old_voffset;
-	
-	gtk_clist_thaw (GTK_CLIST (clist));*/
-	
-	//gtk_tree_view_set_vadjustment (GTK_TREE_VIEW (procdata->disk_list), old);
 	
 	glibtop_free (entry);
 	

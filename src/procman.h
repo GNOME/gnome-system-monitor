@@ -143,6 +143,7 @@ struct _ProcData
 	LoadGraph	*cpu_graph;
 	LoadGraph	*mem_graph;
 	gint		selected_pid;
+	ProcInfo	*selected_process;
 	gint		timeout;
 	gint		disk_timeout;
 	GList		*info;

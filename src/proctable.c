@@ -64,7 +64,8 @@ proctable_new (ProcData *data)
 	GtkTreeStore *model;
 	GtkTreeViewColumn *column;
   	GtkCellRenderer *cell_renderer;
-	static gchar *title[] = {"Icon ", "Process Name", "User", "Memory", "% CPU", "ID"};
+	static gchar *title[] = {"Icon ", "Process Name", "User", 
+				 "Memory", "% CPU", "ID", "POINTER"};
 	gint i;
 	
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
@@ -74,7 +75,7 @@ proctable_new (ProcData *data)
 	
 	model = gtk_tree_store_new (NUM_COLUMNS, GDK_TYPE_PIXBUF, G_TYPE_STRING, 
 				    G_TYPE_STRING, G_TYPE_STRING,
-				    G_TYPE_INT, G_TYPE_INT);				    
+				    G_TYPE_INT, G_TYPE_INT, G_TYPE_POINTER);		    
   	
   	proctree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (proctree), TRUE);
@@ -93,19 +94,19 @@ proctable_new (ProcData *data)
 						    		   cell_renderer,
 						     		   "text", COL_NAME,
 						     		   NULL);
-	//gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
+	gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
 	gtk_tree_view_column_set_reorderable (column, TRUE);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 	gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
   	
-  	for (i = 2; i < NUM_COLUMNS; i++) {
+  	for (i = 2; i < NUM_COLUMNS - 1; i++) {
   		cell_renderer = gtk_cell_renderer_text_new ();
   		column = gtk_tree_view_column_new_with_attributes (title[i],
 						    		   cell_renderer,
 						     		   "text", i,
 						     		   NULL);
-		//gtk_tree_view_column_set_sort_column_id (column, i);
+		gtk_tree_view_column_set_sort_column_id (column, i);
 		gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
 		gtk_tree_view_column_set_reorderable (column, TRUE);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
@@ -113,13 +114,18 @@ proctable_new (ProcData *data)
 	
 	gtk_container_add (GTK_CONTAINER (scrolled), proctree);
 	
+	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model),
+					      COL_NAME,
+					      GTK_SORT_ASCENDING);
+	
 	/*gtk_tree_view_set_enable_search (GTK_TREE_VIEW (proctree), TRUE);
 	
 	gtk_tree_view_set_search_column (GTK_TREE_VIEW (proctree), COL_NAME);*/
 		
 	procdata->tree = proctree;
 	
-	g_signal_connect (G_OBJECT (proctree), "select_cursor_row",
+	g_signal_connect (G_OBJECT (gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree))), 
+			  "changed",
 			  G_CALLBACK (cb_row_selected), procdata);
 	
 	return scrolled;
@@ -544,6 +550,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 							  COL_MEM, mem,
 							  COL_CPU, info->cpu,
 							  COL_PID, info->pid,
+							  COL_POINTER, info,
 							  -1);
 	g_free (mem);
 	info->node = row;
@@ -735,10 +742,9 @@ proctable_update_all (ProcData *data)
 	
 	proctable_update_list (procdata);
 	
-#if 0	
 	if (procdata->config.show_more_info)
 		infoview_update (procdata);
-		
+#if 0		
 	update_memmaps_dialog (procdata);
 #endif
 

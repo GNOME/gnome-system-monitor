@@ -29,6 +29,7 @@ enum
 	COL_MEM,
 	COL_CPU,
 	COL_PID,
+	COL_POINTER,
 	NUM_COLUMNS,
 };
 
