@@ -289,19 +289,13 @@ cb_frame_color_changed (GtkColorButton *cp, gpointer data)
 }
 
 
-
-static ProcInfo *selected_process = NULL;
-
 static void
 get_last_selected (GtkTreeModel *model, GtkTreePath *path,
 		   GtkTreeIter *iter, gpointer data)
 {
-	ProcInfo *info;
+	ProcInfo **info = data;
 
-	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
-	g_return_if_fail (info);
-
-	selected_process = info;
+	gtk_tree_model_get (model, iter, COL_POINTER, info, -1);
 }
 
 
@@ -315,21 +309,18 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
 	/* get the most recent selected process and determine if there are
 	** no selected processes
 	*/
-	selected_process = NULL;
 	gtk_tree_selection_selected_foreach (procdata->selection, get_last_selected,
-					     procdata);
+					     &procdata->selected_process);
 
-	if (selected_process) {
-		procdata->selected_process = selected_process;
-		if (procdata->config.show_more_info == TRUE)
+	if (procdata->selected_process) {
+		if (procdata->config.show_more_info)
 			infoview_update (procdata);
+
 		update_sensitivity (procdata, TRUE);
 	}
 	else {
-		procdata->selected_process = NULL;
 		update_sensitivity (procdata, FALSE);
 	}
-
 }
 
 
