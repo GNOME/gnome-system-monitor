@@ -307,7 +307,7 @@ create_sys_view (ProcData *procdata)
 	gtk_paned_set_position (GTK_PANED (vpane), procdata->config.pane_pos);
 	
 	vbox = gtk_vbox_new (FALSE, 0);
-	gtk_paned_add1 (GTK_PANED (vpane), vbox);
+	gtk_paned_pack1 (GTK_PANED (vpane), vbox, TRUE, FALSE);
 	
 	cpu_frame = gtk_frame_new (_("% CPU Usage History"));
 	gtk_widget_show (cpu_frame);
@@ -432,7 +432,8 @@ create_sys_view (ProcData *procdata)
 				
 	disk_frame = gtk_frame_new (_("Devices"));
 	gtk_container_set_border_width (GTK_CONTAINER (disk_frame), GNOME_PAD_SMALL);
-	gtk_paned_add2 (GTK_PANED (vpane), disk_frame);
+
+	gtk_paned_pack2 (GTK_PANED (vpane), disk_frame, TRUE, TRUE);
 	
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), 
@@ -467,7 +468,8 @@ create_sys_view (ProcData *procdata)
   	cb_update_disks (procdata);
   	procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
   						  cb_update_disks, procdata);
- 						  
+
+
 	return vpane;
 }
 
@@ -492,7 +494,7 @@ create_main_window (ProcData *procdata)
 	width = procdata->config.width;
 	height = procdata->config.height;
 	gtk_window_set_default_size (GTK_WINDOW (app), width, height);
-	gtk_window_set_policy (GTK_WINDOW (app), TRUE, TRUE, TRUE);
+	gtk_window_set_policy (GTK_WINDOW (app), FALSE, TRUE, TRUE);
 	
 	g_timer_start (timer);
 	gnome_app_create_menus_with_data (GNOME_APP (app), menubar1_uiinfo, procdata);
