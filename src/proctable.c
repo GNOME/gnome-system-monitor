@@ -503,17 +503,29 @@ static void
 remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 {
 	GtkTreeModel *model;
-	GtkTreeIter child;
+	GtkTreeIter iter, child;
+	GtkTreePath *node;
+	gboolean selected = FALSE;
 	
 	g_return_if_fail (info);
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
+	iter = info->node;
 	
 	/* remove all children from tree. They will be added again in refresh_list */
-	if (gtk_tree_model_iter_children (model, &child, &info->node))
+	if (gtk_tree_model_iter_children (model, &child, &iter))
 		remove_children_from_tree (procdata, model, &child);
 	
-	gtk_tree_store_remove (GTK_TREE_STORE (model), &info->node);
+	if (procdata->selected_process == info) 
+		selected = TRUE;
+	
+	gtk_tree_store_remove (GTK_TREE_STORE (model), &iter);
+	
+	if (selected) {
+		node = gtk_tree_model_get_path (model, &iter);
+		gtk_tree_view_set_cursor (GTK_TREE_VIEW (procdata->tree), node, NULL, FALSE);
+		gtk_tree_path_free (node);
+	}
 	
 	info->visible = FALSE;	
 		
