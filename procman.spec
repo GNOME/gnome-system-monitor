@@ -1,5 +1,5 @@
 # Note that this is NOT a relocatable package
-%define ver      0.99.0
+%define ver      1.0
 %define  RELEASE 1
 %define  rel     %{?CUSTOM_RELEASE} %{!?CUSTOM_RELEASE:%RELEASE}
 %define prefix   /usr
@@ -13,7 +13,7 @@ Group: Applications/System
 Source: http://www.personal.psu.edu/kfv101/procman/source/procman-%{ver}.tar.gz
 BuildRoot: /var/tmp/procman-root
 Requires: gnome-libs >= 1.2.5
-Requires: gal >= 0.13
+Requires: gal >= 0.19
 Requires: libgtop >= 1.0.6
 
 %description
