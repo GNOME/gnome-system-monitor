@@ -391,11 +391,11 @@ bg_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 {
 	ProcData *procdata = data;
 	GConfClient *client = procdata->client;
+	gchar *color;
 	
-	gconf_client_set_int (client, "/apps/procman/bg_red", r, NULL);
-	gconf_client_set_int (client, "/apps/procman/bg_green", g, NULL);
-	gconf_client_set_int (client, "/apps/procman/bg_blue", b, NULL);
-
+	color = g_strdup_printf("#%02x%02x%02x", r, g, b);
+	gconf_client_set_string (client, "/apps/procman/bg_color", color, NULL);
+	g_free (color);
 }
 
 static void		
@@ -404,11 +404,11 @@ frame_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 {
 	ProcData *procdata = data;
 	GConfClient *client = procdata->client;
+	gchar *color;
 	
-	gconf_client_set_int (client, "/apps/procman/frame_red", r, NULL);
-	gconf_client_set_int (client, "/apps/procman/frame_green", g, NULL);
-	gconf_client_set_int (client, "/apps/procman/frame_blue", b, NULL);
-
+	color = g_strdup_printf("#%02x%02x%02x", r, g, b);
+	gconf_client_set_string (client, "/apps/procman/frame_color", color, NULL);
+	g_free (color);
 }
 
 static void

@@ -154,79 +154,34 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 	ProcData *procdata = data;
 	const gchar *key = gconf_entry_get_key (entry);
 	GConfValue *value = gconf_entry_get_value (entry);
-	gint color = gconf_value_get_int (value);
-	
-	if (!g_strcasecmp (key, "/apps/procman/bg_red")) {
-		procdata->cpu_graph->colors[0].red = color;
-		procdata->mem_graph->colors[0].red = color;
-		procdata->config.bg_color.red = color;
+	const gchar *color = gconf_value_get_string (value);
+
+	if (!g_strcasecmp (key, "/apps/procman/bg_color")) {
+		gdk_color_parse (color, &procdata->config.bg_color);
+		procdata->cpu_graph->colors[0] = procdata->config.bg_color;
+		procdata->mem_graph->colors[0] = procdata->config.bg_color;
 	}
-	else if (!g_strcasecmp (key, "/apps/procman/bg_green")) {
-		procdata->cpu_graph->colors[0].green = color;
-		procdata->mem_graph->colors[0].green = color;
-		procdata->config.bg_color.green = color;
+	else if (!g_strcasecmp (key, "/apps/procman/frame_color")) {
+		gdk_color_parse (color, &procdata->config.frame_color);
+		procdata->cpu_graph->colors[1] = procdata->config.frame_color;
+		procdata->mem_graph->colors[1] = procdata->config.frame_color;
 	}
-	else if (!g_strcasecmp (key, "/apps/procman/bg_blue")) {
-		procdata->cpu_graph->colors[0].blue = color;
-		procdata->mem_graph->colors[0].blue = color;
-		procdata->config.bg_color.blue = color;
+	else if (!g_strcasecmp (key, "/apps/procman/cpu_color")) {
+		gdk_color_parse (color, &procdata->config.cpu_color);
+		procdata->cpu_graph->colors[2] = procdata->config.cpu_color;
 	}
-	else if (!g_strcasecmp (key, "/apps/procman/frame_red")) {
-		procdata->cpu_graph->colors[1].red = color;
-		procdata->mem_graph->colors[1].red = color;
-		procdata->config.frame_color.red = color;
+	else if (!g_strcasecmp (key, "/apps/procman/mem_color")) {
+		gdk_color_parse (color, &procdata->config.mem_color);
+		procdata->mem_graph->colors[2] = procdata->config.mem_color;
 	}
-	else if (!g_strcasecmp (key, "/apps/procman/frame_green")) {
-		procdata->cpu_graph->colors[1].green = color;
-		procdata->mem_graph->colors[1].green = color;
-		procdata->config.frame_color.green = color;
+	else if (!g_strcasecmp (key, "/apps/procman/swap_color")) {
+		gdk_color_parse (color, &procdata->config.swap_color);
+		procdata->mem_graph->colors[3] = procdata->config.swap_color;
 	}
-	else if (!g_strcasecmp (key, "/apps/procman/frame_blue")) {
-		procdata->cpu_graph->colors[1].blue = color;
-		procdata->mem_graph->colors[1].blue = color;
-		procdata->config.frame_color.blue = color;
-	}
-	else if (!g_strcasecmp (key, "/apps/procman/cpu_red")) {
-		procdata->cpu_graph->colors[2].red = color;
-		procdata->config.cpu_color.red = color;
-	}
-	else if (!g_strcasecmp (key, "/apps/procman/cpu_green")) {
-		procdata->cpu_graph->colors[2].green = color;
-		procdata->config.cpu_color.green = color;
-	}
-	else if (!g_strcasecmp (key, "/apps/procman/cpu_blue")) {
-		procdata->cpu_graph->colors[2].blue = color;
-		procdata->config.cpu_color.blue = color;
-	}
-	else if (!g_strcasecmp (key, "/apps/procman/mem_red")) {
-		procdata->mem_graph->colors[2].red = color;
-		procdata->config.mem_color.red = color;
-	}
-	else if (!g_strcasecmp (key, "/apps/procman/mem_green")) {
-		procdata->mem_graph->colors[2].green = color;
-		procdata->config.mem_color.green = color;
-	}
-	else if (!g_strcasecmp (key, "/apps/procman/mem_blue")) {
-		procdata->mem_graph->colors[2].blue = color;
-		procdata->config.mem_color.blue = color;
-	}
-	else if (!g_strcasecmp (key, "/apps/procman/swap_red")) {
-		procdata->mem_graph->colors[3].red = color;
-		procdata->config.swap_color.red = color;
-	}
-	else if (!g_strcasecmp (key, "/apps/procman/swap_green")) {
-		procdata->mem_graph->colors[3].green = color;
-		procdata->config.swap_color.green = color;
-	}
-	else if (!g_strcasecmp (key, "/apps/procman/swap_blue")) {
-		procdata->mem_graph->colors[3].blue = color;
-		procdata->config.swap_color.blue = color;
-	}
-	
+		
 	procdata->cpu_graph->colors_allocated = FALSE;
 	procdata->mem_graph->colors_allocated = FALSE;
-	
-	
+		
 }
 
 static ProcData *
@@ -234,6 +189,7 @@ procman_data_new (GConfClient *client)
 {
 
 	ProcData *pd;
+	gchar *color;
 	
 	pd = g_new0 (ProcData, 1);
 	
@@ -283,55 +239,33 @@ procman_data_new (GConfClient *client)
 				 pd, NULL, NULL);
 	pd->config.current_tab = gconf_client_get_int (client, "/apps/procman/current_tab", NULL);
 	pd->config.pane_pos = gconf_client_get_int (client, "/apps/procman/pane_pos", NULL);
+
+	color = gconf_client_get_string (client, "/apps/procman/bg_color", NULL);
+	gconf_client_notify_add (client, "/apps/procman/bg_color", 
+			  	 color_changed_cb, pd, NULL, NULL);
+	gdk_color_parse(color, &pd->config.bg_color);
+	g_free (color);
+	color = gconf_client_get_string (client, "/apps/procman/frame_color", NULL);
+	gconf_client_notify_add (client, "/apps/procman/frame_color", 
+			  	 color_changed_cb, pd, NULL, NULL);
+	gdk_color_parse(color, &pd->config.frame_color);
+	g_free (color);
+	color = gconf_client_get_string (client, "/apps/procman/cpu_color", NULL);
+	gconf_client_notify_add (client, "/apps/procman/cpu_color", 
+			  	 color_changed_cb, pd, NULL, NULL);
+	gdk_color_parse(color, &pd->config.cpu_color);
+	g_free (color);
+	color = gconf_client_get_string (client, "/apps/procman/mem_color", NULL);
+	gconf_client_notify_add (client, "/apps/procman/mem_color", 
+			  	 color_changed_cb, pd, NULL, NULL);
+	gdk_color_parse(color, &pd->config.mem_color);
 	
-	pd->config.bg_color.red = gconf_client_get_int (client, "/apps/procman/bg_red", NULL);
-	gconf_client_notify_add (client, "/apps/procman/bg_red", color_changed_cb,
-				 pd, NULL, NULL);
-	pd->config.bg_color.green = gconf_client_get_int (client, "/apps/procman/bg_green", NULL);
-	gconf_client_notify_add (client, "/apps/procman/bg_green", color_changed_cb,
-				 pd, NULL, NULL);
-	pd->config.bg_color.blue= gconf_client_get_int (client, "/apps/procman/bg_blue", NULL);
-	gconf_client_notify_add (client, "/apps/procman/bg_blue", color_changed_cb,
-				 pd, NULL, NULL);
-	pd->config.frame_color.red = gconf_client_get_int (client, "/apps/procman/frame_red", NULL);
-	gconf_client_notify_add (client, "/apps/procman/frame_red", color_changed_cb,
-				 pd, NULL, NULL);
-	pd->config.frame_color.green = gconf_client_get_int (client, "/apps/procman/frame_green",
-							     NULL);
-	gconf_client_notify_add (client, "/apps/procman/frame_green", color_changed_cb,
-				 pd, NULL, NULL);
-	pd->config.frame_color.blue = gconf_client_get_int (client, "/apps/procman/frame_blue", 
-							    NULL);
-	gconf_client_notify_add (client, "/apps/procman/frame_blue", color_changed_cb,
-				 pd, NULL, NULL);
-	pd->config.cpu_color.red = gconf_client_get_int (client, "/apps/procman/cpu_red", NULL);
-	gconf_client_notify_add (client, "/apps/procman/cpu_red", color_changed_cb,
-				 pd, NULL, NULL);
-	pd->config.cpu_color.green = gconf_client_get_int (client, "/apps/procman/cpu_green", NULL);
-	gconf_client_notify_add (client, "/apps/procman/cpu_green", color_changed_cb,
-				 pd, NULL, NULL);
-	pd->config.cpu_color.blue = gconf_client_get_int (client, "/apps/procman/cpu_blue", NULL);
-	gconf_client_notify_add (client, "/apps/procman/cpu_blue", color_changed_cb,
-				 pd, NULL, NULL);
-	pd->config.mem_color.red = gconf_client_get_int (client, "/apps/procman/mem_red", NULL);
-	gconf_client_notify_add (client, "/apps/procman/mem_red", color_changed_cb,
-				 pd, NULL, NULL);
-	pd->config.mem_color.green = gconf_client_get_int (client, "/apps/procman/mem_green", NULL);
-	gconf_client_notify_add (client, "/apps/procman/mem_green", color_changed_cb,
-				 pd, NULL, NULL);
-	pd->config.mem_color.blue = gconf_client_get_int (client, "/apps/procman/mem_blue", NULL);
-	gconf_client_notify_add (client, "/apps/procman/mem_blue", color_changed_cb,
-				 pd, NULL, NULL);
-	pd->config.swap_color.red = gconf_client_get_int (client, "/apps/procman/swap_red", NULL);
-	gconf_client_notify_add (client, "/apps/procman/swap_red", color_changed_cb,
-				 pd, NULL, NULL);
-	pd->config.swap_color.green = gconf_client_get_int (client, "/apps/procman/swap_green", NULL);
-	gconf_client_notify_add (client, "/apps/procman/swap_green", color_changed_cb,
-				 pd, NULL, NULL);
-	pd->config.swap_color.blue = gconf_client_get_int (client, "/apps/procman/swap_blue", NULL);
-	gconf_client_notify_add (client, "/apps/procman/swap_blue", color_changed_cb,
-				 pd, NULL, NULL);
-		
+	g_free (color);
+	color = gconf_client_get_string (client, "/apps/procman/swap_color", NULL);
+	gconf_client_notify_add (client, "/apps/procman/swap_color", 
+			  	 color_changed_cb, pd, NULL, NULL);
+	gdk_color_parse(color, &pd->config.swap_color);
+	g_free (color);
 	get_blacklist (pd, client);
 
 	pd->config.simple_view = FALSE;	

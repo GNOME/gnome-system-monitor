@@ -335,10 +335,11 @@ cb_cpu_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 {
 	ProcData *procdata = data;
 	GConfClient *client = procdata->client;
+	gchar *color;
 	
-	gconf_client_set_int (client, "/apps/procman/cpu_red", r, NULL);
-	gconf_client_set_int (client, "/apps/procman/cpu_green", g, NULL);
-	gconf_client_set_int (client, "/apps/procman/cpu_blue", b, NULL);
+	color = g_strdup_printf("#%02x%02x%02x", r, g, b);
+	gconf_client_set_string (client, "/apps/procman/cpu_color", color, NULL);
+	g_free (color);
 }
 
 void		
@@ -347,10 +348,11 @@ cb_mem_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 {
 	ProcData *procdata = data;
 	GConfClient *client = procdata->client;
-	
-	gconf_client_set_int (client, "/apps/procman/mem_red", r, NULL);
-	gconf_client_set_int (client, "/apps/procman/mem_green", g, NULL);
-	gconf_client_set_int (client, "/apps/procman/mem_blue", b, NULL);
+	gchar *color;
+
+	color = g_strdup_printf("#%02x%02x%02x", r, g, b);
+	gconf_client_set_string (client, "/apps/procman/mem_color", color, NULL);
+	g_free (color);
 }
 
 void		
@@ -359,11 +361,11 @@ cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 {
 	ProcData *procdata = data;
 	GConfClient *client = procdata->client;
-	
-	gconf_client_set_int (client, "/apps/procman/swap_red", r, NULL);
-	gconf_client_set_int (client, "/apps/procman/swap_green", g, NULL);
-	gconf_client_set_int (client, "/apps/procman/swap_blue", b, NULL);
+	gchar *color;
 
+	color = g_strdup_printf("#%02x%02x%02x", r, g, b);
+	gconf_client_set_string (client, "/apps/procman/swap_color", color, NULL);
+	g_free (color);
 }
 
 ProcInfo *selected_process = NULL;

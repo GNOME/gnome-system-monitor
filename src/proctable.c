@@ -65,7 +65,7 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 	gtk_tree_model_get (model, itera, COL_POINTER, &infoa, -1);
 	gtk_tree_model_get (model, iterb, COL_POINTER, &infob, -1);
 	g_return_val_if_fail (infoa, 0);
-	g_return_val_if_fail (infob, 0);
+	g_return_val_if_fail (infob, 0);		
 	
 	switch (col) {
 	case COL_MEM:
