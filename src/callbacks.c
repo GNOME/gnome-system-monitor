@@ -126,7 +126,7 @@ cb_about_activate                     (GtkMenuItem     *menuitem,
 	GtkWidget *about;
 	const gchar *authors[] = {
 				 "Kevin Vandersloot (kfv101@psu.edu)",
-				 "Erik Johnsson (zaphod@linux.nu)",
+				 "Erik Johnsson (zaphod@linux.nu) - icon support",
 				 NULL
 				 };
 				 
@@ -226,9 +226,7 @@ cb_end_process_button_pressed          (GtkButton       *button,
 						    procdata->selected_node);
 		kill (info->pid, SIGTERM);
 		proctable_update_all (procdata);
-	}
-			
-	
+	}	
 
 }
 
@@ -239,13 +237,21 @@ cb_info_button_pressed			(GtkButton	*button,
 	ProcData *procdata = user_data;
 	
 	toggle_infoview (procdata);
-
+		
 }	
 
-
-
-
-
+void		
+cb_search (GtkEditable *editable, gpointer data)
+{
+	ProcData *procdata = data;
+	gchar *text;
+	
+	text = gtk_editable_get_chars (editable, 0, -1);
+	
+	proctable_search_table (procdata, text);
+	
+	g_free (text);
+}
 
 void
 cb_table_selected (ETree *tree, int row, ETreePath path, gpointer data)

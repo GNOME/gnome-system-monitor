@@ -42,9 +42,7 @@ void		cb_hide_process (GtkMenuItem *menuitem, gpointer data);
 
 void		cb_show_hidden_processes (GtkMenuItem *menuitem, gpointer data);
 
-void
-cb_preferences_activate               (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
+void		cb_preferences_activate (GtkMenuItem *menuitem, gpointer user_data);
 
 void
 cb_about_activate                     (GtkMenuItem     *menuitem,
@@ -69,12 +67,9 @@ void		cb_end_process_button_pressed (GtkButton *button, gpointer data);
 void
 cb_info_button_pressed			(GtkButton	*button,
 					gpointer	user_data);
+void		cb_search (GtkEditable *editable, gpointer data);
 				
-void
-cb_table_selected			(ETree		*tree,
-					int		row,
-					ETreePath	path,
-					gpointer	data);
+void		cb_table_selected (ETree *tree,int row,ETreePath path,gpointer data);
 					 
 void 
 cb_double_click				(ETree		*tree,

@@ -1,5 +1,21 @@
 2001-07-30 Kevin Vandersloot <kfv101@psu.edu>
 
+	* proctable.c (proctable_search_table): new function to search
+	the process list for a given string
+
+	* interface.c: add search label and entry. Hook up to the activate
+	signal. Remove the unneded gtk_alignment
+
+	* callbacks.c (cb_search): new callback to call search_table.
+
+	* procman.c (procman_free_data): new function to free allocated
+	memory at exit.
+
+	* proctable.c (proctable_free_table): new function to free
+	the process list.
+
+2001-07-30 Kevin Vandersloot <kfv101@psu.edu>
+
 	*proctable.c (inset_info_to_tree): fix memory leak
 	with appending "thread" to name. Fixes bug #58136.
 

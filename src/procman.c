@@ -97,6 +97,17 @@ procman_data_new (void)
 
 }
 
+static void
+procman_free_data (ProcData *procdata)
+{
+
+	proctable_free_table (procdata);
+	
+	pretty_table_free (procdata->pretty_table);
+	
+	g_free (procdata);
+	
+}
 
 void
 procman_save_config (ProcData *data)
@@ -134,9 +145,6 @@ main (int argc, char *argv[])
 		
 	e_cursors_init ();
 
-/*	gtk_widget_push_visual (gdk_rgb_get_visual ());
-	gtk_widget_push_colormap (gdk_rgb_get_cmap ());*/
-
 	glibtop_init ();
 
 	procdata = procman_data_new ();
@@ -148,9 +156,7 @@ main (int argc, char *argv[])
 	
 	e_cursors_shutdown ();
 	
-	pretty_table_free (procdata->pretty_table);
-		
-
+	procman_free_data (procdata);
 	
 	return 0;
 }

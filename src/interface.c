@@ -126,8 +126,9 @@ create_main_window (ProcData *data)
 	ProcData *procdata = data;
 	GtkWidget *app;
 	GtkWidget *vbox1;
-	GtkWidget *alignment1;
 	GtkWidget *hbox1;
+	GtkWidget *search_label;
+	GtkWidget *search_entry;
 	GtkWidget *optionmenu1;
 	GtkWidget *optionmenu1_menu;
 	GtkWidget *glade_menuitem;
@@ -150,11 +151,18 @@ create_main_window (ProcData *data)
 	vbox1 = gtk_vbox_new (FALSE, 0);
 	gnome_app_set_contents (GNOME_APP (app), vbox1);
 
-	alignment1 = gtk_alignment_new (0.5, 0.5, 1, 1);
-	gtk_box_pack_start (GTK_BOX (vbox1), alignment1, FALSE, FALSE, 0);
 	hbox1 = gtk_hbox_new (FALSE, 0);
-	gtk_container_add (GTK_CONTAINER (alignment1), hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox1), GNOME_PAD_SMALL);
+	
+	search_label = gtk_label_new (_("Search :"));
+	gtk_box_pack_start (GTK_BOX (hbox1), search_label, FALSE, FALSE, 0);
+	gtk_misc_set_padding (GTK_MISC (search_label), GNOME_PAD_SMALL, 0);
+	
+	search_entry = gtk_entry_new ();
+	gtk_box_pack_start (GTK_BOX (hbox1), search_entry, FALSE, FALSE, 0);
+	gtk_signal_connect (GTK_OBJECT (search_entry), "activate",
+			    GTK_SIGNAL_FUNC (cb_search), procdata);
 
 	optionmenu1 = gtk_option_menu_new ();
 	gtk_box_pack_end (GTK_BOX (hbox1), optionmenu1, FALSE, FALSE, 0);
@@ -191,7 +199,7 @@ create_main_window (ProcData *data)
 	gtk_box_pack_end (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	
-	gtk_widget_show_all (alignment1);
+	gtk_widget_show_all (hbox1);
 	
 	scrolled = proctable_new (procdata);
 	/*gtk_widget_set_usize (scrolled, 400, 400);*/

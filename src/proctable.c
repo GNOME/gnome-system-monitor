@@ -565,12 +565,14 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath root_node)
 	if (is_process_blacklisted (procdata, info->cmd))
 		return NULL;
 
-#if 1	
 	/* Find parent process node */
 	parentinfo = find_parent (procdata, info->parent_pid);
 	if (parentinfo)
 	{
 		parent_node = parentinfo->node;
+		/* Ha Ha - don't expand different threads - check to see if parent has
+		** same name and same mem usage - I don't know if this is too smart though.
+		*/
 		if (!g_strcasecmp (info->cmd, parentinfo->cmd) && 
 		    ( parentinfo->mem == info->mem))
 		{
@@ -586,23 +588,10 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath root_node)
 	}
 		
 	if (parent_node && procdata->config.show_tree)
-	{
-		/* Ha Ha - don't expand different threads - check to see if parent has
-		** same name and same mem usage - I don't know if this is too smart though.
-		*/
-		/*if (!g_strcasecmp (info->cmd, parentinfo->cmd) && 
-		    ( parentinfo->mem == info->mem))
-		{
-			e_tree_node_set_expanded (E_TREE (procdata->tree),
-					  	  parentinfo->node, FALSE);
-			info->name = g_strjoin (NULL, info->name, _(" (thread)"), NULL);
-		}*/
 		node = e_tree_memory_node_insert (procdata->memory, 
 						  parentinfo->node, 0, info);		
-	}
-
+	
 	else
-#endif
 	{
 		node = e_tree_memory_node_insert (procdata->memory, root_node,
 						  0, info);
@@ -861,20 +850,21 @@ void
 proctable_clear_tree (ProcData *data)
 {
 	ProcData *procdata = data;
+	GList *list = procdata->info;
 	ETreePath rootnode;
 	
 	rootnode = e_tree_model_get_root (procdata->model);
-	while (procdata->info)
+	/*while (list)
 	{
-		ProcInfo *info = procdata->info->data;
-		/*if (info->node)
-			e_tree_memory_node_remove (procdata->memory, info->node);*/
+		ProcInfo *info = list->data;
 		proctable_free_info (info);
-		procdata->info = g_list_remove (procdata->info, info);
+		list = g_list_next (list);
 	}
 	
 	g_list_free (procdata->info);
-	procdata->info = NULL;
+	procdata->info = NULL;*/
+	
+	proctable_free_table (procdata);
 	
 	gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), "cursor_activated", -1, NULL);
 	procdata->selected_node = NULL;
@@ -886,6 +876,22 @@ proctable_clear_tree (ProcData *data)
 	
 }
 
+void		
+proctable_free_table (ProcData *procdata)
+{
+	GList *list = procdata->info;
+	
+	while (list)
+	{
+		ProcInfo *info = list->data;
+		proctable_free_info (info);
+		list = g_list_next (list);
+	}
+	
+	g_list_free (procdata->info);
+	procdata->info = NULL;
+	
+}
 
 void
 proctable_save_state (ProcData *data)
@@ -894,6 +900,31 @@ proctable_save_state (ProcData *data)
 	
 	e_tree_save_state (E_TREE (procdata->tree), procdata->config.tree_state_file);
 	
+}
+
+void
+proctable_search_table (ProcData *procdata, gchar *string)
+{
+	GList *list = procdata->info;
+	
+	while (list)
+	{
+		ProcInfo *info = list->data;
+		if (!g_strncasecmp (string, info->name, strlen (string)) && info->node)
+		{
+			e_tree_set_cursor (E_TREE (procdata->tree), info->node);
+			return;
+		}
+		
+		if (!g_strncasecmp (string, info->user, strlen (string)) && info->node)
+		{
+			e_tree_set_cursor (E_TREE (procdata->tree), info->node);
+			return;
+		}
+		
+		list = g_list_next (list);
+	}
+
 }
 
 

@@ -44,7 +44,9 @@ void		proctable_update_list (ProcData *data);
 void		proctable_update_progress_meters (ProcData *procdata);
 void		proctable_update_all (ProcData *data);
 void		proctable_clear_tree (ProcData *data);
+void		proctable_free_table (ProcData *data);
 void		proctable_save_state (ProcData *data);
+void		proctable_search_table (ProcData *procdata, gchar *string);
 
 
 #endif
