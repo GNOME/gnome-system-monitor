@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-18 18:50-0500\n"
-"PO-Revision-Date: 2004-11-18 18:38-0400\n"
+"POT-Creation-Date: 2004-11-27 23:55-0500\n"
+"PO-Revision-Date: 2004-11-27 18:38-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,17 +17,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:153 src/interface.c:626
+#: gnome-system-monitor.desktop.in.in.h:1 src/callbacks.c:153
+#: src/interface.c:626
 msgid "System Monitor"
 msgstr "System Monitor"
 
-#: gnome-system-monitor.desktop.in.h:2
+#: gnome-system-monitor.desktop.in.in.h:2
 msgid "View current processes and monitor system state"
 msgstr "View current processes and monitor system state"
-
-#: src/callbacks.c:125
-msgid "Kevin Vandersloot"
-msgstr "Kevin Vandersloot"
 
 #: src/callbacks.c:126
 msgid "Jorgen Scheibengruber - nicer devices treeview"
@@ -40,10 +37,6 @@ msgstr "Benoît Dejean - maintainer"
 #: src/callbacks.c:135
 msgid "translator_credits"
 msgstr "Adam Weinberger <adamw@gnome.org>"
-
-#: src/callbacks.c:154
-msgid "(C) 2001 Kevin Vandersloot"
-msgstr "(C) 2001 Kevin Vandersloot"
 
 #: src/callbacks.c:155
 msgid "System resources monitor"
@@ -235,52 +228,56 @@ msgstr "Vie_w:"
 msgid "More _Info"
 msgstr "More _Info"
 
-#: src/interface.c:334
-msgid "Name"
-msgstr "Name"
+#: src/interface.c:323 src/memmaps.c:262
+msgid "Device"
+msgstr "Device"
 
-#: src/interface.c:335
+#: src/interface.c:324
 msgid "Directory"
 msgstr "Directory"
 
-#: src/interface.c:336
+#: src/interface.c:325
 msgid "Type"
 msgstr "Type"
 
-#: src/interface.c:337
+#: src/interface.c:326
 msgid "Total"
 msgstr "Total"
 
-#: src/interface.c:338
+#: src/interface.c:327
+msgid "Free"
+msgstr "Free"
+
+#: src/interface.c:328
 msgid "Used"
 msgstr "Used"
 
-#: src/interface.c:362
+#: src/interface.c:352
 msgid "CPU History"
 msgstr "CPU History"
 
-#: src/interface.c:402
+#: src/interface.c:392
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: src/interface.c:421
+#: src/interface.c:411
 msgid "Memory and Swap History"
 msgstr "Memory and Swap History"
 
-#: src/interface.c:454
+#: src/interface.c:444
 msgid "Used memory:"
 msgstr "Used memory:"
 
-#: src/interface.c:463 src/interface.c:495
+#: src/interface.c:453 src/interface.c:485
 msgid "of"
 msgstr "of"
 
-#: src/interface.c:486
+#: src/interface.c:476
 msgid "Used swap:"
 msgstr "Used swap:"
 
-#: src/interface.c:521 src/procdialogs.c:904
+#: src/interface.c:511 src/procdialogs.c:904
 msgid "Devices"
 msgstr "Devices"
 
@@ -304,11 +301,11 @@ msgstr "Running Applications"
 msgid "_Close Application"
 msgstr "_Close Application"
 
-#: src/interface.c:776
+#: src/interface.c:770
 msgid "More _Info >>"
 msgstr "More _Info >>"
 
-#: src/interface.c:783
+#: src/interface.c:777
 msgid "<< Less _Info"
 msgstr "<< Less _Info"
 
@@ -324,7 +321,7 @@ msgstr "VM Start"
 msgid "VM End"
 msgstr "VM End"
 
-#: src/memmaps.c:259 src/proctable.c:164
+#: src/memmaps.c:259 src/proctable.c:178
 msgid "VM Size"
 msgstr "VM Size"
 
@@ -335,10 +332,6 @@ msgstr "Flags"
 #: src/memmaps.c:261
 msgid "VM Offset"
 msgstr "VM Offset"
-
-#: src/memmaps.c:262
-msgid "Device"
-msgstr "Device"
 
 #: src/memmaps.c:263
 msgid "Inode"
@@ -369,20 +362,22 @@ msgstr ""
 "You do not have permission to change the priority of this process. You can "
 "enter the root password to gain the necessary permission."
 
-#: src/procactions.c:73
+#: src/procactions.c:74
 #, c-format
 msgid ""
-"Process Name: %s \n"
+"Process Name: %s\n"
 "\n"
-"You must be root to renice a process lower than 0. You can enter the root "
-"password to gain the necessary permission."
+"You must be root to decrease a nice value of this process or set a nice "
+"value less than 0. You can enter the root password to gain the necessary "
+"permission."
 msgstr ""
-"Process Name: %s \n"
+"Process Name: %s\n"
 "\n"
-"You must be root to renice a process lower than 0. You can enter the root "
-"password to gain the necessary permission."
+"You must be root to decrease a nice value of this process or set a nice "
+"value less than 0. You can enter the root password to gain the necessary "
+"permission."
 
-#: src/procactions.c:124
+#: src/procactions.c:131
 #, c-format
 msgid ""
 "Process Name: %s \n"
@@ -395,7 +390,7 @@ msgstr ""
 "You do not have permission to end this process. You can enter the root "
 "password to gain the necessary permission."
 
-#: src/procactions.c:143
+#: src/procactions.c:150
 msgid "An error occured while killing the process."
 msgstr "An error occured while killing the process."
 
@@ -535,89 +530,89 @@ msgstr "Root Password:"
 msgid "Wrong Password."
 msgstr "Wrong Password."
 
-#: src/procman.c:45
+#: src/procman.c:46
 msgid "show simple dialog to end processes and logout"
 msgstr "Show simple dialogue to end processes and logout"
 
-#: src/proctable.c:159
+#: src/proctable.c:174
 msgid "Process Name"
 msgstr "Process Name"
 
-#: src/proctable.c:160
-msgid "Arguments"
-msgstr "Arguments"
-
-#: src/proctable.c:161
+#: src/proctable.c:175
 msgid "User"
 msgstr "User"
 
-#: src/proctable.c:162
+#: src/proctable.c:176
 msgid "Status"
 msgstr "Status"
 
-#: src/proctable.c:163
+#: src/proctable.c:177
 msgid "Memory"
 msgstr "Memory"
 
-#: src/proctable.c:165
+#: src/proctable.c:179
 msgid "Resident Memory"
 msgstr "Resident Memory"
 
-#: src/proctable.c:166
+#: src/proctable.c:180
 msgid "Shared Memory"
 msgstr "Shared Memory"
 
-#: src/proctable.c:167
+#: src/proctable.c:181
 msgid "RSS Memory"
 msgstr "RSS Memory"
 
-#: src/proctable.c:168
+#: src/proctable.c:182
 msgid "X Server Memory"
 msgstr "X Server Memory"
 
-#: src/proctable.c:169
+#: src/proctable.c:183
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: src/proctable.c:170
+#: src/proctable.c:184
 msgid "Nice"
 msgstr "Nice"
 
-#: src/proctable.c:171
+#: src/proctable.c:185
 msgid "ID"
 msgstr "ID"
 
-#: src/proctable.c:172
+#: src/proctable.c:186
 msgid "Security Context"
 msgstr "Security Context"
 
-#: src/proctable.c:329
+#: src/proctable.c:187
+msgid "Arguments"
+msgstr "Arguments"
+
+#: src/proctable.c:363
 msgid "Running"
 msgstr "Running"
 
-#: src/proctable.c:334
+#: src/proctable.c:368
 msgid "Stopped"
 msgstr "Stopped"
 
-#: src/proctable.c:339
+#: src/proctable.c:373
 msgid "Zombie"
 msgstr "Zombie"
 
-#: src/proctable.c:344
+#: src/proctable.c:378
 msgid "Uninterruptible"
 msgstr "Uninterruptible"
 
-#: src/proctable.c:349
+#: src/proctable.c:383
 msgid "Sleeping"
 msgstr "Sleeping"
 
-#: src/proctable.c:444
+#: src/proctable.c:478
 #, c-format
 msgid "%s (thread)"
 msgstr "%s (thread)"
 
-#: src/proctable.c:1025
+#: src/proctable.c:1059
 #, c-format
 msgid "%s could not be found."
 msgstr "%s could not be found."
