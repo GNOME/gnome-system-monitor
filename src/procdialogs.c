@@ -317,7 +317,6 @@ procdialog_create_kill_dialog (ProcData *data, int signal)
 static gchar *
 get_nice_level (gint nice)
 {
-
 	if (nice < -7)
 		return _("(Very High Priority)");
 	else if (nice < -2)
@@ -328,7 +327,6 @@ get_nice_level (gint nice)
 		return _("(Low Priority)");
 	else
 		return _("(Very Low Priority)");
-	
 }
 
 static void
@@ -574,31 +572,6 @@ update_disks_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer 
 	return FALSE;
 }
 
-static void		
-bg_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
-		  guint a, gpointer data)
-{
-	ProcData *procdata = data;
-	GConfClient *client = procdata->client;
-	gchar *color;
-	
-	color = g_strdup_printf("#%04x%04x%04x", r, g, b);
-	gconf_client_set_string (client, "/apps/procman/bg_color", color, NULL);
-	g_free (color);
-}
-
-static void		
-frame_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
-		  guint a, gpointer data)
-{
-	ProcData *procdata = data;
-	GConfClient *client = procdata->client;
-	gchar *color;
-	
-	color = g_strdup_printf("#%04x%04x%04x", r, g, b);
-	gconf_client_set_string (client, "/apps/procman/frame_color", color, NULL);
-	g_free (color);
-}
 
 static void
 proc_field_toggled (GtkToggleButton *button, gpointer data)
@@ -901,7 +874,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 				    procdata->config.bg_color.green,
 				    procdata->config.bg_color.blue, 0);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
-			          G_CALLBACK (bg_color_changed), procdata);
+			          G_CALLBACK (cb_bg_color_changed), procdata);
 	gtk_box_pack_start (GTK_BOX (hbox2), color_picker,TRUE, TRUE, 0);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), color_picker);
 	gtk_widget_show (color_picker);
@@ -920,7 +893,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 				    procdata->config.frame_color.green,
 				    procdata->config.frame_color.blue, 0);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
-			    G_CALLBACK (frame_color_changed), procdata);	  
+			    G_CALLBACK (cb_frame_color_changed), procdata);	  
 	gtk_box_pack_start (GTK_BOX (hbox2), color_picker, TRUE, TRUE, 0);	
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), color_picker);
 	gtk_widget_show (color_picker);

@@ -39,8 +39,8 @@
 #include "cellrenderer.h"
 #include "util.h"
 
-void	cb_toggle_tree (GtkMenuItem *menuitem, gpointer data);
-void	cb_toggle_threads (GtkMenuItem *menuitem, gpointer data);
+static void	cb_toggle_tree (GtkMenuItem *menuitem, gpointer data);
+static void	cb_toggle_threads (GtkMenuItem *menuitem, gpointer data);
 
 
 static GnomeUIInfo file1_menu_uiinfo[] =
@@ -152,14 +152,12 @@ static GnomeUIInfo popup_menu_uiinfo[] =
 	GNOMEUIINFO_END
 };
 
-gchar *moreinfolabel = N_("More _Info >>");
-gchar *lessinfolabel = N_("<< Less _Info");
 
-static GtkWidget *infobutton = NULL;
 static GtkWidget *infolabel = NULL;
 static GtkWidget *endprocessbutton = NULL;
 static GtkWidget *popup_menu = NULL;
 static GtkWidget *sys_pane = NULL;
+
 
 gint
 get_sys_pane_pos (void)
@@ -179,6 +177,7 @@ create_proc_view (ProcData *procdata)
 	GtkWidget *infobox;
 	GtkWidget *label;
 	GtkWidget *hbox2;
+	GtkWidget *infobutton;
 
 	vbox1 = gtk_vbox_new (FALSE, 18);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox1), 12);
@@ -766,7 +765,7 @@ toggle_infoview (ProcData *data)
 {
 	ProcData *procdata = data;
 	GtkWidget *label;
-	
+
 	label = infolabel;
 		
 	if (procdata->config.show_more_info == FALSE)
@@ -774,14 +773,14 @@ toggle_infoview (ProcData *data)
 		infoview_update (procdata);
 		gtk_widget_show_all (procdata->infobox);
 		procdata->config.show_more_info = TRUE;	
-		gtk_label_set_text_with_mnemonic (GTK_LABEL (label),_(lessinfolabel)); 
+		gtk_label_set_text_with_mnemonic (GTK_LABEL (label),_("More _Info >>"));
  				
 	}			
 	else
-	{
+	  {
 		gtk_widget_hide (procdata->infobox);
 		procdata->config.show_more_info = FALSE;
- 		gtk_label_set_text_with_mnemonic (GTK_LABEL (label),_(moreinfolabel)); 
+ 		gtk_label_set_text_with_mnemonic (GTK_LABEL (label),_("<< Less _Info"));
 	}
 }
 
@@ -820,7 +819,7 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 	}
 }
 
-void		
+static void		
 cb_toggle_tree (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
@@ -836,7 +835,7 @@ cb_toggle_tree (GtkMenuItem *menuitem, gpointer data)
 	
 }
 
-void		
+static void		
 cb_toggle_threads (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;

@@ -1,5 +1,36 @@
 2004-10-25  Benoît Dejean  <tazforever@dlfp.org>
 
+	* src/callbacks.c: (cb_preferences_activate), (cb_end_process),
+	(cb_kill_process), (cb_show_memory_maps),
+	(cb_show_hidden_processes), (cb_hide_process), (cb_about_activate),
+	(cb_app_exit), (cb_app_delete), (cb_close_simple_dialog),
+	(cb_proc_combo_changed), (popup_menu_renice),
+	(popup_menu_show_memory_maps), (popup_menu_hide_process),
+	(popup_menu_end_process), (popup_menu_kill_process),
+	(popup_menu_about_process), (cb_end_process_button_pressed),
+	(cb_info_button_pressed), (cb_search), (change_gconf_color),
+	(cb_cpu_color_changed), (cb_mem_color_changed),
+	(cb_swap_color_changed), (cb_bg_color_changed),
+	(cb_frame_color_changed), (get_last_selected), (cb_row_selected),
+	(cb_tree_row_activated), (cb_tree_button_pressed),
+	(cb_switch_page), (fsusage_stats), (compare_disks),
+	(get_icon_for_device), (add_new_disks), (cb_update_disks),
+	(cb_timeout):
+	* src/callbacks.h: Big cleanup.
+	(add_new_disks): possible leak. Added comment on libgtop behaviour.
+	(fsusage_stats): Added. Devices stats code is now shared.
+	(change_gconf_color): Added.
+	
+	* src/interface.c: Removed useless
+	global variables.
+	(create_proc_view), (toggle_infoview): Marked static.
+	
+	* src/procdialogs.c: (get_nice_level),
+	(procdialog_create_preferences_dialog): Moved bg_color_changed/frame_color_changed
+	to src/callbacks.c.
+
+2004-10-25  Benoît Dejean  <tazforever@dlfp.org>
+
 	* src/procman.c: static const popt.
 	* src/procman.h: Changed cpu_initialized type to gboolean.
 

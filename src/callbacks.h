@@ -64,6 +64,11 @@ void		cb_mem_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 				      guint a, gpointer data);
 void		cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 				      guint a, gpointer data);
+void		cb_bg_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
+				      guint a, gpointer data);
+void		cb_frame_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
+				      guint a, gpointer data);
+
 
 void		cb_row_selected (GtkTreeSelection *selection, gpointer data);
 void		cb_tree_row_activated (GtkTreeView *view, GtkTreePath *path,
