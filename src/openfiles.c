@@ -8,6 +8,7 @@
 #include "procman.h"
 #include "openfiles.h"
 #include "proctable.h"
+#include "util.h"
 
 enum
 {
@@ -187,9 +188,14 @@ create_openfiles_tree (ProcData *procdata)
 		N_("Object")
 	};
 
+	PROCMAN_GETTEXT_ARRAY_INIT(title);
+
 	model = gtk_list_store_new (NUM_OPENFILES_COL,
-				    G_TYPE_INT, G_TYPE_STRING,
-				    G_TYPE_STRING, G_TYPE_POINTER);
+				    G_TYPE_INT,		/* FD */
+				    G_TYPE_STRING,	/* Type */
+				    G_TYPE_STRING,	/* Object */
+				    G_TYPE_POINTER	/* open_files_entry */
+		);
 
 	tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree), TRUE);
