@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <config.h>
-#include <pthread.h>
 #include "prettytable.h"
 #include "defaulttable.h"
 #include "proctable.h"
@@ -23,25 +22,17 @@ compare_strings (gconstpointer a, gconstpointer b)
 	return g_strcasecmp (str1, str2) == 0;
 }
 
-static void
-thread_func (void *data)
+void *
+prettytable_load_async (void *data)
 {
 	ProcData *procdata = (ProcData *)data;
 	PrettyTable *table;
 	
 	table = pretty_table_new ();
 	
-	procdata->pretty_table = table;	
-}
-
-void
-prettytable_load_async (ProcData *procdata)
-{
-	pthread_t thread;
+	procdata->desktop_load_finished = TRUE;
 	
-	if (pthread_create (&thread, NULL, (void*)thread_func, (void*)procdata)) {
-		g_print ("error creating new thread \n");
-	}
+	return (void *)table;
 	
 }
 

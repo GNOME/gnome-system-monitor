@@ -604,7 +604,7 @@ create_simple_view_dialog (ProcData *procdata)
 	button = gtk_button_new ();
 	endprocessbutton = button;
   	label = gtk_label_new (NULL);
-	key = gtk_label_parse_uline (GTK_LABEL (label), _("_End Application"));
+	key = gtk_label_parse_uline (GTK_LABEL (label), _("_Close Application"));
 	gtk_widget_add_accelerator (button, "clicked",
 				    accel,
 				    key,

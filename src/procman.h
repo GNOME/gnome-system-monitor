@@ -156,6 +156,7 @@ struct _ProcData
 	GList		*favorites;
 	GList		*blacklist;
 	gint		blacklist_num;
+	gboolean	desktop_load_finished;
 };
 
 void		procman_save_config (ProcData *data);

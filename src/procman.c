@@ -23,6 +23,7 @@
 #include <gnome.h>
 #include <glibtop.h>
 #include <gal/widgets/e-cursors.h>
+#include <pthread.h>
 #include "procman.h"
 #include "proctable.h"
 #include "interface.h"
@@ -31,6 +32,7 @@
 
 GtkWidget *app;
 static int simple_view = FALSE;
+pthread_t thread;
 
 struct poptOption options[] = {
   {
@@ -39,7 +41,7 @@ struct poptOption options[] = {
     POPT_ARG_NONE,
     &simple_view,
     0,
-    N_("show simple dialog to end process and logout"),
+    N_("show simple dialog to end processes and logout"),
     NULL,
   },
   {
@@ -73,18 +75,26 @@ idle_func (gpointer data)
 	
 	if (!procdata->pretty_table)
 	{
-		prettytable_load_async (procdata);
+		if (pthread_create (&thread, NULL, (void*) prettytable_load_async,
+				   (void*) procdata)) 
+			g_print ("error creating new thread \n");
 	}
+			
 	return FALSE;
+	
 }
 
 static gint
 icon_load_finished (gpointer data)
 {
 	ProcData *procdata = data;
+	PrettyTable *table = NULL;
 	
-	if (procdata->pretty_table)
+	if (procdata->desktop_load_finished)
 	{
+		if (pthread_join (thread, (void *)&table))
+			g_print ("error joining thread \n");
+		procdata->pretty_table = (PrettyTable *)table;
 		proctable_update_all (procdata);
 		return FALSE;
 	}
@@ -191,10 +201,11 @@ procman_data_new (void)
 	if (pd->config.load_desktop_files && pd->config.delay_load)
 	{
 		pd->pretty_table = NULL;
+		pd->desktop_load_finished = FALSE;
 		gtk_idle_add_priority (800, idle_func, pd);
 		gtk_timeout_add (500, icon_load_finished, pd);
 	}
-	else if (pd->config.load_desktop_files && !pd->config.delay_load)
+	else if (pd->config.load_desktop_files && !pd->config.delay_load) 
 		pd->pretty_table = pretty_table_new ();
 	else
 		pd->pretty_table = NULL;
