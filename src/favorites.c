@@ -300,7 +300,7 @@ create_tree (ProcData *procdata)
 	ETreeMemory *etmm;
 	ETreeModel *model;
 	ETreePath *root_node;
-	GList *blacklist = g_list_copy (procdata->blacklist);
+	GList *blacklist = procdata->blacklist;
 
 	model = e_tree_memory_callbacks_new (get_icon,
 					     get_columns,
