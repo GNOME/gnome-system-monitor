@@ -62,13 +62,13 @@ static int root;			/* if we are root, no password is
                                            required */
 
 static gint
-exec_su (gchar *exec_path, gchar *user, gchar *pwd)
+exec_su (gchar *exec_path, gchar *user, gchar *pwd, gint test)
 {
 	gchar *exec_p, *user_p;  /* command to execute, user name */
 	pid_t pid;
 	int t_fd;
-	gint error;
-
+	gint error, child_pid, options, loc;
+	
 	exec_p = g_strdup (exec_path);
 
 #if 0
@@ -113,7 +113,6 @@ exec_su (gchar *exec_path, gchar *user, gchar *pwd)
 		}
 		else {
 			memset (pwd, 0, strlen (pwd));
-			_exit (0);
 		}
 	}
 	else {				/* child process */
@@ -167,22 +166,18 @@ exec_su (gchar *exec_path, gchar *user, gchar *pwd)
 #endif
 
 		sleep (1);
-		g_print ("begin \n");
-		error = fork ();
-		if (error == 0) {
-			error = execlp ("su", "su", "-m", user_p, "-c", exec_p, NULL);
-			exit (0);
-		}
-		g_print ("end \n");
-		/*_exit (0);*/
+		
+		execlp ("su", "su", "-m", user_p, "-c", exec_p, NULL);
+		_exit (0);
+		
 	}
 
 	return 0;
 }
 
 void
-su_run_with_password (gchar *exec_path, gchar *password)
+su_run_with_password (gchar *exec_path, gchar *password, gint test)
 {
-	exec_su (exec_path, "root", password);
+	exec_su (exec_path, "root", password, test);
 }
 

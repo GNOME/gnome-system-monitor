@@ -1,3 +1,10 @@
+2001-08-19  Kevin Vandersloot <kfv101@psu.edu>
+
+	* util.c: get the root stuff working! No need to do an extra
+	fork. The problem was that exit was being called earlier on
+	the parent process. Now only call exit on the child. Release
+	coming soon.
+
 2001-08-19  Tige Chastain (tigechastain@home.com)
 
 	* favorites.c: Added checking to empty hidden processes window.
