@@ -9,21 +9,21 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
-"POT-Creation-Date: 2001-09-30 17:12+0200\n"
-"PO-Revision-Date: 2001-09-30 18:55:0200\n"
+"POT-Creation-Date: 2001-10-27 17:12+0200\n"
+"PO-Revision-Date: 2001-10-27 17:27:0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: procman.desktop.in.h:1 src/callbacks.c:1
-msgid "Process Manager"
-msgstr "Mened¿er procesów"
+#: procman.desktop.in.h:1 src/interface.c:1
+msgid "Procman System Monitor"
+msgstr "Procman - monitor systemu"
 
 #: procman.desktop.in.h:1
-msgid "View Running Processes"
-msgstr "Wy¶wietla dzia³aj±ce procesy"
+msgid "View current processes and monitor system state"
+msgstr "Wy¶wietla istniej±ce procesy i monitoruje stan systemu"
 
 #: src/callbacks.c:1
 msgid "Kevin Vandersloot (kfv101@psu.edu)"
@@ -32,6 +32,10 @@ msgstr "Kevin Vandersloot (kfv101@psu.edu)"
 #: src/callbacks.c:1
 msgid "Erik Johnsson (zaphod@linux.nu) - icon support"
 msgstr "Erik Johnsson (zaphod@linux.nu) - obs³uga ikon"
+
+#: src/callbacks.c:1
+msgid "Process Manager"
+msgstr "Mened¿er procesów"
 
 #: src/callbacks.c:1
 msgid "(C) 2001 Kevin Vandersloot"
@@ -46,15 +50,15 @@ msgstr "Prosta przegl±darka procesów, wykorzystuj±ca libgtop"
 msgid "%d K"
 msgstr "%d K"
 
-#: src/callbacks.c:1
+#: src/callbacks.c:1 src/load-graph.c:1
 #, c-format
-msgid "%.2f MB"
-msgstr "%.2f MB"
+msgid "%.0f MB"
+msgstr "%.0f MB"
 
 #: src/callbacks.c:1
 #, c-format
-msgid "%.2f GB"
-msgstr "%.2f GB"
+msgid "%.1f GB"
+msgstr "%.1f GB"
 
 #: src/defaulttable.h:1
 msgid "X window system"
@@ -272,7 +276,7 @@ msgstr "Ukryj proces"
 msgid "End Process"
 msgstr "Zakoñcz proces"
 
-#: src/interface.c:1 src/procdialogs.c:1
+#: src/interface.c:1 src/procdialogs.c:1 src/procdialogs.c:1
 msgid "Kill Process"
 msgstr "Zabij proces"
 
@@ -281,20 +285,16 @@ msgid "Disk Name"
 msgstr "Nazwa dysku"
 
 #: src/interface.c:1
+msgid "Directory"
+msgstr "Katalog"
+
+#: src/interface.c:1
 msgid "Used Space"
 msgstr "Wykorzystana przestrzeñ"
 
 #: src/interface.c:1
-msgid "Free Space"
-msgstr "Wolna przestrzeñ"
-
-#: src/interface.c:1
 msgid "Total Space"
 msgstr "£±czna przestrzeñ"
-
-#: src/interface.c:1
-msgid "Mount Directory"
-msgstr "Katalog montowania"
 
 #: src/interface.c:1
 msgid "% CPU Usage History"
@@ -308,21 +308,25 @@ msgstr "Historia % wykorzystania pamiêci / przestrzeni wymiany"
 msgid "CPU Used :"
 msgstr "Wykorzystanie CPU :"
 
-#: src/interface.c:1
-msgid "Memory Used / Total :"
-msgstr "Pamiêæ wykorzystana / ³±czna :"
+#: src/interface.c:1 src/proctable.etspec.h:1
+msgid "Memory"
+msgstr "Pamiêæ"
+
+#: src/interface.c:1 src/interface.c:1
+msgid "Used :"
+msgstr "Wykorzystana :"
+
+#: src/interface.c:1 src/interface.c:1
+msgid "Total :"
+msgstr "£±cznie : "
 
 #: src/interface.c:1
-msgid "Swap Used / Total :"
+msgid "Swap"
 msgstr "Przestrzeñ wymiany"
 
 #: src/interface.c:1 src/procdialogs.c:1
 msgid "Disks"
 msgstr "Dyski"
-
-#: src/interface.c:1
-msgid "Procman System Monitor"
-msgstr "Procman - monitor systemu"
 
 #: src/interface.c:1 src/procdialogs.c:1
 msgid "Process Listing"
@@ -343,11 +347,6 @@ msgstr "Aktywne aplikacje"
 #: src/interface.c:1
 msgid "_Close Application"
 msgstr "_Zamknij aplikacjê"
-
-#: src/load-graph.c:1
-#, c-format
-msgid "%.0f MB"
-msgstr "%.0f MB"
 
 #: src/load-graph.c:1
 #, c-format
@@ -399,26 +398,41 @@ msgid "No such process."
 msgstr "Nie ma takiego procesu"
 
 #: src/procactions.c:1
+#, c-format
 msgid ""
+"Process Name : %s \n"
+"\n"
 "You do not have permission to change the priority of this process. You can "
 "enter the root password to gain the necessary permission."
 msgstr ""
+"Nazwa procesu : %s\n"
+"\n"
 "Nie masz uprawnieñ do zmiany priorytetu tego procesu. Aby uzyskaæ "
 "odpowiednie uprawnienia, musisz wprowadziæ has³o u¿ytkownika root."
 
 #: src/procactions.c:1
+#, c-format
 msgid ""
+"Process Name : %s \n"
+"\n"
 "You must be root to renice a process lower than 0. You can enter the root "
 "password to gain the necessary permission."
 msgstr ""
+"Nazwa procesu : %s\n"
+"\n"
 "Je¶li chcesz zmieniæ priorytet procesu na ni¿szy od 0, nale¿y mieæ "
 "uprawnienia u¿ytkownika root. Aby je uzyskaæ, musisz wprowadziæ jego has³o."
 
 #: src/procactions.c:1
+#, c-format
 msgid ""
+"Process Name : %s \n"
+"\n"
 "You do not have permission to end this process. You can enter the root "
 "password to gain the necessary permission."
 msgstr ""
+"Nazwa procesu : %s\n"
+"\n"
 "Nie masz uprawnieñ do zakoñczenia tego procesu. Aby uzyskaæ odpowiednie "
 "uprawnienia, musisz wprowadziæ has³o u¿ytkownika root."
 
@@ -428,11 +442,11 @@ msgstr "Podczas zabijania procesu wyst±pi³ b³±d."
 
 #: src/procdialogs.c:1
 msgid ""
-"This action will block a process from being displayed. \n"
-" To reshow a process choose Hidden Processes in the Edit menu"
+"Are you sure you want to hide this process?\n"
+"(Choose 'Hidden Processes' in the Settings menu to reshow)"
 msgstr ""
-"Ta operacja zablokuje wy¶wietlanie procesu.\n"
-"Aby ponownie wy¶wietliæ proces, wybiera z menu Edycja pozycjê Ukryte procesy"
+"Czy na pewno chcesz ukryæ ten proces?\n"
+"(Aby go ponownie wy¶wietliæ, wybierz \"Ukryte procesy\" z menu Ustawienia)"
 
 #: src/procdialogs.c:1 src/procdialogs.c:1
 msgid "Show this dialog next time."
@@ -484,22 +498,20 @@ msgstr "Warto¶æ nice :"
 msgid "Preferences"
 msgstr "Preferencje"
 
-#: src/procdialogs.c:1
-msgid "General"
-msgstr "Ogólne"
-
 #: src/procdialogs.c:1 src/procdialogs.c:1 src/procdialogs.c:1
-msgid "Update Speed ( seconds ) :"
+msgid "Update Interval ( seconds ) :"
 msgstr "Czêsto¶æ od¶wie¿ania (sekundy) :"
 
 #: src/procdialogs.c:1
 msgid "Show Process Dependencies"
 msgstr "Wy¶wietlanie zale¿no¶ci procesów"
 
-#: src/procdialogs.c:1
-msgid "Advanced"
-msgstr "Zaawansowane"
-
+#. frame = gtk_frame_new (_("Advanced"));
+#. gtk_box_pack_start (GTK_BOX (proc_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
+#.
+#. vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+#. gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
+#. gtk_container_add (GTK_CONTAINER (frame), vbox);
 #: src/procdialogs.c:1
 msgid "Show Application Names"
 msgstr "Wy¶wietlanie nazw aplikacji"
@@ -569,11 +581,6 @@ msgstr " (w±tek)"
 msgid "%s could not be found."
 msgstr "Nie mo¿na odnale¼æ %s."
 
-#: src/proctable.c:1
-#, c-format
-msgid "No more instances of %s could be found."
-msgstr "Nie mo¿na odnale¼æ wiêcej instancji %s."
-
 #: src/proctable.etspec.h:1 src/simple.etspec.h:1
 msgid " "
 msgstr " "
@@ -586,10 +593,6 @@ msgstr "% CPU"
 #: src/proctable.etspec.h:1
 msgid "ID"
 msgstr "ID"
-
-#: src/proctable.etspec.h:1
-msgid "Memory"
-msgstr "Pamiêæ"
 
 #: src/proctable.etspec.h:1
 msgid "Nice"
