@@ -292,7 +292,7 @@ sort_bytes (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointe
 	}
 }
 
-static GtkWidget *
+GtkWidget *
 make_title_label (const char *text)
 {
   GtkWidget *label;
@@ -302,7 +302,7 @@ make_title_label (const char *text)
   label = gtk_label_new (full);
   g_free (full);
 
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0f, 0.5f);
   gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
 
   return label;

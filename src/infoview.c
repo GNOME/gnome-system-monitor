@@ -35,21 +35,6 @@ static GtkWidget *memtotal_label = NULL;
 static GtkWidget *memrss_label = NULL;
 static GtkWidget *memshared_label = NULL;
 
-static GtkWidget *
-make_title_label (const char *text)
-{
-  GtkWidget *label;
-  char *full;
-
-  full = g_strdup_printf ("<span weight=\"bold\">%s</span>", text);
-  label = gtk_label_new (full);
-  g_free (full);
-
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-
-  return label;
-}
 
 GtkWidget *
 infoview_create (ProcData *procdata)
