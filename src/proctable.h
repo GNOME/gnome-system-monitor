@@ -43,16 +43,16 @@ enum
 };
 
 
-GtkWidget*	proctable_new (ProcData *data);
-void		proctable_update_table (ProcData *data);
-void		proctable_update_list (ProcData *data);
-void		insert_info_to_tree (ProcInfo *info, ProcData *procdata);
-void		remove_info_from_tree (ProcInfo *info, ProcData *procdata);
-ProcInfo *	proctable_find_process (guint pid, ProcData *procdata);
-void		proctable_update_all (ProcData *data);
-void		proctable_clear_tree (ProcData *data);
-void		proctable_free_table (ProcData *data);
-void		proctable_search_table (ProcData *procdata, gchar *string);
+GtkWidget*	proctable_new (ProcData *data) G_GNUC_INTERNAL;
+void		proctable_update_table (ProcData *data) G_GNUC_INTERNAL;
+void		proctable_update_list (ProcData *data) G_GNUC_INTERNAL;
+void		insert_info_to_tree (ProcInfo *info, ProcData *procdata) G_GNUC_INTERNAL;
+void		remove_info_from_tree (ProcInfo *info, ProcData *procdata) G_GNUC_INTERNAL;
+ProcInfo *	proctable_find_process (guint pid, ProcData *procdata) G_GNUC_INTERNAL;
+void		proctable_update_all (ProcData *data) G_GNUC_INTERNAL;
+void		proctable_clear_tree (ProcData *data) G_GNUC_INTERNAL;
+void		proctable_free_table (ProcData *data) G_GNUC_INTERNAL;
+void		proctable_search_table (ProcData *procdata, gchar *string) G_GNUC_INTERNAL;
 
 
 #endif /* _PROCMAN_PROCTABLE_H_ */

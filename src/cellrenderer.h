@@ -42,8 +42,8 @@ struct _ProcmanCellRendererProgressClass{
 	GtkCellRendererClass parent_class;
 };
 
-GtkType procman_cell_renderer_progress_get_type (void) G_GNUC_CONST;
-GtkCellRenderer* procman_cell_renderer_progress_new(void);
+GtkType procman_cell_renderer_progress_get_type (void) G_GNUC_CONST G_GNUC_INTERNAL;
+GtkCellRenderer* procman_cell_renderer_progress_new(void) G_GNUC_INTERNAL;
 
 G_END_DECLS
 

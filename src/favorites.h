@@ -24,15 +24,15 @@
 #include "procman.h"
 #include <gconf/gconf-client.h>
 
-void 		save_blacklist (ProcData *procdata, GConfClient *client);
-void		add_to_blacklist (ProcData *procdata, gchar *name);
-void		add_selected_to_blacklist (ProcData *procdata);
-void		remove_from_blacklist (ProcData *procdata, gchar *name);
+void 		save_blacklist (ProcData *procdata, GConfClient *client) G_GNUC_INTERNAL;
+void		add_to_blacklist (ProcData *procdata, gchar *name) G_GNUC_INTERNAL;
+void		add_selected_to_blacklist (ProcData *procdata) G_GNUC_INTERNAL;
+void		remove_from_blacklist (ProcData *procdata, gchar *name) G_GNUC_INTERNAL;
 
-gboolean	is_process_blacklisted (ProcData *procdata, gchar *name);
+gboolean	is_process_blacklisted (ProcData *procdata, gchar *name) G_GNUC_INTERNAL;
 
-void 		get_blacklist (ProcData *procdata, GConfClient *client);
+void 		get_blacklist (ProcData *procdata, GConfClient *client) G_GNUC_INTERNAL;
 
-void		create_blacklist_dialog (ProcData *procdata);
+void		create_blacklist_dialog (ProcData *procdata) G_GNUC_INTERNAL;
 
 #endif

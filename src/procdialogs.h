@@ -25,15 +25,15 @@
 
 extern int kill_signal;
 
-void			procdialog_create_hide_dialog (ProcData *data);
-void			procdialog_create_kill_dialog (ProcData *data, int signal);
-void 			procdialog_create_renice_dialog (ProcData *data);
+void			procdialog_create_hide_dialog (ProcData *data) G_GNUC_INTERNAL;
+void			procdialog_create_kill_dialog (ProcData *data, int signal) G_GNUC_INTERNAL;
+void 			procdialog_create_renice_dialog (ProcData *data) G_GNUC_INTERNAL;
 void			procdialog_create_root_password_dialog (gint type, 
 								ProcData *procdata,
 								gint pid, gint extra_value,
-								gchar *text);
-void 			procdialog_create_memmaps_dialog (ProcData *data);
-void			procdialog_create_preferences_dialog (ProcData *data);
+								gchar *text) G_GNUC_INTERNAL;
+void 			procdialog_create_memmaps_dialog (ProcData *data) G_GNUC_INTERNAL;
+void			procdialog_create_preferences_dialog (ProcData *data) G_GNUC_INTERNAL;
 
 #endif
 

@@ -4,7 +4,7 @@
 #include <glib.h>
 #include <stddef.h>
 
-void _procman_array_gettext_init(const char * strings[], size_t n);
+void _procman_array_gettext_init(const char * strings[], size_t n) G_GNUC_INTERNAL;
 
 #define PROCMAN_GETTEXT_ARRAY_INIT(A) G_STMT_START { \
 static gboolean is_init = FALSE; \

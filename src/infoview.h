@@ -25,7 +25,7 @@
 
 
 
-GtkWidget * infoview_create (ProcData *data);
-void	infoview_update (ProcData *data);
+GtkWidget * infoview_create (ProcData *data) G_GNUC_INTERNAL;
+void	infoview_update (ProcData *data) G_GNUC_INTERNAL;
 
 #endif

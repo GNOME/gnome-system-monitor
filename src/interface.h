@@ -22,10 +22,10 @@
 
 #include <procman.h>
 
-gint		get_sys_pane_pos (void);
-void		create_main_window (ProcData *data);
-void		toggle_infoview (ProcData *data);
-void		update_sensitivity (ProcData *data, gboolean sensitivity);
-void            do_popup_menu(ProcData *data, GdkEventButton *event);
+gint		get_sys_pane_pos (void) G_GNUC_INTERNAL;
+void		create_main_window (ProcData *data) G_GNUC_INTERNAL;
+void		toggle_infoview (ProcData *data) G_GNUC_INTERNAL;
+void		update_sensitivity (ProcData *data, gboolean sensitivity) G_GNUC_INTERNAL;
+void            do_popup_menu(ProcData *data, GdkEventButton *event) G_GNUC_INTERNAL;
 
 #endif /* _PROCMAN_INTERFACE_H_ */
