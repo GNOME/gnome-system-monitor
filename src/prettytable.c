@@ -32,6 +32,7 @@ gint pretty_table_load_path (PrettyTable *pretty_table, gchar *path, gboolean re
 	gchar *full_path, *tmp1, *tmp2, *tmp3, *tmp4;
 	GnomeDesktopEntry *entry;
 
+	g_return_val_if_fail (path, 0);
 	g_return_val_if_fail (dh = opendir (path), 0);
 
 	g_hash_table_freeze (pretty_table->cmdline_to_prettyname);
