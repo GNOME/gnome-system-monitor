@@ -1,5 +1,27 @@
 2001-07-11 Kevin Vandersloot <kfv101@psu.edu>
 
+	Added the ability to only view running processes.
+
+	*procman.h: add enum for running processes.
+
+	*proctable.c (get_process_status): added new boolean indicating
+	whether the process is running or not
+	(update_info): change this function to return an int. Return
+	-1 if process needs to be removed, 0 if nothing, and 1 if it
+	needs to be added.
+	(insert_info_to_tree): only add to tree if needed
+	(refresh_list): add or remove processes using return value
+	from update_info.
+	Also initialize info->node to be NULL since we can now maintain
+	a processes info yet not necessarily display it.
+
+	*interface.c (create_main_window): add a view: running_processes
+	menu.
+
+	*callbacks.c: add the necessary callbacks to the menus.
+
+2001-07-11 Kevin Vandersloot <kfv101@psu.edu>
+
 	*proctable.c, memmaps.c: hack around a bug in gal.
 	Some more cosmetic changes.
 

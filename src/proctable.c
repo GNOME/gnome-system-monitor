@@ -386,16 +386,26 @@ proctable_free_info (ProcInfo *info)
 
 
 
-static gchar *
-get_process_status (char *state)
+static void
+get_process_status (ProcInfo *info, char *state)
 {
 
 	if (!g_strcasecmp (state, "r"))
-		return g_strdup_printf (_("Running"));
+	{
+		info->status = g_strdup_printf (_("Running"));
+		info->running = TRUE;
+		return;
+	}
 	else if (!g_strcasecmp (state, "t"))
-		return g_strdup_printf (_("Stopped"));
+	{
+		info->status = g_strdup_printf (_("Stopped"));
+		info->running = FALSE;
+	}
 	else
-		return g_strdup_printf (_("Sleeping"));
+	{
+		info->status = g_strdup_printf (_("Sleeping"));
+		info->running = FALSE;
+	}
 
 }
 
@@ -420,8 +430,8 @@ find_parent (ProcData *data, gint pid)
 }
 
 
-static void
-update_info (ProcInfo *info, gint pid)
+static gint
+update_info (ProcData *procdata, ProcInfo *info, gint pid)
 {
 	ProcInfo *newinfo = info;
 	glibtop_proc_state procstate;
@@ -449,7 +459,19 @@ update_info (ProcInfo *info, gint pid)
 	newinfo->nice = procuid.nice;
 	if (newinfo->status)
 		g_free (newinfo->status);
-	newinfo->status = get_process_status (&procstate.state);
+	get_process_status (newinfo, &procstate.state);
+	
+	if (procdata->config.whose_process == RUNNING_PROCESSES)
+	{
+		/* process started running */
+		if (newinfo->running && (!newinfo->node))
+			return 1;
+		/* process was running but not anymore */
+		else if ((!newinfo->running) && newinfo->node)
+			return -1;
+	}
+	
+	return 0;
 }
 
 static ProcInfo *
@@ -486,7 +508,8 @@ get_info (ProcData *procdata, gint pid)
 	info->parent_pid = procuid.ppid;
 	info->cpu_time_last = newcputime;
 	info->nice = procuid.nice;
-	info->status = get_process_status (&procstate.state);
+	get_process_status (info, &procstate.state);
+	info->node = NULL;
 	
 	return info;
 }
@@ -495,10 +518,18 @@ static ETreePath
 insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath root_node)
 {
 	ProcInfo *parentinfo = NULL;
-	ETreePath node;
-	
+	ETreePath node = NULL;
+	ETreePath parent_node = NULL;
+
+	if (procdata->config.whose_process == RUNNING_PROCESSES && 
+	    (!info->running))
+		return NULL;
+#if 1	
 	parentinfo = find_parent (procdata, info->parent_pid);
-	if (parentinfo && procdata->config.show_tree)
+	if (parentinfo)
+		parent_node = parentinfo->node;
+		
+	if (parent_node && procdata->config.show_tree)
 	{
 		node = e_tree_memory_node_insert (procdata->memory, 
 						  parentinfo->node, 0, info);
@@ -513,9 +544,13 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath root_node)
 			info->name = g_strjoin (NULL, info->name, " (thread)", NULL);
 		}
 	}
+
 	else
+#endif
+	{
 		node = e_tree_memory_node_insert (procdata->memory, root_node,
 						  0, info);
+	}
 	
 	return node;
 }
@@ -549,6 +584,9 @@ static void
 remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 {
 	
+	if (!info->node)
+		return;
+	
 	/* Remove any children from the tree. They will then be readded later
 	** in refresh_list
 	*/
@@ -566,6 +604,7 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 	}
 	g_print ("%s %d \n",info->name, info->pid);
 	e_tree_memory_node_remove (procdata->memory, info->node);
+	info->node = NULL;
 }
 	 
 
@@ -614,8 +653,19 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 		/* existing process */
 		else if (pid_list[i] == oldinfo->pid)
 		{
-			update_info (oldinfo, oldinfo->pid);
-			e_tree_model_node_data_changed (procdata->model,oldinfo->node);
+			gint status;
+			
+			status = update_info (procdata, oldinfo, oldinfo->pid);
+			if (status == 0)
+				e_tree_model_node_data_changed (procdata->model,
+								oldinfo->node);
+			
+			else if (status == 1)
+				oldinfo->node = insert_info_to_tree (oldinfo, procdata, 
+								     root_node);
+			else if (status == -1)
+				remove_info_from_tree (oldinfo, procdata);
+				
 			list = g_list_next (list);
 			i++;
 		}
@@ -664,7 +714,7 @@ proctable_update_list (ProcData *data)
 	
 	
 	
-	if (procdata->config.whose_process == ALL_PROCESSES)
+	if (procdata->config.whose_process == (ALL_PROCESSES | RUNNING_PROCESSES))
 	{
 		which = GLIBTOP_KERN_PROC_ALL;
 		arg = 0;

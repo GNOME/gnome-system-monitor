@@ -34,6 +34,7 @@ enum
 {
 	ALL_PROCESSES,
 	MY_PROCESSES,
+	RUNNING_PROCESSES,
 };
 
 struct _ProcConfig
@@ -66,6 +67,7 @@ struct _ProcInfo
 	gint		memshared;
 	gint		memrss;
 	gchar		*status;
+	gboolean	running;
 };
 
 struct _ProcData

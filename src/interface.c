@@ -81,8 +81,8 @@ static GnomeUIInfo menubar1_uiinfo[] =
 	GNOMEUIINFO_END
 };
 
-gchar *moreinfolabel = N_("More Info  >>");
-gchar *lessinfolabel = N_("<<  Less Info");
+gchar *moreinfolabel = N_("More Info >>");
+gchar *lessinfolabel = N_("<< Less Info");
 
 GtkWidget *infobutton;
 GtkWidget *endprocessbutton;
@@ -133,16 +133,25 @@ create_main_window (ProcData *data)
 	optionmenu1 = gtk_option_menu_new ();
 	gtk_box_pack_end (GTK_BOX (hbox1), optionmenu1, FALSE, FALSE, 0);
   	optionmenu1_menu = gtk_menu_new ();
+  	
   	glade_menuitem = gtk_menu_item_new_with_label (_("All Processes"));
   	gtk_widget_show (glade_menuitem);
   	gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
   			    GTK_SIGNAL_FUNC (cb_all_process_menu_clicked), procdata);
   	gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
+  	
   	glade_menuitem = gtk_menu_item_new_with_label (_("My Processes"));
   	gtk_widget_show (glade_menuitem);
   	gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
   			    GTK_SIGNAL_FUNC (cb_my_process_menu_clicked), procdata);
   	gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
+  	
+  	glade_menuitem = gtk_menu_item_new_with_label (_("Running Processes"));
+  	gtk_widget_show (glade_menuitem);
+  	gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
+  			    GTK_SIGNAL_FUNC (cb_running_process_menu_clicked), procdata);
+  	gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
+  	
   	gtk_menu_set_active (GTK_MENU (optionmenu1_menu), procdata->config.whose_process);
   	gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu1), optionmenu1_menu);
   	

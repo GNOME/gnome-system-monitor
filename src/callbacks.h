@@ -56,6 +56,8 @@ cb_all_process_menu_clicked 		(GtkWidget	*widget,
 void
 cb_my_process_menu_clicked		(GtkWidget	*widget,
 					 gpointer	data);  
+					 
+void	cb_running_process_menu_clicked	(GtkWidget *widget, gpointer data);
 
 void
 cb_end_process_button_pressed          (GtkButton       *button,

@@ -167,15 +167,17 @@ procdialog_create_renice_dialog (ProcData *data)
 	GtkWidget *dialog;
 	GtkWidget *dialog_vbox;
 	GtkWidget *vbox;
+	GtkWidget *alignment;
   	GtkWidget *hbox;
   	GtkWidget *label;
-  	GtkWidget *spinbutton;
   	GtkObject *adjustment;
   	GtkWidget *renicebutton;
   	GtkWidget *cancelbutton;
   	GtkWidget *dialog_action_area;
   	gchar *text = 
-  	      "The nice value is the priority";
+  	      "The nice value refers to the priority of a "
+  	      "process. A lower nice value corresponds to a "
+  	      "higher priority";
 	
 	if (!procdata->selected_node)
 		return;
@@ -196,18 +198,23 @@ procdialog_create_renice_dialog (ProcData *data)
     	
     	label = gtk_label_new (text);
     	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+    	gtk_widget_show (label);
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	
+	/*alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+	gtk_box_pack_start (GTK_BOX (vbox), alignment, FALSE, FALSE, 0);*/
 	
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+	/*gtk_container_add (GTK_CONTAINER (alignment), hbox);*/
 	
-	label = gtk_label_new (_("Nice :"));
-	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+	label = gtk_label_new (_("Nice Value :"));
+	gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
 	
 	adjustment = gtk_adjustment_new (info->nice, -20, 20, 1, 10, 10);
 	renice_spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
-	gtk_box_pack_start (GTK_BOX (hbox), renice_spinbutton, FALSE, FALSE, 0);
-	
+	gtk_box_pack_start (GTK_BOX (hbox), renice_spinbutton, TRUE, FALSE, 0);
+			
 	dialog_action_area = GNOME_DIALOG (dialog)->action_area;
 	gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area), GTK_BUTTONBOX_END);
 	gtk_button_box_set_spacing (GTK_BUTTON_BOX (dialog_action_area), 8);
@@ -225,7 +232,6 @@ procdialog_create_renice_dialog (ProcData *data)
   			    GTK_SIGNAL_FUNC (renice_accept), procdata);
     	
     	gtk_widget_show_all (dialog);
-    	
     	
     	
 }

@@ -128,6 +128,17 @@ cb_my_process_menu_clicked		(GtkWidget	*widget,
 	procdata->config.whose_process = MY_PROCESSES;
 	proctable_clear_tree (procdata);
 	proctable_update_all (procdata);
+}
+
+void
+cb_running_process_menu_clicked		(GtkWidget	*widget,
+					 gpointer	data)
+{
+	ProcData *procdata = data;
+	
+	procdata->config.whose_process = RUNNING_PROCESSES;
+	proctable_clear_tree (procdata);
+	proctable_update_all (procdata);
 }				
 
 void
