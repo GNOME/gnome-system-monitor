@@ -1,5 +1,5 @@
 # Danish translation of procman
-# Copyright (C) 2001 Free Software Foundation, Inc.
+# Copyright (C) 2001, 02 Free Software Foundation, Inc.
 # Ole Laursen <olau@hardworking.dk>, 2001.
 #
 # Process Manager -> Procesoversigt
@@ -12,17 +12,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
-"POT-Creation-Date: 2001-12-04 22:16+0100\n"
-"PO-Revision-Date: 2001-12-04 22:17+0100\n"
+"POT-Creation-Date: 2002-01-24 17:48+0100\n"
+"PO-Revision-Date: 2002-01-24 17:48+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: procman.desktop.in.h:1 src/defaulttable.h:11 src/interface.c:487
-msgid "Procman System Monitor"
-msgstr "Procesoversigtovervågning"
+#: procman.desktop.in.h:1
+msgid "System Monitor"
+msgstr "Systemovervågning"
 
 #: procman.desktop.in.h:2
 msgid "View current processes and monitor system state"
@@ -61,15 +61,19 @@ msgstr "Bourne Again Shell"
 msgid "Gnome-Session"
 msgstr "Gnome-session"
 
-#: src/favorites.c:316
+#: src/defaulttable.h:11 src/interface.c:477
+msgid "Procman System Monitor"
+msgstr "Procesoversigt"
+
+#: src/favorites.c:343
 msgid "No processes are currently hidden."
 msgstr "Ingen processer er i øjeblikket skjult."
 
-#: src/favorites.c:331
+#: src/favorites.c:361
 msgid "Manage Hidden Processes"
 msgstr "Håndtér skjulte processer"
 
-#: src/favorites.c:342
+#: src/favorites.c:372
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
@@ -77,68 +81,68 @@ msgstr ""
 "Dette er de processer som du har valgt at skjule. Du kan vise en proces igen "
 "ved at fjerne den fra denne liste."
 
-#: src/favorites.c:346
+#: src/favorites.c:376
 msgid "Hidden Processes"
 msgstr "Skjulte processer"
 
-#: src/favorites.c:359
+#: src/favorites.c:389
 msgid "_Remove From List"
 msgstr "_Fjern fra listen"
 
-#: src/infoview.c:60
+#: src/infoview.c:58
 msgid "Process Info"
 msgstr "Procesinfo"
 
-#: src/infoview.c:67
+#: src/infoview.c:65
 msgid "Command : "
 msgstr "Kommando: "
 
-#: src/infoview.c:71
+#: src/infoview.c:69
 msgid "Status : "
 msgstr "Status: "
 
-#: src/infoview.c:75
+#: src/infoview.c:73
 msgid "Priority : "
 msgstr "Prioritet: "
 
-#: src/infoview.c:100
+#: src/infoview.c:92
 msgid "Memory Usage"
 msgstr "Hukommelsesforbrug"
 
-#: src/infoview.c:108
+#: src/infoview.c:100
 msgid "Total : "
 msgstr "Total: "
 
 # RSS dækker over den del der befinder sig i den "rigtige" hukommelse, RAM'en
-#: src/infoview.c:112
+#: src/infoview.c:104
 msgid "RSS : "
 msgstr "Fysisk: "
 
-#: src/infoview.c:116
+#: src/infoview.c:108
 msgid "Shared : "
-msgstr "Dels: "
+msgstr "Delt: "
 
-#: src/infoview.c:162
+#: src/infoview.c:154
 #, c-format
 msgid "Very High  ( Nice %d )"
 msgstr "Meget høj (venlighedsværdi %d)"
 
-#: src/infoview.c:164
+#: src/infoview.c:156
 #, c-format
 msgid "High  ( Nice %d )"
 msgstr "Høj (venlighedsværdi %d)"
 
-#: src/infoview.c:166
+#: src/infoview.c:158
 #, c-format
 msgid "Normal  ( Nice %d )"
 msgstr "Normal (venlighedsværdi %d)"
 
-#: src/infoview.c:168
+#: src/infoview.c:160
 #, c-format
 msgid "Low  ( Nice %d )"
 msgstr "Lav (venlighedsværdi %d)"
 
-#: src/infoview.c:170
+#: src/infoview.c:162
 #, c-format
 msgid "Very Low  ( Nice %d )"
 msgstr "Meget lav (venlighedsværdi %d)"
@@ -151,7 +155,7 @@ msgstr "_Skift prioritet..."
 msgid "Change the importance (nice value) of a process"
 msgstr "Skift vigtigheden (venlighedsværdien) af en proces"
 
-#: src/interface.c:58 src/procdialogs.c:95
+#: src/interface.c:58 src/procdialogs.c:96
 msgid "_Hide Process"
 msgstr "Skj_ul proces"
 
@@ -159,7 +163,7 @@ msgstr "Skj_ul proces"
 msgid "Hide a process"
 msgstr "Skjul en proces"
 
-#: src/interface.c:64 src/interface.c:251
+#: src/interface.c:64 src/interface.c:243
 msgid "End _Process"
 msgstr "Afslut _process"
 
@@ -167,7 +171,7 @@ msgstr "Afslut _process"
 msgid "Force a process to finish."
 msgstr "Tving en proces til at afslutte"
 
-#: src/interface.c:69 src/procdialogs.c:144
+#: src/interface.c:69 src/procdialogs.c:146 src/procdialogs.c:724
 msgid "_Kill Process"
 msgstr "_Dræb proces"
 
@@ -219,15 +223,15 @@ msgstr "Vis kun aktive processer"
 msgid "Change Priority ..."
 msgstr "Skift prioritet..."
 
-#: src/interface.c:141 src/memmaps.c:255
+#: src/interface.c:141 src/memmaps.c:257
 msgid "Memory Maps"
 msgstr "Hukommelsesområder"
 
-#: src/interface.c:147 src/procdialogs.c:81
+#: src/interface.c:147 src/procdialogs.c:82
 msgid "Hide Process"
 msgstr "Skjul proces"
 
-#: src/interface.c:153 src/procdialogs.c:147 src/procdialogs.c:644
+#: src/interface.c:153 src/procdialogs.c:149 src/procdialogs.c:727
 msgid "End Process"
 msgstr "Afslut proces"
 
@@ -235,7 +239,7 @@ msgstr "Afslut proces"
 msgid "Force a process to finish"
 msgstr "Tving en proces til at afslutte"
 
-#: src/interface.c:158 src/procdialogs.c:143 src/procdialogs.c:642
+#: src/interface.c:158 src/procdialogs.c:145 src/procdialogs.c:723
 msgid "Kill Process"
 msgstr "Dræb proces"
 
@@ -251,117 +255,117 @@ msgstr "Flere _oplysninger >>"
 msgid "<< Less _Info"
 msgstr "<< Færre _oplysninger"
 
-#: src/interface.c:202
+#: src/interface.c:201
 msgid "Sea_rch :"
 msgstr "S_øg:"
 
-#: src/interface.c:225
+#: src/interface.c:221
 msgid "Vie_w"
 msgstr "_Vis"
 
-#: src/interface.c:259
+#: src/interface.c:251
 msgid "More _Info"
 msgstr "Flere _oplysninger"
 
-#: src/interface.c:297
+#: src/interface.c:287
 msgid "Name"
 msgstr "Navn"
 
-#: src/interface.c:298
+#: src/interface.c:288
 msgid "Directory"
 msgstr "Mappe"
 
-#: src/interface.c:299
+#: src/interface.c:289
 msgid "Used Space"
 msgstr "Brugt plads"
 
-#: src/interface.c:300
+#: src/interface.c:290
 msgid "Total Space"
 msgstr "Total plads"
 
-#: src/interface.c:312
+#: src/interface.c:302
 msgid "% CPU Usage History"
 msgstr "Processorforbrugshistorie"
 
 # ingen grund til at tage 'swap' med her, det er blot en overskrift
-#: src/interface.c:317
+#: src/interface.c:307
 msgid "% Memory / Swap Usage History"
 msgstr "Hukommelsesforbrughistorie"
 
-#: src/interface.c:338
+#: src/interface.c:328
 msgid "CPU Used :"
 msgstr "Processorforbrug:"
 
 # der skal bruges små korte overskrifter
-#: src/interface.c:367 src/proctable.c:127
+#: src/interface.c:357 src/proctable.c:128
 msgid "Memory"
 msgstr "Huk."
 
-#: src/interface.c:372 src/interface.c:408
+#: src/interface.c:362 src/interface.c:398
 msgid "Used :"
 msgstr "Benyttet:"
 
-#: src/interface.c:383 src/interface.c:419
+#: src/interface.c:373 src/interface.c:409
 msgid "Total :"
 msgstr "Total:"
 
-#: src/interface.c:403
+#: src/interface.c:393
 msgid "Swap"
 msgstr "Byt om"
 
-#: src/interface.c:433 src/procdialogs.c:589
+#: src/interface.c:423 src/procdialogs.c:657
 msgid "Devices"
 msgstr "Enheder"
 
-#: src/interface.c:507 src/procdialogs.c:488
+#: src/interface.c:490 src/procdialogs.c:529
 msgid "Process _Listing"
 msgstr "Proces_liste"
 
-#: src/interface.c:516 src/procdialogs.c:532
+#: src/interface.c:496 src/procdialogs.c:592
 msgid "System _Monitor"
 msgstr "System_overvågning"
 
-#: src/interface.c:578
+#: src/interface.c:550
 msgid "Application Manager"
 msgstr "Programhåndtering"
 
-#: src/interface.c:588
+#: src/interface.c:560
 msgid "Running Applications"
 msgstr "Kørende programmer"
 
-#: src/interface.c:607
+#: src/interface.c:579
 msgid "_Close Application"
 msgstr "_Luk program"
 
-#: src/memmaps.c:189
+#: src/memmaps.c:191
 msgid "Filename"
 msgstr "Filnavn"
 
-#: src/memmaps.c:189
+#: src/memmaps.c:191
 msgid "VM Start"
 msgstr "VM-start"
 
-#: src/memmaps.c:189
+#: src/memmaps.c:191
 msgid "VM End"
 msgstr "VM-slut"
 
-#: src/memmaps.c:190
+#: src/memmaps.c:192
 msgid "Flags"
 msgstr "Flag"
 
-#: src/memmaps.c:190
+#: src/memmaps.c:192
 msgid "VM offset"
 msgstr "VM-offset"
 
-#: src/memmaps.c:190
+#: src/memmaps.c:192
 msgid "Device"
 msgstr "Enhed"
 
-#: src/memmaps.c:190
+#: src/memmaps.c:192
 msgid "Inode"
 msgstr "Inode"
 
-#: src/memmaps.c:270
+#: src/memmaps.c:272
 msgid "Process Name :"
 msgstr "Procesnavn:"
 
@@ -369,7 +373,7 @@ msgstr "Procesnavn:"
 msgid "No such process."
 msgstr "Ingen sådan proces."
 
-#: src/procactions.c:60
+#: src/procactions.c:67
 #, c-format
 msgid ""
 "Process Name : %s \n"
@@ -383,7 +387,7 @@ msgstr ""
 "proces. Du kan indtaste administratoradgangskoden for at opnå disse "
 "rettigheder."
 
-#: src/procactions.c:67
+#: src/procactions.c:74
 #, c-format
 msgid ""
 "Process Name : %s \n"
@@ -396,7 +400,7 @@ msgstr ""
 "Du skal være administrator for at kunne sætte en procesprioritet lavere end "
 "0. Du kan indtaste administratoradgangskoden for at opnå disse rettigheder."
 
-#: src/procactions.c:119
+#: src/procactions.c:126
 #, c-format
 msgid ""
 "Process Name : %s \n"
@@ -409,11 +413,11 @@ msgstr ""
 "Du har ikke de nødvendige rettigheder til at afslutte denne proces. Du kan "
 "indtaste administratoradgangskoden for at opnå disse rettigheder."
 
-#: src/procactions.c:133
+#: src/procactions.c:145
 msgid "An error occured while killing the process."
 msgstr "En fejl opstod under drabet på processen."
 
-#: src/procdialogs.c:72
+#: src/procdialogs.c:73
 msgid ""
 "Are you sure you want to hide this process?\n"
 "(Choose 'Hidden Processes' in the Settings menu to reshow)"
@@ -422,39 +426,39 @@ msgstr ""
 "'Skjulte processer' i indstillingsmenuen for at\n"
 "vise den igen)?"
 
-#: src/procdialogs.c:90 src/procdialogs.c:167
+#: src/procdialogs.c:91 src/procdialogs.c:169
 msgid "Show this dialog next time."
 msgstr "Vis dette vindue næste gang."
 
-#: src/procdialogs.c:148
+#: src/procdialogs.c:150 src/procdialogs.c:728
 msgid "_End Process"
 msgstr "_Afslut proces"
 
-#: src/procdialogs.c:155
+#: src/procdialogs.c:157
 msgid "Unsaved data will be lost."
 msgstr "Ugemte data vil gå tabt."
 
-#: src/procdialogs.c:190
+#: src/procdialogs.c:192
 msgid "( Very High Priority )"
 msgstr "(meget høj prioritet)"
 
-#: src/procdialogs.c:192
+#: src/procdialogs.c:194
 msgid "( High Priority )"
 msgstr "(høj prioritet)"
 
-#: src/procdialogs.c:194
+#: src/procdialogs.c:196
 msgid "( Normal Priority )"
 msgstr "(normal prioritet)"
 
-#: src/procdialogs.c:196
+#: src/procdialogs.c:198
 msgid "( Low Priority )"
 msgstr "(lav prioritet)"
 
-#: src/procdialogs.c:198
+#: src/procdialogs.c:200
 msgid "( Very Low Priority)"
 msgstr "(meget lav prioritet)"
 
-#: src/procdialogs.c:240
+#: src/procdialogs.c:243
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -462,154 +466,183 @@ msgstr ""
 "Prioriteten af en proces er givet ved dens venlighedsværdi. En lavere\n"
 "værdi svarer til en højre prioritet."
 
-#: src/procdialogs.c:245 src/procdialogs.c:647
+#: src/procdialogs.c:251 src/procdialogs.c:732
 msgid "Change Priority"
 msgstr "Skift prioritet"
 
-#: src/procdialogs.c:248
+#: src/procdialogs.c:254 src/procdialogs.c:733
 msgid "Change _Priority"
 msgstr "Skift _prioritet"
 
-#: src/procdialogs.c:267
+#: src/procdialogs.c:273
 msgid "Nice Value :"
 msgstr "Venlighedsværdi:"
 
-#: src/procdialogs.c:432
+#: src/procdialogs.c:472
 msgid "Icon"
 msgstr "Ikon"
 
-#: src/procdialogs.c:475
+#: src/procdialogs.c:516
 msgid "Preferences"
 msgstr "Indstillinger"
 
-#: src/procdialogs.c:499
+#: src/procdialogs.c:540
 msgid "Update Interval ( seconds ) :"
 msgstr "Opdateringsinterval (sekunder):"
 
-#: src/procdialogs.c:510
+#: src/procdialogs.c:550 src/procdialogs.c:616
+msgid "_Set"
+msgstr "_Sæt"
+
+#: src/procdialogs.c:556
 msgid "Show Process Dependencies"
 msgstr "Vis procesafhængigheder"
 
-#: src/procdialogs.c:517
+#: src/procdialogs.c:563
 msgid "Show Threads"
 msgstr "Vis tråde"
 
-#: src/procdialogs.c:526
+#: src/procdialogs.c:570
+msgid "Show warning dialog when ending or killing processes"
+msgstr "Vis advarselsvindue ved afslutning eller drab af processer"
+
+#: src/procdialogs.c:577
+msgid "Show warning dialog when hiding processes"
+msgstr "Vis advarselsvindue ved skjulelse af processer"
+
+#: src/procdialogs.c:586
 msgid "Process _Fields"
 msgstr "Proces_felter"
 
-#: src/procdialogs.c:536
+#: src/procdialogs.c:596
 msgid "Graphs"
 msgstr "Grafer"
 
-#: src/procdialogs.c:542 src/procdialogs.c:596
+#: src/procdialogs.c:605 src/procdialogs.c:663
 msgid "Update Speed ( seconds ) :"
 msgstr "Opdateringsinterval (sekunder):"
 
-#: src/procdialogs.c:557
+#: src/procdialogs.c:625
 msgid "Background Color :"
 msgstr "Baggrundsfarve:"
 
-#: src/procdialogs.c:573
+#: src/procdialogs.c:641
 msgid "Grid Color :"
 msgstr "Gitterfarve:"
 
-#: src/procdialogs.c:663
+#: src/procdialogs.c:676
+msgid "Se_t"
+msgstr "Sæ_t"
+
+#: src/procdialogs.c:752
 msgid "Root Password :"
 msgstr "Administratoradgangskode:"
 
-#: src/procdialogs.c:701
+#: src/procdialogs.c:797
 msgid "Wrong Password."
 msgstr "Forkert adgangskode."
 
-#: src/procman.c:47
+#: src/procman.c:46
 msgid "show simple dialog to end processes and logout"
 msgstr "Vis simpelt vindue til at afslutte processer og logge ud"
 
-#: src/proctable.c:125
+#: src/proctable.c:126
 msgid "Process Name"
 msgstr "Procesnavn"
 
-#: src/proctable.c:125
+#: src/proctable.c:126
 msgid "Arguments"
 msgstr "Parametre"
 
-#: src/proctable.c:126
+#: src/proctable.c:127
 msgid "User"
 msgstr "Bruger"
 
-#: src/proctable.c:126
+#: src/proctable.c:127
 msgid "Status"
 msgstr "Status"
 
 # VM = virtuel memory, så dette dækker vist fint
-#: src/proctable.c:127
+#: src/proctable.c:128
 msgid "VM Size"
 msgstr "Virtuel huk."
 
-#: src/proctable.c:127
+#: src/proctable.c:128
 msgid "Resident Memory"
 msgstr "Resident huk."
 
-#: src/proctable.c:128
+#: src/proctable.c:129
 msgid "Shared Memory"
 msgstr "Delt huk."
 
-#: src/proctable.c:128
+#: src/proctable.c:129
 msgid "RSS Memory"
 msgstr "Fysisk huk."
 
-#: src/proctable.c:129
+#: src/proctable.c:130
 msgid "% CPU"
 msgstr "% cpu"
 
 # prioritet er helt entydigt her
-#: src/proctable.c:129
+#: src/proctable.c:130
 msgid "Nice"
 msgstr "Prioritet"
 
-#: src/proctable.c:129
+#: src/proctable.c:130
 msgid "ID"
 msgstr "Id"
 
-#: src/proctable.c:288
+#: src/proctable.c:270
 msgid "Running"
 msgstr "Kører"
 
-#: src/proctable.c:294
+#: src/proctable.c:276
 msgid "Stopped"
 msgstr "Stoppet"
 
-#: src/proctable.c:299
+#: src/proctable.c:281
 msgid "Sleeping"
 msgstr "Sover"
 
-#: src/proctable.c:428
+#: src/proctable.c:410
 msgid " (thread)"
 msgstr " (tråd)"
 
-#: src/proctable.c:945
+#: src/proctable.c:930
 #, c-format
 msgid "%s could not be found."
 msgstr "%s blev ikke fundet."
+
+#: src/util.c:194
+#, c-format
+msgid "%d bytes"
+msgstr "%d byte"
+
+#: src/util.c:197
+#, c-format
+msgid "%d K"
+msgstr "%d k"
+
+#: src/util.c:201
+#, c-format
+msgid "%.1f MB"
+msgstr "%.1f Mb"
+
+#: src/util.c:203
+#, c-format
+msgid "%.0f MB"
+msgstr "%.0f Mb"
+
+#: src/util.c:206
+#, c-format
+msgid "%.1f GB"
+msgstr "%.1f Gb"
 
 #~ msgid "Galeon Web Browser"
 #~ msgstr "Netsurfningsprogrammet Galeon"
 
 #~ msgid "Sawfish Window Manager"
 #~ msgstr "Vindueshåndteringen Sawfish"
-
-#~ msgid "%d K"
-#~ msgstr "%d k"
-
-#~ msgid "%.2f MB"
-#~ msgstr "%.2f Mb"
-
-#~ msgid "%.2f GB"
-#~ msgstr "%.2f Gb"
-
-#~ msgid "..."
-#~ msgstr "..."
 
 #~ msgid ""
 #~ "This action will block a process from being displayed. \n"
@@ -647,12 +680,6 @@ msgstr "%s blev ikke fundet."
 #~ "Procesoversigten kunne ikke finde e-tree-specifikationsfilen.\n"
 #~ "Der skulle være en fil ved navn memmaps.etspec i\n"
 
-#~ msgid "%d bytes"
-#~ msgstr "%d byte"
-
-#~ msgid "%.1f MB"
-#~ msgstr "%.1f Mb"
-
 #~ msgid "Add to favorites"
 #~ msgstr "Tilføj til favoritter"
 
@@ -670,12 +697,6 @@ msgstr "%s blev ikke fundet."
 
 #~ msgid "Swap Used / Total :"
 #~ msgstr "Reservehukommelsesforbrug/total:"
-
-#~ msgid "%.0f MB"
-#~ msgstr "%.0f Mb"
-
-#~ msgid "%.0f GB"
-#~ msgstr "%.0f Gb"
 
 #~ msgid ""
 #~ "Procman could not find the e-tree spec file.\n"
