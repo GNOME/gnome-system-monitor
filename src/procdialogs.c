@@ -610,10 +610,9 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_signal_connect (GTK_OBJECT (color_picker), "color_set",
 			    GTK_SIGNAL_FUNC (frame_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 1, 2, 2, 3, 
-			  GTK_FILL|GTK_EXPAND,0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-			  
+			  GTK_FILL|GTK_EXPAND,0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);		  
 	
-	frame = gtk_frame_new (_("Disks"));
+	frame = gtk_frame_new (_("Devices"));
 	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
 	table = gtk_table_new (2, 1, FALSE);
