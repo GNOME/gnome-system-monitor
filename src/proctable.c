@@ -600,6 +600,11 @@ remove_children_from_tree (ETreeModel *model, ETreePath node, gpointer data)
 	ProcData *procdata = data;
 	ProcInfo *info = e_tree_memory_node_get_data (procdata->memory, node);
 
+	if (!info)
+	{
+		return TRUE;
+	}
+
 	if (info->node == procdata->selected_node)
 	{
 		procdata->selected_node = NULL;
@@ -628,7 +633,6 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 	*/
 	e_tree_model_node_traverse (procdata->model, info->node, remove_children_from_tree,
 				    procdata);
-		
 	
 	if (info->node == procdata->selected_node)
 	{
@@ -648,7 +652,7 @@ static void
 refresh_list (ProcData *data, unsigned *pid_list, gint n)
 {
 	ProcData *procdata = data;
-	GList *list = g_list_copy (procdata->info);
+	GList *list = procdata->info;
 	gint i = 0;
 	ETreePath root_node;
 	
