@@ -90,6 +90,7 @@ void 		cb_double_click	(ETree	*tree, int row, ETreePath path,
 void		cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page, 
 			        gint num, gpointer data);
 
+gint 		cb_update_disks (gpointer data);
 gint		cb_timeout (gpointer data);
 
 

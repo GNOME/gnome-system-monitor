@@ -53,6 +53,7 @@ struct _ProcConfig
         gboolean	show_pretty_names;
         gboolean	show_threads;
  	gint		update_interval;
+ 	gint		graph_update_interval;
 	gint		whose_process;
 	gchar		*tree_state_file;
 	gchar		*memmaps_state_file;
@@ -138,7 +139,7 @@ struct _ProcData
 	ETreePath	selected_node;
 	gint		selected_pid;
 	gint		timeout;
-	gint		meter_timeout;
+	gint		disk_timeout;
 	GList		*info;
 	gint		proc_num;
 	GtkWidget 	*cpumeter, *memmeter, *swapmeter;

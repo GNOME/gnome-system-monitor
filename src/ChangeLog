@@ -1,5 +1,22 @@
 2001-08-24  Kevin Vandersloot <kfv101@psu.edu>
 
+	* interface.c: Put disks updating on timeout. Move mount 
+	directory to the last column of the clist since it is the 
+	least interesting.
+
+	* procman.[c,h]: new config value for the graph updating
+	interval. Remove the g_free to the e-tree state save file
+	names since I think that may be why procman leaves behind
+	weird files.
+
+	* load-graph.c: use the new timeout config variable for the
+	graph timeout.
+
+	* callbacks.c (cb_update_disks): clear the clist and
+	repopulate.
+
+2001-08-24  Kevin Vandersloot <kfv101@psu.edu>
+
 	* interface.c: fix bug #59466, a typo in wording. Also slightly
 	modify another string. Sorry translators :(
 

@@ -106,6 +106,8 @@ procman_data_new (void)
 		gnome_config_get_bool ("procman/Config/show_threads=FALSE");
 	pd->config.update_interval = 
 		gnome_config_get_int ("procman/Config/update_interval=3000");
+	pd->config.graph_update_interval = 
+		gnome_config_get_int ("procman/Config/graph_update_interval=500");
 	pd->config.whose_process = gnome_config_get_int ("procman/Config/view_as=1");
 	pd->config.current_tab = gnome_config_get_int ("procman/Config/current_tab=0");
 	pd->config.bg_color.red = gnome_config_get_int
@@ -177,11 +179,6 @@ procman_free_data (ProcData *procdata)
 	
 	pretty_table_free (procdata->pretty_table);
 	
-	if (procdata->config.tree_state_file)
-		g_free (procdata->config.tree_state_file);
-	if (procdata->config.memmaps_state_file)
-		g_free (procdata->config.memmaps_state_file);
-	
 	g_free (procdata);
 	
 }
@@ -202,6 +199,8 @@ procman_save_config (ProcData *data)
 	gnome_config_set_bool ("procman/Config/show_pretty_names", data->config.show_pretty_names);
 	gnome_config_set_bool ("procman/Config/show_threads", data->config.show_threads);
 	gnome_config_set_int ("procman/Config/update_interval", data->config.update_interval);
+	gnome_config_set_int ("procman/Config/graph_update_interval", 
+			      data->config.graph_update_interval);
 	gnome_config_set_int ("procman/Config/current_tab", data->config.current_tab);
 	/*gnome_config_set_string ("procman/Config/bg_color", data->config.bg_color);
 	gnome_config_set_string ("procman/Config/cpu_color", data->config.cpu_color);

@@ -389,7 +389,7 @@ load_graph_new (gint type, ProcData *procdata)
     	break;
     }
 	
-    g->speed  = 500;
+    g->speed  = procdata->config.graph_update_interval;
     g->num_points = 200;
     
     g->colors = g_new0 (GdkColor, g->n + 2);

@@ -22,6 +22,9 @@
 #endif
 
 #include <gnome.h>
+#include <glibtop/xmalloc.h>
+#include <glibtop/mountlist.h>
+#include <glibtop/fsusage.h>
 #include "callbacks.h"
 #include "interface.h"
 #include "proctable.h"
@@ -157,6 +160,8 @@ cb_app_delete (GtkWidget *window, GdkEventAny *ev, gpointer data)
 	gtk_timeout_remove (procdata->timeout);
 	gtk_timeout_remove (procdata->cpu_graph->timer_index);
 	gtk_timeout_remove (procdata->mem_graph->timer_index);
+	gtk_timeout_remove (procdata->disk_timeout);
+	
 	gtk_main_quit ();
 	
 }
@@ -477,6 +482,75 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 			update_sensitivity (procdata, FALSE);
 	}
 
+}
+
+static gchar *
+get_size_string (gint size)
+{
+	gfloat fsize;
+
+	fsize = (gfloat) size;
+	if (fsize < 1024.0) 
+		return g_strdup_printf ("%d K", (int)fsize);
+		
+	fsize /= 1024.0;
+	if (fsize < 1024.0)
+		return g_strdup_printf ("%.2f MB", fsize);
+	
+	fsize /= 1024.0;
+	return g_strdup_printf ("%.2f GB", fsize);
+
+}
+
+gint
+cb_update_disks (gpointer data)
+{
+	GtkWidget *clist = data;
+	glibtop_mountentry *entry;
+	glibtop_mountlist mountlist;
+	float old_adj_hval = GTK_CLIST (clist)->hadjustment->value;
+        float old_adj_vval = GTK_CLIST (clist)->vadjustment->value;
+        gint old_hoffset = GTK_CLIST (clist)->hoffset;
+        gint old_voffset = GTK_CLIST (clist)->voffset;
+	gint i;
+	
+	gtk_clist_freeze (GTK_CLIST (clist));
+	gtk_clist_clear (GTK_CLIST (clist));
+	
+	entry = glibtop_get_mountlist (&mountlist, 0);
+	for (i=0; i < mountlist.number; i++) {
+		glibtop_fsusage usage;
+		gchar *text[5];
+		
+		glibtop_get_fsusage (&usage, entry[i].mountdir);
+		text[0] = g_strdup (entry[i].devname);
+		text[4] = g_strdup (entry[i].mountdir);
+		text[1] = get_size_string ((usage.blocks - usage.bfree) / 2);
+		text[2] = get_size_string (usage.bfree / 2);
+		text[3] = get_size_string (usage.blocks / 2);
+		/* Hmm, usage.blocks == 0 seems to get rid of /proc and all
+		** the other useless entries */
+		if (usage.blocks != 0)
+			gtk_clist_append (GTK_CLIST (clist), text);
+		
+		g_free (text[0]);
+		g_free (text[1]);
+		g_free (text[2]);
+		g_free (text[3]);
+		g_free (text[4]);
+	}
+	
+	GTK_CLIST (clist)->hadjustment->value = old_adj_hval;
+        GTK_CLIST (clist)->vadjustment->value = old_adj_vval;
+
+        GTK_CLIST (clist)->hoffset = old_hoffset;
+        GTK_CLIST (clist)->voffset = old_voffset;
+	
+	gtk_clist_thaw (GTK_CLIST (clist));
+	
+	glibtop_free (entry);
+	
+	return TRUE;
 }
 	
 gint

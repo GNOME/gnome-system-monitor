@@ -28,9 +28,6 @@
 #include <signal.h>
 #include <gnome.h>
 #include <gdk/gdkkeysyms.h>
-#include <glibtop/xmalloc.h>
-#include <glibtop/mountlist.h>
-#include <glibtop/fsusage.h>
 #include "callbacks.h"
 #include "interface.h"
 #include "proctable.h"
@@ -310,24 +307,6 @@ create_proc_view (ProcData *procdata)
         return vbox1;
 }
 
-static gchar *
-get_size_string (gint size)
-{
-	gfloat fsize;
-
-	fsize = (gfloat) size;
-	if (fsize < 1024.0) 
-		return g_strdup_printf ("%d K", (int)fsize);
-		
-	fsize /= 1024.0;
-	if (fsize < 1024.0)
-		return g_strdup_printf ("%.2f MB", fsize);
-	
-	fsize /= 1024.0;
-	return g_strdup_printf ("%.2f GB", fsize);
-
-}
-
 static GtkWidget *
 create_sys_view (ProcData *procdata)
 {
@@ -340,14 +319,12 @@ create_sys_view (ProcData *procdata)
 	GtkWidget *scrolled, *clist;
 	GtkWidget *alignment;
 	gchar *titles[5] = {_("Disk Name"),
-			    _("Mount Directory"),
 			    _("Used Space"),
 			    _("Free Space"),
-			    _("Total Space")};
+			    _("Total Space"),
+			    _("Mount Directory")
+			    };
 	LoadGraph *cpu_graph, *mem_graph;
-	glibtop_mountentry *entry;
-	glibtop_mountlist mountlist;
-	gint i;
 	
 	vbox = gtk_vbox_new (FALSE, 0);
 	
@@ -475,30 +452,8 @@ create_sys_view (ProcData *procdata)
   	
   	gtk_widget_show_all (disk_frame);
   	
-  	entry = glibtop_get_mountlist (&mountlist, 0);
-	for (i=0; i < mountlist.number; i++) {
-		glibtop_fsusage usage;
-		gchar *text[5];
-		
-		glibtop_get_fsusage (&usage, entry[i].mountdir);
-		text[0] = g_strdup (entry[i].devname);
-		text[1] = g_strdup (entry[i].mountdir);
-		text[2] = get_size_string ((usage.blocks - usage.bfree) / 2);
-		text[3] = get_size_string (usage.bfree / 2);
-		text[4] = get_size_string (usage.blocks / 2);
-		/* Hmm, usage.blocks == 0 seems to get rid of /proc and all
-		** the other useless entries */
-		if (usage.blocks != 0)
-			gtk_clist_append (GTK_CLIST (clist), text);
-		
-		g_free (text[0]);
-		g_free (text[1]);
-		g_free (text[2]);
-		g_free (text[3]);
-		g_free (text[4]);
-	}
-	
-	glibtop_free (entry);
+  	cb_update_disks (clist);
+  	procdata->disk_timeout = gtk_timeout_add (5000, cb_update_disks, clist);  	
 	
 	return vbox;
 }
