@@ -334,7 +334,6 @@ proctable_new (ProcData *data)
 	procdata->model = model;
 	procdata->memory = etmm;
 	
-	/*proctable_update_all (procdata);*/
 	
 	return scrolled;
 
@@ -360,21 +359,6 @@ proctable_free_info (ProcInfo *info)
 	g_free (info);
 }
 
-static void
-proctable_free_info_list (ProcData *data)
-{
-	GList *list = data->info;
-	
-	while (list)
-	{
-		ProcInfo *info = list->data;
-		proctable_free_info (info);
-		list = g_list_next (list);
-	}
-	
-	g_list_free (list);
-	
-}
 
 
 static gchar *
@@ -390,8 +374,8 @@ get_process_status (char *state)
 
 }
 
-static ETreePath *
-find_parent_node (ProcData *data, gint pid)
+static ProcInfo *
+find_parent (ProcData *data, gint pid)
 {
 	GList *list = data->info;
 	
@@ -404,7 +388,7 @@ find_parent_node (ProcData *data, gint pid)
 	{
 		ProcInfo *info = list->data;
 		if (pid == info->pid)
-			return info->node;
+			return info;
 		list = g_list_next (list);
 	}
 	return NULL;
@@ -483,17 +467,21 @@ get_info (ProcData *procdata, gint pid)
 static ETreePath *
 insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath *root_node)
 {
-	ETreePath *parentnode;
+	ProcInfo *parentinfo = NULL;
 	ETreePath *node;
 	
 	#if 1 /* do the tree */
-	parentnode = find_parent_node (procdata, info->parent_pid);
-	if (parentnode)
+	parentinfo = find_parent (procdata, info->parent_pid);
+	if (parentinfo)
 	{
 		node = e_tree_memory_node_insert (procdata->memory, 
-						  parentnode, 0, info);
+						  parentinfo->node, 0, info);
+		/* Ha Ha - don't expand different threads - check to see if parent has
+		** same name - I don't know if this is too smart
+		*/
+		if (g_strcasecmp (info->name, parentinfo->name))
 		e_tree_node_set_expanded (E_TREE (procdata->tree),
-					  parentnode, TRUE);
+					  parentinfo->node, TRUE);
 	}
 	else
 	#endif

@@ -87,7 +87,6 @@ create_main_window (ProcData *data)
 	GtkWidget *optionmenu1_menu;
 	GtkWidget *glade_menuitem;
 	GtkWidget *scrolled;
-	GtkWidget *proctable;
 	GtkWidget *label;
 	GtkWidget *hbox2;
 	GtkWidget *appbar1;
@@ -151,12 +150,16 @@ create_main_window (ProcData *data)
 	gtk_box_pack_end (GTK_BOX (hbox2), infobutton, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (infobutton), GNOME_PAD_SMALL);
 	gtk_misc_set_padding (GTK_MISC (GTK_BIN (infobutton)->child), 2, 2);
+	//gtk_widget_set_sensitive (infobutton, FALSE);
 
 	gtk_widget_show_all (hbox2);
 
-	/*appbar1 = gnome_appbar_new (FALSE, TRUE, GNOME_PREFERENCES_NEVER);
-	gnome_app_set_statusbar (GNOME_APP (app), appbar1);
+	/* This is just to get rid of some GNome-UI criticals - just
+	** hide the appbar
 	*/
+	appbar1 = gnome_appbar_new (FALSE, TRUE, GNOME_PREFERENCES_NEVER);
+	gnome_app_set_statusbar (GNOME_APP (app), appbar1);
+	gtk_widget_hide (appbar1);
 	
 	infobox = infoview_create (procdata);
 	gtk_box_pack_start (GTK_BOX (vbox1), infobox, FALSE, FALSE, 0);
@@ -213,8 +216,6 @@ create_main_window (ProcData *data)
 			    GTK_SIGNAL_FUNC (cb_info_button_pressed),
 			    procdata);
 
-	/*gtk_signal_connect (GTK_OBJECT (procdata->tree), "cursor_activated",
-			    GTK_SIGNAL_FUNC (cb_table_selected), button3);*/
 	gtk_signal_connect (GTK_OBJECT (procdata->tree), "cursor_activated",
 			    GTK_SIGNAL_FUNC (cb_table_selected), procdata);
 	gtk_signal_connect (GTK_OBJECT (procdata->tree), "double_click",
@@ -265,6 +266,7 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 {
 
 	gtk_widget_set_sensitive (endprocessbutton, sensitivity);
+	gtk_widget_set_sensitive (infobutton, sensitivity);
 	gtk_widget_set_sensitive (data->infoview->infobox, sensitivity);
 }	
 
