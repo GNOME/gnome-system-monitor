@@ -547,7 +547,7 @@ main (int argc, char *argv[])
 				      LIBGNOMEUI_MODULE, argc, argv, 
 			    	      GNOME_PARAM_POPT_TABLE, options, 
 				      GNOME_PARAM_APP_DATADIR,DATADIR, NULL);
-	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/procman.png");
+	gtk_window_set_default_icon_name ("procman");
 		    
 	gconf_init (argc, argv, NULL);
 			    

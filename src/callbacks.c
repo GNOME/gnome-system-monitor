@@ -114,13 +114,6 @@ cb_hide_process (GtkMenuItem *menuitem, gpointer data)
 void
 cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 {
-
-	GtkWidget *about;
-	GdkPixbuf *pixbuf;
-	GError    *error = NULL;
-	gchar     *file;
-
-
 	static const gchar *authors[] = {
 		"Kevin Vandersloot",
 		N_("Jorgen Scheibengruber - nicer devices treeview"),
@@ -128,42 +121,19 @@ cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 		NULL
 	};
 
-	static const gchar *documenters[] = {
-		NULL
-	};
-
-	const gchar *translator_credits = _("translator_credits");
-
 	PROCMAN_GETTEXT_ARRAY_INIT(authors);
-	PROCMAN_GETTEXT_ARRAY_INIT(documenters);
 
-
-	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
-					  "procman.png", FALSE, NULL);
-	pixbuf = gdk_pixbuf_new_from_file (file, &error);
-
-	if (error) {
-		g_warning (G_STRLOC ": cannot open %s: %s", file, error->message);
-		g_error_free (error);
-	}
-
-	g_free (file);
-
-
-	about = gnome_about_new (_("System Monitor"), VERSION,
-				 "(C) 2001 Kevin Vandersloot",
-				 _("System resources monitor"),
-				 authors,
-				 documenters,
-				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-				 pixbuf);
-
-	if (pixbuf) {
-		g_object_unref (pixbuf);
-	}
-
-
-	gtk_widget_show (about);
+	gtk_show_about_dialog (
+		NULL,
+		"name",			_("System Monitor"),
+		"comments",		_("System resources monitor"),
+		"version",		VERSION,
+		"copyright",		"(C) 2001 - 2004 Kevin Vandersloot",
+		"logo-icon-name",	"procman",
+		"authors",		authors,
+		"translator-credits",	_("translator_credits"),
+		NULL
+		);
 }
 
 
