@@ -175,7 +175,7 @@ procdialog_create_renice_dialog (ProcData *data)
   	GtkWidget *cancelbutton;
   	GtkWidget *dialog_action_area;
   	gchar *text = 
-  	      _("The nice value is the priority");
+  	      "The nice value is the priority";
 	
 	if (!procdata->selected_node)
 		return;
