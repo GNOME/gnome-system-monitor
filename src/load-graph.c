@@ -122,28 +122,26 @@ load_graph_draw (LoadGraph *g)
 static void
 get_load (gfloat data [2], LoadGraph *g)
 {
-	float usr, nice, sys, free;
-	float total;
-	gchar *text;
 	gint i;
 
 	glibtop_cpu cpu;
 
 	glibtop_get_cpu (&cpu);
 
-	for (i=0; i<g->n; i++) {
-		if (g->n == 1) {
-			g->cpu_time [i][0] = cpu.user;
-			g->cpu_time [i][1] = cpu.nice;
-			g->cpu_time [i][2] = cpu.sys;
-			g->cpu_time [i][3] = cpu.idle;
-		} else {
-			g->cpu_time [i][0] = cpu.xcpu_user[i];
-			g->cpu_time [i][1] = cpu.xcpu_nice[i];
-			g->cpu_time [i][2] = cpu.xcpu_sys[i];
-			g->cpu_time [i][3] = cpu.xcpu_idle[i];
-		}
+	if (g->n == 1) {
+	  g->cpu_time [0][0] = cpu.user;
+	  g->cpu_time [0][1] = cpu.nice;
+	  g->cpu_time [0][2] = cpu.sys;
+	  g->cpu_time [0][3] = cpu.idle;
+	} else {
+	  for (i=0; i<g->n; i++) {
+	    g->cpu_time [i][0] = cpu.xcpu_user[i];
+	    g->cpu_time [i][1] = cpu.xcpu_nice[i];
+	    g->cpu_time [i][2] = cpu.xcpu_sys[i];
+	    g->cpu_time [i][3] = cpu.xcpu_idle[i];
+	  }
 	}
+
 	if (!g->cpu_initialized) {
 		for (i=0; i<g->n; i++) {
 			g->cpu_last [i][0] = g->cpu_time [i][0];
@@ -152,26 +150,27 @@ get_load (gfloat data [2], LoadGraph *g)
 			g->cpu_last [i][3] = g->cpu_time [i][3];
 			data[i] = -1;
 		}
-		g->cpu_initialized = 1;
+		g->cpu_initialized = TRUE;
 		return;
 	}
 
 	for (i=0; i<g->n; i++) {
 		float load;
+		float usr, nice, sys, free;
+		float total;
+		gchar *text;
 
 		usr  = g->cpu_time [i][0] - g->cpu_last [i][0];
 		nice = g->cpu_time [i][1] - g->cpu_last [i][1];
 		sys  = g->cpu_time [i][2] - g->cpu_last [i][2];
 		free = g->cpu_time [i][3] - g->cpu_last [i][3];
 
-		total = usr + nice + sys + free;
-
 		g->cpu_last [i][0] = g->cpu_time [i][0];
 		g->cpu_last [i][1] = g->cpu_time [i][1];
 		g->cpu_last [i][2] = g->cpu_time [i][2];
 		g->cpu_last [i][3] = g->cpu_time [i][3];
 
-		if (!total) total = 1.0;
+		total = MAX(usr + nice + sys + free, 1.0f);
 
 		usr  = usr  / total;
 		nice = nice / total;
@@ -186,8 +185,6 @@ get_load (gfloat data [2], LoadGraph *g)
 		gtk_label_set_text (GTK_LABEL (g->cpu_labels[i]), text);
 		g_free (text);
 	}
-
-
 }
 
 static void

@@ -309,17 +309,14 @@ make_title_label (const char *text)
 static void
 cpu_size_request (GtkWidget *box, GtkRequisition *req, ProcData *procdata)
 {
-	if (req->width > procdata->cpu_label_fixed_width)
-		procdata->cpu_label_fixed_width = req->width;
-		
-	req->width = procdata->cpu_label_fixed_width;
-	
+	req->width = procdata->cpu_label_fixed_width = \
+		MAX(req->width, procdata->cpu_label_fixed_width);
 }
 
 static GtkWidget *
 create_sys_view (ProcData *procdata)
 {
-	GtkWidget *vbox;
+	GtkWidget *vbox, *hbox;
 	GtkWidget *vpane;
 	GtkWidget *cpu_box, *mem_box, *disk_box;
 	GtkWidget *cpu_hbox, *mem_hbox, *disk_hbox;
@@ -380,14 +377,13 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (cpu_graph_box), cpu_graph->main_widget, TRUE, TRUE, 0);
 
 	sizegroup = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
+	hbox = gtk_hbox_new (FALSE, 12);
+	gtk_box_pack_start (GTK_BOX (cpu_graph_box), hbox, FALSE, FALSE, 0);
+
 	for (i=0;i<procdata->config.num_cpus; i++) {
-		GtkWidget *temp_hbox, *hbox = NULL;
+		GtkWidget *temp_hbox;
 		gchar *text;
-		/* Two per row */
-		if (fabs(fmod(i,2) - 0) < .01) {
-			hbox = gtk_hbox_new (FALSE, 12);
-			gtk_box_pack_start (GTK_BOX (cpu_graph_box), hbox, FALSE, FALSE, 0);
-		}
 		
 		temp_hbox = gtk_hbox_new (FALSE, 6);
 		gtk_box_pack_start (GTK_BOX (hbox), temp_hbox, FALSE, FALSE, 0);
