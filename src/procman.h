@@ -138,7 +138,7 @@ struct _ProcData
 {
 	GtkWidget	*tree;
 	GtkWidget	*infobox;
-	GtkWidget	*disk_clist;
+	GtkWidget	*disk_list;
 	ProcConfig	config;
 	LoadGraph	*cpu_graph;
 	LoadGraph	*mem_graph;

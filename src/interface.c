@@ -43,12 +43,6 @@
 #include "procactions.h"
 #endif
 #include "load-graph.h"
-#if 0
-#include <gal/e-table/e-tree-memory.h>
-#include <gal/e-table/e-tree-memory-callbacks.h>
-#include <gal/e-table/e-tree-scrolled.h>
-#endif
-
 
 static GnomeUIInfo file1_menu_uiinfo[] =
 {
@@ -124,6 +118,7 @@ gchar *moreinfolabel = "More _Info >>";
 gchar *lessinfolabel = "<< Less _Info";
 
 GtkWidget *infobutton;
+GtkLabel *infolabel;
 GtkWidget *endprocessbutton;
 GtkWidget *popup_menu;
 GtkWidget *sys_pane;
@@ -246,19 +241,20 @@ create_proc_view (ProcData *procdata)
 	gtk_misc_set_padding (GTK_MISC (GTK_BIN (endprocessbutton)->child), 
 			      GNOME_PAD_SMALL, 1);
 
-	infobutton = gtk_button_new_with_label ("More Info");
-	
+	infolabel = gtk_label_new (_("More Info"));
+	infobutton = gtk_button_new ();
+	gtk_container_add (GTK_CONTAINER (infobutton), infolabel);
 	gtk_box_pack_end (GTK_BOX (hbox2), infobutton, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (infobutton), GNOME_PAD_SMALL);
 	gtk_misc_set_padding (GTK_MISC (GTK_BIN (infobutton)->child), GNOME_PAD_SMALL, 1);
+	g_signal_connect (G_OBJECT (infobutton), "clicked",
+			  G_CALLBACK (cb_info_button_pressed), procdata);
 	
 	gtk_widget_show_all (hbox2);
 #if 0	
 	gtk_signal_connect (GTK_OBJECT (endprocessbutton), "clicked",
 			    GTK_SIGNAL_FUNC (cb_end_process_button_pressed), procdata);
-	gtk_signal_connect (GTK_OBJECT (infobutton), "clicked",
-			    GTK_SIGNAL_FUNC (cb_info_button_pressed),
-			    procdata);
+	
 			    
 	/* create popup_menu */
  	popup_menu = gtk_menu_new ();
@@ -327,7 +323,11 @@ create_sys_view (ProcData *procdata)
 	GtkWidget *hbox, *table;
 	GtkWidget *disk_frame;
 	GtkWidget *color_picker;
-	GtkWidget *scrolled, *clist;
+	GtkWidget *scrolled;
+	GtkWidget *disk_tree;
+	GtkListStore *model;
+	GtkTreeViewColumn *col;
+	GtkCellRenderer *cell;
 	gchar *titles[5] = {"Disk Name",
 			    "Used Space",
 			    "Free Space",
@@ -335,6 +335,7 @@ create_sys_view (ProcData *procdata)
 			    "Mount Directory"
 			    };
 	LoadGraph *cpu_graph, *mem_graph;
+	gint i;
 	
 	vpane = gtk_vpaned_new ();
 	sys_pane = vpane;
@@ -436,7 +437,7 @@ create_sys_view (ProcData *procdata)
 	
 	procdata->mem_graph = mem_graph;
 	gtk_widget_show_all (vbox);
-#if 0					
+				
 	disk_frame = gtk_frame_new ("Disks");
 	gtk_container_set_border_width (GTK_CONTAINER (disk_frame), GNOME_PAD_SMALL);
 	gtk_paned_add2 (GTK_PANED (vpane), disk_frame);
@@ -446,29 +447,34 @@ create_sys_view (ProcData *procdata)
 					GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 	gtk_container_add (GTK_CONTAINER (disk_frame), scrolled);
 	 
-	model = gtk_ 
-	clist = gtk_clist_new_with_titles (5, titles);
-	gtk_container_add (GTK_CONTAINER (scrolled), clist);
-  	gtk_container_set_border_width (GTK_CONTAINER (clist), GNOME_PAD_SMALL);
+	model = gtk_list_store_new (5, G_TYPE_STRING, G_TYPE_STRING,
+				       G_TYPE_STRING, G_TYPE_STRING,
+				       G_TYPE_STRING); 
+				       
+	disk_tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
+	procdata->disk_list = disk_tree;
+	gtk_container_add (GTK_CONTAINER (scrolled), disk_tree);
+  	gtk_container_set_border_width (GTK_CONTAINER (disk_tree), GNOME_PAD_SMALL);
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (disk_tree), TRUE);
+  	g_object_unref (G_OBJECT (model));
   	
-  	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 0, TRUE);
-  	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 1, TRUE);
-  	gtk_clist_set_column_justification (GTK_CLIST (clist), 1, GTK_JUSTIFY_CENTER);
-  	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 2, TRUE);
-  	gtk_clist_set_column_justification (GTK_CLIST (clist), 2, GTK_JUSTIFY_CENTER);
-  	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 3, TRUE);
-  	gtk_clist_set_column_justification (GTK_CLIST (clist), 3, GTK_JUSTIFY_CENTER);
-  	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 4, TRUE);
+  	for (i = 0; i < 5; i++) {
+  		cell = gtk_cell_renderer_text_new ();
+  		col = gtk_tree_view_column_new_with_attributes (titles[i],
+						    		cell,
+						     		"text", i,
+						     		 NULL);
+		/*gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_RESIZABLE);
+		gtk_tree_view_column_set_reorderable (col, TRUE);*/
+		gtk_tree_view_append_column (GTK_TREE_VIEW (disk_tree), col);
+	}
   	
-  	gtk_widget_show_all (disk_frame);
+	gtk_widget_show_all (disk_frame);
   	
-  	procdata->disk_clist = clist;	
-	  	
   	cb_update_disks (procdata);
-  	procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
-  						  cb_update_disks, procdata);  
-#endif 
-  						  
+  	/*procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
+  						  cb_update_disks, procdata);*/
+ 						  
 	return vpane;
 }
 
@@ -518,18 +524,17 @@ create_main_window (ProcData *procdata)
 	tab_label2 = gtk_label_new ("System Monitor");
 	gtk_widget_show (tab_label2);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label2);
-
-#if 0	
+	
 	appbar1 = gnome_appbar_new (FALSE, TRUE, GNOME_PREFERENCES_NEVER);
 	gnome_app_set_statusbar (GNOME_APP (app), appbar1);
-#endif
+
 	
 	g_signal_connect (G_OBJECT (app), "delete_event",
                           G_CALLBACK (cb_app_delete),
                           procdata);
-#if 0
+
 	gnome_app_install_menu_hints (GNOME_APP (app), menubar1_uiinfo);
-#endif
+
 
 #if 0
         gtk_signal_connect (GTK_OBJECT (procdata->tree), "cursor_activated",
@@ -560,12 +565,12 @@ create_main_window (ProcData *procdata)
 	gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), 
 					 "cursor_activated",
 					  -1, NULL);
-					  
+#endif					  
  	/* We cheat and force it to set up the labels */
  	procdata->config.show_more_info = !procdata->config.show_more_info;
  	toggle_infoview (procdata);	
-#endif
- 	gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 1);
+
+ 	gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab);
 	
  	return app;
 
@@ -649,7 +654,6 @@ create_simple_view_dialog (ProcData *procdata)
 	return NULL;
 }
 
-#if 0
 void
 toggle_infoview (ProcData *data)
 {
@@ -658,7 +662,7 @@ toggle_infoview (ProcData *data)
 	static guint more_key = 0;
 	static guint less_key = 0;
 
-	label = GTK_LABEL (GTK_BUTTON (infobutton)->child);
+	label = infolabel;
 		
 	if (procdata->config.show_more_info == FALSE)
 	{
@@ -667,7 +671,7 @@ toggle_infoview (ProcData *data)
 		procdata->config.show_more_info = TRUE;	
  		less_key = gtk_label_parse_uline(GTK_LABEL (label),
  						 _(lessinfolabel));
- 		if (more_key != 0)
+ 		/*if (more_key != 0)
  			gtk_widget_remove_accelerator (infobutton,
  						       accel,
  						       more_key,
@@ -675,7 +679,7 @@ toggle_infoview (ProcData *data)
  		gtk_widget_add_accelerator (infobutton, "clicked",
  					    accel,
  					    less_key, GDK_MOD1_MASK,
- 					    0);
+ 					    0);*/
 		
 	}			
 	else
@@ -684,7 +688,7 @@ toggle_infoview (ProcData *data)
 		procdata->config.show_more_info = FALSE;
  		more_key = gtk_label_parse_uline(GTK_LABEL (label),
  						 _(moreinfolabel));
- 		if (less_key != 0)
+ 		/*if (less_key != 0)
  			gtk_widget_remove_accelerator (infobutton,
  						       accel,
  						       less_key,
@@ -692,10 +696,10 @@ toggle_infoview (ProcData *data)
  		gtk_widget_add_accelerator (infobutton, "clicked",
  					    accel,
  					    more_key, GDK_MOD1_MASK,
- 					    0);		
+ 					    0);*/
 	}
 }
-
+#if 0
 void do_popup_menu (ProcData *data, GdkEvent *event)
 {
 

@@ -31,6 +31,7 @@
 #include "callbacks.h"
 #include "interface.h"
 #include "proctable.h"
+#include "util.h"
 #if 0
 #include "infoview.h"
 #include "procdialogs.h"
@@ -396,7 +397,7 @@ cb_logout (GtkButton *button, gpointer data)
 	g_print ("logout \n");
 	
 }
-
+#endif
 void
 cb_info_button_pressed			(GtkButton	*button,
 					 gpointer	user_data)
@@ -406,7 +407,7 @@ cb_info_button_pressed			(GtkButton	*button,
 	toggle_infoview (procdata);
 		
 }	
-
+#if 0
 void		
 cb_search (GtkEditable *editable, gpointer data)
 {
@@ -585,28 +586,37 @@ get_size_string (gint size)
 	return g_strdup_printf (_("%.2f GB"), fsize);
 
 }
+#endif
 
 gint
 cb_update_disks (gpointer data)
 {
 	ProcData *procdata = data;
-	GtkWidget *clist = procdata->disk_clist;
+	GtkTreeModel *model;
+	
 	glibtop_mountentry *entry;
 	glibtop_mountlist mountlist;
-	float old_adj_hval = GTK_CLIST (clist)->hadjustment->value;
+	/*float old_adj_hval = GTK_CLIST (clist)->hadjustment->value;
         float old_adj_vval = GTK_CLIST (clist)->vadjustment->value;
         gint old_hoffset = GTK_CLIST (clist)->hoffset;
-        gint old_voffset = GTK_CLIST (clist)->voffset;
+        gint old_voffset = GTK_CLIST (clist)->voffset;*/
+        GtkAdjustment *old;
 	gint i;
 	
-	gtk_clist_freeze (GTK_CLIST (clist));
-	gtk_clist_clear (GTK_CLIST (clist));
+	/*gtk_clist_freeze (GTK_CLIST (clist));
+	gtk_clist_clear (GTK_CLIST (clist));*/
+	
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->disk_list));
+	
+	old = gtk_tree_view_get_vadjustment (GTK_TREE_VIEW (procdata->disk_list));
+	
+	gtk_list_store_clear (GTK_LIST_STORE (model));
 	
 	entry = glibtop_get_mountlist (&mountlist, 0);
 	for (i=0; i < mountlist.number; i++) {
 		glibtop_fsusage usage;
 		gchar *text[5];
-		
+				
 		glibtop_get_fsusage (&usage, entry[i].mountdir);
 		text[0] = g_strdup (entry[i].devname);
 		text[4] = g_strdup (entry[i].mountdir);
@@ -615,8 +625,17 @@ cb_update_disks (gpointer data)
 		text[3] = get_size_string (usage.blocks / 2);
 		/* Hmm, usage.blocks == 0 seems to get rid of /proc and all
 		** the other useless entries */
-		if (usage.blocks != 0)
-			gtk_clist_append (GTK_CLIST (clist), text);
+		if (usage.blocks != 0) {
+			GtkTreeIter row;
+			
+			gtk_list_store_insert (GTK_LIST_STORE (model), &row, 0); 
+			gtk_list_store_set (GTK_LIST_STORE (model), &row,
+					    0, text[0],
+					    1, text[1],
+					    2, text[2],
+					    3, text[3],
+					    4, text[4], -1);
+		}
 		
 		g_free (text[0]);
 		g_free (text[1]);
@@ -625,19 +644,21 @@ cb_update_disks (gpointer data)
 		g_free (text[4]);
 	}
 	
-	GTK_CLIST (clist)->hadjustment->value = old_adj_hval;
+	/*GTK_CLIST (clist)->hadjustment->value = old_adj_hval;
         GTK_CLIST (clist)->vadjustment->value = old_adj_vval;
 
         GTK_CLIST (clist)->hoffset = old_hoffset;
         GTK_CLIST (clist)->voffset = old_voffset;
 	
-	gtk_clist_thaw (GTK_CLIST (clist));
+	gtk_clist_thaw (GTK_CLIST (clist));*/
+	
+	//gtk_tree_view_set_vadjustment (GTK_TREE_VIEW (procdata->disk_list), old);
 	
 	glibtop_free (entry);
 	
 	return TRUE;
 }
-#endif	
+
 gint
 cb_timeout (gpointer data)
 {
