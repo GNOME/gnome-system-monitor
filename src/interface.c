@@ -342,7 +342,7 @@ create_sys_view (ProcData *procdata)
 	gchar *titles[5] = {_("Disk Name"),
 			    _("Directory"),
 			    _("Used Space"),
-			    _("Total Size")
+			    _("Total Space")
 			    };
 	LoadGraph *cpu_graph, *mem_graph;
 	
@@ -411,7 +411,7 @@ create_sys_view (ProcData *procdata)
 	label = gtk_label_new (_("Memory"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL|GTK_EXPAND, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
 	
 	label = gtk_label_new (_("Used :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
@@ -422,7 +422,7 @@ create_sys_view (ProcData *procdata)
 	gtk_misc_set_padding (GTK_MISC (mem_graph->memused_label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (mem_graph->memused_label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), mem_graph->memused_label, 3, 4, 0, 1, 
-			  GTK_FILL|GTK_EXPAND, 0, 0, 0);
+			  GTK_FILL, 0, 0, 0);
 	
 	label = gtk_label_new (_("Total :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
@@ -433,7 +433,7 @@ create_sys_view (ProcData *procdata)
 	gtk_misc_set_padding (GTK_MISC (mem_graph->memtotal_label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (mem_graph->memtotal_label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), mem_graph->memtotal_label, 5, 6, 0, 1, 
-			  GTK_FILL|GTK_EXPAND, 0, 0, 0);
+			  GTK_FILL, 0, 0, 0);
 	
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
@@ -458,7 +458,7 @@ create_sys_view (ProcData *procdata)
 	gtk_misc_set_padding (GTK_MISC (mem_graph->swapused_label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (mem_graph->swapused_label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), mem_graph->swapused_label, 3, 4, 1, 2, 
-			  GTK_FILL|GTK_EXPAND, 0, 0, 0);
+			  GTK_FILL, 0, 0, 0);
 			  
 	label = gtk_label_new (_("Total :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
@@ -469,7 +469,7 @@ create_sys_view (ProcData *procdata)
 	gtk_misc_set_padding (GTK_MISC (mem_graph->swaptotal_label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (mem_graph->swaptotal_label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), mem_graph->swaptotal_label, 5, 6, 1, 2, 
-			  GTK_FILL|GTK_EXPAND, 0, 0, 0);	
+			  GTK_FILL, 0, 0, 0);	
 	
 	procdata->mem_graph = mem_graph;
 	gtk_widget_show_all (vbox);
