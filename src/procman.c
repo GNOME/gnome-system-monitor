@@ -409,6 +409,7 @@ procman_save_config (ProcData *data)
 		return;
 		
 	procman_save_tree_state (data->tree, "/apps/procman/proctree/");
+	procman_save_tree_state (data->disk_list, "/apps/procman/disktree/");
 		
 	gdk_window_get_size (app->window, &width, &height);
 	data->config.width = width;

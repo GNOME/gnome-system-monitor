@@ -101,21 +101,7 @@ cb_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
 	
 	create_memmaps_dialog (procdata);
 }
-#if 0
-void
-cb_add_to_favorites (GtkMenuItem *menuitem, gpointer data)
-{
-	ProcData *procdata = data;
-	ProcInfo *info;
-	
-	if (!procdata->selected_node)
-		return;
-	
-	info = e_tree_memory_node_get_data (procdata->memory, procdata->selected_node);
-	add_to_favorites (procdata, info->cmd);
-	
-}
-#endif
+
 void		
 cb_show_hidden_processes (GtkMenuItem *menuitem, gpointer data)
 {
@@ -242,17 +228,6 @@ cb_running_process_menu_clicked		(GtkWidget	*widget,
 	proctable_update_all (procdata);
 }				
 
-#if 0
-void
-cb_favorites_menu_clicked (GtkWidget *widget, gpointer data)
-{
-	ProcData *procdata = data;
-	
-	procdata->config.whose_process = FAVORITE_PROCESSES;
-	proctable_clear_tree (procdata);
-	proctable_update_all (procdata);
-}
-#endif
 void
 popup_menu_renice (GtkMenuItem *menuitem, gpointer data)
 {
@@ -273,7 +248,6 @@ void
 popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
-	ProcInfo *info;
 	
 	if (!procdata->selected_process)
 		return;
@@ -282,7 +256,7 @@ popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
 		procdialog_create_hide_dialog (procdata);
 	else
 	{
-		add_to_blacklist (procdata, info->cmd);
+		add_to_blacklist (procdata, procdata->selected_process->cmd);
 		proctable_update_all (procdata);
 	}
 	
@@ -356,15 +330,6 @@ cb_end_process_button_pressed          (GtkButton       *button,
 		procdialog_create_kill_dialog (procdata, SIGTERM);
 	else
 		kill_process (procdata, SIGTERM);
-	
-}
-
-void
-cb_logout (GtkButton *button, gpointer data)
-{
-	ProcData *procdata = data;
-	
-	g_print ("logout \n");
 	
 }
 

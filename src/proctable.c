@@ -369,10 +369,10 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 		GtkTreePath *parent_node = gtk_tree_model_get_path (model, &info->parent_node);
 		
 		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, &info->parent_node, 0);
-		/*if (!gtk_tree_view_row_expanded (GTK_TREE_VIEW (procdata->tree), parent_node))     
+		if (!gtk_tree_view_row_expanded (GTK_TREE_VIEW (procdata->tree), parent_node))     
 			gtk_tree_view_expand_row (GTK_TREE_VIEW (procdata->tree),
 					  parent_node,
-					  FALSE);*/
+					  FALSE);
 	}	
 	else
 		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0);
@@ -428,14 +428,28 @@ static void
 remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 {
 	GtkTreeModel *model;
+	GtkTreeIter *parent_node, *child_node;
 	
 	/*if (!info->node)
 		return;*/
+	g_return_if_fail (info);
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 	
-	/*gtk_tree_model_foreach (model, remove_children_from_tree,
-				procdata);*/
+	parent_node = gtk_tree_iter_copy (&info->node);
+	while (gtk_tree_model_iter_children (model, child_node, parent_node)) {
+		ProcInfo *child_info = NULL;
+		
+		g_print ("child \n");
+		gtk_tree_model_get (model, child_node, COL_POINTER, &child_info, -1);
+		if (child_info) {
+			g_print ("name %s\n", child_info->name);
+			procdata->info = g_list_remove (procdata->info, child_info);
+			proctable_free_info (child_info);
+		}
+		parent_node = gtk_tree_iter_copy (child_node);
+	}
+	
 				
 	gtk_tree_store_remove (GTK_TREE_STORE (model), &info->node);
 	info->visible = FALSE;	
@@ -721,12 +735,13 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 		}
 		/* process no longer exists */
 		else if (pid_list[i] > oldinfo->pid)
-		{
+		{		
+			g_print ("%d \n", pid_list[i]);
 			remove_info_from_tree (oldinfo, procdata);
 			list = g_list_next (list);
 			procdata->info = g_list_remove (procdata->info, oldinfo);
 			proctable_free_info (oldinfo);
-						
+											
 		}
 	}
 	

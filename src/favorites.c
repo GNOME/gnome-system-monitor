@@ -220,27 +220,15 @@ remove_button_clicked (GtkButton *button, gpointer data)
 	
 	gtk_tree_store_clear (GTK_TREE_STORE (model));
 	fill_tree_with_info (procdata, proctree);
-#if 0
-	if (root_node)
-	{
-		e_tree_memory_node_remove (memory, root_node);
-		fill_tree_with_info (procdata);
-	}
-#endif		
-}
-
-static gboolean
-close_blacklist_dialog (GnomeDialog *dialog, gpointer data)
-{
-	blacklist_dialog = NULL;
 	
-	return FALSE;
 }
 
 static void
-close_button_pressed (GnomeDialog *dialog, gint button, gpointer data)
+close_blacklist_dialog (GtkDialog *dialog, gint id, gpointer data)
 {
-	gnome_dialog_close (GNOME_DIALOG (blacklist_dialog));
+	gtk_widget_destroy (blacklist_dialog);
+	
+	blacklist_dialog = NULL;
 }
 
 void create_blacklist_dialog (ProcData *procdata)
@@ -273,12 +261,16 @@ void create_blacklist_dialog (ProcData *procdata)
       			return;
    		}
 
-		blacklist_dialog = gnome_dialog_new (_("Manage Hidden Processes"), 
-					     GNOME_STOCK_BUTTON_CLOSE, NULL);
+		blacklist_dialog = gtk_dialog_new_with_buttons (_("Manage Hidden Processes"), 
+								NULL,
+								GTK_DIALOG_DESTROY_WITH_PARENT,
+						     		GTK_STOCK_CLOSE, 
+						     		GTK_RESPONSE_CLOSE,
+						     		NULL);
 		gtk_window_set_policy (GTK_WINDOW (blacklist_dialog), FALSE, TRUE, FALSE);
 		gtk_window_set_default_size (GTK_WINDOW (blacklist_dialog), 320, 375);
 		
-		main_vbox = GNOME_DIALOG (blacklist_dialog)->vbox;
+		main_vbox = GTK_DIALOG (blacklist_dialog)->vbox;
 	
 		label = gtk_label_new (_("These are the processes you have chosen to hide. You can reshow a process by removing it from this list."));
 		gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
@@ -303,12 +295,10 @@ void create_blacklist_dialog (ProcData *procdata)
   		gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   		gtk_container_set_border_width (GTK_CONTAINER (button), GNOME_PAD_SMALL);
   	
-  		gtk_signal_connect (GTK_OBJECT (button), "clicked",
-  			    GTK_SIGNAL_FUNC (remove_button_clicked), procdata);
-  		gtk_signal_connect (GTK_OBJECT (blacklist_dialog), "clicked",
-			    GTK_SIGNAL_FUNC (close_button_pressed), procdata);
-		gtk_signal_connect (GTK_OBJECT (blacklist_dialog), "close",
-			    GTK_SIGNAL_FUNC (close_blacklist_dialog), procdata);
+  		g_signal_connect (G_OBJECT (button), "clicked",
+  			    	  G_CALLBACK (remove_button_clicked), procdata);
+  		g_signal_connect (G_OBJECT (blacklist_dialog), "response",
+			    	  G_CALLBACK (close_blacklist_dialog), procdata);
   	
   		gtk_widget_show_all (blacklist_dialog);
 	}

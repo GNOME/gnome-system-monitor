@@ -26,9 +26,6 @@
 #include <unistd.h>
 #include <string.h>
 #include <signal.h>
-#if 0
-#include <gnome.h>
-#endif
 #include <gdk/gdkkeysyms.h>
 #include "procman.h"
 #include "callbacks.h"
@@ -165,8 +162,8 @@ static GnomeUIInfo popup_menu_uiinfo[] =
 	GNOMEUIINFO_END
 };
 
-gchar *moreinfolabel = "More _Info >>";
-gchar *lessinfolabel = "<< Less _Info";
+gchar *moreinfolabel = N_("More _Info >>");
+gchar *lessinfolabel = N_("<< Less _Info");
 
 GtkWidget *infobutton;
 GtkWidget *infolabel;
@@ -437,12 +434,13 @@ create_sys_view (ProcData *procdata)
 						    		cell,
 						     		"text", i,
 						     		 NULL);
-		/*gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_RESIZABLE);
-		gtk_tree_view_column_set_reorderable (col, TRUE);*/
+		gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_RESIZABLE);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (disk_tree), col);
 	}
   	
 	gtk_widget_show_all (disk_frame);
+  	
+  	procman_get_tree_state (disk_tree, "/apps/procman/disktree/");
   	
   	cb_update_disks (procdata);
   	/*procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
