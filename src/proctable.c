@@ -783,9 +783,6 @@ proctable_update_all (ProcData *data)
 	
 	if (procdata->config.show_more_info)
 		infoview_update (procdata);
-#if 0		
-	update_memmaps_dialog (procdata);
-#endif
 
 }
 

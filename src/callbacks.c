@@ -98,10 +98,6 @@ void
 cb_hide_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
-	ProcInfo *info;
-	
-	if (!procdata->selected_process)
-		return;
 	
 	if (procdata->config.show_hide_message)
 		procdialog_create_hide_dialog (procdata);
@@ -232,10 +228,7 @@ void
 popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
-#if 0
-	if (!procdata->selected_process)
-		return;
-#endif	
+	
 	if (procdata->config.show_hide_message)
 		procdialog_create_hide_dialog (procdata);
 	else
@@ -380,33 +373,41 @@ cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 
 }
 
+ProcInfo *selected_process = NULL;
+
+static void
+get_last_selected (GtkTreeModel *model, GtkTreePath *path, 
+      		   GtkTreeIter *iter, gpointer data)
+{
+	ProcInfo *info;
+	
+	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
+	g_return_if_fail (info);
+
+	selected_process = info;
+}
+
 void
 cb_row_selected (GtkTreeSelection *selection, gpointer data)
 {
 	ProcData *procdata = data;
-	ProcInfo *info;
-	GtkTreeIter iter;
-	GtkTreeModel *model;
-	gboolean selected = FALSE;
-	
-	/*selected = gtk_tree_selection_get_selected (selection, NULL, &iter);
-	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));*/
 	
 	procdata->selection = selection;
 	
-	if (selection) {
-		g_print ("selection \n");
-		/*gtk_tree_model_get (model, &iter, COL_POINTER, &info, -1);
-		if (info)
-			procdata->selected_process = info;
+	/* get the most recent selected process and determine if there are
+	** no selected processes 
+	*/
+	selected_process = NULL;	
+	gtk_tree_selection_selected_foreach (procdata->selection, get_last_selected, 
+					     procdata);	
+	
+	if (selected_process) {
+		procdata->selected_process = selected_process;
 		if (procdata->config.show_more_info == TRUE)
-			infoview_update (procdata);*/
+			infoview_update (procdata);
 		update_sensitivity (procdata, TRUE);
-		
-		/*update_memmaps_dialog (procdata);*/
 	}
 	else {	
-		g_print ("no selection \n");
 		procdata->selected_process = NULL;
 		update_sensitivity (procdata, FALSE);
 	}

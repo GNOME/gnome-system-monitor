@@ -8,16 +8,11 @@
 #include <sys/stat.h>
 #include "procman.h"
 #include "memmaps.h"
-
-static GtkWidget *memmapsdialog = NULL;
-static GtkWidget *command_label;
-static GtkWidget *tree = NULL;
-gint timer = 0;
-GList *memmaps_list = NULL;
+#include "proctable.h"
 
 
 static void
-get_memmaps_list (ProcData *procdata, ProcInfo *info)
+get_memmaps_list (ProcInfo *info, GtkWidget *tree)
 {
 	GtkTreeModel *model = NULL;
 	glibtop_map_entry *memmaps;
@@ -87,8 +82,14 @@ get_memmaps_list (ProcData *procdata, ProcInfo *info)
 				    5, info->device,
 				    6, info->inode,
 				    -1);
-               	
-                memmaps_list = g_list_append (memmaps_list, info);
+               	g_free (info->filename);
+		g_free (info->vmstart);
+		g_free (info->vmend);
+		g_free (info->flags);
+		g_free (info->device);
+		g_free (info->vmoffset);
+		g_free (info->inode);
+		g_free (info);
 	
 	}
 	
@@ -98,79 +99,43 @@ get_memmaps_list (ProcData *procdata, ProcInfo *info)
 }
 
 static void
-clear_memmaps (ProcData *procdata)
+update_memmaps_dialog (GtkWidget *tree)
 {
+	ProcInfo *info;
 	
-	while (memmaps_list)
-	{
-		MemmapsInfo *info = memmaps_list->data;
-		g_free (info->filename);
-		g_free (info->vmstart);
-		g_free (info->vmend);
-		g_free (info->flags);
-		g_free (info->device);
-		g_free (info->vmoffset);
-		g_free (info->inode);
-		g_free (info);
-		memmaps_list = g_list_next (memmaps_list);
-	}
-	g_list_free (memmaps_list);
-	memmaps_list = NULL;
+	info = g_object_get_data (G_OBJECT (tree), "selected_info");	
+	g_return_if_fail (info);
 	
-
-}
-
-
-void
-update_memmaps_dialog (ProcData *procdata)
-{
-
-	if (!memmapsdialog)
-		return;
-		
-	g_return_if_fail (procdata->selected_process);
-	
-	gtk_label_set_text (GTK_LABEL (command_label), procdata->selected_process->name);
-#if 0		
-	if (memmaps_list)
-		clear_memmaps (procdata);
-	
-#endif		
-	get_memmaps_list (procdata, procdata->selected_process);
+	get_memmaps_list (info, tree);
 }
 
 static void
 close_memmaps_dialog (GtkDialog *dialog, gint id, gpointer data)
 {
-	ProcData *procdata = data;
+	GtkWidget *tree = data;	
+	gint timer;
 	
 	procman_save_tree_state (tree, "/apps/procman/memmapstree/");
 	
-	clear_memmaps (procdata);
+	timer = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (tree), "timer"));
+	gtk_timeout_remove (timer);
 	
-	gtk_widget_destroy (memmapsdialog);
-	memmapsdialog = NULL;
-	/*gtk_timeout_remove (timer);*/
-	
+	gtk_widget_destroy (GTK_WIDGET (dialog));
+		
 	return ;
 }
 
 static GtkWidget *
 create_memmaps_tree (ProcData *procdata)
 {
-	GtkWidget *scrolled = NULL;
+	GtkWidget *tree;
 	GtkTreeStore *model;
 	GtkTreeViewColumn *column;
   	GtkCellRenderer *cell;
   	gint i;
   	static gchar *title[] = {N_("Filename"), N_("VM Start"), N_("VM End"), 
 				 N_("Flags"), N_("VM offset"), N_("Device"), N_("Inode")};
-	
-	scrolled = gtk_scrolled_window_new (NULL, NULL);
-	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
-                                  	GTK_POLICY_AUTOMATIC,
-                                  	GTK_POLICY_AUTOMATIC);
-                                  	
+	                             	
         model = gtk_tree_store_new (7, G_TYPE_STRING, G_TYPE_STRING, 
 				    G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
@@ -191,15 +156,13 @@ create_memmaps_tree (ProcData *procdata)
 		gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
 	}
 	
-	gtk_container_add (GTK_CONTAINER (scrolled), tree);
-	
 	/*gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model),
 					      0,
 					      GTK_SORT_ASCENDING);*/
 					      
 	procman_get_tree_state (tree, "/apps/procman/memmapstree/");
 	
-	return scrolled;
+	return tree;
 		
 }
 
@@ -207,27 +170,36 @@ create_memmaps_tree (ProcData *procdata)
 static gint
 memmaps_timer (gpointer data)
 {
-	ProcData *procdata = data;
+	GtkWidget *tree = data;
+	GtkTreeModel *model;
 	
-	update_memmaps_dialog (procdata);
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
+	g_return_val_if_fail (model, FALSE);
+	
+	gtk_tree_store_clear (GTK_TREE_STORE (model));
+	
+	update_memmaps_dialog (tree);
 	
 	return TRUE;
 }
 
-void 
-create_memmaps_dialog (ProcData *procdata)
+static void 
+create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path, 
+			      GtkTreeIter *iter, gpointer data)
 {
+	ProcData *procdata = data;
+	GtkWidget *memmapsdialog;
 	GtkWidget *dialog_vbox;
 	GtkWidget *alignment;
 	GtkWidget *cmd_hbox;
 	GtkWidget *label;
 	GtkWidget *scrolled;
+	GtkWidget *tree;
+	ProcInfo *info;
+	gint timer;
 
-	if (memmapsdialog) {
-		gdk_window_show(memmapsdialog->window);
-      		gdk_window_raise(memmapsdialog->window);
-		return;
-	}
+	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
+	g_return_if_fail (info);
 
 	memmapsdialog = gtk_dialog_new_with_buttons (_("Memory Maps"), NULL,
 						     GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -248,29 +220,41 @@ create_memmaps_dialog (ProcData *procdata)
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (cmd_hbox),label, FALSE, FALSE, 0);
 	
-	command_label = gtk_label_new ("");
-	gtk_misc_set_padding (GTK_MISC (command_label), GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (cmd_hbox),command_label, FALSE, FALSE, 0);
+	label = gtk_label_new ("");
+	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, GNOME_PAD_SMALL);
+	gtk_label_set_text (GTK_LABEL (label), info->name);
+	gtk_box_pack_start (GTK_BOX (cmd_hbox),label, FALSE, FALSE, 0);
 	
 	gtk_widget_show_all (alignment);
 	
-	scrolled = create_memmaps_tree (procdata);
-	if (!scrolled)
-	{	
-		memmapsdialog = NULL;
-		return;
-	}
+	scrolled = gtk_scrolled_window_new (NULL, NULL);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+                                  	GTK_POLICY_AUTOMATIC,
+                                  	GTK_POLICY_AUTOMATIC);
+	
+	tree = create_memmaps_tree (procdata);
+	gtk_container_add (GTK_CONTAINER (scrolled), tree);
+	g_object_set_data (G_OBJECT (tree), "selected_info", info);
+	
 	gtk_box_pack_start (GTK_BOX (dialog_vbox), scrolled, TRUE, TRUE, 0);
 	gtk_widget_show_all (scrolled);
 		
 	g_signal_connect (G_OBJECT (memmapsdialog), "response",
-			  G_CALLBACK (close_memmaps_dialog), procdata);
+			  G_CALLBACK (close_memmaps_dialog), tree);
 	
 	gtk_widget_show (memmapsdialog);
 #if 0
-	timer = gtk_timeout_add (5000, memmaps_timer, procdata);
+	timer = gtk_timeout_add (5000, memmaps_timer, tree);
+	g_object_set_data (G_OBJECT (tree), "timer", GINT_TO_POINTER (timer));
 #endif
-#if 1
-	update_memmaps_dialog (procdata);
-#endif	
+
+	update_memmaps_dialog (tree);
+	
+}
+
+void 		
+create_memmaps_dialog (ProcData *procdata)
+{
+	gtk_tree_selection_selected_foreach (procdata->selection, create_single_memmaps_dialog, 
+					     procdata);
 }

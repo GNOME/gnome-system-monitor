@@ -29,7 +29,6 @@ struct _MemmapsInfo
         gchar			*inode;
 };
 
-void		update_memmaps_dialog (ProcData *procdata);
 void 		create_memmaps_dialog (ProcData *procdata);
 
 
