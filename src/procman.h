@@ -145,6 +145,7 @@ struct _ProcData
 	LoadGraph	*mem_graph;
 	gint		selected_pid;
 	ProcInfo	*selected_process;
+	GtkTreeSelection *selection;
 	gint		timeout;
 	gint		disk_timeout;
 	GList		*info;

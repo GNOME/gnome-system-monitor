@@ -1,5 +1,29 @@
 2001-11-09  Kevin Vandersloot <kfv101@psu.edu>
 
+	More stable stuff, not quite finished:
+
+	2001-10-18  Kevin Vandersloot <kfv101@psu.edu>
+
+	Add ability to select multiple processes and do the corresponding
+	actions on all selected processes. 
+
+	* proctable.c: change selection mode to "multiple"
+
+	* favorites.c: hide all selected processes. Also update the
+	tree when a blacklisted processes is readded for good
+	feedback
+	
+	* procactions.c: when putting up root dialog specify the 
+	process name since there could be multiple processes that
+	need to be killed as root. Term/Kill all selected processes.
+
+	* procdialogs.c: make sure to hide all processes
+
+	* callbacks.c: call any new functions to perforam actions on all
+	processes
+
+2001-11-09  Kevin Vandersloot <kfv101@psu.edu>
+
 	Merge some stuff from stable
 
 	* interface.c: remove the free space column in the disk

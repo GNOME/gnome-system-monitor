@@ -59,8 +59,6 @@ cb_end_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
 	
-	if (!procdata->selected_process)
-		return;
 	if (procdata->config.show_kill_warning)
 		procdialog_create_kill_dialog (procdata, SIGTERM);
 	else
@@ -72,9 +70,6 @@ void
 cb_kill_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
-	
-	if (!procdata->selected_process)
-		return;
 	
 	if (procdata->config.show_kill_warning)
 		procdialog_create_kill_dialog (procdata, SIGKILL);
@@ -112,7 +107,7 @@ cb_hide_process (GtkMenuItem *menuitem, gpointer data)
 		procdialog_create_hide_dialog (procdata);
 	else
 	{
-		add_to_blacklist (procdata, procdata->selected_process->cmd);
+		add_selected_to_blacklist (procdata);
 		proctable_update_all (procdata);
 	}
 	
@@ -237,15 +232,15 @@ void
 popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
-	
+#if 0
 	if (!procdata->selected_process)
 		return;
-	
+#endif	
 	if (procdata->config.show_hide_message)
 		procdialog_create_hide_dialog (procdata);
 	else
 	{
-		add_to_blacklist (procdata, procdata->selected_process->cmd);
+		add_selected_to_blacklist (procdata);
 		proctable_update_all (procdata);
 	}
 	
@@ -256,10 +251,7 @@ popup_menu_end_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
 
-        if (!procdata->selected_process)
-		return;
-	
-	if (procdata->config.show_kill_warning)
+        if (procdata->config.show_kill_warning)
 		procdialog_create_kill_dialog (procdata, SIGTERM);
 	else
 		kill_process (procdata, SIGTERM);	
@@ -270,10 +262,7 @@ popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
 
-        if (!procdata->selected_process)
-		return;
-		
-	if (procdata->config.show_kill_warning)
+        if (procdata->config.show_kill_warning)
 		procdialog_create_kill_dialog (procdata, SIGKILL);
 	else	
 		kill_process (procdata, SIGKILL);
@@ -312,9 +301,6 @@ cb_end_process_button_pressed          (GtkButton       *button,
 
 	ProcData *procdata = data;
 
-	if (!procdata->selected_process)
-		return;
-		
 	if (procdata->config.show_kill_warning)
 		procdialog_create_kill_dialog (procdata, SIGTERM);
 	else
@@ -403,20 +389,24 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
 	GtkTreeModel *model;
 	gboolean selected = FALSE;
 	
-	selected = gtk_tree_selection_get_selected (selection, NULL, &iter);
-	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
+	/*selected = gtk_tree_selection_get_selected (selection, NULL, &iter);
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));*/
 	
-	if (selected) {
-		gtk_tree_model_get (model, &iter, COL_POINTER, &info, -1);
+	procdata->selection = selection;
+	
+	if (selection) {
+		g_print ("selection \n");
+		/*gtk_tree_model_get (model, &iter, COL_POINTER, &info, -1);
 		if (info)
 			procdata->selected_process = info;
 		if (procdata->config.show_more_info == TRUE)
-			infoview_update (procdata);
+			infoview_update (procdata);*/
 		update_sensitivity (procdata, TRUE);
 		
 		/*update_memmaps_dialog (procdata);*/
 	}
-	else {
+	else {	
+		g_print ("no selection \n");
 		procdata->selected_process = NULL;
 		update_sensitivity (procdata, FALSE);
 	}

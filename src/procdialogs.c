@@ -54,7 +54,7 @@ hide_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 	ProcData *procdata = data;
 	
 	if (id == 100) {
-		add_to_blacklist (procdata, procdata->selected_process->cmd);
+		add_selected_to_blacklist (procdata);
 		proctable_update_all (procdata);
 	}
 	
@@ -217,7 +217,7 @@ renice_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 	if (id == 100) {
 		if (new_nice_value == -100)
 			return;		
-		renice (procdata, procdata->selected_process->pid, new_nice_value);
+		renice (procdata, -2, new_nice_value);
 	}
 	
 	gtk_widget_destroy (GTK_WIDGET (dialog));
@@ -239,14 +239,14 @@ procdialog_create_renice_dialog (ProcData *data)
   	GtkWidget *hscale;
   	gchar *text = 
   	      _("The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority.");
-	
+#if 0	
 	if (!procdata->selected_process)
 		return;
 		
 	info = procdata->selected_process;
 	if (!info)
 		return;
-		
+#endif		
 	if (renice_dialog)
 		return;
 		
@@ -277,14 +277,14 @@ procdialog_create_renice_dialog (ProcData *data)
 	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 2,
 			  0, 0, 0, 0);
 	
-	renice_adj = gtk_adjustment_new (info->nice, -20, 20, 1, 1, 0);
-	new_nice_value = info->nice;
+	renice_adj = gtk_adjustment_new (0, -20, 20, 1, 1, 0);
+	new_nice_value = 0;
 	hscale = gtk_hscale_new (GTK_ADJUSTMENT (renice_adj));
 	gtk_scale_set_digits (GTK_SCALE (hscale), 0);
 	gtk_table_attach (GTK_TABLE (table), hscale, 1, 2, 0, 1,
 			  GTK_EXPAND | GTK_FILL, 0, 0, 0);
 			  
-	priority_label = gtk_label_new (get_nice_level (info->nice));
+	priority_label = gtk_label_new (get_nice_level (0));
 	gtk_table_attach (GTK_TABLE (table), priority_label, 1, 2, 1, 2,
 			  GTK_FILL, 0, 0, 0);
 	

@@ -98,6 +98,7 @@ proctable_new (ProcData *data)
 	GtkWidget *proctree;
 	GtkWidget *scrolled = NULL;
 	GtkTreeStore *model;
+	GtkTreeSelection *selection;
 	GtkTreeViewColumn *column;
   	GtkCellRenderer *cell_renderer;
 	static gchar *title[] = {N_("Icon "), N_("Process Name"), N_("User"), 
@@ -116,6 +117,9 @@ proctable_new (ProcData *data)
   	proctree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (proctree), TRUE);
   	g_object_unref (G_OBJECT (model));
+  	
+  	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
+  	gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
   	
   	cell_renderer = gtk_cell_renderer_pixbuf_new ();
   	column = gtk_tree_view_column_new_with_attributes (title[0],

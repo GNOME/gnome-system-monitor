@@ -38,6 +38,29 @@ add_to_blacklist (ProcData *procdata, gchar *name)
 	
 }
 
+static void
+add_single_to_blacklist (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
+{
+	ProcData *procdata = data;
+	ProcInfo *info = NULL;
+	
+	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
+	g_return_if_fail (info);
+	
+	add_to_blacklist (procdata, info->cmd);
+	
+}
+
+void
+add_selected_to_blacklist (ProcData *procdata)
+{
+	if (!procdata->selection)
+		return;
+		
+	gtk_tree_selection_selected_foreach (procdata->selection, 
+					     add_single_to_blacklist, procdata);
+}
+
 void
 remove_from_blacklist (ProcData *procdata, gchar *name)
 {
