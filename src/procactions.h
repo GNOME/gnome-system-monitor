@@ -21,7 +21,7 @@
 
 #include "procman.h"
  
-void		renice (int pid, int nice);
+void		renice (ProcData *procdata, int pid, int nice);
 void		kill_process (ProcData *procdata, int sig);
 
 #endif

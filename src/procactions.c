@@ -30,9 +30,9 @@
 #include "procdialogs.h"
 
 void
-renice (int pid, int nice)
+renice (ProcData *procdata, int pid, int nice)
 {
-	int error;
+	gint error, retval;
 	gchar *error_msg;
 	GtkWidget *dialog;
 	
@@ -48,16 +48,24 @@ renice (int pid, int nice)
 				g_free (error_msg);
 				break;
 			case EPERM:
-				error_msg = g_strdup_printf (_("You do not have permission to change the priority of this process."));
-				dialog = gnome_error_dialog (error_msg);
-				gnome_dialog_run(GNOME_DIALOG (dialog));
+				error_msg = g_strdup_printf (_("You do not have permission to change the priority of this process.\n Would you like to enter the superuser (root) password\n to gain the necessary permission?"));
+				dialog = gnome_ok_cancel_dialog (error_msg, NULL, NULL);
+				retval = gnome_dialog_run(GNOME_DIALOG (dialog));
 				g_free(error_msg);
+				if (!retval) 
+					procdialog_create_root_password_dialog (1, procdata, 
+										pid, 
+										nice);
 				break;
 			case EACCES:
-				error_msg = g_strdup_printf (_("You must be root to renice a process lower than 0."));
-				dialog = gnome_error_dialog (error_msg);
-				gnome_dialog_run(GNOME_DIALOG (dialog));
+				error_msg = g_strdup_printf (_("You must be root to renice a process lower than 0.\n Would you like to enter the superuser (root) password\n to gain the necessary permission?"));
+				dialog = gnome_ok_cancel_dialog (error_msg, NULL, NULL);
+				retval = gnome_dialog_run(GNOME_DIALOG (dialog));
 				g_free(error_msg);
+				if (!retval) 
+					procdialog_create_root_password_dialog (1, procdata, 
+										pid, 
+										nice);
 				break;
 			default:
 				break;

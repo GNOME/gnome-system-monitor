@@ -1,3 +1,17 @@
+2001-08-31   Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: left justify the disk name and mount point
+	clist entries.
+	
+	* procactions.c: do the su stuff on renice. Slightly different
+	error message for when the user does not have permission or
+	when they have permission but try to lower the nice value.
+
+	* procactions.c (renice): pass procdata in here in order to 
+	pass it to the password dialog.
+
+	* procdialogs.c (renice_accept): pass procdata ro renice
+
 2001-08-31  Kevin Vandersloot <kfv101@psu.edu>
 
 	* procdialogs.c: add notebook tab for process viewer and

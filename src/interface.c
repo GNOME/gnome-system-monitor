@@ -446,7 +446,7 @@ create_sys_view (ProcData *procdata)
   	gtk_container_set_border_width (GTK_CONTAINER (clist), GNOME_PAD_SMALL);
   	
   	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 0, TRUE);
-  	gtk_clist_set_column_justification (GTK_CLIST (clist), 0, GTK_JUSTIFY_CENTER);
+  	//gtk_clist_set_column_justification (GTK_CLIST (clist), 0, GTK_JUSTIFY_CENTER);
   	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 1, TRUE);
   	gtk_clist_set_column_justification (GTK_CLIST (clist), 1, GTK_JUSTIFY_CENTER);
   	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 2, TRUE);
@@ -454,7 +454,7 @@ create_sys_view (ProcData *procdata)
   	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 3, TRUE);
   	gtk_clist_set_column_justification (GTK_CLIST (clist), 3, GTK_JUSTIFY_CENTER);
   	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 4, TRUE);
-  	gtk_clist_set_column_justification (GTK_CLIST (clist), 4, GTK_JUSTIFY_CENTER);
+  	//gtk_clist_set_column_justification (GTK_CLIST (clist), 4, GTK_JUSTIFY_CENTER);
   	
   	gtk_widget_show_all (disk_frame);
   	
