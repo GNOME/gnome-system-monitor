@@ -330,6 +330,33 @@ show_threads_toggled (GtkToggleButton *button, gpointer data)
 		
 }
 
+static void
+show_kill_dialog_toggled (GtkToggleButton *button, gpointer data)
+{
+	ProcData *procdata = data;
+	GConfClient *client = procdata->client;
+	
+	gboolean toggled;
+	
+	toggled = gtk_toggle_button_get_active (button);
+	
+	gconf_client_set_bool (client, "/apps/procman/kill_dialog", toggled, NULL);
+		
+}
+
+static void
+show_hide_dialog_toggled (GtkToggleButton *button, gpointer data)
+{
+	ProcData *procdata = data;
+	GConfClient *client = procdata->client;
+	
+	gboolean toggled;
+	
+	toggled = gtk_toggle_button_get_active (button);
+	
+	gconf_client_set_bool (client, "/apps/procman/hide_message", toggled, NULL);
+		
+}
 
 static void
 update_update_interval (GtkWidget *widget, gpointer data)
@@ -511,7 +538,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 	
 	label = gtk_label_new (_("Update Interval ( seconds ) :"));
-	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
 	
 	update = (gfloat) procdata->config.update_interval;
 	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 1.0, 
@@ -539,6 +567,20 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 			    G_CALLBACK (show_threads_toggled), procdata);
 	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
 	
+	check_button = gtk_check_button_new_with_label (_("Show warning dialog when ending or killing processes"));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
+				      procdata->config.show_kill_warning);
+	g_signal_connect (G_OBJECT (check_button), "toggled",
+			    G_CALLBACK (show_kill_dialog_toggled), procdata);
+	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
+	
+	check_button = gtk_check_button_new_with_label (_("Show warning dialog when hiding processes"));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
+				    procdata->config.show_hide_message);
+	g_signal_connect (G_OBJECT (check_button), "toggled",
+			    G_CALLBACK (show_hide_dialog_toggled), procdata);
+	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
+	
 	vbox = create_proc_field_page (procdata);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
 	tab_label = gtk_label_new_with_mnemonic (_("Process _Fields"));
@@ -554,33 +596,36 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	frame = gtk_frame_new (_("Graphs"));
 	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
-	table = gtk_table_new (3, 3, FALSE);
-	gtk_container_add (GTK_CONTAINER (frame), table);
+	vbox = gtk_vbox_new (FALSE, 0);
+	gtk_container_add (GTK_CONTAINER (frame), vbox);
+	
+	hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 	
 	label = gtk_label_new (_("Update Speed ( seconds ) :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, 
-			  GTK_FILL|GTK_EXPAND, 0, 0, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
 			  
 	update = (gfloat) procdata->config.graph_update_interval;
 	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.25, 
 							  100.0, 0.25, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
-	gtk_table_attach (GTK_TABLE (table), spin_button, 1, 2, 0, 1,
-			  0, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (hbox), spin_button, FALSE, FALSE, 0);
 			  
 	button = gtk_button_new_with_mnemonic (_("_Set"));
-	gtk_table_attach (GTK_TABLE (table), button, 2, 3, 0, 1,
-			  0, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, GNOME_PAD_SMALL);
 	g_object_set_data (G_OBJECT (button), "spin_button", spin_button);
 	g_signal_connect (G_OBJECT (button), "clicked",
 	 		  G_CALLBACK (update_graph_update_interval), procdata);
 	
+	table = gtk_table_new (2, 3, FALSE);
+	gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+		
 	label = gtk_label_new (_("Background Color :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 			  GTK_FILL, 0, 0, GNOME_PAD_SMALL);
 	
 	color_picker = gnome_color_picker_new ();
@@ -590,14 +635,14 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 				    procdata->config.bg_color.blue, 0);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (bg_color_changed), procdata);
-	gtk_table_attach (GTK_TABLE (table), color_picker, 2, 3, 1, 2, 
-			  GTK_FILL|GTK_EXPAND,0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
+	gtk_table_attach (GTK_TABLE (table), color_picker, 2, 3, 0, 1, 
+			  0, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 			  
 	label = gtk_label_new (_("Grid Color :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-			  GTK_FILL, 0, 0, GNOME_PAD_SMALL);
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+			  GTK_FILL|GTK_EXPAND, 0, 0, GNOME_PAD_SMALL);
 	
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
@@ -606,8 +651,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 				    procdata->config.frame_color.blue, 0);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (frame_color_changed), procdata);
-	gtk_table_attach (GTK_TABLE (table), color_picker, 2, 3, 2, 3, 
-			  GTK_FILL|GTK_EXPAND,0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);		  
+	gtk_table_attach (GTK_TABLE (table), color_picker, 2, 3, 1, 2, 
+			  0, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);		  
 	
 	frame = gtk_frame_new (_("Devices"));
 	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
