@@ -562,10 +562,10 @@ get_size_string (gint size)
 		
 	fsize /= 1024.0;
 	if (fsize < 1024.0)
-		return g_strdup_printf (_("%.2f MB"), fsize);
+		return g_strdup_printf (_("%.0f MB"), fsize);
 	
 	fsize /= 1024.0;
-	return g_strdup_printf (_("%.2f GB"), fsize);
+	return g_strdup_printf (_("%.1f GB"), fsize);
 
 }
 
@@ -588,14 +588,15 @@ cb_update_disks (gpointer data)
 	entry = glibtop_get_mountlist (&mountlist, 0);
 	for (i=0; i < mountlist.number; i++) {
 		glibtop_fsusage usage;
-		gchar *text[5];
+		gchar *text[4];
 		
 		glibtop_get_fsusage (&usage, entry[i].mountdir);
 		text[0] = g_strdup (entry[i].devname);
-		text[4] = g_strdup (entry[i].mountdir);
-		text[1] = get_size_string ((usage.blocks - usage.bfree) / 2);
-		text[2] = get_size_string (usage.bfree / 2);
+		text[2] = get_size_string ((usage.blocks - usage.bfree) / 2);
+		//text[3] = get_size_string (usage.bfree / 2);
 		text[3] = get_size_string (usage.blocks / 2);
+		text[1] = g_strdup (entry[i].mountdir);
+		//text[4] = g_strdup_printf ("%s / %s", text[1], text[3]);
 		/* Hmm, usage.blocks == 0 seems to get rid of /proc and all
 		** the other useless entries */
 		if (usage.blocks != 0)
@@ -605,7 +606,7 @@ cb_update_disks (gpointer data)
 		g_free (text[1]);
 		g_free (text[2]);
 		g_free (text[3]);
-		g_free (text[4]);
+		//g_free (text[4]);
 	}
 	
 	GTK_CLIST (clist)->hadjustment->value = old_adj_hval;

@@ -340,10 +340,9 @@ create_sys_view (ProcData *procdata)
 	GtkWidget *color_picker;
 	GtkWidget *scrolled, *clist;
 	gchar *titles[5] = {_("Disk Name"),
+			    _("Mount Directory"),
 			    _("Used Space"),
-			    _("Free Space"),
-			    _("Total Space"),
-			    _("Mount Directory")
+			    _("Total Size")
 			    };
 	LoadGraph *cpu_graph, *mem_graph;
 	
@@ -452,18 +451,17 @@ create_sys_view (ProcData *procdata)
 					GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 	gtk_container_add (GTK_CONTAINER (disk_frame), scrolled);
 	 
-	clist = gtk_clist_new_with_titles (5, titles);
+	clist = gtk_clist_new_with_titles (4, titles);
 	gtk_container_add (GTK_CONTAINER (scrolled), clist);
   	gtk_container_set_border_width (GTK_CONTAINER (clist), GNOME_PAD_SMALL);
   	
   	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 0, TRUE);
   	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 1, TRUE);
-  	gtk_clist_set_column_justification (GTK_CLIST (clist), 1, GTK_JUSTIFY_CENTER);
   	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 2, TRUE);
   	gtk_clist_set_column_justification (GTK_CLIST (clist), 2, GTK_JUSTIFY_CENTER);
   	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 3, TRUE);
   	gtk_clist_set_column_justification (GTK_CLIST (clist), 3, GTK_JUSTIFY_CENTER);
-  	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 4, TRUE);
+  	//gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 4, TRUE);
   	
   	gtk_widget_show_all (disk_frame);
   	

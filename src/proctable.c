@@ -611,6 +611,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	/* Process was previously visible and has been blacklisted since */
 	if (newinfo->node && is_blacklisted && !was_blacklisted)
 		return -1;
+		
 	/* Process was previously blacklisted but has been knocked from the list
 	** and needs to be added */
 	if (!newinfo->node && !is_blacklisted && was_blacklisted)
