@@ -452,7 +452,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	glibtop_proc_uid procuid;
 	glibtop_proc_time proctime;
 	gint newcputime;
-	gboolean is_blacklisted;
+	gboolean is_blacklisted, was_blacklisted;
 	
 	glibtop_get_proc_state (&procstate, pid);
 	glibtop_get_proc_mem (&procmem, pid);
@@ -476,12 +476,15 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	get_process_status (newinfo, &procstate.state);
 	
 	is_blacklisted = is_process_blacklisted (procdata, newinfo->cmd);
+	was_blacklisted = newinfo->is_blacklisted;
+	newinfo->is_blacklisted = is_blacklisted;
+	
 	/* Process was previously visible and has been blacklisted since */
-	if (newinfo->node && is_blacklisted)
+	if (newinfo->node && is_blacklisted && !was_blacklisted)
 		return -1;
 	/* Process was previously blacklisted but has been knocked from the list
 	** and needs to be added */
-	if (!newinfo->node && !is_blacklisted)
+	if (!newinfo->node && !is_blacklisted && was_blacklisted)
 		return 1;
 	
 	if (procdata->config.whose_process == RUNNING_PROCESSES)
@@ -567,7 +570,11 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath root_node)
 
 	/* Don't show processes that user has blacklisted */
 	if (is_process_blacklisted (procdata, info->cmd))
+	{	
+		info->is_blacklisted = TRUE;
 		return NULL;
+	}
+	info->is_blacklisted = FALSE;
 
 	/* Find parent process node */
 	parentinfo = find_parent (procdata, info->parent_pid);
@@ -854,19 +861,9 @@ void
 proctable_clear_tree (ProcData *data)
 {
 	ProcData *procdata = data;
-	GList *list = procdata->info;
 	ETreePath rootnode;
 	
 	rootnode = e_tree_model_get_root (procdata->model);
-	/*while (list)
-	{
-		ProcInfo *info = list->data;
-		proctable_free_info (info);
-		list = g_list_next (list);
-	}
-	
-	g_list_free (procdata->info);
-	procdata->info = NULL;*/
 	
 	proctable_free_table (procdata);
 	

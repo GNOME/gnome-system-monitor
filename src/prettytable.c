@@ -11,6 +11,16 @@ void free_entry (gpointer key, gpointer value, gpointer data);
 void free_value (gpointer key, gpointer value, gpointer data);
 void free_key (gpointer key, gpointer value, gpointer data);
 
+
+static gboolean
+compare_strings (gconstpointer a, gconstpointer b)
+{
+	const gchar *str1 = a;
+	const gchar *str2 = b;
+	
+	return g_strcasecmp (str1, str2) == 0;
+}
+
 PrettyTable *pretty_table_new (void) {
 	PrettyTable *pretty_table = NULL;
 	gchar *path;
@@ -18,9 +28,9 @@ PrettyTable *pretty_table_new (void) {
 	
 	pretty_table = g_malloc (sizeof (PrettyTable));
 
-	pretty_table->cmdline_to_prettyname = g_hash_table_new (g_str_hash, g_str_equal);
-	pretty_table->cmdline_to_prettyicon = g_hash_table_new (g_str_hash, g_str_equal);
-	pretty_table->name_to_prettyicon = g_hash_table_new (g_str_hash, g_str_equal);
+	pretty_table->cmdline_to_prettyname = g_hash_table_new (g_str_hash, compare_strings);
+	pretty_table->cmdline_to_prettyicon = g_hash_table_new (g_str_hash, compare_strings);
+	pretty_table->name_to_prettyicon = g_hash_table_new (g_str_hash, compare_strings);
 	
 	path = gnome_datadir_file ("gnome/apps");
 	pretty_table_load_path (pretty_table, path, TRUE);
@@ -64,12 +74,12 @@ gint pretty_table_load_path (PrettyTable *pretty_table, gchar *path, gboolean re
 					tmp1[15] = '\0';
 
 				tmp2 = g_strdup (entry->name);
-				g_strdown (tmp2);
+				//g_strdown (tmp2);
 				tmp3 = g_strdup (entry->icon);
 				g_hash_table_insert (pretty_table->cmdline_to_prettyname, tmp1, tmp2);
 				g_hash_table_insert (pretty_table->cmdline_to_prettyicon, tmp1, tmp3);
 				tmp4 = g_strdup (tmp2);
-				g_strdown (tmp4);
+				//g_strdown (tmp4);
 				g_hash_table_insert (pretty_table->name_to_prettyicon, tmp4, tmp3);
 				gnome_desktop_entry_free (entry);
 			}

@@ -69,22 +69,34 @@ infoview_create (ProcData *data)
 	gtk_container_set_border_width (GTK_CONTAINER (info_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (main_hbox), info_frame, TRUE, TRUE, 0);
 	
-	info_table = gtk_table_new (3, 2, TRUE);
+	info_table = gtk_table_new (3, 2, FALSE);
 	gtk_container_add (GTK_CONTAINER (info_frame), info_table);
 	
 	label = gtk_label_new (_("Command : "));
-	gtk_table_attach_defaults (GTK_TABLE (info_table), label, 0, 1, 0, 1);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (info_table), label, 0, 1, 0, 1, GTK_FILL, 
+			  0,GNOME_PAD_SMALL, 0);
 	label = gtk_label_new (_("Status : "));
-	gtk_table_attach_defaults (GTK_TABLE (info_table), label, 0, 1, 1, 2);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (info_table), label, 0, 1, 1, 2, GTK_FILL, 
+			  0, GNOME_PAD_SMALL, 0);
 	label = gtk_label_new (_("Nice Value : "));
-	gtk_table_attach_defaults (GTK_TABLE (info_table), label, 0, 1, 2, 3);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (info_table), label, 0, 1, 2, 3, GTK_FILL, 
+			  0, GNOME_PAD_SMALL, 0);
 			  
 	cmd_label = gtk_label_new ("");
-	gtk_table_attach_defaults (GTK_TABLE (info_table), cmd_label, 1, 2, 0, 1);
+	gtk_misc_set_alignment (GTK_MISC (cmd_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (info_table), cmd_label, 1, 2, 0, 1, GTK_FILL,
+			  0, GNOME_PAD_SMALL, 0);
 	status_label = gtk_label_new ("");
-	gtk_table_attach_defaults (GTK_TABLE (info_table), status_label, 1, 2, 1, 2);
+	gtk_misc_set_alignment (GTK_MISC (status_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (info_table), status_label, 1, 2, 1, 2, GTK_FILL, 
+			  0, GNOME_PAD_SMALL, 0);
 	nice_label = gtk_label_new ("");
-	gtk_table_attach_defaults (GTK_TABLE (info_table), nice_label, 1, 2, 2, 3);
+	gtk_misc_set_alignment (GTK_MISC (nice_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (info_table), nice_label, 1, 2, 2, 3, GTK_FILL, 
+			  0, GNOME_PAD_SMALL, 0);
 	
 	mem_frame = gtk_frame_new (_("Memory Usage"));
 	gtk_frame_set_label_align (GTK_FRAME (mem_frame), 0.5, 0.5);
@@ -96,18 +108,30 @@ infoview_create (ProcData *data)
 	
 	
 	label = gtk_label_new (_("Total : "));
-	gtk_table_attach_defaults (GTK_TABLE (mem_table), label, 0, 1, 0, 1);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (mem_table), label, 0, 1, 0, 1, GTK_FILL, 
+			  0, GNOME_PAD_SMALL, 0);
 	label = gtk_label_new (_("RSS : "));
-	gtk_table_attach_defaults (GTK_TABLE (mem_table), label, 0, 1, 1, 2);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (mem_table), label, 0, 1, 1, 2, GTK_FILL, 
+			  0, GNOME_PAD_SMALL, 0);
 	label = gtk_label_new (_("Shared : "));
-	gtk_table_attach_defaults (GTK_TABLE (mem_table), label, 0, 1, 2, 3);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (mem_table), label, 0, 1, 2, 3, GTK_FILL, 
+			  0, GNOME_PAD_SMALL, 0);
 			  
 	memtotal_label = gtk_label_new ("");
-	gtk_table_attach_defaults (GTK_TABLE (mem_table), memtotal_label, 1, 2, 0, 1);
+	gtk_misc_set_alignment (GTK_MISC (memtotal_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (mem_table), memtotal_label, 1, 2, 0, 1, GTK_FILL, 
+			  0, GNOME_PAD_SMALL, 0);
 	memrss_label = gtk_label_new ("");
-	gtk_table_attach_defaults (GTK_TABLE (mem_table), memrss_label, 1, 2, 1, 2);
+	gtk_misc_set_alignment (GTK_MISC (memrss_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (mem_table), memrss_label, 1, 2, 1, 2, GTK_FILL, 
+			  0, GNOME_PAD_SMALL, 0);
 	memshared_label = gtk_label_new ("");
-	gtk_table_attach_defaults (GTK_TABLE (mem_table), memshared_label, 1, 2, 2, 3);
+	gtk_misc_set_alignment (GTK_MISC (memshared_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (mem_table), memshared_label, 1, 2, 2, 3, GTK_FILL, 
+			  0, GNOME_PAD_SMALL, 0);
 	
 	procdata->infobox = infobox;
 

@@ -73,6 +73,7 @@ struct _ProcInfo
 	gint		memrss;
 	gchar		*status;
 	gboolean	running;
+	gboolean	is_blacklisted;
 };
 
 struct _ProcData

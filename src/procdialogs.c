@@ -496,7 +496,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 			    GTK_SIGNAL_FUNC (show_commands_toggled), procdata);
 	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
 	
-	check_button = gtk_check_button_new_with_label (_("Never Show Icons or Application Names \n ( faster startup time - requires restart)"));
+	check_button = gtk_check_button_new_with_label (_("Never Show Icons or Application Names \n ( faster startup time )"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
 				    !procdata->config.show_icons);
 	gtk_signal_connect (GTK_OBJECT (check_button), "toggled",

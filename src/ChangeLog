@@ -1,3 +1,22 @@
+2001-07-31 Kevin Vandersloot <kfv101@psu.edu>
+
+        * procman.h: add boolean to ProcInfo indicating whether
+        the process is blacklisted.
+
+        * proctable.c (update_info): insert process and remove taking
+        into account whether it was formerly blacklisted or not. Fixes
+        a bug where a process was continusouly inserted leading
+        to (thread) being appended over and over
+
+        * procdialogs.c (creare_preferences_dialog): update comment
+        to be correct.
+
+        * infoview.c (create_infoview): cosmetic improvements
+
+        * prettytable.c (_load_path): remove g_strdowns so app names
+        will be upper case per Seth's suggestion. Nautilus doesn't
+        get an icon so I need to check into that.
+
 2001-07-31  Carlos Perelló Marín <carlos@gnome-db.org>
 
 	* proctable.c, favorites.c: Please, remember to add the
