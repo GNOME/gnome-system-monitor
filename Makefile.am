@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = intl po macros src
+SUBDIRS = po src
 
 EXTRA_DIST = \
 	procman.desktop.in \

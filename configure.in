@@ -6,18 +6,10 @@ AM_CONFIG_HEADER(config.h)
 
 AM_PROG_XML_I18N_TOOLS
 
-
-dnl Pick up the Gnome macros.
-AM_ACLOCAL_INCLUDE(macros)
-
-dnl GNOME_INIT
 AC_ISC_POSIX
 AC_PROG_CC
 AM_PROG_CC_STDC
 AC_HEADER_STDC
-
-GNOME_COMPILE_WARNINGS
-dnl GNOME_X_CHECKS
 
 LIBGNOME_REQUIRED=1.96.0
 LIBGNOMEUI_REQUIRED=1.96.0
@@ -48,9 +40,7 @@ fi
 
 AC_OUTPUT([
 Makefile
-macros/Makefile
 src/Makefile
-intl/Makefile
 po/Makefile.in
 ])
 
