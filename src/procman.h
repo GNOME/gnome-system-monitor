@@ -22,7 +22,6 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gnome.h>
 
-
 typedef struct _ProcConfig ProcConfig;
 typedef struct _PrettyTable PrettyTable;
 typedef struct _LoadGraph LoadGraph;
@@ -156,5 +155,7 @@ struct _ProcData
 };
 
 void		procman_save_config (ProcData *data);
+void		procman_save_tree_state (GtkWidget *tree, gchar *prefix);
+void		procman_get_tree_state (GtkWidget *tree, gchar *prefix);
 
 #endif

@@ -119,9 +119,9 @@ proctable_new (ProcData *data)
   	
   	cell_renderer = gtk_cell_renderer_pixbuf_new ();
   	column = gtk_tree_view_column_new_with_attributes (title[0],
-						    		   cell_renderer,
-						     		   "pixbuf", COL_PIXBUF,
-						     		   NULL);
+						    	   cell_renderer,
+						     	   "pixbuf", COL_PIXBUF,
+						     	    NULL);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 		
 	cell_renderer = gtk_cell_renderer_text_new ();
@@ -131,7 +131,6 @@ proctable_new (ProcData *data)
 						     	   NULL);
 	gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
-	gtk_tree_view_column_set_reorderable (column, TRUE);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 	gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
   	
@@ -143,7 +142,6 @@ proctable_new (ProcData *data)
 						     		   NULL);
 		gtk_tree_view_column_set_sort_column_id (column, i);
 		gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
-		gtk_tree_view_column_set_reorderable (column, TRUE);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 		if (i == 3)
 			gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
@@ -170,11 +168,10 @@ proctable_new (ProcData *data)
 					 sort_ints,
 					 GINT_TO_POINTER (COL_PID),
 					 NULL);
-	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model),
-					      COL_NAME,
-					      GTK_SORT_ASCENDING);
 	
 	procdata->tree = proctree;
+	
+	procman_get_tree_state (proctree, "/apps/procman/proctree/");
 	
 	g_signal_connect (G_OBJECT (gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree))), 
 			  "changed",
@@ -844,14 +841,6 @@ proctable_free_table (ProcData *procdata)
 	
 	g_list_free (procdata->info);
 	procdata->info = NULL;
-	
-}
-
-void
-proctable_save_state (ProcData *data)
-{
-	ProcData *procdata = data;
-	GtkWidget *tree = procdata->tree;
 	
 }
 

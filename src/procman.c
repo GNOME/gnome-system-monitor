@@ -293,6 +293,109 @@ procman_free_data (ProcData *procdata)
 }
 #endif
 
+void
+procman_get_tree_state (GtkWidget *tree, gchar *prefix)
+{
+	GtkTreeModel *model;
+	gint sort_col;
+	GtkSortType order;
+	gchar *key;
+	gint i = 0;
+	gboolean done = FALSE;
+	
+	g_return_if_fail (tree);
+	g_return_if_fail (prefix);
+	
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
+	
+	key = g_strdup_printf ("%ssort_col", prefix);
+	sort_col = get_gconf_int_with_default (key, -1);
+	g_free (key);
+	
+	key = g_strdup_printf ("%ssort_order", prefix);
+	order = get_gconf_int_with_default (key, -1);
+	g_free (key);
+	
+	if (sort_col != -1)
+		gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model),
+					      	      sort_col,
+					              order);
+	
+	while (!done) {
+		GtkTreeViewColumn *column;
+		gint width;
+		gboolean visible;
+		
+		key = g_strdup_printf ("%scol_%d_width", prefix, i);
+		width = get_gconf_int_with_default (key, -1);
+		g_free (key);
+		
+		key = g_strdup_printf ("%scol_%d_visible", prefix, i);
+		visible = get_gconf_bool_with_default (key, FALSE);
+		g_free (key);
+		
+		if (width != -1) {
+			column = gtk_tree_view_get_column (GTK_TREE_VIEW (tree), i);
+			gtk_tree_view_column_set_visible (column, visible);
+			gtk_tree_view_column_set_fixed_width (column, width);
+		}
+		else
+			done = TRUE;
+		
+		i++;
+	}
+}
+
+void
+procman_save_tree_state (GtkWidget *tree, gchar *prefix)
+{
+	GtkTreeModel *model;
+	GList *columns;
+	gint sort_col;
+	GtkSortType order;
+	gint i = 0;
+	
+	g_return_if_fail (tree);
+	g_return_if_fail (prefix);
+	
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
+	if (gtk_tree_sortable_get_sort_column_id (GTK_TREE_SORTABLE (model), &sort_col,
+					          &order)) {
+		gchar *key;
+		
+		key = g_strdup_printf ("%ssort_col", prefix);
+		gconf_client_set_int (client, key, sort_col, NULL);
+		g_free (key);
+		
+		key = g_strdup_printf ("%ssort_order", prefix);
+		gconf_client_set_int (client, key, order, NULL);
+		g_free (key);
+	}			       
+	
+	columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree));
+	
+	while (columns) {
+		GtkTreeViewColumn *column = columns->data;
+		gboolean visible;
+		gint width;
+		gchar *key;
+		
+		visible = gtk_tree_view_column_get_visible (column);
+		width = gtk_tree_view_column_get_width (column);
+		
+		key = g_strdup_printf ("%scol_%d_width", prefix, i);
+		gconf_client_set_int (client, key, width, NULL);
+		g_free (key);
+		
+		key = g_strdup_printf ("%scol_%d_visible", prefix, i);
+		gconf_client_set_bool (client, key, visible, NULL);
+		g_free (key);
+		
+		columns = g_list_next (columns);
+		i++;
+	}
+	
+}
 
 void
 procman_save_config (ProcData *data)
@@ -304,9 +407,9 @@ procman_save_config (ProcData *data)
 		
 	if (data->config.simple_view)
 		return;
-#if 0		
-	proctable_save_state (data);
-#endif		
+		
+	procman_save_tree_state (data->tree, "/apps/procman/proctree/");
+		
 	gdk_window_get_size (app->window, &width, &height);
 	data->config.width = width;
 	data->config.height = height;
