@@ -755,7 +755,9 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 	/*View->Hidden Processes*/
 	gtk_widget_set_sensitive (view1_menu_uiinfo[4].widget, sensitivity);
 	/*View->Memory Maps*/
-	gtk_widget_set_sensitive (view1_menu_uiinfo[5].widget, sensitivity);
+	gtk_widget_set_sensitive (view1_menu_uiinfo[6].widget, sensitivity);
+	/*View->Open Files*/
+	gtk_widget_set_sensitive (view1_menu_uiinfo[7].widget, sensitivity);	
 }
 
 static void		

@@ -351,11 +351,11 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 	gtk_container_set_border_width (GTK_CONTAINER (memmapsdialog), 6);
 
 	vbox = GTK_DIALOG (memmapsdialog)->vbox;
-	gtk_box_set_spacing (GTK_BOX (vbox), 12);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+	gtk_box_set_spacing (GTK_BOX (vbox), 2);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
 
 	dialog_vbox = gtk_vbox_new (FALSE, 6);
-	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 0);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 5);
 	gtk_box_pack_start (GTK_BOX (vbox), dialog_vbox, TRUE, TRUE, 0);
 
 	tmp = g_strdup_printf (_("_Memory maps for process \"%s\":"), info->name);

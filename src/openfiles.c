@@ -309,7 +309,7 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
 
 	dialog_vbox = gtk_vbox_new (FALSE, 6);
-	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 12);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 5);
 	gtk_box_pack_start (GTK_BOX (vbox), dialog_vbox, TRUE, TRUE, 0);
 
 	cmd_hbox = gtk_hbox_new (FALSE, 12);
@@ -325,6 +325,8 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
 					GTK_POLICY_AUTOMATIC,
 					GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
+                                             GTK_SHADOW_IN);
 
 	tree = create_openfiles_tree (procdata);
 	gtk_container_add (GTK_CONTAINER (scrolled), tree);
