@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-10 20:32+0100\n"
-"PO-Revision-Date: 2005-01-10 21:55+0100\n"
+"POT-Creation-Date: 2005-01-20 12:32+0100\n"
+"PO-Revision-Date: 2005-01-20 20:22+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -39,12 +39,12 @@ msgid "translator-credits"
 msgstr "Miloslav Trmač <mitr@volny.cz>"
 
 #. translators: primary alert message
-#: src/favorites.c:345
+#: src/favorites.c:347
 msgid "No hidden processes"
 msgstr "Žádné skryté procesy"
 
 #. translators: secondary alert message
-#: src/favorites.c:352
+#: src/favorites.c:354
 msgid ""
 "There are no hidden processes in the list. To show all running processes, "
 "select the \"All processes\" option in the main window."
@@ -52,23 +52,23 @@ msgstr ""
 "V seznamu nejsou žádné skryté procesy. Všechny běžící procesy zobrazíte "
 "zvolením možnosti \"Všechny procesy\" v hlavním okně."
 
-#: src/favorites.c:372
+#: src/favorites.c:374
 msgid "Hidden Processes"
 msgstr "Skryté procesy"
 
-#: src/favorites.c:396
+#: src/favorites.c:398
 msgid "Currently _hidden processes:"
 msgstr "Momentálně _skryté procesy:"
 
-#: src/favorites.c:418
+#: src/favorites.c:420
 msgid "_Remove From List"
 msgstr "_Odstranit ze seznamu"
 
-#: src/favorites.c:427 src/procdialogs.c:277
+#: src/favorites.c:429 src/procdialogs.c:277
 msgid "Note:"
 msgstr "Poznámka:"
 
-#: src/favorites.c:428
+#: src/favorites.c:430
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
@@ -285,8 +285,8 @@ msgstr "Otevřít seznam momentálně skrytých procesů"
 msgid "_Memory Maps"
 msgstr "_Mapy paměti"
 
-#: src/interface.c:100 src/interface.c:154
-msgid "Open the memory maps associated with the process"
+#: src/interface.c:100
+msgid "Open the memory maps associated with a process"
 msgstr "Otevřít mapy paměti asociované s procesem"
 
 #: src/interface.c:105 src/interface.c:159
@@ -294,8 +294,8 @@ msgid "Open _Files"
 msgstr "Otevřené _soubory"
 
 #: src/interface.c:105
-msgid "View a process' open files"
-msgstr "Zobrazit otevřené soubory procesu"
+msgid "View the files opened by a process"
+msgstr "Zobrazit soubory otevřené procesem"
 
 #: src/interface.c:131 src/procdialogs.c:129
 msgid "_End Process"
@@ -309,9 +309,13 @@ msgstr "Vynutit normální ukončení procesu"
 msgid "Force a process to finish immediately"
 msgstr "Vynutit okamžité ukončení procesu"
 
+#: src/interface.c:154
+msgid "Open the memory maps associated with the process"
+msgstr "Otevřít mapy paměti asociované s procesem"
+
 #: src/interface.c:159
-msgid "View process' open files"
-msgstr "Zobrazit skryté soubory procesu"
+msgid "View the files opened by the process"
+msgstr "Zobrazit soubory otevřené procesem"
 
 #: src/interface.c:199
 msgid "Sea_rch:"
@@ -345,7 +349,7 @@ msgstr "Zařízení"
 msgid "Directory"
 msgstr "Adresář"
 
-#: src/interface.c:337 src/openfiles.c:187
+#: src/interface.c:337 src/openfiles.c:221
 msgid "Type"
 msgstr "Typ"
 
@@ -386,15 +390,15 @@ msgstr "z"
 msgid "Used swap:"
 msgstr "Použitý odkládací prostor:"
 
-#: src/interface.c:523 src/procdialogs.c:742
+#: src/interface.c:523 src/procdialogs.c:752
 msgid "Devices"
 msgstr "Zařízení"
 
-#: src/interface.c:651 src/procdialogs.c:567
+#: src/interface.c:651 src/procdialogs.c:577
 msgid "Processes"
 msgstr "Procesy"
 
-#: src/interface.c:657 src/procdialogs.c:654
+#: src/interface.c:657 src/procdialogs.c:664
 msgid "Resources"
 msgstr "Zdroje"
 
@@ -438,41 +442,49 @@ msgstr "Inode"
 msgid "Memory Maps"
 msgstr "Mapy paměti"
 
-#: src/memmaps.c:363 src/openfiles.c:285
-msgid "Process name:"
-msgstr "Název procesu:"
+#: src/memmaps.c:361
+#, c-format
+msgid "_Memory maps for process \"%s\":"
+msgstr "_Mapy paměti pro proces \"%s\":"
 
-#: src/openfiles.c:29
+#: src/openfiles.c:33
 msgid "file"
 msgstr "soubor"
 
-#: src/openfiles.c:31
+#: src/openfiles.c:35
 msgid "pipe"
 msgstr "roura"
 
-#: src/openfiles.c:33
-msgid "internet connection"
-msgstr "připojení po internetu"
+#: src/openfiles.c:37
+msgid "network connection"
+msgstr "připojení k síti"
 
-#: src/openfiles.c:35
+#: src/openfiles.c:39
 msgid "local socket"
 msgstr "místní socket"
 
-#: src/openfiles.c:37
+#: src/openfiles.c:41
 msgid "unknown type"
 msgstr "neznámý typ"
 
-#: src/openfiles.c:186
+#. Translators: "FD" here means "File Descriptor". Please use
+#. a very short translation if possible, and at most
+#. 2-3 characters for it to be able to fit in the UI.
+#: src/openfiles.c:220
 msgid "FD"
 msgstr "FD"
 
-#: src/openfiles.c:188
+#: src/openfiles.c:222
 msgid "Object"
 msgstr "Objekt"
 
-#: src/openfiles.c:265
+#: src/openfiles.c:299
 msgid "Open Files"
 msgstr "Otevřené soubory"
+
+#: src/openfiles.c:319
+msgid "Process name:"
+msgstr "Název procesu:"
 
 #: src/procactions.c:53
 msgid "No such process."
@@ -531,11 +543,9 @@ msgstr "Skrýt vybraný proces?"
 #. translators: secondary alert messagex
 #: src/procdialogs.c:72
 msgid ""
-"Hidden processes are no longer visible in the processes list. You can re-"
-"enable them selecting the \"Hidden Processes\" entry in the View menu."
-msgstr ""
-"Skryté procesy už nejsou vidět v seznamu procesů. Můžete je znovu povolit "
-"zvolením položky \"Skryté procesy\" v menu Zobrazit."
+"Hidden processes are no longer visible in the process list. You can re-"
+"enable them by selecting the \"Hidden Processes\" entry in the View menu."
+msgstr "Skryté procesy už nejsou vidět v seznamu procesů. Můžete je znovu povolit zvolením položky \"Skryté procesy\" v menu Zobrazit."
 
 #. translators: primary alert message
 #: src/procdialogs.c:115
@@ -607,51 +617,55 @@ msgstr ""
 "Priorita procesu je dána jeho hodnotou nice. Nižší hodnota nice odpovídá "
 "vyšší prioritě."
 
-#: src/procdialogs.c:508
+#: src/procdialogs.c:463
+msgid "Processes i_nfo showed in list:"
+msgstr "_Informace o procesech zobrazované v seznamu:"
+
+#: src/procdialogs.c:514
 msgid "Icon"
 msgstr "Ikona"
 
-#: src/procdialogs.c:548
+#: src/procdialogs.c:554
 msgid "System Monitor Preferences"
 msgstr "Nastavení sledování systému"
 
-#: src/procdialogs.c:574
+#: src/procdialogs.c:584
 msgid "Behavior"
 msgstr "Chování"
 
-#: src/procdialogs.c:593 src/procdialogs.c:680
+#: src/procdialogs.c:603 src/procdialogs.c:690
 msgid "_Update interval:"
 msgstr "Interval _aktualizace:"
 
-#: src/procdialogs.c:609 src/procdialogs.c:697 src/procdialogs.c:778
+#: src/procdialogs.c:619 src/procdialogs.c:707 src/procdialogs.c:788
 msgid "seconds"
 msgstr "sekund"
 
-#: src/procdialogs.c:616
+#: src/procdialogs.c:626
 msgid "Alert before ending or _killing processes"
 msgstr "Upozornit před ukončením nebo za_bitím procesů"
 
-#: src/procdialogs.c:626
+#: src/procdialogs.c:636
 msgid "Alert before _hiding processes"
 msgstr "Upozornit před _skrýváním procesů"
 
-#: src/procdialogs.c:636
+#: src/procdialogs.c:646
 msgid "Process Fields"
 msgstr "Pole procesu"
 
-#: src/procdialogs.c:661
+#: src/procdialogs.c:671
 msgid "Graphs"
 msgstr "Grafy"
 
-#: src/procdialogs.c:704
+#: src/procdialogs.c:714
 msgid "_Background color:"
 msgstr "Barva _pozadí:"
 
-#: src/procdialogs.c:723
+#: src/procdialogs.c:733
 msgid "_Grid color:"
 msgstr "Barva _rastru:"
 
-#: src/procdialogs.c:761
+#: src/procdialogs.c:771
 msgid "Update _interval:"
 msgstr "Interval _aktualizace:"
 
@@ -733,7 +747,22 @@ msgstr "Spí"
 msgid "%s (thread)"
 msgstr "%s (thread)"
 
-#: src/proctable.c:1002
+#: src/proctable.c:1004
 #, c-format
-msgid "%s could not be found."
-msgstr "Nemohu najít %s."
+msgid "Could not find \"%s\""
+msgstr "Nemohu najít \"%s\""
+
+#: src/proctable.c:1008
+msgid ""
+"There are no processes containing the searched string. Please note that the "
+"search is performed only on processes shown in the process list."
+msgstr "Žádný proces neobsahuje hledaný řetězec. Všimněte si, že hledá se jen mezi procesy zobrazenými v seznamu procesů."
+
+#~ msgid "View a process' open files"
+#~ msgstr "Zobrazit otevřené soubory procesu"
+
+#~ msgid "View process' open files"
+#~ msgstr "Zobrazit skryté soubory procesu"
+
+#~ msgid "%s could not be found."
+#~ msgstr "Nemohu najít %s."
