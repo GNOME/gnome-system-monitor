@@ -2,14 +2,14 @@
 
 Summary: Simple process monitor
 Name: gnome-system-monitor
-Version: 1.1.7
+Version: 2.0.0
 Release: 1
 Copyright: GPL
 Group: Applications/System
 Source: http://www.personal.psu.edu/kfv101/procman/source/gnome-system-monitor-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-root
-Requires: libgnomeui >= 1.106.0
-Requires: libgtop >= 1.90.0
+Requires: libgnomeui >= 2.0.0
+Requires: libgtop >= 2.0.0
 Requires: libwnck >= 0.12
 Obsoletes: procman
 
