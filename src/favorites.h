@@ -34,7 +34,7 @@ void		save_favorites (ProcData *procdata);
 void 		get_favorites (ProcData *procdata);
 
 void		add_to_blacklist (ProcData *procdata, gchar *name);
-
+void		add_selected_to_blacklist (ProcData *procdata);
 void		remove_from_blacklist (ProcData *procdata, gchar *name);
 
 gboolean	is_process_blacklisted (ProcData *procdata, gchar *name);

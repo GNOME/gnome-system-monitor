@@ -125,7 +125,6 @@ void
 cb_hide_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
-	ProcInfo *info;
 	
 	if (!procdata->selected_node)
 		return;
@@ -138,9 +137,7 @@ cb_hide_process (GtkMenuItem *menuitem, gpointer data)
 	}
 	else
 	{
-		info = e_tree_memory_node_get_data (procdata->memory, 
-						    procdata->selected_node);
-		add_to_blacklist (procdata, info->cmd);
+		add_selected_to_blacklist (procdata);
 		proctable_update_all (procdata);
 	}
 	
@@ -279,7 +276,6 @@ void
 popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
-	ProcInfo *info;
 	
 	if (!procdata->selected_node)
 		return;
@@ -292,9 +288,7 @@ popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
 	}
 	else
 	{
-		info = e_tree_memory_node_get_data (procdata->memory, 
-						    procdata->selected_node);
-		add_to_blacklist (procdata, info->cmd);
+		add_selected_to_blacklist (procdata);
 		proctable_update_all (procdata);
 	}
 	

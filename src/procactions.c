@@ -29,6 +29,8 @@
 #include "proctable.h"
 #include "procdialogs.h"
 
+int kill_signal;
+
 void
 renice (ProcData *procdata, int pid, int nice)
 {
@@ -68,21 +70,14 @@ renice (ProcData *procdata, int pid, int nice)
 	
 }
 
-void
-kill_process (ProcData *procdata, int sig)
+static void
+kill_single_process (ProcData *procdata, ProcInfo *info, int sig)
 {
-
-	ProcInfo *info;
 	int error;
 	GtkWidget *dialog;
         gchar *error_msg;
 	gchar *error_critical;
 	
-	if (!procdata->selected_node)
-		return;
-		
-	info = e_tree_memory_node_get_data (procdata->memory, 
-					    procdata->selected_node);
 	/* Author:  Tige Chastian
 	   Date:  8/18/01 
 	   Added dialogs for errors on kill.  
@@ -95,7 +90,7 @@ kill_process (ProcData *procdata, int sig)
 			case ESRCH:
 				break;
 			case EPERM:
-				error_msg = g_strdup_printf (_("You do not have permission to end this process. You can enter the root password to gain the necessary permission."));
+				error_msg = g_strdup_printf (_("Process Name : %s \n\nYou do not have permission to end this process. You can enter the root password to gain the necessary permission."), info->name);
 				procdialog_create_root_password_dialog (0, procdata, 
 									info->pid, 0,
 									error_msg);
@@ -118,6 +113,34 @@ kill_process (ProcData *procdata, int sig)
                 	}
 	}
 
-	proctable_update_all (procdata);		
 	
+}
+
+static void
+remove_item (ETreePath node, gpointer data)
+{
+	ProcData *procdata = data;
+	ProcInfo *info = NULL;
+	
+	info = e_tree_memory_node_get_data (procdata->memory, node);
+	
+	g_return_if_fail (info);
+		
+	kill_single_process (procdata, info, kill_signal);
+	
+}
+
+void
+kill_process (ProcData *procdata, int sig)
+{
+	ProcInfo *info;
+	
+	if (!procdata->selected_node)
+		return;
+		
+	kill_signal = sig;	
+	e_tree_selected_path_foreach (E_TREE (procdata->tree), remove_item, procdata);	
+		    
+	proctable_update_all (procdata);
+
 }

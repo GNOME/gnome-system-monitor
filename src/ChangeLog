@@ -1,3 +1,25 @@
+2001-10-18  Kevin Vandersloot <kfv101@psu.edu>
+
+	Add ability to select multiple processes and do the corresponding
+	actions on all selected processes. Crashes when killing multiple
+	processes and one needs the root dialog though and no renice
+	support yet.
+
+	* proctble.etspec: change selection mode to "browse"
+
+	* favorites.c: hide all selected processes. Also update the
+	tree when a blacklisted processes is readded for good
+	feedback
+	
+	* procactions.c: when putting up root dialog specify the 
+	process name since there could be multiple processes that
+	need to be killed as root. Term/Kill all selected processes.
+
+	* procdialogs.c: make sure to hide all processes
+
+	* callbacks.c: call any new functions to perforam actions on all
+	processes
+
 2001-10-17  Kevin Vandersloot <kfv101@psu.edu>
 
 	* interface.c: minor tweaks

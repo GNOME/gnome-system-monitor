@@ -51,12 +51,8 @@ static void
 cb_hide_process_clicked (GtkButton *button, gpointer data)
 {
 	ProcData *procdata = data;
-	ProcInfo *info;
 	
-	info = e_tree_memory_node_get_data (procdata->memory, 
-					    procdata->selected_node);
-					   
-	add_to_blacklist (procdata, info->cmd);
+	add_selected_to_blacklist (procdata);
 	proctable_update_all (procdata);
 
 }

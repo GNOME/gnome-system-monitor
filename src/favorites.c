@@ -27,6 +27,7 @@
 #include <gal/e-table/e-tree-scrolled.h>
 #include <gal/e-table/e-cell-text.h>
 #include "favorites.h"
+#include "proctable.h"
 
 #define SPEC "<ETableSpecification cursor-mode=\"line\" selection-mode=\"browse\" draw-focus=\"true\" no-headers=\"true\">                    	       \
   <ETableColumn model_col=\"0\" _title=\" \"   expansion=\"1.0\" minimum_width=\"20\" resizable=\"true\" cell=\"blacklist\" compare=\"string\"/> \
@@ -50,16 +51,37 @@ add_to_favorites (ProcData *procdata, gchar *name)
 
 }
 
-
 void
 add_to_blacklist (ProcData *procdata, gchar *name)
 {
 	gchar *process = g_strdup (name);
+	
 	procdata->blacklist = g_list_append (procdata->blacklist, process);
 	procdata->blacklist_num++;
 	
 }
 
+static void
+add_single_to_blacklist (ETreePath node, gpointer data)
+{
+	ProcData *procdata = data;
+	ProcInfo *info = NULL;
+	
+	info = e_tree_memory_node_get_data (procdata->memory, node);
+	
+	g_return_if_fail (info);
+	
+	add_to_blacklist (procdata, info->cmd);
+	
+}
+
+void
+add_selected_to_blacklist (ProcData *procdata)
+{
+	
+	e_tree_selected_path_foreach (E_TREE (procdata->tree), add_single_to_blacklist, procdata);
+	
+}
 void
 remove_from_favorites (ProcData *procdata, gchar *name)
 {
@@ -384,6 +406,8 @@ remove_button_clicked (GtkButton *button, gpointer data)
 		e_tree_memory_node_remove (memory, root_node);
 		fill_tree_with_info (procdata);
 	}
+	
+	proctable_update_all (procdata);
 		
 }
 
