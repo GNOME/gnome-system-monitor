@@ -136,10 +136,18 @@ cb_about_activate                     (GtkMenuItem     *menuitem,
 
 
 void
-cb_app_destroy                        (GtkObject       *object,
-                                       gpointer		user_data)
+cb_app_exit (GtkObject *object, gpointer user_data)
 {
 	ProcData *procdata = user_data;
+	
+	cb_app_delete (NULL, NULL, procdata);
+	
+}
+
+void		
+cb_app_delete (GtkWidget *window, GdkEventAny *ev, gpointer data)
+{
+	ProcData *procdata = data;
 	
 	if (procdata)
 	{
@@ -152,7 +160,6 @@ cb_app_destroy                        (GtkObject       *object,
 	gtk_main_quit ();
 	
 }
-
 
 void
 cb_all_process_menu_clicked 		(GtkWidget	*widget,
@@ -454,6 +461,8 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 			 			     	     cb_timeout, procdata);
 		load_graph_stop (procdata->cpu_graph);
 		load_graph_stop (procdata->mem_graph);
+		if (procdata->selected_node)
+			update_sensitivity (procdata, TRUE);
 	}
 	else {
 		if (procdata->timeout != -1 ) {
@@ -464,6 +473,8 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 		load_graph_start (procdata->mem_graph);
 		load_graph_draw (procdata->cpu_graph);
 		load_graph_draw (procdata->mem_graph);
+		if (procdata->selected_node)
+			update_sensitivity (procdata, FALSE);
 	}
 
 }

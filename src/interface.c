@@ -44,7 +44,7 @@
 
 static GnomeUIInfo file1_menu_uiinfo[] =
 {
-	GNOMEUIINFO_MENU_EXIT_ITEM (cb_app_destroy, NULL),
+	GNOMEUIINFO_MENU_EXIT_ITEM (cb_app_exit, NULL),
 	GNOMEUIINFO_END
 };
 
@@ -541,8 +541,8 @@ create_main_window (ProcData *procdata)
 	appbar1 = gnome_appbar_new (FALSE, TRUE, GNOME_PREFERENCES_NEVER);
 	gnome_app_set_statusbar (GNOME_APP (app), appbar1);
 	
-	gtk_signal_connect (GTK_OBJECT (app), "destroy",
-                            GTK_SIGNAL_FUNC (cb_app_destroy),
+	gtk_signal_connect (GTK_OBJECT (app), "delete_event",
+                            GTK_SIGNAL_FUNC (cb_app_delete),
                             procdata);
 	gnome_app_install_menu_hints (GNOME_APP (app), menubar1_uiinfo);
 

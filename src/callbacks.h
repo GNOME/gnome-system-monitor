@@ -48,9 +48,9 @@ void
 cb_about_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
-void
-cb_app_destroy                        (GtkObject       *object,
-                                        gpointer         user_data);
+void		cb_app_exit (GtkObject *object, gpointer user_data);
+                                        
+void		cb_app_delete (GtkWidget *window, GdkEventAny *ev, gpointer data);
                                         
 void
 cb_all_process_menu_clicked 		(GtkWidget	*widget,

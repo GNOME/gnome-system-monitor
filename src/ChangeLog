@@ -1,5 +1,14 @@
 2001-08-23  Kevin Vandersloot <kfv101@psu.edu>
 
+	* interface.c: connect to the "delete_event" signal as that
+	is more right than "destroy" and gets rid of the bug where
+	widgets are destroyed before the "destroy" signal is emitted.
+
+	* callbacks.c: now cb_app_delete for the "delete_event" signal
+	and cb_exit for the exit menu item.
+
+2001-08-23  Kevin Vandersloot <kfv101@psu.edu>
+
 	* interface.c: fill in the status bar message for the menuitems
 
 2001-08-23  Kevin Vandersloot <kfv101@psu.edu>
