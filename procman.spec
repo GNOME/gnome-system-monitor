@@ -54,3 +54,7 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}/share/procman/simple.etspec
 %{prefix}/share/locale/*/LC_MESSAGES/*.mo
 %{prefix}/share/pixmaps/procman.png
+%{prefix}/share/gnome/help/procman/C/*.html
+%{prefix}/share/gnome/help/procman/C/*.dat
+%{prefix}/share/gnome/help/procman/C/*.sgml
+

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = intl po macros src help
+SUBDIRS = intl po macros src help omf-install
 
 EXTRA_DIST = \
 	procman.desktop.in \
