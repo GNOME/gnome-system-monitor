@@ -476,10 +476,13 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 
 }
 
+GList *old_disks = NULL;
+
 static gboolean
 compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
 	GHashTable *new_disks = data;
+	GtkTreeIter *old_iter;
 	glibtop_mountentry *entry = NULL;
 	gchar *old_name;
 	
@@ -495,7 +498,7 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 		used = get_size_string ((float)(usage.blocks - usage.bfree) * 512);
 		total = get_size_string ((float) usage.blocks * 512);
 		
-		gtk_list_store_set (GTK_LIST_STORE (model), iter,
+		gtk_tree_store_set (GTK_TREE_STORE (model), iter,
 				    2, used,
 				    3, total, -1);
 		g_hash_table_remove (new_disks, old_name);
@@ -507,7 +510,9 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 		
 	}
 	
-	gtk_list_store_remove (GTK_LIST_STORE (model), iter);
+	old_iter = gtk_tree_iter_copy (iter);
+	old_disks = g_list_append (old_disks, old_iter);
+	
 	return FALSE;
 	
 }
@@ -530,8 +535,8 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 	if (usage.blocks != 0) {
 		GtkTreeIter row;
 			
-		gtk_list_store_insert (GTK_LIST_STORE (model), &row, 0); 
-		gtk_list_store_set (GTK_LIST_STORE (model), &row,
+		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0); 
+		gtk_tree_store_set (GTK_TREE_STORE (model), &row,
 					    0, text[0],
 					    1, text[1],
 					    2, text[2],
@@ -550,8 +555,6 @@ cb_update_disks (gpointer data)
 {
 	ProcData *procdata = data;
 	GtkTreeModel *model;
-	GtkTreePath *path;
-	GtkTreeIter iter;
 	glibtop_mountentry *entry;
 	glibtop_mountlist mountlist;
 	GHashTable *new_disks = NULL;
@@ -569,7 +572,16 @@ cb_update_disks (gpointer data)
 	gtk_tree_model_foreach (model, compare_disks, new_disks);
 	
 	g_hash_table_foreach (new_disks, add_new_disks, model);
-
+	
+	while (old_disks) {
+		GtkTreeIter *iter = old_disks->data;
+		
+		gtk_tree_store_remove (GTK_TREE_STORE (model), iter);
+		gtk_tree_iter_free (iter);
+		
+		old_disks = g_list_next (old_disks);
+	}
+	
 	g_hash_table_destroy (new_disks);
 	glibtop_free (entry);
 	

@@ -291,7 +291,7 @@ create_sys_view (ProcData *procdata)
 	GtkWidget *color_picker;
 	GtkWidget *scrolled;
 	GtkWidget *disk_tree;
-	GtkListStore *model;
+	GtkTreeStore *model;
 	GtkTreeViewColumn *col;
 	GtkCellRenderer *cell;
 	gchar *titles[5] = {_("Name"),
@@ -440,7 +440,7 @@ create_sys_view (ProcData *procdata)
 	gtk_container_set_border_width (GTK_CONTAINER (scrolled), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (disk_frame), scrolled);
 	 
-	model = gtk_list_store_new (5, G_TYPE_STRING, G_TYPE_STRING,
+	model = gtk_tree_store_new (5, G_TYPE_STRING, G_TYPE_STRING,
 				       G_TYPE_STRING, G_TYPE_STRING,
 				       G_TYPE_STRING); 
 				       
@@ -465,8 +465,8 @@ create_sys_view (ProcData *procdata)
   	procman_get_tree_state (disk_tree, "/apps/procman/disktree");
   	
   	cb_update_disks (procdata);
-  	/*procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
-  						  cb_update_disks, procdata);*/
+  	procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
+  						  cb_update_disks, procdata);
  						  
 	return vpane;
 }

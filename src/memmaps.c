@@ -162,10 +162,13 @@ add_new_maps (gpointer key, gpointer value, gpointer data)
 	g_free (info);
 }
 
+GList *old_maps = NULL;
+
 static gboolean
 compare_memmaps (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
 	GHashTable *new_maps = data;
+	GtkTreeIter *old_iter;
 	glibtop_map_entry *memmaps;
 	gchar *old_name;
 	
@@ -178,7 +181,9 @@ compare_memmaps (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoi
 		
 	}
 	
-	gtk_list_store_remove (GTK_LIST_STORE (model), iter);
+	old_iter = gtk_tree_iter_copy (iter);
+	old_maps = g_list_append (old_maps, old_iter);
+	
 	return FALSE;
 	
 }
@@ -215,6 +220,16 @@ update_memmaps_dialog (GtkWidget *tree)
 	gtk_tree_model_foreach (model, compare_memmaps, new_maps);
 	
 	g_hash_table_foreach (new_maps, add_new_maps, model);
+	
+	while (old_maps) {
+		GtkTreeIter *iter = old_maps->data;
+		
+		gtk_list_store_remove (GTK_LIST_STORE (model), iter);
+		gtk_tree_iter_free (iter);
+		
+		old_maps = g_list_next (old_maps);
+		
+	}
 	
 	g_hash_table_destroy (new_maps);
 	glibtop_free (memmaps);
@@ -287,8 +302,6 @@ memmaps_timer (gpointer data)
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
 	g_return_val_if_fail (model, FALSE);
 	
-	//gtk_tree_store_clear (GTK_TREE_STORE (model));
-	
 	update_memmaps_dialog (tree);
 	
 	return TRUE;
@@ -354,7 +367,7 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 			  G_CALLBACK (close_memmaps_dialog), tree);
 	
 	gtk_widget_show (memmapsdialog);
-#if 0
+#if 1
 	timer = gtk_timeout_add (5000, memmaps_timer, tree);
 	g_object_set_data (G_OBJECT (tree), "timer", GINT_TO_POINTER (timer));
 #endif
