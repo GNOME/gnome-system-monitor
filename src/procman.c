@@ -354,14 +354,13 @@ procman_free_data (ProcData *procdata)
 
 
 gboolean
-procman_get_tree_state (GConfClient *client, GtkWidget *tree, gchar *prefix)
+procman_get_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefix)
 {
 	GtkTreeModel *model;
 	gint sort_col;
 	GtkSortType order;
 	gchar *key;
-	gint i = 0;
-	gboolean done = FALSE;
+	gint i;
 	
 	g_return_val_if_fail (tree, FALSE);
 	g_return_val_if_fail (prefix, FALSE);
@@ -384,7 +383,7 @@ procman_get_tree_state (GConfClient *client, GtkWidget *tree, gchar *prefix)
 					      	      sort_col,
 					              order);
 	
-	while (!done) {
+	for(i = 0; i < NUM_COLUMN; ++i) {
 		GtkTreeViewColumn *column;
 		GConfValue *value = NULL;
 		gint width;
@@ -404,21 +403,18 @@ procman_get_tree_state (GConfClient *client, GtkWidget *tree, gchar *prefix)
 			g_free (key);
 		
 			column = gtk_tree_view_get_column (GTK_TREE_VIEW (tree), i);
+			if(!column) continue;
 			gtk_tree_view_column_set_visible (column, visible);
 			if (width > 0)
 				gtk_tree_view_column_set_fixed_width (column, width);
 		}
-		else
-			done = TRUE;
-		
-		i++;
 	}
 	
 	return TRUE;
 }
 
 void
-procman_save_tree_state (GConfClient *client, GtkWidget *tree, gchar *prefix)
+procman_save_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefix)
 {
 	GtkTreeModel *model;
 	GList *columns;

@@ -214,7 +214,7 @@ struct _ProcData
 };
 
 void		procman_save_config (ProcData *data) G_GNUC_INTERNAL;
-void		procman_save_tree_state (GConfClient *client, GtkWidget *tree, gchar *prefix) G_GNUC_INTERNAL;
-gboolean	procman_get_tree_state (GConfClient *client, GtkWidget *tree, gchar *prefix) G_GNUC_INTERNAL;
+void		procman_save_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefix) G_GNUC_INTERNAL;
+gboolean	procman_get_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefix) G_GNUC_INTERNAL;
 
 #endif /* _PROCMAN_PROCMAN_H_ */
