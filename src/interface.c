@@ -665,13 +665,18 @@ create_main_window (ProcData *procdata)
 	gnome_app_install_menu_hints (GNOME_APP (app), menubar1_uiinfo);
 		    
 	g_signal_connect (G_OBJECT (notebook), "switch-page",
-			    G_CALLBACK (cb_switch_page), procdata);
+			  G_CALLBACK (cb_switch_page), procdata);
+	g_signal_connect (G_OBJECT (notebook), "change-current-page",
+			  G_CALLBACK (cb_change_current_page), procdata);
 
 	gtk_widget_show (vbox1);
 	gnome_app_set_contents (GNOME_APP (app), notebook);
 	gtk_widget_show (notebook);
 
- 	gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab);
+	gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab);
+	cb_change_current_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab, procdata);
+
+
  	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[0].widget),
 							  procdata->config.show_tree);
  	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[1].widget),

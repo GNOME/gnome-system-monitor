@@ -353,6 +353,12 @@ void
 cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 		gint num, gpointer data)
 {
+	cb_change_current_page (nb, num, data);
+}
+
+void
+cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
+{
 	ProcData * const procdata = data;
 
 	procdata->config.current_tab = num;

@@ -67,6 +67,9 @@ gboolean	cb_tree_popup_menu (GtkWidget *widget, gpointer data) G_GNUC_INTERNAL;
 gboolean	cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event,
 					gpointer data) G_GNUC_INTERNAL;
 
+
+void		cb_change_current_page (GtkNotebook *nb,
+					gint num, gpointer data) G_GNUC_INTERNAL;
 void		cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 				gint num, gpointer data) G_GNUC_INTERNAL;
 
