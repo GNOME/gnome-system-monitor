@@ -139,13 +139,15 @@ cb_app_destroy                        (GtkObject       *object,
                                        gpointer		user_data)
 {
 	ProcData *procdata = user_data;
+	
 	if (procdata)
 	{
 		proctable_save_state (procdata);
 		procman_save_config (procdata);
 	}
 	gtk_timeout_remove (procdata->timeout);
-	/*gtk_timeout_remove (procdata->meter_timeout);*/
+	gtk_timeout_remove (procdata->cpu_graph->timer_index);
+	gtk_timeout_remove (procdata->mem_graph->timer_index);
 	gtk_main_quit ();
 	
 }

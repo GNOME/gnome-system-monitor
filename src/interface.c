@@ -335,7 +335,7 @@ create_sys_view (ProcData *procdata)
 	GtkWidget *hbox1;
 	GtkWidget *cpu_frame, *mem_frame;
 	GtkWidget *label,*cpu_label, *mem_label;
-	GtkWidget *hbox;
+	GtkWidget *hbox, *table;
 	GtkWidget *disk_frame;
 	GtkWidget *scrolled, *clist;
 	gchar *titles[4] = {_("Disk Name"),
@@ -354,12 +354,12 @@ create_sys_view (ProcData *procdata)
 	gtk_widget_show (hbox1);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox1, TRUE, TRUE, 0);
 	
-	cpu_frame = gtk_frame_new (_("CPU Usage"));
+	cpu_frame = gtk_frame_new (_("CPU Usage History"));
 	gtk_widget_show (cpu_frame);
 	gtk_container_set_border_width (GTK_CONTAINER (cpu_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (hbox1), cpu_frame, TRUE, TRUE, 0);
 	
-	mem_frame = gtk_frame_new (_("Memory Usage"));
+	mem_frame = gtk_frame_new (_("Memory Usage History"));
 	gtk_container_set_border_width (GTK_CONTAINER (mem_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (hbox1), mem_frame, TRUE, TRUE, 0);
 	
@@ -369,6 +369,7 @@ create_sys_view (ProcData *procdata)
 	gtk_container_set_border_width (GTK_CONTAINER (cpu_graph->main_widget), 
 					GNOME_PAD_SMALL);
 					
+	
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (cpu_graph->main_widget), hbox, FALSE, FALSE, 0);
 	
@@ -389,27 +390,41 @@ create_sys_view (ProcData *procdata)
 	gtk_container_set_border_width (GTK_CONTAINER (mem_graph->main_widget), 
 					GNOME_PAD_SMALL);
 					
-	hbox = gtk_hbox_new (FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), hbox, FALSE, FALSE, 0);
+	table = gtk_table_new (2, 2, FALSE);
+	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), table, FALSE, FALSE, 0);
 	
-	label = gtk_label_new (_("Available Memory :"));
+	/*hbox = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), hbox, FALSE, FALSE, 0);*/
+	
+	label = gtk_label_new (_("Memory Used :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
-	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-	
-	mem_graph->memtotal_label = gtk_label_new ("");
-	gtk_misc_set_padding (GTK_MISC (mem_graph->memtotal_label), GNOME_PAD_SMALL, 0);
-	gtk_box_pack_start (GTK_BOX (hbox), mem_graph->memtotal_label, FALSE, FALSE, 0);	
-	
-	hbox = gtk_hbox_new (FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), hbox, FALSE, FALSE, 0);
-	
-	label = gtk_label_new (_("Used Memory :"));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
-	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	/*gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);*/
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 0, 0);
 	
 	mem_graph->memused_label = gtk_label_new ("");
 	gtk_misc_set_padding (GTK_MISC (mem_graph->memused_label), GNOME_PAD_SMALL, 0);
-	gtk_box_pack_start (GTK_BOX (hbox), mem_graph->memused_label, FALSE, FALSE, 0);
+	gtk_misc_set_alignment (GTK_MISC (mem_graph->memused_label), 0.0, 0.5);
+	/*gtk_box_pack_start (GTK_BOX (hbox), mem_graph->memused_label, FALSE, FALSE, 0);*/
+	gtk_table_attach (GTK_TABLE (table), mem_graph->memused_label, 1, 2, 0, 1, 
+			  GTK_FILL, 0, 0, 0);
+	
+	/*hbox = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), hbox, FALSE, FALSE, 0);*/
+	
+	label = gtk_label_new (_("Memory Available :"));
+	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	/*gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);*/
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 0, 0);
+	
+	mem_graph->memtotal_label = gtk_label_new ("");
+	gtk_misc_set_padding (GTK_MISC (mem_graph->memtotal_label), GNOME_PAD_SMALL, 0);
+	gtk_misc_set_alignment (GTK_MISC (mem_graph->memtotal_label), 0.0, 0.5);
+	/*gtk_box_pack_start (GTK_BOX (hbox), mem_graph->memtotal_label, FALSE, FALSE, 0);*/
+	gtk_table_attach (GTK_TABLE (table), mem_graph->memtotal_label, 1, 2, 1, 2, 
+			  GTK_FILL, 0, 0, 0);	
+	
 	
 	procdata->mem_graph = mem_graph;
 	#endif

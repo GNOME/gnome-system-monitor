@@ -24,6 +24,8 @@ void
 load_graph_draw (LoadGraph *g)
 {
     guint i, j;
+    
+    g_return_if_fail (g->disp->window);
 
     g->draw_width = g->disp->allocation.width - 2 * FRAME_WIDTH;
     g->draw_height = g->disp->allocation.height - 2 * FRAME_WIDTH;
@@ -72,7 +74,7 @@ load_graph_draw (LoadGraph *g)
     /* FIXME: try to do some averaging here to smooth out the graph */
     for (j = 0; j < g->n; j++) {
         float delx = (float)g->draw_width / ( g->num_points - 1);
-	//gdk_gc_set_foreground (g->gc, &(g->colors [j]));
+	/*gdk_gc_set_foreground (g->gc, &(g->colors [j]));*/
 
 	for (i = 0; i < g->num_points - 1; i++) {
 	    
@@ -354,7 +356,7 @@ load_graph_new (gint type)
     	break;
     }
 	
-    g->speed  = 250;
+    g->speed  = 500;
     g->num_points = 50;
 
     g->colors = g_new0 (GdkColor, g->n);

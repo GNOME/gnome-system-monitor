@@ -1,5 +1,18 @@
 2001-08-18  Kevin Vandersloot <kfv101@psu.edu>
 
+	* load-graph.c (load_graph_draw): put a g_return_val_if_fail
+	on the main window to deal with a crash on exit.
+	Slow the update down for a better display. Need to not hardcode
+	these values.
+
+	* interface.c: some update of the labels.
+
+	* callbacks.c: end the timers on exit. The load_graph_draw
+	is still being called even after the window has been 
+	destroyed.
+
+2001-08-18  Kevin Vandersloot <kfv101@psu.edu>
+
 	* callbcaks.c: remove cb_progress_meter... Force a graph update
 	upon a tab switch.
 
