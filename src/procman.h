@@ -66,6 +66,7 @@ struct _ProcConfig
 	GdkColor	swap_color;
 	GdkColor	bg_color;
 	GdkColor	frame_color;
+	gboolean	simple_view;
 };
 
 struct _PrettyTable {

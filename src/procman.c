@@ -30,6 +30,28 @@
 #include "prettytable.h"
 
 GtkWidget *app;
+static int simple_view = FALSE;
+
+struct poptOption options[] = {
+  {
+    "simple",
+    's',
+    POPT_ARG_NONE,
+    &simple_view,
+    0,
+    N_("show simple dialog to end process and logout"),
+    NULL,
+  },
+  {
+    NULL,
+    '\0',
+    0,
+    NULL,
+    0,
+    NULL,
+    NULL
+  }
+};
 
 static void
 procman_get_save_files (ProcData *procdata)
@@ -89,6 +111,9 @@ procman_data_new (void)
 	pd->timeout = -1;
 	pd->favorites = NULL;
 	pd->blacklist = NULL;
+	pd->cpu_graph = NULL;
+	pd->mem_graph = NULL;
+	pd->disk_timeout = -1;
 	
 	pd->config.width = 
 		gnome_config_get_int ("procman/Config/width=440");
@@ -172,8 +197,20 @@ procman_data_new (void)
 	else if (pd->config.load_desktop_files && !pd->config.delay_load)
 		pd->pretty_table = pretty_table_new ();
 	else
-		pd->pretty_table = NULL;	
-	
+		pd->pretty_table = NULL;
+		
+	pd->config.simple_view = simple_view;	
+	if (pd->config.simple_view) {
+		pd->config.width = 325;
+		pd->config.height = 400;
+		pd->config.whose_process = 1;
+		pd->config.show_more_info = FALSE;
+		pd->config.show_tree = FALSE;
+		pd->config.show_kill_warning = TRUE;
+		pd->config.show_pretty_names = TRUE;
+		pd->config.show_threads = FALSE;
+		pd->config.current_tab = 0;
+	}	
 
 	return pd;
 
@@ -198,6 +235,11 @@ procman_save_config (ProcData *data)
 
 	if (!data)
 		return;
+		
+	if (data->config.simple_view)
+		return;
+		
+	proctable_save_state (data);
 		
 	gdk_window_get_size (app->window, &width, &height);
 	data->config.width = width;
@@ -247,27 +289,40 @@ int
 main (int argc, char *argv[])
 {
 	ProcData *procdata;
+	poptContext pctx;
+	char **args;
 	
 #ifdef ENABLE_NLS
 	bindtextdomain (PACKAGE, PACKAGE_LOCALE_DIR);
 	textdomain (PACKAGE);
 #endif
 
-	gnome_init ("procman", VERSION, argc, argv);
-		
+	gnome_init_with_popt_table ("procman", VERSION, argc, argv, options, 0, &pctx);
+	
+	args = (char**) poptGetArgs (pctx);
+	poptFreeContext(pctx);
+	
 	e_cursors_init ();
 
 	glibtop_init ();
 
 	procdata = procman_data_new ();
 
-	app = create_main_window (procdata);
+	if (procdata->config.simple_view) {
+		app = create_simple_view_dialog (procdata);
+		proctable_update_all (procdata);
+		gnome_dialog_run (GNOME_DIALOG (app));
+	}
+	else {
+		app = create_main_window (procdata);
+		proctable_update_all (procdata);
+	}
+	
 	if (!app)
-		return 0;
-		
-  	proctable_update_all (procdata);
+		return 0;  	
  	
-	gtk_main ();
+	if (!procdata->config.simple_view)
+		gtk_main ();
 	
 	e_cursors_shutdown ();
 	

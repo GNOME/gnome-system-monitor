@@ -40,17 +40,13 @@ void		cb_hide_process (GtkMenuItem *menuitem, gpointer data);
 void		cb_show_hidden_processes (GtkMenuItem *menuitem, gpointer data);
 void		cb_preferences_activate (GtkMenuItem *menuitem, gpointer user_data);
 
-void
-cb_about_activate                     (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
+void		cb_about_activate (GtkMenuItem *menuitem, gpointer user_data);
 
-void		cb_app_exit (GtkObject *object, gpointer user_data);
-                                        
+void		cb_app_exit (GtkObject *object, gpointer user_data); 
 void		cb_app_delete (GtkWidget *window, GdkEventAny *ev, gpointer data);
+gboolean	cb_close_simple_dialog (GnomeDialog *dialog, gpointer data);
                                         
-void
-cb_all_process_menu_clicked 		(GtkWidget	*widget,
-					 gpointer	data);	
+void		cb_all_process_menu_clicked (GtkWidget *widget, gpointer data);	
 					 
 void		cb_my_process_menu_clicked (GtkWidget *widget, gpointer data);  
 					 
@@ -58,6 +54,7 @@ void		cb_running_process_menu_clicked	(GtkWidget *widget, gpointer data);
 
 void		cb_favorites_menu_clicked (GtkWidget *widget, gpointer data);
 void		cb_end_process_button_pressed (GtkButton *button, gpointer data);
+void		cb_logout (GtkButton *button, gpointer data);
 
 void		popup_menu_renice (GtkMenuItem *menuitem, gpointer data);
 void		popup_menu_show_memory_maps (GtkMenuItem *menuitem, gpointer data);

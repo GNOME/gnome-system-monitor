@@ -59,7 +59,7 @@ infoview_create (ProcData *data)
 	gtk_box_pack_start (GTK_BOX (infobox), main_frame, FALSE, FALSE, 0);
 	
 
-	main_hbox = gtk_hbox_new (TRUE, 0);
+	main_hbox = gtk_hbox_new (FALSE, 0);
 	gtk_container_add (GTK_CONTAINER (main_frame), main_hbox);
 	
 	info_frame = gtk_frame_new (_("Process Info"));

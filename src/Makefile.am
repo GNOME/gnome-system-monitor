@@ -31,6 +31,7 @@ procman_LDADD = $(GNOME_LIBDIR) $(GNOMEUI_LIBS) \
 specdir = $(datadir)/procman
 spec_DATA = \
 	proctable.etspec \
+	simple.etspec \
 	memmaps.etspec
 
 EXTRA_DIST = \

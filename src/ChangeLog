@@ -1,3 +1,26 @@
+2001-09-14  Kevin Vandersloot <kfv101@psu.edu>
+
+	Add a command line argument to run procman in a simple view.
+	This would be suitable for a ctrl-alt-delete dialog.
+
+	* procman.c: add new config option for the simple view. Don't save
+	settings if set. Also fix suitable defaults. Add command args
+	to show the dialog
+
+	* interface.c: do a gnome_dialog if in simple view.
+
+	* callbacks.c: New function to logout, but does nothing yet.
+	Check to see if timeouts exist before removing them at app
+	exit.
+
+	* proctable.c: load a different spec file if in simple view
+
+	* simple.etspec: new spec file. Headers are not shown so this doesn't
+	need to be translated.
+
+	* infovew.c: don't make the hbox uniform so the info frame can
+	expand a little
+
 2001-09-09  Kevin Vandersloot <kfv101@psu.edu>
 
 	* proctable.c: fix misspelling of e_utf8 function

@@ -38,6 +38,9 @@
 #include "favorites.h"
 #include "procactions.h"
 #include "load-graph.h"
+#include <gal/e-table/e-tree-memory.h>
+#include <gal/e-table/e-tree-memory-callbacks.h>
+#include <gal/e-table/e-tree-scrolled.h>
 
 static GnomeUIInfo file1_menu_uiinfo[] =
 {
@@ -239,6 +242,7 @@ create_proc_view (ProcData *procdata)
 	
 	hbox2 = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox2, FALSE, FALSE, 0);
+	
 	endprocessbutton = gtk_button_new ();
   	label = gtk_label_new (NULL);
 	key = gtk_label_parse_uline (GTK_LABEL (label), _("End _Process"));
@@ -561,6 +565,78 @@ create_main_window (ProcData *procdata)
 
 }
 
+GtkWidget*
+create_simple_view_dialog (ProcData *procdata)
+{
+	GtkWidget *app = NULL;
+	GtkWidget *main_vbox;
+	GtkWidget *scrolled;
+	GtkWidget *vbox;
+	GtkWidget *hbox;
+	GtkWidget *label;
+	GtkWidget *button;
+	GtkWidget *frame;
+	guint key;
+	
+	app = gnome_dialog_new (_("Test"), _("Logout"), GNOME_STOCK_BUTTON_CANCEL, NULL);
+	gtk_window_set_policy (GTK_WINDOW (app), FALSE, TRUE, FALSE);
+	gtk_window_set_default_size (GTK_WINDOW (app), 350, 425);
+	
+	accel = gtk_accel_group_new ();
+	gtk_accel_group_attach (accel, GTK_OBJECT (app));
+	gtk_accel_group_unref (accel);
+	
+	main_vbox = GNOME_DIALOG (app)->vbox;
+	
+	frame = gtk_frame_new (_("Running Applications"));
+	gtk_container_set_border_width (GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
+	
+	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (frame), vbox);
+	
+	scrolled = proctable_new (procdata);
+	if (!scrolled)
+		return NULL;
+	gtk_box_pack_start (GTK_BOX (vbox), scrolled, TRUE, TRUE, 0);
+	
+	hbox = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+	
+	button = gtk_button_new ();
+	endprocessbutton = button;
+  	label = gtk_label_new (NULL);
+	key = gtk_label_parse_uline (GTK_LABEL (label), _("_End Application"));
+	gtk_widget_add_accelerator (button, "clicked",
+				    accel,
+				    key,
+				    GDK_MOD1_MASK,
+				    0);
+	gtk_container_add (GTK_CONTAINER (button), label);
+	gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (button), GNOME_PAD_SMALL);
+	gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 
+			      GNOME_PAD_SMALL, 1);
+	gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			    GTK_SIGNAL_FUNC (cb_end_process_button_pressed), procdata);
+
+	gtk_signal_connect (GTK_OBJECT (app), "close",
+			    GTK_SIGNAL_FUNC (cb_close_simple_dialog), procdata);
+	gtk_signal_connect (GTK_OBJECT (procdata->tree), "cursor_activated",
+			    GTK_SIGNAL_FUNC (cb_table_selected), procdata);
+			    
+	/* Makes sure everything that should be insensitive is at start */
+	gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), "cursor_activated",
+				 -1, NULL);
+				 
+	procdata->timeout = gtk_timeout_add (procdata->config.update_interval,
+			 		     cb_timeout, procdata);
+			    
+	gtk_widget_show_all (main_vbox);
+	
+	return app;
+}
 
 void
 toggle_infoview (ProcData *data)
@@ -630,13 +706,15 @@ void do_popup_menu (ProcData *data, GdkEvent *event)
 void
 update_sensitivity (ProcData *data, gboolean sensitivity)
 {
-
 	gtk_widget_set_sensitive (endprocessbutton, sensitivity);
-	gtk_widget_set_sensitive (data->infobox, sensitivity);
-	gtk_widget_set_sensitive (edit1_menu_uiinfo[0].widget, sensitivity);
-	gtk_widget_set_sensitive (edit1_menu_uiinfo[1].widget, sensitivity);
-	gtk_widget_set_sensitive (view1_menu_uiinfo[0].widget, sensitivity);
-	gtk_widget_set_sensitive (edit1_menu_uiinfo[3].widget, sensitivity);
-	gtk_widget_set_sensitive (edit1_menu_uiinfo[4].widget, sensitivity);
+	
+	if (!data->config.simple_view) {
+		gtk_widget_set_sensitive (data->infobox, sensitivity);
+		gtk_widget_set_sensitive (edit1_menu_uiinfo[0].widget, sensitivity);
+		gtk_widget_set_sensitive (edit1_menu_uiinfo[1].widget, sensitivity);
+		gtk_widget_set_sensitive (view1_menu_uiinfo[0].widget, sensitivity);
+		gtk_widget_set_sensitive (edit1_menu_uiinfo[3].widget, sensitivity);
+		gtk_widget_set_sensitive (edit1_menu_uiinfo[4].widget, sensitivity);
+	}
 }	
 

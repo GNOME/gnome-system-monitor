@@ -340,29 +340,51 @@ proctable_new (ProcData *data)
 	extras = proctable_new_extras ();
 	
 	etmm = E_TREE_MEMORY(model);
-	if (!lstat (PROCMAN_DATADIR "proctable.etspec", &filestat))
-	{	
-		/* Hackety-hack around a bug in gal */
-	
-		scrolled =  gtk_widget_new (e_tree_scrolled_get_type (),
+	if (procdata->config.simple_view) {
+		if (!lstat (PROCMAN_DATADIR "simple.etspec", &filestat))
+		{	
+			scrolled =  gtk_widget_new (e_tree_scrolled_get_type (),
                                                 "hadjustment", NULL,
                                                 "vadjustment", NULL,
                                                 NULL);
-        	scrolled = GTK_WIDGET (e_tree_scrolled_construct_from_spec_file (
+        		scrolled = GTK_WIDGET (e_tree_scrolled_construct_from_spec_file (
+        			E_TREE_SCROLLED (scrolled), 
+        					model, extras,
+        					PROCMAN_DATADIR "simple.etspec", NULL));
+		}					       
+		else
+		{
+			GtkWidget *dialog;
+			dialog = gnome_error_dialog (_("Procman could not find the e-tree spec file.\n"
+				      "There should be a file called simple.etspec in\n"
+				      PROCMAN_DATADIR));
+			gnome_dialog_run (GNOME_DIALOG (dialog));
+			return NULL;
+		}
+	}
+	else {
+		if (!lstat (PROCMAN_DATADIR "proctable.etspec", &filestat))
+		{	
+			/* Hackety-hack around a bug in gal */
+	
+			scrolled =  gtk_widget_new (e_tree_scrolled_get_type (),
+                                                "hadjustment", NULL,
+                                                "vadjustment", NULL,
+                                                NULL);
+        		scrolled = GTK_WIDGET (e_tree_scrolled_construct_from_spec_file (
         			E_TREE_SCROLLED (scrolled), 
         					model, extras,
         					PROCMAN_DATADIR "proctable.etspec", NULL));
-		/*scrolled = e_tree_scrolled_new_from_spec_file (model, extras,
-						       PROCMAN_DATADIR "proctable.etspec", NULL);*/
-	}					       
-	else
-	{
-		GtkWidget *dialog;
-		dialog = gnome_error_dialog (_("Procman could not find the e-tree spec file.\n"
+		}					       
+		else
+		{
+			GtkWidget *dialog;
+			dialog = gnome_error_dialog (_("Procman could not find the e-tree spec file.\n"
 				      "There should be a file called proctable.etspec in\n"
 				      PROCMAN_DATADIR));
-		gnome_dialog_run (GNOME_DIALOG (dialog));
-		return NULL;
+			gnome_dialog_run (GNOME_DIALOG (dialog));
+			return NULL;
+		}
 	}
 					       
 	proctree = GTK_WIDGET (e_tree_scrolled_get_tree (E_TREE_SCROLLED (scrolled)));

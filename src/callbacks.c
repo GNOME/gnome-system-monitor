@@ -185,16 +185,31 @@ cb_app_delete (GtkWidget *window, GdkEventAny *ev, gpointer data)
 	
 	if (procdata)
 	{
-		proctable_save_state (procdata);
 		procman_save_config (procdata);
 	}
-	gtk_timeout_remove (procdata->timeout);
-	gtk_timeout_remove (procdata->cpu_graph->timer_index);
-	gtk_timeout_remove (procdata->mem_graph->timer_index);
-	gtk_timeout_remove (procdata->disk_timeout);
+	if (procdata->timeout != -1)
+		gtk_timeout_remove (procdata->timeout);
+	if (procdata->cpu_graph)
+		gtk_timeout_remove (procdata->cpu_graph->timer_index);
+	if (procdata->mem_graph)
+		gtk_timeout_remove (procdata->mem_graph->timer_index);
+	if (procdata->disk_timeout != -1)
+		gtk_timeout_remove (procdata->disk_timeout);
 	
 	gtk_main_quit ();
 	
+}
+
+gboolean	
+cb_close_simple_dialog (GnomeDialog *dialog, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	if (procdata->timeout != -1)
+		gtk_timeout_remove (procdata->timeout);
+		
+	return FALSE;
+
 }
 
 void
@@ -365,6 +380,15 @@ cb_end_process_button_pressed          (GtkButton       *button,
 }
 
 void
+cb_logout (GtkButton *button, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	g_print ("logout \n");
+	
+}
+
+void
 cb_info_button_pressed			(GtkButton	*button,
 					 gpointer	user_data)
 {
@@ -447,8 +471,6 @@ cb_table_selected (ETree *tree, int row, ETreePath path, gpointer data)
 		return;
 	if (row == -1)
 	{
-		if (GTK_WIDGET_SENSITIVE (procdata->infobox))
-			gtk_widget_set_sensitive (procdata->infobox, FALSE);
 		update_sensitivity (procdata, FALSE);
 		return;
 	}
