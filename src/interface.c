@@ -246,6 +246,9 @@ create_main_window (ProcData *data)
 	
 	gtk_widget_show_all (scrolled);
 	
+	infobox = infoview_create (procdata);
+	gtk_box_pack_start (GTK_BOX (vbox1), infobox, FALSE, FALSE, 0);
+	
 	hbox2 = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox2, FALSE, FALSE, 0);
 	endprocessbutton = gtk_button_new ();
@@ -276,9 +279,6 @@ create_main_window (ProcData *data)
 	appbar1 = gnome_appbar_new (FALSE, TRUE, GNOME_PREFERENCES_NEVER);
 	gnome_app_set_statusbar (GNOME_APP (app), appbar1);
 	gtk_widget_hide (appbar1);
-	
-	infobox = infoview_create (procdata);
-	gtk_box_pack_start (GTK_BOX (vbox1), infobox, FALSE, FALSE, 0);
 	
 	status_hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_end (GTK_BOX (vbox1), status_hbox, FALSE, FALSE, 0);
@@ -358,7 +358,8 @@ create_main_window (ProcData *data)
  	procdata->config.show_more_info = !procdata->config.show_more_info;
  	toggle_infoview (procdata);	
 	
-	idle = gtk_idle_add_priority (800, idle_func, procdata);
+	if (procdata->config.show_icons)
+		idle = gtk_idle_add_priority (800, idle_func, procdata);
 	
 	return app;
 }

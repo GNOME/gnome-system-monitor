@@ -139,6 +139,9 @@ infoview_create (ProcData *data)
 	gtk_misc_set_alignment (GTK_MISC (memshared_label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (mem_table), memshared_label, 1, 2, 2, 3, GTK_FILL, 
 			  0, GNOME_PAD_SMALL, 0);
+			  
+	/*separator = gtk_hseparator_new ();
+	gtk_box_pack_start (GTK_BOX (infobox), separator, FALSE, FALSE, 0);*/
 	
 	procdata->infobox = infobox;
 
