@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-24 22:48+0000\n"
-"PO-Revision-Date: 2005-01-24 22:30+0000\n"
+"POT-Creation-Date: 2005-02-18 00:24+0000\n"
+"PO-Revision-Date: 2005-02-18 00:25+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -390,15 +390,15 @@ msgstr "de"
 msgid "Used swap:"
 msgstr "Swap utilizada:"
 
-#: src/interface.c:523 src/procdialogs.c:752
+#: src/interface.c:523 src/procdialogs.c:715
 msgid "Devices"
 msgstr "Dispositivos"
 
-#: src/interface.c:651 src/procdialogs.c:577
+#: src/interface.c:651 src/procdialogs.c:540
 msgid "Processes"
 msgstr "Processos"
 
-#: src/interface.c:657 src/procdialogs.c:664
+#: src/interface.c:657 src/procdialogs.c:627
 msgid "Resources"
 msgstr "Recursos"
 
@@ -478,13 +478,14 @@ msgstr "DF"
 msgid "Object"
 msgstr "Objecto"
 
-#: src/openfiles.c:304
+#: src/openfiles.c:305
 msgid "Open Files"
 msgstr "Ficheiros Abertos"
 
-#: src/openfiles.c:324
-msgid "Process name:"
-msgstr "Nome do processo:"
+#: src/openfiles.c:326
+#, c-format
+msgid "Files opened by process \"%s\":"
+msgstr "Ficheiros abertos pelo processo \"%s\":"
 
 #: src/procactions.c:53
 msgid "No such process."
@@ -536,10 +537,11 @@ msgid "An error occured while killing the process."
 msgstr "Ocorreu um erro ao matar o processo."
 
 #. translators: primary alert message
-#: src/procdialogs.c:63
+#: src/procdialogs.c:62
 msgid "Hide the selected process?"
 msgstr "Esconder o processo seleccionado?"
 
+#. FIXME: View menu -> Edit menu
 #. translators: secondary alert messagex
 #: src/procdialogs.c:72
 msgid ""
@@ -620,57 +622,67 @@ msgstr ""
 "A prioridade de um processo é indicada pelo seu valor nice. Um valor nice "
 "reduzido corresponde a uma prioridade mais elevada."
 
-#: src/procdialogs.c:463
+#: src/procdialogs.c:426
 msgid "Processes i_nfo showed in list:"
 msgstr "I_nfo dos processos apresentada na lista:"
 
-#: src/procdialogs.c:514
+#: src/procdialogs.c:477
 msgid "Icon"
 msgstr "Ícone"
 
-#: src/procdialogs.c:554
+#: src/procdialogs.c:517
 msgid "System Monitor Preferences"
 msgstr "Preferências do Monitor de Sistema"
 
-#: src/procdialogs.c:584
+#: src/procdialogs.c:547
 msgid "Behavior"
 msgstr "Comportamento"
 
-#: src/procdialogs.c:603 src/procdialogs.c:690
+#: src/procdialogs.c:566 src/procdialogs.c:653
 msgid "_Update interval:"
 msgstr "Intervalo de _actualização:"
 
-#: src/procdialogs.c:619 src/procdialogs.c:707 src/procdialogs.c:788
+#: src/procdialogs.c:582 src/procdialogs.c:670 src/procdialogs.c:751
 msgid "seconds"
 msgstr "segundos"
 
-#: src/procdialogs.c:626
+#: src/procdialogs.c:589
 msgid "Alert before ending or _killing processes"
 msgstr "Alertar antes de _matar ou terminar processos"
 
-#: src/procdialogs.c:636
+#: src/procdialogs.c:599
 msgid "Alert before _hiding processes"
 msgstr "Alertar antes de _esconder processos"
 
-#: src/procdialogs.c:646
+#: src/procdialogs.c:609
 msgid "Process Fields"
 msgstr "Campos de Processo"
 
-#: src/procdialogs.c:671
+#: src/procdialogs.c:634
 msgid "Graphs"
 msgstr "Gráficos"
 
-#: src/procdialogs.c:714
+#: src/procdialogs.c:677
 msgid "_Background color:"
 msgstr "Cor de _fundo:"
 
-#: src/procdialogs.c:733
+#: src/procdialogs.c:696
 msgid "_Grid color:"
 msgstr "Cor da _grelha:"
 
-#: src/procdialogs.c:771
+#: src/procdialogs.c:734
 msgid "Update _interval:"
 msgstr "_Intervalo de actualização:"
+
+#: src/procdialogs.c:798
+#, c-format
+msgid "Cannot kill process with pid %d with signal %d"
+msgstr "Incapaz de matar o processo com o pid %d com o sinal %d"
+
+#: src/procdialogs.c:801
+#, c-format
+msgid "Cannot change the priority of process with pid %d to %d"
+msgstr "Incapaz de alterar a prioridade do processo com o pid %d para %d"
 
 #: src/proctable.c:163
 msgid "Process Name"
@@ -763,6 +775,9 @@ msgstr ""
 "Não existem processos que contenham a expressão procurada. Note que a "
 "procura é efectuada apenas sobre os processos apresentados na lista de "
 "processos."
+
+#~ msgid "Process name:"
+#~ msgstr "Nome do processo:"
 
 #~ msgid "Kevin Vandersloot"
 #~ msgstr "Kevin Vandersloot"
