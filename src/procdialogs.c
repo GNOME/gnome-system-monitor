@@ -321,7 +321,7 @@ procdialog_create_renice_dialog (ProcData *data)
 	gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area), GTK_BUTTONBOX_END);
 	gtk_button_box_set_spacing (GTK_BUTTON_BOX (dialog_action_area), 8);
 	
-	gnome_dialog_append_button (GNOME_DIALOG (dialog), _("Renice"));
+	gnome_dialog_append_button (GNOME_DIALOG (dialog), _("Change Priority"));
   	renicebutton = GTK_WIDGET (g_list_last (GNOME_DIALOG (dialog)->buttons)->data);
   	gnome_dialog_append_button (GNOME_DIALOG (dialog), GNOME_STOCK_BUTTON_CANCEL);
   	cancelbutton = GTK_WIDGET (g_list_last (GNOME_DIALOG (dialog)->buttons)->data);
@@ -692,7 +692,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 ** extra_value is not used for killing and is priority for renice
 */
 void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint pid, 
-					     gint extra_value)
+					     gint extra_value, gchar *text)
 {
 	GtkWidget *dialog;
 	GtkWidget *main_vbox;
@@ -715,21 +715,23 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 	
 	main_vbox = GNOME_DIALOG (dialog)->vbox;
 	
-	label = gtk_label_new (_("Please enter the superuser (root) password."));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, GNOME_PAD);
+	label = gtk_label_new (_(text));
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD, 2 * GNOME_PAD);
 	gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
 	
 	hbox = gtk_hbox_new (FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
 	
-	label = gtk_label_new (_("Password :"));
+	label = gtk_label_new (_("Root Password :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
-	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
 	
 	entry = gtk_entry_new ();
 	gtk_entry_set_visibility (GTK_ENTRY (entry), FALSE);
-	gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-	
+	gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, FALSE, 0);
+		
 	gtk_widget_show_all (main_vbox);
 	
 	gnome_dialog_set_default (GNOME_DIALOG (dialog), 0);

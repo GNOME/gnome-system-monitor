@@ -32,7 +32,7 @@
 void
 renice (ProcData *procdata, int pid, int nice)
 {
-	gint error, retval;
+	gint error;
 	gchar *error_msg;
 	GtkWidget *dialog;
 	
@@ -48,24 +48,18 @@ renice (ProcData *procdata, int pid, int nice)
 				g_free (error_msg);
 				break;
 			case EPERM:
-				error_msg = g_strdup_printf (_("You do not have permission to change the priority of this process.\n Would you like to enter the superuser (root) password\n to gain the necessary permission?"));
-				dialog = gnome_ok_cancel_dialog (error_msg, NULL, NULL);
-				retval = gnome_dialog_run(GNOME_DIALOG (dialog));
-				g_free(error_msg);
-				if (!retval) 
-					procdialog_create_root_password_dialog (1, procdata, 
-										pid, 
-										nice);
+				error_msg = g_strdup_printf (_("You do not have permission to change the priority of this process. You can enter the root password to gain the necessary permission."));
+				procdialog_create_root_password_dialog (1, procdata, 
+									pid, nice,
+									error_msg);
+				g_free (error_msg);
 				break;
 			case EACCES:
-				error_msg = g_strdup_printf (_("You must be root to renice a process lower than 0.\n Would you like to enter the superuser (root) password\n to gain the necessary permission?"));
-				dialog = gnome_ok_cancel_dialog (error_msg, NULL, NULL);
-				retval = gnome_dialog_run(GNOME_DIALOG (dialog));
-				g_free(error_msg);
-				if (!retval) 
-					procdialog_create_root_password_dialog (1, procdata, 
-										pid, 
-										nice);
+				error_msg = g_strdup_printf (_("You must be root to renice a process lower than 0. You can enter the root password to gain the necessary permission."));
+				procdialog_create_root_password_dialog (1, procdata, 
+									pid, nice,
+									error_msg);
+				g_free (error_msg);
 				break;
 			default:
 				break;
@@ -83,9 +77,7 @@ kill_process (ProcData *procdata, int sig)
 	GtkWidget *dialog;
         gchar *error_msg;
 	gchar *error_critical;
-	gint retval;
-
-
+	
 	if (!procdata->selected_node)
 		return;
 		
@@ -103,13 +95,11 @@ kill_process (ProcData *procdata, int sig)
 			case ESRCH:
 				break;
 			case EPERM:
-				error_msg = g_strdup_printf (_("You do not have permission to end this process.\n Would you like to enter the superuser (root) password\n to gain the necessary permission?"));
-				dialog = gnome_ok_cancel_dialog (error_msg, NULL, NULL);
-				retval = gnome_dialog_run(GNOME_DIALOG (dialog));
-				g_free(error_msg);
-				if (!retval) 
-					procdialog_create_root_password_dialog (0, procdata, 
-										info->pid, 0);
+				error_msg = g_strdup_printf (_("You do not have permission to end this process. You can enter the root password to gain the necessary permission."));
+				procdialog_create_root_password_dialog (0, procdata, 
+									info->pid, 0,
+									error_msg);
+				g_free (error_msg);
 				break;	
 			default: 
 				error = kill (info->pid, SIGKILL);

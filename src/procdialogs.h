@@ -28,7 +28,8 @@ void			procdialog_create_kill_dialog (ProcData *data);
 void 			procdialog_create_renice_dialog (ProcData *data);
 void			procdialog_create_root_password_dialog (gint type, 
 								ProcData *procdata,
-								gint pid, gint extra_value);
+								gint pid, gint extra_value,
+								gchar *text);
 void 			procdialog_create_memmaps_dialog (ProcData *data);
 void			procdialog_create_preferences_dialog (ProcData *data);
 
