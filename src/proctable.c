@@ -35,6 +35,9 @@
 #include <libwnck/libwnck.h>
 #include <sys/stat.h>
 #include <pwd.h>
+
+#include <libgnomevfs/gnome-vfs-utils.h>
+
 #include "procman.h"
 #include "proctable.h"
 #include "callbacks.h"
@@ -405,12 +408,12 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	else
 		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0);
 
-	mem = get_size_string (info->mem);
-	vmsize = get_size_string (info->vmsize);
-	memres = get_size_string (info->memres);
-	memshared = get_size_string (info->memshared);
-	memrss = get_size_string (info->memrss);
-	memxserver = get_size_string (info->memxserver);
+	mem = gnome_vfs_format_file_size_for_display (info->mem);
+	vmsize = gnome_vfs_format_file_size_for_display (info->vmsize);
+	memres = gnome_vfs_format_file_size_for_display (info->memres);
+	memshared = gnome_vfs_format_file_size_for_display (info->memshared);
+	memrss = gnome_vfs_format_file_size_for_display (info->memrss);
+	memxserver = gnome_vfs_format_file_size_for_display (info->memxserver);
 
 	/* COL_POINTER must be set first, because GtkTreeStore
 	 * will call sort_ints as soon as we set the column
@@ -603,12 +606,12 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 		if ((rect.y < 0) || (rect.y > vis_rect.height))
 			return;
 
-		mem = get_size_string (info->mem);
-		vmsize = get_size_string (info->vmsize);
-		memres = get_size_string (info->memres);
-		memshared = get_size_string (info->memshared);
-		memrss = get_size_string (info->memrss);
-		memxserver = get_size_string (info->memxserver);
+		mem = gnome_vfs_format_file_size_for_display (info->mem);
+		vmsize = gnome_vfs_format_file_size_for_display (info->vmsize);
+		memres = gnome_vfs_format_file_size_for_display (info->memres);
+		memshared = gnome_vfs_format_file_size_for_display (info->memshared);
+		memrss = gnome_vfs_format_file_size_for_display (info->memrss);
+		memxserver = gnome_vfs_format_file_size_for_display (info->memxserver);
 
 		gtk_tree_store_set (GTK_TREE_STORE (model), &info->node,
 				    COL_STATUS, info->status,

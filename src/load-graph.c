@@ -8,10 +8,14 @@
 #include <time.h>
 #include <gnome.h>
 #include <gdk/gdkx.h>
+
 #include <glibtop.h>
 #include <glibtop/cpu.h>
 #include <glibtop/mem.h>
 #include <glibtop/swap.h>
+
+#include <libgnomevfs/gnome-vfs-utils.h>
+
 #include "procman.h"
 #include "load-graph.h"
 #include "util.h"
@@ -186,8 +190,6 @@ get_load (gfloat data [2], LoadGraph *g)
 static void
 get_memory (gfloat data [1], LoadGraph *g)
 {
-	float user, shared, buffer, free;
-	float swap_used;
 	float mempercent, swappercent;
 	gchar *text1, *text2, *text3;
 
@@ -195,22 +197,14 @@ get_memory (gfloat data [1], LoadGraph *g)
 	glibtop_swap swap;
 
 	glibtop_get_mem (&mem);
-
 	glibtop_get_swap (&swap);
 
-	swap_used = (float)swap.used / (float)swap.total;
-	swappercent = CLAMP(100.0f * swap_used, 0.0f, 100.0f);
+	swappercent = (float)swap.used / (float)swap.total;
+	mempercent  = (float)mem.used  / (float)mem.total;
 
-	user    = (float)mem.user / (float)mem.total;
-	shared  = (float)mem.shared / (float)mem.total;
-	buffer  = (float)mem.buffer / (float)mem.total;
-	free    = (float)mem.free / (float)mem.total;
-	mempercent = CLAMP(100.0f * mem.used / mem.total, 0.0f, 100.0f);
-
-
-	text1 = get_size_string (mem.total);
-	text2 = get_size_string (mem.user);
-	text3 = g_strdup_printf ("  %.1f %%", mempercent);
+	text1 = gnome_vfs_format_file_size_for_display (mem.total);
+	text2 = gnome_vfs_format_file_size_for_display (mem.used);
+	text3 = g_strdup_printf ("  %.1f %%", mempercent * 100.0f);
 	gtk_label_set_text (GTK_LABEL (g->memused_label), text2);
 	gtk_label_set_text (GTK_LABEL (g->memtotal_label), text1);
 	gtk_label_set_text (GTK_LABEL (g->mempercent_label), text3);
@@ -218,9 +212,9 @@ get_memory (gfloat data [1], LoadGraph *g)
 	g_free (text2);
 	g_free (text3);
 
-	text1 = get_size_string (swap.total);
-	text2 = get_size_string (swap.used);
-	text3 = g_strdup_printf ("  %.1f %%", swappercent);
+	text1 = gnome_vfs_format_file_size_for_display (swap.total);
+	text2 = gnome_vfs_format_file_size_for_display (swap.used);
+	text3 = g_strdup_printf ("  %.1f %%", swappercent * 100.0f);
 	gtk_label_set_text (GTK_LABEL (g->swapused_label), text2);
 	gtk_label_set_text (GTK_LABEL (g->swaptotal_label), text1);
 	gtk_label_set_text (GTK_LABEL (g->swappercent_label), text3);
@@ -228,8 +222,8 @@ get_memory (gfloat data [1], LoadGraph *g)
 	g_free (text2);
 	g_free (text3);
 
-	data [0] = user;
-	data [1] = swap_used;
+	data [0] = mempercent;
+	data [1] = swappercent;
 }
 
 /* Updates the load graph when the timeout expires */

@@ -1,3 +1,21 @@
+2004-11-12  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/util.c: (get_size_string):
+	* src/util.h: Removed and replace by gnome_vfs_file_size...
+	* src/callbacks.c: (compare_disks), (add_new_disks):
+	* src/infoview.c: (infoview_update):
+	* src/load-graph.c: (get_memory):
+	* src/memmaps.c: (add_new_maps):
+	
+	* src/proctable.c: (insert_info_to_tree), (update_info):
+	
+	* src/procman.h: More guint64. libgtop uses a lot of guint64, so don't
+	truncate to int. This should solve overflows on systems with >= 2GB of
+	physical memory.
+	
+	* src/load-graph.c: (get_memory): Fixed mem%. Is used physical memory %,
+	including cached + buffer.
+
 2004-10-29  Benoît Dejean  <tazforever@dlfp.org>
 
 	* * s/(MEM|CPU)_GRAPH/LOAD_GRAPH_$1/g

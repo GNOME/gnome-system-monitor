@@ -8,8 +8,6 @@
 /* -1 means wrong password, 0 means another error, 1 means great */
 gint 		su_run_with_password (gchar *exec_path, gchar *password);
 
-gchar*		get_size_string (gfloat size);
-
 
 #define PROCMAN_GETTEXT_ARRAY_INIT(A) G_STMT_START { \
 static gboolean is_init = FALSE; \

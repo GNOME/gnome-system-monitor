@@ -558,8 +558,8 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 
 		fsusage_stats(&usage, &bused, &bfree, &btotal, &percentage);
 
-		used = get_size_string (bused);
-		total = get_size_string (btotal);
+		used = gnome_vfs_format_file_size_for_display (bused);
+		total = gnome_vfs_format_file_size_for_display (btotal);
 
 		gtk_tree_store_set (GTK_TREE_STORE (model), iter,
 				    4, total,
@@ -656,8 +656,8 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 	text[0] = g_strdup (entry->devname);
 	text[1] = g_strdup (entry->mountdir);
 	text[2] = g_strdup (entry->type);
-	text[3] = get_size_string (btotal);
-	text[4] = get_size_string (bused);
+	text[3] = gnome_vfs_format_file_size_for_display (btotal);
+	text[4] = gnome_vfs_format_file_size_for_display (bused);
 
 	gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0);
 	gtk_tree_store_set (GTK_TREE_STORE (model), &row,

@@ -285,27 +285,3 @@ su_run_with_password (gchar *exec_path, gchar *password)
 {
 	return exec_su (exec_path, "root", password);
 }
-
-gchar *
-get_size_string (gfloat fsize)
-{
-	
-	if (fsize < 1024.0f)
-		return g_strdup_printf (ngettext ("%d byte", "%d bytes", (int)fsize), (int)fsize);
-	
-	fsize /= 1024.0f;
-	if (fsize < 1024.0f)
-		return g_strdup_printf (_("%d KB"), (int)fsize);
-		
-	fsize /= 1024.0f;
-	if (fsize < 100.0f)
-		return g_strdup_printf (_("%.1f MB"), fsize);
-	else if (fsize < 1024.0f)
-		return g_strdup_printf (_("%.0f MB"), fsize);
-	
-	fsize /= 1024.0f;
-	return g_strdup_printf (_("%.1f GB"), fsize);
-
-}
-
-

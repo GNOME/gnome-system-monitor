@@ -20,6 +20,7 @@
 
 #include <config.h>
 
+#include <libgnomevfs/gnome-vfs-utils.h>
 
 #include "procman.h"
 #include "infoview.h"
@@ -197,15 +198,15 @@ infoview_update (ProcData *data)
 	gtk_label_set_text (GTK_LABEL (nice_label), string);
 	g_free (string);
 
-	string = get_size_string (info->mem);
+	string = gnome_vfs_format_file_size_for_display (info->mem);
 	gtk_label_set_text (GTK_LABEL (memtotal_label), string);
 	g_free (string);
 
-	string = get_size_string (info->memrss);
+	string = gnome_vfs_format_file_size_for_display (info->memrss);
 	gtk_label_set_text (GTK_LABEL (memrss_label), string);
 	g_free (string);
 
-	string = get_size_string (info->memshared);
+	string = gnome_vfs_format_file_size_for_display (info->memshared);
 	gtk_label_set_text (GTK_LABEL (memshared_label), string);
 	g_free (string);
 }
