@@ -427,6 +427,36 @@ fsusage_stats(const glibtop_fsusage *buf,
 }
 
 
+static void
+update_disk(GtkTreeModel *model, GtkTreeIter *iter, const char *mountdir)
+{
+	glibtop_fsusage usage;
+	gchar *used_str, *total_str, *free_str;
+	float percentage, bused, bfree, btotal;
+
+	glibtop_get_fsusage (&usage, mountdir);
+
+	fsusage_stats(&usage, &bused, &bfree, &btotal, &percentage);
+
+	used_str  = gnome_vfs_format_file_size_for_display (bused);
+	free_str  = gnome_vfs_format_file_size_for_display (bfree);
+	total_str = gnome_vfs_format_file_size_for_display (btotal);
+
+	gtk_tree_store_set (GTK_TREE_STORE (model), iter,
+			    4, total_str,
+			    5, free_str,
+			    6, used_str,
+			    7, percentage,
+			    8, btotal,
+			    9, bfree,
+			    -1);
+
+	g_free (used_str);
+	g_free (free_str);
+	g_free (total_str);
+}
+
+
 static gboolean
 compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
@@ -440,32 +470,8 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 
 	entry = g_hash_table_lookup (new_disks, old_name);
 	if (entry) {
-		glibtop_fsusage usage;
-		gchar *used, *total, *free;
-		float percentage, bused, bfree, btotal;
-
-		glibtop_get_fsusage (&usage, entry->mountdir);
-
-		fsusage_stats(&usage, &bused, &bfree, &btotal, &percentage);
-
-		used = gnome_vfs_format_file_size_for_display (bused);
-		free = gnome_vfs_format_file_size_for_display (bfree);
-		total = gnome_vfs_format_file_size_for_display (btotal);
-
-		gtk_tree_store_set (GTK_TREE_STORE (model), iter,
-				    4, total,
-				    5, free,
-				    6, used,
-				    7, percentage,
-				    8, btotal,
-				    9, bfree,
-				    -1);
-
+		update_disk(model, iter, entry->mountdir);
 		g_hash_table_remove (new_disks, old_name);
-
-		g_free (used);
-		g_free (free);
-		g_free (total);
 	}
 	else {
 		old_iter = gtk_tree_iter_copy (iter);
@@ -511,47 +517,23 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 {
 	glibtop_mountentry * const entry = value;
 	GtkTreeModel * const model = data;
-
-	glibtop_fsusage usage;
-	gchar *text[6];
 	GdkPixbuf *pixbuf;
 	GtkTreeIter row;
-	float percentage, btotal, bfree, bused;
-
-	glibtop_get_fsusage (&usage, entry->mountdir);
-
-	fsusage_stats(&usage, &bused, &bfree, &btotal, &percentage);
 
 	/*  Load an icon corresponding to the type of the device */
 	pixbuf = get_icon_for_device(entry->mountdir);
 
-	text[0] = g_strdup (entry->devname);
-	text[1] = g_strdup (entry->mountdir);
-	text[2] = g_strdup (entry->type);
-	text[3] = gnome_vfs_format_file_size_for_display (btotal);
-	text[4] = gnome_vfs_format_file_size_for_display (bfree);
-	text[5] = gnome_vfs_format_file_size_for_display (bused);
 
 	gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0);
 	gtk_tree_store_set (GTK_TREE_STORE (model), &row,
 			    0, pixbuf,
-			    1, text[0],
-			    2, text[1],
-			    3, text[2],
-			    4, text[3],
-			    5, text[4],
-			    6, text[5],
-			    7, percentage,
-			    8, btotal,
-			    9, bfree,
+			    1, entry->devname,
+			    2, entry->mountdir,
+			    3, entry->type,
 			    -1);
 
-	g_free (text[0]);
-	g_free (text[1]);
-	g_free (text[2]);
-	g_free (text[3]);
-	g_free (text[4]);
-	g_free (text[5]);
+	update_disk(model, &row, entry->mountdir);
+
 
 	if(pixbuf) g_object_unref (pixbuf);
 }
