@@ -657,6 +657,8 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 		if (pixbuf)
 			g_object_unref (pixbuf);
 	}
+	
+	g_object_unref (G_OBJECT (icontheme));
 }
 
 gint

@@ -1,3 +1,18 @@
+2003-02-23  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: add to the view menu the ability to show dependencies and 
+	show threads. Fixes bug #71064
+	
+	* prettytable.c: reorganize and simplify the code. Hopefully fixes the oft dupped bug
+	95238
+	
+	* load-graph.c: some preliminary work to add multiple cpu support. Need to really
+	think this out since I don't have a SMP machine.
+	
+	* callbacks.c: free the icontheme
+	
+	* proctable.c: don't free the pixbuf since it is owned by the hash now
+
 2003-02-16  Kevin Vandersloot <kfv101@psu.edu>
 
 	* infoview.c: fix silly typo and get spacing right

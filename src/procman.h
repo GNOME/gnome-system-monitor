@@ -74,6 +74,8 @@ struct _LoadGraph {
     guint speed;
     guint draw_width, draw_height;
     guint num_points;
+    guint num_datasets;
+    guint num_cpus;
 
     guint allocated;
 

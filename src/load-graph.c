@@ -64,7 +64,7 @@ load_graph_draw (LoadGraph *g)
 			TRUE, 0, 0,
 			g->disp->allocation.width,
 			g->disp->allocation.height);
-			
+		
     /* draw frame */
     gdk_gc_set_foreground (g->gc, &(g->colors [1]));
     gdk_draw_rectangle (g->pixmap,
@@ -104,9 +104,9 @@ load_graph_draw (LoadGraph *g)
 	}
 	g->pos[g->num_points - 1] -= g->data [g->num_points - 1] [j];
     }
-    
+   
     gdk_gc_set_line_attributes (g->gc, 1, GDK_LINE_SOLID, GDK_CAP_ROUND, GDK_JOIN_MITER );
-	
+
     gdk_draw_pixmap (g->disp->window,
 		     g->disp->style->fg_gc [GTK_WIDGET_STATE(g->disp)],
 		     g->pixmap,
@@ -129,8 +129,7 @@ get_load (gfloat data [2], LoadGraph *g)
     glibtop_cpu cpu;
 	
     glibtop_get_cpu (&cpu);
-	
-    
+   
     g->cpu_time [0] = cpu.user;
     g->cpu_time [1] = cpu.nice;
     g->cpu_time [2] = cpu.sys;
@@ -366,21 +365,34 @@ LoadGraph *
 load_graph_new (gint type, ProcData *procdata)
 {
     LoadGraph *g;
-
+    glibtop_cpu cpu;
+    gint i = 0;
+   
     g = g_new0 (LoadGraph, 1);
-
+    
+    g->num_cpus = 1;
+    /* Get # of cpus */
+    glibtop_get_cpu (&cpu);
+    while (i < GLIBTOP_NCPU && cpu.xcpu_total[i] != 0) {
+    	g->num_cpus ++;
+    	i++;
+    }
+g_print ("num cpus %d \n", g->num_cpus);
     g->type = type;
     switch (type) {
     case CPU_GRAPH:
     	g->n = 1;
+	g->num_datasets = g->num_cpus;
+	g_print ("%d \n", g->num_datasets);
     	break;
     case MEM_GRAPH:
     	g->n = 2;
+	g->num_datasets = 1;
     	break;
     }
 	
     g->speed  = procdata->config.graph_update_interval;
-    g->num_points = 200;
+    g->num_points = 100;
     
     g->colors = g_new0 (GdkColor, g->n + 2);
 
@@ -444,10 +456,6 @@ load_graph_start (LoadGraph *g)
 void
 load_graph_stop (LoadGraph *g)
 {
-    /*if (g->timer_index != -1)
-	gtk_timeout_remove (g->timer_index);
-    	
-    g->timer_index = -1;*/
     if (!g)
     	return;
     g->draw = FALSE;

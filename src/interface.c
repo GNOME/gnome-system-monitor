@@ -33,14 +33,12 @@
 #include "proctable.h"
 #include "infoview.h"
 #include "procactions.h"
-#if 0
-#include "prettytable.h"
-#include "procdialogs.h"
-#include "memmaps.h"
-#include "favorites.h"
-#endif
 #include "load-graph.h"
 #include "cellrenderer.h"
+
+void	cb_toggle_tree (GtkMenuItem *menuitem, gpointer data);
+void	cb_toggle_threads (GtkMenuItem *menuitem, gpointer data);
+
 
 static GnomeUIInfo file1_menu_uiinfo[] =
 {
@@ -89,6 +87,17 @@ static GnomeUIInfo view1_menu_uiinfo[] =
 	 cb_show_memory_maps, NULL, NULL, 0, 0,
 	 'm', GDK_CONTROL_MASK
 	},
+	GNOMEUIINFO_SEPARATOR,
+	{
+	 GNOME_APP_UI_TOGGLEITEM, N_("Process _Dependencies"), N_("Display a tree showing process dependencies"),
+	 cb_toggle_tree, NULL, NULL, 0, 0,
+	 'd', GDK_CONTROL_MASK
+	}, 
+	{
+	 GNOME_APP_UI_TOGGLEITEM, N_("_Threads"), N_("Display threads (subprocesses)"),
+	 cb_toggle_threads, NULL, NULL, 0, 0,
+	 't', GDK_CONTROL_MASK
+	}, 
 	GNOMEUIINFO_END
 };
 
@@ -629,6 +638,10 @@ create_main_window (ProcData *procdata)
  	toggle_infoview (procdata);
 
  	gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab);
+ 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[2].widget),
+							  procdata->config.show_tree);
+ 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[3].widget),
+							  procdata->config.show_threads);
 	
  	return app;
 
@@ -651,10 +664,6 @@ create_simple_view_dialog (ProcData *procdata)
 	app = gnome_dialog_new (_("Application Manager"), GNOME_STOCK_BUTTON_CANCEL, NULL);
 	gtk_window_set_policy (GTK_WINDOW (app), FALSE, TRUE, FALSE);
 	gtk_window_set_default_size (GTK_WINDOW (app), 350, 425);
-	
-	accel = gtk_accel_group_new ();
-	gtk_accel_group_attach (accel, G_OBJECT (app));
-	gtk_accel_group_unref (accel);
 	
 	main_vbox = GNOME_DIALOG (app)->vbox;
 	
@@ -765,5 +774,36 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 		gtk_widget_set_sensitive (edit1_menu_uiinfo[3].widget, sensitivity);
 		gtk_widget_set_sensitive (edit1_menu_uiinfo[4].widget, sensitivity);
 	}
-}	
+}
 
+void		
+cb_toggle_tree (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	GtkCheckMenuItem *menu = GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[2].widget);
+	GConfClient *client = procdata->client;
+	gboolean show;
+	
+	show = gtk_check_menu_item_get_active (menu);
+	if (show == procdata->config.show_tree)
+		return;
+		
+	gconf_client_set_bool (client, "/apps/procman/show_tree", show, NULL);
+	
+}
+
+void		
+cb_toggle_threads (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	GtkCheckMenuItem *menu = GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[3].widget);
+	GConfClient *client = procdata->client;
+	gboolean show;
+	
+	show = gtk_check_menu_item_get_active (menu);
+	if (show == procdata->config.show_threads)
+		return;
+		
+	gconf_client_set_bool (client, "/apps/procman/show_threads", show, NULL);
+	
+}

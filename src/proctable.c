@@ -254,8 +254,6 @@ proctable_free_info (ProcInfo *info)
 		g_free (info->user);
 	if (info->status)
 		g_free (info->status);
-	if (info->pixbuf)
-		g_object_unref (info->pixbuf);
 	g_free (info);
 }
 
