@@ -165,7 +165,7 @@ void
 cb_app_exit (GtkObject *object, gpointer user_data)
 {
 	ProcData *procdata = user_data;
-	
+
 	cb_app_delete (NULL, NULL, procdata);
 	
 }
@@ -187,7 +187,7 @@ cb_app_delete (GtkWidget *window, GdkEventAny *event, gpointer data)
 		
 	gtk_main_quit ();
 	
-	return FALSE;
+	return TRUE;
 	
 }
 #if 0
