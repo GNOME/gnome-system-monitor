@@ -8,7 +8,7 @@
 #include <gal/e-table/e-tree-scrolled.h>
 #include <glibtop/procmap.h>
 #include <glibtop/xmalloc.h>
-
+#include <sys/stat.h>
 #include "procman.h"
 #include "memmaps.h"
 
@@ -277,7 +277,8 @@ tree_clicked (ETree *tree, int row, ETreePath node, int col, GdkEvent *event)
 static GtkWidget *
 create_memmaps_tree (ProcData *procdata)
 {
-	GtkWidget *scrolled;
+	GtkWidget *scrolled = NULL;
+	struct stat filestat;
 	
 	model = e_tree_memory_callbacks_new (memmaps_get_icon,
 					     memmaps_get_columns,
@@ -297,31 +298,27 @@ create_memmaps_tree (ProcData *procdata)
 				    	     
 	memory = E_TREE_MEMORY(model);
 
-#if 1
-	/* Hackety-hack around a bug in gal */
-	scrolled =  gtk_widget_new (e_tree_scrolled_get_type (),
+	if (!lstat (PROCMAN_DATADIR "memmaps.etspec", &filestat))
+	{
+		/* Hackety-hack around a bug in gal */
+		scrolled =  gtk_widget_new (e_tree_scrolled_get_type (),
                                                 "hadjustment", NULL,
                                                 "vadjustment", NULL,
                                                 NULL);
-        scrolled = GTK_WIDGET (e_tree_scrolled_construct_from_spec_file (
+        	scrolled = GTK_WIDGET (e_tree_scrolled_construct_from_spec_file (
         			E_TREE_SCROLLED (scrolled), 
         					model, NULL,
         					PROCMAN_DATADIR "memmaps.etspec", NULL));
-	/*scrolled = e_tree_scrolled_new_from_spec_file (model, NULL,
-						       PROCMAN_DATADIR "memmaps.etspec", NULL);
-	*/
-	if (!scrolled)
+	}
+	else 
 	{
 		GtkWidget *dialog;
 		dialog = gnome_error_dialog (_("Procman could not find the e-tree spec file.\n"
 				      "There should be a file called memmaps.etspec in\n"
 				      PROCMAN_DATADIR));
 		gnome_dialog_run (GNOME_DIALOG (dialog));
-		g_assert (scrolled);
+		return NULL;
 	}
-#else	
-	scrolled = e_tree_scrolled_new (model, NULL, MEMMAPSSPEC, NULL);
-#endif
 	
 	tree = GTK_WIDGET (e_tree_scrolled_get_tree (E_TREE_SCROLLED (scrolled)));
 	
@@ -382,6 +379,11 @@ void create_memmaps_dialog (ProcData *procdata)
 	gtk_widget_show_all (alignment);
 	
 	scrolled = create_memmaps_tree (procdata);
+	if (!scrolled)
+	{	
+		memmapsdialog = NULL;
+		return;
+	}
 	gtk_box_pack_start (GTK_BOX (dialog_vbox), scrolled, TRUE, TRUE, 0);
 	gtk_widget_show_all (scrolled);
 		

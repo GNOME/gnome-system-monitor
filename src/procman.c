@@ -150,6 +150,9 @@ main (int argc, char *argv[])
 	procdata = procman_data_new ();
 
 	app1 = create_main_window (procdata);
+	if (!app1)
+		return 0;
+		
   	proctable_update_all (procdata);
  	
 	gtk_main ();

@@ -100,7 +100,7 @@ cb_hide_process (GtkMenuItem *menuitem, gpointer data)
 	
 	if (!procdata->selected_node)
 		return;
-		
+	
 	if (procdata->config.show_hide_message)
 	{	
 		GtkWidget *dialog;

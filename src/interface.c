@@ -202,6 +202,8 @@ create_main_window (ProcData *data)
 	gtk_widget_show_all (hbox1);
 	
 	scrolled = proctable_new (procdata);
+	if (!scrolled)
+		return NULL;
 	/*gtk_widget_set_usize (scrolled, 400, 400);*/
 	gtk_box_pack_start (GTK_BOX (vbox1), scrolled, TRUE, TRUE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (scrolled), GNOME_PAD_SMALL);

@@ -36,6 +36,7 @@
 #include <glibtop/procuid.h>
 #include <glibtop/mem.h>
 #include <glibtop/swap.h>
+#include <sys/stat.h>
 #include <pwd.h>
 #include "procman.h"
 #include "proctable.h"
@@ -306,10 +307,11 @@ proctable_new (ProcData *data)
 {
 	ProcData *procdata = data;
 	GtkWidget *proctree;
-	GtkWidget *scrolled;
+	GtkWidget *scrolled = NULL;
 	ETreeMemory *etmm;
 	ETreeModel *model = NULL;
 	ETableExtras *extras;
+	struct stat filestat;
 
 	model = e_tree_memory_callbacks_new (proctable_get_icon,
 					     proctable_get_columns,
@@ -333,32 +335,31 @@ proctable_new (ProcData *data)
 	extras = proctable_new_extras ();
 	
 	etmm = E_TREE_MEMORY(model);
-#if 1	
-	/* Hackety-hack around a bug in gal */
-	scrolled =  gtk_widget_new (e_tree_scrolled_get_type (),
+	if (!lstat (PROCMAN_DATADIR "proctable.etspec", &filestat))
+	{	
+		/* Hackety-hack around a bug in gal */
+	
+		scrolled =  gtk_widget_new (e_tree_scrolled_get_type (),
                                                 "hadjustment", NULL,
                                                 "vadjustment", NULL,
                                                 NULL);
-        scrolled = GTK_WIDGET (e_tree_scrolled_construct_from_spec_file (
+        	scrolled = GTK_WIDGET (e_tree_scrolled_construct_from_spec_file (
         			E_TREE_SCROLLED (scrolled), 
         					model, extras,
         					PROCMAN_DATADIR "proctable.etspec", NULL));
-	/*scrolled = e_tree_scrolled_new_from_spec_file (model, extras,
+		/*scrolled = e_tree_scrolled_new_from_spec_file (model, extras,
 						       PROCMAN_DATADIR "proctable.etspec", NULL);*/
-						       
-	if (!scrolled)
+	}					       
+	else
 	{
 		GtkWidget *dialog;
 		dialog = gnome_error_dialog (_("Procman could not find the e-tree spec file.\n"
 				      "There should be a file called proctable.etspec in\n"
 				      PROCMAN_DATADIR));
 		gnome_dialog_run (GNOME_DIALOG (dialog));
-		g_assert (scrolled);
+		return NULL;
 	}
 					       
-#else
-	scrolled = e_tree_scrolled_new (model, extras, SPEC, NULL);
-#endif
 	proctree = GTK_WIDGET (e_tree_scrolled_get_tree (E_TREE_SCROLLED (scrolled)));
 	
 	e_tree_load_state (E_TREE (proctree), procdata->config.tree_state_file);
