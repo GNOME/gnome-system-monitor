@@ -214,14 +214,6 @@ popup_menu_show_open_files (GtkMenuItem *menuitem, gpointer data)
 	create_openfiles_dialog (procdata);
 }
 
-void
-cb_info_button_pressed (GtkButton *button, gpointer user_data)
-{
-	ProcData * const procdata = user_data;
-
-	toggle_infoview (procdata);
-}
-
 
 void
 cb_search (GtkEditable *editable, gpointer data)
@@ -338,18 +330,6 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
 		update_sensitivity (procdata, FALSE);
 	}
 
-}
-
-
-void
-cb_tree_row_activated (GtkTreeView *view,
-		       GtkTreePath *path,
-		       GtkTreeViewColumn *column,
-		       gpointer data)
-{
-	ProcData * const procdata = data;
-
-	toggle_infoview (procdata);
 }
 
 

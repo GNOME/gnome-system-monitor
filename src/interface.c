@@ -164,15 +164,10 @@ static GnomeUIInfo popup_menu_uiinfo[] =
 };
 
 
-static GtkWidget *infolabel = NULL;
-static GtkWidget *endprocessbutton = NULL;
-static GtkWidget *popup_menu = NULL;
-
-
 static GtkWidget *
 create_proc_view (ProcData *procdata)
 {
-	GtkWidget *vbox1;
+	GtkWidget *vbox1, *vbox2;
 	GtkWidget *hbox1;
 	GtkWidget *search_label;
 	GtkWidget *search_entry;
@@ -180,8 +175,6 @@ create_proc_view (ProcData *procdata)
 	GtkWidget *scrolled;
 	GtkWidget *label;
 	GtkWidget *hbox2;
-	GtkWidget *infobutton;
-	const char *msg;
 
 	vbox1 = gtk_vbox_new (FALSE, 18);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox1), 12);
@@ -226,32 +219,30 @@ create_proc_view (ProcData *procdata)
 	
 	gtk_widget_show_all (scrolled);
 	
-	infoview_create (procdata);
-	gtk_box_pack_start (GTK_BOX (vbox1), procdata->infoview.box, FALSE, FALSE, 0);
-
 	hbox2 = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox2, FALSE, FALSE, 0);
-	
-	endprocessbutton = gtk_button_new_with_mnemonic (_("End _Process"));
-  	gtk_box_pack_end (GTK_BOX (hbox2), endprocessbutton, FALSE, FALSE, 0);
-	g_signal_connect (G_OBJECT (endprocessbutton), "clicked",
-			  G_CALLBACK (cb_end_process_button_pressed), procdata);
 
-	msg = infoview_toggle_button_get_msg(procdata);
-	infolabel = gtk_label_new_with_mnemonic (msg);
-	infobutton = gtk_button_new ();
-	gtk_container_add (GTK_CONTAINER (infobutton), infolabel);
-	gtk_box_pack_start (GTK_BOX (hbox2), infobutton, FALSE, FALSE, 0);
-	g_signal_connect (G_OBJECT (infobutton), "clicked",
-			  G_CALLBACK (cb_info_button_pressed), procdata);
+	infoview_create (procdata);
+	gtk_box_pack_start (GTK_BOX (hbox2), procdata->infoview.expander, FALSE, FALSE, 0);
+	gtk_expander_set_expanded (GTK_EXPANDER(procdata->infoview.expander),
+				   procdata->config.show_more_info);
+	gtk_widget_show (procdata->infoview.expander);
+	
+
+	vbox2 = gtk_vbox_new (FALSE, 0);
+	gtk_box_pack_end (GTK_BOX (hbox2), vbox2, FALSE, FALSE, 0);
+	procdata->endprocessbutton = gtk_button_new_with_mnemonic (_("End _Process"));
+	gtk_box_pack_end (GTK_BOX (vbox2), procdata->endprocessbutton, FALSE, FALSE, 0);
+	g_signal_connect (G_OBJECT (procdata->endprocessbutton), "clicked",
+			  G_CALLBACK (cb_end_process_button_pressed), procdata);
 	
 	gtk_widget_show_all (hbox2);
 	
 	/* create popup_menu */
- 	popup_menu = gtk_menu_new ();
- 	gnome_app_fill_menu_with_data (GTK_MENU_SHELL (popup_menu), popup_menu_uiinfo,
+ 	procdata->popup_menu = gtk_menu_new ();
+ 	gnome_app_fill_menu_with_data (GTK_MENU_SHELL (procdata->popup_menu), popup_menu_uiinfo,
   			               NULL, TRUE, 0, procdata);
-	gtk_widget_show (popup_menu);
+	gtk_widget_show (procdata->popup_menu);
 
         return vbox1;
 }
@@ -689,10 +680,8 @@ create_main_window (ProcData *procdata)
 	gtk_widget_show (notebook);
 
 	update_sensitivity (procdata, FALSE);
+
 	
-	/* We cheat and force it to set up the labels */
- 	procdata->config.show_more_info = !procdata->config.show_more_info;
- 	toggle_infoview (procdata);
 
  	gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab);
  	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[0].widget),
@@ -704,33 +693,8 @@ create_main_window (ProcData *procdata)
 
 }
 
-
 void
-toggle_infoview (ProcData *procdata)
-{
-	const char *msg;
-
-	msg = infoview_toggle_button_get_msg(procdata);
-
-	if (procdata->config.show_more_info)
-	{
-		gtk_widget_hide (procdata->infoview.box);
-		gtk_label_set_text_with_mnemonic (GTK_LABEL (infolabel),
-						  msg);
-	}
-	else
-	{
-		infoview_update (procdata);
-		gtk_widget_show_all (procdata->infoview.box);
-		gtk_label_set_text_with_mnemonic (GTK_LABEL (infolabel),
-						  msg);
-	}
-
-	procdata->config.show_more_info = ! procdata->config.show_more_info;
-}
-
-void
-do_popup_menu (ProcData *data, GdkEventButton *event)
+do_popup_menu (ProcData *procdata, GdkEventButton *event)
 {
 	gint button;
 	gint event_time;
@@ -744,15 +708,19 @@ do_popup_menu (ProcData *data, GdkEventButton *event)
 		event_time = gtk_get_current_event_time ();
 	}
 
-	gtk_menu_popup (GTK_MENU (popup_menu), NULL, NULL,
+	gtk_menu_popup (GTK_MENU (procdata->popup_menu), NULL, NULL,
 			NULL, NULL, button, event_time);
 }
 
 void
 update_sensitivity (ProcData *data, gboolean sensitivity)
 {
-	gtk_widget_set_sensitive (endprocessbutton, sensitivity);
-	
+	if(data->endprocessbutton) {
+		/* avoid error on startup if endprocessbutton
+		   has not been built yet */
+		gtk_widget_set_sensitive (data->endprocessbutton, sensitivity);
+	}
+
 	gtk_widget_set_sensitive (data->infoview.box, sensitivity);
 	/*Edit->End Process*/
 	gtk_widget_set_sensitive (edit1_menu_uiinfo[0].widget, sensitivity);

@@ -28,6 +28,7 @@ typedef struct _Infoview Infoview;
 
 struct _Infoview
 {
+	GtkWidget	*expander;
 	GtkWidget	*box;
 	GtkWidget	*cmd_label;
 	GtkWidget	*status_label;
@@ -39,10 +40,6 @@ struct _Infoview
 
 void infoview_create (ProcData *data) G_GNUC_INTERNAL;
 void	infoview_update (ProcData *data) G_GNUC_INTERNAL;
-
-
-const char *
-infoview_toggle_button_get_msg(ProcData *procdata) G_GNUC_INTERNAL;
 
 
 #endif

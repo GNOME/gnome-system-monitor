@@ -147,6 +147,8 @@ struct _ProcInfo
 struct _ProcData
 {
 	GtkWidget	*tree;
+	GtkWidget	*endprocessbutton;
+	GtkWidget	*popup_menu;
 	Infoview	infoview;
 	GtkWidget	*disk_list;
 	ProcConfig	config;
@@ -187,14 +189,18 @@ struct _ProcData
 	PrettyTable	*pretty_table;
 	GList		*blacklist;
 	gint		blacklist_num;
+
 	GConfClient	*client;
 	GtkWidget	*app;
 	GtkUIManager	*menu;
 
+
 	/* cached username */
 	GStringChunk	*users;
 
+
 	GMemChunk	*procinfo_allocator;
+
 
 	/* libgtop uses guint64 but we use a float because
 	   frequency is ~always == 100

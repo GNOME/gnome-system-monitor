@@ -62,8 +62,7 @@ void		cb_frame_color_changed (GtkColorButton *widget, gpointer user_data) G_GNUC
 
 
 void		cb_row_selected (GtkTreeSelection *selection, gpointer data) G_GNUC_INTERNAL;
-void		cb_tree_row_activated (GtkTreeView *view, GtkTreePath *path,
-				       GtkTreeViewColumn *column, gpointer data) G_GNUC_INTERNAL;
+
 gboolean	cb_tree_popup_menu (GtkWidget *widget, gpointer data) G_GNUC_INTERNAL;
 gboolean	cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event,
 					gpointer data) G_GNUC_INTERNAL;

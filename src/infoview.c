@@ -28,6 +28,45 @@
 #include "util.h"
 
 
+static const char *
+expander_get_label (gboolean more_info)
+{
+	return (more_info ? _("Less _Info") : _("More _Info"));
+}
+
+
+static void
+expander_callback (GObject    *object,
+		   GParamSpec *param_spec,
+		   gpointer    user_data)
+{
+	ProcData *procdata = user_data;
+	GtkExpander *expander;
+
+	expander = GTK_EXPANDER (object);
+
+	if (gtk_expander_get_expanded (expander))
+	{
+		procdata->config.show_more_info = TRUE;
+
+		infoview_update (procdata);
+		gtk_widget_show (procdata->infoview.box);
+	}
+	else
+	{
+		procdata->config.show_more_info = FALSE;
+
+		gtk_widget_hide (procdata->infoview.box);
+	}
+
+	gtk_expander_set_label (
+		expander,
+		expander_get_label(procdata->config.show_more_info)
+		);
+}
+
+
+
 void
 infoview_create (ProcData *procdata)
 {
@@ -136,6 +175,13 @@ infoview_create (ProcData *procdata)
 	gtk_misc_set_alignment (GTK_MISC (infoview->memshared_label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (mem_table), infoview->memshared_label, 1, 2, 2, 3, GTK_FILL,
 			  0, 0, 0);
+
+	infoview->expander = gtk_expander_new_with_mnemonic (
+		expander_get_label(procdata->config.show_more_info));
+	g_signal_connect (infoview->expander, "notify::expanded",
+			  G_CALLBACK (expander_callback), procdata);
+
+	gtk_container_add (GTK_CONTAINER(infoview->expander), infoview->box);
 }
 
 void
@@ -178,14 +224,4 @@ infoview_update (ProcData *procdata)
 	string = gnome_vfs_format_file_size_for_display (info->memshared);
 	gtk_label_set_text (GTK_LABEL (procdata->infoview.memshared_label), string);
 	g_free (string);
-}
-
-
-
-const char *
-infoview_toggle_button_get_msg(ProcData *procdata)
-{
-	return (procdata->config.show_more_info
-		? _("More _Info >>")
-		: _("<< Less _Info"));
 }
