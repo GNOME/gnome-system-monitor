@@ -344,7 +344,8 @@ memmaps_timer (gpointer data)
 	return TRUE;
 }
 
-void create_memmaps_dialog (ProcData *procdata)
+void 
+create_memmaps_dialog (ProcData *procdata)
 {
 	GtkWidget *dialog_vbox;
 	GtkWidget *alignment;

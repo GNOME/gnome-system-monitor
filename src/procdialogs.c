@@ -21,14 +21,12 @@
 #  include <config.h>
 #endif
 
-#include <signal.h>
-#include <sys/time.h>
-#include <sys/resource.h>
 #include "procdialogs.h"
 #include "favorites.h"
 #include "proctable.h"
 #include "callbacks.h"
 #include "prettytable.h"
+#include "procactions.h"
 
 GtkWidget *renice_spinbutton;
 GtkWidget *renice_dialog;
@@ -152,13 +150,8 @@ static void
 cb_kill_process_clicked (GtkButton *button, gpointer data)
 {
 	ProcData *procdata = data;
-	ProcInfo *info;
 	
-	info = e_tree_memory_node_get_data (procdata->memory, 
-					    procdata->selected_node);
-	kill (info->pid, SIGKILL);
-	
-	proctable_update_all (procdata);
+	kill_process (procdata);
 
 }
 
@@ -169,7 +162,7 @@ cb_kill_cancel_clicked (GtkButton *button, gpointer data)
 }
 
 
-GtkWidget *
+void
 procdialog_create_kill_dialog (ProcData *data)
 {
 	ProcData *procdata = data;
@@ -231,7 +224,8 @@ procdialog_create_kill_dialog (ProcData *data)
 
 
   	gtk_widget_grab_default (button6);
-  	return messagebox1;
+  	
+  	gtk_widget_show (messagebox1);
 
 }
 
@@ -246,15 +240,6 @@ renice_close (GtkButton *button, gpointer *data)
 }
 
 static void
-renice (int pid, int nice)
-{
-	int error;
-	/* FIXME: give a message box with the error messages */
-	error = setpriority (PRIO_PROCESS, pid, nice);
-	gnome_dialog_close (GNOME_DIALOG (renice_dialog));
-}
-
-static void
 renice_accept (GtkButton *button, gpointer *data)
 {
 	ProcData *procdata = (ProcData *)data;
@@ -264,13 +249,10 @@ renice_accept (GtkButton *button, gpointer *data)
 		return;
 		
 	nice = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (renice_spinbutton));
+	
 	renice (procdata->selected_pid, nice);
-	g_print ("%d \n", nice);
+	
 }
-	
-	
-
-
 
 void
 procdialog_create_renice_dialog (ProcData *data)
@@ -336,7 +318,7 @@ procdialog_create_renice_dialog (ProcData *data)
 	
 	gnome_dialog_append_button (GNOME_DIALOG (dialog), _("Renice"));
   	renicebutton = GTK_WIDGET (g_list_last (GNOME_DIALOG (dialog)->buttons)->data);
-  	gnome_dialog_append_button (GNOME_DIALOG (dialog), GNOME_STOCK_BUTTON_CANCEL);
+  	gnome_dialog_append_button (GNOME_DIALOG (dialog), GNOME_STOCK_BUTTON_CLOSE);
   	cancelbutton = GTK_WIDGET (g_list_last (GNOME_DIALOG (dialog)->buttons)->data);
   	
   	GTK_WIDGET_SET_FLAGS (cancelbutton, GTK_CAN_DEFAULT);
@@ -386,6 +368,7 @@ show_commands_toggled (GtkToggleButton *button, gpointer data)
 	
 }
 
+#if 0
 static void
 show_icons_toggled (GtkToggleButton *button, gpointer data)
 {
@@ -403,6 +386,7 @@ show_icons_toggled (GtkToggleButton *button, gpointer data)
 	proctable_update_all (procdata);
 	
 }
+#endif
 
 static void
 show_threads_toggled (GtkToggleButton *button, gpointer data)
@@ -496,12 +480,14 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 			    GTK_SIGNAL_FUNC (show_commands_toggled), procdata);
 	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
 	
-	/*check_button = gtk_check_button_new_with_label (_("Never Show Icons or Application Names \n ( faster startup time )"));
+#if 0
+	check_button = gtk_check_button_new_with_label (_("Never Show Icons or Application Names \n ( faster startup time )"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
 				    !procdata->config.load_desktop_files);
 	gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
 			    GTK_SIGNAL_FUNC (show_icons_toggled), procdata);			    
-	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);*/
+	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
+#endif
 	
 	check_button = gtk_check_button_new_with_label (_("Show Threads"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 

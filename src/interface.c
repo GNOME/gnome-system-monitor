@@ -36,6 +36,7 @@
 #include "procdialogs.h"
 #include "memmaps.h"
 #include "favorites.h"
+#include "procactions.h"
 
 static GnomeUIInfo file1_menu_uiinfo[] =
 {
@@ -176,18 +177,14 @@ popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
 void popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
-        ProcInfo *info;
 
         if (!procdata->selected_node)
 		return;
 	
+	if (procdata->config.show_kill_warning)
+		procdialog_create_kill_dialog (procdata);
 	else
-	{
-		info = e_tree_memory_node_get_data (procdata->memory, 
-						    procdata->selected_node);
-		kill (info->pid, SIGKILL);
-		proctable_update_all (procdata);
-	}
+		kill_process (procdata);
 	
 	gtk_menu_popdown (GTK_MENU (popup_menu));	
 }

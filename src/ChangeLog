@@ -1,3 +1,22 @@
+2001-08-06 Kevin Vandersloot <kfv101@psu.edu>
+
+	* Makefile.am: add procactions.c procactions.h
+
+	* procactions.[c,h]: new file to deal with process actions
+	like renice and kill
+
+	* callbacks.c (end_process_button...): use the kill function
+
+	* interface.c (popup...kill_process): use the kill function here
+	also. Do the warning also if needed.
+	
+	* procdialogs.c (create_kill_dialog): show the dialog here instead
+	of returnin the dialog GtkWidget
+
+	* procdialogs.c (cb_kill..._clicked): use the new kill function.
+	(renice_accepted): use the new renice function.
+	(create_renice_dialog): change cancel button the close
+
 2001-08-05 Kevin Vandersloot <kfv101@psu.edu>
 
 	Improve the popup menu from patch by Tige Chastain 

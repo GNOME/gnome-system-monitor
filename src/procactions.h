@@ -1,4 +1,4 @@
-/* Procman - dialogs
+/* Procman process actions
  * Copyright (C) 2001 Kevin Vandersloot
  *
  * This program is free software; you can redistribute it and/or
@@ -16,17 +16,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  *
  */
-#ifndef _PROCDIALOGS_H_
-#define _PROCDIALOGS_H_
+#ifndef _PROCACTIONS_H_
+#define _PROCACTIONS_H_
 
+ 
+void		renice (int pid, int nice);
+void		kill_process (ProcData *procdata);
 
-#include <gnome.h>
-#include <procman.h>
-
-GtkWidget*		procdialog_create_hide_dialog (ProcData *data);
-void			procdialog_create_kill_dialog (ProcData *data);
-void 			procdialog_create_renice_dialog (ProcData *data);
-void 			procdialog_create_memmaps_dialog (ProcData *data);
-void			procdialog_create_preferences_dialog (ProcData *data)
-;
 #endif
+

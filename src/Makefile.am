@@ -20,6 +20,7 @@ procman_SOURCES = \
 	memmaps.c memmaps.h \
 	favorites.c favorites.h \
 	e-clipped-label.c e-clipped-label.h \
+	procactions.c procactions.h \
 	defaulttable.h
 
 procman_LDADD = $(GNOME_LIBDIR) $(GNOMEUI_LIBS) \

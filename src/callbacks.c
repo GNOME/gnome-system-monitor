@@ -22,7 +22,6 @@
 #endif
 
 #include <gnome.h>
-#include <signal.h>
 #include "callbacks.h"
 #include "interface.h"
 #include "proctable.h"
@@ -30,6 +29,7 @@
 #include "procdialogs.h"
 #include "memmaps.h"
 #include "favorites.h"
+#include "procactions.h"
 
 void
 cb_properties_activate                (GtkMenuItem     *menuitem,
@@ -214,24 +214,14 @@ cb_end_process_button_pressed          (GtkButton       *button,
 {
 
 	ProcData *procdata = data;
-	ProcInfo *info;
-	GtkWidget *dialog;
 
 	if (!procdata->selected_node)
 		return;
 		
 	if (procdata->config.show_kill_warning)
-	{	
-		dialog = procdialog_create_kill_dialog (procdata);
-		gtk_widget_show (dialog);
-	}
+		procdialog_create_kill_dialog (procdata);
 	else
-	{
-		info = e_tree_memory_node_get_data (procdata->memory, 
-						    procdata->selected_node);
-		kill (info->pid, SIGKILL);
-		proctable_update_all (procdata);
-	}	
+		kill_process (procdata);
 	
 }
 

@@ -1,4 +1,4 @@
-/* Procman - dialogs
+/* Procman process actions
  * Copyright (C) 2001 Kevin Vandersloot
  *
  * This program is free software; you can redistribute it and/or
@@ -16,17 +16,37 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  *
  */
-#ifndef _PROCDIALOGS_H_
-#define _PROCDIALOGS_H_
 
-
-#include <gnome.h>
-#include <procman.h>
-
-GtkWidget*		procdialog_create_hide_dialog (ProcData *data);
-void			procdialog_create_kill_dialog (ProcData *data);
-void 			procdialog_create_renice_dialog (ProcData *data);
-void 			procdialog_create_memmaps_dialog (ProcData *data);
-void			procdialog_create_preferences_dialog (ProcData *data)
-;
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
 #endif
+#include <signal.h>
+#include <sys/time.h>
+#include <sys/resource.h>
+#include "procman.h"
+#include "proctable.h"
+
+void
+renice (int pid, int nice)
+{
+	int error;
+	
+	/* FIXME: give a message box with the error messages */
+	error = setpriority (PRIO_PROCESS, pid, nice);
+}
+
+void
+kill_process (ProcData *procdata)
+{
+
+	ProcInfo *info;
+
+	if (!procdata->selected_node)
+		return;
+		
+	info = e_tree_memory_node_get_data (procdata->memory, 
+					    procdata->selected_node);
+	kill (info->pid, SIGKILL);
+	proctable_update_all (procdata);		
+	
+}
