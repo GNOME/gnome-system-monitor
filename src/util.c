@@ -110,7 +110,7 @@ exec_su (gchar *exec_path, gchar *user, gchar *pwd)
 		waitpid (pid, &status, 0);
 
 		if (WIFEXITED (status) && WEXITSTATUS (status) && (WEXITSTATUS(status) < 255)) {
-/*			error_box (_("Incorrect password.")); */
+/*			error_box ("Incorrect password."); */
 			g_free (exec_p);
 			return -1;
 		}
