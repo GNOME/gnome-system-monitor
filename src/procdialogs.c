@@ -398,6 +398,22 @@ show_icons_toggled (GtkToggleButton *button, gpointer data)
 }
 
 static void
+show_threads_toggled (GtkToggleButton *button, gpointer data)
+{
+	ProcData *procdata = data;
+	gboolean toggled;
+	
+	toggled = gtk_toggle_button_get_active (button);
+	
+	procdata->config.show_threads = toggled;
+	
+	proctable_clear_tree (procdata);
+	proctable_update_all (procdata);
+	
+}
+
+
+static void
 update_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 {
 	ProcData *procdata = data;
@@ -476,6 +492,13 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 				    !procdata->config.show_icons);
 	gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
 			    GTK_SIGNAL_FUNC (show_icons_toggled), procdata);
+	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
+	
+	check_button = gtk_check_button_new_with_label (_("Show Threads"));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
+				    procdata->config.show_threads);
+	gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
+			    GTK_SIGNAL_FUNC (show_threads_toggled), procdata);
 	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
 	
 	gtk_signal_connect (GTK_OBJECT (dialog), "clicked",
