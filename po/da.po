@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-06 15:44+0100\n"
-"PO-Revision-Date: 2005-02-06 15:44+0100\n"
+"POT-Creation-Date: 2005-02-16 21:49+0100\n"
+"PO-Revision-Date: 2005-02-16 22:01+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -413,15 +413,15 @@ msgstr "af"
 msgid "Used swap:"
 msgstr "Benyttet swap:"
 
-#: ../src/interface.c:523 ../src/procdialogs.c:752
+#: ../src/interface.c:523 ../src/procdialogs.c:715
 msgid "Devices"
 msgstr "Enheder"
 
-#: ../src/interface.c:651 ../src/procdialogs.c:577
+#: ../src/interface.c:651 ../src/procdialogs.c:540
 msgid "Processes"
 msgstr "Processer"
 
-#: ../src/interface.c:657 ../src/procdialogs.c:664
+#: ../src/interface.c:657 ../src/procdialogs.c:627
 msgid "Resources"
 msgstr "Resurser"
 
@@ -563,10 +563,11 @@ msgid "An error occured while killing the process."
 msgstr "En fejl opstod under termineringen af processen."
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:63
+#: ../src/procdialogs.c:62
 msgid "Hide the selected process?"
 msgstr "Skjul den valgte proces?"
 
+#. FIXME: View menu -> Edit menu
 #. translators: secondary alert messagex
 #: ../src/procdialogs.c:72
 msgid ""
@@ -646,57 +647,67 @@ msgstr ""
 "Prioriteten af en proces er givet ved dens venlighedsværdi. En lavere\n"
 "værdi svarer til en højre prioritet."
 
-#: ../src/procdialogs.c:463
+#: ../src/procdialogs.c:426
 msgid "Processes i_nfo showed in list:"
 msgstr "Proces_oplysninger vist i listen:"
 
-#: ../src/procdialogs.c:514
+#: ../src/procdialogs.c:477
 msgid "Icon"
 msgstr "Ikon"
 
-#: ../src/procdialogs.c:554
+#: ../src/procdialogs.c:517
 msgid "System Monitor Preferences"
 msgstr "Indstillinger for systemovervågning"
 
-#: ../src/procdialogs.c:584
+#: ../src/procdialogs.c:547
 msgid "Behavior"
 msgstr "Opførsel"
 
-#: ../src/procdialogs.c:603 ../src/procdialogs.c:690
+#: ../src/procdialogs.c:566 ../src/procdialogs.c:653
 msgid "_Update interval:"
 msgstr "_Opdateringsinterval:"
 
-#: ../src/procdialogs.c:619 ../src/procdialogs.c:707 ../src/procdialogs.c:788
+#: ../src/procdialogs.c:582 ../src/procdialogs.c:670 ../src/procdialogs.c:751
 msgid "seconds"
 msgstr "sekunder"
 
-#: ../src/procdialogs.c:626
+#: ../src/procdialogs.c:589
 msgid "Alert before ending or _killing processes"
 msgstr "Advar ved afslutning eller _terminering af processer"
 
-#: ../src/procdialogs.c:636
+#: ../src/procdialogs.c:599
 msgid "Alert before _hiding processes"
 msgstr "Advar ved _skjul af processer"
 
-#: ../src/procdialogs.c:646
+#: ../src/procdialogs.c:609
 msgid "Process Fields"
 msgstr "Procesfelter"
 
-#: ../src/procdialogs.c:671
+#: ../src/procdialogs.c:634
 msgid "Graphs"
 msgstr "Grafer"
 
-#: ../src/procdialogs.c:714
+#: ../src/procdialogs.c:677
 msgid "_Background color:"
 msgstr "_Baggrundsfarve:"
 
-#: ../src/procdialogs.c:733
+#: ../src/procdialogs.c:696
 msgid "_Grid color:"
 msgstr "_Gitterfarve:"
 
-#: ../src/procdialogs.c:771
+#: ../src/procdialogs.c:734
 msgid "Update _interval:"
 msgstr "Opdaterings_interval:"
+
+#: ../src/procdialogs.c:798
+#, c-format
+msgid "Cannot kill process with pid %d with signal %d"
+msgstr "Kan ikke afslutte proces med proces-id %d med signal %d"
+
+#: ../src/procdialogs.c:801
+#, c-format
+msgid "Cannot change the priority of process with pid %d to %d"
+msgstr "Kan ikke skifte prioriteten for proces med proces-id %d til %d"
 
 #: ../src/proctable.c:163
 msgid "Process Name"
