@@ -291,7 +291,7 @@ get_size_string (gfloat fsize)
 {
 	
 	if (fsize < 1024.0)
-		return g_strdup_printf (_("%d bytes"), (int)fsize);
+		return g_strdup_printf (ngettext ("%d byte", "%d bytes", (int)fsize), (int)fsize);
 	fsize /= 1024.0;
 	if (fsize < 1024.0) 
 		return g_strdup_printf (_("%d K"), (int)fsize);
