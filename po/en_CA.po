@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 13:28-0500\n"
-"PO-Revision-Date: 2005-01-09 18:38-0400\n"
+"POT-Creation-Date: 2005-01-10 20:17-0500\n"
+"PO-Revision-Date: 2005-01-10 18:38-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,26 +17,64 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: gnome-system-monitor.desktop.in.in.h:1 src/callbacks.c:134
-#: src/interface.c:629
+#: gnome-system-monitor.desktop.in.in.h:1 src/callbacks.c:142
+#: src/interface.c:639
 msgid "System Monitor"
 msgstr "System Monitor"
 
-#: gnome-system-monitor.desktop.in.in.h:2 src/callbacks.c:135
+#: gnome-system-monitor.desktop.in.in.h:2 src/callbacks.c:143
 msgid "View current processes and monitor system state"
 msgstr "View current processes and monitor system state"
 
-#: src/callbacks.c:119
+#: src/callbacks.c:127
 msgid "Jorgen Scheibengruber - nicer devices treeview"
 msgstr "Jorgen Scheibengruber - nicer devices treeview"
 
-#: src/callbacks.c:120
+#: src/callbacks.c:128
 msgid "Benoît Dejean - maintainer"
 msgstr "Benoît Dejean - maintainer"
 
-#: src/callbacks.c:143
+#: src/callbacks.c:151
 msgid "translator-credits"
 msgstr "Adam Weinberger <adamw@gnome.org>"
+
+#. translators: primary alert message
+#: src/favorites.c:345
+msgid "No hidden processes"
+msgstr "No hidden processes"
+
+#. translators: secondary alert message
+#: src/favorites.c:352
+msgid ""
+"There are no hidden processes in the list. To show all running processes, "
+"select the \"All processes\" option in the main window."
+msgstr ""
+"There are no hidden processes in the list. To show all running processes, "
+"select the \"All processes\" option in the main window."
+
+#: src/favorites.c:372
+msgid "Hidden Processes"
+msgstr "Hidden Processes"
+
+#: src/favorites.c:396
+msgid "Currently _hidden processes:"
+msgstr "Currently _hidden processes:"
+
+#: src/favorites.c:418
+msgid "_Remove From List"
+msgstr "_Remove From List"
+
+#: src/favorites.c:427 src/procdialogs.c:277
+msgid "Note:"
+msgstr "Note:"
+
+#: src/favorites.c:428
+msgid ""
+"These are the processes you have chosen to hide. You can reshow a process by "
+"removing it from this list."
+msgstr ""
+"These are the processes you have chosen to hide. You can reshow a process by "
+"removing it from this list."
 
 #: src/gnome-system-monitor.schemas.in.h:1
 msgid "Column zero saved width"
@@ -130,44 +168,6 @@ msgstr "Time in milliseconds between updates of the graphs"
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Time in milliseconds between updates of the process view"
 
-#. translators: primary alert message
-#: src/favorites.c:345
-msgid "No hidden processes"
-msgstr "No hidden processes"
-
-#. translators: secondary alert message
-#: src/favorites.c:352
-msgid ""
-"There are no hidden processes in the list. To show all running processes, "
-"select the \"All processes\" option in the main window."
-msgstr ""
-"There are no hidden processes in the list. To show all running processes, "
-"select the \"All processes\" option in the main window."
-
-#: src/favorites.c:372
-msgid "Hidden Processes"
-msgstr "Hidden Processes"
-
-#: src/favorites.c:396
-msgid "Currently _hidden processes:"
-msgstr "Currently _hidden processes:"
-
-#: src/favorites.c:418
-msgid "_Remove From List"
-msgstr "_Remove From List"
-
-#: src/favorites.c:427 src/procdialogs.c:277
-msgid "Note:"
-msgstr "Note:"
-
-#: src/favorites.c:428
-msgid ""
-"These are the processes you have chosen to hide. You can reshow a process by "
-"removing it from this list."
-msgstr ""
-"These are the processes you have chosen to hide. You can reshow a process by "
-"removing it from this list."
-
 #: src/infoview.c:77
 msgid "Process Info"
 msgstr "Process Info"
@@ -225,7 +225,7 @@ msgstr "Low - nice %d"
 msgid "Very low - nice %d"
 msgstr "Very low - nice %d"
 
-#: src/interface.c:55 src/interface.c:232
+#: src/interface.c:55 src/interface.c:242
 msgid "End _Process"
 msgstr "End _Process"
 
@@ -233,7 +233,7 @@ msgstr "End _Process"
 msgid "Force process to finish normally"
 msgstr "Force process to finish normally"
 
-#: src/interface.c:60 src/interface.c:131 src/procdialogs.c:120
+#: src/interface.c:60 src/interface.c:136 src/procdialogs.c:120
 msgid "_Kill Process"
 msgstr "_Kill Process"
 
@@ -241,11 +241,11 @@ msgstr "_Kill Process"
 msgid "Force process to finish immediately"
 msgstr "Force process to finish immediately"
 
-#: src/interface.c:66 src/interface.c:137
+#: src/interface.c:66 src/interface.c:142
 msgid "_Change Priority..."
 msgstr "_Change Priority..."
 
-#: src/interface.c:66 src/interface.c:137
+#: src/interface.c:66 src/interface.c:142
 msgid "Change the order of priority of process"
 msgstr "Change the order of priority of process"
 
@@ -265,11 +265,11 @@ msgstr "_Threads"
 msgid "Show each thread as a separate process"
 msgstr "Show each thread as a separate process"
 
-#: src/interface.c:89 src/interface.c:143 src/procdialogs.c:82
+#: src/interface.c:89 src/interface.c:148 src/procdialogs.c:82
 msgid "_Hide Process"
 msgstr "_Hide Process"
 
-#: src/interface.c:89 src/interface.c:143
+#: src/interface.c:89 src/interface.c:148
 msgid "Hide process from list"
 msgstr "Hide process from list"
 
@@ -281,116 +281,128 @@ msgstr "_Hidden Processes"
 msgid "Open the list of currently hidden processes"
 msgstr "Open the list of currently hidden processes"
 
-#: src/interface.c:100 src/interface.c:149
+#: src/interface.c:100 src/interface.c:154
 msgid "_Memory Maps"
 msgstr "_Memory Maps"
 
-#: src/interface.c:100 src/interface.c:149
+#: src/interface.c:100 src/interface.c:154
 msgid "Open the memory maps associated with the process"
 msgstr "Open the memory maps associated with the process"
 
-#: src/interface.c:126 src/procdialogs.c:129
+#: src/interface.c:105 src/interface.c:159
+msgid "Open _Files"
+msgstr "Open _Files"
+
+#: src/interface.c:105
+msgid "View a process' open files"
+msgstr "View a process's open files"
+
+#: src/interface.c:131 src/procdialogs.c:129
 msgid "_End Process"
 msgstr "_End Process"
 
-#: src/interface.c:126
+#: src/interface.c:131
 msgid "Force a process to finish normally"
 msgstr "Force a process to finish normally"
 
-#: src/interface.c:131
+#: src/interface.c:136
 msgid "Force a process to finish immediately"
 msgstr "Force a process to finish immediately"
 
-#: src/interface.c:189
+#: src/interface.c:159
+msgid "View process' open files"
+msgstr "View process's open files"
+
+#: src/interface.c:199
 msgid "Sea_rch:"
 msgstr "Sea_rch:"
 
-#: src/interface.c:201
+#: src/interface.c:211
 msgid "All processes"
 msgstr "All processes"
 
-#: src/interface.c:202
+#: src/interface.c:212
 msgid "My processes"
 msgstr "My processes"
 
-#: src/interface.c:203
+#: src/interface.c:213
 msgid "Active processes"
 msgstr "Active processes"
 
-#: src/interface.c:210
+#: src/interface.c:220
 msgid "Sho_w:"
 msgstr "Sho_w:"
 
-#: src/interface.c:237
+#: src/interface.c:247
 msgid "More _Info"
 msgstr "More _Info"
 
-#: src/interface.c:325 src/memmaps.c:261
+#: src/interface.c:335 src/memmaps.c:261
 msgid "Device"
 msgstr "Device"
 
-#: src/interface.c:326
+#: src/interface.c:336
 msgid "Directory"
 msgstr "Directory"
 
-#: src/interface.c:327
+#: src/interface.c:337 src/openfiles.c:187
 msgid "Type"
 msgstr "Type"
 
-#: src/interface.c:328
+#: src/interface.c:338
 msgid "Total"
 msgstr "Total"
 
-#: src/interface.c:329
+#: src/interface.c:339
 msgid "Free"
 msgstr "Free"
 
-#: src/interface.c:330
+#: src/interface.c:340
 msgid "Used"
 msgstr "Used"
 
-#: src/interface.c:354
+#: src/interface.c:364
 msgid "CPU History"
 msgstr "CPU History"
 
-#: src/interface.c:394
+#: src/interface.c:404
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: src/interface.c:413
+#: src/interface.c:423
 msgid "Memory and Swap History"
 msgstr "Memory and Swap History"
 
-#: src/interface.c:446
+#: src/interface.c:456
 msgid "User memory:"
 msgstr "User memory:"
 
-#: src/interface.c:455 src/interface.c:487
+#: src/interface.c:465 src/interface.c:497
 msgid "of"
 msgstr "of"
 
-#: src/interface.c:478
+#: src/interface.c:488
 msgid "Used swap:"
 msgstr "Used swap:"
 
-#: src/interface.c:513 src/procdialogs.c:742
+#: src/interface.c:523 src/procdialogs.c:742
 msgid "Devices"
 msgstr "Devices"
 
-#: src/interface.c:641 src/procdialogs.c:567
+#: src/interface.c:651 src/procdialogs.c:567
 msgid "Processes"
 msgstr "Processes"
 
-#: src/interface.c:647 src/procdialogs.c:654
+#: src/interface.c:657 src/procdialogs.c:654
 msgid "Resources"
 msgstr "Resources"
 
-#: src/interface.c:699
+#: src/interface.c:709
 msgid "More _Info >>"
 msgstr "More _Info >>"
 
-#: src/interface.c:706
+#: src/interface.c:716
 msgid "<< Less _Info"
 msgstr "<< Less _Info"
 
@@ -426,9 +438,41 @@ msgstr "Inode"
 msgid "Memory Maps"
 msgstr "Memory Maps"
 
-#: src/memmaps.c:363
+#: src/memmaps.c:363 src/openfiles.c:285
 msgid "Process name:"
 msgstr "Process name:"
+
+#: src/openfiles.c:29
+msgid "file"
+msgstr "file"
+
+#: src/openfiles.c:31
+msgid "pipe"
+msgstr "pipe"
+
+#: src/openfiles.c:33
+msgid "internet connection"
+msgstr "internet connection"
+
+#: src/openfiles.c:35
+msgid "local socket"
+msgstr "local socket"
+
+#: src/openfiles.c:37
+msgid "unknown type"
+msgstr "unknown type"
+
+#: src/openfiles.c:186
+msgid "FD"
+msgstr "FD"
+
+#: src/openfiles.c:188
+msgid "Object"
+msgstr "Object"
+
+#: src/openfiles.c:265
+msgid "Open Files"
+msgstr "Open Files"
 
 #: src/procactions.c:53
 msgid "No such process."
