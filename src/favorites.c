@@ -64,6 +64,22 @@ add_single_to_blacklist (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *it
 		removed_processes = g_list_append (removed_processes, info);
 }
 
+static void
+remove_all_of_same_name_from_tree (ProcInfo *info, ProcData *procdata)
+{
+	GList *list = procdata->info;
+	
+	while (list) {
+		ProcInfo *tmp = list->data;
+		
+		if (g_strcasecmp (info->name, tmp->name) == 0) 
+			remove_info_from_tree (tmp, procdata);
+			
+		list = g_list_next (list);
+	}
+
+}
+
 void
 add_selected_to_blacklist (ProcData *procdata)
 {
@@ -75,7 +91,7 @@ add_selected_to_blacklist (ProcData *procdata)
 					     
 	while (removed_processes) {
 		ProcInfo *info = removed_processes->data;
-		remove_info_from_tree (info, procdata);
+		remove_all_of_same_name_from_tree (info, procdata);
 		
 		removed_processes = g_list_next (removed_processes);
 	}
@@ -245,6 +261,22 @@ create_tree (ProcData *procdata)
 GList *removed_iters = NULL;
 
 static void
+insert_all_of_same_name_from_tree (gchar *name, ProcData *procdata)
+{
+	GList *list = procdata->info;
+	
+	while (list) {
+		ProcInfo *tmp = list->data;
+		
+		if (g_strcasecmp (name, tmp->name) == 0) 
+			insert_info_to_tree (tmp, procdata);
+			
+		list = g_list_next (list);
+	}
+
+}
+
+static void
 remove_item (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
 	ProcData *procdata = data;
@@ -254,13 +286,8 @@ remove_item (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer
 	gtk_tree_model_get (model, iter, 0, &process, -1);
 	
 	if (process) {
-		ProcInfo *info;
-		
-		info = proctable_find_process (-1, process, procdata);		
 		remove_from_blacklist (procdata, process);
-		if (info)
-			insert_info_to_tree (info, procdata);
-			
+		insert_all_of_same_name_from_tree (process, procdata);			
 	}
 		
 	iter_copy = gtk_tree_iter_copy (iter);	
