@@ -1,3 +1,8 @@
+2002-11-25  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: don't strdup the username if it's NULL. Should fix
+	bug #98471
+
 2002-05-19  Kevin Vandersloot <kfv101@psu.edu>
 
 	* proctable.c: remove hack to catch bug that was a treeview bug
@@ -1504,7 +1509,7 @@ Sat Aug  4 00:35:55 2001  Jonathan Blandford  <jrb@redhat.com>
         will be upper case per Seth's suggestion. Nautilus doesn't
         get an icon so I need to check into that.
 
-2001-07-31  Carlos Perelló Marín <carlos@gnome-db.org>
+2001-07-31  Carlos PerellÃ³ MarÃ­n <carlos@gnome-db.org>
 
 	* proctable.c, favorites.c: Please, remember to add the
 	config.h include. Thanks ;-)
@@ -1650,12 +1655,12 @@ Sat Aug  4 00:35:55 2001  Jonathan Blandford  <jrb@redhat.com>
 	*callbacks.c (cb_show_hidden_processes): add callback to edit 
 	blacklist menu
 
-2001-07-14  Carlos Perelló Marín <carlos@gnome-db.org>
+2001-07-14  Carlos PerellÃ³ MarÃ­n <carlos@gnome-db.org>
 
 	* src/memmaps.c: Added #include config.h to enable i18n
 	src/procdialogs.c: ditto.
 	
-2001-07-14  Carlos Perelló Marín <carlos@gnome-db.org>
+2001-07-14  Carlos PerellÃ³ MarÃ­n <carlos@gnome-db.org>
 
 	* infoview.c: Added #include config.h to enable i18n
 	* interface.c: /s/lessinfolabel/_(lessinfolabel)/
