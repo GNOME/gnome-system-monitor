@@ -1,5 +1,16 @@
 2005-03-15  Benoît Dejean  <TazForEver@dlfp.org>
 
+	* src/procman.c: (procman_data_new):
+	* src/procman.h:
+	* src/proctable.c: (sort_ints), (proctable_new),
+	(update_info_mutable_cols), (insert_info_to_tree), (update_info),
+	(get_info):
+	* src/proctable.h: Added a new col that displays cpu time.
+	Also merged duplicate functions.
+	glibtop_get_proc_time() is called only once per process on every update.
+
+2005-03-15  Benoît Dejean  <TazForEver@dlfp.org>
+
 	* src/procman.h: changed type of procdata->memxserver as libwnck's uses
 	an unsigned long not a guint64.
 

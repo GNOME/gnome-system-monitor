@@ -323,6 +323,7 @@ procman_data_new (GConfClient *client)
 	/* Determinie number of cpus since libgtop doesn't really tell you*/
 	pd->config.num_cpus = 0;
 	glibtop_get_cpu (&cpu);
+	pd->frequency = cpu.frequency;
 	i=0;
     	while (i < GLIBTOP_NCPU && cpu.xcpu_total[i] != 0) {
     	    pd->config.num_cpus ++;

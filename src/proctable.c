@@ -88,6 +88,9 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 	case COL_MEMXSERVER:
 		return PROCMAN_CMP(infoa->memxserver, infob->memxserver);
 
+	case COL_CPU_TIME:
+		return PROCMAN_CMP(infoa->cpu_time_last, infob->cpu_time_last);
+
 	default:
 		g_assert_not_reached();
 		return 0;
@@ -171,6 +174,7 @@ proctable_new (ProcData * const procdata)
 		N_("RSS Memory"),
 		N_("X Server Memory"),
 		/* xgettext:no-c-format */ N_("% CPU"),
+		N_("CPU time"),
 		N_("Nice"),
 		N_("ID"),
 		N_("Security Context"),
@@ -199,6 +203,7 @@ proctable_new (ProcData * const procdata)
 				    G_TYPE_STRING,	/* RSS Memory	*/
 				    G_TYPE_STRING,	/* X Server Memory */
 				    G_TYPE_UINT,	/* % CPU	*/
+				    G_TYPE_STRING,	/* CPU time	*/
 				    G_TYPE_INT,		/* Nice		*/
 				    G_TYPE_UINT,	/* ID		*/
 				    G_TYPE_STRING,	/* Security Context */
@@ -249,6 +254,7 @@ proctable_new (ProcData * const procdata)
 		case COL_CPU:
 		case COL_NICE:
 		case COL_PID:
+		case COL_CPU_TIME:
 			g_object_set(G_OBJECT(cell_renderer),
 				     "xalign", 1.0f,
 				     NULL);
@@ -268,36 +274,26 @@ proctable_new (ProcData * const procdata)
 
 	gtk_container_add (GTK_CONTAINER (scrolled), proctree);
 
-	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
-					 COL_MEM,
-					 sort_ints,
-					 GINT_TO_POINTER (COL_MEM),
-					 NULL);
-	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
-					 COL_VMSIZE,
-					 sort_ints,
-					 GINT_TO_POINTER (COL_VMSIZE),
-					 NULL);
-	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
-					 COL_MEMRES,
-					 sort_ints,
-					 GINT_TO_POINTER (COL_MEMRES),
-					 NULL);
-	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
-					 COL_MEMSHARED,
-					 sort_ints,
-					 GINT_TO_POINTER (COL_MEMSHARED),
-					 NULL);
-	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
-					 COL_MEMRSS,
-					 sort_ints,
-					 GINT_TO_POINTER (COL_MEMRSS),
-					 NULL);
-	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
-					 COL_MEMXSERVER,
-					 sort_ints,
-					 GINT_TO_POINTER (COL_MEMXSERVER),
-					 NULL);
+
+	for(i = 0; i< NUM_COLUMNS - 2; i++)
+	{
+		switch(i)
+		{
+		case COL_MEM:
+		case COL_VMSIZE:
+		case COL_MEMRES:
+		case COL_MEMSHARED:
+		case COL_MEMRSS:
+		case COL_MEMXSERVER:
+		case COL_CPU_TIME:
+			gtk_tree_sortable_set_sort_func (
+				GTK_TREE_SORTABLE (model),
+				i,
+				sort_ints,
+				GINT_TO_POINTER(i),
+				NULL);
+		}
+	}
 
 	procdata->tree = proctree;
 
@@ -427,13 +423,50 @@ find_parent (ProcData *procdata, guint pid)
 }
 
 
+static void
+update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info)
+{
+	gchar *mem, *vmsize, *memres, *memshared, *memrss, *memxserver, *cpu_time;
+
+	mem	   = gnome_vfs_format_file_size_for_display (info->mem);
+	vmsize	   = gnome_vfs_format_file_size_for_display (info->vmsize);
+	memres	   = gnome_vfs_format_file_size_for_display (info->memres);
+	memshared  = gnome_vfs_format_file_size_for_display (info->memshared);
+	memrss	   = gnome_vfs_format_file_size_for_display (info->memrss);
+	memxserver = gnome_vfs_format_file_size_for_display (info->memxserver);
+
+	cpu_time = g_strdup_printf("%0.1fs", info->cpu_time_last / procdata->frequency);
+
+	gtk_tree_store_set (store, &info->node,
+			    COL_STATUS, info->status,
+			    COL_MEM, mem,
+			    COL_VMSIZE, vmsize,
+			    COL_MEMRES, memres,
+			    COL_MEMSHARED, memshared,
+			    COL_MEMRSS, memrss,
+			    COL_MEMXSERVER, memxserver,
+			    COL_CPU, info->pcpu,
+			    COL_CPU_TIME, cpu_time,
+			    COL_NICE, info->nice,
+			    -1);
+
+	/* We don't bother updating COL_SECURITYCONTEXT as it can never change */
+	g_free (mem);
+	g_free (vmsize);
+	g_free (memres);
+	g_free (memshared);
+	g_free (memrss);
+	g_free (memxserver);
+	g_free (cpu_time);
+}
+
+
+
 void
 insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 {
 	GtkTreeModel *model;
-	GtkTreeIter row;
 	gchar *name;
-	gchar *mem, *vmsize, *memres, *memshared, *memrss, *memxserver;
 
 	/* Don't show process if it is not running */
 	if ((procdata->config.whose_process == ACTIVE_PROCESSES) &&
@@ -460,7 +493,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	if (info->parent && procdata->config.show_tree && info->parent->is_visible) {
 		GtkTreePath *parent_node = gtk_tree_model_get_path (model, &info->parent->node);
 
-		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, &info->parent->node, 0);
+		gtk_tree_store_insert (GTK_TREE_STORE (model), &info->node, &info->parent->node, 0);
 		if (!gtk_tree_view_row_expanded (GTK_TREE_VIEW (procdata->tree), parent_node))
 			gtk_tree_view_expand_row (GTK_TREE_VIEW (procdata->tree),
 						  parent_node,
@@ -469,47 +502,25 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 		gtk_tree_path_free (parent_node);
 	}
 	else
-		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0);
-
-	mem = gnome_vfs_format_file_size_for_display (info->mem);
-	vmsize = gnome_vfs_format_file_size_for_display (info->vmsize);
-	memres = gnome_vfs_format_file_size_for_display (info->memres);
-	memshared = gnome_vfs_format_file_size_for_display (info->memshared);
-	memrss = gnome_vfs_format_file_size_for_display (info->memrss);
-	memxserver = gnome_vfs_format_file_size_for_display (info->memxserver);
+		gtk_tree_store_insert (GTK_TREE_STORE (model), &info->node, NULL, 0);
 
 	/* COL_POINTER must be set first, because GtkTreeStore
 	 * will call sort_ints as soon as we set the column
 	 * that we're sorting on.
 	 */
 
-	gtk_tree_store_set (GTK_TREE_STORE (model), &row,
+	gtk_tree_store_set (GTK_TREE_STORE (model), &info->node,
 			    COL_POINTER, info,
 			    COL_PIXBUF, info->pixbuf,
 			    COL_NAME, name,
 			    COL_ARGS, info->arguments,
 			    COL_USER, info->user,
-			    COL_STATUS, info->status,
-			    COL_MEM, mem,
-			    COL_VMSIZE, vmsize,
-			    COL_MEMRES, memres,
-			    COL_MEMSHARED, memshared,
-			    COL_MEMRSS, memrss,
-			    COL_MEMXSERVER, memxserver,
-			    COL_CPU, info->pcpu,
 			    COL_PID, info->pid,
-			    COL_NICE, info->nice,
 			    COL_SECURITYCONTEXT, info->security_context,
 			    -1);
-	g_free (mem);
-	g_free (vmsize);
-	g_free (memres);
-	g_free (memshared);
-	g_free (memrss);
-	g_free (memxserver);
-	g_free (name);
 
-	info->node = row;
+	update_info_mutable_cols(GTK_TREE_STORE (model), procdata, info);
+
 	info->is_visible = TRUE;
 }
 
@@ -618,7 +629,6 @@ update_info (ProcData *procdata, ProcInfo *info)
 	if (info->is_visible) {
 		GdkRectangle rect, vis_rect;
 		GtkTreePath *path;
-		gchar *mem, *vmsize, *memres, *memshared, *memrss, *memxserver;
 
 		GtkTreeModel *model;
 		glibtop_proc_uid procuid;
@@ -649,31 +659,7 @@ update_info (ProcData *procdata, ProcInfo *info)
 		if ((rect.y < 0) || (rect.y > vis_rect.height))
 			return;
 
-		mem = gnome_vfs_format_file_size_for_display (info->mem);
-		vmsize = gnome_vfs_format_file_size_for_display (info->vmsize);
-		memres = gnome_vfs_format_file_size_for_display (info->memres);
-		memshared = gnome_vfs_format_file_size_for_display (info->memshared);
-		memrss = gnome_vfs_format_file_size_for_display (info->memrss);
-		memxserver = gnome_vfs_format_file_size_for_display (info->memxserver);
-
-		gtk_tree_store_set (GTK_TREE_STORE (model), &info->node,
-				    COL_STATUS, info->status,
-				    COL_MEM, mem,
-				    COL_VMSIZE, vmsize,
-				    COL_MEMRES, memres,
-				    COL_MEMSHARED, memshared,
-				    COL_MEMRSS, memrss,
-				    COL_MEMXSERVER, memxserver,
-				    COL_CPU, info->pcpu,
-				    COL_NICE, info->nice,
-				    -1);
-		/* We don't bother updating COL_SECURITYCONTEXT as it can never change */
-		g_free (mem);
-		g_free (vmsize);
-		g_free (memres);
-		g_free (memshared);
-		g_free (memrss);
-		g_free (memxserver);
+		update_info_mutable_cols(GTK_TREE_STORE (model), procdata, info);
 	}
 }
 
@@ -696,7 +682,6 @@ get_info (ProcData *procdata, gint pid)
 
 	glibtop_get_proc_state (&procstate, pid);
 	pwd = getpwuid (procstate.uid);
-	glibtop_get_proc_time (&proctime, pid);
 	glibtop_get_proc_uid (&procuid, pid);
 	glibtop_get_proc_time (&proctime, pid);
 
