@@ -283,16 +283,6 @@ get_process_status (ProcInfo *info, const glibtop_proc_state *buf)
 		info->running = FALSE;
 		break;
 
-	case GLIBTOP_PROCESS_ZOMBIE:
-		info->status = g_strdup (_("Zombie"));
-		info->running = FALSE;
-		break;
-
-	case GLIBTOP_PROCESS_UNINTERRUPTIBLE:
-		info->status = g_strdup (_("Uninterruptible"));
-		info->running = FALSE;
-		break;
-
 	default:
 		info->status = g_strdup (_("Sleeping"));
 		info->running = FALSE;
