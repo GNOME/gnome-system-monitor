@@ -1,6 +1,6 @@
 # Swedish messages for procman.
-# Copyright (C) 2001, 2002, 2003, 2004 Free Software Foundation, Inc.
-# Christian Rose <menthos@menthos.com>, 2001, 2002, 2003, 2004.
+# Copyright (C) 2001, 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
+# Christian Rose <menthos@menthos.com>, 2001, 2002, 2003, 2004, 2005.
 #
 # $Id$
 #
@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 23:24+0100\n"
-"PO-Revision-Date: 2004-12-28 23:24+0100\n"
+"POT-Creation-Date: 2005-01-09 01:30+0100\n"
+"PO-Revision-Date: 2005-01-09 01:30+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: gnome-system-monitor.desktop.in.in.h:1 src/callbacks.c:128
-#: src/interface.c:628
+#: gnome-system-monitor.desktop.in.in.h:1 src/callbacks.c:134
+#: src/interface.c:629
 msgid "System Monitor"
 msgstr "Systemövervakare"
 
-#: gnome-system-monitor.desktop.in.in.h:2
+#: gnome-system-monitor.desktop.in.in.h:2 src/callbacks.c:135
 msgid "View current processes and monitor system state"
 msgstr "Visa aktuella processer och övervaka systemtillståndet"
 
@@ -34,37 +34,135 @@ msgstr "Jörgen Scheibengruber - trevligare trädvy för enheter"
 msgid "Benoît Dejean - maintainer"
 msgstr "Benoît Dejean - ansvarig"
 
-#: src/callbacks.c:129
-msgid "System resources monitor"
-msgstr "Systemresursövervakare"
-
-#: src/callbacks.c:134
-msgid "translator_credits"
+#: src/callbacks.c:143
+msgid "translator-credits"
 msgstr ""
 "Christian Rose\n"
 "Skicka synpunkter på översättningen till sv@li.org"
 
-#: src/favorites.c:344
-msgid "No processes are currently hidden."
-msgstr "Inga processer är dolda för tillfället."
+#: src/gnome-system-monitor.schemas.in.h:1
+msgid "Column zero saved width"
+msgstr "Sparad bredd för kolumn noll"
 
-#: src/favorites.c:364
-msgid "Manage Hidden Processes"
-msgstr "Hantera dolda processer"
+#: src/gnome-system-monitor.schemas.in.h:2
+msgid "Default graph background color"
+msgstr "Bakgrundsfärg för standardgraf"
 
-#: src/favorites.c:388
-msgid "_Hidden processes:"
-msgstr "_Dolda processer:"
+#: src/gnome-system-monitor.schemas.in.h:3
+msgid "Default graph cpu color"
+msgstr "CPU-färg för standardgraf"
 
-#: src/favorites.c:410
+#: src/gnome-system-monitor.schemas.in.h:4
+msgid "Default graph frame color"
+msgstr "Ramfärg för standardgraf"
+
+#: src/gnome-system-monitor.schemas.in.h:5
+msgid "Default graph mem color"
+msgstr "Minnesfärg för standardgraf"
+
+#: src/gnome-system-monitor.schemas.in.h:6
+msgid "Default graph swap color"
+msgstr "Växlingsfärg för standardgraf"
+
+#: src/gnome-system-monitor.schemas.in.h:7
+msgid ""
+"Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
+"active"
+msgstr ""
+"Avgör vilka processer som visas som standard. 0 är alla, 1 är användare, och "
+"2 är aktiva"
+
+#: src/gnome-system-monitor.schemas.in.h:8
+msgid "Main Window height"
+msgstr "Höjd på huvudfönstret"
+
+#: src/gnome-system-monitor.schemas.in.h:9
+msgid "Main Window width"
+msgstr "Bredd på huvudfönstret"
+
+#: src/gnome-system-monitor.schemas.in.h:10
+msgid "Process view sort column"
+msgstr "Sorteringskolumn för processvyn"
+
+#: src/gnome-system-monitor.schemas.in.h:11
+msgid "Process view sort order"
+msgstr "Sorteringsordning för processvyn"
+
+#: src/gnome-system-monitor.schemas.in.h:12
+msgid "Saves the currently viewed tab"
+msgstr ""
+
+#: src/gnome-system-monitor.schemas.in.h:13
+msgid "Saves the pane position for the system monitor tab"
+msgstr ""
+
+#: src/gnome-system-monitor.schemas.in.h:14
+msgid "Show advanced info tab on startup"
+msgstr "Visa fliken med avancerad information vid uppstart"
+
+#: src/gnome-system-monitor.schemas.in.h:15
+msgid "Show column zero on startup"
+msgstr "Visa kolumn noll vid uppstart"
+
+#: src/gnome-system-monitor.schemas.in.h:16
+msgid "Show process dependencies in tree form"
+msgstr "Visa processberoenden i trädform"
+
+#: src/gnome-system-monitor.schemas.in.h:17
+msgid "Show process threads"
+msgstr "Visa processtrådar"
+
+#: src/gnome-system-monitor.schemas.in.h:18
+msgid "Show waring dialog when killing processes"
+msgstr "Visa varningsdialog då processer dödas"
+
+#: src/gnome-system-monitor.schemas.in.h:19
+msgid "Show warning dialog when hiding processes"
+msgstr "Visa varningsdialog då processer döljs"
+
+#: src/gnome-system-monitor.schemas.in.h:20
+msgid "Time in milliseconds between updates of the devices list"
+msgstr ""
+
+#: src/gnome-system-monitor.schemas.in.h:21
+msgid "Time in milliseconds between updates of the graphs"
+msgstr ""
+
+#: src/gnome-system-monitor.schemas.in.h:22
+msgid "Time in milliseconds between updates of the process view"
+msgstr ""
+
+#. translators: primary alert message
+#: src/favorites.c:345
+msgid "No hidden processes"
+msgstr "Inga dolda processer"
+
+#. translators: secondary alert message
+#: src/favorites.c:352
+msgid ""
+"There are no hidden processes in the list. To show all running processes, "
+"select the \"All processes\" option in the main window."
+msgstr ""
+"Det finns inga dolda processer i listan. För att visa alla processer som "
+"körs väljer du alternativet \"Alla processer\" i huvudfönstret."
+
+#: src/favorites.c:372
+msgid "Hidden Processes"
+msgstr "Dolda processer"
+
+#: src/favorites.c:396
+msgid "Currently _hidden processes:"
+msgstr "_Dolda processer för tillfället:"
+
+#: src/favorites.c:418
 msgid "_Remove From List"
 msgstr "_Ta bort från listan"
 
-#: src/favorites.c:419 src/procdialogs.c:440
+#: src/favorites.c:427 src/procdialogs.c:277
 msgid "Note:"
 msgstr "Observera:"
 
-#: src/favorites.c:420
+#: src/favorites.c:428
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
@@ -129,173 +227,172 @@ msgstr "Låg - nice-värde %d"
 msgid "Very low - nice %d"
 msgstr "Mycket låg - nice-värde %d"
 
-#: src/interface.c:55 src/interface.c:126
-msgid "_Change Priority..."
-msgstr "_Ändra prioritet..."
-
-#: src/interface.c:55 src/interface.c:126
-msgid "Change the importance (nice value) of a process"
-msgstr "Ändra viktigheten (bice-värdet) hos en process"
-
-#: src/interface.c:60 src/interface.c:137 src/procdialogs.c:158
-msgid "_Hide Process"
-msgstr "_Dölj process"
-
-#: src/interface.c:60 src/interface.c:137
-msgid "Hide a process"
-msgstr "Dölj en process"
-
-#: src/interface.c:66 src/interface.c:231
+#: src/interface.c:55 src/interface.c:232
 msgid "End _Process"
 msgstr "Avsluta _process"
 
-#: src/interface.c:66
-msgid "Force a process to finish."
-msgstr "Tvinga en process att avsluta."
+#: src/interface.c:55
+msgid "Force process to finish normally"
+msgstr "Tvinga process att avsluta normalt"
 
-#: src/interface.c:71 src/interface.c:148 src/procdialogs.c:220
-#: src/procdialogs.c:984
+#: src/interface.c:60 src/interface.c:131 src/procdialogs.c:120
 msgid "_Kill Process"
 msgstr "D_öda process"
 
-#: src/interface.c:71
-msgid "Force a process to finish now."
-msgstr "Tvinga en process att avsluta nu."
+#: src/interface.c:60
+msgid "Force process to finish immediately"
+msgstr "Tvinga process att avsluta omedelbart"
 
-#: src/interface.c:77
-msgid "_Hidden Processes"
-msgstr "_Dolda processer"
+#: src/interface.c:66 src/interface.c:137
+msgid "_Change Priority..."
+msgstr "_Ändra prioritet..."
+
+#: src/interface.c:66 src/interface.c:137
+msgid "Change the order of priority of process"
+msgstr "Ändra prioritetsordningen för process"
 
 #: src/interface.c:78
-msgid "View and edit your list of hidden processes"
-msgstr "Visa och redigera din lista över dolda processer"
+msgid "_Dependencies"
+msgstr "_Beroenden"
 
-#: src/interface.c:89 src/interface.c:131
-msgid "_Memory Maps"
-msgstr "_Minneskartor"
+#: src/interface.c:78
+msgid "Show parent/child relationship between processes"
+msgstr "Visa förälder-/barnrelationer mellan processer"
 
-#: src/interface.c:89 src/interface.c:131
-msgid "View the memory maps associated with a process"
-msgstr "Visa minneskartorna som är associerade med en process"
-
-#: src/interface.c:95
-msgid "Process _Dependencies"
-msgstr "Process_beroenden"
-
-#: src/interface.c:95
-msgid "Display a tree showing process dependencies"
-msgstr "Visa ett träd som visar processberoenden"
-
-#: src/interface.c:100
+#: src/interface.c:83
 msgid "_Threads"
 msgstr "_Trådar"
 
-#: src/interface.c:100
-msgid "Display threads (subprocesses)"
-msgstr "Visa trådar (underprocesser)"
+#: src/interface.c:83
+msgid "Show each thread as a separate process"
+msgstr "Visa varje tråd som en separat process"
 
-#: src/interface.c:143 src/procdialogs.c:225 src/procdialogs.c:988
+#: src/interface.c:89 src/interface.c:143 src/procdialogs.c:82
+msgid "_Hide Process"
+msgstr "_Dölj process"
+
+#: src/interface.c:89 src/interface.c:143
+msgid "Hide process from list"
+msgstr "Dölj process från lista"
+
+#: src/interface.c:94
+msgid "_Hidden Processes"
+msgstr "_Dolda processer"
+
+#: src/interface.c:94
+msgid "Open the list of currently hidden processes"
+msgstr "Öppna listan över dolda processer"
+
+#: src/interface.c:100 src/interface.c:149
+msgid "_Memory Maps"
+msgstr "_Minneskartor"
+
+#: src/interface.c:100 src/interface.c:149
+msgid "Open the memory maps associated with the process"
+msgstr "Öppna minneskartorna som är associerade med process"
+
+#: src/interface.c:126 src/procdialogs.c:129
 msgid "_End Process"
 msgstr "_Avsluta process"
 
-#: src/interface.c:143
-msgid "Force a process to finish"
-msgstr "Tvinga en process att avsluta"
+#: src/interface.c:126
+msgid "Force a process to finish normally"
+msgstr "Tvinga en process att avsluta normalt"
 
-#: src/interface.c:148
-msgid "Force a process to finish now"
-msgstr "Tvinga en process att avsluta nu"
+#: src/interface.c:131
+msgid "Force a process to finish immediately"
+msgstr "Tvinga en process att avsluta omedelbart"
 
-#: src/interface.c:188
+#: src/interface.c:189
 msgid "Sea_rch:"
 msgstr "S_ök:"
 
-#: src/interface.c:200
-msgid "All Processes"
+#: src/interface.c:201
+msgid "All processes"
 msgstr "Alla processer"
 
-#: src/interface.c:201
-msgid "My Processes"
+#: src/interface.c:202
+msgid "My processes"
 msgstr "Mina processer"
 
-#: src/interface.c:202
-msgid "Active Processes"
+#: src/interface.c:203
+msgid "Active processes"
 msgstr "Aktiva processer"
 
-#: src/interface.c:209
-msgid "Vie_w:"
+#: src/interface.c:210
+msgid "Sho_w:"
 msgstr "_Visa:"
 
-#: src/interface.c:236
+#: src/interface.c:237
 msgid "More _Info"
 msgstr "Mer _information"
 
-#: src/interface.c:324 src/memmaps.c:261
+#: src/interface.c:325 src/memmaps.c:261
 msgid "Device"
 msgstr "Enhet"
 
-#: src/interface.c:325
+#: src/interface.c:326
 msgid "Directory"
 msgstr "Katalog"
 
-#: src/interface.c:326
+#: src/interface.c:327
 msgid "Type"
 msgstr "Typ"
 
-#: src/interface.c:327
+#: src/interface.c:328
 msgid "Total"
 msgstr "Totalt"
 
-#: src/interface.c:328
+#: src/interface.c:329
 msgid "Free"
 msgstr "Ledigt"
 
-#: src/interface.c:329
+#: src/interface.c:330
 msgid "Used"
 msgstr "Använt"
 
-#: src/interface.c:353
+#: src/interface.c:354
 msgid "CPU History"
 msgstr "CPU-historik"
 
-#: src/interface.c:393
+#: src/interface.c:394
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: src/interface.c:412
+#: src/interface.c:413
 msgid "Memory and Swap History"
 msgstr "Historik över minnes- och växlingsutrymmesanvändning"
 
-#: src/interface.c:445
+#: src/interface.c:446
 msgid "User memory:"
 msgstr "Användarminne:"
 
-#: src/interface.c:454 src/interface.c:486
+#: src/interface.c:455 src/interface.c:487
 msgid "of"
 msgstr "av"
 
-#: src/interface.c:477
+#: src/interface.c:478
 msgid "Used swap:"
 msgstr "Använt växlingsutrymme:"
 
-#: src/interface.c:512 src/procdialogs.c:904
+#: src/interface.c:513 src/procdialogs.c:742
 msgid "Devices"
 msgstr "Enheter"
 
-#: src/interface.c:640 src/procdialogs.c:729
-msgid "Process Listing"
-msgstr "Processlista"
+#: src/interface.c:641 src/procdialogs.c:567
+msgid "Processes"
+msgstr "Processer"
 
-#: src/interface.c:646 src/procdialogs.c:816
-msgid "Resource Monitor"
-msgstr "Resursövervakare"
+#: src/interface.c:647 src/procdialogs.c:654
+msgid "Resources"
+msgstr "Resurser"
 
-#: src/interface.c:698
+#: src/interface.c:699
 msgid "More _Info >>"
 msgstr "Mer _information >>"
 
-#: src/interface.c:705
+#: src/interface.c:706
 msgid "<< Less _Info"
 msgstr "<< Mindre _information"
 
@@ -384,71 +481,77 @@ msgstr ""
 msgid "An error occured while killing the process."
 msgstr "Ett fel uppstod vid dödande av process."
 
-#: src/procdialogs.c:81
-msgid "Are you sure you want to hide this process?"
-msgstr "Är du säker på att du vill dölja denna process?"
+#. translators: primary alert message
+#: src/procdialogs.c:63
+msgid "Hide the selected process?"
+msgstr "Dölj den valda processen?"
 
-#: src/procdialogs.c:82
+#. translators: secondary alert messagex
+#: src/procdialogs.c:72
 msgid ""
-"If you hide a process, you can unhide it by selecting 'Hidden Processes' in "
-"the Edit menu."
+"Hidden processes are no longer visible in the processes list. You can re-"
+"enable them selecting the \"Hidden Processes\" entry in the View menu."
 msgstr ""
-"Om du döljer en process kan du visa den igen genom att välja \"Dolda "
-"processer\" i Redigera-menyn."
+"Dolda processer syns inte längre i processlistan. Du kan återaktivera dem "
+"genom att välja posten \"Dolda processer\" i Visa-menyn."
 
-#: src/procdialogs.c:141 src/procdialogs.c:282
-msgid "_Show this dialog next time"
-msgstr "_Visa denna dialog nästa gång"
+#. translators: primary alert message
+#: src/procdialogs.c:115
+msgid "Kill the selected process?"
+msgstr "Döda den valda processen?"
 
-#: src/procdialogs.c:218
-msgid "Are you sure you want to kill this process?"
-msgstr "Är du säker på att du vill döda denna process?"
+#. translators: secondary alert message
+#: src/procdialogs.c:117
+msgid ""
+"Killing a process, you could destroy your data, break the working session or "
+"create a security risk. Only misbehaving processes should be killed."
+msgstr ""
 
-#: src/procdialogs.c:219
-msgid "If you kill a process, unsaved data will be lost."
-msgstr "Om du dödar en process kommer osparade data att gå förlorade."
+#. translators: primary alert message
+#: src/procdialogs.c:124
+msgid "End the selected process?"
+msgstr "Avsluta den valda processen?"
 
-#: src/procdialogs.c:223
-msgid "Are you sure you want to end this process?"
-msgstr "Är du säker på att du vill avsluta denna process?"
+#. translators: secondary alert message
+#: src/procdialogs.c:126
+msgid ""
+"Ending a process, you could destroy your data, break the working session or "
+"create a security risk. Only misbehaving processes should be ended."
+msgstr ""
 
-#: src/procdialogs.c:224
-msgid "If you end a process, unsaved data will be lost."
-msgstr "Om du avslutar en process kommer osparade data att gå förlorade."
-
-#: src/procdialogs.c:321
+#: src/procdialogs.c:158
 msgid "(Very High Priority)"
 msgstr "(Mycket hög prioritet)"
 
-#: src/procdialogs.c:323
+#: src/procdialogs.c:160
 msgid "(High Priority)"
 msgstr "(Hög prioritet)"
 
-#: src/procdialogs.c:325
+#: src/procdialogs.c:162
 msgid "(Normal Priority)"
 msgstr "(Normal prioritet)"
 
-#: src/procdialogs.c:327
+#: src/procdialogs.c:164
 msgid "(Low Priority)"
 msgstr "(Låg prioritet)"
 
-#: src/procdialogs.c:329
+#: src/procdialogs.c:166
 msgid "(Very Low Priority)"
 msgstr "(Mycket låg prioritet)"
 
-#: src/procdialogs.c:382 src/procdialogs.c:992
+#: src/procdialogs.c:219
 msgid "Change Priority"
 msgstr "Ändra prioritet"
 
-#: src/procdialogs.c:403 src/procdialogs.c:993
+#: src/procdialogs.c:240
 msgid "Change _Priority"
 msgstr "Ändra _prioritet"
 
-#: src/procdialogs.c:424
+#: src/procdialogs.c:261
 msgid "_Nice value:"
 msgstr "_Nice-värde:"
 
-#: src/procdialogs.c:441
+#: src/procdialogs.c:278
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -456,69 +559,53 @@ msgstr ""
 "Prioriteten hos en process ges av dess nice-värde. Ett lägre nice-värde "
 "motsvarar en högre prioritet."
 
-#: src/procdialogs.c:671
+#: src/procdialogs.c:508
 msgid "Icon"
 msgstr "Ikon"
 
-#: src/procdialogs.c:711
-msgid "Preferences"
-msgstr "Inställningar"
+#: src/procdialogs.c:548
+msgid "System Monitor Preferences"
+msgstr "Inställningar för systemövervakaren"
 
-#: src/procdialogs.c:736
+#: src/procdialogs.c:574
 msgid "Behavior"
 msgstr "Beteende"
 
-#: src/procdialogs.c:755 src/procdialogs.c:842
+#: src/procdialogs.c:593 src/procdialogs.c:680
 msgid "_Update interval:"
 msgstr "_Uppdateringsintervall:"
 
-#: src/procdialogs.c:771 src/procdialogs.c:859 src/procdialogs.c:940
+#: src/procdialogs.c:609 src/procdialogs.c:697 src/procdialogs.c:778
 msgid "seconds"
 msgstr "sekunder"
 
-#: src/procdialogs.c:778
-msgid "Show warning dialog when ending or _killing processes"
-msgstr "Visa varningsdialog då processer avslutas eller _dödas"
+#: src/procdialogs.c:616
+msgid "Alert before ending or _killing processes"
+msgstr "Varna innan processer avslutas eller _dödas"
 
-#: src/procdialogs.c:788
-msgid "Show warning dialog when _hiding processes"
-msgstr "Visa varningsdialog då processer _döljs"
+#: src/procdialogs.c:626
+msgid "Alert before _hiding processes"
+msgstr "Varna innan processer _döljs"
 
-#: src/procdialogs.c:798
+#: src/procdialogs.c:636
 msgid "Process Fields"
 msgstr "Processfält"
 
-#: src/procdialogs.c:823
+#: src/procdialogs.c:661
 msgid "Graphs"
 msgstr "Grafer"
 
-#: src/procdialogs.c:866
+#: src/procdialogs.c:704
 msgid "_Background color:"
 msgstr "_Bakgrundsfärg:"
 
-#: src/procdialogs.c:885
+#: src/procdialogs.c:723
 msgid "_Grid color:"
 msgstr "_Rutnätsfärg:"
 
-#: src/procdialogs.c:923
+#: src/procdialogs.c:761
 msgid "Update _interval:"
 msgstr "Uppdaterings_intervall:"
-
-#: src/procdialogs.c:983
-msgid "Kill Process"
-msgstr "Döda process"
-
-#: src/procdialogs.c:987
-msgid "End Process"
-msgstr "Avsluta process"
-
-#: src/procdialogs.c:1012
-msgid "Root Password :"
-msgstr "rootlösenord:"
-
-#: src/procdialogs.c:1057
-msgid "Wrong Password."
-msgstr "Fel lösenord."
 
 #: src/proctable.c:163
 msgid "Process Name"
@@ -603,6 +690,94 @@ msgstr "%s (tråd)"
 msgid "%s could not be found."
 msgstr "%s kunde inte hittas."
 
+#~ msgid ""
+#~ "Determines which processes to show by default. 0 is all, 1 is user, and 2 "
+#~ "is active."
+#~ msgstr ""
+#~ "Avgör vilka processer som visas som standard. 0 är alla, 1 är användare, "
+#~ "och 2 är aktiva."
+
+#~ msgid "translator_credits"
+#~ msgstr ""
+#~ "Christian Rose\n"
+#~ "Skicka synpunkter på översättningen till sv@li.org"
+
+#~ msgid "Dependencies"
+#~ msgstr "Beroenden"
+
+#~ msgid "Open the list of currenlty hidden processes"
+#~ msgstr "Öppna listan över dolda processer"
+
+#~ msgid "Open the memory maps associated with process"
+#~ msgstr "Öppna minneskartorna som är associerade med process"
+
+#~ msgid "System resources monitor"
+#~ msgstr "Systemresursövervakare"
+
+#~ msgid "No processes are currently hidden."
+#~ msgstr "Inga processer är dolda för tillfället."
+
+#~ msgid "Manage Hidden Processes"
+#~ msgstr "Hantera dolda processer"
+
+#~ msgid "Force a process to finish."
+#~ msgstr "Tvinga en process att avsluta."
+
+#~ msgid "Force a process to finish now."
+#~ msgstr "Tvinga en process att avsluta nu."
+
+#~ msgid "Display a tree showing process dependencies"
+#~ msgstr "Visa ett träd som visar processberoenden"
+
+#~ msgid "Display threads (subprocesses)"
+#~ msgstr "Visa trådar (underprocesser)"
+
+#~ msgid "Vie_w:"
+#~ msgstr "_Visa:"
+
+#~ msgid "Resource Monitor"
+#~ msgstr "Resursövervakare"
+
+#~ msgid "Are you sure you want to hide this process?"
+#~ msgstr "Är du säker på att du vill dölja denna process?"
+
+#~ msgid ""
+#~ "If you hide a process, you can unhide it by selecting 'Hidden Processes' "
+#~ "in the Edit menu."
+#~ msgstr ""
+#~ "Om du döljer en process kan du visa den igen genom att välja \"Dolda "
+#~ "processer\" i Redigera-menyn."
+
+#~ msgid "_Show this dialog next time"
+#~ msgstr "_Visa denna dialog nästa gång"
+
+#~ msgid "Are you sure you want to kill this process?"
+#~ msgstr "Är du säker på att du vill döda denna process?"
+
+#~ msgid "If you kill a process, unsaved data will be lost."
+#~ msgstr "Om du dödar en process kommer osparade data att gå förlorade."
+
+#~ msgid "Are you sure you want to end this process?"
+#~ msgstr "Är du säker på att du vill avsluta denna process?"
+
+#~ msgid "If you end a process, unsaved data will be lost."
+#~ msgstr "Om du avslutar en process kommer osparade data att gå förlorade."
+
+#~ msgid "Preferences"
+#~ msgstr "Inställningar"
+
+#~ msgid "Kill Process"
+#~ msgstr "Döda process"
+
+#~ msgid "End Process"
+#~ msgstr "Avsluta process"
+
+#~ msgid "Root Password :"
+#~ msgstr "rootlösenord:"
+
+#~ msgid "Wrong Password."
+#~ msgstr "Fel lösenord."
+
 #~ msgid "Security"
 #~ msgstr "Säkerhet"
 
@@ -637,9 +812,6 @@ msgstr "%s kunde inte hittas."
 #~ msgstr "Systemresursövervakare"
 
 #~ msgid "Resources monitor"
-#~ msgstr "Resursövervakare"
-
-#~ msgid "Resources Monitor"
 #~ msgstr "Resursövervakare"
 
 #~ msgid "Uninterruptable"
@@ -813,9 +985,6 @@ msgstr "%s kunde inte hittas."
 #~ msgid "Shared"
 #~ msgstr "Delat"
 
-#~ msgid "Process Dependencies"
-#~ msgstr "Processberoenden"
-
 #~ msgid "Threads"
 #~ msgstr "Trådar"
 
@@ -867,9 +1036,6 @@ msgstr "%s kunde inte hittas."
 #~ msgid "Show warning dialog when ending or killing processes"
 #~ msgstr "Visa varningsdialog då processer avslutas eller dödas"
 
-#~ msgid "Show warning dialog when hiding processes"
-#~ msgstr "Visa varningsdialog då processer döljs"
-
 #~ msgid "Process _Fields"
 #~ msgstr "Process_fält"
 
@@ -902,9 +1068,6 @@ msgstr "%s kunde inte hittas."
 
 #~ msgid "Erik Johnsson (zaphod@linux.nu) - icon support"
 #~ msgstr "Erik Johnsson (zaphod@linux.nu) - stöd för ikoner"
-
-#~ msgid "Hidden Processes"
-#~ msgstr "Dolda processer"
 
 #~ msgid "Status : "
 #~ msgstr "Status: "
