@@ -18,8 +18,15 @@
  */
 
 #include <config.h>
+
+#include <stdlib.h>
+
+#include <glib.h>
 #include <glib/gi18n.h>
+#include <gtk/gtk.h>
+#include <gdk/gdkx.h>
 #include <gnome.h>
+#include <bacon-message-connection.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <gconf/gconf-client.h>
 #include <glibtop.h>
@@ -490,13 +497,71 @@ procman_save_config (ProcData *data)
 }
 
 
+static void
+cb_server (const gchar *msg, gpointer user_data)
+{
+	GdkWindow *window;
+	ProcData *procdata;
+	guint32 timestamp;
+
+	window = gdk_get_default_root_window ();
+
+	procdata = *(ProcData**)user_data;
+	g_assert (procdata != NULL);
+
+	timestamp = strtoul(msg, NULL, 0);
+
+	if(timestamp)
+	{
+		gdk_x11_window_set_user_time (window, timestamp);
+	}
+	else
+	{
+		g_warning ("Couldn't get timestamp");
+	}
+
+	gtk_window_present (GTK_WINDOW(procdata->app));
+}
+
+
 int
 main (int argc, char *argv[])
 {
 	GnomeProgram *procman;
 	GConfClient *client;
 	ProcData *procdata;
-	
+	BaconMessageConnection *conn;
+
+	conn = bacon_message_connection_new ("gnome-system-monitor");
+	if (!conn) g_error("Couldn't connect to gnome-system-monitor");
+
+	if (bacon_message_connection_get_is_server (conn))
+	{
+		bacon_message_connection_set_callback (conn, cb_server, &procdata);
+	}
+	else /* client */
+	{
+		const char *desktop_startup_id, *timestamp;
+
+		timestamp = NULL;
+		desktop_startup_id = g_getenv("DESKTOP_STARTUP_ID");
+
+		if(desktop_startup_id)
+		{
+			timestamp = strstr(desktop_startup_id, "_TIME");
+		}
+
+		if(!timestamp)
+		{
+			g_warning ("Couldn't get $DESKTOP_STARTUP_ID");
+			timestamp = "0";
+		}
+
+		bacon_message_connection_send (conn, timestamp);
+		bacon_message_connection_free (conn);
+		return 1;
+	}
+
 	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
