@@ -86,8 +86,8 @@ cb_double_click				(ETree		*tree,
 					 
 
 
-gint
-cb_timeout 				(gpointer data);
+gint		cb_timeout (gpointer data);
+gint		cb_progress_meter_timeout (gpointer data);
 
 
 #endif

@@ -291,3 +291,13 @@ cb_timeout (gpointer data)
 	return TRUE;
 }
 
+gint
+cb_progress_meter_timeout (gpointer data)
+{
+	ProcData *procdata = data;
+	
+	proctable_update_progress_meters (procdata);
+	
+	return TRUE;
+}
+

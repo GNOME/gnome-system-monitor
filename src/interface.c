@@ -44,18 +44,18 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
  	{
  	  GNOME_APP_UI_ITEM, N_("Renice..."), "",
 	 cb_renice, NULL, NULL, 0, 0,
-	 'n', 0
+	 'r', GDK_CONTROL_MASK
 	},
 	{
 	 GNOME_APP_UI_ITEM, N_("Hide Process"), "",
 	 cb_hide_process, NULL, NULL, 0, 0,
-	 'h', 0
+	 'h', GDK_CONTROL_MASK
 	}, 
 	GNOMEUIINFO_SEPARATOR,
 	{
 	 GNOME_APP_UI_ITEM, N_("Hidden Processes..."), "",
 	 cb_show_hidden_processes, NULL, NULL, 0, 0,
-	 'p', 0
+	 'p', GDK_CONTROL_MASK
 	},
 	GNOMEUIINFO_END
 };
@@ -65,7 +65,7 @@ static GnomeUIInfo view1_menu_uiinfo[] =
 	{
 	 GNOME_APP_UI_ITEM, N_("Memory Maps..."), "",
 	 cb_show_memory_maps, NULL, NULL, 0, 0,
-	 'm', 0
+	 'm', GDK_CONTROL_MASK
 	},
 	GNOMEUIINFO_END
 };
@@ -296,6 +296,7 @@ create_main_window (ProcData *data)
 #if 1
 	procdata->timeout = gtk_timeout_add (procdata->config.update_interval,
 			 cb_timeout, procdata);
+	gtk_timeout_add (500, cb_progress_meter_timeout, procdata);
 #endif		
 	gtk_widget_show (vbox1);	 
 	gtk_widget_show (app);
