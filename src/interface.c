@@ -310,6 +310,24 @@ create_proc_view (ProcData *procdata)
 	return vbox1;
 }
 
+static gchar *
+get_size_string (gint size)
+{
+	gfloat fsize;
+
+	fsize = (gfloat) size;
+	if (fsize < 1024.0) 
+		return g_strdup_printf ("%d K", (int)fsize);
+		
+	fsize /= 1024.0;
+	if (fsize < 1024.0)
+		return g_strdup_printf ("%.2f MB", fsize);
+	
+	fsize /= 1024.0;
+	return g_strdup_printf ("%.2f GB", fsize);
+
+}
+
 static GtkWidget *
 create_sys_view (ProcData *procdata)
 {
@@ -327,12 +345,12 @@ create_sys_view (ProcData *procdata)
 	LoadGraph *cpu_graph, *mem_graph;
 	glibtop_mountentry *entry;
 	glibtop_mountlist mountlist;
-	gint i, width;
+	gint i;
 	
 	vbox = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox);
 	
-	hbox1 = gtk_hbox_new (FALSE, 0);
+	hbox1 = gtk_hbox_new (TRUE, 0);
 	gtk_widget_show (hbox1);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox1, TRUE, TRUE, 0);
 	
@@ -416,8 +434,8 @@ create_sys_view (ProcData *procdata)
 		glibtop_get_fsusage (&usage, entry[i].mountdir);
 		text[0] = g_strdup (entry[i].devname);
 		text[1] = g_strdup (entry[i].mountdir);
-		text[2] = g_strdup_printf ("%d", usage.bfree * 512);
-		text[3] = g_strdup_printf ("%d", usage.blocks * 512);
+		text[2] = get_size_string (usage.bfree / 2);
+		text[3] = get_size_string (usage.blocks / 2);
 		gtk_clist_append (GTK_CLIST (clist), text);
 		
 		g_free (text[0]);

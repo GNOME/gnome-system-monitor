@@ -393,10 +393,8 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 	ProcData *procdata = data;
 		
 	procdata->config.current_tab = num;
-	g_print ("%d \n", num);
 	
 	if (num == 0) {
-		g_print ("tab 1 selected \n");
 		if (procdata->timeout == -1) 
 			procdata->timeout = gtk_timeout_add (procdata->config.update_interval,
 			 			     	     cb_timeout, procdata);
@@ -404,7 +402,6 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 		load_graph_stop (procdata->mem_graph);
 	}
 	else {
-		g_print ("tab 2 selected \n");
 		if (procdata->timeout != -1 ) {
 			gtk_timeout_remove (procdata->timeout);
 			procdata->timeout = -1;

@@ -17,7 +17,7 @@
 
 static GList *object_list = NULL;
 
-
+#define FRAME_WIDTH GNOME_PAD_SMALL
 
 /* Redraws the backing pixmap for the load graph and updates the window */
 static void
@@ -59,6 +59,13 @@ load_graph_draw (LoadGraph *g)
 			TRUE, 0, 0,
 			g->disp->allocation.width,
 			g->disp->allocation.height);
+			
+    /* draw frame */
+    gdk_draw_rectangle (g->pixmap,
+    			g->disp->style->white_gc,
+    			FALSE, FRAME_WIDTH, FRAME_WIDTH,
+    			g->disp->allocation.width - 2 * FRAME_WIDTH,
+    			g->disp->allocation.height - 2 * FRAME_WIDTH);
 
     for (i = 0; i < g->num_points; i++)
 	g->pos [i] = g->draw_height;
@@ -70,10 +77,10 @@ load_graph_draw (LoadGraph *g)
 
 	for (i = 0; i < g->num_points - 1; i++) {
 	    
-	    gint x1 = i * delx;
-	    gint x2 = (i + 1) * delx;
-	    gint y1 = g->data[i][j] * g->draw_height;
-	    gint y2 = g->data[i+1][j] * g->draw_height;
+	    gint x1 = i * delx - FRAME_WIDTH;
+	    gint x2 = (i + 1) * delx - FRAME_WIDTH;
+	    gint y1 = g->data[i][j] * g->draw_height - FRAME_WIDTH;
+	    gint y2 = g->data[i+1][j] * g->draw_height - FRAME_WIDTH;
 	    
 	    gdk_draw_line (g->pixmap, g->gc,
 			   g->draw_width - x2, g->pos[i + 1] - y2,
@@ -230,8 +237,8 @@ load_graph_alloc (LoadGraph *g)
     if (g->allocated)
 	return;
 
-    g->draw_height = g->disp->allocation.height;
-    g->draw_width = g->disp->allocation.width;
+    g->draw_height = g->disp->allocation.height - 2 * FRAME_WIDTH;
+    g->draw_width = g->disp->allocation.width - 2 * FRAME_WIDTH;
     
     g->data = g_new0 (gfloat *, g->num_points);
     g->odata = g_new0 (gfloat *, g->num_points);
@@ -258,8 +265,8 @@ load_graph_configure (GtkWidget *widget, GdkEventConfigure *event,
     if (!c->draw)
     	return TRUE;
     
-    c->draw_width = c->disp->allocation.width;
-    c->draw_height = c->disp->allocation.height;
+    c->draw_width = c->disp->allocation.width - 2 * FRAME_WIDTH;
+    c->draw_height = c->disp->allocation.height - 2 * FRAME_WIDTH;
     if (c->pixmap) {
 	gdk_pixmap_unref (c->pixmap);
 	c->pixmap = NULL;
@@ -365,6 +372,9 @@ load_graph_new (gint type)
     object_list = g_list_append (object_list, g);
 
     gtk_widget_show_all (g->main_widget);
+    
+    g->timer_index = gtk_timeout_add (g->speed,
+				      (GtkFunction) load_graph_update, g);
 
     return g;
 }
