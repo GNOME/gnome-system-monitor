@@ -20,6 +20,7 @@
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
+#include <errno.h>
 #include <signal.h>
 #include <sys/time.h>
 #include <sys/resource.h>
@@ -33,6 +34,7 @@ renice (int pid, int nice)
 	
 	/* FIXME: give a message box with the error messages */
 	error = setpriority (PRIO_PROCESS, pid, nice);
+	
 }
 
 void
@@ -40,13 +42,27 @@ kill_process (ProcData *procdata)
 {
 
 	ProcInfo *info;
+	int error;
 
 	if (!procdata->selected_node)
 		return;
 		
 	info = e_tree_memory_node_get_data (procdata->memory, 
 					    procdata->selected_node);
-	kill (info->pid, SIGKILL);
+	/* FIXME: if SIGTERM don't work the try SIGKILL. Give a error dialog
+	** if still an error (like permission denied
+	*/
+	error = kill (info->pid, SIGKTERM);
+	if (error == -1)
+	{
+		switch (errno) {
+		case EPERM:
+			g_print ("acces denied \n");
+			break;
+		default:
+			g_print ("error \n");
+		}
+	}
 	proctable_update_all (procdata);		
 	
 }
