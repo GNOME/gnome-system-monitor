@@ -31,6 +31,7 @@ PrettyTable *pretty_table_new (void) {
 	pretty_table->cmdline_to_prettyname = g_hash_table_new (g_str_hash, compare_strings);
 	pretty_table->cmdline_to_prettyicon = g_hash_table_new (g_str_hash, compare_strings);
 	pretty_table->name_to_prettyicon = g_hash_table_new (g_str_hash, compare_strings);
+	pretty_table->name_to_prettyname = g_hash_table_new (g_str_hash, compare_strings);
 	
 	path = gnome_datadir_file ("gnome/apps");
 	pretty_table_load_path (pretty_table, path, TRUE);
@@ -74,13 +75,13 @@ gint pretty_table_load_path (PrettyTable *pretty_table, gchar *path, gboolean re
 					tmp1[15] = '\0';
 
 				tmp2 = g_strdup (entry->name);
-				//g_strdown (tmp2);
 				tmp3 = g_strdup (entry->icon);
 				g_hash_table_insert (pretty_table->cmdline_to_prettyname, tmp1, tmp2);
 				g_hash_table_insert (pretty_table->cmdline_to_prettyicon, tmp1, tmp3);
 				tmp4 = g_strdup (tmp2);
 				g_strdown (tmp4);
 				g_hash_table_insert (pretty_table->name_to_prettyicon, tmp4, tmp3);
+				g_hash_table_insert (pretty_table->name_to_prettyname, tmp4, tmp2);
 				gnome_desktop_entry_free (entry);
 			}
 
@@ -132,10 +133,14 @@ gchar *pretty_table_get_name (PrettyTable *pretty_table, const gchar *command) {
 	if (!pretty_table)
 		return g_strdup (command);
 	pretty_name = g_hash_table_lookup (pretty_table->cmdline_to_prettyname, command);
-	if (!pretty_name)
-		return g_strdup (command);
+	if (pretty_name)
+		return g_strdup (pretty_name);
 
-	return g_strdup (pretty_name);
+	pretty_name = g_hash_table_lookup (pretty_table->name_to_prettyname, command);
+	if (pretty_name)
+		return g_strdup (pretty_name);
+
+	return g_strdup (command);
 }
 
 GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command) {
@@ -199,6 +204,7 @@ void pretty_table_free (PrettyTable *pretty_table) {
 	g_hash_table_destroy (pretty_table->cmdline_to_prettyicon);
 	g_hash_table_foreach (pretty_table->name_to_prettyicon, free_key, NULL);
 	g_hash_table_destroy (pretty_table->name_to_prettyicon);
+	g_hash_table_destroy (pretty_table->name_to_prettyname);
 
 	g_free (pretty_table);
 }

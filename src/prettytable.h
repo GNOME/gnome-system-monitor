@@ -8,6 +8,7 @@ typedef struct _PrettyTable {
 	GHashTable *cmdline_to_prettyname;
 	GHashTable *cmdline_to_prettyicon;
 	GHashTable *name_to_prettyicon; /* lower case */
+	GHashTable *name_to_prettyname;
 	
 	/* private */
 	
