@@ -312,7 +312,7 @@ create_proc_view (ProcData *procdata)
 			    GTK_SIGNAL_FUNC(popup_menu_kill_process),
 			    procdata);
         gtk_menu_append (GTK_MENU (popup_menu), menuitem);
-        sep = gtk_menu_item_new();
+        /*sep = gtk_menu_item_new();
 	gtk_widget_show (sep);
 	gtk_menu_append (GTK_MENU (popup_menu), sep);
         menuitem = gtk_menu_item_new_with_label (_("About This Process"));
@@ -320,7 +320,7 @@ create_proc_view (ProcData *procdata)
         gtk_signal_connect (GTK_OBJECT (menuitem),"activate",
 			    GTK_SIGNAL_FUNC(popup_menu_about_process),
 			    procdata);
-        gtk_menu_append (GTK_MENU (popup_menu), menuitem);
+        gtk_menu_append (GTK_MENU (popup_menu), menuitem);*/
 	
 	/* Make the menu visible */
         gtk_widget_show (popup_menu);
