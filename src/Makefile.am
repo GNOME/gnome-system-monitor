@@ -32,11 +32,16 @@ endif
 specdir = $(datadir)/procman
 
 schemadir   = @GCONF_SCHEMA_FILE_DIR@
-schema_DATA = gnome-system-monitor.schemas	
+schema_ins  = gnome-system-monitor.schemas.in
+schema_DATA = $(schema_ins:.schemas.in=.schemas)
+@INTLTOOL_SCHEMAS_RULE@
 
 EXTRA_DIST = \
 	README.hacking \
-	$(schema_DATA)	
+	$(schema_ins)
+
+CLEANFILES = \
+	$(schema_DATA)
 
 install-data-local:
 	-GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) \
