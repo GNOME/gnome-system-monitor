@@ -124,8 +124,8 @@ cb_about_activate                     (GtkMenuItem     *menuitem,
 
 	GtkWidget *about;
 	const gchar *authors[] = {
-				 "Kevin Vandersloot (kfv101@psu.edu)",
-				 "Erik Johnsson (zaphod@linux.nu) - icon support",
+				 _("Kevin Vandersloot (kfv101@psu.edu)"),
+				 _("Erik Johnsson (zaphod@linux.nu) - icon support"),
 				 NULL
 				 };
 				 
