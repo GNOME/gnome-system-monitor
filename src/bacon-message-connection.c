@@ -86,7 +86,8 @@ server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 {
 	BaconMessageConnection *conn = (BaconMessageConnection *)data;
 	char *message, *subs, buf;
-	int cd, alen, rc, offset;
+	int cd, rc, offset;
+	socklen_t alen;
 	gboolean finished, serverconn = FALSE;
 
 	message = g_malloc (1);
