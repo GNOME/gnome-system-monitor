@@ -51,18 +51,18 @@ static GnomeUIInfo file1_menu_uiinfo[] =
 static GnomeUIInfo edit1_menu_uiinfo[] =
 {
  	{
- 	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), "",
+ 	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), NULL,
 	 cb_renice, NULL, NULL, 0, 0,
 	 'r', GDK_CONTROL_MASK
 	},
 	{
-	 GNOME_APP_UI_ITEM, N_("_Hide Process"), "",
+	 GNOME_APP_UI_ITEM, N_("_Hide Process"), NULL,
 	 cb_hide_process, NULL, NULL, 0, 0,
 	 'h', GDK_CONTROL_MASK
 	}, 
 	GNOMEUIINFO_SEPARATOR,
 	{
-	 GNOME_APP_UI_ITEM, N_("Hidden _Processes..."), "",
+	 GNOME_APP_UI_ITEM, N_("Hidden _Processes..."), NULL,
 	 cb_show_hidden_processes, NULL, NULL, 0, 0,
 	 'p', GDK_CONTROL_MASK
 	},
@@ -72,7 +72,7 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
 static GnomeUIInfo view1_menu_uiinfo[] =
 {
 	{
-	 GNOME_APP_UI_ITEM, N_("_Memory Maps..."), "",
+	 GNOME_APP_UI_ITEM, N_("_Memory Maps..."), NULL,
 	 cb_show_memory_maps, NULL, NULL, 0, 0,
 	 'm', GDK_CONTROL_MASK
 	},
@@ -83,7 +83,7 @@ static GnomeUIInfo view1_menu_uiinfo[] =
 static GnomeUIInfo favorites1_menu_uiinfo[] =
 {
 	{
-	 GNOME_APP_UI_ITEM, N_("Add to favorites"), "",
+	 GNOME_APP_UI_ITEM, N_("Add to favorites"), NULL,
 	 cb_add_to_favorites, NULL, NULL, 0, 0,
 	 'a', 0
 	},
