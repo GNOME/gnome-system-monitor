@@ -23,10 +23,18 @@ gnome_system_monitor_SOURCES = \
 	favorites.c favorites.h \
 	defaulttable.h
 
+
+
+noinst_LTLIBRARIES = libbacon.la
+libbacon_la_SOURCES = \
+	bacon-message-connection.c \
+	bacon-message-connection.h
+
+
 if ENABLE_SELINUX
-gnome_system_monitor_LDADD = @PROCMAN_LIBS@ -lselinux
+gnome_system_monitor_LDADD = @PROCMAN_LIBS@ libbacon.la -lselinux
 else
-gnome_system_monitor_LDADD = @PROCMAN_LIBS@
+gnome_system_monitor_LDADD = @PROCMAN_LIBS@ libbacon.la
 endif
 
 specdir = $(datadir)/procman
