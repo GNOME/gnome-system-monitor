@@ -228,6 +228,7 @@ void
 procdialog_create_renice_dialog (ProcData *data)
 {
 	ProcData *procdata = data;
+	ProcInfo *info = procdata->selected_process;
 	GtkWidget *dialog = NULL;
 	GtkWidget *dialog_vbox;
 	GtkWidget *vbox;
@@ -240,6 +241,9 @@ procdialog_create_renice_dialog (ProcData *data)
   	      _("The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority.");
 
 	if (renice_dialog)
+		return;
+		
+	if (!info)
 		return;
 		
 	dialog = gtk_dialog_new_with_buttons (_("Change Priority"), NULL,
@@ -269,14 +273,14 @@ procdialog_create_renice_dialog (ProcData *data)
 	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 2,
 			  0, 0, 0, 0);
 	
-	renice_adj = gtk_adjustment_new (0, -20, 20, 1, 1, 0);
+	renice_adj = gtk_adjustment_new (info->nice, -20, 20, 1, 1, 0);
 	new_nice_value = 0;
 	hscale = gtk_hscale_new (GTK_ADJUSTMENT (renice_adj));
 	gtk_scale_set_digits (GTK_SCALE (hscale), 0);
 	gtk_table_attach (GTK_TABLE (table), hscale, 1, 2, 0, 1,
 			  GTK_EXPAND | GTK_FILL, 0, 0, 0);
 			  
-	priority_label = gtk_label_new (get_nice_level (0));
+	priority_label = gtk_label_new (get_nice_level (info->nice));
 	gtk_table_attach (GTK_TABLE (table), priority_label, 1, 2, 1, 2,
 			  GTK_FILL, 0, 0, 0);
 	
@@ -619,6 +623,15 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 2);
 }
 
+static void
+entry_activate_cb (GtkEntry *entry, gpointer data)
+{
+	GtkDialog *dialog = GTK_DIALOG (data);
+	
+	gtk_dialog_response (dialog, 100);
+	
+}	
+
 /*
 ** type determines whether if dialog is for killing process (type=0) or renice (type=other).
 ** extra_value is not used for killing and is priority for renice
@@ -632,24 +645,32 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 	GtkWidget *hbox;
 	GtkWidget *entry;
 	GtkWidget *label;
-	gchar *title = NULL;
+	gchar *title = NULL, *button_label;
 	gchar *command;
 	gchar *password, *blank;
 	gint retval;
-	
+
 	if (type == 0) {
-		if (extra_value == SIGKILL)
+		if (extra_value == SIGKILL) {
 			title = g_strdup (_("Kill Process"));
-		else
+			button_label = g_strdup (_("_Kill Process"));
+		}
+		else {
 			title = g_strdup (_("End Process"));
+			button_label = g_strdup (_("_End Process"));
+		}
 	}
-	else
+	else {
 		title = g_strdup (_("Change Priority"));
+		button_label = g_strdup (_("Change _Priority"));
+	}
 		
-	dialog = gnome_dialog_new (title, GNOME_STOCK_BUTTON_CANCEL, title, NULL);
-	gnome_dialog_close_hides (GNOME_DIALOG (dialog), TRUE);
+	dialog = gtk_dialog_new_with_buttons (title, NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
+					      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+					      button_label, 100,
+					      NULL);
 	
-	main_vbox = GNOME_DIALOG (dialog)->vbox;
+	main_vbox = GTK_DIALOG (dialog)->vbox;
 	
 	label = gtk_label_new (_(text));
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
@@ -667,19 +688,21 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 	entry = gtk_entry_new ();
 	gtk_entry_set_visibility (GTK_ENTRY (entry), FALSE);
 	gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, FALSE, 0);
+	g_signal_connect (G_OBJECT (entry), "activate",
+			  G_CALLBACK (entry_activate_cb), dialog);
 		
 	gtk_widget_show_all (main_vbox);
 	
-	gnome_dialog_set_default (GNOME_DIALOG (dialog), 0);
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
 	gtk_widget_grab_focus (entry);
 		
-	if (title)
-		g_free (title);	
+	g_free (title);	
+	g_free (button_label);
 	
-	gnome_dialog_editable_enters (GNOME_DIALOG (dialog), GTK_EDITABLE (entry));	
-	retval = gnome_dialog_run_and_close (GNOME_DIALOG (dialog));
+	retval = gtk_dialog_run (GTK_DIALOG (dialog));
+	gtk_widget_hide (dialog);
 	
-	if (retval == 1) {
+	if (retval == 100) {
 		password = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
 		
 		if (!password)
@@ -711,6 +734,7 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 		g_free (command);
 		
 	}
-	
+	gtk_widget_destroy (dialog);
+
 }
 

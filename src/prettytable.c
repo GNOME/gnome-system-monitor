@@ -132,7 +132,8 @@ void pretty_table_add_table (PrettyTable *pretty_table, const gchar *table[]) {
 		/* pretty_table_free frees all string in the tables */
 		command = g_strdup (table[i]); 
 		/* pretty_table_free frees all string in the tables */
-		text = gnome_datadir_file ("pixmaps/");
+		text = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, "pixmaps/",
+						  TRUE, NULL);
 		if (text) {
 			prettyicon = g_malloc (strlen (table[i + 2]) + strlen (text) + 1);
 			sprintf (prettyicon, "%s%s", text, table[i + 2]);
