@@ -6,7 +6,6 @@
 #include <dirent.h>
 #include <string.h>
 #include <time.h>
-#include <config.h>
 #include <gnome.h>
 #include <gdk/gdkx.h>
 #include <glibtop.h>
