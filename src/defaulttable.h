@@ -9,7 +9,7 @@ const gchar *default_table[] = {
 				"bash", N_("bourne again shell"), "gnome-term.png",
 				"gnome-session", N_("Gnome-Session"), "gnome-logo-icon-transparent.png",
 				"galeon-bin", N_("Galeon Web Browser"), "galeon.png",
-				"sawfish", N_("Sawfish Window Manager"), "sawfish.png",
+				"sawfish", N_("Sawfish Window Manager"), "sawfish.png",		
 				NULL};
 
 #endif /* _DEFAULTTABLE_H_ */

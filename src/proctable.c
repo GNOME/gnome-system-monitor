@@ -456,8 +456,6 @@ get_process_name (ProcData *procdata, ProcInfo *info, gchar *cmd, gchar *args)
 	gint i, n = 0, len, newlen;
 	gboolean done = FALSE;
 	
-	if (procdata->config.show_pretty_names && procdata->config.load_desktop_files)
-		name = pretty_table_get_name (procdata->pretty_table, cmd);
 							  
 	/* strip the absolute path from the arguments */	
 	if (args)
@@ -485,6 +483,13 @@ get_process_name (ProcData *procdata, ProcInfo *info, gchar *cmd, gchar *args)
 		command[newlen] = '\0';
 	}
 	
+	if (command) 
+		info->cmd = g_strdup (command);
+	else
+		info->cmd = g_strdup (cmd);
+	if (procdata->config.show_pretty_names && procdata->config.load_desktop_files)
+		name = pretty_table_get_name (procdata->pretty_table, info->cmd);
+	
 	if (!name && command)
 		name = g_strdup (command);
 	else if (!name && !command)
@@ -493,11 +498,6 @@ get_process_name (ProcData *procdata, ProcInfo *info, gchar *cmd, gchar *args)
 	info->name_utf8 = e_utf8_from_locale_string (name);
 	info->name = g_strdup (name);
 	
-	if (command) 
-		info->cmd = g_strdup (command);
-	else
-		info->cmd = g_strdup (cmd);
-		
 	if (command)
 		g_free (command);
 	if (name)
@@ -578,7 +578,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 			}
 		}
 		newinfo->pixbuf = pretty_table_get_icon (procdata->pretty_table, 
-							 procstate.cmd);
+							 newinfo->cmd);
 							
 		if (newinfo->pixbuf)
 			newinfo->has_desktop_file = 1;
@@ -652,17 +652,7 @@ get_info (ProcData *procdata, gint pid)
 	glibtop_get_proc_time (&proctime, pid);
 	newcputime = proctime.utime + proctime.stime;
 
-	info->has_desktop_file = -1;	
-	if (procdata->config.load_desktop_files && procdata->pretty_table) {
-		info->pixbuf = pretty_table_get_icon (procdata->pretty_table, procstate.cmd);
-		
-		if (info->pixbuf)
-			info->has_desktop_file = 1;
-		else
-			info->has_desktop_file = 0;
-	}
-	else
-		info->pixbuf = NULL;
+	
 	
 	arguments = glibtop_get_proc_args (&procargs, pid, 0);	
 	get_process_name (procdata, info, procstate.cmd, arguments);
@@ -678,6 +668,18 @@ get_info (ProcData *procdata, gint pid)
 	}
 	else
 		info->arguments = g_strdup ("");
+		
+	info->has_desktop_file = -1;	
+	if (procdata->config.load_desktop_files && procdata->pretty_table) {
+		info->pixbuf = pretty_table_get_icon (procdata->pretty_table, info->cmd);
+		
+		if (info->pixbuf)
+			info->has_desktop_file = 1;
+		else
+			info->has_desktop_file = 0;
+	}
+	else
+		info->pixbuf = NULL;
 	
 	info->user = g_strdup_printf ("%s", pwd->pw_name);
 	info->mem = procmem.size;

@@ -82,6 +82,7 @@ add_selected_to_blacklist (ProcData *procdata)
 	e_tree_selected_path_foreach (E_TREE (procdata->tree), add_single_to_blacklist, procdata);
 	
 }
+
 void
 remove_from_favorites (ProcData *procdata, gchar *name)
 {

@@ -43,10 +43,10 @@ PrettyTable *pretty_table_new (void) {
 	
 	pretty_table = g_malloc (sizeof (PrettyTable));
 
-	pretty_table->cmdline_to_prettyname = g_hash_table_new (g_str_hash, compare_strings);
-	pretty_table->cmdline_to_prettyicon = g_hash_table_new (g_str_hash, compare_strings);
-	pretty_table->name_to_prettyicon = g_hash_table_new (g_str_hash, compare_strings);
-	pretty_table->name_to_prettyname = g_hash_table_new (g_str_hash, compare_strings);
+	pretty_table->cmdline_to_prettyname = g_hash_table_new (g_str_hash, g_str_equal);
+	pretty_table->cmdline_to_prettyicon = g_hash_table_new (g_str_hash, g_str_equal);
+	pretty_table->name_to_prettyicon = g_hash_table_new (g_str_hash, g_str_equal);
+	pretty_table->name_to_prettyname = g_hash_table_new (g_str_hash, g_str_equal);
 	
 	path = gnome_datadir_file ("gnome/apps");
 	pretty_table_load_path (pretty_table, path, TRUE);
@@ -90,9 +90,6 @@ gint pretty_table_load_path (PrettyTable *pretty_table, gchar *path, gboolean re
 			if (entry && entry->exec) {
 				gchar *tmp1, *tmp2, *tmp3, *tmp4;
 				tmp1 = g_strdup (entry->exec[0]);
-				if (strlen (tmp1) > 15) /* libgtop seems to report only 15 characters of the command */
-					tmp1[15] = '\0';
-
 				tmp2 = g_strdup (entry->name);
 				tmp3 = g_strdup (entry->icon);
 				g_hash_table_insert (pretty_table->cmdline_to_prettyname, tmp1, tmp2);
@@ -165,13 +162,13 @@ gchar *pretty_table_get_name (PrettyTable *pretty_table, const gchar *command) {
 	if (!pretty_table)
 		return NULL;
 		
-	pretty_name = g_hash_table_lookup (pretty_table->cmdline_to_prettyname, command);
-	if (pretty_name) 
-		return g_strdup (pretty_name); 
-
 	pretty_name = g_hash_table_lookup (pretty_table->name_to_prettyname, command);
 	if (pretty_name) 
 		return g_strdup (pretty_name);
+		
+	pretty_name = g_hash_table_lookup (pretty_table->cmdline_to_prettyname, command);
+	if (pretty_name) 
+		return g_strdup (pretty_name); 
 
 	return NULL;
 }
@@ -183,15 +180,15 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command)
 	
 	if (!pretty_table) 
 		return NULL;
-
-	icon_path = g_hash_table_lookup (pretty_table->cmdline_to_prettyicon, command);
+	icon_path = g_hash_table_lookup (pretty_table->name_to_prettyicon, command);
+	
 	if (!icon_path) {
 		gchar *tmp1;
 		
 		tmp1 = g_strdup (command);
 		g_strdown (tmp1);
 		
-		icon_path = g_hash_table_lookup (pretty_table->name_to_prettyicon, tmp1);
+		icon_path = g_hash_table_lookup (pretty_table->cmdline_to_prettyicon, tmp1);
 		
 		g_free (tmp1);
 	}
