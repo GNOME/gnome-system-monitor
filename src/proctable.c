@@ -24,7 +24,6 @@
 #include <string.h>
 #include <glibtop.h>
 #include <glibtop/proclist.h>
-#include <glibtop/xmalloc.h>
 #include <glibtop/procstate.h>
 #include <glibtop/procmem.h>
 #include <glibtop/proctime.h>
@@ -365,13 +364,13 @@ is_graphical (ProcInfo *info)
 		if (memmaps [i].flags & (1 << GLIBTOP_MAP_ENTRY_FILENAME)) {
 			string = strstr (memmaps[i].filename, "libX11");
 			if (string) {
-				glibtop_free (memmaps);
+				g_free (memmaps);
 				return TRUE;
 			}
 		}
 	}
 	
-	glibtop_free (memmaps);
+	g_free (memmaps);
 	
 	return FALSE;
 }
@@ -640,7 +639,7 @@ get_info (ProcData *procdata, gint pid)
 				arguments[i] = ' ';
 		}
 		info->arguments = g_strdup (arguments);
-		glibtop_free (arguments);
+		g_free (arguments);
 	}
 	else
 		info->arguments = g_strdup ("");
@@ -825,7 +824,7 @@ proctable_update_list (ProcData *data)
 	
 	refresh_list (procdata, pid_list, n);
 	
-	glibtop_free (pid_list);
+	g_free (pid_list);
 	
 }
 

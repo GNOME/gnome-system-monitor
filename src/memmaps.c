@@ -4,7 +4,6 @@
 
 #include <gnome.h>
 #include <glibtop/procmap.h>
-#include <glibtop/xmalloc.h>
 #include <sys/stat.h>
 #include "procman.h"
 #include "memmaps.h"
@@ -51,9 +50,9 @@ add_new_maps (gpointer key, gpointer value, gpointer data)
         flags [4] = 0;
             	
         if (memmaps->flags & (1 << GLIBTOP_MAP_ENTRY_FILENAME))
-               	info->filename = (gchar *)glibtop_strdup (memmaps->filename);
+               	info->filename = g_strdup (memmaps->filename);
         else
-               	info->filename = glibtop_strdup ("");
+               	info->filename = g_strdup ("");
                 	
         info->vmstart = g_strdup_printf (format, vmstart);
         info->vmend = g_strdup_printf (format, vmend);
@@ -167,7 +166,7 @@ update_memmaps_dialog (GtkWidget *tree)
 	}
 	
 	g_hash_table_destroy (new_maps);
-	glibtop_free (memmaps);
+	g_free (memmaps);
 }
 
 static void

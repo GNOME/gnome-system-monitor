@@ -1,3 +1,10 @@
+2003-10-20  Bastien Nocera  <hadess@hadess.net>
+
+	* callbacks.c: (cb_tree_key_press), (cb_update_disks):
+	* memmaps.c: (add_new_maps), (update_memmaps_dialog):
+	* proctable.c: (is_graphical), (get_info), (proctable_update_list):
+	make it compile with libgtop HEAD
+
 2003-05-21  Kevin Vandersloot <kfv101@psu.edu>
 
 	* proctable.c: Fix crash if uid is not correct. Fixes bug #109134
@@ -1953,7 +1960,7 @@ Sat Aug  4 00:35:55 2001  Jonathan Blandford  <jrb@redhat.com>
 	not persistent
 
 	*memmaps.c (get_memmaps_list): add e_tree_memory_freeze and thaw
-	to inprove table updating. Add glibtop_free to fix a major
+	to inprove table updating. Add g_free to fix a major
 	memory leak.
 
 	*memmaps.c (create_memmaps_dialog): change timeout to be 5 sec. This

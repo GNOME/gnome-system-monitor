@@ -21,7 +21,6 @@
 #  include <config.h>
 #endif
 
-#include <glibtop/xmalloc.h>
 #include <glibtop/mountlist.h>
 #include <glibtop/fsusage.h>
 #include <signal.h>
@@ -467,7 +466,6 @@ cb_tree_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data)
 	case GDK_space:
 		toggle_infoview (procdata);
 		break;
-	default:
 	}
 		
 	return FALSE;
@@ -696,7 +694,7 @@ cb_update_disks (gpointer data)
 	}
 	
 	g_hash_table_destroy (new_disks);
-	glibtop_free (entry);
+	g_free (entry);
 	
 	return TRUE;
 }
