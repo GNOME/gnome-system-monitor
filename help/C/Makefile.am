@@ -10,9 +10,9 @@ figs = figures/addColumn.png \
 	figures/columnContextMenu.png  \
 	figures/sortButton.png \
 	figures/viewMenu.png
-docname = procman
+docname = gnome-system-monitor
 lang = C
-omffile = procman-C.omf
+omffile = gnome-system-monitor-C.omf
 entities = legal.xml
 include $(top_srcdir)/xmldocs.make
 dist-hook: app-dist-hook
