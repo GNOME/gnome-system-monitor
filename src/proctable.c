@@ -157,7 +157,6 @@ proctable_new (ProcData * const procdata)
 
 	static const gchar *titles[] = {
 		N_("Process Name"),
-		N_("Arguments"),
 		N_("User"),
 		N_("Status"),
 		N_("Memory"),
@@ -169,7 +168,8 @@ proctable_new (ProcData * const procdata)
 		/* xgettext:no-c-format */ N_("% CPU"),
 		N_("Nice"),
 		N_("ID"),
-		N_("Security Context"), 
+		N_("Security Context"),
+		N_("Arguments"),
 		NULL,
 		"POINTER"
 	};
@@ -183,12 +183,12 @@ proctable_new (ProcData * const procdata)
 					GTK_POLICY_AUTOMATIC,
 					GTK_POLICY_AUTOMATIC);
 
-	model = gtk_tree_store_new (NUM_COLUMNS,  G_TYPE_STRING,
+	model = gtk_tree_store_new (NUM_COLUMNS,
 				    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_INT, G_TYPE_INT, G_TYPE_INT,
-				    G_TYPE_STRING,
+				    G_TYPE_STRING, G_TYPE_STRING,
 				    GDK_TYPE_PIXBUF, G_TYPE_POINTER);
 
 	proctree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
