@@ -21,6 +21,8 @@
 #  include <config.h>
 #endif
 
+#include <libgnomevfs/gnome-vfs.h>
+
 #include <glibtop/mountlist.h>
 #include <glibtop/fsusage.h>
 #include <signal.h>
@@ -39,7 +41,7 @@
 void
 cb_preferences_activate (GtkMenuItem *menuitem, gpointer user_data)
 {
-	ProcData *procdata = user_data;
+	ProcData * const procdata = user_data;
 
 	procdialog_create_preferences_dialog (procdata);
 }
@@ -48,7 +50,7 @@ cb_preferences_activate (GtkMenuItem *menuitem, gpointer user_data)
 void
 cb_renice (GtkMenuItem *menuitem, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	procdialog_create_renice_dialog (procdata);
 
@@ -58,7 +60,7 @@ cb_renice (GtkMenuItem *menuitem, gpointer data)
 void
 cb_end_process (GtkMenuItem *menuitem, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	if (procdata->config.show_kill_warning)
 		procdialog_create_kill_dialog (procdata, SIGTERM);
@@ -70,7 +72,7 @@ cb_end_process (GtkMenuItem *menuitem, gpointer data)
 void
 cb_kill_process (GtkMenuItem *menuitem, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	if (procdata->config.show_kill_warning)
 		procdialog_create_kill_dialog (procdata, SIGKILL);
@@ -82,7 +84,7 @@ cb_kill_process (GtkMenuItem *menuitem, gpointer data)
 void
 cb_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	create_memmaps_dialog (procdata);
 }
@@ -91,7 +93,7 @@ cb_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
 void
 cb_show_hidden_processes (GtkMenuItem *menuitem, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	create_blacklist_dialog (procdata);
 }
@@ -100,7 +102,7 @@ cb_show_hidden_processes (GtkMenuItem *menuitem, gpointer data)
 void
 cb_hide_process (GtkMenuItem *menuitem, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	if (procdata->config.show_hide_message)
 		procdialog_create_hide_dialog (procdata);
@@ -130,10 +132,11 @@ cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 		NULL
 	};
 
+	const gchar *translator_credits = _("translator_credits");
+
 	PROCMAN_GETTEXT_ARRAY_INIT(authors);
 	PROCMAN_GETTEXT_ARRAY_INIT(documenters);
 
-	const gchar *translator_credits = _("translator_credits");
 
 	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
 					  "procman.png", FALSE, NULL);
@@ -198,7 +201,7 @@ cb_app_delete (GtkWidget *window, GdkEventAny *event, gpointer data)
 gboolean
 cb_close_simple_dialog (GnomeDialog *dialog, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	if (procdata->timeout != -1)
 		gtk_timeout_remove (procdata->timeout);
@@ -215,12 +218,11 @@ cb_close_simple_dialog (GnomeDialog *dialog, gpointer data)
 void
 cb_proc_combo_changed (GtkComboBox *combo, gpointer data)
 {
-	ProcData *procdata;
+	ProcData * const procdata = data;
 	GConfClient *client;
 
-	g_return_if_fail (data);
+	g_return_if_fail (procdata);
 
-	procdata = data;
 	client = procdata->client;
 
 	procdata->config.whose_process = gtk_combo_box_get_active (combo);
@@ -232,7 +234,7 @@ cb_proc_combo_changed (GtkComboBox *combo, gpointer data)
 void
 popup_menu_renice (GtkMenuItem *menuitem, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	procdialog_create_renice_dialog (procdata);
 }
@@ -241,7 +243,7 @@ popup_menu_renice (GtkMenuItem *menuitem, gpointer data)
 void
 popup_menu_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	create_memmaps_dialog (procdata);
 }
@@ -250,7 +252,7 @@ popup_menu_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
 void
 popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	if (procdata->config.show_hide_message)
 		procdialog_create_hide_dialog (procdata);
@@ -262,7 +264,7 @@ popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
 void
 popup_menu_end_process (GtkMenuItem *menuitem, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	if (procdata->config.show_kill_warning)
 		procdialog_create_kill_dialog (procdata, SIGTERM);
@@ -274,7 +276,7 @@ popup_menu_end_process (GtkMenuItem *menuitem, gpointer data)
 void
 popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	if (procdata->config.show_kill_warning)
 		procdialog_create_kill_dialog (procdata, SIGKILL);
@@ -288,7 +290,7 @@ popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
 void
 popup_menu_about_process (GtkMenuItem *menuitem, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 	ProcInfo *info = NULL;
 	gchar *name;
 
@@ -313,7 +315,7 @@ void
 cb_end_process_button_pressed (GtkButton *button, gpointer data)
 {
 
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	if (procdata->config.show_kill_warning)
 		procdialog_create_kill_dialog (procdata, SIGTERM);
@@ -326,7 +328,7 @@ cb_end_process_button_pressed (GtkButton *button, gpointer data)
 void
 cb_info_button_pressed (GtkButton *button, gpointer user_data)
 {
-	ProcData *procdata = user_data;
+	ProcData * const procdata = user_data;
 
 	toggle_infoview (procdata);
 }
@@ -335,7 +337,7 @@ cb_info_button_pressed (GtkButton *button, gpointer user_data)
 void
 cb_search (GtkEditable *editable, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 	gchar *text;
 
 	text = gtk_editable_get_chars (editable, 0, -1);
@@ -375,7 +377,7 @@ void
 cb_mem_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 		      guint a, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 	change_gconf_color(procdata->client, "/apps/procman/mem_color", r, g, b);
 }
 
@@ -384,7 +386,7 @@ void
 cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 		       guint a, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 	change_gconf_color(procdata->client, "/apps/procman/swap_color", r, g, b);
 }
 
@@ -393,7 +395,7 @@ void
 cb_bg_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 		     guint a, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 	change_gconf_color(procdata->client, "/apps/procman/bg_color", r, g, b);
 }
 
@@ -401,7 +403,7 @@ void
 cb_frame_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 			guint a, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 	change_gconf_color(procdata->client, "/apps/procman/frame_color", r, g, b);
 }
 
@@ -425,7 +427,7 @@ get_last_selected (GtkTreeModel *model, GtkTreePath *path,
 void
 cb_row_selected (GtkTreeSelection *selection, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	procdata->selection = selection;
 
@@ -456,7 +458,7 @@ cb_tree_row_activated (GtkTreeView *view,
 		       GtkTreeViewColumn *column,
 		       gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	toggle_infoview (procdata);
 }
@@ -467,7 +469,7 @@ cb_tree_button_pressed (GtkWidget *widget,
 			GdkEventButton *event,
 			gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	if (event->button == 3 && event->type == GDK_BUTTON_PRESS)
 		do_popup_menu (procdata, event);
@@ -479,7 +481,7 @@ cb_tree_button_pressed (GtkWidget *widget,
 gboolean
 cb_tree_popup_menu (GtkWidget *widget, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	do_popup_menu (procdata, NULL);
 
@@ -491,7 +493,7 @@ void
 cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 		gint num, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	procdata->config.current_tab = num;
 
@@ -538,7 +540,8 @@ fsusage_stats(const glibtop_fsusage *buf,
 static gboolean
 compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
-	GHashTable *new_disks = data;
+	GHashTable * const new_disks = data;
+
 	GtkTreeIter *old_iter;
 	glibtop_mountentry *entry;
 	gchar *old_name;
@@ -548,7 +551,7 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 	entry = g_hash_table_lookup (new_disks, old_name);
 	if (entry) {
 		glibtop_fsusage usage;
-		gchar *used, *total, *unused;
+		gchar *used, *total;
 		float percentage, bused, bfree, btotal;
 
 		glibtop_get_fsusage (&usage, entry->mountdir);
@@ -557,7 +560,6 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 
 		used = get_size_string (bused);
 		total = get_size_string (btotal);
-		unused = get_size_string (bfree);
 
 		gtk_tree_store_set (GTK_TREE_STORE (model), iter,
 				    4, total,
@@ -571,7 +573,6 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 
 		g_free (used);
 		g_free (total);
-		g_free (unused);
 	}
 	else {
 		old_iter = gtk_tree_iter_copy (iter);
@@ -584,33 +585,25 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 
 
 static GdkPixbuf*
-get_icon_for_device(GnomeIconTheme *icontheme, const char *mountpoint,
-		    const char *type)
+get_icon_for_device(GnomeIconTheme *icontheme, const char *mountpoint)
 {
 	GdkPixbuf *pixbuf;
-	const char *i_type;
+	GnomeVFSVolumeMonitor* monitor;
+	GnomeVFSVolume* volume;
+	char *i_type;
 	char *path;
 	int size = 24;
 
-	if (strstr(mountpoint,"/zip"))
-		i_type = "gnome-dev-zipdisk";
-	else
-	if (strstr(mountpoint,"/floppy"))
-		i_type = "gnome-dev-floppy";
-	else
-	if (strstr(type,"iso9660"))
-		i_type = "gnome-dev-cdrom";
-	else
-	if (strstr(type, "smbfs"))
-		i_type = "gnome-fs-smb";
-	else
-	if (strstr(type, "nfs"))
-		i_type = "gnome-fs-nfs";
-	else
-		i_type = "gnome-dev-harddisk";
+	monitor = gnome_vfs_get_volume_monitor();
+	volume = gnome_vfs_volume_monitor_get_volume_for_path(monitor, mountpoint);
+	i_type = gnome_vfs_volume_get_icon(volume);
+	gnome_vfs_volume_unref(volume);
 
-	if (!(path = gnome_icon_theme_lookup_icon(icontheme, i_type, 24, NULL, &size)))
-		return NULL;
+	path = gnome_icon_theme_lookup_icon(icontheme, i_type, 24, NULL, &size);
+
+	g_free(i_type);
+
+	if(!path) return NULL;
 
 	pixbuf = gdk_pixbuf_new_from_file(path, NULL);
 
@@ -634,6 +627,7 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 {
 	glibtop_mountentry * const entry = value;
 	GtkTreeModel * const model = data;
+
 	glibtop_fsusage usage;
 	gchar *text[5];
 	GdkPixbuf *pixbuf;
@@ -657,7 +651,7 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 	fsusage_stats(&usage, &bused, &bfree, &btotal, &percentage);
 
 	/*  Load an icon corresponding to the type of the device */
-	pixbuf = get_icon_for_device(icontheme, entry->mountdir, entry->type);
+	pixbuf = get_icon_for_device(icontheme, entry->mountdir);
 
 	text[0] = g_strdup (entry->devname);
 	text[1] = g_strdup (entry->mountdir);
@@ -693,11 +687,12 @@ gint
 cb_update_disks (gpointer data)
 {
 	ProcData * const procdata = data;
+
 	GtkTreeModel *model;
 	glibtop_mountentry *entry;
 	glibtop_mountlist mountlist;
 	GHashTable *new_disks = NULL;
-	gint i;
+	guint i;
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->disk_list));
 
@@ -731,7 +726,7 @@ cb_update_disks (gpointer data)
 gint
 cb_timeout (gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 
 	proctable_update_all (procdata);
 

@@ -1,3 +1,26 @@
+2004-10-27  Benoît Dejean  <tazforever@dlfp.org>
+
+	* configure.in: Added new dependency on GNOME VFS 2.6.
+	* src/callbacks.c: (get_icon_for_device): Re-implemented using GNOME VFS.
+	The icon lookup is much better.	
+	
+	(cb_preferences_activate), (cb_renice),
+	(cb_end_process), (cb_kill_process), (cb_show_memory_maps),
+	(cb_show_hidden_processes), (cb_hide_process), (cb_about_activate),
+	(cb_close_simple_dialog), (cb_proc_combo_changed),
+	(popup_menu_renice), (popup_menu_show_memory_maps),
+	(popup_menu_hide_process), (popup_menu_end_process),
+	(popup_menu_kill_process), (popup_menu_about_process),
+	(cb_end_process_button_pressed), (cb_info_button_pressed),
+	(cb_search), (cb_mem_color_changed), (cb_swap_color_changed),
+	(cb_bg_color_changed), (cb_frame_color_changed), (cb_row_selected),
+	(cb_tree_row_activated), (cb_tree_button_pressed),
+	(cb_tree_popup_menu), (cb_switch_page), (compare_disks),
+	(get_icon_for_device), (add_new_disks), (cb_update_disks),
+	(cb_timeout): Paranoid cleanup.
+	
+	* src/defaulttable.h: Updated.
+
 2004-10-25  Benoît Dejean  <tazforever@dlfp.org>
 
 	* src/callbacks.c: (cb_preferences_activate), (cb_end_process),
