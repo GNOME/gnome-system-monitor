@@ -20,8 +20,8 @@
 #define _PROCDIALOGS_H_
 
 
-#include <gnome.h>
-#include <procman.h>
+#include <glib.h>
+#include "procman.h"
 
 extern int kill_signal G_GNUC_INTERNAL;
 

@@ -6,7 +6,6 @@
 #include <dirent.h>
 #include <string.h>
 #include <time.h>
-#include <gnome.h>
 #include <gdk/gdkx.h>
 
 #include <glibtop.h>
@@ -23,7 +22,7 @@
 
 static GList *object_list = NULL;
 
-#define FRAME_WIDTH GNOME_PAD_SMALL
+#define FRAME_WIDTH 4
 
 /* Redraws the backing pixmap for the load graph and updates the window */
 void

@@ -20,7 +20,8 @@
 #ifndef _PROCMAN_INTERFACE_H_
 #define _PROCMAN_INTERFACE_H_
 
-#include <procman.h>
+#include "procman.h"
+#include <glib.h>
 
 gint		get_sys_pane_pos (void) G_GNUC_INTERNAL;
 void		create_main_window (ProcData *data) G_GNUC_INTERNAL;

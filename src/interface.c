@@ -21,6 +21,8 @@
 #  include <config.h>
 #endif
 
+#include <gnome.h>
+#include <gtk/gtk.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -329,6 +331,7 @@ create_sys_view (ProcData *procdata)
 	GtkTreeViewColumn *col;
 	GtkCellRenderer *cell;
 	GtkSizeGroup *sizegroup;
+	GdkColor color;
 
 	static const gchar *titles[] = {
 	  N_("Device"),
@@ -390,12 +393,12 @@ create_sys_view (ProcData *procdata)
 		gtk_size_group_add_widget (sizegroup, temp_hbox);
 		g_signal_connect (G_OBJECT (temp_hbox), "size_request",
 					 G_CALLBACK (cpu_size_request), procdata);
-		
-		color_picker = gnome_color_picker_new ();
-		gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
-				    cpu_graph->colors[2+i].red,
-				    cpu_graph->colors[2+i].green,
-				    cpu_graph->colors[2+i].blue, 0);
+
+		color.red   = cpu_graph->colors[2+i].red;
+		color.green = cpu_graph->colors[2+i].green;
+		color.blue  = cpu_graph->colors[2+i].blue;
+		color_picker = gtk_color_button_new_with_color (&color);
+
 		g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
 		gtk_box_pack_start (GTK_BOX (temp_hbox), color_picker, FALSE, FALSE, 0);
@@ -443,11 +446,11 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (mem_graph_box), table, 
 			    FALSE, FALSE, 0);
 
-	color_picker = gnome_color_picker_new ();
-	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
-				    mem_graph->colors[2].red,
-				    mem_graph->colors[2].green,
-				    mem_graph->colors[2].blue, 0);
+
+	color.red   = mem_graph->colors[2].red;
+	color.green = mem_graph->colors[2].green;
+	color.blue  = mem_graph->colors[2].blue;
+	color_picker = gtk_color_button_new_with_color (&color);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_mem_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, 0, 0, 0, 0);
@@ -475,11 +478,10 @@ create_sys_view (ProcData *procdata)
 	gtk_table_attach (GTK_TABLE (table), mem_graph->mempercent_label, 5, 6, 0, 1, 
 			  GTK_FILL, 0, 0, 0);
 			  
-	color_picker = gnome_color_picker_new ();
-	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
-				    mem_graph->colors[3].red,
-				    mem_graph->colors[3].green,
-				    mem_graph->colors[3].blue, 0);
+	color.red   = mem_graph->colors[3].red;
+	color.green = mem_graph->colors[3].green;
+	color.blue  = mem_graph->colors[3].blue;
+	color_picker = gtk_color_button_new_with_color (&color);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_swap_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, 0, 0, 0, 0);

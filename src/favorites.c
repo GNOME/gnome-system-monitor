@@ -22,6 +22,8 @@
 #  include <config.h>
 #endif
 
+#include <glib/gi18n.h>
+
 #include "favorites.h"
 #include "proctable.h"
 

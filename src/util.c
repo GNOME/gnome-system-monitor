@@ -2,7 +2,7 @@
 
 #include <config.h>
 
-#include <gnome.h>
+#include <glib/gi18n.h>
 #include <stddef.h>
 
 void _procman_array_gettext_init(const char * strings[], size_t n)

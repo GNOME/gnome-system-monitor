@@ -22,6 +22,7 @@
 #endif
 
 #include <string.h>
+#include <glib/gi18n.h>
 #include <glibtop.h>
 #include <glibtop/proclist.h>
 #include <glibtop/procstate.h>
@@ -1001,8 +1002,7 @@ proctable_search_table (ProcData *procdata, gchar *string)
 		dialog = gtk_message_dialog_new (GTK_WINDOW (procdata->app),
 						 GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_MODAL,
 						 GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-						 _("Could not find \"%s\""), string,
-						 NULL);
+						 _("Could not find \"%s\""), string);
 		gtk_message_dialog_format_secondary_text (
 			GTK_MESSAGE_DIALOG (dialog),
 			_("There are no processes containing the searched string. "

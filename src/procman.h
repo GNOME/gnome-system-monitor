@@ -20,7 +20,8 @@
 #define _PROCMAN_PROCMAN_H_
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gnome.h>
+#include <glib.h>
+#include <gtk/gtk.h>
 #include <gconf/gconf-client.h>
 #include <glibtop/cpu.h>
 
@@ -186,6 +187,7 @@ struct _ProcData
 	gint		blacklist_num;
 	GConfClient	*client;
 	GtkWidget	*app;
+	GtkUIManager	*menu;
 
 	/* cached username */
 	GStringChunk	*users;

@@ -20,7 +20,7 @@
 #ifndef _INFOVIEW_H_
 #define _INFOVIEW_H_
 
-#include <gnome.h>
+#include <gtk/gtk.h>
 #include "procman.h"
 
 

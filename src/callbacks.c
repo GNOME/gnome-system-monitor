@@ -21,8 +21,10 @@
 #  include <config.h>
 #endif
 
+#include <libgnome/gnome-help.h>
 #include <libgnomevfs/gnome-vfs.h>
-
+#include <gtk/gtk.h>
+#include <glib/gi18n.h>
 #include <glibtop/mountlist.h>
 #include <glibtop/fsusage.h>
 #include <signal.h>
@@ -238,62 +240,62 @@ cb_search (GtkEditable *editable, gpointer data)
 
 
 static void change_gconf_color(GConfClient *client, const char *key,
-			       guint r, guint g, guint b)
+			       GtkColorButton *cp)
 {
+	GdkColor c;
 	char color[24]; /* color should be 1 + 3*4 + 1 = 15 chars -> 24 */
-	g_snprintf(color, sizeof color, "#%04x%04x%04x", r, g, b);
+
+	gtk_color_button_get_color(cp, &c);
+	g_snprintf(color, sizeof color, "#%04x%04x%04x", c.red, c.green, c.blue);
 	gconf_client_set_string (client, key, color, NULL);
 }
 
 
 void
-cb_cpu_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
-		      guint a, gpointer data)
+cb_cpu_color_changed (GtkColorButton *cp, gpointer data)
 {
+	char key[80];
 	gint i = GPOINTER_TO_INT (data);
 	GConfClient *client = gconf_client_get_default ();
 
-	if (i == 0)
-		change_gconf_color(client, "/apps/procman/cpu_color", r, g, b);
-	else {
-		gchar key[sizeof "/apps/procman/cpu_color%d"];
-		g_snprintf(key, sizeof key, "/apps/procman/cpu_color%d", i);
-		change_gconf_color(client, key, r, g, b);
+	if (i == 0) {
+		strcpy(key, "/apps/procman/cpu_color");
 	}
+	else {
+		g_snprintf(key, sizeof key, "/apps/procman/cpu_color%d", i);
+	}
+
+	change_gconf_color(client, key, cp);
 }
 
 void
-cb_mem_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
-		      guint a, gpointer data)
+cb_mem_color_changed (GtkColorButton *cp, gpointer data)
 {
 	ProcData * const procdata = data;
-	change_gconf_color(procdata->client, "/apps/procman/mem_color", r, g, b);
-}
-
-
-void
-cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
-		       guint a, gpointer data)
-{
-	ProcData * const procdata = data;
-	change_gconf_color(procdata->client, "/apps/procman/swap_color", r, g, b);
+	change_gconf_color(procdata->client, "/apps/procman/mem_color", cp);
 }
 
 
 void
-cb_bg_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
-		     guint a, gpointer data)
+cb_swap_color_changed (GtkColorButton *cp, gpointer data)
 {
 	ProcData * const procdata = data;
-	change_gconf_color(procdata->client, "/apps/procman/bg_color", r, g, b);
+	change_gconf_color(procdata->client, "/apps/procman/swap_color", cp);
+}
+
+
+void
+cb_bg_color_changed (GtkColorButton *cp, gpointer data)
+{
+	ProcData * const procdata = data;
+	change_gconf_color(procdata->client, "/apps/procman/bg_color", cp);
 }
 
 void
-cb_frame_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
-			guint a, gpointer data)
+cb_frame_color_changed (GtkColorButton *cp, gpointer data)
 {
 	ProcData * const procdata = data;
-	change_gconf_color(procdata->client, "/apps/procman/frame_color", r, g, b);
+	change_gconf_color(procdata->client, "/apps/procman/frame_color", cp);
 }
 
 

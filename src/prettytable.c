@@ -1,5 +1,5 @@
 #include <config.h>
-#include <libgnome/libgnome.h>
+#include <libgnome/gnome-program.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
 #include <dirent.h>

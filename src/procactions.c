@@ -21,6 +21,8 @@
 #  include <config.h>
 #endif
 #include <errno.h>
+
+#include <glib/gi18n.h>
 #include <signal.h>
 #include <sys/time.h>
 #include <sys/resource.h>
@@ -56,8 +58,7 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
                                   			         GTK_MESSAGE_ERROR,
                                   			         GTK_BUTTONS_OK,
                                   			         "%s",
-                                  			         error_msg,
-                                  			         NULL); 
+                                  			         error_msg); 
 				gtk_dialog_run (GTK_DIALOG (dialog));
 				gtk_widget_destroy (dialog);
 				g_free (error_msg);
@@ -147,8 +148,7 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
                                   			       GTK_MESSAGE_ERROR,
                                   			       GTK_BUTTONS_OK,
                                   			       "%s",
-                                  			      _("An error occured while killing the process."),
-                                  			      NULL); 
+                                  			      _("An error occured while killing the process.")); 
 						gtk_dialog_run (GTK_DIALOG (dialog));
 						gtk_widget_destroy (dialog);
 					}

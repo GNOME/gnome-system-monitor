@@ -18,9 +18,8 @@
  */
 
 #include <config.h>
-
+#include <glib/gi18n.h>
 #include <gnome.h>
-#include <libgnomeui/gnome-window-icon.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <gconf/gconf-client.h>
 #include <glibtop.h>
@@ -510,7 +509,7 @@ main (int argc, char *argv[])
 	textdomain (GETTEXT_PACKAGE);
 
 	procman = gnome_program_init ("gnome-system-monitor", VERSION, 
-				      LIBGNOMEUI_MODULE, argc, argv,
+				       LIBGNOMEUI_MODULE, argc, argv,
 				      GNOME_PARAM_APP_DATADIR,DATADIR, NULL);
 	gtk_window_set_default_icon_name ("gnome-monitor");
 		    
@@ -532,7 +531,7 @@ main (int argc, char *argv[])
 		 
 	g_return_val_if_fail(procdata->app != NULL, 1);
 			
- 	gtk_widget_show (procdata->app);
+ 	gtk_widget_show_all(procdata->app);
  	
 	gtk_main ();
 	

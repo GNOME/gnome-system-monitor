@@ -22,7 +22,7 @@
 #define _PROCMAN_CALLBACKS_H_
 
 #include "procman.h"
-
+#include <gtk/gtk.h>
 
 void		cb_properties_activate (GtkMenuItem *menuitem, gpointer user_data) G_GNUC_INTERNAL;
 
@@ -53,16 +53,11 @@ void		cb_info_button_pressed (GtkButton *button, gpointer user_data) G_GNUC_INTE
 void		cb_search (GtkEditable *editable, gpointer data) G_GNUC_INTERNAL;
 
 
-void		cb_cpu_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
-				      guint a, gpointer data) G_GNUC_INTERNAL;
-void		cb_mem_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
-				      guint a, gpointer data) G_GNUC_INTERNAL;
-void		cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
-				      guint a, gpointer data) G_GNUC_INTERNAL;
-void		cb_bg_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
-				      guint a, gpointer data) G_GNUC_INTERNAL;
-void		cb_frame_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
-				      guint a, gpointer data) G_GNUC_INTERNAL;
+void		cb_cpu_color_changed (GtkColorButton *widget, gpointer user_data) G_GNUC_INTERNAL;
+void		cb_mem_color_changed (GtkColorButton *widget, gpointer user_data) G_GNUC_INTERNAL;
+void		cb_swap_color_changed (GtkColorButton *widget, gpointer user_data) G_GNUC_INTERNAL;
+void		cb_bg_color_changed (GtkColorButton *widget, gpointer user_data) G_GNUC_INTERNAL;
+void		cb_frame_color_changed (GtkColorButton *widget, gpointer user_data) G_GNUC_INTERNAL;
 
 
 void		cb_row_selected (GtkTreeSelection *selection, gpointer data) G_GNUC_INTERNAL;

@@ -2,7 +2,7 @@
 #  include <config.h>
 #endif
 
-#include <gnome.h>
+#include <glib/gi18n.h>
 #include <glibtop/procopenfiles.h>
 #include <sys/stat.h>
 #include <netdb.h>

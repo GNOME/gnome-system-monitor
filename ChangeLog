@@ -1,5 +1,33 @@
 2005-03-10  Benoît Dejean  <TazForEver@dlfp.org>
 
+	* src/callbacks.c: (change_gconf_color), (cb_cpu_color_changed),
+	(cb_mem_color_changed), (cb_swap_color_changed),
+	(cb_bg_color_changed), (cb_frame_color_changed):
+	* src/callbacks.h:
+	* src/favorites.c:
+	* src/infoview.c:
+	* src/infoview.h:
+	* src/interface.c: (create_sys_view):
+	* src/interface.h:
+	* src/load-graph.c:
+	* src/memmaps.c:
+	* src/openfiles.c:
+	* src/prettytable.c:
+	* src/procactions.c: (renice_single_process),
+	(kill_single_process):
+	* src/procdialogs.c: (procdialog_create_preferences_dialog):
+	* src/procdialogs.h:
+	* src/procman.c: (main):
+	* src/procman.h:
+	* src/proctable.c: (proctable_search_table):
+	* src/util.c:
+	
+	- Big cleanup. Replaced gnome_color_picker_new() by gtk_color_button_new_with_color().
+	Original patch by Kristof Vansant <de_lupus@pandora.be>.
+	- Fixed a couple of warnings.
+
+2005-03-10  Benoît Dejean  <TazForEver@dlfp.org>
+
 	* configure.in:
 	* src/Makefile.am:
 	* src/callbacks.c: (fsusage_stats):
