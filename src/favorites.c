@@ -456,6 +456,8 @@ void create_blacklist_dialog (ProcData *procdata)
   		gtk_box_pack_end (GTK_BOX (inner_vbox), hbox, FALSE, FALSE, 0);
   	
   		button = gtk_button_new_with_label (_("Remove From List"));
+  		gtk_misc_set_padding (GTK_MISC (GTK_BUTTON (button)->child), 
+  				      GNOME_PAD_SMALL, -2);
   		gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   		gtk_container_set_border_width (GTK_CONTAINER (button), GNOME_PAD_SMALL);
   	

@@ -59,9 +59,14 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
 	}, 
 	GNOMEUIINFO_SEPARATOR,
 	{
-	 GNOME_APP_UI_ITEM, N_("Hidden _Processes..."), N_("View and edit your list of hidden processes"),
-	 cb_show_hidden_processes, NULL, NULL, 0, 0,
-	 'p', GDK_CONTROL_MASK
+	 GNOME_APP_UI_ITEM, N_("End _Process"), N_("Force a process to finish."),
+	 cb_end_process, NULL, NULL, 0, 0,
+	 'e', GDK_CONTROL_MASK
+	},
+	{
+	 GNOME_APP_UI_ITEM, N_("_Kill Process"), N_("Force a process to finish now."),
+	 cb_kill_process, NULL, NULL, 0, 0,
+	 'k', GDK_CONTROL_MASK
 	},
 	GNOMEUIINFO_END
 };
@@ -69,7 +74,7 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
 static GnomeUIInfo view1_menu_uiinfo[] =
 {
 	{
-	 GNOME_APP_UI_ITEM, N_("_Memory Maps..."), N_("View the memory maps associated with a process"),
+	 GNOME_APP_UI_ITEM, N_("_Memory Maps"), N_("View the memory maps associated with a process"),
 	 cb_show_memory_maps, NULL, NULL, 0, 0,
 	 'm', GDK_CONTROL_MASK
 	},
@@ -90,6 +95,11 @@ static GnomeUIInfo favorites1_menu_uiinfo[] =
 
 static GnomeUIInfo settings1_menu_uiinfo[] =
 {
+	{
+	 GNOME_APP_UI_ITEM, N_("Hidden _Processes"), N_("View and edit your list of hidden processes"),
+	 cb_show_hidden_processes, NULL, NULL, 0, 0,
+	 'p', GDK_CONTROL_MASK
+	},
 	GNOMEUIINFO_MENU_PREFERENCES_ITEM (cb_preferences_activate, NULL),
 	GNOMEUIINFO_END
 };
@@ -267,7 +277,7 @@ create_proc_view (ProcData *procdata)
                             GTK_SIGNAL_FUNC(popup_menu_renice),
                             procdata);
         gtk_menu_append (GTK_MENU (popup_menu), lbl_renice);
-	lbl_mem_maps = gtk_menu_item_new_with_label (_("Memory Maps ..."));
+	lbl_mem_maps = gtk_menu_item_new_with_label (_("Memory Maps"));
 	gtk_widget_show (lbl_mem_maps);
 	gtk_signal_connect (GTK_OBJECT (lbl_mem_maps),"activate",
 			    GTK_SIGNAL_FUNC(popup_menu_show_memory_maps),
@@ -626,5 +636,7 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 	gtk_widget_set_sensitive (edit1_menu_uiinfo[0].widget, sensitivity);
 	gtk_widget_set_sensitive (edit1_menu_uiinfo[1].widget, sensitivity);
 	gtk_widget_set_sensitive (view1_menu_uiinfo[0].widget, sensitivity);
+	gtk_widget_set_sensitive (edit1_menu_uiinfo[3].widget, sensitivity);
+	gtk_widget_set_sensitive (edit1_menu_uiinfo[4].widget, sensitivity);
 }	
 

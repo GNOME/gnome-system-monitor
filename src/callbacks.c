@@ -62,6 +62,36 @@ cb_renice (GtkMenuItem *menuitem, gpointer data)
 }
 
 void
+cb_end_process (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	if (!procdata->selected_node)
+		return;
+	
+	if (procdata->config.show_kill_warning)
+		procdialog_create_kill_dialog (procdata, SIGTERM);
+	else
+		kill_process (procdata, SIGTERM);
+	
+}
+
+void
+cb_kill_process (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	if (!procdata->selected_node)
+		return;
+	
+	if (procdata->config.show_kill_warning)
+		procdialog_create_kill_dialog (procdata, SIGKILL);
+	else
+		kill_process (procdata, SIGKILL);
+	
+}
+
+void
 cb_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
