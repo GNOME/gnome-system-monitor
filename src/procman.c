@@ -123,14 +123,12 @@ timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer 
 	GConfValue *value = gconf_entry_get_value (entry);
 	
 	if (!g_strcasecmp (key, "/apps/procman/update_interval")) {
-		g_print ("main timeout \n");
 		procdata->config.update_interval = gconf_value_get_int (value);
 		gtk_timeout_remove (procdata->timeout);
 		procdata->timeout = gtk_timeout_add (procdata->config.update_interval, cb_timeout,
 					     procdata);
 	}
 	else if (!g_strcasecmp (key, "/apps/procman/graph_update_interval")){
-		g_print ("garph timeout \n");
 		gtk_timeout_remove (procdata->cpu_graph->timer_index);
 		procdata->cpu_graph->timer_index = -1;
 		procdata->cpu_graph->speed = gconf_value_get_int (value);
@@ -142,7 +140,6 @@ timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer 
 		load_graph_start (procdata->mem_graph);	
 	}
 	else {
-		g_print ("disk timeout \n");
 		
 		procdata->config.disks_update_interval = gconf_value_get_int (value);
 		gtk_timeout_remove (procdata->disk_timeout);
@@ -233,42 +230,6 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 	
 }
 
-static gint 
-gconf_client_get_int_with_default (gchar *key, gint def)
-{
-	GConfValue *value = NULL;
-	gint retval;
-	
-	value = gconf_client_get (client, key, NULL);
-	if (!value) {
-		return def;
-	}
-	else {
-		retval = gconf_value_get_int(value);
-		gconf_value_free (value);
-		return retval;
-	}
-		
-}
-
-static gboolean
-gconf_client_get_bool_with_default (gchar *key, gboolean def)
-{
-	GConfValue *value = NULL;
-	gboolean retval;
-	
-	value = gconf_client_get (client, key, NULL);
-	if (!value) {
-		return def;
-	}
-	else {
-		retval = gconf_value_get_bool(value);
-		gconf_value_free (value);
-		return retval;
-	}
-		
-}
-
 static ProcData *
 procman_data_new (void)
 {
@@ -286,103 +247,89 @@ procman_data_new (void)
 	pd->cpu_graph = NULL;
 	pd->mem_graph = NULL;
 	pd->disk_timeout = -1;
-	
-	pd->config.width = gconf_client_get_int_with_default ("/apps/procman/width", 440);
-	pd->config.height = gconf_client_get_int_with_default ("/apps/procman/height", 495);
-	pd->config.show_more_info = gconf_client_get_bool_with_default 
-		("/apps/procman/more_info", FALSE);
-	pd->config.show_tree = gconf_client_get_bool_with_default 
-		("/apps/procman/show_tree", TRUE);
+
+	pd->config.width = gconf_client_get_int (client, "/apps/procman/width", NULL);
+	pd->config.height = gconf_client_get_int (client, "/apps/procman/height", NULL);
+	pd->config.show_more_info = gconf_client_get_bool (client, "/apps/procman/more_info", NULL);
+	pd->config.show_tree = gconf_client_get_bool (client, "/apps/procman/show_tree", NULL);
 	gconf_client_notify_add (client, "/apps/procman/show_tree", tree_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.show_kill_warning = gconf_client_get_bool_with_default 
-		("/apps/procman/kill_dialog", TRUE);
+	pd->config.show_kill_warning = gconf_client_get_bool (client, "/apps/procman/kill_dialog", 
+							      NULL);
 	gconf_client_notify_add (client, "/apps/procman/kill_dialog", warning_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.show_hide_message = gconf_client_get_bool_with_default 
-		("/apps/procman/hide_message", TRUE);
+	pd->config.show_hide_message = gconf_client_get_bool (client, "/apps/procman/hide_message",
+							      NULL);
 	gconf_client_notify_add (client, "/apps/procman/hide_message", warning_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.show_threads = gconf_client_get_bool_with_default 
-		("/apps/procman/show_threads", FALSE);
+	pd->config.show_threads = gconf_client_get_bool (client, "/apps/procman/show_threads", NULL);
 	gconf_client_notify_add (client, "/apps/procman/show_threads", threads_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.update_interval = gconf_client_get_int_with_default 
-		("/apps/procman/update_interval", 3000);
+	pd->config.update_interval = gconf_client_get_int (client, "/apps/procman/update_interval", 
+							   NULL);
 	gconf_client_notify_add (client, "/apps/procman/update_interval", timeouts_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.graph_update_interval = gconf_client_get_int_with_default 
-		("/apps/procman/graph_update_interval", 1000);
+	pd->config.graph_update_interval = gconf_client_get_int (client,
+						"/apps/procman/graph_update_interval",
+						NULL);
 	gconf_client_notify_add (client, "/apps/procman/graph_update_interval", timeouts_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.disks_update_interval = gconf_client_get_int_with_default 
-		("/apps/procman/disks_interval", 5000);
+	pd->config.disks_update_interval = gconf_client_get_int (client,
+								 "/apps/procman/disks_interval",
+								 NULL);
 	gconf_client_notify_add (client, "/apps/procman/disks_interval", timeouts_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.whose_process = gconf_client_get_int_with_default ("/apps/procman/view_as", 1);
+	pd->config.whose_process = gconf_client_get_int (client, "/apps/procman/view_as", NULL);
 	gconf_client_notify_add (client, "/apps/procman/view_as", view_as_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.current_tab = gconf_client_get_int_with_default ("/apps/procman/current_tab", 1);
-	pd->config.pane_pos = gconf_client_get_int_with_default 
-		("/apps/procman/pane_pos", 300);
-	pd->config.bg_color.red = gconf_client_get_int_with_default
-		("/apps/procman/bg_red", 0);
+	pd->config.current_tab = gconf_client_get_int (client, "/apps/procman/current_tab", NULL);
+	pd->config.pane_pos = gconf_client_get_int (client, "/apps/procman/pane_pos", NULL);
+	
+	pd->config.bg_color.red = gconf_client_get_int (client, "/apps/procman/bg_red", NULL);
 	gconf_client_notify_add (client, "/apps/procman/bg_red", color_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.bg_color.green = gconf_client_get_int_with_default
-		("/apps/procman/bg_green", 0);
+	pd->config.bg_color.green = gconf_client_get_int (client, "/apps/procman/bg_green", NULL);
 	gconf_client_notify_add (client, "/apps/procman/bg_green", color_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.bg_color.blue= gconf_client_get_int_with_default
-		("/apps/procman/bg_blue", 0);
+	pd->config.bg_color.blue= gconf_client_get_int (client, "/apps/procman/bg_blue", NULL);
 	gconf_client_notify_add (client, "/apps/procman/bg_blue", color_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.frame_color.red = gconf_client_get_int_with_default
-		("/apps/procman/frame_red", 20409);
+	pd->config.frame_color.red = gconf_client_get_int (client, "/apps/procman/frame_red", NULL);
 	gconf_client_notify_add (client, "/apps/procman/frame_red", color_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.frame_color.green = gconf_client_get_int_with_default
-		("/apps/procman/frame_green",32271);
+	pd->config.frame_color.green = gconf_client_get_int (client, "/apps/procman/frame_green",
+							     NULL);
 	gconf_client_notify_add (client, "/apps/procman/frame_green", color_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.frame_color.blue = gconf_client_get_int_with_default
-		("/apps/procman/frame_blue", 17781);
+	pd->config.frame_color.blue = gconf_client_get_int (client, "/apps/procman/frame_blue", 
+							    NULL);
 	gconf_client_notify_add (client, "/apps/procman/frame_blue", color_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.cpu_color.red = gconf_client_get_int_with_default
-		("/apps/procman/cpu_red", 65535);
+	pd->config.cpu_color.red = gconf_client_get_int (client, "/apps/procman/cpu_red", NULL);
 	gconf_client_notify_add (client, "/apps/procman/cpu_red", color_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.cpu_color.green = gconf_client_get_int_with_default
-		("/apps/procman/cpu_green", 591);
+	pd->config.cpu_color.green = gconf_client_get_int (client, "/apps/procman/cpu_green", NULL);
 	gconf_client_notify_add (client, "/apps/procman/cpu_green", color_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.cpu_color.blue = gconf_client_get_int_with_default
-		("/apps/procman/cpu_blue", 0);
+	pd->config.cpu_color.blue = gconf_client_get_int (client, "/apps/procman/cpu_blue", NULL);
 	gconf_client_notify_add (client, "/apps/procman/cpu_blue", color_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.mem_color.red = gconf_client_get_int_with_default
-		("/apps/procman/mem_red", 65535);
+	pd->config.mem_color.red = gconf_client_get_int (client, "/apps/procman/mem_red", NULL);
 	gconf_client_notify_add (client, "/apps/procman/mem_red", color_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.mem_color.green = gconf_client_get_int_with_default
-		("/apps/procman/mem_green", 591);
+	pd->config.mem_color.green = gconf_client_get_int (client, "/apps/procman/mem_green", NULL);
 	gconf_client_notify_add (client, "/apps/procman/mem_green", color_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.mem_color.blue = gconf_client_get_int_with_default
-		("/apps/procman/mem_blue", 0);
+	pd->config.mem_color.blue = gconf_client_get_int (client, "/apps/procman/mem_blue", NULL);
 	gconf_client_notify_add (client, "/apps/procman/mem_blue", color_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.swap_color.red = gconf_client_get_int_with_default
-		("/apps/procman/swap_red", 1363);
+	pd->config.swap_color.red = gconf_client_get_int (client, "/apps/procman/swap_red", NULL);
 	gconf_client_notify_add (client, "/apps/procman/swap_red", color_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.swap_color.green = gconf_client_get_int_with_default
-		("/apps/procman/swap_green", 52130);
+	pd->config.swap_color.green = gconf_client_get_int (client, "/apps/procman/swap_green", NULL);
 	gconf_client_notify_add (client, "/apps/procman/swap_green", color_changed_cb,
 				 pd, NULL, NULL);
-	pd->config.swap_color.blue = gconf_client_get_int_with_default
-		("/apps/procman/swap_blue", 18595);
+	pd->config.swap_color.blue = gconf_client_get_int (client, "/apps/procman/swap_blue", NULL);
 	gconf_client_notify_add (client, "/apps/procman/swap_blue", color_changed_cb,
 				 pd, NULL, NULL);
 		
@@ -429,19 +376,15 @@ procman_get_tree_state (GtkWidget *tree, gchar *prefix)
 	
 	g_return_val_if_fail (tree, FALSE);
 	g_return_val_if_fail (prefix, FALSE);
-	if (!gconf_client_dir_exists (client, prefix, NULL)) {
-		g_print ("dir don't exist \n");
-		return FALSE;
-	}
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
 	
 	key = g_strdup_printf ("%s/sort_col", prefix);
-	sort_col = gconf_client_get_int_with_default (key, -1);
+	sort_col = gconf_client_get_int (client, key, NULL);
 	g_free (key);
 	
 	key = g_strdup_printf ("%s/sort_order", prefix);
-	order = gconf_client_get_int_with_default (key, -1);
+	order = gconf_client_get_int (client, key, NULL);
 	g_free (key);
 	
 	if (sort_col != -1)
@@ -451,18 +394,23 @@ procman_get_tree_state (GtkWidget *tree, gchar *prefix)
 	
 	while (!done) {
 		GtkTreeViewColumn *column;
+		GConfValue *value = NULL;
 		gint width;
 		gboolean visible;
 		
+		
 		key = g_strdup_printf ("%s/col_%d_width", prefix, i);
-		width = gconf_client_get_int_with_default (key, -1);
+		value = gconf_client_get (client, key, NULL);
 		g_free (key);
 		
-		key = g_strdup_printf ("%s/col_%d_visible", prefix, i);
-		visible = gconf_client_get_bool_with_default (key, FALSE);
-		g_free (key);
+		if (value != NULL) {
+			width = gconf_value_get_int(value);
+			gconf_value_free (value);
 		
-		if (width != -1) {
+			key = g_strdup_printf ("%s/col_%d_visible", prefix, i);
+			visible = gconf_client_get_bool (client, key, NULL);
+			g_free (key);
+		
 			column = gtk_tree_view_get_column (GTK_TREE_VIEW (tree), i);
 			gtk_tree_view_column_set_visible (column, visible);
 			if (width > 0)

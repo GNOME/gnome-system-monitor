@@ -222,27 +222,8 @@ proctable_new (ProcData *data)
 					 NULL);
 	procdata->tree = proctree;
 	
-	if (!procman_get_tree_state (proctree, "/apps/procman/proctree")) {
-		/* Defaults - should make a gconf schema instead */
-		gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model),
-					      	      COL_NAME,
-					              GTK_SORT_ASCENDING);
-		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_STATUS);
-		gtk_tree_view_column_set_visible (column, FALSE);
-		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_ARGS);
-		gtk_tree_view_column_set_visible (column, FALSE);
-		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_VMSIZE);
-		gtk_tree_view_column_set_visible (column, FALSE);
-		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_MEMRES);
-		gtk_tree_view_column_set_visible (column, FALSE);
-		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_MEMSHARED);
-		gtk_tree_view_column_set_visible (column, FALSE);
-		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_MEMRSS);
-		gtk_tree_view_column_set_visible (column, FALSE);
-		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_NICE);
-		gtk_tree_view_column_set_visible (column, FALSE);
-	}
-	
+	procman_get_tree_state (proctree, "/apps/procman/proctree");
+
 	g_signal_connect (G_OBJECT (gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree))), 
 			  "changed",
 			  G_CALLBACK (cb_row_selected), procdata);
