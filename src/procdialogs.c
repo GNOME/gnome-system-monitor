@@ -75,7 +75,7 @@ procdialog_create_hide_dialog (ProcData *data)
   	GtkWidget *button5;
   	GtkWidget *button6;
   	GtkWidget *dialog_action_area1;
-  	gchar *text = _("This action will block a process from being displayed. \n To reshow a process choose Hidden Processes in the Edit menu");
+  	gchar *text = _("Are you sure you want to hide this process?");
 
   	/* We create it with an OK button, and then remove the button, to work
      	around a bug in gnome-libs. */
@@ -327,6 +327,7 @@ procdialog_create_renice_dialog (ProcData *data)
     	dialog_vbox = GNOME_DIALOG (dialog)->vbox;
     	
     	vbox = gtk_vbox_new (FALSE, GNOME_PAD);
+    	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD);
     	gtk_box_pack_start (GTK_BOX (dialog_vbox), vbox, TRUE, TRUE, 0);
     	
     	label = gtk_label_new (text);
@@ -569,22 +570,23 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (main_vbox), notebook, TRUE, TRUE, 0);
 	
 	proc_box = gtk_vbox_new (FALSE, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (proc_box), GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (proc_box), GNOME_PAD);
 	tab_label = gtk_label_new (_("Process Listing"));
 	gtk_widget_show (tab_label);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), proc_box, tab_label);
 	
-	frame = gtk_frame_new (_("General"));
-	gtk_box_pack_start (GTK_BOX (proc_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
+	/*frame = gtk_frame_new (_("General"));
+	gtk_box_pack_start (GTK_BOX (proc_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);*/
 	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (frame), vbox);
+	/*gtk_container_add (GTK_CONTAINER (frame), vbox);*/
+	gtk_box_pack_start (GTK_BOX (proc_box), vbox, FALSE, FALSE, GNOME_PAD_SMALL);
 	
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 	
-	label = gtk_label_new (_("Update Speed ( seconds ) :"));
+	label = gtk_label_new (_("Update Interval ( seconds ) :"));
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 	
 	update = (gfloat) procdata->config.update_interval;
@@ -602,12 +604,12 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 			    GTK_SIGNAL_FUNC (show_tree_toggled), procdata);
 	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
 	
-	frame = gtk_frame_new (_("Advanced"));
+	/*frame = gtk_frame_new (_("Advanced"));
 	gtk_box_pack_start (GTK_BOX (proc_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (frame), vbox);
+	gtk_container_add (GTK_CONTAINER (frame), vbox);*/
 	
 	check_button = gtk_check_button_new_with_label (_("Show Application Names"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
@@ -637,9 +639,10 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
 	table = gtk_table_new (2, 3, FALSE);
+	gtk_container_set_border_width (GTK_CONTAINER (table), GNOME_PAD);
 	gtk_container_add (GTK_CONTAINER (frame), table);
 	
-	label = gtk_label_new (_("Update Speed ( seconds ) :"));
+	label = gtk_label_new (_("Update Interval ( seconds ) :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, 
@@ -691,10 +694,10 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
 	table = gtk_table_new (2, 1, FALSE);
-	//gtk_container_set_border_width (GTK_CONTAINER (table), GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (table), GNOME_PAD);
 	gtk_container_add (GTK_CONTAINER (frame), table);
 			  
-	label = gtk_label_new (_("Update Speed ( seconds ) :"));
+	label = gtk_label_new (_("Update Interval ( seconds ) :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, 
@@ -716,7 +719,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 
 /*
 ** type determines whether if dialog is for killing process (type=0) or renice (type=other).
-** extra_value is not used for killing and is priority for renice
+** extra_value is signal for killing and is priority for renice
 */
 void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint pid, 
 					     gint extra_value, gchar *text)
@@ -732,8 +735,12 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 	gchar *password, *blank;
 	gint retval;
 	
-	if (type == 0)
-		title = g_strdup (_("End Process"));
+	if (type == 0) {
+		if (extra_value == SIGKILL)
+			title = g_strdup (_("Kill Process"));
+		else
+			title = g_strdup (_("End Process"));
+	}
 	else
 		title = g_strdup (_("Change Priority"));
 		
@@ -749,7 +756,7 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 	gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
 	
 	hbox = gtk_hbox_new (FALSE, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (hbox), GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox), GNOME_PAD);
 	gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
 	
 	label = gtk_label_new (_("Root Password :"));
@@ -785,7 +792,7 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 		g_free (blank);
 		
 		if (type == 0)
-			command = g_strdup_printf ("kill %d", pid);
+			command = g_strdup_printf ("kill -s %d %d", extra_value, pid);
 		else
 			command = g_strdup_printf ("renice %d %d", extra_value, pid);
 			

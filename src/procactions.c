@@ -115,7 +115,7 @@ kill_single_process (ETreePath node, gpointer data)
 			case EPERM:
 				error_msg = g_strdup_printf (_("Process Name : %s \n\nYou do not have permission to end this process. You can enter the root password to gain the necessary permission."), info->name);
 				procdialog_create_root_password_dialog (0, procdata, 
-									info->pid, 0,
+									info->pid, kill_signal,
 									error_msg);
 				g_free (error_msg);
 				break;	
