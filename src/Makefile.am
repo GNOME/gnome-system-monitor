@@ -39,5 +39,8 @@ EXTRA_DIST = \
 	$(pixmap_DATA)
 
 install-data-local:
-	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) \
-	gconftool-2 --makefile-install-rule $(schema_DATA)	  	
+	if test -z "$(DESTDIR)" ; then \
+	for p in $(schema_DATA) ; do \
+	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_srcdir)/src/$$p; \
+	done \
+        fi

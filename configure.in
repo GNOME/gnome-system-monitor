@@ -24,6 +24,15 @@ PKG_CHECK_MODULES(PROCMAN, libgnome-2.0 >= $LIBGNOME_REQUIRED libgnomeui-2.0 >= 
 AC_SUBST(PROCMAN_CFLAGS)
 AC_SUBST(PROCMAN_LIBS)
 
+dnl Specify the gconf configuration source, 
+dnl default to xml::$(sysconfdir)/gconf/gconf.xml.defaults
+
+AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
+
+if test x"$GCONFTOOL" = xno; then
+  AC_MSG_ERROR([gconftool-2 executable not found in your path - should be installed with GConf])
+fi
+
 AM_GCONF_SOURCE_2
 
 AC_DEFINE_UNQUOTED(GNOME_ICONDIR, "${prefix}/share/pixmaps")
