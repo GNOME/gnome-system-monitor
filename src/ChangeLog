@@ -1,3 +1,11 @@
+2001-08-25  Kevin Vandersloot <kfv101@psu.edu>
+
+	* memmaps.c: connect to the "close" signal since "destroy" was
+	causing corruption when save the e-tree state file. Try to
+	raise the dialog if it already exists. For the close button
+	just call gnome_dialog_close, don't call it in the "close" 
+	signal handler. Clear the memmaps data at close time
+
 2001-08-24  Kevin Vandersloot <kfv101@psu.edu>
 
 	* interface.c: add a Kill Process item to right click

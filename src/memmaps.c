@@ -249,22 +249,23 @@ save_memmaps_tree_state (ProcData *procdata)
 }
 
 
-static void
-close_memmaps_dialog (gpointer data)
+static gboolean
+close_memmaps_dialog (GnomeDialog *dialog, gpointer data)
 {
 	ProcData *procdata = data;
 	
 	save_memmaps_tree_state (procdata);
-	gnome_dialog_close (GNOME_DIALOG (memmapsdialog));
+	clear_memmaps (procdata);
 	memmapsdialog = NULL;
 	gtk_timeout_remove (timer);
+	
+	return FALSE;
 }
 
 static void
 close_button_pressed (GtkButton *button, gpointer data)
 {
-	ProcData *procdata = data;
-	close_memmaps_dialog (procdata);
+	gnome_dialog_close (GNOME_DIALOG (memmapsdialog));
 }
 
 
@@ -355,8 +356,11 @@ create_memmaps_dialog (ProcData *procdata)
 	GtkWidget *closebutton;
 	GtkWidget *scrolled;
 
-	if (memmapsdialog)
+	if (memmapsdialog) {
+		gdk_window_show(memmapsdialog->window);
+      		gdk_window_raise(memmapsdialog->window);
 		return;
+	}
 
 	memmapsdialog = gnome_dialog_new (_("Memory Maps"), NULL);
 	gtk_window_set_policy (GTK_WINDOW (memmapsdialog), TRUE, TRUE, FALSE);
@@ -396,7 +400,7 @@ create_memmaps_dialog (ProcData *procdata)
 	
 	gtk_signal_connect (GTK_OBJECT (closebutton), "clicked",
 			    GTK_SIGNAL_FUNC (close_button_pressed), procdata);
-	gtk_signal_connect (GTK_OBJECT (memmapsdialog), "destroy",
+	gtk_signal_connect (GTK_OBJECT (memmapsdialog), "close",
 			    GTK_SIGNAL_FUNC (close_memmaps_dialog), procdata);
 	
 	gtk_widget_show (memmapsdialog);
