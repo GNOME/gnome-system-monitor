@@ -498,6 +498,8 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 		}
 		load_graph_start (procdata->cpu_graph);
 		load_graph_start (procdata->mem_graph);
+		load_graph_draw (procdata->cpu_graph);
+		load_graph_draw (procdata->mem_graph);
 		if (procdata->selected_process)
 			update_sensitivity (procdata, FALSE);
 	}

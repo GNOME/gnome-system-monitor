@@ -30,7 +30,7 @@ load_graph_draw (LoadGraph *g)
     
     if (!g->disp->window) 
     	return;
-    
+  
     g->draw_width = g->disp->allocation.width - 2 * FRAME_WIDTH;
     g->draw_height = g->disp->allocation.height - 2 * FRAME_WIDTH - 2;
     
@@ -270,7 +270,7 @@ load_graph_alloc (LoadGraph *g)
 
     if (g->allocated)
 	return;
-    
+ 
     g->data = g_new0 (gfloat *, g->num_points);
     g->odata = g_new0 (gfloat *, g->num_points);
     g->pos = g_new0 (guint, g->num_points);
@@ -297,9 +297,6 @@ load_graph_configure (GtkWidget *widget, GdkEventConfigure *event,
 {
     LoadGraph *c = (LoadGraph *) data_ptr;
 
-    if (!c->draw)
-    	return TRUE;
-    	
     if (c->pixmap) {
 	gdk_pixmap_unref (c->pixmap);
 	c->pixmap = NULL;
@@ -323,7 +320,7 @@ load_graph_configure (GtkWidget *widget, GdkEventConfigure *event,
 		     0, 0,
 		     c->disp->allocation.width,
 		     c->disp->allocation.height);
-		     
+
     load_graph_draw (c);
     
     return TRUE;
@@ -335,7 +332,7 @@ load_graph_expose (GtkWidget *widget, GdkEventExpose *event,
 		   gpointer data_ptr)
 {
     LoadGraph *g = (LoadGraph *) data_ptr;
-    	
+   	
     gdk_draw_pixmap (widget->window,
 		     widget->style->fg_gc [GTK_WIDGET_STATE(widget)],
 		     g->pixmap,
@@ -377,14 +374,13 @@ load_graph_new (gint type, ProcData *procdata)
     	g->num_cpus ++;
     	i++;
     }
-g_print ("num cpus %d \n", g->num_cpus);
+
     g->type = type;
     switch (type) {
     case CPU_GRAPH:
     	g->n = 1;
 	g->num_datasets = g->num_cpus;
-	g_print ("%d \n", g->num_datasets);
-    	break;
+	break;
     case MEM_GRAPH:
     	g->n = 2;
 	g->num_datasets = 1;
