@@ -5,7 +5,7 @@
 
 /* The current table is only a test */
 static const gchar * const default_table[] = {
-	"0", "gnome-run.png",
+	/* "0", "gnome-run.png", */
 	"X", "gnome-mdi.png",
 
 	"aio" G_DIR_SEPARATOR_S "0", "gnome-run.png",
