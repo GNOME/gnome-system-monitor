@@ -649,7 +649,7 @@ create_main_window (ProcData *procdata)
 	
 	sys_box = create_sys_view (procdata);
 	gtk_widget_show (sys_box);
-	tab_label2 = gtk_label_new_with_mnemonic (_("Resource Monitor"));
+	tab_label2 = gtk_label_new (_("Resource Monitor"));
 	gtk_widget_show (tab_label2);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label2);
 	

@@ -749,7 +749,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	
 	proc_box = gtk_vbox_new (FALSE, 18);
 	gtk_container_set_border_width (GTK_CONTAINER (proc_box), 12);
-	tab_label = gtk_label_new_with_mnemonic (_("Process Listing"));
+	tab_label = gtk_label_new (_("Process Listing"));
 	gtk_widget_show (tab_label);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), proc_box, tab_label);
 	
@@ -836,7 +836,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	
 	sys_box = gtk_vbox_new (FALSE, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (sys_box), 12);
-	tab_label = gtk_label_new_with_mnemonic (_("Resource Monitor"));
+	tab_label = gtk_label_new (_("Resource Monitor"));
 	gtk_widget_show (tab_label);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label);
 	
