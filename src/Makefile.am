@@ -33,7 +33,8 @@ pixmap_DATA = \
 	
 EXTRA_DIST = \
 	README.hacking \
-	$(pixmap_DATA) 
+	$(pixmap_DATA) \
+	procman.schemas
 	
 install-data-local:
 	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) \
