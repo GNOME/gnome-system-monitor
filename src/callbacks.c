@@ -119,12 +119,20 @@ cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 				 _("Erik Johnsson (zaphod@linux.nu) - icon support"),
 				 NULL
 				 };
+
+	const gchar *documenters[] = {
+				 NULL
+	};
+
+	const gchar *translator_credits = _("translator_credits");
 				 
 	about = gnome_about_new (_("Process Manager"), VERSION,
 				 _("(C) 2001 Kevin Vandersloot"),
 				 _("Simple process viewer using libgtop"),
 				 authors,
-				 NULL, NULL, NULL);
+				 documenters,
+				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
+				 NULL);
 				 
 	gtk_widget_show (about);  
 	
