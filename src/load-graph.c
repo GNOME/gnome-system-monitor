@@ -30,17 +30,18 @@ void
 load_graph_draw (LoadGraph *g)
 {
 	guint i, j;
-	gint dely;
+	gfloat dely;
 
 	if (!g->disp->window)
 		return;
 
 	g->draw_width = g->disp->allocation.width - 2 * FRAME_WIDTH;
-	g->draw_height = g->disp->allocation.height - 2 * FRAME_WIDTH - 2;
+	g->draw_height = g->disp->allocation.height - 2 * FRAME_WIDTH;
 
 	if (!g->pixmap)
 		g->pixmap = gdk_pixmap_new (g->disp->window,
-					    g->draw_width, g->draw_height,
+					    g->disp->allocation.width,
+					    g->disp->allocation.height,
 					    gtk_widget_get_visual (g->disp)->depth);
 
 /* Create GC if necessary. */
@@ -74,14 +75,14 @@ load_graph_draw (LoadGraph *g)
 	gdk_draw_rectangle (g->pixmap,
 			    g->gc,
 			    FALSE, FRAME_WIDTH, FRAME_WIDTH,
-			    g->draw_width,
-			    g->disp->allocation.height - 2 * FRAME_WIDTH);
+			    g->draw_width - 1,
+			    g->draw_height - 1);
 
-	dely = g->draw_height / 5;
+	dely = (gfloat)(g->draw_height - 1) / 5;
 	for (i = 1; i <5; i++) {
-		gint y1 = g->draw_height + FRAME_WIDTH + 1 - i * dely;
+		gint y1 = FRAME_WIDTH + i * dely;
 		gdk_draw_line (g->pixmap, g->gc,
-			       FRAME_WIDTH, y1, FRAME_WIDTH + g->draw_width, y1);
+			       FRAME_WIDTH, y1, FRAME_WIDTH + g->draw_width - 1, y1);
 	}
 
 	for (i = 0; i < g->num_points; i++)
@@ -90,20 +91,21 @@ load_graph_draw (LoadGraph *g)
 	gdk_gc_set_line_attributes (g->gc, 2, GDK_LINE_SOLID, GDK_CAP_ROUND, GDK_JOIN_MITER );
 /* FIXME: try to do some averaging here to smooth out the graph */
 	for (j = 0; j < g->n; j++) {
-		float delx = (float)g->draw_width / ( g->num_points - 1);
+		gfloat delx = (gfloat)(g->draw_width - 1) / (g->num_points - 1);
 		gdk_gc_set_foreground (g->gc, &(g->colors [j + 2]));
 
 		for (i = 0; i < g->num_points - 1; i++) {
 
-			gint x1 = i * delx - FRAME_WIDTH;
-			gint x2 = (i + 1) * delx - FRAME_WIDTH;
-			gint y1 = g->data[i][j] * g->draw_height - FRAME_WIDTH - 1;
-			gint y2 = g->data[i+1][j] * g->draw_height - FRAME_WIDTH - 1;
+			gint x1 = g->draw_width - i * delx + FRAME_WIDTH - 1;
+			gint x2 = g->draw_width - (i + 1) * delx + FRAME_WIDTH - 1;
+			gint y1 = g->pos[i] - g->data[i][j] * (g->draw_height - 1) +
+				  FRAME_WIDTH - 1;
+			gint y2 = g->pos[i+1] - g->data[i+1][j] * (g->draw_height - 1) +
+				  FRAME_WIDTH - 1;
 
 			if ((g->data[i][j] != -1) && (g->data[i+1][j] != -1))
-				gdk_draw_line (g->pixmap, g->gc,
-					       g->draw_width - x2, g->pos[i + 1] - y2,
-					       g->draw_width - x1, g->pos[i] - y1);
+				gdk_draw_line (g->pixmap, g->gc, x2, y2, x1, y1);
+
 			g->pos [i] -= g->data [i][j];
 		}
 		g->pos[g->num_points - 1] -= g->data [g->num_points - 1] [j];
