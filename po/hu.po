@@ -6,15 +6,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: procman VERSION\n"
-"POT-Creation-Date: 2002-12-15 17:46+0100\n"
-"PO-Revision-Date: 2002-12-15 17:47+0100\n"
+"POT-Creation-Date: 2003-07-10 14:14+0200\n"
+"PO-Revision-Date: 2003-07-10 14:20+0200\n"
 "Last-Translator: Andras Timar <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:146 src/interface.c:476
+#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:147 src/interface.c:605
 msgid "System Monitor"
 msgstr "Rendszerfigyelő"
 
@@ -22,25 +22,25 @@ msgstr "Rendszerfigyelő"
 msgid "View current processes and monitor system state"
 msgstr "Az aktuális folyamatok megtekintése és a rendszerállapot figyelése"
 
-#: src/callbacks.c:123
+#: src/callbacks.c:124
 msgid "Kevin Vandersloot (kfv101@psu.edu)"
 msgstr "Kevin Vandersloot (kfv101@psu.edu)"
 
-#: src/callbacks.c:124
-msgid "Erik Johnsson (zaphod@linux.nu) - icon support"
-msgstr "Erik Johnsson (zaphod@linux.nu) - ikonok"
+#: src/callbacks.c:125
+msgid "Jorgen Scheibengruber <mfcn@gmx.de> - nicer devices treeview"
+msgstr "Jorgen Scheibengruber <mfcn@gmx.de> - szebb fanézet az eszközökhöz"
 
-#: src/callbacks.c:132
+#: src/callbacks.c:133
 msgid "translator_credits"
 msgstr ""
 "Tímár András <timar@gnome.hu>\n"
 "Ványi Róbert <robi@mora.u-szeged.hu>"
 
-#: src/callbacks.c:147
+#: src/callbacks.c:148
 msgid "(C) 2001 Kevin Vandersloot"
 msgstr "© 2001 Kevin Vandersloot"
 
-#: src/callbacks.c:148
+#: src/callbacks.c:149
 msgid "Simple process viewer using libgtop"
 msgstr "Egyszerű folyamatnézegető a libgtop használatával"
 
@@ -64,7 +64,7 @@ msgstr "Jelenleg nincs rejtett folyamat."
 msgid "Manage Hidden Processes"
 msgstr "Rejtett folyamatok kezelése"
 
-#: src/favorites.c:372
+#: src/favorites.c:376
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
@@ -72,290 +72,308 @@ msgstr ""
 "Ezek a folyamatok amiket kijelöltél elrejtésre. Egy folyamatot újra "
 "megjeleníthetsz úgy, hogy kitörlöd ebből a listából."
 
-#: src/favorites.c:376
-msgid "Hidden Processes"
-msgstr "Rejtett folyamatok"
+#: src/favorites.c:386
+msgid "_Hidden Processes:"
+msgstr "_Rejtett folyamatok:"
 
-#: src/favorites.c:389
+#: src/favorites.c:396
 msgid "_Remove From List"
 msgstr "_Törlés a listából"
 
-#: src/infoview.c:58
+#: src/infoview.c:80
 msgid "Process Info"
 msgstr "Folyamat infó"
 
-#: src/infoview.c:65
-msgid "Command : "
-msgstr "Parancs : "
+#: src/infoview.c:94
+msgid "Command:"
+msgstr "Parancs:"
 
-#: src/infoview.c:69
-msgid "Status : "
-msgstr "Állapot : "
+#: src/infoview.c:98
+msgid "Status:"
+msgstr "Állapot:"
 
-#: src/infoview.c:73
-msgid "Priority : "
-msgstr "Prioritás : "
+#: src/infoview.c:102
+msgid "Priority:"
+msgstr "Prioritás:"
 
-#: src/infoview.c:92
+#: src/infoview.c:126
 msgid "Memory Usage"
 msgstr "Memóriahasználat"
 
-#: src/infoview.c:100
-msgid "Total : "
-msgstr "Összesen : "
+#: src/infoview.c:140
+msgid "Total:"
+msgstr "Összes:"
 
-#: src/infoview.c:104
-msgid "RSS : "
-msgstr "RSS : "
+#: src/infoview.c:144
+msgid "RSS:"
+msgstr "RSS:"
 
-#: src/infoview.c:108
-msgid "Shared : "
-msgstr "Osztott : "
+#: src/infoview.c:148
+msgid "Shared:"
+msgstr "Osztott:"
 
-#: src/infoview.c:156
+#: src/infoview.c:193
 #, c-format
-msgid "Very High  ( Nice %d )"
-msgstr "Nagyon magas ( Nice %d )"
+msgid "Very high - nice %d"
+msgstr "Nagyon magas - nice %d"
 
-#: src/infoview.c:158
+#: src/infoview.c:195
 #, c-format
-msgid "High  ( Nice %d )"
-msgstr "Magas ( Nice %d ) "
+msgid "High - nice %d"
+msgstr "Magas - nice %d"
 
-#: src/infoview.c:160
+#: src/infoview.c:197
 #, c-format
-msgid "Normal  ( Nice %d )"
-msgstr "Normális ( Nice %d )"
+msgid "Normal - nice %d"
+msgstr "Normál - nice %d"
 
-#: src/infoview.c:162
+#: src/infoview.c:199
 #, c-format
-msgid "Low  ( Nice %d )"
-msgstr "Alacsony ( Nice %d ) "
+msgid "Low - nice %d"
+msgstr "Alacsony - nice %d"
 
-#: src/infoview.c:164
+#: src/infoview.c:201
 #, c-format
-msgid "Very Low  ( Nice %d )"
-msgstr "Nagyon alacsony ( Nice %d )"
+msgid "Very low - nice %d"
+msgstr "Nagyon alacsony - nice %d"
 
-#: src/interface.c:53
+#: src/interface.c:52
 msgid "_Change Priority..."
 msgstr "_Prioritás megváltoztatása..."
 
-#: src/interface.c:53 src/interface.c:133
+#: src/interface.c:52 src/interface.c:143
 msgid "Change the importance (nice value) of a process"
 msgstr "Egy folyamat fontosságának (nice érték) megváltoztatása"
 
-#: src/interface.c:58 src/procdialogs.c:96
+#: src/interface.c:57 src/procdialogs.c:100
 msgid "_Hide Process"
 msgstr "Folyamat _elrejtése"
 
-#: src/interface.c:58 src/interface.c:144
+#: src/interface.c:57 src/interface.c:154
 msgid "Hide a process"
 msgstr "Elrejt egy folyamatot"
 
-#: src/interface.c:64 src/interface.c:240
+#: src/interface.c:63 src/interface.c:249
 msgid "End _Process"
 msgstr "Folyamat _bezárása"
 
-#: src/interface.c:64
+#: src/interface.c:63
 msgid "Force a process to finish."
 msgstr "Befejezésre kényszeríti a folyamatot."
 
-#: src/interface.c:69 src/procdialogs.c:146 src/procdialogs.c:724
+#: src/interface.c:68 src/procdialogs.c:150 src/procdialogs.c:835
 msgid "_Kill Process"
 msgstr "Folyamat _kilövése"
 
-#: src/interface.c:69
+#: src/interface.c:68
 msgid "Force a process to finish now."
 msgstr "Kényszeríti a folyamatot az azonnali befejezésre."
 
-#: src/interface.c:75
+#: src/interface.c:74
 msgid "_Hidden Processes"
 msgstr "_Rejtett folyamatok"
 
-#: src/interface.c:76
+#: src/interface.c:75
 msgid "View and edit your list of hidden processes"
 msgstr "A rejtett folyamatok listájának megtekintése és szerkesztése"
 
-#: src/interface.c:87
+#: src/interface.c:86
 msgid "_Memory Maps"
 msgstr "_Memória térképek"
 
-#: src/interface.c:87 src/interface.c:138
+#: src/interface.c:86 src/interface.c:148
 msgid "View the memory maps associated with a process"
 msgstr "A folyamatokhoz hozzárendelt memóriatérképek megtekintése"
 
-#: src/interface.c:113
+#: src/interface.c:92
+msgid "Process _Dependencies"
+msgstr "Folyamat _függőségei"
+
+#: src/interface.c:92
+msgid "Display a tree showing process dependencies"
+msgstr "Folyamat függőségeinek megjelenítése fa formájában"
+
+#: src/interface.c:97
+msgid "_Threads"
+msgstr "_Szálak"
+
+#: src/interface.c:97
+msgid "Display threads (subprocesses)"
+msgstr "Szálak megjelenítése (alfolyamatok)"
+
+#: src/interface.c:123
 msgid "All Processes"
 msgstr "Összes folyamat"
 
-#: src/interface.c:113
+#: src/interface.c:123
 msgid "View processes being run by all users"
 msgstr "Az összes felhasználó által futtatott folyamatok megtekintése"
 
-#: src/interface.c:118
+#: src/interface.c:128
 msgid "My Processes"
 msgstr "Saját folyamatok"
 
-#: src/interface.c:118
+#: src/interface.c:128
 msgid "View processes being run by you"
 msgstr "Az általad futtatott folyamatok megtekintése"
 
-#: src/interface.c:123
+#: src/interface.c:133
 msgid "Active Processes"
 msgstr "Aktív folyamatok"
 
-#: src/interface.c:123
+#: src/interface.c:133
 msgid "View only active processes"
 msgstr "Csak az aktív folyamatok megjelenítése"
 
-#: src/interface.c:133
+#: src/interface.c:143
 msgid "Change Priority ..."
 msgstr "Prioritás megváltoztatása ..."
 
-#: src/interface.c:138 src/memmaps.c:257
+#: src/interface.c:148 src/memmaps.c:306
 msgid "Memory Maps"
 msgstr "Memóriatérképek"
 
-#: src/interface.c:144 src/procdialogs.c:82
+#: src/interface.c:154 src/procdialogs.c:82
 msgid "Hide Process"
 msgstr "Folyamat elrejtése"
 
-#: src/interface.c:150 src/procdialogs.c:149 src/procdialogs.c:727
+#: src/interface.c:160 src/procdialogs.c:153 src/procdialogs.c:838
 msgid "End Process"
 msgstr "Folyamat befejezése"
 
-#: src/interface.c:150
+#: src/interface.c:160
 msgid "Force a process to finish"
 msgstr "Folyamat kényszerítése befejezésre"
 
-#: src/interface.c:155 src/procdialogs.c:145 src/procdialogs.c:723
+#: src/interface.c:165 src/procdialogs.c:149 src/procdialogs.c:834
 msgid "Kill Process"
 msgstr "Folyamat kilövése"
 
-#: src/interface.c:155
+#: src/interface.c:165
 msgid "Force a process to finish now"
 msgstr "Folyamat kényszerítése azonnali befejezésre"
 
-#: src/interface.c:162
+#: src/interface.c:172
 msgid "More _Info >>"
 msgstr "Több _infó >>"
 
-#: src/interface.c:163
+#: src/interface.c:173
 msgid "<< Less _Info"
 msgstr "<< Kevesebb _infó"
 
-#: src/interface.c:198
-msgid "Sea_rch :"
-msgstr "_Keres :"
+#: src/interface.c:208
+msgid "Sea_rch:"
+msgstr "_Keresés:"
 
-#: src/interface.c:218
-msgid "Vie_w"
-msgstr "_Megtekintés"
+#: src/interface.c:227
+msgid "Vie_w:"
+msgstr "_Megtekintés:"
 
-#: src/interface.c:248
+#: src/interface.c:254
 msgid "More _Info"
 msgstr "Több _infó"
 
-#: src/interface.c:284
+#: src/interface.c:342
 msgid "Name"
 msgstr "Név"
 
-#: src/interface.c:285
+#: src/interface.c:343
 msgid "Directory"
 msgstr "Könyvtár"
 
-#: src/interface.c:286
-msgid "Used Space"
-msgstr "Használt terület"
+#: src/interface.c:344
+msgid "Type"
+msgstr "Típus"
 
-#: src/interface.c:287
-msgid "Total Space"
-msgstr "Összes terület"
+#: src/interface.c:345
+msgid "Total"
+msgstr "Összes"
 
-#: src/interface.c:300
-#, no-c-format
-msgid "% CPU Usage History"
-msgstr "% CPU-használat előzmények"
+#: src/interface.c:346
+msgid "Used"
+msgstr "Használt"
 
-#: src/interface.c:306
-#, no-c-format
-msgid "% Memory / Swap Usage History"
-msgstr "% Memória / swap használat előzmények"
+#: src/interface.c:367
+msgid "CPU History"
+msgstr "CPU-használat előzmények"
 
-#: src/interface.c:327
-msgid "CPU Used :"
-msgstr "CPU-használat :"
+#: src/interface.c:395
+msgid "Used CPU:"
+msgstr "Használt CPU:"
 
-#: src/interface.c:356 src/proctable.c:128
-msgid "Memory"
-msgstr "Memória"
+#: src/interface.c:410
+msgid "Memory and Swap History"
+msgstr "Memória / swap használat előzmények"
 
-#: src/interface.c:361 src/interface.c:397
-msgid "Used :"
-msgstr "Használt :"
+#: src/interface.c:443
+msgid "Used memory:"
+msgstr "Használt memória:"
 
-#: src/interface.c:372 src/interface.c:408
-msgid "Total :"
-msgstr "Összes :"
+#: src/interface.c:452 src/interface.c:479
+msgid "of"
+msgstr "/"
 
-#: src/interface.c:392
-msgid "Swap"
-msgstr "Swap"
+#: src/interface.c:470
+msgid "Used swap:"
+msgstr "Használt swap:"
 
-#: src/interface.c:422 src/procdialogs.c:657
+#: src/interface.c:500 src/procdialogs.c:762
 msgid "Devices"
 msgstr "Eszközök"
 
-#: src/interface.c:489 src/procdialogs.c:529
-msgid "Process _Listing"
-msgstr "Folyamat_lista"
+#: src/interface.c:617 src/procdialogs.c:601
+msgid "Process Listing"
+msgstr "Folyamatlista"
 
-#: src/interface.c:495 src/procdialogs.c:592
-msgid "System _Monitor"
-msgstr "Rendszer_figyelő"
+#: src/interface.c:623 src/procdialogs.c:681
+msgid "Resource Monitor"
+msgstr "Rendszerfigyelő"
 
-#: src/interface.c:549
+#: src/interface.c:681
 msgid "Application Manager"
 msgstr "Alkalmazás menedzser"
 
-#: src/interface.c:559
+#: src/interface.c:687
 msgid "Running Applications"
 msgstr "Futó alkalmazások"
 
-#: src/interface.c:578
+#: src/interface.c:706
 msgid "_Close Application"
 msgstr "Alkalmazás _bezárása"
 
-#: src/memmaps.c:191
+#: src/memmaps.c:228
 msgid "Filename"
 msgstr "Fájlnév"
 
-#: src/memmaps.c:191
+#: src/memmaps.c:228
 msgid "VM Start"
 msgstr "VM kezdet"
 
-#: src/memmaps.c:191
+#: src/memmaps.c:228
 msgid "VM End"
 msgstr "VM vég"
 
-#: src/memmaps.c:192
+#: src/memmaps.c:229 src/proctable.c:128
+msgid "VM Size"
+msgstr "VM méret"
+
+#: src/memmaps.c:229
 msgid "Flags"
 msgstr "Flag-ek"
 
-#: src/memmaps.c:192
+#: src/memmaps.c:229
 msgid "VM offset"
 msgstr "VM offszet"
 
-#: src/memmaps.c:192
+#: src/memmaps.c:230
 msgid "Device"
 msgstr "Eszköz"
 
-#: src/memmaps.c:192
+#: src/memmaps.c:230
 msgid "Inode"
 msgstr "Inode"
 
-#: src/memmaps.c:272
+#: src/memmaps.c:322
 msgid "Process Name :"
 msgstr "Folyamatnév :"
 
@@ -415,39 +433,39 @@ msgstr ""
 "(Válaszd a 'Rejtett folyamatok' pontot a Beállítások menüben a "
 "megjelenítéshez)"
 
-#: src/procdialogs.c:91 src/procdialogs.c:169
+#: src/procdialogs.c:95 src/procdialogs.c:177
 msgid "Show this dialog next time."
 msgstr "Legközelebb is mutasd ezt az ablakot."
 
-#: src/procdialogs.c:150 src/procdialogs.c:728
+#: src/procdialogs.c:154 src/procdialogs.c:839
 msgid "_End Process"
 msgstr "Folyamat _befejezése"
 
-#: src/procdialogs.c:157
+#: src/procdialogs.c:161
 msgid "Unsaved data will be lost."
 msgstr "A nem mentett adatok elvesznek."
 
-#: src/procdialogs.c:192
+#: src/procdialogs.c:200
 msgid "( Very High Priority )"
 msgstr "( Nagyon magas prioritás )"
 
-#: src/procdialogs.c:194
+#: src/procdialogs.c:202
 msgid "( High Priority )"
 msgstr "( Magas prioritás )"
 
-#: src/procdialogs.c:196
+#: src/procdialogs.c:204
 msgid "( Normal Priority )"
 msgstr "( Normál prioritás )"
 
-#: src/procdialogs.c:198
+#: src/procdialogs.c:206
 msgid "( Low Priority )"
 msgstr "( Alacsony prioritás )"
 
-#: src/procdialogs.c:200
+#: src/procdialogs.c:208
 msgid "( Very Low Priority)"
 msgstr "( Nagyon alacsony prioritás )"
 
-#: src/procdialogs.c:243
+#: src/procdialogs.c:251
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -455,80 +473,67 @@ msgstr ""
 "A folyamat prioritását a nice értéke adja meg. Alacsony nice érték magasabb "
 "prioritásnak felel meg."
 
-#: src/procdialogs.c:251 src/procdialogs.c:732
+#: src/procdialogs.c:259 src/procdialogs.c:843
 msgid "Change Priority"
 msgstr "Prioritás megváltoztatása"
 
-#: src/procdialogs.c:254 src/procdialogs.c:733
+#: src/procdialogs.c:262 src/procdialogs.c:844
 msgid "Change _Priority"
 msgstr "Prioritás _megváltoztatása"
 
-#: src/procdialogs.c:273
+#: src/procdialogs.c:282
 msgid "Nice Value :"
 msgstr "Nice érték :"
 
-#: src/procdialogs.c:472
+#: src/procdialogs.c:544
 msgid "Icon"
 msgstr "Ikon"
 
-#: src/procdialogs.c:516
+#: src/procdialogs.c:587
 msgid "Preferences"
-msgstr "Tulajdonságok"
+msgstr "Beállítások"
 
-#: src/procdialogs.c:540
-msgid "Update Interval ( seconds ) :"
-msgstr "Frissítési intervallum ( másodperc ) :"
+#: src/procdialogs.c:608
+msgid "Behavior"
+msgstr "Viselkedés"
 
-#: src/procdialogs.c:550 src/procdialogs.c:616
-msgid "_Set"
-msgstr "_Beállítás"
+#: src/procdialogs.c:627 src/procdialogs.c:707
+msgid "_Update Interval ( seconds ) :"
+msgstr "_Frissítési intervallum ( másodperc ) :"
 
-#: src/procdialogs.c:556
-msgid "Show Process Dependencies"
-msgstr "Folyamat függőségeinek megjelenítése"
+#: src/procdialogs.c:643
+msgid "Show warning dialog when ending or _killing processes"
+msgstr "F_olyamatok leállításánál vagy kilövésénél figyelmeztető üzenet megjelenítése"
 
-#: src/procdialogs.c:563
-msgid "Show Threads"
-msgstr "Szálak mutatása"
+#: src/procdialogs.c:653
+msgid "Show warning dialog when _hiding processes"
+msgstr "Folyama_tok elrejtésénél figyelmeztető üzenet megjelenítése"
 
-#: src/procdialogs.c:570
-msgid "Show warning dialog when ending or killing processes"
-msgstr ""
-"Folyamatok leállításánál vagy kilövésénél figyelmeztető üzenet megjelenítése "
+#: src/procdialogs.c:663
+msgid "Process Fields"
+msgstr "Folyamatmezők"
 
-#: src/procdialogs.c:577
-msgid "Show warning dialog when hiding processes"
-msgstr "Folyamatok elrejtésénél figyelmeztető üzenet megjelenítése"
-
-#: src/procdialogs.c:586
-msgid "Process _Fields"
-msgstr "Folyamat _mezők"
-
-#: src/procdialogs.c:596
+#: src/procdialogs.c:688
 msgid "Graphs"
 msgstr "Grafikonok"
 
-#: src/procdialogs.c:605 src/procdialogs.c:663
-msgid "Update Speed ( seconds ) :"
-msgstr "Frissítési sebesség ( másodperc ) :"
+#: src/procdialogs.c:724
+msgid "_Background Color:"
+msgstr "_Háttérszín:"
 
-#: src/procdialogs.c:625
-msgid "Background Color :"
-msgstr "Háttérszín :"
+#: src/procdialogs.c:743
+msgid "_Grid Color:"
+msgstr "_Rácsszín:"
 
-#: src/procdialogs.c:641
-msgid "Grid Color :"
-msgstr "Rácsszín :"
+#: src/procdialogs.c:781
+msgid "Update _Interval ( seconds ) :"
+msgstr "Frissítési _intervallum ( másodperc ) :"
 
-#: src/procdialogs.c:676
-msgid "Se_t"
-msgstr "B_eállítás"
-
-#: src/procdialogs.c:752
+#: src/procdialogs.c:863
 msgid "Root Password :"
 msgstr "Rendszergazda jelszó :"
 
-#: src/procdialogs.c:797
+#: src/procdialogs.c:908
 msgid "Wrong Password."
 msgstr "Hibás jelszó."
 
@@ -553,8 +558,8 @@ msgid "Status"
 msgstr "Állapot"
 
 #: src/proctable.c:128
-msgid "VM Size"
-msgstr "VM méret"
+msgid "Memory"
+msgstr "Memória"
 
 #: src/proctable.c:128
 msgid "Resident Memory"
@@ -581,23 +586,23 @@ msgstr "Nice"
 msgid "ID"
 msgstr "ID"
 
-#: src/proctable.c:272
+#: src/proctable.c:270
 msgid "Running"
 msgstr "Fut"
 
-#: src/proctable.c:278
+#: src/proctable.c:276
 msgid "Stopped"
-msgstr "Áll"
+msgstr "Leállítva"
 
-#: src/proctable.c:283
+#: src/proctable.c:281
 msgid "Sleeping"
 msgstr "Alszik"
 
-#: src/proctable.c:412
+#: src/proctable.c:410
 msgid " (thread)"
 msgstr " (szál)"
 
-#: src/proctable.c:938
+#: src/proctable.c:947
 #, c-format
 msgid "%s could not be found."
 msgstr "%s nem található."
@@ -626,3 +631,39 @@ msgstr "%.0f MB"
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
+
+#~ msgid "Erik Johnsson (zaphod@linux.nu) - icon support"
+#~ msgstr "Erik Johnsson (zaphod@linux.nu) - ikonok"
+
+#~ msgid "Hidden Processes"
+#~ msgstr "Rejtett folyamatok"
+
+#~ msgid "Status : "
+#~ msgstr "Állapot : "
+
+#~ msgid "Total : "
+#~ msgstr "Összesen : "
+
+#~ msgid "Used Space"
+#~ msgstr "Használt terület"
+
+#~ msgid "Total Space"
+#~ msgstr "Összes terület"
+
+#~ msgid "CPU Used :"
+#~ msgstr "CPU-használat :"
+
+#~ msgid "Swap"
+#~ msgstr "Swap"
+
+#~ msgid "System _Monitor"
+#~ msgstr "Rendszer_figyelő"
+
+#~ msgid "_Set"
+#~ msgstr "_Beállítás"
+
+#~ msgid "Update Speed ( seconds ) :"
+#~ msgstr "Frissítési sebesség ( másodperc ) :"
+
+#~ msgid "Se_t"
+#~ msgstr "B_eállítás"
