@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman 2.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-19 15:28+0100\n"
-"PO-Revision-Date: 2005-01-19 15:28+0100\n"
+"POT-Creation-Date: 2005-02-08 14:01+0100\n"
+"PO-Revision-Date: 2005-02-08 14:02+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -62,7 +62,7 @@ msgstr "Prosesser som er skjult:"
 msgid "_Remove From List"
 msgstr "Fje_rn fra listen"
 
-#: src/favorites.c:429 src/procdialogs.c:277
+#: src/favorites.c:429 src/procdialogs.c:279
 msgid "Note:"
 msgstr "Merk:"
 
@@ -147,12 +147,12 @@ msgid "Show process threads"
 msgstr "Vis tråder for prosesser"
 
 #: src/gnome-system-monitor.schemas.in.h:18
-msgid "Show waring dialog when killing processes"
-msgstr "Vis advarsel når prosesser termineres"
-
-#: src/gnome-system-monitor.schemas.in.h:19
 msgid "Show warning dialog when hiding processes"
 msgstr "Vis advarsel når prosesser skjules"
+
+#: src/gnome-system-monitor.schemas.in.h:19
+msgid "Show warning dialog when killing processes"
+msgstr "Vis advarsel når prosesser termineres"
 
 #: src/gnome-system-monitor.schemas.in.h:20
 msgid "Time in milliseconds between updates of the devices list"
@@ -231,7 +231,7 @@ msgstr "Avslutt _prosess"
 msgid "Force process to finish normally"
 msgstr "Tving en prosess til å avslutte normalt"
 
-#: src/interface.c:60 src/interface.c:136 src/procdialogs.c:120
+#: src/interface.c:60 src/interface.c:136 src/procdialogs.c:122
 msgid "_Kill Process"
 msgstr "_Drep prosess"
 
@@ -263,7 +263,7 @@ msgstr "_Tråder"
 msgid "Show each thread as a separate process"
 msgstr "Vis hver tråd som en separat prosess"
 
-#: src/interface.c:89 src/interface.c:148 src/procdialogs.c:82
+#: src/interface.c:89 src/interface.c:148 src/procdialogs.c:84
 msgid "_Hide Process"
 msgstr "_Skjul prosess"
 
@@ -295,7 +295,7 @@ msgstr "Åpne _filer"
 msgid "View the files opened by a process"
 msgstr "Vis filer som er åpnet av en prosess"
 
-#: src/interface.c:131 src/procdialogs.c:129
+#: src/interface.c:131 src/procdialogs.c:131
 msgid "_End Process"
 msgstr "_Avslutt prosess"
 
@@ -347,7 +347,7 @@ msgstr "Enhet"
 msgid "Directory"
 msgstr "Katalog"
 
-#: src/interface.c:337 src/openfiles.c:221
+#: src/interface.c:337 src/openfiles.c:226
 msgid "Type"
 msgstr "Type"
 
@@ -388,15 +388,15 @@ msgstr "av"
 msgid "Used swap:"
 msgstr "Swap brukt:"
 
-#: src/interface.c:523 src/procdialogs.c:752
+#: src/interface.c:523 src/procdialogs.c:754
 msgid "Devices"
 msgstr "Enheter"
 
-#: src/interface.c:651 src/procdialogs.c:577
+#: src/interface.c:651 src/procdialogs.c:579
 msgid "Processes"
 msgstr "Prosesser"
 
-#: src/interface.c:657 src/procdialogs.c:664
+#: src/interface.c:657 src/procdialogs.c:666
 msgid "Resources"
 msgstr "Ressurser"
 
@@ -468,21 +468,22 @@ msgstr "ukjent type"
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: src/openfiles.c:220
+#: src/openfiles.c:225
 msgid "FD"
 msgstr "FD"
 
-#: src/openfiles.c:222
+#: src/openfiles.c:227
 msgid "Object"
 msgstr "Objekt"
 
-#: src/openfiles.c:299
+#: src/openfiles.c:305
 msgid "Open Files"
 msgstr "Åpne filer"
 
-#: src/openfiles.c:319
-msgid "Process name:"
-msgstr "Prosessnavn:"
+#: src/openfiles.c:326
+#, c-format
+msgid "Files opened by process \"%s\":"
+msgstr "Filer som er åpnet av prosess «%s»:"
 
 #: src/procactions.c:53
 msgid "No such process."
@@ -534,12 +535,12 @@ msgid "An error occured while killing the process."
 msgstr "En feil oppsto under dreping av prosessen."
 
 #. translators: primary alert message
-#: src/procdialogs.c:63
+#: src/procdialogs.c:65
 msgid "Hide the selected process?"
 msgstr "Skjul valgt prosess?"
 
 #. translators: secondary alert messagex
-#: src/procdialogs.c:72
+#: src/procdialogs.c:74
 msgid ""
 "Hidden processes are no longer visible in the process list. You can re-"
 "enable them by selecting the \"Hidden Processes\" entry in the View menu."
@@ -548,12 +549,12 @@ msgstr ""
 "igjen ved å velge «Skjulte prosesser» i Vis-menyen."
 
 #. translators: primary alert message
-#: src/procdialogs.c:115
+#: src/procdialogs.c:117
 msgid "Kill the selected process?"
 msgstr "Terminer valgt prosess?"
 
 #. translators: secondary alert message
-#: src/procdialogs.c:117
+#: src/procdialogs.c:119
 msgid ""
 "Killing a process, you could destroy your data, break the working session or "
 "create a security risk. Only misbehaving processes should be killed."
@@ -563,12 +564,12 @@ msgstr ""
 "ikke oppfører seg som de skal bør termineres."
 
 #. translators: primary alert message
-#: src/procdialogs.c:124
+#: src/procdialogs.c:126
 msgid "End the selected process?"
 msgstr "Avslutt valgt prosess?"
 
 #. translators: secondary alert message
-#: src/procdialogs.c:126
+#: src/procdialogs.c:128
 msgid ""
 "Ending a process, you could destroy your data, break the working session or "
 "create a security risk. Only misbehaving processes should be ended."
@@ -577,39 +578,39 @@ msgstr ""
 "slutte å fungere eller du kan skape en sikkerhetsrisiko. Kun prosesser som "
 "ikke oppfører seg som de skal bør avsluttes"
 
-#: src/procdialogs.c:158
+#: src/procdialogs.c:160
 msgid "(Very High Priority)"
 msgstr "(Meget høy prioritet)"
 
-#: src/procdialogs.c:160
+#: src/procdialogs.c:162
 msgid "(High Priority)"
 msgstr "(Høy prioritet)"
 
-#: src/procdialogs.c:162
+#: src/procdialogs.c:164
 msgid "(Normal Priority)"
 msgstr "(Normal prioritet)"
 
-#: src/procdialogs.c:164
+#: src/procdialogs.c:166
 msgid "(Low Priority)"
 msgstr "(Lav prioritet)"
 
-#: src/procdialogs.c:166
+#: src/procdialogs.c:168
 msgid "(Very Low Priority)"
 msgstr "(Meget lav prioritet)"
 
-#: src/procdialogs.c:219
+#: src/procdialogs.c:221
 msgid "Change Priority"
 msgstr "Endre prioritet"
 
-#: src/procdialogs.c:240
+#: src/procdialogs.c:242
 msgid "Change _Priority"
 msgstr "Endre _prioritet"
 
-#: src/procdialogs.c:261
+#: src/procdialogs.c:263
 msgid "_Nice value:"
 msgstr "_Nice-verdi:"
 
-#: src/procdialogs.c:278
+#: src/procdialogs.c:280
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -617,57 +618,67 @@ msgstr ""
 "Prioriteten for en prosess gis av dens «nice»-verdi. En lavere verdi betyr "
 "høyere prioritet."
 
-#: src/procdialogs.c:463
+#: src/procdialogs.c:465
 msgid "Processes i_nfo showed in list:"
 msgstr "I_nformasjon for prosesser som vises i listen:"
 
-#: src/procdialogs.c:514
+#: src/procdialogs.c:516
 msgid "Icon"
 msgstr "Ikon"
 
-#: src/procdialogs.c:554
+#: src/procdialogs.c:556
 msgid "System Monitor Preferences"
 msgstr "Brukervalg for systemmonitor"
 
-#: src/procdialogs.c:584
+#: src/procdialogs.c:586
 msgid "Behavior"
 msgstr "Oppførsel"
 
-#: src/procdialogs.c:603 src/procdialogs.c:690
+#: src/procdialogs.c:605 src/procdialogs.c:692
 msgid "_Update interval:"
 msgstr "_Oppdateringsintervall:"
 
-#: src/procdialogs.c:619 src/procdialogs.c:707 src/procdialogs.c:788
+#: src/procdialogs.c:621 src/procdialogs.c:709 src/procdialogs.c:790
 msgid "seconds"
 msgstr "sekunder"
 
-#: src/procdialogs.c:626
+#: src/procdialogs.c:628
 msgid "Alert before ending or _killing processes"
 msgstr "Vis advarsel ved avslutting eller _terminering av prosesser"
 
-#: src/procdialogs.c:636
+#: src/procdialogs.c:638
 msgid "Alert before _hiding processes"
 msgstr "Vis advarsel før prosesser _skjules"
 
-#: src/procdialogs.c:646
+#: src/procdialogs.c:648
 msgid "Process Fields"
 msgstr "Prosessfelt"
 
-#: src/procdialogs.c:671
+#: src/procdialogs.c:673
 msgid "Graphs"
 msgstr "Grafer"
 
-#: src/procdialogs.c:714
+#: src/procdialogs.c:716
 msgid "_Background color:"
 msgstr "_Bakgrunnsfarge:"
 
-#: src/procdialogs.c:733
+#: src/procdialogs.c:735
 msgid "_Grid color:"
 msgstr "_Farge på rutenett:"
 
-#: src/procdialogs.c:771
+#: src/procdialogs.c:773
 msgid "Update _interval:"
 msgstr "Oppdaterings_intervall:"
+
+#: src/procdialogs.c:831
+#, c-format
+msgid "Cannot kill process with pid %d with signal %d"
+msgstr "Kan ikke terminere prosess med pid %d med signal %d"
+
+#: src/procdialogs.c:834
+#, c-format
+msgid "Cannot change the priority of process with pid %d to %d"
+msgstr "Kan ikke endre prioritet for prosess med pid %d til %d"
 
 #: src/proctable.c:163
 msgid "Process Name"
