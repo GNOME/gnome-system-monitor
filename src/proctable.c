@@ -339,6 +339,29 @@ get_process_name (ProcData *procdata, ProcInfo *info, gchar *cmd, gchar *args)
 
 }
 
+ProcInfo *
+proctable_find_process (gint pid, gchar *name, ProcData *procdata)
+{
+
+	GList *list = procdata->info;
+	
+	while (list) {
+		ProcInfo *info = list->data;
+		
+		if (pid == info->pid)
+			return info;
+		
+		if (name) {	
+			if (g_strcasecmp (name, info->name) == 0)
+				return info;
+		}
+		
+		list = g_list_next (list);
+	}
+
+	return NULL;
+}
+
 static ProcInfo *
 find_parent (ProcData *data, gint pid)
 {
@@ -361,32 +384,6 @@ find_parent (ProcData *data, gint pid)
 	return NULL;
 }
 
-/* He he. Check to see if the process links to libX11. */
-static gboolean
-is_graphical (ProcInfo *info)
-{
-	glibtop_map_entry *memmaps;
-	glibtop_proc_map procmap;
-	char *string=NULL;
-	gint i;
-	
-	memmaps = glibtop_get_proc_map (&procmap, info->pid);
-	
-	for (i = 0; i < procmap.number; i++) {
-		if (memmaps [i].flags & (1 << GLIBTOP_MAP_ENTRY_FILENAME)) {
-			string = strstr (memmaps[i].filename, "libX11");
-			if (string) {
-				g_free (memmaps);
-				return TRUE;
-			}
-		}
-	}
-	
-	g_free (memmaps);
-	
-	return FALSE;
-}
-
 void
 insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 {
@@ -399,10 +396,6 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	if ((procdata->config.whose_process == ACTIVE_PROCESSES) && 
 	    (!info->running))
 		return;
-		
-	/* crazy hack to see if process links to libX11 */	
-	/*if (!is_graphical (info))
-		return;*/
 
 	/* Don't show processes that user has blacklisted */
 	if (is_process_blacklisted (procdata, info->name))
@@ -421,10 +414,10 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 		name = g_strdup (info->name);
 			
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-	if (info->has_parent && procdata->config.show_tree) {
-		GtkTreePath *parent_node = gtk_tree_model_get_path (model, &info->parent_node);
+	if (info->parent && procdata->config.show_tree && info->parent->visible) {
+		GtkTreePath *parent_node = gtk_tree_model_get_path (model, &info->parent->node);
 		
-		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, &info->parent_node, 0);
+		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, &info->parent->node, 0);
 		if (!gtk_tree_view_row_expanded (GTK_TREE_VIEW (procdata->tree), parent_node))     
 			gtk_tree_view_expand_row (GTK_TREE_VIEW (procdata->tree),
 					  parent_node,
@@ -476,8 +469,8 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	info->visible = TRUE;
 }
 
-/* Kind of a hack. When a parent process is removed we remove all the info
-** pertaining to the child processes and then readd them later
+/* Removing a node with children - make sure the children are queued
+** to be readded.
 */
 static void
 remove_children_from_tree (ProcData *procdata, GtkTreeModel *model,
@@ -495,8 +488,8 @@ remove_children_from_tree (ProcData *procdata, GtkTreeModel *model,
 		if (child_info) {
 			if (procdata->selected_process == child_info) 
 				procdata->selected_process = NULL;
-			procdata->info = g_list_remove (procdata->info, child_info);
-			proctable_free_info (child_info);
+			child_info ->queue = NEEDS_ADDITION;
+			child_info->visible = FALSE;
 		}
 	} while (gtk_tree_model_iter_next (model, parent));
 }
@@ -507,6 +500,7 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 	GtkTreeModel *model;
 	GtkTreeIter iter, child;
 	GtkTreePath *node;
+	GList *children;
 	
 	g_return_if_fail (info);
 	
@@ -515,17 +509,39 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 	iter = info->node;
-	
-	/* remove all children from tree. They will be added again in refresh_list */
-	if (gtk_tree_model_iter_children (model, &child, &iter))
-		remove_children_from_tree (procdata, model, &child);
-	
+
 	if (procdata->selected_process == info) 
 		procdata->selected_process = NULL;
 	
 	gtk_tree_store_remove (GTK_TREE_STORE (model), &iter);
 	
 	info->visible = FALSE;	
+}
+
+static void
+remove_info_from_list (ProcInfo *info, ProcData *procdata)
+{
+	GList *children = info->children;
+		
+	/* Remove info from parent list */
+	if (info->parent)
+		info->parent->children = g_list_remove (info->parent->children, info);
+
+	/* Add any children to parent list */	
+	while (children) {
+		ProcInfo *child_info = children->data;
+		
+		if (info->parent)	
+			info->parent->children = g_list_append (info->parent->children, child_info);
+		child_info->parent = info->parent;
+			
+		children = g_list_next (children);
+	}
+	
+	/* Remove from list */
+	procdata->info = g_list_remove (procdata->info, info);
+	proctable_free_info (info);
+	
 }
 
 static void
@@ -696,7 +712,11 @@ get_info (ProcData *procdata, gint pid)
 	
 	info->pixbuf = pretty_table_get_icon (procdata->pretty_table, info->name, pid);
 	
-	parentinfo = find_parent (procdata, info->parent_pid);
+	info->parent = find_parent (procdata, info->parent_pid);
+	if (info->parent)
+		info->parent->children = g_list_append (info->parent->children, info);
+
+#if 0
 	if (parentinfo) {
 		/* Ha Ha - don't expand different threads - check to see if parent has
 		** same name and same mem usage - I don't know if this is too smart though.
@@ -722,101 +742,95 @@ get_info (ProcData *procdata, gint pid)
 		info->has_parent = FALSE;
 		info->is_thread = FALSE;
 	}
+#endif
 	
 	info->visible = FALSE;
 	
 	return info;
 }
 
-ProcInfo *
-proctable_find_process (gint pid, gchar *name, ProcData *procdata)
+static gboolean
+find_match_in_new_list (gint pid, unsigned *pid_list, gint n)
 {
-
-	GList *list = procdata->info;
+	gint i = 0;
 	
-	while (list) {
-		ProcInfo *info = list->data;
-		
-		if (pid == info->pid)
-			return info;
-		
-		if (name) {	
-			if (g_strcasecmp (name, info->name) == 0)
-				return info;
-		}
-		
-		list = g_list_next (list);
+	for (i=0; i<n; i++){
+		if (pid_list[i] == pid) return TRUE;	
 	}
 
-	return NULL;
+	return FALSE;
 }
 
 static void
 refresh_list (ProcData *data, unsigned *pid_list, gint n)
 {
 	ProcData *procdata = data;
-	GList *list = procdata->info;
+	GList *list, *removal_list = NULL;
+	GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 	gint i = 0;
 	
-	while (i < n)
-	{
-		ProcInfo *oldinfo;
+	/* Add or update processes */
+	while (i < n) {
+		ProcInfo *info;
 		
-		/* New process with higher pid than any previous one */
-		if (!list)
-		{
-			ProcInfo *info;
-			
+		info = proctable_find_process (pid_list[i], NULL, procdata);
+		if (!info) {
 			info = get_info (procdata, pid_list[i]);
-			insert_info_to_tree (info, procdata);
+			info->queue = NEEDS_ADDITION;
 			procdata->info = g_list_append (procdata->info, info);
-			
-			i++;
-			continue;
 		}
-		else
-			oldinfo = list->data;
-		/* new process */	
-		if (pid_list[i] < oldinfo->pid)
-		{
-			ProcInfo *info;
-			
-			info = get_info (procdata, pid_list[i]);
-			insert_info_to_tree (info, procdata);
-			procdata->info = g_list_insert (procdata->info, info, i);
-			
-			i++;
+		else {
+			update_info (procdata, info, info->pid);
 		}
-		/* existing process */
-		else if (pid_list[i] == oldinfo->pid)
-		{
-			update_info (procdata, oldinfo, oldinfo->pid);
-			
-			list = g_list_next (list);
-			i++;
-		}
-		/* process no longer exists */
-		else if (pid_list[i] > oldinfo->pid)
-		{		
-			remove_info_from_tree (oldinfo, procdata);
-			list = g_list_next (list);
-			procdata->info = g_list_remove (procdata->info, oldinfo);
-			proctable_free_info (oldinfo);
-											
-		}
+		
+		i++;
 	}
 	
-	
-	/* Get rid of any tasks at end of list that have ended */
-	while (list)
-	{
-		ProcInfo *oldinfo;
-		oldinfo = list->data;
-		remove_info_from_tree (oldinfo, procdata);
+	/* Remove processes */
+	list = procdata->info;
+	while (list) {
+		ProcInfo *info = list->data;
+		GtkTreeIter child;
+		
+		if (!find_match_in_new_list (info->pid, pid_list, n))  {
+			removal_list  = g_list_append (removal_list, info);
+			info->queue = NEEDS_REMOVAL;
+			/* remove all children from tree */
+			if (info->visible) {
+				if (gtk_tree_model_iter_children (model, &child, &info->node))
+					remove_children_from_tree (procdata, model, &child);
+			}
+		}
 		list = g_list_next (list);
-		procdata->info = g_list_remove (procdata->info, oldinfo);
-		proctable_free_info (oldinfo);
 	}
+	
+	/* Add or remove processes from the tree */
+	list = procdata->info;
+	while (list) {
+		ProcInfo *info = list->data;
+		
+		if (info->queue == NEEDS_REMOVAL) {
+			remove_info_from_tree (info, procdata);
+			info->queue = NEEDS_NOTHING;
+		} else if (info->queue == NEEDS_ADDITION) {
+			insert_info_to_tree (info, procdata);
+			info->queue = NEEDS_NOTHING;
+		}
+		
+		list = g_list_next (list);
+	}
+	
+	/* Remove processes from the internal GList */
+	while(removal_list) {
+		ProcInfo *info = removal_list->data;
+		
+		remove_info_from_list (info, procdata);
+		
+		removal_list = g_list_next (removal_list);
+	}
+	
+	g_list_free (removal_list);	
+	
 }
 
 void
