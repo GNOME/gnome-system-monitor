@@ -96,7 +96,7 @@ static GnomeUIInfo favorites1_menu_uiinfo[] =
 static GnomeUIInfo settings1_menu_uiinfo[] =
 {
 	{
-	 GNOME_APP_UI_ITEM, N_("Hidden _Processes"), N_("View and edit your list of hidden processes"),
+	 GNOME_APP_UI_ITEM, N_("_Hidden Processes"), N_("View and edit your list of hidden processes"),
 	 cb_show_hidden_processes, NULL, NULL, 0, 0,
 	 'p', GDK_CONTROL_MASK
 	},
@@ -344,13 +344,13 @@ create_sys_view (ProcData *procdata)
 	
 	vbox = gtk_vbox_new (FALSE, 0);
 	
-	cpu_frame = gtk_frame_new (_("CPU Usage History"));
+	cpu_frame = gtk_frame_new (_("% CPU Usage History"));
 	gtk_frame_set_label_align (GTK_FRAME (cpu_frame), 0.5, 0.5);
 	gtk_widget_show (cpu_frame);
 	gtk_container_set_border_width (GTK_CONTAINER (cpu_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), cpu_frame, TRUE, TRUE, 0);
 	
-	mem_frame = gtk_frame_new (_("Memory / Swap Usage History"));
+	mem_frame = gtk_frame_new (_("% Memory / Swap Usage History"));
 	gtk_frame_set_label_align (GTK_FRAME (mem_frame), 0.5, 0.5);
 	gtk_container_set_border_width (GTK_CONTAINER (mem_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), mem_frame, TRUE, TRUE, 0);

@@ -108,7 +108,7 @@ exec_su (gchar *exec_path, gchar *user, gchar *pwd)
 
 		if (WIFEXITED (status) && WEXITSTATUS (status) && (WEXITSTATUS(status) < 255)) {
 /*			error_box (_("Incorrect password.")); */
-			return 0;
+			return -1;
 		}
 		else {
 			memset (pwd, 0, strlen (pwd));
@@ -176,9 +176,9 @@ exec_su (gchar *exec_path, gchar *user, gchar *pwd)
 	return 0;
 }
 
-void
+gint
 su_run_with_password (gchar *exec_path, gchar *password)
 {
-	exec_su (exec_path, "root", password);
+	return exec_su (exec_path, "root", password);
 }
 

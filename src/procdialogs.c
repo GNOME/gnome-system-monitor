@@ -732,6 +732,7 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 					     gint extra_value, gchar *text)
 {
 	GtkWidget *dialog;
+	GtkWidget *error_dialog;
 	GtkWidget *main_vbox;
 	GtkWidget *hbox;
 	GtkWidget *entry;
@@ -798,10 +799,12 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 		else
 			command = g_strdup_printf ("renice %d %d", extra_value, pid);
 			
-		su_run_with_password (command, password);
+		if (su_run_with_password (command, password) == -1) {
+			error_dialog = gnome_error_dialog (_("Wrong Password."));
+			gnome_dialog_run (GNOME_DIALOG (error_dialog));
+		}
 		g_free (command);
 	}
-	
 	
 }
 
