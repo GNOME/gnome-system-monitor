@@ -44,7 +44,7 @@ cb_show_hide_message_toggled (GtkToggleButton *button, gpointer data)
 	gboolean toggle_state;
 	
 	toggle_state = gtk_toggle_button_get_active (button);
-g_print ("%d \n", toggle_state);	
+
 	gconf_client_set_bool (client, "/apps/procman/hide_message", toggle_state, NULL);
 
 }
@@ -67,7 +67,7 @@ procdialog_create_hide_dialog (ProcData *data)
 {
 	ProcData *procdata = data;
 	GtkWidget *messagebox1;
-	GtkWidget *dialog_vbox1;
+	GtkWidget *dialog_vbox1, *vbox;
   	GtkWidget *hbox1;
   	GtkWidget *checkbutton1;
   	gchar *text = _("Are you sure you want to hide this process?\n"
@@ -82,7 +82,11 @@ procdialog_create_hide_dialog (ProcData *data)
   	gtk_window_set_title (GTK_WINDOW (messagebox1), _("Hide Process"));
   	gtk_window_set_policy (GTK_WINDOW (messagebox1), FALSE, FALSE, FALSE);
   
-    	dialog_vbox1 = GTK_DIALOG (messagebox1)->vbox;
+    	vbox = GTK_DIALOG (messagebox1)->vbox;
+    	
+    	dialog_vbox1 = gtk_vbox_new (FALSE, 6);
+    	gtk_box_pack_start (GTK_BOX (vbox), dialog_vbox1, TRUE, TRUE, 0);
+    	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox1), 12);
 
   	hbox1 = gtk_hbox_new (FALSE, 0);
   	gtk_widget_show (hbox1);
@@ -134,7 +138,7 @@ procdialog_create_kill_dialog (ProcData *data, int signal)
 {
 	ProcData *procdata = data;
 	GtkWidget *messagebox1;
-	GtkWidget *dialog_vbox1;
+	GtkWidget *dialog_vbox1, *vbox;
   	GtkWidget *hbox1;
   	GtkWidget *checkbutton1;
   	gchar *text, *title;
@@ -160,7 +164,11 @@ procdialog_create_kill_dialog (ProcData *data, int signal)
   	gtk_window_set_modal (GTK_WINDOW (messagebox1), TRUE);
   	gtk_window_set_policy (GTK_WINDOW (messagebox1), FALSE, FALSE, FALSE);
   
-    	dialog_vbox1 = GTK_DIALOG (messagebox1)->vbox;
+    	vbox = GTK_DIALOG (messagebox1)->vbox;
+    	
+    	dialog_vbox1 = gtk_vbox_new (FALSE, 6);
+    	gtk_box_pack_start (GTK_BOX (vbox), dialog_vbox1, TRUE, TRUE, 0);
+    	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox1), 12);
   	
 	hbox1 = gtk_hbox_new (FALSE, 0);
   	gtk_widget_show (hbox1);
@@ -258,9 +266,10 @@ procdialog_create_renice_dialog (ProcData *data)
   	new_nice_value = -100;
   	  
     	dialog_vbox = GTK_DIALOG (dialog)->vbox;
-    	
+    	    	
     	vbox = gtk_vbox_new (FALSE, GNOME_PAD);
     	gtk_box_pack_start (GTK_BOX (dialog_vbox), vbox, TRUE, TRUE, 0);
+    	gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
     	
     	label = gtk_label_new (text);
     	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
@@ -769,7 +778,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	hbox2 = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
 	
-	label = gtk_label_new_with_mnemonic (_("Update _Speed ( seconds ) :"));
+	label = gtk_label_new_with_mnemonic (_("Update _Interval ( seconds ) :"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
 			  

@@ -328,7 +328,7 @@ close_blacklist_dialog (GtkDialog *dialog, gint id, gpointer data)
 void create_blacklist_dialog (ProcData *procdata)
 {
 	GtkWidget *frame;
-	GtkWidget *main_vbox;
+	GtkWidget *main_vbox, *vbox;
 	GtkWidget *inner_vbox;
 	GtkWidget *hbox;
 	GtkWidget *button;
@@ -367,28 +367,33 @@ void create_blacklist_dialog (ProcData *procdata)
 		gtk_window_set_policy (GTK_WINDOW (blacklist_dialog), FALSE, TRUE, FALSE);
 		gtk_window_set_default_size (GTK_WINDOW (blacklist_dialog), 320, 375);
 		
-		main_vbox = GTK_DIALOG (blacklist_dialog)->vbox;
+		vbox = GTK_DIALOG (blacklist_dialog)->vbox;
+		
+		main_vbox = gtk_vbox_new (FALSE, 12);
+		gtk_box_pack_start (GTK_BOX (vbox), main_vbox, TRUE, TRUE, 0);
+		gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
 	
 		label = gtk_label_new (_("These are the processes you have chosen to hide. You can reshow a process by removing it from this list."));
 		gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 		gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
 		
-		frame = gtk_frame_new (_("Hidden Processes"));
-  		gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
-  	
-  		inner_vbox = gtk_vbox_new (FALSE, 0);
-  		gtk_container_add (GTK_CONTAINER (frame), inner_vbox);
+		inner_vbox = gtk_vbox_new (FALSE, 6);
+  		gtk_box_pack_start (GTK_BOX (main_vbox), inner_vbox, TRUE, TRUE, 0);
+  		
+  		hbox = gtk_hbox_new (FALSE, 0);
+  		gtk_box_pack_start (GTK_BOX (inner_vbox), hbox, FALSE, FALSE, 0);
+  		
+  		label = gtk_label_new_with_mnemonic (_("_Hidden Processes:"));
+		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   	
   		scrolled = create_tree (procdata);
   		gtk_box_pack_start (GTK_BOX (inner_vbox), scrolled, TRUE, TRUE, 0);
-  		gtk_container_set_border_width (GTK_CONTAINER (scrolled), GNOME_PAD_SMALL);
+  		gtk_label_set_mnemonic_widget (GTK_LABEL (label), proctree);
   	
   		hbox = gtk_hbox_new (FALSE, 0);
   		gtk_box_pack_end (GTK_BOX (inner_vbox), hbox, FALSE, FALSE, 0);
   	
   		button = gtk_button_new_with_mnemonic (_("_Remove From List"));
-  		/*gtk_misc_set_padding (GTK_MISC (GTK_BUTTON (button)->child), 
-  				      GNOME_PAD_SMALL, -2);*/
   		gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   		gtk_container_set_border_width (GTK_CONTAINER (button), GNOME_PAD_SMALL);
   	

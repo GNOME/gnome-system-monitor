@@ -292,8 +292,7 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 {
 	ProcData *procdata = data;
 	GtkWidget *memmapsdialog;
-	GtkWidget *dialog_vbox;
-	GtkWidget *alignment;
+	GtkWidget *dialog_vbox, *vbox;
 	GtkWidget *cmd_hbox;
 	GtkWidget *label;
 	GtkWidget *scrolled;
@@ -309,26 +308,23 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 						     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 						     NULL);
 	gtk_window_set_policy (GTK_WINDOW (memmapsdialog), TRUE, TRUE, FALSE);
-	gtk_widget_set_usize (memmapsdialog, 575, 400);
+	gtk_window_set_default_size (GTK_WINDOW (memmapsdialog), 575, 400);
 	
-	dialog_vbox = GTK_DIALOG (memmapsdialog)->vbox;
+	vbox = GTK_DIALOG (memmapsdialog)->vbox;
 	
-	alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-	gtk_box_pack_start (GTK_BOX (dialog_vbox), alignment, FALSE, FALSE, 0);
+	dialog_vbox = gtk_vbox_new (FALSE, 6);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 12);
+	gtk_box_pack_start (GTK_BOX (vbox), dialog_vbox, TRUE, TRUE, 0);
 	
-	cmd_hbox = gtk_hbox_new (FALSE, 0);
-	gtk_container_add (GTK_CONTAINER (alignment), cmd_hbox);
-	
+	cmd_hbox = gtk_hbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (dialog_vbox), cmd_hbox, FALSE, FALSE, 0);
+		
 	label = gtk_label_new (_("Process Name :"));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (cmd_hbox),label, FALSE, FALSE, 0);
 	
 	label = gtk_label_new ("");
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 	gtk_label_set_text (GTK_LABEL (label), info->name);
 	gtk_box_pack_start (GTK_BOX (cmd_hbox),label, FALSE, FALSE, 0);
-	
-	gtk_widget_show_all (alignment);
 	
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
@@ -346,11 +342,10 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 	g_signal_connect (G_OBJECT (memmapsdialog), "response",
 			  G_CALLBACK (close_memmaps_dialog), tree);
 	
-	gtk_widget_show (memmapsdialog);
-#if 1
+	gtk_widget_show_all (memmapsdialog);
+
 	timer = gtk_timeout_add (5000, memmaps_timer, tree);
 	g_object_set_data (G_OBJECT (tree), "timer", GINT_TO_POINTER (timer));
-#endif
 
 	update_memmaps_dialog (tree);
 	
