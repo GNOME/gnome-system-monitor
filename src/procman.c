@@ -105,6 +105,11 @@ procman_free_data (ProcData *procdata)
 	
 	pretty_table_free (procdata->pretty_table);
 	
+	if (procdata->config.tree_state_file)
+		g_free (procdata->config.tree_state_file);
+	if (procdata->config.memmaps_state_file)
+		g_free (procdata->config.memmaps_state_file);
+	
 	g_free (procdata);
 	
 }

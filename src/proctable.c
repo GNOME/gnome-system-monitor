@@ -513,9 +513,8 @@ get_info (ProcData *procdata, gint pid)
 	glibtop_proc_mem procmem;
 	glibtop_proc_uid procuid;
 	glibtop_proc_args procargs;
-	//glibtop_array array;
 	struct passwd *pwd;
-	gchar *name, *args = g_strdup (" ");
+	gchar *name;
 	gchar *arguments;
 	gint newcputime, i;
 	
@@ -546,12 +545,9 @@ get_info (ProcData *procdata, gint pid)
 		{
 			if (!arguments[i])
 				arguments[i] = ' ';
-			/*strcat (args, &arguments[i]);
-			glibtop_free (&arguments[i]);*/
 		}
 		info->arguments = g_strdup (arguments);
 		glibtop_free (arguments);
-		g_free (args);
 	}
 	else
 		info->arguments = g_strdup ("");

@@ -1,5 +1,25 @@
 2001-08-03 Kevin Vandersloot <kfv101@psu.edu>
 
+	* favorites.c (save_blacklist): fix memory leak
+	(fill_tree_with_info): new function to fill the tree.
+	(remove_item): remove the call to e_tree_memory_node_remove
+	as that caused a segfault in e-tree that won't be fixed for
+	Gal 1.0
+	(remove_button_clicked): call the e-tree ForEach function so
+	all selected processes are remove from the list. Then call
+	fill_tree_with_info to clear the tree and repopulate.
+
+	* memmaps.c (clear_memmaps): free the info->flags string to fix
+	a memory leak.
+
+	* procman.c (procman_free_data): free strings pointing to
+	.etspec files. Fixes memory leak.
+
+	* proctable.c (get_info): remove unused variable and some 
+	unneeded comments
+
+2001-08-03 Kevin Vandersloot <kfv101@psu.edu>
+
 	* procman.h: add new gchar to ProcInfo structure for the command
 	args
 

@@ -39,6 +39,7 @@
 GtkWidget *blacklist_dialog = NULL;
 GtkWidget *tree;
 ETreeMemory *memory;
+ETreePath root_node;
 gint initial_blacklist_num; /* defined in order to prune off entries from config file */
 
 void
@@ -161,6 +162,7 @@ void save_blacklist (ProcData *procdata)
 	{
 		gchar *config = g_strdup_printf ("%s%d", "procman/Blacklist/process", i);
 		gnome_config_clean_key (config);
+		g_free (config);
 	} 
 }
 
@@ -284,6 +286,25 @@ value_to_string (ETreeModel *model, int column, const void *value, void *data)
 	
 }
 
+static void 
+fill_tree_with_info (ProcData *procdata)
+{
+	GList *blacklist = procdata->blacklist;
+	
+	if (!memory)
+		return;
+		
+	root_node = e_tree_memory_node_insert (memory, NULL, 0, NULL);
+	e_tree_root_node_set_visible (E_TREE(tree), FALSE);
+	
+	/* add the blacklist */
+	while (blacklist)
+	{
+		e_tree_memory_node_insert (memory, root_node, 0, blacklist->data);
+		blacklist = g_list_next (blacklist);
+	}
+}
+
 static ETableExtras *
 new_extras ()
 {
@@ -306,8 +327,6 @@ create_tree (ProcData *procdata)
 	ETableExtras *extras;
 	ETreeMemory *etmm;
 	ETreeModel *model;
-	ETreePath *root_node;
-	GList *blacklist = procdata->blacklist;
 
 	model = e_tree_memory_callbacks_new (get_icon,
 					     get_columns,
@@ -327,25 +346,16 @@ create_tree (ProcData *procdata)
 	
 					    	     
 	etmm = E_TREE_MEMORY(model);
+	memory = etmm;
 	
 	extras = new_extras ();
 
 	scrolled = e_tree_scrolled_new (model, extras, SPEC, NULL);
 
 	e_tree = GTK_WIDGET (e_tree_scrolled_get_tree (E_TREE_SCROLLED (scrolled)));
-	
-	root_node = e_tree_memory_node_insert (etmm, NULL, 0, NULL);
-	e_tree_root_node_set_visible (E_TREE(e_tree), FALSE);
-	
-	/* add the blacklist */
-	while (blacklist)
-	{
-		e_tree_memory_node_insert (etmm, root_node, 0, blacklist->data);
-		blacklist = g_list_next (blacklist);
-	}
-	
 	tree = e_tree;
-	memory = etmm;
+
+	fill_tree_with_info (procdata);
 
 	return scrolled;
 
@@ -358,7 +368,6 @@ remove_item (ETreePath node, gpointer data)
 	gchar *process;
 	
 	process = e_tree_memory_node_get_data (memory, node);
-	e_tree_memory_node_remove (memory, node);
 	remove_from_blacklist (procdata, process);
 	
 }
@@ -367,19 +376,14 @@ static void
 remove_button_clicked (GtkButton *button, gpointer data)
 {
 	ProcData *procdata = data;
-	ETreePath selected_node = NULL;
-	gchar *process;
 	
-	selected_node = e_tree_get_cursor (E_TREE (tree));
-	if (!selected_node)
-		return;
-		
-	process = e_tree_memory_node_get_data (memory, selected_node);
+	e_tree_selected_path_foreach (E_TREE (tree), remove_item, procdata);
 	
-	e_tree_memory_node_remove (memory, selected_node);
-	remove_from_blacklist (procdata, process);
-	
-	/*e_tree_selected_path_foreach (E_TREE (tree), remove_item, procdata);*/
+	if (root_node)
+	{
+		e_tree_memory_node_remove (memory, root_node);
+		fill_tree_with_info (procdata);
+	}
 	
 }
 

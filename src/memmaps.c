@@ -198,6 +198,7 @@ clear_memmaps (ProcData *procdata)
 		g_free (info->filename);
 		g_free (info->vmstart);
 		g_free (info->vmend);
+		g_free (info->flags);
 		g_free (info->device);
 		g_free (info->vmoffset);
 		g_free (info->inode);
