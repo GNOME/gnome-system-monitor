@@ -200,10 +200,10 @@ get_memory (gfloat data [1], LoadGraph *g)
 	glibtop_get_swap (&swap);
 
 	swappercent = (float)swap.used / (float)swap.total;
-	mempercent  = (float)mem.used  / (float)mem.total;
+	mempercent  = (float)mem.user  / (float)mem.total;
 
 	text1 = gnome_vfs_format_file_size_for_display (mem.total);
-	text2 = gnome_vfs_format_file_size_for_display (mem.used);
+	text2 = gnome_vfs_format_file_size_for_display (mem.user);
 	text3 = g_strdup_printf ("  %.1f %%", mempercent * 100.0f);
 	gtk_label_set_text (GTK_LABEL (g->memused_label), text2);
 	gtk_label_set_text (GTK_LABEL (g->memtotal_label), text1);
