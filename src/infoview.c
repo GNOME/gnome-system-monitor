@@ -141,9 +141,11 @@ infoview_update (ProcData *data)
 	ProcInfo *info;
 	gchar *string;
 	gchar *command;
-	
-	if (!procdata->selected_process)
+
+	if (!procdata->selected_process) {
+		update_sensitivity (procdata, FALSE);
 		return;
+	}
 
 	info = procdata->selected_process;	
 

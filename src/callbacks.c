@@ -388,7 +388,7 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
 	ProcData *procdata = data;
 	
 	procdata->selection = selection;
-	
+
 	/* get the most recent selected process and determine if there are
 	** no selected processes 
 	*/
