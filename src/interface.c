@@ -667,21 +667,9 @@ create_main_window (ProcData *procdata)
 	g_signal_connect (G_OBJECT (notebook), "switch-page",
 			    G_CALLBACK (cb_switch_page), procdata);
 
-	if (procdata->config.current_tab == 0)
-		procdata->timeout = gtk_timeout_add (procdata->config.update_interval,
-			 		     cb_timeout, procdata);
-	else {
-		load_graph_start (procdata->cpu_graph);
-		load_graph_start (procdata->mem_graph);
-	}
-	 	
 	gtk_widget_show (vbox1);
 	gnome_app_set_contents (GNOME_APP (app), notebook);
 	gtk_widget_show (notebook);
-
-	update_sensitivity (procdata, FALSE);
-
-	
 
  	gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab);
  	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[0].widget),

@@ -315,7 +315,7 @@ procman_data_new (GConfClient *client)
 	pd->config.graph_update_interval = MAX (pd->config.graph_update_interval, 250);
 	pd->config.disks_update_interval = MAX (pd->config.disks_update_interval, 1000);
 	pd->config.whose_process = CLAMP (pd->config.whose_process, 0, 2);
-	pd->config.current_tab = CLAMP (pd->config.current_tab, 0, 1);
+	pd->config.current_tab = CLAMP (pd->config.current_tab, 0, 2);
 	
 	/* Determinie number of cpus since libgtop doesn't really tell you*/
 	pd->config.num_cpus = 0;
