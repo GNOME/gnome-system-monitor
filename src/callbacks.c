@@ -595,6 +595,9 @@ get_icon_for_device(GnomeIconTheme *icontheme, const char *mountpoint)
 
 	monitor = gnome_vfs_get_volume_monitor();
 	volume = gnome_vfs_volume_monitor_get_volume_for_path(monitor, mountpoint);
+
+	if(!volume) return NULL;
+
 	i_type = gnome_vfs_volume_get_icon(volume);
 	gnome_vfs_volume_unref(volume);
 
@@ -677,7 +680,7 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 	g_free (text[3]);
 	g_free (text[4]);
 
-	g_object_unref (pixbuf);
+	if(pixbuf) g_object_unref (pixbuf);
 	g_object_unref (icontheme);
 }
 

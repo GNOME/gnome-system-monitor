@@ -21,6 +21,7 @@
 
 #include <gnome.h>
 #include <libgnomeui/gnome-window-icon.h>
+#include <libgnomevfs/gnome-vfs.h>
 #include <gconf/gconf-client.h>
 #include <glibtop.h>
 #include <glibtop/close.h>
@@ -560,9 +561,10 @@ main (int argc, char *argv[])
                                
 	args = (char**) poptGetArgs (pctx);
 	poptFreeContext(pctx);*/
-	
+
+	gnome_vfs_init ();
 	glibtop_init ();
-	
+
 	procdata = procman_data_new (client);
 	procdata->client = client;
 	
@@ -586,6 +588,7 @@ main (int argc, char *argv[])
 	procman_free_data (procdata);
 
 	glibtop_close ();
+	gnome_vfs_shutdown ();
 
 	return 0;
 }
