@@ -173,7 +173,6 @@ GtkWidget *infolabel;
 GtkWidget *endprocessbutton;
 GtkWidget *popup_menu;
 GtkWidget *sys_pane;
-GtkAccelGroup *accel;
 
 gint
 get_sys_pane_pos (void)
@@ -202,7 +201,6 @@ create_proc_view (ProcData *procdata)
 	GtkWidget *lbl_mem_maps;
 	GtkWidget *sep;
 	GtkWidget *menuitem;
-	guint key;	
 	GTimer *timer = g_timer_new ();
 	
 	vbox1 = gtk_vbox_new (FALSE, 0);
@@ -211,21 +209,16 @@ create_proc_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox1), GNOME_PAD_SMALL);
 	
-	search_label = gtk_label_new (NULL);
-	key = gtk_label_parse_uline (GTK_LABEL (search_label), "Sea_rch :");
+	search_label = gtk_label_new_with_mnemonic (_("Sea_rch :"));
 	gtk_box_pack_start (GTK_BOX (hbox1), search_label, FALSE, FALSE, 0);
 	gtk_misc_set_padding (GTK_MISC (search_label), GNOME_PAD_SMALL, 0);
 	
 	search_entry = gtk_entry_new ();
-	/*gtk_widget_add_accelerator (search_entry, "grab_focus",
-				    accel,
-				    key,
-				    GDK_MOD1_MASK,
-				    0);*/
-				    
 	gtk_box_pack_start (GTK_BOX (hbox1), search_entry, FALSE, FALSE, 0);
 	g_signal_connect (G_OBJECT (search_entry), "activate",
 			  G_CALLBACK (cb_search), procdata);
+	gtk_label_set_mnemonic_widget (GTK_LABEL (search_label), search_entry);
+	
 	g_timer_start (timer);
 	optionmenu1 = gtk_option_menu_new ();
 	gtk_box_pack_end (GTK_BOX (hbox1), optionmenu1, FALSE, FALSE, 0);
@@ -239,13 +232,8 @@ create_proc_view (ProcData *procdata)
   	g_timer_stop (timer);
   	g_print ("optionmenu done %f \n", g_timer_elapsed (timer, NULL));
   	
-  	label = gtk_label_new (NULL);
-	key = gtk_label_parse_uline (GTK_LABEL (label), "Vie_w");
-	/*gtk_widget_add_accelerator (optionmenu1, "grab_focus",
-				    accel,
-				    key,
-				    GDK_MOD1_MASK,
-				    0);*/
+  	label = gtk_label_new_with_mnemonic (_("Vie_w"));
+  	gtk_label_set_mnemonic_widget (GTK_LABEL (label), optionmenu1);
 	gtk_box_pack_end (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	
@@ -270,23 +258,15 @@ create_proc_view (ProcData *procdata)
 	hbox2 = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox2, FALSE, FALSE, 0);
 	
-	endprocessbutton = gtk_button_new ();
-  	label = gtk_label_new (NULL);
-	key = gtk_label_parse_uline (GTK_LABEL (label), "End _Process");
-	/*gtk_widget_add_accelerator (endprocessbutton, "clicked",
-				    accel,
-				    key,
-				    GDK_MOD1_MASK,
-				    0);*/
-	gtk_container_add (GTK_CONTAINER (endprocessbutton), label);
-	gtk_box_pack_start (GTK_BOX (hbox2), endprocessbutton, FALSE, FALSE, 0);
+	endprocessbutton = gtk_button_new_with_mnemonic (_("End _Process"));
+  	gtk_box_pack_start (GTK_BOX (hbox2), endprocessbutton, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (endprocessbutton), GNOME_PAD_SMALL);
 	gtk_misc_set_padding (GTK_MISC (GTK_BIN (endprocessbutton)->child), 
 			      GNOME_PAD_SMALL, 1);
 	g_signal_connect (G_OBJECT (endprocessbutton), "clicked",
 			  G_CALLBACK (cb_end_process_button_pressed), procdata);
 
-	infolabel = gtk_label_new (_("More Info"));
+	infolabel = gtk_label_new_with_mnemonic (_("More _Info"));
 	infobutton = gtk_button_new ();
 	gtk_container_add (GTK_CONTAINER (infobutton), infolabel);
 	gtk_box_pack_end (GTK_BOX (hbox2), infobutton, FALSE, FALSE, 0);
@@ -655,9 +635,7 @@ toggle_infoview (ProcData *data)
 {
 	ProcData *procdata = data;
 	GtkWidget *label;
-	static guint more_key = 0;
-	static guint less_key = 0;
-
+	
 	label = infolabel;
 		
 	if (procdata->config.show_more_info == FALSE)
@@ -665,34 +643,14 @@ toggle_infoview (ProcData *data)
 		infoview_update (procdata);
 		gtk_widget_show_all (procdata->infobox);
 		procdata->config.show_more_info = TRUE;	
- 		less_key = gtk_label_parse_uline(GTK_LABEL (label),
- 						 _(lessinfolabel));
- 		/*if (more_key != 0)
- 			gtk_widget_remove_accelerator (infobutton,
- 						       accel,
- 						       more_key,
- 						       GDK_MOD1_MASK);
- 		gtk_widget_add_accelerator (infobutton, "clicked",
- 					    accel,
- 					    less_key, GDK_MOD1_MASK,
- 					    0);*/
-		
+		gtk_label_set_text_with_mnemonic (GTK_LABEL (label),_(lessinfolabel)); 
+ 				
 	}			
 	else
 	{
 		gtk_widget_hide (procdata->infobox);
 		procdata->config.show_more_info = FALSE;
- 		more_key = gtk_label_parse_uline(GTK_LABEL (label),
- 						 _(moreinfolabel));
- 		/*if (less_key != 0)
- 			gtk_widget_remove_accelerator (infobutton,
- 						       accel,
- 						       less_key,
- 						       GDK_MOD1_MASK);
- 		gtk_widget_add_accelerator (infobutton, "clicked",
- 					    accel,
- 					    more_key, GDK_MOD1_MASK,
- 					    0);*/
+ 		gtk_label_set_text_with_mnemonic (GTK_LABEL (label),_(moreinfolabel)); 
 	}
 }
 
@@ -718,8 +676,9 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 	if (!data->config.simple_view) {
 		gtk_widget_set_sensitive (data->infobox, sensitivity);
 		gtk_widget_set_sensitive (edit1_menu_uiinfo[0].widget, sensitivity);
-		gtk_widget_set_sensitive (edit1_menu_uiinfo[1].widget, sensitivity);
-		/*gtk_widget_set_sensitive (view1_menu_uiinfo[0].widget, sensitivity);*/
+		/*gtk_widget_set_sensitive (edit1_menu_uiinfo[1].widget, sensitivity);*/
+		gtk_widget_set_sensitive (view1_menu_uiinfo[0].widget, sensitivity);
+		gtk_widget_set_sensitive (edit1_menu_uiinfo[2].widget, sensitivity);
 		gtk_widget_set_sensitive (edit1_menu_uiinfo[3].widget, sensitivity);
 		/*gtk_widget_set_sensitive (edit1_menu_uiinfo[4].widget, sensitivity);*/
 	}

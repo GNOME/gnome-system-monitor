@@ -187,11 +187,8 @@ void
 cb_app_delete (GtkWidget *window, GdkEventAny *ev, gpointer data)
 {
 	ProcData *procdata = data;
-#if 0	
-	if (procdata)
-	{
-		procman_save_config (procdata);
-	}
+	
+	procman_save_config (procdata);
 	if (procdata->timeout != -1)
 		gtk_timeout_remove (procdata->timeout);
 	if (procdata->cpu_graph)
@@ -200,10 +197,7 @@ cb_app_delete (GtkWidget *window, GdkEventAny *ev, gpointer data)
 		gtk_timeout_remove (procdata->mem_graph->timer_index);
 	if (procdata->disk_timeout != -1)
 		gtk_timeout_remove (procdata->disk_timeout);
-#endif	
-	procman_save_config (procdata);
-	if (procdata->timeout != -1)
-		gtk_timeout_remove (procdata->timeout);
+		
 	gtk_main_quit ();
 	
 }
@@ -575,8 +569,8 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 			 			     	     cb_timeout, procdata);
 		load_graph_stop (procdata->cpu_graph);
 		load_graph_stop (procdata->mem_graph);
-		/*if (procdata->selected_node)
-			update_sensitivity (procdata, TRUE);*/
+		if (procdata->selected_process)
+			update_sensitivity (procdata, TRUE);
 	}
 	else {
 		if (procdata->timeout != -1 ) {
@@ -585,8 +579,8 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 		}
 		load_graph_start (procdata->cpu_graph);
 		load_graph_start (procdata->mem_graph);
-		/*if (procdata->selected_node)
-			update_sensitivity (procdata, FALSE);*/
+		if (procdata->selected_process)
+			update_sensitivity (procdata, FALSE);
 	}
 
 }
