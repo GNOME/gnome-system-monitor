@@ -366,7 +366,7 @@ create_sys_view (ProcData *procdata)
 	gtk_container_add (GTK_CONTAINER (cpu_frame), cpu_graph->main_widget);
 	gtk_container_set_border_width (GTK_CONTAINER (cpu_graph->main_widget), 
 					GNOME_PAD_SMALL);
-					
+				
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (cpu_graph->main_widget), hbox, FALSE, FALSE, 0);
 	
@@ -473,7 +473,7 @@ create_sys_view (ProcData *procdata)
 	
 	procdata->mem_graph = mem_graph;
 	gtk_widget_show_all (vbox);
-					
+				
 	disk_frame = gtk_frame_new (_("Disks"));
 	gtk_container_set_border_width (GTK_CONTAINER (disk_frame), GNOME_PAD_SMALL);
 	gtk_paned_add2 (GTK_PANED (vpane), disk_frame);

@@ -75,7 +75,8 @@ procdialog_create_hide_dialog (ProcData *data)
   	GtkWidget *button5;
   	GtkWidget *button6;
   	GtkWidget *dialog_action_area1;
-  	gchar *text = _("Are you sure you want to hide this process?");
+  	gchar *text = _("Are you sure you want to hide this process?\n"
+  			"(Choose 'Hidden Processes' in the Settings menu to reshow)");
 
   	/* We create it with an OK button, and then remove the button, to work
      	around a bug in gnome-libs. */

@@ -429,7 +429,6 @@ proctable_free_info (ProcInfo *info)
 static void
 get_process_status (ProcInfo *info, char *state)
 {
-
 	if (!g_strcasecmp (state, "r"))
 	{
 		info->status = g_strdup_printf (_("Running"));
