@@ -2,6 +2,7 @@
 
 INCLUDES = \
 	-DPROCMAN_DATADIR=\"$(datadir)/procman/\" \
+	-DDATADIR=\""$(datadir)"\" \
 	@PROCMAN_CFLAGS@ -DGTK_DISABLE_DEPRECATED=1 \
 	-DGNOME_DISABLE_DEPRECATED
 

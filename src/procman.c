@@ -507,7 +507,8 @@ main (int argc, char *argv[])
 
 	procman = gnome_program_init ("gnome-system-monitor", VERSION, 
 				      LIBGNOMEUI_MODULE, argc, argv, 
-			    	      GNOME_PARAM_POPT_TABLE, options, NULL);
+			    	      GNOME_PARAM_POPT_TABLE, options, 
+				      GNOME_PARAM_APP_DATADIR,DATADIR, NULL);
 	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/procman.png");
 		    
 	gconf_init (argc, argv, NULL);

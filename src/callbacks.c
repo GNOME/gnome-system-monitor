@@ -114,6 +114,11 @@ cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 {
 
 	GtkWidget *about;
+	GdkPixbuf *pixbuf;
+	GError    *error = NULL;
+	gchar     *file;
+
+
 	const gchar *authors[] = {
 				 _("Kevin Vandersloot (kfv101@psu.edu)"),
 				 _("Erik Johnsson (zaphod@linux.nu) - icon support"),
@@ -125,15 +130,32 @@ cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 	};
 
 	const gchar *translator_credits = _("translator_credits");
-				 
-	about = gnome_about_new (_("Process Manager"), VERSION,
+	
+	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+				          "procman.png", FALSE, NULL);
+	pixbuf = gdk_pixbuf_new_from_file (file, &error);
+	
+	if (error) {
+		g_warning (G_STRLOC ": cannot open %s: %s", file, error->message);
+		g_error_free (error);
+	}
+	
+	g_free (file);
+
+			 
+	about = gnome_about_new (_("System Monitor"), VERSION,
 				 _("(C) 2001 Kevin Vandersloot"),
 				 _("Simple process viewer using libgtop"),
 				 authors,
 				 documenters,
 				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-				 NULL);
-				 
+				 pixbuf);
+	
+	if (pixbuf) {
+		g_object_unref (pixbuf);
+	}	
+
+			 
 	gtk_widget_show (about);  
 	
 }

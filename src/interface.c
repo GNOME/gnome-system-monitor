@@ -93,6 +93,7 @@ static GnomeUIInfo view1_menu_uiinfo[] =
 
 static GnomeUIInfo help1_menu_uiinfo[] =
 {
+	GNOMEUIINFO_HELP("gnome-system-monitor"),
 	GNOMEUIINFO_MENU_ABOUT_ITEM (cb_about_activate, NULL),
 	GNOMEUIINFO_END
 };
