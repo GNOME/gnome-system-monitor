@@ -194,7 +194,7 @@ create_memmaps_tree (ProcData *procdata)
 						     		   "text", i,
 						     		   NULL);
 		gtk_tree_view_column_set_sort_column_id (column, i);
-		gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
+		gtk_tree_view_column_set_resizable (column, TRUE);
 		gtk_tree_view_column_set_reorderable (column, TRUE);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
 	}

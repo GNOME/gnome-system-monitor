@@ -456,7 +456,7 @@ create_sys_view (ProcData *procdata)
 						    		cell,
 						     		"text", i,
 						     		NULL);
-		gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_RESIZABLE);
+		gtk_tree_view_column_set_resizable (col, TRUE);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (disk_tree), col);
 	}
   	
