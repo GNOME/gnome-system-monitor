@@ -94,15 +94,24 @@ compare_memmaps (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoi
 	memmaps = g_hash_table_lookup (new_maps, old_name);
 	if (memmaps) {
 		g_hash_table_remove (new_maps, old_name);
+		g_free (old_name);
 		return FALSE;
 		
 	}
 	
 	old_iter = gtk_tree_iter_copy (iter);
 	old_maps = g_list_append (old_maps, old_iter);
-	
+	g_free (old_name);
 	return FALSE;
 	
+}
+
+static void
+key_destroy (gpointer key)
+{
+	if (key)
+		g_free (key);
+		
 }
 
 static void
@@ -125,7 +134,8 @@ update_memmaps_dialog (GtkWidget *tree)
 	if (!memmaps)
 		return;
 	
-	new_maps = g_hash_table_new (g_str_hash, g_str_equal);
+	new_maps = g_hash_table_new_full (g_str_hash, g_str_equal,
+					  key_destroy, NULL);
 	for (i=0; i < procmap.number; i++) {
 		gchar *format = (sizeof (void*) == 8) ? "%016lx" : "%08lx";
 		gchar *vmstart;

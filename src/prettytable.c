@@ -179,18 +179,23 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command, gin
 	if (icon_path) {
 		tmp_pixbuf = gdk_pixbuf_new_from_file (icon_path, NULL);			
 	}
-	else {
-		text = g_strdup_printf ("%d", pid);
-		tmp_pixbuf = g_hash_table_lookup (pretty_table->app_hash, text);
-		g_free (text);
+	/* This looks ugly but we don't want to unref the pixbuf in the 
+	** app hash since it's owned by libwnck and not us */	
+	if (tmp_pixbuf) {
+		icon = gdk_pixbuf_scale_simple (tmp_pixbuf, 16, 16, GDK_INTERP_HYPER);
+		gdk_pixbuf_unref (tmp_pixbuf);
+		return icon;
 	}
-
-
+		
+	text = g_strdup_printf ("%d", pid);
+	tmp_pixbuf = g_hash_table_lookup (pretty_table->app_hash, text);
+	g_free (text);
+	
 	if (!tmp_pixbuf) 
 		return NULL;
 	
 	icon = gdk_pixbuf_scale_simple (tmp_pixbuf, 16, 16, GDK_INTERP_HYPER);
-	
+		
 	return icon;
 	
 }
