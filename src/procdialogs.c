@@ -67,6 +67,7 @@ procdialog_create_hide_dialog (ProcData *data)
 						   message);
        g_free (message);
 
+       /* FIXME: View menu -> Edit menu */
        /*translators: secondary alert messagex*/
        message = g_strdup_printf (_("Hidden processes are no longer visible "
 				    "in the process list. You can re-enable "
@@ -300,31 +301,6 @@ prefs_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 	prefs_dialog = NULL;
 }
 
-static void
-show_tree_toggled (GtkToggleButton *button, gpointer data)
-{
-	ProcData *procdata = data;
-	GConfClient *client = procdata->client;
-	gboolean toggled;
-	
-	toggled = gtk_toggle_button_get_active (button);
-	gconf_client_set_bool (client, "/apps/procman/show_tree", toggled, NULL);
-
-}
-
-static void
-show_threads_toggled (GtkToggleButton *button, gpointer data)
-{
-	ProcData *procdata = data;
-	GConfClient *client = procdata->client;
-	
-	gboolean toggled;
-	
-	toggled = gtk_toggle_button_get_active (button);
-	
-	gconf_client_set_bool (client, "/apps/procman/show_threads", toggled, NULL);
-		
-}
 
 static void
 show_kill_dialog_toggled (GtkToggleButton *button, gpointer data)
@@ -408,18 +384,6 @@ update_disks_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer 
 	return FALSE;
 }
 
-
-static void
-proc_field_toggled (GtkToggleButton *button, gpointer data)
-{
-	GtkTreeViewColumn *column = data;
-	gboolean toggled;
-	
-	toggled = gtk_toggle_button_get_active (button);
-
-	gtk_tree_view_column_set_visible (column, toggled);
-	
-}
 
 static void
 field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
@@ -798,14 +762,6 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 1);
 }
 
-static void
-entry_activate_cb (GtkEntry *entry, gpointer data)
-{
-	GtkDialog *dialog = GTK_DIALOG (data);
-	
-	gtk_dialog_response (dialog, 100);
-	
-}	
 
 /*
 ** type determines whether if dialog is for killing process (type=0) or renice (type=other).

@@ -65,6 +65,7 @@ struct _ProcConfig
 struct _PrettyTable {
 	GHashTable *app_hash;		/* apps gotten from libwnck */      
 	GHashTable *default_hash; 	/* defined in defaulttable.h */
+	gchar *datadir;
 };
 
 struct _LoadGraph {

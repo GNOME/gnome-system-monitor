@@ -23,7 +23,7 @@
 #include <gnome.h>
 #include <procman.h>
 
-extern int kill_signal;
+extern int kill_signal G_GNUC_INTERNAL;
 
 void			procdialog_create_hide_dialog (ProcData *data) G_GNUC_INTERNAL;
 void			procdialog_create_kill_dialog (ProcData *data, int signal) G_GNUC_INTERNAL;
