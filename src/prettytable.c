@@ -65,7 +65,6 @@ new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 			gtk_tree_store_set (GTK_TREE_STORE (model), &info->node,
                             		    COL_PIXBUF, info->pixbuf, -1);
                 }
-                return;
 	}
 							
 	g_hash_table_insert (hash, g_strdup_printf ("%d", pid), icon);
