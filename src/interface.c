@@ -295,6 +295,10 @@ create_main_window (ProcData *data)
 			    GTK_SIGNAL_FUNC (cb_table_selected), procdata);
 	gtk_signal_connect (GTK_OBJECT (procdata->tree), "double_click",
 			    GTK_SIGNAL_FUNC (cb_double_click), procdata);
+        gtk_signal_connect (GTK_OBJECT (procdata->tree), "right_click",
+                            GTK_SIGNAL_FUNC (cb_right_click), procdata);
+
+
 	
 #if 1
 	procdata->timeout = gtk_timeout_add (procdata->config.update_interval,
@@ -338,6 +342,56 @@ toggle_infoview (ProcData *data)
 	}
 }
 
+void popup_menu (ProcData *data, GdkEvent *event)
+{
+
+/* Define all variables */
+        GtkWidget *menu;
+        GtkWidget *lbl_hide;
+        GtkWidget *lbl_kill;
+        GtkWidget *lbl_renice;
+        GdkEventButton *event_button;
+
+/* Create the menu */
+        menu = gtk_menu_new ();
+
+/* Create new menu items */
+        lbl_hide = gtk_menu_item_new_with_label (_("Hide Process"));
+        lbl_kill = gtk_menu_item_new_with_label (_("Kill Process"));
+        lbl_renice = gtk_menu_item_new_with_label (_("Renice Process"));
+
+/* Associate the items to the menu and make them visible */
+        gtk_menu_append (GTK_MENU (menu), lbl_hide);
+        gtk_widget_show (lbl_hide);
+        gtk_menu_append (GTK_MENU (menu), lbl_renice);
+        gtk_widget_show (lbl_renice);
+        gtk_menu_append (GTK_MENU (menu), lbl_kill);
+        gtk_widget_show (lbl_kill);
+
+   /* Add activiate signal associations to these */
+        gtk_signal_connect (GTK_OBJECT (lbl_hide),"activate",
+                            GTK_SIGNAL_FUNC(cb_hide_process),
+                            data);
+
+        gtk_signal_connect (GTK_OBJECT (lbl_renice),"activate",
+                            GTK_SIGNAL_FUNC(cb_renice),
+                            data);
+
+/* Make the menu visible */
+        gtk_widget_show (menu);
+
+/* Make the menu visible one right-button click*/
+        if (event->type == GDK_BUTTON_PRESS)
+        {
+                event_button = (GdkEventButton *) event;
+                if (event_button->button == 3)
+                {
+                        gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
+                                        NULL, NULL, event_button->button,
+                                        event_button->time);
+                }
+        }
+}
 
 void
 update_sensitivity (ProcData *data, gboolean sensitivity)

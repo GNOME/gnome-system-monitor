@@ -203,6 +203,17 @@ cb_favorites_menu_clicked (GtkWidget *widget, gpointer data)
 	proctable_update_all (procdata);
 }
 
+gint
+cb_right_click (ETree *tree, int row, ETreePath path, int col,
+                 GdkEvent *event, gpointer data)
+{
+        ProcData *procdata = data;
+
+        popup_menu (procdata, event);
+
+        return FALSE;
+}
+
 void
 cb_end_process_button_pressed          (GtkButton       *button,
                                         gpointer         data)

@@ -64,6 +64,15 @@ void		cb_favorites_menu_clicked (GtkWidget *widget, gpointer data);
 
 void		cb_end_process_button_pressed (GtkButton *button, gpointer data);
 
+gint
+cb_right_click                          (ETree          *tree,
+                                         int            row,
+                                         ETreePath      path,
+                                         int            col,
+                                         GdkEvent       *event,
+                                         gpointer       data);
+
+
 void
 cb_info_button_pressed			(GtkButton	*button,
 					gpointer	user_data);
