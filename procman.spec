@@ -51,3 +51,4 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}/share/gnome/apps/System/procman.desktop
 %{prefix}/share/procman/proctable.etspec
 %{prefix}/share/procman/memmaps.etspec
+%{prefix}/share/locale/*/LC_MESSAGES/*.mo
