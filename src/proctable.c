@@ -44,6 +44,7 @@
 #include "infoview.h"
 #include "memmaps.h"
 #include "favorites.h"
+#include "prettytable.h"
 
 #define NUM_COLUMNS 12
 
@@ -463,6 +464,13 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	glibtop_get_proc_uid (&procuid, pid);
 	glibtop_get_proc_time (&proctime, pid);
 	newcputime = proctime.utime + proctime.stime;
+	
+	/* This is not ideal. If a process doesn't have an icon this will keep 
+	** checking to see if it does. That means lots of extra hash_table calls
+	** for every update
+	*/
+	if (procdata->config.show_icons && !newinfo->pixbuf)
+		newinfo->pixbuf = pretty_table_get_icon (procdata->pretty_table, procstate.cmd);
 		
 	newinfo->mem = procmem.size;
 	newinfo->vmsize = procmem.vsize;

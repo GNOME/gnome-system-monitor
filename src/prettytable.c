@@ -4,8 +4,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <config.h>
+#include <pthread.h>
 #include "prettytable.h"
 #include "defaulttable.h"
+#include "proctable.h"
 
 void free_entry (gpointer key, gpointer value, gpointer data);
 void free_value (gpointer key, gpointer value, gpointer data);
@@ -19,6 +21,31 @@ compare_strings (gconstpointer a, gconstpointer b)
 	const gchar *str2 = b;
 	
 	return g_strcasecmp (str1, str2) == 0;
+}
+
+static void
+thread_func (void *data)
+{
+	ProcData *procdata = (ProcData *)data;
+	PrettyTable *table;
+	
+	table = pretty_table_new ();
+	
+	procdata->pretty_table = table;
+	
+	/*g_print ("clear \n");
+	proctable_clear_tree (procdata);
+	g_print ("update");
+	proctable_update_all (procdata);*/
+}
+
+void
+prettytable_load_async (ProcData *procdata)
+{
+	pthread_t thread;
+	
+	pthread_create (&thread, NULL, (void*)thread_func, (void*)procdata);
+	
 }
 
 PrettyTable *pretty_table_new (void) {

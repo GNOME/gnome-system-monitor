@@ -32,6 +32,7 @@
 #include "interface.h"
 #include "proctable.h"
 #include "infoview.h"
+#include "prettytable.h"
 
 static GnomeUIInfo file1_menu_uiinfo[] =
 {
@@ -129,9 +130,10 @@ idle_func (gpointer data)
 	
 	if (!procdata->pretty_table)
 	{
-		procdata->pretty_table = pretty_table_new ();
+		/*procdata->pretty_table = pretty_table_new ();
 		proctable_clear_tree (procdata);
-		proctable_update_all (procdata);
+		proctable_update_all (procdata);*/
+		prettytable_load_async (procdata);
 	}
 	return FALSE;
 }

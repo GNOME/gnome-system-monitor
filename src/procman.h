@@ -23,10 +23,10 @@
 #include <gal/e-table/e-table.h>
 #include <gal/e-table/e-tree.h>
 #include <gal/e-table/e-tree-memory.h>
-#include "prettytable.h"
 
 
 typedef struct _ProcConfig ProcConfig;
+typedef struct _PrettyTable PrettyTable;
 typedef struct _ProcInfo ProcInfo;
 typedef struct _ProcData ProcData;
 
@@ -53,6 +53,12 @@ struct _ProcConfig
 	gchar		*memmaps_state_file;
 };
 
+struct _PrettyTable {
+	GHashTable *cmdline_to_prettyname;
+	GHashTable *cmdline_to_prettyicon;
+	GHashTable *name_to_prettyicon; /* lower case */
+	GHashTable *name_to_prettyname;
+};
 
 struct _ProcInfo
 {

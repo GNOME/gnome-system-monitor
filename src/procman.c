@@ -27,6 +27,7 @@
 #include "proctable.h"
 #include "interface.h"
 #include "favorites.h"
+#include "prettytable.h"
 
 static void
 procman_get_save_files (ProcData *procdata)
@@ -78,7 +79,7 @@ procman_data_new (void)
 		gnome_config_get_bool ("procman/Config/show_threads=FALSE");
 	procdata->config.update_interval = 
 		gnome_config_get_int ("procman/Config/update_interval=3000");
-	procdata->config.whose_process = gnome_config_get_int ("procman/Config/view_as=0");
+	procdata->config.whose_process = gnome_config_get_int ("procman/Config/view_as=1");
 	
 	
 	procman_get_save_files (procdata);

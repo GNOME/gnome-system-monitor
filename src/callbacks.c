@@ -234,7 +234,7 @@ cb_end_process_button_pressed          (GtkButton       *button,
 	{
 		info = e_tree_memory_node_get_data (procdata->memory, 
 						    procdata->selected_node);
-		kill (info->pid, SIGTERM);
+		kill (info->pid, SIGKILL);
 		proctable_update_all (procdata);
 	}	
 

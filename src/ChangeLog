@@ -1,5 +1,28 @@
 2001-08-04 Kevin Vandersloot <kfv101@psu.edu>
 
+	* callbacks.c (cb_end_process): changed SIGTERM to SIGKILL
+
+	* procdialogs.c: likewise.
+
+	* prettytable.c (prettytable_load_async): new function to get 
+	the icons using a seperate thread.
+	(thread_func): new function to actually load the icons within
+	the thread.
+
+	* interface.c (idle_func): call the new async functions to load
+	icons
+
+	* proctable.c (update_info): check to see if icon doesn't exist
+	and if so try to find one. Not ideal in that it means we 
+	constantly check for icons for processes that don't have them.
+
+	* prettytable.h: remove unneeded stuf
+
+	* procman.c (procman_data_new): change default "view as" to 
+	my processes.
+
+2001-08-04 Kevin Vandersloot <kfv101@psu.edu>
+
 	First crack at delay loading icons.
 
 	* interface.c (create_main_window): create an idle timer to delay 
