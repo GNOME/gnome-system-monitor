@@ -78,11 +78,12 @@ void		cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 				      guint a, gpointer data);
 
 void		cb_row_selected (GtkTreeSelection *selection, gpointer data);
+void		cb_tree_row_activated (GtkTreeView *view, GtkTreePath *path,
+		       		       GtkTreeViewColumn *column, gpointer data);
+gboolean	cb_tree_popup_menu (GtkWidget *widget, gpointer data);
 gboolean	cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event, 
 					gpointer data);
-gint		cb_tree_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data);
-
-					 
+				 
 void		cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page, 
 			        gint num, gpointer data);
 

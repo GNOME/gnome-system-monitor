@@ -1,3 +1,11 @@
+2004-01-24  Paolo Borelli  <pborelli@katamail.com>
+
+	* callbacks.[ch] (cb_tree_popup_menu): handle the popup_menu signal.
+	(cb_tree_row_activated): use the activate-row signal instead of 
+	manually checking for double click.
+	* interface.c (do_popup_menu): update for the above changes.
+	* proctable.c (proctable_new): connect the callbacks.
+
 2004-01-07  Glynn Foster  <glynn.foster@sun.com>
 
 	* interface.c: (create_main_window): remove _with_mnemonic when it's 

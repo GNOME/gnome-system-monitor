@@ -792,18 +792,23 @@ toggle_infoview (ProcData *data)
 	}
 }
 
-void do_popup_menu (ProcData *data, GdkEventButton *event)
+void
+do_popup_menu (ProcData *data, GdkEventButton *event)
 {
+	gint button;
+	gint event_time;
 
-	if (event->type == GDK_BUTTON_PRESS)
-        {
-                if (event->button == 3)
-                {
-                	gtk_menu_popup (GTK_MENU (popup_menu), NULL, NULL,
-                                        NULL, NULL, event->button,
-                                        event->time);
-                }
-        }
+	if (event) {
+		button = event->button;
+		event_time = event->time;
+	}
+	else {
+		button = 0;
+		event_time = gtk_get_current_event_time ();
+	}
+
+	gtk_menu_popup (GTK_MENU (popup_menu), NULL, NULL,
+			NULL, NULL, button, event_time);
 }
 
 void

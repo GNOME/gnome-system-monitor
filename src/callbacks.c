@@ -37,8 +37,7 @@
 #include "cellrenderer.h"
 
 void
-cb_preferences_activate               (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
+cb_preferences_activate (GtkMenuItem *menuitem, gpointer user_data)
 {
 	ProcData *procdata = user_data;
 	
@@ -63,7 +62,6 @@ cb_end_process (GtkMenuItem *menuitem, gpointer data)
 		procdialog_create_kill_dialog (procdata, SIGTERM);
 	else
 		kill_process (procdata, SIGTERM);
-	
 }
 
 void
@@ -160,7 +158,6 @@ cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 	
 }
 
-
 void
 cb_app_exit (GtkObject *object, gpointer user_data)
 {
@@ -218,7 +215,6 @@ cb_all_process_menu_clicked 		(GtkWidget	*widget,
 			      procdata->config.whose_process, NULL);
 	
 }
-
 
 void
 cb_my_process_menu_clicked		(GtkWidget	*widget,
@@ -344,7 +340,6 @@ cb_info_button_pressed			(GtkButton	*button,
 	ProcData *procdata = user_data;
 	
 	toggle_infoview (procdata);
-		
 }	
 
 void		
@@ -359,7 +354,6 @@ cb_search (GtkEditable *editable, gpointer data)
 	gtk_widget_grab_focus (GTK_WIDGET (editable));
 	g_free (text);
 }
-
 
 void		
 cb_cpu_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
@@ -447,35 +441,38 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
 	
 }
 
+void
+cb_tree_row_activated (GtkTreeView *view,
+		       GtkTreePath *path, 
+		       GtkTreeViewColumn *column,
+		       gpointer data)
+{
+	ProcData *procdata = data;
+
+	toggle_infoview (procdata);
+}
+
 gboolean
-cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event, 
+cb_tree_button_pressed (GtkWidget *widget,
+		        GdkEventButton *event, 
 			gpointer data)
 {
-        ProcData *procdata = data;
+	ProcData *procdata = data;
 
-	if (event->type == GDK_2BUTTON_PRESS) 
-		toggle_infoview (procdata);
-	else
+	if (event->button == 3 && event->type == GDK_BUTTON_PRESS)
         	do_popup_menu (procdata, event);
 
         return FALSE;
-
 }
 
-gint
-cb_tree_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data)
+gboolean
+cb_tree_popup_menu (GtkWidget *widget, gpointer data)
 {
 	ProcData *procdata = data;
-		
-	switch (event->keyval) {
-	case GDK_Return:
-	case GDK_space:
-		toggle_infoview (procdata);
-		break;
-	}
-		
-	return FALSE;
-		
+
+	do_popup_menu (procdata, NULL);
+
+	return TRUE;
 }
 
 void		
@@ -554,7 +551,6 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 		g_free (old_name);
 			
 		return FALSE;
-		
 	}
 	else {
 		old_iter = gtk_tree_iter_copy (iter);
@@ -563,7 +559,6 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 	
 	g_free (old_name);
 	return FALSE;
-	
 }
 
 static GdkPixbuf*
@@ -714,5 +709,4 @@ cb_timeout (gpointer data)
 	
 	return TRUE;
 }
-
 

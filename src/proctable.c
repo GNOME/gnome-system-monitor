@@ -245,16 +245,15 @@ proctable_new (ProcData *data)
 	g_signal_connect (G_OBJECT (gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree))), 
 			  "changed",
 			  G_CALLBACK (cb_row_selected), procdata);
+	g_signal_connect (G_OBJECT (proctree), "row_activated",
+			  G_CALLBACK (cb_tree_row_activated), procdata);
+	g_signal_connect (G_OBJECT (proctree), "popup_menu",
+			  G_CALLBACK (cb_tree_popup_menu), procdata);
 	g_signal_connect (G_OBJECT (proctree), "button_press_event",
 			  G_CALLBACK (cb_tree_button_pressed), procdata);
-	g_signal_connect (G_OBJECT (proctree), "key_press_event",
-			  G_CALLBACK (cb_tree_key_press), procdata);
 			  
 	return scrolled;
-
 }
-
-
 
 static void
 proctable_free_info (ProcInfo *info)
