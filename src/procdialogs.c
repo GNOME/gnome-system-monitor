@@ -695,7 +695,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
 	table = gtk_table_new (2, 1, FALSE);
-	gtk_container_set_border_width (GTK_CONTAINER (table), GNOME_PAD_SMALL);
+	//gtk_container_set_border_width (GTK_CONTAINER (table), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), table);
 			  
 	label = gtk_label_new (_("Update Speed ( seconds ) :"));
