@@ -47,18 +47,18 @@ static GnomeUIInfo file1_menu_uiinfo[] =
 static GnomeUIInfo edit1_menu_uiinfo[] =
 {
  	{
- 	  GNOME_APP_UI_ITEM, N_("Renice..."), "",
+ 	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), "",
 	 cb_renice, NULL, NULL, 0, 0,
 	 'r', GDK_CONTROL_MASK
 	},
 	{
-	 GNOME_APP_UI_ITEM, N_("Hide Process"), "",
+	 GNOME_APP_UI_ITEM, N_("_Hide Process"), "",
 	 cb_hide_process, NULL, NULL, 0, 0,
 	 'h', GDK_CONTROL_MASK
 	}, 
 	GNOMEUIINFO_SEPARATOR,
 	{
-	 GNOME_APP_UI_ITEM, N_("Hidden Processes..."), "",
+	 GNOME_APP_UI_ITEM, N_("Hidden _Processes..."), "",
 	 cb_show_hidden_processes, NULL, NULL, 0, 0,
 	 'p', GDK_CONTROL_MASK
 	},
@@ -68,7 +68,7 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
 static GnomeUIInfo view1_menu_uiinfo[] =
 {
 	{
-	 GNOME_APP_UI_ITEM, N_("Memory Maps..."), "",
+	 GNOME_APP_UI_ITEM, N_("_Memory Maps..."), "",
 	 cb_show_memory_maps, NULL, NULL, 0, 0,
 	 'm', GDK_CONTROL_MASK
 	},
@@ -152,11 +152,11 @@ create_main_window (ProcData *data)
         GtkWidget *lbl_kill;
         GtkWidget *lbl_renice;
 	GtkWidget *lbl_mem_maps;
-	GtkWidget *sep, *an_sep;
+	GtkWidget *sep;
 	GtkWidget *menuitem;
 	guint key;
 
-	app = gnome_app_new ("procman", NULL);
+	app = gnome_app_new ("procman", _("Procman System Monitor"));
 	accel = gtk_accel_group_new ();
 	gtk_accel_group_attach (accel, GTK_OBJECT (app));
 	gtk_accel_group_unref (accel);
@@ -356,7 +356,7 @@ create_main_window (ProcData *data)
  	popup_menu = gtk_menu_new ();
 
 	/* Create new menu items */
-	lbl_renice = gtk_menu_item_new_with_label (_("Renice Process ..."));
+	lbl_renice = gtk_menu_item_new_with_label (_("Change Priority ..."));
         gtk_widget_show (lbl_renice);
         gtk_signal_connect (GTK_OBJECT (lbl_renice),"activate",
                             GTK_SIGNAL_FUNC(popup_menu_renice),

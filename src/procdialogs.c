@@ -28,8 +28,8 @@
 #include "prettytable.h"
 #include "procactions.h"
 
-GtkWidget *renice_spinbutton;
 GtkWidget *renice_dialog;
+gint new_nice_value = 0;
 
 static void
 cb_show_hide_message_toggled (GtkToggleButton *button, gpointer data)
@@ -75,10 +75,7 @@ procdialog_create_hide_dialog (ProcData *data)
   	GtkWidget *button5;
   	GtkWidget *button6;
   	GtkWidget *dialog_action_area1;
-  	gchar *text = _("This will block a process from \n"
-  			"being displayed. To reshow a \n"
-  			"process choose Hidden \n"
-  			"Processes in the Edit menu");
+  	gchar *text = _("This action will block a process from being displayed. \n To reshow a process choose Hidden Processes in the Edit menu");
 
   	/* We create it with an OK button, and then remove the button, to work
      	around a bug in gnome-libs. */
@@ -176,7 +173,7 @@ procdialog_create_kill_dialog (ProcData *data)
 
   	/* We create it with an OK button, and then remove the button, to work
      	around a bug in gnome-libs. */
- 	messagebox1 = gnome_message_box_new (_("Unsaved data will be lost"),
+ 	messagebox1 = gnome_message_box_new (_("Unsaved data will be lost."),
                               		     GNOME_MESSAGE_BOX_WARNING,
                               		     GNOME_STOCK_BUTTON_OK, NULL);
   	gtk_container_remove (GTK_CONTAINER (GNOME_DIALOG (messagebox1)->action_area), 
@@ -240,17 +237,20 @@ renice_close (GtkButton *button, gpointer *data)
 }
 
 static void
-renice_accept (GtkButton *button, gpointer *data)
+renice_accept (GtkButton *button, gpointer data)
 {
-	ProcData *procdata = (ProcData *)data;
-	gint nice;
+	ProcData *procdata = data;
 	
-	if (!renice_spinbutton)
-		return;
-		
-	nice = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (renice_spinbutton));
+	renice (procdata->selected_pid, new_nice_value);
 	
-	renice (procdata->selected_pid, nice);
+	gnome_dialog_close (GNOME_DIALOG (renice_dialog));	
+	
+}
+
+static void
+renice_scale_changed (GtkAdjustment *adj, gpointer data)
+{
+	new_nice_value = adj->value;		
 	
 }
 
@@ -262,18 +262,16 @@ procdialog_create_renice_dialog (ProcData *data)
 	GtkWidget *dialog;
 	GtkWidget *dialog_vbox;
 	GtkWidget *vbox;
-	GtkWidget *alignment;
  	GtkWidget *hbox;
   	GtkWidget *label;
-  	GtkObject *adjustment;
+  	GtkWidget *frame;
+  	GtkObject *renice_adj;
+  	GtkWidget *hscale;
   	GtkWidget *renicebutton;
   	GtkWidget *cancelbutton;
   	GtkWidget *dialog_action_area;
   	gchar *text = 
-  	      _("The nice value refers to the \n"
-  	        "priority of a process. A lower \n"
-  	        "nice value corresponds to a \n" 
-  	        "higher priority.");
+  	      _("The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority.");
 	
 	if (!procdata->selected_node)
 		return;
@@ -289,36 +287,35 @@ procdialog_create_renice_dialog (ProcData *data)
   	  
     	dialog_vbox = GNOME_DIALOG (dialog)->vbox;
     	
-    	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+    	vbox = gtk_vbox_new (FALSE, GNOME_PAD);
     	gtk_box_pack_start (GTK_BOX (dialog_vbox), vbox, TRUE, TRUE, 0);
     	
     	label = gtk_label_new (text);
     	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+    	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD, 0);
     	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
     	gtk_widget_show (label);
     	
-    	alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-    	gtk_box_pack_start (GTK_BOX (vbox), alignment, FALSE, FALSE, 0);
+    	frame = gtk_frame_new (_("Nice Value"));				
+	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 	
 	hbox = gtk_hbox_new (FALSE, 0);
-	/*gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);*/
-	gtk_container_add (GTK_CONTAINER (alignment), hbox);
+	gtk_container_add (GTK_CONTAINER (frame), hbox);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox), GNOME_PAD_SMALL);
 	
-	adjustment = gtk_adjustment_new (info->nice, -20, 20, 1, 10, 10);
-	renice_spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
-	gtk_box_pack_end (GTK_BOX (hbox), renice_spinbutton, FALSE, FALSE, 0);
+	renice_adj = gtk_adjustment_new (info->nice, -20, 20, 1, 1, 0);
+	new_nice_value = info->nice;
+	hscale = gtk_hscale_new (GTK_ADJUSTMENT (renice_adj));
+	gtk_scale_set_digits (GTK_SCALE (hscale), 0);
+	gtk_box_pack_start (GTK_BOX (hbox), hscale, TRUE, TRUE, 0);
 	
-	label = gtk_label_new (_("Nice Value :"));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 1);
-	gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-				
 	dialog_action_area = GNOME_DIALOG (dialog)->action_area;
 	gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area), GTK_BUTTONBOX_END);
 	gtk_button_box_set_spacing (GTK_BUTTON_BOX (dialog_action_area), 8);
 	
 	gnome_dialog_append_button (GNOME_DIALOG (dialog), _("Renice"));
   	renicebutton = GTK_WIDGET (g_list_last (GNOME_DIALOG (dialog)->buttons)->data);
-  	gnome_dialog_append_button (GNOME_DIALOG (dialog), GNOME_STOCK_BUTTON_CLOSE);
+  	gnome_dialog_append_button (GNOME_DIALOG (dialog), GNOME_STOCK_BUTTON_CANCEL);
   	cancelbutton = GTK_WIDGET (g_list_last (GNOME_DIALOG (dialog)->buttons)->data);
   	
   	GTK_WIDGET_SET_FLAGS (cancelbutton, GTK_CAN_DEFAULT);
@@ -327,6 +324,8 @@ procdialog_create_renice_dialog (ProcData *data)
   			    GTK_SIGNAL_FUNC (renice_close), dialog);
   	gtk_signal_connect (GTK_OBJECT (renicebutton), "clicked",
   			    GTK_SIGNAL_FUNC (renice_accept), procdata);
+  	gtk_signal_connect (GTK_OBJECT (renice_adj), "value_changed",
+  			    GTK_SIGNAL_FUNC (renice_scale_changed), procdata);
     	
     	gtk_widget_show_all (dialog);
     	

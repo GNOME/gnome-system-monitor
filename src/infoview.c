@@ -78,7 +78,7 @@ infoview_create (ProcData *data)
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (info_table), label, 0, 1, 1, 2, GTK_FILL, 
 			  0, GNOME_PAD_SMALL, 0);
-	label = gtk_label_new (_("Nice Value : "));
+	label = gtk_label_new (_("Priority : "));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (info_table), label, 0, 1, 2, 3, GTK_FILL, 
 			  0, GNOME_PAD_SMALL, 0);
@@ -92,6 +92,7 @@ infoview_create (ProcData *data)
 	gtk_container_add (GTK_CONTAINER (cmd_event_box), cmd_label);
 	
 	cmd_tooltip = gtk_tooltips_new ();
+	gtk_tooltips_set_delay (GTK_TOOLTIPS (cmd_tooltip), 15);
 	
 	status_label = gtk_label_new ("");
 	gtk_misc_set_alignment (GTK_MISC (status_label), 0.0, 0.5);
@@ -209,7 +210,12 @@ infoview_update (ProcData *data)
 	if (g_strcasecmp (info->arguments, command))
 		gtk_tooltips_set_tip (cmd_tooltip, cmd_event_box, info->arguments, NULL);
 	e_clipped_label_set_text (E_CLIPPED_LABEL (cmd_label), info->arguments);
-	string = g_strdup_printf ("%d", info->nice);
+	if (info->nice <= -5)
+		string = g_strdup_printf (_("High  ( Nice %d )"), info->nice);
+	else if (info->nice <= 5)
+		string = g_strdup_printf (_("Normal  ( Nice %d )"), info->nice);
+	else
+		string = g_strdup_printf (_("Low  ( Nice %d )"), info->nice);
 	gtk_label_set_text (GTK_LABEL (nice_label), string);
 	g_free (string); 
 	string = get_size_string (info->mem);
