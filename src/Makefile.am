@@ -16,7 +16,8 @@ procman_SOURCES = \
 	load-graph.c load-graph.h \
 	proctable.c proctable.h \
 	prettytable.c prettytable.h \
-	util.c util.h
+	util.c util.h \
+	infoview.c infoview.h
 
 procman_LDADD =  \
 	@PROCMAN_LIBS@ $(INTLLIBS) $(LIBGTOP_LIBS) -lpthread
