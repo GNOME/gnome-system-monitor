@@ -425,7 +425,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	GtkWidget *spin_button;
 	GtkWidget *check_button;
 	
-	dialog = gnome_dialog_new (_("Preferneces"), GNOME_STOCK_BUTTON_CLOSE, NULL);
+	dialog = gnome_dialog_new (_("Preferences"), GNOME_STOCK_BUTTON_CLOSE, NULL);
 	
 	main_vbox = GNOME_DIALOG (dialog)->vbox;
 
