@@ -7,7 +7,8 @@ EXTRA_DIST = \
 	procman.spec \
 	xml-i18n-extract.in \
 	xml-i18n-merge.in \
-	xml-i18n-update.in
+	xml-i18n-update.in \
+	HACKING 
 
 Applicationsdir = $(datadir)/gnome/apps/System
 Applications_in_files = procman.desktop.in
