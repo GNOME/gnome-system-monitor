@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  *
  */
-#ifndef _PROCMAN_H_
-#define _PROCMAN_H_
+#ifndef _PROCMAN_PROCMAN_H_
+#define _PROCMAN_PROCMAN_H_
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gnome.h>
@@ -165,4 +165,4 @@ void		procman_save_config (ProcData *data);
 void		procman_save_tree_state (GConfClient *client, GtkWidget *tree, gchar *prefix);
 gboolean	procman_get_tree_state (GConfClient *client, GtkWidget *tree, gchar *prefix);
 
-#endif
+#endif /* _PROCMAN_PROCMAN_H_ */

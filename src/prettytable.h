@@ -1,5 +1,5 @@
-#ifndef _PRETTYTABLE_H_
-#define _PRETTYTABLE_H_
+#ifndef _PROCMAN_PRETTYTABLE_H_
+#define _PROCMAN_PRETTYTABLE_H_
 
 #include <glib.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -16,4 +16,4 @@ GdkPixbuf*	pretty_table_get_icon (PrettyTable *pretty_table,
 				       const gchar *command, gint pid);
 void 		pretty_table_free (PrettyTable *pretty_table);
 
-#endif /* _PRETTYTABLE_H_ */
+#endif /* _PROCMAN_PRETTYTABLE_H_ */

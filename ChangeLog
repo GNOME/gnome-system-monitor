@@ -1,5 +1,36 @@
 2004-10-24  Benoît Dejean  <tazforever@dlfp.org>
 
+	* src/memmaps.c: (compare_memmaps):
+	* src/callbacks.c: (compare_disks):
+	* src/favorites.c: (add_to_blacklist), (add_single_to_blacklist),
+	(remove_item): s/g_list_append/g_list_prepend/ as order doesn't matter.
+	
+	* src/load-graph.c: (load_graph_configure), (load_graph_expose),
+	(load_graph_destroy), (load_graph_new): s/g_list_append/g_list_prepend/
+	as order doesn't matter. Little cleanup.
+	
+	* src/prettytable.h:
+	* src/procman.h:
+	* src/load-graph.h: Better ifdef.
+	
+	* src/prettytable.c: (new_application), (application_finished),
+	(pretty_table_new), (pretty_table_add_table),
+	(pretty_table_get_icon): Whitespace cleanup.
+	(load_table_from_file): Added (WIP). Currently excluded.
+	
+	* src/proctable.c: (proctable_new): Cleaned.
+	(proctable_free_info): prevent memory leak.
+	(get_process_name): Re-implemented using g_get_path_basename(). 
+	(remove_info_from_list): Big cleanup. Improved performances. Scales much
+	better.
+	(update_info): CLAMP cpu%.
+	(get_info): Re-added thread detection code. ThreadView works again.
+	(refresh_list): removal_list is now a g_ptr_array for performance.
+	(proctable_update_list),(proctable_update_all), (proctable_clear_tree),
+	(proctable_free_table): Cleanups.
+
+2004-10-24  Benoît Dejean  <tazforever@dlfp.org>
+
 	* src/proctable.c: (proctable_free_info), (insert_info_to_tree),
 	(remove_children_from_tree), (find_match_in_new_list),
 	(refresh_list): Cleaned.

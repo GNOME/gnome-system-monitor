@@ -33,7 +33,7 @@ void
 add_to_blacklist (ProcData *procdata, gchar *name)
 {
 	gchar *process = g_strdup (name);
-	procdata->blacklist = g_list_append (procdata->blacklist, process);
+	procdata->blacklist = g_list_prepend (procdata->blacklist, process);
 	procdata->blacklist_num++;
 	
 	if (blacklist_dialog) {
@@ -61,7 +61,7 @@ add_single_to_blacklist (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *it
 	add_to_blacklist (procdata, info->name);
 	
 	if (info->visible) 
-		removed_processes = g_list_append (removed_processes, info);
+		removed_processes = g_list_prepend (removed_processes, info);
 }
 
 static void
@@ -291,7 +291,7 @@ remove_item (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer
 	}
 		
 	iter_copy = gtk_tree_iter_copy (iter);	
-	removed_iters = g_list_append (removed_iters, iter_copy);
+	removed_iters = g_list_prepend (removed_iters, iter_copy);
 }
 
 static void

@@ -100,7 +100,7 @@ compare_memmaps (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoi
 	}
 
 	old_iter = gtk_tree_iter_copy (iter);
-	old_maps = g_list_append (old_maps, old_iter);
+	old_maps = g_list_prepend (old_maps, old_iter);
 	g_free (old_name);
 	return FALSE;
 }

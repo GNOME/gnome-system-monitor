@@ -324,7 +324,7 @@ static gint
 load_graph_configure (GtkWidget *widget, GdkEventConfigure *event,
 		      gpointer data_ptr)
 {
-	LoadGraph *c = (LoadGraph *) data_ptr;
+	LoadGraph * const c = data_ptr;
 
 	if (c->pixmap) {
 		gdk_pixmap_unref (c->pixmap);
@@ -360,7 +360,7 @@ static gint
 load_graph_expose (GtkWidget *widget, GdkEventExpose *event,
 		   gpointer data_ptr)
 {
-	LoadGraph *g = (LoadGraph *) data_ptr;
+	LoadGraph * const g = data_ptr;
 
 	gdk_draw_pixmap (widget->window,
 			 widget->style->fg_gc [GTK_WIDGET_STATE(widget)],
@@ -374,7 +374,7 @@ load_graph_expose (GtkWidget *widget, GdkEventExpose *event,
 static void
 load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
 {
-	LoadGraph *g = (LoadGraph *) data_ptr;
+	LoadGraph * const g = data_ptr;
 
 	load_graph_stop (g);
 
@@ -448,7 +448,7 @@ load_graph_new (gint type, ProcData *procdata)
 
 	load_graph_alloc (g);
 
-	object_list = g_list_append (object_list, g);
+	object_list = g_list_prepend (object_list, g);
 
 	gtk_widget_show_all (g->main_widget);
 

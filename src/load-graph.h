@@ -1,5 +1,5 @@
-#ifndef LOAD_GRAPH_H__
-#define LOAD_GRAPH_H__
+#ifndef _PROCMAN_LOAD_GRAPH_H_
+#define _PROCMAN_LOAD_GRAPH_H_
 
 #include "procman.h"
 
@@ -26,4 +26,4 @@ load_graph_start (LoadGraph *g);
 void
 load_graph_stop (LoadGraph *g);
 
-#endif
+#endif /* _PROCMAN_LOAD_GRAPH_H_ */

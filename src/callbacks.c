@@ -535,7 +535,7 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 	}
 	else {
 		old_iter = gtk_tree_iter_copy (iter);
-		old_disks = g_list_append (old_disks, old_iter);
+		old_disks = g_list_prepend (old_disks, old_iter);
 		g_free (old_name);
 		return FALSE;
 	}

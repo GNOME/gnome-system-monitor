@@ -116,11 +116,10 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 
 
 GtkWidget *
-proctable_new (ProcData *data)
+proctable_new (ProcData * const procdata)
 {
-	ProcData *procdata = data;
 	GtkWidget *proctree;
-	GtkWidget *scrolled = NULL;
+	GtkWidget *scrolled;
 	GtkTreeStore *model;
 	GtkTreeSelection *selection;
 	GtkTreeViewColumn *column;
@@ -274,6 +273,7 @@ proctable_free_info (ProcInfo *info)
 	g_free (info->arguments);
 	g_free (info->user);
 	g_free (info->status);
+	g_list_free (info->children);
 	g_free (info);
 }
 
@@ -314,39 +314,15 @@ get_process_status (ProcInfo *info, const glibtop_proc_state *buf)
 
 
 static void
-get_process_name (ProcData *procdata, ProcInfo *info, gchar *cmd, gchar *args)
+get_process_name (ProcData *procdata, ProcInfo *info,
+		  const gchar *cmd, const gchar *args)
 {
-	gchar *command = NULL;
-	gint i, n = 0, len, newlen;
-	gboolean done = FALSE;
 
-	/* strip the absolute path from the arguments */
-	if (args && (len = strlen(args)))
-	{
-		i = len;
-		while (!done)
-		{
-			/* no / in string */
-			if (i == 0) {
-				n = 0;
-				done = TRUE;
-			}
-			if (args[i] == '/') {
-				done = TRUE;
-				n = i + 1;
-			}
-			i--;
-		}
-		newlen = len - n;
-		command = g_new (gchar, newlen + 1);
-		for (i = 0; i < newlen; i++) {
-			command[i] = args[i + n];
-		}
-		command[newlen] = '\0';
-	}
-
-	if (command)
-		info->name = command;
+	/* strip the absolute path from the arguments
+	 * if args is not null nor ""
+	 */
+	if (args && *args)
+		info->name = g_path_get_basename (args);
 	else
 		info->name = g_strdup (cmd);
 }
@@ -537,27 +513,28 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 static void
 remove_info_from_list (ProcInfo *info, ProcData *procdata)
 {
-	GList *children = info->children;
+	GList *child;
+	ProcInfo * const parent = info->parent;
 
 	/* Remove info from parent list */
-	if (info->parent)
-		info->parent->children = g_list_remove (info->parent->children, info);
+	if (parent)
+		parent->children = g_list_remove (parent->children, info);
 
 	/* Add any children to parent list */
-	while (children) {
-		ProcInfo *child_info = children->data;
+	for(child = info->children; child; child = g_list_next (child)) {
+		ProcInfo *child_info = child->data;
+		child_info->parent = parent;
+	}
 
-		if (info->parent)
-			info->parent->children = g_list_append (info->parent->children, child_info);
-		child_info->parent = info->parent;
-
-		children = g_list_next (children);
+	if(parent) {
+		parent->children = g_list_concat(parent->children,
+						 info->children);
+		info->children = NULL;
 	}
 
 	/* Remove from list */
 	procdata->info = g_list_remove (procdata->info, info);
 	proctable_free_info (info);
-
 }
 
 
@@ -602,6 +579,9 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 		pcpu = ( newcputime - info->cpu_time_last ) * 100 / total_time;
 	else
 		pcpu = 0;
+
+	pcpu = CLAMP(pcpu, 0, 100);
+
 	info->cpu_time_last = newcputime;
 	info->cpu = pcpu;
 	info->nice = procuid.nice;
@@ -610,12 +590,12 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 
 	if (procdata->config.whose_process == ACTIVE_PROCESSES)	{
 
-	/* process started running */
+		/* process started running */
 		if (info->running && (!info->visible)) {
 			insert_info_to_tree (info, procdata);
 			return;
 		}
-	/* process was running but not anymore */
+		/* process was running but not anymore */
 		else if ((!info->running) && info->visible) {
 			remove_info_from_tree (info, procdata);
 			return;
@@ -632,9 +612,12 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 		gtk_tree_view_get_visible_rect (GTK_TREE_VIEW (procdata->tree),
 						&vis_rect);
 		gtk_tree_path_free (path);
-	/* Don't update if row is not visible. Small performance improvement */
+
+		/* Don't update if row is not visible.
+		   Small performance improvement */
 		if ((rect.y < 0) || (rect.y > vis_rect.height))
 			return;
+
 		mem = get_size_string (info->mem);
 		vmsize = get_size_string (info->vmsize);
 		memres = get_size_string (info->memres);
@@ -731,8 +714,12 @@ get_info (ProcData *procdata, gint pid)
 	info->pixbuf = pretty_table_get_icon (procdata->pretty_table, info->name, pid);
 
 	info->parent = find_parent (procdata, info->parent_pid);
-	if (info->parent)
-		info->parent->children = g_list_append (info->parent->children, info);
+	if (info->parent) {
+		info->parent->children = g_list_prepend (info->parent->children, info);
+		if(g_strcasecmp (info->name, info->parent->name) == 0
+		   && info->parent->mem == info->mem)
+			info->is_thread = TRUE;
+	}
 
 #if 0
 	if (parentinfo) {
@@ -746,7 +733,6 @@ get_info (ProcData *procdata, gint pid)
 			info->is_thread = TRUE;
 		}
 		else
-
 			info->is_thread = FALSE;
 
 		if (parentinfo->visible) {
@@ -785,38 +771,37 @@ static void
 refresh_list (ProcData *data, const unsigned *pid_list, guint n)
 {
 	ProcData *procdata = data;
-	GList *list, *removal_list = NULL;
+	GList *list;
+	GPtrArray *removal_list = g_ptr_array_new ();
 	GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-	gint i = 0;
+	guint i;
 
 	/* Add or update processes */
-	while (i < n) {
+	for(i = 0; i < n; ++i) {
 		ProcInfo *info;
 
 		info = proctable_find_process (pid_list[i], NULL, procdata);
 		if (!info) {
 			info = get_info (procdata, pid_list[i]);
 			info->queue = NEEDS_ADDITION;
-			procdata->info = g_list_append (procdata->info, info);
+			procdata->info = g_list_prepend (procdata->info, info);
 		}
 		else {
 			update_info (procdata, info, info->pid);
 		}
-
-		i++;
 	}
 
 	/* Remove processes */
 	list = procdata->info;
 	while (list) {
-		ProcInfo *info = list->data;
-		GtkTreeIter child;
+		ProcInfo * const info = list->data;
 
 		if (!find_match_in_new_list (info->pid, pid_list, n))  {
-			removal_list  = g_list_append (removal_list, info);
+			g_ptr_array_add (removal_list, info);
 			info->queue = NEEDS_REMOVAL;
 			/* remove all children from tree */
 			if (info->visible) {
+				GtkTreeIter child;
 				if (gtk_tree_model_iter_children (model, &child, &info->node))
 					remove_children_from_tree (procdata, model, &child);
 			}
@@ -827,7 +812,7 @@ refresh_list (ProcData *data, const unsigned *pid_list, guint n)
 	/* Add or remove processes from the tree */
 	list = procdata->info;
 	while (list) {
-		ProcInfo *info = list->data;
+		ProcInfo * const info = list->data;
 
 		if (info->queue == NEEDS_REMOVAL) {
 			remove_info_from_tree (info, procdata);
@@ -841,28 +826,20 @@ refresh_list (ProcData *data, const unsigned *pid_list, guint n)
 	}
 
 	/* Remove processes from the internal GList */
-	while(removal_list) {
-		ProcInfo *info = removal_list->data;
+	for(i = 0; i < removal_list->len; ++i)
+		remove_info_from_list (removal_list->pdata[i], procdata);
 
-		remove_info_from_list (info, procdata);
-
-		removal_list = g_list_next (removal_list);
-	}
-
-	g_list_free (removal_list);
-
+	g_ptr_array_free (removal_list, TRUE);
 }
 
 
 void
-proctable_update_list (ProcData *data)
+proctable_update_list (ProcData * const procdata)
 {
-	ProcData *procdata = data;
 	unsigned *pid_list;
 	glibtop_proclist proclist;
 	glibtop_cpu cpu;
 	gint which, arg;
-	gint n;
 
 	switch (procdata->config.whose_process) {
 	case ALL_PROCESSES:
@@ -877,7 +854,6 @@ proctable_update_list (ProcData *data)
 	}
 
 	pid_list = glibtop_get_proclist (&proclist, which, arg);
-	n = proclist.number;
 
 	/* FIXME: total cpu time elapsed should be calculated on an individual basis here
 	** should probably have a total_time_last gint in the ProcInfo structure */
@@ -885,17 +861,15 @@ proctable_update_list (ProcData *data)
 	total_time = cpu.total - total_time_last;
 	total_time_last = cpu.total;
 
-	refresh_list (procdata, pid_list, n);
+	refresh_list (procdata, pid_list, proclist.number);
 
 	g_free (pid_list);
 }
 
 
 void
-proctable_update_all (ProcData *data)
+proctable_update_all (ProcData * const procdata)
 {
-	ProcData *procdata = data;
-
 	proctable_update_list (procdata);
 
 	if (procdata->config.show_more_info)
@@ -904,9 +878,8 @@ proctable_update_all (ProcData *data)
 
 
 void
-proctable_clear_tree (ProcData *data)
+proctable_clear_tree (ProcData * const procdata)
 {
-	ProcData *procdata = data;
 	GtkTreeModel *model;
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
@@ -920,7 +893,7 @@ proctable_clear_tree (ProcData *data)
 
 
 void
-proctable_free_table (ProcData *procdata)
+proctable_free_table (ProcData * const procdata)
 {
 	GList *list = procdata->info;
 
