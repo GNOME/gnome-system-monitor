@@ -81,6 +81,9 @@ static GnomeUIInfo menubar1_uiinfo[] =
 	GNOMEUIINFO_END
 };
 
+gchar *moreinfolabel = N_("More Info  >>");
+gchar *lessinfolabel = N_("<<  Less Info");
+
 GtkWidget *infobutton;
 GtkWidget *endprocessbutton;
 
@@ -161,11 +164,14 @@ create_main_window (ProcData *data)
 	endprocessbutton = gtk_button_new_with_label (_("End Process"));
 	gtk_box_pack_start (GTK_BOX (hbox2), endprocessbutton, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (endprocessbutton), GNOME_PAD_SMALL);
+	gtk_misc_set_padding (GTK_MISC (GTK_BIN (endprocessbutton)->child), 
+			      GNOME_PAD_SMALL, 1);
 
-	infobutton = gtk_button_new_with_label (_("More Info"));
+	infobutton = gtk_button_new_with_label (procdata->config.show_more_info ?
+					        lessinfolabel : moreinfolabel);
 	gtk_box_pack_end (GTK_BOX (hbox2), infobutton, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (infobutton), GNOME_PAD_SMALL);
-	gtk_misc_set_padding (GTK_MISC (GTK_BIN (infobutton)->child), 2, 2);
+	gtk_misc_set_padding (GTK_MISC (GTK_BIN (infobutton)->child), GNOME_PAD_SMALL, 1);
 	
 	gtk_widget_show_all (hbox2);
 
@@ -187,35 +193,38 @@ create_main_window (ProcData *data)
 
 	status_frame = gtk_frame_new (NULL);
 	gtk_box_pack_start (GTK_BOX (status_hbox), status_frame, TRUE, TRUE, 0);
-	meter_hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
+	meter_hbox = gtk_hbox_new (FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (meter_hbox), 1);
 	gtk_container_add (GTK_CONTAINER (status_frame), meter_hbox);
 	label = gtk_label_new (_("CPU :"));
-	gtk_box_pack_start (GTK_BOX (meter_hbox), label, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (meter_hbox), label, FALSE, FALSE, GNOME_PAD_SMALL);
 	cpumeter = gtk_progress_bar_new ();
 	gtk_widget_set_usize (cpumeter, 60, -2);
-	gtk_box_pack_start (GTK_BOX (meter_hbox), cpumeter, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (meter_hbox), cpumeter, TRUE, TRUE, GNOME_PAD_SMALL);
 	procdata->cpumeter = cpumeter;
 	
 	status_frame = gtk_frame_new (NULL);
 	gtk_box_pack_start (GTK_BOX (status_hbox), status_frame, TRUE, TRUE, 0);
-	meter_hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
+	meter_hbox = gtk_hbox_new (FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (meter_hbox), 1);
 	gtk_container_add (GTK_CONTAINER (status_frame), meter_hbox);
 	label = gtk_label_new (_("Memory Used :"));
-	gtk_box_pack_start (GTK_BOX (meter_hbox), label, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (meter_hbox), label, FALSE, FALSE, GNOME_PAD_SMALL);
 	memmeter = gtk_progress_bar_new ();
 	gtk_widget_set_usize (memmeter, 60, -2);
-	gtk_box_pack_start (GTK_BOX (meter_hbox), memmeter, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (meter_hbox), memmeter, TRUE, TRUE, GNOME_PAD_SMALL);
 	procdata->memmeter = memmeter;
 	
 	status_frame = gtk_frame_new (NULL);
 	gtk_box_pack_start (GTK_BOX (status_hbox), status_frame, TRUE, TRUE, 0);
-	meter_hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
+	meter_hbox = gtk_hbox_new (FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (meter_hbox), 1);
 	gtk_container_add (GTK_CONTAINER (status_frame), meter_hbox);
 	label = gtk_label_new (_("Swap Used :"));
-	gtk_box_pack_start (GTK_BOX (meter_hbox), label, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (meter_hbox), label, FALSE, FALSE, GNOME_PAD_SMALL);
 	swapmeter = gtk_progress_bar_new ();
 	gtk_widget_set_usize (swapmeter, 60, -2);
-	gtk_box_pack_start (GTK_BOX (meter_hbox), swapmeter, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (meter_hbox), swapmeter, TRUE, TRUE, GNOME_PAD_SMALL);
 	procdata->swapmeter = swapmeter;
 	
 	gtk_widget_show_all (status_hbox);
@@ -227,7 +236,7 @@ create_main_window (ProcData *data)
 
 	gtk_signal_connect (GTK_OBJECT (endprocessbutton), "clicked",
 			    GTK_SIGNAL_FUNC (cb_end_process_button_pressed), procdata);
-	gtk_signal_connect (GTK_OBJECT (infobutton), "pressed",
+	gtk_signal_connect (GTK_OBJECT (infobutton), "clicked",
 			    GTK_SIGNAL_FUNC (cb_info_button_pressed),
 			    procdata);
 
@@ -268,14 +277,14 @@ toggle_infoview (ProcData *data)
 		gtk_widget_show_all (procdata->infobox);
 		procdata->config.show_more_info = TRUE;	
 		infoview_update (procdata);
-		gtk_label_set_text (label, _("Less Info"));
+		gtk_label_set_text (label, lessinfolabel);
 		
 	}			
 	else
 	{
 		gtk_widget_hide (procdata->infobox);
 		procdata->config.show_more_info = FALSE;
-		gtk_label_set_text (label, _("More Info"));
+		gtk_label_set_text (label, moreinfolabel);
 	}
 }
 
