@@ -108,8 +108,8 @@ main (int argc, char *argv[])
 		
 	e_cursors_init ();
 
-//	gtk_widget_push_visual (gdk_rgb_get_visual ());
-//	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
+/*	gtk_widget_push_visual (gdk_rgb_get_visual ());
+	gtk_widget_push_colormap (gdk_rgb_get_cmap ());*/
 
 	glibtop_init ();
 
@@ -117,13 +117,13 @@ main (int argc, char *argv[])
 
 	procdata->pretty_table = pretty_table_new ();
 
-	/* FIXME: do not hard code paths here and in defaulttable.h */
 	path = gnome_datadir_file ("gnome/apps");
 	pretty_table_load_path (procdata->pretty_table, path, TRUE);
 	g_free (path);
 	path = gnome_datadir_file ("gnome/ximian");
 	pretty_table_load_path (procdata->pretty_table, path, TRUE);
 	g_free (path);
+	
 	pretty_table_add_table (procdata->pretty_table, default_table);
 
 	app1 = create_main_window (procdata);

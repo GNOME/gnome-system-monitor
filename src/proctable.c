@@ -513,7 +513,6 @@ remove_children_from_tree (ETreeModel *model, ETreePath node, gpointer data)
 					 "cursor_activated",
 					  -1, NULL); 
 	}
-	e_tree_memory_node_remove (procdata->memory, info->node);
 	procdata->info = g_list_remove (procdata->info, info);
 	proctable_free_info (info);
 	
@@ -553,7 +552,7 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 	gint i = 0;
 	ETreePath root_node;
 	
-	//e_tree_memory_freeze (procdata->memory);
+	/*e_tree_memory_freeze (procdata->memory);*/
 	root_node = e_tree_model_get_root (procdata->model);
 	
 	
@@ -619,7 +618,7 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 		proctable_free_info (oldinfo);
 	}
 	
-	//e_tree_memory_thaw (procdata->memory);
+	/*e_tree_memory_thaw (procdata->memory);*/
 
 
 }
