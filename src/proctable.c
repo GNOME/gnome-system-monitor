@@ -923,7 +923,7 @@ proctable_search_table (ProcData *procdata, gchar *string)
 			gtk_tree_path_free (node);
 		}
 		
-		if (strstr (info->user, string) && info->visible)
+		if (info->user && strstr (info->user, string) && info->visible)
 		{
 			GtkTreePath *node = gtk_tree_model_get_path (model, &info->node);
 			
