@@ -47,7 +47,7 @@ PrettyTable *pretty_table_new (void) {
 	pretty_table->cmdline_to_prettyicon = g_hash_table_new (g_str_hash, compare_strings);
 	pretty_table->name_to_prettyicon = g_hash_table_new (g_str_hash, compare_strings);
 	pretty_table->name_to_prettyname = g_hash_table_new (g_str_hash, compare_strings);
-	
+#if 0
 	path = gnome_datadir_file ("gnome/apps");
 	pretty_table_load_path (pretty_table, path, TRUE);
 	g_free (path);
@@ -57,12 +57,12 @@ PrettyTable *pretty_table_new (void) {
 	path = gnome_datadir_file ("applets");
 	pretty_table_load_path (pretty_table, path, TRUE);
 	g_free (path);
-	
+#endif	
 	pretty_table_add_table (pretty_table, default_table);
 
 	return pretty_table;
 }
-
+#if 0
 gint pretty_table_load_path (PrettyTable *pretty_table, gchar *path, gboolean recursive) { /* No ending slash in the path */
 	DIR *dh;
 	struct dirent *file;
@@ -121,7 +121,7 @@ gint pretty_table_load_path (PrettyTable *pretty_table, gchar *path, gboolean re
 
 	return 1;
 }
-
+#endif
 void pretty_table_add_table (PrettyTable *pretty_table, const gchar *table[]) {
 	/* Table format:
 
@@ -180,6 +180,7 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command)
 {
 	GdkPixbuf *icon = NULL, *tmp_pixbuf = NULL;
 	gchar *icon_path = NULL;
+	GError *error;
 	
 	if (!pretty_table) 
 		return NULL;
@@ -198,12 +199,13 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command)
 
 	if (!icon_path) 
 		return NULL;
-
-	tmp_pixbuf = gdk_pixbuf_new_from_file (icon_path);
+	
+	tmp_pixbuf = gdk_pixbuf_new_from_file (icon_path, NULL);
 	if (!tmp_pixbuf) 
 		return NULL;
 	
 	icon = gdk_pixbuf_scale_simple (tmp_pixbuf, 16, 16, GDK_INTERP_HYPER);
+	
 	gdk_pixbuf_unref (tmp_pixbuf);		
 
 	return icon;

@@ -37,11 +37,11 @@
 #include <pwd.h>
 #include "procman.h"
 #include "proctable.h"
+#include "prettytable.h"
 #if 0
 #include "infoview.h"
 #include "memmaps.h"
 #include "favorites.h"
-#include "prettytable.h"
 #endif
 
 
@@ -53,8 +53,6 @@ gint cpu_time_last = 0;
 gint cpu_time = 0;
 gfloat pcpu_last = 0.0;
 
-
-
 GtkWidget *
 proctable_new (ProcData *data)
 {
@@ -65,7 +63,7 @@ proctable_new (ProcData *data)
 	GtkTreeModel *smodel;
 	GtkTreeViewColumn *column;
   	GtkCellRenderer *cell_renderer;
-	static gchar *title[] = {"Process Name", "User", "Memory", "% CPU", "ID"};
+	static gchar *title[] = {"Icon ", "Process Name", "User", "Memory", "% CPU", "ID"};
 	gint i;
 	
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
@@ -73,7 +71,8 @@ proctable_new (ProcData *data)
                                   	GTK_POLICY_AUTOMATIC,
                                   	GTK_POLICY_AUTOMATIC);
 	
-	model = gtk_tree_store_new (NUM_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
+	model = gtk_tree_store_new (NUM_COLUMNS, GDK_TYPE_PIXBUF, G_TYPE_STRING, 
+				    G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_INT, G_TYPE_INT);
 				    
   	smodel = gtk_tree_model_sort_new_with_model (GTK_TREE_MODEL (model));
@@ -82,7 +81,26 @@ proctable_new (ProcData *data)
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (proctree), TRUE);
   	g_object_unref (G_OBJECT (model));
   	
-  	for (i = 0; i < NUM_COLUMNS; i++) {
+  	cell_renderer = gtk_cell_renderer_pixbuf_new ();
+  	column = gtk_tree_view_column_new_with_attributes (title[0],
+						    		   cell_renderer,
+						     		   "pixbuf", COL_PIXBUF,
+						     		   NULL);
+	gtk_tree_view_column_set_sort_column_id (column, COL_PIXBUF);
+	gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
+		
+	cell_renderer = gtk_cell_renderer_text_new ();
+  		column = gtk_tree_view_column_new_with_attributes (title[1],
+						    		   cell_renderer,
+						     		   "text", COL_NAME,
+						     		   NULL);
+	gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
+	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
+	gtk_tree_view_column_set_reorderable (column, TRUE);
+	gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
+	gtk_tree_view_set_expander_column (proctree, column);
+  	
+  	for (i = 2; i < NUM_COLUMNS; i++) {
   		cell_renderer = gtk_cell_renderer_text_new ();
   		column = gtk_tree_view_column_new_with_attributes (title[i],
 						    		   cell_renderer,
@@ -345,8 +363,8 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 		model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 		mem = get_size_string (newinfo->mem);
 		gtk_tree_store_set (GTK_TREE_STORE (model), &newinfo->node, 
-			    2, mem,
-			    3, newinfo->cpu,
+			    COL_MEM, mem,
+			    COL_CPU, newinfo->cpu,
 			   -1);	
 		g_free (mem);
 		/*g_print ("%s \n", newinfo->name);*/
@@ -386,7 +404,7 @@ get_info (ProcData *procdata, gint pid)
 	newcputime = proctime.utime + proctime.stime;
 
 	info->has_desktop_file = -1;	
-#if 0	
+#if 1
 	if (procdata->config.load_desktop_files && procdata->pretty_table) {
 		info->pixbuf = pretty_table_get_icon (procdata->pretty_table, procstate.cmd);
 		
@@ -397,7 +415,7 @@ get_info (ProcData *procdata, gint pid)
 	}
 	else
 		info->pixbuf = NULL;
-#endif	
+#endif
 	arguments = glibtop_get_proc_args (&procargs, pid, 0);	
 	get_process_name (procdata, info, procstate.cmd, arguments);
 	if (arguments)
@@ -522,11 +540,12 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0);
 	
 	mem = get_size_string (info->mem);
-	gtk_tree_store_set (GTK_TREE_STORE (model), &row, 0, info->name,
-							  1, info->user,
-							  2, mem,
-							  3, info->cpu,
-							  4, info->pid,
+	gtk_tree_store_set (GTK_TREE_STORE (model), &row, COL_PIXBUF, info->pixbuf, 
+							  COL_NAME, info->name,
+							  COL_USER, info->user,
+							  COL_MEM, mem,
+							  COL_CPU, info->cpu,
+							  COL_PID, info->pid,
 							  -1);
 	g_free (mem);
 	info->node = row;
@@ -718,6 +737,7 @@ void
 proctable_update_all (ProcData *data)
 {
 	ProcData *procdata = data;
+	
 	
 #if 0
 	root_node = e_tree_model_get_root (model);

@@ -25,9 +25,9 @@
 #include "procman.h"
 #include "interface.h"
 #include "proctable.h"
+#include "prettytable.h"
 #if 0
 #include "favorites.h"
-#include "prettytable.h"
 #endif
 
 GtkWidget *app;
@@ -104,6 +104,7 @@ icon_load_finished (gpointer data)
 	
 	return TRUE;
 }
+#endif
 
 static void
 load_desktop_files (ProcData *pd)
@@ -115,6 +116,7 @@ load_desktop_files (ProcData *pd)
 	** Basically what needs to be done is to update the table when the thread is
 	** finished 
 	*/
+	#if 0
 	if (pd->config.load_desktop_files && pd->config.delay_load)
 	{
 		pd->pretty_table = NULL;
@@ -124,11 +126,12 @@ load_desktop_files (ProcData *pd)
 		gtk_timeout_add (500, icon_load_finished, pd);
 	}
 	else if (pd->config.load_desktop_files && !pd->config.delay_load) 
+	#endif
 		pd->pretty_table = pretty_table_new ();
-	else
-		pd->pretty_table = NULL;
+	/*else
+		pd->pretty_table = NULL;*/
 }
-#endif
+
 
 static ProcData *
 procman_data_new (void)
@@ -137,7 +140,7 @@ procman_data_new (void)
 	ProcData *pd;
 
 	pd = g_new0 (ProcData, 1);
-	g_print ("allocated \n");
+	
 	pd->tree = NULL;
 	pd->infobox = NULL;
 	pd->info = NULL;
@@ -367,22 +370,20 @@ main (int argc, char *argv[])
 
 	glibtop_init ();
 
-	g_print ("data init \n");
 	procdata = procman_data_new ();
 
-	g_print ("start UI \n");
 	if (procdata->config.simple_view) 
 		app = create_simple_view_dialog (procdata);
 	else 
 		app = create_main_window (procdata);
-#if 0		
+
 	load_desktop_files (procdata);
-#endif	
+
 	proctable_update_all (procdata);
 	gtk_tree_view_expand_all (GTK_TREE_VIEW (procdata->tree));
 	if (!app)
 		return 0;  
-	g_print ("app created \n");		
+			
  	gtk_widget_show_all (app);	
  	
 	gtk_main ();

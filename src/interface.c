@@ -512,7 +512,6 @@ create_main_window (ProcData *procdata)
 	gtk_widget_show (tab_label1);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox1, tab_label1);
 
-	g_print ("start sys box \n");
 	sys_box = create_sys_view (procdata);
 	gtk_widget_show (sys_box);
 	tab_label2 = gtk_label_new ("System Monitor");

@@ -200,10 +200,10 @@ get_size_string (gint size)
 		
 	fsize /= 1024.0;
 	if (fsize < 1024.0)
-		return g_strdup_printf (_("%.0f MB"), fsize);
+		return g_strdup_printf (_("%.1f MB"), fsize);
 	
 	fsize /= 1024.0;
-	return g_strdup_printf (_("%.0f GB"), fsize);
+	return g_strdup_printf (_("%.1f GB"), fsize);
 
 }
 

@@ -23,7 +23,8 @@
 
 enum
 {
-	COL_NAME = 0,
+	COL_PIXBUF = 0,
+	COL_NAME,
 	COL_USER,
 	COL_MEM,
 	COL_CPU,
