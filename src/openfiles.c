@@ -183,6 +183,9 @@ create_openfiles_tree (ProcData *procdata)
 	gint i;
 
 	static gchar *title[] = {
+		/* Translators: "FD" here means "File Descriptor". Please use
+                   a very short translation if possible, and at most
+                   2-3 characters for it to be able to fit in the UI. */
 		N_("FD"),
 		N_("Type"),
 		N_("Object")
