@@ -157,6 +157,8 @@ get_load (gfloat data [2], LoadGraph *g)
     }
 
     for (i=0; i<g->n; i++) {
+	float load;
+
     	usr  = g->cpu_time [i][0] - g->cpu_last [i][0];
     	nice = g->cpu_time [i][1] - g->cpu_last [i][1];
     	sys  = g->cpu_time [i][2] - g->cpu_last [i][2];
@@ -178,7 +180,9 @@ get_load (gfloat data [2], LoadGraph *g)
 
     	data[i] = usr + sys + nice;
     	
-	text = g_strdup_printf ("%.1f%%", 100.0*data[i]);
+	load = CLAMP(100.0f*data[i], 0.0f, 100.0f);
+
+	text = g_strdup_printf ("%.1f%%", load);
     	gtk_label_set_text (GTK_LABEL (g->cpu_labels[i]), text);
     	g_free (text);
     }
