@@ -186,11 +186,10 @@ kill_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 {
 	ProcData *procdata = data;
 	
-	if (id == 100) 
-		kill_process (procdata, kill_signal);
-	
 	gtk_widget_destroy (GTK_WIDGET (dialog));
-		
+
+	if (id == 100) 
+		kill_process (procdata, kill_signal);		
 }
 
 void

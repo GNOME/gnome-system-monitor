@@ -181,7 +181,7 @@ exec_su (gchar *exec_path, gchar *user, gchar *pwd)
 	 * Make su think we're sending the password from a terminal:
 	 */
 
-	if ((t_fd = OPEN_TTY()) < 0) {
+	if (((t_fd = OPEN_TTY()) < 0) || (grantpt(t_fd) < 0) || (unlockpt(t_fd) < 0)) {
 		fprintf (stderr, "Unable to open a terminal\n");
 		ABORT (root);
 	}
@@ -194,10 +194,16 @@ exec_su (gchar *exec_path, gchar *user, gchar *pwd)
 	if (pid > 0) {			/* parent process */
 		int status;
 
+		sleep(1);
+
 		/* su(1) won't want a password if we're already root.
 		 */
-		if (root == 0)
+		if (root == 0) {
 			write (t_fd, pwd, strlen(pwd));
+
+			/* Need the \n to flush the password */
+			write (t_fd, "\n", 1);
+		}
 
 		waitpid (pid, &status, 0);
 
@@ -212,7 +218,7 @@ exec_su (gchar *exec_path, gchar *user, gchar *pwd)
 	}
 	else {				/* child process */
 		struct passwd *pw;
-		char *env, *home;
+		char *env, *home, *pts;
 
 		/* We have rights to run X (obviously).  We need to ensure the
 		 * destination user has the right stuff in the environment
@@ -253,6 +259,10 @@ exec_su (gchar *exec_path, gchar *user, gchar *pwd)
 			}
 		}
 
+		if(((pts = ptsname(t_fd)) == NULL) || ((t_fd = open(pts, O_RDWR | O_NOCTTY)) < 0)) {
+			perror ("Unable to open pseudo slave terminal");
+			_exit (-1);
+		}
 		dup2 (t_fd, 0);
 
 #if 0
@@ -260,8 +270,6 @@ exec_su (gchar *exec_path, gchar *user, gchar *pwd)
 		freopen ("/dev/null", "w", stdout);
 #endif
 
-		sleep (1);
-		
 		execlp ("su", "su", "-m", user_p, "-c", exec_p, NULL);
 		_exit (0);
 		
