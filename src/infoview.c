@@ -62,7 +62,7 @@ infoview_create (ProcData *data)
 	
 	info_table = gtk_table_new (3, 2, FALSE);
 	gtk_container_add (GTK_CONTAINER (info_frame), info_table);
-	gtk_container_set_border_width (GTK_CONTAINER (mem_table), 6);
+	gtk_container_set_border_width (GTK_CONTAINER (info_table), 6);
 	
 	label = gtk_label_new (_("Command : "));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
