@@ -430,7 +430,12 @@ find_parent (ProcData *data, gint pid)
 	return NULL;
 }
 
-
+/* return of -1 means the process needs to be removed from the display
+** return of 0 means the process will remain dislplayed
+** return of 1 means the process is not displayed and needs to be
+** This is needed since we could, for example, only want to dislplay running
+** processes which can switch back and forth from needing to be displayed
+*/
 static gint
 update_info (ProcData *procdata, ProcInfo *info, gint pid)
 {
@@ -461,6 +466,11 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	if (newinfo->status)
 		g_free (newinfo->status);
 	get_process_status (newinfo, &procstate.state);
+	
+	/* Process was previously visible and has been blacklisted since */
+	if (newinfo->node && is_process_blacklisted (procdata, newinfo->cmd))
+		return -1;
+	
 	
 	if (procdata->config.whose_process == RUNNING_PROCESSES)
 	{
@@ -522,16 +532,24 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath root_node)
 	ETreePath node = NULL;
 	ETreePath parent_node = NULL;
 
+	/* Don't show process if it is not running */
 	if (procdata->config.whose_process == RUNNING_PROCESSES && 
 	    (!info->running))
 		return NULL;
-		
+#if 0		
 	if (procdata->config.whose_process == FAVORITE_PROCESSES)
 	{
 		if (!is_process_a_favorite (procdata, info->cmd))
 			return NULL;
 	}
+#endif
+
+	/* Don't show processes that user has blacklisted */
+	if (is_process_blacklisted (procdata, info->cmd))
+		return NULL;
+
 #if 1	
+	/* Find parent process node */
 	parentinfo = find_parent (procdata, info->parent_pid);
 	if (parentinfo)
 		parent_node = parentinfo->node;
@@ -548,7 +566,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath root_node)
 		{
 			/*e_tree_node_set_expanded (E_TREE (procdata->tree),
 					  	  parentinfo->node, FALSE);*/
-			info->name = g_strjoin (NULL, info->name, " (thread)", NULL);
+			info->name = g_strjoin (NULL, info->name, _(" (thread)"), NULL);
 		}
 	}
 

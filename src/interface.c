@@ -46,6 +46,11 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
 	 cb_renice, NULL, NULL, 0, 0,
 	 'n', 0
 	},
+	{
+	 GNOME_APP_UI_ITEM, N_("Hide Process"), "",
+	 cb_hide_process, NULL, NULL, 0, 0,
+	 'h', 0
+	}, 
 	GNOMEUIINFO_END
 };
 
@@ -86,6 +91,7 @@ static GnomeUIInfo menubar1_uiinfo[] =
 	GNOMEUIINFO_MENU_FILE_TREE (file1_menu_uiinfo),
 	GNOMEUIINFO_MENU_EDIT_TREE (edit1_menu_uiinfo),
 	GNOMEUIINFO_MENU_VIEW_TREE (view1_menu_uiinfo),
+#if 0
 	{
 		GNOME_APP_UI_SUBTREE,
 		N_("F_avorites"),
@@ -94,6 +100,7 @@ static GnomeUIInfo menubar1_uiinfo[] =
             	GNOME_APP_PIXMAP_NONE, NULL,
             	0, 0, NULL	
 	},
+#endif
 	GNOMEUIINFO_MENU_SETTINGS_TREE (settings1_menu_uiinfo),
 	GNOMEUIINFO_MENU_HELP_TREE (help1_menu_uiinfo),
 	GNOMEUIINFO_END
@@ -169,13 +176,13 @@ create_main_window (ProcData *data)
   	gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
   			    GTK_SIGNAL_FUNC (cb_running_process_menu_clicked), procdata);
   	gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
-  	
+#if 0  	
   	glade_menuitem = gtk_menu_item_new_with_label (_("Favorites"));
   	gtk_widget_show (glade_menuitem);
   	gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
   			    GTK_SIGNAL_FUNC (cb_favorites_menu_clicked), procdata);
   	gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
-  	
+#endif  	
   	gtk_menu_set_active (GTK_MENU (optionmenu1_menu), procdata->config.whose_process);
   	gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu1), optionmenu1_menu);
   	
@@ -329,6 +336,7 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 	gtk_widget_set_sensitive (endprocessbutton, sensitivity);
 	gtk_widget_set_sensitive (data->infobox, sensitivity);
 	gtk_widget_set_sensitive (edit1_menu_uiinfo[0].widget, sensitivity);
+	gtk_widget_set_sensitive (edit1_menu_uiinfo[1].widget, sensitivity);
 	gtk_widget_set_sensitive (view1_menu_uiinfo[0].widget, sensitivity);
 }	
 

@@ -1,5 +1,31 @@
 2001-07-12 Kevin Vandersloot <kfv101@psu.edu>
 
+	For now don't do the favorites. Instead make a blacklist
+	of processes the user don't want to see. I think this is
+	more useful than defining favorites.
+
+	*proctable.c: remove favorites for now since I'm not sure
+	if it is usefule. Instead there will be a blacklist of
+	processes that the user doesn't want to see.
+
+	*favorites.c: add stuff for blacklisting processes similar to
+	favorites stuff.
+
+	*interface.c: comment out the favorite menus. Add a hide option
+	to the edit menu.
+
+	*callbacks.[c,h] (cb_hide_process): new callback to hide a 
+	process.
+
+	*procman.c: initialize the blacklist, save it at end of session.
+
+	*procman.h: add the blacklist GList to ProcData structure.
+
+	*proctable.c (update_info): add some comments to this ever 
+	increasingly complicated function.
+
+2001-07-12 Kevin Vandersloot <kfv101@psu.edu>
+
 	*proctable.c (proctable_update_list): change the check
 	to a case statement for which processes to view to fix
 	a bug where only the user processes were shown.

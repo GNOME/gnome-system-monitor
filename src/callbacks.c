@@ -83,6 +83,22 @@ cb_add_to_favorites (GtkMenuItem *menuitem, gpointer data)
 
 
 void
+cb_hide_process (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	ProcInfo *info;
+	
+	if (!procdata->selected_node)
+		return;
+	
+	info = e_tree_memory_node_get_data (procdata->memory, procdata->selected_node);
+	add_to_blacklist (procdata, info->cmd);
+	proctable_update_all (procdata);
+	
+}
+
+
+void
 cb_about_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {

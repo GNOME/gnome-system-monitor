@@ -61,6 +61,7 @@ procman_data_new (void)
 	procdata->selected_node = NULL;
 	procdata->timeout = -1;
 	procdata->favorites = NULL;
+	procdata->blacklist = NULL;
 	
 	procdata->config.show_more_info = 
 		gnome_config_get_bool ("procman/Config/more_info=FALSE");
@@ -74,9 +75,11 @@ procman_data_new (void)
 	
 	
 	procman_get_save_files (procdata);
-	
+#if 0	
 	get_favorites (procdata);
-		
+#endif
+
+	get_blacklist (procdata);		
 	
 
 	return procdata;
@@ -95,9 +98,10 @@ procman_save_config (ProcData *data)
 	gnome_config_set_bool ("procman/Config/kill_dialog", data->config.show_kill_warning);
 	gnome_config_set_bool ("procman/Config/show_tree", data->config.show_tree);
 	gnome_config_set_int ("procman/Config/update_interval", data->config.update_interval);
-	
+#if 0	
 	save_favorites (data);
-
+#endif
+	save_blacklist (data);
 	gnome_config_sync ();
 
 }

@@ -1,4 +1,5 @@
-/* Procman - ability to show favorite processes
+/* Procman - ability to show favorite processes blacklisted processes
+ * For now the favorite processes will not be compiled in.
  * Copyright (C) 2001 Kevin Vandersloot
  *
  * This program is free software; you can redistribute it and/or
@@ -31,6 +32,14 @@ add_to_favorites (ProcData *procdata, gchar *name)
 
 
 void
+add_to_blacklist (ProcData *procdata, gchar *name)
+{
+	gchar *process = g_strdup (name);
+	procdata->blacklist = g_list_append (procdata->blacklist, process);
+	
+}
+
+void
 remove_from_favorites (ProcData *procdata)
 {
 
@@ -44,7 +53,6 @@ is_process_a_favorite (ProcData *procdata, gchar *name)
 	
 	if (!list)
 	{
-		g_print ("no favorites \n");
 		return FALSE;
 	}
 	
@@ -52,6 +60,30 @@ is_process_a_favorite (ProcData *procdata, gchar *name)
 	{
 		gchar *favorite = list->data;
 		if (!g_strcasecmp (favorite, name))
+			return TRUE;
+		
+		list = g_list_next (list);
+	}
+	
+	return FALSE;
+
+}
+
+
+gboolean
+is_process_blacklisted (ProcData *procdata, gchar *name)
+{
+	GList *list = procdata->blacklist;
+	
+	if (!list)
+	{
+		return FALSE;
+	}
+	
+	while (list)
+	{
+		gchar *process = list->data;
+		if (!g_strcasecmp (process, name))
 			return TRUE;
 		
 		list = g_list_next (list);
@@ -79,6 +111,24 @@ void save_favorites (ProcData *procdata)
 }
 
 
+void save_blacklist (ProcData *procdata)
+{
+
+	GList *list = procdata->blacklist;
+	gint i = 0;
+	
+	while (list)
+	{
+		gchar *name = list->data;
+		gchar *config = g_strdup_printf ("%s%d", "procman/Blacklist/process", i);
+		gnome_config_set_string (config, name);
+		g_free (config); 
+		i++;
+		list = g_list_next (list);
+	}
+}
+
+
 void get_favorites (ProcData *procdata)
 {
 	gint i = 0;
@@ -98,3 +148,23 @@ void get_favorites (ProcData *procdata)
 	}
 	
 } 
+
+void get_blacklist (ProcData *procdata)
+{
+	gint i = 0;
+	gboolean done = FALSE;
+	
+	while (!done)
+	{
+		gchar *config = g_strdup_printf ("%s%d", "procman/Blacklist/process", i);
+		gchar *process;
+		
+		process = gnome_config_get_string (config);
+		if (process)
+			add_to_blacklist (procdata, process);
+		else
+			done = TRUE;
+		i++;
+	}
+	
+}

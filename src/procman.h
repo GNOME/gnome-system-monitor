@@ -86,7 +86,7 @@ struct _ProcData
 	GtkWidget 	*cpumeter, *memmeter, *swapmeter;
 	PrettyTable	*pretty_table;
 	GList		*favorites;
-
+	GList		*blacklist;
 };
 
 void		procman_save_config (ProcData *data);

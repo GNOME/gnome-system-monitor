@@ -33,5 +33,14 @@ void		save_favorites (ProcData *procdata);
 
 void 		get_favorites (ProcData *procdata);
 
+void		add_to_blacklist (ProcData *procdata, gchar *name);
+
+void		remove_from_blacklist (ProcData *procdata);
+
+gboolean	is_process_blacklisted (ProcData *procdata, gchar *name);
+
+void		save_blacklist (ProcData *procdata);
+
+void 		get_blacklist (ProcData *procdata);
 
 #endif
