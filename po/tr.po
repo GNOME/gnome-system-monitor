@@ -4,16 +4,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: procman 0.9\n"
-"POT-Creation-Date: 2001-08-19 15:25+0200\n"
-"PO-Revision-Date: 2001-08-25 20:43+300\n"
+"Project-Id-Version: procman 0.10.1\n"
+"POT-Creation-Date: 2001-08-25 23:46+0200\n"
+"PO-Revision-Date: 2001-08-27 16:29+300\n"
 "Last-Translator: Nilgün Belma Bugüner <nilgun@fide.org>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-9\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: procman.desktop.in.h:1 src/callbacks.c:127
+#: procman.desktop.in.h:1 src/callbacks.c:132
 msgid "Process Manager"
 msgstr "Süreç Yönetici"
 
@@ -21,11 +21,11 @@ msgstr "Süreç Yönetici"
 msgid "View Running Processes"
 msgstr "Çalýþan Süreçleri Göster"
 
-#: src/callbacks.c:128
+#: src/callbacks.c:133
 msgid "(C) 2001 Kevin Vandersloot"
 msgstr "(C) 2001 Kevin Vandersloot"
 
-#: src/callbacks.c:130
+#: src/callbacks.c:135
 msgid "Simple process viewer using libgtop"
 msgstr "libgtop kullanan basit bir süreç gösterici"
 
@@ -49,11 +49,15 @@ msgstr "Galeon Web Tarayýcý"
 msgid "Sawfish Window Manager"
 msgstr "Sawfish Pencere Yöneticisi"
 
-#: src/favorites.c:422
+#: src/favorites.c:420
+msgid "No processes are currently hidden."
+msgstr "Þu anda gizli süreç yok."
+
+#: src/favorites.c:435
 msgid "Manage Hidden Processes"
 msgstr "Gizli Süreçleri Yönet"
 
-#: src/favorites.c:429
+#: src/favorites.c:442
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
@@ -61,11 +65,11 @@ msgstr ""
 "Bunlar gizlemeyi tercih ettiðiniz süreçlerdir. Listeden kaldýrarak bir "
 "süreci tekrar görünür duruma getirebilirsiniz."
 
-#: src/favorites.c:433
+#: src/favorites.c:446
 msgid "Hidden Processes"
 msgstr "Gizli Süreçler"
 
-#: src/favorites.c:446
+#: src/favorites.c:459
 msgid "Remove From List"
 msgstr "Listeden Kaldýr"
 
@@ -116,140 +120,161 @@ msgstr "Normal ( %d )"
 msgid "Low  ( Nice %d )"
 msgstr "Düþük  ( %d )"
 
-#: src/interface.c:54
+#: src/interface.c:51
 msgid "_Change Priority..."
 msgstr "Önceliði _Deðiþtir"
 
-#: src/interface.c:59
+#: src/interface.c:51
+msgid "Change the priority of a process"
+msgstr "Süreç önceliklerini deðiþtirir"
+
+#: src/interface.c:56
 msgid "_Hide Process"
 msgstr "Süreci _Gizle"
 
-#: src/interface.c:65
+#: src/interface.c:56
+msgid "Hide a process"
+msgstr "Bir süreci gizler"
+
+#: src/interface.c:62
 msgid "Hidden _Processes..."
 msgstr "_Süreçleri Gizle..."
 
-#: src/interface.c:75
+#: src/interface.c:62
+msgid "View and edit your list of hidden processes"
+msgstr "Gizli süreçlerinizin listesini görebilir ve düzenleyebilirsiniz"
+
+#: src/interface.c:72
 msgid "_Memory Maps..."
 msgstr "Bellek _Eþlemler..."
 
-#: src/interface.c:86
+#: src/interface.c:72
+msgid "View the memory maps associated with a process"
+msgstr "Bir süreç ile ilgili bellek eþlemler gösterilir"
+
+#: src/interface.c:83
 msgid "Add to favorites"
 msgstr "Sýk kullanýlanlara ekle"
 
-#: src/interface.c:114
+#: src/interface.c:111
 msgid "F_avorites"
 msgstr "_Sýk kullanýlanlar"
 
-#: src/interface.c:126
+#: src/interface.c:123
 msgid "More _Info >>"
 msgstr "_Baþka >>"
 
-#: src/interface.c:127
+#: src/interface.c:124
 msgid "<< Less _Info"
 msgstr "<< _Geri"
 
-#: src/interface.c:163
+#: src/interface.c:160
 msgid "Sea_rch :"
 msgstr "_Arama:"
 
-#: src/interface.c:182
+#: src/interface.c:179
 msgid "All Processes"
 msgstr "Tüm Süreçler"
 
-#: src/interface.c:188
+#: src/interface.c:185
 msgid "My Processes"
 msgstr "Süreçlerim"
 
-#: src/interface.c:194
+#: src/interface.c:191
 msgid "Running Processes"
 msgstr "Çalýþan Süreçler"
 
-#: src/interface.c:200
+#: src/interface.c:197
 msgid "Favorites"
 msgstr "Sýk kullanýlanlar"
 
-#: src/interface.c:210
+#: src/interface.c:207
 msgid "Vie_w"
 msgstr "Gö_rünüm:"
 
-#: src/interface.c:237
+#: src/interface.c:234
 msgid "End _Process"
 msgstr "Bi_tiþ Süreci"
 
 #. Create new menu items
-#: src/interface.c:267
+#: src/interface.c:264
 msgid "Change Priority ..."
 msgstr "Önceliði Deðiþtir ..."
 
-#: src/interface.c:273
+#: src/interface.c:270
 msgid "Memory Maps ..."
 msgstr "Bellek Eþlemler ..."
 
-#: src/interface.c:282 src/procdialogs.c:89 src/procdialogs.c:105
+#: src/interface.c:279 src/procdialogs.c:91 src/procdialogs.c:107
 msgid "Hide Process"
 msgstr "Süreci Gizle"
 
-#: src/interface.c:291 src/procdialogs.c:183 src/procdialogs.c:199
+#: src/interface.c:288 src/procdialogs.c:185 src/procdialogs.c:201
+#: src/procdialogs.c:524
 msgid "End Process"
-msgstr "Bitiþ Süreci"
+msgstr "Süreci Sonlandýr"
 
-#: src/interface.c:300
+#: src/interface.c:294
+msgid "Kill Process"
+msgstr "Süreci Öldür"
+
+#: src/interface.c:303
 msgid "About This Process"
 msgstr "Bu Süreç Hakkýnda"
 
-#: src/interface.c:341
+#: src/interface.c:327
 msgid "Disk Name"
 msgstr "Disk Ýsmi"
 
-#: src/interface.c:342
-msgid "Mount Directory"
-msgstr "Baðlama Dizini"
+#: src/interface.c:328
+msgid "Used Space"
+msgstr "Kullanýlan Alan"
 
-#: src/interface.c:343
+#: src/interface.c:329
 msgid "Free Space"
 msgstr "Boþ Alan"
 
-#: src/interface.c:344
+#: src/interface.c:330
 msgid "Total Space"
 msgstr "Toplam Alan"
 
-#: src/interface.c:357
+#: src/interface.c:331
+msgid "Mount Directory"
+msgstr "Baðlama Dizini"
+
+#: src/interface.c:337
 msgid "CPU Usage History"
 msgstr "CPU Kullaným Geçmiþi"
 
-#: src/interface.c:362
-msgid "Memory Usage History"
-msgstr "Bellek Kullaným Geçmiþi"
+#: src/interface.c:343
+msgid "Memory / Swap Usage History"
+msgstr "Bellek / Takas Kullaným Geçmiþi"
 
-#: src/interface.c:376
-msgid "% CPU Used :"
-msgstr "CPU Kullanýmý (%):"
+#: src/interface.c:368
+msgid "CPU Used :"
+msgstr "Kullanýlan CPU:"
 
-#. hbox = gtk_hbox_new (FALSE, 0);
-#. gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), hbox, FALSE, FALSE, 0);
-#: src/interface.c:399
-msgid "Memory Used :"
-msgstr "Kullanýlan Bellek:"
+#: src/interface.c:400
+msgid "Memory Used / Total :"
+msgstr "Kullanýlan / Toplam Bellek:"
 
-#. hbox = gtk_hbox_new (FALSE, 0);
-#. gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), hbox, FALSE, FALSE, 0);
-#: src/interface.c:415
-msgid "Memory Available :"
-msgstr "Serbest Bellek:"
+#: src/interface.c:420
+msgid "Swap Used / Total :"
+msgstr "Kullanýlan / Toplam Takas Alaný:"
 
-#: src/interface.c:432
+#: src/interface.c:434
 msgid "Disks"
 msgstr "Disk"
 
-#: src/interface.c:492
+#: src/interface.c:477
 msgid "Procman System Monitor"
 msgstr "Procman Sistem Gözlemcisi"
 
-#: src/interface.c:507
+#: src/interface.c:492
 msgid "Process Listing"
 msgstr "Süreç Listeleme"
 
-#: src/interface.c:512
+#: src/interface.c:498
 msgid "System Monitor"
 msgstr "Sistem Gözlemcisi"
 
@@ -297,27 +322,35 @@ msgstr "VM baþlangýç"
 msgid "VM offset"
 msgstr "VM offset"
 
-#: src/procactions.c:44
+#: src/procactions.c:45
 msgid "No such process."
 msgstr "Böyle bir iþlem yok"
 
-#: src/procactions.c:50
+#: src/procactions.c:51
 msgid "You do not have permission to change the priority of this process."
 msgstr "Bu sürecin önceliklerini deðiþtirme yetkiniz yok."
 
-#: src/procactions.c:56
+#: src/procactions.c:57
 msgid "You must be root to renice a process lower than 0."
-msgstr "Bir süreci 0 dan daha düþük bir iyileme deðerine ayarlayabilmek için root olmalýsýnýz."
+msgstr ""
+"Bir süreci 0 dan daha düþük bir iyileme deðerine ayarlayabilmek için root "
+"olmalýsýnýz."
 
-#: src/procactions.c:97 src/procactions.c:110
-msgid "You do not have permission to end this process"
-msgstr "Bu süreci sonlandýrma yetkiniz yok"
+#: src/procactions.c:98
+msgid ""
+"You do not have permission to end this process.\n"
+" Would you like to enter the superuser (root) password\n"
+" to gain the necessary permission?"
+msgstr ""
+"Bu süreci sonlandýrmak için yetkiniz yok.\n"
+" Gerekli haklarý elde etmek için root parolanýzý\n"
+" girmek ister misiniz?"
 
-#: src/procactions.c:116
+#: src/procactions.c:114
 msgid "An error occured while killing the process."
 msgstr "Süreç öldürülürken bir hata oluþtu"
 
-#: src/procdialogs.c:78
+#: src/procdialogs.c:80
 msgid ""
 "This action will block a process from being displayed. \n"
 " To reshow a process choose Hidden Processes in the Edit menu"
@@ -326,61 +359,61 @@ msgstr ""
 "görünür yapmak için menüden Düzenle -> Gizli Süreçler\n"
 "öðesini seçiniz."
 
-#: src/procdialogs.c:100 src/procdialogs.c:194
+#: src/procdialogs.c:102 src/procdialogs.c:196
 msgid "Show this dialog next time."
 msgstr "Bu iletiþim kutusunu hep göster."
 
 #. We create it with an OK button, and then remove the button, to work
 #. around a bug in gnome-libs.
-#: src/procdialogs.c:176
+#: src/procdialogs.c:178
 msgid "Unsaved data will be lost."
 msgstr "Kaydedilmemiþ veriler kaybolacak."
 
-#: src/procdialogs.c:274
+#: src/procdialogs.c:276
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
 msgstr ""
-"Ýyileþtirme deðeri süreç öncelikleri ile ilgilidir. "
-"Düþük iyileþtirme deðeri daha yüksek bir önceliðe karþýlýk gelir."
+"Ýyileþtirme deðeri süreç öncelikleri ile ilgilidir. Düþük iyileþtirme deðeri "
+"daha yüksek bir önceliðe karþýlýk gelir."
 
-#: src/procdialogs.c:285
+#: src/procdialogs.c:287 src/procdialogs.c:526
 msgid "Change Priority"
 msgstr "Önceliði Deðiþtir"
 
-#: src/procdialogs.c:299
+#: src/procdialogs.c:301
 msgid "Nice Value"
 msgstr "Ýyileþtirme Deðeri"
 
-#: src/procdialogs.c:316
+#: src/procdialogs.c:318
 msgid "Renice"
 msgstr "Tekrar iyileþtir"
 
-#: src/procdialogs.c:435
+#: src/procdialogs.c:437
 msgid "Preferences"
 msgstr "Tercihler"
 
-#: src/procdialogs.c:439
+#: src/procdialogs.c:441
 msgid "General"
 msgstr "Genel"
 
-#: src/procdialogs.c:450
+#: src/procdialogs.c:452
 msgid "Update Speed ( seconds ) :"
 msgstr "Güncelleme Hýzý (saniye):"
 
-#: src/procdialogs.c:460
+#: src/procdialogs.c:462
 msgid "Show Process Dependencies"
 msgstr "Süreç Baðýmlýlýklarýný Göster"
 
-#: src/procdialogs.c:467
+#: src/procdialogs.c:469
 msgid "Advanced"
 msgstr "Geliþmiþ"
 
-#: src/procdialogs.c:475
+#: src/procdialogs.c:477
 msgid "Show Application Names"
 msgstr "Uygulama Ýsimlerini Göster"
 
-#: src/procdialogs.c:483
+#: src/procdialogs.c:485
 msgid ""
 "Never Show Icons or Application Names \n"
 " ( faster startup time )"
@@ -388,9 +421,17 @@ msgstr ""
 "Simgeleri ve Uygulama Ýsimlerini Asla Gösterme\n"
 " (daha hýzlý bir baþlangýç)"
 
-#: src/procdialogs.c:491
+#: src/procdialogs.c:493
 msgid "Show Threads"
 msgstr "Konularý Göster"
+
+#: src/procdialogs.c:534
+msgid "Please enter the superuser (root) password."
+msgstr "Lütfen root parolasýný giriniz."
+
+#: src/procdialogs.c:541
+msgid "Password :"
+msgstr "Parola:"
 
 #: src/proctable.c:359
 msgid ""
