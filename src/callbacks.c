@@ -502,6 +502,8 @@ compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 		
 		g_free (used);
 		g_free (total);
+
+		g_free (old_name);
 			
 		return FALSE;
 		
