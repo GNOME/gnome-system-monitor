@@ -1,5 +1,16 @@
 2001-07-16 Kevin Vandersloot <kfv101@psu.edu>
 
+	*procman.h: add config option to not show icons. Speeds up
+	load time.
+
+	*procman.c (main): move a bunch of prettytable stuff into
+	prettytable.c where it belongs.
+
+	*prettytable.c (prettytable_get[icon,name]): check if the hash
+	table exists. If not then it means icons should not be shown.
+
+2001-07-16 Kevin Vandersloot <kfv101@psu.edu>
+
 	*favorites.c: add dialog to edit hidden processes.
 
 	*proctable.c (update_info): add a little logic to show

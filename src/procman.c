@@ -26,7 +26,6 @@
 #include "procman.h"
 #include "proctable.h"
 #include "interface.h"
-#include "defaulttable.h"
 #include "favorites.h"
 
 static void
@@ -69,6 +68,8 @@ procman_data_new (void)
 		gnome_config_get_bool ("procman/Config/show_tree=TRUE");
 	procdata->config.show_kill_warning = 
 		gnome_config_get_bool ("procman/Config/kill_dialog=TRUE");
+	procdata->config.show_icons = 
+		gnome_config_get_bool ("procman/Config/show_icons=TRUE");
 	procdata->config.update_interval = 
 		gnome_config_get_int ("procman/Config/update_interval=3000");
 	procdata->config.whose_process = gnome_config_get_int ("procman/Config/view_as=0");
@@ -79,8 +80,12 @@ procman_data_new (void)
 	get_favorites (procdata);
 #endif
 
-	get_blacklist (procdata);		
+	get_blacklist (procdata);	
 	
+	if (procdata->config.show_icons)
+		procdata->pretty_table = pretty_table_new ();
+	else
+		procdata->pretty_table = NULL;	
 
 	return procdata;
 
@@ -97,6 +102,7 @@ procman_save_config (ProcData *data)
 	gnome_config_set_bool ("procman/Config/more_info", data->config.show_more_info);
 	gnome_config_set_bool ("procman/Config/kill_dialog", data->config.show_kill_warning);
 	gnome_config_set_bool ("procman/Config/show_tree", data->config.show_tree);
+	gnome_config_set_bool ("procman/Config/show_icons", data->config.show_icons);
 	gnome_config_set_int ("procman/Config/update_interval", data->config.update_interval);
 
 	save_blacklist (data);
@@ -127,22 +133,9 @@ main (int argc, char *argv[])
 
 	procdata = procman_data_new ();
 
-	procdata->pretty_table = pretty_table_new ();
-
-	path = gnome_datadir_file ("gnome/apps");
-	pretty_table_load_path (procdata->pretty_table, path, TRUE);
-	g_free (path);
-	path = gnome_datadir_file ("gnome/ximian");
-	pretty_table_load_path (procdata->pretty_table, path, TRUE);
-	g_free (path);
-	
-	pretty_table_add_table (procdata->pretty_table, default_table);
-
 	app1 = create_main_window (procdata);
   	proctable_update_all (procdata);
-#if 0  	
-  	create_blacklist_dialog (procdata);
-#endif  	
+ 	
 	gtk_main ();
 	
 	e_cursors_shutdown ();

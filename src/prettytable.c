@@ -5,19 +5,31 @@
 #include <string.h>
 #include <config.h>
 #include "prettytable.h"
+#include "defaulttable.h"
 
 void free_entry (gpointer key, gpointer value, gpointer data);
 void free_value (gpointer key, gpointer value, gpointer data);
 void free_key (gpointer key, gpointer value, gpointer data);
 
 PrettyTable *pretty_table_new (void) {
-	PrettyTable *pretty_table;
+	PrettyTable *pretty_table = NULL;
+	gchar *path;
+	
 	
 	pretty_table = g_malloc (sizeof (PrettyTable));
 
 	pretty_table->cmdline_to_prettyname = g_hash_table_new (g_str_hash, g_str_equal);
 	pretty_table->cmdline_to_prettyicon = g_hash_table_new (g_str_hash, g_str_equal);
 	pretty_table->name_to_prettyicon = g_hash_table_new (g_str_hash, g_str_equal);
+	
+	path = gnome_datadir_file ("gnome/apps");
+	pretty_table_load_path (pretty_table, path, TRUE);
+	g_free (path);
+	path = gnome_datadir_file ("gnome/ximian");
+	pretty_table_load_path (pretty_table, path, TRUE);
+	g_free (path);
+	
+	pretty_table_add_table (pretty_table, default_table);
 
 	return pretty_table;
 }
@@ -107,6 +119,8 @@ void pretty_table_add_table (PrettyTable *pretty_table, const gchar *table[]) {
 gchar *pretty_table_get_name (PrettyTable *pretty_table, const gchar *command) {
 	gchar *pretty_name;
 
+	if (!pretty_table)
+		return g_strdup (command);
 	pretty_name = g_hash_table_lookup (pretty_table->cmdline_to_prettyname, command);
 	if (!pretty_name)
 		return g_strdup (command);
@@ -117,6 +131,9 @@ gchar *pretty_table_get_name (PrettyTable *pretty_table, const gchar *command) {
 GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command) {
 	GdkPixbuf *icon = NULL, *tmp_pixbuf = NULL;
 	gchar *icon_path = NULL;
+	
+	if (!pretty_table)
+		return NULL;
 
 	icon_path = g_hash_table_lookup (pretty_table->cmdline_to_prettyicon, command);
 	if (!icon_path) {
