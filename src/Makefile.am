@@ -29,9 +29,13 @@ specdir = $(datadir)/procman
 schemadir   = @GCONF_SCHEMA_FILE_DIR@
 schema_DATA = procman.schemas	
 
+pixmapdir   = $(datadir)/pixmaps
+pixmap_DATA = procman.png
+
 EXTRA_DIST = \
 	README.hacking \
-	$(schema_DATA)
+	$(schema_DATA)	\
+	$(pixmap_DATA)
 
 install-data-local:
 	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) \
