@@ -11,7 +11,7 @@
 [x/2 ] Throw in a few more column displays such as nice, process state.
     But do not show them by default. It is easy to add them with e-table.
 [x] Maybe a cpu meter on top?
-[ ] right click menu - send some signals - at least kill
+[x] right click menu - send some signals - at least kill
 [x] save the e-table state
 [x] remove the process meter on the bottom ( or make it the cpu meter ?)
 [x] dialog notifying the user the end process button will not save
@@ -38,6 +38,13 @@
     select processes which you don't care about.
 [x] simple dialog when user chooses to hide a process explaining the
     idea just like the end process dialog.
+[ ] clean up renice dialog. Provide error messages when renice don't
+    work.
+[ ] somehow display command arguments. The UI is tricky. Perhaps do this
+    as a tooltip to the command argument in the info viewer - hmm I kinda
+    like that.
+[ ] Provide a new function to end a process and call that instead of 
+    duplicating code. I think we should send SIGKILL instead of SIGTERM.
 
 -- Later --
 [ ] I'm thinking of maybe doing a graphical system monitor
