@@ -1,5 +1,19 @@
 2001-07-18 Kevin Vandersloot <kfv101@psu.edu>
 
+	*proctable.c (proctable_get_value): use
+	e_utf8_from_locale_string for the process name to properly
+	display names in the tree. This generates a lot of warnings
+	so I hope there is a better solution.
+
+	*procman.h: add new config variable show_pretty_names
+	to show the .desktop names
+
+	*proctable.c (get_info): Get the pretty name if needed.
+
+	*favorites.c (get_blacklist): remove an unessecary g_print.
+
+2001-07-18 Kevin Vandersloot <kfv101@psu.edu>
+
 	Create a hide message dialog similar to the end process one.
 
 	*procdialogs.c: add the dialog in the same fashion as the end

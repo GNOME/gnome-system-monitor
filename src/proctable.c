@@ -22,6 +22,7 @@
 #include <gal/e-table/e-tree-memory.h>
 #include <gal/e-table/e-tree-memory-callbacks.h>
 #include <gal/e-table/e-tree-scrolled.h>
+#include <gal/widgets/e-unicode.h>
 #include <glibtop.h>
 #include <glibtop/proclist.h>
 #include <glibtop/xmalloc.h>
@@ -96,7 +97,7 @@ proctable_get_value (ETreeModel *model, ETreePath path, int column, void *data)
 
 	switch (column) {
 	case COL_NAME: {
-		return info->name;
+		return e_utf8_from_locale_string (info->name);
 	}
 	case COL_USER: {
 		return info->user;
@@ -513,7 +514,10 @@ get_info (ProcData *procdata, gint pid)
 	newcputime = proctime.utime + proctime.stime;
 	
 	info->pixbuf = pretty_table_get_icon (procdata->pretty_table, procstate.cmd);
-	info->name = pretty_table_get_name (procdata->pretty_table, procstate.cmd);
+	if (procdata->config.show_pretty_names)
+		info->name = pretty_table_get_name (procdata->pretty_table, procstate.cmd);
+	else
+		info->name = g_strdup (procstate.cmd);
 	info->cmd = g_strdup_printf ("%s", procstate.cmd);
 	info->user = g_strdup_printf ("%s", pwd->pw_name);
 	info->mem = procmem.size;

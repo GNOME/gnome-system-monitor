@@ -199,7 +199,7 @@ void get_blacklist (ProcData *procdata)
 			done = TRUE;
 		i++;
 	}
-	g_print ("%d \n", i);
+	
 	procdata->blacklist_num = i - 1;
 	initial_blacklist_num = i - 1;
 	
