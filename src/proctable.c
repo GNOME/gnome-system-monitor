@@ -162,7 +162,7 @@ proctable_new (ProcData *data)
 	gtk_tree_view_column_set_attributes (column, cell_renderer,
 					     "text", COL_NAME,
 					     NULL);
-	gtk_tree_view_column_set_title (column, title[0]);
+	gtk_tree_view_column_set_title (column, _(title[0]));
 	gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
 	gtk_tree_view_column_set_resizable (column, TRUE);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
@@ -170,7 +170,7 @@ proctable_new (ProcData *data)
   	
   	for (i = 1; i < NUM_COLUMNS - 2; i++) {
   		cell_renderer = gtk_cell_renderer_text_new ();
-  		column = gtk_tree_view_column_new_with_attributes (title[i],
+  		column = gtk_tree_view_column_new_with_attributes (_(title[i]),
 						    		   cell_renderer,
 						     		   "text", i,
 						     		   NULL);
