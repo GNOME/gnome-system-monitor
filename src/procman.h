@@ -132,7 +132,7 @@ struct _ProcInfo
 	guint64		memres;
 	guint64		memshared;
 	guint64		memrss;
-	guint64		memxserver;
+	unsigned long	memxserver;
 
 	guint		pcpu; /* 0% - 100% */
 	gint		nice;
