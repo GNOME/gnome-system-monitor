@@ -311,7 +311,6 @@ proctable_free_info (ProcInfo *info)
 	g_free (info->name);
 	g_free (info->arguments);
 	g_free (info->user);
-	g_free (info->status);
 	g_free (info->security_context);
 	g_list_free (info->children);
 	g_free (info);
@@ -321,33 +320,32 @@ proctable_free_info (ProcInfo *info)
 static void
 get_process_status (ProcInfo *info, const glibtop_proc_state *buf)
 {
-	g_free (info->status);
 
 	switch(buf->state)
 	{
 	case GLIBTOP_PROCESS_RUNNING:
-		info->status = g_strdup (_("Running"));
-		info->running = TRUE;
+		info->status = _("Running");
+		info->is_running = TRUE;
 		break;
 
 	case GLIBTOP_PROCESS_STOPPED:
-		info->status = g_strdup (_("Stopped"));
-		info->running = FALSE;
+		info->status = _("Stopped");
+		info->is_running = FALSE;
 		break;
 
 	case GLIBTOP_PROCESS_ZOMBIE:
-		info->status = g_strdup (_("Zombie"));
-		info->running = FALSE;
+		info->status = _("Zombie");
+		info->is_running = FALSE;
 		break;
 
 	case GLIBTOP_PROCESS_UNINTERRUPTIBLE:
-		info->status = g_strdup (_("Uninterruptible"));
-		info->running = FALSE;
+		info->status = _("Uninterruptible");
+		info->is_running = FALSE;
 		break;
 
 	default:
-		info->status = g_strdup (_("Sleeping"));
-		info->running = FALSE;
+		info->status = _("Sleeping");
+		info->is_running = FALSE;
 		break;
 	}
 }
@@ -393,7 +391,7 @@ proctable_find_process (gint pid, gchar *name, ProcData *procdata)
 
 
 static ProcInfo *
-find_parent (ProcData *data, gint pid)
+find_parent (ProcData *data, guint pid)
 {
 	GList *list = data->info;
 
@@ -426,7 +424,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 
 	/* Don't show process if it is not running */
 	if ((procdata->config.whose_process == ACTIVE_PROCESSES) &&
-	    (!info->running))
+	    (!info->is_running))
 		return;
 
 	/* Don't show processes that user has blacklisted */
@@ -446,7 +444,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 		name = g_strdup (info->name);
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-	if (info->parent && procdata->config.show_tree && info->parent->visible) {
+	if (info->parent && procdata->config.show_tree && info->parent->is_visible) {
 		GtkTreePath *parent_node = gtk_tree_model_get_path (model, &info->parent->node);
 
 		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, &info->parent->node, 0);
@@ -499,7 +497,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	g_free (name);
 
 	info->node = row;
-	info->visible = TRUE;
+	info->is_visible = TRUE;
 }
 
 
@@ -522,7 +520,7 @@ remove_children_from_tree (ProcData *procdata, GtkTreeModel *model,
 			if (procdata->selected_process == child_info)
 				procdata->selected_process = NULL;
 			child_info ->queue = NEEDS_ADDITION;
-			child_info->visible = FALSE;
+			child_info->is_visible = FALSE;
 		}
 	} while (gtk_tree_model_iter_next (model, parent));
 }
@@ -536,7 +534,7 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 
 	g_return_if_fail (info);
 
-	if (!info->visible)
+	if (!info->is_visible)
 		return;
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
@@ -547,7 +545,7 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 
 	gtk_tree_store_remove (GTK_TREE_STORE (model), &iter);
 
-	info->visible = FALSE;
+	info->is_visible = FALSE;
 }
 
 
@@ -632,20 +630,20 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	if (procdata->config.whose_process == ACTIVE_PROCESSES)	{
 
 		/* process started running */
-		if (info->running && (!info->visible)) {
+		if (info->is_running && (!info->is_visible)) {
 			insert_info_to_tree (info, procdata);
 			return;
 		}
 		/* process was running but not anymore */
-		else if ((!info->running) && info->visible) {
+		else if ((!info->is_running) && info->is_visible) {
 			remove_info_from_tree (info, procdata);
 			return;
 		}
-		else if (!info->running)
+		else if (!info->is_running)
 			return;
 	}
 
-	if (info->visible) {
+	if (info->is_visible) {
 		GdkRectangle rect, vis_rect;
 		path = gtk_tree_model_get_path (model, &info->node);
 		gtk_tree_view_get_cell_area (GTK_TREE_VIEW (procdata->tree),
@@ -748,7 +746,6 @@ get_info (ProcData *procdata, gint pid)
 
 	info->pcpu = 0;
 	info->pid = pid;
-	info->parent_pid = procuid.ppid;
 	info->cpu_time_last = newcputime;
 	info->nice = procuid.nice;
 	get_process_status (info, &procstate);
@@ -757,7 +754,7 @@ get_info (ProcData *procdata, gint pid)
 
 	info->pixbuf = pretty_table_get_icon (procdata->pretty_table, info->name, pid);
 
-	info->parent = find_parent (procdata, info->parent_pid);
+	info->parent = find_parent (procdata, procuid.ppid);
 	if (info->parent) {
 		info->parent->children = g_list_prepend (info->parent->children, info);
 		if(g_strcasecmp (info->name, info->parent->name) == 0
@@ -779,7 +776,7 @@ get_info (ProcData *procdata, gint pid)
 		else
 			info->is_thread = FALSE;
 
-		if (parentinfo->visible) {
+		if (parentinfo->is_visible) {
 			info->parent_node = parentinfo->node;
 			info->has_parent = TRUE;
 		}
@@ -792,7 +789,7 @@ get_info (ProcData *procdata, gint pid)
 	}
 #endif
 
-	info->visible = FALSE;
+	info->is_visible = FALSE;
 
 	return info;
 }
@@ -844,7 +841,7 @@ refresh_list (ProcData *data, const unsigned *pid_list, guint n)
 			g_ptr_array_add (removal_list, info);
 			info->queue = NEEDS_REMOVAL;
 			/* remove all children from tree */
-			if (info->visible) {
+			if (info->is_visible) {
 				GtkTreeIter child;
 				if (gtk_tree_model_iter_children (model, &child, &info->node))
 					remove_children_from_tree (procdata, model, &child);
@@ -984,7 +981,7 @@ proctable_search_table (ProcData *procdata, gchar *string)
 	while (list)
 	{
 		ProcInfo *info = list->data;
-		if (strstr (info->name, string) && info->visible)
+		if (strstr (info->name, string) && info->is_visible)
 		{
 			GtkTreePath *node = gtk_tree_model_get_path (model, &info->node);
 
@@ -1001,7 +998,7 @@ proctable_search_table (ProcData *procdata, gchar *string)
 			gtk_tree_path_free (node);
 		}
 
-		if (info->user && strstr (info->user, string) && info->visible)
+		if (info->user && strstr (info->user, string) && info->is_visible)
 		{
 			GtkTreePath *node = gtk_tree_model_get_path (model, &info->node);
 

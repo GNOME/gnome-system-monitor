@@ -114,32 +114,46 @@ enum
 
 struct _ProcInfo
 {
-	GtkTreeIter 	node;
-	GtkTreePath     *path;
-	ProcInfo    *parent;
-	GList *children;
-	gboolean	visible;
-	gint queue;
+	GtkTreeIter	node;
+	GtkTreePath	*path;
+	ProcInfo	*parent;
+	GList		*children;
+
 	GdkPixbuf	*pixbuf;
 	gchar		*name;
 	gchar		*user;
 	gchar		*arguments;
-	guint64		mem;
-	guint8		pcpu;
-	gint		pid;
-	gint		parent_pid;
+
+	gchar		*status; /* shared, don't free it ! */
+	gchar		*security_context;
+
 	guint64		cpu_time_last;
-	gint		nice;
+
+	guint64		mem;
 	guint64		vmsize;
 	guint64		memres;
 	guint64		memshared;
 	guint64		memrss;
-        guint64            memxserver;
-	gchar		*status;
-	gchar           *security_context;
-	gboolean	running;
+	guint64		memxserver;
+
+	guint		pcpu; /* 0% - 100% */
+	gint		nice;
+
+	guint		pid;
+
+#if 0
+	guint8		queue; /* enum */
+
+	gboolean	is_visible;
+	gboolean	is_running;
 	gboolean	is_thread;
 	gboolean	is_blacklisted;
+#endif
+	guint		queue		: 2;
+	guint		is_visible	: 1;
+	guint		is_running	: 1;
+	guint		is_thread	: 1;
+	guint		is_blacklisted	: 1;
 };
 
 struct _ProcData

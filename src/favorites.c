@@ -60,7 +60,7 @@ add_single_to_blacklist (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *it
 	
 	add_to_blacklist (procdata, info->name);
 	
-	if (info->visible) 
+	if (info->is_visible) 
 		removed_processes = g_list_prepend (removed_processes, info);
 }
 

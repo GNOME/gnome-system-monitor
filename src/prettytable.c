@@ -56,7 +56,7 @@ new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 		if (info->pixbuf)
 			return;
 		info->pixbuf = icon;
-		if (info->visible) {
+		if (info->is_visible) {
 			GtkTreeModel *model;
 			model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 			gtk_tree_store_set (GTK_TREE_STORE (model), &info->node,

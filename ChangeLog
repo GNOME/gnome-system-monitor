@@ -1,3 +1,18 @@
+2004-11-24  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/favorites.c: (add_single_to_blacklist):
+	* src/prettytable.c: (new_application):
+	* src/proctable.c: (proctable_free_info), (get_process_status),
+	(find_parent), (insert_info_to_tree), (remove_children_from_tree),
+	(remove_info_from_tree), (update_info), (get_info), (refresh_list),
+	(proctable_search_table):
+	* src/procman.h: ProcInfo is a bit smaller (on my ppc32 160B -> 128B).
+	Renamed some members and added bitfield.
+	Removed .parent_pid as we already have it though self->parent->pid.
+	The .status string is now shared (no need to allocate/free anymore).
+	
+	(let say we have 200 running process, we've saved 30B * 200 = 6KB, wow !)
+
 2004-11-22  Benoît Dejean  <tazforever@dlfp.org>
 
 	* src/proctable.c: (sort_ints): Fixed stupid typo. CPU and RES columns
