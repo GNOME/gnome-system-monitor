@@ -228,13 +228,18 @@ procdialog_create_kill_dialog (ProcData *data)
 
 }
 
+static gboolean
+renice_close_dialog (GnomeDialog *dialog, gpointer data)
+{
+	renice_dialog = NULL;
+	
+	return FALSE;
+}
 
 static void
 renice_close (GtkButton *button, gpointer *data)
 {
-	GtkWidget *dialog = GTK_WIDGET (data);
-	
-	gnome_dialog_close (GNOME_DIALOG (dialog));
+	gnome_dialog_close (GNOME_DIALOG (renice_dialog));
 
 }
 
@@ -261,7 +266,7 @@ procdialog_create_renice_dialog (ProcData *data)
 {
 	ProcData *procdata = data;
 	ProcInfo *info;
-	GtkWidget *dialog;
+	GtkWidget *dialog = NULL;
 	GtkWidget *dialog_vbox;
 	GtkWidget *vbox;
  	GtkWidget *hbox;
@@ -281,11 +286,12 @@ procdialog_create_renice_dialog (ProcData *data)
 	info = e_tree_memory_node_get_data (procdata->memory, procdata->selected_node);
 	if (!info)
 		return;
-
-  	dialog = gnome_dialog_new (NULL, NULL);
+		
+	if (renice_dialog)
+		return;
+		
+	dialog = gnome_dialog_new (_("Change Priority"), NULL);
   	renice_dialog = dialog;
-  	gtk_window_set_title (GTK_WINDOW (dialog), _("Change Priority"));
-  	gtk_window_set_policy (GTK_WINDOW (dialog), FALSE, FALSE, FALSE);
   	  
     	dialog_vbox = GNOME_DIALOG (dialog)->vbox;
     	
@@ -296,7 +302,6 @@ procdialog_create_renice_dialog (ProcData *data)
     	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
     	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD, 0);
     	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-    	gtk_widget_show (label);
     	
     	frame = gtk_frame_new (_("Nice Value"));				
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -328,6 +333,8 @@ procdialog_create_renice_dialog (ProcData *data)
   			    GTK_SIGNAL_FUNC (renice_accept), procdata);
   	gtk_signal_connect (GTK_OBJECT (renice_adj), "value_changed",
   			    GTK_SIGNAL_FUNC (renice_scale_changed), procdata);
+  	gtk_signal_connect (GTK_OBJECT (dialog), "close",
+  			    GTK_SIGNAL_FUNC (renice_close_dialog), NULL);
     	
     	gtk_widget_show_all (dialog);
     	

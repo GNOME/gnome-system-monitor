@@ -387,19 +387,18 @@ remove_button_clicked (GtkButton *button, gpointer data)
 		
 }
 
-static void
-close_blacklist_dialog (gpointer data)
+static gboolean
+close_blacklist_dialog (GnomeDialog *dialog, gpointer data)
 {
-	gnome_dialog_close (GNOME_DIALOG (blacklist_dialog));
 	blacklist_dialog = NULL;
+	
+	return FALSE;
 }
 
 static void
 close_button_pressed (GnomeDialog *dialog, gint button, gpointer data)
 {
-	ProcData *procdata = data;
-	
-	close_blacklist_dialog (procdata);
+	gnome_dialog_close (GNOME_DIALOG (blacklist_dialog));
 }
 
 void create_blacklist_dialog (ProcData *procdata)
@@ -464,7 +463,7 @@ void create_blacklist_dialog (ProcData *procdata)
   			    GTK_SIGNAL_FUNC (remove_button_clicked), procdata);
   		gtk_signal_connect (GTK_OBJECT (blacklist_dialog), "clicked",
 			    GTK_SIGNAL_FUNC (close_button_pressed), procdata);
-		gtk_signal_connect (GTK_OBJECT (blacklist_dialog), "destroy",
+		gtk_signal_connect (GTK_OBJECT (blacklist_dialog), "close",
 			    GTK_SIGNAL_FUNC (close_blacklist_dialog), procdata);
   	
   		gtk_widget_show_all (blacklist_dialog);
