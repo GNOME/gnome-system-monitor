@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-23 14:19+0100\n"
-"PO-Revision-Date: 2004-11-23 14:19+0100\n"
+"POT-Creation-Date: 2004-11-29 15:38+0100\n"
+"PO-Revision-Date: 2004-11-29 15:46+0100\n"
 "Last-Translator: Martin Willemoes Hansen <mwh@sysrq.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -28,27 +28,28 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:153 src/interface.c:626
+#: gnome-system-monitor.desktop.in.in.h:1 src/callbacks.c:128
+#: src/interface.c:627
 msgid "System Monitor"
 msgstr "Systemovervågning"
 
-#: gnome-system-monitor.desktop.in.h:2
+#: gnome-system-monitor.desktop.in.in.h:2
 msgid "View current processes and monitor system state"
 msgstr "Vis aktive processer og overvåg systemstatus"
 
-#: src/callbacks.c:125
-msgid "Kevin Vandersloot"
-msgstr "Kevin Vandersloot"
-
-#: src/callbacks.c:126
+#: src/callbacks.c:119
 msgid "Jorgen Scheibengruber - nicer devices treeview"
 msgstr "Jorgen Scheibengruber - pænere enhedstræ"
 
-#: src/callbacks.c:127
+#: src/callbacks.c:120
 msgid "Benoît Dejean - maintainer"
 msgstr "Benoît Dejean - vedligeholder"
 
-#: src/callbacks.c:135
+#: src/callbacks.c:129
+msgid "System resources monitor"
+msgstr "Systemresurseovervågning"
+
+#: src/callbacks.c:134
 msgid "translator_credits"
 msgstr ""
 "Martin Willemoes Hansen\n"
@@ -56,14 +57,6 @@ msgstr ""
 "\n"
 "Dansk-gruppen <dansk@klid.dk>\n"
 "Mere info: http://www.klid.dk/dansk/"
-
-#: src/callbacks.c:154
-msgid "(C) 2001 Kevin Vandersloot"
-msgstr "© 2001 Kevin Vandersloot"
-
-#: src/callbacks.c:155
-msgid "System resources monitor"
-msgstr "Systemresurseovervågning"
 
 #: src/favorites.c:344
 msgid "No processes are currently hidden."
@@ -173,7 +166,7 @@ msgstr "Afslut _proces"
 
 #: src/interface.c:66
 msgid "Force a process to finish."
-msgstr "Tving en proces til at slutte"
+msgstr "Tving en proces til at stoppe"
 
 #: src/interface.c:71 src/interface.c:148 src/procdialogs.c:220
 #: src/procdialogs.c:984
@@ -182,7 +175,7 @@ msgstr "_Afslut proces"
 
 #: src/interface.c:71
 msgid "Force a process to finish now."
-msgstr "Tving en proces til at slutte øjeblikkeligt"
+msgstr "Tving en proces til at stoppe øjeblikkeligt"
 
 #: src/interface.c:77
 msgid "_Hidden Processes"
@@ -252,124 +245,124 @@ msgstr "_Vis"
 msgid "More _Info"
 msgstr "Flere _oplysninger"
 
-#: src/interface.c:334
-msgid "Name"
-msgstr "Navn"
+#: src/interface.c:324 src/memmaps.c:261
+msgid "Device"
+msgstr "Enhed"
 
-#: src/interface.c:335
+#: src/interface.c:325
 msgid "Directory"
 msgstr "Mappe"
 
-#: src/interface.c:336
+#: src/interface.c:326
 msgid "Type"
 msgstr "Type"
 
-#: src/interface.c:337
+#: src/interface.c:327
 msgid "Total"
 msgstr "Total"
 
-#: src/interface.c:338
+#: src/interface.c:328
+msgid "Free"
+msgstr "Fri"
+
+#: src/interface.c:329
 msgid "Used"
 msgstr "Benyttet"
 
 # history unødvendigt
-#: src/interface.c:362
+#: src/interface.c:353
 msgid "CPU History"
 msgstr "Processorforbrug"
 
-#: src/interface.c:402
+#: src/interface.c:393
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
 # ingen grund til at tage 'swap' med her, det er blot en overskrift,
 # ligeledes for 'history' 
-#: src/interface.c:421
+#: src/interface.c:412
 msgid "Memory and Swap History"
 msgstr "Hukommelsesforbrug"
 
-#: src/interface.c:454
+#: src/interface.c:445
 msgid "Used memory:"
 msgstr "Benyttet hukommelse:"
 
-#: src/interface.c:463 src/interface.c:495
+#: src/interface.c:454 src/interface.c:486
 msgid "of"
 msgstr "af"
 
-#: src/interface.c:486
+#: src/interface.c:477
 msgid "Used swap:"
 msgstr "Benyttet swap:"
 
-#: src/interface.c:521 src/procdialogs.c:904
+#: src/interface.c:512 src/procdialogs.c:904
 msgid "Devices"
 msgstr "Enheder"
 
-#: src/interface.c:638 src/procdialogs.c:729
+#: src/interface.c:639 src/procdialogs.c:729
 msgid "Process Listing"
 msgstr "Procesliste"
 
-#: src/interface.c:644 src/procdialogs.c:816
+#: src/interface.c:645 src/procdialogs.c:816
 msgid "Resource Monitor"
 msgstr "Resurseovervågning"
 
-#: src/interface.c:702
+#: src/interface.c:703
 msgid "Application Manager"
 msgstr "Programhåndtering"
 
-#: src/interface.c:708
+#: src/interface.c:709
 msgid "Running Applications"
 msgstr "Kørende programmer"
 
-#: src/interface.c:727
+#: src/interface.c:728
 msgid "_Close Application"
 msgstr "_Luk program"
 
-#: src/interface.c:776
+#: src/interface.c:771
 msgid "More _Info >>"
 msgstr "Flere _oplysninger >>"
 
-#: src/interface.c:783
+#: src/interface.c:778
 msgid "<< Less _Info"
 msgstr "<< Færre _oplysninger"
 
-#: src/memmaps.c:256
+#: src/memmaps.c:255
 msgid "Filename"
 msgstr "Filnavn"
 
-#: src/memmaps.c:257
+#: src/memmaps.c:256
 msgid "VM Start"
 msgstr "VM-start"
 
-#: src/memmaps.c:258
+#: src/memmaps.c:257
 msgid "VM End"
 msgstr "VM-slut"
 
 # VM = virtuel memory, så dette dækker vist fint
-#: src/memmaps.c:259 src/proctable.c:163
+#: src/memmaps.c:258 src/proctable.c:167
 msgid "VM Size"
 msgstr "Virtuel huk."
 
-#: src/memmaps.c:260
+#: src/memmaps.c:259
 msgid "Flags"
 msgstr "Flag"
 
-#: src/memmaps.c:261
+#: src/memmaps.c:260
 msgid "VM Offset"
 msgstr "VM-offset"
 
 #: src/memmaps.c:262
-msgid "Device"
-msgstr "Enhed"
-
-#: src/memmaps.c:263
 msgid "Inode"
 msgstr "Inode"
 
-#: src/memmaps.c:344
+#: src/memmaps.c:343
 msgid "Memory Maps"
 msgstr "Hukommelsesområder"
 
-#: src/memmaps.c:364
+#: src/memmaps.c:363
 msgid "Process name:"
 msgstr "Procesnavn:"
 
@@ -391,20 +384,22 @@ msgstr ""
 "proces. Du kan indtaste administratoradgangskoden for at opnå disse "
 "rettigheder."
 
-#: src/procactions.c:73
+#: src/procactions.c:74
 #, c-format
 msgid ""
-"Process Name: %s \n"
+"Process Name: %s\n"
 "\n"
-"You must be root to renice a process lower than 0. You can enter the root "
-"password to gain the necessary permission."
+"You must be root to decrease a nice value of this process or set a nice "
+"value less than 0. You can enter the root password to gain the necessary "
+"permission."
 msgstr ""
-"Procesnavn: %s \n"
+"Procesnavn: %s\n"
 "\n"
-"Du skal være administrator for at kunne sætte en procesprioritet lavere end "
-"0. Du kan indtaste administratoradgangskoden for at opnå disse rettigheder."
+"Du skal være administrator for at kunne sætte en procesprioritet for denne "
+"proces eller sætte en procesprioritet lavere end 0. Du kan indtaste "
+"administratoradgangskoden for at opnå de nødvendige rettigheder."
 
-#: src/procactions.c:124
+#: src/procactions.c:131
 #, c-format
 msgid ""
 "Process Name: %s \n"
@@ -417,7 +412,7 @@ msgstr ""
 "Du har ikke de nødvendige rettigheder til at afslutte denne proces. Du kan "
 "indtaste administratoradgangskoden for at opnå disse rettigheder."
 
-#: src/procactions.c:143
+#: src/procactions.c:150
 msgid "An error occured while killing the process."
 msgstr "En fejl opstod under drabet på processen."
 
@@ -483,7 +478,7 @@ msgstr "Skift _prioritet"
 
 #: src/procdialogs.c:424
 msgid "_Nice value:"
-msgstr "_Venlighedsværdi:"
+msgstr "_Procesprioritetsværdi:"
 
 #: src/procdialogs.c:441
 msgid ""
@@ -557,94 +552,103 @@ msgstr "Administratoradgangskode:"
 msgid "Wrong Password."
 msgstr "Forkert adgangskode."
 
-#: src/procman.c:45
+#: src/procman.c:46
 msgid "show simple dialog to end processes and logout"
 msgstr "Vis simpelt vindue til at slutte processer og logge ud"
 
-#: src/proctable.c:159
+#: src/proctable.c:163
 msgid "Process Name"
 msgstr "Procesnavn"
 
-#: src/proctable.c:160
+#: src/proctable.c:164
 msgid "User"
 msgstr "Bruger"
 
-#: src/proctable.c:161
+#: src/proctable.c:165
 msgid "Status"
 msgstr "Status"
 
 # der skal bruges små korte overskrifter
-#: src/proctable.c:162
+#: src/proctable.c:166
 msgid "Memory"
 msgstr "Hukom."
 
-#: src/proctable.c:164
+#: src/proctable.c:168
 msgid "Resident Memory"
 msgstr "Resident huk."
 
-#: src/proctable.c:165
+#: src/proctable.c:169
 msgid "Shared Memory"
 msgstr "Delt huk."
 
-#: src/proctable.c:166
+#: src/proctable.c:170
 msgid "RSS Memory"
 msgstr "Fysisk huk."
 
-#: src/proctable.c:167
+#: src/proctable.c:171
 msgid "X Server Memory"
 msgstr "X-serverhuk."
 
-#: src/proctable.c:168
+#: src/proctable.c:172
 #, no-c-format
 msgid "% CPU"
 msgstr "% cpu"
 
 # prioritet er helt entydigt her
-#: src/proctable.c:169
+#: src/proctable.c:173
 msgid "Nice"
 msgstr "Prioritet"
 
-#: src/proctable.c:170
+#: src/proctable.c:174
 msgid "ID"
 msgstr "Id"
 
-#: src/proctable.c:171
+#: src/proctable.c:175
 msgid "Security Context"
 msgstr "Sikkerhedssammenhæng"
 
-#: src/proctable.c:172
+#: src/proctable.c:176
 msgid "Arguments"
 msgstr "Parametre"
 
-#: src/proctable.c:329
+#: src/proctable.c:349
 msgid "Running"
 msgstr "Kører"
 
-#: src/proctable.c:334
+#: src/proctable.c:354
 msgid "Stopped"
 msgstr "Stoppet"
 
-#: src/proctable.c:339
+#: src/proctable.c:359
 msgid "Zombie"
 msgstr "Zombie"
 
-#: src/proctable.c:344
+#: src/proctable.c:364
 msgid "Uninterruptible"
 msgstr "Ikke forstyrbar"
 
-#: src/proctable.c:349
+#: src/proctable.c:369
 msgid "Sleeping"
 msgstr "Sover"
 
-#: src/proctable.c:444
+#: src/proctable.c:455
 #, c-format
 msgid "%s (thread)"
 msgstr "%s (tråd)"
 
-#: src/proctable.c:1025
+#: src/proctable.c:1008
 #, c-format
 msgid "%s could not be found."
 msgstr "%s blev ikke fundet."
+
+#~ msgid "Kevin Vandersloot"
+#~ msgstr "Kevin Vandersloot"
+
+#~ msgid "(C) 2001 Kevin Vandersloot"
+#~ msgstr "© 2001 Kevin Vandersloot"
+
+#~ msgid "Name"
+#~ msgstr "Navn"
 
 #~ msgid "%lluKB"
 #~ msgstr "%lluKB"
