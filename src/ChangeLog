@@ -1,3 +1,16 @@
+2001-08-03  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c (create_kill_dialog): pass in the signal now
+	so either SIGKILL or SIGTERM can use this dialog. Change the
+	button labels accordingly.
+
+	* callbacks.c: use the create_kill_dailog properly adding
+	the signal to the argument.
+
+	* interface.c: left align the disk name and mount point
+
+	* util.c: fix a memory leak
+
 2001-08-02  Kevin Vandersloot <kfv101@psu.edu>
 
 	* procdialogs.c: improve the renice dialog by adding a label

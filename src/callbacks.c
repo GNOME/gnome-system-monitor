@@ -262,7 +262,7 @@ popup_menu_end_process (GtkMenuItem *menuitem, gpointer data)
 		return;
 	
 	if (procdata->config.show_kill_warning)
-		procdialog_create_kill_dialog (procdata);
+		procdialog_create_kill_dialog (procdata, SIGTERM);
 	else
 		kill_process (procdata, SIGTERM);	
 }
@@ -274,8 +274,12 @@ popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
 
         if (!procdata->selected_node)
 		return;
-	
-	kill_process (procdata, SIGKILL);	
+		
+	if (procdata->config.show_kill_warning)
+		procdialog_create_kill_dialog (procdata, SIGKILL);
+	else	
+		kill_process (procdata, SIGKILL);
+			
 }
 
 void 
@@ -324,7 +328,7 @@ cb_end_process_button_pressed          (GtkButton       *button,
 		return;
 		
 	if (procdata->config.show_kill_warning)
-		procdialog_create_kill_dialog (procdata);
+		procdialog_create_kill_dialog (procdata, SIGTERM);
 	else
 		kill_process (procdata, SIGTERM);
 	

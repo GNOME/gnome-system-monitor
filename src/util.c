@@ -170,6 +170,8 @@ exec_su (gchar *exec_path, gchar *user, gchar *pwd)
 		_exit (0);
 		
 	}
+	
+	g_free (exec_p);
 
 	return 0;
 }

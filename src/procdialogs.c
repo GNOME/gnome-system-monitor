@@ -33,6 +33,7 @@
 
 GtkWidget *renice_dialog;
 gint new_nice_value = 0;
+int kill_signal = SIGTERM;
 
 static void
 cb_show_hide_message_toggled (GtkToggleButton *button, gpointer data)
@@ -151,7 +152,7 @@ cb_kill_process_clicked (GtkButton *button, gpointer data)
 {
 	ProcData *procdata = data;
 	
-	kill_process (procdata, SIGTERM);
+	kill_process (procdata, kill_signal);
 
 }
 
@@ -163,7 +164,7 @@ cb_kill_cancel_clicked (GtkButton *button, gpointer data)
 
 
 void
-procdialog_create_kill_dialog (ProcData *data)
+procdialog_create_kill_dialog (ProcData *data, int signal)
 {
 	ProcData *procdata = data;
 	GtkWidget *messagebox1;
@@ -173,6 +174,14 @@ procdialog_create_kill_dialog (ProcData *data)
   	GtkWidget *button5;
   	GtkWidget *button6;
   	GtkWidget *dialog_action_area1;
+  	gchar *text;
+  	
+  	kill_signal = signal;
+  	
+  	if (signal == SIGKILL)
+  		text = _("Kill Process");
+  	else
+  		text = _("End Process");
 
   	/* We create it with an OK button, and then remove the button, to work
      	around a bug in gnome-libs. */
@@ -183,7 +192,7 @@ procdialog_create_kill_dialog (ProcData *data)
   			      GNOME_DIALOG (messagebox1)->buttons->data);
   	GNOME_DIALOG (messagebox1)->buttons = NULL;
   	
-  	gtk_window_set_title (GTK_WINDOW (messagebox1), _("End Process"));
+  	gtk_window_set_title (GTK_WINDOW (messagebox1), _(text));
   	gtk_window_set_modal (GTK_WINDOW (messagebox1), TRUE);
   	gtk_window_set_policy (GTK_WINDOW (messagebox1), FALSE, FALSE, FALSE);
   
@@ -199,7 +208,7 @@ procdialog_create_kill_dialog (ProcData *data)
   	gtk_box_pack_end (GTK_BOX (hbox1), checkbutton1, FALSE, FALSE, 0);
     	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbutton1), TRUE);
 
-  	gnome_dialog_append_button (GNOME_DIALOG (messagebox1), _("End Process"));
+  	gnome_dialog_append_button (GNOME_DIALOG (messagebox1), _(text));
   	button5 = GTK_WIDGET (g_list_last (GNOME_DIALOG (messagebox1)->buttons)->data);
   	gtk_widget_show (button5);
   	GTK_WIDGET_SET_FLAGS (button5, GTK_CAN_DEFAULT);
