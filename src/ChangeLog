@@ -1,7 +1,21 @@
 2001-08-07 Kevin Vandersloot <kfv101@psu.edu>
 
+	* interface.c : move the popup menu callbacks back to
+	callbacks.c. Add a new menuitem to get info about the
+	process. Just tries to man:process name.
+
+	* callbacks.c (popup_menu_about_process): call gnome_url_show
+	on the process command name. Perhaps there is a better way.
+
+	* proctable.c (get_process_name): change this to get the
+	process name and process command. Thus shortened command names
+	should no longer be in procman.
+
+2001-08-07 Kevin Vandersloot <kfv101@psu.edu>
+
 	* interface.c (create_main_window): hook up to the key press
-	signal for the e-tree
+	signal for the e-tree. Also remove a duplicated 
+	gtk_signal_connect for the "right_click" signal.
 
 	* callbacks.c (cb_tree_key_press): toggle info tab if 
 	return/enter or space bar is pressed

@@ -19,6 +19,7 @@
 #ifndef _PROCACTIONS_H_
 #define _PROCACTIONS_H_
 
+#include "procman.h"
  
 void		renice (int pid, int nice);
 void		kill_process (ProcData *procdata);

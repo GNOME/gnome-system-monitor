@@ -196,6 +196,81 @@ cb_favorites_menu_clicked (GtkWidget *widget, gpointer data)
 	proctable_update_all (procdata);
 }
 
+void
+popup_menu_renice (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	procdialog_create_renice_dialog (procdata);
+}
+
+void
+popup_menu_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	create_memmaps_dialog (procdata);
+}
+
+void
+popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	ProcInfo *info;
+	
+	if (!procdata->selected_node)
+		return;
+	
+	if (procdata->config.show_hide_message)
+	{	
+		GtkWidget *dialog;
+		dialog = procdialog_create_hide_dialog (procdata);
+		gtk_widget_show (dialog);
+	}
+	else
+	{
+		info = e_tree_memory_node_get_data (procdata->memory, 
+						    procdata->selected_node);
+		add_to_blacklist (procdata, info->cmd);
+		proctable_update_all (procdata);
+	}
+	
+}
+
+void 
+popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+
+        if (!procdata->selected_node)
+		return;
+	
+	if (procdata->config.show_kill_warning)
+		procdialog_create_kill_dialog (procdata);
+	else
+		kill_process (procdata);	
+}
+
+void 
+popup_menu_about_process (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	ProcInfo *info = NULL;
+	gchar *name;
+	
+	if (!procdata->selected_node)
+		return;
+		
+	info = e_tree_memory_node_get_data (procdata->memory, 
+					    procdata->selected_node);
+	g_return_if_fail (info != NULL);
+					    
+	name = g_strjoin (NULL, "man:", info->cmd, NULL);
+	gnome_url_show (name);
+	g_free (name);
+					    
+}
+
 gint
 cb_right_click (ETree *tree, int row, ETreePath path, int col,
                  GdkEvent *event, gpointer data)

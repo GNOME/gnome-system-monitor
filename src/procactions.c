@@ -24,6 +24,7 @@
 #include <signal.h>
 #include <sys/time.h>
 #include <sys/resource.h>
+#include "procactions.h"
 #include "procman.h"
 #include "proctable.h"
 
@@ -52,7 +53,7 @@ kill_process (ProcData *procdata)
 	/* FIXME: if SIGTERM don't work the try SIGKILL. Give a error dialog
 	** if still an error (like permission denied
 	*/
-	error = kill (info->pid, SIGTERM);
+	error = kill (info->pid, SIGKILL);
 	if (error == -1)
 	{
 		switch (errno) {

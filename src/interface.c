@@ -127,68 +127,6 @@ GtkWidget *endprocessbutton;
 GtkWidget *popup_menu;
 GtkAccelGroup *accel;
 
-static void
-popup_menu_renice (GtkMenuItem *menuitem, gpointer data)
-{
-	ProcData *procdata = data;
-	
-	procdialog_create_renice_dialog (procdata);
-	
-	/*gtk_menu_popdown (GTK_MENU (popup_menu));*/
-}
-
-static void
-popup_menu_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
-{
-	ProcData *procdata = data;
-	
-	create_memmaps_dialog (procdata);
-	
-	/*gtk_menu_popdown (GTK_MENU (popup_menu));*/
-}
-
-static void
-popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
-{
-	ProcData *procdata = data;
-	ProcInfo *info;
-	
-	if (!procdata->selected_node)
-		return;
-	
-	if (procdata->config.show_hide_message)
-	{	
-		GtkWidget *dialog;
-		dialog = procdialog_create_hide_dialog (procdata);
-		gtk_widget_show (dialog);
-	}
-	else
-	{
-		info = e_tree_memory_node_get_data (procdata->memory, 
-						    procdata->selected_node);
-		add_to_blacklist (procdata, info->cmd);
-		proctable_update_all (procdata);
-	}
-	
-	/*gtk_menu_popdown (GTK_MENU (popup_menu));*/
-	
-}
-
-static void popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
-{
-	ProcData *procdata = data;
-
-        if (!procdata->selected_node)
-		return;
-	
-	if (procdata->config.show_kill_warning)
-		procdialog_create_kill_dialog (procdata);
-	else
-		kill_process (procdata);
-	
-	/*gtk_menu_popdown (GTK_MENU (popup_menu));*/	
-}
-
 GtkWidget*
 create_main_window (ProcData *data)
 {
@@ -215,6 +153,7 @@ create_main_window (ProcData *data)
         GtkWidget *lbl_renice;
 	GtkWidget *lbl_mem_maps;
 	GtkWidget *sep, *an_sep;
+	GtkWidget *menuitem;
 	guint key;
 
 	app = gnome_app_new ("procman", NULL);
@@ -396,12 +335,11 @@ create_main_window (ProcData *data)
 
 	gtk_signal_connect (GTK_OBJECT (procdata->tree), "key_press",
 			    GTK_SIGNAL_FUNC (cb_tree_key_press), procdata);
-	
-#if 1
+			    
 	procdata->timeout = gtk_timeout_add (procdata->config.update_interval,
 			 cb_timeout, procdata);
 	procdata->meter_timeout = gtk_timeout_add (500, cb_progress_meter_timeout, procdata);
-#endif		
+		
 	gtk_widget_show (vbox1);	 
 	gtk_widget_show (app);
 
@@ -418,43 +356,53 @@ create_main_window (ProcData *data)
  	popup_menu = gtk_menu_new ();
 
 	/* Create new menu items */
-	lbl_mem_maps = gtk_menu_item_new_with_label (_("Memory Maps ..."));
-	gtk_widget_show (lbl_mem_maps);
-	lbl_hide = gtk_menu_item_new_with_label (_("Hide Process"));
-	gtk_widget_show (lbl_hide);
-        lbl_kill = gtk_menu_item_new_with_label (_("End Process"));
-        gtk_widget_show (lbl_kill);
-        lbl_renice = gtk_menu_item_new_with_label (_("Renice Process ..."));
+	lbl_renice = gtk_menu_item_new_with_label (_("Renice Process ..."));
         gtk_widget_show (lbl_renice);
-	sep = gtk_menu_item_new();
-	gtk_widget_show (sep);
-	an_sep = gtk_menu_item_new();
-	gtk_widget_show (an_sep);
-
-	/* Associate the items to the menu and make them visible */
-        gtk_menu_append (GTK_MENU (popup_menu), lbl_renice);
-        gtk_menu_append (GTK_MENU (popup_menu), lbl_mem_maps);
-	gtk_menu_append (GTK_MENU (popup_menu), sep);
-	gtk_menu_append (GTK_MENU (popup_menu), lbl_hide);
-        gtk_menu_append (GTK_MENU (popup_menu), an_sep);
-	gtk_menu_append (GTK_MENU (popup_menu), lbl_kill);
-        
-	/* Add activiate signal associations to these */
-	gtk_signal_connect (GTK_OBJECT (lbl_mem_maps),"activate",
-			    GTK_SIGNAL_FUNC(popup_menu_show_memory_maps),
-			    data);
-
-	gtk_signal_connect (GTK_OBJECT (lbl_hide),"activate",
-                            GTK_SIGNAL_FUNC(popup_menu_hide_process),
-                            data);
-
         gtk_signal_connect (GTK_OBJECT (lbl_renice),"activate",
                             GTK_SIGNAL_FUNC(popup_menu_renice),
                             data);
-	gtk_signal_connect (GTK_OBJECT (lbl_kill),"activate",
+        gtk_menu_append (GTK_MENU (popup_menu), lbl_renice);
+	lbl_mem_maps = gtk_menu_item_new_with_label (_("Memory Maps ..."));
+	gtk_widget_show (lbl_mem_maps);
+	gtk_signal_connect (GTK_OBJECT (lbl_mem_maps),"activate",
+			    GTK_SIGNAL_FUNC(popup_menu_show_memory_maps),
+			    data);
+	gtk_menu_append (GTK_MENU (popup_menu), lbl_mem_maps);
+	sep = gtk_menu_item_new();
+	gtk_widget_show (sep);
+	gtk_menu_append (GTK_MENU (popup_menu), sep);
+	lbl_hide = gtk_menu_item_new_with_label (_("Hide Process"));
+	gtk_widget_show (lbl_hide);
+	gtk_signal_connect (GTK_OBJECT (lbl_hide),"activate",
+                            GTK_SIGNAL_FUNC(popup_menu_hide_process),
+                            data);
+	gtk_menu_append (GTK_MENU (popup_menu), lbl_hide);
+	sep = gtk_menu_item_new();
+	gtk_widget_show (sep);
+	gtk_menu_append (GTK_MENU (popup_menu), sep);
+        lbl_kill = gtk_menu_item_new_with_label (_("End Process"));
+        gtk_widget_show (lbl_kill);
+        gtk_signal_connect (GTK_OBJECT (lbl_kill),"activate",
 			    GTK_SIGNAL_FUNC(popup_menu_kill_process),
 			    data);
+        gtk_menu_append (GTK_MENU (popup_menu), lbl_kill);
+        sep = gtk_menu_item_new();
+	gtk_widget_show (sep);
+	gtk_menu_append (GTK_MENU (popup_menu), sep);
+        menuitem = gtk_menu_item_new_with_label (_("About This Process"));
+        gtk_widget_show (menuitem);
+        gtk_signal_connect (GTK_OBJECT (menuitem),"activate",
+			    GTK_SIGNAL_FUNC(popup_menu_about_process),
+			    data);
+        gtk_menu_append (GTK_MENU (popup_menu), menuitem);
+	
+	
+	/* Add activiate signal associations to these */
+	
+	
 
+       
+	
 	/* Make the menu visible */
         gtk_widget_show (popup_menu);
 	

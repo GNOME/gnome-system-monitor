@@ -422,48 +422,59 @@ get_process_status (ProcInfo *info, char *state)
 
 }
 
-static gchar *
-get_process_name (ProcData *procdata, gchar *cmd, gchar *args)
+static void
+get_process_name (ProcData *procdata, ProcInfo *info, gchar *cmd, gchar *args)
 {
 	gchar *name = NULL;
+	gchar *command = NULL;
 	gint i, n = 0, len, newlen;
 	gboolean done = FALSE;
 	
 	if (procdata->config.show_pretty_names && procdata->config.load_desktop_files)
 		name = pretty_table_get_name (procdata->pretty_table, cmd);
-		
-	if (!name)
+	
+	/* strip the absolute path from the arguments */	
+	if (args)
 	{
-		/* strip the arguments string */
-		if (args)
+		len = strlen (args);
+		i = len;
+		while (!done)
 		{
-			len = strlen (args);
-			i = len;
-			while (!done)
-			{
-				/* no / in string */
-				if (i == 0) {
-					n = 0;
-					done = TRUE;
-				}
-				if (args[i] == '/') {
-					done = TRUE;
-					n = i + 1;
-				}
-				i--;
-			}		
-			newlen = len - n;
-			name = g_new (gchar, newlen + 1);
-			for (i = 0; i < newlen; i++) {
-				name[i] = args[i + n];
+			/* no / in string */
+			if (i == 0) {
+				n = 0;
+				done = TRUE;
 			}
-			name[newlen] = '\0';
+			if (args[i] == '/') {
+				done = TRUE;
+				n = i + 1;
+			}
+			i--;
+		}		
+		newlen = len - n;
+		command = g_new (gchar, newlen + 1);
+		for (i = 0; i < newlen; i++) {
+			command[i] = args[i + n];
 		}
-		else
-			name =  g_strdup (cmd);
+		command[newlen] = '\0';
 	}
+	
+	if (!name && command)
+		name = g_strdup (command);
+	else if (!name && !command)
+		name = g_strdup (cmd);
 		
-	return name;
+	info->name = e_utf8_from_locale_string (name);
+	
+	if (command) 
+		info->cmd = g_strdup (command);
+	else
+		info->cmd = g_strdup (cmd);
+		
+	if (command)
+		g_free (command);
+	if (name)
+		g_free (name);
 
 }
 
@@ -518,14 +529,12 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	{
 		if (procdata->config.show_pretty_names)
 		{	
-			gchar *name, *arguments;
+			gchar *arguments;
 			glibtop_proc_args procargs;
 		
 			g_free (newinfo->name);
 			arguments = glibtop_get_proc_args (&procargs, pid, 0);	
-			name = get_process_name (procdata, procstate.cmd, arguments);
-			newinfo->name = e_utf8_from_locale_string (name);
-			g_free (name);
+			get_process_name (procdata, newinfo, procstate.cmd, arguments);
 			if (arguments)
 				glibtop_free (arguments);
 		}
@@ -582,7 +591,6 @@ get_info (ProcData *procdata, gint pid)
 	glibtop_proc_uid procuid;
 	glibtop_proc_args procargs;
 	struct passwd *pwd;
-	gchar *name;
 	gchar *arguments;
 	gint newcputime, i;
 	
@@ -601,10 +609,7 @@ get_info (ProcData *procdata, gint pid)
 		info->pixbuf = NULL;
 	
 	arguments = glibtop_get_proc_args (&procargs, pid, 0);	
-	name = get_process_name (procdata, procstate.cmd, arguments);
-	info->name = e_utf8_from_locale_string (name);
-	g_free (name);
-	info->cmd = g_strdup_printf ("%s", procstate.cmd);
+	get_process_name (procdata, info, procstate.cmd, arguments);
 	if (arguments)
 	{
 		for (i = 0; i < procargs.size; i++)

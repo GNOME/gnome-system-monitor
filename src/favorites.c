@@ -384,7 +384,7 @@ remove_button_clicked (GtkButton *button, gpointer data)
 		e_tree_memory_node_remove (memory, root_node);
 		fill_tree_with_info (procdata);
 	}
-	
+		
 }
 
 static void
