@@ -136,8 +136,13 @@ get_load (gfloat data [2], LoadGraph *g)
     g->cpu_time [3] = cpu.idle;
 
     if (!g->cpu_initialized) {
-	memcpy (g->cpu_last, g->cpu_time, sizeof (g->cpu_last));
+    	g->cpu_last [0] = g->cpu_time [0];
+    	g->cpu_last [1] = g->cpu_time [1];
+    	g->cpu_last [2] = g->cpu_time [2];
+    	g->cpu_last [3] = g->cpu_time [3];
+	data[0] = -1;
 	g->cpu_initialized = 1;
+	return;
     }
 
     usr  = g->cpu_time [0] - g->cpu_last [0];
