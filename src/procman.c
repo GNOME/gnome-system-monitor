@@ -117,6 +117,7 @@ load_desktop_files (ProcData *pd)
 		pd->pretty_table = NULL;
 		pd->desktop_load_finished = FALSE;
 		gtk_idle_add_priority (800, idle_func, pd);
+		/*idle_func (pd);*/
 		gtk_timeout_add (500, icon_load_finished, pd);
 	}
 	else if (pd->config.load_desktop_files && !pd->config.delay_load) 
@@ -177,6 +178,7 @@ procman_data_new (void)
 		gnome_config_get_int ("procman/Config/disks_update_interval=5000");
 	pd->config.whose_process = gnome_config_get_int ("procman/Config/view_as=1");
 	pd->config.current_tab = gnome_config_get_int ("procman/Config/current_tab=0");
+	pd->config.pane_pos = gnome_config_get_int ("procman/Config/pane_pos=300");
 	pd->config.bg_color.red = gnome_config_get_int
 		("procman/Config/bg_red=0");
 	pd->config.bg_color.green = gnome_config_get_int
@@ -209,11 +211,10 @@ procman_data_new (void)
 		("procman/Config/swap_blue=18595");
 	
 	procman_get_save_files (pd);
-#if 0	
-	get_favorites (pd);
-#endif
 
-	get_blacklist (pd);	
+	get_blacklist (pd);
+	
+	load_desktop_files (pd);	
 	
 	pd->config.simple_view = simple_view;	
 	if (pd->config.simple_view) {
@@ -247,7 +248,7 @@ procman_free_data (ProcData *procdata)
 void
 procman_save_config (ProcData *data)
 {
-	gint width, height;
+	gint width, height, pane_pos;
 
 	if (!data)
 		return;
@@ -260,6 +261,9 @@ procman_save_config (ProcData *data)
 	gdk_window_get_size (app->window, &width, &height);
 	data->config.width = width;
 	data->config.height = height;
+	
+	pane_pos = get_sys_pane_pos ();
+	data->config.pane_pos = pane_pos;
 		
 	gnome_config_set_int ("procman/Config/width",data->config.width);
 	gnome_config_set_int ("procman/Config/height",data->config.height);	
@@ -280,6 +284,7 @@ procman_save_config (ProcData *data)
 	gnome_config_set_int ("procman/Config/disks_update_interval", 
 			      data->config.disks_update_interval);
 	gnome_config_set_int ("procman/Config/current_tab", data->config.current_tab);
+	gnome_config_set_int ("procman/Config/pane_pos", data->config.pane_pos);
 	gnome_config_set_int ("procman/Config/bg_red", data->config.bg_color.red);
 	gnome_config_set_int ("procman/Config/bg_green", data->config.bg_color.green);
 	gnome_config_set_int ("procman/Config/bg_blue", data->config.bg_color.blue);

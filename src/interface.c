@@ -139,7 +139,14 @@ gchar *lessinfolabel = N_("<< Less _Info");
 GtkWidget *infobutton;
 GtkWidget *endprocessbutton;
 GtkWidget *popup_menu;
+GtkWidget *sys_pane;
 GtkAccelGroup *accel;
+
+gint
+get_sys_pane_pos (void)
+{
+	return GTK_PANED (sys_pane)->child1_size;
+}
 
 static GtkWidget *
 create_proc_view (ProcData *procdata)
@@ -325,13 +332,13 @@ static GtkWidget *
 create_sys_view (ProcData *procdata)
 {
 	GtkWidget *vbox;
+	GtkWidget *vpane;
 	GtkWidget *cpu_frame, *mem_frame;
 	GtkWidget *label,*cpu_label;
 	GtkWidget *hbox, *table;
 	GtkWidget *disk_frame;
 	GtkWidget *color_picker;
 	GtkWidget *scrolled, *clist;
-	GtkWidget *alignment;
 	gchar *titles[5] = {_("Disk Name"),
 			    _("Used Space"),
 			    _("Free Space"),
@@ -340,7 +347,12 @@ create_sys_view (ProcData *procdata)
 			    };
 	LoadGraph *cpu_graph, *mem_graph;
 	
+	vpane = gtk_vpaned_new ();
+	sys_pane = vpane;
+	gtk_paned_set_position (GTK_PANED (vpane), procdata->config.pane_pos);
+	
 	vbox = gtk_vbox_new (FALSE, 0);
+	gtk_paned_add1 (GTK_PANED (vpane), vbox);
 	
 	cpu_frame = gtk_frame_new (_("% CPU Usage History"));
 	gtk_widget_show (cpu_frame);
@@ -356,11 +368,9 @@ create_sys_view (ProcData *procdata)
 	gtk_container_set_border_width (GTK_CONTAINER (cpu_graph->main_widget), 
 					GNOME_PAD_SMALL);
 					
-	/*alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 	gtk_box_pack_start (GTK_BOX (cpu_graph->main_widget), alignment, FALSE, FALSE, 0);*/
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (cpu_graph->main_widget), hbox, FALSE, FALSE, 0);
-	/*gtk_container_add (GTK_CONTAINER (alignment), hbox);*/
 	
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
@@ -380,7 +390,6 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (hbox), cpu_label, FALSE, FALSE, 0);
 	cpu_graph->label = cpu_label;
 	
-	gtk_widget_show_all (cpu_frame);
 	procdata->cpu_graph = cpu_graph;
 	
 	mem_graph = load_graph_new (MEM_GRAPH, procdata);
@@ -388,11 +397,9 @@ create_sys_view (ProcData *procdata)
 	gtk_container_set_border_width (GTK_CONTAINER (mem_graph->main_widget), 
 					GNOME_PAD_SMALL);
 	
-	/*alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), alignment, FALSE, FALSE, 0);*/	
 	table = gtk_table_new (2, 3, FALSE);
 	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), table, FALSE, FALSE, 0);
-	/*gtk_container_add (GTK_CONTAINER (alignment), table);*/
 	
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
@@ -434,15 +441,14 @@ create_sys_view (ProcData *procdata)
 	gtk_table_attach (GTK_TABLE (table), mem_graph->swap_label, 2, 3, 1, 2, 
 			  GTK_FILL, 0, 0, 0);	
 	
-	gtk_widget_show_all (mem_frame);
 	procdata->mem_graph = mem_graph;
+	gtk_widget_show_all (vbox);
 					
 	disk_frame = gtk_frame_new (_("Disks"));
 	gtk_container_set_border_width (GTK_CONTAINER (disk_frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (vbox), disk_frame, FALSE, TRUE, 0);
+	gtk_paned_add2 (GTK_PANED (vpane), disk_frame);
 	
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
-	gtk_widget_set_usize (scrolled, -2, 80);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), 
 					GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 	gtk_container_add (GTK_CONTAINER (disk_frame), scrolled);
@@ -468,7 +474,7 @@ create_sys_view (ProcData *procdata)
   	procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
   						  cb_update_disks, procdata);  
   						  
-	return vbox;
+	return vpane;
 }
 
 GtkWidget*
@@ -549,7 +555,7 @@ create_main_window (ProcData *procdata)
  	procdata->config.show_more_info = !procdata->config.show_more_info;
  	toggle_infoview (procdata);	
  	
- 	gtk_notebook_set_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab); 
+ 	gtk_notebook_set_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab);
  	
  	return app;
 
@@ -622,6 +628,8 @@ create_simple_view_dialog (ProcData *procdata)
 				 
 	procdata->timeout = gtk_timeout_add (procdata->config.update_interval,
 			 		     cb_timeout, procdata);
+			 		    
+	
 			    
 	gtk_widget_show_all (main_vbox);
 	gtk_widget_show (app);

@@ -67,6 +67,7 @@ struct _ProcConfig
 	GdkColor	bg_color;
 	GdkColor	frame_color;
 	gboolean	simple_view;
+	gint		pane_pos;
 };
 
 struct _PrettyTable {
