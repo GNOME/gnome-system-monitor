@@ -358,58 +358,58 @@ show_hide_dialog_toggled (GtkToggleButton *button, gpointer data)
 		
 }
 
-static void
-update_update_interval (GtkWidget *widget, gpointer data)
+static gboolean
+update_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 {
 	ProcData *procdata = data;
 	GConfClient *client = procdata->client;
 	GtkWidget *spin_button;
 	gdouble value;
 	
-	spin_button = g_object_get_data (G_OBJECT (widget), "spin_button");
+	spin_button = widget;
 	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (spin_button));
 	
 	if (1000 * value == procdata->config.update_interval)
-		return;
+		return FALSE;
 		
 	gconf_client_set_int (client, "/apps/procman/update_interval", value * 1000, NULL);
-		
+	return FALSE;
 }
 
-static void
-update_graph_update_interval (GtkWidget *widget, gpointer data)
+static gboolean
+update_graph_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 {
 	ProcData *procdata = data;
 	GConfClient *client = procdata->client;
 	GtkWidget *spin_button;
 	gdouble value = 0;
 
-	spin_button = g_object_get_data (G_OBJECT (widget), "spin_button");
+	spin_button = widget;
 	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (spin_button));
 	
 	if (1000 * value == procdata->config.graph_update_interval)
-		return;
+		return FALSE;
 
 	gconf_client_set_int (client, "/apps/procman/graph_update_interval", value * 1000, NULL);
-	
+	return FALSE;
 }
 
-static void
-update_disks_update_interval (GtkWidget *widget, gpointer data)
+static gboolean
+update_disks_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 {
 	ProcData *procdata = data;
 	GConfClient *client = procdata->client;
 	GtkWidget *spin_button;
 	gdouble value;
 
-	spin_button = g_object_get_data (G_OBJECT (widget), "spin_button");
+	spin_button = widget;
 	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (spin_button));
 	
 	if (1000 * value == procdata->config.disks_update_interval)
-		return;
+		return FALSE;
 		
 	gconf_client_set_int (client, "/apps/procman/disks_interval", value * 1000, NULL);
-	
+	return FALSE;
 }
 
 static void		
@@ -450,20 +450,83 @@ proc_field_toggled (GtkToggleButton *button, gpointer data)
 	
 }
 
+static void
+field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
+{
+	GtkTreeModel *model = data;
+	GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
+  	GtkTreeIter iter;
+  	GtkTreeViewColumn *column;
+  	gboolean toggled;
+	
+	if (!path)
+		return;
+	
+	gtk_tree_model_get_iter (model, &iter, path);
+	
+	gtk_tree_model_get (model, &iter, 2, &column, -1);
+	toggled = gtk_cell_renderer_toggle_get_active (cell);
+	
+	gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, !toggled, -1);
+	gtk_tree_view_column_set_visible (column, !toggled);
+	
+	gtk_tree_path_free (path);
+
+}
+
 static GtkWidget *
 create_proc_field_page (ProcData *procdata)
 {
-	GtkWidget *vbox;
-	GtkWidget *tree = procdata->tree;
+	GtkWidget *sys_box, *vbox, *vbox2, *hbox, *hbox2;
+	GtkWidget *scrolled;
+	GtkWidget *tree = procdata->tree, *treeview;
 	GList *columns = NULL;
-	GtkWidget *check_button;
+	GtkListStore *model;
+	GtkTreeViewColumn *column;
+	GtkCellRenderer *cell;
+
+	vbox = gtk_vbox_new (FALSE, 6);
 	
-	vbox = gtk_vbox_new (TRUE, GNOME_PAD_SMALL);
+	scrolled = gtk_scrolled_window_new (NULL, NULL);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+                                  	GTK_POLICY_AUTOMATIC,
+                                  	GTK_POLICY_AUTOMATIC);
+        gtk_box_pack_start (GTK_BOX (vbox), scrolled, TRUE, TRUE, 0);
+        
+        model = gtk_list_store_new (3, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_POINTER);	
+        
+	treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
+	gtk_container_add (GTK_CONTAINER (scrolled), treeview);
+	g_object_unref (G_OBJECT (model));
+	
+	column = gtk_tree_view_column_new ();
+	
+	cell = gtk_cell_renderer_toggle_new ();
+	gtk_tree_view_column_pack_start (column, cell, FALSE);
+	gtk_tree_view_column_set_attributes (column, cell,
+					                       "active", 0,
+					                       NULL);
+	g_signal_connect (G_OBJECT (cell), "toggled", G_CALLBACK (field_toggled), model);
+	gtk_tree_view_column_set_clickable (column, TRUE);
+	gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+	
+	column = gtk_tree_view_column_new ();
+	
+	cell = gtk_cell_renderer_text_new ();
+	gtk_tree_view_column_pack_start (column, cell, FALSE);
+	gtk_tree_view_column_set_attributes (column, cell,
+					                       "text", 1,
+					                        NULL);
+					                        
+	gtk_tree_view_column_set_title (column, "Not Shown");
+	gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
 	
 	columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree));
 	
 	while (columns) {
 		GtkTreeViewColumn *column = columns->data;
+		GtkTreeIter iter;
 		const gchar *title;
 		gboolean visible;
 		
@@ -473,19 +536,14 @@ create_proc_field_page (ProcData *procdata)
 		
 		visible = gtk_tree_view_column_get_visible (column);
 		
-		check_button = gtk_check_button_new_with_label (title);
-		
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
-				              visible);
-		g_signal_connect (G_OBJECT (check_button), "toggled",
-			          G_CALLBACK (proc_field_toggled), column);
+		gtk_list_store_append (model, &iter);
+		gtk_list_store_set (model, &iter, 0, visible, 1, title, 2, column,-1);
 			    
-		gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
 		
 		columns = g_list_next (columns);
 	}
 		
-	
+
 	return vbox;
 }
 
@@ -498,8 +556,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	GtkWidget *sys_box;
 	GtkWidget *main_vbox;
 	GtkWidget *frame;
-	GtkWidget *vbox;
-	GtkWidget *hbox;
+	GtkWidget *vbox, *vbox2;
+	GtkWidget *hbox, *hbox2;
 	GtkWidget *label;
 	GtkAdjustment *adjustment;
 	GtkWidget *spin_button;
@@ -508,15 +566,20 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	GtkWidget *table;
 	GtkWidget *tab_label;
 	GtkWidget *color_picker;
+	GtkSizeGroup *size;
 	gfloat update;
+	gchar *tmp;
 	
 	if (prefs_dialog)
 		return;
+		
+	size = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 	
 	dialog = gtk_dialog_new_with_buttons (_("Preferences"), NULL,
 					      GTK_DIALOG_DESTROY_WITH_PARENT,
 					      GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 					      NULL);
+	gtk_window_set_default_size (GTK_WINDOW (dialog), 400,  375);
 	prefs_dialog = dialog;
 	
 	main_vbox = GTK_DIALOG (dialog)->vbox;
@@ -524,109 +587,134 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	notebook = gtk_notebook_new ();
 	gtk_box_pack_start (GTK_BOX (main_vbox), notebook, TRUE, TRUE, 0);
 	
-	proc_box = gtk_vbox_new (FALSE, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (proc_box), GNOME_PAD_SMALL);
-	tab_label = gtk_label_new_with_mnemonic (_("Process _Listing"));
+	proc_box = gtk_vbox_new (FALSE, 18);
+	gtk_container_set_border_width (GTK_CONTAINER (proc_box), 12);
+	tab_label = gtk_label_new_with_mnemonic (_("Process Listing"));
 	gtk_widget_show (tab_label);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), proc_box, tab_label);
 	
-	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (proc_box), vbox, FALSE, FALSE, GNOME_PAD_SMALL);
+	vbox = gtk_vbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (proc_box), vbox, FALSE, FALSE, 0);
 	
-	hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
+	tmp = g_strdup_printf ("<b>%s</b>", _("Behavior"));
+	label = gtk_label_new (NULL);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_label_set_markup (GTK_LABEL (label), tmp);
+	g_free (tmp);
+	gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
+	
+	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 	
-	label = gtk_label_new (_("Update Interval ( seconds ) :"));
+	label = gtk_label_new ("    ");
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+	
+	vbox2 = gtk_vbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
+	
+	hbox2 = gtk_hbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
+	
+	label = gtk_label_new_with_mnemonic (_("_Update Interval ( seconds ) :"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox2), label, TRUE, TRUE, 0);
 	
 	update = (gfloat) procdata->config.update_interval;
 	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 1.0, 
 							  100.0, 0.25, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
-	gtk_box_pack_start (GTK_BOX (hbox), spin_button, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox2), spin_button, TRUE, TRUE, 0);
+	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
+				   G_CALLBACK (update_update_interval), procdata);
+	gtk_label_set_mnemonic_widget (GTK_LABEL (label), spin_button);
 	
-	button = gtk_button_new_with_mnemonic (_("_Set"));
-	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-	g_object_set_data (G_OBJECT (button), "spin_button", spin_button);
-	g_signal_connect (G_OBJECT (button), "clicked",
-	 		  G_CALLBACK (update_update_interval), procdata);
-	
-	check_button = gtk_check_button_new_with_label (_("Show Process Dependencies"));
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
-				    procdata->config.show_tree);
-	g_signal_connect (G_OBJECT (check_button), "toggled",
-			    G_CALLBACK (show_tree_toggled), procdata);
-	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
-	
-	check_button = gtk_check_button_new_with_label (_("Show Threads"));
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
-				    procdata->config.show_threads);
-	g_signal_connect (G_OBJECT (check_button), "toggled",
-			    G_CALLBACK (show_threads_toggled), procdata);
-	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
-	
-	check_button = gtk_check_button_new_with_label (_("Show warning dialog when ending or killing processes"));
+	hbox2 = gtk_hbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
+		
+	check_button = gtk_check_button_new_with_mnemonic (_("Show warning dialog when ending or _killing processes"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
 				      procdata->config.show_kill_warning);
 	g_signal_connect (G_OBJECT (check_button), "toggled",
 			    G_CALLBACK (show_kill_dialog_toggled), procdata);
-	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox2), check_button, FALSE, FALSE, 0);
 	
-	check_button = gtk_check_button_new_with_label (_("Show warning dialog when hiding processes"));
+	hbox2 = gtk_hbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
+	
+	check_button = gtk_check_button_new_with_mnemonic (_("Show warning dialog when _hiding processes"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
 				    procdata->config.show_hide_message);
 	g_signal_connect (G_OBJECT (check_button), "toggled",
 			    G_CALLBACK (show_hide_dialog_toggled), procdata);
-	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox2), check_button, FALSE, FALSE, 0);
 	
-	vbox = create_proc_field_page (procdata);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
-	tab_label = gtk_label_new_with_mnemonic (_("Process _Fields"));
-	gtk_widget_show (tab_label);
-	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, tab_label);
+	vbox = gtk_vbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (proc_box), vbox, TRUE, TRUE, 0);
 	
-	sys_box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_set_border_width (GTK_CONTAINER (sys_box), GNOME_PAD_SMALL);
-	tab_label = gtk_label_new_with_mnemonic (_("System _Monitor"));
+	tmp = g_strdup_printf ("<b>%s</b>", _("Process Fields"));
+	label = gtk_label_new (NULL);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_label_set_markup (GTK_LABEL (label), tmp);
+	g_free (tmp);
+	gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
+	
+	hbox = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+	
+	label = gtk_label_new ("    ");
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+	
+	vbox2 = create_proc_field_page (procdata);
+	gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
+	
+	sys_box = gtk_vbox_new (FALSE, 12);
+	gtk_container_set_border_width (GTK_CONTAINER (sys_box), 12);
+	tab_label = gtk_label_new_with_mnemonic (_("System Monitor"));
 	gtk_widget_show (tab_label);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label);
 	
-	frame = gtk_frame_new (_("Graphs"));
-	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
+	vbox = gtk_vbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (sys_box), vbox, FALSE, FALSE, 0);
 	
-	vbox = gtk_vbox_new (FALSE, 0);
-	gtk_container_add (GTK_CONTAINER (frame), vbox);
+	tmp = g_strdup_printf ("<b>%s</b>", _("Graphs"));
+	label = gtk_label_new (NULL);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_label_set_markup (GTK_LABEL (label), tmp);
+	g_free (tmp);
+	gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
 	
-	hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
+	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 	
-	label = gtk_label_new (_("Update Speed ( seconds ) :"));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	label = gtk_label_new ("    ");
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+	
+	vbox2 = gtk_vbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
+	
+	hbox2 = gtk_hbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
+		
+	label = gtk_label_new_with_mnemonic (_("_Update Interval ( seconds ) :"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
 			  
 	update = (gfloat) procdata->config.graph_update_interval;
 	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.25, 
 							  100.0, 0.25, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
-	gtk_box_pack_start (GTK_BOX (hbox), spin_button, FALSE, FALSE, 0);
+	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
+				   G_CALLBACK (update_graph_update_interval), procdata);
+	gtk_box_pack_end (GTK_BOX (hbox2), spin_button, FALSE, FALSE, 0);
+	gtk_label_set_mnemonic_widget (GTK_LABEL (label), spin_button);
+	gtk_size_group_add_widget (size, spin_button);
 			  
-	button = gtk_button_new_with_mnemonic (_("_Set"));
-	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, GNOME_PAD_SMALL);
-	g_object_set_data (G_OBJECT (button), "spin_button", spin_button);
-	g_signal_connect (G_OBJECT (button), "clicked",
-	 		  G_CALLBACK (update_graph_update_interval), procdata);
+	hbox2 = gtk_hbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, TRUE, TRUE, 0);
 	
-	table = gtk_table_new (2, 3, FALSE);
-	gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-		
-	label = gtk_label_new (_("Background Color :"));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	label = gtk_label_new_with_mnemonic (_("_Background Color:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-			  GTK_FILL, 0, 0, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
 	
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
@@ -634,15 +722,18 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 				    procdata->config.bg_color.green,
 				    procdata->config.bg_color.blue, 0);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
-			    G_CALLBACK (bg_color_changed), procdata);
-	gtk_table_attach (GTK_TABLE (table), color_picker, 2, 3, 0, 1, 
-			  0, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-			  
-	label = gtk_label_new (_("Grid Color :"));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+			          G_CALLBACK (bg_color_changed), procdata);
+	gtk_box_pack_end (GTK_BOX (hbox2), color_picker, FALSE, FALSE, 0);
+	gtk_label_set_mnemonic_widget (GTK_LABEL (label), color_picker);
+	gtk_widget_show (color_picker);
+	gtk_size_group_add_widget (size, color_picker);
+		
+	hbox2 = gtk_hbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, TRUE, TRUE, 0);
+	  
+	label = gtk_label_new_with_mnemonic (_("_Grid Color:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-			  GTK_FILL|GTK_EXPAND, 0, 0, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
 	
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
@@ -651,44 +742,55 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 				    procdata->config.frame_color.blue, 0);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (frame_color_changed), procdata);
-	gtk_table_attach (GTK_TABLE (table), color_picker, 2, 3, 1, 2, 
-			  0, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);		  
+	gtk_size_group_add_widget (size, color_picker);	  
+	gtk_box_pack_end (GTK_BOX (hbox2), color_picker, FALSE, FALSE, 0);	
+	gtk_label_set_mnemonic_widget (GTK_LABEL (label), color_picker);
+	gtk_widget_show (color_picker);
 	
-	frame = gtk_frame_new (_("Devices"));
-	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
+	vbox = gtk_vbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (sys_box), vbox, FALSE, FALSE, 0);
 	
-	table = gtk_table_new (2, 2, FALSE);
-	gtk_container_add (GTK_CONTAINER (frame), table);
-			  
-	label = gtk_label_new (_("Update Speed ( seconds ) :"));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	tmp = g_strdup_printf ("<b>%s</b>", _("Devices"));
+	label = gtk_label_new (NULL);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, 
-			  GTK_FILL|GTK_EXPAND, 0, 0, GNOME_PAD_SMALL);
+	gtk_label_set_markup (GTK_LABEL (label), tmp);
+	g_free (tmp);
+	gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
+	
+	hbox = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+	
+	label = gtk_label_new ("    ");
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+	
+	vbox2 = gtk_vbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
+	
+	hbox2 = gtk_hbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
+	
+	label = gtk_label_new_with_mnemonic (_("Update _Speed ( seconds ) :"));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
 			  
 	update = (gfloat) procdata->config.disks_update_interval;
 	adjustment = (GtkAdjustment *) gtk_adjustment_new (update / 1000.0, 1.0, 
 							   100.0, 1.0, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 0);
-	gtk_table_attach (GTK_TABLE (table), spin_button, 1, 2, 0, 1,
-			  0, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-	
-	button = gtk_button_new_with_mnemonic (_("Se_t"));
-	gtk_table_attach (GTK_TABLE (table), button, 2, 3, 0, 1,
-			  0, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-	g_object_set_data (G_OBJECT (button), "spin_button", spin_button);
-	g_signal_connect (G_OBJECT (button), "clicked",
-	 		  G_CALLBACK (update_disks_update_interval), procdata);
-	 		  		  
-	g_signal_connect (G_OBJECT (dialog), "response",
-			  G_CALLBACK (prefs_dialog_button_pressed), procdata);
-	
+	gtk_box_pack_end (GTK_BOX (hbox2), spin_button, FALSE, FALSE, 0);
+	gtk_label_set_mnemonic_widget (GTK_LABEL (label), spin_button);
+	gtk_size_group_add_widget (size, spin_button);
+	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
+				  G_CALLBACK (update_disks_update_interval), procdata);
+		
 	gtk_widget_show_all (dialog);
+	g_signal_connect (G_OBJECT (dialog), "response",
+				  G_CALLBACK (prefs_dialog_button_pressed), procdata);
 	
 	if (procdata->config.current_tab == 0)
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 0);
 	else
-		gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 2);
+		gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 1);
 }
 
 static void
