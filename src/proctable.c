@@ -1053,29 +1053,60 @@ proctable_search_table (ProcData *procdata, gchar *string)
 	GList *list = procdata->info;
 	GtkWidget *dialog;
 	gchar *error;
+	static gint increment = 0, index;
+	static gchar *last = NULL;
+	
+	if (!g_strcasecmp (string, ""))
+		return;
+	
+	if (!last)
+		last = g_strdup (string);
+	else if (g_strcasecmp (string, last)) {
+		increment = 0;
+		g_free (last);
+		last = g_strdup (string);
+	}
+	else 
+		increment ++;
+	
+	index = increment;
 	
 	while (list)
 	{
 		ProcInfo *info = list->data;
-		if (!g_strncasecmp (string, info->name, strlen (string)) && info->node)
+		if (strstr (info->name, string) && info->node)
 		{
-			e_tree_set_cursor (E_TREE (procdata->tree), info->node);
-			return;
+			if (index == 0) {
+				e_tree_set_cursor (E_TREE (procdata->tree), info->node);
+				return;
+			}
+			else
+				index --;
 		}
 		
-		if (!g_strncasecmp (string, info->user, strlen (string)) && info->node)
+		if (strstr (info->user, string) && info->node)
 		{
-			e_tree_set_cursor (E_TREE (procdata->tree), info->node);
-			return;
+			
+			if (index == 0) {
+				e_tree_set_cursor (E_TREE (procdata->tree), info->node);
+				return;
+			}
+			else
+				index --;
 		}
 		
 		list = g_list_next (list);
 	}
 	
-	error = g_strdup_printf (_("%s could not be found"), string);
+	if (index == increment)
+		error = g_strdup_printf (_("%s could not be found."), string);
+	else
+		error = g_strdup_printf (_("No more instances of %s could be found."), string);
 	dialog = gnome_error_dialog (error);
 	gnome_dialog_run (GNOME_DIALOG (dialog));
 	g_free (error);
+	
+	increment --;
 
 }
 
