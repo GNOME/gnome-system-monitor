@@ -39,12 +39,12 @@ int kill_signal = SIGTERM;
 static void
 cb_show_hide_message_toggled (GtkToggleButton *button, gpointer data)
 {
-	ProcData *procdata = data;
+	GConfClient *client = gconf_client_get_default ();
 	gboolean toggle_state;
 	
 	toggle_state = gtk_toggle_button_get_active (button);
 	
-	procdata->config.show_hide_message = toggle_state;	
+	gconf_client_set_bool (client, "/apps/procman/hide_message", toggle_state, NULL);	
 
 }
 
@@ -106,12 +106,12 @@ procdialog_create_hide_dialog (ProcData *data)
 static void
 cb_show_kill_warning_toggled (GtkToggleButton *button, gpointer data)
 {
-	ProcData *procdata = data;
+	GConfClient *client = gconf_client_get_default ();
 	gboolean toggle_state;
 	
 	toggle_state = gtk_toggle_button_get_active (button);
 	
-	procdata->config.show_kill_warning = toggle_state;	
+	gconf_client_set_bool (client, "/apps/procman/kill_dialog", toggle_state, NULL);	
 
 }
 
@@ -301,30 +301,28 @@ prefs_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 static void
 show_tree_toggled (GtkToggleButton *button, gpointer data)
 {
-	ProcData *procdata = data;
+	GConfClient *client;
 	gboolean toggled;
 	
-	toggled = gtk_toggle_button_get_active (button);
+	client = gconf_client_get_default ();
 	
-	procdata->config.show_tree = toggled;
+	toggled = gtk_toggle_button_get_active (button);
+	gconf_client_set_bool (client, "/apps/procman/show_tree", toggled, NULL);
 
-	proctable_clear_tree (procdata);
-	proctable_update_all (procdata);
 }
 
 static void
 show_threads_toggled (GtkToggleButton *button, gpointer data)
 {
-	ProcData *procdata = data;
+	GConfClient *client;
 	gboolean toggled;
+	
+	client = gconf_client_get_default ();
 	
 	toggled = gtk_toggle_button_get_active (button);
 	
-	procdata->config.show_threads = toggled;
-	
-	proctable_clear_tree (procdata);
-	proctable_update_all (procdata);
-	
+	gconf_client_set_bool (client, "/apps/procman/show_threads", toggled, NULL);
+		
 }
 
 
@@ -332,35 +330,31 @@ static void
 update_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 {
 	ProcData *procdata = data;
+	GConfClient *client = gconf_client_get_default ();
 	gfloat value;
 	
 	value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (widget));
-	procdata->config.update_interval = value * 1000;
 	
-	gtk_timeout_remove (procdata->timeout);
-	procdata->timeout = gtk_timeout_add (procdata->config.update_interval, cb_timeout,
-					     procdata);
-	
+	if (1000 * value == procdata->config.update_interval)
+		return;
+		
+	gconf_client_set_int (client, "/apps/procman/update_interval", value * 1000, NULL);
+		
 }
 
 static void
 update_graph_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 {
 	ProcData *procdata = data;
-	gfloat value;
+	GConfClient *client = gconf_client_get_default ();
+	gfloat value = 0;
 	
 	value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (widget));
-	procdata->config.graph_update_interval = value * 1000;
 	
-	gtk_timeout_remove (procdata->cpu_graph->timer_index);
-	procdata->cpu_graph->timer_index = -1;
-	procdata->cpu_graph->speed = procdata->config.graph_update_interval;
-	gtk_timeout_remove (procdata->mem_graph->timer_index);
-	procdata->mem_graph->timer_index = -1;
-	procdata->mem_graph->speed = procdata->config.graph_update_interval;
+	if (1000 * value == procdata->config.graph_update_interval)
+		return;
 	
-	load_graph_start (procdata->cpu_graph);
-	load_graph_start (procdata->mem_graph);					     
+	gconf_client_set_int (client, "/apps/procman/graph_update_interval", value * 1000, NULL);
 	
 }
 
@@ -368,15 +362,15 @@ static void
 update_disks_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 {
 	ProcData *procdata = data;
+	GConfClient *client = gconf_client_get_default ();
 	gfloat value;
 	
 	value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (widget));
-	procdata->config.disks_update_interval = value * 1000;
 	
-	gtk_timeout_remove (procdata->disk_timeout);
-	
-	procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
-  						   cb_update_disks, procdata);		     
+	if (1000 * value == procdata->config.disks_update_interval)
+		return;
+		
+	gconf_client_set_int (client, "/apps/procman/disks_interval", value * 1000, NULL);
 	
 }
 
@@ -384,19 +378,11 @@ static void
 bg_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 		  guint a, gpointer data)
 {
-	ProcData *procdata = data;
+	GConfClient *client = gconf_client_get_default ();
 	
-	procdata->cpu_graph->colors[0].red = r;
-	procdata->cpu_graph->colors[0].green = g;
-	procdata->cpu_graph->colors[0].blue = b;
-	procdata->mem_graph->colors[0].red = r;
-	procdata->mem_graph->colors[0].green = g;
-	procdata->mem_graph->colors[0].blue = b;
-	procdata->config.bg_color.red = r;
-	procdata->config.bg_color.green = g;
-	procdata->config.bg_color.blue = b;	
-	procdata->cpu_graph->colors_allocated = FALSE;
-	procdata->mem_graph->colors_allocated = FALSE;
+	gconf_client_set_int (client, "/apps/procman/bg_red", r, NULL);
+	gconf_client_set_int (client, "/apps/procman/bg_green", g, NULL);
+	gconf_client_set_int (client, "/apps/procman/bg_blue", b, NULL);
 
 }
 
@@ -404,19 +390,11 @@ static void
 frame_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 		  guint a, gpointer data)
 {
-	ProcData *procdata = data;
+	GConfClient *client = gconf_client_get_default ();
 	
-	procdata->cpu_graph->colors[1].red = r;
-	procdata->cpu_graph->colors[1].green = g;
-	procdata->cpu_graph->colors[1].blue = b;
-	procdata->mem_graph->colors[1].red = r;
-	procdata->mem_graph->colors[1].green = g;
-	procdata->mem_graph->colors[1].blue = b;
-	procdata->config.frame_color.red = r;
-	procdata->config.frame_color.green = g;
-	procdata->config.frame_color.blue = b;	
-	procdata->cpu_graph->colors_allocated = FALSE;
-	procdata->mem_graph->colors_allocated = FALSE;
+	gconf_client_set_int (client, "/apps/procman/frame_red", r, NULL);
+	gconf_client_set_int (client, "/apps/procman/frame_green", g, NULL);
+	gconf_client_set_int (client, "/apps/procman/frame_blue", b, NULL);
 
 }
 

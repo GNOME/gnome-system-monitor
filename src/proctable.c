@@ -814,7 +814,6 @@ proctable_update_list (ProcData *data)
 
 	pid_list = glibtop_get_proclist (&proclist, which, arg);
 	n = proclist.number;
-	procdata->proc_num = n;
 	
 	/* FIXME: total cpu time elapsed should be calculated on an individual basis here 
 	** should probably have a total_time_last gint in the ProcInfo structure */

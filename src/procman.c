@@ -29,6 +29,7 @@
 #include "proctable.h"
 #include "prettytable.h"
 #include "favorites.h"
+#include "callbacks.h"
 
 GtkWidget *app;
 GConfClient *client;
@@ -57,92 +58,179 @@ struct poptOption options[] = {
   }
 };
 
-
-#if 0
-static void
-procman_get_save_files (ProcData *procdata)
-{
-	gchar *homedir;
-	
-	homedir = g_get_home_dir ();
-	procdata->config.tree_state_file = g_strconcat (homedir, "/.gnome/", 
-							"procman_header_state", NULL);
-	procdata->config.memmaps_state_file = g_strconcat (homedir, "/.gnome/",
-							   "procman_memmaps_state", NULL);
-
-}
-
-static gint
-idle_func (gpointer data)
-{
-	ProcData *procdata = data;
-	
-	if (!procdata->pretty_table)
-	{
-		if (pthread_create (&thread, NULL, (void*) prettytable_load_async,
-				   (void*) procdata)) 
-			g_print ("error creating new thread \n");
-	}
-			
-	return FALSE;
-	
-}
-
-static gint
-icon_load_finished (gpointer data)
-{
-	ProcData *procdata = data;
-	PrettyTable *table = NULL;
-	
-	if (procdata->desktop_load_finished)
-	{
-		if (pthread_join (thread, (void *)&table))
-			g_print ("error joining thread \n");
-		procdata->pretty_table = (PrettyTable *)table;
-		proctable_update_all (procdata);
-		return FALSE;
-	}
-	
-	return TRUE;
-}
-#endif
-
 static void
 load_desktop_files (ProcData *pd)
 {
-	/* delay load the .desktop files. Procman will display icons and app names
-	** if the pd->pretty_table structure is not NULL. The timeout will monitor
-	** whether or not that becomes the case and update the table if so. There is 
-	** undoubtedly a better solution, but I am not too knowlegabe about threads.
-	** Basically what needs to be done is to update the table when the thread is
-	** finished 
-	*/
-	#if 0
-	if (pd->config.load_desktop_files && pd->config.delay_load)
-	{
-		pd->pretty_table = NULL;
-		pd->desktop_load_finished = FALSE;
-		gtk_idle_add_priority (2000, idle_func, pd);
-		/*idle_func (pd);*/
-		gtk_timeout_add (500, icon_load_finished, pd);
-	}
-	else if (pd->config.load_desktop_files && !pd->config.delay_load) 
-	#endif
-		pd->pretty_table = pretty_table_new (pd);
-	/*else
-		pd->pretty_table = NULL;*/
+	pd->pretty_table = pretty_table_new (pd);
 }
 
-static gint
-initial_update_tree (gpointer data)
+static void
+tree_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
 {
 	ProcData *procdata = data;
+	GConfValue *value = gconf_entry_get_value (entry);
 	
-	load_desktop_files (procdata);
-	
+	procdata->config.show_tree = gconf_value_get_bool (value);
+	proctable_clear_tree (procdata);
 	proctable_update_all (procdata);
 	
-	return FALSE;
+}
+
+static void
+threads_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
+{
+	ProcData *procdata = data;
+	GConfValue *value = gconf_entry_get_value (entry);
+	
+	procdata->config.show_threads = gconf_value_get_bool (value);
+	proctable_clear_tree (procdata);
+	proctable_update_all (procdata);
+	
+}
+
+static void
+view_as_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
+{
+	ProcData *procdata = data;
+	GConfValue *value = gconf_entry_get_value (entry);
+	
+	procdata->config.whose_process = gconf_value_get_int (value);
+	proctable_clear_tree (procdata);
+	proctable_update_all (procdata);
+	
+}
+
+static void
+warning_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
+{
+	ProcData *procdata = data;
+	const gchar *key = gconf_entry_get_key (entry);
+	GConfValue *value = gconf_entry_get_value (entry);
+	
+	if (!g_strcasecmp (key, "/apps/procman/kill_dialog")) {
+		procdata->config.show_kill_warning = gconf_value_get_bool (value);
+	}
+	else {
+		procdata->config.show_hide_message = gconf_value_get_bool (value);
+	}
+}
+
+static void
+timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
+{
+	ProcData *procdata = data;
+	const gchar *key = gconf_entry_get_key (entry);
+	GConfValue *value = gconf_entry_get_value (entry);
+	
+	if (!g_strcasecmp (key, "/apps/procman/update_interval")) {
+		g_print ("main timeout \n");
+		procdata->config.update_interval = gconf_value_get_int (value);
+		gtk_timeout_remove (procdata->timeout);
+		procdata->timeout = gtk_timeout_add (procdata->config.update_interval, cb_timeout,
+					     procdata);
+	}
+	else if (!g_strcasecmp (key, "/apps/procman/graph_update_interval")){
+		g_print ("garph timeout \n");
+		gtk_timeout_remove (procdata->cpu_graph->timer_index);
+		procdata->cpu_graph->timer_index = -1;
+		procdata->cpu_graph->speed = gconf_value_get_int (value);
+		gtk_timeout_remove (procdata->mem_graph->timer_index);
+		procdata->mem_graph->timer_index = -1;
+		procdata->mem_graph->speed = gconf_value_get_int (value);
+	
+		load_graph_start (procdata->cpu_graph);
+		load_graph_start (procdata->mem_graph);	
+	}
+	else {
+		g_print ("disk timeout \n");
+		
+		procdata->config.disks_update_interval = gconf_value_get_int (value);
+		gtk_timeout_remove (procdata->disk_timeout);
+		procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
+  						   cb_update_disks, procdata);	
+		
+	}
+}
+
+static void
+color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
+{
+	ProcData *procdata = data;
+	const gchar *key = gconf_entry_get_key (entry);
+	GConfValue *value = gconf_entry_get_value (entry);
+	gint color = gconf_value_get_int (value);
+	
+	if (!g_strcasecmp (key, "/apps/procman/bg_red")) {
+		procdata->cpu_graph->colors[0].red = color;
+		procdata->mem_graph->colors[0].red = color;
+		procdata->config.bg_color.red = color;
+	}
+	else if (!g_strcasecmp (key, "/apps/procman/bg_green")) {
+		procdata->cpu_graph->colors[0].green = color;
+		procdata->mem_graph->colors[0].green = color;
+		procdata->config.bg_color.green = color;
+	}
+	else if (!g_strcasecmp (key, "/apps/procman/bg_blue")) {
+		procdata->cpu_graph->colors[0].blue = color;
+		procdata->mem_graph->colors[0].blue = color;
+		procdata->config.bg_color.blue = color;
+	}
+	else if (!g_strcasecmp (key, "/apps/procman/frame_red")) {
+		procdata->cpu_graph->colors[1].red = color;
+		procdata->mem_graph->colors[1].red = color;
+		procdata->config.frame_color.red = color;
+	}
+	else if (!g_strcasecmp (key, "/apps/procman/frame_green")) {
+		procdata->cpu_graph->colors[1].green = color;
+		procdata->mem_graph->colors[1].green = color;
+		procdata->config.frame_color.green = color;
+	}
+	else if (!g_strcasecmp (key, "/apps/procman/frame_blue")) {
+		procdata->cpu_graph->colors[1].blue = color;
+		procdata->mem_graph->colors[1].blue = color;
+		procdata->config.frame_color.blue = color;
+	}
+	else if (!g_strcasecmp (key, "/apps/procman/cpu_red")) {
+		procdata->cpu_graph->colors[2].red = color;
+		procdata->config.cpu_color.red = color;
+	}
+	else if (!g_strcasecmp (key, "/apps/procman/cpu_green")) {
+		procdata->cpu_graph->colors[2].green = color;
+		procdata->config.cpu_color.green = color;
+	}
+	else if (!g_strcasecmp (key, "/apps/procman/cpu_blue")) {
+		procdata->cpu_graph->colors[2].blue = color;
+		procdata->config.cpu_color.blue = color;
+	}
+	else if (!g_strcasecmp (key, "/apps/procman/mem_red")) {
+		procdata->mem_graph->colors[2].red = color;
+		procdata->config.mem_color.red = color;
+	}
+	else if (!g_strcasecmp (key, "/apps/procman/mem_green")) {
+		procdata->mem_graph->colors[2].green = color;
+		procdata->config.mem_color.green = color;
+	}
+	else if (!g_strcasecmp (key, "/apps/procman/mem_blue")) {
+		procdata->mem_graph->colors[2].blue = color;
+		procdata->config.mem_color.blue = color;
+	}
+	else if (!g_strcasecmp (key, "/apps/procman/swap_red")) {
+		procdata->mem_graph->colors[3].red = color;
+		procdata->config.swap_color.red = color;
+	}
+	else if (!g_strcasecmp (key, "/apps/procman/swap_green")) {
+		procdata->mem_graph->colors[3].green = color;
+		procdata->config.swap_color.green = color;
+	}
+	else if (!g_strcasecmp (key, "/apps/procman/swap_blue")) {
+		procdata->mem_graph->colors[3].blue = color;
+		procdata->config.swap_color.blue = color;
+	}
+	
+	procdata->cpu_graph->colors_allocated = FALSE;
+	procdata->mem_graph->colors_allocated = FALSE;
+	
+	
 }
 
 static gint 
@@ -192,11 +280,8 @@ procman_data_new (void)
 	pd->tree = NULL;
 	pd->infobox = NULL;
 	pd->info = NULL;
-	pd->proc_num = 0;
-	pd->selected_pid = -1;
 	pd->selected_process = NULL;
 	pd->timeout = -1;
-	pd->favorites = NULL;
 	pd->blacklist = NULL;
 	pd->cpu_graph = NULL;
 	pd->mem_graph = NULL;
@@ -208,58 +293,98 @@ procman_data_new (void)
 		("/apps/procman/more_info", FALSE);
 	pd->config.show_tree = gconf_client_get_bool_with_default 
 		("/apps/procman/show_tree", TRUE);
+	gconf_client_notify_add (client, "/apps/procman/show_tree", tree_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.show_kill_warning = gconf_client_get_bool_with_default 
 		("/apps/procman/kill_dialog", TRUE);
+	gconf_client_notify_add (client, "/apps/procman/kill_dialog", warning_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.show_hide_message = gconf_client_get_bool_with_default 
 		("/apps/procman/hide_message", TRUE);
-	pd->config.delay_load = gconf_client_get_bool_with_default 
-		("/apps/procman/delay_load", TRUE);
-	pd->config.load_desktop_files = gconf_client_get_bool_with_default 
-		("/apps/procman/load_desktop_files", TRUE);
-	pd->config.show_pretty_names = gconf_client_get_bool_with_default 
-		("/apps/procman/show_app_names", FALSE);
+	gconf_client_notify_add (client, "/apps/procman/hide_message", warning_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.show_threads = gconf_client_get_bool_with_default 
 		("/apps/procman/show_threads", FALSE);
+	gconf_client_notify_add (client, "/apps/procman/show_threads", threads_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.update_interval = gconf_client_get_int_with_default 
 		("/apps/procman/update_interval", 3000);
+	gconf_client_notify_add (client, "/apps/procman/update_interval", timeouts_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.graph_update_interval = gconf_client_get_int_with_default 
 		("/apps/procman/graph_update_interval", 1000);
+	gconf_client_notify_add (client, "/apps/procman/graph_update_interval", timeouts_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.disks_update_interval = gconf_client_get_int_with_default 
 		("/apps/procman/disks_interval", 5000);
+	gconf_client_notify_add (client, "/apps/procman/disks_interval", timeouts_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.whose_process = gconf_client_get_int_with_default ("/apps/procman/view_as", 1);
+	gconf_client_notify_add (client, "/apps/procman/view_as", view_as_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.current_tab = gconf_client_get_int_with_default ("/apps/procman/current_tab", 1);
 	pd->config.pane_pos = gconf_client_get_int_with_default 
 		("/apps/procman/pane_pos", 300);
 	pd->config.bg_color.red = gconf_client_get_int_with_default
 		("/apps/procman/bg_red", 0);
+	gconf_client_notify_add (client, "/apps/procman/bg_red", color_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.bg_color.green = gconf_client_get_int_with_default
 		("/apps/procman/bg_green", 0);
+	gconf_client_notify_add (client, "/apps/procman/bg_green", color_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.bg_color.blue= gconf_client_get_int_with_default
 		("/apps/procman/bg_blue", 0);
+	gconf_client_notify_add (client, "/apps/procman/bg_blue", color_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.frame_color.red = gconf_client_get_int_with_default
 		("/apps/procman/frame_red", 20409);
+	gconf_client_notify_add (client, "/apps/procman/frame_red", color_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.frame_color.green = gconf_client_get_int_with_default
 		("/apps/procman/frame_green",32271);
+	gconf_client_notify_add (client, "/apps/procman/frame_green", color_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.frame_color.blue = gconf_client_get_int_with_default
 		("/apps/procman/frame_blue", 17781);
+	gconf_client_notify_add (client, "/apps/procman/frame_blue", color_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.cpu_color.red = gconf_client_get_int_with_default
 		("/apps/procman/cpu_red", 65535);
+	gconf_client_notify_add (client, "/apps/procman/cpu_red", color_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.cpu_color.green = gconf_client_get_int_with_default
 		("/apps/procman/cpu_green", 591);
+	gconf_client_notify_add (client, "/apps/procman/cpu_green", color_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.cpu_color.blue = gconf_client_get_int_with_default
 		("/apps/procman/cpu_blue", 0);
+	gconf_client_notify_add (client, "/apps/procman/cpu_blue", color_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.mem_color.red = gconf_client_get_int_with_default
 		("/apps/procman/mem_red", 65535);
+	gconf_client_notify_add (client, "/apps/procman/mem_red", color_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.mem_color.green = gconf_client_get_int_with_default
 		("/apps/procman/mem_green", 591);
+	gconf_client_notify_add (client, "/apps/procman/mem_green", color_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.mem_color.blue = gconf_client_get_int_with_default
 		("/apps/procman/mem_blue", 0);
+	gconf_client_notify_add (client, "/apps/procman/mem_blue", color_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.swap_color.red = gconf_client_get_int_with_default
 		("/apps/procman/swap_red", 1363);
+	gconf_client_notify_add (client, "/apps/procman/swap_red", color_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.swap_color.green = gconf_client_get_int_with_default
 		("/apps/procman/swap_green", 52130);
+	gconf_client_notify_add (client, "/apps/procman/swap_green", color_changed_cb,
+				 pd, NULL, NULL);
 	pd->config.swap_color.blue = gconf_client_get_int_with_default
 		("/apps/procman/swap_blue", 18595);
+	gconf_client_notify_add (client, "/apps/procman/swap_blue", color_changed_cb,
+				 pd, NULL, NULL);
 		
 	get_blacklist (pd, client);
 
@@ -271,7 +396,6 @@ procman_data_new (void)
 		pd->config.show_more_info = FALSE;
 		pd->config.show_tree = FALSE;
 		pd->config.show_kill_warning = TRUE;
-		pd->config.show_pretty_names = FALSE;
 		pd->config.show_threads = FALSE;
 		pd->config.current_tab = 0;
 	}	
@@ -427,39 +551,10 @@ procman_save_config (ProcData *data)
 	
 	gconf_client_set_int (client, "/apps/procman/width", data->config.width, NULL);
 	gconf_client_set_int (client, "/apps/procman/height", data->config.height, NULL);	
-	gconf_client_set_int (client, "/apps/procman/view_as", data->config.whose_process, NULL);
 	gconf_client_set_bool (client, "/apps/procman/more_info", data->config.show_more_info, NULL);
-	gconf_client_set_bool (client, "/apps/procman/kill_dialog", data->config.show_kill_warning, NULL);
-	gconf_client_set_bool (client, "/apps/procman/hide_message", data->config.show_hide_message, NULL);
-	gconf_client_set_bool (client, "/apps/procman/show_tree", data->config.show_tree, NULL);
-	gconf_client_set_bool (client, "/apps/procman/delay_load", data->config.delay_load, NULL);
-	gconf_client_set_bool (client, "/apps/procman/load_desktop_files", 
-			       data->config.load_desktop_files, NULL);
-	gconf_client_set_bool (client, "/apps/procman/show_app_names", 
-			       data->config.show_pretty_names, NULL);
-	gconf_client_set_bool (client, "/apps/procman/show_threads", data->config.show_threads, NULL);
-	gconf_client_set_int (client, "/apps/procman/update_interval", data->config.update_interval, NULL);
-	gconf_client_set_int (client, "/apps/procman/graph_update_interval", 
-			      data->config.graph_update_interval, NULL);
-	gconf_client_set_int (client, "/apps/procman/disks_interval", 
-			      data->config.disks_update_interval, NULL);
 	gconf_client_set_int (client, "/apps/procman/current_tab", data->config.current_tab, NULL);
 	gconf_client_set_int (client, "/apps/procman/pane_pos", data->config.pane_pos, NULL);
-	gconf_client_set_int (client, "/apps/procman/bg_red", data->config.bg_color.red, NULL);
-	gconf_client_set_int (client, "/apps/procman/bg_green", data->config.bg_color.green, NULL);
-	gconf_client_set_int (client, "/apps/procman/bg_blue", data->config.bg_color.blue, NULL);
-	gconf_client_set_int (client, "/apps/procman/frame_red", data->config.frame_color.red, NULL);
-	gconf_client_set_int (client, "/apps/procman/frame_green", data->config.frame_color.green, NULL);
-	gconf_client_set_int (client, "/apps/procman/frame_blue", data->config.frame_color.blue, NULL);
-	gconf_client_set_int (client, "/apps/procman/cpu_red", data->config.cpu_color.red, NULL);
-	gconf_client_set_int (client, "/apps/procman/cpu_green", data->config.cpu_color.green, NULL);
-	gconf_client_set_int (client, "/apps/procman/cpu_blue", data->config.cpu_color.blue, NULL);
-	gconf_client_set_int (client, "/apps/procman/mem_red", data->config.mem_color.red, NULL);
-	gconf_client_set_int (client, "/apps/procman/mem_green", data->config.mem_color.green, NULL);
-	gconf_client_set_int (client, "/apps/procman/mem_blue", data->config.mem_color.blue, NULL);
-	gconf_client_set_int (client, "/apps/procman/swap_red", data->config.swap_color.red, NULL);
-	gconf_client_set_int (client, "/apps/procman/swap_green", data->config.swap_color.green, NULL);
-	gconf_client_set_int (client, "/apps/procman/swap_blue", data->config.swap_color.blue, NULL);
+	
 	save_blacklist (data, client);
 
 	gconf_client_suggest_sync (client, NULL);
@@ -493,10 +588,7 @@ main (int argc, char *argv[])
 	gconf_init (argc, argv, NULL);
 			    
 	client = gconf_client_get_default ();
-	/*gconf_client_add_dir(client,
-                       "/apps/procman",
-                       GCONF_CLIENT_PRELOAD_NONE,
-                       NULL);*/
+	gconf_client_add_dir(client, "/apps/procman", GCONF_CLIENT_PRELOAD_NONE, NULL);
         		    
 	/*g_value_init (&value, G_TYPE_POINTER);
   	g_object_get_property (G_OBJECT(procman),
@@ -527,8 +619,7 @@ main (int argc, char *argv[])
 	g_print ("desktop files %f \n", g_timer_elapsed (timer, NULL));
 	g_timer_start (timer);
 	proctable_update_all (procdata);
-	/* update in idle to satisfy libwnck */
-	//gtk_idle_add_priority (200, initial_update_tree, procdata); 
+		 
 	g_timer_stop (timer);
 	g_print ("table updated %f \n", g_timer_elapsed (timer, NULL));
 	g_timer_destroy (timer);
