@@ -47,7 +47,9 @@ void
 cb_preferences_activate               (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-
+	ProcData *procdata = user_data;
+	
+	procdialog_create_preferences_dialog (procdata);
 }
 
 void

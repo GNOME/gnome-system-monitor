@@ -27,6 +27,7 @@
 #include "procdialogs.h"
 #include "favorites.h"
 #include "proctable.h"
+#include "callbacks.h"
 
 GtkWidget *renice_spinbutton;
 GtkWidget *renice_dialog;
@@ -278,6 +279,7 @@ procdialog_create_renice_dialog (ProcData *data)
 	GtkWidget *dialog;
 	GtkWidget *dialog_vbox;
 	GtkWidget *vbox;
+	GtkWidget *alignment;
  	GtkWidget *hbox;
   	GtkWidget *label;
   	GtkObject *adjustment;
@@ -285,9 +287,10 @@ procdialog_create_renice_dialog (ProcData *data)
   	GtkWidget *cancelbutton;
   	GtkWidget *dialog_action_area;
   	gchar *text = 
-  	      _("The nice value refers to the priority of a "
-  	      "process. A lower nice value corresponds to a "
-  	      "higher priority");
+  	      _("The nice value refers to the \n"
+  	        "priority of a process. A lower \n"
+  	        "nice value corresponds to a \n" 
+  	        "higher priority.");
 	
 	if (!procdata->selected_node)
 		return;
@@ -306,32 +309,33 @@ procdialog_create_renice_dialog (ProcData *data)
     	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
     	gtk_box_pack_start (GTK_BOX (dialog_vbox), vbox, TRUE, TRUE, 0);
     	
-    	label = gtk_label_new (_(text));
+    	label = gtk_label_new (text);
+    	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
     	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
     	gtk_widget_show (label);
-	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	
-	/*alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-	gtk_box_pack_start (GTK_BOX (vbox), alignment, FALSE, FALSE, 0);*/
+    	
+    	alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+    	gtk_box_pack_start (GTK_BOX (vbox), alignment, FALSE, FALSE, 0);
 	
 	hbox = gtk_hbox_new (FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-	/*gtk_container_add (GTK_CONTAINER (alignment), hbox);*/
-	
-	label = gtk_label_new (_("Nice Value :"));
-	gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
+	/*gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);*/
+	gtk_container_add (GTK_CONTAINER (alignment), hbox);
 	
 	adjustment = gtk_adjustment_new (info->nice, -20, 20, 1, 10, 10);
 	renice_spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
-	gtk_box_pack_start (GTK_BOX (hbox), renice_spinbutton, TRUE, FALSE, 0);
-			
+	gtk_box_pack_end (GTK_BOX (hbox), renice_spinbutton, FALSE, FALSE, 0);
+	
+	label = gtk_label_new (_("Nice Value :"));
+	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 1);
+	gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+				
 	dialog_action_area = GNOME_DIALOG (dialog)->action_area;
 	gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area), GTK_BUTTONBOX_END);
 	gtk_button_box_set_spacing (GTK_BUTTON_BOX (dialog_action_area), 8);
 	
 	gnome_dialog_append_button (GNOME_DIALOG (dialog), _("Renice"));
   	renicebutton = GTK_WIDGET (g_list_last (GNOME_DIALOG (dialog)->buttons)->data);
-  	gnome_dialog_append_button (GNOME_DIALOG (dialog), _("Cancel"));
+  	gnome_dialog_append_button (GNOME_DIALOG (dialog), GNOME_STOCK_BUTTON_CANCEL);
   	cancelbutton = GTK_WIDGET (g_list_last (GNOME_DIALOG (dialog)->buttons)->data);
   	
   	GTK_WIDGET_SET_FLAGS (cancelbutton, GTK_CAN_DEFAULT);
@@ -346,3 +350,136 @@ procdialog_create_renice_dialog (ProcData *data)
     	
 }
 
+static void
+preferences_close_button_pressed (GnomeDialog *dialog, gint button, gpointer data)
+{
+	gnome_dialog_close (dialog);
+}
+
+static void
+show_tree_toggled (GtkToggleButton *button, gpointer data)
+{
+	ProcData *procdata = data;
+	gboolean toggled;
+	
+	toggled = gtk_toggle_button_get_active (button);
+	
+	procdata->config.show_tree = toggled;
+
+	proctable_clear_tree (procdata);
+	proctable_update_all (procdata);
+}
+
+static void
+show_commands_toggled (GtkToggleButton *button, gpointer data)
+{
+	ProcData *procdata = data;
+	gboolean toggled;
+	
+	toggled = gtk_toggle_button_get_active (button);
+	
+	procdata->config.show_pretty_names = toggled;
+
+	proctable_clear_tree (procdata);
+	proctable_update_all (procdata);
+	
+}
+
+static void
+show_icons_toggled (GtkToggleButton *button, gpointer data)
+{
+	ProcData *procdata = data;
+	gboolean toggled;
+	
+	toggled = gtk_toggle_button_get_active (button);
+	
+	procdata->config.show_icons = !toggled;
+	
+}
+
+static void
+update_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
+{
+	ProcData *procdata = data;
+	gfloat value;
+	
+	value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (widget));
+	procdata->config.update_interval = (gint) value * 1000;
+	
+	gtk_timeout_remove (procdata->timeout);
+	procdata->timeout = gtk_timeout_add (procdata->config.update_interval, cb_timeout,
+					     procdata);
+	
+}
+
+void
+procdialog_create_preferences_dialog (ProcData *procdata)
+{
+	GtkWidget *dialog;
+	GtkWidget *main_vbox;
+	GtkWidget *frame;
+	GtkWidget *vbox;
+	GtkWidget *hbox;
+	GtkWidget *label;
+	GtkAdjustment *adjustment;
+	GtkWidget *spin_button;
+	GtkWidget *check_button;
+	
+	dialog = gnome_dialog_new (_("Preferneces"), GNOME_STOCK_BUTTON_CLOSE, NULL);
+	
+	main_vbox = GNOME_DIALOG (dialog)->vbox;
+
+	frame = gtk_frame_new (_("General"));
+	gtk_frame_set_label_align (GTK_FRAME (frame), 0.5, 0.5);
+	gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, GNOME_PAD_SMALL);
+	
+	vbox = gtk_vbox_new (FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (frame), vbox);
+	
+	hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+	
+	label = gtk_label_new (_("Update Speed ( seconds ) :"));
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+	
+	adjustment = (GtkAdjustment *) gtk_adjustment_new(procdata->config.update_interval / 1000, 0.25, 100.0, 0.25, 1.0, 1.0);
+	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
+	gtk_signal_connect (GTK_OBJECT (spin_button), "focus_out_event",
+			    GTK_SIGNAL_FUNC (update_update_interval), procdata);
+	gtk_box_pack_start (GTK_BOX (hbox), spin_button, FALSE, FALSE, 0);
+	
+	check_button = gtk_check_button_new_with_label (_("Show Process Dependencies"));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
+				    procdata->config.show_tree);
+	gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
+			    GTK_SIGNAL_FUNC (show_tree_toggled), procdata);
+	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
+	
+	frame = gtk_frame_new (_("Advanced"));
+	gtk_frame_set_label_align (GTK_FRAME (frame), 0.5, 0.5);
+	gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, GNOME_PAD_SMALL);
+	
+	vbox = gtk_vbox_new (FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (frame), vbox);
+	
+	check_button = gtk_check_button_new_with_label (_("Show Application Names"));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
+				    procdata->config.show_pretty_names);
+	gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
+			    GTK_SIGNAL_FUNC (show_commands_toggled), procdata);
+	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
+	
+	check_button = gtk_check_button_new_with_label (_("Never Show Icons or Application Names \n ( faster startup time )"));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
+				    !procdata->config.show_icons);
+	gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
+			    GTK_SIGNAL_FUNC (show_icons_toggled), procdata);
+	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
+	
+	gtk_signal_connect (GTK_OBJECT (dialog), "clicked",
+			    GTK_SIGNAL_FUNC (preferences_close_button_pressed), NULL);
+
+	gtk_widget_show_all (dialog);
+}
