@@ -650,6 +650,7 @@ create_proc_field_page (ProcData *procdata)
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                   	GTK_POLICY_AUTOMATIC,
                                   	GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled), GTK_SHADOW_IN);
         gtk_box_pack_start (GTK_BOX (vbox), scrolled, TRUE, TRUE, 0);
         
         model = gtk_list_store_new (3, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_POINTER);	
