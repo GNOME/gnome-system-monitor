@@ -145,7 +145,7 @@ initial_update_tree (gpointer data)
 }
 
 static gint 
-get_gconf_int_with_default (gchar *key, gint def)
+gconf_client_get_int_with_default (gchar *key, gint def)
 {
 	GConfValue *value = NULL;
 	gint retval;
@@ -162,7 +162,7 @@ get_gconf_int_with_default (gchar *key, gint def)
 }
 
 static gboolean
-get_gconf_bool_with_default (gchar *key, gboolean def)
+gconf_client_get_bool_with_default (gchar *key, gboolean def)
 {
 	GConfValue *value = NULL;
 	gboolean retval;
@@ -199,63 +199,63 @@ procman_data_new (void)
 	pd->mem_graph = NULL;
 	pd->disk_timeout = -1;
 	
-	pd->config.width = get_gconf_int_with_default ("/apps/procman/width", 440);
-	pd->config.height = get_gconf_int_with_default ("/apps/procman/height", 495);
-	pd->config.show_more_info = get_gconf_bool_with_default 
+	pd->config.width = gconf_client_get_int_with_default ("/apps/procman/width", 440);
+	pd->config.height = gconf_client_get_int_with_default ("/apps/procman/height", 495);
+	pd->config.show_more_info = gconf_client_get_bool_with_default 
 		("/apps/procman/more_info", FALSE);
-	pd->config.show_tree = get_gconf_bool_with_default 
+	pd->config.show_tree = gconf_client_get_bool_with_default 
 		("/apps/procman/show_tree", TRUE);
-	pd->config.show_kill_warning = get_gconf_bool_with_default 
+	pd->config.show_kill_warning = gconf_client_get_bool_with_default 
 		("/apps/procman/kill_dialog", TRUE);
-	pd->config.show_hide_message = get_gconf_bool_with_default 
+	pd->config.show_hide_message = gconf_client_get_bool_with_default 
 		("/apps/procman/hide_message", TRUE);
-	pd->config.delay_load = get_gconf_bool_with_default 
+	pd->config.delay_load = gconf_client_get_bool_with_default 
 		("/apps/procman/delay_load", TRUE);
-	pd->config.load_desktop_files = get_gconf_bool_with_default 
+	pd->config.load_desktop_files = gconf_client_get_bool_with_default 
 		("/apps/procman/load_desktop_files", TRUE);
-	pd->config.show_pretty_names = get_gconf_bool_with_default 
+	pd->config.show_pretty_names = gconf_client_get_bool_with_default 
 		("/apps/procman/show_app_names", FALSE);
-	pd->config.show_threads = get_gconf_bool_with_default 
+	pd->config.show_threads = gconf_client_get_bool_with_default 
 		("/apps/procman/show_threads", FALSE);
-	pd->config.update_interval = get_gconf_int_with_default 
+	pd->config.update_interval = gconf_client_get_int_with_default 
 		("/apps/procman/update_interval", 3000);
-	pd->config.graph_update_interval = get_gconf_int_with_default 
+	pd->config.graph_update_interval = gconf_client_get_int_with_default 
 		("/apps/procman/graph_update_interval", 1000);
-	pd->config.disks_update_interval = get_gconf_int_with_default 
+	pd->config.disks_update_interval = gconf_client_get_int_with_default 
 		("/apps/procman/disks_interval", 5000);
-	pd->config.whose_process = get_gconf_int_with_default ("/apps/procman/view_as", 1);
-	pd->config.current_tab = get_gconf_int_with_default ("/apps/procman/current_tab", 1);
-	pd->config.pane_pos = get_gconf_int_with_default 
+	pd->config.whose_process = gconf_client_get_int_with_default ("/apps/procman/view_as", 1);
+	pd->config.current_tab = gconf_client_get_int_with_default ("/apps/procman/current_tab", 1);
+	pd->config.pane_pos = gconf_client_get_int_with_default 
 		("/apps/procman/pane_pos", 300);
-	pd->config.bg_color.red = get_gconf_int_with_default
+	pd->config.bg_color.red = gconf_client_get_int_with_default
 		("/apps/procman/bg_red", 0);
-	pd->config.bg_color.green = get_gconf_int_with_default
+	pd->config.bg_color.green = gconf_client_get_int_with_default
 		("/apps/procman/bg_green", 0);
-	pd->config.bg_color.blue= get_gconf_int_with_default
+	pd->config.bg_color.blue= gconf_client_get_int_with_default
 		("/apps/procman/bg_blue", 0);
-	pd->config.frame_color.red = get_gconf_int_with_default
+	pd->config.frame_color.red = gconf_client_get_int_with_default
 		("/apps/procman/frame_red", 20409);
-	pd->config.frame_color.green = get_gconf_int_with_default
+	pd->config.frame_color.green = gconf_client_get_int_with_default
 		("/apps/procman/frame_green",32271);
-	pd->config.frame_color.blue = get_gconf_int_with_default
+	pd->config.frame_color.blue = gconf_client_get_int_with_default
 		("/apps/procman/frame_blue", 17781);
-	pd->config.cpu_color.red = get_gconf_int_with_default
+	pd->config.cpu_color.red = gconf_client_get_int_with_default
 		("/apps/procman/cpu_red", 65535);
-	pd->config.cpu_color.green = get_gconf_int_with_default
+	pd->config.cpu_color.green = gconf_client_get_int_with_default
 		("/apps/procman/cpu_green", 591);
-	pd->config.cpu_color.blue = get_gconf_int_with_default
+	pd->config.cpu_color.blue = gconf_client_get_int_with_default
 		("/apps/procman/cpu_blue", 0);
-	pd->config.mem_color.red = get_gconf_int_with_default
+	pd->config.mem_color.red = gconf_client_get_int_with_default
 		("/apps/procman/mem_red", 65535);
-	pd->config.mem_color.green = get_gconf_int_with_default
+	pd->config.mem_color.green = gconf_client_get_int_with_default
 		("/apps/procman/mem_green", 591);
-	pd->config.mem_color.blue = get_gconf_int_with_default
+	pd->config.mem_color.blue = gconf_client_get_int_with_default
 		("/apps/procman/mem_blue", 0);
-	pd->config.swap_color.red = get_gconf_int_with_default
+	pd->config.swap_color.red = gconf_client_get_int_with_default
 		("/apps/procman/swap_red", 1363);
-	pd->config.swap_color.green = get_gconf_int_with_default
+	pd->config.swap_color.green = gconf_client_get_int_with_default
 		("/apps/procman/swap_green", 52130);
-	pd->config.swap_color.blue = get_gconf_int_with_default
+	pd->config.swap_color.blue = gconf_client_get_int_with_default
 		("/apps/procman/swap_blue", 18595);
 		
 	pd->config.whose_process = 0;
@@ -309,11 +309,11 @@ procman_get_tree_state (GtkWidget *tree, gchar *prefix)
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
 	
 	key = g_strdup_printf ("%ssort_col", prefix);
-	sort_col = get_gconf_int_with_default (key, -1);
+	sort_col = gconf_client_get_int_with_default (key, -1);
 	g_free (key);
 	
 	key = g_strdup_printf ("%ssort_order", prefix);
-	order = get_gconf_int_with_default (key, -1);
+	order = gconf_client_get_int_with_default (key, -1);
 	g_free (key);
 	
 	if (sort_col != -1)
@@ -327,11 +327,11 @@ procman_get_tree_state (GtkWidget *tree, gchar *prefix)
 		gboolean visible;
 		
 		key = g_strdup_printf ("%scol_%d_width", prefix, i);
-		width = get_gconf_int_with_default (key, -1);
+		width = gconf_client_get_int_with_default (key, -1);
 		g_free (key);
 		
 		key = g_strdup_printf ("%scol_%d_visible", prefix, i);
-		visible = get_gconf_bool_with_default (key, FALSE);
+		visible = gconf_client_get_bool_with_default (key, FALSE);
 		g_free (key);
 		
 		if (width != -1) {
@@ -523,7 +523,7 @@ main (int argc, char *argv[])
 	g_timer_stop (timer);
 	g_print ("table updated %f \n", g_timer_elapsed (timer, NULL));
 	g_timer_destroy (timer);
-	//gtk_tree_view_expand_all (GTK_TREE_VIEW (procdata->tree));
+	
 	if (!app)
 		return 0;  
 			

@@ -125,8 +125,6 @@ void
 update_memmaps_dialog (ProcData *procdata)
 {
 
-	ProcInfo *info;
-	
 	if (!memmapsdialog)
 		return;
 		
@@ -141,23 +139,20 @@ update_memmaps_dialog (ProcData *procdata)
 	get_memmaps_list (procdata, procdata->selected_process);
 }
 
-static gboolean
-close_memmaps_dialog (GnomeDialog *dialog, gpointer data)
+static void
+close_memmaps_dialog (GtkDialog *dialog, gint id, gpointer data)
 {
 	ProcData *procdata = data;
 	
-	/*save_memmaps_tree_state (procdata);*/
+	procman_save_tree_state (tree, "/apps/procman/memmapstree/");
+	
 	clear_memmaps (procdata);
+	
+	gtk_widget_destroy (memmapsdialog);
 	memmapsdialog = NULL;
 	/*gtk_timeout_remove (timer);*/
 	
-	return FALSE;
-}
-
-static void
-close_button_pressed (GtkButton *button, gpointer data)
-{
-	gnome_dialog_close (GNOME_DIALOG (memmapsdialog));
+	return ;
 }
 
 static GtkWidget *
@@ -198,9 +193,12 @@ create_memmaps_tree (ProcData *procdata)
 	
 	gtk_container_add (GTK_CONTAINER (scrolled), tree);
 	
-	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model),
+	/*gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model),
 					      0,
-					      GTK_SORT_ASCENDING);
+					      GTK_SORT_ASCENDING);*/
+					      
+	procman_get_tree_state (tree, "/apps/procman/memmapstree/");
+	
 	return scrolled;
 		
 }
@@ -223,8 +221,6 @@ create_memmaps_dialog (ProcData *procdata)
 	GtkWidget *alignment;
 	GtkWidget *cmd_hbox;
 	GtkWidget *label;
-	GtkWidget *dialog_action_area;
-	GtkWidget *closebutton;
 	GtkWidget *scrolled;
 
 	if (memmapsdialog) {
@@ -233,11 +229,14 @@ create_memmaps_dialog (ProcData *procdata)
 		return;
 	}
 
-	memmapsdialog = gnome_dialog_new (_("Memory Maps"), NULL);
+	memmapsdialog = gtk_dialog_new_with_buttons (_("Memory Maps"), NULL,
+						     GTK_DIALOG_DESTROY_WITH_PARENT,
+						     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+						     NULL);
 	gtk_window_set_policy (GTK_WINDOW (memmapsdialog), TRUE, TRUE, FALSE);
 	gtk_widget_set_usize (memmapsdialog, 575, 400);
 	
-	dialog_vbox = GNOME_DIALOG (memmapsdialog)->vbox;
+	dialog_vbox = GTK_DIALOG (memmapsdialog)->vbox;
 	
 	alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 	gtk_box_pack_start (GTK_BOX (dialog_vbox), alignment, FALSE, FALSE, 0);
@@ -264,10 +263,8 @@ create_memmaps_dialog (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (dialog_vbox), scrolled, TRUE, TRUE, 0);
 	gtk_widget_show_all (scrolled);
 		
-	/*gtk_signal_connect (GTK_OBJECT (closebutton), "clicked",
-			    GTK_SIGNAL_FUNC (close_button_pressed), procdata);*/
-	gtk_signal_connect (GTK_OBJECT (memmapsdialog), "close",
-			    GTK_SIGNAL_FUNC (close_memmaps_dialog), procdata);
+	g_signal_connect (G_OBJECT (memmapsdialog), "response",
+			  G_CALLBACK (close_memmaps_dialog), procdata);
 	
 	gtk_widget_show (memmapsdialog);
 #if 0
