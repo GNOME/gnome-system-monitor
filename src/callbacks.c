@@ -21,9 +21,6 @@
 #  include <config.h>
 #endif
 
-#if 0
-#include <gnome.h>
-#endif
 #include <glibtop/xmalloc.h>
 #include <glibtop/mountlist.h>
 #include <glibtop/fsusage.h>
@@ -39,14 +36,6 @@
 #include "favorites.h"
 #include "load-graph.h"
 
-#if 0
-void
-cb_properties_activate                (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-
-}
-#endif
 void
 cb_preferences_activate               (GtkMenuItem     *menuitem,
                                         gpointer         user_data)

@@ -187,17 +187,10 @@ create_proc_view (ProcData *procdata)
 	GtkWidget *search_entry;
 	GtkWidget *optionmenu1;
 	GtkWidget *optionmenu1_menu;
-	GtkWidget *glade_menuitem;
 	GtkWidget *scrolled;
 	GtkWidget *infobox;
 	GtkWidget *label;
 	GtkWidget *hbox2;
-	GtkWidget *lbl_hide;
-        GtkWidget *lbl_kill;
-        GtkWidget *lbl_renice;
-	GtkWidget *lbl_mem_maps;
-	GtkWidget *sep;
-	GtkWidget *menuitem;
 	GTimer *timer = g_timer_new ();
 	
 	vbox1 = gtk_vbox_new (FALSE, 0);
@@ -301,11 +294,11 @@ create_sys_view (ProcData *procdata)
 	GtkListStore *model;
 	GtkTreeViewColumn *col;
 	GtkCellRenderer *cell;
-	gchar *titles[5] = {"Disk Name",
-			    "Used Space",
-			    "Free Space",
-			    "Total Space",
-			    "Mount Directory"
+	gchar *titles[5] = {_("Disk Name"),
+			    _("Used Space"),
+			    _("Free Space"),
+			    _("Total Space"),
+			    _("Mount Directory")
 			    };
 	LoadGraph *cpu_graph, *mem_graph;
 	gint i;
@@ -317,12 +310,12 @@ create_sys_view (ProcData *procdata)
 	vbox = gtk_vbox_new (FALSE, 0);
 	gtk_paned_add1 (GTK_PANED (vpane), vbox);
 	
-	cpu_frame = gtk_frame_new ("% CPU Usage History");
+	cpu_frame = gtk_frame_new (_("% CPU Usage History"));
 	gtk_widget_show (cpu_frame);
 	gtk_container_set_border_width (GTK_CONTAINER (cpu_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), cpu_frame, TRUE, TRUE, 0);
 	
-	mem_frame = gtk_frame_new ("% Memory / Swap Usage History");
+	mem_frame = gtk_frame_new (_("% Memory / Swap Usage History"));
 	gtk_container_set_border_width (GTK_CONTAINER (mem_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), mem_frame, TRUE, TRUE, 0);
 	
@@ -343,7 +336,7 @@ create_sys_view (ProcData *procdata)
 			    GTK_SIGNAL_FUNC (cb_cpu_color_changed), procdata);
 	gtk_box_pack_start (GTK_BOX (hbox), color_picker, FALSE, FALSE, 0);
 	
-	label = gtk_label_new ("CPU Used :");
+	label = gtk_label_new (_("CPU Used :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 	
@@ -374,7 +367,7 @@ create_sys_view (ProcData *procdata)
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, 0, 0, 0, 0);
 
 	
-	label = gtk_label_new ("Memory Used / Total :");
+	label = gtk_label_new (_("Memory Used / Total :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
@@ -394,7 +387,7 @@ create_sys_view (ProcData *procdata)
 			    GTK_SIGNAL_FUNC (cb_swap_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, 0, 0, 0, 0);
 			  
-	label = gtk_label_new ("Swap Used / Total :");
+	label = gtk_label_new (_("Swap Used / Total :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
@@ -408,7 +401,7 @@ create_sys_view (ProcData *procdata)
 	procdata->mem_graph = mem_graph;
 	gtk_widget_show_all (vbox);
 				
-	disk_frame = gtk_frame_new ("Disks");
+	disk_frame = gtk_frame_new (_("Disks"));
 	gtk_container_set_border_width (GTK_CONTAINER (disk_frame), GNOME_PAD_SMALL);
 	gtk_paned_add2 (GTK_PANED (vpane), disk_frame);
 	
@@ -463,9 +456,7 @@ create_main_window (ProcData *procdata)
 
 	g_timer_start (timer);
 	app = gnome_app_new ("procman", _("Procman System Monitor"));
-	/*accel = gtk_accel_group_new ();
-	gtk_accel_group_attach (accel, GTK_OBJECT (app));
-	gtk_accel_group_unref (accel);*/
+	
 	g_timer_stop (timer);
 	g_print ("app new %f \n", g_timer_elapsed (timer, NULL));
 
@@ -484,7 +475,7 @@ create_main_window (ProcData *procdata)
 
 	g_timer_start (timer);
 	vbox1 = create_proc_view (procdata);
-	tab_label1 = gtk_label_new (_("Process Listing"));
+	tab_label1 = gtk_label_new_with_mnemonic (_("Process _Listing"));
 	gtk_widget_show (tab_label1);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox1, tab_label1);
 	g_timer_stop (timer);
@@ -493,7 +484,7 @@ create_main_window (ProcData *procdata)
 	g_timer_start (timer);
 	sys_box = create_sys_view (procdata);
 	gtk_widget_show (sys_box);
-	tab_label2 = gtk_label_new ("System Monitor");
+	tab_label2 = gtk_label_new_with_mnemonic (_("System _Monitor"));
 	gtk_widget_show (tab_label2);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label2);
 	g_timer_stop (timer);
@@ -513,16 +504,7 @@ create_main_window (ProcData *procdata)
 	g_timer_stop (timer);
 	g_print ("menu hints %f \n", g_timer_elapsed (timer, NULL));
 	g_timer_destroy (timer);
-#if 0
-        gtk_signal_connect (GTK_OBJECT (procdata->tree), "cursor_activated",
-			    GTK_SIGNAL_FUNC (cb_table_selected), procdata);
-	gtk_signal_connect (GTK_OBJECT (procdata->tree), "double_click",
-			    GTK_SIGNAL_FUNC (cb_double_click), procdata);
-        gtk_signal_connect (GTK_OBJECT (procdata->tree), "right_click",
-                            GTK_SIGNAL_FUNC (cb_right_click), procdata);
-	gtk_signal_connect (GTK_OBJECT (procdata->tree), "key_press",
-			    GTK_SIGNAL_FUNC (cb_tree_key_press), procdata);
-#endif			    
+		    
 	gtk_signal_connect (GTK_OBJECT (notebook), "switch-page",
 			    GTK_SIGNAL_FUNC (cb_switch_page), procdata);
 
@@ -553,6 +535,7 @@ create_main_window (ProcData *procdata)
 GtkWidget*
 create_simple_view_dialog (ProcData *procdata)
 {
+#if 0
 	GtkWidget *app = NULL;
 	GtkWidget *main_vbox;
 	GtkWidget *scrolled;
@@ -562,7 +545,7 @@ create_simple_view_dialog (ProcData *procdata)
 	GtkWidget *button;
 	GtkWidget *frame;
 	guint key;
-#if 0	
+	
 	app = gnome_dialog_new (_("Application Manager"), GNOME_STOCK_BUTTON_CANCEL, NULL);
 	gtk_window_set_policy (GTK_WINDOW (app), FALSE, TRUE, FALSE);
 	gtk_window_set_default_size (GTK_WINDOW (app), 350, 425);

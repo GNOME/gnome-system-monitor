@@ -239,10 +239,7 @@ get_process_name (ProcData *procdata, ProcInfo *info, gchar *cmd, gchar *args)
 	gchar *command = NULL;
 	gint i, n = 0, len, newlen;
 	gboolean done = FALSE;
-#if 0	
-	if (procdata->config.show_pretty_names && procdata->config.load_desktop_files)
-		name = pretty_table_get_name (procdata->pretty_table, cmd);
-#endif							  
+						  
 	/* strip the absolute path from the arguments */	
 	if (args)
 	{
@@ -397,18 +394,25 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 ** pertaining to the child processes and then readd them later
 */
 static gboolean
-remove_children_from_tree (GtkTreeModel *model, GtkTreePath *node, GtkTreeIter *iter,
-			   gpointer data)
+remove_children_from_tree (ProcData *procdata, GtkTreeModel *model,
+			   GtkTreeIter *parent)
 {
-#if 0
-	ProcData *procdata = data;
-	ProcInfo *info = e_tree_memory_node_get_data (procdata->memory, node);
-
-	if (!info)
-	{
-		return TRUE;
+	GtkTreeIter *child;
+	ProcInfo *child_info;
+	g_print ("remove child from tree \n");
+	if (gtk_tree_model_iter_children (model, child, parent)) {
+		remove_children_from_tree (procdata, model, child);
 	}
-
+	else {
+		g_print ("child \n");
+		gtk_tree_model_get (model, child, COL_POINTER, &child_info, -1);
+		if (child_info) {
+			g_print ("name %s\n", child_info->name);
+			procdata->info = g_list_remove (procdata->info, child_info);
+			proctable_free_info (child_info);
+		}
+	}	
+#if 0
 	if (info->node == procdata->selected_node)
 	{
 		procdata->selected_node = NULL;
@@ -428,7 +432,8 @@ static void
 remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 {
 	GtkTreeModel *model;
-	GtkTreeIter *parent_node, *child_node;
+	GtkTreeIter *child_node;
+	gint i = 0;
 	
 	/*if (!info->node)
 		return;*/
@@ -436,31 +441,15 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 	
-	parent_node = gtk_tree_iter_copy (&info->node);
-	while (gtk_tree_model_iter_children (model, child_node, parent_node)) {
-		ProcInfo *child_info = NULL;
-		
-		g_print ("child \n");
-		gtk_tree_model_get (model, child_node, COL_POINTER, &child_info, -1);
-		if (child_info) {
-			g_print ("name %s\n", child_info->name);
-			procdata->info = g_list_remove (procdata->info, child_info);
-			proctable_free_info (child_info);
-		}
-		parent_node = gtk_tree_iter_copy (child_node);
-	}
-	
+	/*while (gtk_tree_model_iter_nth_child (model, child_node, &info->node, i)) {
+		remove_children_from_tree (procdata, model, child_node);
+		i++;
+	}*/	
 				
 	gtk_tree_store_remove (GTK_TREE_STORE (model), &info->node);
 	info->visible = FALSE;	
 	
 	#if 0
-	/* Remove any children from the tree. They will then be readded later
-	** in refresh_list
-	*/
-	e_tree_model_node_traverse (procdata->model, info->node, remove_children_from_tree,
-				    procdata);
-	
 	if (info->node == procdata->selected_node)
 	{
 		procdata->selected_node = NULL;
@@ -470,8 +459,6 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 					  -1, NULL); 
 	}
 	
-	e_tree_memory_node_remove (procdata->memory, info->node);
-	info->node = NULL;
 	#endif
 }
 
@@ -695,7 +682,6 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 	ProcData *procdata = data;
 	GList *list = procdata->info;
 	gint i = 0;
-	/*ETreePath root_node;*/
 	
 	while (i < n)
 	{
@@ -830,10 +816,6 @@ proctable_clear_tree (ProcData *data)
 	proctable_free_table (procdata);
 	g_print ("freed \n");
 #if 0	
-	rootnode = e_tree_model_get_root (procdata->model);
-	
-	proctable_free_table (procdata);
-	
 	gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), "cursor_activated", -1, NULL);
 	procdata->selected_node = NULL;
 	procdata->selected_pid = -1;

@@ -92,7 +92,7 @@ procdialog_create_hide_dialog (ProcData *data)
   	gtk_box_pack_end (GTK_BOX (hbox1), checkbutton1, FALSE, FALSE, 0);
     	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbutton1), TRUE);
 
-  	gtk_dialog_add_button (GTK_DIALOG (messagebox1), _("Hide Process"), 100);
+  	gtk_dialog_add_button (GTK_DIALOG (messagebox1), _("_Hide Process"), 100);
   	
   	g_signal_connect (G_OBJECT (checkbutton1), "toggled",
                       	  G_CALLBACK (cb_show_hide_message_toggled), procdata);
@@ -135,14 +135,18 @@ procdialog_create_kill_dialog (ProcData *data, int signal)
 	GtkWidget *dialog_vbox1;
   	GtkWidget *hbox1;
   	GtkWidget *checkbutton1;
-  	gchar *text;
+  	gchar *text, *title;
   	
   	kill_signal = signal;
   	
-  	if (signal == SIGKILL)
-  		text = _("Kill Process");
-  	else
-  		text = _("End Process");
+  	if (signal == SIGKILL) {
+  		title = _("Kill Process");
+  		text = _("_Kill Process");
+  	}
+  	else {
+  		title = _("End Process");
+  		text = _("_End Process");
+  	}
 
   	messagebox1 = gtk_message_dialog_new (NULL,
  					      GTK_DIALOG_MODAL,
@@ -150,7 +154,7 @@ procdialog_create_kill_dialog (ProcData *data, int signal)
  					      GTK_BUTTONS_CANCEL,
  					      _("Unsaved data will be lost."));
   	
-  	gtk_window_set_title (GTK_WINDOW (messagebox1), _(text));
+  	gtk_window_set_title (GTK_WINDOW (messagebox1), _(title));
   	gtk_window_set_modal (GTK_WINDOW (messagebox1), TRUE);
   	gtk_window_set_policy (GTK_WINDOW (messagebox1), FALSE, FALSE, FALSE);
   
@@ -248,7 +252,7 @@ procdialog_create_renice_dialog (ProcData *data)
 		
 	dialog = gtk_dialog_new_with_buttons (_("Change Priority"), NULL,
 				              GTK_DIALOG_DESTROY_WITH_PARENT,
-				              _("Change Priority"), 100,
+				              _("Change _Priority"), 100,
 				              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				              NULL);
   	renice_dialog = dialog;
@@ -495,7 +499,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	
 	proc_box = gtk_vbox_new (FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (proc_box), GNOME_PAD_SMALL);
-	tab_label = gtk_label_new (_("Process Listing"));
+	tab_label = gtk_label_new_with_mnemonic (_("Process _Listing"));
 	gtk_widget_show (tab_label);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), proc_box, tab_label);
 	
@@ -550,7 +554,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	
 	sys_box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width (GTK_CONTAINER (sys_box), GNOME_PAD_SMALL);
-	tab_label = gtk_label_new (_("System Monitor"));
+	tab_label = gtk_label_new_with_mnemonic (_("System _Monitor"));
 	gtk_widget_show (tab_label);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label);
 	
