@@ -21,11 +21,9 @@
 #ifndef _CALLBACKS_H_
 #define _CALLBACKS_H_
 
-#if 0
 #include <gnome.h>
-#include <gal/e-table/e-table.h>
-#endif
 #include "procman.h"
+#include <gal/e-table/e-table.h>
 
 
 
@@ -46,9 +44,8 @@ void		cb_about_activate (GtkMenuItem *menuitem, gpointer user_data);
 
 void		cb_app_exit (GtkObject *object, gpointer user_data); 
 void		cb_app_delete (GtkWidget *window, GdkEventAny *ev, gpointer data);
-#if 0
 gboolean	cb_close_simple_dialog (GnomeDialog *dialog, gpointer data);
-#endif                                        
+                                        
 void		cb_all_process_menu_clicked (GtkWidget *widget, gpointer data);	
 					 
 void		cb_my_process_menu_clicked (GtkWidget *widget, gpointer data);  
@@ -69,16 +66,13 @@ void 		popup_menu_about_process (GtkMenuItem *menuitem, gpointer data);
 void		cb_info_button_pressed (GtkButton *button, gpointer user_data);
 void		cb_search (GtkEditable *editable, gpointer data);
 
-#if 0
 void		cb_cpu_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 				      guint a, gpointer data);
 void		cb_mem_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 				      guint a, gpointer data);
 void		cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 				      guint a, gpointer data);
-#endif
-
-#if 0				
+				
 gint		cb_right_click (ETree *tree, int row, ETreePath path,
                                 int col, GdkEvent *event, gpointer data);
 void		cb_table_selected (ETree *tree,int row,ETreePath path,gpointer data);
@@ -86,7 +80,6 @@ gint		cb_tree_key_press (ETree *tree, int row, ETreePath path, int col,
 		   		   GdkEvent *event, gpointer data);
 void 		cb_double_click	(ETree	*tree, int row, ETreePath path,
 				 int col, GdkEvent *event, gpointer data);
-#endif
 					 
 void		cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page, 
 			        gint num, gpointer data);

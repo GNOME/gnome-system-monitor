@@ -16,24 +16,23 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  *
  */
-
-#include <config.h>
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif
 
 #include <gnome.h>
 #include <glibtop.h>
+#include <gal/widgets/e-cursors.h>
 #include <pthread.h>
 #include "procman.h"
-#include "interface.h"
 #include "proctable.h"
-#include "prettytable.h"
-#if 0
+#include "interface.h"
 #include "favorites.h"
-#endif
+#include "prettytable.h"
 
 GtkWidget *app;
 static int simple_view = FALSE;
 pthread_t thread;
-
 
 struct poptOption options[] = {
   {
@@ -56,8 +55,6 @@ struct poptOption options[] = {
   }
 };
 
-
-#if 0
 static void
 procman_get_save_files (ProcData *procdata)
 {
@@ -104,7 +101,6 @@ icon_load_finished (gpointer data)
 	
 	return TRUE;
 }
-#endif
 
 static void
 load_desktop_files (ProcData *pd)
@@ -116,20 +112,18 @@ load_desktop_files (ProcData *pd)
 	** Basically what needs to be done is to update the table when the thread is
 	** finished 
 	*/
-	#if 0
 	if (pd->config.load_desktop_files && pd->config.delay_load)
 	{
 		pd->pretty_table = NULL;
 		pd->desktop_load_finished = FALSE;
-		gtk_idle_add_priority (2000, idle_func, pd);
+		gtk_idle_add_priority (800, idle_func, pd);
 		/*idle_func (pd);*/
 		gtk_timeout_add (500, icon_load_finished, pd);
 	}
 	else if (pd->config.load_desktop_files && !pd->config.delay_load) 
-	#endif
 		pd->pretty_table = pretty_table_new ();
-	/*else
-		pd->pretty_table = NULL;*/
+	else
+		pd->pretty_table = NULL;
 }
 
 
@@ -140,12 +134,15 @@ procman_data_new (void)
 	ProcData *pd;
 
 	pd = g_new0 (ProcData, 1);
-	
+
 	pd->tree = NULL;
+	pd->model = NULL;
+	pd->memory = NULL;
 	pd->infobox = NULL;
 	pd->info = NULL;
 	pd->proc_num = 0;
 	pd->selected_pid = -1;
+	pd->selected_node = NULL;
 	pd->timeout = -1;
 	pd->favorites = NULL;
 	pd->blacklist = NULL;
@@ -153,38 +150,6 @@ procman_data_new (void)
 	pd->mem_graph = NULL;
 	pd->disk_timeout = -1;
 	
-	pd->config.width = 440;
-	pd->config.height = 495;
-	pd->config.show_more_info = FALSE;
-	pd->config.show_tree = TRUE;
-	pd->config.show_kill_warning = TRUE;
-	pd->config.show_hide_message = TRUE;
-	pd->config.delay_load = TRUE;
-	pd->config.load_desktop_files = TRUE;
-	pd->config.show_pretty_names = TRUE;
-	pd->config.show_threads = FALSE;
-	pd->config.update_interval = 3000;
-	pd->config.graph_update_interval = 500;
-	pd->config.disks_update_interval = 5000;
-	pd->config.whose_process = 0;
-	pd->config.current_tab = 0;
-	pd->config.pane_pos = 300;
-	pd->config.bg_color.red = 0;
-	pd->config.bg_color.green = 0;
-	pd->config.bg_color.blue= 0;
-	pd->config.frame_color.red = 20409;
-	pd->config.frame_color.green = 32271;
-	pd->config.frame_color.blue = 17781;
-	pd->config.cpu_color.red = 65535;
-	pd->config.cpu_color.green = 591;
-	pd->config.cpu_color.blue = 0;
-	pd->config.mem_color.red = 65535;
-	pd->config.mem_color.green = 591;
-	pd->config.mem_color.blue = 0;
-	pd->config.swap_color.red = 1363;
-	pd->config.swap_color.green = 52130;
-	pd->config.swap_color.blue = 18595;	
-#if 0	
 	pd->config.width = 
 		gnome_config_get_int ("procman/Config/width=440");
 	pd->config.height = 
@@ -248,8 +213,8 @@ procman_data_new (void)
 	procman_get_save_files (pd);
 
 	get_blacklist (pd);
-#endif	
-	pd->config.simple_view = FALSE;	
+	
+	pd->config.simple_view = simple_view;	
 	if (pd->config.simple_view) {
 		pd->config.width = 325;
 		pd->config.height = 400;
@@ -257,7 +222,7 @@ procman_data_new (void)
 		pd->config.show_more_info = FALSE;
 		pd->config.show_tree = FALSE;
 		pd->config.show_kill_warning = TRUE;
-		pd->config.show_pretty_names = FALSE;
+		pd->config.show_pretty_names = TRUE;
 		pd->config.show_threads = FALSE;
 		pd->config.current_tab = 0;
 	}	
@@ -265,7 +230,7 @@ procman_data_new (void)
 	return pd;
 
 }
-#if 0
+
 static void
 procman_free_data (ProcData *procdata)
 {
@@ -277,9 +242,7 @@ procman_free_data (ProcData *procdata)
 	g_free (procdata);
 	
 }
-#endif
 
-#if 0
 void
 procman_save_config (ProcData *data)
 {
@@ -340,33 +303,25 @@ procman_save_config (ProcData *data)
 	gnome_config_sync ();
 
 }
-#endif
 
 int
 main (int argc, char *argv[])
 {
-	GnomeProgram *procman;
 	ProcData *procdata;
-	GValue value = {0,};
 	poptContext pctx;
 	char **args;
-
 	
 #ifdef ENABLE_NLS
 	bindtextdomain (PACKAGE, PACKAGE_LOCALE_DIR);
 	textdomain (PACKAGE);
 #endif
 
-	procman = gnome_program_init ("procman", VERSION, LIBGNOMEUI_MODULE, argc, argv, 
-			    GNOME_PARAM_POPT_TABLE, options, NULL);
-			    
-	g_value_init (&value, G_TYPE_POINTER);
-  	g_object_get_property (G_OBJECT(procman),
-                               GNOME_PARAM_POPT_CONTEXT, &value);
-        (poptContext)pctx = g_value_get_pointer (&value);
-                               
+	gnome_init_with_popt_table ("procman", VERSION, argc, argv, options, 0, &pctx);
+	
 	args = (char**) poptGetArgs (pctx);
 	poptFreeContext(pctx);
+	
+	e_cursors_init ();
 
 	glibtop_init ();
 
@@ -376,20 +331,22 @@ main (int argc, char *argv[])
 		app = create_simple_view_dialog (procdata);
 	else 
 		app = create_main_window (procdata);
-
+		
 	load_desktop_files (procdata);
-
+	
 	proctable_update_all (procdata);
-	gtk_tree_view_expand_all (GTK_TREE_VIEW (procdata->tree));
+	
 	if (!app)
 		return 0;  
 			
- 	gtk_widget_show_all (app);	
+ 	gtk_widget_show (app);	
  	
 	gtk_main ();
-#if 0	
+	
+	e_cursors_shutdown ();
+	
 	procman_free_data (procdata);
-#endif	
+	
 	return 0;
 }
 

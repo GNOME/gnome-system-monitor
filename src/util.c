@@ -186,25 +186,3 @@ su_run_with_password (gchar *exec_path, gchar *password)
 	return exec_su (exec_path, "root", password);
 }
 
-gchar *
-get_size_string (gint size)
-{
-	gfloat fsize;
-
-	fsize = (gfloat) size;
-	if (fsize < 1024.0)
-		return g_strdup_printf (_("%d bytes"), (int)fsize);
-	fsize /= 1024.0;
-	if (fsize < 1024.0) 
-		return g_strdup_printf (_("%d K"), (int)fsize);
-		
-	fsize /= 1024.0;
-	if (fsize < 1024.0)
-		return g_strdup_printf (_("%.1f MB"), fsize);
-	
-	fsize /= 1024.0;
-	return g_strdup_printf (_("%.1f GB"), fsize);
-
-}
-
-

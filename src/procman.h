@@ -19,8 +19,12 @@
 #ifndef _PROCMAN_H_
 #define _PROCMAN_H_
 
-#include <gdk-pixbuf/gdk-pixbuf.h>
+
 #include <gnome.h>
+#include <gal/e-table/e-table.h>
+#include <gal/e-table/e-tree.h>
+#include <gal/e-table/e-tree-memory.h>
+
 
 typedef struct _ProcConfig ProcConfig;
 typedef struct _PrettyTable PrettyTable;
@@ -107,10 +111,8 @@ struct _LoadGraph {
 
 struct _ProcInfo
 {
-	GtkTreeIter 	node;
-	GtkTreeIter 	parent_node;
-	gboolean	visible;
-	gboolean	has_parent;
+	ETreePath	node;
+	ETreePath	parent_node;
 	GdkPixbuf	*pixbuf;
 	gchar		*name;
 	gchar		*name_utf8;
@@ -137,11 +139,14 @@ struct _ProcInfo
 struct _ProcData
 {
 	GtkWidget	*tree;
+	ETreeModel	*model;
+	ETreeMemory	*memory;
 	GtkWidget	*infobox;
 	GtkWidget	*disk_clist;
 	ProcConfig	config;
 	LoadGraph	*cpu_graph;
 	LoadGraph	*mem_graph;
+	ETreePath	selected_node;
 	gint		selected_pid;
 	gint		timeout;
 	gint		disk_timeout;
