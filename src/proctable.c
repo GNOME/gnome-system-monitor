@@ -645,7 +645,7 @@ get_info (ProcData *procdata, gint pid)
 	else
 		info->arguments = g_strdup ("");
 	
-	if (pwd->pw_name)
+	if (pwd && pwd->pw_name)
 		info->user = g_strdup_printf ("%s", pwd->pw_name);
 	else
 		info->user = NULL;
