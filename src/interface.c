@@ -208,7 +208,7 @@ create_main_window (ProcData *data)
 			      GNOME_PAD_SMALL, 1);
 
 	infobutton = gtk_button_new_with_label (procdata->config.show_more_info ?
-					        lessinfolabel : moreinfolabel);
+					        _(lessinfolabel) : _(moreinfolabel));
 	gtk_box_pack_end (GTK_BOX (hbox2), infobutton, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (infobutton), GNOME_PAD_SMALL);
 	gtk_misc_set_padding (GTK_MISC (GTK_BIN (infobutton)->child), GNOME_PAD_SMALL, 1);
@@ -317,14 +317,14 @@ toggle_infoview (ProcData *data)
 		gtk_widget_show_all (procdata->infobox);
 		procdata->config.show_more_info = TRUE;	
 		infoview_update (procdata);
-		gtk_label_set_text (label, lessinfolabel);
+		gtk_label_set_text (label, _(lessinfolabel));
 		
 	}			
 	else
 	{
 		gtk_widget_hide (procdata->infobox);
 		procdata->config.show_more_info = FALSE;
-		gtk_label_set_text (label, moreinfolabel);
+		gtk_label_set_text (label, _(moreinfolabel));
 	}
 }
 
