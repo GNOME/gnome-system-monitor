@@ -51,6 +51,12 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
 	 cb_hide_process, NULL, NULL, 0, 0,
 	 'h', 0
 	}, 
+	GNOMEUIINFO_SEPARATOR,
+	{
+	 GNOME_APP_UI_ITEM, N_("Hidden Processes..."), "",
+	 cb_show_hidden_processes, NULL, NULL, 0, 0,
+	 'p', 0
+	},
 	GNOMEUIINFO_END
 };
 

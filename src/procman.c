@@ -98,9 +98,7 @@ procman_save_config (ProcData *data)
 	gnome_config_set_bool ("procman/Config/kill_dialog", data->config.show_kill_warning);
 	gnome_config_set_bool ("procman/Config/show_tree", data->config.show_tree);
 	gnome_config_set_int ("procman/Config/update_interval", data->config.update_interval);
-#if 0	
-	save_favorites (data);
-#endif
+
 	save_blacklist (data);
 	gnome_config_sync ();
 
@@ -142,7 +140,9 @@ main (int argc, char *argv[])
 
 	app1 = create_main_window (procdata);
   	proctable_update_all (procdata);
-  	
+#if 0  	
+  	create_blacklist_dialog (procdata);
+#endif  	
 	gtk_main ();
 	
 	e_cursors_shutdown ();

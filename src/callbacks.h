@@ -40,6 +40,8 @@ void		cb_add_to_favorites (GtkMenuItem *menuitem, gpointer data);
 
 void		cb_hide_process (GtkMenuItem *menuitem, gpointer data);
 
+void		cb_show_hidden_processes (GtkMenuItem *menuitem, gpointer data);
+
 void
 cb_preferences_activate               (GtkMenuItem     *menuitem,
                                         gpointer         user_data);

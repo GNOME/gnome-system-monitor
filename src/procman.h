@@ -87,6 +87,7 @@ struct _ProcData
 	PrettyTable	*pretty_table;
 	GList		*favorites;
 	GList		*blacklist;
+	gint		blacklist_num;
 };
 
 void		procman_save_config (ProcData *data);

@@ -82,6 +82,14 @@ cb_add_to_favorites (GtkMenuItem *menuitem, gpointer data)
 }
 
 
+void		
+cb_show_hidden_processes (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	create_blacklist_dialog (procdata);
+}
+
 void
 cb_hide_process (GtkMenuItem *menuitem, gpointer data)
 {

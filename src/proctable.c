@@ -445,6 +445,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	glibtop_proc_uid procuid;
 	glibtop_proc_time proctime;
 	gint newcputime;
+	gboolean is_blacklisted;
 	
 	glibtop_get_proc_state (&procstate, pid);
 	glibtop_get_proc_mem (&procmem, pid);
@@ -467,10 +468,14 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 		g_free (newinfo->status);
 	get_process_status (newinfo, &procstate.state);
 	
+	is_blacklisted = is_process_blacklisted (procdata, newinfo->cmd);
 	/* Process was previously visible and has been blacklisted since */
-	if (newinfo->node && is_process_blacklisted (procdata, newinfo->cmd))
+	if (newinfo->node && is_blacklisted)
 		return -1;
-	
+	/* Process was previously blacklisted but has been knocked from the list
+	** and needs to be added */
+	if (!newinfo->node && !is_blacklisted)
+		return 1;
 	
 	if (procdata->config.whose_process == RUNNING_PROCESSES)
 	{

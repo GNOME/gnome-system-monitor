@@ -22,7 +22,7 @@ procman_SOURCES = \
 	defaulttable.h
 
 procman_LDADD = $(GNOME_LIBDIR) $(GNOMEUI_LIBS) \
-	$(INTLLIBS) $(LIBGTOP_LIBS) $(GAL_LIBS)
+	$(INTLLIBS) $(LIBGTOP_LIBS) $(GAL_LIBS) 
 
 specdir = $(datadir)/procman
 spec_DATA = \

@@ -19,8 +19,24 @@
  */
 
 
+#include <gal/e-table/e-tree-memory.h>
+#include <gal/e-table/e-tree-memory-callbacks.h>
+#include <gal/e-table/e-tree-scrolled.h>
+#include <gal/e-table/e-cell-text.h>
 #include "favorites.h"
 
+#define SPEC "<ETableSpecification cursor-mode=\"line\" selection-mode=\"browse\" draw-focus=\"true\" no-headers=\"true\">                    	       \
+  <ETableColumn model_col=\"0\" _title=\" \"   expansion=\"1.0\" minimum_width=\"20\" resizable=\"true\" cell=\"blacklist\" compare=\"string\"/> \
+  	<ETableState> \
+        	<column source=\"0\"/> \
+	        <grouping> <leaf column=\"0\" ascending=\"true\"/> </grouping>    \
+        </ETableState> \
+</ETableSpecification>"
+
+GtkWidget *blacklist_dialog = NULL;
+GtkWidget *tree;
+ETreeMemory *memory;
+gint initial_blacklist_num; /* defined in order to prune off entries from config file */
 
 void
 add_to_favorites (ProcData *procdata, gchar *name)
@@ -36,13 +52,24 @@ add_to_blacklist (ProcData *procdata, gchar *name)
 {
 	gchar *process = g_strdup (name);
 	procdata->blacklist = g_list_append (procdata->blacklist, process);
+	procdata->blacklist_num++;
 	
 }
 
 void
-remove_from_favorites (ProcData *procdata)
+remove_from_favorites (ProcData *procdata, gchar *name)
 {
 
+
+}
+
+void
+remove_from_blacklist (ProcData *procdata, gchar *name)
+{
+
+
+	procdata->blacklist = g_list_remove (procdata->blacklist, name);
+	procdata->blacklist_num --;
 }
 
 
@@ -126,6 +153,12 @@ void save_blacklist (ProcData *procdata)
 		i++;
 		list = g_list_next (list);
 	}
+	
+	for (i = initial_blacklist_num; i >= procdata->blacklist_num; i--)
+	{
+		gchar *config = g_strdup_printf ("%s%d", "procman/Blacklist/process", i);
+		gnome_config_clean_key (config);
+	} 
 }
 
 
@@ -166,5 +199,250 @@ void get_blacklist (ProcData *procdata)
 			done = TRUE;
 		i++;
 	}
+	g_print ("%d \n", i);
+	procdata->blacklist_num = i - 1;
+	initial_blacklist_num = i - 1;
 	
+}
+
+
+static GdkPixbuf *
+get_icon (ETreeModel *etm, ETreePath path, void *data)
+{
+	/* No icon, since the cell tree renderer takes care of the +/- icons itself. */
+	return NULL;
+}
+
+static int
+get_columns (ETreeModel *table, void *data)
+{
+	return 1;
+}
+
+
+static void *
+get_value (ETreeModel *model, ETreePath path, int column, void *data)
+{
+	gchar *string;
+	
+	string = e_tree_memory_node_get_data (memory, path);
+
+	return string;
+}
+
+static void
+set_value (ETreeModel *model, ETreePath path, int col, const void *value, void *data)
+{
+
+}	
+
+static gboolean
+get_editable (ETreeModel *model, ETreePath path, int column, void *data)
+{
+	return FALSE;
+}
+
+static void *
+duplicate_value (ETreeModel *model, int column, const void *value, void *data)
+{
+	return g_strdup (value);
+	
+}
+
+static void
+free_value (ETreeModel *model, int column, void *value, void *data)
+{
+	g_free (value);
+	
+}
+
+static void *
+initialize_value (ETreeModel *model, int column, void *data)
+{
+	return g_strdup ("");
+	
+}
+
+static gboolean
+value_is_empty (ETreeModel *model, int column, const void *value, void *data)
+{
+	return !(value && *(char *)value);
+	
+}
+
+static char *
+value_to_string (ETreeModel *model, int column, const void *value, void *data)
+{
+	return g_strdup (value);
+	
+}
+
+static ETableExtras *
+new_extras ()
+{
+	ETableExtras *extras;
+	ECell *cell;
+	
+	extras = e_table_extras_new ();
+	
+	cell = e_cell_text_new (NULL, GTK_JUSTIFY_LEFT);
+	e_table_extras_add_cell (extras, "blacklist", cell);
+	
+	return extras;
+}
+
+static GtkWidget *
+create_tree (ProcData *procdata)
+{
+	GtkWidget *scrolled;
+	GtkWidget *e_tree;
+	ETableExtras *extras;
+	ETreeMemory *etmm;
+	ETreeModel *model;
+	ETreePath *root_node;
+	GList *blacklist = g_list_copy (procdata->blacklist);
+
+	model = e_tree_memory_callbacks_new (get_icon,
+					     get_columns,
+					     NULL,
+					     NULL,
+					     NULL,
+					     NULL,
+					     get_value,
+					     set_value,
+					     get_editable,
+				    	     duplicate_value,
+				    	     free_value,
+				    	     initialize_value,
+				    	     value_is_empty,
+				    	     value_to_string,
+				    	     NULL);
+	
+					    	     
+	etmm = E_TREE_MEMORY(model);
+	
+	extras = new_extras ();
+
+	scrolled = e_tree_scrolled_new (model, extras, SPEC, NULL);
+
+	e_tree = GTK_WIDGET (e_tree_scrolled_get_tree (E_TREE_SCROLLED (scrolled)));
+	
+	root_node = e_tree_memory_node_insert (etmm, NULL, 0, NULL);
+	e_tree_root_node_set_visible (E_TREE(e_tree), FALSE);
+	
+	/* add the blacklist */
+	while (blacklist)
+	{
+		e_tree_memory_node_insert (etmm, root_node, 0, blacklist->data);
+		blacklist = g_list_next (blacklist);
+	}
+	
+	tree = e_tree;
+	memory = etmm;
+
+	return scrolled;
+
+}
+
+static void
+remove_item (ETreePath node, gpointer data)
+{
+	ProcData *procdata = data;
+	gchar *process;
+	
+	process = e_tree_memory_node_get_data (memory, node);
+	e_tree_memory_node_remove (memory, node);
+	remove_from_blacklist (procdata, process);
+	
+}
+
+static void
+remove_button_clicked (GtkButton *button, gpointer data)
+{
+	ProcData *procdata = data;
+	ETreePath selected_node = NULL;
+	gchar *process;
+	
+	selected_node = e_tree_get_cursor (E_TREE (tree));
+	if (!selected_node)
+		return;
+		
+	process = e_tree_memory_node_get_data (memory, selected_node);
+	
+	e_tree_memory_node_remove (memory, selected_node);
+	remove_from_blacklist (procdata, process);
+	
+	/*e_tree_selected_path_foreach (E_TREE (tree), remove_item, procdata);*/
+	
+}
+
+static void
+close_blacklist_dialog (gpointer data)
+{
+	gnome_dialog_close (GNOME_DIALOG (blacklist_dialog));
+	blacklist_dialog = NULL;
+}
+
+static void
+close_button_pressed (GnomeDialog *dialog, gint button, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	close_blacklist_dialog (procdata);
+}
+
+void create_blacklist_dialog (ProcData *procdata)
+{
+	GtkWidget *frame;
+	GtkWidget *main_vbox;
+	GtkWidget *inner_vbox;
+	GtkWidget *hbox;
+	GtkWidget *button;
+	GtkWidget *scrolled;
+	GtkWidget *label;
+	
+
+	if (blacklist_dialog)
+	{
+		gdk_window_raise(blacklist_dialog->window);
+      		return;
+   	}
+
+	blacklist_dialog = gnome_dialog_new (_("Manage Hidden Processes"), 
+					     GNOME_STOCK_BUTTON_CLOSE, NULL);
+	gtk_window_set_policy (GTK_WINDOW (blacklist_dialog), FALSE, TRUE, FALSE);
+	gtk_window_set_default_size (GTK_WINDOW (blacklist_dialog), 320, 375);
+	
+	main_vbox = GNOME_DIALOG (blacklist_dialog)->vbox;
+	
+	label = gtk_label_new (_("These are the processes you have chosen to hide. You can reshow a process by removing it from this list."));
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
+	
+	frame = gtk_frame_new (_("Hidden Processes"));
+  	gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
+  	
+  	inner_vbox = gtk_vbox_new (FALSE, 0);
+  	gtk_container_add (GTK_CONTAINER (frame), inner_vbox);
+  	
+  	scrolled = create_tree (procdata);
+  	gtk_box_pack_start (GTK_BOX (inner_vbox), scrolled, TRUE, TRUE, 0);
+  	gtk_container_set_border_width (GTK_CONTAINER (scrolled), GNOME_PAD_SMALL);
+  	
+  	hbox = gtk_hbox_new (FALSE, 0);
+  	gtk_box_pack_end (GTK_BOX (inner_vbox), hbox, FALSE, FALSE, 0);
+  	
+  	button = gtk_button_new_with_label (_("Remove From List"));
+  	gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  	gtk_container_set_border_width (GTK_CONTAINER (button), GNOME_PAD_SMALL);
+  	
+  	gtk_signal_connect (GTK_OBJECT (button), "clicked",
+  			    GTK_SIGNAL_FUNC (remove_button_clicked), procdata);
+  	gtk_signal_connect (GTK_OBJECT (blacklist_dialog), "clicked",
+			    GTK_SIGNAL_FUNC (close_button_pressed), procdata);
+	gtk_signal_connect (GTK_OBJECT (blacklist_dialog), "destroy",
+			    GTK_SIGNAL_FUNC (close_blacklist_dialog), procdata);
+  	
+  	gtk_widget_show_all (blacklist_dialog);
+  	
 }
