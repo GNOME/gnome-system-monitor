@@ -306,14 +306,17 @@ procman_get_tree_state (GtkWidget *tree, gchar *prefix)
 	
 	g_return_if_fail (tree);
 	g_return_if_fail (prefix);
+	if (!gconf_client_dir_exists (client, prefix, NULL)) {
+		g_print ("dir don't exist \n");
+	}
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
 	
-	key = g_strdup_printf ("%ssort_col", prefix);
+	key = g_strdup_printf ("%s/sort_col", prefix);
 	sort_col = gconf_client_get_int_with_default (key, -1);
 	g_free (key);
 	
-	key = g_strdup_printf ("%ssort_order", prefix);
+	key = g_strdup_printf ("%s/sort_order", prefix);
 	order = gconf_client_get_int_with_default (key, -1);
 	g_free (key);
 	
@@ -327,11 +330,11 @@ procman_get_tree_state (GtkWidget *tree, gchar *prefix)
 		gint width;
 		gboolean visible;
 		
-		key = g_strdup_printf ("%scol_%d_width", prefix, i);
+		key = g_strdup_printf ("%s/col_%d_width", prefix, i);
 		width = gconf_client_get_int_with_default (key, -1);
 		g_free (key);
 		
-		key = g_strdup_printf ("%scol_%d_visible", prefix, i);
+		key = g_strdup_printf ("%s/col_%d_visible", prefix, i);
 		visible = gconf_client_get_bool_with_default (key, FALSE);
 		g_free (key);
 		
@@ -364,11 +367,11 @@ procman_save_tree_state (GtkWidget *tree, gchar *prefix)
 					          &order)) {
 		gchar *key;
 		
-		key = g_strdup_printf ("%ssort_col", prefix);
+		key = g_strdup_printf ("%s/sort_col", prefix);
 		gconf_client_set_int (client, key, sort_col, NULL);
 		g_free (key);
 		
-		key = g_strdup_printf ("%ssort_order", prefix);
+		key = g_strdup_printf ("%s/sort_order", prefix);
 		gconf_client_set_int (client, key, order, NULL);
 		g_free (key);
 	}			       
@@ -384,11 +387,11 @@ procman_save_tree_state (GtkWidget *tree, gchar *prefix)
 		visible = gtk_tree_view_column_get_visible (column);
 		width = gtk_tree_view_column_get_width (column);
 		
-		key = g_strdup_printf ("%scol_%d_width", prefix, i);
+		key = g_strdup_printf ("%s/col_%d_width", prefix, i);
 		gconf_client_set_int (client, key, width, NULL);
 		g_free (key);
 		
-		key = g_strdup_printf ("%scol_%d_visible", prefix, i);
+		key = g_strdup_printf ("%s/col_%d_visible", prefix, i);
 		gconf_client_set_bool (client, key, visible, NULL);
 		g_free (key);
 		
@@ -409,8 +412,8 @@ procman_save_config (ProcData *data)
 	if (data->config.simple_view)
 		return;
 		
-	procman_save_tree_state (data->tree, "/apps/procman/proctree/");
-	procman_save_tree_state (data->disk_list, "/apps/procman/disktree/");
+	procman_save_tree_state (data->tree, "/apps/procman/proctree");
+	procman_save_tree_state (data->disk_list, "/apps/procman/disktree");
 		
 	gdk_window_get_size (app->window, &width, &height);
 	data->config.width = width;

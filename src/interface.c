@@ -462,7 +462,7 @@ create_sys_view (ProcData *procdata)
   	
 	gtk_widget_show_all (disk_frame);
   	
-  	procman_get_tree_state (disk_tree, "/apps/procman/disktree/");
+  	procman_get_tree_state (disk_tree, "/apps/procman/disktree");
   	
   	cb_update_disks (procdata);
   	/*procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,

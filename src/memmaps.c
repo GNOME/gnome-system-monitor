@@ -115,7 +115,7 @@ close_memmaps_dialog (GtkDialog *dialog, gint id, gpointer data)
 	GtkWidget *tree = data;	
 	gint timer;
 	
-	procman_save_tree_state (tree, "/apps/procman/memmapstree/");
+	procman_save_tree_state (tree, "/apps/procman/memmapstree");
 	
 	timer = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (tree), "timer"));
 	gtk_timeout_remove (timer);
@@ -160,7 +160,7 @@ create_memmaps_tree (ProcData *procdata)
 					      0,
 					      GTK_SORT_ASCENDING);*/
 					      
-	procman_get_tree_state (tree, "/apps/procman/memmapstree/");
+	procman_get_tree_state (tree, "/apps/procman/memmapstree");
 	
 	return tree;
 		

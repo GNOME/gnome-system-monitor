@@ -336,26 +336,6 @@ show_commands_toggled (GtkToggleButton *button, gpointer data)
 	
 }
 
-#if 0
-static void
-show_icons_toggled (GtkToggleButton *button, gpointer data)
-{
-	ProcData *procdata = data;
-	gboolean toggled;
-	
-	toggled = gtk_toggle_button_get_active (button);
-	
-	procdata->config.load_desktop_files = !toggled;
-	
-	if (!procdata->pretty_table && !toggled)
-		procdata->pretty_table = pretty_table_new ();
-		
-	proctable_clear_tree (procdata);
-	proctable_update_all (procdata);
-	
-}
-#endif
-
 static void
 show_threads_toggled (GtkToggleButton *button, gpointer data)
 {
@@ -464,6 +444,54 @@ frame_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 
 }
 
+static void
+proc_field_toggled (GtkToggleButton *button, gpointer data)
+{
+	GtkTreeViewColumn *column = data;
+	gboolean toggled;
+	
+	toggled = gtk_toggle_button_get_active (button);
+
+	gtk_tree_view_column_set_visible (column, toggled);
+	
+}
+
+static GtkWidget *
+create_proc_field_page (ProcData *procdata)
+{
+	GtkWidget *vbox;
+	GtkWidget *tree = procdata->tree;
+	GList *columns = NULL;
+	GtkWidget *check_button;
+	
+	vbox = gtk_vbox_new (TRUE, GNOME_PAD_SMALL);
+	
+	columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree));
+	
+	while (columns) {
+		GtkTreeViewColumn *column = columns->data;
+		const gchar *title;
+		gboolean visible;
+		
+		title = gtk_tree_view_column_get_title (column);
+		visible = gtk_tree_view_column_get_visible (column);
+		
+		check_button = gtk_check_button_new_with_label (title);
+		
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
+				              visible);
+		g_signal_connect (G_OBJECT (check_button), "toggled",
+			          G_CALLBACK (proc_field_toggled), column);
+			    
+		gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
+		
+		columns = g_list_next (columns);
+	}
+		
+	
+	return vbox;
+}
+
 void
 procdialog_create_preferences_dialog (ProcData *procdata)
 {
@@ -552,6 +580,12 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
 			    GTK_SIGNAL_FUNC (show_threads_toggled), procdata);
 	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
+	
+	vbox = create_proc_field_page (procdata);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
+	tab_label = gtk_label_new_with_mnemonic (_("Process _Fields"));
+	gtk_widget_show (tab_label);
+	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, tab_label);
 	
 	sys_box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width (GTK_CONTAINER (sys_box), GNOME_PAD_SMALL);
