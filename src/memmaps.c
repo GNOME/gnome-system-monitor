@@ -296,8 +296,16 @@ create_memmaps_tree (ProcData *procdata)
 
 #if 1
 	scrolled = e_tree_scrolled_new_from_spec_file (model, NULL,
-						       "memmaps.etspec", NULL);
-						       //PROCMAN_DATADIR "memmaps.etstate");
+						       PROCMAN_DATADIR "memmaps.etspec", NULL);
+	if (!scrolled)
+	{
+		GtkWidget *dialog;
+		dialog = gnome_error_dialog (_("Procman could not find the e-tree spec file.\n"
+				      "There should be a file called memmaps.etspec in\n"
+				      PROCMAN_DATADIR));
+		gnome_dialog_run (GNOME_DIALOG (dialog));
+		g_assert (scrolled);
+	}
 #else	
 	scrolled = e_tree_scrolled_new (model, NULL, MEMMAPSSPEC, NULL);
 #endif

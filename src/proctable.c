@@ -325,10 +325,20 @@ proctable_new (ProcData *data)
 	extras = proctable_new_extras ();
 	
 	etmm = E_TREE_MEMORY(model);
-#if 0	
+#if 1	
 	scrolled = e_tree_scrolled_new_from_spec_file (model, extras,
-						       "proctable.etspec", NULL);
-						       //PROCMAN_DATADIR "proctable.etstate");
+						       PROCMAN_DATADIR "proctable.etspec", NULL);
+						       
+	if (!scrolled)
+	{
+		GtkWidget *dialog;
+		dialog = gnome_error_dialog (_("Procman could not find the e-tree spec file.\n"
+				      "There should be a file called proctable.etspec in\n"
+				      PROCMAN_DATADIR));
+		gnome_dialog_run (GNOME_DIALOG (dialog));
+		g_assert (scrolled);
+	}
+					       
 #else
 	scrolled = e_tree_scrolled_new (model, extras, SPEC, NULL);
 #endif
@@ -737,8 +747,9 @@ proctable_clear_tree (ProcData *data)
 	procdata->selected_node = NULL;
 	procdata->selected_pid = -1;
 	
+	/*e_tree_memory_freeze (procdata->memory);*/
 	e_tree_memory_node_remove (procdata->memory, rootnode);
-	
+	/*e_tree_memory_thaw (procdata->memory);*/
 	
 }
 
