@@ -118,7 +118,7 @@ gchar *moreinfolabel = "More _Info >>";
 gchar *lessinfolabel = "<< Less _Info";
 
 GtkWidget *infobutton;
-GtkLabel *infolabel;
+GtkWidget *infolabel;
 GtkWidget *endprocessbutton;
 GtkWidget *popup_menu;
 GtkWidget *sys_pane;
@@ -442,6 +442,7 @@ create_sys_view (ProcData *procdata)
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), 
 					GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+	gtk_container_set_border_width (GTK_CONTAINER (scrolled), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (disk_frame), scrolled);
 	 
 	model = gtk_list_store_new (5, G_TYPE_STRING, G_TYPE_STRING,
@@ -451,8 +452,7 @@ create_sys_view (ProcData *procdata)
 	disk_tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
 	procdata->disk_list = disk_tree;
 	gtk_container_add (GTK_CONTAINER (scrolled), disk_tree);
-  	gtk_container_set_border_width (GTK_CONTAINER (disk_tree), GNOME_PAD_SMALL);
-	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (disk_tree), TRUE);
+  	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (disk_tree), TRUE);
   	g_object_unref (G_OBJECT (model));
   	
   	for (i = 0; i < 5; i++) {
@@ -495,7 +495,7 @@ create_main_window (ProcData *procdata)
 	width = procdata->config.width;
 	height = procdata->config.height;
 	gtk_window_set_default_size (GTK_WINDOW (app), width, height);
-	gtk_window_set_policy (GTK_WINDOW (app), FALSE, TRUE, TRUE);
+	gtk_window_set_policy (GTK_WINDOW (app), TRUE, TRUE, TRUE);
 
 	
 	gnome_app_create_menus_with_data (GNOME_APP (app), menubar1_uiinfo, procdata);
@@ -548,8 +548,9 @@ create_main_window (ProcData *procdata)
 		load_graph_start (procdata->mem_graph);
 	}
 	 	
-	
+	gtk_widget_show (vbox1);
 	gnome_app_set_contents (GNOME_APP (app), notebook);
+	gtk_widget_show (notebook);
 
 	update_sensitivity (procdata, FALSE);
 	
@@ -645,7 +646,7 @@ void
 toggle_infoview (ProcData *data)
 {
 	ProcData *procdata = data;
-	GtkLabel *label;
+	GtkWidget *label;
 	static guint more_key = 0;
 	static guint less_key = 0;
 
