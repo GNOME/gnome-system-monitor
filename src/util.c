@@ -187,11 +187,9 @@ su_run_with_password (gchar *exec_path, gchar *password)
 }
 
 gchar *
-get_size_string (gint size)
+get_size_string (gfloat fsize)
 {
-	gfloat fsize;
-
-	fsize = (gfloat) size;
+	
 	if (fsize < 1024.0)
 		return g_strdup_printf (_("%d bytes"), (int)fsize);
 	fsize /= 1024.0;

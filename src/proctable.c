@@ -704,7 +704,6 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 		/* process no longer exists */
 		else if (pid_list[i] > oldinfo->pid)
 		{		
-			g_print ("%d \n", pid_list[i]);
 			remove_info_from_tree (oldinfo, procdata);
 			list = g_list_next (list);
 			procdata->info = g_list_remove (procdata->info, oldinfo);

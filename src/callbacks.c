@@ -517,9 +517,9 @@ cb_update_disks (gpointer data)
 		glibtop_get_fsusage (&usage, entry[i].mountdir);
 		text[0] = g_strdup (entry[i].devname);
 		text[4] = g_strdup (entry[i].mountdir);
-		text[1] = get_size_string ((usage.blocks - usage.bfree) / 2);
-		text[2] = get_size_string (usage.bfree / 2);
-		text[3] = get_size_string (usage.blocks / 2);
+		text[1] = get_size_string ((float)(usage.blocks - usage.bfree) * 512);
+		text[2] = get_size_string ((float) usage.bfree * 512);
+		text[3] = get_size_string ((float) usage.blocks * 512);
 		/* Hmm, usage.blocks == 0 seems to get rid of /proc and all
 		** the other useless entries */
 		if (usage.blocks != 0) {
