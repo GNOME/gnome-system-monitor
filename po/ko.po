@@ -1,13 +1,13 @@
 # procman korean translation
 # Young-Ho, Cha <ganadist@chollian.net> 2002.
-# Changwoo Ryu <cwryu@debian.org> 2003,2004.
+# Changwoo Ryu <cwryu@debian.org> 2003, 2004, 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-system-monitor 2.9.90\n"
+"Project-Id-Version: gnome-system-monitor 2.9.92\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-05 07:45+0900\n"
-"PO-Revision-Date: 2005-02-05 07:55+0900\n"
+"POT-Creation-Date: 2005-02-18 22:27+0900\n"
+"PO-Revision-Date: 2005-02-18 22:28+0900\n"
 "Last-Translator: Young-Ho Cha <ganadist at mizi.com>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
 "MIME-Version: 1.0\n"
@@ -104,7 +104,8 @@ msgstr "기본 그래프 스왑 색상"
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
-msgstr "어떤 프로세스를 볼 지 결정합니다. 0은 전부, 1은 사용자, 2는 활성 프로세스"
+msgstr ""
+"어떤 프로세스를 볼 지 결정합니다. 0은 전부, 1은 사용자, 2는 활성 프로세스"
 
 #: ../src/gnome-system-monitor.schemas.in.h:8
 msgid "Main Window height"
@@ -388,15 +389,15 @@ msgstr "사용중, 전체"
 msgid "Used swap:"
 msgstr "사용중인 스왑:"
 
-#: ../src/interface.c:523 ../src/procdialogs.c:752
+#: ../src/interface.c:523 ../src/procdialogs.c:715
 msgid "Devices"
 msgstr "장치"
 
-#: ../src/interface.c:651 ../src/procdialogs.c:577
+#: ../src/interface.c:651 ../src/procdialogs.c:540
 msgid "Processes"
 msgstr "프로세스"
 
-#: ../src/interface.c:657 ../src/procdialogs.c:664
+#: ../src/interface.c:657 ../src/procdialogs.c:627
 msgid "Resources"
 msgstr "자원"
 
@@ -534,16 +535,19 @@ msgid "An error occured while killing the process."
 msgstr "프로세스를 죽이는 동안 오류가 발생했습니다."
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:63
+#: ../src/procdialogs.c:62
 msgid "Hide the selected process?"
 msgstr "선택한 프로세스를 숨기겠습니까?"
 
+#. FIXME: View menu -> Edit menu
 #. translators: secondary alert messagex
 #: ../src/procdialogs.c:72
 msgid ""
 "Hidden processes are no longer visible in the process list. You can re-"
 "enable them by selecting the \"Hidden Processes\" entry in the View menu."
-msgstr "숨긴 프로세스를 프로세스 목록에서 더 이상 보지 않습니다. 다시 보려면 보기 메뉴의 \"숨긴 프로세스\" 항목에서 선택해야 합니다."
+msgstr ""
+"숨긴 프로세스를 프로세스 목록에서 더 이상 보지 않습니다. 다시 보려면 보기 메"
+"뉴의 \"숨긴 프로세스\" 항목에서 선택해야 합니다."
 
 #. translators: primary alert message
 #: ../src/procdialogs.c:115
@@ -613,57 +617,67 @@ msgstr ""
 "프로세스의 우선순위는 그 nice 값에 따라 결정됩니다. nice 값이 낮을 수록 우선"
 "순위가 높습니다."
 
-#: ../src/procdialogs.c:463
+#: ../src/procdialogs.c:426
 msgid "Processes i_nfo showed in list:"
 msgstr "목록에 표시하는 프로세스 정보(_N):"
 
-#: ../src/procdialogs.c:514
+#: ../src/procdialogs.c:477
 msgid "Icon"
 msgstr "아이콘"
 
-#: ../src/procdialogs.c:554
+#: ../src/procdialogs.c:517
 msgid "System Monitor Preferences"
 msgstr "시스템 감시 기본설정"
 
-#: ../src/procdialogs.c:584
+#: ../src/procdialogs.c:547
 msgid "Behavior"
 msgstr "행동"
 
-#: ../src/procdialogs.c:603 ../src/procdialogs.c:690
+#: ../src/procdialogs.c:566 ../src/procdialogs.c:653
 msgid "_Update interval:"
 msgstr "업데이트 간격(_U):"
 
-#: ../src/procdialogs.c:619 ../src/procdialogs.c:707 ../src/procdialogs.c:788
+#: ../src/procdialogs.c:582 ../src/procdialogs.c:670 ../src/procdialogs.c:751
 msgid "seconds"
 msgstr "초"
 
-#: ../src/procdialogs.c:626
+#: ../src/procdialogs.c:589
 msgid "Alert before ending or _killing processes"
 msgstr "프로세스를 끝내거나 죽일 때 알림(_K)"
 
-#: ../src/procdialogs.c:636
+#: ../src/procdialogs.c:599
 msgid "Alert before _hiding processes"
 msgstr "프로세스를 숨길 때 알림(_H)"
 
-#: ../src/procdialogs.c:646
+#: ../src/procdialogs.c:609
 msgid "Process Fields"
 msgstr "프로세스 필드"
 
-#: ../src/procdialogs.c:671
+#: ../src/procdialogs.c:634
 msgid "Graphs"
 msgstr "그래프"
 
-#: ../src/procdialogs.c:714
+#: ../src/procdialogs.c:677
 msgid "_Background color:"
 msgstr "바탕색(_B):"
 
-#: ../src/procdialogs.c:733
+#: ../src/procdialogs.c:696
 msgid "_Grid color:"
 msgstr "격자색(_G):"
 
-#: ../src/procdialogs.c:771
+#: ../src/procdialogs.c:734
 msgid "Update _interval:"
 msgstr "업데이트 간격(_I):"
+
+#: ../src/procdialogs.c:798
+#, c-format
+msgid "Cannot kill process with pid %d with signal %d"
+msgstr "pid %d인 프로세스를 시그널 %d번으로 죽일 수 없습니다"
+
+#: ../src/procdialogs.c:801
+#, c-format
+msgid "Cannot change the priority of process with pid %d to %d"
+msgstr "pid %d인 프로세스의 우선 순위를 %d번으로 바꿀 수 없습니다"
 
 #: ../src/proctable.c:163
 msgid "Process Name"
@@ -752,4 +766,6 @@ msgstr "\"%s\"을(를) 찾을 수 없습니다"
 msgid ""
 "There are no processes containing the searched string. Please note that the "
 "search is performed only on processes shown in the process list."
-msgstr "찾기 문자열이 들어 있는 프로세스가 없습니다. 프로세스 목록에 표시하고 있는 프로세스에 대해서만 찾는다는 점에 주의하십시오."
+msgstr ""
+"찾기 문자열이 들어 있는 프로세스가 없습니다. 프로세스 목록에 표시하고 있는 프"
+"로세스에 대해서만 찾는다는 점에 주의하십시오."
