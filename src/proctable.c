@@ -1095,13 +1095,18 @@ proctable_search_table (ProcData *procdata, gchar *string)
 		list = g_list_next (list);
 	}
 	
-	if (index == increment)
+	if (index == increment) {
 		error = g_strdup_printf (_("%s could not be found."), string);
-	else
-		error = g_strdup_printf (_("No more instances of %s could be found."), string);
-	dialog = gnome_error_dialog (error);
-	gnome_dialog_run (GNOME_DIALOG (dialog));
-	g_free (error);
+		dialog = gnome_error_dialog (error);
+		gnome_dialog_run (GNOME_DIALOG (dialog));
+		g_free (error);
+	}
+	else {
+		/* no more cases found. Start the search anew */
+		increment = -1;
+		proctable_search_table (procdata, string);
+		return;
+	}
 	
 	increment --;
 
