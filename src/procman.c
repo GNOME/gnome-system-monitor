@@ -162,11 +162,10 @@ timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer 
 static void
 color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData * const procdata = data;
 	const gchar *key = gconf_entry_get_key (entry);
 	GConfValue *value = gconf_entry_get_value (entry);
 	const gchar *color = gconf_value_get_string (value);
-	gint i;
 
 	if (!g_strcasecmp (key, "/apps/procman/bg_color")) {
 		gdk_color_parse (color, &procdata->config.bg_color);
@@ -182,7 +181,9 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 		gdk_color_parse (color, &procdata->config.cpu_color[0]);
 		procdata->cpu_graph->colors[2] = procdata->config.cpu_color[0];
 	}
-	else if (g_strrstr (key, "/apps/procman/cpu_color")) {
+	else if (g_str_has_prefix (key, "/apps/procman/cpu_color")) {
+		gint i;
+
 		for (i=1;i<GLIBTOP_NCPU;i++) {
 			gchar *cpu_key;
 			cpu_key = g_strdup_printf ("/apps/procman/cpu_color%d",i);
@@ -284,7 +285,7 @@ procman_data_new (GConfClient *client)
 	
 	color = gconf_client_get_string (client, "/apps/procman/cpu_color", NULL);
 	if (!color)
-		color = g_strdup ("#f25915e815e8");
+		color = g_strdup ("#0000007200b3");
 	gconf_client_notify_add (client, "/apps/procman/cpu_color", 
 			  	 color_changed_cb, pd, NULL, NULL);
 	gdk_color_parse(color, &pd->config.cpu_color[0]);
@@ -305,7 +306,7 @@ procman_data_new (GConfClient *client)
 	}
 	color = gconf_client_get_string (client, "/apps/procman/mem_color", NULL);
 	if (!color)
-		color = g_strdup ("#f25915e815e8");
+		color = g_strdup ("#000000b3005b");
 	gconf_client_notify_add (client, "/apps/procman/mem_color", 
 			  	 color_changed_cb, pd, NULL, NULL);
 	gdk_color_parse(color, &pd->config.mem_color);
@@ -314,7 +315,7 @@ procman_data_new (GConfClient *client)
 	
 	color = gconf_client_get_string (client, "/apps/procman/swap_color", NULL);
 	if (!color)
-		color = g_strdup ("#212fe32b212f");
+		color = g_strdup ("#008b000000c3");
 	gconf_client_notify_add (client, "/apps/procman/swap_color", 
 			  	 color_changed_cb, pd, NULL, NULL);
 	gdk_color_parse(color, &pd->config.swap_color);
