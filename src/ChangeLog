@@ -1,3 +1,10 @@
+2002-01-11  Havoc Pennington  <hp@pobox.com>
+
+	* proctable.c (sort_ints): handle case where ints are equal, 
+	ensures that we maintain proper semantics for the sort function
+	(that if a > b, b < a; if a and b are equal, the return val 
+	can't depend on order the args are passed in)
+
 2002-01-19  Kevin Vandersloot <kfv101@psu.edu>
 
 	* infoview.c: don't put command lable in event box
