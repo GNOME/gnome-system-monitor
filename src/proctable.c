@@ -784,7 +784,7 @@ refresh_list (ProcData *data, const unsigned *pid_list, guint n)
 		if (!info) {
 			info = get_info (procdata, pid_list[i]);
 			info->queue = NEEDS_ADDITION;
-			procdata->info = g_list_prepend (procdata->info, info);
+			procdata->info = g_list_append (procdata->info, info);
 		}
 		else {
 			update_info (procdata, info, info->pid);
