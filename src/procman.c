@@ -21,6 +21,7 @@
 #endif
 
 #include <gnome.h>
+#include <libgnomeui/gnome-window-icon.h>
 #include <glibtop.h>
 #include <gal/widgets/e-cursors.h>
 #include <pthread.h>
@@ -317,6 +318,7 @@ main (int argc, char *argv[])
 #endif
 
 	gnome_init_with_popt_table ("procman", VERSION, argc, argv, options, 0, &pctx);
+	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/procman.png");
 	
 	args = (char**) poptGetArgs (pctx);
 	poptFreeContext(pctx);

@@ -34,6 +34,11 @@ spec_DATA = \
 	simple.etspec \
 	memmaps.etspec
 
+pixmapdir = $(datadir)/pixmaps
+pixmap_DATA = \
+	procman.png
+
 EXTRA_DIST = \
 	README.hacking \
+	$(pixmap_DATA) \
 	$(spec_DATA)
