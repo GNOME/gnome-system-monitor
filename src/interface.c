@@ -43,7 +43,7 @@
 
 static GnomeUIInfo file1_menu_uiinfo[] =
 {
-	GNOMEUIINFO_MENU_EXIT_ITEM (cb_app_exit, NULL),
+	GNOMEUIINFO_MENU_QUIT_ITEM (cb_app_exit, NULL),
 	GNOMEUIINFO_END
 };
 
