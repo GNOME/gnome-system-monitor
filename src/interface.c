@@ -148,6 +148,30 @@ get_sys_pane_pos (void)
 	return GTK_PANED (sys_pane)->child1_size;
 }
 
+static void
+disk_list_resize (GtkCList *clist, gint column, gint width, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	switch (column) {
+	case 0:
+		procdata->config.disk_width1 = width;
+		break;
+	case 1:
+		procdata->config.disk_width2 = width;
+		break;
+	case 2:
+		procdata->config.disk_width3 = width;
+		break;
+	case 3:
+		procdata->config.disk_width4 = width;
+		break;
+	default:
+		break;
+	}
+		
+}
+
 static GtkWidget *
 create_proc_view (ProcData *procdata)
 {
@@ -339,7 +363,7 @@ create_sys_view (ProcData *procdata)
 	GtkWidget *disk_frame;
 	GtkWidget *color_picker;
 	GtkWidget *scrolled, *clist;
-	gchar *titles[5] = {_("Disk Name"),
+	gchar *titles[5] = {_("Name"),
 			    _("Directory"),
 			    _("Used Space"),
 			    _("Total Space")
@@ -474,7 +498,7 @@ create_sys_view (ProcData *procdata)
 	procdata->mem_graph = mem_graph;
 	gtk_widget_show_all (vbox);
 				
-	disk_frame = gtk_frame_new (_("Disks"));
+	disk_frame = gtk_frame_new (_("Devices"));
 	gtk_container_set_border_width (GTK_CONTAINER (disk_frame), GNOME_PAD_SMALL);
 	gtk_paned_add2 (GTK_PANED (vpane), disk_frame);
 	
@@ -487,12 +511,16 @@ create_sys_view (ProcData *procdata)
 	clist = gtk_clist_new_with_titles (4, titles);
 	gtk_container_add (GTK_CONTAINER (scrolled), clist);
   	
-  	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 0, TRUE);
-  	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 1, TRUE);
-  	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 2, TRUE);
+  	gtk_clist_set_column_width (GTK_CLIST (clist), 0, procdata->config.disk_width1);
+  	gtk_clist_set_column_width (GTK_CLIST (clist), 1, procdata->config.disk_width2);
+  	gtk_clist_set_column_width (GTK_CLIST (clist), 2, procdata->config.disk_width3);
+  	gtk_clist_set_column_width (GTK_CLIST (clist), 3, procdata->config.disk_width4);
+  	
   	gtk_clist_set_column_justification (GTK_CLIST (clist), 2, GTK_JUSTIFY_CENTER);
-  	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 3, TRUE);
   	gtk_clist_set_column_justification (GTK_CLIST (clist), 3, GTK_JUSTIFY_CENTER);
+  	
+  	gtk_signal_connect (GTK_OBJECT (clist), "resize_column",
+  			    GTK_SIGNAL_FUNC (disk_list_resize), procdata);
   	
   	gtk_widget_show_all (disk_frame);
   	

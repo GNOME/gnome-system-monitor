@@ -180,6 +180,10 @@ procman_data_new (void)
 	pd->config.whose_process = gnome_config_get_int ("procman/Config/view_as=1");
 	pd->config.current_tab = gnome_config_get_int ("procman/Config/current_tab=0");
 	pd->config.pane_pos = gnome_config_get_int ("procman/Config/pane_pos=300");
+	pd->config.disk_width1 = gnome_config_get_int ("procman/Config/disk1=60");
+	pd->config.disk_width2 = gnome_config_get_int ("procman/Config/disk2=120");
+	pd->config.disk_width3 = gnome_config_get_int ("procman/Config/disk3=80");
+	pd->config.disk_width4 = gnome_config_get_int ("procman/Config/disk4=10");
 	pd->config.bg_color.red = gnome_config_get_int
 		("procman/Config/bg_red=0");
 	pd->config.bg_color.green = gnome_config_get_int
@@ -262,7 +266,7 @@ procman_save_config (ProcData *data)
 	data->config.height = height;
 	
 	pane_pos = get_sys_pane_pos ();
-	data->config.pane_pos = pane_pos;
+	data->config.pane_pos = pane_pos;		
 		
 	gnome_config_set_int ("procman/Config/width",data->config.width);
 	gnome_config_set_int ("procman/Config/height",data->config.height);	
@@ -284,6 +288,10 @@ procman_save_config (ProcData *data)
 			      data->config.disks_update_interval);
 	gnome_config_set_int ("procman/Config/current_tab", data->config.current_tab);
 	gnome_config_set_int ("procman/Config/pane_pos", data->config.pane_pos);
+	gnome_config_set_int ("procman/Config/disk1", data->config.disk_width1);
+	gnome_config_set_int ("procman/Config/disk2", data->config.disk_width2);
+	gnome_config_set_int ("procman/Config/disk3", data->config.disk_width3);
+	gnome_config_set_int ("procman/Config/disk4", data->config.disk_width4);
 	gnome_config_set_int ("procman/Config/bg_red", data->config.bg_color.red);
 	gnome_config_set_int ("procman/Config/bg_green", data->config.bg_color.green);
 	gnome_config_set_int ("procman/Config/bg_blue", data->config.bg_color.blue);

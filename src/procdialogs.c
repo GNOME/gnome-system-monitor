@@ -691,7 +691,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 			  GTK_FILL|GTK_EXPAND,0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 			  
 	
-	frame = gtk_frame_new (_("Disks"));
+	frame = gtk_frame_new (_("Devices"));
 	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
 	table = gtk_table_new (2, 1, FALSE);

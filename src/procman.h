@@ -68,6 +68,10 @@ struct _ProcConfig
 	GdkColor	frame_color;
 	gboolean	simple_view;
 	gint		pane_pos;
+	gint		disk_width1;
+	gint		disk_width2;
+	gint		disk_width3;
+	gint		disk_width4;
 };
 
 struct _PrettyTable {
