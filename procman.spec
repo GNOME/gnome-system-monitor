@@ -53,4 +53,4 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}/share/procman/memmaps.etspec
 %{prefix}/share/procman/simple.etspec
 %{prefix}/share/locale/*/LC_MESSAGES/*.mo
-%{prefix}/pixmaps/procman.png
+%{prefix}/share/pixmaps/procman.png
