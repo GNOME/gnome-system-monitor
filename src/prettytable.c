@@ -25,50 +25,77 @@ static void
 new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 {
 	ProcData *procdata = data;
+	ProcInfo *info;
 	GHashTable *hash = procdata->pretty_table->app_hash;
 	gint pid;
 	GdkPixbuf *icon = NULL;
-	GList *windows = NULL;
+	GList *list = NULL;
 	WnckWindow *window;
 	
-	windows =  wnck_application_get_windows (app);
-	g_return_if_fail (windows);
-	window = windows->data;
-	
-	pid = wnck_window_get_pid (window);
+	pid = wnck_application_get_pid (app);
 	if (pid == 0)
 		return;
-		
-	icon = wnck_window_get_icon (window);
 	
-	if (icon) {
-		g_hash_table_insert (hash, g_strdup_printf ("%d", pid), icon);
+	/* Hack - wnck_application_get_icon always returns the default icon */
+#if 0	
+	icon = wnck_application_get_mini_icon (app);	
+#else
+	list = wnck_application_get_windows (app);
+	if (!list)
+		return;
+	window = list->data;
+	icon = wnck_window_get_icon (window);
+#endif
+	if (!icon)
+		return;
+	
+	/* If process already exists then set the icon. Otherwise put into hash
+	** table to be added later */	
+	info = proctable_find_process (pid, NULL, procdata);
+	if (info) {
+		info->pixbuf = gdk_pixbuf_scale_simple (icon, 16, 16, 
+							GDK_INTERP_HYPER);		
+		if (info->visible) {
+			GtkTreeModel *model;
+			model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
+			gtk_tree_store_set (GTK_TREE_STORE (model), &info->node,
+                            		    COL_PIXBUF, info->pixbuf, -1);
+                }
+                return;
 	}
+							
+	g_hash_table_insert (hash, g_strdup_printf ("%d", pid), icon);
+		
 	
 }	
 
 static void
 application_finished (WnckScreen *screen, WnckApplication *app, gpointer data)
 {
-/*
+
 	ProcData *procdata = data;
 	GHashTable *hash = procdata->pretty_table->app_hash;
 	gint pid;
+	gpointer p1, p2;
 	GdkPixbuf *icon;
-	GList *windows = NULL;
 	WnckWindow *window;
+	gchar *id, *orig_id;
 
-	windows =  wnck_application_get_windows (app);
-	window = windows->data;
-	
-	g_print ("new app closed\n");
-	pid = wnck_window_get_pid (window);
-	g_print ("%d \n", pid);
+	pid =  wnck_application_get_pid (app);
 	if (pid == 0)
 		return;
+		
+	id = g_strdup_printf ("%d", pid);
+	if (g_hash_table_lookup_extended (hash, id, &p1, &p2)) {
+		orig_id = p1;
+		g_hash_table_remove (hash, orig_id);
+		if (orig_id) 
+			g_free (orig_id);
+	}
 	
-	g_hash_table_remove (hash, &pid);
-*/	
+	
+	g_free (id);
+	
 }
 #endif
 
@@ -92,11 +119,17 @@ PrettyTable *pretty_table_new (ProcData *procdata) {
 		pid = wnck_window_get_pid (window);
 		if (pid > 0) {
 			GdkPixbuf *icon;
+			gchar *id;
 			icon = wnck_window_get_icon (window);
-	
 			if (icon) {
-				g_hash_table_insert (pretty_table->app_hash, 
-						     g_strdup_printf ("%d", pid), icon);
+				id = g_strdup_printf ("%d", pid);
+				/* Don't put in icons for the same pid */
+				if (!g_hash_table_lookup (pretty_table->app_hash, id)) 
+				 	g_hash_table_insert (pretty_table->app_hash, 
+						             id, icon);
+					
+				else 
+					g_free (id);
 			}
 		}
 		
@@ -178,13 +211,14 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command, gin
 	icon_path = g_hash_table_lookup (pretty_table->default_hash, command);
 	
 	if (icon_path) {
-		tmp_pixbuf = gdk_pixbuf_new_from_file (icon_path, NULL);			
+		tmp_pixbuf = gdk_pixbuf_new_from_file (icon_path, NULL);		
 	}
 	/* This looks ugly but we don't want to unref the pixbuf in the 
 	** app hash since it's owned by libwnck and not us */	
 	if (tmp_pixbuf) {
-		icon = gdk_pixbuf_scale_simple (tmp_pixbuf, 16, 16, GDK_INTERP_HYPER);
-		gdk_pixbuf_unref (tmp_pixbuf);
+		icon = gdk_pixbuf_scale_simple (tmp_pixbuf, 16, 16, 
+						GDK_INTERP_HYPER);
+		g_object_unref (tmp_pixbuf);
 		return icon;
 	}
 		

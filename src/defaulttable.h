@@ -8,7 +8,6 @@ const gchar *default_table[] = {
 				"X", N_("X window system"), "gnome-mdi.png",
 				"bash", N_("bourne again shell"), "gnome-term.png",
 				"gnome-session", N_("Gnome-Session"), "gnome-logo-icon-transparent.png",
-				"gnome-system-monitor", N_("System Monitor"), "procman.png",
 				NULL};
 
 #endif /* _DEFAULTTABLE_H_ */
