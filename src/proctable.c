@@ -271,8 +271,6 @@ proctable_free_info (ProcInfo *info)
 	g_free (info);
 }
 
-
-
 static void
 get_process_status (ProcInfo *info, char *state)
 {
@@ -363,7 +361,6 @@ find_parent (ProcData *data, gint pid)
 	return NULL;
 }
 
-
 /* He he. Check to see if the process links to libX11. */
 static gboolean
 is_graphical (ProcInfo *info)
@@ -390,7 +387,6 @@ is_graphical (ProcInfo *info)
 	return FALSE;
 }
 
-
 void
 insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 {
@@ -400,14 +396,13 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	gchar *mem, *vmsize, *memres, *memshared, *memrss, *memxserver;
 	
 	/* Don't show process if it is not running */
-	if (procdata->config.whose_process == RUNNING_PROCESSES && 
+	if ((procdata->config.whose_process == ACTIVE_PROCESSES) && 
 	    (!info->running))
 		return;
 		
 	/* crazy hack to see if process links to libX11 */	
 	/*if (!is_graphical (info))
 		return;*/
-
 
 	/* Don't show processes that user has blacklisted */
 	if (is_process_blacklisted (procdata, info->name))
@@ -481,8 +476,6 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	info->visible = TRUE;
 }
 
-
-
 /* Kind of a hack. When a parent process is removed we remove all the info
 ** pertaining to the child processes and then readd them later
 */
@@ -506,7 +499,6 @@ remove_children_from_tree (ProcData *procdata, GtkTreeModel *model,
 			proctable_free_info (child_info);
 		}
 	} while (gtk_tree_model_iter_next (model, parent));
-		
 }
 
 void
@@ -534,7 +526,6 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 	gtk_tree_store_remove (GTK_TREE_STORE (model), &iter);
 	
 	info->visible = FALSE;	
-		
 }
 
 static void
@@ -561,7 +552,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
         wnck_pid_read_resource_usage (gdk_screen_get_display (gdk_screen_get_default ()),
                                       pid,
                                       &xresources);
-        
+
 	info->mem = procmem.size;
 	info->vmsize = procmem.vsize;
 	info->memres = procmem.resident;
@@ -581,11 +572,11 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	info->cpu_time_last = newcputime;
 	info->cpu = pcpu;	
 	info->nice = procuid.nice;
-		
-	get_process_status (info, &procstate.state);
 
-	if (procdata->config.whose_process == RUNNING_PROCESSES)
-	{
+	get_process_status (info, (char *) &procstate.state);
+
+	if (procdata->config.whose_process == ACTIVE_PROCESSES)	{
+
 		/* process started running */
 		if (info->running && (!info->visible)) {
 			insert_info_to_tree (info, procdata);
@@ -636,7 +627,6 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 		g_free (memrss);
                 g_free (memxserver);
 	}
-		
 }
 
 static ProcInfo *
@@ -702,7 +692,7 @@ get_info (ProcData *procdata, gint pid)
 	info->parent_pid = procuid.ppid;
 	info->cpu_time_last = newcputime;
 	info->nice = procuid.nice;
-	get_process_status (info, &procstate.state);
+	get_process_status (info, (char *) &procstate.state);
 	
 	info->pixbuf = pretty_table_get_icon (procdata->pretty_table, info->name, pid);
 	
@@ -827,9 +817,6 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 		procdata->info = g_list_remove (procdata->info, oldinfo);
 		proctable_free_info (oldinfo);
 	}
-	
-	
-
 }
 
 void
@@ -841,12 +828,10 @@ proctable_update_list (ProcData *data)
 	glibtop_cpu cpu;
 	gint which, arg;
 	gint n;
-	
-	
+
 	switch (procdata->config.whose_process) {
 	case ALL_PROCESSES:
-	case RUNNING_PROCESSES:
-	case FAVORITE_PROCESSES:
+	case ACTIVE_PROCESSES:
 		which = GLIBTOP_KERN_PROC_ALL;
 		arg = 0;
 		break;
@@ -856,7 +841,6 @@ proctable_update_list (ProcData *data)
 		break;
 	}
 	
-
 	pid_list = glibtop_get_proclist (&proclist, which, arg);
 	n = proclist.number;
 	
@@ -869,9 +853,7 @@ proctable_update_list (ProcData *data)
 	refresh_list (procdata, pid_list, n);
 	
 	g_free (pid_list);
-	
 }
-
 
 void
 proctable_update_all (ProcData *data)
@@ -882,7 +864,6 @@ proctable_update_all (ProcData *data)
 	
 	if (procdata->config.show_more_info)
 		infoview_update (procdata);
-
 }
 
 void 
@@ -898,8 +879,6 @@ proctable_clear_tree (ProcData *data)
 	proctable_free_table (procdata);
 	
 	update_sensitivity (procdata, FALSE);
-	
-
 }
 
 void		
@@ -916,7 +895,6 @@ proctable_free_table (ProcData *procdata)
 	
 	g_list_free (procdata->info);
 	procdata->info = NULL;
-	
 }
 
 void
@@ -1003,7 +981,5 @@ proctable_search_table (ProcData *procdata, gchar *string)
 	}
 	
 	increment --;
-
 }
-
 	

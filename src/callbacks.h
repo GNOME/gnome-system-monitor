@@ -49,13 +49,8 @@ gboolean	cb_app_delete (GtkWidget *window, GdkEventAny *event, gpointer data);
 #if 0
 gboolean	cb_close_simple_dialog (GnomeDialog *dialog, gpointer data);
 #endif                                        
-void		cb_all_process_menu_clicked (GtkWidget *widget, gpointer data);	
-					 
-void		cb_my_process_menu_clicked (GtkWidget *widget, gpointer data);  
-					 
-void		cb_running_process_menu_clicked	(GtkWidget *widget, gpointer data);
+void		cb_proc_combo_changed (GtkComboBox *combo, gpointer data);
 
-void		cb_favorites_menu_clicked (GtkWidget *widget, gpointer data);
 void		cb_end_process_button_pressed (GtkButton *button, gpointer data);
 void		cb_logout (GtkButton *button, gpointer data);
 

@@ -202,45 +202,22 @@ cb_close_simple_dialog (GnomeDialog *dialog, gpointer data)
 
 }
 #endif
-void
-cb_all_process_menu_clicked 		(GtkWidget	*widget,
-					 gpointer	data)
-{
-	ProcData *procdata = data;
-	GConfClient *client = procdata->client;
-	
-	g_return_if_fail (data);
-	procdata->config.whose_process = ALL_PROCESSES;
-	gconf_client_set_int (client, "/apps/procman/view_as", 
-			      procdata->config.whose_process, NULL);
-	
-}
 
 void
-cb_my_process_menu_clicked		(GtkWidget	*widget,
-					 gpointer	data)
+cb_proc_combo_changed (GtkComboBox *combo, gpointer data)
 {
-	ProcData *procdata = data;
-	GConfClient *client = procdata->client;
-	
+	ProcData *procdata;
+	GConfClient *client;
+
 	g_return_if_fail (data);
-	procdata->config.whose_process = MY_PROCESSES;
+
+	procdata = data;
+	client = procdata->client;
+
+	procdata->config.whose_process = gtk_combo_box_get_active (combo);
 	gconf_client_set_int (client, "/apps/procman/view_as", 
 			      procdata->config.whose_process, NULL);
 }
-
-void
-cb_running_process_menu_clicked		(GtkWidget	*widget,
-					 gpointer	data)
-{
-	ProcData *procdata = data;
-	GConfClient *client = procdata->client;
-	
-	g_return_if_fail (data);
-	procdata->config.whose_process = RUNNING_PROCESSES;
-	gconf_client_set_int (client, "/apps/procman/view_as", 
-			      procdata->config.whose_process, NULL);
-}				
 
 void
 popup_menu_renice (GtkMenuItem *menuitem, gpointer data)

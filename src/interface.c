@@ -118,26 +118,6 @@ static GnomeUIInfo menubar1_uiinfo[] =
 	GNOMEUIINFO_END
 };
 
-static GnomeUIInfo view_optionmenu[] = 
-{
-	{
- 	  GNOME_APP_UI_ITEM, N_("All Processes"), N_("View processes being run by all users"),
-	 cb_all_process_menu_clicked, NULL, NULL, 0, 0,
-	 't', GDK_CONTROL_MASK
-	},
-	{
- 	  GNOME_APP_UI_ITEM, N_("My Processes"), N_("View processes being run by you"),
-	 cb_my_process_menu_clicked, NULL, NULL, 0, 0,
-	 'p', GDK_CONTROL_MASK
-	},
-	{
- 	  GNOME_APP_UI_ITEM, N_("Active Processes"), N_("View only active processes"),
-	 cb_running_process_menu_clicked, NULL, NULL, 0, 0,
-	 'o', GDK_CONTROL_MASK
-	},
-	GNOMEUIINFO_END
-};
-
 static GnomeUIInfo popup_menu_uiinfo[] =
 {
 	{
@@ -185,7 +165,6 @@ get_sys_pane_pos (void)
 	return GTK_PANED (sys_pane)->child1_size;
 }
 
-
 static GtkWidget *
 create_proc_view (ProcData *procdata)
 {
@@ -193,19 +172,18 @@ create_proc_view (ProcData *procdata)
 	GtkWidget *hbox1;
 	GtkWidget *search_label;
 	GtkWidget *search_entry;
-	GtkWidget *optionmenu1;
-	GtkWidget *optionmenu1_menu;
+	GtkWidget *proc_combo;
 	GtkWidget *scrolled;
 	GtkWidget *infobox;
 	GtkWidget *label;
 	GtkWidget *hbox2;
-	
+
 	vbox1 = gtk_vbox_new (FALSE, 18);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox1), 12);
 	
 	hbox1 = gtk_hbox_new (FALSE, 12);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
-	
+
 	search_label = gtk_label_new_with_mnemonic (_("Sea_rch:"));
 	gtk_box_pack_start (GTK_BOX (hbox1), search_label, FALSE, FALSE, 0);
 	
@@ -214,29 +192,31 @@ create_proc_view (ProcData *procdata)
 	g_signal_connect (G_OBJECT (search_entry), "activate",
 			  G_CALLBACK (cb_search), procdata);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (search_label), search_entry);
-	
-	optionmenu1 = gtk_option_menu_new ();
-	gtk_box_pack_end (GTK_BOX (hbox1), optionmenu1, FALSE, FALSE, 0);
-  	optionmenu1_menu = gtk_menu_new ();
 
-  	gnome_app_fill_menu_with_data (GTK_MENU_SHELL (optionmenu1_menu), view_optionmenu,
-  			               NULL, TRUE, 0, procdata);
+	proc_combo = gtk_combo_box_new_text ();
+	gtk_box_pack_end (GTK_BOX (hbox1), proc_combo, FALSE, FALSE, 0);
 
-	gtk_menu_set_active (GTK_MENU (optionmenu1_menu), procdata->config.whose_process);
-  	gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu1), optionmenu1_menu);
-  	  	
+	gtk_combo_box_insert_text (GTK_COMBO_BOX (proc_combo), ALL_PROCESSES, _("All Processes"));
+	gtk_combo_box_insert_text (GTK_COMBO_BOX (proc_combo), MY_PROCESSES, _("My Processes"));
+	gtk_combo_box_insert_text (GTK_COMBO_BOX (proc_combo), ACTIVE_PROCESSES, _("Active Processes"));
+
+	gtk_combo_box_set_active (GTK_COMBO_BOX (proc_combo), procdata->config.whose_process);
+
+	g_signal_connect (G_OBJECT (proc_combo), "changed",
+			  G_CALLBACK (cb_proc_combo_changed), procdata);
+
   	label = gtk_label_new_with_mnemonic (_("Vie_w:"));
-  	gtk_label_set_mnemonic_widget (GTK_LABEL (label), optionmenu1);
+  	gtk_label_set_mnemonic_widget (GTK_LABEL (label), proc_combo);
 	gtk_box_pack_end (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
-	
+
 	gtk_widget_show_all (hbox1);
-	
+
 	scrolled = proctable_new (procdata);
 	if (!scrolled)
 		return NULL;
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
                                              GTK_SHADOW_IN);
-	
+
 	gtk_box_pack_start (GTK_BOX (vbox1), scrolled, TRUE, TRUE, 0);
 	
 	gtk_widget_show_all (scrolled);
@@ -266,7 +246,7 @@ create_proc_view (ProcData *procdata)
  	gnome_app_fill_menu_with_data (GTK_MENU_SHELL (popup_menu), popup_menu_uiinfo,
   			               NULL, TRUE, 0, procdata);
 	gtk_widget_show (popup_menu);
-      
+
         return vbox1;
 }
 
