@@ -1,5 +1,26 @@
 2004-11-28  Benoît Dejean  <tazforever@dlfp.org>
 
+	* src/interface.c: (sort_bytes):
+	* src/memmaps.c: (sort_guint64): Cleaned.
+	
+	* src/procman.h: Added a pid_t->ProcInfo hashtable. See comment. 
+	
+	* src/prettytable.c: (new_application):
+	* src/procman.c: (procman_data_new), (procman_free_data):
+	* src/proctable.c: (sort_ints), (get_process_selinux_context),
+	(proctable_new), (proctable_free_info), (get_process_name),
+	(get_process_memory_info), (proctable_find_process), (find_parent),
+	(remove_children_from_tree), (remove_info_from_list),
+	(update_info), (get_info), (refresh_list), (proctable_free_table):
+	* src/proctable.h: Big cleanup.
+	Use hashtable instead of list : N² -> N ! I believe this is major speedup.
+	I'm interested in any kind of feedback.
+	
+	(get_process_memory_info): shares the routine that retrieves memory
+	stats.
+
+2004-11-28  Benoît Dejean  <tazforever@dlfp.org>
+
 	* configure.in: Depends on gtk+-2.5.
 	* src/callbacks.c: (cb_about_activate): Create about dialog with
 	gtk_show_about_dialog. Closes #159392.

@@ -230,15 +230,14 @@ sort_guint64 (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpoin
 		break;
 
 	default:
+		g_assert_not_reached();
 		return 0;
 	}
 
 	gtk_tree_model_get (model, itera, data_col, &a, -1);
 	gtk_tree_model_get (model, iterb, data_col, &b, -1);
 
-	if(a < b) return -1;
-	if(a > b) return  1;
-	return 0;
+	return PROCMAN_CMP(a, b);
 }
 
 

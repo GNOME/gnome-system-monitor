@@ -49,7 +49,7 @@ new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 
 	/* If process already exists then set the icon. Otherwise put into hash
 	** table to be added later */
-	info = proctable_find_process (pid, NULL, procdata);
+	info = proctable_find_process (pid, procdata);
 
 	if (info) {
 	/* Don't update the icon if there already is one */

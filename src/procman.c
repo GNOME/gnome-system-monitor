@@ -224,6 +224,7 @@ procman_data_new (GConfClient *client)
 	pd->tree = NULL;
 	pd->infobox = NULL;
 	pd->info = NULL;
+	pd->pids = g_hash_table_new(g_direct_hash, g_direct_equal);
 	pd->selected_process = NULL;
 	pd->timeout = -1;
 	pd->blacklist = NULL;
@@ -369,7 +370,7 @@ procman_free_data (ProcData *procdata)
 {
 
 	proctable_free_table (procdata);
-	
+	g_hash_table_destroy(procdata->pids);
 	/* pretty_table_free (procdata->pretty_table); */
 	
 	g_free (procdata);

@@ -141,14 +141,6 @@ struct _ProcInfo
 
 	guint		pid;
 
-#if 0
-	guint8		queue; /* enum */
-
-	gboolean	is_visible;
-	gboolean	is_running;
-	gboolean	is_thread;
-	gboolean	is_blacklisted;
-#endif
 	guint		queue		: 2;
 	guint		is_visible	: 1;
 	guint		is_running	: 1;
@@ -169,7 +161,33 @@ struct _ProcData
 	GtkTreeSelection *selection;
 	gint		timeout;
 	gint		disk_timeout;
+
+/*
+   'info' is GList, which has very slow lookup. On each update, glibtop
+   retrieves the full system pid list. To update the table,
+
+   foreach pid in glibtop pid list:
+	- if there's not ProcInfo with pid, add a new ProcInfo to 'info'
+	- else, update the current ProcInfo
+
+   which is very inefficient, because if a process is running at time t,
+   it's very likely to be running at t+1.
+   So if is length('info') = N, N lookups are performed on each update.
+   Average lookup iterates over N / 2 ProcInfo to find that a pid already
+   has a ProcInfo.
+   -> cost = (N x N) / 2
+
+   With 200 processes, an update costs about 20000 g_list_next(), which
+   is huge because we only want to know if we have this pid or not.
+
+   So 'pids' is a hastable to perform fast lookups.
+
+   TODO: 'info' and 'pids' could be merged
+*/
+
 	GList		*info;
+	GHashTable	*pids;
+
 	PrettyTable	*pretty_table;
 	GList		*blacklist;
 	gint		blacklist_num;

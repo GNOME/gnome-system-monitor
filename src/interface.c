@@ -273,6 +273,7 @@ sort_bytes (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointe
 			return PROCMAN_CMP(btotal1 - bfree1, btotal2 - bfree2);
 
 		default:
+			g_assert_not_reached();
 			return 0;
 	}
 }
