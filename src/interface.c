@@ -295,12 +295,14 @@ create_sys_view (ProcData *procdata)
 	
 	vbox = gtk_vbox_new (FALSE, 0);
 	gtk_paned_pack1 (GTK_PANED (vpane), vbox, TRUE, FALSE);
-	
+
+	/* xgettext:no-c-format */
 	cpu_frame = gtk_frame_new (_("% CPU Usage History"));
 	gtk_widget_show (cpu_frame);
 	gtk_container_set_border_width (GTK_CONTAINER (cpu_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), cpu_frame, TRUE, TRUE, 0);
 	
+	/* xgettext:no-c-format */
 	mem_frame = gtk_frame_new (_("% Memory / Swap Usage History"));
 	gtk_container_set_border_width (GTK_CONTAINER (mem_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), mem_frame, TRUE, TRUE, 0);

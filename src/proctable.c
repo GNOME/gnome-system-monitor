@@ -127,7 +127,9 @@ proctable_new (ProcData *data)
 				 N_("User"), N_("Status"),
 				 N_("Memory"), N_("VM Size"), N_("Resident Memory"),
 				 N_("Shared Memory"), N_("RSS Memory"),
-				 N_("% CPU"), N_("Nice"), N_("ID"), NULL, "POINTER"};
+				 /* xgettext:no-c-format */
+				 N_("% CPU"),
+				 N_("Nice"), N_("ID"), NULL, "POINTER"};
 	gint i;
 	
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
