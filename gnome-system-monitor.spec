@@ -1,7 +1,7 @@
 # Note that this is NOT a relocatable package
 
 Summary: Simple process monitor
-Name: procman
+Name: gnome-system-monitor
 Version: 1.1.2
 Release: 1
 Copyright: GPL
@@ -37,13 +37,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
-gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/procman.schemas > /dev/null
+gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/gnome-system-monitor.schemas > /dev/null
 
 %files -f %{name}.lang
 %defattr(-, root, root)
 
-%{_bindir}/procman
-%{_datadir}/gnome/apps/System/procman.desktop
+%{_bindir}/gnome-system-monitor
+%{_datadir}/applications/gnome-system-monitor.schemas
 %{_sysconfdir}/gconf/schemas/*
 
 %changelog

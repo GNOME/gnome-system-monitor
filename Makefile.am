@@ -3,15 +3,15 @@
 SUBDIRS = po src
 
 EXTRA_DIST = \
-	procman.desktop.in \
-	procman.spec \
+	gnome-system-monitor.desktop.in \
+	gnome-system-monitor.spec \
 	intltool-extract.in \
 	intltool-merge.in \
 	intltool-update.in \
 	HACKING 
 
-Applicationsdir = $(datadir)/gnome/apps/System
-Applications_in_files = procman.desktop.in
+Applicationsdir = $(datadir)/applications
+Applications_in_files = gnome-system-monitor.desktop.in
 Applications_DATA = $(Applications_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
