@@ -143,7 +143,7 @@ compare_open_files(gconstpointer a, gconstpointer b)
 	const glibtop_open_files_entry *o2 = b;
 
 	/* Falta manejar los diferentes tipos! */
-	return (o1->fd == o2->fd) && (o1->type == o1->type); // XXX!
+	return (o1->fd == o2->fd) && (o1->type == o1->type); /* XXX! */
 }
 
 
