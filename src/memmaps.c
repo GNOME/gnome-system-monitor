@@ -12,14 +12,14 @@
 #include "procman.h"
 #include "memmaps.h"
 
-GtkWidget *memmapsdialog = NULL;
-GtkWidget *command_label;
-GtkWidget *tree = NULL;
-ETreeModel *model = NULL;
-ETreeMemory *memory = NULL;
-ETreePath root_node = NULL;
-gint timer = 0;
-GList *memmaps_list = NULL;
+static GtkWidget *memmapsdialog = NULL;
+static GtkWidget *command_label;
+static GtkWidget *tree = NULL;
+static ETreeModel *model = NULL;
+static ETreeMemory *memory = NULL;
+static ETreePath root_node = NULL;
+static gint timer = 0;
+static GList *memmaps_list = NULL;
 
 static GdkPixbuf *
 memmaps_get_icon (ETreeModel *etm, ETreePath path, void *data)

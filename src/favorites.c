@@ -37,11 +37,11 @@
         </ETableState> \
 </ETableSpecification>"
 
-GtkWidget *blacklist_dialog = NULL;
-GtkWidget *tree;
-ETreeMemory *memory;
-ETreePath root_node;
-gint initial_blacklist_num; /* defined in order to prune off entries from config file */
+static GtkWidget *blacklist_dialog = NULL;
+static GtkWidget *tree;
+static ETreeMemory *memory;
+static ETreePath root_node;
+static gint initial_blacklist_num; /* defined in order to prune off entries from config file */
 
 void
 add_to_favorites (ProcData *procdata, gchar *name)
