@@ -201,7 +201,8 @@ get_memory (gfloat data [1], LoadGraph *g)
 	glibtop_get_mem (&mem);
 	glibtop_get_swap (&swap);
 
-	swappercent = (float)swap.used / (float)swap.total;
+	/* There's no swap on LiveCD : 0.0f is better than NaN :) */
+	swappercent = (swap.total ? (float)swap.used / (float)swap.total : 0.0f);
 	mempercent  = (float)mem.user  / (float)mem.total;
 
 	text1 = gnome_vfs_format_file_size_for_display (mem.total);
