@@ -39,129 +39,92 @@
 #include "load-graph.h"
 #include "util.h"
 
-static void	cb_toggle_tree (GtkMenuItem *menuitem, gpointer data);
-static void	cb_toggle_threads (GtkMenuItem *menuitem, gpointer data);
+static void	cb_toggle_tree (GtkAction *action, gpointer data);
+static void	cb_toggle_threads (GtkAction *action, gpointer data);
 
-
-static GnomeUIInfo file1_menu_uiinfo[] =
+static const GtkActionEntry menu_entries[] =
 {
-	GNOMEUIINFO_MENU_QUIT_ITEM (cb_app_exit, NULL),
-	GNOMEUIINFO_END
+	{ "File", NULL, N_("_File") },
+	{ "Edit", NULL, N_("_Edit") },
+	{ "View", NULL, N_("_View") },
+	{ "Help", NULL, N_("_Help") },
+
+	{ "Quit", GTK_STOCK_QUIT, N_("_Quit"), "<control>Q",
+	  N_("Quit the program"), G_CALLBACK (cb_app_exit) },
+
+	{ "EndProcess", NULL, N_("End _Process"), "<control>E",
+	  N_("Force process to finish normally"), G_CALLBACK (cb_end_process) },
+	{ "KillProcess", NULL, N_("_Kill Process"), "<control>K",
+	  N_("Force process to finish immediately"), G_CALLBACK (cb_kill_process) },
+	{ "ChangePriority", NULL, N_("_Change Priority..."), "<control>R",
+	  N_("Change the order of priority of process"), G_CALLBACK (cb_renice) },
+	{ "Preferencies", GTK_STOCK_PREFERENCES, N_("Prefere_nces"), NULL,
+	  N_("Configure the application"), G_CALLBACK (cb_edit_preferences) },
+
+	{ "HideProcess", NULL, N_("_Hide Process"), "<control>H",
+	  N_("Hide process from list"), G_CALLBACK (cb_hide_process) },
+	{ "HiddenProcesses", NULL, N_("_Hidden Processes"), "<control>P",
+	  N_("Open the list of currently hidden processes"), G_CALLBACK (cb_show_hidden_processes) },
+	{ "MemoryMaps", NULL, N_("_Memory Maps"), "<control>M",
+	  N_("Open the memory maps associated with a process"), G_CALLBACK (cb_show_memory_maps) },
+	{ "OpenFiles", NULL, N_("Open _Files"), "<control>F",
+	  N_("View the files opened by a process"), G_CALLBACK (cb_show_open_files) },
+
+	{ "HelpContents", GTK_STOCK_HELP, N_("_Contents"), "F1",
+	  N_("Open the manual"), G_CALLBACK (cb_help_contents) },
+	{ "About", GTK_STOCK_ABOUT, N_("_About"), NULL,
+	  N_("About this application"), G_CALLBACK (cb_about) }
 };
 
-static GnomeUIInfo edit1_menu_uiinfo[] =
+static const GtkToggleActionEntry toggle_menu_entries[] =
 {
-	{
-	 GNOME_APP_UI_ITEM, N_("End _Process"), N_("Force process to finish normally"),
-	 cb_end_process, NULL, NULL, 0, NULL,
-	 'e', GDK_CONTROL_MASK
-	},
-	{
-	 GNOME_APP_UI_ITEM, N_("_Kill Process"), N_("Force process to finish immediately"),
-	 cb_kill_process, NULL, NULL, 0, NULL,
-	 'k', GDK_CONTROL_MASK
-	},
-	GNOMEUIINFO_SEPARATOR,
- 	{
- 	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), N_("Change the order of priority of process"),
-	 cb_renice, NULL, NULL, 0, NULL,
-	 'r', GDK_CONTROL_MASK
-	},
-	GNOMEUIINFO_SEPARATOR,
-	GNOMEUIINFO_MENU_PREFERENCES_ITEM (cb_preferences_activate, NULL),
-	GNOMEUIINFO_END
+	{ "ShowDependencies", NULL, N_("_Dependencies"), "<control>D",
+	  N_("Show parent/child relationship between processes"),
+	  G_CALLBACK (cb_toggle_tree), TRUE },
+	{ "ShowThreads", NULL, N_("_Threads"), "<control>T",
+	  N_("Show each thread as a separate process"),
+	  G_CALLBACK (cb_toggle_threads), FALSE }
 };
 
-static GnomeUIInfo view1_menu_uiinfo[] =
-{
-	{
-	 GNOME_APP_UI_TOGGLEITEM, N_("_Dependencies"), N_("Show parent/child relationship between processes"),
-	 cb_toggle_tree, NULL, NULL, 0, NULL,
-	 'd', GDK_CONTROL_MASK
-	}, 
-	{
-	 GNOME_APP_UI_TOGGLEITEM, N_("_Threads"), N_("Show each thread as a separate process"),
-	 cb_toggle_threads, NULL, NULL, 0, NULL,
-	 't', GDK_CONTROL_MASK
-	},
-	GNOMEUIINFO_SEPARATOR,
-	{
-	 GNOME_APP_UI_ITEM, N_("_Hide Process"), N_("Hide process from list"),
-	 cb_hide_process, NULL, NULL, 0, NULL,
-	 'h', GDK_CONTROL_MASK
-	}, 
-	{
-	 GNOME_APP_UI_ITEM, N_("_Hidden Processes"), N_("Open the list of currently hidden processes"),
-	 cb_show_hidden_processes, NULL, NULL, 0, NULL,
-	 'p', GDK_CONTROL_MASK
-	},
-	GNOMEUIINFO_SEPARATOR,
-	{
-	 GNOME_APP_UI_ITEM, N_("_Memory Maps"), N_("Open the memory maps associated with a process"),
-	 cb_show_memory_maps, NULL, NULL, 0, NULL,
-	 'm', GDK_CONTROL_MASK
-	},
-	{
-	 GNOME_APP_UI_ITEM, N_("Open _Files"), N_("View the files opened by a process"),
-	 cb_show_open_files, NULL, NULL, 0, 0,
-	 'f', GDK_CONTROL_MASK
-	},
-	GNOMEUIINFO_END
-};
-
-static GnomeUIInfo help1_menu_uiinfo[] =
-{
-	GNOMEUIINFO_HELP("gnome-system-monitor"),
-	GNOMEUIINFO_MENU_ABOUT_ITEM (cb_about_activate, NULL),
-	GNOMEUIINFO_END
-};
-
-static GnomeUIInfo menubar1_uiinfo[] =
-{
-	GNOMEUIINFO_MENU_FILE_TREE (file1_menu_uiinfo),
-	GNOMEUIINFO_MENU_EDIT_TREE (edit1_menu_uiinfo),
-	GNOMEUIINFO_MENU_VIEW_TREE (view1_menu_uiinfo),
-	GNOMEUIINFO_MENU_HELP_TREE (help1_menu_uiinfo),
-	GNOMEUIINFO_END
-};
-
-static GnomeUIInfo popup_menu_uiinfo[] =
-{
-	{
- 	  GNOME_APP_UI_ITEM, N_("_End Process"), N_("Force a process to finish normally"),
-	 cb_end_process, NULL, NULL, 0, NULL,
-	 0, 0
-	},
-	{
- 	  GNOME_APP_UI_ITEM, N_("_Kill Process"), N_("Force a process to finish immediately"),
-	 cb_kill_process, NULL, NULL, 0, NULL,
-	 0, 0
-	},
-	GNOMEUIINFO_SEPARATOR,
-	{
- 	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), N_("Change the order of priority of process"),
-	 cb_renice, NULL, NULL, 0, NULL,
-	 0, 0
-	},
-	GNOMEUIINFO_SEPARATOR,
-	{
- 	  GNOME_APP_UI_ITEM, N_("_Hide Process"), N_("Hide process from list"),
-	 cb_hide_process, NULL, NULL, 0, NULL,
-	 0, 0
-	},
-	GNOMEUIINFO_SEPARATOR,
-	{
- 	  GNOME_APP_UI_ITEM, N_("_Memory Maps"), N_("Open the memory maps associated with the process"),
-	 cb_show_memory_maps, NULL, NULL, 0, NULL,
-	 0, 0
-	},
-	{
- 	  GNOME_APP_UI_ITEM, N_("Open _Files"), N_("View the files opened by the process"),
-	 popup_menu_show_open_files, NULL, NULL, 0, 0,
-	 0, 0
-	},
-	GNOMEUIINFO_END
-};
+static const char ui_info[] =
+"  <menubar name=\"MenuBar\">"
+"    <menu name=\"FileMenu\" action=\"File\">"
+"      <menuitem name=\"FileQuitMenu\" action=\"Quit\" />"
+"    </menu>"
+"    <menu name=\"EditMenu\" action=\"Edit\">"
+"      <menuitem name=\"EditEndProcessMenu\" action=\"EndProcess\" />"
+"      <menuitem name=\"EditKillProcessMenu\" action=\"KillProcess\" />"
+"      <separator />"
+"      <menuitem name=\"EditChangePriorityMenu\" action=\"ChangePriority\" />"
+"      <separator />"
+"      <menuitem name=\"EditPreferenciesMenu\" action=\"Preferencies\" />"
+"    </menu>"
+"    <menu name=\"ViewMenu\" action=\"View\">"
+"      <menuitem name=\"ViewDependenciesMenu\" action=\"ShowDependencies\" />"
+"      <menuitem name=\"ViewThreadsMenu\" action=\"ShowThreads\" />"
+"      <separator />"
+"      <menuitem name=\"ViewHideProcessMenu\" action=\"HideProcess\" />"
+"      <menuitem name=\"ViewHiddenProcessesMenu\" action=\"HiddenProcesses\" />"
+"      <separator />"
+"      <menuitem name=\"ViewMemoryMapsMenu\" action=\"MemoryMaps\" />"
+"      <menuitem name=\"ViewOpenFilesMenu\" action=\"OpenFiles\" />"
+"    </menu>"
+"    <menu name=\"HelpMenu\" action=\"Help\">"
+"      <menuitem name=\"HelpContentsMenu\" action=\"HelpContents\" />"
+"      <menuitem name=\"HelpAboutMenu\" action=\"About\" />"
+"    </menu>"
+"  </menubar>"
+"  <popup name=\"PopupMenu\" action=\"Popup\">"
+"    <menuitem action=\"EndProcess\" />"
+"    <menuitem action=\"KillProcess\" />"
+"    <separator />"
+"    <menuitem action=\"ChangePriority\" />"
+"    <separator />"
+"    <menuitem action=\"HideProcess\" />"
+"    <separator />"
+"    <menuitem action=\"MemoryMaps\" />"
+"    <menuitem action=\"OpenFiles\" />"
+"  </popup>";
 
 
 static GtkWidget *
@@ -228,7 +191,6 @@ create_proc_view (ProcData *procdata)
 				   procdata->config.show_more_info);
 	gtk_widget_show (procdata->infoview.expander);
 	
-
 	vbox2 = gtk_vbox_new (FALSE, 0);
 	gtk_box_pack_end (GTK_BOX (hbox2), vbox2, FALSE, FALSE, 0);
 	procdata->endprocessbutton = gtk_button_new_with_mnemonic (_("End _Process"));
@@ -239,10 +201,7 @@ create_proc_view (ProcData *procdata)
 	gtk_widget_show_all (hbox2);
 	
 	/* create popup_menu */
- 	procdata->popup_menu = gtk_menu_new ();
- 	gnome_app_fill_menu_with_data (GTK_MENU_SHELL (procdata->popup_menu), popup_menu_uiinfo,
-  			               NULL, TRUE, 0, procdata);
-	gtk_widget_show (procdata->popup_menu);
+ 	procdata->popup_menu = gtk_ui_manager_get_widget (procdata->uimanager, "/PopupMenu");
 
         return vbox1;
 }
@@ -615,30 +574,134 @@ create_sys_view (ProcData *procdata)
 	return vbox;
 }
 
+static void
+menu_item_select_cb (GtkMenuItem *proxy,
+                     ProcData *procdata)
+{
+	GtkAction *action;
+	char *message;
+
+	action = g_object_get_data (G_OBJECT (proxy),  "gtk-action");
+	g_return_if_fail (action != NULL);
+
+	g_object_get (G_OBJECT (action), "tooltip", &message, NULL);
+	if (message)
+	{
+		gtk_statusbar_push (GTK_STATUSBAR (procdata->statusbar),
+				    procdata->tip_message_cid, message);
+		g_free (message);
+	}
+}
+
+static void
+menu_item_deselect_cb (GtkMenuItem *proxy,
+                       ProcData *procdata)
+{
+	gtk_statusbar_pop (GTK_STATUSBAR (procdata->statusbar),
+			   procdata->tip_message_cid);
+}
+
+static void
+connect_proxy_cb (GtkUIManager *manager,
+                  GtkAction *action,
+                  GtkWidget *proxy,
+                  ProcData *procdata)
+{
+	if (GTK_IS_MENU_ITEM (proxy)) {
+		g_signal_connect (proxy, "select",
+				  G_CALLBACK (menu_item_select_cb), procdata);
+		g_signal_connect (proxy, "deselect",
+				  G_CALLBACK (menu_item_deselect_cb), procdata);
+	}
+}
+
+static void
+disconnect_proxy_cb (GtkUIManager *manager,
+                     GtkAction *action,
+                     GtkWidget *proxy,
+                     ProcData *procdata)
+{
+	if (GTK_IS_MENU_ITEM (proxy)) {
+		g_signal_handlers_disconnect_by_func
+			(proxy, G_CALLBACK (menu_item_select_cb), procdata);
+		g_signal_handlers_disconnect_by_func
+			(proxy, G_CALLBACK (menu_item_deselect_cb), procdata);
+	}
+}
 
 void
 create_main_window (ProcData *procdata)
 {
 	gint width, height;
 	GtkWidget *app;
+	GtkAction *action;
+	GtkWidget *menubar;
+	GtkWidget *main_box;
 	GtkWidget *notebook;
 	GtkWidget *tab_label1, *tab_label2, *tab_label3;
 	GtkWidget *vbox1;
 	GtkWidget *sys_box, *devices_box;
-	GtkWidget *appbar1;
-	
+
 	app = gnome_app_new ("procman", _("System Monitor"));
+
+	main_box = gtk_vbox_new (FALSE, 0);
+	gnome_app_set_contents (GNOME_APP (app), main_box);
+	gtk_widget_show (main_box);
 	
 	width = procdata->config.width;
 	height = procdata->config.height;
 	gtk_window_set_default_size (GTK_WINDOW (app), width, height);
 	gtk_window_set_resizable (GTK_WINDOW (app), TRUE);
 	
-	gnome_app_create_menus_with_data (GNOME_APP (app), menubar1_uiinfo, procdata);
-	
+	/* create the menubar */
+	procdata->uimanager = gtk_ui_manager_new ();
+
+	/* show tooltips in the statusbar */
+	g_signal_connect (procdata->uimanager, "connect_proxy",
+			  G_CALLBACK (connect_proxy_cb), procdata);
+	g_signal_connect (procdata->uimanager, "disconnect_proxy",
+			 G_CALLBACK (disconnect_proxy_cb), procdata);
+
+	gtk_window_add_accel_group (GTK_WINDOW (app),
+				    gtk_ui_manager_get_accel_group (procdata->uimanager));
+
+	if (!gtk_ui_manager_add_ui_from_string (procdata->uimanager,
+	                                        ui_info,
+	                                        -1,
+	                                        NULL)) {
+		g_error("building menus failed");
+	}
+
+	procdata->action_group = gtk_action_group_new ("ProcmanActions");
+	gtk_action_group_set_translation_domain (procdata->action_group, NULL);
+	gtk_action_group_add_actions (procdata->action_group,
+	                              menu_entries,
+	                              G_N_ELEMENTS (menu_entries),
+	                              procdata);
+	gtk_action_group_add_toggle_actions (procdata->action_group,
+	                                     toggle_menu_entries,
+	                                     G_N_ELEMENTS (toggle_menu_entries),
+	                                     procdata);
+
+	gtk_ui_manager_insert_action_group (procdata->uimanager,
+	                                    procdata->action_group,
+	                                    0);
+
+	menubar = gtk_ui_manager_get_widget (procdata->uimanager, "/MenuBar");
+	gtk_box_pack_start (GTK_BOX (main_box), menubar, FALSE, FALSE, 0);
+
+
+	/* create the main notebook */
 	notebook = gtk_notebook_new ();
-	
+  	gtk_box_pack_start (GTK_BOX (main_box), 
+	                    notebook, 
+	                    TRUE, 
+	                    TRUE, 
+	                    0);
+	gtk_widget_show (notebook);
+
 	vbox1 = create_proc_view (procdata);
+	gtk_widget_show (vbox1);
 	tab_label1 = gtk_label_new (_("Processes"));
 	gtk_widget_show (tab_label1);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox1, tab_label1);
@@ -654,36 +717,36 @@ create_main_window (ProcData *procdata)
 	tab_label3 = gtk_label_new (_("Devices"));
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), devices_box, tab_label3);
 
-
-	appbar1 = gtk_statusbar_new();
-	gnome_app_set_statusbar (GNOME_APP (app), appbar1);
-	
-	g_signal_connect (G_OBJECT (app), "delete_event",
-                          G_CALLBACK (cb_app_delete),
-                          procdata);
-	
-	gnome_app_install_menu_hints (GNOME_APP (app), menubar1_uiinfo);
-		    
 	g_signal_connect (G_OBJECT (notebook), "switch-page",
 			  G_CALLBACK (cb_switch_page), procdata);
 	g_signal_connect (G_OBJECT (notebook), "change-current-page",
 			  G_CALLBACK (cb_change_current_page), procdata);
 
-	gtk_widget_show (vbox1);
-	gnome_app_set_contents (GNOME_APP (app), notebook);
-	gtk_widget_show (notebook);
 
 	gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab);
 	cb_change_current_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab, procdata);
+	g_signal_connect (G_OBJECT (app), "delete_event",
+                          G_CALLBACK (cb_app_delete),
+                          procdata);
 
 
- 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[0].widget),
-							  procdata->config.show_tree);
- 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[1].widget),
-							  procdata->config.show_threads);
-	
+	/* create the statusbar */
+	procdata->statusbar = gtk_statusbar_new();
+	gnome_app_set_statusbar (GNOME_APP (app), procdata->statusbar);
+	procdata->tip_message_cid = gtk_statusbar_get_context_id
+		(GTK_STATUSBAR (procdata->statusbar), "tip_message");
+
+
+	action = gtk_action_group_get_action (procdata->action_group, "ShowDependencies");
+	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
+				      procdata->config.show_tree);
+
+	action = gtk_action_group_get_action (procdata->action_group, "ShowThreads");
+	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
+				      procdata->config.show_threads);
+
+
 	procdata->app = app;
-
 }
 
 void
@@ -708,6 +771,8 @@ do_popup_menu (ProcData *procdata, GdkEventButton *event)
 void
 update_sensitivity (ProcData *data, gboolean sensitivity)
 {
+	GtkAction *action;
+
 	if(data->endprocessbutton) {
 		/* avoid error on startup if endprocessbutton
 		   has not been built yet */
@@ -715,50 +780,47 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 	}
 
 	gtk_widget_set_sensitive (data->infoview.box, sensitivity);
-	/*Edit->End Process*/
-	gtk_widget_set_sensitive (edit1_menu_uiinfo[0].widget, sensitivity);
-	/*Edit->Kill Process*/
-	gtk_widget_set_sensitive (edit1_menu_uiinfo[1].widget, sensitivity);
-	/*Edit->Change Priority*/
-	gtk_widget_set_sensitive (edit1_menu_uiinfo[3].widget, sensitivity);
-	/*View->Hide Process*/
-	gtk_widget_set_sensitive (view1_menu_uiinfo[3].widget, sensitivity);
-	/*View->Hidden Processes*/
-	gtk_widget_set_sensitive (view1_menu_uiinfo[4].widget, sensitivity);
-	/*View->Memory Maps*/
-	gtk_widget_set_sensitive (view1_menu_uiinfo[6].widget, sensitivity);
-	/*View->Open Files*/
-	gtk_widget_set_sensitive (view1_menu_uiinfo[7].widget, sensitivity);	
+
+	action = gtk_action_group_get_action (data->action_group, "EndProcess");
+	gtk_action_set_sensitive (action, sensitivity);
+	action = gtk_action_group_get_action (data->action_group, "KillProcess");
+	gtk_action_set_sensitive (action, sensitivity);
+	action = gtk_action_group_get_action (data->action_group, "ChangePriority");
+	gtk_action_set_sensitive (action, sensitivity);
+	action = gtk_action_group_get_action (data->action_group, "HideProcess");
+	gtk_action_set_sensitive (action, sensitivity);
+	action = gtk_action_group_get_action (data->action_group, "HiddenProcesses");
+	gtk_action_set_sensitive (action, sensitivity);
+	action = gtk_action_group_get_action (data->action_group, "MemoryMaps");
+	gtk_action_set_sensitive (action, sensitivity);
+	action = gtk_action_group_get_action (data->action_group, "OpenFiles");
+	gtk_action_set_sensitive (action, sensitivity);
 }
 
 static void		
-cb_toggle_tree (GtkMenuItem *menuitem, gpointer data)
+cb_toggle_tree (GtkAction *action, gpointer data)
 {
 	ProcData *procdata = data;
-	GtkCheckMenuItem *menu = GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[0].widget);
 	GConfClient *client = procdata->client;
 	gboolean show;
-	
-	show = gtk_check_menu_item_get_active (menu);
+
+	show = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 	if (show == procdata->config.show_tree)
 		return;
-		
+
 	gconf_client_set_bool (client, "/apps/procman/show_tree", show, NULL);
-	
 }
 
 static void		
-cb_toggle_threads (GtkMenuItem *menuitem, gpointer data)
+cb_toggle_threads (GtkAction *action, gpointer data)
 {
 	ProcData *procdata = data;
-	GtkCheckMenuItem *menu = GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[1].widget);
 	GConfClient *client = procdata->client;
 	gboolean show;
-	
-	show = gtk_check_menu_item_get_active (menu);
+
+	show = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 	if (show == procdata->config.show_threads)
 		return;
-		
+
 	gconf_client_set_bool (client, "/apps/procman/show_threads", show, NULL);
-	
 }

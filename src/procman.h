@@ -146,6 +146,10 @@ struct _ProcInfo
 
 struct _ProcData
 {
+	GtkUIManager	*uimanager;
+	GtkActionGroup	*action_group;
+	GtkWidget	*statusbar;
+	gint		tip_message_cid;
 	GtkWidget	*tree;
 	GtkWidget	*endprocessbutton;
 	GtkWidget	*popup_menu;

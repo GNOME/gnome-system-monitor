@@ -1,5 +1,21 @@
 2005-03-31  Benoît Dejean  <TazForEver@dlfp.org>
 
+	* src/callbacks.c: (cb_edit_preferences), (cb_renice),
+	(cb_end_process), (cb_kill_process), (cb_show_memory_maps),
+	(cb_show_open_files), (cb_show_hidden_processes),
+	(cb_hide_process), (cb_about), (cb_help_contents), (cb_app_exit),
+	(cb_change_current_page):
+	* src/callbacks.h:
+	* src/interface.c: (create_proc_view), (menu_item_select_cb),
+	(menu_item_deselect_cb), (connect_proxy_cb), (disconnect_proxy_cb),
+	(create_main_window), (update_sensitivity), (cb_toggle_tree),
+	(cb_toggle_threads):
+	* src/procman.h:
+	
+	Port to GtkUIManager by Paolo Borelli <pborelli@katamail.com>.
+
+2005-03-31  Benoît Dejean  <TazForEver@dlfp.org>
+
 	* configure.in:
 	* src/procman.c: (cb_server), (main): Added dependency on libbacon.
 	Spawn only one instance of gnome-system-monitor.

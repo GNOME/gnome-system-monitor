@@ -50,16 +50,16 @@ kill_process_helper(ProcData *procdata, int sig)
 
 
 void
-cb_preferences_activate (GtkMenuItem *menuitem, gpointer user_data)
+cb_edit_preferences (GtkAction *action, gpointer data)
 {
-	ProcData * const procdata = user_data;
+	ProcData * const procdata = data;
 
 	procdialog_create_preferences_dialog (procdata);
 }
 
 
 void
-cb_renice (GtkMenuItem *menuitem, gpointer data)
+cb_renice (GtkAction *action, gpointer data)
 {
 	ProcData * const procdata = data;
 
@@ -68,21 +68,21 @@ cb_renice (GtkMenuItem *menuitem, gpointer data)
 
 
 void
-cb_end_process (GtkMenuItem *menuitem, gpointer data)
+cb_end_process (GtkAction *action, gpointer data)
 {
 	kill_process_helper(data, SIGTERM);
 }
 
 
 void
-cb_kill_process (GtkMenuItem *menuitem, gpointer data)
+cb_kill_process (GtkAction *action, gpointer data)
 {
 	kill_process_helper(data, SIGKILL);
 }
 
 
 void
-cb_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
+cb_show_memory_maps (GtkAction *action, gpointer data)
 {
 	ProcData * const procdata = data;
 
@@ -90,7 +90,7 @@ cb_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
 }
 
 void
-cb_show_open_files (GtkMenuItem *menuitem, gpointer data)
+cb_show_open_files (GtkAction *action, gpointer data)
 {
 	ProcData *procdata = data;
 	
@@ -98,7 +98,7 @@ cb_show_open_files (GtkMenuItem *menuitem, gpointer data)
 }
 
 void		
-cb_show_hidden_processes (GtkMenuItem *menuitem, gpointer data)
+cb_show_hidden_processes (GtkAction *action, gpointer data)
 {
 	ProcData * const procdata = data;
 
@@ -107,7 +107,7 @@ cb_show_hidden_processes (GtkMenuItem *menuitem, gpointer data)
 
 
 void
-cb_hide_process (GtkMenuItem *menuitem, gpointer data)
+cb_hide_process (GtkAction *action, gpointer data)
 {
 	ProcData * const procdata = data;
 
@@ -119,7 +119,7 @@ cb_hide_process (GtkMenuItem *menuitem, gpointer data)
 
 
 void
-cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
+cb_about (GtkAction *action, gpointer data)
 {
 	static const gchar *authors[] = {
 		"Kevin Vandersloot",
@@ -154,9 +154,24 @@ cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 
 
 void
-cb_app_exit (GtkObject *object, gpointer user_data)
+cb_help_contents (GtkAction *action, gpointer data)
 {
-	ProcData * const procdata = user_data;
+	GError *error = NULL;
+
+	gnome_help_display ("gnome-system-monitor.xml", NULL, &error);
+
+	if (error != NULL)
+	{
+		g_warning (error->message);
+		g_error_free (error);
+	}
+}
+
+
+void
+cb_app_exit (GtkAction *action, gpointer data)
+{
+	ProcData * const procdata = data;
 
 	cb_app_delete (NULL, NULL, procdata);
 }
@@ -203,15 +218,6 @@ void
 cb_end_process_button_pressed (GtkButton *button, gpointer data)
 {
 	kill_process_helper(data, SIGTERM);
-}
-
-
-void
-popup_menu_show_open_files (GtkMenuItem *menuitem, gpointer data)
-{
-	ProcData *procdata = data;
-	
-	create_openfiles_dialog (procdata);
 }
 
 
@@ -378,10 +384,8 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 			procdata->timeout = -1;
 		}
 
-		if (procdata->selected_process)
-			update_sensitivity (procdata, FALSE);
+		update_sensitivity (procdata, FALSE);
 	}
-
 
 	if (num == 1) {
 		load_graph_start (procdata->cpu_graph);
