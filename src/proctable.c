@@ -32,6 +32,8 @@
 #include <glibtop/mem.h>
 #include <glibtop/swap.h>
 #include <glibtop/procmap.h>
+#define WNCK_I_KNOW_THIS_IS_UNSTABLE
+#include <libwnck/libwnck.h>
 #include <sys/stat.h>
 #include <pwd.h>
 #include "procman.h"
@@ -99,6 +101,10 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 		a = infoa->memrss;
 		b = infob->memrss;
 		break;
+        case COL_MEMXSERVER:
+		a = infoa->memxserver;
+		b = infob->memxserver;
+		break;
 	default:
 		return 0;
 		break;
@@ -126,6 +132,7 @@ proctable_new (ProcData *data)
 				 N_("User"), N_("Status"),
 				 N_("Memory"), N_("VM Size"), N_("Resident Memory"),
 				 N_("Shared Memory"), N_("RSS Memory"),
+                                 N_("X Server Memory"),
 				 /* xgettext:no-c-format */
 				 N_("% CPU"),
 				 N_("Nice"), N_("ID"), NULL, "POINTER"};
@@ -139,7 +146,7 @@ proctable_new (ProcData *data)
 	model = gtk_tree_store_new (NUM_COLUMNS,  G_TYPE_STRING, 
 				    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
-				    G_TYPE_STRING, G_TYPE_STRING,
+				    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_INT, G_TYPE_INT, G_TYPE_INT,
 				    GDK_TYPE_PIXBUF, G_TYPE_POINTER);		    
   	
@@ -221,6 +228,11 @@ proctable_new (ProcData *data)
 					 COL_MEMRSS,
 					 sort_ints,
 					 GINT_TO_POINTER (COL_MEMRSS),
+					 NULL);
+        gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
+					 COL_MEMXSERVER,
+					 sort_ints,
+					 GINT_TO_POINTER (COL_MEMXSERVER),
 					 NULL);
 	procdata->tree = proctree;
 	
@@ -382,7 +394,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	GtkTreeModel *model;
 	GtkTreeIter row;
 	gchar *name;
-	gchar *mem, *vmsize, *memres, *memshared, *memrss;
+	gchar *mem, *vmsize, *memres, *memshared, *memrss, *memxserver;
 	
 	/* Don't show process if it is not running */
 	if (procdata->config.whose_process == RUNNING_PROCESSES && 
@@ -430,6 +442,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	memres = get_size_string (info->memres);
 	memshared = get_size_string (info->memshared);
 	memrss = get_size_string (info->memrss);
+        memxserver = get_size_string (info->memxserver);
 
         /* COL_POINTER must be set first, because GtkTreeStore
          * will call sort_ints as soon as we set the column
@@ -448,6 +461,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
                             COL_MEMRES, memres,
                             COL_MEMSHARED, memshared,
                             COL_MEMRSS, memrss,
+                            COL_MEMXSERVER, memxserver,
                             COL_CPU, info->cpu,
                             COL_PID, info->pid,
                             COL_NICE, info->nice,
@@ -457,6 +471,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	g_free (memres);
 	g_free (memshared);
 	g_free (memrss);
+        g_free (memxserver);
 	g_free (name);
 	
 	info->node = row;
@@ -528,10 +543,11 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	glibtop_proc_mem procmem;
 	glibtop_proc_uid procuid;
 	glibtop_proc_time proctime;
-	gchar *mem, *vmsize, *memres, *memshared, *memrss;
+	gchar *mem, *vmsize, *memres, *memshared, *memrss, *memxserver;
 	gint newcputime;
 	gint pcpu;
-	
+        WnckResourceUsage xresources;
+        
 	glibtop_get_proc_state (&procstate, pid);
 	glibtop_get_proc_mem (&procmem, pid);
 	glibtop_get_proc_uid (&procuid, pid);
@@ -539,11 +555,22 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	newcputime = proctime.utime + proctime.stime;
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 
+        wnck_pid_read_resource_usage (gdk_screen_get_display (gdk_screen_get_default ()),
+                                      pid,
+                                      &xresources);
+        
 	info->mem = procmem.size;
 	info->vmsize = procmem.vsize;
 	info->memres = procmem.resident;
 	info->memshared = procmem.share;
 	info->memrss = procmem.rss;
+        info->memxserver = xresources.total_bytes_estimate;
+
+        /* Possible enhancement - also SUBTRACT this value
+         * from the memory of the X server itself.
+         */
+        info->mem += info->memxserver;
+        
 	if (total_time != 0)
 		pcpu = ( newcputime - info->cpu_time_last ) * 100 / total_time;
 	else 
@@ -586,6 +613,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 		memres = get_size_string (info->memres);
 		memshared = get_size_string (info->memshared);
 		memrss = get_size_string (info->memrss);
+                memxserver = get_size_string (info->memxserver);
 		
 		gtk_tree_store_set (GTK_TREE_STORE (model), &info->node, 
 				    COL_STATUS, info->status,
@@ -594,6 +622,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 				    COL_MEMRES, memres,
 			            COL_MEMSHARED, memshared,
 				    COL_MEMRSS, memrss,
+                                    COL_MEMXSERVER, memxserver,
 				    COL_CPU, info->cpu,
 				    COL_NICE, info->nice,
 			 	   -1);
@@ -602,6 +631,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 		g_free (memres);
 		g_free (memshared);
 		g_free (memrss);
+                g_free (memxserver);
 	}
 		
 }
@@ -619,7 +649,7 @@ get_info (ProcData *procdata, gint pid)
 	struct passwd *pwd;
 	gchar *arguments;
 	gint newcputime, i;
-	
+        WnckResourceUsage xresources;
 	
 	glibtop_get_proc_state (&procstate, pid);
 	pwd = getpwuid (procstate.uid);
@@ -629,6 +659,10 @@ get_info (ProcData *procdata, gint pid)
 	glibtop_get_proc_time (&proctime, pid);
 	newcputime = proctime.utime + proctime.stime;
 
+        wnck_pid_read_resource_usage (gdk_screen_get_display (gdk_screen_get_default ()),
+                                      pid,
+                                      &xresources);
+        
 	arguments = glibtop_get_proc_args (&procargs, pid, 0);	
 	get_process_name (procdata, info, procstate.cmd, arguments);
 	if (arguments)
@@ -653,6 +687,13 @@ get_info (ProcData *procdata, gint pid)
 	info->memres = procmem.resident;
 	info->memshared = procmem.share;
 	info->memrss = procmem.rss;
+        info->memxserver = xresources.total_bytes_estimate;
+
+        /* Possible enhancement - also SUBTRACT this value
+         * from the memory of the X server itself.
+         */
+        info->mem += info->memxserver;
+        
 	info->cpu = 0;
 	info->pid = pid;
 	info->parent_pid = procuid.ppid;

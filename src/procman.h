@@ -123,6 +123,7 @@ struct _ProcInfo
 	gint		memres;
 	gint		memshared;
 	gint		memrss;
+        gint            memxserver;
 	gchar		*status;
 	gboolean	running;
 	gboolean	is_thread;
