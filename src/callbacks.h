@@ -27,6 +27,7 @@
 void		cb_properties_activate (GtkMenuItem *menuitem, gpointer user_data);
 
 void		cb_show_memory_maps (GtkMenuItem *menuitem, gpointer data);
+void		cb_show_open_files (GtkMenuItem *menuitem, gpointer data);
 void		cb_renice (GtkMenuItem *menuitem, gpointer data);
 void		cb_add_to_favorites (GtkMenuItem *menuitem, gpointer data);
 void		cb_end_process (GtkMenuItem *menuitem, gpointer data);
@@ -46,6 +47,7 @@ void		cb_end_process_button_pressed (GtkButton *button, gpointer data);
 void		cb_logout (GtkButton *button, gpointer data);
 
 void		popup_menu_about_process (GtkMenuItem *menuitem, gpointer data);
+void		popup_menu_show_open_files (GtkMenuItem *menuitem, gpointer data);
 
 void		cb_info_button_pressed (GtkButton *button, gpointer user_data);
 void		cb_search (GtkEditable *editable, gpointer data);

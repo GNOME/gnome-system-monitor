@@ -20,6 +20,7 @@ gnome_system_monitor_SOURCES = \
 	procactions.c procactions.h \
 	procdialogs.c procdialogs.h \
 	memmaps.c memmaps.h \
+	openfiles.c openfiles.h \
 	favorites.c favorites.h \
 	defaulttable.h
 

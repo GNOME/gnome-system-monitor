@@ -84,6 +84,11 @@ static GnomeUIInfo view1_menu_uiinfo[] =
 	 cb_toggle_threads, NULL, NULL, 0, NULL,
 	 't', GDK_CONTROL_MASK
 	},
+	{
+	 GNOME_APP_UI_ITEM, N_("Open _Files"), N_("View a process' open files"),
+	 cb_show_open_files, NULL, NULL, 0, 0,
+	 'f', GDK_CONTROL_MASK
+	},
 	GNOMEUIINFO_SEPARATOR,
 	{
 	 GNOME_APP_UI_ITEM, N_("_Hide Process"), N_("Hide process from list"),
@@ -130,6 +135,11 @@ static GnomeUIInfo popup_menu_uiinfo[] =
 	{
  	  GNOME_APP_UI_ITEM, N_("_Kill Process"), N_("Force a process to finish immediately"),
 	 cb_kill_process, NULL, NULL, 0, NULL,
+	 0, 0
+	},
+	{
+ 	  GNOME_APP_UI_ITEM, N_("Open _Files"), N_("View process' open files"),
+	 popup_menu_show_open_files, NULL, NULL, 0, 0,
 	 0, 0
 	},
 	GNOMEUIINFO_SEPARATOR,

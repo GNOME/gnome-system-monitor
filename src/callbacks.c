@@ -34,6 +34,7 @@
 #include "procactions.h"
 #include "procdialogs.h"
 #include "memmaps.h"
+#include "openfiles.h"
 #include "favorites.h"
 #include "load-graph.h"
 #include "cellrenderer.h"
@@ -89,8 +90,15 @@ cb_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
 	create_memmaps_dialog (procdata);
 }
 
-
 void
+cb_show_open_files (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	create_openfiles_dialog (procdata);
+}
+
+void		
 cb_show_hidden_processes (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData * const procdata = data;
@@ -198,6 +206,14 @@ cb_end_process_button_pressed (GtkButton *button, gpointer data)
 	kill_process_helper(data, SIGTERM);
 }
 
+
+void
+popup_menu_show_open_files (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	create_openfiles_dialog (procdata);
+}
 
 void
 cb_info_button_pressed (GtkButton *button, gpointer user_data)
