@@ -20,6 +20,7 @@
 #include <config.h>
 
 #include <gnome.h>
+#include <gconf/gconf-client.h>
 #include <glibtop.h>
 #include <pthread.h>
 #include "procman.h"
@@ -31,6 +32,7 @@
 #endif
 
 GtkWidget *app;
+GConfClient *client;
 static int simple_view = FALSE;
 pthread_t thread;
 
@@ -132,12 +134,50 @@ load_desktop_files (ProcData *pd)
 		pd->pretty_table = NULL;*/
 }
 
+static gint 
+get_gconf_int_with_default (gchar *key, gint def)
+{
+	GConfValue *value = NULL;
+	gint retval;
+	
+	value = gconf_client_get (client, key, NULL);
+	if (!value) {
+		g_print ("no value found \n");
+		return def;
+	}
+	else {
+		retval = gconf_value_get_int(value);
+		g_print ("%d \n", retval);
+		return retval;
+	}
+		
+}
+
+static gboolean
+get_gconf_bool_with_default (gchar *key, gboolean def)
+{
+	GConfValue *value = NULL;
+	gboolean retval;
+	
+	g_print ("%s \n", key);
+	
+	value = gconf_client_get (client, key, NULL);
+	if (!value) {
+		return def;
+	}
+	else {
+		retval = gconf_value_get_bool(value);
+		return retval;
+	}
+		
+}
 
 static ProcData *
 procman_data_new (void)
 {
 
 	ProcData *pd;
+	gint width, height;
 
 	pd = g_new0 (ProcData, 1);
 	
@@ -185,19 +225,18 @@ procman_data_new (void)
 	pd->config.swap_color.red = 1363;
 	pd->config.swap_color.green = 52130;
 	pd->config.swap_color.blue = 18595;	
+	
+	pd->config.width = get_gconf_int_with_default ("/apps/procman/width", 440);
+	pd->config.height = get_gconf_int_with_default ("/apps/procman/height", 495);
+	pd->config.show_more_info = get_gconf_bool_with_default ("/apps/procman/more_info",
+								 FALSE);
+	pd->config.show_tree = get_gconf_bool_with_default ("/apps/procman/show_tree",
+							    TRUE);
+	pd->config.show_kill_warning = get_gconf_bool_with_default ("/apps/procman/kill_dialog",
+								 TRUE);
+	pd->config.show_hide_message = get_gconf_bool_with_default ("/apps/procman/hide_message",
+								 TRUE);
 #if 0	
-	pd->config.width = 
-		gnome_config_get_int ("procman/Config/width=440");
-	pd->config.height = 
-		gnome_config_get_int ("procman/Config/height=495");
-	pd->config.show_more_info = 
-		gnome_config_get_bool ("procman/Config/more_info=FALSE");
-	pd->config.show_tree = 
-		gnome_config_get_bool ("procman/Config/show_tree=TRUE");
-	pd->config.show_kill_warning = 
-		gnome_config_get_bool ("procman/Config/kill_dialog=TRUE");
-	pd->config.show_hide_message = 
-		gnome_config_get_bool ("procman/Config/hide_message=TRUE");
 	pd->config.delay_load = 
 		gnome_config_get_bool ("procman/Config/delay_load=TRUE");
 	pd->config.load_desktop_files = 
@@ -280,7 +319,7 @@ procman_free_data (ProcData *procdata)
 }
 #endif
 
-#if 0
+
 void
 procman_save_config (ProcData *data)
 {
@@ -291,16 +330,21 @@ procman_save_config (ProcData *data)
 		
 	if (data->config.simple_view)
 		return;
-		
+#if 0		
 	proctable_save_state (data);
-		
+#endif		
 	gdk_window_get_size (app->window, &width, &height);
 	data->config.width = width;
 	data->config.height = height;
 	
 	pane_pos = get_sys_pane_pos ();
 	data->config.pane_pos = pane_pos;
-		
+	g_print ("save width %d \n", width);
+	gconf_client_set_int (client, "/apps/procman/width", data->config.width, NULL);
+	gconf_client_set_int (client, "/apps/procman/height", data->config.height, NULL);
+	
+	//gconf_client_suggest_sync (client, NULL);
+#if 0		
 	gnome_config_set_int ("procman/Config/width",data->config.width);
 	gnome_config_set_int ("procman/Config/height",data->config.height);	
 	gnome_config_set_int ("procman/Config/view_as",data->config.whose_process);
@@ -339,9 +383,9 @@ procman_save_config (ProcData *data)
 	
 	save_blacklist (data);
 	gnome_config_sync ();
-
-}
 #endif
+}
+
 
 int
 main (int argc, char *argv[])
@@ -359,8 +403,16 @@ main (int argc, char *argv[])
 #endif
 
 	procman = gnome_program_init ("procman", VERSION, LIBGNOMEUI_MODULE, argc, argv, 
-			    GNOME_PARAM_POPT_TABLE, options, NULL);
+			    	      GNOME_PARAM_POPT_TABLE, options, NULL);
 			    
+	gconf_init (argc, argv, NULL);
+			    
+	client = gconf_client_get_default ();
+	/*gconf_client_add_dir(client,
+                       "/apps/procman",
+                       GCONF_CLIENT_PRELOAD_NONE,
+                       NULL);*/
+        		    
 	g_value_init (&value, G_TYPE_POINTER);
   	g_object_get_property (G_OBJECT(procman),
                                GNOME_PARAM_POPT_CONTEXT, &value);

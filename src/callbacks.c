@@ -32,8 +32,8 @@
 #include "interface.h"
 #include "proctable.h"
 #include "util.h"
-#if 0
 #include "infoview.h"
+#if 0
 #include "procdialogs.h"
 #include "memmaps.h"
 #include "favorites.h"
@@ -152,10 +152,9 @@ cb_hide_process (GtkMenuItem *menuitem, gpointer data)
 	
 }
 
-
+#endif
 void
-cb_about_activate                     (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
+cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 {
 
 	GtkWidget *about;
@@ -167,13 +166,14 @@ cb_about_activate                     (GtkMenuItem     *menuitem,
 				 
 	about = gnome_about_new (_("Process Manager"), VERSION,
 				 _("(C) 2001 Kevin Vandersloot"),
-				 authors,
 				 _("Simple process viewer using libgtop"),
-				 NULL);
+				 authors,
+				 NULL, NULL, NULL);
 				 
 	gtk_widget_show (about);  
+	
 }
-#endif
+
 
 void
 cb_app_exit (GtkObject *object, gpointer user_data)
@@ -202,6 +202,7 @@ cb_app_delete (GtkWidget *window, GdkEventAny *ev, gpointer data)
 	if (procdata->disk_timeout != -1)
 		gtk_timeout_remove (procdata->disk_timeout);
 #endif	
+	procman_save_config (procdata);
 	if (procdata->timeout != -1)
 		gtk_timeout_remove (procdata->timeout);
 	gtk_main_quit ();
@@ -420,6 +421,7 @@ cb_search (GtkEditable *editable, gpointer data)
 	
 	g_free (text);
 }
+#endif
 
 void		
 cb_cpu_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
@@ -468,7 +470,7 @@ cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 	procdata->mem_graph->colors_allocated = FALSE;
 
 }
-#endif
+
 void
 cb_row_selected (GtkTreeSelection *selection, gpointer data)
 {

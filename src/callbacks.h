@@ -69,14 +69,13 @@ void 		popup_menu_about_process (GtkMenuItem *menuitem, gpointer data);
 void		cb_info_button_pressed (GtkButton *button, gpointer user_data);
 void		cb_search (GtkEditable *editable, gpointer data);
 
-#if 0
+
 void		cb_cpu_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 				      guint a, gpointer data);
 void		cb_mem_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 				      guint a, gpointer data);
 void		cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 				      guint a, gpointer data);
-#endif
 
 void		cb_row_selected (GtkTreeSelection *selection, gpointer data);
 

@@ -99,7 +99,7 @@ static GnomeUIInfo settings1_menu_uiinfo[] =
 
 static GnomeUIInfo help1_menu_uiinfo[] =
 {
-	/*GNOMEUIINFO_MENU_ABOUT_ITEM (cb_about_activate, NULL),*/
+	GNOMEUIINFO_MENU_ABOUT_ITEM (cb_about_activate, NULL),
 	GNOMEUIINFO_END
 };
 
@@ -360,7 +360,7 @@ create_sys_view (ProcData *procdata)
 					
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (cpu_graph->main_widget), hbox, FALSE, FALSE, 0);
-#if 0
+
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
 				    cpu_graph->colors[2].red,
@@ -369,7 +369,6 @@ create_sys_view (ProcData *procdata)
 	gtk_signal_connect (GTK_OBJECT (color_picker), "color_set",
 			    GTK_SIGNAL_FUNC (cb_cpu_color_changed), procdata);
 	gtk_box_pack_start (GTK_BOX (hbox), color_picker, FALSE, FALSE, 0);
-#endif
 	
 	label = gtk_label_new ("CPU Used :");
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
@@ -391,7 +390,7 @@ create_sys_view (ProcData *procdata)
 	table = gtk_table_new (2, 3, FALSE);
 	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), table, FALSE, FALSE, 0);
 
-#if 0	
+	
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
 				    mem_graph->colors[2].red,
@@ -400,7 +399,7 @@ create_sys_view (ProcData *procdata)
 	gtk_signal_connect (GTK_OBJECT (color_picker), "color_set",
 			    GTK_SIGNAL_FUNC (cb_mem_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, 0, 0, 0, 0);
-#endif
+
 	
 	label = gtk_label_new ("Memory Used / Total :");
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
@@ -413,7 +412,6 @@ create_sys_view (ProcData *procdata)
 	gtk_table_attach (GTK_TABLE (table), mem_graph->mem_label, 2, 3, 0, 1, 
 			  GTK_FILL, 0, 0, 0);
 
-#if 0
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
 				    mem_graph->colors[3].red,
@@ -422,7 +420,6 @@ create_sys_view (ProcData *procdata)
 	gtk_signal_connect (GTK_OBJECT (color_picker), "color_set",
 			    GTK_SIGNAL_FUNC (cb_swap_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, 0, 0, 0, 0);
-#endif
 			  
 	label = gtk_label_new ("Swap Used / Total :");
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
@@ -472,8 +469,8 @@ create_sys_view (ProcData *procdata)
 	gtk_widget_show_all (disk_frame);
   	
   	cb_update_disks (procdata);
-  	procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
-  						  cb_update_disks, procdata);
+  	/*procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
+  						  cb_update_disks, procdata);*/
  						  
 	return vpane;
 }
@@ -495,12 +492,6 @@ create_main_window (ProcData *procdata)
 	gtk_accel_group_unref (accel);*/
 
 
-	/*app = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	accel = gtk_accel_group_new ();
-	gtk_accel_group_attach (accel, GTK_OBJECT (app));
-	gtk_accel_group_unref (accel);
-	g_print ("app created \n");*/
-	
 	width = procdata->config.width;
 	height = procdata->config.height;
 	gtk_window_set_default_size (GTK_WINDOW (app), width, height);
@@ -560,15 +551,11 @@ create_main_window (ProcData *procdata)
 	
 	gnome_app_set_contents (GNOME_APP (app), notebook);
 
-#if 0	
-	/* Makes sure everything that should be insensitive is at start */
-	gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), 
-					 "cursor_activated",
-					  -1, NULL);
-#endif					  
- 	/* We cheat and force it to set up the labels */
+	update_sensitivity (procdata, FALSE);
+	
+	/* We cheat and force it to set up the labels */
  	procdata->config.show_more_info = !procdata->config.show_more_info;
- 	toggle_infoview (procdata);	
+ 	toggle_infoview (procdata);
 
  	gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab);
 	

@@ -86,7 +86,6 @@ proctable_new (ProcData *data)
 						    		   cell_renderer,
 						     		   "pixbuf", COL_PIXBUF,
 						     		   NULL);
-	//gtk_tree_view_column_set_sort_column_id (column, COL_PIXBUF);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 		
 	cell_renderer = gtk_cell_renderer_text_new ();
@@ -118,10 +117,6 @@ proctable_new (ProcData *data)
 					      COL_NAME,
 					      GTK_SORT_ASCENDING);
 	
-	/*gtk_tree_view_set_enable_search (GTK_TREE_VIEW (proctree), TRUE);
-	
-	gtk_tree_view_set_search_column (GTK_TREE_VIEW (proctree), COL_NAME);*/
-		
 	procdata->tree = proctree;
 	
 	g_signal_connect (G_OBJECT (gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree))), 
