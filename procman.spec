@@ -13,7 +13,7 @@ Group: Applications/System
 Source: http://www.personal.psu.edu/kfv101/procman/procman-%{ver}.tar.gz
 BuildRoot: /var/tmp/procman-root
 Requires: gnome-libs >= 1.2.5
-Requires: gal >= 0.10
+Requires: gal >= 0.11.2
 Requires: libgtop >= 1.0.6
 
 %description
