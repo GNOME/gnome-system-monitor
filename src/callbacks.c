@@ -104,7 +104,6 @@ cb_hide_process (GtkMenuItem *menuitem, gpointer data)
 	else
 	{
 		add_selected_to_blacklist (procdata);
-		proctable_update_all (procdata);
 	}
 	
 }
@@ -234,7 +233,6 @@ popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
 	else
 	{
 		add_selected_to_blacklist (procdata);
-		proctable_update_all (procdata);
 	}
 	
 }

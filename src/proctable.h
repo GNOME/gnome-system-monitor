@@ -44,6 +44,9 @@ enum
 GtkWidget*	proctable_new (ProcData *data);
 void		proctable_update_table (ProcData *data);
 void		proctable_update_list (ProcData *data);
+void		insert_info_to_tree (ProcInfo *info, ProcData *procdata);
+void		remove_info_from_tree (ProcInfo *info, ProcData *procdata);
+ProcInfo *	proctable_find_process (gint pid, gchar *name, ProcData *procdata);
 void		proctable_update_all (ProcData *data);
 void		proctable_clear_tree (ProcData *data);
 void		proctable_free_table (ProcData *data);

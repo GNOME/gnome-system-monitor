@@ -389,7 +389,7 @@ is_graphical (ProcInfo *info)
 }
 
 
-static void
+void
 insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 {
 	GtkTreeModel *model;
@@ -463,6 +463,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	g_free (memres);
 	g_free (memshared);
 	g_free (memrss);
+	g_free (name);
 	
 	info->node = row;
 	info->visible = TRUE;
@@ -494,7 +495,7 @@ remove_children_from_tree (ProcData *procdata, GtkTreeModel *model,
 		
 }
 
-static void
+void
 remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 {
 	GtkTreeModel *model;
@@ -535,7 +536,6 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 static gint
 update_info (ProcData *procdata, ProcInfo *info, gint pid)
 {
-	ProcInfo *newinfo = info;
 	GtkTreeModel *model;
 	glibtop_proc_state procstate;
 	glibtop_proc_mem procmem;
@@ -544,7 +544,6 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	gchar *mem, *vmsize, *memres, *memshared, *memrss;
 	gint newcputime;
 	gint pcpu;
-	gboolean is_blacklisted, was_blacklisted;
 	
 	
 	glibtop_get_proc_state (&procstate, pid);
@@ -558,94 +557,61 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	** we haven't been able to get the icon yet thus newinfo->pixbuf is NULL. Once
 	** the .desktop file is done the info->has_desktop_file will be changed to 1 or 0
 	*/
-	if (procdata->pretty_table && !newinfo->pixbuf 
-	    && newinfo->has_icon == -1 && newinfo->visible)
+	if (procdata->pretty_table && !info->pixbuf 
+	    && info->has_icon == -1 && info->visible)
 	{
-		newinfo->pixbuf = pretty_table_get_icon (procdata->pretty_table, 
-							 procstate.cmd, pid);
+		info->pixbuf = pretty_table_get_icon (procdata->pretty_table, 
+						      procstate.cmd, pid);
 							
-		if (newinfo->pixbuf) {
-			newinfo->has_icon = 1;
-			gtk_tree_store_set (GTK_TREE_STORE (model), &newinfo->node, 
-			    		    COL_PIXBUF, newinfo->pixbuf,
+		if (info->pixbuf) {
+			info->has_icon = 1;
+			gtk_tree_store_set (GTK_TREE_STORE (model), &info->node, 
+			    		    COL_PIXBUF, info->pixbuf,
 			    		    -1);	
 		}
 		else
-			newinfo->has_icon = 0;
+			info->has_icon = 0;
 		
 
 	}
 		
-	newinfo->vmsize = procmem.vsize;
-	newinfo->memres = procmem.resident;
-	newinfo->memshared = procmem.share;
-	newinfo->memrss = procmem.rss;
+	info->vmsize = procmem.vsize;
+	info->memres = procmem.resident;
+	info->memshared = procmem.share;
+	info->memrss = procmem.rss;
 	if (total_time)
 		pcpu = ( newcputime - info->cpu_time_last ) * 100 / total_time;
 	else 
 		pcpu = 0;
-	newinfo->cpu_time_last = newcputime;
-	newinfo->nice = procuid.nice;
-	if (newinfo->status)
-		g_free (newinfo->status);
-	get_process_status (newinfo, &procstate.state);
-	
-	is_blacklisted = is_process_blacklisted (procdata, newinfo->name);
-	was_blacklisted = newinfo->is_blacklisted;
-	newinfo->is_blacklisted = is_blacklisted;
-	
-	/* Process was previously visible and has been blacklisted since */
-	if (newinfo->visible && is_blacklisted && !was_blacklisted) {
-		remove_info_from_tree (info, procdata);
-		return -1;
-	}
-	/* Process was previously blacklisted but has been knocked from the list
-	** and needs to be added */
-	if (!newinfo->visible && !is_blacklisted && was_blacklisted) {
-		insert_info_to_tree (info, procdata);
-		return 1;
-	}
+	info->cpu_time_last = newcputime;
+	info->nice = procuid.nice;
+	if (info->status)
+		g_free (info->status);
+	get_process_status (info, &procstate.state);
 
 	if (procdata->config.whose_process == RUNNING_PROCESSES)
 	{
 		/* process started running */
-		if (newinfo->running && (!newinfo->visible)) {
+		if (info->running && (!info->visible)) {
 			insert_info_to_tree (info, procdata);
 			return 1;
 		}
 		/* process was running but not anymore */
-		else if ((!newinfo->running) && newinfo->visible) {
+		else if ((!info->running) && info->visible) {
 			remove_info_from_tree (info, procdata);
 			return -1;
 		}
-		else if (!newinfo->running)
+		else if (!info->running)
 			return 0;
 	}
 	
-
-#if 0
-	if (newinfo->visible) {
-		gchar *mem;
-		if (procmem.size != newinfo->mem) {
-			mem = get_size_string (procmem.size);
-			gtk_tree_store_set (GTK_TREE_STORE (model), &newinfo->node, 
-			    COL_MEM, mem,
-			   -1);	
-			g_free (mem);
-		}
-		if (pcpu != newinfo->cpu)
-			gtk_tree_store_set (GTK_TREE_STORE (model), &newinfo->node, 
-			    	            COL_CPU, newinfo->cpu,
-			   	            -1);
-	}
-#endif
-	if (newinfo->visible) {
+	if (info->visible) {
 		mem = get_size_string (info->mem);
 		vmsize = get_size_string (info->vmsize);
 		memres = get_size_string (info->memres);
 		memshared = get_size_string (info->memshared);
 		memrss = get_size_string (info->memrss);
-		gtk_tree_store_set (GTK_TREE_STORE (model), &newinfo->node, 
+		gtk_tree_store_set (GTK_TREE_STORE (model), &info->node, 
 				    COL_STATUS, info->status,
 				    COL_MEM, mem,
 				    COL_VMSIZE, vmsize,
@@ -661,8 +627,8 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 		g_free (memshared);
 		g_free (memrss);
 	}
-	newinfo->mem = procmem.size;
-	newinfo->cpu = pcpu;
+	info->mem = procmem.size;
+	info->cpu = pcpu;
 			
 	return 0;
 }
@@ -761,6 +727,29 @@ get_info (ProcData *procdata, gint pid)
 	info->visible = FALSE;
 	
 	return info;
+}
+
+ProcInfo *
+proctable_find_process (gint pid, gchar *name, ProcData *procdata)
+{
+
+	GList *list = procdata->info;
+	
+	while (list) {
+		ProcInfo *info = list->data;
+		
+		if (pid == info->pid)
+			return info;
+		
+		if (name) {	
+			if (g_strcasecmp (name, info->name) == 0)
+				return info;
+		}
+		
+		list = g_list_next (list);
+	}
+
+	return NULL;
 }
 
 static void

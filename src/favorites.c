@@ -47,6 +47,8 @@ add_to_blacklist (ProcData *procdata, gchar *name)
 		
 }
 
+GList *removed_processes = NULL;
+
 static void
 add_single_to_blacklist (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
@@ -58,6 +60,8 @@ add_single_to_blacklist (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *it
 	
 	add_to_blacklist (procdata, info->name);
 	
+	if (info->visible) 
+		removed_processes = g_list_append (removed_processes, info);
 }
 
 void
@@ -68,6 +72,13 @@ add_selected_to_blacklist (ProcData *procdata)
 		
 	gtk_tree_selection_selected_foreach (procdata->selection, 
 					     add_single_to_blacklist, procdata);
+					     
+	while (removed_processes) {
+		ProcInfo *info = removed_processes->data;
+		remove_info_from_tree (info, procdata);
+		
+		removed_processes = g_list_next (removed_processes);
+	}
 }
 
 void
@@ -242,9 +253,16 @@ remove_item (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer
 	
 	gtk_tree_model_get (model, iter, 0, &process, -1);
 	
-	if (process)
+	if (process) {
+		ProcInfo *info;
+		
+		info = proctable_find_process (-1, process, procdata);		
 		remove_from_blacklist (procdata, process);
-	
+		if (info)
+			insert_info_to_tree (info, procdata);
+			
+	}
+		
 	iter_copy = gtk_tree_iter_copy (iter);	
 	removed_iters = g_list_append (removed_iters, iter_copy);
 }
@@ -269,8 +287,6 @@ remove_button_clicked (GtkButton *button, gpointer data)
 		
 		removed_iters = g_list_next (removed_iters);
 	}
-	
-	proctable_update_all (procdata);
 	
 }
 

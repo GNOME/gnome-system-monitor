@@ -55,7 +55,6 @@ hide_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 	
 	if (id == 100) {
 		add_selected_to_blacklist (procdata);
-		proctable_update_all (procdata);
 	}
 	
 	gtk_widget_destroy (GTK_WIDGET (dialog));

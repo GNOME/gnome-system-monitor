@@ -1,3 +1,18 @@
+2001-11-18  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: make insert_info_to_tree and remove_info_from_tree
+	external functions. New function to find a process given a name
+	or PID. 
+	(upddate_info): simplify this a lot 
+
+	* favorites.c: explictly hide or reshow processes instead of
+	queuing an update. Makes things simpler and faster :)
+
+	* callbacks.c, procdialogs.c: no need to queue an update when
+	hiding processes
+	
+	* Also bring back libwnck :)
+
 2001-11-17  Kevin Vandersloot <kfv101@psu.edu>
 
 	* proctable.c: add a new column showing command arguments.
