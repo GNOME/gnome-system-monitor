@@ -151,7 +151,6 @@ struct _ProcData
 	gint		disk_timeout;
 	GList		*info;
 	gint		proc_num;
-	GtkWidget 	*cpumeter, *memmeter, *swapmeter;
 	PrettyTable	*pretty_table;
 	GList		*favorites;
 	GList		*blacklist;

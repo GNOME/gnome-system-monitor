@@ -53,7 +53,7 @@ PrettyTable *pretty_table_new (void) {
 	g_free (path);
 	path = gnome_datadir_file ("gnome/ximian");
 	pretty_table_load_path (pretty_table, path, TRUE);
-	g_free (path);
+	g_free (path);	
 	path = gnome_datadir_file ("applets");
 	pretty_table_load_path (pretty_table, path, TRUE);
 	g_free (path);
@@ -107,6 +107,7 @@ gint pretty_table_load_path (PrettyTable *pretty_table, gchar *path, gboolean re
 			}
 			if (entry)
 				gnome_desktop_entry_free (entry);
+			
 
 			g_free (full_path);
 		}
@@ -139,7 +140,7 @@ void pretty_table_add_table (PrettyTable *pretty_table, const gchar *table[]) {
 		/* pretty_table_free frees all string in the tables */
 		command = g_strdup (table[i]); 
 		/* pretty_table_free frees all string in the tables */
-		prettyname = g_strdup (table[i + 1]);
+		prettyname = g_strdup (gettext(table[i + 1]));
 		text = gnome_datadir_file ("pixmaps/");
 		if (text) {
 			prettyicon = g_malloc (strlen (table[i + 2]) + strlen (text) + 1);

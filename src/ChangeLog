@@ -1,3 +1,29 @@
+2001-09-19  Kevn Vandersloot <kfv101@psu.edu>
+
+	* callbacks.c (cb_simple_dialog_close): call gtk_main_quit
+	to close the app
+
+	* interface.c: some reshuffling of the UI code. don't call
+	gtk_widget_show on the main window untill all updating
+	has been done.
+	Improve the ctrl-alt-del dialog by giving a title
+
+	* prettytable.c: call gettext () on the string since
+	the app names arent getting translated. Still doesn't 
+	work.
+
+	* procdialogs.c: remove some debugging spew. Change a pref
+	tab label to match the main notebook tab label.
+
+	* procman.c: load the desktop files after the main window
+	has been created. This seems to reduce the amount of 
+	crashing due to the delay loading. Seems that the problem is
+	unthreadsafeness of some gnome functions.
+	Also let the simple dialog share the gtk main loop instead of
+	calling gnome_dialog_run. This makes it truly modeless
+
+	* proctable.c: remove some unneeded commented stuff.
+
 2001-09-16  Kevin Vandersloot <kfv101@psu.edu>
 
 	* proctable.c: improve the search. Use strstr to search for

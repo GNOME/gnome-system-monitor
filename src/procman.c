@@ -102,6 +102,30 @@ icon_load_finished (gpointer data)
 	return TRUE;
 }
 
+static void
+load_desktop_files (ProcData *pd)
+{
+	/* delay load the .desktop files. Procman will display icons and app names
+	** if the pd->pretty_table structure is not NULL. The timeout will monitor
+	** whether or not that becomes the case and update the table if so. There is 
+	** undoubtedly a better solution, but I am not too knowlegabe about threads.
+	** Basically what needs to be done is to update the table when the thread is
+	** finished 
+	*/
+	if (pd->config.load_desktop_files && pd->config.delay_load)
+	{
+		pd->pretty_table = NULL;
+		pd->desktop_load_finished = FALSE;
+		gtk_idle_add_priority (800, idle_func, pd);
+		gtk_timeout_add (500, icon_load_finished, pd);
+	}
+	else if (pd->config.load_desktop_files && !pd->config.delay_load) 
+		pd->pretty_table = pretty_table_new ();
+	else
+		pd->pretty_table = NULL;
+}
+
+
 static ProcData *
 procman_data_new (void)
 {
@@ -191,25 +215,6 @@ procman_data_new (void)
 
 	get_blacklist (pd);	
 	
-	/* delay load the .desktop files. Procman will display icons and app names
-	** if the pd->pretty_table structure is not NULL. The timeout will monitor
-	** whether or not that becomes the case and update the table if so. There is 
-	** undoubtedly a better solution, but I am not too knowlegabe about threads.
-	** Basically what needs to be done is to update the table when the thread is
-	** finished 
-	*/
-	if (pd->config.load_desktop_files && pd->config.delay_load)
-	{
-		pd->pretty_table = NULL;
-		pd->desktop_load_finished = FALSE;
-		gtk_idle_add_priority (800, idle_func, pd);
-		gtk_timeout_add (500, icon_load_finished, pd);
-	}
-	else if (pd->config.load_desktop_files && !pd->config.delay_load) 
-		pd->pretty_table = pretty_table_new ();
-	else
-		pd->pretty_table = NULL;
-		
 	pd->config.simple_view = simple_view;	
 	if (pd->config.simple_view) {
 		pd->config.width = 325;
@@ -319,21 +324,21 @@ main (int argc, char *argv[])
 
 	procdata = procman_data_new ();
 
-	if (procdata->config.simple_view) {
+	if (procdata->config.simple_view) 
 		app = create_simple_view_dialog (procdata);
-		proctable_update_all (procdata);
-		gnome_dialog_run (GNOME_DIALOG (app));
-	}
-	else {
+	else 
 		app = create_main_window (procdata);
-		proctable_update_all (procdata);
-	}
+		
+	load_desktop_files (procdata);
+	
+	proctable_update_all (procdata);
 	
 	if (!app)
-		return 0;  	
+		return 0;  
+			
+ 	gtk_widget_show (app);	
  	
-	if (!procdata->config.simple_view)
-		gtk_main ();
+	gtk_main ();
 	
 	e_cursors_shutdown ();
 	

@@ -1015,9 +1015,7 @@ proctable_clear_tree (ProcData *data)
 	procdata->selected_node = NULL;
 	procdata->selected_pid = -1;
 	
-	/*e_tree_memory_freeze (procdata->memory);*/
 	e_tree_memory_node_remove (procdata->memory, rootnode);
-	/*e_tree_memory_thaw (procdata->memory);*/
 	
 }
 

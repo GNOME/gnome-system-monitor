@@ -206,13 +206,7 @@ create_proc_view (ProcData *procdata)
   	gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
   			    GTK_SIGNAL_FUNC (cb_running_process_menu_clicked), procdata);
   	gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
-#if 0  	
-  	glade_menuitem = gtk_menu_item_new_with_label (_("Favorites"));
-  	gtk_widget_show (glade_menuitem);
-  	gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
-  			    GTK_SIGNAL_FUNC (cb_favorites_menu_clicked), procdata);
-  	gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
-#endif  	
+ 	
   	gtk_menu_set_active (GTK_MENU (optionmenu1_menu), procdata->config.whose_process);
   	gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu1), optionmenu1_menu);
   	
@@ -502,7 +496,6 @@ create_main_window (ProcData *procdata)
 	
 	notebook = gtk_notebook_new ();
 	gtk_container_set_border_width (GTK_CONTAINER (notebook), GNOME_PAD_SMALL);
-	gnome_app_set_contents (GNOME_APP (app), notebook);
 	
 	vbox1 = create_proc_view (procdata);
 	tab_label1 = gtk_label_new (_("Process Listing"));
@@ -543,10 +536,10 @@ create_main_window (ProcData *procdata)
 		load_graph_start (procdata->cpu_graph);
 		load_graph_start (procdata->mem_graph);
 	}
-		
-	gtk_widget_show (vbox1);	 
-	gtk_widget_show (app);
-
+	 	
+	gtk_widget_show (vbox1);
+	gnome_app_set_contents (GNOME_APP (app), notebook);
+	
 	/* Makes sure everything that should be insensitive is at start */
 	gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), 
 					 "cursor_activated",
@@ -557,8 +550,8 @@ create_main_window (ProcData *procdata)
  	toggle_infoview (procdata);	
  	
  	gtk_notebook_set_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab); 
-	
-	return app;
+ 	
+ 	return app;
 
 }
 
@@ -575,7 +568,7 @@ create_simple_view_dialog (ProcData *procdata)
 	GtkWidget *frame;
 	guint key;
 	
-	app = gnome_dialog_new (_("Test"), _("Logout"), GNOME_STOCK_BUTTON_CANCEL, NULL);
+	app = gnome_dialog_new (_("Application Manager"), GNOME_STOCK_BUTTON_CANCEL, NULL);
 	gtk_window_set_policy (GTK_WINDOW (app), FALSE, TRUE, FALSE);
 	gtk_window_set_default_size (GTK_WINDOW (app), 350, 425);
 	
@@ -631,6 +624,7 @@ create_simple_view_dialog (ProcData *procdata)
 			 		     cb_timeout, procdata);
 			    
 	gtk_widget_show_all (main_vbox);
+	gtk_widget_show (app);
 	
 	return app;
 }

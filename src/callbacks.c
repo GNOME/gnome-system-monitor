@@ -207,6 +207,8 @@ cb_close_simple_dialog (GnomeDialog *dialog, gpointer data)
 	
 	if (procdata->timeout != -1)
 		gtk_timeout_remove (procdata->timeout);
+	
+	gtk_main_quit ();
 		
 	return FALSE;
 

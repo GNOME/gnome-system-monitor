@@ -258,8 +258,6 @@ renice_accept (GtkButton *button, gpointer data)
 {
 	ProcData *procdata = data;
 	
-	g_print ("nice value %d\n", new_nice_value);
-	
 	if (new_nice_value == -100)
 		return;		
 	
@@ -576,7 +574,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	
 	proc_box = gtk_vbox_new (FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (proc_box), GNOME_PAD_SMALL);
-	tab_label = gtk_label_new (_("Process Viewer"));
+	tab_label = gtk_label_new (_("Process Listing"));
 	gtk_widget_show (tab_label);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), proc_box, tab_label);
 	
