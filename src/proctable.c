@@ -322,6 +322,9 @@ proctable_new (ProcData *data)
 				    	     proctable_value_is_empty,
 				    	     proctable_value_to_string,
 				    	     procdata);
+				    	     
+	e_tree_memory_set_expanded_default(E_TREE_MEMORY(model), TRUE);
+
 	extras = proctable_new_extras ();
 	
 	etmm = E_TREE_MEMORY(model);
@@ -412,7 +415,7 @@ update_info (ProcInfo *info, gint pid)
 	glibtop_get_proc_uid (&procuid, pid);
 	glibtop_get_proc_time (&proctime, pid);
 	newcputime = proctime.utime + proctime.stime;
-	
+		
 	newinfo->mem = procmem.size;
 	newinfo->vmsize = procmem.vsize;
 	newinfo->memres = procmem.resident;
@@ -466,11 +469,11 @@ get_info (ProcData *procdata, gint pid)
 	return info;
 }
 
-static ETreePath *
-insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath *root_node)
+static ETreePath 
+insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath root_node)
 {
 	ProcInfo *parentinfo = NULL;
-	ETreePath *node;
+	ETreePath node;
 	
 	#if 1 /* do the tree */
 	parentinfo = find_parent (procdata, info->parent_pid);
@@ -481,9 +484,9 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath *root_node)
 		/* Ha Ha - don't expand different threads - check to see if parent has
 		** same name - I don't know if this is too smart though.
 		*/
-		if (g_strcasecmp (info->name, parentinfo->name))
+		if (!g_strcasecmp (info->name, parentinfo->name))
 			e_tree_node_set_expanded (E_TREE (procdata->tree),
-					  	  parentinfo->node, TRUE);
+					  	  parentinfo->node, FALSE);
 	}
 	else
 	#endif
@@ -493,13 +496,62 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath *root_node)
 	return node;
 }
 
+/* Kind of a hack. When a parent process is removed we remove all the info
+** pertaining to the child processes and then readd them later
+*/
+static gboolean
+remove_children_from_tree (ETreeModel *model, ETreePath node, gpointer data)
+{
+	ProcData *procdata = data;
+	ProcInfo *info = e_tree_memory_node_get_data (procdata->memory, node);
+
+	if (info->node == procdata->selected_node)
+	{
+		procdata->selected_node = NULL;
+		/* simulate a "unselected" signal */
+		gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), 
+					 "cursor_activated",
+					  -1, NULL); 
+	}
+	e_tree_memory_node_remove (procdata->memory, info->node);
+	procdata->info = g_list_remove (procdata->info, info);
+	proctable_free_info (info);
+	
+	return FALSE;
+		
+}
+
+
+static void
+remove_info_from_tree (ProcInfo *info, ProcData *procdata)
+{
+	
+	/* Remove any children from the tree. They will then be readded later
+	** in refresh_list
+	*/
+	e_tree_model_node_traverse (procdata->model, info->node, remove_children_from_tree,
+				    procdata);
+		
+	
+	if (info->node == procdata->selected_node)
+	{
+		procdata->selected_node = NULL;
+		/* simulate a "unselected" signal */
+		gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), 
+					 "cursor_activated",
+					  -1, NULL); 
+	}
+	e_tree_memory_node_remove (procdata->memory, info->node);
+}
+	 
+
 static void
 refresh_list (ProcData *data, unsigned *pid_list, gint n)
 {
 	ProcData *procdata = data;
 	GList *list = procdata->info;
 	gint i = 0;
-	ETreePath *root_node;
+	ETreePath root_node;
 	
 	//e_tree_memory_freeze (procdata->memory);
 	root_node = e_tree_model_get_root (procdata->model);
@@ -512,7 +564,7 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 		if (!list)
 		{
 			ProcInfo *info;
-			ETreePath *node;
+			ETreePath node;
 			
 			info = get_info (procdata, pid_list[i]);
 			node = insert_info_to_tree (info, procdata, root_node);
@@ -527,7 +579,7 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 		if (pid_list[i] < oldinfo->pid)
 		{
 			ProcInfo *info;
-			ETreePath *node;
+			ETreePath node;
 			
 			info = get_info (procdata, pid_list[i]);
 			node = insert_info_to_tree (info, procdata, root_node);
@@ -546,15 +598,7 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 		/* process no longer exists */
 		else if (pid_list[i] > oldinfo->pid)
 		{
-			if (oldinfo->node == procdata->selected_node)
-			{
-				procdata->selected_node = NULL;
-				/* simulate a "unselected" signal */
-				gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), 
-							 "cursor_activated",
-					  		 -1, NULL); 
-			}
-			e_tree_memory_node_remove (procdata->memory, oldinfo->node);
+			remove_info_from_tree (oldinfo, procdata);
 			list = g_list_next (list);
 			procdata->info = g_list_remove (procdata->info, oldinfo);
 			proctable_free_info (oldinfo);
@@ -568,7 +612,8 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 	{
 		ProcInfo *oldinfo;
 		oldinfo = list->data;
-		e_tree_memory_node_remove (procdata->memory, oldinfo->node);
+		
+		remove_info_from_tree (oldinfo, procdata);
 		list = g_list_next (list);
 		procdata->info = g_list_remove (procdata->info, oldinfo);
 		proctable_free_info (oldinfo);
@@ -592,11 +637,9 @@ proctable_update_list (ProcData *data)
 	float pcpu;
 	gint which, arg;
 	gint n;
-	ETreePath *root_node;
 	
 	
-	root_node = e_tree_model_get_root (procdata->model);
-
+	
 	if (procdata->config.whose_process == ALL_PROCESSES)
 	{
 		which = GLIBTOP_KERN_PROC_ALL;
@@ -646,7 +689,7 @@ proctable_update_all (ProcData *data)
 {
 	ProcData *procdata = data;
 	ETreeModel *model = procdata->model;
-	ETreePath *root_node;
+	ETreePath root_node;
 
 	
 	root_node = e_tree_model_get_root (model);
@@ -672,7 +715,7 @@ void
 proctable_clear_tree (ProcData *data)
 {
 	ProcData *procdata = data;
-	ETreePath *rootnode;
+	ETreePath rootnode;
 	
 	rootnode = e_tree_model_get_root (procdata->model);
 	while (procdata->info)

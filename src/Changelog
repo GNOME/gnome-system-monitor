@@ -1,3 +1,30 @@
+2001-07-04 Kevin Vandersloot <kfv101@psu.edu>
+
+	*proctable.c(remove_children_from_tree): new function to
+	remove all child info if a parent process is removed.
+
+	*proctable.c (remove_info_from_tree): new function to remove
+	a process.
+
+	*interface.c (create_main_window): change gtk_wdiget_show to
+	gtk_widget_show_all to fix a bug where the infoview state was
+	not persistent
+
+	*memmaps.c (get_memmaps_list): add e_tree_memory_freeze and thaw
+	to inprove table updating. Add glibtop_free to fix a major
+	memory leak.
+
+	*memmaps.c (create_memmaps_dialog): change timeout to be 5 sec. This
+	should probably not be hard coded.
+
+	*procman.c (main): remove the push visual and colormap since
+	I don't know what use they are for.
+
+	*procman.h, proctable.c: change ETreePath *path to ETreePath path
+	since they should not be declared as pointers.
+
+	*proctable.c (proctable_new): make tree default to being expanded.
+
 2001-07-03 Kevin Vandersloot <kfv101@psu.edu>
 
 	*memmaps.[c,h]: create and handle the memmaps dialog. Lots

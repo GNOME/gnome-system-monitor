@@ -172,7 +172,7 @@ create_main_window (ProcData *data)
 	gtk_box_pack_start (GTK_BOX (vbox1), infobox, FALSE, FALSE, 0);
 	
 	if (procdata->config.show_more_info == TRUE)
-		gtk_widget_show (infobox);
+		gtk_widget_show_all (infobox);
 	
 	status_hbox = gtk_hbox_new (TRUE, 0);
 	gtk_box_pack_end (GTK_BOX (vbox1), status_hbox, FALSE, FALSE, 0);

@@ -14,7 +14,7 @@ GtkWidget *cmd_label;
 GtkWidget *tree = NULL;
 ETreeModel *model = NULL;
 ETreeMemory *memory = NULL;
-ETreePath *root_node = NULL;
+ETreePath root_node = NULL;
 gint timer = 0;
 GList *memmaps_list = NULL;
 
@@ -126,7 +126,7 @@ get_memmaps_list (ProcData *procdata, ProcInfo *info)
 	
 	if (!memmaps)
 		return;
-		
+	e_tree_memory_freeze (memory);	
 	for (i = 0; i < procmap.number; i++)
 	{
 		MemmapsInfo *info = g_new0 (MemmapsInfo, 1);
@@ -177,7 +177,8 @@ get_memmaps_list (ProcData *procdata, ProcInfo *info)
                 memmaps_list = g_list_append (memmaps_list, info);
 	
 	}
-	
+	e_tree_memory_thaw (memory);
+	glibtop_free (memmaps);
 
 
 }
@@ -248,6 +249,7 @@ static void
 close_memmaps_dialog (gpointer data)
 {
 	ProcData *procdata = data;
+	
 	save_memmaps_tree_state (procdata);
 	gnome_dialog_close (GNOME_DIALOG (memmapsdialog));
 	memmapsdialog = NULL;
@@ -264,7 +266,7 @@ close_button_pressed (GtkButton *button, gpointer data)
 
 /* Do this to prevent selection of a row */
 static gint
-tree_clicked (ETree *tree, int row, ETreePath *node, int col, GdkEvent *event)
+tree_clicked (ETree *tree, int row, ETreePath node, int col, GdkEvent *event)
 {
 	return TRUE;
 }
@@ -365,7 +367,7 @@ void create_memmaps_dialog (ProcData *procdata)
 	
 	gtk_widget_show (memmapsdialog);
 #if 1
-	timer = gtk_timeout_add (procdata->config.update_interval, memmaps_timer, procdata);
+	timer = gtk_timeout_add (5000, memmaps_timer, procdata);
 #endif
 	update_memmaps_dialog (procdata);
 	

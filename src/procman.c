@@ -108,8 +108,8 @@ main (int argc, char *argv[])
 		
 	e_cursors_init ();
 
-	gtk_widget_push_visual (gdk_rgb_get_visual ());
-	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
+//	gtk_widget_push_visual (gdk_rgb_get_visual ());
+//	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
 
 	glibtop_init ();
 

@@ -63,7 +63,7 @@ struct _InfoView
 
 struct _ProcInfo
 {
-	ETreePath	*node;
+	ETreePath	node;
 	GdkPixbuf	*pixbuf;
 	gchar		*name;
 	gchar		*user;
