@@ -23,6 +23,7 @@
 
 #include <signal.h>
 #include <string.h>
+#include <libgnomesu/libgnomesu.h>
 #include "procdialogs.h"
 #include "favorites.h"
 #include "proctable.h"
@@ -804,101 +805,13 @@ entry_activate_cb (GtkEntry *entry, gpointer data)
 void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint pid, 
 					     gint extra_value, gchar *text)
 {
-	GtkWidget *dialog;
-	GtkWidget *error_dialog;
-	GtkWidget *main_vbox;
-	GtkWidget *hbox;
-	GtkWidget *entry;
-	GtkWidget *label;
-	gchar *title = NULL, *button_label;
 	gchar *command;
-	gchar *password, *blank;
-	gint retval;
 
-	if (type == 0) {
-		if (extra_value == SIGKILL) {
-			title = g_strdup (_("Kill Process"));
-			button_label = g_strdup (_("_Kill Process"));
-		}
-		else {
-			title = g_strdup (_("End Process"));
-			button_label = g_strdup (_("_End Process"));
-		}
-	}
-	else {
-		title = g_strdup (_("Change Priority"));
-		button_label = g_strdup (_("Change _Priority"));
-	}
-		
-	dialog = gtk_dialog_new_with_buttons (title, NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
-					      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-					      button_label, 100,
-					      NULL);
-	
-	main_vbox = GTK_DIALOG (dialog)->vbox;
-	
-	label = gtk_label_new (_(text));
-	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD, 2 * GNOME_PAD);
-	gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
-	
-	hbox = gtk_hbox_new (FALSE, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (hbox), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-	
-	label = gtk_label_new (_("Root Password :"));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
-	gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
-	
-	entry = gtk_entry_new ();
-	gtk_entry_set_visibility (GTK_ENTRY (entry), FALSE);
-	gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, FALSE, 0);
-	g_signal_connect (G_OBJECT (entry), "activate",
-			  G_CALLBACK (entry_activate_cb), dialog);
-		
-	gtk_widget_show_all (main_vbox);
-	
-	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
-	gtk_widget_grab_focus (entry);
-		
-	g_free (title);	
-	g_free (button_label);
-	
-	retval = gtk_dialog_run (GTK_DIALOG (dialog));
-	gtk_widget_hide (dialog);
-	
-	if (retval == 100) {
-		password = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
-		
-		if (!password)
-			password = "";
-		blank = g_strdup (password);
-		if (strlen (blank))
-			memset (blank, ' ', strlen (blank));
-			
-		gtk_entry_set_text (GTK_ENTRY (entry), blank);
-		gtk_entry_set_text (GTK_ENTRY (entry), "");
-		g_free (blank);
-		
-		if (type == 0)
-			command = g_strdup_printf ("kill -s %d %d", extra_value, pid);
-		else
-			command = g_strdup_printf ("renice %d %d", extra_value, pid);
-			
-		if (su_run_with_password (command, password) == -1) {
-			error_dialog = gtk_message_dialog_new (NULL,
-							       GTK_DIALOG_DESTROY_WITH_PARENT,
-                                  			       GTK_MESSAGE_ERROR,
-                                  			       GTK_BUTTONS_OK,
-                                  			       "%s",
-                                  			      _("Wrong Password.")); 
-			gtk_dialog_run (GTK_DIALOG (error_dialog));
-			gtk_widget_destroy (error_dialog);
-		}
-		g_free (command);
-		
-	}
-	gtk_widget_destroy (dialog);
-
+	if (type == 0)
+		command = g_strdup_printf ("kill -s %d %d", extra_value, pid);
+	else
+		command = g_strdup_printf ("renice %d %d", extra_value, pid);
+	gnomesu_exec (command);
+	g_free (command);
 }
 

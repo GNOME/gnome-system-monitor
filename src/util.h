@@ -1,12 +1,8 @@
-
 #ifndef _PROCMAN_UTIL_H_
 #define _PROCAMN_UTIL_H_
 
-#include <gnome.h>
+#include <glib.h>
 #include <stddef.h>
-
-/* -1 means wrong password, 0 means another error, 1 means great */
-gint 		su_run_with_password (gchar *exec_path, gchar *password);
 
 void _procman_array_gettext_init(const char * strings[], size_t n);
 
