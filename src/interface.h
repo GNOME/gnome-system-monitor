@@ -23,7 +23,6 @@
 #include "procman.h"
 #include <glib.h>
 
-gint		get_sys_pane_pos (void) G_GNUC_INTERNAL;
 void		create_main_window (ProcData *data) G_GNUC_INTERNAL;
 void		toggle_infoview (ProcData *data) G_GNUC_INTERNAL;
 void		update_sensitivity (ProcData *data, gboolean sensitivity) G_GNUC_INTERNAL;

@@ -689,7 +689,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			          G_CALLBACK (cb_bg_color_changed), procdata);
-	gtk_box_pack_start (GTK_BOX (hbox2), color_picker,TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox2), color_picker, FALSE, FALSE, 0);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), color_picker);
 	gtk_widget_show (color_picker);
 		
@@ -708,19 +708,26 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_frame_color_changed), procdata);	  
-	gtk_box_pack_start (GTK_BOX (hbox2), color_picker, TRUE, TRUE, 0);	
+	gtk_box_pack_start (GTK_BOX (hbox2), color_picker, FALSE, FALSE, 0);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), color_picker);
 	gtk_widget_show (color_picker);
-	
+
+
+	/*
+	 * Devices
+	 */
 	vbox = gtk_vbox_new (FALSE, 6);
-	gtk_box_pack_start (GTK_BOX (sys_box), vbox, FALSE, FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+	tab_label = gtk_label_new (_("Devices"));
+	gtk_widget_show (tab_label);
+	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, tab_label);
 	
 	tmp = g_strdup_printf ("<b>%s</b>", _("Devices"));
 	label = gtk_label_new (NULL);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_label_set_markup (GTK_LABEL (label), tmp);
 	g_free (tmp);
-	gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 	
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -754,7 +761,9 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	label = gtk_label_new_with_mnemonic (_("seconds"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_box_pack_start (GTK_BOX (hbox3), label, FALSE, FALSE, 0);
-	
+
+
+
 	gtk_widget_show_all (dialog);
 	g_signal_connect (G_OBJECT (dialog), "response",
 				  G_CALLBACK (prefs_dialog_button_pressed), procdata);

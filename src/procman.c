@@ -249,7 +249,6 @@ procman_data_new (GConfClient *client)
 	gconf_client_notify_add (client, "/apps/procman/view_as", view_as_changed_cb,
 				 pd, NULL, NULL);
 	pd->config.current_tab = gconf_client_get_int (client, "/apps/procman/current_tab", NULL);
-	pd->config.pane_pos = gconf_client_get_int (client, "/apps/procman/pane_pos", NULL);
 
 	color = gconf_client_get_string (client, "/apps/procman/bg_color", NULL);
 	if (!color)
@@ -317,8 +316,6 @@ procman_data_new (GConfClient *client)
 	pd->config.disks_update_interval = MAX (pd->config.disks_update_interval, 1000);
 	pd->config.whose_process = CLAMP (pd->config.whose_process, 0, 2);
 	pd->config.current_tab = CLAMP (pd->config.current_tab, 0, 1);
-	if (pd->config.pane_pos == 0)
-		pd->config.pane_pos = 300;
 	
 	/* Determinie number of cpus since libgtop doesn't really tell you*/
 	pd->config.num_cpus = 0;
@@ -468,7 +465,7 @@ void
 procman_save_config (ProcData *data)
 {
 	GConfClient *client = data->client;
-	gint width, height, pane_pos;
+	gint width, height;
 
 	g_return_if_fail(data != NULL);
 		
@@ -479,14 +476,10 @@ procman_save_config (ProcData *data)
 	data->config.width = width;
 	data->config.height = height;
 	
-	pane_pos = get_sys_pane_pos ();
-	data->config.pane_pos = pane_pos;
-	
 	gconf_client_set_int (client, "/apps/procman/width", data->config.width, NULL);
 	gconf_client_set_int (client, "/apps/procman/height", data->config.height, NULL);	
 	gconf_client_set_bool (client, "/apps/procman/more_info", data->config.show_more_info, NULL);
 	gconf_client_set_int (client, "/apps/procman/current_tab", data->config.current_tab, NULL);
-	gconf_client_set_int (client, "/apps/procman/pane_pos", data->config.pane_pos, NULL);
 	
 	save_blacklist (data, client);
 

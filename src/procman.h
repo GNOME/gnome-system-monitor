@@ -62,7 +62,6 @@ struct _ProcConfig
 	GdkColor	swap_color;
 	GdkColor	bg_color;
 	GdkColor	frame_color;
-	gint		pane_pos;
 	gint 		num_cpus;
 };
 
