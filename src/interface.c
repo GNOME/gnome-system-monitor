@@ -199,15 +199,14 @@ create_proc_view (ProcData *procdata)
 	GtkWidget *label;
 	GtkWidget *hbox2;
 	
-	vbox1 = gtk_vbox_new (FALSE, 0);
+	vbox1 = gtk_vbox_new (FALSE, 18);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox1), 12);
 	
-	hbox1 = gtk_hbox_new (FALSE, 0);
+	hbox1 = gtk_hbox_new (FALSE, 12);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (hbox1), GNOME_PAD_SMALL);
 	
-	search_label = gtk_label_new_with_mnemonic (_("Sea_rch :"));
+	search_label = gtk_label_new_with_mnemonic (_("Sea_rch:"));
 	gtk_box_pack_start (GTK_BOX (hbox1), search_label, FALSE, FALSE, 0);
-	gtk_misc_set_padding (GTK_MISC (search_label), GNOME_PAD_SMALL, 0);
 	
 	search_entry = gtk_entry_new ();
 	gtk_box_pack_start (GTK_BOX (hbox1), search_entry, FALSE, FALSE, 0);
@@ -225,19 +224,19 @@ create_proc_view (ProcData *procdata)
 	gtk_menu_set_active (GTK_MENU (optionmenu1_menu), procdata->config.whose_process);
   	gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu1), optionmenu1_menu);
   	  	
-  	label = gtk_label_new_with_mnemonic (_("Vie_w"));
+  	label = gtk_label_new_with_mnemonic (_("Vie_w:"));
   	gtk_label_set_mnemonic_widget (GTK_LABEL (label), optionmenu1);
 	gtk_box_pack_end (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	
 	gtk_widget_show_all (hbox1);
 	
 	scrolled = proctable_new (procdata);
 	if (!scrolled)
 		return NULL;
+	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
+                                             GTK_SHADOW_IN);
 	
 	gtk_box_pack_start (GTK_BOX (vbox1), scrolled, TRUE, TRUE, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (scrolled), GNOME_PAD_SMALL);
 	
 	gtk_widget_show_all (scrolled);
 	
@@ -249,9 +248,6 @@ create_proc_view (ProcData *procdata)
 	
 	endprocessbutton = gtk_button_new_with_mnemonic (_("End _Process"));
   	gtk_box_pack_end (GTK_BOX (hbox2), endprocessbutton, FALSE, FALSE, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (endprocessbutton), GNOME_PAD_SMALL);
-	gtk_misc_set_padding (GTK_MISC (GTK_BIN (endprocessbutton)->child), 
-			      GNOME_PAD_SMALL, 1);
 	g_signal_connect (G_OBJECT (endprocessbutton), "clicked",
 			  G_CALLBACK (cb_end_process_button_pressed), procdata);
 
@@ -259,8 +255,6 @@ create_proc_view (ProcData *procdata)
 	infobutton = gtk_button_new ();
 	gtk_container_add (GTK_CONTAINER (infobutton), infolabel);
 	gtk_box_pack_start (GTK_BOX (hbox2), infobutton, FALSE, FALSE, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (infobutton), GNOME_PAD_SMALL);
-	gtk_misc_set_padding (GTK_MISC (GTK_BIN (infobutton)->child), GNOME_PAD_SMALL, 1);
 	g_signal_connect (G_OBJECT (infobutton), "clicked",
 			  G_CALLBACK (cb_info_button_pressed), procdata);
 	
@@ -313,14 +307,31 @@ sort_bytes (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointe
 }
 
 static GtkWidget *
+make_title_label (const char *text)
+{
+  GtkWidget *label;
+  char *full;
+
+  full = g_strdup_printf ("<span weight=\"bold\">%s</span>", text);
+  label = gtk_label_new (full);
+  g_free (full);
+
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+
+  return label;
+}
+
+static GtkWidget *
 create_sys_view (ProcData *procdata)
 {
 	GtkWidget *vbox;
 	GtkWidget *vpane;
-	GtkWidget *cpu_frame, *mem_frame;
-	GtkWidget *label,*cpu_label;
+	GtkWidget *cpu_box, *mem_box, *disk_box;
+	GtkWidget *cpu_hbox, *mem_hbox, *disk_hbox;
+	GtkWidget *cpu_graph_box, *mem_graph_box;
+	GtkWidget *label,*cpu_label, *spacer;
 	GtkWidget *hbox, *table;
-	GtkWidget *disk_frame;
 	GtkWidget *color_picker;
 	GtkWidget *scrolled;
 	GtkWidget *disk_tree;
@@ -341,40 +352,36 @@ create_sys_view (ProcData *procdata)
 	sys_pane = vpane;
 	gtk_paned_set_position (GTK_PANED (vpane), procdata->config.pane_pos);
 	
-	vbox = gtk_vbox_new (FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (vpane), 6);
+
+	vbox = gtk_vbox_new (FALSE, 18);
 	gtk_paned_pack1 (GTK_PANED (vpane), vbox, TRUE, FALSE);
 
-	/* xgettext:no-c-format */
-	label = gtk_label_new (NULL);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+
+	/* The CPU BOX */
+
+	cpu_box = gtk_vbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (vbox), cpu_box, TRUE, TRUE, 0);
+
+	label = make_title_label (_("CPU History"));
 	gtk_widget_show (label);
-	tmp = g_strdup_printf ("%s", _("CPU History"));
-	gtk_label_set_markup (GTK_LABEL (label), tmp);
-	g_free (tmp);
-	cpu_frame = gtk_frame_new (NULL);
-	gtk_frame_set_label_widget (GTK_FRAME (cpu_frame), label);
-	gtk_frame_set_shadow_type (GTK_FRAME (cpu_frame), GTK_SHADOW_NONE);
-	gtk_widget_show (cpu_frame);
-	gtk_container_set_border_width (GTK_CONTAINER (cpu_frame), 6);
-	gtk_box_pack_start (GTK_BOX (vbox), cpu_frame, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (cpu_box), label, FALSE, FALSE, 0);
 	
-	/* xgettext:no-c-format */
-	label = gtk_label_new (NULL);
-	gtk_widget_show (label);
-	tmp = g_strdup_printf ("%s", _("Memory / Swap Usage History"));
-	gtk_label_set_markup (GTK_LABEL (label), tmp);
-	g_free (tmp);
-	mem_frame = gtk_frame_new (NULL);
-	gtk_frame_set_shadow_type (GTK_FRAME (mem_frame), GTK_SHADOW_NONE);
-	gtk_frame_set_label_widget (GTK_FRAME (mem_frame), label);
-	gtk_container_set_border_width (GTK_CONTAINER (mem_frame), 6);
-	gtk_box_pack_start (GTK_BOX (vbox), mem_frame, TRUE, TRUE, 0);
-	
+	cpu_hbox = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (cpu_box), cpu_hbox, TRUE, TRUE, 0);
+
+	spacer = gtk_label_new ("    ");
+	gtk_box_pack_start (GTK_BOX (cpu_hbox), spacer, FALSE, FALSE, 0);
+
+	cpu_graph_box = gtk_vbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (cpu_hbox), cpu_graph_box, TRUE, TRUE, 0);
+
 	cpu_graph = load_graph_new (CPU_GRAPH, procdata);
-	gtk_container_add (GTK_CONTAINER (cpu_frame), cpu_graph->main_widget);
-	gtk_container_set_border_width (GTK_CONTAINER (cpu_graph->main_widget), 6);
-					
-	hbox = gtk_hbox_new (FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (cpu_graph->main_widget), hbox, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (cpu_graph_box), cpu_graph->main_widget, TRUE, TRUE, 0);
+
+	hbox = gtk_hbox_new (FALSE, 12);
+	gtk_box_pack_start (GTK_BOX (cpu_graph_box), hbox, FALSE, FALSE, 0);
 
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
@@ -385,25 +392,45 @@ create_sys_view (ProcData *procdata)
 			    G_CALLBACK (cb_cpu_color_changed), procdata);
 	gtk_box_pack_start (GTK_BOX (hbox), color_picker, FALSE, FALSE, 0);
 	
-	label = gtk_label_new (_("CPU Used :"));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	label = gtk_label_new (_("Used CPU:"));
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 	
 	cpu_label = gtk_label_new ("");
-	gtk_misc_set_padding (GTK_MISC (cpu_label), GNOME_PAD_SMALL, 0);
 	gtk_box_pack_start (GTK_BOX (hbox), cpu_label, FALSE, FALSE, 0);
 	cpu_graph->label = cpu_label;
 	
 	procdata->cpu_graph = cpu_graph;
+
+
+	/******************************************/
+
+	mem_box = gtk_vbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (vbox), mem_box, TRUE, TRUE, 0);
+
+	label = make_title_label (_("Memory and Swap History"));
+	gtk_widget_show (label);
+	gtk_box_pack_start (GTK_BOX (mem_box), label, FALSE, FALSE, 0);
 	
+	mem_hbox = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (mem_box), mem_hbox, TRUE, TRUE, 0);
+
+	spacer = gtk_label_new ("    ");
+	gtk_box_pack_start (GTK_BOX (mem_hbox), spacer, FALSE, FALSE, 0);
+
+	mem_graph_box = gtk_vbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (mem_hbox), mem_graph_box, TRUE, TRUE, 0);
+
+
 	mem_graph = load_graph_new (MEM_GRAPH, procdata);
-	gtk_container_add (GTK_CONTAINER (mem_frame), mem_graph->main_widget);
-	gtk_container_set_border_width (GTK_CONTAINER (mem_graph->main_widget), 6);
-	
+	gtk_box_pack_start (GTK_BOX (mem_graph_box), mem_graph->main_widget, 
+			    TRUE, TRUE, 0);
 	
 	table = gtk_table_new (2, 6, FALSE);
-	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), table, FALSE, FALSE, 0);
-	
+	gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+	gtk_table_set_col_spacings (GTK_TABLE (table), 12);
+	gtk_box_pack_start (GTK_BOX (mem_graph_box), table, 
+			    FALSE, FALSE, 0);
+
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
 				    mem_graph->colors[2].red,
@@ -413,31 +440,22 @@ create_sys_view (ProcData *procdata)
 			    G_CALLBACK (cb_mem_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, 0, 0, 0, 0);
 	
-	label = gtk_label_new (_("Memory"));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	label = gtk_label_new (_("Used memory:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
 	
-	label = gtk_label_new (_("Used :"));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1, GTK_FILL, 0, 0, 0);
-	
 	mem_graph->memused_label = gtk_label_new ("");
-	gtk_misc_set_padding (GTK_MISC (mem_graph->memused_label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (mem_graph->memused_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), mem_graph->memused_label, 3, 4, 0, 1, 
+	gtk_table_attach (GTK_TABLE (table), mem_graph->memused_label, 2, 3, 0, 1, 
 			  GTK_FILL, 0, 0, 0);
 	
-	label = gtk_label_new (_("Total :"));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	label = gtk_label_new (_("of"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 4, 5, 0, 1, GTK_FILL, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 0, 1, GTK_FILL, 0, 0, 0);
 	
 	mem_graph->memtotal_label = gtk_label_new ("");
-	gtk_misc_set_padding (GTK_MISC (mem_graph->memtotal_label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (mem_graph->memtotal_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), mem_graph->memtotal_label, 5, 6, 0, 1, 
+	gtk_table_attach (GTK_TABLE (table), mem_graph->memtotal_label, 4, 5, 0, 1, 
 			  GTK_FILL, 0, 0, 0);
 	
 	color_picker = gnome_color_picker_new ();
@@ -449,53 +467,53 @@ create_sys_view (ProcData *procdata)
 			    G_CALLBACK (cb_swap_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, 0, 0, 0, 0);
 			  
-	label = gtk_label_new (_("Swap"));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	label = gtk_label_new (_("Used swap:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
 	
-	label = gtk_label_new (_("Used :"));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2, GTK_FILL, 0, 0, 0);
-	
 	mem_graph->swapused_label = gtk_label_new ("");
-	gtk_misc_set_padding (GTK_MISC (mem_graph->swapused_label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (mem_graph->swapused_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), mem_graph->swapused_label, 3, 4, 1, 2, 
+	gtk_table_attach (GTK_TABLE (table), mem_graph->swapused_label, 2, 3, 1, 2, 
 			  GTK_FILL, 0, 0, 0);
 			  
-	label = gtk_label_new (_("Total :"));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	label = gtk_label_new (_("of"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 4, 5, 1, 2, GTK_FILL, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 1, 2, GTK_FILL, 0, 0, 0);
 	
 	mem_graph->swaptotal_label = gtk_label_new ("");
-	gtk_misc_set_padding (GTK_MISC (mem_graph->swaptotal_label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (mem_graph->swaptotal_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), mem_graph->swaptotal_label, 5, 6, 1, 2, 
+	gtk_table_attach (GTK_TABLE (table), mem_graph->swaptotal_label, 4, 5, 1, 2, 
 			  GTK_FILL, 0, 0, 0);	
 	
 	procdata->mem_graph = mem_graph;
 	gtk_widget_show_all (vbox);
-	
-	label = gtk_label_new (NULL);
-	gtk_widget_show (label);
-	tmp = g_strdup_printf ("%s", _("Devices"));
-	gtk_label_set_markup (GTK_LABEL (label), tmp);
-	g_free (tmp);			
-	disk_frame = gtk_frame_new (NULL);
-	gtk_frame_set_shadow_type (GTK_FRAME (disk_frame), GTK_SHADOW_NONE);
-	gtk_frame_set_label_widget (GTK_FRAME (disk_frame), label);
-	gtk_container_set_border_width (GTK_CONTAINER (disk_frame), 6);
 
-	gtk_paned_pack2 (GTK_PANED (vpane), disk_frame, TRUE, TRUE);
-	
+
+	/*****************************************/
+
+	disk_box = gtk_vbox_new (FALSE, 6);
+
+	gtk_container_set_border_width (GTK_CONTAINER (disk_box), 6);
+
+	gtk_paned_pack2 (GTK_PANED (vpane), disk_box, TRUE, TRUE);
+
+	label = make_title_label (_("Devices"));
+	gtk_box_pack_start (GTK_BOX (disk_box), label, FALSE, FALSE, 0);
+
+	disk_hbox = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (disk_box), disk_hbox, TRUE, TRUE, 0);
+
+	spacer = gtk_label_new ("    ");
+	gtk_box_pack_start (GTK_BOX (disk_hbox), spacer, FALSE, FALSE, 0);
+
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), 
 					GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-	gtk_container_set_border_width (GTK_CONTAINER (scrolled), 6);
-	gtk_container_add (GTK_CONTAINER (disk_frame), scrolled);
+	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
+                                             GTK_SHADOW_IN);
+
+	gtk_box_pack_start (GTK_BOX (disk_hbox), scrolled, TRUE, TRUE, 0);
+
 	 
 	model = gtk_tree_store_new (9, GDK_TYPE_PIXBUF, G_TYPE_STRING, 
 					   G_TYPE_STRING, G_TYPE_STRING,
@@ -561,7 +579,7 @@ create_sys_view (ProcData *procdata)
 	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
 					 5, sort_bytes, GINT_TO_POINTER (5), NULL);
 	
-	gtk_widget_show_all (disk_frame);
+	gtk_widget_show_all (disk_box);
   	
   	procman_get_tree_state (procdata->client, disk_tree, "/apps/procman/disktreenew");
   	
@@ -594,16 +612,15 @@ create_main_window (ProcData *procdata)
 	gnome_app_create_menus_with_data (GNOME_APP (app), menubar1_uiinfo, procdata);
 	
 	notebook = gtk_notebook_new ();
-	gtk_container_set_border_width (GTK_CONTAINER (notebook), GNOME_PAD_SMALL);
-
+	
 	vbox1 = create_proc_view (procdata);
-	tab_label1 = gtk_label_new_with_mnemonic (_("Process _Listing"));
+	tab_label1 = gtk_label_new (_("Process Listing"));
 	gtk_widget_show (tab_label1);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox1, tab_label1);
 	
 	sys_box = create_sys_view (procdata);
 	gtk_widget_show (sys_box);
-	tab_label2 = gtk_label_new_with_mnemonic (_("System _Monitor"));
+	tab_label2 = gtk_label_new_with_mnemonic (_("Resource Monitor"));
 	gtk_widget_show (tab_label2);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label2);
 	
