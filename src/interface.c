@@ -36,7 +36,6 @@
 #include "infoview.h"
 #include "procactions.h"
 #include "load-graph.h"
-#include "cellrenderer.h"
 #include "util.h"
 
 static void	cb_toggle_tree (GtkMenuItem *menuitem, gpointer data);
@@ -594,7 +593,7 @@ create_sys_view (ProcData *procdata)
 	gtk_tree_view_column_set_title (col, titles[5]);
 		
 	
-	cell = procman_cell_renderer_progress_new ();
+	cell = gtk_cell_renderer_progress_new ();
 	gtk_tree_view_column_pack_start (col, cell, TRUE);
 	gtk_tree_view_column_set_attributes (col, cell,
 					     "value", 7,

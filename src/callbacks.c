@@ -37,7 +37,6 @@
 #include "openfiles.h"
 #include "favorites.h"
 #include "load-graph.h"
-#include "cellrenderer.h"
 
 
 static void
@@ -423,7 +422,7 @@ fsusage_stats(const glibtop_fsusage *buf,
 	*btotal = buf->blocks * buf->block_size;
 	*bfree  = buf->bfree  * buf->block_size;
 	*bused  = *btotal - *bfree;
-	*percentage = *bused / *btotal;
+	*percentage = CLAMP(100.0f * *bused / *btotal, 0.0f, 100.0f);
 }
 
 

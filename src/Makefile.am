@@ -8,7 +8,6 @@ INCLUDES = \
 bin_PROGRAMS = gnome-system-monitor
 
 gnome_system_monitor_SOURCES = \
-	cellrenderer.c cellrenderer.h \
 	procman.c  procman.h \
 	interface.c interface.h \
 	callbacks.c callbacks.h \

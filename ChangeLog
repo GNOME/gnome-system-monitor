@@ -1,5 +1,16 @@
 2005-03-10  Benoît Dejean  <TazForEver@dlfp.org>
 
+	* configure.in:
+	* src/Makefile.am:
+	* src/callbacks.c: (fsusage_stats):
+	* src/cellrenderer.c:
+	* src/cellrenderer.h:
+	* src/interface.c: (create_sys_view): Got rid of Procman cellrenderer
+	and replaced by GTK+ 2.6 GtkCellRendererProgress.
+	Closes #142540.
+
+2005-03-10  Benoît Dejean  <TazForEver@dlfp.org>
+
 	* src/callbacks.c: (update_disk), (compare_disks), (add_new_disks):
 	Added update_disk() so that compare_disk() and add_new_disks() retrieve
 	disk info in the same way.
