@@ -97,12 +97,12 @@ static GnomeUIInfo view1_menu_uiinfo[] =
 	},
 	GNOMEUIINFO_SEPARATOR,
 	{
-	 GNOME_APP_UI_ITEM, N_("_Memory Maps"), N_("Open the memory maps associated with the process"),
+	 GNOME_APP_UI_ITEM, N_("_Memory Maps"), N_("Open the memory maps associated with a process"),
 	 cb_show_memory_maps, NULL, NULL, 0, NULL,
 	 'm', GDK_CONTROL_MASK
 	},
 	{
-	 GNOME_APP_UI_ITEM, N_("Open _Files"), N_("View a process' open files"),
+	 GNOME_APP_UI_ITEM, N_("Open _Files"), N_("View the files opened by a process"),
 	 cb_show_open_files, NULL, NULL, 0, 0,
 	 'f', GDK_CONTROL_MASK
 	},
@@ -156,7 +156,7 @@ static GnomeUIInfo popup_menu_uiinfo[] =
 	 0, 0
 	},
 	{
- 	  GNOME_APP_UI_ITEM, N_("Open _Files"), N_("View process' open files"),
+ 	  GNOME_APP_UI_ITEM, N_("Open _Files"), N_("View the files opened by the process"),
 	 popup_menu_show_open_files, NULL, NULL, 0, 0,
 	 0, 0
 	},
