@@ -6,17 +6,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor-ro\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-07 09:25+0300\n"
+"POT-Creation-Date: 2003-11-08 10:08-0500\n"
 "PO-Revision-Date: 2003-10-05 23:58+0300\n"
 "Last-Translator: Mugurel Tudor <mugurelu@go.ro>\n"
 "Language-Team: Romanian <gnomero@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.0.2\n"
 
-#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:147 src/interface.c:605
+#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:146 src/interface.c:604
 msgid "System Monitor"
 msgstr "Monitorizare sistem"
 
@@ -24,23 +24,23 @@ msgstr "Monitorizare sistem"
 msgid "View current processes and monitor system state"
 msgstr "Arată procesele curente şi monitorizează starea sistemului"
 
-#: src/callbacks.c:124
+#: src/callbacks.c:123
 msgid "Kevin Vandersloot (kfv101@psu.edu)"
 msgstr "Kevin Vandersloot (kfv101@psu.edu)"
 
-#: src/callbacks.c:125
+#: src/callbacks.c:124
 msgid "Jorgen Scheibengruber <mfcn@gmx.de> - nicer devices treeview"
 msgstr "Jorgen Scheibengruber <mfcn@gmx.de> - nicer devices treeview"
 
-#: src/callbacks.c:133
+#: src/callbacks.c:132
 msgid "translator_credits"
 msgstr "Mugurel Tudor <mugurelu@go.ro>"
 
-#: src/callbacks.c:148
+#: src/callbacks.c:147
 msgid "(C) 2001 Kevin Vandersloot"
 msgstr "(C) 2001 Kevin Vandersloot"
 
-#: src/callbacks.c:149
+#: src/callbacks.c:148
 msgid "Simple process viewer using libgtop"
 msgstr "Vizualizator simplu pentru procese folosind libgtop"
 
@@ -56,29 +56,34 @@ msgstr "bourne again shell"
 msgid "Gnome-Session"
 msgstr "Gnome-Session"
 
-#: src/favorites.c:343
+#: src/favorites.c:344
 msgid "No processes are currently hidden."
 msgstr "Nici un proces nu este ascuns în acest moment."
 
-#: src/favorites.c:361
+#: src/favorites.c:364
 msgid "Manage Hidden Processes"
 msgstr "Gestionează procesele ascunse"
 
-#: src/favorites.c:376
+#: src/favorites.c:388
+#, fuzzy
+msgid "_Hidden processes:"
+msgstr "_Procesele ascunse:"
+
+#: src/favorites.c:410
+msgid "_Remove From List"
+msgstr "_Şterge din listă"
+
+#: src/favorites.c:419 src/procdialogs.c:440
+msgid "Note:"
+msgstr ""
+
+#: src/favorites.c:420
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
 msgstr ""
 "Acestea sunt procesele pe care aţi ales să le ascundeţi. Puteţi reafişa un "
 "proces ştergândul din această listă."
-
-#: src/favorites.c:386
-msgid "_Hidden Processes:"
-msgstr "_Procesele ascunse:"
-
-#: src/favorites.c:396
-msgid "_Remove From List"
-msgstr "_Şterge din listă"
 
 #: src/infoview.c:80
 msgid "Process Info"
@@ -137,7 +142,7 @@ msgstr "Mică - nice %d"
 msgid "Very low - nice %d"
 msgstr "Foarte mică - nice %d"
 
-#: src/interface.c:52
+#: src/interface.c:52 src/interface.c:143
 msgid "_Change Priority..."
 msgstr "_Schimbă prioritatea..."
 
@@ -145,7 +150,7 @@ msgstr "_Schimbă prioritatea..."
 msgid "Change the importance (nice value) of a process"
 msgstr "Schimbă importanţa (valoarea nice) a unui proces"
 
-#: src/interface.c:57 src/procdialogs.c:100
+#: src/interface.c:57 src/interface.c:154 src/procdialogs.c:155
 msgid "_Hide Process"
 msgstr "_Ascunde procesul"
 
@@ -161,7 +166,8 @@ msgstr "Termină _procesul"
 msgid "Force a process to finish."
 msgstr "Forţează un proces să se termine."
 
-#: src/interface.c:68 src/procdialogs.c:150 src/procdialogs.c:835
+#: src/interface.c:68 src/interface.c:165 src/procdialogs.c:218
+#: src/procdialogs.c:1008
 msgid "_Kill Process"
 msgstr "_Omoară procesul"
 
@@ -177,7 +183,7 @@ msgstr "_Procesele ascunse"
 msgid "View and edit your list of hidden processes"
 msgstr "Vizualizează şi editează lista proceselor ascunse"
 
-#: src/interface.c:86
+#: src/interface.c:86 src/interface.c:148
 msgid "_Memory Maps"
 msgstr "_Harta memoriei"
 
@@ -225,29 +231,13 @@ msgstr "Procesele active"
 msgid "View only active processes"
 msgstr "Arată doar procesele active"
 
-#: src/interface.c:143
-msgid "Change Priority ..."
-msgstr "Schimbă prioritatea ..."
-
-#: src/interface.c:148 src/memmaps.c:306
-msgid "Memory Maps"
-msgstr "Harta memoriei"
-
-#: src/interface.c:154 src/procdialogs.c:82
-msgid "Hide Process"
-msgstr "Ascunde procesul"
-
-#: src/interface.c:160 src/procdialogs.c:153 src/procdialogs.c:838
-msgid "End Process"
-msgstr "Termină procesul"
+#: src/interface.c:160 src/procdialogs.c:223 src/procdialogs.c:1012
+msgid "_End Process"
+msgstr "_Termină procesul"
 
 #: src/interface.c:160
 msgid "Force a process to finish"
 msgstr "Forţează terminarea unui proces"
-
-#: src/interface.c:165 src/procdialogs.c:149 src/procdialogs.c:834
-msgid "Kill Process"
-msgstr "Omoară procesul"
 
 #: src/interface.c:165
 msgid "Force a process to finish now"
@@ -273,108 +263,114 @@ msgstr "_Vizualizează:"
 msgid "More _Info"
 msgstr "Mai multe _informaţii"
 
-#: src/interface.c:342
+#: src/interface.c:341
 msgid "Name"
 msgstr "Nume"
 
-#: src/interface.c:343
+#: src/interface.c:342
 msgid "Directory"
 msgstr "Director"
 
-#: src/interface.c:344
+#: src/interface.c:343
 msgid "Type"
 msgstr "Tip"
 
-#: src/interface.c:345
+#: src/interface.c:344
 msgid "Total"
 msgstr "Total"
 
-#: src/interface.c:346
+#: src/interface.c:345
 msgid "Used"
 msgstr "Folosită"
 
-#: src/interface.c:367
+#: src/interface.c:366
 msgid "CPU History"
 msgstr "Istoric folosire CPU"
 
-#: src/interface.c:395
+#: src/interface.c:394
 msgid "Used CPU:"
 msgstr "Utilizare CPU:"
 
-#: src/interface.c:410
+#: src/interface.c:409
 msgid "Memory and Swap History"
 msgstr "Istoric folosire Memorie / Swap"
 
-#: src/interface.c:443
+#: src/interface.c:442
 msgid "Used memory:"
 msgstr "Memorie utilizată:"
 
-#: src/interface.c:452 src/interface.c:479
+#: src/interface.c:451 src/interface.c:478
 msgid "of"
 msgstr "din"
 
-#: src/interface.c:470
+#: src/interface.c:469
 msgid "Used swap:"
 msgstr "Swap utilizat:"
 
-#: src/interface.c:500 src/procdialogs.c:762
+#: src/interface.c:499 src/procdialogs.c:928
 msgid "Devices"
 msgstr "Dispozitive"
 
-#: src/interface.c:617 src/procdialogs.c:601
+#: src/interface.c:616 src/procdialogs.c:753
 msgid "Process Listing"
 msgstr "Lista proceselor"
 
-#: src/interface.c:623 src/procdialogs.c:681
+#: src/interface.c:622 src/procdialogs.c:840
 msgid "Resource Monitor"
 msgstr "Monitorizare resurse"
 
-#: src/interface.c:681
+#: src/interface.c:680
 msgid "Application Manager"
 msgstr "Managerul aplicaţiilor"
 
-#: src/interface.c:687
+#: src/interface.c:686
 msgid "Running Applications"
 msgstr "Aplicaţii care rulează"
 
-#: src/interface.c:706
+#: src/interface.c:705
 msgid "_Close Application"
 msgstr "_Închide aplicaţia"
 
-#: src/memmaps.c:228
+#: src/memmaps.c:227
 msgid "Filename"
 msgstr "Nume fişier"
 
-#: src/memmaps.c:228
+#: src/memmaps.c:227
 msgid "VM Start"
 msgstr "Început VM"
 
-#: src/memmaps.c:228
+#: src/memmaps.c:227
 msgid "VM End"
 msgstr "Sfârşit VM"
 
-#: src/memmaps.c:229 src/proctable.c:128
+#: src/memmaps.c:228 src/proctable.c:127
 msgid "VM Size"
 msgstr "Mărimea VM"
 
-#: src/memmaps.c:229
+#: src/memmaps.c:228
 msgid "Flags"
 msgstr "Fanioane"
 
-#: src/memmaps.c:229
-msgid "VM offset"
+#: src/memmaps.c:228
+#, fuzzy
+msgid "VM Offset"
 msgstr "Offset VM"
 
-#: src/memmaps.c:230
+#: src/memmaps.c:229
 msgid "Device"
 msgstr "Dispozitiv"
 
-#: src/memmaps.c:230
+#: src/memmaps.c:229
 msgid "Inode"
 msgstr "Inode"
 
-#: src/memmaps.c:322
-msgid "Process Name :"
+#: src/memmaps.c:305
+msgid "Memory Maps"
+msgstr "Harta memoriei"
+
+#: src/memmaps.c:325
+#, fuzzy
+msgid "Process name:"
 msgstr "Nume proces :"
 
 #: src/procactions.c:54
@@ -424,47 +420,78 @@ msgstr ""
 msgid "An error occured while killing the process."
 msgstr "A intervenit o eroare la omorârea procesului."
 
-#: src/procdialogs.c:73
-msgid ""
-"Are you sure you want to hide this process?\n"
-"(Choose 'Hidden Processes' in the Settings menu to reshow)"
+#: src/procdialogs.c:80
+msgid "Are you sure you want to hide this process?"
 msgstr ""
-"Sunteţi sigur că vreţi să ascundeţi acest proces ?\n"
-"(Alegeţi 'Procesele ascunse' din meniul Setări pentru a fi afişat din nou)"
 
-#: src/procdialogs.c:95 src/procdialogs.c:177
-msgid "Show this dialog next time."
+#: src/procdialogs.c:81
+msgid ""
+"If you hide a process, you can unhide it by selecting 'Hidden Processes' in "
+"the Edit menu."
+msgstr ""
+
+#: src/procdialogs.c:138 src/procdialogs.c:280
+#, fuzzy
+msgid "_Show this dialog next time"
 msgstr "Arată acest dialog data următoare."
 
-#: src/procdialogs.c:154 src/procdialogs.c:839
-msgid "_End Process"
-msgstr "_Termină procesul"
+#: src/procdialogs.c:216
+msgid "Are you sure you want to kill this process?"
+msgstr ""
 
-#: src/procdialogs.c:161
-msgid "Unsaved data will be lost."
+#: src/procdialogs.c:217
+#, fuzzy
+msgid "If you kill a process, unsaved data will be lost."
 msgstr "Datele nesalvate vor fi pierdute."
 
-#: src/procdialogs.c:200
-msgid "( Very High Priority )"
+#: src/procdialogs.c:221
+msgid "Are you sure you want to end this process?"
+msgstr ""
+
+#: src/procdialogs.c:222
+#, fuzzy
+msgid "If you end a process, unsaved data will be lost."
+msgstr "Datele nesalvate vor fi pierdute."
+
+#: src/procdialogs.c:320
+#, fuzzy
+msgid "(Very High Priority)"
 msgstr "( Prioritate foarte mare )"
 
-#: src/procdialogs.c:202
-msgid "( High Priority )"
+#: src/procdialogs.c:322
+#, fuzzy
+msgid "(High Priority)"
 msgstr "( Prioritate mare )"
 
-#: src/procdialogs.c:204
-msgid "( Normal Priority )"
+#: src/procdialogs.c:324
+#, fuzzy
+msgid "(Normal Priority)"
 msgstr "( Prioritate mare )"
 
-#: src/procdialogs.c:206
-msgid "( Low Priority )"
+#: src/procdialogs.c:326
+#, fuzzy
+msgid "(Low Priority)"
 msgstr "( Prioritate mică )"
 
-#: src/procdialogs.c:208
-msgid "( Very Low Priority)"
+#: src/procdialogs.c:328
+#, fuzzy
+msgid "(Very Low Priority)"
 msgstr "( Prioritate foarte mică )"
 
-#: src/procdialogs.c:251
+#: src/procdialogs.c:382 src/procdialogs.c:1016
+msgid "Change Priority"
+msgstr "Schimbă prioritatea"
+
+#: src/procdialogs.c:403 src/procdialogs.c:1017
+msgid "Change _Priority"
+msgstr "Schimbă _prioritatea"
+
+#: src/procdialogs.c:424
+#, fuzzy
+msgid "_Nice value:"
+msgstr "Valoarea nice :"
+
+#: src/procdialogs.c:441
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -472,67 +499,71 @@ msgstr ""
 "Prioritatea unui proces este dată de valoarea sa nice. O valoare nice mai "
 "mică corespunde unei priorităţi mai mari."
 
-#: src/procdialogs.c:259 src/procdialogs.c:843
-msgid "Change Priority"
-msgstr "Schimbă prioritatea"
-
-#: src/procdialogs.c:262 src/procdialogs.c:844
-msgid "Change _Priority"
-msgstr "Schimbă _prioritatea"
-
-#: src/procdialogs.c:282
-msgid "Nice Value :"
-msgstr "Valoarea nice :"
-
-#: src/procdialogs.c:544
+#: src/procdialogs.c:695
 msgid "Icon"
 msgstr "Iconiţa"
 
-#: src/procdialogs.c:587
+#: src/procdialogs.c:735
 msgid "Preferences"
 msgstr "Preferinţe"
 
-#: src/procdialogs.c:608
+#: src/procdialogs.c:760
 msgid "Behavior"
 msgstr "Comportament"
 
-#: src/procdialogs.c:627 src/procdialogs.c:707
-msgid "_Update Interval ( seconds ) :"
+#: src/procdialogs.c:779 src/procdialogs.c:866
+#, fuzzy
+msgid "_Update interval:"
 msgstr "Interval _reactualizare ( secunde ) :"
 
-#: src/procdialogs.c:643
+#: src/procdialogs.c:795 src/procdialogs.c:883 src/procdialogs.c:964
+msgid "seconds"
+msgstr ""
+
+#: src/procdialogs.c:802
 msgid "Show warning dialog when ending or _killing processes"
 msgstr "Avertizează înainte de terminarea sau _omorârea proceselor"
 
-#: src/procdialogs.c:653
+#: src/procdialogs.c:812
 msgid "Show warning dialog when _hiding processes"
 msgstr "Avertizează înainte de a _ascunde procesele"
 
-#: src/procdialogs.c:663
+#: src/procdialogs.c:822
 msgid "Process Fields"
 msgstr "Câmpuri proces"
 
-#: src/procdialogs.c:688
+#: src/procdialogs.c:847
 msgid "Graphs"
 msgstr "Grafice"
 
-#: src/procdialogs.c:724
-msgid "_Background Color:"
+#: src/procdialogs.c:890
+#, fuzzy
+msgid "_Background color:"
 msgstr "Culoarea de _fundal:"
 
-#: src/procdialogs.c:743
-msgid "_Grid Color:"
+#: src/procdialogs.c:909
+#, fuzzy
+msgid "_Grid color:"
 msgstr "Culoarea _grilei:"
 
-#: src/procdialogs.c:781
-msgid "Update _Interval ( seconds ) :"
+#: src/procdialogs.c:947
+#, fuzzy
+msgid "Update _interval:"
 msgstr "Interval rea_ctualizare ( secunde ) :"
 
-#: src/procdialogs.c:863
+#: src/procdialogs.c:1007
+msgid "Kill Process"
+msgstr "Omoară procesul"
+
+#: src/procdialogs.c:1011
+msgid "End Process"
+msgstr "Termină procesul"
+
+#: src/procdialogs.c:1036
 msgid "Root Password :"
 msgstr "Parola de root :"
 
-#: src/procdialogs.c:908
+#: src/procdialogs.c:1081
 msgid "Wrong Password."
 msgstr "Parolă greşită."
 
@@ -540,96 +571,109 @@ msgstr "Parolă greşită."
 msgid "show simple dialog to end processes and logout"
 msgstr "arată un dialog simplu de terminare a proceselor si logout"
 
-#: src/proctable.c:126
+#: src/proctable.c:125
 msgid "Process Name"
 msgstr "Nume proces"
 
-#: src/proctable.c:126
+#: src/proctable.c:125
 msgid "Arguments"
 msgstr "Argumente"
 
-#: src/proctable.c:127
+#: src/proctable.c:126
 msgid "User"
 msgstr "Utilizator"
 
-#: src/proctable.c:127
+#: src/proctable.c:126
 msgid "Status"
 msgstr "Status"
 
-#: src/proctable.c:128
+#: src/proctable.c:127
 msgid "Memory"
 msgstr "Memorie"
 
-#: src/proctable.c:128
+#: src/proctable.c:127
 msgid "Resident Memory"
 msgstr "Memoria rezidentă"
 
-#: src/proctable.c:129
+#: src/proctable.c:128
 msgid "Shared Memory"
 msgstr "Memoria partajată"
 
-#: src/proctable.c:129
+#: src/proctable.c:128
 msgid "RSS Memory"
 msgstr "Memoria RSS"
 
-#: src/proctable.c:131
+#: src/proctable.c:130
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: src/proctable.c:132
+#: src/proctable.c:131
 msgid "Nice"
 msgstr "Nice"
 
-#: src/proctable.c:132
+#: src/proctable.c:131
 msgid "ID"
 msgstr "ID"
 
-#: src/proctable.c:270
+#: src/proctable.c:269
 msgid "Running"
 msgstr "Rulează"
 
-#: src/proctable.c:276
+#: src/proctable.c:275
 msgid "Stopped"
 msgstr "Oprit"
 
-#: src/proctable.c:281
+#: src/proctable.c:280
 msgid "Sleeping"
 msgstr "Adormit"
 
-#: src/proctable.c:410
+#: src/proctable.c:409
 msgid " (thread)"
 msgstr " (thread)"
 
-#: src/proctable.c:947
+#: src/proctable.c:946
 #, c-format
 msgid "%s could not be found."
 msgstr "%s nu a putut fi găsit."
 
-#: src/util.c:194
+#: src/util.c:286
 #, c-format
 msgid "%d bytes"
 msgstr "%d bytes"
 
-#: src/util.c:197
+#: src/util.c:289
 #, c-format
 msgid "%d K"
 msgstr "%d K"
 
-#: src/util.c:201
+#: src/util.c:293
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: src/util.c:203
+#: src/util.c:295
 #, c-format
 msgid "%.0f MB"
 msgstr "%.0f MB"
 
-#: src/util.c:206
+#: src/util.c:298
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
+
+#~ msgid "Change Priority ..."
+#~ msgstr "Schimbă prioritatea ..."
+
+#~ msgid "Hide Process"
+#~ msgstr "Ascunde procesul"
+
+#~ msgid ""
+#~ "Are you sure you want to hide this process?\n"
+#~ "(Choose 'Hidden Processes' in the Settings menu to reshow)"
+#~ msgstr ""
+#~ "Sunteţi sigur că vreţi să ascundeţi acest proces ?\n"
+#~ "(Alegeţi 'Procesele ascunse' din meniul Setări pentru a fi afişat din nou)"
 
 #~ msgid "Erik Johnsson (zaphod@linux.nu) - icon support"
 #~ msgstr "Erik Johnsson (zaphod@linux.nu) - suportul pentru iconiţe"

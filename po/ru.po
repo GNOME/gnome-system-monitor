@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor 2.3.0\n"
-"POT-Creation-Date: 2003-04-24 22:54+0300\n"
+"POT-Creation-Date: 2003-11-08 10:08-0500\n"
 "PO-Revision-Date: 2003-04-24 23:20+0300\n"
 "Last-Translator: \"Andrew W. Nosenko\" <awn@bcs.zp.ua>\n"
 "Language-Team: RUSSIAN <gnome-cyr@gnome.org>\n"
@@ -13,8 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:147 src/interface.c:587
-#: src/procdialogs.c:681
+#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:146 src/interface.c:604
 msgid "System Monitor"
 msgstr "Системный монитор"
 
@@ -22,15 +21,15 @@ msgstr "Системный монитор"
 msgid "View current processes and monitor system state"
 msgstr "Просмотреть текущие процессы и проконтролировать систему"
 
-#: src/callbacks.c:124
+#: src/callbacks.c:123
 msgid "Kevin Vandersloot (kfv101@psu.edu)"
 msgstr "Kevin Vandersloot (kfv101@psu.edu)"
 
-#: src/callbacks.c:125
+#: src/callbacks.c:124
 msgid "Jorgen Scheibengruber <mfcn@gmx.de> - nicer devices treeview"
 msgstr "Jorgen Scheibengruber <mfcn@gmx.de> - улучшил отображение устройств"
 
-#: src/callbacks.c:133
+#: src/callbacks.c:132
 msgid "translator_credits"
 msgstr ""
 "Сергей Воложанин\n"
@@ -38,11 +37,11 @@ msgstr ""
 "Дмитрий Мастрюков\n"
 "Андрей Носенко <awn@bcs.zp.ua>"
 
-#: src/callbacks.c:148
+#: src/callbacks.c:147
 msgid "(C) 2001 Kevin Vandersloot"
 msgstr "(C) 2001 Kevin Vandersloot"
 
-#: src/callbacks.c:149
+#: src/callbacks.c:148
 msgid "Simple process viewer using libgtop"
 msgstr "Компактный просмотрщик процессов, использующий libgtop"
 
@@ -58,15 +57,28 @@ msgstr "Оболочка bourne again"
 msgid "Gnome-Session"
 msgstr "Gnome-Session"
 
-#: src/favorites.c:343
+#: src/favorites.c:344
 msgid "No processes are currently hidden."
 msgstr "Нет скрытых процессов"
 
-#: src/favorites.c:361
+#: src/favorites.c:364
 msgid "Manage Hidden Processes"
 msgstr "Менеджер скрытых процессов"
 
-#: src/favorites.c:376
+#: src/favorites.c:388
+#, fuzzy
+msgid "_Hidden processes:"
+msgstr "_Скрытые процессы:"
+
+#: src/favorites.c:410
+msgid "_Remove From List"
+msgstr "У_брать из списка"
+
+#: src/favorites.c:419 src/procdialogs.c:440
+msgid "Note:"
+msgstr ""
+
+#: src/favorites.c:420
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
@@ -74,72 +86,70 @@ msgstr ""
 "Данные процессы скрыты. Этот диалог позволит вернуть скрытые процессы в "
 "список просмотрщика процессов."
 
-#: src/favorites.c:386
-msgid "_Hidden Processes:"
-msgstr "_Скрытые процессы:"
-
-#: src/favorites.c:396
-msgid "_Remove From List"
-msgstr "У_брать из списка"
-
-#: src/infoview.c:58
+#: src/infoview.c:80
 msgid "Process Info"
 msgstr "Информация о процессе"
 
-#: src/infoview.c:67
-msgid "Command : "
+#: src/infoview.c:94
+#, fuzzy
+msgid "Command:"
 msgstr "Команда : "
 
-#: src/infoview.c:71
-msgid "Status : "
-msgstr "Статус : "
+#: src/infoview.c:98
+#, fuzzy
+msgid "Status:"
+msgstr "Статус"
 
-#: src/infoview.c:75
-msgid "Priority : "
+#: src/infoview.c:102
+#, fuzzy
+msgid "Priority:"
 msgstr "Приоритет : "
 
-#: src/infoview.c:94
+#: src/infoview.c:126
 msgid "Memory Usage"
 msgstr "Загрузка памяти"
 
-#: src/infoview.c:103
-msgid "Total : "
-msgstr "Всего : "
+#: src/infoview.c:140
+#, fuzzy
+msgid "Total:"
+msgstr "Всего :"
 
-#: src/infoview.c:107
-msgid "RSS : "
+#: src/infoview.c:144
+#, fuzzy
+msgid "RSS:"
 msgstr "RSS: "
 
-#: src/infoview.c:111
-msgid "Shared : "
+#: src/infoview.c:148
+#, fuzzy
+msgid "Shared:"
 msgstr "Разделяемая :"
 
-#: src/infoview.c:159
-#, c-format
-msgid "Very High  ( Nice %d )"
+#: src/infoview.c:193
+#, fuzzy, c-format
+msgid "Very high - nice %d"
 msgstr "Очень высокий (Nice %d )"
 
-#: src/infoview.c:161
-#, c-format
-msgid "High  ( Nice %d )"
+#: src/infoview.c:195
+#, fuzzy, c-format
+msgid "High - nice %d"
 msgstr "Высокий (Nice %d )"
 
-#: src/infoview.c:163
-#, c-format
-msgid "Normal  ( Nice %d )"
+#: src/infoview.c:197
+#, fuzzy, c-format
+msgid "Normal - nice %d"
 msgstr "Нормальный ( Nice %d )"
 
-#: src/infoview.c:165
-#, c-format
-msgid "Low  ( Nice %d )"
+#: src/infoview.c:199
+#, fuzzy, c-format
+msgid "Low - nice %d"
 msgstr "Низкий ( Nice %d )"
 
-#: src/infoview.c:167
-#, c-format
-msgid "Very Low  ( Nice %d )"
+#: src/infoview.c:201
+#, fuzzy, c-format
+msgid "Very low - nice %d"
 msgstr "Очень низкий ( Nice %d )"
 
-#: src/interface.c:52
+#: src/interface.c:52 src/interface.c:143
 msgid "_Change Priority..."
 msgstr "_Измененить приоритет..."
 
@@ -147,7 +157,7 @@ msgstr "_Измененить приоритет..."
 msgid "Change the importance (nice value) of a process"
 msgstr "Изменить значимость (уровень nice) процесса"
 
-#: src/interface.c:57 src/procdialogs.c:100
+#: src/interface.c:57 src/interface.c:154 src/procdialogs.c:155
 msgid "_Hide Process"
 msgstr "Cкр_ыть процесс"
 
@@ -155,7 +165,7 @@ msgstr "Cкр_ыть процесс"
 msgid "Hide a process"
 msgstr "Cкрыть процесс"
 
-#: src/interface.c:63 src/interface.c:250
+#: src/interface.c:63 src/interface.c:249
 msgid "End _Process"
 msgstr "Сн_ять процесс"
 
@@ -163,7 +173,8 @@ msgstr "Сн_ять процесс"
 msgid "Force a process to finish."
 msgstr "Снять процесс."
 
-#: src/interface.c:68 src/procdialogs.c:150 src/procdialogs.c:835
+#: src/interface.c:68 src/interface.c:165 src/procdialogs.c:218
+#: src/procdialogs.c:1008
 msgid "_Kill Process"
 msgstr "Завер_шить процесс"
 
@@ -179,7 +190,7 @@ msgstr "Показать _скрытые процессы"
 msgid "View and edit your list of hidden processes"
 msgstr "Просмотреть и отредактировать список скрытых процессов"
 
-#: src/interface.c:86
+#: src/interface.c:86 src/interface.c:148
 msgid "_Memory Maps"
 msgstr "Показать _карту памяти"
 
@@ -227,29 +238,13 @@ msgstr "Активные процессы"
 msgid "View only active processes"
 msgstr "Просмотреть список активных процессов"
 
-#: src/interface.c:143
-msgid "Change Priority ..."
-msgstr "Измененить приоритет"
-
-#: src/interface.c:148 src/memmaps.c:306
-msgid "Memory Maps"
-msgstr "Карта памяти"
-
-#: src/interface.c:154 src/procdialogs.c:82
-msgid "Hide Process"
-msgstr "Cкрыть процесс"
-
-#: src/interface.c:160 src/procdialogs.c:153 src/procdialogs.c:838
-msgid "End Process"
-msgstr "Снять процесс"
+#: src/interface.c:160 src/procdialogs.c:223 src/procdialogs.c:1012
+msgid "_End Process"
+msgstr "Сн_ять процесс"
 
 #: src/interface.c:160
 msgid "Force a process to finish"
 msgstr "Снять процесс."
-
-#: src/interface.c:165 src/procdialogs.c:149 src/procdialogs.c:834
-msgid "Kill Process"
-msgstr "Завершить процесс"
 
 #: src/interface.c:165
 msgid "Force a process to finish now"
@@ -264,123 +259,132 @@ msgid "<< Less _Info"
 msgstr "_<< Меньше информации"
 
 #: src/interface.c:208
-msgid "Sea_rch :"
+#, fuzzy
+msgid "Sea_rch:"
 msgstr "Поис_к : "
 
-#: src/interface.c:228
-msgid "Vie_w"
+#: src/interface.c:227
+#, fuzzy
+msgid "Vie_w:"
 msgstr "Ви_д"
 
-#: src/interface.c:258
+#: src/interface.c:254
 msgid "More _Info"
 msgstr "Дополнительная _информация"
 
-#: src/interface.c:331
+#: src/interface.c:341
 msgid "Name"
 msgstr "Имя"
 
-#: src/interface.c:332
+#: src/interface.c:342
 msgid "Directory"
 msgstr "Каталог"
 
-#: src/interface.c:333
+#: src/interface.c:343
 msgid "Type"
 msgstr "Тип"
 
-#: src/interface.c:334
+#: src/interface.c:344
 msgid "Total"
 msgstr "Всего"
 
-#: src/interface.c:335
+#: src/interface.c:345
 msgid "Used"
 msgstr "Использовано"
 
-#: src/interface.c:350
+#: src/interface.c:366
 msgid "CPU History"
 msgstr "История использования CPU"
 
-#: src/interface.c:363
-msgid "Memory / Swap Usage History"
-msgstr "История использования памяти / подкачки"
-
-#: src/interface.c:388
-msgid "CPU Used :"
-msgstr "Использовано CPU :"
-
-#: src/interface.c:416 src/proctable.c:128
-msgid "Memory"
-msgstr "Память"
-
-#: src/interface.c:421 src/interface.c:457
-msgid "Used :"
+#: src/interface.c:394
+#, fuzzy
+msgid "Used CPU:"
 msgstr "Использовано :"
 
-#: src/interface.c:432 src/interface.c:468
-msgid "Total :"
-msgstr "Всего :"
+#: src/interface.c:409
+#, fuzzy
+msgid "Memory and Swap History"
+msgstr "История использования памяти / подкачки"
 
-#: src/interface.c:452
-msgid "Swap"
-msgstr "Подкачка"
+#: src/interface.c:442
+#, fuzzy
+msgid "Used memory:"
+msgstr "Использовано :"
 
-#: src/interface.c:484 src/procdialogs.c:762
+#: src/interface.c:451 src/interface.c:478
+msgid "of"
+msgstr ""
+
+#: src/interface.c:469
+#, fuzzy
+msgid "Used swap:"
+msgstr "Использовано :"
+
+#: src/interface.c:499 src/procdialogs.c:928
 msgid "Devices"
 msgstr "Устройства"
 
-#: src/interface.c:600
-msgid "Process _Listing"
-msgstr "Cп_исок процессов"
+#: src/interface.c:616 src/procdialogs.c:753
+msgid "Process Listing"
+msgstr "Cписок процессов"
 
-#: src/interface.c:606
-msgid "System _Monitor"
-msgstr "К_онтроль системы"
+#: src/interface.c:622 src/procdialogs.c:840
+#, fuzzy
+msgid "Resource Monitor"
+msgstr "Системный монитор"
 
-#: src/interface.c:664
+#: src/interface.c:680
 msgid "Application Manager"
 msgstr "Диспетчер приложений"
 
-#: src/interface.c:670
+#: src/interface.c:686
 msgid "Running Applications"
 msgstr "Запуск приложений"
 
-#: src/interface.c:689
+#: src/interface.c:705
 msgid "_Close Application"
 msgstr "_Закрыть приложение"
 
-#: src/memmaps.c:228
+#: src/memmaps.c:227
 msgid "Filename"
 msgstr "Имя файла"
 
-#: src/memmaps.c:228
+#: src/memmaps.c:227
 msgid "VM Start"
 msgstr "Начало VM"
 
-#: src/memmaps.c:228
+#: src/memmaps.c:227
 msgid "VM End"
 msgstr "Окончание VM"
 
-#: src/memmaps.c:229 src/proctable.c:128
+#: src/memmaps.c:228 src/proctable.c:127
 msgid "VM Size"
 msgstr "Размер VM"
 
-#: src/memmaps.c:229
+#: src/memmaps.c:228
 msgid "Flags"
 msgstr "Флаги"
 
-#: src/memmaps.c:229
-msgid "VM offset"
+#: src/memmaps.c:228
+#, fuzzy
+msgid "VM Offset"
 msgstr "Смещение VM"
 
-#: src/memmaps.c:230
+#: src/memmaps.c:229
 msgid "Device"
 msgstr "Устройство"
 
-#: src/memmaps.c:230
+#: src/memmaps.c:229
 msgid "Inode"
 msgstr "Inode"
 
-#: src/memmaps.c:322
-msgid "Process Name :"
+#: src/memmaps.c:305
+msgid "Memory Maps"
+msgstr "Карта памяти"
+
+#: src/memmaps.c:325
+#, fuzzy
+msgid "Process name:"
 msgstr "Имя процесса:"
 
 #: src/procactions.c:54
@@ -430,48 +434,78 @@ msgstr ""
 msgid "An error occured while killing the process."
 msgstr "Ошибка при завершении процесса."
 
-#: src/procdialogs.c:73
-msgid ""
-"Are you sure you want to hide this process?\n"
-"(Choose 'Hidden Processes' in the Settings menu to reshow)"
+#: src/procdialogs.c:80
+msgid "Are you sure you want to hide this process?"
 msgstr ""
-"Вы уверены, что желаете скрыть процесс?\n"
-"(Для возврата процесса в список, воспользуйтесь\n"
-"пунктом 'Скрытые процессы' в меню \"Настроить\"."
 
-#: src/procdialogs.c:95 src/procdialogs.c:177
-msgid "Show this dialog next time."
+#: src/procdialogs.c:81
+msgid ""
+"If you hide a process, you can unhide it by selecting 'Hidden Processes' in "
+"the Edit menu."
+msgstr ""
+
+#: src/procdialogs.c:138 src/procdialogs.c:280
+#, fuzzy
+msgid "_Show this dialog next time"
 msgstr "Показывать диалог при запуске."
 
-#: src/procdialogs.c:154 src/procdialogs.c:839
-msgid "_End Process"
-msgstr "Сн_ять процесс"
+#: src/procdialogs.c:216
+msgid "Are you sure you want to kill this process?"
+msgstr ""
 
-#: src/procdialogs.c:161
-msgid "Unsaved data will be lost."
+#: src/procdialogs.c:217
+#, fuzzy
+msgid "If you kill a process, unsaved data will be lost."
 msgstr "Несохраненные данные будут потеряны"
 
-#: src/procdialogs.c:200
-msgid "( Very High Priority )"
+#: src/procdialogs.c:221
+msgid "Are you sure you want to end this process?"
+msgstr ""
+
+#: src/procdialogs.c:222
+#, fuzzy
+msgid "If you end a process, unsaved data will be lost."
+msgstr "Несохраненные данные будут потеряны"
+
+#: src/procdialogs.c:320
+#, fuzzy
+msgid "(Very High Priority)"
 msgstr "(Очень высокий приоритет)"
 
-#: src/procdialogs.c:202
-msgid "( High Priority )"
+#: src/procdialogs.c:322
+#, fuzzy
+msgid "(High Priority)"
 msgstr "(Высокий приоритет)"
 
-#: src/procdialogs.c:204
-msgid "( Normal Priority )"
+#: src/procdialogs.c:324
+#, fuzzy
+msgid "(Normal Priority)"
 msgstr "(Нормальный приоритет)"
 
-#: src/procdialogs.c:206
-msgid "( Low Priority )"
+#: src/procdialogs.c:326
+#, fuzzy
+msgid "(Low Priority)"
 msgstr "(Низкий приоритет)"
 
-#: src/procdialogs.c:208
-msgid "( Very Low Priority)"
+#: src/procdialogs.c:328
+#, fuzzy
+msgid "(Very Low Priority)"
 msgstr "(Очень низкий приоритет)"
 
-#: src/procdialogs.c:251
+#: src/procdialogs.c:382 src/procdialogs.c:1016
+msgid "Change Priority"
+msgstr "Изменить приоритет"
+
+#: src/procdialogs.c:403 src/procdialogs.c:1017
+msgid "Change _Priority"
+msgstr "_Изменить приоритет"
+
+#: src/procdialogs.c:424
+#, fuzzy
+msgid "_Nice value:"
+msgstr "Уровень Nice :"
+
+#: src/procdialogs.c:441
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -480,71 +514,71 @@ msgstr ""
 "приорететом процесса. Меньший \n"
 "nice уровень соответствует более высокому приоритету."
 
-#: src/procdialogs.c:259 src/procdialogs.c:843
-msgid "Change Priority"
-msgstr "Изменить приоритет"
-
-#: src/procdialogs.c:262 src/procdialogs.c:844
-msgid "Change _Priority"
-msgstr "_Изменить приоритет"
-
-#: src/procdialogs.c:282
-msgid "Nice Value :"
-msgstr "Уровень Nice :"
-
-#: src/procdialogs.c:544
+#: src/procdialogs.c:695
 msgid "Icon"
 msgstr "Пиктограмма"
 
-#: src/procdialogs.c:587
+#: src/procdialogs.c:735
 msgid "Preferences"
 msgstr "Изменить настройки"
 
-#: src/procdialogs.c:601
-msgid "Process Listing"
-msgstr "Cписок процессов"
-
-#: src/procdialogs.c:608
+#: src/procdialogs.c:760
 msgid "Behavior"
 msgstr "Поведение"
 
-#: src/procdialogs.c:627 src/procdialogs.c:707
-msgid "_Update Interval ( seconds ) :"
+#: src/procdialogs.c:779 src/procdialogs.c:866
+#, fuzzy
+msgid "_Update interval:"
 msgstr "Период _обновления (сек.) :"
 
-#: src/procdialogs.c:643
+#: src/procdialogs.c:795 src/procdialogs.c:883 src/procdialogs.c:964
+msgid "seconds"
+msgstr ""
+
+#: src/procdialogs.c:802
 msgid "Show warning dialog when ending or _killing processes"
 msgstr "Показывать предупреждения при завершении или у_ничтожении процессов"
 
-#: src/procdialogs.c:653
+#: src/procdialogs.c:812
 msgid "Show warning dialog when _hiding processes"
 msgstr "Показывать предупреждения при со_крытии процессов"
 
-#: src/procdialogs.c:663
+#: src/procdialogs.c:822
 msgid "Process Fields"
 msgstr "Поля процессов"
 
-#: src/procdialogs.c:688
+#: src/procdialogs.c:847
 msgid "Graphs"
 msgstr "Графики"
 
-#: src/procdialogs.c:724
-msgid "_Background Color:"
+#: src/procdialogs.c:890
+#, fuzzy
+msgid "_Background color:"
 msgstr "_Цвет фона:"
 
-#: src/procdialogs.c:743
-msgid "_Grid Color:"
+#: src/procdialogs.c:909
+#, fuzzy
+msgid "_Grid color:"
 msgstr "Ц_вет разметки:"
 
-#: src/procdialogs.c:781
-msgid "Update _Interval ( seconds ) :"
+#: src/procdialogs.c:947
+#, fuzzy
+msgid "Update _interval:"
 msgstr "Период о_бновления (сек.) :"
 
-#: src/procdialogs.c:863
+#: src/procdialogs.c:1007
+msgid "Kill Process"
+msgstr "Завершить процесс"
+
+#: src/procdialogs.c:1011
+msgid "End Process"
+msgstr "Снять процесс"
+
+#: src/procdialogs.c:1036
 msgid "Root Password :"
 msgstr "Пароль (root) :"
 
-#: src/procdialogs.c:908
+#: src/procdialogs.c:1081
 msgid "Wrong Password."
 msgstr "Неверный пароль."
 
@@ -552,92 +586,128 @@ msgstr "Неверный пароль."
 msgid "show simple dialog to end processes and logout"
 msgstr "показать простой диалог для завершения процессов и выхода"
 
-#: src/proctable.c:126
+#: src/proctable.c:125
 msgid "Process Name"
 msgstr "Имя процесса"
 
-#: src/proctable.c:126
+#: src/proctable.c:125
 msgid "Arguments"
 msgstr "Аргументы"
 
-#: src/proctable.c:127
+#: src/proctable.c:126
 msgid "User"
 msgstr "Пользователь"
 
-#: src/proctable.c:127
+#: src/proctable.c:126
 msgid "Status"
 msgstr "Статус"
 
-#: src/proctable.c:128
+#: src/proctable.c:127
+msgid "Memory"
+msgstr "Память"
+
+#: src/proctable.c:127
 msgid "Resident Memory"
 msgstr "Резедентная память"
 
-#: src/proctable.c:129
+#: src/proctable.c:128
 msgid "Shared Memory"
 msgstr "Разделяемая память"
 
-#: src/proctable.c:129
+#: src/proctable.c:128
 msgid "RSS Memory"
 msgstr "Память RSS"
 
-#: src/proctable.c:131
+#: src/proctable.c:130
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: src/proctable.c:132
+#: src/proctable.c:131
 msgid "Nice"
 msgstr "Nice"
 
-#: src/proctable.c:132
+#: src/proctable.c:131
 msgid "ID"
 msgstr "ID"
 
-#: src/proctable.c:270
+#: src/proctable.c:269
 msgid "Running"
 msgstr "Запущен"
 
-#: src/proctable.c:276
+#: src/proctable.c:275
 msgid "Stopped"
 msgstr "Остановлен"
 
-#: src/proctable.c:281
+#: src/proctable.c:280
 msgid "Sleeping"
 msgstr "Ожидает"
 
-#: src/proctable.c:410
+#: src/proctable.c:409
 msgid " (thread)"
 msgstr " (нить)"
 
-#: src/proctable.c:947
+#: src/proctable.c:946
 #, c-format
 msgid "%s could not be found."
 msgstr "%s не найден."
 
-#: src/util.c:194
+#: src/util.c:286
 #, c-format
 msgid "%d bytes"
 msgstr "%d байт"
 
-#: src/util.c:197
+#: src/util.c:289
 #, c-format
 msgid "%d K"
 msgstr "%d K"
 
-#: src/util.c:201
+#: src/util.c:293
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f МБ"
 
-#: src/util.c:203
+#: src/util.c:295
 #, c-format
 msgid "%.0f MB"
 msgstr "%.0f МБ"
 
-#: src/util.c:206
+#: src/util.c:298
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f ГБ"
+
+#~ msgid "Status : "
+#~ msgstr "Статус : "
+
+#~ msgid "Total : "
+#~ msgstr "Всего : "
+
+#~ msgid "Change Priority ..."
+#~ msgstr "Измененить приоритет"
+
+#~ msgid "Hide Process"
+#~ msgstr "Cкрыть процесс"
+
+#~ msgid "CPU Used :"
+#~ msgstr "Использовано CPU :"
+
+#~ msgid "Swap"
+#~ msgstr "Подкачка"
+
+#~ msgid "Process _Listing"
+#~ msgstr "Cп_исок процессов"
+
+#~ msgid "System _Monitor"
+#~ msgstr "К_онтроль системы"
+
+#~ msgid ""
+#~ "Are you sure you want to hide this process?\n"
+#~ "(Choose 'Hidden Processes' in the Settings menu to reshow)"
+#~ msgstr ""
+#~ "Вы уверены, что желаете скрыть процесс?\n"
+#~ "(Для возврата процесса в список, воспользуйтесь\n"
+#~ "пунктом 'Скрытые процессы' в меню \"Настроить\"."
 
 #~ msgid "Erik Johnsson (zaphod@linux.nu) - icon support"
 #~ msgstr "Erik Johnsson (zaphod@linux.nu) - поддержка пиктограмм"

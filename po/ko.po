@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: procman 1.1.5\n"
-"POT-Creation-Date: 2003-05-10 16:30+0900\n"
+"POT-Creation-Date: 2003-11-08 10:08-0500\n"
 "PO-Revision-Date: 2003-09-23 00:21+0900\n"
 "Last-Translator: Changwoo Ryu <ganadist@chollian.net>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:147 src/interface.c:605
+#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:146 src/interface.c:604
 msgid "System Monitor"
 msgstr "시스템 감시기"
 
@@ -21,23 +21,23 @@ msgstr "시스템 감시기"
 msgid "View current processes and monitor system state"
 msgstr "현제 프로세스와 감시기 시스템 상태를 봅니다"
 
-#: src/callbacks.c:124
+#: src/callbacks.c:123
 msgid "Kevin Vandersloot (kfv101@psu.edu)"
 msgstr "Kevin Vandersloot (kfv101@psu.edu)"
 
-#: src/callbacks.c:125
+#: src/callbacks.c:124
 msgid "Jorgen Scheibengruber <mfcn@gmx.de> - nicer devices treeview"
 msgstr "Jorgen Scheibengruber <mfcn@gmx.de> - 멋진 장치 트리뷰"
 
-#: src/callbacks.c:133
+#: src/callbacks.c:132
 msgid "translator_credits"
 msgstr "차영호<ganadist@chollian.net>, 2002"
 
-#: src/callbacks.c:148
+#: src/callbacks.c:147
 msgid "(C) 2001 Kevin Vandersloot"
 msgstr "(C) 2001 Kevin Vandersloot"
 
-#: src/callbacks.c:149
+#: src/callbacks.c:148
 msgid "Simple process viewer using libgtop"
 msgstr "libgtop을 사용한 간단한 프로세스 보기 프로그램"
 
@@ -53,29 +53,34 @@ msgstr "본 어겐 쉘"
 msgid "Gnome-Session"
 msgstr "그놈-세션"
 
-#: src/favorites.c:343
+#: src/favorites.c:344
 msgid "No processes are currently hidden."
 msgstr "현재 숨겨진 프로세스가 없습니다."
 
-#: src/favorites.c:361
+#: src/favorites.c:364
 msgid "Manage Hidden Processes"
 msgstr "숨겨진 프로세스 관리"
 
-#: src/favorites.c:376
+#: src/favorites.c:388
+#, fuzzy
+msgid "_Hidden processes:"
+msgstr "숨겨진 프로세스(_H):"
+
+#: src/favorites.c:410
+msgid "_Remove From List"
+msgstr "목록에서 제거(_R)"
+
+#: src/favorites.c:419 src/procdialogs.c:440
+msgid "Note:"
+msgstr ""
+
+#: src/favorites.c:420
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
 msgstr ""
 "숨기도록 선택한 프로세스가 있습니다. 이 목록에서 지워서 프로세스를 다시 볼수 "
 "있습니다."
-
-#: src/favorites.c:386
-msgid "_Hidden Processes:"
-msgstr "숨겨진 프로세스(_H):"
-
-#: src/favorites.c:396
-msgid "_Remove From List"
-msgstr "목록에서 제거(_R)"
 
 #: src/infoview.c:80
 msgid "Process Info"
@@ -134,7 +139,7 @@ msgstr "낮음 - nice %d"
 msgid "Very low - nice %d"
 msgstr "아주 낮음 - nice %d"
 
-#: src/interface.c:52
+#: src/interface.c:52 src/interface.c:143
 msgid "_Change Priority..."
 msgstr "우선도 바꿈(_C)..."
 
@@ -142,7 +147,7 @@ msgstr "우선도 바꿈(_C)..."
 msgid "Change the importance (nice value) of a process"
 msgstr "프로세스의 우선 순위 (nice 값)을 바꿉니다"
 
-#: src/interface.c:57 src/procdialogs.c:100
+#: src/interface.c:57 src/interface.c:154 src/procdialogs.c:155
 msgid "_Hide Process"
 msgstr "프로세스 숨김(_H)"
 
@@ -158,7 +163,8 @@ msgstr "프로세스 끝냄(_P)"
 msgid "Force a process to finish."
 msgstr "프로세스를 강제로 끝냅니다."
 
-#: src/interface.c:68 src/procdialogs.c:150 src/procdialogs.c:835
+#: src/interface.c:68 src/interface.c:165 src/procdialogs.c:218
+#: src/procdialogs.c:1008
 msgid "_Kill Process"
 msgstr "프로세스 죽임(_K)"
 
@@ -174,7 +180,7 @@ msgstr "숨겨진 프로세스(_H)"
 msgid "View and edit your list of hidden processes"
 msgstr "숨겨진 프로세스의 목록을 보고 편집합니다"
 
-#: src/interface.c:86
+#: src/interface.c:86 src/interface.c:148
 msgid "_Memory Maps"
 msgstr "메모리 맵(_M)"
 
@@ -222,29 +228,13 @@ msgstr "활성 프로세스"
 msgid "View only active processes"
 msgstr "활성화 된 프로세스만 봅니다"
 
-#: src/interface.c:143
-msgid "Change Priority ..."
-msgstr "우선도 바꿈..."
-
-#: src/interface.c:148 src/memmaps.c:306
-msgid "Memory Maps"
-msgstr "메모리 맵"
-
-#: src/interface.c:154 src/procdialogs.c:82
-msgid "Hide Process"
-msgstr "프로세스 숨김"
-
-#: src/interface.c:160 src/procdialogs.c:153 src/procdialogs.c:838
-msgid "End Process"
-msgstr "프로세스 마침"
+#: src/interface.c:160 src/procdialogs.c:223 src/procdialogs.c:1012
+msgid "_End Process"
+msgstr "프로세스 끝냄(_E)"
 
 #: src/interface.c:160
 msgid "Force a process to finish"
 msgstr "강제로 프로세스를 마칩니다"
-
-#: src/interface.c:165 src/procdialogs.c:149 src/procdialogs.c:834
-msgid "Kill Process"
-msgstr "프로세스 죽임"
 
 #: src/interface.c:165
 msgid "Force a process to finish now"
@@ -270,108 +260,114 @@ msgstr "보기(_W):"
 msgid "More _Info"
 msgstr "자세한 정보(_I)"
 
-#: src/interface.c:342
+#: src/interface.c:341
 msgid "Name"
 msgstr "이름"
 
-#: src/interface.c:343
+#: src/interface.c:342
 msgid "Directory"
 msgstr "디렉토리"
 
-#: src/interface.c:344
+#: src/interface.c:343
 msgid "Type"
 msgstr "종류"
 
-#: src/interface.c:345
+#: src/interface.c:344
 msgid "Total"
 msgstr "전체"
 
-#: src/interface.c:346
+#: src/interface.c:345
 msgid "Used"
 msgstr "사용중"
 
-#: src/interface.c:367
+#: src/interface.c:366
 msgid "CPU History"
 msgstr "CPU 사용 기록"
 
-#: src/interface.c:395
+#: src/interface.c:394
 msgid "Used CPU:"
 msgstr "사용중인 CPU:"
 
-#: src/interface.c:410
+#: src/interface.c:409
 msgid "Memory and Swap History"
 msgstr "메모리 및 스왑 사용 기록"
 
-#: src/interface.c:443
+#: src/interface.c:442
 msgid "Used memory:"
 msgstr "사용중인 메모리:"
 
-#: src/interface.c:452 src/interface.c:479
+#: src/interface.c:451 src/interface.c:478
 msgid "of"
 msgstr "사용중, 전체"
 
-#: src/interface.c:470
+#: src/interface.c:469
 msgid "Used swap:"
 msgstr "사용중인 스왑:"
 
-#: src/interface.c:500 src/procdialogs.c:762
+#: src/interface.c:499 src/procdialogs.c:928
 msgid "Devices"
 msgstr "장치"
 
-#: src/interface.c:617 src/procdialogs.c:601
+#: src/interface.c:616 src/procdialogs.c:753
 msgid "Process Listing"
 msgstr "프로세스 목록"
 
-#: src/interface.c:623 src/procdialogs.c:681
+#: src/interface.c:622 src/procdialogs.c:840
 msgid "Resource Monitor"
 msgstr "자원 감시기"
 
-#: src/interface.c:681
+#: src/interface.c:680
 msgid "Application Manager"
 msgstr "응용프로그램 관리자"
 
-#: src/interface.c:687
+#: src/interface.c:686
 msgid "Running Applications"
 msgstr "응용프로그램 실행중"
 
-#: src/interface.c:706
+#: src/interface.c:705
 msgid "_Close Application"
 msgstr "응용프로그램 닫음(_C)"
 
-#: src/memmaps.c:228
+#: src/memmaps.c:227
 msgid "Filename"
 msgstr "파일이름"
 
-#: src/memmaps.c:228
+#: src/memmaps.c:227
 msgid "VM Start"
 msgstr "VM 시작"
 
-#: src/memmaps.c:228
+#: src/memmaps.c:227
 msgid "VM End"
 msgstr "VM 끝"
 
-#: src/memmaps.c:229 src/proctable.c:128
+#: src/memmaps.c:228 src/proctable.c:127
 msgid "VM Size"
 msgstr "VM 크기"
 
-#: src/memmaps.c:229
+#: src/memmaps.c:228
 msgid "Flags"
 msgstr "프래그"
 
-#: src/memmaps.c:229
-msgid "VM offset"
+#: src/memmaps.c:228
+#, fuzzy
+msgid "VM Offset"
 msgstr "VM 오프셋"
 
-#: src/memmaps.c:230
+#: src/memmaps.c:229
 msgid "Device"
 msgstr "장치"
 
-#: src/memmaps.c:230
+#: src/memmaps.c:229
 msgid "Inode"
 msgstr "아이노드"
 
-#: src/memmaps.c:322
-msgid "Process Name :"
+#: src/memmaps.c:305
+msgid "Memory Maps"
+msgstr "메모리 맵"
+
+#: src/memmaps.c:325
+#, fuzzy
+msgid "Process name:"
 msgstr "프로세스 이름 :"
 
 #: src/procactions.c:54
@@ -388,7 +384,8 @@ msgid ""
 msgstr ""
 "프로세스 이름 : %s \n"
 "\n"
-"이 프로세스의 우선도를 바꿀 수 있는 허가권이 없습니다. 필요한 허가권을 얻으려면 root사용자의 열쇠글을 입력하십시오."
+"이 프로세스의 우선도를 바꿀 수 있는 허가권이 없습니다. 필요한 허가권을 얻으려"
+"면 root사용자의 열쇠글을 입력하십시오."
 
 #: src/procactions.c:74
 #, c-format
@@ -400,7 +397,8 @@ msgid ""
 msgstr ""
 "프로세스 이름 : %s \n"
 "\n"
-"0 보다 낮은 우선도로 바꾸려면 root 사용자 허가권이 필요합니다. 필요한 허가권을 얻으려면 root사용자의 열쇠글을 입력하십시오."
+"0 보다 낮은 우선도로 바꾸려면 root 사용자 허가권이 필요합니다. 필요한 허가권"
+"을 얻으려면 root사용자의 열쇠글을 입력하십시오."
 
 #: src/procactions.c:126
 #, c-format
@@ -412,53 +410,85 @@ msgid ""
 msgstr ""
 "프로세스 이름 : %s \n"
 "\n"
-"이 프로세스를 끝낼 수 있는 허가권이 없습니다. 필요한 허가권을 얻으려면 root사용자의 열쇠글을 입력하십시오."
+"이 프로세스를 끝낼 수 있는 허가권이 없습니다. 필요한 허가권을 얻으려면 root사"
+"용자의 열쇠글을 입력하십시오."
 
 #: src/procactions.c:145
 msgid "An error occured while killing the process."
 msgstr "프로세스를 죽이는 동안 오류가 발생했습니다."
 
-#: src/procdialogs.c:73
-msgid ""
-"Are you sure you want to hide this process?\n"
-"(Choose 'Hidden Processes' in the Settings menu to reshow)"
+#: src/procdialogs.c:80
+msgid "Are you sure you want to hide this process?"
 msgstr ""
-"이 프로세스를 정말로 숨기겠습니까?\n"
-"(다시 보이게 하려면 설정 메뉴에서 '숨겨진 프로세스'를 선택하십시오)"
 
-#: src/procdialogs.c:95 src/procdialogs.c:177
-msgid "Show this dialog next time."
+#: src/procdialogs.c:81
+msgid ""
+"If you hide a process, you can unhide it by selecting 'Hidden Processes' in "
+"the Edit menu."
+msgstr ""
+
+#: src/procdialogs.c:138 src/procdialogs.c:280
+#, fuzzy
+msgid "_Show this dialog next time"
 msgstr "이 대화상자를 다음에 보이게합니다."
 
-#: src/procdialogs.c:154 src/procdialogs.c:839
-msgid "_End Process"
-msgstr "프로세스 끝냄(_E)"
+#: src/procdialogs.c:216
+msgid "Are you sure you want to kill this process?"
+msgstr ""
 
-#: src/procdialogs.c:161
-msgid "Unsaved data will be lost."
+#: src/procdialogs.c:217
+#, fuzzy
+msgid "If you kill a process, unsaved data will be lost."
 msgstr "저장하지 않은 데이터는 잃어버릴 것입니다."
 
-#: src/procdialogs.c:200
-msgid "( Very High Priority )"
+#: src/procdialogs.c:221
+msgid "Are you sure you want to end this process?"
+msgstr ""
+
+#: src/procdialogs.c:222
+#, fuzzy
+msgid "If you end a process, unsaved data will be lost."
+msgstr "저장하지 않은 데이터는 잃어버릴 것입니다."
+
+#: src/procdialogs.c:320
+#, fuzzy
+msgid "(Very High Priority)"
 msgstr "( 아주 높은 우선도 )"
 
-#: src/procdialogs.c:202
-msgid "( High Priority )"
+#: src/procdialogs.c:322
+#, fuzzy
+msgid "(High Priority)"
 msgstr "( 높은 우선도 )"
 
-#: src/procdialogs.c:204
-msgid "( Normal Priority )"
+#: src/procdialogs.c:324
+#, fuzzy
+msgid "(Normal Priority)"
 msgstr "( 보통 우선도 )"
 
-#: src/procdialogs.c:206
-msgid "( Low Priority )"
+#: src/procdialogs.c:326
+#, fuzzy
+msgid "(Low Priority)"
 msgstr "( 낮은 우선도 )"
 
-#: src/procdialogs.c:208
-msgid "( Very Low Priority)"
+#: src/procdialogs.c:328
+#, fuzzy
+msgid "(Very Low Priority)"
 msgstr "( 아주 낮은 우선도 )"
 
-#: src/procdialogs.c:251
+#: src/procdialogs.c:382 src/procdialogs.c:1016
+msgid "Change Priority"
+msgstr "우선도 바꿈"
+
+#: src/procdialogs.c:403 src/procdialogs.c:1017
+msgid "Change _Priority"
+msgstr "우선도 바꿈(_P)"
+
+#: src/procdialogs.c:424
+#, fuzzy
+msgid "_Nice value:"
+msgstr "Nice 값 :"
+
+#: src/procdialogs.c:441
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -466,67 +496,71 @@ msgstr ""
 "프로세스의 우선순위는 그 nice 값에 따라 결정됩니다. nice 값이 낮을 수록 우선"
 "순위가 높습니다."
 
-#: src/procdialogs.c:259 src/procdialogs.c:843
-msgid "Change Priority"
-msgstr "우선도 바꿈"
-
-#: src/procdialogs.c:262 src/procdialogs.c:844
-msgid "Change _Priority"
-msgstr "우선도 바꿈(_P)"
-
-#: src/procdialogs.c:282
-msgid "Nice Value :"
-msgstr "Nice 값 :"
-
-#: src/procdialogs.c:544
+#: src/procdialogs.c:695
 msgid "Icon"
 msgstr "아이콘"
 
-#: src/procdialogs.c:587
+#: src/procdialogs.c:735
 msgid "Preferences"
 msgstr "기본 설정"
 
-#: src/procdialogs.c:608
+#: src/procdialogs.c:760
 msgid "Behavior"
 msgstr "동작"
 
-#: src/procdialogs.c:627 src/procdialogs.c:707
-msgid "_Update Interval ( seconds ) :"
+#: src/procdialogs.c:779 src/procdialogs.c:866
+#, fuzzy
+msgid "_Update interval:"
 msgstr "업데이트 간격 ( 초 )(_U) :"
 
-#: src/procdialogs.c:643
+#: src/procdialogs.c:795 src/procdialogs.c:883 src/procdialogs.c:964
+msgid "seconds"
+msgstr ""
+
+#: src/procdialogs.c:802
 msgid "Show warning dialog when ending or _killing processes"
 msgstr "프로세스를 끝내거나 죽일때 경고 대화상자를 보입니다(_K)"
 
-#: src/procdialogs.c:653
+#: src/procdialogs.c:812
 msgid "Show warning dialog when _hiding processes"
 msgstr "프로세스를 숨길때 경고 대화상자를 보입니다(_H)"
 
-#: src/procdialogs.c:663
+#: src/procdialogs.c:822
 msgid "Process Fields"
 msgstr "프로세스 필드"
 
-#: src/procdialogs.c:688
+#: src/procdialogs.c:847
 msgid "Graphs"
 msgstr "그래프"
 
-#: src/procdialogs.c:724
-msgid "_Background Color:"
+#: src/procdialogs.c:890
+#, fuzzy
+msgid "_Background color:"
 msgstr "배경 색상(_B):"
 
-#: src/procdialogs.c:743
-msgid "_Grid Color:"
+#: src/procdialogs.c:909
+#, fuzzy
+msgid "_Grid color:"
 msgstr "격자 색상(_G):"
 
-#: src/procdialogs.c:781
-msgid "Update _Interval ( seconds ) :"
+#: src/procdialogs.c:947
+#, fuzzy
+msgid "Update _interval:"
 msgstr "업데이트 간격 ( 초 )(_I) :"
 
-#: src/procdialogs.c:863
+#: src/procdialogs.c:1007
+msgid "Kill Process"
+msgstr "프로세스 죽임"
+
+#: src/procdialogs.c:1011
+msgid "End Process"
+msgstr "프로세스 마침"
+
+#: src/procdialogs.c:1036
 msgid "Root Password :"
 msgstr "Root 열쇠글 :"
 
-#: src/procdialogs.c:908
+#: src/procdialogs.c:1081
 msgid "Wrong Password."
 msgstr "잘못된 열쇠글."
 
@@ -534,93 +568,106 @@ msgstr "잘못된 열쇠글."
 msgid "show simple dialog to end processes and logout"
 msgstr "프로세스를 끝내는 간단한 대화상자를 보이고 로그아웃"
 
-#: src/proctable.c:126
+#: src/proctable.c:125
 msgid "Process Name"
 msgstr "프로세스 이름"
 
-#: src/proctable.c:126
+#: src/proctable.c:125
 msgid "Arguments"
 msgstr "인자"
 
-#: src/proctable.c:127
+#: src/proctable.c:126
 msgid "User"
 msgstr "사용자"
 
-#: src/proctable.c:127
+#: src/proctable.c:126
 msgid "Status"
 msgstr "상태"
 
-#: src/proctable.c:128
+#: src/proctable.c:127
 msgid "Memory"
 msgstr "메모리"
 
-#: src/proctable.c:128
+#: src/proctable.c:127
 msgid "Resident Memory"
 msgstr "상주 메모리"
 
-#: src/proctable.c:129
+#: src/proctable.c:128
 msgid "Shared Memory"
 msgstr "공유 메모리"
 
-#: src/proctable.c:129
+#: src/proctable.c:128
 msgid "RSS Memory"
 msgstr "물리 메모리"
 
-#: src/proctable.c:131
+#: src/proctable.c:130
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: src/proctable.c:132
+#: src/proctable.c:131
 msgid "Nice"
 msgstr "Nice"
 
-#: src/proctable.c:132
+#: src/proctable.c:131
 msgid "ID"
 msgstr "ID"
 
-#: src/proctable.c:270
+#: src/proctable.c:269
 msgid "Running"
 msgstr "실행중"
 
-#: src/proctable.c:276
+#: src/proctable.c:275
 msgid "Stopped"
 msgstr "멈춤"
 
-#: src/proctable.c:281
+#: src/proctable.c:280
 msgid "Sleeping"
 msgstr "휴식"
 
-#: src/proctable.c:410
+#: src/proctable.c:409
 msgid " (thread)"
 msgstr " (스레드)"
 
-#: src/proctable.c:947
+#: src/proctable.c:946
 #, c-format
 msgid "%s could not be found."
 msgstr "%s 를 찾을 수 없습니다."
 
-#: src/util.c:194
+#: src/util.c:286
 #, c-format
 msgid "%d bytes"
 msgstr "%d bytes"
 
-#: src/util.c:197
+#: src/util.c:289
 #, c-format
 msgid "%d K"
 msgstr "%d K"
 
-#: src/util.c:201
+#: src/util.c:293
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: src/util.c:203
+#: src/util.c:295
 #, c-format
 msgid "%.0f MB"
 msgstr "%.0f MB"
 
-#: src/util.c:206
+#: src/util.c:298
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
+
+#~ msgid "Change Priority ..."
+#~ msgstr "우선도 바꿈..."
+
+#~ msgid "Hide Process"
+#~ msgstr "프로세스 숨김"
+
+#~ msgid ""
+#~ "Are you sure you want to hide this process?\n"
+#~ "(Choose 'Hidden Processes' in the Settings menu to reshow)"
+#~ msgstr ""
+#~ "이 프로세스를 정말로 숨기겠습니까?\n"
+#~ "(다시 보이게 하려면 설정 메뉴에서 '숨겨진 프로세스'를 선택하십시오)"

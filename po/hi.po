@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: procman .2.2\n"
-"POT-Creation-Date: 2003-08-05 20:56+0530\n"
+"POT-Creation-Date: 2003-11-08 10:08-0500\n"
 "PO-Revision-Date: 2003-05-07 17:20+0530\n"
 "Last-Translator: G Karunakar <karunakar@freedomink.org>\n"
 "Language-Team: Gnome Hindi team <indlinux-hindi-gnome@lists.sourceforge."
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:147 src/interface.c:605
+#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:146 src/interface.c:604
 msgid "System Monitor"
 msgstr "सिसटम् मोनीटर"
 
@@ -23,23 +23,23 @@ msgstr "सिसटम् मोनीटर"
 msgid "View current processes and monitor system state"
 msgstr "वर्तमान प्रक्रिया और सिसटम् कि स्थिति पर दृष्टि रखता है"
 
-#: src/callbacks.c:124
+#: src/callbacks.c:123
 msgid "Kevin Vandersloot (kfv101@psu.edu)"
 msgstr "केविन वेनडरस्लूट (kfv101@psu.edu)"
 
-#: src/callbacks.c:125
+#: src/callbacks.c:124
 msgid "Jorgen Scheibengruber <mfcn@gmx.de> - nicer devices treeview"
 msgstr "जोरगेन शेबेंग्रबर <mfcn@gmx.de> - और अच्छा उपकरण दर्शन"
 
-#: src/callbacks.c:133
+#: src/callbacks.c:132
 msgid "translator_credits"
 msgstr "अनुवादकों को श्रेय (_c)"
 
-#: src/callbacks.c:148
+#: src/callbacks.c:147
 msgid "(C) 2001 Kevin Vandersloot"
 msgstr "(C) 2001 केविन वेनडरस्लूट"
 
-#: src/callbacks.c:149
+#: src/callbacks.c:148
 msgid "Simple process viewer using libgtop"
 msgstr "आम  क्रिया दृष्टक लिबगटाँप के प्रयोग से"
 
@@ -55,29 +55,34 @@ msgstr "फिरसे बौर्न शैल"
 msgid "Gnome-Session"
 msgstr "गनोम सत्र"
 
-#: src/favorites.c:343
+#: src/favorites.c:344
 msgid "No processes are currently hidden."
 msgstr "वर्तमान में कोइ प्रक्रिया छिपी नही है"
 
-#: src/favorites.c:361
+#: src/favorites.c:364
 msgid "Manage Hidden Processes"
 msgstr "छिपी प्रक्रिया "
 
-#: src/favorites.c:376
+#: src/favorites.c:388
+#, fuzzy
+msgid "_Hidden processes:"
+msgstr "छिपी प्रक्रिया (_H):"
+
+#: src/favorites.c:410
+msgid "_Remove From List"
+msgstr "सूची से हटायें (_R)"
+
+#: src/favorites.c:419 src/procdialogs.c:440
+msgid "Note:"
+msgstr ""
+
+#: src/favorites.c:420
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
 msgstr ""
 "यह वो प्रक्रियाऐ है जिनको आपने छिपाया है. इस सूची से हटाके आप उनको दुबारा प्रदष्रित कर "
 "सकते है"
-
-#: src/favorites.c:386
-msgid "_Hidden Processes:"
-msgstr "छिपी प्रक्रिया (_H):"
-
-#: src/favorites.c:396
-msgid "_Remove From List"
-msgstr "सूची से हटायें (_R)"
 
 #: src/infoview.c:80
 msgid "Process Info"
@@ -136,7 +141,7 @@ msgstr "नीचा ( nice %d )"
 msgid "Very low - nice %d"
 msgstr "बहुत नीचा ( Nice %d )"
 
-#: src/interface.c:52
+#: src/interface.c:52 src/interface.c:143
 msgid "_Change Priority..."
 msgstr "प्रथमिकता बदलें (_C)..."
 
@@ -144,7 +149,7 @@ msgstr "प्रथमिकता बदलें (_C)..."
 msgid "Change the importance (nice value) of a process"
 msgstr "प्रक्रिया का (nice value) महत्व बदलें"
 
-#: src/interface.c:57 src/procdialogs.c:100
+#: src/interface.c:57 src/interface.c:154 src/procdialogs.c:155
 msgid "_Hide Process"
 msgstr "प्रक्रिया छिपायें (_H)"
 
@@ -160,7 +165,8 @@ msgstr "प्रक्रिया समाप्त करे"
 msgid "Force a process to finish."
 msgstr "प्रक्रिया को समाप्त होने के लिए मजबूर करें"
 
-#: src/interface.c:68 src/procdialogs.c:150 src/procdialogs.c:835
+#: src/interface.c:68 src/interface.c:165 src/procdialogs.c:218
+#: src/procdialogs.c:1008
 msgid "_Kill Process"
 msgstr "प्रक्रिया को अन्त करें (_K)"
 
@@ -176,7 +182,7 @@ msgstr "छिपी प्रक्रिया (_H)"
 msgid "View and edit your list of hidden processes"
 msgstr "छिपी प्रक्रिया की सूची को देखें तथा संपादन करे"
 
-#: src/interface.c:86
+#: src/interface.c:86 src/interface.c:148
 msgid "_Memory Maps"
 msgstr "मेमोरी मैप्स् (_M)"
 
@@ -224,29 +230,13 @@ msgstr "सक्रिय प्रक्रियाएं"
 msgid "View only active processes"
 msgstr "केवल सक्रिय प्रक्रियाएं दिखाएं"
 
-#: src/interface.c:143
-msgid "Change Priority ..."
-msgstr "प्राथमिकता बदलें"
-
-#: src/interface.c:148 src/memmaps.c:306
-msgid "Memory Maps"
-msgstr "मेमोरी मैप्स्"
-
-#: src/interface.c:154 src/procdialogs.c:82
-msgid "Hide Process"
-msgstr "प्रक्रिया छिपाएं"
-
-#: src/interface.c:160 src/procdialogs.c:153 src/procdialogs.c:838
-msgid "End Process"
-msgstr "प्रक्रिया का अन्त"
+#: src/interface.c:160 src/procdialogs.c:223 src/procdialogs.c:1012
+msgid "_End Process"
+msgstr "प्रक्रिया का अंत"
 
 #: src/interface.c:160
 msgid "Force a process to finish"
 msgstr "प्रक्रिया को बलपूर्वक अन्त करें"
-
-#: src/interface.c:165 src/procdialogs.c:149 src/procdialogs.c:834
-msgid "Kill Process"
-msgstr "प्रक्रिया को ख़त्म् करे"
 
 #: src/interface.c:165
 msgid "Force a process to finish now"
@@ -272,108 +262,114 @@ msgstr "देखें (_w):"
 msgid "More _Info"
 msgstr "अधिक जानकारी (_I)"
 
-#: src/interface.c:342
+#: src/interface.c:341
 msgid "Name"
 msgstr "नाम"
 
-#: src/interface.c:343
+#: src/interface.c:342
 msgid "Directory"
 msgstr "डायरेक्ट्री"
 
-#: src/interface.c:344
+#: src/interface.c:343
 msgid "Type"
 msgstr "प्रकार"
 
-#: src/interface.c:345
+#: src/interface.c:344
 msgid "Total"
 msgstr "कुल योग"
 
-#: src/interface.c:346
+#: src/interface.c:345
 msgid "Used"
 msgstr "उपयोगित"
 
-#: src/interface.c:367
+#: src/interface.c:366
 msgid "CPU History"
 msgstr "सीपीयु उपयोगिता इतिहास"
 
-#: src/interface.c:395
+#: src/interface.c:394
 msgid "Used CPU:"
 msgstr "उपयोगित सीपीयु :"
 
-#: src/interface.c:410
+#: src/interface.c:409
 msgid "Memory and Swap History"
 msgstr "मेमोरी / स्वेप उपयोगिता इतिहास"
 
-#: src/interface.c:443
+#: src/interface.c:442
 msgid "Used memory:"
 msgstr "उपयोगित मेमोरी :"
 
-#: src/interface.c:452 src/interface.c:479
+#: src/interface.c:451 src/interface.c:478
 msgid "of"
 msgstr "का"
 
-#: src/interface.c:470
+#: src/interface.c:469
 msgid "Used swap:"
 msgstr "उपयोगित स्वेप :"
 
-#: src/interface.c:500 src/procdialogs.c:762
+#: src/interface.c:499 src/procdialogs.c:928
 msgid "Devices"
 msgstr "उपकरण"
 
-#: src/interface.c:617 src/procdialogs.c:601
+#: src/interface.c:616 src/procdialogs.c:753
 msgid "Process Listing"
 msgstr "प्रक्रिया सूची"
 
-#: src/interface.c:623 src/procdialogs.c:681
+#: src/interface.c:622 src/procdialogs.c:840
 msgid "Resource Monitor"
 msgstr "संसाधन मोनीटर"
 
-#: src/interface.c:681
+#: src/interface.c:680
 msgid "Application Manager"
 msgstr "अनुप्रयोग प्रभंधक"
 
-#: src/interface.c:687
+#: src/interface.c:686
 msgid "Running Applications"
 msgstr "चालू अनुप्रयोग"
 
-#: src/interface.c:706
+#: src/interface.c:705
 msgid "_Close Application"
 msgstr "अनुप्रयोग बंद करें (_C)"
 
-#: src/memmaps.c:228
+#: src/memmaps.c:227
 msgid "Filename"
 msgstr "फाइलनाम"
 
-#: src/memmaps.c:228
+#: src/memmaps.c:227
 msgid "VM Start"
 msgstr "वीएम शुरु"
 
-#: src/memmaps.c:228
+#: src/memmaps.c:227
 msgid "VM End"
 msgstr "वीएम अंत"
 
-#: src/memmaps.c:229 src/proctable.c:128
+#: src/memmaps.c:228 src/proctable.c:127
 msgid "VM Size"
 msgstr "वीएम आकार"
 
-#: src/memmaps.c:229
+#: src/memmaps.c:228
 msgid "Flags"
 msgstr "संकेत झंडा"
 
-#: src/memmaps.c:229
-msgid "VM offset"
+#: src/memmaps.c:228
+#, fuzzy
+msgid "VM Offset"
 msgstr "वीएम प्रतिसंतुलन"
 
-#: src/memmaps.c:230
+#: src/memmaps.c:229
 msgid "Device"
 msgstr "उपकरण"
 
-#: src/memmaps.c:230
+#: src/memmaps.c:229
 msgid "Inode"
 msgstr "आइनोड"
 
-#: src/memmaps.c:322
-msgid "Process Name :"
+#: src/memmaps.c:305
+msgid "Memory Maps"
+msgstr "मेमोरी मैप्स्"
+
+#: src/memmaps.c:325
+#, fuzzy
+msgid "Process name:"
 msgstr "प्रक्रिया नाम :"
 
 #: src/procactions.c:54
@@ -423,47 +419,78 @@ msgstr ""
 msgid "An error occured while killing the process."
 msgstr "इस प्रक्रिया को ख्त्म करते समय एक भूल दिखायी दी "
 
-#: src/procdialogs.c:73
-msgid ""
-"Are you sure you want to hide this process?\n"
-"(Choose 'Hidden Processes' in the Settings menu to reshow)"
+#: src/procdialogs.c:80
+msgid "Are you sure you want to hide this process?"
 msgstr ""
-"क्या आप इस प्रक्रिया को छिपाने के लिए निस्संशय है?(दुबारा देखने के लिए सेटिन्ग्स् मीनू मे से "
-"'छिपी प्रक्रिया' चुने )"
 
-#: src/procdialogs.c:95 src/procdialogs.c:177
-msgid "Show this dialog next time."
+#: src/procdialogs.c:81
+msgid ""
+"If you hide a process, you can unhide it by selecting 'Hidden Processes' in "
+"the Edit menu."
+msgstr ""
+
+#: src/procdialogs.c:138 src/procdialogs.c:280
+#, fuzzy
+msgid "_Show this dialog next time"
 msgstr "इस डॉयलॉग को अगली बार दिखाए"
 
-#: src/procdialogs.c:154 src/procdialogs.c:839
-msgid "_End Process"
-msgstr "प्रक्रिया का अंत"
+#: src/procdialogs.c:216
+msgid "Are you sure you want to kill this process?"
+msgstr ""
 
-#: src/procdialogs.c:161
-msgid "Unsaved data will be lost."
+#: src/procdialogs.c:217
+#, fuzzy
+msgid "If you kill a process, unsaved data will be lost."
 msgstr "संचित ना किया हुआ डाटा मिट जायेगा"
 
-#: src/procdialogs.c:200
-msgid "( Very High Priority )"
+#: src/procdialogs.c:221
+msgid "Are you sure you want to end this process?"
+msgstr ""
+
+#: src/procdialogs.c:222
+#, fuzzy
+msgid "If you end a process, unsaved data will be lost."
+msgstr "संचित ना किया हुआ डाटा मिट जायेगा"
+
+#: src/procdialogs.c:320
+#, fuzzy
+msgid "(Very High Priority)"
 msgstr "( बहुत अधिक प्राथमिक्ता )"
 
-#: src/procdialogs.c:202
-msgid "( High Priority )"
+#: src/procdialogs.c:322
+#, fuzzy
+msgid "(High Priority)"
 msgstr "( अधिक प्राथमिक्ता )"
 
-#: src/procdialogs.c:204
-msgid "( Normal Priority )"
+#: src/procdialogs.c:324
+#, fuzzy
+msgid "(Normal Priority)"
 msgstr "( साधारण प्राथमिक्ता )"
 
-#: src/procdialogs.c:206
-msgid "( Low Priority )"
+#: src/procdialogs.c:326
+#, fuzzy
+msgid "(Low Priority)"
 msgstr "( कम प्राथमिक्ता )"
 
-#: src/procdialogs.c:208
-msgid "( Very Low Priority)"
+#: src/procdialogs.c:328
+#, fuzzy
+msgid "(Very Low Priority)"
 msgstr "( बहुत कम प्राथमिक्ता )"
 
-#: src/procdialogs.c:251
+#: src/procdialogs.c:382 src/procdialogs.c:1016
+msgid "Change Priority"
+msgstr "प्राथमिकता बदलें"
+
+#: src/procdialogs.c:403 src/procdialogs.c:1017
+msgid "Change _Priority"
+msgstr "प्राथमिकता बदलें (_P)"
+
+#: src/procdialogs.c:424
+#, fuzzy
+msgid "_Nice value:"
+msgstr "नाईस का माप :"
+
+#: src/procdialogs.c:441
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -471,67 +498,71 @@ msgstr ""
 "प्रक्रिया की प्राथमिक्ता उसकी नाईस के माप से दी जाती हैं | नाईस का कम माप अधिक "
 "प्राथमिक्ता के अनुरुप होता हैं"
 
-#: src/procdialogs.c:259 src/procdialogs.c:843
-msgid "Change Priority"
-msgstr "प्राथमिकता बदलें"
-
-#: src/procdialogs.c:262 src/procdialogs.c:844
-msgid "Change _Priority"
-msgstr "प्राथमिकता बदलें (_P)"
-
-#: src/procdialogs.c:282
-msgid "Nice Value :"
-msgstr "नाईस का माप :"
-
-#: src/procdialogs.c:544
+#: src/procdialogs.c:695
 msgid "Icon"
 msgstr "आइकान"
 
-#: src/procdialogs.c:587
+#: src/procdialogs.c:735
 msgid "Preferences"
 msgstr "वरियताएँ"
 
-#: src/procdialogs.c:608
+#: src/procdialogs.c:760
 msgid "Behavior"
 msgstr "व्यावहार"
 
-#: src/procdialogs.c:627 src/procdialogs.c:707
-msgid "_Update Interval ( seconds ) :"
+#: src/procdialogs.c:779 src/procdialogs.c:866
+#, fuzzy
+msgid "_Update interval:"
 msgstr "अपडेट अंतराल ( क्षण ) (_U):"
 
-#: src/procdialogs.c:643
+#: src/procdialogs.c:795 src/procdialogs.c:883 src/procdialogs.c:964
+msgid "seconds"
+msgstr ""
+
+#: src/procdialogs.c:802
 msgid "Show warning dialog when ending or _killing processes"
 msgstr "प्रक्रिया को अंत या ख्त्म करते समय चेतावनी डाँयलाग दिखाऐं (_k)"
 
-#: src/procdialogs.c:653
+#: src/procdialogs.c:812
 msgid "Show warning dialog when _hiding processes"
 msgstr "प्रक्रिया को छिपाते समय चेतावनी डाँयलाग दिखाऐं (_h)"
 
-#: src/procdialogs.c:663
+#: src/procdialogs.c:822
 msgid "Process Fields"
 msgstr "प्रक्रिया क्षेत्र"
 
-#: src/procdialogs.c:688
+#: src/procdialogs.c:847
 msgid "Graphs"
 msgstr "रेखाचित्र"
 
-#: src/procdialogs.c:724
-msgid "_Background Color:"
+#: src/procdialogs.c:890
+#, fuzzy
+msgid "_Background color:"
 msgstr "पार्श्व रंग (_B):"
 
-#: src/procdialogs.c:743
-msgid "_Grid Color:"
+#: src/procdialogs.c:909
+#, fuzzy
+msgid "_Grid color:"
 msgstr "ग्रिड का रंग (_G):"
 
-#: src/procdialogs.c:781
-msgid "Update _Interval ( seconds ) :"
+#: src/procdialogs.c:947
+#, fuzzy
+msgid "Update _interval:"
 msgstr "अपडेट अंतराल ( क्षण ) (_I):"
 
-#: src/procdialogs.c:863
+#: src/procdialogs.c:1007
+msgid "Kill Process"
+msgstr "प्रक्रिया को ख़त्म् करे"
+
+#: src/procdialogs.c:1011
+msgid "End Process"
+msgstr "प्रक्रिया का अन्त"
+
+#: src/procdialogs.c:1036
 msgid "Root Password :"
 msgstr "रूट पासवर्ड :"
 
-#: src/procdialogs.c:908
+#: src/procdialogs.c:1081
 msgid "Wrong Password."
 msgstr "गलत पासवर्ड"
 
@@ -539,100 +570,113 @@ msgstr "गलत पासवर्ड"
 msgid "show simple dialog to end processes and logout"
 msgstr "प्रक्रिया के अंत या लाँगआउट पे  सरल डाँयलाग दिखाऐं"
 
-#: src/proctable.c:126
+#: src/proctable.c:125
 msgid "Process Name"
 msgstr "प्रक्रिया नाम"
 
-#: src/proctable.c:126
+#: src/proctable.c:125
 msgid "Arguments"
 msgstr "राशीयां"
 
-#: src/proctable.c:127
+#: src/proctable.c:126
 msgid "User"
 msgstr "उपयोगकर्ता"
 
-#: src/proctable.c:127
+#: src/proctable.c:126
 msgid "Status"
 msgstr "स्तर"
 
-#: src/proctable.c:128
+#: src/proctable.c:127
 msgid "Memory"
 msgstr "मेमोरी"
 
-#: src/proctable.c:128
+#: src/proctable.c:127
 msgid "Resident Memory"
 msgstr "निवासी मेमोरी"
 
-#: src/proctable.c:129
+#: src/proctable.c:128
 msgid "Shared Memory"
 msgstr "साझा मेमोरी"
 
-#: src/proctable.c:129
+#: src/proctable.c:128
 msgid "RSS Memory"
 msgstr "RSS मेमोरी"
 
-#: src/proctable.c:131
+#: src/proctable.c:130
 #, no-c-format
 msgid "% CPU"
 msgstr "% सीपीयु"
 
-#: src/proctable.c:132
+#: src/proctable.c:131
 msgid "Nice"
 msgstr "नाईस"
 
 # libgnomeui/gnome-client.c:833
-#: src/proctable.c:132
+#: src/proctable.c:131
 msgid "ID"
 msgstr "सूचक"
 
 # gnome-session/gsm-client-row.c:37
-#: src/proctable.c:270
+#: src/proctable.c:269
 msgid "Running"
 msgstr "चल रहा है"
 
-#: src/proctable.c:276
+#: src/proctable.c:275
 msgid "Stopped"
 msgstr "रुक गया"
 
-#: src/proctable.c:281
+#: src/proctable.c:280
 msgid "Sleeping"
 msgstr "निष्क्रिय"
 
-#: src/proctable.c:410
+#: src/proctable.c:409
 msgid " (thread)"
 msgstr "(थ्रेड)"
 
-#: src/proctable.c:947
+#: src/proctable.c:946
 #, c-format
 msgid "%s could not be found."
 msgstr "%s नहीं मिला"
 
-#: src/util.c:194
+#: src/util.c:286
 #, c-format
 msgid "%d bytes"
 msgstr "%d बाइट"
 
-#: src/util.c:197
+#: src/util.c:289
 #, c-format
 msgid "%d K"
 msgstr "%d के"
 
 # libgnomevfs/gnome-vfs-utils.c:78
-#: src/util.c:201
+#: src/util.c:293
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f मेगाबाइट्स"
 
-#: src/util.c:203
+#: src/util.c:295
 #, c-format
 msgid "%.0f MB"
 msgstr "%.0f एमबी"
 
 # libgnomevfs/gnome-vfs-utils.c:82
-#: src/util.c:206
+#: src/util.c:298
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f गीगाबाइट्स"
+
+#~ msgid "Change Priority ..."
+#~ msgstr "प्राथमिकता बदलें"
+
+#~ msgid "Hide Process"
+#~ msgstr "प्रक्रिया छिपाएं"
+
+#~ msgid ""
+#~ "Are you sure you want to hide this process?\n"
+#~ "(Choose 'Hidden Processes' in the Settings menu to reshow)"
+#~ msgstr ""
+#~ "क्या आप इस प्रक्रिया को छिपाने के लिए निस्संशय है?(दुबारा देखने के लिए सेटिन्ग्स् मीनू मे से "
+#~ "'छिपी प्रक्रिया' चुने )"
 
 #~ msgid "Erik Johnsson (zaphod@linux.nu) - icon support"
 #~ msgstr "एरिक जॉनसन (zaphod@linuxnu) - आयकन "

@@ -5,16 +5,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-23 13:11+0200\n"
+"POT-Creation-Date: 2003-11-08 10:08-0500\n"
 "PO-Revision-Date: 2003-08-23 15:11+0200\n"
 "Last-Translator: Andraz Tori <andraz.tori1@guest.arnes.si>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
-#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:147 src/interface.c:605
+#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:146 src/interface.c:604
 msgid "System Monitor"
 msgstr "Sistemski nadzornik"
 
@@ -22,23 +22,25 @@ msgstr "Sistemski nadzornik"
 msgid "View current processes and monitor system state"
 msgstr "Glej trenutne procese in nadzoruj stanje sistema"
 
-#: src/callbacks.c:124
+#: src/callbacks.c:123
 msgid "Kevin Vandersloot (kfv101@psu.edu)"
 msgstr "Kevin Vandersloot (kfv101@psu.edu)"
 
-#: src/callbacks.c:125
+#: src/callbacks.c:124
 msgid "Jorgen Scheibengruber <mfcn@gmx.de> - nicer devices treeview"
 msgstr "Jorgen Scheibengruber <mfcn@gmx.de> - lepši drevesni pogled naprav"
 
-#: src/callbacks.c:133
+#: src/callbacks.c:132
 msgid "translator_credits"
-msgstr "Andraž Tori <andraz.tori1@guest.arnes.si>\nTilen Travnik <tilen.travnik@guest.arnes.si>"
+msgstr ""
+"Andraž Tori <andraz.tori1@guest.arnes.si>\n"
+"Tilen Travnik <tilen.travnik@guest.arnes.si>"
 
-#: src/callbacks.c:148
+#: src/callbacks.c:147
 msgid "(C) 2001 Kevin Vandersloot"
 msgstr "(C) 2001 Kevin Vandersloot"
 
-#: src/callbacks.c:149
+#: src/callbacks.c:148
 msgid "Simple process viewer using libgtop"
 msgstr "Enostaven pregledovalnik procesov z uporabo libgtop"
 
@@ -54,29 +56,34 @@ msgstr "ukazna lupina bourne again shell (bash)"
 msgid "Gnome-Session"
 msgstr "Gnome-seja"
 
-#: src/favorites.c:343
+#: src/favorites.c:344
 msgid "No processes are currently hidden."
 msgstr "Trenutno ni skrit noben proces."
 
-#: src/favorites.c:361
+#: src/favorites.c:364
 msgid "Manage Hidden Processes"
 msgstr "Upravljaj skrite procesee"
 
-#: src/favorites.c:376
+#: src/favorites.c:388
+#, fuzzy
+msgid "_Hidden processes:"
+msgstr "_Skriti procesi:"
+
+#: src/favorites.c:410
+msgid "_Remove From List"
+msgstr "_Odstrani s seznama"
+
+#: src/favorites.c:419 src/procdialogs.c:440
+msgid "Note:"
+msgstr ""
+
+#: src/favorites.c:420
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
 msgstr ""
 "To so procesi, ki ste jih izbrali za skritje. Proces lahko znova pokažete z "
 "njegovo odstranitvijo s tega seznama."
-
-#: src/favorites.c:386
-msgid "_Hidden Processes:"
-msgstr "_Skriti procesi:"
-
-#: src/favorites.c:396
-msgid "_Remove From List"
-msgstr "_Odstrani s seznama"
 
 #: src/infoview.c:80
 msgid "Process Info"
@@ -111,27 +118,31 @@ msgid "Shared:"
 msgstr "Skupni:"
 
 #: src/infoview.c:193
+#, c-format
 msgid "Very high - nice %d"
 msgstr "zelo visoka - nice %d"
 
 #: src/infoview.c:195
+#, c-format
 msgid "High - nice %d"
 msgstr "visoka - nice %d"
 
 #: src/infoview.c:197
-
+#, c-format
 msgid "Normal - nice %d"
 msgstr "običajna - nice %d"
 
 #: src/infoview.c:199
+#, c-format
 msgid "Low - nice %d"
 msgstr "nizka - nice %d"
 
 #: src/infoview.c:201
+#, c-format
 msgid "Very low - nice %d"
 msgstr "zelo nizka - nice %d"
 
-#: src/interface.c:52
+#: src/interface.c:52 src/interface.c:143
 msgid "_Change Priority..."
 msgstr "_Spremeni prioriteto..."
 
@@ -139,7 +150,7 @@ msgstr "_Spremeni prioriteto..."
 msgid "Change the importance (nice value) of a process"
 msgstr "Spremeni pomembnost (vrednost nice) procesa"
 
-#: src/interface.c:57 src/procdialogs.c:100
+#: src/interface.c:57 src/interface.c:154 src/procdialogs.c:155
 msgid "_Hide Process"
 msgstr "_Skrij proces"
 
@@ -155,7 +166,8 @@ msgstr "Končaj proces"
 msgid "Force a process to finish."
 msgstr "Prisili proces, da se konča."
 
-#: src/interface.c:68 src/procdialogs.c:150 src/procdialogs.c:835
+#: src/interface.c:68 src/interface.c:165 src/procdialogs.c:218
+#: src/procdialogs.c:1008
 msgid "_Kill Process"
 msgstr "_Ubij proces"
 
@@ -171,7 +183,7 @@ msgstr "_Skriti procesi"
 msgid "View and edit your list of hidden processes"
 msgstr "Glej in uredi seznam skritih procesov"
 
-#: src/interface.c:86
+#: src/interface.c:86 src/interface.c:148
 msgid "_Memory Maps"
 msgstr "_Karte pomnilnika"
 
@@ -219,29 +231,13 @@ msgstr "Aktivni procesi"
 msgid "View only active processes"
 msgstr "Glej le aktivne procese"
 
-#: src/interface.c:143
-msgid "Change Priority ..."
-msgstr "Spremeni prioriteto ..."
-
-#: src/interface.c:148 src/memmaps.c:306
-msgid "Memory Maps"
-msgstr "Karte pomnilnika"
-
-#: src/interface.c:154 src/procdialogs.c:82
-msgid "Hide Process"
-msgstr "Skrij proces"
-
-#: src/interface.c:160 src/procdialogs.c:153 src/procdialogs.c:838
-msgid "End Process"
-msgstr "Končaj proces"
+#: src/interface.c:160 src/procdialogs.c:223 src/procdialogs.c:1012
+msgid "_End Process"
+msgstr "_Končaj proces"
 
 #: src/interface.c:160
 msgid "Force a process to finish"
 msgstr "Prisili proces, da se konča"
-
-#: src/interface.c:165 src/procdialogs.c:149 src/procdialogs.c:834
-msgid "Kill Process"
-msgstr "Ubij proces"
 
 #: src/interface.c:165
 msgid "Force a process to finish now"
@@ -256,12 +252,10 @@ msgid "<< Less _Info"
 msgstr "<< Manj _podatkov"
 
 #: src/interface.c:208
-
 msgid "Sea_rch:"
 msgstr "Is_kanje:"
 
 #: src/interface.c:227
-
 msgid "Vie_w:"
 msgstr "Po_gled:"
 
@@ -269,110 +263,114 @@ msgstr "Po_gled:"
 msgid "More _Info"
 msgstr "Več _podatkov"
 
-#: src/interface.c:342
+#: src/interface.c:341
 msgid "Name"
 msgstr "Ime"
 
-#: src/interface.c:343
+#: src/interface.c:342
 msgid "Directory"
 msgstr "Imenik"
 
-#: src/interface.c:344
+#: src/interface.c:343
 msgid "Type"
 msgstr "Vrsta"
 
-#: src/interface.c:345
+#: src/interface.c:344
 msgid "Total"
 msgstr "Skupno"
 
-#: src/interface.c:346
+#: src/interface.c:345
 msgid "Used"
 msgstr "Uporabljen"
 
-#: src/interface.c:367
+#: src/interface.c:366
 msgid "CPU History"
 msgstr "Zgodovina uporabe procesorja"
 
-#: src/interface.c:395
-
+#: src/interface.c:394
 msgid "Used CPU:"
 msgstr "Uporabljen procesor:"
 
-#: src/interface.c:410
+#: src/interface.c:409
 msgid "Memory and Swap History"
 msgstr "Zgodovina porabe pomnilnika in navideznega pomnilnika"
 
-#: src/interface.c:443
+#: src/interface.c:442
 msgid "Used memory:"
 msgstr "Uporabljen pomnilnik:"
 
-#: src/interface.c:452 src/interface.c:479
+#: src/interface.c:451 src/interface.c:478
 msgid "of"
 msgstr "od"
 
-#: src/interface.c:470
-
+#: src/interface.c:469
 msgid "Used swap:"
 msgstr "Uporabljen navidezni pomnilnik:"
 
-#: src/interface.c:500 src/procdialogs.c:762
+#: src/interface.c:499 src/procdialogs.c:928
 msgid "Devices"
 msgstr "Naprave"
 
-#: src/interface.c:617 src/procdialogs.c:601
+#: src/interface.c:616 src/procdialogs.c:753
 msgid "Process Listing"
 msgstr "Seznam procesov"
 
-#: src/interface.c:623 src/procdialogs.c:681
+#: src/interface.c:622 src/procdialogs.c:840
 msgid "Resource Monitor"
 msgstr "Sistemski nadzornik"
 
-#: src/interface.c:681
+#: src/interface.c:680
 msgid "Application Manager"
 msgstr "Upravljalnik programov"
 
-#: src/interface.c:687
+#: src/interface.c:686
 msgid "Running Applications"
 msgstr "Programi, ki tečejo"
 
-#: src/interface.c:706
+#: src/interface.c:705
 msgid "_Close Application"
 msgstr "_Zapri"
 
-#: src/memmaps.c:228
+#: src/memmaps.c:227
 msgid "Filename"
 msgstr "Ime datoteke"
 
-#: src/memmaps.c:228
+#: src/memmaps.c:227
 msgid "VM Start"
 msgstr "Začetek navideznega pomnilnika"
 
-#: src/memmaps.c:228
+#: src/memmaps.c:227
 msgid "VM End"
 msgstr "Konec navideznega pomnilnika"
 
-#: src/memmaps.c:229 src/proctable.c:128
+#: src/memmaps.c:228 src/proctable.c:127
 msgid "VM Size"
 msgstr "Velikost navideznega pomnilnika"
 
-#: src/memmaps.c:229
+#: src/memmaps.c:228
 msgid "Flags"
 msgstr "Zastavice"
 
-#: src/memmaps.c:229
-msgid "VM offset"
+#: src/memmaps.c:228
+#, fuzzy
+msgid "VM Offset"
 msgstr "Odmik navideznega pomnilnika"
 
-#: src/memmaps.c:230
+#: src/memmaps.c:229
 msgid "Device"
 msgstr "Naprava"
 
-#: src/memmaps.c:230
+#: src/memmaps.c:229
 msgid "Inode"
 msgstr "Inode"
 
-#: src/memmaps.c:322
-msgid "Process Name :"
+#: src/memmaps.c:305
+msgid "Memory Maps"
+msgstr "Karte pomnilnika"
+
+#: src/memmaps.c:325
+#, fuzzy
+msgid "Process name:"
 msgstr "Ime procesa :"
 
 #: src/procactions.c:54
@@ -422,47 +420,78 @@ msgstr ""
 msgid "An error occured while killing the process."
 msgstr "Ob ubijanju procesa se je zgodila napaka."
 
-#: src/procdialogs.c:73
-msgid ""
-"Are you sure you want to hide this process?\n"
-"(Choose 'Hidden Processes' in the Settings menu to reshow)"
+#: src/procdialogs.c:80
+msgid "Are you sure you want to hide this process?"
 msgstr ""
-"Ste prepričani, da želite skriti ta proces?\n"
-"(Izberite 'Skriti procesi' v menuju Nastavitve za vnovičen prikaz)"
 
-#: src/procdialogs.c:95 src/procdialogs.c:177
-msgid "Show this dialog next time."
+#: src/procdialogs.c:81
+msgid ""
+"If you hide a process, you can unhide it by selecting 'Hidden Processes' in "
+"the Edit menu."
+msgstr ""
+
+#: src/procdialogs.c:138 src/procdialogs.c:280
+#, fuzzy
+msgid "_Show this dialog next time"
 msgstr "Tudi prihodnjič kaži to vprašanje."
 
-#: src/procdialogs.c:154 src/procdialogs.c:839
-msgid "_End Process"
-msgstr "_Končaj proces"
+#: src/procdialogs.c:216
+msgid "Are you sure you want to kill this process?"
+msgstr ""
 
-#: src/procdialogs.c:161
-msgid "Unsaved data will be lost."
+#: src/procdialogs.c:217
+#, fuzzy
+msgid "If you kill a process, unsaved data will be lost."
 msgstr "Neshranjeni podatki bodo izgubljeni."
 
-#: src/procdialogs.c:200
-msgid "( Very High Priority )"
+#: src/procdialogs.c:221
+msgid "Are you sure you want to end this process?"
+msgstr ""
+
+#: src/procdialogs.c:222
+#, fuzzy
+msgid "If you end a process, unsaved data will be lost."
+msgstr "Neshranjeni podatki bodo izgubljeni."
+
+#: src/procdialogs.c:320
+#, fuzzy
+msgid "(Very High Priority)"
 msgstr "( zelo visoka prioriteta )"
 
-#: src/procdialogs.c:202
-msgid "( High Priority )"
+#: src/procdialogs.c:322
+#, fuzzy
+msgid "(High Priority)"
 msgstr "( visoka prioriteta )"
 
-#: src/procdialogs.c:204
-msgid "( Normal Priority )"
+#: src/procdialogs.c:324
+#, fuzzy
+msgid "(Normal Priority)"
 msgstr "( običajna prioriteta )"
 
-#: src/procdialogs.c:206
-msgid "( Low Priority )"
+#: src/procdialogs.c:326
+#, fuzzy
+msgid "(Low Priority)"
 msgstr "( nizka prioriteta )"
 
-#: src/procdialogs.c:208
-msgid "( Very Low Priority)"
+#: src/procdialogs.c:328
+#, fuzzy
+msgid "(Very Low Priority)"
 msgstr "( zelo nizka prioriteta )"
 
-#: src/procdialogs.c:251
+#: src/procdialogs.c:382 src/procdialogs.c:1016
+msgid "Change Priority"
+msgstr "Spremeni prioriteto"
+
+#: src/procdialogs.c:403 src/procdialogs.c:1017
+msgid "Change _Priority"
+msgstr "Spremeni _prioriteto"
+
+#: src/procdialogs.c:424
+#, fuzzy
+msgid "_Nice value:"
+msgstr "Vrednost nice :"
+
+#: src/procdialogs.c:441
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -470,67 +499,71 @@ msgstr ""
 "Prioriteta procesa je podana z vrednostjo nice. Nižja vrednost ustreza višji "
 "prioriteti."
 
-#: src/procdialogs.c:259 src/procdialogs.c:843
-msgid "Change Priority"
-msgstr "Spremeni prioriteto"
-
-#: src/procdialogs.c:262 src/procdialogs.c:844
-msgid "Change _Priority"
-msgstr "Spremeni _prioriteto"
-
-#: src/procdialogs.c:282
-msgid "Nice Value :"
-msgstr "Vrednost nice :"
-
-#: src/procdialogs.c:544
+#: src/procdialogs.c:695
 msgid "Icon"
 msgstr "Ikona"
 
-#: src/procdialogs.c:587
+#: src/procdialogs.c:735
 msgid "Preferences"
 msgstr "Nastavitve"
 
-#: src/procdialogs.c:608
+#: src/procdialogs.c:760
 msgid "Behavior"
 msgstr "Obnašanje"
 
-#: src/procdialogs.c:627 src/procdialogs.c:707
-msgid "_Update Interval ( seconds ) :"
+#: src/procdialogs.c:779 src/procdialogs.c:866
+#, fuzzy
+msgid "_Update interval:"
 msgstr "_Interval posodabljanja ( sekund ) :"
 
-#: src/procdialogs.c:643
+#: src/procdialogs.c:795 src/procdialogs.c:883 src/procdialogs.c:964
+msgid "seconds"
+msgstr ""
+
+#: src/procdialogs.c:802
 msgid "Show warning dialog when ending or _killing processes"
 msgstr "Kaži opozorilo ob _končanju ali ubijanju procesa"
 
-#: src/procdialogs.c:653
+#: src/procdialogs.c:812
 msgid "Show warning dialog when _hiding processes"
 msgstr "Kaži opozorilo ob _skrivanju procesa"
 
-#: src/procdialogs.c:663
+#: src/procdialogs.c:822
 msgid "Process Fields"
 msgstr "Polja procesa"
 
-#: src/procdialogs.c:688
+#: src/procdialogs.c:847
 msgid "Graphs"
 msgstr "Grafi"
 
-#: src/procdialogs.c:724
-msgid "_Background Color:"
+#: src/procdialogs.c:890
+#, fuzzy
+msgid "_Background color:"
 msgstr "_Barva ozadja:"
 
-#: src/procdialogs.c:743
-msgid "_Grid Color:"
+#: src/procdialogs.c:909
+#, fuzzy
+msgid "_Grid color:"
 msgstr "Ba_rva mreže:"
 
-#: src/procdialogs.c:781
-msgid "Update _Interval ( seconds ) :"
+#: src/procdialogs.c:947
+#, fuzzy
+msgid "Update _interval:"
 msgstr "_Interval posodabljanja ( sekund ) :"
 
-#: src/procdialogs.c:863
+#: src/procdialogs.c:1007
+msgid "Kill Process"
+msgstr "Ubij proces"
+
+#: src/procdialogs.c:1011
+msgid "End Process"
+msgstr "Končaj proces"
+
+#: src/procdialogs.c:1036
 msgid "Root Password :"
 msgstr "Geslo za root :"
 
-#: src/procdialogs.c:908
+#: src/procdialogs.c:1081
 msgid "Wrong Password."
 msgstr "Neveljavno geslo."
 
@@ -538,96 +571,109 @@ msgstr "Neveljavno geslo."
 msgid "show simple dialog to end processes and logout"
 msgstr "kaži vzorčni dialog za končanje procesov in izhod"
 
-#: src/proctable.c:126
+#: src/proctable.c:125
 msgid "Process Name"
 msgstr "Ime procesa"
 
-#: src/proctable.c:126
+#: src/proctable.c:125
 msgid "Arguments"
 msgstr "Argumenti"
 
-#: src/proctable.c:127
+#: src/proctable.c:126
 msgid "User"
 msgstr "Uporabnik"
 
-#: src/proctable.c:127
+#: src/proctable.c:126
 msgid "Status"
 msgstr "Stanje"
 
-#: src/proctable.c:128
+#: src/proctable.c:127
 msgid "Memory"
 msgstr "Pomnilnik"
 
-#: src/proctable.c:128
+#: src/proctable.c:127
 msgid "Resident Memory"
 msgstr "Rezidenčni pomnilnik"
 
-#: src/proctable.c:129
+#: src/proctable.c:128
 msgid "Shared Memory"
 msgstr "Skupni pomnilnik"
 
-#: src/proctable.c:129
+#: src/proctable.c:128
 msgid "RSS Memory"
 msgstr "Pomnilnik RSS"
 
-#: src/proctable.c:131
+#: src/proctable.c:130
 #, no-c-format
 msgid "% CPU"
 msgstr "% procesorja"
 
-#: src/proctable.c:132
+#: src/proctable.c:131
 msgid "Nice"
 msgstr "Nice"
 
-#: src/proctable.c:132
+#: src/proctable.c:131
 msgid "ID"
 msgstr "ID"
 
-#: src/proctable.c:270
+#: src/proctable.c:269
 msgid "Running"
 msgstr "Teče"
 
-#: src/proctable.c:276
+#: src/proctable.c:275
 msgid "Stopped"
 msgstr "Ustavljen"
 
-#: src/proctable.c:281
+#: src/proctable.c:280
 msgid "Sleeping"
 msgstr "Spi"
 
-#: src/proctable.c:410
+#: src/proctable.c:409
 msgid " (thread)"
 msgstr " (nit)"
 
-#: src/proctable.c:947
+#: src/proctable.c:946
 #, c-format
 msgid "%s could not be found."
 msgstr "%s ni bil najden."
 
-#: src/util.c:194
+#: src/util.c:286
 #, c-format
 msgid "%d bytes"
 msgstr "%d bajtov"
 
-#: src/util.c:197
+#: src/util.c:289
 #, c-format
 msgid "%d K"
 msgstr "%d K"
 
-#: src/util.c:201
+#: src/util.c:293
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: src/util.c:203
+#: src/util.c:295
 #, c-format
 msgid "%.0f MB"
 msgstr "%.0f MB"
 
-#: src/util.c:206
+#: src/util.c:298
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
+
+#~ msgid "Change Priority ..."
+#~ msgstr "Spremeni prioriteto ..."
+
+#~ msgid "Hide Process"
+#~ msgstr "Skrij proces"
+
+#~ msgid ""
+#~ "Are you sure you want to hide this process?\n"
+#~ "(Choose 'Hidden Processes' in the Settings menu to reshow)"
+#~ msgstr ""
+#~ "Ste prepričani, da želite skriti ta proces?\n"
+#~ "(Izberite 'Skriti procesi' v menuju Nastavitve za vnovičen prikaz)"
 
 #~ msgid "Erik Johnsson (zaphod@linux.nu) - icon support"
 #~ msgstr "Erik Johnsson (zaphod@linux.nu) - podpora ikonam"

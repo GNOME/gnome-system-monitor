@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
-"POT-Creation-Date: 2002-08-18 06:37-0500\n"
+"POT-Creation-Date: 2003-11-08 10:08-0500\n"
 "PO-Revision-Date: 2002-05-27 13:07-0300\n"
 "Last-Translator: Isam Bayazidi <bayazidi@arabeyes.org>\n"
 "Language-Team: Arabic <support@arabeyes.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 0.9.6\n"
 
-#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:146 src/interface.c:476
+#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:146 src/interface.c:604
 msgid "System Monitor"
 msgstr "مراقب النظام"
 
@@ -28,8 +28,8 @@ msgid "Kevin Vandersloot (kfv101@psu.edu)"
 msgstr "Kevin Vandersloot (kfv101@psu.edu)"
 
 #: src/callbacks.c:124
-msgid "Erik Johnsson (zaphod@linux.nu) - icon support"
-msgstr "Erik Johnsson (zaphod@linux.nu) - دعم اﻷيقونات"
+msgid "Jorgen Scheibengruber <mfcn@gmx.de> - nicer devices treeview"
+msgstr ""
 
 #: src/callbacks.c:132
 msgid "translator_credits"
@@ -55,15 +55,28 @@ msgstr "bourne again shell"
 msgid "Gnome-Session"
 msgstr "جلسة جينوم"
 
-#: src/favorites.c:343
+#: src/favorites.c:344
 msgid "No processes are currently hidden."
 msgstr "لا يوجد عمليات مخفاة حاليا."
 
-#: src/favorites.c:361
+#: src/favorites.c:364
 msgid "Manage Hidden Processes"
 msgstr "أدمج العمليات المخفاة."
 
-#: src/favorites.c:372
+#: src/favorites.c:388
+#, fuzzy
+msgid "_Hidden processes:"
+msgstr "_علميات مخفية"
+
+#: src/favorites.c:410
+msgid "_Remove From List"
+msgstr "ا_حذف من القائمة"
+
+#: src/favorites.c:419 src/procdialogs.c:440
+msgid "Note:"
+msgstr ""
+
+#: src/favorites.c:420
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
@@ -71,291 +84,312 @@ msgstr ""
 "هناك عمليات أخترت أنت أن تخفيها. تستطيع أظهارها مرة أخرى عن طريق إزالتها من "
 "هذه القائمة."
 
-#: src/favorites.c:376
-msgid "Hidden Processes"
-msgstr "العمليات المخفية"
-
-#: src/favorites.c:389
-msgid "_Remove From List"
-msgstr "ا_حذف من القائمة"
-
-#: src/infoview.c:58
+#: src/infoview.c:80
 msgid "Process Info"
 msgstr "معلومات العملية"
 
-#: src/infoview.c:65
-msgid "Command : "
+#: src/infoview.c:94
+#, fuzzy
+msgid "Command:"
 msgstr "الأمر : "
 
-#: src/infoview.c:69
-msgid "Status : "
-msgstr "الحالة : "
+#: src/infoview.c:98
+#, fuzzy
+msgid "Status:"
+msgstr "حالة"
 
-#: src/infoview.c:73
-msgid "Priority : "
+#: src/infoview.c:102
+#, fuzzy
+msgid "Priority:"
 msgstr "الأولوية : "
 
-#: src/infoview.c:92
+#: src/infoview.c:126
 msgid "Memory Usage"
 msgstr "ذاكرة المستعملة"
 
-#: src/infoview.c:100
-msgid "Total : "
-msgstr "مجموع : "
+#: src/infoview.c:140
+#, fuzzy
+msgid "Total:"
+msgstr "مجموع :"
 
-#: src/infoview.c:104
-msgid "RSS : "
+#: src/infoview.c:144
+#, fuzzy
+msgid "RSS:"
 msgstr "RSS : "
 
-#: src/infoview.c:108
-msgid "Shared : "
+#: src/infoview.c:148
+#, fuzzy
+msgid "Shared:"
 msgstr "مشارك : "
 
-#: src/infoview.c:156
-#, c-format
-msgid "Very High  ( Nice %d )"
+#: src/infoview.c:193
+#, fuzzy, c-format
+msgid "Very high - nice %d"
 msgstr "مرتفع جدا  ( nice %d )"
 
-#: src/infoview.c:158
-#, c-format
-msgid "High  ( Nice %d )"
+#: src/infoview.c:195
+#, fuzzy, c-format
+msgid "High - nice %d"
 msgstr "مرتفع  (nice %d)"
 
-#: src/infoview.c:160
-#, c-format
-msgid "Normal  ( Nice %d )"
+#: src/infoview.c:197
+#, fuzzy, c-format
+msgid "Normal - nice %d"
 msgstr "عادي  (nice %d)"
 
-#: src/infoview.c:162
-#, c-format
-msgid "Low  ( Nice %d )"
+#: src/infoview.c:199
+#, fuzzy, c-format
+msgid "Low - nice %d"
 msgstr "منخفض (nice %d)"
 
-#: src/infoview.c:164
-#, c-format
-msgid "Very Low  ( Nice %d )"
+#: src/infoview.c:201
+#, fuzzy, c-format
+msgid "Very low - nice %d"
 msgstr "منخفض جدا (nice %d)"
 
-#: src/interface.c:53
+#: src/interface.c:52 src/interface.c:143
 msgid "_Change Priority..."
 msgstr "_غيّر أولوية..."
 
-#: src/interface.c:53 src/interface.c:133
+#: src/interface.c:52 src/interface.c:143
 msgid "Change the importance (nice value) of a process"
 msgstr "غير مستوى أهمية (درجة nice) للعمليات"
 
-#: src/interface.c:58 src/procdialogs.c:96
+#: src/interface.c:57 src/interface.c:154 src/procdialogs.c:155
 msgid "_Hide Process"
 msgstr "إ_خفاء العملية"
 
-#: src/interface.c:58 src/interface.c:144
+#: src/interface.c:57 src/interface.c:154
 msgid "Hide a process"
 msgstr "إخفاء عملية"
 
-#: src/interface.c:64 src/interface.c:240
+#: src/interface.c:63 src/interface.c:249
 msgid "End _Process"
 msgstr "إ_نهاء العملية"
 
-#: src/interface.c:64
+#: src/interface.c:63
 msgid "Force a process to finish."
 msgstr "أجبار عملية على الإنتهاء."
 
-#: src/interface.c:69 src/procdialogs.c:146 src/procdialogs.c:724
+#: src/interface.c:68 src/interface.c:165 src/procdialogs.c:218
+#: src/procdialogs.c:1008
 msgid "_Kill Process"
 msgstr "_قتل العملية"
 
-#: src/interface.c:69
+#: src/interface.c:68
 msgid "Force a process to finish now."
 msgstr "أجبار عملية على الإنتهاء الآن."
 
-#: src/interface.c:75
+#: src/interface.c:74
 msgid "_Hidden Processes"
 msgstr "_علميات مخفية"
 
-#: src/interface.c:76
+#: src/interface.c:75
 msgid "View and edit your list of hidden processes"
 msgstr "أعرض و حرر قائمتك للعمليات المخفية"
 
-#: src/interface.c:87
+#: src/interface.c:86 src/interface.c:148
 msgid "_Memory Maps"
 msgstr "_خارطة الذاكرة"
 
-#: src/interface.c:87 src/interface.c:138
+#: src/interface.c:86 src/interface.c:148
 msgid "View the memory maps associated with a process"
 msgstr "أعرض خارطة الذاكرة المرافقة للعملية"
 
-#: src/interface.c:113
+#: src/interface.c:92
+#, fuzzy
+msgid "Process _Dependencies"
+msgstr "أظهر متطلبات العملية"
+
+#: src/interface.c:92
+#, fuzzy
+msgid "Display a tree showing process dependencies"
+msgstr "أظهر متطلبات العملية"
+
+#: src/interface.c:97
+#, fuzzy
+msgid "_Threads"
+msgstr "أظهر تشعبات العملية"
+
+#: src/interface.c:97
+msgid "Display threads (subprocesses)"
+msgstr ""
+
+#: src/interface.c:123
 msgid "All Processes"
 msgstr "كل العمليات"
 
-#: src/interface.c:113
+#: src/interface.c:123
 msgid "View processes being run by all users"
 msgstr "أعرض العمليات المشغلة من قبل كل المستخدمين"
 
-#: src/interface.c:118
+#: src/interface.c:128
 msgid "My Processes"
 msgstr "عملياتي"
 
-#: src/interface.c:118
+#: src/interface.c:128
 msgid "View processes being run by you"
 msgstr "أعرض العمليات المشغلة من قبلك"
 
-#: src/interface.c:123
+#: src/interface.c:133
 msgid "Active Processes"
 msgstr "العمليات النشطة"
 
-#: src/interface.c:123
+#: src/interface.c:133
 msgid "View only active processes"
 msgstr "أعرض العمليات النشطة فقط"
 
-#: src/interface.c:133
-msgid "Change Priority ..."
-msgstr "غيّر أولوية..."
+#: src/interface.c:160 src/procdialogs.c:223 src/procdialogs.c:1012
+msgid "_End Process"
+msgstr "إ_نهاء العملية"
 
-#: src/interface.c:138 src/memmaps.c:257
-msgid "Memory Maps"
-msgstr "خارطة الذاكرة"
-
-#: src/interface.c:144 src/procdialogs.c:82
-msgid "Hide Process"
-msgstr "إخفاء العملية"
-
-#: src/interface.c:150 src/procdialogs.c:149 src/procdialogs.c:727
-msgid "End Process"
-msgstr "إنهاء العملية"
-
-#: src/interface.c:150
+#: src/interface.c:160
 msgid "Force a process to finish"
 msgstr "أجبار عملية على الإنتهاء."
 
-#: src/interface.c:155 src/procdialogs.c:145 src/procdialogs.c:723
-msgid "Kill Process"
-msgstr "قتل العملية"
-
-#: src/interface.c:155
+#: src/interface.c:165
 msgid "Force a process to finish now"
 msgstr "أجبار عملية على الإنتهاء الآن."
 
-#: src/interface.c:162
+#: src/interface.c:172
 msgid "More _Info >>"
 msgstr "معلومات أ_كثر >>"
 
-#: src/interface.c:163
+#: src/interface.c:173
 msgid "<< Less _Info"
 msgstr "<< معلومات أ_قل"
 
-#: src/interface.c:198
-msgid "Sea_rch :"
+#: src/interface.c:208
+#, fuzzy
+msgid "Sea_rch:"
 msgstr "اب_حث :"
 
-#: src/interface.c:218
-msgid "Vie_w"
+#: src/interface.c:227
+#, fuzzy
+msgid "Vie_w:"
 msgstr "ا_عرض"
 
-#: src/interface.c:248
+#: src/interface.c:254
 msgid "More _Info"
 msgstr "معلومات أ_كثر"
 
-#: src/interface.c:284
+#: src/interface.c:341
 msgid "Name"
 msgstr "اسم"
 
-#: src/interface.c:285
+#: src/interface.c:342
 msgid "Directory"
 msgstr "دليل"
 
-#: src/interface.c:286
-msgid "Used Space"
-msgstr "المساحة المستخدمة"
+#: src/interface.c:343
+msgid "Type"
+msgstr ""
 
-#: src/interface.c:287
-msgid "Total Space"
-msgstr "المساحة الكلية"
-
-#: src/interface.c:300
-#, no-c-format
-msgid "% CPU Usage History"
-msgstr "% تاريخ إستخدام CPU"
-
-#: src/interface.c:306
-#, no-c-format
-msgid "% Memory / Swap Usage History"
-msgstr "% تاريخ إستخدام الذاكرة/ مساحة التبديل"
-
-#: src/interface.c:327
-msgid "CPU Used :"
-msgstr "مستخدم من المعالج :"
-
-#: src/interface.c:356 src/proctable.c:128
-msgid "Memory"
-msgstr "ذاكرة"
-
-#: src/interface.c:361 src/interface.c:397
-msgid "Used :"
-msgstr "تم استعماله :"
-
-#: src/interface.c:372 src/interface.c:408
-msgid "Total :"
+#: src/interface.c:344
+#, fuzzy
+msgid "Total"
 msgstr "مجموع :"
 
-#: src/interface.c:392
-msgid "Swap"
-msgstr "تبديل"
+#: src/interface.c:345
+#, fuzzy
+msgid "Used"
+msgstr "تم استعماله :"
 
-#: src/interface.c:422 src/procdialogs.c:657
+#: src/interface.c:366
+#, fuzzy
+msgid "CPU History"
+msgstr "% تاريخ إستخدام CPU"
+
+#: src/interface.c:394
+#, fuzzy
+msgid "Used CPU:"
+msgstr "تم استعماله :"
+
+#: src/interface.c:409
+#, fuzzy
+msgid "Memory and Swap History"
+msgstr "% تاريخ إستخدام الذاكرة/ مساحة التبديل"
+
+#: src/interface.c:442
+#, fuzzy
+msgid "Used memory:"
+msgstr "تم استعماله :"
+
+#: src/interface.c:451 src/interface.c:478
+msgid "of"
+msgstr ""
+
+#: src/interface.c:469
+#, fuzzy
+msgid "Used swap:"
+msgstr "تم استعماله :"
+
+#: src/interface.c:499 src/procdialogs.c:928
 msgid "Devices"
 msgstr "اجهزة"
 
-#: src/interface.c:489 src/procdialogs.c:529
-msgid "Process _Listing"
+#: src/interface.c:616 src/procdialogs.c:753
+#, fuzzy
+msgid "Process Listing"
 msgstr "_قائمة العمليات"
 
-#: src/interface.c:495 src/procdialogs.c:592
-msgid "System _Monitor"
-msgstr "_مراقب النظام"
+#: src/interface.c:622 src/procdialogs.c:840
+#, fuzzy
+msgid "Resource Monitor"
+msgstr "مراقب النظام"
 
-#: src/interface.c:549
+#: src/interface.c:680
 msgid "Application Manager"
 msgstr "مدير التطبيقات"
 
-#: src/interface.c:559
+#: src/interface.c:686
 msgid "Running Applications"
 msgstr "تشغيل التطبيقات"
 
-#: src/interface.c:578
+#: src/interface.c:705
 msgid "_Close Application"
 msgstr "إ_غلاق تطبيق"
 
-#: src/memmaps.c:191
+#: src/memmaps.c:227
 msgid "Filename"
 msgstr "اسم الملف"
 
-#: src/memmaps.c:191
+#: src/memmaps.c:227
 msgid "VM Start"
 msgstr "بداية الذاكرة الإفتراضية"
 
-#: src/memmaps.c:191
+#: src/memmaps.c:227
 msgid "VM End"
 msgstr "نهاية الذاكرة الإفتراضية"
 
-#: src/memmaps.c:192
+#: src/memmaps.c:228 src/proctable.c:127
+msgid "VM Size"
+msgstr "حجم الذاكرة الإفتراضية"
+
+#: src/memmaps.c:228
 msgid "Flags"
 msgstr "خيارات"
 
-#: src/memmaps.c:192
-msgid "VM offset"
+#: src/memmaps.c:228
+#, fuzzy
+msgid "VM Offset"
 msgstr "إزاحة الذاكرة الإفتراضية"
 
-#: src/memmaps.c:192
+#: src/memmaps.c:229
 msgid "Device"
 msgstr "جهاز"
 
-#: src/memmaps.c:192
+#: src/memmaps.c:229
 msgid "Inode"
 msgstr "Inode"
 
-#: src/memmaps.c:272
-msgid "Process Name :"
+#: src/memmaps.c:305
+msgid "Memory Maps"
+msgstr "خارطة الذاكرة"
+
+#: src/memmaps.c:325
+#, fuzzy
+msgid "Process name:"
 msgstr "أسم العملية :"
 
 #: src/procactions.c:54
@@ -405,126 +439,152 @@ msgstr ""
 msgid "An error occured while killing the process."
 msgstr "حدث هناك خطأ أثناء قتل العملية."
 
-#: src/procdialogs.c:73
-msgid ""
-"Are you sure you want to hide this process?\n"
-"(Choose 'Hidden Processes' in the Settings menu to reshow)"
+#: src/procdialogs.c:80
+msgid "Are you sure you want to hide this process?"
 msgstr ""
-"هل أنت متأكد نك تريد أخفاء هذه العملية؟(أختر 'العمليات المخفاة' من قائمة "
-"إعدادات لإعادة عرضها)"
 
-#: src/procdialogs.c:91 src/procdialogs.c:169
-msgid "Show this dialog next time."
+#: src/procdialogs.c:81
+msgid ""
+"If you hide a process, you can unhide it by selecting 'Hidden Processes' in "
+"the Edit menu."
+msgstr ""
+
+#: src/procdialogs.c:138 src/procdialogs.c:280
+#, fuzzy
+msgid "_Show this dialog next time"
 msgstr "أظهر شاشة الحوار هذه في المرة القادمة."
 
-#: src/procdialogs.c:150 src/procdialogs.c:728
-msgid "_End Process"
-msgstr "إ_نهاء العملية"
+#: src/procdialogs.c:216
+msgid "Are you sure you want to kill this process?"
+msgstr ""
 
-#: src/procdialogs.c:157
-msgid "Unsaved data will be lost."
+#: src/procdialogs.c:217
+#, fuzzy
+msgid "If you kill a process, unsaved data will be lost."
 msgstr "البيانات الغير محفوظة سيتم فقدانها."
 
-#: src/procdialogs.c:192
-msgid "( Very High Priority )"
+#: src/procdialogs.c:221
+msgid "Are you sure you want to end this process?"
+msgstr ""
+
+#: src/procdialogs.c:222
+#, fuzzy
+msgid "If you end a process, unsaved data will be lost."
+msgstr "البيانات الغير محفوظة سيتم فقدانها."
+
+#: src/procdialogs.c:320
+#, fuzzy
+msgid "(Very High Priority)"
 msgstr "( أولوية مرتفعة جدا )"
 
-#: src/procdialogs.c:194
-msgid "( High Priority )"
+#: src/procdialogs.c:322
+#, fuzzy
+msgid "(High Priority)"
 msgstr "( أولوية مرتفعة )"
 
-#: src/procdialogs.c:196
-msgid "( Normal Priority )"
+#: src/procdialogs.c:324
+#, fuzzy
+msgid "(Normal Priority)"
 msgstr "( أولوية عادية )"
 
-#: src/procdialogs.c:198
-msgid "( Low Priority )"
+#: src/procdialogs.c:326
+#, fuzzy
+msgid "(Low Priority)"
 msgstr "( أولوية منخفضة )"
 
-#: src/procdialogs.c:200
-msgid "( Very Low Priority)"
+#: src/procdialogs.c:328
+#, fuzzy
+msgid "(Very Low Priority)"
 msgstr "( أولوية منخفضة جدا )"
 
-#: src/procdialogs.c:243
+#: src/procdialogs.c:382 src/procdialogs.c:1016
+msgid "Change Priority"
+msgstr "غيّر أولوية"
+
+#: src/procdialogs.c:403 src/procdialogs.c:1017
+msgid "Change _Priority"
+msgstr "غيّر أ_ولوية..."
+
+#: src/procdialogs.c:424
+#, fuzzy
+msgid "_Nice value:"
+msgstr "درجة Nice : "
+
+#: src/procdialogs.c:441
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
 msgstr ""
 "أولوية العمليات تعطى بقيمة أو مستوى nice لها. قيمة nice أقل تعنيأولوية أعلى."
 
-#: src/procdialogs.c:251 src/procdialogs.c:732
-msgid "Change Priority"
-msgstr "غيّر أولوية"
-
-#: src/procdialogs.c:254 src/procdialogs.c:733
-msgid "Change _Priority"
-msgstr "غيّر أ_ولوية..."
-
-#: src/procdialogs.c:273
-msgid "Nice Value :"
-msgstr "درجة Nice : "
-
-#: src/procdialogs.c:472
+#: src/procdialogs.c:695
 msgid "Icon"
 msgstr "أيقونة"
 
-#: src/procdialogs.c:516
+#: src/procdialogs.c:735
 msgid "Preferences"
 msgstr "تفضيلات"
 
-#: src/procdialogs.c:540
-msgid "Update Interval ( seconds ) :"
+#: src/procdialogs.c:760
+msgid "Behavior"
+msgstr ""
+
+#: src/procdialogs.c:779 src/procdialogs.c:866
+#, fuzzy
+msgid "_Update interval:"
 msgstr "فترة التحديث ( ثواني ) :"
 
-#: src/procdialogs.c:550 src/procdialogs.c:616
-msgid "_Set"
-msgstr "_عيّن"
+#: src/procdialogs.c:795 src/procdialogs.c:883 src/procdialogs.c:964
+msgid "seconds"
+msgstr ""
 
-#: src/procdialogs.c:556
-msgid "Show Process Dependencies"
-msgstr "أظهر متطلبات العملية"
-
-#: src/procdialogs.c:563
-msgid "Show Threads"
-msgstr "أظهر تشعبات العملية"
-
-#: src/procdialogs.c:570
-msgid "Show warning dialog when ending or killing processes"
+#: src/procdialogs.c:802
+#, fuzzy
+msgid "Show warning dialog when ending or _killing processes"
 msgstr "أظهر رسالة تحذير عند إنهاء أو قتل العمليات"
 
-#: src/procdialogs.c:577
-msgid "Show warning dialog when hiding processes"
+#: src/procdialogs.c:812
+#, fuzzy
+msgid "Show warning dialog when _hiding processes"
 msgstr "أظهر رسالة تحذير عند إخفاء العمليات"
 
-#: src/procdialogs.c:586
-msgid "Process _Fields"
+#: src/procdialogs.c:822
+#, fuzzy
+msgid "Process Fields"
 msgstr "ح_قول العملية"
 
-#: src/procdialogs.c:596
+#: src/procdialogs.c:847
 msgid "Graphs"
 msgstr "رسم بياني"
 
-#: src/procdialogs.c:605 src/procdialogs.c:663
-msgid "Update Speed ( seconds ) :"
-msgstr "سرعة التحديث ( ثواني) :"
-
-#: src/procdialogs.c:625
-msgid "Background Color :"
+#: src/procdialogs.c:890
+#, fuzzy
+msgid "_Background color:"
 msgstr "لون الخلفية :"
 
-#: src/procdialogs.c:641
-msgid "Grid Color :"
+#: src/procdialogs.c:909
+#, fuzzy
+msgid "_Grid color:"
 msgstr "لون الشبكة :"
 
-#: src/procdialogs.c:676
-msgid "Se_t"
-msgstr "_عيّن"
+#: src/procdialogs.c:947
+#, fuzzy
+msgid "Update _interval:"
+msgstr "فترة التحديث ( ثواني ) :"
 
-#: src/procdialogs.c:752
+#: src/procdialogs.c:1007
+msgid "Kill Process"
+msgstr "قتل العملية"
+
+#: src/procdialogs.c:1011
+msgid "End Process"
+msgstr "إنهاء العملية"
+
+#: src/procdialogs.c:1036
 msgid "Root Password :"
 msgstr "كلمة السر للجذر :"
 
-#: src/procdialogs.c:797
+#: src/procdialogs.c:1081
 msgid "Wrong Password."
 msgstr "كلمة السر.خاطئة"
 
@@ -532,96 +592,145 @@ msgstr "كلمة السر.خاطئة"
 msgid "show simple dialog to end processes and logout"
 msgstr "أظهر شاشة حوار بسيطة لإنهاء العمليات و الخروج."
 
-#: src/proctable.c:126
+#: src/proctable.c:125
 msgid "Process Name"
 msgstr "أسم العملية"
 
-#: src/proctable.c:126
+#: src/proctable.c:125
 msgid "Arguments"
 msgstr "معاملات"
 
-#: src/proctable.c:127
+#: src/proctable.c:126
 msgid "User"
 msgstr "مستخدم"
 
-#: src/proctable.c:127
+#: src/proctable.c:126
 msgid "Status"
 msgstr "حالة"
 
-#: src/proctable.c:128
-msgid "VM Size"
-msgstr "حجم الذاكرة الإفتراضية"
+#: src/proctable.c:127
+msgid "Memory"
+msgstr "ذاكرة"
 
-#: src/proctable.c:128
+#: src/proctable.c:127
 msgid "Resident Memory"
 msgstr "ذاكرة مقيمة"
 
-#: src/proctable.c:129
+#: src/proctable.c:128
 msgid "Shared Memory"
 msgstr "ذاكرة مشتركة"
 
-#: src/proctable.c:129
+#: src/proctable.c:128
 msgid "RSS Memory"
 msgstr "ذاكرة RSS"
 
-#: src/proctable.c:131
+#: src/proctable.c:130
 #, no-c-format
 msgid "% CPU"
 msgstr "% معالج"
 
-#: src/proctable.c:132
+#: src/proctable.c:131
 msgid "Nice"
 msgstr "Nice"
 
-#: src/proctable.c:132
+#: src/proctable.c:131
 msgid "ID"
 msgstr "هوية"
 
-#: src/proctable.c:272
+#: src/proctable.c:269
 msgid "Running"
 msgstr "عاملة"
 
-#: src/proctable.c:278
+#: src/proctable.c:275
 msgid "Stopped"
 msgstr "متوقفة"
 
-#: src/proctable.c:283
+#: src/proctable.c:280
 msgid "Sleeping"
 msgstr "نائمة"
 
-#: src/proctable.c:412
+#: src/proctable.c:409
 msgid " (thread)"
 msgstr " (تشعب)"
 
-#: src/proctable.c:935
+#: src/proctable.c:946
 #, c-format
 msgid "%s could not be found."
 msgstr "لا يمكن أيجاد %s"
 
-#: src/util.c:194
+#: src/util.c:286
 #, c-format
 msgid "%d bytes"
 msgstr "%d بايت"
 
-#: src/util.c:197
+#: src/util.c:289
 #, c-format
 msgid "%d K"
 msgstr "%d كيلو"
 
-#: src/util.c:201
+#: src/util.c:293
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f م.بايت"
 
-#: src/util.c:203
+#: src/util.c:295
 #, c-format
 msgid "%.0f MB"
 msgstr "%.0f م.بايت"
 
-#: src/util.c:206
+#: src/util.c:298
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f ج.بايت"
+
+#~ msgid "Erik Johnsson (zaphod@linux.nu) - icon support"
+#~ msgstr "Erik Johnsson (zaphod@linux.nu) - دعم اﻷيقونات"
+
+#~ msgid "Hidden Processes"
+#~ msgstr "العمليات المخفية"
+
+#~ msgid "Status : "
+#~ msgstr "الحالة : "
+
+#~ msgid "Total : "
+#~ msgstr "مجموع : "
+
+#~ msgid "Change Priority ..."
+#~ msgstr "غيّر أولوية..."
+
+#~ msgid "Hide Process"
+#~ msgstr "إخفاء العملية"
+
+#~ msgid "Used Space"
+#~ msgstr "المساحة المستخدمة"
+
+#~ msgid "Total Space"
+#~ msgstr "المساحة الكلية"
+
+#~ msgid "CPU Used :"
+#~ msgstr "مستخدم من المعالج :"
+
+#~ msgid "Swap"
+#~ msgstr "تبديل"
+
+#~ msgid "System _Monitor"
+#~ msgstr "_مراقب النظام"
+
+#~ msgid ""
+#~ "Are you sure you want to hide this process?\n"
+#~ "(Choose 'Hidden Processes' in the Settings menu to reshow)"
+#~ msgstr ""
+#~ "هل أنت متأكد نك تريد أخفاء هذه العملية؟(أختر 'العمليات المخفاة' من قائمة "
+#~ "إعدادات لإعادة عرضها)"
+
+#~ msgid "_Set"
+#~ msgstr "_عيّن"
+
+#~ msgid "Update Speed ( seconds ) :"
+#~ msgstr "سرعة التحديث ( ثواني) :"
+
+#~ msgid "Se_t"
+#~ msgstr "_عيّن"
 
 #~ msgid "Process Manager"
 #~ msgstr "مدير العمليات"
