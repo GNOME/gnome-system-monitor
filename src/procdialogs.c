@@ -584,7 +584,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_frame_set_label_align (GTK_FRAME (frame), 0.5, 0.5);
 	gtk_box_pack_start (GTK_BOX (proc_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
-	vbox = gtk_vbox_new (FALSE, 0);
+	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), vbox);
 	
@@ -612,7 +612,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_frame_set_label_align (GTK_FRAME (frame), 0.5, 0.5);
 	gtk_box_pack_start (GTK_BOX (proc_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
-	vbox = gtk_vbox_new (FALSE, 0);
+	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), vbox);
 	
@@ -650,13 +650,13 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label);
 	
 	frame = gtk_frame_new (_("Graphs"));
-	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, 0);
+	gtk_frame_set_label_align (GTK_FRAME (frame), 0.5, 0.5);
+	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
 	table = gtk_table_new (2, 3, FALSE);
-	gtk_container_set_border_width (GTK_CONTAINER (table), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), table);
 	
-	label = gtk_label_new (_("Update Speed  ( seconds ) :"));
+	label = gtk_label_new (_("Update Speed ( seconds ) :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, 
@@ -668,7 +668,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_signal_connect (GTK_OBJECT (spin_button), "focus_out_event",
 			    GTK_SIGNAL_FUNC (update_graph_update_interval), procdata);
 	gtk_table_attach (GTK_TABLE (table), spin_button, 1, 2, 0, 1,
-			  0, 0, 0, GNOME_PAD_SMALL);
+			  0, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 	
 	label = gtk_label_new (_("Background Color :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
@@ -684,7 +684,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_signal_connect (GTK_OBJECT (color_picker), "color_set",
 			    GTK_SIGNAL_FUNC (bg_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 1, 2, 1, 2, 
-			  GTK_FILL|GTK_EXPAND,0, 0, GNOME_PAD_SMALL);
+			  GTK_FILL|GTK_EXPAND,0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 			  
 	label = gtk_label_new (_("Grid Color :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
@@ -700,17 +700,18 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_signal_connect (GTK_OBJECT (color_picker), "color_set",
 			    GTK_SIGNAL_FUNC (frame_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 1, 2, 2, 3, 
-			  GTK_FILL|GTK_EXPAND,0, 0, GNOME_PAD_SMALL);
+			  GTK_FILL|GTK_EXPAND,0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 			  
 	
 	frame = gtk_frame_new (_("Disks"));
-	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, 0);
+	gtk_frame_set_label_align (GTK_FRAME (frame), 0.5, 0.5);
+	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
 	table = gtk_table_new (2, 1, FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (table), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), table);
 			  
-	label = gtk_label_new (_("Update Speed  ( seconds ) :"));
+	label = gtk_label_new (_("Update Speed ( seconds ) :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, 
@@ -718,7 +719,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 			  
 	update = (gfloat) procdata->config.disks_update_interval;
 	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.25, 100.0, 0.25, 1.0, 1.0);
-	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
+	spin_button = gtk_spin_button_new (adjustment, 1.0, 0);
 	gtk_signal_connect (GTK_OBJECT (spin_button), "focus_out_event",
 			    GTK_SIGNAL_FUNC (update_disks_update_interval), procdata);
 	gtk_table_attach (GTK_TABLE (table), spin_button, 1, 2, 0, 1,
