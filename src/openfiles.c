@@ -78,17 +78,22 @@ add_new_files (gpointer key, gpointer value, gpointer data)
 
 	char *object;
 
-	if(openfiles->type == GLIBTOP_FILE_TYPE_FILE)
+	switch(openfiles->type)
 	{
+	case GLIBTOP_FILE_TYPE_FILE:
 		object = g_strdup(openfiles->info.file.name);
-	}
-	else if(openfiles->type == GLIBTOP_FILE_TYPE_INETSOCKET)
-	{
+		break;
+
+	case GLIBTOP_FILE_TYPE_INETSOCKET:
 		object = friendlier_hostname(openfiles->info.sock.dest_host,
 					     openfiles->info.sock.dest_port);
-	}
-	else
-	{
+		break;
+
+	case GLIBTOP_FILE_TYPE_LOCALSOCKET:
+		object = g_strdup(openfiles->info.localsock.name);
+		break;
+
+	default:
 		object = g_strdup("");
 	}
 
