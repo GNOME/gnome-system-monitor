@@ -1000,6 +1000,8 @@ void
 proctable_search_table (ProcData *procdata, gchar *string)
 {
 	GList *list = procdata->info;
+	GtkWidget *dialog;
+	gchar *error;
 	
 	while (list)
 	{
@@ -1018,6 +1020,11 @@ proctable_search_table (ProcData *procdata, gchar *string)
 		
 		list = g_list_next (list);
 	}
+	
+	error = g_strdup_printf (_("%s could not be found"), string);
+	dialog = gnome_error_dialog (error);
+	gnome_dialog_run (GNOME_DIALOG (dialog));
+	g_free (error);
 
 }
 

@@ -32,4 +32,5 @@ spec_DATA = \
 	memmaps.etspec
 
 EXTRA_DIST = \
+	README.hacking \
 	$(spec_DATA)
