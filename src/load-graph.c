@@ -26,6 +26,7 @@ void
 load_graph_draw (LoadGraph *g)
 {
     guint i, j;
+    gint dely;
     
     if (!g->disp->window) 
     	return;
@@ -71,10 +72,18 @@ load_graph_draw (LoadGraph *g)
     			FALSE, FRAME_WIDTH, FRAME_WIDTH,
     			g->draw_width,
     			g->disp->allocation.height - 2 * FRAME_WIDTH);
+    			
+    dely = g->draw_height / 5;
+    for (i = 1; i <5; i++) {
+    	gint y1 = g->draw_height + FRAME_WIDTH + 1 - i * dely;
+    	gdk_draw_line (g->pixmap, g->gc,
+    		       FRAME_WIDTH, y1, FRAME_WIDTH + g->draw_width, y1);
+    }
 			
     for (i = 0; i < g->num_points; i++)
 	g->pos [i] = g->draw_height;
 
+    gdk_gc_set_line_attributes (g->gc, 3, GDK_LINE_SOLID, GDK_CAP_ROUND, GDK_JOIN_MITER );
     /* FIXME: try to do some averaging here to smooth out the graph */
     for (j = 0; j < g->n; j++) {
         float delx = (float)g->draw_width / ( g->num_points - 1);
@@ -84,7 +93,7 @@ load_graph_draw (LoadGraph *g)
 	    
 	    gint x1 = i * delx - FRAME_WIDTH;
 	    gint x2 = (i + 1) * delx - FRAME_WIDTH;
-	    gint y1 = g->data[i][j] * g->draw_height - FRAME_WIDTH -1;
+	    gint y1 = g->data[i][j] * g->draw_height - FRAME_WIDTH - 1;
 	    gint y2 = g->data[i+1][j] * g->draw_height - FRAME_WIDTH - 1;
 	    
 	    if ((g->data[i][j] != -1) && (g->data[i+1][j] != -1))
@@ -96,7 +105,7 @@ load_graph_draw (LoadGraph *g)
 	g->pos[g->num_points - 1] -= g->data [g->num_points - 1] [j];
     }
     
-    
+    gdk_gc_set_line_attributes (g->gc, 1, GDK_LINE_SOLID, GDK_CAP_ROUND, GDK_JOIN_MITER );
 	
     gdk_draw_pixmap (g->disp->window,
 		     g->disp->style->fg_gc [GTK_WIDGET_STATE(g->disp)],

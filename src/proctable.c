@@ -21,6 +21,7 @@
 #  include <config.h>
 #endif
 
+#include <string.h>
 #include <gal/e-table/e-cell-number.h>
 #include <gal/e-table/e-cell-size.h>
 #include <gal/e-table/e-tree-memory.h>
@@ -37,6 +38,7 @@
 #include <glibtop/procargs.h>
 #include <glibtop/mem.h>
 #include <glibtop/swap.h>
+#include <glibtop/procmap.h>
 #include <sys/stat.h>
 #include <pwd.h>
 #include "procman.h"
@@ -644,6 +646,32 @@ get_info (ProcData *procdata, gint pid)
 	return info;
 }
 
+/* He he. Check to see if the process links to libX11. */
+static gboolean
+is_graphical (ProcInfo *info)
+{
+	glibtop_map_entry *memmaps;
+	glibtop_proc_map procmap;
+	char *string=NULL;
+	gint i;
+	
+	memmaps = glibtop_get_proc_map (&procmap, info->pid);
+	
+	for (i = 0; i < procmap.number; i++) {
+		if (memmaps [i].flags & (1 << GLIBTOP_MAP_ENTRY_FILENAME)) {
+			string = strstr (memmaps[i].filename, "libX11");
+			if (string) {
+				glibtop_free (memmaps);
+				return TRUE;
+			}
+		}
+	}
+	
+	glibtop_free (memmaps);
+	
+	return FALSE;
+}
+
 static ETreePath 
 insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath root_node)
 {
@@ -655,6 +683,10 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath root_node)
 	if (procdata->config.whose_process == RUNNING_PROCESSES && 
 	    (!info->running))
 		return NULL;
+#if 0	/* crazy hack to see if process links to libX11 */	
+	if (!is_graphical (info))
+		return NULL;
+#endif
 #if 0		
 	if (procdata->config.whose_process == FAVORITE_PROCESSES)
 	{
