@@ -1,3 +1,15 @@
+2004-10-28  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/memmaps.c: (vmoff_tostring): Renamed vmoff_strdup_printf.
+	
+	* src/memmaps.h: Moved some declarations to memmaps.c.
+	* src/memmaps.c: (add_new_maps), (update_memmaps_dialog), (sort_guint64),
+	(create_memmaps_tree): Renamed COL_* to MMAP_COL* to avoid conflict.
+	Use MMAP_COL_* wherever possible.
+	(sort_guint64): Don't truncate guint64 to gint anymore.
+	
+	* src/proctable.c: Removed useless #includes.
+
 2004-10-27  Benoît Dejean  <tazforever@dlfp.org>
 
 	* configure.in: Added new dependency on GNOME VFS 2.6.

@@ -31,7 +31,6 @@
 #include <glibtop/procargs.h>
 #include <glibtop/mem.h>
 #include <glibtop/swap.h>
-#include <glibtop/procmap.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
 #include <sys/stat.h>
@@ -43,7 +42,6 @@
 #include "util.h"
 #include "infoview.h"
 #include "interface.h"
-#include "memmaps.h"
 #include "favorites.h"
 
 

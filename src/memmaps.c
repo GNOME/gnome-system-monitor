@@ -12,7 +12,47 @@
 #include "util.h"
 
 
-static gchar* vmoff_strdup_printf(guint64 v)
+
+/* be careful with this enum, you could break the column names */
+enum
+{
+	MMAP_COL_FILENAME = 0,
+	MMAP_COL_VMSTART,
+	MMAP_COL_VMEND,
+	MMAP_COL_VMSZ,
+	MMAP_COL_FLAGS,
+	MMAP_COL_VMOFFSET,
+	MMAP_COL_DEVICE,
+	MMAP_COL_INODE = 7,
+
+	MMAP_COL_VMSZ_INT,
+	MMAP_COL_INODE_INT,
+	MMAP_COL_MAX
+};
+
+#define MMAP_COL_MAX_VISIBLE (MMAP_COL_INODE + 1)
+
+
+typedef struct _MemmapsInfo MemmapsInfo;
+
+struct _MemmapsInfo
+{
+	gchar *filename;
+	gchar *vmstart;
+	gchar *vmend;
+	gchar *vmsize;
+	gchar *flags;
+	gchar *vmoffset;
+	gchar *device;
+	gchar *inode;
+};
+
+
+
+/*
+ * Returns a new allocated string representing @v
+ */
+static gchar* vmoff_tostring(guint64 v)
 {
 	return g_strdup_printf((sizeof (void*) == 8) ? "%016llx" : "%08llx",
 			       (sizeof (void*) == 8) ?  v : v & 0xffffffff);
@@ -23,8 +63,8 @@ static gchar* vmoff_strdup_printf(guint64 v)
 static void
 add_new_maps (gpointer key, gpointer value, gpointer data)
 {
-	glibtop_map_entry *memmaps = value;
-	GtkTreeModel *model = data;
+	glibtop_map_entry * const memmaps = value;
+	GtkTreeModel * const model = data;
 	GtkTreeIter row;
 	MemmapsInfo info;
 	guint64 vmsize;
@@ -46,26 +86,26 @@ add_new_maps (gpointer key, gpointer value, gpointer data)
 	else
 		info.filename = g_strdup ("");
 
-	info.vmstart  = vmoff_strdup_printf (memmaps->start);
-	info.vmend    = vmoff_strdup_printf (memmaps->end);
+	info.vmstart  = vmoff_tostring (memmaps->start);
+	info.vmend    = vmoff_tostring (memmaps->end);
 	info.vmsize   = g_strdup_printf (_("%lluKB"), vmsize);
 	info.flags    = g_strdup (flags);
-	info.vmoffset = vmoff_strdup_printf (memmaps->offset);
+	info.vmoffset = vmoff_tostring (memmaps->offset);
 	info.device   = g_strdup_printf ("%02hx:%02hx", dev_major, dev_minor);
 	info.inode    = g_strdup_printf ("%llu", memmaps->inode);
 
 	gtk_list_store_insert (GTK_LIST_STORE (model), &row, 0);
 	gtk_list_store_set (GTK_LIST_STORE (model), &row,
-			    0, info.filename,
-			    1, info.vmstart,
-			    2, info.vmend,
-			    3, info.vmsize,
-			    4, info.flags,
-			    5, info.vmoffset,
-			    6, info.device,
-			    7, info.inode,
-			    8, (gpointer) vmsize,
-			    9, (gpointer) memmaps->inode,
+			    MMAP_COL_FILENAME, info.filename,
+			    MMAP_COL_VMSTART, info.vmstart,
+			    MMAP_COL_VMEND, info.vmend,
+			    MMAP_COL_VMSZ, info.vmsize,
+			    MMAP_COL_FLAGS, info.flags,
+			    MMAP_COL_VMOFFSET, info.vmoffset,
+			    MMAP_COL_DEVICE, info.device,
+			    MMAP_COL_INODE, info.inode,
+			    MMAP_COL_VMSZ_INT, vmsize,
+			    MMAP_COL_INODE_INT, memmaps->inode,
 			    -1);
 
 	g_free (info.filename);
@@ -130,7 +170,7 @@ update_memmaps_dialog (GtkWidget *tree)
 					  g_free, NULL);
 	for (i=0; i < procmap.number; i++) {
 		gchar *vmstart;
-		vmstart = vmoff_strdup_printf (memmaps[i].start);
+		vmstart = vmoff_tostring (memmaps[i].start);
 		g_hash_table_insert (new_maps, vmstart, &memmaps[i]);
 	}
 
@@ -171,25 +211,28 @@ close_memmaps_dialog (GtkDialog *dialog, gint id, gpointer data)
 
 
 static gint
-sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer data)
+sort_guint64 (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer data)
 {
-	const gint col = GPOINTER_TO_INT (data);
-	gpointer a, b;
+	const gint selected_col = GPOINTER_TO_INT (data);
+	gint data_col;
+	guint64 a, b;
 
-	switch(col)
+	switch(selected_col)
 	{
-	case COL_VMSZ:
-		gtk_tree_model_get (model, itera, 8, &a, -1);
-		gtk_tree_model_get (model, iterb, 8, &b, -1);
+	case MMAP_COL_VMSZ:
+		data_col = MMAP_COL_VMSZ_INT;
 		break;
-	case COL_INODE:
-		gtk_tree_model_get (model, itera, 9, &a, -1);
-		gtk_tree_model_get (model, iterb, 9, &b, -1);
+
+	case MMAP_COL_INODE:
+		data_col = MMAP_COL_INODE_INT;
 		break;
 
 	default:
 		return 0;
 	}
+
+	gtk_tree_model_get (model, itera, data_col, &a, -1);
+	gtk_tree_model_get (model, iterb, data_col, &b, -1);
 
 	if(a < b) return -1;
 	if(a > b) return  1;
@@ -205,7 +248,7 @@ create_memmaps_tree (ProcData *procdata)
 	GtkListStore *model;
 	GtkTreeViewColumn *column;
 	GtkCellRenderer *cell;
-	gint i;
+	guint i;
 
 	static const gchar *titles[] = {
 		N_("Filename"),
@@ -221,19 +264,19 @@ create_memmaps_tree (ProcData *procdata)
 	PROCMAN_GETTEXT_ARRAY_INIT(titles);
 
 
-	model = gtk_list_store_new (NUM_MMAP_COL + 2,
+	model = gtk_list_store_new (MMAP_COL_MAX,
 				    G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_STRING, G_TYPE_STRING,
-				    G_TYPE_INT, G_TYPE_INT
+				    G_TYPE_UINT64, G_TYPE_UINT64 /* these are invisible */
 				    );
 
 	tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree), TRUE);
 	g_object_unref (G_OBJECT (model));
 
-	for (i = 0; i < NUM_MMAP_COL; i++) {
+	for (i = 0; i < MMAP_COL_MAX_VISIBLE; i++) {
 		cell = gtk_cell_renderer_text_new ();
 
 		column = gtk_tree_view_column_new_with_attributes (titles[i],
@@ -247,15 +290,15 @@ create_memmaps_tree (ProcData *procdata)
 
 
 	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
-					 COL_VMSZ,
-					 sort_ints,
-					 GINT_TO_POINTER (COL_VMSZ),
+					 MMAP_COL_VMSZ,
+					 sort_guint64,
+					 GINT_TO_POINTER (MMAP_COL_VMSZ),
 					 NULL);
 
 	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
-					 COL_INODE,
-					 sort_ints,
-					 GINT_TO_POINTER (COL_INODE),
+					 MMAP_COL_INODE,
+					 sort_guint64,
+					 GINT_TO_POINTER (MMAP_COL_INODE),
 					 NULL);
 
 	procman_get_tree_state (procdata->client, tree, "/apps/procman/memmapstree2");
