@@ -31,7 +31,8 @@
 #include "util.h"
 #include "load-graph.h"
 
-GtkWidget *renice_dialog;
+GtkWidget *renice_dialog = NULL;
+GtkWidget *prefs_dialog = NULL;
 gint new_nice_value = 0;
 int kill_signal = SIGTERM;
 #if 0
@@ -148,20 +149,16 @@ cb_show_kill_warning_toggled (GtkToggleButton *button, gpointer data)
 }
 
 static void
-cb_kill_process_clicked (GtkButton *button, gpointer data)
+kill_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 {
 	ProcData *procdata = data;
 	
-	kill_process (procdata, kill_signal);
-
+	if (id == 100) 
+		kill_process (procdata, kill_signal);
+	
+	gtk_widget_destroy (GTK_WIDGET (dialog));
+		
 }
-
-static void
-cb_kill_cancel_clicked (GtkButton *button, gpointer data)
-{
-
-}
-
 
 void
 procdialog_create_kill_dialog (ProcData *data, int signal)
@@ -171,8 +168,6 @@ procdialog_create_kill_dialog (ProcData *data, int signal)
 	GtkWidget *dialog_vbox1;
   	GtkWidget *hbox1;
   	GtkWidget *checkbutton1;
-  	GtkWidget *button5;
-  	GtkWidget *button6;
   	gchar *text;
   	
   	kill_signal = signal;
@@ -182,23 +177,19 @@ procdialog_create_kill_dialog (ProcData *data, int signal)
   	else
   		text = _("End Process");
 
-  	/* We create it with an OK button, and then remove the button, to work
-     	around a bug in gnome-libs. */
- 	messagebox1 = gnome_message_box_new (_("Unsaved data will be lost."),
-                              		     GNOME_MESSAGE_BOX_WARNING,
-                              		     GNOME_STOCK_BUTTON_CANCEL, NULL);
-  	/*gtk_container_remove (GTK_CONTAINER (GNOME_DIALOG (messagebox1)->action_area), 
-  			      GNOME_DIALOG (messagebox1)->buttons->data);
-  	GNOME_DIALOG (messagebox1)->buttons = NULL;*/
+  	messagebox1 = gtk_message_dialog_new (NULL,
+ 					      GTK_DIALOG_MODAL,
+ 					      GTK_MESSAGE_WARNING,
+ 					      GTK_BUTTONS_CANCEL,
+ 					      _("Unsaved data will be lost."));
   	
   	gtk_window_set_title (GTK_WINDOW (messagebox1), _(text));
   	gtk_window_set_modal (GTK_WINDOW (messagebox1), TRUE);
   	gtk_window_set_policy (GTK_WINDOW (messagebox1), FALSE, FALSE, FALSE);
   
-    	dialog_vbox1 = GNOME_DIALOG (messagebox1)->vbox;
+    	dialog_vbox1 = GTK_DIALOG (messagebox1)->vbox;
   	
-
-  	hbox1 = gtk_hbox_new (FALSE, 0);
+	hbox1 = gtk_hbox_new (FALSE, 0);
   	gtk_widget_show (hbox1);
   	gtk_box_pack_end (GTK_BOX (dialog_vbox1), hbox1, TRUE, TRUE, 0);
 
@@ -207,60 +198,17 @@ procdialog_create_kill_dialog (ProcData *data, int signal)
   	gtk_box_pack_end (GTK_BOX (hbox1), checkbutton1, FALSE, FALSE, 0);
     	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbutton1), TRUE);
 
-  	gnome_dialog_append_button (GNOME_DIALOG (messagebox1), _(text));
-  	button5 = GTK_WIDGET (g_list_last (GNOME_DIALOG (messagebox1)->buttons)->data);
-  	gtk_widget_show (button5);
-  	GTK_WIDGET_SET_FLAGS (button5, GTK_CAN_DEFAULT);
-
-  	/*gnome_dialog_append_button (GNOME_DIALOG (messagebox1), GNOME_STOCK_BUTTON_CANCEL);
-  	button6 = GTK_WIDGET (g_list_last (GNOME_DIALOG (messagebox1)->buttons)->data);
-  	gtk_widget_show (button6);
-    	GTK_WIDGET_SET_FLAGS (button6, GTK_CAN_DEFAULT);*/
-
-  	gtk_signal_connect (GTK_OBJECT (checkbutton1), "toggled",
-                      	    GTK_SIGNAL_FUNC (cb_show_kill_warning_toggled),
-                      	    procdata);
-        gtk_signal_connect (GTK_OBJECT (button5), "clicked",
-                      	    GTK_SIGNAL_FUNC (cb_kill_process_clicked),
-                      	    procdata);
-  	/*gtk_signal_connect (GTK_OBJECT (button6), "clicked",
-                      	    GTK_SIGNAL_FUNC (cb_kill_cancel_clicked),
-                      	    NULL);*/
-
-
-  	/*gtk_widget_grab_default (button6);*/
-  	
-  	gtk_widget_show (messagebox1);
-
-}
-
-static gboolean
-renice_close_dialog (GnomeDialog *dialog, gpointer data)
-{
-	renice_dialog = NULL;
-	
-	return FALSE;
-}
-
-static void
-renice_close (GtkButton *button, gpointer *data)
-{
-	gnome_dialog_close (GNOME_DIALOG (renice_dialog));
-
-}
-
-static void
-renice_accept (GtkButton *button, gpointer data)
-{
-	ProcData *procdata = data;
-	
-	if (new_nice_value == -100)
-		return;		
-	
-	renice (procdata, procdata->selected_process->pid, new_nice_value);
-	
-	gnome_dialog_close (GNOME_DIALOG (renice_dialog));	
-	
+	gtk_dialog_add_button (GTK_DIALOG (messagebox1), _(text), 100);
+					    
+  	g_signal_connect (G_OBJECT (checkbutton1), "toggled",
+                      	  G_CALLBACK (cb_show_kill_warning_toggled),
+                      	  procdata);
+        g_signal_connect (G_OBJECT (messagebox1), "response",
+        		  G_CALLBACK (kill_dialog_button_pressed), procdata);
+        
+        gtk_widget_show_all (messagebox1);
+        
+        
 }
 
 static gchar *
@@ -290,6 +238,21 @@ renice_scale_changed (GtkAdjustment *adj, gpointer data)
 	
 }
 
+static void
+renice_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	if (id == 100) {
+		if (new_nice_value == -100)
+			return;		
+		renice (procdata, procdata->selected_process->pid, new_nice_value);
+	}
+	
+	gtk_widget_destroy (GTK_WIDGET (dialog));
+	renice_dialog = NULL;
+}
+
 void
 procdialog_create_renice_dialog (ProcData *data)
 {
@@ -303,9 +266,6 @@ procdialog_create_renice_dialog (ProcData *data)
   	GtkWidget *table;
   	GtkObject *renice_adj;
   	GtkWidget *hscale;
-  	GtkWidget *renicebutton;
-  	GtkWidget *cancelbutton;
-  	GtkWidget *dialog_action_area;
   	gchar *text = 
   	      _("The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority.");
 	
@@ -319,12 +279,16 @@ procdialog_create_renice_dialog (ProcData *data)
 	if (renice_dialog)
 		return;
 		
-	dialog = gnome_dialog_new (_("Change Priority"), NULL);
+	dialog = gtk_dialog_new_with_buttons (_("Change Priority"), NULL,
+				              GTK_DIALOG_DESTROY_WITH_PARENT,
+				              _("Change Priority"), 100,
+				              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				              NULL);
   	renice_dialog = dialog;
   	
   	new_nice_value = -100;
   	  
-    	dialog_vbox = GNOME_DIALOG (dialog)->vbox;
+    	dialog_vbox = GTK_DIALOG (dialog)->vbox;
     	
     	vbox = gtk_vbox_new (FALSE, GNOME_PAD);
     	gtk_box_pack_start (GTK_BOX (dialog_vbox), vbox, TRUE, TRUE, 0);
@@ -353,35 +317,22 @@ procdialog_create_renice_dialog (ProcData *data)
 	gtk_table_attach (GTK_TABLE (table), priority_label, 1, 2, 1, 2,
 			  GTK_FILL, 0, 0, 0);
 	
-	/*dialog_action_area = GNOME_DIALOG (dialog)->action_area;
-	gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area), GTK_BUTTONBOX_END);
-	gtk_button_box_set_spacing (GTK_BUTTON_BOX (dialog_action_area), 8);*/
-	
-	gnome_dialog_append_button (GNOME_DIALOG (dialog), _("Change Priority"));
-  	renicebutton = GTK_WIDGET (g_list_last (GNOME_DIALOG (dialog)->buttons)->data);
-  	gnome_dialog_append_button (GNOME_DIALOG (dialog), GNOME_STOCK_BUTTON_CANCEL);
-  	cancelbutton = GTK_WIDGET (g_list_last (GNOME_DIALOG (dialog)->buttons)->data);
-  	
-  	GTK_WIDGET_SET_FLAGS (cancelbutton, GTK_CAN_DEFAULT);
-  	
-  	gtk_signal_connect (GTK_OBJECT (cancelbutton), "clicked",
-  			    GTK_SIGNAL_FUNC (renice_close), dialog);
-  	gtk_signal_connect (GTK_OBJECT (renicebutton), "clicked",
-  			    GTK_SIGNAL_FUNC (renice_accept), procdata);
+	g_signal_connect (G_OBJECT (dialog), "response",
+  			  G_CALLBACK (renice_dialog_button_pressed), procdata);
   	gtk_signal_connect (GTK_OBJECT (renice_adj), "value_changed",
   			    GTK_SIGNAL_FUNC (renice_scale_changed), priority_label);
-  	gtk_signal_connect (GTK_OBJECT (dialog), "close",
-  			    GTK_SIGNAL_FUNC (renice_close_dialog), NULL);
-    	
+  	
     	gtk_widget_show_all (dialog);
     	
     	
 }
 
 static void
-preferences_close_button_pressed (GnomeDialog *dialog, gint button, gpointer data)
+prefs_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 {
-	gnome_dialog_close (dialog);
+	gtk_widget_destroy (GTK_WIDGET (dialog));
+	
+	prefs_dialog = NULL;
 }
 
 static void
@@ -544,7 +495,7 @@ frame_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 void
 procdialog_create_preferences_dialog (ProcData *procdata)
 {
-	GtkWidget *dialog;
+	static GtkWidget *dialog = NULL;
 	GtkWidget *notebook;
 	GtkWidget *proc_box;
 	GtkWidget *sys_box;
@@ -561,9 +512,16 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	GtkWidget *color_picker;
 	gfloat update;
 	
-	dialog = gnome_dialog_new (_("Preferences"), GNOME_STOCK_BUTTON_CLOSE, NULL);
+	if (prefs_dialog)
+		return;
 	
-	main_vbox = GNOME_DIALOG (dialog)->vbox;
+	dialog = gtk_dialog_new_with_buttons (_("Preferences"), NULL,
+					      GTK_DIALOG_DESTROY_WITH_PARENT,
+					      GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+					      NULL);
+	prefs_dialog = dialog;
+	
+	main_vbox = GTK_DIALOG (dialog)->vbox;
 	
 	notebook = gtk_notebook_new ();
 	gtk_box_pack_start (GTK_BOX (main_vbox), notebook, TRUE, TRUE, 0);
@@ -623,10 +581,6 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 			    GTK_SIGNAL_FUNC (show_threads_toggled), procdata);
 	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
 	
-	gtk_signal_connect (GTK_OBJECT (dialog), "clicked",
-			    GTK_SIGNAL_FUNC (preferences_close_button_pressed), NULL);
-			    
-			    
 	sys_box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width (GTK_CONTAINER (sys_box), GNOME_PAD_SMALL);
 	tab_label = gtk_label_new (_("System Monitor"));
@@ -708,7 +662,10 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 			    GTK_SIGNAL_FUNC (update_disks_update_interval), procdata);
 	gtk_table_attach (GTK_TABLE (table), spin_button, 1, 2, 0, 1,
 			  0, 0, 0, GNOME_PAD_SMALL);
-
+			  
+	g_signal_connect (G_OBJECT (dialog), "response",
+			  G_CALLBACK (prefs_dialog_button_pressed), procdata);
+	
 	gtk_widget_show_all (dialog);
 	
 	gtk_notebook_set_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab);
@@ -767,16 +724,20 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 		
 	if (title)
 		g_free (title);	
-	
+	g_print ("dialog setup \n");
 	gnome_dialog_editable_enters (GNOME_DIALOG (dialog), GTK_EDITABLE (entry));	
 	retval = gnome_dialog_run_and_close (GNOME_DIALOG (dialog));
-	
+	g_print ("dialog donw \n");
 	if (retval == 0) {
-		password = gtk_entry_get_text (GTK_ENTRY (entry));
+		password = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
 		
 		if (!password)
-			password = "";
-		blank = g_strdup (password);
+			blank = g_strdup ("");
+		else {
+			blank = g_strdup (password);
+			g_free (password);
+		}
+		
 		if (strlen (blank))
 			memset (blank, ' ', strlen (blank));
 
@@ -794,6 +755,7 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 			gnome_dialog_run (GNOME_DIALOG (error_dialog));
 		}
 		g_free (command);
+		
 	}
 	
 }
