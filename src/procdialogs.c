@@ -394,7 +394,7 @@ show_icons_toggled (GtkToggleButton *button, gpointer data)
 	
 	toggled = gtk_toggle_button_get_active (button);
 	
-	procdata->config.show_icons = !toggled;
+	procdata->config.load_desktop_files = !toggled;
 	
 	if (!procdata->pretty_table && !toggled)
 		procdata->pretty_table = pretty_table_new ();
@@ -498,7 +498,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	
 	/*check_button = gtk_check_button_new_with_label (_("Never Show Icons or Application Names \n ( faster startup time )"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
-				    !procdata->config.show_icons);
+				    !procdata->config.load_desktop_files);
 	gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
 			    GTK_SIGNAL_FUNC (show_icons_toggled), procdata);			    
 	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);*/

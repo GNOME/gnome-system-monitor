@@ -121,22 +121,6 @@ gchar *lessinfolabel = N_("<< Less _Info");
 GtkWidget *infobutton;
 GtkWidget *endprocessbutton;
 GtkAccelGroup *accel;
-guint idle;
-
-static gint
-idle_func (gpointer data)
-{
-	ProcData *procdata = data;
-	
-	if (!procdata->pretty_table)
-	{
-		/*procdata->pretty_table = pretty_table_new ();
-		proctable_clear_tree (procdata);
-		proctable_update_all (procdata);*/
-		prettytable_load_async (procdata);
-	}
-	return FALSE;
-}
 
 GtkWidget*
 create_main_window (ProcData *data)
@@ -357,9 +341,6 @@ create_main_window (ProcData *data)
  	/* We cheat and force it to set up the labels */
  	procdata->config.show_more_info = !procdata->config.show_more_info;
  	toggle_infoview (procdata);	
-	
-	if (procdata->config.show_icons)
-		idle = gtk_idle_add_priority (800, idle_func, procdata);
 	
 	return app;
 }

@@ -237,7 +237,7 @@ cb_end_process_button_pressed          (GtkButton       *button,
 		kill (info->pid, SIGKILL);
 		proctable_update_all (procdata);
 	}	
-
+	
 }
 
 void

@@ -42,6 +42,31 @@ procman_get_save_files (ProcData *procdata)
 
 }
 
+static gint
+idle_func (gpointer data)
+{
+	ProcData *procdata = data;
+	
+	if (!procdata->pretty_table)
+	{
+		prettytable_load_async (procdata);
+	}
+	return FALSE;
+}
+
+static gint
+icon_load_finished (gpointer data)
+{
+	ProcData *procdata = data;
+	
+	if (procdata->pretty_table)
+	{
+		proctable_update_all (procdata);
+		return FALSE;
+	}
+	
+	return TRUE;
+}
 
 static ProcData *
 procman_data_new (void)
@@ -71,8 +96,10 @@ procman_data_new (void)
 		gnome_config_get_bool ("procman/Config/kill_dialog=TRUE");
 	procdata->config.show_hide_message = 
 		gnome_config_get_bool ("procman/Config/hide_message=TRUE");
-	procdata->config.show_icons = 
-		gnome_config_get_bool ("procman/Config/show_icons=TRUE");
+	procdata->config.delay_load = 
+		gnome_config_get_bool ("procman/Config/delay_load=TRUE");
+	procdata->config.load_desktop_files = 
+		gnome_config_get_bool ("procman/Config/load_desktop_files=TRUE");
 	procdata->config.show_pretty_names = 
 		gnome_config_get_bool ("procman/Config/show_pretty_names=TRUE");
 	procdata->config.show_threads = 
@@ -89,9 +116,22 @@ procman_data_new (void)
 
 	get_blacklist (procdata);	
 	
-	/*if (procdata->config.show_icons)
+	/* delay load the .desktop files. Procman will display icons and app names
+	** if the procdata->pretty_table structure is not NULL. The timeout will monitor
+	** whether or not that becomes the case and update the table if so. There is 
+	** undoubtedly a better solution, but I am not too knowlegabe about threads.
+	** Basically what needs to be done is to update the table when the thread is
+	** finished 
+	*/
+	if (procdata->config.load_desktop_files && procdata->config.delay_load)
+	{
+		procdata->pretty_table = NULL;
+		gtk_idle_add_priority (800, idle_func, procdata);
+		gtk_timeout_add (500, icon_load_finished, procdata);
+	}
+	else if (procdata->config.load_desktop_files && !procdata->config.delay_load)
 		procdata->pretty_table = pretty_table_new ();
-	else*/
+	else
 		procdata->pretty_table = NULL;	
 	
 
@@ -127,7 +167,8 @@ procman_save_config (ProcData *data)
 	gnome_config_set_bool ("procman/Config/kill_dialog", data->config.show_kill_warning);
 	gnome_config_set_bool ("procman/Config/hide_message", data->config.show_hide_message);
 	gnome_config_set_bool ("procman/Config/show_tree", data->config.show_tree);
-	gnome_config_set_bool ("procman/Config/show_icons", data->config.show_icons);
+	gnome_config_set_bool ("procman/Config/delay_load", data->config.delay_load);
+	gnome_config_set_bool ("procman/Config/load_desktop_files", data->config.load_desktop_files);
 	gnome_config_set_bool ("procman/Config/show_pretty_names", data->config.show_pretty_names);
 	gnome_config_set_bool ("procman/Config/show_threads", data->config.show_threads);
 	gnome_config_set_int ("procman/Config/update_interval", data->config.update_interval);

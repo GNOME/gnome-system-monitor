@@ -469,8 +469,16 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	** checking to see if it does. That means lots of extra hash_table calls
 	** for every update
 	*/
-	if (procdata->config.show_icons && !newinfo->pixbuf)
+	if (procdata->config.load_desktop_files && !newinfo->pixbuf)
+	{
+		if (procdata->config.show_pretty_names)
+		{
+			g_free (newinfo->name);
+			newinfo->name = pretty_table_get_name (procdata->pretty_table, 
+							       procstate.cmd);
+		}
 		newinfo->pixbuf = pretty_table_get_icon (procdata->pretty_table, procstate.cmd);
+	}
 		
 	newinfo->mem = procmem.size;
 	newinfo->vmsize = procmem.vsize;
@@ -535,11 +543,11 @@ get_info (ProcData *procdata, gint pid)
 	glibtop_get_proc_time (&proctime, pid);
 	newcputime = proctime.utime + proctime.stime;
 	
-	if (procdata->config.show_icons)
+	if (procdata->config.load_desktop_files)
 		info->pixbuf = pretty_table_get_icon (procdata->pretty_table, procstate.cmd);
 	else
 		info->pixbuf = NULL;
-	if (procdata->config.show_pretty_names && procdata->config.show_icons)
+	if (procdata->config.show_pretty_names && procdata->config.load_desktop_files)
 		name = pretty_table_get_name (procdata->pretty_table, procstate.cmd);
 	else
 		name = g_strdup (procstate.cmd);

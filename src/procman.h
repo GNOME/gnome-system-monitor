@@ -44,7 +44,9 @@ struct _ProcConfig
         gboolean	show_kill_warning;
         gboolean	show_hide_message;
         gboolean	show_tree;
-        gboolean	show_icons;
+        gboolean	load_desktop_files;
+        /*gboolean	show_icons;*/
+        gboolean	delay_load;
         gboolean	show_pretty_names;
         gboolean	show_threads;
  	gint		update_interval;
@@ -80,7 +82,7 @@ struct _ProcInfo
 	gint		memrss;
 	gchar		*status;
 	gboolean	running;
-	gboolean	is_blacklisted;
+	gboolean	is_blacklisted;	
 };
 
 struct _ProcData
