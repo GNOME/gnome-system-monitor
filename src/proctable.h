@@ -34,6 +34,7 @@ enum
 	COL_MEMRSS,
 	COL_NICE,
 	COL_PIXBUF,
+	COL_STATUS,
 };
 
 

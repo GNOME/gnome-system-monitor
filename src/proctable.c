@@ -48,7 +48,7 @@ gchar * titles[NUM_COLUMNS] =
 };
 */
 
-#define NUM_COLUMNS 11
+#define NUM_COLUMNS 12
 
 
 #define SPEC "<ETableSpecification cursor-mode=\"line\" selection-mode=\"single\" draw-focus=\"true\">                    	       \
@@ -63,7 +63,7 @@ gchar * titles[NUM_COLUMNS] =
   <ETableColumn model_col=\"8\" _title=\"RSS Memory\"      expansion=\"1.0\" minimum_width=\"20\" resizable=\"true\" cell=\"memrss\"      compare=\"integer\"/> \
   <ETableColumn model_col=\"9\" _title=\"Nice\"      expansion=\"1.0\" minimum_width=\"20\" resizable=\"true\" cell=\"nice\"      compare=\"integer\"/> \
   <ETableColumn model_col=\"10\" _title=\" \"      expansion=\"1.0\" minimum_width=\"16\" resizable=\"false\" cell=\"pixbuf\"      compare=\"string\"/> \
-  
+  <ETableColumn model_col=\"11\" _title=\"Status\"   expansion=\"1.0\" minimum_width=\"20\" resizable=\"true\" cell=\"string\" compare=\"string\"/> \
         <ETableState> \
         	<column source=\"10\"/> \
         	<column source=\"0\"/> \
@@ -137,6 +137,9 @@ proctable_get_value (ETreeModel *model, ETreePath path, int column, void *data)
 	case COL_NICE: {
 		return GINT_TO_POINTER (info->nice);
 	}
+	case COL_STATUS: {
+		return info->status;
+	}
 	}
 	g_assert_not_reached ();
 	return NULL;
@@ -162,6 +165,7 @@ proctable_duplicate_value (ETreeModel *model, int column, const void *value, voi
 	switch (column) {
 	case COL_NAME:
 	case COL_USER:
+	case COL_STATUS:
 		return g_strdup (value);
 	case COL_MEM:
 	case COL_CPU:
@@ -187,6 +191,7 @@ proctable_free_value (ETreeModel *model, int column, void *value, void *data)
 	switch (column) {
 	case COL_NAME:
 	case COL_USER:
+	case COL_STATUS:
 		g_free (value);
 	case COL_PID:
 	case COL_MEM:
@@ -208,6 +213,7 @@ proctable_initialize_value (ETreeModel *model, int column, void *data)
 	switch (column) {
 	case COL_NAME:
 	case COL_USER:
+	case COL_STATUS:
 		return g_strdup ("");
 	case COL_MEM:
 	case COL_CPU:
@@ -231,6 +237,7 @@ proctable_value_is_empty (ETreeModel *model, int column, const void *value, void
 	switch (column) {
 	case COL_NAME:
 	case COL_USER:
+	case COL_STATUS:
 		return !(value && *(char *)value);
 	case COL_MEM:
 	case COL_CPU:
@@ -253,6 +260,7 @@ proctable_value_to_string (ETreeModel *model, int column, const void *value, voi
 	switch (column) {
 	case COL_NAME:
 	case COL_USER:
+	case COL_STATUS:
 		return g_strdup (value);
 	case COL_MEM:
 	case COL_CPU:

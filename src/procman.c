@@ -63,7 +63,7 @@ procman_data_new (void)
 	procdata->config.show_more_info = 
 		gnome_config_get_bool ("procman/Config/more_info=FALSE");
 	procdata->config.show_tree = 
-		gnome_config_get_bool ("procman/Config/show_tree=FALSE");
+		gnome_config_get_bool ("procman/Config/show_tree=TRUE");
 	procdata->config.show_kill_warning = 
 		gnome_config_get_bool ("procman/Config/kill_dialog=TRUE");
 	procdata->config.update_interval = 
