@@ -1,3 +1,20 @@
+2001-08-18  Kevin Vandersloot <kfv101@psu.edu>
+
+	* callbcaks.c: remove cb_progress_meter... Force a graph update
+	upon a tab switch.
+
+	* interface.c: update some of the labels for the cpu and mem
+	graphs. Also don't show a disk if it has zero size - seems to 
+	do the work of not showing /proc etc.
+
+	* load-graph.c (load_graph_draw): not static anymore so the 
+	graph can be drawn in callbacks.c. Set the graph width and height
+	here so we are always guarenteed the allocation->[height,width] are
+	correct. 
+	(get_memory): put in the memory values for the labels
+
+	* proctable.c: add a FIXME and remove the progress meter stuff.
+
 2001-08-17  Kevin Vandersloot <kfv101@psu.edu>
 
 	* interface.c (get_size_string): display the disk space sizes nicer.

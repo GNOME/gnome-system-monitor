@@ -20,15 +20,14 @@ static GList *object_list = NULL;
 #define FRAME_WIDTH GNOME_PAD_SMALL
 
 /* Redraws the backing pixmap for the load graph and updates the window */
-static void
+void
 load_graph_draw (LoadGraph *g)
 {
     guint i, j;
 
-    /* we might get called before the configure event so that
-     * g->disp->allocation may not have the correct size
-     * (after the user resized the applet in the prop dialog). */
-
+    g->draw_width = g->disp->allocation.width - 2 * FRAME_WIDTH;
+    g->draw_height = g->disp->allocation.height - 2 * FRAME_WIDTH;
+    
     if (!g->pixmap)
 	g->pixmap = gdk_pixmap_new (g->disp->window,
 				    g->draw_width, g->draw_height,
@@ -64,15 +63,15 @@ load_graph_draw (LoadGraph *g)
     gdk_draw_rectangle (g->pixmap,
     			g->disp->style->white_gc,
     			FALSE, FRAME_WIDTH, FRAME_WIDTH,
-    			g->disp->allocation.width - 2 * FRAME_WIDTH,
+    			g->draw_width,
     			g->disp->allocation.height - 2 * FRAME_WIDTH);
 
     for (i = 0; i < g->num_points; i++)
 	g->pos [i] = g->draw_height;
 
     /* FIXME: try to do some averaging here to smooth out the graph */
-    for (j = 0; j < g->n - 1; j++) {
-        float delx = g->draw_width / ( g->num_points - 1);
+    for (j = 0; j < g->n; j++) {
+        float delx = (float)g->draw_width / ( g->num_points - 1);
 	//gdk_gc_set_foreground (g->gc, &(g->colors [j]));
 
 	for (i = 0; i < g->num_points - 1; i++) {
@@ -100,6 +99,27 @@ load_graph_draw (LoadGraph *g)
 
     for (i = 0; i < g->num_points; i++)
 	memcpy (g->odata [i], g->data [i], g->data_size);
+}
+
+static gchar *
+get_size_string (gint size)
+{
+	gfloat fsize;
+
+	fsize = (gfloat) size;
+	if (fsize < 1024.0)
+		return g_strdup_printf ("%d bytes", (int)fsize);
+	fsize /= 1024.0;
+	if (fsize < 1024.0) 
+		return g_strdup_printf ("%d K", (int)fsize);
+		
+	fsize /= 1024.0;
+	if (fsize < 1024.0)
+		return g_strdup_printf ("%.2f MB", fsize);
+	
+	fsize /= 1024.0;
+	return g_strdup_printf ("%.2f GB", fsize);
+
 }
 
 static void
@@ -144,21 +164,18 @@ get_load (gfloat data [2], LoadGraph *g)
     free = free / total;
 
     data[0] = usr + sys + nice;
-    data[1] = free;
     
     text = g_strdup_printf ("%.2f %s", 100.0 *(usr + sys + nice), "%");
     gtk_label_set_text (GTK_LABEL (g->label), text);
     g_free (text);
-    /*data [0] = usr;
-    data [1] = sys;
-    data [2] = nice;
-    data [3] = free;*/
+    
 }
 
 static void
-get_memory (gfloat data [4], LoadGraph *g)
+get_memory (gfloat data [1], LoadGraph *g)
 {
     float user, shared, buffer, free;
+    gchar *text;
 
     glibtop_mem mem;
 	
@@ -170,11 +187,17 @@ get_memory (gfloat data [4], LoadGraph *g)
     shared  = mem.shared / mem.total;
     buffer  = mem.buffer / mem.total;
     free    = mem.free / mem.total;
-
+    
+    text = get_size_string (mem.total);
+    gtk_label_set_text (GTK_LABEL (g->memtotal_label), text);
+    g_free (text);
+    text = get_size_string (mem.used);
+    gtk_label_set_text (GTK_LABEL (g->memused_label), text);
+    g_free (text);
+    
     data [0] = user;
-    data [1] = shared;
-    data [2] = buffer;
-    data [3] = free;
+    /*data [1] = shared;
+    data [2] = buffer;*/
 }
 
 /* Updates the load graph when the timeout expires */
@@ -237,9 +260,6 @@ load_graph_alloc (LoadGraph *g)
     if (g->allocated)
 	return;
 
-    g->draw_height = g->disp->allocation.height - 2 * FRAME_WIDTH;
-    g->draw_width = g->disp->allocation.width - 2 * FRAME_WIDTH;
-    
     g->data = g_new0 (gfloat *, g->num_points);
     g->odata = g_new0 (gfloat *, g->num_points);
     g->pos = g_new0 (guint, g->num_points);
@@ -260,13 +280,9 @@ load_graph_configure (GtkWidget *widget, GdkEventConfigure *event,
 {
     LoadGraph *c = (LoadGraph *) data_ptr;
 
-    /*load_graph_unalloc (c);
-    load_graph_alloc (c);*/
     if (!c->draw)
     	return TRUE;
-    
-    c->draw_width = c->disp->allocation.width - 2 * FRAME_WIDTH;
-    c->draw_height = c->disp->allocation.height - 2 * FRAME_WIDTH;
+    	
     if (c->pixmap) {
 	gdk_pixmap_unref (c->pixmap);
 	c->pixmap = NULL;
@@ -331,15 +347,14 @@ load_graph_new (gint type)
     g->type = type;
     switch (type) {
     case CPU_GRAPH:
-    	g->n = 2;
+    	g->n = 1;
     	break;
     case MEM_GRAPH:
-    	g->n = 4;
+    	g->n = 1;
     	break;
     }
 	
-    g->speed  = 500;
-    g->size   = 50;
+    g->speed  = 250;
     g->num_points = 50;
 
     g->colors = g_new0 (GdkColor, g->n);
@@ -359,16 +374,13 @@ load_graph_new (gint type)
 			(GtkSignalFunc)load_graph_configure, g);
     gtk_signal_connect (GTK_OBJECT(g->disp), "destroy",
 			(GtkSignalFunc)load_graph_destroy, g);
+    			
     gtk_widget_set_events (g->disp, GDK_EXPOSURE_MASK);
 
     gtk_box_pack_start (GTK_BOX (g->main_widget), g->disp, TRUE, TRUE, 0);
     
     load_graph_alloc (g);
     
-    /*gtk_widget_set_usize (g->disp, g->draw_width, g->draw_height);*/
-
-    /*gtk_widget_set_usize (g->main_widget, g->size, g->pixel_size);*/
-
     object_list = g_list_append (object_list, g);
 
     gtk_widget_show_all (g->main_widget);
@@ -382,12 +394,6 @@ load_graph_new (gint type)
 void
 load_graph_start (LoadGraph *g)
 {
-    /*if (g->timer_index != -1)
-	gtk_timeout_remove (g->timer_index);*/
-
-    /*load_graph_unalloc (g);
-    load_graph_alloc (g);*/
-
     if (g->timer_index == -1)
         g->timer_index = gtk_timeout_add (g->speed,
 				      (GtkFunction) load_graph_update, g);

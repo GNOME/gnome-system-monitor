@@ -69,18 +69,9 @@ void		popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data);
 void 		popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data);
 void 		popup_menu_about_process (GtkMenuItem *menuitem, gpointer data);
 
-gint
-cb_right_click                          (ETree          *tree,
-                                         int            row,
-                                         ETreePath      path,
-                                         int            col,
-                                         GdkEvent       *event,
-                                         gpointer       data);
-
-
-void
-cb_info_button_pressed			(GtkButton	*button,
-					gpointer	user_data);
+gint		cb_right_click (ETree *tree, int row, ETreePath path,
+                                int col, GdkEvent *event, gpointer data);
+void		cb_info_button_pressed (GtkButton *button, gpointer user_data);
 void		cb_search (GtkEditable *editable, gpointer data);
 				
 void		cb_table_selected (ETree *tree,int row,ETreePath path,gpointer data);
@@ -88,26 +79,13 @@ void		cb_table_selected (ETree *tree,int row,ETreePath path,gpointer data);
 gint		cb_tree_key_press (ETree *tree, int row, ETreePath path, int col,
 		   		   GdkEvent *event, gpointer data);
 					 
-void 
-cb_double_click				(ETree		*tree,
-					 int		row,
-					 ETreePath	path,
-					 int		col,
-					 GdkEvent	*event,
-					 gpointer	data);
+void 		cb_double_click	(ETree	*tree, int row, ETreePath path,
+				 int col, GdkEvent *event, gpointer data);
 					 
 void		cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page, 
 			        gint num, gpointer data);
 
 gint		cb_timeout (gpointer data);
-gint		cb_progress_meter_timeout (gpointer data);
 
-gint
-cb_right_click                          (ETree          *tree,
-                                         int            row,
-                                         ETreePath      path,
-                                         int            col,
-                                         GdkEvent       *event,
-                                         gpointer       data);
 
 #endif

@@ -372,7 +372,7 @@ create_sys_view (ProcData *procdata)
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (cpu_graph->main_widget), hbox, FALSE, FALSE, 0);
 	
-	label = gtk_label_new (_("Current Value :"));
+	label = gtk_label_new (_("% CPU Used :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 	
@@ -392,18 +392,28 @@ create_sys_view (ProcData *procdata)
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), hbox, FALSE, FALSE, 0);
 	
-	label = gtk_label_new (_("Current Value :"));
+	label = gtk_label_new (_("Available Memory :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 	
-	mem_label = gtk_label_new ("");
-	gtk_misc_set_padding (GTK_MISC (mem_label), GNOME_PAD_SMALL, 0);
-	gtk_box_pack_start (GTK_BOX (hbox), mem_label, FALSE, FALSE, 0);
-	mem_graph->label = mem_label;
+	mem_graph->memtotal_label = gtk_label_new ("");
+	gtk_misc_set_padding (GTK_MISC (mem_graph->memtotal_label), GNOME_PAD_SMALL, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), mem_graph->memtotal_label, FALSE, FALSE, 0);	
+	
+	hbox = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (mem_graph->main_widget), hbox, FALSE, FALSE, 0);
+	
+	label = gtk_label_new (_("Used Memory :"));
+	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+	
+	mem_graph->memused_label = gtk_label_new ("");
+	gtk_misc_set_padding (GTK_MISC (mem_graph->memused_label), GNOME_PAD_SMALL, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), mem_graph->memused_label, FALSE, FALSE, 0);
 	
 	procdata->mem_graph = mem_graph;
 	#endif
-	
+					
 	disk_frame = gtk_frame_new (_("Disks"));
 	gtk_widget_show (disk_frame);
 	gtk_container_set_border_width (GTK_CONTAINER (disk_frame), GNOME_PAD_SMALL);
@@ -436,7 +446,10 @@ create_sys_view (ProcData *procdata)
 		text[1] = g_strdup (entry[i].mountdir);
 		text[2] = get_size_string (usage.bfree / 2);
 		text[3] = get_size_string (usage.blocks / 2);
-		gtk_clist_append (GTK_CLIST (clist), text);
+		/* Hmm, usage.blocks == 0 seems to get rid of /proc and all
+		** the other useless entries */
+		if (usage.blocks != 0)
+			gtk_clist_append (GTK_CLIST (clist), text);
 		
 		g_free (text[0]);
 		g_free (text[1]);
@@ -469,29 +482,22 @@ create_main_window (ProcData *procdata)
 	gtk_window_set_default_size (GTK_WINDOW (app), 460, 475);
 	gtk_window_set_policy (GTK_WINDOW (app), FALSE, TRUE, TRUE);
 	
-	
 	gnome_app_create_menus_with_data (GNOME_APP (app), menubar1_uiinfo, procdata);
 	
 	notebook = gtk_notebook_new ();
+	gtk_container_set_border_width (GTK_CONTAINER (notebook), GNOME_PAD_SMALL);
 	gnome_app_set_contents (GNOME_APP (app), notebook);
 	
 	vbox1 = create_proc_view (procdata);
 	tab_label1 = gtk_label_new (_("Process Listing"));
 	gtk_widget_show (tab_label1);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox1, tab_label1);
-	/*gnome_app_set_contents (GNOME_APP (app), vbox1);*/
 	
+	sys_box = create_sys_view (procdata);
 	tab_label2 = gtk_label_new (_("System Monitor"));
 	gtk_widget_show (tab_label2);
-	sys_box = create_sys_view (procdata);
-	gtk_widget_show (sys_box);
-	
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label2);
 	
-	
-	/* This is just to get rid of some GNome-UI criticals - just
-	** hide the appbar
-	*/
 	appbar1 = gnome_appbar_new (FALSE, TRUE, GNOME_PREFERENCES_NEVER);
 	gnome_app_set_statusbar (GNOME_APP (app), appbar1);
 	
@@ -507,7 +513,6 @@ create_main_window (ProcData *procdata)
 			    GTK_SIGNAL_FUNC (cb_double_click), procdata);
         gtk_signal_connect (GTK_OBJECT (procdata->tree), "right_click",
                             GTK_SIGNAL_FUNC (cb_right_click), procdata);
-
 	gtk_signal_connect (GTK_OBJECT (procdata->tree), "key_press",
 			    GTK_SIGNAL_FUNC (cb_tree_key_press), procdata);
 			    
@@ -522,11 +527,8 @@ create_main_window (ProcData *procdata)
 		load_graph_start (procdata->mem_graph);
 	}
 		
-	#if 0
-	procdata->meter_timeout = gtk_timeout_add (250, cb_progress_meter_timeout, procdata);
-	#endif
-		
 	gtk_widget_show (vbox1);	 
+	gtk_widget_show (sys_box);
 	gtk_widget_show (app);
 
 	/* Makes sure everything that should be insensitive is at start */

@@ -18,7 +18,7 @@ struct _LoadGraph {
     
     guint n;
     gint type;
-    guint speed, size;
+    guint speed;
     guint draw_width, draw_height;
     guint num_points;
 
@@ -33,6 +33,12 @@ struct _LoadGraph {
     GtkWidget *main_widget;
     GtkWidget *disp;
     GtkWidget *label;
+    GtkWidget *memtotal_label;
+    GtkWidget *memuser_label;
+    GtkWidget *memshared_label;
+    GtkWidget *membuffer_label;
+    GtkWidget *memfree_label;
+    GtkWidget *memused_label;
     GdkPixmap *pixmap;
     GdkGC *gc;
     int timer_index;
@@ -49,6 +55,10 @@ struct _LoadGraph {
 /* Create new load graph. */
 LoadGraph *
 load_graph_new (gint type);
+
+/* Force a drawing update */
+void
+load_graph_draw (LoadGraph *g);
 
 /* Start load graph. */
 void
