@@ -44,8 +44,8 @@ cb_show_hide_message_toggled (GtkToggleButton *button, gpointer data)
 	gboolean toggle_state;
 	
 	toggle_state = gtk_toggle_button_get_active (button);
-	
-	gconf_client_set_bool (client, "/apps/procman/hide_message", toggle_state, NULL);	
+g_print ("%d \n", toggle_state);	
+	gconf_client_set_bool (client, "/apps/procman/hide_message", toggle_state, NULL);
 
 }
 

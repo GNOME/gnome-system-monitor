@@ -44,7 +44,6 @@ gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/procman.schemas
 
 %{_bindir}/procman
 %{_datadir}/gnome/apps/System/procman.desktop
-%{_datadir}/pixmaps/procman.png
 %{_sysconfdir}/gconf/schemas/*
 
 %changelog

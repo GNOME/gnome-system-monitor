@@ -26,16 +26,11 @@ procman_LDADD = @PROCMAN_LIBS@
 
 specdir = $(datadir)/procman
 
-pixmapdir = $(datadir)/pixmaps
-pixmap_DATA = \
-	procman.png
-
 schemadir   = @GCONF_SCHEMA_FILE_DIR@
 schema_DATA = procman.schemas	
 
 EXTRA_DIST = \
 	README.hacking \
-	$(pixmap_DATA) \
 	$(schema_DATA)
 
 install-data-local:

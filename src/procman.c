@@ -464,7 +464,7 @@ main (int argc, char *argv[])
 
 	procman = gnome_program_init ("procman", VERSION, LIBGNOMEUI_MODULE, argc, argv, 
 			    	      GNOME_PARAM_POPT_TABLE, options, NULL);
-	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/procman.png");
+	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/gnome-monitor.png");
 		    
 	gconf_init (argc, argv, NULL);
 			    
