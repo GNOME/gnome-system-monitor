@@ -27,6 +27,7 @@
 #include "proctable.h"
 #include "interface.h"
 #include "defaulttable.h"
+#include "favorites.h"
 
 static void
 procman_get_save_files (ProcData *procdata)
@@ -59,6 +60,7 @@ procman_data_new (void)
 	procdata->selected_pid = -1;
 	procdata->selected_node = NULL;
 	procdata->timeout = -1;
+	procdata->favorites = NULL;
 	
 	procdata->config.show_more_info = 
 		gnome_config_get_bool ("procman/Config/more_info=FALSE");
@@ -72,6 +74,9 @@ procman_data_new (void)
 	
 	
 	procman_get_save_files (procdata);
+	
+	get_favorites (procdata);
+		
 	
 
 	return procdata;
@@ -91,6 +96,7 @@ procman_save_config (ProcData *data)
 	gnome_config_set_bool ("procman/Config/show_tree", data->config.show_tree);
 	gnome_config_set_int ("procman/Config/update_interval", data->config.update_interval);
 	
+	save_favorites (data);
 
 	gnome_config_sync ();
 

@@ -35,6 +35,7 @@ enum
 	ALL_PROCESSES,
 	MY_PROCESSES,
 	RUNNING_PROCESSES,
+	FAVORITE_PROCESSES,
 };
 
 struct _ProcConfig
@@ -84,6 +85,7 @@ struct _ProcData
 	gint		proc_num;
 	GtkWidget 	*cpumeter, *memmeter, *swapmeter;
 	PrettyTable	*pretty_table;
+	GList		*favorites;
 
 };
 

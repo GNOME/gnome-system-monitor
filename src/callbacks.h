@@ -31,11 +31,12 @@ void
 cb_properties_activate                (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
-void
-cb_show_memory_maps (GtkMenuItem *menuitem, gpointer data);
+void		cb_show_memory_maps (GtkMenuItem *menuitem, gpointer data);
 
-void
-cb_renice (GtkMenuItem *menuitem, gpointer data);
+void		cb_renice (GtkMenuItem *menuitem, gpointer data);
+
+
+void		cb_add_to_favorites (GtkMenuItem *menuitem, gpointer data);
 
 void
 cb_preferences_activate               (GtkMenuItem     *menuitem,
@@ -53,15 +54,13 @@ void
 cb_all_process_menu_clicked 		(GtkWidget	*widget,
 					 gpointer	data);	
 					 
-void
-cb_my_process_menu_clicked		(GtkWidget	*widget,
-					 gpointer	data);  
+void		cb_my_process_menu_clicked (GtkWidget *widget, gpointer data);  
 					 
-void	cb_running_process_menu_clicked	(GtkWidget *widget, gpointer data);
+void		cb_running_process_menu_clicked	(GtkWidget *widget, gpointer data);
 
-void
-cb_end_process_button_pressed          (GtkButton       *button,
-                                        gpointer         data);
+void		cb_favorites_menu_clicked (GtkWidget *widget, gpointer data);
+
+void		cb_end_process_button_pressed (GtkButton *button, gpointer data);
 
 void
 cb_info_button_pressed			(GtkButton	*button,

@@ -36,6 +36,7 @@
 #include "proctable.h"
 #include "infoview.h"
 #include "memmaps.h"
+#include "favorites.h"
 
 #define NUM_COLUMNS 12
 
@@ -524,6 +525,12 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath root_node)
 	if (procdata->config.whose_process == RUNNING_PROCESSES && 
 	    (!info->running))
 		return NULL;
+		
+	if (procdata->config.whose_process == FAVORITE_PROCESSES)
+	{
+		if (!is_process_a_favorite (procdata, info->cmd))
+			return NULL;
+	}
 #if 1	
 	parentinfo = find_parent (procdata, info->parent_pid);
 	if (parentinfo)
@@ -714,7 +721,8 @@ proctable_update_list (ProcData *data)
 	
 	
 	
-	if (procdata->config.whose_process == (ALL_PROCESSES | RUNNING_PROCESSES))
+	if (procdata->config.whose_process == (ALL_PROCESSES | RUNNING_PROCESSES
+					       | FAVORITE_PROCESSES))
 	{
 		which = GLIBTOP_KERN_PROC_ALL;
 		arg = 0;

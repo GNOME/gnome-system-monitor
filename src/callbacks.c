@@ -29,6 +29,7 @@
 #include "infoview.h"
 #include "procdialogs.h"
 #include "memmaps.h"
+#include "favorites.h"
 
 
 
@@ -64,6 +65,20 @@ cb_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
 	ProcData *procdata = data;
 	
 	create_memmaps_dialog (procdata);
+}
+
+void
+cb_add_to_favorites (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	ProcInfo *info;
+	
+	if (!procdata->selected_node)
+		return;
+	
+	info = e_tree_memory_node_get_data (procdata->memory, procdata->selected_node);
+	add_to_favorites (procdata, info->cmd);
+	
 }
 
 
@@ -140,6 +155,17 @@ cb_running_process_menu_clicked		(GtkWidget	*widget,
 	proctable_clear_tree (procdata);
 	proctable_update_all (procdata);
 }				
+
+
+void
+cb_favorites_menu_clicked (GtkWidget *widget, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	procdata->config.whose_process = FAVORITE_PROCESSES;
+	proctable_clear_tree (procdata);
+	proctable_update_all (procdata);
+}
 
 void
 cb_end_process_button_pressed          (GtkButton       *button,

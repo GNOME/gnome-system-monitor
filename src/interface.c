@@ -59,6 +59,16 @@ static GnomeUIInfo view1_menu_uiinfo[] =
 	GNOMEUIINFO_END
 };
 
+static GnomeUIInfo favorites1_menu_uiinfo[] =
+{
+	{
+	 GNOME_APP_UI_ITEM, N_("Add to favorites"), "",
+	 cb_add_to_favorites, NULL, NULL, 0, 0,
+	 'a', 0
+	},
+	GNOMEUIINFO_END
+};
+
 static GnomeUIInfo settings1_menu_uiinfo[] =
 {
 	GNOMEUIINFO_MENU_PREFERENCES_ITEM (cb_preferences_activate, NULL),
@@ -76,6 +86,14 @@ static GnomeUIInfo menubar1_uiinfo[] =
 	GNOMEUIINFO_MENU_FILE_TREE (file1_menu_uiinfo),
 	GNOMEUIINFO_MENU_EDIT_TREE (edit1_menu_uiinfo),
 	GNOMEUIINFO_MENU_VIEW_TREE (view1_menu_uiinfo),
+	{
+		GNOME_APP_UI_SUBTREE,
+		N_("F_avorites"),
+      		NULL,
+             	&favorites1_menu_uiinfo, NULL, NULL,
+            	GNOME_APP_PIXMAP_NONE, NULL,
+            	0, 0, NULL	
+	},
 	GNOMEUIINFO_MENU_SETTINGS_TREE (settings1_menu_uiinfo),
 	GNOMEUIINFO_MENU_HELP_TREE (help1_menu_uiinfo),
 	GNOMEUIINFO_END
@@ -150,6 +168,12 @@ create_main_window (ProcData *data)
   	gtk_widget_show (glade_menuitem);
   	gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
   			    GTK_SIGNAL_FUNC (cb_running_process_menu_clicked), procdata);
+  	gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
+  	
+  	glade_menuitem = gtk_menu_item_new_with_label (_("Favorites"));
+  	gtk_widget_show (glade_menuitem);
+  	gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
+  			    GTK_SIGNAL_FUNC (cb_favorites_menu_clicked), procdata);
   	gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
   	
   	gtk_menu_set_active (GTK_MENU (optionmenu1_menu), procdata->config.whose_process);

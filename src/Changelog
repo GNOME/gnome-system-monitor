@@ -1,5 +1,30 @@
 2001-07-11 Kevin Vandersloot <kfv101@psu.edu>
 
+	Added the beginnings of showing only favorite processes
+
+	*procman.h: add enum for favorites
+
+	*interface.c: added view: favorites menu item and add to
+	favorites menu item.
+
+	*callbacks.c (cb_add_to_favorites, cb_favorites_menu_clicked) :
+	respond to new menu items.
+
+	*procman.c (procman_data_new): initialize the favorites list.
+	(procman_save_config): save the favorites.
+
+	*proctable.c (insert_info_to_tree): check to see if process
+	is a favorite.
+	(proctable_update_list): add check to see if showing favorites
+	and show all processes if so.
+
+	*favorites.[c,h]: implement adding, saving, and checking for
+	favorites.
+
+	*Makefile.am: add favorites.[c,h]
+
+2001-07-11 Kevin Vandersloot <kfv101@psu.edu>
+
 	Added the ability to only view running processes.
 
 	*procman.h: add enum for running processes.
