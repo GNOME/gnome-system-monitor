@@ -54,7 +54,7 @@ struct _LoadGraph {
 
 /* Create new load graph. */
 LoadGraph *
-load_graph_new (gint type);
+load_graph_new (gint type, gchar *bg_color, gchar *frame_color, gchar *fg_color);
 
 /* Force a drawing update */
 void

@@ -754,7 +754,7 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 					 "cursor_activated",
 					  -1, NULL); 
 	}
-	g_print ("%s %d \n",info->name, info->pid);
+	
 	e_tree_memory_node_remove (procdata->memory, info->node);
 	info->node = NULL;
 }

@@ -43,28 +43,29 @@ load_graph_draw (LoadGraph *g)
     }
 
     /* Allocate colors. */
-    /*if (!g->colors_allocated) {
+    if (!g->colors_allocated) {
 	GdkColormap *colormap;
 
 	colormap = gdk_window_get_colormap (g->disp->window);
-	for (i = 0; i < g->n; i++) {
-	    g->colors [i] = g->prop_data_ptr->colors [i];
+	for (i = 0; i < 3; i++) {
 	    gdk_color_alloc (colormap, &(g->colors [i]));
 	}
 
 	g->colors_allocated = 1;
-    }*/
+    }
 	
     /* Erase Rectangle */
+    gdk_gc_set_foreground (g->gc, &(g->colors [0]));
     gdk_draw_rectangle (g->pixmap,
-			g->disp->style->black_gc,
+			g->gc,
 			TRUE, 0, 0,
 			g->disp->allocation.width,
 			g->disp->allocation.height);
 			
     /* draw frame */
+    gdk_gc_set_foreground (g->gc, &(g->colors [1]));
     gdk_draw_rectangle (g->pixmap,
-    			g->disp->style->white_gc,
+    			g->gc,
     			FALSE, FRAME_WIDTH, FRAME_WIDTH,
     			g->draw_width,
     			g->disp->allocation.height - 2 * FRAME_WIDTH);
@@ -75,7 +76,7 @@ load_graph_draw (LoadGraph *g)
     /* FIXME: try to do some averaging here to smooth out the graph */
     for (j = 0; j < g->n; j++) {
         float delx = (float)g->draw_width / ( g->num_points - 1);
-	/*gdk_gc_set_foreground (g->gc, &(g->colors [j]));*/
+        gdk_gc_set_foreground (g->gc, &(g->colors [2]));
 
 	for (i = 0; i < g->num_points - 1; i++) {
 	    
@@ -348,7 +349,7 @@ load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
 }
 
 LoadGraph *
-load_graph_new (gint type)
+load_graph_new (gint type, gchar *bg_color, gchar *frame_color, gchar *fg_color)
 {
     LoadGraph *g;
 
@@ -367,8 +368,11 @@ load_graph_new (gint type)
     g->speed  = 500;
     g->num_points = 50;
 
-    g->colors = g_new0 (GdkColor, g->n);
-
+    g->colors = g_new0 (GdkColor, 3);
+    gdk_color_parse (bg_color, &g->colors[0]);
+    gdk_color_parse (frame_color, &g->colors[1]);
+    gdk_color_parse (fg_color, &g->colors[2]);
+    
     g->timer_index = -1;
     
     g->draw = FALSE;

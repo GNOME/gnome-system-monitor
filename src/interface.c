@@ -366,7 +366,9 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (hbox1), mem_frame, TRUE, TRUE, 0);
 	
 	#if 1 
-	cpu_graph = load_graph_new (CPU_GRAPH);
+	cpu_graph = load_graph_new (CPU_GRAPH, procdata->config.bg_color,
+				    procdata->config.frame_color, 
+				    procdata->config.cpu_color);
 	gtk_container_add (GTK_CONTAINER (cpu_frame), cpu_graph->main_widget);
 	gtk_container_set_border_width (GTK_CONTAINER (cpu_graph->main_widget), 
 					GNOME_PAD_SMALL);
@@ -387,7 +389,9 @@ create_sys_view (ProcData *procdata)
 	
 	procdata->cpu_graph = cpu_graph;
 	
-	mem_graph = load_graph_new (MEM_GRAPH);
+	mem_graph = load_graph_new (MEM_GRAPH, procdata->config.bg_color,
+				    procdata->config.frame_color,
+				    procdata->config.mem_color);
 	gtk_container_add (GTK_CONTAINER (mem_frame), mem_graph->main_widget);
 	gtk_container_set_border_width (GTK_CONTAINER (mem_graph->main_widget), 
 					GNOME_PAD_SMALL);

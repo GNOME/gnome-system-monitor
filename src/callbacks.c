@@ -266,7 +266,10 @@ popup_menu_about_process (GtkMenuItem *menuitem, gpointer data)
 	info = e_tree_memory_node_get_data (procdata->memory, 
 					    procdata->selected_node);
 	g_return_if_fail (info != NULL);
-					    
+	
+	/* FIXME: this is lame. GNOME help browser sucks balls. There should be a way
+	to first check man pages, then info pages and give a nice error message if nothing
+	exists */			    
 	name = g_strjoin (NULL, "man:", info->cmd, NULL);
 	gnome_url_show (name);
 	g_free (name);

@@ -47,7 +47,6 @@ struct _ProcConfig
         gboolean	show_hide_message;
         gboolean	show_tree;
         gboolean	load_desktop_files;
-        /*gboolean	show_icons;*/
         gboolean	delay_load;
         gboolean	show_pretty_names;
         gboolean	show_threads;
@@ -56,6 +55,10 @@ struct _ProcConfig
 	gchar		*tree_state_file;
 	gchar		*memmaps_state_file;
 	gint		current_tab;
+	gchar		*cpu_color;
+	gchar		*mem_color;
+	gchar		*bg_color;
+	gchar		*frame_color;
 };
 
 struct _PrettyTable {

@@ -72,71 +72,78 @@ static ProcData *
 procman_data_new (void)
 {
 
-	ProcData *procdata;
+	ProcData *pd;
 
-	procdata = g_new0 (ProcData, 1);
+	pd = g_new0 (ProcData, 1);
 
-	procdata->tree = NULL;
-	procdata->model = NULL;
-	procdata->memory = NULL;
-	procdata->infobox = NULL;
-	procdata->info = NULL;
-	procdata->proc_num = 0;
-	procdata->selected_pid = -1;
-	procdata->selected_node = NULL;
-	procdata->timeout = -1;
-	procdata->favorites = NULL;
-	procdata->blacklist = NULL;
+	pd->tree = NULL;
+	pd->model = NULL;
+	pd->memory = NULL;
+	pd->infobox = NULL;
+	pd->info = NULL;
+	pd->proc_num = 0;
+	pd->selected_pid = -1;
+	pd->selected_node = NULL;
+	pd->timeout = -1;
+	pd->favorites = NULL;
+	pd->blacklist = NULL;
 	
-	procdata->config.show_more_info = 
+	pd->config.show_more_info = 
 		gnome_config_get_bool ("procman/Config/more_info=FALSE");
-	procdata->config.show_tree = 
+	pd->config.show_tree = 
 		gnome_config_get_bool ("procman/Config/show_tree=TRUE");
-	procdata->config.show_kill_warning = 
+	pd->config.show_kill_warning = 
 		gnome_config_get_bool ("procman/Config/kill_dialog=TRUE");
-	procdata->config.show_hide_message = 
+	pd->config.show_hide_message = 
 		gnome_config_get_bool ("procman/Config/hide_message=TRUE");
-	procdata->config.delay_load = 
+	pd->config.delay_load = 
 		gnome_config_get_bool ("procman/Config/delay_load=TRUE");
-	procdata->config.load_desktop_files = 
+	pd->config.load_desktop_files = 
 		gnome_config_get_bool ("procman/Config/load_desktop_files=TRUE");
-	procdata->config.show_pretty_names = 
+	pd->config.show_pretty_names = 
 		gnome_config_get_bool ("procman/Config/show_pretty_names=TRUE");
-	procdata->config.show_threads = 
+	pd->config.show_threads = 
 		gnome_config_get_bool ("procman/Config/show_threads=FALSE");
-	procdata->config.update_interval = 
+	pd->config.update_interval = 
 		gnome_config_get_int ("procman/Config/update_interval=3000");
-	procdata->config.whose_process = gnome_config_get_int ("procman/Config/view_as=1");
-	procdata->config.current_tab = gnome_config_get_int ("procman/Config/current_tab=0");
+	pd->config.whose_process = gnome_config_get_int ("procman/Config/view_as=1");
+	pd->config.current_tab = gnome_config_get_int ("procman/Config/current_tab=0");
+	pd->config.bg_color = gnome_config_get_string 
+		("procman/Config/bg_color=#000000");
+	pd->config.cpu_color = gnome_config_get_string
+		("procman/Config/cpu_color=#ff0000");
+	pd->config.mem_color = gnome_config_get_string
+		("procman/Config/mem_color=#ff0000");
+	pd->config.frame_color = gnome_config_get_string
+		("procman/Config/frame_color=#848484");
 	
-	
-	procman_get_save_files (procdata);
+	procman_get_save_files (pd);
 #if 0	
-	get_favorites (procdata);
+	get_favorites (pd);
 #endif
 
-	get_blacklist (procdata);	
+	get_blacklist (pd);	
 	
 	/* delay load the .desktop files. Procman will display icons and app names
-	** if the procdata->pretty_table structure is not NULL. The timeout will monitor
+	** if the pd->pretty_table structure is not NULL. The timeout will monitor
 	** whether or not that becomes the case and update the table if so. There is 
 	** undoubtedly a better solution, but I am not too knowlegabe about threads.
 	** Basically what needs to be done is to update the table when the thread is
 	** finished 
 	*/
-	if (procdata->config.load_desktop_files && procdata->config.delay_load)
+	if (pd->config.load_desktop_files && pd->config.delay_load)
 	{
-		procdata->pretty_table = NULL;
-		gtk_idle_add_priority (800, idle_func, procdata);
-		gtk_timeout_add (500, icon_load_finished, procdata);
+		pd->pretty_table = NULL;
+		gtk_idle_add_priority (800, idle_func, pd);
+		gtk_timeout_add (500, icon_load_finished, pd);
 	}
-	else if (procdata->config.load_desktop_files && !procdata->config.delay_load)
-		procdata->pretty_table = pretty_table_new ();
+	else if (pd->config.load_desktop_files && !pd->config.delay_load)
+		pd->pretty_table = pretty_table_new ();
 	else
-		procdata->pretty_table = NULL;	
+		pd->pretty_table = NULL;	
 	
 
-	return procdata;
+	return pd;
 
 }
 
@@ -174,7 +181,11 @@ procman_save_config (ProcData *data)
 	gnome_config_set_bool ("procman/Config/show_threads", data->config.show_threads);
 	gnome_config_set_int ("procman/Config/update_interval", data->config.update_interval);
 	gnome_config_set_int ("procman/Config/current_tab", data->config.current_tab);
-
+	gnome_config_set_string ("procman/Config/bg_color", data->config.bg_color);
+	gnome_config_set_string ("procman/Config/cpu_color", data->config.cpu_color);
+	gnome_config_set_string ("procman/Config/mem_color", data->config.mem_color);
+	gnome_config_set_string ("procman/Config/frame_color", data->config.frame_color);
+	
 	save_blacklist (data);
 	gnome_config_sync ();
 
