@@ -159,7 +159,7 @@ proctable_new (ProcData *data)
 						     	   "text", COL_NAME,
 						     	   NULL);
 	gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
-	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
+	//gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 	gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
   	
@@ -170,7 +170,7 @@ proctable_new (ProcData *data)
 						     		   "text", i,
 						     		   NULL);
 		gtk_tree_view_column_set_sort_column_id (column, i);
-		gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
+		//gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 	}
 	
@@ -345,12 +345,10 @@ find_parent (ProcData *data, gint pid)
 	while (list)
 	{
 		ProcInfo *info = list->data;
-		if (pid == info->pid) {
-			if (info->visible)
-				return info;
-			else
-				return NULL;
-		}
+		
+		if (pid == info->pid) 
+			return info;
+						
 		list = g_list_next (list);
 	}
 	return NULL;
@@ -734,9 +732,13 @@ get_info (ProcData *procdata, gint pid)
 		else
 
 			info->is_thread = FALSE;
-			
-		info->parent_node = parentinfo->node;
-		info->has_parent = TRUE;
+		
+		if (parentinfo->visible) {	
+			info->parent_node = parentinfo->node;
+			info->has_parent = TRUE;
+		}
+		else
+			info->has_parent = FALSE;
 	}
 	else {
 		info->has_parent = FALSE;
