@@ -720,18 +720,19 @@ proctable_update_list (ProcData *data)
 	gint n;
 	
 	
-	
-	if (procdata->config.whose_process == (ALL_PROCESSES | RUNNING_PROCESSES
-					       | FAVORITE_PROCESSES))
-	{
+	switch (procdata->config.whose_process) {
+	case ALL_PROCESSES:
+	case RUNNING_PROCESSES:
+	case FAVORITE_PROCESSES:
 		which = GLIBTOP_KERN_PROC_ALL;
 		arg = 0;
-	}
-	else
-	{
+		break;
+	default:
 		which = GLIBTOP_KERN_PROC_UID;
 		arg = getuid ();
+		break;
 	}
+	
 
 	pid_list = glibtop_get_proclist (&proclist, which, arg);
 	n = proclist.number;
