@@ -31,14 +31,12 @@
 #endif
 
 GtkWidget *infobox;
-GtkWidget *cmd_event_box;
 GtkWidget *cmd_label;
 GtkWidget *status_label;
 GtkWidget *nice_label;
 GtkWidget *memtotal_label;
 GtkWidget *memrss_label;
 GtkWidget *memshared_label;
-GtkTooltips *cmd_tooltip;
 
 GtkWidget *
 infoview_create (ProcData *data)
@@ -77,16 +75,10 @@ infoview_create (ProcData *data)
 	gtk_table_attach (GTK_TABLE (info_table), label, 0, 1, 2, 3, GTK_FILL, 
 			  0, GNOME_PAD_SMALL, 0);
 	
-	cmd_event_box = gtk_event_box_new ();
-	gtk_table_attach (GTK_TABLE (info_table), cmd_event_box, 1, 2, 0, 1, 
-			  GTK_FILL|GTK_EXPAND, 0, GNOME_PAD_SMALL, 0);
-	
 	cmd_label = gtk_label_new ("");
 	gtk_misc_set_alignment (GTK_MISC (cmd_label), 0.0, 0.5);
-	gtk_container_add (GTK_CONTAINER (cmd_event_box), cmd_label);
-	
-	cmd_tooltip = gtk_tooltips_new ();
-	gtk_tooltips_set_delay (GTK_TOOLTIPS (cmd_tooltip), 15);
+	gtk_table_attach (GTK_TABLE (info_table), cmd_label, 1, 2, 0, 1,
+                          GTK_FILL|GTK_EXPAND, 0, GNOME_PAD_SMALL, 0);
 	
 	status_label = gtk_label_new ("");
 	gtk_misc_set_alignment (GTK_MISC (status_label), 0.0, 0.5);
