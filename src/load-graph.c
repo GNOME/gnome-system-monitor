@@ -298,9 +298,6 @@ load_graph_configure (GtkWidget *widget, GdkEventConfigure *event,
 {
     LoadGraph *c = (LoadGraph *) data_ptr;
 
-    if (!c->draw)
-    	return TRUE;
-    	
     if (c->pixmap) {
 	gdk_pixmap_unref (c->pixmap);
 	c->pixmap = NULL;
