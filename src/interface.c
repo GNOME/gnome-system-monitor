@@ -28,6 +28,9 @@
 #include <signal.h>
 #include <gnome.h>
 #include <gdk/gdkkeysyms.h>
+#include <glibtop/xmalloc.h>
+#include <glibtop/mountlist.h>
+#include <glibtop/fsusage.h>
 #include "callbacks.h"
 #include "interface.h"
 #include "proctable.h"
@@ -315,7 +318,16 @@ create_sys_view (ProcData *procdata)
 	GtkWidget *cpu_frame, *mem_frame;
 	GtkWidget *label,*cpu_label, *mem_label;
 	GtkWidget *hbox;
+	GtkWidget *disk_frame;
+	GtkWidget *scrolled, *clist;
+	gchar *titles[4] = {_("Disk Name"),
+			    _("Mount Directory"),
+			    _("Free Space"),
+			    _("Total Space")};
 	LoadGraph *cpu_graph, *mem_graph;
+	glibtop_mountentry *entry;
+	glibtop_mountlist mountlist;
+	gint i, width;
 	
 	vbox = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox);
@@ -373,6 +385,48 @@ create_sys_view (ProcData *procdata)
 	
 	procdata->mem_graph = mem_graph;
 	#endif
+	
+	disk_frame = gtk_frame_new (_("Disks"));
+	gtk_widget_show (disk_frame);
+	gtk_container_set_border_width (GTK_CONTAINER (disk_frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), disk_frame, TRUE, TRUE, 0);
+	
+	scrolled = gtk_scrolled_window_new (NULL, NULL);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), 
+					GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+	gtk_container_add (GTK_CONTAINER (disk_frame), scrolled);
+	 
+	clist = gtk_clist_new_with_titles (4, titles);
+	gtk_widget_show (clist);
+	gtk_container_add (GTK_CONTAINER (scrolled), clist);
+  	gtk_container_set_border_width (GTK_CONTAINER (clist), 4);
+  	
+  	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 0, TRUE);
+  	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 1, TRUE);
+  	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 2, TRUE);
+  	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 3, TRUE);
+  	
+  	gtk_widget_show_all (scrolled);
+  	
+  	entry = glibtop_get_mountlist (&mountlist, 0);
+	for (i=0; i < mountlist.number; i++) {
+		glibtop_fsusage usage;
+		gchar *text[4];
+		
+		glibtop_get_fsusage (&usage, entry[i].mountdir);
+		text[0] = g_strdup (entry[i].devname);
+		text[1] = g_strdup (entry[i].mountdir);
+		text[2] = g_strdup_printf ("%d", usage.bfree * 512);
+		text[3] = g_strdup_printf ("%d", usage.blocks * 512);
+		gtk_clist_append (GTK_CLIST (clist), text);
+		
+		g_free (text[0]);
+		g_free (text[1]);
+		g_free (text[2]);
+		g_free (text[3]);
+	}
+	
+	glibtop_free (entry);
 	
 	gtk_widget_show_all (hbox1);
 	

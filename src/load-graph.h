@@ -36,6 +36,8 @@ struct _LoadGraph {
     GdkPixmap *pixmap;
     GdkGC *gc;
     int timer_index;
+    
+    gboolean draw;
 
     gint show_frame;
 

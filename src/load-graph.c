@@ -139,7 +139,7 @@ get_load (gfloat data [2], LoadGraph *g)
     data[0] = usr + sys + nice;
     data[1] = free;
     
-    text = g_strdup_printf ("%f %s", 100.0 *(usr + sys + nice), "%");
+    text = g_strdup_printf ("%.2f %s", 100.0 *(usr + sys + nice), "%");
     gtk_label_set_text (GTK_LABEL (g->label), text);
     g_free (text);
     /*data [0] = usr;
@@ -189,7 +189,8 @@ load_graph_update (LoadGraph *g)
 	for (j=0; j < g->n; j++)
 	    g->data [i+1][j] = g->odata [i][j];
 
-    load_graph_draw (g);
+    if (g->draw)
+        load_graph_draw (g);
     return TRUE;
 }
 
@@ -254,6 +255,9 @@ load_graph_configure (GtkWidget *widget, GdkEventConfigure *event,
 
     /*load_graph_unalloc (c);
     load_graph_alloc (c);*/
+    if (!c->draw)
+    	return TRUE;
+    
     c->draw_width = c->disp->allocation.width;
     c->draw_height = c->disp->allocation.height;
     if (c->pixmap) {
@@ -261,8 +265,6 @@ load_graph_configure (GtkWidget *widget, GdkEventConfigure *event,
 	c->pixmap = NULL;
     }
     
-    g_print ("%d %d \n", c->draw_width, c->draw_height);
-
     if (!c->pixmap)
 	c->pixmap = gdk_pixmap_new (widget->window,
 				    widget->allocation.width,
@@ -336,6 +338,8 @@ load_graph_new (gint type)
     g->colors = g_new0 (GdkColor, g->n);
 
     g->timer_index = -1;
+    
+    g->draw = FALSE;
 	
     g->main_widget = gtk_vbox_new (FALSE, FALSE);
     gtk_widget_show (g->main_widget);
@@ -368,18 +372,25 @@ load_graph_new (gint type)
 void
 load_graph_start (LoadGraph *g)
 {
-    if (g->timer_index != -1)
-	gtk_timeout_remove (g->timer_index);
+    /*if (g->timer_index != -1)
+	gtk_timeout_remove (g->timer_index);*/
 
-    g->timer_index = gtk_timeout_add (g->speed,
+    /*load_graph_unalloc (g);
+    load_graph_alloc (g);*/
+
+    if (g->timer_index == -1)
+        g->timer_index = gtk_timeout_add (g->speed,
 				      (GtkFunction) load_graph_update, g);
+				      
+    g->draw = TRUE;
 }
 
 void
 load_graph_stop (LoadGraph *g)
 {
-    if (g->timer_index != -1)
+    /*if (g->timer_index != -1)
 	gtk_timeout_remove (g->timer_index);
     
-    g->timer_index = -1;
+    g->timer_index = -1;*/
+    g->draw = FALSE;
 }
