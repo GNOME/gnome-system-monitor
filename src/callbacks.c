@@ -497,15 +497,13 @@ cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event,
         return FALSE;
 
 }
-#if 0
 
 gint
-cb_tree_key_press (ETree *tree, int row, ETreePath path, int col,
-		   GdkEvent *event, gpointer data)
+cb_tree_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
 	ProcData *procdata = data;
 		
-	switch (event->key.keyval) {
+	switch (event->keyval) {
 	case GDK_Return:
 	case GDK_space:
 		toggle_infoview (procdata);
@@ -517,16 +515,6 @@ cb_tree_key_press (ETree *tree, int row, ETreePath path, int col,
 		
 }
 
-void
-cb_double_click (ETree *tree, int row, ETreePath path, int col, 
-		 GdkEvent *event, gpointer data)
-{
-	ProcData *procdata = data;
-	
-	toggle_infoview (procdata);
-
-}
-#endif
 void		
 cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page, 
 		gint num, gpointer data)

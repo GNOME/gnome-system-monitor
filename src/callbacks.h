@@ -80,15 +80,8 @@ void		cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 void		cb_row_selected (GtkTreeSelection *selection, gpointer data);
 gboolean	cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event, 
 					gpointer data);
-#if 0				
-gint		cb_right_click (ETree *tree, int row, ETreePath path,
-                                int col, GdkEvent *event, gpointer data);
-void		cb_table_selected (ETree *tree,int row,ETreePath path,gpointer data);
-gint		cb_tree_key_press (ETree *tree, int row, ETreePath path, int col,
-		   		   GdkEvent *event, gpointer data);
-void 		cb_double_click	(ETree	*tree, int row, ETreePath path,
-				 int col, GdkEvent *event, gpointer data);
-#endif
+gint		cb_tree_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data);
+
 					 
 void		cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page, 
 			        gint num, gpointer data);

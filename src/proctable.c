@@ -182,6 +182,8 @@ proctable_new (ProcData *data)
 			  G_CALLBACK (cb_row_selected), procdata);
 	g_signal_connect (G_OBJECT (proctree), "button_press_event",
 			  G_CALLBACK (cb_tree_button_pressed), procdata);
+	g_signal_connect (G_OBJECT (proctree), "key_press_event",
+			  G_CALLBACK (cb_tree_key_press), procdata);
 			  
 	return scrolled;
 
