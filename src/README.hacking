@@ -1,0 +1,42 @@
+
+
+******* Procman source code overview ************
+
+procman.c: 
+  * main function
+  * load and save configuration (procman_get_data, procman_save_config)
+  
+proctable.c:
+  * create e-tree (proctable_new)
+  * update display (proctable_update_all)
+  * clear tree (proctable_clear)
+  * get list of processes (proctable_update_list)
+  * handle all adding and removing process from e-tree
+  
+interface.c:
+  * create UI for main window only (create_main_window)
+  
+callbacks.c:
+  * handle all signal callbacks for main window
+  
+infoview.c:
+  * create "more info" tab at bottom of window (infoview_create)
+  * update the values (infoview_update)
+
+procdialogs.c:
+  * create and manage the hide, renice, kill, and preferences dialogs
+
+memmaps.c:
+  * create and manage the memmaps dialog
+  
+prettytable.c:
+  * scan the .desktop files to give icons and application names (prettytable_new)
+  * load them in a seperate thread for delay loading (prettytable_load_async)
+  * get the icon or app name given the process name (prettytable_get_[icon,name])
+  
+favorites.c:
+  * Named somewhat improperly - handles the hidden ("blacklisted") processes
+  * gets and saves blacklist to diask (create_blacklist_dialog)
+  * determines whether a process is blacklisted (is_process_blacklisted)
+  * creates and handles the Hidden Processes dialog (create_blacklist_dialog)
+  

@@ -61,7 +61,6 @@ void		cb_my_process_menu_clicked (GtkWidget *widget, gpointer data);
 void		cb_running_process_menu_clicked	(GtkWidget *widget, gpointer data);
 
 void		cb_favorites_menu_clicked (GtkWidget *widget, gpointer data);
-
 void		cb_end_process_button_pressed (GtkButton *button, gpointer data);
 
 gint
@@ -93,5 +92,12 @@ cb_double_click				(ETree		*tree,
 gint		cb_timeout (gpointer data);
 gint		cb_progress_meter_timeout (gpointer data);
 
+gint
+cb_right_click                          (ETree          *tree,
+                                         int            row,
+                                         ETreePath      path,
+                                         int            col,
+                                         GdkEvent       *event,
+                                         gpointer       data);
 
 #endif

@@ -31,17 +31,12 @@
 #include "memmaps.h"
 #include "favorites.h"
 
-
-
-
-
 void
 cb_properties_activate                (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
 
 }
-
 
 void
 cb_preferences_activate               (GtkMenuItem     *menuitem,
@@ -82,7 +77,6 @@ cb_add_to_favorites (GtkMenuItem *menuitem, gpointer data)
 	add_to_favorites (procdata, info->cmd);
 	
 }
-
 
 void		
 cb_show_hidden_processes (GtkMenuItem *menuitem, gpointer data)
@@ -208,9 +202,10 @@ cb_right_click (ETree *tree, int row, ETreePath path, int col,
 {
         ProcData *procdata = data;
 
-        popup_menu (procdata, event);
+        do_popup_menu (procdata, event);
 
-        return FALSE;
+        return TRUE;
+
 }
 
 void
@@ -308,7 +303,6 @@ cb_double_click (ETree *tree, int row, ETreePath path, int col,
 
 }
 	
-
 gint
 cb_timeout (gpointer data)
 {

@@ -1,5 +1,32 @@
 2001-08-05 Kevin Vandersloot <kfv101@psu.edu>
 
+	Improve the popup menu from patch by Tige Chastain 
+	<tigechastain@home.com>
+
+	* interface.c (create_main_window): create the popup menu here
+	and save as a global variable. Make the menu nicer.
+	(do_popup_menu): rename to avoid conflict with said global
+	variable. Now just pop the menu up
+	(popup_menu*): place callbacks here and call gtk_popdown_menu
+	on the global GtkMenu.
+
+2001-08-05 Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.c: add new boolean config option to do the delay load
+	(procman_get_data): do the delay loading here and honor the
+	new config option. Add a timeout to determine if the icons are
+	loaded.
+	(icon_load_finished): timeout function. Update the table once
+	loading is finished.
+
+	* procman.h: renmae config variable show_icons to 
+	load_desktop_files to be more descriptive.
+
+	* proctable.c (update_info): check to see if process name
+	needs updating
+
+2001-08-05 Kevin Vandersloot <kfv101@psu.edu>
+
 	* e-clipped-lable.[c,h]: stolen from evolution. Displays
 	labels shortened with ...
 

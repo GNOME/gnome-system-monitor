@@ -25,7 +25,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string.h>
-
+#include <signal.h>
 #include <gnome.h>
 #include <gdk/gdkkeysyms.h>
 #include "callbacks.h"
@@ -33,6 +33,9 @@
 #include "proctable.h"
 #include "infoview.h"
 #include "prettytable.h"
+#include "procdialogs.h"
+#include "memmaps.h"
+#include "favorites.h"
 
 static GnomeUIInfo file1_menu_uiinfo[] =
 {
@@ -120,7 +123,74 @@ gchar *lessinfolabel = N_("<< Less _Info");
 
 GtkWidget *infobutton;
 GtkWidget *endprocessbutton;
+GtkWidget *popup_menu;
 GtkAccelGroup *accel;
+
+void
+popup_menu_renice (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	procdialog_create_renice_dialog (procdata);
+	
+	gtk_menu_popdown (GTK_MENU (popup_menu));
+}
+
+void
+popup_menu_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	
+	create_memmaps_dialog (procdata);
+	
+	gtk_menu_popdown (GTK_MENU (popup_menu));
+}
+
+void
+popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+	ProcInfo *info;
+	
+	if (!procdata->selected_node)
+		return;
+	
+	if (procdata->config.show_hide_message)
+	{	
+		GtkWidget *dialog;
+		dialog = procdialog_create_hide_dialog (procdata);
+		gtk_widget_show (dialog);
+	}
+	else
+	{
+		info = e_tree_memory_node_get_data (procdata->memory, 
+						    procdata->selected_node);
+		add_to_blacklist (procdata, info->cmd);
+		proctable_update_all (procdata);
+	}
+	
+	gtk_menu_popdown (GTK_MENU (popup_menu));
+	
+}
+
+void popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+        ProcInfo *info;
+
+        if (!procdata->selected_node)
+		return;
+	
+	else
+	{
+		info = e_tree_memory_node_get_data (procdata->memory, 
+						    procdata->selected_node);
+		kill (info->pid, SIGKILL);
+		proctable_update_all (procdata);
+	}
+	
+	gtk_menu_popdown (GTK_MENU (popup_menu));	
+}
 
 GtkWidget*
 create_main_window (ProcData *data)
@@ -143,6 +213,11 @@ create_main_window (ProcData *data)
 	GtkWidget *infobox;
 	GtkWidget *meter_hbox;
 	GtkWidget *cpumeter, *memmeter, *swapmeter;
+	GtkWidget *lbl_hide;
+        GtkWidget *lbl_kill;
+        GtkWidget *lbl_renice;
+	GtkWidget *lbl_mem_maps;
+	GtkWidget *sep, *an_sep;
 	guint key;
 
 	app = gnome_app_new ("procman", NULL);
@@ -315,7 +390,8 @@ create_main_window (ProcData *data)
 	gtk_signal_connect (GTK_OBJECT (infobutton), "clicked",
 			    GTK_SIGNAL_FUNC (cb_info_button_pressed),
 			    procdata);
-
+        gtk_signal_connect (GTK_OBJECT (procdata->tree), "right_click",
+                            GTK_SIGNAL_FUNC (cb_right_click), procdata);
 	gtk_signal_connect (GTK_OBJECT (procdata->tree), "cursor_activated",
 			    GTK_SIGNAL_FUNC (cb_table_selected), procdata);
 	gtk_signal_connect (GTK_OBJECT (procdata->tree), "double_click",
@@ -341,6 +417,50 @@ create_main_window (ProcData *data)
  	/* We cheat and force it to set up the labels */
  	procdata->config.show_more_info = !procdata->config.show_more_info;
  	toggle_infoview (procdata);	
+ 	
+ 	/* create popup_menu */
+ 	popup_menu = gtk_menu_new ();
+
+	/* Create new menu items */
+	lbl_mem_maps = gtk_menu_item_new_with_label (_("Memory Maps ..."));
+	gtk_widget_show (lbl_mem_maps);
+	lbl_hide = gtk_menu_item_new_with_label (_("Hide Process"));
+	gtk_widget_show (lbl_hide);
+        lbl_kill = gtk_menu_item_new_with_label (_("End Process"));
+        gtk_widget_show (lbl_kill);
+        lbl_renice = gtk_menu_item_new_with_label (_("Renice Process ..."));
+        gtk_widget_show (lbl_renice);
+	sep = gtk_menu_item_new();
+	gtk_widget_show (sep);
+	an_sep = gtk_menu_item_new();
+	gtk_widget_show (an_sep);
+
+	/* Associate the items to the menu and make them visible */
+        gtk_menu_append (GTK_MENU (popup_menu), lbl_renice);
+        gtk_menu_append (GTK_MENU (popup_menu), lbl_mem_maps);
+	gtk_menu_append (GTK_MENU (popup_menu), sep);
+	gtk_menu_append (GTK_MENU (popup_menu), lbl_hide);
+        gtk_menu_append (GTK_MENU (popup_menu), an_sep);
+	gtk_menu_append (GTK_MENU (popup_menu), lbl_kill);
+        
+	/* Add activiate signal associations to these */
+	gtk_signal_connect (GTK_OBJECT (lbl_mem_maps),"activate",
+			    GTK_SIGNAL_FUNC(popup_menu_show_memory_maps),
+			    data);
+
+	gtk_signal_connect (GTK_OBJECT (lbl_hide),"activate",
+                            GTK_SIGNAL_FUNC(popup_menu_hide_process),
+                            data);
+
+        gtk_signal_connect (GTK_OBJECT (lbl_renice),"activate",
+                            GTK_SIGNAL_FUNC(popup_menu_renice),
+                            data);
+	gtk_signal_connect (GTK_OBJECT (lbl_kill),"activate",
+			    GTK_SIGNAL_FUNC(popup_menu_kill_process),
+			    data);
+
+	/* Make the menu visible */
+        gtk_widget_show (popup_menu);
 	
 	return app;
 }
@@ -392,51 +512,19 @@ toggle_infoview (ProcData *data)
 	}
 }
 
-void popup_menu (ProcData *data, GdkEvent *event)
+void do_popup_menu (ProcData *data, GdkEvent *event)
 {
 
-/* Define all variables */
-        GtkWidget *menu;
-        GtkWidget *lbl_hide;
-        GtkWidget *lbl_kill;
-        GtkWidget *lbl_renice;
+	/* Define all variables */
         GdkEventButton *event_button;
 
-/* Create the menu */
-        menu = gtk_menu_new ();
-
-/* Create new menu items */
-        lbl_hide = gtk_menu_item_new_with_label (_("Hide Process"));
-        lbl_kill = gtk_menu_item_new_with_label (_("Kill Process"));
-        lbl_renice = gtk_menu_item_new_with_label (_("Renice Process"));
-
-/* Associate the items to the menu and make them visible */
-        gtk_menu_append (GTK_MENU (menu), lbl_hide);
-        gtk_widget_show (lbl_hide);
-        gtk_menu_append (GTK_MENU (menu), lbl_renice);
-        gtk_widget_show (lbl_renice);
-        gtk_menu_append (GTK_MENU (menu), lbl_kill);
-        gtk_widget_show (lbl_kill);
-
-   /* Add activiate signal associations to these */
-        gtk_signal_connect (GTK_OBJECT (lbl_hide),"activate",
-                            GTK_SIGNAL_FUNC(cb_hide_process),
-                            data);
-
-        gtk_signal_connect (GTK_OBJECT (lbl_renice),"activate",
-                            GTK_SIGNAL_FUNC(cb_renice),
-                            data);
-
-/* Make the menu visible */
-        gtk_widget_show (menu);
-
-/* Make the menu visible one right-button click*/
+	/* Make the menu visible one right-button click*/
         if (event->type == GDK_BUTTON_PRESS)
         {
                 event_button = (GdkEventButton *) event;
                 if (event_button->button == 3)
                 {
-                        gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
+                        gtk_menu_popup (GTK_MENU (popup_menu), NULL, NULL,
                                         NULL, NULL, event_button->button,
                                         event_button->time);
                 }
