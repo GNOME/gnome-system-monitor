@@ -1,5 +1,15 @@
 2005-03-09  Benoît Dejean  <TazForEver@dlfp.org>
 
+	* src/procman.c: (procman_data_new):
+	* src/procman.h:
+	* src/proctable.c: (proctable_free_info), (remove_info_from_list),
+	(get_info), (proctable_free_table):
+	
+	Allocates ProcInfo::user with GStringChunk.
+	Allocates ProcInfo with GMemChunk.
+
+2005-03-09  Benoît Dejean  <TazForEver@dlfp.org>
+
 	* configure.in: Post release version bump.
 
 2005-03-07  Benoît Dejean  <TazForEver@dlfp.org>

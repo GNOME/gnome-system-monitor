@@ -326,16 +326,15 @@ proctable_new (ProcData * const procdata)
 
 
 static void
-proctable_free_info (ProcInfo *info)
+proctable_free_info (ProcData *procdata, ProcInfo *info)
 {
 	g_return_if_fail(info != NULL);
 
 	g_free (info->name);
 	g_free (info->arguments);
-	g_free (info->user);
 	g_free (info->security_context);
 	g_list_free (info->children);
-	g_free (info);
+	g_mem_chunk_free (procdata->procinfo_allocator, info);
 }
 
 
@@ -587,7 +586,7 @@ remove_info_from_list (ProcInfo *info, ProcData *procdata)
 	/* Remove from list */
 	procdata->info = g_list_remove (procdata->info, info);
 	g_hash_table_remove(procdata->pids, GINT_TO_POINTER(info->pid));
-	proctable_free_info (info);
+	proctable_free_info (procdata, info);
 }
 
 
@@ -681,13 +680,16 @@ update_info (ProcData *procdata, ProcInfo *info)
 static ProcInfo *
 get_info (ProcData *procdata, gint pid)
 {
-	ProcInfo *info = g_new0 (ProcInfo, 1);
+	ProcInfo *info;
 	glibtop_proc_state procstate;
 	glibtop_proc_time proctime;
 	glibtop_proc_uid procuid;
 	glibtop_proc_args procargs;
 	struct passwd *pwd;
 	gchar *arguments;
+	char *username;
+
+	info = g_chunk_new0(ProcInfo, procdata->procinfo_allocator);
 
 	info->pid = pid;
 
@@ -715,10 +717,8 @@ get_info (ProcData *procdata, gint pid)
 	else
 		info->arguments = g_strdup ("");
 
-	if (pwd && pwd->pw_name)
-		info->user = g_strdup(pwd->pw_name);
-	else
-		info->user = NULL;
+	username = (pwd && pwd->pw_name ? pwd->pw_name : "");
+	info->user = g_string_chunk_insert_const(procdata->users, username);
 
 	info->pcpu = 0;
 	info->cpu_time_last = proctime.rtime;
@@ -917,7 +917,7 @@ proctable_free_table (ProcData * const procdata)
 	while (list)
 	{
 		ProcInfo *info = list->data;
-		proctable_free_info (info);
+		proctable_free_info (procdata, info);
 		list = g_list_next (list);
 	}
 

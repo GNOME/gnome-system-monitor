@@ -25,6 +25,7 @@
 #include <gconf/gconf-client.h>
 #include <glibtop.h>
 #include <glibtop/close.h>
+#include <glibtop/loadavg.h>
 #include "load-graph.h"
 #include "procman.h"
 #include "interface.h"
@@ -189,7 +190,9 @@ procman_data_new (GConfClient *client)
 	gint swidth, sheight;
 	gint i;
 	glibtop_cpu cpu;
-	
+	glibtop_loadavg loadavg;
+	gsize nprocs;
+
 	pd = g_new0 (ProcData, 1);
 	
 	pd->tree = NULL;
@@ -202,6 +205,16 @@ procman_data_new (GConfClient *client)
 	pd->cpu_graph = NULL;
 	pd->mem_graph = NULL;
 	pd->disk_timeout = -1;
+
+	glibtop_get_loadavg(&loadavg);
+	nprocs = (loadavg.nr_tasks ? 1.2f * loadavg.nr_tasks : 100);
+	pd->procinfo_allocator = g_mem_chunk_create(ProcInfo, nprocs, G_ALLOC_AND_FREE);
+
+	/* username is usually 8 chars long
+	   for caching, we create chunks of 128 chars */
+	pd->users = g_string_chunk_new(128);
+	/* push empty string */
+	g_string_chunk_insert_const(pd->users, "");
 
 	pd->config.width = gconf_client_get_int (client, "/apps/procman/width", NULL);
 	pd->config.height = gconf_client_get_int (client, "/apps/procman/height", NULL);

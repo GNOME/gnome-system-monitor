@@ -115,7 +115,7 @@ struct _ProcInfo
 
 	GdkPixbuf	*pixbuf;
 	gchar		*name;
-	gchar		*user;
+	gchar		*user; /* allocated with g_string_chunk, don't free it ! */
 	gchar		*arguments;
 
 	gchar		*status; /* shared, don't free it ! */
@@ -186,6 +186,11 @@ struct _ProcData
 	gint		blacklist_num;
 	GConfClient	*client;
 	GtkWidget	*app;
+
+	/* cached username */
+	GStringChunk	*users;
+
+	GMemChunk	*procinfo_allocator;
 };
 
 void		procman_save_config (ProcData *data) G_GNUC_INTERNAL;
