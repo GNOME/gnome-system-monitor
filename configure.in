@@ -40,6 +40,9 @@ else
   AC_DEFINE_UNQUOTED(PACKAGE_LOCALE_DIR, "${prefix}/${DATADIRNAME}/locale")
 fi
 
+dnl Honor ACLOCAL_FLAGS for --enable-maintainer-mode
+ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
+
 AC_OUTPUT([
 Makefile
 src/Makefile
