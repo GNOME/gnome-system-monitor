@@ -332,7 +332,6 @@ static GtkWidget *
 create_sys_view (ProcData *procdata)
 {
 	GtkWidget *vbox;
-	GtkWidget *hbox1;
 	GtkWidget *cpu_frame, *mem_frame;
 	GtkWidget *label,*cpu_label;
 	GtkWidget *hbox, *table;
@@ -350,24 +349,18 @@ create_sys_view (ProcData *procdata)
 	gint i;
 	
 	vbox = gtk_vbox_new (FALSE, 0);
-	gtk_widget_show (vbox);
-	
-	hbox1 = gtk_hbox_new (FALSE, 0);
-	gtk_widget_show (hbox1);
-	gtk_box_pack_start (GTK_BOX (vbox), hbox1, TRUE, TRUE, 0);
 	
 	cpu_frame = gtk_frame_new (_("CPU Usage History"));
 	gtk_frame_set_label_align (GTK_FRAME (cpu_frame), 0.5, 0.5);
 	gtk_widget_show (cpu_frame);
 	gtk_container_set_border_width (GTK_CONTAINER (cpu_frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (hbox1), cpu_frame, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), cpu_frame, TRUE, TRUE, 0);
 	
 	mem_frame = gtk_frame_new (_("Memory / Swap Usage History"));
 	gtk_frame_set_label_align (GTK_FRAME (mem_frame), 0.5, 0.5);
 	gtk_container_set_border_width (GTK_CONTAINER (mem_frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (hbox1), mem_frame, FALSE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), mem_frame, TRUE, TRUE, 0);
 	
-	#if 1 
 	cpu_graph = load_graph_new (CPU_GRAPH, procdata);
 	gtk_container_add (GTK_CONTAINER (cpu_frame), cpu_graph->main_widget);
 	gtk_container_set_border_width (GTK_CONTAINER (cpu_graph->main_widget), 
@@ -395,7 +388,7 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (hbox), cpu_label, FALSE, FALSE, 0);
 	cpu_graph->label = cpu_label;
 	
-	
+	gtk_widget_show_all (cpu_frame);
 	procdata->cpu_graph = cpu_graph;
 	
 	mem_graph = load_graph_new (MEM_GRAPH, procdata);
@@ -446,22 +439,20 @@ create_sys_view (ProcData *procdata)
 	gtk_table_attach (GTK_TABLE (table), mem_graph->swap_label, 2, 3, 1, 2, 
 			  GTK_FILL, 0, 0, 0);	
 	
-	
+	gtk_widget_show_all (mem_frame);
 	procdata->mem_graph = mem_graph;
-	#endif
 					
 	disk_frame = gtk_frame_new (_("Disks"));
-	gtk_widget_show (disk_frame);
 	gtk_container_set_border_width (GTK_CONTAINER (disk_frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (vbox), disk_frame, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), disk_frame, FALSE, TRUE, 0);
 	
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
+	gtk_widget_set_usize (scrolled, -2, 80);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), 
 					GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 	gtk_container_add (GTK_CONTAINER (disk_frame), scrolled);
 	 
 	clist = gtk_clist_new_with_titles (5, titles);
-	gtk_widget_show (clist);
 	gtk_container_add (GTK_CONTAINER (scrolled), clist);
   	gtk_container_set_border_width (GTK_CONTAINER (clist), GNOME_PAD_SMALL);
   	
@@ -476,7 +467,7 @@ create_sys_view (ProcData *procdata)
   	gtk_clist_set_column_auto_resize (GTK_CLIST (clist), 4, TRUE);
   	gtk_clist_set_column_justification (GTK_CLIST (clist), 4, GTK_JUSTIFY_CENTER);
   	
-  	gtk_widget_show_all (scrolled);
+  	gtk_widget_show_all (disk_frame);
   	
   	entry = glibtop_get_mountlist (&mountlist, 0);
 	for (i=0; i < mountlist.number; i++) {
@@ -503,8 +494,6 @@ create_sys_view (ProcData *procdata)
 	
 	glibtop_free (entry);
 	
-	gtk_widget_show_all (hbox1);
-	
 	return vbox;
 }
 
@@ -523,7 +512,7 @@ create_main_window (ProcData *procdata)
 	gtk_accel_group_attach (accel, GTK_OBJECT (app));
 	gtk_accel_group_unref (accel);
 
-	gtk_window_set_default_size (GTK_WINDOW (app), 460, 475);
+	gtk_window_set_default_size (GTK_WINDOW (app), 460, 495);
 	gtk_window_set_policy (GTK_WINDOW (app), FALSE, TRUE, TRUE);
 	
 	gnome_app_create_menus_with_data (GNOME_APP (app), menubar1_uiinfo, procdata);
@@ -538,6 +527,7 @@ create_main_window (ProcData *procdata)
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox1, tab_label1);
 	
 	sys_box = create_sys_view (procdata);
+	gtk_widget_show (sys_box);
 	tab_label2 = gtk_label_new (_("System Monitor"));
 	gtk_widget_show (tab_label2);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label2);
@@ -572,7 +562,6 @@ create_main_window (ProcData *procdata)
 	}
 		
 	gtk_widget_show (vbox1);	 
-	gtk_widget_show (sys_box);
 	gtk_widget_show (app);
 
 	/* Makes sure everything that should be insensitive is at start */

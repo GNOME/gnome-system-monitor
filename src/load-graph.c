@@ -64,6 +64,14 @@ load_graph_draw (LoadGraph *g)
 			g->disp->allocation.width,
 			g->disp->allocation.height);
 			
+    /* draw frame */
+    gdk_gc_set_foreground (g->gc, &(g->colors [1]));
+    gdk_draw_rectangle (g->pixmap,
+    			g->gc,
+    			FALSE, FRAME_WIDTH, FRAME_WIDTH,
+    			g->draw_width,
+    			g->disp->allocation.height - 2 * FRAME_WIDTH);
+			
     for (i = 0; i < g->num_points; i++)
 	g->pos [i] = g->draw_height;
 
@@ -79,6 +87,7 @@ load_graph_draw (LoadGraph *g)
 	    gint y1 = g->data[i][j] * g->draw_height - FRAME_WIDTH;
 	    gint y2 = g->data[i+1][j] * g->draw_height - FRAME_WIDTH;
 	    
+	    if (g->data[i+1][j] > 0.0 && g->data[i][j] > 0.0)
 	    gdk_draw_line (g->pixmap, g->gc,
 			   g->draw_width - x2, g->pos[i + 1] - y2,
 			   g->draw_width - x1, g->pos[i] - y1);
@@ -87,13 +96,7 @@ load_graph_draw (LoadGraph *g)
 	g->pos[g->num_points - 1] -= g->data [g->num_points - 1] [j];
     }
     
-    /* draw frame */
-    gdk_gc_set_foreground (g->gc, &(g->colors [1]));
-    gdk_draw_rectangle (g->pixmap,
-    			g->gc,
-    			FALSE, FRAME_WIDTH, FRAME_WIDTH,
-    			g->draw_width,
-    			g->disp->allocation.height - 2 * FRAME_WIDTH);
+    
 	
     gdk_draw_pixmap (g->disp->window,
 		     g->disp->style->fg_gc [GTK_WIDGET_STATE(g->disp)],
@@ -381,7 +384,7 @@ load_graph_new (gint type, ProcData *procdata)
     }
 	
     g->speed  = 500;
-    g->num_points = 50;
+    g->num_points = 200;
     
     g->colors = g_new0 (GdkColor, g->n + 2);
 
