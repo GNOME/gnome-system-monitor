@@ -12,8 +12,7 @@ Copyright: GPL
 Group: Applications/System
 Source: http://www.personal.psu.edu/kfv101/procman/source/procman-%{ver}.tar.gz
 BuildRoot: /var/tmp/procman-root
-Requires: gnome-libs >= 1.2.5
-Requires: gal >= 0.11.2
+Requires: libgnomeui >= 1.106.0
 Requires: libgtop >= 1.0.6
 
 %description
