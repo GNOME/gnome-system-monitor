@@ -119,7 +119,7 @@ proctable_new (ProcData *data)
 		
 	procdata->tree = proctree;
 	
-	g_signal_connect (G_OBJECT (proctree), "row_activated",
+	g_signal_connect (G_OBJECT (proctree), "select_cursor_row",
 			  G_CALLBACK (cb_row_selected), procdata);
 	
 	return scrolled;

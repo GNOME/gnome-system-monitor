@@ -469,8 +469,7 @@ cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 }
 #endif
 void
-cb_row_selected (GtkTreeView *tree, GtkTreePath *path,
-                 GtkTreeViewColumn *column, gpointer data)
+cb_row_selected (GtkTreeView *tree, gpointer data)
 {
 	ProcData *procdata = data;
 	

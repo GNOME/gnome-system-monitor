@@ -34,8 +34,8 @@
 #include "callbacks.h"
 #include "interface.h"
 #include "proctable.h"
-#if 0
 #include "infoview.h"
+#if 0
 #include "prettytable.h"
 #include "procdialogs.h"
 #include "memmaps.h"
@@ -446,6 +446,7 @@ create_sys_view (ProcData *procdata)
 					GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 	gtk_container_add (GTK_CONTAINER (disk_frame), scrolled);
 	 
+	model = gtk_ 
 	clist = gtk_clist_new_with_titles (5, titles);
 	gtk_container_add (GTK_CONTAINER (scrolled), clist);
   	gtk_container_set_border_width (GTK_CONTAINER (clist), GNOME_PAD_SMALL);
