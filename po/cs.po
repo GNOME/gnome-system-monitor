@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 12:28+0100\n"
-"PO-Revision-Date: 2005-01-09 15:33+0100\n"
+"POT-Creation-Date: 2005-01-10 20:32+0100\n"
+"PO-Revision-Date: 2005-01-10 21:55+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,26 +17,64 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: gnome-system-monitor.desktop.in.in.h:1 src/callbacks.c:134
-#: src/interface.c:629
+#: gnome-system-monitor.desktop.in.in.h:1 src/callbacks.c:142
+#: src/interface.c:639
 msgid "System Monitor"
 msgstr "Sledování systému"
 
-#: gnome-system-monitor.desktop.in.in.h:2 src/callbacks.c:135
+#: gnome-system-monitor.desktop.in.in.h:2 src/callbacks.c:143
 msgid "View current processes and monitor system state"
 msgstr "Zobrazit aktuální procesy a sledovat stav systému"
 
-#: src/callbacks.c:119
+#: src/callbacks.c:127
 msgid "Jorgen Scheibengruber - nicer devices treeview"
 msgstr "Jorgen Scheibengruber - hezčí stromový pohled na zařízení"
 
-#: src/callbacks.c:120
+#: src/callbacks.c:128
 msgid "Benoît Dejean - maintainer"
 msgstr "Benoît Dejean - správce"
 
-#: src/callbacks.c:143
+#: src/callbacks.c:151
 msgid "translator-credits"
 msgstr "Miloslav Trmač <mitr@volny.cz>"
+
+#. translators: primary alert message
+#: src/favorites.c:345
+msgid "No hidden processes"
+msgstr "Žádné skryté procesy"
+
+#. translators: secondary alert message
+#: src/favorites.c:352
+msgid ""
+"There are no hidden processes in the list. To show all running processes, "
+"select the \"All processes\" option in the main window."
+msgstr ""
+"V seznamu nejsou žádné skryté procesy. Všechny běžící procesy zobrazíte "
+"zvolením možnosti \"Všechny procesy\" v hlavním okně."
+
+#: src/favorites.c:372
+msgid "Hidden Processes"
+msgstr "Skryté procesy"
+
+#: src/favorites.c:396
+msgid "Currently _hidden processes:"
+msgstr "Momentálně _skryté procesy:"
+
+#: src/favorites.c:418
+msgid "_Remove From List"
+msgstr "_Odstranit ze seznamu"
+
+#: src/favorites.c:427 src/procdialogs.c:277
+msgid "Note:"
+msgstr "Poznámka:"
+
+#: src/favorites.c:428
+msgid ""
+"These are the processes you have chosen to hide. You can reshow a process by "
+"removing it from this list."
+msgstr ""
+"Tyto procesy jste se rozhodli skrýt. Proces můžete znovu zobrazit jeho "
+"odstraněním z tohoto seznamu."
 
 #: src/gnome-system-monitor.schemas.in.h:1
 msgid "Column zero saved width"
@@ -66,7 +104,9 @@ msgstr "Implicitní barva grafu odkládacího prostoru"
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
-msgstr "Určuje, které procesy implicitně zobrazovat. 0 je všechny, 1 je uživatele a 2 je aktivní"
+msgstr ""
+"Určuje, které procesy implicitně zobrazovat. 0 je všechny, 1 je uživatele a "
+"2 je aktivní"
 
 #: src/gnome-system-monitor.schemas.in.h:8
 msgid "Main Window height"
@@ -128,42 +168,6 @@ msgstr "Čas v milisekundách mezi aktualizacemi grafů"
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Čas v milisekundách mezi aktualizacemi pohledu na procesy"
 
-#. translators: primary alert message
-#: src/favorites.c:345
-msgid "No hidden processes"
-msgstr "Žádné skryté procesy"
-
-#. translators: secondary alert message
-#: src/favorites.c:352
-msgid ""
-"There are no hidden processes in the list. To show all running processes, "
-"select the \"All processes\" option in the main window."
-msgstr "V seznamu nejsou žádné skryté procesy. Všechny běžící procesy zobrazíte zvolením možnosti \"Všechny procesy\" v hlavním okně."
-
-#: src/favorites.c:372
-msgid "Hidden Processes"
-msgstr "Skryté procesy"
-
-#: src/favorites.c:396
-msgid "Currently _hidden processes:"
-msgstr "Momentálně _skryté procesy:"
-
-#: src/favorites.c:418
-msgid "_Remove From List"
-msgstr "_Odstranit ze seznamu"
-
-#: src/favorites.c:427 src/procdialogs.c:277
-msgid "Note:"
-msgstr "Poznámka:"
-
-#: src/favorites.c:428
-msgid ""
-"These are the processes you have chosen to hide. You can reshow a process by "
-"removing it from this list."
-msgstr ""
-"Tyto procesy jste se rozhodli skrýt. Proces můžete znovu zobrazit jeho "
-"odstraněním z tohoto seznamu."
-
 #: src/infoview.c:77
 msgid "Process Info"
 msgstr "Informace o procesu"
@@ -221,7 +225,7 @@ msgstr "Nízká - nice %d"
 msgid "Very low - nice %d"
 msgstr "Velmi nízká - nice %d"
 
-#: src/interface.c:55 src/interface.c:232
+#: src/interface.c:55 src/interface.c:242
 msgid "End _Process"
 msgstr "_Ukončit proces"
 
@@ -229,7 +233,7 @@ msgstr "_Ukončit proces"
 msgid "Force process to finish normally"
 msgstr "Vynutit normální ukončení procesu"
 
-#: src/interface.c:60 src/interface.c:131 src/procdialogs.c:120
+#: src/interface.c:60 src/interface.c:136 src/procdialogs.c:120
 msgid "_Kill Process"
 msgstr "_Zabít proces"
 
@@ -237,11 +241,11 @@ msgstr "_Zabít proces"
 msgid "Force process to finish immediately"
 msgstr "Vynutit okamžité ukončení procesu"
 
-#: src/interface.c:66 src/interface.c:137
+#: src/interface.c:66 src/interface.c:142
 msgid "_Change Priority..."
 msgstr "_Změnit prioritu..."
 
-#: src/interface.c:66 src/interface.c:137
+#: src/interface.c:66 src/interface.c:142
 msgid "Change the order of priority of process"
 msgstr "Změnit důležitost procesu"
 
@@ -261,11 +265,11 @@ msgstr "_Thready"
 msgid "Show each thread as a separate process"
 msgstr "Zobrazovat každé vlákno jako oddělený proces"
 
-#: src/interface.c:89 src/interface.c:143 src/procdialogs.c:82
+#: src/interface.c:89 src/interface.c:148 src/procdialogs.c:82
 msgid "_Hide Process"
 msgstr "_Skrýt proces"
 
-#: src/interface.c:89 src/interface.c:143
+#: src/interface.c:89 src/interface.c:148
 msgid "Hide process from list"
 msgstr "Skrýt proces ze seznamu"
 
@@ -277,116 +281,128 @@ msgstr "_Skryté procesy"
 msgid "Open the list of currently hidden processes"
 msgstr "Otevřít seznam momentálně skrytých procesů"
 
-#: src/interface.c:100 src/interface.c:149
+#: src/interface.c:100 src/interface.c:154
 msgid "_Memory Maps"
 msgstr "_Mapy paměti"
 
-#: src/interface.c:100 src/interface.c:149
+#: src/interface.c:100 src/interface.c:154
 msgid "Open the memory maps associated with the process"
 msgstr "Otevřít mapy paměti asociované s procesem"
 
-#: src/interface.c:126 src/procdialogs.c:129
+#: src/interface.c:105 src/interface.c:159
+msgid "Open _Files"
+msgstr "Otevřené _soubory"
+
+#: src/interface.c:105
+msgid "View a process' open files"
+msgstr "Zobrazit otevřené soubory procesu"
+
+#: src/interface.c:131 src/procdialogs.c:129
 msgid "_End Process"
 msgstr "_Ukončit proces"
 
-#: src/interface.c:126
+#: src/interface.c:131
 msgid "Force a process to finish normally"
 msgstr "Vynutit normální ukončení procesu"
 
-#: src/interface.c:131
+#: src/interface.c:136
 msgid "Force a process to finish immediately"
 msgstr "Vynutit okamžité ukončení procesu"
 
-#: src/interface.c:189
+#: src/interface.c:159
+msgid "View process' open files"
+msgstr "Zobrazit skryté soubory procesu"
+
+#: src/interface.c:199
 msgid "Sea_rch:"
 msgstr "_Hledat:"
 
-#: src/interface.c:201
+#: src/interface.c:211
 msgid "All processes"
 msgstr "Všechny procesy"
 
-#: src/interface.c:202
+#: src/interface.c:212
 msgid "My processes"
 msgstr "Moje procesy"
 
-#: src/interface.c:203
+#: src/interface.c:213
 msgid "Active processes"
 msgstr "Aktivní procesy"
 
-#: src/interface.c:210
+#: src/interface.c:220
 msgid "Sho_w:"
 msgstr "_Zobrazovat:"
 
-#: src/interface.c:237
+#: src/interface.c:247
 msgid "More _Info"
 msgstr "Více _informací"
 
-#: src/interface.c:325 src/memmaps.c:261
+#: src/interface.c:335 src/memmaps.c:261
 msgid "Device"
 msgstr "Zařízení"
 
-#: src/interface.c:326
+#: src/interface.c:336
 msgid "Directory"
 msgstr "Adresář"
 
-#: src/interface.c:327
+#: src/interface.c:337 src/openfiles.c:187
 msgid "Type"
 msgstr "Typ"
 
-#: src/interface.c:328
+#: src/interface.c:338
 msgid "Total"
 msgstr "Celkem"
 
-#: src/interface.c:329
+#: src/interface.c:339
 msgid "Free"
 msgstr "Volné"
 
-#: src/interface.c:330
+#: src/interface.c:340
 msgid "Used"
 msgstr "Použito"
 
-#: src/interface.c:354
+#: src/interface.c:364
 msgid "CPU History"
 msgstr "Historie CPU"
 
-#: src/interface.c:394
+#: src/interface.c:404
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: src/interface.c:413
+#: src/interface.c:423
 msgid "Memory and Swap History"
 msgstr "Historie použití paměti a odkládacího prostoru"
 
-#: src/interface.c:446
+#: src/interface.c:456
 msgid "User memory:"
 msgstr "Uživatelská paměť:"
 
-#: src/interface.c:455 src/interface.c:487
+#: src/interface.c:465 src/interface.c:497
 msgid "of"
 msgstr "z"
 
-#: src/interface.c:478
+#: src/interface.c:488
 msgid "Used swap:"
 msgstr "Použitý odkládací prostor:"
 
-#: src/interface.c:513 src/procdialogs.c:742
+#: src/interface.c:523 src/procdialogs.c:742
 msgid "Devices"
 msgstr "Zařízení"
 
-#: src/interface.c:641 src/procdialogs.c:567
+#: src/interface.c:651 src/procdialogs.c:567
 msgid "Processes"
 msgstr "Procesy"
 
-#: src/interface.c:647 src/procdialogs.c:654
+#: src/interface.c:657 src/procdialogs.c:654
 msgid "Resources"
 msgstr "Zdroje"
 
-#: src/interface.c:699
+#: src/interface.c:709
 msgid "More _Info >>"
 msgstr "Více _informací >>"
 
-#: src/interface.c:706
+#: src/interface.c:716
 msgid "<< Less _Info"
 msgstr "Méně _informací >>"
 
@@ -422,9 +438,41 @@ msgstr "Inode"
 msgid "Memory Maps"
 msgstr "Mapy paměti"
 
-#: src/memmaps.c:363
+#: src/memmaps.c:363 src/openfiles.c:285
 msgid "Process name:"
 msgstr "Název procesu:"
+
+#: src/openfiles.c:29
+msgid "file"
+msgstr "soubor"
+
+#: src/openfiles.c:31
+msgid "pipe"
+msgstr "roura"
+
+#: src/openfiles.c:33
+msgid "internet connection"
+msgstr "připojení po internetu"
+
+#: src/openfiles.c:35
+msgid "local socket"
+msgstr "místní socket"
+
+#: src/openfiles.c:37
+msgid "unknown type"
+msgstr "neznámý typ"
+
+#: src/openfiles.c:186
+msgid "FD"
+msgstr "FD"
+
+#: src/openfiles.c:188
+msgid "Object"
+msgstr "Objekt"
+
+#: src/openfiles.c:265
+msgid "Open Files"
+msgstr "Otevřené soubory"
 
 #: src/procactions.c:53
 msgid "No such process."
@@ -485,7 +533,9 @@ msgstr "Skrýt vybraný proces?"
 msgid ""
 "Hidden processes are no longer visible in the processes list. You can re-"
 "enable them selecting the \"Hidden Processes\" entry in the View menu."
-msgstr "Skryté procesy už nejsou vidět v seznamu procesů. Můžete je znovu povolit zvolením položky \"Skryté procesy\" v menu Zobrazit."
+msgstr ""
+"Skryté procesy už nejsou vidět v seznamu procesů. Můžete je znovu povolit "
+"zvolením položky \"Skryté procesy\" v menu Zobrazit."
 
 #. translators: primary alert message
 #: src/procdialogs.c:115
@@ -497,7 +547,10 @@ msgstr "Zabít vybraný proces?"
 msgid ""
 "Killing a process, you could destroy your data, break the working session or "
 "create a security risk. Only misbehaving processes should be killed."
-msgstr "Zabitím procesu možná zničíte svá data, přerušíte pracovní sezení nebo způsobíte bezpečnostní riziko. Zabíjet by se měly jen nesprávně fungující procesy."
+msgstr ""
+"Zabitím procesu možná zničíte svá data, přerušíte pracovní sezení nebo "
+"způsobíte bezpečnostní riziko. Zabíjet by se měly jen nesprávně fungující "
+"procesy."
 
 #. translators: primary alert message
 #: src/procdialogs.c:124
@@ -509,7 +562,10 @@ msgstr "Uklnčit vybraný proces?"
 msgid ""
 "Ending a process, you could destroy your data, break the working session or "
 "create a security risk. Only misbehaving processes should be ended."
-msgstr "Zabitím procesu možná zničíte svá data, přerušíte pracovní sezení nebo způsobíte bezpečnostní riziko. Ukončovat by se měly jen nesprávně fungující procesy."
+msgstr ""
+"Zabitím procesu možná zničíte svá data, přerušíte pracovní sezení nebo "
+"způsobíte bezpečnostní riziko. Ukončovat by se měly jen nesprávně fungující "
+"procesy."
 
 #: src/procdialogs.c:158
 msgid "(Very High Priority)"
