@@ -31,7 +31,7 @@ load_graph_draw (LoadGraph *g)
     	return;
     
     g->draw_width = g->disp->allocation.width - 2 * FRAME_WIDTH;
-    g->draw_height = g->disp->allocation.height - 2 * FRAME_WIDTH;
+    g->draw_height = g->disp->allocation.height - 2 * FRAME_WIDTH - 2;
     
     if (!g->pixmap)
 	g->pixmap = gdk_pixmap_new (g->disp->window,
@@ -84,13 +84,13 @@ load_graph_draw (LoadGraph *g)
 	    
 	    gint x1 = i * delx - FRAME_WIDTH;
 	    gint x2 = (i + 1) * delx - FRAME_WIDTH;
-	    gint y1 = g->data[i][j] * g->draw_height - FRAME_WIDTH;
-	    gint y2 = g->data[i+1][j] * g->draw_height - FRAME_WIDTH;
+	    gint y1 = g->data[i][j] * g->draw_height - FRAME_WIDTH -1;
+	    gint y2 = g->data[i+1][j] * g->draw_height - FRAME_WIDTH - 1;
 	    
-	    if (g->data[i+1][j] > 0.0 && g->data[i][j] > 0.0)
-	    gdk_draw_line (g->pixmap, g->gc,
-			   g->draw_width - x2, g->pos[i + 1] - y2,
-			   g->draw_width - x1, g->pos[i] - y1);
+	    if ((g->data[i][j] != -1) && (g->data[i+1][j] != -1))
+	    	gdk_draw_line (g->pixmap, g->gc,
+			       g->draw_width - x2, g->pos[i + 1] - y2,
+			       g->draw_width - x1, g->pos[i] - y1);
 	    g->pos [i] -= g->data [i][j];
 	}
 	g->pos[g->num_points - 1] -= g->data [g->num_points - 1] [j];
@@ -280,7 +280,7 @@ load_graph_unalloc (LoadGraph *g)
 static void
 load_graph_alloc (LoadGraph *g)
 {
-    int i;
+    int i, j;
 
     if (g->allocated)
 	return;
@@ -294,6 +294,12 @@ load_graph_alloc (LoadGraph *g)
     for (i = 0; i < g->num_points; i++) {
 	g->data [i] = g_malloc0 (g->data_size);
 	g->odata [i] = g_malloc0 (g->data_size);
+    }
+    
+    for (j = 0; j < g->n; j++) {
+    	for (i = 0; i < g->num_points; i++) {
+    		g->data [i][j] = -1;
+    	}
     }
 
     g->allocated = TRUE;
