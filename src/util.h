@@ -16,4 +16,10 @@ if(!is_init) { \
 
 #define PROCMAN_CMP(X, Y) (((X) == (Y)) ? 0 : (((X) < (Y)) ? -1 : 1))
 
+
+GtkWidget*
+procman_make_label_for_mmaps_or_ofiles(const char *format,
+					     const char *process_name,
+					     unsigned pid) G_GNUC_INTERNAL;
+
 #endif /* _PROCAMN_UTIL_H_ */

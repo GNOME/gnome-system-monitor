@@ -295,7 +295,6 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 	GtkWidget *tree;
 	ProcInfo *info;
 	gint timer;
-	char *title;
 
 	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 	g_return_if_fail (info);
@@ -321,11 +320,13 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 	gtk_box_pack_start (GTK_BOX (dialog_vbox), cmd_hbox, FALSE, FALSE, 0);
 
 
-	title = g_strdup_printf(_("Files opened by process \"%s\":"),
-				info->name);
-	label = gtk_label_new (title);
+	label = procman_make_label_for_mmaps_or_ofiles (
+		_("Files opened by process \"%s\" (PID %d):"),
+		info->name,
+		info->pid);
+
 	gtk_box_pack_start (GTK_BOX (cmd_hbox),label, FALSE, FALSE, 0);
-	g_free(title);
+
 
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),

@@ -333,7 +333,6 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 	GtkWidget *tree;
 	ProcInfo *info;
 	gint timer;
-	gchar *tmp;
 
 	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 	g_return_if_fail (info);
@@ -356,14 +355,14 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 5);
 	gtk_box_pack_start (GTK_BOX (vbox), dialog_vbox, TRUE, TRUE, 0);
 
-	tmp = g_strdup_printf (_("_Memory maps for process \"%s\":"), info->name);
-	/*FIXME: maybe we could add PID ?*/
-	/* "_Memory maps for process \"%s\" (PID %d):"*/
-	label = gtk_label_new (NULL);
-	gtk_label_set_text_with_mnemonic (GTK_LABEL (label), tmp);
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+
+	label = procman_make_label_for_mmaps_or_ofiles (
+		_("_Memory maps for process \"%s\" (PID %d):"),
+		info->name,
+		info->pid);
+
 	gtk_box_pack_start (GTK_BOX (dialog_vbox), label, FALSE, TRUE, 0);
-	g_free (tmp);
+
 
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
