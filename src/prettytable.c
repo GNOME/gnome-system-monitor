@@ -89,7 +89,7 @@ application_finished (WnckScreen *screen, WnckApplication *app, gpointer data)
 }
 
 
-PrettyTable *pretty_table_new (ProcData *procdata)
+void pretty_table_new (ProcData *procdata)
 {
 	WnckScreen *screen;
 	PrettyTable *pretty_table = g_new(PrettyTable, 1);
@@ -106,7 +106,7 @@ PrettyTable *pretty_table_new (ProcData *procdata)
 
 	pretty_table_add_table (pretty_table, default_table);
 
-	return pretty_table;
+	procdata->pretty_table = pretty_table;
 }
 
 

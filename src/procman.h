@@ -58,7 +58,6 @@ struct _ProcConfig
 	GdkColor	swap_color;
 	GdkColor	bg_color;
 	GdkColor	frame_color;
-	gboolean	simple_view;
 	gint		pane_pos;
 	gint 		num_cpus;
 };
@@ -191,6 +190,7 @@ struct _ProcData
 	GList		*blacklist;
 	gint		blacklist_num;
 	GConfClient	*client;
+	GtkWidget	*app;
 };
 
 void		procman_save_config (ProcData *data);

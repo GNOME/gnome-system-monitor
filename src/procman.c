@@ -32,36 +32,6 @@
 #include "favorites.h"
 #include "callbacks.h"
 
-static GtkWidget *app = NULL;
-static int simple_view = FALSE;
-
-
-static const struct poptOption options[] = {
-  {
-    "simple",
-    's',
-    POPT_ARG_NONE,
-    &simple_view,
-    0,
-    N_("show simple dialog to end processes and logout"),
-    NULL,
-  },
-  {
-    NULL,
-    '\0',
-    0,
-    NULL,
-    0,
-    NULL,
-    NULL
-  }
-};
-
-static void
-load_desktop_files (ProcData *pd)
-{
-	pd->pretty_table = pretty_table_new (pd);
-}
 
 static void
 tree_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
@@ -324,18 +294,6 @@ procman_data_new (GConfClient *client)
 	g_free (color);
 	
 	get_blacklist (pd, client);
-
-	pd->config.simple_view = FALSE;	
-	if (pd->config.simple_view) {
-		pd->config.width = 325;
-		pd->config.height = 400;
-		pd->config.whose_process = 1;
-		pd->config.show_more_info = FALSE;
-		pd->config.show_tree = FALSE;
-		pd->config.show_kill_warning = TRUE;
-		pd->config.show_threads = FALSE;
-		pd->config.current_tab = 0;
-	}	
 	
 	/* Sanity checks */
 	swidth = gdk_screen_width ();
@@ -499,16 +457,12 @@ procman_save_config (ProcData *data)
 	GConfClient *client = data->client;
 	gint width, height, pane_pos;
 
-	if (!data)
-		return;
-		
-	if (data->config.simple_view)
-		return;
+	g_return_if_fail(data != NULL);
 		
 	procman_save_tree_state (data->client, data->tree, "/apps/procman/proctree");
 	procman_save_tree_state (data->client, data->disk_list, "/apps/procman/disktreenew");
 		
-	gdk_window_get_size (app->window, &width, &height);
+	gdk_window_get_size (data->app->window, &width, &height);
 	data->config.width = width;
 	data->config.height = height;
 	
@@ -536,17 +490,13 @@ main (int argc, char *argv[])
 	GnomeProgram *procman;
 	GConfClient *client;
 	ProcData *procdata;
-	/* GValue value = {0,};
-	poptContext pctx;
-	char **args; */
 	
 	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
 	procman = gnome_program_init ("gnome-system-monitor", VERSION, 
-				      LIBGNOMEUI_MODULE, argc, argv, 
-			    	      GNOME_PARAM_POPT_TABLE, options, 
+				      LIBGNOMEUI_MODULE, argc, argv,
 				      GNOME_PARAM_APP_DATADIR,DATADIR, NULL);
 	gtk_window_set_default_icon_name ("procman");
 		    
@@ -554,34 +504,20 @@ main (int argc, char *argv[])
 			    
 	client = gconf_client_get_default ();
 	gconf_client_add_dir(client, "/apps/procman", GCONF_CLIENT_PRELOAD_NONE, NULL);
-        		    
-	/*g_value_init (&value, G_TYPE_POINTER);
-  	g_object_get_property (G_OBJECT(procman),
-                               GNOME_PARAM_POPT_CONTEXT, &value);
-        (poptContext)pctx = g_value_get_pointer (&value);
-                               
-	args = (char**) poptGetArgs (pctx);
-	poptFreeContext(pctx);*/
 	
 	glibtop_init ();
 	
 	procdata = procman_data_new (client);
 	procdata->client = client;
-	
-	if (procdata->config.simple_view) 
-		app = create_simple_view_dialog (procdata);
-	else 
-		app = create_main_window (procdata);
-	
-	load_desktop_files (procdata);
+	pretty_table_new (procdata);
+
+	create_main_window (procdata);
 	
 	proctable_update_all (procdata);
 		 
-	
-	if (!app)
-		return 1;  
+	g_return_val_if_fail(procdata->app != NULL, 1);
 			
- 	gtk_widget_show (app);	
+ 	gtk_widget_show (procdata->app);
  	
 	gtk_main ();
 	

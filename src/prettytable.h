@@ -7,7 +7,7 @@
 
 
 void*		prettytable_load_async (void *data);
-PrettyTable*	pretty_table_new (ProcData *procdata);
+void		pretty_table_new (ProcData *procdata);
 gint 		pretty_table_load_path (PrettyTable *pretty_table, gchar *path, 
 					gboolean recursive); 
 void 		pretty_table_add_table (PrettyTable *pretty_table, const gchar * const table[]);

@@ -872,6 +872,8 @@ proctable_update_list (ProcData * const procdata)
 	refresh_list (procdata, pid_list, proclist.number);
 
 	g_free (pid_list);
+
+	/* proclist.number == g_list_length(procdata->info) == g_hash_table_size(procdata->pids) */
 }
 
 
