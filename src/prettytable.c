@@ -66,6 +66,9 @@ PrettyTable *pretty_table_new (void) {
 	path = gnome_datadir_file ("gnome/ximian");
 	pretty_table_load_path (pretty_table, path, TRUE);
 	g_free (path);
+	path = gnome_datadir_file ("applets");
+	pretty_table_load_path (pretty_table, path, TRUE);
+	g_free (path);
 	
 	pretty_table_add_table (pretty_table, default_table);
 
@@ -76,7 +79,7 @@ gint pretty_table_load_path (PrettyTable *pretty_table, gchar *path, gboolean re
 	DIR *dh;
 	struct dirent *file;
 	struct stat filestat;
-	gchar *full_path, *tmp1, *tmp2, *tmp3, *tmp4;
+	gchar *full_path;
 	GnomeDesktopEntry *entry;
 
 	g_return_val_if_fail (path, 0);
@@ -97,6 +100,7 @@ gint pretty_table_load_path (PrettyTable *pretty_table, gchar *path, gboolean re
 			}
 			entry = gnome_desktop_entry_load (full_path);
 			if (entry && entry->exec) {
+				gchar *tmp1, *tmp2, *tmp3, *tmp4;
 				tmp1 = g_strdup (entry->exec[0]);
 				if (strlen (tmp1) > 15) /* libgtop seems to report only 15 characters of the command */
 					tmp1[15] = '\0';
@@ -107,10 +111,14 @@ gint pretty_table_load_path (PrettyTable *pretty_table, gchar *path, gboolean re
 				g_hash_table_insert (pretty_table->cmdline_to_prettyicon, tmp1, tmp3);
 				tmp4 = g_strdup (tmp2);
 				g_strdown (tmp4);
-				g_hash_table_insert (pretty_table->name_to_prettyicon, tmp4, tmp3);
-				g_hash_table_insert (pretty_table->name_to_prettyname, tmp4, tmp2);
-				gnome_desktop_entry_free (entry);
+				g_hash_table_insert (pretty_table->name_to_prettyicon, 
+						     tmp4, tmp3);
+				g_hash_table_insert (pretty_table->name_to_prettyname, 
+						     tmp4, tmp2);				
+				
 			}
+			if (entry)
+				gnome_desktop_entry_free (entry);
 
 			g_free (full_path);
 		}
@@ -135,17 +143,25 @@ void pretty_table_add_table (PrettyTable *pretty_table, const gchar *table[]) {
 	*/
 	gint i = 0;
 	gchar *command, *prettyname, *prettyicon;
+	gchar *text;
 	
 	g_hash_table_freeze (pretty_table->cmdline_to_prettyname);
 
 	while (table[i] && table[i + 1] && table[i + 2]) {
-		command = g_strdup (table[i]); /* pretty_table_free frees all string in the tables */
-		prettyname = g_strdup (table[i + 1]); /* pretty_table_free frees all string in the tables */
-		prettyicon = g_malloc (strlen (table[i + 2]) + strlen (gnome_datadir_file ("pixmaps/")) + 1);
-		sprintf (prettyicon, "%s%s", gnome_datadir_file ("pixmaps/"), table[i + 2]);
+		/* pretty_table_free frees all string in the tables */
+		command = g_strdup (table[i]); 
+		/* pretty_table_free frees all string in the tables */
+		prettyname = g_strdup (table[i + 1]);
+		text = gnome_datadir_file ("pixmaps/");
+		if (text) {
+			prettyicon = g_malloc (strlen (table[i + 2]) + strlen (text) + 1);
+			sprintf (prettyicon, "%s%s", text, table[i + 2]);
+			g_hash_table_insert (pretty_table->cmdline_to_prettyicon, 
+					     command, prettyicon);
+			g_free (text);
+		}
 		g_hash_table_insert (pretty_table->cmdline_to_prettyname, command, prettyname);
-		g_hash_table_insert (pretty_table->cmdline_to_prettyicon, command, prettyicon);
-
+		
 		i += 3;
 	}
 
@@ -224,7 +240,7 @@ void free_key (gpointer key, gpointer value, gpointer data) {
 void pretty_table_free (PrettyTable *pretty_table) {
 	if (!pretty_table)
 		return;
-
+	return;
 	g_hash_table_foreach (pretty_table->cmdline_to_prettyname, free_entry, NULL);
 	g_hash_table_destroy (pretty_table->cmdline_to_prettyname);
 	g_hash_table_foreach (pretty_table->cmdline_to_prettyicon, free_value, NULL);
