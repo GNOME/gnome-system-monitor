@@ -22,34 +22,12 @@
 #  include <config.h>
 #endif
 
-#include <gal/e-table/e-tree-memory.h>
-#include <gal/e-table/e-tree-memory-callbacks.h>
-#include <gal/e-table/e-tree-scrolled.h>
-#include <gal/e-table/e-cell-text.h>
 #include "favorites.h"
-
-#define SPEC "<ETableSpecification cursor-mode=\"line\" selection-mode=\"browse\" draw-focus=\"true\" no-headers=\"true\">                    	       \
-  <ETableColumn model_col=\"0\" _title=\" \"   expansion=\"1.0\" minimum_width=\"20\" resizable=\"true\" cell=\"blacklist\" compare=\"string\"/> \
-  	<ETableState> \
-        	<column source=\"0\"/> \
-	        <grouping> <leaf column=\"0\" ascending=\"true\"/> </grouping>    \
-        </ETableState> \
-</ETableSpecification>"
+#include "proctable.h"
 
 GtkWidget *blacklist_dialog = NULL;
-GtkWidget *tree;
-ETreeMemory *memory;
-ETreePath root_node;
-gint initial_blacklist_num; /* defined in order to prune off entries from config file */
-
-void
-add_to_favorites (ProcData *procdata, gchar *name)
-{
-	gchar *favorite = g_strdup (name);
-	procdata->favorites = g_list_append (procdata->favorites, favorite);
-
-}
-
+GtkWidget *proctree = NULL;
+gint initial_blacklist_num = 0; /* defined in order to prune off entries from config file */
 
 void
 add_to_blacklist (ProcData *procdata, gchar *name)
@@ -61,45 +39,21 @@ add_to_blacklist (ProcData *procdata, gchar *name)
 }
 
 void
-remove_from_favorites (ProcData *procdata, gchar *name)
-{
-
-
-}
-
-void
 remove_from_blacklist (ProcData *procdata, gchar *name)
 {
-
-
-	procdata->blacklist = g_list_remove (procdata->blacklist, name);
-	procdata->blacklist_num --;
-}
-
-
-gboolean
-is_process_a_favorite (ProcData *procdata, gchar *name)
-{
-	GList *list = procdata->favorites;
+	GList *list = procdata->blacklist;
 	
-	if (!list)
-	{
-		return FALSE;
-	}
-	
-	while (list)
-	{
-		gchar *favorite = list->data;
-		if (!g_strcasecmp (favorite, name))
-			return TRUE;
+	while (list) {
+		if (!g_strcasecmp (list->data, name)) {
+			procdata->blacklist = g_list_remove (procdata->blacklist, list->data);
+			procdata->blacklist_num --;
+			return;
+		}
 		
 		list = g_list_next (list);
 	}
 	
-	return FALSE;
-
 }
-
 
 gboolean
 is_process_blacklisted (ProcData *procdata, gchar *name)
@@ -124,25 +78,8 @@ is_process_blacklisted (ProcData *procdata, gchar *name)
 
 }
 
-void save_favorites (ProcData *procdata)
-{
-
-	GList *list = procdata->favorites;
-	gint i = 0;
-	
-	while (list)
-	{
-		gchar *name = list->data;
-		gchar *config = g_strdup_printf ("%s%d", "procman/Favorites/favorite", i);
-		gnome_config_set_string (config, name);
-		g_free (config); 
-		i++;
-		list = g_list_next (list);
-	}
-}
-
-
-void save_blacklist (ProcData *procdata)
+void 
+save_blacklist (ProcData *procdata, GConfClient *client)
 {
 
 	GList *list = procdata->blacklist;
@@ -151,53 +88,34 @@ void save_blacklist (ProcData *procdata)
 	while (list)
 	{
 		gchar *name = list->data;
-		gchar *config = g_strdup_printf ("%s%d", "procman/Blacklist/process", i);
-		gnome_config_set_string (config, name);
+		gchar *config = g_strdup_printf ("%s%d", "/apps/procman/process", i);
+		gconf_client_set_string (client, config, name, NULL);
 		g_free (config); 
 		i++;
+		
 		list = g_list_next (list);
 	}
 	
 	for (i = initial_blacklist_num; i >= procdata->blacklist_num; i--)
 	{
-		gchar *config = g_strdup_printf ("%s%d", "procman/Blacklist/process", i);
-		gnome_config_clean_key (config);
+		gchar *config = g_strdup_printf ("%s%d", "/apps/procman/process", i);
+		gconf_client_unset (client, config, NULL);
 		g_free (config);
 	} 
+
 }
 
-
-void get_favorites (ProcData *procdata)
+void get_blacklist (ProcData *procdata, GConfClient *client)
 {
 	gint i = 0;
 	gboolean done = FALSE;
 	
 	while (!done)
 	{
-		gchar *config = g_strdup_printf ("%s%d", "procman/Favorites/favorite", i);
-		gchar *favorite;
-		
-		favorite = gnome_config_get_string (config);
-		if (favorite)
-			add_to_favorites (procdata, favorite);
-		else
-			done = TRUE;
-		i++;
-	}
-	
-} 
-
-void get_blacklist (ProcData *procdata)
-{
-	gint i = 0;
-	gboolean done = FALSE;
-	
-	while (!done)
-	{
-		gchar *config = g_strdup_printf ("%s%d", "procman/Blacklist/process", i);
+		gchar *config = g_strdup_printf ("%s%d", "/apps/procman/process", i);
 		gchar *process;
 		
-		process = gnome_config_get_string (config);
+		process = gconf_client_get_string (client, config, NULL);
 		g_free (config);
 		if (process)
 		{
@@ -211,180 +129,104 @@ void get_blacklist (ProcData *procdata)
 	
 	procdata->blacklist_num = i - 1;
 	initial_blacklist_num = i - 1;
-	
-}
 
-
-static GdkPixbuf *
-get_icon (ETreeModel *etm, ETreePath path, void *data)
-{
-	/* No icon, since the cell tree renderer takes care of the +/- icons itself. */
-	return NULL;
-}
-
-static int
-get_columns (ETreeModel *table, void *data)
-{
-	return 1;
-}
-
-
-static void *
-get_value (ETreeModel *model, ETreePath path, int column, void *data)
-{
-	gchar *string;
-	
-	string = e_tree_memory_node_get_data (memory, path);
-
-	return string;
-}
-
-static void
-set_value (ETreeModel *model, ETreePath path, int col, const void *value, void *data)
-{
-
-}	
-
-static gboolean
-get_editable (ETreeModel *model, ETreePath path, int column, void *data)
-{
-	return FALSE;
-}
-
-static void *
-duplicate_value (ETreeModel *model, int column, const void *value, void *data)
-{
-	return g_strdup (value);
-	
-}
-
-static void
-free_value (ETreeModel *model, int column, void *value, void *data)
-{
-	g_free (value);
-	
-}
-
-static void *
-initialize_value (ETreeModel *model, int column, void *data)
-{
-	return g_strdup ("");
-	
-}
-
-static gboolean
-value_is_empty (ETreeModel *model, int column, const void *value, void *data)
-{
-	return !(value && *(char *)value);
-	
-}
-
-static char *
-value_to_string (ETreeModel *model, int column, const void *value, void *data)
-{
-	return g_strdup (value);
-	
 }
 
 static void 
-fill_tree_with_info (ProcData *procdata)
+fill_tree_with_info (ProcData *procdata, GtkWidget *tree)
 {
 	GList *blacklist = procdata->blacklist;
+	GtkTreeModel *model;
+	GtkTreeIter row;
 	
-	if (!memory)
-		return;
-		
-	root_node = e_tree_memory_node_insert (memory, NULL, 0, NULL);
-	e_tree_root_node_set_visible (E_TREE(tree), FALSE);
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
 	
 	/* add the blacklist */
 	while (blacklist)
 	{
-		e_tree_memory_node_insert (memory, root_node, 0, blacklist->data);
+		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0);
+		gtk_tree_store_set (GTK_TREE_STORE (model), &row, 0, blacklist->data, -1);
 		blacklist = g_list_next (blacklist);
 	}
 }
 
-static ETableExtras *
-new_extras ()
-{
-	ETableExtras *extras;
-	ECell *cell;
-	
-	extras = e_table_extras_new ();
-	
-	cell = e_cell_text_new (NULL, GTK_JUSTIFY_LEFT);
-	e_table_extras_add_cell (extras, "blacklist", cell);
-	
-	return extras;
-}
 
 static GtkWidget *
 create_tree (ProcData *procdata)
 {
 	GtkWidget *scrolled;
-	GtkWidget *e_tree;
-	ETableExtras *extras;
-	ETreeMemory *etmm;
-	ETreeModel *model;
-
-	model = e_tree_memory_callbacks_new (get_icon,
-					     get_columns,
-					     NULL,
-					     NULL,
-					     NULL,
-					     NULL,
-					     get_value,
-					     set_value,
-					     get_editable,
-				    	     duplicate_value,
-				    	     free_value,
-				    	     initialize_value,
-				    	     value_is_empty,
-				    	     value_to_string,
-				    	     NULL);
+	GtkWidget *tree;
+	GtkTreeStore *model;
+	GtkTreeViewColumn *column;
+  	GtkCellRenderer *cell_renderer;
+		
+	scrolled = gtk_scrolled_window_new (NULL, NULL);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+                                  	GTK_POLICY_AUTOMATIC,
+                                  	GTK_POLICY_AUTOMATIC);
 	
-					    	     
-	etmm = E_TREE_MEMORY(model);
-	memory = etmm;
+	model = gtk_tree_store_new (1, G_TYPE_STRING);
 	
-	extras = new_extras ();
+	tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree), TRUE);
+  	g_object_unref (G_OBJECT (model));
+  	
+  	cell_renderer = gtk_cell_renderer_text_new ();
+  	column = gtk_tree_view_column_new_with_attributes ("hello",
+						    	   cell_renderer,
+						     	   "text", 0,
+						     	   NULL);
+	gtk_tree_view_column_set_sort_column_id (column, 0);
+					     	   
+	gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
+	
+	gtk_container_add (GTK_CONTAINER (scrolled), tree);
+	
+	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model),
+					      0,
+					      GTK_SORT_ASCENDING);
+	
+	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tree), FALSE);
+	  	
+	fill_tree_with_info (procdata, tree);
 
-	scrolled = e_tree_scrolled_new (model, extras, SPEC, NULL);
-
-	e_tree = GTK_WIDGET (e_tree_scrolled_get_tree (E_TREE_SCROLLED (scrolled)));
-	tree = e_tree;
-
-	fill_tree_with_info (procdata);
-
+	proctree = tree;
+	
 	return scrolled;
 
-}
-
-static void
-remove_item (ETreePath node, gpointer data)
-{
-	ProcData *procdata = data;
-	gchar *process;
-	
-	process = e_tree_memory_node_get_data (memory, node);
-	remove_from_blacklist (procdata, process);
-	
 }
 
 static void
 remove_button_clicked (GtkButton *button, gpointer data)
 {
 	ProcData *procdata = data;
+	GtkTreeModel *model;
+	GtkTreeSelection *selection;
+	GtkTreeIter iter;
+	gchar *process = NULL;
+	gboolean selected;
 	
-	e_tree_selected_path_foreach (E_TREE (tree), remove_item, procdata);
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (proctree));
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
+	selected = gtk_tree_selection_get_selected (selection, NULL, &iter);
+	if (!selected)
+		return;
+	gtk_tree_model_get (model, &iter, 0, &process, -1);
 	
+	if (process)
+		remove_from_blacklist (procdata, process);
+		
+	proctable_update_all (procdata);
+	
+	gtk_tree_store_clear (GTK_TREE_STORE (model));
+	fill_tree_with_info (procdata, proctree);
+#if 0
 	if (root_node)
 	{
 		e_tree_memory_node_remove (memory, root_node);
 		fill_tree_with_info (procdata);
 	}
-		
+#endif		
 }
 
 static gboolean
@@ -456,8 +298,8 @@ void create_blacklist_dialog (ProcData *procdata)
   		gtk_box_pack_end (GTK_BOX (inner_vbox), hbox, FALSE, FALSE, 0);
   	
   		button = gtk_button_new_with_label (_("Remove From List"));
-  		gtk_misc_set_padding (GTK_MISC (GTK_BUTTON (button)->child), 
-  				      GNOME_PAD_SMALL, -2);
+  		/*gtk_misc_set_padding (GTK_MISC (GTK_BUTTON (button)->child), 
+  				      GNOME_PAD_SMALL, -2);*/
   		gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   		gtk_container_set_border_width (GTK_CONTAINER (button), GNOME_PAD_SMALL);
   	

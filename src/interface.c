@@ -57,11 +57,11 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
 	 cb_renice, NULL, NULL, 0, 0,
 	 'r', GDK_CONTROL_MASK
 	},
-	/*{
+	{
 	 GNOME_APP_UI_ITEM, N_("_Hide Process"), N_("Hide a process"),
 	 cb_hide_process, NULL, NULL, 0, 0,
 	 'h', GDK_CONTROL_MASK
-	}, */
+	}, 
 	GNOMEUIINFO_SEPARATOR,
 	{
 	 GNOME_APP_UI_ITEM, N_("End _Process"), N_("Force a process to finish."),
@@ -88,11 +88,11 @@ static GnomeUIInfo view1_menu_uiinfo[] =
 
 static GnomeUIInfo settings1_menu_uiinfo[] =
 {
-	/*{
+	{
 	 GNOME_APP_UI_ITEM, N_("_Hidden Processes"), N_("View and edit your list of hidden processes"),
 	 cb_show_hidden_processes, NULL, NULL, 0, 0,
 	 'p', GDK_CONTROL_MASK
-	},*/
+	},
 	GNOMEUIINFO_MENU_PREFERENCES_ITEM (cb_preferences_activate, NULL),
 	GNOMEUIINFO_END
 };
@@ -676,11 +676,11 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 	if (!data->config.simple_view) {
 		gtk_widget_set_sensitive (data->infobox, sensitivity);
 		gtk_widget_set_sensitive (edit1_menu_uiinfo[0].widget, sensitivity);
-		/*gtk_widget_set_sensitive (edit1_menu_uiinfo[1].widget, sensitivity);*/
+		gtk_widget_set_sensitive (edit1_menu_uiinfo[1].widget, sensitivity);
 		gtk_widget_set_sensitive (view1_menu_uiinfo[0].widget, sensitivity);
 		gtk_widget_set_sensitive (edit1_menu_uiinfo[2].widget, sensitivity);
 		gtk_widget_set_sensitive (edit1_menu_uiinfo[3].widget, sensitivity);
-		/*gtk_widget_set_sensitive (edit1_menu_uiinfo[4].widget, sensitivity);*/
+		gtk_widget_set_sensitive (edit1_menu_uiinfo[4].widget, sensitivity);
 	}
 }	
 

@@ -20,7 +20,8 @@ procman_SOURCES = \
 	infoview.c infoview.h \
 	procactions.c procactions.h \
 	procdialogs.c procdialogs.h \
-	memmaps.c memmaps.h
+	memmaps.c memmaps.h \
+	favorites.c favorites.h
 
 procman_LDADD =  \
 	@PROCMAN_LIBS@ $(INTLLIBS) $(LIBGTOP_LIBS) 

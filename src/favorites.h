@@ -22,6 +22,7 @@
 
 
 #include "procman.h"
+#include <gconf/gconf-client.h>
 
 void		add_to_favorites (ProcData *procdata, gchar *name);
 
@@ -30,7 +31,7 @@ void		remove_from_favorites (ProcData *procdata, gchar *name);
 gboolean	is_process_a_favorite (ProcData *procdata, gchar *name);
 
 void		save_favorites (ProcData *procdata);
-
+void 		save_blacklist (ProcData *procdata, GConfClient *client);
 void 		get_favorites (ProcData *procdata);
 
 void		add_to_blacklist (ProcData *procdata, gchar *name);
@@ -39,9 +40,7 @@ void		remove_from_blacklist (ProcData *procdata, gchar *name);
 
 gboolean	is_process_blacklisted (ProcData *procdata, gchar *name);
 
-void		save_blacklist (ProcData *procdata);
-
-void 		get_blacklist (ProcData *procdata);
+void 		get_blacklist (ProcData *procdata, GConfClient *client);
 
 void		create_blacklist_dialog (ProcData *procdata);
 

@@ -35,7 +35,7 @@ GtkWidget *renice_dialog = NULL;
 GtkWidget *prefs_dialog = NULL;
 gint new_nice_value = 0;
 int kill_signal = SIGTERM;
-#if 0
+
 static void
 cb_show_hide_message_toggled (GtkToggleButton *button, gpointer data)
 {
@@ -49,27 +49,20 @@ cb_show_hide_message_toggled (GtkToggleButton *button, gpointer data)
 }
 
 static void
-cb_hide_process_clicked (GtkButton *button, gpointer data)
+hide_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 {
 	ProcData *procdata = data;
-	ProcInfo *info;
 	
-	info = e_tree_memory_node_get_data (procdata->memory, 
-					    procdata->selected_node);
-					   
-	add_to_blacklist (procdata, info->cmd);
-	proctable_update_all (procdata);
-
+	if (id == 100) {
+		add_to_blacklist (procdata, procdata->selected_process->cmd);
+		proctable_update_all (procdata);
+	}
+	
+	gtk_widget_destroy (GTK_WIDGET (dialog));
+		
 }
 
-static void
-cb_hide_cancel_clicked (GtkButton *button, gpointer data)
-{
-
-}
-
-
-GtkWidget *
+void
 procdialog_create_hide_dialog (ProcData *data)
 {
 	ProcData *procdata = data;
@@ -77,26 +70,18 @@ procdialog_create_hide_dialog (ProcData *data)
 	GtkWidget *dialog_vbox1;
   	GtkWidget *hbox1;
   	GtkWidget *checkbutton1;
-  	GtkWidget *button5;
-  	GtkWidget *button6;
-  	GtkWidget *dialog_action_area1;
   	gchar *text = _("This action will block a process from being displayed. \n To reshow a process choose Hidden Processes in the Edit menu");
 
-  	/* We create it with an OK button, and then remove the button, to work
-     	around a bug in gnome-libs. */
- 	messagebox1 = gnome_message_box_new (text,
-                              		     GNOME_MESSAGE_BOX_WARNING,
-                              		     GNOME_STOCK_BUTTON_OK, NULL);
-  	gtk_container_remove (GTK_CONTAINER (GNOME_DIALOG (messagebox1)->action_area), 
-  			      GNOME_DIALOG (messagebox1)->buttons->data);
-  	GNOME_DIALOG (messagebox1)->buttons = NULL;
+  	messagebox1 = gtk_message_dialog_new (NULL,
+ 					      GTK_DIALOG_MODAL,
+ 					      GTK_MESSAGE_WARNING,
+ 					      GTK_BUTTONS_CANCEL,
+ 					      text);
   	
   	gtk_window_set_title (GTK_WINDOW (messagebox1), _("Hide Process"));
-  	gtk_window_set_modal (GTK_WINDOW (messagebox1), TRUE);
   	gtk_window_set_policy (GTK_WINDOW (messagebox1), FALSE, FALSE, FALSE);
   
-    	dialog_vbox1 = GNOME_DIALOG (messagebox1)->vbox;
-  	
+    	dialog_vbox1 = GTK_DIALOG (messagebox1)->vbox;
 
   	hbox1 = gtk_hbox_new (FALSE, 0);
   	gtk_widget_show (hbox1);
@@ -107,35 +92,17 @@ procdialog_create_hide_dialog (ProcData *data)
   	gtk_box_pack_end (GTK_BOX (hbox1), checkbutton1, FALSE, FALSE, 0);
     	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbutton1), TRUE);
 
-  	gnome_dialog_append_button (GNOME_DIALOG (messagebox1), _("Hide Process"));
-  	button5 = GTK_WIDGET (g_list_last (GNOME_DIALOG (messagebox1)->buttons)->data);
-  	gtk_widget_show (button5);
-  	GTK_WIDGET_SET_FLAGS (button5, GTK_CAN_DEFAULT);
-
-  	gnome_dialog_append_button (GNOME_DIALOG (messagebox1), GNOME_STOCK_BUTTON_CANCEL);
-  	button6 = GTK_WIDGET (g_list_last (GNOME_DIALOG (messagebox1)->buttons)->data);
-  	gtk_widget_show (button6);
-    	GTK_WIDGET_SET_FLAGS (button6, GTK_CAN_DEFAULT);
-
-  	dialog_action_area1 = GNOME_DIALOG (messagebox1)->action_area;
+  	gtk_dialog_add_button (GTK_DIALOG (messagebox1), _("Hide Process"), 100);
   	
-
-  	gtk_signal_connect (GTK_OBJECT (checkbutton1), "toggled",
-                      	    GTK_SIGNAL_FUNC (cb_show_hide_message_toggled),
-                      	    procdata);
-        gtk_signal_connect (GTK_OBJECT (button5), "clicked",
-                      	    GTK_SIGNAL_FUNC (cb_hide_process_clicked),
-                      	    procdata);
-  	gtk_signal_connect (GTK_OBJECT (button6), "clicked",
-                      	    GTK_SIGNAL_FUNC (cb_hide_cancel_clicked),
-                      	    NULL);
-
-
-  	gtk_widget_grab_default (button6);
-  	return messagebox1;
+  	g_signal_connect (G_OBJECT (checkbutton1), "toggled",
+                      	  G_CALLBACK (cb_show_hide_message_toggled), procdata);
+        g_signal_connect (G_OBJECT (messagebox1), "response",
+        		  G_CALLBACK (hide_dialog_button_pressed), procdata);
+  	
+  	gtk_widget_show_all (messagebox1);
 
 }
-#endif
+
 static void
 cb_show_kill_warning_toggled (GtkToggleButton *button, gpointer data)
 {
@@ -724,23 +691,19 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 		
 	if (title)
 		g_free (title);	
-	g_print ("dialog setup \n");
+	
 	gnome_dialog_editable_enters (GNOME_DIALOG (dialog), GTK_EDITABLE (entry));	
 	retval = gnome_dialog_run_and_close (GNOME_DIALOG (dialog));
-	g_print ("dialog donw \n");
+	
 	if (retval == 0) {
 		password = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
 		
 		if (!password)
-			blank = g_strdup ("");
-		else {
-			blank = g_strdup (password);
-			g_free (password);
-		}
-		
+			password = "";
+		blank = g_strdup (password);
 		if (strlen (blank))
 			memset (blank, ' ', strlen (blank));
-
+			
 		gtk_entry_set_text (GTK_ENTRY (entry), blank);
 		gtk_entry_set_text (GTK_ENTRY (entry), "");
 		g_free (blank);

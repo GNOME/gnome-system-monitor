@@ -36,9 +36,7 @@
 #include "procactions.h"
 #include "procdialogs.h"
 #include "memmaps.h"
-#if 0
 #include "favorites.h"
-#endif
 #include "load-graph.h"
 
 #if 0
@@ -117,7 +115,7 @@ cb_add_to_favorites (GtkMenuItem *menuitem, gpointer data)
 	add_to_favorites (procdata, info->cmd);
 	
 }
-
+#endif
 void		
 cb_show_hidden_processes (GtkMenuItem *menuitem, gpointer data)
 {
@@ -132,26 +130,20 @@ cb_hide_process (GtkMenuItem *menuitem, gpointer data)
 	ProcData *procdata = data;
 	ProcInfo *info;
 	
-	if (!procdata->selected_node)
+	if (!procdata->selected_process)
 		return;
 	
 	if (procdata->config.show_hide_message)
-	{	
-		GtkWidget *dialog;
-		dialog = procdialog_create_hide_dialog (procdata);
-		gtk_widget_show (dialog);
-	}
+		procdialog_create_hide_dialog (procdata);
 	else
 	{
-		info = e_tree_memory_node_get_data (procdata->memory, 
-						    procdata->selected_node);
-		add_to_blacklist (procdata, info->cmd);
+		add_to_blacklist (procdata, procdata->selected_process->cmd);
 		proctable_update_all (procdata);
 	}
 	
 }
 
-#endif
+
 void
 cb_about_activate (GtkMenuItem *menuitem, gpointer user_data)
 {
@@ -287,14 +279,10 @@ popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
 		return;
 	
 	if (procdata->config.show_hide_message)
-	{	
-		/*GtkWidget *dialog;
-		dialog = procdialog_create_hide_dialog (procdata);
-		gtk_widget_show (dialog);*/
-	}
+		procdialog_create_hide_dialog (procdata);
 	else
 	{
-		/*add_to_blacklist (procdata, info->cmd);*/
+		add_to_blacklist (procdata, info->cmd);
 		proctable_update_all (procdata);
 	}
 	
@@ -471,10 +459,8 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
 		if (procdata->config.show_more_info == TRUE)
 			infoview_update (procdata);
 		update_sensitivity (procdata, TRUE);
-		/*if (procdata->config.show_more_info == TRUE)
-			infoview_update (procdata);
-	
-		update_memmaps_dialog (procdata);*/
+		
+		/*update_memmaps_dialog (procdata);*/
 	}
 	else {
 		procdata->selected_process = NULL;

@@ -41,10 +41,9 @@
 #include "prettytable.h"
 #include "util.h"
 #include "infoview.h"
-#if 0
 #include "memmaps.h"
 #include "favorites.h"
-#endif
+
 
 
 gint total_time = 0;
@@ -101,8 +100,8 @@ proctable_new (ProcData *data)
 	GtkTreeStore *model;
 	GtkTreeViewColumn *column;
   	GtkCellRenderer *cell_renderer;
-	static gchar *title[] = {"Icon ", "Process Name", "User", 
-				 "Memory", "% CPU", "ID", "POINTER"};
+	static gchar *title[] = {N_("Icon "), N_("Process Name"), N_("User"), 
+				 N_("Memory"), N_("% CPU"), N_("ID"), "POINTER"};
 	gint i;
 	
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
@@ -126,10 +125,10 @@ proctable_new (ProcData *data)
 	gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 		
 	cell_renderer = gtk_cell_renderer_text_new ();
-  		column = gtk_tree_view_column_new_with_attributes (title[1],
-						    		   cell_renderer,
-						     		   "text", COL_NAME,
-						     		   NULL);
+  	column = gtk_tree_view_column_new_with_attributes (title[1],
+						    	   cell_renderer,
+						     	   "text", COL_NAME,
+						     	   NULL);
 	gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
 	gtk_tree_view_column_set_reorderable (column, TRUE);
@@ -312,6 +311,159 @@ find_parent (ProcData *data, gint pid)
 	return NULL;
 }
 
+
+/* He he. Check to see if the process links to libX11. */
+static gboolean
+is_graphical (ProcInfo *info)
+{
+	glibtop_map_entry *memmaps;
+	glibtop_proc_map procmap;
+	char *string=NULL;
+	gint i;
+	
+	memmaps = glibtop_get_proc_map (&procmap, info->pid);
+	
+	for (i = 0; i < procmap.number; i++) {
+		if (memmaps [i].flags & (1 << GLIBTOP_MAP_ENTRY_FILENAME)) {
+			string = strstr (memmaps[i].filename, "libX11");
+			if (string) {
+				glibtop_free (memmaps);
+				return TRUE;
+			}
+		}
+	}
+	
+	glibtop_free (memmaps);
+	
+	return FALSE;
+}
+
+
+static void
+insert_info_to_tree (ProcInfo *info, ProcData *procdata)
+{
+	GtkTreeModel *model;
+	GtkTreeIter row;
+	gchar *mem;
+	
+	/* Don't show process if it is not running */
+	if (procdata->config.whose_process == RUNNING_PROCESSES && 
+	    (!info->running))
+		return;
+		
+	/* crazy hack to see if process links to libX11 */	
+	/*if (!is_graphical (info))
+		return;*/
+
+
+	/* Don't show processes that user has blacklisted */
+	if (is_process_blacklisted (procdata, info->cmd))
+	{	
+		info->is_blacklisted = TRUE;
+		return;
+	}
+	info->is_blacklisted = FALSE;
+	
+	if (!procdata->config.show_threads && info->is_thread)
+		return; 
+
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
+	if (info->has_parent && procdata->config.show_tree) {
+		GtkTreePath *parent_node = gtk_tree_model_get_path (model, &info->parent_node);
+		
+		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, &info->parent_node, 0);
+		/*if (!gtk_tree_view_row_expanded (GTK_TREE_VIEW (procdata->tree), parent_node))     
+			gtk_tree_view_expand_row (GTK_TREE_VIEW (procdata->tree),
+					  parent_node,
+					  FALSE);*/
+	}	
+	else
+		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0);
+	
+	mem = get_size_string (info->mem);
+	gtk_tree_store_set (GTK_TREE_STORE (model), &row, COL_PIXBUF, info->pixbuf, 
+							  COL_NAME, info->name,
+							  COL_USER, info->user,
+							  COL_MEM, mem,
+							  COL_CPU, info->cpu,
+							  COL_PID, info->pid,
+							  COL_POINTER, info,
+							  -1);
+	g_free (mem);
+	info->node = row;
+	info->visible = TRUE;
+}
+
+
+
+/* Kind of a hack. When a parent process is removed we remove all the info
+** pertaining to the child processes and then readd them later
+*/
+static gboolean
+remove_children_from_tree (GtkTreeModel *model, GtkTreePath *node, GtkTreeIter *iter,
+			   gpointer data)
+{
+#if 0
+	ProcData *procdata = data;
+	ProcInfo *info = e_tree_memory_node_get_data (procdata->memory, node);
+
+	if (!info)
+	{
+		return TRUE;
+	}
+
+	if (info->node == procdata->selected_node)
+	{
+		procdata->selected_node = NULL;
+		/* simulate a "unselected" signal */
+		gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), 
+					 "cursor_activated",
+					  -1, NULL); 					  
+	}
+	procdata->info = g_list_remove (procdata->info, info);
+	proctable_free_info (info);
+#endif	
+	return FALSE;
+		
+}
+
+static void
+remove_info_from_tree (ProcInfo *info, ProcData *procdata)
+{
+	GtkTreeModel *model;
+	
+	/*if (!info->node)
+		return;*/
+	
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
+	
+	/*gtk_tree_model_foreach (model, remove_children_from_tree,
+				procdata);*/
+				
+	gtk_tree_store_remove (GTK_TREE_STORE (model), &info->node);
+	info->visible = FALSE;	
+	
+	#if 0
+	/* Remove any children from the tree. They will then be readded later
+	** in refresh_list
+	*/
+	e_tree_model_node_traverse (procdata->model, info->node, remove_children_from_tree,
+				    procdata);
+	
+	if (info->node == procdata->selected_node)
+	{
+		procdata->selected_node = NULL;
+		/* simulate a "unselected" signal */
+		gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), 
+					 "cursor_activated",
+					  -1, NULL); 
+	}
+	
+	e_tree_memory_node_remove (procdata->memory, info->node);
+	info->node = NULL;
+	#endif
+}
+
 /* return of -1 means the process needs to be removed from the display
 ** return of 0 means the process will remain dislplayed
 ** return of 1 means the process is not displayed and needs to be
@@ -373,27 +525,35 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	if (newinfo->status)
 		g_free (newinfo->status);
 	get_process_status (newinfo, &procstate.state);
-#if 0	
+	
 	is_blacklisted = is_process_blacklisted (procdata, newinfo->cmd);
 	was_blacklisted = newinfo->is_blacklisted;
 	newinfo->is_blacklisted = is_blacklisted;
 	
 	/* Process was previously visible and has been blacklisted since */
-	if (newinfo->visible && is_blacklisted && !was_blacklisted)
+	if (newinfo->visible && is_blacklisted && !was_blacklisted) {
+		remove_info_from_tree (info, procdata);
 		return -1;
+	}
 	/* Process was previously blacklisted but has been knocked from the list
 	** and needs to be added */
-	if (!newinfo->visible && !is_blacklisted && was_blacklisted)
+	if (!newinfo->visible && !is_blacklisted && was_blacklisted) {
+		insert_info_to_tree (info, procdata);
 		return 1;
-
+	}
+#if 0
 	if (procdata->config.whose_process == RUNNING_PROCESSES)
 	{
 		/* process started running */
-		if (newinfo->running && (!newinfo->node))
+		if (newinfo->running && (!newinfo->node)) {
+			insert_info_to_tree (info, procdata);
 			return 1;
+		}
 		/* process was running but not anymore */
-		else if ((!newinfo->running) && newinfo->node)
+		else if ((!newinfo->running) && newinfo->node) {
+			remove_info_from_tree (info, procdata);
 			return -1;
+		}
 	}
 #endif	
 	if (newinfo->visible) {
@@ -408,8 +568,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 		if (pcpu != newinfo->cpu)
 			gtk_tree_store_set (GTK_TREE_STORE (model), &newinfo->node, 
 			    	            COL_CPU, newinfo->cpu,
-			   	            -1);	
-		/*g_print ("%s \n", newinfo->name);*/
+			   	            -1);
 	}
 	newinfo->mem = procmem.size;
 	newinfo->cpu = pcpu;	
@@ -518,159 +677,6 @@ get_info (ProcData *procdata, gint pid)
 	
 	return info;
 }
-
-/* He he. Check to see if the process links to libX11. */
-static gboolean
-is_graphical (ProcInfo *info)
-{
-	glibtop_map_entry *memmaps;
-	glibtop_proc_map procmap;
-	char *string=NULL;
-	gint i;
-	
-	memmaps = glibtop_get_proc_map (&procmap, info->pid);
-	
-	for (i = 0; i < procmap.number; i++) {
-		if (memmaps [i].flags & (1 << GLIBTOP_MAP_ENTRY_FILENAME)) {
-			string = strstr (memmaps[i].filename, "libX11");
-			if (string) {
-				glibtop_free (memmaps);
-				return TRUE;
-			}
-		}
-	}
-	
-	glibtop_free (memmaps);
-	
-	return FALSE;
-}
-
-
-static void
-insert_info_to_tree (ProcInfo *info, ProcData *procdata)
-{
-	GtkTreeModel *model;
-	GtkTreeIter row;
-	gchar *mem;
-	
-	/* Don't show process if it is not running */
-	if (procdata->config.whose_process == RUNNING_PROCESSES && 
-	    (!info->running))
-		return;
-		
-	/* crazy hack to see if process links to libX11 */	
-	/*if (!is_graphical (info))
-		return NULL;*/
-
-#if 0
-	/* Don't show processes that user has blacklisted */
-	if (is_process_blacklisted (procdata, info->cmd))
-	{	
-		info->is_blacklisted = TRUE;
-		return NULL;
-	}
-	info->is_blacklisted = FALSE;
-#endif	
-	if (!procdata->config.show_threads && info->is_thread)
-		return; 
-
-	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-	if (info->has_parent && procdata->config.show_tree) {
-		GtkTreePath *parent_node = gtk_tree_model_get_path (model, &info->parent_node);
-		
-		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, &info->parent_node, 0);
-		/*if (!gtk_tree_view_row_expanded (GTK_TREE_VIEW (procdata->tree), parent_node))     
-			gtk_tree_view_expand_row (GTK_TREE_VIEW (procdata->tree),
-					  parent_node,
-					  FALSE);*/
-	}	
-	else
-		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0);
-	
-	mem = get_size_string (info->mem);
-	gtk_tree_store_set (GTK_TREE_STORE (model), &row, COL_PIXBUF, info->pixbuf, 
-							  COL_NAME, info->name,
-							  COL_USER, info->user,
-							  COL_MEM, mem,
-							  COL_CPU, info->cpu,
-							  COL_PID, info->pid,
-							  COL_POINTER, info,
-							  -1);
-	g_free (mem);
-	info->node = row;
-	info->visible = TRUE;
-}
-
-
-
-/* Kind of a hack. When a parent process is removed we remove all the info
-** pertaining to the child processes and then readd them later
-*/
-static gboolean
-remove_children_from_tree (GtkTreeModel *model, GtkTreePath *node, GtkTreeIter *iter,
-			   gpointer data)
-{
-#if 0
-	ProcData *procdata = data;
-	ProcInfo *info = e_tree_memory_node_get_data (procdata->memory, node);
-
-	if (!info)
-	{
-		return TRUE;
-	}
-
-	if (info->node == procdata->selected_node)
-	{
-		procdata->selected_node = NULL;
-		/* simulate a "unselected" signal */
-		gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), 
-					 "cursor_activated",
-					  -1, NULL); 					  
-	}
-	procdata->info = g_list_remove (procdata->info, info);
-	proctable_free_info (info);
-#endif	
-	return FALSE;
-		
-}
-
-
-static void
-remove_info_from_tree (ProcInfo *info, ProcData *procdata)
-{
-	GtkTreeModel *model;
-	
-	/*if (!info->node)
-		return;*/
-	
-	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-	
-	/*gtk_tree_model_foreach (model, remove_children_from_tree,
-				procdata);*/
-				
-	gtk_tree_store_remove (GTK_TREE_STORE (model), &info->node);	
-	
-	#if 0
-	/* Remove any children from the tree. They will then be readded later
-	** in refresh_list
-	*/
-	e_tree_model_node_traverse (procdata->model, info->node, remove_children_from_tree,
-				    procdata);
-	
-	if (info->node == procdata->selected_node)
-	{
-		procdata->selected_node = NULL;
-		/* simulate a "unselected" signal */
-		gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), 
-					 "cursor_activated",
-					  -1, NULL); 
-	}
-	
-	e_tree_memory_node_remove (procdata->memory, info->node);
-	info->node = NULL;
-	#endif
-}
- 
 
 static void
 refresh_list (ProcData *data, unsigned *pid_list, gint n)

@@ -27,9 +27,7 @@
 #include "interface.h"
 #include "proctable.h"
 #include "prettytable.h"
-#if 0
 #include "favorites.h"
-#endif
 
 GtkWidget *app;
 GConfClient *client;
@@ -262,11 +260,9 @@ procman_data_new (void)
 		
 	pd->config.whose_process = 0;
 	pd->config.show_more_info = FALSE;
-#if 0
-	procman_get_save_files (pd);
 
-	get_blacklist (pd);
-#endif	
+	get_blacklist (pd, client);
+
 	pd->config.simple_view = FALSE;	
 	if (pd->config.simple_view) {
 		pd->config.width = 325;
@@ -317,9 +313,9 @@ procman_save_config (ProcData *data)
 	
 	pane_pos = get_sys_pane_pos ();
 	data->config.pane_pos = pane_pos;
-	g_print ("save width %d \n", width);
+	
 	gconf_client_set_int (client, "/apps/procman/width", data->config.width, NULL);
-	gconf_client_set_int (client, "/apps/procman/height", data->config.height, NULL);
+	gconf_client_set_int (client, "/apps/procman/height", data->config.height, NULL);	
 	gconf_client_set_int (client, "/apps/procman/view_as", data->config.whose_process, NULL);
 	gconf_client_set_bool (client, "/apps/procman/more_info", data->config.show_more_info, NULL);
 	gconf_client_set_bool (client, "/apps/procman/kill_dialog", data->config.show_kill_warning, NULL);
@@ -353,12 +349,12 @@ procman_save_config (ProcData *data)
 	gconf_client_set_int (client, "/apps/procman/swap_red", data->config.swap_color.red, NULL);
 	gconf_client_set_int (client, "/apps/procman/swap_green", data->config.swap_color.green, NULL);
 	gconf_client_set_int (client, "/apps/procman/swap_blue", data->config.swap_color.blue, NULL);
-	
+	save_blacklist (data, client);
+
 	gconf_client_suggest_sync (client, NULL);
 	
-#if 0	
-	save_blacklist (data);
-#endif
+
+	
 }
 
 
@@ -385,10 +381,10 @@ main (int argc, char *argv[])
 	gconf_init (argc, argv, NULL);
 			    
 	client = gconf_client_get_default ();
-	gconf_client_add_dir(client,
+	/*gconf_client_add_dir(client,
                        "/apps/procman",
                        GCONF_CLIENT_PRELOAD_NONE,
-                       NULL);
+                       NULL);*/
         		    
 	/*g_value_init (&value, G_TYPE_POINTER);
   	g_object_get_property (G_OBJECT(procman),
