@@ -41,6 +41,7 @@
 #include "prettytable.h"
 #include "util.h"
 #include "infoview.h"
+#include "interface.h"
 #include "memmaps.h"
 #include "favorites.h"
 
@@ -728,6 +729,8 @@ get_info (ProcData *procdata, gint pid)
 			gchar *name;
 			
 			name = g_strjoin (NULL, info->name, _(" (thread)"), NULL);
+			g_free (info->name);
+			info->name = g_strdup (name);
 			g_free (name);
 			info->is_thread = TRUE;
 		}
