@@ -27,5 +27,5 @@ GtkWidget* 	create_main_window (ProcData *data);
 GtkWidget*	create_simple_view_dialog (ProcData *procdata);
 void		toggle_infoview (ProcData *data);
 void		update_sensitivity (ProcData *data, gboolean sensitivity);
-void            do_popup_menu(ProcData *data, GdkEvent *event);
+void            do_popup_menu(ProcData *data, GdkEventButton *event);
 #endif

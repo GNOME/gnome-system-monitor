@@ -1,5 +1,6 @@
 #include <config.h>
 #include <libgnome/libgnome.h>
+#include <libwnck/libwnck.h>
 #include <dirent.h>
 #include <sys/stat.h>
 #include <stdio.h>
@@ -11,7 +12,8 @@
 void free_entry (gpointer key, gpointer value, gpointer data);
 void free_value (gpointer key, gpointer value, gpointer data);
 void free_key (gpointer key, gpointer value, gpointer data);
-
+#define WNCK_I_KNOW_THIS_IS_UNSTABLE 
+WnckScreen *screen = NULL;
 
 static gboolean
 compare_strings (gconstpointer a, gconstpointer b)
@@ -28,7 +30,7 @@ prettytable_load_async (void *data)
 	ProcData *procdata = (ProcData *)data;
 	PrettyTable *table;
 	
-	table = pretty_table_new ();
+	table = pretty_table_new (procdata);
 	
 	procdata->desktop_load_finished = TRUE;
 	
@@ -36,92 +38,75 @@ prettytable_load_async (void *data)
 	
 }
 
-PrettyTable *pretty_table_new (void) {
+static void
+new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
+{
+	ProcData *procdata = data;
+	GHashTable *hash = procdata->pretty_table->cmdline_to_prettyicon;
+	gint pid;
+	GdkPixbuf *icon = NULL;
+	GList *windows = NULL;
+	WnckWindow *window;
+	
+	windows =  wnck_application_get_windows (app);
+	g_return_if_fail (windows);
+	window = windows->data;
+	
+	g_print ("new app \n");
+	pid = wnck_window_get_pid (window);
+	g_print ("%d \n", pid);
+	if (pid == 0)
+		return;
+		
+	icon = wnck_window_get_icon (window);
+	
+	if (icon) {
+		g_hash_table_insert (hash, g_strdup_printf ("%d", pid), icon);
+	}
+	/* Ugh this is ugly */
+	procdata->desktop_load_finished = TRUE;
+}	
+
+static void
+application_finished (WnckScreen *screen, WnckApplication *app, gpointer data)
+{
+	ProcData *procdata = data;
+	GHashTable *hash = procdata->pretty_table->cmdline_to_prettyicon;
+	gint pid;
+	GdkPixbuf *icon;
+	GList *windows = NULL;
+	WnckWindow *window;
+	return;
+	windows =  wnck_application_get_windows (app);
+	window = windows->data;
+	
+	g_print ("new app closed\n");
+	pid = wnck_window_get_pid (window);
+	g_print ("%d \n", pid);
+	if (pid == 0)
+		return;
+	
+	g_hash_table_remove (hash, &pid);
+	
+}
+
+PrettyTable *pretty_table_new (ProcData *procdata) {
 	PrettyTable *pretty_table = NULL;
 	gchar *path;
 	
+	screen = wnck_screen_get (0);
 	
 	pretty_table = g_malloc (sizeof (PrettyTable));
-
-	pretty_table->cmdline_to_prettyname = g_hash_table_new (g_str_hash, compare_strings);
-	pretty_table->cmdline_to_prettyicon = g_hash_table_new (g_str_hash, compare_strings);
-	pretty_table->name_to_prettyicon = g_hash_table_new (g_str_hash, compare_strings);
-	pretty_table->name_to_prettyname = g_hash_table_new (g_str_hash, compare_strings);
-#if 0
-	path = gnome_datadir_file ("gnome/apps");
-	pretty_table_load_path (pretty_table, path, TRUE);
-	g_free (path);
-	path = gnome_datadir_file ("gnome/ximian");
-	pretty_table_load_path (pretty_table, path, TRUE);
-	g_free (path);	
-	path = gnome_datadir_file ("applets");
-	pretty_table_load_path (pretty_table, path, TRUE);
-	g_free (path);
-#endif	
-	pretty_table_add_table (pretty_table, default_table);
-
+	
+	pretty_table->cmdline_to_prettyicon = g_hash_table_new (g_str_hash, g_str_equal);
+	
+	g_signal_connect (G_OBJECT (screen), "application_opened",
+			  G_CALLBACK (new_application), procdata);
+	g_signal_connect (G_OBJECT (screen), "application_closed",
+			  G_CALLBACK (application_finished), procdata);
 	return pretty_table;
 }
-#if 0
-gint pretty_table_load_path (PrettyTable *pretty_table, gchar *path, gboolean recursive) { /* No ending slash in the path */
-	DIR *dh;
-	struct dirent *file;
-	struct stat filestat;
-	gchar *full_path;
-	GnomeDesktopEntry *entry;
 
-	g_return_val_if_fail (path, 0);
-	g_return_val_if_fail (dh = opendir (path), 0);
-
-	g_hash_table_freeze (pretty_table->cmdline_to_prettyname);
-	g_hash_table_freeze (pretty_table->cmdline_to_prettyicon);
-	g_hash_table_freeze (pretty_table->name_to_prettyicon);
-
-	while ((file = readdir (dh))) {
-		if (file->d_name[0] != '.') { /* This does not only filter out the "."- and ".."-directories , but also all hidden files (It is probably a good idea). */
-			full_path = g_malloc (strlen (file->d_name) + strlen (path) + 2);
-			sprintf (full_path, "%s/%s", path, file->d_name);
-			lstat (full_path, &filestat);
-			if (S_ISDIR(filestat.st_mode)) {
-				if (recursive)
-					pretty_table_load_path (pretty_table, full_path, 1);
-			}
-			entry = gnome_desktop_entry_load (full_path);
-			if (entry && entry->exec) {
-				gchar *tmp1, *tmp2, *tmp3, *tmp4;
-				tmp1 = g_strdup (entry->exec[0]);
-				if (strlen (tmp1) > 15) /* libgtop seems to report only 15 characters of the command */
-					tmp1[15] = '\0';
-
-				tmp2 = g_strdup (entry->name);
-				tmp3 = g_strdup (entry->icon);
-				g_hash_table_insert (pretty_table->cmdline_to_prettyname, tmp1, tmp2);
-				g_hash_table_insert (pretty_table->cmdline_to_prettyicon, tmp1, tmp3);
-				tmp4 = g_strdup (tmp2);
-				g_strdown (tmp4);
-				g_hash_table_insert (pretty_table->name_to_prettyicon, 
-						     tmp4, tmp3);
-				g_hash_table_insert (pretty_table->name_to_prettyname, 
-						     tmp4, tmp2);				
-				
-			}
-			if (entry)
-				gnome_desktop_entry_free (entry);
-			
-
-			g_free (full_path);
-		}
-	}
-
-	g_hash_table_thaw (pretty_table->cmdline_to_prettyname);
-	g_hash_table_thaw (pretty_table->cmdline_to_prettyicon);
-	g_hash_table_thaw (pretty_table->name_to_prettyicon);
-	
-	closedir (dh);
-
-	return 1;
-}
-#endif
 void pretty_table_add_table (PrettyTable *pretty_table, const gchar *table[]) {
 	/* Table format:
 
@@ -176,15 +161,16 @@ gchar *pretty_table_get_name (PrettyTable *pretty_table, const gchar *command) {
 	return NULL;
 }
 
-GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command) 
+GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command, gint pid) 
 {
 	GdkPixbuf *icon = NULL, *tmp_pixbuf = NULL;
 	gchar *icon_path = NULL;
 	GError *error;
+	gint test;
 	
 	if (!pretty_table) 
 		return NULL;
-
+#if 0
 	icon_path = g_hash_table_lookup (pretty_table->cmdline_to_prettyicon, command);
 	if (!icon_path) {
 		gchar *tmp1;
@@ -197,10 +183,37 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command)
 		g_free (tmp1);
 	}
 
-	if (!icon_path) 
-		return NULL;
+	if (!icon_path) {
+		GList *windows = NULL;
+		if (!screen)
+			g_print ("no screen yet \n");
+		windows = wnck_screen_get_windows (screen);
+		
+		if (!windows)
+			g_print ("No windows \n");
+		while (windows) {
+			int wpid = 0;
+			WnckWindow *window = windows->data;
+			
+			wpid = wnck_window_get_pid (window);
+			g_print ("window PID %d \n", wpid);
+			
+			icon_path = "hello";	
+			if (wpid == pid) {
+				tmp_pixbuf = wnck_window_get_icon (window);
+			}
+			windows = g_list_next (windows);
+		}		
+	}
 	
-	tmp_pixbuf = gdk_pixbuf_new_from_file (icon_path, NULL);
+	if (!icon_path)
+		return NULL;
+#endif	
+	tmp_pixbuf = g_hash_table_lookup (pretty_table->cmdline_to_prettyicon, 
+		     g_strdup_printf ("%d", pid));
+	
+	/*if (!tmp_pixbuf)
+		tmp_pixbuf = gdk_pixbuf_new_from_file (icon_path, NULL);*/
 	if (!tmp_pixbuf) 
 		return NULL;
 	

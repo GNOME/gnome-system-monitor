@@ -129,9 +129,21 @@ load_desktop_files (ProcData *pd)
 	}
 	else if (pd->config.load_desktop_files && !pd->config.delay_load) 
 	#endif
-		pd->pretty_table = pretty_table_new ();
+		pd->pretty_table = pretty_table_new (pd);
 	/*else
 		pd->pretty_table = NULL;*/
+}
+
+static gint
+initial_update_tree (gpointer data)
+{
+	ProcData *procdata = data;
+	
+	load_desktop_files (procdata);
+	
+	proctable_update_all (procdata);
+	
+	return FALSE;
 }
 
 static gint 
@@ -355,7 +367,7 @@ main (int argc, char *argv[])
 	GValue value = {0,};
 	poptContext pctx;
 	char **args;
-
+	GTimer *timer = g_timer_new ();
 	
 #ifdef ENABLE_NLS
 	bindtextdomain (PACKAGE, PACKAGE_LOCALE_DIR);
@@ -364,7 +376,9 @@ main (int argc, char *argv[])
 
 	procman = gnome_program_init ("procman", VERSION, LIBGNOMEUI_MODULE, argc, argv, 
 			    	      GNOME_PARAM_POPT_TABLE, options, NULL);
-			    
+	/*gnome_init ("procman", VERSION, argc, argv);*/
+	g_print ("gconf init \n");
+	g_timer_start (timer);		    
 	gconf_init (argc, argv, NULL);
 			    
 	client = gconf_client_get_default ();
@@ -373,26 +387,40 @@ main (int argc, char *argv[])
                        GCONF_CLIENT_PRELOAD_NONE,
                        NULL);
         		    
-	g_value_init (&value, G_TYPE_POINTER);
+	/*g_value_init (&value, G_TYPE_POINTER);
   	g_object_get_property (G_OBJECT(procman),
                                GNOME_PARAM_POPT_CONTEXT, &value);
         (poptContext)pctx = g_value_get_pointer (&value);
                                
 	args = (char**) poptGetArgs (pctx);
-	poptFreeContext(pctx);
-
+	poptFreeContext(pctx);*/
+	g_timer_stop (timer);
+	g_print ("gconf done %f \n", g_timer_elapsed (timer, NULL));
+	g_timer_start (timer);
 	glibtop_init ();
-
+	g_timer_stop (timer);
+	g_print ("glibtop done %f \n", g_timer_elapsed (timer, NULL));
+	g_timer_start (timer);
 	procdata = procman_data_new ();
-
+	g_timer_stop (timer);
+	g_print ("data done %f \n", g_timer_elapsed (timer, NULL));
+	g_timer_start (timer);
 	if (procdata->config.simple_view) 
 		app = create_simple_view_dialog (procdata);
 	else 
 		app = create_main_window (procdata);
-
+	g_timer_stop (timer);
+	g_print ("UI doene %f \n", g_timer_elapsed (timer, NULL));
+	g_timer_start (timer);
 	load_desktop_files (procdata);
-
+	g_print ("desktop files %f \n", g_timer_elapsed (timer, NULL));
+	g_timer_start (timer);
 	proctable_update_all (procdata);
+	/* update in idle to satisfy libwnck */
+	//gtk_idle_add_priority (200, initial_update_tree, procdata); 
+	g_timer_stop (timer);
+	g_print ("table updated %f \n", g_timer_elapsed (timer, NULL));
+	g_timer_destroy (timer);
 	//gtk_tree_view_expand_all (GTK_TREE_VIEW (procdata->tree));
 	if (!app)
 		return 0;  

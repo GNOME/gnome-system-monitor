@@ -53,7 +53,7 @@ static GnomeUIInfo file1_menu_uiinfo[] =
 static GnomeUIInfo edit1_menu_uiinfo[] =
 {
  	{
- 	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), N_("Change the priority of a process"),
+ 	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), N_("Change the importance (nice value) of a process"),
 	 cb_renice, NULL, NULL, 0, 0,
 	 'r', GDK_CONTROL_MASK
 	},
@@ -78,11 +78,11 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
 
 static GnomeUIInfo view1_menu_uiinfo[] =
 {
-	/*{
+	{
 	 GNOME_APP_UI_ITEM, N_("_Memory Maps"), N_("View the memory maps associated with a process"),
 	 cb_show_memory_maps, NULL, NULL, 0, 0,
 	 'm', GDK_CONTROL_MASK
-	},*/
+	},
 	GNOMEUIINFO_END
 };
 
@@ -113,6 +113,57 @@ static GnomeUIInfo menubar1_uiinfo[] =
 	GNOMEUIINFO_END
 };
 
+static GnomeUIInfo view_optionmenu[] = 
+{
+	{
+ 	  GNOME_APP_UI_ITEM, N_("All _Processes"), N_("View processes being run by all users"),
+	 cb_all_process_menu_clicked, NULL, NULL, 0, 0,
+	 't', GDK_CONTROL_MASK
+	},
+	{
+ 	  GNOME_APP_UI_ITEM, N_("_My Processes"), N_("View processes being run by you"),
+	 cb_my_process_menu_clicked, NULL, NULL, 0, 0,
+	 'p', GDK_CONTROL_MASK
+	},
+	{
+ 	  GNOME_APP_UI_ITEM, N_("_Active Processes"), N_("View only active processes"),
+	 cb_running_process_menu_clicked, NULL, NULL, 0, 0,
+	 'o', GDK_CONTROL_MASK
+	},
+	GNOMEUIINFO_END
+};
+
+static GnomeUIInfo popup_menu_uiinfo[] =
+{
+	{
+ 	  GNOME_APP_UI_ITEM, N_("Change Priority ..."), N_("Change the importance (nice value) of a process"),
+	 popup_menu_renice, NULL, NULL, 0, 0,
+	 0, 0
+	},
+	{
+ 	  GNOME_APP_UI_ITEM, N_("Memory Maps"), N_("View the memory maps associated with a process"),
+	 popup_menu_show_memory_maps, NULL, NULL, 0, 0,
+	 0, 0
+	},
+	GNOMEUIINFO_SEPARATOR,
+	{
+ 	  GNOME_APP_UI_ITEM, N_("Hide Process"), N_("Hide a process"),
+	 popup_menu_hide_process, NULL, NULL, 0, 0,
+	 0, 0
+	},
+	GNOMEUIINFO_SEPARATOR,
+	{
+ 	  GNOME_APP_UI_ITEM, N_("End Process"), N_("Force a process to finish"),
+	 popup_menu_end_process, NULL, NULL, 0, 0,
+	 0, 0
+	},
+	{
+ 	  GNOME_APP_UI_ITEM, N_("Kill Process"), N_("Force a process to finish now"),
+	 popup_menu_kill_process, NULL, NULL, 0, 0,
+	 0, 0
+	},
+	GNOMEUIINFO_END
+};
 
 gchar *moreinfolabel = "More _Info >>";
 gchar *lessinfolabel = "<< Less _Info";
@@ -152,6 +203,7 @@ create_proc_view (ProcData *procdata)
 	GtkWidget *sep;
 	GtkWidget *menuitem;
 	guint key;	
+	GTimer *timer = g_timer_new ();
 	
 	vbox1 = gtk_vbox_new (FALSE, 0);
 	
@@ -172,33 +224,20 @@ create_proc_view (ProcData *procdata)
 				    0);*/
 				    
 	gtk_box_pack_start (GTK_BOX (hbox1), search_entry, FALSE, FALSE, 0);
-	/*gtk_signal_connect (GTK_OBJECT (search_entry), "activate",
-			    GTK_SIGNAL_FUNC (cb_search), procdata);*/
-
+	g_signal_connect (G_OBJECT (search_entry), "activate",
+			  G_CALLBACK (cb_search), procdata);
+	g_timer_start (timer);
 	optionmenu1 = gtk_option_menu_new ();
 	gtk_box_pack_end (GTK_BOX (hbox1), optionmenu1, FALSE, FALSE, 0);
   	optionmenu1_menu = gtk_menu_new ();
-  	
-  	glade_menuitem = gtk_menu_item_new_with_label ("All Processes");
-  	gtk_widget_show (glade_menuitem);
-  	gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
-  			    GTK_SIGNAL_FUNC (cb_all_process_menu_clicked), procdata);
-  	gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
-  	
-  	glade_menuitem = gtk_menu_item_new_with_label ("My Processes");
-  	gtk_widget_show (glade_menuitem);
-  	gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
-  			    GTK_SIGNAL_FUNC (cb_my_process_menu_clicked), procdata);
-  	gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
-  	
-  	glade_menuitem = gtk_menu_item_new_with_label ("Running Processes");
-  	gtk_widget_show (glade_menuitem);
-  	gtk_signal_connect (GTK_OBJECT (glade_menuitem), "activate",
-  			    GTK_SIGNAL_FUNC (cb_running_process_menu_clicked), procdata);
-  	gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
- 	
-  	gtk_menu_set_active (GTK_MENU (optionmenu1_menu), procdata->config.whose_process);
+
+  	gnome_app_fill_menu_with_data (GTK_MENU_SHELL (optionmenu1_menu), view_optionmenu,
+  			               NULL, TRUE, 0, procdata);
+
+	gtk_menu_set_active (GTK_MENU (optionmenu1_menu), procdata->config.whose_process);
   	gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu1), optionmenu1_menu);
+  	g_timer_stop (timer);
+  	g_print ("optionmenu done %f \n", g_timer_elapsed (timer, NULL));
   	
   	label = gtk_label_new (NULL);
 	key = gtk_label_parse_uline (GTK_LABEL (label), "Vie_w");
@@ -212,15 +251,19 @@ create_proc_view (ProcData *procdata)
 	
 	gtk_widget_show_all (hbox1);
 	
+	g_timer_start (timer);
 	scrolled = proctable_new (procdata);
 	if (!scrolled)
 		return NULL;
 	/*gtk_widget_set_usize (scrolled, 400, 400);*/
 	gtk_box_pack_start (GTK_BOX (vbox1), scrolled, TRUE, TRUE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (scrolled), GNOME_PAD_SMALL);
+	g_timer_stop (timer);
+	g_print ("table created %f \n", g_timer_elapsed (timer, NULL));
 	
 	gtk_widget_show_all (scrolled);
-
+	
+	g_timer_start (timer);
 	infobox = infoview_create (procdata);
 	gtk_box_pack_start (GTK_BOX (vbox1), infobox, FALSE, FALSE, 0);
 
@@ -253,64 +296,15 @@ create_proc_view (ProcData *procdata)
 			  G_CALLBACK (cb_info_button_pressed), procdata);
 	
 	gtk_widget_show_all (hbox2);
-#if 0	
-	gtk_signal_connect (GTK_OBJECT (endprocessbutton), "clicked",
-			    GTK_SIGNAL_FUNC (cb_end_process_button_pressed), procdata);
+	g_timer_stop (timer);
+	g_print ("info bottm butonss new %f \n", g_timer_elapsed (timer, NULL));
 	
-			    
 	/* create popup_menu */
  	popup_menu = gtk_menu_new ();
-
-	/* Create new menu items */
-	lbl_renice = gtk_menu_item_new_with_label (_("Change Priority ..."));
-        gtk_widget_show (lbl_renice);
-        gtk_signal_connect (GTK_OBJECT (lbl_renice),"activate",
-                            GTK_SIGNAL_FUNC(popup_menu_renice),
-                            procdata);
-        gtk_menu_append (GTK_MENU (popup_menu), lbl_renice);
-	lbl_mem_maps = gtk_menu_item_new_with_label (_("Memory Maps"));
-	gtk_widget_show (lbl_mem_maps);
-	gtk_signal_connect (GTK_OBJECT (lbl_mem_maps),"activate",
-			    GTK_SIGNAL_FUNC(popup_menu_show_memory_maps),
-			    procdata);
-	gtk_menu_append (GTK_MENU (popup_menu), lbl_mem_maps);
-	sep = gtk_menu_item_new();
-	gtk_widget_show (sep);
-	gtk_menu_append (GTK_MENU (popup_menu), sep);
-	lbl_hide = gtk_menu_item_new_with_label (_("Hide Process"));
-	gtk_widget_show (lbl_hide);
-	gtk_signal_connect (GTK_OBJECT (lbl_hide),"activate",
-                            GTK_SIGNAL_FUNC(popup_menu_hide_process),
-                            procdata);
-	gtk_menu_append (GTK_MENU (popup_menu), lbl_hide);
-	sep = gtk_menu_item_new();
-	gtk_widget_show (sep);
-	gtk_menu_append (GTK_MENU (popup_menu), sep);
-        lbl_kill = gtk_menu_item_new_with_label (_("End Process"));
-        gtk_widget_show (lbl_kill);
-        gtk_signal_connect (GTK_OBJECT (lbl_kill),"activate",
-			    GTK_SIGNAL_FUNC(popup_menu_end_process),
-			    procdata);
-        gtk_menu_append (GTK_MENU (popup_menu), lbl_kill);
-        menuitem = gtk_menu_item_new_with_label (_("Kill Process"));
-        gtk_widget_show (menuitem);
-        gtk_signal_connect (GTK_OBJECT (menuitem),"activate",
-			    GTK_SIGNAL_FUNC(popup_menu_kill_process),
-			    procdata);
-        gtk_menu_append (GTK_MENU (popup_menu), menuitem);
-        sep = gtk_menu_item_new();
-	gtk_widget_show (sep);
-	gtk_menu_append (GTK_MENU (popup_menu), sep);
-        menuitem = gtk_menu_item_new_with_label (_("About This Process"));
-        gtk_widget_show (menuitem);
-        gtk_signal_connect (GTK_OBJECT (menuitem),"activate",
-			    GTK_SIGNAL_FUNC(popup_menu_about_process),
-			    procdata);
-        gtk_menu_append (GTK_MENU (popup_menu), menuitem);
-	
-	/* Make the menu visible */
-        gtk_widget_show (popup_menu);
-#endif      
+ 	gnome_app_fill_menu_with_data (GTK_MENU_SHELL (popup_menu), popup_menu_uiinfo,
+  			               NULL, TRUE, 0, procdata);
+	gtk_widget_show (popup_menu);
+      
         return vbox1;
 }
 
@@ -487,48 +481,60 @@ create_main_window (ProcData *procdata)
 	GtkWidget *vbox1;
 	GtkWidget *sys_box;
 	GtkWidget *appbar1;
+	GTimer *timer = g_timer_new ();
 
+	g_timer_start (timer);
 	app = gnome_app_new ("procman", _("Procman System Monitor"));
 	/*accel = gtk_accel_group_new ();
 	gtk_accel_group_attach (accel, GTK_OBJECT (app));
 	gtk_accel_group_unref (accel);*/
-
+	g_timer_stop (timer);
+	g_print ("app new %f \n", g_timer_elapsed (timer, NULL));
 
 	width = procdata->config.width;
 	height = procdata->config.height;
 	gtk_window_set_default_size (GTK_WINDOW (app), width, height);
 	gtk_window_set_policy (GTK_WINDOW (app), TRUE, TRUE, TRUE);
 
-	
+	g_timer_start (timer);
 	gnome_app_create_menus_with_data (GNOME_APP (app), menubar1_uiinfo, procdata);
-
+	g_timer_stop (timer);
+	g_print ("menus new %f \n", g_timer_elapsed (timer, NULL));
 	
 	notebook = gtk_notebook_new ();
 	gtk_container_set_border_width (GTK_CONTAINER (notebook), GNOME_PAD_SMALL);
 
-	
+	g_timer_start (timer);
 	vbox1 = create_proc_view (procdata);
 	tab_label1 = gtk_label_new (_("Process Listing"));
 	gtk_widget_show (tab_label1);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox1, tab_label1);
-
+	g_timer_stop (timer);
+	g_print ("proc view created %f \n", g_timer_elapsed (timer, NULL));
+	
+	g_timer_start (timer);
 	sys_box = create_sys_view (procdata);
 	gtk_widget_show (sys_box);
 	tab_label2 = gtk_label_new ("System Monitor");
 	gtk_widget_show (tab_label2);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label2);
+	g_timer_stop (timer);
+	g_print ("sys view created %f \n", g_timer_elapsed (timer, NULL));
 	
+	g_timer_start (timer);
 	appbar1 = gnome_appbar_new (FALSE, TRUE, GNOME_PREFERENCES_NEVER);
 	gnome_app_set_statusbar (GNOME_APP (app), appbar1);
-
+	g_timer_stop (timer);
+	g_print ("appbar created %f \n", g_timer_elapsed (timer, NULL));
 	
 	g_signal_connect (G_OBJECT (app), "delete_event",
                           G_CALLBACK (cb_app_delete),
                           procdata);
-
+	g_timer_start (timer);
 	gnome_app_install_menu_hints (GNOME_APP (app), menubar1_uiinfo);
-
-
+	g_timer_stop (timer);
+	g_print ("menu hints %f \n", g_timer_elapsed (timer, NULL));
+	g_timer_destroy (timer);
 #if 0
         gtk_signal_connect (GTK_OBJECT (procdata->tree), "cursor_activated",
 			    GTK_SIGNAL_FUNC (cb_table_selected), procdata);
@@ -689,26 +695,21 @@ toggle_infoview (ProcData *data)
  					    0);*/
 	}
 }
-#if 0
-void do_popup_menu (ProcData *data, GdkEvent *event)
+
+void do_popup_menu (ProcData *data, GdkEventButton *event)
 {
 
-	/* Define all variables */
-        GdkEventButton *event_button;
-
-	/* Make the menu visible one right-button click*/
-        if (event->type == GDK_BUTTON_PRESS)
+	if (event->type == GDK_BUTTON_PRESS)
         {
-                event_button = (GdkEventButton *) event;
-                if (event_button->button == 3)
+                if (event->button == 3)
                 {
-                        gtk_menu_popup (GTK_MENU (popup_menu), NULL, NULL,
-                                        NULL, NULL, event_button->button,
-                                        event_button->time);
+                	gtk_menu_popup (GTK_MENU (popup_menu), NULL, NULL,
+                                        NULL, NULL, event->button,
+                                        event->time);
                 }
         }
 }
-#endif
+
 void
 update_sensitivity (ProcData *data, gboolean sensitivity)
 {
@@ -716,11 +717,11 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 	
 	if (!data->config.simple_view) {
 		gtk_widget_set_sensitive (data->infobox, sensitivity);
-		/*gtk_widget_set_sensitive (edit1_menu_uiinfo[0].widget, sensitivity);
+		gtk_widget_set_sensitive (edit1_menu_uiinfo[0].widget, sensitivity);
 		gtk_widget_set_sensitive (edit1_menu_uiinfo[1].widget, sensitivity);
-		gtk_widget_set_sensitive (view1_menu_uiinfo[0].widget, sensitivity);
+		/*gtk_widget_set_sensitive (view1_menu_uiinfo[0].widget, sensitivity);*/
 		gtk_widget_set_sensitive (edit1_menu_uiinfo[3].widget, sensitivity);
-		gtk_widget_set_sensitive (edit1_menu_uiinfo[4].widget, sensitivity);*/
+		/*gtk_widget_set_sensitive (edit1_menu_uiinfo[4].widget, sensitivity);*/
 	}
 }	
 

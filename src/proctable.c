@@ -40,8 +40,8 @@
 #include "callbacks.h"
 #include "prettytable.h"
 #include "util.h"
-#if 0
 #include "infoview.h"
+#if 0
 #include "memmaps.h"
 #include "favorites.h"
 #endif
@@ -54,6 +54,43 @@ gint total_time_last_meter = 0;
 gint cpu_time_last = 0;
 gint cpu_time = 0;
 gfloat pcpu_last = 0.0;
+
+static gint
+sort_ints (GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer data)
+{
+	ProcInfo *infoa = NULL, *infob = NULL;
+	gint col = GPOINTER_TO_INT (data);
+	
+	gtk_tree_model_get (model, a, COL_POINTER, &infoa, -1);
+	gtk_tree_model_get (model, b, COL_POINTER, &infob, -1);
+	g_return_val_if_fail (infoa, 0);
+	g_return_val_if_fail (infob, 0);
+	
+	switch (col) {
+	case COL_MEM:
+		if (infoa->mem > infob->mem)
+			return -1;
+		else
+			return 1;
+		break;
+	case COL_CPU:
+		if (infoa->cpu > infob->cpu)
+			return -1;
+		else
+			return 1;
+		break;
+	case COL_PID:
+		if (infoa->pid > infob->pid)
+			return -1;
+		else
+			return 1;
+		break;
+	default:
+		return 0;
+		break;
+	}		
+	
+}
 
 GtkWidget *
 proctable_new (ProcData *data)
@@ -109,10 +146,31 @@ proctable_new (ProcData *data)
 		gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
 		gtk_tree_view_column_set_reorderable (column, TRUE);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
+		if (i == 3)
+			gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
+							 i,
+							 sort_ints,
+							 GINT_TO_POINTER (i),
+							 NULL);
 	}
 	
 	gtk_container_add (GTK_CONTAINER (scrolled), proctree);
 	
+	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
+					 COL_MEM,
+					 sort_ints,
+					 GINT_TO_POINTER (COL_MEM),
+					 NULL);
+	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
+					 COL_CPU,
+					 sort_ints,
+					 GINT_TO_POINTER (COL_CPU),
+					 NULL);
+	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
+					 COL_PID,
+					 sort_ints,
+					 GINT_TO_POINTER (COL_PID),
+					 NULL);
 	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model),
 					      COL_NAME,
 					      GTK_SORT_ASCENDING);
@@ -122,7 +180,9 @@ proctable_new (ProcData *data)
 	g_signal_connect (G_OBJECT (gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree))), 
 			  "changed",
 			  G_CALLBACK (cb_row_selected), procdata);
-	
+	g_signal_connect (G_OBJECT (proctree), "button_press_event",
+			  G_CALLBACK (cb_tree_button_pressed), procdata);
+			  
 	return scrolled;
 
 }
@@ -136,8 +196,6 @@ proctable_free_info (ProcInfo *info)
 		return;
 	if (info->name)
 		g_free (info->name);
-	if (info->name_utf8)
-		g_free (info->name_utf8);
 	if (info->cmd)
 		g_free (info->cmd);
 	if (info->arguments)
@@ -218,8 +276,6 @@ get_process_name (ProcData *procdata, ProcInfo *info, gchar *cmd, gchar *args)
 	else if (!name && !command)
 		name = g_strdup (cmd);
 		
-	/*info->name_utf8 = e_utf8_from_locale_string (name);*/
-	info->name_utf8 = NULL;
 	info->name = g_strdup (name);
 	
 	if (command) 
@@ -270,6 +326,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	glibtop_proc_uid procuid;
 	glibtop_proc_time proctime;
 	gint newcputime;
+	gint pcpu;
 	gboolean is_blacklisted, was_blacklisted;
 	
 	glibtop_get_proc_state (&procstate, pid);
@@ -277,58 +334,38 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	glibtop_get_proc_uid (&procuid, pid);
 	glibtop_get_proc_time (&proctime, pid);
 	newcputime = proctime.utime + proctime.stime;
-#if 0	
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
+		
 	/* This is here for delay loading. The process has been added to the tree, but
 	** we haven't been able to get the icon yet thus newinfo->pixbuf is NULL. Once
 	** the .desktop file is done the info->has_desktop_file will be changed to 1 or 0
 	*/
-	if (procdata->config.load_desktop_files && procdata->pretty_table && !newinfo->pixbuf 
-	    && newinfo->has_desktop_file == -1)
+	if (procdata->pretty_table && !newinfo->pixbuf 
+	    && newinfo->has_icon == -1 && newinfo->visible)
 	{
-		if (procdata->config.show_pretty_names)
-		{	
-			gchar *arguments, *name;
-			glibtop_proc_args procargs;
-		
-			g_free (newinfo->name);
-			g_free (newinfo->cmd);
-			g_free (newinfo->name_utf8);
-			arguments = glibtop_get_proc_args (&procargs, pid, 0);	
-			get_process_name (procdata, newinfo, procstate.cmd, arguments);
-			if (arguments)
-				glibtop_free (arguments);
-
-			/* add the (thread) string to the name since by calling get_process_name
-			** we destory the name
-			*/
-			if (newinfo->is_thread)	{
-				name = g_strjoin (NULL, info->name, _(" (thread)"), NULL);
-				g_free (info->name_utf8);
-				info->name_utf8 =  e_utf8_from_locale_string (name);
-				g_free (name);
-			}
-		}
 		newinfo->pixbuf = pretty_table_get_icon (procdata->pretty_table, 
-							 procstate.cmd);
+							 procstate.cmd, pid);
 							
-		if (newinfo->pixbuf)
-			newinfo->has_desktop_file = 1;
+		if (newinfo->pixbuf) {
+			newinfo->has_icon = 1;
+			gtk_tree_store_set (GTK_TREE_STORE (model), &newinfo->node, 
+			    		    COL_PIXBUF, newinfo->pixbuf,
+			    		    -1);	
+		}
 		else
-			newinfo->has_desktop_file = 0;
+			newinfo->has_icon = 0;
+		
 
 	}
-#endif	
-	
 		
-	newinfo->mem = procmem.size;
 	newinfo->vmsize = procmem.vsize;
 	newinfo->memres = procmem.resident;
 	newinfo->memshared = procmem.share;
 	newinfo->memrss = procmem.rss;
 	if (total_time)
-		newinfo->cpu = ( newcputime - info->cpu_time_last ) * 100 / total_time;
+		pcpu = ( newcputime - info->cpu_time_last ) * 100 / total_time;
 	else 
-		newinfo->cpu = 0;
+		pcpu = 0;
 	newinfo->cpu_time_last = newcputime;
 	newinfo->nice = procuid.nice;
 	if (newinfo->status)
@@ -359,16 +396,21 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 #endif	
 	if (newinfo->visible) {
 		gchar *mem;
-		model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-		mem = get_size_string (newinfo->mem);
-		gtk_tree_store_set (GTK_TREE_STORE (model), &newinfo->node, 
+		if (procmem.size != newinfo->mem) {
+			mem = get_size_string (procmem.size);
+			gtk_tree_store_set (GTK_TREE_STORE (model), &newinfo->node, 
 			    COL_MEM, mem,
-			    COL_CPU, newinfo->cpu,
 			   -1);	
-		g_free (mem);
+			g_free (mem);
+		}
+		if (pcpu != newinfo->cpu)
+			gtk_tree_store_set (GTK_TREE_STORE (model), &newinfo->node, 
+			    	            COL_CPU, newinfo->cpu,
+			   	            -1);	
 		/*g_print ("%s \n", newinfo->name);*/
 	}
-		
+	newinfo->mem = procmem.size;
+	newinfo->cpu = pcpu;	
 	/*		
 	else if (status == 1)
 		insert_info_to_tree (oldinfo, procdata);
@@ -402,15 +444,15 @@ get_info (ProcData *procdata, gint pid)
 	glibtop_get_proc_time (&proctime, pid);
 	newcputime = proctime.utime + proctime.stime;
 
-	info->has_desktop_file = -1;	
+	info->has_icon = -1;	
 
-	if (procdata->config.load_desktop_files && procdata->pretty_table) {
-		info->pixbuf = pretty_table_get_icon (procdata->pretty_table, procstate.cmd);
+	if (procdata->desktop_load_finished) {
+		info->pixbuf = pretty_table_get_icon (procdata->pretty_table, procstate.cmd, pid);
 		
 		if (info->pixbuf)
-			info->has_desktop_file = 1;
+			info->has_icon = 1;
 		else
-			info->has_desktop_file = 0;
+			info->has_icon = 0;
 	}
 	else
 		info->pixbuf = NULL;
@@ -455,7 +497,6 @@ get_info (ProcData *procdata, gint pid)
 			gchar *name;
 			
 			name = g_strjoin (NULL, info->name, _(" (thread)"), NULL);
-			g_free (info->name_utf8);
 			g_free (name);
 			info->is_thread = TRUE;
 		}
@@ -532,9 +573,15 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 		return; 
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-	if (info->has_parent && procdata->config.show_tree)
+	if (info->has_parent && procdata->config.show_tree) {
+		GtkTreePath *parent_node = gtk_tree_model_get_path (model, &info->parent_node);
+		
 		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, &info->parent_node, 0);
-	
+		/*if (!gtk_tree_view_row_expanded (GTK_TREE_VIEW (procdata->tree), parent_node))     
+			gtk_tree_view_expand_row (GTK_TREE_VIEW (procdata->tree),
+					  parent_node,
+					  FALSE);*/
+	}	
 	else
 		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0);
 	
@@ -553,13 +600,15 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 }
 
 
-#if 0
+
 /* Kind of a hack. When a parent process is removed we remove all the info
 ** pertaining to the child processes and then readd them later
 */
 static gboolean
-remove_children_from_tree (ETreeModel *model, ETreePath node, gpointer data)
+remove_children_from_tree (GtkTreeModel *model, GtkTreePath *node, GtkTreeIter *iter,
+			   gpointer data)
 {
+#if 0
 	ProcData *procdata = data;
 	ProcInfo *info = e_tree_memory_node_get_data (procdata->memory, node);
 
@@ -578,11 +627,11 @@ remove_children_from_tree (ETreeModel *model, ETreePath node, gpointer data)
 	}
 	procdata->info = g_list_remove (procdata->info, info);
 	proctable_free_info (info);
-	
+#endif	
 	return FALSE;
 		
 }
-#endif
+
 
 static void
 remove_info_from_tree (ProcInfo *info, ProcData *procdata)
@@ -593,6 +642,10 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 		return;*/
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
+	
+	/*gtk_tree_model_foreach (model, remove_children_from_tree,
+				procdata);*/
+				
 	gtk_tree_store_remove (GTK_TREE_STORE (model), &info->node);	
 	
 	#if 0
@@ -785,13 +838,12 @@ proctable_free_table (ProcData *procdata)
 	procdata->info = NULL;
 	
 }
-#if 0
+
 void
 proctable_save_state (ProcData *data)
 {
 	ProcData *procdata = data;
-	
-	e_tree_save_state (E_TREE (procdata->tree), procdata->config.tree_state_file);
+	GtkWidget *tree = procdata->tree;
 	
 }
 
@@ -800,12 +852,15 @@ proctable_search_table (ProcData *procdata, gchar *string)
 {
 	GList *list = procdata->info;
 	GtkWidget *dialog;
+	GtkTreeModel *model;
 	gchar *error;
 	static gint increment = 0, index;
 	static gchar *last = NULL;
 	
 	if (!g_strcasecmp (string, ""))
 		return;
+	
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 	
 	if (!last)
 		last = g_strdup (string);
@@ -822,21 +877,30 @@ proctable_search_table (ProcData *procdata, gchar *string)
 	while (list)
 	{
 		ProcInfo *info = list->data;
-		if (strstr (info->name, string) && info->node)
+		if (strstr (info->name, string) && info->visible)
 		{
+			GtkTreePath *node = gtk_tree_model_get_path (model, &info->node);
+			
 			if (index == 0) {
-				e_tree_set_cursor (E_TREE (procdata->tree), info->node);
+				gtk_tree_view_set_cursor (GTK_TREE_VIEW (procdata->tree), 
+							 node,
+							 NULL,
+							 FALSE);
 				return;
 			}
 			else
 				index --;
 		}
 		
-		if (strstr (info->user, string) && info->node)
+		if (strstr (info->user, string) && info->visible)
 		{
+			GtkTreePath *node = gtk_tree_model_get_path (model, &info->node);
 			
 			if (index == 0) {
-				e_tree_set_cursor (E_TREE (procdata->tree), info->node);
+				gtk_tree_view_set_cursor (GTK_TREE_VIEW (procdata->tree), 
+							 node,
+							 NULL,
+							 FALSE);
 				return;
 			}
 			else
@@ -857,6 +921,5 @@ proctable_search_table (ProcData *procdata, gchar *string)
 	increment --;
 
 }
-#endif
 
 	

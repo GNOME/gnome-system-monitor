@@ -35,8 +35,8 @@
 #include "infoview.h"
 #include "procactions.h"
 #include "procdialogs.h"
-#if 0
 #include "memmaps.h"
+#if 0
 #include "favorites.h"
 #endif
 #include "load-graph.h"
@@ -95,7 +95,7 @@ cb_kill_process (GtkMenuItem *menuitem, gpointer data)
 		kill_process (procdata, SIGKILL);
 	
 }
-#if 0
+
 void
 cb_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
 {
@@ -103,7 +103,7 @@ cb_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
 	
 	create_memmaps_dialog (procdata);
 }
-
+#if 0
 void
 cb_add_to_favorites (GtkMenuItem *menuitem, gpointer data)
 {
@@ -227,7 +227,7 @@ cb_all_process_menu_clicked 		(GtkWidget	*widget,
 					 gpointer	data)
 {
 	ProcData *procdata = data;
-	
+	g_return_if_fail (data);
 	procdata->config.whose_process = ALL_PROCESSES;
 	proctable_clear_tree (procdata);
 	proctable_update_all (procdata);
@@ -239,7 +239,7 @@ cb_my_process_menu_clicked		(GtkWidget	*widget,
 					 gpointer	data)
 {
 	ProcData *procdata = data;
-	
+	g_return_if_fail (data);
 	procdata->config.whose_process = MY_PROCESSES;
 	proctable_clear_tree (procdata);
 	proctable_update_all (procdata);
@@ -250,7 +250,7 @@ cb_running_process_menu_clicked		(GtkWidget	*widget,
 					 gpointer	data)
 {
 	ProcData *procdata = data;
-	
+	g_return_if_fail (data);
 	procdata->config.whose_process = RUNNING_PROCESSES;
 	proctable_clear_tree (procdata);
 	proctable_update_all (procdata);
@@ -266,7 +266,7 @@ cb_favorites_menu_clicked (GtkWidget *widget, gpointer data)
 	proctable_clear_tree (procdata);
 	proctable_update_all (procdata);
 }
-
+#endif
 void
 popup_menu_renice (GtkMenuItem *menuitem, gpointer data)
 {
@@ -289,20 +289,18 @@ popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
 	ProcData *procdata = data;
 	ProcInfo *info;
 	
-	if (!procdata->selected_node)
+	if (!procdata->selected_process)
 		return;
 	
 	if (procdata->config.show_hide_message)
 	{	
-		GtkWidget *dialog;
+		/*GtkWidget *dialog;
 		dialog = procdialog_create_hide_dialog (procdata);
-		gtk_widget_show (dialog);
+		gtk_widget_show (dialog);*/
 	}
 	else
 	{
-		info = e_tree_memory_node_get_data (procdata->memory, 
-						    procdata->selected_node);
-		add_to_blacklist (procdata, info->cmd);
+		/*add_to_blacklist (procdata, info->cmd);*/
 		proctable_update_all (procdata);
 	}
 	
@@ -313,7 +311,7 @@ popup_menu_end_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
 
-        if (!procdata->selected_node)
+        if (!procdata->selected_process)
 		return;
 	
 	if (procdata->config.show_kill_warning)
@@ -327,7 +325,7 @@ popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
 
-        if (!procdata->selected_node)
+        if (!procdata->selected_process)
 		return;
 		
 	if (procdata->config.show_kill_warning)
@@ -336,7 +334,7 @@ popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
 		kill_process (procdata, SIGKILL);
 			
 }
-
+#if 0
 void 
 popup_menu_about_process (GtkMenuItem *menuitem, gpointer data)
 {
@@ -360,17 +358,7 @@ popup_menu_about_process (GtkMenuItem *menuitem, gpointer data)
 					    
 }
 
-gint
-cb_right_click (ETree *tree, int row, ETreePath path, int col,
-                 GdkEvent *event, gpointer data)
-{
-        ProcData *procdata = data;
 
-        do_popup_menu (procdata, event);
-
-        return TRUE;
-
-}
 #endif
 void
 cb_end_process_button_pressed          (GtkButton       *button,
@@ -407,7 +395,7 @@ cb_info_button_pressed			(GtkButton	*button,
 	toggle_infoview (procdata);
 		
 }	
-#if 0
+
 void		
 cb_search (GtkEditable *editable, gpointer data)
 {
@@ -420,7 +408,7 @@ cb_search (GtkEditable *editable, gpointer data)
 	
 	g_free (text);
 }
-#endif
+
 
 void		
 cb_cpu_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
@@ -498,6 +486,18 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
 		update_sensitivity (procdata, FALSE);
 	}
 	
+}
+
+gboolean
+cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event, 
+			gpointer data)
+{
+        ProcData *procdata = data;
+
+        do_popup_menu (procdata, event);
+
+        return FALSE;
+
 }
 #if 0
 

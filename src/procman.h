@@ -22,6 +22,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gnome.h>
 
+#define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
+
 typedef struct _ProcConfig ProcConfig;
 typedef struct _PrettyTable PrettyTable;
 typedef struct _LoadGraph LoadGraph;
@@ -113,7 +115,6 @@ struct _ProcInfo
 	gboolean	has_parent;
 	GdkPixbuf	*pixbuf;
 	gchar		*name;
-	gchar		*name_utf8;
 	gchar		*user;
 	gchar		*cmd;
 	gchar		*arguments;
@@ -131,7 +132,7 @@ struct _ProcInfo
 	gboolean	running;
 	gboolean	is_thread;
 	gboolean	is_blacklisted;
-	gint		has_desktop_file;	
+	gint		has_icon;	
 };
 
 struct _ProcData

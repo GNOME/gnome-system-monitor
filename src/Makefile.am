@@ -19,7 +19,8 @@ procman_SOURCES = \
 	util.c util.h \
 	infoview.c infoview.h \
 	procactions.c procactions.h \
-	procdialogs.c procdialogs.h
+	procdialogs.c procdialogs.h \
+	memmaps.c memmaps.h
 
 procman_LDADD =  \
 	@PROCMAN_LIBS@ $(INTLLIBS) $(LIBGTOP_LIBS) -lpthread

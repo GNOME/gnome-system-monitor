@@ -3,124 +3,23 @@
 #endif
 
 #include <gnome.h>
-#include <gal/e-table/e-tree-memory.h>
-#include <gal/e-table/e-tree-memory-callbacks.h>
-#include <gal/e-table/e-tree-scrolled.h>
 #include <glibtop/procmap.h>
 #include <glibtop/xmalloc.h>
 #include <sys/stat.h>
 #include "procman.h"
 #include "memmaps.h"
 
-GtkWidget *memmapsdialog = NULL;
-GtkWidget *command_label;
-GtkWidget *tree = NULL;
-ETreeModel *model = NULL;
-ETreeMemory *memory = NULL;
-ETreePath root_node = NULL;
+static GtkWidget *memmapsdialog = NULL;
+static GtkWidget *command_label;
+static GtkWidget *tree = NULL;
 gint timer = 0;
 GList *memmaps_list = NULL;
-
-static GdkPixbuf *
-memmaps_get_icon (ETreeModel *etm, ETreePath path, void *data)
-{
-	/* No icon, since the cell tree renderer takes care of the +/- icons itself. */
-	return NULL;
-}
-
-static int
-memmaps_get_columns (ETreeModel *table, void *data)
-{
-	return 7;
-}
-
-
-static void *
-memmaps_get_value (ETreeModel *model, ETreePath path, int column, void *data)
-{
-	MemmapsInfo *info;
-	
-	info = e_tree_memory_node_get_data (memory, path);
-	if (!info) g_print ("Null info \n");
-	
-	switch (column) {
-	case COL_FILENAME:
-		return info->filename;
-	case COL_VMSTART:
-		return info->vmstart;
-	case COL_VMEND:
-		return info->vmend;
-	case COL_FLAGS:
-		return info->flags;
-	case COL_VMOFFSET:
-		return info->vmoffset;
-	case COL_DEVICE:
-		return info->device;
-	case COL_INODE:
-		return info->inode;
-	
-	}
-	g_assert_not_reached ();
-	return NULL;
-	
-}
-
-static void
-memmaps_set_value (ETreeModel *model, ETreePath path, int col, const void *value, void *data)
-{
-
-}	
-
-static gboolean
-memmaps_get_editable (ETreeModel *model, ETreePath path, int column, void *data)
-{
-	return FALSE;
-}
-
-static void *
-memmaps_duplicate_value (ETreeModel *model, int column, const void *value, void *data)
-{
-
-	return g_strdup (value);
-
-}
-
-static void
-memmaps_free_value (ETreeModel *model, int column, void *value, void *data)
-{
-
-
-	g_free (value);
-
-		
-}
-
-static void *
-memmaps_initialize_value (ETreeModel *model, int column, void *data)
-{
-	return g_strdup ("");
-
-}
-
-static gboolean
-memmaps_value_is_empty (ETreeModel *model, int column, const void *value, void *data)
-{
-
-	return !(value && *(char *)value);
-
-}
-
-static char *
-memmaps_value_to_string (ETreeModel *model, int column, const void *value, void *data)
-{
-	return g_strdup (value);
-
-}
 
 
 static void
 get_memmaps_list (ProcData *procdata, ProcInfo *info)
 {
+	GtkTreeModel *model = NULL;
 	glibtop_map_entry *memmaps;
 	glibtop_proc_map procmap;
 	gint i;
@@ -129,9 +28,13 @@ get_memmaps_list (ProcData *procdata, ProcInfo *info)
 	
 	if (!memmaps)
 		return;
-	e_tree_memory_freeze (memory);	
+	
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
+	g_return_if_fail (model);
+	
 	for (i = 0; i < procmap.number; i++)
 	{
+		GtkTreeIter row;
 		MemmapsInfo *info = g_new0 (MemmapsInfo, 1);
 		gchar *format = (sizeof (void*) == 8) ? "%016lx" : "%08lx";
 		unsigned long vmstart;
@@ -174,13 +77,21 @@ get_memmaps_list (ProcData *procdata, ProcInfo *info)
                 info->device = g_strdup_printf ("%02hx:%02hx", dev_major, dev_minor);
                 info->inode = g_strdup_printf ("%ld", inode);
                 
-                	
-                
-                e_tree_memory_node_insert (memory, root_node, 0, info);
+                gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0);	
+                gtk_tree_store_set (GTK_TREE_STORE (model), &row, 
+                		    0, info->filename, 
+				    1, info->vmstart,
+				    2, info->vmend,
+				    3, info->flags,
+				    4, info->vmoffset,
+				    5, info->device,
+				    6, info->inode,
+				    -1);
+               	
                 memmaps_list = g_list_append (memmaps_list, info);
 	
 	}
-	e_tree_memory_thaw (memory);
+	
 	glibtop_free (memmaps);
 
 
@@ -189,8 +100,6 @@ get_memmaps_list (ProcData *procdata, ProcInfo *info)
 static void
 clear_memmaps (ProcData *procdata)
 {
-	e_tree_memory_node_remove (memory, root_node);
-	root_node = NULL;
 	
 	while (memmaps_list)
 	{
@@ -221,43 +130,26 @@ update_memmaps_dialog (ProcData *procdata)
 	if (!memmapsdialog)
 		return;
 		
-	if (!procdata->selected_node)
-		return;
-
-	info = e_tree_memory_node_get_data (procdata->memory, procdata->selected_node);
-	if (!info)
-		return;
-
-	gtk_label_set_text (GTK_LABEL (command_label), info->name);
+	g_return_if_fail (procdata->selected_process);
 	
+	gtk_label_set_text (GTK_LABEL (command_label), procdata->selected_process->name);
+#if 0		
 	if (memmaps_list)
 		clear_memmaps (procdata);
 	
-	if (!root_node)
-	{
-		root_node = e_tree_memory_node_insert (memory, NULL, 0, NULL);
-		e_tree_root_node_set_visible (E_TREE(tree), FALSE);
-	}
-		
-	get_memmaps_list (procdata, info);
+#endif		
+	get_memmaps_list (procdata, procdata->selected_process);
 }
-
-static void
-save_memmaps_tree_state (ProcData *procdata)
-{
-	e_tree_save_state (E_TREE (tree), procdata->config.memmaps_state_file);
-}
-
 
 static gboolean
 close_memmaps_dialog (GnomeDialog *dialog, gpointer data)
 {
 	ProcData *procdata = data;
 	
-	save_memmaps_tree_state (procdata);
+	/*save_memmaps_tree_state (procdata);*/
 	clear_memmaps (procdata);
 	memmapsdialog = NULL;
-	gtk_timeout_remove (timer);
+	/*gtk_timeout_remove (timer);*/
 	
 	return FALSE;
 }
@@ -268,70 +160,49 @@ close_button_pressed (GtkButton *button, gpointer data)
 	gnome_dialog_close (GNOME_DIALOG (memmapsdialog));
 }
 
-
-/* Do this to prevent selection of a row */
-static gint
-tree_clicked (ETree *tree, int row, ETreePath node, int col, GdkEvent *event)
-{
-	return TRUE;
-}
-
 static GtkWidget *
 create_memmaps_tree (ProcData *procdata)
 {
 	GtkWidget *scrolled = NULL;
-	struct stat filestat;
+	GtkTreeStore *model;
+	GtkTreeViewColumn *column;
+  	GtkCellRenderer *cell;
+  	gint i;
+  	static gchar *title[] = {N_("Filename"), N_("VM Start"), N_("VM End"), 
+				 N_("Flags"), N_("VM offset"), N_("Device"), N_("Inode")};
 	
-	model = e_tree_memory_callbacks_new (memmaps_get_icon,
-					     memmaps_get_columns,
-					     NULL,
-					     NULL,
-					     NULL,
-					     NULL,
-					     memmaps_get_value,
-					     memmaps_set_value,
-					     memmaps_get_editable,
-				    	     memmaps_duplicate_value,
-				    	     memmaps_free_value,
-				    	     memmaps_initialize_value,
-				    	     memmaps_value_is_empty,
-				    	     memmaps_value_to_string,
-				    	     procdata);
-				    	     
-	memory = E_TREE_MEMORY(model);
-
-	if (!lstat (PROCMAN_DATADIR "memmaps.etspec", &filestat))
-	{
-		/* Hackety-hack around a bug in gal */
-		scrolled =  gtk_widget_new (e_tree_scrolled_get_type (),
-                                                "hadjustment", NULL,
-                                                "vadjustment", NULL,
-                                                NULL);
-        	scrolled = GTK_WIDGET (e_tree_scrolled_construct_from_spec_file (
-        			E_TREE_SCROLLED (scrolled), 
-        					model, NULL,
-        					PROCMAN_DATADIR "memmaps.etspec", NULL));
-	}
-	else 
-	{
-		GtkWidget *dialog;
-		dialog = gnome_error_dialog (_("Procman could not find the e-tree spec file.\n"
-				      "There should be a file called memmaps.etspec in\n"
-				      PROCMAN_DATADIR));
-		gnome_dialog_run (GNOME_DIALOG (dialog));
-		return NULL;
+	scrolled = gtk_scrolled_window_new (NULL, NULL);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+                                  	GTK_POLICY_AUTOMATIC,
+                                  	GTK_POLICY_AUTOMATIC);
+                                  	
+        model = gtk_tree_store_new (7, G_TYPE_STRING, G_TYPE_STRING, 
+				    G_TYPE_STRING, G_TYPE_STRING,
+				    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+				    
+	tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree), TRUE);
+  	g_object_unref (G_OBJECT (model));
+  	
+  	for (i = 0; i < 7; i++) {
+  		cell = gtk_cell_renderer_text_new ();
+  		column = gtk_tree_view_column_new_with_attributes (title[i],
+						    		   cell,
+						     		   "text", i,
+						     		   NULL);
+		gtk_tree_view_column_set_sort_column_id (column, i);
+		gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
+		gtk_tree_view_column_set_reorderable (column, TRUE);
+		gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
 	}
 	
-	tree = GTK_WIDGET (e_tree_scrolled_get_tree (E_TREE_SCROLLED (scrolled)));
+	gtk_container_add (GTK_CONTAINER (scrolled), tree);
 	
-	e_tree_load_state (E_TREE (tree), procdata->config.memmaps_state_file);
-	
-	/* Connect here to prevent row selection - a bit of a hack indeed */
-	gtk_signal_connect (GTK_OBJECT (tree), "click",
-			    GTK_SIGNAL_FUNC (tree_clicked), NULL);
-	
+	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model),
+					      0,
+					      GTK_SORT_ASCENDING);
 	return scrolled;
-
+		
 }
 
 
@@ -393,20 +264,16 @@ create_memmaps_dialog (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (dialog_vbox), scrolled, TRUE, TRUE, 0);
 	gtk_widget_show_all (scrolled);
 		
-	dialog_action_area = GNOME_DIALOG (memmapsdialog)->action_area;
-	gnome_dialog_append_button (GNOME_DIALOG (memmapsdialog), GNOME_STOCK_BUTTON_CLOSE);
-	closebutton = GTK_WIDGET (g_list_last (GNOME_DIALOG (memmapsdialog)->buttons)->data);
-	GTK_WIDGET_SET_FLAGS (closebutton, GTK_CAN_DEFAULT);
-	
-	gtk_signal_connect (GTK_OBJECT (closebutton), "clicked",
-			    GTK_SIGNAL_FUNC (close_button_pressed), procdata);
+	/*gtk_signal_connect (GTK_OBJECT (closebutton), "clicked",
+			    GTK_SIGNAL_FUNC (close_button_pressed), procdata);*/
 	gtk_signal_connect (GTK_OBJECT (memmapsdialog), "close",
 			    GTK_SIGNAL_FUNC (close_memmaps_dialog), procdata);
 	
 	gtk_widget_show (memmapsdialog);
-#if 1
+#if 0
 	timer = gtk_timeout_add (5000, memmaps_timer, procdata);
 #endif
+#if 1
 	update_memmaps_dialog (procdata);
-	
+#endif	
 }
