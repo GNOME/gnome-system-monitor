@@ -552,7 +552,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 			if (newinfo->is_thread)	{
 				name = g_strjoin (NULL, info->name, _(" (thread)"), NULL);
 				g_free (info->name_utf8);
-				info->name_utf8 =  e_utf8_from_locale_strin (name);
+				info->name_utf8 =  e_utf8_from_locale_string (name);
 				g_free (name);
 			}
 		}
