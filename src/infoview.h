@@ -23,9 +23,20 @@
 #include <gtk/gtk.h>
 #include "procman.h"
 
+typedef struct _Infoview Infoview;
 
+struct _Infoview
+{
+	GtkWidget	*box;
+	GtkWidget	*cmd_label;
+	GtkWidget	*status_label;
+	GtkWidget	*nice_label;
+	GtkWidget	*memtotal_label;
+	GtkWidget	*memrss_label;
+	GtkWidget	*memshared_label;
+};
 
-GtkWidget * infoview_create (ProcData *data) G_GNUC_INTERNAL;
+void infoview_create (ProcData *data) G_GNUC_INTERNAL;
 void	infoview_update (ProcData *data) G_GNUC_INTERNAL;
 
 

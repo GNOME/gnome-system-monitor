@@ -19,17 +19,20 @@
 #ifndef _PROCMAN_PROCMAN_H_
 #define _PROCMAN_PROCMAN_H_
 
+typedef struct _ProcConfig ProcConfig;
+typedef struct _PrettyTable PrettyTable;
+typedef struct _LoadGraph LoadGraph;
+typedef struct _ProcInfo ProcInfo;
+typedef struct _ProcData ProcData;
+
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <glib.h>
 #include <gtk/gtk.h>
 #include <gconf/gconf-client.h>
 #include <glibtop/cpu.h>
 
-typedef struct _ProcConfig ProcConfig;
-typedef struct _PrettyTable PrettyTable;
-typedef struct _LoadGraph LoadGraph;
-typedef struct _ProcInfo ProcInfo;
-typedef struct _ProcData ProcData;
+#include "infoview.h"
+
 
 enum
 {
@@ -145,7 +148,7 @@ struct _ProcInfo
 struct _ProcData
 {
 	GtkWidget	*tree;
-	GtkWidget	*infobox;
+	Infoview	infoview;
 	GtkWidget	*disk_list;
 	ProcConfig	config;
 	LoadGraph	*cpu_graph;

@@ -28,18 +28,10 @@
 #include "util.h"
 
 
-static GtkWidget *cmd_label = NULL;
-static GtkWidget *status_label = NULL;
-static GtkWidget *nice_label = NULL;
-static GtkWidget *memtotal_label = NULL;
-static GtkWidget *memrss_label = NULL;
-static GtkWidget *memshared_label = NULL;
-
-
-GtkWidget *
+void
 infoview_create (ProcData *procdata)
 {
-	GtkWidget *infobox;
+	Infoview * const infoview = &procdata->infoview;
 
 	GtkWidget *main_hbox;
 	GtkWidget *info_table, *mem_table;
@@ -49,10 +41,10 @@ infoview_create (ProcData *procdata)
 	GtkWidget *mem_title, *mem_box;
 	GtkWidget *spacer, *info_hbox, *mem_hbox;
 
-	infobox = gtk_vbox_new (FALSE, 0);
+	infoview->box = gtk_vbox_new (FALSE, 0);
 
 	main_hbox = gtk_hbox_new (FALSE, 18);
-	gtk_box_pack_start (GTK_BOX (infobox), main_hbox, FALSE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (infoview->box), main_hbox, FALSE, TRUE, 0);
 
 	/* The Process Info Area */
 
@@ -86,18 +78,18 @@ infoview_create (ProcData *procdata)
 	gtk_table_attach (GTK_TABLE (info_table), label, 0, 1, 2, 3, GTK_FILL,
 			  0, 0, 0);
 
-	cmd_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (cmd_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (info_table), cmd_label, 1, 2, 0, 1, GTK_FILL,
+	infoview->cmd_label = gtk_label_new ("");
+	gtk_misc_set_alignment (GTK_MISC (infoview->cmd_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (info_table), infoview->cmd_label, 1, 2, 0, 1, GTK_FILL,
 			  0, 0, 0);
 
-	status_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (status_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (info_table), status_label, 1, 2, 1, 2, GTK_FILL,
+	infoview->status_label = gtk_label_new ("");
+	gtk_misc_set_alignment (GTK_MISC (infoview->status_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (info_table), infoview->status_label, 1, 2, 1, 2, GTK_FILL,
 			  0, 0, 0);
-	nice_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (nice_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (info_table), nice_label, 1, 2, 2, 3, GTK_FILL,
+	infoview->nice_label = gtk_label_new ("");
+	gtk_misc_set_alignment (GTK_MISC (infoview->nice_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (info_table), infoview->nice_label, 1, 2, 2, 3, GTK_FILL,
 			  0, 0, 0);
 
 	/*The Memory usage Area*/
@@ -132,31 +124,23 @@ infoview_create (ProcData *procdata)
 	gtk_table_attach (GTK_TABLE (mem_table), label, 0, 1, 2, 3, GTK_FILL,
 			  0, 0, 0);
 
-	memtotal_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (memtotal_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (mem_table), memtotal_label, 1, 2, 0, 1, GTK_FILL,
+	infoview->memtotal_label = gtk_label_new ("");
+	gtk_misc_set_alignment (GTK_MISC (infoview->memtotal_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (mem_table), infoview->memtotal_label, 1, 2, 0, 1, GTK_FILL,
 			  0, 0, 0);
-	memrss_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (memrss_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (mem_table), memrss_label, 1, 2, 1, 2, GTK_FILL,
+	infoview->memrss_label = gtk_label_new ("");
+	gtk_misc_set_alignment (GTK_MISC (infoview->memrss_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (mem_table), infoview->memrss_label, 1, 2, 1, 2, GTK_FILL,
 			  0, 0, 0);
-	memshared_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (memshared_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (mem_table), memshared_label, 1, 2, 2, 3, GTK_FILL,
+	infoview->memshared_label = gtk_label_new ("");
+	gtk_misc_set_alignment (GTK_MISC (infoview->memshared_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (mem_table), infoview->memshared_label, 1, 2, 2, 3, GTK_FILL,
 			  0, 0, 0);
-
-	procdata->infobox = infobox;
-
-
-	return infobox;
-
-
 }
 
 void
-infoview_update (ProcData *data)
+infoview_update (ProcData *procdata)
 {
-	ProcData *procdata = data;
 	ProcInfo *info;
 	gchar *string;
 
@@ -167,8 +151,8 @@ infoview_update (ProcData *data)
 
 	info = procdata->selected_process;
 
-	gtk_label_set_text (GTK_LABEL (cmd_label), info->name);
-	gtk_label_set_text (GTK_LABEL (status_label), info->status);
+	gtk_label_set_text (GTK_LABEL (procdata->infoview.cmd_label), info->name);
+	gtk_label_set_text (GTK_LABEL (procdata->infoview.status_label), info->status);
 
 	if (info->nice < -7)
 		string = g_strdup_printf (_("Very high - nice %d"), info->nice);
@@ -180,19 +164,19 @@ infoview_update (ProcData *data)
 		string = g_strdup_printf (_("Low - nice %d"), info->nice);
 	else
 		string = g_strdup_printf (_("Very low - nice %d"), info->nice);
-	gtk_label_set_text (GTK_LABEL (nice_label), string);
+	gtk_label_set_text (GTK_LABEL (procdata->infoview.nice_label), string);
 	g_free (string);
 
 	string = gnome_vfs_format_file_size_for_display (info->mem);
-	gtk_label_set_text (GTK_LABEL (memtotal_label), string);
+	gtk_label_set_text (GTK_LABEL (procdata->infoview.memtotal_label), string);
 	g_free (string);
 
 	string = gnome_vfs_format_file_size_for_display (info->memrss);
-	gtk_label_set_text (GTK_LABEL (memrss_label), string);
+	gtk_label_set_text (GTK_LABEL (procdata->infoview.memrss_label), string);
 	g_free (string);
 
 	string = gnome_vfs_format_file_size_for_display (info->memshared);
-	gtk_label_set_text (GTK_LABEL (memshared_label), string);
+	gtk_label_set_text (GTK_LABEL (procdata->infoview.memshared_label), string);
 	g_free (string);
 }
 

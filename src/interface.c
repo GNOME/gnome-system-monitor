@@ -186,7 +186,6 @@ create_proc_view (ProcData *procdata)
 	GtkWidget *search_entry;
 	GtkWidget *proc_combo;
 	GtkWidget *scrolled;
-	GtkWidget *infobox;
 	GtkWidget *label;
 	GtkWidget *hbox2;
 	GtkWidget *infobutton;
@@ -235,8 +234,8 @@ create_proc_view (ProcData *procdata)
 	
 	gtk_widget_show_all (scrolled);
 	
-	infobox = infoview_create (procdata);
-	gtk_box_pack_start (GTK_BOX (vbox1), infobox, FALSE, FALSE, 0);
+	infoview_create (procdata);
+	gtk_box_pack_start (GTK_BOX (vbox1), procdata->infoview.box, FALSE, FALSE, 0);
 
 	hbox2 = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox2, FALSE, FALSE, 0);
@@ -711,14 +710,14 @@ toggle_infoview (ProcData *procdata)
 
 	if (procdata->config.show_more_info)
 	{
-		gtk_widget_hide (procdata->infobox);
+		gtk_widget_hide (procdata->infoview.box);
 		gtk_label_set_text_with_mnemonic (GTK_LABEL (infolabel),
 						  msg);
 	}
 	else
 	{
 		infoview_update (procdata);
-		gtk_widget_show_all (procdata->infobox);
+		gtk_widget_show_all (procdata->infoview.box);
 		gtk_label_set_text_with_mnemonic (GTK_LABEL (infolabel),
 						  msg);
 	}
@@ -750,7 +749,7 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 {
 	gtk_widget_set_sensitive (endprocessbutton, sensitivity);
 	
-	gtk_widget_set_sensitive (data->infobox, sensitivity);
+	gtk_widget_set_sensitive (data->infoview.box, sensitivity);
 	/*Edit->End Process*/
 	gtk_widget_set_sensitive (edit1_menu_uiinfo[0].widget, sensitivity);
 	/*Edit->Kill Process*/

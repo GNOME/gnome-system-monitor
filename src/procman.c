@@ -195,7 +195,6 @@ procman_data_new (GConfClient *client)
 	pd = g_new0 (ProcData, 1);
 	
 	pd->tree = NULL;
-	pd->infobox = NULL;
 	pd->info = NULL;
 	pd->pids = g_hash_table_new(g_direct_hash, g_direct_equal);
 	pd->selected_process = NULL;
