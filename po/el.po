@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-05 12:20+0200\n"
-"PO-Revision-Date: 2005-02-05 12:19+0200\n"
+"POT-Creation-Date: 2005-02-18 13:15+0200\n"
+"PO-Revision-Date: 2005-02-18 13:15+0200\n"
 "Last-Translator: Kostas Papadimas <pkst@gnome.org>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
 "MIME-Version: 1.0\n"
@@ -425,16 +425,16 @@ msgstr "από"
 msgid "Used swap:"
 msgstr "Μνήμη εναλλαγής σε χρήση :"
 
-#: src/interface.c:523 src/procdialogs.c:752
+#: src/interface.c:523 src/procdialogs.c:715
 msgid "Devices"
 msgstr "Συσκευές"
 
 #
-#: src/interface.c:651 src/procdialogs.c:577
+#: src/interface.c:651 src/procdialogs.c:540
 msgid "Processes"
 msgstr "Διεργασίες"
 
-#: src/interface.c:657 src/procdialogs.c:664
+#: src/interface.c:657 src/procdialogs.c:627
 msgid "Resources"
 msgstr "Πόροι"
 
@@ -583,10 +583,11 @@ msgstr "Συνέβει σφάλμα κατά το βιαίο τερματισμ�
 
 #
 #. translators: primary alert message
-#: src/procdialogs.c:63
+#: src/procdialogs.c:62
 msgid "Hide the selected process?"
 msgstr "Απόκρυψη της επιλεγμένης διεργασίας;"
 
+#. FIXME: View menu -> Edit menu
 #. translators: secondary alert messagex
 #: src/procdialogs.c:72
 msgid ""
@@ -670,60 +671,70 @@ msgstr ""
 "Η προτεραιότητα μιας διεργασίας δίνεται από την τιμή της ωραιοποίησης της. "
 "Μια χαμηλή τιμή ωραιοποίησης αντιστοιχεί σε υψηλότερη προταιρεότητα."
 
-#: src/procdialogs.c:463
+#: src/procdialogs.c:426
 msgid "Processes i_nfo showed in list:"
 msgstr "Πληροφορίες διεργασιών που εμφανίζονται στην λίστα:"
 
-#: src/procdialogs.c:514
+#: src/procdialogs.c:477
 msgid "Icon"
 msgstr "Εικονίδιο"
 
-#: src/procdialogs.c:554
+#: src/procdialogs.c:517
 msgid "System Monitor Preferences"
 msgstr "Προτιμήσεις παρακολούθησης συστήματος"
 
-#: src/procdialogs.c:584
+#: src/procdialogs.c:547
 msgid "Behavior"
 msgstr "Συμπεριφορά"
 
-#: src/procdialogs.c:603 src/procdialogs.c:690
+#: src/procdialogs.c:566 src/procdialogs.c:653
 msgid "_Update interval:"
 msgstr "Διάστημα Ανανέ_ωσης :"
 
-#: src/procdialogs.c:619 src/procdialogs.c:707 src/procdialogs.c:788
+#: src/procdialogs.c:582 src/procdialogs.c:670 src/procdialogs.c:751
 msgid "seconds"
 msgstr "δευτερόλεπτα"
 
-#: src/procdialogs.c:626
+#: src/procdialogs.c:589
 msgid "Alert before ending or _killing processes"
 msgstr ""
 "Εμφάνιση διαλόγου προειδοποίησης κατά τον τερματισμό ή _βίαιο τερματισμό "
 "διεργασιών"
 
-#: src/procdialogs.c:636
+#: src/procdialogs.c:599
 msgid "Alert before _hiding processes"
 msgstr "Εμφάνιση διαλόγου προειδοποίησης κατά την απόκρυ_ψη διεργασιών"
 
 #
-#: src/procdialogs.c:646
+#: src/procdialogs.c:609
 msgid "Process Fields"
 msgstr "Πεδία Διεργασίας"
 
-#: src/procdialogs.c:671
+#: src/procdialogs.c:634
 msgid "Graphs"
 msgstr "Γραφήματα"
 
-#: src/procdialogs.c:714
+#: src/procdialogs.c:677
 msgid "_Background color:"
 msgstr "Χρώμα _παρασκηνίου :"
 
-#: src/procdialogs.c:733
+#: src/procdialogs.c:696
 msgid "_Grid color:"
 msgstr "Χρώμα πλέ_γματος :"
 
-#: src/procdialogs.c:771
+#: src/procdialogs.c:734
 msgid "Update _interval:"
 msgstr "Διάστημα ανανέ_ωσης:"
+
+#: src/procdialogs.c:798
+#, c-format
+msgid "Cannot kill process with pid %d with signal %d"
+msgstr "Αδυναμία βίαου τερματισμού διεργασίας με pid·%d·με·signal·%d"
+
+#: src/procdialogs.c:801
+#, c-format
+msgid "Cannot change the priority of process with pid %d to %d"
+msgstr "Αλλαγή της σειράς προτεραιότητας μιας διεργασίας με ·pid·%d·σε·%d"
 
 #
 #: src/proctable.c:163
