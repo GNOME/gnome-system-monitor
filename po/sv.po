@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-14 00:59+0100\n"
-"PO-Revision-Date: 2005-01-14 01:00+0100\n"
+"POT-Creation-Date: 2005-01-23 21:16+0100\n"
+"PO-Revision-Date: 2005-01-24 21:16+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -287,17 +287,17 @@ msgstr "Öppna listan över dolda processer"
 msgid "_Memory Maps"
 msgstr "_Minneskartor"
 
-#: src/interface.c:100 src/interface.c:154
-msgid "Open the memory maps associated with the process"
-msgstr "Öppna minneskartorna som är associerade med process"
+#: src/interface.c:100
+msgid "Open the memory maps associated with a process"
+msgstr "Öppna minneskartorna som är associerade med en process"
 
 #: src/interface.c:105 src/interface.c:159
 msgid "Open _Files"
 msgstr "Öppna _filer"
 
 #: src/interface.c:105
-msgid "View a process' open files"
-msgstr "Visa en process öppna filer"
+msgid "View the files opened by a process"
+msgstr "Visa de filer som öppnats av en process"
 
 #: src/interface.c:131 src/procdialogs.c:129
 msgid "_End Process"
@@ -311,9 +311,13 @@ msgstr "Tvinga en process att avsluta normalt"
 msgid "Force a process to finish immediately"
 msgstr "Tvinga en process att avsluta omedelbart"
 
+#: src/interface.c:154
+msgid "Open the memory maps associated with the process"
+msgstr "Öppna minneskartorna som är associerade med process"
+
 #: src/interface.c:159
-msgid "View process' open files"
-msgstr "Visa processens öppna filer"
+msgid "View the files opened by the process"
+msgstr "Visa de filer som öppnats av processen"
 
 #: src/interface.c:199
 msgid "Sea_rch:"
@@ -347,7 +351,7 @@ msgstr "Enhet"
 msgid "Directory"
 msgstr "Katalog"
 
-#: src/interface.c:337 src/openfiles.c:190
+#: src/interface.c:337 src/openfiles.c:226
 msgid "Type"
 msgstr "Typ"
 
@@ -445,42 +449,42 @@ msgstr "Minneskartor"
 msgid "_Memory maps for process \"%s\":"
 msgstr "_Minneskartor för processen \"%s\":"
 
-#: src/openfiles.c:29
+#: src/openfiles.c:33
 msgid "file"
 msgstr "fil"
 
-#: src/openfiles.c:31
+#: src/openfiles.c:35
 msgid "pipe"
 msgstr "rör"
 
-#: src/openfiles.c:33
+#: src/openfiles.c:37
 msgid "network connection"
 msgstr "nätverksanslutning"
 
-#: src/openfiles.c:35
+#: src/openfiles.c:39
 msgid "local socket"
 msgstr "lokalt uttag"
 
-#: src/openfiles.c:37
+#: src/openfiles.c:41
 msgid "unknown type"
 msgstr "okänd typ"
 
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: src/openfiles.c:189
+#: src/openfiles.c:225
 msgid "FD"
 msgstr "FD"
 
-#: src/openfiles.c:191
+#: src/openfiles.c:227
 msgid "Object"
 msgstr "Objekt"
 
-#: src/openfiles.c:268
+#: src/openfiles.c:304
 msgid "Open Files"
 msgstr "Öppna filer"
 
-#: src/openfiles.c:288
+#: src/openfiles.c:324
 msgid "Process name:"
 msgstr "Processnamn:"
 
@@ -541,7 +545,7 @@ msgstr "Dölj den valda processen?"
 #. translators: secondary alert messagex
 #: src/procdialogs.c:72
 msgid ""
-"Hidden processes are no longer visible in the processes list. You can re-"
+"Hidden processes are no longer visible in the process list. You can re-"
 "enable them by selecting the \"Hidden Processes\" entry in the View menu."
 msgstr ""
 "Dolda processer syns inte längre i processlistan. Du kan återaktivera dem "
@@ -764,8 +768,14 @@ msgstr ""
 "Det finns inga processer som innehåller den sträng som söktes. Observera att "
 "sökningen endast utförs på processer som visas i processlistan."
 
+#~ msgid "View a process' open files"
+#~ msgstr "Visa en process öppna filer"
+
+#~ msgid "View process' open files"
+#~ msgstr "Visa processens öppna filer"
+
 #~ msgid ""
-#~ "Hidden processes are no longer visible in the process list. You can re-"
+#~ "Hidden processes are no longer visible in the processes list. You can re-"
 #~ "enable them by selecting the \"Hidden Processes\" entry in the View menu."
 #~ msgstr ""
 #~ "Dolda processer syns inte längre i processlistan. Du kan återaktivera dem "
@@ -803,9 +813,6 @@ msgstr ""
 
 #~ msgid "Open the list of currenlty hidden processes"
 #~ msgstr "Öppna listan över dolda processer"
-
-#~ msgid "Open the memory maps associated with process"
-#~ msgstr "Öppna minneskartorna som är associerade med process"
 
 #~ msgid "System resources monitor"
 #~ msgstr "Systemresursövervakare"
