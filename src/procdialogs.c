@@ -660,8 +660,12 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 	gchar *password, *blank;
 	gint retval;
 	
-	if (type == 0)
-		title = g_strdup (_("End Process"));
+	if (type == 0) {
+		if (extra_value == SIGKILL)
+			title = g_strdup (_("Kill Process"));
+		else
+			title = g_strdup (_("End Process"));
+	}
 	else
 		title = g_strdup (_("Change Priority"));
 		
@@ -713,7 +717,7 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 		g_free (blank);
 		
 		if (type == 0)
-			command = g_strdup_printf ("kill %d", pid);
+			command = g_strdup_printf ("kill -s %d %d", extra_value, pid);
 		else
 			command = g_strdup_printf ("renice %d %d", extra_value, pid);
 			
