@@ -566,22 +566,31 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath root_node)
 	/* Find parent process node */
 	parentinfo = find_parent (procdata, info->parent_pid);
 	if (parentinfo)
-		parent_node = parentinfo->node;
-		
-	if (parent_node && procdata->config.show_tree)
 	{
-		node = e_tree_memory_node_insert (procdata->memory, 
-						  parentinfo->node, 0, info);
-		/* Ha Ha - don't expand different threads - check to see if parent has
-		** same name and same mem usage - I don't know if this is too smart though.
-		*/
+		parent_node = parentinfo->node;
 		if (!g_strcasecmp (info->cmd, parentinfo->cmd) && 
 		    ( parentinfo->mem == info->mem))
 		{
-			/*e_tree_node_set_expanded (E_TREE (procdata->tree),
-					  	  parentinfo->node, FALSE);*/
 			info->name = g_strjoin (NULL, info->name, _(" (thread)"), NULL);
+			if (!procdata->config.show_threads)
+				return NULL;
 		}
+	}
+		
+	if (parent_node && procdata->config.show_tree)
+	{
+		/* Ha Ha - don't expand different threads - check to see if parent has
+		** same name and same mem usage - I don't know if this is too smart though.
+		*/
+		/*if (!g_strcasecmp (info->cmd, parentinfo->cmd) && 
+		    ( parentinfo->mem == info->mem))
+		{
+			e_tree_node_set_expanded (E_TREE (procdata->tree),
+					  	  parentinfo->node, FALSE);
+			info->name = g_strjoin (NULL, info->name, _(" (thread)"), NULL);
+		}*/
+		node = e_tree_memory_node_insert (procdata->memory, 
+						  parentinfo->node, 0, info);		
 	}
 
 	else

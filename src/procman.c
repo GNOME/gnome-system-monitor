@@ -74,6 +74,8 @@ procman_data_new (void)
 		gnome_config_get_bool ("procman/Config/show_icons=TRUE");
 	procdata->config.show_pretty_names = 
 		gnome_config_get_bool ("procman/Config/show_pretty_names=TRUE");
+	procdata->config.show_threads = 
+		gnome_config_get_bool ("procman/Config/show_threads=FALSE");
 	procdata->config.update_interval = 
 		gnome_config_get_int ("procman/Config/update_interval=3000");
 	procdata->config.whose_process = gnome_config_get_int ("procman/Config/view_as=0");
@@ -109,6 +111,7 @@ procman_save_config (ProcData *data)
 	gnome_config_set_bool ("procman/Config/show_tree", data->config.show_tree);
 	gnome_config_set_bool ("procman/Config/show_icons", data->config.show_icons);
 	gnome_config_set_bool ("procman/Config/show_pretty_names", data->config.show_pretty_names);
+	gnome_config_set_bool ("procman/Config/show_threads", data->config.show_threads);
 	gnome_config_set_int ("procman/Config/update_interval", data->config.update_interval);
 
 	save_blacklist (data);

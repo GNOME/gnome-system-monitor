@@ -46,6 +46,7 @@ struct _ProcConfig
         gboolean	show_tree;
         gboolean	show_icons;
         gboolean	show_pretty_names;
+        gboolean	show_threads;
  	gint		update_interval;
 	gint		whose_process;
 	gchar		*tree_state_file;
