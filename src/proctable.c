@@ -326,8 +326,17 @@ proctable_new (ProcData *data)
 	
 	etmm = E_TREE_MEMORY(model);
 #if 1	
-	scrolled = e_tree_scrolled_new_from_spec_file (model, extras,
-						       PROCMAN_DATADIR "proctable.etspec", NULL);
+	/* Hackety-hack around a bug in gal */
+	scrolled =  gtk_widget_new (e_tree_scrolled_get_type (),
+                                                "hadjustment", NULL,
+                                                "vadjustment", NULL,
+                                                NULL);
+        scrolled = GTK_WIDGET (e_tree_scrolled_construct_from_spec_file (
+        			E_TREE_SCROLLED (scrolled), 
+        					model, extras,
+        					PROCMAN_DATADIR "proctable.etspec", NULL));
+	/*scrolled = e_tree_scrolled_new_from_spec_file (model, extras,
+						       PROCMAN_DATADIR "proctable.etspec", NULL);*/
 						       
 	if (!scrolled)
 	{

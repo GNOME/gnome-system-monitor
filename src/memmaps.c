@@ -295,8 +295,18 @@ create_memmaps_tree (ProcData *procdata)
 	memory = E_TREE_MEMORY(model);
 
 #if 1
-	scrolled = e_tree_scrolled_new_from_spec_file (model, NULL,
+	/* Hackety-hack around a bug in gal */
+	scrolled =  gtk_widget_new (e_tree_scrolled_get_type (),
+                                                "hadjustment", NULL,
+                                                "vadjustment", NULL,
+                                                NULL);
+        scrolled = GTK_WIDGET (e_tree_scrolled_construct_from_spec_file (
+        			E_TREE_SCROLLED (scrolled), 
+        					model, NULL,
+        					PROCMAN_DATADIR "memmaps.etspec", NULL));
+	/*scrolled = e_tree_scrolled_new_from_spec_file (model, NULL,
 						       PROCMAN_DATADIR "memmaps.etspec", NULL);
+	*/
 	if (!scrolled)
 	{
 		GtkWidget *dialog;
@@ -347,18 +357,18 @@ void create_memmaps_dialog (ProcData *procdata)
 		return;
 
 	memmapsdialog = gnome_dialog_new (_("Memory Maps"), NULL);
-	gtk_window_set_policy (GTK_WINDOW (memmapsdialog), FALSE, TRUE, FALSE);
+	gtk_window_set_policy (GTK_WINDOW (memmapsdialog), TRUE, TRUE, FALSE);
 	gtk_widget_set_usize (memmapsdialog, 575, 400);
 	
 	dialog_vbox = GNOME_DIALOG (memmapsdialog)->vbox;
 	
-	alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
+	alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 	gtk_box_pack_start (GTK_BOX (dialog_vbox), alignment, FALSE, FALSE, 0);
 	
 	cmd_hbox = gtk_hbox_new (FALSE, 0);
 	gtk_container_add (GTK_CONTAINER (alignment), cmd_hbox);
 	
-	label = gtk_label_new (_("Process Name : "));
+	label = gtk_label_new (_("Process Name :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (cmd_hbox),label, FALSE, FALSE, 0);
 	
