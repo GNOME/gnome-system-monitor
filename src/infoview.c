@@ -85,7 +85,7 @@ infoview_create (ProcData *data)
 	
 	cmd_event_box = gtk_event_box_new ();
 	gtk_table_attach (GTK_TABLE (info_table), cmd_event_box, 1, 2, 0, 1, 
-			  GTK_EXPAND | GTK_FILL, 0, GNOME_PAD_SMALL, 0);
+			  GTK_FILL|GTK_EXPAND, 0, GNOME_PAD_SMALL, 0);
 	
 	cmd_label = e_clipped_label_new (" ");
 	gtk_misc_set_alignment (GTK_MISC (cmd_label), 0.0, 0.5);
@@ -210,12 +210,16 @@ infoview_update (ProcData *data)
 	if (g_strcasecmp (info->arguments, command))
 		gtk_tooltips_set_tip (cmd_tooltip, cmd_event_box, info->arguments, NULL);
 	e_clipped_label_set_text (E_CLIPPED_LABEL (cmd_label), info->arguments);
-	if (info->nice <= -5)
+	if (info->nice < -7)
+		string = g_strdup_printf (_("Very High  ( Nice %d )"), info->nice);
+	else if (info->nice < -2)
 		string = g_strdup_printf (_("High  ( Nice %d )"), info->nice);
-	else if (info->nice <= 5)
+	else if (info->nice < 3)
 		string = g_strdup_printf (_("Normal  ( Nice %d )"), info->nice);
-	else
+	else if (info->nice < 7)
 		string = g_strdup_printf (_("Low  ( Nice %d )"), info->nice);
+	else
+		string = g_strdup_printf (_("Very Low  ( Nice %d )"), info->nice);
 	gtk_label_set_text (GTK_LABEL (nice_label), string);
 	g_free (string); 
 	string = get_size_string (info->mem);

@@ -249,16 +249,41 @@ renice_accept (GtkButton *button, gpointer data)
 {
 	ProcData *procdata = data;
 	
+	g_print ("nice value %d\n", new_nice_value);
+	
+	if (new_nice_value == -100)
+		return;		
+	
 	renice (procdata, procdata->selected_pid, new_nice_value);
 	
 	gnome_dialog_close (GNOME_DIALOG (renice_dialog));	
 	
 }
 
+static gchar *
+get_nice_level (gint nice)
+{
+
+	if (nice < -7)
+		return _("( Very High Priority )");
+	else if (nice < -2)
+		return _("( High Priority )");
+	else if (nice < 3)
+		return _("( Normal Priority )");
+	else if (nice < 7)
+		return _("( Low Priority )");
+	else
+		return _("( Very Low Priority)");
+	
+}
+
 static void
 renice_scale_changed (GtkAdjustment *adj, gpointer data)
 {
-	new_nice_value = adj->value;		
+	GtkWidget *label = GTK_WIDGET (data);
+	
+	new_nice_value = adj->value;
+	gtk_label_set_text (GTK_LABEL (label), get_nice_level (new_nice_value));		
 	
 }
 
@@ -270,9 +295,9 @@ procdialog_create_renice_dialog (ProcData *data)
 	GtkWidget *dialog = NULL;
 	GtkWidget *dialog_vbox;
 	GtkWidget *vbox;
- 	GtkWidget *hbox;
   	GtkWidget *label;
-  	GtkWidget *frame;
+  	GtkWidget *priority_label;
+  	GtkWidget *table;
   	GtkObject *renice_adj;
   	GtkWidget *hscale;
   	GtkWidget *renicebutton;
@@ -293,6 +318,8 @@ procdialog_create_renice_dialog (ProcData *data)
 		
 	dialog = gnome_dialog_new (_("Change Priority"), NULL);
   	renice_dialog = dialog;
+  	
+  	new_nice_value = -100;
   	  
     	dialog_vbox = GNOME_DIALOG (dialog)->vbox;
     	
@@ -304,18 +331,24 @@ procdialog_create_renice_dialog (ProcData *data)
     	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD, 0);
     	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
     	
-    	frame = gtk_frame_new (_("Nice Value"));				
-	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+    	table = gtk_table_new (2, 2, FALSE);
+	gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 	
-	hbox = gtk_hbox_new (FALSE, 0);
-	gtk_container_add (GTK_CONTAINER (frame), hbox);
-	gtk_container_set_border_width (GTK_CONTAINER (hbox), GNOME_PAD_SMALL);
+	label = gtk_label_new (_("Nice Value :"));
+	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 2,
+			  0, 0, 0, 0);
 	
 	renice_adj = gtk_adjustment_new (info->nice, -20, 20, 1, 1, 0);
 	new_nice_value = info->nice;
 	hscale = gtk_hscale_new (GTK_ADJUSTMENT (renice_adj));
 	gtk_scale_set_digits (GTK_SCALE (hscale), 0);
-	gtk_box_pack_start (GTK_BOX (hbox), hscale, TRUE, TRUE, 0);
+	gtk_table_attach (GTK_TABLE (table), hscale, 1, 2, 0, 1,
+			  GTK_EXPAND | GTK_FILL, 0, 0, 0);
+			  
+	priority_label = gtk_label_new (get_nice_level (info->nice));
+	gtk_table_attach (GTK_TABLE (table), priority_label, 1, 2, 1, 2,
+			  GTK_FILL, 0, 0, 0);
 	
 	dialog_action_area = GNOME_DIALOG (dialog)->action_area;
 	gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area), GTK_BUTTONBOX_END);
@@ -333,7 +366,7 @@ procdialog_create_renice_dialog (ProcData *data)
   	gtk_signal_connect (GTK_OBJECT (renicebutton), "clicked",
   			    GTK_SIGNAL_FUNC (renice_accept), procdata);
   	gtk_signal_connect (GTK_OBJECT (renice_adj), "value_changed",
-  			    GTK_SIGNAL_FUNC (renice_scale_changed), procdata);
+  			    GTK_SIGNAL_FUNC (renice_scale_changed), priority_label);
   	gtk_signal_connect (GTK_OBJECT (dialog), "close",
   			    GTK_SIGNAL_FUNC (renice_close_dialog), NULL);
     	
