@@ -122,11 +122,11 @@ proctable_new (ProcData *data)
 	GtkTreeSelection *selection;
 	GtkTreeViewColumn *column;
   	GtkCellRenderer *cell_renderer;
-	static gchar *title[] = {NULL, N_("Process Name"), N_("Arguments"),
+	static gchar *title[] = {N_("Process Name"), N_("Arguments"),
 				 N_("User"), N_("Status"),
 				 N_("Memory"), N_("VM Size"), N_("Resident Memory"),
 				 N_("Shared Memory"), N_("RSS Memory"),
-				 N_("% CPU"), N_("Nice"), N_("ID"), "POINTER"};
+				 N_("% CPU"), N_("Nice"), N_("ID"), NULL, "POINTER"};
 	gint i;
 	
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
@@ -134,12 +134,12 @@ proctable_new (ProcData *data)
                                   	GTK_POLICY_AUTOMATIC,
                                   	GTK_POLICY_AUTOMATIC);
 	
-	model = gtk_tree_store_new (NUM_COLUMNS, GDK_TYPE_PIXBUF, G_TYPE_STRING, 
+	model = gtk_tree_store_new (NUM_COLUMNS,  G_TYPE_STRING, 
 				    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_INT, G_TYPE_INT, G_TYPE_INT,
-				    G_TYPE_POINTER);		    
+				    GDK_TYPE_PIXBUF, G_TYPE_POINTER);		    
   	
   	proctree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (proctree), TRUE);
@@ -161,20 +161,20 @@ proctable_new (ProcData *data)
 	gtk_tree_view_column_set_attributes (column, cell_renderer,
 					     "text", COL_NAME,
 					     NULL);
-	gtk_tree_view_column_set_title (column, title[1]);
+	gtk_tree_view_column_set_title (column, title[0]);
 	gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
-	//gtk_tree_view_column_set_resizable (column, TRUE);
+	gtk_tree_view_column_set_resizable (column, TRUE);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 	gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
   	
-  	for (i = 2; i < NUM_COLUMNS - 1; i++) {
+  	for (i = 1; i < NUM_COLUMNS - 2; i++) {
   		cell_renderer = gtk_cell_renderer_text_new ();
   		column = gtk_tree_view_column_new_with_attributes (title[i],
 						    		   cell_renderer,
 						     		   "text", i,
 						     		   NULL);
 		gtk_tree_view_column_set_sort_column_id (column, i);
-		//gtk_tree_view_column_set_resizable (column, TRUE);
+		gtk_tree_view_column_set_resizable (column, TRUE);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 	}
 	
@@ -228,6 +228,8 @@ proctable_new (ProcData *data)
 					      	      COL_NAME,
 					              GTK_SORT_ASCENDING);
 		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_STATUS);
+		gtk_tree_view_column_set_visible (column, FALSE);
+		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_ARGS);
 		gtk_tree_view_column_set_visible (column, FALSE);
 		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_VMSIZE);
 		gtk_tree_view_column_set_visible (column, FALSE);

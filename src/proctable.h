@@ -23,8 +23,7 @@
 
 enum
 {
-	COL_PIXBUF = 0,
-	COL_NAME,
+	COL_NAME = 0,
 	COL_ARGS,
 	COL_USER,
 	COL_STATUS,
@@ -36,8 +35,9 @@ enum
 	COL_CPU,
 	COL_NICE,
 	COL_PID,
+	COL_PIXBUF,
 	COL_POINTER,
-	NUM_COLUMNS,
+	NUM_COLUMNS,	
 };
 
 

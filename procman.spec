@@ -1,5 +1,5 @@
 # Note that this is NOT a relocatable package
-%define ver      1.1.0
+%define ver      1.1.1
 %define  RELEASE 1
 %define  rel     %{?CUSTOM_RELEASE} %{!?CUSTOM_RELEASE:%RELEASE}
 %define prefix   /usr
@@ -13,7 +13,8 @@ Group: Applications/System
 Source: http://www.personal.psu.edu/kfv101/procman/source/procman-%{ver}.tar.gz
 BuildRoot: /var/tmp/procman-root
 Requires: libgnomeui >= 1.106.0
-Requires: libgtop >= 1.0.6
+Requires: libgtop >= 1.90.0
+Requires: libwnck >= 0.1
 
 %description
 Procman is a simple process and system monitor.
