@@ -52,8 +52,15 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 		switch (errno) {
 			case ESRCH:
 				error_msg = g_strdup_printf (_("No such process."));
-				dialog = gnome_error_dialog (error_msg);
-				gnome_dialog_run(GNOME_DIALOG (dialog));
+				dialog = gtk_message_dialog_new (NULL,
+							         GTK_DIALOG_DESTROY_WITH_PARENT,
+                                  			         GTK_MESSAGE_ERROR,
+                                  			         GTK_BUTTONS_OK,
+                                  			         "%s",
+                                  			         error_msg,
+                                  			         NULL); 
+				gtk_dialog_run (GTK_DIALOG (dialog));
+				gtk_widget_destroy (dialog);
 				g_free (error_msg);
 				break;
 			case EPERM:
@@ -130,9 +137,15 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
 					case ESRCH:
 						break;
 					default:
-						error_critical = g_strdup_printf (_("An error occured while killing the process."));
-						dialog = gnome_error_dialog (error_critical);
-						g_free (error_critical);
+						dialog = gtk_message_dialog_new (NULL,
+							       GTK_DIALOG_DESTROY_WITH_PARENT,
+                                  			       GTK_MESSAGE_ERROR,
+                                  			       GTK_BUTTONS_OK,
+                                  			       "%s",
+                                  			      _("An error occured while killing the process."),
+                                  			      NULL); 
+						gtk_dialog_run (GTK_DIALOG (dialog));
+						gtk_widget_destroy (dialog);
 					}
 				}
 			

@@ -282,8 +282,8 @@ procdialog_create_renice_dialog (ProcData *data)
 	
 	g_signal_connect (G_OBJECT (dialog), "response",
   			  G_CALLBACK (renice_dialog_button_pressed), procdata);
-  	gtk_signal_connect (GTK_OBJECT (renice_adj), "value_changed",
-  			    GTK_SIGNAL_FUNC (renice_scale_changed), priority_label);
+  	g_signal_connect (G_OBJECT (renice_adj), "value_changed",
+  			    G_CALLBACK (renice_scale_changed), priority_label);
   	
     	gtk_widget_show_all (dialog);
     	
@@ -331,9 +331,9 @@ update_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 {
 	ProcData *procdata = data;
 	GConfClient *client = gconf_client_get_default ();
-	gfloat value;
+	gdouble value;
 	
-	value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (widget));
+	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (widget));
 	
 	if (1000 * value == procdata->config.update_interval)
 		return;
@@ -347,9 +347,9 @@ update_graph_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer 
 {
 	ProcData *procdata = data;
 	GConfClient *client = gconf_client_get_default ();
-	gfloat value = 0;
+	gdouble value = 0;
 	
-	value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (widget));
+	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (widget));
 	
 	if (1000 * value == procdata->config.graph_update_interval)
 		return;
@@ -363,9 +363,9 @@ update_disks_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer 
 {
 	ProcData *procdata = data;
 	GConfClient *client = gconf_client_get_default ();
-	gfloat value;
+	gdouble value;
 	
-	value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (widget));
+	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (widget));
 	
 	if (1000 * value == procdata->config.disks_update_interval)
 		return;
@@ -503,22 +503,22 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 1.0, 
 							  100.0, 0.25, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
-	gtk_signal_connect (GTK_OBJECT (spin_button), "focus_out_event",
-			    GTK_SIGNAL_FUNC (update_update_interval), procdata);
+	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
+			    G_CALLBACK (update_update_interval), procdata);
 	gtk_box_pack_start (GTK_BOX (hbox), spin_button, FALSE, FALSE, 0);
 	
 	check_button = gtk_check_button_new_with_label (_("Show Process Dependencies"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
 				    procdata->config.show_tree);
-	gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
-			    GTK_SIGNAL_FUNC (show_tree_toggled), procdata);
+	g_signal_connect (G_OBJECT (check_button), "toggled",
+			    G_CALLBACK (show_tree_toggled), procdata);
 	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
 	
 	check_button = gtk_check_button_new_with_label (_("Show Threads"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
 				    procdata->config.show_threads);
-	gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
-			    GTK_SIGNAL_FUNC (show_threads_toggled), procdata);
+	g_signal_connect (G_OBJECT (check_button), "toggled",
+			    G_CALLBACK (show_threads_toggled), procdata);
 	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
 	
 	vbox = create_proc_field_page (procdata);
@@ -549,8 +549,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.25, 
 							  100.0, 0.25, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
-	gtk_signal_connect (GTK_OBJECT (spin_button), "focus_out_event",
-			    GTK_SIGNAL_FUNC (update_graph_update_interval), procdata);
+	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
+			    G_CALLBACK (update_graph_update_interval), procdata);
 	gtk_table_attach (GTK_TABLE (table), spin_button, 1, 2, 0, 1,
 			  0, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 	
@@ -565,8 +565,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 				    procdata->config.bg_color.red,
 				    procdata->config.bg_color.green,
 				    procdata->config.bg_color.blue, 0);
-	gtk_signal_connect (GTK_OBJECT (color_picker), "color_set",
-			    GTK_SIGNAL_FUNC (bg_color_changed), procdata);
+	g_signal_connect (G_OBJECT (color_picker), "color_set",
+			    G_CALLBACK (bg_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 1, 2, 1, 2, 
 			  GTK_FILL|GTK_EXPAND,0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 			  
@@ -581,8 +581,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 				    procdata->config.frame_color.red,
 				    procdata->config.frame_color.green,
 				    procdata->config.frame_color.blue, 0);
-	gtk_signal_connect (GTK_OBJECT (color_picker), "color_set",
-			    GTK_SIGNAL_FUNC (frame_color_changed), procdata);
+	g_signal_connect (G_OBJECT (color_picker), "color_set",
+			    G_CALLBACK (frame_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 1, 2, 2, 3, 
 			  GTK_FILL|GTK_EXPAND,0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);		  
 	
@@ -603,8 +603,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	adjustment = (GtkAdjustment *) gtk_adjustment_new (update / 1000.0, 1.0, 
 							   100.0, 1.0, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 0);
-	gtk_signal_connect (GTK_OBJECT (spin_button), "focus_out_event",
-			    GTK_SIGNAL_FUNC (update_disks_update_interval), procdata);
+	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
+			    G_CALLBACK (update_disks_update_interval), procdata);
 	gtk_table_attach (GTK_TABLE (table), spin_button, 1, 2, 0, 1,
 			  0, 0, 0, GNOME_PAD_SMALL);
 			  
@@ -614,9 +614,9 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_widget_show_all (dialog);
 	
 	if (procdata->config.current_tab == 0)
-		gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 0);
+		gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 0);
 	else
-		gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 2);
+		gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 2);
 }
 
 /*
@@ -698,8 +698,15 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 			command = g_strdup_printf ("renice %d %d", extra_value, pid);
 			
 		if (su_run_with_password (command, password) == -1) {
-			error_dialog = gnome_error_dialog (_("Wrong Password."));
-			gnome_dialog_run (GNOME_DIALOG (error_dialog));
+			error_dialog = gtk_message_dialog_new (NULL,
+							       GTK_DIALOG_DESTROY_WITH_PARENT,
+                                  			       GTK_MESSAGE_ERROR,
+                                  			       GTK_BUTTONS_OK,
+                                  			       "%s",
+                                  			      _("Wrong Password."),
+                                  			      NULL); 
+			gtk_dialog_run (GTK_DIALOG (error_dialog));
+			gtk_widget_destroy (error_dialog);
 		}
 		g_free (command);
 		

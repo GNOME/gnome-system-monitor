@@ -2,7 +2,7 @@
 
 INCLUDES = \
 	-DPROCMAN_DATADIR=\"$(datadir)/procman/\" \
-	@PROCMAN_CFLAGS@ 
+	@PROCMAN_CFLAGS@ -DGTK_DISABLE_DEPRECATED=1
 
 bin_PROGRAMS = procman
 

@@ -249,7 +249,7 @@ create_proc_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox2, FALSE, FALSE, 0);
 	
 	endprocessbutton = gtk_button_new_with_mnemonic (_("End _Process"));
-  	gtk_box_pack_start (GTK_BOX (hbox2), endprocessbutton, FALSE, FALSE, 0);
+  	gtk_box_pack_end (GTK_BOX (hbox2), endprocessbutton, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (endprocessbutton), GNOME_PAD_SMALL);
 	gtk_misc_set_padding (GTK_MISC (GTK_BIN (endprocessbutton)->child), 
 			      GNOME_PAD_SMALL, 1);
@@ -259,7 +259,7 @@ create_proc_view (ProcData *procdata)
 	infolabel = gtk_label_new_with_mnemonic (_("More _Info"));
 	infobutton = gtk_button_new ();
 	gtk_container_add (GTK_CONTAINER (infobutton), infolabel);
-	gtk_box_pack_end (GTK_BOX (hbox2), infobutton, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox2), infobutton, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (infobutton), GNOME_PAD_SMALL);
 	gtk_misc_set_padding (GTK_MISC (GTK_BIN (infobutton)->child), GNOME_PAD_SMALL, 1);
 	g_signal_connect (G_OBJECT (infobutton), "clicked",
@@ -331,8 +331,8 @@ create_sys_view (ProcData *procdata)
 				    cpu_graph->colors[2].red,
 				    cpu_graph->colors[2].green,
 				    cpu_graph->colors[2].blue, 0);
-	gtk_signal_connect (GTK_OBJECT (color_picker), "color_set",
-			    GTK_SIGNAL_FUNC (cb_cpu_color_changed), procdata);
+	g_signal_connect (G_OBJECT (color_picker), "color_set",
+			    G_CALLBACK (cb_cpu_color_changed), procdata);
 	gtk_box_pack_start (GTK_BOX (hbox), color_picker, FALSE, FALSE, 0);
 	
 	label = gtk_label_new (_("CPU Used :"));
@@ -360,8 +360,8 @@ create_sys_view (ProcData *procdata)
 				    mem_graph->colors[2].red,
 				    mem_graph->colors[2].green,
 				    mem_graph->colors[2].blue, 0);
-	gtk_signal_connect (GTK_OBJECT (color_picker), "color_set",
-			    GTK_SIGNAL_FUNC (cb_mem_color_changed), procdata);
+	g_signal_connect (G_OBJECT (color_picker), "color_set",
+			    G_CALLBACK (cb_mem_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, 0, 0, 0, 0);
 	
 	label = gtk_label_new (_("Memory"));
@@ -396,8 +396,8 @@ create_sys_view (ProcData *procdata)
 				    mem_graph->colors[3].red,
 				    mem_graph->colors[3].green,
 				    mem_graph->colors[3].blue, 0);
-	gtk_signal_connect (GTK_OBJECT (color_picker), "color_set",
-			    GTK_SIGNAL_FUNC (cb_swap_color_changed), procdata);
+	g_signal_connect (G_OBJECT (color_picker), "color_set",
+			    G_CALLBACK (cb_swap_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, 0, 0, 0, 0);
 			  
 	label = gtk_label_new (_("Swap"));
@@ -536,8 +536,8 @@ create_main_window (ProcData *procdata)
 	g_print ("menu hints %f \n", g_timer_elapsed (timer, NULL));
 	g_timer_destroy (timer);
 		    
-	gtk_signal_connect (GTK_OBJECT (notebook), "switch-page",
-			    GTK_SIGNAL_FUNC (cb_switch_page), procdata);
+	g_signal_connect (G_OBJECT (notebook), "switch-page",
+			    G_CALLBACK (cb_switch_page), procdata);
 
 	if (procdata->config.current_tab == 0)
 		procdata->timeout = gtk_timeout_add (procdata->config.update_interval,
@@ -582,7 +582,7 @@ create_simple_view_dialog (ProcData *procdata)
 	gtk_window_set_default_size (GTK_WINDOW (app), 350, 425);
 	
 	accel = gtk_accel_group_new ();
-	gtk_accel_group_attach (accel, GTK_OBJECT (app));
+	gtk_accel_group_attach (accel, G_OBJECT (app));
 	gtk_accel_group_unref (accel);
 	
 	main_vbox = GNOME_DIALOG (app)->vbox;
@@ -617,16 +617,16 @@ create_simple_view_dialog (ProcData *procdata)
 	gtk_container_set_border_width (GTK_CONTAINER (button), GNOME_PAD_SMALL);
 	gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 
 			      GNOME_PAD_SMALL, 1);
-	gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    GTK_SIGNAL_FUNC (cb_end_process_button_pressed), procdata);
+	g_signal_connect (G_OBJECT (button), "clicked",
+			    G_CALLBACK (cb_end_process_button_pressed), procdata);
 
-	gtk_signal_connect (GTK_OBJECT (app), "close",
-			    GTK_SIGNAL_FUNC (cb_close_simple_dialog), procdata);
-	gtk_signal_connect (GTK_OBJECT (procdata->tree), "cursor_activated",
-			    GTK_SIGNAL_FUNC (cb_table_selected), procdata);
+	g_signal_connect (G_OBJECT (app), "close",
+			    G_CALLBACK (cb_close_simple_dialog), procdata);
+	g_signal_connect (G_OBJECT (procdata->tree), "cursor_activated",
+			    G_CALLBACK (cb_table_selected), procdata);
 			    
 	/* Makes sure everything that should be insensitive is at start */
-	gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), "cursor_activated",
+	gtk_signal_emit_by_name (G_OBJECT (procdata->tree), "cursor_activated",
 				 -1, NULL);
 				 
 	procdata->timeout = gtk_timeout_add (procdata->config.update_interval,

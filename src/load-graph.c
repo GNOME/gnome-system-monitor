@@ -405,12 +405,12 @@ load_graph_new (gint type, ProcData *procdata)
 
     g->disp = gtk_drawing_area_new ();
     gtk_widget_show (g->disp);
-    gtk_signal_connect (GTK_OBJECT (g->disp), "expose_event",
-			(GtkSignalFunc)load_graph_expose, g);
-    gtk_signal_connect (GTK_OBJECT(g->disp), "configure_event",
-			(GtkSignalFunc)load_graph_configure, g);
-    gtk_signal_connect (GTK_OBJECT(g->disp), "destroy",
-			(GtkSignalFunc)load_graph_destroy, g);
+    g_signal_connect (G_OBJECT (g->disp), "expose_event",
+			G_CALLBACK (load_graph_expose), g);
+    g_signal_connect (G_OBJECT(g->disp), "configure_event",
+			G_CALLBACK (load_graph_configure), g);
+    g_signal_connect (G_OBJECT(g->disp), "destroy",
+		      G_CALLBACK (load_graph_destroy), g);
     			
     gtk_widget_set_events (g->disp, GDK_EXPOSURE_MASK);
 

@@ -943,8 +943,11 @@ proctable_search_table (ProcData *procdata, gchar *string)
 	
 	if (index == increment) {
 		error = g_strdup_printf (_("%s could not be found."), string);
-		dialog = gnome_error_dialog (error);
-		gnome_dialog_run (GNOME_DIALOG (dialog));
+		dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
+                                  		 GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+                                  		 "%s", error, NULL); 
+		gtk_dialog_run (GTK_DIALOG (dialog));
+		gtk_widget_destroy (dialog);
 		g_free (error);
 	}
 	else {

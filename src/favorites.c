@@ -314,8 +314,11 @@ void create_blacklist_dialog (ProcData *procdata)
 	if (procdata->blacklist_num == 0 )
 	{
 		message = g_strdup_printf(_("No processes are currently hidden."));
-		dialog = gnome_error_dialog (message);
-		gnome_dialog_run(GNOME_DIALOG (dialog));
+		dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
+                                  		 GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+                                  		 "%s", message, NULL); 
+		gtk_dialog_run (GTK_DIALOG (dialog));
+		gtk_widget_destroy (dialog);
 		g_free (message);
 	}
 	
