@@ -470,7 +470,7 @@ create_main_window (ProcData *procdata)
 	GtkWidget *sys_box;
 	GtkWidget *appbar1;
 	
-	app = gnome_app_new ("procman", _("Procman System Monitor"));
+	app = gnome_app_new ("procman", _("System Monitor"));
 	
 	width = procdata->config.width;
 	height = procdata->config.height;
