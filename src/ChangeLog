@@ -1,5 +1,19 @@
 2001-07-21 Kevin Vandersloot <kfv101@psu.edu>
 
+	*procdialogs.c (update_update_interval, _create_preferences_dialog): fix 
+	conversions between ints to floats to fix the update interval preference
+	
+	*procdialogs.c (show_icons_toggled): if set to yes scan the .desktop files
+	in order to show icons. Thus no restart is needed for this preference to take
+	effect
+	
+	*proctable.c (get_info): don't show icons if pref is set. 
+	
+	*interface.c (cb_test): remove the useless function. Also #ifdef the favorites
+	menu as it is not used.
+
+2001-07-21 Kevin Vandersloot <kfv101@psu.edu>
+
 	*procdialogs.c: add show_threads config to config dialog
 
 2001-07-21 Kevin Vandersloot <kfv101@psu.edu>

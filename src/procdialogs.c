@@ -28,6 +28,7 @@
 #include "favorites.h"
 #include "proctable.h"
 #include "callbacks.h"
+#include "prettytable.h"
 
 GtkWidget *renice_spinbutton;
 GtkWidget *renice_dialog;
@@ -395,6 +396,12 @@ show_icons_toggled (GtkToggleButton *button, gpointer data)
 	
 	procdata->config.show_icons = !toggled;
 	
+	if (!procdata->pretty_table && !toggled)
+		procdata->pretty_table = pretty_table_new ();
+		
+	proctable_clear_tree (procdata);
+	proctable_update_all (procdata);
+	
 }
 
 static void
@@ -420,7 +427,7 @@ update_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 	gfloat value;
 	
 	value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (widget));
-	procdata->config.update_interval = (gint) value * 1000;
+	procdata->config.update_interval = value * 1000;
 	
 	gtk_timeout_remove (procdata->timeout);
 	procdata->timeout = gtk_timeout_add (procdata->config.update_interval, cb_timeout,
@@ -440,6 +447,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	GtkAdjustment *adjustment;
 	GtkWidget *spin_button;
 	GtkWidget *check_button;
+	gfloat update;
 	
 	dialog = gnome_dialog_new (_("Preferences"), GNOME_STOCK_BUTTON_CLOSE, NULL);
 	
@@ -459,7 +467,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	label = gtk_label_new (_("Update Speed ( seconds ) :"));
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 	
-	adjustment = (GtkAdjustment *) gtk_adjustment_new(procdata->config.update_interval / 1000, 0.25, 100.0, 0.25, 1.0, 1.0);
+	update = (gfloat) procdata->config.update_interval;
+	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.25, 100.0, 0.25, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
 	gtk_signal_connect (GTK_OBJECT (spin_button), "focus_out_event",
 			    GTK_SIGNAL_FUNC (update_update_interval), procdata);
@@ -487,11 +496,11 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 			    GTK_SIGNAL_FUNC (show_commands_toggled), procdata);
 	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
 	
-	check_button = gtk_check_button_new_with_label (_("Never Show Icons or Application Names \n ( faster startup time )"));
+	check_button = gtk_check_button_new_with_label (_("Never Show Icons or Application Names \n ( faster startup time - requires restart)"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
 				    !procdata->config.show_icons);
 	gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
-			    GTK_SIGNAL_FUNC (show_icons_toggled), procdata);
+			    GTK_SIGNAL_FUNC (show_icons_toggled), procdata);			    
 	gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
 	
 	check_button = gtk_check_button_new_with_label (_("Show Threads"));

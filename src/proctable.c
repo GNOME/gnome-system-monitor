@@ -514,8 +514,11 @@ get_info (ProcData *procdata, gint pid)
 	glibtop_get_proc_time (&proctime, pid);
 	newcputime = proctime.utime + proctime.stime;
 	
-	info->pixbuf = pretty_table_get_icon (procdata->pretty_table, procstate.cmd);
-	if (procdata->config.show_pretty_names)
+	if (procdata->config.show_icons)
+		info->pixbuf = pretty_table_get_icon (procdata->pretty_table, procstate.cmd);
+	else
+		info->pixbuf = NULL;
+	if (procdata->config.show_pretty_names && procdata->config.show_icons)
 		name = pretty_table_get_name (procdata->pretty_table, procstate.cmd);
 	else
 		name = g_strdup (procstate.cmd);

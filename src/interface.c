@@ -70,6 +70,7 @@ static GnomeUIInfo view1_menu_uiinfo[] =
 	GNOMEUIINFO_END
 };
 
+#if 0
 static GnomeUIInfo favorites1_menu_uiinfo[] =
 {
 	{
@@ -79,6 +80,7 @@ static GnomeUIInfo favorites1_menu_uiinfo[] =
 	},
 	GNOMEUIINFO_END
 };
+#endif
 
 static GnomeUIInfo settings1_menu_uiinfo[] =
 {
@@ -117,13 +119,6 @@ gchar *lessinfolabel = N_("<< Less Info");
 
 GtkWidget *infobutton;
 GtkWidget *endprocessbutton;
-
-static void
-cb_test (ETree *tree, int row, ETreePath *node, gpointer data)
-{
-
-	g_print ("change row %d \n",row);
-}
 
 GtkWidget*
 create_main_window (ProcData *data)
@@ -290,9 +285,7 @@ create_main_window (ProcData *data)
 			    GTK_SIGNAL_FUNC (cb_table_selected), procdata);
 	gtk_signal_connect (GTK_OBJECT (procdata->tree), "double_click",
 			    GTK_SIGNAL_FUNC (cb_double_click), procdata);
-	gtk_signal_connect (GTK_OBJECT (procdata->tree), "cursor_change",
-			    GTK_SIGNAL_FUNC (cb_test), procdata);
-
+	
 #if 1
 	procdata->timeout = gtk_timeout_add (procdata->config.update_interval,
 			 cb_timeout, procdata);
