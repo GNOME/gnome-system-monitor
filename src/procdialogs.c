@@ -22,6 +22,7 @@
 #endif
 
 #include <signal.h>
+#include <string.h>
 #include "procdialogs.h"
 #include "favorites.h"
 #include "proctable.h"
@@ -68,37 +69,96 @@ procdialog_create_hide_dialog (ProcData *data)
 	ProcData *procdata = data;
 	GtkWidget *messagebox1;
 	GtkWidget *dialog_vbox1, *vbox;
-  	GtkWidget *hbox1;
+	GtkWidget *hbox, *hbox1;
+	GtkWidget *dialog_action_area;
   	GtkWidget *checkbutton1;
-  	gchar *text = _("Are you sure you want to hide this process?\n"
-  			"(Choose 'Hidden Processes' in the Settings menu to reshow)");
-  			
-  	messagebox1 = gtk_message_dialog_new (NULL,
- 					      GTK_DIALOG_MODAL,
- 					      GTK_MESSAGE_WARNING,
- 					      GTK_BUTTONS_CANCEL,
- 					      text);
-  	
-  	gtk_window_set_title (GTK_WINDOW (messagebox1), _("Hide Process"));
-  	gtk_window_set_policy (GTK_WINDOW (messagebox1), FALSE, FALSE, FALSE);
-  
-    	vbox = GTK_DIALOG (messagebox1)->vbox;
-    	
-    	dialog_vbox1 = gtk_vbox_new (FALSE, 6);
-    	gtk_box_pack_start (GTK_BOX (vbox), dialog_vbox1, TRUE, TRUE, 0);
-    	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox1), 12);
+	GtkWidget *button;
+	GtkWidget *image;
+	GtkWidget *label;
+	GtkWidget *align;
+	GtkWidget *icon;
+	gchar *header  = _("Are you sure you want to hide this process?");
+	gchar *message = _("If you hide a process, you can unhide it by selecting 'Hidden Processes' in the Edit menu.");
+	gchar *title;
+		  			
+  	messagebox1 = gtk_dialog_new ();
+	
+	gtk_window_set_title (GTK_WINDOW (messagebox1), "");
+	gtk_window_set_resizable (GTK_WINDOW (messagebox1), FALSE);
+	gtk_window_set_modal (GTK_WINDOW (messagebox1), TRUE);
+	
+	gtk_dialog_set_has_separator (GTK_DIALOG (messagebox1), FALSE);
+	gtk_container_set_border_width (GTK_CONTAINER (messagebox1), 5);
+	
+	dialog_vbox1 = GTK_DIALOG (messagebox1)->vbox;
+	gtk_box_set_spacing (GTK_BOX (dialog_vbox1), 14);
+
+	hbox = gtk_hbox_new (FALSE, 12);
+	gtk_box_pack_start (GTK_BOX (dialog_vbox1), hbox, FALSE, FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
+	gtk_widget_show (hbox);
+
+	image = gtk_image_new_from_stock ("gtk-dialog-warning", GTK_ICON_SIZE_DIALOG);
+	gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+	gtk_widget_show (image);
+	
+	vbox = gtk_vbox_new (FALSE, 12);
+	gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+	gtk_widget_show (vbox);
+	
+	title = g_strconcat ("<b>", _(header), "</b>", NULL);
+	label = gtk_label_new (title);  
+	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtk_widget_show (label);
+	g_free (title);
+	
+	label = gtk_label_new (_(message));
+	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtk_widget_show (label);
+	
+	dialog_action_area = GTK_DIALOG (messagebox1)->action_area;
+	gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area), GTK_BUTTONBOX_END);
+
+	button = gtk_button_new_from_stock ("gtk-cancel");
+  	gtk_widget_show (button);
+  	gtk_dialog_add_action_widget (GTK_DIALOG (messagebox1), button, GTK_RESPONSE_CANCEL);
+	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
 
   	hbox1 = gtk_hbox_new (FALSE, 0);
   	gtk_widget_show (hbox1);
-  	gtk_box_pack_end (GTK_BOX (dialog_vbox1), hbox1, TRUE, TRUE, 0);
+  	gtk_box_pack_end (GTK_BOX (vbox), hbox1, TRUE, TRUE, 0);
 
-  	checkbutton1 = gtk_check_button_new_with_label (_("Show this dialog next time."));
+  	checkbutton1 = gtk_check_button_new_with_mnemonic (_("_Show this dialog next time"));
   	gtk_widget_show (checkbutton1);
   	gtk_box_pack_end (GTK_BOX (hbox1), checkbutton1, FALSE, FALSE, 0);
     	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbutton1), TRUE);
 
-  	gtk_dialog_add_button (GTK_DIALOG (messagebox1), _("_Hide Process"), 100);
+	button = gtk_button_new ();
+	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+		
+	align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+	gtk_container_add (GTK_CONTAINER (button), align);
+		
+	hbox = gtk_hbox_new (FALSE, 2);
+	gtk_container_add (GTK_CONTAINER (align), hbox);
+
+	icon = gtk_image_new_from_stock (GTK_STOCK_OK, GTK_ICON_SIZE_BUTTON);
+	gtk_box_pack_start (GTK_BOX (hbox), icon, FALSE, FALSE, 0);
   	
+	label = gtk_label_new_with_mnemonic (_("_Hide Process"));
+	gtk_label_set_mnemonic_widget (GTK_LABEL (label), button);
+	gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+
+	gtk_dialog_add_action_widget (GTK_DIALOG (messagebox1), button, 100);
+  	gtk_dialog_set_default_response (GTK_DIALOG (messagebox1), 100);
+	
   	g_signal_connect (G_OBJECT (checkbutton1), "toggled",
                       	  G_CALLBACK (cb_show_hide_message_toggled), procdata);
         g_signal_connect (G_OBJECT (messagebox1), "response",
@@ -139,47 +199,107 @@ procdialog_create_kill_dialog (ProcData *data, int signal)
 	ProcData *procdata = data;
 	GtkWidget *messagebox1;
 	GtkWidget *dialog_vbox1, *vbox;
-  	GtkWidget *hbox1;
+  	GtkWidget *hbox1, *hbox2;
   	GtkWidget *checkbutton1;
+	GtkWidget *dialog_action_area;
+	GtkWidget *button;
+	GtkWidget *align;
+	GtkWidget *label;
+	GtkWidget *icon;
+	GtkWidget *image;
   	gchar *text, *title;
+	gchar *header, *message;
   	
   	kill_signal = signal;
   	
   	if (signal == SIGKILL) {
-  		title = _("Kill Process");
+  		header = _("Are you sure you want to kill this process?");
+		message = _("If you kill a process, unsaved data will be lost.");
   		text = _("_Kill Process");
-  	}
+		  	}
   	else {
-  		title = _("End Process");
+  		header = _("Are you sure you want to end this process?");
+		message = _("If you end a process, unsaved data will be lost.");
   		text = _("_End Process");
   	}
 
-  	messagebox1 = gtk_message_dialog_new (NULL,
- 					      GTK_DIALOG_MODAL,
- 					      GTK_MESSAGE_WARNING,
- 					      GTK_BUTTONS_CANCEL,
- 					      _("Unsaved data will be lost."));
+	messagebox1 = gtk_dialog_new ();
   	
-  	gtk_window_set_title (GTK_WINDOW (messagebox1), _(title));
+  	gtk_window_set_title (GTK_WINDOW (messagebox1), "");
   	gtk_window_set_modal (GTK_WINDOW (messagebox1), TRUE);
-  	gtk_window_set_policy (GTK_WINDOW (messagebox1), FALSE, FALSE, FALSE);
+  	gtk_window_set_resizable (GTK_WINDOW (messagebox1), FALSE);
   
-    	vbox = GTK_DIALOG (messagebox1)->vbox;
+	gtk_dialog_set_has_separator (GTK_DIALOG (messagebox1), FALSE);
+	gtk_container_set_border_width (GTK_CONTAINER (messagebox1), 5);
+	
+    	dialog_vbox1 = GTK_DIALOG (messagebox1)->vbox;
+    	gtk_box_set_spacing (GTK_BOX (dialog_vbox1), 14);
     	
-    	dialog_vbox1 = gtk_vbox_new (FALSE, 6);
-    	gtk_box_pack_start (GTK_BOX (vbox), dialog_vbox1, TRUE, TRUE, 0);
-    	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox1), 12);
-  	
-	hbox1 = gtk_hbox_new (FALSE, 0);
-  	gtk_widget_show (hbox1);
-  	gtk_box_pack_end (GTK_BOX (dialog_vbox1), hbox1, TRUE, TRUE, 0);
+	hbox1 = gtk_hbox_new (FALSE, 12);
+	gtk_box_pack_start (GTK_BOX (dialog_vbox1), hbox1, FALSE, FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox1), 5);
+	gtk_widget_show (hbox1);
 
-  	checkbutton1 = gtk_check_button_new_with_label (_("Show this dialog next time."));
+	image = gtk_image_new_from_stock ("gtk-dialog-warning", GTK_ICON_SIZE_DIALOG);
+	gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
+	gtk_widget_show (image);
+	
+	vbox = gtk_vbox_new (FALSE, 12);
+	gtk_box_pack_start (GTK_BOX (hbox1), vbox, TRUE, TRUE, 0);
+	gtk_widget_show (vbox);
+	
+	title = g_strconcat ("<b>", _(header), "</b>", NULL);
+	label = gtk_label_new (title);  
+	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtk_widget_show (label);
+	g_free (title);
+	
+	label = gtk_label_new (_(message));
+	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtk_widget_show (label);
+	
+	dialog_action_area = GTK_DIALOG (messagebox1)->action_area;
+	gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area), GTK_BUTTONBOX_END);
+
+	button = gtk_button_new_from_stock ("gtk-cancel");
+  	gtk_widget_show (button);
+  	gtk_dialog_add_action_widget (GTK_DIALOG (messagebox1), button, GTK_RESPONSE_CANCEL);
+	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+
+  	hbox2 = gtk_hbox_new (FALSE, 0);
+  	gtk_widget_show (hbox2);
+  	gtk_box_pack_end (GTK_BOX (vbox), hbox2, TRUE, TRUE, 0);
+
+  	checkbutton1 = gtk_check_button_new_with_mnemonic (_("_Show this dialog next time"));
   	gtk_widget_show (checkbutton1);
-  	gtk_box_pack_end (GTK_BOX (hbox1), checkbutton1, FALSE, FALSE, 0);
+  	gtk_box_pack_end (GTK_BOX (hbox2), checkbutton1, FALSE, FALSE, 0);
     	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbutton1), TRUE);
 
-	gtk_dialog_add_button (GTK_DIALOG (messagebox1), _(text), 100);
+	button = gtk_button_new ();
+	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+		
+	align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+	gtk_container_add (GTK_CONTAINER (button), align);
+		
+	hbox1 = gtk_hbox_new (FALSE, 2);
+	gtk_container_add (GTK_CONTAINER (align), hbox1);
+
+	icon = gtk_image_new_from_stock (GTK_STOCK_OK, GTK_ICON_SIZE_BUTTON);
+	gtk_box_pack_start (GTK_BOX (hbox1), icon, FALSE, FALSE, 0);
+
+	label = gtk_label_new_with_mnemonic (_(text));
+	gtk_label_set_mnemonic_widget (GTK_LABEL (label), button);
+	gtk_box_pack_end (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
+
+	gtk_dialog_add_action_widget (GTK_DIALOG (messagebox1), button, 100);
+  	gtk_dialog_set_default_response (GTK_DIALOG (messagebox1), 100);	
 					    
   	g_signal_connect (G_OBJECT (checkbutton1), "toggled",
                       	  G_CALLBACK (cb_show_kill_warning_toggled),
@@ -197,15 +317,15 @@ get_nice_level (gint nice)
 {
 
 	if (nice < -7)
-		return _("( Very High Priority )");
+		return _("(Very High Priority)");
 	else if (nice < -2)
-		return _("( High Priority )");
+		return _("(High Priority)");
 	else if (nice < 3)
-		return _("( Normal Priority )");
+		return _("(Normal Priority)");
 	else if (nice < 7)
-		return _("( Low Priority )");
+		return _("(Low Priority)");
 	else
-		return _("( Very Low Priority)");
+		return _("(Very Low Priority)");
 	
 }
 
@@ -242,13 +362,16 @@ procdialog_create_renice_dialog (ProcData *data)
 	GtkWidget *dialog = NULL;
 	GtkWidget *dialog_vbox;
 	GtkWidget *vbox;
+	GtkWidget *hbox;
   	GtkWidget *label;
   	GtkWidget *priority_label;
   	GtkWidget *table;
   	GtkObject *renice_adj;
   	GtkWidget *hscale;
-  	gchar *text = 
-  	      _("The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority.");
+	GtkWidget *button;
+	GtkWidget *align;
+	GtkWidget *icon;
+  	gchar *text;
 
 	if (renice_dialog)
 		return;
@@ -259,34 +382,53 @@ procdialog_create_renice_dialog (ProcData *data)
 	dialog = gtk_dialog_new_with_buttons (_("Change Priority"), NULL,
 				              GTK_DIALOG_DESTROY_WITH_PARENT,
 				              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-				              _("Change _Priority"), 100,
 				              NULL);
   	renice_dialog = dialog;
+	gtk_window_set_resizable (GTK_WINDOW (renice_dialog), FALSE);
+	gtk_dialog_set_has_separator (GTK_DIALOG (renice_dialog), FALSE);
+	gtk_container_set_border_width (GTK_CONTAINER (renice_dialog), 5);
   	
+	button = gtk_button_new ();
+	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+		
+	align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+	gtk_container_add (GTK_CONTAINER (button), align);
+		
+	hbox = gtk_hbox_new (FALSE, 2);
+	gtk_container_add (GTK_CONTAINER (align), hbox);
+
+	icon = gtk_image_new_from_stock (GTK_STOCK_OK, GTK_ICON_SIZE_BUTTON);
+	gtk_box_pack_start (GTK_BOX (hbox), icon, FALSE, FALSE, 0);
+
+	label = gtk_label_new_with_mnemonic (_("Change _Priority"));
+	gtk_label_set_mnemonic_widget (GTK_LABEL (label), button);
+	gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+
+	gtk_dialog_add_action_widget (GTK_DIALOG (renice_dialog), button, 100);
+  	gtk_dialog_set_default_response (GTK_DIALOG (renice_dialog), 100);
   	new_nice_value = -100;
   	  
     	dialog_vbox = GTK_DIALOG (dialog)->vbox;
+	gtk_box_set_spacing (GTK_BOX (dialog_vbox), 2);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 5);
     	    	
-    	vbox = gtk_vbox_new (FALSE, GNOME_PAD);
+    	vbox = gtk_vbox_new (FALSE, 12);
     	gtk_box_pack_start (GTK_BOX (dialog_vbox), vbox, TRUE, TRUE, 0);
     	gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
     	
-    	label = gtk_label_new (text);
-    	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-    	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD, 0);
-    	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-    	
     	table = gtk_table_new (2, 2, FALSE);
+	gtk_table_set_col_spacings (GTK_TABLE(table), 12);
+	gtk_table_set_row_spacings (GTK_TABLE(table), 6);
 	gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 	
-	label = gtk_label_new (_("Nice Value :"));
-	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
+	label = gtk_label_new_with_mnemonic (_("_Nice value:"));
 	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 2,
 			  0, 0, 0, 0);
 	
 	renice_adj = gtk_adjustment_new (info->nice, -20, 20, 1, 1, 0);
 	new_nice_value = 0;
 	hscale = gtk_hscale_new (GTK_ADJUSTMENT (renice_adj));
+	gtk_label_set_mnemonic_widget (GTK_LABEL (label), hscale);
 	gtk_scale_set_digits (GTK_SCALE (hscale), 0);
 	gtk_table_attach (GTK_TABLE (table), hscale, 1, 2, 0, 1,
 			  GTK_EXPAND | GTK_FILL, 0, 0, 0);
@@ -294,6 +436,15 @@ procdialog_create_renice_dialog (ProcData *data)
 	priority_label = gtk_label_new (get_nice_level (info->nice));
 	gtk_table_attach (GTK_TABLE (table), priority_label, 1, 2, 1, 2,
 			  GTK_FILL, 0, 0, 0);
+	
+	text = g_strconcat("<small><i><b>", _("Note:"), "</b> ", 
+	    _("The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."),
+	    "</i></small>", NULL); 
+	label = gtk_label_new (_(text));
+    	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+    	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+	g_free (text);
 	
 	g_signal_connect (G_OBJECT (dialog), "response",
   			  G_CALLBACK (renice_dialog_button_pressed), procdata);
@@ -486,7 +637,7 @@ field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
 static GtkWidget *
 create_proc_field_page (ProcData *procdata)
 {
-	GtkWidget *sys_box, *vbox, *vbox2, *hbox, *hbox2;
+	GtkWidget *vbox;
 	GtkWidget *scrolled;
 	GtkWidget *tree = procdata->tree, *treeview;
 	GList *columns = NULL;
@@ -564,15 +715,12 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	GtkWidget *proc_box;
 	GtkWidget *sys_box;
 	GtkWidget *main_vbox;
-	GtkWidget *frame;
 	GtkWidget *vbox, *vbox2;
-	GtkWidget *hbox, *hbox2;
+	GtkWidget *hbox, *hbox2, *hbox3;
 	GtkWidget *label;
 	GtkAdjustment *adjustment;
 	GtkWidget *spin_button;
-	GtkWidget *button;
 	GtkWidget *check_button;
-	GtkWidget *table;
 	GtkWidget *tab_label;
 	GtkWidget *color_picker;
 	GtkSizeGroup *size;
@@ -589,11 +737,15 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 					      GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 					      NULL);
 	gtk_window_set_default_size (GTK_WINDOW (dialog), 400,  375);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
+	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 	prefs_dialog = dialog;
 	
 	main_vbox = GTK_DIALOG (dialog)->vbox;
+	gtk_box_set_spacing (GTK_BOX (main_vbox), 2);
 	
 	notebook = gtk_notebook_new ();
+	gtk_container_set_border_width (GTK_CONTAINER (notebook), 5);
 	gtk_box_pack_start (GTK_BOX (main_vbox), notebook, TRUE, TRUE, 0);
 	
 	proc_box = gtk_vbox_new (FALSE, 18);
@@ -610,7 +762,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_label_set_markup (GTK_LABEL (label), tmp);
 	g_free (tmp);
-	gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 	
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -620,22 +772,29 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	
 	vbox2 = gtk_vbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
-	
-	hbox2 = gtk_hbox_new (FALSE, 6);
+			  
+	hbox2 = gtk_hbox_new (FALSE, 12);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
 	
-	label = gtk_label_new_with_mnemonic (_("_Update Interval ( seconds ) :"));
+	label = gtk_label_new_with_mnemonic (_("_Update interval:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_box_pack_start (GTK_BOX (hbox2), label, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
+	
+	hbox3 = gtk_hbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (hbox2), hbox3, TRUE, TRUE, 0);
 	
 	update = (gfloat) procdata->config.update_interval;
 	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 1.0, 
 							  100.0, 0.25, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
-	gtk_box_pack_start (GTK_BOX (hbox2), spin_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox3), spin_button, TRUE, TRUE, 0);
 	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
 				   G_CALLBACK (update_update_interval), procdata);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), spin_button);
+	
+	label = gtk_label_new_with_mnemonic (_("seconds"));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_box_pack_start (GTK_BOX (hbox3), label, FALSE, FALSE, 0);
 	
 	hbox2 = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
@@ -665,7 +824,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_label_set_markup (GTK_LABEL (label), tmp);
 	g_free (tmp);
-	gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 	
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
@@ -701,12 +860,16 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	vbox2 = gtk_vbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
 	
-	hbox2 = gtk_hbox_new (FALSE, 6);
+	hbox2 = gtk_hbox_new (FALSE, 12);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
 		
-	label = gtk_label_new_with_mnemonic (_("_Update Interval ( seconds ) :"));
+	label = gtk_label_new_with_mnemonic (_("_Update interval:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
+	gtk_size_group_add_widget (size, label);
+	
+	hbox3 = gtk_hbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (hbox2), hbox3, TRUE, TRUE, 0);
 			  
 	update = (gfloat) procdata->config.graph_update_interval;
 	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.25, 
@@ -714,16 +877,20 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
 	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
 				   G_CALLBACK (update_graph_update_interval), procdata);
-	gtk_box_pack_end (GTK_BOX (hbox2), spin_button, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox3), spin_button, TRUE, TRUE, 0);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), spin_button);
-	gtk_size_group_add_widget (size, spin_button);
-			  
-	hbox2 = gtk_hbox_new (FALSE, 6);
+	
+	label = gtk_label_new_with_mnemonic (_("seconds"));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_box_pack_start (GTK_BOX (hbox3), label, FALSE, FALSE, 0);
+	
+	hbox2 = gtk_hbox_new (FALSE, 12);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, TRUE, TRUE, 0);
 	
-	label = gtk_label_new_with_mnemonic (_("_Background Color:"));
+	label = gtk_label_new_with_mnemonic (_("_Background color:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
+	gtk_size_group_add_widget (size, label);
 	
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
@@ -732,17 +899,17 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 				    procdata->config.bg_color.blue, 0);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			          G_CALLBACK (bg_color_changed), procdata);
-	gtk_box_pack_end (GTK_BOX (hbox2), color_picker, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox2), color_picker,TRUE, TRUE, 0);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), color_picker);
 	gtk_widget_show (color_picker);
-	gtk_size_group_add_widget (size, color_picker);
 		
-	hbox2 = gtk_hbox_new (FALSE, 6);
+	hbox2 = gtk_hbox_new (FALSE, 12);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, TRUE, TRUE, 0);
 	  
-	label = gtk_label_new_with_mnemonic (_("_Grid Color:"));
+	label = gtk_label_new_with_mnemonic (_("_Grid color:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
+	gtk_size_group_add_widget (size, label);
 	
 	color_picker = gnome_color_picker_new ();
 	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (color_picker), 
@@ -750,9 +917,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 				    procdata->config.frame_color.green,
 				    procdata->config.frame_color.blue, 0);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
-			    G_CALLBACK (frame_color_changed), procdata);
-	gtk_size_group_add_widget (size, color_picker);	  
-	gtk_box_pack_end (GTK_BOX (hbox2), color_picker, FALSE, FALSE, 0);	
+			    G_CALLBACK (frame_color_changed), procdata);	  
+	gtk_box_pack_start (GTK_BOX (hbox2), color_picker, TRUE, TRUE, 0);	
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), color_picker);
 	gtk_widget_show (color_picker);
 	
@@ -775,23 +941,30 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	vbox2 = gtk_vbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
 	
-	hbox2 = gtk_hbox_new (FALSE, 6);
+	hbox2 = gtk_hbox_new (FALSE, 12);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
 	
-	label = gtk_label_new_with_mnemonic (_("Update _Interval ( seconds ) :"));
+	label = gtk_label_new_with_mnemonic (_("Update _interval:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
+	gtk_size_group_add_widget (size, label);
+	
+	hbox3 = gtk_hbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (hbox2), hbox3, TRUE, TRUE, 0);
 			  
 	update = (gfloat) procdata->config.disks_update_interval;
 	adjustment = (GtkAdjustment *) gtk_adjustment_new (update / 1000.0, 1.0, 
 							   100.0, 1.0, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 0);
-	gtk_box_pack_end (GTK_BOX (hbox2), spin_button, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox3), spin_button, TRUE, TRUE, 0);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), spin_button);
-	gtk_size_group_add_widget (size, spin_button);
 	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
 				  G_CALLBACK (update_disks_update_interval), procdata);
 		
+	label = gtk_label_new_with_mnemonic (_("seconds"));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_box_pack_start (GTK_BOX (hbox3), label, FALSE, FALSE, 0);
+	
 	gtk_widget_show_all (dialog);
 	g_signal_connect (G_OBJECT (dialog), "response",
 				  G_CALLBACK (prefs_dialog_button_pressed), procdata);
@@ -905,8 +1078,7 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
                                   			       GTK_MESSAGE_ERROR,
                                   			       GTK_BUTTONS_OK,
                                   			       "%s",
-                                  			      _("Wrong Password."),
-                                  			      NULL); 
+                                  			      _("Wrong Password.")); 
 			gtk_dialog_run (GTK_DIALOG (error_dialog));
 			gtk_widget_destroy (error_dialog);
 		}

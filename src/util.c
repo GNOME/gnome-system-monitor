@@ -19,6 +19,15 @@
 # include <libutil.h>
 #endif
 
+#ifdef __sun
+# include <errno.h>
+# include <unistd.h>
+# include <stropts.h>
+# include <sys/stream.h>
+# include <sys/termios.h>
+# include <sys/ptem.h>
+#endif
+
 #include "util.h"
 
 /* ABORT() kills GTK if we're not root, else it just exits.
@@ -56,6 +65,89 @@ getpt ()
 	}
 	return master;
 }
+#endif
+
+#ifdef __sun
+/* Sun doesn't have getpt().  This function emulates it's behavior. */
+int getpt (void);
+
+int
+getpt ()
+{
+	int fdm, fds;
+	extern int errno;
+	char *slavename;
+	/* extern char *ptsname(); */
+
+	/* open master */
+	fdm = open("/dev/ptmx", O_RDWR);
+	if ( fdm < 0 ) {
+		/* Simulate getpt()'s only error condition. */
+		errno = ENOENT;
+		return -1;
+	}
+	if ( grantpt(fdm) < 0 )	{	/* change permission ofslave */
+		/* Simulate getpt()'s only error condition. */
+		errno = ENOENT;
+		return -1;
+	}
+	if ( unlockpt(fdm) < 0 ) {	/* unlock slave */
+		/* Simulate getpt()'s only error condition. */
+		errno = ENOENT;
+		return -1;
+	}
+	slavename = ptsname(fdm);	/* get name of slave */
+	if ( slavename == NULL ) {
+		/* Simulate getpt()'s only error condition. */
+		errno = ENOENT;
+		return -1;
+	}
+	fds = open(slavename, O_RDWR);        /* open slave */
+	if ( fds < 0 ) {
+		/* Simulate getpt()'s only error condition. */
+		errno = ENOENT;
+		return -1;
+	}
+	ioctl(fds, I_PUSH, "ptem");           /* push ptem * /
+	ioctl(fds, I_PUSH, "ldterm");         /* push ldterm */
+
+	return fds;
+}
+
+/* Handle the fact that solaris doesn't have an asprintf */
+/* pinched from 
+http://samba.anu.edu.au/rsync/doxygen/head/snprintf_8c-source.html */
+
+#ifndef HAVE_VASPRINTF
+int vasprintf(char **ptr, const char *format, va_list ap)
+{
+	int ret;
+        
+	ret = vsnprintf(NULL, 0, format, ap);
+	if (ret <= 0) return ret;
+
+	(*ptr) = (char *)malloc(ret+1);
+	if (!*ptr) return -1;
+	ret = vsnprintf(*ptr, ret+1, format, ap);
+
+	return ret;
+}
+#endif
+
+
+#ifndef HAVE_ASPRINTF
+ int asprintf(char **ptr, const char *format, ...)
+{
+	va_list ap;
+	int ret;
+        
+	va_start(ap, format);
+	ret = vasprintf(ptr, format, ap);
+	va_end(ap);
+
+	return ret;
+}
+#endif
 #endif
 
 static int root;			/* if we are root, no password is

@@ -225,7 +225,7 @@ create_memmaps_tree (ProcData *procdata)
   	GtkCellRenderer *cell;
   	gint i;
   	static gchar *title[] = {N_("Filename"), N_("VM Start"), N_("VM End"),
-                                 N_("VM Size"), N_("Flags"), N_("VM offset"),
+                                 N_("VM Size"), N_("Flags"), N_("VM Offset"),
                                  N_("Device"), N_("Inode")};
 	                             	
         model = gtk_list_store_new (NUM_MMAP_COL+2, 
@@ -306,19 +306,23 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 						     GTK_DIALOG_DESTROY_WITH_PARENT,
 						     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 						     NULL);
-	gtk_window_set_policy (GTK_WINDOW (memmapsdialog), TRUE, TRUE, FALSE);
+	gtk_window_set_resizable (GTK_WINDOW (memmapsdialog), TRUE);
 	gtk_window_set_default_size (GTK_WINDOW (memmapsdialog), 575, 400);
+	gtk_dialog_set_has_separator (GTK_DIALOG (memmapsdialog), FALSE);
+	gtk_container_set_border_width (GTK_CONTAINER (memmapsdialog), 5);
 	
 	vbox = GTK_DIALOG (memmapsdialog)->vbox;
+	gtk_box_set_spacing (GTK_BOX (vbox), 2);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
 	
 	dialog_vbox = gtk_vbox_new (FALSE, 6);
 	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 12);
 	gtk_box_pack_start (GTK_BOX (vbox), dialog_vbox, TRUE, TRUE, 0);
 	
-	cmd_hbox = gtk_hbox_new (FALSE, 6);
+	cmd_hbox = gtk_hbox_new (FALSE, 12);
 	gtk_box_pack_start (GTK_BOX (dialog_vbox), cmd_hbox, FALSE, FALSE, 0);
 		
-	label = gtk_label_new (_("Process Name :"));
+	label = gtk_label_new (_("Process name:"));
 	gtk_box_pack_start (GTK_BOX (cmd_hbox),label, FALSE, FALSE, 0);
 	
 	label = gtk_label_new ("");

@@ -140,29 +140,29 @@ static GnomeUIInfo view_optionmenu[] =
 static GnomeUIInfo popup_menu_uiinfo[] =
 {
 	{
- 	  GNOME_APP_UI_ITEM, N_("Change Priority ..."), N_("Change the importance (nice value) of a process"),
+ 	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), N_("Change the importance (nice value) of a process"),
 	 popup_menu_renice, NULL, NULL, 0, 0,
 	 0, 0
 	},
 	{
- 	  GNOME_APP_UI_ITEM, N_("Memory Maps"), N_("View the memory maps associated with a process"),
+ 	  GNOME_APP_UI_ITEM, N_("_Memory Maps"), N_("View the memory maps associated with a process"),
 	 popup_menu_show_memory_maps, NULL, NULL, 0, 0,
 	 0, 0
 	},
 	GNOMEUIINFO_SEPARATOR,
 	{
- 	  GNOME_APP_UI_ITEM, N_("Hide Process"), N_("Hide a process"),
+ 	  GNOME_APP_UI_ITEM, N_("_Hide Process"), N_("Hide a process"),
 	 popup_menu_hide_process, NULL, NULL, 0, 0,
 	 0, 0
 	},
 	GNOMEUIINFO_SEPARATOR,
 	{
- 	  GNOME_APP_UI_ITEM, N_("End Process"), N_("Force a process to finish"),
+ 	  GNOME_APP_UI_ITEM, N_("_End Process"), N_("Force a process to finish"),
 	 popup_menu_end_process, NULL, NULL, 0, 0,
 	 0, 0
 	},
 	{
- 	  GNOME_APP_UI_ITEM, N_("Kill Process"), N_("Force a process to finish now"),
+ 	  GNOME_APP_UI_ITEM, N_("_Kill Process"), N_("Force a process to finish now"),
 	 popup_menu_kill_process, NULL, NULL, 0, 0,
 	 0, 0
 	},
@@ -338,7 +338,6 @@ create_sys_view (ProcData *procdata)
 	GtkTreeStore *model;
 	GtkTreeViewColumn *col;
 	GtkCellRenderer *cell;
-	gchar *tmp;
 	gchar *titles[5] = {_("Name"),
 			    _("Directory"),
 				_("Type"),
@@ -607,7 +606,7 @@ create_main_window (ProcData *procdata)
 	width = procdata->config.width;
 	height = procdata->config.height;
 	gtk_window_set_default_size (GTK_WINDOW (app), width, height);
-	gtk_window_set_policy (GTK_WINDOW (app), FALSE, TRUE, TRUE);
+	gtk_window_set_resizable (GTK_WINDOW (app), TRUE);
 	
 	gnome_app_create_menus_with_data (GNOME_APP (app), menubar1_uiinfo, procdata);
 	
