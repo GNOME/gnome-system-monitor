@@ -4,6 +4,8 @@ AC_INIT(configure.in)
 AM_INIT_AUTOMAKE(procman, 0.6)
 AM_CONFIG_HEADER(config.h)
 
+AM_PROG_XML_I18N_TOOLS
+
 dnl Stolen from evolution
 AC_DEFUN(PROCMAN_CHECK_LIB, [
 	dispname="$1"
@@ -80,7 +82,7 @@ AC_SUBST(GAL_LIBS)
 
 dnl Add the languages which your application supports here.
 ALL_LINGUAS="es no sv"
-AM_GNU_GETTEXT
+AM_GNOME_GETTEXT
 
 dnl Set PACKAGE_LOCALE_DIR in config.h.
 if test "x${prefix}" = "xNONE"; then

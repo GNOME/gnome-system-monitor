@@ -3,12 +3,16 @@
 SUBDIRS = intl po macros src
 
 EXTRA_DIST = \
-	procman.desktop \
+	procman.desktop.in \
 	procman.spec \
-	autogen.sh 
+	xml-i18n-extract.in \
+	xml-i18n-merge.in \
+	xml-i18n-update.in
 
 Applicationsdir = $(datadir)/gnome/apps/System
-Applications_DATA = procman.desktop
+Applications_in_files = procman.desktop.in
+Applications_DATA = $(Applications_in_files:.desktop.in=.desktop)
+@XML_I18N_MERGE_DESKTOP_RULE@
 
 install-data-local:
 	@$(NORMAL_INSTALL)
