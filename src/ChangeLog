@@ -1,5 +1,26 @@
 2001-11-14  Kevin Vandersloot <kfv101@psu.edu>
 
+	* Makefile.am: add defaulttable.h so that it gets added to a
+	dist
+
+	* release 1.1.0
+
+	* procman.c (procman_get_tree_state): change g_return_if to
+	g_return_val since it returns a gboolean now. Also don't
+	hardcode showing "all processes"
+
+	* callbacks.c, memmaps.c: turn of updating for now until
+	I get it right
+
+2001-11-14  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: make nice defaults for the columns
+
+	* procman.c (procman_get_tree_state): return FALSE if no config
+	so I can do defaults
+
+2001-11-14  Kevin Vandersloot <kfv101@psu.edu>
+
 	* prettytable.c: #ifdef out libwnck support for now so I can
 	do a release
 

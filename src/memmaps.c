@@ -354,7 +354,7 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 			  G_CALLBACK (close_memmaps_dialog), tree);
 	
 	gtk_widget_show (memmapsdialog);
-#if 1
+#if 0
 	timer = gtk_timeout_add (5000, memmaps_timer, tree);
 	g_object_set_data (G_OBJECT (tree), "timer", GINT_TO_POINTER (timer));
 #endif

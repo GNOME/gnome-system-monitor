@@ -261,8 +261,6 @@ procman_data_new (void)
 	pd->config.swap_color.blue = gconf_client_get_int_with_default
 		("/apps/procman/swap_blue", 18595);
 		
-	pd->config.whose_process = 0;
-
 	get_blacklist (pd, client);
 
 	pd->config.simple_view = FALSE;	
@@ -295,7 +293,7 @@ procman_free_data (ProcData *procdata)
 }
 #endif
 
-void
+gboolean
 procman_get_tree_state (GtkWidget *tree, gchar *prefix)
 {
 	GtkTreeModel *model;
@@ -305,10 +303,11 @@ procman_get_tree_state (GtkWidget *tree, gchar *prefix)
 	gint i = 0;
 	gboolean done = FALSE;
 	
-	g_return_if_fail (tree);
-	g_return_if_fail (prefix);
+	g_return_val_if_fail (tree, FALSE);
+	g_return_val_if_fail (prefix, FALSE);
 	if (!gconf_client_dir_exists (client, prefix, NULL)) {
 		g_print ("dir don't exist \n");
+		return FALSE;
 	}
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
@@ -349,6 +348,8 @@ procman_get_tree_state (GtkWidget *tree, gchar *prefix)
 		
 		i++;
 	}
+	
+	return TRUE;
 }
 
 void

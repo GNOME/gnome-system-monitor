@@ -465,8 +465,8 @@ create_sys_view (ProcData *procdata)
   	procman_get_tree_state (disk_tree, "/apps/procman/disktree");
   	
   	cb_update_disks (procdata);
-  	procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
-  						  cb_update_disks, procdata);
+  	/*procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
+  						  cb_update_disks, procdata);*/
  						  
 	return vpane;
 }
@@ -493,7 +493,7 @@ create_main_window (ProcData *procdata)
 	height = procdata->config.height;
 	gtk_window_set_default_size (GTK_WINDOW (app), width, height);
 	gtk_window_set_policy (GTK_WINDOW (app), TRUE, TRUE, TRUE);
-
+	
 	g_timer_start (timer);
 	gnome_app_create_menus_with_data (GNOME_APP (app), menubar1_uiinfo, procdata);
 	g_timer_stop (timer);

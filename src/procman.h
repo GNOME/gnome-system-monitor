@@ -159,6 +159,6 @@ struct _ProcData
 
 void		procman_save_config (ProcData *data);
 void		procman_save_tree_state (GtkWidget *tree, gchar *prefix);
-void		procman_get_tree_state (GtkWidget *tree, gchar *prefix);
+gboolean	procman_get_tree_state (GtkWidget *tree, gchar *prefix);
 
 #endif

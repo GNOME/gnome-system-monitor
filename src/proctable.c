@@ -160,7 +160,7 @@ proctable_new (ProcData *data)
 						     	   "text", COL_NAME,
 						     	   NULL);
 	gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
-	//gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
+	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 	gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
   	
@@ -171,7 +171,7 @@ proctable_new (ProcData *data)
 						     		   "text", i,
 						     		   NULL);
 		gtk_tree_view_column_set_sort_column_id (column, i);
-		//gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
+		gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_RESIZABLE);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 	}
 	
@@ -219,7 +219,24 @@ proctable_new (ProcData *data)
 					 NULL);
 	procdata->tree = proctree;
 	
-	procman_get_tree_state (proctree, "/apps/procman/proctree");
+	if (!procman_get_tree_state (proctree, "/apps/procman/proctree")) {
+		/* Defaults - should make a gconf schema instead */
+		gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model),
+					      	      COL_NAME,
+					              GTK_SORT_ASCENDING);
+		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_STATUS);
+		gtk_tree_view_column_set_visible (column, FALSE);
+		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_VMSIZE);
+		gtk_tree_view_column_set_visible (column, FALSE);
+		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_MEMRES);
+		gtk_tree_view_column_set_visible (column, FALSE);
+		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_MEMSHARED);
+		gtk_tree_view_column_set_visible (column, FALSE);
+		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_MEMRSS);
+		gtk_tree_view_column_set_visible (column, FALSE);
+		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_NICE);
+		gtk_tree_view_column_set_visible (column, FALSE);
+	}
 	
 	g_signal_connect (G_OBJECT (gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree))), 
 			  "changed",
@@ -495,21 +512,11 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 	/* remove all children from tree. They will be added again in refresh_list */
 	if (gtk_tree_model_iter_children (model, &child, &info->node))
 		remove_children_from_tree (procdata, model, &child);
-				
+	
 	gtk_tree_store_remove (GTK_TREE_STORE (model), &info->node);
+	
 	info->visible = FALSE;	
-	
-	#if 0
-	if (info->node == procdata->selected_node)
-	{
-		procdata->selected_node = NULL;
-		/* simulate a "unselected" signal */
-		gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), 
-					 "cursor_activated",
-					  -1, NULL); 
-	}
-	
-	#endif
+		
 }
 
 /* return of -1 means the process needs to be removed from the display
