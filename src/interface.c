@@ -458,9 +458,12 @@ create_sys_view (ProcData *procdata)
   	
   	gtk_widget_show_all (disk_frame);
   	
-  	cb_update_disks (clist);
-  	procdata->disk_timeout = gtk_timeout_add (5000, cb_update_disks, clist);  	
-	
+  	procdata->disk_clist = clist;	
+	  	
+  	cb_update_disks (procdata);
+  	procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
+  						  cb_update_disks, procdata);  
+  						  
 	return vbox;
 }
 

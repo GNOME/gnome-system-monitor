@@ -54,6 +54,7 @@ struct _ProcConfig
         gboolean	show_threads;
  	gint		update_interval;
  	gint		graph_update_interval;
+ 	gint		disks_update_interval;
 	gint		whose_process;
 	gchar		*tree_state_file;
 	gchar		*memmaps_state_file;
@@ -107,6 +108,7 @@ struct _LoadGraph {
 struct _ProcInfo
 {
 	ETreePath	node;
+	ETreePath	parent_node;
 	GdkPixbuf	*pixbuf;
 	gchar		*name;
 	gchar		*name_utf8;
@@ -125,7 +127,9 @@ struct _ProcInfo
 	gint		memrss;
 	gchar		*status;
 	gboolean	running;
-	gboolean	is_blacklisted;	
+	gboolean	is_thread;
+	gboolean	is_blacklisted;
+	gint		has_desktop_file;	
 };
 
 struct _ProcData
@@ -134,6 +138,7 @@ struct _ProcData
 	ETreeModel	*model;
 	ETreeMemory	*memory;
 	GtkWidget	*infobox;
+	GtkWidget	*disk_clist;
 	ProcConfig	config;
 	LoadGraph	*cpu_graph;
 	LoadGraph	*mem_graph;

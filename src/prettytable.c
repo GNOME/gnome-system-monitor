@@ -31,12 +31,7 @@ thread_func (void *data)
 	
 	table = pretty_table_new ();
 	
-	procdata->pretty_table = table;
-	
-	/*g_print ("clear \n");
-	proctable_clear_tree (procdata);
-	g_print ("update");
-	proctable_update_all (procdata);*/
+	procdata->pretty_table = table;	
 }
 
 void
@@ -44,7 +39,9 @@ prettytable_load_async (ProcData *procdata)
 {
 	pthread_t thread;
 	
-	pthread_create (&thread, NULL, (void*)thread_func, (void*)procdata);
+	if (pthread_create (&thread, NULL, (void*)thread_func, (void*)procdata)) {
+		g_print ("error creating new thread \n");
+	}
 	
 }
 
@@ -175,22 +172,24 @@ gchar *pretty_table_get_name (PrettyTable *pretty_table, const gchar *command) {
 
 	if (!pretty_table)
 		return NULL;
+		
 	pretty_name = g_hash_table_lookup (pretty_table->cmdline_to_prettyname, command);
-	if (pretty_name)
-		return g_strdup (pretty_name);
+	if (pretty_name) 
+		return g_strdup (pretty_name); 
 
 	pretty_name = g_hash_table_lookup (pretty_table->name_to_prettyname, command);
-	if (pretty_name)
+	if (pretty_name) 
 		return g_strdup (pretty_name);
 
 	return NULL;
 }
 
-GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command) {
+GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command) 
+{
 	GdkPixbuf *icon = NULL, *tmp_pixbuf = NULL;
 	gchar *icon_path = NULL;
 	
-	if (!pretty_table)
+	if (!pretty_table) 
 		return NULL;
 
 	icon_path = g_hash_table_lookup (pretty_table->cmdline_to_prettyicon, command);
@@ -205,15 +204,15 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table, gchar *command) {
 		g_free (tmp1);
 	}
 
-	if (!icon_path)
+	if (!icon_path) 
 		return NULL;
 
 	tmp_pixbuf = gdk_pixbuf_new_from_file (icon_path);
-	if (!tmp_pixbuf)
+	if (!tmp_pixbuf) 
 		return NULL;
-
+	
 	icon = gdk_pixbuf_scale_simple (tmp_pixbuf, 16, 16, GDK_INTERP_NEAREST);
-	gdk_pixbuf_unref (tmp_pixbuf);
+	gdk_pixbuf_unref (tmp_pixbuf);		
 
 	return icon;
 }

@@ -517,7 +517,8 @@ get_size_string (gint size)
 gint
 cb_update_disks (gpointer data)
 {
-	GtkWidget *clist = data;
+	ProcData *procdata = data;
+	GtkWidget *clist = procdata->disk_clist;
 	glibtop_mountentry *entry;
 	glibtop_mountlist mountlist;
 	float old_adj_hval = GTK_CLIST (clist)->hadjustment->value;

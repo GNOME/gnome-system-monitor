@@ -1,3 +1,38 @@
+2001-08-31  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: add notebook tab for process viewer and
+	system monitor settings. Add settings for graph colors, and
+	graph/disk update intervals.
+
+	* callbacks.c: change gpointer to a procdata instead of the clist
+	so that you don't have to access the clist to use this function
+	anywhere in the code. The clist is now stored in procdata.
+
+	* interface.c: pass procdata to cb_update_disks
+
+	* load_graph.c: change back to 2 pixel line width
+
+	* prettytable.c: remove some debugging stuff. 
+	(prettytable_load_async) return if thread could not be created.
+
+	* procman.[c,h]: add config variable for disk update interval.
+	Add to ProcInfo structure booleans if process is thread and
+	if it has a .desktop file.
+
+	* proctable.c: some reordering of the code initiated by the fact that
+	(thread) was not being added anymore. A benefit is that we don't
+	call prettytable_get_icons more than needed.
+	(update_info): don't try to get icon or name if it has already
+	been checked (info->has_desktop_file is either 0 or 1). Be
+	sure to readd (thread) if the name has changed.
+	(get_info): check to see if process is a thread here and set
+	info->is_thread accordingly. 
+	Set has_desktop_file to 0 or 1 if the desktop files have been
+	scanned at this point.
+	(insert_info_to_tree): now add process to info->parent_node
+	if it has a parent. Don't show if info->is_thread = FALSE and
+	we are not supossed to show threads.
+
 2001-08-28  Kevin Vandersloot <kfv101@psu.edu>
 
 	* prettytable.c (pretty_table_add_table): fix memory leak.

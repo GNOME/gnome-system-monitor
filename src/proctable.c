@@ -437,7 +437,7 @@ get_process_name (ProcData *procdata, ProcInfo *info, gchar *cmd, gchar *args)
 	
 	if (procdata->config.show_pretty_names && procdata->config.load_desktop_files)
 		name = pretty_table_get_name (procdata->pretty_table, cmd);
-	
+							  
 	/* strip the absolute path from the arguments */	
 	if (args)
 	{
@@ -527,15 +527,16 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	glibtop_get_proc_time (&proctime, pid);
 	newcputime = proctime.utime + proctime.stime;
 	
-	/* This is not ideal. If a process doesn't have an icon this will keep 
-	** checking to see if it does. That means lots of extra hash_table calls
-	** for every update
+	/* This is here for delay loading. The process has been added to the tree, but
+	** we haven't been able to get the icon yet thus newinfo->pixbuf is NULL. Once
+	** the .desktop file is done the info->has_desktop_file will be changed to 1 or 0
 	*/
-	if (procdata->config.load_desktop_files && !newinfo->pixbuf)
+	if (procdata->config.load_desktop_files && procdata->pretty_table && !newinfo->pixbuf 
+	    && newinfo->has_desktop_file == -1)
 	{
 		if (procdata->config.show_pretty_names)
 		{	
-			gchar *arguments;
+			gchar *arguments, *name;
 			glibtop_proc_args procargs;
 		
 			g_free (newinfo->name);
@@ -543,9 +544,26 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 			get_process_name (procdata, newinfo, procstate.cmd, arguments);
 			if (arguments)
 				glibtop_free (arguments);
+			/* add the (thread) string to the name since by calling get_process_name
+			** we destory the name
+			*/
+			if (newinfo->is_thread)	{
+				name = g_strjoin (NULL, info->name, _(" (thread)"), NULL);
+				g_free (info->name_utf8);
+				info->name_utf8 = g_strdup (name);
+				g_free (name);
+			}
 		}
-		newinfo->pixbuf = pretty_table_get_icon (procdata->pretty_table, procstate.cmd);
+		newinfo->pixbuf = pretty_table_get_icon (procdata->pretty_table, 
+							 procstate.cmd);
+							
+		if (newinfo->pixbuf)
+			newinfo->has_desktop_file = 1;
+		else
+			newinfo->has_desktop_file = 0;
 	}
+	
+	
 		
 	newinfo->mem = procmem.size;
 	newinfo->vmsize = procmem.vsize;
@@ -591,6 +609,7 @@ static ProcInfo *
 get_info (ProcData *procdata, gint pid)
 {
 	ProcInfo *info = g_new0 (ProcInfo, 1);
+	ProcInfo *parentinfo = NULL;
 	glibtop_proc_state procstate;
 	glibtop_proc_time proctime;
 	glibtop_proc_mem procmem;
@@ -608,9 +627,16 @@ get_info (ProcData *procdata, gint pid)
 	glibtop_get_proc_uid (&procuid, pid);
 	glibtop_get_proc_time (&proctime, pid);
 	newcputime = proctime.utime + proctime.stime;
-	
-	if (procdata->config.load_desktop_files)
+
+	info->has_desktop_file = -1;	
+	if (procdata->config.load_desktop_files && procdata->pretty_table) {
 		info->pixbuf = pretty_table_get_icon (procdata->pretty_table, procstate.cmd);
+		
+		if (info->pixbuf)
+			info->has_desktop_file = 1;
+		else
+			info->has_desktop_file = 0;
+	}
 	else
 		info->pixbuf = NULL;
 	
@@ -642,6 +668,32 @@ get_info (ProcData *procdata, gint pid)
 	info->nice = procuid.nice;
 	get_process_status (info, &procstate.state);
 	info->node = NULL;
+	
+	parentinfo = find_parent (procdata, info->parent_pid);
+	if (parentinfo) {
+		/* Ha Ha - don't expand different threads - check to see if parent has
+		** same name and same mem usage - I don't know if this is too smart though.
+		*/
+		if (!g_strcasecmp (info->cmd, parentinfo->cmd) && 
+		    ( parentinfo->mem == info->mem))
+		{
+			gchar *name;
+			
+			name = g_strjoin (NULL, info->name, _(" (thread)"), NULL);
+			g_free (info->name_utf8);
+			info->name_utf8 = g_strdup (name);
+			g_free (name);
+			info->is_thread = TRUE;
+		}
+		else
+			info->is_thread = FALSE;
+			
+		info->parent_node = parentinfo->node;
+	}
+	else {
+		info->parent_node = NULL;
+		info->is_thread = FALSE;
+	}
 	
 	return info;
 }
@@ -675,24 +727,16 @@ is_graphical (ProcInfo *info)
 static ETreePath 
 insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath root_node)
 {
-	ProcInfo *parentinfo = NULL;
 	ETreePath node = NULL;
-	ETreePath parent_node = NULL;
-
+	
 	/* Don't show process if it is not running */
 	if (procdata->config.whose_process == RUNNING_PROCESSES && 
 	    (!info->running))
 		return NULL;
+		
 #if 0	/* crazy hack to see if process links to libX11 */	
 	if (!is_graphical (info))
 		return NULL;
-#endif
-#if 0		
-	if (procdata->config.whose_process == FAVORITE_PROCESSES)
-	{
-		if (!is_process_a_favorite (procdata, info->cmd))
-			return NULL;
-	}
 #endif
 
 	/* Don't show processes that user has blacklisted */
@@ -702,38 +746,17 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, ETreePath root_node)
 		return NULL;
 	}
 	info->is_blacklisted = FALSE;
-
-	/* Find parent process node */
-	parentinfo = find_parent (procdata, info->parent_pid);
-	if (parentinfo)
-	{
-		parent_node = parentinfo->node;
-		/* Ha Ha - don't expand different threads - check to see if parent has
-		** same name and same mem usage - I don't know if this is too smart though.
-		*/
-		if (!g_strcasecmp (info->cmd, parentinfo->cmd) && 
-		    ( parentinfo->mem == info->mem))
-		{
-			gchar *name;
-			
-			name = g_strjoin (NULL, info->name, _(" (thread)"), NULL);
-			g_free (info->name);
-			info->name = g_strdup (name);
-			g_free (name);
-			if (!procdata->config.show_threads)
-				return NULL;
-		}
-	}
-		
-	if (parent_node && procdata->config.show_tree)
+	
+	if (!procdata->config.show_threads && info->is_thread)
+		return NULL; 
+	
+	if (info->parent_node && procdata->config.show_tree)
 		node = e_tree_memory_node_insert (procdata->memory, 
-						  parentinfo->node, 0, info);		
+						  info->parent_node, 0, info);		
 	
 	else
-	{
 		node = e_tree_memory_node_insert (procdata->memory, root_node,
 						  0, info);
-	}
 	
 	return node;
 }

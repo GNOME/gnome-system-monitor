@@ -83,7 +83,7 @@ load_graph_draw (LoadGraph *g)
     for (i = 0; i < g->num_points; i++)
 	g->pos [i] = g->draw_height;
 
-    gdk_gc_set_line_attributes (g->gc, 3, GDK_LINE_SOLID, GDK_CAP_ROUND, GDK_JOIN_MITER );
+    gdk_gc_set_line_attributes (g->gc, 2, GDK_LINE_SOLID, GDK_CAP_ROUND, GDK_JOIN_MITER );
     /* FIXME: try to do some averaging here to smooth out the graph */
     for (j = 0; j < g->n; j++) {
         float delx = (float)g->draw_width / ( g->num_points - 1);
