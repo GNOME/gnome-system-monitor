@@ -468,6 +468,7 @@ create_sys_view (ProcData *procdata)
 GtkWidget*
 create_main_window (ProcData *procdata)
 {
+	gint width, height;
 	GtkWidget *app;
 	GtkWidget *notebook;
 	GtkWidget *tab_label1, *tab_label2;
@@ -480,7 +481,9 @@ create_main_window (ProcData *procdata)
 	gtk_accel_group_attach (accel, GTK_OBJECT (app));
 	gtk_accel_group_unref (accel);
 
-	gtk_window_set_default_size (GTK_WINDOW (app), 440, 495);
+	width = procdata->config.width;
+	height = procdata->config.height;
+	gtk_window_set_default_size (GTK_WINDOW (app), width, height);
 	gtk_window_set_policy (GTK_WINDOW (app), FALSE, TRUE, TRUE);
 	
 	gnome_app_create_menus_with_data (GNOME_APP (app), menubar1_uiinfo, procdata);

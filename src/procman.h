@@ -44,6 +44,8 @@ enum
 
 struct _ProcConfig
 {
+	gint		width;
+	gint		height;
         gboolean        show_more_info;
         gboolean	show_kill_warning;
         gboolean	show_hide_message;

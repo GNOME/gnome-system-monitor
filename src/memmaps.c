@@ -273,7 +273,6 @@ close_button_pressed (GtkButton *button, gpointer data)
 static gint
 tree_clicked (ETree *tree, int row, ETreePath node, int col, GdkEvent *event)
 {
-	g_print ("click \n");
 	return TRUE;
 }
 
@@ -329,8 +328,6 @@ create_memmaps_tree (ProcData *procdata)
 	
 	/* Connect here to prevent row selection - a bit of a hack indeed */
 	gtk_signal_connect (GTK_OBJECT (tree), "click",
-			    GTK_SIGNAL_FUNC (tree_clicked), NULL);
-	gtk_signal_connect (GTK_OBJECT (tree), "right_click",
 			    GTK_SIGNAL_FUNC (tree_clicked), NULL);
 	
 	return scrolled;

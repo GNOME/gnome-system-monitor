@@ -29,6 +29,8 @@
 #include "favorites.h"
 #include "prettytable.h"
 
+GtkWidget *app;
+
 static void
 procman_get_save_files (ProcData *procdata)
 {
@@ -88,6 +90,10 @@ procman_data_new (void)
 	pd->favorites = NULL;
 	pd->blacklist = NULL;
 	
+	pd->config.width = 
+		gnome_config_get_int ("procman/Config/width=440");
+	pd->config.height = 
+		gnome_config_get_int ("procman/Config/height=495");
 	pd->config.show_more_info = 
 		gnome_config_get_bool ("procman/Config/more_info=FALSE");
 	pd->config.show_tree = 
@@ -188,17 +194,27 @@ procman_free_data (ProcData *procdata)
 void
 procman_save_config (ProcData *data)
 {
+	gint width, height;
 
 	if (!data)
 		return;
+		
+	gdk_window_get_size (app->window, &width, &height);
+	data->config.width = width;
+	data->config.height = height;
+		
+	gnome_config_set_int ("procman/Config/width",data->config.width);
+	gnome_config_set_int ("procman/Config/height",data->config.height);	
 	gnome_config_set_int ("procman/Config/view_as",data->config.whose_process);
 	gnome_config_set_bool ("procman/Config/more_info", data->config.show_more_info);
 	gnome_config_set_bool ("procman/Config/kill_dialog", data->config.show_kill_warning);
 	gnome_config_set_bool ("procman/Config/hide_message", data->config.show_hide_message);
 	gnome_config_set_bool ("procman/Config/show_tree", data->config.show_tree);
 	gnome_config_set_bool ("procman/Config/delay_load", data->config.delay_load);
-	gnome_config_set_bool ("procman/Config/load_desktop_files", data->config.load_desktop_files);
-	gnome_config_set_bool ("procman/Config/show_pretty_names", data->config.show_pretty_names);
+	gnome_config_set_bool ("procman/Config/load_desktop_files", 
+			       data->config.load_desktop_files);
+	gnome_config_set_bool ("procman/Config/show_pretty_names", 
+			       data->config.show_pretty_names);
 	gnome_config_set_bool ("procman/Config/show_threads", data->config.show_threads);
 	gnome_config_set_int ("procman/Config/update_interval", data->config.update_interval);
 	gnome_config_set_int ("procman/Config/graph_update_interval", 
@@ -206,12 +222,6 @@ procman_save_config (ProcData *data)
 	gnome_config_set_int ("procman/Config/disks_update_interval", 
 			      data->config.disks_update_interval);
 	gnome_config_set_int ("procman/Config/current_tab", data->config.current_tab);
-	/*gnome_config_set_string ("procman/Config/bg_color", data->config.bg_color);
-	gnome_config_set_string ("procman/Config/cpu_color", data->config.cpu_color);
-	gnome_config_set_string ("procman/Config/mem_color", data->config.mem_color);
-	gnome_config_set_string ("procman/Config/swap_color", data->config.swap_color);
-	gnome_config_set_string ("procman/Config/frame_color", data->config.frame_color);*/
-	
 	gnome_config_set_int ("procman/Config/bg_red", data->config.bg_color.red);
 	gnome_config_set_int ("procman/Config/bg_green", data->config.bg_color.green);
 	gnome_config_set_int ("procman/Config/bg_blue", data->config.bg_color.blue);
@@ -236,7 +246,6 @@ procman_save_config (ProcData *data)
 int
 main (int argc, char *argv[])
 {
-	GtkWidget *app1;
 	ProcData *procdata;
 	
 #ifdef ENABLE_NLS
@@ -252,8 +261,8 @@ main (int argc, char *argv[])
 
 	procdata = procman_data_new ();
 
-	app1 = create_main_window (procdata);
-	if (!app1)
+	app = create_main_window (procdata);
+	if (!app)
 		return 0;
 		
   	proctable_update_all (procdata);
