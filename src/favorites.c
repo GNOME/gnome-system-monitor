@@ -341,12 +341,20 @@ void create_blacklist_dialog (ProcData *procdata)
 
 	if (procdata->blacklist_num == 0 )
 	{
-		message = g_strdup_printf(_("No processes are currently hidden."));
-		dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
-                                  		 GTK_MESSAGE_INFO, GTK_BUTTONS_OK,
-                                  		 "%s", message); 
-		gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
-		gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
+                /*translators: primary alert message*/
+		message = g_strdup_printf(_("No hidden processes"));
+		dialog = gtk_message_dialog_new (GTK_WINDOW (procdata->app),
+						 GTK_DIALOG_MODAL| GTK_DIALOG_DESTROY_WITH_PARENT,
+                                  		 GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+                                  		 message);
+		g_free (message);
+		/*translators: secondary alert message*/
+		message = g_strdup_printf(_("There are no hidden processes in the list. "
+					    "To show all running processes, select the "
+					    "\"All processes\" option in the main window."));
+		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+							  message);
+
 		gtk_dialog_run (GTK_DIALOG (dialog));
 		gtk_widget_destroy (dialog);
 		g_free (message);
@@ -361,7 +369,7 @@ void create_blacklist_dialog (ProcData *procdata)
       			return;
    		}
 
-		blacklist_dialog = gtk_dialog_new_with_buttons (_("Manage Hidden Processes"), 
+		blacklist_dialog = gtk_dialog_new_with_buttons (_("Hidden Processes"), 
 								NULL,
 								GTK_DIALOG_DESTROY_WITH_PARENT,
 						     		GTK_STOCK_CLOSE, 
@@ -369,7 +377,7 @@ void create_blacklist_dialog (ProcData *procdata)
 						     		NULL);
 		gtk_window_set_resizable (GTK_WINDOW (blacklist_dialog), TRUE);
 		gtk_window_set_default_size (GTK_WINDOW (blacklist_dialog), 320, 375);
-		gtk_container_set_border_width (GTK_CONTAINER (blacklist_dialog), 5);
+		gtk_container_set_border_width (GTK_CONTAINER (blacklist_dialog), 6);
 		gtk_dialog_set_has_separator (GTK_DIALOG (blacklist_dialog), FALSE);
 		
 		vbox = GTK_DIALOG (blacklist_dialog)->vbox;
@@ -377,7 +385,7 @@ void create_blacklist_dialog (ProcData *procdata)
 		
 		main_vbox = gtk_vbox_new (FALSE, 12);
 		gtk_box_pack_start (GTK_BOX (vbox), main_vbox, TRUE, TRUE, 0);
-		gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 5);
+		gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
 		
 		inner_vbox = gtk_vbox_new (FALSE, 6);
   		gtk_box_pack_start (GTK_BOX (main_vbox), inner_vbox, TRUE, TRUE, 0);
@@ -385,7 +393,7 @@ void create_blacklist_dialog (ProcData *procdata)
   		hbox = gtk_hbox_new (FALSE, 0);
   		gtk_box_pack_start (GTK_BOX (inner_vbox), hbox, FALSE, FALSE, 0);
   		
-  		label = gtk_label_new_with_mnemonic (_("_Hidden processes:"));
+  		label = gtk_label_new_with_mnemonic (_("Currently _hidden processes:"));
 		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   	
   		scrolled = create_tree (procdata);

@@ -39,24 +39,11 @@ static gint new_nice_value = 0;
 /* public */ int kill_signal = SIGTERM;
 
 static void
-cb_show_hide_message_toggled (GtkToggleButton *button, gpointer data)
-{
-	ProcData *procdata = data;
-	GConfClient *client = procdata->client;
-	gboolean toggle_state;
-	
-	toggle_state = gtk_toggle_button_get_active (button);
-
-	gconf_client_set_bool (client, "/apps/procman/hide_message", toggle_state, NULL);
-
-}
-
-static void
 hide_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 {
 	ProcData *procdata = data;
 	
-	if (id == 100) {
+	if (id == GTK_RESPONSE_OK) {
 		add_selected_to_blacklist (procdata);
 	}
 	
@@ -67,120 +54,39 @@ hide_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 void
 procdialog_create_hide_dialog (ProcData *data)
 {
-	ProcData *procdata = data;
-	GtkWidget *messagebox1;
-	GtkWidget *dialog_vbox1, *vbox;
-	GtkWidget *hbox, *hbox1;
-	GtkWidget *dialog_action_area;
-  	GtkWidget *checkbutton1;
-	GtkWidget *button;
-	GtkWidget *image;
-	GtkWidget *label;
-	GtkWidget *align;
-	GtkWidget *icon;
-	const gchar *header  = _("Are you sure you want to hide this process?");
-	const gchar *message = _("If you hide a process, you can unhide it by "
-				 "selecting 'Hidden Processes' in the Edit "
-				 "menu.");
-	gchar *title;
-		  			
-  	messagebox1 = gtk_dialog_new ();
-	
-	gtk_window_set_title (GTK_WINDOW (messagebox1), "");
-	gtk_window_set_resizable (GTK_WINDOW (messagebox1), FALSE);
-	gtk_window_set_modal (GTK_WINDOW (messagebox1), TRUE);
-	
-	gtk_dialog_set_has_separator (GTK_DIALOG (messagebox1), FALSE);
-	gtk_container_set_border_width (GTK_CONTAINER (messagebox1), 5);
-	
-	dialog_vbox1 = GTK_DIALOG (messagebox1)->vbox;
-	gtk_box_set_spacing (GTK_BOX (dialog_vbox1), 14);
+       ProcData *procdata = data;
+       GtkWidget *hide_alert_dialog;
+       gchar *message;
 
-	hbox = gtk_hbox_new (FALSE, 12);
-	gtk_box_pack_start (GTK_BOX (dialog_vbox1), hbox, FALSE, FALSE, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
-	gtk_widget_show (hbox);
+       /*translators: primary alert message*/
+       message = g_strdup_printf (_("Hide the selected process?"));
+       hide_alert_dialog = gtk_message_dialog_new (GTK_WINDOW (procdata->app),
+						   GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+						   GTK_MESSAGE_WARNING,
+						   GTK_BUTTONS_NONE,
+						   message);
+       g_free (message);
 
-	image = gtk_image_new_from_stock ("gtk-dialog-warning", GTK_ICON_SIZE_DIALOG);
-	gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-	gtk_widget_show (image);
+       /*translators: secondary alert messagex*/
+       message = g_strdup_printf (_("Hidden processes are no longer visible "
+				    "in the processes list. You can re-enable "
+				    "them selecting the \"Hidden Processes\" "
+				    "entry in the View menu."));
+       gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (hide_alert_dialog),
+						 message);
+       g_free (message);
+
+       gtk_dialog_add_buttons (GTK_DIALOG (hide_alert_dialog),
+                               GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                               _("_Hide Process"), GTK_RESPONSE_OK,
+                               NULL);
+       gtk_dialog_set_default_response (GTK_DIALOG (hide_alert_dialog),
+                                        GTK_RESPONSE_OK);
 	
-	vbox = gtk_vbox_new (FALSE, 12);
-	gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-	gtk_widget_show (vbox);
-	
-	title = g_strdup_printf("<b>%s</b>", header);
-	label = gtk_label_new (title);  
-	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-	gtk_widget_show (label);
-	g_free (title);
-	
-	label = gtk_label_new (_(message));
-	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-	gtk_widget_show (label);
-	
-	dialog_action_area = GTK_DIALOG (messagebox1)->action_area;
-	gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area), GTK_BUTTONBOX_END);
-
-	button = gtk_button_new_from_stock ("gtk-cancel");
-  	gtk_widget_show (button);
-  	gtk_dialog_add_action_widget (GTK_DIALOG (messagebox1), button, GTK_RESPONSE_CANCEL);
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-
-  	hbox1 = gtk_hbox_new (FALSE, 0);
-  	gtk_widget_show (hbox1);
-  	gtk_box_pack_end (GTK_BOX (vbox), hbox1, TRUE, TRUE, 0);
-
-  	checkbutton1 = gtk_check_button_new_with_mnemonic (_("_Show this dialog next time"));
-  	gtk_widget_show (checkbutton1);
-  	gtk_box_pack_end (GTK_BOX (hbox1), checkbutton1, FALSE, FALSE, 0);
-    	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbutton1), TRUE);
-
-	button = gtk_button_new ();
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-		
-	align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-	gtk_container_add (GTK_CONTAINER (button), align);
-		
-	hbox = gtk_hbox_new (FALSE, 2);
-	gtk_container_add (GTK_CONTAINER (align), hbox);
-
-	icon = gtk_image_new_from_stock (GTK_STOCK_OK, GTK_ICON_SIZE_BUTTON);
-	gtk_box_pack_start (GTK_BOX (hbox), icon, FALSE, FALSE, 0);
+       g_signal_connect (G_OBJECT (hide_alert_dialog), "response",
+			 G_CALLBACK (hide_dialog_button_pressed), procdata);
   	
-	label = gtk_label_new_with_mnemonic (_("_Hide Process"));
-	gtk_label_set_mnemonic_widget (GTK_LABEL (label), button);
-	gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-
-	gtk_dialog_add_action_widget (GTK_DIALOG (messagebox1), button, 100);
-  	gtk_dialog_set_default_response (GTK_DIALOG (messagebox1), 100);
-	
-  	g_signal_connect (G_OBJECT (checkbutton1), "toggled",
-                      	  G_CALLBACK (cb_show_hide_message_toggled), procdata);
-        g_signal_connect (G_OBJECT (messagebox1), "response",
-        		  G_CALLBACK (hide_dialog_button_pressed), procdata);
-  	
-  	gtk_widget_show_all (messagebox1);
-
-}
-
-static void
-cb_show_kill_warning_toggled (GtkToggleButton *button, gpointer data)
-{
-	ProcData *procdata = data;
-	GConfClient *client = procdata->client;
-	gboolean toggle_state;
-	
-	toggle_state = gtk_toggle_button_get_active (button);
-	
-	gconf_client_set_bool (client, "/apps/procman/kill_dialog", toggle_state, NULL);	
+       gtk_widget_show_all (hide_alert_dialog);
 
 }
 
@@ -191,7 +97,7 @@ kill_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 	
 	gtk_widget_destroy (GTK_WIDGET (dialog));
 
-	if (id == 100) 
+	if (id == GTK_RESPONSE_OK) 
 		kill_process (procdata, kill_signal);		
 }
 
@@ -199,119 +105,49 @@ void
 procdialog_create_kill_dialog (ProcData *data, int signal)
 {
 	ProcData *procdata = data;
-	GtkWidget *messagebox1;
-	GtkWidget *dialog_vbox1, *vbox;
-  	GtkWidget *hbox1, *hbox2;
-  	GtkWidget *checkbutton1;
-	GtkWidget *dialog_action_area;
-	GtkWidget *button;
-	GtkWidget *align;
-	GtkWidget *label;
-	GtkWidget *icon;
-	GtkWidget *image;
-  	gchar *text, *title;
-	gchar *header, *message;
-  	
+	GtkWidget *kill_alert_dialog;
+	gchar *primary, *secondary, *button_text;
   	kill_signal = signal;
   	
   	if (signal == SIGKILL) {
-  		header = _("Are you sure you want to kill this process?");
-		message = _("If you kill a process, unsaved data will be lost.");
-  		text = _("_Kill Process");
+                /*translators: primary alert message*/
+  		primary = _("Kill the selected process?");
+		/*translators: secondary alert message*/
+		secondary = _("Killing a process, you could destroy your data, "
+			      "break the working session or create a security risk. "
+			      "Only misbehaving processes should be killed.");
+  		button_text = _("_Kill Process");
 		  	}
   	else {
-  		header = _("Are you sure you want to end this process?");
-		message = _("If you end a process, unsaved data will be lost.");
-  		text = _("_End Process");
+                /*translators: primary alert message*/
+                primary = _("End the selected process?");
+	        /*translators: secondary alert message*/
+                secondary = _("Ending a process, you could destroy your data, "
+		              "break the working session or create a security risk. "
+			      "Only misbehaving processes should be ended.");
+                button_text = _("_End Process");
   	}
 
-	messagebox1 = gtk_dialog_new ();
-  	
-  	gtk_window_set_title (GTK_WINDOW (messagebox1), "");
-  	gtk_window_set_modal (GTK_WINDOW (messagebox1), TRUE);
-  	gtk_window_set_resizable (GTK_WINDOW (messagebox1), FALSE);
-  
-	gtk_dialog_set_has_separator (GTK_DIALOG (messagebox1), FALSE);
-	gtk_container_set_border_width (GTK_CONTAINER (messagebox1), 5);
-	
-    	dialog_vbox1 = GTK_DIALOG (messagebox1)->vbox;
-    	gtk_box_set_spacing (GTK_BOX (dialog_vbox1), 14);
-    	
-	hbox1 = gtk_hbox_new (FALSE, 12);
-	gtk_box_pack_start (GTK_BOX (dialog_vbox1), hbox1, FALSE, FALSE, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (hbox1), 5);
-	gtk_widget_show (hbox1);
+	kill_alert_dialog = gtk_message_dialog_new (GTK_WINDOW (procdata->app),
+						    GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+						    GTK_MESSAGE_WARNING,
+						    GTK_BUTTONS_NONE,
+						    _(primary));
+	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (kill_alert_dialog),
+						  _(secondary));
 
-	image = gtk_image_new_from_stock ("gtk-dialog-warning", GTK_ICON_SIZE_DIALOG);
-	gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
-	gtk_widget_show (image);
-	
-	vbox = gtk_vbox_new (FALSE, 12);
-	gtk_box_pack_start (GTK_BOX (hbox1), vbox, TRUE, TRUE, 0);
-	gtk_widget_show (vbox);
-	
-	title = g_strconcat ("<b>", _(header), "</b>", NULL);
-	label = gtk_label_new (title);  
-	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-	gtk_widget_show (label);
-	g_free (title);
-	
-	label = gtk_label_new (_(message));
-	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-	gtk_widget_show (label);
-	
-	dialog_action_area = GTK_DIALOG (messagebox1)->action_area;
-	gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area), GTK_BUTTONBOX_END);
+	gtk_dialog_add_buttons (GTK_DIALOG (kill_alert_dialog),
+				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				_(button_text), GTK_RESPONSE_OK,
+				NULL);
 
-	button = gtk_button_new_from_stock ("gtk-cancel");
-  	gtk_widget_show (button);
-  	gtk_dialog_add_action_widget (GTK_DIALOG (messagebox1), button, GTK_RESPONSE_CANCEL);
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+	gtk_dialog_set_default_response (GTK_DIALOG (kill_alert_dialog),
+					 GTK_RESPONSE_CANCEL);
 
-  	hbox2 = gtk_hbox_new (FALSE, 0);
-  	gtk_widget_show (hbox2);
-  	gtk_box_pack_end (GTK_BOX (vbox), hbox2, TRUE, TRUE, 0);
-
-  	checkbutton1 = gtk_check_button_new_with_mnemonic (_("_Show this dialog next time"));
-  	gtk_widget_show (checkbutton1);
-  	gtk_box_pack_end (GTK_BOX (hbox2), checkbutton1, FALSE, FALSE, 0);
-    	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbutton1), TRUE);
-
-	button = gtk_button_new ();
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-		
-	align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-	gtk_container_add (GTK_CONTAINER (button), align);
-		
-	hbox1 = gtk_hbox_new (FALSE, 2);
-	gtk_container_add (GTK_CONTAINER (align), hbox1);
-
-	icon = gtk_image_new_from_stock (GTK_STOCK_OK, GTK_ICON_SIZE_BUTTON);
-	gtk_box_pack_start (GTK_BOX (hbox1), icon, FALSE, FALSE, 0);
-
-	label = gtk_label_new_with_mnemonic (_(text));
-	gtk_label_set_mnemonic_widget (GTK_LABEL (label), button);
-	gtk_box_pack_end (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
-
-	gtk_dialog_add_action_widget (GTK_DIALOG (messagebox1), button, 100);
-  	gtk_dialog_set_default_response (GTK_DIALOG (messagebox1), 100);	
-					    
-  	g_signal_connect (G_OBJECT (checkbutton1), "toggled",
-                      	  G_CALLBACK (cb_show_kill_warning_toggled),
-                      	  procdata);
-        g_signal_connect (G_OBJECT (messagebox1), "response",
+        g_signal_connect (G_OBJECT (kill_alert_dialog), "response",
         		  G_CALLBACK (kill_dialog_button_pressed), procdata);
         
-        gtk_widget_show_all (messagebox1);
-        
-        
+        gtk_widget_show_all (kill_alert_dialog);
 }
 
 static gchar *
@@ -708,25 +544,26 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 		
 	size = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 	
-	dialog = gtk_dialog_new_with_buttons (_("Preferences"), NULL,
+	dialog = gtk_dialog_new_with_buttons (_("System Monitor Preferences"),
+					      GTK_WINDOW (procdata->app),
 					      GTK_DIALOG_DESTROY_WITH_PARENT,
 					      GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 					      NULL);
 	gtk_window_set_default_size (GTK_WINDOW (dialog), 400,  375);
-	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog), 6);
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 	prefs_dialog = dialog;
 	
 	main_vbox = GTK_DIALOG (dialog)->vbox;
-	gtk_box_set_spacing (GTK_BOX (main_vbox), 2);
+	gtk_box_set_spacing (GTK_BOX (main_vbox), 12);
 	
 	notebook = gtk_notebook_new ();
-	gtk_container_set_border_width (GTK_CONTAINER (notebook), 5);
+	gtk_container_set_border_width (GTK_CONTAINER (notebook), 6);
 	gtk_box_pack_start (GTK_BOX (main_vbox), notebook, TRUE, TRUE, 0);
 	
 	proc_box = gtk_vbox_new (FALSE, 18);
 	gtk_container_set_border_width (GTK_CONTAINER (proc_box), 12);
-	tab_label = gtk_label_new (_("Process Listing"));
+	tab_label = gtk_label_new (_("Processes"));
 	gtk_widget_show (tab_label);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), proc_box, tab_label);
 	
@@ -775,7 +612,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	hbox2 = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
 		
-	check_button = gtk_check_button_new_with_mnemonic (_("Show warning dialog when ending or _killing processes"));
+	check_button = gtk_check_button_new_with_mnemonic (_("Alert before ending or _killing processes"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
 				      procdata->config.show_kill_warning);
 	g_signal_connect (G_OBJECT (check_button), "toggled",
@@ -785,7 +622,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	hbox2 = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
 	
-	check_button = gtk_check_button_new_with_mnemonic (_("Show warning dialog when _hiding processes"));
+	check_button = gtk_check_button_new_with_mnemonic (_("Alert before _hiding processes"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
 				    procdata->config.show_hide_message);
 	g_signal_connect (G_OBJECT (check_button), "toggled",
@@ -813,7 +650,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	
 	sys_box = gtk_vbox_new (FALSE, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (sys_box), 12);
-	tab_label = gtk_label_new (_("Resource Monitor"));
+	tab_label = gtk_label_new (_("Resources"));
 	gtk_widget_show (tab_label);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label);
 	

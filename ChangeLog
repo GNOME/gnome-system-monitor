@@ -1,3 +1,36 @@
+2005-01-08  Luca Ferretti <elle.uca@libero.it>
+
+	* src/favorites.c: (create_blacklist_dialog):
+	* src/interface.c: (create_proc_view), (create_main_window),
+	(update_sensitivity), (cb_toggle_tree), (cb_toggle_threads):
+	* src/procdialogs.c: (hide_dialog_button_pressed),
+	(procdialog_create_hide_dialog), (kill_dialog_button_pressed),
+	(procdialog_create_kill_dialog),
+	(procdialog_create_preferences_dialog):
+
+	* Kill, End, and Hide confirmation alert don't follow HIG (details: rework
+	primary/secondary labels, remove checkbox, use the latest
+	GtkMessageDialog API
+	and MODAL)
+
+	* Move items from Edit to View (details: HIG says that "Edit
+	contains menu items
+	relating to editing", while the "View menu contains only items
+	that affect the
+	user's view of the current document". So Hide Process and Hidden
+	Processes
+	entries should be placed in View menu; rework items position and
+	comments)
+
+	* Adjust preferences and hidden processes window titles
+
+	* Fix some labels in main window (details: make tab labels
+	shorter, change Vie_w
+	to Show because View is a standard menu, de-capitalize combobox
+	entries)
+
+	* Fix some spacing.
+
 2005-01-08  Sven Herzberg  <herzi@gnome-de.org>
 
 	reviewed by: seb128@debian.org

@@ -51,34 +51,23 @@ static GnomeUIInfo file1_menu_uiinfo[] =
 
 static GnomeUIInfo edit1_menu_uiinfo[] =
 {
- 	{
- 	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), N_("Change the importance (nice value) of a process"),
-	 cb_renice, NULL, NULL, 0, NULL,
-	 'r', GDK_CONTROL_MASK
-	},
 	{
-	 GNOME_APP_UI_ITEM, N_("_Hide Process"), N_("Hide a process"),
-	 cb_hide_process, NULL, NULL, 0, NULL,
-	 'h', GDK_CONTROL_MASK
-	}, 
-	GNOMEUIINFO_SEPARATOR,
-	{
-	 GNOME_APP_UI_ITEM, N_("End _Process"), N_("Force a process to finish."),
+	 GNOME_APP_UI_ITEM, N_("End _Process"), N_("Force process to finish normally"),
 	 cb_end_process, NULL, NULL, 0, NULL,
 	 'e', GDK_CONTROL_MASK
 	},
 	{
-	 GNOME_APP_UI_ITEM, N_("_Kill Process"), N_("Force a process to finish now."),
+	 GNOME_APP_UI_ITEM, N_("_Kill Process"), N_("Force process to finish immediately"),
 	 cb_kill_process, NULL, NULL, 0, NULL,
 	 'k', GDK_CONTROL_MASK
 	},
 	GNOMEUIINFO_SEPARATOR,
-	{
-	 GNOME_APP_UI_ITEM, N_("_Hidden Processes"), 
-	 		    N_("View and edit your list of hidden processes"),
-	 cb_show_hidden_processes, NULL, NULL, 0, NULL,
-	 'p', GDK_CONTROL_MASK
+ 	{
+ 	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), N_("Change the order of priority of process"),
+	 cb_renice, NULL, NULL, 0, NULL,
+	 'r', GDK_CONTROL_MASK
 	},
+	GNOMEUIINFO_SEPARATOR,
 	GNOMEUIINFO_MENU_PREFERENCES_ITEM (cb_preferences_activate, NULL),
 	GNOMEUIINFO_END
 };
@@ -86,21 +75,32 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
 static GnomeUIInfo view1_menu_uiinfo[] =
 {
 	{
-	 GNOME_APP_UI_ITEM, N_("_Memory Maps"), N_("View the memory maps associated with a process"),
-	 cb_show_memory_maps, NULL, NULL, 0, NULL,
-	 'm', GDK_CONTROL_MASK
-	},
-	GNOMEUIINFO_SEPARATOR,
-	{
-	 GNOME_APP_UI_TOGGLEITEM, N_("Process _Dependencies"), N_("Display a tree showing process dependencies"),
+	 GNOME_APP_UI_TOGGLEITEM, N_("_Dependencies"), N_("Show parent/child relationship between processes"),
 	 cb_toggle_tree, NULL, NULL, 0, NULL,
 	 'd', GDK_CONTROL_MASK
 	}, 
 	{
-	 GNOME_APP_UI_TOGGLEITEM, N_("_Threads"), N_("Display threads (subprocesses)"),
+	 GNOME_APP_UI_TOGGLEITEM, N_("_Threads"), N_("Show each thread as a separate process"),
 	 cb_toggle_threads, NULL, NULL, 0, NULL,
 	 't', GDK_CONTROL_MASK
+	},
+	GNOMEUIINFO_SEPARATOR,
+	{
+	 GNOME_APP_UI_ITEM, N_("_Hide Process"), N_("Hide process from list"),
+	 cb_hide_process, NULL, NULL, 0, NULL,
+	 'h', GDK_CONTROL_MASK
 	}, 
+	{
+	 GNOME_APP_UI_ITEM, N_("_Hidden Processes"), N_("Open the list of currenlty hidden processes"),
+	 cb_show_hidden_processes, NULL, NULL, 0, NULL,
+	 'p', GDK_CONTROL_MASK
+	},
+	GNOMEUIINFO_SEPARATOR,
+	{
+	 GNOME_APP_UI_ITEM, N_("_Memory Maps"), N_("Open the memory maps associated with process"),
+	 cb_show_memory_maps, NULL, NULL, 0, NULL,
+	 'm', GDK_CONTROL_MASK
+	},
 	GNOMEUIINFO_END
 };
 
@@ -123,30 +123,31 @@ static GnomeUIInfo menubar1_uiinfo[] =
 static GnomeUIInfo popup_menu_uiinfo[] =
 {
 	{
- 	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), N_("Change the importance (nice value) of a process"),
-	 cb_renice, NULL, NULL, 0, NULL,
+ 	  GNOME_APP_UI_ITEM, N_("_End Process"), N_("Force a process to finish normally"),
+	 cb_end_process, NULL, NULL, 0, NULL,
 	 0, 0
 	},
 	{
- 	  GNOME_APP_UI_ITEM, N_("_Memory Maps"), N_("View the memory maps associated with a process"),
-	 cb_show_memory_maps, NULL, NULL, 0, NULL,
+ 	  GNOME_APP_UI_ITEM, N_("_Kill Process"), N_("Force a process to finish immediately"),
+	 cb_kill_process, NULL, NULL, 0, NULL,
 	 0, 0
 	},
 	GNOMEUIINFO_SEPARATOR,
 	{
- 	  GNOME_APP_UI_ITEM, N_("_Hide Process"), N_("Hide a process"),
+ 	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), N_("Change the order of priority of process"),
+	 cb_renice, NULL, NULL, 0, NULL,
+	 0, 0
+	},
+	GNOMEUIINFO_SEPARATOR,
+	{
+ 	  GNOME_APP_UI_ITEM, N_("_Hide Process"), N_("Hide process from list"),
 	 cb_hide_process, NULL, NULL, 0, NULL,
 	 0, 0
 	},
 	GNOMEUIINFO_SEPARATOR,
 	{
- 	  GNOME_APP_UI_ITEM, N_("_End Process"), N_("Force a process to finish"),
-	 cb_end_process, NULL, NULL, 0, NULL,
-	 0, 0
-	},
-	{
- 	  GNOME_APP_UI_ITEM, N_("_Kill Process"), N_("Force a process to finish now"),
-	 cb_kill_process, NULL, NULL, 0, NULL,
+ 	  GNOME_APP_UI_ITEM, N_("_Memory Maps"), N_("Open the memory maps associated with process"),
+	 cb_show_memory_maps, NULL, NULL, 0, NULL,
 	 0, 0
 	},
 	GNOMEUIINFO_END
@@ -197,16 +198,16 @@ create_proc_view (ProcData *procdata)
 	proc_combo = gtk_combo_box_new_text ();
 	gtk_box_pack_end (GTK_BOX (hbox1), proc_combo, FALSE, FALSE, 0);
 
-	gtk_combo_box_insert_text (GTK_COMBO_BOX (proc_combo), ALL_PROCESSES, _("All Processes"));
-	gtk_combo_box_insert_text (GTK_COMBO_BOX (proc_combo), MY_PROCESSES, _("My Processes"));
-	gtk_combo_box_insert_text (GTK_COMBO_BOX (proc_combo), ACTIVE_PROCESSES, _("Active Processes"));
+	gtk_combo_box_insert_text (GTK_COMBO_BOX (proc_combo), ALL_PROCESSES, _("All processes"));
+	gtk_combo_box_insert_text (GTK_COMBO_BOX (proc_combo), MY_PROCESSES, _("My processes"));
+	gtk_combo_box_insert_text (GTK_COMBO_BOX (proc_combo), ACTIVE_PROCESSES, _("Active processes"));
 
 	gtk_combo_box_set_active (GTK_COMBO_BOX (proc_combo), procdata->config.whose_process);
 
 	g_signal_connect (G_OBJECT (proc_combo), "changed",
 			  G_CALLBACK (cb_proc_combo_changed), procdata);
 
-  	label = gtk_label_new_with_mnemonic (_("Vie_w:"));
+  	label = gtk_label_new_with_mnemonic (_("Sho_w:"));
   	gtk_label_set_mnemonic_widget (GTK_LABEL (label), proc_combo);
 	gtk_box_pack_end (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
 
@@ -637,13 +638,13 @@ create_main_window (ProcData *procdata)
 	notebook = gtk_notebook_new ();
 	
 	vbox1 = create_proc_view (procdata);
-	tab_label1 = gtk_label_new (_("Process Listing"));
+	tab_label1 = gtk_label_new (_("Processes"));
 	gtk_widget_show (tab_label1);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox1, tab_label1);
 	
 	sys_box = create_sys_view (procdata);
 	gtk_widget_show (sys_box);
-	tab_label2 = gtk_label_new (_("Resource Monitor"));
+	tab_label2 = gtk_label_new (_("Resources"));
 	gtk_widget_show (tab_label2);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label2);
 	
@@ -678,9 +679,9 @@ create_main_window (ProcData *procdata)
  	toggle_infoview (procdata);
 
  	gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab);
- 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[2].widget),
+ 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[0].widget),
 							  procdata->config.show_tree);
- 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[3].widget),
+ 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[1].widget),
 							  procdata->config.show_threads);
 	
 	procdata->app = app;
@@ -733,19 +734,25 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 	gtk_widget_set_sensitive (endprocessbutton, sensitivity);
 	
 	gtk_widget_set_sensitive (data->infobox, sensitivity);
+	/*Edit->End Process*/
 	gtk_widget_set_sensitive (edit1_menu_uiinfo[0].widget, sensitivity);
+	/*Edit->Kill Process*/
 	gtk_widget_set_sensitive (edit1_menu_uiinfo[1].widget, sensitivity);
-	gtk_widget_set_sensitive (view1_menu_uiinfo[0].widget, sensitivity);
-	gtk_widget_set_sensitive (edit1_menu_uiinfo[2].widget, sensitivity);
+	/*Edit->Change Priority*/
 	gtk_widget_set_sensitive (edit1_menu_uiinfo[3].widget, sensitivity);
-	gtk_widget_set_sensitive (edit1_menu_uiinfo[4].widget, sensitivity);
+	/*View->Hide Process*/
+	gtk_widget_set_sensitive (view1_menu_uiinfo[3].widget, sensitivity);
+	/*View->Hidden Processes*/
+	gtk_widget_set_sensitive (view1_menu_uiinfo[4].widget, sensitivity);
+	/*View->Memory Maps*/
+	gtk_widget_set_sensitive (view1_menu_uiinfo[5].widget, sensitivity);
 }
 
 static void		
 cb_toggle_tree (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
-	GtkCheckMenuItem *menu = GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[2].widget);
+	GtkCheckMenuItem *menu = GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[0].widget);
 	GConfClient *client = procdata->client;
 	gboolean show;
 	
@@ -761,7 +768,7 @@ static void
 cb_toggle_threads (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
-	GtkCheckMenuItem *menu = GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[3].widget);
+	GtkCheckMenuItem *menu = GTK_CHECK_MENU_ITEM (view1_menu_uiinfo[1].widget);
 	GConfClient *client = procdata->client;
 	gboolean show;
 	
