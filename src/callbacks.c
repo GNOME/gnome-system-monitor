@@ -590,7 +590,7 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 	GdkPixbuf *pixbuf = NULL;
 	GnomeIconTheme *icontheme;
 	icontheme  = gnome_icon_theme_new();
-	
+
 	glibtop_get_fsusage (&usage, entry->mountdir);
 	
 	/* Hmm, usage.blocks == 0 seems to get rid of /proc and all
@@ -612,7 +612,6 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 		text[2] = g_strdup (entry->type);
 		text[3] = get_size_string (btotal);
 		text[4] = get_size_string (bused);
-		text[5] = get_size_string (bfree);
 		
 		gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0); 
 		gtk_tree_store_set (GTK_TREE_STORE (model), &row,
@@ -631,12 +630,13 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 		g_free (text[2]);
 		g_free (text[3]);
 		g_free (text[4]);
-		g_free (text[5]);
+		
 		if (pixbuf)
 			g_object_unref (pixbuf);
+			
+		g_object_unref (icontheme);
 	}
-	
-	g_object_unref (G_OBJECT (icontheme));
+
 }
 
 gint
