@@ -28,6 +28,7 @@
 #include "procman.h"
 #include "proctable.h"
 #include "procdialogs.h"
+#include "callbacks.h"
 
 int kill_signal;
 int nice_value;
@@ -87,19 +88,25 @@ void renice (ProcData *procdata, int pid, int nice)
 }
 
 static void
-kill_single_process (ProcData *procdata, ProcInfo *info, int sig)
+kill_single_process (ETreePath node, gpointer data)
 {
+	ProcData *procdata = data;
+	ProcInfo *info;
 	int error;
 	GtkWidget *dialog;
         gchar *error_msg;
 	gchar *error_critical;
+	
+	info = e_tree_memory_node_get_data (procdata->memory, node);
+	
+	g_return_if_fail (info);
 	
 	/* Author:  Tige Chastian
 	   Date:  8/18/01 
 	   Added dialogs for errors on kill.  
 	   Added sigterm fail over to sigkill 
 	*/
-        error = kill (info->pid, sig);
+        error = kill (info->pid, kill_signal);
 	if (error == -1)
 	{
 		switch (errno) {
@@ -132,20 +139,6 @@ kill_single_process (ProcData *procdata, ProcInfo *info, int sig)
 	
 }
 
-static void
-remove_item (ETreePath node, gpointer data)
-{
-	ProcData *procdata = data;
-	ProcInfo *info = NULL;
-	
-	info = e_tree_memory_node_get_data (procdata->memory, node);
-	
-	g_return_if_fail (info);
-		
-	kill_single_process (procdata, info, kill_signal);
-	
-}
-
 void
 kill_process (ProcData *procdata, int sig)
 {
@@ -153,9 +146,17 @@ kill_process (ProcData *procdata, int sig)
 	if (!procdata->selected_node)
 		return;
 		
+	/* EEEK - ugly hack - make sure the table is not updated as a crash
+	** occurs if you first kill a process and the tree node is removed while
+	** still in the foreach function
+	*/
+	gtk_timeout_remove (procdata->timeout);	
+	
 	kill_signal = sig;	
-	e_tree_selected_path_foreach (E_TREE (procdata->tree), remove_item, procdata);	
-		    
+	e_tree_selected_path_foreach (E_TREE (procdata->tree), kill_single_process, procdata);	
+	
+	procdata->timeout = gtk_timeout_add (procdata->config.update_interval,
+					     cb_timeout, procdata);	    
 	proctable_update_all (procdata);
 
 }

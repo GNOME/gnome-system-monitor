@@ -1,5 +1,13 @@
 2001-10-18  Kevin Vandersloot <kfv101@psu.edu>
 
+	* procactions.c: fix the crash. The tree was being updated
+	while going through the selected processes and if one was
+	removed from the e-tree then e-tree would crash. Ugly hack
+	just removing the update timeout while doing the foreach
+	function
+
+2001-10-18  Kevin Vandersloot <kfv101@psu.edu>
+
 	* procactions.c: add support for renicing multiple processes
 
 2001-10-18  Kevin Vandersloot <kfv101@psu.edu>
