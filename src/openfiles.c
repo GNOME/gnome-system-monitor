@@ -62,6 +62,7 @@ friendlier_hostname(const char *dotted_quad, int port)
 	return g_strdup_printf("%s:%d", host->h_name, port);
 
  failsafe:
+	if(!dotted_quad[0]) return g_strdup("");
 	return g_strdup_printf("%s:%d", dotted_quad, port);
 }
 
