@@ -35,12 +35,12 @@
 #include "interface.h"
 #include "proctable.h"
 #include "infoview.h"
+#include "procactions.h"
 #if 0
 #include "prettytable.h"
 #include "procdialogs.h"
 #include "memmaps.h"
 #include "favorites.h"
-#include "procactions.h"
 #endif
 #include "load-graph.h"
 
@@ -52,16 +52,16 @@ static GnomeUIInfo file1_menu_uiinfo[] =
 
 static GnomeUIInfo edit1_menu_uiinfo[] =
 {
- 	/*{
+ 	{
  	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), N_("Change the priority of a process"),
 	 cb_renice, NULL, NULL, 0, 0,
 	 'r', GDK_CONTROL_MASK
 	},
-	{
+	/*{
 	 GNOME_APP_UI_ITEM, N_("_Hide Process"), N_("Hide a process"),
 	 cb_hide_process, NULL, NULL, 0, 0,
 	 'h', GDK_CONTROL_MASK
-	}, 
+	}, */
 	GNOMEUIINFO_SEPARATOR,
 	{
 	 GNOME_APP_UI_ITEM, N_("End _Process"), N_("Force a process to finish."),
@@ -72,7 +72,7 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
 	 GNOME_APP_UI_ITEM, N_("_Kill Process"), N_("Force a process to finish now."),
 	 cb_kill_process, NULL, NULL, 0, 0,
 	 'k', GDK_CONTROL_MASK
-	},*/
+	},
 	GNOMEUIINFO_END
 };
 
@@ -92,8 +92,8 @@ static GnomeUIInfo settings1_menu_uiinfo[] =
 	 GNOME_APP_UI_ITEM, N_("_Hidden Processes"), N_("View and edit your list of hidden processes"),
 	 cb_show_hidden_processes, NULL, NULL, 0, 0,
 	 'p', GDK_CONTROL_MASK
-	},
-	GNOMEUIINFO_MENU_PREFERENCES_ITEM (cb_preferences_activate, NULL),*/
+	},*/
+	GNOMEUIINFO_MENU_PREFERENCES_ITEM (cb_preferences_activate, NULL),
 	GNOMEUIINFO_END
 };
 
@@ -240,6 +240,8 @@ create_proc_view (ProcData *procdata)
 	gtk_container_set_border_width (GTK_CONTAINER (endprocessbutton), GNOME_PAD_SMALL);
 	gtk_misc_set_padding (GTK_MISC (GTK_BIN (endprocessbutton)->child), 
 			      GNOME_PAD_SMALL, 1);
+	g_signal_connect (G_OBJECT (endprocessbutton), "clicked",
+			  G_CALLBACK (cb_end_process_button_pressed), procdata);
 
 	infolabel = gtk_label_new (_("More Info"));
 	infobutton = gtk_button_new ();

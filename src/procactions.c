@@ -38,6 +38,7 @@ renice (ProcData *procdata, int pid, int nice)
 	
 	errno = 0;
 	error = setpriority (PRIO_PROCESS, pid, nice);
+#if 0
 	if (error == -1)
 	{
 		switch (errno) {
@@ -65,7 +66,7 @@ renice (ProcData *procdata, int pid, int nice)
 				break;
 		}
 	}
-	
+#endif	
 }
 
 void
@@ -78,17 +79,17 @@ kill_process (ProcData *procdata, int sig)
         gchar *error_msg;
 	gchar *error_critical;
 	
-	if (!procdata->selected_node)
+	if (!procdata->selected_process)
 		return;
 		
-	info = e_tree_memory_node_get_data (procdata->memory, 
-					    procdata->selected_node);
+	info = procdata->selected_process;
 	/* Author:  Tige Chastian
 	   Date:  8/18/01 
 	   Added dialogs for errors on kill.  
 	   Added sigterm fail over to sigkill 
 	*/
         error = kill (info->pid, sig);
+#if 0
 	if (error == -1)
 	{
 		switch (errno) {
@@ -117,7 +118,7 @@ kill_process (ProcData *procdata, int sig)
 			
                 	}
 	}
-
+#endif
 	proctable_update_all (procdata);		
 	
 }

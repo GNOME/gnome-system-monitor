@@ -34,7 +34,7 @@
 GtkWidget *renice_dialog;
 gint new_nice_value = 0;
 int kill_signal = SIGTERM;
-
+#if 0
 static void
 cb_show_hide_message_toggled (GtkToggleButton *button, gpointer data)
 {
@@ -134,7 +134,7 @@ procdialog_create_hide_dialog (ProcData *data)
   	return messagebox1;
 
 }
-
+#endif
 static void
 cb_show_kill_warning_toggled (GtkToggleButton *button, gpointer data)
 {
@@ -173,7 +173,6 @@ procdialog_create_kill_dialog (ProcData *data, int signal)
   	GtkWidget *checkbutton1;
   	GtkWidget *button5;
   	GtkWidget *button6;
-  	GtkWidget *dialog_action_area1;
   	gchar *text;
   	
   	kill_signal = signal;
@@ -187,10 +186,10 @@ procdialog_create_kill_dialog (ProcData *data, int signal)
      	around a bug in gnome-libs. */
  	messagebox1 = gnome_message_box_new (_("Unsaved data will be lost."),
                               		     GNOME_MESSAGE_BOX_WARNING,
-                              		     GNOME_STOCK_BUTTON_OK, NULL);
-  	gtk_container_remove (GTK_CONTAINER (GNOME_DIALOG (messagebox1)->action_area), 
+                              		     GNOME_STOCK_BUTTON_CANCEL, NULL);
+  	/*gtk_container_remove (GTK_CONTAINER (GNOME_DIALOG (messagebox1)->action_area), 
   			      GNOME_DIALOG (messagebox1)->buttons->data);
-  	GNOME_DIALOG (messagebox1)->buttons = NULL;
+  	GNOME_DIALOG (messagebox1)->buttons = NULL;*/
   	
   	gtk_window_set_title (GTK_WINDOW (messagebox1), _(text));
   	gtk_window_set_modal (GTK_WINDOW (messagebox1), TRUE);
@@ -213,13 +212,10 @@ procdialog_create_kill_dialog (ProcData *data, int signal)
   	gtk_widget_show (button5);
   	GTK_WIDGET_SET_FLAGS (button5, GTK_CAN_DEFAULT);
 
-  	gnome_dialog_append_button (GNOME_DIALOG (messagebox1), GNOME_STOCK_BUTTON_CANCEL);
+  	/*gnome_dialog_append_button (GNOME_DIALOG (messagebox1), GNOME_STOCK_BUTTON_CANCEL);
   	button6 = GTK_WIDGET (g_list_last (GNOME_DIALOG (messagebox1)->buttons)->data);
   	gtk_widget_show (button6);
-    	GTK_WIDGET_SET_FLAGS (button6, GTK_CAN_DEFAULT);
-
-  	dialog_action_area1 = GNOME_DIALOG (messagebox1)->action_area;
-  	
+    	GTK_WIDGET_SET_FLAGS (button6, GTK_CAN_DEFAULT);*/
 
   	gtk_signal_connect (GTK_OBJECT (checkbutton1), "toggled",
                       	    GTK_SIGNAL_FUNC (cb_show_kill_warning_toggled),
@@ -227,12 +223,12 @@ procdialog_create_kill_dialog (ProcData *data, int signal)
         gtk_signal_connect (GTK_OBJECT (button5), "clicked",
                       	    GTK_SIGNAL_FUNC (cb_kill_process_clicked),
                       	    procdata);
-  	gtk_signal_connect (GTK_OBJECT (button6), "clicked",
+  	/*gtk_signal_connect (GTK_OBJECT (button6), "clicked",
                       	    GTK_SIGNAL_FUNC (cb_kill_cancel_clicked),
-                      	    NULL);
+                      	    NULL);*/
 
 
-  	gtk_widget_grab_default (button6);
+  	/*gtk_widget_grab_default (button6);*/
   	
   	gtk_widget_show (messagebox1);
 
@@ -313,10 +309,10 @@ procdialog_create_renice_dialog (ProcData *data)
   	gchar *text = 
   	      _("The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority.");
 	
-	if (!procdata->selected_node)
+	if (!procdata->selected_process)
 		return;
 		
-	info = e_tree_memory_node_get_data (procdata->memory, procdata->selected_node);
+	info = procdata->selected_process;
 	if (!info)
 		return;
 		
@@ -357,9 +353,9 @@ procdialog_create_renice_dialog (ProcData *data)
 	gtk_table_attach (GTK_TABLE (table), priority_label, 1, 2, 1, 2,
 			  GTK_FILL, 0, 0, 0);
 	
-	dialog_action_area = GNOME_DIALOG (dialog)->action_area;
+	/*dialog_action_area = GNOME_DIALOG (dialog)->action_area;
 	gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area), GTK_BUTTONBOX_END);
-	gtk_button_box_set_spacing (GTK_BUTTON_BOX (dialog_action_area), 8);
+	gtk_button_box_set_spacing (GTK_BUTTON_BOX (dialog_action_area), 8);*/
 	
 	gnome_dialog_append_button (GNOME_DIALOG (dialog), _("Change Priority"));
   	renicebutton = GTK_WIDGET (g_list_last (GNOME_DIALOG (dialog)->buttons)->data);

@@ -33,11 +33,11 @@
 #include "proctable.h"
 #include "util.h"
 #include "infoview.h"
-#if 0
+#include "procactions.h"
 #include "procdialogs.h"
+#if 0
 #include "memmaps.h"
 #include "favorites.h"
-#include "procactions.h"
 #endif
 #include "load-graph.h"
 
@@ -48,7 +48,7 @@ cb_properties_activate                (GtkMenuItem     *menuitem,
 {
 
 }
-
+#endif
 void
 cb_preferences_activate               (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
@@ -62,9 +62,9 @@ void
 cb_renice (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
-	
+
 	procdialog_create_renice_dialog (procdata);
-	
+
 }
 
 void
@@ -72,9 +72,8 @@ cb_end_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
 	
-	if (!procdata->selected_node)
+	if (!procdata->selected_process)
 		return;
-	
 	if (procdata->config.show_kill_warning)
 		procdialog_create_kill_dialog (procdata, SIGTERM);
 	else
@@ -87,7 +86,7 @@ cb_kill_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
 	
-	if (!procdata->selected_node)
+	if (!procdata->selected_process)
 		return;
 	
 	if (procdata->config.show_kill_warning)
@@ -96,7 +95,7 @@ cb_kill_process (GtkMenuItem *menuitem, gpointer data)
 		kill_process (procdata, SIGKILL);
 	
 }
-
+#if 0
 void
 cb_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
 {
@@ -372,7 +371,7 @@ cb_right_click (ETree *tree, int row, ETreePath path, int col,
         return TRUE;
 
 }
-
+#endif
 void
 cb_end_process_button_pressed          (GtkButton       *button,
                                         gpointer         data)
@@ -380,7 +379,7 @@ cb_end_process_button_pressed          (GtkButton       *button,
 
 	ProcData *procdata = data;
 
-	if (!procdata->selected_node)
+	if (!procdata->selected_process)
 		return;
 		
 	if (procdata->config.show_kill_warning)
@@ -398,7 +397,7 @@ cb_logout (GtkButton *button, gpointer data)
 	g_print ("logout \n");
 	
 }
-#endif
+
 void
 cb_info_button_pressed			(GtkButton	*button,
 					 gpointer	user_data)
