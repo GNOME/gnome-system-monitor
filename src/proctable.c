@@ -157,13 +157,13 @@ proctable_new (ProcData *data)
 					     NULL);
 		
 	cell_renderer = gtk_cell_renderer_text_new ();
-	gtk_tree_view_column_pack_start (column, cell_renderer, TRUE);
+	gtk_tree_view_column_pack_start (column, cell_renderer, FALSE);
 	gtk_tree_view_column_set_attributes (column, cell_renderer,
 					     "text", COL_NAME,
 					     NULL);
 	gtk_tree_view_column_set_title (column, title[1]);
 	gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
-	gtk_tree_view_column_set_resizable (column, TRUE);
+	//gtk_tree_view_column_set_resizable (column, TRUE);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 	gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
   	
@@ -174,7 +174,7 @@ proctable_new (ProcData *data)
 						     		   "text", i,
 						     		   NULL);
 		gtk_tree_view_column_set_sort_column_id (column, i);
-		gtk_tree_view_column_set_resizable (column, TRUE);
+		//gtk_tree_view_column_set_resizable (column, TRUE);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 	}
 	
