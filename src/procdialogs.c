@@ -21,6 +21,7 @@
 #  include <config.h>
 #endif
 
+#include <signal.h>
 #include "procdialogs.h"
 #include "favorites.h"
 #include "proctable.h"
@@ -149,7 +150,7 @@ cb_kill_process_clicked (GtkButton *button, gpointer data)
 {
 	ProcData *procdata = data;
 	
-	kill_process (procdata);
+	kill_process (procdata, SIGTERM);
 
 }
 

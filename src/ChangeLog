@@ -1,5 +1,19 @@
 2001-08-24  Kevin Vandersloot <kfv101@psu.edu>
 
+	* interface.c: add a Kill Process item to right click
+	menu because there are times when it is needed.
+
+	* procactions.c (kill_process): add an extra argument to
+	determine the signal sent.
+
+	* callbacks.c: add popup_menu_end_process to send SIGTERM and
+	change popup_menu_kill_process to send SIGKILL and ignore the
+	warning dialog.
+
+	* procdialogs.c: call kill_process with SIGTERM.
+
+2001-08-24  Kevin Vandersloot <kfv101@psu.edu>
+
 	* interface.c: Put disks updating on timeout. Move mount 
 	directory to the last column of the clist since it is the 
 	least interesting.

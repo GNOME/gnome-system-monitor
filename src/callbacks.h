@@ -66,6 +66,7 @@ void		cb_end_process_button_pressed (GtkButton *button, gpointer data);
 void		popup_menu_renice (GtkMenuItem *menuitem, gpointer data);
 void		popup_menu_show_memory_maps (GtkMenuItem *menuitem, gpointer data);
 void		popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data);
+void 		popup_menu_end_process (GtkMenuItem *menuitem, gpointer data);
 void 		popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data);
 void 		popup_menu_about_process (GtkMenuItem *menuitem, gpointer data);
 

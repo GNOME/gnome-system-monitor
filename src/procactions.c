@@ -67,7 +67,7 @@ renice (int pid, int nice)
 }
 
 void
-kill_process (ProcData *procdata)
+kill_process (ProcData *procdata, int sig)
 {
 
 	ProcInfo *info;
@@ -88,7 +88,7 @@ kill_process (ProcData *procdata)
 	   Added dialogs for errors on kill.  
 	   Added sigterm fail over to sigkill 
 	*/
-        error = kill (info->pid, SIGTERM);
+        error = kill (info->pid, sig);
 	if (error == -1)
 	{
 		switch (errno) {

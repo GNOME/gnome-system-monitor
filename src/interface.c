@@ -288,9 +288,15 @@ create_proc_view (ProcData *procdata)
         lbl_kill = gtk_menu_item_new_with_label (_("End Process"));
         gtk_widget_show (lbl_kill);
         gtk_signal_connect (GTK_OBJECT (lbl_kill),"activate",
-			    GTK_SIGNAL_FUNC(popup_menu_kill_process),
+			    GTK_SIGNAL_FUNC(popup_menu_end_process),
 			    procdata);
         gtk_menu_append (GTK_MENU (popup_menu), lbl_kill);
+        menuitem = gtk_menu_item_new_with_label (_("Kill Process"));
+        gtk_widget_show (menuitem);
+        gtk_signal_connect (GTK_OBJECT (menuitem),"activate",
+			    GTK_SIGNAL_FUNC(popup_menu_kill_process),
+			    procdata);
+        gtk_menu_append (GTK_MENU (popup_menu), menuitem);
         sep = gtk_menu_item_new();
 	gtk_widget_show (sep);
 	gtk_menu_append (GTK_MENU (popup_menu), sep);

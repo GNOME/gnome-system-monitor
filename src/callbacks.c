@@ -25,6 +25,7 @@
 #include <glibtop/xmalloc.h>
 #include <glibtop/mountlist.h>
 #include <glibtop/fsusage.h>
+#include <signal.h>
 #include "callbacks.h"
 #include "interface.h"
 #include "proctable.h"
@@ -253,7 +254,7 @@ popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
 }
 
 void 
-popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
+popup_menu_end_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
 
@@ -263,7 +264,18 @@ popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
 	if (procdata->config.show_kill_warning)
 		procdialog_create_kill_dialog (procdata);
 	else
-		kill_process (procdata);	
+		kill_process (procdata, SIGTERM);	
+}
+
+void 
+popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
+{
+	ProcData *procdata = data;
+
+        if (!procdata->selected_node)
+		return;
+	
+	kill_process (procdata, SIGKILL);	
 }
 
 void 
@@ -314,7 +326,7 @@ cb_end_process_button_pressed          (GtkButton       *button,
 	if (procdata->config.show_kill_warning)
 		procdialog_create_kill_dialog (procdata);
 	else
-		kill_process (procdata);
+		kill_process (procdata, SIGTERM);
 	
 }
 
