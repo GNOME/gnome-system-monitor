@@ -113,17 +113,17 @@ static GnomeUIInfo menubar1_uiinfo[] =
 static GnomeUIInfo view_optionmenu[] = 
 {
 	{
- 	  GNOME_APP_UI_ITEM, N_("All _Processes"), N_("View processes being run by all users"),
+ 	  GNOME_APP_UI_ITEM, N_("All Processes"), N_("View processes being run by all users"),
 	 cb_all_process_menu_clicked, NULL, NULL, 0, 0,
 	 't', GDK_CONTROL_MASK
 	},
 	{
- 	  GNOME_APP_UI_ITEM, N_("_My Processes"), N_("View processes being run by you"),
+ 	  GNOME_APP_UI_ITEM, N_("My Processes"), N_("View processes being run by you"),
 	 cb_my_process_menu_clicked, NULL, NULL, 0, 0,
 	 'p', GDK_CONTROL_MASK
 	},
 	{
- 	  GNOME_APP_UI_ITEM, N_("_Active Processes"), N_("View only active processes"),
+ 	  GNOME_APP_UI_ITEM, N_("Active Processes"), N_("View only active processes"),
 	 cb_running_process_menu_clicked, NULL, NULL, 0, 0,
 	 'o', GDK_CONTROL_MASK
 	},

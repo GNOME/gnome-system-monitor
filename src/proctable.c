@@ -122,7 +122,7 @@ proctable_new (ProcData *data)
 	GtkTreeSelection *selection;
 	GtkTreeViewColumn *column;
   	GtkCellRenderer *cell_renderer;
-	static gchar *title[] = {N_("Icon "), N_("Process Name"), N_("Arguments"),
+	static gchar *title[] = {NULL, N_("Process Name"), N_("Arguments"),
 				 N_("User"), N_("Status"),
 				 N_("Memory"), N_("VM Size"), N_("Resident Memory"),
 				 N_("Shared Memory"), N_("RSS Memory"),
@@ -276,7 +276,9 @@ proctable_free_info (ProcInfo *info)
 static void
 get_process_status (ProcInfo *info, char *state)
 {
-
+	if (info->status)
+		g_free (info->status);
+		
 	if (!g_strcasecmp (state, "r"))
 	{
 		info->status = g_strdup_printf (_("Running"));
@@ -527,13 +529,7 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 		
 }
 
-/* return of -1 means the process needs to be removed from the display
-** return of 0 means the process will remain dislplayed
-** return of 1 means the process is not displayed and needs to be
-** This is needed since we could, for example, only want to dislplay running
-** processes which can switch back and forth from needing to be displayed
-*/
-static gint
+static void
 update_info (ProcData *procdata, ProcInfo *info, gint pid)
 {
 	GtkTreeModel *model;
@@ -544,7 +540,6 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	gchar *mem, *vmsize, *memres, *memshared, *memrss;
 	gint newcputime;
 	gint pcpu;
-	
 	
 	glibtop_get_proc_state (&procstate, pid);
 	glibtop_get_proc_mem (&procmem, pid);
@@ -574,19 +569,20 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 		
 
 	}
-		
+	
+	info->mem = procmem.size;
 	info->vmsize = procmem.vsize;
 	info->memres = procmem.resident;
 	info->memshared = procmem.share;
 	info->memrss = procmem.rss;
-	if (total_time)
+	if (total_time != 0)
 		pcpu = ( newcputime - info->cpu_time_last ) * 100 / total_time;
 	else 
 		pcpu = 0;
 	info->cpu_time_last = newcputime;
+	info->cpu = pcpu;	
 	info->nice = procuid.nice;
-	if (info->status)
-		g_free (info->status);
+		
 	get_process_status (info, &procstate.state);
 
 	if (procdata->config.whose_process == RUNNING_PROCESSES)
@@ -594,15 +590,15 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 		/* process started running */
 		if (info->running && (!info->visible)) {
 			insert_info_to_tree (info, procdata);
-			return 1;
+			return;
 		}
 		/* process was running but not anymore */
 		else if ((!info->running) && info->visible) {
 			remove_info_from_tree (info, procdata);
-			return -1;
+			return;
 		}
 		else if (!info->running)
-			return 0;
+			return;
 	}
 	
 	if (info->visible) {
@@ -627,10 +623,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 		g_free (memshared);
 		g_free (memrss);
 	}
-	info->mem = procmem.size;
-	info->cpu = pcpu;
-			
-	return 0;
+		
 }
 
 static ProcInfo *
@@ -767,6 +760,7 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 		if (!list)
 		{
 			ProcInfo *info;
+			
 			info = get_info (procdata, pid_list[i]);
 			insert_info_to_tree (info, procdata);
 			procdata->info = g_list_append (procdata->info, info);
@@ -784,14 +778,13 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 			info = get_info (procdata, pid_list[i]);
 			insert_info_to_tree (info, procdata);
 			procdata->info = g_list_insert (procdata->info, info, i);
+			
 			i++;
 		}
 		/* existing process */
 		else if (pid_list[i] == oldinfo->pid)
 		{
-			gint status;
-			
-			status = update_info (procdata, oldinfo, oldinfo->pid);
+			update_info (procdata, oldinfo, oldinfo->pid);
 			
 			list = g_list_next (list);
 			i++;

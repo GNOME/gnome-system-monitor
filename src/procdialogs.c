@@ -450,6 +450,9 @@ create_proc_field_page (ProcData *procdata)
 		gboolean visible;
 		
 		title = gtk_tree_view_column_get_title (column);
+		if (!title) 
+			title = _("Icon");
+		
 		visible = gtk_tree_view_column_get_visible (column);
 		
 		check_button = gtk_check_button_new_with_label (title);
