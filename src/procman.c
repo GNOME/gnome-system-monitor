@@ -78,7 +78,7 @@ warning_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer d
 	const gchar *key = gconf_entry_get_key (entry);
 	GConfValue *value = gconf_entry_get_value (entry);
 	
-	if (!g_strcasecmp (key, "/apps/procman/kill_dialog")) {
+	if (g_str_equal (key, "/apps/procman/kill_dialog")) {
 		procdata->config.show_kill_warning = gconf_value_get_bool (value);
 	}
 	else {
@@ -93,7 +93,7 @@ timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer 
 	const gchar *key = gconf_entry_get_key (entry);
 	GConfValue *value = gconf_entry_get_value (entry);
 
-	if (!g_strcasecmp (key, "/apps/procman/update_interval")) {
+	if (g_str_equal (key, "/apps/procman/update_interval")) {
 		procdata->config.update_interval = gconf_value_get_int (value);
 		procdata->config.update_interval = 
 			MAX (procdata->config.update_interval, 1000);
@@ -101,7 +101,7 @@ timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer 
 		procdata->timeout = gtk_timeout_add (procdata->config.update_interval, 
 						     cb_timeout, procdata);
 	}
-	else if (!g_strcasecmp (key, "/apps/procman/graph_update_interval")){
+	else if (g_str_equal (key, "/apps/procman/graph_update_interval")){
 		procdata->config.graph_update_interval = gconf_value_get_int (value);
 		procdata->config.graph_update_interval = 
 			MAX (procdata->config.graph_update_interval, 
@@ -139,17 +139,17 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 	GConfValue *value = gconf_entry_get_value (entry);
 	const gchar *color = gconf_value_get_string (value);
 
-	if (!g_strcasecmp (key, "/apps/procman/bg_color")) {
+	if (g_str_equal (key, "/apps/procman/bg_color")) {
 		gdk_color_parse (color, &procdata->config.bg_color);
 		procdata->cpu_graph->colors[0] = procdata->config.bg_color;
 		procdata->mem_graph->colors[0] = procdata->config.bg_color;
 	}
-	else if (!g_strcasecmp (key, "/apps/procman/frame_color")) {
+	else if (g_str_equal (key, "/apps/procman/frame_color")) {
 		gdk_color_parse (color, &procdata->config.frame_color);
 		procdata->cpu_graph->colors[1] = procdata->config.frame_color;
 		procdata->mem_graph->colors[1] = procdata->config.frame_color;
 	}
-	else if (!g_strcasecmp (key, "/apps/procman/cpu_color")) {
+	else if (g_str_equal (key, "/apps/procman/cpu_color")) {
 		gdk_color_parse (color, &procdata->config.cpu_color[0]);
 		procdata->cpu_graph->colors[2] = procdata->config.cpu_color[0];
 	}
@@ -159,18 +159,18 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 		for (i=1;i<GLIBTOP_NCPU;i++) {
 			gchar *cpu_key;
 			cpu_key = g_strdup_printf ("/apps/procman/cpu_color%d",i);
-			if (!g_strcasecmp (key, cpu_key)) {
+			if (g_str_equal (key, cpu_key)) {
 				gdk_color_parse (color, &procdata->config.cpu_color[i]);
 				procdata->cpu_graph->colors[i+2] = procdata->config.cpu_color[i];
 			}
 			g_free (cpu_key);
 		}
 	}
-	else if (!g_strcasecmp (key, "/apps/procman/mem_color")) {
+	else if (g_str_equal (key, "/apps/procman/mem_color")) {
 		gdk_color_parse (color, &procdata->config.mem_color);
 		procdata->mem_graph->colors[2] = procdata->config.mem_color;
 	}
-	else if (!g_strcasecmp (key, "/apps/procman/swap_color")) {
+	else if (g_str_equal (key, "/apps/procman/swap_color")) {
 		gdk_color_parse (color, &procdata->config.swap_color);
 		procdata->mem_graph->colors[3] = procdata->config.swap_color;
 	}

@@ -73,7 +73,7 @@ remove_all_of_same_name_from_tree (ProcInfo *info, ProcData *procdata)
 	while (list) {
 		ProcInfo *tmp = list->data;
 		
-		if (g_strcasecmp (info->name, tmp->name) == 0) 
+		if (g_ascii_strcasecmp (info->name, tmp->name) == 0) 
 			remove_info_from_tree (tmp, procdata);
 			
 		list = g_list_next (list);
@@ -104,7 +104,7 @@ remove_from_blacklist (ProcData *procdata, gchar *name)
 	GList *list = procdata->blacklist;
 	
 	while (list) {
-		if (!g_strcasecmp (list->data, name)) {
+		if (!g_ascii_strcasecmp (list->data, name)) {
 			procdata->blacklist = g_list_remove (procdata->blacklist, list->data);
 			procdata->blacklist_num --;
 			return;
@@ -128,7 +128,7 @@ is_process_blacklisted (ProcData *procdata, gchar *name)
 	while (list)
 	{
 		gchar *process = list->data;
-		if (!g_strcasecmp (process, name))
+		if (!g_ascii_strcasecmp (process, name))
 			return TRUE;
 		
 		list = g_list_next (list);
@@ -271,7 +271,7 @@ insert_all_of_same_name_from_tree (gchar *name, ProcData *procdata)
 	while (list) {
 		ProcInfo *tmp = list->data;
 		
-		if (g_strcasecmp (name, tmp->name) == 0) 
+		if (g_ascii_strcasecmp (name, tmp->name) == 0) 
 			insert_info_to_tree (tmp, procdata);
 			
 		list = g_list_next (list);

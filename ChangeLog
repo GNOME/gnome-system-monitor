@@ -1,5 +1,18 @@
 2005-03-18  Benoît Dejean  <TazForEver@dlfp.org>
 
+	* src/favorites.c: (remove_all_of_same_name_from_tree),
+	(remove_from_blacklist), (is_process_blacklisted),
+	(insert_all_of_same_name_from_tree):
+	* src/procman.c: (warning_changed_cb), (timeouts_changed_cb),
+	(color_changed_cb):
+	* src/proctable.c: (get_info), (proctable_search_table):
+	* src/proctable.h: Replaced g_strcasecmp by g_ascii_strcasecmp.
+	GConf keys are now compared with g_str_equal instead of g_strcasecmp (????).
+	
+	(proctable_search_table): Marked argument const.
+
+2005-03-18  Benoît Dejean  <TazForEver@dlfp.org>
+
 	* src/memmaps.c: (create_single_memmaps_dialog):
 	* src/openfiles.c: (create_single_openfiles_dialog): Fixed strings.
 

@@ -744,37 +744,10 @@ get_info (ProcData *procdata, gint pid)
 	info->parent = find_parent (procdata, procuid.ppid);
 	if (info->parent) {
 		info->parent->children = g_list_prepend (info->parent->children, info);
-		if(g_strcasecmp (info->name, info->parent->name) == 0
+		if(g_str_equal(info->name, info->parent->name)
 		   && info->parent->mem == info->mem)
 			info->is_thread = TRUE;
 	}
-
-#if 0
-	if (parentinfo) {
-	/* Ha Ha - don't expand different threads - check to see if parent has
-	** same name and same mem usage - I don't know if this is too smart though.
-	*/
-
-		if (!g_strcasecmp (info->name, parentinfo->name) &&
-		    ( parentinfo->mem == info->mem))
-		{
-			info->is_thread = TRUE;
-		}
-		else
-			info->is_thread = FALSE;
-
-		if (parentinfo->is_visible) {
-			info->parent_node = parentinfo->node;
-			info->has_parent = TRUE;
-		}
-		else
-			info->has_parent = FALSE;
-	}
-	else {
-		info->has_parent = FALSE;
-		info->is_thread = FALSE;
-	}
-#endif
 
 	info->is_visible = FALSE;
 
@@ -941,7 +914,7 @@ proctable_free_table (ProcData * const procdata)
 
 
 void
-proctable_search_table (ProcData *procdata, gchar *string)
+proctable_search_table (ProcData *procdata, const gchar *string)
 {
 	GList *list = procdata->info;
 	GtkWidget *dialog;
@@ -950,14 +923,13 @@ proctable_search_table (ProcData *procdata, gchar *string)
 	gint index;
 	static gchar *last = NULL;
 
-	if (!g_strcasecmp (string, ""))
-		return;
+	if(!string[0]) return;
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 
 	if (!last)
 		last = g_strdup (string);
-	else if (g_strcasecmp (string, last)) {
+	else if (g_ascii_strcasecmp (string, last)) {
 		increment = 0;
 		g_free (last);
 		last = g_strdup (string);
