@@ -420,7 +420,7 @@ proctable_free_info (ProcInfo *info)
 	if (info->status)
 		g_free (info->status);
 	if (info->pixbuf)
-		g_free (info->pixbuf);
+		gdk_pixbuf_unref (info->pixbuf);
 	g_free (info);
 }
 
