@@ -56,7 +56,7 @@ infoview_create (ProcData *data)
 	gtk_box_pack_start (GTK_BOX (infobox), separator, FALSE, FALSE, 0);
 	
 	
-	main_frame = gtk_frame_new ("");
+	main_frame = gtk_frame_new (NULL);
 	gtk_frame_set_label_align (GTK_FRAME (main_frame), 0.0, 0.5);
 	gtk_container_set_border_width (GTK_CONTAINER (main_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (infobox), main_frame, FALSE, FALSE, 0);

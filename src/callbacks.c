@@ -315,7 +315,7 @@ cb_timeout (gpointer data)
 	ProcData *procdata = data;
 	
 	proctable_update_all (procdata);
-
+	
 	return TRUE;
 }
 

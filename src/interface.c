@@ -27,7 +27,7 @@
 #include <string.h>
 
 #include <gnome.h>
-
+#include <gdk/gdkkeysyms.h>
 #include "callbacks.h"
 #include "interface.h"
 #include "proctable.h"
@@ -114,11 +114,27 @@ static GnomeUIInfo menubar1_uiinfo[] =
 	GNOMEUIINFO_END
 };
 
-gchar *moreinfolabel = N_("More Info >>");
-gchar *lessinfolabel = N_("<< Less Info");
+gchar *moreinfolabel = N_("More _Info >>");
+gchar *lessinfolabel = N_("<< Less _Info");
 
 GtkWidget *infobutton;
 GtkWidget *endprocessbutton;
+GtkAccelGroup *accel;
+guint idle;
+
+static gint
+idle_func (gpointer data)
+{
+	ProcData *procdata = data;
+	
+	if (!procdata->pretty_table)
+	{
+		procdata->pretty_table = pretty_table_new ();
+		proctable_clear_tree (procdata);
+		proctable_update_all (procdata);
+	}
+	return FALSE;
+}
 
 GtkWidget*
 create_main_window (ProcData *data)
@@ -141,8 +157,13 @@ create_main_window (ProcData *data)
 	GtkWidget *infobox;
 	GtkWidget *meter_hbox;
 	GtkWidget *cpumeter, *memmeter, *swapmeter;
+	guint key;
 
 	app = gnome_app_new ("procman", NULL);
+	accel = gtk_accel_group_new ();
+	gtk_accel_group_attach (accel, GTK_OBJECT (app));
+	gtk_accel_group_unref (accel);
+
 	gtk_window_set_default_size (GTK_WINDOW (app), 460, 475);
 	gtk_window_set_policy (GTK_WINDOW (app), FALSE, TRUE, TRUE);
 
@@ -155,11 +176,18 @@ create_main_window (ProcData *data)
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox1), GNOME_PAD_SMALL);
 	
-	search_label = gtk_label_new (_("Search :"));
+	search_label = gtk_label_new (NULL);
+	key = gtk_label_parse_uline (GTK_LABEL (search_label), _("Sea_rch :"));
 	gtk_box_pack_start (GTK_BOX (hbox1), search_label, FALSE, FALSE, 0);
 	gtk_misc_set_padding (GTK_MISC (search_label), GNOME_PAD_SMALL, 0);
 	
 	search_entry = gtk_entry_new ();
+	gtk_widget_add_accelerator (search_entry, "grab_focus",
+				    accel,
+				    key,
+				    GDK_MOD1_MASK,
+				    0);
+				    
 	gtk_box_pack_start (GTK_BOX (hbox1), search_entry, FALSE, FALSE, 0);
 	gtk_signal_connect (GTK_OBJECT (search_entry), "activate",
 			    GTK_SIGNAL_FUNC (cb_search), procdata);
@@ -195,7 +223,13 @@ create_main_window (ProcData *data)
   	gtk_menu_set_active (GTK_MENU (optionmenu1_menu), procdata->config.whose_process);
   	gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu1), optionmenu1_menu);
   	
-  	label = gtk_label_new (_("View:"));
+  	label = gtk_label_new (NULL);
+	key = gtk_label_parse_uline (GTK_LABEL (label), _("Vie_w"));
+	gtk_widget_add_accelerator (optionmenu1, "grab_focus",
+				    accel,
+				    key,
+				    GDK_MOD1_MASK,
+				    0);
 	gtk_box_pack_end (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
 	
@@ -212,14 +246,22 @@ create_main_window (ProcData *data)
 	
 	hbox2 = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox2, FALSE, FALSE, 0);
-	endprocessbutton = gtk_button_new_with_label (_("End Process"));
+	endprocessbutton = gtk_button_new ();
+  	label = gtk_label_new (NULL);
+	key = gtk_label_parse_uline (GTK_LABEL (label), _("End _Process"));
+	gtk_widget_add_accelerator (endprocessbutton, "clicked",
+				    accel,
+				    key,
+				    GDK_MOD1_MASK,
+				    0);
+	gtk_container_add (GTK_CONTAINER (endprocessbutton), label);
 	gtk_box_pack_start (GTK_BOX (hbox2), endprocessbutton, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (endprocessbutton), GNOME_PAD_SMALL);
 	gtk_misc_set_padding (GTK_MISC (GTK_BIN (endprocessbutton)->child), 
 			      GNOME_PAD_SMALL, 1);
 
-	infobutton = gtk_button_new_with_label (procdata->config.show_more_info ?
-					        _(lessinfolabel) : _(moreinfolabel));
+	infobutton = gtk_button_new_with_label ("");
+	
 	gtk_box_pack_end (GTK_BOX (hbox2), infobutton, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (infobutton), GNOME_PAD_SMALL);
 	gtk_misc_set_padding (GTK_MISC (GTK_BIN (infobutton)->child), GNOME_PAD_SMALL, 1);
@@ -235,9 +277,6 @@ create_main_window (ProcData *data)
 	
 	infobox = infoview_create (procdata);
 	gtk_box_pack_start (GTK_BOX (vbox1), infobox, FALSE, FALSE, 0);
-	
-	if (procdata->config.show_more_info == TRUE)
-		gtk_widget_show_all (infobox);
 	
 	status_hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_end (GTK_BOX (vbox1), status_hbox, FALSE, FALSE, 0);
@@ -311,8 +350,13 @@ create_main_window (ProcData *data)
 	/* Makes sure everything that should be insensitive is at start */
 	gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), 
 					 "cursor_activated",
-					  -1, NULL);	
+					  -1, NULL);
+					  
+ 	/* We cheat and force it to set up the labels */
+ 	procdata->config.show_more_info = !procdata->config.show_more_info;
+ 	toggle_infoview (procdata);	
 	
+	idle = gtk_idle_add_priority (800, idle_func, procdata);
 	
 	return app;
 }
@@ -323,22 +367,44 @@ toggle_infoview (ProcData *data)
 {
 	ProcData *procdata = data;
 	GtkLabel *label;
-	
+	static guint more_key = 0;
+	static guint less_key = 0;
+
 	label = GTK_LABEL (GTK_BUTTON (infobutton)->child);
 		
 	if (procdata->config.show_more_info == FALSE)
 	{
+		infoview_update (procdata);
 		gtk_widget_show_all (procdata->infobox);
 		procdata->config.show_more_info = TRUE;	
-		infoview_update (procdata);
-		gtk_label_set_text (label, _(lessinfolabel));
+ 		less_key = gtk_label_parse_uline(GTK_LABEL (label),
+ 						 _(lessinfolabel));
+ 		if (more_key != 0)
+ 			gtk_widget_remove_accelerator (infobutton,
+ 						       accel,
+ 						       more_key,
+ 						       GDK_MOD1_MASK);
+ 		gtk_widget_add_accelerator (infobutton, "clicked",
+ 					    accel,
+ 					    less_key, GDK_MOD1_MASK,
+ 					    0);
 		
 	}			
 	else
 	{
 		gtk_widget_hide (procdata->infobox);
 		procdata->config.show_more_info = FALSE;
-		gtk_label_set_text (label, _(moreinfolabel));
+ 		more_key = gtk_label_parse_uline(GTK_LABEL (label),
+ 						 _(moreinfolabel));
+ 		if (less_key != 0)
+ 			gtk_widget_remove_accelerator (infobutton,
+ 						       accel,
+ 						       less_key,
+ 						       GDK_MOD1_MASK);
+ 		gtk_widget_add_accelerator (infobutton, "clicked",
+ 					    accel,
+ 					    more_key, GDK_MOD1_MASK,
+ 					    0);		
 	}
 }
 

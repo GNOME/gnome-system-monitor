@@ -88,10 +88,11 @@ procman_data_new (void)
 
 	get_blacklist (procdata);	
 	
-	if (procdata->config.show_icons)
+	/*if (procdata->config.show_icons)
 		procdata->pretty_table = pretty_table_new ();
-	else
+	else*/
 		procdata->pretty_table = NULL;	
+	
 
 	return procdata;
 
