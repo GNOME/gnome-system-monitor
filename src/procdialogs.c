@@ -23,9 +23,6 @@
 
 #include <signal.h>
 #include <string.h>
-#if HAVE_LIBGNOMESU
-# include <libgnomesu/libgnomesu.h>
-#endif /* HAVE_LIBGNOMESU */
 #include "procdialogs.h"
 #include "favorites.h"
 #include "proctable.h"
@@ -817,22 +814,36 @@ entry_activate_cb (GtkEntry *entry, gpointer data)
 void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint pid, 
 					     gint extra_value, gchar *text)
 {
-#if HAVE_LIBGNOMESU
-	gchar *command;
+	GModule *mod;
+	gpointer gnomesu_exec;
+	gboolean has_libgnomesu = FALSE;
+	typedef gboolean (*GnomesuExecFunc) (char *commandline);
 
-	if (type == 0)
-		command = g_strdup_printf ("kill -s %d %d", extra_value, pid);
-	else
-		command = g_strdup_printf ("renice %d %d", extra_value, pid);
-	gnomesu_exec (command);
-	g_free (command);
-#else
-	if (type == 0)
-		g_warning(_("Cannot kill process with pid %d with signal %d"),
-			  pid, extra_value);
-	else
-		g_warning(_("Cannot change the priority of process with pid %d to %d"),
-			  pid, extra_value);
-#endif /* HAVE_LIBGNOMESU */
+	/* Attempt to use libgnomesu */
+	mod = g_module_open ("libgnomesu.so.0", G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
+	if (mod) {
+		if (g_module_symbol (mod, "gnomesu_exec", &gnomesu_exec)) {
+			gchar *command;
+
+			has_libgnomesu = TRUE;
+			if (type == 0)
+				command = g_strdup_printf ("kill -s %d %d", extra_value, pid);
+			else
+				command = g_strdup_printf ("renice %d %d", extra_value, pid);
+			((GnomesuExecFunc) gnomesu_exec) (command);
+			g_free (command);
+		}
+
+		g_module_close (mod);
+	}
+
+	if (!has_libgnomesu) {
+		if (type == 0)
+			g_warning(_("Cannot kill process with pid %d with signal %d"),
+				  pid, extra_value);
+		else
+			g_warning(_("Cannot change the priority of process with pid %d to %d"),
+				  pid, extra_value);
+	}
 }
 

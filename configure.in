@@ -19,7 +19,6 @@ LIBWNCK_REQUIRED=2.5.0
 LIBGTOP_REQUIRED=2.9.5
 GTK_REQUIRED=2.5.0
 GNOME_VFS_REQUIRED=2.6.0
-LIBGNOMESU_REQUIRED=0.9.3
 
 PKG_CHECK_MODULES(PROCMAN, libgnome-2.0 >= $LIBGNOME_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED gconf-2.0 >= $GCONF_REQUIRED libgtop-2.0 >= $LIBGTOP_REQUIRED libwnck-1.0 >= $LIBWNCK_REQUIRED gtk+-2.0 >= $GTK_REQUIRED gnome-vfs-2.0 >= $GNOME_VFS_REQUIRED)
 
@@ -92,17 +91,6 @@ if test x$enable_selinux = xyes; then
 else
    AC_MSG_RESULT(SELinux support disabled)
 fi
-
-
-AC_MSG_CHECKING(for libgnomesu)
-
-PKG_CHECK_MODULES(LIBGNOMESU, libgnomesu-1.0 >= $LIBGNOMESU_REQUIRED, have_libgnomesu=yes, have_libgnomesu=no)
-if test "x$have_libgnomesu" = "xyes"; then
-	AC_DEFINE(HAVE_LIBGNOMESU, 1, [Define to enable libgnomesu support])
-	AC_SUBST(LIBGNOMESU_CFLAGS)
-	AC_SUBST(LIBGNOMESU_LIBS)
-fi
-
 
 
 dnl Honor ACLOCAL_FLAGS for --enable-maintainer-mode

@@ -3,7 +3,7 @@
 INCLUDES = \
 	-DPROCMAN_DATADIR=\"$(datadir)/procman/\" \
 	-DDATADIR=\""$(datadir)"\" \
-	@PROCMAN_CFLAGS@ $(LIBGNOMESU_CFLAGS)
+	@PROCMAN_CFLAGS@
 
 bin_PROGRAMS = gnome-system-monitor
 
@@ -25,9 +25,9 @@ gnome_system_monitor_SOURCES = \
 	defaulttable.h
 
 if ENABLE_SELINUX
-gnome_system_monitor_LDADD = @PROCMAN_LIBS@ -lselinux $(LIBGNOMESU_LIBS)
+gnome_system_monitor_LDADD = @PROCMAN_LIBS@ -lselinux
 else
-gnome_system_monitor_LDADD = @PROCMAN_LIBS@  $(LIBGNOMESU_LIBS)
+gnome_system_monitor_LDADD = @PROCMAN_LIBS@
 endif
 
 specdir = $(datadir)/procman
