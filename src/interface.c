@@ -191,7 +191,6 @@ create_proc_view (ProcData *procdata)
 	GtkWidget *infobox;
 	GtkWidget *label;
 	GtkWidget *hbox2;
-	GTimer *timer = g_timer_new ();
 	
 	vbox1 = gtk_vbox_new (FALSE, 0);
 	
@@ -209,7 +208,6 @@ create_proc_view (ProcData *procdata)
 			  G_CALLBACK (cb_search), procdata);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (search_label), search_entry);
 	
-	g_timer_start (timer);
 	optionmenu1 = gtk_option_menu_new ();
 	gtk_box_pack_end (GTK_BOX (hbox1), optionmenu1, FALSE, FALSE, 0);
   	optionmenu1_menu = gtk_menu_new ();
@@ -219,9 +217,7 @@ create_proc_view (ProcData *procdata)
 
 	gtk_menu_set_active (GTK_MENU (optionmenu1_menu), procdata->config.whose_process);
   	gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu1), optionmenu1_menu);
-  	g_timer_stop (timer);
-  	g_print ("optionmenu done %f \n", g_timer_elapsed (timer, NULL));
-  	
+  	  	
   	label = gtk_label_new_with_mnemonic (_("Vie_w"));
   	gtk_label_set_mnemonic_widget (GTK_LABEL (label), optionmenu1);
 	gtk_box_pack_end (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
@@ -229,19 +225,15 @@ create_proc_view (ProcData *procdata)
 	
 	gtk_widget_show_all (hbox1);
 	
-	g_timer_start (timer);
 	scrolled = proctable_new (procdata);
 	if (!scrolled)
 		return NULL;
 	
 	gtk_box_pack_start (GTK_BOX (vbox1), scrolled, TRUE, TRUE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (scrolled), GNOME_PAD_SMALL);
-	g_timer_stop (timer);
-	g_print ("table created %f \n", g_timer_elapsed (timer, NULL));
 	
 	gtk_widget_show_all (scrolled);
 	
-	g_timer_start (timer);
 	infobox = infoview_create (procdata);
 	gtk_box_pack_start (GTK_BOX (vbox1), infobox, FALSE, FALSE, 0);
 
@@ -266,8 +258,6 @@ create_proc_view (ProcData *procdata)
 			  G_CALLBACK (cb_info_button_pressed), procdata);
 	
 	gtk_widget_show_all (hbox2);
-	g_timer_stop (timer);
-	g_print ("info bottm butonss new %f \n", g_timer_elapsed (timer, NULL));
 	
 	/* create popup_menu */
  	popup_menu = gtk_menu_new ();
@@ -463,7 +453,7 @@ create_sys_view (ProcData *procdata)
   	
 	gtk_widget_show_all (disk_frame);
   	
-  	procman_get_tree_state (disk_tree, "/apps/procman/disktree");
+  	procman_get_tree_state (procdata->client, disk_tree, "/apps/procman/disktree");
   	
   	cb_update_disks (procdata);
   	procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
@@ -483,58 +473,38 @@ create_main_window (ProcData *procdata)
 	GtkWidget *vbox1;
 	GtkWidget *sys_box;
 	GtkWidget *appbar1;
-	GTimer *timer = g_timer_new ();
-
-	g_timer_start (timer);
+	
 	app = gnome_app_new ("procman", _("Procman System Monitor"));
 	
-	g_timer_stop (timer);
-	g_print ("app new %f \n", g_timer_elapsed (timer, NULL));
-
 	width = procdata->config.width;
 	height = procdata->config.height;
 	gtk_window_set_default_size (GTK_WINDOW (app), width, height);
 	gtk_window_set_policy (GTK_WINDOW (app), FALSE, TRUE, TRUE);
 	
-	g_timer_start (timer);
 	gnome_app_create_menus_with_data (GNOME_APP (app), menubar1_uiinfo, procdata);
-	g_timer_stop (timer);
-	g_print ("menus new %f \n", g_timer_elapsed (timer, NULL));
 	
 	notebook = gtk_notebook_new ();
 	gtk_container_set_border_width (GTK_CONTAINER (notebook), GNOME_PAD_SMALL);
 
-	g_timer_start (timer);
 	vbox1 = create_proc_view (procdata);
 	tab_label1 = gtk_label_new_with_mnemonic (_("Process _Listing"));
 	gtk_widget_show (tab_label1);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox1, tab_label1);
-	g_timer_stop (timer);
-	g_print ("proc view created %f \n", g_timer_elapsed (timer, NULL));
 	
-	g_timer_start (timer);
 	sys_box = create_sys_view (procdata);
 	gtk_widget_show (sys_box);
 	tab_label2 = gtk_label_new_with_mnemonic (_("System _Monitor"));
 	gtk_widget_show (tab_label2);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label2);
-	g_timer_stop (timer);
-	g_print ("sys view created %f \n", g_timer_elapsed (timer, NULL));
 	
-	g_timer_start (timer);
 	appbar1 = gnome_appbar_new (FALSE, TRUE, GNOME_PREFERENCES_NEVER);
 	gnome_app_set_statusbar (GNOME_APP (app), appbar1);
-	g_timer_stop (timer);
-	g_print ("appbar created %f \n", g_timer_elapsed (timer, NULL));
 	
 	g_signal_connect (G_OBJECT (app), "delete_event",
                           G_CALLBACK (cb_app_delete),
                           procdata);
-	g_timer_start (timer);
+	
 	gnome_app_install_menu_hints (GNOME_APP (app), menubar1_uiinfo);
-	g_timer_stop (timer);
-	g_print ("menu hints %f \n", g_timer_elapsed (timer, NULL));
-	g_timer_destroy (timer);
 		    
 	g_signal_connect (G_OBJECT (notebook), "switch-page",
 			    G_CALLBACK (cb_switch_page), procdata);

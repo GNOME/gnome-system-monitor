@@ -32,7 +32,6 @@
 #include "callbacks.h"
 
 GtkWidget *app;
-GConfClient *client;
 static int simple_view = FALSE;
 pthread_t thread;
 
@@ -231,7 +230,7 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 }
 
 static ProcData *
-procman_data_new (void)
+procman_data_new (GConfClient *client)
 {
 
 	ProcData *pd;
@@ -350,22 +349,22 @@ procman_data_new (void)
 	return pd;
 
 }
-#if 0
+
 static void
 procman_free_data (ProcData *procdata)
 {
 
 	proctable_free_table (procdata);
 	
-	pretty_table_free (procdata->pretty_table);
+	//pretty_table_free (procdata->pretty_table);
 	
 	g_free (procdata);
 	
 }
-#endif
+
 
 gboolean
-procman_get_tree_state (GtkWidget *tree, gchar *prefix)
+procman_get_tree_state (GConfClient *client, GtkWidget *tree, gchar *prefix)
 {
 	GtkTreeModel *model;
 	gint sort_col;
@@ -426,7 +425,7 @@ procman_get_tree_state (GtkWidget *tree, gchar *prefix)
 }
 
 void
-procman_save_tree_state (GtkWidget *tree, gchar *prefix)
+procman_save_tree_state (GConfClient *client, GtkWidget *tree, gchar *prefix)
 {
 	GtkTreeModel *model;
 	GList *columns;
@@ -479,6 +478,7 @@ procman_save_tree_state (GtkWidget *tree, gchar *prefix)
 void
 procman_save_config (ProcData *data)
 {
+	GConfClient *client = data->client;
 	gint width, height, pane_pos;
 
 	if (!data)
@@ -487,8 +487,8 @@ procman_save_config (ProcData *data)
 	if (data->config.simple_view)
 		return;
 		
-	procman_save_tree_state (data->tree, "/apps/procman/proctree");
-	procman_save_tree_state (data->disk_list, "/apps/procman/disktree");
+	procman_save_tree_state (data->client, data->tree, "/apps/procman/proctree");
+	procman_save_tree_state (data->client, data->disk_list, "/apps/procman/disktree");
 		
 	gdk_window_get_size (app->window, &width, &height);
 	data->config.width = width;
@@ -516,11 +516,11 @@ int
 main (int argc, char *argv[])
 {
 	GnomeProgram *procman;
+	GConfClient *client;
 	ProcData *procdata;
 	GValue value = {0,};
 	poptContext pctx;
 	char **args;
-	GTimer *timer = g_timer_new ();
 	
 #ifdef ENABLE_NLS
 	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
@@ -531,9 +531,7 @@ main (int argc, char *argv[])
 	procman = gnome_program_init ("procman", VERSION, LIBGNOMEUI_MODULE, argc, argv, 
 			    	      GNOME_PARAM_POPT_TABLE, options, NULL);
 	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/procman.png");
-	/*gnome_init ("procman", VERSION, argc, argv);*/
-	g_print ("gconf init \n");
-	g_timer_start (timer);		    
+		    
 	gconf_init (argc, argv, NULL);
 			    
 	client = gconf_client_get_default ();
@@ -546,32 +544,21 @@ main (int argc, char *argv[])
                                
 	args = (char**) poptGetArgs (pctx);
 	poptFreeContext(pctx);*/
-	g_timer_stop (timer);
-	g_print ("gconf done %f \n", g_timer_elapsed (timer, NULL));
-	g_timer_start (timer);
+	
 	glibtop_init ();
-	g_timer_stop (timer);
-	g_print ("glibtop done %f \n", g_timer_elapsed (timer, NULL));
-	g_timer_start (timer);
-	procdata = procman_data_new ();
-	g_timer_stop (timer);
-	g_print ("data done %f \n", g_timer_elapsed (timer, NULL));
-	g_timer_start (timer);
+	
+	procdata = procman_data_new (client);
+	procdata->client = client;
+	
 	if (procdata->config.simple_view) 
 		app = create_simple_view_dialog (procdata);
 	else 
 		app = create_main_window (procdata);
-	g_timer_stop (timer);
-	g_print ("UI doene %f \n", g_timer_elapsed (timer, NULL));
-	g_timer_start (timer);
+	
 	load_desktop_files (procdata);
-	g_print ("desktop files %f \n", g_timer_elapsed (timer, NULL));
-	g_timer_start (timer);
+	
 	proctable_update_all (procdata);
 		 
-	g_timer_stop (timer);
-	g_print ("table updated %f \n", g_timer_elapsed (timer, NULL));
-	g_timer_destroy (timer);
 	
 	if (!app)
 		return 0;  
@@ -579,9 +566,9 @@ main (int argc, char *argv[])
  	gtk_widget_show (app);	
  	
 	gtk_main ();
-#if 0	
+	
 	procman_free_data (procdata);
-#endif	
+
 	return 0;
 }
 

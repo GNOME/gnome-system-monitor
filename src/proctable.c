@@ -222,7 +222,7 @@ proctable_new (ProcData *data)
 					 NULL);
 	procdata->tree = proctree;
 	
-	procman_get_tree_state (proctree, "/apps/procman/proctree");
+	procman_get_tree_state (procdata->client, proctree, "/apps/procman/proctree");
 
 	g_signal_connect (G_OBJECT (gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree))), 
 			  "changed",

@@ -21,6 +21,7 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gnome.h>
+#include <gconf/gconf-client.h>
 
 typedef struct _ProcConfig ProcConfig;
 typedef struct _PrettyTable PrettyTable;
@@ -142,10 +143,11 @@ struct _ProcData
 	PrettyTable	*pretty_table;
 	GList		*blacklist;
 	gint		blacklist_num;
+	GConfClient	*client;
 };
 
 void		procman_save_config (ProcData *data);
-void		procman_save_tree_state (GtkWidget *tree, gchar *prefix);
-gboolean	procman_get_tree_state (GtkWidget *tree, gchar *prefix);
+void		procman_save_tree_state (GConfClient *client, GtkWidget *tree, gchar *prefix);
+gboolean	procman_get_tree_state (GConfClient *client, GtkWidget *tree, gchar *prefix);
 
 #endif
