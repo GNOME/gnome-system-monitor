@@ -97,7 +97,7 @@ proctable_get_value (ETreeModel *model, ETreePath path, int column, void *data)
 
 	switch (column) {
 	case COL_NAME: {
-		return e_utf8_from_locale_string (info->name);
+		return info->name;
 	}
 	case COL_USER: {
 		return info->user;
@@ -502,6 +502,7 @@ get_info (ProcData *procdata, gint pid)
 	glibtop_proc_mem procmem;
 	glibtop_proc_uid procuid;
 	struct passwd *pwd;
+	gchar *name;
 	gint newcputime;
 	
 	
@@ -515,9 +516,11 @@ get_info (ProcData *procdata, gint pid)
 	
 	info->pixbuf = pretty_table_get_icon (procdata->pretty_table, procstate.cmd);
 	if (procdata->config.show_pretty_names)
-		info->name = pretty_table_get_name (procdata->pretty_table, procstate.cmd);
+		name = pretty_table_get_name (procdata->pretty_table, procstate.cmd);
 	else
-		info->name = g_strdup (procstate.cmd);
+		name = g_strdup (procstate.cmd);
+	info->name = e_utf8_from_locale_string (name);
+	g_free (name);
 	info->cmd = g_strdup_printf ("%s", procstate.cmd);
 	info->user = g_strdup_printf ("%s", pwd->pw_name);
 	info->mem = procmem.size;
