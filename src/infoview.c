@@ -158,7 +158,7 @@ get_size_string (gint size)
 
 	if (size < 1024) 
 	{
-		return g_strdup_printf ("%d bytes", size);
+		return g_strdup_printf (_("%d bytes"), size);
 
 	} 
 	else 
@@ -166,12 +166,12 @@ get_size_string (gint size)
 		fsize = ((gfloat) size) / 1024.0;
 		if (fsize < 1024.0) 
 		{
-			return g_strdup_printf ("%d K", (int)fsize);
+			return g_strdup_printf (_("%d K"), (int)fsize);
 		} 
 		else 
 		{
 			fsize /= 1024.0;
-			return g_strdup_printf ("%.1f MB", fsize);
+			return g_strdup_printf (_("%.1f MB"), fsize);
 		}
       	}
 
