@@ -8,7 +8,7 @@
     	correctly - This is not quite acceptable. Perhaps doing the items
 	as a e-table will help. Done - I like the look now using all
 	labels.
-[x/2 ] Throw in a few more column displays such as nice, process state.
+[x] Throw in a few more column displays such as nice, process state.
     But do not show them by default. It is easy to add them with e-table.
 [x] Maybe a cpu meter on top?
 [x] right click menu - send some signals - at least kill
@@ -28,7 +28,8 @@
 [x] memmaps dialog
 [x] menu stuff
 [ ] make sure everything is navigatable by keyboard and we have
-    accelerators
+    accelerators - only problem is e-tree which can't seem to accept
+    focus until you click on it
 [ ] Fix bugs of course.
 [x] Add the ability to have favorite processes. This would involve a lot
     of things like storing the names in a config file and designing
@@ -50,7 +51,7 @@
 [x] custimization of colors for the graph (including background)
 [x] split settings dialog into notebooks -"Process Listing" "System Monitor"
     "Advanced"
-[ ] graphs need to be beautified
+[x] graphs need to be beautified
 [x] swap needs to get into graph (I guess the Mem graph)
 [x] need to update the disk usage on a periodic basis
 [x] don't hard code the update intervals. Put the in the config
@@ -64,8 +65,6 @@
 [x] hook up renice to su stuff
 [x] feedback if root password is wrong. Preferably return to the password
     dialog.
-
--- Later --
 [x] I'm thinking of maybe doing a graphical system monitor
     thingamabob like memory usage, cpu usage, disk space. This would be
     a separate tab or just a seperate screen. The View: menu could
@@ -75,6 +74,12 @@
     get back the icons while procman has started, then read the files
     rather than doing nothing and requiring a restart. I think these
     two would go hand in hand. 
+
+-- Post 1.0 --
+[ ] Port to GNOME 2.0. I think I will use the gtk tree widget instead
+    of e-tree and remove the depenency on Gal. GConf for the cofig
+    stuff.
 [ ] Should be able to drag a process to "end process" button and 
     "more info" button and do the appropriate action
 [ ] Should be able to select multiple processes and kill em etc.
+[ ] color rows depending on cpu usage 
