@@ -422,6 +422,28 @@ get_process_status (ProcInfo *info, char *state)
 
 }
 
+static gchar *
+get_process_name (ProcData *procdata,gchar *cmd, gchar *args)
+{
+	gchar *name;
+	
+	if (procdata->config.show_pretty_names && procdata->config.load_desktop_files)
+		name = pretty_table_get_name (procdata->pretty_table, cmd);
+	else
+	{
+		/* strip the arguments string */
+		if (args)
+		{
+			name = g_strdup (args);
+		}
+		else
+			name = g_strdup (cmd);
+	}
+	
+	return name;
+
+}
+
 static ProcInfo *
 find_parent (ProcData *data, gint pid)
 {
@@ -473,9 +495,9 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 	{
 		if (procdata->config.show_pretty_names)
 		{
-			g_free (newinfo->name);
+			/*g_free (newinfo->name);
 			newinfo->name = pretty_table_get_name (procdata->pretty_table, 
-							       procstate.cmd);
+							       procstate.cmd);*/
 		}
 		newinfo->pixbuf = pretty_table_get_icon (procdata->pretty_table, procstate.cmd);
 	}
@@ -547,14 +569,18 @@ get_info (ProcData *procdata, gint pid)
 		info->pixbuf = pretty_table_get_icon (procdata->pretty_table, procstate.cmd);
 	else
 		info->pixbuf = NULL;
-	if (procdata->config.show_pretty_names && procdata->config.load_desktop_files)
+	/*if (procdata->config.show_pretty_names && procdata->config.load_desktop_files)
 		name = pretty_table_get_name (procdata->pretty_table, procstate.cmd);
 	else
-		name = g_strdup (procstate.cmd);
+		name = g_strdup (procstate.cmd);*/
+	arguments = glibtop_get_proc_args (&procargs, pid, 0);	
+	name = get_process_name (procdata, procstate.cmd, arguments);
+	/* FIXME: get the process name by stripping the path from the command arguments */
 	info->name = e_utf8_from_locale_string (name);
 	g_free (name);
 	info->cmd = g_strdup_printf ("%s", procstate.cmd);
-	arguments = glibtop_get_proc_args (&procargs, pid, 0);
+	if (arguments)
+		g_print ("%s %d\n",arguments, strlen(arguments));
 	if (arguments)
 	{
 		for (i = 0; i < procargs.size; i++)

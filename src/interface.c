@@ -127,7 +127,7 @@ GtkWidget *endprocessbutton;
 GtkWidget *popup_menu;
 GtkAccelGroup *accel;
 
-void
+static void
 popup_menu_renice (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
@@ -137,7 +137,7 @@ popup_menu_renice (GtkMenuItem *menuitem, gpointer data)
 	gtk_menu_popdown (GTK_MENU (popup_menu));
 }
 
-void
+static void
 popup_menu_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
@@ -147,7 +147,7 @@ popup_menu_show_memory_maps (GtkMenuItem *menuitem, gpointer data)
 	gtk_menu_popdown (GTK_MENU (popup_menu));
 }
 
-void
+static void
 popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
@@ -174,7 +174,7 @@ popup_menu_hide_process (GtkMenuItem *menuitem, gpointer data)
 	
 }
 
-void popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
+static void popup_menu_kill_process (GtkMenuItem *menuitem, gpointer data)
 {
 	ProcData *procdata = data;
 
