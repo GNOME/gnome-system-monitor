@@ -1,3 +1,23 @@
+2001-08-03 Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.h: add new gchar to ProcInfo structure for the command
+	args
+
+	* proctable.c (get_info): get the command arguments
+
+	* infoview.c: new tooltip for the command label showing the
+	full arguments. Wrap the command label in an event box.
+	(infoview_update): update the tooltip but make sure that
+	the selected process has changed otherwise updating the
+	tooltip will make it go away.
+
+	* procman.h: add new gint for the progress meter timeouts
+	so they can be removed at app destruction
+
+	* callbacks.c (cb_app_destroy): remove the timeouts. I think
+	they were still being triggered even though the widgets were
+	destroyed.
+
 2001-08-02 Tige Chastain <tigechastain@home.com>
 
 	* interface.c (create_main_window): hook up to the "right-click"

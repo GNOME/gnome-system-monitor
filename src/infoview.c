@@ -29,13 +29,14 @@
 
 GtkWidget *infobox;
 GtkWidget *main_frame;
+GtkWidget *cmd_event_box;
 GtkWidget *cmd_label;
 GtkWidget *status_label;
 GtkWidget *nice_label;
 GtkWidget *memtotal_label;
 GtkWidget *memrss_label;
 GtkWidget *memshared_label;
-
+GtkTooltips *cmd_tooltip;
 
 GtkWidget *
 infoview_create (ProcData *data)
@@ -84,11 +85,17 @@ infoview_create (ProcData *data)
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (info_table), label, 0, 1, 2, 3, GTK_FILL, 
 			  0, GNOME_PAD_SMALL, 0);
-			  
+	
+	cmd_event_box = gtk_event_box_new ();
+	gtk_table_attach (GTK_TABLE (info_table), cmd_event_box, 1, 2, 0, 1, GTK_FILL,
+			  0, GNOME_PAD_SMALL, 0);
+	
 	cmd_label = gtk_label_new ("");
 	gtk_misc_set_alignment (GTK_MISC (cmd_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (info_table), cmd_label, 1, 2, 0, 1, GTK_FILL,
-			  0, GNOME_PAD_SMALL, 0);
+	gtk_container_add (GTK_CONTAINER (cmd_event_box), cmd_label);
+	
+	cmd_tooltip = gtk_tooltips_new ();
+	
 	status_label = gtk_label_new ("");
 	gtk_misc_set_alignment (GTK_MISC (status_label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (info_table), status_label, 1, 2, 1, 2, GTK_FILL, 
@@ -178,10 +185,10 @@ infoview_update (ProcData *data)
 	ProcData *procdata = data;
 	ProcInfo *info;
 	gchar *string;
+	gchar *command;
 	
 	if (!procdata->selected_node)
 		return;
-
 
 	info = e_tree_memory_node_get_data (procdata->memory, procdata->selected_node);	
 	
@@ -194,6 +201,13 @@ infoview_update (ProcData *data)
 	
 	gtk_frame_set_label (GTK_FRAME (main_frame), info->name);
 	gtk_label_set_text (GTK_LABEL (status_label), info->status);
+	/* ugh. don't update the tooltip if the selected process has not changed.
+	** This is here so that when the user has to tooltip showing and we do an
+	** update here, the tooltip will go away if we call gtk_tooltip_set_tip
+	*/
+	gtk_label_get (GTK_LABEL (cmd_label), &command);
+	if (g_strcasecmp (info->cmd, command))
+		gtk_tooltips_set_tip (cmd_tooltip, cmd_event_box, info->arguments, NULL);
 	gtk_label_set_text (GTK_LABEL (cmd_label), info->cmd);
 	string = g_strdup_printf ("%d", info->nice);
 	gtk_label_set_text (GTK_LABEL (nice_label), string);

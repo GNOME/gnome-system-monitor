@@ -34,6 +34,7 @@
 #include <glibtop/procmem.h>
 #include <glibtop/proctime.h>
 #include <glibtop/procuid.h>
+#include <glibtop/procargs.h>
 #include <glibtop/mem.h>
 #include <glibtop/swap.h>
 #include <sys/stat.h>
@@ -384,6 +385,8 @@ proctable_free_info (ProcInfo *info)
 		g_free (info->name);
 	if (info->cmd)
 		g_free (info->cmd);
+	if (info->arguments)
+		g_free (info->arguments);
 	if (info->user)
 		g_free (info->user);
 	if (info->status)
@@ -509,9 +512,12 @@ get_info (ProcData *procdata, gint pid)
 	glibtop_proc_time proctime;
 	glibtop_proc_mem procmem;
 	glibtop_proc_uid procuid;
+	glibtop_proc_args procargs;
+	//glibtop_array array;
 	struct passwd *pwd;
-	gchar *name;
-	gint newcputime;
+	gchar *name, *args = g_strdup (" ");
+	gchar *arguments;
+	gint newcputime, i;
 	
 	
 	glibtop_get_proc_state (&procstate, pid);
@@ -533,6 +539,22 @@ get_info (ProcData *procdata, gint pid)
 	info->name = e_utf8_from_locale_string (name);
 	g_free (name);
 	info->cmd = g_strdup_printf ("%s", procstate.cmd);
+	arguments = glibtop_get_proc_args (&procargs, pid, 0);
+	if (arguments)
+	{
+		for (i = 0; i < procargs.size; i++)
+		{
+			if (!arguments[i])
+				arguments[i] = ' ';
+			/*strcat (args, &arguments[i]);
+			glibtop_free (&arguments[i]);*/
+		}
+		info->arguments = g_strdup (arguments);
+		glibtop_free (arguments);
+		g_free (args);
+	}
+	else
+		info->arguments = g_strdup ("");
 	info->user = g_strdup_printf ("%s", pwd->pw_name);
 	info->mem = procmem.size;
 	info->vmsize = procmem.vsize;
@@ -632,7 +654,7 @@ remove_children_from_tree (ETreeModel *model, ETreePath node, gpointer data)
 		/* simulate a "unselected" signal */
 		gtk_signal_emit_by_name (GTK_OBJECT (procdata->tree), 
 					 "cursor_activated",
-					  -1, NULL); 
+					  -1, NULL); 					  
 	}
 	procdata->info = g_list_remove (procdata->info, info);
 	proctable_free_info (info);

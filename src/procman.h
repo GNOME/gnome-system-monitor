@@ -61,6 +61,7 @@ struct _ProcInfo
 	gchar		*name;
 	gchar		*user;
 	gchar		*cmd;
+	gchar		*arguments;
 	gint		mem;
 	gint		cpu;
 	gint		pid;
@@ -86,6 +87,7 @@ struct _ProcData
 	ETreePath	selected_node;
 	gint		selected_pid;
 	gint		timeout;
+	gint		meter_timeout;
 	GList		*info;
 	gint		proc_num;
 	GtkWidget 	*cpumeter, *memmeter, *swapmeter;
