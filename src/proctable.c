@@ -72,7 +72,7 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 		return PROCMAN_CMP(infoa->mem, infob->mem);
 
 	case COL_CPU:
-		return PROCMAN_CMP(infoa->pcpu, infoa->pcpu);
+		return PROCMAN_CMP(infoa->pcpu, infob->pcpu);
 
 	case COL_PID:
 		return PROCMAN_CMP(infoa->pid, infob->pid);
@@ -84,7 +84,7 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 		return PROCMAN_CMP(infoa->vmsize, infob->vmsize);
 
 	case COL_MEMRES:
-		return PROCMAN_CMP(infoa->memres, infoa->memres);
+		return PROCMAN_CMP(infoa->memres, infob->memres);
 
 	case COL_MEMSHARED:
 		return PROCMAN_CMP(infoa->memshared, infob->memshared);
