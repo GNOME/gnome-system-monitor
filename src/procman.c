@@ -24,6 +24,7 @@
 #include <gconf/gconf-client.h>
 #include <glibtop.h>
 #include <pthread.h>
+#include "load-graph.h"
 #include "procman.h"
 #include "interface.h"
 #include "proctable.h"

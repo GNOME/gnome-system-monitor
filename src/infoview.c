@@ -23,6 +23,7 @@
 
 #include "procman.h"
 #include "infoview.h"
+#include "interface.h"
 #include "util.h"
 #if 0
 #include "procdialogs.h"

@@ -51,30 +51,30 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
 {
  	{
  	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), N_("Change the importance (nice value) of a process"),
-	 cb_renice, NULL, NULL, 0, 0,
+	 cb_renice, NULL, NULL, 0, NULL,
 	 'r', GDK_CONTROL_MASK
 	},
 	{
 	 GNOME_APP_UI_ITEM, N_("_Hide Process"), N_("Hide a process"),
-	 cb_hide_process, NULL, NULL, 0, 0,
+	 cb_hide_process, NULL, NULL, 0, NULL,
 	 'h', GDK_CONTROL_MASK
 	}, 
 	GNOMEUIINFO_SEPARATOR,
 	{
 	 GNOME_APP_UI_ITEM, N_("End _Process"), N_("Force a process to finish."),
-	 cb_end_process, NULL, NULL, 0, 0,
+	 cb_end_process, NULL, NULL, 0, NULL,
 	 'e', GDK_CONTROL_MASK
 	},
 	{
 	 GNOME_APP_UI_ITEM, N_("_Kill Process"), N_("Force a process to finish now."),
-	 cb_kill_process, NULL, NULL, 0, 0,
+	 cb_kill_process, NULL, NULL, 0, NULL,
 	 'k', GDK_CONTROL_MASK
 	},
 	GNOMEUIINFO_SEPARATOR,
 	{
 	 GNOME_APP_UI_ITEM, N_("_Hidden Processes"), 
 	 		    N_("View and edit your list of hidden processes"),
-	 cb_show_hidden_processes, NULL, NULL, 0, 0,
+	 cb_show_hidden_processes, NULL, NULL, 0, NULL,
 	 'p', GDK_CONTROL_MASK
 	},
 	GNOMEUIINFO_MENU_PREFERENCES_ITEM (cb_preferences_activate, NULL),
@@ -85,18 +85,18 @@ static GnomeUIInfo view1_menu_uiinfo[] =
 {
 	{
 	 GNOME_APP_UI_ITEM, N_("_Memory Maps"), N_("View the memory maps associated with a process"),
-	 cb_show_memory_maps, NULL, NULL, 0, 0,
+	 cb_show_memory_maps, NULL, NULL, 0, NULL,
 	 'm', GDK_CONTROL_MASK
 	},
 	GNOMEUIINFO_SEPARATOR,
 	{
 	 GNOME_APP_UI_TOGGLEITEM, N_("Process _Dependencies"), N_("Display a tree showing process dependencies"),
-	 cb_toggle_tree, NULL, NULL, 0, 0,
+	 cb_toggle_tree, NULL, NULL, 0, NULL,
 	 'd', GDK_CONTROL_MASK
 	}, 
 	{
 	 GNOME_APP_UI_TOGGLEITEM, N_("_Threads"), N_("Display threads (subprocesses)"),
-	 cb_toggle_threads, NULL, NULL, 0, 0,
+	 cb_toggle_threads, NULL, NULL, 0, NULL,
 	 't', GDK_CONTROL_MASK
 	}, 
 	GNOMEUIINFO_END
@@ -122,29 +122,29 @@ static GnomeUIInfo popup_menu_uiinfo[] =
 {
 	{
  	  GNOME_APP_UI_ITEM, N_("_Change Priority..."), N_("Change the importance (nice value) of a process"),
-	 popup_menu_renice, NULL, NULL, 0, 0,
+	 popup_menu_renice, NULL, NULL, 0, NULL,
 	 0, 0
 	},
 	{
  	  GNOME_APP_UI_ITEM, N_("_Memory Maps"), N_("View the memory maps associated with a process"),
-	 popup_menu_show_memory_maps, NULL, NULL, 0, 0,
+	 popup_menu_show_memory_maps, NULL, NULL, 0, NULL,
 	 0, 0
 	},
 	GNOMEUIINFO_SEPARATOR,
 	{
  	  GNOME_APP_UI_ITEM, N_("_Hide Process"), N_("Hide a process"),
-	 popup_menu_hide_process, NULL, NULL, 0, 0,
+	 popup_menu_hide_process, NULL, NULL, 0, NULL,
 	 0, 0
 	},
 	GNOMEUIINFO_SEPARATOR,
 	{
  	  GNOME_APP_UI_ITEM, N_("_End Process"), N_("Force a process to finish"),
-	 popup_menu_end_process, NULL, NULL, 0, 0,
+	 popup_menu_end_process, NULL, NULL, 0, NULL,
 	 0, 0
 	},
 	{
  	  GNOME_APP_UI_ITEM, N_("_Kill Process"), N_("Force a process to finish now"),
-	 popup_menu_kill_process, NULL, NULL, 0, 0,
+	 popup_menu_kill_process, NULL, NULL, 0, NULL,
 	 0, 0
 	},
 	GNOMEUIINFO_END
