@@ -178,7 +178,7 @@ cb_all_process_menu_clicked 		(GtkWidget	*widget,
 					 gpointer	data)
 {
 	ProcData *procdata = data;
-	GConfClient *client = gconf_client_get_default ();
+	GConfClient *client = procdata->client;
 	
 	g_return_if_fail (data);
 	procdata->config.whose_process = ALL_PROCESSES;
@@ -193,7 +193,7 @@ cb_my_process_menu_clicked		(GtkWidget	*widget,
 					 gpointer	data)
 {
 	ProcData *procdata = data;
-	GConfClient *client = gconf_client_get_default ();
+	GConfClient *client = procdata->client;
 	
 	g_return_if_fail (data);
 	procdata->config.whose_process = MY_PROCESSES;
@@ -206,7 +206,7 @@ cb_running_process_menu_clicked		(GtkWidget	*widget,
 					 gpointer	data)
 {
 	ProcData *procdata = data;
-	GConfClient *client = gconf_client_get_default ();
+	GConfClient *client = procdata->client;
 	
 	g_return_if_fail (data);
 	procdata->config.whose_process = RUNNING_PROCESSES;
@@ -333,7 +333,8 @@ void
 cb_cpu_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 		      guint a, gpointer data)
 {
-	GConfClient *client = gconf_client_get_default ();
+	ProcData *procdata = data;
+	GConfClient *client = procdata->client;
 	
 	gconf_client_set_int (client, "/apps/procman/cpu_red", r, NULL);
 	gconf_client_set_int (client, "/apps/procman/cpu_green", g, NULL);
@@ -344,7 +345,8 @@ void
 cb_mem_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 		      guint a, gpointer data)
 {
-	GConfClient *client = gconf_client_get_default ();
+	ProcData *procdata = data;
+	GConfClient *client = procdata->client;
 	
 	gconf_client_set_int (client, "/apps/procman/mem_red", r, NULL);
 	gconf_client_set_int (client, "/apps/procman/mem_green", g, NULL);
@@ -355,7 +357,8 @@ void
 cb_swap_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 		       guint a, gpointer data)
 {
-	GConfClient *client = gconf_client_get_default ();
+	ProcData *procdata = data;
+	GConfClient *client = procdata->client;
 	
 	gconf_client_set_int (client, "/apps/procman/swap_red", r, NULL);
 	gconf_client_set_int (client, "/apps/procman/swap_green", g, NULL);

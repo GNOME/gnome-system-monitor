@@ -39,7 +39,8 @@ int kill_signal = SIGTERM;
 static void
 cb_show_hide_message_toggled (GtkToggleButton *button, gpointer data)
 {
-	GConfClient *client = gconf_client_get_default ();
+	ProcData *procdata = data;
+	GConfClient *client = procdata->client;
 	gboolean toggle_state;
 	
 	toggle_state = gtk_toggle_button_get_active (button);
@@ -106,7 +107,8 @@ procdialog_create_hide_dialog (ProcData *data)
 static void
 cb_show_kill_warning_toggled (GtkToggleButton *button, gpointer data)
 {
-	GConfClient *client = gconf_client_get_default ();
+	ProcData *procdata = data;
+	GConfClient *client = procdata->client;
 	gboolean toggle_state;
 	
 	toggle_state = gtk_toggle_button_get_active (button);
@@ -305,10 +307,9 @@ prefs_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 static void
 show_tree_toggled (GtkToggleButton *button, gpointer data)
 {
-	GConfClient *client;
+	ProcData *procdata = data;
+	GConfClient *client = procdata->client;
 	gboolean toggled;
-	
-	client = gconf_client_get_default ();
 	
 	toggled = gtk_toggle_button_get_active (button);
 	gconf_client_set_bool (client, "/apps/procman/show_tree", toggled, NULL);
@@ -318,10 +319,10 @@ show_tree_toggled (GtkToggleButton *button, gpointer data)
 static void
 show_threads_toggled (GtkToggleButton *button, gpointer data)
 {
-	GConfClient *client;
-	gboolean toggled;
+	ProcData *procdata = data;
+	GConfClient *client = procdata->client;
 	
-	client = gconf_client_get_default ();
+	gboolean toggled;
 	
 	toggled = gtk_toggle_button_get_active (button);
 	
@@ -331,13 +332,15 @@ show_threads_toggled (GtkToggleButton *button, gpointer data)
 
 
 static void
-update_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
+update_update_interval (GtkWidget *widget, gpointer data)
 {
 	ProcData *procdata = data;
-	GConfClient *client = gconf_client_get_default ();
+	GConfClient *client = procdata->client;
+	GtkWidget *spin_button;
 	gdouble value;
 	
-	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (widget));
+	spin_button = g_object_get_data (G_OBJECT (widget), "spin_button");
+	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (spin_button));
 	
 	if (1000 * value == procdata->config.update_interval)
 		return;
@@ -347,29 +350,33 @@ update_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 }
 
 static void
-update_graph_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
+update_graph_update_interval (GtkWidget *widget, gpointer data)
 {
 	ProcData *procdata = data;
-	GConfClient *client = gconf_client_get_default ();
+	GConfClient *client = procdata->client;
+	GtkWidget *spin_button;
 	gdouble value = 0;
-	
-	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (widget));
+
+	spin_button = g_object_get_data (G_OBJECT (widget), "spin_button");
+	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (spin_button));
 	
 	if (1000 * value == procdata->config.graph_update_interval)
 		return;
-	
+
 	gconf_client_set_int (client, "/apps/procman/graph_update_interval", value * 1000, NULL);
 	
 }
 
 static void
-update_disks_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
+update_disks_update_interval (GtkWidget *widget, gpointer data)
 {
 	ProcData *procdata = data;
-	GConfClient *client = gconf_client_get_default ();
+	GConfClient *client = procdata->client;
+	GtkWidget *spin_button;
 	gdouble value;
-	
-	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (widget));
+
+	spin_button = g_object_get_data (G_OBJECT (widget), "spin_button");
+	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (spin_button));
 	
 	if (1000 * value == procdata->config.disks_update_interval)
 		return;
@@ -382,7 +389,8 @@ static void
 bg_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 		  guint a, gpointer data)
 {
-	GConfClient *client = gconf_client_get_default ();
+	ProcData *procdata = data;
+	GConfClient *client = procdata->client;
 	
 	gconf_client_set_int (client, "/apps/procman/bg_red", r, NULL);
 	gconf_client_set_int (client, "/apps/procman/bg_green", g, NULL);
@@ -394,7 +402,8 @@ static void
 frame_color_changed (GnomeColorPicker *cp, guint r, guint g, guint b,
 		  guint a, gpointer data)
 {
-	GConfClient *client = gconf_client_get_default ();
+	ProcData *procdata = data;
+	GConfClient *client = procdata->client;
 	
 	gconf_client_set_int (client, "/apps/procman/frame_red", r, NULL);
 	gconf_client_set_int (client, "/apps/procman/frame_green", g, NULL);
@@ -467,6 +476,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	GtkWidget *label;
 	GtkAdjustment *adjustment;
 	GtkWidget *spin_button;
+	GtkWidget *button;
 	GtkWidget *check_button;
 	GtkWidget *table;
 	GtkWidget *tab_label;
@@ -507,9 +517,13 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 1.0, 
 							  100.0, 0.25, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
-	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-			    G_CALLBACK (update_update_interval), procdata);
 	gtk_box_pack_start (GTK_BOX (hbox), spin_button, FALSE, FALSE, 0);
+	
+	button = gtk_button_new_with_mnemonic (_("_Set"));
+	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+	g_object_set_data (G_OBJECT (button), "spin_button", spin_button);
+	g_signal_connect (G_OBJECT (button), "clicked",
+	 		  G_CALLBACK (update_update_interval), procdata);
 	
 	check_button = gtk_check_button_new_with_label (_("Show Process Dependencies"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
@@ -540,7 +554,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	frame = gtk_frame_new (_("Graphs"));
 	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
-	table = gtk_table_new (2, 3, FALSE);
+	table = gtk_table_new (3, 3, FALSE);
 	gtk_container_add (GTK_CONTAINER (frame), table);
 	
 	label = gtk_label_new (_("Update Speed ( seconds ) :"));
@@ -553,10 +567,15 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.25, 
 							  100.0, 0.25, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
-	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-			    G_CALLBACK (update_graph_update_interval), procdata);
 	gtk_table_attach (GTK_TABLE (table), spin_button, 1, 2, 0, 1,
 			  0, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
+			  
+	button = gtk_button_new_with_mnemonic (_("_Set"));
+	gtk_table_attach (GTK_TABLE (table), button, 2, 3, 0, 1,
+			  0, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
+	g_object_set_data (G_OBJECT (button), "spin_button", spin_button);
+	g_signal_connect (G_OBJECT (button), "clicked",
+	 		  G_CALLBACK (update_graph_update_interval), procdata);
 	
 	label = gtk_label_new (_("Background Color :"));
 	gtk_misc_set_padding (GTK_MISC (label), GNOME_PAD_SMALL, 0);
@@ -571,7 +590,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 				    procdata->config.bg_color.blue, 0);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (bg_color_changed), procdata);
-	gtk_table_attach (GTK_TABLE (table), color_picker, 1, 2, 1, 2, 
+	gtk_table_attach (GTK_TABLE (table), color_picker, 2, 3, 1, 2, 
 			  GTK_FILL|GTK_EXPAND,0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 			  
 	label = gtk_label_new (_("Grid Color :"));
@@ -587,14 +606,13 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 				    procdata->config.frame_color.blue, 0);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (frame_color_changed), procdata);
-	gtk_table_attach (GTK_TABLE (table), color_picker, 1, 2, 2, 3, 
+	gtk_table_attach (GTK_TABLE (table), color_picker, 2, 3, 2, 3, 
 			  GTK_FILL|GTK_EXPAND,0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);		  
 	
 	frame = gtk_frame_new (_("Devices"));
 	gtk_box_pack_start (GTK_BOX (sys_box), frame, FALSE, FALSE, GNOME_PAD_SMALL);
 	
-	table = gtk_table_new (2, 1, FALSE);
-	gtk_container_set_border_width (GTK_CONTAINER (table), GNOME_PAD_SMALL);
+	table = gtk_table_new (2, 2, FALSE);
 	gtk_container_add (GTK_CONTAINER (frame), table);
 			  
 	label = gtk_label_new (_("Update Speed ( seconds ) :"));
@@ -607,11 +625,16 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	adjustment = (GtkAdjustment *) gtk_adjustment_new (update / 1000.0, 1.0, 
 							   100.0, 1.0, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 0);
-	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-			    G_CALLBACK (update_disks_update_interval), procdata);
 	gtk_table_attach (GTK_TABLE (table), spin_button, 1, 2, 0, 1,
-			  0, 0, 0, GNOME_PAD_SMALL);
-			  
+			  0, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
+	
+	button = gtk_button_new_with_mnemonic (_("Se_t"));
+	gtk_table_attach (GTK_TABLE (table), button, 2, 3, 0, 1,
+			  0, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
+	g_object_set_data (G_OBJECT (button), "spin_button", spin_button);
+	g_signal_connect (G_OBJECT (button), "clicked",
+	 		  G_CALLBACK (update_disks_update_interval), procdata);
+	 		  		  
 	g_signal_connect (G_OBJECT (dialog), "response",
 			  G_CALLBACK (prefs_dialog_button_pressed), procdata);
 	
