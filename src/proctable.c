@@ -492,6 +492,9 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 	
 	g_return_if_fail (info);
 	
+	if (!info->visible)
+		return;
+	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 	iter = info->node;
 	
