@@ -1,71 +1,193 @@
 <?xml version="1.0"?>
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-      "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY version "1.00">
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appversion "2.0.2">
+  <!ENTITY manrevision "2.0">
+  <!ENTITY date "November 2002">
+  <!ENTITY app "<application>System Monitor</application>">
+  <!-- Information about the entities
+       The legal.xml file contains legal information, there is no need to
+edit the file. 
+       Use the appversion entity to specify the version of the application.
+       Use the manrevision entity to specify the revision number of this
+manual.
+       Use the date entity to specify the release date of this manual.
+       Use the app entity to specify the name of the application. -->
 ]>
 
-<!--
-     (Do not remove this comment block.)
+<!-- 
+      (Do not remove this comment block.)
   Maintained by the GNOME Documentation Project
   http://developer.gnome.org/projects/gdp
-  Template version 1.0.3 (modified for XML by Bill Day Jan 24, 2002)
-  Template last modified: Nov 16, 2000
+  Template version: 2.0 beta
+  Template last modified Apr 11, 2002
 -->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="en">
+<!-- please do not change the id; for translations, change lang to -->
 
-<article id="index">
-<articleinfo>
- <title>Procman Manual</title>
-  <!-- Use this legal notice for online documents which depend on -->
-  <!-- core GNOME packages.                                       -->
-  <legalnotice id="legalnotice">
-   <para>
-    Permission is granted to copy, distribute and/or modify this document
-    under the terms of the <ulink type="help" 
-    url="gnome-help:fdl"><citetitle>GNU Free Documentation
-    License</citetitle></ulink>, Version 1.1 or any later version 
-    published by the Free Software Foundation with no Invariant Sections, 
-    no Front-Cover Texts, and no Back-Cover Texts.  A copy of the license
-    can be found <ulink type="help" url="gnome-help:fdl">here</ulink>.
-   </para>
-   <para>
-    Many of the names used by companies to distinguish their products and
-    services are claimed as trademarks. Where those names appear in any
-    GNOME documentation, and those trademarks are made aware to the members
-    of the GNOME Documentation Project, the names have been printed in caps
-    or initial caps.
-   </para>
-  </legalnotice>
+<!-- appropriate code -->
+  <articleinfo> 
+    <title>&app; Manual V&manrevision;</title>       
+
+    <copyright> 
+      <year>2001</year>
+      <year>2002</year> 
+      <holder>Bill Day</holder> 
+    </copyright> 
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+<!-- An address can be added to the publisher information.  If a role is 
+     not specified, the publisher/author is the same for all versions of the 
+     document.  -->
+
+    <publisher> 
+      <publishername> GNOME Documentation Project </publishername> 
+    </publisher> 
+
+   &legal;
+   <!-- This file  contains link to license for the documentation (GNU
+FDL), and 
+        other legal stuff such as "NO WARRANTY" statement. Please do not
+change 
+	any of this. -->
+
+    <authorgroup> 
+      <author> 
+		<firstname>Bill</firstname> 
+		<surname>Day</surname> 
+		<affiliation> 
+	  		<address> <email>billday@bellatlantic.net</email> </address> 
+		</affiliation> 
+      </author> 
+      
+      
+
+<!-- This is appropriate place for other contributors: translators,
+     maintainers,  etc. Commented out by default.
+     
+      <othercredit role="translator">
+		<firstname>Latin</firstname> 
+		<surname>Translator 1</surname> 
+		<affiliation> 
+	  		<orgname>Latin Translation Team</orgname> 
+	  		<address> <email>translator@gnome.org</email> </address> 
+		</affiliation>
+		<contrib>Latin translation</contrib>
+      </othercredit>
+-->
+    </authorgroup>
 
 
- <!-- This is the manual version, not application version. --> 
-    <releaseinfo>
-       This is version 0.11 of the Procman manual.
-    </releaseinfo>
-</articleinfo>
+<!-- According to GNU FDL, revision history is mandatory if you are -->
+<!-- modifying/reusing someone else's document.  If not, you can omit it. -->
+<!-- Remember to remove the &manrevision; entity from the revision entries
+other
+-->
+<!-- than the current revision. -->
+<!-- The revision numbering system for GNOME manuals is as follows: -->
+<!-- * the revision number consists of two components -->
+<!-- * the first component of the revision number reflects the release
+version of the GNOME desktop. -->
+<!-- * the second component of the revision number is a decimal unit that
+is incremented with each revision of the manual. -->
+<!-- For example, if the GNOME desktop release is V2.x, the first version
+of the manual that -->
+<!-- is written in that desktop timeframe is V2.0, the second version of
+the manual is V2.1, etc. -->
+<!-- When the desktop release version changes to V3.x, the revision number
+of the manual changes -->
+<!-- to V3.0, and so on. -->  
+    <revhistory>
 
- <!-- ============= Document Body ============================= -->
+      <revision> 
+		<revnumber>System Monitor Manual V&manrevision;</revnumber> 
+		<date>&date;</date> 
+		<revdescription> 
+	  		<para role="author">Bill Day
+	    	<email>billday@bellatlantic.net</email>
+	  		</para>
+	  		<para role="publisher">GNOME Documentation Project</para>
+		</revdescription> 
+      </revision> 
+      <revision> 
+		<revnumber>Procman Manual V0.11</revnumber> 
+		<date>January 2002.</date> 
+		<revdescription> 
+	  		<para role="author">Bill Day 
+	    	<email>billday@bellatlantic.net</email>
 
+	  		</para>
+	  		<para role="publisher">GNOME Documentation Project</para>
+		</revdescription> 
+      </revision> 
+    </revhistory> 
+
+    <releaseinfo>This manual describes version &appversion; of System Monitor.
+    </releaseinfo> 
+    <legalnotice> 
+      <title>Feedback</title> 
+      <para>To report a bug or make a suggestion regarding the &app;
+application or
+      this manual, follow the directions in the <ulink
+url="ghelp:gnome-feedback"
+	  type="help">GNOME Feedback Page</ulink>. 
+      </para>
+
+<!-- Translators may also add here feedback address for translations -->
+    </legalnotice> 
+  </articleinfo> 
+
+  <indexterm zone="index"> 
+    <primary>MY-GNOME-APP</primary> 
+  </indexterm> 
+  <indexterm zone="index"> 
+    <primary>mygnomeapp</primary> 
+  </indexterm>
+
+<!-- ============= Document Body ============================= -->
  <!-- ============= Introduction ============================== -->
   <sect1 id="intro">
+
     <title>Introduction</title>
 
     <para>
-     <application>Procman</application> is an application that lists system processes and monitors system usage.  <application>Procman</application> shows which processes are running and how those processes are related to each other in a table that the user can easily read and search.  It also provides detailed information about individual processes and allows the user to control which processes are running.  <application>Procman</application> also displays how much processor (CPU) capacity the system is using, how much memory and swap space the system is using, and how much disk space the system is taking up on each device.  <application>Procman</application> displays this information in a clear graphical display so that users can easily understand what the system is doing.  Users can then modify the behavior of the system through the same clear graphical display.
+     <application>System Monitor</application> lists system processes and
+monitors system usage.  <application>System Monitor</application> shows
+which processes are running and how those processes are related to each
+other in a table that the user can read and search.  It also provides
+detailed information about individual processes and allows the user to
+control which processes are running.  <application>System
+Monitor</application> also displays how much processor (CPU) capacity the
+system is using, how much memory and swap space the system is using, and
+how much disk space the system is taking up on each device. 
+<application>System Monitor</application> displays this information in a
+graphical display so that users can see what the system is doing.  Users
+can then modify the behavior of the system through the same graphical display.
     </para>
+
     <para>
-      To run <application>Procman</application>, select
+      To run <application>System Monitor</application>, select
       <menuchoice>
-	<guisubmenu>SYSTEM</guisubmenu>
-	<guimenuitem>Procman System Monitor</guimenuitem>
+       	<guisubmenu>SYSTEM TOOLS</guisubmenu>
+	<guimenuitem>System Monitor</guimenuitem>
       </menuchoice>
-      from the <guimenu>Main Menu</guimenu>, or type <command>Procman</command> on the command line.
+      from the <guimenu>Applications</guimenu> menu, or type
+<command>gnome-system-monitor</command> on the command line.
   </para>
 
     <para>
-      <application>Procman</application> is included in the
-      <filename>procman</filename> package, which is part of the
+      <application>System Monitor</application> is included in the
+      <filename>gnome-system-monitor</filename> package, which is part of the
       GNOME desktop environment. This document describes version
-      &version; of <application>Procman</application>.
+      &appversion; of <application>System Monitor</application>.
     </para>
   </sect1>
 
@@ -74,9 +196,52 @@
  <!-- This section should describe basic usage of the application. -->
 
   <sect1 id="usage">
-    <title>Using Procman</title>
+    <title>Using System Monitor</title>
     <para>
-      <application>Procman</application> has two main uses.  The first is to monitor and modify the processes that are running.  The second is to monitor demands on the processor (CPU), how much memory is consumed, and how much space is available on each device. This section describes basic usage of <application>Procman</application>.
+      <application>System Monitor</application> has the following uses:</para>
+
+     <variablelist> 
+      <varlistentry>
+       <term>Process Listing</term>
+         <listitem>
+          <para>
+          <itemizedlist>          
+           <listitem>
+             <para>Monitors processes that are running; and</para>
+           </listitem>
+
+           <listitem>
+             <para>Modifies processes that are running.</para>
+           </listitem>
+         </itemizedlist>
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+
+       <term>System Monitor</term>
+          <listitem>
+           <para>
+            <itemizedlist>
+            <listitem>
+              <para>Monitors demands on the processor (CPU);</para>
+            </listitem>
+           <listitem>
+
+             <para>How much memory is consumed; and</para>
+           </listitem>
+           <listitem>
+             <para>How much space is available on each device.</para>
+           </listitem>
+      </itemizedlist>
+     </para>
+    </listitem>
+
+   </varlistentry>
+</variablelist>
+
+    <para> This section describes the basic usage of <application>System
+Monitor</application>.
     </para>
 
  
@@ -85,15 +250,24 @@
 
 
     <sect2 id="processListing">
+
       <title>Process Listing</title>
       <para>
-        Starting <application>Procman</application> opens the
-        <interface>Process Listing window</interface>, shown in <xref linkend="processlisting-fig" />. The window shows the names of the processes that are running under the Process Name column on the left side of the window.  In some cases processes are shown in outline form.  Child processes are connected to their parents by a dotted line and indented.  Clicking the mouse on the plus (+) sign next to a process name expands the listing to show the child processes beneath it.  Clicking on a minus (-) sign next to the process name collapses the list of child processes.
+        Starting <application>System Monitor</application> opens the
+        <interface>Process Listing window</interface>, shown in <xref
+linkend="processlisting-fig" />. The window shows the names of the
+processes that are running under the Process Name column on the left side
+of the window.  In some cases processes are shown in outline form.  Child
+processes are listed below their parents and indented.  Clicking the mouse
+on the triangle next to a process name expands the listing to show the
+child processes beneath it.  Clicking on the triangle again collapses the
+list of child processes.
 
-        <!-- ==== Figure ==== -->
+        <!-- ==== Figure 1 ==== -->
 
 <figure id="processlisting-fig">
 	  <title>Process Listing window</title>
+
  <screenshot>
      <mediaobject>
          <imageobject>
@@ -103,10 +277,12 @@
                <imagedata fileref="figures/processListing.eps" format="EPS"/>
          </imageobject>
          <textobject>
+
                <phrase>Process Listing window</phrase>
          </textobject>
          <caption>
-              <para>This window lists the processes that are running and shows how the processes are related to each other.</para>
+              <para>This window lists the processes that are running and
+shows how the processes are related to each other.</para>
          </caption>
      </mediaobject>
 </screenshot>
@@ -114,306 +290,53 @@
     <!-- ==== End of Figure ==== -->
 
 
-By default, <interface>Process Listing</interface> shows the application icons associated with each process in the far left column. The default table shows a column for the process name and four columns that provide additional information.  The User column shows which user owns the process.  The Memory column shows how much total system memory that process is using. The %CPU column shows how great a percentage of the processor's capacity the process is using.  The ID column indicates the process identifier (pid), a number that uniquely identifies the process and can be used to manipulate the process on the command line.  The user can use a contextual menu to add columns that show VM Size, Resident Memory, Shared Memory, RSS Memory, Nice, or Status as described below in <xref linkend="headercontextmenu" />.
-      </para>
+<interface>Process Listing</interface> shows the application icons
+associated with each process in the far left column. The default table
+shows a column for the process name and six columns that provide additional
+information.  The Arguments column shows the command with the arguments
+that were used to start the process.  The User column shows which user owns
+the process.  The Memory column shows how much total system memory that
+process is using. The VM Size column shows how much virtual memory (disk
+space) the process is using. The %CPU column shows how great a percentage
+of the processor's capacity the process is using.  The ID column indicates
+the process identifier (pid), a number that uniquely identifies the process
+and can be used to manipulate the process on the command line.</para>
+
+<para>By default, the processes are sorted by process in alphabetical
+order. Clicking on the header above a column reorders the table by sorting
+the information in the column in alphabetical (a-z) or numerical order. 
+Clicking again on the column sorts the data in reverse alphabetical (z-a)
+or reverse numerical order.</para>
    <sect3 id="searchwindow">
-      <title>The Search Window</title>
-       <para>The search window allows the user to search for a process by name.  Wildcards are not supported.  Once the process is found, it is highlighted, and the user can perform operations on it using either contextual menus or the menu bar.</para>
+      <title>The Search Text Box</title>
+       <para>The search text box allows the user to search for a process by
+name.  Wildcards are not supported.  Once the process is found, it is
+highlighted, and the user can perform operations on it using either
+contextual menus or the menu bar.</para>
+
    </sect3>
-   <sect3 id="view-menu">
-     <title>The View Menu</title>
-       <para>Clicking on the <guimenu>View</guimenu> menu (shown in <xref linkend="viewmenu-fig" />) with the mouse reveals three options: View <guimenuitem>All Processes</guimenuitem>, View <guimenuitem>My Processes</guimenuitem>, and View <guimenuitem>Running Processes</guimenuitem>.
-
-<!--Figure 2-->
-<figure id="viewmenu-fig">
-	    <title>View Menu</title>
- <screenshot>
-     <mediaobject>
-         <imageobject>
-               <imagedata fileref="figures/viewMenu.png" format="PNG"/>
-         </imageobject>
-         <imageobject>
-               <imagedata fileref="figures/viewMenu.eps" format="EPS"/>
-         </imageobject>
-         <textobject>
-               <phrase>View Menu</phrase>
-         </textobject>
-         <caption>
-              <para>This menu allows the user to change the Process Listing display.</para>
-         </caption>
-     </mediaobject>
-</screenshot>
-</figure>
+   <sect3 id="view-button">
+     <title>The View Button</title>
+       <para>Clicking on the <guibutton>View</guibutton> button reveals a menu with three options: View
+<guimenuitem>All Processes</guimenuitem>, View <guimenuitem>My
+Processes</guimenuitem>, and View <guimenuitem>Running Processes</guimenuitem>.
 
 
+Clicking on View <guimenuitem>All Processes</guimenuitem> shows all
+processes on the system for all users. View <guimenuitem>My
+Processes</guimenuitem> shows only those processes that belong to the
+current user.  View <guimenuitem>Running Processes</guimenuitem> shows only
+the processes that are running at that moment.</para>
 
-<!--End of Figure -->
-
-Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on the system for all users. View <guimenuitem>My Processes</guimenuitem> shows only those processes that belong to the current user.  View <guimenuitem>Running Processes</guimenuitem> shows only the processes that are running at that moment.</para>
      </sect3>
 
-     <sect3 id="headercontextmenu">
-	<title>Changing Column Headers with the Contextual Menu</title>
-       <para>As noted above, column headers appear across the top of the <interface>Process Listing</interface>.  By default, application icons appear in the far left column, followed by Process Name, User, Memory, %CPU, and ID.</para>
 
 
-
-
-
-<para> Clicking on the column header will reverse the order in which information is displayed from top to bottom.  The user can also move the column to the left or right by dragging the column header with the mouse.</para>
- 
-          <!-- ======Figure 3===== -->
-
-<figure id="columncontextmenu-fig">
-	  <title>Contextual Menu</title>
- <screenshot>
-     <mediaobject>
-         <imageobject>
-               <imagedata fileref="figures/columnContextMenu.png" format="PNG"/>
-         </imageobject>
-         <imageobject>
-               <imagedata fileref="figures/columnContextMenu.eps" format="EPS"/>
-         </imageobject>
-         <textobject>
-               <phrase>Contextual Menu</phrase>
-         </textobject>
-         <caption>
-              <para>This contextual menu allows the user to change how data is displayed in columns in the Process Listing table.  (The Memory Maps table in <xref linkend="memorymaps-fig" /> has an identical menu.</para>
-         </caption>
-     </mediaobject>
- </screenshot>
-</figure>         
-
-
-
-
-           <!-- ====End of Figure==== -->
-           <para>
-            Right clicking on a column header shows a contextual menu shown above in <xref linkend="columncontextmenu-fig" />, which provides the following choices:</para>
-              <para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						<menuchoice>
-						    <guimenuitem>Sort Ascending</guimenuitem>
-						</menuchoice>
-                                         &#8212; This sorts the column in ascending numerical and then alphabetical order.
-
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<menuchoice>
-						    <guimenuitem>
-							Sort Descending
-						    </guimenuitem>
-						</menuchoice>
-
-					 &#8212; This sorts the column in descending alphabetical and then numerical order.
-						
-
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<menuchoice>
-						    <guimenuitem>
-							Unsort
-						    </guimenuitem>
-						</menuchoice>
-
-					 &#8212; This undoes previous sort commands.
-
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<menuchoice>
-						    <guimenuitem>
-							Remove This Column
-						    </guimenuitem>
-						</menuchoice>
-
-					 &#8212; This removes the column from the display.
-
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<menuchoice>
-						    <guimenuitem>
-							Add a Column
-						    </guimenuitem>
-						</menuchoice>
-
-					 &#8212; This brings up a dialog box (shown in <xref linkend="addcolumn-fig" />) that allows the user to drag a column back onto the table with the mouse.  The user is able to choose where the column should be located.
-
-
-
-<!-- ====== Figure 4 ===== -->
-
-<figure id="addcolumn-fig">
-		  <title>Add a Column</title>
- <screenshot>
-     <mediaobject>
-         <imageobject>
-               <imagedata fileref="figures/addColumn.png" format="PNG"/>
-         </imageobject>
-         <imageobject>
-               <imagedata fileref="figures/addColumn.eps" format="EPS"/>
-         </imageobject>
-         <textobject>
-               <phrase>Add a Column</phrase>
-         </textobject>
-         <caption>
-              <para>This dialog allows the user to add columns of additional data to the table by dragging them from the dialog to table.</para>
-         </caption>
-     </mediaobject>
- </screenshot>
-</figure>
-
-
-<!--  ======End of Figure===== -->
-
-
-
-                                    
-                                            <itemizedlist>
-                                                <listitem>
-                                                  <para> VM Size: This column shows the amount of virtual memory allocated to a process.</para>
-                                                </listitem>
-                                                <listitem>
-                                                  <para> Resident Memory: This column shows the amount of physical memory allocated to a process.</para>
-                                                </listitem> 
-                                                <listitem>
-                                                  <para> Shared Memory: This column shows the amount of shared memory allocated to a process.  Shared memory is memory that can be accessed by another process.</para>
-                                                </listitem>  
-                                                <listitem>
-                                                  <para> RSS Memory: This column shows the total amount of physical memory used, not counting pages swapped out.</para>
-                                                </listitem>
-
-                                                <listitem>
-                                                  <para> Nice: A higher nice value indicates that a process has a lower priority, and will wait for higher priority processes.  A lower nice value indicates that a process has a higher priority and will execute before lower priority processes.</para>
-                                                </listitem>
-                                                <listitem>
-                                                  <para> Status: This column shows whether a process is running or sleeping.</para>
-                                                </listitem>    
-                                            </itemizedlist>
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<menuchoice>
-						    <guimenuitem>
-							Best Fit
-						    </guimenuitem>
-						</menuchoice>
-
-					 &#8212; This menu choice refreshes the table and realigns the data so that it is optimally displayed.
-
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<menuchoice>
-						    <guimenuitem>
-							Customise Current View
-						    </guimenuitem>
-						</menuchoice>
-
-					 &#8212; This menu choice allows the user to sort the data in the columns multiple times using multiple filters.  In order to create filters, the user should select the <guimenuitem>Customise Current View</guimenuitem> menu choice and a <interface>Sort</interface> button will appear with a description of the current criteria for sorting to the right of the button as shown in <xref linkend="sortbutton-fig" />.
-
-<!-- ====== Figure 5 ===== -->
-
-<figure id="sortbutton-fig">
-		  <title>Sort Button</title>
- <screenshot>
-     <mediaobject>
-         <imageobject>
-               <imagedata fileref="figures/sortButton.png" format="PNG"/>
-         </imageobject>
-         <imageobject>
-               <imagedata fileref="figures/sortButton.eps" format="EPS"/>
-         </imageobject>
-         <textobject>
-               <phrase>Sort Button</phrase>
-         </textobject>
-         <caption>
-              <para>This dialog shows the filters currently applied to the table.  Clicking on the button brings up a dialog so that the user can create or modify filters.</para>
-         </caption>
-     </mediaobject>
- </screenshot>
-</figure>
-
-
-<!--  ======End of Figure===== -->
-
-
-  Click on the <interface>Sort</interface> button to bring up a dialog box which allows the user to create or modify four filters as shown in <xref linkend="sortmenu-fig" />. 
-
-
-<!-- ====== Figure 6  ===== -->
-
-<figure id="sortmenu-fig">
-		  <title>Sort Menu</title>
- <screenshot>
-     <mediaobject>
-         <imageobject>
-               <imagedata fileref="figures/sortMenu.png" format="PNG"/>
-         </imageobject>
-         <imageobject>
-               <imagedata fileref="figures/sortMenu.eps" format="EPS"/>
-         </imageobject>
-         <textobject>
-               <phrase>Sort Menu</phrase>
-         </textobject>
-         <caption>
-              <para>This dialog allows the user to enter or change the filters that display data in table columns.</para>
-         </caption>
-     </mediaobject>
- </screenshot>
-</figure>
-
-
-<!--  ======End of Figure===== -->
-
-
- Left click on the pop up menu at the top of the dialog box (as shown in <xref linkend="sortmenu2-fig" />) to select the first criterion for sorting, and click the radio button to indicate whether the sort should take place in ascending or descending order.  Up to three additional criteria can be entered to refine the order in which the user wishes to sort the data as shown in <xref linkend="sortmenu2-fig" />.  
-
-<!-- ====== Figure 7 ===== -->
-
-<figure id="sortmenu2-fig">
-		  <title>Sort Button</title>
- <screenshot>
-     <mediaobject>
-         <imageobject>
-               <imagedata fileref="figures/sortMenu2.png" format="PNG"/>
-         </imageobject>
-         <imageobject>
-               <imagedata fileref="figures/sortMenu2.eps" format="EPS"/>
-         </imageobject>
-         <textobject>
-               <phrase>Sort Button</phrase>
-         </textobject>
-         <caption>
-              <para>The user can enter which columns to filter with this menu.</para>
-         </caption>
-     </mediaobject>
- </screenshot>
-</figure>
-
-<!--  ======End of Figure===== -->
-
-<!--Add sentence on clear all, OK, cancel.  Clear all does not yet appear to be implemented-->
-                                            </para>
-                                   </listitem>
-                             </itemizedlist>
-    
-                   </para>
-
-      </sect3>
       <sect3 id="tableContextMenu">
            <title>Processes and Contextual Menus</title>
+<para>Right-click  on one of the processes listed in the Process Listing
+window and a contextual menu will appear with the following choices:</para>
+
 
 <itemizedlist>
 
@@ -423,49 +346,38 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
               <menuchoice>
                  <guimenuitem>Change Priority</guimenuitem>
               </menuchoice>
-               &#8212;This menu choice brings up a dialog box (shown in <xref linkend="changepriority-fig" />) with a sliding bar that allows the user to change the priority of a process.  Sliding the bar to the right gives the process a higher "Nice value" and a lower priority.  A process with a lower priority will run after processes with a higher priority, and giving a process a lower priority (higher Nice value) can keep it from interfering with higher priority processes.  Sliding the bar to the left gives the process a lower Nice value and a higher priority.  Giving a process a higher priority (lower Nice value) helps ensure that it will run before processes of a lower priority.  Generally, child processes inherit their priority from parent processes, but <guimenuitem>Change Priority</guimenuitem> allows the user to set priorities manually.  In order to set the Nice value lower than zero (and give the process a higher priority) the user needs to enter the root password, unless the user is already logged in as root.
-
-<!-- ============= Figure 8 ================ -->
-
-<figure id="changepriority-fig">
-		<title>Change Priority</title>
- <screenshot>
-     <mediaobject>
-         <imageobject>
-               <imagedata fileref="figures/changePriority.png" format="PNG"/>
-         </imageobject>
-         <imageobject>
-               <imagedata fileref="figures/changePriority.eps" format="EPS"/>
-         </imageobject>
-         <textobject>
-               <phrase>Change Priority</phrase>
-         </textobject>
-         <caption>
-              <para>The superuser can slide the bar to change the priority ("Nice value") of the process.</para>
-         </caption>
-     </mediaobject>
- </screenshot>
-</figure>
-
-<!-- ================ End of Figure =================== -->
-
-
-
-
-  
+               &#8212;This menu choice brings up a dialog box with a slider that allows the user
+to change the priority of a process.  Sliding the bar to the right gives
+the process a higher "Nice value" and a lower priority.  A process with a
+lower priority will run after processes with a higher priority, and giving
+a process a lower priority (higher Nice value) can keep it from interfering
+with higher priority processes.  Sliding the bar to the left gives the
+process a lower Nice value and a higher priority.  Giving a process a
+higher priority (lower Nice value) helps ensure that it will run before
+processes of a lower priority.  Generally, child processes inherit their
+priority from parent processes, but <guimenuitem>Change
+Priority</guimenuitem> allows the user to set priorities manually.  In
+order to set the Nice value lower than zero (and give the process a higher
+priority) the user needs to enter the root password, unless the user is
+already logged in as root.
             </para>
 	 </listitem>
 
          <listitem>
+
             <para>
               <menuchoice>
                  <guimenuitem>Memory Maps</guimenuitem>
               </menuchoice>
-                      &#8212; This menu choice brings up a dialog box containing the table shown in <xref linkend="memorymaps-fig" /> which displays memory maps of of the highlighted process.
+                      &#8212; This menu choice brings up a dialog box
+containing the table shown in <xref linkend="memorymaps-fig" /> which
+displays memory maps of of the highlighted process. The name of the process
+appears at the top of the table.
 
-<!-- ============= Figure 9 ================ -->
+<!-- ============= Figure 4 ================ -->
 
 <figure id="memorymaps-fig">
+
 		<title>Memory Maps</title>
  <screenshot>
      <mediaobject>
@@ -474,6 +386,7 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
          </imageobject>
          <imageobject>
                <imagedata fileref="figures/memoryMaps.eps" format="EPS"/>
+
          </imageobject>
          <textobject>
                <phrase>Memory Maps</phrase>
@@ -482,6 +395,7 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
               <para>This table shows the memory maps for a process.</para>
          </caption>
      </mediaobject>
+
  </screenshot>
 </figure>
 
@@ -490,6 +404,11 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
   <!-- what are memory maps? -->  The table contains the following columns:
                <itemizedlist>
                     <listitem>
+                      <para>Filename: This column shows the full path name
+of the file listed.</para>
+                    </listitem>
+
+                    <listitem>
                        <para>VM Start</para>
                     </listitem>
                     <listitem>
@@ -497,6 +416,7 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
                     </listitem>
                     <listitem>
                        <para>Flags</para>
+
                     </listitem>
                    <listitem>
                        <para>VM Offset</para>
@@ -505,49 +425,132 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
                        <para>Device</para>
                     </listitem>
                    <listitem>
+
                        <para>Inode</para>
                     </listitem>
                </itemizedlist>
-<!-- Explain each one -->  Left clicking on the column header will reverse the order in which information is displayed from top to bottom.</para>
-           <para>
-            Right clicking on a column header shows a contextual menu with the following choices: <guimenuitem>Sort Ascending</guimenuitem>, <guimenuitem>Sort Descending</guimenuitem>, <guimenuitem>Unsort</guimenuitem>, <guimenuitem>Remove ThisColumn</guimenuitem>, <guimenuitem>Add a Column</guimenuitem>, <guimenuitem>Best Fit</guimenuitem>, and <guimenuitem>Customise Current View</guimenuitem>.  For further explanation of this contextual menu see <xref linkend="headercontextmenu"/>.
-           </para>
+<!-- Explain each on. Still no information on what each of these items
+indicates. -->  Left clicking on the column header will reverse the order
+in which information is displayed from top to bottom.</para>
           </listitem>
+
+
           <listitem>
              <para>
+
                <menuchoice>
                  <guimenuitem>Hide Process</guimenuitem>
                </menuchoice>
-               &#8212; This menu choice hides the process so that it is no longer displayed under <interface>Process Listing</interface>. (Child processes are still displayed in the main process branch.)  To display a process that has been hidden, click on the Menu Bar on the <guimenu>Settings</guimenu> and click on <guimenuitem>Hidden Processes</guimenuitem>.  This will display a dialogue box with a list of the processes that have been hidden.  To display the hidden process in the <interface>Process Listing</interface> table, highlight the hidden process with the mouse and click on the button <interface>Remove From List</interface>.
-              </para>
+               &#8212; This menu choice hides the process so that it is no
+longer displayed under <interface>Process Listing</interface>. (Child
+processes are still displayed in the main process branch.)  To display a
+process that has been hidden, click on the Menu Bar on the
+<guimenu>Edit</guimenu> menu and then click on <guimenuitem>Hidden
+Processes</guimenuitem> or type
+<keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>.  This will
+display a dialogue box with a list of the processes that have been hidden.
+ To display the hidden process in the <interface>Process
+Listing</interface> table, highlight the hidden process with the mouse and
+click on the button <interface>Remove From List</interface> or type
+<keycombo><keycap>Alt</keycap><keycap>R</keycap></keycombo>.  Left click on
+the <guibutton>Close</guibutton> button or type
+<keycombo><keycap>Alt</keycap><keycap>C</keycap></keycombo> to close the
+window.</para>
+
+<!--=====Figure 5========-->
+<figure id="hiddenprocess-fig">
+	    <title>Hidden Processes</title>
+ <screenshot>
+     <mediaobject>
+         <imageobject>
+               <imagedata fileref="figures/hiddenProcess.png" format="PNG"/>
+         </imageobject>
+         <imageobject>
+
+               <imagedata fileref="figures/hiddenProcess.eps" format="EPS"/>
+         </imageobject>
+         <textobject>
+               <phrase>Hidden Processes</phrase>
+         </textobject>
+         <caption>
+              <para>This dialog box allows the user to see which processes
+in the Process Listing window are hidden.  Clicking the <guibutton>Remove
+From List</guibutton> button displays the process.</para>
+
+         </caption>
+     </mediaobject>
+</screenshot>
+</figure>
+
+<!-- =====End Figure 5======= -->
            </listitem>
            <listitem>
                <para>
                  <menuchoice>
                    <guimenuitem>End Process</guimenuitem>
+
                  </menuchoice>
-                 &#8212; This menu choice <!-- sends a ?????? signal that-->ends the process.  This is the preferred method of stopping a process.
+                 &#8212; This menu choice <!-- sends a ?????? signal
+that-->ends the process.  This is the preferred method of stopping a process.
                 </para>
             </listitem>
             <listitem>
                 <para>
                  <menuchoice>
                    <guimenuitem>Kill Process</guimenuitem>
+
                  </menuchoice>
-                 &#8212; This menu choice<!-- sends a ??????? that --> kills the process.  Normally Kill Process is necessary only if End Process does not work.
+                 &#8212; This menu choice<!-- sends a ??????? that -->
+kills the process.  Normally Kill Process is necessary only if End Process
+does not work.
                  </para>        
              </listitem>
          </itemizedlist>
       </sect3>
       <sect3 id="otherbuttons">
          <title>Other Buttons</title>
-           <para>The <interface>More Info</interface> button is located in the lower right corner of the <interface>Process Listing</interface> window.  Clicking on the <interface>More Info</interface> button with the mouse reveals more information about whichever process is highlighted in the <interface>Process Listing</interface> windows as shown in <xref linkend="moreinfo-fig" />.</para>
 
-<!-- =====Figure 10 ===== -->
+           <para>The <interface>More Info</interface> button is located in
+the lower left corner of the <interface>Process Listing</interface>
+window.</para>
+<variablelist>
+  <varlistentry>
+     <term>More Information</term>
+        <listitem>
+
+          <para> Clicking on the <interface>More Info</interface> button 
+or typing <keycombo><keycap>Alt</keycap><keycap>I</keycap></keycombo>
+reveals more information about whichever process is highlighted in the
+<interface>Process Listing</interface> window as shown in <xref
+linkend="moreinfo-fig" />.
+          </para>
+        </listitem>
+
+  </varlistentry>
+  <varlistentry>
+     <term>Less Information</term>
+        <listitem>
+          <para>  The user can click the <interface>Less Info</interface>
+button (in the same place as <interface>More Info</interface>) or type
+<keycombo><keycap>Alt</keycap><keycap>I</keycap></keycombo> to toggle the
+information display and show less information.
+          </para>
+
+        </listitem>
+  </varlistentry>
+</variablelist>
+
+
+
+
+           
+
+<!-- =====Figure 6 ===== -->
 
 <figure id="moreinfo-fig">
 	  <title>More Info</title>
 <screenshot>
+
      <mediaobject>
          <imageobject>
                <imagedata fileref="figures/moreInfo.png" format="PNG"/>
@@ -557,9 +560,12 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
          </imageobject>
          <textobject>
                <phrase>More Info</phrase>
+
          </textobject>
          <caption>
-              <para>This button shows additional information about the highlighted process.</para>
+              <para>Highlight a process in the Process Listing window and
+click  on the "More Info" button in the lower left corner of the window to
+show the information about a process displayed in the figure above. </para>
          </caption>
      </mediaobject>
  </screenshot>
@@ -567,10 +573,44 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
 
 <!-- =====End of Figure==== -->
 
-<para><guibutton>More Info</guibutton> shows the command used to start the highlighted process.  It shows whether the Status of the process is sleeping or running.  It shows the Priority of the process (with the Nice number used to set the Priority in parentheses.)  <interface>More Info</interface> also shows the total memory used by the process, the RSS (or physical) memory used by the process, and the amount of memory that is Shared.  To hide this information, click on the <guibutton>Less Info</guibutton> button in the lower left corner.  The user can also toggle More Info/Less Info with the <keycombo><keycap>Ctrl</keycap><keycap>i</keycap></keycombo> key combination.</para>
+<para><guibutton>More Info</guibutton> shows the following information:</para>
+<itemizedlist>
+   <listitem>
+    <para>The command used to start the highlighted process;</para>
+   </listitem>
+   <listitem>
+     <para>Whether the Status of the process is sleeping or running;</para>
 
-      <para><guibutton>End Process</guibutton> is located in the lower left corner of the <interface>Process Listing</interface> window.  The user can stop a process by highlighting the process on the Process Listing table with the mouse, and clicking on the <guibutton>End Process</guibutton>.</para>
+   </listitem>
+   <listitem>
+     <para>The Priority of the process (with the Nice number used to set
+the Priority in parentheses);</para>
+   </listitem>
+   <listitem>
+      <para>The total memory used by the process;</para>
+   </listitem>
+   <listitem>
 
+      <para>The RSS (or physical) memory used by the process; and</para>
+   </listitem>
+   <listitem>
+      <para>The amount of memory that is Shared.</para>
+   </listitem>
+</itemizedlist>
+     <para>To hide this information, click on the <guibutton>Less
+Info</guibutton> button in the lower left corner.  The user can also toggle
+More Info/Less Info with the
+<keycombo><keycap>Alt</keycap><keycap>I</keycap></keycombo> key
+combination.</para>
+
+ <para>The <interface>End Process</interface> button ends the process
+highlighted in the Process Listing window.  Clicking on the <interface>End
+Process</interface> button or typing
+<keycombo><keycap>Alt</keycap><keycap>P</keycap></keycombo> will display an
+optional dialogue box that gives the user a choice between canceling the
+action <keycombo><keycap>Alt</keycap><keycap>C</keycap></keycombo> or
+ending the process
+<keycombo><keycap>Alt</keycap><keycap>E</keycap></keycombo>.  </para>
 
       </sect3>
     </sect2>
@@ -579,8 +619,13 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
 
     <sect2 id="menubar">
   <title>Menu Bar</title>
-        <para>Most of the menu choices in the menu bar apply to the <interface>Process Listing</interface> window.  If the <interface>System Monitor</interface> window is on top, menu choices that apply only to the <interface>Process Listing</interface> will be greyed out.  The menu bar contains the following choices:
+        <para>Most of the menu choices in the menu bar apply to the
+<interface>Process Listing</interface> window.  If the <interface>System
+Monitor</interface> window is on top, menu choices that apply only to the
+<interface>Process Listing</interface> will be greyed out.  The menu bar
+contains the following choices:
        <variablelist>
+
           <varlistentry>
             <term><guimenu>File</guimenu></term>
              <listitem>
@@ -590,13 +635,15 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
                         <listitem>
                            <para>
                              <menuchoice>
+
                                <shortcut>
                                  <keycombo><keycap>Ctrl</keycap>
                                            <keycap>Q</keycap>
                                   </keycombo>
                                 </shortcut>
-                                <guimenuitem>Exit</guimenuitem>
+                                <guimenuitem>Quit</guimenuitem>
                               </menuchoice>
+
                              &#8212; This exits the program.
                             </para>
                          </listitem>
@@ -606,6 +653,7 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
             </varlistentry>
 <varlistentry>
             <term><guimenu>Edit</guimenu></term>
+
              <listitem>
                 <para>
                    This menu contains:
@@ -615,13 +663,17 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
                              <menuchoice>
                                <shortcut>
                                  <keycombo><keycap>Ctrl</keycap>
+
                                            <keycap>R</keycap>
                                   </keycombo>
                                 </shortcut>
                                 <guimenuitem>Change Priority</guimenuitem>
                               </menuchoice>
-                             &#8212; Highlight a process in the <interface>Process Listing</interface> table and select this menu choice to bring up the dialog box in <xref linkend="changepriority-fig" /> to change the Priority or "Nice value" of a process.  You must be a superuser to do this.
+                             &#8212; Highlight a process in the
+<interface>Process Listing</interface> table and select this menu choice to change
+the Priority or "Nice value" of a process.  You must be a superuser to do this.
                             </para>
+
                          </listitem>
                         <listitem>
                            <para>
@@ -630,11 +682,16 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
                                  <keycombo><keycap>Ctrl</keycap>
                                            <keycap>H</keycap>
                                   </keycombo>
+
                                 </shortcut>
                                 <guimenuitem>Hide Process</guimenuitem>
                               </menuchoice>
-                             &#8212; Highlight a process in the <interface>Process Listing</interface> table and select this menu choice to hide a process.  Select <guimenu>Settings</guimenu>: <guimenuitem>Hidden Processes</guimenuitem> to show hidden processes.
+                             &#8212; Highlight a process in the
+<interface>Process Listing</interface> table and select this menu choice to
+hide a process.  Select <guimenu>Edit</guimenu>: <guimenuitem>Hidden
+Processes</guimenuitem> to show hidden processes.
                             </para>
+
                          </listitem>
                         <listitem>
                            <para>
@@ -643,13 +700,18 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
                                  <keycombo><keycap>Ctrl</keycap>
                                            <keycap>E</keycap>
                                   </keycombo>
+
                                 </shortcut>
                                 <guimenuitem>End Process</guimenuitem>
                               </menuchoice>
-                             &#8212; Highlight a process in the <interface>Process Listing</interface> table and select this menu choice to end the process.  You must be the owner of the process or the superuser to do this.
+                             &#8212; Highlight a process in the
+<interface>Process Listing</interface> table and select this menu choice to
+end the process.  You must be the owner of the process or the superuser to
+do this.
                             </para>
                          </listitem>
   <listitem>
+
                            <para>
                              <menuchoice>
                                <shortcut>
@@ -658,19 +720,192 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
                                   </keycombo>
                                 </shortcut>
                                 <guimenuitem>Kill Process</guimenuitem>
+
                               </menuchoice>
-                             &#8212; Highlight a process in the <interface>Process Listing</interface> table and select this menu choice to kill the process.  You must be the owner of the process or the superuser to do this.  If possible, it is normally preferable to end a process rather than kill it.
+                             &#8212; Highlight a process in the
+<interface>Process Listing</interface> table and select this menu choice to
+kill the process.  You must be the owner of the process or the superuser to
+do this.  If possible, it is normally preferable to end a process rather
+than kill it.
                             </para>
                          </listitem>
+                         <listitem>
+                           <para>
+                             <menuchoice>
 
-                       </itemizedlist>
-                    </para>
+                               <shortcut>
+                                 <keycombo><keycap>Ctrl</keycap>
+                                           <keycap>P</keycap>
+                                  </keycombo>
+                                </shortcut>
+                                <guimenuitem>Hidden Processes</guimenuitem>
+                              </menuchoice>
+
+                             &#8212; This menu choice will list any
+processes that are not displayed in the Process Listing window because they
+are hidden as shown in <xref linkend="hiddenprocess-fig" />.  If no
+processes are hidden, it will display an error message.
+                            </para>
+                         </listitem>
+                         <listitem>
+                           <para>                  
+                             <menuchoice>
+                               <guimenuitem>Preferences</guimenuitem>
+                              </menuchoice>
+
+                             &#8212; This shows the preferences dialog for
+<interface>Process Listing</interface>, <interface>Process
+Fields</interface> and <interface>System Monitor</interface>.</para>
+                                 <para>
+                                  <variablelist>
+                                     <varlistentry>
+
+		      <term>Process Listing</term>
+                                        <listitem>
+                                                 <para>The
+<interface>Process Listing</interface> tab allows the user to control the
+following features:</para>
+                                         <variablelist>
+                                           <varlistentry>
+                                             <term>Update Interval</term>
+
+                                               <listitem>
+                                                 <para>Set the interval in
+seconds at which the <interface>Process Listing</interface> will
+update.</para>                                                        
+</listitem>
+                                           </varlistentry>
+                                           <varlistentry>
+                                             <term></term>
+                                               <listitem>
+
+                                                 <para>Display Process
+Dependencies and Threads.<!-- In future, elaborate on what these are.
+--></para>
+                                                </listitem>
+                                           </varlistentry>
+                                           <varlistentry>
+                                             <term></term>
+                                               <listitem>
+                                                 <para>Display warning
+messages before ending, killing or hiding processes in the Process Listing
+window.</para>                                                </listitem>
+
+                                           </varlistentry>
+                                         </variablelist>
+    <para>Left click the <guibutton>Close</guibutton> button or hit
+<keycombo><keycap>Alt</keycap><keycap>C</keycap></keycombo> to exit
+preferences.</para>                                                
+                                        </listitem>
+                                     </varlistentry>
+
+                                     <varlistentry>
+                                        <term>Process Fields</term>
+                                          <listitem>
+                                                  <para>The
+<interface>Process Fields</interface> tab allows the user to select which
+columns to display in the Process Listing window. The user can select the
+following columns to display in the Process Listing window:</para>
+                  
+                                
+                                             <itemizedlist>
+                                                <listitem>
+
+                                                 <para>Process Name:  This
+column show the name of the process.
+                                             
+                                                 </para>
+                                                </listitem>
+                                                <listitem>
+
+                                                 <para>Arguments:  This
+column shows the arguments used when the process was started.
+
+                                                 </para>
+                                                </listitem>
+                                                  <listitem>
+ 
+                                                  <para> Status: This
+column shows whether a process is running or sleeping.</para>
+
+                                                </listitem>  
+                                               <listitem>
+                                                 <para>Memory:  This column
+shows the amount of memory that the process uses.
+                                                 </para>
+                                                </listitem>
+                                               <listitem>
+                                                  <para> VM Size: This
+column shows the amount of virtual memory allocated to a process.</para>
+                                                </listitem>
+
+                                                <listitem>
+                                                  <para> Resident Memory:
+This column shows the amount of physical memory allocated to a process.</para>
+                                                </listitem> 
+                                                <listitem>
+                                                  <para> Shared Memory:
+This column shows the amount of shared memory allocated to a process. 
+Shared memory is memory that can be accessed by another process.</para>
+                                                </listitem>  
+                                                <listitem>
+                                                  <para> RSS Memory: This
+column shows the total amount of physical memory used, not counting pages
+swapped out.</para>
+
+                                                </listitem>
+                                                <listitem>
+                                                  <para>%CPU: This column
+shows the percentage of Central Processing Unit (CPU) time the process
+uses.</para>
+                                                </listitem>               
+           
+                                                <listitem>
+                                                  <para> Nice: A higher
+nice value indicates that a process has a lower priority, and will wait for
+higher priority processes.  A lower nice value indicates that a process has
+a higher priority and will execute before lower priority processes.</para>
+                                                </listitem>
+                                               <listitem>
+
+                                                  <para>ID: This column
+shows the unique Process Identification number (PID) for the process.</para>
+                                                </listitem>
+
+
+                                      
+                                            </itemizedlist>
+                                           </listitem>
+                                          </varlistentry>
+                                          <varlistentry>
+                                            <term>System Monitor</term>
+
+                                              <listitem>
+                                                <itemizedlist>
+              
+                                         
+
+
+                                               <listitem>
+                                                  <para>Left click
+<interface>System Monitor</interface> tab to see the <interface>System
+Monitor</interface> preferences.  Under Graphs, the user can set the
+interval at which the graphs update in seconds.  Left clicking on the boxes
+to the right of Background Color or Grid Color brings up a color change dialog. The user can then adjust the
+color of the background or the grid lines in the % CPU Usage History and %
+Memory/Swap Usage History graphs, which are described in <xref
+linkend="system-monitor" />.</para>
+
+                                               
+                  </listitem>
+                 </itemizedlist>
                 </listitem>
             </varlistentry>
          <varlistentry>
             <term><guimenu>View</guimenu></term>
              <listitem>
                 <para>
+
                    This menu contains:
                      <itemizedlist>
                         <listitem>
@@ -679,78 +914,28 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
                                <shortcut>
                                  <keycombo><keycap>Ctrl</keycap>
                                            <keycap>M</keycap>
+
                                   </keycombo>
                                 </shortcut>
                                 <guimenuitem>Memory Maps</guimenuitem>
                               </menuchoice>
-                             &#8212; This displays the Memory Maps table shown in <xref linkend="memorymaps-fig" />. 
+                             &#8212; This displays the Memory Maps table
+shown in <xref linkend="memorymaps-fig" />. 
                             </para>
                          </listitem>
                        </itemizedlist>
+
                     </para>
                 </listitem>
             </varlistentry>
-        <varlistentry>
-            <term><guimenu>Settings</guimenu></term>
-             <listitem>
-                <para>
-                   This menu contains:
-                     <itemizedlist>
-                        <listitem>
-                           <para>
-                             <menuchoice>
-                               <shortcut>
-                                 <keycombo><keycap>Ctrl</keycap>
-                                           <keycap>P</keycap>
-                                  </keycombo>
-                                </shortcut>
-                                <guimenuitem>Hidden Process</guimenuitem>
-                              </menuchoice>
-                             &#8212; This displays any hidden processes and allows the user to display them in the Process Listing table.
-                            </para>
-                         </listitem>
-                         <listitem>
-                           <para>
-                             <menuchoice>
-                             <guimenuitem>Preferences</guimenuitem>
-                              </menuchoice>
-                             &#8212; This shows the preferences dialog for <interface>Process Listing</interface> and <interface>System Monitor</interface>.
-                                  <variablelist>
-                                     <varlistentry>
-		      <term>Process Listing</term>
-                                        <listitem>
-                                          <para>
-                                            <itemizedlist>
-                                              <listitem>
-                                                 <para>The <interface>Process Listing</interface> menu choice allows the user to set the interval in seconds at which the <interface>Process Listing</interface> will update.  In addition, the user can use the mouse to choose whether to display Process Dependencies, Application Names, and Threads.<!-- In future, elaborate on what these are. --> Left click the <guibutton>Close</guibutton> or hit <keycap>Enter</keycap> to exit preferences.</para>
-                                                
-                                               </listitem> 
-                                               <listitem>
-                                                  <para>Left click <interface>System Monitor</interface> tab to see the <interface>System Monitor</interface> preferences.  Under Graphs, the user can set the interval at which the graphs update in seconds.  Left clicking on the boxes to the right of Background Color or Grid Color brings up a dialog similar to that in <xref linkend="colorpanel-fig" />.  The user can then adjust the color of the background or the grid lines in the % CPU Usage History and % Memory/Swap Usage History graphs, which are described in <xref linkend="system-monitor" />.
-                                                   </para>
-                                               </listitem>
-                                               <listitem>
-                                                   <para>The <interface>System Monitor</interface> also allows the user to change the interval in seconds at which the Device table updates.
+            </variablelist>
+            </para>
+            </listitem>
+            </itemizedlist>
+           </para>
+           </listitem>
 
-
-                                                   </para>
-                                               </listitem>
-                                            </itemizedlist>
-                                          </para>
-                                         </listitem>
-                                      </varlistentry>
-                                  </variablelist>
-                            </para>
-                         </listitem>
-                       </itemizedlist>
-                    </para>
-                </listitem>
-            </varlistentry>
-  
-            
-            
-
-
+          </varlistentry>
         </variablelist>
       </para>
     </sect2>
@@ -759,25 +944,33 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
 
     <sect2 id="system-monitor">
        <title>System Monitor</title>
-          <para>The second window in <application>Procman</application> is the <interface>System Monitor</interface> shown in <xref linkend="system-monitor-fig" />.  To see the<interface> Sytem Monitor</interface>, click with the mouse on the System Monitor tab to the right of the Process Listing tab.
+          <para>The second window in <application>System
+Monitor</application> is the <interface>System Monitor</interface> shown in
+<xref linkend="system-monitor-fig" />.  To see the<interface> System
+Monitor</interface>, click  on the System Monitor tab to the right of the
+Process Listing tab.
 
-<!-- ==== Figure 11 ==== -->
+
+<!-- ==== Figure 7 ==== -->
 
 <figure id="system-monitor-fig"> 
-      <title>More Info</title>
+      <title>System Monitor</title>
  <screenshot>
      <mediaobject>
          <imageobject>
                <imagedata fileref="figures/systemMonitor.png" format="PNG"/>
          </imageobject>
          <imageobject>
+
                <imagedata fileref="figures/systemMonitor.eps" format="EPS"/>
          </imageobject>
          <textobject>
                <phrase>More Info</phrase>
          </textobject>
          <caption>
-              <para>This <interface>System Monitor</interface> window shows information about CPU usage, Memory/Swap history usage, and disk space.</para>
+              <para>This <interface>System Monitor</interface> window shows
+information about CPU usage, Memory/Swap history usage, and disk space.</para>
+
          </caption>
      </mediaobject>
  </screenshot>
@@ -785,38 +978,27 @@ Clicking on View <guimenuitem>All Processes</guimenuitem> shows all processes on
 
 <!-- =====End of Figure==== -->
 
-As shown in <xref linkend="system-monitor-fig" /> above, the  <interface>System Monitor</interface> has three panels:</para> 
+As shown in <xref linkend="system-monitor-fig" /> above, the 
+<interface>System Monitor</interface> has three panels:</para> 
      
-                  <para>% CPU Usage History &#8212; This panel shows a graph of the percentage of processor (CPU) capacity used over time.</para>
+                  <para>% CPU Usage History &#8212; This panel shows a
+graph of the percentage of processor (CPU) capacity used over time.</para>
+
          
 
-                  <para>% Memory/Swap Use &#8212; This panel shows a graph of the percentage of memory and swap space used over time.  Users can change the colors of the lines used in the graphs by clicking on the colored buttons in the lower left corner of the %CPU Usage History or % Memory/Swap Use graphs as shown in <xref linkend="colorpanel-fig" /> below.</para>
+                  <para>% Memory/Swap Use &#8212; This panel shows a graph
+of the percentage of memory and swap space used over time.  Users can
+change the colors of the lines used in the graphs by clicking on the
+colored buttons in the lower left corner of the %CPU Usage History or %
+Memory/Swap Use graphs.</para>
  
-<!-- ==== Figure 12 ==== -->
 
-<figure id="colorpanel-fig">
-<title>Color Panel</title>
-  <screenshot>
-     <mediaobject>
-         <imageobject>
-               <imagedata fileref="figures/colorPanel.png" format="PNG"/>
-         </imageobject>
-         <imageobject>
-               <imagedata fileref="figures/colorPanel.eps" format="EPS"/>
-         </imageobject>
-         <textobject>
-               <phrase>Color Panel</phrase>
-         </textobject>
-         <caption>
-              <para>Clicking with the mouse on the colored button at the lower left corner of the % CPU Usage History or the %Memory/Swap Use History graph allows the user to change the colors of the graph lines.</para>
-         </caption>
-     </mediaobject>
- </screenshot>
-</figure>
-
-<!-- ==== End of Figure ==== -->
-
-       <para>At the bottom of the <interface>System Monitor</interface> panel is a table showing the amount of used disk space and total disk space by device name and directory as shown in <xref linkend="system-monitor-fig" /> above.  Dragging the edges of this table with the left mouse button will resize it, and dragging the separators between the column headers will change the width of the columns.</para>
+       <para>At the bottom of the <interface>System Monitor</interface>
+panel is a Devices table showing the amount of used disk space and total
+disk space by device name and directory as shown in <xref
+linkend="system-monitor-fig" /> above.  Left clicking and dragging the
+space between the graphs and the Devices table allows the user to change
+the size of the Devices table.</para>
 
 
 
@@ -827,102 +1009,38 @@ As shown in <xref linkend="system-monitor-fig" /> above, the  <interface>System 
 
 
     </sect2>
- </sect1>
+</sect1>
+<!-- ============= About ================================== -->
+<!-- This section contains info about the program (not docs), such as
+      author's name(s), web page, license, feedback address. This
+      section is optional: primary place for this info is "About.." box of
+      the program. However, if you do wish to include this info in the
+      manual, this is the place to put it. Alternatively, you can put this
+information in the title page.-->
+  <sect1 id="myapp-about"> 
+    <title>About &app;</title> 
+    <para> &app; was written by Kevin Vandersloot
+   (<email>kfv101@psu.edu</email>).   Erik Johnsson
+(<email>zaphod@linux.nu</email>) provided icon support. </para>
 
+    <para>
+      To report a bug or make a suggestion regarding this application or
+      this manual, follow the directions in this 
+      <ulink url="ghelp:gnome-feedback"   type="help">document</ulink>.
+    </para>
 
- <!-- ============= Bugs ================================== -->
- <!-- This section should describe known bugs and limitations of
-      the program if there are any - please be frank and list all
-      problems you know of. -->
- <sect1 id="bugs">
-  <title>Known Bugs and Limitations</title>
-  <para>
-   This application has no known bugs.
-<!-- Is Hidden Processes working? -->
+    <para> This program is distributed under the terms of the GNU
+      General Public license as published by the Free Software
+      Foundation; either version 2 of the License, or (at your option)
+      any later version. A copy of this license can be found at this
+      <ulink url="ghelp:gpl" type="help">link</ulink>, or in the file
+      COPYING included with the source code of this program. </para>
 
-  </para>
- </sect1>
+  </sect1> 
 
-
-<!-- ============= Authors ================================ -->
-
- <sect1 id="authors">
-  <title>Authors</title>
-  <para>
-   <application>Procman</application> was written by Kevin Vandersloot
-   (<email>kfv101@psu.edu</email>).   Erik Johnsson (<email>zaphod@linux.nu</email>) provided icon support.  To find more information about
-   <application>Procman</application>, please visit the <ulink
-   url="http://www.personal.psu.edu/users/k/f/kfv101/procman/" type="http">Procman Web
-   page</ulink>.  Please send all comments, suggestions, and bug
-   reports to the <ulink url="http://bugs.gnome.org" type="http">GNOME
-   bug tracking database</ulink>.  (Instructions for submitting bug
-   reports can be found <ulink
-   url="http://bugs.gnome.org/Reporting.html" type="http">
-   on-line</ulink>.)  You can also use <application>Bug Report
-   Tool</application> (<command>bug-buddy</command>), available in the
-   <guisubmenu>Utilities</guisubmenu> submenu of <guimenu>Main
-   Menu</guimenu>, for submitting bug reports.
-  </para>
-
-  <para>
-   This manual was written by Bill Day
-   (<email>billday@bellatlantic.net</email>). Please send all comments and
-   suggestions regarding this manual to the <ulink type="http"
-   url="http://developer.gnome.org/projects/gdp">GNOME Documentation
-   Project</ulink> by sending an email to
-   <email>docs@gnome.org</email>. You can also add your comments
-   online by using the <ulink type="http"
-   url="http://developer.gnome.org/projects/gdp/doctable/">GNOME
-   Documentation Status Table</ulink>.
-  </para>
-
-  <!-- For translations: uncomment this:
-
-  <para>
-   Latin translation was done by ME
-   (<email>MYNAME@MYADDRESS</email>). Please send all  comments  and
-   suggestions regarding this translation to SOMEWHERE.
-  </para>
-
-  -->
-
- </sect1>
-
-
- <!-- ============= Application License ============================= -->
-
- <sect1 id="license">
-  <title>License</title>
-  <para>
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the  <ulink type="help" url="gnome-help:gpl">
-    <citetitle>GNU General Public License</citetitle></ulink> as
-   published by the Free Software Foundation; 
-   either version 2 of the License, or (at your option) any later
-   version.
-  </para>
-  <para>
-   This program is distributed in the hope that it will be useful, but
-   WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   <citetitle>GNU General Public License</citetitle> for more details.
-  </para>
-  <para>
-   A copy of the <citetitle>GNU General Public License</citetitle> is
-   included as an appendix to the <citetitle>GNOME Users
-   Guide</citetitle>.  You may also obtain a copy of the
-   <citetitle>GNU General Public License</citetitle> from the Free
-   Software Foundation by visiting <ulink type="http"
-   url="http://www.fsf.org">their Web site</ulink> or by writing to
-   <address>
-    Free Software Foundation, Inc.
-    <street>59 Temple Place</street> - Suite 330
-    <city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
-    <country>USA</country>
-   </address>
-  </para>
- </sect1>
 </article>
+
+
 
 
 
