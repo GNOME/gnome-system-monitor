@@ -73,6 +73,7 @@ static GnomeUIInfo menubar1_uiinfo[] =
 };
 
 GtkWidget *infobutton;
+GtkWidget *endprocessbutton;
 
 GtkWidget*
 create_main_window (ProcData *data)
@@ -89,10 +90,8 @@ create_main_window (ProcData *data)
 	GtkWidget *proctable;
 	GtkWidget *label;
 	GtkWidget *hbox2;
-	GtkWidget *button3;
 	GtkWidget *appbar1;
 	GtkWidget *status_hbox;
-	GtkWidget *statusbar;
 	GtkWidget *status_frame;
 	GtkWidget *infobox;
 	GtkWidget *meter_hbox;
@@ -143,10 +142,10 @@ create_main_window (ProcData *data)
 	
 	hbox2 = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox2, FALSE, FALSE, 0);
-	button3 = gtk_button_new_with_label (_("End Process"));
-	gtk_widget_set_sensitive (button3, FALSE);
-	gtk_box_pack_start (GTK_BOX (hbox2), button3, FALSE, FALSE, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (button3), GNOME_PAD_SMALL);
+	endprocessbutton = gtk_button_new_with_label (_("End Process"));
+	gtk_widget_set_sensitive (endprocessbutton, FALSE);
+	gtk_box_pack_start (GTK_BOX (hbox2), endprocessbutton, FALSE, FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (endprocessbutton), GNOME_PAD_SMALL);
 
 	infobutton = gtk_button_new_with_label (_("More Info"));
 	gtk_box_pack_end (GTK_BOX (hbox2), infobutton, FALSE, FALSE, 0);
@@ -208,16 +207,16 @@ create_main_window (ProcData *data)
                             procdata);
 	gnome_app_install_menu_hints (GNOME_APP (app), menubar1_uiinfo);
 
-	gtk_signal_connect (GTK_OBJECT (button3), "clicked",
+	gtk_signal_connect (GTK_OBJECT (endprocessbutton), "clicked",
 			    GTK_SIGNAL_FUNC (cb_end_process_button_pressed), procdata);
 	gtk_signal_connect (GTK_OBJECT (infobutton), "pressed",
 			    GTK_SIGNAL_FUNC (cb_info_button_pressed),
 			    procdata);
 
+	/*gtk_signal_connect (GTK_OBJECT (procdata->tree), "cursor_activated",
+			    GTK_SIGNAL_FUNC (cb_table_selected), button3);*/
 	gtk_signal_connect (GTK_OBJECT (procdata->tree), "cursor_activated",
-			    GTK_SIGNAL_FUNC (cb_table_selected), button3);
-	gtk_signal_connect (GTK_OBJECT (procdata->tree), "cursor_activated",
-			    GTK_SIGNAL_FUNC (cb_update_selected_row), procdata);
+			    GTK_SIGNAL_FUNC (cb_table_selected), procdata);
 	gtk_signal_connect (GTK_OBJECT (procdata->tree), "double_click",
 			    GTK_SIGNAL_FUNC (cb_double_click), procdata);
 
@@ -259,3 +258,13 @@ toggle_infoview (ProcData *data)
 		gtk_label_set_text (label, _("More Info"));
 	}
 }
+
+
+void
+update_sensitivity (ProcData *data, gboolean sensitivity)
+{
+
+	gtk_widget_set_sensitive (endprocessbutton, sensitivity);
+	gtk_widget_set_sensitive (data->infoview->infobox, sensitivity);
+}	
+

@@ -64,12 +64,6 @@ cb_table_selected			(ETree		*tree,
 					int		row,
 					ETreePath	path,
 					gpointer	data);
-					
-void
-cb_update_selected_row			(ETree		*tree,
-					 int		row,
-					 ETreePath	path,
-					 gpointer	data);
 					 
 void 
 cb_double_click				(ETree		*tree,

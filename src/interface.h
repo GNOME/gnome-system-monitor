@@ -24,5 +24,6 @@
 
 GtkWidget* 	create_main_window (ProcData *data);
 void		toggle_infoview (ProcData *data);
+void		update_sensitivity (ProcData *data, gboolean sensitivity);
 
 #endif

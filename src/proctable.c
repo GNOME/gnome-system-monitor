@@ -50,7 +50,7 @@ gchar * titles[NUM_COLUMNS] =
 #define NUM_COLUMNS 11
 
 
-#define SPEC "<ETableSpecification cursor-mode=\"line\" selection-mode=\"browse\" draw-focus=\"false\">                    	       \
+#define SPEC "<ETableSpecification cursor-mode=\"line\" selection-mode=\"browse\" draw-focus=\"true\">                    	       \
   <ETableColumn model_col=\"0\" _title=\"Process Name\"   expansion=\"1.0\" minimum_width=\"20\" resizable=\"true\" cell=\"tree-string\" compare=\"string\"/> \
   <ETableColumn model_col=\"1\" _title=\"User\" expansion=\"1.0\" minimum_width=\"20\" resizable=\"true\" cell=\"string\"      compare=\"string\"/> \
   <ETableColumn model_col=\"2\" _title=\"Memory\"     expansion=\"1.0\" minimum_width=\"20\" resizable=\"true\" cell=\"memory\"      compare=\"integer\"/> \
@@ -433,7 +433,7 @@ update_info (ProcInfo *info, gint pid)
 	newinfo->memshared = procmem.share;
 	newinfo->memrss = procmem.rss;
 	if (cpu_time)
-		newinfo->cpu = ( newcputime - info->cpu_time_last ) * 100 / cpu_time;
+		newinfo->cpu = ( newcputime - info->cpu_time_last ) * 100 / total_time;
 	else 
 		newinfo->cpu = 0;
 	newinfo->cpu_time_last = newcputime;
@@ -511,6 +511,7 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 	gint i = 0;
 	ETreePath *root_node;
 	
+	//e_tree_memory_freeze (procdata->memory);
 	root_node = e_tree_model_get_root (procdata->model);
 	
 	
@@ -536,7 +537,7 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 		if (pid_list[i] < oldinfo->pid)
 		{
 			ProcInfo *info;
-			ETreePath *node, *parentnode;
+			ETreePath *node;
 			
 			info = get_info (procdata, pid_list[i]);
 			node = insert_info_to_tree (info, procdata, root_node);
@@ -582,6 +583,8 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 		procdata->info = g_list_remove (procdata->info, oldinfo);
 		proctable_free_info (oldinfo);
 	}
+	
+	//e_tree_memory_thaw (procdata->memory);
 
 
 }
@@ -598,7 +601,7 @@ proctable_update_list (ProcData *data)
 	float memtotal, memused, swaptotal, swapused;
 	float pcpu;
 	gint which, arg;
-	gint n, i;
+	gint n;
 	ETreePath *root_node;
 	
 	
@@ -621,11 +624,11 @@ proctable_update_list (ProcData *data)
 	
 	/* FIXME: should make sure that we don't divide by zero here */
 	glibtop_get_cpu (&cpu);
-	cpu_time = cpu.user + cpu.sys  - cpu_time_last;//+ cpu.idle - cpu_time_last;
-	cpu_time_last = cpu.user + cpu.sys ;// + cpu.idle;
-	total_time = cpu_time + cpu.idle +cpu.nice - total_time_last;
+	cpu_time = cpu.user + cpu.sys - cpu_time_last;
+	cpu_time_last = cpu.user + cpu.sys ;
+	total_time = cpu.total - total_time_last;
 	pcpu = (float) cpu_time / (total_time);
-	total_time_last = cpu_time + cpu.idle + cpu.nice;
+	total_time_last = cpu.total;
 	gtk_progress_bar_update (GTK_PROGRESS_BAR (procdata->cpumeter), pcpu);
 	
 	glibtop_get_mem (&mem);
@@ -677,7 +680,6 @@ void
 proctable_clear_tree (ProcData *data)
 {
 	ProcData *procdata = data;
-	GList *list = procdata->info;
 	ETreePath *rootnode;
 	
 	rootnode = e_tree_model_get_root (procdata->model);

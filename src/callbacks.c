@@ -153,30 +153,16 @@ cb_info_button_pressed			(GtkButton	*button,
 
 
 
+
+
+
 void
 cb_table_selected (ETree *tree, int row, ETreePath path, gpointer data)
 {
 
-	GtkWidget *button = data;
-	
-	if (!tree)
-		return;
-	
-	if (row < 0)
-		gtk_widget_set_sensitive (button, FALSE);
-	else 
-		gtk_widget_set_sensitive (button, TRUE);
-	
-}
-
-
-void
-cb_update_selected_row (ETree *tree, int row, ETreePath path, gpointer data)
-{
-
 	ProcData *procdata = data;
 	ProcInfo *info;
-	gint previously_selected_pid;
+	
 	
 	if (!tree)
 		return;
@@ -184,18 +170,20 @@ cb_update_selected_row (ETree *tree, int row, ETreePath path, gpointer data)
 	{
 		if (GTK_WIDGET_SENSITIVE (procdata->infoview->infobox))
 			gtk_widget_set_sensitive (procdata->infoview->infobox, FALSE);
+		update_sensitivity (procdata, FALSE);
 		return;
 	}
 		
-	previously_selected_pid = procdata->selected_pid;
-
+	
 	info = e_tree_memory_node_get_data (procdata->memory, path);
 	procdata->selected_pid = info->pid;
 	procdata->selected_node = path;
 	
-	if (!GTK_WIDGET_SENSITIVE (procdata->infoview->infobox))
-		gtk_widget_set_sensitive (procdata->infoview->infobox, TRUE);
-	
+	/*if (!GTK_WIDGET_SENSITIVE (procdata->infoview->infobox))
+		*/
+		
+	update_sensitivity (procdata, TRUE);
+		
 	if (procdata->config.show_more_info == TRUE)
 		infoview_update (procdata);
 		 
