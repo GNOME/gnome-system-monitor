@@ -29,13 +29,15 @@ specdir = $(datadir)/procman
 pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = \
 	procman.png
-	
+
+schemadir   = @GCONF_SCHEMA_FILE_DIR@
+schema_DATA = procman.schemas	
 	
 EXTRA_DIST = \
 	README.hacking \
 	$(pixmap_DATA) \
-	procman.schemas
+	$(schema_DATA)
 	
 install-data-local:
 	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) \
-	gconftool --makefile-install-rule procman.schemas	
+	gconftool --makefile-install-rule $(schema_DATA)	  	

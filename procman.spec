@@ -6,7 +6,7 @@ Version: 1.1.2
 Release: 1
 Copyright: GPL
 Group: Applications/System
-Source: http://www.personal.psu.edu/kfv101/procman/source/procman-%{ver}.tar.gz
+Source: http://www.personal.psu.edu/kfv101/procman/source/procman-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-root
 Requires: libgnomeui >= 1.106.0
 Requires: libgtop >= 1.90.0
@@ -44,7 +44,7 @@ gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/procman.schemas
 
 %{_bindir}/procman
 %{_datadir}/gnome/apps/System/procman.desktop
-%{_datadir}/share/pixmaps/procman.png
+%{_datadir}/pixmaps/procman.png
 %{_sysconfdir}/gconf/schemas/*
 
 %changelog
