@@ -5,9 +5,9 @@ INCLUDES = \
 	@PROCMAN_CFLAGS@ -DGTK_DISABLE_DEPRECATED=1 \
 	-DGNOME_DISABLE_DEPRECATED
 
-bin_PROGRAMS = procman
+bin_PROGRAMS = gnome-system-monitor
 
-procman_SOURCES = \
+gnome_system_monitor_SOURCES = \
 	procman.c  procman.h \
 	interface.c interface.h \
 	callbacks.c callbacks.h \
@@ -22,12 +22,12 @@ procman_SOURCES = \
 	favorites.c favorites.h \
 	defaulttable.h
 
-procman_LDADD = @PROCMAN_LIBS@
+gnome_system_monitor_LDADD = @PROCMAN_LIBS@
 
 specdir = $(datadir)/procman
 
 schemadir   = @GCONF_SCHEMA_FILE_DIR@
-schema_DATA = procman.schemas	
+schema_DATA = gnome-system-monitor.schemas	
 
 pixmapdir   = $(datadir)/pixmaps
 pixmap_DATA = procman.png
