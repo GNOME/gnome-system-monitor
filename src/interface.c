@@ -91,7 +91,7 @@ static GnomeUIInfo view1_menu_uiinfo[] =
 	 'h', GDK_CONTROL_MASK
 	}, 
 	{
-	 GNOME_APP_UI_ITEM, N_("_Hidden Processes"), N_("Open the list of currenlty hidden processes"),
+	 GNOME_APP_UI_ITEM, N_("_Hidden Processes"), N_("Open the list of currently hidden processes"),
 	 cb_show_hidden_processes, NULL, NULL, 0, NULL,
 	 'p', GDK_CONTROL_MASK
 	},
