@@ -54,6 +54,7 @@ gint total_time_meter = 0;
 gint total_time_last_meter = 0;
 gint cpu_time_last = 0;
 gint cpu_time = 0;
+gfloat pcpu_last = 0.0;
 
 #define SPEC "<ETableSpecification cursor-mode=\"line\" selection-mode=\"single\" draw-focus=\"true\">                    	       \
   <ETableColumn model_col=\"0\" _title=\"Process Name\"   expansion=\"1.0\" minimum_width=\"20\" resizable=\"true\" cell=\"tree-string\" compare=\"string\"/> \
@@ -933,7 +934,8 @@ proctable_update_progress_meters (ProcData *procdata)
 	total_time_meter = cpu.total - total_time_last_meter;
 	pcpu = (float) cpu_time / (total_time_meter);
 	total_time_last_meter = cpu.total;
-	gtk_progress_bar_update (GTK_PROGRESS_BAR (procdata->cpumeter), pcpu);
+	gtk_progress_bar_update (GTK_PROGRESS_BAR (procdata->cpumeter), (pcpu + pcpu_last) / 2);
+	pcpu_last = pcpu;
 	
 	glibtop_get_mem (&mem);
 	memused = (float) mem.used;

@@ -338,7 +338,7 @@ create_main_window (ProcData *data)
 			    
 	procdata->timeout = gtk_timeout_add (procdata->config.update_interval,
 			 cb_timeout, procdata);
-	procdata->meter_timeout = gtk_timeout_add (500, cb_progress_meter_timeout, procdata);
+	procdata->meter_timeout = gtk_timeout_add (250, cb_progress_meter_timeout, procdata);
 		
 	gtk_widget_show (vbox1);	 
 	gtk_widget_show (app);
