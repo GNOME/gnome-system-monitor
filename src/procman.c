@@ -168,7 +168,7 @@ procman_data_new (void)
 	pd->config.load_desktop_files = 
 		gnome_config_get_bool ("procman/Config/load_desktop_files=TRUE");
 	pd->config.show_pretty_names = 
-		gnome_config_get_bool ("procman/Config/show_pretty_names=TRUE");
+		gnome_config_get_bool ("procman/Config/show_pretty_names=FALSE");
 	pd->config.show_threads = 
 		gnome_config_get_bool ("procman/Config/show_threads=FALSE");
 	pd->config.update_interval = 

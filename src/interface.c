@@ -589,6 +589,12 @@ create_main_window (ProcData *procdata)
 
 }
 
+static void
+simple_dialog_button_pressed (GnomeDialog *dialog, gint button, gpointer data)
+{
+	gnome_dialog_close (dialog);
+}
+
 GtkWidget*
 create_simple_view_dialog (ProcData *procdata)
 {
@@ -644,7 +650,8 @@ create_simple_view_dialog (ProcData *procdata)
 			      GNOME_PAD_SMALL, 1);
 	gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			    GTK_SIGNAL_FUNC (cb_end_process_button_pressed), procdata);
-
+	gtk_signal_connect (GTK_OBJECT (app), "clicked",
+			    GTK_SIGNAL_FUNC (simple_dialog_button_pressed), procdata);
 	gtk_signal_connect (GTK_OBJECT (app), "close",
 			    GTK_SIGNAL_FUNC (cb_close_simple_dialog), procdata);
 	gtk_signal_connect (GTK_OBJECT (procdata->tree), "cursor_activated",
