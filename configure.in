@@ -82,6 +82,17 @@ else
   AC_DEFINE_UNQUOTED(PACKAGE_LOCALE_DIR, "${prefix}/${DATADIRNAME}/locale")
 fi
 
+AC_ARG_ENABLE(selinux, AC_HELP_STRING(--enable-selinux,enable SELinux support),enable_selinux=$enableval, enable_selinux=no)
+
+if test x$enable_selinux = xyes; then
+   AC_DEFINE(ENABLE_SELINUX, 1, [Define to 1 to enable SELinux support])
+   AM_CONDITIONAL(ENABLE_SELINUX, test x$enable_selinux = xyes)
+   AC_MSG_RESULT(SELinux support enabled)
+else
+   AC_MSG_RESULT(SELinux support disabled)
+fi
+
+
 dnl Honor ACLOCAL_FLAGS for --enable-maintainer-mode
 ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
 

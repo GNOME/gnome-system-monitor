@@ -136,6 +136,7 @@ struct _ProcInfo
 	guint64		memrss;
         guint64            memxserver;
 	gchar		*status;
+	gchar           *security_context;
 	gboolean	running;
 	gboolean	is_thread;
 	gboolean	is_blacklisted;

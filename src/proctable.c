@@ -48,6 +48,10 @@
 #include "favorites.h"
 
 
+#ifdef ENABLE_SELINUX
+#include <selinux/selinux.h>
+#endif
+
 
 static gint total_time = 0;
 static gint total_time_last = 0;
@@ -102,6 +106,44 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 
 
 
+static gboolean
+can_show_security_context_column (void)
+{
+#ifdef ENABLE_SELINUX
+	switch (is_selinux_enabled()) {
+	case 1: /* We're running on an SELinux kernel */ 
+		return TRUE;
+
+	default:
+	case -1: 
+		/* Error; hide the security context column */
+
+	case 0: 
+		/* We're not running on an SELinux kernel: hide the security context column */
+		return FALSE;
+	}
+#else
+	/* Support disabled; hide the security context column */
+	return FALSE;
+#endif
+}
+
+static gchar*
+get_selinux_context (gint pid)
+{
+#ifdef ENABLE_SELINUX
+	/* Directly grab the SELinux security context: */
+	security_context_t con;
+	
+	if (!getpidcon (pid, &con)) {
+		gchar *result = g_strdup (con);
+		freecon (con);
+		return result;
+	}
+#endif
+
+	return NULL;
+}
 
 GtkWidget *
 proctable_new (ProcData * const procdata)
@@ -127,6 +169,7 @@ proctable_new (ProcData * const procdata)
 		/* xgettext:no-c-format */ N_("% CPU"),
 		N_("Nice"),
 		N_("ID"),
+		N_("Security Context"), 
 		NULL,
 		"POINTER"
 	};
@@ -145,6 +188,7 @@ proctable_new (ProcData * const procdata)
 				    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
 				    G_TYPE_INT, G_TYPE_INT, G_TYPE_INT,
+				    G_TYPE_STRING,
 				    GDK_TYPE_PIXBUF, G_TYPE_POINTER);
 
 	proctree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
@@ -239,6 +283,13 @@ proctable_new (ProcData * const procdata)
 
 	procman_get_tree_state (procdata->client, proctree, "/apps/procman/proctree");
 
+	/* Override column settings by hiding this column if it's meaningless: */
+	if (!can_show_security_context_column ()) {
+		GtkTreeViewColumn *column;
+		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_SECURITYCONTEXT);
+		gtk_tree_view_column_set_visible (column, FALSE);
+	}
+
 	g_signal_connect (G_OBJECT (gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree))),
 			  "changed",
 			  G_CALLBACK (cb_row_selected), procdata);
@@ -261,6 +312,7 @@ proctable_free_info (ProcInfo *info)
 	g_free (info->arguments);
 	g_free (info->user);
 	g_free (info->status);
+	g_free (info->security_context);
 	g_list_free (info->children);
 	g_free (info);
 }
@@ -436,6 +488,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 			    COL_CPU, info->pcpu,
 			    COL_PID, info->pid,
 			    COL_NICE, info->nice,
+			    COL_SECURITYCONTEXT, info->security_context,
 			    -1);
 	g_free (mem);
 	g_free (vmsize);
@@ -624,6 +677,7 @@ update_info (ProcData *procdata, ProcInfo *info, gint pid)
 				    COL_CPU, info->pcpu,
 				    COL_NICE, info->nice,
 				    -1);
+		/* We don't bother updating COL_SECURITYCONTEXT as it can never change */
 		g_free (mem);
 		g_free (vmsize);
 		g_free (memres);
@@ -698,6 +752,8 @@ get_info (ProcData *procdata, gint pid)
 	info->cpu_time_last = newcputime;
 	info->nice = procuid.nice;
 	get_process_status (info, &procstate);
+	
+	info->security_context = get_selinux_context (pid);
 
 	info->pixbuf = pretty_table_get_icon (procdata->pretty_table, info->name, pid);
 

@@ -23,7 +23,11 @@ gnome_system_monitor_SOURCES = \
 	favorites.c favorites.h \
 	defaulttable.h
 
-gnome_system_monitor_LDADD = @PROCMAN_LIBS@
+if ENABLE_SELINUX
+gnome_system_monitor_LDADD = @PROCMAN_LIBS@ -lselinux
+else
+gnome_system_monitor_LDADD = @PROCMAN_LIBS@ 
+endif
 
 specdir = $(datadir)/procman
 
