@@ -804,8 +804,9 @@ procman_get_gnomesu_exec(void)
 ** type determines whether if dialog is for killing process (type=0) or renice (type=other).
 ** extra_value is not used for killing and is priority for renice
 */
-void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint pid, 
-					     gint extra_value)
+gboolean
+procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint pid,
+					gint extra_value)
 {
 	GnomesuExecFunc gnomesu_exec;
 
@@ -822,16 +823,9 @@ void procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint
 			g_snprintf (command, sizeof command,
 				    "renice %d %d", extra_value, pid);
 
-		gnomesu_exec (command);
+		return gnomesu_exec (command);
 	}
-	else
-	{
-		if (type == 0)
-			g_warning(_("Cannot kill process with pid %d with signal %d"),
-				  pid, extra_value);
-		else
-			g_warning(_("Cannot change the priority of process with pid %d to %d"),
-				  pid, extra_value);
-	}
+
+	return FALSE;
 }
 

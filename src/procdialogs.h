@@ -28,7 +28,7 @@ extern int kill_signal G_GNUC_INTERNAL;
 void			procdialog_create_hide_dialog (ProcData *data) G_GNUC_INTERNAL;
 void			procdialog_create_kill_dialog (ProcData *data, int signal) G_GNUC_INTERNAL;
 void 			procdialog_create_renice_dialog (ProcData *data) G_GNUC_INTERNAL;
-void			procdialog_create_root_password_dialog (gint type, 
+gboolean		procdialog_create_root_password_dialog (gint type,
 								ProcData *procdata,
 								gint pid, gint extra_value) G_GNUC_INTERNAL;
 void 			procdialog_create_memmaps_dialog (ProcData *data) G_GNUC_INTERNAL;
