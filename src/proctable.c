@@ -892,10 +892,11 @@ refresh_list (ProcData *data, unsigned *pid_list, gint n)
 			gint status;
 			
 			status = update_info (procdata, oldinfo, oldinfo->pid);
-			if (status == 0)
+			if (status == 0) {
+				e_tree_model_pre_change (procdata->model);
 				e_tree_model_node_data_changed (procdata->model,
 								oldinfo->node);
-			
+			}
 			else if (status == 1)
 				oldinfo->node = insert_info_to_tree (oldinfo, procdata, 
 								     root_node);
