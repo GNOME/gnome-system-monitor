@@ -341,7 +341,8 @@ procman_get_tree_state (GtkWidget *tree, gchar *prefix)
 		if (width != -1) {
 			column = gtk_tree_view_get_column (GTK_TREE_VIEW (tree), i);
 			gtk_tree_view_column_set_visible (column, visible);
-			gtk_tree_view_column_set_fixed_width (column, width);
+			if (width > 0)
+				gtk_tree_view_column_set_fixed_width (column, width);
 		}
 		else
 			done = TRUE;

@@ -173,7 +173,7 @@ get_memory (gfloat data [1], LoadGraph *g)
 {
     float user, shared, buffer, free;
     float swap_used;
-    gchar *text1, *text2, *text;
+    gchar *text1, *text2;
 
     glibtop_mem mem;
     glibtop_swap swap;
