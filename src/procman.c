@@ -34,7 +34,8 @@
 static GtkWidget *app = NULL;
 static int simple_view = FALSE;
 
-struct poptOption options[] = {
+
+static const struct poptOption options[] = {
   {
     "simple",
     's',

@@ -102,7 +102,7 @@ struct _LoadGraph {
 
     long cpu_time [GLIBTOP_NCPU] [NCPUSTATES];
     long cpu_last [GLIBTOP_NCPU] [NCPUSTATES];
-    int cpu_initialized;       
+    gboolean cpu_initialized;       
 };
 
 enum
