@@ -383,7 +383,7 @@ procman_get_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefi
 					      	      sort_col,
 					              order);
 	
-	for(i = 0; i < NUM_COLUMN; ++i) {
+	for(i = 0; i < NUM_COLUMNS; ++i) {
 		GtkTreeViewColumn *column;
 		GConfValue *value = NULL;
 		gint width;
