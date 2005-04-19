@@ -39,6 +39,7 @@
 #include "prettytable.h"
 #include "favorites.h"
 #include "callbacks.h"
+#include "smooth_refresh.h"
 
 
 static void
@@ -104,6 +105,9 @@ timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer 
 		procdata->config.update_interval = gconf_value_get_int (value);
 		procdata->config.update_interval = 
 			MAX (procdata->config.update_interval, 1000);
+
+		smooth_refresh_reset(procdata->smooth_refresh);
+
 		gtk_timeout_remove (procdata->timeout);
 		procdata->timeout = gtk_timeout_add (procdata->config.update_interval, 
 						     cb_timeout, procdata);
@@ -335,7 +339,9 @@ procman_data_new (GConfClient *client)
     	}
     	if (pd->config.num_cpus == 0)
     		pd->config.num_cpus = 1;
-    	
+
+	pd->smooth_refresh = smooth_refresh_new(&pd->config.update_interval);
+
 	return pd;
 
 }
@@ -347,7 +353,7 @@ procman_free_data (ProcData *procdata)
 	proctable_free_table (procdata);
 	g_hash_table_destroy(procdata->pids);
 	/* pretty_table_free (procdata->pretty_table); */
-	
+	smooth_refresh_destroy(procdata->smooth_refresh);
 	g_free (procdata);
 	
 }

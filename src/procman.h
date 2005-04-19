@@ -32,7 +32,7 @@ typedef struct _ProcData ProcData;
 #include <glibtop/cpu.h>
 
 #include "infoview.h"
-
+#include "smooth_refresh.h"
 
 enum
 {
@@ -211,6 +211,8 @@ struct _ProcData
 	   and because we display cpu_time as %.1f seconds
 	*/
 	float		frequency;
+
+	SmoothRefresh  *smooth_refresh;
 };
 
 void		procman_save_config (ProcData *data) G_GNUC_INTERNAL;

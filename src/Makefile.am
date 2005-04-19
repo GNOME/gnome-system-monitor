@@ -21,6 +21,7 @@ gnome_system_monitor_SOURCES = \
 	memmaps.c memmaps.h \
 	openfiles.c openfiles.h \
 	favorites.c favorites.h \
+	smooth_refresh.c smooth_refresh.h \
 	defaulttable.h
 
 

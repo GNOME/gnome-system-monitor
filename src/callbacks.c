@@ -571,8 +571,16 @@ gint
 cb_timeout (gpointer data)
 {
 	ProcData * const procdata = data;
+	guint new_interval;
 
 	proctable_update_all (procdata);
+
+	if(smooth_refresh_get(procdata->smooth_refresh, &new_interval))
+	{
+		procdata->timeout = gtk_timeout_add(new_interval,
+						    cb_timeout, procdata);
+		return FALSE;
+	}
 
 	return TRUE;
 }
