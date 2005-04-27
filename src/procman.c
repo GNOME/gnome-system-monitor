@@ -526,6 +526,20 @@ cb_server (const gchar *msg, gpointer user_data)
 }
 
 
+static void
+init_volume_monitor(ProcData *procdata)
+{
+	GnomeVFSVolumeMonitor *mon;
+	mon = gnome_vfs_get_volume_monitor();
+
+	g_signal_connect(mon, "volume_mounted",
+			 G_CALLBACK(cb_volume_mounted_or_unmounted), procdata);
+
+	g_signal_connect(mon, "volume_unmounted",
+			 G_CALLBACK(cb_volume_mounted_or_unmounted), procdata);
+}
+
+
 int
 main (int argc, char *argv[])
 {
@@ -588,7 +602,9 @@ main (int argc, char *argv[])
 	create_main_window (procdata);
 	
 	proctable_update_all (procdata);
-		 
+
+	init_volume_monitor (procdata);
+
 	g_return_val_if_fail(procdata->app != NULL, 1);
 			
  	gtk_widget_show(procdata->app);

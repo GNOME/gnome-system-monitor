@@ -23,6 +23,7 @@
 
 #include <gtk/gtk.h>
 #include "procman.h"
+#include <libgnomevfs/gnome-vfs.h>
 
 void		cb_show_memory_maps (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
 void		cb_show_open_files (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
@@ -67,6 +68,10 @@ void		cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 
 gint		cb_update_disks (gpointer data) G_GNUC_INTERNAL;
 gint		cb_timeout (gpointer data) G_GNUC_INTERNAL;
+
+void		cb_volume_mounted_or_unmounted(GnomeVFSVolumeMonitor *vfsvolumemonitor,
+					       GnomeVFSVolume *vol,
+					       gpointer procdata) G_GNUC_INTERNAL;
 
 
 #endif /* _PROCMAN_CALLBACKS_H_ */

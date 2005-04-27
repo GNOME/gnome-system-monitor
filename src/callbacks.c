@@ -530,6 +530,8 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 gint
 cb_update_disks (gpointer data)
 {
+	static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
+
 	ProcData * const procdata = data;
 
 	GtkTreeModel *model;
@@ -537,6 +539,8 @@ cb_update_disks (gpointer data)
 	glibtop_mountlist mountlist;
 	GHashTable *new_disks = NULL;
 	guint i;
+
+	g_static_mutex_lock (&mutex);
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->disk_list));
 
@@ -563,7 +567,18 @@ cb_update_disks (gpointer data)
 	g_hash_table_destroy (new_disks);
 	g_free (entry);
 
+	g_static_mutex_unlock (&mutex);
+
 	return TRUE;
+}
+
+
+void
+cb_volume_mounted_or_unmounted(GnomeVFSVolumeMonitor *vfsvolumemonitor,
+			    GnomeVFSVolume *vol,
+			    gpointer procdata)
+{
+	cb_update_disks(procdata);
 }
 
 
