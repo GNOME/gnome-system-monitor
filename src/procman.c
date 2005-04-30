@@ -191,6 +191,20 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 		
 }
 
+
+
+static void
+show_all_fs_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
+{
+	ProcData * const procdata = data;
+	GConfValue *value = gconf_entry_get_value (entry);
+
+	procdata->config.show_all_fs = gconf_value_get_bool (value);
+
+	cb_update_disks (data);
+}
+
+
 static ProcData *
 procman_data_new (GConfClient *client)
 {
@@ -256,6 +270,17 @@ procman_data_new (GConfClient *client)
 								 NULL);
 	gconf_client_notify_add (client, "/apps/procman/disks_interval", timeouts_changed_cb,
 				 pd, NULL, NULL);
+
+
+	/* /apps/procman/show_all_fs */
+	pd->config.show_all_fs = gconf_client_get_bool (
+		client, "/apps/procman/show_all_fs",
+		NULL);
+	gconf_client_notify_add
+		(client, "/apps/procman/show_all_fs",
+		 show_all_fs_changed_cb, pd, NULL, NULL);
+
+
 	pd->config.whose_process = gconf_client_get_int (client, "/apps/procman/view_as", NULL);
 	gconf_client_notify_add (client, "/apps/procman/view_as", view_as_changed_cb,
 				 pd, NULL, NULL);

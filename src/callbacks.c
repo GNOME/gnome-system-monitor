@@ -408,10 +408,18 @@ fsusage_stats(const glibtop_fsusage *buf,
 	      float *bused, float *bfree, float *btotal,
 	      float *percentage)
 {
-	*btotal = buf->blocks * buf->block_size;
-	*bfree  = buf->bfree  * buf->block_size;
-	*bused  = *btotal - *bfree;
-	*percentage = CLAMP(100.0f * *bused / *btotal, 0.0f, 100.0f);
+	guint64 total = buf->blocks * buf->block_size;
+
+	if(!total) {
+		/* not a real device */
+		*btotal = *bfree = *bused = *percentage = 0.0f;
+	}
+	else {
+		*btotal = total;
+		*bfree  = buf->bfree  * buf->block_size;
+		*bused  = *btotal - *bfree;
+		*percentage = CLAMP(100.0f * *bused / *btotal, 0.0f, 100.0f);
+	}
 }
 
 
@@ -540,11 +548,12 @@ cb_update_disks (gpointer data)
 	GHashTable *new_disks = NULL;
 	guint i;
 
+	/* LOCK */
 	g_static_mutex_lock (&mutex);
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->disk_list));
 
-	entry = glibtop_get_mountlist (&mountlist, FALSE);
+	entry = glibtop_get_mountlist (&mountlist, procdata->config.show_all_fs);
 
 	new_disks = g_hash_table_new (g_str_hash, g_str_equal);
 	for (i=0; i < mountlist.number; i++) {
@@ -568,6 +577,7 @@ cb_update_disks (gpointer data)
 	g_free (entry);
 
 	g_static_mutex_unlock (&mutex);
+	/* UNLOCK */
 
 	return TRUE;
 }

@@ -52,6 +52,7 @@ struct _ProcConfig
         gboolean	show_hide_message;
         gboolean	show_tree;
         gboolean	show_threads;
+	gboolean	show_all_fs;
  	gint		update_interval;
  	gint		graph_update_interval;
  	gint		disks_update_interval;
