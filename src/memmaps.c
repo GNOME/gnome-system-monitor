@@ -88,7 +88,7 @@ add_new_maps (gpointer key, gpointer value, gpointer data)
 
 	info.vmstart  = vmoff_tostring (memmaps->start);
 	info.vmend    = vmoff_tostring (memmaps->end);
-	info.vmsize   = gnome_vfs_format_file_size_for_display (vmsize);
+	info.vmsize   = SI_gnome_vfs_format_file_size_for_display (vmsize);
 	info.flags    = g_strdup (flags);
 	info.vmoffset = vmoff_tostring (memmaps->offset);
 	info.device   = g_strdup_printf ("%02hx:%02hx", dev_major, dev_minor);

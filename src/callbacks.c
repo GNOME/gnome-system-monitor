@@ -434,9 +434,9 @@ update_disk(GtkTreeModel *model, GtkTreeIter *iter, const char *mountdir)
 
 	fsusage_stats(&usage, &bused, &bfree, &btotal, &percentage);
 
-	used_str  = gnome_vfs_format_file_size_for_display (bused);
-	free_str  = gnome_vfs_format_file_size_for_display (bfree);
-	total_str = gnome_vfs_format_file_size_for_display (btotal);
+	used_str  = SI_gnome_vfs_format_file_size_for_display (bused);
+	free_str  = SI_gnome_vfs_format_file_size_for_display (bfree);
+	total_str = SI_gnome_vfs_format_file_size_for_display (btotal);
 
 	gtk_tree_store_set (GTK_TREE_STORE (model), iter,
 			    4, total_str,

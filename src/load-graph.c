@@ -204,8 +204,8 @@ get_memory (gfloat data [1], LoadGraph *g)
 	swappercent = (swap.total ? (float)swap.used / (float)swap.total : 0.0f);
 	mempercent  = (float)mem.user  / (float)mem.total;
 
-	text1 = gnome_vfs_format_file_size_for_display (mem.total);
-	text2 = gnome_vfs_format_file_size_for_display (mem.user);
+	text1 = SI_gnome_vfs_format_file_size_for_display (mem.total);
+	text2 = SI_gnome_vfs_format_file_size_for_display (mem.user);
 	text3 = g_strdup_printf ("  %.1f %%", mempercent * 100.0f);
 	gtk_label_set_text (GTK_LABEL (g->memused_label), text2);
 	gtk_label_set_text (GTK_LABEL (g->memtotal_label), text1);
@@ -214,8 +214,8 @@ get_memory (gfloat data [1], LoadGraph *g)
 	g_free (text2);
 	g_free (text3);
 
-	text1 = gnome_vfs_format_file_size_for_display (swap.total);
-	text2 = gnome_vfs_format_file_size_for_display (swap.used);
+	text1 = SI_gnome_vfs_format_file_size_for_display (swap.total);
+	text2 = SI_gnome_vfs_format_file_size_for_display (swap.used);
 	text3 = g_strdup_printf ("  %.1f %%", swappercent * 100.0f);
 	gtk_label_set_text (GTK_LABEL (g->swapused_label), text2);
 	gtk_label_set_text (GTK_LABEL (g->swaptotal_label), text1);

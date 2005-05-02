@@ -2,6 +2,7 @@
 #define _PROCAMN_UTIL_H_
 
 #include <glib.h>
+#include <libgnomevfs/gnome-vfs-utils.h>
 #include <stddef.h>
 
 void _procman_array_gettext_init(const char * strings[], size_t n) G_GNUC_INTERNAL;
@@ -21,5 +22,10 @@ GtkWidget*
 procman_make_label_for_mmaps_or_ofiles(const char *format,
 					     const char *process_name,
 					     unsigned pid) G_GNUC_INTERNAL;
+
+
+gchar*
+SI_gnome_vfs_format_file_size_for_display (GnomeVFSFileSize size) G_GNUC_INTERNAL;
+
 
 #endif /* _PROCAMN_UTIL_H_ */

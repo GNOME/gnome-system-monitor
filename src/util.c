@@ -4,6 +4,8 @@
 #include <glib/gstring.h>
 #include <gtk/gtk.h>
 
+#include <libgnomevfs/gnome-vfs-utils.h>
+
 #include <stddef.h>
 
 #include "util.h"
@@ -58,4 +60,46 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
 	g_free (name);
 
 	return label;
+}
+
+
+
+#define KIBIBYTE_FACTOR 1024.0
+#define MEBIBYTE_FACTOR (1024.0 * 1024.0)
+#define GIBIBYTE_FACTOR (1024.0 * 1024.0 * 1024.0)
+
+
+/**
+ * SI_gnome_vfs_format_file_size_for_display:
+ * @size:
+ * 
+ * Formats the file size passed in @bytes in a way that is easy for
+ * the user to read. Gives the size in bytes, kibibytes, mebibytes or
+ * gibibytes, choosing whatever is appropriate.
+ * 
+ * Returns: a newly allocated string with the size ready to be shown.
+ **/
+
+gchar*
+SI_gnome_vfs_format_file_size_for_display (GnomeVFSFileSize size)
+{
+	if (size < (GnomeVFSFileSize) KIBIBYTE_FACTOR) {
+		return g_strdup_printf (dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes",(guint) size), (guint) size);
+	} else {
+		gdouble displayed_size;
+
+		if (size < (GnomeVFSFileSize) MEBIBYTE_FACTOR) {
+			displayed_size = (gdouble) size / KIBIBYTE_FACTOR;
+			return g_strdup_printf (_("%.1f KiB"),
+						       displayed_size);
+		} else if (size < (GnomeVFSFileSize) GIBIBYTE_FACTOR) {
+			displayed_size = (gdouble) size / MEBIBYTE_FACTOR;
+			return g_strdup_printf (_("%.1f MiB"),
+						       displayed_size);
+		} else {
+			displayed_size = (gdouble) size / GIBIBYTE_FACTOR;
+			return g_strdup_printf (_("%.1f GiB"),
+						       displayed_size);
+		}
+	}
 }

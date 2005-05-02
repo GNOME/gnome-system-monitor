@@ -453,12 +453,12 @@ update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info
 {
 	gchar *mem, *vmsize, *memres, *memshared, *memrss, *memxserver, *cpu_time;
 
-	mem	   = gnome_vfs_format_file_size_for_display (info->mem);
-	vmsize	   = gnome_vfs_format_file_size_for_display (info->vmsize);
-	memres	   = gnome_vfs_format_file_size_for_display (info->memres);
-	memshared  = gnome_vfs_format_file_size_for_display (info->memshared);
-	memrss	   = gnome_vfs_format_file_size_for_display (info->memrss);
-	memxserver = gnome_vfs_format_file_size_for_display (info->memxserver);
+	mem	   = SI_gnome_vfs_format_file_size_for_display (info->mem);
+	vmsize	   = SI_gnome_vfs_format_file_size_for_display (info->vmsize);
+	memres	   = SI_gnome_vfs_format_file_size_for_display (info->memres);
+	memshared  = SI_gnome_vfs_format_file_size_for_display (info->memshared);
+	memrss	   = SI_gnome_vfs_format_file_size_for_display (info->memrss);
+	memxserver = SI_gnome_vfs_format_file_size_for_display (info->memxserver);
 
 	cpu_time = format_duration_for_display (info->cpu_time_last / procdata->frequency);
 
