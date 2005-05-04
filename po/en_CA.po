@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-31 16:49-0500\n"
-"PO-Revision-Date: 2005-03-31 18:38-0400\n"
+"POT-Creation-Date: 2005-05-04 01:43-0400\n"
+"PO-Revision-Date: 2005-05-04 18:38-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -163,6 +163,20 @@ msgstr "Time in milliseconds between updates of the graphs"
 #: ../src/gnome-system-monitor.schemas.in.h:21
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Time in milliseconds between updates of the process view"
+
+#: ../src/gnome-system-monitor.schemas.in.h:22
+msgid "Whether information about all filesystems should be displayed"
+msgstr "Whether information about all filesystems should be displayed"
+
+#: ../src/gnome-system-monitor.schemas.in.h:23
+msgid ""
+"Whether information about all filesystems should be displayed: this will "
+"include filesystem types like 'autofs' and 'procfs'. It can be usefull to "
+"get a list of all currently mounted filesystems."
+msgstr ""
+"Whether information about all filesystems should be displayed: this will "
+"include filesystem types like 'autofs' and 'procfs'. It can be useful to "
+"get a list of all currently mounted filesystems."
 
 #: ../src/infoview.c:34
 msgid "Less _Info"
@@ -393,8 +407,8 @@ msgstr "Free"
 msgid "Used"
 msgstr "Used"
 
-#: ../src/interface.c:290 ../src/interface.c:717 ../src/procdialogs.c:720
-#: ../src/procdialogs.c:724
+#: ../src/interface.c:290 ../src/interface.c:717 ../src/procdialogs.c:735
+#: ../src/procdialogs.c:739
 msgid "Devices"
 msgstr "Devices"
 
@@ -423,11 +437,11 @@ msgstr "of"
 msgid "Used swap:"
 msgstr "Used swap:"
 
-#: ../src/interface.c:705 ../src/procdialogs.c:542
+#: ../src/interface.c:705 ../src/procdialogs.c:557
 msgid "Processes"
 msgstr "Processes"
 
-#: ../src/interface.c:711 ../src/procdialogs.c:629
+#: ../src/interface.c:711 ../src/procdialogs.c:644
 msgid "Resources"
 msgstr "Resources"
 
@@ -613,57 +627,61 @@ msgstr ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
 
-#: ../src/procdialogs.c:427
+#: ../src/procdialogs.c:442
 msgid "Processes i_nfo showed in list:"
 msgstr "Process i_nfo showed in list:"
 
-#: ../src/procdialogs.c:478
+#: ../src/procdialogs.c:493
 msgid "Icon"
 msgstr "Icon"
 
-#: ../src/procdialogs.c:519
+#: ../src/procdialogs.c:534
 msgid "System Monitor Preferences"
 msgstr "System Monitor Preferences"
 
-#: ../src/procdialogs.c:549
+#: ../src/procdialogs.c:564
 msgid "Behavior"
 msgstr "Behaviour"
 
-#: ../src/procdialogs.c:568 ../src/procdialogs.c:655
+#: ../src/procdialogs.c:583 ../src/procdialogs.c:670
 msgid "_Update interval:"
 msgstr "_Update interval:"
 
-#: ../src/procdialogs.c:584 ../src/procdialogs.c:672 ../src/procdialogs.c:760
+#: ../src/procdialogs.c:599 ../src/procdialogs.c:687 ../src/procdialogs.c:775
 msgid "seconds"
 msgstr "seconds"
 
-#: ../src/procdialogs.c:591
+#: ../src/procdialogs.c:606
 msgid "Alert before ending or _killing processes"
 msgstr "Alert before ending or _killing processes"
 
-#: ../src/procdialogs.c:601
+#: ../src/procdialogs.c:616
 msgid "Alert before _hiding processes"
 msgstr "Alert before _hiding processes"
 
-#: ../src/procdialogs.c:611
+#: ../src/procdialogs.c:626
 msgid "Process Fields"
 msgstr "Process Fields"
 
-#: ../src/procdialogs.c:636
+#: ../src/procdialogs.c:651
 msgid "Graphs"
 msgstr "Graphs"
 
-#: ../src/procdialogs.c:679
+#: ../src/procdialogs.c:694
 msgid "_Background color:"
 msgstr "_Background colour:"
 
-#: ../src/procdialogs.c:698
+#: ../src/procdialogs.c:713
 msgid "_Grid color:"
 msgstr "_Grid colour:"
 
-#: ../src/procdialogs.c:743
+#: ../src/procdialogs.c:758
 msgid "Update _interval:"
 msgstr "Update _interval:"
+
+#: ../src/procdialogs.c:782
+msgid "Show _all filesystems"
+msgstr "Show _all filesystems"
 
 #: ../src/proctable.c:168
 msgid "Process Name"
@@ -759,3 +777,25 @@ msgid ""
 msgstr ""
 "There are no processes containing the searched string. Please note that the "
 "search is performed only on processes shown in the process list."
+
+#: ../src/util.c:87
+#, c-format
+msgid "%u byte"
+msgid_plural "%u bytes"
+msgstr[0] "%u byte"
+msgstr[1] "%u bytes"
+
+#: ../src/util.c:93
+#, c-format
+msgid "%.1f KiB"
+msgstr "%.1f KiB"
+
+#: ../src/util.c:97
+#, c-format
+msgid "%.1f MiB"
+msgstr "%.1f MiB"
+
+#: ../src/util.c:101
+#, c-format
+msgid "%.1f GiB"
+msgstr "%.1f GiB"
