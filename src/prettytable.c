@@ -162,9 +162,14 @@ create_scaled_icon(const char *iconpath)
 						   16, 16,
 						   TRUE,
 						   &error);
-	if(!scaled) {
-		    g_warning("Unable load icon %s", error->message);
-		    g_error_free (error);
+
+	if(error) {
+	  if(!(error->domain == G_FILE_ERROR
+	       && error->code == G_FILE_ERROR_NOENT))
+		    g_warning(error->message);
+
+	  g_error_free(error);
+	  return NULL;
 	}
 
 	return scaled;
