@@ -1,3 +1,14 @@
+2005-05-11  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/openfiles.c: (update_openfiles_dialog): Fixed a leak.
+	
+	* src/prettytable.c: (pretty_table_free): Don't forget to free all
+	hashtables.
+
+	* src/procman.c: (procman_free_data): Actually free the prettytable.
+	
+	* src/proctable.c: (get_process_name), (get_info): Fixed process name.
+
 2005-05-07  Benoît Dejean  <TazForEver@dlfp.org>
 
 	* src/prettytable.c: (create_scaled_icon): Don't warn if icon is

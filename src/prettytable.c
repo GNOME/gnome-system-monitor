@@ -142,6 +142,8 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table,
 
 
 void pretty_table_free (PrettyTable *pretty_table) {
+	g_hash_table_destroy (pretty_table->default_hash);
+	g_hash_table_destroy (pretty_table->app_hash);
 	g_free (pretty_table->datadir);
 	g_free (pretty_table);
 }

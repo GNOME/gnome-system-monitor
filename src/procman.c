@@ -330,7 +330,7 @@ procman_free_data (ProcData *procdata)
 
 	proctable_free_table (procdata);
 	g_hash_table_destroy(procdata->pids);
-	/* pretty_table_free (procdata->pretty_table); */
+	pretty_table_free (procdata->pretty_table);
 	
 	g_free (procdata);
 	
