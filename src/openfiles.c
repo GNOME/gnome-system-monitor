@@ -176,9 +176,15 @@ update_openfiles_dialog (GtkWidget *tree)
 
 	while (old_maps) {
 		GtkTreeIter *iter = old_maps->data;
+		glibtop_open_files_entry *openfiles = NULL;
+
+		gtk_tree_model_get (model, iter,
+				    COL_OPENFILE_STRUCT, &openfiles,
+				    -1);
 
 		gtk_list_store_remove (GTK_LIST_STORE (model), iter);
 		gtk_tree_iter_free (iter);
+		g_free (openfiles);
 
 		old_maps = g_list_next (old_maps);
 

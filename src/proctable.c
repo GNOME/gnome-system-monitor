@@ -372,14 +372,21 @@ static void
 get_process_name (ProcInfo *info,
 		  const gchar *cmd, const gchar *args)
 {
-
-	/* strip the absolute path from the arguments
-	 * if args is not null nor ""
-	 */
 	if (args && *args)
-		info->name = g_path_get_basename (args);
-	else
-		info->name = g_strdup (cmd);
+	{
+		char* basename;
+		basename = g_path_get_basename (args);
+
+		if(g_str_has_prefix (basename, cmd))
+		{
+			info->name = basename;
+			return;
+		}
+
+		g_free (basename);
+	}
+
+	info->name = g_strdup (cmd);
 }
 
 
@@ -713,7 +720,7 @@ get_info (ProcData *procdata, gint pid)
 	arguments = glibtop_get_proc_args (&procargs, pid, 0);
 	get_process_name (info, procstate.cmd, arguments);
 
-	if (arguments)
+	if (arguments && *arguments)
 	{
 		guint i;
 
