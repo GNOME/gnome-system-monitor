@@ -554,6 +554,8 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	update_info_mutable_cols(GTK_TREE_STORE (model), procdata, info);
 
 	info->is_visible = TRUE;
+
+	g_free(name);
 }
 
 
