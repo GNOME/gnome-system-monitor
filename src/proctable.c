@@ -390,6 +390,33 @@ get_process_name (ProcInfo *info,
 }
 
 
+
+static void
+get_process_user(ProcData* procdata, ProcInfo* info, uid_t uid)
+{
+	struct passwd* pwd;
+	char* username;
+
+	if(G_LIKELY(info->uid == uid))
+		return;
+
+	info->uid = uid;
+
+	pwd = getpwuid(uid);
+
+	if(pwd && pwd->pw_name)
+		username = g_strdup(pwd->pw_name);
+	else
+		username = g_strdup_printf("%u", (unsigned)uid);
+
+	/* don't free, because info->user belongs to procdata->users */
+	info->user = g_string_chunk_insert_const(procdata->users, username);
+
+	g_free(username);
+}
+
+
+
 static void
 get_process_memory_info(ProcInfo *info)
 {
@@ -471,6 +498,7 @@ update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info
 
 	gtk_tree_store_set (store, &info->node,
 			    COL_STATUS, info->status,
+			    COL_USER, info->user,
 			    COL_MEM, mem,
 			    COL_VMSIZE, vmsize,
 			    COL_MEMRES, memres,
@@ -546,7 +574,6 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 			    COL_PIXBUF, info->pixbuf,
 			    COL_NAME, name,
 			    COL_ARGS, info->arguments,
-			    COL_USER, info->user,
 			    COL_PID, info->pid,
 			    COL_SECURITYCONTEXT, info->security_context,
 			    -1);
@@ -672,6 +699,7 @@ update_info (ProcData *procdata, ProcInfo *info)
 		glibtop_get_proc_time (&proctime, info->pid);
 
 		get_process_memory_info(info);
+		get_process_user(procdata, info, procstate.uid);
 
 		info->pcpu = (proctime.rtime - info->cpu_time_last) * 100 / total_time;
 		info->pcpu = MIN(info->pcpu, 100);
@@ -706,39 +734,23 @@ get_info (ProcData *procdata, gint pid)
 	glibtop_proc_time proctime;
 	glibtop_proc_uid procuid;
 	glibtop_proc_args procargs;
-	struct passwd *pwd;
-	gchar *arguments;
-	char *username;
+	gchar** arguments;
 
 	info = g_chunk_new0(ProcInfo, procdata->procinfo_allocator);
 
 	info->pid = pid;
+	info->uid = -1;
 
 	glibtop_get_proc_state (&procstate, pid);
-	pwd = getpwuid (procstate.uid);
 	glibtop_get_proc_uid (&procuid, pid);
 	glibtop_get_proc_time (&proctime, pid);
+	arguments = glibtop_get_proc_argv (&procargs, pid, 0);
 
-	arguments = glibtop_get_proc_args (&procargs, pid, 0);
-	get_process_name (info, procstate.cmd, arguments);
+	get_process_name (info, procstate.cmd, arguments[0]);
+	get_process_user (procdata, info, procstate.uid);
 
-	if (arguments && *arguments)
-	{
-		guint i;
-
-		for (i = 0; i < procargs.size; i++)
-		{
-			if (!arguments[i])
-				arguments[i] = ' ';
-		}
-		/* steals arguments */
-		info->arguments = arguments;
-	}
-	else
-		info->arguments = g_strdup ("");
-
-	username = (pwd && pwd->pw_name ? pwd->pw_name : "");
-	info->user = g_string_chunk_insert_const(procdata->users, username);
+	info->arguments = g_strjoinv(" ", arguments);
+	g_strfreev(arguments);
 
 	info->pcpu = 0;
 	info->cpu_time_last = proctime.rtime;

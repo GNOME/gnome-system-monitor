@@ -1,5 +1,17 @@
 2005-05-12  Benoît Dejean  <TazForEver@dlfp.org>
 
+	* src/procman.h:
+	* src/proctable.c: (get_process_user), (update_info_mutable_cols),
+	(insert_info_to_tree), (update_info), (get_info):
+	Added ProcInfo::uid.
+	Update ProcInfo::user whenever ProcInfo::uid changes. If ProcInfo::uid
+	doesn't match with any system username, displays direclty ProcInfo::uid.
+	
+	* src/proctable.c:(get_info): Used glibtop_get_proc_argv() instead of
+	glibtop_get_proc_args().
+
+2005-05-12  Benoît Dejean  <TazForEver@dlfp.org>
+
 	* src/proctable.c: (insert_info_to_tree): Fixed a leak.
 
 2005-05-11  Benoît Dejean  <TazForEver@dlfp.org>
