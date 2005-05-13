@@ -25,6 +25,7 @@
 #include <math.h>
 #include <glib/gi18n.h>
 #include <glibtop.h>
+#include <glibtop/loadavg.h>
 #include <glibtop/proclist.h>
 #include <glibtop/procstate.h>
 #include <glibtop/procmem.h>
@@ -154,6 +155,33 @@ set_proctree_reorderable(ProcData *procdata)
 }
 
 
+
+static gboolean
+search_equal_func(GtkTreeModel *model,
+		  gint column,
+		  const gchar *key,
+		  GtkTreeIter *iter,
+		  gpointer search_data)
+{
+	char* name;
+	char* user;
+
+	gtk_tree_model_get(model, iter,
+			   COL_NAME, &name,
+			   COL_USER, &user,
+			   -1);
+
+	if(name && strstr(name, key))
+		return FALSE;
+
+	if(user && strstr(user, key))
+		return FALSE;
+
+	return TRUE;
+}
+
+
+
 GtkWidget *
 proctable_new (ProcData * const procdata)
 {
@@ -214,6 +242,10 @@ proctable_new (ProcData * const procdata)
 		);
 
 	proctree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
+	gtk_tree_view_set_search_equal_func (GTK_TREE_VIEW (proctree),
+					     search_equal_func,
+					     NULL,
+					     NULL);
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (proctree), TRUE);
 	g_object_unref (G_OBJECT (model));
 
@@ -892,6 +924,12 @@ proctable_update_list (ProcData * const procdata)
 void
 proctable_update_all (ProcData * const procdata)
 {
+	char* string;
+
+	string = make_loadavg_string();
+	gtk_label_set_text (GTK_LABEL(procdata->loadavg), string);
+	g_free (string);
+
 	proctable_update_list (procdata);
 
 	if (procdata->config.show_more_info)
@@ -934,93 +972,18 @@ proctable_free_table (ProcData * const procdata)
 }
 
 
-void
-proctable_search_table (ProcData *procdata, const gchar *string)
+
+char*
+make_loadavg_string(void)
 {
-	GList *list = procdata->info;
-	GtkWidget *dialog;
-	GtkTreeModel *model;
-	static gint increment = 0;
-	gint index;
-	static gchar *last = NULL;
+	glibtop_loadavg buf;
 
-	if(!string[0]) return;
+	glibtop_get_loadavg(&buf);
 
-	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-
-	if (!last)
-		last = g_strdup (string);
-	else if (g_ascii_strcasecmp (string, last)) {
-		increment = 0;
-		g_free (last);
-		last = g_strdup (string);
-	}
-	else
-		increment ++;
-
-	index = increment;
-
-	while (list)
-	{
-		ProcInfo *info = list->data;
-		if (strstr (info->name, string) && info->is_visible)
-		{
-			GtkTreePath *node = gtk_tree_model_get_path (model, &info->node);
-
-			if (index == 0) {
-				gtk_tree_view_set_cursor (GTK_TREE_VIEW (procdata->tree),
-							  node,
-							  NULL,
-							  FALSE);
-				return;
-			}
-			else
-				index --;
-
-			gtk_tree_path_free (node);
-		}
-
-		if (info->user && strstr (info->user, string) && info->is_visible)
-		{
-			GtkTreePath *node = gtk_tree_model_get_path (model, &info->node);
-
-			if (index == 0) {
-				gtk_tree_view_set_cursor (GTK_TREE_VIEW (procdata->tree),
-							  node,
-							  NULL,
-							  FALSE);
-				return;
-			}
-			else
-				index --;
-
-			gtk_tree_path_free (node);
-		}
-
-		list = g_list_next (list);
-	}
-
-	if (index == increment) {
-	        /*translators: primary alert message*/
-		dialog = gtk_message_dialog_new (GTK_WINDOW (procdata->app),
-						 GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_MODAL,
-						 GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-						 _("Could not find \"%s\""), string);
-		gtk_message_dialog_format_secondary_text (
-			GTK_MESSAGE_DIALOG (dialog),
-			_("There are no processes containing the searched string. "
-			  "Please note that the search is performed only on "
-			  "processes shown in the process list."));
-		gtk_dialog_run (GTK_DIALOG (dialog));
-		gtk_widget_destroy (dialog);
-	}
-	else {
-		/* no more cases found. Start the search anew */
-		increment = -1;
-		proctable_search_table (procdata, string);
-		return;
-	}
-
-	increment --;
+	return g_strdup_printf(
+		_("Load averages for the last 1, 5, 15 minutes: "
+		  "%0.2f, %0.2f, %0.2f"),
+		buf.loadavg[0],
+		buf.loadavg[1],
+		buf.loadavg[2]);
 }
-

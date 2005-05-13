@@ -132,12 +132,11 @@ create_proc_view (ProcData *procdata)
 {
 	GtkWidget *vbox1, *vbox2;
 	GtkWidget *hbox1;
-	GtkWidget *search_label;
-	GtkWidget *search_entry;
 	GtkWidget *proc_combo;
 	GtkWidget *scrolled;
 	GtkWidget *label;
 	GtkWidget *hbox2;
+	char* string;
 
 	vbox1 = gtk_vbox_new (FALSE, 18);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox1), 12);
@@ -145,14 +144,10 @@ create_proc_view (ProcData *procdata)
 	hbox1 = gtk_hbox_new (FALSE, 12);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
 
-	search_label = gtk_label_new_with_mnemonic (_("Sea_rch:"));
-	gtk_box_pack_start (GTK_BOX (hbox1), search_label, FALSE, FALSE, 0);
-	
-	search_entry = gtk_entry_new ();
-	gtk_box_pack_start (GTK_BOX (hbox1), search_entry, FALSE, FALSE, 0);
-	g_signal_connect (G_OBJECT (search_entry), "activate",
-			  G_CALLBACK (cb_search), procdata);
-	gtk_label_set_mnemonic_widget (GTK_LABEL (search_label), search_entry);
+	string = make_loadavg_string ();
+	procdata->loadavg = gtk_label_new (string);
+	g_free (string);
+	gtk_box_pack_start (GTK_BOX (hbox1), procdata->loadavg, FALSE, FALSE, 0);
 
 	proc_combo = gtk_combo_box_new_text ();
 	gtk_box_pack_end (GTK_BOX (hbox1), proc_combo, FALSE, FALSE, 0);

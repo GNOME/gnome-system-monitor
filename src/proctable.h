@@ -56,7 +56,7 @@ ProcInfo *	proctable_find_process (guint pid, ProcData *procdata) G_GNUC_INTERNA
 void		proctable_update_all (ProcData *data) G_GNUC_INTERNAL;
 void		proctable_clear_tree (ProcData *data) G_GNUC_INTERNAL;
 void		proctable_free_table (ProcData *data) G_GNUC_INTERNAL;
-void		proctable_search_table (ProcData *procdata, const gchar *string) G_GNUC_INTERNAL;
 
+char*		make_loadavg_string(void) G_GNUC_INTERNAL;
 
 #endif /* _PROCMAN_PROCTABLE_H_ */

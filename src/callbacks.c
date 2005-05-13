@@ -221,20 +221,6 @@ cb_end_process_button_pressed (GtkButton *button, gpointer data)
 }
 
 
-void
-cb_search (GtkEditable *editable, gpointer data)
-{
-	ProcData * const procdata = data;
-	gchar *text;
-
-	text = gtk_editable_get_chars (editable, 0, -1);
-
-	proctable_search_table (procdata, text);
-	gtk_widget_grab_focus (GTK_WIDGET (editable));
-	g_free (text);
-}
-
-
 static void change_gconf_color(GConfClient *client, const char *key,
 			       GtkColorButton *cp)
 {

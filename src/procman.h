@@ -153,6 +153,7 @@ struct _ProcData
 	GtkWidget	*statusbar;
 	gint		tip_message_cid;
 	GtkWidget	*tree;
+	GtkWidget	*loadavg;
 	GtkWidget	*endprocessbutton;
 	GtkWidget	*popup_menu;
 	Infoview	infoview;
