@@ -115,18 +115,18 @@ procdialog_create_kill_dialog (ProcData *data, int signal)
                 /*translators: primary alert message*/
   		primary = _("Kill the selected process?");
 		/*translators: secondary alert message*/
-		secondary = _("Killing a process, you could destroy your data, "
-			      "break the working session or create a security risk. "
-			      "Only misbehaving processes should be killed.");
+		secondary = _("Killing a process may destroy data, break the "
+			      "session or introduce a security risk. "
+			      "Only unresponding processes should be killed.");
   		button_text = _("_Kill Process");
 		  	}
   	else {
                 /*translators: primary alert message*/
                 primary = _("End the selected process?");
 	        /*translators: secondary alert message*/
-                secondary = _("Ending a process, you could destroy your data, "
-		              "break the working session or create a security risk. "
-			      "Only misbehaving processes should be ended.");
+		secondary = _("Ending a process may destroy data, break the "
+			      "session or introduce a security risk. "
+			      "Only unresponding processes should be ended.");
                 button_text = _("_End Process");
   	}
 
