@@ -18,8 +18,8 @@ typedef struct _SmoothRefresh SmoothRefresh;
   @return : initialized SmoothRefresh
  */
 
-SmoothRefresh* G_GNUC_INTERNAL
-smooth_refresh_new(const guint * config_interval);
+SmoothRefresh*
+smooth_refresh_new(const guint * config_interval) G_GNUC_INTERNAL;
 
 
 
@@ -30,8 +30,8 @@ smooth_refresh_new(const guint * config_interval);
 
  */
 
-void G_GNUC_INTERNAL
-smooth_refresh_reset(SmoothRefresh *sm);
+void
+smooth_refresh_reset(SmoothRefresh *sm) G_GNUC_INTERNAL;
 
 
 
@@ -42,8 +42,8 @@ smooth_refresh_reset(SmoothRefresh *sm);
 
  */
 
-void G_GNUC_INTERNAL
-smooth_refresh_destroy(SmoothRefresh *sm);
+void
+smooth_refresh_destroy(SmoothRefresh *sm) G_GNUC_INTERNAL;
 
 
 
@@ -59,8 +59,8 @@ smooth_refresh_destroy(SmoothRefresh *sm);
   is stored in @new_interval. Else FALSE;
  */
 
-gboolean G_GNUC_INTERNAL
-smooth_refresh_get(SmoothRefresh *sm, guint *new_interval);
+gboolean
+smooth_refresh_get(SmoothRefresh *sm, guint *new_interval) G_GNUC_INTERNAL;
 
 
 G_END_DECLS
