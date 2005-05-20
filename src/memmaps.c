@@ -33,21 +33,6 @@ enum
 #define MMAP_COL_MAX_VISIBLE (MMAP_COL_INODE + 1)
 
 
-typedef struct _MemmapsInfo MemmapsInfo;
-
-struct _MemmapsInfo
-{
-	gchar *filename;
-	gchar *vmstart;
-	gchar *vmend;
-	gchar *vmsize;
-	gchar *flags;
-	gchar *vmoffset;
-	gchar *device;
-	gchar *inode;
-};
-
-
 
 /*
  * Returns a new allocated string representing @v
@@ -66,12 +51,18 @@ add_new_maps (gpointer key, gpointer value, gpointer data)
 	glibtop_map_entry * const memmaps = value;
 	GtkTreeModel * const model = data;
 	GtkTreeIter row;
-	MemmapsInfo info;
-	guint64 vmsize;
+	guint64 size;
+	char *filename;
+	char *vmstart;
+	char *vmend;
+	char *vmsize;
+	char *vmoffset;
+	char *device;
+	char *inode;
 	char flags[5] = "----";
 	unsigned short dev_major, dev_minor;
 
-	vmsize = memmaps->end - memmaps->start;
+	size = memmaps->end - memmaps->start;
 	dev_minor = memmaps->device & 255;
 	dev_major = (memmaps->device >> 8) & 255;
 
@@ -82,40 +73,38 @@ add_new_maps (gpointer key, gpointer value, gpointer data)
 	if(memmaps->perm & GLIBTOP_MAP_PERM_PRIVATE) flags [3] = 'p';
 
 	if (memmaps->flags & (1 << GLIBTOP_MAP_ENTRY_FILENAME))
-		info.filename = g_strdup (memmaps->filename);
+		filename = g_strdup (memmaps->filename);
 	else
-		info.filename = g_strdup ("");
+		filename = g_strdup ("");
 
-	info.vmstart  = vmoff_tostring (memmaps->start);
-	info.vmend    = vmoff_tostring (memmaps->end);
-	info.vmsize   = SI_gnome_vfs_format_file_size_for_display (vmsize);
-	info.flags    = g_strdup (flags);
-	info.vmoffset = vmoff_tostring (memmaps->offset);
-	info.device   = g_strdup_printf ("%02hx:%02hx", dev_major, dev_minor);
-	info.inode    = g_strdup_printf ("%llu", memmaps->inode);
+	vmstart  = vmoff_tostring (memmaps->start);
+	vmend    = vmoff_tostring (memmaps->end);
+	vmsize   = SI_gnome_vfs_format_file_size_for_display (size);
+	vmoffset = vmoff_tostring (memmaps->offset);
+	device   = g_strdup_printf ("%02hx:%02hx", dev_major, dev_minor);
+	inode    = g_strdup_printf ("%llu", memmaps->inode);
 
 	gtk_list_store_insert (GTK_LIST_STORE (model), &row, 0);
 	gtk_list_store_set (GTK_LIST_STORE (model), &row,
-			    MMAP_COL_FILENAME, info.filename,
-			    MMAP_COL_VMSTART, info.vmstart,
-			    MMAP_COL_VMEND, info.vmend,
-			    MMAP_COL_VMSZ, info.vmsize,
-			    MMAP_COL_FLAGS, info.flags,
-			    MMAP_COL_VMOFFSET, info.vmoffset,
-			    MMAP_COL_DEVICE, info.device,
-			    MMAP_COL_INODE, info.inode,
+			    MMAP_COL_FILENAME, filename,
+			    MMAP_COL_VMSTART, vmstart,
+			    MMAP_COL_VMEND, vmend,
+			    MMAP_COL_VMSZ, vmsize,
+			    MMAP_COL_FLAGS, flags,
+			    MMAP_COL_VMOFFSET, vmoffset,
+			    MMAP_COL_DEVICE, device,
+			    MMAP_COL_INODE, inode,
 			    MMAP_COL_VMSZ_INT, vmsize,
 			    MMAP_COL_INODE_INT, memmaps->inode,
 			    -1);
 
-	g_free (info.filename);
-	g_free (info.vmstart);
-	g_free (info.vmend);
-	g_free (info.vmsize);
-	g_free (info.flags);
-	g_free (info.device);
-	g_free (info.vmoffset);
-	g_free (info.inode);
+	g_free (filename);
+	g_free (vmstart);
+	g_free (vmend);
+	g_free (vmsize);
+	g_free (device);
+	g_free (vmoffset);
+	g_free (inode);
 }
 
 
