@@ -1,3 +1,15 @@
+2005-05-23  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/memmaps.c: (ghashtable_clear_callback), (ghashtable_clear),
+	(add_new_maps), (compare_memmaps), (update_memmaps_dialog),
+	(close_memmaps_dialog), (create_memmapsdata), (memmaps_timer),
+	(create_single_memmaps_dialog), (create_memmaps_dialog): Big rework.
+	
+	Moved all data to MemMapsData instead of storing(hiding) stuff in the
+	tree's gobject properties. So it's also now reentrant. Added some TODO.
+	I think it's cleaner like this. opendialogs.c should be reworked the
+	same way :/
+
 2005-05-20  Benoît Dejean  <TazForEver@dlfp.org>
 
 	* src/memmaps.c: (add_new_maps): Little cleanup. Removed unneeded

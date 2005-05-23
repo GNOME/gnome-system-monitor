@@ -33,6 +33,23 @@ enum
 #define MMAP_COL_MAX_VISIBLE (MMAP_COL_INODE + 1)
 
 
+typedef struct
+{
+	int timer;
+	GtkWidget *tree;
+	GPtrArray *old_maps;
+
+	/*
+	  { VMStart -> glibtop_map_entry* }
+	*/
+	GHashTable *new_maps;
+
+	GConfClient *client;
+	ProcInfo *info;
+
+} MemMapsData;
+
+
 
 /*
  * Returns a new allocated string representing @v
@@ -42,6 +59,31 @@ static gchar* vmoff_tostring(guint64 v)
 	return g_strdup_printf((sizeof (void*) == 8) ? "%016llx" : "%08llx",
 			       (sizeof (void*) == 8) ?  v : v & 0xffffffff);
 }
+
+
+
+/*
+ * Dummy callback used to clear a GHashTable
+ */
+static gboolean
+ghashtable_clear_callback (gpointer key, gpointer value, gpointer user_data)
+{
+	return TRUE;
+}
+
+
+/*
+ * Utility function to clear a GHashTable without destroying it
+ * then creating a new one.
+ */
+
+static void
+ghashtable_clear(GHashTable *hash)
+{
+	g_hash_table_foreach_remove (hash, ghashtable_clear_callback, NULL);
+}
+
+
 
 
 
@@ -94,7 +136,7 @@ add_new_maps (gpointer key, gpointer value, gpointer data)
 			    MMAP_COL_VMOFFSET, vmoffset,
 			    MMAP_COL_DEVICE, device,
 			    MMAP_COL_INODE, inode,
-			    MMAP_COL_VMSZ_INT, vmsize,
+			    MMAP_COL_VMSZ_INT, size,
 			    MMAP_COL_INODE_INT, memmaps->inode,
 			    -1);
 
@@ -108,76 +150,87 @@ add_new_maps (gpointer key, gpointer value, gpointer data)
 }
 
 
-static GList *old_maps = NULL;
 
 
 static gboolean
 compare_memmaps (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
-	GHashTable * const new_maps = data;
-	GtkTreeIter *old_iter;
+	MemMapsData * const mmdata = data;
+
 	glibtop_map_entry *memmaps;
 	gchar *old_name;
 
-	gtk_tree_model_get (model, iter, 1, &old_name, -1);
+	gtk_tree_model_get (model, iter, MMAP_COL_VMSTART, &old_name, -1);
 
-	memmaps = g_hash_table_lookup (new_maps, old_name);
+	g_return_val_if_fail(old_name != NULL, FALSE);
+
+	/* If the glibtop_map_entry is still there, we remove it
+	   from the new_maps so it's going to be updated only.
+	   Else we add it to the old_maps to be removed.
+	*/
+	/* TODO: lookup is based on vmstart which seems totally broken */
+	memmaps = g_hash_table_lookup (mmdata->new_maps, old_name);
 	if (memmaps) {
-		g_hash_table_remove (new_maps, old_name);
-		g_free (old_name);
-		return FALSE;
+		g_hash_table_remove (mmdata->new_maps, old_name);
+	}
+	else
+	{
+		GtkTreeIter *old_iter;
+		old_iter = gtk_tree_iter_copy (iter);
+		g_ptr_array_add (mmdata->old_maps, old_iter);
 	}
 
-	old_iter = gtk_tree_iter_copy (iter);
-	old_maps = g_list_prepend (old_maps, old_iter);
 	g_free (old_name);
 	return FALSE;
 }
 
 
 static void
-update_memmaps_dialog (GtkWidget *tree)
+update_memmaps_dialog (MemMapsData *mmdata)
 {
-	ProcInfo *info;
 	GtkTreeModel *model;
 	glibtop_map_entry *memmaps;
 	glibtop_proc_map procmap;
-	GHashTable *new_maps;
 	gint i;
 
-	info = g_object_get_data (G_OBJECT (tree), "selected_info");
-	g_return_if_fail (info);
+	memmaps = glibtop_get_proc_map (&procmap, mmdata->info->pid);
+	/* process has disappeared */
+	if(!memmaps) return;
 
-	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
+	/* fill mmdata->new_maps with { VMstart -> memmaps[i] */
 
-	memmaps = glibtop_get_proc_map (&procmap, info->pid);
+	g_assert(g_hash_table_size(mmdata->new_maps) == 0);
 
-	if (!memmaps)
-		return;
-
-	new_maps = g_hash_table_new_full (g_str_hash, g_str_equal,
-					  g_free, NULL);
 	for (i=0; i < procmap.number; i++) {
 		gchar *vmstart;
 		vmstart = vmoff_tostring (memmaps[i].start);
-		g_hash_table_insert (new_maps, vmstart, &memmaps[i]);
+		g_hash_table_insert (mmdata->new_maps, vmstart, &memmaps[i]);
 	}
 
-	gtk_tree_model_foreach (model, compare_memmaps, new_maps);
 
-	g_hash_table_foreach (new_maps, add_new_maps, model);
+	/* update the mmaps */
 
-	while (old_maps) {
-		GtkTreeIter *iter = old_maps->data;
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (mmdata->tree));
+	gtk_tree_model_foreach (model, compare_memmaps, mmdata);
+
+	g_hash_table_foreach (mmdata->new_maps, add_new_maps, model);
+
+	ghashtable_clear (mmdata->new_maps);
+
+
+	/* remove and clear the old mmaps*/
+
+	for(i = 0; i < mmdata->old_maps->len; ++i)
+	{
+		GtkTreeIter *iter = g_ptr_array_index (mmdata->old_maps, i);
 
 		gtk_list_store_remove (GTK_LIST_STORE (model), iter);
 		gtk_tree_iter_free (iter);
-
-		old_maps = g_list_next (old_maps);
-
 	}
 
-	g_hash_table_destroy (new_maps);
+	g_ptr_array_set_size (mmdata->old_maps, 0);
+
+
 	g_free (memmaps);
 }
 
@@ -185,17 +238,17 @@ update_memmaps_dialog (GtkWidget *tree)
 static void
 close_memmaps_dialog (GtkDialog *dialog, gint id, gpointer data)
 {
-	GtkWidget * const tree = data;
-	GConfClient *client;
-	gint timer;
+	MemMapsData * const mmdata = data;
 
-	client = g_object_get_data (G_OBJECT (tree), "client");
-	procman_save_tree_state (client, tree, "/apps/procman/memmapstree2");
+	procman_save_tree_state (mmdata->client, mmdata->tree, "/apps/procman/memmapstree2");
 
-	timer = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (tree), "timer"));
-	gtk_timeout_remove (timer);
+	gtk_timeout_remove (mmdata->timer);
 
 	gtk_widget_destroy (GTK_WIDGET (dialog));
+
+	g_ptr_array_free (mmdata->old_maps, TRUE);
+	g_hash_table_destroy (mmdata->new_maps);
+	g_free (mmdata);
 }
 
 
@@ -229,13 +282,12 @@ sort_guint64 (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpoin
 
 
 
-static GtkWidget *
-create_memmaps_tree (ProcData *procdata)
+static MemMapsData*
+create_memmapsdata (ProcData *procdata)
 {
+	MemMapsData *mmdata;
 	GtkWidget *tree;
 	GtkListStore *model;
-	GtkTreeViewColumn *column;
-	GtkCellRenderer *cell;
 	guint i;
 
 	static const gchar *titles[] = {
@@ -251,13 +303,18 @@ create_memmaps_tree (ProcData *procdata)
 
 	PROCMAN_GETTEXT_ARRAY_INIT(titles);
 
-
 	model = gtk_list_store_new (MMAP_COL_MAX,
-				    G_TYPE_STRING, G_TYPE_STRING,
-				    G_TYPE_STRING, G_TYPE_STRING,
-				    G_TYPE_STRING, G_TYPE_STRING,
-				    G_TYPE_STRING, G_TYPE_STRING,
-				    G_TYPE_UINT64, G_TYPE_UINT64 /* these are invisible */
+				    G_TYPE_STRING, /* MMAP_COL_FILENAME  */
+				    G_TYPE_STRING, /* MMAP_COL_VMSTART	 */
+				    G_TYPE_STRING, /* MMAP_COL_VMEND	 */
+				    G_TYPE_STRING, /* MMAP_COL_VMSZ	 */
+				    G_TYPE_STRING, /* MMAP_COL_FLAGS	 */
+				    G_TYPE_STRING, /* MMAP_COL_VMOFFSET  */
+				    G_TYPE_STRING, /* MMAP_COL_DEVICE	 */
+				    G_TYPE_STRING, /* MMAP_COL_INODE	 */
+				    /* hidden */
+				    G_TYPE_UINT64, /* MMAP_COL_VMSZ_INT  */
+				    G_TYPE_UINT64  /* MMAP_COL_INODE_INT */
 				    );
 
 	tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
@@ -265,6 +322,9 @@ create_memmaps_tree (ProcData *procdata)
 	g_object_unref (G_OBJECT (model));
 
 	for (i = 0; i < MMAP_COL_MAX_VISIBLE; i++) {
+		GtkCellRenderer *cell;
+		GtkTreeViewColumn *column;
+
 		cell = gtk_cell_renderer_text_new ();
 
 		column = gtk_tree_view_column_new_with_attributes (titles[i],
@@ -291,20 +351,30 @@ create_memmaps_tree (ProcData *procdata)
 
 	procman_get_tree_state (procdata->client, tree, "/apps/procman/memmapstree2");
 
-	return tree;
+
+	mmdata = g_new(MemMapsData, 1);
+
+	mmdata->timer = -1;
+	mmdata->client = procdata->client;
+	mmdata->tree = tree;
+	mmdata->old_maps = g_ptr_array_new ();
+	mmdata->new_maps = g_hash_table_new_full (g_str_hash, g_str_equal,
+						  g_free, NULL);
+
+	return mmdata;
 }
 
 
 static gint
 memmaps_timer (gpointer data)
 {
-	GtkWidget * const tree = data;
+	MemMapsData * const mmdata = data;
 	GtkTreeModel *model;
 
-	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (mmdata->tree));
 	g_return_val_if_fail (model, FALSE);
 
-	update_memmaps_dialog (tree);
+	update_memmaps_dialog (mmdata);
 
 	return TRUE;
 }
@@ -315,16 +385,18 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 			      GtkTreeIter *iter, gpointer data)
 {
 	ProcData * const procdata = data;
+	MemMapsData *mmdata;
 	GtkWidget *memmapsdialog;
 	GtkWidget *dialog_vbox, *vbox;
 	GtkWidget *label;
 	GtkWidget *scrolled;
-	GtkWidget *tree;
 	ProcInfo *info;
-	gint timer;
 
 	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 	g_return_if_fail (info);
+
+	mmdata = create_memmapsdata (procdata);
+	mmdata->info = info;
 
 	memmapsdialog = gtk_dialog_new_with_buttons (_("Memory Maps"), GTK_WINDOW (procdata->app),
 						     GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -360,31 +432,27 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
 					     GTK_SHADOW_IN);
 
-	tree = create_memmaps_tree (procdata);
-	gtk_container_add (GTK_CONTAINER (scrolled), tree);
-	g_object_set_data (G_OBJECT (tree), "selected_info", info);
-	g_object_set_data (G_OBJECT (tree), "client", procdata->client);
-	gtk_label_set_mnemonic_widget (GTK_LABEL (label), tree);
+	gtk_container_add (GTK_CONTAINER (scrolled), mmdata->tree);
+	gtk_label_set_mnemonic_widget (GTK_LABEL (label), mmdata->tree);
 
 	gtk_box_pack_start (GTK_BOX (dialog_vbox), scrolled, TRUE, TRUE, 0);
 	gtk_widget_show_all (scrolled);
 
 	g_signal_connect (G_OBJECT (memmapsdialog), "response",
-			  G_CALLBACK (close_memmaps_dialog), tree);
+			  G_CALLBACK (close_memmaps_dialog), mmdata);
 
 	gtk_widget_show_all (memmapsdialog);
 
-	timer = gtk_timeout_add (5000, memmaps_timer, tree);
-	g_object_set_data (G_OBJECT (tree), "timer", GINT_TO_POINTER (timer));
+	mmdata->timer = gtk_timeout_add (5000, memmaps_timer, mmdata);
 
-	update_memmaps_dialog (tree);
-
+	update_memmaps_dialog (mmdata);
 }
 
 
 void
 create_memmaps_dialog (ProcData *procdata)
 {
+	/* TODO: do we really want to open multiple dialogs ? */
 	gtk_tree_selection_selected_foreach (procdata->selection, create_single_memmaps_dialog,
 					     procdata);
 }
