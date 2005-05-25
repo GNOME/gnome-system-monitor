@@ -49,11 +49,7 @@
 #include "infoview.h"
 #include "interface.h"
 #include "favorites.h"
-
-
-#ifdef ENABLE_SELINUX
-#include <selinux/selinux.h>
-#endif
+#include "selinux.h"
 
 
 static guint64 total_time = 1;
@@ -99,43 +95,6 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 	}
 }
 
-
-
-static gboolean
-can_show_security_context_column (void)
-{
-#ifdef ENABLE_SELINUX
-	switch (is_selinux_enabled()) {
-	case 1: /* We're running on an SELinux kernel */ 
-		return TRUE;
-
-	default:
-	case -1: 
-		/* Error; hide the security context column */
-
-	case 0: 
-		/* We're not running on an SELinux kernel: hide the security context column */
-		return FALSE;
-	}
-#else
-	/* Support disabled; hide the security context column */
-	return FALSE;
-#endif
-}
-
-static void
-get_process_selinux_context (ProcInfo *info)
-{
-#ifdef ENABLE_SELINUX
-	/* Directly grab the SELinux security context: */
-	security_context_t con;
-
-	if (!getpidcon (info->pid, &con)) {
-		info->security_context = g_strdup (con);
-		freecon (con);
-	}
-#endif
-}
 
 
 static void

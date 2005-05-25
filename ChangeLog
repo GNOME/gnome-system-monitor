@@ -1,5 +1,15 @@
 2005-05-25  Benoît Dejean  <TazForEver@dlfp.org>
 
+	* configure.in:
+	* src/Makefile.am:
+	* src/proctable.c:
+	* src/selinux.c: (get_process_selinux_context),
+	(can_show_security_context_column):
+	* src/selinux.h: Moved all the SELinux code to src/selinux.[ch].
+	Better SELinux (auto-)detection in configure.in.
+
+2005-05-25  Benoît Dejean  <TazForEver@dlfp.org>
+
 	* src/procman.h:
 	* src/proctable.c: (proctable_free_info), (remove_info_from_list),
 	(get_info): ProcInfo::children is now GSList.

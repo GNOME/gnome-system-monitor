@@ -22,8 +22,11 @@ gnome_system_monitor_SOURCES = \
 	openfiles.c openfiles.h \
 	favorites.c favorites.h \
 	smooth_refresh.c smooth_refresh.h \
-	defaulttable.h
+	defaulttable.h \
+	selinux.h selinux.c
 
+
+gnome_system_monitor_LDADD = @PROCMAN_LIBS@ $(SELINUX_LIBS) libbacon.la 
 
 
 noinst_LTLIBRARIES = libbacon.la
@@ -31,12 +34,6 @@ libbacon_la_SOURCES = \
 	bacon-message-connection.c \
 	bacon-message-connection.h
 
-
-if ENABLE_SELINUX
-gnome_system_monitor_LDADD = @PROCMAN_LIBS@ libbacon.la -lselinux
-else
-gnome_system_monitor_LDADD = @PROCMAN_LIBS@ libbacon.la
-endif
 
 specdir = $(datadir)/procman
 
