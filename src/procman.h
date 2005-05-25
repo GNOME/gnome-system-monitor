@@ -115,7 +115,7 @@ struct _ProcInfo
 	GtkTreeIter	node;
 	GtkTreePath	*path;
 	ProcInfo	*parent;
-	GList		*children;
+	GSList		*children;
 
 	GdkPixbuf	*pixbuf;
 	gchar		*name;

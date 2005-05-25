@@ -361,7 +361,7 @@ proctable_free_info (ProcData *procdata, ProcInfo *info)
 	g_free (info->name);
 	g_free (info->arguments);
 	g_free (info->security_context);
-	g_list_free (info->children);
+	g_slist_free (info->children);
 	g_mem_chunk_free (procdata->procinfo_allocator, info);
 }
 
@@ -669,21 +669,21 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 static void
 remove_info_from_list (ProcInfo *info, ProcData *procdata)
 {
-	GList *child;
+	GSList *child;
 	ProcInfo * const parent = info->parent;
 
 	/* Remove info from parent list */
 	if (parent)
-		parent->children = g_list_remove (parent->children, info);
+		parent->children = g_slist_remove (parent->children, info);
 
 	/* Add any children to parent list */
-	for(child = info->children; child; child = g_list_next (child)) {
+	for(child = info->children; child; child = g_slist_next (child)) {
 		ProcInfo *child_info = child->data;
 		child_info->parent = parent;
 	}
 
 	if(parent) {
-		parent->children = g_list_concat(parent->children,
+		parent->children = g_slist_concat(parent->children,
 						 info->children);
 		info->children = NULL;
 	}
@@ -796,7 +796,7 @@ get_info (ProcData *procdata, gint pid)
 
 	info->parent = find_parent (procdata, procuid.ppid);
 	if (info->parent) {
-		info->parent->children = g_list_prepend (info->parent->children, info);
+		info->parent->children = g_slist_prepend (info->parent->children, info);
 		if(g_str_equal(info->name, info->parent->name)
 		   && info->parent->mem == info->mem)
 			info->is_thread = TRUE;
