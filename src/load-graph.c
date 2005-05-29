@@ -20,8 +20,6 @@
 #include "util.h"
 
 
-static GList *object_list = NULL;
-
 #define FRAME_WIDTH 4
 
 /* Redraws the backing pixmap for the load graph and updates the window */
@@ -367,8 +365,6 @@ load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
 
 	load_graph_stop (g);
 
-	object_list = g_list_remove (object_list, g);
-
 	if (g->timer_index != -1)
 		gtk_timeout_remove (g->timer_index);
 
@@ -436,8 +432,6 @@ load_graph_new (gint type, ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (g->main_widget), g->disp, TRUE, TRUE, 0);
 
 	load_graph_alloc (g);
-
-	object_list = g_list_prepend (object_list, g);
 
 	gtk_widget_show_all (g->main_widget);
 
