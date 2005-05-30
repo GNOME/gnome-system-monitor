@@ -226,14 +226,42 @@ get_memory (gfloat data [1], LoadGraph *g)
 	data [1] = swappercent;
 }
 
+
+
+/*
+  Shifts data right
+
+  data[i+1] = data[i]
+
+  data[i] are float*, so we just move the pointer, not the data.
+  But moving data loses data[n-1], so we save data[n-1] and reuse
+  it as new data[0]. In fact, we rotate data[].
+
+*/
+
+static void
+shift_right(LoadGraph *g)
+{
+	unsigned i;
+	float* last_data;
+
+	/* data[g->num_points - 1] becomes data[0] */
+	last_data = g->data[g->num_points - 1];
+
+	/* data[i+1] = data[i] */
+	for(i = g->num_points - 1; i != 0; --i)
+		g->data[i] = g->data[i-1];
+
+	g->data[0] = last_data;
+}
+
+
+
 /* Updates the load graph when the timeout expires */
 static int
 load_graph_update (LoadGraph *g)
 {
-	guint i, j;
-
-	for (i = 0; i < g->num_points; i++)
-		memcpy (g->odata [i], g->data [i], g->data_size);
+	shift_right(g);
 
 	switch (g->type) {
 	case LOAD_GRAPH_CPU:
@@ -243,10 +271,6 @@ load_graph_update (LoadGraph *g)
 		get_memory (g->data [0], g);
 		break;
 	}
-
-	for (i=0; i < g->num_points-1; i++)
-		for (j=0; j < g->n; j++)
-			g->data [i+1][j] = g->odata [i][j];
 
 	if (g->draw)
 		load_graph_draw (g);
@@ -264,15 +288,13 @@ load_graph_unalloc (LoadGraph *g)
 
 	for (i = 0; i < g->num_points; i++) {
 		g_free (g->data [i]);
-		g_free (g->odata [i]);
 	}
 
 	g_free (g->data);
-	g_free (g->odata);
 	g_free (g->pos);
 
 	g->pos = NULL;
-	g->data = g->odata = NULL;
+	g->data = NULL;
 
 	if (g->pixmap) {
 		gdk_pixmap_unref (g->pixmap);
@@ -291,7 +313,6 @@ load_graph_alloc (LoadGraph *g)
 		return;
 
 	g->data = g_new (gfloat *, g->num_points);
-	g->odata = g_new (gfloat *, g->num_points);
 	g->pos = g_new0 (guint, g->num_points);
 
 	g->data_size = sizeof (gfloat) * g->n;
@@ -300,8 +321,6 @@ load_graph_alloc (LoadGraph *g)
 
 		g->data [i] = g_malloc (g->data_size);
 		for(j = 0; j < g->n; j++) g->data [i][j] = -1;
-
-		g->odata [i] = g_malloc0 (g->data_size);
 	}
 
 	g->allocated = TRUE;
