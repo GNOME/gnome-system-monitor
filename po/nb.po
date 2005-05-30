@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman 2.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-25 14:27+0200\n"
+"POT-Creation-Date: 2005-05-30 16:48+0200\n"
 "PO-Revision-Date: 2005-05-25 14:31+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:141
-#: ../src/interface.c:640
+#: ../src/interface.c:645
 msgid "System Monitor"
 msgstr "Systemmonitor"
 
@@ -164,7 +164,7 @@ msgstr "Tid mellom oppdatering av prosessvisning i millisekunder"
 
 #: ../src/gnome-system-monitor.schemas.in.h:22
 msgid "Whether information about all filesystems should be displayed"
-msgstr ""
+msgstr "Vise informasjon om alle filsystemene"
 
 #: ../src/gnome-system-monitor.schemas.in.h:23
 msgid ""
@@ -172,6 +172,9 @@ msgid ""
 "include filesystem types like 'autofs' and 'procfs'. It can be usefull to "
 "get a list of all currently mounted filesystems."
 msgstr ""
+"Vise informasjon om alle filsystemene: dette inkluderer filsystemer som "
+"«autofs» og «procfs». Det kan være hendig å få en liste over alle "
+"monterte filsystemer."
 
 #: ../src/infoview.c:34
 msgid "Less _Info"
@@ -398,7 +401,7 @@ msgstr "Ledig"
 msgid "Used"
 msgstr "Brukt"
 
-#: ../src/interface.c:285 ../src/interface.c:712 ../src/procdialogs.c:735
+#: ../src/interface.c:285 ../src/interface.c:717 ../src/procdialogs.c:735
 #: ../src/procdialogs.c:739
 msgid "Devices"
 msgstr "Enheter"
@@ -407,32 +410,36 @@ msgstr "Enheter"
 msgid "CPU History"
 msgstr "Historikk for CPU-bruk"
 
-#: ../src/interface.c:460
+#: ../src/interface.c:461
+msgid "CPU:"
+msgstr "CPU:"
+
+#: ../src/interface.c:464
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: ../src/interface.c:479
+#: ../src/interface.c:484
 msgid "Memory and Swap History"
 msgstr "Historikk for minne- og swap-bruk"
 
-#: ../src/interface.c:512
+#: ../src/interface.c:517
 msgid "User memory:"
 msgstr "Brukerminne:"
 
-#: ../src/interface.c:521 ../src/interface.c:552
+#: ../src/interface.c:526 ../src/interface.c:557
 msgid "of"
 msgstr "av"
 
-#: ../src/interface.c:543
+#: ../src/interface.c:548
 msgid "Used swap:"
 msgstr "Swap brukt:"
 
-#: ../src/interface.c:700 ../src/procdialogs.c:557
+#: ../src/interface.c:705 ../src/procdialogs.c:557
 msgid "Processes"
 msgstr "Prosesser"
 
-#: ../src/interface.c:706 ../src/procdialogs.c:644
+#: ../src/interface.c:711 ../src/procdialogs.c:644
 msgid "Resources"
 msgstr "Ressurser"
 
@@ -556,7 +563,10 @@ msgstr "Terminer valgt prosess?"
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponding processes should be killed."
-msgstr "Ved terminering av en prosess kan du ødelegge data, kjørende sesjon kan slutte å fungere eller du kan skape en sikkerhetsrisiko. Kun prosesser som ikke responderer bør termineres."
+msgstr ""
+"Ved terminering av en prosess kan du ødelegge data, kjørende sesjon kan "
+"slutte å fungere eller du kan skape en sikkerhetsrisiko. Kun prosesser som "
+"ikke responderer bør termineres."
 
 #. translators: primary alert message
 #: ../src/procdialogs.c:125
@@ -565,14 +575,13 @@ msgstr "Avslutt valgt prosess?"
 
 #. translators: secondary alert message
 #: ../src/procdialogs.c:127
-#, fuzzy
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponding processes should be ended."
 msgstr ""
 "Ved avslutting av en prosess kan du ødelegge data, kjørende sesjon kan "
 "slutte å fungere eller du kan skape en sikkerhetsrisiko. Kun prosesser som "
-"ikke oppfører seg som de skal bør avsluttes"
+"ikke svarer bør avsluttes"
 
 #: ../src/procdialogs.c:130
 msgid "_End Process"
