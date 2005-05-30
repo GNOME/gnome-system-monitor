@@ -457,7 +457,12 @@ create_sys_view (ProcData *procdata)
 			    G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
 		gtk_box_pack_start (GTK_BOX (temp_hbox), color_picker, FALSE, FALSE, 0);
 		
-		text = g_strdup_printf (_("CPU%d:"), i+1);
+		if(procdata->config.num_cpus == 1) {
+			text = g_strdup (_("CPU:"));
+		}
+		else {
+			text = g_strdup_printf (_("CPU%d:"), i+1);
+		}
 		label = gtk_label_new (text);
 		gtk_box_pack_start (GTK_BOX (temp_hbox), label, FALSE, FALSE, 0);
 		g_free (text);
