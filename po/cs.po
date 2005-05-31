@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-15 14:00+0000\n"
-"PO-Revision-Date: 2005-05-15 20:50+0200\n"
+"POT-Creation-Date: 2005-05-30 23:00+0000\n"
+"PO-Revision-Date: 2005-05-31 13:07+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:141
-#: ../src/interface.c:640
+#: ../src/interface.c:645
 msgid "System Monitor"
 msgstr "Sledování systému"
 
@@ -381,7 +381,7 @@ msgstr "Aktivní procesy"
 msgid "Sho_w:"
 msgstr "_Zobrazovat:"
 
-#: ../src/interface.c:271 ../src/memmaps.c:259
+#: ../src/interface.c:271 ../src/memmaps.c:300
 msgid "Device"
 msgstr "Zařízení"
 
@@ -405,7 +405,7 @@ msgstr "Volné"
 msgid "Used"
 msgstr "Použito"
 
-#: ../src/interface.c:285 ../src/interface.c:712 ../src/procdialogs.c:735
+#: ../src/interface.c:285 ../src/interface.c:717 ../src/procdialogs.c:735
 #: ../src/procdialogs.c:739
 msgid "Devices"
 msgstr "Zařízení"
@@ -414,68 +414,72 @@ msgstr "Zařízení"
 msgid "CPU History"
 msgstr "Historie CPU"
 
-#: ../src/interface.c:460
+#: ../src/interface.c:461
+msgid "CPU:"
+msgstr "CPU:"
+
+#: ../src/interface.c:464
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: ../src/interface.c:479
+#: ../src/interface.c:484
 msgid "Memory and Swap History"
 msgstr "Historie použití paměti a odkládacího prostoru"
 
-#: ../src/interface.c:512
+#: ../src/interface.c:517
 msgid "User memory:"
 msgstr "Uživatelská paměť:"
 
-#: ../src/interface.c:521 ../src/interface.c:552
+#: ../src/interface.c:526 ../src/interface.c:557
 msgid "of"
 msgstr "z"
 
-#: ../src/interface.c:543
+#: ../src/interface.c:548
 msgid "Used swap:"
 msgstr "Použitý odkládací prostor:"
 
-#: ../src/interface.c:700 ../src/procdialogs.c:557
+#: ../src/interface.c:705 ../src/procdialogs.c:557
 msgid "Processes"
 msgstr "Procesy"
 
-#: ../src/interface.c:706 ../src/procdialogs.c:644
+#: ../src/interface.c:711 ../src/procdialogs.c:644
 msgid "Resources"
 msgstr "Zdroje"
 
-#: ../src/memmaps.c:253
+#: ../src/memmaps.c:294
 msgid "Filename"
 msgstr "Jméno souboru"
 
-#: ../src/memmaps.c:254
+#: ../src/memmaps.c:295
 msgid "VM Start"
 msgstr "Start VM"
 
-#: ../src/memmaps.c:255
+#: ../src/memmaps.c:296
 msgid "VM End"
 msgstr "Konec VM"
 
-#: ../src/memmaps.c:256 ../src/proctable.c:200
+#: ../src/memmaps.c:297 ../src/proctable.c:159
 msgid "VM Size"
 msgstr "Velikost VM"
 
-#: ../src/memmaps.c:257
+#: ../src/memmaps.c:298
 msgid "Flags"
 msgstr "Příznaky"
 
-#: ../src/memmaps.c:258
+#: ../src/memmaps.c:299
 msgid "VM Offset"
 msgstr "Offset VM"
 
-#: ../src/memmaps.c:260
+#: ../src/memmaps.c:301
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.c:340
+#: ../src/memmaps.c:401
 msgid "Memory Maps"
 msgstr "Mapy paměti"
 
-#: ../src/memmaps.c:360
+#: ../src/memmaps.c:421
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "_Mapy paměti pro proces \"%s\" (PID %u):"
@@ -563,7 +567,9 @@ msgstr "Zabít vybraný proces?"
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponding processes should be killed."
-msgstr "Zabití procesu může zničit data, přerušit sezení nebo způsobit bezpečnostní riziko. Zabíjet by se měly jen neodpovídající procesy."
+msgstr ""
+"Zabití procesu může zničit data, přerušit sezení nebo způsobit bezpečnostní "
+"riziko. Zabíjet by se měly jen neodpovídající procesy."
 
 #. translators: primary alert message
 #: ../src/procdialogs.c:125
@@ -575,7 +581,9 @@ msgstr "Uklnčit vybraný proces?"
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponding processes should be ended."
-msgstr "Ukončení procesu může zničit data, přerušit sezení nebo způsobit bezpečnostní riziko. Ukončovat by se měly jen neodpovídající procesy."
+msgstr ""
+"Ukončení procesu může zničit data, přerušit sezení nebo způsobit "
+"bezpečnostní riziko. Ukončovat by se měly jen neodpovídající procesy."
 
 #: ../src/procdialogs.c:130
 msgid "_End Process"
@@ -677,89 +685,89 @@ msgstr "Interval _aktualizace:"
 msgid "Show _all filesystems"
 msgstr "Zobrazovat _všechny systémy souborů"
 
-#: ../src/proctable.c:196
+#: ../src/proctable.c:155
 msgid "Process Name"
 msgstr "Jméno procesu"
 
-#: ../src/proctable.c:197
+#: ../src/proctable.c:156
 msgid "User"
 msgstr "Uživatel"
 
-#: ../src/proctable.c:198
+#: ../src/proctable.c:157
 msgid "Status"
 msgstr "Stav"
 
-#: ../src/proctable.c:199
+#: ../src/proctable.c:158
 msgid "Memory"
 msgstr "Paměť"
 
-#: ../src/proctable.c:201
+#: ../src/proctable.c:160
 msgid "Resident Memory"
 msgstr "Rezidentní paměť"
 
-#: ../src/proctable.c:202
+#: ../src/proctable.c:161
 msgid "Shared Memory"
 msgstr "Sdílená paměť"
 
-#: ../src/proctable.c:203
+#: ../src/proctable.c:162
 msgid "RSS Memory"
 msgstr "RSS paměť"
 
-#: ../src/proctable.c:204
+#: ../src/proctable.c:163
 msgid "X Server Memory"
 msgstr "Paměť X serveru"
 
-#: ../src/proctable.c:205
+#: ../src/proctable.c:164
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:206
+#: ../src/proctable.c:165
 msgid "CPU time"
 msgstr "Čas CPU"
 
-#: ../src/proctable.c:207
+#: ../src/proctable.c:166
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.c:208
+#: ../src/proctable.c:167
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.c:209
+#: ../src/proctable.c:168
 msgid "Security Context"
 msgstr "Kontext zabezpečení"
 
-#: ../src/proctable.c:210
+#: ../src/proctable.c:169
 msgid "Arguments"
 msgstr "Argumenty"
 
-#: ../src/proctable.c:376
+#: ../src/proctable.c:335
 msgid "Running"
 msgstr "Běží"
 
-#: ../src/proctable.c:381
+#: ../src/proctable.c:340
 msgid "Stopped"
 msgstr "Zastaven"
 
-#: ../src/proctable.c:386
+#: ../src/proctable.c:345
 msgid "Zombie"
 msgstr "Zombie"
 
-#: ../src/proctable.c:391
+#: ../src/proctable.c:350
 msgid "Uninterruptible"
 msgstr "Nepřerušitelný"
 
-#: ../src/proctable.c:396
+#: ../src/proctable.c:355
 msgid "Sleeping"
 msgstr "Spí"
 
-#: ../src/proctable.c:580
+#: ../src/proctable.c:539
 #, c-format
 msgid "%s (thread)"
 msgstr "%s (thread)"
 
-#: ../src/proctable.c:984
+#: ../src/proctable.c:943
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Průměry zátěže za posledních 1, 5, 15 minut: %0.2f, %0.2f, %0.2f"
