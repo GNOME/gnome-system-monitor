@@ -707,11 +707,6 @@ update_info (ProcData *procdata, ProcInfo *info)
 						&vis_rect);
 		gtk_tree_path_free (path);
 
-		/* Don't update if row is not visible.
-		   Small performance improvement */
-		if ((rect.y < 0) || (rect.y > vis_rect.height))
-			return;
-
 		update_info_mutable_cols(GTK_TREE_STORE (model), procdata, info);
 	}
 }
