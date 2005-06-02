@@ -679,9 +679,6 @@ update_info (ProcData *procdata, ProcInfo *info)
 	}
 
 	if (info->is_visible) {
-		GdkRectangle rect, vis_rect;
-		GtkTreePath *path;
-
 		GtkTreeModel *model;
 		glibtop_proc_uid procuid;
 		glibtop_proc_time proctime;
@@ -700,12 +697,6 @@ update_info (ProcData *procdata, ProcInfo *info)
 
 
 		model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-		path = gtk_tree_model_get_path (model, &info->node);
-		gtk_tree_view_get_cell_area (GTK_TREE_VIEW (procdata->tree),
-					     path, NULL, &rect);
-		gtk_tree_view_get_visible_rect (GTK_TREE_VIEW (procdata->tree),
-						&vis_rect);
-		gtk_tree_path_free (path);
 
 		update_info_mutable_cols(GTK_TREE_STORE (model), procdata, info);
 	}
