@@ -606,7 +606,6 @@ void
 remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 {
 	GtkTreeModel *model;
-	GtkTreeIter iter;
 
 	g_return_if_fail (info);
 
@@ -614,12 +613,11 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 		return;
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-	iter = info->node;
 
 	if (procdata->selected_process == info)
 		procdata->selected_process = NULL;
 
-	gtk_tree_store_remove (GTK_TREE_STORE (model), &iter);
+	gtk_tree_store_remove (GTK_TREE_STORE (model), &info->node);
 
 	info->is_visible = FALSE;
 }
