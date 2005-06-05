@@ -181,13 +181,14 @@ smooth_refresh_get(SmoothRefresh *sm, guint *new_interval)
 
 	sm->last_pcpu = pcpu;
 
-#if 1
-	printf(" %c CPU %3.1f%% current %u (config %u)\n",
-	       (changed ? 'M' : ' '),
-	       sm->last_pcpu,
-	       sm->interval,
-	       *sm->config_interval);
-#endif
+
+	if(changed) {
+		printf("CPU %3.1f%% current %u (config %u)\n",
+		       sm->last_pcpu,
+		       sm->interval,
+		       *sm->config_interval);
+	}
+
 	g_assert(sm->interval == *new_interval);
 	g_assert(sm->interval >= *sm->config_interval);
 
