@@ -43,6 +43,13 @@ enum
 
 #define NCPUSTATES 4
 
+enum
+{
+	MIN_UPDATE_INTERVAL = 1,
+	MAX_UPDATE_INTERVAL = 100
+};
+
+
 struct _ProcConfig
 {
 	gint		width;

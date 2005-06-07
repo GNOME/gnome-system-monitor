@@ -588,8 +588,13 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (hbox2), hbox3, TRUE, TRUE, 0);
 	
 	update = (gfloat) procdata->config.update_interval;
-	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 1.0, 
-							  100.0, 0.25, 1.0, 1.0);
+	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0,
+							  MIN_UPDATE_INTERVAL,
+							  MAX_UPDATE_INTERVAL,
+							  0.25,
+							  1.0,
+							  1.0);
+
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
 	gtk_box_pack_start (GTK_BOX (hbox3), spin_button, TRUE, TRUE, 0);
 	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",

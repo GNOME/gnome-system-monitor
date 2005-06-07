@@ -10,7 +10,7 @@
 #include <glibtop/cpu.h>
 
 #include "smooth_refresh.h"
-
+#include "procman.h"
 
 
 /*
@@ -139,7 +139,7 @@ smooth_refresh_get(SmoothRefresh *sm, guint *new_interval)
 
 	pcpu = get_own_cpu_usage(sm);
 /*
-  invariant: interval >= config_interval >= 1000
+  invariant: MAX_UPDATE_INTERVAL >= interval >= config_interval >= MIN_UPDATE_INTERVAL
 
   i see 3 cases:
 
@@ -171,6 +171,9 @@ smooth_refresh_get(SmoothRefresh *sm, guint *new_interval)
 		*new_interval = sm->interval;
 	}
 
+	*new_interval = CLAMP(*new_interval,
+			      MIN_UPDATE_INTERVAL,
+			      MAX_UPDATE_INTERVAL);
 
 	changed = sm->interval != *new_interval;
 
