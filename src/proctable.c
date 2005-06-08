@@ -317,6 +317,10 @@ proctable_free_info (ProcData *procdata, ProcInfo *info)
 {
 	g_return_if_fail(info != NULL);
 
+	if(info->pixbuf) {
+		g_object_unref (info->pixbuf);
+	}
+
 	g_free (info->name);
 	g_free (info->arguments);
 	g_free (info->security_context);

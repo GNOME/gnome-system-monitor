@@ -64,6 +64,7 @@ new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 		if (info->pixbuf)
 			return;
 		info->pixbuf = icon;
+		g_object_ref(info->pixbuf);
 		if (info->is_visible) {
 			GtkTreeModel *model;
 			model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
@@ -72,6 +73,7 @@ new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 		}
 	}
 
+	g_assert(g_hash_table_lookup(hash, GUINT_TO_POINTER(pid)) == NULL);
 	g_hash_table_insert (hash, GUINT_TO_POINTER(pid), icon);
 }
 
@@ -92,7 +94,7 @@ application_finished (WnckScreen *screen, WnckApplication *app, gpointer data)
 					  &orig_pid, &icon)) {
 		g_hash_table_remove (hash, orig_pid);
 		if (icon)
-			g_object_unref (G_OBJECT (icon));
+			g_object_unref (icon);
 	}
 }
 
@@ -130,13 +132,20 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table,
 {
 	GdkPixbuf *icon;
 
-	icon = g_hash_table_lookup (pretty_table->default_hash, command);
+	icon = g_hash_table_lookup (pretty_table->app_hash,
+				    GUINT_TO_POINTER(pid));
 
-	if (icon) {
-		return icon;
+	if(!icon) {
+		icon = g_hash_table_lookup (pretty_table->default_hash,
+					    command);
 	}
 
-	icon = g_hash_table_lookup (pretty_table->app_hash, GUINT_TO_POINTER(pid));
+	if(icon) {
+		g_object_ref (icon);
+	}
+
+	g_assert(!icon || G_IS_OBJECT(icon));
+
 	return icon;
 }
 
@@ -199,13 +208,13 @@ load_icon_for_commands(gpointer key, gpointer value, gpointer userdata)
 
 		for(i = 0; i < commands->len; ++i)
 		{
-			gdk_pixbuf_ref(scaled);
+			g_object_ref(scaled);
 			g_hash_table_insert(pretty_table->default_hash,
 					    g_strdup(g_ptr_array_index(commands, i)),
 					    scaled);
 		}
 
-		gdk_pixbuf_unref(scaled);
+		g_object_unref(scaled);
 	}
 }
 
