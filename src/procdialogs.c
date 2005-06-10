@@ -589,8 +589,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	
 	update = (gfloat) procdata->config.update_interval;
 	adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0,
-							  MIN_UPDATE_INTERVAL,
-							  MAX_UPDATE_INTERVAL,
+							  MIN_UPDATE_INTERVAL / 1000,
+							  MAX_UPDATE_INTERVAL / 1000,
 							  0.25,
 							  1.0,
 							  1.0);
