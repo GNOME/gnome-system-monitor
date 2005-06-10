@@ -388,10 +388,10 @@ gboolean
 procman_get_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefix)
 {
 	GtkTreeModel *model;
+	GList *columns, *it;
 	gint sort_col;
 	GtkSortType order;
 	gchar *key;
-	gint i;
 	
 	g_return_val_if_fail (tree, FALSE);
 	g_return_val_if_fail (prefix, FALSE);
@@ -413,33 +413,41 @@ procman_get_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefi
 		gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model),
 					      	      sort_col,
 					              order);
-	
-	for(i = 0; i < NUM_COLUMNS; ++i) {
+
+	columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree));
+
+	for(it = columns; it; it = it->next)
+	{
 		GtkTreeViewColumn *column;
 		GConfValue *value = NULL;
 		gint width;
 		gboolean visible;
-		
-		
-		key = g_strdup_printf ("%s/col_%d_width", prefix, i);
+		int id;
+
+		column = it->data;
+		id = gtk_tree_view_column_get_sort_column_id (column);
+
+		key = g_strdup_printf ("%s/col_%d_width", prefix, id);
 		value = gconf_client_get (client, key, NULL);
 		g_free (key);
-		
+
 		if (value != NULL) {
 			width = gconf_value_get_int(value);
 			gconf_value_free (value);
-		
-			key = g_strdup_printf ("%s/col_%d_visible", prefix, i);
+
+			key = g_strdup_printf ("%s/col_%d_visible", prefix, id);
 			visible = gconf_client_get_bool (client, key, NULL);
 			g_free (key);
-		
-			column = gtk_tree_view_get_column (GTK_TREE_VIEW (tree), i);
+
+			column = gtk_tree_view_get_column (GTK_TREE_VIEW (tree), id);
 			if(!column) continue;
 			gtk_tree_view_column_set_visible (column, visible);
 			if (width > 0)
 				gtk_tree_view_column_set_fixed_width (column, width);
 		}
 	}
+
+	g_list_free(columns);
 	
 	return TRUE;
 }
@@ -448,10 +456,9 @@ void
 procman_save_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefix)
 {
 	GtkTreeModel *model;
-	GList *columns;
+	GList *it, *columns;
 	gint sort_col;
 	GtkSortType order;
-	gint i = 0;
 	
 	g_return_if_fail (tree);
 	g_return_if_fail (prefix);
@@ -471,28 +478,30 @@ procman_save_tree_state (GConfClient *client, GtkWidget *tree, const gchar *pref
 	}			       
 	
 	columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree));
-	
-	while (columns) {
-		GtkTreeViewColumn *column = columns->data;
+
+	for(it = columns; it; it = it->next)
+	{
+		GtkTreeViewColumn *column;
 		gboolean visible;
 		gint width;
 		gchar *key;
-		
+		int id;
+
+		column = it->data;
+		id = gtk_tree_view_column_get_sort_column_id (column);
 		visible = gtk_tree_view_column_get_visible (column);
 		width = gtk_tree_view_column_get_width (column);
-		
-		key = g_strdup_printf ("%s/col_%d_width", prefix, i);
+
+		key = g_strdup_printf ("%s/col_%d_width", prefix, id);
 		gconf_client_set_int (client, key, width, NULL);
 		g_free (key);
-		
-		key = g_strdup_printf ("%s/col_%d_visible", prefix, i);
+
+		key = g_strdup_printf ("%s/col_%d_visible", prefix, id);
 		gconf_client_set_bool (client, key, visible, NULL);
 		g_free (key);
-		
-		columns = g_list_next (columns);
-		i++;
 	}
-	
+
+	g_list_free(columns);
 }
 
 void

@@ -432,7 +432,7 @@ create_proc_field_page (ProcData *procdata)
 	GtkWidget *scrolled;
 	GtkWidget *label;
 	GtkWidget *tree = procdata->tree, *treeview;
-	GList *columns = NULL;
+	GList *it, *columns;
 	GtkListStore *model;
 	GtkTreeViewColumn *column;
 	GtkCellRenderer *cell;
@@ -482,8 +482,9 @@ create_proc_field_page (ProcData *procdata)
 	
 	columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree));
 	
-	while (columns) {
-		GtkTreeViewColumn *column = columns->data;
+	for(it = columns; it; it = it->next)
+	{
+		GtkTreeViewColumn *column = it->data;
 		GtkTreeIter iter;
 		const gchar *title;
 		gboolean visible;
@@ -496,11 +497,9 @@ create_proc_field_page (ProcData *procdata)
 		
 		gtk_list_store_append (model, &iter);
 		gtk_list_store_set (model, &iter, 0, visible, 1, title, 2, column,-1);
-			    
-		
-		columns = g_list_next (columns);
 	}
-		
+
+	g_list_free(columns);
 
 	return vbox;
 }
