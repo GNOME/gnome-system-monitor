@@ -447,6 +447,19 @@ procman_get_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefi
 		}
 	}
 
+	if(g_str_has_suffix(prefix, "proctree"))
+	{
+		GSList *order;
+		char *key;
+
+		key = g_strdup_printf("%s/columns_order", prefix);
+		order = gconf_client_get_list(client, key, GCONF_VALUE_INT, NULL);
+		proctable_set_columns_order(GTK_TREE_VIEW(tree), order);
+
+		g_slist_free(order);
+		g_free(key);
+	}
+
 	g_list_free(columns);
 	
 	return TRUE;
@@ -499,6 +512,27 @@ procman_save_tree_state (GConfClient *client, GtkWidget *tree, const gchar *pref
 		key = g_strdup_printf ("%s/col_%d_visible", prefix, id);
 		gconf_client_set_bool (client, key, visible, NULL);
 		g_free (key);
+	}
+
+	if(g_str_has_suffix(prefix, "proctree"))
+	{
+		GSList *order;
+		char *key;
+		GError *error = NULL;
+
+		key = g_strdup_printf("%s/columns_order", prefix);
+		order = proctable_get_columns_order(GTK_TREE_VIEW(tree));
+
+		if(!gconf_client_set_list(client, key, GCONF_VALUE_INT, order, &error))
+		{
+			g_error("Could not save GConf key '%s' : %s",
+				key,
+				error->message);
+			g_error_free(error);
+		}
+
+		g_slist_free(order);
+		g_free(key);
 	}
 
 	g_list_free(columns);

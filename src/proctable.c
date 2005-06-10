@@ -114,6 +114,90 @@ set_proctree_reorderable(ProcData *procdata)
 }
 
 
+static void
+cb_columns_changed(GtkTreeView *treeview, gpointer user_data)
+{
+	ProcData * const procdata = user_data;
+
+	procman_save_tree_state(procdata->client,
+				GTK_WIDGET(treeview),
+				"/apps/procman/proctree");
+}
+
+
+static GtkTreeViewColumn*
+my_gtk_tree_view_get_column_with_sort_column_id(GtkTreeView *treeview, int id)
+{
+	GList *columns, *it;
+	GtkTreeViewColumn *col = NULL;
+
+	columns = gtk_tree_view_get_columns(treeview);
+
+	for(it = columns; it; it = it->next)
+	{
+		if(gtk_tree_view_column_get_sort_column_id(it->data) == id)
+		{
+			col = it->data;
+			break;
+		}
+	}
+
+	g_list_free(columns);
+
+	return col;
+}
+
+
+void
+proctable_set_columns_order(GtkTreeView *treeview, GSList *order)
+{
+	GtkTreeViewColumn* last = NULL;
+	GSList *it;
+
+	for(it = order; it; it = it->next)
+	{
+		int id;
+		GtkTreeViewColumn *cur;
+
+		id = GPOINTER_TO_INT(it->data);
+
+		g_assert(id >= 0 && id < NUM_COLUMNS);
+
+		cur = my_gtk_tree_view_get_column_with_sort_column_id(treeview, id);
+
+		if(cur && cur != last)
+		{
+			gtk_tree_view_move_column_after(treeview, cur, last);
+			last = cur;
+		}
+	}
+}
+
+
+
+GSList*
+proctable_get_columns_order(GtkTreeView *treeview)
+{
+	GList *columns, *col;
+	GSList *order = NULL;
+
+	columns = gtk_tree_view_get_columns(treeview);
+
+	for(col = columns; col; col = col->next)
+	{
+		int id;
+
+		id = gtk_tree_view_column_get_sort_column_id(col->data);
+		order = g_slist_prepend(order, GINT_TO_POINTER(id));
+	}
+
+	g_list_free(columns);
+
+	order = g_slist_reverse(order);
+
+	return order;
+}
+
 
 static gboolean
 search_equal_func(GtkTreeModel *model,
@@ -232,7 +316,7 @@ proctable_new (ProcData * const procdata)
 	gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
 
 
-	for (i = 1; i < NUM_COLUMNS - 2; i++) {
+	for (i = COL_USER; i <= COL_ARGS; i++) {
 		cell_renderer = gtk_cell_renderer_text_new ();
 
 		switch(i)
@@ -267,7 +351,7 @@ proctable_new (ProcData * const procdata)
 	gtk_container_add (GTK_CONTAINER (scrolled), proctree);
 
 
-	for(i = 0; i< NUM_COLUMNS - 2; i++)
+	for(i = COL_NAME; i <= COL_ARGS; i++)
 	{
 		switch(i)
 		{
@@ -307,6 +391,9 @@ proctable_new (ProcData * const procdata)
 			  G_CALLBACK (cb_tree_popup_menu), procdata);
 	g_signal_connect (G_OBJECT (proctree), "button_press_event",
 			  G_CALLBACK (cb_tree_button_pressed), procdata);
+
+	g_signal_connect (G_OBJECT(proctree), "columns-changed",
+			 G_CALLBACK(cb_columns_changed), procdata);
 
 	return scrolled;
 }
