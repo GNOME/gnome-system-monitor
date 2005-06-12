@@ -68,6 +68,8 @@ struct _ProcConfig
 	GdkColor	cpu_color[GLIBTOP_NCPU];
 	GdkColor	mem_color;
 	GdkColor	swap_color;
+	GdkColor	net_in_color;
+	GdkColor	net_out_color;
 	GdkColor	bg_color;
 	GdkColor	frame_color;
 	gint 		num_cpus;
@@ -105,6 +107,10 @@ struct _LoadGraph {
     GtkWidget *swapused_label;
     GtkWidget *swaptotal_label;
     GtkWidget *swappercent_label;
+    GtkWidget *net_in_label;
+    GtkWidget *net_in_total_label;
+    GtkWidget *net_out_label;
+    GtkWidget *net_out_total_label;
     GdkPixmap *pixmap;
     GdkGC *gc;
     int timer_index;
@@ -114,6 +120,10 @@ struct _LoadGraph {
     guint64 cpu_time [GLIBTOP_NCPU] [NCPUSTATES];
     guint64 cpu_last [GLIBTOP_NCPU] [NCPUSTATES];
     gboolean cpu_initialized;       
+
+    guint64 net_last_in, net_last_out;
+    float net_max;
+    GTimeVal net_time;
 };
 
 
@@ -168,7 +178,9 @@ struct _ProcData
 	ProcConfig	config;
 	LoadGraph	*cpu_graph;
 	LoadGraph	*mem_graph;
+	LoadGraph	*net_graph;
 	gint		cpu_label_fixed_width;
+	gint		net_label_fixed_width;
 	ProcInfo	*selected_process;
 	GtkTreeSelection *selection;
 	gint		timeout;

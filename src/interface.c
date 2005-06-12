@@ -252,6 +252,12 @@ cpu_size_request (GtkWidget *box, GtkRequisition *req, ProcData *procdata)
 		MAX(req->width, procdata->cpu_label_fixed_width);
 }
 
+static void
+net_size_request (GtkWidget *label, GtkRequisition *req, ProcData *procdata)
+{
+	req->width = procdata->net_label_fixed_width = \
+		MAX(req->width, procdata->net_label_fixed_width);
+}
 
 
 
@@ -396,15 +402,15 @@ static GtkWidget *
 create_sys_view (ProcData *procdata)
 {
 	GtkWidget *vbox, *hbox;
-	GtkWidget *cpu_box, *mem_box;
-	GtkWidget *cpu_hbox, *mem_hbox;
-	GtkWidget *cpu_graph_box, *mem_graph_box;
+	GtkWidget *cpu_box, *mem_box, *net_box;
+	GtkWidget *cpu_hbox, *mem_hbox, *net_hbox;
+	GtkWidget *cpu_graph_box, *mem_graph_box, *net_graph_box;
 	GtkWidget *label,*cpu_label, *spacer;
 	GtkWidget *table;
 	GtkWidget *color_picker;
 	GtkSizeGroup *sizegroup;
 	GdkColor color;
-	LoadGraph *cpu_graph, *mem_graph;
+	LoadGraph *cpu_graph, *mem_graph, *net_graph;
 	gint i;
 
 
@@ -569,6 +575,99 @@ create_sys_view (ProcData *procdata)
 			  GTK_FILL, 0, 0, 0);
 			  
 	procdata->mem_graph = mem_graph;
+
+	/* The net box */
+	net_box = gtk_vbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (vbox), net_box, TRUE, TRUE, 0);
+
+	label = make_title_label (_("Network History"));
+	gtk_widget_show (label);
+	gtk_box_pack_start (GTK_BOX (net_box), label, FALSE, FALSE, 0);
+
+	net_hbox = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (net_box), net_hbox, TRUE, TRUE, 0);
+
+	spacer = gtk_label_new ("    ");
+	gtk_box_pack_start (GTK_BOX (net_hbox), spacer, FALSE, FALSE, 0);
+
+	net_graph_box = gtk_vbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (net_hbox), net_graph_box, TRUE, TRUE, 0);
+
+	net_graph = load_graph_new (LOAD_GRAPH_NET, procdata);
+	gtk_box_pack_start (GTK_BOX (net_graph_box), net_graph->main_widget,
+			    TRUE, TRUE, 0);
+
+	table = gtk_table_new (2, 5, FALSE);
+	gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+	gtk_table_set_col_spacings (GTK_TABLE (table), 12);
+	gtk_box_pack_start (GTK_BOX (net_graph_box), table,
+			    FALSE, FALSE, 0);
+
+	color.red   = net_graph->colors[2].red;
+	color.green = net_graph->colors[2].green;
+	color.blue  = net_graph->colors[2].blue;
+	color_picker = gtk_color_button_new_with_color (&color);
+	g_signal_connect (G_OBJECT (color_picker), "color_set",
+			    G_CALLBACK (cb_net_in_color_changed), procdata);
+	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, 0, 0, 0, 0);
+
+	label = gtk_label_new (_("Receive:"));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
+
+	hbox = gtk_hbox_new (FALSE, 0);
+	g_signal_connect (G_OBJECT (hbox), "size_request",
+			  G_CALLBACK (net_size_request), procdata);
+
+	net_graph->net_in_label = gtk_label_new ("");
+	gtk_misc_set_alignment (GTK_MISC (net_graph->net_in_label), 0.0, 0.5);
+	gtk_box_pack_start (GTK_BOX (hbox), net_graph->net_in_label, FALSE, FALSE, 0);
+
+	gtk_table_attach (GTK_TABLE (table), hbox, 2, 3, 0, 1, GTK_FILL, 0, 0, 0);
+
+	label = gtk_label_new (_("Total:"));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 0, 1, GTK_FILL, 0, 0, 0);
+
+	net_graph->net_in_total_label = gtk_label_new ("");
+	gtk_misc_set_alignment (GTK_MISC (net_graph->net_in_total_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), net_graph->net_in_total_label, 4, 5, 0, 1,
+			  GTK_FILL, 0, 0, 0);
+
+	color.red   = net_graph->colors[3].red;
+	color.green = net_graph->colors[3].green;
+	color.blue  = net_graph->colors[3].blue;
+	color_picker = gtk_color_button_new_with_color (&color);
+	g_signal_connect (G_OBJECT (color_picker), "color_set",
+			    G_CALLBACK (cb_net_out_color_changed), procdata);
+	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, 0, 0, 0, 0);
+
+	label = gtk_label_new (_("Send:"));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
+
+	hbox = gtk_hbox_new (FALSE, 0);
+	g_signal_connect (G_OBJECT (hbox), "size_request",
+			  G_CALLBACK (net_size_request), procdata);
+
+	net_graph->net_out_label = gtk_label_new ("");
+	gtk_misc_set_alignment (GTK_MISC (net_graph->net_out_label), 0.0, 0.5);
+	gtk_box_pack_start (GTK_BOX (hbox), net_graph->net_out_label, FALSE, FALSE, 0);
+
+	gtk_table_attach (GTK_TABLE (table), hbox, 2, 3, 1, 2, GTK_FILL, 0, 0, 0);
+
+	label = gtk_label_new (_("Total:"));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 1, 2, GTK_FILL, 0, 0, 0);
+
+	net_graph->net_out_total_label = gtk_label_new ("");
+	gtk_misc_set_alignment (GTK_MISC (net_graph->net_out_total_label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), net_graph->net_out_total_label, 4, 5, 1, 2,
+			  GTK_FILL, 0, 0, 0);
+
+	procdata->net_graph = net_graph;
+
+
 	gtk_widget_show_all (vbox);
 
 	return vbox;

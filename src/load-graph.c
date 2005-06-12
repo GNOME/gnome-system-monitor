@@ -8,10 +8,14 @@
 #include <time.h>
 #include <gdk/gdkx.h>
 
+#include <glib/gi18n.h>
+
 #include <glibtop.h>
 #include <glibtop/cpu.h>
 #include <glibtop/mem.h>
 #include <glibtop/swap.h>
+#include <glibtop/netload.h>
+#include <glibtop/netlist.h>
 
 #include <libgnomevfs/gnome-vfs-utils.h>
 
@@ -226,6 +230,102 @@ get_memory (gfloat data [1], LoadGraph *g)
 	data [1] = swappercent;
 }
 
+static void
+net_scale (LoadGraph *g, float new_max)
+{
+	gint i;
+	float old_max = MAX (g->net_max, 1.0f), scale;
+
+	if (new_max <= old_max)
+		return;
+
+	scale = old_max / new_max;
+
+	for (i = 0; i < g->num_points; i++) {
+		if (g->data[i][0] >= 0.0f) {
+			g->data[i][0] *= scale;
+			g->data[i][1] *= scale;
+		}
+	}
+
+	g->net_max = new_max;
+}
+
+static void
+get_net (float data [2], LoadGraph *g)
+{
+	glibtop_netlist netlist;
+	char **ifnames;
+	guint32 i;
+	guint64 in = 0, out = 0;
+	GTimeVal time;
+	float din, dout;
+	gchar *text1, *text2;
+
+	ifnames = glibtop_get_netlist(&netlist);
+
+	for (i = 0; i < netlist.number; ++i)
+	{
+		glibtop_netload netload;
+		glibtop_get_netload (&netload, ifnames[i]);
+
+		if (netload.if_flags & (1 << GLIBTOP_IF_FLAGS_LOOPBACK))
+			continue;
+
+		/* Don't skip interfaces that are down (GLIBTOP_IF_FLAGS_UP)
+		   to avoid spikes when they are brought up */
+
+		in  += netload.bytes_in;
+		out += netload.bytes_out;
+	}
+
+	g_strfreev(ifnames);
+
+	g_get_current_time (&time);
+
+	if (in >= g->net_last_in && out >= g->net_last_out &&
+	    g->net_time.tv_sec != 0) {
+		float dtime;
+		dtime = time.tv_sec - g->net_time.tv_sec +
+			(float) (time.tv_usec - g->net_time.tv_usec) / G_USEC_PER_SEC;
+		din   = (in - g->net_last_in) / dtime;
+		dout  = (out - g->net_last_out) / dtime;
+	} else {
+		/* Don't calc anything if new data is less than old (interface
+		   removed, counters reset, ...) or if it is the first time */
+		din  = 0.0f;
+		dout = 0.0f;
+	}
+
+	g->net_last_in  = in;
+	g->net_last_out = out;
+	g->net_time     = time;
+
+	data [0] = din / MAX (g->net_max, 1.0f);
+	data [1] = dout / MAX (g->net_max, 1.0f);
+
+	net_scale (g, MAX (din, dout));
+
+	text1 = SI_gnome_vfs_format_file_size_for_display (din);
+	text2 = g_strdup_printf (_("%s/s"), text1);
+	gtk_label_set_text (GTK_LABEL (g->net_in_label), text2);
+	g_free (text1);
+	g_free (text2);
+
+	text1 = SI_gnome_vfs_format_file_size_for_display (in);
+	gtk_label_set_text (GTK_LABEL (g->net_in_total_label), text1);
+	g_free (text1);
+
+	text1 = SI_gnome_vfs_format_file_size_for_display (dout);
+	text2 = g_strdup_printf (_("%s/s"), text1);
+	gtk_label_set_text (GTK_LABEL (g->net_out_label), text2);
+	g_free (text1);
+	g_free (text2);
+
+	text1 = SI_gnome_vfs_format_file_size_for_display (out);
+	gtk_label_set_text (GTK_LABEL (g->net_out_total_label), text1);
+	g_free (text1);
+}
 
 
 /*
@@ -269,6 +369,9 @@ load_graph_update (LoadGraph *g)
 		break;
 	case LOAD_GRAPH_MEM:
 		get_memory (g->data [0], g);
+		break;
+	case LOAD_GRAPH_NET:
+		get_net (g->data[0], g);
 		break;
 	}
 
@@ -410,6 +513,9 @@ load_graph_new (gint type, ProcData *procdata)
 	case LOAD_GRAPH_MEM:
 		g->n = 2;
 		break;
+	case LOAD_GRAPH_NET:
+		g->n = 2;
+		break;
 	}
 
 	g->speed  = procdata->config.graph_update_interval;
@@ -427,6 +533,10 @@ load_graph_new (gint type, ProcData *procdata)
 	case LOAD_GRAPH_MEM:
 		g->colors[2] = procdata->config.mem_color;
 		g->colors[3] = procdata->config.swap_color;
+		break;
+	case LOAD_GRAPH_NET:
+		g->colors[2] = procdata->config.net_in_color;
+		g->colors[3] = procdata->config.net_out_color;
 		break;
 	}
 

@@ -189,6 +189,8 @@ cb_app_delete (GtkWidget *window, GdkEventAny *event, gpointer data)
 		gtk_timeout_remove (procdata->cpu_graph->timer_index);
 	if (procdata->mem_graph)
 		gtk_timeout_remove (procdata->mem_graph->timer_index);
+	if (procdata->net_graph)
+		gtk_timeout_remove (procdata->net_graph->timer_index);
 	if (procdata->disk_timeout != -1)
 		gtk_timeout_remove (procdata->disk_timeout);
 
@@ -265,6 +267,19 @@ cb_swap_color_changed (GtkColorButton *cp, gpointer data)
 	change_gconf_color(procdata->client, "/apps/procman/swap_color", cp);
 }
 
+void
+cb_net_in_color_changed (GtkColorButton *cp, gpointer data)
+{
+	ProcData * const procdata = data;
+	change_gconf_color(procdata->client, "/apps/procman/net_in_color", cp);
+}
+
+void
+cb_net_out_color_changed (GtkColorButton *cp, gpointer data)
+{
+	ProcData * const procdata = data;
+	change_gconf_color(procdata->client, "/apps/procman/net_out_color", cp);
+}
 
 void
 cb_bg_color_changed (GtkColorButton *cp, gpointer data)
@@ -376,12 +391,15 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 	if (num == 1) {
 		load_graph_start (procdata->cpu_graph);
 		load_graph_start (procdata->mem_graph);
+		load_graph_start (procdata->net_graph);
 		load_graph_draw (procdata->cpu_graph);
 		load_graph_draw (procdata->mem_graph);
+		load_graph_draw (procdata->net_graph);
 	}
 	else {
 		load_graph_stop (procdata->cpu_graph);
 		load_graph_stop (procdata->mem_graph);
+		load_graph_stop (procdata->net_graph);
 	}
 }
 

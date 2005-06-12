@@ -50,6 +50,8 @@ void		cb_info_button_pressed (GtkButton *button, gpointer user_data) G_GNUC_INTE
 void		cb_cpu_color_changed (GtkColorButton *widget, gpointer user_data) G_GNUC_INTERNAL;
 void		cb_mem_color_changed (GtkColorButton *widget, gpointer user_data) G_GNUC_INTERNAL;
 void		cb_swap_color_changed (GtkColorButton *widget, gpointer user_data) G_GNUC_INTERNAL;
+void		cb_net_in_color_changed (GtkColorButton *widget, gpointer user_data) G_GNUC_INTERNAL;
+void		cb_net_out_color_changed (GtkColorButton *widget, gpointer user_data) G_GNUC_INTERNAL;
 void		cb_bg_color_changed (GtkColorButton *widget, gpointer user_data) G_GNUC_INTERNAL;
 void		cb_frame_color_changed (GtkColorButton *widget, gpointer user_data) G_GNUC_INTERNAL;
 

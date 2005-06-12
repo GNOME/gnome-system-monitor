@@ -126,8 +126,13 @@ timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer 
 		procdata->mem_graph->timer_index = -1;
 		procdata->mem_graph->speed = procdata->config.graph_update_interval;
 	
+		gtk_timeout_remove (procdata->net_graph->timer_index);
+		procdata->net_graph->timer_index = -1;
+		procdata->net_graph->speed = procdata->config.graph_update_interval;
+
 		load_graph_start (procdata->cpu_graph);
 		load_graph_start (procdata->mem_graph);	
+		load_graph_start (procdata->net_graph);
 	}
 	else {
 		
@@ -154,11 +159,13 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 		gdk_color_parse (color, &procdata->config.bg_color);
 		procdata->cpu_graph->colors[0] = procdata->config.bg_color;
 		procdata->mem_graph->colors[0] = procdata->config.bg_color;
+		procdata->net_graph->colors[0] = procdata->config.bg_color;
 	}
 	else if (g_str_equal (key, "/apps/procman/frame_color")) {
 		gdk_color_parse (color, &procdata->config.frame_color);
 		procdata->cpu_graph->colors[1] = procdata->config.frame_color;
 		procdata->mem_graph->colors[1] = procdata->config.frame_color;
+		procdata->net_graph->colors[1] = procdata->config.frame_color;
 	}
 	else if (g_str_equal (key, "/apps/procman/cpu_color")) {
 		gdk_color_parse (color, &procdata->config.cpu_color[0]);
@@ -185,9 +192,18 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 		gdk_color_parse (color, &procdata->config.swap_color);
 		procdata->mem_graph->colors[3] = procdata->config.swap_color;
 	}
+	else if (g_str_equal (key, "/apps/procman/net_in_color")) {
+		gdk_color_parse (color, &procdata->config.net_in_color);
+		procdata->net_graph->colors[2] = procdata->config.net_in_color;
+	}
+	else if (g_str_equal (key, "/apps/procman/net_out_color")) {
+		gdk_color_parse (color, &procdata->config.net_out_color);
+		procdata->net_graph->colors[3] = procdata->config.net_out_color;
+	}
 		
 	procdata->cpu_graph->colors_allocated = FALSE;
 	procdata->mem_graph->colors_allocated = FALSE;
+	procdata->net_graph->colors_allocated = FALSE;
 		
 }
 
@@ -227,6 +243,7 @@ procman_data_new (GConfClient *client)
 	pd->blacklist = NULL;
 	pd->cpu_graph = NULL;
 	pd->mem_graph = NULL;
+	pd->net_graph = NULL;
 	pd->disk_timeout = -1;
 
 	glibtop_get_loadavg(&loadavg);
@@ -338,6 +355,22 @@ procman_data_new (GConfClient *client)
 	gconf_client_notify_add (client, "/apps/procman/swap_color", 
 			  	 color_changed_cb, pd, NULL, NULL);
 	gdk_color_parse(color, &pd->config.swap_color);
+	g_free (color);
+
+	color = gconf_client_get_string (client, "/apps/procman/net_in_color", NULL);
+	if (!color)
+		color = g_strdup ("#000000b3005b");
+	gconf_client_notify_add (client, "/apps/procman/net_in_color",
+			  	 color_changed_cb, pd, NULL, NULL);
+	gdk_color_parse(color, &pd->config.net_in_color);
+	g_free (color);
+
+	color = gconf_client_get_string (client, "/apps/procman/net_out_color", NULL);
+	if (!color)
+		color = g_strdup ("#008b000000c3");
+	gconf_client_notify_add (client, "/apps/procman/net_out_color",
+			  	 color_changed_cb, pd, NULL, NULL);
+	gdk_color_parse(color, &pd->config.net_out_color);
 	g_free (color);
 	
 	get_blacklist (pd, client);
