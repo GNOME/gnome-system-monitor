@@ -86,6 +86,18 @@ static const GtkToggleActionEntry toggle_menu_entries[] =
 	  G_CALLBACK (cb_toggle_threads), FALSE }
 };
 
+
+static const GtkRadioActionEntry radio_menu_entries[] =
+{
+  { "ShowActiveProcesses", NULL, N_("Active processes"), NULL,
+    N_("Show active processes"), ACTIVE_PROCESSES },
+  { "ShowAllProcesses", NULL, N_("All processes"), NULL,
+    N_("Show all processes"), ALL_PROCESSES },
+  { "ShowMyProcesses", NULL, N_("My processes"), NULL,
+    N_("Show user own process"), MY_PROCESSES }
+};
+
+
 static const char ui_info[] =
 "  <menubar name=\"MenuBar\">"
 "    <menu name=\"FileMenu\" action=\"File\">"
@@ -100,6 +112,10 @@ static const char ui_info[] =
 "      <menuitem name=\"EditPreferenciesMenu\" action=\"Preferencies\" />"
 "    </menu>"
 "    <menu name=\"ViewMenu\" action=\"View\">"
+"      <menuitem name=\"ViewActiveProcesses\" action=\"ShowActiveProcesses\" />"
+"      <menuitem name=\"ViewAllProcesses\" action=\"ShowAllProcesses\" />"
+"      <menuitem name=\"ViewMyProcesses\" action=\"ShowMyProcesses\" />"
+"      <separator />"
 "      <menuitem name=\"ViewDependenciesMenu\" action=\"ShowDependencies\" />"
 "      <menuitem name=\"ViewThreadsMenu\" action=\"ShowThreads\" />"
 "      <separator />"
@@ -132,9 +148,7 @@ create_proc_view (ProcData *procdata)
 {
 	GtkWidget *vbox1, *vbox2;
 	GtkWidget *hbox1;
-	GtkWidget *proc_combo;
 	GtkWidget *scrolled;
-	GtkWidget *label;
 	GtkWidget *hbox2;
 	char* string;
 
@@ -148,22 +162,6 @@ create_proc_view (ProcData *procdata)
 	procdata->loadavg = gtk_label_new (string);
 	g_free (string);
 	gtk_box_pack_start (GTK_BOX (hbox1), procdata->loadavg, FALSE, FALSE, 0);
-
-	proc_combo = gtk_combo_box_new_text ();
-	gtk_box_pack_end (GTK_BOX (hbox1), proc_combo, FALSE, FALSE, 0);
-
-	gtk_combo_box_insert_text (GTK_COMBO_BOX (proc_combo), ALL_PROCESSES, _("All processes"));
-	gtk_combo_box_insert_text (GTK_COMBO_BOX (proc_combo), MY_PROCESSES, _("My processes"));
-	gtk_combo_box_insert_text (GTK_COMBO_BOX (proc_combo), ACTIVE_PROCESSES, _("Active processes"));
-
-	gtk_combo_box_set_active (GTK_COMBO_BOX (proc_combo), procdata->config.whose_process);
-
-	g_signal_connect (G_OBJECT (proc_combo), "changed",
-			  G_CALLBACK (cb_proc_combo_changed), procdata);
-
-  	label = gtk_label_new_with_mnemonic (_("Sho_w:"));
-  	gtk_label_set_mnemonic_widget (GTK_LABEL (label), proc_combo);
-	gtk_box_pack_end (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
 
 	gtk_widget_show_all (hbox1);
 
@@ -781,6 +779,13 @@ create_main_window (ProcData *procdata)
 	                                     toggle_menu_entries,
 	                                     G_N_ELEMENTS (toggle_menu_entries),
 	                                     procdata);
+
+	gtk_action_group_add_radio_actions (procdata->action_group,
+					    radio_menu_entries,
+					    G_N_ELEMENTS (radio_menu_entries),
+					    procdata->config.whose_process,
+					    G_CALLBACK(cb_radio_processes),
+					    procdata);
 
 	gtk_ui_manager_insert_action_group (procdata->uimanager,
 	                                    procdata->action_group,

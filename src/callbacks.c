@@ -200,21 +200,6 @@ cb_app_delete (GtkWidget *window, GdkEventAny *event, gpointer data)
 }
 
 
-void
-cb_proc_combo_changed (GtkComboBox *combo, gpointer data)
-{
-	ProcData * const procdata = data;
-	GConfClient *client;
-
-	g_return_if_fail (procdata);
-
-	client = procdata->client;
-
-	procdata->config.whose_process = gtk_combo_box_get_active (combo);
-	gconf_client_set_int (client, "/apps/procman/view_as",
-			      procdata->config.whose_process, NULL);
-}
-
 
 void
 cb_end_process_button_pressed (GtkButton *button, gpointer data)
@@ -612,4 +597,16 @@ cb_timeout (gpointer data)
 	}
 
 	return TRUE;
+}
+
+
+void
+cb_radio_processes(GtkAction *action, GtkRadioAction *current, gpointer data)
+{
+	ProcData * const procdata = data;
+
+	procdata->config.whose_process = gtk_radio_action_get_current_value(current);
+
+	gconf_client_set_int (procdata->client, "/apps/procman/view_as",
+			      procdata->config.whose_process, NULL);
 }

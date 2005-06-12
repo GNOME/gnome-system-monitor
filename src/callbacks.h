@@ -40,8 +40,6 @@ void		cb_about (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
 void		cb_app_exit (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
 gboolean	cb_app_delete (GtkWidget *window, GdkEventAny *event, gpointer data) G_GNUC_INTERNAL;
 
-void		cb_proc_combo_changed (GtkComboBox *combo, gpointer data) G_GNUC_INTERNAL;
-
 void		cb_end_process_button_pressed (GtkButton *button, gpointer data) G_GNUC_INTERNAL;
 void		cb_logout (GtkButton *button, gpointer data) G_GNUC_INTERNAL;
 
@@ -74,5 +72,8 @@ void		cb_volume_mounted_or_unmounted(GnomeVFSVolumeMonitor *vfsvolumemonitor,
 					       GnomeVFSVolume *vol,
 					       gpointer procdata) G_GNUC_INTERNAL;
 
+void		cb_radio_processes(GtkAction *action,
+				   GtkRadioAction *current,
+				   gpointer data) G_GNUC_INTERNAL;
 
 #endif /* _PROCMAN_CALLBACKS_H_ */
