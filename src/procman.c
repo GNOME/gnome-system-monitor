@@ -321,7 +321,7 @@ procman_data_new (GConfClient *client)
 	
 	color = gconf_client_get_string (client, "/apps/procman/cpu_color", NULL);
 	if (!color)
-		color = g_strdup ("#0000007200b3");
+		color = g_strdup ("#000000a200ff");
 	gconf_client_notify_add (client, "/apps/procman/cpu_color", 
 			  	 color_changed_cb, pd, NULL, NULL);
 	gdk_color_parse(color, &pd->config.cpu_color[0]);
@@ -342,7 +342,7 @@ procman_data_new (GConfClient *client)
 	}
 	color = gconf_client_get_string (client, "/apps/procman/mem_color", NULL);
 	if (!color)
-		color = g_strdup ("#000000b3005b");
+		color = g_strdup ("#000000ff0082");
 	gconf_client_notify_add (client, "/apps/procman/mem_color", 
 			  	 color_changed_cb, pd, NULL, NULL);
 	gdk_color_parse(color, &pd->config.mem_color);
@@ -351,7 +351,7 @@ procman_data_new (GConfClient *client)
 	
 	color = gconf_client_get_string (client, "/apps/procman/swap_color", NULL);
 	if (!color)
-		color = g_strdup ("#008b000000c3");
+		color = g_strdup ("#00b6000000ff");
 	gconf_client_notify_add (client, "/apps/procman/swap_color", 
 			  	 color_changed_cb, pd, NULL, NULL);
 	gdk_color_parse(color, &pd->config.swap_color);
@@ -359,7 +359,7 @@ procman_data_new (GConfClient *client)
 
 	color = gconf_client_get_string (client, "/apps/procman/net_in_color", NULL);
 	if (!color)
-		color = g_strdup ("#000000b3005b");
+		color = g_strdup ("#000000f200f2");
 	gconf_client_notify_add (client, "/apps/procman/net_in_color",
 			  	 color_changed_cb, pd, NULL, NULL);
 	gdk_color_parse(color, &pd->config.net_in_color);
@@ -367,7 +367,7 @@ procman_data_new (GConfClient *client)
 
 	color = gconf_client_get_string (client, "/apps/procman/net_out_color", NULL);
 	if (!color)
-		color = g_strdup ("#008b000000c3");
+		color = g_strdup ("#00f2000000c1");
 	gconf_client_notify_add (client, "/apps/procman/net_out_color",
 			  	 color_changed_cb, pd, NULL, NULL);
 	gdk_color_parse(color, &pd->config.net_out_color);
