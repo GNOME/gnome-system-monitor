@@ -266,7 +266,7 @@ create_disk_view (ProcData *procdata)
 	GtkWidget *label, *spacer;
 	GtkWidget *scrolled;
 	GtkWidget *disk_tree;
-	GtkTreeStore *model;
+	GtkListStore *model;
 	GtkTreeViewColumn *col;
 	GtkCellRenderer *cell;
 	gint i;
@@ -304,7 +304,7 @@ create_disk_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (disk_hbox), scrolled, TRUE, TRUE, 0);
 
 
-	model = gtk_tree_store_new (10,
+	model = gtk_list_store_new (10,
 				    GDK_TYPE_PIXBUF,
 				    G_TYPE_STRING, /* device name */
 				    G_TYPE_STRING, /* directory */

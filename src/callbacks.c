@@ -427,7 +427,7 @@ update_disk(GtkTreeModel *model, GtkTreeIter *iter, const char *mountdir)
 	free_str  = SI_gnome_vfs_format_file_size_for_display (bfree);
 	total_str = SI_gnome_vfs_format_file_size_for_display (btotal);
 
-	gtk_tree_store_set (GTK_TREE_STORE (model), iter,
+	gtk_list_store_set (GTK_LIST_STORE (model), iter,
 			    4, total_str,
 			    5, free_str,
 			    6, used_str,
@@ -509,8 +509,8 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 	pixbuf = get_icon_for_device(entry->mountdir);
 
 
-	gtk_tree_store_insert (GTK_TREE_STORE (model), &row, NULL, 0);
-	gtk_tree_store_set (GTK_TREE_STORE (model), &row,
+	gtk_list_store_insert (GTK_LIST_STORE (model), &row, 0);
+	gtk_list_store_set (GTK_LIST_STORE (model), &row,
 			    0, pixbuf,
 			    1, entry->devname,
 			    2, entry->mountdir,
@@ -556,7 +556,7 @@ cb_update_disks (gpointer data)
 	while (old_disks) {
 		GtkTreeIter *iter = old_disks->data;
 
-		gtk_tree_store_remove (GTK_TREE_STORE (model), iter);
+		gtk_list_store_remove (GTK_LIST_STORE (model), iter);
 		gtk_tree_iter_free (iter);
 
 		old_disks = g_list_next (old_disks);
