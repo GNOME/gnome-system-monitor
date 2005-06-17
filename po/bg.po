@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-07 09:28+0300\n"
-"PO-Revision-Date: 2005-06-07 09:28+0300\n"
+"POT-Creation-Date: 2005-06-17 10:57+0300\n"
+"PO-Revision-Date: 2005-06-16 17:46+0300\n"
 "Last-Translator: Vladimir \"Kaladan\" Petkov <vpetkov@i-space.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:141
-#: ../src/interface.c:645
+#: ../src/interface.c:742
 msgid "System Monitor"
 msgstr "Наблюдение на системата"
 
@@ -103,10 +103,18 @@ msgid "Default graph mem color"
 msgstr "Стандартен цвят на графиката за паметта"
 
 #: ../src/gnome-system-monitor.schemas.in.h:6
+msgid "Default graph net in color"
+msgstr "Стандартен цвят на графиката за входящия трафик"
+
+#: ../src/gnome-system-monitor.schemas.in.h:7
+msgid "Default graph net out color"
+msgstr "Стандартен цвят на графиката за изходящия трафик"
+
+#: ../src/gnome-system-monitor.schemas.in.h:8
 msgid "Default graph swap color"
 msgstr "Стандартен цвят на графиката за суапа"
 
-#: ../src/gnome-system-monitor.schemas.in.h:7
+#: ../src/gnome-system-monitor.schemas.in.h:9
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
@@ -114,70 +122,74 @@ msgstr ""
 "Определяне на кои процеси да се показват по подразбиране. 0 е за всички, 1 е "
 "за потребителските и 2 е за активните"
 
-#: ../src/gnome-system-monitor.schemas.in.h:8
+#: ../src/gnome-system-monitor.schemas.in.h:10
 msgid "Main Window height"
 msgstr "Височина на основния прозорец"
 
-#: ../src/gnome-system-monitor.schemas.in.h:9
+#: ../src/gnome-system-monitor.schemas.in.h:11
 msgid "Main Window width"
 msgstr "Ширина на основния прозорец"
 
-#: ../src/gnome-system-monitor.schemas.in.h:10
+#: ../src/gnome-system-monitor.schemas.in.h:12
+msgid "Process view columns order"
+msgstr "Ред на процесите в колоната"
+
+#: ../src/gnome-system-monitor.schemas.in.h:13
 msgid "Process view sort column"
 msgstr "Колона за сортиране на процеси"
 
-#: ../src/gnome-system-monitor.schemas.in.h:11
+#: ../src/gnome-system-monitor.schemas.in.h:14
 msgid "Process view sort order"
 msgstr "Ред за подреждане на процесите"
 
-#: ../src/gnome-system-monitor.schemas.in.h:12
+#: ../src/gnome-system-monitor.schemas.in.h:15
 msgid "Saves the currently viewed tab"
 msgstr "Запазване на текущия таб"
 
-#: ../src/gnome-system-monitor.schemas.in.h:13
+#: ../src/gnome-system-monitor.schemas.in.h:16
 msgid "Show advanced info tab on startup"
 msgstr "Показване на таба за допълнителна информация при стартиране"
 
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:17
 msgid "Show column zero on startup"
 msgstr "Показване на нулевата колона при стартиране"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:18
 msgid "Show process dependencies in tree form"
 msgstr "Показване на зависимостите на процес чрез дървовидна форма"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
+#: ../src/gnome-system-monitor.schemas.in.h:19
 msgid "Show process threads"
 msgstr "Показване на нишките на процесите"
 
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:20
 msgid "Show warning dialog when hiding processes"
 msgstr "Показване на диалог за предупреждение, при скриване на процес"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:21
 msgid "Show warning dialog when killing processes"
 msgstr "Показване на предупреждение при убиване на процес"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:22
 msgid "Time in milliseconds between updates of the devices list"
 msgstr ""
 "Време, в милисекунди, между интервалите за актуализация на списъка с "
 "устройства"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:23
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Време, в милисекунди, между интервалите за актуализиране на графиките"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:24
 msgid "Time in milliseconds between updates of the process view"
 msgstr ""
 "Време, в милисекунди, между интервалите за актуализиране на списъка с процеси"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:25
 msgid "Whether information about all filesystems should be displayed"
 msgstr "Дали да се показва информация за всички файлови системи."
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:26
 msgid ""
 "Whether information about all filesystems should be displayed: this will "
 "include filesystem types like 'autofs' and 'procfs'. It can be usefull to "
@@ -215,7 +227,7 @@ msgstr "Приоритет:"
 msgid "Memory Usage"
 msgstr "Използвана памет"
 
-#: ../src/infoview.c:153
+#: ../src/infoview.c:153 ../src/interface.c:626 ../src/interface.c:657
 msgid "Total:"
 msgstr "Общо:"
 
@@ -276,7 +288,7 @@ msgstr "_Спиране на програмата"
 msgid "Quit the program"
 msgstr "Спиране на програмата"
 
-#: ../src/interface.c:55 ../src/interface.c:191
+#: ../src/interface.c:55 ../src/interface.c:189
 msgid "End _Process"
 msgstr "Завършване на _процес"
 
@@ -372,87 +384,112 @@ msgstr "_Нишки"
 msgid "Show each thread as a separate process"
 msgstr "Показване на всяка нишка в отделен процес"
 
-#: ../src/interface.c:155
-msgid "All processes"
-msgstr "Всички процеси"
-
-#: ../src/interface.c:156
-msgid "My processes"
-msgstr "Мои процеси"
-
-#: ../src/interface.c:157
+#: ../src/interface.c:92
 msgid "Active processes"
 msgstr "Активни процеси"
 
-#: ../src/interface.c:164
-msgid "Sho_w:"
-msgstr "Показ_ване:"
+#: ../src/interface.c:93
+msgid "Show active processes"
+msgstr "Показване на активните процеси"
 
-#: ../src/interface.c:271 ../src/memmaps.c:300
+#: ../src/interface.c:94
+msgid "All processes"
+msgstr "Всички процеси"
+
+#: ../src/interface.c:95
+msgid "Show all processes"
+msgstr "Показване на всички процеси"
+
+#: ../src/interface.c:96
+msgid "My processes"
+msgstr "Мои процеси"
+
+#: ../src/interface.c:97
+msgid "Show user own process"
+msgstr "Показване на процесите на потребителя"
+
+#: ../src/interface.c:275 ../src/memmaps.c:300
 msgid "Device"
 msgstr "Устройство"
 
-#: ../src/interface.c:272
+#: ../src/interface.c:276
 msgid "Directory"
 msgstr "Директория"
 
-#: ../src/interface.c:273 ../src/openfiles.c:230
+#: ../src/interface.c:277 ../src/openfiles.c:230
 msgid "Type"
 msgstr "Тип"
 
-#: ../src/interface.c:274
+#: ../src/interface.c:278
 msgid "Total"
 msgstr "Общо"
 
-#: ../src/interface.c:275
+#: ../src/interface.c:279
 msgid "Free"
 msgstr "Свободно"
 
-#: ../src/interface.c:276
+#: ../src/interface.c:280
 msgid "Used"
 msgstr "Използвана"
 
-#: ../src/interface.c:285 ../src/interface.c:717 ../src/procdialogs.c:735
-#: ../src/procdialogs.c:739
+#: ../src/interface.c:289 ../src/interface.c:821 ../src/procdialogs.c:739
+#: ../src/procdialogs.c:743
 msgid "Devices"
 msgstr "Устройства"
 
-#: ../src/interface.c:420
+#: ../src/interface.c:424
 msgid "CPU History"
 msgstr "История на използването на процесора"
 
-#: ../src/interface.c:461
+#: ../src/interface.c:465
 msgid "CPU:"
 msgstr "CPU:"
 
-#: ../src/interface.c:464
+#: ../src/interface.c:468
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: ../src/interface.c:484
+#: ../src/interface.c:488
 msgid "Memory and Swap History"
 msgstr "История на използването на паметта / суапа"
 
-#: ../src/interface.c:517
+#: ../src/interface.c:521
 msgid "User memory:"
 msgstr "Потребителска памет:"
 
-#: ../src/interface.c:526 ../src/interface.c:557
+#: ../src/interface.c:530 ../src/interface.c:561
 msgid "of"
 msgstr "от"
 
-#: ../src/interface.c:548
+#: ../src/interface.c:552
 msgid "Used swap:"
 msgstr "Използван swap:"
 
-#: ../src/interface.c:705 ../src/procdialogs.c:557
+#: ../src/interface.c:581
+msgid "Network History"
+msgstr "История на мрежата"
+
+#: ../src/interface.c:612
+msgid "Receive:"
+msgstr "Получаване:"
+
+#: ../src/interface.c:643
+msgid "Send:"
+msgstr "Изпращане:"
+
+#: ../src/interface.c:809 ../src/procdialogs.c:556
 msgid "Processes"
 msgstr "Процеси"
 
-#: ../src/interface.c:711 ../src/procdialogs.c:644
+#: ../src/interface.c:815 ../src/procdialogs.c:648
 msgid "Resources"
 msgstr "Ресурси"
+
+#: ../src/load-graph.c:310 ../src/load-graph.c:320
+#, c-format
+msgid "%s/s"
+msgstr "%s/s"
 
 #: ../src/memmaps.c:294
 msgid "Filename"
@@ -466,7 +503,7 @@ msgstr "VM старт"
 msgid "VM End"
 msgstr "VM край"
 
-#: ../src/memmaps.c:297 ../src/proctable.c:159
+#: ../src/memmaps.c:297 ../src/proctable.c:243
 msgid "VM Size"
 msgstr "VM размер"
 
@@ -642,141 +679,141 @@ msgstr ""
 msgid "Processes i_nfo showed in list:"
 msgstr "И_нформация за процесите в списъка:"
 
-#: ../src/procdialogs.c:493
+#: ../src/procdialogs.c:494
 msgid "Icon"
 msgstr "Икона"
 
-#: ../src/procdialogs.c:534
+#: ../src/procdialogs.c:533
 msgid "System Monitor Preferences"
 msgstr "Настройки на наблюдението на системата"
 
-#: ../src/procdialogs.c:564
+#: ../src/procdialogs.c:563
 msgid "Behavior"
 msgstr "Поведение"
 
-#: ../src/procdialogs.c:583 ../src/procdialogs.c:670
+#: ../src/procdialogs.c:582 ../src/procdialogs.c:674
 msgid "_Update interval:"
 msgstr "_Интервал на обновяване:"
 
-#: ../src/procdialogs.c:599 ../src/procdialogs.c:687 ../src/procdialogs.c:775
+#: ../src/procdialogs.c:603 ../src/procdialogs.c:691 ../src/procdialogs.c:779
 msgid "seconds"
 msgstr "секунди"
 
-#: ../src/procdialogs.c:606
+#: ../src/procdialogs.c:610
 msgid "Alert before ending or _killing processes"
 msgstr "Показване на предупредителен диалог, когато _спирате процес"
 
-#: ../src/procdialogs.c:616
+#: ../src/procdialogs.c:620
 msgid "Alert before _hiding processes"
 msgstr "Показване на диалог за предупреждение, когато _скривате процес"
 
-#: ../src/procdialogs.c:626
+#: ../src/procdialogs.c:630
 msgid "Process Fields"
 msgstr "Полета на процеси"
 
-#: ../src/procdialogs.c:651
+#: ../src/procdialogs.c:655
 msgid "Graphs"
 msgstr "Графики"
 
-#: ../src/procdialogs.c:694
+#: ../src/procdialogs.c:698
 msgid "_Background color:"
 msgstr "_Фонов цвят:"
 
-#: ../src/procdialogs.c:713
+#: ../src/procdialogs.c:717
 msgid "_Grid color:"
 msgstr "Цвят на _мрежа:"
 
-#: ../src/procdialogs.c:758
+#: ../src/procdialogs.c:762
 msgid "Update _interval:"
 msgstr "Интервал на _обновяване:"
 
-#: ../src/procdialogs.c:782
+#: ../src/procdialogs.c:786
 msgid "Show _all filesystems"
 msgstr "Показване на _всички файлови системи"
 
-#: ../src/proctable.c:155
+#: ../src/proctable.c:239
 msgid "Process Name"
 msgstr "Име на процес"
 
-#: ../src/proctable.c:156
+#: ../src/proctable.c:240
 msgid "User"
 msgstr "Потребител"
 
-#: ../src/proctable.c:157
+#: ../src/proctable.c:241
 msgid "Status"
 msgstr "Състояние"
 
-#: ../src/proctable.c:158
+#: ../src/proctable.c:242
 msgid "Memory"
 msgstr "Памет"
 
-#: ../src/proctable.c:160
+#: ../src/proctable.c:244
 msgid "Resident Memory"
 msgstr "Постоянна памет"
 
-#: ../src/proctable.c:161
+#: ../src/proctable.c:245
 msgid "Shared Memory"
 msgstr "Разделяема памет"
 
-#: ../src/proctable.c:162
+#: ../src/proctable.c:246
 msgid "RSS Memory"
 msgstr "RSS памет"
 
-#: ../src/proctable.c:163
+#: ../src/proctable.c:247
 msgid "X Server Memory"
 msgstr "X Server памет"
 
-#: ../src/proctable.c:164
+#: ../src/proctable.c:248
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:165
+#: ../src/proctable.c:249
 msgid "CPU time"
 msgstr "Време на процесора"
 
-#: ../src/proctable.c:166
+#: ../src/proctable.c:250
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.c:167
+#: ../src/proctable.c:251
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.c:168
+#: ../src/proctable.c:252
 msgid "Security Context"
 msgstr "Контекст на сигурността"
 
-#: ../src/proctable.c:169
+#: ../src/proctable.c:253
 msgid "Arguments"
 msgstr "Аргументи"
 
-#: ../src/proctable.c:335
+#: ../src/proctable.c:426
 msgid "Running"
 msgstr "Стартирани"
 
-#: ../src/proctable.c:340
+#: ../src/proctable.c:431
 msgid "Stopped"
 msgstr "Спрян"
 
-#: ../src/proctable.c:345
+#: ../src/proctable.c:436
 msgid "Zombie"
 msgstr "Зомби"
 
-#: ../src/proctable.c:350
+#: ../src/proctable.c:441
 msgid "Uninterruptible"
 msgstr "Непрекъсваем"
 
-#: ../src/proctable.c:355
+#: ../src/proctable.c:446
 msgid "Sleeping"
 msgstr "Заспал"
 
-#: ../src/proctable.c:539
+#: ../src/proctable.c:630
 #, c-format
 msgid "%s (thread)"
 msgstr "%s (нанизан)"
 
-#: ../src/proctable.c:927
+#: ../src/proctable.c:1018
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Средно натоварване за последните 1, 5, 15 минути: %0.2f, %0.2f, %0.2f"
@@ -802,6 +839,9 @@ msgstr "%.1f MiB"
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
+
+#~ msgid "Sho_w:"
+#~ msgstr "Показ_ване:"
 
 #~ msgid "Sea_rch:"
 #~ msgstr "Търс_ене:"
