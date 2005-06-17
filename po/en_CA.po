@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-01 04:56-0400\n"
-"PO-Revision-Date: 2005-06-01 18:38-0400\n"
+"POT-Creation-Date: 2005-06-17 02:04-0400\n"
+"PO-Revision-Date: 2005-06-17 18:38-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: gnome-system-monitor.desktop.in.in.h:1 src/callbacks.c:141
-#: src/interface.c:645
+#: src/interface.c:742
 msgid "System Monitor"
 msgstr "System Monitor"
 
@@ -97,10 +97,18 @@ msgid "Default graph mem color"
 msgstr "Default graph mem colour"
 
 #: src/gnome-system-monitor.schemas.in.h:6
+msgid "Default graph net in color"
+msgstr "Default graph net in colour"
+
+#: src/gnome-system-monitor.schemas.in.h:7
+msgid "Default graph net out color"
+msgstr "Default graph net out colour"
+
+#: src/gnome-system-monitor.schemas.in.h:8
 msgid "Default graph swap color"
 msgstr "Default graph swap colour"
 
-#: src/gnome-system-monitor.schemas.in.h:7
+#: src/gnome-system-monitor.schemas.in.h:9
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
@@ -108,67 +116,71 @@ msgstr ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
 
-#: src/gnome-system-monitor.schemas.in.h:8
+#: src/gnome-system-monitor.schemas.in.h:10
 msgid "Main Window height"
 msgstr "Main Window height"
 
-#: src/gnome-system-monitor.schemas.in.h:9
+#: src/gnome-system-monitor.schemas.in.h:11
 msgid "Main Window width"
 msgstr "Main Window width"
 
-#: src/gnome-system-monitor.schemas.in.h:10
+#: src/gnome-system-monitor.schemas.in.h:12
+msgid "Process view columns order"
+msgstr "Process view columns order"
+
+#: src/gnome-system-monitor.schemas.in.h:13
 msgid "Process view sort column"
 msgstr "Process view sort column"
 
-#: src/gnome-system-monitor.schemas.in.h:11
+#: src/gnome-system-monitor.schemas.in.h:14
 msgid "Process view sort order"
 msgstr "Process view sort order"
 
-#: src/gnome-system-monitor.schemas.in.h:12
+#: src/gnome-system-monitor.schemas.in.h:15
 msgid "Saves the currently viewed tab"
 msgstr "Saves the currently viewed tab"
 
-#: src/gnome-system-monitor.schemas.in.h:13
+#: src/gnome-system-monitor.schemas.in.h:16
 msgid "Show advanced info tab on startup"
 msgstr "Show advanced info tab on startup"
 
-#: src/gnome-system-monitor.schemas.in.h:14
+#: src/gnome-system-monitor.schemas.in.h:17
 msgid "Show column zero on startup"
 msgstr "Show column zero on startup"
 
-#: src/gnome-system-monitor.schemas.in.h:15
+#: src/gnome-system-monitor.schemas.in.h:18
 msgid "Show process dependencies in tree form"
 msgstr "Show process dependencies in tree form"
 
-#: src/gnome-system-monitor.schemas.in.h:16
+#: src/gnome-system-monitor.schemas.in.h:19
 msgid "Show process threads"
 msgstr "Show process threads"
 
-#: src/gnome-system-monitor.schemas.in.h:17
+#: src/gnome-system-monitor.schemas.in.h:20
 msgid "Show warning dialog when hiding processes"
 msgstr "Show warning dialogue when hiding processes"
 
-#: src/gnome-system-monitor.schemas.in.h:18
+#: src/gnome-system-monitor.schemas.in.h:21
 msgid "Show warning dialog when killing processes"
 msgstr "Show warning dialogue when killing processes"
 
-#: src/gnome-system-monitor.schemas.in.h:19
+#: src/gnome-system-monitor.schemas.in.h:22
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Time in milliseconds between updates of the devices list"
 
-#: src/gnome-system-monitor.schemas.in.h:20
+#: src/gnome-system-monitor.schemas.in.h:23
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Time in milliseconds between updates of the graphs"
 
-#: src/gnome-system-monitor.schemas.in.h:21
+#: src/gnome-system-monitor.schemas.in.h:24
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Time in milliseconds between updates of the process view"
 
-#: src/gnome-system-monitor.schemas.in.h:22
+#: src/gnome-system-monitor.schemas.in.h:25
 msgid "Whether information about all filesystems should be displayed"
 msgstr "Whether information about all filesystems should be displayed"
 
-#: src/gnome-system-monitor.schemas.in.h:23
+#: src/gnome-system-monitor.schemas.in.h:26
 msgid ""
 "Whether information about all filesystems should be displayed: this will "
 "include filesystem types like 'autofs' and 'procfs'. It can be usefull to "
@@ -206,7 +218,7 @@ msgstr "Priority:"
 msgid "Memory Usage"
 msgstr "Memory Usage"
 
-#: src/infoview.c:153
+#: src/infoview.c:153 src/interface.c:626 src/interface.c:657
 msgid "Total:"
 msgstr "Total:"
 
@@ -267,7 +279,7 @@ msgstr "_Quit"
 msgid "Quit the program"
 msgstr "Quit the program"
 
-#: src/interface.c:55 src/interface.c:191
+#: src/interface.c:55 src/interface.c:189
 msgid "End _Process"
 msgstr "End _Process"
 
@@ -363,87 +375,112 @@ msgstr "_Threads"
 msgid "Show each thread as a separate process"
 msgstr "Show each thread as a separate process"
 
-#: src/interface.c:155
-msgid "All processes"
-msgstr "All processes"
-
-#: src/interface.c:156
-msgid "My processes"
-msgstr "My processes"
-
-#: src/interface.c:157
+#: src/interface.c:92
 msgid "Active processes"
 msgstr "Active processes"
 
-#: src/interface.c:164
-msgid "Sho_w:"
-msgstr "Sho_w:"
+#: src/interface.c:93
+msgid "Show active processes"
+msgstr "Show active processes"
 
-#: src/interface.c:271 src/memmaps.c:300
+#: src/interface.c:94
+msgid "All processes"
+msgstr "All processes"
+
+#: src/interface.c:95
+msgid "Show all processes"
+msgstr "Show all processes"
+
+#: src/interface.c:96
+msgid "My processes"
+msgstr "My processes"
+
+#: src/interface.c:97
+msgid "Show user own process"
+msgstr "Show user own process"
+
+#: src/interface.c:275 src/memmaps.c:300
 msgid "Device"
 msgstr "Device"
 
-#: src/interface.c:272
+#: src/interface.c:276
 msgid "Directory"
 msgstr "Directory"
 
-#: src/interface.c:273 src/openfiles.c:230
+#: src/interface.c:277 src/openfiles.c:230
 msgid "Type"
 msgstr "Type"
 
-#: src/interface.c:274
+#: src/interface.c:278
 msgid "Total"
 msgstr "Total"
 
-#: src/interface.c:275
+#: src/interface.c:279
 msgid "Free"
 msgstr "Free"
 
-#: src/interface.c:276
+#: src/interface.c:280
 msgid "Used"
 msgstr "Used"
 
-#: src/interface.c:285 src/interface.c:717 src/procdialogs.c:735
-#: src/procdialogs.c:739
+#: src/interface.c:289 src/interface.c:821 src/procdialogs.c:739
+#: src/procdialogs.c:743
 msgid "Devices"
 msgstr "Devices"
 
-#: src/interface.c:420
+#: src/interface.c:424
 msgid "CPU History"
 msgstr "CPU History"
 
-#: src/interface.c:461
+#: src/interface.c:465
 msgid "CPU:"
 msgstr "CPU:"
 
-#: src/interface.c:464
+#: src/interface.c:468
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: src/interface.c:484
+#: src/interface.c:488
 msgid "Memory and Swap History"
 msgstr "Memory and Swap History"
 
-#: src/interface.c:517
+#: src/interface.c:521
 msgid "User memory:"
 msgstr "User memory:"
 
-#: src/interface.c:526 src/interface.c:557
+#: src/interface.c:530 src/interface.c:561
 msgid "of"
 msgstr "of"
 
-#: src/interface.c:548
+#: src/interface.c:552
 msgid "Used swap:"
 msgstr "Used swap:"
 
-#: src/interface.c:705 src/procdialogs.c:557
+#: src/interface.c:581
+msgid "Network History"
+msgstr "Network History"
+
+#: src/interface.c:612
+msgid "Receive:"
+msgstr "Receive:"
+
+#: src/interface.c:643
+msgid "Send:"
+msgstr "Send:"
+
+#: src/interface.c:809 src/procdialogs.c:556
 msgid "Processes"
 msgstr "Processes"
 
-#: src/interface.c:711 src/procdialogs.c:644
+#: src/interface.c:815 src/procdialogs.c:648
 msgid "Resources"
 msgstr "Resources"
+
+#: src/load-graph.c:310 src/load-graph.c:320
+#, c-format
+msgid "%s/s"
+msgstr "%s/s"
 
 #: src/memmaps.c:294
 msgid "Filename"
@@ -457,7 +494,7 @@ msgstr "VM Start"
 msgid "VM End"
 msgstr "VM End"
 
-#: src/memmaps.c:297 src/proctable.c:159
+#: src/memmaps.c:297 src/proctable.c:243
 msgid "VM Size"
 msgstr "VM Size"
 
@@ -631,141 +668,141 @@ msgstr ""
 msgid "Processes i_nfo showed in list:"
 msgstr "Process i_nfo showed in list:"
 
-#: src/procdialogs.c:493
+#: src/procdialogs.c:494
 msgid "Icon"
 msgstr "Icon"
 
-#: src/procdialogs.c:534
+#: src/procdialogs.c:533
 msgid "System Monitor Preferences"
 msgstr "System Monitor Preferences"
 
-#: src/procdialogs.c:564
+#: src/procdialogs.c:563
 msgid "Behavior"
 msgstr "Behaviour"
 
-#: src/procdialogs.c:583 src/procdialogs.c:670
+#: src/procdialogs.c:582 src/procdialogs.c:674
 msgid "_Update interval:"
 msgstr "_Update interval:"
 
-#: src/procdialogs.c:599 src/procdialogs.c:687 src/procdialogs.c:775
+#: src/procdialogs.c:603 src/procdialogs.c:691 src/procdialogs.c:779
 msgid "seconds"
 msgstr "seconds"
 
-#: src/procdialogs.c:606
+#: src/procdialogs.c:610
 msgid "Alert before ending or _killing processes"
 msgstr "Alert before ending or _killing processes"
 
-#: src/procdialogs.c:616
+#: src/procdialogs.c:620
 msgid "Alert before _hiding processes"
 msgstr "Alert before _hiding processes"
 
-#: src/procdialogs.c:626
+#: src/procdialogs.c:630
 msgid "Process Fields"
 msgstr "Process Fields"
 
-#: src/procdialogs.c:651
+#: src/procdialogs.c:655
 msgid "Graphs"
 msgstr "Graphs"
 
-#: src/procdialogs.c:694
+#: src/procdialogs.c:698
 msgid "_Background color:"
 msgstr "_Background colour:"
 
-#: src/procdialogs.c:713
+#: src/procdialogs.c:717
 msgid "_Grid color:"
 msgstr "_Grid colour:"
 
-#: src/procdialogs.c:758
+#: src/procdialogs.c:762
 msgid "Update _interval:"
 msgstr "Update _interval:"
 
-#: src/procdialogs.c:782
+#: src/procdialogs.c:786
 msgid "Show _all filesystems"
 msgstr "Show _all filesystems"
 
-#: src/proctable.c:155
+#: src/proctable.c:239
 msgid "Process Name"
 msgstr "Process Name"
 
-#: src/proctable.c:156
+#: src/proctable.c:240
 msgid "User"
 msgstr "User"
 
-#: src/proctable.c:157
+#: src/proctable.c:241
 msgid "Status"
 msgstr "Status"
 
-#: src/proctable.c:158
+#: src/proctable.c:242
 msgid "Memory"
 msgstr "Memory"
 
-#: src/proctable.c:160
+#: src/proctable.c:244
 msgid "Resident Memory"
 msgstr "Resident Memory"
 
-#: src/proctable.c:161
+#: src/proctable.c:245
 msgid "Shared Memory"
 msgstr "Shared Memory"
 
-#: src/proctable.c:162
+#: src/proctable.c:246
 msgid "RSS Memory"
 msgstr "RSS Memory"
 
-#: src/proctable.c:163
+#: src/proctable.c:247
 msgid "X Server Memory"
 msgstr "X Server Memory"
 
-#: src/proctable.c:164
+#: src/proctable.c:248
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: src/proctable.c:165
+#: src/proctable.c:249
 msgid "CPU time"
 msgstr "CPU time"
 
-#: src/proctable.c:166
+#: src/proctable.c:250
 msgid "Nice"
 msgstr "Nice"
 
-#: src/proctable.c:167
+#: src/proctable.c:251
 msgid "ID"
 msgstr "ID"
 
-#: src/proctable.c:168
+#: src/proctable.c:252
 msgid "Security Context"
 msgstr "Security Context"
 
-#: src/proctable.c:169
+#: src/proctable.c:253
 msgid "Arguments"
 msgstr "Arguments"
 
-#: src/proctable.c:335
+#: src/proctable.c:426
 msgid "Running"
 msgstr "Running"
 
-#: src/proctable.c:340
+#: src/proctable.c:431
 msgid "Stopped"
 msgstr "Stopped"
 
-#: src/proctable.c:345
+#: src/proctable.c:436
 msgid "Zombie"
 msgstr "Zombie"
 
-#: src/proctable.c:350
+#: src/proctable.c:441
 msgid "Uninterruptible"
 msgstr "Uninterruptible"
 
-#: src/proctable.c:355
+#: src/proctable.c:446
 msgid "Sleeping"
 msgstr "Sleeping"
 
-#: src/proctable.c:539
+#: src/proctable.c:630
 #, c-format
 msgid "%s (thread)"
 msgstr "%s (thread)"
 
-#: src/proctable.c:943
+#: src/proctable.c:1018
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
