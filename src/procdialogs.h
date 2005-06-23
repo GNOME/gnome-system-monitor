@@ -23,6 +23,19 @@
 #include <glib.h>
 #include "procman.h"
 
+/* These are the actual range of settable values. Values outside this range
+   are scaled back to these limits. So show these limits in the slider
+*/
+#ifdef linux
+#define RENICE_VAL_MIN -20
+#define RENICE_VAL_MAX 19
+#else /* ! linux */
+#define RENICE_VAL_MIN -20
+#define RENICE_VAL_MAX 20
+#endif
+
+
+
 extern int kill_signal G_GNUC_INTERNAL;
 
 void			procdialog_create_hide_dialog (ProcData *data) G_GNUC_INTERNAL;

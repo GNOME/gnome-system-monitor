@@ -263,7 +263,7 @@ procdialog_create_renice_dialog (ProcData *data)
 	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 2,
 			  0, 0, 0, 0);
 	
-	renice_adj = gtk_adjustment_new (info->nice, -20, 20, 1, 1, 0);
+	renice_adj = gtk_adjustment_new (info->nice, RENICE_VAL_MIN, RENICE_VAL_MAX, 1, 1, 0);
 	new_nice_value = 0;
 	hscale = gtk_hscale_new (GTK_ADJUSTMENT (renice_adj));
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), hscale);
