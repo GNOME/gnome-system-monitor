@@ -55,6 +55,7 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 
 	ProcInfo *info = NULL;
 	gint error;
+	int saved_errno;
 	gchar *error_msg;
 	GtkWidget *dialog;
 
@@ -66,6 +67,8 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 	/* success */
 	if(error != -1) return;
 
+	saved_errno = errno;
+
 	/* need to be root */
 	if(errno == EPERM || errno == EACCES) {
 		gboolean success;
@@ -75,13 +78,17 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 			args->nice_value);
 
 		if(success) return;
+
+		if(errno) {
+			saved_errno = errno;
+		}
 	}
 
 	/* failed */
 	error_msg = g_strdup_printf (
 		_("Cannot change the priority of process with pid %d to %d.\n"
 		  "%s"),
-		info->pid, args->nice_value, g_strerror(errno));
+		info->pid, args->nice_value, g_strerror(saved_errno));
 
 	dialog = gtk_message_dialog_new (
 		NULL,
@@ -116,6 +123,7 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
 	char *error_msg;
 	ProcInfo *info;
 	int error;
+	int saved_errno;
 	GtkWidget *dialog;
 
 	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
@@ -126,6 +134,8 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
 	/* success */
 	if(error != -1) return;
 
+	saved_errno = errno;
+
 	/* need to be root */
 	if(errno == EPERM) {
 		gboolean success;
@@ -135,13 +145,17 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
 			args->signal);
 
 		if(success) return;
+
+		if(errno) {
+			saved_errno = errno;
+		}
 	}
 
 	/* failed */
 	error_msg = g_strdup_printf (
 		_("Cannot kill process with pid %d with signal %d.\n"
 		  "%s"),
-		info->pid, args->signal, g_strerror(errno));
+		info->pid, args->signal, g_strerror(saved_errno));
 
 	dialog = gtk_message_dialog_new (
 		NULL,
