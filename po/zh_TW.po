@@ -1,23 +1,23 @@
 # traditional Chinese translation for procman(gnome-system-monitor).
 # Copyright (C) 2001, 02, 03, 04, 05 Free Software Foundation, Inc.
 # Woodman Tuen <woodman@culturecom.com.hk>, 2004
-# Abel Cheung <maddog@linuxhall.org>, 2001-03, 05.
+# Abel Cheung <abel@oaka.org>, 2001-03, 05.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: procman 2.11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-29 04:59+0800\n"
-"PO-Revision-Date: 2005-03-29 10:11+0800\n"
-"Last-Translator: Abel Cheung <maddog@linuxhall.org>\n"
-"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"POT-Creation-Date: 2005-06-23 22:08+0000\n"
+"PO-Revision-Date: 2005-06-24 11:02+0800\n"
+"Last-Translator: Abel Cheung <abel@oaka.org>\n"
+"Language-Team: Chinese (traditional) <community@linuxhall.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:141
-#: ../src/interface.c:630
+#: ../src/interface.c:742
 msgid "System Monitor"
 msgstr "系統監控"
 
@@ -36,10 +36,11 @@ msgstr "Benoît Dejean - 維護者"
 #: ../src/callbacks.c:150
 msgid "translator-credits"
 msgstr ""
-"i18n 程式中文化計劃\n"
-"http://i18n.linux.org.tw/\n"
+"如對翻譯有任何意見，請送一封電子郵件給\n"
+"以下地址，GNOME 翻譯團隊會盡快回覆您：\n"
+"community@linuxhall.org\n"
 "\n"
-"Abel Cheung <maddog@linuxhall.org>, 2001-03, 05\n"
+"Abel Cheung <abel@oaka.org>, 2001-03, 05\n"
 "Woodman Tuen <woodman@culturecom.com.hk>, 2004"
 
 #. translators: primary alert message
@@ -98,10 +99,20 @@ msgid "Default graph mem color"
 msgstr "圖表預設表示記憶體的顏色"
 
 #: ../src/gnome-system-monitor.schemas.in.h:6
+#, fuzzy
+msgid "Default graph net in color"
+msgstr "圖表預設表示記憶體的顏色"
+
+#: ../src/gnome-system-monitor.schemas.in.h:7
+#, fuzzy
+msgid "Default graph net out color"
+msgstr "圖表預設表示記憶體的顏色"
+
+#: ../src/gnome-system-monitor.schemas.in.h:8
 msgid "Default graph swap color"
 msgstr "圖表預設表示交換記憶的顏色"
 
-#: ../src/gnome-system-monitor.schemas.in.h:7
+#: ../src/gnome-system-monitor.schemas.in.h:9
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
@@ -109,62 +120,78 @@ msgstr ""
 "決定顯示哪一類進程。0 表示全部，1 只顯示用家自己的進程，2 只顯示目前仍然活躍"
 "的進程。"
 
-#: ../src/gnome-system-monitor.schemas.in.h:8
+#: ../src/gnome-system-monitor.schemas.in.h:10
 msgid "Main Window height"
 msgstr "主視窗高度"
 
-#: ../src/gnome-system-monitor.schemas.in.h:9
+#: ../src/gnome-system-monitor.schemas.in.h:11
 msgid "Main Window width"
 msgstr "主視窗寬度"
 
-#: ../src/gnome-system-monitor.schemas.in.h:10
+#: ../src/gnome-system-monitor.schemas.in.h:12
+#, fuzzy
+msgid "Process view columns order"
+msgstr "排列進程的次序"
+
+#: ../src/gnome-system-monitor.schemas.in.h:13
 msgid "Process view sort column"
 msgstr "進程根據哪一欄排序"
 
-#: ../src/gnome-system-monitor.schemas.in.h:11
+#: ../src/gnome-system-monitor.schemas.in.h:14
 msgid "Process view sort order"
 msgstr "排列進程的次序"
 
-#: ../src/gnome-system-monitor.schemas.in.h:12
+#: ../src/gnome-system-monitor.schemas.in.h:15
 msgid "Saves the currently viewed tab"
 msgstr "本數值表示程式下次啟動時顯示的分頁"
 
-#: ../src/gnome-system-monitor.schemas.in.h:13
+#: ../src/gnome-system-monitor.schemas.in.h:16
 msgid "Show advanced info tab on startup"
 msgstr "程式啟動時顯示進程的詳細資訊"
 
 # (Abel) 怎麼每一欄都是稱為第 0 欄的？
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:17
 msgid "Show column zero on startup"
 msgstr "程式啟動時顯示第 0 欄"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:18
 msgid "Show process dependencies in tree form"
 msgstr "以樹狀方式顯示進程間的相依性"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
+#: ../src/gnome-system-monitor.schemas.in.h:19
 msgid "Show process threads"
 msgstr "顯示進程中的所有線程 (thread)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:20
 msgid "Show warning dialog when hiding processes"
 msgstr "當隱藏進程時顯示警告訊息對話方塊"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:21
 msgid "Show warning dialog when killing processes"
 msgstr "準備強行終止進程時顯示警告訊息對話方塊"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:22
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "儲存裝置清單每次更新的時間，以毫秒表示"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:23
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "資源圖表每次更新的時間，以毫秒表示"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:24
 msgid "Time in milliseconds between updates of the process view"
 msgstr "進程清單每次更新的時間，以毫秒表示"
+
+#: ../src/gnome-system-monitor.schemas.in.h:25
+msgid "Whether information about all filesystems should be displayed"
+msgstr ""
+
+#: ../src/gnome-system-monitor.schemas.in.h:26
+msgid ""
+"Whether information about all filesystems should be displayed: this will "
+"include filesystem types like 'autofs' and 'procfs'. It can be usefull to "
+"get a list of all currently mounted filesystems."
+msgstr ""
 
 #: ../src/infoview.c:34
 msgid "Less _Info"
@@ -194,7 +221,7 @@ msgstr "優先度:"
 msgid "Memory Usage"
 msgstr "記憶體使用量"
 
-#: ../src/infoview.c:153
+#: ../src/infoview.c:153 ../src/interface.c:626 ../src/interface.c:657
 msgid "Total:"
 msgstr "總數:"
 
@@ -231,215 +258,279 @@ msgstr "低 (Nice 值為 %d)"
 msgid "Very low - nice %d"
 msgstr "極低 (Nice 值為 %d)"
 
-#: ../src/interface.c:55 ../src/interface.c:234
+#: ../src/interface.c:47
+#, fuzzy
+msgid "_File"
+msgstr "檔案"
+
+#: ../src/interface.c:48
+msgid "_Edit"
+msgstr ""
+
+#: ../src/interface.c:49
+#, fuzzy
+msgid "_View"
+msgstr "顯示(_W):"
+
+#: ../src/interface.c:50
+msgid "_Help"
+msgstr ""
+
+#: ../src/interface.c:52
+msgid "_Quit"
+msgstr ""
+
+#: ../src/interface.c:53
+msgid "Quit the program"
+msgstr ""
+
+#: ../src/interface.c:55 ../src/interface.c:189
 msgid "End _Process"
 msgstr "終止進程(_P)"
 
-#: ../src/interface.c:55
+#: ../src/interface.c:56
 msgid "Force process to finish normally"
 msgstr "立刻以正常方式終止進程"
 
-#: ../src/interface.c:60 ../src/interface.c:136 ../src/procdialogs.c:121
+#: ../src/interface.c:57 ../src/procdialogs.c:121
 msgid "_Kill Process"
 msgstr "強行終止進程(_K)"
 
-#: ../src/interface.c:60
+#: ../src/interface.c:58
 msgid "Force process to finish immediately"
 msgstr "立刻強行終止進程"
 
-#: ../src/interface.c:66 ../src/interface.c:142
+#: ../src/interface.c:59
 msgid "_Change Priority..."
 msgstr "更改優先度(_C)..."
 
-#: ../src/interface.c:66 ../src/interface.c:142
+#: ../src/interface.c:60
 msgid "Change the order of priority of process"
 msgstr "更改進程的優先度 (nice 值)"
 
-#: ../src/interface.c:78
-msgid "_Dependencies"
-msgstr "相依性(_D)"
+#: ../src/interface.c:61
+#, fuzzy
+msgid "Prefere_nces"
+msgstr "偏好設定"
 
-#: ../src/interface.c:78
-msgid "Show parent/child relationship between processes"
-msgstr "顯示各進程之間的主從關係"
+#: ../src/interface.c:62
+#, fuzzy
+msgid "Configure the application"
+msgstr "關閉應用程式(_C)"
 
-#: ../src/interface.c:83
-msgid "_Threads"
-msgstr "線程(_Thread)"
-
-#: ../src/interface.c:83
-msgid "Show each thread as a separate process"
-msgstr "將每個線程 (thread) 都作為獨立的進程看待"
-
-#: ../src/interface.c:89 ../src/interface.c:148 ../src/procdialogs.c:83
+#: ../src/interface.c:64 ../src/procdialogs.c:83
 msgid "_Hide Process"
 msgstr "隱藏進程(_H)"
 
-#: ../src/interface.c:89 ../src/interface.c:148
+#: ../src/interface.c:65
 msgid "Hide process from list"
 msgstr "在清單中隱藏某個進程"
 
-#: ../src/interface.c:94
+#: ../src/interface.c:66
 msgid "_Hidden Processes"
 msgstr "已隱藏的進程(_H)"
 
-#: ../src/interface.c:94
+#: ../src/interface.c:67
 msgid "Open the list of currently hidden processes"
 msgstr "顯示目前已經隱藏的進程"
 
-#: ../src/interface.c:100 ../src/interface.c:154
+#: ../src/interface.c:68
 msgid "_Memory Maps"
 msgstr "記憶配置(_M)"
 
-#: ../src/interface.c:100
+#: ../src/interface.c:69
 msgid "Open the memory maps associated with a process"
 msgstr "顯示有關某進程的記憶配置情況"
 
 # (Abel) 指一個 process 開啟了哪些檔案
-#: ../src/interface.c:105 ../src/interface.c:159
+#: ../src/interface.c:70
 msgid "Open _Files"
 msgstr "已開啟的檔案(_F)"
 
-#: ../src/interface.c:105
+#: ../src/interface.c:71
 msgid "View the files opened by a process"
 msgstr "顯示某進程開啟了哪些檔案"
 
-#: ../src/interface.c:131 ../src/procdialogs.c:130
-msgid "_End Process"
-msgstr "終止進程(_E)"
+#: ../src/interface.c:73
+msgid "_Contents"
+msgstr ""
 
-#: ../src/interface.c:131
-msgid "Force a process to finish normally"
-msgstr "立刻以正常方式終止某進程"
+#: ../src/interface.c:74
+msgid "Open the manual"
+msgstr ""
 
-#: ../src/interface.c:136
-msgid "Force a process to finish immediately"
-msgstr "立刻強行終止某進程"
+#: ../src/interface.c:75
+msgid "_About"
+msgstr ""
 
-#: ../src/interface.c:154
-msgid "Open the memory maps associated with the process"
-msgstr "顯示該進程的記憶配置情況"
+#: ../src/interface.c:76
+#, fuzzy
+msgid "About this application"
+msgstr "關閉應用程式(_C)"
 
-#: ../src/interface.c:159
-msgid "View the files opened by the process"
-msgstr "顯示該進程開啟了哪些檔案"
+#: ../src/interface.c:81
+msgid "_Dependencies"
+msgstr "相依性(_D)"
 
-#: ../src/interface.c:185
-msgid "Sea_rch:"
-msgstr "搜尋(_R):"
+#: ../src/interface.c:82
+msgid "Show parent/child relationship between processes"
+msgstr "顯示各進程之間的主從關係"
 
-#: ../src/interface.c:197
-msgid "All processes"
-msgstr "所有進程"
+#: ../src/interface.c:84
+msgid "_Threads"
+msgstr "線程(_Thread)"
 
-#: ../src/interface.c:198
-msgid "My processes"
-msgstr "我的進程"
+#: ../src/interface.c:85
+msgid "Show each thread as a separate process"
+msgstr "將每個線程 (thread) 都作為獨立的進程看待"
 
-#: ../src/interface.c:199
+#: ../src/interface.c:92
 msgid "Active processes"
 msgstr "運行中的進程"
 
-#: ../src/interface.c:206
-msgid "Sho_w:"
-msgstr "顯示(_W):"
+#: ../src/interface.c:93
+#, fuzzy
+msgid "Show active processes"
+msgstr "運行中的進程"
 
-#: ../src/interface.c:317 ../src/memmaps.c:259
+#: ../src/interface.c:94
+msgid "All processes"
+msgstr "所有進程"
+
+#: ../src/interface.c:95
+#, fuzzy
+msgid "Show all processes"
+msgstr "所有進程"
+
+#: ../src/interface.c:96
+msgid "My processes"
+msgstr "我的進程"
+
+#: ../src/interface.c:97
+#, fuzzy
+msgid "Show user own process"
+msgstr "沒有隱藏任何進程"
+
+#: ../src/interface.c:275 ../src/memmaps.c:300
 msgid "Device"
 msgstr "裝置"
 
-#: ../src/interface.c:318
+#: ../src/interface.c:276
 msgid "Directory"
 msgstr "目錄"
 
-#: ../src/interface.c:319 ../src/openfiles.c:224
+#: ../src/interface.c:277 ../src/openfiles.c:230
 msgid "Type"
 msgstr "類型"
 
-#: ../src/interface.c:320
+#: ../src/interface.c:278
 msgid "Total"
 msgstr "總數"
 
-#: ../src/interface.c:321
+#: ../src/interface.c:279
 msgid "Free"
 msgstr "剩餘"
 
-#: ../src/interface.c:322
+#: ../src/interface.c:280
 msgid "Used"
 msgstr "已用"
 
-#: ../src/interface.c:331 ../src/interface.c:654 ../src/procdialogs.c:720
-#: ../src/procdialogs.c:724
+#: ../src/interface.c:289 ../src/interface.c:821 ../src/procdialogs.c:739
+#: ../src/procdialogs.c:743
 msgid "Devices"
 msgstr "裝置"
 
-#: ../src/interface.c:466
+#: ../src/interface.c:424
 msgid "CPU History"
 msgstr "CPU 使用量紀錄"
 
-#: ../src/interface.c:506
+#: ../src/interface.c:465
+#, fuzzy
+msgid "CPU:"
+msgstr "CPU%d:"
+
+#: ../src/interface.c:468
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: ../src/interface.c:525
+#: ../src/interface.c:488
 msgid "Memory and Swap History"
 msgstr "記憶體/交換記憶使用量紀錄"
 
-#: ../src/interface.c:558
+#: ../src/interface.c:521
 msgid "User memory:"
 msgstr "已使用的記憶體:"
 
 # (Abel) e.g. 200MB of 256MB
-#: ../src/interface.c:567 ../src/interface.c:598
+#: ../src/interface.c:530 ../src/interface.c:561
 msgid "of"
 msgstr "/"
 
-#: ../src/interface.c:589
+#: ../src/interface.c:552
 msgid "Used swap:"
 msgstr "已使用的交換記憶:"
 
-#: ../src/interface.c:642 ../src/procdialogs.c:542
+#: ../src/interface.c:581
+#, fuzzy
+msgid "Network History"
+msgstr "CPU 使用量紀錄"
+
+#: ../src/interface.c:612
+msgid "Receive:"
+msgstr ""
+
+#: ../src/interface.c:643
+#, fuzzy
+msgid "Send:"
+msgstr "分享記憶:"
+
+#: ../src/interface.c:809 ../src/procdialogs.c:556
 msgid "Processes"
 msgstr "進程"
 
-#: ../src/interface.c:648 ../src/procdialogs.c:629
+#: ../src/interface.c:815 ../src/procdialogs.c:648
 msgid "Resources"
 msgstr "資源"
 
-#: ../src/memmaps.c:253
+#: ../src/load-graph.c:310 ../src/load-graph.c:320
+#, c-format
+msgid "%s/s"
+msgstr ""
+
+#: ../src/memmaps.c:294
 msgid "Filename"
 msgstr "檔名"
 
-#: ../src/memmaps.c:254
+#: ../src/memmaps.c:295
 msgid "VM Start"
 msgstr "VM 開始"
 
-#: ../src/memmaps.c:255
+#: ../src/memmaps.c:296
 msgid "VM End"
 msgstr "VM 終結"
 
-#: ../src/memmaps.c:256 ../src/proctable.c:172
+#: ../src/memmaps.c:297 ../src/proctable.c:243
 msgid "VM Size"
 msgstr "VM 大小"
 
-#: ../src/memmaps.c:257
+#: ../src/memmaps.c:298
 msgid "Flags"
 msgstr "旗標"
 
-#: ../src/memmaps.c:258
+#: ../src/memmaps.c:299
 msgid "VM Offset"
 msgstr "VM Offset"
 
-#: ../src/memmaps.c:260
+#: ../src/memmaps.c:301
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.c:340
+#: ../src/memmaps.c:401
 msgid "Memory Maps"
 msgstr "記憶配置"
 
-#: ../src/memmaps.c:360
+#: ../src/memmaps.c:421
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "進程 “%s” (_PID %u) 的記憶配置:"
@@ -467,19 +558,19 @@ msgstr "類型不詳"
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.c:223
+#: ../src/openfiles.c:229
 msgid "FD"
 msgstr "FD"
 
-#: ../src/openfiles.c:225
+#: ../src/openfiles.c:231
 msgid "Object"
 msgstr "物件"
 
-#: ../src/openfiles.c:302
+#: ../src/openfiles.c:308
 msgid "Open Files"
 msgstr "已開啟的檔案"
 
-#: ../src/openfiles.c:324
+#: ../src/openfiles.c:330
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "進程 “%s” (_PID %u) 所開啟的檔案:"
@@ -525,9 +616,10 @@ msgstr "是否強行終止指定的進程？"
 
 #. translators: secondary alert message
 #: ../src/procdialogs.c:118
+#, fuzzy
 msgid ""
-"Killing a process, you could destroy your data, break the working session or "
-"create a security risk. Only misbehaving processes should be killed."
+"Killing a process may destroy data, break the session or introduce a "
+"security risk. Only unresponding processes should be killed."
 msgstr ""
 "強行終止進程可能導致損失資料，令桌面無法正常運作，甚至可以造成保安漏洞。如果"
 "不是因為軟體不能正常運作，就最好不要強行終止。"
@@ -539,12 +631,17 @@ msgstr "是否終止指定的進程？"
 
 #. translators: secondary alert message
 #: ../src/procdialogs.c:127
+#, fuzzy
 msgid ""
-"Ending a process, you could destroy your data, break the working session or "
-"create a security risk. Only misbehaving processes should be ended."
+"Ending a process may destroy data, break the session or introduce a security "
+"risk. Only unresponding processes should be ended."
 msgstr ""
 "終止進程可能導致損失資料，令桌面無法正常運作，甚至可以造成保安漏洞。如果不是"
 "因為軟體不能正常運作，就最好不要終止。"
+
+#: ../src/procdialogs.c:130
+msgid "_End Process"
+msgstr "終止進程(_E)"
 
 # (Abel) FIXME: 這些我譯得不好，要再考慮
 #: ../src/procdialogs.c:159
@@ -585,155 +682,201 @@ msgid ""
 "corresponds to a higher priority."
 msgstr "進程是否優先執行可由它的 nice 值得出。較低的 nice 值表示較優先執行。"
 
-#: ../src/procdialogs.c:427
+#: ../src/procdialogs.c:442
 msgid "Processes i_nfo showed in list:"
 msgstr "清單中顯示的進程資訊欄位(_N):"
 
-#: ../src/procdialogs.c:478
+#: ../src/procdialogs.c:494
 msgid "Icon"
 msgstr "圖示"
 
-#: ../src/procdialogs.c:519
+#: ../src/procdialogs.c:533
 msgid "System Monitor Preferences"
 msgstr "系統監控程式偏好設定"
 
-#: ../src/procdialogs.c:549
+#: ../src/procdialogs.c:563
 msgid "Behavior"
 msgstr "運作方式"
 
-#: ../src/procdialogs.c:568 ../src/procdialogs.c:655
+#: ../src/procdialogs.c:582 ../src/procdialogs.c:674
 msgid "_Update interval:"
 msgstr "更新間隔(_U):"
 
-#: ../src/procdialogs.c:584 ../src/procdialogs.c:672 ../src/procdialogs.c:760
+#: ../src/procdialogs.c:603 ../src/procdialogs.c:691 ../src/procdialogs.c:779
 msgid "seconds"
 msgstr "秒"
 
-#: ../src/procdialogs.c:591
+#: ../src/procdialogs.c:610
 msgid "Alert before ending or _killing processes"
 msgstr "當進程結束或被強行終止之前顯示警告訊息對話方塊(_K)"
 
-#: ../src/procdialogs.c:601
+#: ../src/procdialogs.c:620
 msgid "Alert before _hiding processes"
 msgstr "隱藏進程之前顯示警告訊息對話方塊(_H)"
 
-#: ../src/procdialogs.c:611
+#: ../src/procdialogs.c:630
 msgid "Process Fields"
 msgstr "進程欄位"
 
-#: ../src/procdialogs.c:636
+#: ../src/procdialogs.c:655
 msgid "Graphs"
 msgstr "圖表"
 
-#: ../src/procdialogs.c:679
+#: ../src/procdialogs.c:698
 msgid "_Background color:"
 msgstr "背景顏色(_B):"
 
-#: ../src/procdialogs.c:698
+#: ../src/procdialogs.c:717
 msgid "_Grid color:"
 msgstr "框線顏色(_G):"
 
-#: ../src/procdialogs.c:743
+#: ../src/procdialogs.c:762
 msgid "Update _interval:"
 msgstr "更新間隔(_I):"
 
-#: ../src/proctable.c:168
+#: ../src/procdialogs.c:786
+msgid "Show _all filesystems"
+msgstr ""
+
+#: ../src/proctable.c:239
 msgid "Process Name"
 msgstr "進程名稱"
 
-#: ../src/proctable.c:169
+#: ../src/proctable.c:240
 msgid "User"
 msgstr "用戶"
 
-#: ../src/proctable.c:170
+#: ../src/proctable.c:241
 msgid "Status"
 msgstr "狀態"
 
-#: ../src/proctable.c:171
+#: ../src/proctable.c:242
 msgid "Memory"
 msgstr "記憶體"
 
-#: ../src/proctable.c:173
+#: ../src/proctable.c:244
 msgid "Resident Memory"
 msgstr "常駐記憶"
 
-#: ../src/proctable.c:174
+#: ../src/proctable.c:245
 msgid "Shared Memory"
 msgstr "分享記憶"
 
-#: ../src/proctable.c:175
+#: ../src/proctable.c:246
 msgid "RSS Memory"
 msgstr "RSS 記憶"
 
-#: ../src/proctable.c:176
+#: ../src/proctable.c:247
 msgid "X Server Memory"
 msgstr "X伺服器記憶體"
 
-#: ../src/proctable.c:177
+#: ../src/proctable.c:248
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:178
+#: ../src/proctable.c:249
 msgid "CPU time"
 msgstr "CPU 時間"
 
-#: ../src/proctable.c:179
+#: ../src/proctable.c:250
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.c:180
+#: ../src/proctable.c:251
 msgid "ID"
 msgstr "ID"
 
 # (Abel) 和 selinux 有關?
-#: ../src/proctable.c:181
+#: ../src/proctable.c:252
 #, fuzzy
 msgid "Security Context"
 msgstr "保安規則內容"
 
-#: ../src/proctable.c:182
+#: ../src/proctable.c:253
 msgid "Arguments"
 msgstr "參數"
 
-#: ../src/proctable.c:344
+#: ../src/proctable.c:426
 msgid "Running"
 msgstr "執行中"
 
-#: ../src/proctable.c:349
+#: ../src/proctable.c:431
 msgid "Stopped"
 msgstr "已停止"
 
 # (Abel) 不譯會比較容易明白
-#: ../src/proctable.c:354
+#: ../src/proctable.c:436
 msgid "Zombie"
 msgstr "Zombie"
 
-#: ../src/proctable.c:359
+#: ../src/proctable.c:441
 msgid "Uninterruptible"
 msgstr "無法中斷"
 
-#: ../src/proctable.c:364
+#: ../src/proctable.c:446
 msgid "Sleeping"
 msgstr "睡眠中"
 
-#: ../src/proctable.c:513
+#: ../src/proctable.c:630
 #, c-format
 msgid "%s (thread)"
 msgstr "%s (線程)"
 
-#: ../src/proctable.c:987
+#: ../src/proctable.c:1018
 #, c-format
-msgid "Could not find \"%s\""
-msgstr "找不到“%s”"
-
-#: ../src/proctable.c:990
-msgid ""
-"There are no processes containing the searched string. Please note that the "
-"search is performed only on processes shown in the process list."
+msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr ""
-"沒有任何進程含有指定的搜尋字串。請注意，搜尋時只會考慮清單目前正在顯示的進"
-"程。"
+
+#: ../src/util.c:87
+#, c-format
+msgid "%u byte"
+msgid_plural "%u bytes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/util.c:93
+#, c-format
+msgid "%.1f KiB"
+msgstr ""
+
+#: ../src/util.c:97
+#, c-format
+msgid "%.1f MiB"
+msgstr ""
+
+#: ../src/util.c:101
+#, c-format
+msgid "%.1f GiB"
+msgstr ""
+
+#~ msgid "Force a process to finish normally"
+#~ msgstr "立刻以正常方式終止某進程"
+
+#~ msgid "Force a process to finish immediately"
+#~ msgstr "立刻強行終止某進程"
+
+#~ msgid "Open the memory maps associated with the process"
+#~ msgstr "顯示該進程的記憶配置情況"
+
+#~ msgid "View the files opened by the process"
+#~ msgstr "顯示該進程開啟了哪些檔案"
+
+#~ msgid "Sea_rch:"
+#~ msgstr "搜尋(_R):"
+
+#~ msgid "Sho_w:"
+#~ msgstr "顯示(_W):"
+
+#~ msgid "Could not find \"%s\""
+#~ msgstr "找不到“%s”"
+
+#~ msgid ""
+#~ "There are no processes containing the searched string. Please note that "
+#~ "the search is performed only on processes shown in the process list."
+#~ msgstr ""
+#~ "沒有任何進程含有指定的搜尋字串。請注意，搜尋時只會考慮清單目前正在顯示的進"
+#~ "程。"
 
 #~ msgid "No processes are currently hidden."
 #~ msgstr "目前沒有任何隱藏的進程。"
@@ -756,9 +899,6 @@ msgstr ""
 #~ msgid "More _Info >>"
 #~ msgstr "顯示詳細資訊(_I) >>"
 
-#~ msgid "Vie_w:"
-#~ msgstr "顯示(_W):"
-
 #~ msgid "Name"
 #~ msgstr "名稱"
 
@@ -767,9 +907,6 @@ msgstr ""
 
 #~ msgid "Running Applications"
 #~ msgstr "執行中的程式"
-
-#~ msgid "_Close Application"
-#~ msgstr "關閉應用程式(_C)"
 
 #~ msgid "Process name:"
 #~ msgstr "進程名稱:"
@@ -807,9 +944,6 @@ msgstr ""
 
 #~ msgid "If you end a process, unsaved data will be lost."
 #~ msgstr "如果您要停止這進程，將會失去未儲存的資料。"
-
-#~ msgid "Preferences"
-#~ msgstr "偏好設定"
 
 #~ msgid "Kill Process"
 #~ msgstr "強行終止進程"
