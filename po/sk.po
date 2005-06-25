@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-11 12:57+0200\n"
-"PO-Revision-Date: 2005-06-11 20:25+0200\n"
+"POT-Creation-Date: 2005-06-25 23:51+0200\n"
+"PO-Revision-Date: 2005-06-25 23:54+0200\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural= (n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:141
-#: ../src/interface.c:645
+#: ../src/interface.c:742
 msgid "System Monitor"
 msgstr "Monitor systému"
 
@@ -103,10 +103,18 @@ msgid "Default graph mem color"
 msgstr "Predvolená farba grafu pamäte"
 
 #: ../src/gnome-system-monitor.schemas.in.h:6
+msgid "Default graph net in color"
+msgstr "Predvolená farba vnútri grafu siete"
+
+#: ../src/gnome-system-monitor.schemas.in.h:7
+msgid "Default graph net out color"
+msgstr "Predvolená farba mimo grafu pamäte"
+
+#: ../src/gnome-system-monitor.schemas.in.h:8
 msgid "Default graph swap color"
 msgstr "Predvolená farba grafu odkladacieho priestoru"
 
-#: ../src/gnome-system-monitor.schemas.in.h:7
+#: ../src/gnome-system-monitor.schemas.in.h:9
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
@@ -114,79 +122,80 @@ msgstr ""
 "Určuje, ktoré procesy štandardne zobraziť. 0 pre všetky, 1 pre procesy "
 "používateľa a 2 pre aktívne"
 
-#: ../src/gnome-system-monitor.schemas.in.h:8
+#: ../src/gnome-system-monitor.schemas.in.h:10
 msgid "Main Window height"
 msgstr "Výška hlavného okna"
 
-#: ../src/gnome-system-monitor.schemas.in.h:9
+#: ../src/gnome-system-monitor.schemas.in.h:11
 msgid "Main Window width"
 msgstr "Šírka hlavného okna"
 
-#: ../src/gnome-system-monitor.schemas.in.h:10
+#: ../src/gnome-system-monitor.schemas.in.h:12
 msgid "Process view columns order"
 msgstr "Poradie stĺpcov prehľadu procesov"
 
-#: ../src/gnome-system-monitor.schemas.in.h:11
+#: ../src/gnome-system-monitor.schemas.in.h:13
 msgid "Process view sort column"
 msgstr "Stĺpec triedenia prehľadu procesov"
 
-#: ../src/gnome-system-monitor.schemas.in.h:12
+#: ../src/gnome-system-monitor.schemas.in.h:14
 msgid "Process view sort order"
 msgstr "Poradie triedenia prehľadu procesov"
 
-#: ../src/gnome-system-monitor.schemas.in.h:13
+#: ../src/gnome-system-monitor.schemas.in.h:15
 msgid "Saves the currently viewed tab"
 msgstr "Uloží aktuálne zobrazenú kartu"
 
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:16
 msgid "Show advanced info tab on startup"
 msgstr "Zobraziť kartu rozšírených informácií pri štarte"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:17
 msgid "Show column zero on startup"
 msgstr "Zobraziť stĺpec nula pri štarte"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
+#: ../src/gnome-system-monitor.schemas.in.h:18
 msgid "Show process dependencies in tree form"
 msgstr "Zobraziť závislosti procesov v tvare stromu"
 
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:19
 msgid "Show process threads"
 msgstr "Zobraziť vlákna procesov"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:20
 msgid "Show warning dialog when hiding processes"
 msgstr "Zobraziť dialógové okno s upozornením pri skrývaní procesov"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:21
 msgid "Show warning dialog when killing processes"
 msgstr "Zobraziť dialógové okno s upozornením pri zabíjaní procesov"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:22
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Čas v milisekundách medzi aktualizáciami zoznamu zariadení"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:23
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Čas v milisekundách medzi aktualizáciami grafov"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:24
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Čas v milisekundách medzi aktualizáciami prehľadu procesov"
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:25
 msgid "Whether information about all filesystems should be displayed"
 msgstr "Či majú byť zobrazené informácie o všetkých súborových systémoch"
 
-#: ../src/gnome-system-monitor.schemas.in.h:24
+#: ../src/gnome-system-monitor.schemas.in.h:26
 msgid ""
 "Whether information about all filesystems should be displayed: this will "
 "include filesystem types like 'autofs' and 'procfs'. It can be usefull to "
 "get a list of all currently mounted filesystems."
 msgstr ""
 "Či majú byť zobrazené informácie o všetkých súborových systémoch: toto "
-"zahŕňa typy súborových systémov ako sú 'autofs' a 'procfs'. To môže byť užitočné "
-"na získanie zoznamu všetkých momentálne pripojených súborových systémov."
+"zahŕňa typy súborových systémov ako sú 'autofs' a 'procfs'. To môže byť "
+"užitočné na získanie zoznamu všetkých momentálne pripojených súborových "
+"systémov."
 
 #: ../src/infoview.c:34
 msgid "Less _Info"
@@ -216,7 +225,7 @@ msgstr "Priorita:"
 msgid "Memory Usage"
 msgstr "Využitie pamäte"
 
-#: ../src/infoview.c:153
+#: ../src/infoview.c:153 ../src/interface.c:626 ../src/interface.c:657
 msgid "Total:"
 msgstr "Celkom:"
 
@@ -277,7 +286,7 @@ msgstr "_Koniec"
 msgid "Quit the program"
 msgstr "Ukončiť program"
 
-#: ../src/interface.c:55 ../src/interface.c:191
+#: ../src/interface.c:55 ../src/interface.c:189
 msgid "End _Process"
 msgstr "Ukončiť _proces"
 
@@ -373,87 +382,112 @@ msgstr "_Vlákna"
 msgid "Show each thread as a separate process"
 msgstr "Zobraziť každé vlákno ako samostatný proces"
 
-#: ../src/interface.c:155
-msgid "All processes"
-msgstr "Všetky procesy"
-
-#: ../src/interface.c:156
-msgid "My processes"
-msgstr "Moje procesy"
-
-#: ../src/interface.c:157
+#: ../src/interface.c:92
 msgid "Active processes"
 msgstr "Aktívne procesy"
 
-#: ../src/interface.c:164
-msgid "Sho_w:"
-msgstr "Zo_braziť:"
+#: ../src/interface.c:93
+msgid "Show active processes"
+msgstr "Aktívne procesy"
 
-#: ../src/interface.c:271 ../src/memmaps.c:300
+#: ../src/interface.c:94
+msgid "All processes"
+msgstr "Všetky procesy"
+
+#: ../src/interface.c:95
+msgid "Show all processes"
+msgstr "Zobraziť všetky procesy"
+
+#: ../src/interface.c:96
+msgid "My processes"
+msgstr "Moje procesy"
+
+#: ../src/interface.c:97
+msgid "Show user own process"
+msgstr "Zobraziť vlastný proces používateľa"
+
+#: ../src/interface.c:275 ../src/memmaps.c:300
 msgid "Device"
 msgstr "Zariadenie"
 
-#: ../src/interface.c:272
+#: ../src/interface.c:276
 msgid "Directory"
 msgstr "Priečinok"
 
-#: ../src/interface.c:273 ../src/openfiles.c:230
+#: ../src/interface.c:277 ../src/openfiles.c:230
 msgid "Type"
 msgstr "Typ"
 
-#: ../src/interface.c:274
+#: ../src/interface.c:278
 msgid "Total"
 msgstr "Celkom"
 
-#: ../src/interface.c:275
+#: ../src/interface.c:279
 msgid "Free"
 msgstr "Voľné"
 
-#: ../src/interface.c:276
+#: ../src/interface.c:280
 msgid "Used"
 msgstr "Použité"
 
-#: ../src/interface.c:285 ../src/interface.c:717 ../src/procdialogs.c:739
+#: ../src/interface.c:289 ../src/interface.c:821 ../src/procdialogs.c:739
 #: ../src/procdialogs.c:743
 msgid "Devices"
 msgstr "Zariadenia"
 
-#: ../src/interface.c:420
+#: ../src/interface.c:424
 msgid "CPU History"
 msgstr "História použitia CPU"
 
-#: ../src/interface.c:461
+#: ../src/interface.c:465
 msgid "CPU:"
 msgstr "CPU:"
 
-#: ../src/interface.c:464
+#: ../src/interface.c:468
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: ../src/interface.c:484
+#: ../src/interface.c:488
 msgid "Memory and Swap History"
 msgstr "História využitia pamäti/odkladacieho priestoru"
 
-#: ../src/interface.c:517
+#: ../src/interface.c:521
 msgid "User memory:"
 msgstr "Pamäť používateľa:"
 
-#: ../src/interface.c:526 ../src/interface.c:557
+#: ../src/interface.c:530 ../src/interface.c:561
 msgid "of"
 msgstr "z"
 
-#: ../src/interface.c:548
+#: ../src/interface.c:552
 msgid "Used swap:"
 msgstr "Použitý odkladací priestor:"
 
-#: ../src/interface.c:705 ../src/procdialogs.c:556
+#: ../src/interface.c:581
+msgid "Network History"
+msgstr "História siete"
+
+#: ../src/interface.c:612
+msgid "Receive:"
+msgstr "Prijaté:"
+
+#: ../src/interface.c:643
+msgid "Send:"
+msgstr "Odoslané:"
+
+#: ../src/interface.c:809 ../src/procdialogs.c:556
 msgid "Processes"
 msgstr "Procesy"
 
-#: ../src/interface.c:711 ../src/procdialogs.c:648
+#: ../src/interface.c:815 ../src/procdialogs.c:648
 msgid "Resources"
 msgstr "Zdroje"
+
+#: ../src/load-graph.c:310 ../src/load-graph.c:320
+#, c-format
+msgid "%s/s"
+msgstr "%s/s"
 
 #: ../src/memmaps.c:294
 msgid "Filename"
@@ -532,7 +566,7 @@ msgstr "Otvorené súbory"
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_Súbory otvorené procesom \"%s\" (PID %u):"
 
-#: ../src/procactions.c:82
+#: ../src/procactions.c:89
 #, c-format
 msgid ""
 "Cannot change the priority of process with pid %d to %d.\n"
@@ -541,7 +575,7 @@ msgstr ""
 "Nepodarilo sa zmeniť prioritu procesu s pid %d na %d.\n"
 "%s"
 
-#: ../src/procactions.c:142
+#: ../src/procactions.c:156
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -576,9 +610,8 @@ msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponding processes should be killed."
 msgstr ""
-"Zabitím procesu môžete zničiť údaje, prerušiť bežiace sedenie alebo "
-"vytvoriť bezpečnostné riziko. Len procesy, ktoré neodpovedajú, by mali "
-"byť zabité."
+"Zabitím procesu môžete zničiť údaje, prerušiť bežiace sedenie alebo vytvoriť "
+"bezpečnostné riziko. Len procesy, ktoré neodpovedajú, by mali byť zabité."
 
 #. translators: primary alert message
 #: ../src/procdialogs.c:125
@@ -592,8 +625,8 @@ msgid ""
 "risk. Only unresponding processes should be ended."
 msgstr ""
 "Ukončením procesu môžete zničiť údaje, prerušiť bežiace sedenie alebo "
-"vytvoriť bezpečnostné riziko. Len procesy, ktoré neodpovedajú, by mali "
-"byť ukončené."
+"vytvoriť bezpečnostné riziko. Len procesy, ktoré neodpovedajú, by mali byť "
+"ukončené."
 
 #: ../src/procdialogs.c:130
 msgid "_End Process"
