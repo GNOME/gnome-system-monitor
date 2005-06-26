@@ -540,15 +540,15 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	/* have to show at least 4 items to respect HIG. I don't know   */
 	/* any function to set list height by contents/items inside it. */
 	gtk_window_set_default_size (GTK_WINDOW (dialog), 400, 420);
-	gtk_container_set_border_width (GTK_CONTAINER (dialog), 6);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 	prefs_dialog = dialog;
 	
 	main_vbox = GTK_DIALOG (dialog)->vbox;
-	gtk_box_set_spacing (GTK_BOX (main_vbox), 12);
+	gtk_box_set_spacing (GTK_BOX (main_vbox), 2);
 	
 	notebook = gtk_notebook_new ();
-	gtk_container_set_border_width (GTK_CONTAINER (notebook), 6);
+	gtk_container_set_border_width (GTK_CONTAINER (notebook), 5);
 	gtk_box_pack_start (GTK_BOX (main_vbox), notebook, TRUE, TRUE, 0);
 	
 	proc_box = gtk_vbox_new (FALSE, 18);
@@ -762,7 +762,6 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	label = gtk_label_new_with_mnemonic (_("Update _interval:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
-	gtk_size_group_add_widget (size, label);
 	
 	hbox3 = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (hbox2), hbox3, TRUE, TRUE, 0);

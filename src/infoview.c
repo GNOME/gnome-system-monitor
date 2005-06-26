@@ -31,7 +31,7 @@
 static const char *
 expander_get_label (gboolean more_info)
 {
-	return (more_info ? _("Less _Info") : _("More _Info"));
+	return (more_info ? _("Less _info") : _("More _info"));
 }
 
 
@@ -72,7 +72,7 @@ infoview_create (ProcData *procdata)
 {
 	Infoview * const infoview = &procdata->infoview;
 
-	GtkWidget *main_hbox;
+	GtkWidget *main_hbox, *hbox;
 	GtkWidget *info_table, *mem_table;
 	GtkWidget *label;
 
@@ -82,8 +82,14 @@ infoview_create (ProcData *procdata)
 
 	infoview->box = gtk_vbox_new (FALSE, 0);
 
+	hbox = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (infoview->box), hbox, TRUE, TRUE, 0);
+
+	label = gtk_label_new ("    ");
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+
 	main_hbox = gtk_hbox_new (FALSE, 18);
-	gtk_box_pack_start (GTK_BOX (infoview->box), main_hbox, FALSE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), main_hbox, TRUE, TRUE, 0);
 
 	/* The Process Info Area */
 

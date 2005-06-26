@@ -89,11 +89,11 @@ static const GtkToggleActionEntry toggle_menu_entries[] =
 
 static const GtkRadioActionEntry radio_menu_entries[] =
 {
-  { "ShowActiveProcesses", NULL, N_("Active processes"), NULL,
+  { "ShowActiveProcesses", NULL, N_("_Active Processes"), NULL,
     N_("Show active processes"), ACTIVE_PROCESSES },
-  { "ShowAllProcesses", NULL, N_("All processes"), NULL,
+  { "ShowAllProcesses", NULL, N_("A_ll Processes"), NULL,
     N_("Show all processes"), ALL_PROCESSES },
-  { "ShowMyProcesses", NULL, N_("My processes"), NULL,
+  { "ShowMyProcesses", NULL, N_("M_y Processes"), NULL,
     N_("Show user own process"), MY_PROCESSES }
 };
 
@@ -284,7 +284,7 @@ create_disk_view (ProcData *procdata)
 
 	disk_box = gtk_vbox_new (FALSE, 6);
 
-	gtk_container_set_border_width (GTK_CONTAINER (disk_box), 6);
+	gtk_container_set_border_width (GTK_CONTAINER (disk_box), 12);
 
 	label = make_title_label (_("Devices"));
 	gtk_box_pack_start (GTK_BOX (disk_box), label, FALSE, FALSE, 0);
@@ -414,7 +414,7 @@ create_sys_view (ProcData *procdata)
 
 	vbox = gtk_vbox_new (FALSE, 18);
 
-	gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
 	/* The CPU BOX */
 
