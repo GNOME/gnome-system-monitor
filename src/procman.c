@@ -599,6 +599,37 @@ procman_save_config (ProcData *data)
 	
 }
 
+static guint32
+get_startup_timestamp ()
+{
+	const gchar *startup_id_env;
+	gchar *startup_id = NULL;
+	gchar *time_str;
+	gulong retval = 0;
+
+	/* we don't unset the env, since startup-notification
+	 * may still need it */
+	startup_id_env = g_getenv ("DESKTOP_STARTUP_ID");
+	if (startup_id_env == NULL)
+		goto out;
+
+	startup_id = g_strdup (startup_id_env);
+
+	time_str = g_strrstr (startup_id, "_TIME");
+	if (time_str == NULL)
+		goto out;
+
+	/* Skip past the "_TIME" part */
+	time_str += 5;
+
+	retval = strtoul (time_str, NULL, 0);
+
+ out:
+	g_free (startup_id);
+
+	return retval;
+}
+
 
 static void
 cb_server (const gchar *msg, gpointer user_data)
@@ -614,14 +645,13 @@ cb_server (const gchar *msg, gpointer user_data)
 
 	timestamp = strtoul(msg, NULL, 0);
 
-	if(timestamp)
+	if (timestamp == 0)
 	{
-		gdk_x11_window_set_user_time (window, timestamp);
+		/* fall back to rountripping to X */
+		timestamp = gdk_x11_get_server_time (window);
 	}
-	else
-	{
-		g_warning ("Couldn't get timestamp");
-	}
+
+	gdk_x11_window_set_user_time (window, timestamp);
 
 	gtk_window_present (GTK_WINDOW(procdata->app));
 }
@@ -644,10 +674,21 @@ init_volume_monitor(ProcData *procdata)
 int
 main (int argc, char *argv[])
 {
+	guint32 startup_timestamp;
 	GnomeProgram *procman;
 	GConfClient *client;
 	ProcData *procdata;
 	BaconMessageConnection *conn;
+
+	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+	textdomain (GETTEXT_PACKAGE);
+
+	startup_timestamp = get_startup_timestamp();
+
+	procman = gnome_program_init ("gnome-system-monitor", VERSION, 
+				       LIBGNOMEUI_MODULE, argc, argv,
+				      GNOME_PARAM_APP_DATADIR,DATADIR, NULL);
 
 	conn = bacon_message_connection_new ("gnome-system-monitor");
 	if (!conn) g_error("Couldn't connect to gnome-system-monitor");
@@ -658,34 +699,20 @@ main (int argc, char *argv[])
 	}
 	else /* client */
 	{
-		const char *desktop_startup_id, *timestamp;
+		char *timestamp;
 
-		timestamp = NULL;
-		desktop_startup_id = g_getenv("DESKTOP_STARTUP_ID");
-
-		if(desktop_startup_id)
-		{
-			timestamp = strstr(desktop_startup_id, "_TIME");
-		}
-
-		if(!timestamp)
-		{
-			g_warning ("Couldn't get $DESKTOP_STARTUP_ID");
-			timestamp = "0";
-		}
+		timestamp = g_strdup_printf ("%" G_GUINT32_FORMAT, startup_timestamp);
 
 		bacon_message_connection_send (conn, timestamp);
+
+		gdk_notify_startup_complete ();
+
+		g_free (timestamp);
 		bacon_message_connection_free (conn);
-		return 1;
+
+		exit (0);
 	}
 
-	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
-	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-	textdomain (GETTEXT_PACKAGE);
-
-	procman = gnome_program_init ("gnome-system-monitor", VERSION, 
-				       LIBGNOMEUI_MODULE, argc, argv,
-				      GNOME_PARAM_APP_DATADIR,DATADIR, NULL);
 	gtk_window_set_default_icon_name ("gnome-monitor");
 		    
 	gconf_init (argc, argv, NULL);
