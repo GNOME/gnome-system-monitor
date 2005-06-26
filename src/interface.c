@@ -468,7 +468,7 @@ create_sys_view (ProcData *procdata)
 			text = g_strdup_printf (_("CPU%d:"), i+1);
 		}
 		label = gtk_label_new (text);
-		gtk_box_pack_start (GTK_BOX (temp_hbox), label, FALSE, FALSE, 0);
+		gtk_box_pack_start (GTK_BOX (temp_hbox), label, FALSE, FALSE, 6);
 		g_free (text);
 		
 		cpu_label = gtk_label_new (NULL);
