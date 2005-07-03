@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor (procman) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-11 18:50+0900\n"
-"PO-Revision-Date: 2005-06-11 18:48+0900\n"
+"POT-Creation-Date: 2005-07-04 00:06+0900\n"
+"PO-Revision-Date: 2005-07-03 23:49+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:141
-#: ../src/interface.c:645
+#: ../src/interface.c:742
 msgid "System Monitor"
 msgstr "システム・モニタ"
 
@@ -97,13 +97,21 @@ msgstr "グラフ枠の色 (デフォルト)"
 
 #: ../src/gnome-system-monitor.schemas.in.h:5
 msgid "Default graph mem color"
-msgstr "メモリ・グラフのの色 (デフォルト)"
+msgstr "メモリ・グラフの色 (デフォルト)"
 
 #: ../src/gnome-system-monitor.schemas.in.h:6
+msgid "Default graph net in color"
+msgstr "ネットワーク受信グラフの色 (デフォルト)"
+
+#: ../src/gnome-system-monitor.schemas.in.h:7
+msgid "Default graph net out color"
+msgstr "ネットワーク送信グラフの色 (デフォルト)"
+
+#: ../src/gnome-system-monitor.schemas.in.h:8
 msgid "Default graph swap color"
 msgstr "スワップ・グラフの色 (デフォルト)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:7
+#: ../src/gnome-system-monitor.schemas.in.h:9
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
@@ -111,71 +119,71 @@ msgstr ""
 "デフォルトでどのレベルのプロセスを表示するかです (0: 全て、1: ユーザ・プロセ"
 "ス、2: 動作中のプロセス)。"
 
-#: ../src/gnome-system-monitor.schemas.in.h:8
+#: ../src/gnome-system-monitor.schemas.in.h:10
 msgid "Main Window height"
 msgstr "メイン・ウィンドウの高さ"
 
-#: ../src/gnome-system-monitor.schemas.in.h:9
+#: ../src/gnome-system-monitor.schemas.in.h:11
 msgid "Main Window width"
 msgstr "メイン・ウィンドウの幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:10
+#: ../src/gnome-system-monitor.schemas.in.h:12
 msgid "Process view columns order"
 msgstr "プロセス表示の項目の順番"
 
-#: ../src/gnome-system-monitor.schemas.in.h:11
+#: ../src/gnome-system-monitor.schemas.in.h:13
 msgid "Process view sort column"
 msgstr "プロセス一覧の項目の並べ方"
 
-#: ../src/gnome-system-monitor.schemas.in.h:12
+#: ../src/gnome-system-monitor.schemas.in.h:14
 msgid "Process view sort order"
 msgstr "プロセス一覧の並べ方"
 
-#: ../src/gnome-system-monitor.schemas.in.h:13
+#: ../src/gnome-system-monitor.schemas.in.h:15
 msgid "Saves the currently viewed tab"
 msgstr "現在表示しているタブを保存するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:16
 msgid "Show advanced info tab on startup"
 msgstr "起動時に詳細情報のタブを表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:17
 msgid "Show column zero on startup"
 msgstr "起動時に項目０を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
+#: ../src/gnome-system-monitor.schemas.in.h:18
 msgid "Show process dependencies in tree form"
 msgstr "ツリー表示でプロセスの依存関係を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:19
 msgid "Show process threads"
 msgstr "プロセスのスレッドを表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:20
 msgid "Show warning dialog when hiding processes"
 msgstr "プロセスを非表示にする時に警告ダイアログを表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:21
 msgid "Show warning dialog when killing processes"
 msgstr "プロセスを強制終了する際に警告ダイアログを表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:22
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "デバイス一覧の更新間隔 (ミリ秒)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:23
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "グラフの更新間隔 (ミリ秒)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:24
 msgid "Time in milliseconds between updates of the process view"
 msgstr "プロセス一覧の更新間隔 (ミリ秒)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:25
 msgid "Whether information about all filesystems should be displayed"
 msgstr "全てのファイルシステムの情報を表示するかどうか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:24
+#: ../src/gnome-system-monitor.schemas.in.h:26
 msgid ""
 "Whether information about all filesystems should be displayed: this will "
 "include filesystem types like 'autofs' and 'procfs'. It can be usefull to "
@@ -186,66 +194,66 @@ msgstr ""
 "ファイルシステムのリストを取得する際に使用します。"
 
 #: ../src/infoview.c:34
-msgid "Less _Info"
+msgid "Less _info"
 msgstr "簡易表示(_I)"
 
 #: ../src/infoview.c:34
-msgid "More _Info"
+msgid "More _info"
 msgstr "詳細表示(_I)"
 
-#: ../src/infoview.c:93
+#: ../src/infoview.c:99
 msgid "Process Info"
 msgstr "プロセスの情報"
 
-#: ../src/infoview.c:107
+#: ../src/infoview.c:113
 msgid "Command:"
 msgstr "コマンド:"
 
-#: ../src/infoview.c:111
+#: ../src/infoview.c:117
 msgid "Status:"
 msgstr "状態:"
 
-#: ../src/infoview.c:115
+#: ../src/infoview.c:121
 msgid "Priority:"
 msgstr "優先度:"
 
-#: ../src/infoview.c:139
+#: ../src/infoview.c:145
 msgid "Memory Usage"
 msgstr "メモリの使用量"
 
-#: ../src/infoview.c:153
+#: ../src/infoview.c:159 ../src/interface.c:626 ../src/interface.c:657
 msgid "Total:"
 msgstr "合計:"
 
-#: ../src/infoview.c:157
+#: ../src/infoview.c:163
 msgid "RSS:"
 msgstr "RSS:"
 
-#: ../src/infoview.c:161
+#: ../src/infoview.c:167
 msgid "Shared:"
 msgstr "共有:"
 
-#: ../src/infoview.c:204
+#: ../src/infoview.c:210
 #, c-format
 msgid "Very high - nice %d"
 msgstr "一番高い - Nice値 %d"
 
-#: ../src/infoview.c:206
+#: ../src/infoview.c:212
 #, c-format
 msgid "High - nice %d"
 msgstr "高い - Nice値 %d"
 
-#: ../src/infoview.c:208
+#: ../src/infoview.c:214
 #, c-format
 msgid "Normal - nice %d"
 msgstr "標準 - Nice値 %d"
 
-#: ../src/infoview.c:210
+#: ../src/infoview.c:216
 #, c-format
 msgid "Low - nice %d"
 msgstr "低い - Nice値 %d"
 
-#: ../src/infoview.c:212
+#: ../src/infoview.c:218
 #, c-format
 msgid "Very low - nice %d"
 msgstr "一番低い - Nice値 %d"
@@ -274,7 +282,7 @@ msgstr "終了(_Q)"
 msgid "Quit the program"
 msgstr "プログラムを終了します"
 
-#: ../src/interface.c:55 ../src/interface.c:191
+#: ../src/interface.c:55 ../src/interface.c:189
 msgid "End _Process"
 msgstr "プロセスの終了(_P)"
 
@@ -370,87 +378,112 @@ msgstr "スレッド(_T)"
 msgid "Show each thread as a separate process"
 msgstr "各スレッドを分割したプロセスとして表示します"
 
-#: ../src/interface.c:155
-msgid "All processes"
-msgstr "全てのプロセス"
+#: ../src/interface.c:92
+msgid "_Active Processes"
+msgstr "実行中のプロセス(_A)"
 
-#: ../src/interface.c:156
-msgid "My processes"
-msgstr "ユーザのプロセス"
+#: ../src/interface.c:93
+msgid "Show active processes"
+msgstr "実行中のプロセスを表示します"
 
-#: ../src/interface.c:157
-msgid "Active processes"
-msgstr "実行中のプロセス"
+#: ../src/interface.c:94
+msgid "A_ll Processes"
+msgstr "全てのプロセス(_L)"
 
-#: ../src/interface.c:164
-msgid "Sho_w:"
-msgstr "表示レベル(_W):"
+#: ../src/interface.c:95
+msgid "Show all processes"
+msgstr "全てのプロセスを表示します"
 
-#: ../src/interface.c:271 ../src/memmaps.c:300
+#: ../src/interface.c:96
+msgid "M_y Processes"
+msgstr "ユーザのプロセス(_Y)"
+
+#: ../src/interface.c:97
+msgid "Show user own process"
+msgstr "ユーザが起動したプロセスを表示します"
+
+#: ../src/interface.c:275 ../src/memmaps.c:300
 msgid "Device"
 msgstr "デバイス"
 
-#: ../src/interface.c:272
+#: ../src/interface.c:276
 msgid "Directory"
 msgstr "フォルダ"
 
-#: ../src/interface.c:273 ../src/openfiles.c:230
+#: ../src/interface.c:277 ../src/openfiles.c:230
 msgid "Type"
 msgstr "種類"
 
-#: ../src/interface.c:274
+#: ../src/interface.c:278
 msgid "Total"
 msgstr "合計"
 
-#: ../src/interface.c:275
+#: ../src/interface.c:279
 msgid "Free"
 msgstr "空き"
 
-#: ../src/interface.c:276
+#: ../src/interface.c:280
 msgid "Used"
 msgstr "使用済み"
 
-#: ../src/interface.c:285 ../src/interface.c:717 ../src/procdialogs.c:739
+#: ../src/interface.c:289 ../src/interface.c:821 ../src/procdialogs.c:739
 #: ../src/procdialogs.c:743
 msgid "Devices"
 msgstr "デバイスの一覧"
 
-#: ../src/interface.c:420
+#: ../src/interface.c:424
 msgid "CPU History"
 msgstr "CPU 使用率の履歴"
 
-#: ../src/interface.c:461
+#: ../src/interface.c:465
 msgid "CPU:"
 msgstr "CPU:"
 
-#: ../src/interface.c:464
+#: ../src/interface.c:468
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: ../src/interface.c:484
+#: ../src/interface.c:488
 msgid "Memory and Swap History"
 msgstr "メモリとスワップの履歴"
 
-#: ../src/interface.c:517
+#: ../src/interface.c:521
 msgid "User memory:"
 msgstr "ユーザのメモリ:"
 
-#: ../src/interface.c:526 ../src/interface.c:557
+#: ../src/interface.c:530 ../src/interface.c:561
 msgid "of"
 msgstr "/"
 
-#: ../src/interface.c:548
+#: ../src/interface.c:552
 msgid "Used swap:"
 msgstr "使用済みスワップ:"
 
-#: ../src/interface.c:705 ../src/procdialogs.c:556
+#: ../src/interface.c:581
+msgid "Network History"
+msgstr "ネットワークの履歴"
+
+#: ../src/interface.c:612
+msgid "Receive:"
+msgstr "受信:"
+
+#: ../src/interface.c:643
+msgid "Send:"
+msgstr "送信:"
+
+#: ../src/interface.c:809 ../src/procdialogs.c:556
 msgid "Processes"
 msgstr "プロセス"
 
-#: ../src/interface.c:711 ../src/procdialogs.c:648
+#: ../src/interface.c:815 ../src/procdialogs.c:648
 msgid "Resources"
 msgstr "リソース"
+
+#: ../src/load-graph.c:310 ../src/load-graph.c:320
+#, c-format
+msgid "%s/s"
+msgstr "%s/秒"
 
 #: ../src/memmaps.c:294
 msgid "Filename"
@@ -529,7 +562,7 @@ msgstr "オープンしたファイル"
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "プロセス \"%s\" (PID %u) がオープンしたファイル(_F):"
 
-#: ../src/procactions.c:82
+#: ../src/procactions.c:89
 #, c-format
 msgid ""
 "Cannot change the priority of process with pid %d to %d.\n"
@@ -538,7 +571,7 @@ msgstr ""
 "PID %d のプロセスの優先度を %d に変更できません。\n"
 "%s"
 
-#: ../src/procactions.c:142
+#: ../src/procactions.c:156
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -655,7 +688,7 @@ msgstr "動作"
 msgid "_Update interval:"
 msgstr "更新間隔:"
 
-#: ../src/procdialogs.c:603 ../src/procdialogs.c:691 ../src/procdialogs.c:779
+#: ../src/procdialogs.c:603 ../src/procdialogs.c:691 ../src/procdialogs.c:778
 msgid "seconds"
 msgstr "秒"
 
@@ -687,7 +720,7 @@ msgstr "グリッドの色(_G):"
 msgid "Update _interval:"
 msgstr "更新間隔(_I):"
 
-#: ../src/procdialogs.c:786
+#: ../src/procdialogs.c:785
 msgid "Show _all filesystems"
 msgstr "全てのファイルシステムを表示する(_A)"
 
