@@ -32,22 +32,6 @@
 #include "callbacks.h"
 
 
-struct ReniceArgs
-{
-	ProcData *procdata;
-	int nice_value;
-};
-
-
-struct KillArgs
-{
-	ProcData *procdata;
-	int signal;
-};
-
-
-
-
 static void
 renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
@@ -129,7 +113,7 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
 	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 	g_return_if_fail (info);
 
-	error = kill (info->pid, kill_signal);
+	error = kill (info->pid, args->signal);
 
 	/* success */
 	if(error != -1) return;

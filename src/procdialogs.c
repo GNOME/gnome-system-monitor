@@ -37,7 +37,6 @@ static GtkWidget *renice_dialog = NULL;
 static GtkWidget *prefs_dialog = NULL;
 static gint new_nice_value = 0;
 
-/* public */ int kill_signal = SIGTERM;
 
 static void
 hide_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
@@ -95,21 +94,27 @@ procdialog_create_hide_dialog (ProcData *data)
 static void
 kill_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 {
-	ProcData *procdata = data;
+	struct KillArgs *kargs = data;
 	
 	gtk_widget_destroy (GTK_WIDGET (dialog));
 
 	if (id == GTK_RESPONSE_OK) 
-		kill_process (procdata, kill_signal);		
+		kill_process (kargs->procdata, kargs->signal);
+
+	g_free (kargs);
 }
 
 void
-procdialog_create_kill_dialog (ProcData *data, int signal)
+procdialog_create_kill_dialog (ProcData *procdata, int signal)
 {
-	ProcData *procdata = data;
 	GtkWidget *kill_alert_dialog;
 	gchar *primary, *secondary, *button_text;
-  	kill_signal = signal;
+	struct KillArgs *kargs;
+
+	kargs = g_malloc(sizeof *kargs);
+	kargs->procdata = procdata;
+	kargs->signal = signal;
+
   	
   	if (signal == SIGKILL) {
                 /*translators: primary alert message*/
@@ -147,7 +152,7 @@ procdialog_create_kill_dialog (ProcData *data, int signal)
 					 GTK_RESPONSE_CANCEL);
 
         g_signal_connect (G_OBJECT (kill_alert_dialog), "response",
-        		  G_CALLBACK (kill_dialog_button_pressed), procdata);
+        		  G_CALLBACK (kill_dialog_button_pressed), kargs);
         
         gtk_widget_show_all (kill_alert_dialog);
 }
@@ -193,9 +198,8 @@ renice_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 }
 
 void
-procdialog_create_renice_dialog (ProcData *data)
+procdialog_create_renice_dialog (ProcData *procdata)
 {
-	ProcData *procdata = data;
 	ProcInfo *info = procdata->selected_process;
 	GtkWidget *dialog = NULL;
 	GtkWidget *dialog_vbox;

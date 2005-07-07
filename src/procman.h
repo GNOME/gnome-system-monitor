@@ -241,4 +241,24 @@ void		procman_save_config (ProcData *data) G_GNUC_INTERNAL;
 void		procman_save_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefix) G_GNUC_INTERNAL;
 gboolean	procman_get_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefix) G_GNUC_INTERNAL;
 
+
+
+
+
+struct ReniceArgs
+{
+	ProcData *procdata;
+	int nice_value;
+};
+
+
+struct KillArgs
+{
+	ProcData *procdata;
+	int signal;
+};
+
+
+
+
 #endif /* _PROCMAN_PROCMAN_H_ */
