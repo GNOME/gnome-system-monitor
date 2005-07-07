@@ -240,7 +240,7 @@ proctable_new (ProcData * const procdata)
 		N_("User"),
 		N_("Status"),
 		N_("Memory"),
-		N_("VM Size"),
+		N_("Virtual Memory"),
 		N_("Resident Memory"),
 		N_("Shared Memory"),
 		N_("RSS Memory"),
