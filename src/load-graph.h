@@ -2,6 +2,11 @@
 #define _PROCMAN_LOAD_GRAPH_H_
 
 #include <glib/gtypes.h>
+#include <glibtop/cpu.h>
+
+typedef struct _LoadGraph LoadGraph;
+typedef struct _LoadGraphLabels LoadGraphLabels;
+
 #include "procman.h"
 
 enum
@@ -9,6 +14,22 @@ enum
 	LOAD_GRAPH_CPU,
 	LOAD_GRAPH_MEM,
 	LOAD_GRAPH_NET
+};
+
+
+struct _LoadGraphLabels
+{
+	GtkWidget *cpu[GLIBTOP_NCPU];
+	GtkWidget *memused;
+	GtkWidget *memtotal;
+	GtkWidget *mempercent;
+	GtkWidget *swapused;
+	GtkWidget *swaptotal;
+	GtkWidget *swappercent;
+	GtkWidget *net_in;
+	GtkWidget *net_in_total;
+	GtkWidget *net_out;
+	GtkWidget *net_out_total;
 };
 
 
@@ -27,5 +48,25 @@ load_graph_start (LoadGraph *g) G_GNUC_INTERNAL;
 /* Stop load graph. */
 void
 load_graph_stop (LoadGraph *g) G_GNUC_INTERNAL;
+
+/* Change load graph speed and restart it if it has been previously started */
+void
+load_graph_change_speed (LoadGraph *g,
+			 guint new_speed) G_GNUC_INTERNAL;
+
+void
+load_graph_reset_colors (LoadGraph *g) G_GNUC_INTERNAL;
+
+
+GdkColor*
+load_graph_get_colors (LoadGraph *g) G_GNUC_INTERNAL G_GNUC_CONST;
+
+LoadGraphLabels*
+load_graph_get_labels (LoadGraph *g) G_GNUC_INTERNAL G_GNUC_CONST;
+
+
+GtkWidget*
+load_graph_get_widget (LoadGraph *g) G_GNUC_INTERNAL G_GNUC_CONST;
+
 
 #endif /* _PROCMAN_LOAD_GRAPH_H_ */

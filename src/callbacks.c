@@ -185,12 +185,6 @@ cb_app_delete (GtkWidget *window, GdkEventAny *event, gpointer data)
 	procman_save_config (procdata);
 	if (procdata->timeout != -1)
 		gtk_timeout_remove (procdata->timeout);
-	if (procdata->cpu_graph)
-		gtk_timeout_remove (procdata->cpu_graph->timer_index);
-	if (procdata->mem_graph)
-		gtk_timeout_remove (procdata->mem_graph->timer_index);
-	if (procdata->net_graph)
-		gtk_timeout_remove (procdata->net_graph->timer_index);
 	if (procdata->disk_timeout != -1)
 		gtk_timeout_remove (procdata->disk_timeout);
 
@@ -355,7 +349,11 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 
 	procdata->config.current_tab = num;
 
+
 	if (num == 0) {
+
+		cb_timeout (procdata);
+
 		if (procdata->timeout == -1)
 			procdata->timeout = gtk_timeout_add (
 				procdata->config.update_interval,
@@ -373,18 +371,34 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 		update_sensitivity (procdata, FALSE);
 	}
 
+
 	if (num == 1) {
 		load_graph_start (procdata->cpu_graph);
 		load_graph_start (procdata->mem_graph);
 		load_graph_start (procdata->net_graph);
-		load_graph_draw (procdata->cpu_graph);
-		load_graph_draw (procdata->mem_graph);
-		load_graph_draw (procdata->net_graph);
 	}
 	else {
 		load_graph_stop (procdata->cpu_graph);
 		load_graph_stop (procdata->mem_graph);
 		load_graph_stop (procdata->net_graph);
+	}
+
+
+	if (num == 2) {
+
+		cb_update_disks (procdata);
+
+		if(procdata->disk_timeout == -1) {
+			procdata->disk_timeout =
+				gtk_timeout_add (procdata->config.disks_update_interval,
+						 cb_update_disks, procdata);
+		}
+	}
+	else {
+		if(procdata->disk_timeout != -1) {
+			gtk_timeout_remove (procdata->disk_timeout);
+			procdata->disk_timeout = -1;
+		}
 	}
 }
 
@@ -540,6 +554,8 @@ cb_update_disks (gpointer data)
 	/* LOCK */
 	g_static_mutex_lock (&mutex);
 
+	puts("cb_update_disks");
+
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->disk_list));
 
 	entry = glibtop_get_mountlist (&mountlist, procdata->config.show_all_fs);
@@ -586,6 +602,8 @@ cb_timeout (gpointer data)
 {
 	ProcData * const procdata = data;
 	guint new_interval;
+
+	puts("cb_timeout");
 
 	proctable_update_all (procdata);
 

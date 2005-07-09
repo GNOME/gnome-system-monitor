@@ -24,7 +24,47 @@
 #include "util.h"
 
 
+struct _LoadGraph {
+
+	guint n;
+	gint type;
+	guint speed;
+	guint draw_width, draw_height;
+	guint num_points;
+	guint num_cpus;
+
+	guint allocated;
+
+	GdkColor *colors;
+	gfloat **data;
+	guint data_size;
+	guint *pos;
+
+	gboolean colors_allocated;
+	GtkWidget *main_widget;
+	GtkWidget *disp;
+
+	GdkPixmap *pixmap;
+	GdkGC *gc;
+	int timer_index;
+
+	gboolean draw;
+
+	LoadGraphLabels labels;
+
+	guint64 cpu_time [GLIBTOP_NCPU] [NCPUSTATES];
+	guint64 cpu_last [GLIBTOP_NCPU] [NCPUSTATES];
+	gboolean cpu_initialized;
+
+	guint64 net_last_in, net_last_out;
+	float net_max;
+	GTimeVal net_time;
+};
+
+
 #define FRAME_WIDTH 4
+
+
 
 /* Redraws the backing pixmap for the load graph and updates the window */
 void
@@ -60,7 +100,7 @@ load_graph_draw (LoadGraph *g)
 			gdk_color_alloc (colormap, &(g->colors [i]));
 		}
 
-		g->colors_allocated = 1;
+		g->colors_allocated = TRUE;
 	}
 
 /* Erase Rectangle */
@@ -185,7 +225,7 @@ get_load (gfloat data [2], LoadGraph *g)
 		load = CLAMP(100.0f*data[i], 0.0f, 100.0f);
 
 		text = g_strdup_printf ("%.1f%%", load);
-		gtk_label_set_text (GTK_LABEL (g->cpu_labels[i]), text);
+		gtk_label_set_text (GTK_LABEL (g->labels.cpu[i]), text);
 		g_free (text);
 	}
 }
@@ -209,9 +249,9 @@ get_memory (gfloat data [1], LoadGraph *g)
 	text1 = SI_gnome_vfs_format_file_size_for_display (mem.total);
 	text2 = SI_gnome_vfs_format_file_size_for_display (mem.user);
 	text3 = g_strdup_printf ("  %.1f %%", mempercent * 100.0f);
-	gtk_label_set_text (GTK_LABEL (g->memused_label), text2);
-	gtk_label_set_text (GTK_LABEL (g->memtotal_label), text1);
-	gtk_label_set_text (GTK_LABEL (g->mempercent_label), text3);
+	gtk_label_set_text (GTK_LABEL (g->labels.memused), text2);
+	gtk_label_set_text (GTK_LABEL (g->labels.memtotal), text1);
+	gtk_label_set_text (GTK_LABEL (g->labels.mempercent), text3);
 	g_free (text1);
 	g_free (text2);
 	g_free (text3);
@@ -219,9 +259,9 @@ get_memory (gfloat data [1], LoadGraph *g)
 	text1 = SI_gnome_vfs_format_file_size_for_display (swap.total);
 	text2 = SI_gnome_vfs_format_file_size_for_display (swap.used);
 	text3 = g_strdup_printf ("  %.1f %%", swappercent * 100.0f);
-	gtk_label_set_text (GTK_LABEL (g->swapused_label), text2);
-	gtk_label_set_text (GTK_LABEL (g->swaptotal_label), text1);
-	gtk_label_set_text (GTK_LABEL (g->swappercent_label), text3);
+	gtk_label_set_text (GTK_LABEL (g->labels.swapused), text2);
+	gtk_label_set_text (GTK_LABEL (g->labels.swaptotal), text1);
+	gtk_label_set_text (GTK_LABEL (g->labels.swappercent), text3);
 	g_free (text1);
 	g_free (text2);
 	g_free (text3);
@@ -308,22 +348,22 @@ get_net (float data [2], LoadGraph *g)
 
 	text1 = SI_gnome_vfs_format_file_size_for_display (din);
 	text2 = g_strdup_printf (_("%s/s"), text1);
-	gtk_label_set_text (GTK_LABEL (g->net_in_label), text2);
+	gtk_label_set_text (GTK_LABEL (g->labels.net_in), text2);
 	g_free (text1);
 	g_free (text2);
 
 	text1 = SI_gnome_vfs_format_file_size_for_display (in);
-	gtk_label_set_text (GTK_LABEL (g->net_in_total_label), text1);
+	gtk_label_set_text (GTK_LABEL (g->labels.net_in_total), text1);
 	g_free (text1);
 
 	text1 = SI_gnome_vfs_format_file_size_for_display (dout);
 	text2 = g_strdup_printf (_("%s/s"), text1);
-	gtk_label_set_text (GTK_LABEL (g->net_out_label), text2);
+	gtk_label_set_text (GTK_LABEL (g->labels.net_out), text2);
 	g_free (text1);
 	g_free (text2);
 
 	text1 = SI_gnome_vfs_format_file_size_for_display (out);
-	gtk_label_set_text (GTK_LABEL (g->net_out_total_label), text1);
+	gtk_label_set_text (GTK_LABEL (g->labels.net_out_total), text1);
 	g_free (text1);
 }
 
@@ -361,6 +401,8 @@ shift_right(LoadGraph *g)
 static int
 load_graph_update (LoadGraph *g)
 {
+	printf("load_graph_update (%p) draw : %d\n", g, (int)g->draw);
+
 	shift_right(g);
 
 	switch (g->type) {
@@ -386,8 +428,7 @@ load_graph_unalloc (LoadGraph *g)
 {
 	int i;
 
-	if (!g->allocated)
-		return;
+	g_return_if_fail(g->allocated);
 
 	for (i = 0; i < g->num_points; i++) {
 		g_free (g->data [i]);
@@ -412,8 +453,7 @@ load_graph_alloc (LoadGraph *g)
 {
 	int i, j;
 
-	if (g->allocated)
-		return;
+	g_return_if_fail(!g->allocated);
 
 	g->data = g_new (gfloat *, g->num_points);
 	g->pos = g_new0 (guint, g->num_points);
@@ -490,6 +530,8 @@ load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
 	if (g->timer_index != -1)
 		gtk_timeout_remove (g->timer_index);
 
+	load_graph_unalloc(g);
+
 	return FALSE;
 }
 
@@ -509,12 +551,28 @@ load_graph_new (gint type, ProcData *procdata)
 			g->n = 1;
 		else
 			g->n = procdata->config.num_cpus;
+
+		for(i = 0; i < G_N_ELEMENTS(g->labels.cpu); ++i)
+			g->labels.cpu[i] = gtk_label_new(NULL);
+
 		break;
+
 	case LOAD_GRAPH_MEM:
 		g->n = 2;
+		g->labels.memused = gtk_label_new(NULL);
+		g->labels.memtotal = gtk_label_new(NULL);
+		g->labels.mempercent = gtk_label_new(NULL);
+		g->labels.swapused = gtk_label_new(NULL);
+		g->labels.swaptotal = gtk_label_new(NULL);
+		g->labels.swappercent = gtk_label_new(NULL);
 		break;
+
 	case LOAD_GRAPH_NET:
 		g->n = 2;
+		g->labels.net_in = gtk_label_new(NULL);
+		g->labels.net_in_total = gtk_label_new(NULL);
+		g->labels.net_out = gtk_label_new(NULL);
+		g->labels.net_out_total = gtk_label_new(NULL);
 		break;
 	}
 
@@ -564,29 +622,76 @@ load_graph_new (gint type, ProcData *procdata)
 
 	gtk_widget_show_all (g->main_widget);
 
-	g->timer_index = gtk_timeout_add (g->speed,
-					  (GtkFunction) load_graph_update, g);
-
 	return g;
 }
+
 
 void
 load_graph_start (LoadGraph *g)
 {
-	if (!g)
-		return;
+	if(g->timer_index == -1) {
 
-	if (g->timer_index == -1)
+		load_graph_update(g);
+
 		g->timer_index = gtk_timeout_add (g->speed,
-						  (GtkFunction) load_graph_update, g);
+						  (GtkFunction) load_graph_update,
+						  g);
+	}
 
 	g->draw = TRUE;
 }
 
+
 void
 load_graph_stop (LoadGraph *g)
 {
-	if (!g)
-		return;
+	/* don't draw anymore, but continue to poll */
 	g->draw = FALSE;
+}
+
+
+
+void
+load_graph_change_speed (LoadGraph *g,
+			 guint new_speed)
+{
+	g->speed = new_speed;
+
+	if(g->timer_index != -1) {
+		gtk_timeout_remove (g->timer_index);
+		g->timer_index = gtk_timeout_add (g->speed,
+						  (GtkFunction) load_graph_update,
+						  g);
+	}
+}
+
+
+
+GdkColor*
+load_graph_get_colors (LoadGraph *g)
+{
+	return g->colors;
+}
+
+
+
+void
+load_graph_reset_colors (LoadGraph *g)
+{
+	g->colors_allocated = FALSE;
+}
+
+
+
+LoadGraphLabels*
+load_graph_get_labels (LoadGraph *g)
+{
+	return &g->labels;
+}
+
+
+GtkWidget*
+load_graph_get_widget (LoadGraph *g)
+{
+	return g->main_widget;
 }

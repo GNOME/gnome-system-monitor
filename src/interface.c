@@ -381,11 +381,6 @@ create_disk_view (ProcData *procdata)
 	gtk_widget_show_all (disk_box);
   	
   	procman_get_tree_state (procdata->client, disk_tree, "/apps/procman/disktreenew");
-  	
-  	cb_update_disks (procdata);
-  	procdata->disk_timeout = gtk_timeout_add (procdata->config.disks_update_interval,
-  						  cb_update_disks, procdata);
-
 
 	return disk_box;
 }
@@ -407,7 +402,6 @@ create_sys_view (ProcData *procdata)
 	GtkWidget *table;
 	GtkWidget *color_picker;
 	GtkSizeGroup *sizegroup;
-	GdkColor color;
 	LoadGraph *cpu_graph, *mem_graph, *net_graph;
 	gint i;
 
@@ -435,7 +429,11 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (cpu_hbox), cpu_graph_box, TRUE, TRUE, 0);
 
 	cpu_graph = load_graph_new (LOAD_GRAPH_CPU, procdata);
-	gtk_box_pack_start (GTK_BOX (cpu_graph_box), cpu_graph->main_widget, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (cpu_graph_box),
+			    load_graph_get_widget(cpu_graph),
+			    TRUE,
+			    TRUE,
+			    0);
 
 	sizegroup = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -452,10 +450,8 @@ create_sys_view (ProcData *procdata)
 		g_signal_connect (G_OBJECT (temp_hbox), "size_request",
 					 G_CALLBACK (cpu_size_request), procdata);
 
-		color.red   = cpu_graph->colors[2+i].red;
-		color.green = cpu_graph->colors[2+i].green;
-		color.blue  = cpu_graph->colors[2+i].blue;
-		color_picker = gtk_color_button_new_with_color (&color);
+		color_picker = gtk_color_button_new_with_color (
+			&load_graph_get_colors(cpu_graph)[2+i]);
 
 		g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
@@ -473,7 +469,7 @@ create_sys_view (ProcData *procdata)
 		
 		cpu_label = gtk_label_new (NULL);
 		gtk_box_pack_start (GTK_BOX (temp_hbox), cpu_label, FALSE, FALSE, 0);
-		cpu_graph->cpu_labels[i] = cpu_label;
+		load_graph_get_labels(cpu_graph)->cpu[i] = cpu_label;
 		
 	}
 	
@@ -500,8 +496,11 @@ create_sys_view (ProcData *procdata)
 
 
 	mem_graph = load_graph_new (LOAD_GRAPH_MEM, procdata);
-	gtk_box_pack_start (GTK_BOX (mem_graph_box), mem_graph->main_widget, 
-			    TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (mem_graph_box),
+			    load_graph_get_widget(mem_graph),
+			    TRUE,
+			    TRUE,
+			    0);
 	
 	table = gtk_table_new (2, 7, FALSE);
 	gtk_table_set_row_spacings (GTK_TABLE (table), 6);
@@ -509,11 +508,8 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (mem_graph_box), table, 
 			    FALSE, FALSE, 0);
 
-
-	color.red   = mem_graph->colors[2].red;
-	color.green = mem_graph->colors[2].green;
-	color.blue  = mem_graph->colors[2].blue;
-	color_picker = gtk_color_button_new_with_color (&color);
+	color_picker = gtk_color_button_new_with_color (
+		&load_graph_get_colors(mem_graph)[2]);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_mem_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, 0, 0, 0, 0);
@@ -522,29 +518,57 @@ create_sys_view (ProcData *procdata)
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
 	
-	mem_graph->memused_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (mem_graph->memused_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), mem_graph->memused_label, 2, 3, 0, 1, 
-			  GTK_FILL, 0, 0, 0);
+	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(mem_graph)->memused),
+				0.0,
+				0.5);
+	gtk_table_attach (GTK_TABLE (table),
+			  load_graph_get_labels(mem_graph)->memused,
+			  2,
+			  3,
+			  0,
+			  1,
+			  GTK_FILL,
+			  0,
+			  0,
+			  0);
 	
 	label = gtk_label_new (_("of"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 0, 1, GTK_FILL, 0, 0, 0);
 	
-	mem_graph->memtotal_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (mem_graph->memtotal_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), mem_graph->memtotal_label, 4, 5, 0, 1, 
-			  GTK_FILL, 0, 0, 0);
+
+	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(mem_graph)->memtotal),
+				0.0,
+				0.5);
+
+	gtk_table_attach (GTK_TABLE (table),
+			  load_graph_get_labels(mem_graph)->memtotal,
+			  4,
+			  5,
+			  0,
+			  1,
+			  GTK_FILL,
+			  0,
+			  0,
+			  0);
 	
-	mem_graph->mempercent_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (mem_graph->mempercent_label), 1.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), mem_graph->mempercent_label, 5, 6, 0, 1, 
-			  GTK_FILL, 0, 0, 0);
-			  
-	color.red   = mem_graph->colors[3].red;
-	color.green = mem_graph->colors[3].green;
-	color.blue  = mem_graph->colors[3].blue;
-	color_picker = gtk_color_button_new_with_color (&color);
+
+	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(mem_graph)->mempercent),
+					  1.0,
+					  0.5);
+	gtk_table_attach (GTK_TABLE (table),
+			  load_graph_get_labels(mem_graph)->mempercent,
+			  5,
+			  6,
+			  0,
+			  1,
+			  GTK_FILL,
+			  0,
+			  0,
+			  0);
+
+	color_picker = gtk_color_button_new_with_color (
+		&load_graph_get_colors(mem_graph)[3]);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_swap_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, 0, 0, 0, 0);
@@ -553,25 +577,55 @@ create_sys_view (ProcData *procdata)
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
 	
-	mem_graph->swapused_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (mem_graph->swapused_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), mem_graph->swapused_label, 2, 3, 1, 2, 
-			  GTK_FILL, 0, 0, 0);
+
+	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(mem_graph)->swapused ),
+				0.0,
+				0.5);
+	gtk_table_attach (GTK_TABLE (table),
+			  load_graph_get_labels(mem_graph)->swapused,
+			  2,
+			  3,
+			  1,
+			  2,
+			  GTK_FILL,
+			  0,
+			  0,
+			  0);
 			  
 	label = gtk_label_new (_("of"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 1, 2, GTK_FILL, 0, 0, 0);
 	
-	mem_graph->swaptotal_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (mem_graph->swaptotal_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), mem_graph->swaptotal_label, 4, 5, 1, 2, 
-			  GTK_FILL, 0, 0, 0);	
-	
-	mem_graph->swappercent_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (mem_graph->swappercent_label), 1.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), mem_graph->swappercent_label, 5, 6, 1, 2, 
-			  GTK_FILL, 0, 0, 0);
-			  
+
+	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(mem_graph)->swaptotal),
+				0.0,
+				0.5);
+	gtk_table_attach (GTK_TABLE (table),
+			  load_graph_get_labels(mem_graph)->swaptotal,
+			  4,
+			  5,
+			  1,
+			  2,
+			  GTK_FILL,
+			  0,
+			  0,
+			  0);
+
+
+	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(mem_graph)->swappercent),
+				1.0,
+				0.5);
+	gtk_table_attach (GTK_TABLE (table),
+			  load_graph_get_labels(mem_graph)->swappercent,
+			  5,
+			  6,
+			  1,
+			  2,
+			  GTK_FILL,
+			  0,
+			  0,
+			  0);
+
 	procdata->mem_graph = mem_graph;
 
 	/* The net box */
@@ -592,8 +646,11 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (net_hbox), net_graph_box, TRUE, TRUE, 0);
 
 	net_graph = load_graph_new (LOAD_GRAPH_NET, procdata);
-	gtk_box_pack_start (GTK_BOX (net_graph_box), net_graph->main_widget,
-			    TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (net_graph_box),
+			    load_graph_get_widget(net_graph),
+			    TRUE,
+			    TRUE,
+			    0);
 
 	table = gtk_table_new (2, 5, FALSE);
 	gtk_table_set_row_spacings (GTK_TABLE (table), 6);
@@ -601,10 +658,8 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (net_graph_box), table,
 			    FALSE, FALSE, 0);
 
-	color.red   = net_graph->colors[2].red;
-	color.green = net_graph->colors[2].green;
-	color.blue  = net_graph->colors[2].blue;
-	color_picker = gtk_color_button_new_with_color (&color);
+	color_picker = gtk_color_button_new_with_color (
+		&load_graph_get_colors(net_graph)[2]);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_net_in_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, 0, 0, 0, 0);
@@ -617,9 +672,15 @@ create_sys_view (ProcData *procdata)
 	g_signal_connect (G_OBJECT (hbox), "size_request",
 			  G_CALLBACK (net_size_request), procdata);
 
-	net_graph->net_in_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (net_graph->net_in_label), 0.0, 0.5);
-	gtk_box_pack_start (GTK_BOX (hbox), net_graph->net_in_label, FALSE, FALSE, 0);
+
+	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(net_graph)->net_in),
+				0.0,
+				0.5);
+	gtk_box_pack_start (GTK_BOX (hbox),
+			    load_graph_get_labels(net_graph)->net_in,
+			    FALSE,
+			    FALSE,
+			    0);
 
 	gtk_table_attach (GTK_TABLE (table), hbox, 2, 3, 0, 1, GTK_FILL, 0, 0, 0);
 
@@ -627,15 +688,22 @@ create_sys_view (ProcData *procdata)
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 0, 1, GTK_FILL, 0, 0, 0);
 
-	net_graph->net_in_total_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (net_graph->net_in_total_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), net_graph->net_in_total_label, 4, 5, 0, 1,
-			  GTK_FILL, 0, 0, 0);
+	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(net_graph)->net_in_total),
+				0.0,
+				0.5);
+	gtk_table_attach (GTK_TABLE (table),
+			  load_graph_get_labels(net_graph)->net_in_total,
+			  4,
+			  5,
+			  0,
+			  1,
+			  GTK_FILL,
+			  0,
+			  0,
+			  0);
 
-	color.red   = net_graph->colors[3].red;
-	color.green = net_graph->colors[3].green;
-	color.blue  = net_graph->colors[3].blue;
-	color_picker = gtk_color_button_new_with_color (&color);
+	color_picker = gtk_color_button_new_with_color (
+		&load_graph_get_colors(net_graph)[3]);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_net_out_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, 0, 0, 0, 0);
@@ -648,9 +716,14 @@ create_sys_view (ProcData *procdata)
 	g_signal_connect (G_OBJECT (hbox), "size_request",
 			  G_CALLBACK (net_size_request), procdata);
 
-	net_graph->net_out_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (net_graph->net_out_label), 0.0, 0.5);
-	gtk_box_pack_start (GTK_BOX (hbox), net_graph->net_out_label, FALSE, FALSE, 0);
+	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(net_graph)->net_out),
+				0.0,
+				0.5);
+	gtk_box_pack_start (GTK_BOX (hbox),
+			    load_graph_get_labels(net_graph)->net_out,
+			    FALSE,
+			    FALSE,
+			    0);
 
 	gtk_table_attach (GTK_TABLE (table), hbox, 2, 3, 1, 2, GTK_FILL, 0, 0, 0);
 
@@ -658,10 +731,19 @@ create_sys_view (ProcData *procdata)
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 1, 2, GTK_FILL, 0, 0, 0);
 
-	net_graph->net_out_total_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (net_graph->net_out_total_label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), net_graph->net_out_total_label, 4, 5, 1, 2,
-			  GTK_FILL, 0, 0, 0);
+	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(net_graph)->net_out_total),
+				0.0,
+				0.5);
+	gtk_table_attach (GTK_TABLE (table),
+			  load_graph_get_labels(net_graph)->net_out_total,
+			  4,
+			  5,
+			  1,
+			  2,
+			  GTK_FILL,
+			  0,
+			  0,
+			  0);
 
 	procdata->net_graph = net_graph;
 

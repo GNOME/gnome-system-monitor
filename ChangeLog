@@ -1,5 +1,26 @@
 2005-07-09  Benoît Dejean  <TazForEver@dlfp.org>
 
+	* src/callbacks.c: (cb_app_delete), (cb_change_current_page),
+	(cb_update_disks), (cb_timeout):
+	* src/interface.c: (create_disk_view), (create_sys_view):
+	* src/load-graph.c: (load_graph_draw), (get_load), (get_memory),
+	(get_net), (load_graph_update), (load_graph_unalloc),
+	(load_graph_alloc), (load_graph_destroy), (load_graph_new),
+	(load_graph_start), (load_graph_stop), (load_graph_change_speed),
+	(load_graph_get_colors), (load_graph_reset_colors),
+	(load_graph_get_labels), (load_graph_get_widget):
+	* src/load-graph.h:
+	* src/procman.c: (timeouts_changed_cb), (color_changed_cb):
+	* src/procman.h:
+
+	Big rework. Closes #309840.
+
+	LoadGraph definition is private.
+	Start timeouts only when needed (used to start every timeout on
+	startup).
+
+2005-07-09  Benoît Dejean  <TazForEver@dlfp.org>
+
 	* src/load-graph.c: (load_graph_configure), (load_graph_destroy):
 	Little cleanup. Fixed callbacks' prototype. Removed never reached
 	statements.

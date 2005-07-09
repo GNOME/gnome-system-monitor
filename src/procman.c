@@ -108,42 +108,40 @@ timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer 
 
 		smooth_refresh_reset(procdata->smooth_refresh);
 
-		gtk_timeout_remove (procdata->timeout);
-		procdata->timeout = gtk_timeout_add (procdata->config.update_interval, 
-						     cb_timeout, procdata);
+		if(procdata->timeout != -1) {
+			gtk_timeout_remove (procdata->timeout);
+			procdata->timeout = gtk_timeout_add (procdata->config.update_interval,
+							     cb_timeout, procdata);
+		}
 	}
 	else if (g_str_equal (key, "/apps/procman/graph_update_interval")){
 		procdata->config.graph_update_interval = gconf_value_get_int (value);
 		procdata->config.graph_update_interval = 
 			MAX (procdata->config.graph_update_interval, 
 			     250);
-		gtk_timeout_remove (procdata->cpu_graph->timer_index);
-		procdata->cpu_graph->timer_index = -1;
-		procdata->cpu_graph->speed = procdata->config.graph_update_interval;
-		
-	
-		gtk_timeout_remove (procdata->mem_graph->timer_index);
-		procdata->mem_graph->timer_index = -1;
-		procdata->mem_graph->speed = procdata->config.graph_update_interval;
-	
-		gtk_timeout_remove (procdata->net_graph->timer_index);
-		procdata->net_graph->timer_index = -1;
-		procdata->net_graph->speed = procdata->config.graph_update_interval;
-
-		load_graph_start (procdata->cpu_graph);
-		load_graph_start (procdata->mem_graph);	
-		load_graph_start (procdata->net_graph);
+		load_graph_change_speed(procdata->cpu_graph,
+					procdata->config.graph_update_interval);
+		load_graph_change_speed(procdata->mem_graph,
+					procdata->config.graph_update_interval);
+		load_graph_change_speed(procdata->net_graph,
+					procdata->config.graph_update_interval);
 	}
-	else {
+	else if (g_str_equal(key, "/apps/procman/disks_interval")) {
 		
 		procdata->config.disks_update_interval = gconf_value_get_int (value);
 		procdata->config.disks_update_interval = 
 			MAX (procdata->config.disks_update_interval, 1000);	
-		gtk_timeout_remove (procdata->disk_timeout);
-		procdata->disk_timeout = 
-			gtk_timeout_add (procdata->config.disks_update_interval,
-  					 cb_update_disks, procdata);	
-		
+
+		if(procdata->disk_timeout != -1) {
+			gtk_timeout_remove (procdata->disk_timeout);
+			procdata->disk_timeout = \
+				gtk_timeout_add (procdata->config.disks_update_interval,
+						 cb_update_disks,
+						 procdata);
+		}
+	}
+	else {
+		g_assert_not_reached();
 	}
 }
 
@@ -157,19 +155,19 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 
 	if (g_str_equal (key, "/apps/procman/bg_color")) {
 		gdk_color_parse (color, &procdata->config.bg_color);
-		procdata->cpu_graph->colors[0] = procdata->config.bg_color;
-		procdata->mem_graph->colors[0] = procdata->config.bg_color;
-		procdata->net_graph->colors[0] = procdata->config.bg_color;
+		load_graph_get_colors(procdata->cpu_graph)[0] = procdata->config.bg_color;
+		load_graph_get_colors(procdata->mem_graph)[0] = procdata->config.bg_color;
+		load_graph_get_colors(procdata->net_graph)[0] = procdata->config.bg_color;
 	}
 	else if (g_str_equal (key, "/apps/procman/frame_color")) {
 		gdk_color_parse (color, &procdata->config.frame_color);
-		procdata->cpu_graph->colors[1] = procdata->config.frame_color;
-		procdata->mem_graph->colors[1] = procdata->config.frame_color;
-		procdata->net_graph->colors[1] = procdata->config.frame_color;
+		load_graph_get_colors(procdata->cpu_graph)[1] = procdata->config.frame_color;
+		load_graph_get_colors(procdata->mem_graph)[1] = procdata->config.frame_color;
+		load_graph_get_colors(procdata->net_graph)[1] = procdata->config.frame_color;
 	}
 	else if (g_str_equal (key, "/apps/procman/cpu_color")) {
 		gdk_color_parse (color, &procdata->config.cpu_color[0]);
-		procdata->cpu_graph->colors[2] = procdata->config.cpu_color[0];
+		load_graph_get_colors(procdata->cpu_graph)[2] = procdata->config.cpu_color[0];
 	}
 	else if (g_str_has_prefix (key, "/apps/procman/cpu_color")) {
 		gint i;
@@ -179,32 +177,31 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 			cpu_key = g_strdup_printf ("/apps/procman/cpu_color%d",i);
 			if (g_str_equal (key, cpu_key)) {
 				gdk_color_parse (color, &procdata->config.cpu_color[i]);
-				procdata->cpu_graph->colors[i+2] = procdata->config.cpu_color[i];
+				load_graph_get_colors(procdata->cpu_graph)[i+2] = procdata->config.cpu_color[i];
 			}
 			g_free (cpu_key);
 		}
 	}
 	else if (g_str_equal (key, "/apps/procman/mem_color")) {
 		gdk_color_parse (color, &procdata->config.mem_color);
-		procdata->mem_graph->colors[2] = procdata->config.mem_color;
+		load_graph_get_colors(procdata->mem_graph)[2] = procdata->config.mem_color;
 	}
 	else if (g_str_equal (key, "/apps/procman/swap_color")) {
 		gdk_color_parse (color, &procdata->config.swap_color);
-		procdata->mem_graph->colors[3] = procdata->config.swap_color;
+		load_graph_get_colors(procdata->mem_graph)[3] = procdata->config.swap_color;
 	}
 	else if (g_str_equal (key, "/apps/procman/net_in_color")) {
 		gdk_color_parse (color, &procdata->config.net_in_color);
-		procdata->net_graph->colors[2] = procdata->config.net_in_color;
+		load_graph_get_colors(procdata->net_graph)[2] = procdata->config.net_in_color;
 	}
 	else if (g_str_equal (key, "/apps/procman/net_out_color")) {
 		gdk_color_parse (color, &procdata->config.net_out_color);
-		procdata->net_graph->colors[3] = procdata->config.net_out_color;
+		load_graph_get_colors(procdata->net_graph)[3] = procdata->config.net_out_color;
 	}
-		
-	procdata->cpu_graph->colors_allocated = FALSE;
-	procdata->mem_graph->colors_allocated = FALSE;
-	procdata->net_graph->colors_allocated = FALSE;
-		
+
+	load_graph_reset_colors(procdata->cpu_graph);
+	load_graph_reset_colors(procdata->mem_graph);
+	load_graph_reset_colors(procdata->net_graph);
 }
 
 

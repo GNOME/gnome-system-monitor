@@ -21,7 +21,6 @@
 
 typedef struct _ProcConfig ProcConfig;
 typedef struct _PrettyTable PrettyTable;
-typedef struct _LoadGraph LoadGraph;
 typedef struct _ProcInfo ProcInfo;
 typedef struct _ProcData ProcData;
 
@@ -33,6 +32,8 @@ typedef struct _ProcData ProcData;
 
 #include "infoview.h"
 #include "smooth_refresh.h"
+
+#include "load-graph.h"
 
 enum
 {
@@ -81,50 +82,6 @@ struct _PrettyTable {
 	gchar *datadir;
 };
 
-struct _LoadGraph {
-    
-    guint n;
-    gint type;
-    guint speed;
-    guint draw_width, draw_height;
-    guint num_points;
-    guint num_cpus;
-
-    guint allocated;
-
-    GdkColor *colors;
-    gfloat **data;
-    guint data_size;
-    guint *pos;
-
-    gint colors_allocated;
-    GtkWidget *main_widget;
-    GtkWidget *disp;
-    GtkWidget *cpu_labels[GLIBTOP_NCPU];
-    GtkWidget *memused_label;
-    GtkWidget *memtotal_label;
-    GtkWidget *mempercent_label;
-    GtkWidget *swapused_label;
-    GtkWidget *swaptotal_label;
-    GtkWidget *swappercent_label;
-    GtkWidget *net_in_label;
-    GtkWidget *net_in_total_label;
-    GtkWidget *net_out_label;
-    GtkWidget *net_out_total_label;
-    GdkPixmap *pixmap;
-    GdkGC *gc;
-    int timer_index;
-    
-    gboolean draw;
-
-    guint64 cpu_time [GLIBTOP_NCPU] [NCPUSTATES];
-    guint64 cpu_last [GLIBTOP_NCPU] [NCPUSTATES];
-    gboolean cpu_initialized;       
-
-    guint64 net_last_in, net_last_out;
-    float net_max;
-    GTimeVal net_time;
-};
 
 
 struct _ProcInfo
