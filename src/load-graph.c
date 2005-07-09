@@ -429,7 +429,8 @@ load_graph_alloc (LoadGraph *g)
 	g->allocated = TRUE;
 }
 
-static gint
+
+static gboolean
 load_graph_configure (GtkWidget *widget, GdkEventConfigure *event,
 		      gpointer data_ptr)
 {
@@ -437,14 +438,12 @@ load_graph_configure (GtkWidget *widget, GdkEventConfigure *event,
 
 	if (c->pixmap) {
 		gdk_pixmap_unref (c->pixmap);
-		c->pixmap = NULL;
 	}
 
-	if (!c->pixmap)
-		c->pixmap = gdk_pixmap_new (widget->window,
-					    widget->allocation.width,
-					    widget->allocation.height,
-					    gtk_widget_get_visual (c->disp)->depth);
+	c->pixmap = gdk_pixmap_new (widget->window,
+				    widget->allocation.width,
+				    widget->allocation.height,
+				    gtk_widget_get_visual (c->disp)->depth);
 
 	gdk_draw_rectangle (c->pixmap,
 			    widget->style->black_gc,
@@ -462,10 +461,10 @@ load_graph_configure (GtkWidget *widget, GdkEventConfigure *event,
 	load_graph_draw (c);
 
 	return TRUE;
-	event = NULL;
 }
 
-static gint
+
+static gboolean
 load_graph_expose (GtkWidget *widget, GdkEventExpose *event,
 		   gpointer data_ptr)
 {
@@ -480,7 +479,8 @@ load_graph_expose (GtkWidget *widget, GdkEventExpose *event,
 	return FALSE;
 }
 
-static void
+
+static gboolean
 load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
 {
 	LoadGraph * const g = data_ptr;
@@ -490,9 +490,9 @@ load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
 	if (g->timer_index != -1)
 		gtk_timeout_remove (g->timer_index);
 
-	return;
-	widget = NULL;
+	return FALSE;
 }
+
 
 LoadGraph *
 load_graph_new (gint type, ProcData *procdata)
