@@ -35,7 +35,7 @@ enum
 
 typedef struct
 {
-	int timer;
+	guint timer;
 	GtkWidget *tree;
 	GPtrArray *old_maps;
 
@@ -242,7 +242,7 @@ close_memmaps_dialog (GtkDialog *dialog, gint id, gpointer data)
 
 	procman_save_tree_state (mmdata->client, mmdata->tree, "/apps/procman/memmapstree2");
 
-	gtk_timeout_remove (mmdata->timer);
+	g_source_remove (mmdata->timer);
 
 	gtk_widget_destroy (GTK_WIDGET (dialog));
 
@@ -354,7 +354,7 @@ create_memmapsdata (ProcData *procdata)
 
 	mmdata = g_new(MemMapsData, 1);
 
-	mmdata->timer = -1;
+	mmdata->timer = 0;
 	mmdata->client = procdata->client;
 	mmdata->tree = tree;
 	mmdata->old_maps = g_ptr_array_new ();
@@ -365,7 +365,7 @@ create_memmapsdata (ProcData *procdata)
 }
 
 
-static gint
+static gboolean
 memmaps_timer (gpointer data)
 {
 	MemMapsData * const mmdata = data;
@@ -443,7 +443,7 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 
 	gtk_widget_show_all (memmapsdialog);
 
-	mmdata->timer = gtk_timeout_add (5000, memmaps_timer, mmdata);
+	mmdata->timer = g_timeout_add (5000, memmaps_timer, mmdata);
 
 	update_memmaps_dialog (mmdata);
 }

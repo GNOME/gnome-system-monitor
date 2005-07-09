@@ -183,10 +183,10 @@ cb_app_delete (GtkWidget *window, GdkEventAny *event, gpointer data)
 	ProcData * const procdata = data;
 
 	procman_save_config (procdata);
-	if (procdata->timeout != -1)
-		gtk_timeout_remove (procdata->timeout);
-	if (procdata->disk_timeout != -1)
-		gtk_timeout_remove (procdata->disk_timeout);
+	if (procdata->timeout)
+		g_source_remove (procdata->timeout);
+	if (procdata->disk_timeout)
+		g_source_remove (procdata->disk_timeout);
 
 	gtk_main_quit ();
 
@@ -354,8 +354,8 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 
 		cb_timeout (procdata);
 
-		if (procdata->timeout == -1)
-			procdata->timeout = gtk_timeout_add (
+		if (!procdata->timeout)
+			procdata->timeout = g_timeout_add (
 				procdata->config.update_interval,
 				cb_timeout, procdata);
 
@@ -363,9 +363,9 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 			update_sensitivity (procdata, TRUE);
 	}
 	else {
-		if (procdata->timeout != -1 ) {
-			gtk_timeout_remove (procdata->timeout);
-			procdata->timeout = -1;
+		if (procdata->timeout) {
+			g_source_remove (procdata->timeout);
+			procdata->timeout = 0;
 		}
 
 		update_sensitivity (procdata, FALSE);
@@ -388,16 +388,17 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 
 		cb_update_disks (procdata);
 
-		if(procdata->disk_timeout == -1) {
+		if(!procdata->disk_timeout) {
 			procdata->disk_timeout =
-				gtk_timeout_add (procdata->config.disks_update_interval,
-						 cb_update_disks, procdata);
+				g_timeout_add (procdata->config.disks_update_interval,
+					       cb_update_disks,
+					       procdata);
 		}
 	}
 	else {
-		if(procdata->disk_timeout != -1) {
-			gtk_timeout_remove (procdata->disk_timeout);
-			procdata->disk_timeout = -1;
+		if(procdata->disk_timeout) {
+			g_source_remove (procdata->disk_timeout);
+			procdata->disk_timeout = 0;
 		}
 	}
 }
@@ -609,8 +610,9 @@ cb_timeout (gpointer data)
 
 	if(smooth_refresh_get(procdata->smooth_refresh, &new_interval))
 	{
-		procdata->timeout = gtk_timeout_add(new_interval,
-						    cb_timeout, procdata);
+		procdata->timeout = g_timeout_add(new_interval,
+						  cb_timeout,
+						  procdata);
 		return FALSE;
 	}
 

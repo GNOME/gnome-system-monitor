@@ -1,3 +1,19 @@
+2005-07-10  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (cb_app_delete), (cb_change_current_page),
+	(cb_timeout):
+	* src/load-graph.c: (load_graph_update), (load_graph_destroy),
+	(load_graph_new), (load_graph_start), (load_graph_change_speed):
+	* src/memmaps.c: (close_memmaps_dialog), (create_memmapsdata),
+	(create_single_memmaps_dialog):
+	* src/openfiles.c: (close_openfiles_dialog),
+	(create_single_openfiles_dialog):
+	* src/procactions.c: (kill_process):
+	* src/procman.c: (timeouts_changed_cb), (procman_data_new):
+	* src/procman.h:
+
+	gtk_timeout_add/gtk_timeout_remove -> g_timeout_add/g_source_remove.
+
 2005-07-09  Benoît Dejean  <TazForEver@dlfp.org>
 
 	* src/callbacks.c: (cb_app_delete), (cb_change_current_page),

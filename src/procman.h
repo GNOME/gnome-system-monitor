@@ -140,8 +140,8 @@ struct _ProcData
 	gint		net_label_fixed_width;
 	ProcInfo	*selected_process;
 	GtkTreeSelection *selection;
-	gint		timeout;
-	gint		disk_timeout;
+	guint		timeout;
+	guint		disk_timeout;
 
 /*
    'info' is GList, which has very slow lookup. On each update, glibtop

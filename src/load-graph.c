@@ -46,7 +46,7 @@ struct _LoadGraph {
 
 	GdkPixmap *pixmap;
 	GdkGC *gc;
-	int timer_index;
+	guint timer_index;
 
 	gboolean draw;
 
@@ -398,9 +398,11 @@ shift_right(LoadGraph *g)
 
 
 /* Updates the load graph when the timeout expires */
-static int
-load_graph_update (LoadGraph *g)
+static gboolean
+load_graph_update (gpointer user_data)
 {
+	LoadGraph * const g = user_data;
+
 	printf("load_graph_update (%p) draw : %d\n", g, (int)g->draw);
 
 	shift_right(g);
@@ -527,8 +529,8 @@ load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
 
 	load_graph_stop (g);
 
-	if (g->timer_index != -1)
-		gtk_timeout_remove (g->timer_index);
+	if (g->timer_index)
+		g_source_remove (g->timer_index);
 
 	load_graph_unalloc(g);
 
@@ -598,7 +600,7 @@ load_graph_new (gint type, ProcData *procdata)
 		break;
 	}
 
-	g->timer_index = -1;
+	g->timer_index = 0;
 
 	g->draw = FALSE;
 
@@ -629,13 +631,13 @@ load_graph_new (gint type, ProcData *procdata)
 void
 load_graph_start (LoadGraph *g)
 {
-	if(g->timer_index == -1) {
+	if(!g->timer_index) {
 
 		load_graph_update(g);
 
-		g->timer_index = gtk_timeout_add (g->speed,
-						  (GtkFunction) load_graph_update,
-						  g);
+		g->timer_index = g_timeout_add (g->speed,
+						load_graph_update,
+						g);
 	}
 
 	g->draw = TRUE;
@@ -657,11 +659,11 @@ load_graph_change_speed (LoadGraph *g,
 {
 	g->speed = new_speed;
 
-	if(g->timer_index != -1) {
-		gtk_timeout_remove (g->timer_index);
-		g->timer_index = gtk_timeout_add (g->speed,
-						  (GtkFunction) load_graph_update,
-						  g);
+	if(g->timer_index) {
+		g_source_remove (g->timer_index);
+		g->timer_index = g_timeout_add (g->speed,
+						load_graph_update,
+						g);
 	}
 }
 

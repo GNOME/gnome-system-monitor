@@ -108,10 +108,11 @@ timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer 
 
 		smooth_refresh_reset(procdata->smooth_refresh);
 
-		if(procdata->timeout != -1) {
-			gtk_timeout_remove (procdata->timeout);
-			procdata->timeout = gtk_timeout_add (procdata->config.update_interval,
-							     cb_timeout, procdata);
+		if(procdata->timeout) {
+			g_source_remove (procdata->timeout);
+			procdata->timeout = g_timeout_add (procdata->config.update_interval,
+							   cb_timeout,
+							   procdata);
 		}
 	}
 	else if (g_str_equal (key, "/apps/procman/graph_update_interval")){
@@ -132,12 +133,12 @@ timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer 
 		procdata->config.disks_update_interval = 
 			MAX (procdata->config.disks_update_interval, 1000);	
 
-		if(procdata->disk_timeout != -1) {
-			gtk_timeout_remove (procdata->disk_timeout);
+		if(procdata->disk_timeout) {
+			g_source_remove (procdata->disk_timeout);
 			procdata->disk_timeout = \
-				gtk_timeout_add (procdata->config.disks_update_interval,
-						 cb_update_disks,
-						 procdata);
+				g_timeout_add (procdata->config.disks_update_interval,
+					       cb_update_disks,
+					       procdata);
 		}
 	}
 	else {
@@ -236,12 +237,12 @@ procman_data_new (GConfClient *client)
 	pd->info = NULL;
 	pd->pids = g_hash_table_new(g_direct_hash, g_direct_equal);
 	pd->selected_process = NULL;
-	pd->timeout = -1;
+	pd->timeout = 0;
 	pd->blacklist = NULL;
 	pd->cpu_graph = NULL;
 	pd->mem_graph = NULL;
 	pd->net_graph = NULL;
-	pd->disk_timeout = -1;
+	pd->disk_timeout = 0;
 
 	glibtop_get_loadavg(&loadavg);
 	nprocs = (loadavg.nr_tasks ? 1.2f * loadavg.nr_tasks : 100);

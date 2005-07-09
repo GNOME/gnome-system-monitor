@@ -163,12 +163,13 @@ kill_process (ProcData *procdata, int sig)
 	** occurs if you first kill a process and the tree node is removed while
 	** still in the foreach function
 	*/
-	gtk_timeout_remove (procdata->timeout);
+	g_source_remove (procdata->timeout);
 
 	gtk_tree_selection_selected_foreach (procdata->selection, kill_single_process,
 					    &args);
 
-	procdata->timeout = gtk_timeout_add (procdata->config.update_interval,
-					     cb_timeout, procdata);
+	procdata->timeout = g_timeout_add (procdata->config.update_interval,
+					   cb_timeout,
+					   procdata);
 	proctable_update_all (procdata);
 }

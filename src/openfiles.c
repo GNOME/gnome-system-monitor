@@ -199,13 +199,13 @@ close_openfiles_dialog (GtkDialog *dialog, gint id, gpointer data)
 {
 	GtkWidget *tree = data;
 	GConfClient *client;
-	gint timer;
+	guint timer;
 
 	client = g_object_get_data (G_OBJECT (tree), "client");
 	procman_save_tree_state (client, tree, "/apps/procman/openfilestree2");
 
-	timer = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (tree), "timer"));
-	gtk_timeout_remove (timer);
+	timer = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (tree), "timer"));
+	g_source_remove (timer);
 
 	gtk_widget_destroy (GTK_WIDGET (dialog));
 
@@ -273,7 +273,7 @@ create_openfiles_tree (ProcData *procdata)
 }
 
 
-static gint
+static gboolean
 openfiles_timer (gpointer data)
 {
 	GtkWidget *tree = data;
@@ -300,7 +300,7 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 	GtkWidget *scrolled;
 	GtkWidget *tree;
 	ProcInfo *info;
-	gint timer;
+	guint timer;
 
 	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 	g_return_if_fail (info);
@@ -354,8 +354,8 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 
 	gtk_widget_show_all (openfilesdialog);
 
-	timer = gtk_timeout_add (5000, openfiles_timer, tree);
-	g_object_set_data (G_OBJECT (tree), "timer", GINT_TO_POINTER (timer));
+	timer = g_timeout_add (5000, openfiles_timer, tree);
+	g_object_set_data (G_OBJECT (tree), "timer", GUINT_TO_POINTER (timer));
 
 	update_openfiles_dialog (tree);
 
