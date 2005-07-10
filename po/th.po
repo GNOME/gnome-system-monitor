@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman 2.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-28 17:18+0700\n"
-"PO-Revision-Date: 2005-06-28 17:22+0700\n"
+"POT-Creation-Date: 2005-07-10 17:14+0700\n"
+"PO-Revision-Date: 2005-07-10 17:15+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <l10n@opentle.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;"
 
 #: gnome-system-monitor.desktop.in.in.h:1 src/callbacks.c:141
-#: src/interface.c:742
+#: src/interface.c:824
 msgid "System Monitor"
 msgstr "ติดตามทรัพยากรระบบ"
 
@@ -64,7 +64,7 @@ msgstr "รายการโพรเซสที่_ซ่อนไว้:"
 msgid "_Remove From List"
 msgstr "_ลบออกจากรายการ"
 
-#: src/favorites.c:430 src/procdialogs.c:278
+#: src/favorites.c:430 src/procdialogs.c:282
 msgid "Note:"
 msgstr "ข้อสังเกต:"
 
@@ -217,7 +217,7 @@ msgstr "ลำดับความสำคัญ:"
 msgid "Memory Usage"
 msgstr "การใช้หน่วยความจำ"
 
-#: src/infoview.c:159 src/interface.c:626 src/interface.c:657
+#: src/infoview.c:159 src/interface.c:687 src/interface.c:730
 msgid "Total:"
 msgstr "รวม:"
 
@@ -286,7 +286,7 @@ msgstr "_จบโพรเซส"
 msgid "Force process to finish normally"
 msgstr "บังคับให้โพรเซสจบการทำงานตามขั้นตอนปกติ"
 
-#: src/interface.c:57 src/procdialogs.c:121
+#: src/interface.c:57 src/procdialogs.c:126
 msgid "_Kill Process"
 msgstr "_ฆ่าโพรเซส"
 
@@ -310,7 +310,7 @@ msgstr "ปรับแ_ต่ง"
 msgid "Configure the application"
 msgstr "ปรับแต่งการทำงานของโปรแกรม"
 
-#: src/interface.c:64 src/procdialogs.c:83
+#: src/interface.c:64 src/procdialogs.c:82
 msgid "_Hide Process"
 msgstr "_ซ่อนโพรเซส"
 
@@ -422,61 +422,61 @@ msgstr "ว่าง"
 msgid "Used"
 msgstr "ใช้ไป"
 
-#: src/interface.c:289 src/interface.c:821 src/procdialogs.c:739
-#: src/procdialogs.c:743
+#: src/interface.c:289 src/interface.c:903 src/procdialogs.c:743
+#: src/procdialogs.c:747
 msgid "Devices"
 msgstr "อุปกรณ์ต่างๆ"
 
-#: src/interface.c:424
+#: src/interface.c:418
 msgid "CPU History"
 msgstr "สถิติการใช้ซีพียู"
 
-#: src/interface.c:465
+#: src/interface.c:461
 msgid "CPU:"
 msgstr "ซีพียู:"
 
-#: src/interface.c:468
+#: src/interface.c:464
 #, c-format
 msgid "CPU%d:"
 msgstr "ซีพียู %d:"
 
-#: src/interface.c:488
+#: src/interface.c:484
 msgid "Memory and Swap History"
 msgstr "สถิติการใช้หน่วยความจำและพื้นที่สลับ"
 
-#: src/interface.c:521
+#: src/interface.c:517
 msgid "User memory:"
 msgstr "หน่วยความจำที่ใช้:"
 
-#: src/interface.c:530 src/interface.c:561
+#: src/interface.c:535 src/interface.c:595
 msgid "of"
 msgstr "จาก"
 
-#: src/interface.c:552
+#: src/interface.c:576
 msgid "Used swap:"
 msgstr "พื้นที่สลับที่ใช้:"
 
-#: src/interface.c:581
+#: src/interface.c:635
 msgid "Network History"
 msgstr "สถิติการใช้เครือข่าย"
 
-#: src/interface.c:612
+#: src/interface.c:667
 msgid "Receive:"
 msgstr "รับ:"
 
-#: src/interface.c:643
+#: src/interface.c:711
 msgid "Send:"
 msgstr "ส่ง:"
 
-#: src/interface.c:809 src/procdialogs.c:556
+#: src/interface.c:891 src/procdialogs.c:560
 msgid "Processes"
 msgstr "โพรเซส"
 
-#: src/interface.c:815 src/procdialogs.c:648
+#: src/interface.c:897 src/procdialogs.c:652
 msgid "Resources"
 msgstr "ทรัพยากร"
 
-#: src/load-graph.c:310 src/load-graph.c:320
+#: src/load-graph.c:350 src/load-graph.c:360
 #, c-format
 msgid "%s/s"
 msgstr "%s/วินาที"
@@ -493,7 +493,7 @@ msgstr "VM เริ่ม"
 msgid "VM End"
 msgstr "VM จบ"
 
-#: src/memmaps.c:297 src/proctable.c:243
+#: src/memmaps.c:297
 msgid "VM Size"
 msgstr "ขนาด VM"
 
@@ -558,7 +558,7 @@ msgstr "แฟ้มที่เปิด"
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "แ_ฟ้มที่โพรเซส \"%s\" (PID %u) เปิด:"
 
-#: src/procactions.c:89
+#: src/procactions.c:73
 #, c-format
 msgid ""
 "Cannot change the priority of process with pid %d to %d.\n"
@@ -567,7 +567,7 @@ msgstr ""
 "ไม่สามารถเปลี่ยนลำดับความสำคัญของโพรเซสหมายเลข %d ไปเป็น %d\n"
 "%s"
 
-#: src/procactions.c:156
+#: src/procactions.c:140
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -577,13 +577,13 @@ msgstr ""
 "%s"
 
 #. translators: primary alert message
-#: src/procdialogs.c:63
+#: src/procdialogs.c:62
 msgid "Hide the selected process?"
 msgstr "จะซ่อนโพรเซสที่เลือกหรือไม่?"
 
 #. FIXME: View menu -> Edit menu
 #. translators: secondary alert messagex
-#: src/procdialogs.c:73
+#: src/procdialogs.c:72
 msgid ""
 "Hidden processes are no longer visible in the process list. You can re-"
 "enable them by selecting the \"Hidden Processes\" entry in the View menu."
@@ -592,12 +592,12 @@ msgstr ""
 "'โพรเซสซ่อน' ในเมนู 'แก้ไข'"
 
 #. translators: primary alert message
-#: src/procdialogs.c:116
+#: src/procdialogs.c:121
 msgid "Kill the selected process?"
 msgstr "จะฆ่าโพรเซสที่เลือกหรือไม่?"
 
 #. translators: secondary alert message
-#: src/procdialogs.c:118
+#: src/procdialogs.c:123
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponding processes should be killed."
@@ -606,12 +606,12 @@ msgstr ""
 "หรือการสร้างช่องโหว่ในระบบรักษาความปลอดภัย จึงควรสั่งฆ่าเฉพาะโพรเซสที่ไม่มีการตอบสนองเท่านั้น"
 
 #. translators: primary alert message
-#: src/procdialogs.c:125
+#: src/procdialogs.c:130
 msgid "End the selected process?"
 msgstr "จะจบโพรเซสที่เลือกหรือไม่?"
 
 #. translators: secondary alert message
-#: src/procdialogs.c:127
+#: src/procdialogs.c:132
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponding processes should be ended."
@@ -619,101 +619,101 @@ msgstr ""
 "การจบโพรเซสอาจหมายถึงการสูญเสียข้อมูล การทำลายวาระที่กำลังทำงานอยู่ "
 "หรือการสร้างช่องโหว่ในระบบรักษาความปลอดภัย จึงควรสั่งจบเฉพาะโพรเซสที่ไม่มีการตอบสนองเท่านั้น"
 
-#: src/procdialogs.c:130
+#: src/procdialogs.c:135
 msgid "_End Process"
 msgstr "_จบโพรเซส"
 
-#: src/procdialogs.c:159
+#: src/procdialogs.c:164
 msgid "(Very High Priority)"
 msgstr "(ความสำคัญสูงมาก)"
 
-#: src/procdialogs.c:161
+#: src/procdialogs.c:166
 msgid "(High Priority)"
 msgstr "(ความสำคัญสูง)"
 
-#: src/procdialogs.c:163
+#: src/procdialogs.c:168
 msgid "(Normal Priority)"
 msgstr "(ความสำคัญปกติ)"
 
-#: src/procdialogs.c:165
+#: src/procdialogs.c:170
 msgid "(Low Priority)"
 msgstr "(ความสำคัญต่ำ)"
 
-#: src/procdialogs.c:167
+#: src/procdialogs.c:172
 msgid "(Very Low Priority)"
 msgstr "(ความสำคัญต่ำมาก)"
 
-#: src/procdialogs.c:220
+#: src/procdialogs.c:224
 msgid "Change Priority"
 msgstr "เปลี่ยนลำดับความสำคัญ"
 
-#: src/procdialogs.c:241
+#: src/procdialogs.c:245
 msgid "Change _Priority"
 msgstr "เปลี่ยนลำดับความ_สำคัญ"
 
-#: src/procdialogs.c:262
+#: src/procdialogs.c:266
 msgid "_Nice value:"
 msgstr "ค่าไ_นซ์:"
 
-#: src/procdialogs.c:279
+#: src/procdialogs.c:283
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
 msgstr "ลำดับความสำคัญของโพรเซสกำหนดโดยค่าไนซ์ ค่าไนซ์ที่ต่ำหมายถึงลำดับความสำคัญสูง"
 
-#: src/procdialogs.c:442
+#: src/procdialogs.c:446
 msgid "Processes i_nfo showed in list:"
 msgstr "_ข้อมูลของโพรเซสที่แสดงในรายการ"
 
-#: src/procdialogs.c:494
+#: src/procdialogs.c:498
 msgid "Icon"
 msgstr "ไอคอน"
 
-#: src/procdialogs.c:533
+#: src/procdialogs.c:537
 msgid "System Monitor Preferences"
 msgstr "ปรับแต่งโปรแกรมติดตามทรัพยากรระบบ"
 
-#: src/procdialogs.c:563
+#: src/procdialogs.c:567
 msgid "Behavior"
 msgstr "พฤติกรรม"
 
-#: src/procdialogs.c:582 src/procdialogs.c:674
+#: src/procdialogs.c:586 src/procdialogs.c:678
 msgid "_Update interval:"
 msgstr "_อัพเดตทุกๆ:"
 
-#: src/procdialogs.c:603 src/procdialogs.c:691 src/procdialogs.c:778
+#: src/procdialogs.c:607 src/procdialogs.c:695 src/procdialogs.c:782
 msgid "seconds"
 msgstr "วินาที"
 
-#: src/procdialogs.c:610
+#: src/procdialogs.c:614
 msgid "Alert before ending or _killing processes"
 msgstr "เตือนก่อน_จบหรือฆ่าโพรเซส"
 
-#: src/procdialogs.c:620
+#: src/procdialogs.c:624
 msgid "Alert before _hiding processes"
 msgstr "เตือนก่อน_ซ่อนโพรเซส"
 
-#: src/procdialogs.c:630
+#: src/procdialogs.c:634
 msgid "Process Fields"
 msgstr "ฟิลด์ข้อมูลโพรเซส"
 
-#: src/procdialogs.c:655
+#: src/procdialogs.c:659
 msgid "Graphs"
 msgstr "กราฟ"
 
-#: src/procdialogs.c:698
+#: src/procdialogs.c:702
 msgid "_Background color:"
 msgstr "สี_พื้น:"
 
-#: src/procdialogs.c:717
+#: src/procdialogs.c:721
 msgid "_Grid color:"
 msgstr "สี_ตาราง:"
 
-#: src/procdialogs.c:762
+#: src/procdialogs.c:766
 msgid "Update _interval:"
 msgstr "อัพเดต_ทุกๆ:"
 
-#: src/procdialogs.c:785
+#: src/procdialogs.c:789
 msgid "Show _all filesystems"
 msgstr "แสดงทุก_ระบบไฟล์"
 
@@ -732,6 +732,10 @@ msgstr "สถานะ"
 #: src/proctable.c:242
 msgid "Memory"
 msgstr "หน่วยความจำ"
+
+#: src/proctable.c:243
+msgid "Virtual Memory"
+msgstr "หน่วยความจำเสมือน"
 
 #: src/proctable.c:244
 msgid "Resident Memory"
