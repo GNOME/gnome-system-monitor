@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-07 22:31+0000\n"
-"PO-Revision-Date: 2005-07-08 09:13+0300\n"
+"POT-Creation-Date: 2005-07-11 14:30+0000\n"
+"PO-Revision-Date: 2005-07-12 00:40+0300\n"
 "Last-Translator: Priit Laes <amd@store20.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../gnome-system-monitor.desktop.in.in.h:1
 #: ../src/callbacks.c:141
-#: ../src/interface.c:742
+#: ../src/interface.c:824
 msgid "System Monitor"
 msgstr "Süsteemijälgija"
 
@@ -68,7 +68,7 @@ msgid "_Remove From List"
 msgstr "_Eemalda nimekirjast"
 
 #: ../src/favorites.c:430
-#: ../src/procdialogs.c:278
+#: ../src/procdialogs.c:282
 msgid "Note:"
 msgstr "Märkus:"
 
@@ -209,8 +209,8 @@ msgid "Memory Usage"
 msgstr "Mälukasutus"
 
 #: ../src/infoview.c:159
-#: ../src/interface.c:626
-#: ../src/interface.c:657
+#: ../src/interface.c:687
+#: ../src/interface.c:730
 msgid "Total:"
 msgstr "Kokku:"
 
@@ -281,7 +281,7 @@ msgid "Force process to finish normally"
 msgstr "Protsessi sundimine normaalseks lõpetamiseks"
 
 #: ../src/interface.c:57
-#: ../src/procdialogs.c:121
+#: ../src/procdialogs.c:126
 msgid "_Kill Process"
 msgstr "_Kõrvalda protsess"
 
@@ -306,7 +306,7 @@ msgid "Configure the application"
 msgstr "Rakenduse seadistamine"
 
 #: ../src/interface.c:64
-#: ../src/procdialogs.c:83
+#: ../src/procdialogs.c:82
 msgid "_Hide Process"
 msgstr "_Peida protsess"
 
@@ -421,66 +421,66 @@ msgid "Used"
 msgstr "Kasutuses"
 
 #: ../src/interface.c:289
-#: ../src/interface.c:821
-#: ../src/procdialogs.c:739
+#: ../src/interface.c:903
 #: ../src/procdialogs.c:743
+#: ../src/procdialogs.c:747
 msgid "Devices"
 msgstr "Seadmed"
 
-#: ../src/interface.c:424
+#: ../src/interface.c:418
 msgid "CPU History"
 msgstr "Protsessori ajalugu"
 
-#: ../src/interface.c:465
+#: ../src/interface.c:461
 msgid "CPU:"
 msgstr "Protsessor:"
 
-#: ../src/interface.c:468
+#: ../src/interface.c:464
 #, c-format
 msgid "CPU%d:"
 msgstr "Protsessor%d:"
 
-#: ../src/interface.c:488
+#: ../src/interface.c:484
 msgid "Memory and Swap History"
 msgstr "Mälu ja saaleala ajalugu"
 
-#: ../src/interface.c:521
+#: ../src/interface.c:517
 msgid "User memory:"
 msgstr "Kasutaja mälu:"
 
-#: ../src/interface.c:530
-#: ../src/interface.c:561
+#: ../src/interface.c:535
+#: ../src/interface.c:595
 msgid "of"
 msgstr "/"
 
-#: ../src/interface.c:552
+#: ../src/interface.c:576
 msgid "Used swap:"
 msgstr "Kasutatud saalemälu:"
 
-#: ../src/interface.c:581
+#: ../src/interface.c:635
 msgid "Network History"
 msgstr "Võrgu ajalugu"
 
-#: ../src/interface.c:612
+#: ../src/interface.c:667
 msgid "Receive:"
 msgstr "Vastuvõetud:"
 
-#: ../src/interface.c:643
+#: ../src/interface.c:711
 msgid "Send:"
 msgstr "Saadetud:"
 
-#: ../src/interface.c:809
-#: ../src/procdialogs.c:556
+#: ../src/interface.c:891
+#: ../src/procdialogs.c:560
 msgid "Processes"
 msgstr "Protsessid"
 
-#: ../src/interface.c:815
-#: ../src/procdialogs.c:648
+#: ../src/interface.c:897
+#: ../src/procdialogs.c:652
 msgid "Resources"
 msgstr "Vahendid"
 
-#: ../src/load-graph.c:310
-#: ../src/load-graph.c:320
+#: ../src/load-graph.c:350
+#: ../src/load-graph.c:360
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
@@ -562,7 +562,7 @@ msgstr "Avatud failid"
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_Protsessi \"%s\" (PID %u) poolt avatud failid:"
 
-#: ../src/procactions.c:89
+#: ../src/procactions.c:73
 #, c-format
 msgid ""
 "Cannot change the priority of process with pid %d to %d.\n"
@@ -571,7 +571,7 @@ msgstr ""
 "Protsessi pid'ga %d tähtsust pole võimalik %d'ks muuta.\n"
 "%s"
 
-#: ../src/procactions.c:156
+#: ../src/procactions.c:140
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -581,132 +581,132 @@ msgstr ""
 "%s"
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:63
+#: ../src/procdialogs.c:62
 msgid "Hide the selected process?"
 msgstr "Kas peita valitud protsess?"
 
 #. FIXME: View menu -> Edit menu
 #. translators: secondary alert messagex
-#: ../src/procdialogs.c:73
+#: ../src/procdialogs.c:72
 msgid "Hidden processes are no longer visible in the process list. You can re-enable them by selecting the \"Hidden Processes\" entry in the View menu."
 msgstr "Peidetud protsesse ei kuvata protsesside nimekirjas. Sul on võimalus nendekuvamist lubada valides menüüst \"Peidetud protsessid\" vaate menüüst."
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:116
+#: ../src/procdialogs.c:121
 msgid "Kill the selected process?"
 msgstr "Kas kõrvaldada valitud protsess?"
 
 #. translators: secondary alert message
-#: ../src/procdialogs.c:118
+#: ../src/procdialogs.c:123
 msgid "Killing a process may destroy data, break the session or introduce a security risk. Only unresponding processes should be killed."
 msgstr "Protsessi kõrvaldamine võib hävitada sinu andmed, lõhkuda tööseansi või põhjustada turvariski. Kõrvaldama peaks ainult protsesse, mis ei käitu õigesti."
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:125
+#: ../src/procdialogs.c:130
 msgid "End the selected process?"
 msgstr "Kas lõpetada valitud protsessi töö?"
 
 #. translators: secondary alert message
-#: ../src/procdialogs.c:127
+#: ../src/procdialogs.c:132
 msgid "Ending a process may destroy data, break the session or introduce a security risk. Only unresponding processes should be ended."
 msgstr "Protsessi töö lõpetamine võib hävitada sinu andmed, lõhkuda tööseansi või põhjustada turvariski. Lõpetama peaks ainult protsesse, mis ei käitu õigesti."
 
-#: ../src/procdialogs.c:130
+#: ../src/procdialogs.c:135
 msgid "_End Process"
 msgstr "_Lõpeta protsess"
 
-#: ../src/procdialogs.c:159
+#: ../src/procdialogs.c:164
 msgid "(Very High Priority)"
 msgstr "(Väga kõrge tähtsusega)"
 
-#: ../src/procdialogs.c:161
+#: ../src/procdialogs.c:166
 msgid "(High Priority)"
 msgstr "(Kõrge tähtsusega)"
 
-#: ../src/procdialogs.c:163
+#: ../src/procdialogs.c:168
 msgid "(Normal Priority)"
 msgstr "(Tavalise tähtsusega)"
 
-#: ../src/procdialogs.c:165
+#: ../src/procdialogs.c:170
 msgid "(Low Priority)"
 msgstr "(Madala tähtsusega)"
 
-#: ../src/procdialogs.c:167
+#: ../src/procdialogs.c:172
 msgid "(Very Low Priority)"
 msgstr "(Väga madala tähtsusega)"
 
-#: ../src/procdialogs.c:220
+#: ../src/procdialogs.c:224
 msgid "Change Priority"
 msgstr "Tähtsuse muutmine"
 
-#: ../src/procdialogs.c:241
+#: ../src/procdialogs.c:245
 msgid "Change _Priority"
 msgstr "Muuda _tähtsust"
 
-#: ../src/procdialogs.c:262
+#: ../src/procdialogs.c:266
 msgid "_Nice value:"
 msgstr "Tähtsuse _väärtus:"
 
-#: ../src/procdialogs.c:279
+#: ../src/procdialogs.c:283
 msgid "The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."
 msgstr "Protsessi prioriteet on antud tema nice väärtusega. Madalam nice väärtus tähendab suuremat prioriteeti."
 
-#: ../src/procdialogs.c:442
+#: ../src/procdialogs.c:446
 msgid "Processes i_nfo showed in list:"
 msgstr "Protsessi _teave, mida näidatakse nimekirjas:"
 
-#: ../src/procdialogs.c:494
+#: ../src/procdialogs.c:498
 msgid "Icon"
 msgstr "Ikoon"
 
-#: ../src/procdialogs.c:533
+#: ../src/procdialogs.c:537
 msgid "System Monitor Preferences"
 msgstr "Süsteemijälgija eelistused"
 
-#: ../src/procdialogs.c:563
+#: ../src/procdialogs.c:567
 msgid "Behavior"
 msgstr "Käitumine"
 
-#: ../src/procdialogs.c:582
-#: ../src/procdialogs.c:674
+#: ../src/procdialogs.c:586
+#: ../src/procdialogs.c:678
 msgid "_Update interval:"
 msgstr "_Värskendamise vahemik:"
 
-#: ../src/procdialogs.c:603
-#: ../src/procdialogs.c:691
-#: ../src/procdialogs.c:778
+#: ../src/procdialogs.c:607
+#: ../src/procdialogs.c:695
+#: ../src/procdialogs.c:782
 msgid "seconds"
 msgstr "sekundit"
 
-#: ../src/procdialogs.c:610
+#: ../src/procdialogs.c:614
 msgid "Alert before ending or _killing processes"
 msgstr "Hoiatamine enne protsessi _kõrvaldamist"
 
-#: ../src/procdialogs.c:620
+#: ../src/procdialogs.c:624
 msgid "Alert before _hiding processes"
 msgstr "Hoiatamine enne protsessi _peitmist"
 
-#: ../src/procdialogs.c:630
+#: ../src/procdialogs.c:634
 msgid "Process Fields"
 msgstr "Protsessiväljad"
 
-#: ../src/procdialogs.c:655
+#: ../src/procdialogs.c:659
 msgid "Graphs"
 msgstr "Graafikud"
 
-#: ../src/procdialogs.c:698
+#: ../src/procdialogs.c:702
 msgid "_Background color:"
 msgstr "_Taustavärv:"
 
-#: ../src/procdialogs.c:717
+#: ../src/procdialogs.c:721
 msgid "_Grid color:"
 msgstr "Te_ljestiku värv:"
 
-#: ../src/procdialogs.c:762
+#: ../src/procdialogs.c:766
 msgid "Update _interval:"
 msgstr "Värskendamise _vahemik:"
 
-#: ../src/procdialogs.c:785
+#: ../src/procdialogs.c:789
 msgid "Show _all filesystems"
 msgstr "Näita _kõiki failisüsteeme"
 
