@@ -52,6 +52,12 @@ static const GtkActionEntry menu_entries[] =
 	{ "Quit", GTK_STOCK_QUIT, N_("_Quit"), "<control>Q",
 	  N_("Quit the program"), G_CALLBACK (cb_app_exit) },
 
+
+	{ "StopProcess", NULL, N_("_Stop Process"), "<control>S",
+	  N_("Stop process"), G_CALLBACK(cb_kill_sigstop) },
+	{ "ContProcess", NULL, N_("_Continue Process"), "<control>C",
+	  N_("Continue process if stopped"), G_CALLBACK(cb_kill_sigcont) },
+
 	{ "EndProcess", NULL, N_("End _Process"), "<control>E",
 	  N_("Force process to finish normally"), G_CALLBACK (cb_end_process) },
 	{ "KillProcess", NULL, N_("_Kill Process"), "<control>K",
@@ -104,6 +110,9 @@ static const char ui_info[] =
 "      <menuitem name=\"FileQuitMenu\" action=\"Quit\" />"
 "    </menu>"
 "    <menu name=\"EditMenu\" action=\"Edit\">"
+"      <menuitem name=\"EditStopProcessMenu\" action=\"StopProcess\" />"
+"      <menuitem name=\"EditContProcessMenu\" action=\"ContProcess\" />"
+"      <separator />"
 "      <menuitem name=\"EditEndProcessMenu\" action=\"EndProcess\" />"
 "      <menuitem name=\"EditKillProcessMenu\" action=\"KillProcess\" />"
 "      <separator />"
@@ -131,6 +140,9 @@ static const char ui_info[] =
 "    </menu>"
 "  </menubar>"
 "  <popup name=\"PopupMenu\" action=\"Popup\">"
+"    <menuitem action=\"StopProcess\" />"
+"    <menuitem action=\"ContProcess\" />"
+"    <separator />"
 "    <menuitem action=\"EndProcess\" />"
 "    <menuitem action=\"KillProcess\" />"
 "    <separator />"
@@ -966,6 +978,11 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 	}
 
 	gtk_widget_set_sensitive (data->infoview.box, sensitivity);
+
+	action = gtk_action_group_get_action (data->action_group, "StopProcess");
+	gtk_action_set_sensitive (action, sensitivity);
+	action = gtk_action_group_get_action (data->action_group, "ContProcess");
+	gtk_action_set_sensitive (action, sensitivity);
 
 	action = gtk_action_group_get_action (data->action_group, "EndProcess");
 	gtk_action_set_sensitive (action, sensitivity);

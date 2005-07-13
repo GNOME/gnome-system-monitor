@@ -76,4 +76,13 @@ void		cb_radio_processes(GtkAction *action,
 				   GtkRadioAction *current,
 				   gpointer data) G_GNUC_INTERNAL;
 
+
+
+void		cb_kill_sigstop(GtkAction *action,
+				gpointer data) G_GNUC_INTERNAL;
+
+void		cb_kill_sigcont(GtkAction *action,
+				gpointer data) G_GNUC_INTERNAL;
+
+
 #endif /* _PROCMAN_CALLBACKS_H_ */

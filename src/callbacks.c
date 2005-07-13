@@ -39,6 +39,32 @@
 #include "load-graph.h"
 
 
+
+
+void
+cb_kill_sigstop(GtkAction *action, gpointer data)
+{
+	ProcData * const procdata = data;
+
+	/* no confirmation */
+	kill_process (procdata, SIGSTOP);
+}
+
+
+
+
+void
+cb_kill_sigcont(GtkAction *action, gpointer data)
+{
+	ProcData * const procdata = data;
+
+	/* no confirmation */
+	kill_process (procdata, SIGCONT);
+}
+
+
+
+
 static void
 kill_process_helper(ProcData *procdata, int sig)
 {
