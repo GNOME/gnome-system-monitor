@@ -944,7 +944,7 @@ proctable_update_list (ProcData * const procdata)
 	/* FIXME: total cpu time elapsed should be calculated on an individual basis here
 	** should probably have a total_time_last gint in the ProcInfo structure */
 	glibtop_get_cpu (&cpu);
-	total_time = cpu.total - total_time_last;
+	total_time = MAX(cpu.total - total_time_last, 1);
 	total_time_last = cpu.total;
 
 	refresh_list (procdata, pid_list, proclist.number);
