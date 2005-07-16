@@ -881,7 +881,7 @@ refresh_list (ProcData *procdata, const unsigned *pid_list, const guint n)
 	/* use a hash for fast lookup
 	   !NULL as data for every key */
 
-	pid_hash = g_hash_table_new(g_direct_hash, g_direct_equal);
+	pid_hash = g_hash_table_new(NULL, NULL);
 	for(i = 0; i < n; ++i)
 		g_hash_table_insert(pid_hash,
 				    GINT_TO_POINTER(pid_list[i]),
@@ -1002,7 +1002,7 @@ proctable_free_table (ProcData * const procdata)
 	procdata->info = NULL;
 
 	g_hash_table_destroy(procdata->pids);
-	procdata->pids = g_hash_table_new(g_direct_hash, g_direct_equal);
+	procdata->pids = g_hash_table_new(NULL, NULL);
 }
 
 

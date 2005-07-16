@@ -104,7 +104,7 @@ void pretty_table_new (ProcData *procdata)
 	WnckScreen *screen;
 	PrettyTable *pretty_table = g_new(PrettyTable, 1);
 
-	pretty_table->app_hash = g_hash_table_new (g_direct_hash, g_direct_equal);
+	pretty_table->app_hash = g_hash_table_new (NULL, NULL);
 	pretty_table->default_hash = g_hash_table_new (g_str_hash, g_str_equal);
 
 	screen = wnck_screen_get_default ();
