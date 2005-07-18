@@ -578,9 +578,6 @@ cb_update_disks (gpointer data)
 	GHashTable *new_disks = NULL;
 	guint i;
 
-	/* LOCK */
-	g_static_mutex_lock (&mutex);
-
 	puts("cb_update_disks");
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->disk_list));
@@ -607,9 +604,6 @@ cb_update_disks (gpointer data)
 
 	g_hash_table_destroy (new_disks);
 	g_free (entry);
-
-	g_static_mutex_unlock (&mutex);
-	/* UNLOCK */
 
 	return TRUE;
 }
