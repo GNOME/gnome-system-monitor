@@ -16,6 +16,7 @@ if(!is_init) { \
 } G_STMT_END
 
 #define PROCMAN_CMP(X, Y) (((X) == (Y)) ? 0 : (((X) < (Y)) ? -1 : 1))
+#define PROCMAN_RCMP(X, Y) PROCMAN_CMP((Y), (X))
 
 
 GtkWidget*

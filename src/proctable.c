@@ -69,25 +69,28 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 
 	switch (col) {
 	case COL_MEM:
-		return PROCMAN_CMP(infoa->mem, infob->mem);
+		return PROCMAN_RCMP(infoa->mem, infob->mem);
 
 	case COL_VMSIZE:
-		return PROCMAN_CMP(infoa->vmsize, infob->vmsize);
+		return PROCMAN_RCMP(infoa->vmsize, infob->vmsize);
 
 	case COL_MEMRES:
-		return PROCMAN_CMP(infoa->memres, infob->memres);
+		return PROCMAN_RCMP(infoa->memres, infob->memres);
 
 	case COL_MEMSHARED:
-		return PROCMAN_CMP(infoa->memshared, infob->memshared);
+		return PROCMAN_RCMP(infoa->memshared, infob->memshared);
 
 	case COL_MEMRSS:
-		return PROCMAN_CMP(infoa->memrss, infob->memrss);
+		return PROCMAN_RCMP(infoa->memrss, infob->memrss);
 
 	case COL_MEMXSERVER:
-		return PROCMAN_CMP(infoa->memxserver, infob->memxserver);
+		return PROCMAN_RCMP(infoa->memxserver, infob->memxserver);
 
 	case COL_CPU_TIME:
-		return PROCMAN_CMP(infoa->cpu_time_last, infob->cpu_time_last);
+		return PROCMAN_RCMP(infoa->cpu_time_last, infob->cpu_time_last);
+
+	case COL_CPU:
+		return PROCMAN_RCMP(infoa->pcpu, infob->pcpu);
 
 	default:
 		g_assert_not_reached();
@@ -362,6 +365,7 @@ proctable_new (ProcData * const procdata)
 		case COL_MEMRSS:
 		case COL_MEMXSERVER:
 		case COL_CPU_TIME:
+		case COL_CPU:
 			gtk_tree_sortable_set_sort_func (
 				GTK_TREE_SORTABLE (model),
 				i,

@@ -256,28 +256,29 @@ static gint
 sort_guint64 (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer data)
 {
 	const gint selected_col = GPOINTER_TO_INT (data);
-	gint data_col;
-	guint64 a, b;
+	guint64 vmsza, vmszb, inodea, inodeb;
+
+	gtk_tree_model_get (model, itera,
+			    MMAP_COL_VMSZ_INT, &vmsza,
+			    MMAP_COL_INODE_INT, &inodea,
+			    -1);
+
+	gtk_tree_model_get (model, iterb,
+			    MMAP_COL_VMSZ_INT, &vmszb,
+			    MMAP_COL_INODE_INT, &inodeb,
+			    -1);
 
 	switch(selected_col)
 	{
 	case MMAP_COL_VMSZ:
-		data_col = MMAP_COL_VMSZ_INT;
-		break;
+		return PROCMAN_RCMP(vmsza, vmszb);
 
 	case MMAP_COL_INODE:
-		data_col = MMAP_COL_INODE_INT;
-		break;
+		return PROCMAN_CMP(inodea, inodeb);
 
 	default:
 		g_assert_not_reached();
-		return 0;
 	}
-
-	gtk_tree_model_get (model, itera, data_col, &a, -1);
-	gtk_tree_model_get (model, iterb, data_col, &b, -1);
-
-	return PROCMAN_CMP(a, b);
 }
 
 

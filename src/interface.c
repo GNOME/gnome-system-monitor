@@ -224,13 +224,13 @@ sort_bytes (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointe
 	switch (col)
 	{
 		case 4:
-			return PROCMAN_CMP(btotal1, btotal2);
+			return PROCMAN_RCMP(btotal1, btotal2);
 
 		case 5:
-			return PROCMAN_CMP(bfree1, bfree2);
+			return PROCMAN_RCMP(bfree1, bfree2);
 
 		case 6:
-			return PROCMAN_CMP(btotal1 - bfree1, btotal2 - bfree2);
+			return PROCMAN_RCMP(btotal1 - bfree1, btotal2 - bfree2);
 
 		default:
 			g_assert_not_reached();
