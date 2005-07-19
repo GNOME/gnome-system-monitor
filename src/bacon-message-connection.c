@@ -122,9 +122,9 @@ server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 	subs = message;
 	finished = FALSE;
 
-	while (*subs != '\0' && finished == FALSE)
+	while (finished == FALSE && *subs != '\0')
 	{
-		if (message != NULL && conn->func != NULL)
+		if (conn->func != NULL)
 			(*conn->func) (subs, conn->data);
 
 		subs += strlen (subs) + 1;
