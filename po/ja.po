@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor (procman) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-04 00:06+0900\n"
-"PO-Revision-Date: 2005-07-03 23:49+0900\n"
+"POT-Creation-Date: 2005-07-19 16:15+0900\n"
+"PO-Revision-Date: 2005-07-19 16:15+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -16,24 +16,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:141
-#: ../src/interface.c:742
+#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:167
+#: ../src/interface.c:836
 msgid "System Monitor"
 msgstr "システム・モニタ"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:142
+#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:168
 msgid "View current processes and monitor system state"
 msgstr "現在のプロセスを表示して、システム状況を監視します"
 
-#: ../src/callbacks.c:126
+#: ../src/callbacks.c:152
 msgid "Jorgen Scheibengruber - nicer devices treeview"
 msgstr "Jorgen Scheibengruber - クールなデバイスのツリー表示"
 
-#: ../src/callbacks.c:127
+#: ../src/callbacks.c:153
 msgid "Benoît Dejean - maintainer"
 msgstr "Benoît Dejean - メンテナンス担当"
 
-#: ../src/callbacks.c:150
+#: ../src/callbacks.c:176
 msgid "translator-credits"
 msgstr ""
 "相花 毅 <aihana@gnome.gr.jp>\n"
@@ -67,7 +67,7 @@ msgstr "現在の非表示プロセス(_H):"
 msgid "_Remove From List"
 msgstr "一覧から削除(_R)"
 
-#: ../src/favorites.c:430 ../src/procdialogs.c:278
+#: ../src/favorites.c:430 ../src/procdialogs.c:282
 msgid "Note:"
 msgstr "メモ:"
 
@@ -221,7 +221,7 @@ msgstr "優先度:"
 msgid "Memory Usage"
 msgstr "メモリの使用量"
 
-#: ../src/infoview.c:159 ../src/interface.c:626 ../src/interface.c:657
+#: ../src/infoview.c:159 ../src/interface.c:699 ../src/interface.c:742
 msgid "Total:"
 msgstr "合計:"
 
@@ -282,242 +282,258 @@ msgstr "終了(_Q)"
 msgid "Quit the program"
 msgstr "プログラムを終了します"
 
-#: ../src/interface.c:55 ../src/interface.c:189
+#: ../src/interface.c:56
+msgid "_Stop Process"
+msgstr "プロセスの停止(_S)"
+
+#: ../src/interface.c:57
+msgid "Stop process"
+msgstr "プロセスを停止します"
+
+#: ../src/interface.c:58
+msgid "_Continue Process"
+msgstr "プロセスの再開(_C)"
+
+#: ../src/interface.c:59
+msgid "Continue process if stopped"
+msgstr "停止したプロセスの実行を再開します"
+
+#: ../src/interface.c:61 ../src/interface.c:201
 msgid "End _Process"
 msgstr "プロセスの終了(_P)"
 
-#: ../src/interface.c:56
+#: ../src/interface.c:62
 msgid "Force process to finish normally"
 msgstr "プロセスを正常に終了します"
 
-#: ../src/interface.c:57 ../src/procdialogs.c:121
+#: ../src/interface.c:63 ../src/procdialogs.c:126
 msgid "_Kill Process"
 msgstr "プロセスの強制終了(_K)"
 
-#: ../src/interface.c:58
+#: ../src/interface.c:64
 msgid "Force process to finish immediately"
 msgstr "プロセスを今すぐ強制終了します"
 
-#: ../src/interface.c:59
+#: ../src/interface.c:65
 msgid "_Change Priority..."
 msgstr "プロパティの変更(_C)..."
 
-#: ../src/interface.c:60
+#: ../src/interface.c:66
 msgid "Change the order of priority of process"
 msgstr "プロセスの優先度を変更します"
 
-#: ../src/interface.c:61
+#: ../src/interface.c:67
 msgid "Prefere_nces"
 msgstr "設定(_N)"
 
-#: ../src/interface.c:62
+#: ../src/interface.c:68
 msgid "Configure the application"
 msgstr "プログラムを設定します"
 
-#: ../src/interface.c:64 ../src/procdialogs.c:83
+#: ../src/interface.c:70 ../src/procdialogs.c:82
 msgid "_Hide Process"
 msgstr "プロセスの非表示(_H)"
 
-#: ../src/interface.c:65
+#: ../src/interface.c:71
 msgid "Hide process from list"
 msgstr "一覧からプロセスを隠します"
 
-#: ../src/interface.c:66
+#: ../src/interface.c:72
 msgid "_Hidden Processes"
 msgstr "非表示のプロセス(_H)"
 
-#: ../src/interface.c:67
+#: ../src/interface.c:73
 msgid "Open the list of currently hidden processes"
 msgstr "現在、隠しているプロセスの一覧を開きます"
 
-#: ../src/interface.c:68
+#: ../src/interface.c:74
 msgid "_Memory Maps"
 msgstr "メモリ・マップ(_M)"
 
-#: ../src/interface.c:69
+#: ../src/interface.c:75
 msgid "Open the memory maps associated with a process"
 msgstr "プロセスに関連づけられているメモリマップを開きます"
 
-#: ../src/interface.c:70
+#: ../src/interface.c:76
 msgid "Open _Files"
 msgstr "オープンしたファイル(_F)"
 
-#: ../src/interface.c:71
+#: ../src/interface.c:77
 msgid "View the files opened by a process"
 msgstr "プロセスがオープンしたファイルを表示します"
 
-#: ../src/interface.c:73
+#: ../src/interface.c:79
 msgid "_Contents"
 msgstr "目次(_C)"
 
-#: ../src/interface.c:74
+#: ../src/interface.c:80
 msgid "Open the manual"
 msgstr "ヘルプを表示します"
 
-#: ../src/interface.c:75
+#: ../src/interface.c:81
 msgid "_About"
 msgstr "情報(_A)"
 
-#: ../src/interface.c:76
+#: ../src/interface.c:82
 msgid "About this application"
 msgstr "このアプリケーションの情報です"
 
-#: ../src/interface.c:81
+#: ../src/interface.c:87
 msgid "_Dependencies"
 msgstr "依存関係(_D)"
 
-#: ../src/interface.c:82
+#: ../src/interface.c:88
 msgid "Show parent/child relationship between processes"
 msgstr "プロセスで親/子の関係を表示します"
 
-#: ../src/interface.c:84
+#: ../src/interface.c:90
 msgid "_Threads"
 msgstr "スレッド(_T)"
 
-#: ../src/interface.c:85
+#: ../src/interface.c:91
 msgid "Show each thread as a separate process"
 msgstr "各スレッドを分割したプロセスとして表示します"
 
-#: ../src/interface.c:92
+#: ../src/interface.c:98
 msgid "_Active Processes"
 msgstr "実行中のプロセス(_A)"
 
-#: ../src/interface.c:93
+#: ../src/interface.c:99
 msgid "Show active processes"
 msgstr "実行中のプロセスを表示します"
 
-#: ../src/interface.c:94
+#: ../src/interface.c:100
 msgid "A_ll Processes"
 msgstr "全てのプロセス(_L)"
 
-#: ../src/interface.c:95
+#: ../src/interface.c:101
 msgid "Show all processes"
 msgstr "全てのプロセスを表示します"
 
-#: ../src/interface.c:96
+#: ../src/interface.c:102
 msgid "M_y Processes"
 msgstr "ユーザのプロセス(_Y)"
 
-#: ../src/interface.c:97
+#: ../src/interface.c:103
 msgid "Show user own process"
 msgstr "ユーザが起動したプロセスを表示します"
 
-#: ../src/interface.c:275 ../src/memmaps.c:300
+#: ../src/interface.c:287 ../src/memmaps.c:301
 msgid "Device"
 msgstr "デバイス"
 
-#: ../src/interface.c:276
+#: ../src/interface.c:288
 msgid "Directory"
 msgstr "フォルダ"
 
-#: ../src/interface.c:277 ../src/openfiles.c:230
+#: ../src/interface.c:289 ../src/openfiles.c:230
 msgid "Type"
 msgstr "種類"
 
-#: ../src/interface.c:278
+#: ../src/interface.c:290
 msgid "Total"
 msgstr "合計"
 
-#: ../src/interface.c:279
+#: ../src/interface.c:291
 msgid "Free"
 msgstr "空き"
 
-#: ../src/interface.c:280
+#: ../src/interface.c:292
 msgid "Used"
 msgstr "使用済み"
 
-#: ../src/interface.c:289 ../src/interface.c:821 ../src/procdialogs.c:739
-#: ../src/procdialogs.c:743
+#: ../src/interface.c:301 ../src/interface.c:915 ../src/procdialogs.c:743
+#: ../src/procdialogs.c:747
 msgid "Devices"
 msgstr "デバイスの一覧"
 
-#: ../src/interface.c:424
+#: ../src/interface.c:430
 msgid "CPU History"
 msgstr "CPU 使用率の履歴"
 
-#: ../src/interface.c:465
+#: ../src/interface.c:473
 msgid "CPU:"
 msgstr "CPU:"
 
-#: ../src/interface.c:468
+#: ../src/interface.c:476
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: ../src/interface.c:488
+#: ../src/interface.c:496
 msgid "Memory and Swap History"
 msgstr "メモリとスワップの履歴"
 
-#: ../src/interface.c:521
+#: ../src/interface.c:529
 msgid "User memory:"
 msgstr "ユーザのメモリ:"
 
-#: ../src/interface.c:530 ../src/interface.c:561
+#: ../src/interface.c:547 ../src/interface.c:607
 msgid "of"
 msgstr "/"
 
-#: ../src/interface.c:552
+#: ../src/interface.c:588
 msgid "Used swap:"
 msgstr "使用済みスワップ:"
 
-#: ../src/interface.c:581
+#: ../src/interface.c:647
 msgid "Network History"
 msgstr "ネットワークの履歴"
 
-#: ../src/interface.c:612
+#: ../src/interface.c:679
 msgid "Receive:"
 msgstr "受信:"
 
-#: ../src/interface.c:643
+#: ../src/interface.c:723
 msgid "Send:"
 msgstr "送信:"
 
-#: ../src/interface.c:809 ../src/procdialogs.c:556
+#: ../src/interface.c:903 ../src/procdialogs.c:560
 msgid "Processes"
 msgstr "プロセス"
 
-#: ../src/interface.c:815 ../src/procdialogs.c:648
+#: ../src/interface.c:909 ../src/procdialogs.c:652
 msgid "Resources"
 msgstr "リソース"
 
-#: ../src/load-graph.c:310 ../src/load-graph.c:320
+#: ../src/load-graph.c:350 ../src/load-graph.c:360
 #, c-format
 msgid "%s/s"
 msgstr "%s/秒"
 
-#: ../src/memmaps.c:294
+#: ../src/memmaps.c:295
 msgid "Filename"
 msgstr "フルネーム"
 
-#: ../src/memmaps.c:295
+#: ../src/memmaps.c:296
 msgid "VM Start"
 msgstr "VM の先頭"
 
-#: ../src/memmaps.c:296
+#: ../src/memmaps.c:297
 msgid "VM End"
 msgstr "VM の最後"
 
-#: ../src/memmaps.c:297 ../src/proctable.c:243
+#: ../src/memmaps.c:298
 msgid "VM Size"
 msgstr "VM のサイズ"
 
-#: ../src/memmaps.c:298
+#: ../src/memmaps.c:299
 msgid "Flags"
 msgstr "フラグ"
 
-#: ../src/memmaps.c:299
+#: ../src/memmaps.c:300
 msgid "VM Offset"
 msgstr "VM のオフセット"
 
-#: ../src/memmaps.c:301
+#: ../src/memmaps.c:302
 msgid "Inode"
 msgstr "I-ノード"
 
-#: ../src/memmaps.c:401
+#: ../src/memmaps.c:402
 msgid "Memory Maps"
 msgstr "メモリ・マップ"
 
-#: ../src/memmaps.c:421
+#: ../src/memmaps.c:422
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "プロセス \"%s\" (PID %u) のメモリ・マップ(_M):"
@@ -562,7 +578,7 @@ msgstr "オープンしたファイル"
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "プロセス \"%s\" (PID %u) がオープンしたファイル(_F):"
 
-#: ../src/procactions.c:89
+#: ../src/procactions.c:73
 #, c-format
 msgid ""
 "Cannot change the priority of process with pid %d to %d.\n"
@@ -571,7 +587,7 @@ msgstr ""
 "PID %d のプロセスの優先度を %d に変更できません。\n"
 "%s"
 
-#: ../src/procactions.c:156
+#: ../src/procactions.c:140
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -581,13 +597,13 @@ msgstr ""
 "%s"
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:63
+#: ../src/procdialogs.c:62
 msgid "Hide the selected process?"
 msgstr "選択したプロセスを非表示にしますか？"
 
 #. FIXME: View menu -> Edit menu
 #. translators: secondary alert messagex
-#: ../src/procdialogs.c:73
+#: ../src/procdialogs.c:72
 msgid ""
 "Hidden processes are no longer visible in the process list. You can re-"
 "enable them by selecting the \"Hidden Processes\" entry in the View menu."
@@ -596,12 +612,12 @@ msgstr ""
 "示のプロセス\" を選択することで、このプロセスを表示させることが可能です。"
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:116
+#: ../src/procdialogs.c:121
 msgid "Kill the selected process?"
 msgstr "選択したプロセスを強制終了しますか？"
 
 #. translators: secondary alert message
-#: ../src/procdialogs.c:118
+#: ../src/procdialogs.c:123
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponding processes should be killed."
@@ -611,12 +627,12 @@ msgstr ""
 "て下さい。"
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:125
+#: ../src/procdialogs.c:130
 msgid "End the selected process?"
 msgstr "選択したプロセスを終了しますか？"
 
 #. translators: secondary alert message
-#: ../src/procdialogs.c:127
+#: ../src/procdialogs.c:132
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponding processes should be ended."
@@ -624,43 +640,43 @@ msgstr ""
 "プロセスを終了すると、データを破壊してセッションを終了したり、セキュリティ上"
 "の危険性が増すかもしれません。おかしな動きをするプロセスのみ終了して下さい。"
 
-#: ../src/procdialogs.c:130
+#: ../src/procdialogs.c:135
 msgid "_End Process"
 msgstr "プロセスの終了(_E)"
 
-#: ../src/procdialogs.c:159
+#: ../src/procdialogs.c:164
 msgid "(Very High Priority)"
 msgstr "(一番高い優先度)"
 
-#: ../src/procdialogs.c:161
+#: ../src/procdialogs.c:166
 msgid "(High Priority)"
 msgstr "(高い優先度)"
 
-#: ../src/procdialogs.c:163
+#: ../src/procdialogs.c:168
 msgid "(Normal Priority)"
 msgstr "(通常の優先度)"
 
-#: ../src/procdialogs.c:165
+#: ../src/procdialogs.c:170
 msgid "(Low Priority)"
 msgstr "(低い優先度)"
 
-#: ../src/procdialogs.c:167
+#: ../src/procdialogs.c:172
 msgid "(Very Low Priority)"
 msgstr "(一番低い優先度)"
 
-#: ../src/procdialogs.c:220
+#: ../src/procdialogs.c:224
 msgid "Change Priority"
 msgstr "プロパティの変更"
 
-#: ../src/procdialogs.c:241
+#: ../src/procdialogs.c:245
 msgid "Change _Priority"
 msgstr "プロパティの変更(_P)"
 
-#: ../src/procdialogs.c:262
+#: ../src/procdialogs.c:266
 msgid "_Nice value:"
 msgstr "Nice 値:"
 
-#: ../src/procdialogs.c:279
+#: ../src/procdialogs.c:283
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -668,145 +684,149 @@ msgstr ""
 "プロセスの優先度は Nice 値で与えられます。小さい Nice 値は高いプロセスに相当"
 "します。"
 
-#: ../src/procdialogs.c:442
+#: ../src/procdialogs.c:446
 msgid "Processes i_nfo showed in list:"
 msgstr "一覧に表示しているプロセスの情報(_N):"
 
-#: ../src/procdialogs.c:494
+#: ../src/procdialogs.c:498
 msgid "Icon"
 msgstr "アイコン"
 
-#: ../src/procdialogs.c:533
+#: ../src/procdialogs.c:537
 msgid "System Monitor Preferences"
 msgstr "システム・モニタの設定"
 
-#: ../src/procdialogs.c:563
+#: ../src/procdialogs.c:567
 msgid "Behavior"
 msgstr "動作"
 
-#: ../src/procdialogs.c:582 ../src/procdialogs.c:674
+#: ../src/procdialogs.c:586 ../src/procdialogs.c:678
 msgid "_Update interval:"
 msgstr "更新間隔:"
 
-#: ../src/procdialogs.c:603 ../src/procdialogs.c:691 ../src/procdialogs.c:778
+#: ../src/procdialogs.c:607 ../src/procdialogs.c:695 ../src/procdialogs.c:782
 msgid "seconds"
 msgstr "秒"
 
-#: ../src/procdialogs.c:610
+#: ../src/procdialogs.c:614
 msgid "Alert before ending or _killing processes"
 msgstr "プロセスを終了または強制終了する前に警告する(_K)"
 
-#: ../src/procdialogs.c:620
+#: ../src/procdialogs.c:624
 msgid "Alert before _hiding processes"
 msgstr "プロセスを非表示にする前に警告する(_H)"
 
-#: ../src/procdialogs.c:630
+#: ../src/procdialogs.c:634
 msgid "Process Fields"
 msgstr "表示するプロセス情報"
 
-#: ../src/procdialogs.c:655
+#: ../src/procdialogs.c:659
 msgid "Graphs"
 msgstr "グラフ"
 
-#: ../src/procdialogs.c:698
+#: ../src/procdialogs.c:702
 msgid "_Background color:"
 msgstr "背景色(_B):"
 
-#: ../src/procdialogs.c:717
+#: ../src/procdialogs.c:721
 msgid "_Grid color:"
 msgstr "グリッドの色(_G):"
 
-#: ../src/procdialogs.c:762
+#: ../src/procdialogs.c:766
 msgid "Update _interval:"
 msgstr "更新間隔(_I):"
 
-#: ../src/procdialogs.c:785
+#: ../src/procdialogs.c:789
 msgid "Show _all filesystems"
 msgstr "全てのファイルシステムを表示する(_A)"
 
-#: ../src/proctable.c:239
+#: ../src/proctable.c:242
 msgid "Process Name"
 msgstr "プロセス名"
 
-#: ../src/proctable.c:240
+#: ../src/proctable.c:243
 msgid "User"
 msgstr "ユーザ"
 
-#: ../src/proctable.c:241
+#: ../src/proctable.c:244
 msgid "Status"
 msgstr "状態"
 
-#: ../src/proctable.c:242
+#: ../src/proctable.c:245
 msgid "Memory"
 msgstr "メモリ"
 
-#: ../src/proctable.c:244
+#: ../src/proctable.c:246
+msgid "Virtual Memory"
+msgstr "仮想メモリ"
+
+#: ../src/proctable.c:247
 msgid "Resident Memory"
 msgstr "Resident メモリ"
 
-#: ../src/proctable.c:245
+#: ../src/proctable.c:248
 msgid "Shared Memory"
 msgstr "共有メモリ"
 
-#: ../src/proctable.c:246
+#: ../src/proctable.c:249
 msgid "RSS Memory"
 msgstr "RSS メモリ"
 
-#: ../src/proctable.c:247
+#: ../src/proctable.c:250
 msgid "X Server Memory"
 msgstr "X サーバ・メモリ"
 
-#: ../src/proctable.c:248
+#: ../src/proctable.c:251
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:249
+#: ../src/proctable.c:252
 msgid "CPU time"
 msgstr "CPU 時間"
 
-#: ../src/proctable.c:250
+#: ../src/proctable.c:253
 msgid "Nice"
 msgstr "Nice値"
 
-#: ../src/proctable.c:251
+#: ../src/proctable.c:254
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.c:252
+#: ../src/proctable.c:255
 msgid "Security Context"
 msgstr "セキュリティ・コンテキスト"
 
-#: ../src/proctable.c:253
+#: ../src/proctable.c:256
 msgid "Arguments"
 msgstr "引数"
 
-#: ../src/proctable.c:426
+#: ../src/proctable.c:430
 msgid "Running"
 msgstr "実行中"
 
-#: ../src/proctable.c:431
+#: ../src/proctable.c:435
 msgid "Stopped"
 msgstr "停止中"
 
-#: ../src/proctable.c:436
+#: ../src/proctable.c:440
 msgid "Zombie"
 msgstr "ゾンビ"
 
-#: ../src/proctable.c:441
+#: ../src/proctable.c:445
 msgid "Uninterruptible"
 msgstr "割り込み不可"
 
-#: ../src/proctable.c:446
+#: ../src/proctable.c:450
 msgid "Sleeping"
 msgstr "スリープ中"
 
-#: ../src/proctable.c:630
+#: ../src/proctable.c:634
 #, c-format
 msgid "%s (thread)"
 msgstr "%s (スレッド)"
 
-#: ../src/proctable.c:1018
+#: ../src/proctable.c:1022
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "1, 5, 15分後の平均負荷: %0.2f, %0.2f, %0.2f"
