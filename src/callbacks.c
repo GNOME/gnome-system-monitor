@@ -568,8 +568,6 @@ add_new_disks (gpointer key, gpointer value, gpointer data)
 gint
 cb_update_disks (gpointer data)
 {
-	static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
-
 	ProcData * const procdata = data;
 
 	GtkTreeModel *model;
