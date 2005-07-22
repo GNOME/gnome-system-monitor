@@ -13,6 +13,18 @@
 #include "proctable.h"
 
 
+#define APP_ICON_SIZE 16
+
+
+struct _PrettyTable {
+	GHashTable	*app_hash;	/* WNCK */
+	GHashTable	*default_hash;	/* defined in defaulttable.h */
+	gchar		*datadir;
+	GtkIconTheme	*theme;
+};
+
+
+
 static void
 load_default_table(PrettyTable *pretty_table,
 		   const PrettyTableItem table[], size_t n);
@@ -51,7 +63,7 @@ new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 	if (!tmp)
 		return;
 
-	icon =  gdk_pixbuf_scale_simple (tmp, 16, 16, GDK_INTERP_HYPER);
+	icon =  gdk_pixbuf_scale_simple (tmp, APP_ICON_SIZE, APP_ICON_SIZE, GDK_INTERP_HYPER);
 	if (!icon)
 		return;
 
@@ -122,7 +134,63 @@ void pretty_table_new (ProcData *procdata)
 
 	procdata->pretty_table = pretty_table;
 
+	pretty_table->theme = gtk_icon_theme_get_default ();
+}
 
+
+
+
+
+static GdkPixbuf *
+get_icon_from_theme (PrettyTable *pretty_table,
+		     guint pid,
+		     const gchar *command)
+{
+	return gtk_icon_theme_load_icon (pretty_table->theme,
+					 command,
+					 APP_ICON_SIZE,
+					 0,
+					 NULL);
+}
+
+
+
+static GdkPixbuf *
+get_icon_from_default (PrettyTable *pretty_table,
+		       guint pid,
+		       const gchar *command)
+{
+	GdkPixbuf *icon;
+
+	icon = g_hash_table_lookup (pretty_table->default_hash,
+				    command);
+
+	if (icon) {
+		g_object_ref (icon);
+		return icon;
+	}
+
+	return NULL;
+}
+
+
+
+static GdkPixbuf *
+get_icon_from_wnck (PrettyTable *pretty_table,
+		    guint pid,
+		    const gchar *command)
+{
+	GdkPixbuf *icon;
+
+	icon = g_hash_table_lookup (pretty_table->app_hash,
+				    GUINT_TO_POINTER(pid));
+
+	if (icon) {
+		g_object_ref (icon);
+		return icon;
+	}
+
+	return NULL;
 }
 
 
@@ -130,23 +198,34 @@ void pretty_table_new (ProcData *procdata)
 GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table,
 				  const gchar *command, guint pid)
 {
-	GdkPixbuf *icon;
+	typedef GdkPixbuf * (*IconGetter) (PrettyTable *pretty_table,
+					   guint pid,
+					   const gchar *command);
 
-	icon = g_hash_table_lookup (pretty_table->app_hash,
-				    GUINT_TO_POINTER(pid));
 
-	if(!icon) {
-		icon = g_hash_table_lookup (pretty_table->default_hash,
-					    command);
+	const IconGetter getters[] = {
+		get_icon_from_theme,
+		get_icon_from_wnck,
+		get_icon_from_default
+	};
+
+
+	size_t i;
+
+	for (i = 0; i < G_N_ELEMENTS (getters); ++i) {
+		GdkPixbuf *icon;
+
+		icon = (getters[i]) (pretty_table, pid, command);
+
+		if (icon) {
+			g_print("Get icon method %lu for '%s'\n",
+				(gulong)i,
+				command);
+			return icon;
+		}
 	}
 
-	if(icon) {
-		g_object_ref (icon);
-	}
-
-	g_assert(!icon || G_IS_OBJECT(icon));
-
-	return icon;
+	return NULL;
 }
 
 
@@ -171,7 +250,7 @@ create_scaled_icon(const char *iconpath)
 	GdkPixbuf *scaled;
 
 	scaled = gdk_pixbuf_new_from_file_at_scale(iconpath,
-						   16, 16,
+						   APP_ICON_SIZE, APP_ICON_SIZE,
 						   TRUE,
 						   &error);
 

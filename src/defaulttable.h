@@ -15,6 +15,7 @@ struct _PrettyTableItem
 static const PrettyTableItem default_table[] = {
 /* "0", "gnome-run.png", */
 	{"X", "gnome-mdi.png"},
+	{"Xorg", "gnome-mdi.png"},
 
 	{"aio" G_DIR_SEPARATOR_S "0", "gnome-run.png"},
 	{"aio" G_DIR_SEPARATOR_S "1", "gnome-run.png"},
@@ -76,6 +77,8 @@ static const PrettyTableItem default_table[] = {
 
 	/* "kswapd0", "other" G_DIR_SEPARATOR_S "Harddisk.png", */
 
+	{"mc", "mc.xpm"},
+
 	{"metacity", "metacity-properties.png"},
 
 	{"migration" G_DIR_SEPARATOR_S "0" ,"other" G_DIR_SEPARATOR_S "Bird.png"},
@@ -84,6 +87,7 @@ static const PrettyTableItem default_table[] = {
 	{"migration" G_DIR_SEPARATOR_S "3" ,"other" G_DIR_SEPARATOR_S "Bird.png"},
 
 	{"mysqld", "other" G_DIR_SEPARATOR_S "MySQL.png"},
+	{"mutt", "mutt.xpm"},
 	{"pdflush", "gnome-run.png"},
 	{"portmap","other" G_DIR_SEPARATOR_S "Connection-Ethernet.png"},
 	{"powernowd", "battstat.png"},
@@ -112,7 +116,35 @@ static const PrettyTableItem default_table[] = {
 
 	{"xfs", "other" G_DIR_SEPARATOR_S "Font-Capplet.png"},
 	{"xscreensaver", "xscreensaver.xpm"},
-	{"xterm", "gnome-xterm.png"}
+	{"xterm", "gnome-xterm.png"},
+
+	{"vim", "vim.svg"},
+
+
+	/* GNOME applets */
+
+	{"accessx-status-applet",	"gnome-applets.png"},
+	{"battstat-applet-2",		"gnome-applets.png"},
+	{"charpick_applet2",		"gnome-applets.png"},
+	{"cpufreq-applet",		"gnome-applets.png"},
+	{"drivemount_applet2",		"gnome-applets.png"},
+	{"geyes_applet2",		"gnome-applets.png"},
+	{"gnome-keyboard-applet",       "gnome-applets.png"},
+	{"gtik2_applet2",		"gnome-applets.png"},
+	{"gweather-applet-2",		"gnome-applets.png"},
+	{"mini_commander_applet",       "gnome-applets.png"},
+	{"mixer_applet2",		"gnome-applets.png"},
+	{"modem_applet",		"gnome-applets.png"},
+	{"multiload-applet-2",		"gnome-applets.png"},
+	{"netspeed-applet-2",		"gnome-applets.png"},
+	{"null_applet",			"gnome-applets.png"},
+	{"rhythmbox-applet",		"gnome-applets.png"},
+	{"stickynotes_applet",		"gnome-applets.png"},
+	{"trashapplet",			"gnome-applets.png"},
+
+	{"clock-applet",		"gnome-applets.png"},
+	{"notification-area-applet",	"gnome-applets.png"},
+	{"wnck-applet",			"gnome-applets.png"}
 };
 
 #endif /* _PROCMAN_DEFAULTTABLE_H_ */
