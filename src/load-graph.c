@@ -403,8 +403,6 @@ load_graph_update (gpointer user_data)
 {
 	LoadGraph * const g = user_data;
 
-	printf("load_graph_update (%p) draw : %d\n", g, (int)g->draw);
-
 	shift_right(g);
 
 	switch (g->type) {

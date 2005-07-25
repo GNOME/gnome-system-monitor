@@ -576,8 +576,6 @@ cb_update_disks (gpointer data)
 	GHashTable *new_disks = NULL;
 	guint i;
 
-	puts("cb_update_disks");
-
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->disk_list));
 
 	entry = glibtop_get_mountlist (&mountlist, procdata->config.show_all_fs);
@@ -621,8 +619,6 @@ cb_timeout (gpointer data)
 {
 	ProcData * const procdata = data;
 	guint new_interval;
-
-	puts("cb_timeout");
 
 	proctable_update_all (procdata);
 
