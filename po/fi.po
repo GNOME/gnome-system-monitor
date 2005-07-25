@@ -4,53 +4,55 @@
 # Tarmo Toikkanen <tarmo@iki.fi>, 2002.
 # Lauri Nurmi <lanurmi@iki.fi>, 2003.
 # Pauli Virtanen <pauli.virtanen@hut.fi>, 2003-2005.
+# Ilkka Tuohela <hile@iki.fi>, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-17 20:07+0200\n"
-"PO-Revision-Date: 2005-01-30 22:58+0200\n"
-"Last-Translator: Pauli Virtanen <pauli.virtanen@hut.fi>\n"
+"POT-Creation-Date: 2005-07-25 08:05+0300\n"
+"PO-Revision-Date: 2005-07-25 08:15+0300\n"
+"Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:142
-#: ../src/interface.c:639
+#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:167
+#: ../src/interface.c:836
 msgid "System Monitor"
 msgstr "Järjestelmän valvonta"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:143
+#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:168
 msgid "View current processes and monitor system state"
 msgstr "Katsele aktiivisia prosesseja ja valvo järjestelmän tilaa"
 
-#: ../src/callbacks.c:127
+#: ../src/callbacks.c:152
 msgid "Jorgen Scheibengruber - nicer devices treeview"
 msgstr "Jörgen Scheibengruber - mukavampi laitteiden puunäkymä"
 
-#: ../src/callbacks.c:128
+#: ../src/callbacks.c:153
 msgid "Benoît Dejean - maintainer"
 msgstr "Benoît Dejean - ylläpitäjä"
 
-#: ../src/callbacks.c:151
+#: ../src/callbacks.c:176
 msgid "translator-credits"
 msgstr ""
+"Ilkka Tuohela, 2005\n"
 "Pauli Virtanen, 2003-2005\n"
 "Lauri Nurmi, 2003\n"
 "Tarmo Toikkanen, 2002\n"
 "\n"
-"http://gnome-fi.org/"
+"http://gnome.fi/"
 
 #. translators: primary alert message
-#: ../src/favorites.c:347
+#: ../src/favorites.c:348
 msgid "No hidden processes"
 msgstr "Ei piilotettuja prosesseja"
 
 #. translators: secondary alert message
-#: ../src/favorites.c:354
+#: ../src/favorites.c:355
 msgid ""
 "There are no hidden processes in the list. To show all running processes, "
 "select the \"All processes\" option in the main window."
@@ -58,23 +60,23 @@ msgstr ""
 "Luettelossa ei ole piilotettuja prosesseja. Kaikki käynnissä olevat "
 "prosessit saa näkyviin valitsemalla pääikkunasta \"Kaikki prosessit\"."
 
-#: ../src/favorites.c:374
+#: ../src/favorites.c:375
 msgid "Hidden Processes"
 msgstr "Piilotetut prosessit"
 
-#: ../src/favorites.c:398
+#: ../src/favorites.c:399
 msgid "Currently _hidden processes:"
 msgstr "Nyt piilotetut p_rosessit:"
 
-#: ../src/favorites.c:420
+#: ../src/favorites.c:421
 msgid "_Remove From List"
 msgstr "_Poista luettelosta"
 
-#: ../src/favorites.c:429 ../src/procdialogs.c:277
+#: ../src/favorites.c:430 ../src/procdialogs.c:282
 msgid "Note:"
 msgstr "Huomio:"
 
-#: ../src/favorites.c:430
+#: ../src/favorites.c:431
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
@@ -103,10 +105,18 @@ msgid "Default graph mem color"
 msgstr "Oletusarvoinen muistigraafin väri"
 
 #: ../src/gnome-system-monitor.schemas.in.h:6
+msgid "Default graph net in color"
+msgstr "Oletusarvoinen verkkograafin saapuvan liikenteen väri"
+
+#: ../src/gnome-system-monitor.schemas.in.h:7
+msgid "Default graph net out color"
+msgstr "Oletusarvoinen verkkograafin lähtevän liikenteen väri"
+
+#: ../src/gnome-system-monitor.schemas.in.h:8
 msgid "Default graph swap color"
 msgstr "Oletusarvoinen sivutusgraafin väri"
 
-#: ../src/gnome-system-monitor.schemas.in.h:7
+#: ../src/gnome-system-monitor.schemas.in.h:9
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
@@ -114,433 +124,483 @@ msgstr ""
 "Määrittelee, mitkä prosessit näkyvät oletusarvoisesti. Mahdollisia valintoja "
 "ovat: 0 (kaikki), 1 (käyttäjän prosessit), 2 (aktiiviset prosessit)."
 
-#: ../src/gnome-system-monitor.schemas.in.h:8
+#: ../src/gnome-system-monitor.schemas.in.h:10
 msgid "Main Window height"
 msgstr "Pääikkunan korkeus"
 
-#: ../src/gnome-system-monitor.schemas.in.h:9
+#: ../src/gnome-system-monitor.schemas.in.h:11
 msgid "Main Window width"
 msgstr "Pääikkunan leveys"
 
-#: ../src/gnome-system-monitor.schemas.in.h:10
+#: ../src/gnome-system-monitor.schemas.in.h:12
+msgid "Process view columns order"
+msgstr "Prosessinäkymän sarakkeiden järjestys"
+
+#: ../src/gnome-system-monitor.schemas.in.h:13
 msgid "Process view sort column"
 msgstr "Prosessinäkymän lajittelusarake"
 
-#: ../src/gnome-system-monitor.schemas.in.h:11
+#: ../src/gnome-system-monitor.schemas.in.h:14
 msgid "Process view sort order"
 msgstr "Prosessinäkymän järjestys"
 
-#: ../src/gnome-system-monitor.schemas.in.h:12
+#: ../src/gnome-system-monitor.schemas.in.h:15
 msgid "Saves the currently viewed tab"
 msgstr "Tallentaa nyt katseltavan välilehden"
 
-#: ../src/gnome-system-monitor.schemas.in.h:13
-msgid "Saves the pane position for the system monitor tab"
-msgstr "Tallentaa järjestelmävalvonnan välilehden sijainnin lehtiössä"
-
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:16
 msgid "Show advanced info tab on startup"
 msgstr "Lisätietoja-lehti näkyy käynnistyttyä"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:17
 msgid "Show column zero on startup"
 msgstr "0-sarake näkyy käynnistyttyä"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
+#: ../src/gnome-system-monitor.schemas.in.h:18
 msgid "Show process dependencies in tree form"
 msgstr "Näytä prosessien riippuvuuspuu"
 
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:19
 msgid "Show process threads"
 msgstr "Näytä prosessien säikeet"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:20
 msgid "Show warning dialog when hiding processes"
 msgstr "Näytä varoitusikkuna ennen prosessin piilottamista"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:21
 msgid "Show warning dialog when killing processes"
 msgstr "Näytä varoitusikkuna ennen prosessin lopettamista väkisin"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:22
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Aika (ms) laiteluettelon päivitysten välillä"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:23
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Aika (ms) graafien päivitysten välillä"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:24
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Aika (ms) prosessinäkymän päivitysten välillä"
 
-#: ../src/infoview.c:77
+#: ../src/gnome-system-monitor.schemas.in.h:25
+msgid "Whether information about all filesystems should be displayed"
+msgstr "Näytetäänkö kaikkien tiedostojärjestelmien tiedot"
+
+#: ../src/gnome-system-monitor.schemas.in.h:26
+msgid ""
+"Whether information about all filesystems should be displayed: this will "
+"include filesystem types like 'autofs' and 'procfs'. It can be usefull to "
+"get a list of all currently mounted filesystems."
+msgstr ""
+"Näytetäänkö tiedot kaikista tiedostojärjestelmistä: tämä laskee mukaan myös "
+"tiedostojärjestelmätyypit kuten \"autofs\" tai \"procfs\". Tämä tieto voi "
+"olla hyödyllinen, kun halutaan tietoa kaikista juuri nyt liitetyistä "
+"tiedostojärjestelmistä."
+
+#: ../src/infoview.c:34
+msgid "Less _info"
+msgstr "Vähemmän t_ietoa"
+
+#: ../src/infoview.c:34
+msgid "More _info"
+msgstr "Lisää t_ietoa"
+
+#: ../src/infoview.c:99
 msgid "Process Info"
 msgstr "Prosessin tiedot"
 
-#: ../src/infoview.c:91
+#: ../src/infoview.c:113
 msgid "Command:"
 msgstr "Komento:"
 
-#: ../src/infoview.c:95
+#: ../src/infoview.c:117
 msgid "Status:"
 msgstr "Tila:"
 
-#: ../src/infoview.c:99
+#: ../src/infoview.c:121
 msgid "Priority:"
 msgstr "Prioriteetti:"
 
-#: ../src/infoview.c:123
+#: ../src/infoview.c:145
 msgid "Memory Usage"
 msgstr "Muistin käyttö"
 
-#: ../src/infoview.c:137
+#: ../src/infoview.c:159 ../src/interface.c:699 ../src/interface.c:742
 msgid "Total:"
 msgstr "Yhteensä:"
 
-#: ../src/infoview.c:141
+#: ../src/infoview.c:163
 msgid "RSS:"
 msgstr "Keskusmuistia:"
 
-#: ../src/infoview.c:145
+#: ../src/infoview.c:167
 msgid "Shared:"
 msgstr "Jaettuna:"
 
-#: ../src/infoview.c:189
+#: ../src/infoview.c:210
 #, c-format
 msgid "Very high - nice %d"
 msgstr "Todella korkea - nice %d"
 
-#: ../src/infoview.c:191
+#: ../src/infoview.c:212
 #, c-format
 msgid "High - nice %d"
 msgstr "Korkea - nice %d"
 
-#: ../src/infoview.c:193
+#: ../src/infoview.c:214
 #, c-format
 msgid "Normal - nice %d"
 msgstr "Tavallinen - nice %d"
 
-#: ../src/infoview.c:195
+#: ../src/infoview.c:216
 #, c-format
 msgid "Low - nice %d"
 msgstr "Matala - nice %d"
 
-#: ../src/infoview.c:197
+#: ../src/infoview.c:218
 #, c-format
 msgid "Very low - nice %d"
 msgstr "Todella matala - nice %d"
 
-#: ../src/interface.c:55 ../src/interface.c:242
+#: ../src/interface.c:47
+msgid "_File"
+msgstr "_Tiedosto"
+
+#: ../src/interface.c:48
+msgid "_Edit"
+msgstr "_Muokkaa"
+
+#: ../src/interface.c:49
+msgid "_View"
+msgstr "_Näytä"
+
+#: ../src/interface.c:50
+msgid "_Help"
+msgstr "O_hje"
+
+#: ../src/interface.c:52
+msgid "_Quit"
+msgstr "_Lopeta"
+
+#: ../src/interface.c:53
+msgid "Quit the program"
+msgstr "Lopeta ohjelma"
+
+#: ../src/interface.c:56
+msgid "_Stop Process"
+msgstr "_Pysäytä prosessi"
+
+#: ../src/interface.c:57
+msgid "Stop process"
+msgstr "Pysäytä prosessi"
+
+#: ../src/interface.c:58
+msgid "_Continue Process"
+msgstr "_Jatka prosessin suoritusta"
+
+#: ../src/interface.c:59
+msgid "Continue process if stopped"
+msgstr "Piilottaa prosessin luettelosta"
+
+#: ../src/interface.c:61 ../src/interface.c:201
 msgid "End _Process"
 msgstr "_Lopeta prosessi"
 
-#: ../src/interface.c:55
+#: ../src/interface.c:62
 msgid "Force process to finish normally"
 msgstr "Lopeta prosessi tavallisesti"
 
-#: ../src/interface.c:60 ../src/interface.c:136 ../src/procdialogs.c:120
+#: ../src/interface.c:63 ../src/procdialogs.c:126
 msgid "_Kill Process"
 msgstr "_Tapa prosessi"
 
-#: ../src/interface.c:60
+#: ../src/interface.c:64
 msgid "Force process to finish immediately"
 msgstr "Lopeta prosessi välittömästi"
 
-#: ../src/interface.c:66 ../src/interface.c:142
+#: ../src/interface.c:65
 msgid "_Change Priority..."
 msgstr "_Vaihda prioriteettia..."
 
-#: ../src/interface.c:66 ../src/interface.c:142
+#: ../src/interface.c:66
 msgid "Change the order of priority of process"
 msgstr "Vaihtaa prosessin prioriteettia (nice-arvo)"
 
-#: ../src/interface.c:78
-msgid "_Dependencies"
-msgstr "_Riippuvuudet"
+#: ../src/interface.c:67
+msgid "Prefere_nces"
+msgstr "_Asetukset"
 
-#: ../src/interface.c:78
-msgid "Show parent/child relationship between processes"
-msgstr "Näytä isä/lapsi-riippuvuudet prosessien välillä"
+#: ../src/interface.c:68
+msgid "Configure the application"
+msgstr "Muokkaa ohjelman asetuksia"
 
-#: ../src/interface.c:83
-msgid "_Threads"
-msgstr "_Säikeet"
-
-#: ../src/interface.c:83
-msgid "Show each thread as a separate process"
-msgstr "Näytä kukin säie erillisenä prosessina"
-
-#: ../src/interface.c:89 ../src/interface.c:148 ../src/procdialogs.c:82
+#: ../src/interface.c:70 ../src/procdialogs.c:82
 msgid "_Hide Process"
 msgstr "_Piilota prosessi"
 
-#: ../src/interface.c:89 ../src/interface.c:148
+#: ../src/interface.c:71
 msgid "Hide process from list"
 msgstr "Piilottaa prosessin luettelosta"
 
-#: ../src/interface.c:94
+#: ../src/interface.c:72
 msgid "_Hidden Processes"
 msgstr "P_iilotetut prosessit"
 
-#: ../src/interface.c:94
+#: ../src/interface.c:73
 msgid "Open the list of currently hidden processes"
 msgstr "Avaa piilotettujen prosessien luettelo"
 
-#: ../src/interface.c:100 ../src/interface.c:154
+#: ../src/interface.c:74
 msgid "_Memory Maps"
 msgstr "_Muistikartat"
 
-#: ../src/interface.c:100
+#: ../src/interface.c:75
 msgid "Open the memory maps associated with a process"
 msgstr "Avaa prosessiin liittyvät muistikartat"
 
-#: ../src/interface.c:105 ../src/interface.c:159
+#: ../src/interface.c:76
 msgid "Open _Files"
 msgstr "Avaa _tiedostoja"
 
-#: ../src/interface.c:105
+#: ../src/interface.c:77
 msgid "View the files opened by a process"
 msgstr "Näytä prosessin avaamat tiedostot"
 
-#: ../src/interface.c:131 ../src/procdialogs.c:129
-msgid "_End Process"
-msgstr "_Lopeta prosessi"
+#: ../src/interface.c:79
+msgid "_Contents"
+msgstr "_Sisältö"
 
-#: ../src/interface.c:131
-msgid "Force a process to finish normally"
-msgstr "Lopeta prosessi tavallisesti"
+#: ../src/interface.c:80
+msgid "Open the manual"
+msgstr "Avaa manuaali"
 
-#: ../src/interface.c:136
-msgid "Force a process to finish immediately"
-msgstr "Lopeta prosessi välittömästi"
+#: ../src/interface.c:81
+msgid "_About"
+msgstr "_Tietoja"
 
-#: ../src/interface.c:154
-msgid "Open the memory maps associated with the process"
-msgstr "Avaa prosessiin liittyvät muistikartat"
+#: ../src/interface.c:82
+msgid "About this application"
+msgstr "Tietoja tästä ohjelmasta"
 
-#: ../src/interface.c:159
-msgid "View the files opened by the process"
-msgstr "Näytä prosessin avaamat tiedostot"
+#: ../src/interface.c:87
+msgid "_Dependencies"
+msgstr "_Riippuvuudet"
 
-#: ../src/interface.c:199
-msgid "Sea_rch:"
-msgstr "_Etsi:"
+#: ../src/interface.c:88
+msgid "Show parent/child relationship between processes"
+msgstr "Näytä isä/lapsi-riippuvuudet prosessien välillä"
 
-#: ../src/interface.c:211
-msgid "All processes"
-msgstr "Kaikki prosessit"
+#: ../src/interface.c:90
+msgid "_Threads"
+msgstr "_Säikeet"
 
-#: ../src/interface.c:212
-msgid "My processes"
-msgstr "Omat prosessit"
+#: ../src/interface.c:91
+msgid "Show each thread as a separate process"
+msgstr "Näytä kukin säie erillisenä prosessina"
 
-#: ../src/interface.c:213
-msgid "Active processes"
-msgstr "Aktiiviset prosessit"
+#: ../src/interface.c:98
+msgid "_Active Processes"
+msgstr "_Aktiiviset prosessit"
 
-#: ../src/interface.c:220
-msgid "Sho_w:"
-msgstr "_Näytä:"
+#: ../src/interface.c:99
+msgid "Show active processes"
+msgstr "Näytä aktiiviset prosessit"
 
-#: ../src/interface.c:247
-msgid "More _Info"
-msgstr "Lisää t_ietoa"
+#: ../src/interface.c:100
+msgid "A_ll Processes"
+msgstr "_Kaikki prosessit"
 
-#: ../src/interface.c:335 ../src/memmaps.c:261
+#: ../src/interface.c:101
+msgid "Show all processes"
+msgstr "Näytä kaikki prosessit"
+
+#: ../src/interface.c:102
+msgid "M_y Processes"
+msgstr "_Omat prosessit"
+
+#: ../src/interface.c:103
+msgid "Show user own process"
+msgstr "Näytä käyttäjän omat prosessit"
+
+#: ../src/interface.c:287 ../src/memmaps.c:301
 msgid "Device"
 msgstr "Laite"
 
-#: ../src/interface.c:336
+#: ../src/interface.c:288
 msgid "Directory"
 msgstr "Kansio"
 
-#: ../src/interface.c:337 ../src/openfiles.c:226
+#: ../src/interface.c:289 ../src/openfiles.c:230
 msgid "Type"
 msgstr "Tyyppi"
 
-#: ../src/interface.c:338
+#: ../src/interface.c:290
 msgid "Total"
 msgstr "Yhteensä"
 
-#: ../src/interface.c:339
+#: ../src/interface.c:291
 msgid "Free"
 msgstr "Vapaana"
 
-#: ../src/interface.c:340
+#: ../src/interface.c:292
 msgid "Used"
 msgstr "Käyttö"
 
-#: ../src/interface.c:364
+#: ../src/interface.c:301 ../src/interface.c:915 ../src/procdialogs.c:743
+#: ../src/procdialogs.c:747
+msgid "Devices"
+msgstr "Laitteet"
+
+#: ../src/interface.c:430
 msgid "CPU History"
 msgstr "Suorittimen käyttöaste"
 
-#: ../src/interface.c:404
+#: ../src/interface.c:473
+msgid "CPU:"
+msgstr "CPU:"
+
+#: ../src/interface.c:476
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: ../src/interface.c:423
+#: ../src/interface.c:496
 msgid "Memory and Swap History"
 msgstr "Muistin ja sivutuksen historiikki"
 
-#: ../src/interface.c:456
+#: ../src/interface.c:529
 msgid "User memory:"
 msgstr "Käyttäjän muisti:"
 
-#: ../src/interface.c:465 ../src/interface.c:497
+#: ../src/interface.c:547 ../src/interface.c:607
 msgid "of"
 msgstr "/"
 
-#: ../src/interface.c:488
+#: ../src/interface.c:588
 msgid "Used swap:"
 msgstr "Sivutustilan käyttö:"
 
-#: ../src/interface.c:523 ../src/procdialogs.c:715
-msgid "Devices"
-msgstr "Laitteet"
+#: ../src/interface.c:647
+msgid "Network History"
+msgstr "Verkonkäytön historia"
 
-#: ../src/interface.c:651 ../src/procdialogs.c:540
+#: ../src/interface.c:679
+msgid "Receive:"
+msgstr "Vastaanotettu:"
+
+#: ../src/interface.c:723
+msgid "Send:"
+msgstr "Lähetetty:"
+
+#: ../src/interface.c:903 ../src/procdialogs.c:560
 msgid "Processes"
 msgstr "Prosessit"
 
-#: ../src/interface.c:657 ../src/procdialogs.c:627
+#: ../src/interface.c:909 ../src/procdialogs.c:652
 msgid "Resources"
 msgstr "Resurssit"
 
-#: ../src/interface.c:709
-msgid "More _Info >>"
-msgstr "Lisää t_ietoa >>"
+#: ../src/load-graph.c:350 ../src/load-graph.c:360
+#, c-format
+msgid "%s/s"
+msgstr "%s/s"
 
-#: ../src/interface.c:716
-msgid "<< Less _Info"
-msgstr "<< Vähemmän t_ietoa"
-
-#: ../src/memmaps.c:255
+#: ../src/memmaps.c:295
 msgid "Filename"
 msgstr "Tiedostonimi"
 
-#: ../src/memmaps.c:256
+#: ../src/memmaps.c:296
 msgid "VM Start"
 msgstr "VM-alku"
 
-#: ../src/memmaps.c:257
+#: ../src/memmaps.c:297
 msgid "VM End"
 msgstr "VM-loppu"
 
-#: ../src/memmaps.c:258 ../src/proctable.c:167
+#: ../src/memmaps.c:298
 msgid "VM Size"
 msgstr "Virtuaalimuisti"
 
-#: ../src/memmaps.c:259
+#: ../src/memmaps.c:299
 msgid "Flags"
 msgstr "Liput"
 
-#: ../src/memmaps.c:260
+#: ../src/memmaps.c:300
 msgid "VM Offset"
 msgstr "VM-siirros"
 
-#: ../src/memmaps.c:262
+#: ../src/memmaps.c:302
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.c:343
+#: ../src/memmaps.c:402
 msgid "Memory Maps"
 msgstr "Muistikartat"
 
-#: ../src/memmaps.c:361
+#: ../src/memmaps.c:422
 #, c-format
-msgid "_Memory maps for process \"%s\":"
-msgstr "Prosessin \"%s\" _muistikartat:"
+msgid "_Memory maps for process \"%s\" (PID %u):"
+msgstr "Prosessin \"%s\" _muistikartat (PID %u):"
 
-#: ../src/openfiles.c:33
+#: ../src/openfiles.c:31
 msgid "file"
 msgstr "tiedosto"
 
-#: ../src/openfiles.c:35
+#: ../src/openfiles.c:33
 msgid "pipe"
 msgstr "putki"
 
-#: ../src/openfiles.c:37
+#: ../src/openfiles.c:35
 msgid "network connection"
 msgstr "verkkoyhteys"
 
-#: ../src/openfiles.c:39
+#: ../src/openfiles.c:37
 msgid "local socket"
 msgstr "paikallinen pistoke"
 
-#: ../src/openfiles.c:41
+#: ../src/openfiles.c:39
 msgid "unknown type"
 msgstr "tuntematon tyyppi"
 
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.c:225
+#: ../src/openfiles.c:229
 msgid "FD"
 msgstr "FD"
 
-#: ../src/openfiles.c:227
+#: ../src/openfiles.c:231
 msgid "Object"
 msgstr "objekti"
 
-#: ../src/openfiles.c:305
+#: ../src/openfiles.c:308
 msgid "Open Files"
 msgstr "Avaa tiedostot"
 
-#: ../src/openfiles.c:326
+#: ../src/openfiles.c:330
 #, c-format
-msgid "Files opened by process \"%s\":"
-msgstr "Prosessin \"%s\" avaamat tiedostot:"
+msgid "_Files opened by process \"%s\" (PID %u):"
+msgstr "Prosessin \"%s\" avaamat tiedostot (PID %u):"
 
-#: ../src/procactions.c:53
-msgid "No such process."
-msgstr "Prosessia ei löydy."
-
-#: ../src/procactions.c:66
+#: ../src/procactions.c:73
 #, c-format
 msgid ""
-"Process Name: %s \n"
-"\n"
-"You do not have permission to change the priority of this process. You can "
-"enter the root password to gain the necessary permission."
+"Cannot change the priority of process with pid %d to %d.\n"
+"%s"
 msgstr ""
-"Prosessin nimi : %s \n"
-"\n"
-"Sinulla ei ole oikeutta muuttaa tämän prosessin prioriteettia. Anna "
-"pääkäyttäjän (root) salasanan saadaksesi tarvittavat oikeudet."
+"Prosessin %d prioriteettia ei voida muuttaa arvoon %d.\n"
+"%s"
 
-#: ../src/procactions.c:74
+#: ../src/procactions.c:140
 #, c-format
 msgid ""
-"Process Name: %s\n"
-"\n"
-"You must be root to decrease a nice value of this process or set a nice "
-"value less than 0. You can enter the root password to gain the necessary "
-"permission."
+"Cannot kill process with pid %d with signal %d.\n"
+"%s"
 msgstr ""
-"Prosessin nimi : %s \n"
-"\n"
-"Sinun on oltava pääkäyttäjä voidaksesi antaa prosessille nice-arvon alle 0. "
-"Anna pääkäyttäjän (root) salasanan saadaksesi tarvittavat oikeudet."
-
-#: ../src/procactions.c:131
-#, c-format
-msgid ""
-"Process Name: %s \n"
-"\n"
-"You do not have permission to end this process. You can enter the root "
-"password to gain the necessary permission."
-msgstr ""
-"Prosessin nimi : %s \n"
-"\n"
-"Sinulla ei ole oikeutta lopettaa tätä prosessia. Anna pääkäyttäjän (root) "
-"salasanan saadaksesi tarvittavat oikeudet."
-
-#: ../src/procactions.c:150
-msgid "An error occured while killing the process."
-msgstr "Virhe prosessia tapettaessa."
-
+"Prosessia %d ei voida tappaa signaalilla %d.\n"
+"%s"
 #. translators: primary alert message
 #: ../src/procdialogs.c:62
 msgid "Hide the selected process?"
@@ -557,67 +617,71 @@ msgstr ""
 "näkyviin valitsemalla \"Piilotetut prosessit\" Näytä-valikosta."
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:115
+#: ../src/procdialogs.c:121
 msgid "Kill the selected process?"
 msgstr "Suljetaanko valittu prosessi väkisin?"
 
 #. translators: secondary alert message
-#: ../src/procdialogs.c:117
+#: ../src/procdialogs.c:123
 msgid ""
-"Killing a process, you could destroy your data, break the working session or "
-"create a security risk. Only misbehaving processes should be killed."
+"Killing a process may destroy data, break the session or introduce a "
+"security risk. Only unresponding processes should be killed."
 msgstr ""
 "Prosessin lopettaminen väkisin voi tuhota tietoja, rikkoa istunnon tai luoda "
 "turvallisuusongelmia. Vain väärin toimivat sovellukset tulisi lopettaa "
 "väkisin."
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:124
+#: ../src/procdialogs.c:130
 msgid "End the selected process?"
 msgstr "Suljetaanko valittu prosessi?"
 
 #. translators: secondary alert message
-#: ../src/procdialogs.c:126
+#: ../src/procdialogs.c:132
 msgid ""
-"Ending a process, you could destroy your data, break the working session or "
-"create a security risk. Only misbehaving processes should be ended."
+"Ending a process may destroy data, break the session or introduce a security "
+"risk. Only unresponding processes should be ended."
 msgstr ""
 "Prosessin lopettaminen voi tuhota tietoja, rikkoa istunnon tai luoda "
 "turvallisuusongelmia. Vain väärin toimivat sovellukset tulisi lopettaa."
 
-#: ../src/procdialogs.c:158
+#: ../src/procdialogs.c:135
+msgid "_End Process"
+msgstr "_Lopeta prosessi"
+
+#: ../src/procdialogs.c:164
 msgid "(Very High Priority)"
 msgstr "(Todella korkea prioriteetti)"
 
-#: ../src/procdialogs.c:160
+#: ../src/procdialogs.c:166
 msgid "(High Priority)"
 msgstr "(Korkea prioriteetti)"
 
-#: ../src/procdialogs.c:162
+#: ../src/procdialogs.c:168
 msgid "(Normal Priority)"
 msgstr "(Tavallinen prioriteetti)"
 
-#: ../src/procdialogs.c:164
+#: ../src/procdialogs.c:170
 msgid "(Low Priority)"
 msgstr "(Matala prioriteetti)"
 
-#: ../src/procdialogs.c:166
+#: ../src/procdialogs.c:172
 msgid "(Very Low Priority)"
 msgstr "(Todella matala prioriteetti)"
 
-#: ../src/procdialogs.c:219
+#: ../src/procdialogs.c:224
 msgid "Change Priority"
 msgstr "Muuta prioriteettia"
 
-#: ../src/procdialogs.c:240
+#: ../src/procdialogs.c:245
 msgid "Change _Priority"
 msgstr "Muuta _prioriteettia"
 
-#: ../src/procdialogs.c:261
+#: ../src/procdialogs.c:266
 msgid "_Nice value:"
 msgstr "_Nice-arvo:"
 
-#: ../src/procdialogs.c:278
+#: ../src/procdialogs.c:283
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -625,158 +689,172 @@ msgstr ""
 "Prosessin prioriteetin määrää sen nice-arvo. Matalampi nice-arvo vastaa "
 "korkeampaa suoritustärkeyttä."
 
-#: ../src/procdialogs.c:426
+#: ../src/procdialogs.c:446
 msgid "Processes i_nfo showed in list:"
 msgstr "Luettelossa näkyvät prosess_ien tiedot:"
 
-#: ../src/procdialogs.c:477
+#: ../src/procdialogs.c:498
 msgid "Icon"
 msgstr "Kuvake"
 
-#: ../src/procdialogs.c:517
+#: ../src/procdialogs.c:537
 msgid "System Monitor Preferences"
 msgstr "Järjestelmän valvonnan asetukset"
 
-#: ../src/procdialogs.c:547
+#: ../src/procdialogs.c:567
 msgid "Behavior"
 msgstr "Toiminta"
 
-#: ../src/procdialogs.c:566 ../src/procdialogs.c:653
+#: ../src/procdialogs.c:586 ../src/procdialogs.c:678
 msgid "_Update interval:"
 msgstr "_Päivitysväli:"
 
-#: ../src/procdialogs.c:582 ../src/procdialogs.c:670 ../src/procdialogs.c:751
+#: ../src/procdialogs.c:607 ../src/procdialogs.c:695 ../src/procdialogs.c:782
 msgid "seconds"
 msgstr "sekuntia"
 
-#: ../src/procdialogs.c:589
+#: ../src/procdialogs.c:614
 msgid "Alert before ending or _killing processes"
 msgstr "Varoita ennen sovelluksen s_ulkemista"
 
-#: ../src/procdialogs.c:599
+#: ../src/procdialogs.c:624
 msgid "Alert before _hiding processes"
 msgstr "Varoita ennen sovelluksen _piilottamista"
 
-#: ../src/procdialogs.c:609
+#: ../src/procdialogs.c:634
 msgid "Process Fields"
 msgstr "Prosessin kentät"
 
-#: ../src/procdialogs.c:634
+#: ../src/procdialogs.c:659
 msgid "Graphs"
 msgstr "Graafit"
 
-#: ../src/procdialogs.c:677
+#: ../src/procdialogs.c:702
 msgid "_Background color:"
 msgstr "_Taustaväri:"
 
-#: ../src/procdialogs.c:696
+#: ../src/procdialogs.c:721
 msgid "_Grid color:"
 msgstr "_Ruudukon väri:"
 
-#: ../src/procdialogs.c:734
+#: ../src/procdialogs.c:766
 msgid "Update _interval:"
 msgstr "Päivitys_väli:"
 
-#: ../src/procdialogs.c:798
-#, c-format
-msgid "Cannot kill process with pid %d with signal %d"
-msgstr "Prosessia %d ei voida tappaa signaalilla %d"
+#: ../src/procdialogs.c:789
+msgid "Show _all filesystems"
+msgstr "Näytä k_aikki tiedostojärjestelmät"
 
-#: ../src/procdialogs.c:801
-#, c-format
-msgid "Cannot change the priority of process with pid %d to %d"
-msgstr "Prosessin %d prioriteetti ei voida vaihtaa arvoon %d"
-
-#: ../src/proctable.c:163
+#: ../src/proctable.c:242
 msgid "Process Name"
 msgstr "Prosessin nimi"
 
-#: ../src/proctable.c:164
+#: ../src/proctable.c:243
 msgid "User"
 msgstr "Käyttäjä"
 
-#: ../src/proctable.c:165
+#: ../src/proctable.c:244
 msgid "Status"
 msgstr "Tila"
 
-#: ../src/proctable.c:166
+#: ../src/proctable.c:245
 msgid "Memory"
 msgstr "Muisti"
 
-#: ../src/proctable.c:168
+#: ../src/proctable.c:246
+msgid "Virtual Memory"
+msgstr "Virtuaalimuisti"
+
+#: ../src/proctable.c:247
 msgid "Resident Memory"
 msgstr "Käytetty muisti"
 
-#: ../src/proctable.c:169
+#: ../src/proctable.c:248
 msgid "Shared Memory"
 msgstr "Jaettu muisti"
 
-#: ../src/proctable.c:170
+#: ../src/proctable.c:249
 msgid "RSS Memory"
 msgstr "Keskusmuisti"
 
-#: ../src/proctable.c:171
+#: ../src/proctable.c:250
 msgid "X Server Memory"
 msgstr "X-palvelimen muisti"
 
-#: ../src/proctable.c:172
+#: ../src/proctable.c:251
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:173
+#: ../src/proctable.c:252
+msgid "CPU time"
+msgstr "CPU-aika"
+
+#: ../src/proctable.c:253
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.c:174
+#: ../src/proctable.c:254
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.c:175
+#: ../src/proctable.c:255
 msgid "Security Context"
 msgstr "Turvakonteksti"
 
-#: ../src/proctable.c:176
+#: ../src/proctable.c:256
 msgid "Arguments"
 msgstr "Argumentit"
 
-#: ../src/proctable.c:349
+#: ../src/proctable.c:430
 msgid "Running"
 msgstr "Käynnissä"
 
-#: ../src/proctable.c:354
+#: ../src/proctable.c:435
 msgid "Stopped"
 msgstr "Pysäytetty"
 
-#: ../src/proctable.c:359
+#: ../src/proctable.c:440
 msgid "Zombie"
 msgstr "Zombi"
 
-#: ../src/proctable.c:364
+#: ../src/proctable.c:445
 msgid "Uninterruptible"
 msgstr "Ei-keskeytettävä"
 
-#: ../src/proctable.c:369
+#: ../src/proctable.c:450
 msgid "Sleeping"
 msgstr "Unessa"
 
-#: ../src/proctable.c:455
+#: ../src/proctable.c:634
 #, c-format
 msgid "%s (thread)"
 msgstr "%s (säie)"
 
-#: ../src/proctable.c:1004
+#: ../src/proctable.c:1022
 #, c-format
-msgid "Could not find \"%s\""
-msgstr "Ei löytynyt: \"%s\""
+msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
+msgstr "Keskiarvokuorma viimeisille 1, 5 ja 15 minuutille: %0.2f, %0.2f, %0.2f"
 
-#: ../src/proctable.c:1008
-msgid ""
-"There are no processes containing the searched string. Please note that the "
-"search is performed only on processes shown in the process list."
-msgstr ""
-"Mikään prosessi ei sisällä etsittävää tekstiä. Huomaa, että etsittiin vain "
-"luettelossa näkyvien prosessien joukosta."
+#: ../src/util.c:87
+#, c-format
+msgid "%u byte"
+msgid_plural "%u bytes"
+msgstr[0] "%u tavu"
+msgstr[1] "%u tavua"
 
-#~ msgid "Process name:"
-#~ msgstr "Prosessin nimi:"
+#: ../src/util.c:93
+#, c-format
+msgid "%.1f KiB"
+msgstr "%.1f KiB"
+
+#: ../src/util.c:97
+#, c-format
+msgid "%.1f MiB"
+msgstr "%.1f MiB"
+
+#: ../src/util.c:101
+#, c-format
+msgid "%.1f GiB"
+msgstr "%.1f GiB"
+
