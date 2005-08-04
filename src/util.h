@@ -1,5 +1,5 @@
-#ifndef _PROCMAN_UTIL_H_
-#define _PROCAMN_UTIL_H_
+#ifndef H_GNOME_SYSTEM_MONITOR_UTIL_1123178725
+#define H_GNOME_SYSTEM_MONITOR_UTIL_1123178725
 
 #include <glib.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
@@ -29,4 +29,4 @@ gchar*
 SI_gnome_vfs_format_file_size_for_display (GnomeVFSFileSize size) G_GNUC_INTERNAL;
 
 
-#endif /* _PROCAMN_UTIL_H_ */
+#endif /* H_GNOME_SYSTEM_MONITOR_UTIL_1123178725 */
