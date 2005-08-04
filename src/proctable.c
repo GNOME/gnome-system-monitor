@@ -797,7 +797,7 @@ update_info (ProcData *procdata, ProcInfo *info)
 
 
 static ProcInfo *
-get_info (ProcData *procdata, gint pid)
+procinfo_new (ProcData *procdata, gint pid)
 {
 	ProcInfo *info;
 	glibtop_proc_state procstate;
@@ -869,7 +869,7 @@ refresh_list (ProcData *procdata, const unsigned *pid_list, const guint n)
 
 		info = proctable_find_process (pid_list[i], procdata);
 		if (!info) {
-			info = get_info (procdata, pid_list[i]);
+			info = procinfo_new (procdata, pid_list[i]);
 			g_ptr_array_add(addition_list, info);
 			procdata->info = g_list_append (procdata->info, info);
 			g_hash_table_insert(procdata->pids, GINT_TO_POINTER(info->pid), info);
