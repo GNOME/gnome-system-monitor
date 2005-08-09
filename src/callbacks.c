@@ -582,7 +582,7 @@ cb_update_disks (gpointer data)
 
 	new_disks = g_hash_table_new (g_str_hash, g_str_equal);
 	for (i=0; i < mountlist.number; i++) {
-		g_hash_table_insert (new_disks, entry[i].devname, &entry[i]);
+		g_hash_table_insert (new_disks, entry[i].mountdir, &entry[i]);
 	}
 
 	gtk_tree_model_foreach (model, compare_disks, new_disks);
