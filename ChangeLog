@@ -1,5 +1,20 @@
 2005-08-11  Benoît Dejean  <benoit@placenet.org>
 
+	* src/Makefile.am:
+	* src/callbacks.c:
+	* src/disks.c: (sort_bytes), (fsusage_stats),
+	(get_icon_for_device), (add_disk), (cb_update_disks),
+	(create_disk_view):
+	* src/disks.h:
+	* src/interface.c:
+
+	Reworked the disk view and moved everything related in
+	disks.[ch]. The new device list handling is much simpler and no
+	longer hides duplicate mount points. The sort should also be a bit
+	more stable.
+
+2005-08-11  Benoît Dejean  <benoit@placenet.org>
+
 	* src/prettytable.c: (pretty_table_get_icon):
 
 	#if 0 debug message.

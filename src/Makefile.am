@@ -23,6 +23,7 @@ gnome_system_monitor_SOURCES = \
 	favorites.c favorites.h \
 	smooth_refresh.c smooth_refresh.h \
 	defaulttable.h \
+	disks.c disks.h \
 	selinux.h selinux.c
 
 

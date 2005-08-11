@@ -23,8 +23,6 @@
 #include <libgnomevfs/gnome-vfs.h>
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
-#include <glibtop/mountlist.h>
-#include <glibtop/fsusage.h>
 #include <signal.h>
 #include "callbacks.h"
 #include "interface.h"
@@ -37,7 +35,7 @@
 #include "openfiles.h"
 #include "favorites.h"
 #include "load-graph.h"
-
+#include "disks.h"
 
 
 
@@ -429,180 +427,6 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 	}
 }
 
-
-static GList *old_disks = NULL;
-
-
-static void
-fsusage_stats(const glibtop_fsusage *buf,
-	      float *bused, float *bfree, float *btotal,
-	      float *percentage)
-{
-	guint64 total = buf->blocks * buf->block_size;
-
-	if(!total) {
-		/* not a real device */
-		*btotal = *bfree = *bused = *percentage = 0.0f;
-	}
-	else {
-		*btotal = total;
-		*bfree  = buf->bfree  * buf->block_size;
-		*bused  = *btotal - *bfree;
-		*percentage = CLAMP(100.0f * *bused / *btotal, 0.0f, 100.0f);
-	}
-}
-
-
-static void
-update_disk(GtkTreeModel *model, GtkTreeIter *iter, const char *mountdir)
-{
-	glibtop_fsusage usage;
-	gchar *used_str, *total_str, *free_str;
-	float percentage, bused, bfree, btotal;
-
-	glibtop_get_fsusage (&usage, mountdir);
-
-	fsusage_stats(&usage, &bused, &bfree, &btotal, &percentage);
-
-	used_str  = SI_gnome_vfs_format_file_size_for_display (bused);
-	free_str  = SI_gnome_vfs_format_file_size_for_display (bfree);
-	total_str = SI_gnome_vfs_format_file_size_for_display (btotal);
-
-	gtk_list_store_set (GTK_LIST_STORE (model), iter,
-			    4, total_str,
-			    5, free_str,
-			    6, used_str,
-			    7, percentage,
-			    8, btotal,
-			    9, bfree,
-			    -1);
-
-	g_free (used_str);
-	g_free (free_str);
-	g_free (total_str);
-}
-
-
-static gboolean
-compare_disks (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
-{
-	GHashTable * const new_disks = data;
-
-	GtkTreeIter *old_iter;
-	glibtop_mountentry *entry;
-	gchar *old_name;
-
-	gtk_tree_model_get (model, iter, 1, &old_name, -1);
-
-	entry = g_hash_table_lookup (new_disks, old_name);
-	if (entry) {
-		update_disk(model, iter, entry->mountdir);
-		g_hash_table_remove (new_disks, old_name);
-	}
-	else {
-		old_iter = gtk_tree_iter_copy (iter);
-		old_disks = g_list_prepend (old_disks, old_iter);
-	}
-
-	g_free (old_name);
-	return FALSE;
-}
-
-
-static GdkPixbuf*
-get_icon_for_device(const char *mountpoint)
-{
-	GdkPixbuf *pixbuf;
-	GtkIconTheme *icon_theme;
-	GnomeVFSVolumeMonitor* monitor;
-	GnomeVFSVolume* volume;
-	char *icon_name;
-
-	monitor = gnome_vfs_get_volume_monitor();
-	volume = gnome_vfs_volume_monitor_get_volume_for_path(monitor, mountpoint);
-
-	if(!volume)
-	{
-		g_warning("Cannont get volume for mount point '%s'", mountpoint);
-		return NULL;
-	}
-
-	icon_name = gnome_vfs_volume_get_icon(volume);
-	icon_theme = gtk_icon_theme_get_default ();
-	pixbuf = gtk_icon_theme_load_icon (icon_theme, icon_name, 24, 0, NULL);
-
-	gnome_vfs_volume_unref(volume);
-	g_free (icon_name);
-
-	return pixbuf;
-}
-
-
-static void
-add_new_disks (gpointer key, gpointer value, gpointer data)
-{
-	glibtop_mountentry * const entry = value;
-	GtkTreeModel * const model = data;
-	GdkPixbuf *pixbuf;
-	GtkTreeIter row;
-
-	/*  Load an icon corresponding to the type of the device */
-	pixbuf = get_icon_for_device(entry->mountdir);
-
-
-	gtk_list_store_insert (GTK_LIST_STORE (model), &row, 0);
-	gtk_list_store_set (GTK_LIST_STORE (model), &row,
-			    0, pixbuf,
-			    1, entry->devname,
-			    2, entry->mountdir,
-			    3, entry->type,
-			    -1);
-
-	update_disk(model, &row, entry->mountdir);
-
-
-	if(pixbuf) g_object_unref (pixbuf);
-}
-
-
-gint
-cb_update_disks (gpointer data)
-{
-	ProcData * const procdata = data;
-
-	GtkTreeModel *model;
-	glibtop_mountentry *entry;
-	glibtop_mountlist mountlist;
-	GHashTable *new_disks = NULL;
-	guint i;
-
-	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->disk_list));
-
-	entry = glibtop_get_mountlist (&mountlist, procdata->config.show_all_fs);
-
-	new_disks = g_hash_table_new (g_str_hash, g_str_equal);
-	for (i=0; i < mountlist.number; i++) {
-		g_hash_table_insert (new_disks, entry[i].mountdir, &entry[i]);
-	}
-
-	gtk_tree_model_foreach (model, compare_disks, new_disks);
-
-	g_hash_table_foreach (new_disks, add_new_disks, model);
-
-	while (old_disks) {
-		GtkTreeIter *iter = old_disks->data;
-
-		gtk_list_store_remove (GTK_LIST_STORE (model), iter);
-		gtk_tree_iter_free (iter);
-
-		old_disks = g_list_next (old_disks);
-	}
-
-	g_hash_table_destroy (new_disks);
-	g_free (entry);
-
-	return TRUE;
-}
 
 
 void

@@ -38,6 +38,7 @@
 #include "procactions.h"
 #include "load-graph.h"
 #include "util.h"
+#include "disks.h"
 
 static void	cb_toggle_tree (GtkAction *action, gpointer data);
 static void	cb_toggle_threads (GtkAction *action, gpointer data);
@@ -211,32 +212,6 @@ create_proc_view (ProcData *procdata)
         return vbox1;
 }
 
-static int
-sort_bytes (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer data)
-{
-	int col = GPOINTER_TO_INT (data);
-	float btotal1, btotal2, bfree1, bfree2;
-
-	btotal1 = btotal2 = bfree1 = bfree2 = 0.0f;
-	gtk_tree_model_get (model, itera, 8, &btotal1, 9, &bfree1, -1);
-	gtk_tree_model_get (model, iterb, 8, &btotal2, 9, &bfree2, -1);
-
-	switch (col)
-	{
-		case 4:
-			return PROCMAN_RCMP(btotal1, btotal2);
-
-		case 5:
-			return PROCMAN_RCMP(bfree1, bfree2);
-
-		case 6:
-			return PROCMAN_RCMP(btotal1 - bfree1, btotal2 - bfree2);
-
-		default:
-			g_assert_not_reached();
-			return 0;
-	}
-}
 
 GtkWidget *
 make_title_label (const char *text)
@@ -268,137 +243,6 @@ net_size_request (GtkWidget *label, GtkRequisition *req, ProcData *procdata)
 	req->width = procdata->net_label_fixed_width = \
 		MAX(req->width, procdata->net_label_fixed_width);
 }
-
-
-
-static GtkWidget*
-create_disk_view (ProcData *procdata)
-{
-	GtkWidget *disk_box, *disk_hbox;
-	GtkWidget *label, *spacer;
-	GtkWidget *scrolled;
-	GtkWidget *disk_tree;
-	GtkListStore *model;
-	GtkTreeViewColumn *col;
-	GtkCellRenderer *cell;
-	gint i;
-
-	static const gchar *titles[] = {
-	  N_("Device"),
-	  N_("Directory"),
-	  N_("Type"),
-	  N_("Total"),
-	  N_("Free"),
-	  N_("Used"),
-	};
-
-	PROCMAN_GETTEXT_ARRAY_INIT(titles);
-
-	disk_box = gtk_vbox_new (FALSE, 6);
-
-	gtk_container_set_border_width (GTK_CONTAINER (disk_box), 12);
-
-	label = make_title_label (_("Devices"));
-	gtk_box_pack_start (GTK_BOX (disk_box), label, FALSE, FALSE, 0);
-
-	disk_hbox = gtk_hbox_new (FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (disk_box), disk_hbox, TRUE, TRUE, 0);
-
-	spacer = gtk_label_new ("    ");
-	gtk_box_pack_start (GTK_BOX (disk_hbox), spacer, FALSE, FALSE, 0);
-
-	scrolled = gtk_scrolled_window_new (NULL, NULL);
-	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), 
-					GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
-                                             GTK_SHADOW_IN);
-
-	gtk_box_pack_start (GTK_BOX (disk_hbox), scrolled, TRUE, TRUE, 0);
-
-
-	model = gtk_list_store_new (10,
-				    GDK_TYPE_PIXBUF,
-				    G_TYPE_STRING, /* device name */
-				    G_TYPE_STRING, /* directory */
-				    G_TYPE_STRING, /* type */
-				    G_TYPE_STRING, /* total */
-				    G_TYPE_STRING, /* free */
-				    G_TYPE_STRING, /* used */
-				    G_TYPE_FLOAT,
-				    G_TYPE_FLOAT,
-				    G_TYPE_FLOAT);
-
-	disk_tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
-	procdata->disk_list = disk_tree;
-	gtk_container_add (GTK_CONTAINER (scrolled), disk_tree);
-  	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (disk_tree), TRUE);
-  	g_object_unref (G_OBJECT (model));
-  	
- 	col = gtk_tree_view_column_new ();
-  	cell = gtk_cell_renderer_pixbuf_new ();
-	gtk_tree_view_column_pack_start (col, cell, FALSE);
-	gtk_tree_view_column_set_attributes (col, cell,
-					     "pixbuf", 0,
-					     NULL);
-		
-	cell = gtk_cell_renderer_text_new ();
-	gtk_tree_view_column_pack_start (col, cell, FALSE);
-	gtk_tree_view_column_set_attributes (col, cell,
-					     "text", 1,
-					     NULL);
-	gtk_tree_view_column_set_title (col, titles[0]);
-	gtk_tree_view_column_set_sort_column_id (col, 1);
-	gtk_tree_view_column_set_resizable (col, TRUE);
-	gtk_tree_view_append_column (GTK_TREE_VIEW (disk_tree), col);
-								
-  	for (i = 1; i < 5	; i++) {
-  		cell = gtk_cell_renderer_text_new ();
-  		col = gtk_tree_view_column_new_with_attributes (titles[i],
-						    		cell,
-						     		"text", i + 1,
-						     		NULL);
-		gtk_tree_view_column_set_resizable (col, TRUE);
-		gtk_tree_view_column_set_sort_column_id (col, i + 1);
-		gtk_tree_view_append_column (GTK_TREE_VIEW (disk_tree), col);
-	}
-	
-	col = gtk_tree_view_column_new ();	
-
-	cell = gtk_cell_renderer_text_new ();
-	gtk_tree_view_column_pack_start (col, cell, FALSE);
-	gtk_tree_view_column_set_attributes (col, cell,
-					     "text", 6,
-					     NULL);
-	gtk_tree_view_column_set_title (col, titles[5]);
-		
-	
-	cell = gtk_cell_renderer_progress_new ();
-	gtk_tree_view_column_pack_start (col, cell, TRUE);
-	gtk_tree_view_column_set_attributes (col, cell,
-					     "value", 7,
-					     NULL);
-	
-	gtk_tree_view_append_column (GTK_TREE_VIEW (disk_tree), col);
-	gtk_tree_view_column_set_resizable (col, TRUE);
-	gtk_tree_view_column_set_sort_column_id (col, 6);
-	
-	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
-					 4, sort_bytes, GINT_TO_POINTER (4), NULL);
-	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
-					 5, sort_bytes, GINT_TO_POINTER (5), NULL);
-	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
-					 6, sort_bytes, GINT_TO_POINTER (6), NULL);
-
-
-	gtk_widget_show_all (disk_box);
-  	
-  	procman_get_tree_state (procdata->client, disk_tree, "/apps/procman/disktreenew");
-
-	return disk_box;
-}
-
-
-
 
 
 
