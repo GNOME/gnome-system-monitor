@@ -218,9 +218,11 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table,
 		icon = (getters[i]) (pretty_table, pid, command);
 
 		if (icon) {
+#if 0
 			g_print("Get icon method %lu for '%s'\n",
 				(gulong)i,
 				command);
+#endif
 			return icon;
 		}
 	}
