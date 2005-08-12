@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-26 15:02-0300\n"
-"PO-Revision-Date: 2005-02-26 14:04-0300\n"
+"POT-Creation-Date: 2005-08-07 14:41+0000\n"
+"PO-Revision-Date: 2005-08-11 21:07-0300\n"
 "Last-Translator: Raphael Higino <raphaelh@uai.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
@@ -18,26 +18,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:142
-#: ../src/interface.c:639
+#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:167
+#: ../src/interface.c:836
 msgid "System Monitor"
 msgstr "Monitor do Sistema"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:143
+#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:168
 msgid "View current processes and monitor system state"
 msgstr "Exibe os processos atuais e monitora o estado do sistema"
 
-#: ../src/callbacks.c:127
+#: ../src/callbacks.c:152
 msgid "Jorgen Scheibengruber - nicer devices treeview"
 msgstr ""
 "Jorgen Scheibengruber - melhoramentos na árvore de visualização de "
 "dispositivos"
 
-#: ../src/callbacks.c:128
+#: ../src/callbacks.c:153
 msgid "Benoît Dejean - maintainer"
 msgstr "Benoît Dejean - mantenedor"
 
-#: ../src/callbacks.c:151
+#: ../src/callbacks.c:176
 msgid "translator-credits"
 msgstr ""
 "Evandro Fernandes Giovanini <evandrofg@ig.com.br>\n"
@@ -46,12 +46,12 @@ msgstr ""
 "Raphael Higino <raphaelh@uai.com.br>"
 
 #. translators: primary alert message
-#: ../src/favorites.c:347
+#: ../src/favorites.c:348
 msgid "No hidden processes"
 msgstr "Nenhum processo oculto"
 
 #. translators: secondary alert message
-#: ../src/favorites.c:354
+#: ../src/favorites.c:355
 msgid ""
 "There are no hidden processes in the list. To show all running processes, "
 "select the \"All processes\" option in the main window."
@@ -59,23 +59,23 @@ msgstr ""
 "Não há nenhum processo na lista. Para exibir todos os processos em execução, "
 "selecione a opção \"Todos os processos\" na janela principal."
 
-#: ../src/favorites.c:374
+#: ../src/favorites.c:375
 msgid "Hidden Processes"
 msgstr "Processos Ocultos"
 
-#: ../src/favorites.c:398
+#: ../src/favorites.c:399
 msgid "Currently _hidden processes:"
 msgstr "Processos atualmente _ocultos:"
 
-#: ../src/favorites.c:420
+#: ../src/favorites.c:421
 msgid "_Remove From List"
 msgstr "_Remover da lista"
 
-#: ../src/favorites.c:429 ../src/procdialogs.c:277
+#: ../src/favorites.c:430 ../src/procdialogs.c:282
 msgid "Note:"
 msgstr "Nota:"
 
-#: ../src/favorites.c:430
+#: ../src/favorites.c:431
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
@@ -104,10 +104,18 @@ msgid "Default graph mem color"
 msgstr "Cor padrão da memória no gráfico"
 
 #: ../src/gnome-system-monitor.schemas.in.h:6
+msgid "Default graph net in color"
+msgstr "Cor padrão da entrada de rede no gráfico"
+
+#: ../src/gnome-system-monitor.schemas.in.h:7
+msgid "Default graph net out color"
+msgstr "Cor padrão da saída de rede no gráfico"
+
+#: ../src/gnome-system-monitor.schemas.in.h:8
 msgid "Default graph swap color"
 msgstr "Cor padrão da swap no gráfico"
 
-#: ../src/gnome-system-monitor.schemas.in.h:7
+#: ../src/gnome-system-monitor.schemas.in.h:9
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
@@ -115,433 +123,479 @@ msgstr ""
 "Determina que processos mostrar por padrão. 0 = todos, 1 = usuário e 2 = "
 "ativos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:8
+#: ../src/gnome-system-monitor.schemas.in.h:10
 msgid "Main Window height"
 msgstr "Altura da janela principal"
 
-#: ../src/gnome-system-monitor.schemas.in.h:9
+#: ../src/gnome-system-monitor.schemas.in.h:11
 msgid "Main Window width"
 msgstr "Largura da janela principal"
 
-#: ../src/gnome-system-monitor.schemas.in.h:10
+#: ../src/gnome-system-monitor.schemas.in.h:12
+msgid "Process view columns order"
+msgstr "Ordem das colunas na visão de processos"
+
+#: ../src/gnome-system-monitor.schemas.in.h:13
 msgid "Process view sort column"
 msgstr "Coluna de ordenação da visão de processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:11
+#: ../src/gnome-system-monitor.schemas.in.h:14
 msgid "Process view sort order"
 msgstr "Ordenação da visão de processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:12
+#: ../src/gnome-system-monitor.schemas.in.h:15
 msgid "Saves the currently viewed tab"
 msgstr "Salva a aba exibida atualmente"
 
-#: ../src/gnome-system-monitor.schemas.in.h:13
-msgid "Saves the pane position for the system monitor tab"
-msgstr "Salva a posição do painel para a aba do monitor do sistema"
-
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:16
 msgid "Show advanced info tab on startup"
 msgstr "Mostrar a aba de informações avançadas ao iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:17
 msgid "Show column zero on startup"
 msgstr "Mostrar a coluna zero ao iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
+#: ../src/gnome-system-monitor.schemas.in.h:18
 msgid "Show process dependencies in tree form"
 msgstr "Mostrar as dependências do processo na forma de árvore"
 
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:19
 msgid "Show process threads"
 msgstr "Mostrar as threads dos processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:20
 msgid "Show warning dialog when hiding processes"
 msgstr "Mostrar diálogo de aviso ao ocultar processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:21
 msgid "Show warning dialog when killing processes"
 msgstr "Mostrar diálogo de aviso ao matar processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:22
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Tempo em milissegundos entre atualizações da lista de dispositivos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:23
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Tempo em milissegundos entre atualizações dos gráficos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:24
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Tempo em milissegundos entre atualizações da visão de processos"
 
-#: ../src/infoview.c:77
+#: ../src/gnome-system-monitor.schemas.in.h:25
+msgid "Whether information about all filesystems should be displayed"
+msgstr "Se as informações sobre todos os sistemas de arquivos devem ser exibidas"
+
+#: ../src/gnome-system-monitor.schemas.in.h:26
+msgid ""
+"Whether information about all filesystems should be displayed: this will "
+"include filesystem types like 'autofs' and 'procfs'. It can be usefull to "
+"get a list of all currently mounted filesystems."
+msgstr "Se as informações sobre todos os sistemas de arquivos devem ser exibidas: elas incluirá os tipos de sistemas de arquivos 'autofs' e 'procfs'. Isso pode ser útil para obter uma lista de todos os sistemas de arquivos montados atualmente."
+
+#: ../src/infoview.c:34
+msgid "Less _info"
+msgstr "Menos _informações"
+
+#: ../src/infoview.c:34
+msgid "More _info"
+msgstr "Mais _informações"
+
+#: ../src/infoview.c:99
 msgid "Process Info"
 msgstr "Informações do Processo"
 
-#: ../src/infoview.c:91
+#: ../src/infoview.c:113
 msgid "Command:"
 msgstr "Comando:"
 
-#: ../src/infoview.c:95
+#: ../src/infoview.c:117
 msgid "Status:"
 msgstr "Status:"
 
-#: ../src/infoview.c:99
+#: ../src/infoview.c:121
 msgid "Priority:"
 msgstr "Prioridade:"
 
-#: ../src/infoview.c:123
+#: ../src/infoview.c:145
 msgid "Memory Usage"
 msgstr "Uso de Memória"
 
-#: ../src/infoview.c:137
+#: ../src/infoview.c:159 ../src/interface.c:699 ../src/interface.c:742
 msgid "Total:"
 msgstr "Total:"
 
-#: ../src/infoview.c:141
+#: ../src/infoview.c:163
 msgid "RSS:"
 msgstr "RSS:"
 
-#: ../src/infoview.c:145
+#: ../src/infoview.c:167
 msgid "Shared:"
 msgstr "Compartilhada:"
 
-#: ../src/infoview.c:189
+#: ../src/infoview.c:210
 #, c-format
 msgid "Very high - nice %d"
 msgstr "Muito alta - nice %d"
 
-#: ../src/infoview.c:191
+#: ../src/infoview.c:212
 #, c-format
 msgid "High - nice %d"
 msgstr "Alta - nice %d"
 
-#: ../src/infoview.c:193
+#: ../src/infoview.c:214
 #, c-format
 msgid "Normal - nice %d"
 msgstr "Normal - nice %d"
 
-#: ../src/infoview.c:195
+#: ../src/infoview.c:216
 #, c-format
 msgid "Low - nice %d"
 msgstr "Baixa - nice %d"
 
-#: ../src/infoview.c:197
+#: ../src/infoview.c:218
 #, c-format
 msgid "Very low - nice %d"
 msgstr "Muito baixa - nice %d"
 
-#: ../src/interface.c:55 ../src/interface.c:242
+#: ../src/interface.c:47
+msgid "_File"
+msgstr "_Arquivo"
+
+#: ../src/interface.c:48
+msgid "_Edit"
+msgstr "_Editar"
+
+#: ../src/interface.c:49
+msgid "_View"
+msgstr "_Ver"
+
+#: ../src/interface.c:50
+msgid "_Help"
+msgstr "Aj_uda"
+
+#: ../src/interface.c:52
+msgid "_Quit"
+msgstr "Sai_r"
+
+#: ../src/interface.c:53
+msgid "Quit the program"
+msgstr "Sai do programa"
+
+#: ../src/interface.c:56
+msgid "_Stop Process"
+msgstr "_Parar Processo"
+
+#: ../src/interface.c:57
+msgid "Stop process"
+msgstr "Pára o processo"
+
+#: ../src/interface.c:58
+msgid "_Continue Process"
+msgstr "_Continuar Processo"
+
+#: ../src/interface.c:59
+msgid "Continue process if stopped"
+msgstr "Continua o processo se estiver parado"
+
+#: ../src/interface.c:61 ../src/interface.c:201
 msgid "End _Process"
 msgstr "_Finalizar Processo"
 
-#: ../src/interface.c:55
+#: ../src/interface.c:62
 msgid "Force process to finish normally"
 msgstr "Forçar o processo a terminar normalmente"
 
-#: ../src/interface.c:60 ../src/interface.c:136 ../src/procdialogs.c:120
+#: ../src/interface.c:63 ../src/procdialogs.c:126
 msgid "_Kill Process"
 msgstr "_Matar Processo"
 
-#: ../src/interface.c:60
+#: ../src/interface.c:64
 msgid "Force process to finish immediately"
 msgstr "Força um processo a finalizar imediatamente"
 
-#: ../src/interface.c:66 ../src/interface.c:142
+#: ../src/interface.c:65
 msgid "_Change Priority..."
 msgstr "_Alterar Prioridade..."
 
-#: ../src/interface.c:66 ../src/interface.c:142
+#: ../src/interface.c:66
 msgid "Change the order of priority of process"
 msgstr "Altera a ordem de prioridade de um processo"
 
-#: ../src/interface.c:78
-msgid "_Dependencies"
-msgstr "_Dependências"
+#: ../src/interface.c:67
+msgid "Prefere_nces"
+msgstr "Preferê_ncias"
 
-#: ../src/interface.c:78
-msgid "Show parent/child relationship between processes"
-msgstr "Mostra o relacionamento pai/filho entre processos"
+#: ../src/interface.c:68
+msgid "Configure the application"
+msgstr "Configura a aplicação"
 
-#: ../src/interface.c:83
-msgid "_Threads"
-msgstr "_Threads"
-
-#: ../src/interface.c:83
-msgid "Show each thread as a separate process"
-msgstr "Mostra cada thread como um processo separado"
-
-#: ../src/interface.c:89 ../src/interface.c:148 ../src/procdialogs.c:82
+#: ../src/interface.c:70 ../src/procdialogs.c:82
 msgid "_Hide Process"
 msgstr "_Ocultar Processo"
 
-#: ../src/interface.c:89 ../src/interface.c:148
+#: ../src/interface.c:71
 msgid "Hide process from list"
 msgstr "Oculta o processo da lista"
 
-#: ../src/interface.c:94
+#: ../src/interface.c:72
 msgid "_Hidden Processes"
 msgstr "Pro_cessos Ocultos"
 
-#: ../src/interface.c:94
+#: ../src/interface.c:73
 msgid "Open the list of currently hidden processes"
 msgstr "Abre a lista de processos atualmente ocultos"
 
-#: ../src/interface.c:100 ../src/interface.c:154
+#: ../src/interface.c:74
 msgid "_Memory Maps"
 msgstr "_Mapas de Memória"
 
-#: ../src/interface.c:100
+#: ../src/interface.c:75
 msgid "Open the memory maps associated with a process"
 msgstr "Abre os mapas de memória associados a um processo"
 
-#: ../src/interface.c:105 ../src/interface.c:159
+#: ../src/interface.c:76
 msgid "Open _Files"
 msgstr "_Abrir Arquivos"
 
-#: ../src/interface.c:105
+#: ../src/interface.c:77
 msgid "View the files opened by a process"
 msgstr "Visualiza os arquivos abertos por um processo"
 
-#: ../src/interface.c:131 ../src/procdialogs.c:129
-msgid "_End Process"
-msgstr "_Finalizar Processo"
+#: ../src/interface.c:79
+msgid "_Contents"
+msgstr "_Conteúdo"
 
-#: ../src/interface.c:131
-msgid "Force a process to finish normally"
-msgstr "Força um processo a terminar normalmente"
+#: ../src/interface.c:80
+msgid "Open the manual"
+msgstr "Abre o manual"
 
-#: ../src/interface.c:136
-msgid "Force a process to finish immediately"
-msgstr "Força um processo terminar imediatamente"
+#: ../src/interface.c:81
+msgid "_About"
+msgstr "_Sobre"
 
-#: ../src/interface.c:154
-msgid "Open the memory maps associated with the process"
-msgstr "Abre os mapas de memória associados ao processo"
+#: ../src/interface.c:82
+msgid "About this application"
+msgstr "Sobre essa aplicação"
 
-#: ../src/interface.c:159
-msgid "View the files opened by the process"
-msgstr "Visualiza os arquivos abertos pelo processo"
+#: ../src/interface.c:87
+msgid "_Dependencies"
+msgstr "_Dependências"
 
-#: ../src/interface.c:199
-msgid "Sea_rch:"
-msgstr "_Procurar:"
+#: ../src/interface.c:88
+msgid "Show parent/child relationship between processes"
+msgstr "Mostra o relacionamento pai/filho entre processos"
 
-#: ../src/interface.c:211
-msgid "All processes"
-msgstr "Todos os processos"
+#: ../src/interface.c:90
+msgid "_Threads"
+msgstr "_Threads"
 
-#: ../src/interface.c:212
-msgid "My processes"
-msgstr "Meus processos"
+#: ../src/interface.c:91
+msgid "Show each thread as a separate process"
+msgstr "Mostra cada thread como um processo separado"
 
-#: ../src/interface.c:213
-msgid "Active processes"
-msgstr "Processos ativos"
+#: ../src/interface.c:98
+msgid "_Active Processes"
+msgstr "Processos _Ativos"
 
-#: ../src/interface.c:220
-msgid "Sho_w:"
-msgstr "_Exibir:"
+#: ../src/interface.c:99
+msgid "Show active processes"
+msgstr "Mostra os processos ativos"
 
-#: ../src/interface.c:247
-msgid "More _Info"
-msgstr "Mais _Informações"
+#: ../src/interface.c:100
+msgid "A_ll Processes"
+msgstr "_Todos os Processos"
 
-#: ../src/interface.c:335 ../src/memmaps.c:261
+#: ../src/interface.c:101
+msgid "Show all processes"
+msgstr "Mostra todos os processos"
+
+#: ../src/interface.c:102
+msgid "M_y Processes"
+msgstr "_Meus Processos"
+
+#: ../src/interface.c:103
+msgid "Show user own process"
+msgstr "Mostra os processos do próprio usuário"
+
+#: ../src/interface.c:287 ../src/memmaps.c:301
 msgid "Device"
 msgstr "Dispositivo"
 
-#: ../src/interface.c:336
+#: ../src/interface.c:288
 msgid "Directory"
 msgstr "Diretório"
 
-#: ../src/interface.c:337 ../src/openfiles.c:226
+#: ../src/interface.c:289 ../src/openfiles.c:230
 msgid "Type"
 msgstr "Tipo"
 
-#: ../src/interface.c:338
+#: ../src/interface.c:290
 msgid "Total"
 msgstr "Total"
 
-#: ../src/interface.c:339
+#: ../src/interface.c:291
 msgid "Free"
 msgstr "Livre"
 
-#: ../src/interface.c:340
+#: ../src/interface.c:292
 msgid "Used"
 msgstr "Usada"
 
-#: ../src/interface.c:364
+#: ../src/interface.c:301 ../src/interface.c:915 ../src/procdialogs.c:743
+#: ../src/procdialogs.c:747
+msgid "Devices"
+msgstr "Dispositivos"
+
+#: ../src/interface.c:430
 msgid "CPU History"
 msgstr "Histório da CPU"
 
-#: ../src/interface.c:404
+#: ../src/interface.c:473
+msgid "CPU:"
+msgstr "CPU:"
+
+#: ../src/interface.c:476
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: ../src/interface.c:423
+#: ../src/interface.c:496
 msgid "Memory and Swap History"
 msgstr "Histórico da memória e swap"
 
-#: ../src/interface.c:456
+#: ../src/interface.c:529
 msgid "User memory:"
 msgstr "Memória do usuário:"
 
-#: ../src/interface.c:465 ../src/interface.c:497
+#: ../src/interface.c:547 ../src/interface.c:607
 msgid "of"
 msgstr "de"
 
-#: ../src/interface.c:488
+#: ../src/interface.c:588
 msgid "Used swap:"
 msgstr "Swap usada:"
 
-#: ../src/interface.c:523 ../src/procdialogs.c:715
-msgid "Devices"
-msgstr "Dispositivos"
+#: ../src/interface.c:647
+msgid "Network History"
+msgstr "Histório da Rede"
 
-#: ../src/interface.c:651 ../src/procdialogs.c:540
+#: ../src/interface.c:679
+msgid "Receive:"
+msgstr "Recebidos:"
+
+#: ../src/interface.c:723
+msgid "Send:"
+msgstr "Enviados:"
+
+#: ../src/interface.c:903 ../src/procdialogs.c:560
 msgid "Processes"
 msgstr "Processos"
 
-#: ../src/interface.c:657 ../src/procdialogs.c:627
+#: ../src/interface.c:909 ../src/procdialogs.c:652
 msgid "Resources"
 msgstr "Recursos"
 
-#: ../src/interface.c:709
-msgid "More _Info >>"
-msgstr "Mais _Informações >>"
+#: ../src/load-graph.c:350 ../src/load-graph.c:360
+#, c-format
+msgid "%s/s"
+msgstr "%s/s"
 
-#: ../src/interface.c:716
-msgid "<< Less _Info"
-msgstr "<< Menos _Informações"
-
-#: ../src/memmaps.c:255
+#: ../src/memmaps.c:295
 msgid "Filename"
 msgstr "Nome do arquivo"
 
-#: ../src/memmaps.c:256
+#: ../src/memmaps.c:296
 msgid "VM Start"
 msgstr "Início da VM"
 
-#: ../src/memmaps.c:257
+#: ../src/memmaps.c:297
 msgid "VM End"
 msgstr "Fim da VM"
 
-#: ../src/memmaps.c:258 ../src/proctable.c:167
+#: ../src/memmaps.c:298
 msgid "VM Size"
 msgstr "Tamanho da VM"
 
-#: ../src/memmaps.c:259
+#: ../src/memmaps.c:299
 msgid "Flags"
 msgstr "Flags"
 
-#: ../src/memmaps.c:260
+#: ../src/memmaps.c:300
 msgid "VM Offset"
 msgstr "Deslocamento da VM"
 
-#: ../src/memmaps.c:262
+#: ../src/memmaps.c:302
 msgid "Inode"
 msgstr "Nó I"
 
-#: ../src/memmaps.c:343
+#: ../src/memmaps.c:402
 msgid "Memory Maps"
 msgstr "Mapas de Memória"
 
-#: ../src/memmaps.c:361
+#: ../src/memmaps.c:422
 #, c-format
-msgid "_Memory maps for process \"%s\":"
-msgstr "_Mapas de memoria para o processo \"%s\":"
+msgid "_Memory maps for process \"%s\" (PID %u):"
+msgstr "_Mapas de memória para o processo \"%s\" (PID %u):"
 
-#: ../src/openfiles.c:33
+#: ../src/openfiles.c:31
 msgid "file"
 msgstr "arquivo"
 
-#: ../src/openfiles.c:35
+#: ../src/openfiles.c:33
 msgid "pipe"
 msgstr "pipe"
 
-#: ../src/openfiles.c:37
+#: ../src/openfiles.c:35
 msgid "network connection"
 msgstr "conexão de rede"
 
-#: ../src/openfiles.c:39
+#: ../src/openfiles.c:37
 msgid "local socket"
 msgstr "soquete local"
 
-#: ../src/openfiles.c:41
+#: ../src/openfiles.c:39
 msgid "unknown type"
 msgstr "tipo desconhecido"
 
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.c:225
+#: ../src/openfiles.c:229
 msgid "FD"
 msgstr "DA"
 
-#: ../src/openfiles.c:227
+#: ../src/openfiles.c:231
 msgid "Object"
 msgstr "Objeto"
 
-#: ../src/openfiles.c:305
+#: ../src/openfiles.c:308
 msgid "Open Files"
 msgstr "Abrir Arquivos"
 
-#: ../src/openfiles.c:326
+#: ../src/openfiles.c:330
 #, c-format
-msgid "Files opened by process \"%s\":"
-msgstr "Arquivos abertos pelo processo \"%s\":"
+msgid "_Files opened by process \"%s\" (PID %u):"
+msgstr "_Arquivos abertos pelo processo \"%s\" (PID %u):"
 
-#: ../src/procactions.c:53
-msgid "No such process."
-msgstr "Processo inexistente."
-
-#: ../src/procactions.c:66
+#: ../src/procactions.c:73
 #, c-format
 msgid ""
-"Process Name: %s \n"
-"\n"
-"You do not have permission to change the priority of this process. You can "
-"enter the root password to gain the necessary permission."
+"Cannot change the priority of process with pid %d to %d.\n"
+"%s"
 msgstr ""
-"Nome do Processo: %s\n"
-"\n"
-"Você não tem permissão de alterar a prioridade deste processo. Você pode "
-"digitar a senha do root para obter a permissão necessária."
+"Não é possível alterar a prioridade do processo de PID %d para %d.\n"
+"%s"
 
-#: ../src/procactions.c:74
+#: ../src/procactions.c:140
 #, c-format
 msgid ""
-"Process Name: %s\n"
-"\n"
-"You must be root to decrease a nice value of this process or set a nice "
-"value less than 0. You can enter the root password to gain the necessary "
-"permission."
+"Cannot kill process with pid %d with signal %d.\n"
+"%s"
 msgstr ""
-"Nome do Processo: %s\n"
-"\n"
-"Você deve ser root para diminuir a prioridade desse processo ou para definir "
-"um valor menor que 0. Você pode digitar a senha de root para obter a "
-"permissão necessária."
-
-#: ../src/procactions.c:131
-#, c-format
-msgid ""
-"Process Name: %s \n"
-"\n"
-"You do not have permission to end this process. You can enter the root "
-"password to gain the necessary permission."
-msgstr ""
-"Nome do Processo: %s\n"
-"\n"
-"Você não tem permissão para finalizar esse processo. Você pode digitar a "
-"senha de root para obter a permissão necessária."
-
-#: ../src/procactions.c:150
-msgid "An error occured while killing the process."
-msgstr "Ocorreu um erro ao matar o processo."
+"Não é possível matar o processo de PID %d com o sinal %d.\n"
+"%s"
 
 #. translators: primary alert message
 #: ../src/procdialogs.c:62
@@ -559,68 +613,66 @@ msgstr ""
 "reexibí-los selecionando \"Processos Ocultos\" no menu Ver."
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:115
+#: ../src/procdialogs.c:121
 msgid "Kill the selected process?"
 msgstr "Deseja matar o processo selecionado?"
 
 #. translators: secondary alert message
-#: ../src/procdialogs.c:117
+#: ../src/procdialogs.c:123
 msgid ""
-"Killing a process, you could destroy your data, break the working session or "
-"create a security risk. Only misbehaving processes should be killed."
-msgstr ""
-"Matando um processo, você pode destruir seus dados, interromper a sessão "
-"atual ou criar um risco à segurança. Apenas processos com comportamento "
-"estranho devem ser mortos."
+"Killing a process may destroy data, break the session or introduce a "
+"security risk. Only unresponding processes should be killed."
+msgstr "Matando um processo, você pode destruir seus dados, interromper a sessão atual ou criar um risco à segurança. Apenas processos que não estejam respondendo devem ser mortos."
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:124
+#: ../src/procdialogs.c:130
 msgid "End the selected process?"
 msgstr "Deseja finalizar o processo selecionado?"
 
 #. translators: secondary alert message
-#: ../src/procdialogs.c:126
+#: ../src/procdialogs.c:132
 msgid ""
-"Ending a process, you could destroy your data, break the working session or "
-"create a security risk. Only misbehaving processes should be ended."
-msgstr ""
-"Finalizando um processo, você pode destruir seus dados, interromper a sessão "
-"atual ou criar um risco à segurança. Apenas processos com comportamento "
-"estranho devem ser finalizados."
+"Ending a process may destroy data, break the session or introduce a security "
+"risk. Only unresponding processes should be ended."
+msgstr "Finalizando um processo, você pode destruir seus dados, interromper a sessão atual ou criar um risco à segurança. Apenas processos que não estejam respondendo devem ser finalizados."
 
-#: ../src/procdialogs.c:158
+#: ../src/procdialogs.c:135
+msgid "_End Process"
+msgstr "_Finalizar Processo"
+
+#: ../src/procdialogs.c:164
 msgid "(Very High Priority)"
 msgstr "(Prioridade Muito Alta)"
 
-#: ../src/procdialogs.c:160
+#: ../src/procdialogs.c:166
 msgid "(High Priority)"
 msgstr "(Prioridade Alta)"
 
-#: ../src/procdialogs.c:162
+#: ../src/procdialogs.c:168
 msgid "(Normal Priority)"
 msgstr "(Prioridade Normal)"
 
-#: ../src/procdialogs.c:164
+#: ../src/procdialogs.c:170
 msgid "(Low Priority)"
 msgstr "(Prioridade Baixa)"
 
-#: ../src/procdialogs.c:166
+#: ../src/procdialogs.c:172
 msgid "(Very Low Priority)"
 msgstr "(Prioridade Muito Baixa)"
 
-#: ../src/procdialogs.c:219
+#: ../src/procdialogs.c:224
 msgid "Change Priority"
 msgstr "Alterar Prioridade"
 
-#: ../src/procdialogs.c:240
+#: ../src/procdialogs.c:245
 msgid "Change _Priority"
 msgstr "Alterar _Prioridade"
 
-#: ../src/procdialogs.c:261
+#: ../src/procdialogs.c:266
 msgid "_Nice value:"
 msgstr "Valor _nice:"
 
-#: ../src/procdialogs.c:278
+#: ../src/procdialogs.c:283
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -628,158 +680,249 @@ msgstr ""
 "A prioridade de um processo é dada pelo seu valor nice. Quanto menor o valor "
 "nice, maior a prioridade."
 
-#: ../src/procdialogs.c:426
+#: ../src/procdialogs.c:446
 msgid "Processes i_nfo showed in list:"
 msgstr "_Informações exibidas na lista:"
 
-#: ../src/procdialogs.c:477
+#: ../src/procdialogs.c:498
 msgid "Icon"
 msgstr "Ícone"
 
-#: ../src/procdialogs.c:517
+#: ../src/procdialogs.c:537
 msgid "System Monitor Preferences"
 msgstr "Preferências do Monitor do Sistema"
 
-#: ../src/procdialogs.c:547
+#: ../src/procdialogs.c:567
 msgid "Behavior"
 msgstr "Comportamento"
 
-#: ../src/procdialogs.c:566 ../src/procdialogs.c:653
+#: ../src/procdialogs.c:586 ../src/procdialogs.c:678
 msgid "_Update interval:"
 msgstr "_Intervalo de atualização:"
 
-#: ../src/procdialogs.c:582 ../src/procdialogs.c:670 ../src/procdialogs.c:751
+#: ../src/procdialogs.c:607 ../src/procdialogs.c:695 ../src/procdialogs.c:782
 msgid "seconds"
 msgstr "segundos"
 
-#: ../src/procdialogs.c:589
+#: ../src/procdialogs.c:614
 msgid "Alert before ending or _killing processes"
 msgstr "Alertar antes de finalizar ou _matar processos"
 
-#: ../src/procdialogs.c:599
+#: ../src/procdialogs.c:624
 msgid "Alert before _hiding processes"
 msgstr "Alertar antes de _ocultar processos"
 
-#: ../src/procdialogs.c:609
+#: ../src/procdialogs.c:634
 msgid "Process Fields"
 msgstr "Campos do Processo"
 
-#: ../src/procdialogs.c:634
+#: ../src/procdialogs.c:659
 msgid "Graphs"
 msgstr "Gráficos"
 
-#: ../src/procdialogs.c:677
+#: ../src/procdialogs.c:702
 msgid "_Background color:"
 msgstr "_Cor do fundo:"
 
-#: ../src/procdialogs.c:696
+#: ../src/procdialogs.c:721
 msgid "_Grid color:"
 msgstr "Cor da _grade:"
 
-#: ../src/procdialogs.c:734
+#: ../src/procdialogs.c:766
 msgid "Update _interval:"
-msgstr "Intervalo de _atualização:"
+msgstr "_Intervalo de atualização:"
 
-#: ../src/procdialogs.c:798
-#, c-format
-msgid "Cannot kill process with pid %d with signal %d"
-msgstr "Não é possível matar o processo com PID %d com o sinal %d"
+#: ../src/procdialogs.c:789
+msgid "Show _all filesystems"
+msgstr "Todos os sistemas de _arquivos"
 
-#: ../src/procdialogs.c:801
-#, c-format
-msgid "Cannot change the priority of process with pid %d to %d"
-msgstr "Não é possível alterar a prioridade do processo com PID %d para %d"
-
-#: ../src/proctable.c:163
+#: ../src/proctable.c:242
 msgid "Process Name"
 msgstr "Nome do Processo"
 
-#: ../src/proctable.c:164
+#: ../src/proctable.c:243
 msgid "User"
 msgstr "Usuário"
 
-#: ../src/proctable.c:165
+#: ../src/proctable.c:244
 msgid "Status"
 msgstr "Status"
 
-#: ../src/proctable.c:166
+#: ../src/proctable.c:245
 msgid "Memory"
 msgstr "Memória"
 
-#: ../src/proctable.c:168
+#: ../src/proctable.c:246
+msgid "Virtual Memory"
+msgstr "Memória Virtual"
+
+#: ../src/proctable.c:247
 msgid "Resident Memory"
 msgstr "Memória Residente"
 
-#: ../src/proctable.c:169
+#: ../src/proctable.c:248
 msgid "Shared Memory"
 msgstr "Memória Compartilhada"
 
-#: ../src/proctable.c:170
+#: ../src/proctable.c:249
 msgid "RSS Memory"
 msgstr "Memória RSS"
 
-#: ../src/proctable.c:171
+#: ../src/proctable.c:250
 msgid "X Server Memory"
 msgstr "Memória do X Server"
 
-#: ../src/proctable.c:172
+#: ../src/proctable.c:251
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:173
+#: ../src/proctable.c:252
+msgid "CPU time"
+msgstr "Tempo da CPU"
+
+#: ../src/proctable.c:253
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.c:174
+#: ../src/proctable.c:254
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.c:175
+#: ../src/proctable.c:255
 msgid "Security Context"
 msgstr "Contexto de Segurança"
 
-#: ../src/proctable.c:176
+#: ../src/proctable.c:256
 msgid "Arguments"
 msgstr "Argumentos"
 
-#: ../src/proctable.c:349
+#: ../src/proctable.c:430
 msgid "Running"
 msgstr "Executando"
 
-#: ../src/proctable.c:354
+#: ../src/proctable.c:435
 msgid "Stopped"
 msgstr "Parado"
 
-#: ../src/proctable.c:359
+#: ../src/proctable.c:440
 msgid "Zombie"
 msgstr "Zumbi"
 
-#: ../src/proctable.c:364
+#: ../src/proctable.c:445
 msgid "Uninterruptible"
 msgstr "Ininterrompível"
 
-#: ../src/proctable.c:369
+#: ../src/proctable.c:450
 msgid "Sleeping"
 msgstr "Dormindo"
 
-#: ../src/proctable.c:455
+#: ../src/proctable.c:634
 #, c-format
 msgid "%s (thread)"
 msgstr "%s (thread)"
 
-#: ../src/proctable.c:1004
+#: ../src/proctable.c:1022
 #, c-format
-msgid "Could not find \"%s\""
-msgstr "Não foi possível encontrar \"%s\""
+msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
+msgstr "Cargas médias para os últimos 1, 5, 15 minutos: %0.2f, %0.2f, %0.2f"
 
-#: ../src/proctable.c:1008
-msgid ""
-"There are no processes containing the searched string. Please note that the "
-"search is performed only on processes shown in the process list."
-msgstr ""
-"Não há nenhum processo contendo a expressão procurada. Note que a busca é "
-"executada apenas em processos exibidos na lista de processos."
+#: ../src/util.c:87
+#, c-format
+msgid "%u byte"
+msgid_plural "%u bytes"
+msgstr[0] "%u byte"
+msgstr[1] "%u bytes"
+
+#: ../src/util.c:93
+#, c-format
+msgid "%.1f KiB"
+msgstr "%.1f KB"
+
+#: ../src/util.c:97
+#, c-format
+msgid "%.1f MiB"
+msgstr "%.1f MB"
+
+#: ../src/util.c:101
+#, c-format
+msgid "%.1f GiB"
+msgstr "%.1f GB"
+
+#~ msgid "Saves the pane position for the system monitor tab"
+#~ msgstr "Salva a posição do painel para a aba do monitor do sistema"
+
+#~ msgid "Force a process to finish normally"
+#~ msgstr "Força um processo a terminar normalmente"
+
+#~ msgid "Force a process to finish immediately"
+#~ msgstr "Força um processo terminar imediatamente"
+
+#~ msgid "Open the memory maps associated with the process"
+#~ msgstr "Abre os mapas de memória associados ao processo"
+
+#~ msgid "View the files opened by the process"
+#~ msgstr "Visualiza os arquivos abertos pelo processo"
+
+#~ msgid "Sea_rch:"
+#~ msgstr "_Procurar:"
+
+#~ msgid "Sho_w:"
+#~ msgstr "_Exibir:"
+
+#~ msgid "More _Info >>"
+#~ msgstr "Mais _Informações >>"
+
+#~ msgid "No such process."
+#~ msgstr "Processo inexistente."
+
+#~ msgid ""
+#~ "Process Name: %s \n"
+#~ "\n"
+#~ "You do not have permission to change the priority of this process. You "
+#~ "can enter the root password to gain the necessary permission."
+#~ msgstr ""
+#~ "Nome do Processo: %s\n"
+#~ "\n"
+#~ "Você não tem permissão de alterar a prioridade deste processo. Você pode "
+#~ "digitar a senha do root para obter a permissão necessária."
+
+#~ msgid ""
+#~ "Process Name: %s\n"
+#~ "\n"
+#~ "You must be root to decrease a nice value of this process or set a nice "
+#~ "value less than 0. You can enter the root password to gain the necessary "
+#~ "permission."
+#~ msgstr ""
+#~ "Nome do Processo: %s\n"
+#~ "\n"
+#~ "Você deve ser root para diminuir a prioridade desse processo ou para "
+#~ "definir um valor menor que 0. Você pode digitar a senha de root para "
+#~ "obter a permissão necessária."
+
+#~ msgid ""
+#~ "Process Name: %s \n"
+#~ "\n"
+#~ "You do not have permission to end this process. You can enter the root "
+#~ "password to gain the necessary permission."
+#~ msgstr ""
+#~ "Nome do Processo: %s\n"
+#~ "\n"
+#~ "Você não tem permissão para finalizar esse processo. Você pode digitar a "
+#~ "senha de root para obter a permissão necessária."
+
+#~ msgid "An error occured while killing the process."
+#~ msgstr "Ocorreu um erro ao matar o processo."
+
+#~ msgid "Could not find \"%s\""
+#~ msgstr "Não foi possível encontrar \"%s\""
+
+#~ msgid ""
+#~ "There are no processes containing the searched string. Please note that "
+#~ "the search is performed only on processes shown in the process list."
+#~ msgstr ""
+#~ "Não há nenhum processo contendo a expressão procurada. Note que a busca é "
+#~ "executada apenas em processos exibidos na lista de processos."
 
 #~ msgid "Kevin Vandersloot"
 #~ msgstr "Kevin Vandersloot"
@@ -808,9 +951,6 @@ msgstr ""
 #~ msgid "Display threads (subprocesses)"
 #~ msgstr "Mostrar threads (subprocessos)"
 
-#~ msgid "Vie_w:"
-#~ msgstr "E_xibir:"
-
 #~ msgid "Name"
 #~ msgstr "Nome"
 
@@ -819,9 +959,6 @@ msgstr ""
 
 #~ msgid "Running Applications"
 #~ msgstr "Programas em Execução"
-
-#~ msgid "_Close Application"
-#~ msgstr "_Fechar Programa"
 
 #~ msgid "Process name:"
 #~ msgstr "Nome do processo:"
@@ -843,9 +980,6 @@ msgstr ""
 
 #~ msgid "If you end a process, unsaved data will be lost."
 #~ msgstr "Se você finalizar um processo, dados não salvos serão perdidos."
-
-#~ msgid "Preferences"
-#~ msgstr "Preferências"
 
 #~ msgid "Kill Process"
 #~ msgstr "Matar Processo"
@@ -877,19 +1011,8 @@ msgstr ""
 #~ msgid "Gnome-Session"
 #~ msgstr "Sessão Gnome"
 
-#~ msgid "%d byte"
-#~ msgid_plural "%d bytes"
-#~ msgstr[0] "%d byte"
-#~ msgstr[1] "%d bytes"
-
 #~ msgid "%d K"
 #~ msgstr "%d K"
 
-#~ msgid "%.1f MB"
-#~ msgstr "%.1f MB"
-
 #~ msgid "%.0f MB"
 #~ msgstr "%.0f MB"
-
-#~ msgid "%.1f GB"
-#~ msgstr "%.1f GB"
