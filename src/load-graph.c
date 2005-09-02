@@ -38,14 +38,13 @@ struct _LoadGraph {
 	GdkColor *colors;
 	gfloat **data;
 	guint data_size;
-	guint *pos;
 
 	gboolean colors_allocated;
 	GtkWidget *main_widget;
 	GtkWidget *disp;
 
-	GdkPixmap *pixmap;
-	GdkGC *gc;
+	cairo_surface_t *buffer;
+
 	guint timer_index;
 
 	gboolean draw;
@@ -65,33 +64,17 @@ struct _LoadGraph {
 #define FRAME_WIDTH 4
 
 
-
-/* Redraws the backing pixmap for the load graph and updates the window */
+/* Redraws the backing buffer for the load graph and updates the window */
 void
 load_graph_draw (LoadGraph *g)
 {
-	guint i, j;
-	gfloat dely;
+	cairo_t *cr;
+	int dely;
+	double delx;
+	int real_draw_height;
+	gint i, j;
 
-	if (!g->disp->window)
-		return;
-
-	g->draw_width = g->disp->allocation.width - 2 * FRAME_WIDTH;
-	g->draw_height = g->disp->allocation.height - 2 * FRAME_WIDTH;
-
-	if (!g->pixmap)
-		g->pixmap = gdk_pixmap_new (g->disp->window,
-					    g->disp->allocation.width,
-					    g->disp->allocation.height,
-					    gtk_widget_get_visual (g->disp)->depth);
-
-/* Create GC if necessary. */
-	if (!g->gc) {
-		g->gc = gdk_gc_new (g->disp->window);
-		gdk_gc_copy (g->gc, g->disp->style->white_gc);
-	}
-
-/* Allocate colors. */
+	/* Allocate colors. */
 	if (!g->colors_allocated) {
 		GdkColormap *colormap;
 
@@ -103,68 +86,112 @@ load_graph_draw (LoadGraph *g)
 		g->colors_allocated = TRUE;
 	}
 
-/* Erase Rectangle */
-	gdk_gc_set_foreground (g->gc, &(g->colors [0]));
-	gdk_draw_rectangle (g->pixmap,
-			    g->gc,
-			    TRUE, 0, 0,
-			    g->disp->allocation.width,
-			    g->disp->allocation.height);
+	cr = cairo_create (g->buffer);
 
-/* draw frame */
-	gdk_gc_set_foreground (g->gc, &(g->colors [1]));
-	gdk_draw_rectangle (g->pixmap,
-			    g->gc,
-			    FALSE, FRAME_WIDTH, FRAME_WIDTH,
-			    g->draw_width - 1,
-			    g->draw_height - 1);
+	/* clear */
+	cairo_set_source_rgb (cr, 0., 0., 0.);
+	cairo_paint (cr);
 
-	dely = (gfloat)(g->draw_height - 1) / 5;
-	for (i = 1; i <5; i++) {
-		gint y1 = FRAME_WIDTH + i * dely;
-		gdk_draw_line (g->pixmap, g->gc,
-			       FRAME_WIDTH, y1, FRAME_WIDTH + g->draw_width - 1, y1);
+	/* draw frame */
+	cairo_translate (cr, FRAME_WIDTH, FRAME_WIDTH);
+	gdk_cairo_set_source_color (cr, &(g->colors [1]));
+	cairo_set_line_width (cr, 1.0);
+
+	dely = (g->draw_height) / 5; /* round to int to avoid AA blur */
+	real_draw_height = dely * 5;
+
+	for (i = 0; i <= 5; ++i) {
+		cairo_move_to (cr, 0.5, i * dely + 0.5);
+		cairo_line_to (cr, g->draw_width - 0.5, i * dely + 0.5);
 	}
 
-	for (i = 0; i < g->num_points; i++)
-		g->pos [i] = g->draw_height;
+	cairo_move_to (cr, 0.5, 0.5);
+	cairo_line_to (cr, 0.5, real_draw_height + 0.5);
 
-	gdk_gc_set_line_attributes (g->gc, 2, GDK_LINE_SOLID, GDK_CAP_ROUND, GDK_JOIN_MITER );
-/* FIXME: try to do some averaging here to smooth out the graph */
-	for (j = 0; j < g->n; j++) {
-		gfloat delx = (gfloat)(g->draw_width - 1) / (g->num_points - 1);
-		gdk_gc_set_foreground (g->gc, &(g->colors [j + 2]));
+	cairo_move_to (cr, g->draw_width - 0.5, 0.5);
+	cairo_line_to (cr, g->draw_width - 0.5, real_draw_height + 0.5);
 
-		for (i = 0; i < g->num_points - 1; i++) {
+	cairo_stroke (cr);
 
-			gint x1 = g->draw_width - i * delx + FRAME_WIDTH - 1;
-			gint x2 = g->draw_width - (i + 1) * delx + FRAME_WIDTH - 1;
-			gint y1 = g->pos[i] - g->data[i][j] * (g->draw_height - 1) +
-				  FRAME_WIDTH - 1;
-			gint y2 = g->pos[i+1] - g->data[i+1][j] * (g->draw_height - 1) +
-				  FRAME_WIDTH - 1;
+	/* draw the graph */
+	cairo_set_line_width (cr, 2.0);
+	cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
+	cairo_set_line_join (cr, CAIRO_LINE_JOIN_MITER);
 
-			if ((g->data[i][j] != -1) && (g->data[i+1][j] != -1))
-				gdk_draw_line (g->pixmap, g->gc, x2, y2, x1, y1);
+	delx = (double)(g->draw_width) / (double)g->num_points;
 
-			g->pos [i] -= g->data [i][j];
+	for (j = 0; j < g->n; ++j) {
+		cairo_move_to (cr,
+			       g->draw_width - 1,
+			       (1 - g->data[0][j]) * real_draw_height);
+		gdk_cairo_set_source_color (cr, &(g->colors [j + 2]));
+
+		for (i = 1; i < g->num_points - 1; ++i) {
+			if (g->data[i][j] == -1)
+				continue;
+
+			cairo_line_to (cr,
+				       g->draw_width -1 - i * delx,
+				       (1 - g->data[i][j]) * real_draw_height);
 		}
-		g->pos[g->num_points - 1] -= g->data [g->num_points - 1] [j];
+
+		cairo_stroke (cr);
 	}
 
-	gdk_gc_set_line_attributes (g->gc, 1, GDK_LINE_SOLID, GDK_CAP_ROUND, GDK_JOIN_MITER );
+	cairo_destroy (cr);
 
-	gdk_draw_pixmap (g->disp->window,
-			 g->disp->style->fg_gc [GTK_WIDGET_STATE(g->disp)],
-			 g->pixmap,
-			 0, 0,
-			 0, 0,
-			 g->disp->allocation.width,
-			 g->disp->allocation.height);
-
-
+	/* repaint */
+	gtk_widget_queue_draw (g->disp);
 }
 
+static gboolean
+load_graph_configure (GtkWidget *widget,
+		      GdkEventConfigure *event,
+		      gpointer data_ptr)
+{
+	LoadGraph * const g = data_ptr;
+	cairo_t *cr;
+
+	g->draw_width = widget->allocation.width - 2 * FRAME_WIDTH;
+	g->draw_height = widget->allocation.height - 2 * FRAME_WIDTH;
+
+	cr = gdk_cairo_create (widget->window);
+
+	if (g->buffer)
+		cairo_surface_destroy (g->buffer);
+
+	g->buffer = cairo_surface_create_similar (cairo_get_target (cr),
+						  CAIRO_CONTENT_COLOR,
+						  widget->allocation.width,
+						  widget->allocation.height);
+
+	cairo_destroy (cr);
+
+	load_graph_draw (g);
+
+	return TRUE;
+}
+
+static gboolean
+load_graph_expose (GtkWidget *widget,
+		   GdkEventExpose *event,
+		   gpointer data_ptr)
+{
+	LoadGraph * const g = data_ptr;
+	cairo_t *cr;
+
+	cr = gdk_cairo_create(widget->window);
+
+	cairo_set_source_surface(cr, g->buffer, 0, 0);
+	cairo_rectangle(cr,
+			event->area.x, event->area.y,
+			event->area.width, event->area.height);
+	cairo_fill(cr);
+
+	cairo_destroy(cr);
+
+	return TRUE;
+}
 
 static void
 get_load (gfloat data [2], LoadGraph *g)
@@ -395,8 +422,6 @@ shift_right(LoadGraph *g)
 	g->data[0] = last_data;
 }
 
-
-
 /* Updates the load graph when the timeout expires */
 static gboolean
 load_graph_update (gpointer user_data)
@@ -435,14 +460,12 @@ load_graph_unalloc (LoadGraph *g)
 	}
 
 	g_free (g->data);
-	g_free (g->pos);
 
-	g->pos = NULL;
 	g->data = NULL;
 
-	if (g->pixmap) {
-		gdk_pixmap_unref (g->pixmap);
-		g->pixmap = NULL;
+	if (g->buffer) {
+		cairo_surface_destroy (g->buffer);
+		g->buffer = NULL;
 	}
 
 	g->allocated = FALSE;
@@ -456,7 +479,6 @@ load_graph_alloc (LoadGraph *g)
 	g_return_if_fail(!g->allocated);
 
 	g->data = g_new (gfloat *, g->num_points);
-	g->pos = g_new0 (guint, g->num_points);
 
 	g->data_size = sizeof (gfloat) * g->n;
 
@@ -468,57 +490,6 @@ load_graph_alloc (LoadGraph *g)
 
 	g->allocated = TRUE;
 }
-
-
-static gboolean
-load_graph_configure (GtkWidget *widget, GdkEventConfigure *event,
-		      gpointer data_ptr)
-{
-	LoadGraph * const c = data_ptr;
-
-	if (c->pixmap) {
-		gdk_pixmap_unref (c->pixmap);
-	}
-
-	c->pixmap = gdk_pixmap_new (widget->window,
-				    widget->allocation.width,
-				    widget->allocation.height,
-				    gtk_widget_get_visual (c->disp)->depth);
-
-	gdk_draw_rectangle (c->pixmap,
-			    widget->style->black_gc,
-			    TRUE, 0,0,
-			    widget->allocation.width,
-			    widget->allocation.height);
-	gdk_draw_pixmap (widget->window,
-			 c->disp->style->fg_gc [GTK_WIDGET_STATE(widget)],
-			 c->pixmap,
-			 0, 0,
-			 0, 0,
-			 c->disp->allocation.width,
-			 c->disp->allocation.height);
-
-	load_graph_draw (c);
-
-	return TRUE;
-}
-
-
-static gboolean
-load_graph_expose (GtkWidget *widget, GdkEventExpose *event,
-		   gpointer data_ptr)
-{
-	LoadGraph * const g = data_ptr;
-
-	gdk_draw_pixmap (widget->window,
-			 widget->style->fg_gc [GTK_WIDGET_STATE(widget)],
-			 g->pixmap,
-			 event->area.x, event->area.y,
-			 event->area.x, event->area.y,
-			 event->area.width, event->area.height);
-	return FALSE;
-}
-
 
 static gboolean
 load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
@@ -534,7 +505,6 @@ load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
 
 	return FALSE;
 }
-
 
 LoadGraph *
 load_graph_new (gint type, ProcData *procdata)
@@ -625,7 +595,6 @@ load_graph_new (gint type, ProcData *procdata)
 	return g;
 }
 
-
 void
 load_graph_start (LoadGraph *g)
 {
@@ -641,15 +610,12 @@ load_graph_start (LoadGraph *g)
 	g->draw = TRUE;
 }
 
-
 void
 load_graph_stop (LoadGraph *g)
 {
 	/* don't draw anymore, but continue to poll */
 	g->draw = FALSE;
 }
-
-
 
 void
 load_graph_change_speed (LoadGraph *g,
@@ -665,15 +631,11 @@ load_graph_change_speed (LoadGraph *g,
 	}
 }
 
-
-
 GdkColor*
 load_graph_get_colors (LoadGraph *g)
 {
 	return g->colors;
 }
-
-
 
 void
 load_graph_reset_colors (LoadGraph *g)
@@ -681,14 +643,11 @@ load_graph_reset_colors (LoadGraph *g)
 	g->colors_allocated = FALSE;
 }
 
-
-
 LoadGraphLabels*
 load_graph_get_labels (LoadGraph *g)
 {
 	return &g->labels;
 }
-
 
 GtkWidget*
 load_graph_get_widget (LoadGraph *g)
