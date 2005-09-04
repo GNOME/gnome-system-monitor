@@ -28,7 +28,6 @@
 #include "interface.h"
 #include "proctable.h"
 #include "util.h"
-#include "infoview.h"
 #include "procactions.h"
 #include "procdialogs.h"
 #include "memmaps.h"
@@ -323,9 +322,6 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
 					     &procdata->selected_process);
 
 	if (procdata->selected_process) {
-		if (procdata->config.show_more_info)
-			infoview_update (procdata);
-
 		update_sensitivity (procdata, TRUE);
 	}
 	else {

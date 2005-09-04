@@ -30,7 +30,6 @@ typedef struct _ProcData ProcData;
 #include <gconf/gconf-client.h>
 #include <glibtop/cpu.h>
 
-#include "infoview.h"
 #include "smooth_refresh.h"
 
 #include "load-graph.h"
@@ -55,7 +54,6 @@ struct _ProcConfig
 {
 	gint		width;
 	gint		height;
-        gboolean        show_more_info;
         gboolean	show_kill_warning;
         gboolean	show_hide_message;
         gboolean	show_tree;
@@ -121,7 +119,6 @@ struct _ProcData
 	GtkWidget	*loadavg;
 	GtkWidget	*endprocessbutton;
 	GtkWidget	*popup_menu;
-	Infoview	infoview;
 	GtkWidget	*disk_list;
 	ProcConfig	config;
 	LoadGraph	*cpu_graph;

@@ -256,7 +256,6 @@ procman_data_new (GConfClient *client)
 
 	pd->config.width = gconf_client_get_int (client, "/apps/procman/width", NULL);
 	pd->config.height = gconf_client_get_int (client, "/apps/procman/height", NULL);
-	pd->config.show_more_info = gconf_client_get_bool (client, "/apps/procman/more_info", NULL);
 	pd->config.show_tree = gconf_client_get_bool (client, "/apps/procman/show_tree", NULL);
 	gconf_client_notify_add (client, "/apps/procman/show_tree", tree_changed_cb,
 				 pd, NULL, NULL);
@@ -586,7 +585,6 @@ procman_save_config (ProcData *data)
 	
 	gconf_client_set_int (client, "/apps/procman/width", data->config.width, NULL);
 	gconf_client_set_int (client, "/apps/procman/height", data->config.height, NULL);	
-	gconf_client_set_bool (client, "/apps/procman/more_info", data->config.show_more_info, NULL);
 	gconf_client_set_int (client, "/apps/procman/current_tab", data->config.current_tab, NULL);
 	
 	save_blacklist (data, client);

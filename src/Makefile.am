@@ -15,7 +15,6 @@ gnome_system_monitor_SOURCES = \
 	proctable.c proctable.h \
 	prettytable.c prettytable.h \
 	util.c util.h \
-	infoview.c infoview.h \
 	procactions.c procactions.h \
 	procdialogs.c procdialogs.h \
 	memmaps.c memmaps.h \

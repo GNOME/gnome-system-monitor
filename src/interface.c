@@ -34,7 +34,6 @@
 #include "callbacks.h"
 #include "interface.h"
 #include "proctable.h"
-#include "infoview.h"
 #include "procactions.h"
 #include "load-graph.h"
 #include "util.h"
@@ -159,7 +158,7 @@ static const char ui_info[] =
 static GtkWidget *
 create_proc_view (ProcData *procdata)
 {
-	GtkWidget *vbox1, *vbox2;
+	GtkWidget *vbox1;
 	GtkWidget *hbox1;
 	GtkWidget *scrolled;
 	GtkWidget *hbox2;
@@ -190,17 +189,9 @@ create_proc_view (ProcData *procdata)
 	
 	hbox2 = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox2, FALSE, FALSE, 0);
-
-	infoview_create (procdata);
-	gtk_box_pack_start (GTK_BOX (hbox2), procdata->infoview.expander, FALSE, FALSE, 0);
-	gtk_expander_set_expanded (GTK_EXPANDER(procdata->infoview.expander),
-				   procdata->config.show_more_info);
-	gtk_widget_show (procdata->infoview.expander);
 	
-	vbox2 = gtk_vbox_new (FALSE, 0);
-	gtk_box_pack_end (GTK_BOX (hbox2), vbox2, FALSE, FALSE, 0);
 	procdata->endprocessbutton = gtk_button_new_with_mnemonic (_("End _Process"));
-	gtk_box_pack_end (GTK_BOX (vbox2), procdata->endprocessbutton, FALSE, FALSE, 0);
+	gtk_box_pack_end (GTK_BOX (hbox2), procdata->endprocessbutton, FALSE, FALSE, 0);
 	g_signal_connect (G_OBJECT (procdata->endprocessbutton), "clicked",
 			  G_CALLBACK (cb_end_process_button_pressed), procdata);
 	
@@ -820,8 +811,6 @@ update_sensitivity (ProcData *data, gboolean sensitivity)
 		   has not been built yet */
 		gtk_widget_set_sensitive (data->endprocessbutton, sensitivity);
 	}
-
-	gtk_widget_set_sensitive (data->infoview.box, sensitivity);
 
 	action = gtk_action_group_get_action (data->action_group, "StopProcess");
 	gtk_action_set_sensitive (action, sensitivity);

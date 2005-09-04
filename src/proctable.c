@@ -46,7 +46,6 @@
 #include "callbacks.h"
 #include "prettytable.h"
 #include "util.h"
-#include "infoview.h"
 #include "interface.h"
 #include "favorites.h"
 #include "selinux.h"
@@ -947,9 +946,6 @@ proctable_update_all (ProcData * const procdata)
 	g_free (string);
 
 	proctable_update_list (procdata);
-
-	if (procdata->config.show_more_info)
-		infoview_update (procdata);
 }
 
 
