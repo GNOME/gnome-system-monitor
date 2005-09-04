@@ -145,20 +145,20 @@ cb_hide_process (GtkAction *action, gpointer data)
 void
 cb_about (GtkAction *action, gpointer data)
 {
-	static const gchar *authors[] = {
+	const gchar * const authors[] = {
 		"Kevin Vandersloot",
-		N_("Jorgen Scheibengruber - nicer devices treeview"),
-		N_("Benoît Dejean - maintainer"),
+		"Erik Johnsson",
+		"Jorgen Scheibengruber",
+		"Benoît Dejean",
+		"Paollo Borelli",
 		NULL
 	};
 
-	static const gchar * const documenters[] = {
+	const gchar * const documenters[] = {
 		"Bill Day",
 		"Sun Microsystems",
 		NULL
 	};
-
-	PROCMAN_GETTEXT_ARRAY_INIT(authors);
 
 	gtk_show_about_dialog (
 		NULL,
