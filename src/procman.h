@@ -94,11 +94,9 @@ struct _ProcInfo
 
 	guint64		cpu_time_last;
 
-	guint64		mem;
 	guint64		vmsize;
 	guint64		memres;
 	guint64		memshared;
-	guint64		memrss;
 	unsigned long	memxserver;
 
 	guint		pcpu; /* 0% - 100% */

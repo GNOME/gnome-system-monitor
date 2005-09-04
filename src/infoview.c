@@ -219,14 +219,6 @@ infoview_update (ProcData *procdata)
 	gtk_label_set_text (GTK_LABEL (procdata->infoview.nice_label), string);
 	g_free (string);
 
-	string = SI_gnome_vfs_format_file_size_for_display (info->mem);
-	gtk_label_set_text (GTK_LABEL (procdata->infoview.memtotal_label), string);
-	g_free (string);
-
-	string = SI_gnome_vfs_format_file_size_for_display (info->memrss);
-	gtk_label_set_text (GTK_LABEL (procdata->infoview.memrss_label), string);
-	g_free (string);
-
 	string = SI_gnome_vfs_format_file_size_for_display (info->memshared);
 	gtk_label_set_text (GTK_LABEL (procdata->infoview.memshared_label), string);
 	g_free (string);

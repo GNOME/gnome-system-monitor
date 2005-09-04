@@ -68,9 +68,6 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 	g_return_val_if_fail (infob, 0);
 
 	switch (col) {
-	case COL_MEM:
-		return PROCMAN_RCMP(infoa->mem, infob->mem);
-
 	case COL_VMSIZE:
 		return PROCMAN_RCMP(infoa->vmsize, infob->vmsize);
 
@@ -79,9 +76,6 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 
 	case COL_MEMSHARED:
 		return PROCMAN_RCMP(infoa->memshared, infob->memshared);
-
-	case COL_MEMRSS:
-		return PROCMAN_RCMP(infoa->memrss, infob->memrss);
 
 	case COL_MEMXSERVER:
 		return PROCMAN_RCMP(infoa->memxserver, infob->memxserver);
@@ -242,11 +236,9 @@ proctable_new (ProcData * const procdata)
 		N_("Process Name"),
 		N_("User"),
 		N_("Status"),
-		N_("Memory"),
 		N_("Virtual Memory"),
 		N_("Resident Memory"),
 		N_("Shared Memory"),
-		N_("RSS Memory"),
 		N_("X Server Memory"),
 		/* xgettext:no-c-format */ N_("% CPU"),
 		N_("CPU time"),
@@ -271,11 +263,9 @@ proctable_new (ProcData * const procdata)
 				    G_TYPE_STRING,	/* Process Name */
 				    G_TYPE_STRING,	/* User		*/
 				    G_TYPE_STRING,	/* Status	*/
-				    G_TYPE_STRING,      /* Memory	*/
 				    G_TYPE_STRING,	/* VM Size	*/
 				    G_TYPE_STRING,	/* Resident Memory */
 				    G_TYPE_STRING,	/* Shared Memory */
-				    G_TYPE_STRING,	/* RSS Memory	*/
 				    G_TYPE_STRING,	/* X Server Memory */
 				    G_TYPE_UINT,	/* % CPU	*/
 				    G_TYPE_STRING,	/* CPU time	*/
@@ -324,11 +314,9 @@ proctable_new (ProcData * const procdata)
 
 		switch(i)
 		{
-		case COL_MEM:
 		case COL_VMSIZE:
 		case COL_MEMRES:
 		case COL_MEMSHARED:
-		case COL_MEMRSS:
 		case COL_MEMXSERVER:
 		case COL_CPU:
 		case COL_NICE:
@@ -358,11 +346,9 @@ proctable_new (ProcData * const procdata)
 	{
 		switch(i)
 		{
-		case COL_MEM:
 		case COL_VMSIZE:
 		case COL_MEMRES:
 		case COL_MEMSHARED:
-		case COL_MEMRSS:
 		case COL_MEMXSERVER:
 		case COL_CPU_TIME:
 		case COL_CPU:
@@ -515,11 +501,9 @@ get_process_memory_info(ProcInfo *info)
 
 	glibtop_get_proc_mem(&procmem, info->pid);
 
-	info->mem	= procmem.size;
 	info->vmsize	= procmem.vsize;
 	info->memres	= procmem.resident;
 	info->memshared	= procmem.share;
-	info->memrss	= procmem.rss;
 
 	info->memxserver = xresources.total_bytes_estimate;
 }
@@ -571,13 +555,11 @@ format_duration_for_display (double d)
 static void
 update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info)
 {
-	gchar *mem, *vmsize, *memres, *memshared, *memrss, *memxserver, *cpu_time;
+	gchar *vmsize, *memres, *memshared, *memxserver, *cpu_time;
 
-	mem	   = SI_gnome_vfs_format_file_size_for_display (info->mem);
 	vmsize	   = SI_gnome_vfs_format_file_size_for_display (info->vmsize);
 	memres	   = SI_gnome_vfs_format_file_size_for_display (info->memres);
 	memshared  = SI_gnome_vfs_format_file_size_for_display (info->memshared);
-	memrss	   = SI_gnome_vfs_format_file_size_for_display (info->memrss);
 	memxserver = SI_gnome_vfs_format_file_size_for_display (info->memxserver);
 
 	cpu_time = format_duration_for_display (info->cpu_time_last / procdata->frequency);
@@ -585,11 +567,9 @@ update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info
 	gtk_tree_store_set (store, &info->node,
 			    COL_STATUS, info->status,
 			    COL_USER, info->user,
-			    COL_MEM, mem,
 			    COL_VMSIZE, vmsize,
 			    COL_MEMRES, memres,
 			    COL_MEMSHARED, memshared,
-			    COL_MEMRSS, memrss,
 			    COL_MEMXSERVER, memxserver,
 			    COL_CPU, info->pcpu,
 			    COL_CPU_TIME, cpu_time,
@@ -597,11 +577,9 @@ update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info
 			    -1);
 
 	/* We don't bother updating COL_SECURITYCONTEXT as it can never change */
-	g_free (mem);
 	g_free (vmsize);
 	g_free (memres);
 	g_free (memshared);
-	g_free (memrss);
 	g_free (memxserver);
 	g_free (cpu_time);
 }
@@ -836,7 +814,7 @@ procinfo_new (ProcData *procdata, gint pid)
 	if (info->parent) {
 		info->parent->children = g_slist_prepend (info->parent->children, info);
 		if(g_str_equal(info->name, info->parent->name)
-		   && info->parent->mem == info->mem)
+		   && info->parent->vmsize == info->vmsize)
 			info->is_thread = TRUE;
 	}
 
