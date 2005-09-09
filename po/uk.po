@@ -6,23 +6,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-21 16:01+0300\n"
-"PO-Revision-Date: 2005-08-21 16:03+0300\n"
+"POT-Creation-Date: 2005-09-09 10:21+0300\n"
+"PO-Revision-Date: 2005-09-09 16:03+0300\n"
 "Last-Translator: Maxim V. Dziumanenko <mvd@mylinux.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1
-#: ../src/callbacks.c:165
+#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:165
 #: ../src/interface.c:680
 msgid "System Monitor"
 msgstr "Системний монітор"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2
-#: ../src/callbacks.c:166
+#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:166
 msgid "View current processes and monitor system state"
 msgstr "Перегляд поточних процесів та контроль стану системи"
 
@@ -40,6 +39,35 @@ msgstr ""
 "Юрій Сирота\n"
 "Максим Дзюманенко <mvd@mylinux.com.ua>"
 
+#: ../src/disks.c:186 ../src/memmaps.c:301
+msgid "Device"
+msgstr "Пристрій"
+
+#: ../src/disks.c:187
+msgid "Directory"
+msgstr "Каталог"
+
+#: ../src/disks.c:188 ../src/openfiles.c:230
+msgid "Type"
+msgstr "Тип"
+
+#: ../src/disks.c:189
+msgid "Total"
+msgstr "Загалом"
+
+#: ../src/disks.c:190
+msgid "Free"
+msgstr "Вільно"
+
+#: ../src/disks.c:191
+msgid "Used"
+msgstr "Використано"
+
+#: ../src/disks.c:198 ../src/interface.c:759 ../src/procdialogs.c:743
+#: ../src/procdialogs.c:747
+msgid "Devices"
+msgstr "Пристрої"
+
 #. translators: primary alert message
 #: ../src/favorites.c:348
 msgid "No hidden processes"
@@ -47,8 +75,12 @@ msgstr "Немає прихованих процесів"
 
 #. translators: secondary alert message
 #: ../src/favorites.c:355
-msgid "There are no hidden processes in the list. To show all running processes, select the \"All processes\" option in the main window."
-msgstr "У списку немає прихованих процесів. Щоб показати запущені процеси, виберіть \"Усі процеси\"."
+msgid ""
+"There are no hidden processes in the list. To show all running processes, "
+"select the \"All processes\" option in the main window."
+msgstr ""
+"У списку немає прихованих процесів. Щоб показати запущені процеси, виберіть "
+"\"Усі процеси\"."
 
 #: ../src/favorites.c:375
 msgid "Hidden Processes"
@@ -62,14 +94,17 @@ msgstr "Поточні при_ховані процеси:"
 msgid "_Remove From List"
 msgstr "В_идалити з списку"
 
-#: ../src/favorites.c:430
-#: ../src/procdialogs.c:282
+#: ../src/favorites.c:430 ../src/procdialogs.c:282
 msgid "Note:"
 msgstr "Примітка:"
 
 #: ../src/favorites.c:431
-msgid "These are the processes you have chosen to hide. You can reshow a process by removing it from this list."
-msgstr "Дані процеси приховано. Цей діалог дозволить повернути приховані процеси в список переглядача процесів."
+msgid ""
+"These are the processes you have chosen to hide. You can reshow a process by "
+"removing it from this list."
+msgstr ""
+"Дані процеси приховано. Цей діалог дозволить повернути приховані процеси в "
+"список переглядача процесів."
 
 #: ../src/gnome-system-monitor.schemas.in.h:1
 msgid "Column zero saved width"
@@ -104,8 +139,12 @@ msgid "Default graph swap color"
 msgstr "Типовий колір графіка підкачки"
 
 #: ../src/gnome-system-monitor.schemas.in.h:9
-msgid "Determines which processes to show by default. 0 is All, 1 is user, and 2 is active"
-msgstr "Визначає, які процеси типово відображати. 0 - усі, 1 - користувача, 2 - активні"
+msgid ""
+"Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
+"active"
+msgstr ""
+"Визначає, які процеси типово відображати. 0 - усі, 1 - користувача, 2 - "
+"активні"
 
 #: ../src/gnome-system-monitor.schemas.in.h:10
 msgid "Main Window height"
@@ -172,10 +211,14 @@ msgid "Whether information about all filesystems should be displayed"
 msgstr "Чи буде відображатись інформація про усі файлові системи"
 
 #: ../src/gnome-system-monitor.schemas.in.h:26
-msgid "Whether information about all filesystems should be displayed: this will include filesystem types like 'autofs' and 'procfs'. It can be usefull to get a list of all currently mounted filesystems."
+msgid ""
+"Whether information about all filesystems should be displayed: this will "
+"include filesystem types like 'autofs' and 'procfs'. It can be usefull to "
+"get a list of all currently mounted filesystems."
 msgstr ""
-"Чи буде відображатись інформація про усі файлові системи: включаючи такі типи файлових систем як "
-"'autofs' та 'procfs'. Може бути корисно для отримання списку усіх підключених файлових систем."
+"Чи буде відображатись інформація про усі файлові системи: включаючи такі "
+"типи файлових систем як 'autofs' та 'procfs'. Може бути корисно для "
+"отримання списку усіх підключених файлових систем."
 
 #: ../src/infoview.c:34
 msgid "Less _info"
@@ -205,9 +248,7 @@ msgstr "Пріоритет:"
 msgid "Memory Usage"
 msgstr "Використання пам'яті"
 
-#: ../src/infoview.c:159
-#: ../src/interface.c:543
-#: ../src/interface.c:586
+#: ../src/infoview.c:159 ../src/interface.c:543 ../src/interface.c:586
 msgid "Total:"
 msgstr "Всього:"
 
@@ -284,8 +325,7 @@ msgstr "_Продовжити процес"
 msgid "Continue process if stopped"
 msgstr "Продовжити зупинений процес"
 
-#: ../src/interface.c:62
-#: ../src/interface.c:202
+#: ../src/interface.c:62 ../src/interface.c:202
 msgid "End _Process"
 msgstr "Завершити _процес"
 
@@ -293,8 +333,7 @@ msgstr "Завершити _процес"
 msgid "Force process to finish normally"
 msgstr "Коректно завершити процес"
 
-#: ../src/interface.c:64
-#: ../src/procdialogs.c:126
+#: ../src/interface.c:64 ../src/procdialogs.c:126
 msgid "_Kill Process"
 msgstr "_Зняти процес"
 
@@ -318,8 +357,7 @@ msgstr "П_араметри"
 msgid "Configure the application"
 msgstr "Налаштувати програму"
 
-#: ../src/interface.c:71
-#: ../src/procdialogs.c:82
+#: ../src/interface.c:71 ../src/procdialogs.c:82
 msgid "_Hide Process"
 msgstr "При_ховати процес"
 
@@ -428,8 +466,7 @@ msgstr "Історія пам'яті та свопінгу"
 msgid "User memory:"
 msgstr "Пам'ять користувача:"
 
-#: ../src/interface.c:391
-#: ../src/interface.c:451
+#: ../src/interface.c:391 ../src/interface.c:451
 msgid "of"
 msgstr "з"
 
@@ -449,24 +486,15 @@ msgstr "Отримано:"
 msgid "Send:"
 msgstr "Надіслано:"
 
-#: ../src/interface.c:747
-#: ../src/procdialogs.c:560
+#: ../src/interface.c:747 ../src/procdialogs.c:560
 msgid "Processes"
 msgstr "Процеси"
 
-#: ../src/interface.c:753
-#: ../src/procdialogs.c:652
+#: ../src/interface.c:753 ../src/procdialogs.c:652
 msgid "Resources"
 msgstr "Ресурси"
 
-#: ../src/interface.c:759
-#: ../src/procdialogs.c:743
-#: ../src/procdialogs.c:747
-msgid "Devices"
-msgstr "Пристрої"
-
-#: ../src/load-graph.c:350
-#: ../src/load-graph.c:360
+#: ../src/load-graph.c:350 ../src/load-graph.c:360
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
@@ -494,10 +522,6 @@ msgstr "Ознаки"
 #: ../src/memmaps.c:300
 msgid "VM Offset"
 msgstr "Зсув ВП"
-
-#: ../src/memmaps.c:301
-msgid "Device"
-msgstr "Пристрій"
 
 #: ../src/memmaps.c:302
 msgid "Inode"
@@ -533,14 +557,11 @@ msgid "unknown type"
 msgstr "невідомий тип"
 
 #. Translators: "FD" here means "File Descriptor". Please use
+#. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
 #: ../src/openfiles.c:229
 msgid "FD"
 msgstr "FD"
-
-#: ../src/openfiles.c:230
-msgid "Type"
-msgstr "Тип"
 
 #: ../src/openfiles.c:231
 msgid "Object"
@@ -560,7 +581,8 @@ msgstr "_Файли, що відкриті процесом \"%s\" (PID %u):"
 msgid ""
 "Cannot change the priority of process with pid %d to %d.\n"
 "%s"
-msgstr "Не вдається змінити пріоритет процесу з PID %d на %d.\n"
+msgstr ""
+"Не вдається змінити пріоритет процесу з PID %d на %d.\n"
 "%s"
 
 #: ../src/procactions.c:140
@@ -568,7 +590,8 @@ msgstr "Не вдається змінити пріоритет процесу �
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
 "%s"
-msgstr "Не вдається зняти процес %d за допомогою сигналу %d.\n"
+msgstr ""
+"Не вдається зняти процес %d за допомогою сигналу %d.\n"
 "%s"
 
 #. translators: primary alert message
@@ -577,9 +600,15 @@ msgid "Hide the selected process?"
 msgstr "Сховати виділений процес"
 
 #. FIXME: View menu -> Edit menu
+#. translators: secondary alert messagex
 #: ../src/procdialogs.c:72
-msgid "Hidden processes are no longer visible in the process list. You can re-enable them by selecting the \"Hidden Processes\" entry in the View menu."
-msgstr "Приховані процеси більше не відображаються у переліку процесів. Їх відображення можна увімкнути, вибравши пункт меню \"Приховані процеси\" в меню \"Правка\"."
+msgid ""
+"Hidden processes are no longer visible in the process list. You can re-"
+"enable them by selecting the \"Hidden Processes\" entry in the View menu."
+msgstr ""
+"Приховані процеси більше не відображаються у переліку процесів. Їх "
+"відображення можна увімкнути, вибравши пункт меню \"Приховані процеси\" в "
+"меню \"Правка\"."
 
 #. translators: primary alert message
 #: ../src/procdialogs.c:121
@@ -588,8 +617,13 @@ msgstr "Зняти виділений процес?"
 
 #. translators: secondary alert message
 #: ../src/procdialogs.c:123
-msgid "Killing a process may destroy data, break the session or introduce a security risk. Only unresponding processes should be killed."
-msgstr "Знімаючи процес, ви можете знищити ваші дані, перервати робочий сеанс або створити загрозу безпеці. Знімати треба лише процеси, які не відповідають на запити."
+msgid ""
+"Killing a process may destroy data, break the session or introduce a "
+"security risk. Only unresponding processes should be killed."
+msgstr ""
+"Знімаючи процес, ви можете знищити ваші дані, перервати робочий сеанс або "
+"створити загрозу безпеці. Знімати треба лише процеси, які не відповідають на "
+"запити."
 
 #. translators: primary alert message
 #: ../src/procdialogs.c:130
@@ -598,8 +632,13 @@ msgstr "Завершити виділений процес?"
 
 #. translators: secondary alert message
 #: ../src/procdialogs.c:132
-msgid "Ending a process may destroy data, break the session or introduce a security risk. Only unresponding processes should be ended."
-msgstr "Завершуючи процес, ви можете знищити ваші дані, перервати робочий сеанс або створити загрозу безпеці. Завершувати треба лише процеси, які не відповідають на запити."
+msgid ""
+"Ending a process may destroy data, break the session or introduce a security "
+"risk. Only unresponding processes should be ended."
+msgstr ""
+"Завершуючи процес, ви можете знищити ваші дані, перервати робочий сеанс або "
+"створити загрозу безпеці. Завершувати треба лише процеси, які не "
+"відповідають на запити."
 
 #: ../src/procdialogs.c:135
 msgid "_End Process"
@@ -638,8 +677,12 @@ msgid "_Nice value:"
 msgstr "_Рівень пріоритету:"
 
 #: ../src/procdialogs.c:283
-msgid "The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."
-msgstr "Рівень nice пов'язаний з пріоритетом процесу. Менший рівень nice відповідає вищому рівню процесу."
+msgid ""
+"The priority of a process is given by its nice value. A lower nice value "
+"corresponds to a higher priority."
+msgstr ""
+"Рівень nice пов'язаний з пріоритетом процесу. Менший рівень nice відповідає "
+"вищому рівню процесу."
 
 #: ../src/procdialogs.c:446
 msgid "Processes i_nfo showed in list:"
@@ -657,14 +700,11 @@ msgstr "Параметри системного монітора"
 msgid "Behavior"
 msgstr "Поведінка"
 
-#: ../src/procdialogs.c:586
-#: ../src/procdialogs.c:678
+#: ../src/procdialogs.c:586 ../src/procdialogs.c:678
 msgid "_Update interval:"
 msgstr "Період _оновлення:"
 
-#: ../src/procdialogs.c:607
-#: ../src/procdialogs.c:695
-#: ../src/procdialogs.c:782
+#: ../src/procdialogs.c:607 ../src/procdialogs.c:695 ../src/procdialogs.c:782
 msgid "seconds"
 msgstr "секунд"
 
@@ -813,4 +853,3 @@ msgstr "%.1f Мб"
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f Гб"
-
