@@ -103,8 +103,9 @@ timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer 
 
 	if (g_str_equal (key, "/apps/procman/update_interval")) {
 		procdata->config.update_interval = gconf_value_get_int (value);
-		procdata->config.update_interval = 
-			MAX (procdata->config.update_interval, 1000);
+		procdata->config.update_interval = CLAMP(procdata->config.update_interval,
+							 MIN_UPDATE_INTERVAL,
+							 MAX_UPDATE_INTERVAL);
 
 		smooth_refresh_reset(procdata->smooth_refresh);
 
@@ -378,7 +379,9 @@ procman_data_new (GConfClient *client)
 	sheight = gdk_screen_height ();
 	pd->config.width = CLAMP (pd->config.width, 50, swidth);
 	pd->config.height = CLAMP (pd->config.height, 50, sheight);
-	pd->config.update_interval = MAX (pd->config.update_interval, 1000);
+	pd->config.update_interval = CLAMP(pd->config.update_interval,
+					   MIN_UPDATE_INTERVAL,
+					   MAX_UPDATE_INTERVAL);
 	pd->config.graph_update_interval = MAX (pd->config.graph_update_interval, 250);
 	pd->config.disks_update_interval = MAX (pd->config.disks_update_interval, 1000);
 	pd->config.whose_process = CLAMP (pd->config.whose_process, 0, 2);
