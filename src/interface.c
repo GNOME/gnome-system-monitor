@@ -511,7 +511,7 @@ create_sys_view (ProcData *procdata)
 			    G_CALLBACK (cb_net_in_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, 0, 0, 0, 0);
 
-	label = gtk_label_new (_("Receive:"));
+	label = gtk_label_new (_("Received:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
 
@@ -555,7 +555,7 @@ create_sys_view (ProcData *procdata)
 			    G_CALLBACK (cb_net_out_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, 0, 0, 0, 0);
 
-	label = gtk_label_new (_("Send:"));
+	label = gtk_label_new (_("Sent:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
 
