@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman 2.11.91\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-08 21:25+0800\n"
-"PO-Revision-Date: 2005-08-06 08:59+0800\n"
+"POT-Creation-Date: 2005-10-24 17:24+0800\n"
+"PO-Revision-Date: 2005-10-22 08:15+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (traditional) <community@linuxhall.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,24 +17,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:167
-#: ../src/interface.c:836
+#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:164
+#: ../src/interface.c:671
 msgid "System Monitor"
 msgstr "系統監控"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:168
+#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:165
 msgid "View current processes and monitor system state"
 msgstr "顯示目前的程序並監控系統的狀態"
 
-#: ../src/callbacks.c:152
-msgid "Jorgen Scheibengruber - nicer devices treeview"
-msgstr "Jorgen Scheibengruber  - 較好的裝置檔案樹狀顯示模式"
-
-#: ../src/callbacks.c:153
-msgid "Benoît Dejean - maintainer"
-msgstr "Benoît Dejean - 維護者"
-
-#: ../src/callbacks.c:176
+#: ../src/callbacks.c:173
 msgid "translator-credits"
 msgstr ""
 "如對翻譯有任何意見，請送一封電子郵件給\n"
@@ -43,6 +35,35 @@ msgstr ""
 "\n"
 "Abel Cheung <abel@oaka.org>, 2001-03, 05\n"
 "Woodman Tuen <woodman@culturecom.com.hk>, 2004"
+
+#: ../src/disks.c:186 ../src/memmaps.c:301
+msgid "Device"
+msgstr "裝置"
+
+#: ../src/disks.c:187
+msgid "Directory"
+msgstr "目錄"
+
+#: ../src/disks.c:188 ../src/openfiles.c:230
+msgid "Type"
+msgstr "類型"
+
+#: ../src/disks.c:189
+msgid "Total"
+msgstr "總數"
+
+#: ../src/disks.c:190
+msgid "Free"
+msgstr "剩餘"
+
+#: ../src/disks.c:191
+msgid "Used"
+msgstr "已用"
+
+#: ../src/disks.c:198 ../src/interface.c:750 ../src/procdialogs.c:743
+#: ../src/procdialogs.c:747
+msgid "Devices"
+msgstr "裝置"
 
 #. translators: primary alert message
 #: ../src/favorites.c:348
@@ -143,120 +164,51 @@ msgstr "排列程序的次序"
 msgid "Saves the currently viewed tab"
 msgstr "本數值表示程式下次啟動時顯示的分頁"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
-msgid "Show advanced info tab on startup"
-msgstr "程式啟動時顯示程序的詳細資訊"
-
 # (Abel) 怎麼每一欄都是稱為第 0 欄的？
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:16
 msgid "Show column zero on startup"
 msgstr "程式啟動時顯示第 0 欄"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:17
 msgid "Show process dependencies in tree form"
 msgstr "以樹狀方式顯示程序間的相依性"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:18
 msgid "Show process threads"
 msgstr "顯示程序中的所有線程 (thread)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:19
 msgid "Show warning dialog when hiding processes"
 msgstr "當隱藏程序時顯示警告訊息對話方塊"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:20
 msgid "Show warning dialog when killing processes"
 msgstr "準備強行終止程序時顯示警告訊息對話方塊"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:21
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "儲存裝置清單每次更新的時間，以毫秒表示"
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:22
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "資源圖表每次更新的時間，以毫秒表示"
 
-#: ../src/gnome-system-monitor.schemas.in.h:24
+#: ../src/gnome-system-monitor.schemas.in.h:23
 msgid "Time in milliseconds between updates of the process view"
 msgstr "程序清單每次更新的時間，以毫秒表示"
 
-#: ../src/gnome-system-monitor.schemas.in.h:25
+#: ../src/gnome-system-monitor.schemas.in.h:24
 msgid "Whether information about all filesystems should be displayed"
 msgstr "是否要顯示關於所有檔案系統的資訊"
 
-#: ../src/gnome-system-monitor.schemas.in.h:26
+#: ../src/gnome-system-monitor.schemas.in.h:25
 msgid ""
-"Whether information about all filesystems should be displayed: this will "
-"include filesystem types like 'autofs' and 'procfs'. It can be usefull to "
-"get a list of all currently mounted filesystems."
+"Whether to display information about all filesystems (including types like "
+"'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
+"filesystems."
 msgstr ""
-"是否要顯示關於所有檔案系統的資訊：這裡包括了像「autofs」和「procfs」這種檔案"
-"類型。在取得目前所有掛載的檔案系統清單時會很有用。"
-
-#: ../src/infoview.c:34
-msgid "Less _info"
-msgstr "隱藏詳細資訊(_I)"
-
-#: ../src/infoview.c:34
-msgid "More _info"
-msgstr "顯示詳細資訊(_I)"
-
-#: ../src/infoview.c:99
-msgid "Process Info"
-msgstr "程序資訊"
-
-#: ../src/infoview.c:113
-msgid "Command:"
-msgstr "指令:"
-
-#: ../src/infoview.c:117
-msgid "Status:"
-msgstr "狀態:"
-
-#: ../src/infoview.c:121
-msgid "Priority:"
-msgstr "優先度:"
-
-#: ../src/infoview.c:145
-msgid "Memory Usage"
-msgstr "記憶體使用量"
-
-#: ../src/infoview.c:159 ../src/interface.c:699 ../src/interface.c:742
-msgid "Total:"
-msgstr "總數:"
-
-#: ../src/infoview.c:163
-msgid "RSS:"
-msgstr "RSS:"
-
-#: ../src/infoview.c:167
-msgid "Shared:"
-msgstr "分享記憶:"
-
-#: ../src/infoview.c:210
-#, c-format
-msgid "Very high - nice %d"
-msgstr "極高 (Nice 值為 %d)"
-
-#: ../src/infoview.c:212
-#, c-format
-msgid "High - nice %d"
-msgstr "高 (Nice 值為 %d)"
-
-#: ../src/infoview.c:214
-#, c-format
-msgid "Normal - nice %d"
-msgstr "正常 (Nice 值為 %d)"
-
-#: ../src/infoview.c:216
-#, c-format
-msgid "Low - nice %d"
-msgstr "低 (Nice 值為 %d)"
-
-#: ../src/infoview.c:218
-#, c-format
-msgid "Very low - nice %d"
-msgstr "極低 (Nice 值為 %d)"
+"是否要顯示關於所有檔案系統的資訊（這裡包括了像「autofs」和「procfs」這種檔案"
+"類型）。在取得目前所有掛載的檔案系統清單時會很有用。"
 
 #: ../src/interface.c:47
 msgid "_File"
@@ -298,7 +250,7 @@ msgstr "繼續程序(_C)"
 msgid "Continue process if stopped"
 msgstr "如果被停止則繼續該程序"
 
-#: ../src/interface.c:61 ../src/interface.c:201
+#: ../src/interface.c:61 ../src/interface.c:193
 msgid "End _Process"
 msgstr "終止程序(_P)"
 
@@ -419,86 +371,61 @@ msgstr "我的程序(_Y)"
 msgid "Show user own process"
 msgstr "顯示使用者擁有的程序"
 
-#: ../src/interface.c:287 ../src/memmaps.c:301
-msgid "Device"
-msgstr "裝置"
-
-#: ../src/interface.c:288
-msgid "Directory"
-msgstr "目錄"
-
-#: ../src/interface.c:289 ../src/openfiles.c:230
-msgid "Type"
-msgstr "類型"
-
-#: ../src/interface.c:290
-msgid "Total"
-msgstr "總數"
-
-#: ../src/interface.c:291
-msgid "Free"
-msgstr "剩餘"
-
-#: ../src/interface.c:292
-msgid "Used"
-msgstr "已用"
-
-#: ../src/interface.c:301 ../src/interface.c:915 ../src/procdialogs.c:743
-#: ../src/procdialogs.c:747
-msgid "Devices"
-msgstr "裝置"
-
-#: ../src/interface.c:430
+#: ../src/interface.c:265
 msgid "CPU History"
 msgstr "CPU 使用量紀錄"
 
-#: ../src/interface.c:473
+#: ../src/interface.c:308
 msgid "CPU:"
 msgstr "CPU:"
 
-#: ../src/interface.c:476
+#: ../src/interface.c:311
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: ../src/interface.c:496
+#: ../src/interface.c:331
 msgid "Memory and Swap History"
 msgstr "記憶體/交換記憶使用量紀錄"
 
-#: ../src/interface.c:529
+#: ../src/interface.c:364
 msgid "User memory:"
 msgstr "已使用的記憶體:"
 
 # (Abel) e.g. 200MB of 256MB
-#: ../src/interface.c:547 ../src/interface.c:607
+#: ../src/interface.c:382 ../src/interface.c:442
 msgid "of"
 msgstr "/"
 
-#: ../src/interface.c:588
+#: ../src/interface.c:423
 msgid "Used swap:"
 msgstr "已使用的交換記憶:"
 
-#: ../src/interface.c:647
+#: ../src/interface.c:482
 msgid "Network History"
 msgstr "網路紀錄"
 
-#: ../src/interface.c:679
-msgid "Receive:"
+#: ../src/interface.c:514
+msgid "Received:"
 msgstr "已接收:"
 
-#: ../src/interface.c:723
-msgid "Send:"
+#: ../src/interface.c:534 ../src/interface.c:577
+msgid "Total:"
+msgstr "總數:"
+
+#: ../src/interface.c:558
+msgid "Sent:"
 msgstr "已傳送:"
 
-#: ../src/interface.c:903 ../src/procdialogs.c:560
+#: ../src/interface.c:738 ../src/procdialogs.c:560
 msgid "Processes"
 msgstr "程序"
 
-#: ../src/interface.c:909 ../src/procdialogs.c:652
+#: ../src/interface.c:744 ../src/procdialogs.c:652
 msgid "Resources"
 msgstr "資源"
 
-#: ../src/load-graph.c:350 ../src/load-graph.c:360
+#: ../src/load-graph.c:377 ../src/load-graph.c:387
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
@@ -741,95 +668,87 @@ msgstr "更新間隔(_I):"
 msgid "Show _all filesystems"
 msgstr "顯示所有檔案系統(_A)"
 
-#: ../src/proctable.c:242
+#: ../src/proctable.c:235
 msgid "Process Name"
 msgstr "程序名稱"
 
-#: ../src/proctable.c:243
+#: ../src/proctable.c:236
 msgid "User"
 msgstr "用戶"
 
-#: ../src/proctable.c:244
+#: ../src/proctable.c:237
 msgid "Status"
 msgstr "狀態"
 
-#: ../src/proctable.c:245
-msgid "Memory"
-msgstr "記憶體"
-
-#: ../src/proctable.c:246
+#: ../src/proctable.c:238
 msgid "Virtual Memory"
 msgstr "虛擬記憶體"
 
-#: ../src/proctable.c:247
+#: ../src/proctable.c:239
 msgid "Resident Memory"
 msgstr "常駐記憶"
 
-#: ../src/proctable.c:248
+#: ../src/proctable.c:240
 msgid "Shared Memory"
 msgstr "分享記憶"
 
-#: ../src/proctable.c:249
-msgid "RSS Memory"
-msgstr "RSS 記憶"
-
-#: ../src/proctable.c:250
+#: ../src/proctable.c:241
 msgid "X Server Memory"
 msgstr "X伺服器記憶體"
 
-#: ../src/proctable.c:251
+#: ../src/proctable.c:242
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:252
+#: ../src/proctable.c:243
 msgid "CPU time"
 msgstr "CPU 運行時間"
 
-#: ../src/proctable.c:253
+#: ../src/proctable.c:244
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.c:254
+#: ../src/proctable.c:245
 msgid "ID"
 msgstr "ID"
 
 # (Abel) 和 selinux 有關?
-#: ../src/proctable.c:255
+#: ../src/proctable.c:246
 msgid "Security Context"
 msgstr "保安規則內容"
 
-#: ../src/proctable.c:256
+#: ../src/proctable.c:247
 msgid "Arguments"
 msgstr "參數"
 
-#: ../src/proctable.c:430
+#: ../src/proctable.c:415
 msgid "Running"
 msgstr "執行中"
 
-#: ../src/proctable.c:435
+#: ../src/proctable.c:420
 msgid "Stopped"
 msgstr "已停止"
 
 # (Abel) 不譯會比較容易明白
-#: ../src/proctable.c:440
+#: ../src/proctable.c:425
 msgid "Zombie"
 msgstr "Zombie"
 
-#: ../src/proctable.c:445
+#: ../src/proctable.c:430
 msgid "Uninterruptible"
 msgstr "無法中斷"
 
-#: ../src/proctable.c:450
+#: ../src/proctable.c:435
 msgid "Sleeping"
 msgstr "睡眠中"
 
-#: ../src/proctable.c:634
+#: ../src/proctable.c:611
 #, c-format
 msgid "%s (thread)"
 msgstr "%s (線程)"
 
-#: ../src/proctable.c:1022
+#: ../src/proctable.c:996
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "最後 1、5、15 分鐘的平均負載：%0.2f, %0.2f, %0.2f"
