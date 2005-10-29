@@ -162,7 +162,8 @@ compare_memmaps (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoi
 
 	gtk_tree_model_get (model, iter, MMAP_COL_VMSTART, &old_name, -1);
 
-	g_return_val_if_fail(old_name != NULL, FALSE);
+	if (!old_name)
+		return FALSE;
 
 	/* If the glibtop_map_entry is still there, we remove it
 	   from the new_maps so it's going to be updated only.
@@ -373,7 +374,7 @@ memmaps_timer (gpointer data)
 	GtkTreeModel *model;
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (mmdata->tree));
-	g_return_val_if_fail (model, FALSE);
+	g_assert(model);
 
 	update_memmaps_dialog (mmdata);
 
@@ -394,7 +395,9 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 	ProcInfo *info;
 
 	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
-	g_return_if_fail (info);
+
+	if (!info)
+		return;
 
 	mmdata = create_memmapsdata (procdata);
 	mmdata->info = info;

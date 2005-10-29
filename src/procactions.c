@@ -44,7 +44,9 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 	GtkWidget *dialog;
 
 	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
-	g_return_if_fail (info);
+
+	if (!info)
+		return;
 
 	error = setpriority (PRIO_PROCESS, info->pid, args->nice_value);
 
@@ -111,7 +113,9 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
 	GtkWidget *dialog;
 
 	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
-	g_return_if_fail (info);
+
+	if (!info)
+		return;
 
 	error = kill (info->pid, args->signal);
 

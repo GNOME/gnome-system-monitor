@@ -156,7 +156,9 @@ update_openfiles_dialog (GtkWidget *tree)
 	gint i;
 
 	info = g_object_get_data (G_OBJECT (tree), "selected_info");
-	g_return_if_fail (info);
+
+	if (!info)
+		return;
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
 
@@ -280,7 +282,7 @@ openfiles_timer (gpointer data)
 	GtkTreeModel *model;
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
-	g_return_val_if_fail (model, FALSE);
+	g_assert(model);
 
 	update_openfiles_dialog (tree);
 
@@ -303,7 +305,9 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 	guint timer;
 
 	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
-	g_return_if_fail (info);
+
+	if (!info)
+		return;
 
 	openfilesdialog = gtk_dialog_new_with_buttons (_("Open Files"), NULL,
 						       GTK_DIALOG_DESTROY_WITH_PARENT,

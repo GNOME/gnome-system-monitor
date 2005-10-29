@@ -199,6 +199,9 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 		gdk_color_parse (color, &procdata->config.net_out_color);
 		load_graph_get_colors(procdata->net_graph)[3] = procdata->config.net_out_color;
 	}
+	else {
+		g_assert_not_reached();
+	}
 
 	load_graph_reset_colors(procdata->cpu_graph);
 	load_graph_reset_colors(procdata->mem_graph);
@@ -423,8 +426,9 @@ procman_get_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefi
 	GtkSortType order;
 	gchar *key;
 	
-	g_return_val_if_fail (tree, FALSE);
-	g_return_val_if_fail (prefix, FALSE);
+
+	g_assert(tree);
+	g_assert(prefix);
 	
 	if (!gconf_client_dir_exists (client, prefix, NULL)) 
 		return FALSE;
@@ -503,8 +507,8 @@ procman_save_tree_state (GConfClient *client, GtkWidget *tree, const gchar *pref
 	gint sort_col;
 	GtkSortType order;
 	
-	g_return_if_fail (tree);
-	g_return_if_fail (prefix);
+	g_assert(tree);
+	g_assert(radix);
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
 	if (gtk_tree_sortable_get_sort_column_id (GTK_TREE_SORTABLE (model), &sort_col,
@@ -574,7 +578,7 @@ procman_save_config (ProcData *data)
 	GConfClient *client = data->client;
 	gint width, height;
 
-	g_return_if_fail(data != NULL);
+	g_assert(data);
 		
 	procman_save_tree_state (data->client, data->tree, "/apps/procman/proctree");
 	procman_save_tree_state (data->client, data->disk_list, "/apps/procman/disktreenew");
@@ -729,7 +733,7 @@ main (int argc, char *argv[])
 
 	init_volume_monitor (procdata);
 
-	g_return_val_if_fail(procdata->app != NULL, 1);
+	g_assert(procdata->app);
 			
  	gtk_widget_show(procdata->app);
  	

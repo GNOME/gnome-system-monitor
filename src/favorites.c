@@ -57,7 +57,9 @@ add_single_to_blacklist (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *it
 	ProcInfo *info = NULL;
 	
 	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
-	g_return_if_fail (info);
+	
+	if (!info)
+		return;
 	
 	add_to_blacklist (procdata, info->name);
 	

@@ -453,7 +453,7 @@ load_graph_unalloc (LoadGraph *g)
 {
 	int i;
 
-	g_return_if_fail(g->allocated);
+	g_assert(g->allocated);
 
 	for (i = 0; i < g->num_points; i++) {
 		g_free (g->data [i]);
@@ -476,7 +476,7 @@ load_graph_alloc (LoadGraph *g)
 {
 	int i, j;
 
-	g_return_if_fail(!g->allocated);
+	g_assert(!g->allocated);
 
 	g->data = g_new (gfloat *, g->num_points);
 

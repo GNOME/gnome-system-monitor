@@ -608,7 +608,7 @@ menu_item_select_cb (GtkMenuItem *proxy,
 	char *message;
 
 	action = g_object_get_data (G_OBJECT (proxy),  "gtk-action");
-	g_return_if_fail (action != NULL);
+	g_assert(action);
 
 	g_object_get (G_OBJECT (action), "tooltip", &message, NULL);
 	if (message)

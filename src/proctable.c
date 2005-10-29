@@ -63,8 +63,9 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 
 	gtk_tree_model_get (model, itera, COL_POINTER, &infoa, -1);
 	gtk_tree_model_get (model, iterb, COL_POINTER, &infob, -1);
-	g_return_val_if_fail (infoa, 0);
-	g_return_val_if_fail (infob, 0);
+
+	g_assert(infoa);
+	g_assert(infob);
 
 	switch (col) {
 	case COL_VMSIZE:
@@ -391,7 +392,7 @@ proctable_new (ProcData * const procdata)
 static void
 proctable_free_info (ProcData *procdata, ProcInfo *info)
 {
-	g_return_if_fail(info != NULL);
+	g_assert(info != NULL);
 
 	if(info->pixbuf) {
 		g_object_unref (info->pixbuf);
@@ -679,7 +680,7 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 {
 	GtkTreeModel *model;
 
-	g_return_if_fail (info);
+	g_assert(info);
 
 	if (!info->is_visible)
 		return;
