@@ -508,7 +508,7 @@ procman_save_tree_state (GConfClient *client, GtkWidget *tree, const gchar *pref
 	GtkSortType order;
 	
 	g_assert(tree);
-	g_assert(radix);
+	g_assert(prefix);
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
 	if (gtk_tree_sortable_get_sort_column_id (GTK_TREE_SORTABLE (model), &sort_col,
