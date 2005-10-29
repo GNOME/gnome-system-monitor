@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor (procman) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-19 16:15+0900\n"
-"PO-Revision-Date: 2005-07-19 16:15+0900\n"
+"POT-Creation-Date: 2005-10-29 13:42+0900\n"
+"PO-Revision-Date: 2005-10-29 13:39+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -16,29 +16,50 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:167
-#: ../src/interface.c:836
+#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:164
+#: ../src/interface.c:671
 msgid "System Monitor"
 msgstr "システム・モニタ"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:168
+#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:165
 msgid "View current processes and monitor system state"
-msgstr "現在のプロセスを表示して、システム状況を監視します"
+msgstr "現在のプロセスを表示して、システムの状態を監視します"
 
-#: ../src/callbacks.c:152
-msgid "Jorgen Scheibengruber - nicer devices treeview"
-msgstr "Jorgen Scheibengruber - クールなデバイスのツリー表示"
-
-#: ../src/callbacks.c:153
-msgid "Benoît Dejean - maintainer"
-msgstr "Benoît Dejean - メンテナンス担当"
-
-#: ../src/callbacks.c:176
+#: ../src/callbacks.c:173
 msgid "translator-credits"
 msgstr ""
 "相花 毅 <aihana@gnome.gr.jp>\n"
 "KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>\n"
-"日本GNOMEユーザー会 <http://www.gnome.gr.jp>"
+"日本GNOMEユーザー会 http://www.gnome.gr.jp"
+
+#: ../src/disks.c:186 ../src/memmaps.c:301
+msgid "Device"
+msgstr "デバイス"
+
+#: ../src/disks.c:187
+msgid "Directory"
+msgstr "フォルダ"
+
+#: ../src/disks.c:188 ../src/openfiles.c:230
+msgid "Type"
+msgstr "種類"
+
+#: ../src/disks.c:189
+msgid "Total"
+msgstr "合計"
+
+#: ../src/disks.c:190
+msgid "Free"
+msgstr "空き"
+
+#: ../src/disks.c:191
+msgid "Used"
+msgstr "使用済み"
+
+#: ../src/disks.c:198 ../src/interface.c:750 ../src/procdialogs.c:743
+#: ../src/procdialogs.c:747
+msgid "Devices"
+msgstr "デバイスの一覧"
 
 #. translators: primary alert message
 #: ../src/favorites.c:348
@@ -144,119 +165,50 @@ msgid "Saves the currently viewed tab"
 msgstr "現在表示しているタブを保存するか"
 
 #: ../src/gnome-system-monitor.schemas.in.h:16
-msgid "Show advanced info tab on startup"
-msgstr "起動時に詳細情報のタブを表示するか"
-
-#: ../src/gnome-system-monitor.schemas.in.h:17
 msgid "Show column zero on startup"
 msgstr "起動時に項目０を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:17
 msgid "Show process dependencies in tree form"
 msgstr "ツリー表示でプロセスの依存関係を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:18
 msgid "Show process threads"
 msgstr "プロセスのスレッドを表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:19
 msgid "Show warning dialog when hiding processes"
 msgstr "プロセスを非表示にする時に警告ダイアログを表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:20
 msgid "Show warning dialog when killing processes"
 msgstr "プロセスを強制終了する際に警告ダイアログを表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:21
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "デバイス一覧の更新間隔 (ミリ秒)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:22
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "グラフの更新間隔 (ミリ秒)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:24
+#: ../src/gnome-system-monitor.schemas.in.h:23
 msgid "Time in milliseconds between updates of the process view"
 msgstr "プロセス一覧の更新間隔 (ミリ秒)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:25
+#: ../src/gnome-system-monitor.schemas.in.h:24
 msgid "Whether information about all filesystems should be displayed"
 msgstr "全てのファイルシステムの情報を表示するかどうか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:26
+#: ../src/gnome-system-monitor.schemas.in.h:25
 msgid ""
-"Whether information about all filesystems should be displayed: this will "
-"include filesystem types like 'autofs' and 'procfs'. It can be usefull to "
-"get a list of all currently mounted filesystems."
+"Whether to display information about all filesystems (including types like "
+"'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
+"filesystems."
 msgstr ""
-"全てのファイルシステムの情報を表示するかどうかです。これは 'autofs' や "
-"'procfs' のようなファイルシステムも含まれます。現在マウントされている全ての"
-"ファイルシステムのリストを取得する際に使用します。"
-
-#: ../src/infoview.c:34
-msgid "Less _info"
-msgstr "簡易表示(_I)"
-
-#: ../src/infoview.c:34
-msgid "More _info"
-msgstr "詳細表示(_I)"
-
-#: ../src/infoview.c:99
-msgid "Process Info"
-msgstr "プロセスの情報"
-
-#: ../src/infoview.c:113
-msgid "Command:"
-msgstr "コマンド:"
-
-#: ../src/infoview.c:117
-msgid "Status:"
-msgstr "状態:"
-
-#: ../src/infoview.c:121
-msgid "Priority:"
-msgstr "優先度:"
-
-#: ../src/infoview.c:145
-msgid "Memory Usage"
-msgstr "メモリの使用量"
-
-#: ../src/infoview.c:159 ../src/interface.c:699 ../src/interface.c:742
-msgid "Total:"
-msgstr "合計:"
-
-#: ../src/infoview.c:163
-msgid "RSS:"
-msgstr "RSS:"
-
-#: ../src/infoview.c:167
-msgid "Shared:"
-msgstr "共有:"
-
-#: ../src/infoview.c:210
-#, c-format
-msgid "Very high - nice %d"
-msgstr "一番高い - Nice値 %d"
-
-#: ../src/infoview.c:212
-#, c-format
-msgid "High - nice %d"
-msgstr "高い - Nice値 %d"
-
-#: ../src/infoview.c:214
-#, c-format
-msgid "Normal - nice %d"
-msgstr "標準 - Nice値 %d"
-
-#: ../src/infoview.c:216
-#, c-format
-msgid "Low - nice %d"
-msgstr "低い - Nice値 %d"
-
-#: ../src/infoview.c:218
-#, c-format
-msgid "Very low - nice %d"
-msgstr "一番低い - Nice値 %d"
+"全てのファイルシステムの情報を表示するかどうかです (これは 'autofs' や "
+"'procfs' のような類も含まれます)。現在マウントされている全てのファイルシステ"
+"ムの一覧を取得する際に使用します。"
 
 #: ../src/interface.c:47
 msgid "_File"
@@ -298,7 +250,7 @@ msgstr "プロセスの再開(_C)"
 msgid "Continue process if stopped"
 msgstr "停止したプロセスの実行を再開します"
 
-#: ../src/interface.c:61 ../src/interface.c:201
+#: ../src/interface.c:61 ../src/interface.c:193
 msgid "End _Process"
 msgstr "プロセスの終了(_P)"
 
@@ -418,85 +370,60 @@ msgstr "ユーザのプロセス(_Y)"
 msgid "Show user own process"
 msgstr "ユーザが起動したプロセスを表示します"
 
-#: ../src/interface.c:287 ../src/memmaps.c:301
-msgid "Device"
-msgstr "デバイス"
-
-#: ../src/interface.c:288
-msgid "Directory"
-msgstr "フォルダ"
-
-#: ../src/interface.c:289 ../src/openfiles.c:230
-msgid "Type"
-msgstr "種類"
-
-#: ../src/interface.c:290
-msgid "Total"
-msgstr "合計"
-
-#: ../src/interface.c:291
-msgid "Free"
-msgstr "空き"
-
-#: ../src/interface.c:292
-msgid "Used"
-msgstr "使用済み"
-
-#: ../src/interface.c:301 ../src/interface.c:915 ../src/procdialogs.c:743
-#: ../src/procdialogs.c:747
-msgid "Devices"
-msgstr "デバイスの一覧"
-
-#: ../src/interface.c:430
+#: ../src/interface.c:265
 msgid "CPU History"
 msgstr "CPU 使用率の履歴"
 
-#: ../src/interface.c:473
+#: ../src/interface.c:308
 msgid "CPU:"
 msgstr "CPU:"
 
-#: ../src/interface.c:476
+#: ../src/interface.c:311
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: ../src/interface.c:496
+#: ../src/interface.c:331
 msgid "Memory and Swap History"
 msgstr "メモリとスワップの履歴"
 
-#: ../src/interface.c:529
+#: ../src/interface.c:364
 msgid "User memory:"
 msgstr "ユーザのメモリ:"
 
-#: ../src/interface.c:547 ../src/interface.c:607
+#: ../src/interface.c:382 ../src/interface.c:442
 msgid "of"
 msgstr "/"
 
-#: ../src/interface.c:588
+#: ../src/interface.c:423
 msgid "Used swap:"
 msgstr "使用済みスワップ:"
 
-#: ../src/interface.c:647
+#: ../src/interface.c:482
 msgid "Network History"
 msgstr "ネットワークの履歴"
 
-#: ../src/interface.c:679
-msgid "Receive:"
-msgstr "受信:"
+#: ../src/interface.c:514
+msgid "Received:"
+msgstr "受信したデータ:"
 
-#: ../src/interface.c:723
-msgid "Send:"
-msgstr "送信:"
+#: ../src/interface.c:534 ../src/interface.c:577
+msgid "Total:"
+msgstr "合計:"
 
-#: ../src/interface.c:903 ../src/procdialogs.c:560
+#: ../src/interface.c:558
+msgid "Sent:"
+msgstr "送信したデータ:"
+
+#: ../src/interface.c:738 ../src/procdialogs.c:560
 msgid "Processes"
 msgstr "プロセス"
 
-#: ../src/interface.c:909 ../src/procdialogs.c:652
+#: ../src/interface.c:744 ../src/procdialogs.c:652
 msgid "Resources"
 msgstr "リソース"
 
-#: ../src/load-graph.c:350 ../src/load-graph.c:360
+#: ../src/load-graph.c:377 ../src/load-graph.c:387
 #, c-format
 msgid "%s/s"
 msgstr "%s/秒"
@@ -740,93 +667,85 @@ msgstr "更新間隔(_I):"
 msgid "Show _all filesystems"
 msgstr "全てのファイルシステムを表示する(_A)"
 
-#: ../src/proctable.c:242
+#: ../src/proctable.c:235
 msgid "Process Name"
 msgstr "プロセス名"
 
-#: ../src/proctable.c:243
+#: ../src/proctable.c:236
 msgid "User"
 msgstr "ユーザ"
 
-#: ../src/proctable.c:244
+#: ../src/proctable.c:237
 msgid "Status"
 msgstr "状態"
 
-#: ../src/proctable.c:245
-msgid "Memory"
-msgstr "メモリ"
-
-#: ../src/proctable.c:246
+#: ../src/proctable.c:238
 msgid "Virtual Memory"
 msgstr "仮想メモリ"
 
-#: ../src/proctable.c:247
+#: ../src/proctable.c:239
 msgid "Resident Memory"
 msgstr "Resident メモリ"
 
-#: ../src/proctable.c:248
+#: ../src/proctable.c:240
 msgid "Shared Memory"
 msgstr "共有メモリ"
 
-#: ../src/proctable.c:249
-msgid "RSS Memory"
-msgstr "RSS メモリ"
-
-#: ../src/proctable.c:250
+#: ../src/proctable.c:241
 msgid "X Server Memory"
 msgstr "X サーバ・メモリ"
 
-#: ../src/proctable.c:251
+#: ../src/proctable.c:242
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:252
+#: ../src/proctable.c:243
 msgid "CPU time"
 msgstr "CPU 時間"
 
-#: ../src/proctable.c:253
+#: ../src/proctable.c:244
 msgid "Nice"
 msgstr "Nice値"
 
-#: ../src/proctable.c:254
+#: ../src/proctable.c:245
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.c:255
+#: ../src/proctable.c:246
 msgid "Security Context"
 msgstr "セキュリティ・コンテキスト"
 
-#: ../src/proctable.c:256
+#: ../src/proctable.c:247
 msgid "Arguments"
 msgstr "引数"
 
-#: ../src/proctable.c:430
+#: ../src/proctable.c:415
 msgid "Running"
 msgstr "実行中"
 
-#: ../src/proctable.c:435
+#: ../src/proctable.c:420
 msgid "Stopped"
 msgstr "停止中"
 
-#: ../src/proctable.c:440
+#: ../src/proctable.c:425
 msgid "Zombie"
 msgstr "ゾンビ"
 
-#: ../src/proctable.c:445
+#: ../src/proctable.c:430
 msgid "Uninterruptible"
 msgstr "割り込み不可"
 
-#: ../src/proctable.c:450
+#: ../src/proctable.c:435
 msgid "Sleeping"
 msgstr "スリープ中"
 
-#: ../src/proctable.c:634
+#: ../src/proctable.c:611
 #, c-format
 msgid "%s (thread)"
 msgstr "%s (スレッド)"
 
-#: ../src/proctable.c:1022
+#: ../src/proctable.c:996
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "1, 5, 15分後の平均負荷: %0.2f, %0.2f, %0.2f"
