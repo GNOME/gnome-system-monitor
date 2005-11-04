@@ -29,6 +29,7 @@
 #include <glibtop/proclist.h>
 #include <glibtop/procstate.h>
 #include <glibtop/procmem.h>
+#include <glibtop/procmap.h>
 #include <glibtop/proctime.h>
 #include <glibtop/procuid.h>
 #include <glibtop/procargs.h>
@@ -73,6 +74,9 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 
 	case COL_MEMRES:
 		return PROCMAN_RCMP(infoa->memres, infob->memres);
+
+	case COL_MEMWRITABLE:
+		return PROCMAN_RCMP(infoa->memwritable, infob->memwritable);
 
 	case COL_MEMSHARED:
 		return PROCMAN_RCMP(infoa->memshared, infob->memshared);
@@ -238,6 +242,7 @@ proctable_new (ProcData * const procdata)
 		N_("Status"),
 		N_("Virtual Memory"),
 		N_("Resident Memory"),
+		N_("Writable Memory"),
 		N_("Shared Memory"),
 		N_("X Server Memory"),
 		/* xgettext:no-c-format */ N_("% CPU"),
@@ -265,6 +270,7 @@ proctable_new (ProcData * const procdata)
 				    G_TYPE_STRING,	/* Status	*/
 				    G_TYPE_STRING,	/* VM Size	*/
 				    G_TYPE_STRING,	/* Resident Memory */
+				    G_TYPE_STRING,	/* Writable Memory */
 				    G_TYPE_STRING,	/* Shared Memory */
 				    G_TYPE_STRING,	/* X Server Memory */
 				    G_TYPE_UINT,	/* % CPU	*/
@@ -316,6 +322,7 @@ proctable_new (ProcData * const procdata)
 		{
 		case COL_VMSIZE:
 		case COL_MEMRES:
+		case COL_MEMWRITABLE:
 		case COL_MEMSHARED:
 		case COL_MEMXSERVER:
 		case COL_CPU:
@@ -348,6 +355,7 @@ proctable_new (ProcData * const procdata)
 		{
 		case COL_VMSIZE:
 		case COL_MEMRES:
+		case COL_MEMWRITABLE:
 		case COL_MEMSHARED:
 		case COL_MEMXSERVER:
 		case COL_CPU_TIME:
@@ -489,6 +497,25 @@ get_process_user(ProcData* procdata, ProcInfo* info, uid_t uid)
 
 
 
+static void get_process_memory_writable(ProcInfo *info)
+{
+	glibtop_proc_map buf;
+	glibtop_map_entry *maps;
+	unsigned i;
+
+	info->memwritable = 0;
+
+	maps = glibtop_get_proc_map(&buf, info->pid);
+
+	for (i = 0; i < buf.number; ++i) {
+		if (maps[i].perm & GLIBTOP_MAP_PERM_WRITE)
+			info->memwritable += (maps[i].end - maps[i].start);
+	}
+
+	g_free(maps);
+}
+
+
 static void
 get_process_memory_info(ProcInfo *info)
 {
@@ -506,7 +533,11 @@ get_process_memory_info(ProcInfo *info)
 	info->memshared	= procmem.share;
 
 	info->memxserver = xresources.total_bytes_estimate;
+
+	get_process_memory_writable(info);
 }
+
+
 
 ProcInfo *
 proctable_find_process (guint pid, ProcData *procdata)
@@ -555,10 +586,11 @@ format_duration_for_display (double d)
 static void
 update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info)
 {
-	gchar *vmsize, *memres, *memshared, *memxserver, *cpu_time;
+	gchar *vmsize, *memres, *memwritable, *memshared, *memxserver, *cpu_time;
 
 	vmsize	   = SI_gnome_vfs_format_file_size_for_display (info->vmsize);
 	memres	   = SI_gnome_vfs_format_file_size_for_display (info->memres);
+	memwritable = SI_gnome_vfs_format_file_size_for_display (info->memwritable);
 	memshared  = SI_gnome_vfs_format_file_size_for_display (info->memshared);
 	memxserver = SI_gnome_vfs_format_file_size_for_display (info->memxserver);
 
@@ -569,6 +601,7 @@ update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info
 			    COL_USER, info->user,
 			    COL_VMSIZE, vmsize,
 			    COL_MEMRES, memres,
+			    COL_MEMWRITABLE, memwritable,
 			    COL_MEMSHARED, memshared,
 			    COL_MEMXSERVER, memxserver,
 			    COL_CPU, info->pcpu,
@@ -579,6 +612,7 @@ update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info
 	/* We don't bother updating COL_SECURITYCONTEXT as it can never change */
 	g_free (vmsize);
 	g_free (memres);
+	g_free (memwritable);
 	g_free (memshared);
 	g_free (memxserver);
 	g_free (cpu_time);

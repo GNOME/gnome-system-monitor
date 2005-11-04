@@ -94,6 +94,7 @@ struct _ProcInfo
 
 	guint64		vmsize;
 	guint64		memres;
+	guint64		memwritable;
 	guint64		memshared;
 	unsigned long	memxserver;
 
