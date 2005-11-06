@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman 2.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-17 09:25+0700\n"
-"PO-Revision-Date: 2005-07-25 13:02+0700\n"
+"POT-Creation-Date: 2005-11-06 11:04+0700\n"
+"PO-Revision-Date: 2005-11-06 11:11+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <l10n@opentle.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,34 +17,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;"
 
-#: gnome-system-monitor.desktop.in.in.h:1 src/callbacks.c:167
-#: src/interface.c:836
+#: gnome-system-monitor.desktop.in.in.h:1 src/callbacks.c:164
+#: src/interface.c:671
 msgid "System Monitor"
 msgstr "ติดตามทรัพยากรระบบ"
 
-#: gnome-system-monitor.desktop.in.in.h:2 src/callbacks.c:168
+#: gnome-system-monitor.desktop.in.in.h:2 src/callbacks.c:165
 msgid "View current processes and monitor system state"
 msgstr "แสดงโพรเซสปัจจุบันและติดตามสถานะของระบบ"
 
-#: src/callbacks.c:152
-msgid "Jorgen Scheibengruber - nicer devices treeview"
-msgstr "Jorgen·Scheibengruber - การแสดงโครงสร้างต้นไม้ของอุปกรณ์ที่ดีขึ้น"
-
-#: src/callbacks.c:153
-msgid "Benoît Dejean - maintainer"
-msgstr "Benoît·Dejean - ผู้ดูแล"
-
-#: src/callbacks.c:176
+#: src/callbacks.c:173
 msgid "translator-credits"
 msgstr "เทพพิทักษ์ การุญบุญญานันท์ <thep@linux.thai.net>"
 
+#: src/disks.c:186 src/memmaps.c:302
+msgid "Device"
+msgstr "อุปกรณ์"
+
+#: src/disks.c:187
+msgid "Directory"
+msgstr "ไดเรกทอรี"
+
+#: src/disks.c:188 src/openfiles.c:232
+msgid "Type"
+msgstr "ชนิด"
+
+#: src/disks.c:189
+msgid "Total"
+msgstr "รวม"
+
+#: src/disks.c:190
+msgid "Free"
+msgstr "ว่าง"
+
+#: src/disks.c:191
+msgid "Used"
+msgstr "ใช้ไป"
+
+#: src/disks.c:198 src/interface.c:750 src/procdialogs.c:743
+#: src/procdialogs.c:747
+msgid "Devices"
+msgstr "อุปกรณ์ต่างๆ"
+
 #. translators: primary alert message
-#: src/favorites.c:348
+#: src/favorites.c:350
 msgid "No hidden processes"
 msgstr "ไม่มีโพรเซสซ่อน"
 
 #. translators: secondary alert message
-#: src/favorites.c:355
+#: src/favorites.c:357
 msgid ""
 "There are no hidden processes in the list. To show all running processes, "
 "select the \"All processes\" option in the main window."
@@ -52,23 +73,23 @@ msgstr ""
 "ไม่มีโพรเซสซ่อนในรายการ ถ้าคุณต้องการแสดงโพรเซสที่ทำงานอยู่ทั้งหมด คุณสามารถเลือกตัวเลือก "
 "\"ทุกโพรเซส\" ได้ในหน้าต่างหลัก"
 
-#: src/favorites.c:375
+#: src/favorites.c:377
 msgid "Hidden Processes"
 msgstr "โพรเซสซ่อน"
 
-#: src/favorites.c:399
+#: src/favorites.c:401
 msgid "Currently _hidden processes:"
 msgstr "รายการโพรเซสที่_ซ่อนไว้:"
 
-#: src/favorites.c:421
+#: src/favorites.c:423
 msgid "_Remove From List"
 msgstr "_ลบออกจากรายการ"
 
-#: src/favorites.c:430 src/procdialogs.c:282
+#: src/favorites.c:432 src/procdialogs.c:282
 msgid "Note:"
 msgstr "ข้อสังเกต:"
 
-#: src/favorites.c:431
+#: src/favorites.c:433
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
@@ -141,118 +162,49 @@ msgid "Saves the currently viewed tab"
 msgstr "เก็บแท็บที่ดู"
 
 #: src/gnome-system-monitor.schemas.in.h:16
-msgid "Show advanced info tab on startup"
-msgstr "แสดงรายละเอียดเพิ่มเติมของโพรเซสขณะเริ่มโปรแกรม"
-
-#: src/gnome-system-monitor.schemas.in.h:17
 msgid "Show column zero on startup"
 msgstr "แสดงคอลัมน์ที่ศูนย์เมื่อเริ่มโปรแกรม"
 
-#: src/gnome-system-monitor.schemas.in.h:18
+#: src/gnome-system-monitor.schemas.in.h:17
 msgid "Show process dependencies in tree form"
 msgstr "แสดงความขึ้นต่อกันของโพรเซสแบบต้นไม้"
 
-#: src/gnome-system-monitor.schemas.in.h:19
+#: src/gnome-system-monitor.schemas.in.h:18
 msgid "Show process threads"
 msgstr "แสดงเธรดของโพรเซส"
 
-#: src/gnome-system-monitor.schemas.in.h:20
+#: src/gnome-system-monitor.schemas.in.h:19
 msgid "Show warning dialog when hiding processes"
 msgstr "เตือนก่อนซ่อนโพรเซส"
 
-#: src/gnome-system-monitor.schemas.in.h:21
+#: src/gnome-system-monitor.schemas.in.h:20
 msgid "Show warning dialog when killing processes"
 msgstr "เตือนก่อนฆ่าโพรเซส"
 
-#: src/gnome-system-monitor.schemas.in.h:22
+#: src/gnome-system-monitor.schemas.in.h:21
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "ช่วงเวลาระหว่างการอัพเดตรายการอุปกรณ์ เป็นมิลลิวินาที"
 
-#: src/gnome-system-monitor.schemas.in.h:23
+#: src/gnome-system-monitor.schemas.in.h:22
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "ช่วงเวลาระหว่างการอัพเดตกราฟ เป็นมิลลิวินาที"
 
-#: src/gnome-system-monitor.schemas.in.h:24
+#: src/gnome-system-monitor.schemas.in.h:23
 msgid "Time in milliseconds between updates of the process view"
 msgstr "ช่วงเวลาระหว่างการอัพเดตรายการโพรเซส เป็นมิลลิวินาที"
 
-#: src/gnome-system-monitor.schemas.in.h:25
+#: src/gnome-system-monitor.schemas.in.h:24
 msgid "Whether information about all filesystems should be displayed"
 msgstr "จะแสดงข้อมูลของทุกระบบไฟล์หรือไม่"
 
-#: src/gnome-system-monitor.schemas.in.h:26
+#: src/gnome-system-monitor.schemas.in.h:25
 msgid ""
-"Whether information about all filesystems should be displayed: this will "
-"include filesystem types like 'autofs' and 'procfs'. It can be usefull to "
-"get a list of all currently mounted filesystems."
+"Whether to display information about all filesystems (including types like "
+"'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
+"filesystems."
 msgstr ""
-"จะแสดงข้อมูลเกี่ยวกับระบบไฟล์ทั้งหมดหรือไม่: การแสดงระบบไฟล์ทั้งหมดนี้ จะรวมชนิดระบบไฟล์อย่าง "
-"'autofs'และ 'procfs' ด้วย ซึ่งจะมีประโยชน์ในการดูรายการระบบไฟล์ที่เมานท์อยู่ทั้งหมด"
-
-#: src/infoview.c:34
-msgid "Less _info"
-msgstr "ลด_รายละเอียด"
-
-#: src/infoview.c:34
-msgid "More _info"
-msgstr "_รายละเอียดเพิ่มเติม"
-
-#: src/infoview.c:99
-msgid "Process Info"
-msgstr "รายละเอียดของโพรเซส"
-
-#: src/infoview.c:113
-msgid "Command:"
-msgstr "คำสั่ง:"
-
-#: src/infoview.c:117
-msgid "Status:"
-msgstr "สถานะ:"
-
-#: src/infoview.c:121
-msgid "Priority:"
-msgstr "ลำดับความสำคัญ:"
-
-#: src/infoview.c:145
-msgid "Memory Usage"
-msgstr "การใช้หน่วยความจำ"
-
-#: src/infoview.c:159 src/interface.c:699 src/interface.c:742
-msgid "Total:"
-msgstr "รวม:"
-
-#: src/infoview.c:163
-msgid "RSS:"
-msgstr "RSS:"
-
-#: src/infoview.c:167
-msgid "Shared:"
-msgstr "ใช้ร่วม:"
-
-#: src/infoview.c:210
-#, c-format
-msgid "Very high - nice %d"
-msgstr "สูงมาก - ไนซ์ %d"
-
-#: src/infoview.c:212
-#, c-format
-msgid "High - nice %d"
-msgstr "สูง - ไนซ์ %d"
-
-#: src/infoview.c:214
-#, c-format
-msgid "Normal - nice %d"
-msgstr "ปกติ - ไนซ์ %d"
-
-#: src/infoview.c:216
-#, c-format
-msgid "Low - nice %d"
-msgstr "ต่ำ - ไนซ์ %d"
-
-#: src/infoview.c:218
-#, c-format
-msgid "Very low - nice %d"
-msgstr "ต่ำมาก - ไนซ์ %d"
+"จะแสดงข้อมูลเกี่ยวกับระบบไฟล์ทั้งหมด (รวมถึงชนิดอย่าง 'autofs' และ 'procfs') "
+"หรือไม่ ซึ่งจะมีประโยชน์ในการดูรายการระบบไฟล์ที่เมานท์อยู่ทั้งหมด"
 
 #: src/interface.c:47
 msgid "_File"
@@ -294,7 +246,7 @@ msgstr "ให้โพรเซสทำงาน_ต่อ"
 msgid "Continue process if stopped"
 msgstr "ให้โพรเซสที่หยุดไว้ทำงานต่อ"
 
-#: src/interface.c:61 src/interface.c:201
+#: src/interface.c:61 src/interface.c:193
 msgid "End _Process"
 msgstr "_จบโพรเซส"
 
@@ -414,122 +366,97 @@ msgstr "โพรเซสของ_ฉัน"
 msgid "Show user own process"
 msgstr "แสดงโพรเซสของผู้ใช้"
 
-#: src/interface.c:287 src/memmaps.c:300
-msgid "Device"
-msgstr "อุปกรณ์"
-
-#: src/interface.c:288
-msgid "Directory"
-msgstr "ไดเรกทอรี"
-
-#: src/interface.c:289 src/openfiles.c:230
-msgid "Type"
-msgstr "ชนิด"
-
-#: src/interface.c:290
-msgid "Total"
-msgstr "รวม"
-
-#: src/interface.c:291
-msgid "Free"
-msgstr "ว่าง"
-
-#: src/interface.c:292
-msgid "Used"
-msgstr "ใช้ไป"
-
-#: src/interface.c:301 src/interface.c:915 src/procdialogs.c:743
-#: src/procdialogs.c:747
-msgid "Devices"
-msgstr "อุปกรณ์ต่างๆ"
-
-#: src/interface.c:430
+#: src/interface.c:265
 msgid "CPU History"
 msgstr "สถิติการใช้ซีพียู"
 
-#: src/interface.c:473
+#: src/interface.c:308
 msgid "CPU:"
 msgstr "ซีพียู:"
 
-#: src/interface.c:476
+#: src/interface.c:311
 #, c-format
 msgid "CPU%d:"
 msgstr "ซีพียู %d:"
 
-#: src/interface.c:496
+#: src/interface.c:331
 msgid "Memory and Swap History"
 msgstr "สถิติการใช้หน่วยความจำและพื้นที่สลับ"
 
-#: src/interface.c:529
+#: src/interface.c:364
 msgid "User memory:"
 msgstr "หน่วยความจำที่ใช้:"
 
-#: src/interface.c:547 src/interface.c:607
+#: src/interface.c:382 src/interface.c:442
 msgid "of"
 msgstr "จาก"
 
-#: src/interface.c:588
+#: src/interface.c:423
 msgid "Used swap:"
 msgstr "พื้นที่สลับที่ใช้:"
 
-#: src/interface.c:647
+#: src/interface.c:482
 msgid "Network History"
 msgstr "สถิติการใช้เครือข่าย"
 
-#: src/interface.c:679
-msgid "Receive:"
-msgstr "รับ:"
+#: src/interface.c:514
+msgid "Received:"
+msgstr "ได้รับ:"
 
-#: src/interface.c:723
-msgid "Send:"
-msgstr "ส่ง:"
+#: src/interface.c:534 src/interface.c:577
+msgid "Total:"
+msgstr "รวม:"
 
-#: src/interface.c:903 src/procdialogs.c:560
+#: src/interface.c:558
+msgid "Sent:"
+msgstr "ส่งไป:"
+
+#: src/interface.c:738 src/procdialogs.c:560
 msgid "Processes"
 msgstr "โพรเซส"
 
-#: src/interface.c:909 src/procdialogs.c:652
+#: src/interface.c:744 src/procdialogs.c:652
 msgid "Resources"
 msgstr "ทรัพยากร"
 
-#: src/load-graph.c:350 src/load-graph.c:360
+#: src/load-graph.c:377 src/load-graph.c:387
 #, c-format
 msgid "%s/s"
 msgstr "%s/วินาที"
 
-#: src/memmaps.c:294
+#: src/memmaps.c:296
 msgid "Filename"
 msgstr "ชื่อแฟ้ม"
 
-#: src/memmaps.c:295
+#: src/memmaps.c:297
 msgid "VM Start"
 msgstr "VM เริ่ม"
 
-#: src/memmaps.c:296
+#: src/memmaps.c:298
 msgid "VM End"
 msgstr "VM จบ"
 
-#: src/memmaps.c:297
+#: src/memmaps.c:299
 msgid "VM Size"
 msgstr "ขนาด VM"
 
-#: src/memmaps.c:298
+#: src/memmaps.c:300
 msgid "Flags"
 msgstr "แฟล็ก"
 
-#: src/memmaps.c:299
+#: src/memmaps.c:301
 msgid "VM Offset"
 msgstr "ออฟเซต VM"
 
-#: src/memmaps.c:301
+#: src/memmaps.c:303
 msgid "Inode"
 msgstr "Inode"
 
-#: src/memmaps.c:401
+#: src/memmaps.c:405
 msgid "Memory Maps"
 msgstr "ผังหน่วยความจำ"
 
-#: src/memmaps.c:421
+#: src/memmaps.c:425
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "_ผังหน่วยความจำของโพรเซส \"%s\" (PID %u):"
@@ -557,24 +484,24 @@ msgstr "ไม่ทราบชนิด"
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: src/openfiles.c:229
+#: src/openfiles.c:231
 msgid "FD"
 msgstr "FD"
 
-#: src/openfiles.c:231
+#: src/openfiles.c:233
 msgid "Object"
 msgstr "อ็อบเจกต์"
 
-#: src/openfiles.c:308
+#: src/openfiles.c:312
 msgid "Open Files"
 msgstr "แฟ้มที่เปิด"
 
-#: src/openfiles.c:330
+#: src/openfiles.c:334
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "แ_ฟ้มที่โพรเซส \"%s\" (PID %u) เปิด:"
 
-#: src/procactions.c:73
+#: src/procactions.c:75
 #, c-format
 msgid ""
 "Cannot change the priority of process with pid %d to %d.\n"
@@ -583,7 +510,7 @@ msgstr ""
 "ไม่สามารถเปลี่ยนลำดับความสำคัญของโพรเซสหมายเลข %d ไปเป็น %d\n"
 "%s"
 
-#: src/procactions.c:140
+#: src/procactions.c:144
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -733,21 +660,17 @@ msgstr "อัพเดต_ทุกๆ:"
 msgid "Show _all filesystems"
 msgstr "แสดงทุก_ระบบไฟล์"
 
-#: src/proctable.c:239
+#: src/proctable.c:240
 msgid "Process Name"
 msgstr "ชื่อโพรเซส"
 
-#: src/proctable.c:240
+#: src/proctable.c:241
 msgid "User"
 msgstr "ผู้ใช้"
 
-#: src/proctable.c:241
+#: src/proctable.c:242
 msgid "Status"
 msgstr "สถานะ"
-
-#: src/proctable.c:242
-msgid "Memory"
-msgstr "หน่วยความจำ"
 
 #: src/proctable.c:243
 msgid "Virtual Memory"
@@ -758,12 +681,12 @@ msgid "Resident Memory"
 msgstr "หน่วยความจำ resident"
 
 #: src/proctable.c:245
-msgid "Shared Memory"
-msgstr "หน่วยความจำใช้ร่วม"
+msgid "Writable Memory"
+msgstr "หน่วยความจำที่เขียนได้"
 
 #: src/proctable.c:246
-msgid "RSS Memory"
-msgstr "หน่วยความจำ RSS"
+msgid "Shared Memory"
+msgstr "หน่วยความจำใช้ร่วม"
 
 #: src/proctable.c:247
 msgid "X Server Memory"
@@ -794,32 +717,32 @@ msgstr "Security Context"
 msgid "Arguments"
 msgstr "อาร์กิวเมนต์"
 
-#: src/proctable.c:426
+#: src/proctable.c:424
 msgid "Running"
 msgstr "กำลังทำงาน"
 
-#: src/proctable.c:431
+#: src/proctable.c:429
 msgid "Stopped"
 msgstr "หยุดชั่วคราว"
 
-#: src/proctable.c:436
+#: src/proctable.c:434
 msgid "Zombie"
 msgstr "ผีดิบ"
 
-#: src/proctable.c:441
+#: src/proctable.c:439
 msgid "Uninterruptible"
 msgstr "ห้ามขัดจังหวะ"
 
-#: src/proctable.c:446
+#: src/proctable.c:444
 msgid "Sleeping"
 msgstr "หลับ"
 
-#: src/proctable.c:630
+#: src/proctable.c:646
 #, c-format
 msgid "%s (thread)"
 msgstr "%s (เธรด)"
 
-#: src/proctable.c:1018
+#: src/proctable.c:1031
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "โหลดเฉลี่ยใน 1, 5, 15 นาทีที่ผ่านมา: %0.2f, %0.2f, %0.2f"
@@ -845,6 +768,63 @@ msgstr "%.1f MiB"
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
+
+#~ msgid "Jorgen Scheibengruber - nicer devices treeview"
+#~ msgstr "Jorgen·Scheibengruber - การแสดงโครงสร้างต้นไม้ของอุปกรณ์ที่ดีขึ้น"
+
+#~ msgid "Benoît Dejean - maintainer"
+#~ msgstr "Benoît·Dejean - ผู้ดูแล"
+
+#~ msgid "Show advanced info tab on startup"
+#~ msgstr "แสดงรายละเอียดเพิ่มเติมของโพรเซสขณะเริ่มโปรแกรม"
+
+#~ msgid "Less _info"
+#~ msgstr "ลด_รายละเอียด"
+
+#~ msgid "More _info"
+#~ msgstr "_รายละเอียดเพิ่มเติม"
+
+#~ msgid "Process Info"
+#~ msgstr "รายละเอียดของโพรเซส"
+
+#~ msgid "Command:"
+#~ msgstr "คำสั่ง:"
+
+#~ msgid "Status:"
+#~ msgstr "สถานะ:"
+
+#~ msgid "Priority:"
+#~ msgstr "ลำดับความสำคัญ:"
+
+#~ msgid "Memory Usage"
+#~ msgstr "การใช้หน่วยความจำ"
+
+#~ msgid "RSS:"
+#~ msgstr "RSS:"
+
+#~ msgid "Shared:"
+#~ msgstr "ใช้ร่วม:"
+
+#~ msgid "Very high - nice %d"
+#~ msgstr "สูงมาก - ไนซ์ %d"
+
+#~ msgid "High - nice %d"
+#~ msgstr "สูง - ไนซ์ %d"
+
+#~ msgid "Normal - nice %d"
+#~ msgstr "ปกติ - ไนซ์ %d"
+
+#~ msgid "Low - nice %d"
+#~ msgstr "ต่ำ - ไนซ์ %d"
+
+#~ msgid "Very low - nice %d"
+#~ msgstr "ต่ำมาก - ไนซ์ %d"
+
+#~ msgid "Memory"
+#~ msgstr "หน่วยความจำ"
+
+#~ msgid "RSS Memory"
+#~ msgstr "หน่วยความจำ RSS"
 
 #~ msgid "Sho_w:"
 #~ msgstr "แ_สดง:"
