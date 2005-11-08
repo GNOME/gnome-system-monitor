@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 #include <glib.h>
-
+#include <gconf/gconf-client.h>
 #include <glibtop.h>
 #include <glibtop/proctime.h>
 #include <glibtop/cpu.h>
@@ -12,6 +12,8 @@
 #include "smooth_refresh.h"
 #include "procman.h"
 
+#define SMOOTH_REFRESH_KEY "/apps/procman/smooth_refresh"
+#define SMOOTH_REFRESH_KEY_DEFAULT TRUE
 
 /*
   -self : procman's PID (so we call getpid() only once)
@@ -34,6 +36,9 @@
 
 struct _SmoothRefresh
 {
+	gboolean active;
+	guint connection;
+
 	pid_t self;
 
 	guint interval;
@@ -89,15 +94,53 @@ get_own_cpu_usage(SmoothRefresh *sm)
 
 
 
+static void status_changed(GConfClient *client,
+			   guint cnxn_id,
+			   GConfEntry *entry,
+			   gpointer user_data)
+{
+	SmoothRefresh *sm = user_data;
+	GConfValue *value = gconf_entry_get_value(entry);
+
+	if (value)
+		sm->active = gconf_value_get_bool(value);
+	else
+		sm->active = SMOOTH_REFRESH_KEY_DEFAULT;
+
+	smooth_refresh_reset(sm);
+
+	g_print("smooth_refresh is active = %d\n", sm->active);
+}
+
+
 SmoothRefresh*
 smooth_refresh_new(const guint * config_interval)
 {
 	SmoothRefresh *sm;
+	GConfValue *value;
 
 	sm = g_new(SmoothRefresh, 1);
 	sm->config_interval = config_interval;
 
 	smooth_refresh_reset(sm);
+	value = gconf_client_get_without_default(gconf_client_get_default(),
+						 SMOOTH_REFRESH_KEY,
+						 NULL);
+
+	if (value) {
+		sm->active = gconf_value_get_bool(value);
+		gconf_value_free(value);
+	} else
+		sm->active = SMOOTH_REFRESH_KEY_DEFAULT;
+
+	sm->connection = gconf_client_notify_add(gconf_client_get_default(),
+						 SMOOTH_REFRESH_KEY,
+						 status_changed,
+						 sm,
+						 NULL,
+						 NULL);
+
+	g_print("smooth_refresh is active = %d\n", sm->active);
 
 	return sm;
 }
@@ -126,6 +169,9 @@ smooth_refresh_reset(SmoothRefresh *sm)
 void
 smooth_refresh_destroy(SmoothRefresh *sm)
 {
+	if (sm->connection)
+		gconf_client_notify_remove(gconf_client_get_default(),
+					   sm->connection);
 	g_free(sm);
 }
 
@@ -136,6 +182,9 @@ smooth_refresh_get(SmoothRefresh *sm, guint *new_interval)
 {
 	gboolean changed;
 	float pcpu;
+
+	if (!sm->active)
+		return FALSE;
 
 	pcpu = get_own_cpu_usage(sm);
 /*
