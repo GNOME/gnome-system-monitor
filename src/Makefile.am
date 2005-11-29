@@ -43,7 +43,6 @@ schema_DATA = $(schema_ins:.schemas.in=.schemas)
 @INTLTOOL_SCHEMAS_RULE@
 
 EXTRA_DIST = \
-	README.hacking \
 	$(schema_ins)
 
 CLEANFILES = \
