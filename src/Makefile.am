@@ -3,7 +3,7 @@
 INCLUDES = \
 	-DPROCMAN_DATADIR=\"$(datadir)/procman/\" \
 	-DDATADIR=\""$(datadir)"\" \
-	@PROCMAN_CFLAGS@
+	@PROCMAN_CFLAGS@ $(LIBGKSU_CFLAGS)
 
 bin_PROGRAMS = gnome-system-monitor
 
@@ -23,10 +23,12 @@ gnome_system_monitor_SOURCES = \
 	smooth_refresh.c smooth_refresh.h \
 	defaulttable.h \
 	disks.c disks.h \
-	selinux.h selinux.c
+	selinux.h selinux.c \
+	procman_gnomesu.h procman_gnomesu.c \
+	procman_gksu.h procman_gksu.c
 
 
-gnome_system_monitor_LDADD = @PROCMAN_LIBS@ $(SELINUX_LIBS) libbacon.la 
+gnome_system_monitor_LDADD = @PROCMAN_LIBS@ $(SELINUX_LIBS) $(LIBGKSU_LIBS) libbacon.la 
 
 
 noinst_LTLIBRARIES = libbacon.la

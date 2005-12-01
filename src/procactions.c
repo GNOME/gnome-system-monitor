@@ -60,7 +60,7 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 		gboolean success;
 
 		success = procdialog_create_root_password_dialog (
-			1, args->procdata, info->pid,
+			PROCMAN_ACTION_RENICE, args->procdata, info->pid,
 			args->nice_value);
 
 		if(success) return;
@@ -129,7 +129,7 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
 		gboolean success;
 
 		success = procdialog_create_root_password_dialog (
-			0, args->procdata, info->pid,
+			PROCMAN_ACTION_KILL, args->procdata, info->pid,
 			args->signal);
 
 		if(success) return;

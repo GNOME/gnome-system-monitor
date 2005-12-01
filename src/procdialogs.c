@@ -33,6 +33,9 @@
 #include "util.h"
 #include "load-graph.h"
 
+#include "procman_gnomesu.h"
+#include "procman_gksu.h"
+
 static GtkWidget *renice_dialog = NULL;
 static GtkWidget *prefs_dialog = NULL;
 static gint new_nice_value = 0;
@@ -807,65 +810,51 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 
 
 
-typedef gboolean (*GnomesuExecFunc) (char *commandline);
-
-
-static GnomesuExecFunc G_GNUC_CONST
-procman_get_gnomesu_exec(void)
+static char *
+procman_action_to_command(ProcmanActionType type,
+			  gint pid,
+			  gint extra_value)
 {
-	static gboolean is_init = FALSE;
-	static gpointer gnomesu_exec = NULL;
-
-	if(!is_init) {
-		GModule *libgnomesu;
-
-		libgnomesu = g_module_open ("libgnomesu.so.0",
-					    G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
-
-		if(libgnomesu) {
-			if(g_module_symbol (libgnomesu, "gnomesu_exec", &gnomesu_exec)) {
-				g_module_make_resident(libgnomesu);
-			}
-			else {
-				g_warning("Cannot found gnomesu_exec : %s", g_module_error());
-				g_module_close(libgnomesu);
-			}
-		}
-
-		is_init = TRUE;
+	switch (type) {
+	case PROCMAN_ACTION_KILL:
+	       return g_strdup_printf("kill -s %d %d", extra_value, pid);
+	case PROCMAN_ACTION_RENICE:
+		return g_strdup_printf("renice %d %d", extra_value, pid);
+	default:
+		g_assert_not_reached();
 	}
-
-	return (GnomesuExecFunc)gnomesu_exec;
 }
-
 
 
 /*
-** type determines whether if dialog is for killing process (type=0) or renice (type=other).
-** extra_value is not used for killing and is priority for renice
-*/
+ * type determines whether if dialog is for killing process or renice.
+ * type == PROCMAN_ACTION_KILL,   extra_value -> signal to send
+ * type == PROCMAN_ACTION_RENICE, extra_value -> new priority.
+ */
 gboolean
-procdialog_create_root_password_dialog (gint type, ProcData *procdata, gint pid,
-					gint extra_value)
+procdialog_create_root_password_dialog(ProcmanActionType type,
+				       ProcData *procdata,
+				       gint pid,
+				       gint extra_value)
 {
-	GnomesuExecFunc gnomesu_exec;
+	char * command;
+	gboolean ret = FALSE;
 
-	gnomesu_exec = procman_get_gnomesu_exec ();
+	command = procman_action_to_command(type, pid, extra_value);
 
-	if(gnomesu_exec)
-	{
-		gchar command[80];
+	ret = procman_gksu_create_root_password_dialog(command);
 
-		if (type == 0)
-			g_snprintf (command, sizeof command,
-				    "kill -s %d %d", extra_value, pid);
-		else
-			g_snprintf (command, sizeof command,
-				    "renice %d %d", extra_value, pid);
+	if (ret)
+		goto out;
 
-		return gnomesu_exec (command);
-	}
+	ret = procman_gnomesu_create_root_password_dialog(command);
 
-	return FALSE;
+	if (ret)
+		goto out;
+
+ out:
+	g_free(command);
+	return ret;
 }
+
 

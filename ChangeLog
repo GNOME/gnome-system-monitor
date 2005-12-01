@@ -1,5 +1,30 @@
 2005-12-01  Benoît Dejean  <benoit@placenet.org>
 
+	* configure.in:
+	* src/Makefile.am:
+	* src/procactions.c: (renice_single_process),
+	(kill_single_process):
+	* src/procdialogs.c: (procman_action_to_command),
+	(procdialog_create_root_password_dialog):
+	* src/procdialogs.h:
+	* src/procman_gksu.c: (procman_gksu_create_root_password_dialog):
+	* src/procman_gksu.h:
+	* src/procman_gnomesu.c: (procman_gnomesu_get_exec),
+	(procman_gnomesu_create_root_password_dialog):
+	* src/procman_gnomesu.h:
+
+	Post release version bump to 2.13.3.
+
+	Added Gksu support.
+	Original patch by Sébastion Bacher <seb128@debian.org>
+	from Ubuntu packaged.
+
+	Splitted Gksu and Gnomesu implementations.
+
+	TODO: fix password prompt.
+
+2005-12-01  Benoît Dejean  <benoit@placenet.org>
+
 	* src/procactions.c: (renice):
 	* src/procactions.h:
 	* src/procdialogs.c: (renice_dialog_button_pressed):
