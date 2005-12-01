@@ -90,7 +90,7 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 
 
 void
-renice (ProcData *procdata, int pid, int nice)
+renice (ProcData *procdata, int nice)
 {
 	struct ReniceArgs args = { procdata, nice };
 

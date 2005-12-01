@@ -190,7 +190,7 @@ renice_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 	if (id == 100) {
 		if (new_nice_value == -100)
 			return;		
-		renice (procdata, -2, new_nice_value);
+		renice(procdata, new_nice_value);
 	}
 	
 	gtk_widget_destroy (GTK_WIDGET (dialog));
