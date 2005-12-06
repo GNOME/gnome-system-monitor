@@ -65,6 +65,20 @@ test_is_socket (const char *path)
 	return FALSE;
 }
 
+static gboolean
+is_owned_by_user (const char *path)
+{
+	struct stat s;
+
+	if (stat (path, &s) == -1)
+		return FALSE;
+
+	if (s.st_uid != geteuid ())
+		return FALSE;
+
+	return TRUE;
+}
+
 static gboolean server_cb (GIOChannel *source,
 			   GIOCondition condition, gpointer data);
 
@@ -137,23 +151,61 @@ server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 	return TRUE;
 }
 
+static const char *
+find_file_with_pattern (const char *dir, const char *pattern)
+{
+	GDir *filedir;
+	const char *filename;
+	GPatternSpec *pat;
+
+	filedir = g_dir_open (dir, 0, NULL);
+	if (filedir == NULL)
+		return NULL;
+
+	pat = g_pattern_spec_new (pattern);
+	if (pat == NULL)
+	{
+		g_dir_close (filedir);
+		return NULL;
+	}
+
+	while ((filename = g_dir_read_name (filedir)))
+	{
+		if (g_pattern_match_string (pat, filename))
+		{
+			char *tmp = g_build_filename (dir, filename, NULL);
+			if (!is_owned_by_user (tmp))
+				filename = NULL;
+			g_free (tmp);
+
+			if (filename != NULL)
+				break;
+		}
+	}
+
+	g_pattern_spec_free (pat);
+	g_dir_close (filedir);
+
+	return filename;
+}
+
 static char *
 socket_filename (const char *prefix)
 {
-	char *filename, *path;
-	const char *dir;
+	char *pattern, *newfile, *path;
+	const char *tmpdir, *filename;
 
-	filename = g_strdup_printf (".%s.%s", prefix, g_get_user_name ());
+	newfile = g_strdup_printf ("%s.%s.%u", prefix, g_get_user_name (),
+			g_random_int ());
+	pattern = g_strdup_printf ("%s.%s.*", prefix, g_get_user_name ());
+	tmpdir = g_get_tmp_dir ();
+	filename = find_file_with_pattern (tmpdir, pattern);
+	if (filename == NULL)
+		filename = newfile;
+	path = g_build_filename (tmpdir, filename, NULL);
 
-	dir = g_getenv ("BACON_SOCKET_DIR");
-	if (dir == NULL)
-	{
-		path = g_build_filename (g_get_home_dir (), filename, NULL);
-	} else {
-		path = g_build_filename (dir, filename, NULL);
-	}
-
-	g_free (filename);
+	g_free (newfile);
+	g_free (pattern);
 	return path;
 }
 
