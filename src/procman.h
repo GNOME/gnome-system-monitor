@@ -171,9 +171,6 @@ struct _ProcData
 	GStringChunk	*users;
 
 
-	GMemChunk	*procinfo_allocator;
-
-
 	/* libgtop uses guint64 but we use a float because
 	   frequency is ~always == 100
 	   and because we display cpu_time as %.1f seconds

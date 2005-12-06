@@ -231,8 +231,6 @@ procman_data_new (GConfClient *client)
 	gint swidth, sheight;
 	gint i;
 	glibtop_cpu cpu;
-	glibtop_loadavg loadavg;
-	gsize nprocs;
 
 	pd = g_new0 (ProcData, 1);
 	
@@ -246,10 +244,6 @@ procman_data_new (GConfClient *client)
 	pd->mem_graph = NULL;
 	pd->net_graph = NULL;
 	pd->disk_timeout = 0;
-
-	glibtop_get_loadavg(&loadavg);
-	nprocs = (loadavg.nr_tasks ? 1.2f * loadavg.nr_tasks : 100);
-	pd->procinfo_allocator = g_mem_chunk_create(ProcInfo, nprocs, G_ALLOC_AND_FREE);
 
 	/* username is usually 8 chars long
 	   for caching, we create chunks of 128 chars */

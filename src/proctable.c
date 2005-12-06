@@ -410,7 +410,7 @@ proctable_free_info (ProcData *procdata, ProcInfo *info)
 	g_free (info->arguments);
 	g_free (info->security_context);
 	g_slist_free (info->children);
-	g_mem_chunk_free (procdata->procinfo_allocator, info);
+	g_slice_free(ProcInfo, info);
 }
 
 
@@ -818,7 +818,7 @@ procinfo_new (ProcData *procdata, gint pid)
 	glibtop_proc_args procargs;
 	gchar** arguments;
 
-	info = g_chunk_new0(ProcInfo, procdata->procinfo_allocator);
+	info = g_slice_new0(ProcInfo);
 
 	info->pid = pid;
 	info->uid = -1;
