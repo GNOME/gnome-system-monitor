@@ -39,7 +39,7 @@ libbacon_la_SOURCES = \
 
 specdir = $(datadir)/procman
 
-schemadir   = @GCONF_SCHEMA_FILE_DIR@
+schemadir   = $(GCONF_SCHEMA_FILE_DIR)
 schema_ins  = gnome-system-monitor.schemas.in
 schema_DATA = $(schema_ins:.schemas.in=.schemas)
 @INTLTOOL_SCHEMAS_RULE@
@@ -50,6 +50,14 @@ EXTRA_DIST = \
 CLEANFILES = \
 	$(schema_DATA)
 
+if GCONF_SCHEMAS_INSTALL
 install-data-local:
-	-GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) \
-	gconftool-2 --makefile-install-rule $(schema_DATA)	  	
+	if test -z "$(DESTDIR)"; then \
+	  for p in $(schema_DATA); do \
+	    GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) \
+	      gconftool-2 --makefile-install-rule $(top_builddir)/src/$$p; \
+	  done; \
+	fi
+else
+install-data-local:
+endif

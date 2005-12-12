@@ -2,9 +2,13 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.52)
 
-AC_INIT(configure.in)
-AM_INIT_AUTOMAKE(gnome-system-monitor, 2.13.3)
-AM_CONFIG_HEADER(config.h)
+AC_INIT([gnome-system-monitor], [2.13.3],
+        [http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor])
+AC_CONFIG_SRCDIR(configure.in)
+AC_CONFIG_HEADERS(config.h)
+
+AM_INIT_AUTOMAKE
+AC_SUBST(ACLOCAL_AMFLAGS, [\${ACLOCAL_FLAGS}])
 
 AM_PROG_LIBTOOL
 
@@ -31,7 +35,7 @@ PKG_CHECK_MODULES(PROCMAN, glib-2.0 >= $GLIB_REQUIRED libgnome-2.0 >= $LIBGNOME_
 
 
 AC_ARG_ENABLE(more-warnings,
-[  --enable-more-warnings  Maximum compiler warnings],
+[AC_HELP_STRING([--enable-more-warnings], [Maximum compiler warnings])],
 set_more_warnings="$enableval",[
     set_more_warnings=yes
 ])
@@ -67,27 +71,19 @@ else
 fi
 
 
-AC_SUBST(PROCMAN_CFLAGS)
-AC_SUBST(PROCMAN_LIBS)
-
 AM_GCONF_SOURCE_2
-
-AC_DEFINE_UNQUOTED(GNOME_ICONDIR, "${prefix}/share/pixmaps")
 
 dnl Add the languages which your application supports here.
 ALL_LINGUAS="am ar az be bg bn bs ca cs cy da de el en_CA en_GB es et eu fa fi fr ga gl gu he hi hr hu id it ja ko li lt lv mk ml mn ms nb ne nl no pa pl pt pt_BR ro ru rw sk sl sq sr sr@Latn sv ta th tr ug uk vi zh_CN zh_TW"
 
 GETTEXT_PACKAGE=gnome-system-monitor
 AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE")
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE",
+                   [The gettext catalog name])
 AM_GLIB_GNU_GETTEXT
 
 dnl Set PACKAGE_LOCALE_DIR in config.h.
-if test "x${prefix}" = "xNONE"; then
-  AC_DEFINE_UNQUOTED(PACKAGE_LOCALE_DIR, "${ac_default_prefix}/${DATADIRNAME}/locale")
-else
-  AC_DEFINE_UNQUOTED(PACKAGE_LOCALE_DIR, "${prefix}/${DATADIRNAME}/locale")
-fi
+GLIB_DEFINE_LOCALEDIR(PACKAGE_LOCALE_DIR)
 
 AC_ARG_ENABLE(selinux, AC_HELP_STRING(--enable-selinux,enable SELinux support),enable_selinux=$enableval, enable_selinux=auto)
 
@@ -147,11 +143,7 @@ AC_SUBST(LIBGKSU_CFLAGS)
 AC_SUBST(LIBGKSU_LIBS)
 
 
-
-dnl Honor ACLOCAL_FLAGS for --enable-maintainer-mode
-ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
-
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 src/Makefile
 po/Makefile.in
@@ -160,6 +152,7 @@ help/C/Makefile
 gnome-system-monitor.desktop.in
 ])
 
+AC_OUTPUT
 
 echo "
 
