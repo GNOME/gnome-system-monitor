@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-17 22:44+0000\n"
-"PO-Revision-Date: 2005-07-18 12:39+0800\n"
+"POT-Creation-Date: 2005-12-12 07:02+0100\n"
+"PO-Revision-Date: 2005-12-12 21:22+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -16,34 +16,59 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:167
-#: ../src/interface.c:836
+#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:164
+#: ../src/interface.c:671
 msgid "System Monitor"
 msgstr "系统监视器"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:168
+#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:165
 msgid "View current processes and monitor system state"
 msgstr "查看当前进程及监视系统状态"
 
-#: ../src/callbacks.c:152
-msgid "Jorgen Scheibengruber - nicer devices treeview"
-msgstr "Jorgen Scheibengruber - 更好的设备树视图"
-
-#: ../src/callbacks.c:153
-msgid "Benoît Dejean - maintainer"
-msgstr "Benoit Dejean - 维护者"
-
-#: ../src/callbacks.c:176
+#: ../src/callbacks.c:173
 msgid "translator-credits"
 msgstr "GNOME 简体中文翻译 <i18n-translation@lists.linux.net.cn>"
 
+#: ../src/disks.c:195 ../src/memmaps.c:302
+msgid "Device"
+msgstr "设备"
+
+#: ../src/disks.c:196
+msgid "Directory"
+msgstr "目录"
+
+#: ../src/disks.c:197 ../src/openfiles.c:232
+msgid "Type"
+msgstr "类型"
+
+#: ../src/disks.c:198
+msgid "Total"
+msgstr "总数"
+
+#: ../src/disks.c:199
+msgid "Free"
+msgstr "空闲"
+
+#: ../src/disks.c:200
+msgid "Available"
+msgstr "可用"
+
+#: ../src/disks.c:201
+msgid "Used"
+msgstr "已用"
+
+#: ../src/disks.c:208 ../src/interface.c:750 ../src/procdialogs.c:746
+#: ../src/procdialogs.c:750
+msgid "Devices"
+msgstr "设备"
+
 #. translators: primary alert message
-#: ../src/favorites.c:348
+#: ../src/favorites.c:350
 msgid "No hidden processes"
 msgstr "无隐藏的进程"
 
 #. translators: secondary alert message
-#: ../src/favorites.c:355
+#: ../src/favorites.c:357
 msgid ""
 "There are no hidden processes in the list. To show all running processes, "
 "select the \"All processes\" option in the main window."
@@ -51,23 +76,23 @@ msgstr ""
 "列表中没有隐藏的进程。要显示运行中的全部进程，请在主窗口中选择“全部进程”选"
 "项。"
 
-#: ../src/favorites.c:375
+#: ../src/favorites.c:377
 msgid "Hidden Processes"
 msgstr "隐藏的进程"
 
-#: ../src/favorites.c:399
+#: ../src/favorites.c:401
 msgid "Currently _hidden processes:"
 msgstr "目前隐藏的进程(_H)："
 
-#: ../src/favorites.c:421
+#: ../src/favorites.c:423
 msgid "_Remove From List"
 msgstr "从列表中删除(_R)"
 
-#: ../src/favorites.c:430 ../src/procdialogs.c:282
+#: ../src/favorites.c:432 ../src/procdialogs.c:285
 msgid "Note:"
 msgstr "备忘："
 
-#: ../src/favorites.c:431
+#: ../src/favorites.c:433
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
@@ -112,32 +137,32 @@ msgid ""
 msgstr "确定默认情况下要显示哪些进程。0 代表全部，1 代表用户，2 代表活动"
 
 #: ../src/gnome-system-monitor.schemas.in.h:10
+msgid "Enable/Disable smooth refresh"
+msgstr "启用/禁用平滑刷新"
+
+#: ../src/gnome-system-monitor.schemas.in.h:11
 msgid "Main Window height"
 msgstr "主窗口高度"
 
-#: ../src/gnome-system-monitor.schemas.in.h:11
+#: ../src/gnome-system-monitor.schemas.in.h:12
 msgid "Main Window width"
 msgstr "主窗口宽度"
 
-#: ../src/gnome-system-monitor.schemas.in.h:12
+#: ../src/gnome-system-monitor.schemas.in.h:13
 msgid "Process view columns order"
 msgstr "进程视图列顺序"
 
-#: ../src/gnome-system-monitor.schemas.in.h:13
+#: ../src/gnome-system-monitor.schemas.in.h:14
 msgid "Process view sort column"
 msgstr "进程视图排序列"
 
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:15
 msgid "Process view sort order"
 msgstr "进程视图排序顺序"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:16
 msgid "Saves the currently viewed tab"
 msgstr "保存目前查看的标签"
-
-#: ../src/gnome-system-monitor.schemas.in.h:16
-msgid "Show advanced info tab on startup"
-msgstr "启动时显示高级信息标签"
 
 #: ../src/gnome-system-monitor.schemas.in.h:17
 msgid "Show column zero on startup"
@@ -177,77 +202,12 @@ msgstr "是否应显示关于全部文件系统的信息"
 
 #: ../src/gnome-system-monitor.schemas.in.h:26
 msgid ""
-"Whether information about all filesystems should be displayed: this will "
-"include filesystem types like 'autofs' and 'procfs'. It can be usefull to "
-"get a list of all currently mounted filesystems."
+"Whether to display information about all filesystems (including types like "
+"'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
+"filesystems."
 msgstr ""
-"是否应显示关于全部文件系统的信息：这将包含类似“autofs”和“procfs”的文件系统。"
+"是否应显示关于全部文件系统的信息(包含类似“autofs”和“procfs”的文件系统)。"
 "您可以通过此功能获得目前已挂载的全部文件系统。"
-
-#: ../src/infoview.c:34
-msgid "Less _info"
-msgstr "更少信息(_I)"
-
-#: ../src/infoview.c:34
-msgid "More _info"
-msgstr "更多信息(_I)"
-
-#: ../src/infoview.c:99
-msgid "Process Info"
-msgstr "进程信息"
-
-#: ../src/infoview.c:113
-msgid "Command:"
-msgstr "命令："
-
-#: ../src/infoview.c:117
-msgid "Status:"
-msgstr "状态："
-
-#: ../src/infoview.c:121
-msgid "Priority:"
-msgstr "优先级："
-
-#: ../src/infoview.c:145
-msgid "Memory Usage"
-msgstr "内存使用"
-
-#: ../src/infoview.c:159 ../src/interface.c:699 ../src/interface.c:742
-msgid "Total:"
-msgstr "总数："
-
-#: ../src/infoview.c:163
-msgid "RSS:"
-msgstr "RSS："
-
-#: ../src/infoview.c:167
-msgid "Shared:"
-msgstr "共享："
-
-#: ../src/infoview.c:210
-#, c-format
-msgid "Very high - nice %d"
-msgstr "非常高 - nice %d"
-
-#: ../src/infoview.c:212
-#, c-format
-msgid "High - nice %d"
-msgstr "高 - nice %d"
-
-#: ../src/infoview.c:214
-#, c-format
-msgid "Normal - nice %d"
-msgstr "普通 - nice %d"
-
-#: ../src/infoview.c:216
-#, c-format
-msgid "Low - nice %d"
-msgstr "低 - nice %d"
-
-#: ../src/infoview.c:218
-#, c-format
-msgid "Very low - nice %d"
-msgstr "非常低 - nice %d"
 
 #: ../src/interface.c:47
 msgid "_File"
@@ -289,7 +249,7 @@ msgstr "继续进程(_C)"
 msgid "Continue process if stopped"
 msgstr "如果进程已停止，则继续进程"
 
-#: ../src/interface.c:61 ../src/interface.c:201
+#: ../src/interface.c:61 ../src/interface.c:193
 msgid "End _Process"
 msgstr "结束进程(_P)"
 
@@ -297,7 +257,7 @@ msgstr "结束进程(_P)"
 msgid "Force process to finish normally"
 msgstr "强行中止一个进程"
 
-#: ../src/interface.c:63 ../src/procdialogs.c:126
+#: ../src/interface.c:63 ../src/procdialogs.c:129
 msgid "_Kill Process"
 msgstr "杀死进程(_K)"
 
@@ -321,7 +281,7 @@ msgstr "首选项(_N)"
 msgid "Configure the application"
 msgstr "配置应用程序"
 
-#: ../src/interface.c:70 ../src/procdialogs.c:82
+#: ../src/interface.c:70 ../src/procdialogs.c:85
 msgid "_Hide Process"
 msgstr "隐藏进程(_H)"
 
@@ -355,7 +315,7 @@ msgstr "查看进程所打开的文件"
 
 #: ../src/interface.c:79
 msgid "_Contents"
-msgstr "内容(_C)"
+msgstr "目录(_C)"
 
 #: ../src/interface.c:80
 msgid "Open the manual"
@@ -409,122 +369,97 @@ msgstr "我的进程(_Y)"
 msgid "Show user own process"
 msgstr "显示用户所有的进程"
 
-#: ../src/interface.c:287 ../src/memmaps.c:300
-msgid "Device"
-msgstr "设备"
-
-#: ../src/interface.c:288
-msgid "Directory"
-msgstr "目录"
-
-#: ../src/interface.c:289 ../src/openfiles.c:230
-msgid "Type"
-msgstr "类型"
-
-#: ../src/interface.c:290
-msgid "Total"
-msgstr "总数"
-
-#: ../src/interface.c:291
-msgid "Free"
-msgstr "空闲"
-
-#: ../src/interface.c:292
-msgid "Used"
-msgstr "已用"
-
-#: ../src/interface.c:301 ../src/interface.c:915 ../src/procdialogs.c:743
-#: ../src/procdialogs.c:747
-msgid "Devices"
-msgstr "设备"
-
-#: ../src/interface.c:430
+#: ../src/interface.c:265
 msgid "CPU History"
 msgstr "CPU 历史"
 
-#: ../src/interface.c:473
+#: ../src/interface.c:308
 msgid "CPU:"
 msgstr "CPU："
 
-#: ../src/interface.c:476
+#: ../src/interface.c:311
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d："
 
-#: ../src/interface.c:496
+#: ../src/interface.c:331
 msgid "Memory and Swap History"
 msgstr "内存和交换历史"
 
-#: ../src/interface.c:529
+#: ../src/interface.c:364
 msgid "User memory:"
 msgstr "用户内存："
 
-#: ../src/interface.c:547 ../src/interface.c:607
+#: ../src/interface.c:382 ../src/interface.c:442
 msgid "of"
-msgstr "共"
+msgstr "，共"
 
-#: ../src/interface.c:588
+#: ../src/interface.c:423
 msgid "Used swap:"
 msgstr "已用交换："
 
-#: ../src/interface.c:647
+#: ../src/interface.c:482
 msgid "Network History"
 msgstr "网络历史"
 
-#: ../src/interface.c:679
-msgid "Receive:"
-msgstr "接收："
+#: ../src/interface.c:514
+msgid "Received:"
+msgstr "已接收："
 
-#: ../src/interface.c:723
-msgid "Send:"
-msgstr "发出："
+#: ../src/interface.c:534 ../src/interface.c:577
+msgid "Total:"
+msgstr "总计："
 
-#: ../src/interface.c:903 ../src/procdialogs.c:560
+#: ../src/interface.c:558
+msgid "Sent:"
+msgstr "总发出："
+
+#: ../src/interface.c:738 ../src/procdialogs.c:563
 msgid "Processes"
 msgstr "进程"
 
-#: ../src/interface.c:909 ../src/procdialogs.c:652
+#: ../src/interface.c:744 ../src/procdialogs.c:655
 msgid "Resources"
 msgstr "资源"
 
-#: ../src/load-graph.c:350 ../src/load-graph.c:360
+#: ../src/load-graph.c:377 ../src/load-graph.c:387
 #, c-format
 msgid "%s/s"
-msgstr "%s/s"
+msgstr "%s/秒"
 
-#: ../src/memmaps.c:294
+#: ../src/memmaps.c:296
 msgid "Filename"
 msgstr "文件名"
 
-#: ../src/memmaps.c:295
+#: ../src/memmaps.c:297
 msgid "VM Start"
 msgstr "VM 开始于"
 
-#: ../src/memmaps.c:296
+#: ../src/memmaps.c:298
 msgid "VM End"
 msgstr "VM 终止于"
 
-#: ../src/memmaps.c:297
+#: ../src/memmaps.c:299
 msgid "VM Size"
 msgstr "VM 大小"
 
-#: ../src/memmaps.c:298
+#: ../src/memmaps.c:300
 msgid "Flags"
 msgstr "标志"
 
-#: ../src/memmaps.c:299
+#: ../src/memmaps.c:301
 msgid "VM Offset"
 msgstr "VM 偏移"
 
-#: ../src/memmaps.c:301
+#: ../src/memmaps.c:303
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.c:401
+#: ../src/memmaps.c:405
 msgid "Memory Maps"
-msgstr "内存分配"
+msgstr "内存映射"
 
-#: ../src/memmaps.c:421
+#: ../src/memmaps.c:425
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "进程“%s”(PID %u)的内存映像(_M)："
@@ -552,24 +487,24 @@ msgstr "位置类型"
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.c:229
+#: ../src/openfiles.c:231
 msgid "FD"
 msgstr "FD"
 
-#: ../src/openfiles.c:231
+#: ../src/openfiles.c:233
 msgid "Object"
 msgstr "对象"
 
-#: ../src/openfiles.c:308
+#: ../src/openfiles.c:312
 msgid "Open Files"
 msgstr "打开的文件"
 
-#: ../src/openfiles.c:330
+#: ../src/openfiles.c:334
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "进程“%s”(PID %u)所打开的文件(_F)："
 
-#: ../src/procactions.c:73
+#: ../src/procactions.c:75
 #, c-format
 msgid ""
 "Cannot change the priority of process with pid %d to %d.\n"
@@ -578,7 +513,7 @@ msgstr ""
 "无法将 pid 为 %d 的进程的优先级更改为 %d\n"
 "%s"
 
-#: ../src/procactions.c:140
+#: ../src/procactions.c:144
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -588,13 +523,13 @@ msgstr ""
 "%3$s"
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:62
+#: ../src/procdialogs.c:65
 msgid "Hide the selected process?"
 msgstr "隐藏选中进程吗？"
 
 #. FIXME: View menu -> Edit menu
 #. translators: secondary alert messagex
-#: ../src/procdialogs.c:72
+#: ../src/procdialogs.c:75
 msgid ""
 "Hidden processes are no longer visible in the process list. You can re-"
 "enable them by selecting the \"Hidden Processes\" entry in the View menu."
@@ -603,12 +538,12 @@ msgstr ""
 "进程。"
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:121
+#: ../src/procdialogs.c:124
 msgid "Kill the selected process?"
 msgstr "杀死选中的进程吗？"
 
 #. translators: secondary alert message
-#: ../src/procdialogs.c:123
+#: ../src/procdialogs.c:126
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponding processes should be killed."
@@ -617,12 +552,12 @@ msgstr ""
 "不响应的进程。"
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:130
+#: ../src/procdialogs.c:133
 msgid "End the selected process?"
 msgstr "结束选中的进程吗？"
 
 #. translators: secondary alert message
-#: ../src/procdialogs.c:132
+#: ../src/procdialogs.c:135
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponding processes should be ended."
@@ -630,119 +565,115 @@ msgstr ""
 "结束进程可能导致您的数据损坏，工作过程被打断，甚至造成安全隐患。您应该只结束"
 "不响应的进程。"
 
-#: ../src/procdialogs.c:135
+#: ../src/procdialogs.c:138
 msgid "_End Process"
 msgstr "结束进程(_E)"
 
-#: ../src/procdialogs.c:164
+#: ../src/procdialogs.c:167
 msgid "(Very High Priority)"
 msgstr "(非常高优先级)"
 
-#: ../src/procdialogs.c:166
+#: ../src/procdialogs.c:169
 msgid "(High Priority)"
 msgstr "(高优先级)"
 
-#: ../src/procdialogs.c:168
+#: ../src/procdialogs.c:171
 msgid "(Normal Priority)"
 msgstr "(普通优先级)"
 
-#: ../src/procdialogs.c:170
+#: ../src/procdialogs.c:173
 msgid "(Low Priority)"
 msgstr "(低优先级)"
 
-#: ../src/procdialogs.c:172
+#: ../src/procdialogs.c:175
 msgid "(Very Low Priority)"
 msgstr "(非常低优先级)"
 
-#: ../src/procdialogs.c:224
+#: ../src/procdialogs.c:227
 msgid "Change Priority"
 msgstr "改变优先级"
 
-#: ../src/procdialogs.c:245
+#: ../src/procdialogs.c:248
 msgid "Change _Priority"
 msgstr "改变优先级(_P)"
 
-#: ../src/procdialogs.c:266
+#: ../src/procdialogs.c:269
 msgid "_Nice value:"
 msgstr "_Nice 值："
 
-#: ../src/procdialogs.c:283
+#: ../src/procdialogs.c:286
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
 msgstr "进程的优先级由它的 nice 值决定。低的 nice 值对应于高优先级。"
 
-#: ../src/procdialogs.c:446
+#: ../src/procdialogs.c:449
 msgid "Processes i_nfo showed in list:"
 msgstr "此列表中显示的进程信息(_N)："
 
-#: ../src/procdialogs.c:498
+#: ../src/procdialogs.c:501
 msgid "Icon"
 msgstr "图标"
 
-#: ../src/procdialogs.c:537
+#: ../src/procdialogs.c:540
 msgid "System Monitor Preferences"
 msgstr "系统监视器首选项"
 
-#: ../src/procdialogs.c:567
+#: ../src/procdialogs.c:570
 msgid "Behavior"
 msgstr "行为"
 
-#: ../src/procdialogs.c:586 ../src/procdialogs.c:678
+#: ../src/procdialogs.c:589 ../src/procdialogs.c:681
 msgid "_Update interval:"
 msgstr "更新间隔(_U)："
 
-#: ../src/procdialogs.c:607 ../src/procdialogs.c:695 ../src/procdialogs.c:782
+#: ../src/procdialogs.c:610 ../src/procdialogs.c:698 ../src/procdialogs.c:785
 msgid "seconds"
 msgstr "秒"
 
-#: ../src/procdialogs.c:614
+#: ../src/procdialogs.c:617
 msgid "Alert before ending or _killing processes"
 msgstr "结束或杀死进程前警告(_K)"
 
-#: ../src/procdialogs.c:624
+#: ../src/procdialogs.c:627
 msgid "Alert before _hiding processes"
 msgstr "隐藏进程前警告(_H)"
 
-#: ../src/procdialogs.c:634
+#: ../src/procdialogs.c:637
 msgid "Process Fields"
 msgstr "进程域"
 
-#: ../src/procdialogs.c:659
+#: ../src/procdialogs.c:662
 msgid "Graphs"
 msgstr "图形"
 
-#: ../src/procdialogs.c:702
+#: ../src/procdialogs.c:705
 msgid "_Background color:"
 msgstr "背景颜色(_B)："
 
-#: ../src/procdialogs.c:721
+#: ../src/procdialogs.c:724
 msgid "_Grid color:"
 msgstr "网格颜色(_G)："
 
-#: ../src/procdialogs.c:766
+#: ../src/procdialogs.c:769
 msgid "Update _interval:"
 msgstr "更新间隔(_I)："
 
-#: ../src/procdialogs.c:789
+#: ../src/procdialogs.c:792
 msgid "Show _all filesystems"
 msgstr "显示全部文件系统(_A)"
 
-#: ../src/proctable.c:239
+#: ../src/proctable.c:240
 msgid "Process Name"
 msgstr "进程名"
 
-#: ../src/proctable.c:240
+#: ../src/proctable.c:241
 msgid "User"
 msgstr "用户"
 
-#: ../src/proctable.c:241
+#: ../src/proctable.c:242
 msgid "Status"
 msgstr "状态"
-
-#: ../src/proctable.c:242
-msgid "Memory"
-msgstr "内存"
 
 #: ../src/proctable.c:243
 msgid "Virtual Memory"
@@ -753,12 +684,12 @@ msgid "Resident Memory"
 msgstr "驻留内存"
 
 #: ../src/proctable.c:245
-msgid "Shared Memory"
-msgstr "共享内存"
+msgid "Writable Memory"
+msgstr "可写内存"
 
 #: ../src/proctable.c:246
-msgid "RSS Memory"
-msgstr "RSS 内存"
+msgid "Shared Memory"
+msgstr "共享内存"
 
 #: ../src/proctable.c:247
 msgid "X Server Memory"
@@ -789,32 +720,32 @@ msgstr "安全环境"
 msgid "Arguments"
 msgstr "参数"
 
-#: ../src/proctable.c:426
+#: ../src/proctable.c:424
 msgid "Running"
 msgstr "运行中"
 
-#: ../src/proctable.c:431
+#: ../src/proctable.c:429
 msgid "Stopped"
 msgstr "已停止"
 
-#: ../src/proctable.c:436
+#: ../src/proctable.c:434
 msgid "Zombie"
 msgstr "僵死"
 
-#: ../src/proctable.c:441
+#: ../src/proctable.c:439
 msgid "Uninterruptible"
 msgstr "不可中断"
 
-#: ../src/proctable.c:446
+#: ../src/proctable.c:444
 msgid "Sleeping"
 msgstr "睡眠中"
 
-#: ../src/proctable.c:630
+#: ../src/proctable.c:646
 #, c-format
 msgid "%s (thread)"
 msgstr "%s (线程)"
 
-#: ../src/proctable.c:1018
+#: ../src/proctable.c:1031
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "前一分钟、五分钟、十五分钟的平均负载：%0.2f，%0.2f，%0.2f"
@@ -839,3 +770,4 @@ msgstr "%.1f MB"
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GB"
+
