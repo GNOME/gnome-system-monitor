@@ -41,7 +41,7 @@ enum
 	ACTIVE_PROCESSES
 };
 
-#define NCPUSTATES 4
+#define NCPUSTATES 5
 
 enum
 {

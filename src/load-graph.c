@@ -207,12 +207,15 @@ get_load (gfloat data [2], LoadGraph *g)
 	  g->cpu_time [0][1] = cpu.nice;
 	  g->cpu_time [0][2] = cpu.sys;
 	  g->cpu_time [0][3] = cpu.idle;
+	  g->cpu_time [0][4] = cpu.iowait + cpu.irq + cpu.softirq;
 	} else {
 	  for (i=0; i<g->n; i++) {
 	    g->cpu_time [i][0] = cpu.xcpu_user[i];
 	    g->cpu_time [i][1] = cpu.xcpu_nice[i];
 	    g->cpu_time [i][2] = cpu.xcpu_sys[i];
 	    g->cpu_time [i][3] = cpu.xcpu_idle[i];
+	    g->cpu_time [0][4] = cpu.xcpu_iowait[i]
+		    + cpu.xcpu_irq[i] + cpu.xcpu_softirq[i];
 	  }
 	}
 
@@ -229,7 +232,7 @@ get_load (gfloat data [2], LoadGraph *g)
 
 	for (i=0; i<g->n; i++) {
 		float load;
-		float usr, nice, sys, free;
+		float usr, nice, sys, free, iowait;
 		float total;
 		gchar *text;
 
@@ -237,10 +240,10 @@ get_load (gfloat data [2], LoadGraph *g)
 		nice = g->cpu_time [i][1] - g->cpu_last [i][1];
 		sys  = g->cpu_time [i][2] - g->cpu_last [i][2];
 		free = g->cpu_time [i][3] - g->cpu_last [i][3];
-
+		iowait = g->cpu_time[i][4] - g->cpu_last[i][4];
 		memcpy(g->cpu_last [i], g->cpu_time [i], sizeof g->cpu_last[i]);
 
-		total = MAX(usr + nice + sys + free, 1.0f);
+		total = MAX(usr + nice + sys + free + iowait, 1.0f);
 
 		usr  = usr  / total;
 		nice = nice / total;
