@@ -66,7 +66,7 @@ test_is_socket (const char *path)
 }
 
 static gboolean
-is_owned_by_user (const char *path)
+is_owned_by_user_and_socket (const char *path)
 {
 	struct stat s;
 
@@ -76,6 +76,9 @@ is_owned_by_user (const char *path)
 	if (s.st_uid != geteuid ())
 		return FALSE;
 
+	if ((s.st_mode & S_IFSOCK) != S_IFSOCK)
+		return FALSE;
+	
 	return TRUE;
 }
 
@@ -151,10 +154,11 @@ server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 	return TRUE;
 }
 
-static const char *
+static char *
 find_file_with_pattern (const char *dir, const char *pattern)
 {
 	GDir *filedir;
+	char *found_filename;
 	const char *filename;
 	GPatternSpec *pat;
 
@@ -169,42 +173,48 @@ find_file_with_pattern (const char *dir, const char *pattern)
 		return NULL;
 	}
 
+	found_filename = NULL;
+
 	while ((filename = g_dir_read_name (filedir)))
 	{
 		if (g_pattern_match_string (pat, filename))
 		{
 			char *tmp = g_build_filename (dir, filename, NULL);
-			if (!is_owned_by_user (tmp))
-				filename = NULL;
+			if (is_owned_by_user_and_socket (tmp))
+				found_filename = g_strdup (filename);
 			g_free (tmp);
-
-			if (filename != NULL)
-				break;
 		}
+
+		if (found_filename != NULL)
+			break;
 	}
 
 	g_pattern_spec_free (pat);
 	g_dir_close (filedir);
 
-	return filename;
+	return found_filename;
 }
 
 static char *
 socket_filename (const char *prefix)
 {
-	char *pattern, *newfile, *path;
-	const char *tmpdir, *filename;
+	char *pattern, *newfile, *path, *filename;
+	const char *tmpdir;
 
-	newfile = g_strdup_printf ("%s.%s.%u", prefix, g_get_user_name (),
-			g_random_int ());
 	pattern = g_strdup_printf ("%s.%s.*", prefix, g_get_user_name ());
 	tmpdir = g_get_tmp_dir ();
 	filename = find_file_with_pattern (tmpdir, pattern);
 	if (filename == NULL)
-		filename = newfile;
-	path = g_build_filename (tmpdir, filename, NULL);
+	{
+		newfile = g_strdup_printf ("%s.%s.%u", prefix,
+				g_get_user_name (), g_random_int ());
+		path = g_build_filename (tmpdir, newfile, NULL);
+		g_free (newfile);
+	} else {
+		path = g_build_filename (tmpdir, filename, NULL);
+		g_free (filename);
+	}
 
-	g_free (newfile);
 	g_free (pattern);
 	return path;
 }
