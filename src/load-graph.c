@@ -595,6 +595,9 @@ load_graph_new (gint type, ProcData *procdata)
 
 	gtk_widget_show_all (g->main_widget);
 
+	load_graph_start(g);
+	load_graph_stop(g);
+
 	return g;
 }
 
