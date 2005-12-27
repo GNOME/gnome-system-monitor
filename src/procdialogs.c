@@ -326,6 +326,21 @@ show_kill_dialog_toggled (GtkToggleButton *button, gpointer data)
 
 
 static void
+smooth_refresh_toggled(GtkToggleButton *button, gpointer data)
+{
+	ProcData *procdata = data;
+	GConfClient *client = procdata->client;
+
+	gboolean toggled;
+
+	toggled = gtk_toggle_button_get_active(button);
+
+	gconf_client_set_bool(client, SMOOTH_REFRESH_KEY, toggled, NULL);
+}
+
+
+
+static void
 show_all_fs_toggled (GtkToggleButton *button, gpointer data)
 {
 	ProcData *procdata = data;
@@ -527,6 +542,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	GtkWidget *check_button;
 	GtkWidget *tab_label;
 	GtkWidget *color_picker;
+	GtkWidget *smooth_button;
 	GtkSizeGroup *size;
 	gfloat update;
 	gchar *tmp;
@@ -610,7 +626,16 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	label = gtk_label_new_with_mnemonic (_("seconds"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_box_pack_start (GTK_BOX (hbox3), label, FALSE, FALSE, 0);
-	
+
+
+
+	smooth_button = gtk_check_button_new_with_mnemonic(_("Enable _smooth refresh"));
+	g_signal_connect(G_OBJECT(smooth_button), "toggled",
+			 G_CALLBACK(smooth_refresh_toggled), procdata);
+	gtk_box_pack_start(GTK_BOX(hbox2), smooth_button, TRUE, TRUE, 0);
+
+
+
 	hbox2 = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
 		

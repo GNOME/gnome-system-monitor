@@ -12,8 +12,6 @@
 #include "smooth_refresh.h"
 #include "procman.h"
 
-#define SMOOTH_REFRESH_KEY "/apps/procman/smooth_refresh"
-#define SMOOTH_REFRESH_KEY_DEFAULT TRUE
 
 /*
   -self : procman's PID (so we call getpid() only once)
@@ -235,10 +233,13 @@ smooth_refresh_get(SmoothRefresh *sm, guint *new_interval)
 
 
 	if(changed) {
-		printf("CPU %3.1f%% current %u (config %u)\n",
+		time_t now;
+		time(&now);
+		printf("changed refresh_interval to CPU %3.1f%% current %u (config %u) at %s",
 		       sm->last_pcpu,
 		       sm->interval,
-		       *sm->config_interval);
+		       *sm->config_interval,
+		       ctime(&now));
 	}
 
 	g_assert(sm->interval == *new_interval);

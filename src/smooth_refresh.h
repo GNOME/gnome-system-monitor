@@ -3,8 +3,8 @@
 
 #include <glib.h>
 
-G_BEGIN_DECLS
-
+#define SMOOTH_REFRESH_KEY "/apps/procman/smooth_refresh"
+#define SMOOTH_REFRESH_KEY_DEFAULT TRUE
 
 typedef struct _SmoothRefresh SmoothRefresh;
 
@@ -62,7 +62,5 @@ smooth_refresh_destroy(SmoothRefresh *sm) G_GNUC_INTERNAL;
 gboolean
 smooth_refresh_get(SmoothRefresh *sm, guint *new_interval) G_GNUC_INTERNAL;
 
-
-G_END_DECLS
 
 #endif /* _PROCMAN_SMOOTH_REFRESH */
