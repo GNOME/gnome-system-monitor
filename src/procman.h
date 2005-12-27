@@ -30,6 +30,8 @@ typedef struct _ProcData ProcData;
 #include <gconf/gconf-client.h>
 #include <glibtop/cpu.h>
 
+#include <time.h>
+
 #include "smooth_refresh.h"
 
 #include "load-graph.h"
@@ -90,6 +92,7 @@ struct _ProcInfo
 	gchar		*status; /* shared, don't free it ! */
 	gchar		*security_context;
 
+	time_t		start_time;
 	guint64		cpu_time_last;
 
 	guint64		vmsize;

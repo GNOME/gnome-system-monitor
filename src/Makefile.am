@@ -25,7 +25,8 @@ gnome_system_monitor_SOURCES = \
 	disks.c disks.h \
 	selinux.h selinux.c \
 	procman_gnomesu.h procman_gnomesu.c \
-	procman_gksu.h procman_gksu.c
+	procman_gksu.h procman_gksu.c \
+	e_date.c e_date.h
 
 
 gnome_system_monitor_LDADD = @PROCMAN_LIBS@ $(SELINUX_LIBS) $(LIBGKSU_LIBS) libbacon.la 
