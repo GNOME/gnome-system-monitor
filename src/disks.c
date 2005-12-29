@@ -178,6 +178,15 @@ cb_update_disks(gpointer data)
 }
 
 
+static void
+cb_disk_columns_changed(GtkTreeView *treeview, gpointer user_data)
+{
+	ProcData * const procdata = user_data;
+
+	procman_save_tree_state(procdata->client,
+				GTK_WIDGET(treeview),
+				"/apps/procman/disktreenew");
+}
 
 GtkWidget *
 create_disk_view(ProcData *procdata)
@@ -259,6 +268,7 @@ create_disk_view(ProcData *procdata)
 					    NULL);
 	gtk_tree_view_column_set_title(col, _(titles[0]));
 	gtk_tree_view_column_set_sort_column_id(col, 1);
+	gtk_tree_view_column_set_reorderable(col, TRUE);
 	gtk_tree_view_column_set_resizable(col, TRUE);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
 
@@ -272,6 +282,7 @@ create_disk_view(ProcData *procdata)
 							       NULL);
 		gtk_tree_view_column_set_resizable(col, TRUE);
 		gtk_tree_view_column_set_sort_column_id(col, i + 1);
+		gtk_tree_view_column_set_reorderable(col, TRUE);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
 	}
 
@@ -290,6 +301,7 @@ create_disk_view(ProcData *procdata)
 	gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
 	gtk_tree_view_column_set_resizable(col, TRUE);
 	gtk_tree_view_column_set_sort_column_id(col, DISK_USED);
+	gtk_tree_view_column_set_reorderable(col, TRUE);
 
 	/* numeric sort */
 
@@ -318,6 +330,9 @@ create_disk_view(ProcData *procdata)
 
 	procman_get_tree_state(procdata->client, disk_tree,
 			       "/apps/procman/disktreenew");
+
+	g_signal_connect (G_OBJECT(disk_tree), "columns-changed", 
+	                  G_CALLBACK(cb_disk_columns_changed), procdata);
 
 	return disk_box;
 }

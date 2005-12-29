@@ -475,7 +475,7 @@ procman_get_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefi
 		}
 	}
 
-	if(g_str_has_suffix(prefix, "proctree"))
+	if(g_str_has_suffix(prefix, "proctree") || g_str_has_suffix(prefix, "disktreenew"))
 	{
 		GSList *order;
 		char *key;
@@ -542,7 +542,7 @@ procman_save_tree_state (GConfClient *client, GtkWidget *tree, const gchar *pref
 		g_free (key);
 	}
 
-	if(g_str_has_suffix(prefix, "proctree"))
+	if(g_str_has_suffix(prefix, "proctree") || g_str_has_suffix(prefix, "disktreenew"))
 	{
 		GSList *order;
 		char *key;
