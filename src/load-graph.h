@@ -54,10 +54,6 @@ void
 load_graph_change_speed (LoadGraph *g,
 			 guint new_speed) G_GNUC_INTERNAL;
 
-void
-load_graph_reset_colors (LoadGraph *g) G_GNUC_INTERNAL;
-
-
 GdkColor*
 load_graph_get_colors (LoadGraph *g) G_GNUC_INTERNAL G_GNUC_CONST;
 

@@ -43,8 +43,6 @@ enum
 	ACTIVE_PROCESSES
 };
 
-#define NCPUSTATES 5
-
 enum
 {
 	MIN_UPDATE_INTERVAL = 1 * 1000,

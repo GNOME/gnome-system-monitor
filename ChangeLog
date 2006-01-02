@@ -1,5 +1,26 @@
 2006-01-02  Benoît Dejean  <benoit@placenet.org>
 
+	* src/load-graph.c: (load_graph_draw), (get_load), (get_memory),
+	(net_scale), (get_net), (shift_right), (load_graph_update),
+	(load_graph_unalloc), (load_graph_alloc), (load_graph_new),
+	(load_graph_change_speed):
+	* src/load-graph.h:
+	* src/procman.c: (color_changed_cb):
+	* src/procman.h:
+
+	Reworked LoadGraph.
+	Fuzy description of changes (as i was offline all the weekend, i
+	have been enable to commit anything. CVS is so bad).
+
+	Fixed background color.
+	Many drawing improvements.
+	Dropped color allocation code.
+	Moved a macro from procman.h to load-graph.h
+	Reworked CPU load graph : simpler and faster.
+	Changed LoadGraph->data allocation scheme.
+
+2006-01-02  Benoît Dejean  <benoit@placenet.org>
+
 	* src/gnome-system-monitor.schemas.in:
 
 	Made Resources tab default.

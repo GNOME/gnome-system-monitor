@@ -202,10 +202,6 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 	else {
 		g_assert_not_reached();
 	}
-
-	load_graph_reset_colors(procdata->cpu_graph);
-	load_graph_reset_colors(procdata->mem_graph);
-	load_graph_reset_colors(procdata->net_graph);
 }
 
 

@@ -24,22 +24,27 @@
 #include "util.h"
 
 
+#define NUM_POINTS 100
+
+
+enum {
+	CPU_TOTAL,
+	CPU_USED,
+	N_CPU_STATES
+};
+
 struct _LoadGraph {
 
 	guint n;
 	gint type;
 	guint speed;
 	guint draw_width, draw_height;
-	guint num_points;
-	guint num_cpus;
-
-	guint allocated;
 
 	GdkColor *colors;
-	gfloat **data;
-	guint data_size;
 
-	gboolean colors_allocated;
+	gfloat* data_block;
+	gfloat* data[NUM_POINTS];
+
 	GtkWidget *main_widget;
 	GtkWidget *disp;
 
@@ -51,14 +56,23 @@ struct _LoadGraph {
 
 	LoadGraphLabels labels;
 
-	guint64 cpu_time [GLIBTOP_NCPU] [NCPUSTATES];
-	guint64 cpu_last [GLIBTOP_NCPU] [NCPUSTATES];
-	gboolean cpu_initialized;
+	union {
+		struct {
+			gboolean initialized;
+			guint now; /* 0 -> current, 1 -> last
+				    now ^ 1 each time */
+			/* times[now], times[now ^ 1] is last */
+			guint64 times[2][GLIBTOP_NCPU][N_CPU_STATES];
+		} cpu;
 
-	guint64 net_last_in, net_last_out;
-	float net_max;
-	GTimeVal net_time;
+		struct {
+			guint64 last_in, last_out;
+			GTimeVal time;
+			float max;
+		} net;
+	};
 };
+
 
 
 #define FRAME_WIDTH 4
@@ -74,22 +88,10 @@ load_graph_draw (LoadGraph *g)
 	int real_draw_height;
 	gint i, j;
 
-	/* Allocate colors. */
-	if (!g->colors_allocated) {
-		GdkColormap *colormap;
-
-		colormap = gdk_window_get_colormap (g->disp->window);
-		for (i = 0; i < g->n + 2; i++) {
-			gdk_color_alloc (colormap, &(g->colors [i]));
-		}
-
-		g->colors_allocated = TRUE;
-	}
-
 	cr = cairo_create (g->buffer);
 
 	/* clear */
-	cairo_set_source_rgb (cr, 0., 0., 0.);
+	gdk_cairo_set_source_color (cr, &(g->colors [0]));
 	cairo_paint (cr);
 
 	/* draw frame */
@@ -118,21 +120,21 @@ load_graph_draw (LoadGraph *g)
 	cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
 	cairo_set_line_join (cr, CAIRO_LINE_JOIN_MITER);
 
-	delx = (double)(g->draw_width) / (double)g->num_points;
+	delx = (g->draw_width - 2.0) / (NUM_POINTS - 1);
 
 	for (j = 0; j < g->n; ++j) {
 		cairo_move_to (cr,
-			       g->draw_width - 1,
-			       (1 - g->data[0][j]) * real_draw_height);
+			       g->draw_width - 2.0,
+			       (1.0f - g->data[0][j]) * real_draw_height);
 		gdk_cairo_set_source_color (cr, &(g->colors [j + 2]));
 
-		for (i = 1; i < g->num_points - 1; ++i) {
-			if (g->data[i][j] == -1)
+		for (i = 1; i < NUM_POINTS; ++i) {
+			if (g->data[i][j] == -1.0f)
 				continue;
 
 			cairo_line_to (cr,
-				       g->draw_width -1 - i * delx,
-				       (1 - g->data[i][j]) * real_draw_height);
+				       g->draw_width - i * delx,
+				       (1.0f - g->data[i][j]) * real_draw_height);
 		}
 
 		cairo_stroke (cr);
@@ -194,74 +196,60 @@ load_graph_expose (GtkWidget *widget,
 }
 
 static void
-get_load (gfloat data [2], LoadGraph *g)
+get_load (LoadGraph *g)
 {
 	guint i;
-
 	glibtop_cpu cpu;
 
 	glibtop_get_cpu (&cpu);
 
+#undef NOW
+#undef LAST
+#define NOW  (g->cpu.times[g->cpu.now])
+#define LAST (g->cpu.times[g->cpu.now ^ 1])
+
 	if (g->n == 1) {
-	  g->cpu_time [0][0] = cpu.user;
-	  g->cpu_time [0][1] = cpu.nice;
-	  g->cpu_time [0][2] = cpu.sys;
-	  g->cpu_time [0][3] = cpu.idle;
-	  g->cpu_time [0][4] = cpu.iowait + cpu.irq + cpu.softirq;
+		NOW[0][CPU_TOTAL] = cpu.total;
+		NOW[0][CPU_USED] = cpu.user + cpu.nice + cpu.sys;
 	} else {
-	  for (i=0; i<g->n; i++) {
-	    g->cpu_time [i][0] = cpu.xcpu_user[i];
-	    g->cpu_time [i][1] = cpu.xcpu_nice[i];
-	    g->cpu_time [i][2] = cpu.xcpu_sys[i];
-	    g->cpu_time [i][3] = cpu.xcpu_idle[i];
-	    g->cpu_time [0][4] = cpu.xcpu_iowait[i]
-		    + cpu.xcpu_irq[i] + cpu.xcpu_softirq[i];
-	  }
-	}
-
-	if (!g->cpu_initialized) {
-		for (i=0; i<g->n; i++) {
-			memcpy(g->cpu_last[i], g->cpu_time[i],
-			       sizeof g->cpu_last[i]);
-
-			data[i] = -1;
+		for (i = 0; i < g->n; i++) {
+			NOW[i][CPU_TOTAL] = cpu.xcpu_total[i];
+			NOW[i][CPU_USED] = cpu.xcpu_user[i] + cpu.xcpu_nice[i]
+				+ cpu.xcpu_sys[i];
 		}
-		g->cpu_initialized = TRUE;
-		return;
 	}
 
-	for (i=0; i<g->n; i++) {
-		float load;
-		float usr, nice, sys, free, iowait;
-		float total;
-		gchar *text;
+	if (G_UNLIKELY(!g->cpu.initialized)) {
+		/* No data yet */
+		g->cpu.initialized = TRUE;
+	} else {
+		for (i = 0; i < g->n; i++) {
+			float load;
+			float total, used;
+			gchar *text;
 
-		usr  = g->cpu_time [i][0] - g->cpu_last [i][0];
-		nice = g->cpu_time [i][1] - g->cpu_last [i][1];
-		sys  = g->cpu_time [i][2] - g->cpu_last [i][2];
-		free = g->cpu_time [i][3] - g->cpu_last [i][3];
-		iowait = g->cpu_time[i][4] - g->cpu_last[i][4];
-		memcpy(g->cpu_last [i], g->cpu_time [i], sizeof g->cpu_last[i]);
+			total = NOW[i][CPU_TOTAL] - LAST[i][CPU_TOTAL];
+			used  = NOW[i][CPU_USED]  - LAST[i][CPU_USED];
 
-		total = MAX(usr + nice + sys + free + iowait, 1.0f);
+			load = used / MAX(total, 1.0f);
+			g->data[0][i] = load;
 
-		usr  = usr  / total;
-		nice = nice / total;
-		sys  = sys  / total;
-		free = free / total;
-
-		data[i] = usr + sys + nice;
-
-		load = CLAMP(100.0f*data[i], 0.0f, 100.0f);
-
-		text = g_strdup_printf ("%.1f%%", load);
-		gtk_label_set_text (GTK_LABEL (g->labels.cpu[i]), text);
-		g_free (text);
+			/* Update label */
+			text = g_strdup_printf("%.1f%%", load * 100.0f);
+			gtk_label_set_text(GTK_LABEL(g->labels.cpu[i]), text);
+			g_free(text);
+		}
 	}
+
+	g->cpu.now ^= 1;
+
+#undef NOW
+#undef LAST
 }
 
+
 static void
-get_memory (gfloat data [1], LoadGraph *g)
+get_memory (LoadGraph *g)
 {
 	float mempercent, swappercent;
 	gchar *text1, *text2, *text3;
@@ -296,33 +284,33 @@ get_memory (gfloat data [1], LoadGraph *g)
 	g_free (text2);
 	g_free (text3);
 
-	data [0] = mempercent;
-	data [1] = swappercent;
+	g->data[0][0] = mempercent;
+	g->data[0][1] = swappercent;
 }
 
 static void
 net_scale (LoadGraph *g, float new_max)
 {
 	gint i;
-	float old_max = MAX (g->net_max, 1.0f), scale;
+	float old_max = MAX (g->net.max, 1.0f), scale;
 
 	if (new_max <= old_max)
 		return;
 
 	scale = old_max / new_max;
 
-	for (i = 0; i < g->num_points; i++) {
+	for (i = 0; i < NUM_POINTS; i++) {
 		if (g->data[i][0] >= 0.0f) {
 			g->data[i][0] *= scale;
 			g->data[i][1] *= scale;
 		}
 	}
 
-	g->net_max = new_max;
+	g->net.max = new_max;
 }
 
 static void
-get_net (float data [2], LoadGraph *g)
+get_net (LoadGraph *g)
 {
 	glibtop_netlist netlist;
 	char **ifnames;
@@ -353,13 +341,13 @@ get_net (float data [2], LoadGraph *g)
 
 	g_get_current_time (&time);
 
-	if (in >= g->net_last_in && out >= g->net_last_out &&
-	    g->net_time.tv_sec != 0) {
+	if (in >= g->net.last_in && out >= g->net.last_out &&
+	    g->net.time.tv_sec != 0) {
 		float dtime;
-		dtime = time.tv_sec - g->net_time.tv_sec +
-			(float) (time.tv_usec - g->net_time.tv_usec) / G_USEC_PER_SEC;
-		din   = (in - g->net_last_in) / dtime;
-		dout  = (out - g->net_last_out) / dtime;
+		dtime = time.tv_sec - g->net.time.tv_sec +
+			(float) (time.tv_usec - g->net.time.tv_usec) / G_USEC_PER_SEC;
+		din   = (in - g->net.last_in) / dtime;
+		dout  = (out - g->net.last_out) / dtime;
 	} else {
 		/* Don't calc anything if new data is less than old (interface
 		   removed, counters reset, ...) or if it is the first time */
@@ -367,12 +355,12 @@ get_net (float data [2], LoadGraph *g)
 		dout = 0.0f;
 	}
 
-	g->net_last_in  = in;
-	g->net_last_out = out;
-	g->net_time     = time;
+	g->net.last_in  = in;
+	g->net.last_out = out;
+	g->net.time     = time;
 
-	data [0] = din / MAX (g->net_max, 1.0f);
-	data [1] = dout / MAX (g->net_max, 1.0f);
+	g->data[0][0] = din  / MAX(g->net.max, 1.0f);
+	g->data[0][1] = dout / MAX(g->net.max, 1.0f);
 
 	net_scale (g, MAX (din, dout));
 
@@ -415,11 +403,11 @@ shift_right(LoadGraph *g)
 	unsigned i;
 	float* last_data;
 
-	/* data[g->num_points - 1] becomes data[0] */
-	last_data = g->data[g->num_points - 1];
+	/* data[NUM_POINTS - 1] becomes data[0] */
+	last_data = g->data[NUM_POINTS - 1];
 
 	/* data[i+1] = data[i] */
-	for(i = g->num_points - 1; i != 0; --i)
+	for(i = NUM_POINTS - 1; i != 0; --i)
 		g->data[i] = g->data[i-1];
 
 	g->data[0] = last_data;
@@ -435,14 +423,16 @@ load_graph_update (gpointer user_data)
 
 	switch (g->type) {
 	case LOAD_GRAPH_CPU:
-		get_load (g->data[0], g);
+		get_load(g);
 		break;
 	case LOAD_GRAPH_MEM:
-		get_memory (g->data [0], g);
+		get_memory(g);
 		break;
 	case LOAD_GRAPH_NET:
-		get_net (g->data[0], g);
+		get_net(g);
 		break;
+	default:
+		g_assert_not_reached();
 	}
 
 	if (g->draw)
@@ -454,24 +444,12 @@ load_graph_update (gpointer user_data)
 static void
 load_graph_unalloc (LoadGraph *g)
 {
-	int i;
-
-	g_assert(g->allocated);
-
-	for (i = 0; i < g->num_points; i++) {
-		g_free (g->data [i]);
-	}
-
-	g_free (g->data);
-
-	g->data = NULL;
+	g_free(g->data_block);
 
 	if (g->buffer) {
 		cairo_surface_destroy (g->buffer);
 		g->buffer = NULL;
 	}
-
-	g->allocated = FALSE;
 }
 
 static void
@@ -479,19 +457,14 @@ load_graph_alloc (LoadGraph *g)
 {
 	int i, j;
 
-	g_assert(!g->allocated);
+	/* Allocate data in a contiguous block */
+	g->data_block = g_new(float, g->n * NUM_POINTS);
 
-	g->data = g_new (gfloat *, g->num_points);
-
-	g->data_size = sizeof (gfloat) * g->n;
-
-	for (i = 0; i < g->num_points; i++) {
-
-		g->data [i] = g_malloc (g->data_size);
-		for(j = 0; j < g->n; j++) g->data [i][j] = -1;
+	for (i = 0; i < NUM_POINTS; ++i) {
+		g->data[i] = g->data_block + i * g->n;
+		for (j = 0; j < g->n; ++j)
+			g->data[i][j] = -1.0f;
 	}
-
-	g->allocated = TRUE;
 }
 
 static gboolean
@@ -550,7 +523,6 @@ load_graph_new (gint type, ProcData *procdata)
 	}
 
 	g->speed  = procdata->config.graph_update_interval;
-	g->num_points = 100;
 
 	g->colors = g_new0 (GdkColor, g->n + 2);
 
@@ -558,8 +530,8 @@ load_graph_new (gint type, ProcData *procdata)
 	g->colors[1] = procdata->config.frame_color;
 	switch (type) {
 	case LOAD_GRAPH_CPU:
-		for (i=0;i<g->n;i++)
-			g->colors[2+i] = procdata->config.cpu_color[i];
+		memcpy(g->colors + 2, procdata->config.cpu_color,
+		       g->n * sizeof g->colors[0]);
 		break;
 	case LOAD_GRAPH_MEM:
 		g->colors[2] = procdata->config.mem_color;
@@ -627,7 +599,12 @@ void
 load_graph_change_speed (LoadGraph *g,
 			 guint new_speed)
 {
+	if (g->speed == new_speed)
+		return;
+
 	g->speed = new_speed;
+
+	g_assert(g->timer_index);
 
 	if(g->timer_index) {
 		g_source_remove (g->timer_index);
@@ -643,11 +620,6 @@ load_graph_get_colors (LoadGraph *g)
 	return g->colors;
 }
 
-void
-load_graph_reset_colors (LoadGraph *g)
-{
-	g->colors_allocated = FALSE;
-}
 
 LoadGraphLabels*
 load_graph_get_labels (LoadGraph *g)
