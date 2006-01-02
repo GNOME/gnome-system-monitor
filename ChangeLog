@@ -1,3 +1,23 @@
+2006-01-02  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procdialogs.c: (procdialog_create_preferences_dialog):
+
+	Set smooth refresh checkbox status according to gconf.
+
+2006-01-02  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+
+	Requires libgtop 2.13.0.
+
+	* src/proctable.c: (proctable_free_info),
+	, (update_info_mutable_cols),
+	(remove_info_from_list), (procinfo_new), (proctable_free_table):
+
+	Removed first unused argument of proctable_free_info(procinfo).
+
+	(get_process_memory_writable): Use libgtop 2.13.0 feature.
+
 2005-12-28  Dennis Cranston  <dennis_cranston@yahoo.com>
 
 	* src/disks.c: (cb_disk_columns_changed), (create_disk_view):
