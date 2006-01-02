@@ -406,7 +406,7 @@ proctable_new (ProcData * const procdata)
 
 
 static void
-proctable_free_info (ProcData *procdata, ProcInfo *info)
+proctable_free_info(ProcInfo *info)
 {
 	g_assert(info != NULL);
 
@@ -517,7 +517,7 @@ static void get_process_memory_writable(ProcInfo *info)
 
 	for (i = 0; i < buf.number; ++i) {
 		if (maps[i].perm & GLIBTOP_MAP_PERM_WRITE)
-			info->memwritable += (maps[i].end - maps[i].start);
+			info->memwritable += maps[i].size;
 	}
 
 	g_free(maps);
@@ -603,6 +603,9 @@ update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info
 	memxserver = SI_gnome_vfs_format_file_size_for_display (info->memxserver);
 
 	cpu_time = format_duration_for_display (info->cpu_time_last / procdata->frequency);
+
+	/* FIXME: does it worths it to display relative to $now date ?
+	   absolute date wouldn't required to be updated on every refresh */
 	start_time = procman_format_date_for_display(info->start_time);
 
 	gtk_tree_store_set (store, &info->node,
@@ -619,7 +622,8 @@ update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info
 			    COL_NICE, info->nice,
 			    -1);
 
-	/* We don't bother updating COL_SECURITYCONTEXT as it can never change */
+	/* FIXME: We don't bother updating COL_SECURITYCONTEXT as it can never change.
+	   even on fork ? */
 	g_free (vmsize);
 	g_free (memres);
 	g_free (memwritable);
@@ -766,7 +770,7 @@ remove_info_from_list (ProcInfo *info, ProcData *procdata)
 	/* Remove from list */
 	procdata->info = g_list_remove (procdata->info, info);
 	g_hash_table_remove(procdata->pids, GINT_TO_POINTER(info->pid));
-	proctable_free_info (procdata, info);
+	proctable_free_info(info);
 }
 
 
@@ -839,6 +843,7 @@ procinfo_new (ProcData *procdata, gint pid)
 	glibtop_get_proc_time (&proctime, pid);
 	arguments = glibtop_get_proc_argv (&procargs, pid, 0);
 
+	/* FIXME : wrong. name and arguments may change with exec* */
 	get_process_name (info, procstate.cmd, arguments[0]);
 	get_process_user (procdata, info, procstate.uid);
 
@@ -1019,7 +1024,7 @@ proctable_free_table (ProcData * const procdata)
 	while (list)
 	{
 		ProcInfo *info = list->data;
-		proctable_free_info (procdata, info);
+		proctable_free_info(info);
 		list = g_list_next (list);
 	}
 
