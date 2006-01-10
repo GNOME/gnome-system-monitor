@@ -636,7 +636,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 							   NULL));
 	g_signal_connect(G_OBJECT(smooth_button), "toggled",
 			 G_CALLBACK(smooth_refresh_toggled), procdata);
-	gtk_box_pack_start(GTK_BOX(hbox2), smooth_button, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox2), smooth_button, TRUE, TRUE, 0);
 
 
 

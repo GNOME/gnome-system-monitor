@@ -639,7 +639,6 @@ void
 insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 {
 	GtkTreeModel *model;
-	gchar *name;
 
 	/* Don't show process if it is not running */
 	if ((procdata->config.whose_process == ACTIVE_PROCESSES) &&
@@ -653,14 +652,6 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 		return;
 	}
 	info->is_blacklisted = FALSE;
-
-	/* Don't show threads */
-	if (!procdata->config.show_threads && info->is_thread)
-		return;
-	else if (info->is_thread)
-		name = g_strdup_printf(_("%s (thread)"), info->name);
-	else
-		name = g_strdup (info->name);
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 	if (info->parent && procdata->config.show_tree && info->parent->is_visible) {
@@ -685,7 +676,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	gtk_tree_store_set (GTK_TREE_STORE (model), &info->node,
 			    COL_POINTER, info,
 			    COL_PIXBUF, info->pixbuf,
-			    COL_NAME, name,
+			    COL_NAME, info->name,
 			    COL_ARGS, info->arguments,
 			    COL_PID, info->pid,
 			    COL_SECURITYCONTEXT, info->security_context,
@@ -694,8 +685,6 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	update_info_mutable_cols(GTK_TREE_STORE (model), procdata, info);
 
 	info->is_visible = TRUE;
-
-	g_free(name);
 }
 
 
@@ -864,9 +853,6 @@ procinfo_new (ProcData *procdata, gint pid)
 	info->parent = find_parent (procdata, procuid.ppid);
 	if (info->parent) {
 		info->parent->children = g_slist_prepend (info->parent->children, info);
-		if(g_str_equal(info->name, info->parent->name)
-		   && info->parent->vmsize == info->vmsize)
-			info->is_thread = TRUE;
 	}
 
 	info->is_visible = FALSE;

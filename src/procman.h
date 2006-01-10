@@ -57,7 +57,6 @@ struct _ProcConfig
         gboolean	show_kill_warning;
         gboolean	show_hide_message;
         gboolean	show_tree;
-        gboolean	show_threads;
 	gboolean	show_all_fs;
 	guint		update_interval;
  	gint		graph_update_interval;
@@ -107,7 +106,6 @@ struct _ProcInfo
 
 	guint		is_visible	: 1;
 	guint		is_running	: 1;
-	guint		is_thread	: 1;
 	guint		is_blacklisted	: 1;
 };
 

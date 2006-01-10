@@ -55,18 +55,6 @@ tree_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data
 }
 
 static void
-threads_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
-{
-	ProcData *procdata = data;
-	GConfValue *value = gconf_entry_get_value (entry);
-	
-	procdata->config.show_threads = gconf_value_get_bool (value);
-	proctable_clear_tree (procdata);
-	proctable_update_all (procdata);
-	
-}
-
-static void
 view_as_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
 {
 	ProcData *procdata = data;
@@ -259,9 +247,6 @@ procman_data_new (GConfClient *client)
 	pd->config.show_hide_message = gconf_client_get_bool (client, "/apps/procman/hide_message",
 							      NULL);
 	gconf_client_notify_add (client, "/apps/procman/hide_message", warning_changed_cb,
-				 pd, NULL, NULL);
-	pd->config.show_threads = gconf_client_get_bool (client, "/apps/procman/show_threads", NULL);
-	gconf_client_notify_add (client, "/apps/procman/show_threads", threads_changed_cb,
 				 pd, NULL, NULL);
 	pd->config.update_interval = gconf_client_get_int (client, "/apps/procman/update_interval", 
 							   NULL);

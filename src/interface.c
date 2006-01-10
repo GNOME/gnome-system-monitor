@@ -40,7 +40,6 @@
 #include "disks.h"
 
 static void	cb_toggle_tree (GtkAction *action, gpointer data);
-static void	cb_toggle_threads (GtkAction *action, gpointer data);
 
 static const GtkActionEntry menu_entries[] =
 {
@@ -87,9 +86,6 @@ static const GtkToggleActionEntry toggle_menu_entries[] =
 	{ "ShowDependencies", NULL, N_("_Dependencies"), "<control>D",
 	  N_("Show parent/child relationship between processes"),
 	  G_CALLBACK (cb_toggle_tree), TRUE },
-	{ "ShowThreads", NULL, N_("_Threads"), "<control>T",
-	  N_("Show each thread as a separate process"),
-	  G_CALLBACK (cb_toggle_threads), FALSE }
 };
 
 
@@ -126,7 +122,6 @@ static const char ui_info[] =
 "      <menuitem name=\"ViewMyProcesses\" action=\"ShowMyProcesses\" />"
 "      <separator />"
 "      <menuitem name=\"ViewDependenciesMenu\" action=\"ShowDependencies\" />"
-"      <menuitem name=\"ViewThreadsMenu\" action=\"ShowThreads\" />"
 "      <separator />"
 "      <menuitem name=\"ViewHideProcessMenu\" action=\"HideProcess\" />"
 "      <menuitem name=\"ViewHiddenProcessesMenu\" action=\"HiddenProcesses\" />"
@@ -774,11 +769,6 @@ create_main_window (ProcData *procdata)
 	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
 				      procdata->config.show_tree);
 
-	action = gtk_action_group_get_action (procdata->action_group, "ShowThreads");
-	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
-				      procdata->config.show_threads);
-
-
 	procdata->app = app;
 }
 
@@ -845,18 +835,4 @@ cb_toggle_tree (GtkAction *action, gpointer data)
 		return;
 
 	gconf_client_set_bool (client, "/apps/procman/show_tree", show, NULL);
-}
-
-static void		
-cb_toggle_threads (GtkAction *action, gpointer data)
-{
-	ProcData *procdata = data;
-	GConfClient *client = procdata->client;
-	gboolean show;
-
-	show = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-	if (show == procdata->config.show_threads)
-		return;
-
-	gconf_client_set_bool (client, "/apps/procman/show_threads", show, NULL);
 }
