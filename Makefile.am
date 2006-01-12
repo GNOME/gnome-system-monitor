@@ -4,7 +4,6 @@ SUBDIRS = po src help
 
 EXTRA_DIST = \
 	gnome-system-monitor.desktop.in \
-	gnome-system-monitor.spec \
 	intltool-extract.in \
 	intltool-merge.in \
 	intltool-update.in \
