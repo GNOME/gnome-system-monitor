@@ -251,7 +251,7 @@ proctable_new (ProcData * const procdata)
 		N_("Shared Memory"),
 		N_("X Server Memory"),
 		/* xgettext:no-c-format */ N_("% CPU"),
-		N_("CPU time"),
+		N_("CPU Time"),
 		N_("Started"),
 		N_("Nice"),
 		N_("ID"),

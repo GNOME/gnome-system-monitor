@@ -628,6 +628,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (hbox3), label, FALSE, FALSE, 0);
 
 
+	hbox2 = gtk_hbox_new(FALSE, 6);
+	gtk_box_pack_start(GTK_BOX(vbox2), hbox2, FALSE, FALSE, 0);
 
 	smooth_button = gtk_check_button_new_with_mnemonic(_("Enable _smooth refresh"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(smooth_button),
