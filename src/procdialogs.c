@@ -602,7 +602,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	hbox2 = gtk_hbox_new (FALSE, 12);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
 	
-	label = gtk_label_new_with_mnemonic (_("_Update interval:"));
+	label = gtk_label_new_with_mnemonic (_("_Update interval in seconds:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
 	
@@ -618,15 +618,11 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 							  1.0);
 
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
-	gtk_box_pack_start (GTK_BOX (hbox3), spin_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox3), spin_button, FALSE, FALSE, 0);
 	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
 				   G_CALLBACK (update_update_interval), procdata);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), spin_button);
 	
-	label = gtk_label_new_with_mnemonic (_("seconds"));
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_box_pack_start (GTK_BOX (hbox3), label, FALSE, FALSE, 0);
-
 
 	hbox2 = gtk_hbox_new(FALSE, 6);
 	gtk_box_pack_start(GTK_BOX(vbox2), hbox2, FALSE, FALSE, 0);
@@ -638,7 +634,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 							   NULL));
 	g_signal_connect(G_OBJECT(smooth_button), "toggled",
 			 G_CALLBACK(smooth_refresh_toggled), procdata);
-	gtk_box_pack_start(GTK_BOX(vbox2), smooth_button, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(hbox2), smooth_button, TRUE, TRUE, 0);
 
 
 
@@ -709,7 +705,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	hbox2 = gtk_hbox_new (FALSE, 12);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
 		
-	label = gtk_label_new_with_mnemonic (_("_Update interval:"));
+	label = gtk_label_new_with_mnemonic (_("_Update interval in seconds:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
 	gtk_size_group_add_widget (size, label);
@@ -723,12 +719,9 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
 	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
 				   G_CALLBACK (update_graph_update_interval), procdata);
-	gtk_box_pack_start (GTK_BOX (hbox3), spin_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox3), spin_button, FALSE, FALSE, 0);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), spin_button);
 	
-	label = gtk_label_new_with_mnemonic (_("seconds"));
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_box_pack_start (GTK_BOX (hbox3), label, FALSE, FALSE, 0);
 	
 	hbox2 = gtk_hbox_new (FALSE, 12);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, TRUE, TRUE, 0);
@@ -797,7 +790,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	hbox2 = gtk_hbox_new (FALSE, 12);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
 	
-	label = gtk_label_new_with_mnemonic (_("Update _interval:"));
+	label = gtk_label_new_with_mnemonic (_("_Update interval in seconds:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
 	
@@ -808,15 +801,11 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	adjustment = (GtkAdjustment *) gtk_adjustment_new (update / 1000.0, 1.0, 
 							   100.0, 1.0, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 0);
-	gtk_box_pack_start (GTK_BOX (hbox3), spin_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox3), spin_button, FALSE, FALSE, 0);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), spin_button);
 	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
 				  G_CALLBACK (update_disks_update_interval), procdata);
 		
-	label = gtk_label_new_with_mnemonic (_("seconds"));
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_box_pack_start (GTK_BOX (hbox3), label, FALSE, FALSE, 0);
-
 
 	hbox2 = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
