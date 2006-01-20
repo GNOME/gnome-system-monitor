@@ -41,10 +41,15 @@ struct BaconMessageConnection {
 	/* The socket path itself */
 	char *path;
 
-	/* FD is for the connection, serverfd is for the server socket,
-	 * it accepts incoming connections. */
-	int fd, serverfd, server_conn_id, conn_id;
+	/* File descriptor of the socket */
+	int fd;
+	/* Channel to watch */
 	GIOChannel *chan;
+	/* Event id returned by g_io_add_watch() */
+	int conn_id;
+
+	/* Connections accepted by this connection */
+	GSList *accepted_connections;
 
 	/* callback */
 	void (*func) (const char *message, gpointer user_data);
@@ -88,6 +93,8 @@ static gboolean server_cb (GIOChannel *source,
 static gboolean
 setup_connection (BaconMessageConnection *conn)
 {
+	g_return_val_if_fail (conn->chan == NULL, FALSE);
+
 	conn->chan = g_io_channel_unix_new (conn->fd);
 	if (!conn->chan) {
 		return FALSE;
@@ -98,19 +105,38 @@ setup_connection (BaconMessageConnection *conn)
 	return TRUE;
 }
 
+static void
+accept_new_connection (BaconMessageConnection *server_conn)
+{
+	BaconMessageConnection *conn;
+	int alen;
+
+	g_return_if_fail (server_conn->is_server);
+
+	conn = g_new0 (BaconMessageConnection, 1);
+	conn->is_server = FALSE;
+	conn->func = server_conn->func;
+	conn->data = server_conn->data;
+
+	conn->fd = accept (server_conn->fd, NULL, (guint *)&alen);
+
+	server_conn->accepted_connections =
+		g_slist_prepend (server_conn->accepted_connections, conn);
+
+	setup_connection (conn);
+}
+
 static gboolean
 server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 {
 	BaconMessageConnection *conn = (BaconMessageConnection *)data;
 	char *message, *subs, buf;
-	int cd, alen, rc, offset;
+	int cd, rc, offset;
 	gboolean finished;
 
 	offset = 0;
-	if (conn->serverfd == g_io_channel_unix_get_fd (source)) {
-		cd = accept (conn->serverfd, NULL, (guint *)&alen);
-		conn->fd = cd;
-		setup_connection (conn);
+	if (conn->is_server && conn->fd == g_io_channel_unix_get_fd (source)) {
+		accept_new_connection (conn);
 		return TRUE;
 	}
 	message = g_malloc (1);
@@ -227,7 +253,7 @@ try_server (BaconMessageConnection *conn)
 	uaddr.sun_family = AF_UNIX;
 	strncpy (uaddr.sun_path, conn->path,
 			MIN (strlen(conn->path)+1, UNIX_PATH_MAX));
-	conn->serverfd = conn->fd = socket (PF_UNIX, SOCK_STREAM, 0);
+	conn->fd = socket (PF_UNIX, SOCK_STREAM, 0);
 	if (bind (conn->fd, (struct sockaddr *) &uaddr, sizeof (uaddr)) == -1)
 	{
 		conn->fd = -1;
@@ -237,7 +263,6 @@ try_server (BaconMessageConnection *conn)
 
 	if (!setup_connection (conn))
 		return FALSE;
-	conn->server_conn_id = conn->conn_id;
 	return TRUE;
 }
 
@@ -250,7 +275,6 @@ try_client (BaconMessageConnection *conn)
 	strncpy (uaddr.sun_path, conn->path,
 			MIN(strlen(conn->path)+1, UNIX_PATH_MAX));
 	conn->fd = socket (PF_UNIX, SOCK_STREAM, 0);
-	conn->serverfd = -1;
 	if (connect (conn->fd, (struct sockaddr *) &uaddr,
 				sizeof (uaddr)) == -1)
 	{
@@ -304,13 +328,20 @@ bacon_message_connection_new (const char *prefix)
 void
 bacon_message_connection_free (BaconMessageConnection *conn)
 {
-	g_return_if_fail (conn != NULL);
-	g_return_if_fail (conn->path != NULL);
+	GSList *child_conn;
 
-	if (conn->server_conn_id) {
-		g_source_remove (conn->server_conn_id);
-		conn->server_conn_id = 0;
+	g_return_if_fail (conn != NULL);
+	/* Only servers can accept other connections */
+	g_return_if_fail (conn->is_server != FALSE ||
+			  conn->accepted_connections == NULL);
+
+	child_conn = conn->accepted_connections;
+	while (child_conn != NULL) {
+		bacon_message_connection_free (child_conn->data);
+		child_conn = g_slist_next (child_conn);
 	}
+	g_slist_free (conn->accepted_connections);
+
 	if (conn->conn_id) {
 		g_source_remove (conn->conn_id);
 		conn->conn_id = 0;
@@ -322,8 +353,8 @@ bacon_message_connection_free (BaconMessageConnection *conn)
 
 	if (conn->is_server != FALSE) {
 		unlink (conn->path);
-		close (conn->serverfd);
-	} else if (conn->fd != -1) {
+	}
+	if (conn->fd != -1) {
 		close (conn->fd);
 	}
 

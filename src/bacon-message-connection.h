@@ -29,7 +29,6 @@ typedef void (*BaconMessageReceivedFunc) (const char *message,
 
 typedef struct BaconMessageConnection BaconMessageConnection;
 
-void bacon_message_connection_free			(BaconMessageConnection *conn);
 BaconMessageConnection *bacon_message_connection_new	(const char *prefix);
 void bacon_message_connection_free			(BaconMessageConnection *conn);
 void bacon_message_connection_set_callback		(BaconMessageConnection *conn,
