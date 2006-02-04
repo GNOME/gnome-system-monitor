@@ -1,14 +1,14 @@
-# Përkthimi i mesazheve të procman në shqip
+# Përkthimi i mesazheve të gnome-system-monitor në shqip
 # Albanian translation of procman
-# Copyright (C) 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
-# Laurent Dhima <laurenti@alblinux.net>, 2002, 2003, 2004, 2005.
+# Copyright (C) 2006 Free Software Foundation, Inc.
 #
+# Laurent Dhima <laurenti@alblinux.net>, 2002, 2003, 2004, 2005, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: procman.HEAD.sq\n"
+"Project-Id-Version: gnome-system-monitor HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-28 14:48+0000\n"
-"PO-Revision-Date: 2005-07-28 18:03+0200\n"
+"POT-Creation-Date: 2006-02-04 07:31+0100\n"
+"PO-Revision-Date: 2006-02-04 12:36+0100\n"
 "Last-Translator: Laurent Dhima <laurenti@alblinux.net>\n"
 "Language-Team: Albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,34 +16,83 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:167
-#: ../src/interface.c:836
+#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:164
+#: ../src/interface.c:666
 msgid "System Monitor"
 msgstr "Monitori i sistemit"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:168
+#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:165
 msgid "View current processes and monitor system state"
 msgstr "Shfaq proçeset aktualë dhe monitoron gjëndjen e sistemit"
 
-#: ../src/callbacks.c:152
-msgid "Jorgen Scheibengruber - nicer devices treeview"
-msgstr "Jorgen Scheibengruber - paraqitje e lezeçme e degëzimeve të dispozitivëve"
-
-#: ../src/callbacks.c:153
-msgid "Benoît Dejean - maintainer"
-msgstr "Benoît Dejean - mirëmbajtësi"
-
-#: ../src/callbacks.c:176
+#: ../src/callbacks.c:173
 msgid "translator-credits"
 msgstr "Laurent Dhima <laurenti@alblinux.net>"
 
+#: ../src/disks.c:204 ../src/memmaps.c:302
+msgid "Device"
+msgstr "Dispozitivi"
+
+#: ../src/disks.c:205
+msgid "Directory"
+msgstr "Directory"
+
+#: ../src/disks.c:206 ../src/openfiles.c:232
+msgid "Type"
+msgstr "Lloji"
+
+#: ../src/disks.c:207
+msgid "Total"
+msgstr "Gjithsej"
+
+#: ../src/disks.c:208
+msgid "Free"
+msgstr "E lirë"
+
+#: ../src/disks.c:209
+msgid "Available"
+msgstr "Në dispozicion"
+
+#: ../src/disks.c:210
+msgid "Used"
+msgstr "Në përdorim"
+
+#: ../src/disks.c:217 ../src/interface.c:745 ../src/procdialogs.c:770
+#: ../src/procdialogs.c:774
+msgid "Devices"
+msgstr "Dispozitivët"
+
+#: ../src/e_date.c:154
+msgid "?"
+msgstr "?"
+
+#: ../src/e_date.c:161
+msgid "Today %l:%M %p"
+msgstr "Sot %l:%M %p"
+
+#: ../src/e_date.c:170
+msgid "Yesterday %l:%M %p"
+msgstr "Dje %l:%M %p"
+
+#: ../src/e_date.c:182
+msgid "%a %l:%M %p"
+msgstr "%a %l:%M %p"
+
+#: ../src/e_date.c:190
+msgid "%b %d %l:%M %p"
+msgstr "%b %d %l:%M %p"
+
+#: ../src/e_date.c:192
+msgid "%b %d %Y"
+msgstr "%b %d %Y"
+
 #. translators: primary alert message
-#: ../src/favorites.c:348
+#: ../src/favorites.c:350
 msgid "No hidden processes"
 msgstr "Nuk ka proçesë të fshehur"
 
 #. translators: secondary alert message
-#: ../src/favorites.c:355
+#: ../src/favorites.c:357
 msgid ""
 "There are no hidden processes in the list. To show all running processes, "
 "select the \"All processes\" option in the main window."
@@ -51,23 +100,23 @@ msgstr ""
 "Asnjë proçes i fshehur në listë. Për të shikuar të gjithë proçeset në "
 "ekzekutim, zgjidh opcionin \"Të gjithë proçeset\" tek dritarja qendrore."
 
-#: ../src/favorites.c:375
+#: ../src/favorites.c:377
 msgid "Hidden Processes"
 msgstr "Proçeset e fshehur"
 
-#: ../src/favorites.c:399
+#: ../src/favorites.c:401
 msgid "Currently _hidden processes:"
 msgstr "Proçese aktualisht të fshe_hur:"
 
-#: ../src/favorites.c:421
+#: ../src/favorites.c:423
 msgid "_Remove From List"
 msgstr "_Hiq nga lista"
 
-#: ../src/favorites.c:430 ../src/procdialogs.c:282
+#: ../src/favorites.c:432 ../src/procdialogs.c:285
 msgid "Note:"
 msgstr "Shënim:"
 
-#: ../src/favorites.c:431
+#: ../src/favorites.c:433
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
@@ -116,420 +165,326 @@ msgstr ""
 "është \"të përdoruesit\", dhe 2 është \"aktivë\""
 
 #: ../src/gnome-system-monitor.schemas.in.h:10
+msgid "Disk view columns order"
+msgstr "Rradha e renditjes së kollonave në paraqitjen e diskut"
+
+#: ../src/gnome-system-monitor.schemas.in.h:11
+msgid "Enable/Disable smooth refresh"
+msgstr "Aktivo/ç'aktivo rifreskimin e shpejtë"
+
+#: ../src/gnome-system-monitor.schemas.in.h:12
 msgid "Main Window height"
 msgstr "Lartësia e dritares qendrore"
 
-#: ../src/gnome-system-monitor.schemas.in.h:11
+#: ../src/gnome-system-monitor.schemas.in.h:13
 msgid "Main Window width"
 msgstr "Gjerësia e dritares qendrore"
 
-#: ../src/gnome-system-monitor.schemas.in.h:12
+#: ../src/gnome-system-monitor.schemas.in.h:14
 msgid "Process view columns order"
 msgstr "Rradha e renditjes së kollonave në paraqitjen e proçeseve"
 
-#: ../src/gnome-system-monitor.schemas.in.h:13
+#: ../src/gnome-system-monitor.schemas.in.h:15
 msgid "Process view sort column"
 msgstr "Kolona e renditjes në paraqitjen e proçeseve"
 
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:16
 msgid "Process view sort order"
 msgstr "Rradha e renditjes në paraqitjen e proçeseve"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:17
 msgid "Saves the currently viewed tab"
 msgstr "Ruan tabelën e shfaqur aktualisht"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
-msgid "Show advanced info tab on startup"
-msgstr "Shfaq tabelën me informacione të hollësishme në nisje"
-
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:18
 msgid "Show column zero on startup"
 msgstr "Shfaq kollonën zero në nisje"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:19
 msgid "Show process dependencies in tree form"
 msgstr "Shfaq varësitë e proçesit në formë të degëzuar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:20
 msgid "Show process threads"
 msgstr "Shfaq rrjedhën e proçesit"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:21
 msgid "Show warning dialog when hiding processes"
 msgstr "Shfaq dritaren e dialogut paralajmërues kur fshihen proçeset"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:22
 msgid "Show warning dialog when killing processes"
 msgstr "Shfaq dritaren e dialogut paralajmërues kur vriten proçeset"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:23
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Koha në milisekonda midis rifreskimit të listës së dispozitivëve"
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:24
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Koha në milisekonda midis rifreskimit të grafikëve"
 
-#: ../src/gnome-system-monitor.schemas.in.h:24
+#: ../src/gnome-system-monitor.schemas.in.h:25
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Koha në milisekonda midis rifreskimit të paraqitjes së proçesit"
 
-#: ../src/gnome-system-monitor.schemas.in.h:25
+#: ../src/gnome-system-monitor.schemas.in.h:26
 msgid "Whether information about all filesystems should be displayed"
 msgstr "Nëse duhen shfaqur informacionet në lidhje me të gjithë files e sistemit"
 
-#: ../src/gnome-system-monitor.schemas.in.h:26
+#: ../src/gnome-system-monitor.schemas.in.h:27
 msgid ""
-"Whether information about all filesystems should be displayed: this will "
-"include filesystem types like 'autofs' and 'procfs'. It can be usefull to "
-"get a list of all currently mounted filesystems."
+"Whether to display information about all filesystems (including types like "
+"'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
+"filesystems."
 msgstr ""
-"Nëse duhen shfaqur informacionet në lidhje me të gjithë files e sistemit: kjo do të "
-"përfshijë llojet e si p.sh. 'autofs' dhe 'procfs'. Mund të hyjë në punë për të marrë "
-"listën e të gjithë file të sistemit aktualisht montuar."
+"Nëse duhen shfaqur informacionet në lidhje me të gjithë files e sistemit "
+"(përfshirë p.sh. llojet 'autofs' dhe 'procfs'). Mund të hyjë në punë për të "
+"marrë listën e të gjithë file të sistemit aktualisht montuar."
 
-#: ../src/infoview.c:34
-msgid "Less _info"
-msgstr "Më pak _info"
-
-#: ../src/infoview.c:34
-msgid "More _info"
-msgstr "Më shumë _info"
-
-#: ../src/infoview.c:99
-msgid "Process Info"
-msgstr "Informacione mbi proçesin"
-
-#: ../src/infoview.c:113
-msgid "Command:"
-msgstr "Komanda:"
-
-#: ../src/infoview.c:117
-msgid "Status:"
-msgstr "Gjëndja:"
-
-#: ../src/infoview.c:121
-msgid "Priority:"
-msgstr "Prioriteti: "
-
-#: ../src/infoview.c:145
-msgid "Memory Usage"
-msgstr "Kujtesa e përdorur"
-
-#: ../src/infoview.c:159 ../src/interface.c:699 ../src/interface.c:742
-msgid "Total:"
-msgstr "Gjithsej:"
-
-#: ../src/infoview.c:163
-msgid "RSS:"
-msgstr "RSS:"
-
-#: ../src/infoview.c:167
-msgid "Shared:"
-msgstr "Të përbashkët:"
-
-#: ../src/infoview.c:210
-#, c-format
-msgid "Very high - nice %d"
-msgstr "Shumë e lartë - nice %d"
-
-#: ../src/infoview.c:212
-#, c-format
-msgid "High - nice %d"
-msgstr "E lartë - nice %d"
-
-#: ../src/infoview.c:214
-#, c-format
-msgid "Normal - nice %d"
-msgstr "Normale - nice %d"
-
-#: ../src/infoview.c:216
-#, c-format
-msgid "Low - nice %d"
-msgstr "E ulët - nice %d"
-
-#: ../src/infoview.c:218
-#, c-format
-msgid "Very low - nice %d"
-msgstr "Shumë e ulët - nice %d"
-
-#: ../src/interface.c:47
+#: ../src/interface.c:46
 msgid "_File"
 msgstr "_File"
 
-#: ../src/interface.c:48
+#: ../src/interface.c:47
 msgid "_Edit"
 msgstr "_Ndrysho"
 
-#: ../src/interface.c:49
+#: ../src/interface.c:48
 msgid "_View"
 msgstr "_Shfaq"
 
-#: ../src/interface.c:50
+#: ../src/interface.c:49
 msgid "_Help"
 msgstr "_Ndihmë"
 
-#: ../src/interface.c:52
+#: ../src/interface.c:51
 msgid "_Quit"
 msgstr "_Dalja"
 
-#: ../src/interface.c:53
+#: ../src/interface.c:52
 msgid "Quit the program"
 msgstr "Mbyll programin"
 
-#: ../src/interface.c:56
+#: ../src/interface.c:55
 msgid "_Stop Process"
 msgstr "_Ndalo proçesin"
 
-#: ../src/interface.c:57
+#: ../src/interface.c:56
 msgid "Stop process"
 msgstr "Ndalo proçesin"
 
-#: ../src/interface.c:58
+#: ../src/interface.c:57
 msgid "_Continue Process"
 msgstr "_Vazhdo proçesin"
 
-#: ../src/interface.c:59
+#: ../src/interface.c:58
 msgid "Continue process if stopped"
 msgstr "Vazhdon proçesin nëse është ndaluar"
 
-#: ../src/interface.c:61 ../src/interface.c:201
+#: ../src/interface.c:60 ../src/interface.c:188
 msgid "End _Process"
 msgstr "Përfundo _Proçesin"
 
-#: ../src/interface.c:62
+#: ../src/interface.c:61
 msgid "Force process to finish normally"
 msgstr "Detyro një proçes të përfundojë normalisht"
 
-#: ../src/interface.c:63 ../src/procdialogs.c:126
+#: ../src/interface.c:62 ../src/procdialogs.c:129
 msgid "_Kill Process"
 msgstr "_Vrit Proçesin"
 
-#: ../src/interface.c:64
+#: ../src/interface.c:63
 msgid "Force process to finish immediately"
 msgstr "Detyro një proçes të përfundojë menjëherë"
 
-#: ../src/interface.c:65
+#: ../src/interface.c:64
 msgid "_Change Priority..."
 msgstr "_Ndrysho prioritetin..."
 
-#: ../src/interface.c:66
+#: ../src/interface.c:65
 msgid "Change the order of priority of process"
 msgstr "Ndrysho renditjen e rëndësisë së proçesit"
 
-#: ../src/interface.c:67
+#: ../src/interface.c:66
 msgid "Prefere_nces"
 msgstr "Preferi_met"
 
-#: ../src/interface.c:68
+#: ../src/interface.c:67
 msgid "Configure the application"
 msgstr "Konfiguro aplikativin"
 
-#: ../src/interface.c:70 ../src/procdialogs.c:82
+#: ../src/interface.c:69 ../src/procdialogs.c:85
 msgid "_Hide Process"
 msgstr "_Fshih proçesin"
 
-#: ../src/interface.c:71
+#: ../src/interface.c:70
 msgid "Hide process from list"
 msgstr "Fshih proçesin nga lista"
 
-#: ../src/interface.c:72
+#: ../src/interface.c:71
 msgid "_Hidden Processes"
 msgstr "Proçese të Fshe_hur"
 
-#: ../src/interface.c:73
+#: ../src/interface.c:72
 msgid "Open the list of currently hidden processes"
 msgstr "Hap listën e proçeseve aktualisht të fshehur"
 
-#: ../src/interface.c:74
+#: ../src/interface.c:73
 msgid "_Memory Maps"
 msgstr "Hartat e _Memories"
 
-#: ../src/interface.c:75
+#: ../src/interface.c:74
 msgid "Open the memory maps associated with a process"
 msgstr "Hap hartat e memorjes të shoqëruara me një proçes"
 
-#: ../src/interface.c:76
+#: ../src/interface.c:75
 msgid "Open _Files"
 msgstr "Hap _Files"
 
-#: ../src/interface.c:77
+#: ../src/interface.c:76
 msgid "View the files opened by a process"
 msgstr "Shiko files e hapur nga një proçes"
 
-#: ../src/interface.c:79
+#: ../src/interface.c:78
 msgid "_Contents"
 msgstr "_Përmbajtja"
 
-#: ../src/interface.c:80
+#: ../src/interface.c:79
 msgid "Open the manual"
 msgstr "Hap udhëzuesin"
 
-#: ../src/interface.c:81
+#: ../src/interface.c:80
 msgid "_About"
 msgstr "_Informacione"
 
-#: ../src/interface.c:82
+#: ../src/interface.c:81
 msgid "About this application"
 msgstr "Informacione në lidhje me këtë aplikativ"
 
-#: ../src/interface.c:87
+#: ../src/interface.c:86
 msgid "_Dependencies"
 msgstr "_Varësi"
 
-#: ../src/interface.c:88
+#: ../src/interface.c:87
 msgid "Show parent/child relationship between processes"
 msgstr "Shfaq relacionet fis/bir midis proçeseve"
 
-#: ../src/interface.c:90
-msgid "_Threads"
-msgstr "_Threads"
-
-#: ../src/interface.c:91
-msgid "Show each thread as a separate process"
-msgstr "Shfaq çdo rrjedhë si proçes të veçantë"
-
-#: ../src/interface.c:98
+#: ../src/interface.c:94
 msgid "_Active Processes"
 msgstr "Proçeset _aktivë"
 
-#: ../src/interface.c:99
+#: ../src/interface.c:95
 msgid "Show active processes"
 msgstr "Shfaq proçeset aktivë"
 
-#: ../src/interface.c:100
+#: ../src/interface.c:96
 msgid "A_ll Processes"
 msgstr "Të _gjithë proçesët"
 
-#: ../src/interface.c:101
+#: ../src/interface.c:97
 msgid "Show all processes"
 msgstr "Shfaq të gjithë proçeset"
 
-#: ../src/interface.c:102
+#: ../src/interface.c:98
 msgid "M_y Processes"
 msgstr "Proçeset e m_i"
 
-#: ../src/interface.c:103
+#: ../src/interface.c:99
 msgid "Show user own process"
 msgstr "Shfaq proçesët e vet përdoruesit"
 
-#: ../src/interface.c:287 ../src/memmaps.c:301
-msgid "Device"
-msgstr "Dispozitivi"
-
-#: ../src/interface.c:288
-msgid "Directory"
-msgstr "Directory"
-
-#: ../src/interface.c:289 ../src/openfiles.c:230
-msgid "Type"
-msgstr "Lloji"
-
-#: ../src/interface.c:290
-msgid "Total"
-msgstr "Gjithsej"
-
-#: ../src/interface.c:291
-msgid "Free"
-msgstr "E lirë"
-
-#: ../src/interface.c:292
-msgid "Used"
-msgstr "Në përdorim"
-
-#: ../src/interface.c:301 ../src/interface.c:915 ../src/procdialogs.c:743
-#: ../src/procdialogs.c:747
-msgid "Devices"
-msgstr "Dispozitivët"
-
-#: ../src/interface.c:430
+#: ../src/interface.c:260
 msgid "CPU History"
 msgstr "Kronollogjia e përdorimit të CPU"
 
-#: ../src/interface.c:473
+#: ../src/interface.c:303
 msgid "CPU:"
 msgstr "CPU:"
 
-#: ../src/interface.c:476
+#: ../src/interface.c:306
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: ../src/interface.c:496
+#: ../src/interface.c:326
 msgid "Memory and Swap History"
 msgstr "Kronollogjia e përdorimit të kujtesës dhe swap"
 
-#: ../src/interface.c:529
+#: ../src/interface.c:359
 msgid "User memory:"
 msgstr "Kujtesa e përdoruesit:"
 
-#: ../src/interface.c:547 ../src/interface.c:607
+#: ../src/interface.c:377 ../src/interface.c:437
 msgid "of"
 msgstr "nga"
 
-#: ../src/interface.c:588
+#: ../src/interface.c:418
 msgid "Used swap:"
 msgstr "Swap në përdorim:"
 
-#: ../src/interface.c:647
+#: ../src/interface.c:477
 msgid "Network History"
 msgstr "Kronollogjia e rrjetit"
 
-#: ../src/interface.c:679
-msgid "Receive:"
+#: ../src/interface.c:509
+msgid "Received:"
 msgstr "Marrë:"
 
-#: ../src/interface.c:723
-msgid "Send:"
+#: ../src/interface.c:529 ../src/interface.c:572
+msgid "Total:"
+msgstr "Gjithsej:"
+
+#: ../src/interface.c:553
+msgid "Sent:"
 msgstr "Dërguar:"
 
-#: ../src/interface.c:903 ../src/procdialogs.c:560
+#: ../src/interface.c:733 ../src/procdialogs.c:579
 msgid "Processes"
 msgstr "Proçeset"
 
-#: ../src/interface.c:909 ../src/procdialogs.c:652
+#: ../src/interface.c:739 ../src/procdialogs.c:682
 msgid "Resources"
 msgstr "Rezervat"
 
-#: ../src/load-graph.c:350 ../src/load-graph.c:360
+#: ../src/load-graph.c:368 ../src/load-graph.c:378
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../src/memmaps.c:295
+#: ../src/memmaps.c:296
 msgid "Filename"
 msgstr "Emri i file"
 
-#: ../src/memmaps.c:296
+#: ../src/memmaps.c:297
 msgid "VM Start"
 msgstr "Fillimi i VM"
 
-#: ../src/memmaps.c:297
+#: ../src/memmaps.c:298
 msgid "VM End"
 msgstr "Fundi i VM"
 
-#: ../src/memmaps.c:298
+#: ../src/memmaps.c:299
 msgid "VM Size"
 msgstr "Madhësia e VM"
 
-#: ../src/memmaps.c:299
+#: ../src/memmaps.c:300
 msgid "Flags"
 msgstr "Flags"
 
-#: ../src/memmaps.c:300
+#: ../src/memmaps.c:301
 msgid "VM Offset"
 msgstr "VM Offset"
 
-#: ../src/memmaps.c:302
+#: ../src/memmaps.c:303
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.c:402
+#: ../src/memmaps.c:405
 msgid "Memory Maps"
 msgstr "Hartat e Memorjes"
 
-#: ../src/memmaps.c:422
+#: ../src/memmaps.c:425
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "Hartat e _memorjes për proçesin \"%s\" (PID %u):"
@@ -557,24 +512,24 @@ msgstr "lloj i panjohur"
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.c:229
+#: ../src/openfiles.c:231
 msgid "FD"
 msgstr "PF"
 
-#: ../src/openfiles.c:231
+#: ../src/openfiles.c:233
 msgid "Object"
 msgstr "Objekti"
 
-#: ../src/openfiles.c:308
+#: ../src/openfiles.c:312
 msgid "Open Files"
 msgstr "Files e hapur"
 
-#: ../src/openfiles.c:330
+#: ../src/openfiles.c:334
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_Files e hapur nga proçesi \"%s\" (PID %u):"
 
-#: ../src/procactions.c:73
+#: ../src/procactions.c:75
 #, c-format
 msgid ""
 "Cannot change the priority of process with pid %d to %d.\n"
@@ -583,7 +538,7 @@ msgstr ""
 "I pamundur ndryshimi i prioritetit të proçesit me pid %d në %d.\n"
 "%s"
 
-#: ../src/procactions.c:140
+#: ../src/procactions.c:144
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -593,13 +548,13 @@ msgstr ""
 "%s"
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:62
+#: ../src/procdialogs.c:65
 msgid "Hide the selected process?"
 msgstr "Fsheh proçesin e zgjedhur?"
 
 #. FIXME: View menu -> Edit menu
 #. translators: secondary alert messagex
-#: ../src/procdialogs.c:72
+#: ../src/procdialogs.c:75
 msgid ""
 "Hidden processes are no longer visible in the process list. You can re-"
 "enable them by selecting the \"Hidden Processes\" entry in the View menu."
@@ -608,70 +563,72 @@ msgstr ""
 "riaktivoni ata duke zgjedhur \"Proçeset e fshehur\" tek menuja \"Shfaq\"."
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:121
+#: ../src/procdialogs.c:124
 msgid "Kill the selected process?"
 msgstr "Vret proçesin e zgjedhur?"
 
 #. translators: secondary alert message
-#: ../src/procdialogs.c:123
+#: ../src/procdialogs.c:126
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponding processes should be killed."
 msgstr ""
-"Duke vrarë një proçes, mund të dëmtosh të dhënat e tua, të bllokosh seancën e punës "
-"apo të krijosh një rrezik sigurie. Vetëm proçeset që nuk përgjigjen duhen vrarë."
+"Duke vrarë një proçes, mund të dëmtosh të dhënat e tua, të bllokosh seancën "
+"e punës apo të krijosh një rrezik sigurie. Vetëm proçeset që nuk përgjigjen "
+"duhen vrarë."
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:130
+#: ../src/procdialogs.c:133
 msgid "End the selected process?"
 msgstr "Përfundon proçesin e zgjedhur?"
 
 #. translators: secondary alert message
-#: ../src/procdialogs.c:132
+#: ../src/procdialogs.c:135
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponding processes should be ended."
 msgstr ""
-"Duke përfunduar një proçes, mund të dëmtosh të dhënat e tua, të bllokosh seancën e "
-"punës apo të krijosh një rrezik sigurie. Vetëm proçeset që nuk përgjigjen duhen përfunduar."
+"Duke përfunduar një proçes, mund të dëmtosh të dhënat e tua, të bllokosh "
+"seancën e punës apo të krijosh një rrezik sigurie. Vetëm proçeset që nuk "
+"përgjigjen duhen përfunduar."
 
-#: ../src/procdialogs.c:135
+#: ../src/procdialogs.c:138
 msgid "_End Process"
 msgstr "_Përfundo Proçesin"
 
-#: ../src/procdialogs.c:164
+#: ../src/procdialogs.c:167
 msgid "(Very High Priority)"
 msgstr "(Prioritet tepër i lartë)"
 
-#: ../src/procdialogs.c:166
+#: ../src/procdialogs.c:169
 msgid "(High Priority)"
 msgstr "(Prioritet i lartë)"
 
-#: ../src/procdialogs.c:168
+#: ../src/procdialogs.c:171
 msgid "(Normal Priority)"
 msgstr "(Prioritet Normal)"
 
-#: ../src/procdialogs.c:170
+#: ../src/procdialogs.c:173
 msgid "(Low Priority)"
 msgstr "(Prioritet i ulët)"
 
-#: ../src/procdialogs.c:172
+#: ../src/procdialogs.c:175
 msgid "(Very Low Priority)"
 msgstr "(Prioritet shumë i ulët)"
 
-#: ../src/procdialogs.c:224
+#: ../src/procdialogs.c:227
 msgid "Change Priority"
 msgstr "Ndrysho prioritetin"
 
-#: ../src/procdialogs.c:245
+#: ../src/procdialogs.c:248
 msgid "Change _Priority"
 msgstr "Ndrysho _Prioritetin"
 
-#: ../src/procdialogs.c:266
+#: ../src/procdialogs.c:269
 msgid "_Nice value:"
 msgstr "Vlera _Nice:"
 
-#: ../src/procdialogs.c:283
+#: ../src/procdialogs.c:286
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -679,149 +636,140 @@ msgstr ""
 "Prioriteti i një proçesi jepet nga vlera e tij nice. Një vlerë më e ulët "
 "nice i korrispondon një prioriteti më të lartë."
 
-#: ../src/procdialogs.c:446
+#: ../src/procdialogs.c:464
 msgid "Processes i_nfo showed in list:"
 msgstr "I_nformacionet e proçeseve të shfaqura në listë:"
 
-#: ../src/procdialogs.c:498
+#: ../src/procdialogs.c:516
 msgid "Icon"
 msgstr "Ikona"
 
-#: ../src/procdialogs.c:537
+#: ../src/procdialogs.c:556
 msgid "System Monitor Preferences"
 msgstr "Preferimet e monitorit të sistemit"
 
-#: ../src/procdialogs.c:567
+#: ../src/procdialogs.c:586
 msgid "Behavior"
 msgstr "Sjellja"
 
-#: ../src/procdialogs.c:586 ../src/procdialogs.c:678
-msgid "_Update interval:"
-msgstr "Intervali i _rifreskimit:"
+#: ../src/procdialogs.c:605 ../src/procdialogs.c:708 ../src/procdialogs.c:793
+msgid "_Update interval in seconds:"
+msgstr "Intervali i _rifreskimit në sekonda:"
 
-#: ../src/procdialogs.c:607 ../src/procdialogs.c:695 ../src/procdialogs.c:782
-msgid "seconds"
-msgstr "sekonda"
+#: ../src/procdialogs.c:630
+msgid "Enable _smooth refresh"
+msgstr "Aktivo rifreskimin e _shpejtë"
 
-#: ../src/procdialogs.c:614
+#: ../src/procdialogs.c:644
 msgid "Alert before ending or _killing processes"
 msgstr "Paralajmëro para se të përfundohen apo _vriten proçeset"
 
-#: ../src/procdialogs.c:624
+#: ../src/procdialogs.c:654
 msgid "Alert before _hiding processes"
 msgstr "Paralajmëro para se të _fshihen proçeset"
 
-#: ../src/procdialogs.c:634
+#: ../src/procdialogs.c:664
 msgid "Process Fields"
 msgstr "Fushat e proçesit"
 
-#: ../src/procdialogs.c:659
+#: ../src/procdialogs.c:689
 msgid "Graphs"
 msgstr "Grafikë"
 
-#: ../src/procdialogs.c:702
+#: ../src/procdialogs.c:729
 msgid "_Background color:"
 msgstr "_Ngjyra e sfondit:"
 
-#: ../src/procdialogs.c:721
+#: ../src/procdialogs.c:748
 msgid "_Grid color:"
 msgstr "Ngjyra e _rrjetës:"
 
-#: ../src/procdialogs.c:766
-msgid "Update _interval:"
-msgstr "_Intervali i rifreskimit:"
-
-#: ../src/procdialogs.c:789
+#: ../src/procdialogs.c:812
 msgid "Show _all filesystems"
 msgstr "Shf_aq të gjithë files e sistemit"
 
-#: ../src/proctable.c:242
+#: ../src/proctable.c:245
 msgid "Process Name"
 msgstr "Emri i proçesit"
 
-#: ../src/proctable.c:243
+#: ../src/proctable.c:246
 msgid "User"
 msgstr "Përdoruesi"
 
-#: ../src/proctable.c:244
+#: ../src/proctable.c:247
 msgid "Status"
 msgstr "Gjendja"
 
-#: ../src/proctable.c:245
-msgid "Memory"
-msgstr "Kujtesa"
-
-#: ../src/proctable.c:246
+#: ../src/proctable.c:248
 msgid "Virtual Memory"
 msgstr "Memorja virtuale"
 
-#: ../src/proctable.c:247
+#: ../src/proctable.c:249
 msgid "Resident Memory"
 msgstr "Kujtesa Residente"
 
-#: ../src/proctable.c:248
+#: ../src/proctable.c:250
+msgid "Writable Memory"
+msgstr "Memorja e shkruajtshme"
+
+#: ../src/proctable.c:251
 msgid "Shared Memory"
 msgstr "Kujtesa e përbashkët"
 
-#: ../src/proctable.c:249
-msgid "RSS Memory"
-msgstr "Memorja RSS"
-
-#: ../src/proctable.c:250
+#: ../src/proctable.c:252
 msgid "X Server Memory"
 msgstr "Memorja e Server-it X"
 
-#: ../src/proctable.c:251
+#: ../src/proctable.c:253
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:252
-msgid "CPU time"
+#: ../src/proctable.c:254
+msgid "CPU Time"
 msgstr "Koha e CPU"
 
-#: ../src/proctable.c:253
+#: ../src/proctable.c:255
+msgid "Started"
+msgstr "Nisur"
+
+#: ../src/proctable.c:256
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.c:254
+#: ../src/proctable.c:257
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.c:255
+#: ../src/proctable.c:258
 msgid "Security Context"
 msgstr "Gjendja e sigurisë"
 
-#: ../src/proctable.c:256
+#: ../src/proctable.c:259
 msgid "Arguments"
 msgstr "Argumente"
 
-#: ../src/proctable.c:430
+#: ../src/proctable.c:432
 msgid "Running"
 msgstr "Në ekzekutim"
 
-#: ../src/proctable.c:435
+#: ../src/proctable.c:437
 msgid "Stopped"
 msgstr "U ndërpre"
 
-#: ../src/proctable.c:440
+#: ../src/proctable.c:442
 msgid "Zombie"
 msgstr "Zombie"
 
-#: ../src/proctable.c:445
+#: ../src/proctable.c:447
 msgid "Uninterruptible"
 msgstr "E pandëprershme"
 
-#: ../src/proctable.c:450
+#: ../src/proctable.c:452
 msgid "Sleeping"
 msgstr "Në gjumë"
 
-#: ../src/proctable.c:634
-#, c-format
-msgid "%s (thread)"
-msgstr "%s (thread)"
-
-#: ../src/proctable.c:1022
+#: ../src/proctable.c:1034
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Mesataret e ngarkesës për 1, 5, 15 minutat e fundit: %0.2f, %0.2f, %0.2f"
