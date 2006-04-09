@@ -102,7 +102,7 @@ struct _ProcInfo
 	gint		nice;
 
 	guint		pid;
-	gint		uid;
+	guint		uid;
 
 	guint		is_visible	: 1;
 	guint		is_running	: 1;

@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.52)
 
-AC_INIT([gnome-system-monitor], [2.14.0],
+AC_INIT([gnome-system-monitor], [2.14.1],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor])
 AC_CONFIG_SRCDIR(configure.in)
 AC_CONFIG_HEADERS(config.h)
@@ -50,22 +50,6 @@ if test "$GCC" = "yes" -a "$set_more_warnings" != "no"; then
     -Wcast-align -Wsign-compare \
     -std=gnu89 \
     $CFLAGS"
-
-    for option in -Wno-strict-aliasing -Wno-sign-compare; do
-        SAVE_CFLAGS="$CFLAGS"
-        CFLAGS="$CFLAGS $option"
-        AC_MSG_CHECKING([whether gcc understands $option])
-        AC_TRY_COMPILE([], [],
-            has_option=yes,
-            has_option=no,)
-        if test $has_option = no; then
-            CFLAGS="$SAVE_CFLAGS"
-        fi
-        AC_MSG_RESULT($has_option)
-        unset has_option
-        unset SAVE_CFLAGS
-    done
-    unset option
 else
     AC_MSG_RESULT(no)
 fi

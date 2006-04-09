@@ -198,7 +198,7 @@ create_disk_view(ProcData *procdata)
 	GtkListStore *model;
 	GtkTreeViewColumn *col;
 	GtkCellRenderer *cell;
-	gint i;
+	guint i;
 
 	const gchar * const titles[] = {
 		N_("Device"),

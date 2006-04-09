@@ -153,7 +153,7 @@ update_openfiles_dialog (GtkWidget *tree)
 	glibtop_open_files_entry *openfiles;
 	glibtop_proc_open_files procmap;
 	GHashTable *new_maps;
-	gint i;
+	guint i;
 
 	info = g_object_get_data (G_OBJECT (tree), "selected_info");
 

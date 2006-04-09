@@ -192,7 +192,7 @@ update_memmaps_dialog (MemMapsData *mmdata)
 	GtkTreeModel *model;
 	glibtop_map_entry *memmaps;
 	glibtop_proc_map procmap;
-	gint i;
+	guint i;
 
 	memmaps = glibtop_get_proc_map (&procmap, mmdata->info->pid);
 	/* process has disappeared */
