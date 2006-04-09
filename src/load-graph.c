@@ -25,6 +25,7 @@
 
 
 #define NUM_POINTS 100
+#define GRAPH_MIN_HEIGHT 30
 
 
 enum {
@@ -548,6 +549,7 @@ load_graph_new (gint type, ProcData *procdata)
 	g->draw = FALSE;
 
 	g->main_widget = gtk_vbox_new (FALSE, FALSE);
+	gtk_widget_set_size_request(g->main_widget, -1, GRAPH_MIN_HEIGHT);
 	gtk_widget_show (g->main_widget);
 
 	g->disp = gtk_drawing_area_new ();
