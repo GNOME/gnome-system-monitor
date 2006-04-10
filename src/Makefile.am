@@ -3,7 +3,7 @@
 INCLUDES = \
 	-DPROCMAN_DATADIR=\"$(datadir)/procman/\" \
 	-DDATADIR=\""$(datadir)"\" \
-	@PROCMAN_CFLAGS@ $(LIBGKSU_CFLAGS)
+	@PROCMAN_CFLAGS@ $(LIBGKSU_CFLAGS) $(LIBGKSUUI_CFLAGS)
 
 bin_PROGRAMS = gnome-system-monitor
 
@@ -29,7 +29,7 @@ gnome_system_monitor_SOURCES = \
 	e_date.c e_date.h
 
 
-gnome_system_monitor_LDADD = @PROCMAN_LIBS@ $(SELINUX_LIBS) $(LIBGKSU_LIBS) libbacon.la 
+gnome_system_monitor_LDADD = @PROCMAN_LIBS@ $(SELINUX_LIBS) $(LIBGKSU_LIBS) $(LIBGKSUUI_LIBS) libbacon.la 
 
 
 noinst_LTLIBRARIES = libbacon.la

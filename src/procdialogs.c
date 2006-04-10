@@ -862,6 +862,8 @@ procdialog_create_root_password_dialog(ProcmanActionType type,
 
 	command = procman_action_to_command(type, pid, extra_value);
 
+	g_debug("Trying to run '%s' as root", command);
+
 	ret = procman_gksu_create_root_password_dialog(command);
 
 	if (ret)
