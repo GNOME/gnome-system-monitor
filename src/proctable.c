@@ -516,8 +516,12 @@ static void get_process_memory_writable(ProcInfo *info)
 	maps = glibtop_get_proc_map(&buf, info->pid);
 
 	for (i = 0; i < buf.number; ++i) {
+#ifdef __linux__
+		info->memwritable += maps[i].private_dirty;
+#else
 		if (maps[i].perm & GLIBTOP_MAP_PERM_WRITE)
 			info->memwritable += maps[i].size;
+#endif
 	}
 
 	g_free(maps);
