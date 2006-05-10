@@ -50,16 +50,13 @@ new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 	if (g_hash_table_lookup (hash, GUINT_TO_POINTER(pid)))
 		return;
 
-/* Hack - wnck_application_get_icon always returns the default icon */
-#if 0
-	tmp = wnck_application_get_mini_icon (app);
-#else
+	/* don't free list, we don't own it */
 	list = wnck_application_get_windows (app);
 	if (!list)
 		return;
 	window = list->data;
 	tmp = wnck_window_get_icon (window);
-#endif
+
 	if (!tmp)
 		return;
 
@@ -73,8 +70,10 @@ new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 
 	if (info) {
 	/* Don't update the icon if there already is one */
-		if (info->pixbuf)
+		if (info->pixbuf) {
+			g_object_unref(icon);
 			return;
+		}
 		info->pixbuf = icon;
 		g_object_ref(info->pixbuf);
 		if (info->is_visible) {
@@ -117,7 +116,10 @@ void pretty_table_new (ProcData *procdata)
 	PrettyTable *pretty_table = g_new(PrettyTable, 1);
 
 	pretty_table->app_hash = g_hash_table_new (NULL, NULL);
-	pretty_table->default_hash = g_hash_table_new (g_str_hash, g_str_equal);
+	pretty_table->default_hash = g_hash_table_new_full (g_str_hash,
+							    g_str_equal,
+							    g_free,
+							    g_object_unref);
 
 	screen = wnck_screen_get_default ();
 
