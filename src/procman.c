@@ -384,6 +384,7 @@ procman_free_data (ProcData *procdata)
 {
 
 	proctable_free_table (procdata);
+	g_string_chunk_free(procdata->users);
 	g_hash_table_destroy(procdata->pids);
 	pretty_table_free (procdata->pretty_table);
 	smooth_refresh_destroy(procdata->smooth_refresh);
