@@ -57,7 +57,7 @@ struct _LoadGraph {
 
 	LoadGraphLabels labels;
 
-	union {
+	/* union { */
 		struct {
 			gboolean initialized;
 			guint now; /* 0 -> current, 1 -> last
@@ -71,7 +71,7 @@ struct _LoadGraph {
 			GTimeVal time;
 			float max;
 		} net;
-	};
+	/* }; */
 };
 
 
