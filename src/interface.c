@@ -43,7 +43,7 @@ static void	cb_toggle_tree (GtkAction *action, gpointer data);
 
 static const GtkActionEntry menu_entries[] =
 {
-	{ "File", NULL, N_("_File") },
+	{ "Monitor", NULL, N_("_Monitor") },
 	{ "Edit", NULL, N_("_Edit") },
 	{ "View", NULL, N_("_View") },
 	{ "Help", NULL, N_("_Help") },
@@ -102,8 +102,8 @@ static const GtkRadioActionEntry radio_menu_entries[] =
 
 static const char ui_info[] =
 "  <menubar name=\"MenuBar\">"
-"    <menu name=\"FileMenu\" action=\"File\">"
-"      <menuitem name=\"FileQuitMenu\" action=\"Quit\" />"
+"    <menu name=\"MonitorMenu\" action=\"Monitor\">"
+"      <menuitem name=\"MonitorQuitMenu\" action=\"Quit\" />"
 "    </menu>"
 "    <menu name=\"EditMenu\" action=\"Edit\">"
 "      <menuitem name=\"EditStopProcessMenu\" action=\"StopProcess\" />"
