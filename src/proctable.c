@@ -103,6 +103,48 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 
 
 
+static GtkWidget *
+create_proctree(GtkTreeModel *model)
+{
+	GtkWidget *proctree = NULL;
+	GModule *sexy;
+
+	sexy = g_module_open("libsexy.so",
+			     G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
+
+	if (sexy) {
+		GtkWidget* (*new)(void);
+		void (*set_column)(void*, guint);
+
+		if (g_module_symbol(sexy,
+				    "sexy_tree_view_new",
+				    &new) &&
+		    g_module_symbol(sexy,
+				    "sexy_tree_view_set_tooltip_label_column",
+				    &set_column)) {
+
+			g_module_make_resident(sexy);
+			g_print("Found libsexy\n");
+
+			proctree = new();
+			gtk_tree_view_set_model(GTK_TREE_VIEW(proctree), model);
+			set_column(proctree, COL_ARGS);
+		} else {
+			g_module_close(sexy);
+		}
+	}
+
+	if (!proctree) {
+		proctree = gtk_tree_view_new_with_model(model);
+	}
+
+	return proctree;
+}
+
+
+
+
+
 static void
 set_proctree_reorderable(ProcData *procdata)
 {
@@ -290,7 +332,7 @@ proctable_new (ProcData * const procdata)
 				    G_TYPE_POINTER	/* ProcInfo	*/
 		);
 
-	proctree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
+	proctree = create_proctree(GTK_TREE_MODEL(model));
 	gtk_tree_view_set_search_equal_func (GTK_TREE_VIEW (proctree),
 					     search_equal_func,
 					     NULL,
