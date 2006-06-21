@@ -91,7 +91,8 @@ get_icon_for_device(const char *mountpoint)
 	if (!volume) {
 		g_warning("Cannot get volume for mount point '%s'",
 			  mountpoint);
-		return NULL;
+		/* Fallback using / icon */
+		volume = gnome_vfs_volume_monitor_get_volume_for_path(monitor, "/");
 	}
 
 	icon_name = gnome_vfs_volume_get_icon(volume);
@@ -104,6 +105,34 @@ get_icon_for_device(const char *mountpoint)
 	return pixbuf;
 }
 
+
+static gboolean
+find_disk_in_model(GtkTreeModel *model, const char *mountpoint,
+		   GtkTreeIter *result)
+{
+	GtkTreeIter iter;
+	gboolean found = FALSE;
+
+	if (gtk_tree_model_get_iter_first(model, &iter)) {
+		do {
+			char *dir;
+
+			gtk_tree_model_get(model, &iter,
+					   DISK_DIR, &dir,
+					   -1);
+
+			if (dir && !strcmp(dir, mountpoint)) {
+				*result = iter;
+				found = TRUE;
+			}
+
+			g_free(dir);
+
+		} while (!found && gtk_tree_model_iter_next(model, &iter));
+	}
+
+	return found;
+}
 
 
 static void
@@ -126,7 +155,13 @@ add_disk(GtkListStore *list, const glibtop_mountentry *entry)
 	avail_str = SI_gnome_vfs_format_file_size_for_display(bavail);
 	total_str = SI_gnome_vfs_format_file_size_for_display(btotal);
 
-	gtk_list_store_append(list, &iter);
+	/* if we can find a row with the same mountpoint, we get it but we
+	   still need to update all the fields.
+	   This makes selection persistent.
+	*/
+	if (!find_disk_in_model(GTK_TREE_MODEL(list), entry->mountdir, &iter))
+		gtk_list_store_append(list, &iter);
+
 	gtk_list_store_set(list, &iter,
 			   DISK_ICON, pixbuf,
 			   DISK_DEVICE, entry->devname,
@@ -165,7 +200,6 @@ cb_update_disks(gpointer data)
 	guint i;
 
 	list = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(procdata->disk_list)));
-	gtk_list_store_clear(list);
 
 	entries = glibtop_get_mountlist(&mountlist, procdata->config.show_all_fs);
 
