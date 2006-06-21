@@ -359,6 +359,7 @@ proctable_new (ProcData * const procdata)
 	gtk_tree_view_column_set_title (column, titles[0]);
 	gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
 	gtk_tree_view_column_set_resizable (column, TRUE);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_min_width (column, 1);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 	gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
@@ -391,6 +392,7 @@ proctable_new (ProcData * const procdata)
 		gtk_tree_view_column_set_title (column, titles[i]);
 		gtk_tree_view_column_set_sort_column_id (column, i);
 		gtk_tree_view_column_set_resizable (column, TRUE);
+		gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 		gtk_tree_view_column_set_min_width (column, 1);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 	}
