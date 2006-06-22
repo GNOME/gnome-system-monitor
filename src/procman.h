@@ -96,6 +96,7 @@ struct _ProcInfo
 	guint64		memres;
 	guint64		memwritable;
 	guint64		memshared;
+	guint64		mem; /* estimated memory usage */
 	unsigned long	memxserver;
 
 	guint		pcpu; /* 0% - 100% */
