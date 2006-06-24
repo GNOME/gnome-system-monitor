@@ -864,17 +864,11 @@ procdialog_create_root_password_dialog(ProcmanActionType type,
 
 	g_debug("Trying to run '%s' as root", command);
 
-	ret = procman_gksu_create_root_password_dialog(command);
+	if (procman_has_gksu())
+		ret = procman_gksu_create_root_password_dialog(command);
+	else
+		ret = procman_gnomesu_create_root_password_dialog(command);
 
-	if (ret)
-		goto out;
-
-	ret = procman_gnomesu_create_root_password_dialog(command);
-
-	if (ret)
-		goto out;
-
- out:
 	g_free(command);
 	return ret;
 }
