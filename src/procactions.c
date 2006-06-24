@@ -94,8 +94,19 @@ renice (ProcData *procdata, int nice)
 {
 	struct ReniceArgs args = { procdata, nice };
 
-	gtk_tree_selection_selected_foreach (procdata->selection, renice_single_process, 
-					     &args);
+	/* EEEK - ugly hack - make sure the table is not updated as a crash
+	** occurs if you first kill a process and the tree node is removed while
+	** still in the foreach function
+	*/
+	g_source_remove(procdata->timeout);
+
+	gtk_tree_selection_selected_foreach(procdata->selection, renice_single_process,
+					    &args);
+
+	procdata->timeout = g_timeout_add(procdata->config.update_interval,
+					  cb_timeout,
+					  procdata);
+
 	proctable_update_all (procdata);
 }
 
