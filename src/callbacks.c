@@ -165,12 +165,14 @@ cb_about (GtkAction *action, gpointer data)
 		"comments",		_("View current processes and monitor "
 					  "system state"),
 		"version",		VERSION,
-		"copyright",		"Copyright \xc2\xa9 2001-2004 "
-					"Kevin Vandersloot",
+		"copyright",		"Copyright \xc2\xa9 2001-2004 Kevin Vandersloot\n"
+					"Copyright \xc2\xa9 2005-2006 Benoît Dejean",
 		"logo-icon-name",	"gnome-monitor",
 		"authors",		authors,
 		"documenters",		documenters,
 		"translator-credits",	_("translator-credits"),
+		"license",		"GPL 2+",
+		"wrap-license",		TRUE,
 		NULL
 		);
 }
