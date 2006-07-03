@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-23 16:53+0200\n"
-"PO-Revision-Date: 2006-02-24 16:55+0200\n"
+"POT-Creation-Date: 2006-07-03 10:13+0300\n"
+"PO-Revision-Date: 2006-07-03 10:17+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:164
-#: ../src/interface.c:666
+#: ../src/interface.c:666 ../src/procman.c:693
 msgid "System Monitor"
 msgstr "Järjestelmän valvonta"
 
@@ -38,35 +38,35 @@ msgstr ""
 "\n"
 "http://gnome.fi/"
 
-#: ../src/disks.c:204 ../src/memmaps.c:302
+#: ../src/disks.c:238 ../src/memmaps.c:302
 msgid "Device"
 msgstr "Laite"
 
-#: ../src/disks.c:205
+#: ../src/disks.c:239
 msgid "Directory"
 msgstr "Kansio"
 
-#: ../src/disks.c:206 ../src/openfiles.c:232
+#: ../src/disks.c:240 ../src/openfiles.c:232
 msgid "Type"
 msgstr "Tyyppi"
 
-#: ../src/disks.c:207
+#: ../src/disks.c:241
 msgid "Total"
 msgstr "Yhteensä"
 
-#: ../src/disks.c:208
+#: ../src/disks.c:242
 msgid "Free"
 msgstr "Vapaana"
 
-#: ../src/disks.c:209
+#: ../src/disks.c:243
 msgid "Available"
 msgstr "Käytettävissä"
 
-#: ../src/disks.c:210
+#: ../src/disks.c:244
 msgid "Used"
 msgstr "Käyttö"
 
-#: ../src/disks.c:217 ../src/interface.c:745 ../src/procdialogs.c:770
+#: ../src/disks.c:251 ../src/interface.c:745 ../src/procdialogs.c:770
 #: ../src/procdialogs.c:774
 msgid "Devices"
 msgstr "Laitteet"
@@ -189,59 +189,190 @@ msgstr "Pääikkunan korkeus"
 msgid "Main Window width"
 msgstr "Pääikkunan leveys"
 
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:15
+#, no-c-format
+msgid "Process CPU % column saved width"
+msgstr "Prosessin CPU % -sarakkeen tallennettu leveys"
+
+#: ../src/gnome-system-monitor.schemas.in.h:16
+msgid "Process CPU time column saved width"
+msgstr "Prosessin CPU-aika -sarakkeen tallennettu leveys"
+
+#: ../src/gnome-system-monitor.schemas.in.h:17
+msgid "Process PID column saved width"
+msgstr "Prosessin PID -sarakkeen tallennettu leveys"
+
+#: ../src/gnome-system-monitor.schemas.in.h:18
+msgid "Process SELinux security context column saved width"
+msgstr "Prosessin SELinux turvakonteksti -sarakkeen tallennettu leveys"
+
+#: ../src/gnome-system-monitor.schemas.in.h:19
+msgid "Process X server memory column saved width"
+msgstr "Prosessin X-palvelimen muisti -sarakkeen tallennettu leveys"
+
+#: ../src/gnome-system-monitor.schemas.in.h:20
+msgid "Process arguments column saved width"
+msgstr "Prosessin valitsimet -sarakkeen tallennettu leveys"
+
+#: ../src/gnome-system-monitor.schemas.in.h:21
+msgid "Process estimated memory usage column saved width"
+msgstr "Prosessin arvioitu muistinkäyttö -sarakkeen tallennettu leveys"
+
+#: ../src/gnome-system-monitor.schemas.in.h:22
+msgid "Process name column saved width"
+msgstr "Prosessin nimi -sarakkeen tallennettu leveys"
+
+#: ../src/gnome-system-monitor.schemas.in.h:23
+msgid "Process nice column saved width"
+msgstr "Prosessin nice-arvo -sarakkeen tallennettu leveys"
+
+#: ../src/gnome-system-monitor.schemas.in.h:24
+msgid "Process owner column saved width"
+msgstr "Prosessin omistaja -sarakkeen tallennettu leveys"
+
+#: ../src/gnome-system-monitor.schemas.in.h:25
+msgid "Process resident memory column saved width"
+msgstr "Prosessin ladattu muisti -sarakkeen tallennettu leveys"
+
+#: ../src/gnome-system-monitor.schemas.in.h:26
+msgid "Process shared memory column saved width"
+msgstr "Prosessin jaettu muisti -sarakkeen tallennettu leveys"
+
+#: ../src/gnome-system-monitor.schemas.in.h:27
+msgid "Process start time column saved width"
+msgstr "Prosessin käynnistysaika -sarakkeen tallennettu leveys"
+
+#: ../src/gnome-system-monitor.schemas.in.h:28
+msgid "Process status column saved width"
+msgstr "Prosessin tila -sarakkeen tallennettu leveys"
+
+#: ../src/gnome-system-monitor.schemas.in.h:29
 msgid "Process view columns order"
 msgstr "Prosessinäkymän sarakkeiden järjestys"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:30
 msgid "Process view sort column"
 msgstr "Prosessinäkymän lajittelusarake"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
+#: ../src/gnome-system-monitor.schemas.in.h:31
 msgid "Process view sort order"
 msgstr "Prosessinäkymän järjestys"
 
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:32
+msgid "Process virtual memory column saved width"
+msgstr "Prosessin virtuaalimuisti -sarakkeen tallennettu leveys"
+
+#: ../src/gnome-system-monitor.schemas.in.h:33
 msgid "Saves the currently viewed tab"
 msgstr "Tallentaa nyt katseltavan välilehden"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:34
 msgid "Show column zero on startup"
 msgstr "0-sarake näkyy käynnistyttyä"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
-msgid "Show process dependencies in tree form"
-msgstr "Näytä prosessien riippuvuuspuu"
+#: ../src/gnome-system-monitor.schemas.in.h:35
+msgid "Show estimated memory usage column on startup"
+msgstr "Näytä arvioitu muistinkäyttö -sarake käynnistyttyä"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:37
+#, no-c-format
+msgid "Show process CPU % column on startup"
+msgstr "Näytä prosessin CPU % -sarake käynnistyttyä"
+
+#: ../src/gnome-system-monitor.schemas.in.h:38
+msgid "Show process CPU time column on startup"
+msgstr "Näytä prosessin CPU-aika -sarake käynnistyttyä"
+
+#: ../src/gnome-system-monitor.schemas.in.h:39
+msgid "Show process PID column on startup"
+msgstr "Näytä prosessin PID -sarake käynnistyttyä"
+
+#: ../src/gnome-system-monitor.schemas.in.h:40
+msgid "Show process SELinux security context column on startup"
+msgstr "Näytä prosessin SELinux turvakonteksti -sarake käynnistyttyä"
+
+#: ../src/gnome-system-monitor.schemas.in.h:41
+msgid "Show process X server memory column zero startup"
+msgstr "Näytä prosessin X-palvelimen muistinkäyttösarake käynnistyttyä"
+
+#: ../src/gnome-system-monitor.schemas.in.h:42
+msgid "Show process arguments column on startup"
+msgstr "Näytä prosessin valitsimien sarake käynnistyttyä"
+
+#: ../src/gnome-system-monitor.schemas.in.h:43
+msgid "Show process dependencies in tree form"
+msgstr "Näytä prosessien riippuvuudet puuna"
+
+#: ../src/gnome-system-monitor.schemas.in.h:44
+msgid "Show process name column on startup"
+msgstr "Näytä prosessin nimi -sarake käynnistyttyä"
+
+#: ../src/gnome-system-monitor.schemas.in.h:45
+msgid "Show process nice column on startup"
+msgstr "Näytä prosessin nicearvo -sarake käynnistyttyä"
+
+#: ../src/gnome-system-monitor.schemas.in.h:46
+msgid "Show process owner column on startup"
+msgstr "Näytä prosessin omistaja -sarake käynnistyttyä"
+
+#: ../src/gnome-system-monitor.schemas.in.h:47
+msgid "Show process resident memory column on startup"
+msgstr "Näytä prosessin ladatun muistin -sarake käynnistyttyä"
+
+#: ../src/gnome-system-monitor.schemas.in.h:48
+msgid "Show process shared memory column on startup"
+msgstr "Näytä prosessin jaetun muistin -sarake käynnistyttyä"
+
+#: ../src/gnome-system-monitor.schemas.in.h:49
+msgid "Show process start time column on startup"
+msgstr "Näytä prosessin käynnistysajan -sarake käynnistyttyä"
+
+#: ../src/gnome-system-monitor.schemas.in.h:50
+msgid "Show process status column on startup"
+msgstr "Näytä prosessin tila  -sarake käynnistyttyä"
+
+#: ../src/gnome-system-monitor.schemas.in.h:51
 msgid "Show process threads"
 msgstr "Näytä prosessien säikeet"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:52
+msgid "Show process virtual memory column on startup"
+msgstr "Näytä prosessin virtuaalimuisti -sarake käynnistyttyä"
+
+#: ../src/gnome-system-monitor.schemas.in.h:53
+msgid "Show process writable memory column on startup"
+msgstr "Näytä prosessin kirjoitettava amuisti -sarake käynnistyttyä"
+
+#: ../src/gnome-system-monitor.schemas.in.h:54
+msgid "Show process writable memory column saved width"
+msgstr ""
+"Näytä prosessin kirjoitettava ja tallennettu muisti -sarake käynnistyttyä"
+
+#: ../src/gnome-system-monitor.schemas.in.h:55
 msgid "Show warning dialog when hiding processes"
 msgstr "Näytä varoitusikkuna ennen prosessin piilottamista"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:56
 msgid "Show warning dialog when killing processes"
 msgstr "Näytä varoitusikkuna ennen prosessin lopettamista väkisin"
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:57
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Aika (ms) laiteluettelon päivitysten välillä"
 
-#: ../src/gnome-system-monitor.schemas.in.h:24
+#: ../src/gnome-system-monitor.schemas.in.h:58
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Aika (ms) graafien päivitysten välillä"
 
-#: ../src/gnome-system-monitor.schemas.in.h:25
+#: ../src/gnome-system-monitor.schemas.in.h:59
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Aika (ms) prosessinäkymän päivitysten välillä"
 
-#: ../src/gnome-system-monitor.schemas.in.h:26
+#: ../src/gnome-system-monitor.schemas.in.h:60
 msgid "Whether information about all filesystems should be displayed"
 msgstr "Näytetäänkö kaikkien tiedostojärjestelmien tiedot"
 
-#: ../src/gnome-system-monitor.schemas.in.h:27
+#: ../src/gnome-system-monitor.schemas.in.h:61
 msgid ""
 "Whether to display information about all filesystems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -252,8 +383,8 @@ msgstr ""
 "halutaan tietoa kaikista juuri nyt liitetyistä tiedostojärjestelmistä."
 
 #: ../src/interface.c:46
-msgid "_File"
-msgstr "_Tiedosto"
+msgid "_Monitor"
+msgstr "_Tarkkaile"
 
 #: ../src/interface.c:47
 msgid "_Edit"
@@ -456,7 +587,7 @@ msgstr "Prosessit"
 msgid "Resources"
 msgstr "Resurssit"
 
-#: ../src/load-graph.c:368 ../src/load-graph.c:378
+#: ../src/load-graph.c:369 ../src/load-graph.c:379
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
@@ -547,7 +678,7 @@ msgstr ""
 "Prosessin %d prioriteettia ei voida muuttaa arvoon %d.\n"
 "%s"
 
-#: ../src/procactions.c:144
+#: ../src/procactions.c:155
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -696,88 +827,92 @@ msgstr "_Ruudukon väri:"
 msgid "Show _all filesystems"
 msgstr "Näytä k_aikki tiedostojärjestelmät"
 
-#: ../src/proctable.c:245
+#: ../src/proctable.c:290
 msgid "Process Name"
 msgstr "Prosessin nimi"
 
-#: ../src/proctable.c:246
+#: ../src/proctable.c:291
 msgid "User"
 msgstr "Käyttäjä"
 
-#: ../src/proctable.c:247
+#: ../src/proctable.c:292
 msgid "Status"
 msgstr "Tila"
 
-#: ../src/proctable.c:248
+#: ../src/proctable.c:293
 msgid "Virtual Memory"
 msgstr "Virtuaalimuisti"
 
-#: ../src/proctable.c:249
+#: ../src/proctable.c:294
 msgid "Resident Memory"
 msgstr "Käytetty muisti"
 
-#: ../src/proctable.c:250
+#: ../src/proctable.c:295
 msgid "Writable Memory"
 msgstr "Kirjoitettava muisti"
 
-#: ../src/proctable.c:251
+#: ../src/proctable.c:296
 msgid "Shared Memory"
 msgstr "Jaettu muisti"
 
-#: ../src/proctable.c:252
+#: ../src/proctable.c:297
 msgid "X Server Memory"
 msgstr "X-palvelimen muisti"
 
-#: ../src/proctable.c:253
+#: ../src/proctable.c:298
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:254
+#: ../src/proctable.c:299
 msgid "CPU Time"
 msgstr "CPU-aika"
 
-#: ../src/proctable.c:255
+#: ../src/proctable.c:300
 msgid "Started"
 msgstr "Aloitettu"
 
-#: ../src/proctable.c:256
+#: ../src/proctable.c:301
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.c:257
+#: ../src/proctable.c:302
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.c:258
+#: ../src/proctable.c:303
 msgid "Security Context"
 msgstr "Turvakonteksti"
 
-#: ../src/proctable.c:259
+#: ../src/proctable.c:304
 msgid "Arguments"
 msgstr "Argumentit"
 
-#: ../src/proctable.c:432
+#: ../src/proctable.c:305
+msgid "Memory"
+msgstr "Muisti"
+
+#: ../src/proctable.c:489
 msgid "Running"
 msgstr "Käynnissä"
 
-#: ../src/proctable.c:437
+#: ../src/proctable.c:494
 msgid "Stopped"
 msgstr "Pysäytetty"
 
-#: ../src/proctable.c:442
+#: ../src/proctable.c:499
 msgid "Zombie"
 msgstr "Zombi"
 
-#: ../src/proctable.c:447
+#: ../src/proctable.c:504
 msgid "Uninterruptible"
 msgstr "Ei-keskeytettävä"
 
-#: ../src/proctable.c:452
+#: ../src/proctable.c:509
 msgid "Sleeping"
 msgstr "Unessa"
 
-#: ../src/proctable.c:1034
+#: ../src/proctable.c:1100
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Keskiarvokuorma viimeisille 1, 5 ja 15 minuutille: %0.2f, %0.2f, %0.2f"
@@ -803,6 +938,9 @@ msgstr "%.1f MiB"
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
+
+#~ msgid "_File"
+#~ msgstr "_Tiedosto"
 
 #~ msgid "seconds"
 #~ msgstr "sekuntia"
@@ -866,9 +1004,6 @@ msgstr "%.1f GiB"
 
 #~ msgid "Very low - nice %d"
 #~ msgstr "Todella matala - nice %d"
-
-#~ msgid "Memory"
-#~ msgstr "Muisti"
 
 #~ msgid "RSS Memory"
 #~ msgstr "Keskusmuisti"
