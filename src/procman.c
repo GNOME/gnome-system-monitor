@@ -452,8 +452,11 @@ procman_get_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefi
 			column = gtk_tree_view_get_column (GTK_TREE_VIEW (tree), id);
 			if(!column) continue;
 			gtk_tree_view_column_set_visible (column, visible);
-			if (width > 0)
-				gtk_tree_view_column_set_fixed_width (column, width);
+			if (visible) {
+				/* ensure column is really visible */
+				width = MAX(width, 10);
+				gtk_tree_view_column_set_fixed_width(column, width);
+			}
 		}
 	}
 
