@@ -82,6 +82,7 @@ struct _ProcInfo
 	GSList		*children;
 
 	GdkPixbuf	*pixbuf;
+	gchar		*tooltip;
 	gchar		*name;
 	gchar		*user; /* allocated with g_string_chunk, don't free it ! */
 	gchar		*arguments;

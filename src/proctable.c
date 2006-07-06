@@ -131,7 +131,7 @@ create_proctree(GtkTreeModel *model)
 
 			proctree = new();
 			gtk_tree_view_set_model(GTK_TREE_VIEW(proctree), model);
-			set_column(proctree, COL_ARGS);
+			set_column(proctree, COL_TOOLTIP);
 		} else {
 			g_module_close(sexy);
 		}
@@ -334,7 +334,8 @@ proctable_new (ProcData * const procdata)
 				    G_TYPE_STRING,	/* Arguments	*/
 				    G_TYPE_STRING,	/* Memory       */
 				    GDK_TYPE_PIXBUF,	/* Icon		*/
-				    G_TYPE_POINTER	/* ProcInfo	*/
+				    G_TYPE_POINTER,	/* ProcInfo	*/
+				    G_TYPE_STRING	/* Sexy tooltip */
 		);
 
 	proctree = create_proctree(GTK_TREE_MODEL(model));
@@ -472,6 +473,7 @@ proctable_free_info(ProcInfo *info)
 	}
 
 	g_free (info->name);
+	g_free(info->tooltip);
 	g_free (info->arguments);
 	g_free (info->security_context);
 	g_slist_free (info->children);
@@ -744,6 +746,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 			    COL_PIXBUF, info->pixbuf,
 			    COL_NAME, info->name,
 			    COL_ARGS, info->arguments,
+			    COL_TOOLTIP, info->tooltip,
 			    COL_PID, info->pid,
 			    COL_SECURITYCONTEXT, info->security_context,
 			    -1);
@@ -902,7 +905,8 @@ procinfo_new (ProcData *procdata, gint pid)
 	get_process_name (info, procstate.cmd, arguments[0]);
 	get_process_user (procdata, info, procstate.uid);
 
-	info->arguments = g_strjoinv(" ", arguments);
+	info->tooltip = g_strjoinv(" ", arguments);
+	info->arguments = g_strescape(info->tooltip, "\\\"");
 	g_strfreev(arguments);
 
 	info->pcpu = 0;
