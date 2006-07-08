@@ -2,7 +2,7 @@
 
 #include "procman.h"
 #include "procman_gksu.h"
-
+#include "util.h"
 
 static gboolean (*gksu_run)(const char *, GError **);
 
@@ -10,25 +10,15 @@ static gboolean (*gksu_run)(const char *, GError **);
 static void load_gksu(void)
 {
 	static gboolean init;
-	GModule *gksu;
 
 	if (init)
 		return;
 
 	init = TRUE;
 
-	gksu = g_module_open("libgksu2.so",
-			     G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
-
-	if (gksu) {
-		if (g_module_symbol(gksu, "gksu_run", &gksu_run)) {
-
-			g_module_make_resident(gksu);
-			g_print("Found libgksu2\n");
-		} else {
-			g_module_close(gksu);
-		}
-	}
+	load_symbols("libgksu2.so",
+		     "gksu_run", &gksu_run,
+		     NULL);
 }
 
 

@@ -29,4 +29,8 @@ gchar*
 SI_gnome_vfs_format_file_size_for_display (GnomeVFSFileSize size) G_GNUC_INTERNAL;
 
 
+gboolean
+load_symbols(const char *module, ...) G_GNUC_INTERNAL G_GNUC_NULL_TERMINATED;
+
+
 #endif /* H_GNOME_SYSTEM_MONITOR_UTIL_1123178725 */

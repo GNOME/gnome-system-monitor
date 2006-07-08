@@ -1,3 +1,25 @@
+2006-07-08  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/procdialogs.c: (procdialog_create_root_password_dialog):
+	* src/procman_gksu.c: (load_gksu):
+	* src/procman_gksu.h:
+	* src/procman_gnomesu.c: (load_gnomesu),
+	(procman_gnomesu_create_root_password_dialog),
+	(procman_has_gnomesu):
+	* src/procman_gnomesu.h:
+	* src/proctable.c: (create_proctree):
+	* src/selinux.c: (load_selinux), (get_process_selinux_context),
+	(can_show_security_context_column):
+	* src/selinux.h:
+	* src/util.c: (load_symbols):
+	* src/util.h:
+	
+	Big rework of {gksu,gnomesu,selinux} dynamic loading.
+	Dropped all related auto* stuff.
+	Added load_symbols which makes module loading easier.
+
 2006-07-06  Benoît Dejean  <benoit@placenet.org>
 
 	* src/procman.h:

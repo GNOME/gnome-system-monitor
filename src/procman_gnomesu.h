@@ -4,6 +4,9 @@
 #include <glib/gtypes.h>
 
 gboolean
-procman_gnomesu_create_root_password_dialog(char * message);
+procman_gnomesu_create_root_password_dialog(const char * message);
+
+gboolean
+procman_has_gnomesu(void) G_GNUC_CONST;
 
 #endif /* H_GNOME_SYSTEM_MONITOR_GNOMESU_H_1132171917 */

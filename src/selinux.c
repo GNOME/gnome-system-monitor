@@ -4,17 +4,29 @@
 
 #include "selinux.h"
 #include "procman.h"
+#include "util.h"
 
-#if HAVE_SELINUX
 
-#include <selinux/selinux.h>
+static int (*getpidcon)(pid_t, char**);
+static void (*freecon)(char*);
+static int (*is_selinux_enabled)(void);
+
+
+static gboolean load_selinux(void)
+{
+	return load_symbols("libselinux.so.1",
+			    "getpidcon", &getpidcon,
+			    "freecon", &freecon,
+			    "is_selinux_enabled", &is_selinux_enabled,
+			    NULL);
+}
+
 
 
 void
 get_process_selinux_context (ProcInfo *info)
 {
-	/* Directly grab the SELinux security context: */
-	security_context_t con;
+	char *con;
 
 	if (!getpidcon (info->pid, &con)) {
 		info->security_context = g_strdup (con);
@@ -27,6 +39,9 @@ get_process_selinux_context (ProcInfo *info)
 gboolean
 can_show_security_context_column (void)
 {
+	if (!load_selinux())
+		return FALSE;
+
 	switch (is_selinux_enabled()) {
 	case 1:
 		/* We're running on an SELinux kernel */
@@ -40,8 +55,10 @@ can_show_security_context_column (void)
 		   hide the security context column */
 
 	default:
+		g_warning("SELinux was found but is not enabled.\n");
 		return FALSE;
 	}
 }
 
-#endif
+
+

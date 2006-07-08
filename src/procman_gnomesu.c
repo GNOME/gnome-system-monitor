@@ -4,50 +4,37 @@
 
 #include "procman.h"
 #include "procman_gnomesu.h"
+#include "util.h"
+
+gboolean (*gnomesu_exec)(const char *commandline);
 
 
-typedef gboolean (*GnomesuExecFunc)(char *commandline);
-
-
-static GnomesuExecFunc G_GNUC_CONST
-procman_gnomesu_get_exec(void)
+static void
+load_gnomesu(void)
 {
-	static gboolean is_init = FALSE;
-	static gpointer gnomesu_exec = NULL;
+	static gboolean init;
 
-	if (!is_init) {
-		GModule *libgnomesu;
+	if (init)
+		return;
 
-		libgnomesu = g_module_open("libgnomesu.so.0",
-					   G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
+	init = TRUE;
 
-		if (libgnomesu) {
-			if (g_module_symbol(libgnomesu, "gnomesu_exec", &gnomesu_exec))
-				g_module_make_resident(libgnomesu);
-			else {
-				g_warning("Cannot found gnomesu_exec : %s", g_module_error());
-				g_module_close(libgnomesu);
-			}
-		}
-
-		is_init = TRUE;
-	}
-
-	return (GnomesuExecFunc)gnomesu_exec;
+	load_symbols("libgnomesu.so.0",
+		     "gnomesu_exec", &gnomesu_exec,
+		     NULL);
 }
-
 
 
 gboolean
-procman_gnomesu_create_root_password_dialog(char * command)
+procman_gnomesu_create_root_password_dialog(const char *command)
 {
-	GnomesuExecFunc gnomesu_exec;
-
-	gnomesu_exec = procman_gnomesu_get_exec();
-
-	if (gnomesu_exec)
-		return gnomesu_exec(command);
-
-	return FALSE;
+	return gnomesu_exec(command);
 }
 
+
+gboolean
+procman_has_gnomesu(void)
+{
+	load_gnomesu();
+	return gnomesu_exec != NULL;
+}
