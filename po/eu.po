@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-22 20:31+0100\n"
-"PO-Revision-Date: 2006-02-22 23:47+0100\n"
-"Last-Translator: Iñaki Larrañaga <dooteo@euskalgnu.org>\n"
+"POT-Creation-Date: 2006-07-08 13:39+0000\n"
+"PO-Revision-Date: 2006-07-08 14:19+0000\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n>1;\n"
+"Plural-Forms: Plural-Forms: Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.10.2\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:164
-#: ../src/interface.c:666
+#: ../src/interface.c:666 ../src/procman.c:696
 msgid "System Monitor"
 msgstr "Sistemako monitorea"
 
@@ -30,35 +30,35 @@ msgstr "Ikusi uneko prozesuak eta monitorizatu sistemako egoera"
 msgid "translator-credits"
 msgstr "Iñaki Larrañaga  <dooteo@euskalgnu.org>"
 
-#: ../src/disks.c:204 ../src/memmaps.c:302
+#: ../src/disks.c:238 ../src/memmaps.c:302
 msgid "Device"
 msgstr "Gailua"
 
-#: ../src/disks.c:205
+#: ../src/disks.c:239
 msgid "Directory"
 msgstr "Direktorioa"
 
-#: ../src/disks.c:206 ../src/openfiles.c:232
+#: ../src/disks.c:240 ../src/openfiles.c:232
 msgid "Type"
 msgstr "Mota"
 
-#: ../src/disks.c:207
+#: ../src/disks.c:241
 msgid "Total"
 msgstr "Guztira"
 
-#: ../src/disks.c:208
+#: ../src/disks.c:242
 msgid "Free"
 msgstr "Libre"
 
-#: ../src/disks.c:209
+#: ../src/disks.c:243
 msgid "Available"
 msgstr "Eskuragarri"
 
-#: ../src/disks.c:210
+#: ../src/disks.c:244
 msgid "Used"
 msgstr "Erabilita"
 
-#: ../src/disks.c:217 ../src/interface.c:745 ../src/procdialogs.c:770
+#: ../src/disks.c:251 ../src/interface.c:745 ../src/procdialogs.c:770
 #: ../src/procdialogs.c:774
 msgid "Devices"
 msgstr "Gailuak"
@@ -98,8 +98,8 @@ msgid ""
 "There are no hidden processes in the list. To show all running processes, "
 "select the \"All processes\" option in the main window."
 msgstr ""
-"Ez dago ezkutuko prozesurik zerrendan. Hautatu \"Prozesu guztiak\" aukera leiho "
-"nagusian exekutatzen ari diren prozesu guztiak erakusteko."
+"Ez dago ezkutuko prozesurik zerrendan. Hautatu \"Prozesu guztiak\" aukera "
+"leiho nagusian exekutatzen ari diren prozesu guztiak erakusteko."
 
 #: ../src/favorites.c:377
 msgid "Hidden Processes"
@@ -161,7 +161,9 @@ msgstr "Swap-aren grafikoaren kolore lehenetsia"
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
-msgstr "Lehenetsi gisa zein prozesu erakutsiko diren zehazten du. 0 guztiak, 1 erabiltzailea eta 2 aktibatu"
+msgstr ""
+"Lehenetsi gisa zein prozesu erakutsiko diren zehazten du. 0 guztiak, 1 "
+"erabiltzailea eta 2 aktibatu"
 
 #: ../src/gnome-system-monitor.schemas.in.h:10
 msgid "Disk view columns order"
@@ -179,71 +181,201 @@ msgstr "Leiho nagusiaren altuera"
 msgid "Main Window width"
 msgstr "Leiho nagusiaren zabalera"
 
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:15
+#, no-c-format
+msgid "Process CPU % column saved width"
+msgstr "'Prozesuaren PUZ %' zutabearen gordetako zabalera"
+
+#: ../src/gnome-system-monitor.schemas.in.h:16
+msgid "Process CPU time column saved width"
+msgstr "'Prozesuaren PUZ denbora' zutabearen gordetako zabalera"
+
+#: ../src/gnome-system-monitor.schemas.in.h:17
+msgid "Process PID column saved width"
+msgstr "'PID prozesua' zutabearen gordetako zabalera"
+
+#: ../src/gnome-system-monitor.schemas.in.h:18
+msgid "Process SELinux security context column saved width"
+msgstr "'SELinux segurtasun testuingurua prozesua' zutabearen gordetako zabalera"
+
+#: ../src/gnome-system-monitor.schemas.in.h:19
+msgid "Process X server memory column saved width"
+msgstr "'Prozesuaren X zerbitzari-memoria' zutabearen gordetako zabalera"
+
+#: ../src/gnome-system-monitor.schemas.in.h:20
+msgid "Process arguments column saved width"
+msgstr "Argumentuen prozesuaren zutabearen gordetako zabalera"
+
+#: ../src/gnome-system-monitor.schemas.in.h:21
+msgid "Process estimated memory usage column saved width"
+msgstr "'Prozesuak erabilitako memoria' zutabearen gordetako zabalera"
+
+#: ../src/gnome-system-monitor.schemas.in.h:22
+msgid "Process name column saved width"
+msgstr "'Prozesuaren izena' zutabearen gordetako zabalera"
+
+#: ../src/gnome-system-monitor.schemas.in.h:23
+msgid "Process nice column saved width"
+msgstr "'Prozesuaren lehentasuna' zutabearen gordetako zabalera"
+
+#: ../src/gnome-system-monitor.schemas.in.h:24
+msgid "Process owner column saved width"
+msgstr "'Prozesuaren jabea' zutabearen gordetako zabalera"
+
+#: ../src/gnome-system-monitor.schemas.in.h:25
+msgid "Process resident memory column saved width"
+msgstr "'Prozesuaren memoria egoiliarra' zutabearen gordetako zabalera"
+
+#: ../src/gnome-system-monitor.schemas.in.h:26
+msgid "Process shared memory column saved width"
+msgstr "'Prozesuaren partekatutako memoria' zutabearen gordetako zabalera"
+
+#: ../src/gnome-system-monitor.schemas.in.h:27
+msgid "Process start time column saved width"
+msgstr "'Prozesuaren hasierako denbora' zutabearen gordetako zabalera"
+
+#: ../src/gnome-system-monitor.schemas.in.h:28
+msgid "Process status column saved width"
+msgstr "'Prozesuaren egoera' zutabearen gordetako zabalera"
+
+#: ../src/gnome-system-monitor.schemas.in.h:29
 msgid "Process view columns order"
 msgstr "Prozesu-ikuspegiko zutabeak"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:30
 msgid "Process view sort column"
 msgstr "Prozesuen ikuspegi-ordena zutabea"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
+#: ../src/gnome-system-monitor.schemas.in.h:31
 msgid "Process view sort order"
 msgstr "Prozesuen ikuspegiaren ordena"
 
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:32
+msgid "Process virtual memory column saved width"
+msgstr "'Prozesuaren memoria birtuala' zutabearen gordetako zabalera"
+
+#: ../src/gnome-system-monitor.schemas.in.h:33
 msgid "Saves the currently viewed tab"
 msgstr "Gorde unean fitxan ikusten dena"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:34
 msgid "Show column zero on startup"
 msgstr "Erakutsi zero. zutabea abiatzean"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:35
+msgid "Show estimated memory usage column on startup"
+msgstr "Erakutsi 'memoriaren erabilpena' zutabea abioan"
+
+#: ../src/gnome-system-monitor.schemas.in.h:37
+#, no-c-format
+msgid "Show process CPU % column on startup"
+msgstr "Erakutsi 'prozesuaren % PUZ' zutabea abioan"
+
+#: ../src/gnome-system-monitor.schemas.in.h:38
+msgid "Show process CPU time column on startup"
+msgstr "Erakutsi 'prozesuaren PUZ denbora' zutabea abioan"
+
+#: ../src/gnome-system-monitor.schemas.in.h:39
+msgid "Show process PID column on startup"
+msgstr "Erakutsi 'prozesuaren PID' zutabea abioan"
+
+#: ../src/gnome-system-monitor.schemas.in.h:40
+msgid "Show process SELinux security context column on startup"
+msgstr "Erakutsi 'prozesuaren SELinux segurtasun testuingurua' zutabea abioan"
+
+#: ../src/gnome-system-monitor.schemas.in.h:41
+msgid "Show process X server memory column zero startup"
+msgstr "Erakutsi 'prozesuaren X zerbitzari-memoria' zutabea abioan"
+
+#: ../src/gnome-system-monitor.schemas.in.h:42
+msgid "Show process arguments column on startup"
+msgstr "Erakutsi 'prozesuaren argumentuak' zutabea abioan"
+
+#: ../src/gnome-system-monitor.schemas.in.h:43
 msgid "Show process dependencies in tree form"
 msgstr "Erakutsi prozesuaren mendekotasunak zuhaitz eran"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:44
+msgid "Show process name column on startup"
+msgstr "Erakutsi 'prozesu-izena' zutabea abioan"
+
+#: ../src/gnome-system-monitor.schemas.in.h:45
+msgid "Show process nice column on startup"
+msgstr "Erakutsi 'prozesuaren lehentasuna' zutabea abioan"
+
+#: ../src/gnome-system-monitor.schemas.in.h:46
+msgid "Show process owner column on startup"
+msgstr "Erakutsi 'prozesuaren jabea' zutabea abioan"
+
+#: ../src/gnome-system-monitor.schemas.in.h:47
+msgid "Show process resident memory column on startup"
+msgstr "Erakutsi 'prozesuaren memoria egoiliarra' zutabea abioan"
+
+#: ../src/gnome-system-monitor.schemas.in.h:48
+msgid "Show process shared memory column on startup"
+msgstr "Erakutsi 'prozesuaren memoria partekatua' zutabea abioan"
+
+#: ../src/gnome-system-monitor.schemas.in.h:49
+msgid "Show process start time column on startup"
+msgstr "Erakutsi 'prozesuaren hasierako denbora' zutabea abioan"
+
+#: ../src/gnome-system-monitor.schemas.in.h:50
+msgid "Show process status column on startup"
+msgstr "Erakutsi 'prozesuaren egoera' zutabea abioan"
+
+#: ../src/gnome-system-monitor.schemas.in.h:51
 msgid "Show process threads"
 msgstr "Erakutsi prozesuen hariak"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:52
+msgid "Show process virtual memory column on startup"
+msgstr "Erakutsi 'prozesuaren memoria birtuala' zutabea abioan"
+
+#: ../src/gnome-system-monitor.schemas.in.h:53
+msgid "Show process writable memory column on startup"
+msgstr "Erakutsi 'prozesuaren memoria idazkorra' zutabea abioan"
+
+#: ../src/gnome-system-monitor.schemas.in.h:54
+msgid "Show process writable memory column saved width"
+msgstr "Erakutsi 'prozesuaren memoria idazkorra' zutabearen gordetako zabalera"
+
+#: ../src/gnome-system-monitor.schemas.in.h:55
 msgid "Show warning dialog when hiding processes"
 msgstr "Erakutsi abisuko elkarrizketa-koadroa prozesuak ezkutatzean"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:56
 msgid "Show warning dialog when killing processes"
 msgstr "Erakutsi abisuko elkarrizketa-koadroa prozesuak hiltzean"
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:57
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Gailuen zerrendaren eguneratzeko tartearen denbora milisegundotan"
 
-#: ../src/gnome-system-monitor.schemas.in.h:24
+#: ../src/gnome-system-monitor.schemas.in.h:58
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Grafikoak eguneratzeko tartearen denbora milisegundotan"
 
-#: ../src/gnome-system-monitor.schemas.in.h:25
+#: ../src/gnome-system-monitor.schemas.in.h:59
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Prozesuen ikuspegia eguneratzeko tartearen denbora milisegundotan"
 
-#: ../src/gnome-system-monitor.schemas.in.h:26
+#: ../src/gnome-system-monitor.schemas.in.h:60
 msgid "Whether information about all filesystems should be displayed"
 msgstr "Fitxategi-sistema guztiei buruzko informazioa bistaratu behar den ala ez"
 
-#: ../src/gnome-system-monitor.schemas.in.h:27
+#: ../src/gnome-system-monitor.schemas.in.h:61
 msgid ""
 "Whether to display information about all filesystems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
 "filesystems."
 msgstr ""
-"Fitxategi-sistema guztiei buruzko informazioa bistaratu ala ez ('autofs' eta 'procfs' "
-"motak bezalakoak barne). Erabilgarria unean muntatuta dauden fitxategi-sistema "
-"guztiak zerrendatzeko."
+"Fitxategi-sistema guztiei buruzko informazioa bistaratu ala ez ('autofs' eta "
+"'procfs' motak bezalakoak barne). Erabilgarria unean muntatuta dauden "
+"fitxategi-sistema guztiak zerrendatzeko."
 
 #: ../src/interface.c:46
-msgid "_File"
-msgstr "_Fitxategia"
+msgid "_Monitor"
+msgstr "_Monitorizatu"
 
 #: ../src/interface.c:47
 msgid "_Edit"
@@ -446,7 +578,7 @@ msgstr "Prozesuak"
 msgid "Resources"
 msgstr "Baliabideak"
 
-#: ../src/load-graph.c:368 ../src/load-graph.c:378
+#: ../src/load-graph.c:369 ../src/load-graph.c:379
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
@@ -537,7 +669,7 @@ msgstr ""
 "Ezin da PID %d prozesuaren lehentasuna %d-(e)ra aldatu.\n"
 "%s"
 
-#: ../src/procactions.c:144
+#: ../src/procactions.c:155
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -558,8 +690,9 @@ msgid ""
 "Hidden processes are no longer visible in the process list. You can re-"
 "enable them by selecting the \"Hidden Processes\" entry in the View menu."
 msgstr ""
-"Ezkutatutako prozesuak ez dira prozesuen zerrendan ikusgai egongo. Prozesu bat ezkutatzen "
-"baduzu, berriro bistaratzeko hautatu Editatu menuko \"Ezkutuko prozesuak\"."
+"Ezkutatutako prozesuak ez dira prozesuen zerrendan ikusgai egongo. Prozesu "
+"bat ezkutatzen baduzu, berriro bistaratzeko hautatu Editatu menuko "
+"\"Ezkutuko prozesuak\"."
 
 #. translators: primary alert message
 #: ../src/procdialogs.c:124
@@ -572,8 +705,8 @@ msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponding processes should be killed."
 msgstr ""
-"Prozesu bat hiltzean datuak galdu, saioa hondatu edo segurtasun arriskua sor daiteke. Erantzuten ez "
-"duten prozesuak bakarrik hil beharko lirateke."
+"Prozesu bat hiltzean datuak galdu, saioa hondatu edo segurtasun arriskua sor "
+"daiteke. Erantzuten ez duten prozesuak bakarrik hil beharko lirateke."
 
 #. translators: primary alert message
 #: ../src/procdialogs.c:133
@@ -586,8 +719,8 @@ msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponding processes should be ended."
 msgstr ""
-"Prozesu bat amaitzean datuak galdu, saioa hondatu edo segurtasun arriskua sor "
-"daiteke. Erantzuten ez duten prozesuak bakarrik hil beharko lirateke."
+"Prozesu bat amaitzean datuak galdu, saioa hondatu edo segurtasun arriskua "
+"sor daiteke. Erantzuten ez duten prozesuak bakarrik hil beharko lirateke."
 
 #: ../src/procdialogs.c:138
 msgid "_End Process"
@@ -685,88 +818,92 @@ msgstr "_Saretaren kolorea:"
 msgid "Show _all filesystems"
 msgstr "Erakutsi fitxategi-sistema g_uztiak"
 
-#: ../src/proctable.c:245
+#: ../src/proctable.c:290
 msgid "Process Name"
 msgstr "Prozesuaren izena"
 
-#: ../src/proctable.c:246
+#: ../src/proctable.c:291
 msgid "User"
 msgstr "Erabiltzailea"
 
-#: ../src/proctable.c:247
+#: ../src/proctable.c:292
 msgid "Status"
 msgstr "Egoera"
 
-#: ../src/proctable.c:248
+#: ../src/proctable.c:293
 msgid "Virtual Memory"
 msgstr "Memoria birtuala"
 
-#: ../src/proctable.c:249
+#: ../src/proctable.c:294
 msgid "Resident Memory"
 msgstr "Memoria egoiliarra"
 
-#: ../src/proctable.c:250
+#: ../src/proctable.c:295
 msgid "Writable Memory"
 msgstr "Memoria idazkorra"
 
-#: ../src/proctable.c:251
+#: ../src/proctable.c:296
 msgid "Shared Memory"
 msgstr "Memoria partekatua"
 
-#: ../src/proctable.c:252
+#: ../src/proctable.c:297
 msgid "X Server Memory"
 msgstr "X zerbitzariaren memoria"
 
-#: ../src/proctable.c:253
+#: ../src/proctable.c:298
 #, no-c-format
 msgid "% CPU"
 msgstr "% PUZ"
 
-#: ../src/proctable.c:254
+#: ../src/proctable.c:299
 msgid "CPU Time"
 msgstr "PUZ denbora"
 
-#: ../src/proctable.c:255
+#: ../src/proctable.c:300
 msgid "Started"
 msgstr "Hasita"
 
-#: ../src/proctable.c:256
+#: ../src/proctable.c:301
 msgid "Nice"
 msgstr "Lehentasuna"
 
-#: ../src/proctable.c:257
+#: ../src/proctable.c:302
 msgid "ID"
 msgstr "IDa"
 
-#: ../src/proctable.c:258
+#: ../src/proctable.c:303
 msgid "Security Context"
 msgstr "Segurtasun testuingurua"
 
-#: ../src/proctable.c:259
+#: ../src/proctable.c:304
 msgid "Arguments"
 msgstr "Argumentuak"
 
-#: ../src/proctable.c:432
+#: ../src/proctable.c:305
+msgid "Memory"
+msgstr "Memoria"
+
+#: ../src/proctable.c:491
 msgid "Running"
 msgstr "Exekutatzen"
 
-#: ../src/proctable.c:437
+#: ../src/proctable.c:496
 msgid "Stopped"
 msgstr "Geldituta"
 
-#: ../src/proctable.c:442
+#: ../src/proctable.c:501
 msgid "Zombie"
 msgstr "Zonbia"
 
-#: ../src/proctable.c:447
+#: ../src/proctable.c:506
 msgid "Uninterruptible"
 msgstr "Etenkaitza"
 
-#: ../src/proctable.c:452
+#: ../src/proctable.c:511
 msgid "Sleeping"
 msgstr "Lotan"
 
-#: ../src/proctable.c:1034
+#: ../src/proctable.c:1104
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Batez besteko karga (azken 1, 5, 15 minututakoa): %0.2f, %0.2f, %0.2f"
