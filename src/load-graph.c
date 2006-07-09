@@ -83,6 +83,8 @@ struct _LoadGraph {
 void
 load_graph_draw (LoadGraph *g)
 {
+	const double fontsize = 12.0;
+	const double rmargin = 3.5 * fontsize;
 	cairo_t *cr;
 	int dely;
 	double delx;
@@ -99,17 +101,42 @@ load_graph_draw (LoadGraph *g)
 	cairo_translate (cr, FRAME_WIDTH, FRAME_WIDTH);
 	gdk_cairo_set_source_color (cr, &(g->colors [1]));
 	cairo_set_line_width (cr, 1.0);
+	cairo_select_font_face(cr,
+			       "monospace",
+			       CAIRO_FONT_SLANT_NORMAL,
+			       CAIRO_FONT_WEIGHT_NORMAL);
+	cairo_set_font_size(cr, fontsize);
 
 	dely = (g->draw_height) / 5; /* round to int to avoid AA blur */
 	real_draw_height = dely * 5;
 
 	for (i = 0; i <= 5; ++i) {
-		cairo_move_to (cr, 0.5, i * dely + 0.5);
+		char *caption;
+		double y;
+
+		switch (i) {
+		case 0:
+			y = 0.5 + fontsize / 2.0;
+			break;
+		case 5:
+			y = i * dely + 0.5;
+			break;
+		default:
+			y = i * dely + fontsize / 2.0;
+			break;
+		}
+
+		cairo_move_to(cr, 0.0, y);
+		caption = g_strdup_printf("%3d %%", 100 - i * 20);
+		cairo_show_text(cr, caption);
+		g_free(caption);
+
+		cairo_move_to (cr, rmargin, i * dely + 0.5);
 		cairo_line_to (cr, g->draw_width - 0.5, i * dely + 0.5);
 	}
 
-	cairo_move_to (cr, 0.5, 0.5);
-	cairo_line_to (cr, 0.5, real_draw_height + 0.5);
+	cairo_move_to (cr, rmargin, 0.5);
+	cairo_line_to (cr, rmargin, real_draw_height + 0.5);
 
 	cairo_move_to (cr, g->draw_width - 0.5, 0.5);
 	cairo_line_to (cr, g->draw_width - 0.5, real_draw_height + 0.5);
