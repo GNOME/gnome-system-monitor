@@ -692,7 +692,7 @@ main (int argc, char *argv[])
 		exit (0);
 	}
 
-	gtk_window_set_default_icon_name ("gnome-monitor");
+	gtk_window_set_default_icon_name ("utilities-system-monitor");
 	g_set_application_name(_("System Monitor"));
 		    
 	gconf_init (argc, argv, NULL);

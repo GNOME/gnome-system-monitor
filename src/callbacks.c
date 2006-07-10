@@ -167,7 +167,7 @@ cb_about (GtkAction *action, gpointer data)
 		"version",		VERSION,
 		"copyright",		"Copyright \xc2\xa9 2001-2004 Kevin Vandersloot\n"
 					"Copyright \xc2\xa9 2005-2006 Benoît Dejean",
-		"logo-icon-name",	"gnome-monitor",
+		"logo-icon-name",	"utilities-system-monitor",
 		"authors",		authors,
 		"documenters",		documenters,
 		"translator-credits",	_("translator-credits"),
