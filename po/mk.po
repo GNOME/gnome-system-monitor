@@ -1,34 +1,33 @@
-# translation of mk.po to Macedonian
+# translation of gnome-system-monitor.HEAD.mk.po to Macedonian
 # translation of procman.HEAD.mk.po to
-# translation of procman.HEAD.mk.po to Macedonian
 # translation of procman.HEAD.mk.po to
 # Procman translated on Macedonian
 # Copyright (C) 2002,2003, 2005, 2006 Free Software Foundation, Inc.
 # Stojcev Darko | <atom1c@linux.net.mk | 2002
 # http://www.linux.net.mk
-# , 2003
+#
+#
 # Vladislav Bidikov <bidikovi@mail.com.mk>, 2003.
 #  <ufo@linux.net.mk>, 2005.
 # Арангел Ангов <ufo@linux.net.mk>, 2005.
 # Arangel Angov <ufo@linux.net.mk>, 2005, 2006.
-#
-#
+# Jovan Naumovski <jovan@lugola.net>, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: mk\n"
+"Project-Id-Version: gnome-system-monitor.HEAD.mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-05 23:52+0100\n"
-"PO-Revision-Date: 2006-02-06 00:28+0100\n"
-"Last-Translator: Arangel Angov <ufo@linux.net.mk>\n"
+"POT-Creation-Date: 2006-07-09 08:04+0200\n"
+"PO-Revision-Date: 2006-07-11 14:08+0200\n"
+"Last-Translator: Jovan Naumovski <jovan@lugola.net>\n"
 "Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural= n==1 || n%10==1 ? 0 : 1\n"
-"X-Generator: KBabel 1.10.2\n"
+"X-Generator: KBabel 1.11.2\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:164
-#: ../src/interface.c:666
+#: ../src/interface.c:666 ../src/procman.c:696
 msgid "System Monitor"
 msgstr "Надгледувач на системот"
 
@@ -38,37 +37,39 @@ msgstr "Погледни ги моментално активните проце
 
 #: ../src/callbacks.c:173
 msgid "translator-credits"
-msgstr "Арангел Ангов (ufo@linux.net.mk) http://gnome.softver.org.mk"
+msgstr ""
+"Арангел Ангов (ufo@linux.net.mk) http://gnome.softver.org.mk \n"
+"Јован Наумовски (jovan@lugola.net)"
 
-#: ../src/disks.c:204 ../src/memmaps.c:302
+#: ../src/disks.c:238 ../src/memmaps.c:302
 msgid "Device"
 msgstr "Уред"
 
-#: ../src/disks.c:205
+#: ../src/disks.c:239
 msgid "Directory"
 msgstr "Директориум"
 
-#: ../src/disks.c:206 ../src/openfiles.c:232
+#: ../src/disks.c:240 ../src/openfiles.c:232
 msgid "Type"
 msgstr "Тип"
 
-#: ../src/disks.c:207
+#: ../src/disks.c:241
 msgid "Total"
 msgstr "Вкупно "
 
-#: ../src/disks.c:208
+#: ../src/disks.c:242
 msgid "Free"
 msgstr "Слободни"
 
-#: ../src/disks.c:209
+#: ../src/disks.c:243
 msgid "Available"
 msgstr "Достапно"
 
-#: ../src/disks.c:210
+#: ../src/disks.c:244
 msgid "Used"
 msgstr "Искористено "
 
-#: ../src/disks.c:217 ../src/interface.c:745 ../src/procdialogs.c:770
+#: ../src/disks.c:251 ../src/interface.c:745 ../src/procdialogs.c:770
 #: ../src/procdialogs.c:774
 msgid "Devices"
 msgstr "Уреди"
@@ -191,59 +192,189 @@ msgstr "Височина на главниот прозорец"
 msgid "Main Window width"
 msgstr "Широчина на главниот прозорец"
 
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:15
+#, no-c-format
+msgid "Process CPU % column saved width"
+msgstr "Зачувана ширина на колоната за процент на искористеност на процесорот од процес"
+
+#: ../src/gnome-system-monitor.schemas.in.h:16
+msgid "Process CPU time column saved width"
+msgstr "Зачувана ширина на колоната за време на искористеност на процесорот од процес"
+
+#: ../src/gnome-system-monitor.schemas.in.h:17
+msgid "Process PID column saved width"
+msgstr "Зачувана ширина на колоната за PID на процес"
+
+#: ../src/gnome-system-monitor.schemas.in.h:18
+msgid "Process SELinux security context column saved width"
+msgstr "Зачувана ширина на колоната за процесот за SELinux содржини за безбедност"
+
+#: ../src/gnome-system-monitor.schemas.in.h:19
+msgid "Process X server memory column saved width"
+msgstr "Зачувана ширина на колоната за меморија за X сервер на процес"
+
+#: ../src/gnome-system-monitor.schemas.in.h:20
+msgid "Process arguments column saved width"
+msgstr "Зачувана ширина на колоната за аргументи на процес"
+
+#: ../src/gnome-system-monitor.schemas.in.h:21
+msgid "Process estimated memory usage column saved width"
+msgstr "Зачувана ширина на колоната за проценетата искористеност на меморијата на процес"
+
+#: ../src/gnome-system-monitor.schemas.in.h:22
+msgid "Process name column saved width"
+msgstr "Зачувана ширина на колоната за име на процес"
+
+#: ../src/gnome-system-monitor.schemas.in.h:23
+msgid "Process nice column saved width"
+msgstr "Зачувана ширина на колоната за приоритет на процес"
+
+#: ../src/gnome-system-monitor.schemas.in.h:24
+msgid "Process owner column saved width"
+msgstr "Зачувана ширина на колоната за сопственик на процес"
+
+#: ../src/gnome-system-monitor.schemas.in.h:25
+msgid "Process resident memory column saved width"
+msgstr "Зачувана ширина на колоната за резидентна меморија на процес"
+
+#: ../src/gnome-system-monitor.schemas.in.h:26
+msgid "Process shared memory column saved width"
+msgstr "Зачувана ширина на колоната за споделената меморија на процес"
+
+#: ../src/gnome-system-monitor.schemas.in.h:27
+msgid "Process start time column saved width"
+msgstr "Зачувана ширина на колоната за времето на стартување на процесот"
+
+#: ../src/gnome-system-monitor.schemas.in.h:28
+msgid "Process status column saved width"
+msgstr "Зачувана ширина на колоната за статус на процес"
+
+#: ../src/gnome-system-monitor.schemas.in.h:29
 msgid "Process view columns order"
 msgstr "Поглед на процеси во колона за редослед"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:30
 msgid "Process view sort column"
 msgstr "Поглед на процеси во колона за подредување"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
+#: ../src/gnome-system-monitor.schemas.in.h:31
 msgid "Process view sort order"
 msgstr "Редослед на погледот на процесите"
 
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:32
+msgid "Process virtual memory column saved width"
+msgstr "Зачувана ширина на колоната за вируелната меморија на процес"
+
+#: ../src/gnome-system-monitor.schemas.in.h:33
 msgid "Saves the currently viewed tab"
 msgstr "Го зачувува тековното јазиче"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:34
 msgid "Show column zero on startup"
 msgstr "Покажи колона со нула на почеток"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:35
+msgid "Show estimated memory usage column on startup"
+msgstr "Прикажи ја колоната за проценета употреба на меморијата при подигнување"
+
+#: ../src/gnome-system-monitor.schemas.in.h:37
+#, no-c-format
+msgid "Show process CPU % column on startup"
+msgstr "Покажи ја колоната за процентот на искористеност на процесорот при подигање"
+
+#: ../src/gnome-system-monitor.schemas.in.h:38
+msgid "Show process CPU time column on startup"
+msgstr "Прикажи ја колоната за време на искористеност на процесорот при подигнување"
+
+#: ../src/gnome-system-monitor.schemas.in.h:39
+msgid "Show process PID column on startup"
+msgstr "Прикажи ја колоната за PID на процес при подигање"
+
+#: ../src/gnome-system-monitor.schemas.in.h:40
+msgid "Show process SELinux security context column on startup"
+msgstr "Прикажи ја колоната за процесот за SELinux содржини за безбедност при подигнување"
+
+#: ../src/gnome-system-monitor.schemas.in.h:41
+msgid "Show process X server memory column zero startup"
+msgstr "Прикажи ја колоната нула за X меморијата на процесот при подигнување"
+
+#: ../src/gnome-system-monitor.schemas.in.h:42
+msgid "Show process arguments column on startup"
+msgstr "Прикажи ја колоната за аргументи на процес при подигнување"
+
+#: ../src/gnome-system-monitor.schemas.in.h:43
 msgid "Show process dependencies in tree form"
 msgstr "Покажи ја зависноста на процесот во форма на дрво"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:44
+msgid "Show process name column on startup"
+msgstr "Прикажи ја колоната за име на процес при подигнување"
+
+#: ../src/gnome-system-monitor.schemas.in.h:45
+msgid "Show process nice column on startup"
+msgstr "Прикажи ја колоната за приоритет на процес при подигнување"
+
+#: ../src/gnome-system-monitor.schemas.in.h:46
+msgid "Show process owner column on startup"
+msgstr "Прикажи ја колоната за сопственик на процес при подигнување"
+
+#: ../src/gnome-system-monitor.schemas.in.h:47
+msgid "Show process resident memory column on startup"
+msgstr "Прикажи ја колоната за резидентна меморија на процес при подигнување"
+
+#: ../src/gnome-system-monitor.schemas.in.h:48
+msgid "Show process shared memory column on startup"
+msgstr "Прикажи ја колоната за споделена меморија на процесот при подигнување"
+
+#: ../src/gnome-system-monitor.schemas.in.h:49
+msgid "Show process start time column on startup"
+msgstr "Прикажи ја колоната за време на стартување на процес при подигнување"
+
+#: ../src/gnome-system-monitor.schemas.in.h:50
+msgid "Show process status column on startup"
+msgstr "Прикажи ја колоната за статус на процес при подигнување"
+
+#: ../src/gnome-system-monitor.schemas.in.h:51
 msgid "Show process threads"
 msgstr "Покажи нишка со процеси"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:52
+msgid "Show process virtual memory column on startup"
+msgstr "Прикажи ја колоната за виртуелна меморија на процес при подигнување"
+
+#: ../src/gnome-system-monitor.schemas.in.h:53
+msgid "Show process writable memory column on startup"
+msgstr "Прикажи ја колоната за меморија за запишување на процес при подигнување"
+
+#: ../src/gnome-system-monitor.schemas.in.h:54
+msgid "Show process writable memory column saved width"
+msgstr "Зачувана ширина на колоната за прикажување на меморијата за запишување на процес"
+
+#: ../src/gnome-system-monitor.schemas.in.h:55
 msgid "Show warning dialog when hiding processes"
 msgstr "Покажи дијалог прозорец со предупредување кога кријам процеси"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:56
 msgid "Show warning dialog when killing processes"
 msgstr "Покажи дијалог прозорец со предупредување кога убивам процеси"
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:57
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Време во милисекунди помеѓу освежувања на листата за уреди"
 
-#: ../src/gnome-system-monitor.schemas.in.h:24
+#: ../src/gnome-system-monitor.schemas.in.h:58
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Време·во·милисекунди·помеѓу·освежувања на графиците"
 
-#: ../src/gnome-system-monitor.schemas.in.h:25
+#: ../src/gnome-system-monitor.schemas.in.h:59
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Време·во·милисекунди·помеѓу·освежувања на погледот на процесите"
 
-#: ../src/gnome-system-monitor.schemas.in.h:26
+#: ../src/gnome-system-monitor.schemas.in.h:60
 msgid "Whether information about all filesystems should be displayed"
 msgstr "Дали треба да бидат прикажани информации за датотечниот систем"
 
-#: ../src/gnome-system-monitor.schemas.in.h:27
+#: ../src/gnome-system-monitor.schemas.in.h:61
 msgid ""
 "Whether to display information about all filesystems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -254,8 +385,8 @@ msgstr ""
 "за добивање на листа од тековно монтирани датотечни системи."
 
 #: ../src/interface.c:46
-msgid "_File"
-msgstr "_Датотека"
+msgid "_Monitor"
+msgstr "_Надгледувач"
 
 #: ../src/interface.c:47
 msgid "_Edit"
@@ -458,7 +589,7 @@ msgstr "Процеси"
 msgid "Resources"
 msgstr "Ресурси"
 
-#: ../src/load-graph.c:368 ../src/load-graph.c:378
+#: ../src/load-graph.c:369 ../src/load-graph.c:379
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
@@ -549,7 +680,7 @@ msgstr ""
 "Не можам да го променам приоритетот на процесот со pid %d to %d.\n"
 "%s"
 
-#: ../src/procactions.c:144
+#: ../src/procactions.c:155
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -699,88 +830,92 @@ msgstr "_Боја на мрежата:"
 msgid "Show _all filesystems"
 msgstr "Покажи _ги сите датотечни системи"
 
-#: ../src/proctable.c:245
+#: ../src/proctable.c:274
 msgid "Process Name"
 msgstr "Име на процесот"
 
-#: ../src/proctable.c:246
+#: ../src/proctable.c:275
 msgid "User"
 msgstr "Корисник"
 
-#: ../src/proctable.c:247
+#: ../src/proctable.c:276
 msgid "Status"
 msgstr "Статус"
 
-#: ../src/proctable.c:248
+#: ../src/proctable.c:277
 msgid "Virtual Memory"
 msgstr "Виртуелна меморија"
 
-#: ../src/proctable.c:249
+#: ../src/proctable.c:278
 msgid "Resident Memory"
 msgstr "Меморија"
 
-#: ../src/proctable.c:250
+#: ../src/proctable.c:279
 msgid "Writable Memory"
 msgstr "Запишлива меморија"
 
-#: ../src/proctable.c:251
+#: ../src/proctable.c:280
 msgid "Shared Memory"
-msgstr "Share-увана меморија"
+msgstr "Споделена меморија"
 
-#: ../src/proctable.c:252
+#: ../src/proctable.c:281
 msgid "X Server Memory"
 msgstr "Меморија на X серверот"
 
-#: ../src/proctable.c:253
+#: ../src/proctable.c:282
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:254
+#: ../src/proctable.c:283
 msgid "CPU Time"
 msgstr "Време на CPU"
 
-#: ../src/proctable.c:255
+#: ../src/proctable.c:284
 msgid "Started"
 msgstr "Работи"
 
-#: ../src/proctable.c:256
+#: ../src/proctable.c:285
 msgid "Nice"
-msgstr "Убаво"
+msgstr "Приоритет"
 
-#: ../src/proctable.c:257
+#: ../src/proctable.c:286
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.c:258
+#: ../src/proctable.c:287
 msgid "Security Context"
 msgstr "Безбедносен контекст"
 
-#: ../src/proctable.c:259
+#: ../src/proctable.c:288
 msgid "Arguments"
 msgstr "Аргументи"
 
-#: ../src/proctable.c:432
+#: ../src/proctable.c:289
+msgid "Memory"
+msgstr "Меморија"
+
+#: ../src/proctable.c:475
 msgid "Running"
 msgstr "Работи"
 
-#: ../src/proctable.c:437
+#: ../src/proctable.c:480
 msgid "Stopped"
 msgstr "Стопирано"
 
-#: ../src/proctable.c:442
+#: ../src/proctable.c:485
 msgid "Zombie"
 msgstr "Зомби"
 
-#: ../src/proctable.c:447
+#: ../src/proctable.c:490
 msgid "Uninterruptible"
 msgstr "Непрекинлив"
 
-#: ../src/proctable.c:452
+#: ../src/proctable.c:495
 msgid "Sleeping"
 msgstr "Спие"
 
-#: ../src/proctable.c:1034
+#: ../src/proctable.c:1088
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Вчитување во просек за последните 1, 5 ,15 минути: %0.2f,·%0.2f,·%0.2f"
