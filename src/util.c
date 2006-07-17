@@ -118,7 +118,7 @@ load_symbols(const char *module, ...)
 	if (!mod)
 		return FALSE;
 
-	g_print("Found %s\n", module);
+	procman_debug("Found %s", module);
 
 	va_start(args, module);
 
@@ -134,10 +134,10 @@ load_symbols(const char *module, ...)
 		symbol = va_arg(args, void**);
 
 		if (g_module_symbol(mod, name, symbol)) {
-			g_print("Loaded %s from %s\n", name, module);
+			procman_debug("Loaded %s from %s", name, module);
 		}
 		else {
-			g_print("Could not load %s from %s\n", name, module);
+			procman_debug("Could not load %s from %s", name, module);
 			found_all = FALSE;
 			break;
 		}
@@ -154,4 +154,36 @@ load_symbols(const char *module, ...)
 	return found_all;
 }
 
+
+static gboolean
+is_debug_enabled(void)
+{
+	static gboolean init;
+	static gboolean enabled;
+
+	if (!init) {
+		enabled = g_getenv("GNOME_SYSTEM_MONITOR_DEBUG") != NULL;
+		init = TRUE;
+	}
+
+	return enabled;
+}
+
+
+
+void
+procman_debug(const char *format, ...)
+{
+	va_list args;
+	char *msg;
+
+	if (G_LIKELY(!is_debug_enabled()))
+		return;
+
+	va_start(args, format);
+	msg = g_strdup_vprintf(format, args);
+	va_end(args);
+
+	g_debug(msg);
+}
 

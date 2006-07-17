@@ -11,7 +11,7 @@
 
 #include "smooth_refresh.h"
 #include "procman.h"
-
+#include "util.h"
 
 /*
   -self : procman's PID (so we call getpid() only once)
@@ -107,7 +107,8 @@ static void status_changed(GConfClient *client,
 
 	smooth_refresh_reset(sm);
 
-	g_print("smooth_refresh is active = %d\n", sm->active);
+	if (sm->active)
+		procman_debug("smooth_refresh is enabled");
 }
 
 
@@ -138,7 +139,8 @@ smooth_refresh_new(const guint * config_interval)
 						 NULL,
 						 NULL);
 
-	g_print("smooth_refresh is active = %d\n", sm->active);
+	if (sm->active)
+		procman_debug("smooth_refresh is enabled");
 
 	return sm;
 }
@@ -235,7 +237,7 @@ smooth_refresh_get(SmoothRefresh *sm, guint *new_interval)
 	if(changed) {
 		time_t now;
 		time(&now);
-		printf("changed refresh_interval to CPU %3.1f%% current %u (config %u) at %s",
+		procman_debug("changed refresh_interval to CPU %3.1f%% current %u (config %u) at %s",
 		       sm->last_pcpu,
 		       sm->interval,
 		       *sm->config_interval,

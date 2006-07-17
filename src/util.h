@@ -33,4 +33,7 @@ gboolean
 load_symbols(const char *module, ...) G_GNUC_INTERNAL G_GNUC_NULL_TERMINATED;
 
 
+void
+procman_debug(const char *format, ...) G_GNUC_INTERNAL G_GNUC_PRINTF(1, 2);
+
 #endif /* H_GNOME_SYSTEM_MONITOR_UTIL_1123178725 */
