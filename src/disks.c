@@ -135,6 +135,43 @@ find_disk_in_model(GtkTreeModel *model, const char *mountpoint,
 }
 
 
+
+static void
+remove_old_disks(GtkTreeModel *model, const glibtop_mountentry *entries, guint n)
+{
+	GtkTreeIter iter;
+
+	if (!gtk_tree_model_get_iter_first(model, &iter))
+		return;
+
+	do {
+		char *dir;
+		guint i;
+		gboolean found = FALSE;
+
+		gtk_tree_model_get(model, &iter,
+				   DISK_DIR, &dir,
+				   -1);
+
+		for (i = 0; i != n; ++i) {
+			if (!strcmp(dir, entries[i].mountdir)) {
+				found = TRUE;
+				break;
+			}
+		}
+
+		if (!found) {
+			if (!gtk_list_store_remove(GTK_LIST_STORE(model), &iter))
+				break;
+		}
+
+		g_free(dir);
+
+	} while (gtk_tree_model_iter_next(model, &iter));
+}
+
+
+
 static void
 add_disk(GtkListStore *list, const glibtop_mountentry *entry)
 {
@@ -202,6 +239,8 @@ cb_update_disks(gpointer data)
 	list = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(procdata->disk_list)));
 
 	entries = glibtop_get_mountlist(&mountlist, procdata->config.show_all_fs);
+
+	remove_old_disks(GTK_TREE_MODEL(list), entries, mountlist.number);
 
 	for (i = 0; i < mountlist.number; i++)
 		add_disk(list, &entries[i]);
