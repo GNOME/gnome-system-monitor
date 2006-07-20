@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gtop cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-23 23:58+0100\n"
-"PO-Revision-Date: 2006-01-24 05:10+0100\n"
+"POT-Creation-Date: 2006-07-20 00:27+0200\n"
+"PO-Revision-Date: 2006-07-20 04:38+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,10 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+# meervoud is beter (tino)
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:164
-#: ../src/interface.c:666
+#: ../src/interface.c:666 ../src/procman.c:696
 msgid "System Monitor"
-msgstr "Procesbeheer"
+msgstr "Processenbeheer"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:165
 msgid "View current processes and monitor system state"
@@ -34,36 +35,36 @@ msgstr ""
 "\n"
 "Kijk voor meer informatie op http://nl.gnome.org/"
 
-#: ../src/disks.c:204 ../src/memmaps.c:302
+#: ../src/disks.c:308 ../src/memmaps.c:302
 msgid "Device"
 msgstr "Station"
 
-#: ../src/disks.c:205
+#: ../src/disks.c:309
 msgid "Directory"
 msgstr "Map"
 
-#: ../src/disks.c:206 ../src/openfiles.c:232
+#: ../src/disks.c:310 ../src/openfiles.c:232
 msgid "Type"
 msgstr "Type"
 
-#: ../src/disks.c:207
+#: ../src/disks.c:311
 msgid "Total"
 msgstr "Totaal"
 
-#: ../src/disks.c:208
+#: ../src/disks.c:312
 msgid "Free"
 msgstr "Vrij"
 
-#: ../src/disks.c:209
+#: ../src/disks.c:313
 msgid "Available"
 msgstr "Beschikbaar"
 
-#: ../src/disks.c:210
+#: ../src/disks.c:314
 msgid "Used"
 msgstr "Gebruikt"
 
 # dit zijn de verschillende partities op de harde schijven: dev/hda1 etc..
-#: ../src/disks.c:217 ../src/interface.c:745 ../src/procdialogs.c:770
+#: ../src/disks.c:321 ../src/interface.c:745 ../src/procdialogs.c:770
 #: ../src/procdialogs.c:774
 msgid "Devices"
 msgstr "Stations"
@@ -99,14 +100,13 @@ msgstr "%b %d %Y"
 msgid "No hidden processes"
 msgstr "Geen verborgen processen"
 
+# Alle processen staat in feite in het menu Beeld.
 #. translators: secondary alert message
 #: ../src/favorites.c:357
 msgid ""
 "There are no hidden processes in the list. To show all running processes, "
 "select the \"All processes\" option in the main window."
-msgstr ""
-"Er staan geen verborgen processen in de lijst. Om alle lopende processen te "
-"zien selecteert u de optie \"Alle processen\" in het hoofdvenster."
+msgstr "Er zijn geen verborgen processen in de lijst. Om alle lopende processen te zien selecteert u de optie \"Alle processen\" in het hoofdvenster."
 
 #: ../src/favorites.c:377
 msgid "Hidden Processes"
@@ -114,13 +114,13 @@ msgstr "Verborgen processen"
 
 #: ../src/favorites.c:401
 msgid "Currently _hidden processes:"
-msgstr "Huidige verborgen processen:"
+msgstr "_Huidige verborgen processen:"
 
 #: ../src/favorites.c:423
 msgid "_Remove From List"
 msgstr "Uit de lijst _verwijderen"
 
-# merk op/opmerking/nota/noteer/notitie
+# merk op/opmerking/nota/noteer/notitie/bijschrift
 #: ../src/favorites.c:432 ../src/procdialogs.c:285
 msgid "Note:"
 msgstr "Opmerking:"
@@ -129,14 +129,13 @@ msgstr "Opmerking:"
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
-msgstr ""
-"U heeft gekozen deze processen niet weer te geven. U kunt ze weer "
-"weergegeven wanneer ze uit deze lijst worden verwijderd."
+msgstr "U heeft gekozen deze processen niet weer te geven. U kunt ze weer laten weergegeven door ze uit deze lijst te verwijderen."
 
-# ?
+# 'saved width' is niet 'bespaarde ruimte', 
+# maar opgeslagen (voor de volgende sessie)
 #: ../src/gnome-system-monitor.schemas.in.h:1
 msgid "Column zero saved width"
-msgstr "Kolom nul bespaarde ruimte"
+msgstr "Opgeslagen breedte van kolom nul "
 
 # achtergrondkleur standaardgrafiek
 #: ../src/gnome-system-monitor.schemas.in.h:2
@@ -172,9 +171,7 @@ msgstr "Standaardgrafiek wisselgeheugen-kleur"
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
-msgstr ""
-"Bepaalt welke processen standaard worden getoond. 0 is alles, 1 is "
-"gebruiker, en 2 is actief."
+msgstr "Bepaalt welke processen standaard worden getoond. Bij 0 wordt alles getoond, Bij 1 alleen die van de gebruiker, en bij 2 de actieve."
 
 #: ../src/gnome-system-monitor.schemas.in.h:10
 msgid "Disk view columns order"
@@ -192,62 +189,198 @@ msgstr "Hoogte hoofdvenster"
 msgid "Main Window width"
 msgstr "Breedte hoofdvenster"
 
-#: ../src/gnome-system-monitor.schemas.in.h:14
+# 'process' = het proces, niet processor. het kan worden weggelaten
+# het is verwarrend als het er bij staat (tino)
+#: ../src/gnome-system-monitor.schemas.in.h:15
+#, no-c-format
+msgid "Process CPU % column saved width"
+msgstr "Opgeslagen breedte van de kolom CPU-%"
+
+#: ../src/gnome-system-monitor.schemas.in.h:16
+msgid "Process CPU time column saved width"
+msgstr "Opgeslagen breedte van de kolom CPU-tijd"
+
+#: ../src/gnome-system-monitor.schemas.in.h:17
+msgid "Process PID column saved width"
+msgstr "Opgeslagen breedte van de kolom PID"
+
+#: ../src/gnome-system-monitor.schemas.in.h:18
+msgid "Process SELinux security context column saved width"
+msgstr "Opgeslagen breedte van de kolom SELinux beveiligingscontext"
+
+#: ../src/gnome-system-monitor.schemas.in.h:19
+msgid "Process X server memory column saved width"
+msgstr "Opgeslagen breedte van de kolom X-server geheugen"
+
+# in de kolomkop is Argumenten met een hoofdletetr
+#: ../src/gnome-system-monitor.schemas.in.h:20
+msgid "Process arguments column saved width"
+msgstr "Opgeslagen breedte van de kolom Argumenten"
+
+#: ../src/gnome-system-monitor.schemas.in.h:21
+msgid "Process estimated memory usage column saved width"
+msgstr "Opgeslagen breedte van de kolom Geschat geheugengebruik"
+
+#: ../src/gnome-system-monitor.schemas.in.h:22
+msgid "Process name column saved width"
+msgstr "Opgeslagen breedte van de kolom Procesnaam"
+
+#: ../src/gnome-system-monitor.schemas.in.h:23
+msgid "Process nice column saved width"
+msgstr "Opgeslagen breedte van de kolom Nice"
+
+# Proceseigenaar/Gebruiker?
+#: ../src/gnome-system-monitor.schemas.in.h:24
+msgid "Process owner column saved width"
+msgstr "Opgeslagen breedte van de kolom Proceseigenaar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:25
+msgid "Process resident memory column saved width"
+msgstr "Opgeslagen breedte van de kolom Vast geheugen"
+
+#: ../src/gnome-system-monitor.schemas.in.h:26
+msgid "Process shared memory column saved width"
+msgstr "Opgeslagen breedte van de kolom Gedeeld geheugen"
+
+#: ../src/gnome-system-monitor.schemas.in.h:27
+msgid "Process start time column saved width"
+msgstr "Opgeslagen breedte van de kolom Starttijd"
+
+#: ../src/gnome-system-monitor.schemas.in.h:28
+msgid "Process status column saved width"
+msgstr "Opgeslagen breedte van de kolom Status"
+
+#: ../src/gnome-system-monitor.schemas.in.h:29
 msgid "Process view columns order"
 msgstr "Proceslijst kolomvolgorde"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:30
 msgid "Process view sort column"
 msgstr "Proceslijst sorteerkolom"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
+#: ../src/gnome-system-monitor.schemas.in.h:31
 msgid "Process view sort order"
 msgstr "Proceslijst sorteerrichting"
 
-# Bewaart: zorgt dat de volgende keer dezelfde tab wordt getoond
-#: ../src/gnome-system-monitor.schemas.in.h:17
-msgid "Saves the currently viewed tab"
-msgstr "Bewaart de huidige getoonde tab"
+#: ../src/gnome-system-monitor.schemas.in.h:32
+msgid "Process virtual memory column saved width"
+msgstr "Opgeslagen breedte van de kolom Virtueel geheugen"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+# Bewaart/Onthoudt: zorgt dat de volgende keer dezelfde tab wordt getoond
+#: ../src/gnome-system-monitor.schemas.in.h:33
+msgid "Saves the currently viewed tab"
+msgstr "Onthoudt de huidige getoonde tab"
+
+#: ../src/gnome-system-monitor.schemas.in.h:34
 msgid "Show column zero on startup"
 msgstr "Kolom nul tonen bij opstarten"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:35
+msgid "Show estimated memory usage column on startup"
+msgstr "De kolom Geschat geheugen tonen bij opstarten"
+
+#: ../src/gnome-system-monitor.schemas.in.h:37
+#, no-c-format
+msgid "Show process CPU % column on startup"
+msgstr "De kolom CPU-% tonen bij opstarten"
+
+#: ../src/gnome-system-monitor.schemas.in.h:38
+msgid "Show process CPU time column on startup"
+msgstr "De kolom CPU-tijd tonen bij opstarten"
+
+#: ../src/gnome-system-monitor.schemas.in.h:39
+msgid "Show process PID column on startup"
+msgstr "De kolom PID tonen bij opstarten"
+
+#: ../src/gnome-system-monitor.schemas.in.h:40
+msgid "Show process SELinux security context column on startup"
+msgstr "De kolom SELinux beveiligingscontext tonen bij opstarten"
+
+#: ../src/gnome-system-monitor.schemas.in.h:41
+msgid "Show process X server memory column zero startup"
+msgstr "De kolom X-server geheugen tonen bij opstarten"
+
+#: ../src/gnome-system-monitor.schemas.in.h:42
+msgid "Show process arguments column on startup"
+msgstr "De kolom Argumenten tonen bij opstarten"
+
+#: ../src/gnome-system-monitor.schemas.in.h:43
 msgid "Show process dependencies in tree form"
 msgstr "Procesafhankelijkheden tonen in boomvorm"
 
+#: ../src/gnome-system-monitor.schemas.in.h:44
+msgid "Show process name column on startup"
+msgstr "De kolom Procesnaam tonen bij opstarten"
+
+#: ../src/gnome-system-monitor.schemas.in.h:45
+msgid "Show process nice column on startup"
+msgstr "De kolom Nice tonen bij opstarten"
+
+#: ../src/gnome-system-monitor.schemas.in.h:46
+msgid "Show process owner column on startup"
+msgstr "Kolom Proceseigenaar tonen bij opstarten"
+
+#: ../src/gnome-system-monitor.schemas.in.h:47
+msgid "Show process resident memory column on startup"
+msgstr "De kolom Vast geheugen tonen bij opstarten"
+
+#: ../src/gnome-system-monitor.schemas.in.h:48
+msgid "Show process shared memory column on startup"
+msgstr "De kolom Gedeeld geheugen tonen bij opstarten"
+
+#: ../src/gnome-system-monitor.schemas.in.h:49
+msgid "Show process start time column on startup"
+msgstr "De kolom Starttijd tonen bij opstarten"
+
+#: ../src/gnome-system-monitor.schemas.in.h:50
+msgid "Show process status column on startup"
+msgstr "De kolom Status tonen bij opstarten"
+
 # draden/threads
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:51
 msgid "Show process threads"
 msgstr "Procesdraden tonen"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:52
+msgid "Show process virtual memory column on startup"
+msgstr "De kolom Virtueel geheugen tonen bij opstarten"
+
+#: ../src/gnome-system-monitor.schemas.in.h:53
+msgid "Show process writable memory column on startup"
+msgstr "De kolom Schrijfbaar geheugen tonen bij opstarten"
+
+# BUG Show process writable memory column saved width
+# (extra Show moet weg)
+#: ../src/gnome-system-monitor.schemas.in.h:54
+msgid "Show process writable memory column saved width"
+msgstr "Opgeslagen breedte van de kolom Schrijfbaar geheugen"
+
+#: ../src/gnome-system-monitor.schemas.in.h:55
 msgid "Show warning dialog when hiding processes"
 msgstr "Waarschuwingsdialoog tonen bij het verbergen van processen"
 
 # omdat dit in .schemes staat, killen gebruiken ipv vernietigen?
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:56
 msgid "Show warning dialog when killing processes"
 msgstr "Waarschuwingsdialoog tonen bij het 'killen' van processen"
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:57
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Tijd in milliseconden tussen updates van de stationslijst"
 
-#: ../src/gnome-system-monitor.schemas.in.h:24
+#: ../src/gnome-system-monitor.schemas.in.h:58
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Tijd in milliseconden tussen updates van de grafieken"
 
-#: ../src/gnome-system-monitor.schemas.in.h:25
+#: ../src/gnome-system-monitor.schemas.in.h:59
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Tijd in milliseconden tussen updates van de processenlijst"
 
-#: ../src/gnome-system-monitor.schemas.in.h:26
+#: ../src/gnome-system-monitor.schemas.in.h:60
 msgid "Whether information about all filesystems should be displayed"
 msgstr "Of over alle bestandssystemen informatie moet worden weergeven"
 
-#: ../src/gnome-system-monitor.schemas.in.h:27
+#: ../src/gnome-system-monitor.schemas.in.h:61
 msgid ""
 "Whether to display information about all filesystems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -257,9 +390,10 @@ msgstr ""
 "inclusief bestandssystemen als 'autofs' en 'procfs'. Het kan handig zijn om "
 "een lijst met alle aangekoppelde bestandssystemen te hebben."
 
+# Monitoren/Controleren/Beheren
 #: ../src/interface.c:46
-msgid "_File"
-msgstr "_Bestand"
+msgid "_Monitor"
+msgstr "Behe_ren"
 
 #: ../src/interface.c:47
 msgid "_Edit"
@@ -483,7 +617,7 @@ msgstr "Processen"
 msgid "Resources"
 msgstr "Grafieken"
 
-#: ../src/load-graph.c:368 ../src/load-graph.c:378
+#: ../src/load-graph.c:396 ../src/load-graph.c:406
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
@@ -578,7 +712,7 @@ msgstr ""
 "Kan de prioriteit van het proces met pid %d niet wijzigen in %d.\n"
 "%s"
 
-#: ../src/procactions.c:144
+#: ../src/procactions.c:155
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -689,7 +823,7 @@ msgstr "Pictogram"
 
 #: ../src/procdialogs.c:556
 msgid "System Monitor Preferences"
-msgstr "Procesbeheer voorkeuren"
+msgstr "Processenbeheer voorkeuren"
 
 #: ../src/procdialogs.c:586
 msgid "Behavior"
@@ -731,97 +865,101 @@ msgstr "_Rasterkleur:"
 msgid "Show _all filesystems"
 msgstr "_Alle bestandssystemen tonen"
 
-#: ../src/proctable.c:245
+#: ../src/proctable.c:274
 msgid "Process Name"
 msgstr "Procesnaam"
 
-#: ../src/proctable.c:246
+#: ../src/proctable.c:275
 msgid "User"
 msgstr "Gebruiker"
 
-#: ../src/proctable.c:247
+#: ../src/proctable.c:276
 msgid "Status"
 msgstr "Status"
 
-#: ../src/proctable.c:248
+#: ../src/proctable.c:277
 msgid "Virtual Memory"
 msgstr "Virtueel geheugen"
 
-#: ../src/proctable.c:249
+#: ../src/proctable.c:278
 msgid "Resident Memory"
 msgstr "Vast geheugen"
 
-#: ../src/proctable.c:250
+#: ../src/proctable.c:279
 msgid "Writable Memory"
 msgstr "Schrijfbaar geheugen"
 
-#: ../src/proctable.c:251
+#: ../src/proctable.c:280
 msgid "Shared Memory"
 msgstr "Gedeeld geheugen"
 
-#: ../src/proctable.c:252
+#: ../src/proctable.c:281
 msgid "X Server Memory"
 msgstr "X-server geheugen"
 
 # tabelkop
-#: ../src/proctable.c:253
+#: ../src/proctable.c:282
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
 # tabelkop
-#: ../src/proctable.c:254
+#: ../src/proctable.c:283
 msgid "CPU Time"
 msgstr "CPU-tijd"
 
-#: ../src/proctable.c:255
+#: ../src/proctable.c:284
 msgid "Started"
 msgstr "Gestart"
 
 # tabelkop
 # (kort houden dus)
-#: ../src/proctable.c:256
+#: ../src/proctable.c:285
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.c:257
+#: ../src/proctable.c:286
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.c:258
+#: ../src/proctable.c:287
 msgid "Security Context"
 msgstr "Beveiligingscontext"
 
-#: ../src/proctable.c:259
+#: ../src/proctable.c:288
 msgid "Arguments"
 msgstr "Argumenten"
 
+#: ../src/proctable.c:289
+msgid "Memory"
+msgstr "Geheugen"
+
 # status: actief
-#: ../src/proctable.c:432
+#: ../src/proctable.c:475
 msgid "Running"
 msgstr "Actief"
 
 # status: gestopt
-#: ../src/proctable.c:437
+#: ../src/proctable.c:480
 msgid "Stopped"
 msgstr "Gestopt"
 
 # status: zombie
-#: ../src/proctable.c:442
+#: ../src/proctable.c:485
 msgid "Zombie"
 msgstr "Zombie"
 
 # status: ononderbreekbaar
-#: ../src/proctable.c:447
+#: ../src/proctable.c:490
 msgid "Uninterruptible"
 msgstr "Ononderbreekbaar"
 
 # status: slaapt
-#: ../src/proctable.c:452
+#: ../src/proctable.c:495
 msgid "Sleeping"
 msgstr "Slaapt"
 
-#: ../src/proctable.c:1034
+#: ../src/proctable.c:1088
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr ""
@@ -848,6 +986,9 @@ msgstr "%.1f MiB"
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
+
+#~ msgid "_File"
+#~ msgstr "_Bestand"
 
 #~ msgid "_Threads"
 #~ msgstr "_Draden"
@@ -916,14 +1057,8 @@ msgstr "%.1f GiB"
 #~ msgid "Very low - nice %d"
 #~ msgstr "Erg laag ('nice'-waarde: %d)"
 
-#~ msgid "Memory"
-#~ msgstr "Geheugen"
-
 #~ msgid "RSS Memory"
 #~ msgstr "Gewisseld geheugen"
-
-#~ msgid "Saves the pane position for the system monitor tab"
-#~ msgstr "Bewaart de vensterpositie voor het tabblad: procesbeheer"
 
 #~ msgid "Force a process to finish normally"
 #~ msgstr "Dwing een proces om normaal te stoppen"
