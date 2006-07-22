@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-22 07:18+0100\n"
-"PO-Revision-Date: 2006-01-22 17:59+0800\n"
+"POT-Creation-Date: 2006-07-22 08:26+0200\n"
+"PO-Revision-Date: 2006-07-22 15:46+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:164
-#: ../src/interface.c:666
+#: ../src/interface.c:666 ../src/procman.c:696
 msgid "System Monitor"
 msgstr "系统监视器"
 
@@ -29,35 +29,35 @@ msgstr "查看当前进程及监视系统状态"
 msgid "translator-credits"
 msgstr "GNOME 简体中文翻译 <i18n-translation@lists.linux.net.cn>"
 
-#: ../src/disks.c:204 ../src/memmaps.c:302
+#: ../src/disks.c:308 ../src/memmaps.c:302
 msgid "Device"
 msgstr "设备"
 
-#: ../src/disks.c:205
+#: ../src/disks.c:309
 msgid "Directory"
 msgstr "目录"
 
-#: ../src/disks.c:206 ../src/openfiles.c:232
+#: ../src/disks.c:310 ../src/openfiles.c:232
 msgid "Type"
 msgstr "类型"
 
-#: ../src/disks.c:207
+#: ../src/disks.c:311
 msgid "Total"
 msgstr "总数"
 
-#: ../src/disks.c:208
+#: ../src/disks.c:312
 msgid "Free"
 msgstr "空闲"
 
-#: ../src/disks.c:209
+#: ../src/disks.c:313
 msgid "Available"
 msgstr "可用"
 
-#: ../src/disks.c:210
+#: ../src/disks.c:314
 msgid "Used"
 msgstr "已用"
 
-#: ../src/disks.c:217 ../src/interface.c:745 ../src/procdialogs.c:770
+#: ../src/disks.c:321 ../src/interface.c:745 ../src/procdialogs.c:770
 #: ../src/procdialogs.c:774
 msgid "Devices"
 msgstr "设备"
@@ -176,59 +176,189 @@ msgstr "主窗口高度"
 msgid "Main Window width"
 msgstr "主窗口宽度"
 
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:15
+#, no-c-format
+msgid "Process CPU % column saved width"
+msgstr "进程 CPU 百分比列所存宽度"
+
+#: ../src/gnome-system-monitor.schemas.in.h:16
+msgid "Process CPU time column saved width"
+msgstr "进程 CPU 时间列所存宽度"
+
+#: ../src/gnome-system-monitor.schemas.in.h:17
+msgid "Process PID column saved width"
+msgstr "进程 PID 列所存宽度"
+
+#: ../src/gnome-system-monitor.schemas.in.h:18
+msgid "Process SELinux security context column saved width"
+msgstr "进程 SELinux 安全环境列所存宽度"
+
+#: ../src/gnome-system-monitor.schemas.in.h:19
+msgid "Process X server memory column saved width"
+msgstr "进程 X 服务器内存列所存宽度"
+
+#: ../src/gnome-system-monitor.schemas.in.h:20
+msgid "Process arguments column saved width"
+msgstr "进程参数列所存宽度"
+
+#: ../src/gnome-system-monitor.schemas.in.h:21
+msgid "Process estimated memory usage column saved width"
+msgstr "进程预计内存占用列所存宽度"
+
+#: ../src/gnome-system-monitor.schemas.in.h:22
+msgid "Process name column saved width"
+msgstr "进程名称列所存宽度"
+
+#: ../src/gnome-system-monitor.schemas.in.h:23
+msgid "Process nice column saved width"
+msgstr "进程 nice 列所存宽度"
+
+#: ../src/gnome-system-monitor.schemas.in.h:24
+msgid "Process owner column saved width"
+msgstr "进程所有者列所存宽度"
+
+#: ../src/gnome-system-monitor.schemas.in.h:25
+msgid "Process resident memory column saved width"
+msgstr "进程常驻内存列所存宽度"
+
+#: ../src/gnome-system-monitor.schemas.in.h:26
+msgid "Process shared memory column saved width"
+msgstr "进程共享内存列所存宽度"
+
+#: ../src/gnome-system-monitor.schemas.in.h:27
+msgid "Process start time column saved width"
+msgstr "进程启动时间列已存宽度"
+
+#: ../src/gnome-system-monitor.schemas.in.h:28
+msgid "Process status column saved width"
+msgstr "进程状态列所存宽度"
+
+#: ../src/gnome-system-monitor.schemas.in.h:29
 msgid "Process view columns order"
 msgstr "进程视图列顺序"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:30
 msgid "Process view sort column"
 msgstr "进程视图排序列"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
+#: ../src/gnome-system-monitor.schemas.in.h:31
 msgid "Process view sort order"
 msgstr "进程视图排序顺序"
 
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:32
+msgid "Process virtual memory column saved width"
+msgstr "进程虚拟内存列所存宽度"
+
+#: ../src/gnome-system-monitor.schemas.in.h:33
 msgid "Saves the currently viewed tab"
 msgstr "保存目前查看的标签"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:34
 msgid "Show column zero on startup"
 msgstr "启动时显示零宽度列"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:35
+msgid "Show estimated memory usage column on startup"
+msgstr "启动时显示预计内存使用列"
+
+#: ../src/gnome-system-monitor.schemas.in.h:37
+#, no-c-format
+msgid "Show process CPU % column on startup"
+msgstr "启动时进程 CPU 百分比列"
+
+#: ../src/gnome-system-monitor.schemas.in.h:38
+msgid "Show process CPU time column on startup"
+msgstr "启动时显示进程 CPU 时间列"
+
+#: ../src/gnome-system-monitor.schemas.in.h:39
+msgid "Show process PID column on startup"
+msgstr "启动时显示进程 PID 列"
+
+#: ../src/gnome-system-monitor.schemas.in.h:40
+msgid "Show process SELinux security context column on startup"
+msgstr "启动时显示 SELinux 安全环境列"
+
+#: ../src/gnome-system-monitor.schemas.in.h:41
+msgid "Show process X server memory column zero startup"
+msgstr "启动时显示进程 X 服务器内存列"
+
+#: ../src/gnome-system-monitor.schemas.in.h:42
+msgid "Show process arguments column on startup"
+msgstr "启动时显示进程参数列"
+
+#: ../src/gnome-system-monitor.schemas.in.h:43
 msgid "Show process dependencies in tree form"
 msgstr "以树型显示进程依赖关系"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:44
+msgid "Show process name column on startup"
+msgstr "启动时显示进程名列"
+
+#: ../src/gnome-system-monitor.schemas.in.h:45
+msgid "Show process nice column on startup"
+msgstr "启动时显示进程 nice 值列"
+
+#: ../src/gnome-system-monitor.schemas.in.h:46
+msgid "Show process owner column on startup"
+msgstr "启动时显示进程所有者列"
+
+#: ../src/gnome-system-monitor.schemas.in.h:47
+msgid "Show process resident memory column on startup"
+msgstr "启动时显示进程常驻内存列"
+
+#: ../src/gnome-system-monitor.schemas.in.h:48
+msgid "Show process shared memory column on startup"
+msgstr "启动时显示进程共享内存列"
+
+#: ../src/gnome-system-monitor.schemas.in.h:49
+msgid "Show process start time column on startup"
+msgstr "启动时进程启动时间列"
+
+#: ../src/gnome-system-monitor.schemas.in.h:50
+msgid "Show process status column on startup"
+msgstr "启动时显示进程状态列"
+
+#: ../src/gnome-system-monitor.schemas.in.h:51
 msgid "Show process threads"
 msgstr "显示进程线程"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:52
+msgid "Show process virtual memory column on startup"
+msgstr "启动时显示进程虚拟内存列"
+
+#: ../src/gnome-system-monitor.schemas.in.h:53
+msgid "Show process writable memory column on startup"
+msgstr "启动时显示进程可写入内存列"
+
+#: ../src/gnome-system-monitor.schemas.in.h:54
+msgid "Show process writable memory column saved width"
+msgstr "显示进程可写入内存列所存宽度"
+
+#: ../src/gnome-system-monitor.schemas.in.h:55
 msgid "Show warning dialog when hiding processes"
 msgstr "隐藏进程时显示警告对话框"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:56
 msgid "Show warning dialog when killing processes"
 msgstr "杀死进程时显示警告对话框"
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:57
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "更新设备列表的时间间隔，以毫秒计"
 
-#: ../src/gnome-system-monitor.schemas.in.h:24
+#: ../src/gnome-system-monitor.schemas.in.h:58
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "更新图形的时间间隔，以毫秒计"
 
-#: ../src/gnome-system-monitor.schemas.in.h:25
+#: ../src/gnome-system-monitor.schemas.in.h:59
 msgid "Time in milliseconds between updates of the process view"
 msgstr "更新进程视图的时间间隔，以毫秒计"
 
-#: ../src/gnome-system-monitor.schemas.in.h:26
+#: ../src/gnome-system-monitor.schemas.in.h:60
 msgid "Whether information about all filesystems should be displayed"
 msgstr "是否应显示关于全部文件系统的信息"
 
-#: ../src/gnome-system-monitor.schemas.in.h:27
+#: ../src/gnome-system-monitor.schemas.in.h:61
 msgid ""
 "Whether to display information about all filesystems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -238,8 +368,8 @@ msgstr ""
 "以通过此功能获得目前已挂载的全部文件系统。"
 
 #: ../src/interface.c:46
-msgid "_File"
-msgstr "文件(_F)"
+msgid "_Monitor"
+msgstr "监视器(_M)"
 
 #: ../src/interface.c:47
 msgid "_Edit"
@@ -442,7 +572,7 @@ msgstr "进程"
 msgid "Resources"
 msgstr "资源"
 
-#: ../src/load-graph.c:368 ../src/load-graph.c:378
+#: ../src/load-graph.c:396 ../src/load-graph.c:406
 #, c-format
 msgid "%s/s"
 msgstr "%s/秒"
@@ -533,7 +663,7 @@ msgstr ""
 "无法将 pid 为 %d 的进程的优先级更改为 %d\n"
 "%s"
 
-#: ../src/procactions.c:144
+#: ../src/procactions.c:155
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -679,88 +809,92 @@ msgstr "网格颜色(_G)："
 msgid "Show _all filesystems"
 msgstr "显示全部文件系统(_A)"
 
-#: ../src/proctable.c:245
+#: ../src/proctable.c:274
 msgid "Process Name"
 msgstr "进程名"
 
-#: ../src/proctable.c:246
+#: ../src/proctable.c:275
 msgid "User"
 msgstr "用户"
 
-#: ../src/proctable.c:247
+#: ../src/proctable.c:276
 msgid "Status"
 msgstr "状态"
 
-#: ../src/proctable.c:248
+#: ../src/proctable.c:277
 msgid "Virtual Memory"
 msgstr "虚拟内存"
 
-#: ../src/proctable.c:249
+#: ../src/proctable.c:278
 msgid "Resident Memory"
 msgstr "驻留内存"
 
-#: ../src/proctable.c:250
+#: ../src/proctable.c:279
 msgid "Writable Memory"
 msgstr "可写内存"
 
-#: ../src/proctable.c:251
+#: ../src/proctable.c:280
 msgid "Shared Memory"
 msgstr "共享内存"
 
-#: ../src/proctable.c:252
+#: ../src/proctable.c:281
 msgid "X Server Memory"
 msgstr "X 服务器内存"
 
-#: ../src/proctable.c:253
+#: ../src/proctable.c:282
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:254
+#: ../src/proctable.c:283
 msgid "CPU Time"
 msgstr "CPU 时间"
 
-#: ../src/proctable.c:255
+#: ../src/proctable.c:284
 msgid "Started"
 msgstr "开始于"
 
-#: ../src/proctable.c:256
+#: ../src/proctable.c:285
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.c:257
+#: ../src/proctable.c:286
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.c:258
+#: ../src/proctable.c:287
 msgid "Security Context"
 msgstr "安全环境"
 
-#: ../src/proctable.c:259
+#: ../src/proctable.c:288
 msgid "Arguments"
 msgstr "参数"
 
-#: ../src/proctable.c:432
+#: ../src/proctable.c:289
+msgid "Memory"
+msgstr "内存"
+
+#: ../src/proctable.c:475
 msgid "Running"
 msgstr "运行中"
 
-#: ../src/proctable.c:437
+#: ../src/proctable.c:480
 msgid "Stopped"
 msgstr "已停止"
 
-#: ../src/proctable.c:442
+#: ../src/proctable.c:485
 msgid "Zombie"
 msgstr "僵死"
 
-#: ../src/proctable.c:447
+#: ../src/proctable.c:490
 msgid "Uninterruptible"
 msgstr "不可中断"
 
-#: ../src/proctable.c:452
+#: ../src/proctable.c:495
 msgid "Sleeping"
 msgstr "睡眠中"
 
-#: ../src/proctable.c:1034
+#: ../src/proctable.c:1088
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "前一分钟、五分钟、十五分钟的平均负载：%0.2f，%0.2f，%0.2f"
@@ -785,4 +919,3 @@ msgstr "%.1f MB"
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GB"
-
