@@ -1,3 +1,11 @@
+2006-07-22  Benoît Dejean  <benoit@placenet.org>
+
+	* src/selinux.c: (get_process_selinux_context),
+	(can_show_security_context_column):
+	
+	Fixed segfault if selinux was not found.
+	Closes #348311.
+
 2006-07-19  Benoît Dejean  <benoit@placenet.org>
 
 	* src/disks.c: (remove_old_disks), (cb_update_disks):

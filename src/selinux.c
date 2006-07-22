@@ -11,6 +11,7 @@ static int (*getpidcon)(pid_t, char**);
 static void (*freecon)(char*);
 static int (*is_selinux_enabled)(void);
 
+static gboolean has_selinux;
 
 static gboolean load_selinux(void)
 {
@@ -28,7 +29,7 @@ get_process_selinux_context (ProcInfo *info)
 {
 	char *con;
 
-	if (!getpidcon (info->pid, &con)) {
+	if (has_selinux && !getpidcon (info->pid, &con)) {
 		info->security_context = g_strdup (con);
 		freecon (con);
 	}
@@ -39,7 +40,7 @@ get_process_selinux_context (ProcInfo *info)
 gboolean
 can_show_security_context_column (void)
 {
-	if (!load_selinux())
+	if (!(has_selinux = load_selinux()))
 		return FALSE;
 
 	switch (is_selinux_enabled()) {
