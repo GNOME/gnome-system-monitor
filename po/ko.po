@@ -1,14 +1,14 @@
 # procman korean translation
-# Young-Ho, Cha <ganadist@chollian.net> 2002.
-# Changwoo Ryu <cwryu@debian.org> 2003, 2004, 2005.
+# Young-Ho, Cha <ganadist@chollian.net> 2002, 2006
+# Changwoo Ryu <cwryu@debian.org> 2003, 2004, 2005, 2006.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-system-monitor 2.11.92\n"
+"Project-Id-Version: gnome-system-monitor 2.15.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-04 20:13+0900\n"
-"PO-Revision-Date: 2006-02-04 20:17+0900\n"
-"Last-Translator: Young-Ho Cha <ganadist@gmail.com>\n"
+"POT-Creation-Date: 2006-07-22 22:43+0900\n"
+"PO-Revision-Date: 2006-07-22 22:54+0900\n"
+"Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,49 +16,49 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:164
-#: ../src/interface.c:666
+#: ../src/interface.c:666 ../src/procman.c:696
 msgid "System Monitor"
-msgstr "시스템 감시"
+msgstr "시스템 정보"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:165
 msgid "View current processes and monitor system state"
-msgstr "현제 프로세스와 감시기 시스템 상태를 봅니다"
+msgstr "현제 프로세스와 시스템 상태를 봅니다"
 
 #: ../src/callbacks.c:173
 msgid "translator-credits"
 msgstr ""
-"차영호 <ganadist@chollian.net>, 2002, 2005\n"
-"류창우 <cwryu@debian.org>, 2003, 2004"
+"류창우 <cwryu@debian.org>\n"
+"차영호 <ganadist@chollian.net>"
 
-#: ../src/disks.c:204 ../src/memmaps.c:302
+#: ../src/disks.c:308 ../src/memmaps.c:302
 msgid "Device"
 msgstr "장치"
 
-#: ../src/disks.c:205
+#: ../src/disks.c:309
 msgid "Directory"
 msgstr "디렉토리"
 
-#: ../src/disks.c:206 ../src/openfiles.c:232
+#: ../src/disks.c:310 ../src/openfiles.c:232
 msgid "Type"
 msgstr "종류"
 
-#: ../src/disks.c:207
+#: ../src/disks.c:311
 msgid "Total"
 msgstr "전체"
 
-#: ../src/disks.c:208
+#: ../src/disks.c:312
 msgid "Free"
 msgstr "남음"
 
-#: ../src/disks.c:209
+#: ../src/disks.c:313
 msgid "Available"
 msgstr "사용 가능"
 
-#: ../src/disks.c:210
+#: ../src/disks.c:314
 msgid "Used"
 msgstr "사용중"
 
-#: ../src/disks.c:217 ../src/interface.c:745 ../src/procdialogs.c:770
+#: ../src/disks.c:321 ../src/interface.c:745 ../src/procdialogs.c:770
 #: ../src/procdialogs.c:774
 msgid "Devices"
 msgstr "장치"
@@ -180,71 +180,200 @@ msgstr "기본 창 높이"
 msgid "Main Window width"
 msgstr "기본 창 너비"
 
-#: ../src/gnome-system-monitor.schemas.in.h:14
-msgid "Process view columns order"
-msgstr "프로세스 보기 컬럼 순서"
-
 #: ../src/gnome-system-monitor.schemas.in.h:15
-msgid "Process view sort column"
-msgstr "프로세스 목록 정렬 컬럼"
+#, no-c-format
+msgid "Process CPU % column saved width"
+msgstr "프로세스 CPU % 열의 저장한 너비"
 
 #: ../src/gnome-system-monitor.schemas.in.h:16
+msgid "Process CPU time column saved width"
+msgstr "프로세스 CPU 시간 열의 저장한 너비"
+
+#: ../src/gnome-system-monitor.schemas.in.h:17
+msgid "Process PID column saved width"
+msgstr "프로세스 CPU PID 열의 저장한 너비"
+
+#: ../src/gnome-system-monitor.schemas.in.h:18
+msgid "Process SELinux security context column saved width"
+msgstr "프로세스 SELinux 보안 컨텍스트 열의 저장한 너비"
+
+#: ../src/gnome-system-monitor.schemas.in.h:19
+msgid "Process X server memory column saved width"
+msgstr "프로세스 X 서버 메모리 열의 저장한 너비"
+
+#: ../src/gnome-system-monitor.schemas.in.h:20
+msgid "Process arguments column saved width"
+msgstr "프로세스 인자 열의 저장한 너비"
+
+#: ../src/gnome-system-monitor.schemas.in.h:21
+msgid "Process estimated memory usage column saved width"
+msgstr "프로세스 예상 메모리 사용량 열의 저장한 너비"
+
+#: ../src/gnome-system-monitor.schemas.in.h:22
+msgid "Process name column saved width"
+msgstr "프로세스 이름 열의 저장한 너비"
+
+#: ../src/gnome-system-monitor.schemas.in.h:23
+msgid "Process nice column saved width"
+msgstr "프로세스 우선 순위 열의 저장한 너비"
+
+#: ../src/gnome-system-monitor.schemas.in.h:24
+msgid "Process owner column saved width"
+msgstr "프로세스 소유자 열의 저장한 너비"
+
+#: ../src/gnome-system-monitor.schemas.in.h:25
+msgid "Process resident memory column saved width"
+msgstr "프로세스 차지 메모리 열의 저장한 너비"
+
+#: ../src/gnome-system-monitor.schemas.in.h:26
+msgid "Process shared memory column saved width"
+msgstr "프로세스 공유 메모리 열의 저장한 너비"
+
+#: ../src/gnome-system-monitor.schemas.in.h:27
+msgid "Process start time column saved width"
+msgstr "프로세스 시작 시간 열의 저장한 너비"
+
+#: ../src/gnome-system-monitor.schemas.in.h:28
+msgid "Process status column saved width"
+msgstr "프로세스 상태 열의 저장한 너비"
+
+#: ../src/gnome-system-monitor.schemas.in.h:29
+msgid "Process view columns order"
+msgstr "프로세스 보기 열 순서"
+
+#: ../src/gnome-system-monitor.schemas.in.h:30
+msgid "Process view sort column"
+msgstr "프로세스 보기 정렬 열"
+
+#: ../src/gnome-system-monitor.schemas.in.h:31
 msgid "Process view sort order"
 msgstr "프로세스 보기 정렬 순서"
 
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:32
+msgid "Process virtual memory column saved width"
+msgstr "프로세스 가상 메모리 열의 저장한 너비"
+
+#: ../src/gnome-system-monitor.schemas.in.h:33
 msgid "Saves the currently viewed tab"
 msgstr "현재 표시하는 탭을 저장합니다"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:34
 msgid "Show column zero on startup"
 msgstr "시작할 때 0번 열을 표시합니다"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:35
+msgid "Show estimated memory usage column on startup"
+msgstr "예상 메모리 사용량 열을 시작할 때 표시합니다"
+
+#: ../src/gnome-system-monitor.schemas.in.h:37
+#, no-c-format
+msgid "Show process CPU % column on startup"
+msgstr "프로세스 CPU % 열을 시작할 때 표시합니다"
+
+#: ../src/gnome-system-monitor.schemas.in.h:38
+msgid "Show process CPU time column on startup"
+msgstr "프로세스 CPU 시간 열을 시작할 때 표시합니다"
+
+#: ../src/gnome-system-monitor.schemas.in.h:39
+msgid "Show process PID column on startup"
+msgstr "프로세스 PID 열을 시작할 때 표시합니다"
+
+#: ../src/gnome-system-monitor.schemas.in.h:40
+msgid "Show process SELinux security context column on startup"
+msgstr "프로세스 SELinux 보안 컨텍스트 열을 시작할 때 표시합니다"
+
+#: ../src/gnome-system-monitor.schemas.in.h:41
+msgid "Show process X server memory column zero startup"
+msgstr "프로세스 X 서버 메모리 열을 시작할 때 표시합니다"
+
+#: ../src/gnome-system-monitor.schemas.in.h:42
+msgid "Show process arguments column on startup"
+msgstr "프로세스 인자 열을 시작할 때 표시합니다"
+
+#: ../src/gnome-system-monitor.schemas.in.h:43
 msgid "Show process dependencies in tree form"
 msgstr "프로세스 의존성 보기"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:44
+msgid "Show process name column on startup"
+msgstr "프로세스 이름 열을 시작할 때 표시합니다"
+
+#: ../src/gnome-system-monitor.schemas.in.h:45
+msgid "Show process nice column on startup"
+msgstr "프로세스 우선 순위 열을 시작할 때 표시합니다"
+
+#: ../src/gnome-system-monitor.schemas.in.h:46
+msgid "Show process owner column on startup"
+msgstr "프로세스 소유자 열을 시작할 때 표시합니다"
+
+#: ../src/gnome-system-monitor.schemas.in.h:47
+msgid "Show process resident memory column on startup"
+msgstr "프로세스 차지 메모리 열을 시작할 때 표시합니다"
+
+#: ../src/gnome-system-monitor.schemas.in.h:48
+msgid "Show process shared memory column on startup"
+msgstr "프로세스 공유 메모리 열을 시작할 때 표시합니다"
+
+#: ../src/gnome-system-monitor.schemas.in.h:49
+msgid "Show process start time column on startup"
+msgstr "프로세스 시작 시각 열을 시작할 때 표시합니다"
+
+#: ../src/gnome-system-monitor.schemas.in.h:50
+msgid "Show process status column on startup"
+msgstr "프로세스 상태 열을 시작할 때 표시합니다"
+
+#: ../src/gnome-system-monitor.schemas.in.h:51
 msgid "Show process threads"
 msgstr "프로세스 스레드 보기"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:52
+msgid "Show process virtual memory column on startup"
+msgstr "프로세스 가상 메모리 열을 시작할 때 표시합니다"
+
+#: ../src/gnome-system-monitor.schemas.in.h:53
+msgid "Show process writable memory column on startup"
+msgstr "프로세스 쓰기 가능 메모리 열을 시작할 때 표시합니다"
+
+#: ../src/gnome-system-monitor.schemas.in.h:54
+msgid "Show process writable memory column saved width"
+msgstr "프로세스 쓰기 가능 메모리 열의 저장한 너비"
+
+#: ../src/gnome-system-monitor.schemas.in.h:55
 msgid "Show warning dialog when hiding processes"
 msgstr "프로세스를 숨길 때 경고 대화상자 보기"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:56
 msgid "Show warning dialog when killing processes"
 msgstr "프로세스를 죽일 때 경고 대화상자 보기"
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:57
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "장치 목록 업데이트 간격 (천분의일초 단위)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:24
+#: ../src/gnome-system-monitor.schemas.in.h:58
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "그래프 업데이트 간격 (천분의일초 단위)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:25
+#: ../src/gnome-system-monitor.schemas.in.h:59
 msgid "Time in milliseconds between updates of the process view"
 msgstr "프로세스 보기 업데이트 간격 (천분의일초 단위)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:26
+#: ../src/gnome-system-monitor.schemas.in.h:60
 msgid "Whether information about all filesystems should be displayed"
 msgstr "모든 파일시스템에 대한 정보를 보일것인 지 여부"
 
-#: ../src/gnome-system-monitor.schemas.in.h:27
+#: ../src/gnome-system-monitor.schemas.in.h:61
 msgid ""
 "Whether to display information about all filesystems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
 "filesystems."
 msgstr ""
-"모든 파일시스템에 대한 정보를 보일것인 지 여부('autofs'와 'procfs'같"
-"은 파일시스템 형식을 포함). 현재 마운트된 파일시스템의 모든 목록을 얻을 "
-"때 유용합니다."
+"모든 파일시스템에 대한 정보를 보일것인 지 여부('autofs'와 'procfs'같은 파일시"
+"스템 형식을 포함). 현재 마운트된 파일시스템의 모든 목록을 얻을 때 유용합니다."
 
 #: ../src/interface.c:46
-msgid "_File"
-msgstr "파일(_F)"
+msgid "_Monitor"
+msgstr "정보(_M)"
 
 #: ../src/interface.c:47
 msgid "_Edit"
@@ -447,7 +576,7 @@ msgstr "프로세스"
 msgid "Resources"
 msgstr "자원"
 
-#: ../src/load-graph.c:368 ../src/load-graph.c:378
+#: ../src/load-graph.c:396 ../src/load-graph.c:406
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
@@ -538,7 +667,7 @@ msgstr ""
 "pid %d인 프로세스의 우선 순위를 %d번으로 바꿀 수 없습니다.\n"
 "%s"
 
-#: ../src/procactions.c:144
+#: ../src/procactions.c:155
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -644,11 +773,11 @@ msgstr "아이콘"
 
 #: ../src/procdialogs.c:556
 msgid "System Monitor Preferences"
-msgstr "시스템 감시 기본설정"
+msgstr "시스템 정보 기본설정"
 
 #: ../src/procdialogs.c:586
 msgid "Behavior"
-msgstr "행동"
+msgstr "동작"
 
 #: ../src/procdialogs.c:605 ../src/procdialogs.c:708 ../src/procdialogs.c:793
 msgid "_Update interval in seconds:"
@@ -656,7 +785,7 @@ msgstr "업데이트 간격(_U):"
 
 #: ../src/procdialogs.c:630
 msgid "Enable _smooth refresh"
-msgstr "부드럽게 재생(_S)"
+msgstr "부드럽게 새로 고침(_S)"
 
 #: ../src/procdialogs.c:644
 msgid "Alert before ending or _killing processes"
@@ -686,88 +815,92 @@ msgstr "격자색(_G):"
 msgid "Show _all filesystems"
 msgstr "모든 파일시스템 보이기(_A)"
 
-#: ../src/proctable.c:245
+#: ../src/proctable.c:274
 msgid "Process Name"
 msgstr "프로세스 이름"
 
-#: ../src/proctable.c:246
+#: ../src/proctable.c:275
 msgid "User"
 msgstr "사용자"
 
-#: ../src/proctable.c:247
+#: ../src/proctable.c:276
 msgid "Status"
 msgstr "상태"
 
-#: ../src/proctable.c:248
+#: ../src/proctable.c:277
 msgid "Virtual Memory"
 msgstr "가상 메모리"
 
-#: ../src/proctable.c:249
+#: ../src/proctable.c:278
 msgid "Resident Memory"
 msgstr "상주 메모리"
 
-#: ../src/proctable.c:250
+#: ../src/proctable.c:279
 msgid "Writable Memory"
 msgstr "쓰기 가능한 메모리"
 
-#: ../src/proctable.c:251
+#: ../src/proctable.c:280
 msgid "Shared Memory"
 msgstr "공유 메모리"
 
-#: ../src/proctable.c:252
+#: ../src/proctable.c:281
 msgid "X Server Memory"
 msgstr "X 서버 메모리"
 
-#: ../src/proctable.c:253
+#: ../src/proctable.c:282
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:254
+#: ../src/proctable.c:283
 msgid "CPU Time"
 msgstr "CPU 시간"
 
-#: ../src/proctable.c:255
+#: ../src/proctable.c:284
 msgid "Started"
 msgstr "시작됨"
 
-#: ../src/proctable.c:256
+#: ../src/proctable.c:285
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.c:257
+#: ../src/proctable.c:286
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.c:258
+#: ../src/proctable.c:287
 msgid "Security Context"
 msgstr "보안 컨텍스트"
 
-#: ../src/proctable.c:259
+#: ../src/proctable.c:288
 msgid "Arguments"
 msgstr "인자"
 
-#: ../src/proctable.c:432
+#: ../src/proctable.c:289
+msgid "Memory"
+msgstr "메모리"
+
+#: ../src/proctable.c:475
 msgid "Running"
 msgstr "실행중"
 
-#: ../src/proctable.c:437
+#: ../src/proctable.c:480
 msgid "Stopped"
 msgstr "중지"
 
-#: ../src/proctable.c:442
+#: ../src/proctable.c:485
 msgid "Zombie"
 msgstr "좀비"
 
-#: ../src/proctable.c:447
+#: ../src/proctable.c:490
 msgid "Uninterruptible"
 msgstr "가로챌 수 없음"
 
-#: ../src/proctable.c:452
+#: ../src/proctable.c:495
 msgid "Sleeping"
 msgstr "휴식"
 
-#: ../src/proctable.c:1034
+#: ../src/proctable.c:1088
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "최근 1분, 5분, 15분 사이의 평균 부하: %0.2f, %0.2f, %0.2f"
@@ -792,6 +925,9 @@ msgstr "%.1f MiB"
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
+
+#~ msgid "_File"
+#~ msgstr "파일(_F)"
 
 #~ msgid "Jorgen Scheibengruber - nicer devices treeview"
 #~ msgstr "Jorgen Scheibengruber - 멋진 장치 트리 보기"
@@ -852,9 +988,6 @@ msgstr "%.1f GiB"
 
 #~ msgid "Update _interval:"
 #~ msgstr "업데이트 간격(_I):"
-
-#~ msgid "Memory"
-#~ msgstr "메모리"
 
 #~ msgid "RSS Memory"
 #~ msgstr "물리 메모리"
