@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.52)
 
-AC_INIT([gnome-system-monitor], [2.15.5],
+AC_INIT([gnome-system-monitor], [2.15.90],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor])
 AC_CONFIG_SRCDIR(configure.in)
 AC_CONFIG_HEADERS(config.h)
@@ -31,7 +31,7 @@ GTK_REQUIRED=2.8.0
 GNOME_VFS_REQUIRED=2.6.0
 GNOME_ICON_THEME_REQUIRED=2.15.3
 
-PKG_CHECK_MODULES(PROCMAN, glib-2.0 >= $GLIB_REQUIRED libgnome-2.0 >= $LIBGNOME_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED gconf-2.0 >= $GCONF_REQUIRED libgtop-2.0 >= $LIBGTOP_REQUIRED libwnck-1.0 >= $LIBWNCK_REQUIRED gtk+-2.0 >= $GTK_REQUIRED gnome-vfs-2.0 >= $GNOME_VFS_REQUIRED gnome-icon-theme >= 2.15.3)
+PKG_CHECK_MODULES(PROCMAN, glib-2.0 >= $GLIB_REQUIRED libgnome-2.0 >= $LIBGNOME_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED gconf-2.0 >= $GCONF_REQUIRED libgtop-2.0 >= $LIBGTOP_REQUIRED libwnck-1.0 >= $LIBWNCK_REQUIRED gtk+-2.0 >= $GTK_REQUIRED gnome-vfs-2.0 >= $GNOME_VFS_REQUIRED gnome-icon-theme >= $GNOME_ICON_THEME_REQUIRED)
 
 
 AC_ARG_ENABLE(more-warnings,
