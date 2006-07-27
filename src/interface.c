@@ -742,7 +742,7 @@ create_main_window (ProcData *procdata)
 
 	devices_box = create_disk_view (procdata);
 	gtk_widget_show(devices_box);
-	tab_label3 = gtk_label_new (_("Devices"));
+	tab_label3 = gtk_label_new (_("File Systems"));
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), devices_box, tab_label3);
 
 	g_signal_connect (G_OBJECT (notebook), "switch-page",

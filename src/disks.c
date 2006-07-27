@@ -318,7 +318,7 @@ create_disk_view(ProcData *procdata)
 
 	gtk_container_set_border_width(GTK_CONTAINER(disk_box), 12);
 
-	label = make_title_label(_("Devices"));
+	label = make_title_label(_("File Systems"));
 	gtk_box_pack_start(GTK_BOX(disk_box), label, FALSE, FALSE, 0);
 
 	disk_hbox = gtk_hbox_new(FALSE, 0);

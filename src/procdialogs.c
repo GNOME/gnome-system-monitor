@@ -767,11 +767,11 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	 */
 	vbox = gtk_vbox_new (FALSE, 6);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-	tab_label = gtk_label_new (_("Devices"));
+	tab_label = gtk_label_new (_("File Systems"));
 	gtk_widget_show (tab_label);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, tab_label);
 	
-	tmp = g_strdup_printf ("<b>%s</b>", _("Devices"));
+	tmp = g_strdup_printf ("<b>%s</b>", _("File Systems"));
 	label = gtk_label_new (NULL);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_label_set_markup (GTK_LABEL (label), tmp);
