@@ -12,21 +12,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-25 15:39+0200\n"
-"PO-Revision-Date: 2006-05-05 07:53+0300\n"
-"Last-Translator: Ivar Smolin <okul@linux.ee>\n"
+"POT-Creation-Date: 2006-08-05 11:52+0200\n"
+"PO-Revision-Date: 2006-08-05 16:14+0200\n"
+"Last-Translator: Priit Laes <plaes@plaes.org>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:164
+#: ../gnome-system-monitor.desktop.in.in.h:1
+#: ../src/callbacks.c:164
 #: ../src/interface.c:666
+#: ../src/procman.c:696
 msgid "System Monitor"
 msgstr "Süsteemijälgija"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:165
+#: ../gnome-system-monitor.desktop.in.in.h:2
+#: ../src/callbacks.c:165
 msgid "View current processes and monitor system state"
 msgstr "Süsteemi oleku ja protsesside jälgimine"
 
@@ -36,38 +39,42 @@ msgstr ""
 "Ivar Smolin <okul@linux.ee>, 2005, 2006.\n"
 "Priit Laes <amd@store20.com>, 2005, 2006."
 
-#: ../src/disks.c:238 ../src/memmaps.c:302
+#: ../src/disks.c:308
+#: ../src/memmaps.c:302
 msgid "Device"
 msgstr "Seade"
 
-#: ../src/disks.c:239
+#: ../src/disks.c:309
 msgid "Directory"
 msgstr "Kataloog"
 
-#: ../src/disks.c:240 ../src/openfiles.c:232
+#: ../src/disks.c:310
+#: ../src/openfiles.c:232
 msgid "Type"
 msgstr "Liik"
 
-#: ../src/disks.c:241
+#: ../src/disks.c:311
 msgid "Total"
 msgstr "Kokku"
 
-#: ../src/disks.c:242
+#: ../src/disks.c:312
 msgid "Free"
 msgstr "Vaba"
 
-#: ../src/disks.c:243
+#: ../src/disks.c:313
 msgid "Available"
 msgstr "Saadaval"
 
-#: ../src/disks.c:244
+#: ../src/disks.c:314
 msgid "Used"
 msgstr "Kasutuses"
 
-#: ../src/disks.c:251 ../src/interface.c:745 ../src/procdialogs.c:770
+#: ../src/disks.c:321
+#: ../src/interface.c:745
+#: ../src/procdialogs.c:770
 #: ../src/procdialogs.c:774
-msgid "Devices"
-msgstr "Seadmed"
+msgid "File Systems"
+msgstr "Failisüsteemid"
 
 #: ../src/e_date.c:154
 msgid "?"
@@ -100,12 +107,8 @@ msgstr "Peidetud protsesse ei ole"
 
 #. translators: secondary alert message
 #: ../src/favorites.c:357
-msgid ""
-"There are no hidden processes in the list. To show all running processes, "
-"select the \"All processes\" option in the main window."
-msgstr ""
-"Nimekirjas pole peidetud protsesse. Kõikide töötavate protsesside kuvamiseks "
-"vali peaaknast \"Näidata kõiki protsesse\"."
+msgid "There are no hidden processes in the list. To show all running processes, select the \"All processes\" option in the main window."
+msgstr "Nimekirjas pole peidetud protsesse. Kõikide töötavate protsesside kuvamiseks vali peaaknast \"Näidata kõiki protsesse\"."
 
 #: ../src/favorites.c:377
 msgid "Hidden Processes"
@@ -119,17 +122,14 @@ msgstr "Hetkel _peidetud protsessid:"
 msgid "_Remove From List"
 msgstr "_Eemalda nimekirjast"
 
-#: ../src/favorites.c:432 ../src/procdialogs.c:285
+#: ../src/favorites.c:432
+#: ../src/procdialogs.c:285
 msgid "Note:"
 msgstr "Märkus:"
 
 #: ../src/favorites.c:433
-msgid ""
-"These are the processes you have chosen to hide. You can reshow a process by "
-"removing it from this list."
-msgstr ""
-"Siin on protsessid, mille sa oled peidetuks määranud. Sa saad neid protsesse "
-"jälle näha eemaldades need sellest nimekirjast."
+msgid "These are the processes you have chosen to hide. You can reshow a process by removing it from this list."
+msgstr "Siin on protsessid, mille sa oled peidetuks määranud. Sa saad neid protsesse jälle näha eemaldades need sellest nimekirjast."
 
 #: ../src/gnome-system-monitor.schemas.in.h:1
 msgid "Column zero saved width"
@@ -164,12 +164,8 @@ msgid "Default graph swap color"
 msgstr "Graafiku saalejoone vaikimisi värv"
 
 #: ../src/gnome-system-monitor.schemas.in.h:9
-msgid ""
-"Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
-"active"
-msgstr ""
-"Määrab milliseid protsesse vaikimisi kuvatakse. 0 - kõik, 1 - kasutaja omad "
-"ja 2 - kõik aktiivsed"
+msgid "Determines which processes to show by default. 0 is All, 1 is user, and 2 is active"
+msgstr "Määrab milliseid protsesse vaikimisi kuvatakse. 0 - kõik, 1 - kasutaja omad ja 2 - kõik aktiivsed"
 
 #: ../src/gnome-system-monitor.schemas.in.h:10
 msgid "Disk view columns order"
@@ -280,91 +276,77 @@ msgid "Show column zero on startup"
 msgstr "Kuva nulltulp peale käivitamist"
 
 #: ../src/gnome-system-monitor.schemas.in.h:35
-#, fuzzy
 msgid "Show estimated memory usage column on startup"
-msgstr "Kuva nulltulp peale käivitamist"
+msgstr "Kuva käivitamisel protsessi hinnangulise mälukasutuse tulp"
 
 #: ../src/gnome-system-monitor.schemas.in.h:37
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Show process CPU % column on startup"
-msgstr "Kuva nulltulp peale käivitamist"
+msgstr "Kuva käivitamisel protsessi protsessori kasutuse tulp"
 
 #: ../src/gnome-system-monitor.schemas.in.h:38
-#, fuzzy
 msgid "Show process CPU time column on startup"
-msgstr "Kuva nulltulp peale käivitamist"
+msgstr "Kuva käivitamisel protsessi protsessori ajakasutuse tulp"
 
 #: ../src/gnome-system-monitor.schemas.in.h:39
-#, fuzzy
 msgid "Show process PID column on startup"
-msgstr "Kuva nulltulp peale käivitamist"
+msgstr "Kuva käivitamisel protsessi PID-tulp"
 
 #: ../src/gnome-system-monitor.schemas.in.h:40
 msgid "Show process SELinux security context column on startup"
-msgstr ""
+msgstr "Kuva käivitamisel protsessi SELinux-i turvalisuse konteksti tulp"
 
 #: ../src/gnome-system-monitor.schemas.in.h:41
-#, fuzzy
 msgid "Show process X server memory column zero startup"
-msgstr "Kuva nulltulp peale käivitamist"
+msgstr ""
 
 #: ../src/gnome-system-monitor.schemas.in.h:42
-#, fuzzy
 msgid "Show process arguments column on startup"
-msgstr "Kuva nulltulp peale käivitamist"
+msgstr "Kuva käivitamisel protsessi argumentide tulp"
 
 #: ../src/gnome-system-monitor.schemas.in.h:43
 msgid "Show process dependencies in tree form"
 msgstr "Protsessi sõltuvuste näitamine puuvaates"
 
 #: ../src/gnome-system-monitor.schemas.in.h:44
-#, fuzzy
 msgid "Show process name column on startup"
-msgstr "Kuva nulltulp peale käivitamist"
+msgstr "Kuva käivitamisel protsessi nime tulp"
 
 #: ../src/gnome-system-monitor.schemas.in.h:45
-#, fuzzy
 msgid "Show process nice column on startup"
-msgstr "Kuva nulltulp peale käivitamist"
+msgstr "Kuva käivitamisel protsessi prioriteedi tulp"
 
 #: ../src/gnome-system-monitor.schemas.in.h:46
-#, fuzzy
 msgid "Show process owner column on startup"
-msgstr "Kuva nulltulp peale käivitamist"
+msgstr "Kuva käivitamisel protsessi omaniku tulp"
 
 #: ../src/gnome-system-monitor.schemas.in.h:47
-#, fuzzy
 msgid "Show process resident memory column on startup"
-msgstr "Kuva nulltulp peale käivitamist"
+msgstr "Kuva käivitamisel protsessi kasutuses oleva mälu tulp"
 
 #: ../src/gnome-system-monitor.schemas.in.h:48
-#, fuzzy
 msgid "Show process shared memory column on startup"
-msgstr "Kuva nulltulp peale käivitamist"
+msgstr "Kuva käivitamisel protsessi jagatud mälu tulp"
 
 #: ../src/gnome-system-monitor.schemas.in.h:49
-#, fuzzy
 msgid "Show process start time column on startup"
-msgstr "Kuva nulltulp peale käivitamist"
+msgstr "Kuva käivitamisel protsessi alustamisaja tulp"
 
 #: ../src/gnome-system-monitor.schemas.in.h:50
-#, fuzzy
 msgid "Show process status column on startup"
-msgstr "Kuva nulltulp peale käivitamist"
+msgstr "Kuva käivitamisel protsessi oleku tulp"
 
 #: ../src/gnome-system-monitor.schemas.in.h:51
 msgid "Show process threads"
 msgstr "Protsessi lõimede näitamine"
 
 #: ../src/gnome-system-monitor.schemas.in.h:52
-#, fuzzy
 msgid "Show process virtual memory column on startup"
-msgstr "Kuva nulltulp peale käivitamist"
+msgstr "Kuva käivitamisel protsessi virtuaalmälu tulp"
 
 #: ../src/gnome-system-monitor.schemas.in.h:53
-#, fuzzy
 msgid "Show process writable memory column on startup"
-msgstr "Kuva nulltulp peale käivitamist"
+msgstr "Kuva käivitamisel protsessi kirjutatava mälu tulp"
 
 #: ../src/gnome-system-monitor.schemas.in.h:54
 msgid "Show process writable memory column saved width"
@@ -395,18 +377,12 @@ msgid "Whether information about all filesystems should be displayed"
 msgstr "Kas näidata teavet kõikide failisüsteemide kohta "
 
 #: ../src/gnome-system-monitor.schemas.in.h:61
-msgid ""
-"Whether to display information about all filesystems (including types like "
-"'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
-"filesystems."
-msgstr ""
-"Kas näidata kõikide failisüsteemide (nende hulgas ka 'autofs' ja 'procfs') "
-"andmeid. See on kasulik kõigi ühendatud failisüsteemide nimekirja saamiseks."
+msgid "Whether to display information about all filesystems (including types like 'autofs' and 'procfs'). Useful for getting a list of all currently mounted filesystems."
+msgstr "Kas näidata kõikide failisüsteemide (nende hulgas ka 'autofs' ja 'procfs') andmeid. See on kasulik kõigi ühendatud failisüsteemide nimekirja saamiseks."
 
 #: ../src/interface.c:46
-#, fuzzy
 msgid "_Monitor"
-msgstr "Süsteemijälgija"
+msgstr "_Jälgija"
 
 #: ../src/interface.c:47
 msgid "_Edit"
@@ -444,7 +420,8 @@ msgstr "_Jätka protsessi"
 msgid "Continue process if stopped"
 msgstr "Jätka protsessi juhul kui peatatud"
 
-#: ../src/interface.c:60 ../src/interface.c:188
+#: ../src/interface.c:60
+#: ../src/interface.c:188
 msgid "End _Process"
 msgstr "_Lõpeta protsess"
 
@@ -452,7 +429,8 @@ msgstr "_Lõpeta protsess"
 msgid "Force process to finish normally"
 msgstr "Protsessi sundimine normaalseks lõpetamiseks"
 
-#: ../src/interface.c:62 ../src/procdialogs.c:129
+#: ../src/interface.c:62
+#: ../src/procdialogs.c:129
 msgid "_Kill Process"
 msgstr "_Kõrvalda protsess"
 
@@ -476,7 +454,8 @@ msgstr "_Eelistused"
 msgid "Configure the application"
 msgstr "Rakenduse seadistamine"
 
-#: ../src/interface.c:69 ../src/procdialogs.c:85
+#: ../src/interface.c:69
+#: ../src/procdialogs.c:85
 msgid "_Hide Process"
 msgstr "Pei_da protsess"
 
@@ -577,7 +556,8 @@ msgstr "Mälu ja saaleala ajalugu"
 msgid "User memory:"
 msgstr "Kasutaja mälu:"
 
-#: ../src/interface.c:377 ../src/interface.c:437
+#: ../src/interface.c:377
+#: ../src/interface.c:437
 msgid "of"
 msgstr "/"
 
@@ -593,7 +573,8 @@ msgstr "Võrgu ajalugu"
 msgid "Received:"
 msgstr "Vastu võetud:"
 
-#: ../src/interface.c:529 ../src/interface.c:572
+#: ../src/interface.c:529
+#: ../src/interface.c:572
 msgid "Total:"
 msgstr "Kokku:"
 
@@ -601,15 +582,18 @@ msgstr "Kokku:"
 msgid "Sent:"
 msgstr "Saadetud:"
 
-#: ../src/interface.c:733 ../src/procdialogs.c:579
+#: ../src/interface.c:733
+#: ../src/procdialogs.c:579
 msgid "Processes"
 msgstr "Protsessid"
 
-#: ../src/interface.c:739 ../src/procdialogs.c:682
+#: ../src/interface.c:739
+#: ../src/procdialogs.c:682
 msgid "Resources"
 msgstr "Vahendid"
 
-#: ../src/load-graph.c:369 ../src/load-graph.c:379
+#: ../src/load-graph.c:396
+#: ../src/load-graph.c:406
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
@@ -717,12 +701,8 @@ msgstr "Kas peita valitud protsess?"
 #. FIXME: View menu -> Edit menu
 #. translators: secondary alert messagex
 #: ../src/procdialogs.c:75
-msgid ""
-"Hidden processes are no longer visible in the process list. You can re-"
-"enable them by selecting the \"Hidden Processes\" entry in the View menu."
-msgstr ""
-"Peidetud protsesse ei kuvata protsesside nimekirjas. Sul on võimalus "
-"nendekuvamist lubada valides menüüst \"Peidetud protsessid\" vaate menüüst."
+msgid "Hidden processes are no longer visible in the process list. You can re-enable them by selecting the \"Hidden Processes\" entry in the View menu."
+msgstr "Peidetud protsesse ei kuvata protsesside nimekirjas. Sul on võimalus nendekuvamist lubada valides menüüst \"Peidetud protsessid\" vaate menüüst."
 
 #. translators: primary alert message
 #: ../src/procdialogs.c:124
@@ -731,13 +711,8 @@ msgstr "Kas kõrvaldada valitud protsess?"
 
 #. translators: secondary alert message
 #: ../src/procdialogs.c:126
-msgid ""
-"Killing a process may destroy data, break the session or introduce a "
-"security risk. Only unresponding processes should be killed."
-msgstr ""
-"Protsessi kõrvaldamine võib hävitada sinu andmed, lõhkuda tööseansi või "
-"põhjustada turvariski. Kõrvaldama peaks ainult protsesse, mis ei käitu "
-"õigesti."
+msgid "Killing a process may destroy data, break the session or introduce a security risk. Only unresponding processes should be killed."
+msgstr "Protsessi kõrvaldamine võib hävitada sinu andmed, lõhkuda tööseansi või põhjustada turvariski. Kõrvaldama peaks ainult protsesse, mis ei käitu õigesti."
 
 #. translators: primary alert message
 #: ../src/procdialogs.c:133
@@ -746,12 +721,8 @@ msgstr "Kas lõpetada valitud protsessi töö?"
 
 #. translators: secondary alert message
 #: ../src/procdialogs.c:135
-msgid ""
-"Ending a process may destroy data, break the session or introduce a security "
-"risk. Only unresponding processes should be ended."
-msgstr ""
-"Protsessi töö lõpetamine võib hävitada sinu andmed, lõhkuda tööseansi või "
-"põhjustada turvariski. Lõpetama peaks ainult protsesse, mis ei käitu õigesti."
+msgid "Ending a process may destroy data, break the session or introduce a security risk. Only unresponding processes should be ended."
+msgstr "Protsessi töö lõpetamine võib hävitada sinu andmed, lõhkuda tööseansi või põhjustada turvariski. Lõpetama peaks ainult protsesse, mis ei käitu õigesti."
 
 #: ../src/procdialogs.c:138
 msgid "_End Process"
@@ -790,12 +761,8 @@ msgid "_Nice value:"
 msgstr "Tähtsuse _väärtus:"
 
 #: ../src/procdialogs.c:286
-msgid ""
-"The priority of a process is given by its nice value. A lower nice value "
-"corresponds to a higher priority."
-msgstr ""
-"Protsessi prioriteet on antud tema nice väärtusega. Madalam nice väärtus "
-"tähendab suuremat prioriteeti."
+msgid "The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."
+msgstr "Protsessi prioriteet on antud tema nice väärtusega. Madalam nice väärtus tähendab suuremat prioriteeti."
 
 #: ../src/procdialogs.c:464
 msgid "Processes i_nfo showed in list:"
@@ -813,7 +780,9 @@ msgstr "Süsteemijälgija eelistused"
 msgid "Behavior"
 msgstr "Käitumine"
 
-#: ../src/procdialogs.c:605 ../src/procdialogs.c:708 ../src/procdialogs.c:793
+#: ../src/procdialogs.c:605
+#: ../src/procdialogs.c:708
+#: ../src/procdialogs.c:793
 msgid "_Update interval in seconds:"
 msgstr "_Värskendamise vahemik sekundites:"
 
@@ -849,93 +818,92 @@ msgstr "Te_ljestiku värv:"
 msgid "Show _all filesystems"
 msgstr "_Kõigi failisüsteemide näitamine"
 
-#: ../src/proctable.c:290
+#: ../src/proctable.c:274
 msgid "Process Name"
 msgstr "Protsessi nimi"
 
-#: ../src/proctable.c:291
+#: ../src/proctable.c:275
 msgid "User"
 msgstr "Kasutaja"
 
-#: ../src/proctable.c:292
+#: ../src/proctable.c:276
 msgid "Status"
 msgstr "Olek"
 
-#: ../src/proctable.c:293
+#: ../src/proctable.c:277
 msgid "Virtual Memory"
 msgstr "Virtuaalmälu"
 
-#: ../src/proctable.c:294
+#: ../src/proctable.c:278
 msgid "Resident Memory"
 msgstr "Residentne mälu"
 
-#: ../src/proctable.c:295
+#: ../src/proctable.c:279
 msgid "Writable Memory"
 msgstr "Kirjutatav mälu"
 
-#: ../src/proctable.c:296
+#: ../src/proctable.c:280
 msgid "Shared Memory"
 msgstr "Jagatud mälu"
 
-#: ../src/proctable.c:297
+#: ../src/proctable.c:281
 msgid "X Server Memory"
 msgstr "X serveri mälu"
 
-#: ../src/proctable.c:298
+#: ../src/proctable.c:282
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:299
+#: ../src/proctable.c:283
 msgid "CPU Time"
 msgstr "CPU aeg"
 
-#: ../src/proctable.c:300
+#: ../src/proctable.c:284
 msgid "Started"
 msgstr "Käivitatud"
 
-#: ../src/proctable.c:301
+#: ../src/proctable.c:285
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.c:302
+#: ../src/proctable.c:286
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.c:303
+#: ../src/proctable.c:287
 msgid "Security Context"
 msgstr "Turvakontekst"
 
-#: ../src/proctable.c:304
+#: ../src/proctable.c:288
 msgid "Arguments"
 msgstr "Argumendid"
 
-#: ../src/proctable.c:305
-#, fuzzy
+#: ../src/proctable.c:289
 msgid "Memory"
-msgstr "Mälu jaotumine"
+msgstr "Mälu"
 
-#: ../src/proctable.c:483
+#: ../src/proctable.c:475
 msgid "Running"
 msgstr "Töötav"
 
-#: ../src/proctable.c:488
+#: ../src/proctable.c:480
 msgid "Stopped"
 msgstr "Seisatud"
 
-#: ../src/proctable.c:493
+#: ../src/proctable.c:485
 msgid "Zombie"
 msgstr "Zombi"
 
-#: ../src/proctable.c:498
+#: ../src/proctable.c:490
 msgid "Uninterruptible"
 msgstr "Katkestamatu"
 
-#: ../src/proctable.c:503
+#: ../src/proctable.c:495
 msgid "Sleeping"
 msgstr "Magav"
 
-#: ../src/proctable.c:1094
+#: ../src/proctable.c:1088
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Koormuse näit viimase 1, 5 ja 15 minuti kohta: %0.2f, %0.2f, %0.2f"
@@ -962,5 +930,8 @@ msgstr "%.1f MiB"
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
 
+#~ msgid "Devices"
+#~ msgstr "Seadmed"
 #~ msgid "_File"
 #~ msgstr "_Fail"
+
