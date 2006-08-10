@@ -148,7 +148,7 @@ load_graph_draw (LoadGraph *g)
 	cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
 	cairo_set_line_join (cr, CAIRO_LINE_JOIN_MITER);
 
-	delx = (g->draw_width - 2.0) / (NUM_POINTS - 1);
+	delx = (g->draw_width - 2.0 - rmargin) / (NUM_POINTS - 1);
 
 	for (j = 0; j < g->n; ++j) {
 		cairo_move_to (cr,
