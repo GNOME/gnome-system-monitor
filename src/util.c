@@ -185,5 +185,7 @@ procman_debug(const char *format, ...)
 	va_end(args);
 
 	g_debug(msg);
+
+	g_free(msg);
 }
 
