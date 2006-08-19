@@ -329,10 +329,28 @@ create_memmapsdata (ProcData *procdata)
 
 		cell = gtk_cell_renderer_text_new ();
 
+		switch (i) {
+		case MMAP_COL_VMSTART:
+		case MMAP_COL_VMEND:
+		case MMAP_COL_FLAGS:
+		case MMAP_COL_VMOFFSET:
+		case MMAP_COL_DEVICE:
+			g_object_set(cell, "family", "monospace", NULL);
+			break;
+		}
+
+		switch (i) {
+		case MMAP_COL_INODE:
+		case MMAP_COL_VMSZ:
+			g_object_set(cell, "xalign", 1.0f, NULL);
+			break;
+		}
+
 		column = gtk_tree_view_column_new_with_attributes (titles[i],
 								   cell,
 								   "text", i,
 								   NULL);
+
 		gtk_tree_view_column_set_sort_column_id (column, i);
 		gtk_tree_view_column_set_resizable (column, TRUE);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);

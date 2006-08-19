@@ -248,6 +248,13 @@ create_openfiles_tree (ProcData *procdata)
 
 	for (i = 0; i < NUM_OPENFILES_COL-1; i++) {
 		cell = gtk_cell_renderer_text_new ();
+
+		switch (i) {
+		case COL_FD:
+			g_object_set(cell, "xalign", 1.0f, NULL);
+			break;
+		}
+
 		column = gtk_tree_view_column_new_with_attributes (title[i],
 								   cell,
 								   "text", i,
