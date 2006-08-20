@@ -381,6 +381,15 @@ create_disk_view(ProcData *procdata)
 
 	for (i = 1; i < G_N_ELEMENTS(titles) - 1; i++) {
 		cell = gtk_cell_renderer_text_new();
+
+		switch (i + 1) {
+		case DISK_TOTAL:
+		case DISK_FREE:
+		case DISK_AVAIL:
+			g_object_set(cell, "xalign", 1.0f, NULL);
+			break;
+		}
+
 		col = gtk_tree_view_column_new_with_attributes(_(titles[i]),
 							       cell,
 							       "text", i + 1,
@@ -395,6 +404,7 @@ create_disk_view(ProcData *procdata)
 
 	col = gtk_tree_view_column_new();
 	cell = gtk_cell_renderer_text_new();
+	g_object_set(cell, "xalign", 1.0f, NULL);
 	gtk_tree_view_column_pack_start(col, cell, FALSE);
 	gtk_tree_view_column_set_attributes(col, cell, "text", DISK_USED, NULL);
 	gtk_tree_view_column_set_title(col, _(titles[G_N_ELEMENTS(titles) - 1]));
