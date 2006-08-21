@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman 2.11.92\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-05 17:43+0100\n"
-"PO-Revision-Date: 2006-02-05 17:53+0100\n"
-"Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
+"POT-Creation-Date: 2006-08-21 21:44+0200\n"
+"PO-Revision-Date: 2006-08-21 21:57+0200\n"
+"Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n!=1;\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:164
-#: ../src/interface.c:666
+#: ../src/interface.c:666 ../src/procman.c:696
 msgid "System Monitor"
 msgstr "Monitor del sistema"
 
@@ -32,38 +32,38 @@ msgstr ""
 "Jesús Moreno <jmmolas@wanadoo.es>\n"
 "Jordi Mallach <jordi@sindominio.net>"
 
-#: ../src/disks.c:204 ../src/memmaps.c:302
+#: ../src/disks.c:308 ../src/memmaps.c:302
 msgid "Device"
 msgstr "Dispositiu"
 
-#: ../src/disks.c:205
+#: ../src/disks.c:309
 msgid "Directory"
 msgstr "Directori"
 
-#: ../src/disks.c:206 ../src/openfiles.c:232
+#: ../src/disks.c:310 ../src/openfiles.c:232
 msgid "Type"
 msgstr "Tipus"
 
-#: ../src/disks.c:207
+#: ../src/disks.c:311
 msgid "Total"
 msgstr "Total"
 
-#: ../src/disks.c:208
+#: ../src/disks.c:312
 msgid "Free"
 msgstr "Lliure"
 
-#: ../src/disks.c:209
+#: ../src/disks.c:313
 msgid "Available"
 msgstr "Disponible"
 
-#: ../src/disks.c:210
+#: ../src/disks.c:314
 msgid "Used"
 msgstr "Utilitzat"
 
-#: ../src/disks.c:217 ../src/interface.c:745 ../src/procdialogs.c:770
+#: ../src/disks.c:321 ../src/interface.c:745 ../src/procdialogs.c:770
 #: ../src/procdialogs.c:774
-msgid "Devices"
-msgstr "Dispositius"
+msgid "File Systems"
+msgstr "Sistemes de fitxers"
 
 #: ../src/e_date.c:154
 msgid "?"
@@ -183,60 +183,196 @@ msgstr "Alçada de la finestra principal"
 msgid "Main Window width"
 msgstr "Amplada de la finestra principal"
 
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:15
+#, no-c-format
+msgid "Process CPU % column saved width"
+msgstr "Amplada desada de la columna de % d'ús de CPU del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:16
+msgid "Process CPU time column saved width"
+msgstr "Amplada desada de la columna de temps de CPU del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:17
+msgid "Process PID column saved width"
+msgstr "Amplada desada de la columna de PID del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:18
+msgid "Process SELinux security context column saved width"
+msgstr ""
+"Amplada desada de la columna del context de seguretat SELinux del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:19
+msgid "Process X server memory column saved width"
+msgstr "Amplada desada de la columna memòria del servidor de les X del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:20
+msgid "Process arguments column saved width"
+msgstr "Amplada desada de la columna d'arguments del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:21
+msgid "Process estimated memory usage column saved width"
+msgstr ""
+"Amplada desada de la columna d'estimació de la memòria utilitzada del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:22
+msgid "Process name column saved width"
+msgstr "Amplada desada de la columna del nom del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:23
+msgid "Process nice column saved width"
+msgstr "Amplada desada de la columna de prioritat del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:24
+msgid "Process owner column saved width"
+msgstr "Amplada desada de la columna de propietari del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:25
+msgid "Process resident memory column saved width"
+msgstr "Amplada desada de la columna de memòria resident del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:26
+msgid "Process shared memory column saved width"
+msgstr "Amplada desada de la columna de memòria compartida en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:27
+msgid "Process start time column saved width"
+msgstr "Amplada desada de la columna temps d'engegada del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:28
+msgid "Process status column saved width"
+msgstr "Amplada desada de la columna d'estat del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:29
 msgid "Process view columns order"
 msgstr "Ordre de les columnes de la visualització de processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:30
 msgid "Process view sort column"
 msgstr "Columna ordenada a la llista de processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
+#: ../src/gnome-system-monitor.schemas.in.h:31
 msgid "Process view sort order"
 msgstr "Ordre de la visualització de processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:32
+msgid "Process virtual memory column saved width"
+msgstr "Amplada desada de la columna de memòria virtual del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:33
 msgid "Saves the currently viewed tab"
 msgstr "Desa la pestanya visualitzada actualment"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:34
 msgid "Show column zero on startup"
 msgstr "Mostra la columna zero en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:35
+msgid "Show estimated memory usage column on startup"
+msgstr ""
+"Mostra la columna d'estimació de la memòria utilitzada pel procés en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:37
+#, no-c-format
+msgid "Show process CPU % column on startup"
+msgstr "Mostra la columna de % d'ús de la CPU pel procés en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:38
+msgid "Show process CPU time column on startup"
+msgstr "Mostra la columna de temps de CPU del procés en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:39
+msgid "Show process PID column on startup"
+msgstr "Mostra la columna de PID del procés en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:40
+msgid "Show process SELinux security context column on startup"
+msgstr ""
+"Mostra la columna del context de seguretat SELinux del procés en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:41
+msgid "Show process X server memory column zero startup"
+msgstr ""
+"Mostra la columna de memòria del servidor de les X del procés en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:42
+msgid "Show process arguments column on startup"
+msgstr "Mostra la columna d'arguments del procés en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:43
 msgid "Show process dependencies in tree form"
 msgstr "Mostra les dependències dels processos en forma d'arbre"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:44
+msgid "Show process name column on startup"
+msgstr "Mostra la columna del nom del procés en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:45
+msgid "Show process nice column on startup"
+msgstr "Mostra la columna de prioritat del procés en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:46
+msgid "Show process owner column on startup"
+msgstr "Mostra la columna de propietari del procés en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:47
+msgid "Show process resident memory column on startup"
+msgstr "Mostra la columna de memòria resident del procés en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:48
+msgid "Show process shared memory column on startup"
+msgstr "Mostra la columna de memòria compartida del procés en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:49
+msgid "Show process start time column on startup"
+msgstr "Mostra la columna de temps d'engegada del procés en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:50
+msgid "Show process status column on startup"
+msgstr "Mostra la columna d'estat del procés en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:51
 msgid "Show process threads"
 msgstr "Mostra els fils dels processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:52
+msgid "Show process virtual memory column on startup"
+msgstr "Mostra la columna de memòria virtual del procés en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:53
+msgid "Show process writable memory column on startup"
+msgstr "Mostra la columna de memòria d'escriptura del procés en iniciar"
+
+#: ../src/gnome-system-monitor.schemas.in.h:54
+msgid "Show process writable memory column saved width"
+msgstr ""
+"Mostra l'amplada desada de la columna de memòria d'escriptura del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:55
 msgid "Show warning dialog when hiding processes"
 msgstr "Mostra un diàleg d'advertència en ocultar els processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:56
 msgid "Show warning dialog when killing processes"
 msgstr "Mostra un diàleg d'advertència en finalitzar els processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:57
 msgid "Time in milliseconds between updates of the devices list"
 msgstr ""
 "Temps en mil·lisegons entre actualitzacions de la llista de dispositius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:24
+#: ../src/gnome-system-monitor.schemas.in.h:58
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Temps en mil·lisegons entre actualitzacions de les gràfiques"
 
-#: ../src/gnome-system-monitor.schemas.in.h:25
+#: ../src/gnome-system-monitor.schemas.in.h:59
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Temps en mil·lisegons entre actualitzacions de la vista de processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:26
+#: ../src/gnome-system-monitor.schemas.in.h:60
 msgid "Whether information about all filesystems should be displayed"
 msgstr "Si s'hauria de mostrar informació sobre tots els sistemes de fitxers"
 
-#: ../src/gnome-system-monitor.schemas.in.h:27
+#: ../src/gnome-system-monitor.schemas.in.h:61
 msgid ""
 "Whether to display information about all filesystems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -247,8 +383,8 @@ msgstr ""
 "obtenir una llista de tots els sistemes de fitxers muntats actualment."
 
 #: ../src/interface.c:46
-msgid "_File"
-msgstr "_Fitxer"
+msgid "_Monitor"
+msgstr "_Monitoritza"
 
 #: ../src/interface.c:47
 msgid "_Edit"
@@ -272,11 +408,11 @@ msgstr "Surt del programa"
 
 #: ../src/interface.c:55
 msgid "_Stop Process"
-msgstr "Finalitza el procé_s"
+msgstr "_Atura el procés"
 
 #: ../src/interface.c:56
 msgid "Stop process"
-msgstr "Finalitza el procés"
+msgstr "Atura el procés"
 
 #: ../src/interface.c:57
 msgid "_Continue Process"
@@ -296,7 +432,7 @@ msgstr "Imposa la finalització normal del procés"
 
 #: ../src/interface.c:62 ../src/procdialogs.c:129
 msgid "_Kill Process"
-msgstr "_Termina el procés"
+msgstr "_Mata el procés"
 
 #: ../src/interface.c:63
 msgid "Force process to finish immediately"
@@ -304,7 +440,7 @@ msgstr "Imposa la finalització immediata del procés"
 
 #: ../src/interface.c:64
 msgid "_Change Priority..."
-msgstr "_Canvia la prioritat..."
+msgstr "Can_via la prioritat..."
 
 #: ../src/interface.c:65
 msgid "Change the order of priority of process"
@@ -328,7 +464,7 @@ msgstr "Oculta el procés de la llista"
 
 #: ../src/interface.c:71
 msgid "_Hidden Processes"
-msgstr "P_rocessos ocults"
+msgstr "_Processos ocults"
 
 #: ../src/interface.c:72
 msgid "Open the list of currently hidden processes"
@@ -336,7 +472,7 @@ msgstr "Obre la llista actual de processos ocults"
 
 #: ../src/interface.c:73
 msgid "_Memory Maps"
-msgstr "Mapes de _memòria"
+msgstr "_Mapes de memòria"
 
 #: ../src/interface.c:74
 msgid "Open the memory maps associated with a process"
@@ -344,7 +480,7 @@ msgstr "Obre els mapes de memòria associats a un procés"
 
 #: ../src/interface.c:75
 msgid "Open _Files"
-msgstr "Obre els _fitxers"
+msgstr "_Fitxers oberts"
 
 #: ../src/interface.c:76
 msgid "View the files opened by a process"
@@ -384,7 +520,7 @@ msgstr "Mostra els processos actius"
 
 #: ../src/interface.c:96
 msgid "A_ll Processes"
-msgstr "Tots e_ls processos"
+msgstr "_Tots els processos"
 
 #: ../src/interface.c:97
 msgid "Show all processes"
@@ -392,7 +528,7 @@ msgstr "Mostra tots els processos"
 
 #: ../src/interface.c:98
 msgid "M_y Processes"
-msgstr "Els me_us processos"
+msgstr "_Els meus processos"
 
 #: ../src/interface.c:99
 msgid "Show user own process"
@@ -451,7 +587,7 @@ msgstr "Processos"
 msgid "Resources"
 msgstr "Recursos"
 
-#: ../src/load-graph.c:368 ../src/load-graph.c:378
+#: ../src/load-graph.c:396 ../src/load-graph.c:406
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
@@ -484,11 +620,11 @@ msgstr "Desplaçament de VM"
 msgid "Inode"
 msgstr "Node-i"
 
-#: ../src/memmaps.c:405
+#: ../src/memmaps.c:423
 msgid "Memory Maps"
 msgstr "Mapes de memòria"
 
-#: ../src/memmaps.c:425
+#: ../src/memmaps.c:443
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "_Mapes de memòria per al procés «%s» (PID %u):"
@@ -524,11 +660,11 @@ msgstr "DF"
 msgid "Object"
 msgstr "Objecte"
 
-#: ../src/openfiles.c:312
+#: ../src/openfiles.c:319
 msgid "Open Files"
 msgstr "Fitxers oberts"
 
-#: ../src/openfiles.c:334
+#: ../src/openfiles.c:341
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_Fitxers oberts pel procés «%s» (PID %u):"
@@ -542,7 +678,7 @@ msgstr ""
 "No es pot canviar la prioritat del procés amb pid %d a %d.\n"
 "%s"
 
-#: ../src/procactions.c:144
+#: ../src/procactions.c:155
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -694,88 +830,92 @@ msgstr "Color de la _graella:"
 msgid "Show _all filesystems"
 msgstr "Mostr_a tots els sistemes de fitxers"
 
-#: ../src/proctable.c:245
+#: ../src/proctable.c:274
 msgid "Process Name"
 msgstr "Nom del procés"
 
-#: ../src/proctable.c:246
+#: ../src/proctable.c:275
 msgid "User"
 msgstr "Usuari"
 
-#: ../src/proctable.c:247
+#: ../src/proctable.c:276
 msgid "Status"
 msgstr "Estat"
 
-#: ../src/proctable.c:248
+#: ../src/proctable.c:277
 msgid "Virtual Memory"
 msgstr "Memòria virtual"
 
-#: ../src/proctable.c:249
+#: ../src/proctable.c:278
 msgid "Resident Memory"
 msgstr "Memòria resident"
 
-#: ../src/proctable.c:250
+#: ../src/proctable.c:279
 msgid "Writable Memory"
 msgstr "Memòria per escriure-hi"
 
-#: ../src/proctable.c:251
+#: ../src/proctable.c:280
 msgid "Shared Memory"
 msgstr "Memòria compartida"
 
-#: ../src/proctable.c:252
+#: ../src/proctable.c:281
 msgid "X Server Memory"
 msgstr "Memòria del servidor d'X"
 
-#: ../src/proctable.c:253
+#: ../src/proctable.c:282
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:254
+#: ../src/proctable.c:283
 msgid "CPU Time"
 msgstr "Temps de CPU"
 
-#: ../src/proctable.c:255
+#: ../src/proctable.c:284
 msgid "Started"
 msgstr "Iniciat"
 
-#: ../src/proctable.c:256
+#: ../src/proctable.c:285
 msgid "Nice"
 msgstr "Prioritat"
 
-#: ../src/proctable.c:257
+#: ../src/proctable.c:286
 msgid "ID"
 msgstr "Identificador"
 
-#: ../src/proctable.c:258
+#: ../src/proctable.c:287
 msgid "Security Context"
 msgstr "Context de seguretat"
 
-#: ../src/proctable.c:259
+#: ../src/proctable.c:288
 msgid "Arguments"
 msgstr "Arguments"
 
-#: ../src/proctable.c:432
+#: ../src/proctable.c:289
+msgid "Memory"
+msgstr "Memòria"
+
+#: ../src/proctable.c:475
 msgid "Running"
 msgstr "Executant-se"
 
-#: ../src/proctable.c:437
+#: ../src/proctable.c:480
 msgid "Stopped"
 msgstr "Aturat"
 
-#: ../src/proctable.c:442
+#: ../src/proctable.c:485
 msgid "Zombie"
 msgstr "Zombi"
 
-#: ../src/proctable.c:447
+#: ../src/proctable.c:490
 msgid "Uninterruptible"
 msgstr "No interruptible"
 
-#: ../src/proctable.c:452
+#: ../src/proctable.c:495
 msgid "Sleeping"
 msgstr "Adormit"
 
-#: ../src/proctable.c:1034
+#: ../src/proctable.c:1088
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Mitjanes de càrrega dels últims 1, 5 i 15 minuts: %0.2f, %0.2f, %0.2f"
@@ -801,6 +941,12 @@ msgstr "%.1f MiB"
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
+
+#~ msgid "Devices"
+#~ msgstr "Dispositius"
+
+#~ msgid "_File"
+#~ msgstr "_Fitxer"
 
 #~ msgid "_Threads"
 #~ msgstr "_Fils"
@@ -864,9 +1010,6 @@ msgstr "%.1f GiB"
 
 #~ msgid "Very low - nice %d"
 #~ msgstr "Molt baix - prioritat %d"
-
-#~ msgid "Memory"
-#~ msgstr "Memòria"
 
 #~ msgid "RSS Memory"
 #~ msgstr "Memòria RSS"
@@ -1084,9 +1227,6 @@ msgstr "%.1f GiB"
 
 #~ msgid "Swap"
 #~ msgstr "Espai d'intercanvi"
-
-#~ msgid "System _Monitor"
-#~ msgstr "_Monitor del sistema"
 
 #~ msgid "_Set"
 #~ msgstr "_Especifica"
