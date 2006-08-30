@@ -243,19 +243,20 @@ search_equal_func(GtkTreeModel *model,
 {
 	char* name;
 	char* user;
+	gboolean found;
 
 	gtk_tree_model_get(model, iter,
 			   COL_NAME, &name,
 			   COL_USER, &user,
 			   -1);
 
-	if(name && strstr(name, key))
-		return FALSE;
+	found = !((name && strstr(name, key))
+		  || (user && strstr(user, key)));
 
-	if(user && strstr(user, key))
-		return FALSE;
+	g_free(name);
+	g_free(user);
 
-	return TRUE;
+	return found;
 }
 
 
