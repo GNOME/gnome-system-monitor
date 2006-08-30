@@ -10,20 +10,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-13 08:51+0100\n"
-"PO-Revision-Date: 2006-03-13 15:20+0530\n"
+"POT-Creation-Date: 2006-08-30 10:07+0200\n"
+"PO-Revision-Date: 2006-08-31 00:13+0530\n"
 "Last-Translator: A S Alam <apbrar@gmail.com>\n"
 "Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "\n"
 "\n"
-"X-Generator: KBabel 1.11.1\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:164
-#: ../src/interface.c:666
+#: ../src/interface.c:666 ../src/procman.c:696
 msgid "System Monitor"
 msgstr "ਸਿਸਟਮ ਨਿਗਰਾਨ"
 
@@ -35,42 +35,42 @@ msgstr "ਮੌਜੂਦਾ ਕਾਰਜ ਵੇਖੋ ਅਤੇ ਸਿਸਟਮ �
 msgid "translator-credits"
 msgstr ""
 "ਜਸਵਿੰਦਰ ਸਿੰਘ ਫੂਲੇਵਾਲਾ (jaswinderphulewala@yahoo.com)\n"
-"ਅਮਨਪਰੀਤ ਸਿੰਘ ਆਲਮਵਾਲਾ(aalam@redhat.com)\n"
+"ਅਮਨਪਰੀਤ ਸਿੰਘ ਆਲਮਵਾਲਾ(apbrar@gmail.com)\n"
 "Punjabi Open Source Team (Satluj Project)\n"
-"http://www.satluj.com/"
+"http://punlinux.sf.net/"
 
-#: ../src/disks.c:204 ../src/memmaps.c:302
+#: ../src/disks.c:308 ../src/memmaps.c:302
 msgid "Device"
 msgstr "ਜੰਤਰ"
 
-#: ../src/disks.c:205
+#: ../src/disks.c:309
 msgid "Directory"
 msgstr "ਡਾਇਰੈਕਟਰੀ"
 
-#: ../src/disks.c:206 ../src/openfiles.c:232
+#: ../src/disks.c:310 ../src/openfiles.c:232
 msgid "Type"
 msgstr "ਕਿਸਮ"
 
-#: ../src/disks.c:207
+#: ../src/disks.c:311
 msgid "Total"
 msgstr "ਕੁੱਲ"
 
-#: ../src/disks.c:208
+#: ../src/disks.c:312
 msgid "Free"
 msgstr "ਖਾਲ਼ੀ"
 
-#: ../src/disks.c:209
+#: ../src/disks.c:313
 msgid "Available"
 msgstr "ਉਪਲੱਬਧ"
 
-#: ../src/disks.c:210
+#: ../src/disks.c:314
 msgid "Used"
 msgstr "ਵਰਤੋਂ"
 
-#: ../src/disks.c:217 ../src/interface.c:745 ../src/procdialogs.c:770
+#: ../src/disks.c:321 ../src/interface.c:745 ../src/procdialogs.c:770
 #: ../src/procdialogs.c:774
-msgid "Devices"
-msgstr "ਜੰਤਰ"
+msgid "File Systems"
+msgstr "ਫਾਇਲ ਸਿਸਟਮ"
 
 #: ../src/e_date.c:154
 msgid "?"
@@ -136,7 +136,7 @@ msgstr "ਕਾਲਮ ਜ਼ੀਰੋ ਸੰਭਾਲੀ ਚੌੜਾਈ"
 
 #: ../src/gnome-system-monitor.schemas.in.h:2
 msgid "Default graph background color"
-msgstr "ਮੂਲ ਗਰਾਫ ਪਿੱਠਭੂਮੀ ਰੰਗ"
+msgstr "ਮੂਲ ਗਰਾਫ ਬੈਕਗਰਾਊਂਡ ਰੰਗ"
 
 #: ../src/gnome-system-monitor.schemas.in.h:3
 msgid "Default graph cpu color"
@@ -184,59 +184,189 @@ msgstr "ਮੁੱਖ ਝਰੋਖਾ ਉਚਾਈ"
 msgid "Main Window width"
 msgstr "ਮੁੱਖ ਝਰੋਖਾ ਚੌੜਾਈ"
 
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:15
+#, no-c-format
+msgid "Process CPU % column saved width"
+msgstr "ਕਾਰਜ CPU % ਕਾਲਮ ਸੰਭਾਲੀ ਚੌੜਾਈ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:16
+msgid "Process CPU time column saved width"
+msgstr "ਕਾਰਜ CPU ਸਮਾਂ ਕਾਲਮ ਸੰਭਾਲੀ ਚੌੜਾਈ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:17
+msgid "Process PID column saved width"
+msgstr "ਕਾਰਜ PID ਕਾਲਮ ਸੰਭਾਲੀ ਚੌੜਾਈ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:18
+msgid "Process SELinux security context column saved width"
+msgstr "ਕਾਰਜ SELinux ਸੁਰੱਖਿਆ ਪਰਸੰਗ ਕਾਲਮ ਸੰਭਾਲੀ ਚੌੜਾਈ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:19
+msgid "Process X server memory column saved width"
+msgstr "ਕਾਰਜ X ਸਰਵਰ ਮੈਮੋਰੀ ਕਾਲਮ ਸੰਭਾਲੀ ਚੌੜਾਈ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:20
+msgid "Process arguments column saved width"
+msgstr "ਕਾਰਜ ਮੁੱਲ ਕਾਲਮ ਸੰਭਾਲੀ ਚੌੜਾਈ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:21
+msgid "Process estimated memory usage column saved width"
+msgstr "ਕਾਰਜ ਅਨੁਮਾਨਿਤ ਮੈਮੋਰੀ ਵਰਤੋਂ ਕਾਲਮ ਸੰਭਾਲੀ ਚੌੜਾਈ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:22
+msgid "Process name column saved width"
+msgstr "ਕਾਰਜ ਨਾਂ ਕਾਲਮ ਸੰਭਾਲੀ ਚੌੜਾਈ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:23
+msgid "Process nice column saved width"
+msgstr "ਕਾਰਜ ਨਾਈਸ ਕਾਲਮ ਸੰਭਾਲੀ ਚੌੜਾਈ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:24
+msgid "Process owner column saved width"
+msgstr "ਕਾਰਜ ਮਾਲਕ ਕਾਲਮ ਸੰਭਾਲੀ ਚੌੜਾਈ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:25
+msgid "Process resident memory column saved width"
+msgstr "ਕਾਰਜ ਰੈਜ਼ੀਡੈਂਟ ਮੈਮੋਰੀ ਕਾਲਮ ਸੰਭਾਲੀ ਚੌੜਾਈ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:26
+msgid "Process shared memory column saved width"
+msgstr "ਕਾਰਜ ਸਾਂਝੀ ਮੈਮੋਰੀ ਕਾਲਮ ਸੰਭਾਲੀ ਚੌੜਾਈ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:27
+msgid "Process start time column saved width"
+msgstr "ਕਾਰਜ ਸ਼ੁਰੂ ਸਮਾਂ ਕਾਲਮ ਸੰਭਾਲੀ ਚੌੜਾਈ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:28
+msgid "Process status column saved width"
+msgstr "ਕਾਰਜ ਹਾਲਤ ਕਾਲਮ ਸੰਭਾਲੀ ਚੌੜਾਈ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:29
 msgid "Process view columns order"
 msgstr "ਕਾਰਜ ਦਿੱਖ ਕ੍ਰਮ"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:30
 msgid "Process view sort column"
 msgstr "ਕਾਰਜ ਸੂਚੀ ਕ੍ਰਮਬੱਧ ਕਾਲਮ"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
+#: ../src/gnome-system-monitor.schemas.in.h:31
 msgid "Process view sort order"
 msgstr "ਕਾਰਜ ਝਲਕ ਕ੍ਰਮ"
 
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:32
+msgid "Process virtual memory column saved width"
+msgstr "ਕਾਰਜ ਵੁਰਚੁਅਲ ਮੈਮੋਰੀ ਕਾਲਮ ਸੰਭਾਲੀ ਚੌੜਾਈ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:33
 msgid "Saves the currently viewed tab"
 msgstr "ਮੌਜੂਦਾ ਵੇਖੀ ਟੈਬ ਸੰਭਾਲੋ"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:34
 msgid "Show column zero on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਕਾਲਮ ਜ਼ੀਰੋ ਵੇਖਾਓ"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:35
+msgid "Show estimated memory usage column on startup"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਅਨੁਮਾਨਿਤ ਮੈਮੋਰੀ ਵਰਤੋਂ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:37
+#, no-c-format
+msgid "Show process CPU % column on startup"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਕਾਰਜ CPU % ਕਾਲਮ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:38
+msgid "Show process CPU time column on startup"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਕਾਰਜ CPU ਸਮਾਂ ਕਾਲਮ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:39
+msgid "Show process PID column on startup"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਕਾਰਜ PID ਕਾਲਮ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:40
+msgid "Show process SELinux security context column on startup"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਕਾਰਜ SELinux ਸੁਰੱਖਿਆ ਪਰਸੰਗ ਕਾਲਮ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:41
+msgid "Show process X server memory column zero startup"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਕਾਰਜ X ਸਰਵਰ ਮੈਮੋਰੀ ਕਾਲਮ ਸਿਫ਼ਰ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:42
+msgid "Show process arguments column on startup"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਕਾਰਜ ਮੁੱਲ ਕਾਲਮ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:43
 msgid "Show process dependencies in tree form"
 msgstr "ਲੜੀ ਢੰਗ ਵਿੱਚ ਕਾਰਜ ਨਿਰਭਰਤਾ ਵੇਖਾਓ"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:44
+msgid "Show process name column on startup"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਕਾਰਜ ਨਾਂ ਕਾਲਮ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:45
+msgid "Show process nice column on startup"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਕਾਰਜ ਨਾਈਸ ਕਾਲਮ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:46
+msgid "Show process owner column on startup"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਕਾਰਜ ਮਾਲਕ ਕਾਲਮ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:47
+msgid "Show process resident memory column on startup"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਕਾਰਜ ਰੈਜ਼ੀਡੈਂਟ ਮੈਮੋਰੀ ਕਾਲਮ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:48
+msgid "Show process shared memory column on startup"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਕਾਰਜ ਸਾਂਝੀ ਮੈਮੋਰੀ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:49
+msgid "Show process start time column on startup"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਕਾਰਜ ਸ਼ੁਰੂ ਸਮਾਂ ਕਾਲਮ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:50
+msgid "Show process status column on startup"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਕਾਰਜ ਹਾਲਤ ਕਾਲਮ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:51
 msgid "Show process threads"
 msgstr "ਕਾਰਜ ਥਰਿੱਡ ਵੇਖਾਓ"
 
-#: ../src/gnome-system-monitor.schemas.in.h:21
+#: ../src/gnome-system-monitor.schemas.in.h:52
+msgid "Show process virtual memory column on startup"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਕਾਰਜ ਵੁਰਚੁਅਲ ਮੈਮੋਰੀ ਕਾਲਮ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:53
+msgid "Show process writable memory column on startup"
+msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਕਾਰਜ ਲਿਖਣਯੋਗ ਮੈਮੋਰੀ ਕਾਲਮ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:54
+msgid "Show process writable memory column saved width"
+msgstr "ਕਾਰਜ ਲਿਖਣਯੋਗ ਮੈਮੋਰੀ ਕਾਲਮ ਸੰਭਾਲੀ ਚੌੜਾਈ ਵੇਖਾਓ"
+
+#: ../src/gnome-system-monitor.schemas.in.h:55
 msgid "Show warning dialog when hiding processes"
 msgstr "ਜਦੋਂ ਕਾਰਜ ਲੁਕਵੇਂ ਹੋਣ ਤਾਂ ਚੇਤਾਵਨੀ ਵਾਰਤਾਲਾਪ ਵਿਖਾਓ"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:56
 msgid "Show warning dialog when killing processes"
 msgstr "ਜਦੋਂ ਕਾਰਜ ਖਤਮ ਕਰਨੇ ਹੋਣ ਤਾਂ ਚੇਤਾਵਨੀ ਵਾਰਤਾਲਾਪ ਵਿਖਾਓ"
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:57
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "ਜੰਤਰ ਸੂਚੀ ਦੇ ਅੱਪਡੇਟ ਦਾ ਸਮਾਂ (ਮਿਲੀ ਸਕਿੰਟ ਵਿੱਚ)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:24
+#: ../src/gnome-system-monitor.schemas.in.h:58
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "ਗਰਾਫ਼ ਦੇ ਅੱਪਡੇਟ ਦਾ ਸਮਾਂ (ਮਿਲੀ ਸਕਿੰਟ ਵਿੱਚ)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:25
+#: ../src/gnome-system-monitor.schemas.in.h:59
 msgid "Time in milliseconds between updates of the process view"
 msgstr "ਕਾਰਜ ਝਲਕ ਦੇ ਅੱਪਡੇਟ ਦਾ ਸਮਾਂ (ਮਿਲੀ ਸਕਿੰਟ ਵਿੱਚ)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:26
+#: ../src/gnome-system-monitor.schemas.in.h:60
 msgid "Whether information about all filesystems should be displayed"
 msgstr "ਕੀ ਸਭ ਫਾਇਲ-ਸਿਸਟਮਾਂ ਬਾਰੇ ਜਾਣਕਾਰੀ ਨੂੰ ਵਿਖਾਇਆ ਜਾਵੇ"
 
-#: ../src/gnome-system-monitor.schemas.in.h:27
+#: ../src/gnome-system-monitor.schemas.in.h:61
 msgid ""
 "Whether to display information about all filesystems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -247,8 +377,8 @@ msgstr ""
 "ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ ਸਹਾਇਕ ਹੈ।"
 
 #: ../src/interface.c:46
-msgid "_File"
-msgstr "ਫਾਇਲ(_F)"
+msgid "_Monitor"
+msgstr "ਨਿਗਰਾਨੀ(_M)"
 
 #: ../src/interface.c:47
 msgid "_Edit"
@@ -348,7 +478,7 @@ msgstr "ਫਾਇਲਾਂ ਖੋਲ੍ਹੋ(_F)"
 
 #: ../src/interface.c:76
 msgid "View the files opened by a process"
-msgstr "ਕਾਰਜ ਰਾਹੀਂ ਖੋਲੀਆਂ ਫਾਇਲਾਂ ਵੇਖੋ"
+msgstr "ਕਾਰਜ ਰਾਹੀਂ ਖੋਲ੍ਹੀਆਂ ਫਾਇਲਾਂ ਵੇਖੋ"
 
 #: ../src/interface.c:78
 msgid "_Contents"
@@ -356,7 +486,7 @@ msgstr "ਭਾਗ(_C)"
 
 #: ../src/interface.c:79
 msgid "Open the manual"
-msgstr "ਦਸਤਾਵੇਜ਼ ਖੁੱਲੇਗਾ"
+msgstr "ਦਸਤਾਵੇਜ਼ ਖੋਲ੍ਹੋ"
 
 #: ../src/interface.c:80
 msgid "_About"
@@ -451,7 +581,7 @@ msgstr "ਕਾਰਜ"
 msgid "Resources"
 msgstr "ਸਰੋਤ"
 
-#: ../src/load-graph.c:368 ../src/load-graph.c:378
+#: ../src/load-graph.c:396 ../src/load-graph.c:406
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
@@ -484,11 +614,11 @@ msgstr "VM ਵਾਧਾ"
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.c:405
+#: ../src/memmaps.c:423
 msgid "Memory Maps"
 msgstr "ਮੈਮੋਰੀ ਨਕਸ਼ਾ"
 
-#: ../src/memmaps.c:425
+#: ../src/memmaps.c:443
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "ਕਾਰਜ \"%s\" (PID %u) ਲਈ ਮੈਮੋਰੀ ਨਕਸ਼ਾ(_M):"
@@ -524,11 +654,11 @@ msgstr "FD"
 msgid "Object"
 msgstr "ਇਕਾਈ"
 
-#: ../src/openfiles.c:312
+#: ../src/openfiles.c:319
 msgid "Open Files"
-msgstr "ਫਾਇਲਾਂ ਖੋਲੋ"
+msgstr "ਖੁੱਲ੍ਹੀਆਂ ਫਾਇਲਾਂ"
 
-#: ../src/openfiles.c:334
+#: ../src/openfiles.c:341
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "ਕਾਰਜ \"%s\" (PID %u) ਲਈ ਖੁੱਲੀਆਂ ਫਾਇਲਾਂ(_F):"
@@ -542,7 +672,7 @@ msgstr ""
 "ਕਾਰਜ ਦਾ ਦਰਜਾ pid %d ਤੋਂ %d ਤਬਦੀਲ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।\n"
 "%s"
 
-#: ../src/procactions.c:144
+#: ../src/procactions.c:155
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -678,7 +808,7 @@ msgstr "ਗਰਾਫ਼"
 
 #: ../src/procdialogs.c:729
 msgid "_Background color:"
-msgstr "ਪਿੱਠਭੂਮੀ ਰੰਗ(_B):"
+msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ(_B):"
 
 #: ../src/procdialogs.c:748
 msgid "_Grid color:"
@@ -688,88 +818,92 @@ msgstr "ਗਰਿੱਡ ਰੰਗ(_G):"
 msgid "Show _all filesystems"
 msgstr "ਸਭ ਫਾਇਲ ਸਿਸਟਮ ਵੇਖਾਓ(_a)"
 
-#: ../src/proctable.c:245
+#: ../src/proctable.c:274
 msgid "Process Name"
 msgstr "ਕਾਰਜ ਨਾਂ"
 
-#: ../src/proctable.c:246
+#: ../src/proctable.c:275
 msgid "User"
 msgstr "ਉਪਭੋਗੀ"
 
-#: ../src/proctable.c:247
+#: ../src/proctable.c:276
 msgid "Status"
 msgstr "ਹਾਲਤ"
 
-#: ../src/proctable.c:248
+#: ../src/proctable.c:277
 msgid "Virtual Memory"
 msgstr "ਵੁਰਚੁਅਲ ਮੈਮੋਰੀ"
 
-#: ../src/proctable.c:249
+#: ../src/proctable.c:278
 msgid "Resident Memory"
 msgstr "ਰੈਜ਼ੀਡੇਂਟ ਮੈਮੋਰੀ"
 
-#: ../src/proctable.c:250
+#: ../src/proctable.c:279
 msgid "Writable Memory"
 msgstr "ਲਿਖਣਯੋਗ ਮੈਮੋਰੀ"
 
-#: ../src/proctable.c:251
+#: ../src/proctable.c:280
 msgid "Shared Memory"
 msgstr "ਸਾਂਝੀ ਮੈਮੋਰੀ"
 
-#: ../src/proctable.c:252
+#: ../src/proctable.c:281
 msgid "X Server Memory"
 msgstr "X ਸਰਵਰ ਮੈਮੋਰੀ"
 
-#: ../src/proctable.c:253
+#: ../src/proctable.c:282
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:254
+#: ../src/proctable.c:283
 msgid "CPU Time"
 msgstr "CPU ਸਮਾਂ"
 
-#: ../src/proctable.c:255
+#: ../src/proctable.c:284
 msgid "Started"
 msgstr "ਸ਼ੁਰੂ"
 
-#: ../src/proctable.c:256
+#: ../src/proctable.c:285
 msgid "Nice"
 msgstr "ਨਾਇਸ"
 
-#: ../src/proctable.c:257
+#: ../src/proctable.c:286
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.c:258
+#: ../src/proctable.c:287
 msgid "Security Context"
 msgstr "ਸੁਰੱਖਿਆ ਜਾਣਕਾਰੀ"
 
-#: ../src/proctable.c:259
+#: ../src/proctable.c:288
 msgid "Arguments"
 msgstr "ਮੁੱਲ"
 
-#: ../src/proctable.c:432
+#: ../src/proctable.c:289
+msgid "Memory"
+msgstr "ਮੈਮੋਰੀ"
+
+#: ../src/proctable.c:475
 msgid "Running"
 msgstr "ਚੱਲਦੇ"
 
-#: ../src/proctable.c:437
+#: ../src/proctable.c:480
 msgid "Stopped"
 msgstr "ਰੁਕੇ"
 
-#: ../src/proctable.c:442
+#: ../src/proctable.c:485
 msgid "Zombie"
 msgstr "ਜੋਮਬੀਏ (zombie)"
 
-#: ../src/proctable.c:447
+#: ../src/proctable.c:490
 msgid "Uninterruptible"
 msgstr "ਰੁਕਾਵਟ ਰਹਿਤ"
 
-#: ../src/proctable.c:452
+#: ../src/proctable.c:495
 msgid "Sleeping"
 msgstr "ਵਿਰਾਮ"
 
-#: ../src/proctable.c:1034
+#: ../src/proctable.c:1088
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "ਆਖਰੀ 1, 5, 15 ਮਿੰਟਾਂ 'ਚ ਲੋਡ ਔਸਤ: %0.2f, %0.2f, %0.2f"
