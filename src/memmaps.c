@@ -50,14 +50,40 @@ typedef struct
 } MemMapsData;
 
 
+/*
+ * Tries to guess memory format.
+ * 32bits processes running on a 64bit kernel may have 64bit VM values.
+ */
+
+static const char *
+get_memory_format(void)
+{
+	static const char *format;
+
+	if (G_UNLIKELY(!format)) {
+		glibtop_map_entry *memmaps;
+		glibtop_proc_map procmap;
+
+		memmaps = glibtop_get_proc_map(&procmap, getpid());
+
+		if (sizeof(void*) == 8 || memmaps[procmap.number - 1].end > G_MAXUINT32)
+			format = "%016llx";
+		else
+			format = "%08llx";
+
+		g_free(memmaps);
+	}
+
+	return format;
+}
+
 
 /*
  * Returns a new allocated string representing @v
  */
 static gchar* vmoff_tostring(guint64 v)
 {
-	return g_strdup_printf((sizeof (void*) == 8) ? "%016llx" : "%08llx",
-			       (sizeof (void*) == 8) ?  v : v & 0xffffffff);
+	return g_strdup_printf(get_memory_format(), v);
 }
 
 
