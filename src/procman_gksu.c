@@ -33,8 +33,8 @@ gboolean procman_gksu_create_root_password_dialog(const char *command)
 	gksu_run(command, &e);
 
 	if (e) {
-		g_error("Could not run gksu_run(\"%s\") : %s\n",
-			command, e->message);
+		g_critical("Could not run gksu_run(\"%s\") : %s\n",
+			   command, e->message);
 		g_error_free(e);
 		return FALSE;
 	}

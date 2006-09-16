@@ -538,9 +538,9 @@ procman_save_tree_state (GConfClient *client, GtkWidget *tree, const gchar *pref
 
 		if(!gconf_client_set_list(client, key, GCONF_VALUE_INT, order, &error))
 		{
-			g_error("Could not save GConf key '%s' : %s",
-				key,
-				error->message);
+			g_critical("Could not save GConf key '%s' : %s",
+				   key,
+				   error->message);
 			g_error_free(error);
 		}
 
