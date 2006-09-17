@@ -1,7 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
 INCLUDES = \
-	-DPROCMAN_DATADIR=\"$(datadir)/procman/\" \
+	-DPROCMAN_DATADIR=\""$(datadir)/procman/"\" \
+	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-DDATADIR=\""$(datadir)"\" \
 	@PROCMAN_CFLAGS@
 
