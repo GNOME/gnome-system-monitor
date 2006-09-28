@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-system-monitor 2.15.5\n"
+"Project-Id-Version: gnome-system-monitor 2.16.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-12 21:37+0900\n"
-"PO-Revision-Date: 2006-08-12 21:38+0900\n"
+"POT-Creation-Date: 2006-09-29 02:35+0900\n"
+"PO-Revision-Date: 2006-09-29 02:36+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr ""
 "류창우 <cwryu@debian.org>\n"
 "차영호 <ganadist@chollian.net>"
 
-#: ../src/disks.c:308 ../src/memmaps.c:302
+#: ../src/disks.c:308 ../src/memmaps.c:328
 msgid "Device"
 msgstr "장치"
 
@@ -48,7 +48,7 @@ msgstr "전체"
 
 #: ../src/disks.c:312
 msgid "Free"
-msgstr "남음"
+msgstr "남은 양"
 
 #: ../src/disks.c:313
 msgid "Available"
@@ -56,7 +56,7 @@ msgstr "사용 가능"
 
 #: ../src/disks.c:314
 msgid "Used"
-msgstr "사용중"
+msgstr "사용 중"
 
 #: ../src/disks.c:321 ../src/interface.c:745 ../src/procdialogs.c:770
 #: ../src/procdialogs.c:774
@@ -90,7 +90,7 @@ msgstr "%Y %b %d"
 #. translators: primary alert message
 #: ../src/favorites.c:350
 msgid "No hidden processes"
-msgstr "숨겨진 프로세스 없음"
+msgstr "숨긴 프로세스 없음"
 
 #. translators: secondary alert message
 #: ../src/favorites.c:357
@@ -98,16 +98,16 @@ msgid ""
 "There are no hidden processes in the list. To show all running processes, "
 "select the \"All processes\" option in the main window."
 msgstr ""
-"목록에 숨겨진 프로세스가 업습니다. 실행되는 모든 프로세스를 보려면, 기본 창에"
+"목록에 숨긴 프로세스가 업습니다. 실행되는 모든 프로세스를 보려면, 기본 창에"
 "서 \"모든 프로세스\"옵션을 선택하십시오."
 
 #: ../src/favorites.c:377
 msgid "Hidden Processes"
-msgstr "숨겨진 프로세스"
+msgstr "숨긴 프로세스"
 
 #: ../src/favorites.c:401
 msgid "Currently _hidden processes:"
-msgstr "현재 숨겨진 프로세스(_H):"
+msgstr "현재 숨긴 프로세스(_H):"
 
 #: ../src/favorites.c:423
 msgid "_Remove From List"
@@ -122,8 +122,8 @@ msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
 msgstr ""
-"숨기도록 선택한 프로세스가 있습니다. 이 목록에서 지워서 프로세스를 다시 볼 "
-"수 있습니다."
+"숨기도록 선택한 프로세스가 있습니다. 이 목록에서 지우면 해당 프로세스를 다시 "
+"볼 수 있습니다."
 
 #: ../src/gnome-system-monitor.schemas.in.h:1
 msgid "Column zero saved width"
@@ -348,19 +348,19 @@ msgstr "프로세스를 죽일 때 경고 대화상자 보기"
 
 #: ../src/gnome-system-monitor.schemas.in.h:57
 msgid "Time in milliseconds between updates of the devices list"
-msgstr "장치 목록 업데이트 간격 (천분의일초 단위)"
+msgstr "장치 목록 업데이트 간격 (천분의 일초 단위)"
 
 #: ../src/gnome-system-monitor.schemas.in.h:58
 msgid "Time in milliseconds between updates of the graphs"
-msgstr "그래프 업데이트 간격 (천분의일초 단위)"
+msgstr "그래프 업데이트 간격 (천분의 일초 단위)"
 
 #: ../src/gnome-system-monitor.schemas.in.h:59
 msgid "Time in milliseconds between updates of the process view"
-msgstr "프로세스 보기 업데이트 간격 (천분의일초 단위)"
+msgstr "프로세스 보기 업데이트 간격 (천분의 일초 단위)"
 
 #: ../src/gnome-system-monitor.schemas.in.h:60
 msgid "Whether information about all filesystems should be displayed"
-msgstr "모든 파일시스템에 대한 정보를 보일것인 지 여부"
+msgstr "모든 파일시스템에 대한 정보를 표시할 지 여부"
 
 #: ../src/gnome-system-monitor.schemas.in.h:61
 msgid ""
@@ -368,8 +368,8 @@ msgid ""
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
 "filesystems."
 msgstr ""
-"모든 파일시스템에 대한 정보를 보일것인 지 여부('autofs'와 'procfs'같은 파일시"
-"스템 형식을 포함). 현재 마운트된 파일시스템의 모든 목록을 얻을 때 유용합니다."
+"모든 파일시스템에 대한 정보를 표시할 지 여부('autofs'와 'procfs'같은 파일시스"
+"템 형식을 포함). 현재 마운트된 파일시스템의 모든 목록을 얻을 때 유용합니다."
 
 #: ../src/interface.c:46
 msgid "_Monitor"
@@ -389,11 +389,11 @@ msgstr "도움말(_H)"
 
 #: ../src/interface.c:51
 msgid "_Quit"
-msgstr "마침(_Q)"
+msgstr "끝내기(_Q)"
 
 #: ../src/interface.c:52
 msgid "Quit the program"
-msgstr "프로그램을 마칩니다"
+msgstr "프로그램을 끝냅니다"
 
 #: ../src/interface.c:55
 msgid "_Stop Process"
@@ -413,7 +413,7 @@ msgstr "멈춘 프로세스를 계속 진행하게 합니다"
 
 #: ../src/interface.c:60 ../src/interface.c:188
 msgid "End _Process"
-msgstr "프로세스 끝냄(_P)"
+msgstr "프로세스 끝내기(_P)"
 
 #: ../src/interface.c:61
 msgid "Force process to finish normally"
@@ -421,7 +421,7 @@ msgstr "정상적으로 프로세스를 마칩니다"
 
 #: ../src/interface.c:62 ../src/procdialogs.c:129
 msgid "_Kill Process"
-msgstr "프로세스 죽임(_K)"
+msgstr "프로세스 죽이기(_K)"
 
 #: ../src/interface.c:63
 msgid "Force process to finish immediately"
@@ -445,7 +445,7 @@ msgstr "프로그램을 설정합니다"
 
 #: ../src/interface.c:69 ../src/procdialogs.c:85
 msgid "_Hide Process"
-msgstr "프로세스 숨김(_H)"
+msgstr "프로세스 숨기기(_H)"
 
 #: ../src/interface.c:70
 msgid "Hide process from list"
@@ -453,11 +453,11 @@ msgstr "목록에서 프로세스를 숨깁니다"
 
 #: ../src/interface.c:71
 msgid "_Hidden Processes"
-msgstr "숨겨진 프로세스(_H)"
+msgstr "숨긴 프로세스(_H)"
 
 #: ../src/interface.c:72
 msgid "Open the list of currently hidden processes"
-msgstr "숨겨진 프로세스의 목록을 보고 편집합니다"
+msgstr "숨긴 프로세스의 목록을 보고 편집합니다"
 
 #: ../src/interface.c:73
 msgid "_Memory Maps"
@@ -546,11 +546,11 @@ msgstr "사용자 메모리:"
 
 #: ../src/interface.c:377 ../src/interface.c:437
 msgid "of"
-msgstr "사용중, 전체"
+msgstr "사용 중, 전체"
 
 #: ../src/interface.c:418
 msgid "Used swap:"
-msgstr "사용중인 스왑:"
+msgstr "사용 중인 스왑:"
 
 #: ../src/interface.c:477
 msgid "Network History"
@@ -579,41 +579,41 @@ msgstr "자원"
 #: ../src/load-graph.c:396 ../src/load-graph.c:406
 #, c-format
 msgid "%s/s"
-msgstr "%s/s"
+msgstr "%s/초"
 
-#: ../src/memmaps.c:296
+#: ../src/memmaps.c:322
 msgid "Filename"
 msgstr "파일이름"
 
-#: ../src/memmaps.c:297
+#: ../src/memmaps.c:323
 msgid "VM Start"
 msgstr "VM 시작"
 
-#: ../src/memmaps.c:298
+#: ../src/memmaps.c:324
 msgid "VM End"
 msgstr "VM 끝"
 
-#: ../src/memmaps.c:299
+#: ../src/memmaps.c:325
 msgid "VM Size"
 msgstr "VM 크기"
 
-#: ../src/memmaps.c:300
+#: ../src/memmaps.c:326
 msgid "Flags"
 msgstr "프래그"
 
-#: ../src/memmaps.c:301
+#: ../src/memmaps.c:327
 msgid "VM Offset"
 msgstr "VM 오프셋"
 
-#: ../src/memmaps.c:303
+#: ../src/memmaps.c:329
 msgid "Inode"
 msgstr "아이노드"
 
-#: ../src/memmaps.c:405
+#: ../src/memmaps.c:449
 msgid "Memory Maps"
 msgstr "메모리 맵"
 
-#: ../src/memmaps.c:425
+#: ../src/memmaps.c:469
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "\"%s\" 프로세스의 메모리 맵(_M) (PID %u):"
@@ -649,11 +649,11 @@ msgstr "FD"
 msgid "Object"
 msgstr "개체"
 
-#: ../src/openfiles.c:312
+#: ../src/openfiles.c:319
 msgid "Open Files"
 msgstr "연 파일"
 
-#: ../src/openfiles.c:334
+#: ../src/openfiles.c:341
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "\"%s\" 프로세스가 연 파일 (PID %u):"
@@ -721,7 +721,7 @@ msgstr ""
 
 #: ../src/procdialogs.c:138
 msgid "_End Process"
-msgstr "프로세스 끝냄(_E)"
+msgstr "프로세스 끝내기(_E)"
 
 #: ../src/procdialogs.c:167
 msgid "(Very High Priority)"
@@ -815,92 +815,92 @@ msgstr "격자색(_G):"
 msgid "Show _all filesystems"
 msgstr "모든 파일시스템 보이기(_A)"
 
-#: ../src/proctable.c:274
+#: ../src/proctable.c:275
 msgid "Process Name"
 msgstr "프로세스 이름"
 
-#: ../src/proctable.c:275
+#: ../src/proctable.c:276
 msgid "User"
 msgstr "사용자"
 
-#: ../src/proctable.c:276
+#: ../src/proctable.c:277
 msgid "Status"
 msgstr "상태"
 
-#: ../src/proctable.c:277
+#: ../src/proctable.c:278
 msgid "Virtual Memory"
 msgstr "가상 메모리"
 
-#: ../src/proctable.c:278
+#: ../src/proctable.c:279
 msgid "Resident Memory"
 msgstr "상주 메모리"
 
-#: ../src/proctable.c:279
+#: ../src/proctable.c:280
 msgid "Writable Memory"
 msgstr "쓰기 가능한 메모리"
 
-#: ../src/proctable.c:280
+#: ../src/proctable.c:281
 msgid "Shared Memory"
 msgstr "공유 메모리"
 
-#: ../src/proctable.c:281
+#: ../src/proctable.c:282
 msgid "X Server Memory"
 msgstr "X 서버 메모리"
 
-#: ../src/proctable.c:282
+#: ../src/proctable.c:283
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:283
+#: ../src/proctable.c:284
 msgid "CPU Time"
 msgstr "CPU 시간"
 
-#: ../src/proctable.c:284
+#: ../src/proctable.c:285
 msgid "Started"
 msgstr "시작됨"
 
-#: ../src/proctable.c:285
+#: ../src/proctable.c:286
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.c:286
+#: ../src/proctable.c:287
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.c:287
+#: ../src/proctable.c:288
 msgid "Security Context"
 msgstr "보안 컨텍스트"
 
-#: ../src/proctable.c:288
+#: ../src/proctable.c:289
 msgid "Arguments"
 msgstr "인자"
 
-#: ../src/proctable.c:289
+#: ../src/proctable.c:290
 msgid "Memory"
 msgstr "메모리"
 
-#: ../src/proctable.c:475
+#: ../src/proctable.c:476
 msgid "Running"
 msgstr "실행중"
 
-#: ../src/proctable.c:480
+#: ../src/proctable.c:481
 msgid "Stopped"
 msgstr "중지"
 
-#: ../src/proctable.c:485
+#: ../src/proctable.c:486
 msgid "Zombie"
 msgstr "좀비"
 
-#: ../src/proctable.c:490
+#: ../src/proctable.c:491
 msgid "Uninterruptible"
 msgstr "가로챌 수 없음"
 
-#: ../src/proctable.c:495
+#: ../src/proctable.c:496
 msgid "Sleeping"
 msgstr "휴식"
 
-#: ../src/proctable.c:1088
+#: ../src/proctable.c:1089
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "최근 1분, 5분, 15분 사이의 평균 부하: %0.2f, %0.2f, %0.2f"
@@ -925,75 +925,3 @@ msgstr "%.1f MiB"
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
-
-#~ msgid "Devices"
-#~ msgstr "장치"
-
-#~ msgid "_File"
-#~ msgstr "파일(_F)"
-
-#~ msgid "Jorgen Scheibengruber - nicer devices treeview"
-#~ msgstr "Jorgen Scheibengruber - 멋진 장치 트리 보기"
-
-#~ msgid "Benoît Dejean - maintainer"
-#~ msgstr "Benoît Dejean - 관리자"
-
-#~ msgid "Show advanced info tab on startup"
-#~ msgstr "시작할 때 고급 정보 탭을 표시합니다"
-
-#~ msgid "Less _info"
-#~ msgstr "간략한 정보(_I)"
-
-#~ msgid "More _info"
-#~ msgstr "자세한 정보(_I)"
-
-#~ msgid "Process Info"
-#~ msgstr "프로세스 정보"
-
-#~ msgid "Command:"
-#~ msgstr "명령:"
-
-#~ msgid "Status:"
-#~ msgstr "상태:"
-
-#~ msgid "Priority:"
-#~ msgstr "우선 순위:"
-
-#~ msgid "Memory Usage"
-#~ msgstr "메모리 사용량"
-
-#~ msgid "RSS:"
-#~ msgstr "물리메모리:"
-
-#~ msgid "Very high - nice %d"
-#~ msgstr "아주 높음 - nice %d"
-
-#~ msgid "High - nice %d"
-#~ msgstr "높음 - nice %d"
-
-#~ msgid "Normal - nice %d"
-#~ msgstr "보통 - nice %d"
-
-#~ msgid "Low - nice %d"
-#~ msgstr "낮음 - nice %d"
-
-#~ msgid "Very low - nice %d"
-#~ msgstr "아주 낮음 - nice %d"
-
-#~ msgid "_Threads"
-#~ msgstr "스레드(_T)"
-
-#~ msgid "Show each thread as a separate process"
-#~ msgstr "각각의 스레드를 분리된 프로세스로 봅니다"
-
-#~ msgid "seconds"
-#~ msgstr "초"
-
-#~ msgid "Update _interval:"
-#~ msgstr "업데이트 간격(_I):"
-
-#~ msgid "RSS Memory"
-#~ msgstr "물리 메모리"
-
-#~ msgid "%s (thread)"
-#~ msgstr "%s (스레드)"
