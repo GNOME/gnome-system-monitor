@@ -27,10 +27,11 @@ gnome_system_monitor_SOURCES = \
 	selinux.h selinux.c \
 	procman_gnomesu.h procman_gnomesu.c \
 	procman_gksu.h procman_gksu.c \
+	lsof.cpp lsof.h \
 	e_date.c e_date.h
 
 
-gnome_system_monitor_LDADD = @PROCMAN_LIBS@ libbacon.la 
+gnome_system_monitor_LDADD = @PROCMAN_LIBS@ libbacon.la -lpcrecpp
 
 
 noinst_LTLIBRARIES = libbacon.la

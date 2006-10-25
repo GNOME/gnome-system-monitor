@@ -27,6 +27,7 @@
 
 void		cb_show_memory_maps (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
 void		cb_show_open_files (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
+void		cb_show_lsof(GtkAction *action, gpointer data) G_GNUC_INTERNAL;
 void		cb_renice (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
 void		cb_end_process (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
 void		cb_kill_process (GtkAction *action, gpointer data) G_GNUC_INTERNAL;

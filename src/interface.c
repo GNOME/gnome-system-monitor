@@ -48,6 +48,8 @@ static const GtkActionEntry menu_entries[] =
 	{ "View", NULL, N_("_View") },
 	{ "Help", NULL, N_("_Help") },
 
+	{ "Lsof", GTK_STOCK_FIND, N_("_Lsof"), "<control>L",
+	  N_("Lsof"), G_CALLBACK(cb_show_lsof) },
 	{ "Quit", GTK_STOCK_QUIT, N_("_Quit"), "<control>Q",
 	  N_("Quit the program"), G_CALLBACK (cb_app_exit) },
 
@@ -103,6 +105,7 @@ static const GtkRadioActionEntry radio_menu_entries[] =
 static const char ui_info[] =
 "  <menubar name=\"MenuBar\">"
 "    <menu name=\"MonitorMenu\" action=\"Monitor\">"
+"      <menuitem name=\"MonitorLsofMenu\" action=\"Lsof\" />"
 "      <menuitem name=\"MonitorQuitMenu\" action=\"Quit\" />"
 "    </menu>"
 "    <menu name=\"EditMenu\" action=\"Edit\">"

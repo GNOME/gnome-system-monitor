@@ -35,6 +35,7 @@
 #include "favorites.h"
 #include "load-graph.h"
 #include "disks.h"
+#include "lsof.h"
 
 
 
@@ -118,6 +119,13 @@ cb_show_open_files (GtkAction *action, gpointer data)
 	ProcData *procdata = data;
 	
 	create_openfiles_dialog (procdata);
+}
+
+void
+cb_show_lsof(GtkAction *action, gpointer data)
+{
+	ProcData *procdata = data;
+	procman_lsof(procdata);
 }
 
 void		
