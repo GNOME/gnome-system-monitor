@@ -48,8 +48,8 @@ static const GtkActionEntry menu_entries[] =
 	{ "View", NULL, N_("_View") },
 	{ "Help", NULL, N_("_Help") },
 
-	{ "Lsof", GTK_STOCK_FIND, N_("_Lsof"), "<control>L",
-	  N_("Lsof"), G_CALLBACK(cb_show_lsof) },
+	{ "Lsof", GTK_STOCK_FIND, N_("Search for _Open Files"), "<control>O",
+	  N_("Search for open files"), G_CALLBACK(cb_show_lsof) },
 	{ "Quit", GTK_STOCK_QUIT, N_("_Quit"), "<control>Q",
 	  N_("Quit the program"), G_CALLBACK (cb_app_exit) },
 

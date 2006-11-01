@@ -442,7 +442,7 @@ proctable_new (ProcData * const procdata)
 			  G_CALLBACK (cb_tree_button_pressed), procdata);
 
 	g_signal_connect (G_OBJECT(proctree), "columns-changed",
-			 G_CALLBACK(cb_columns_changed), procdata);
+			  G_CALLBACK(cb_columns_changed), procdata);
 
 	return scrolled;
 }
@@ -615,28 +615,42 @@ find_parent (ProcData *procdata, guint pid)
 }
 
 
-static char *
-format_duration_for_display (double d)
+static inline unsigned divide(unsigned *q, unsigned *r, unsigned d)
 {
-	double minutes, seconds, centiseconds;
+	*q = *r / d;
+	*r = *r % d;
+	return *q != 0;
+}
 
-	centiseconds = 100.0 * modf(d, &seconds);
+/*
+ * @param d: duration in centiseconds
+ * @type d: unsigned
+ */
+static char *
+format_duration_for_display(unsigned centiseconds)
+{
+	unsigned weeks = 0, days = 0, hours = 0, minutes = 0, seconds = 0;
 
-	if(seconds < 60.0)
-	{
-		minutes = 0.0;
-	}
-	else
-	{
-		minutes = seconds / 60.0;
-		seconds = fmod(seconds, 60.0);
-	}
+	(void)(divide(&seconds, &centiseconds, 100)
+	       && divide(&minutes, &seconds, 60)
+	       && divide(&hours, &minutes, 60)
+	       && divide(&days, &hours, 24)
+	       && divide(&weeks, &days, 7));
 
-	return g_strdup_printf(
-		"%02u:%02u.%02u",
-		(unsigned) minutes,
-		(unsigned) seconds,
-		(unsigned) centiseconds);
+	if (weeks)
+		/* xgettext: weeks, days */
+		return g_strdup_printf(_("%uw%ud"), weeks, days);
+
+	if (days)
+		/* xgettext: days, hours (0 -> 23) */
+		return g_strdup_printf(_("%ud%02uh"), days, hours);
+
+	if (hours)
+		/* xgettext: hours (0 -> 23), minutes, seconds */
+		return g_strdup_printf(_("%u:%02u:%02u"), hours, minutes, seconds);
+
+	/* xgettext: minutes, seconds, centiseconds */
+	return g_strdup_printf(_("%u:%02u.%02u"), minutes, seconds, centiseconds);
 }
 
 
@@ -653,7 +667,7 @@ update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info
 	memxserver = SI_gnome_vfs_format_file_size_for_display (info->memxserver);
 	mem = SI_gnome_vfs_format_file_size_for_display(info->mem);
 
-	cpu_time = format_duration_for_display (info->cpu_time_last / procdata->frequency);
+	cpu_time = format_duration_for_display(100 * info->cpu_time_last / procdata->frequency);
 
 	/* FIXME: does it worths it to display relative to $now date ?
 	   absolute date wouldn't required to be updated on every refresh */
@@ -806,7 +820,7 @@ remove_info_from_list (ProcInfo *info, ProcData *procdata)
 
 	if(parent) {
 		parent->children = g_slist_concat(parent->children,
-						 info->children);
+						  info->children);
 		info->children = NULL;
 	}
 
