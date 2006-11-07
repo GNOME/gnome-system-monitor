@@ -26,7 +26,7 @@
 
 
 void		create_main_window (ProcData *data) G_GNUC_INTERNAL;
-void		update_sensitivity (ProcData *data, gboolean sensitivity) G_GNUC_INTERNAL;
+void		update_sensitivity (ProcData *data) G_GNUC_INTERNAL;
 void            do_popup_menu(ProcData *data, GdkEventButton *event) G_GNUC_INTERNAL;
 GtkWidget *	make_title_label (const char *text) G_GNUC_INTERNAL;
 

@@ -822,10 +822,19 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	g_signal_connect (G_OBJECT (dialog), "response",
 				  G_CALLBACK (prefs_dialog_button_pressed), procdata);
 	
-	if (procdata->config.current_tab == 0)
-		gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 0);
-	else
-		gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 1);
+	switch (procdata->config.current_tab) {
+	case PROCMAN_TAB_SYSINFO:
+	case PROCMAN_TAB_PROCESSES:
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
+		break;
+	case PROCMAN_TAB_RESOURCES:
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 1);
+		break;
+	case PROCMAN_TAB_DISKS:
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 2);
+		break;
+
+	}
 }
 
 

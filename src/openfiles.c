@@ -224,7 +224,7 @@ create_openfiles_tree (ProcData *procdata)
 	GtkCellRenderer *cell;
 	gint i;
 
-	static const gchar *title[] = {
+	const gchar * const titles[] = {
 		/* Translators: "FD" here means "File Descriptor". Please use
                    a very short translation if possible, and at most
                    2-3 characters for it to be able to fit in the UI. */
@@ -232,8 +232,6 @@ create_openfiles_tree (ProcData *procdata)
 		N_("Type"),
 		N_("Object")
 	};
-
-	PROCMAN_GETTEXT_ARRAY_INIT(title);
 
 	model = gtk_list_store_new (NUM_OPENFILES_COL,
 				    G_TYPE_INT,		/* FD */
@@ -255,7 +253,7 @@ create_openfiles_tree (ProcData *procdata)
 			break;
 		}
 
-		column = gtk_tree_view_column_new_with_attributes (title[i],
+		column = gtk_tree_view_column_new_with_attributes (_(titles[i]),
 								   cell,
 								   "text", i,
 								   NULL);

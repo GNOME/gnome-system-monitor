@@ -1067,7 +1067,7 @@ proctable_clear_tree (ProcData * const procdata)
 
 	proctable_free_table (procdata);
 
-	update_sensitivity (procdata, FALSE);
+	update_sensitivity(procdata);
 }
 
 

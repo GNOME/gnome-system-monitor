@@ -167,6 +167,11 @@ cb_about (GtkAction *action, gpointer data)
 		NULL
 	};
 
+	const gchar * const artists[] = {
+		"Baptiste Mille-Mathias",
+		NULL
+	};
+
 	gtk_show_about_dialog (
 		NULL,
 		"name",			_("System Monitor"),
@@ -177,6 +182,7 @@ cb_about (GtkAction *action, gpointer data)
 					"Copyright \xc2\xa9 2005-2006 Benoît Dejean",
 		"logo-icon-name",	"utilities-system-monitor",
 		"authors",		authors,
+		"artists",		artists,
 		"documenters",		documenters,
 		"translator-credits",	_("translator-credits"),
 		"license",		"GPL 2+",
@@ -331,12 +337,7 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
 	gtk_tree_selection_selected_foreach (procdata->selection, get_last_selected,
 					     &procdata->selected_process);
 
-	if (procdata->selected_process) {
-		update_sensitivity (procdata, TRUE);
-	}
-	else {
-		update_sensitivity (procdata, FALSE);
-	}
+		update_sensitivity(procdata);
 }
 
 
@@ -380,7 +381,7 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 	procdata->config.current_tab = num;
 
 
-	if (num == 0) {
+	if (num == PROCMAN_TAB_PROCESSES) {
 
 		cb_timeout (procdata);
 
@@ -389,8 +390,7 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 				procdata->config.update_interval,
 				cb_timeout, procdata);
 
-		if (procdata->selected_process)
-			update_sensitivity (procdata, TRUE);
+		update_sensitivity(procdata);
 	}
 	else {
 		if (procdata->timeout) {
@@ -398,11 +398,11 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 			procdata->timeout = 0;
 		}
 
-		update_sensitivity (procdata, FALSE);
+		update_sensitivity(procdata);
 	}
 
 
-	if (num == 1) {
+	if (num == PROCMAN_TAB_RESOURCES) {
 		load_graph_start (procdata->cpu_graph);
 		load_graph_start (procdata->mem_graph);
 		load_graph_start (procdata->net_graph);
@@ -414,7 +414,7 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 	}
 
 
-	if (num == 2) {
+	if (num == PROCMAN_TAB_DISKS) {
 
 		cb_update_disks (procdata);
 

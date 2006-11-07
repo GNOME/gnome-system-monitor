@@ -318,7 +318,7 @@ create_memmapsdata (ProcData *procdata)
 	GtkListStore *model;
 	guint i;
 
-	static const gchar *titles[] = {
+	const gchar * const titles[] = {
 		N_("Filename"),
 		N_("VM Start"),
 		N_("VM End"),
@@ -328,8 +328,6 @@ create_memmapsdata (ProcData *procdata)
 		N_("Device"),
 		N_("Inode")
 	};
-
-	PROCMAN_GETTEXT_ARRAY_INIT(titles);
 
 	model = gtk_list_store_new (MMAP_COL_MAX,
 				    G_TYPE_STRING, /* MMAP_COL_FILENAME  */
@@ -372,7 +370,7 @@ create_memmapsdata (ProcData *procdata)
 			break;
 		}
 
-		column = gtk_tree_view_column_new_with_attributes (titles[i],
+		column = gtk_tree_view_column_new_with_attributes (_(titles[i]),
 								   cell,
 								   "text", i,
 								   NULL);

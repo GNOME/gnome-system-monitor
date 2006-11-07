@@ -50,6 +50,15 @@ enum
 };
 
 
+enum ProcmanTab
+{
+	PROCMAN_TAB_SYSINFO,
+	PROCMAN_TAB_PROCESSES,
+	PROCMAN_TAB_RESOURCES,
+	PROCMAN_TAB_DISKS
+};
+
+
 struct _ProcConfig
 {
 	gint		width;

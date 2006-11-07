@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = po src help
+SUBDIRS = pixmaps po src help
 
 EXTRA_DIST = \
 	gnome-system-monitor.desktop.in \

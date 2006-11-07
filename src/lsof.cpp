@@ -110,6 +110,15 @@ namespace
   // GUI Stuff
 
 
+  enum ProcmanLsof {
+    PROCMAN_LSOF_COL_PIXBUF,
+    PROCMAN_LSOF_COL_PROCESS,
+    PROCMAN_LSOF_COL_PID,
+    PROCMAN_LSOF_COL_FILENAME,
+    PROCMAN_LSOF_NCOLS
+  };
+
+
   struct GUI {
 
     GtkListStore *model;

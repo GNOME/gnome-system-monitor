@@ -38,6 +38,7 @@
 #include "load-graph.h"
 #include "util.h"
 #include "disks.h"
+#include "sysinfo.h"
 
 static void	cb_toggle_tree (GtkAction *action, gpointer data);
 
@@ -65,7 +66,7 @@ static const GtkActionEntry menu_entries[] =
 	  N_("Force process to finish immediately"), G_CALLBACK (cb_kill_process) },
 	{ "ChangePriority", NULL, N_("_Change Priority..."), "<control>R",
 	  N_("Change the order of priority of process"), G_CALLBACK (cb_renice) },
-	{ "Preferencies", GTK_STOCK_PREFERENCES, N_("Prefere_nces"), NULL,
+	{ "Preferences", GTK_STOCK_PREFERENCES, N_("Prefere_nces"), NULL,
 	  N_("Configure the application"), G_CALLBACK (cb_edit_preferences) },
 
 	{ "HideProcess", NULL, N_("_Hide Process"), "<control>H",
@@ -117,7 +118,7 @@ static const char ui_info[] =
 "      <separator />"
 "      <menuitem name=\"EditChangePriorityMenu\" action=\"ChangePriority\" />"
 "      <separator />"
-"      <menuitem name=\"EditPreferenciesMenu\" action=\"Preferencies\" />"
+"      <menuitem name=\"EditPreferencesMenu\" action=\"Preferences\" />"
 "    </menu>"
 "    <menu name=\"ViewMenu\" action=\"View\">"
 "      <menuitem name=\"ViewActiveProcesses\" action=\"ShowActiveProcesses\" />"
@@ -665,6 +666,7 @@ create_main_window (ProcData *procdata)
 	GtkWidget *tab_label1, *tab_label2, *tab_label3;
 	GtkWidget *vbox1;
 	GtkWidget *sys_box, *devices_box;
+	GtkWidget *sysinfo_box, *sysinfo_label;
 
 	app = gnome_app_new ("procman", _("System Monitor"));
 
@@ -731,6 +733,12 @@ create_main_window (ProcData *procdata)
 	                    0);
 	gtk_widget_show (notebook);
 
+	sysinfo_box = procman_create_sysinfo_view();
+	gtk_widget_show_all(sysinfo_box);
+	sysinfo_label = gtk_label_new(_("System"));
+	gtk_widget_show(sysinfo_label);
+	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), sysinfo_box, sysinfo_label);
+
 	vbox1 = create_proc_view (procdata);
 	gtk_widget_show (vbox1);
 	tab_label1 = gtk_label_new (_("Processes"));
@@ -795,35 +803,47 @@ do_popup_menu (ProcData *procdata, GdkEventButton *event)
 }
 
 void
-update_sensitivity (ProcData *data, gboolean sensitivity)
+update_sensitivity(ProcData *data)
 {
+	const char * const selected_actions[] = { "StopProcess",
+						  "ContProcess",
+						  "EndProcess",
+						  "KillProcess",
+						  "ChangePriority",
+						  "HideProcess",
+						  "MemoryMaps",
+						  "OpenFiles" };
+
+	const char * const processes_actions[] = { "ShowActiveProcesses",
+						   "ShowAllProcesses",
+						   "ShowMyProcesses",
+						   "ShowDependencies",
+						   "HiddenProcesses" };
+
+	size_t i;
+	gboolean processes_sensitivity, selected_sensitivity;
 	GtkAction *action;
+
+	processes_sensitivity = (data->config.current_tab == PROCMAN_TAB_PROCESSES);
+	selected_sensitivity = (processes_sensitivity && data->selected_process != NULL);
 
 	if(data->endprocessbutton) {
 		/* avoid error on startup if endprocessbutton
 		   has not been built yet */
-		gtk_widget_set_sensitive (data->endprocessbutton, sensitivity);
+		gtk_widget_set_sensitive(data->endprocessbutton, selected_sensitivity);
 	}
 
-	action = gtk_action_group_get_action (data->action_group, "StopProcess");
-	gtk_action_set_sensitive (action, sensitivity);
-	action = gtk_action_group_get_action (data->action_group, "ContProcess");
-	gtk_action_set_sensitive (action, sensitivity);
+	for (i = 0; i != G_N_ELEMENTS(processes_actions); ++i) {
+		action = gtk_action_group_get_action(data->action_group,
+						     processes_actions[i]);
+		gtk_action_set_sensitive(action, processes_sensitivity);
+	}
 
-	action = gtk_action_group_get_action (data->action_group, "EndProcess");
-	gtk_action_set_sensitive (action, sensitivity);
-	action = gtk_action_group_get_action (data->action_group, "KillProcess");
-	gtk_action_set_sensitive (action, sensitivity);
-	action = gtk_action_group_get_action (data->action_group, "ChangePriority");
-	gtk_action_set_sensitive (action, sensitivity);
-	action = gtk_action_group_get_action (data->action_group, "HideProcess");
-	gtk_action_set_sensitive (action, sensitivity);
-	action = gtk_action_group_get_action (data->action_group, "HiddenProcesses");
-	gtk_action_set_sensitive (action, sensitivity);
-	action = gtk_action_group_get_action (data->action_group, "MemoryMaps");
-	gtk_action_set_sensitive (action, sensitivity);
-	action = gtk_action_group_get_action (data->action_group, "OpenFiles");
-	gtk_action_set_sensitive (action, sensitivity);
+	for (i = 0; i != G_N_ELEMENTS(selected_actions); ++i) {
+		action = gtk_action_group_get_action(data->action_group,
+						     selected_actions[i]);
+		gtk_action_set_sensitive(action, selected_sensitivity);
+	}
 }
 
 static void		

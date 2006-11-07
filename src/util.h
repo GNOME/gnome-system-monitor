@@ -5,16 +5,6 @@
 #include <libgnomevfs/gnome-vfs-utils.h>
 #include <stddef.h>
 
-void _procman_array_gettext_init(const char * strings[], size_t n) G_GNUC_INTERNAL;
-
-#define PROCMAN_GETTEXT_ARRAY_INIT(A) G_STMT_START { \
-static gboolean is_init = FALSE; \
-if(!is_init) { \
-  _procman_array_gettext_init((A), G_N_ELEMENTS(A)); \
-  is_init = TRUE; \
- } \
-} G_STMT_END
-
 #define PROCMAN_CMP(X, Y) (((X) == (Y)) ? 0 : (((X) < (Y)) ? -1 : 1))
 #define PROCMAN_RCMP(X, Y) PROCMAN_CMP((Y), (X))
 
