@@ -286,7 +286,7 @@ proctable_new (ProcData * const procdata)
 		N_("Nice"),
 		N_("ID"),
 		N_("Security Context"),
-		N_("Arguments"),
+		N_("Command Line"),
 		N_("Memory"),
 		NULL,
 		"POINTER"

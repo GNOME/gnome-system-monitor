@@ -3,6 +3,9 @@
 #include <glib/gi18n.h>
 #include <glibtop/procopenfiles.h>
 
+// #include <libsexy/sexy-icon-entry.h>
+
+
 #include <set>
 #include <string>
 #include <sstream>
@@ -208,6 +211,12 @@ namespace
     }
 
 
+    static void search_entry_activate(GtkEntry *, gpointer data)
+    {
+      static_cast<GUI*>(data)->search();
+    }
+
+
     static void clear_button_clicked(GtkButton *, gpointer data)
     {
       static_cast<GUI*>(data)->clear();
@@ -345,14 +354,17 @@ void procman_lsof(ProcData *procdata)
   GtkWidget *label = gtk_label_new_with_mnemonic(_("_Name contains:"));
   gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
   GtkWidget *entry = gtk_entry_new();
+
+  // entry = sexy_icon_entry_new();
+  // sexy_icon_entry_add_clear_button(SEXY_ICON_ENTRY(entry));
+  // GtkWidget *icon = gtk_image_new_from_stock(GTK_STOCK_FIND, GTK_ICON_SIZE_MENU);
+  // sexy_icon_entry_set_icon(SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_PRIMARY, GTK_IMAGE(icon));
+
   gtk_box_pack_start(GTK_BOX(hbox), entry, TRUE, TRUE, 0);
   GtkWidget *search_button = gtk_button_new_from_stock(GTK_STOCK_FIND);
   gtk_box_pack_start(GTK_BOX(hbox), search_button, FALSE, FALSE, 0);
   GtkWidget *clear_button = gtk_button_new_from_stock(GTK_STOCK_CLEAR);
   gtk_box_pack_start(GTK_BOX(hbox), clear_button, FALSE, FALSE, 0);
-
-  // g_object_set(G_OBJECT(dialog), "activates_default", TRUE, NULL);
-  // gtk_window_set_default(GTK_WINDOW(dialog), GTK_WIDGET(search_button));
 
 
   GtkWidget *case_button = gtk_check_button_new_with_mnemonic(_("Case insensitive matching"));
@@ -394,6 +406,8 @@ void procman_lsof(ProcData *procdata)
   gui->entry = GTK_ENTRY(entry);
   gui->count = GTK_LABEL(count_label);
 
+  g_signal_connect(G_OBJECT(entry), "activate",
+		   G_CALLBACK(GUI::search_entry_activate), gui);
   g_signal_connect(G_OBJECT(clear_button), "clicked",
 		   G_CALLBACK(GUI::clear_button_clicked), gui);
   g_signal_connect(G_OBJECT(search_button), "clicked",

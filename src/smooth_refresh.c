@@ -235,13 +235,10 @@ smooth_refresh_get(SmoothRefresh *sm, guint *new_interval)
 
 
 	if(changed) {
-		time_t now;
-		time(&now);
-		procman_debug("changed refresh_interval to CPU %3.1f%% current %u (config %u) at %s",
-		       sm->last_pcpu,
-		       sm->interval,
-		       *sm->config_interval,
-		       ctime(&now));
+		procman_debug("CPU usage is %3.1f%%, changed refresh_interval to %u (config %u)",
+			      sm->last_pcpu,
+			      sm->interval,
+			      *sm->config_interval);
 	}
 
 	g_assert(sm->interval == *new_interval);
