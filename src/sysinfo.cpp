@@ -141,10 +141,35 @@ namespace {
   };
 
 
+  class FedoraSysInfo
+    : public SysInfo
+  {
+  public:
+    FedoraSysInfo()
+      : SysInfo("Fedora")
+    {
+      this->load_fedora_info();
+    }
+
+  private:
+    void load_fedora_info()
+    {
+      std::ifstream input("/etc/fedora-release");
+
+      if (input)
+	std::getline(input, this->distro_version);
+      else
+	this->distro_version = _("Unknown version");
+    }
+  };
+
+
   SysInfo* get_sysinfo()
   {
     if (g_file_test("/etc/debian_version", G_FILE_TEST_EXISTS))
       return new DebianSysInfo;
+    else if (g_file_test("/etc/fedora-release", G_FILE_TEST_EXISTS))
+      return new FedoraSysInfo;
     else
       return new SysInfo(_("Unknown distro"));
   }
