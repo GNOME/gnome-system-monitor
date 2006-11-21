@@ -20,7 +20,7 @@
 
 #include <config.h>
 
-#include <gnome.h>
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -668,11 +668,11 @@ create_main_window (ProcData *procdata)
 	GtkWidget *sys_box, *devices_box;
 	GtkWidget *sysinfo_box, *sysinfo_label;
 
-	app = gnome_app_new ("procman", _("System Monitor"));
+	app = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_window_set_title(GTK_WINDOW(app), _("System Monitor"));
 
 	main_box = gtk_vbox_new (FALSE, 0);
-	gnome_app_set_contents (GNOME_APP (app), main_box);
-	gtk_widget_show (main_box);
+	gtk_container_add(GTK_CONTAINER(app), main_box);
 	
 	width = procdata->config.width;
 	height = procdata->config.height;
@@ -771,7 +771,7 @@ create_main_window (ProcData *procdata)
 
 	/* create the statusbar */
 	procdata->statusbar = gtk_statusbar_new();
-	gnome_app_set_statusbar (GNOME_APP (app), procdata->statusbar);
+	gtk_box_pack_end(GTK_BOX(main_box), procdata->statusbar, FALSE, FALSE, 0);
 	procdata->tip_message_cid = gtk_statusbar_get_context_id
 		(GTK_STATUSBAR (procdata->statusbar), "tip_message");
 
@@ -780,6 +780,7 @@ create_main_window (ProcData *procdata)
 	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
 				      procdata->config.show_tree);
 
+	gtk_widget_show_all(app);
 	procdata->app = app;
 }
 

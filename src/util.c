@@ -5,6 +5,8 @@
 #include <gtk/gtk.h>
 
 #include <libgnomevfs/gnome-vfs-utils.h>
+#include <glibtop/proctime.h>
+#include <unistd.h>
 
 #include <stddef.h>
 
@@ -158,6 +160,21 @@ is_debug_enabled(void)
 }
 
 
+static double get_relative_time(void)
+{
+	static unsigned long start_time;
+	GTimeVal tv;
+
+	if (G_UNLIKELY(!start_time)) {
+		glibtop_proc_time buf;
+		glibtop_get_proc_time(&buf, getpid());
+		start_time = buf.start_time;
+	}
+
+	g_get_current_time(&tv);
+	return (tv.tv_sec - start_time) + 1e-6 * tv.tv_usec;
+}
+
 
 void
 procman_debug(const char *format, ...)
@@ -172,7 +189,7 @@ procman_debug(const char *format, ...)
 	msg = g_strdup_vprintf(format, args);
 	va_end(args);
 
-	g_debug(msg);
+	g_debug("[%0.6f] %s", get_relative_time(), msg);
 
 	g_free(msg);
 }

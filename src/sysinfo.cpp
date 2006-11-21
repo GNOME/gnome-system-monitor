@@ -15,6 +15,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <sstream>
 
 extern "C" {
 #include "sysinfo.h"
@@ -34,8 +35,8 @@ namespace {
   public:
     string hostname;
     string distro_name;
-    string distro_version;
-    string distro_release;
+    string distro_codename;
+    string distro_release; // numerical version
 
     guint64 memory_bytes;
     guint64 free_space_bytes;
@@ -44,9 +45,9 @@ namespace {
     vector<string> processors;
 
 
-    SysInfo(const string &name)
+    SysInfo(const string &name = _("Unknown distribution"))
       : distro_name(name),
-	distro_version(_("Unknown version"))
+	distro_release(_("Unknown release"))
     {
       this->load_hostname();
       this->load_processors_info();
@@ -110,7 +111,7 @@ namespace {
       for (guint i = 0; i != mountlist.number; ++i) {
 	glibtop_fsusage usage;
 	glibtop_get_fsusage(&usage, entries[i].mountdir);
-	this->free_space_bytes += usage.bfree * usage.block_size;
+	this->free_space_bytes += usage.bavail * usage.block_size;
       }
 
       g_free(entries);
@@ -118,60 +119,87 @@ namespace {
   };
 
 
-  class DebianSysInfo
+  class LSBSysInfo
     : public SysInfo
   {
   public:
-    DebianSysInfo()
-      : SysInfo("Debian")
+    LSBSysInfo()
     {
-      this->load_debian_info();
+      this->lsb_release();
     }
 
   private:
-    void load_debian_info()
-    {
-      std::ifstream input("/etc/debian_version");
 
-      if (input)
-	std::getline(input, this->distro_version);
-      else
-	this->distro_version = _("Unknown version");
+    static void strip_description(string &s)
+    {
+      const string whitespace("\t\n\x0b\x0c\r ");
+
+      string::size_type colon = s.find(':');
+
+      if (colon == string::npos)
+	return;
+
+      string::size_type first = s.find_first_not_of(whitespace, colon + 1);
+
+      if (first == string::npos)
+	return;
+
+      s.erase(0, first);
+
+      if (first == string::npos)
+	return;
+
+      string::size_type last = s.find_last_not_of(whitespace);
+
+      if (last != string::npos)
+	s.erase(last + 1, s.size());
+
+      // 13 lines for $1 /^.*:\s*(.+?)\s*$/
     }
-  };
 
-
-  class FedoraSysInfo
-    : public SysInfo
-  {
-  public:
-    FedoraSysInfo()
-      : SysInfo("Fedora")
+    static std::istream& get_value(std::istream &is, string &s)
     {
-      this->load_fedora_info();
+      if (std::getline(is, s))
+	strip_description(s);
+      return is;
     }
 
-  private:
-    void load_fedora_info()
+    void lsb_release()
     {
-      std::ifstream input("/etc/fedora-release");
+      char *out= 0;
+      GError *error = 0;
+      int status;
 
-      if (input)
-	std::getline(input, this->distro_version);
-      else
-	this->distro_version = _("Unknown version");
+      if (g_spawn_command_line_sync("lsb_release -irc",
+				    &out,
+				    0,
+				    &status,
+				    &error)) {
+
+	if (!error and WIFEXITED(status) and WEXITSTATUS(status) == 0) {
+	  std::istringstream input(out);
+	  get_value(input, this->distro_name)
+	    and get_value(input, this->distro_release)
+	    and get_value(input, this->distro_codename);
+	}
+      }
+
+      if (error)
+	g_error_free(error);
+
+      g_free(out);
     }
   };
 
 
   SysInfo* get_sysinfo()
   {
-    if (g_file_test("/etc/debian_version", G_FILE_TEST_EXISTS))
-      return new DebianSysInfo;
-    else if (g_file_test("/etc/fedora-release", G_FILE_TEST_EXISTS))
-      return new FedoraSysInfo;
-    else
-      return new SysInfo(_("Unknown distro"));
+    if (char *p = g_find_program_in_path("lsb_release")) {
+      g_free(p);
+      return new LSBSysInfo;
+    }
+
+    return new SysInfo(_("Unknown distribution"));
   }
 }
 
@@ -187,7 +215,7 @@ procman_create_sysinfo_view(void)
   GtkWidget *logo;
 
   GtkWidget *distro_frame;
-  GtkWidget *distro_version_label;
+  GtkWidget *distro_release_label;
 
   GtkWidget *hardware_frame;
   GtkWidget *hardware_table;
@@ -253,18 +281,18 @@ procman_create_sysinfo_view(void)
 
   if (data->distro_release != "")
     markup = g_strdup_printf(
-			     _("Version %s (Release %s)"),
-			     data->distro_version.c_str(),
-			     data->distro_release.c_str());
+			     _("Release %s (%s)"),
+			     data->distro_release.c_str(),
+			     data->distro_codename.c_str());
   else
     markup = g_strdup_printf(
-			     _("Version %s"),
-			     data->distro_version.c_str());
-  distro_version_label = gtk_label_new(markup);
+			     _("Release %s"),
+			     data->distro_release.c_str());
+  distro_release_label = gtk_label_new(markup);
   g_free(markup);
-  gtk_misc_set_alignment(GTK_MISC(distro_version_label), 0.0, 0.5);
-  gtk_misc_set_padding(GTK_MISC(distro_version_label), 6, 6);
-  gtk_container_add(GTK_CONTAINER(alignment), distro_version_label);
+  gtk_misc_set_alignment(GTK_MISC(distro_release_label), 0.0, 0.5);
+  gtk_misc_set_padding(GTK_MISC(distro_release_label), 6, 6);
+  gtk_container_add(GTK_CONTAINER(alignment), distro_release_label);
 
   /* hardware section */
 
@@ -355,7 +383,7 @@ procman_create_sysinfo_view(void)
   gtk_container_set_border_width(GTK_CONTAINER(disk_space_table), 6);
   gtk_container_add(GTK_CONTAINER(alignment), disk_space_table);
 
-  header = gtk_label_new(_("User Space Free:"));
+  header = gtk_label_new(_("Available Disk Space:"));
   gtk_misc_set_alignment(GTK_MISC(header), 0.0, 0.5);
   gtk_table_attach(
 		   GTK_TABLE(disk_space_table), header,

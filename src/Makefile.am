@@ -18,7 +18,7 @@ gnome_system_monitor_SOURCES = \
 	util.c util.h \
 	procactions.c procactions.h \
 	procdialogs.c procdialogs.h \
-	memmaps.c memmaps.h \
+	memmaps.cpp memmaps.h \
 	openfiles.c openfiles.h \
 	favorites.c favorites.h \
 	smooth_refresh.c smooth_refresh.h \

@@ -1,3 +1,70 @@
+2006-11-20  Benoît Dejean  <benoit@placenet.org>
+
+	* src/sysinfo.cpp:
+
+	lsb_release -s is not consistent among distros so
+	we don't use it and instead parse the
+	"description: value" lines.
+	See #374090.
+
+2006-11-20  Benoît Dejean  <benoit@placenet.org>
+
+	* src/sysinfo.cpp:
+
+	Fixed computation of disk space.
+	Changed label.
+	Closes #??????.
+
+2006-11-19  Benoît Dejean  <benoit@placenet.org>
+
+	* src/memmaps.cpp:
+
+	A little more C++.
+	Added #if 0 code, attempt to rewrite tree save_state/get_state.
+
+2006-11-19  Benoît Dejean  <benoit@placenet.org>
+
+	* src/util.c (procman_debug):
+
+	Added relative time since startup in output.
+
+2006-11-18  Benoît Dejean  <benoit@placenet.org>
+
+	* src/interface.c:
+
+	Replaced libgnome by gtk+.
+
+2006-11-18  Benoît Dejean  <benoit@placenet.org>
+
+	* src/memmaps.cpp:
+
+	Reworked to use lsb_release where available.
+	Original patch by Deji Akingunola <dakingun@gmail.com>.
+	See #374090.
+
+2006-11-17  Benoît Dejean  <benoit@placenet.org>
+
+	* src/memmaps.cpp:
+
+	Reworked and simplified.
+	Made maps addition faster.
+
+2006-11-16  Benoît Dejean  <benoit@placenet.org>
+
+	* src/memmaps.cpp:
+
+	First attempt to rewrite some parts in C++.
+
+2006-11-16  Benoît Dejean  <benoit@placenet.org>
+
+	* renamed src/memmaps.c
+	  to src/memmaps.cpp
+	* patched src/Makefile.am
+	* patched src/memmaps.cpp
+	* patched src/memmaps.h:
+
+	Converted memmaps to C++.
+
 2006-11-14  Benoît Dejean  <benoit@placenet.org>
 
 	* src/sysinfo.cpp:
