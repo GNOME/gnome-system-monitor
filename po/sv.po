@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-16 03:14+0000\n"
-"PO-Revision-Date: 2006-11-19 20:15+0100\n"
+"POT-Creation-Date: 2006-11-22 03:16+0000\n"
+"PO-Revision-Date: 2006-11-27 23:32+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../gnome-system-monitor.desktop.in.in.h:1
 #: ../src/callbacks.c:177
-#: ../src/interface.c:671
+#: ../src/interface.c:672
 #: ../src/procman.c:698
 msgid "System Monitor"
 msgstr "Systemövervakare"
@@ -40,7 +40,7 @@ msgstr ""
 "tp-sv@listor.tp-sv.se"
 
 #: ../src/disks.c:308
-#: ../src/memmaps.c:328
+#: ../src/memmaps.cpp:435
 msgid "Device"
 msgstr "Enhet"
 
@@ -612,7 +612,7 @@ msgid "PID"
 msgstr "PID"
 
 #: ../src/lsof.cpp:309
-#: ../src/memmaps.c:322
+#: ../src/memmaps.cpp:429
 msgid "Filename"
 msgstr "Filnamn"
 
@@ -633,35 +633,35 @@ msgstr "Matchning inte känslig för skiftläge"
 msgid "S_earch results:"
 msgstr "S_ökresultat:"
 
-#: ../src/memmaps.c:323
+#: ../src/memmaps.cpp:430
 msgid "VM Start"
 msgstr "VM-start"
 
-#: ../src/memmaps.c:324
+#: ../src/memmaps.cpp:431
 msgid "VM End"
 msgstr "VM-slut"
 
-#: ../src/memmaps.c:325
+#: ../src/memmaps.cpp:432
 msgid "VM Size"
 msgstr "VM-storlek"
 
-#: ../src/memmaps.c:326
+#: ../src/memmaps.cpp:433
 msgid "Flags"
 msgstr "Flaggor"
 
-#: ../src/memmaps.c:327
+#: ../src/memmaps.cpp:434
 msgid "VM Offset"
 msgstr "VM-offset"
 
-#: ../src/memmaps.c:329
+#: ../src/memmaps.cpp:436
 msgid "Inode"
 msgstr "Inod"
 
-#: ../src/memmaps.c:447
+#: ../src/memmaps.cpp:542
 msgid "Memory Maps"
 msgstr "Minneskartor"
 
-#: ../src/memmaps.c:467
+#: ../src/memmaps.cpp:562
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "_Minneskartor för processen \"%s\" (PID %u):"
@@ -963,58 +963,57 @@ msgstr "%u.%02u.%02u"
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Belastningsgenomsnitt för de senaste 1, 5, 15 minutrarna: %0.2f, %0.2f, %0.2f"
 
-#: ../src/sysinfo.cpp:49
-#: ../src/sysinfo.cpp:139
-#: ../src/sysinfo.cpp:162
-msgid "Unknown version"
-msgstr "Okänd version"
+#: ../src/sysinfo.cpp:48
+#: ../src/sysinfo.cpp:202
+msgid "Unknown distribution"
+msgstr "Okänd distribution"
 
-#: ../src/sysinfo.cpp:93
+#: ../src/sysinfo.cpp:50
+msgid "Unknown release"
+msgstr "Okänd utgåva"
+
+#: ../src/sysinfo.cpp:94
 msgid "Unknown CPU model"
 msgstr "Okänd processormodell"
 
-#: ../src/sysinfo.cpp:174
-msgid "Unknown distro"
-msgstr "Okänd distribution"
-
-#: ../src/sysinfo.cpp:256
+#: ../src/sysinfo.cpp:284
 #, c-format
-msgid "Version %s (Release %s)"
-msgstr "Version %s (Utgåva %s)"
+msgid "Release %s (%s)"
+msgstr "Utgåva %s (%s)"
 
-#: ../src/sysinfo.cpp:261
+#: ../src/sysinfo.cpp:289
 #, c-format
-msgid "Version %s"
-msgstr "Version %s"
+msgid "Release %s"
+msgstr "Utgåva %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:271
+#: ../src/sysinfo.cpp:299
 msgid "<b>Hardware</b>"
 msgstr "<b>Hårdvara</b>"
 
-#: ../src/sysinfo.cpp:292
+#: ../src/sysinfo.cpp:320
 msgid "Memory:"
 msgstr "Minne:"
 
-#: ../src/sysinfo.cpp:312
+#: ../src/sysinfo.cpp:340
 #, c-format
 msgid "Processor %d:"
 msgstr "Processor %d:"
 
-#: ../src/sysinfo.cpp:317
+#: ../src/sysinfo.cpp:345
 msgid "Processor:"
 msgstr "Processor:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:337
+#: ../src/sysinfo.cpp:365
 msgid "<b>System Status</b>"
 msgstr "<b>Systemstatus</b>"
 
-#: ../src/sysinfo.cpp:358
-msgid "User Space Free:"
-msgstr "Ledigt användarutrymme:"
+#: ../src/sysinfo.cpp:386
+msgid "Available Disk Space:"
+msgstr "Tillgängligt diskutrymme:"
 
-#: ../src/util.c:75
+#: ../src/util.c:77
 #, c-format
 msgid "%u byte"
 msgid_plural "%u bytes"
@@ -1024,21 +1023,25 @@ msgstr[1] "%u byte"
 # FIXME: Bör buggrapporteras.
 # http://bugzilla.gnome.org/show_bug.cgi?id=318718
 #
-#: ../src/util.c:81
+#: ../src/util.c:83
 #, c-format
 msgid "%.1f KiB"
 msgstr "%.1f KiB"
 
-#: ../src/util.c:85
+#: ../src/util.c:87
 #, c-format
 msgid "%.1f MiB"
 msgstr "%.1f MiB"
 
-#: ../src/util.c:89
+#: ../src/util.c:91
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
 
+#~ msgid "Version %s"
+#~ msgstr "Version %s"
+#~ msgid "User Space Free:"
+#~ msgstr "Ledigt användarutrymme:"
 #~ msgid "Process CPU % column saved width"
 #~ msgstr "Sparad bredd för kolumnen Process CPU %"
 #~ msgid "Process CPU time column saved width"
