@@ -120,6 +120,8 @@ remove_from_blacklist (ProcData *procdata, gchar *name)
 gboolean
 is_process_blacklisted (ProcData *procdata, gchar *name)
 {
+	return FALSE;
+
 	GList *list = procdata->blacklist;
 	
 	if (!list)
