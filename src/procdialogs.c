@@ -461,7 +461,7 @@ create_proc_field_page (ProcData *procdata)
 
 	vbox = gtk_vbox_new (FALSE, 6);
 	
-	label = gtk_label_new_with_mnemonic (_("Processes i_nfo showed in list:"));
+	label = gtk_label_new_with_mnemonic (_("Process i_nformation shown in list:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
 
@@ -661,7 +661,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	vbox = gtk_vbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (proc_box), vbox, TRUE, TRUE, 0);
 	
-	tmp = g_strdup_printf ("<b>%s</b>", _("Process Fields"));
+	tmp = g_strdup_printf ("<b>%s</b>", _("Information Fields"));
 	label = gtk_label_new (NULL);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_label_set_markup (GTK_LABEL (label), tmp);
