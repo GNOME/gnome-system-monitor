@@ -114,7 +114,7 @@ create_proctree(GtkTreeModel *model)
 	void (*set_column)(void*, guint);
 
 
-	if (load_symbols("libsexy.so",
+	if (FALSE && load_symbols("libsexy.so",
 			 "sexy_tree_view_new", &new,
 			 "sexy_tree_view_set_tooltip_label_column", &set_column,
 			 NULL)) {
