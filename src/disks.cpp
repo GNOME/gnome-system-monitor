@@ -6,11 +6,12 @@
 #include <glibtop/fsusage.h>
 #include <glib/gi18n.h>
 
+extern "C" {
 #include "procman.h"
 #include "disks.h"
 #include "util.h"
 #include "interface.h"
-
+}
 
 enum DiskColumns
 {
@@ -97,7 +98,7 @@ get_icon_for_device(const char *mountpoint)
 
 	icon_name = gnome_vfs_volume_get_icon(volume);
 	icon_theme = gtk_icon_theme_get_default();
-	pixbuf = gtk_icon_theme_load_icon(icon_theme, icon_name, 24, 0, NULL);
+	pixbuf = gtk_icon_theme_load_icon(icon_theme, icon_name, 24, GTK_ICON_LOOKUP_USE_BUILTIN, NULL);
 
 	gnome_vfs_volume_unref(volume);
 	g_free(icon_name);
@@ -229,7 +230,7 @@ add_disk(GtkListStore *list, const glibtop_mountentry *entry)
 int
 cb_update_disks(gpointer data)
 {
-	ProcData *const procdata = data;
+	ProcData *const procdata = static_cast<ProcData*>(data);
 
 	GtkListStore *list;
 	glibtop_mountentry * entries;
@@ -254,7 +255,7 @@ cb_update_disks(gpointer data)
 static void
 cb_disk_columns_changed(GtkTreeView *treeview, gpointer user_data)
 {
-	ProcData * const procdata = user_data;
+	ProcData * const procdata = static_cast<ProcData*>(user_data);
 
 	procman_save_tree_state(procdata->client,
 				GTK_WIDGET(treeview),

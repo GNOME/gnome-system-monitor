@@ -19,11 +19,11 @@ gnome_system_monitor_SOURCES = \
 	procactions.c procactions.h \
 	procdialogs.c procdialogs.h \
 	memmaps.cpp memmaps.h \
-	openfiles.c openfiles.h \
+	openfiles.cpp openfiles.h \
 	favorites.c favorites.h \
 	smooth_refresh.c smooth_refresh.h \
 	defaulttable.h \
-	disks.c disks.h \
+	disks.cpp disks.h \
 	selinux.h selinux.cpp \
 	procman_gnomesu.h procman_gnomesu.c \
 	procman_gksu.h procman_gksu.c \
