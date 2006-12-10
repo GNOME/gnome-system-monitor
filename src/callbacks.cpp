@@ -24,6 +24,8 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <signal.h>
+
+extern "C" {
 #include "callbacks.h"
 #include "interface.h"
 #include "proctable.h"
@@ -36,13 +38,13 @@
 #include "load-graph.h"
 #include "disks.h"
 #include "lsof.h"
-
+}
 
 
 void
 cb_kill_sigstop(GtkAction *action, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 
 	/* no confirmation */
 	kill_process (procdata, SIGSTOP);
@@ -54,7 +56,7 @@ cb_kill_sigstop(GtkAction *action, gpointer data)
 void
 cb_kill_sigcont(GtkAction *action, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 
 	/* no confirmation */
 	kill_process (procdata, SIGCONT);
@@ -76,7 +78,7 @@ kill_process_helper(ProcData *procdata, int sig)
 void
 cb_edit_preferences (GtkAction *action, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 
 	procdialog_create_preferences_dialog (procdata);
 }
@@ -85,7 +87,7 @@ cb_edit_preferences (GtkAction *action, gpointer data)
 void
 cb_renice (GtkAction *action, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 
 	procdialog_create_renice_dialog (procdata);
 }
@@ -94,21 +96,21 @@ cb_renice (GtkAction *action, gpointer data)
 void
 cb_end_process (GtkAction *action, gpointer data)
 {
-	kill_process_helper(data, SIGTERM);
+	kill_process_helper(static_cast<ProcData*>(data), SIGTERM);
 }
 
 
 void
 cb_kill_process (GtkAction *action, gpointer data)
 {
-	kill_process_helper(data, SIGKILL);
+	kill_process_helper(static_cast<ProcData*>(data), SIGKILL);
 }
 
 
 void
 cb_show_memory_maps (GtkAction *action, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 
 	create_memmaps_dialog (procdata);
 }
@@ -116,7 +118,7 @@ cb_show_memory_maps (GtkAction *action, gpointer data)
 void
 cb_show_open_files (GtkAction *action, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	
 	create_openfiles_dialog (procdata);
 }
@@ -124,14 +126,14 @@ cb_show_open_files (GtkAction *action, gpointer data)
 void
 cb_show_lsof(GtkAction *action, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	procman_lsof(procdata);
 }
 
 void		
 cb_show_hidden_processes (GtkAction *action, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 
 	create_blacklist_dialog (procdata);
 }
@@ -140,7 +142,7 @@ cb_show_hidden_processes (GtkAction *action, gpointer data)
 void
 cb_hide_process (GtkAction *action, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 
 	if (procdata->config.show_hide_message)
 		procdialog_create_hide_dialog (procdata);
@@ -210,7 +212,7 @@ cb_help_contents (GtkAction *action, gpointer data)
 void
 cb_app_exit (GtkAction *action, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 
 	cb_app_delete (NULL, NULL, procdata);
 }
@@ -219,7 +221,7 @@ cb_app_exit (GtkAction *action, gpointer data)
 gboolean
 cb_app_delete (GtkWidget *window, GdkEventAny *event, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 
 	procman_save_config (procdata);
 	if (procdata->timeout)
@@ -237,7 +239,7 @@ cb_app_delete (GtkWidget *window, GdkEventAny *event, gpointer data)
 void
 cb_end_process_button_pressed (GtkButton *button, gpointer data)
 {
-	kill_process_helper(data, SIGTERM);
+	kill_process_helper(static_cast<ProcData*>(data), SIGTERM);
 }
 
 
@@ -273,7 +275,7 @@ cb_cpu_color_changed (GtkColorButton *cp, gpointer data)
 void
 cb_mem_color_changed (GtkColorButton *cp, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 	change_gconf_color(procdata->client, "/apps/procman/mem_color", cp);
 }
 
@@ -281,35 +283,35 @@ cb_mem_color_changed (GtkColorButton *cp, gpointer data)
 void
 cb_swap_color_changed (GtkColorButton *cp, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 	change_gconf_color(procdata->client, "/apps/procman/swap_color", cp);
 }
 
 void
 cb_net_in_color_changed (GtkColorButton *cp, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 	change_gconf_color(procdata->client, "/apps/procman/net_in_color", cp);
 }
 
 void
 cb_net_out_color_changed (GtkColorButton *cp, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 	change_gconf_color(procdata->client, "/apps/procman/net_out_color", cp);
 }
 
 void
 cb_bg_color_changed (GtkColorButton *cp, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 	change_gconf_color(procdata->client, "/apps/procman/bg_color", cp);
 }
 
 void
 cb_frame_color_changed (GtkColorButton *cp, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 	change_gconf_color(procdata->client, "/apps/procman/frame_color", cp);
 }
 
@@ -318,7 +320,7 @@ static void
 get_last_selected (GtkTreeModel *model, GtkTreePath *path,
 		   GtkTreeIter *iter, gpointer data)
 {
-	ProcInfo **info = data;
+	ProcInfo **info = static_cast<ProcInfo**>(data);
 
 	gtk_tree_model_get (model, iter, COL_POINTER, info, -1);
 }
@@ -327,7 +329,7 @@ get_last_selected (GtkTreeModel *model, GtkTreePath *path,
 void
 cb_row_selected (GtkTreeSelection *selection, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 
 	procdata->selection = selection;
 
@@ -346,7 +348,7 @@ cb_tree_button_pressed (GtkWidget *widget,
 			GdkEventButton *event,
 			gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 
 	if (event->button == 3 && event->type == GDK_BUTTON_PRESS)
 		do_popup_menu (procdata, event);
@@ -358,7 +360,7 @@ cb_tree_button_pressed (GtkWidget *widget,
 gboolean
 cb_tree_popup_menu (GtkWidget *widget, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 
 	do_popup_menu (procdata, NULL);
 
@@ -376,7 +378,7 @@ cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 void
 cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 
 	procdata->config.current_tab = num;
 
@@ -440,14 +442,14 @@ cb_volume_mounted_or_unmounted(GnomeVFSVolumeMonitor *vfsvolumemonitor,
 			    GnomeVFSVolume *vol,
 			    gpointer procdata)
 {
-	cb_update_disks(procdata);
+	cb_update_disks(static_cast<ProcData*>(procdata));
 }
 
 
 gint
 cb_timeout (gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 	guint new_interval;
 
 	proctable_update_all (procdata);
@@ -467,7 +469,7 @@ cb_timeout (gpointer data)
 void
 cb_radio_processes(GtkAction *action, GtkRadioAction *current, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 
 	procdata->config.whose_process = gtk_radio_action_get_current_value(current);
 

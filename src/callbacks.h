@@ -25,6 +25,8 @@
 #include "procman.h"
 #include <libgnomevfs/gnome-vfs.h>
 
+G_BEGIN_DECLS
+
 void		cb_show_memory_maps (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
 void		cb_show_open_files (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
 void		cb_show_lsof(GtkAction *action, gpointer data) G_GNUC_INTERNAL;
@@ -84,6 +86,6 @@ void		cb_kill_sigstop(GtkAction *action,
 
 void		cb_kill_sigcont(GtkAction *action,
 				gpointer data) G_GNUC_INTERNAL;
-
+G_END_DECLS
 
 #endif /* _PROCMAN_CALLBACKS_H_ */

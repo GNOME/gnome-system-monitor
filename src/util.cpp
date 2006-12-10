@@ -103,7 +103,7 @@ load_symbols(const char *module, ...)
 	gboolean found_all = TRUE;
 	va_list args;
 
-	mod = g_module_open(module, G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
+	mod = g_module_open(module, static_cast<GModuleFlags>(G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL));
 
 	if (!mod)
 		return FALSE;

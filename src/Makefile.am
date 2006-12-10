@@ -11,11 +11,11 @@ bin_PROGRAMS = gnome-system-monitor
 gnome_system_monitor_SOURCES = \
 	procman.c  procman.h \
 	interface.c interface.h \
-	callbacks.c callbacks.h \
+	callbacks.cpp callbacks.h \
 	load-graph.c load-graph.h \
 	proctable.c proctable.h \
 	prettytable.c prettytable.h \
-	util.c util.h \
+	util.cpp util.h \
 	procactions.c procactions.h \
 	procdialogs.c procdialogs.h \
 	memmaps.cpp memmaps.h \
