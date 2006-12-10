@@ -3,6 +3,8 @@
 #include <glib/gi18n.h>
 #include <glibtop/procopenfiles.h>
 
+#include <sys/wait.h>
+
 // #include <libsexy/sexy-icon-entry.h>
 
 
@@ -11,7 +13,7 @@
 #include <sstream>
 #include <iterator>
 
-#include <pcrecpp.h>
+// #include <pcrecpp.h>
 
 extern "C" {
 #include "procman.h"
@@ -87,7 +89,7 @@ namespace
     { }
   };
 
-#else
+#elif 0
 
   class Lsof
     : public LsofBase
@@ -103,6 +105,74 @@ namespace
 
     Lsof(const string &pattern, bool caseless)
       : re(pattern, pcrecpp::RE_Options().set_caseless(caseless).set_utf8(true))
+    { }
+  };
+
+#else
+  class Lsof
+    : public LsofBase
+  {
+    string pattern;
+    bool caseless;
+
+
+    static string escape(const string &s)
+    {
+      char *escaped = g_strescape(s.c_str(), "");
+      string ret(escaped);
+      g_free(escaped);
+
+      return ret;
+    }
+
+
+    virtual bool matches(const string &filename) const
+    {
+      string argv1, argv2;
+
+      argv1 = escape(this->pattern);
+      argv2 = escape(filename);
+
+      const char *argv[7];
+
+      argv[0] = "python";
+      argv[1] = "-c";
+      argv[2] = "import sys, re; "
+	"sys.exit(re.search(sys.argv[1], sys.argv[2], "
+	"(bool(sys.argv[3]) and re.I or 0)) is None)";
+      argv[3] = argv1.c_str();
+      argv[4] = argv2.c_str();
+      argv[5] = this->caseless ? "1" : "0";
+      argv[6] = NULL;
+
+      int status;
+      GError *error = NULL;
+
+      if (g_spawn_sync(NULL, // cwd
+		       const_cast<gchar**>(argv), NULL, // argv and env
+		       static_cast<GSpawnFlags>(G_SPAWN_SEARCH_PATH
+					       | G_SPAWN_STDOUT_TO_DEV_NULL
+					       | G_SPAWN_STDERR_TO_DEV_NULL), // flags
+		       NULL, NULL, // child_setup and user_data
+		       NULL, NULL, // stdin, stdout
+		       &status,
+		       &error)) {
+	if (!error and WIFEXITED(status))
+	  return WEXITSTATUS(status) == 0;
+      }
+
+      if (error) {
+	procman_debug("Failed to spawn python for re : %s", error->message);
+	g_error_free(error);
+      }
+
+      return false;
+    }
+
+  public:
+
+    Lsof(const string &pattern, bool caseless)
+      : pattern(pattern), caseless(caseless)
     { }
   };
 
