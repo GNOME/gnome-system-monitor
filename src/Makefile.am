@@ -24,7 +24,7 @@ gnome_system_monitor_SOURCES = \
 	smooth_refresh.c smooth_refresh.h \
 	defaulttable.h \
 	disks.c disks.h \
-	selinux.h selinux.c \
+	selinux.h selinux.cpp \
 	procman_gnomesu.h procman_gnomesu.c \
 	procman_gksu.h procman_gksu.c \
 	sysinfo.cpp sysinfo.h \

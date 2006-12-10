@@ -8,6 +8,7 @@
 #define PROCMAN_CMP(X, Y) (((X) == (Y)) ? 0 : (((X) < (Y)) ? -1 : 1))
 #define PROCMAN_RCMP(X, Y) PROCMAN_CMP((Y), (X))
 
+G_BEGIN_DECLS
 
 GtkWidget*
 procman_make_label_for_mmaps_or_ofiles(const char *format,
@@ -25,5 +26,7 @@ load_symbols(const char *module, ...) G_GNUC_INTERNAL G_GNUC_NULL_TERMINATED;
 
 void
 procman_debug(const char *format, ...) G_GNUC_INTERNAL G_GNUC_PRINTF(1, 2);
+
+G_END_DECLS
 
 #endif /* H_GNOME_SYSTEM_MONITOR_UTIL_1123178725 */
