@@ -18,10 +18,8 @@
 #include <fstream>
 #include <sstream>
 
-extern "C" {
 #include "sysinfo.h"
 #include "util.h"
-}
 
 
 using std::string;

@@ -97,7 +97,7 @@ static void status_changed(GConfClient *client,
 			   GConfEntry *entry,
 			   gpointer user_data)
 {
-	SmoothRefresh *sm = user_data;
+	SmoothRefresh *sm = static_cast<SmoothRefresh *>(user_data);
 	GConfValue *value = gconf_entry_get_value(entry);
 
 	if (value)

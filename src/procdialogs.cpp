@@ -44,7 +44,7 @@ static gint new_nice_value = 0;
 static void
 hide_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	
 	if (id == GTK_RESPONSE_OK) {
 		add_selected_to_blacklist (procdata);
@@ -57,14 +57,14 @@ hide_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 void
 procdialog_create_hide_dialog (ProcData *data)
 {
-       ProcData *procdata = data;
+       ProcData *procdata = static_cast<ProcData*>(data);
        GtkWidget *hide_alert_dialog;
        gchar *message;
 
        /*translators: primary alert message*/
        message = g_strdup_printf (_("Hide the selected process?"));
        hide_alert_dialog = gtk_message_dialog_new (GTK_WINDOW (procdata->app),
-						   GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+						   static_cast<GtkDialogFlags>(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
 						   GTK_MESSAGE_WARNING,
 						   GTK_BUTTONS_NONE,
 						   message);
@@ -97,7 +97,7 @@ procdialog_create_hide_dialog (ProcData *data)
 static void
 kill_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 {
-	struct KillArgs *kargs = data;
+	struct KillArgs *kargs = static_cast<KillArgs*>(data);
 	
 	gtk_widget_destroy (GTK_WIDGET (dialog));
 
@@ -114,7 +114,7 @@ procdialog_create_kill_dialog (ProcData *procdata, int signal)
 	gchar *primary, *secondary, *button_text;
 	struct KillArgs *kargs;
 
-	kargs = g_malloc(sizeof *kargs);
+	kargs = g_new(KillArgs, 1);
 	kargs->procdata = procdata;
 	kargs->signal = signal;
 
@@ -139,7 +139,7 @@ procdialog_create_kill_dialog (ProcData *procdata, int signal)
   	}
 
 	kill_alert_dialog = gtk_message_dialog_new (GTK_WINDOW (procdata->app),
-						    GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+						    static_cast<GtkDialogFlags>(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
 						    GTK_MESSAGE_WARNING,
 						    GTK_BUTTONS_NONE,
 						    _(primary));
@@ -188,7 +188,7 @@ renice_scale_changed (GtkAdjustment *adj, gpointer data)
 static void
 renice_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	
 	if (id == 100) {
 		if (new_nice_value == -100)
@@ -268,7 +268,7 @@ procdialog_create_renice_dialog (ProcData *procdata)
 	
 	label = gtk_label_new_with_mnemonic (_("_Nice value:"));
 	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 2,
-			  0, 0, 0, 0);
+			  GTK_FILL, GTK_FILL, 0, 0);
 	
 	renice_adj = gtk_adjustment_new (info->nice, RENICE_VAL_MIN, RENICE_VAL_MAX, 1, 1, 0);
 	new_nice_value = 0;
@@ -276,11 +276,11 @@ procdialog_create_renice_dialog (ProcData *procdata)
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), hscale);
 	gtk_scale_set_digits (GTK_SCALE (hscale), 0);
 	gtk_table_attach (GTK_TABLE (table), hscale, 1, 2, 0, 1,
-			  GTK_EXPAND | GTK_FILL, 0, 0, 0);
+			  static_cast<GtkAttachOptions>(GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
 			  
 	priority_label = gtk_label_new (get_nice_level (info->nice));
 	gtk_table_attach (GTK_TABLE (table), priority_label, 1, 2, 1, 2,
-			  GTK_FILL, 0, 0, 0);
+			  GTK_FILL, GTK_FILL, 0, 0);
 	
 	text = g_strconcat("<small><i><b>", _("Note:"), "</b> ", 
 	    _("The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."),
@@ -313,7 +313,7 @@ prefs_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 static void
 show_kill_dialog_toggled (GtkToggleButton *button, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	GConfClient *client = procdata->client;
 	
 	gboolean toggled;
@@ -328,7 +328,7 @@ show_kill_dialog_toggled (GtkToggleButton *button, gpointer data)
 static void
 smooth_refresh_toggled(GtkToggleButton *button, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	GConfClient *client = procdata->client;
 
 	gboolean toggled;
@@ -343,7 +343,7 @@ smooth_refresh_toggled(GtkToggleButton *button, gpointer data)
 static void
 show_all_fs_toggled (GtkToggleButton *button, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	GConfClient *client = procdata->client;
 
 	gboolean toggled;
@@ -357,7 +357,7 @@ show_all_fs_toggled (GtkToggleButton *button, gpointer data)
 static void
 show_hide_dialog_toggled (GtkToggleButton *button, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	GConfClient *client = procdata->client;
 	
 	gboolean toggled;
@@ -371,10 +371,10 @@ show_hide_dialog_toggled (GtkToggleButton *button, gpointer data)
 static gboolean
 update_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	GConfClient *client = procdata->client;
 	GtkWidget *spin_button;
-	gdouble value;
+	guint value;
 	
 	spin_button = widget;
 	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (spin_button));
@@ -389,10 +389,10 @@ update_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 static gboolean
 update_graph_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	GConfClient *client = procdata->client;
 	GtkWidget *spin_button;
-	gdouble value = 0;
+	guint value = 0;
 
 	spin_button = widget;
 	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (spin_button));
@@ -407,10 +407,10 @@ update_graph_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer 
 static gboolean
 update_disks_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	GConfClient *client = procdata->client;
 	GtkWidget *spin_button;
-	gdouble value;
+	guint value;
 
 	spin_button = widget;
 	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (spin_button));
@@ -426,7 +426,7 @@ update_disks_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer 
 static void
 field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
 {
-	GtkTreeModel *model = data;
+	GtkTreeModel *model = static_cast<GtkTreeModel*>(data);
 	GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
   	GtkTreeIter iter;
   	GtkTreeViewColumn *column;
@@ -506,7 +506,7 @@ create_proc_field_page (ProcData *procdata)
 	
 	for(it = columns; it; it = it->next)
 	{
-		GtkTreeViewColumn *column = it->data;
+		GtkTreeViewColumn *column = static_cast<GtkTreeViewColumn*>(it->data);
 		GtkTreeIter iter;
 		const gchar *title;
 		gboolean visible;

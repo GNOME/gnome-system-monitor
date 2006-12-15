@@ -36,7 +36,9 @@
 #include <glibtop/mem.h>
 #include <glibtop/swap.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
+extern "C" {
 #include <libwnck/libwnck.h>
+}
 #include <sys/stat.h>
 #include <pwd.h>
 #include <time.h>
@@ -51,8 +53,9 @@
 #include "interface.h"
 #include "favorites.h"
 #include "selinux.h"
+extern "C" {
 #include "e_date.h"
-
+}
 
 static guint64 total_time = 1;
 static guint64 total_time_last = 1;
@@ -110,17 +113,17 @@ static GtkWidget *
 create_proctree(GtkTreeModel *model)
 {
 	GtkWidget *proctree;
-	GtkWidget* (*new)(void);
-	void (*set_column)(void*, guint);
+	GtkWidget* (*sexy_new)(void);
+	void (*sexy_set_column)(void*, guint);
 
 
 	if (FALSE && load_symbols("libsexy.so",
-			 "sexy_tree_view_new", &new,
-			 "sexy_tree_view_set_tooltip_label_column", &set_column,
+			 "sexy_tree_view_new", &sexy_new,
+			 "sexy_tree_view_set_tooltip_label_column", &sexy_set_column,
 			 NULL)) {
-		proctree = new();
+		proctree = sexy_new();
 		gtk_tree_view_set_model(GTK_TREE_VIEW(proctree), model);
-		set_column(proctree, COL_TOOLTIP);
+		sexy_set_column(proctree, COL_TOOLTIP);
 	} else {
 		proctree = gtk_tree_view_new_with_model(model);
 	}
@@ -143,7 +146,7 @@ set_proctree_reorderable(ProcData *procdata)
 	columns = gtk_tree_view_get_columns (proctree);
 
 	for(col = columns; col; col = col->next)
-		gtk_tree_view_column_set_reorderable(col->data, TRUE);
+		gtk_tree_view_column_set_reorderable(static_cast<GtkTreeViewColumn*>(col->data), TRUE);
 
 	g_list_free(columns);
 }
@@ -152,7 +155,7 @@ set_proctree_reorderable(ProcData *procdata)
 static void
 cb_columns_changed(GtkTreeView *treeview, gpointer user_data)
 {
-	ProcData * const procdata = user_data;
+	ProcData * const procdata = static_cast<ProcData*>(user_data);
 
 	procman_save_tree_state(procdata->client,
 				GTK_WIDGET(treeview),
@@ -170,9 +173,9 @@ my_gtk_tree_view_get_column_with_sort_column_id(GtkTreeView *treeview, int id)
 
 	for(it = columns; it; it = it->next)
 	{
-		if(gtk_tree_view_column_get_sort_column_id(it->data) == id)
+		if(gtk_tree_view_column_get_sort_column_id(static_cast<GtkTreeViewColumn*>(it->data)) == id)
 		{
-			col = it->data;
+			col = static_cast<GtkTreeViewColumn*>(it->data);
 			break;
 		}
 	}
@@ -222,7 +225,7 @@ proctable_get_columns_order(GtkTreeView *treeview)
 	{
 		int id;
 
-		id = gtk_tree_view_column_get_sort_column_id(col->data);
+		id = gtk_tree_view_column_get_sort_column_id(static_cast<GtkTreeViewColumn*>(col->data));
 		order = g_slist_prepend(order, GINT_TO_POINTER(id));
 	}
 
@@ -600,7 +603,7 @@ get_process_memory_info(ProcInfo *info)
 ProcInfo *
 proctable_find_process (guint pid, ProcData *procdata)
 {
-	return g_hash_table_lookup(procdata->pids, GINT_TO_POINTER(pid));
+	return static_cast<ProcInfo*>(g_hash_table_lookup(procdata->pids, GINT_TO_POINTER(pid)));
 }
 
 
@@ -814,7 +817,7 @@ remove_info_from_list (ProcInfo *info, ProcData *procdata)
 
 	/* Add any children to parent list */
 	for(child = info->children; child; child = g_slist_next (child)) {
-		ProcInfo *child_info = child->data;
+		ProcInfo *child_info = static_cast<ProcInfo*>(child->data);
 		child_info->parent = parent;
 	}
 
@@ -973,11 +976,11 @@ refresh_list (ProcData *procdata, const unsigned *pid_list, const guint n)
 	for(i = 0; i < n; ++i)
 		g_hash_table_insert(pid_hash,
 				    GINT_TO_POINTER(pid_list[i]),
-				    GINT_TO_POINTER(!NULL));
+				    GINT_TO_POINTER(1 /* !NULL */));
 
 
 	for(list = procdata->info; list; list = g_list_next (list)) {
-		ProcInfo * const info = list->data;
+		ProcInfo * const info = static_cast<ProcInfo*>(list->data);
 
 		if(!g_hash_table_lookup(pid_hash, GINT_TO_POINTER(info->pid)))
 		{
@@ -1078,7 +1081,7 @@ proctable_free_table (ProcData * const procdata)
 
 	while (list)
 	{
-		ProcInfo *info = list->data;
+		ProcInfo *info = static_cast<ProcInfo*>(list->data);
 		proctable_free_info(info);
 		list = g_list_next (list);
 	}

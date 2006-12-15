@@ -15,11 +15,9 @@
 
 // #include <pcrecpp.h>
 
-extern "C" {
 #include "procman.h"
 #include "lsof.h"
 #include "util.h"
-}
 
 
 using std::string;

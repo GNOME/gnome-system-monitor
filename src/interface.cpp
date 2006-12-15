@@ -364,11 +364,11 @@ create_sys_view (ProcData *procdata)
 		&load_graph_get_colors(mem_graph)[2]);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_mem_color_changed), procdata);
-	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, 0, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 	
 	label = gtk_label_new (_("User memory:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 	
 	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(mem_graph)->memused),
 				0.0,
@@ -380,13 +380,13 @@ create_sys_view (ProcData *procdata)
 			  0,
 			  1,
 			  GTK_FILL,
-			  0,
+			  GTK_FILL,
 			  0,
 			  0);
 	
 	label = gtk_label_new (_("of"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 0, 1, GTK_FILL, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 	
 
 	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(mem_graph)->memtotal),
@@ -400,7 +400,7 @@ create_sys_view (ProcData *procdata)
 			  0,
 			  1,
 			  GTK_FILL,
-			  0,
+			  GTK_FILL,
 			  0,
 			  0);
 	
@@ -415,7 +415,7 @@ create_sys_view (ProcData *procdata)
 			  0,
 			  1,
 			  GTK_FILL,
-			  0,
+			  GTK_FILL,
 			  0,
 			  0);
 
@@ -423,11 +423,11 @@ create_sys_view (ProcData *procdata)
 		&load_graph_get_colors(mem_graph)[3]);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_swap_color_changed), procdata);
-	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, 0, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 			  
 	label = gtk_label_new (_("Used swap:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 	
 
 	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(mem_graph)->swapused ),
@@ -440,13 +440,13 @@ create_sys_view (ProcData *procdata)
 			  1,
 			  2,
 			  GTK_FILL,
-			  0,
+			  GTK_FILL,
 			  0,
 			  0);
 			  
 	label = gtk_label_new (_("of"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 1, 2, GTK_FILL, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 	
 
 	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(mem_graph)->swaptotal),
@@ -459,7 +459,7 @@ create_sys_view (ProcData *procdata)
 			  1,
 			  2,
 			  GTK_FILL,
-			  0,
+			  GTK_FILL,
 			  0,
 			  0);
 
@@ -474,7 +474,7 @@ create_sys_view (ProcData *procdata)
 			  1,
 			  2,
 			  GTK_FILL,
-			  0,
+			  GTK_FILL,
 			  0,
 			  0);
 
@@ -514,11 +514,11 @@ create_sys_view (ProcData *procdata)
 		&load_graph_get_colors(net_graph)[2]);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_net_in_color_changed), procdata);
-	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, 0, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
 	label = gtk_label_new (_("Received:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
 	hbox = gtk_hbox_new (FALSE, 0);
 	g_signal_connect (G_OBJECT (hbox), "size_request",
@@ -534,11 +534,11 @@ create_sys_view (ProcData *procdata)
 			    FALSE,
 			    0);
 
-	gtk_table_attach (GTK_TABLE (table), hbox, 2, 3, 0, 1, GTK_FILL, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), hbox, 2, 3, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
 	label = gtk_label_new (_("Total:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 0, 1, GTK_FILL, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
 	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(net_graph)->net_in_total),
 				0.0,
@@ -550,7 +550,7 @@ create_sys_view (ProcData *procdata)
 			  0,
 			  1,
 			  GTK_FILL,
-			  0,
+			  GTK_FILL,
 			  0,
 			  0);
 
@@ -558,11 +558,11 @@ create_sys_view (ProcData *procdata)
 		&load_graph_get_colors(net_graph)[3]);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_net_out_color_changed), procdata);
-	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, 0, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 
 	label = gtk_label_new (_("Sent:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 
 	hbox = gtk_hbox_new (FALSE, 0);
 	g_signal_connect (G_OBJECT (hbox), "size_request",
@@ -577,11 +577,11 @@ create_sys_view (ProcData *procdata)
 			    FALSE,
 			    0);
 
-	gtk_table_attach (GTK_TABLE (table), hbox, 2, 3, 1, 2, GTK_FILL, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), hbox, 2, 3, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 
 	label = gtk_label_new (_("Total:"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 1, 2, GTK_FILL, 0, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 
 	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(net_graph)->net_out_total),
 				0.0,
@@ -593,7 +593,7 @@ create_sys_view (ProcData *procdata)
 			  1,
 			  2,
 			  GTK_FILL,
-			  0,
+			  GTK_FILL,
 			  0,
 			  0);
 
@@ -612,7 +612,7 @@ menu_item_select_cb (GtkMenuItem *proxy,
 	GtkAction *action;
 	char *message;
 
-	action = g_object_get_data (G_OBJECT (proxy),  "gtk-action");
+	action = static_cast<GtkAction*>(g_object_get_data (G_OBJECT (proxy),  "gtk-action"));
 	g_assert(action);
 
 	g_object_get (G_OBJECT (action), "tooltip", &message, NULL);
@@ -654,9 +654,9 @@ disconnect_proxy_cb (GtkUIManager *manager,
 {
 	if (GTK_IS_MENU_ITEM (proxy)) {
 		g_signal_handlers_disconnect_by_func
-			(proxy, G_CALLBACK (menu_item_select_cb), procdata);
+			(proxy, reinterpret_cast<void*>(G_CALLBACK(menu_item_select_cb)), procdata);
 		g_signal_handlers_disconnect_by_func
-			(proxy, G_CALLBACK (menu_item_deselect_cb), procdata);
+			(proxy, reinterpret_cast<void*>(G_CALLBACK(menu_item_deselect_cb)), procdata);
 	}
 }
 
@@ -861,7 +861,7 @@ update_sensitivity(ProcData *data)
 static void		
 cb_toggle_tree (GtkAction *action, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	GConfClient *client = procdata->client;
 	gboolean show;
 

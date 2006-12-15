@@ -34,7 +34,7 @@ load_default_table(PrettyTable *pretty_table,
 static void
 new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	ProcInfo *info;
 	GHashTable * const hash = procdata->pretty_table->app_hash;
 	guint pid;
@@ -54,7 +54,7 @@ new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 	list = wnck_application_get_windows (app);
 	if (!list)
 		return;
-	window = list->data;
+	window = static_cast<WnckWindow*>(list->data);
 	tmp = wnck_window_get_icon (window);
 
 	if (!tmp)
@@ -92,7 +92,7 @@ new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 static void
 application_finished (WnckScreen *screen, WnckApplication *app, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 	GHashTable * const hash = procdata->pretty_table->app_hash;
 	guint pid;
 	gpointer orig_pid, icon;
@@ -151,7 +151,7 @@ get_icon_from_theme (PrettyTable *pretty_table,
 	return gtk_icon_theme_load_icon (pretty_table->theme,
 					 command,
 					 APP_ICON_SIZE,
-					 0,
+					 GTK_ICON_LOOKUP_USE_BUILTIN,
 					 NULL);
 }
 
@@ -164,8 +164,8 @@ get_icon_from_default (PrettyTable *pretty_table,
 {
 	GdkPixbuf *icon;
 
-	icon = g_hash_table_lookup (pretty_table->default_hash,
-				    command);
+	icon = static_cast<GdkPixbuf*>(g_hash_table_lookup (pretty_table->default_hash,
+							    command));
 
 	if (icon) {
 		g_object_ref (icon);
@@ -184,8 +184,8 @@ get_icon_from_wnck (PrettyTable *pretty_table,
 {
 	GdkPixbuf *icon;
 
-	icon = g_hash_table_lookup (pretty_table->app_hash,
-				    GUINT_TO_POINTER(pid));
+	icon = static_cast<GdkPixbuf*>(g_hash_table_lookup (pretty_table->app_hash,
+							    GUINT_TO_POINTER(pid)));
 
 	if (icon) {
 		g_object_ref (icon);
@@ -275,9 +275,9 @@ create_scaled_icon(const char *iconpath)
 static void
 load_icon_for_commands(gpointer key, gpointer value, gpointer userdata)
 {
-	char *icon = key;
-	GPtrArray *commands = value;
-	PrettyTable * pretty_table = userdata;
+	char *icon = static_cast<char*>(key);
+	GPtrArray *commands = static_cast<GPtrArray*>(value);
+	PrettyTable * pretty_table = static_cast<PrettyTable*>(userdata);
 
 	GdkPixbuf *scaled;
 	char *iconpath;
@@ -293,7 +293,7 @@ load_icon_for_commands(gpointer key, gpointer value, gpointer userdata)
 		{
 			g_object_ref(scaled);
 			g_hash_table_insert(pretty_table->default_hash,
-					    g_strdup(g_ptr_array_index(commands, i)),
+					    g_strdup(static_cast<char*>(g_ptr_array_index(commands, i))),
 					    scaled);
 		}
 
@@ -312,8 +312,8 @@ cb_g_free(gpointer value, gpointer userdata)
 static void
 cb_g_ptr_array_free(gpointer value)
 {
-	g_ptr_array_foreach(value, cb_g_free, NULL);
-	g_ptr_array_free(value, TRUE);
+	g_ptr_array_foreach(static_cast<GPtrArray*>(value), cb_g_free, NULL);
+	g_ptr_array_free(static_cast<GPtrArray*>(value), TRUE);
 }
 
 
@@ -338,7 +338,7 @@ load_default_table(PrettyTable *pretty_table,
 
 		GPtrArray *commands;
 
-		commands = g_hash_table_lookup(multimap, icon);
+		commands = static_cast<GPtrArray*>(g_hash_table_lookup(multimap, icon));
 
 		if(!commands)
 		{

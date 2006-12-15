@@ -32,6 +32,7 @@
 #include <glibtop.h>
 #include <glibtop/close.h>
 #include <glibtop/loadavg.h>
+
 #include "load-graph.h"
 #include "procman.h"
 #include "interface.h"
@@ -45,7 +46,7 @@
 static void
 tree_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	GConfValue *value = gconf_entry_get_value (entry);
 	
 	procdata->config.show_tree = gconf_value_get_bool (value);
@@ -57,7 +58,7 @@ tree_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data
 static void
 view_as_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	GConfValue *value = gconf_entry_get_value (entry);
 	
 	procdata->config.whose_process = gconf_value_get_int (value);
@@ -70,7 +71,7 @@ view_as_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer d
 static void
 warning_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	const gchar *key = gconf_entry_get_key (entry);
 	GConfValue *value = gconf_entry_get_value (entry);
 	
@@ -85,7 +86,7 @@ warning_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer d
 static void
 timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	const gchar *key = gconf_entry_get_key (entry);
 	GConfValue *value = gconf_entry_get_value (entry);
 
@@ -137,7 +138,7 @@ timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer 
 static void
 color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 	const gchar *key = gconf_entry_get_key (entry);
 	GConfValue *value = gconf_entry_get_value (entry);
 	const gchar *color = gconf_value_get_string (value);
@@ -197,7 +198,7 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 static void
 show_all_fs_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
 {
-	ProcData * const procdata = data;
+	ProcData * const procdata = static_cast<ProcData*>(data);
 	GConfValue *value = gconf_entry_get_value (entry);
 
 	procdata->config.show_all_fs = gconf_value_get_bool (value);
@@ -418,7 +419,7 @@ procman_get_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefi
 	g_free (key);
 	
 	key = g_strdup_printf ("%s/sort_order", prefix);
-	order = gconf_client_get_int (client, key, NULL);
+	order = static_cast<GtkSortType>(gconf_client_get_int (client, key, NULL));
 	g_free (key);
 	
 	if (sort_col != -1)
@@ -436,7 +437,7 @@ procman_get_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefi
 		gboolean visible;
 		int id;
 
-		column = it->data;
+		column = static_cast<GtkTreeViewColumn*>(it->data);
 		id = gtk_tree_view_column_get_sort_column_id (column);
 
 		key = g_strdup_printf ("%s/col_%d_width", prefix, id);
@@ -515,7 +516,7 @@ procman_save_tree_state (GConfClient *client, GtkWidget *tree, const gchar *pref
 		gchar *key;
 		int id;
 
-		column = it->data;
+		column = static_cast<GtkTreeViewColumn*>(it->data);
 		id = gtk_tree_view_column_get_sort_column_id (column);
 		visible = gtk_tree_view_column_get_visible (column);
 		width = gtk_tree_view_column_get_width (column);

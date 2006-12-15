@@ -12,12 +12,10 @@
 using std::string;
 
 
-extern "C" {
 #include "procman.h"
 #include "memmaps.h"
 #include "proctable.h"
 #include "util.h"
-}
 
 
 /* be careful with this enum, you could break the column names */

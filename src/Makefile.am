@@ -9,24 +9,24 @@ INCLUDES = \
 bin_PROGRAMS = gnome-system-monitor
 
 gnome_system_monitor_SOURCES = \
-	procman.c  procman.h \
-	interface.c interface.h \
+	procman.cpp  procman.h \
+	interface.cpp interface.h \
 	callbacks.cpp callbacks.h \
-	load-graph.c load-graph.h \
-	proctable.c proctable.h \
-	prettytable.c prettytable.h \
+	load-graph.cpp load-graph.h \
+	proctable.cpp proctable.h \
+	prettytable.cpp prettytable.h \
 	util.cpp util.h \
-	procactions.c procactions.h \
-	procdialogs.c procdialogs.h \
+	procactions.cpp procactions.h \
+	procdialogs.cpp procdialogs.h \
 	memmaps.cpp memmaps.h \
 	openfiles.cpp openfiles.h \
-	favorites.c favorites.h \
-	smooth_refresh.c smooth_refresh.h \
+	favorites.cpp favorites.h \
+	smooth_refresh.cpp smooth_refresh.h \
 	defaulttable.h \
 	disks.cpp disks.h \
 	selinux.h selinux.cpp \
-	procman_gnomesu.h procman_gnomesu.c \
-	procman_gksu.h procman_gksu.c \
+	procman_gnomesu.h procman_gnomesu.cpp \
+	procman_gksu.h procman_gksu.cpp \
 	sysinfo.cpp sysinfo.h \
 	lsof.cpp lsof.h \
 	e_date.c e_date.h

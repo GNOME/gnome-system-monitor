@@ -35,7 +35,7 @@
 static void
 renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
-	const struct ReniceArgs * const args = data;
+	const struct ReniceArgs * const args = static_cast<ReniceArgs*>(data);
 
 	ProcInfo *info = NULL;
 	gint error;
@@ -116,7 +116,7 @@ renice (ProcData *procdata, int nice)
 static void
 kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
-	const struct KillArgs * const args = data;
+	const struct KillArgs * const args = static_cast<KillArgs*>(data);
 	char *error_msg;
 	ProcInfo *info;
 	int error;

@@ -25,7 +25,6 @@
 #include <glib/gi18n.h>
 #include <signal.h>
 
-extern "C" {
 #include "callbacks.h"
 #include "interface.h"
 #include "proctable.h"
@@ -38,7 +37,6 @@ extern "C" {
 #include "load-graph.h"
 #include "disks.h"
 #include "lsof.h"
-}
 
 
 void

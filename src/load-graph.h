@@ -64,5 +64,4 @@ load_graph_get_labels (LoadGraph *g) G_GNUC_INTERNAL G_GNUC_CONST;
 GtkWidget*
 load_graph_get_widget (LoadGraph *g) G_GNUC_INTERNAL G_GNUC_CONST;
 
-
 #endif /* _PROCMAN_LOAD_GRAPH_H_ */

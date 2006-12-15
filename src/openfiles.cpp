@@ -8,12 +8,10 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
-extern "C" {
 #include "procman.h"
 #include "openfiles.h"
 #include "proctable.h"
 #include "util.h"
-}
 
 enum
 {

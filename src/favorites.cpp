@@ -53,7 +53,7 @@ static GList *removed_processes = NULL;
 static void
 add_single_to_blacklist (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	ProcInfo *info = NULL;
 	
 	gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
@@ -73,7 +73,7 @@ remove_all_of_same_name_from_tree (ProcInfo *info, ProcData *procdata)
 	GList *list = procdata->info;
 	
 	while (list) {
-		ProcInfo *tmp = list->data;
+		ProcInfo *tmp = static_cast<ProcInfo*>(list->data);
 		
 		if (g_ascii_strcasecmp (info->name, tmp->name) == 0) 
 			remove_info_from_tree (tmp, procdata);
@@ -93,7 +93,7 @@ add_selected_to_blacklist (ProcData *procdata)
 					     add_single_to_blacklist, procdata);
 					     
 	while (removed_processes) {
-		ProcInfo *info = removed_processes->data;
+		ProcInfo *info = static_cast<ProcInfo*>(removed_processes->data);
 		remove_all_of_same_name_from_tree (info, procdata);
 		
 		removed_processes = g_list_next (removed_processes);
@@ -106,7 +106,7 @@ remove_from_blacklist (ProcData *procdata, gchar *name)
 	GList *list = procdata->blacklist;
 	
 	while (list) {
-		if (!g_ascii_strcasecmp (list->data, name)) {
+		if (!g_ascii_strcasecmp (static_cast<const char*>(list->data), name)) {
 			procdata->blacklist = g_list_remove (procdata->blacklist, list->data);
 			procdata->blacklist_num --;
 			return;
@@ -131,7 +131,7 @@ is_process_blacklisted (ProcData *procdata, gchar *name)
 	
 	while (list)
 	{
-		gchar *process = list->data;
+		gchar *process = static_cast<char*>(list->data);
 		if (!g_ascii_strcasecmp (process, name))
 			return TRUE;
 		
@@ -151,7 +151,7 @@ save_blacklist (ProcData *procdata, GConfClient *client)
 	
 	while (list)
 	{
-		gchar *name = list->data;
+		gchar *name = static_cast<char*>(list->data);
 		gchar *config = g_strdup_printf ("%s%d", "/apps/procman/process", i);
 		gconf_client_set_string (client, config, name, NULL);
 		g_free (config); 
@@ -273,7 +273,7 @@ insert_all_of_same_name_from_tree (gchar *name, ProcData *procdata)
 	GList *list = procdata->info;
 	
 	while (list) {
-		ProcInfo *tmp = list->data;
+		ProcInfo *tmp = static_cast<ProcInfo*>(list->data);
 		
 		if (g_ascii_strcasecmp (name, tmp->name) == 0) 
 			insert_info_to_tree (tmp, procdata);
@@ -286,7 +286,7 @@ insert_all_of_same_name_from_tree (gchar *name, ProcData *procdata)
 static void
 remove_item (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	GtkTreeIter *iter_copy;
 	gchar *process = NULL;
 	
@@ -304,7 +304,7 @@ remove_item (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer
 static void
 remove_button_clicked (GtkButton *button, gpointer data)
 {
-	ProcData *procdata = data;
+	ProcData *procdata = static_cast<ProcData*>(data);
 	GtkTreeModel *model;
 	GtkTreeSelection *selection = NULL;
 	
@@ -314,7 +314,7 @@ remove_button_clicked (GtkButton *button, gpointer data)
 	gtk_tree_selection_selected_foreach (selection, remove_item, procdata); 
 	
 	while (removed_iters) {
-		GtkTreeIter *iter = removed_iters->data;
+		GtkTreeIter *iter = static_cast<GtkTreeIter*>(removed_iters->data);
 		
 		gtk_tree_store_remove (GTK_TREE_STORE (model), iter);
 		gtk_tree_iter_free (iter);
@@ -351,7 +351,7 @@ void create_blacklist_dialog (ProcData *procdata)
                 /*translators: primary alert message*/
 		message = g_strdup_printf(_("No hidden processes"));
 		dialog = gtk_message_dialog_new (GTK_WINDOW (procdata->app),
-						 GTK_DIALOG_MODAL| GTK_DIALOG_DESTROY_WITH_PARENT,
+						 static_cast<GtkDialogFlags>(GTK_DIALOG_MODAL| GTK_DIALOG_DESTROY_WITH_PARENT),
                                   		 GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
                                   		 message);
 		g_free (message);

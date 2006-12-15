@@ -6,12 +6,10 @@
 #include <glibtop/fsusage.h>
 #include <glib/gi18n.h>
 
-extern "C" {
 #include "procman.h"
 #include "disks.h"
 #include "util.h"
 #include "interface.h"
-}
 
 enum DiskColumns
 {

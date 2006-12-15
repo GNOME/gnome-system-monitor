@@ -23,7 +23,6 @@
 #include "load-graph.h"
 #include "util.h"
 
-
 #define NUM_POINTS 100
 #define GRAPH_MIN_HEIGHT 30
 
@@ -179,7 +178,7 @@ load_graph_configure (GtkWidget *widget,
 		      GdkEventConfigure *event,
 		      gpointer data_ptr)
 {
-	LoadGraph * const g = data_ptr;
+	LoadGraph * const g = static_cast<LoadGraph*>(data_ptr);
 	cairo_t *cr;
 
 	g->draw_width = widget->allocation.width - 2 * FRAME_WIDTH;
@@ -207,7 +206,7 @@ load_graph_expose (GtkWidget *widget,
 		   GdkEventExpose *event,
 		   gpointer data_ptr)
 {
-	LoadGraph * const g = data_ptr;
+	LoadGraph * const g = static_cast<LoadGraph*>(data_ptr);
 	cairo_t *cr;
 
 	cr = gdk_cairo_create(widget->window);
@@ -445,7 +444,7 @@ shift_right(LoadGraph *g)
 static gboolean
 load_graph_update (gpointer user_data)
 {
-	LoadGraph * const g = user_data;
+	LoadGraph * const g = static_cast<LoadGraph*>(user_data);
 
 	shift_right(g);
 
@@ -498,7 +497,7 @@ load_graph_alloc (LoadGraph *g)
 static gboolean
 load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
 {
-	LoadGraph * const g = data_ptr;
+	LoadGraph * const g = static_cast<LoadGraph*>(data_ptr);
 
 	load_graph_stop (g);
 
