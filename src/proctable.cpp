@@ -684,10 +684,10 @@ update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info
 			    COL_MEMWRITABLE, memwritable,
 			    COL_MEMSHARED, memshared,
 			    COL_MEMXSERVER, memxserver,
-			    COL_CPU, info->pcpu,
+			    COL_CPU, guint(info->pcpu),
 			    COL_CPU_TIME, cpu_time,
 			    COL_START_TIME, start_time,
-			    COL_NICE, info->nice,
+			    COL_NICE, gint(info->nice),
 			    COL_MEM, mem,
 			    -1);
 

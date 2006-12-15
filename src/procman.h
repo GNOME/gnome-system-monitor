@@ -111,11 +111,11 @@ struct _ProcInfo
 	guint64		mem; /* estimated memory usage */
 	unsigned long	memxserver;
 
-	guint		pcpu; /* 0% - 100% */
-	gint		nice;
-
 	guint		pid;
 	guint		uid;
+
+	guint8		pcpu; /* 0% - 100% */
+	gint8		nice;
 
 	guint		is_visible	: 1;
 	guint		is_running	: 1;
