@@ -8,27 +8,32 @@
 #include <string.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include <map>
+#include <string>
+
+using std::string;
+
 #include "prettytable.h"
 #include "defaulttable.h"
 #include "proctable.h"
-
+#include "util.h"
 
 #define APP_ICON_SIZE 16
 
+typedef std::map<string, GdkPixbuf*> IconsForCommand;
+typedef std::map<unsigned, GdkPixbuf*> IconsForPID;
 
 struct _PrettyTable {
-	GHashTable	*app_hash;	/* WNCK */
-	GHashTable	*default_hash;	/* defined in defaulttable.h */
-	gchar		*datadir;
-	GtkIconTheme	*theme;
+  IconsForPID apps;
+  IconsForCommand defaults;
+  string datadir;
+  GtkIconTheme* theme;
 };
 
 
 
 static void
-load_default_table(PrettyTable *pretty_table,
-		   const PrettyTableItem table[], size_t n);
-
+load_default_table(PrettyTable *pretty_table);
 
 
 static void
@@ -36,7 +41,6 @@ new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 {
 	ProcData *procdata = static_cast<ProcData*>(data);
 	ProcInfo *info;
-	GHashTable * const hash = procdata->pretty_table->app_hash;
 	guint pid;
 	GdkPixbuf *icon = NULL, *tmp = NULL;
 	GList *list = NULL;
@@ -46,8 +50,10 @@ new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 	if (pid == 0)
 		return;
 
+	IconsForPID::iterator it(procdata->pretty_table->apps.find(pid));
+
 	/* Check to see if the pid has already been added */
-	if (g_hash_table_lookup (hash, GUINT_TO_POINTER(pid)))
+	if (it != procdata->pretty_table->apps.end())
 		return;
 
 	/* don't free list, we don't own it */
@@ -84,8 +90,7 @@ new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
 		}
 	}
 
-	g_assert(g_hash_table_lookup(hash, GUINT_TO_POINTER(pid)) == NULL);
-	g_hash_table_insert (hash, GUINT_TO_POINTER(pid), icon);
+	procdata->pretty_table->apps[pid] = icon;
 }
 
 
@@ -93,19 +98,17 @@ static void
 application_finished (WnckScreen *screen, WnckApplication *app, gpointer data)
 {
 	ProcData * const procdata = static_cast<ProcData*>(data);
-	GHashTable * const hash = procdata->pretty_table->app_hash;
 	guint pid;
-	gpointer orig_pid, icon;
 
 	pid =  wnck_application_get_pid (app);
 	if (pid == 0)
 		return;
 
-	if (g_hash_table_lookup_extended (hash, GUINT_TO_POINTER(pid),
-					  &orig_pid, &icon)) {
-		g_hash_table_remove (hash, orig_pid);
-		if (icon)
-			g_object_unref (icon);
+	IconsForPID::iterator it(procdata->pretty_table->apps.find(pid));
+
+	if (it != procdata->pretty_table->apps.end()) {
+	  g_object_unref(it->second);
+	  procdata->pretty_table->apps.erase(it);
 	}
 }
 
@@ -113,30 +116,29 @@ application_finished (WnckScreen *screen, WnckApplication *app, gpointer data)
 void pretty_table_new (ProcData *procdata)
 {
 	WnckScreen *screen;
-	PrettyTable *pretty_table = g_new(PrettyTable, 1);
+	PrettyTable *pretty_table = new PrettyTable;
 
-	pretty_table->app_hash = g_hash_table_new (NULL, NULL);
-	pretty_table->default_hash = g_hash_table_new_full (g_str_hash,
-							    g_str_equal,
-							    g_free,
-							    g_object_unref);
+	pretty_table->theme = gtk_icon_theme_get_default ();
 
-	screen = wnck_screen_get_default ();
 
+
+
+	pretty_table->datadir
+	  = make_string(gnome_program_locate_file(NULL,
+						  GNOME_FILE_DOMAIN_DATADIR,
+						  "pixmaps/",
+						  TRUE,
+						  NULL));
+
+	load_default_table(pretty_table);
+
+
+	procdata->pretty_table = pretty_table;
+	screen = wnck_screen_get_default();
 	g_signal_connect (G_OBJECT (screen), "application_opened",
 			  G_CALLBACK (new_application), procdata);
 	g_signal_connect (G_OBJECT (screen), "application_closed",
 			  G_CALLBACK (application_finished), procdata);
-
-
-	pretty_table->datadir = gnome_program_locate_file (
-		NULL, GNOME_FILE_DOMAIN_DATADIR, "pixmaps/", TRUE, NULL);
-
-	load_default_table(pretty_table, default_table, G_N_ELEMENTS(default_table));
-
-	procdata->pretty_table = pretty_table;
-
-	pretty_table->theme = gtk_icon_theme_get_default ();
 }
 
 
@@ -162,17 +164,16 @@ get_icon_from_default (PrettyTable *pretty_table,
 		       guint pid,
 		       const gchar *command)
 {
-	GdkPixbuf *icon;
+  IconsForCommand::iterator it(pretty_table->defaults.find(command));
 
-	icon = static_cast<GdkPixbuf*>(g_hash_table_lookup (pretty_table->default_hash,
-							    command));
+  if (it != pretty_table->defaults.end()) {
 
-	if (icon) {
-		g_object_ref (icon);
-		return icon;
-	}
+	GdkPixbuf* icon = it->second;
+	g_object_ref(icon);
+	return icon;
+  }
 
-	return NULL;
+  return NULL;
 }
 
 
@@ -182,14 +183,12 @@ get_icon_from_wnck (PrettyTable *pretty_table,
 		    guint pid,
 		    const gchar *command)
 {
-	GdkPixbuf *icon;
+	IconsForPID::iterator it(pretty_table->apps.find(pid));
 
-	icon = static_cast<GdkPixbuf*>(g_hash_table_lookup (pretty_table->app_hash,
-							    GUINT_TO_POINTER(pid)));
-
-	if (icon) {
-		g_object_ref (icon);
-		return icon;
+	if (it != pretty_table->apps.end()) {
+	  GdkPixbuf* icon = it->second;
+	  g_object_ref(icon);
+	  return icon;
 	}
 
 	return NULL;
@@ -235,10 +234,7 @@ GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table,
 
 
 void pretty_table_free (PrettyTable *pretty_table) {
-	g_hash_table_destroy (pretty_table->default_hash);
-	g_hash_table_destroy (pretty_table->app_hash);
-	g_free (pretty_table->datadir);
-	g_free (pretty_table);
+	delete pretty_table;
 }
 
 
@@ -271,89 +267,34 @@ create_scaled_icon(const char *iconpath)
 }
 
 
-
 static void
-load_icon_for_commands(gpointer key, gpointer value, gpointer userdata)
+load_default_table(PrettyTable *pretty_table)
 {
-	char *icon = static_cast<char*>(key);
-	GPtrArray *commands = static_cast<GPtrArray*>(value);
-	PrettyTable * pretty_table = static_cast<PrettyTable*>(userdata);
+  typedef std::map<string, GdkPixbuf*> IconCache;
 
-	GdkPixbuf *scaled;
-	char *iconpath;
+  IconCache cache;
 
-	iconpath = g_build_filename(pretty_table->datadir, icon, NULL);
-	scaled = create_scaled_icon(iconpath);
+  for (size_t i = 0; i != G_N_ELEMENTS(default_table); ++i)
+    {
+      const char* command = default_table[i].command;
+      const char* icon = default_table[i].icon;
+      GdkPixbuf* pix;
+
+      IconCache::iterator it(cache.find(icon));
+
+      if (it == cache.end()) {
+	char* iconpath;
+	iconpath = g_build_filename(pretty_table->datadir.c_str(), icon, NULL);
+	pix = create_scaled_icon(iconpath);
 	g_free(iconpath);
+	if (!pix)
+	  continue;
+	cache[icon] = pix;
 
-	if(scaled) {
-		guint i;
+      } else {
+	pix = it->second;
+      }
 
-		for(i = 0; i < commands->len; ++i)
-		{
-			g_object_ref(scaled);
-			g_hash_table_insert(pretty_table->default_hash,
-					    g_strdup(static_cast<char*>(g_ptr_array_index(commands, i))),
-					    scaled);
-		}
-
-		g_object_unref(scaled);
-	}
-}
-
-
-
-static void
-cb_g_free(gpointer value, gpointer userdata)
-{
-	g_free(value);
-}
-
-static void
-cb_g_ptr_array_free(gpointer value)
-{
-	g_ptr_array_foreach(static_cast<GPtrArray*>(value), cb_g_free, NULL);
-	g_ptr_array_free(static_cast<GPtrArray*>(value), TRUE);
-}
-
-
-static void
-load_default_table(PrettyTable *pretty_table,
-		   const PrettyTableItem table[], size_t n)
-{
-	size_t i;
-	GHashTable *multimap;
-
-	/*
-	 * regroup commands using the same icon
-	 * icon -> [command1, ..., commandN]
-	 */
-	multimap = g_hash_table_new_full(g_str_hash, g_str_equal,
-					 g_free, cb_g_ptr_array_free);
-
-	for(i = 0; i < n; ++i)
-	{
-		const char *command = table[i].command;
-		const char *icon    = table[i].icon;
-
-		GPtrArray *commands;
-
-		commands = static_cast<GPtrArray*>(g_hash_table_lookup(multimap, icon));
-
-		if(!commands)
-		{
-			commands = g_ptr_array_new();
-			g_hash_table_insert(multimap, g_strdup(icon), commands);
-		}
-
-		g_ptr_array_add(commands, g_strdup(command));
-	}
-
-	/*
-	 * load once the icon
-	 * then and add all command -> icon in pretty_table->default_table
-	 */
-	g_hash_table_foreach(multimap, load_icon_for_commands, pretty_table);
-
-	g_hash_table_destroy(multimap);
+      pretty_table->defaults[command] = pix;
+    }
 }

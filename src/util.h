@@ -4,9 +4,24 @@
 #include <glib.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
 #include <stddef.h>
+#include <string>
 
-#define PROCMAN_CMP(X, Y) (((X) == (Y)) ? 0 : (((X) < (Y)) ? -1 : 1))
-#define PROCMAN_RCMP(X, Y) PROCMAN_CMP((Y), (X))
+using std::string;
+
+template<typename T>
+inline int procman_cmp(T x, T y)
+{
+	if (x == y)
+		return 0;
+
+	if (x < y)
+		return -1;
+
+	return 1;
+}
+
+#define PROCMAN_CMP(X, Y) procman_cmp((X), (Y))
+#define PROCMAN_RCMP(X, Y) procman_cmp((Y), (X));
 
 GtkWidget*
 procman_make_label_for_mmaps_or_ofiles(const char *format,
@@ -24,5 +39,14 @@ load_symbols(const char *module, ...) G_GNUC_INTERNAL G_GNUC_NULL_TERMINATED;
 
 void
 procman_debug(const char *format, ...) G_GNUC_INTERNAL G_GNUC_PRINTF(1, 2);
+
+
+inline string make_string(char *c_str)
+{
+	string s(c_str);
+	g_free(c_str);
+	return s;
+}
+
 
 #endif /* H_GNOME_SYSTEM_MONITOR_UTIL_1123178725 */
