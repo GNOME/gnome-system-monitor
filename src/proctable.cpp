@@ -35,10 +35,6 @@
 #include <glibtop/procargs.h>
 #include <glibtop/mem.h>
 #include <glibtop/swap.h>
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE
-extern "C" {
-#include <libwnck/libwnck.h>
-}
 #include <sys/stat.h>
 #include <pwd.h>
 #include <time.h>
@@ -920,7 +916,7 @@ procinfo_new (ProcData *procdata, gint pid)
 	get_process_status (info, &procstate);
 	get_process_selinux_context (info);
 
-	info->pixbuf = pretty_table_get_icon (procdata->pretty_table, info->name, pid);
+	info->pixbuf = procdata->pretty_table.get_icon(info->name, pid);
 
 	info->parent = find_parent (procdata, procuid.ppid);
 	if (info->parent) {
@@ -1108,4 +1104,24 @@ make_loadavg_string(void)
 		buf.loadavg[0],
 		buf.loadavg[1],
 		buf.loadavg[2]);
+}
+
+
+
+void
+_ProcInfo::set_icon(GdkPixbuf* icon)
+{
+  if (this->pixbuf)
+    g_object_unref(this->pixbuf);
+
+  this->pixbuf = icon;
+  g_object_ref(icon);
+
+  if (this->is_visible) {
+    GtkTreeModel *model;
+    model = gtk_tree_view_get_model(GTK_TREE_VIEW(ProcData::get_instance()->tree));
+    gtk_tree_store_set(GTK_TREE_STORE(model), &this->node,
+		       COL_PIXBUF, this->pixbuf,
+		       -1);
+  }
 }

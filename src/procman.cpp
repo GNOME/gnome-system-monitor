@@ -43,6 +43,13 @@
 #include "smooth_refresh.h"
 
 
+ProcData* ProcData::get_instance()
+{
+  static ProcData instance;
+  return &instance;
+}
+
+
 static void
 tree_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
 {
@@ -217,7 +224,7 @@ procman_data_new (GConfClient *client)
 	gint i;
 	glibtop_cpu cpu;
 
-	pd = g_new0 (ProcData, 1);
+	pd = ProcData::get_instance();
 	
 	pd->tree = NULL;
 	pd->info = NULL;
@@ -389,10 +396,7 @@ procman_free_data (ProcData *procdata)
 	proctable_free_table (procdata);
 	g_string_chunk_free(procdata->users);
 	g_hash_table_destroy(procdata->pids);
-	pretty_table_free (procdata->pretty_table);
 	smooth_refresh_destroy(procdata->smooth_refresh);
-	g_free (procdata);
-	
 }
 
 
@@ -708,7 +712,6 @@ main (int argc, char *argv[])
 	
 	procdata = procman_data_new (client);
 	procdata->client = client;
-	pretty_table_new (procdata);
 
 	create_main_window (procdata);
 	

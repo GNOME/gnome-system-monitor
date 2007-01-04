@@ -30,13 +30,14 @@
 #include <time.h>
 
 typedef struct _ProcConfig ProcConfig;
-typedef struct _PrettyTable PrettyTable;
 typedef struct _ProcInfo ProcInfo;
-typedef struct _ProcData ProcData;
+struct ProcData;
 
 #include "smooth_refresh.h"
 
 #include "load-graph.h"
+
+#include "prettytable.h"
 
 enum
 {
@@ -87,6 +88,9 @@ struct _ProcConfig
 
 struct _ProcInfo
 {
+	// adds one more ref to icon
+	void set_icon(GdkPixbuf *icon);
+
 	GtkTreeIter	node;
 	GtkTreePath	*path;
 	ProcInfo	*parent;
@@ -122,8 +126,11 @@ struct _ProcInfo
 	guint		is_blacklisted	: 1;
 };
 
-struct _ProcData
+struct ProcData
 {
+	// lazy initialization
+	static ProcData* get_instance();
+
 	GtkUIManager	*uimanager;
 	GtkActionGroup	*action_group;
 	GtkWidget	*statusbar;
@@ -170,7 +177,7 @@ struct _ProcData
 	GList		*info;
 	GHashTable	*pids;
 
-	PrettyTable	*pretty_table;
+	PrettyTable	pretty_table;
 	GList		*blacklist;
 	gint		blacklist_num;
 
@@ -212,6 +219,5 @@ struct KillArgs
 	ProcData *procdata;
 	int signal;
 };
-
 
 #endif /* _PROCMAN_PROCMAN_H_ */

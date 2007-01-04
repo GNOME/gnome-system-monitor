@@ -5,6 +5,8 @@
 #include <libgnomevfs/gnome-vfs-utils.h>
 #include <stddef.h>
 #include <string>
+#include <functional>
+#include <algorithm>
 
 using std::string;
 
@@ -48,5 +50,25 @@ inline string make_string(char *c_str)
 	return s;
 }
 
+
+
+
+template<typename Map>
+class UnrefMapValues
+  : public std::unary_function<void, Map>
+{
+public:
+  void operator()(const typename Map::value_type &it) const
+  {
+    g_object_unref(it.second);
+  }
+};
+
+
+template<typename Map>
+inline void unref_map_values(Map &map)
+{
+  std::for_each(map.begin(), map.end(), UnrefMapValues<Map>());
+}
 
 #endif /* H_GNOME_SYSTEM_MONITOR_UTIL_1123178725 */

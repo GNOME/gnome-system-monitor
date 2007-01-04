@@ -8,169 +8,166 @@
 #include <string.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include <map>
-#include <string>
-
-using std::string;
 
 #include "prettytable.h"
 #include "defaulttable.h"
 #include "proctable.h"
 #include "util.h"
 
-#define APP_ICON_SIZE 16
 
-typedef std::map<string, GdkPixbuf*> IconsForCommand;
-typedef std::map<unsigned, GdkPixbuf*> IconsForPID;
-
-struct _PrettyTable {
-  IconsForPID apps;
-  IconsForCommand defaults;
-  string datadir;
-  GtkIconTheme* theme;
-};
-
-
-
-static void
-load_default_table(PrettyTable *pretty_table);
-
-
-static void
-new_application (WnckScreen *screen, WnckApplication *app, gpointer data)
+namespace
 {
-	ProcData *procdata = static_cast<ProcData*>(data);
-	ProcInfo *info;
-	guint pid;
-	GdkPixbuf *icon = NULL, *tmp = NULL;
-	GList *list = NULL;
-	WnckWindow *window;
+  const unsigned APP_ICON_SIZE = 16;
 
-	pid = wnck_application_get_pid (app);
-	if (pid == 0)
-		return;
+  GdkPixbuf*
+  create_scaled_icon(const char *iconpath)
+  {
+    GError* error = NULL;
+    GdkPixbuf* scaled;
 
-	IconsForPID::iterator it(procdata->pretty_table->apps.find(pid));
+    scaled = gdk_pixbuf_new_from_file_at_scale(iconpath,
+					       APP_ICON_SIZE, APP_ICON_SIZE,
+					       TRUE,
+					       &error);
 
-	/* Check to see if the pid has already been added */
-	if (it != procdata->pretty_table->apps.end())
-		return;
+    if (error) {
+      if(!(error->domain == G_FILE_ERROR
+	   && error->code == G_FILE_ERROR_NOENT))
+	g_warning(error->message);
 
-	/* don't free list, we don't own it */
-	list = wnck_application_get_windows (app);
-	if (!list)
-		return;
-	window = static_cast<WnckWindow*>(list->data);
-	tmp = wnck_window_get_icon (window);
+      g_error_free(error);
+      return NULL;
+    }
 
-	if (!tmp)
-		return;
+    return scaled;
+  }
+}
 
-	icon =  gdk_pixbuf_scale_simple (tmp, APP_ICON_SIZE, APP_ICON_SIZE, GDK_INTERP_HYPER);
-	if (!icon)
-		return;
 
-	/* If process already exists then set the icon. Otherwise put into hash
-	** table to be added later */
-	info = proctable_find_process (pid, procdata);
 
-	if (info) {
-	/* Don't update the icon if there already is one */
-		if (info->pixbuf) {
-			g_object_unref(icon);
-			return;
-		}
-		info->pixbuf = icon;
-		g_object_ref(info->pixbuf);
-		if (info->is_visible) {
-			GtkTreeModel *model;
-			model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-			gtk_tree_store_set (GTK_TREE_STORE (model), &info->node,
-					    COL_PIXBUF, info->pixbuf, -1);
-		}
+
+
+
+
+
+
+PrettyTable::PrettyTable()
+{
+  this->theme = gtk_icon_theme_get_default();
+
+  this->datadir
+    = make_string(gnome_program_locate_file(NULL,
+					    GNOME_FILE_DOMAIN_DATADIR,
+					    "pixmaps/",
+					    TRUE,
+					    NULL));
+
+  this->load_default_table();
+
+
+  WnckScreen* screen = wnck_screen_get_default();
+  g_signal_connect(G_OBJECT(screen), "application_opened",
+		   G_CALLBACK(PrettyTable::on_application_opened), this);
+  g_signal_connect(G_OBJECT(screen), "application_closed",
+		   G_CALLBACK(PrettyTable::on_application_closed), this);
+}
+
+
+PrettyTable::~PrettyTable()
+{
+  unref_map_values(this->apps);
+  unref_map_values(this->defaults);
+}
+
+
+void
+PrettyTable::on_application_opened(WnckScreen* screen, WnckApplication* app, gpointer data)
+{
+  pid_t pid = wnck_application_get_pid(app);
+
+  if (pid == 0)
+    return;
+
+  /* don't free list, we don't own it */
+  if (GList* list = wnck_application_get_windows(app))
+    {
+      WnckWindow* win = static_cast<WnckWindow*>(list->data);
+
+      if (GdkPixbuf* icon = wnck_window_get_icon(win))
+	{
+	  if (GdkPixbuf* scaled = gdk_pixbuf_scale_simple(icon,
+							  APP_ICON_SIZE,
+							  APP_ICON_SIZE,
+							  GDK_INTERP_HYPER))
+	    static_cast<PrettyTable*>(data)->register_application(pid, scaled);
 	}
-
-	procdata->pretty_table->apps[pid] = icon;
-}
-
-
-static void
-application_finished (WnckScreen *screen, WnckApplication *app, gpointer data)
-{
-	ProcData * const procdata = static_cast<ProcData*>(data);
-	guint pid;
-
-	pid =  wnck_application_get_pid (app);
-	if (pid == 0)
-		return;
-
-	IconsForPID::iterator it(procdata->pretty_table->apps.find(pid));
-
-	if (it != procdata->pretty_table->apps.end()) {
-	  g_object_unref(it->second);
-	  procdata->pretty_table->apps.erase(it);
-	}
-}
-
-
-void pretty_table_new (ProcData *procdata)
-{
-	WnckScreen *screen;
-	PrettyTable *pretty_table = new PrettyTable;
-
-	pretty_table->theme = gtk_icon_theme_get_default ();
-
-
-
-
-	pretty_table->datadir
-	  = make_string(gnome_program_locate_file(NULL,
-						  GNOME_FILE_DOMAIN_DATADIR,
-						  "pixmaps/",
-						  TRUE,
-						  NULL));
-
-	load_default_table(pretty_table);
-
-
-	procdata->pretty_table = pretty_table;
-	screen = wnck_screen_get_default();
-	g_signal_connect (G_OBJECT (screen), "application_opened",
-			  G_CALLBACK (new_application), procdata);
-	g_signal_connect (G_OBJECT (screen), "application_closed",
-			  G_CALLBACK (application_finished), procdata);
+    }
 }
 
 
 
-
-
-static GdkPixbuf *
-get_icon_from_theme (PrettyTable *pretty_table,
-		     guint pid,
-		     const gchar *command)
+void
+PrettyTable::register_application(pid_t pid, GdkPixbuf* icon)
 {
-	return gtk_icon_theme_load_icon (pretty_table->theme,
-					 command,
-					 APP_ICON_SIZE,
-					 GTK_ICON_LOOKUP_USE_BUILTIN,
-					 NULL);
+  /* If process already exists then set the icon. Otherwise put into hash
+  ** table to be added later */
+  if (ProcInfo* info = proctable_find_process(pid, ProcData::get_instance()))
+    {
+      info->set_icon(icon);
+      // move the ref to the map
+      this->apps[pid] = icon;
+    }
 }
 
 
 
-static GdkPixbuf *
-get_icon_from_default (PrettyTable *pretty_table,
-		       guint pid,
-		       const gchar *command)
+void
+PrettyTable::on_application_closed(WnckScreen* screen, WnckApplication* app, gpointer data)
 {
-  IconsForCommand::iterator it(pretty_table->defaults.find(command));
+  pid_t pid = wnck_application_get_pid(app);
 
-  if (it != pretty_table->defaults.end()) {
+  if (pid == 0)
+    return;
 
-	GdkPixbuf* icon = it->second;
-	g_object_ref(icon);
-	return icon;
+  static_cast<PrettyTable*>(data)->unregister_application(pid);
+}
+
+
+
+void
+PrettyTable::unregister_application(pid_t pid)
+{
+  IconsForPID::iterator it(this->apps.find(pid));
+
+  if (it != this->apps.end()) {
+    g_object_unref(it->second);
+    this->apps.erase(it);
+  }
+}
+
+
+
+GdkPixbuf*
+PrettyTable::get_icon_from_theme(pid_t pid, const gchar* command)
+{
+  return gtk_icon_theme_load_icon(this->theme,
+				  command,
+				  APP_ICON_SIZE,
+				  GTK_ICON_LOOKUP_USE_BUILTIN,
+				  NULL);
+}
+
+
+
+GdkPixbuf*
+PrettyTable::get_icon_from_default(pid_t pid, const gchar* command)
+{
+  IconsForCommand::iterator it(this->defaults.find(command));
+
+  if (it != this->defaults.end()) {
+    GdkPixbuf* icon = it->second;
+    g_object_ref(icon);
+    return icon;
   }
 
   return NULL;
@@ -178,97 +175,47 @@ get_icon_from_default (PrettyTable *pretty_table,
 
 
 
-static GdkPixbuf *
-get_icon_from_wnck (PrettyTable *pretty_table,
-		    guint pid,
-		    const gchar *command)
+GdkPixbuf*
+PrettyTable::get_icon_from_wnck(pid_t pid, const gchar* command)
 {
-	IconsForPID::iterator it(pretty_table->apps.find(pid));
+  IconsForPID::iterator it(this->apps.find(pid));
 
-	if (it != pretty_table->apps.end()) {
-	  GdkPixbuf* icon = it->second;
-	  g_object_ref(icon);
-	  return icon;
-	}
+  if (it != this->apps.end()) {
+    GdkPixbuf* icon = it->second;
+    g_object_ref(icon);
+    return icon;
+  }
 
-	return NULL;
+  return NULL;
 }
 
 
 
-GdkPixbuf *pretty_table_get_icon (PrettyTable *pretty_table,
-				  const gchar *command, guint pid)
+GdkPixbuf*
+PrettyTable::get_icon(const gchar* command, pid_t pid)
 {
-	typedef GdkPixbuf * (*IconGetter) (PrettyTable *pretty_table,
-					   guint pid,
-					   const gchar *command);
+  typedef GdkPixbuf* (PrettyTable::*Getter)(pid_t pid,
+					    const gchar* command);
 
+  const Getter getters[] = {
+    &PrettyTable::get_icon_from_theme,
+    &PrettyTable::get_icon_from_wnck,
+    &PrettyTable::get_icon_from_default
+  };
 
-	const IconGetter getters[] = {
-		get_icon_from_theme,
-		get_icon_from_wnck,
-		get_icon_from_default
-	};
+  for (size_t i = 0; i < G_N_ELEMENTS(getters); ++i) {
+    if (GdkPixbuf* icon = (this->*getters[i])(pid, command))
+      return icon;
+  }
 
-
-	size_t i;
-
-	for (i = 0; i < G_N_ELEMENTS (getters); ++i) {
-		GdkPixbuf *icon;
-
-		icon = (getters[i]) (pretty_table, pid, command);
-
-		if (icon) {
-#if 0
-			g_print("Get icon method %lu for '%s'\n",
-				(gulong)i,
-				command);
-#endif
-			return icon;
-		}
-	}
-
-	return NULL;
-}
-
-
-
-void pretty_table_free (PrettyTable *pretty_table) {
-	delete pretty_table;
+  return NULL;
 }
 
 
 
 
-
-
-
-static GdkPixbuf *
-create_scaled_icon(const char *iconpath)
-{
-	GError *error = NULL;
-	GdkPixbuf *scaled;
-
-	scaled = gdk_pixbuf_new_from_file_at_scale(iconpath,
-						   APP_ICON_SIZE, APP_ICON_SIZE,
-						   TRUE,
-						   &error);
-
-	if(error) {
-	  if(!(error->domain == G_FILE_ERROR
-	       && error->code == G_FILE_ERROR_NOENT))
-		    g_warning(error->message);
-
-	  g_error_free(error);
-	  return NULL;
-	}
-
-	return scaled;
-}
-
-
-static void
-load_default_table(PrettyTable *pretty_table)
+void
+PrettyTable::load_default_table()
 {
   typedef std::map<string, GdkPixbuf*> IconCache;
 
@@ -284,7 +231,7 @@ load_default_table(PrettyTable *pretty_table)
 
       if (it == cache.end()) {
 	char* iconpath;
-	iconpath = g_build_filename(pretty_table->datadir.c_str(), icon, NULL);
+	iconpath = g_build_filename(this->datadir.c_str(), icon, NULL);
 	pix = create_scaled_icon(iconpath);
 	g_free(iconpath);
 	if (!pix)
@@ -293,8 +240,9 @@ load_default_table(PrettyTable *pretty_table)
 
       } else {
 	pix = it->second;
+	g_object_ref(pix);
       }
 
-      pretty_table->defaults[command] = pix;
+      this->defaults[command] = pix;
     }
 }
