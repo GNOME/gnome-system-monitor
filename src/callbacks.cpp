@@ -452,7 +452,7 @@ cb_timeout (gpointer data)
 
 	proctable_update_all (procdata);
 
-	if(smooth_refresh_get(procdata->smooth_refresh, &new_interval))
+	if (procdata->smooth_refresh->get(new_interval))
 	{
 		procdata->timeout = g_timeout_add(new_interval,
 						  cb_timeout,

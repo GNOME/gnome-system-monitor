@@ -2,65 +2,103 @@
 #define _PROCMAN_SMOOTH_REFRESH
 
 #include <glib.h>
+#include <gconf/gconf-client.h>
 
+#include <string>
 
-#define SMOOTH_REFRESH_KEY "/apps/procman/smooth_refresh"
-#define SMOOTH_REFRESH_KEY_DEFAULT TRUE
-
-typedef struct _SmoothRefresh SmoothRefresh;
-
-
-/*
-  smooth_refresh_new
-
-  @config_interval : pointer to config_interval so we can observe
-		     config_interval changes.
-
-  @return : initialized SmoothRefresh
- */
-
-SmoothRefresh*
-smooth_refresh_new(const guint * config_interval) G_GNUC_INTERNAL;
+using std::string;
 
 
 
-/*
-  smooth_refresh_reset
+class SmoothRefresh
+{
+public:
 
-  Resets state and re-read config_interval
+  /*
+    smooth_refresh_new
 
- */
+    @config_interval : pointer to config_interval so we can observe
+    config_interval changes.
 
-void
-smooth_refresh_reset(SmoothRefresh *sm) G_GNUC_INTERNAL;
+    @return : initialized SmoothRefresh
+  */
+  SmoothRefresh(const guint &config_interval);
+
+  ~SmoothRefresh();
+
+  /*
+    smooth_refresh_reset
+
+    Resets state and re-read config_interval
+  */
+  void reset();
+
+  /*
+    smooth_refresh_get
+
+    Computes the new refresh_interval so that CPU usage is lower than
+    SMOOTH_REFRESH_PCPU.
+
+    @new_interval : where the new refresh_interval is stored.
+
+    @return : TRUE is refresh_interval has changed. The new refresh_interval
+    is stored in @new_interval. Else FALSE;
+  */
+  bool get(guint &new_interval);
 
 
+  static const string KEY;
+  static const bool KEY_DEFAULT_VALUE;
 
-/*
-  smooth_refresh_destroy
+private:
 
-  @sm : SmoothRefresh to destroy
+  unsigned get_own_cpu_usage();
 
- */
+  static void status_changed(GConfClient *client,
+			     guint cnxn_id,
+			     GConfEntry *entry,
+			     gpointer user_data);
 
-void
-smooth_refresh_destroy(SmoothRefresh *sm) G_GNUC_INTERNAL;
+  void load_gconf_value(GConfValue* value = NULL);
 
+  /*
+    fuzzy logic:
+    - decrease refresh interval only if current CPU% and last CPU%
+    are higher than PCPU_LO
+    - increase refresh interval only if current CPU% and last CPU%
+    are higher than PCPU_HI
 
+  */
 
-/*
-  smooth_refresh_get
+  enum
+    {
+      PCPU_HI = 22,
+      PCPU_LO = 18
+    };
 
-  Computes the new refresh_interval so that CPU usage is lower than
-  SMOOTH_REFRESH_PCPU.
+  /*
+    -self : procman's PID (so we call getpid() only once)
 
-  @new_interval : where the new refresh_interval is stored.
+    -interval : current refresh interval
 
-  @return : TRUE is refresh_interval has changed. The new refresh_interval
-  is stored in @new_interval. Else FALSE;
- */
+    -config_interval : pointer to the configuration refresh interval.
+    Used to watch configuration changes
 
-gboolean
-smooth_refresh_get(SmoothRefresh *sm, guint *new_interval) G_GNUC_INTERNAL;
+    -interval >= -config_interval
+
+    -last_pcpu : to avoid spikes, the last CPU%. See PCPU_{LO,HI}
+
+    -last_total_time:
+    -last_cpu_time: Save last cpu and process times to compute CPU%
+  */
+  bool active;
+  guint connection;
+  guint interval;
+  const guint &config_interval;
+  unsigned  last_pcpu;
+  guint64 last_total_time;
+  guint64 last_cpu_time;
+};
+
 
 #endif /* _PROCMAN_SMOOTH_REFRESH */

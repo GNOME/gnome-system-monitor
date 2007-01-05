@@ -46,11 +46,9 @@ enum
 	ACTIVE_PROCESSES
 };
 
-enum
-{
-	MIN_UPDATE_INTERVAL = 1 * 1000,
-	MAX_UPDATE_INTERVAL = 100 * 1000
-};
+
+static const unsigned MIN_UPDATE_INTERVAL =   1 * 1000;
+static const unsigned MAX_UPDATE_INTERVAL = 100 * 1000;
 
 
 enum ProcmanTab

@@ -102,7 +102,7 @@ timeouts_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer 
 		procdata->config.update_interval = 
 			MAX (procdata->config.update_interval, 1000);
 
-		smooth_refresh_reset(procdata->smooth_refresh);
+		procdata->smooth_refresh->reset();
 
 		if(procdata->timeout) {
 			g_source_remove (procdata->timeout);
@@ -383,7 +383,7 @@ procman_data_new (GConfClient *client)
     	if (pd->config.num_cpus == 0)
     		pd->config.num_cpus = 1;
 
-	pd->smooth_refresh = smooth_refresh_new(&pd->config.update_interval);
+	pd->smooth_refresh = new SmoothRefresh(pd->config.update_interval);
 
 	return pd;
 
@@ -396,7 +396,7 @@ procman_free_data (ProcData *procdata)
 	proctable_free_table (procdata);
 	g_string_chunk_free(procdata->users);
 	g_hash_table_destroy(procdata->pids);
-	smooth_refresh_destroy(procdata->smooth_refresh);
+	delete procdata->smooth_refresh;
 }
 
 
