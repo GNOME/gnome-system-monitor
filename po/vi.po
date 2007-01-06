@@ -1,14 +1,14 @@
 # Vietnamese translation for Gnome System Monitor.
-# Copyright © 2006 Gnome i18n Project for Vietnamese.
+# Copyright © 2007 Gnome i18n Project for Vietnamese.
 # Nguyễn Thái Ngọc Duy <pclouds@gmx.net>, 2002.
-# Clytie Siddall <clytie@riverland.net.au>, 2005-2006.
+# Clytie Siddall <clytie@riverland.net.au>, 2005-2007.
 # 
 msgid ""
 ""
 msgstr "Project-Id-Version: gnome-system-monitor GNOME HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-18 07:58+0200\n"
-"PO-Revision-Date: 2006-10-18 17:27+0930\n"
+"POT-Creation-Date: 2007-01-02 02:09+0000\n"
+"PO-Revision-Date: 2007-01-06 14:01+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -18,55 +18,55 @@ msgstr "Project-Id-Version: gnome-system-monitor GNOME HEAD\n"
 "X-Generator: LocFactoryEditor 1.6fc1\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1
-#: ../src/callbacks.c:164
-#: ../src/interface.c:666
-#: ../src/procman.c:696
+#: ../src/callbacks.cpp:177
+#: ../src/interface.cpp:678
+#: ../src/procman.cpp:699
 msgid "System Monitor"
 msgstr "Bộ theo dõi hệ thống"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2
-#: ../src/callbacks.c:165
+#: ../src/callbacks.cpp:178
 msgid "View current processes and monitor system state"
 msgstr "Xem các tiến trình hiện thời và theo dõi tình trạng hệ thống"
 
-#: ../src/callbacks.c:173
+#: ../src/callbacks.cpp:187
 msgid "translator-credits"
 msgstr "Nhóm Việt hóa GNOME (http://gnomevi.sourceforge.net)"
 
-#: ../src/disks.c:308
-#: ../src/memmaps.c:328
+#: ../src/disks.cpp:307
+#: ../src/memmaps.cpp:433
 msgid "Device"
 msgstr "Thiết bị"
 
-#: ../src/disks.c:309
+#: ../src/disks.cpp:308
 msgid "Directory"
 msgstr "Thư mục"
 
-#: ../src/disks.c:310
-#: ../src/openfiles.c:232
+#: ../src/disks.cpp:309
+#: ../src/openfiles.cpp:233
 msgid "Type"
 msgstr "Kiểu"
 
-#: ../src/disks.c:311
+#: ../src/disks.cpp:310
 msgid "Total"
 msgstr "Tổng"
 
-#: ../src/disks.c:312
+#: ../src/disks.cpp:311
 msgid "Free"
 msgstr "Rảnh"
 
-#: ../src/disks.c:313
+#: ../src/disks.cpp:312
 msgid "Available"
 msgstr "Sẵn sàng"
 
-#: ../src/disks.c:314
+#: ../src/disks.cpp:313
 msgid "Used"
 msgstr "Dùng"
 
-#: ../src/disks.c:321
-#: ../src/interface.c:745
-#: ../src/procdialogs.c:770
-#: ../src/procdialogs.c:774
+#: ../src/disks.cpp:320
+#: ../src/interface.cpp:762
+#: ../src/procdialogs.cpp:770
+#: ../src/procdialogs.cpp:774
 msgid "File Systems"
 msgstr "Hệ thống tập tin"
 
@@ -95,36 +95,36 @@ msgid "%b %d %Y"
 msgstr "%d %b %Y"
 
 #.translators: primary alert message
-#: ../src/favorites.c:350
+#: ../src/favorites.cpp:352
 msgid "No hidden processes"
 msgstr "Không có tiến trình ẩn nào"
 
 #.translators: secondary alert message
-#: ../src/favorites.c:357
+#: ../src/favorites.cpp:359
 msgid ""
 "There are no hidden processes in the list. To show all running processes, "
 "select the \"All processes\" option in the main window."
 msgstr "Không có tiến trình ẩn nằm trong danh sách này. Để hiển thị mọi tiến trình "
 "đang chạy, hãy chọn mục « Mọi tiến trình » trong cửa sổ chính."
 
-#: ../src/favorites.c:377
+#: ../src/favorites.cpp:379
 msgid "Hidden Processes"
 msgstr "Tiến trình ẩn"
 
-#: ../src/favorites.c:401
+#: ../src/favorites.cpp:403
 msgid "Currently _hidden processes:"
 msgstr "Tiến trình _hiện thời ẩn:"
 
-#: ../src/favorites.c:423
+#: ../src/favorites.cpp:425
 msgid "_Remove From List"
 msgstr "Gỡ bỏ _ra danh sách"
 
-#: ../src/favorites.c:432
-#: ../src/procdialogs.c:285
+#: ../src/favorites.cpp:434
+#: ../src/procdialogs.cpp:285
 msgid "Note:"
 msgstr "Ghi chú :"
 
-#: ../src/favorites.c:433
+#: ../src/favorites.cpp:435
 msgid ""
 "These are the processes you have chosen to hide. You can reshow a process by "
 "removing it from this list."
@@ -132,38 +132,47 @@ msgstr "Bạn đã chọn ẩn những tiến trình này. Bạn có thể hiệ
 "cách gỡ bỏ nó khỏi danh sách này."
 
 #: ../src/gnome-system-monitor.schemas.in.h:1
+msgid ""
+"0 for the System Info, 1 for the processes list, 2 for the resources and 3 "
+"for the disks list"
+msgstr "0	thông tin hệ thống\n"
+"1	danh sách các tiến trình\n"
+"2	các tài nguyên\n"
+"3	danh sách các đĩa"
+
+#: ../src/gnome-system-monitor.schemas.in.h:2
 msgid "Column zero saved width"
 msgstr "Độ rộng lưu cho số không cột"
 
-#: ../src/gnome-system-monitor.schemas.in.h:2
+#: ../src/gnome-system-monitor.schemas.in.h:3
 msgid "Default graph background color"
 msgstr "Màu nền đồ thị mặc định"
 
-#: ../src/gnome-system-monitor.schemas.in.h:3
+#: ../src/gnome-system-monitor.schemas.in.h:4
 msgid "Default graph cpu color"
 msgstr "Màu CPU đồ thị mặc định"
 
-#: ../src/gnome-system-monitor.schemas.in.h:4
+#: ../src/gnome-system-monitor.schemas.in.h:5
 msgid "Default graph frame color"
 msgstr "Màu khung đồ thị mặc định"
 
-#: ../src/gnome-system-monitor.schemas.in.h:5
+#: ../src/gnome-system-monitor.schemas.in.h:6
 msgid "Default graph mem color"
 msgstr "Màu bộ nhớ đồ thị mặc định"
 
-#: ../src/gnome-system-monitor.schemas.in.h:6
+#: ../src/gnome-system-monitor.schemas.in.h:7
 msgid "Default graph net in color"
 msgstr "Màu dữ liệu vào mạng đồ thị mặc định"
 
-#: ../src/gnome-system-monitor.schemas.in.h:7
+#: ../src/gnome-system-monitor.schemas.in.h:8
 msgid "Default graph net out color"
 msgstr "Màu dữ liệu ra mạng đồ thị mặc định"
 
-#: ../src/gnome-system-monitor.schemas.in.h:8
+#: ../src/gnome-system-monitor.schemas.in.h:9
 msgid "Default graph swap color"
 msgstr "Màu trao đổi đồ thị mặc định"
 
-#: ../src/gnome-system-monitor.schemas.in.h:9
+#: ../src/gnome-system-monitor.schemas.in.h:10
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
@@ -172,205 +181,140 @@ msgstr "Quyết định hiển thị tiến trình nào theo mặc định:\n"
 " • 1 — người dùng\n"
 " • 2 — hoạt động"
 
-#: ../src/gnome-system-monitor.schemas.in.h:10
+#: ../src/gnome-system-monitor.schemas.in.h:11
 msgid "Disk view columns order"
 msgstr "Thứ tự cột ô xem đĩa"
 
-#: ../src/gnome-system-monitor.schemas.in.h:11
+#: ../src/gnome-system-monitor.schemas.in.h:12
 msgid "Enable/Disable smooth refresh"
 msgstr "Bật/tắt cập nhật mịn"
 
-#: ../src/gnome-system-monitor.schemas.in.h:12
+#: ../src/gnome-system-monitor.schemas.in.h:13
 msgid "Main Window height"
 msgstr "Độ cao cửa sổ chính"
 
-#: ../src/gnome-system-monitor.schemas.in.h:13
+#: ../src/gnome-system-monitor.schemas.in.h:14
 msgid "Main Window width"
 msgstr "Độ rộng của sổ chính"
 
 #: ../src/gnome-system-monitor.schemas.in.h:15
-#, no-c-format
-msgid "Process CPU % column saved width"
-msgstr "Độ rộng lưu cho cột phần trăm CPU tiến trình"
-
-#: ../src/gnome-system-monitor.schemas.in.h:16
-msgid "Process CPU time column saved width"
-msgstr "Độ rộng lưu cho cột thời gian CPU tiến trình"
-
-#: ../src/gnome-system-monitor.schemas.in.h:17
-msgid "Process PID column saved width"
-msgstr "Độ rộng lưu cho cột PID tiến trình"
-
-#: ../src/gnome-system-monitor.schemas.in.h:18
-msgid "Process SELinux security context column saved width"
-msgstr "Độ rộng lưu cho cột ngữ cảnh bảo mật SELinux tiến trình"
-
-#: ../src/gnome-system-monitor.schemas.in.h:19
-msgid "Process X server memory column saved width"
-msgstr "Độ rộng lưu cho cột bộ nhớ trình phục vụ X tiến trình"
-
-#: ../src/gnome-system-monitor.schemas.in.h:20
-msgid "Process arguments column saved width"
-msgstr "Độ rộng lưu cho cột đối số tiến trình"
-
-#: ../src/gnome-system-monitor.schemas.in.h:21
-msgid "Process estimated memory usage column saved width"
-msgstr "Độ rộng lưu cho cột cách sử dụng bộ nhớ ước lượng tiến trình"
-
-#: ../src/gnome-system-monitor.schemas.in.h:22
-msgid "Process name column saved width"
-msgstr "Độ rộng lưu cho cột tên tiến trình"
-
-#: ../src/gnome-system-monitor.schemas.in.h:23
-msgid "Process nice column saved width"
-msgstr "Độ rộng lưu cho cột ưu tiên tài nguyên tiến trình"
-
-#: ../src/gnome-system-monitor.schemas.in.h:24
-msgid "Process owner column saved width"
-msgstr "Độ rộng lưu cho cột người sở hữu tiến trình"
-
-#: ../src/gnome-system-monitor.schemas.in.h:25
-msgid "Process resident memory column saved width"
-msgstr "Độ rộng lưu cho cột bộ nhớ ở tiến trình"
-
-#: ../src/gnome-system-monitor.schemas.in.h:26
-msgid "Process shared memory column saved width"
-msgstr "Độ rộng lưu cho cột bộ nhớ dùng chung tiến trình"
-
-#: ../src/gnome-system-monitor.schemas.in.h:27
-msgid "Process start time column saved width"
-msgstr "Độ rộng lưu cho cột giờ bắt đầu tiến trình"
-
-#: ../src/gnome-system-monitor.schemas.in.h:28
-msgid "Process status column saved width"
-msgstr "Độ rộng lưu cho cột trạng thái tiến trình"
-
-#: ../src/gnome-system-monitor.schemas.in.h:29
 msgid "Process view columns order"
 msgstr "Thứ tự cột ô xem tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:30
+#: ../src/gnome-system-monitor.schemas.in.h:16
 msgid "Process view sort column"
 msgstr "Sắp xếp cột ô xem tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:31
+#: ../src/gnome-system-monitor.schemas.in.h:17
 msgid "Process view sort order"
 msgstr "Thứ tự sắp xếp ô xem tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:32
-msgid "Process virtual memory column saved width"
-msgstr "Độ rộng lưu cho cột bộ nhớ ảo tiến trình"
-
-#: ../src/gnome-system-monitor.schemas.in.h:33
+#: ../src/gnome-system-monitor.schemas.in.h:18
 msgid "Saves the currently viewed tab"
 msgstr "Lưu thanh đang xem hiện thời"
 
-#: ../src/gnome-system-monitor.schemas.in.h:34
+#: ../src/gnome-system-monitor.schemas.in.h:19
 msgid "Show column zero on startup"
-msgstr "Hiển thị cột số không khi khởi chạy"
+msgstr "Độ rộng của cột số không khi khởi chạy"
 
-#: ../src/gnome-system-monitor.schemas.in.h:35
+#: ../src/gnome-system-monitor.schemas.in.h:20
 msgid "Show estimated memory usage column on startup"
-msgstr "Hiển thị cột cách sử dụng ước lượng khi khởi chạy"
+msgstr "Độ rộng của cột cách sử dụng ước lượng khi khởi chạy"
 
-#: ../src/gnome-system-monitor.schemas.in.h:37
+#: ../src/gnome-system-monitor.schemas.in.h:22
 #, no-c-format
 msgid "Show process CPU % column on startup"
-msgstr "Hiển thị cột phần tram CPU tiến trình khi khởi chạy"
+msgstr "Độ rộng của cột phần tram CPU tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:38
+#: ../src/gnome-system-monitor.schemas.in.h:23
 msgid "Show process CPU time column on startup"
-msgstr "Hiển thị cột thời gian CPU tiến trình khi khởi chạy"
+msgstr "Độ rộng của cột thời gian CPU tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:39
+#: ../src/gnome-system-monitor.schemas.in.h:24
 msgid "Show process PID column on startup"
-msgstr "Hiển thị cột PID tiến trình khi khởi chạy"
+msgstr "Độ rộng của cột PID tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:40
+#: ../src/gnome-system-monitor.schemas.in.h:25
 msgid "Show process SELinux security context column on startup"
-msgstr "Hiển thị cột ngữ cảnh bảo mật SELinux tiến trình khi khởi chạy"
+msgstr "Độ rộng của cột ngữ cảnh bảo mật SELinux tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:41
+#: ../src/gnome-system-monitor.schemas.in.h:26
 msgid "Show process X server memory column zero startup"
-msgstr "Hiển thị cột bộ nhớ trình phục vụ X tiến trình khi khởi chạy"
+msgstr "Độ rộng của cột bộ nhớ trình phục vụ X tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:42
+#: ../src/gnome-system-monitor.schemas.in.h:27
 msgid "Show process arguments column on startup"
-msgstr "Hiển thị cột đối số tiến trình khi khởi chạy"
+msgstr "Độ rộng của cột đối số tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:43
+#: ../src/gnome-system-monitor.schemas.in.h:28
 msgid "Show process dependencies in tree form"
 msgstr "Hiển thị cách phụ thuộc vào tiến trình, có dạng cây"
 
-#: ../src/gnome-system-monitor.schemas.in.h:44
+#: ../src/gnome-system-monitor.schemas.in.h:29
 msgid "Show process name column on startup"
-msgstr "Hiển thị cột tên tiến trình khi khởi chạy"
+msgstr "Độ rộng của cột tên tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:45
+#: ../src/gnome-system-monitor.schemas.in.h:30
 msgid "Show process nice column on startup"
-msgstr "Hiển thị cột ưu tiên tài nguyên tiến trình khi khởi chạy"
+msgstr "Độ rộng của cột ưu tiên tài nguyên tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:46
+#: ../src/gnome-system-monitor.schemas.in.h:31
 msgid "Show process owner column on startup"
-msgstr "Hiển thị cột người sở hữu tiến trình khi khởi chạy"
+msgstr "Độ rộng của cột người sở hữu tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:47
+#: ../src/gnome-system-monitor.schemas.in.h:32
 msgid "Show process resident memory column on startup"
-msgstr "Hiển thị cột bộ nhớ ở tiến trình khi khởi chạy"
+msgstr "Độ rộng của cột bộ nhớ ở tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:48
+#: ../src/gnome-system-monitor.schemas.in.h:33
 msgid "Show process shared memory column on startup"
-msgstr "Hiển thị cột bộ nhớ dùng chung tiến trình khi khởi chạy"
+msgstr "Độ rộng của cột bộ nhớ dùng chung tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:49
+#: ../src/gnome-system-monitor.schemas.in.h:34
 msgid "Show process start time column on startup"
-msgstr "Hiển thị cột giờ bắt đầu tiến trình khi khởi chạy"
+msgstr "Độ rộng của cột giờ bắt đầu tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:50
+#: ../src/gnome-system-monitor.schemas.in.h:35
 msgid "Show process status column on startup"
-msgstr "Hiển thị cột trạng thái tiến trình khi khởi chạy"
+msgstr "Độ rộng của cột trạng thái tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:51
+#: ../src/gnome-system-monitor.schemas.in.h:36
 msgid "Show process threads"
 msgstr "Hiển thị các mạch tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:52
+#: ../src/gnome-system-monitor.schemas.in.h:37
 msgid "Show process virtual memory column on startup"
-msgstr "Hiển thị cột bộ nhớ ảo tiến trình khi khởi chạy"
+msgstr "Độ rộng của cột bộ nhớ ảo tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:53
+#: ../src/gnome-system-monitor.schemas.in.h:38
 msgid "Show process writable memory column on startup"
-msgstr "Hiển thị cột bộ nhớ ghi được tiến trình khi khởi chạy"
+msgstr "Độ rộng của cột bộ nhớ ghi được tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:54
-msgid "Show process writable memory column saved width"
-msgstr "Hiện độ rộng đã lưu của cột bộ nhớ ghi được tiến trình"
-
-#: ../src/gnome-system-monitor.schemas.in.h:55
+#: ../src/gnome-system-monitor.schemas.in.h:39
 msgid "Show warning dialog when hiding processes"
 msgstr "Hiện hộp thoại cảnh báo khi ẩn tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:56
+#: ../src/gnome-system-monitor.schemas.in.h:40
 msgid "Show warning dialog when killing processes"
 msgstr "Hiện hộp thoại cảnh báo khi buộc kết thúc của tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:57
+#: ../src/gnome-system-monitor.schemas.in.h:41
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Thời gian theo mili giây, giữa hai lần cập nhật danh sách thiết bị"
 
-#: ../src/gnome-system-monitor.schemas.in.h:58
+#: ../src/gnome-system-monitor.schemas.in.h:42
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Thời gian theo mili giây, giữa hai lần cập nhật đồ thị"
 
-#: ../src/gnome-system-monitor.schemas.in.h:59
+#: ../src/gnome-system-monitor.schemas.in.h:43
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Thời gian theo mili giây, giữa hai lần cập nhật ô xem tiến trình"
 
-#: ../src/gnome-system-monitor.schemas.in.h:60
+#: ../src/gnome-system-monitor.schemas.in.h:44
 msgid "Whether information about all filesystems should be displayed"
 msgstr "Có nên hiển thị thông tin về mọi hệ thống tập tin hay không"
 
-#: ../src/gnome-system-monitor.schemas.in.h:61
+#: ../src/gnome-system-monitor.schemas.in.h:45
 msgid ""
 "Whether to display information about all filesystems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -379,302 +323,405 @@ msgstr "Có nên hiển thị thông tin vê mọi hệ thống tập tin (gồm
 "như « autofs » và « procfs ») hay không. Có ích để lấy một danh sách các hệ "
 "thống tập tin được gắn kết hiện thời."
 
-#: ../src/interface.c:46
+#: ../src/gnome-system-monitor.schemas.in.h:47
+#, no-c-format
+msgid "Width of Process CPU % column"
+msgstr "Độ rộng của cột phần tram CPU tiến trình"
+
+#: ../src/gnome-system-monitor.schemas.in.h:48
+msgid "Width of Process CPU time column"
+msgstr "Độ rộng của cột thời gian CPU tiến trình"
+
+#: ../src/gnome-system-monitor.schemas.in.h:49
+msgid "Width of Process PID column"
+msgstr "Độ rộng của cột PID tiến trình"
+
+#: ../src/gnome-system-monitor.schemas.in.h:50
+msgid "Width of Process SELinux security context column"
+msgstr "Độ rộng của cột ngữ cảnh bảo mật SELinux tiến trình"
+
+#: ../src/gnome-system-monitor.schemas.in.h:51
+msgid "Width of Process X server memory column"
+msgstr "Độ rộng của cột bộ nhớ trình phục vụ X tiến trình"
+
+#: ../src/gnome-system-monitor.schemas.in.h:52
+msgid "Width of Process arguments column"
+msgstr "Độ rộng của cột đối số tiến trình"
+
+#: ../src/gnome-system-monitor.schemas.in.h:53
+msgid "Width of Process estimated memory usage column"
+msgstr "Độ rộng của cột cách sử dụng bộ nhớ ước lượng tiến trình"
+
+#: ../src/gnome-system-monitor.schemas.in.h:54
+msgid "Width of Process name column"
+msgstr "Độ rộng của cột tên tiến trình"
+
+#: ../src/gnome-system-monitor.schemas.in.h:55
+msgid "Width of Process nice column"
+msgstr "Độ rộng của cột ưu tiên tài nguyên tiến trình"
+
+#: ../src/gnome-system-monitor.schemas.in.h:56
+msgid "Width of Process owner column"
+msgstr "Độ rộng của cột người sở hữu tiến trình"
+
+#: ../src/gnome-system-monitor.schemas.in.h:57
+msgid "Width of Process resident memory column"
+msgstr "Độ rộng của cột bộ nhớ ở tiến trình"
+
+#: ../src/gnome-system-monitor.schemas.in.h:58
+msgid "Width of Process shared memory column"
+msgstr "Độ rộng của cột bộ nhớ dùng chung tiến trình"
+
+#: ../src/gnome-system-monitor.schemas.in.h:59
+msgid "Width of Process start time column"
+msgstr "Độ rộng của cột giờ bắt đầu tiến trình"
+
+#: ../src/gnome-system-monitor.schemas.in.h:60
+msgid "Width of Process status column"
+msgstr "Độ rộng của cột trạng thái tiến trình"
+
+#: ../src/gnome-system-monitor.schemas.in.h:61
+msgid "Width of Process virtual memory column"
+msgstr "Độ rộng của cột bộ nhớ ảo tiến trình"
+
+#: ../src/gnome-system-monitor.schemas.in.h:62
+msgid "Width of Process writable memory column"
+msgstr "Độ rộng của cột bộ nhớ ghi được tiến trình"
+
+#: ../src/interface.cpp:47
 msgid "_Monitor"
 msgstr "Th_eo dõi"
 
-#: ../src/interface.c:47
+#: ../src/interface.cpp:48
 msgid "_Edit"
 msgstr "_Sửa"
 
-#: ../src/interface.c:48
+#: ../src/interface.cpp:49
 msgid "_View"
 msgstr "_Xem"
 
-#: ../src/interface.c:49
+#: ../src/interface.cpp:50
 msgid "_Help"
 msgstr "Trợ _giúp"
 
-#: ../src/interface.c:51
+#: ../src/interface.cpp:52
+msgid "Search for _Open Files"
+msgstr "Tìm tập tin _mở"
+
+#: ../src/interface.cpp:53
+msgid "Search for open files"
+msgstr "Tìm kiếm các tập tin được mở"
+
+#: ../src/interface.cpp:54
 msgid "_Quit"
 msgstr "T_hoát"
 
-#: ../src/interface.c:52
+#: ../src/interface.cpp:55
 msgid "Quit the program"
 msgstr "Thoạt khỏi chương trình"
 
-#: ../src/interface.c:55
+#: ../src/interface.cpp:58
 msgid "_Stop Process"
 msgstr "_Dừng tiến trình"
 
-#: ../src/interface.c:56
+#: ../src/interface.cpp:59
 msgid "Stop process"
 msgstr "Dừng tiến trình"
 
-#: ../src/interface.c:57
+#: ../src/interface.cpp:60
 msgid "_Continue Process"
 msgstr "Tiếp tụ_c tiến trình"
 
-#: ../src/interface.c:58
+#: ../src/interface.cpp:61
 msgid "Continue process if stopped"
 msgstr "Tiếp tục tiến trình nếu bị dừng."
 
-#: ../src/interface.c:60
-#: ../src/interface.c:188
+#: ../src/interface.cpp:63
+#: ../src/interface.cpp:198
 msgid "End _Process"
 msgstr "Kết thúc tiến t_rình"
 
-#: ../src/interface.c:61
+#: ../src/interface.cpp:64
 msgid "Force process to finish normally"
 msgstr "Ép buộc tiến trình kết thúc một cách chuẩn"
 
-#: ../src/interface.c:62
-#: ../src/procdialogs.c:129
+#: ../src/interface.cpp:65
+#: ../src/procdialogs.cpp:129
 msgid "_Kill Process"
 msgstr "Buộc _kết thúc tiến trình"
 
-#: ../src/interface.c:63
+#: ../src/interface.cpp:66
 msgid "Force process to finish immediately"
 msgstr "Ép buộc tiến trình kết thúc ngay"
 
-#: ../src/interface.c:64
+#: ../src/interface.cpp:67
 msgid "_Change Priority..."
 msgstr "Đổi độ ư_u tiên..."
 
-#: ../src/interface.c:65
+#: ../src/interface.cpp:68
 msgid "Change the order of priority of process"
 msgstr "Thay đổi thứ tự độ ưu tiên của tiến trình"
 
-#: ../src/interface.c:66
+#: ../src/interface.cpp:69
 msgid "Prefere_nces"
 msgstr "Tu_ỳ thích"
 
-#: ../src/interface.c:67
+#: ../src/interface.cpp:70
 msgid "Configure the application"
 msgstr "Cấu hình ứng dụng"
 
-#: ../src/interface.c:69
-#: ../src/procdialogs.c:85
+#: ../src/interface.cpp:73
+#: ../src/procdialogs.cpp:85
 msgid "_Hide Process"
 msgstr "Ẩn tiến trìn_h"
 
-#: ../src/interface.c:70
+#: ../src/interface.cpp:74
 msgid "Hide process from list"
 msgstr "Ẩn một tiến trình trong danh sách"
 
-#: ../src/interface.c:71
+#: ../src/interface.cpp:75
 msgid "_Hidden Processes"
 msgstr "Tiến trìn_h ẩn"
 
-#: ../src/interface.c:72
+#: ../src/interface.cpp:76
 msgid "Open the list of currently hidden processes"
 msgstr "Mở danh sách các tiến trình ẩn hiện thời"
 
-#: ../src/interface.c:73
+#: ../src/interface.cpp:78
 msgid "_Memory Maps"
 msgstr "Sơ đồ _bộ nhớ"
 
-#: ../src/interface.c:74
+#: ../src/interface.cpp:79
 msgid "Open the memory maps associated with a process"
 msgstr "Mở các sơ đồ bộ nhớ tượng ứng với một tiến trình nào đó"
 
-#: ../src/interface.c:75
+#: ../src/interface.cpp:80
 msgid "Open _Files"
 msgstr "Mở _tập tin"
 
-#: ../src/interface.c:76
+#: ../src/interface.cpp:81
 msgid "View the files opened by a process"
 msgstr "Xem các tập tin được mở bởi một tiến trình nào đó"
 
-#: ../src/interface.c:78
+#: ../src/interface.cpp:83
 msgid "_Contents"
 msgstr "Mục lụ_c"
 
-#: ../src/interface.c:79
+#: ../src/interface.cpp:84
 msgid "Open the manual"
 msgstr "Mở sổ tay"
 
-#: ../src/interface.c:80
+#: ../src/interface.cpp:85
 msgid "_About"
 msgstr "_Giới thiệu"
 
-#: ../src/interface.c:81
+#: ../src/interface.cpp:86
 msgid "About this application"
 msgstr "Giới thiệu ứng dụng này"
 
-#: ../src/interface.c:86
+#: ../src/interface.cpp:91
 msgid "_Dependencies"
 msgstr "_Phụ thuộc"
 
-#: ../src/interface.c:87
+#: ../src/interface.cpp:92
 msgid "Show parent/child relationship between processes"
 msgstr "Hiển thị quan hệ mẹ/con giữa các tiến trình"
 
-#: ../src/interface.c:94
+#: ../src/interface.cpp:99
 msgid "_Active Processes"
 msgstr "Tiến trình h_oạt động"
 
-#: ../src/interface.c:95
+#: ../src/interface.cpp:100
 msgid "Show active processes"
 msgstr "Hiện các tiến trình hoạt động"
 
-#: ../src/interface.c:96
+#: ../src/interface.cpp:101
 msgid "A_ll Processes"
 msgstr "_Mọi tiến trình"
 
-#: ../src/interface.c:97
+#: ../src/interface.cpp:102
 msgid "Show all processes"
 msgstr "Hiện mọi tiến trình"
 
-#: ../src/interface.c:98
+#: ../src/interface.cpp:103
 msgid "M_y Processes"
 msgstr "Tiến trình của _tôi"
 
-#: ../src/interface.c:99
+#: ../src/interface.cpp:104
 msgid "Show user own process"
 msgstr "Hiện các tiến trình của người dùng"
 
-#: ../src/interface.c:260
+#: ../src/interface.cpp:270
 msgid "CPU History"
 msgstr "Nhật ký CPU"
 
-#: ../src/interface.c:303
+#: ../src/interface.cpp:313
 msgid "CPU:"
 msgstr "CPU:"
 
-#: ../src/interface.c:306
+#: ../src/interface.cpp:316
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: ../src/interface.c:326
+#: ../src/interface.cpp:336
 msgid "Memory and Swap History"
 msgstr "Lược sử bộ nhớ và trao đổi"
 
-#: ../src/interface.c:359
+#: ../src/interface.cpp:369
 msgid "User memory:"
 msgstr "Bộ nhớ người dùng:"
 
-#: ../src/interface.c:377
-#: ../src/interface.c:437
+#: ../src/interface.cpp:387
+#: ../src/interface.cpp:447
 msgid "of"
 msgstr "trên"
 
-#: ../src/interface.c:418
+#: ../src/interface.cpp:428
 msgid "Used swap:"
 msgstr "Trao đổi đã dùng:"
 
-#: ../src/interface.c:477
+#: ../src/interface.cpp:487
 msgid "Network History"
 msgstr "Lược sử mạng"
 
-#: ../src/interface.c:509
+#: ../src/interface.cpp:519
 msgid "Received:"
 msgstr "Đã nhận:"
 
-#: ../src/interface.c:529
-#: ../src/interface.c:572
+#: ../src/interface.cpp:539
+#: ../src/interface.cpp:582
 msgid "Total:"
 msgstr "Tổng:"
 
-#: ../src/interface.c:553
+#: ../src/interface.cpp:563
 msgid "Sent:"
 msgstr "Đã gởi:"
 
-#: ../src/interface.c:733
-#: ../src/procdialogs.c:579
+#: ../src/interface.cpp:744
+msgid "System"
+msgstr "Hệ thống"
+
+#: ../src/interface.cpp:750
+#: ../src/procdialogs.cpp:579
 msgid "Processes"
 msgstr "Tiến trình"
 
-#: ../src/interface.c:739
-#: ../src/procdialogs.c:682
+#: ../src/interface.cpp:756
+#: ../src/procdialogs.cpp:682
 msgid "Resources"
 msgstr "Tài nguyên"
 
-#: ../src/load-graph.c:396
-#: ../src/load-graph.c:406
+#: ../src/load-graph.cpp:395
+#: ../src/load-graph.cpp:405
 #, c-format
 msgid "%s/s"
 msgstr "%s/g"
 
-#: ../src/memmaps.c:322
+#: ../src/lsof.cpp:355
+msgid "Process"
+msgstr "Tiến trình"
+
+#: ../src/lsof.cpp:367
+msgid "PID"
+msgstr "PID"
+
+#: ../src/lsof.cpp:377
+#: ../src/memmaps.cpp:427
 msgid "Filename"
 msgstr "Tên tập tin"
 
-#: ../src/memmaps.c:323
+#.gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+#: ../src/lsof.cpp:394
+msgid "Search for Open Files"
+msgstr "Tìm tập tin mở"
+
+#: ../src/lsof.cpp:422
+msgid "_Name contains:"
+msgstr "Tê_n chứa:"
+
+#: ../src/lsof.cpp:438
+msgid "Case insensitive matching"
+msgstr "Khớp không phân biệt chữ hoa/thường"
+
+#: ../src/lsof.cpp:446
+msgid "S_earch results:"
+msgstr "_Kết quả tìm:"
+
+#: ../src/memmaps.cpp:428
 msgid "VM Start"
 msgstr "Đầu bộ nhớ ảo"
 
-#: ../src/memmaps.c:324
+#: ../src/memmaps.cpp:429
 msgid "VM End"
 msgstr "Cuối bộ nhớ ảo"
 
-#: ../src/memmaps.c:325
+#: ../src/memmaps.cpp:430
 msgid "VM Size"
 msgstr "Cỡ bộ nhớ ảo"
 
-#: ../src/memmaps.c:326
+#: ../src/memmaps.cpp:431
 msgid "Flags"
 msgstr "Cờ"
 
-#: ../src/memmaps.c:327
+#: ../src/memmaps.cpp:432
 msgid "VM Offset"
 msgstr "Hiệu bộ nhớ ảo"
 
-#: ../src/memmaps.c:329
+#: ../src/memmaps.cpp:434
 msgid "Inode"
 msgstr "Nút thông tin"
 
-#: ../src/memmaps.c:449
+#: ../src/memmaps.cpp:540
 msgid "Memory Maps"
 msgstr "Sơ đồ bộ nhớ"
 
-#: ../src/memmaps.c:469
+#: ../src/memmaps.cpp:560
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "Sơ đồ _bộ nhớ cho tiến trình « %s » (PID %u):"
 
-#: ../src/openfiles.c:31
+#: ../src/openfiles.cpp:32
 msgid "file"
 msgstr "tập tin"
 
-#: ../src/openfiles.c:33
+#: ../src/openfiles.cpp:34
 msgid "pipe"
 msgstr "ống dẫn"
 
-#: ../src/openfiles.c:35
+#: ../src/openfiles.cpp:36
 msgid "network connection"
 msgstr "kết nối mạng"
 
-#: ../src/openfiles.c:37
+#: ../src/openfiles.cpp:38
 msgid "local socket"
 msgstr "ổ cắm cục bộ"
 
-#: ../src/openfiles.c:39
+#: ../src/openfiles.cpp:40
 msgid "unknown type"
 msgstr "kiểu lạ"
 
 #.Translators: "FD" here means "File Descriptor". Please use
 #.a very short translation if possible, and at most
 #.2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.c:231
+#: ../src/openfiles.cpp:232
 msgid "FD"
 msgstr "Tả"
 
-#: ../src/openfiles.c:233
+#: ../src/openfiles.cpp:234
 msgid "Object"
 msgstr "Đối tượng"
 
-#: ../src/openfiles.c:319
+#: ../src/openfiles.cpp:318
 msgid "Open Files"
 msgstr "Mở tập tin"
 
-#: ../src/openfiles.c:341
+#: ../src/openfiles.cpp:340
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "Các _tập tin được mở bởi tiến trình « %s » (PID %u):"
 
-#: ../src/procactions.c:75
+#: ../src/procactions.cpp:75
 #, c-format
 msgid ""
 "Cannot change the priority of process with pid %d to %d.\n"
@@ -682,7 +729,7 @@ msgid ""
 msgstr "Không thể thay đổi độ ưu tiên của tiến trình có PID %d thành %d.\n"
 "%s"
 
-#: ../src/procactions.c:155
+#: ../src/procactions.cpp:155
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -691,13 +738,13 @@ msgstr "Không thể buộc kết thúc tiến trình có PID %d với tín hi�
 "%s"
 
 #.translators: primary alert message
-#: ../src/procdialogs.c:65
+#: ../src/procdialogs.cpp:65
 msgid "Hide the selected process?"
 msgstr "Ẩn tiến trình đã chọn không?"
 
 #.FIXME: View menu -> Edit menu
 #.translators: secondary alert messagex
-#: ../src/procdialogs.c:75
+#: ../src/procdialogs.cpp:75
 msgid ""
 "Hidden processes are no longer visible in the process list. You can re-"
 "enable them by selecting the \"Hidden Processes\" entry in the View menu."
@@ -706,12 +753,12 @@ msgstr "Những tiến trình ẩn không còn hiển thị được lại trong
 "trong trình đơn Xem."
 
 #.translators: primary alert message
-#: ../src/procdialogs.c:124
+#: ../src/procdialogs.cpp:124
 msgid "Kill the selected process?"
 msgstr "Ép kết thúc tiến trình đã chọn không?"
 
 #.translators: secondary alert message
-#: ../src/procdialogs.c:126
+#: ../src/procdialogs.cpp:126
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponding processes should be killed."
@@ -719,223 +766,297 @@ msgstr "Việc ép buộc kết thúc tiến trình có thể hủy dữ liệu,
 "rủi ro bảo mật. Chỉ nên buộc kết thúc tiến trình không đáp ứng thôi."
 
 #.translators: primary alert message
-#: ../src/procdialogs.c:133
+#: ../src/procdialogs.cpp:133
 msgid "End the selected process?"
 msgstr "Kết thúc tiến trình đã chọn không?"
 
 #.translators: secondary alert message
-#: ../src/procdialogs.c:135
+#: ../src/procdialogs.cpp:135
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponding processes should be ended."
 msgstr "Việc kết thúc tiến trình có thể hủy dữ liệu, hỏng phiên chạy hoặc rủi ro bảo "
 "mật. Chỉ nên kết thúc tiến trình không đáp ứng thôi."
 
-#: ../src/procdialogs.c:138
+#: ../src/procdialogs.cpp:138
 msgid "_End Process"
 msgstr "Kết _thúc tiến trình"
 
-#: ../src/procdialogs.c:167
+#: ../src/procdialogs.cpp:167
 msgid "(Very High Priority)"
 msgstr "(Độ ưu tiên rất cao)"
 
-#: ../src/procdialogs.c:169
+#: ../src/procdialogs.cpp:169
 msgid "(High Priority)"
 msgstr "(Độ ưu tiên cao)"
 
-#: ../src/procdialogs.c:171
+#: ../src/procdialogs.cpp:171
 msgid "(Normal Priority)"
 msgstr "(Độ ưu tiên chuẩn)"
 
-#: ../src/procdialogs.c:173
+#: ../src/procdialogs.cpp:173
 msgid "(Low Priority)"
 msgstr "(Độ ưu tiên thấp)"
 
-#: ../src/procdialogs.c:175
+#: ../src/procdialogs.cpp:175
 msgid "(Very Low Priority)"
 msgstr "(Độ ưu tiên rất thấp)"
 
-#: ../src/procdialogs.c:227
+#: ../src/procdialogs.cpp:227
 msgid "Change Priority"
 msgstr "Đổi độ ưu tiên"
 
-#: ../src/procdialogs.c:248
+#: ../src/procdialogs.cpp:248
 msgid "Change _Priority"
 msgstr "Đổi độ ư_u tiên"
 
-#: ../src/procdialogs.c:269
+#: ../src/procdialogs.cpp:269
 msgid "_Nice value:"
 msgstr "Giá trị _nice:"
 
-#: ../src/procdialogs.c:286
+#: ../src/procdialogs.cpp:286
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
 msgstr "Độ ưu tiên của tiến trình được thể hiện bởi giá trị « nice » (dễ thương). "
 "Giá trị thấp hơn tương ứng với độ ưu tiên cao hơn."
 
-#: ../src/procdialogs.c:464
-msgid "Processes i_nfo showed in list:"
+#: ../src/procdialogs.cpp:464
+msgid "Process i_nformation shown in list:"
 msgstr "Thô_ng tin tiến trình được hiển thị trong danh sách:"
 
-#: ../src/procdialogs.c:516
+#: ../src/procdialogs.cpp:516
 msgid "Icon"
 msgstr "Biểu tượng"
 
-#: ../src/procdialogs.c:556
+#: ../src/procdialogs.cpp:556
 msgid "System Monitor Preferences"
 msgstr "Tùy thích bộ theo dõi hệ thống"
 
-#: ../src/procdialogs.c:586
+#: ../src/procdialogs.cpp:586
 msgid "Behavior"
 msgstr "Ứng xử"
 
-#: ../src/procdialogs.c:605
-#: ../src/procdialogs.c:708
-#: ../src/procdialogs.c:793
+#: ../src/procdialogs.cpp:605
+#: ../src/procdialogs.cpp:708
+#: ../src/procdialogs.cpp:793
 msgid "_Update interval in seconds:"
 msgstr "_Khoảng cập nhật, theo giây:"
 
-#: ../src/procdialogs.c:630
+#: ../src/procdialogs.cpp:630
 msgid "Enable _smooth refresh"
 msgstr "Bật cập nhật _mịn"
 
-#: ../src/procdialogs.c:644
+#: ../src/procdialogs.cpp:644
 msgid "Alert before ending or _killing processes"
 msgstr "Cảnh giác trước khi buộc /_kết thúc tiến trình"
 
-#: ../src/procdialogs.c:654
+#: ../src/procdialogs.cpp:654
 msgid "Alert before _hiding processes"
 msgstr "Cản_h giác trước khi ẩn tiến trình"
 
-#: ../src/procdialogs.c:664
-msgid "Process Fields"
-msgstr "Trường tiến trình"
+#: ../src/procdialogs.cpp:664
+msgid "Information Fields"
+msgstr "Trường thông tin"
 
-#: ../src/procdialogs.c:689
+#: ../src/procdialogs.cpp:689
 msgid "Graphs"
 msgstr "Đồ thị"
 
-#: ../src/procdialogs.c:729
+#: ../src/procdialogs.cpp:729
 msgid "_Background color:"
 msgstr "Màu _nền:"
 
-#: ../src/procdialogs.c:748
+#: ../src/procdialogs.cpp:748
 msgid "_Grid color:"
 msgstr "Màu _lưới:"
 
-#: ../src/procdialogs.c:812
+#: ../src/procdialogs.cpp:812
 msgid "Show _all filesystems"
 msgstr "Hiện _mọi hệ thống tập tin"
 
-#: ../src/proctable.c:275
+#: ../src/proctable.cpp:278
 msgid "Process Name"
 msgstr "Tên tiến trình"
 
-#: ../src/proctable.c:276
+#: ../src/proctable.cpp:279
 msgid "User"
 msgstr "Người dùng"
 
-#: ../src/proctable.c:277
+#: ../src/proctable.cpp:280
 msgid "Status"
 msgstr "Trạng thái"
 
-#: ../src/proctable.c:278
+#: ../src/proctable.cpp:281
 msgid "Virtual Memory"
 msgstr "Bộ nhớ ảo"
 
-#: ../src/proctable.c:279
+#: ../src/proctable.cpp:282
 msgid "Resident Memory"
 msgstr "Bộ nhớ ở"
 
-#: ../src/proctable.c:280
+#: ../src/proctable.cpp:283
 msgid "Writable Memory"
 msgstr "Bộ nhớ ghi được"
 
-#: ../src/proctable.c:281
+#: ../src/proctable.cpp:284
 msgid "Shared Memory"
 msgstr "Bộ nhớ dùng chung"
 
-#: ../src/proctable.c:282
+#: ../src/proctable.cpp:285
 msgid "X Server Memory"
 msgstr "Bộ nhớ trình phục vụ X"
 
-#: ../src/proctable.c:283
+#: ../src/proctable.cpp:286
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:284
+#: ../src/proctable.cpp:287
 msgid "CPU Time"
 msgstr "Thời gian CPU"
 
-#: ../src/proctable.c:285
+#: ../src/proctable.cpp:288
 msgid "Started"
 msgstr "Đã bắt đầu"
 
 # Name: don't translate / Tên: đừng dịch
-#: ../src/proctable.c:286
+#: ../src/proctable.cpp:289
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.c:287
+#: ../src/proctable.cpp:290
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.c:288
+#: ../src/proctable.cpp:291
 msgid "Security Context"
 msgstr "Ngữ cảnh bảo mật"
 
-#: ../src/proctable.c:289
-msgid "Arguments"
-msgstr "Đối số"
+#: ../src/proctable.cpp:292
+msgid "Command Line"
+msgstr "Dòng lệnh"
 
-#: ../src/proctable.c:290
+#: ../src/proctable.cpp:293
 msgid "Memory"
 msgstr "Bộ nhớ"
 
-#: ../src/proctable.c:476
+#: ../src/proctable.cpp:479
 msgid "Running"
 msgstr "Đang chạy"
 
-#: ../src/proctable.c:481
+#: ../src/proctable.cpp:484
 msgid "Stopped"
 msgstr "Bị dừng"
 
-#: ../src/proctable.c:486
+#: ../src/proctable.cpp:489
 msgid "Zombie"
 msgstr "Ma"
 
-#: ../src/proctable.c:491
+#: ../src/proctable.cpp:494
 msgid "Uninterruptible"
 msgstr "Không thể ngắt"
 
-#: ../src/proctable.c:496
+#: ../src/proctable.cpp:499
 msgid "Sleeping"
 msgstr "Ngủ"
 
-#: ../src/proctable.c:1089
+#.xgettext: weeks, days
+#: ../src/proctable.cpp:645
+#, c-format
+msgid "%uw%ud"
+msgstr "%ut%un"
+
+#.xgettext: days, hours (0 -> 23)
+#: ../src/proctable.cpp:649
+#, c-format
+msgid "%ud%02uh"
+msgstr "%un%02ug"
+
+#.xgettext: hours (0 -> 23), minutes, seconds
+#: ../src/proctable.cpp:653
+#, c-format
+msgid "%u:%02u:%02u"
+msgstr "%u:%02u:%02u"
+
+#.xgettext: minutes, seconds, centiseconds
+#: ../src/proctable.cpp:656
+#, c-format
+msgid "%u:%02u.%02u"
+msgstr "%u:%02u.%02u"
+
+#: ../src/proctable.cpp:1106
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Trọng tải trung bình trong vòng 1, 5, 15 phút trước: %0.2f, %0.2f, %0.2f"
 
-#: ../src/util.c:87
+#: ../src/sysinfo.cpp:47
+#: ../src/sysinfo.cpp:201
+msgid "Unknown distribution"
+msgstr "Không biết bản phân phối"
+
+#: ../src/sysinfo.cpp:49
+msgid "Unknown release"
+msgstr "Không biết bản phát hành"
+
+#: ../src/sysinfo.cpp:93
+msgid "Unknown CPU model"
+msgstr "Không biết mô hình CPU"
+
+#: ../src/sysinfo.cpp:283
+#, c-format
+msgid "Release %s (%s)"
+msgstr "Bản phát hành %s (%s)"
+
+#: ../src/sysinfo.cpp:288
+#, c-format
+msgid "Release %s"
+msgstr "Bản phát hành %s"
+
+#.hardware section
+#: ../src/sysinfo.cpp:298
+msgid "<b>Hardware</b>"
+msgstr "<b>Phần cứng</b>"
+
+#: ../src/sysinfo.cpp:319
+msgid "Memory:"
+msgstr "Bộ nhớ :"
+
+#: ../src/sysinfo.cpp:339
+#, c-format
+msgid "Processor %d:"
+msgstr "Bộ xử lý %d:"
+
+#: ../src/sysinfo.cpp:344
+msgid "Processor:"
+msgstr "Bộ xử lý:"
+
+#.disk space section
+#: ../src/sysinfo.cpp:364
+msgid "<b>System Status</b>"
+msgstr "<b>Trạng thái hệ thống</b>"
+
+#: ../src/sysinfo.cpp:385
+msgid "Available Disk Space:"
+msgstr "Chỗ rảnh trên đĩa:"
+
+#: ../src/util.cpp:77
 #, c-format
 msgid "%u byte"
 msgid_plural "%u bytes"
 msgstr[0] "%u byte"
 
-#: ../src/util.c:93
+#: ../src/util.cpp:83
 #, c-format
 msgid "%.1f KiB"
 msgstr "%.1f KiB"
 
-#: ../src/util.c:97
+#: ../src/util.cpp:87
 #, c-format
 msgid "%.1f MiB"
 msgstr "%.1f MiB"
 
-#: ../src/util.c:101
+#: ../src/util.cpp:91
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
