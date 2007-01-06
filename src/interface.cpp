@@ -793,8 +793,8 @@ create_main_window (ProcData *procdata)
 void
 do_popup_menu (ProcData *procdata, GdkEventButton *event)
 {
-	gint button;
-	gint event_time;
+	guint button;
+	guint32 event_time;
 
 	if (event) {
 		button = event->button;
