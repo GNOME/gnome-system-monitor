@@ -148,7 +148,7 @@ PrettyTable::unregister_application(pid_t pid)
 
 
 GdkPixbuf*
-PrettyTable::get_icon_from_theme(pid_t pid, const gchar* command)
+PrettyTable::get_icon_from_theme(pid_t, const gchar* command)
 {
   return gtk_icon_theme_load_icon(this->theme,
 				  command,
@@ -160,7 +160,7 @@ PrettyTable::get_icon_from_theme(pid_t pid, const gchar* command)
 
 
 GdkPixbuf*
-PrettyTable::get_icon_from_default(pid_t pid, const gchar* command)
+PrettyTable::get_icon_from_default(pid_t, const gchar* command)
 {
   IconsForCommand::iterator it(this->defaults.find(command));
 
@@ -176,7 +176,7 @@ PrettyTable::get_icon_from_default(pid_t pid, const gchar* command)
 
 
 GdkPixbuf*
-PrettyTable::get_icon_from_wnck(pid_t pid, const gchar* command)
+PrettyTable::get_icon_from_wnck(pid_t pid, const gchar*)
 {
   IconsForPID::iterator it(this->apps.find(pid));
 
@@ -198,8 +198,8 @@ PrettyTable::get_icon(const gchar* command, pid_t pid)
 					    const gchar* command);
 
   const Getter getters[] = {
-    &PrettyTable::get_icon_from_theme,
     &PrettyTable::get_icon_from_wnck,
+    &PrettyTable::get_icon_from_theme,
     &PrettyTable::get_icon_from_default
   };
 
