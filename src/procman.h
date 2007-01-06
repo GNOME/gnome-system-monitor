@@ -68,9 +68,9 @@ struct _ProcConfig
         gboolean	show_hide_message;
         gboolean	show_tree;
 	gboolean	show_all_fs;
-	guint		update_interval;
- 	gint		graph_update_interval;
- 	gint		disks_update_interval;
+	int		update_interval;
+ 	int		graph_update_interval;
+ 	int		disks_update_interval;
 	gint		whose_process;
 	gint		current_tab;
 	GdkColor	cpu_color[GLIBTOP_NCPU];

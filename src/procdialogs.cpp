@@ -180,7 +180,7 @@ renice_scale_changed (GtkAdjustment *adj, gpointer data)
 {
 	GtkWidget *label = GTK_WIDGET (data);
 	
-	new_nice_value = adj->value;
+	new_nice_value = int(adj->value);
 	gtk_label_set_text (GTK_LABEL (label), get_nice_level (new_nice_value));		
 	
 }
@@ -368,59 +368,43 @@ show_hide_dialog_toggled (GtkToggleButton *button, gpointer data)
 		
 }
 
-static gboolean
-update_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
+
+class SpinButtonUpdater
 {
-	ProcData *procdata = static_cast<ProcData*>(data);
-	GConfClient *client = procdata->client;
-	GtkWidget *spin_button;
-	guint value;
-	
-	spin_button = widget;
-	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (spin_button));
-	
-	if (1000 * value == procdata->config.update_interval)
-		return FALSE;
-		
-	gconf_client_set_int (client, "/apps/procman/update_interval", value * 1000, NULL);
-	return FALSE;
-}
+public:
+  SpinButtonUpdater(const string& gconf_key)
+    : gconf_key(gconf_key)
+  { }
 
-static gboolean
-update_graph_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
-{
-	ProcData *procdata = static_cast<ProcData*>(data);
-	GConfClient *client = procdata->client;
-	GtkWidget *spin_button;
-	guint value = 0;
+  static gboolean callback(GtkWidget *widget, GdkEventFocus *event, gpointer data)
+  {
+    SpinButtonUpdater* updater = static_cast<SpinButtonUpdater*>(data);
+    updater->update(GTK_SPIN_BUTTON(widget));
+    return FALSE;
+  }
 
-	spin_button = widget;
-	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (spin_button));
-	
-	if (1000 * value == procdata->config.graph_update_interval)
-		return FALSE;
+private:
 
-	gconf_client_set_int (client, "/apps/procman/graph_update_interval", value * 1000, NULL);
-	return FALSE;
-}
+  void update(GtkSpinButton* spin)
+  {
+    int new_value = int(1000 * gtk_spin_button_get_value(spin));
+    GError* e = 0;
 
-static gboolean
-update_disks_update_interval (GtkWidget *widget, GdkEventFocus *event, gpointer data)
-{
-	ProcData *procdata = static_cast<ProcData*>(data);
-	GConfClient *client = procdata->client;
-	GtkWidget *spin_button;
-	guint value;
+    if (not gconf_client_set_int(ProcData::get_instance()->client,
+				 this->gconf_key.c_str(), new_value,
+				 &e)) {
+      g_warning("Failed to gconf_client_set_int %s %d : %s\n",
+		this->gconf_key.c_str(), new_value, e->message);
+      g_error_free(e);
+    }
 
-	spin_button = widget;
-	value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (spin_button));
-	
-	if (1000 * value == procdata->config.disks_update_interval)
-		return FALSE;
-		
-	gconf_client_set_int (client, "/apps/procman/disks_interval", value * 1000, NULL);
-	return FALSE;
-}
+    procman_debug("set %s to %d", this->gconf_key.c_str(), new_value);
+  }
+
+  const string gconf_key;
+};
+
+
 
 
 static void
@@ -530,6 +514,13 @@ void
 procdialog_create_preferences_dialog (ProcData *procdata)
 {
 	static GtkWidget *dialog = NULL;
+
+	typedef SpinButtonUpdater SBU;
+
+	static SBU interval_updater("/apps/procman/update_interval");
+	static SBU graph_interval_updater("/apps/procman/graph_update_interval");
+	static SBU disks_interval_updater("/apps/procman/disks_interval");
+
 	GtkWidget *notebook;
 	GtkWidget *proc_box;
 	GtkWidget *sys_box;
@@ -620,7 +611,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
 	gtk_box_pack_start (GTK_BOX (hbox3), spin_button, FALSE, FALSE, 0);
 	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-				   G_CALLBACK (update_update_interval), procdata);
+				   G_CALLBACK (SBU::callback), &interval_updater);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), spin_button);
 	
 
@@ -718,7 +709,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 							  100.0, 0.25, 1.0, 1.0);
 	spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
 	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-				   G_CALLBACK (update_graph_update_interval), procdata);
+			  G_CALLBACK(SBU::callback),
+			  &graph_interval_updater);
 	gtk_box_pack_start (GTK_BOX (hbox3), spin_button, FALSE, FALSE, 0);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), spin_button);
 	
@@ -804,7 +796,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (hbox3), spin_button, FALSE, FALSE, 0);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), spin_button);
 	g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-				  G_CALLBACK (update_disks_update_interval), procdata);
+			  G_CALLBACK(SBU::callback),
+			  &disks_interval_updater);
 		
 
 	hbox2 = gtk_hbox_new (FALSE, 6);
