@@ -954,7 +954,7 @@ refresh_list (ProcData *procdata, const unsigned *pid_list, const guint n)
 		if (!info) {
 			info = procinfo_new (procdata, pid_list[i]);
 			g_ptr_array_add(addition_list, info);
-			procdata->info = g_list_append (procdata->info, info);
+			procdata->info = g_list_prepend (procdata->info, info);
 			g_hash_table_insert(procdata->pids, GINT_TO_POINTER(info->pid), info);
 		}
 		else {

@@ -106,11 +106,17 @@ struct _ProcInfo
 	time_t		start_time;
 	guint64		cpu_time_last;
 
-	guint64		vmsize;
-	guint64		memres;
-	guint64		memwritable;
-	guint64		memshared;
-	guint64		mem; /* estimated memory usage */
+	// all these members are filled with libgtop which uses
+	// guint64 (to have fixed size data) but we don't need more
+	// than an unsigned long (even for 32bit apps on a 64bit
+	// kernel) as these data are amounts, not offsets.
+	unsigned long	vmsize;
+	unsigned long	memres;
+	unsigned long	memwritable;
+	unsigned long	memshared;
+	unsigned long	mem; /* estimated memory usage */
+
+	// wnck gives an unsigned long
 	unsigned long	memxserver;
 
 	guint		pid;

@@ -1,5 +1,17 @@
 2007-01-07  Benoît Dejean  <benoit@placenet.org>
 
+	* src/procman.h:
+	* src/proctable.cpp:
+	* src/util.cpp:
+
+	Various micro-optimizations based on profiling.
+	Changed the type of many ProcInfo members to 'unsigned long' to
+	avoid 64bit arithmetic on 32bit system.
+	Replaced on g_list_append with g_list_prepend.
+	Avoided double comparison in format_file_size_for_display.
+
+2007-01-07  Benoît Dejean  <benoit@placenet.org>
+
 	* src/procman.cpp:
 	* src/smooth_refresh.cpp:
 	* src/smooth_refresh.h:

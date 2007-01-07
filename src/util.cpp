@@ -54,9 +54,9 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
 
 
 
-#define KIBIBYTE_FACTOR 1024.0
-#define MEBIBYTE_FACTOR (1024.0 * 1024.0)
-#define GIBIBYTE_FACTOR (1024.0 * 1024.0 * 1024.0)
+#define KIBIBYTE_FACTOR (1UL << 10)
+#define MEBIBYTE_FACTOR (1UL << 20)
+#define GIBIBYTE_FACTOR (1UL << 30)
 
 
 /**
