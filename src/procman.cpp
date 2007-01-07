@@ -383,7 +383,9 @@ procman_data_new (GConfClient *client)
     	if (pd->config.num_cpus == 0)
     		pd->config.num_cpus = 1;
 
-	pd->smooth_refresh = new SmoothRefresh(pd->config.update_interval);
+	// delayed initialization as SmoothRefresh() needs ProcData
+	// i.e. we can't call ProcData::get_instance
+	pd->smooth_refresh = new SmoothRefresh();
 
 	return pd;
 

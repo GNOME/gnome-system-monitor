@@ -69,8 +69,7 @@ void SmoothRefresh::load_gconf_value(GConfValue* value)
 }
 
 
-SmoothRefresh::SmoothRefresh(const guint &config_interval)
-  : config_interval(config_interval)
+SmoothRefresh::SmoothRefresh()
 {
   this->connection = gconf_client_notify_add(gconf_client_get_default(),
 					     KEY.c_str(),
@@ -93,7 +92,7 @@ void SmoothRefresh::reset()
   glibtop_get_cpu(&cpu);
   glibtop_get_proc_time(&proctime, getpid());
 
-  this->interval = this->config_interval;
+  this->interval = ProcData::get_instance()->config.update_interval;
   this->last_pcpu = PCPU_LO;
   this->last_total_time = cpu.total;
   this->last_cpu_time = proctime.rtime;
@@ -113,7 +112,9 @@ SmoothRefresh::~SmoothRefresh()
 bool
 SmoothRefresh::get(guint &new_interval)
 {
-  g_assert(this->interval >= this->config_interval);
+  const unsigned config_interval = ProcData::get_instance()->config.update_interval;
+
+  g_assert(this->interval >= config_interval);
 
   if (not this->active)
     return false;
@@ -138,14 +139,13 @@ SmoothRefresh::get(guint &new_interval)
 
   if (pcpu > PCPU_HI && this->last_pcpu > PCPU_HI)
     new_interval = this->interval * 11 / 10;
-  else if (this->interval != this->config_interval && pcpu < PCPU_LO && this->last_pcpu < PCPU_LO)
-    new_interval = std::max(this->config_interval, this->interval * 9 / 10);
+  else if (this->interval != config_interval && pcpu < PCPU_LO && this->last_pcpu < PCPU_LO)
+    new_interval = this->interval * 9 / 10;
   else
-      new_interval = this->interval;
+    new_interval = this->interval;
 
-  new_interval = CLAMP(new_interval,
-		       MIN_UPDATE_INTERVAL,
-		       std::min(MAX_UPDATE_INTERVAL, this->config_interval * 2));
+  new_interval = CLAMP(new_interval, config_interval, config_interval * 2);
+  new_interval = CLAMP(new_interval, MIN_UPDATE_INTERVAL, MAX_UPDATE_INTERVAL);
 
   bool changed = this->interval != new_interval;
 
@@ -159,11 +159,11 @@ SmoothRefresh::get(guint &new_interval)
     procman_debug("CPU usage is %3u%%, changed refresh_interval to %u (config %u)",
 		  this->last_pcpu,
 		  this->interval,
-		  this->config_interval);
+		  config_interval);
   }
 
   g_assert(this->interval == new_interval);
-  g_assert(this->interval >= this->config_interval);
+  g_assert(this->interval >= config_interval);
 
   return changed;
 }

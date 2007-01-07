@@ -22,7 +22,7 @@ public:
 
     @return : initialized SmoothRefresh
   */
-  SmoothRefresh(const guint &config_interval);
+  SmoothRefresh();
 
   ~SmoothRefresh();
 
@@ -91,10 +91,10 @@ private:
     -last_total_time:
     -last_cpu_time: Save last cpu and process times to compute CPU%
   */
+
   bool active;
   guint connection;
   guint interval;
-  const guint &config_interval;
   unsigned  last_pcpu;
   guint64 last_total_time;
   guint64 last_cpu_time;
