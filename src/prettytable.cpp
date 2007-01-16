@@ -55,13 +55,6 @@ PrettyTable::PrettyTable()
 {
   this->theme = gtk_icon_theme_get_default();
 
-  this->datadir
-    = make_string(gnome_program_locate_file(NULL,
-					    GNOME_FILE_DOMAIN_DATADIR,
-					    "pixmaps/",
-					    TRUE,
-					    NULL));
-
   this->load_default_table();
 
 
@@ -217,32 +210,16 @@ PrettyTable::get_icon(const gchar* command, pid_t pid)
 void
 PrettyTable::load_default_table()
 {
-  typedef std::map<string, GdkPixbuf*> IconCache;
-
-  IconCache cache;
-
   for (size_t i = 0; i != G_N_ELEMENTS(default_table); ++i)
     {
       const char* command = default_table[i].command;
       const char* icon = default_table[i].icon;
-      GdkPixbuf* pix;
 
-      IconCache::iterator it(cache.find(icon));
-
-      if (it == cache.end()) {
-	char* iconpath;
-	iconpath = g_build_filename(this->datadir.c_str(), icon, NULL);
-	pix = create_scaled_icon(iconpath);
-	g_free(iconpath);
-	if (!pix)
-	  continue;
-	cache[icon] = pix;
-
-      } else {
-	pix = it->second;
-	g_object_ref(pix);
-      }
-
-      this->defaults[command] = pix;
+      if (GdkPixbuf* pix = gtk_icon_theme_load_icon(this->theme,
+						    icon,
+						    APP_ICON_SIZE,
+						    GTK_ICON_LOOKUP_USE_BUILTIN,
+						    NULL))
+	this->defaults[command] = pix;
     }
 }

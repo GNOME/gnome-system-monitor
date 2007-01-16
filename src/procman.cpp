@@ -25,7 +25,6 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
-#include <gnome.h>
 #include <bacon-message-connection.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <gconf/gconf-client.h>
@@ -663,7 +662,6 @@ int
 main (int argc, char *argv[])
 {
 	guint32 startup_timestamp;
-	GnomeProgram *procman;
 	GConfClient *client;
 	ProcData *procdata;
 	BaconMessageConnection *conn;
@@ -674,9 +672,7 @@ main (int argc, char *argv[])
 
 	startup_timestamp = get_startup_timestamp();
 
-	procman = gnome_program_init ("gnome-system-monitor", VERSION, 
-				       LIBGNOMEUI_MODULE, argc, argv,
-				      GNOME_PARAM_APP_DATADIR,DATADIR, NULL);
+	gtk_init(&argc, &argv);
 
 	conn = bacon_message_connection_new ("gnome-system-monitor");
 	if (!conn) g_error("Couldn't connect to gnome-system-monitor");

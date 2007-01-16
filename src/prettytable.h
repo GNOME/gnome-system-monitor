@@ -46,7 +46,6 @@ private:
 
   IconsForPID apps;
   IconsForCommand defaults;
-  string datadir;
   GtkIconTheme* theme;
 };
 
