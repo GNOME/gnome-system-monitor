@@ -666,6 +666,7 @@ update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info
 	memxserver = SI_gnome_vfs_format_file_size_for_display (info->memxserver);
 	mem = SI_gnome_vfs_format_file_size_for_display(info->mem);
 
+	// expects centiseconds
 	cpu_time = format_duration_for_display(100 * info->cpu_time_last / procdata->frequency);
 
 	/* FIXME: does it worths it to display relative to $now date ?
