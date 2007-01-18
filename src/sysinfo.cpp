@@ -215,8 +215,6 @@ procman_create_sysinfo_view(void)
 
   SysInfo *data = get_sysinfo();;
 
-  GtkWidget *logo;
-
   GtkWidget *distro_frame;
   GtkWidget *distro_release_label;
 
@@ -238,13 +236,13 @@ procman_create_sysinfo_view(void)
   hbox = gtk_hbox_new(FALSE, 12);
   gtk_container_set_border_width(GTK_CONTAINER(hbox), 6);
 
+#if 0
   /* left-side logo */
-
-  logo = gtk_image_new_from_file(DATADIR "/pixmaps/gnome-system-monitor/side.png");
+  GtkWidget * logo = gtk_image_new_from_file(DATADIR "/pixmaps/gnome-system-monitor/side.png");
   gtk_misc_set_alignment(GTK_MISC(logo), 0.5, 0.0);
   gtk_misc_set_padding(GTK_MISC(logo), 5, 12);
   gtk_box_pack_start(GTK_BOX(hbox), logo, FALSE, FALSE, 0);
-
+#endif
   vbox = gtk_vbox_new(FALSE, 12);
   gtk_container_set_border_width(GTK_CONTAINER(vbox), 12);
   gtk_box_pack_start(GTK_BOX(hbox), vbox, TRUE, TRUE, 0);
