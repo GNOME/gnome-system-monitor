@@ -47,7 +47,6 @@
 #include "prettytable.h"
 #include "util.h"
 #include "interface.h"
-#include "favorites.h"
 #include "selinux.h"
 extern "C" {
 #include "e_date.h"
@@ -711,14 +710,6 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 	if ((procdata->config.whose_process == ACTIVE_PROCESSES) &&
 	    (!info->is_running))
 		return;
-
-	/* Don't show processes that user has blacklisted */
-	if (is_process_blacklisted (procdata, info->name))
-	{
-		info->is_blacklisted = TRUE;
-		return;
-	}
-	info->is_blacklisted = FALSE;
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 	if (info->parent && procdata->config.show_tree && info->parent->is_visible) {

@@ -69,12 +69,6 @@ static const GtkActionEntry menu_entries[] =
 	{ "Preferences", GTK_STOCK_PREFERENCES, N_("Prefere_nces"), NULL,
 	  N_("Configure the application"), G_CALLBACK (cb_edit_preferences) },
 
-#if 0
-	{ "HideProcess", NULL, N_("_Hide Process"), "<control>H",
-	  N_("Hide process from list"), G_CALLBACK (cb_hide_process) },
-	{ "HiddenProcesses", NULL, N_("_Hidden Processes"), "<control>P",
-	  N_("Open the list of currently hidden processes"), G_CALLBACK (cb_show_hidden_processes) },
-#endif
 	{ "MemoryMaps", NULL, N_("_Memory Maps"), "<control>M",
 	  N_("Open the memory maps associated with a process"), G_CALLBACK (cb_show_memory_maps) },
 	{ "OpenFiles", NULL, N_("Open _Files"), "<control>F",
@@ -129,11 +123,6 @@ static const char ui_info[] =
 "      <separator />"
 "      <menuitem name=\"ViewDependenciesMenu\" action=\"ShowDependencies\" />"
 "      <separator />"
-#if 0
-"      <menuitem name=\"ViewHideProcessMenu\" action=\"HideProcess\" />"
-"      <menuitem name=\"ViewHiddenProcessesMenu\" action=\"HiddenProcesses\" />"
-"      <separator />"
-#endif
 "      <menuitem name=\"ViewMemoryMapsMenu\" action=\"MemoryMaps\" />"
 "      <menuitem name=\"ViewOpenFilesMenu\" action=\"OpenFiles\" />"
 "    </menu>"
@@ -151,10 +140,6 @@ static const char ui_info[] =
 "    <separator />"
 "    <menuitem action=\"ChangePriority\" />"
 "    <separator />"
-#if 0
-"    <menuitem action=\"HideProcess\" />"
-"    <separator />"
-#endif
 "    <menuitem action=\"MemoryMaps\" />"
 "    <menuitem action=\"OpenFiles\" />"
 "  </popup>";
@@ -817,19 +802,13 @@ update_sensitivity(ProcData *data)
 						  "EndProcess",
 						  "KillProcess",
 						  "ChangePriority",
-#if 0
-						  "HideProcess",
-#endif
 						  "MemoryMaps",
 						  "OpenFiles" };
 
 	const char * const processes_actions[] = { "ShowActiveProcesses",
 						   "ShowAllProcesses",
 						   "ShowMyProcesses",
-						   "ShowDependencies",
-#if 0
-						   "HiddenProcesses"
-#endif
+						   "ShowDependencies"
 	};
 
 	size_t i;

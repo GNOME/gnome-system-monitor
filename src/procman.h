@@ -65,7 +65,6 @@ struct _ProcConfig
 	gint		width;
 	gint		height;
         gboolean	show_kill_warning;
-        gboolean	show_hide_message;
         gboolean	show_tree;
 	gboolean	show_all_fs;
 	int		update_interval;
@@ -127,7 +126,6 @@ struct _ProcInfo
 
 	guint		is_visible	: 1;
 	guint		is_running	: 1;
-	guint		is_blacklisted	: 1;
 };
 
 struct ProcData
@@ -182,8 +180,6 @@ struct ProcData
 	GHashTable	*pids;
 
 	PrettyTable	pretty_table;
-	GList		*blacklist;
-	gint		blacklist_num;
 
 	GConfClient	*client;
 	GtkWidget	*app;

@@ -25,7 +25,6 @@
 #include <signal.h>
 #include <string.h>
 #include "procdialogs.h"
-#include "favorites.h"
 #include "proctable.h"
 #include "callbacks.h"
 #include "prettytable.h"
@@ -40,59 +39,6 @@ static GtkWidget *renice_dialog = NULL;
 static GtkWidget *prefs_dialog = NULL;
 static gint new_nice_value = 0;
 
-
-static void
-hide_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
-{
-	ProcData *procdata = static_cast<ProcData*>(data);
-	
-	if (id == GTK_RESPONSE_OK) {
-		add_selected_to_blacklist (procdata);
-	}
-	
-	gtk_widget_destroy (GTK_WIDGET (dialog));
-		
-}
-
-void
-procdialog_create_hide_dialog (ProcData *data)
-{
-       ProcData *procdata = static_cast<ProcData*>(data);
-       GtkWidget *hide_alert_dialog;
-       gchar *message;
-
-       /*translators: primary alert message*/
-       message = g_strdup_printf (_("Hide the selected process?"));
-       hide_alert_dialog = gtk_message_dialog_new (GTK_WINDOW (procdata->app),
-						   static_cast<GtkDialogFlags>(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
-						   GTK_MESSAGE_WARNING,
-						   GTK_BUTTONS_NONE,
-						   message);
-       g_free (message);
-
-       /* FIXME: View menu -> Edit menu */
-       /*translators: secondary alert messagex*/
-       message = g_strdup_printf (_("Hidden processes are no longer visible "
-				    "in the process list. You can re-enable "
-				    "them by selecting the \"Hidden Processes\" "
-				    "entry in the View menu."));
-       gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (hide_alert_dialog),
-						 message);
-       g_free (message);
-
-       gtk_dialog_add_buttons (GTK_DIALOG (hide_alert_dialog),
-                               GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                               _("_Hide Process"), GTK_RESPONSE_OK,
-                               NULL);
-       gtk_dialog_set_default_response (GTK_DIALOG (hide_alert_dialog),
-                                        GTK_RESPONSE_OK);
-	
-       g_signal_connect (G_OBJECT (hide_alert_dialog), "response",
-			 G_CALLBACK (hide_dialog_button_pressed), procdata);
-  	
-       gtk_widget_show_all (hide_alert_dialog);
-
-}
 
 static void
 kill_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
@@ -351,21 +297,6 @@ show_all_fs_toggled (GtkToggleButton *button, gpointer data)
 	toggled = gtk_toggle_button_get_active (button);
 
 	gconf_client_set_bool (client, "/apps/procman/show_all_fs", toggled, NULL);
-}
-
-
-static void
-show_hide_dialog_toggled (GtkToggleButton *button, gpointer data)
-{
-	ProcData *procdata = static_cast<ProcData*>(data);
-	GConfClient *client = procdata->client;
-	
-	gboolean toggled;
-	
-	toggled = gtk_toggle_button_get_active (button);
-	
-	gconf_client_set_bool (client, "/apps/procman/hide_message", toggled, NULL);
-		
 }
 
 
@@ -641,13 +572,6 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	
 	hbox2 = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
-	
-	check_button = gtk_check_button_new_with_mnemonic (_("Alert before _hiding processes"));
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
-				    procdata->config.show_hide_message);
-	g_signal_connect (G_OBJECT (check_button), "toggled",
-			    G_CALLBACK (show_hide_dialog_toggled), procdata);
-	gtk_box_pack_start (GTK_BOX (hbox2), check_button, FALSE, FALSE, 0);
 	
 	vbox = gtk_vbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (proc_box), vbox, TRUE, TRUE, 0);

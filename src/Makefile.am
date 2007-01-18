@@ -20,7 +20,6 @@ gnome_system_monitor_SOURCES = \
 	procdialogs.cpp procdialogs.h \
 	memmaps.cpp memmaps.h \
 	openfiles.cpp openfiles.h \
-	favorites.cpp favorites.h \
 	smooth_refresh.cpp smooth_refresh.h \
 	defaulttable.h \
 	disks.cpp disks.h \

@@ -37,7 +37,6 @@
 #include "interface.h"
 #include "proctable.h"
 #include "prettytable.h"
-#include "favorites.h"
 #include "callbacks.h"
 #include "smooth_refresh.h"
 
@@ -83,9 +82,6 @@ warning_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer d
 	
 	if (g_str_equal (key, "/apps/procman/kill_dialog")) {
 		procdata->config.show_kill_warning = gconf_value_get_bool (value);
-	}
-	else {
-		procdata->config.show_hide_message = gconf_value_get_bool (value);
 	}
 }
 
@@ -230,7 +226,6 @@ procman_data_new (GConfClient *client)
 	pd->pids = g_hash_table_new(NULL, NULL);
 	pd->selected_process = NULL;
 	pd->timeout = 0;
-	pd->blacklist = NULL;
 	pd->cpu_graph = NULL;
 	pd->mem_graph = NULL;
 	pd->net_graph = NULL;
@@ -250,10 +245,6 @@ procman_data_new (GConfClient *client)
 	pd->config.show_kill_warning = gconf_client_get_bool (client, "/apps/procman/kill_dialog", 
 							      NULL);
 	gconf_client_notify_add (client, "/apps/procman/kill_dialog", warning_changed_cb,
-				 pd, NULL, NULL);
-	pd->config.show_hide_message = gconf_client_get_bool (client, "/apps/procman/hide_message",
-							      NULL);
-	gconf_client_notify_add (client, "/apps/procman/hide_message", warning_changed_cb,
 				 pd, NULL, NULL);
 	pd->config.update_interval = gconf_client_get_int (client, "/apps/procman/update_interval", 
 							   NULL);
@@ -354,8 +345,6 @@ procman_data_new (GConfClient *client)
 			  	 color_changed_cb, pd, NULL, NULL);
 	gdk_color_parse(color, &pd->config.net_out_color);
 	g_free (color);
-	
-	get_blacklist (pd, client);
 	
 	/* Sanity checks */
 	swidth = gdk_screen_width ();
@@ -577,8 +566,6 @@ procman_save_config (ProcData *data)
 	gconf_client_set_int (client, "/apps/procman/width", data->config.width, NULL);
 	gconf_client_set_int (client, "/apps/procman/height", data->config.height, NULL);	
 	gconf_client_set_int (client, "/apps/procman/current_tab", data->config.current_tab, NULL);
-	
-	save_blacklist (data, client);
 
 	gconf_client_suggest_sync (client, NULL);
 	

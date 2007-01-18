@@ -33,7 +33,6 @@
 #include "procdialogs.h"
 #include "memmaps.h"
 #include "openfiles.h"
-#include "favorites.h"
 #include "load-graph.h"
 #include "disks.h"
 #include "lsof.h"
@@ -126,26 +125,6 @@ cb_show_lsof(GtkAction *action, gpointer data)
 {
 	ProcData *procdata = static_cast<ProcData*>(data);
 	procman_lsof(procdata);
-}
-
-void		
-cb_show_hidden_processes (GtkAction *action, gpointer data)
-{
-	ProcData * const procdata = static_cast<ProcData*>(data);
-
-	create_blacklist_dialog (procdata);
-}
-
-
-void
-cb_hide_process (GtkAction *action, gpointer data)
-{
-	ProcData * const procdata = static_cast<ProcData*>(data);
-
-	if (procdata->config.show_hide_message)
-		procdialog_create_hide_dialog (procdata);
-	else
-		add_selected_to_blacklist (procdata);
 }
 
 

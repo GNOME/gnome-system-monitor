@@ -32,8 +32,6 @@ void		cb_show_lsof(GtkAction *action, gpointer data) G_GNUC_INTERNAL;
 void		cb_renice (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
 void		cb_end_process (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
 void		cb_kill_process (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
-void		cb_hide_process (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
-void		cb_show_hidden_processes (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
 void		cb_edit_preferences (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
 
 void		cb_help_contents (GtkAction *action, gpointer data) G_GNUC_INTERNAL;
