@@ -384,7 +384,7 @@ procman_create_sysinfo_view(void)
   gtk_container_set_border_width(GTK_CONTAINER(disk_space_table), 6);
   gtk_container_add(GTK_CONTAINER(alignment), disk_space_table);
 
-  header = gtk_label_new(_("Available Disk Space:"));
+  header = gtk_label_new(_("Available disk space:"));
   gtk_misc_set_alignment(GTK_MISC(header), 0.0, 0.5);
   gtk_table_attach(
 		   GTK_TABLE(disk_space_table), header,
