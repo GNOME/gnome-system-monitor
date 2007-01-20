@@ -76,21 +76,21 @@ SI_gnome_vfs_format_file_size_for_display (GnomeVFSFileSize size)
 	if (size < (GnomeVFSFileSize) KIBIBYTE_FACTOR) {
 		return g_strdup_printf (dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes",(guint) size), (guint) size);
 	} else {
-		gdouble displayed_size;
+		guint factor;
+		const char* format;
 
 		if (size < (GnomeVFSFileSize) MEBIBYTE_FACTOR) {
-			displayed_size = (gdouble) size / KIBIBYTE_FACTOR;
-			return g_strdup_printf (_("%.1f KiB"),
-						       displayed_size);
+		  factor = KIBIBYTE_FACTOR;
+		  format = N_("%.1f KiB");
 		} else if (size < (GnomeVFSFileSize) GIBIBYTE_FACTOR) {
-			displayed_size = (gdouble) size / MEBIBYTE_FACTOR;
-			return g_strdup_printf (_("%.1f MiB"),
-						       displayed_size);
+		  factor = MEBIBYTE_FACTOR;
+		  format = N_("%.1f MiB");
 		} else {
-			displayed_size = (gdouble) size / GIBIBYTE_FACTOR;
-			return g_strdup_printf (_("%.1f GiB"),
-						       displayed_size);
+		  factor = GIBIBYTE_FACTOR;
+		  format = N_("%.1f GiB");
 		}
+
+		return g_strdup_printf(_(format), size / (double)factor);
 	}
 }
 
