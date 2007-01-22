@@ -12,6 +12,7 @@
 #include <netdb.h>
 #include <sys/socket.h>
 #include <sys/wait.h>
+#include <math.h>
 
 #include <string>
 #include <vector>
@@ -207,6 +208,54 @@ namespace {
 }
 
 
+#define X_PAD  5
+#define Y_PAD  12
+#define LOGO_W 92
+#define LOGO_H 351
+#define RADIUS 5
+
+static gboolean
+sysinfo_logo_expose (GtkWidget *widget,
+		     GdkEventExpose *event,
+		     gpointer data_ptr)
+{
+  cairo_t *cr;
+  cairo_pattern_t *cp;
+
+  cr = gdk_cairo_create(widget->window);
+
+  cairo_translate(cr, event->area.x, event->area.y);
+
+  cairo_move_to(cr, X_PAD + RADIUS, Y_PAD);
+  cairo_line_to(cr, X_PAD + LOGO_W - RADIUS, Y_PAD);
+  cairo_arc(cr, X_PAD + LOGO_W - RADIUS, Y_PAD + RADIUS, RADIUS, -0.5 * M_PI, 0);
+  cairo_line_to(cr, X_PAD + LOGO_W, Y_PAD + LOGO_H - RADIUS);
+  cairo_arc(cr, X_PAD + LOGO_W - RADIUS, Y_PAD + LOGO_H - RADIUS, RADIUS, 0, 0.5 * M_PI);
+  cairo_line_to(cr, X_PAD + RADIUS, Y_PAD + LOGO_H);
+  cairo_arc(cr, X_PAD + RADIUS, Y_PAD + LOGO_H - RADIUS, RADIUS, 0.5 * M_PI, -1.0 * M_PI);
+  cairo_line_to(cr, X_PAD, Y_PAD + RADIUS);
+  cairo_arc(cr,  X_PAD + RADIUS, Y_PAD + RADIUS, RADIUS, -1.0 * M_PI, -0.5 * M_PI);
+
+  cp = cairo_pattern_create_linear(0, Y_PAD, 0, Y_PAD + LOGO_H);
+  cairo_pattern_add_color_stop_rgba(cp, 0.0,
+				    widget->style->base[GTK_STATE_SELECTED].red / 65535.0,
+				    widget->style->base[GTK_STATE_SELECTED].green / 65535.0,
+				    widget->style->base[GTK_STATE_SELECTED].blue / 65535.0,
+				    1.0);
+  cairo_pattern_add_color_stop_rgba(cp, 1.0,
+				    widget->style->base[GTK_STATE_SELECTED].red / 65535.0,
+				    widget->style->base[GTK_STATE_SELECTED].green / 65535.0,
+				    widget->style->base[GTK_STATE_SELECTED].blue / 65535.0,
+				    0.0);
+  cairo_set_source(cr, cp);
+  cairo_fill(cr);
+
+  cairo_pattern_destroy(cp);
+  cairo_destroy(cr);
+
+  return FALSE;
+}
+
 GtkWidget *
 procman_create_sysinfo_view(void)
 {
@@ -214,6 +263,8 @@ procman_create_sysinfo_view(void)
   GtkWidget *vbox;
 
   SysInfo *data = get_sysinfo();;
+
+  GtkWidget * logo;
 
   GtkWidget *distro_frame;
   GtkWidget *distro_release_label;
@@ -236,13 +287,16 @@ procman_create_sysinfo_view(void)
   hbox = gtk_hbox_new(FALSE, 12);
   gtk_container_set_border_width(GTK_CONTAINER(hbox), 6);
 
-#if 0
   /* left-side logo */
-  GtkWidget * logo = gtk_image_new_from_file(DATADIR "/pixmaps/gnome-system-monitor/side.png");
+
+  logo = gtk_image_new_from_file(DATADIR "/pixmaps/gnome-system-monitor/side.png");
   gtk_misc_set_alignment(GTK_MISC(logo), 0.5, 0.0);
   gtk_misc_set_padding(GTK_MISC(logo), 5, 12);
   gtk_box_pack_start(GTK_BOX(hbox), logo, FALSE, FALSE, 0);
-#endif
+
+  g_signal_connect(G_OBJECT(logo), "expose-event",
+		   G_CALLBACK(sysinfo_logo_expose), NULL);
+
   vbox = gtk_vbox_new(FALSE, 12);
   gtk_container_set_border_width(GTK_CONTAINER(vbox), 12);
   gtk_box_pack_start(GTK_BOX(hbox), vbox, TRUE, TRUE, 0);
