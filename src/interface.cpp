@@ -212,17 +212,10 @@ make_title_label (const char *text)
 
 /* Make sure the cpu labels don't jump around. From the clock applet */
 static void
-cpu_size_request (GtkWidget *box, GtkRequisition *req, ProcData *procdata)
+size_request(GtkWidget* box, GtkRequisition* req, void* data)
 {
-	req->width = procdata->cpu_label_fixed_width = \
-		MAX(req->width, procdata->cpu_label_fixed_width);
-}
-
-static void
-net_size_request (GtkWidget *label, GtkRequisition *req, ProcData *procdata)
-{
-	req->width = procdata->net_label_fixed_width = \
-		MAX(req->width, procdata->net_label_fixed_width);
+  gint* size = static_cast<gint*>(data);
+  req->width = *size = std::max(req->width, *size);
 }
 
 
@@ -231,6 +224,9 @@ net_size_request (GtkWidget *label, GtkRequisition *req, ProcData *procdata)
 static GtkWidget *
 create_sys_view (ProcData *procdata)
 {
+  static gint net_size;
+  static gint cpu_size;
+
 	GtkWidget *vbox, *hbox;
 	GtkWidget *cpu_box, *mem_box, *net_box;
 	GtkWidget *cpu_hbox, *mem_hbox, *net_hbox;
@@ -285,7 +281,7 @@ create_sys_view (ProcData *procdata)
 		gtk_box_pack_start (GTK_BOX (hbox), temp_hbox, FALSE, FALSE, 0);
 		gtk_size_group_add_widget (sizegroup, temp_hbox);
 		g_signal_connect (G_OBJECT (temp_hbox), "size_request",
-					 G_CALLBACK (cpu_size_request), procdata);
+					 G_CALLBACK(size_request), &cpu_size);
 
 		color_picker = gtk_color_button_new_with_color (
 			&load_graph_get_colors(cpu_graph)[2+i]);
@@ -507,7 +503,7 @@ create_sys_view (ProcData *procdata)
 
 	hbox = gtk_hbox_new (FALSE, 0);
 	g_signal_connect (G_OBJECT (hbox), "size_request",
-			  G_CALLBACK (net_size_request), procdata);
+			  G_CALLBACK(size_request), &net_size);
 
 
 	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(net_graph)->net_in),
@@ -551,7 +547,7 @@ create_sys_view (ProcData *procdata)
 
 	hbox = gtk_hbox_new (FALSE, 0);
 	g_signal_connect (G_OBJECT (hbox), "size_request",
-			  G_CALLBACK (net_size_request), procdata);
+			  G_CALLBACK(size_request), &net_size);
 
 	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(net_graph)->net_out),
 				0.0,
