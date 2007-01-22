@@ -30,7 +30,7 @@
 #include <time.h>
 
 typedef struct _ProcConfig ProcConfig;
-typedef struct _ProcInfo ProcInfo;
+struct ProcInfo;
 struct ProcData;
 
 #include "smooth_refresh.h"
@@ -83,8 +83,13 @@ struct _ProcConfig
 };
 
 
-struct _ProcInfo
+class ProcInfo
 {
+	ProcInfo& operator=(const ProcInfo&);
+	ProcInfo(const ProcInfo&);
+ public:
+	ProcInfo(pid_t pid);
+	~ProcInfo();
 	// adds one more ref to icon
 	void set_icon(GdkPixbuf *icon);
 
