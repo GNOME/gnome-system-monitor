@@ -159,7 +159,11 @@ load_graph_draw (LoadGraph *g)
 			if (g->data[i][j] == -1.0f)
 				continue;
 
-			cairo_line_to (cr,
+			cairo_curve_to (cr, 
+				       (g->draw_width - (i-1) * delx) - (delx/2),
+				       (1.0f - g->data[i-1][j]) * real_draw_height,
+				       (g->draw_width - i * delx) + (delx/2),
+				       (1.0f - g->data[i][j]) * real_draw_height,
 				       g->draw_width - i * delx,
 				       (1.0f - g->data[i][j]) * real_draw_height);
 		}
