@@ -19,7 +19,6 @@
 
 #include <config.h>
 
-#include <libgnome/gnome-help.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
@@ -174,15 +173,10 @@ cb_about (GtkAction *action, gpointer data)
 void
 cb_help_contents (GtkAction *action, gpointer data)
 {
-	GError *error = NULL;
+  GnomeVFSResult res;
 
-	gnome_help_display ("gnome-system-monitor.xml", NULL, &error);
-
-	if (error != NULL)
-	{
-		g_warning (error->message);
-		g_error_free (error);
-	}
+  if ((res = gnome_vfs_url_show("ghelp:gnome-system-monitor")) != GNOME_VFS_OK)
+    g_warning("Could not display help : %s", gnome_vfs_result_to_string(res));
 }
 
 
