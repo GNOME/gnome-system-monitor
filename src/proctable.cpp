@@ -386,10 +386,13 @@ proctable_new (ProcData * const procdata)
 		switch (i) {
 		case COL_ARGS:
 			gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+			gtk_tree_view_column_set_min_width(column, 150);
 			break;
+		default:
+		  gtk_tree_view_column_set_min_width(column, 20);
+		  break;
 		}
 
-		gtk_tree_view_column_set_min_width (column, 1);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
 	}
 
