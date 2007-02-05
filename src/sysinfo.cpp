@@ -122,6 +122,28 @@ namespace {
     }
   };
 
+  class SolarisSysInfo
+    : public SysInfo
+  {
+  public:
+    SolarisSysInfo()
+      : SysInfo("Solaris")
+    {
+      this->load_solaris_info();
+    }
+
+  private:
+    void load_solaris_info()
+    {
+      std::ifstream input("/etc/release");
+
+      if (input)
+	std::getline(input, this->distro_release);
+      else
+	this->distro_release = _("Unknown version");
+    }
+  };
+
 
   class LSBSysInfo
     : public SysInfo
@@ -202,6 +224,8 @@ namespace {
       g_free(p);
       return new LSBSysInfo;
     }
+    else if (g_file_test("/etc/release", G_FILE_TEST_EXISTS))
+      return new SolarisSysInfo;
 
     return new SysInfo(_("Unknown distribution"));
   }
