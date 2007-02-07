@@ -13,6 +13,7 @@
 #include <sys/socket.h>
 #include <sys/wait.h>
 #include <math.h>
+#include <errno.h>
 
 #include <string>
 #include <vector>
@@ -64,9 +65,31 @@ namespace {
     {
       char buf[256];
 
-      if (gethostname(buf, sizeof buf) == 0)
-	if (struct hostent *h = gethostbyname(buf))
-	  this->hostname = h->h_name;
+      if (gethostname(buf, sizeof buf) == -1) {
+	g_warning("gethostname failed : %s", strerror(errno));
+	return;
+      }
+
+      struct hostent *h;
+
+      if (not (h = gethostbyname(buf))) {
+	g_warning("gethostbyname failed : %s", strerror(errno));
+	return;
+      }
+
+      this->hostname = h->h_name;
+
+      if (this->hostname.find("localhost") == 0) {
+	for (char **p = h->h_aliases; *p != NULL; ++p) {
+	  const string alias(*p);
+	  if (alias.find("localhost") == 0)
+	    continue;
+
+	  if (this->hostname.find("localhost") == 0
+	      or alias.size() > this->hostname.size())
+	    this->hostname = alias;
+	}
+      }
     }
 
     void load_memory_info()
