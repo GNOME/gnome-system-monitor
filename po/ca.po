@@ -1,67 +1,69 @@
 # Catalan translation of procman.
-# Copyright © 2000, 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+# Copyright © 2000-2007 Free Software Foundation, Inc.
 # Softcatalà <info@softcatala.org>, 2000.
 # Jesús Moreno <jmmolas@wanadoo.es>, 2002.
-# Jordi Mallach <jordi@sindominio.net>, 2002, 2003, 2004, 2005, 2006.
+# Gil Forcada <gilforcada@guifi.net>, 2006
+# Josep Puigdemont i Casamajó <josep.puigdemont@gmail.com>, 2007
+# Jordi Mallach <jordi@sindominio.net>, 2002, 2003, 2004, 2005, 2006, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: procman 2.11.92\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-28 14:42+0200\n"
-"PO-Revision-Date: 2006-10-28 14:43+0200\n"
-"Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
+"POT-Creation-Date: 2007-02-13 08:30+0100\n"
+"PO-Revision-Date: 2007-02-12 00:05+0100\n"
+"Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n!=1;\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.c:172
-#: ../src/interface.c:669 ../src/procman.c:696
+#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:155
+#: ../src/interface.cpp:659 ../src/procman.cpp:688
 msgid "System Monitor"
 msgstr "Monitor del sistema"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.c:173
+#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:156
 msgid "View current processes and monitor system state"
 msgstr "Visualitza els processos actuals i monitoritza l'estat del sistema"
 
-#: ../src/callbacks.c:181
+#: ../src/callbacks.cpp:165
 msgid "translator-credits"
 msgstr ""
 "Jesús Moreno <jmmolas@wanadoo.es>\n"
 "Jordi Mallach <jordi@sindominio.net>"
 
-#: ../src/disks.c:308 ../src/memmaps.c:328
+#: ../src/disks.cpp:307 ../src/memmaps.cpp:433
 msgid "Device"
 msgstr "Dispositiu"
 
-#: ../src/disks.c:309
+#: ../src/disks.cpp:308
 msgid "Directory"
 msgstr "Directori"
 
-#: ../src/disks.c:310 ../src/openfiles.c:232
+#: ../src/disks.cpp:309 ../src/openfiles.cpp:233
 msgid "Type"
 msgstr "Tipus"
 
-#: ../src/disks.c:311
+#: ../src/disks.cpp:310
 msgid "Total"
 msgstr "Total"
 
-#: ../src/disks.c:312
+#: ../src/disks.cpp:311
 msgid "Free"
 msgstr "Lliure"
 
-#: ../src/disks.c:313
+#: ../src/disks.cpp:312
 msgid "Available"
 msgstr "Disponible"
 
-#: ../src/disks.c:314
+#: ../src/disks.cpp:313
 msgid "Used"
 msgstr "Utilitzat"
 
-#: ../src/disks.c:321 ../src/interface.c:748 ../src/procdialogs.c:770
-#: ../src/procdialogs.c:774
+#: ../src/disks.cpp:320 ../src/interface.cpp:743 ../src/procdialogs.cpp:686
+#: ../src/procdialogs.cpp:690
 msgid "File Systems"
 msgstr "Sistemes de fitxers"
 
@@ -89,77 +91,47 @@ msgstr "%b %d %l:%M %p"
 msgid "%b %d %Y"
 msgstr "%b %d %Y"
 
-#. translators: primary alert message
-#: ../src/favorites.c:350
-msgid "No hidden processes"
-msgstr "No hi ha processos ocults"
-
-#. translators: secondary alert message
-#: ../src/favorites.c:357
-msgid ""
-"There are no hidden processes in the list. To show all running processes, "
-"select the \"All processes\" option in the main window."
-msgstr ""
-"No hi ha processos ocults a la llista. Per a mostrar tots els processos en "
-"execució, seleccioneu l'opció «Tots els processos» a la finestra principal."
-
-#: ../src/favorites.c:377
-msgid "Hidden Processes"
-msgstr "Processos ocults"
-
-#: ../src/favorites.c:401
-msgid "Currently _hidden processes:"
-msgstr "Processos _ocults actualment:"
-
-#: ../src/favorites.c:423
-msgid "_Remove From List"
-msgstr "_Suprimeix de la llista"
-
-#: ../src/favorites.c:432 ../src/procdialogs.c:285
-msgid "Note:"
-msgstr "Nota:"
-
-#: ../src/favorites.c:433
-msgid ""
-"These are the processes you have chosen to hide. You can reshow a process by "
-"removing it from this list."
-msgstr ""
-"Aquests són els processos que heu escollit ocultar. Podeu tornar a mostrar "
-"un procés si el suprimiu d'aquesta llista."
-
 #: ../src/gnome-system-monitor.schemas.in.h:1
+msgid ""
+"0 for the System Info, 1 for the processes list, 2 for the resources and 3 "
+"for the disks list"
+msgstr ""
+"0 per a la informació del sistema, 1 per a la llista de processos, 2 per als "
+"recursos, i 3 per a la llista de discs"
+
+#: ../src/gnome-system-monitor.schemas.in.h:2
 msgid "Column zero saved width"
 msgstr "Amplada desada de la columna zero"
 
-#: ../src/gnome-system-monitor.schemas.in.h:2
+#: ../src/gnome-system-monitor.schemas.in.h:3
 msgid "Default graph background color"
 msgstr "Color de fons per defecte de la gràfica"
 
-#: ../src/gnome-system-monitor.schemas.in.h:3
+#: ../src/gnome-system-monitor.schemas.in.h:4
 msgid "Default graph cpu color"
 msgstr "Color per defecte de la cpu a la gràfica"
 
-#: ../src/gnome-system-monitor.schemas.in.h:4
+#: ../src/gnome-system-monitor.schemas.in.h:5
 msgid "Default graph frame color"
 msgstr "Color per defecte dels marcs de la gràfica"
 
-#: ../src/gnome-system-monitor.schemas.in.h:5
+#: ../src/gnome-system-monitor.schemas.in.h:6
 msgid "Default graph mem color"
 msgstr "Color per defecte de la memòria a la gràfica"
 
-#: ../src/gnome-system-monitor.schemas.in.h:6
+#: ../src/gnome-system-monitor.schemas.in.h:7
 msgid "Default graph net in color"
 msgstr "Color per defecte de la xarxa d'entrada a la gràfica"
 
-#: ../src/gnome-system-monitor.schemas.in.h:7
+#: ../src/gnome-system-monitor.schemas.in.h:8
 msgid "Default graph net out color"
 msgstr "Color per defecte de la xarxa de sortida a la gràfica"
 
-#: ../src/gnome-system-monitor.schemas.in.h:8
+#: ../src/gnome-system-monitor.schemas.in.h:9
 msgid "Default graph swap color"
 msgstr "Color per defecte de l'espai d'intercanvi a la gràfica"
 
-#: ../src/gnome-system-monitor.schemas.in.h:9
+#: ../src/gnome-system-monitor.schemas.in.h:10
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
@@ -167,212 +139,136 @@ msgstr ""
 "Determina quins processos es mostren per defecte. 0 són tots, 1 són de "
 "l'usuari, i 2 són els actius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:10
+#: ../src/gnome-system-monitor.schemas.in.h:11
 msgid "Disk view columns order"
 msgstr "Ordre de les columnes de la visualització de discs"
 
-#: ../src/gnome-system-monitor.schemas.in.h:11
+#: ../src/gnome-system-monitor.schemas.in.h:12
 msgid "Enable/Disable smooth refresh"
 msgstr "Habilita/Inhabilita l'actualització suau"
 
-#: ../src/gnome-system-monitor.schemas.in.h:12
+#: ../src/gnome-system-monitor.schemas.in.h:13
 msgid "Main Window height"
 msgstr "Alçada de la finestra principal"
 
-#: ../src/gnome-system-monitor.schemas.in.h:13
+#: ../src/gnome-system-monitor.schemas.in.h:14
 msgid "Main Window width"
 msgstr "Amplada de la finestra principal"
 
 #: ../src/gnome-system-monitor.schemas.in.h:15
-#, no-c-format
-msgid "Process CPU % column saved width"
-msgstr "Amplada desada de la columna de % d'ús de CPU del procés"
-
-#: ../src/gnome-system-monitor.schemas.in.h:16
-msgid "Process CPU time column saved width"
-msgstr "Amplada desada de la columna de temps de CPU del procés"
-
-#: ../src/gnome-system-monitor.schemas.in.h:17
-msgid "Process PID column saved width"
-msgstr "Amplada desada de la columna de PID del procés"
-
-#: ../src/gnome-system-monitor.schemas.in.h:18
-msgid "Process SELinux security context column saved width"
-msgstr ""
-"Amplada desada de la columna del context de seguretat SELinux del procés"
-
-#: ../src/gnome-system-monitor.schemas.in.h:19
-msgid "Process X server memory column saved width"
-msgstr "Amplada desada de la columna memòria del servidor de les X del procés"
-
-#: ../src/gnome-system-monitor.schemas.in.h:20
-msgid "Process arguments column saved width"
-msgstr "Amplada desada de la columna d'arguments del procés"
-
-#: ../src/gnome-system-monitor.schemas.in.h:21
-msgid "Process estimated memory usage column saved width"
-msgstr ""
-"Amplada desada de la columna d'estimació de la memòria utilitzada del procés"
-
-#: ../src/gnome-system-monitor.schemas.in.h:22
-msgid "Process name column saved width"
-msgstr "Amplada desada de la columna del nom del procés"
-
-#: ../src/gnome-system-monitor.schemas.in.h:23
-msgid "Process nice column saved width"
-msgstr "Amplada desada de la columna de prioritat del procés"
-
-#: ../src/gnome-system-monitor.schemas.in.h:24
-msgid "Process owner column saved width"
-msgstr "Amplada desada de la columna de propietari del procés"
-
-#: ../src/gnome-system-monitor.schemas.in.h:25
-msgid "Process resident memory column saved width"
-msgstr "Amplada desada de la columna de memòria resident del procés"
-
-#: ../src/gnome-system-monitor.schemas.in.h:26
-msgid "Process shared memory column saved width"
-msgstr "Amplada desada de la columna de memòria compartida en iniciar"
-
-#: ../src/gnome-system-monitor.schemas.in.h:27
-msgid "Process start time column saved width"
-msgstr "Amplada desada de la columna temps d'engegada del procés"
-
-#: ../src/gnome-system-monitor.schemas.in.h:28
-msgid "Process status column saved width"
-msgstr "Amplada desada de la columna d'estat del procés"
-
-#: ../src/gnome-system-monitor.schemas.in.h:29
 msgid "Process view columns order"
 msgstr "Ordre de les columnes de la visualització de processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:30
+#: ../src/gnome-system-monitor.schemas.in.h:16
 msgid "Process view sort column"
 msgstr "Columna ordenada a la llista de processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:31
+#: ../src/gnome-system-monitor.schemas.in.h:17
 msgid "Process view sort order"
 msgstr "Ordre de la visualització de processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:32
-msgid "Process virtual memory column saved width"
-msgstr "Amplada desada de la columna de memòria virtual del procés"
-
-#: ../src/gnome-system-monitor.schemas.in.h:33
+#: ../src/gnome-system-monitor.schemas.in.h:18
 msgid "Saves the currently viewed tab"
 msgstr "Desa la pestanya visualitzada actualment"
 
-#: ../src/gnome-system-monitor.schemas.in.h:34
+#: ../src/gnome-system-monitor.schemas.in.h:19
 msgid "Show column zero on startup"
 msgstr "Mostra la columna zero en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:35
+#: ../src/gnome-system-monitor.schemas.in.h:20
 msgid "Show estimated memory usage column on startup"
 msgstr ""
 "Mostra la columna d'estimació de la memòria utilitzada pel procés en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:37
+#: ../src/gnome-system-monitor.schemas.in.h:22
 #, no-c-format
 msgid "Show process CPU % column on startup"
 msgstr "Mostra la columna de % d'ús de la CPU pel procés en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:38
+#: ../src/gnome-system-monitor.schemas.in.h:23
 msgid "Show process CPU time column on startup"
-msgstr "Mostra la columna de temps de CPU del procés en iniciar"
+msgstr "Mostra la columna del temps de CPU del procés en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:39
+#: ../src/gnome-system-monitor.schemas.in.h:24
 msgid "Show process PID column on startup"
 msgstr "Mostra la columna de PID del procés en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:40
+#: ../src/gnome-system-monitor.schemas.in.h:25
 msgid "Show process SELinux security context column on startup"
 msgstr ""
 "Mostra la columna del context de seguretat SELinux del procés en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:41
+#: ../src/gnome-system-monitor.schemas.in.h:26
 msgid "Show process X server memory column zero startup"
 msgstr ""
 "Mostra la columna de memòria del servidor de les X del procés en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:42
+#: ../src/gnome-system-monitor.schemas.in.h:27
 msgid "Show process arguments column on startup"
 msgstr "Mostra la columna d'arguments del procés en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:43
+#: ../src/gnome-system-monitor.schemas.in.h:28
 msgid "Show process dependencies in tree form"
 msgstr "Mostra les dependències dels processos en forma d'arbre"
 
-#: ../src/gnome-system-monitor.schemas.in.h:44
+#: ../src/gnome-system-monitor.schemas.in.h:29
 msgid "Show process name column on startup"
 msgstr "Mostra la columna del nom del procés en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:45
+#: ../src/gnome-system-monitor.schemas.in.h:30
 msgid "Show process nice column on startup"
 msgstr "Mostra la columna de prioritat del procés en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:46
+#: ../src/gnome-system-monitor.schemas.in.h:31
 msgid "Show process owner column on startup"
 msgstr "Mostra la columna de propietari del procés en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:47
+#: ../src/gnome-system-monitor.schemas.in.h:32
 msgid "Show process resident memory column on startup"
 msgstr "Mostra la columna de memòria resident del procés en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:48
+#: ../src/gnome-system-monitor.schemas.in.h:33
 msgid "Show process shared memory column on startup"
 msgstr "Mostra la columna de memòria compartida del procés en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:49
+#: ../src/gnome-system-monitor.schemas.in.h:34
 msgid "Show process start time column on startup"
-msgstr "Mostra la columna de temps d'engegada del procés en iniciar"
+msgstr "Mostra la columna del temps d'engegada del procés en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:50
+#: ../src/gnome-system-monitor.schemas.in.h:35
 msgid "Show process status column on startup"
 msgstr "Mostra la columna d'estat del procés en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:51
-msgid "Show process threads"
-msgstr "Mostra els fils dels processos"
-
-#: ../src/gnome-system-monitor.schemas.in.h:52
+#: ../src/gnome-system-monitor.schemas.in.h:36
 msgid "Show process virtual memory column on startup"
 msgstr "Mostra la columna de memòria virtual del procés en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:53
+#: ../src/gnome-system-monitor.schemas.in.h:37
 msgid "Show process writable memory column on startup"
 msgstr "Mostra la columna de memòria d'escriptura del procés en iniciar"
 
-#: ../src/gnome-system-monitor.schemas.in.h:54
-msgid "Show process writable memory column saved width"
-msgstr ""
-"Mostra l'amplada desada de la columna de memòria d'escriptura del procés"
-
-#: ../src/gnome-system-monitor.schemas.in.h:55
-msgid "Show warning dialog when hiding processes"
-msgstr "Mostra un diàleg d'advertència en ocultar els processos"
-
-#: ../src/gnome-system-monitor.schemas.in.h:56
+#: ../src/gnome-system-monitor.schemas.in.h:38
 msgid "Show warning dialog when killing processes"
 msgstr "Mostra un diàleg d'advertència en finalitzar els processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:57
+#: ../src/gnome-system-monitor.schemas.in.h:39
 msgid "Time in milliseconds between updates of the devices list"
 msgstr ""
 "Temps en mil·lisegons entre actualitzacions de la llista de dispositius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:58
+#: ../src/gnome-system-monitor.schemas.in.h:40
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Temps en mil·lisegons entre actualitzacions de les gràfiques"
 
-#: ../src/gnome-system-monitor.schemas.in.h:59
+#: ../src/gnome-system-monitor.schemas.in.h:41
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Temps en mil·lisegons entre actualitzacions de la vista de processos"
 
-#: ../src/gnome-system-monitor.schemas.in.h:60
+#: ../src/gnome-system-monitor.schemas.in.h:42
 msgid "Whether information about all filesystems should be displayed"
 msgstr "Si s'hauria de mostrar informació sobre tots els sistemes de fitxers"
 
-#: ../src/gnome-system-monitor.schemas.in.h:61
+#: ../src/gnome-system-monitor.schemas.in.h:43
 msgid ""
 "Whether to display information about all filesystems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -382,302 +278,380 @@ msgstr ""
 "incloent-hi els tipus com ara «autofs» i «procfs». Pot ser útil per a "
 "obtenir una llista de tots els sistemes de fitxers muntats actualment."
 
-#: ../src/interface.c:46
+#: ../src/gnome-system-monitor.schemas.in.h:45
+#, no-c-format
+msgid "Width of Process CPU % column"
+msgstr "Amplada de la columna del % de CPU del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:46
+msgid "Width of Process CPU time column"
+msgstr "Amplada del temps de CPU del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:47
+msgid "Width of Process PID column"
+msgstr "Amplada de la columna del PID del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:48
+msgid "Width of Process SELinux security context column"
+msgstr "Amplada de la columna del context de seguretat SELinux del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:49
+msgid "Width of Process X server memory column"
+msgstr "Amplada de la columna de la memòria del servidor d'X del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:50
+msgid "Width of Process arguments column"
+msgstr "Amplada de la columna dels arguments del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:51
+msgid "Width of Process estimated memory usage column"
+msgstr "Amplada de la columna d'estimació de la memòria utilitzada pel procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:52
+msgid "Width of Process name column"
+msgstr "Amplada de la columna del nom del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:53
+msgid "Width of Process nice column"
+msgstr "Amplada de la columna de la prioritat del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:54
+msgid "Width of Process owner column"
+msgstr "Amplada de la columna del propietari del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:55
+msgid "Width of Process resident memory column"
+msgstr "Amplada de la columna de memòria resident del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:56
+msgid "Width of Process shared memory column"
+msgstr "Amplada de la columna de memòria compartida del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:57
+msgid "Width of Process start time column"
+msgstr "Amplada de la columna del temps d'engegada del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:58
+msgid "Width of Process status column"
+msgstr "Amplada de la columna d'estat del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:59
+msgid "Width of Process virtual memory column"
+msgstr "Amplada de la columna de memòria virtual del procés"
+
+#: ../src/gnome-system-monitor.schemas.in.h:60
+msgid "Width of Process writable memory column"
+msgstr "Amplada de la columna de la memòria d'escriptura del procés"
+
+#: ../src/interface.cpp:47
 msgid "_Monitor"
 msgstr "_Monitoritza"
 
-#: ../src/interface.c:47
+#: ../src/interface.cpp:48
 msgid "_Edit"
 msgstr "_Edita"
 
-#: ../src/interface.c:48
+#: ../src/interface.cpp:49
 msgid "_View"
 msgstr "_Visualitza"
 
-#: ../src/interface.c:49
+#: ../src/interface.cpp:50
 msgid "_Help"
 msgstr "A_juda"
 
-#: ../src/interface.c:51
-msgid "_Lsof"
-msgstr "_Lsof"
+#: ../src/interface.cpp:52
+msgid "Search for _Open Files"
+msgstr "Cerca fitxers _oberts"
 
-#: ../src/interface.c:52
-msgid "Lsof"
-msgstr "Lsof"
+#: ../src/interface.cpp:53
+msgid "Search for open files"
+msgstr "Cerca fitxers oberts"
 
-#: ../src/interface.c:53
+#: ../src/interface.cpp:54
 msgid "_Quit"
 msgstr "_Surt"
 
-#: ../src/interface.c:54
+#: ../src/interface.cpp:55
 msgid "Quit the program"
 msgstr "Surt del programa"
 
-#: ../src/interface.c:57
+#: ../src/interface.cpp:58
 msgid "_Stop Process"
 msgstr "_Atura el procés"
 
-#: ../src/interface.c:58
+#: ../src/interface.cpp:59
 msgid "Stop process"
 msgstr "Atura el procés"
 
-#: ../src/interface.c:59
+#: ../src/interface.cpp:60
 msgid "_Continue Process"
 msgstr "_Continua el procés"
 
-#: ../src/interface.c:60
+#: ../src/interface.cpp:61
 msgid "Continue process if stopped"
 msgstr "Continua el procés si està aturat"
 
-#: ../src/interface.c:62 ../src/interface.c:191
+#: ../src/interface.cpp:63 ../src/interface.cpp:183
 msgid "End _Process"
 msgstr "Finalitza el _procés"
 
-#: ../src/interface.c:63
+#: ../src/interface.cpp:64
 msgid "Force process to finish normally"
 msgstr "Imposa la finalització normal del procés"
 
-#: ../src/interface.c:64 ../src/procdialogs.c:129
+#: ../src/interface.cpp:65 ../src/procdialogs.cpp:75
 msgid "_Kill Process"
 msgstr "_Mata el procés"
 
-#: ../src/interface.c:65
+#: ../src/interface.cpp:66
 msgid "Force process to finish immediately"
 msgstr "Imposa la finalització immediata del procés"
 
-#: ../src/interface.c:66
+#: ../src/interface.cpp:67
 msgid "_Change Priority..."
 msgstr "Can_via la prioritat..."
 
-#: ../src/interface.c:67
+#: ../src/interface.cpp:68
 msgid "Change the order of priority of process"
 msgstr "Canvia la prioritat del procés"
 
-#: ../src/interface.c:68
+#: ../src/interface.cpp:69
 msgid "Prefere_nces"
 msgstr "Preferè_ncies"
 
-#: ../src/interface.c:69
+#: ../src/interface.cpp:70
 msgid "Configure the application"
 msgstr "Configura l'aplicació"
 
-#: ../src/interface.c:71 ../src/procdialogs.c:85
-msgid "_Hide Process"
-msgstr "_Oculta el procés"
-
-#: ../src/interface.c:72
-msgid "Hide process from list"
-msgstr "Oculta el procés de la llista"
-
-#: ../src/interface.c:73
-msgid "_Hidden Processes"
-msgstr "_Processos ocults"
-
-#: ../src/interface.c:74
-msgid "Open the list of currently hidden processes"
-msgstr "Obre la llista actual de processos ocults"
-
-#: ../src/interface.c:75
+#: ../src/interface.cpp:72
 msgid "_Memory Maps"
 msgstr "_Mapes de memòria"
 
-#: ../src/interface.c:76
+#: ../src/interface.cpp:73
 msgid "Open the memory maps associated with a process"
 msgstr "Obre els mapes de memòria associats a un procés"
 
-#: ../src/interface.c:77
+#: ../src/interface.cpp:74
 msgid "Open _Files"
 msgstr "_Fitxers oberts"
 
-#: ../src/interface.c:78
+#: ../src/interface.cpp:75
 msgid "View the files opened by a process"
 msgstr "Visualitza els fitxers oberts per un procés"
 
-#: ../src/interface.c:80
+#: ../src/interface.cpp:77
 msgid "_Contents"
 msgstr "_Continguts"
 
-#: ../src/interface.c:81
+#: ../src/interface.cpp:78
 msgid "Open the manual"
 msgstr "Obre el manual"
 
-#: ../src/interface.c:82
+#: ../src/interface.cpp:79
 msgid "_About"
 msgstr "_Quant a"
 
-#: ../src/interface.c:83
+#: ../src/interface.cpp:80
 msgid "About this application"
 msgstr "Quant a aquesta aplicació"
 
-#: ../src/interface.c:88
+#: ../src/interface.cpp:85
 msgid "_Dependencies"
 msgstr "_Dependències"
 
-#: ../src/interface.c:89
+#: ../src/interface.cpp:86
 msgid "Show parent/child relationship between processes"
 msgstr "Mostra les relacions pare/fill entre processos"
 
-#: ../src/interface.c:96
+#: ../src/interface.cpp:93
 msgid "_Active Processes"
 msgstr "Processos _actius"
 
-#: ../src/interface.c:97
+#: ../src/interface.cpp:94
 msgid "Show active processes"
 msgstr "Mostra els processos actius"
 
-#: ../src/interface.c:98
+#: ../src/interface.cpp:95
 msgid "A_ll Processes"
 msgstr "_Tots els processos"
 
-#: ../src/interface.c:99
+#: ../src/interface.cpp:96
 msgid "Show all processes"
 msgstr "Mostra tots els processos"
 
-#: ../src/interface.c:100
+#: ../src/interface.cpp:97
 msgid "M_y Processes"
 msgstr "_Els meus processos"
 
-#: ../src/interface.c:101
+#: ../src/interface.cpp:98
 msgid "Show user own process"
 msgstr "Mostra els processos propis de l'usuari"
 
-#: ../src/interface.c:263
+#: ../src/interface.cpp:251
 msgid "CPU History"
 msgstr "Historial de la CPU"
 
-#: ../src/interface.c:306
+#: ../src/interface.cpp:294
 msgid "CPU:"
 msgstr "CPU:"
 
-#: ../src/interface.c:309
+#: ../src/interface.cpp:297
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: ../src/interface.c:329
+#: ../src/interface.cpp:317
 msgid "Memory and Swap History"
 msgstr "Historial de la memòria i espai d'intercanvi"
 
-#: ../src/interface.c:362
+#: ../src/interface.cpp:350
 msgid "User memory:"
 msgstr "Memòria de l'usuari:"
 
-#: ../src/interface.c:380 ../src/interface.c:440
+#: ../src/interface.cpp:368 ../src/interface.cpp:428
 msgid "of"
 msgstr "de"
 
-#: ../src/interface.c:421
+#: ../src/interface.cpp:409
 msgid "Used swap:"
 msgstr "Espai d'intercanvi utilitzat:"
 
-#: ../src/interface.c:480
+#: ../src/interface.cpp:468
 msgid "Network History"
 msgstr "Historial de la xarxa"
 
-#: ../src/interface.c:512
+#: ../src/interface.cpp:500
 msgid "Received:"
 msgstr "Rebuts:"
 
-#: ../src/interface.c:532 ../src/interface.c:575
+#: ../src/interface.cpp:520 ../src/interface.cpp:563
 msgid "Total:"
 msgstr "Total:"
 
-#: ../src/interface.c:556
+#: ../src/interface.cpp:544
 msgid "Sent:"
 msgstr "Enviats:"
 
-#: ../src/interface.c:736 ../src/procdialogs.c:579
+#: ../src/interface.cpp:725
+msgid "System"
+msgstr "Sistema"
+
+#: ../src/interface.cpp:731 ../src/procdialogs.cpp:501
 msgid "Processes"
 msgstr "Processos"
 
-#: ../src/interface.c:742 ../src/procdialogs.c:682
+#: ../src/interface.cpp:737 ../src/procdialogs.cpp:597
 msgid "Resources"
 msgstr "Recursos"
 
-#: ../src/load-graph.c:396 ../src/load-graph.c:406
+#: ../src/load-graph.cpp:399 ../src/load-graph.cpp:409
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../src/memmaps.c:322
+#: ../src/lsof.cpp:355
+msgid "Process"
+msgstr "Procés"
+
+#: ../src/lsof.cpp:367
+msgid "PID"
+msgstr "PID"
+
+#: ../src/lsof.cpp:377 ../src/memmaps.cpp:427
 msgid "Filename"
 msgstr "Nom del fitxer"
 
-#: ../src/memmaps.c:323
+#. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+#: ../src/lsof.cpp:394
+msgid "Search for Open Files"
+msgstr "Cerca fitxers oberts"
+
+#: ../src/lsof.cpp:422
+msgid "_Name contains:"
+msgstr "El _nom conté:"
+
+#: ../src/lsof.cpp:438
+msgid "Case insensitive matching"
+msgstr "No distingeixis majúscules de minúscules"
+
+#: ../src/lsof.cpp:446
+msgid "S_earch results:"
+msgstr "_Resultats de la cerca:"
+
+#: ../src/memmaps.cpp:428
 msgid "VM Start"
 msgstr "Inici de VM"
 
-#: ../src/memmaps.c:324
+#: ../src/memmaps.cpp:429
 msgid "VM End"
 msgstr "Fi de VM"
 
-#: ../src/memmaps.c:325
+#: ../src/memmaps.cpp:430
 msgid "VM Size"
 msgstr "Mida de VM"
 
-#: ../src/memmaps.c:326
+#: ../src/memmaps.cpp:431
 msgid "Flags"
 msgstr "Senyaladors"
 
-#: ../src/memmaps.c:327
+#: ../src/memmaps.cpp:432
 msgid "VM Offset"
 msgstr "Desplaçament de VM"
 
-#: ../src/memmaps.c:329
+#: ../src/memmaps.cpp:434
 msgid "Inode"
 msgstr "Node-i"
 
-#: ../src/memmaps.c:449
+#: ../src/memmaps.cpp:540
 msgid "Memory Maps"
 msgstr "Mapes de memòria"
 
-#: ../src/memmaps.c:469
+#: ../src/memmaps.cpp:560
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "_Mapes de memòria per al procés «%s» (PID %u):"
 
-#: ../src/openfiles.c:31
+#: ../src/openfiles.cpp:32
 msgid "file"
 msgstr "fitxer"
 
-#: ../src/openfiles.c:33
+#: ../src/openfiles.cpp:34
 msgid "pipe"
 msgstr "conducte"
 
-#: ../src/openfiles.c:35
+#: ../src/openfiles.cpp:36
 msgid "network connection"
 msgstr "connexió de xarxa"
 
-#: ../src/openfiles.c:37
+#: ../src/openfiles.cpp:38
 msgid "local socket"
 msgstr "sòcol local"
 
-#: ../src/openfiles.c:39
+#: ../src/openfiles.cpp:40
 msgid "unknown type"
 msgstr "tipus desconegut"
 
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.c:231
+#: ../src/openfiles.cpp:232
 msgid "FD"
 msgstr "DF"
 
-#: ../src/openfiles.c:233
+#: ../src/openfiles.cpp:234
 msgid "Object"
 msgstr "Objecte"
 
-#: ../src/openfiles.c:319
+#: ../src/openfiles.cpp:318
 msgid "Open Files"
 msgstr "Fitxers oberts"
 
-#: ../src/openfiles.c:341
+#: ../src/openfiles.cpp:340
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_Fitxers oberts pel procés «%s» (PID %u):"
 
-#: ../src/procactions.c:75
+#: ../src/procactions.cpp:75
 #, c-format
 msgid ""
 "Cannot change the priority of process with pid %d to %d.\n"
@@ -686,7 +660,7 @@ msgstr ""
 "No es pot canviar la prioritat del procés amb pid %d a %d.\n"
 "%s"
 
-#: ../src/procactions.c:155
+#: ../src/procactions.cpp:155
 #, c-format
 msgid ""
 "Cannot kill process with pid %d with signal %d.\n"
@@ -696,28 +670,12 @@ msgstr ""
 "%s"
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:65
-msgid "Hide the selected process?"
-msgstr "Voleu ocultar els processos seleccionats?"
-
-#. FIXME: View menu -> Edit menu
-#. translators: secondary alert messagex
-#: ../src/procdialogs.c:75
-msgid ""
-"Hidden processes are no longer visible in the process list. You can re-"
-"enable them by selecting the \"Hidden Processes\" entry in the View menu."
-msgstr ""
-"Els processos ocults no són visibles a la llista de processos. Els podeu "
-"tornar a habilitar seleccionant l'entrada «Processos ocults» al menú "
-"Visualitza."
-
-#. translators: primary alert message
-#: ../src/procdialogs.c:124
+#: ../src/procdialogs.cpp:70
 msgid "Kill the selected process?"
 msgstr "Voleu matar el procés seleccionat?"
 
 #. translators: secondary alert message
-#: ../src/procdialogs.c:126
+#: ../src/procdialogs.cpp:72
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponding processes should be killed."
@@ -727,12 +685,12 @@ msgstr ""
 "que no responguin."
 
 #. translators: primary alert message
-#: ../src/procdialogs.c:133
+#: ../src/procdialogs.cpp:79
 msgid "End the selected process?"
 msgstr "Voleu finalitzar el procés seleccionat?"
 
 #. translators: secondary alert message
-#: ../src/procdialogs.c:135
+#: ../src/procdialogs.cpp:81
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponding processes should be ended."
@@ -741,43 +699,47 @@ msgstr ""
 "o crear un problema de seguretat. Només s'haurien de finalitzar els "
 "processos que no responguin."
 
-#: ../src/procdialogs.c:138
+#: ../src/procdialogs.cpp:84
 msgid "_End Process"
 msgstr "_Finalitza el procés"
 
-#: ../src/procdialogs.c:167
+#: ../src/procdialogs.cpp:113
 msgid "(Very High Priority)"
 msgstr "(Prioritat molt alta)"
 
-#: ../src/procdialogs.c:169
+#: ../src/procdialogs.cpp:115
 msgid "(High Priority)"
 msgstr "(Prioritat alta)"
 
-#: ../src/procdialogs.c:171
+#: ../src/procdialogs.cpp:117
 msgid "(Normal Priority)"
 msgstr "(Prioritat normal)"
 
-#: ../src/procdialogs.c:173
+#: ../src/procdialogs.cpp:119
 msgid "(Low Priority)"
 msgstr "(Prioritat baixa)"
 
-#: ../src/procdialogs.c:175
+#: ../src/procdialogs.cpp:121
 msgid "(Very Low Priority)"
 msgstr "(Prioritat molt baixa)"
 
-#: ../src/procdialogs.c:227
+#: ../src/procdialogs.cpp:173
 msgid "Change Priority"
 msgstr "Canvia la prioritat"
 
-#: ../src/procdialogs.c:248
+#: ../src/procdialogs.cpp:194
 msgid "Change _Priority"
 msgstr "Canvia la _Prioritat"
 
-#: ../src/procdialogs.c:269
+#: ../src/procdialogs.cpp:215
 msgid "_Nice value:"
 msgstr "Valor de la _prioritat:"
 
-#: ../src/procdialogs.c:286
+#: ../src/procdialogs.cpp:231
+msgid "Note:"
+msgstr "Nota:"
+
+#: ../src/procdialogs.cpp:232
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -785,170 +747,359 @@ msgstr ""
 "La prioritat d'un procés ve donada pel seu valor de prioritat. Un valor de "
 "prioritat més baix es correspon amb una prioritat més alta."
 
-#: ../src/procdialogs.c:464
-msgid "Processes i_nfo showed in list:"
-msgstr "I_nformació dels processos que es mostra a la llista:"
+#: ../src/procdialogs.cpp:379
+msgid "Process i_nformation shown in list:"
+msgstr "I_nformació del procés que es mostra a la llista:"
 
-#: ../src/procdialogs.c:516
+#: ../src/procdialogs.cpp:431
 msgid "Icon"
 msgstr "Icona"
 
-#: ../src/procdialogs.c:556
+#: ../src/procdialogs.cpp:478
 msgid "System Monitor Preferences"
 msgstr "Preferències del monitor del sistema"
 
-#: ../src/procdialogs.c:586
+#: ../src/procdialogs.cpp:508
 msgid "Behavior"
 msgstr "Comportament"
 
 # FIXME: He posat "Segons" per fer-ho curt (josep)
-#: ../src/procdialogs.c:605 ../src/procdialogs.c:708 ../src/procdialogs.c:793
+#: ../src/procdialogs.cpp:527 ../src/procdialogs.cpp:623
+#: ../src/procdialogs.cpp:709
 msgid "_Update interval in seconds:"
 msgstr "Segons entre act_ualitzacions:"
 
-#: ../src/procdialogs.c:630
+#: ../src/procdialogs.cpp:552
 msgid "Enable _smooth refresh"
 msgstr "Habilita l'actualització _suau"
 
-#: ../src/procdialogs.c:644
+#: ../src/procdialogs.cpp:566
 msgid "Alert before ending or _killing processes"
 msgstr "Alerta abans de finalitzar o _terminar els processos"
 
-#: ../src/procdialogs.c:654
-msgid "Alert before _hiding processes"
-msgstr "Alerta abans d'_ocultar els processos"
+#: ../src/procdialogs.cpp:579
+msgid "Information Fields"
+msgstr "Camps d'informació"
 
-#: ../src/procdialogs.c:664
-msgid "Process Fields"
-msgstr "Camps dels processos"
-
-#: ../src/procdialogs.c:689
+#: ../src/procdialogs.cpp:604
 msgid "Graphs"
 msgstr "Gràfics"
 
-#: ../src/procdialogs.c:729
+#: ../src/procdialogs.cpp:645
 msgid "_Background color:"
 msgstr "Color de _fons:"
 
-#: ../src/procdialogs.c:748
+#: ../src/procdialogs.cpp:664
 msgid "_Grid color:"
 msgstr "Color de la _graella:"
 
-#: ../src/procdialogs.c:812
+#: ../src/procdialogs.cpp:729
 msgid "Show _all filesystems"
 msgstr "Mostr_a tots els sistemes de fitxers"
 
-#: ../src/proctable.c:275
+#: ../src/proctable.cpp:273
 msgid "Process Name"
 msgstr "Nom del procés"
 
-#: ../src/proctable.c:276
+#: ../src/proctable.cpp:274
 msgid "User"
 msgstr "Usuari"
 
-#: ../src/proctable.c:277
+#: ../src/proctable.cpp:275
 msgid "Status"
 msgstr "Estat"
 
-#: ../src/proctable.c:278
+#: ../src/proctable.cpp:276
 msgid "Virtual Memory"
 msgstr "Memòria virtual"
 
-#: ../src/proctable.c:279
+#: ../src/proctable.cpp:277
 msgid "Resident Memory"
 msgstr "Memòria resident"
 
-#: ../src/proctable.c:280
+#: ../src/proctable.cpp:278
 msgid "Writable Memory"
 msgstr "Memòria per escriure-hi"
 
-#: ../src/proctable.c:281
+#: ../src/proctable.cpp:279
 msgid "Shared Memory"
 msgstr "Memòria compartida"
 
-#: ../src/proctable.c:282
+#: ../src/proctable.cpp:280
 msgid "X Server Memory"
 msgstr "Memòria del servidor d'X"
 
-#: ../src/proctable.c:283
+#: ../src/proctable.cpp:281
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.c:284
+#: ../src/proctable.cpp:282
 msgid "CPU Time"
 msgstr "Temps de CPU"
 
-#: ../src/proctable.c:285
+#: ../src/proctable.cpp:283
 msgid "Started"
 msgstr "Iniciat"
 
-#: ../src/proctable.c:286
+#: ../src/proctable.cpp:284
 msgid "Nice"
 msgstr "Prioritat"
 
-#: ../src/proctable.c:287
+#: ../src/proctable.cpp:285
 msgid "ID"
 msgstr "Identificador"
 
-#: ../src/proctable.c:288
+#: ../src/proctable.cpp:286
 msgid "Security Context"
 msgstr "Context de seguretat"
 
-#: ../src/proctable.c:289
-msgid "Arguments"
-msgstr "Arguments"
+#: ../src/proctable.cpp:287
+msgid "Command Line"
+msgstr "Línia d'ordres"
 
-#: ../src/proctable.c:290
+#: ../src/proctable.cpp:288
 msgid "Memory"
 msgstr "Memòria"
 
-#: ../src/proctable.c:476
+#: ../src/proctable.cpp:472
 msgid "Running"
 msgstr "Executant-se"
 
-#: ../src/proctable.c:481
+#: ../src/proctable.cpp:477
 msgid "Stopped"
 msgstr "Aturat"
 
-#: ../src/proctable.c:486
+#: ../src/proctable.cpp:482
 msgid "Zombie"
 msgstr "Zombi"
 
-#: ../src/proctable.c:491
+#: ../src/proctable.cpp:487
 msgid "Uninterruptible"
 msgstr "No interruptible"
 
-#: ../src/proctable.c:496
+#: ../src/proctable.cpp:492
 msgid "Sleeping"
 msgstr "Adormit"
 
-#: ../src/proctable.c:1089
+#. xgettext: weeks, days
+#: ../src/proctable.cpp:638
+#, c-format
+msgid "%uw%ud"
+msgstr "%uw%ud"
+
+#. xgettext: days, hours (0 -> 23)
+#: ../src/proctable.cpp:642
+#, c-format
+msgid "%ud%02uh"
+msgstr "%ud%02uh"
+
+#. xgettext: hours (0 -> 23), minutes, seconds
+#: ../src/proctable.cpp:646
+#, c-format
+msgid "%u:%02u:%02u"
+msgstr "%u:%02u:%02u"
+
+#. xgettext: minutes, seconds, centiseconds
+#: ../src/proctable.cpp:649
+#, c-format
+msgid "%u:%02u.%02u"
+msgstr "%u:%02u.%02u"
+
+#: ../src/proctable.cpp:1097
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Mitjanes de càrrega dels últims 1, 5 i 15 minuts: %0.2f, %0.2f, %0.2f"
 
-#: ../src/util.c:87
+#: ../src/sysinfo.cpp:49 ../src/sysinfo.cpp:253
+msgid "Unknown distribution"
+msgstr "Distribució desconeguda"
+
+#: ../src/sysinfo.cpp:51
+msgid "Unknown release"
+msgstr "Versió desconeguda"
+
+#: ../src/sysinfo.cpp:117
+msgid "Unknown CPU model"
+msgstr "Model de CPU desconegut"
+
+#: ../src/sysinfo.cpp:166
+msgid "Unknown version"
+msgstr "Versió desconeguda"
+
+#: ../src/sysinfo.cpp:386
+#, c-format
+msgid "Release %s (%s)"
+msgstr "Versió %s (%s)"
+
+#: ../src/sysinfo.cpp:391
+#, c-format
+msgid "Release %s"
+msgstr "Versió %s"
+
+#. hardware section
+#: ../src/sysinfo.cpp:401
+msgid "<b>Hardware</b>"
+msgstr "<b>Maquinari</b>"
+
+#: ../src/sysinfo.cpp:422
+msgid "Memory:"
+msgstr "Memòria:"
+
+#: ../src/sysinfo.cpp:442
+#, c-format
+msgid "Processor %d:"
+msgstr "Processador %d:"
+
+#: ../src/sysinfo.cpp:447
+msgid "Processor:"
+msgstr "Processador:"
+
+#. disk space section
+#: ../src/sysinfo.cpp:467
+msgid "<b>System Status</b>"
+msgstr "<b>Estat del sistema</b>"
+
+#: ../src/sysinfo.cpp:488
+msgid "Available disk space:"
+msgstr "Espai de disc disponible:"
+
+#: ../src/util.cpp:77
 #, c-format
 msgid "%u byte"
 msgid_plural "%u bytes"
 msgstr[0] "%u octet"
 msgstr[1] "%u octets"
 
-#: ../src/util.c:93
+#: ../src/util.cpp:84
 #, c-format
 msgid "%.1f KiB"
 msgstr "%.1f KiB"
 
-#: ../src/util.c:97
+#: ../src/util.cpp:87
 #, c-format
 msgid "%.1f MiB"
 msgstr "%.1f MiB"
 
-#: ../src/util.c:101
+#: ../src/util.cpp:90
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
+
+#~ msgid "No hidden processes"
+#~ msgstr "No hi ha processos ocults"
+
+#~ msgid ""
+#~ "There are no hidden processes in the list. To show all running processes, "
+#~ "select the \"All processes\" option in the main window."
+#~ msgstr ""
+#~ "No hi ha processos ocults a la llista. Per a mostrar tots els processos "
+#~ "en execució, seleccioneu l'opció «Tots els processos» a la finestra "
+#~ "principal."
+
+#~ msgid "Hidden Processes"
+#~ msgstr "Processos ocults"
+
+#~ msgid "Currently _hidden processes:"
+#~ msgstr "Processos _ocults actualment:"
+
+#~ msgid "_Remove From List"
+#~ msgstr "_Suprimeix de la llista"
+
+#~ msgid ""
+#~ "These are the processes you have chosen to hide. You can reshow a process "
+#~ "by removing it from this list."
+#~ msgstr ""
+#~ "Aquests són els processos que heu escollit ocultar. Podeu tornar a "
+#~ "mostrar un procés si el suprimiu d'aquesta llista."
+
+#~ msgid "Process CPU % column saved width"
+#~ msgstr "Amplada desada de la columna de % d'ús de CPU del procés"
+
+#~ msgid "Process CPU time column saved width"
+#~ msgstr "Amplada desada de la columna de temps de CPU del procés"
+
+#~ msgid "Process PID column saved width"
+#~ msgstr "Amplada desada de la columna de PID del procés"
+
+#~ msgid "Process SELinux security context column saved width"
+#~ msgstr ""
+#~ "Amplada desada de la columna del context de seguretat SELinux del procés"
+
+#~ msgid "Process arguments column saved width"
+#~ msgstr "Amplada desada de la columna d'arguments del procés"
+
+#~ msgid "Process name column saved width"
+#~ msgstr "Amplada desada de la columna del nom del procés"
+
+#~ msgid "Process nice column saved width"
+#~ msgstr "Amplada desada de la columna de prioritat del procés"
+
+#~ msgid "Process owner column saved width"
+#~ msgstr "Amplada desada de la columna de propietari del procés"
+
+#~ msgid "Process resident memory column saved width"
+#~ msgstr "Amplada desada de la columna de memòria resident del procés"
+
+#~ msgid "Process shared memory column saved width"
+#~ msgstr "Amplada desada de la columna de memòria compartida en iniciar"
+
+#~ msgid "Process start time column saved width"
+#~ msgstr "Amplada desada de la columna temps d'engegada del procés"
+
+#~ msgid "Process status column saved width"
+#~ msgstr "Amplada desada de la columna d'estat del procés"
+
+#~ msgid "Process virtual memory column saved width"
+#~ msgstr "Amplada desada de la columna de memòria virtual del procés"
+
+#~ msgid "Show process threads"
+#~ msgstr "Mostra els fils dels processos"
+
+#~ msgid "Show process writable memory column saved width"
+#~ msgstr ""
+#~ "Mostra l'amplada desada de la columna de memòria d'escriptura del procés"
+
+#~ msgid "Show warning dialog when hiding processes"
+#~ msgstr "Mostra un diàleg d'advertència en ocultar els processos"
+
+#~ msgid "_Lsof"
+#~ msgstr "_Lsof"
+
+#~ msgid "Lsof"
+#~ msgstr "Lsof"
+
+#~ msgid "_Hide Process"
+#~ msgstr "_Oculta el procés"
+
+#~ msgid "Hide process from list"
+#~ msgstr "Oculta el procés de la llista"
+
+#~ msgid "_Hidden Processes"
+#~ msgstr "_Processos ocults"
+
+#~ msgid "Open the list of currently hidden processes"
+#~ msgstr "Obre la llista actual de processos ocults"
+
+#~ msgid "Hide the selected process?"
+#~ msgstr "Voleu ocultar els processos seleccionats?"
+
+#~ msgid ""
+#~ "Hidden processes are no longer visible in the process list. You can re-"
+#~ "enable them by selecting the \"Hidden Processes\" entry in the View menu."
+#~ msgstr ""
+#~ "Els processos ocults no són visibles a la llista de processos. Els podeu "
+#~ "tornar a habilitar seleccionant l'entrada «Processos ocults» al menú "
+#~ "Visualitza."
+
+#~ msgid "Alert before _hiding processes"
+#~ msgstr "Alerta abans d'_ocultar els processos"
+
+#~ msgid "Process Fields"
+#~ msgstr "Camps dels processos"
+
+#~ msgid "Arguments"
+#~ msgstr "Arguments"
 
 #~ msgid "Devices"
 #~ msgstr "Dispositius"
@@ -988,9 +1139,6 @@ msgstr "%.1f GiB"
 
 #~ msgid "Process Info"
 #~ msgstr "Informació del procés"
-
-#~ msgid "Command:"
-#~ msgstr "Ordre:"
 
 #~ msgid "Status:"
 #~ msgstr "Estat:"
@@ -1120,9 +1268,6 @@ msgstr "%.1f GiB"
 
 #~ msgid "Display threads (subprocesses)"
 #~ msgstr "Mostra els fils (subprocessos)"
-
-#~ msgid "Process name:"
-#~ msgstr "Nom del procés:"
 
 #~ msgid "_Show this dialog next time"
 #~ msgstr "_Mostra aquest diàleg la propera vegada"
