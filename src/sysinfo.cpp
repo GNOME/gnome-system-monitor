@@ -136,6 +136,9 @@ namespace {
 	if (string(entries[i].devname).find("/dev/") != 0)
 	  continue;
 
+	if (string(entries[i].mountdir).find("/media/") == 0)
+	  continue;
+
 	glibtop_fsusage usage;
 	glibtop_get_fsusage(&usage, entries[i].mountdir);
 	this->free_space_bytes += usage.bavail * usage.block_size;
