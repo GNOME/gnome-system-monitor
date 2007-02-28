@@ -19,6 +19,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <sys/utsname.h>
 
 #include "sysinfo.h"
 #include "util.h"
@@ -46,14 +47,13 @@ namespace {
     vector<string> processors;
 
 
-    SysInfo(const string &name = _("Unknown distribution"))
-      : distro_name(name),
-	distro_release(_("Unknown release"))
+    SysInfo()
     {
       this->load_hostname();
       this->load_processors_info();
       this->load_memory_info();
       this->load_disk_info();
+      this->load_uname_info();
     }
 
     virtual ~SysInfo()
@@ -146,14 +146,26 @@ namespace {
 
       g_free(entries);
     }
+
+
+    void load_uname_info()
+    {
+      struct utsname name;
+
+      uname(&name);
+
+      this->distro_name = name.sysname;
+      this->distro_release = name.release;
+    }
   };
+
+
 
   class SolarisSysInfo
     : public SysInfo
   {
   public:
     SolarisSysInfo()
-      : SysInfo("Solaris")
     {
       this->load_solaris_info();
     }
@@ -161,12 +173,12 @@ namespace {
   private:
     void load_solaris_info()
     {
+      this->distro_name = "Solaris";
+
       std::ifstream input("/etc/release");
 
       if (input)
 	std::getline(input, this->distro_release);
-      else
-	this->distro_release = _("Unknown version");
     }
   };
 
@@ -253,7 +265,7 @@ namespace {
     else if (g_file_test("/etc/release", G_FILE_TEST_EXISTS))
       return new SolarisSysInfo;
 
-    return new SysInfo(_("Unknown distribution"));
+    return new SysInfo;
   }
 }
 
@@ -384,7 +396,7 @@ procman_create_sysinfo_view(void)
   gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
   gtk_container_add(GTK_CONTAINER(distro_frame), alignment);
 
-  if (data->distro_release != "")
+  if (data->distro_codename != "")
     markup = g_strdup_printf(
 			     _("Release %s (%s)"),
 			     data->distro_release.c_str(),
