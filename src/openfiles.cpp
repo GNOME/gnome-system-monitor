@@ -6,6 +6,7 @@
 #include <netdb.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <netinet/in.h>
 #include <arpa/inet.h>
 
 #include "procman.h"
@@ -52,8 +53,9 @@ friendlier_hostname(const char *dotted_quad, int port)
 	if(inet_pton(AF_INET, dotted_quad, &addr4) <= 0)
 		goto failsafe;
 
-
-	host = gethostbyaddr(&addr4, sizeof addr4, AF_INET);
+	// cast needed because first argument may be const char*
+	// or const void*
+	host = gethostbyaddr((const void*)&addr4, sizeof addr4, AF_INET);
 
 	if(!host)
 		goto failsafe;
