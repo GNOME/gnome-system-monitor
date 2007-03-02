@@ -55,7 +55,7 @@ friendlier_hostname(const char *dotted_quad, int port)
 
 	// cast needed because first argument may be const char*
 	// or const void*
-	host = gethostbyaddr((const void*)&addr4, sizeof addr4, AF_INET);
+	host = gethostbyaddr(reinterpret_cast<const char*>(&addr4), sizeof addr4, AF_INET);
 
 	if(!host)
 		goto failsafe;
