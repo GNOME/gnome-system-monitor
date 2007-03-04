@@ -19,6 +19,8 @@
 
 #include <libgnomevfs/gnome-vfs-utils.h>
 
+#include <algorithm>
+
 #include "procman.h"
 #include "load-graph.h"
 #include "util.h"
@@ -68,7 +70,9 @@ struct _LoadGraph {
 		struct {
 			guint64 last_in, last_out;
 			GTimeVal time;
-			float max;
+			unsigned max;
+			unsigned values[NUM_POINTS];
+			size_t cur;
 		} net;
 	/* }; */
 };
@@ -320,22 +324,46 @@ get_memory (LoadGraph *g)
 }
 
 static void
-net_scale (LoadGraph *g, float new_max)
+net_scale (LoadGraph *g, unsigned din, unsigned dout)
 {
-	gint i;
-	float old_max = MAX (g->net.max, 1.0f), scale;
+	g->data[0][0] = 1.0f * din / g->net.max;
+	g->data[0][1] = 1.0f * dout / g->net.max;
 
-	if (new_max <= old_max)
+	unsigned dmax = std::max(din, dout);
+	g->net.values[g->net.cur] = dmax;
+	g->net.cur = (g->net.cur + 1) % NUM_POINTS;
+
+	unsigned new_max;
+	// both way, new_max is the greatest value
+	if (dmax >= g->net.max)
+		new_max = dmax;
+	else
+		new_max = *std::max_element(&g->net.values[0],
+					    &g->net.values[NUM_POINTS]);
+
+	// round up
+	new_max = 11U * new_max / 10U;
+	// make sure max is not 0 to avoid / 0
+	new_max = std::max(new_max, 1U);
+
+	if (new_max == g->net.max)
 		return;
 
-	scale = old_max / new_max;
+	// if max has decreased but not so much, don't do anything
+	// to avoid rescaling
+	if ((8U * g->net.max / 10U) < new_max && new_max < g->net.max)
+		return;
 
-	for (i = 0; i < NUM_POINTS; i++) {
+	const float scale = 1.0f * g->net.max / new_max;
+
+	for (size_t i = 0; i < NUM_POINTS; i++) {
 		if (g->data[i][0] >= 0.0f) {
 			g->data[i][0] *= scale;
 			g->data[i][1] *= scale;
 		}
 	}
+
+	procman_debug("dmax = %u max = %u new_max = %u", dmax, g->net.max, new_max);
 
 	g->net.max = new_max;
 }
@@ -348,7 +376,7 @@ get_net (LoadGraph *g)
 	guint32 i;
 	guint64 in = 0, out = 0;
 	GTimeVal time;
-	float din, dout;
+	unsigned din, dout;
 	gchar *text1, *text2;
 
 	ifnames = glibtop_get_netlist(&netlist);
@@ -377,23 +405,20 @@ get_net (LoadGraph *g)
 		float dtime;
 		dtime = time.tv_sec - g->net.time.tv_sec +
 			(float) (time.tv_usec - g->net.time.tv_usec) / G_USEC_PER_SEC;
-		din   = (in - g->net.last_in) / dtime;
-		dout  = (out - g->net.last_out) / dtime;
+		din   = static_cast<unsigned>((in  - g->net.last_in)  / dtime);
+		dout  = static_cast<unsigned>((out - g->net.last_out) / dtime);
 	} else {
 		/* Don't calc anything if new data is less than old (interface
 		   removed, counters reset, ...) or if it is the first time */
-		din  = 0.0f;
-		dout = 0.0f;
+		din  = 0;
+		dout = 0;
 	}
 
 	g->net.last_in  = in;
 	g->net.last_out = out;
 	g->net.time     = time;
 
-	g->data[0][0] = din  / MAX(g->net.max, 1.0f);
-	g->data[0][1] = dout / MAX(g->net.max, 1.0f);
-
-	net_scale (g, MAX (din, dout));
+	net_scale(g, din, dout);
 
 	text1 = SI_gnome_vfs_format_file_size_for_display (din);
 	text2 = g_strdup_printf (_("%s/s"), text1);
@@ -546,6 +571,7 @@ load_graph_new (gint type, ProcData *procdata)
 
 	case LOAD_GRAPH_NET:
 		g->n = 2;
+		g->net.max = 1;
 		g->labels.net_in = gtk_label_new(NULL);
 		g->labels.net_in_total = gtk_label_new(NULL);
 		g->labels.net_out = gtk_label_new(NULL);
