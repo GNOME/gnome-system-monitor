@@ -270,15 +270,23 @@ create_sys_view (ProcData *procdata)
 
 	sizegroup = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
-	hbox = gtk_hbox_new (FALSE, 12);
-	gtk_box_pack_start (GTK_BOX (cpu_graph_box), hbox, FALSE, FALSE, 0);
+	GtkWidget* cpu_table = gtk_table_new(std::min(procdata->config.num_cpus / 4, 1),
+					     std::min(procdata->config.num_cpus, 4),
+					     TRUE);
+	gtk_table_set_row_spacings(GTK_TABLE(cpu_table), 6);
+	gtk_table_set_col_spacings(GTK_TABLE(cpu_table), 12);
+	gtk_box_pack_start(GTK_BOX(cpu_graph_box), cpu_table, FALSE, FALSE, 0);
 
 	for (i=0;i<procdata->config.num_cpus; i++) {
 		GtkWidget *temp_hbox;
 		gchar *text;
 		
 		temp_hbox = gtk_hbox_new (FALSE, 6);
-		gtk_box_pack_start (GTK_BOX (hbox), temp_hbox, FALSE, FALSE, 0);
+		gtk_table_attach(GTK_TABLE(cpu_table), temp_hbox,
+				 i % 4, i % 4 + 1,
+				 i / 4, i / 4 + 1,
+				 GTK_FILL, GTK_FILL,
+				 0, 0);
 		gtk_size_group_add_widget (sizegroup, temp_hbox);
 		g_signal_connect (G_OBJECT (temp_hbox), "size_request",
 					 G_CALLBACK(size_request), &cpu_size);
