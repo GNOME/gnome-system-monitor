@@ -135,7 +135,7 @@ cb_about (GtkAction *action, gpointer data)
 		"Erik Johnsson",
 		"Jorgen Scheibengruber",
 		"Benoît Dejean",
-		"Paollo Borelli",
+		"Paolo Borelli",
 		NULL
 	};
 
@@ -157,7 +157,7 @@ cb_about (GtkAction *action, gpointer data)
 					  "system state"),
 		"version",		VERSION,
 		"copyright",		"Copyright \xc2\xa9 2001-2004 Kevin Vandersloot\n"
-					"Copyright \xc2\xa9 2005-2006 Benoît Dejean",
+					"Copyright \xc2\xa9 2005-2007 Benoît Dejean",
 		"logo-icon-name",	"utilities-system-monitor",
 		"authors",		authors,
 		"artists",		artists,
