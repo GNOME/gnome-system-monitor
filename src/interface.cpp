@@ -165,7 +165,6 @@ create_proc_view (ProcData *procdata)
 	g_free (string);
 	gtk_box_pack_start (GTK_BOX (hbox1), procdata->loadavg, FALSE, FALSE, 0);
 
-	gtk_widget_show_all (hbox1);
 
 	scrolled = proctable_new (procdata);
 	if (!scrolled)
@@ -175,7 +174,6 @@ create_proc_view (ProcData *procdata)
 
 	gtk_box_pack_start (GTK_BOX (vbox1), scrolled, TRUE, TRUE, 0);
 	
-	gtk_widget_show_all (scrolled);
 	
 	hbox2 = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox2, FALSE, FALSE, 0);
@@ -185,7 +183,6 @@ create_proc_view (ProcData *procdata)
 	g_signal_connect (G_OBJECT (procdata->endprocessbutton), "clicked",
 			  G_CALLBACK (cb_end_process_button_pressed), procdata);
 	
-	gtk_widget_show_all (hbox2);
 	
 	/* create popup_menu */
  	procdata->popup_menu = gtk_ui_manager_get_widget (procdata->uimanager, "/PopupMenu");
@@ -249,7 +246,6 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (vbox), cpu_box, TRUE, TRUE, 0);
 
 	label = make_title_label (_("CPU History"));
-	gtk_widget_show (label);
 	gtk_box_pack_start (GTK_BOX (cpu_box), label, FALSE, FALSE, 0);
 	
 	cpu_hbox = gtk_hbox_new (FALSE, 0);
@@ -323,7 +319,6 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (vbox), mem_box, TRUE, TRUE, 0);
 
 	label = make_title_label (_("Memory and Swap History"));
-	gtk_widget_show (label);
 	gtk_box_pack_start (GTK_BOX (mem_box), label, FALSE, FALSE, 0);
 	
 	mem_hbox = gtk_hbox_new (FALSE, 0);
@@ -474,7 +469,6 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (vbox), net_box, TRUE, TRUE, 0);
 
 	label = make_title_label (_("Network History"));
-	gtk_widget_show (label);
 	gtk_box_pack_start (GTK_BOX (net_box), label, FALSE, FALSE, 0);
 
 	net_hbox = gtk_hbox_new (FALSE, 0);
@@ -587,9 +581,6 @@ create_sys_view (ProcData *procdata)
 			  0);
 
 	procdata->net_graph = net_graph;
-
-
-	gtk_widget_show_all (vbox);
 
 	return vbox;
 }
@@ -726,28 +717,20 @@ create_main_window (ProcData *procdata)
 	                    TRUE, 
 	                    TRUE, 
 	                    0);
-	gtk_widget_show (notebook);
 
 	sysinfo_box = procman_create_sysinfo_view();
-	gtk_widget_show_all(sysinfo_box);
 	sysinfo_label = gtk_label_new(_("System"));
-	gtk_widget_show(sysinfo_label);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), sysinfo_box, sysinfo_label);
 
 	vbox1 = create_proc_view (procdata);
-	gtk_widget_show (vbox1);
 	tab_label1 = gtk_label_new (_("Processes"));
-	gtk_widget_show (tab_label1);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox1, tab_label1);
 	
 	sys_box = create_sys_view (procdata);
-	gtk_widget_show (sys_box);
 	tab_label2 = gtk_label_new (_("Resources"));
-	gtk_widget_show (tab_label2);
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label2);
 
 	devices_box = create_disk_view (procdata);
-	gtk_widget_show(devices_box);
 	tab_label3 = gtk_label_new (_("File Systems"));
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), devices_box, tab_label3);
 
@@ -756,7 +739,7 @@ create_main_window (ProcData *procdata)
 	g_signal_connect (G_OBJECT (notebook), "change-current-page",
 			  G_CALLBACK (cb_change_current_page), procdata);
 
-
+	gtk_widget_show_all(notebook); // need to make page switch work
 	gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab);
 	cb_change_current_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab, procdata);
 	g_signal_connect (G_OBJECT (app), "delete_event",
