@@ -194,3 +194,19 @@ procman_debug(const char *format, ...)
 	g_free(msg);
 }
 
+
+
+namespace procman
+{
+  void size_cell_data_func(GtkTreeViewColumn *col, GtkCellRenderer *renderer,
+			   GtkTreeModel *model, GtkTreeIter *iter,
+			   gpointer user_data)
+  {
+    guint64 size;
+    gtk_tree_model_get(model, iter, GPOINTER_TO_UINT(user_data), &size, -1);
+
+    char *str = SI_gnome_vfs_format_file_size_for_display(size);
+    g_object_set(renderer, "text", str, NULL);
+    g_free(str);
+  }
+}

@@ -60,7 +60,8 @@ class UnrefMapValues
 public:
   void operator()(const typename Map::value_type &it) const
   {
-    g_object_unref(it.second);
+    if (it.second)
+      g_object_unref(it.second);
   }
 };
 
@@ -70,5 +71,14 @@ inline void unref_map_values(Map &map)
 {
   std::for_each(map.begin(), map.end(), UnrefMapValues<Map>());
 }
+
+
+namespace procman
+{
+  void size_cell_data_func(GtkTreeViewColumn *col, GtkCellRenderer *renderer,
+			   GtkTreeModel *model, GtkTreeIter *iter,
+			   gpointer user_data);
+}
+
 
 #endif /* H_GNOME_SYSTEM_MONITOR_UTIL_1123178725 */
