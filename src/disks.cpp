@@ -62,14 +62,14 @@ fsusage_stats(const glibtop_fsusage *buf,
 		*btotal = *bfree = *bavail = *bused = 0ULL;
 		*percentage = 0;
 	} else {
-		float percent;
+		int percent;
 		*btotal = total;
 		*bfree = buf->bfree * buf->block_size;
 		*bavail = buf->bavail * buf->block_size;
 		*bused = *btotal - *bfree;
 		/* percent = 100.0f * *bused / *btotal; */
-		percent = 100.0f * *bused / (*bused + *bavail);
-		*percentage = CLAMP((gint)percent, 0, 100);
+		percent = 100 * *bused / (*bused + *bavail);
+		*percentage = CLAMP(percent, 0, 100);
 	}
 }
 
