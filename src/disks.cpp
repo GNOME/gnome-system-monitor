@@ -13,8 +13,6 @@
 
 enum DiskColumns
 {
-	/* PixBuf column */
-	DISK_ICON,
 	/* string columns* */
 	DISK_DEVICE,
 	DISK_DIR,
@@ -22,8 +20,11 @@ enum DiskColumns
 	DISK_TOTAL,
 	DISK_FREE,
 	DISK_AVAIL,
-	/* USED have to be the last column */
+	/* USED has to be the last column */
 	DISK_USED,
+	// then unvisible columns
+	/* PixBuf column */
+	DISK_ICON,
 	/* numeric columns */
 	DISK_USED_PERCENTAGE,
 	DISK_TOTAL_UINT64,
@@ -336,7 +337,6 @@ create_disk_view(ProcData *procdata)
 	gtk_box_pack_start(GTK_BOX(disk_hbox), scrolled, TRUE, TRUE, 0);
 
 	model = gtk_list_store_new(DISK_N_COLUMNS,	/* n columns */
-				   GDK_TYPE_PIXBUF,	/* DISK_ICON */
 				   G_TYPE_STRING,	/* DISK_DEVICE */
 				   G_TYPE_STRING,	/* DISK_DIR */
 				   G_TYPE_STRING,	/* DISK_TYPE */
@@ -344,6 +344,7 @@ create_disk_view(ProcData *procdata)
 				   G_TYPE_STRING,	/* DISK_FREE */
 				   G_TYPE_STRING,	/* DISK_AVAIL */
 				   G_TYPE_STRING,	/* DISK_USED */
+				   GDK_TYPE_PIXBUF,	/* DISK_ICON */
 				   G_TYPE_INT,		/* DISK_USED_PERCENTAGE */
 				   G_TYPE_UINT64,	/* DISK_TOTAL_UINT64 */
 				   G_TYPE_UINT64,	/* DISK_FREE_UINT64 */
@@ -370,18 +371,18 @@ create_disk_view(ProcData *procdata)
 	gtk_tree_view_column_pack_start(col, cell, FALSE);
 	gtk_tree_view_column_set_attributes(col, cell, "text", DISK_DEVICE,
 					    NULL);
-	gtk_tree_view_column_set_title(col, _(titles[0]));
-	gtk_tree_view_column_set_sort_column_id(col, 1);
+	gtk_tree_view_column_set_title(col, _(titles[DISK_DEVICE]));
+	gtk_tree_view_column_set_sort_column_id(col, DISK_DEVICE);
 	gtk_tree_view_column_set_reorderable(col, TRUE);
 	gtk_tree_view_column_set_resizable(col, TRUE);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
 
 	/* sizes - used */
 
-	for (i = 1; i < G_N_ELEMENTS(titles) - 1; i++) {
+	for (i = DISK_DIR; i <= DISK_AVAIL; i++) {
 		cell = gtk_cell_renderer_text_new();
 
-		switch (i + 1) {
+		switch (i) {
 		case DISK_TOTAL:
 		case DISK_FREE:
 		case DISK_AVAIL:
@@ -391,10 +392,10 @@ create_disk_view(ProcData *procdata)
 
 		col = gtk_tree_view_column_new_with_attributes(_(titles[i]),
 							       cell,
-							       "text", i + 1,
+							       "text", i,
 							       NULL);
 		gtk_tree_view_column_set_resizable(col, TRUE);
-		gtk_tree_view_column_set_sort_column_id(col, i + 1);
+		gtk_tree_view_column_set_sort_column_id(col, i);
 		gtk_tree_view_column_set_reorderable(col, TRUE);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
 	}
@@ -406,7 +407,7 @@ create_disk_view(ProcData *procdata)
 	g_object_set(cell, "xalign", 1.0f, NULL);
 	gtk_tree_view_column_pack_start(col, cell, FALSE);
 	gtk_tree_view_column_set_attributes(col, cell, "text", DISK_USED, NULL);
-	gtk_tree_view_column_set_title(col, _(titles[G_N_ELEMENTS(titles) - 1]));
+	gtk_tree_view_column_set_title(col, _(titles[DISK_USED]));
 
 	cell = gtk_cell_renderer_progress_new();
 	gtk_tree_view_column_pack_start(col, cell, TRUE);
