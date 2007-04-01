@@ -39,6 +39,7 @@
 #include "prettytable.h"
 #include "callbacks.h"
 #include "smooth_refresh.h"
+#include "util.h"
 
 
 ProcData* ProcData::get_instance()
@@ -660,6 +661,7 @@ main (int argc, char *argv[])
 	startup_timestamp = get_startup_timestamp();
 
 	gtk_init(&argc, &argv);
+	procman_debug("post gtk_init");
 
 	conn = bacon_message_connection_new ("gnome-system-monitor");
 	if (!conn) g_error("Couldn't connect to gnome-system-monitor");
@@ -694,11 +696,15 @@ main (int argc, char *argv[])
 
 	gnome_vfs_init ();
 	glibtop_init ();
+
+	procman_debug("end init");
 	
 	procdata = procman_data_new (client);
 	procdata->client = client;
 
+	procman_debug("begin create_main_window");
 	create_main_window (procdata);
+	procman_debug("end create_main_window");
 	
 	proctable_update_all (procdata);
 
@@ -707,7 +713,8 @@ main (int argc, char *argv[])
 	g_assert(procdata->app);
 			
  	gtk_widget_show(procdata->app);
- 	
+       
+	procman_debug("begin gtk_main");
 	gtk_main ();
 	
 	procman_free_data (procdata);
