@@ -33,19 +33,18 @@ private:
   void unregister_application(pid_t pid);
 
 
-  void load_default_table();
-
   // return a new reference to GdkPixbuf*
   GdkPixbuf* get_icon_from_theme(pid_t pid, const gchar* command);
   GdkPixbuf* get_icon_from_default(pid_t pid, const gchar* command);
   GdkPixbuf* get_icon_from_wnck(pid_t pid, const gchar* command);
 
+  bool get_default_icon_name(const string &cmd, string &name);
 
-  typedef std::map<string, GdkPixbuf*> IconsForCommand;
+  typedef std::map<string, GdkPixbuf*> IconCache;
   typedef std::map<pid_t, GdkPixbuf*> IconsForPID;
 
   IconsForPID apps;
-  IconsForCommand defaults;
+  IconCache defaults;
   GtkIconTheme* theme;
 };
 

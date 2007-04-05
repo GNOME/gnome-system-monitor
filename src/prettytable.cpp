@@ -54,9 +54,6 @@ PrettyTable::PrettyTable()
 {
   this->theme = gtk_icon_theme_get_default();
 
-  this->load_default_table();
-
-
   WnckScreen* screen = wnck_screen_get_default();
   g_signal_connect(G_OBJECT(screen), "application_opened",
 		   G_CALLBACK(PrettyTable::on_application_opened), this);
@@ -150,19 +147,51 @@ PrettyTable::get_icon_from_theme(pid_t, const gchar* command)
 }
 
 
+bool PrettyTable::get_default_icon_name(const string &cmd, string &name)
+{
+  for (size_t i = 0; i != G_N_ELEMENTS(default_table); ++i) {
+    if (cmd == default_table[i].command) {
+      name = default_table[i].icon;
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/*
+  Try to get an icon from the default_table
+  If it's not in defaults, try to load it.
+  If there is no default for a command, store NULL in defaults
+  so we don't have to lookup again.
+*/
 
 GdkPixbuf*
 PrettyTable::get_icon_from_default(pid_t, const gchar* command)
 {
-  IconsForCommand::iterator it(this->defaults.find(command));
+  GdkPixbuf* pix = NULL;
+  string name;
 
-  if (it != this->defaults.end()) {
-    GdkPixbuf* icon = it->second;
-    g_object_ref(icon);
-    return icon;
+  if (this->get_default_icon_name(command, name)) {
+    IconCache::iterator it(this->defaults.find(name));
+
+    if (it == this->defaults.end()) {
+      pix = gtk_icon_theme_load_icon(this->theme,
+				     name.c_str(),
+				     APP_ICON_SIZE,
+				     GTK_ICON_LOOKUP_USE_BUILTIN,
+				     NULL);
+      if (pix)
+	this->defaults[name] = pix;
+
+    } else
+      pix = it->second;
   }
 
-  return NULL;
+  if (pix)
+    g_object_ref(pix);
+
+  return pix;
 }
 
 
@@ -203,22 +232,3 @@ PrettyTable::get_icon(const gchar* command, pid_t pid)
   return NULL;
 }
 
-
-
-
-void
-PrettyTable::load_default_table()
-{
-  for (size_t i = 0; i != G_N_ELEMENTS(default_table); ++i)
-    {
-      const char* command = default_table[i].command;
-      const char* icon = default_table[i].icon;
-
-      if (GdkPixbuf* pix = gtk_icon_theme_load_icon(this->theme,
-						    icon,
-						    APP_ICON_SIZE,
-						    GTK_ICON_LOOKUP_USE_BUILTIN,
-						    NULL))
-	this->defaults[command] = pix;
-    }
-}
