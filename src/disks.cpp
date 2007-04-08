@@ -27,27 +27,8 @@ enum DiskColumns
 	DISK_ICON,
 	/* numeric columns */
 	DISK_USED_PERCENTAGE,
-	DISK_TOTAL_UINT64,
-	DISK_FREE_UINT64,
-	DISK_AVAIL_UINT64,
-	DISK_USED_UINT64,
 	DISK_N_COLUMNS
 };
-
-
-
-static int
-sort_bytes(GtkTreeModel *model, GtkTreeIter *iter1, GtkTreeIter *iter2,
-	   gpointer data)
-{
-	int col = GPOINTER_TO_INT(data);
-	guint64 bytes1, bytes2;
-
-	gtk_tree_model_get(model, iter1, col, &bytes1, -1);
-	gtk_tree_model_get(model, iter2, col, &bytes2, -1);
-
-	return PROCMAN_RCMP(bytes1, bytes2);
-}
 
 
 
@@ -178,7 +159,6 @@ add_disk(GtkListStore *list, const glibtop_mountentry *entry)
 	GdkPixbuf *pixbuf;
 	GtkTreeIter iter;
 	glibtop_fsusage usage;
-	gchar *used_str, *total_str, *free_str, *avail_str;
 	guint64 bused, bfree, bavail, btotal;
 	gint percentage;
 
@@ -186,11 +166,6 @@ add_disk(GtkListStore *list, const glibtop_mountentry *entry)
 
 	glibtop_get_fsusage(&usage, entry->mountdir);
 	fsusage_stats(&usage, &bused, &bfree, &bavail, &btotal, &percentage);
-
-	used_str = SI_gnome_vfs_format_file_size_for_display(bused);
-	free_str = SI_gnome_vfs_format_file_size_for_display(bfree);
-	avail_str = SI_gnome_vfs_format_file_size_for_display(bavail);
-	total_str = SI_gnome_vfs_format_file_size_for_display(btotal);
 
 	/* if we can find a row with the same mountpoint, we get it but we
 	   still need to update all the fields.
@@ -204,24 +179,16 @@ add_disk(GtkListStore *list, const glibtop_mountentry *entry)
 			   DISK_DEVICE, entry->devname,
 			   DISK_DIR, entry->mountdir,
 			   DISK_TYPE, entry->type,
-			   DISK_TOTAL, total_str,
-			   DISK_FREE, free_str,
-			   DISK_AVAIL, avail_str,
-			   DISK_USED, used_str,
 			   DISK_USED_PERCENTAGE, percentage,
-			   DISK_TOTAL_UINT64, btotal,
-			   DISK_FREE_UINT64, bfree,
-			   DISK_AVAIL_UINT64, bavail,
-			   DISK_USED_UINT64, bused,
+			   DISK_TOTAL, btotal,
+			   DISK_FREE, bfree,
+			   DISK_AVAIL, bavail,
+			   DISK_USED, bused,
 			   -1);
 
 	if (pixbuf)
 		g_object_unref(pixbuf);
 
-	g_free(used_str);
-	g_free(free_str);
-	g_free(avail_str);
-	g_free(total_str);
 }
 
 
@@ -340,16 +307,12 @@ create_disk_view(ProcData *procdata)
 				   G_TYPE_STRING,	/* DISK_DEVICE */
 				   G_TYPE_STRING,	/* DISK_DIR */
 				   G_TYPE_STRING,	/* DISK_TYPE */
-				   G_TYPE_STRING,	/* DISK_TOTAL */
-				   G_TYPE_STRING,	/* DISK_FREE */
-				   G_TYPE_STRING,	/* DISK_AVAIL */
-				   G_TYPE_STRING,	/* DISK_USED */
+				   G_TYPE_UINT64,	/* DISK_TOTAL */
+				   G_TYPE_UINT64,	/* DISK_FREE */
+				   G_TYPE_UINT64,	/* DISK_AVAIL */
+				   G_TYPE_UINT64,	/* DISK_USED */
 				   GDK_TYPE_PIXBUF,	/* DISK_ICON */
-				   G_TYPE_INT,		/* DISK_USED_PERCENTAGE */
-				   G_TYPE_UINT64,	/* DISK_TOTAL_UINT64 */
-				   G_TYPE_UINT64,	/* DISK_FREE_UINT64 */
-				   G_TYPE_UINT64,	/* DISK_AVAIL_UINT64 */
-				   G_TYPE_UINT64	/* DISK_USED_UINT64 */
+				   G_TYPE_INT		/* DISK_USED_PERCENTAGE */
 		);
 
 	disk_tree = gtk_tree_view_new_with_model(GTK_TREE_MODEL(model));
@@ -381,23 +344,31 @@ create_disk_view(ProcData *procdata)
 
 	for (i = DISK_DIR; i <= DISK_AVAIL; i++) {
 		cell = gtk_cell_renderer_text_new();
+		col = gtk_tree_view_column_new();
+		gtk_tree_view_column_pack_start(col, cell, TRUE);
+		gtk_tree_view_column_set_title(col, _(titles[i]));
+		gtk_tree_view_column_set_resizable(col, TRUE);
+		gtk_tree_view_column_set_sort_column_id(col, i);
+		gtk_tree_view_column_set_reorderable(col, TRUE);
+		gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
 
 		switch (i) {
 		case DISK_TOTAL:
 		case DISK_FREE:
 		case DISK_AVAIL:
-			g_object_set(cell, "xalign", 1.0f, NULL);
-			break;
-		}
+		  g_object_set(cell, "xalign", 1.0f, NULL);
+		  gtk_tree_view_column_set_cell_data_func(col, cell,
+							  &procman::size_cell_data_func,
+							  GUINT_TO_POINTER(i),
+							  NULL);
+		  break;
 
-		col = gtk_tree_view_column_new_with_attributes(_(titles[i]),
-							       cell,
-							       "text", i,
-							       NULL);
-		gtk_tree_view_column_set_resizable(col, TRUE);
-		gtk_tree_view_column_set_sort_column_id(col, i);
-		gtk_tree_view_column_set_reorderable(col, TRUE);
-		gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
+		default:
+		  gtk_tree_view_column_set_attributes(col, cell,
+						      "text", i,
+						      NULL);
+		  break;
+		}
 	}
 
 	/* used + percentage */
@@ -406,7 +377,10 @@ create_disk_view(ProcData *procdata)
 	cell = gtk_cell_renderer_text_new();
 	g_object_set(cell, "xalign", 1.0f, NULL);
 	gtk_tree_view_column_pack_start(col, cell, FALSE);
-	gtk_tree_view_column_set_attributes(col, cell, "text", DISK_USED, NULL);
+	gtk_tree_view_column_set_cell_data_func(col, cell,
+						&procman::size_cell_data_func,
+						GUINT_TO_POINTER(DISK_USED),
+						NULL);
 	gtk_tree_view_column_set_title(col, _(titles[DISK_USED]));
 
 	cell = gtk_cell_renderer_progress_new();
@@ -419,27 +393,6 @@ create_disk_view(ProcData *procdata)
 	gtk_tree_view_column_set_reorderable(col, TRUE);
 
 	/* numeric sort */
-
-	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(model),
-					DISK_TOTAL,
-					sort_bytes,
-					GINT_TO_POINTER(DISK_TOTAL_UINT64),
-					NULL);
-	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(model),
-					DISK_FREE,
-					sort_bytes,
-					GINT_TO_POINTER(DISK_FREE_UINT64),
-					NULL);
-	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(model),
-					DISK_AVAIL,
-					sort_bytes,
-					GINT_TO_POINTER(DISK_AVAIL_UINT64),
-					NULL);
-	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(model),
-					DISK_USED,
-					sort_bytes,
-					GINT_TO_POINTER(DISK_USED_UINT64),
-					NULL);
 
 	gtk_widget_show_all(disk_box);
 
