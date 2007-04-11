@@ -603,8 +603,8 @@ proctable_find_process (guint pid, ProcData *procdata)
 static ProcInfo *
 find_parent (ProcData *procdata, guint pid)
 {
-	/* ignore init as a parent process */
-	if (pid <= 1)
+	// init and other kernel processes
+	if (pid == 0)
 		return NULL;
 
 	return proctable_find_process(pid, procdata);
