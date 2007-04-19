@@ -17,7 +17,7 @@
 
 
 const string SmoothRefresh::KEY("/apps/procman/smooth_refresh");
-const bool SmoothRefresh::KEY_DEFAULT_VALUE(true);;
+const bool SmoothRefresh::KEY_DEFAULT_VALUE(true);
 
 
 
