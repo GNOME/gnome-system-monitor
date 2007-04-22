@@ -177,7 +177,8 @@ static double get_relative_time(void)
 
 
 void
-procman_debug(const char *format, ...)
+procman_debug_real(const char *file, int line, const char *func,
+		   const char *format, ...)
 {
 	va_list args;
 	char *msg;
@@ -189,7 +190,7 @@ procman_debug(const char *format, ...)
 	msg = g_strdup_vprintf(format, args);
 	va_end(args);
 
-	g_debug("[%0.6f] %s", get_relative_time(), msg);
+	g_debug("[%.3f %s:%d %s] %s", get_relative_time(), file, line, func, msg);
 
 	g_free(msg);
 }

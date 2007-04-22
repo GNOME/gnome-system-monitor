@@ -223,8 +223,6 @@ procman_data_new (GConfClient *client)
 	pd = ProcData::get_instance();
 	
 	pd->tree = NULL;
-	pd->info = NULL;
-	pd->pids = g_hash_table_new(NULL, NULL);
 	pd->selected_process = NULL;
 	pd->timeout = 0;
 	pd->cpu_graph = NULL;
@@ -386,7 +384,6 @@ procman_free_data (ProcData *procdata)
 
 	proctable_free_table (procdata);
 	g_string_chunk_free(procdata->users);
-	g_hash_table_destroy(procdata->pids);
 	delete procdata->smooth_refresh;
 }
 

@@ -39,6 +39,8 @@
 #include <pwd.h>
 #include <time.h>
 
+#include <set>
+
 #include <libgnomevfs/gnome-vfs-utils.h>
 
 #include "procman.h"
@@ -54,6 +56,19 @@ extern "C" {
 
 static guint64 total_time = 1;
 static guint64 total_time_last = 1;
+
+
+
+ProcInfo::List ProcInfo::all;
+
+
+ProcInfo* ProcInfo::find(pid_t pid)
+{
+  Iterator it(ProcInfo::all.find(pid));
+  return (it == ProcInfo::all.end() ? NULL : it->second);
+}
+
+
 
 
 static gint
@@ -459,6 +474,8 @@ ProcInfo::~ProcInfo()
   g_free(this->arguments);
   g_free(this->security_context);
   g_slist_free(this->children);
+
+  ProcInfo::all.erase(this->pid);
 }
 
 
@@ -470,27 +487,22 @@ get_process_status (ProcInfo *info, const glibtop_proc_state *buf)
 	{
 	case GLIBTOP_PROCESS_RUNNING:
 		info->status = _("Running");
-		info->is_running = TRUE;
 		break;
 
 	case GLIBTOP_PROCESS_STOPPED:
 		info->status = _("Stopped");
-		info->is_running = FALSE;
 		break;
 
 	case GLIBTOP_PROCESS_ZOMBIE:
 		info->status = _("Zombie");
-		info->is_running = FALSE;
 		break;
 
 	case GLIBTOP_PROCESS_UNINTERRUPTIBLE:
 		info->status = _("Uninterruptible");
-		info->is_running = FALSE;
 		break;
 
 	default:
 		info->status = _("Sleeping");
-		info->is_running = FALSE;
 		break;
 	}
 }
@@ -593,24 +605,6 @@ get_process_memory_info(ProcInfo *info)
 
 
 
-ProcInfo *
-proctable_find_process (guint pid, ProcData *procdata)
-{
-	return static_cast<ProcInfo*>(g_hash_table_lookup(procdata->pids, GINT_TO_POINTER(pid)));
-}
-
-
-static ProcInfo *
-find_parent (ProcData *procdata, guint pid)
-{
-	// init and other kernel processes
-	if (pid == 0)
-		return NULL;
-
-	return proctable_find_process(pid, procdata);
-}
-
-
 static inline unsigned divide(unsigned *q, unsigned *r, unsigned d)
 {
 	*q = *r / d;
@@ -651,8 +645,12 @@ format_duration_for_display(unsigned centiseconds)
 
 
 static void
-update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info)
+update_info_mutable_cols(ProcInfo *info)
 {
+	ProcData * const procdata = ProcData::get_instance();
+	GtkTreeModel *model;
+	model = gtk_tree_view_get_model(GTK_TREE_VIEW(procdata->tree));
+
 	gchar *vmsize, *memres, *memwritable, *memshared, *memxserver,
 		*cpu_time, *start_time, *mem;
 
@@ -670,7 +668,7 @@ update_info_mutable_cols(GtkTreeStore *store, ProcData *procdata, ProcInfo *info
 	   absolute date wouldn't required to be updated on every refresh */
 	start_time = procman_format_date_for_display(info->start_time);
 
-	gtk_tree_store_set (store, &info->node,
+	gtk_tree_store_set(GTK_TREE_STORE(model), &info->node,
 			    COL_STATUS, info->status,
 			    COL_USER, info->user,
 			    COL_VMSIZE, vmsize,
@@ -704,13 +702,9 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 {
 	GtkTreeModel *model;
 
-	/* Don't show process if it is not running */
-	if ((procdata->config.whose_process == ACTIVE_PROCESSES) &&
-	    (!info->is_running))
-		return;
-
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-	if (info->parent && procdata->config.show_tree && info->parent->is_visible) {
+
+	if (info->parent && procdata->config.show_tree) {
 		GtkTreePath *parent_node = gtk_tree_model_get_path (model, &info->parent->node);
 
 		gtk_tree_store_insert (GTK_TREE_STORE (model), &info->node, &info->parent->node, 0);
@@ -738,10 +732,6 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 			    COL_PID, info->pid,
 			    COL_SECURITYCONTEXT, info->security_context,
 			    -1);
-
-	update_info_mutable_cols(GTK_TREE_STORE (model), procdata, info);
-
-	info->is_visible = TRUE;
 }
 
 
@@ -764,7 +754,6 @@ remove_children_from_tree (ProcData *procdata, GtkTreeModel *model,
 			if (procdata->selected_process == child_info)
 				procdata->selected_process = NULL;
 			g_ptr_array_add(addition_list, child_info);
-			child_info->is_visible = FALSE;
 		}
 	} while (gtk_tree_model_iter_next (model, parent));
 }
@@ -777,17 +766,12 @@ remove_info_from_tree (ProcInfo *info, ProcData *procdata)
 
 	g_assert(info);
 
-	if (!info->is_visible)
-		return;
-
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 
 	if (procdata->selected_process == info)
 		procdata->selected_process = NULL;
 
 	gtk_tree_store_remove (GTK_TREE_STORE (model), &info->node);
-
-	info->is_visible = FALSE;
 }
 
 
@@ -813,9 +797,6 @@ remove_info_from_list (ProcInfo *info, ProcData *procdata)
 		info->children = NULL;
 	}
 
-	/* Remove from list */
-	procdata->info = g_list_remove (procdata->info, info);
-	g_hash_table_remove(procdata->pids, GINT_TO_POINTER(info->pid));
 	delete info;
 }
 
@@ -824,54 +805,30 @@ static void
 update_info (ProcData *procdata, ProcInfo *info)
 {
 	glibtop_proc_state procstate;
+	glibtop_proc_uid procuid;
+	glibtop_proc_time proctime;
 
 	glibtop_get_proc_state (&procstate, info->pid);
+	glibtop_get_proc_uid (&procuid, info->pid);
+	glibtop_get_proc_time (&proctime, info->pid);
+
 	get_process_status (info, &procstate);
 
-	if (procdata->config.whose_process == ACTIVE_PROCESSES)	{
+	get_process_memory_info(info);
 
-		/* process started running */
-		if (info->is_running && (!info->is_visible)) {
-			insert_info_to_tree (info, procdata);
-			return;
-		}
-		/* process was running but not anymore */
-		else if ((!info->is_running) && info->is_visible) {
-			remove_info_from_tree (info, procdata);
-			return;
-		}
-		else if (!info->is_running)
-			return;
-	}
+	get_process_user(procdata, info, procstate.uid);
 
-	if (info->is_visible) {
-		GtkTreeModel *model;
-		glibtop_proc_uid procuid;
-		glibtop_proc_time proctime;
+	info->pcpu = (proctime.rtime - info->cpu_time_last) * 100 / total_time;
+	info->pcpu = MIN(info->pcpu, 100);
 
-		glibtop_get_proc_uid (&procuid, info->pid);
-		glibtop_get_proc_time (&proctime, info->pid);
-
-		get_process_memory_info(info);
-		get_process_user(procdata, info, procstate.uid);
-
-		info->pcpu = (proctime.rtime - info->cpu_time_last) * 100 / total_time;
-		info->pcpu = MIN(info->pcpu, 100);
-
-		info->cpu_time_last = proctime.rtime;
-		info->nice = procuid.nice;
-
-
-		model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-
-		update_info_mutable_cols(GTK_TREE_STORE (model), procdata, info);
-	}
+	info->cpu_time_last = proctime.rtime;
+	info->nice = procuid.nice;
+	info->ppid = procuid.ppid;
 }
 
 
 ProcInfo::ProcInfo(pid_t pid)
-  : path(NULL),
-    parent(NULL),
+  : parent(NULL),
     children(NULL),
     pixbuf(NULL),
     tooltip(NULL),
@@ -879,48 +836,42 @@ ProcInfo::ProcInfo(pid_t pid)
     user(NULL),
     arguments(NULL),
     status(NULL),
-    security_context(NULL)
+    security_context(NULL),
+    pid(pid),
+    uid(-1)
 {
+	ProcInfo::all[pid] = this;
+
 	ProcInfo * const info = this;
 	glibtop_proc_state procstate;
 	glibtop_proc_time proctime;
-	glibtop_proc_uid procuid;
 	glibtop_proc_args procargs;
 	gchar** arguments;
 
-	info->pid = pid;
-	info->uid = -1;
-
 	glibtop_get_proc_state (&procstate, pid);
-	glibtop_get_proc_uid (&procuid, pid);
 	glibtop_get_proc_time (&proctime, pid);
 	arguments = glibtop_get_proc_argv (&procargs, pid, 0);
 
 	/* FIXME : wrong. name and arguments may change with exec* */
 	get_process_name (info, procstate.cmd, arguments[0]);
-	get_process_user(ProcData::get_instance(), info, procstate.uid);
 
 	info->tooltip = g_strjoinv(" ", arguments);
 	info->arguments = g_strescape(info->tooltip, "\\\"");
 	g_strfreev(arguments);
 
-	info->pcpu = 0;
 	info->cpu_time_last = proctime.rtime;
 	info->start_time = proctime.start_time;
-	info->nice = procuid.nice;
 
-	get_process_memory_info(info);
-	get_process_status (info, &procstate);
 	get_process_selinux_context (info);
 
 	info->pixbuf = ProcData::get_instance()->pretty_table.get_icon(info->name, pid);
 
-	info->parent = find_parent(ProcData::get_instance(), procuid.ppid);
+	glibtop_proc_uid uid;
+	glibtop_get_proc_uid(&uid, this->pid);
+	info->parent = ProcInfo::find(uid.ppid);
 	if (info->parent) {
 		info->parent->children = g_slist_prepend (info->parent->children, info);
 	}
-
-	info->is_visible = FALSE;
 }
 
 
@@ -934,8 +885,6 @@ static void cb_exclude(ProcInfo* info, GPtrArray *addition)
 static void
 refresh_list (ProcData *procdata, const unsigned *pid_list, const guint n)
 {
-	GHashTable *pid_hash;
-	GList *list;
 	GPtrArray *addition_list = g_ptr_array_new ();
 	GPtrArray *removal_list = g_ptr_array_new ();
 	GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
@@ -943,49 +892,33 @@ refresh_list (ProcData *procdata, const unsigned *pid_list, const guint n)
 
 	/* Add or update processes */
 	for(i = 0; i < n; ++i) {
-		ProcInfo *info;
+		ProcInfo *info = ProcInfo::find(pid_list[i]);
 
-		info = proctable_find_process (pid_list[i], procdata);
 		if (!info) {
 			info = new ProcInfo(pid_list[i]);
 			g_ptr_array_add(addition_list, info);
-			procdata->info = g_list_prepend (procdata->info, info);
-			g_hash_table_insert(procdata->pids, GINT_TO_POINTER(info->pid), info);
 		}
-		else {
-			update_info (procdata, info);
-		}
+
+		update_info (procdata, info);
 	}
 
 
 	/* Remove processes */
 
-	/* use a hash for fast lookup
-	   !NULL as data for every key */
+	std::set<pid_t> pids(pid_list, pid_list + n);
 
-	pid_hash = g_hash_table_new(NULL, NULL);
-	for(i = 0; i < n; ++i)
-		g_hash_table_insert(pid_hash,
-				    GINT_TO_POINTER(pid_list[i]),
-				    GINT_TO_POINTER(1 /* !NULL */));
+	for(ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it) {
+		ProcInfo * const info = it->second;
 
-
-	for(list = procdata->info; list; list = g_list_next (list)) {
-		ProcInfo * const info = static_cast<ProcInfo*>(list->data);
-
-		if(!g_hash_table_lookup(pid_hash, GINT_TO_POINTER(info->pid)))
+		if (pids.find(info->pid) == pids.end())
 		{
 			g_ptr_array_add (removal_list, info);
 			/* remove all children from tree */
-			if (info->is_visible) {
-				GtkTreeIter child;
-				if (gtk_tree_model_iter_children (model, &child, &info->node))
-					remove_children_from_tree (procdata, model, &child, addition_list);
-			}
+			GtkTreeIter child;
+			if (gtk_tree_model_iter_children (model, &child, &info->node))
+				remove_children_from_tree (procdata, model, &child, addition_list);
 		}
 	}
-
-	g_hash_table_destroy(pid_hash);
 
 	g_ptr_array_foreach(removal_list, (GFunc) cb_exclude, addition_list);
 
@@ -998,6 +931,10 @@ refresh_list (ProcData *procdata, const unsigned *pid_list, const guint n)
 
 	g_ptr_array_free (addition_list, TRUE);
 	g_ptr_array_free (removal_list, TRUE);
+
+
+	for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it)
+		update_info_mutable_cols(it->second);
 }
 
 
@@ -1011,10 +948,15 @@ proctable_update_list (ProcData * const procdata)
 
 	switch (procdata->config.whose_process) {
 	case ALL_PROCESSES:
-	case ACTIVE_PROCESSES:
 		which = GLIBTOP_KERN_PROC_ALL;
 		arg = 0;
 		break;
+
+	case ACTIVE_PROCESSES:
+		which = GLIBTOP_KERN_PROC_ALL | GLIBTOP_EXCLUDE_IDLE;
+		arg = 0;
+		break;
+
 	default:
 		which = GLIBTOP_KERN_PROC_UID;
 		arg = getuid ();
@@ -1068,20 +1010,10 @@ proctable_clear_tree (ProcData * const procdata)
 void
 proctable_free_table (ProcData * const procdata)
 {
-	GList *list = procdata->info;
+  for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it)
+    delete it->second;
 
-	while (list)
-	{
-		ProcInfo *info = static_cast<ProcInfo*>(list->data);
-		delete info;
-		list = g_list_next (list);
-	}
-
-	g_list_free (procdata->info);
-	procdata->info = NULL;
-
-	g_hash_table_destroy(procdata->pids);
-	procdata->pids = g_hash_table_new(NULL, NULL);
+  ProcInfo::all.clear();
 }
 
 
@@ -1112,11 +1044,9 @@ ProcInfo::set_icon(GdkPixbuf* icon)
   this->pixbuf = icon;
   g_object_ref(icon);
 
-  if (this->is_visible) {
-    GtkTreeModel *model;
-    model = gtk_tree_view_get_model(GTK_TREE_VIEW(ProcData::get_instance()->tree));
-    gtk_tree_store_set(GTK_TREE_STORE(model), &this->node,
-		       COL_PIXBUF, this->pixbuf,
-		       -1);
-  }
+  GtkTreeModel *model;
+  model = gtk_tree_view_get_model(GTK_TREE_VIEW(ProcData::get_instance()->tree));
+  gtk_tree_store_set(GTK_TREE_STORE(model), &this->node,
+		     COL_PIXBUF, this->pixbuf,
+		     -1);
 }

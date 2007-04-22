@@ -100,7 +100,7 @@ PrettyTable::register_application(pid_t pid, GdkPixbuf* icon)
 {
   /* If process already exists then set the icon. Otherwise put into hash
   ** table to be added later */
-  if (ProcInfo* info = proctable_find_process(pid, ProcData::get_instance()))
+  if (ProcInfo* info = ProcInfo::find(pid))
     {
       info->set_icon(icon);
       // move the ref to the map

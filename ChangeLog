@@ -1,3 +1,10 @@
+2007-04-21  Benoît Dejean  <benoit@placenet.org>
+
+	* src/util.cpp:
+	* src/util.h:
+	
+	Better debug logging.
+
 2007-04-19  Benoît Dejean  <benoit@placenet.org>
 
 	* src/smooth_refresh.cpp:
@@ -5,6 +12,60 @@
 	Removed duplicate ;;.
 	1-byte patch by Bernard Leak  <bernard@brenda-arkle.demon.co.uk>.
 	Closes #431181.
+
+2007-04-19  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.h:
+	* src/proctable.cpp:
+
+	Splitted code about ProcInfo updates and treestore updates.
+
+	Avoid duplicated work in ProcInfo constructor : update_info
+	already does everything needed.
+
+	Added ProcInfo::ppid which will be soon used instead of
+	ProcInfo::parent.
+
+2007-04-13  Benoît Dejean  <benoit@placenet.org>
+
+	* src/lsof.cpp:
+	* src/prettytable.cpp:
+	* src/procman.cpp:
+	* src/procman.h:
+	* src/proctable.cpp:
+	* src/proctable.h:
+
+	Replaced a ProcData::info and ProcData::pids by ProcInfo::all.
+	This is currently a map. I'll turn it into a set soon.
+	This saves a lot of code and make things simpler.
+	The map has a nice property : it is sorted by pid so this helps a lot
+	when looking for the parent node as ppid is nearly always < pid.
+	May be this is just fortunate but it works.
+	But orphaned processed still may get adpoted by a wrong parent...
+	
+	Also replaced a GHashTable by a set in refresh_list. 
+
+2007-04-13  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.h (ProcInfo):
+	* src/proctable.cpp:
+	
+	Dropped useless ProcInfo::is_visible since the "Hide/Show
+	process" feature has been removed.
+
+2007-04-12  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.h (ProcInfo):
+
+	Removed unused member ProcInfo::path.
+
+2007-04-12  Benoît Dejean  <benoit@placenet.org>
+
+	* src/proctable.cpp (proctable_update_list):
+
+	Simplified ACTIVE_PROCESSES code.
+	No more ProcInfo::is_running. It's best to use libgtop
+	functionnality.
 
 2007-04-12  Benoît Dejean  <benoit@placenet.org>
 

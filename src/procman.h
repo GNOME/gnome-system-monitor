@@ -29,6 +29,8 @@
 
 #include <time.h>
 
+#include <map>
+
 typedef struct _ProcConfig ProcConfig;
 struct ProcInfo;
 struct ProcData;
@@ -85,16 +87,30 @@ struct _ProcConfig
 
 class ProcInfo
 {
-	ProcInfo& operator=(const ProcInfo&);
-	ProcInfo(const ProcInfo&);
+	/* undefined */ ProcInfo& operator=(const ProcInfo&);
+	/* undefined */ ProcInfo(const ProcInfo&);
  public:
+
+	// TODO: use a set instead
+	// sorted by pid. The map has a nice property : it is sorted
+	// by pid so this helps a lot when looking for the parent node
+	// as ppid is nearly always < pid.
+	typedef std::map<pid_t, ProcInfo*> List;
+	typedef List::iterator Iterator;
+
+	static List all;
+
+	static ProcInfo* find(pid_t pid);
+	static Iterator begin() { return ProcInfo::all.begin(); }
+	static Iterator end() { return ProcInfo::all.end(); }
+
+
 	ProcInfo(pid_t pid);
 	~ProcInfo();
 	// adds one more ref to icon
 	void set_icon(GdkPixbuf *icon);
 
 	GtkTreeIter	node;
-	GtkTreePath	*path;
 	ProcInfo	*parent;
 	GSList		*children;
 
@@ -123,14 +139,12 @@ class ProcInfo
 	// wnck gives an unsigned long
 	unsigned long	memxserver;
 
-	guint		pid;
+	const guint	pid;
+	guint		ppid;
 	guint		uid;
 
 	guint8		pcpu; /* 0% - 100% */
 	gint8		nice;
-
-	guint		is_visible	: 1;
-	guint		is_running	: 1;
 };
 
 struct ProcData
@@ -157,32 +171,6 @@ struct ProcData
 	GtkTreeSelection *selection;
 	guint		timeout;
 	guint		disk_timeout;
-
-/*
-   'info' is GList, which has very slow lookup. On each update, glibtop
-   retrieves the full system pid list. To update the table,
-
-   foreach pid in glibtop pid list:
-	- if there's not ProcInfo with pid, add a new ProcInfo to 'info'
-	- else, update the current ProcInfo
-
-   which is very inefficient, because if a process is running at time t,
-   it's very likely to be running at t+1.
-   So if is length('info') = N, N lookups are performed on each update.
-   Average lookup iterates over N / 2 ProcInfo to find that a pid already
-   has a ProcInfo.
-   -> cost = (N x N) / 2
-
-   With 200 processes, an update costs about 20000 g_list_next(), which
-   is huge because we only want to know if we have this pid or not.
-
-   So 'pids' is a hastable to perform fast lookups.
-
-   TODO: 'info' and 'pids' could be merged
-*/
-
-	GList		*info;
-	GHashTable	*pids;
 
 	PrettyTable	pretty_table;
 

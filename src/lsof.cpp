@@ -250,8 +250,8 @@ namespace
       // lsof = new SimpleLsof(this->pattern(), this->case_insensitive);
       unsigned count = 0;
 
-      for (GList *i = this->procdata->info; i; i = i->next) {
-	ProcInfo &info(*static_cast<ProcInfo*>(i->data));
+      for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it) {
+	const ProcInfo &info(*it->second);
 
 	MatchSet matches;
 	lsof.search(info, std::inserter(matches, matches.begin()));

@@ -40,8 +40,10 @@ load_symbols(const char *module, ...) G_GNUC_INTERNAL G_GNUC_NULL_TERMINATED;
 
 
 void
-procman_debug(const char *format, ...) G_GNUC_INTERNAL G_GNUC_PRINTF(1, 2);
+procman_debug_real(const char *file, int line, const char *func,
+		   const char *format, ...) G_GNUC_INTERNAL G_GNUC_PRINTF(4, 5);
 
+#define procman_debug(FMT, ...) procman_debug_real(__FILE__, __LINE__, __func__, FMT, ##__VA_ARGS__)
 
 inline string make_string(char *c_str)
 {
