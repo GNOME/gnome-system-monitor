@@ -4,6 +4,7 @@
 #include <glib.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
 #include <stddef.h>
+#include <cstring>
 #include <string>
 #include <functional>
 #include <algorithm>
@@ -80,6 +81,12 @@ namespace procman
   void size_cell_data_func(GtkTreeViewColumn *col, GtkCellRenderer *renderer,
 			   GtkTreeModel *model, GtkTreeIter *iter,
 			   gpointer user_data);
+
+  template<typename T>
+  void poison(T &t, char c)
+  {
+    memset(&t, c, sizeof t);
+  }
 }
 
 

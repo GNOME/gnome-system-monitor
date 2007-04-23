@@ -111,9 +111,6 @@ class ProcInfo
 	void set_icon(GdkPixbuf *icon);
 
 	GtkTreeIter	node;
-	ProcInfo	*parent;
-	GSList		*children;
-
 	GdkPixbuf	*pixbuf;
 	gchar		*tooltip;
 	gchar		*name;

@@ -40,6 +40,7 @@
 #include <time.h>
 
 #include <set>
+#include <list>
 
 #include <libgnomevfs/gnome-vfs-utils.h>
 
@@ -473,9 +474,7 @@ ProcInfo::~ProcInfo()
   g_free(this->tooltip);
   g_free(this->arguments);
   g_free(this->security_context);
-  g_slist_free(this->children);
-
-  ProcInfo::all.erase(this->pid);
+  procman::poison(*this, 0x42);
 }
 
 
@@ -697,23 +696,26 @@ update_info_mutable_cols(ProcInfo *info)
 
 
 
-void
+static void
 insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 {
 	GtkTreeModel *model;
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 
-	if (info->parent && procdata->config.show_tree) {
-		GtkTreePath *parent_node = gtk_tree_model_get_path (model, &info->parent->node);
+	if (procdata->config.show_tree) {
 
-		gtk_tree_store_insert (GTK_TREE_STORE (model), &info->node, &info->parent->node, 0);
-		if (!gtk_tree_view_row_expanded (GTK_TREE_VIEW (procdata->tree), parent_node))
-			gtk_tree_view_expand_row (GTK_TREE_VIEW (procdata->tree),
-						  parent_node,
-						  FALSE);
+	  ProcInfo *parent = ProcInfo::find(info->ppid);
 
-		gtk_tree_path_free (parent_node);
+	  if (parent) {
+	    GtkTreePath *parent_node = gtk_tree_model_get_path(model, &parent->node);
+	    gtk_tree_store_insert(GTK_TREE_STORE(model), &info->node, &parent->node, 0);
+
+	    if (!gtk_tree_view_row_expanded(GTK_TREE_VIEW(procdata->tree), parent_node))
+	      gtk_tree_view_expand_row(GTK_TREE_VIEW(procdata->tree), parent_node, FALSE);
+	    gtk_tree_path_free(parent_node);
+	  } else
+	    gtk_tree_store_insert(GTK_TREE_STORE(model), &info->node, NULL, 0);
 	}
 	else
 		gtk_tree_store_insert (GTK_TREE_STORE (model), &info->node, NULL, 0);
@@ -738,67 +740,41 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 /* Removing a node with children - make sure the children are queued
 ** to be readded.
 */
+template<typename List>
 static void
-remove_children_from_tree (ProcData *procdata, GtkTreeModel *model,
-			   GtkTreeIter *parent, GPtrArray *addition_list)
+remove_info_from_tree (ProcData *procdata, GtkTreeModel *model,
+		       ProcInfo *current, List &orphans, unsigned lvl = 0)
 {
-	do {
-		ProcInfo *child_info;
-		GtkTreeIter child;
+  GtkTreeIter child_node;
 
-		if (gtk_tree_model_iter_children (model, &child, parent))
-			remove_children_from_tree (procdata, model, &child, addition_list);
+  if (std::find(orphans.begin(), orphans.end(), current) != orphans.end()) {
+    procman_debug("[%u] %d already removed from tree", lvl, int(current->pid));
+    return;
+  }
 
-		gtk_tree_model_get (model, parent, COL_POINTER, &child_info, -1);
-		if (child_info) {
-			if (procdata->selected_process == child_info)
-				procdata->selected_process = NULL;
-			g_ptr_array_add(addition_list, child_info);
-		}
-	} while (gtk_tree_model_iter_next (model, parent));
+  procman_debug("[%u] pid %d, %d children", lvl, int(current->pid),
+		gtk_tree_model_iter_n_children(model, &current->node));
+
+  // it is not possible to iterate&erase over a treeview so instead we
+  // just pop one child after another and recursively remove it and
+  // its children
+
+  while (gtk_tree_model_iter_children(model, &child_node, &current->node)) {
+    ProcInfo *child = 0;
+    gtk_tree_model_get(model, &child_node, COL_POINTER, &child, -1);
+    remove_info_from_tree(procdata, model, child, orphans, lvl + 1);
+  }
+
+  g_assert(not gtk_tree_model_iter_has_child(model, &current->node));
+
+  if (procdata->selected_process == current)
+    procdata->selected_process = NULL;
+
+  orphans.push_back(current);
+  gtk_tree_store_remove(GTK_TREE_STORE(model), &current->node);
+  procman::poison(current->node, 0x69);
 }
 
-
-void
-remove_info_from_tree (ProcInfo *info, ProcData *procdata)
-{
-	GtkTreeModel *model;
-
-	g_assert(info);
-
-	model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
-
-	if (procdata->selected_process == info)
-		procdata->selected_process = NULL;
-
-	gtk_tree_store_remove (GTK_TREE_STORE (model), &info->node);
-}
-
-
-static void
-remove_info_from_list (ProcInfo *info, ProcData *procdata)
-{
-	GSList *child;
-	ProcInfo * const parent = info->parent;
-
-	/* Remove info from parent list */
-	if (parent)
-		parent->children = g_slist_remove (parent->children, info);
-
-	/* Add any children to parent list */
-	for(child = info->children; child; child = g_slist_next (child)) {
-		ProcInfo *child_info = static_cast<ProcInfo*>(child->data);
-		child_info->parent = parent;
-	}
-
-	if(parent) {
-		parent->children = g_slist_concat(parent->children,
-						  info->children);
-		info->children = NULL;
-	}
-
-	delete info;
-}
 
 
 static void
@@ -828,9 +804,7 @@ update_info (ProcData *procdata, ProcInfo *info)
 
 
 ProcInfo::ProcInfo(pid_t pid)
-  : parent(NULL),
-    children(NULL),
-    pixbuf(NULL),
+  : pixbuf(NULL),
     tooltip(NULL),
     name(NULL),
     user(NULL),
@@ -840,8 +814,6 @@ ProcInfo::ProcInfo(pid_t pid)
     pid(pid),
     uid(-1)
 {
-	ProcInfo::all[pid] = this;
-
 	ProcInfo * const info = this;
 	glibtop_proc_state procstate;
 	glibtop_proc_time proctime;
@@ -865,73 +837,90 @@ ProcInfo::ProcInfo(pid_t pid)
 	get_process_selinux_context (info);
 
 	info->pixbuf = ProcData::get_instance()->pretty_table.get_icon(info->name, pid);
-
-	glibtop_proc_uid uid;
-	glibtop_get_proc_uid(&uid, this->pid);
-	info->parent = ProcInfo::find(uid.ppid);
-	if (info->parent) {
-		info->parent->children = g_slist_prepend (info->parent->children, info);
-	}
 }
 
 
-
-static void cb_exclude(ProcInfo* info, GPtrArray *addition)
-{
-	g_ptr_array_remove_fast (addition, info);
-}
 
 
 static void
 refresh_list (ProcData *procdata, const unsigned *pid_list, const guint n)
 {
-	GPtrArray *addition_list = g_ptr_array_new ();
-	GPtrArray *removal_list = g_ptr_array_new ();
+  typedef std::list<ProcInfo*> ProcList;
+  ProcList addition;
+
 	GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 	guint i;
 
-	/* Add or update processes */
+	// Add or update processes in the process list
 	for(i = 0; i < n; ++i) {
 		ProcInfo *info = ProcInfo::find(pid_list[i]);
 
 		if (!info) {
 			info = new ProcInfo(pid_list[i]);
-			g_ptr_array_add(addition_list, info);
+			ProcInfo::all[info->pid] = info;
+			addition.push_back(info);
 		}
 
 		update_info (procdata, info);
 	}
 
 
-	/* Remove processes */
+	// Remove dead processes from the process list and from the
+	// tree. children are queued to be readded at the right place
+	// in the tree.
 
-	std::set<pid_t> pids(pid_list, pid_list + n);
+	const std::set<pid_t> pids(pid_list, pid_list + n);
 
-	for(ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it) {
-		ProcInfo * const info = it->second;
+	ProcInfo::Iterator it(ProcInfo::begin());
 
-		if (pids.find(info->pid) == pids.end())
-		{
-			g_ptr_array_add (removal_list, info);
-			/* remove all children from tree */
-			GtkTreeIter child;
-			if (gtk_tree_model_iter_children (model, &child, &info->node))
-				remove_children_from_tree (procdata, model, &child, addition_list);
-		}
+	while (it != ProcInfo::end()) {
+	  ProcInfo * const info = it->second;
+	  ProcInfo::Iterator next(it);
+	  ++next;
+
+	  if (pids.find(info->pid) == pids.end()) {
+	    procman_debug("ripping %d", info->pid);
+	    remove_info_from_tree(procdata, model, info, addition);
+	    addition.remove(info);
+	    ProcInfo::all.erase(it);
+	    delete info;
+	  }
+
+	  it = next;
 	}
 
-	g_ptr_array_foreach(removal_list, (GFunc) cb_exclude, addition_list);
+	// insert process in the tree. walk through the addition list
+	// (new process + process that have a new parent). This loop
+	// handles the dependencies because we cannot insert a process
+	// until its parent is in the tree.
 
-	/* Add or remove processes from the tree */
-	g_ptr_array_foreach(removal_list,  (GFunc) remove_info_from_tree, procdata);
-	g_ptr_array_foreach(addition_list, (GFunc) insert_info_to_tree  , procdata);
+	std::set<pid_t> in_tree(pids);
 
-	/* Remove processes from the internal GList */
-	g_ptr_array_foreach(removal_list,  (GFunc) remove_info_from_list, procdata);
+	for (ProcList::iterator it(addition.begin()); it != addition.end(); ++it)
+	  in_tree.erase((*it)->pid);
 
-	g_ptr_array_free (addition_list, TRUE);
-	g_ptr_array_free (removal_list, TRUE);
+	unsigned rounds = 0;
 
+	while (not addition.empty()) {
+	  procman_debug("looking for %d parents", int(addition.size()));
+	  ProcList::iterator it(addition.begin());
+
+	  while (it != addition.end()) {
+	    procman_debug("looking for %d's parent", int((*it)->pid));
+	    if ((*it)->ppid == 0 or in_tree.find((*it)->ppid) != in_tree.end()) {
+	      insert_info_to_tree(*it, procdata);
+	      in_tree.insert((*it)->pid);
+	      it = addition.erase(it);
+	      rounds = 0;
+	    } else
+	      ++it;
+	  }
+
+	  rounds++;
+
+	  // dead loop
+	  g_assert(rounds <= 2);
+	}
 
 	for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it)
 		update_info_mutable_cols(it->second);
