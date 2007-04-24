@@ -28,6 +28,7 @@ gnome_system_monitor_SOURCES = \
 	procman_gksu.h procman_gksu.cpp \
 	sysinfo.cpp sysinfo.h \
 	lsof.cpp lsof.h \
+	gconf-keys.cpp gconf-keys.h \
 	e_date.c e_date.h
 
 

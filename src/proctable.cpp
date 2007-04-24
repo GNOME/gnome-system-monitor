@@ -797,6 +797,9 @@ update_info (ProcData *procdata, ProcInfo *info)
 	info->pcpu = (proctime.rtime - info->cpu_time_last) * 100 / total_time;
 	info->pcpu = MIN(info->pcpu, 100);
 
+	if (procdata->config.solaris_mode)
+	  info->pcpu /= procdata->config.num_cpus;
+
 	info->cpu_time_last = proctime.rtime;
 	info->nice = procuid.nice;
 	info->ppid = procuid.ppid;

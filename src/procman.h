@@ -82,6 +82,7 @@ struct _ProcConfig
 	GdkColor	bg_color;
 	GdkColor	frame_color;
 	gint 		num_cpus;
+	bool solaris_mode;
 };
 
 

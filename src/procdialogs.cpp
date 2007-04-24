@@ -31,7 +31,7 @@
 #include "procactions.h"
 #include "util.h"
 #include "load-graph.h"
-
+#include "gconf-keys.h"
 #include "procman_gnomesu.h"
 #include "procman_gksu.h"
 
@@ -269,6 +269,19 @@ show_kill_dialog_toggled (GtkToggleButton *button, gpointer data)
 	gconf_client_set_bool (client, "/apps/procman/kill_dialog", toggled, NULL);
 		
 }
+
+
+
+static void
+solaris_mode_toggled(GtkToggleButton *button, gpointer data)
+{
+	ProcData *procdata = static_cast<ProcData*>(data);
+	GConfClient *client = procdata->client;
+	gboolean toggled;
+	toggled = gtk_toggle_button_get_active(button);
+	gconf_client_set_bool(client, procman::gconf::solaris_mode.c_str(), toggled, NULL);
+}
+
 
 
 static void
@@ -570,6 +583,25 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 			    G_CALLBACK (show_kill_dialog_toggled), procdata);
 	gtk_box_pack_start (GTK_BOX (hbox2), check_button, FALSE, FALSE, 0);
 	
+
+
+
+	hbox2 = gtk_hbox_new(FALSE, 6);
+	gtk_box_pack_start(GTK_BOX(vbox2), hbox2, FALSE, FALSE, 0);
+
+	GtkWidget *solaris_button;
+	solaris_button = gtk_check_button_new_with_mnemonic(_("Solaris Mode"));
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(solaris_button),
+				     gconf_client_get_bool(procdata->client,
+							   procman::gconf::solaris_mode.c_str(),
+							   NULL));
+	g_signal_connect(G_OBJECT(solaris_button), "toggled",
+			 G_CALLBACK(solaris_mode_toggled), procdata);
+	gtk_box_pack_start(GTK_BOX(hbox2), solaris_button, TRUE, TRUE, 0);
+
+
+
+
 	hbox2 = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
 	

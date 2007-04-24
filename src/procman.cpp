@@ -40,7 +40,7 @@
 #include "callbacks.h"
 #include "smooth_refresh.h"
 #include "util.h"
-
+#include "gconf-keys.h"
 
 ProcData* ProcData::get_instance()
 {
@@ -60,6 +60,18 @@ tree_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data
 	proctable_update_all (procdata);
 	
 }
+
+static void
+solaris_mode_changed_cb(GConfClient *client, guint id, GConfEntry *entry, gpointer data)
+{
+	ProcData *procdata = static_cast<ProcData*>(data);
+	GConfValue *value = gconf_entry_get_value (entry);
+
+	procdata->config.solaris_mode = gconf_value_get_bool(value);
+	proctable_update_all (procdata);
+}
+
+
 
 static void
 view_as_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
@@ -241,6 +253,11 @@ procman_data_new (GConfClient *client)
 	pd->config.show_tree = gconf_client_get_bool (client, "/apps/procman/show_tree", NULL);
 	gconf_client_notify_add (client, "/apps/procman/show_tree", tree_changed_cb,
 				 pd, NULL, NULL);
+
+	pd->config.solaris_mode = gconf_client_get_bool(client, procman::gconf::solaris_mode.c_str(), NULL);
+	gconf_client_notify_add(client, procman::gconf::solaris_mode.c_str(), solaris_mode_changed_cb, pd, NULL, NULL);
+
+
 	pd->config.show_kill_warning = gconf_client_get_bool (client, "/apps/procman/kill_dialog", 
 							      NULL);
 	gconf_client_notify_add (client, "/apps/procman/kill_dialog", warning_changed_cb,
