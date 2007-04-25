@@ -8,6 +8,9 @@
 
 #include <string>
 #include <map>
+#include <sstream>
+#include <iomanip>
+#include <stdexcept>
 
 using std::string;
 
@@ -21,22 +24,20 @@ using std::string;
 /* be careful with this enum, you could break the column names */
 enum
 {
-	MMAP_COL_FILENAME = 0,
+	MMAP_COL_FILENAME,
 	MMAP_COL_VMSTART,
 	MMAP_COL_VMEND,
 	MMAP_COL_VMSZ,
 	MMAP_COL_FLAGS,
 	MMAP_COL_VMOFFSET,
+	MMAP_COL_PRIVATE_CLEAN,
+	MMAP_COL_PRIVATE_DIRTY,
+	MMAP_COL_SHARED_CLEAN,
+	MMAP_COL_SHARED_DIRTY,
 	MMAP_COL_DEVICE,
-	MMAP_COL_INODE = 7,
-
-	MMAP_COL_VMSZ_INT,
-	MMAP_COL_INODE_INT,
-	MMAP_COL_VMSTART_INT,
+	MMAP_COL_INODE,
 	MMAP_COL_MAX
 };
-
-#define MMAP_COL_MAX_VISIBLE (MMAP_COL_INODE + 1)
 
 
 namespace
@@ -285,10 +286,7 @@ static void
 update_row(GtkTreeModel *model, GtkTreeIter &row, const MemMapsData &mm, const glibtop_map_entry *memmaps)
 {
 	guint64 size;
-	char *device;
-	char *vmsize;
-	char *inode;
-	string filename;
+	string filename, device;
 	string vmstart, vmend, vmoffset;
 	char flags[5] = "----";
 	unsigned short dev_major, dev_minor;
@@ -308,28 +306,23 @@ update_row(GtkTreeModel *model, GtkTreeIter &row, const MemMapsData &mm, const g
 
 	vmstart  = mm.format(memmaps->start);
 	vmend    = mm.format(memmaps->end);
-	vmsize   = SI_gnome_vfs_format_file_size_for_display (size);
 	vmoffset = mm.format(memmaps->offset);
-	device   = g_strdup_printf ("%02hx:%02hx", dev_major, dev_minor);
-	inode    = g_strdup_printf ("%llu", memmaps->inode);
+	device   = make_string(g_strdup_printf("%02hx:%02hx", dev_major, dev_minor));
 
 	gtk_list_store_set (GTK_LIST_STORE (model), &row,
 			    MMAP_COL_FILENAME, filename.c_str(),
 			    MMAP_COL_VMSTART, vmstart.c_str(),
 			    MMAP_COL_VMEND, vmend.c_str(),
-			    MMAP_COL_VMSZ, vmsize,
+			    MMAP_COL_VMSZ, size,
 			    MMAP_COL_FLAGS, flags,
 			    MMAP_COL_VMOFFSET, vmoffset.c_str(),
-			    MMAP_COL_DEVICE, device,
-			    MMAP_COL_INODE, inode,
-			    MMAP_COL_VMSZ_INT, size,
-			    MMAP_COL_INODE_INT, memmaps->inode,
-			    MMAP_COL_VMSTART_INT, memmaps->start,
+			    MMAP_COL_PRIVATE_CLEAN, memmaps->private_clean,
+			    MMAP_COL_PRIVATE_DIRTY, memmaps->private_dirty,
+			    MMAP_COL_SHARED_CLEAN, memmaps->shared_clean,
+			    MMAP_COL_SHARED_DIRTY, memmaps->shared_dirty,
+			    MMAP_COL_DEVICE, device.c_str(),
+			    MMAP_COL_INODE, memmaps->inode,
 			    -1);
-
-	g_free (vmsize);
-	g_free (device);
-	g_free (inode);
 }
 
 
@@ -363,10 +356,20 @@ update_memmaps_dialog (MemMapsData *mmdata)
 
 	if (gtk_tree_model_get_iter_first(model, &iter)) {
 	  while (true) {
+	    char *vmstart = 0;
 	    guint64 start;
 	    gtk_tree_model_get(model, &iter,
-			       MMAP_COL_VMSTART_INT, &start,
+			       MMAP_COL_VMSTART, &vmstart,
 			       -1);
+
+	    try {
+		    std::istringstream(vmstart) >> std::hex >> start;
+	    } catch (std::logic_error &e) {
+		    g_warning("Could not parse %s", vmstart);
+		    start = 0;
+	    }
+
+	    g_free(vmstart);
 
 	    bool found = std::binary_search(memmaps, memmaps + procmap.number,
 					    start, glibtop_map_entry_cmp());
@@ -402,23 +405,21 @@ update_memmaps_dialog (MemMapsData *mmdata)
 }
 
 
-static void
-close_memmaps_dialog (GtkDialog *dialog, gint id, gpointer data)
+
+static gboolean window_delete_event(GtkWidget *, GdkEvent *, gpointer data)
 {
 	MemMapsData * const mmdata = static_cast<MemMapsData*>(data);
 
 	g_source_remove (mmdata->timer);
 
 	delete mmdata;
-
-	gtk_widget_destroy (GTK_WIDGET (dialog));
+	return FALSE;
 }
 
 
 static MemMapsData*
 create_memmapsdata (ProcData *procdata)
 {
-	MemMapsData *mmdata;
 	GtkWidget *tree;
 	GtkListStore *model;
 	guint i;
@@ -430,6 +431,10 @@ create_memmapsdata (ProcData *procdata)
 		N_("VM Size"),
 		N_("Flags"),
 		N_("VM Offset"),
+		N_("Private clean"),
+		N_("Private dirty"),
+		N_("Shared clean"),
+		N_("Shared dirty"),
 		N_("Device"),
 		N_("Inode")
 	};
@@ -438,26 +443,53 @@ create_memmapsdata (ProcData *procdata)
 				    G_TYPE_STRING, /* MMAP_COL_FILENAME  */
 				    G_TYPE_STRING, /* MMAP_COL_VMSTART	 */
 				    G_TYPE_STRING, /* MMAP_COL_VMEND	 */
-				    G_TYPE_STRING, /* MMAP_COL_VMSZ	 */
+				    G_TYPE_UINT64, /* MMAP_COL_VMSZ	 */
 				    G_TYPE_STRING, /* MMAP_COL_FLAGS	 */
 				    G_TYPE_STRING, /* MMAP_COL_VMOFFSET  */
+				    G_TYPE_UINT64, /* MMAP_COL_PRIVATE_CLEAN */
+				    G_TYPE_UINT64, /* MMAP_COL_PRIVATE_DIRTY */
+				    G_TYPE_UINT64, /* MMAP_COL_SHARED_CLEAN */
+				    G_TYPE_UINT64, /* MMAP_COL_SHARED_DIRTY */
 				    G_TYPE_STRING, /* MMAP_COL_DEVICE	 */
-				    G_TYPE_STRING, /* MMAP_COL_INODE	 */
-				    /* hidden */
-				    G_TYPE_UINT64, /* MMAP_COL_VMSZ_INT  */
-				    G_TYPE_UINT64, /* MMAP_COL_INODE_INT */
-				    G_TYPE_UINT64  /* MMAP_COL_VMSTART_INT */
+				    G_TYPE_UINT64 /* MMAP_COL_INODE	 */
 				    );
 
 	tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree), TRUE);
 	g_object_unref (G_OBJECT (model));
 
-	for (i = 0; i < MMAP_COL_MAX_VISIBLE; i++) {
+	for (i = 0; i < MMAP_COL_MAX; i++) {
 		GtkCellRenderer *cell;
-		GtkTreeViewColumn *column;
+		GtkTreeViewColumn *col;
 
-		cell = gtk_cell_renderer_text_new ();
+		cell = gtk_cell_renderer_text_new();
+		col = gtk_tree_view_column_new();
+		gtk_tree_view_column_pack_start(col, cell, TRUE);
+		gtk_tree_view_column_set_title(col, _(titles[i]));
+		gtk_tree_view_column_set_resizable(col, TRUE);
+		gtk_tree_view_column_set_sort_column_id(col, i);
+		gtk_tree_view_column_set_reorderable(col, TRUE);
+		gtk_tree_view_append_column(GTK_TREE_VIEW(tree), col);
+
+		switch (i) {
+		case MMAP_COL_PRIVATE_CLEAN:
+		case MMAP_COL_PRIVATE_DIRTY:
+		case MMAP_COL_SHARED_CLEAN:
+		case MMAP_COL_SHARED_DIRTY:
+		case MMAP_COL_VMSZ:
+		  gtk_tree_view_column_set_cell_data_func(col, cell,
+							  &procman::size_cell_data_func,
+							  GUINT_TO_POINTER(i),
+							  NULL);
+
+		  g_object_set(cell, "xalign", 1.0f, NULL);
+		  break;
+
+		default:
+		  gtk_tree_view_column_set_attributes(col, cell, "text", i, NULL);
+		  break;
+		}
+
 
 		switch (i) {
 		case MMAP_COL_VMSTART:
@@ -468,34 +500,6 @@ create_memmapsdata (ProcData *procdata)
 			g_object_set(cell, "family", "monospace", NULL);
 			break;
 		}
-
-		switch (i) {
-		case MMAP_COL_INODE:
-		case MMAP_COL_VMSZ:
-			g_object_set(cell, "xalign", 1.0f, NULL);
-			break;
-		}
-
-		column = gtk_tree_view_column_new_with_attributes (_(titles[i]),
-								   cell,
-								   "text", i,
-								   NULL);
-
-		switch (i) {
-		case MMAP_COL_INODE:
-		  gtk_tree_view_column_set_sort_column_id(column, MMAP_COL_INODE_INT);
-		  break;
-		case MMAP_COL_VMSZ:
-		  gtk_tree_view_column_set_sort_column_id(column, MMAP_COL_VMSZ_INT);
-		  break;
-		default:
-		  gtk_tree_view_column_set_sort_column_id(column, i);
-		  break;
-		}
-
-
-		gtk_tree_view_column_set_resizable (column, TRUE);
-		gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
 	}
 
 	return new MemMapsData(tree, procdata->client);
@@ -537,17 +541,20 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 	mmdata = create_memmapsdata (procdata);
 	mmdata->info = info;
 
-	memmapsdialog = gtk_dialog_new_with_buttons (_("Memory Maps"), GTK_WINDOW (procdata->app),
-						     GTK_DIALOG_DESTROY_WITH_PARENT,
-						     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-						     NULL);
-	/*FIXME: maybe the window title could be "Memory Maps - PROCESS_NAME" ?*/
-	gtk_window_set_resizable (GTK_WINDOW (memmapsdialog), TRUE);
-	gtk_window_set_default_size (GTK_WINDOW (memmapsdialog), 575, 400);
-	gtk_dialog_set_has_separator (GTK_DIALOG (memmapsdialog), FALSE);
-	gtk_container_set_border_width (GTK_CONTAINER (memmapsdialog), 6);
+	memmapsdialog = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_window_set_transient_for(GTK_WINDOW(memmapsdialog), GTK_WINDOW(procdata->app));
+	gtk_window_set_destroy_with_parent(GTK_WINDOW(memmapsdialog), TRUE);
+	// gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+	gtk_window_set_title(GTK_WINDOW(memmapsdialog), _("MemoryMaps"));
+	gtk_window_set_resizable(GTK_WINDOW(memmapsdialog), TRUE);
+	gtk_window_set_default_size(GTK_WINDOW(memmapsdialog), 575, 400);
+	// gtk_dialog_set_has_separator(GTK_DIALOG(dialog), FALSE);
+	gtk_container_set_border_width(GTK_CONTAINER(memmapsdialog), 12);
 
-	vbox = GTK_DIALOG (memmapsdialog)->vbox;
+	GtkWidget *mainbox = gtk_vbox_new(FALSE, 12);
+	gtk_container_add(GTK_CONTAINER(memmapsdialog), mainbox);
+
+	vbox = mainbox;
 	gtk_box_set_spacing (GTK_BOX (vbox), 2);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
 
@@ -575,12 +582,11 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), mmdata->tree);
 
 	gtk_box_pack_start (GTK_BOX (dialog_vbox), scrolled, TRUE, TRUE, 0);
-	gtk_widget_show_all (scrolled);
-
-	g_signal_connect (G_OBJECT (memmapsdialog), "response",
-			  G_CALLBACK (close_memmaps_dialog), mmdata);
 
 	gtk_widget_show_all (memmapsdialog);
+
+	g_signal_connect(G_OBJECT(memmapsdialog), "delete-event",
+			 G_CALLBACK(window_delete_event), mmdata);
 
 	mmdata->timer = g_timeout_add (5000, memmaps_timer, mmdata);
 
