@@ -32,8 +32,7 @@ gnome_system_monitor_SOURCES = \
 	e_date.c e_date.h
 
 
-gnome_system_monitor_LDADD = @PROCMAN_LIBS@ libbacon.la
-## gnome_system_monitor_LDADD = @PROCMAN_LIBS@ libbacon.la -lpcrecpp
+gnome_system_monitor_LDADD = @PROCMAN_LIBS@ libbacon.la -lpcrecpp
 
 
 noinst_LTLIBRARIES = libbacon.la

@@ -13,7 +13,7 @@
 #include <sstream>
 #include <iterator>
 
-// #include <pcrecpp.h>
+#include <pcrecpp.h>
 
 #include "procman.h"
 #include "lsof.h"
@@ -57,7 +57,7 @@ namespace
   };
 
 
-#ifdef FOOBAR
+#if 0
 
   class Lsof
     : public LsofBase
@@ -87,7 +87,7 @@ namespace
     { }
   };
 
-#elif 0
+#elif 1
 
   class Lsof
     : public LsofBase
