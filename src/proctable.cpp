@@ -697,7 +697,7 @@ update_info_mutable_cols(ProcInfo *info)
 
 
 static void
-insert_info_to_tree (ProcInfo *info, ProcData *procdata)
+insert_info_to_tree (ProcInfo *info, ProcData *procdata, bool forced = false)
 {
 	GtkTreeModel *model;
 
@@ -705,7 +705,10 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 
 	if (procdata->config.show_tree) {
 
-	  ProcInfo *parent = ProcInfo::find(info->ppid);
+	  ProcInfo *parent = 0;
+
+	  if (not forced)
+	    parent = ProcInfo::find(info->ppid);
 
 	  if (parent) {
 	    GtkTreePath *parent_node = gtk_tree_model_get_path(model, &parent->node);
@@ -734,6 +737,8 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata)
 			    COL_PID, info->pid,
 			    COL_SECURITYCONTEXT, info->security_context,
 			    -1);
+
+	procman_debug("inserted %d%s", info->pid, (forced ? " (forced)" : ""));
 }
 
 
@@ -892,6 +897,12 @@ refresh_list (ProcData *procdata, const unsigned *pid_list, const guint n)
 	  it = next;
 	}
 
+	// INVARIANT
+	// pid_list == ProcInfo::all + addition
+
+
+	if (procdata->config.show_tree) {
+
 	// insert process in the tree. walk through the addition list
 	// (new process + process that have a new parent). This loop
 	// handles the dependencies because we cannot insert a process
@@ -902,28 +913,57 @@ refresh_list (ProcData *procdata, const unsigned *pid_list, const guint n)
 	for (ProcList::iterator it(addition.begin()); it != addition.end(); ++it)
 	  in_tree.erase((*it)->pid);
 
-	unsigned rounds = 0;
 
 	while (not addition.empty()) {
 	  procman_debug("looking for %d parents", int(addition.size()));
 	  ProcList::iterator it(addition.begin());
 
 	  while (it != addition.end()) {
-	    procman_debug("looking for %d's parent", int((*it)->pid));
+	    procman_debug("looking for %d's parent with ppid %d",
+			  int((*it)->pid), int((*it)->ppid));
+
+
+	    // inserts the process in the treeview if :
+	    // - it is init
+	    // - its parent is already in tree
+	    // - its parent is unreachable
+	    //
+	    // rounds == 2 means that addition contains processes with
+	    // unreachable parents
+	    //
+	    // FIXME: this is broken if the unreachable parent becomes active
+	    // i.e. it gets active or changes ower
+	    // so we just clear the tree on __each__ update
+	    // see proctable_update_list (ProcData * const procdata)
+
+
 	    if ((*it)->ppid == 0 or in_tree.find((*it)->ppid) != in_tree.end()) {
 	      insert_info_to_tree(*it, procdata);
 	      in_tree.insert((*it)->pid);
 	      it = addition.erase(it);
-	      rounds = 0;
-	    } else
-	      ++it;
+	      continue;
+	    }
+
+	    ProcInfo *parent = ProcInfo::find((*it)->ppid);
+	    // if the parent is unreachable
+	    if (not parent) {
+		// or std::find(addition.begin(), addition.end(), parent) == addition.end()) {
+		insert_info_to_tree(*it, procdata, true);
+		in_tree.insert((*it)->pid);
+		it = addition.erase(it);
+		continue;
+	    }
+
+	    ++it;
 	  }
-
-	  rounds++;
-
-	  // dead loop
-	  g_assert(rounds <= 2);
 	}
+	}
+	else { 
+	  // don't care of the tree
+	  for (ProcList::iterator it(addition.begin()); it != addition.end(); ++it)
+	    insert_info_to_tree(*it, procdata);
+	}
+
 
 	for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it)
 		update_info_mutable_cols(it->second);
@@ -947,11 +987,13 @@ proctable_update_list (ProcData * const procdata)
 	case ACTIVE_PROCESSES:
 		which = GLIBTOP_KERN_PROC_ALL | GLIBTOP_EXCLUDE_IDLE;
 		arg = 0;
+		proctable_clear_tree(procdata);
 		break;
 
 	default:
 		which = GLIBTOP_KERN_PROC_UID;
 		arg = getuid ();
+		proctable_clear_tree(procdata);
 		break;
 	}
 
