@@ -1,6 +1,7 @@
 #include <config.h>
 
 #include <glibtop/procmap.h>
+#include <glibtop/mountlist.h>
 #include <sys/stat.h>
 #include <glib/gi18n.h>
 
@@ -234,11 +235,60 @@ namespace
 
 
 
+  class InodeDevices
+  {
+    typedef std::map<guint16, string> Map;
+    Map devices;
 
+  public:
 
+    void update()
+    {
+      this->devices.clear();
 
+      glibtop_mountlist list;
+      glibtop_mountentry *entries = glibtop_get_mountlist(&list, 1);
 
+      for (unsigned i = 0; i != list.number; ++i) {
+	struct stat buf;
 
+	if (stat(entries[i].devname, &buf) != -1)
+	  this->devices[buf.st_rdev] = entries[i].devname;
+      }
+
+      g_free(entries);
+    }
+
+    string get(guint64 dev64)
+    {
+      if (dev64 == 0)
+	return "";
+
+      guint16 dev = dev64 & 0xffff;
+
+      if (dev != dev64)
+	g_warning("weird device %llx", dev64);
+
+      Map::iterator it(this->devices.find(dev));
+
+      if (it != this->devices.end())
+	return it->second;
+
+      guint8 major, minor;
+      major = dev >> 8;
+      minor = dev;
+
+      std::ostringstream out;
+      out << std::hex
+	  << std::setfill('0')
+	  << std::setw(2) << unsigned(major)
+	  << ':'
+	  << std::setw(2) << unsigned(minor);
+
+      this->devices[dev] = out.str();
+      return out.str();
+    }
+  };
 
 
   class MemMapsData
@@ -249,6 +299,7 @@ namespace
     GConfClient *client;
     ProcInfo *info;
     OffsetFormater format;
+    mutable InodeDevices devices;
     const char * const key;
 
     MemMapsData(GtkWidget *a_tree, GConfClient *a_client)
@@ -289,11 +340,8 @@ update_row(GtkTreeModel *model, GtkTreeIter &row, const MemMapsData &mm, const g
 	string filename, device;
 	string vmstart, vmend, vmoffset;
 	char flags[5] = "----";
-	unsigned short dev_major, dev_minor;
 
 	size = memmaps->end - memmaps->start;
-	dev_minor = memmaps->device & 255;
-	dev_major = (memmaps->device >> 8) & 255;
 
 	if(memmaps->perm & GLIBTOP_MAP_PERM_READ)    flags [0] = 'r';
 	if(memmaps->perm & GLIBTOP_MAP_PERM_WRITE)   flags [1] = 'w';
@@ -307,7 +355,7 @@ update_row(GtkTreeModel *model, GtkTreeIter &row, const MemMapsData &mm, const g
 	vmstart  = mm.format(memmaps->start);
 	vmend    = mm.format(memmaps->end);
 	vmoffset = mm.format(memmaps->offset);
-	device   = make_string(g_strdup_printf("%02hx:%02hx", dev_major, dev_minor));
+	device   = mm.devices.get(memmaps->device);
 
 	gtk_list_store_set (GTK_LIST_STORE (model), &row,
 			    MMAP_COL_FILENAME, filename.c_str(),
@@ -384,6 +432,8 @@ update_memmaps_dialog (MemMapsData *mmdata)
 	    }
 	  }
 	}
+
+	mmdata->devices.update();
 
 	/*
 	  add the new maps
@@ -545,7 +595,7 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 	gtk_window_set_transient_for(GTK_WINDOW(memmapsdialog), GTK_WINDOW(procdata->app));
 	gtk_window_set_destroy_with_parent(GTK_WINDOW(memmapsdialog), TRUE);
 	// gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-	gtk_window_set_title(GTK_WINDOW(memmapsdialog), _("MemoryMaps"));
+	gtk_window_set_title(GTK_WINDOW(memmapsdialog), _("Memory Maps"));
 	gtk_window_set_resizable(GTK_WINDOW(memmapsdialog), TRUE);
 	gtk_window_set_default_size(GTK_WINDOW(memmapsdialog), 575, 400);
 	// gtk_dialog_set_has_separator(GTK_DIALOG(dialog), FALSE);
