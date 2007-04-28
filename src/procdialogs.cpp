@@ -590,7 +590,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_box_pack_start(GTK_BOX(vbox2), hbox2, FALSE, FALSE, 0);
 
 	GtkWidget *solaris_button;
-	solaris_button = gtk_check_button_new_with_mnemonic(_("Solaris Mode"));
+	solaris_button = gtk_check_button_new_with_mnemonic(_("Solaris mode"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(solaris_button),
 				     gconf_client_get_bool(procdata->client,
 							   procman::gconf::solaris_mode.c_str(),
