@@ -199,12 +199,31 @@ procman_debug_real(const char *file, int line, const char *func,
 
 namespace procman
 {
-  void size_cell_data_func(GtkTreeViewColumn *col, GtkCellRenderer *renderer,
+  void size_cell_data_func(GtkTreeViewColumn *, GtkCellRenderer *renderer,
 			   GtkTreeModel *model, GtkTreeIter *iter,
 			   gpointer user_data)
   {
+    const guint index = GPOINTER_TO_UINT(user_data);
+
     guint64 size;
-    gtk_tree_model_get(model, iter, GPOINTER_TO_UINT(user_data), &size, -1);
+    GValue value = { 0 };
+
+    gtk_tree_model_get_value(model, iter, index, &value);
+
+    switch (G_VALUE_TYPE(&value)) {
+    case G_TYPE_ULONG:
+      size = g_value_get_ulong(&value);
+      break;
+
+    case G_TYPE_UINT64:
+      size = g_value_get_uint64(&value);
+      break;
+
+    default:
+      g_assert_not_reached();
+    }
+
+    g_value_unset(&value);
 
     char *str = SI_gnome_vfs_format_file_size_for_display(size);
     g_object_set(renderer, "text", str, NULL);
