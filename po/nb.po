@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor 2.15.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-19 16:26+0100\n"
-"PO-Revision-Date: 2007-03-18 17:22+0100\n"
+"POT-Creation-Date: 2007-05-08 21:46+0200\n"
+"PO-Revision-Date: 2007-05-08 21:47+0200\n"
 "Last-Translator: Espen Stefansen <espenas@gmail.com>\n"
 "Language-Team: Norwegian/Bokmaal <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:155
-#: ../src/interface.cpp:667 ../src/procman.cpp:688
+#: ../src/interface.cpp:658 ../src/procman.cpp:704
 msgid "System Monitor"
 msgstr "Systemmonitor"
 
@@ -31,36 +31,36 @@ msgstr "Vis aktive prosesser og overvåk systemets tilstand"
 msgid "translator-credits"
 msgstr "Kjartan Maraas <kmaraas@gnome.org>"
 
-#: ../src/disks.cpp:307 ../src/memmaps.cpp:432
+#: ../src/disks.cpp:275 ../src/memmaps.cpp:488
 msgid "Device"
 msgstr "Enhet"
 
-#: ../src/disks.cpp:308
+#: ../src/disks.cpp:276
 msgid "Directory"
 msgstr "Katalog"
 
-#: ../src/disks.cpp:309 ../src/openfiles.cpp:235
+#: ../src/disks.cpp:277 ../src/openfiles.cpp:235
 msgid "Type"
 msgstr "Type"
 
-#: ../src/disks.cpp:310
+#: ../src/disks.cpp:278
 msgid "Total"
 msgstr "Totalt"
 
-#: ../src/disks.cpp:311
+#: ../src/disks.cpp:279
 msgid "Free"
 msgstr "Ledig"
 
-#: ../src/disks.cpp:312
+#: ../src/disks.cpp:280
 msgid "Available"
 msgstr "Tilgjengelig"
 
-#: ../src/disks.cpp:313
+#: ../src/disks.cpp:281
 msgid "Used"
 msgstr "Brukt"
 
-#: ../src/disks.cpp:320 ../src/interface.cpp:751 ../src/procdialogs.cpp:686
-#: ../src/procdialogs.cpp:690
+#: ../src/disks.cpp:288 ../src/interface.cpp:734 ../src/procdialogs.cpp:718
+#: ../src/procdialogs.cpp:722
 msgid "File Systems"
 msgstr "Filsystemer"
 
@@ -145,134 +145,144 @@ msgid "Enable/Disable smooth refresh"
 msgstr "Aktiver/deaktiver myk oppfrisking"
 
 #: ../src/gnome-system-monitor.schemas.in.h:13
+msgid ""
+"If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu usage "
+"is divided by the total number of CPUs. Else it operates in 'Irix mode'."
+msgstr ""
+
+#: ../src/gnome-system-monitor.schemas.in.h:14
 msgid "Main Window height"
 msgstr "Høyde på hovedvinduet"
 
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:15
 msgid "Main Window width"
 msgstr "Bredde på hovedvinduet"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:16
 msgid "Process view columns order"
 msgstr "Rekkefølge på kolonnene for prosessvisning"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
+#: ../src/gnome-system-monitor.schemas.in.h:17
 msgid "Process view sort column"
 msgstr "Sorteringskolonne for prosessvisning"
 
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:18
 msgid "Process view sort order"
 msgstr "Sorteringsrekkefølge for prosessvisning"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:19
 msgid "Saves the currently viewed tab"
 msgstr "Lagrer fane som vises nå"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:20
 msgid "Show column zero on startup"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:21
 msgid "Show estimated memory usage column on startup"
 msgstr "Vis kolonne for estimert minnebruk ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:23
 #, no-c-format
 msgid "Show process CPU % column on startup"
 msgstr "Vis kolonne for CPU-bruk for prosess ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:24
 msgid "Show process CPU time column on startup"
 msgstr "Vis kolonne for CPU-tid per prosess ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:24
+#: ../src/gnome-system-monitor.schemas.in.h:25
 msgid "Show process PID column on startup"
 msgstr "Vis kolonne med PID for prosess ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:25
+#: ../src/gnome-system-monitor.schemas.in.h:26
 msgid "Show process SELinux security context column on startup"
 msgstr "Vis kolonnen SELinux sikkerhetssammenheng ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:26
+#: ../src/gnome-system-monitor.schemas.in.h:27
 #, fuzzy
 msgid "Show process X server memory column zero startup"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:27
+#: ../src/gnome-system-monitor.schemas.in.h:28
 #, fuzzy
 msgid "Show process arguments column on startup"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:28
+#: ../src/gnome-system-monitor.schemas.in.h:29
 msgid "Show process dependencies in tree form"
 msgstr "Vis prosessavhengigheter som et tre"
 
-#: ../src/gnome-system-monitor.schemas.in.h:29
+#: ../src/gnome-system-monitor.schemas.in.h:30
 #, fuzzy
 msgid "Show process name column on startup"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:30
+#: ../src/gnome-system-monitor.schemas.in.h:31
 #, fuzzy
 msgid "Show process nice column on startup"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:31
+#: ../src/gnome-system-monitor.schemas.in.h:32
 #, fuzzy
 msgid "Show process owner column on startup"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:32
+#: ../src/gnome-system-monitor.schemas.in.h:33
 #, fuzzy
 msgid "Show process resident memory column on startup"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:33
+#: ../src/gnome-system-monitor.schemas.in.h:34
 #, fuzzy
 msgid "Show process shared memory column on startup"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:34
+#: ../src/gnome-system-monitor.schemas.in.h:35
 #, fuzzy
 msgid "Show process start time column on startup"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:35
+#: ../src/gnome-system-monitor.schemas.in.h:36
 #, fuzzy
 msgid "Show process status column on startup"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:36
+#: ../src/gnome-system-monitor.schemas.in.h:37
 #, fuzzy
 msgid "Show process virtual memory column on startup"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:37
+#: ../src/gnome-system-monitor.schemas.in.h:38
 #, fuzzy
 msgid "Show process writable memory column on startup"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:38
+#: ../src/gnome-system-monitor.schemas.in.h:39
 msgid "Show warning dialog when killing processes"
 msgstr "Vis advarsel når prosesser termineres"
 
-#: ../src/gnome-system-monitor.schemas.in.h:39
+#: ../src/gnome-system-monitor.schemas.in.h:40
+msgid "Solaris mode for CPU percentage"
+msgstr ""
+
+#: ../src/gnome-system-monitor.schemas.in.h:41
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Tid mellom oppdatering av enhetslisten i millisekunder"
 
-#: ../src/gnome-system-monitor.schemas.in.h:40
+#: ../src/gnome-system-monitor.schemas.in.h:42
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Tid mellom oppdatering av grafene i millisekunder"
 
-#: ../src/gnome-system-monitor.schemas.in.h:41
+#: ../src/gnome-system-monitor.schemas.in.h:43
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Tid mellom oppdatering av prosessvisning i millisekunder"
 
-#: ../src/gnome-system-monitor.schemas.in.h:42
+#: ../src/gnome-system-monitor.schemas.in.h:44
 msgid "Whether information about all filesystems should be displayed"
 msgstr "Vise informasjon om alle filsystemene"
 
-#: ../src/gnome-system-monitor.schemas.in.h:43
+#: ../src/gnome-system-monitor.schemas.in.h:45
 msgid ""
 "Whether to display information about all filesystems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -282,81 +292,81 @@ msgstr ""
 "filsystemer som «autofs» og «procfs». Det kan være hendig å få en liste over "
 "alle monterte filsystemer."
 
-#: ../src/gnome-system-monitor.schemas.in.h:45
+#: ../src/gnome-system-monitor.schemas.in.h:47
 #, fuzzy, no-c-format
 msgid "Width of Process CPU % column"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:46
+#: ../src/gnome-system-monitor.schemas.in.h:48
 #, fuzzy
 msgid "Width of Process CPU time column"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:47
+#: ../src/gnome-system-monitor.schemas.in.h:49
 #, fuzzy
 msgid "Width of Process PID column"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:48
+#: ../src/gnome-system-monitor.schemas.in.h:50
 msgid "Width of Process SELinux security context column"
 msgstr "Bredde for kolonne med SELinux sikkerhetssammenheng"
 
-#: ../src/gnome-system-monitor.schemas.in.h:49
+#: ../src/gnome-system-monitor.schemas.in.h:51
 #, fuzzy
 msgid "Width of Process X server memory column"
 msgstr "Sorteringskolonne for prosessvisning"
 
-#: ../src/gnome-system-monitor.schemas.in.h:50
+#: ../src/gnome-system-monitor.schemas.in.h:52
 #, fuzzy
 msgid "Width of Process arguments column"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:51
+#: ../src/gnome-system-monitor.schemas.in.h:53
 #, fuzzy
 msgid "Width of Process estimated memory usage column"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:52
+#: ../src/gnome-system-monitor.schemas.in.h:54
 #, fuzzy
 msgid "Width of Process name column"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:53
+#: ../src/gnome-system-monitor.schemas.in.h:55
 #, fuzzy
 msgid "Width of Process nice column"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:54
+#: ../src/gnome-system-monitor.schemas.in.h:56
 #, fuzzy
 msgid "Width of Process owner column"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:55
+#: ../src/gnome-system-monitor.schemas.in.h:57
 #, fuzzy
 msgid "Width of Process resident memory column"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:56
+#: ../src/gnome-system-monitor.schemas.in.h:58
 #, fuzzy
 msgid "Width of Process shared memory column"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:57
+#: ../src/gnome-system-monitor.schemas.in.h:59
 #, fuzzy
 msgid "Width of Process start time column"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:58
+#: ../src/gnome-system-monitor.schemas.in.h:60
 #, fuzzy
 msgid "Width of Process status column"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:59
+#: ../src/gnome-system-monitor.schemas.in.h:61
 #, fuzzy
 msgid "Width of Process virtual memory column"
 msgstr "Vis kolonne null ved oppstart"
 
-#: ../src/gnome-system-monitor.schemas.in.h:60
+#: ../src/gnome-system-monitor.schemas.in.h:62
 #, fuzzy
 msgid "Width of Process writable memory column"
 msgstr "Vis kolonne null ved oppstart"
@@ -409,7 +419,7 @@ msgstr "_Sett i gang prosess"
 msgid "Continue process if stopped"
 msgstr "Sett i gang prosess hvis stoppet"
 
-#: ../src/interface.cpp:63 ../src/interface.cpp:183
+#: ../src/interface.cpp:63 ../src/interface.cpp:181
 msgid "End _Process"
 msgstr "Avslutt _prosess"
 
@@ -505,60 +515,60 @@ msgstr "M_ine prosesser"
 msgid "Show user own process"
 msgstr "Vis prosesser som tilhører brukere"
 
-#: ../src/interface.cpp:251
+#: ../src/interface.cpp:248
 msgid "CPU History"
 msgstr "Historikk for CPU-bruk"
 
-#: ../src/interface.cpp:302
+#: ../src/interface.cpp:298
 msgid "CPU:"
 msgstr "CPU:"
 
-#: ../src/interface.cpp:305
+#: ../src/interface.cpp:301
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: ../src/interface.cpp:325
+#: ../src/interface.cpp:321
 msgid "Memory and Swap History"
 msgstr "Historikk for minne- og swap-bruk"
 
-#: ../src/interface.cpp:358
+#: ../src/interface.cpp:353
 msgid "User memory:"
 msgstr "Brukerminne:"
 
-#: ../src/interface.cpp:376 ../src/interface.cpp:436
+#: ../src/interface.cpp:371 ../src/interface.cpp:431
 msgid "of"
 msgstr "av"
 
-#: ../src/interface.cpp:417
+#: ../src/interface.cpp:412
 msgid "Used swap:"
 msgstr "Swap brukt:"
 
-#: ../src/interface.cpp:476
+#: ../src/interface.cpp:471
 msgid "Network History"
 msgstr "Nettverkshistorikk"
 
-#: ../src/interface.cpp:508
+#: ../src/interface.cpp:502
 msgid "Received:"
 msgstr "Mottat:"
 
-#: ../src/interface.cpp:528 ../src/interface.cpp:571
+#: ../src/interface.cpp:522 ../src/interface.cpp:565
 msgid "Total:"
 msgstr "Totalt:"
 
-#: ../src/interface.cpp:552
+#: ../src/interface.cpp:546
 msgid "Sent:"
 msgstr "Sendt:"
 
-#: ../src/interface.cpp:733
+#: ../src/interface.cpp:722
 msgid "System"
 msgstr "System"
 
-#: ../src/interface.cpp:739 ../src/procdialogs.cpp:501
+#: ../src/interface.cpp:726 ../src/procdialogs.cpp:514
 msgid "Processes"
 msgstr "Prosesser"
 
-#: ../src/interface.cpp:745 ../src/procdialogs.cpp:597
+#: ../src/interface.cpp:730 ../src/procdialogs.cpp:629
 msgid "Resources"
 msgstr "Ressurser"
 
@@ -575,7 +585,7 @@ msgstr "Prosess"
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:377 ../src/memmaps.cpp:426
+#: ../src/lsof.cpp:377 ../src/memmaps.cpp:478
 msgid "Filename"
 msgstr "Filnavn"
 
@@ -596,35 +606,52 @@ msgstr "Treff på små/store bokstaver"
 msgid "S_earch results:"
 msgstr "S_økeresultater:"
 
-#: ../src/memmaps.cpp:427
+#: ../src/memmaps.cpp:479
 msgid "VM Start"
 msgstr "VM start"
 
-#: ../src/memmaps.cpp:428
+#: ../src/memmaps.cpp:480
 msgid "VM End"
 msgstr "VM slutt"
 
-#: ../src/memmaps.cpp:429
+#: ../src/memmaps.cpp:481
 msgid "VM Size"
 msgstr "VM-størrelse"
 
-#: ../src/memmaps.cpp:430
+#: ../src/memmaps.cpp:482
 msgid "Flags"
 msgstr "Flagg"
 
-#: ../src/memmaps.cpp:431
+#: ../src/memmaps.cpp:483
 msgid "VM Offset"
 msgstr "VM avstand"
 
-#: ../src/memmaps.cpp:433
+#: ../src/memmaps.cpp:484
+msgid "Private clean"
+msgstr "Privat rent"
+
+#: ../src/memmaps.cpp:485
+msgid "Private dirty"
+msgstr "Privat skittent"
+
+#: ../src/memmaps.cpp:486
+msgid "Shared clean"
+msgstr "Delt rent"
+
+#: ../src/memmaps.cpp:487
+msgid "Shared dirty"
+msgstr "Delt skittent"
+
+#: ../src/memmaps.cpp:489
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.cpp:539
+#. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+#: ../src/memmaps.cpp:598
 msgid "Memory Maps"
 msgstr "Minnekart"
 
-#: ../src/memmaps.cpp:559
+#: ../src/memmaps.cpp:617
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "_Minnekart for prosess «%s» (PID %u):"
@@ -765,207 +792,211 @@ msgstr ""
 "Prioriteten for en prosess gis av dens «nice»-verdi. En lavere verdi betyr "
 "høyere prioritet."
 
-#: ../src/procdialogs.cpp:379
+#: ../src/procdialogs.cpp:392
 msgid "Process i_nformation shown in list:"
 msgstr "I_nformasjon for prosesser som vises i listen:"
 
-#: ../src/procdialogs.cpp:431
+#: ../src/procdialogs.cpp:444
 msgid "Icon"
 msgstr "Ikon"
 
-#: ../src/procdialogs.cpp:478
+#: ../src/procdialogs.cpp:491
 msgid "System Monitor Preferences"
 msgstr "Brukervalg for systemmonitor"
 
-#: ../src/procdialogs.cpp:508
+#: ../src/procdialogs.cpp:521
 msgid "Behavior"
 msgstr "Oppførsel"
 
-#: ../src/procdialogs.cpp:527 ../src/procdialogs.cpp:623
-#: ../src/procdialogs.cpp:709
+#: ../src/procdialogs.cpp:540 ../src/procdialogs.cpp:655
+#: ../src/procdialogs.cpp:741
 msgid "_Update interval in seconds:"
 msgstr "_Oppdateringsintervall i sekunder:"
 
-#: ../src/procdialogs.cpp:552
+#: ../src/procdialogs.cpp:565
 msgid "Enable _smooth refresh"
 msgstr "Aktiver _myk oppfrisking"
 
-#: ../src/procdialogs.cpp:566
+#: ../src/procdialogs.cpp:579
 msgid "Alert before ending or _killing processes"
 msgstr "Vis advarsel ved avslutting eller _terminering av prosesser"
 
-#: ../src/procdialogs.cpp:579
+#: ../src/procdialogs.cpp:593
+msgid "Solaris mode"
+msgstr "Solaris-modus"
+
+#: ../src/procdialogs.cpp:611
 msgid "Information Fields"
 msgstr "Informasjonsfelt"
 
-#: ../src/procdialogs.cpp:604
+#: ../src/procdialogs.cpp:636
 msgid "Graphs"
 msgstr "Grafer"
 
-#: ../src/procdialogs.cpp:645
+#: ../src/procdialogs.cpp:677
 msgid "_Background color:"
 msgstr "_Bakgrunnsfarge:"
 
-#: ../src/procdialogs.cpp:664
+#: ../src/procdialogs.cpp:696
 msgid "_Grid color:"
 msgstr "_Farge på rutenett:"
 
-#: ../src/procdialogs.cpp:729
+#: ../src/procdialogs.cpp:761
 msgid "Show _all filesystems"
 msgstr "Vis _alle filsystemer"
 
-#: ../src/proctable.cpp:273
+#: ../src/proctable.cpp:270
 msgid "Process Name"
 msgstr "Prosessnavn"
 
-#: ../src/proctable.cpp:274
+#: ../src/proctable.cpp:271
 msgid "User"
 msgstr "Bruker"
 
-#: ../src/proctable.cpp:275
+#: ../src/proctable.cpp:272
 msgid "Status"
 msgstr "Status"
 
-#: ../src/proctable.cpp:276
+#: ../src/proctable.cpp:273
 msgid "Virtual Memory"
 msgstr "Virtuelt minne"
 
-#: ../src/proctable.cpp:277
+#: ../src/proctable.cpp:274
 msgid "Resident Memory"
 msgstr "Resident minne"
 
-#: ../src/proctable.cpp:278
+#: ../src/proctable.cpp:275
 msgid "Writable Memory"
 msgstr "Skrivbart minne"
 
-#: ../src/proctable.cpp:279
+#: ../src/proctable.cpp:276
 msgid "Shared Memory"
 msgstr "Delt minne"
 
-#: ../src/proctable.cpp:280
+#: ../src/proctable.cpp:277
 msgid "X Server Memory"
 msgstr "Minne for X-tjener"
 
-#: ../src/proctable.cpp:281
+#: ../src/proctable.cpp:278
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:282
+#: ../src/proctable.cpp:279
 msgid "CPU Time"
 msgstr "CPU-tid"
 
-#: ../src/proctable.cpp:283
+#: ../src/proctable.cpp:280
 msgid "Started"
 msgstr "Startet"
 
-#: ../src/proctable.cpp:284
+#: ../src/proctable.cpp:281
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.cpp:285
+#: ../src/proctable.cpp:282
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:286
+#: ../src/proctable.cpp:283
 msgid "Security Context"
 msgstr "Sikkerhetskontekst"
 
-#: ../src/proctable.cpp:287
+#: ../src/proctable.cpp:284
 msgid "Command Line"
 msgstr "Kommandolinje"
 
-#: ../src/proctable.cpp:288
+#: ../src/proctable.cpp:285
 msgid "Memory"
 msgstr "Minne"
 
-#: ../src/proctable.cpp:472
+#: ../src/proctable.cpp:483
 msgid "Running"
 msgstr "Kjører"
 
-#: ../src/proctable.cpp:477
+#: ../src/proctable.cpp:487
 msgid "Stopped"
 msgstr "Stoppet"
 
-#: ../src/proctable.cpp:482
+#: ../src/proctable.cpp:491
 msgid "Zombie"
 msgstr "Levende død"
 
-#: ../src/proctable.cpp:487
+#: ../src/proctable.cpp:495
 msgid "Uninterruptible"
 msgstr "Kan ikke avbrytes"
 
-#: ../src/proctable.cpp:492
+#: ../src/proctable.cpp:499
 msgid "Sleeping"
 msgstr "Sover"
 
 #. xgettext: weeks, days
-#: ../src/proctable.cpp:638
+#: ../src/proctable.cpp:626
 #, c-format
 msgid "%uw%ud"
 msgstr "%uw%ud"
 
 #. xgettext: days, hours (0 -> 23)
-#: ../src/proctable.cpp:642
+#: ../src/proctable.cpp:630
 #, c-format
 msgid "%ud%02uh"
 msgstr "%ud%02uh"
 
 #. xgettext: hours (0 -> 23), minutes, seconds
-#: ../src/proctable.cpp:646
+#: ../src/proctable.cpp:634
 #, c-format
 msgid "%u:%02u:%02u"
 msgstr "%u:%02u:%02u"
 
 #. xgettext: minutes, seconds, centiseconds
-#: ../src/proctable.cpp:649
+#: ../src/proctable.cpp:637
 #, c-format
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: ../src/proctable.cpp:1097
+#: ../src/proctable.cpp:1044
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Snittbelastning for de siste 1, 5, 15 minutter: %0.2f, %0.2f, %0.2f"
 
-#: ../src/sysinfo.cpp:117
+#: ../src/sysinfo.cpp:85
 msgid "Unknown CPU model"
 msgstr "Ukjent CPU-modell"
 
-#: ../src/sysinfo.cpp:401
+#: ../src/sysinfo.cpp:370
 #, c-format
 msgid "Release %s (%s)"
 msgstr "Versjon %s (%s)"
 
-#: ../src/sysinfo.cpp:406
+#: ../src/sysinfo.cpp:375
 #, c-format
 msgid "Release %s"
 msgstr "Versjon %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:416
+#: ../src/sysinfo.cpp:385
 msgid "<b>Hardware</b>"
 msgstr "<b>Maskinvare</b>"
 
-#: ../src/sysinfo.cpp:437
+#: ../src/sysinfo.cpp:406
 msgid "Memory:"
 msgstr "Minne:"
 
-#: ../src/sysinfo.cpp:457
+#: ../src/sysinfo.cpp:426
 #, c-format
 msgid "Processor %d:"
 msgstr "Prosessor %d:"
 
-#: ../src/sysinfo.cpp:462
+#: ../src/sysinfo.cpp:431
 msgid "Processor:"
 msgstr "Prosessor:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:482
+#: ../src/sysinfo.cpp:451
 msgid "<b>System Status</b>"
 msgstr "<b>Systemstatus</b>"
 
-#: ../src/sysinfo.cpp:503
+#: ../src/sysinfo.cpp:472
 msgid "Available disk space:"
 msgstr "Tilgjengelig diskplass:"
 
@@ -990,13 +1021,3 @@ msgstr "%.1f MiB"
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
-
-#~ msgid "Unknown distribution"
-#~ msgstr "Ukjent distribusjon"
-
-#~ msgid "Unknown release"
-#~ msgstr "Ukjent versjon"
-
-#, fuzzy
-#~ msgid "Unknown version"
-#~ msgstr "Ukjent distribusjon"
