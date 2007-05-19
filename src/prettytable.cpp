@@ -17,29 +17,6 @@
 namespace
 {
   const unsigned APP_ICON_SIZE = 16;
-
-  GdkPixbuf*
-  create_scaled_icon(const char *iconpath)
-  {
-    GError* error = NULL;
-    GdkPixbuf* scaled;
-
-    scaled = gdk_pixbuf_new_from_file_at_scale(iconpath,
-					       APP_ICON_SIZE, APP_ICON_SIZE,
-					       TRUE,
-					       &error);
-
-    if (error) {
-      if(!(error->domain == G_FILE_ERROR
-	   && error->code == G_FILE_ERROR_NOENT))
-	g_warning(error->message);
-
-      g_error_free(error);
-      return NULL;
-    }
-
-    return scaled;
-  }
 }
 
 
@@ -150,7 +127,7 @@ PrettyTable::get_icon_from_theme(pid_t, const gchar* command)
 bool PrettyTable::get_default_icon_name(const string &cmd, string &name)
 {
   for (size_t i = 0; i != G_N_ELEMENTS(default_table); ++i) {
-    if (cmd == default_table[i].command) {
+    if (default_table[i].command->PartialMatch(cmd)) {
       name = default_table[i].icon;
       return true;
     }
@@ -213,6 +190,28 @@ PrettyTable::get_icon_from_wnck(pid_t pid, const gchar*)
 
 
 GdkPixbuf*
+PrettyTable::get_icon_from_name(pid_t, const gchar* command)
+{
+  return gtk_icon_theme_load_icon(this->theme,
+				  command,
+				  APP_ICON_SIZE,
+				  GTK_ICON_LOOKUP_USE_BUILTIN,
+				  NULL);
+}
+
+
+GdkPixbuf*
+PrettyTable::get_icon_dummy(pid_t, const gchar*)
+{
+  return gtk_icon_theme_load_icon(this->theme,
+				  "applications-other",
+				  APP_ICON_SIZE,
+				  GTK_ICON_LOOKUP_USE_BUILTIN,
+				  NULL);
+}
+
+
+GdkPixbuf*
 PrettyTable::get_icon(const gchar* command, pid_t pid)
 {
   typedef GdkPixbuf* (PrettyTable::*Getter)(pid_t pid,
@@ -221,7 +220,9 @@ PrettyTable::get_icon(const gchar* command, pid_t pid)
   const Getter getters[] = {
     &PrettyTable::get_icon_from_wnck,
     &PrettyTable::get_icon_from_theme,
-    &PrettyTable::get_icon_from_default
+    &PrettyTable::get_icon_from_default,
+    &PrettyTable::get_icon_from_name,
+    &PrettyTable::get_icon_dummy,
   };
 
   for (size_t i = 0; i < G_N_ELEMENTS(getters); ++i) {

@@ -37,6 +37,8 @@ private:
   GdkPixbuf* get_icon_from_theme(pid_t pid, const gchar* command);
   GdkPixbuf* get_icon_from_default(pid_t pid, const gchar* command);
   GdkPixbuf* get_icon_from_wnck(pid_t pid, const gchar* command);
+  GdkPixbuf* get_icon_from_name(pid_t pid, const gchar* command);
+  GdkPixbuf* get_icon_dummy(pid_t pid, const gchar* command);
 
   bool get_default_icon_name(const string &cmd, string &name);
 
