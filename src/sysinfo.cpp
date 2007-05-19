@@ -15,6 +15,8 @@
 #include <math.h>
 #include <errno.h>
 
+#include <pcrecpp.h>
+
 #include <string>
 #include <vector>
 #include <fstream>
@@ -157,43 +159,23 @@ namespace {
   {
   public:
     LSBSysInfo()
+      : re("^.+?:\\s*(.+)\\s*$")
     {
       this->lsb_release();
     }
 
   private:
 
-    static void strip_description(string &s)
+    void strip_description(string &s) const
     {
-      const string whitespace("\t\n\x0b\x0c\r ");
-
-      string::size_type colon = s.find(':');
-
-      if (colon == string::npos)
-	return;
-
-      string::size_type first = s.find_first_not_of(whitespace, colon + 1);
-
-      if (first == string::npos)
-	return;
-
-      s.erase(0, first);
-
-      if (first == string::npos)
-	return;
-
-      string::size_type last = s.find_last_not_of(whitespace);
-
-      if (last != string::npos)
-	s.erase(last + 1, s.size());
-
-      // 13 lines for $1 /^.*:\s*(.+?)\s*$/
+      // make a copy to avoid aliasing
+      this->re.PartialMatch(string(s), &s);
     }
 
-    static std::istream& get_value(std::istream &is, string &s)
+    std::istream& get_value(std::istream &is, string &s) const
     {
       if (std::getline(is, s))
-	strip_description(s);
+	this->strip_description(s);
       return is;
     }
 
@@ -211,9 +193,9 @@ namespace {
 
 	if (!error and WIFEXITED(status) and WEXITSTATUS(status) == 0) {
 	  std::istringstream input(out);
-	  get_value(input, this->distro_name)
-	    and get_value(input, this->distro_release)
-	    and get_value(input, this->distro_codename);
+	  this->get_value(input, this->distro_name)
+	    and this->get_value(input, this->distro_release)
+	    and this->get_value(input, this->distro_codename);
 	}
       }
 
@@ -222,6 +204,9 @@ namespace {
 
       g_free(out);
     }
+
+  private:
+    const pcrecpp::RE re;
   };
 
 
