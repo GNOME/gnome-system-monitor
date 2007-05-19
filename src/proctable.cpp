@@ -832,7 +832,7 @@ ProcInfo::ProcInfo(pid_t pid)
 
 
 static void
-refresh_list (ProcData *procdata, const unsigned *pid_list, const guint n)
+refresh_list (ProcData *procdata, const pid_t* pid_list, const guint n)
 {
   typedef std::list<ProcInfo*> ProcList;
   ProcList addition;
@@ -954,7 +954,7 @@ refresh_list (ProcData *procdata, const unsigned *pid_list, const guint n)
 void
 proctable_update_list (ProcData * const procdata)
 {
-	unsigned *pid_list;
+	pid_t* pid_list;
 	glibtop_proclist proclist;
 	glibtop_cpu cpu;
 	gint which, arg;
