@@ -13,7 +13,7 @@ struct PrettyTableItem
   std::string icon;
 };
 
-#define ITEM(CMD, ICON) { std::tr1::shared_ptr<pcrecpp::RE>(new pcrecpp::RE((CMD "$"))), (ICON) }
+#define ITEM(CMD, ICON) { std::tr1::shared_ptr<pcrecpp::RE>(new pcrecpp::RE((CMD))), (ICON) }
 
 /* The current table is only a test */
 static const PrettyTableItem default_table[] = {
@@ -32,6 +32,7 @@ static const PrettyTableItem default_table[] = {
 	ITEM("famd|gam_server", "file-manager"),
 	ITEM("gconfd-2", "preferences-desktop"),
 	ITEM("getty", "input-keyboard"),
+	ITEM("gdb|((gcc|g\\+\\+)(-.*)?)|ar|ld|make", "applications-development"),
 	ITEM("metacity", "gnome-window-manager"),
 	ITEM("sendmail|exim\\d?", "internet-mail"),
 	ITEM("squid", "proxy"),
