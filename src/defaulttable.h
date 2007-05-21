@@ -26,7 +26,7 @@ static const PrettyTableItem default_table[] = {
 	ITEM("applet(-?2)?", "gnome-applets"),
 	ITEM("atd|cron|CRON|ntpd", "date"),
 	ITEM("cupsd|lpd?", "printer"),
-	ITEM("cvsd|mtn", "file-manager"),
+	ITEM("cvsd|mtn|git|svn", "file-manager"),
 	ITEM("emacs(server|\\d+)?", "gnome-emacs"),
 	ITEM("evolution.*", "internet-mail"),
 	ITEM("famd|gam_server", "file-manager"),
