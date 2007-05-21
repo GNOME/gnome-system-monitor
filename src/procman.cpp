@@ -720,7 +720,7 @@ main (int argc, char *argv[])
 	create_main_window (procdata);
 	procman_debug("end create_main_window");
 	
-	proctable_update_all (procdata);
+	// proctable_update_all (procdata);
 
 	init_volume_monitor (procdata);
 
