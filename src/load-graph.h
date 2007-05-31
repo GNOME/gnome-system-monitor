@@ -35,33 +35,33 @@ struct _LoadGraphLabels
 
 /* Create new load graph. */
 LoadGraph *
-load_graph_new (gint type, ProcData *procdata) G_GNUC_INTERNAL;
+load_graph_new (gint type, ProcData *procdata);
 
 /* Force a drawing update */
 void
-load_graph_draw (LoadGraph *g) G_GNUC_INTERNAL;
+load_graph_draw (LoadGraph *g);
 
 /* Start load graph. */
 void
-load_graph_start (LoadGraph *g) G_GNUC_INTERNAL;
+load_graph_start (LoadGraph *g);
 
 /* Stop load graph. */
 void
-load_graph_stop (LoadGraph *g) G_GNUC_INTERNAL;
+load_graph_stop (LoadGraph *g);
 
 /* Change load graph speed and restart it if it has been previously started */
 void
 load_graph_change_speed (LoadGraph *g,
-			 guint new_speed) G_GNUC_INTERNAL;
+			 guint new_speed);
 
 GdkColor*
-load_graph_get_colors (LoadGraph *g) G_GNUC_INTERNAL G_GNUC_CONST;
+load_graph_get_colors (LoadGraph *g) G_GNUC_CONST;
 
 LoadGraphLabels*
-load_graph_get_labels (LoadGraph *g) G_GNUC_INTERNAL G_GNUC_CONST;
+load_graph_get_labels (LoadGraph *g) G_GNUC_CONST;
 
 
 GtkWidget*
-load_graph_get_widget (LoadGraph *g) G_GNUC_INTERNAL G_GNUC_CONST;
+load_graph_get_widget (LoadGraph *g) G_GNUC_CONST;
 
 #endif /* _PROCMAN_LOAD_GRAPH_H_ */

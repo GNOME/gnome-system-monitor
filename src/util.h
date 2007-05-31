@@ -29,20 +29,20 @@ inline int procman_cmp(T x, T y)
 GtkWidget*
 procman_make_label_for_mmaps_or_ofiles(const char *format,
 					     const char *process_name,
-					     unsigned pid) G_GNUC_INTERNAL;
+					     unsigned pid);
 
 
 gchar*
-SI_gnome_vfs_format_file_size_for_display (GnomeVFSFileSize size) G_GNUC_INTERNAL;
+SI_gnome_vfs_format_file_size_for_display (GnomeVFSFileSize size);
 
 
 gboolean
-load_symbols(const char *module, ...) G_GNUC_INTERNAL G_GNUC_NULL_TERMINATED;
+load_symbols(const char *module, ...) G_GNUC_NULL_TERMINATED;
 
 
 void
 procman_debug_real(const char *file, int line, const char *func,
-		   const char *format, ...) G_GNUC_INTERNAL G_GNUC_PRINTF(4, 5);
+		   const char *format, ...) G_GNUC_PRINTF(4, 5);
 
 #define procman_debug(FMT, ...) procman_debug_real(__FILE__, __LINE__, __func__, FMT, ##__VA_ARGS__)
 

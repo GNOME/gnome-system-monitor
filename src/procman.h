@@ -185,9 +185,9 @@ struct ProcData
 	SmoothRefresh  *smooth_refresh;
 };
 
-void		procman_save_config (ProcData *data) G_GNUC_INTERNAL;
-void		procman_save_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefix) G_GNUC_INTERNAL;
-gboolean	procman_get_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefix) G_GNUC_INTERNAL;
+void		procman_save_config (ProcData *data);
+void		procman_save_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefix);
+gboolean	procman_get_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefix);
 
 
 

@@ -21,8 +21,8 @@
 
 #include "procman.h"
  
-void		renice (ProcData *procdata, int nice) G_GNUC_INTERNAL;
-void		kill_process (ProcData *procdata, int sig) G_GNUC_INTERNAL;
+void		renice (ProcData *procdata, int nice);
+void		kill_process (ProcData *procdata, int sig);
 
 #endif
 

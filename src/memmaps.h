@@ -4,6 +4,6 @@
 #include <glib.h>
 #include "procman.h"
 
-void 		create_memmaps_dialog (ProcData *procdata) G_GNUC_INTERNAL;
+void 		create_memmaps_dialog (ProcData *procdata);
 
 #endif /* _PROCMAN_MEMMAPS_H_ */
