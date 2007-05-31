@@ -261,7 +261,7 @@ namespace
 	  GtkTreeIter file;
 	  gtk_list_store_append(this->model, &file);
 	  gtk_list_store_set(this->model, &file,
-			     PROCMAN_LSOF_COL_PIXBUF, info.pixbuf,
+			     PROCMAN_LSOF_COL_PIXBUF, info.pixbuf->gobj(),
 			     PROCMAN_LSOF_COL_PROCESS, info.name,
 			     PROCMAN_LSOF_COL_PID, info.pid,
 			     PROCMAN_LSOF_COL_FILENAME, it->c_str(),

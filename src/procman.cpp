@@ -21,6 +21,7 @@
 
 #include <stdlib.h>
 
+#include <gtkmm.h>
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
@@ -674,7 +675,7 @@ main (int argc, char *argv[])
 
 	startup_timestamp = get_startup_timestamp();
 
-	gtk_init(&argc, &argv);
+	Gtk::Main kit(&argc, &argv);
 	procman_debug("post gtk_init");
 
 	conn = bacon_message_connection_new ("gnome-system-monitor");
@@ -729,7 +730,7 @@ main (int argc, char *argv[])
  	gtk_widget_show(procdata->app);
        
 	procman_debug("begin gtk_main");
-	gtk_main ();
+	kit.run();
 	
 	procman_free_data (procdata);
 

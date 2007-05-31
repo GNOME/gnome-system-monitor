@@ -1,4 +1,7 @@
 #include <config.h>
+
+#include <gtkmm.h>
+
 #include <stdio.h>
 #include <sys/stat.h>
 #include <unistd.h>

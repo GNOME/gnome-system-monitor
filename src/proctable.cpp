@@ -462,14 +462,10 @@ proctable_new (ProcData * const procdata)
 
 ProcInfo::~ProcInfo()
 {
-  if (this->pixbuf)
-    g_object_unref(this->pixbuf);
-
   g_free(this->name);
   g_free(this->tooltip);
   g_free(this->arguments);
   g_free(this->security_context);
-  procman::poison(*this, 0x42);
 }
 
 
@@ -711,7 +707,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, bool forced = false)
 
 	gtk_tree_store_set (GTK_TREE_STORE (model), &info->node,
 			    COL_POINTER, info,
-			    COL_PIXBUF, info->pixbuf,
+			    COL_PIXBUF, info->pixbuf->gobj(),
 			    COL_NAME, info->name,
 			    COL_ARGS, info->arguments,
 			    COL_TOOLTIP, info->tooltip,
@@ -793,8 +789,7 @@ update_info (ProcData *procdata, ProcInfo *info)
 
 
 ProcInfo::ProcInfo(pid_t pid)
-  : pixbuf(NULL),
-    tooltip(NULL),
+  : tooltip(NULL),
     name(NULL),
     user(NULL),
     arguments(NULL),
@@ -1051,17 +1046,13 @@ make_loadavg_string(void)
 
 
 void
-ProcInfo::set_icon(GdkPixbuf* icon)
+ProcInfo::set_icon(Glib::RefPtr<Gdk::Pixbuf> icon)
 {
-  if (this->pixbuf)
-    g_object_unref(this->pixbuf);
-
   this->pixbuf = icon;
-  g_object_ref(icon);
 
   GtkTreeModel *model;
   model = gtk_tree_view_get_model(GTK_TREE_VIEW(ProcData::get_instance()->tree));
   gtk_tree_store_set(GTK_TREE_STORE(model), &this->node,
-		     COL_PIXBUF, this->pixbuf,
+		     COL_PIXBUF, this->pixbuf->gobj(),
 		     -1);
 }
