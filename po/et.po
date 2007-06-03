@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-05 22:44+0000\n"
-"PO-Revision-Date: 2007-02-14 18:25+0200\n"
+"POT-Creation-Date: 2007-04-29 03:15+0100\n"
+"PO-Revision-Date: 2007-06-02 11:10+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:155
-#: ../src/interface.cpp:659 ../src/procman.cpp:688
+#: ../src/interface.cpp:658 ../src/procman.cpp:704
 msgid "System Monitor"
 msgstr "Süsteemijälgija"
 
@@ -37,36 +37,36 @@ msgstr ""
 "Ivar Smolin <okul@linux.ee>, 2005-2007.\n"
 "Priit Laes <amd@store20.com>, 2005, 2006."
 
-#: ../src/disks.cpp:307 ../src/memmaps.cpp:433
+#: ../src/disks.cpp:275 ../src/memmaps.cpp:488
 msgid "Device"
 msgstr "Seade"
 
-#: ../src/disks.cpp:308
+#: ../src/disks.cpp:276
 msgid "Directory"
 msgstr "Kataloog"
 
-#: ../src/disks.cpp:309 ../src/openfiles.cpp:233
+#: ../src/disks.cpp:277 ../src/openfiles.cpp:235
 msgid "Type"
 msgstr "Liik"
 
-#: ../src/disks.cpp:310
+#: ../src/disks.cpp:278
 msgid "Total"
 msgstr "Kokku"
 
-#: ../src/disks.cpp:311
+#: ../src/disks.cpp:279
 msgid "Free"
 msgstr "Vaba"
 
-#: ../src/disks.cpp:312
+#: ../src/disks.cpp:280
 msgid "Available"
 msgstr "Saadaval"
 
-#: ../src/disks.cpp:313
+#: ../src/disks.cpp:281
 msgid "Used"
 msgstr "Kasutuses"
 
-#: ../src/disks.cpp:320 ../src/interface.cpp:743 ../src/procdialogs.cpp:686
-#: ../src/procdialogs.cpp:690
+#: ../src/disks.cpp:288 ../src/interface.cpp:734 ../src/procdialogs.cpp:718
+#: ../src/procdialogs.cpp:722
 msgid "File Systems"
 msgstr "Failisüsteemid"
 
@@ -151,123 +151,136 @@ msgid "Enable/Disable smooth refresh"
 msgstr "Luba/Keela sujuv värskendus"
 
 #: ../src/gnome-system-monitor.schemas.in.h:13
+msgid ""
+"If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu usage "
+"is divided by the total number of CPUs. Else it operates in 'Irix mode'."
+msgstr ""
+"Kui märgitud, siis süsteemijälgija tegutseb \"Solarise režiimis\", kus "
+"protsessi protsessorikasutus on jagatuid protsessorite koguarvuga. Vastasel "
+"juhul tegutsetakse \"Irixi režiimis\"."
+
+#: ../src/gnome-system-monitor.schemas.in.h:14
 msgid "Main Window height"
 msgstr "Peaakna kõrgus"
 
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:15
 msgid "Main Window width"
 msgstr "Peaakna laius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:16
 msgid "Process view columns order"
 msgstr "Protsessivaate tulpade järjestus"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
+#: ../src/gnome-system-monitor.schemas.in.h:17
 msgid "Process view sort column"
 msgstr "Protsessivaate sortimistulp"
 
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:18
 msgid "Process view sort order"
 msgstr "Protsessivaate sortimisjärjestus"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:19
 msgid "Saves the currently viewed tab"
 msgstr "Hetkel kuvatava saki salvestamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:20
 msgid "Show column zero on startup"
 msgstr "Nulltulba kuvamine käivitamisel"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:21
 msgid "Show estimated memory usage column on startup"
 msgstr "Käivitamisel protsessi hinnangulise mälukasutuse tulba kuvamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:23
 #, no-c-format
 msgid "Show process CPU % column on startup"
 msgstr "Käivitamisel protsessi protsessorikasutuse protsendi tulba kuvamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:24
 msgid "Show process CPU time column on startup"
 msgstr "Käivitamisel protsessi protsessoriaja kasutuse tulba kuvamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:24
+#: ../src/gnome-system-monitor.schemas.in.h:25
 msgid "Show process PID column on startup"
 msgstr "Käivitamisel protsessi PID-tulba kuvamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:25
+#: ../src/gnome-system-monitor.schemas.in.h:26
 msgid "Show process SELinux security context column on startup"
 msgstr "Käivitamisel protsessi SELinux-i turvakonteksti tulba kuvamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:26
+#: ../src/gnome-system-monitor.schemas.in.h:27
 msgid "Show process X server memory column zero startup"
 msgstr "Käivitamisel protsessi X-serveri mälu nulltulba kuvamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:27
+#: ../src/gnome-system-monitor.schemas.in.h:28
 msgid "Show process arguments column on startup"
 msgstr "Käivitamisel protsessi argumentide tulba kuvamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:28
+#: ../src/gnome-system-monitor.schemas.in.h:29
 msgid "Show process dependencies in tree form"
 msgstr "Protsessi sõltuvuste näitamine puuvaates"
 
-#: ../src/gnome-system-monitor.schemas.in.h:29
+#: ../src/gnome-system-monitor.schemas.in.h:30
 msgid "Show process name column on startup"
 msgstr "Käivitamisel protsessi nime tulba kuvamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:30
+#: ../src/gnome-system-monitor.schemas.in.h:31
 msgid "Show process nice column on startup"
 msgstr "Käivitamisel protsessi prioriteedi tulba kuvamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:31
+#: ../src/gnome-system-monitor.schemas.in.h:32
 msgid "Show process owner column on startup"
 msgstr "Käivitamisel protsessi omaniku tulba kuvamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:32
+#: ../src/gnome-system-monitor.schemas.in.h:33
 msgid "Show process resident memory column on startup"
 msgstr "Käivitamisel protsessi residentse mälu tulba kuvamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:33
+#: ../src/gnome-system-monitor.schemas.in.h:34
 msgid "Show process shared memory column on startup"
 msgstr "Käivitamisel protsessi jagatud mälu tulba kuvamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:34
+#: ../src/gnome-system-monitor.schemas.in.h:35
 msgid "Show process start time column on startup"
 msgstr "Käivitamisel protsessi alustamisaja tulba kuvamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:35
+#: ../src/gnome-system-monitor.schemas.in.h:36
 msgid "Show process status column on startup"
 msgstr "Käivitamisel protsessi oleku tulba kuvamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:36
+#: ../src/gnome-system-monitor.schemas.in.h:37
 msgid "Show process virtual memory column on startup"
 msgstr "Käivitamisel protsessi virtuaalmälu tulba kuvamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:37
+#: ../src/gnome-system-monitor.schemas.in.h:38
 msgid "Show process writable memory column on startup"
 msgstr "Käivitamisel protsessi kirjutatava mälu tulba kuvamine"
 
-#: ../src/gnome-system-monitor.schemas.in.h:38
+#: ../src/gnome-system-monitor.schemas.in.h:39
 msgid "Show warning dialog when killing processes"
 msgstr "Protsesside kõrvaldamisel kuvada hoiatusdialooge"
 
-#: ../src/gnome-system-monitor.schemas.in.h:39
+#: ../src/gnome-system-monitor.schemas.in.h:40
+msgid "Solaris mode for CPU percentage"
+msgstr "Solarise protsessorikasutuse režiim"
+
+#: ../src/gnome-system-monitor.schemas.in.h:41
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Seadmete loetelu värskendamise sagedus millisekundites"
 
-#: ../src/gnome-system-monitor.schemas.in.h:40
+#: ../src/gnome-system-monitor.schemas.in.h:42
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Graafikute värskendamise sagedus millisekundites"
 
-#: ../src/gnome-system-monitor.schemas.in.h:41
+#: ../src/gnome-system-monitor.schemas.in.h:43
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Protsessivaate värskendamise sagedus millisekundites"
 
-#: ../src/gnome-system-monitor.schemas.in.h:42
+#: ../src/gnome-system-monitor.schemas.in.h:44
 msgid "Whether information about all filesystems should be displayed"
 msgstr "Kas näidata teavet kõikide failisüsteemide kohta "
 
-#: ../src/gnome-system-monitor.schemas.in.h:43
+#: ../src/gnome-system-monitor.schemas.in.h:45
 msgid ""
 "Whether to display information about all filesystems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -276,68 +289,68 @@ msgstr ""
 "Kas näidata kõikide failisüsteemide (nende hulgas ka 'autofs' ja 'procfs') "
 "andmeid. See on kasulik kõigi ühendatud failisüsteemide loetelu saamiseks."
 
-#: ../src/gnome-system-monitor.schemas.in.h:45
+#: ../src/gnome-system-monitor.schemas.in.h:47
 #, no-c-format
 msgid "Width of Process CPU % column"
 msgstr "Protsessi protsessorikasutuse protsendi tulba laius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:46
+#: ../src/gnome-system-monitor.schemas.in.h:48
 msgid "Width of Process CPU time column"
 msgstr "Protsessi protsessoriaja kasutuse tulba laius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:47
+#: ../src/gnome-system-monitor.schemas.in.h:49
 msgid "Width of Process PID column"
 msgstr "Protsessi PID-tulba laius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:48
+#: ../src/gnome-system-monitor.schemas.in.h:50
 msgid "Width of Process SELinux security context column"
 msgstr "Protsessi SELinux-i turvakonteksti tulba laius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:49
+#: ../src/gnome-system-monitor.schemas.in.h:51
 msgid "Width of Process X server memory column"
 msgstr "Protsessi X-serveri mälukasutuse tulba laius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:50
+#: ../src/gnome-system-monitor.schemas.in.h:52
 msgid "Width of Process arguments column"
 msgstr "Protsessi argumentide tulba laius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:51
+#: ../src/gnome-system-monitor.schemas.in.h:53
 msgid "Width of Process estimated memory usage column"
 msgstr "Protsessi hinnangulise mälukasutuse tulba laius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:52
+#: ../src/gnome-system-monitor.schemas.in.h:54
 msgid "Width of Process name column"
 msgstr "Protsessi nime tulba laius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:53
+#: ../src/gnome-system-monitor.schemas.in.h:55
 msgid "Width of Process nice column"
 msgstr "Protsessi prioriteedi tulba laius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:54
+#: ../src/gnome-system-monitor.schemas.in.h:56
 msgid "Width of Process owner column"
 msgstr "Protsessi omaniku tulba laius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:55
+#: ../src/gnome-system-monitor.schemas.in.h:57
 msgid "Width of Process resident memory column"
 msgstr "Protsessi residentse mälu tulba laius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:56
+#: ../src/gnome-system-monitor.schemas.in.h:58
 msgid "Width of Process shared memory column"
 msgstr "Protsessi jagatud mälu tulba laius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:57
+#: ../src/gnome-system-monitor.schemas.in.h:59
 msgid "Width of Process start time column"
 msgstr "Protsessi alustamisaja tulba laius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:58
+#: ../src/gnome-system-monitor.schemas.in.h:60
 msgid "Width of Process status column"
 msgstr "Protsessi oleku tulba laius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:59
+#: ../src/gnome-system-monitor.schemas.in.h:61
 msgid "Width of Process virtual memory column"
 msgstr "Protsessi virtuaalmälu tulba laius"
 
-#: ../src/gnome-system-monitor.schemas.in.h:60
+#: ../src/gnome-system-monitor.schemas.in.h:62
 msgid "Width of Process writable memory column"
 msgstr "Protsessi kirjutatava mälu tulba laius"
 
@@ -389,7 +402,7 @@ msgstr "_Jätka protsessi"
 msgid "Continue process if stopped"
 msgstr "Peatatud protsessi jätkamine"
 
-#: ../src/interface.cpp:63 ../src/interface.cpp:183
+#: ../src/interface.cpp:63 ../src/interface.cpp:181
 msgid "End _Process"
 msgstr "_Lõpeta protsess"
 
@@ -485,64 +498,64 @@ msgstr "_Minu protsessid"
 msgid "Show user own process"
 msgstr "Kuva ainult kasutaja enda protsesse"
 
-#: ../src/interface.cpp:251
+#: ../src/interface.cpp:248
 msgid "CPU History"
 msgstr "Protsessori koormuse ajalugu"
 
-#: ../src/interface.cpp:294
+#: ../src/interface.cpp:298
 msgid "CPU:"
 msgstr "Protsessor:"
 
-#: ../src/interface.cpp:297
+#: ../src/interface.cpp:301
 #, c-format
 msgid "CPU%d:"
 msgstr "Protsessor%d:"
 
-#: ../src/interface.cpp:317
+#: ../src/interface.cpp:321
 msgid "Memory and Swap History"
 msgstr "Mälu ja saaleala kasutuse ajalugu"
 
-#: ../src/interface.cpp:350
+#: ../src/interface.cpp:353
 msgid "User memory:"
 msgstr "Kasutatud mälu:"
 
-#: ../src/interface.cpp:368 ../src/interface.cpp:428
+#: ../src/interface.cpp:371 ../src/interface.cpp:431
 msgid "of"
 msgstr "/"
 
-#: ../src/interface.cpp:409
+#: ../src/interface.cpp:412
 msgid "Used swap:"
 msgstr "Kasutatud saalemälu:"
 
-#: ../src/interface.cpp:468
+#: ../src/interface.cpp:471
 msgid "Network History"
 msgstr "Võrguliikluse ajalugu"
 
-#: ../src/interface.cpp:500
+#: ../src/interface.cpp:502
 msgid "Received:"
 msgstr "Vastu võetud:"
 
-#: ../src/interface.cpp:520 ../src/interface.cpp:563
+#: ../src/interface.cpp:522 ../src/interface.cpp:565
 msgid "Total:"
 msgstr "Kokku:"
 
-#: ../src/interface.cpp:544
+#: ../src/interface.cpp:546
 msgid "Sent:"
 msgstr "Saadetud:"
 
-#: ../src/interface.cpp:725
+#: ../src/interface.cpp:722
 msgid "System"
 msgstr "Süsteem"
 
-#: ../src/interface.cpp:731 ../src/procdialogs.cpp:501
+#: ../src/interface.cpp:726 ../src/procdialogs.cpp:514
 msgid "Processes"
 msgstr "Protsessid"
 
-#: ../src/interface.cpp:737 ../src/procdialogs.cpp:597
+#: ../src/interface.cpp:730 ../src/procdialogs.cpp:629
 msgid "Resources"
 msgstr "Vahendid"
 
-#: ../src/load-graph.cpp:399 ../src/load-graph.cpp:409
+#: ../src/load-graph.cpp:424 ../src/load-graph.cpp:434
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
@@ -555,7 +568,7 @@ msgstr "Protsess"
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:377 ../src/memmaps.cpp:427
+#: ../src/lsof.cpp:377 ../src/memmaps.cpp:478
 msgid "Filename"
 msgstr "Failinimi"
 
@@ -576,75 +589,92 @@ msgstr "Tõstutundetud vastavused"
 msgid "S_earch results:"
 msgstr "O_tsingutulemused:"
 
-#: ../src/memmaps.cpp:428
+#: ../src/memmaps.cpp:479
 msgid "VM Start"
 msgstr "VM algus"
 
-#: ../src/memmaps.cpp:429
+#: ../src/memmaps.cpp:480
 msgid "VM End"
 msgstr "VM lõpp"
 
-#: ../src/memmaps.cpp:430
+#: ../src/memmaps.cpp:481
 msgid "VM Size"
 msgstr "VM Suurus"
 
-#: ../src/memmaps.cpp:431
+#: ../src/memmaps.cpp:482
 msgid "Flags"
 msgstr "Lipud"
 
-#: ../src/memmaps.cpp:432
+#: ../src/memmaps.cpp:483
 msgid "VM Offset"
 msgstr "VM nihe"
 
-#: ../src/memmaps.cpp:434
+#: ../src/memmaps.cpp:484
+msgid "Private clean"
+msgstr ""
+
+#: ../src/memmaps.cpp:485
+msgid "Private dirty"
+msgstr ""
+
+#: ../src/memmaps.cpp:486
+msgid "Shared clean"
+msgstr ""
+
+#: ../src/memmaps.cpp:487
+msgid "Shared dirty"
+msgstr ""
+
+#: ../src/memmaps.cpp:489
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.cpp:540
+#. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+#: ../src/memmaps.cpp:598
 msgid "Memory Maps"
 msgstr "Mälu jaotumine"
 
-#: ../src/memmaps.cpp:560
+#: ../src/memmaps.cpp:617
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "Protsessi \"%s\" (PID %u) _mäluplaan:"
 
-#: ../src/openfiles.cpp:32
+#: ../src/openfiles.cpp:33
 msgid "file"
 msgstr "fail"
 
-#: ../src/openfiles.cpp:34
+#: ../src/openfiles.cpp:35
 msgid "pipe"
 msgstr "toru"
 
-#: ../src/openfiles.cpp:36
+#: ../src/openfiles.cpp:37
 msgid "network connection"
 msgstr "võrguühendus"
 
-#: ../src/openfiles.cpp:38
+#: ../src/openfiles.cpp:39
 msgid "local socket"
 msgstr "kohalik sokkel"
 
-#: ../src/openfiles.cpp:40
+#: ../src/openfiles.cpp:41
 msgid "unknown type"
 msgstr "tundmatu tüüp"
 
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.cpp:232
+#: ../src/openfiles.cpp:234
 msgid "FD"
 msgstr "FD"
 
-#: ../src/openfiles.cpp:234
+#: ../src/openfiles.cpp:236
 msgid "Object"
 msgstr "Objekt"
 
-#: ../src/openfiles.cpp:318
+#: ../src/openfiles.cpp:320
 msgid "Open Files"
 msgstr "Avatud failid"
 
-#: ../src/openfiles.cpp:340
+#: ../src/openfiles.cpp:342
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_Protsessi \"%s\" (PID %u) poolt avatud failid:"
@@ -744,219 +774,211 @@ msgstr ""
 "Protsessi prioriteet on antud tema nice väärtusega. Madalam nice väärtus "
 "tähendab suuremat prioriteeti."
 
-#: ../src/procdialogs.cpp:379
+#: ../src/procdialogs.cpp:392
 msgid "Process i_nformation shown in list:"
 msgstr "Loetelus näidatavad pro_tsessi andmed:"
 
-#: ../src/procdialogs.cpp:431
+#: ../src/procdialogs.cpp:444
 msgid "Icon"
 msgstr "Ikoon"
 
-#: ../src/procdialogs.cpp:478
+#: ../src/procdialogs.cpp:491
 msgid "System Monitor Preferences"
 msgstr "Süsteemijälgija eelistused"
 
-#: ../src/procdialogs.cpp:508
+#: ../src/procdialogs.cpp:521
 msgid "Behavior"
 msgstr "Käitumine"
 
-#: ../src/procdialogs.cpp:527 ../src/procdialogs.cpp:623
-#: ../src/procdialogs.cpp:709
+#: ../src/procdialogs.cpp:540 ../src/procdialogs.cpp:655
+#: ../src/procdialogs.cpp:741
 msgid "_Update interval in seconds:"
 msgstr "_Värskendamise vahemik sekundites:"
 
-#: ../src/procdialogs.cpp:552
+#: ../src/procdialogs.cpp:565
 msgid "Enable _smooth refresh"
 msgstr "_Sujuv värskendus lubatud"
 
-#: ../src/procdialogs.cpp:566
+#: ../src/procdialogs.cpp:579
 msgid "Alert before ending or _killing processes"
 msgstr "Hoiatus enne protsessi _kõrvaldamist"
 
-#: ../src/procdialogs.cpp:579
+#: ../src/procdialogs.cpp:593
+msgid "Solaris mode"
+msgstr "Solarise režiim"
+
+#: ../src/procdialogs.cpp:611
 msgid "Information Fields"
 msgstr "Teabeväljad"
 
-#: ../src/procdialogs.cpp:604
+#: ../src/procdialogs.cpp:636
 msgid "Graphs"
 msgstr "Graafikud"
 
-#: ../src/procdialogs.cpp:645
+#: ../src/procdialogs.cpp:677
 msgid "_Background color:"
 msgstr "_Taustavärv:"
 
-#: ../src/procdialogs.cpp:664
+#: ../src/procdialogs.cpp:696
 msgid "_Grid color:"
 msgstr "Te_ljestiku värv:"
 
-#: ../src/procdialogs.cpp:729
+#: ../src/procdialogs.cpp:761
 msgid "Show _all filesystems"
 msgstr "Näidatakse _kõiki failisüsteeme"
 
-#: ../src/proctable.cpp:273
+#: ../src/proctable.cpp:270
 msgid "Process Name"
 msgstr "Protsessi nimi"
 
-#: ../src/proctable.cpp:274
+#: ../src/proctable.cpp:271
 msgid "User"
 msgstr "Kasutaja"
 
-#: ../src/proctable.cpp:275
+#: ../src/proctable.cpp:272
 msgid "Status"
 msgstr "Olek"
 
-#: ../src/proctable.cpp:276
+#: ../src/proctable.cpp:273
 msgid "Virtual Memory"
 msgstr "Virtuaalmälu"
 
-#: ../src/proctable.cpp:277
+#: ../src/proctable.cpp:274
 msgid "Resident Memory"
 msgstr "Residentne mälu"
 
-#: ../src/proctable.cpp:278
+#: ../src/proctable.cpp:275
 msgid "Writable Memory"
 msgstr "Kirjutatav mälu"
 
-#: ../src/proctable.cpp:279
+#: ../src/proctable.cpp:276
 msgid "Shared Memory"
 msgstr "Jagatud mälu"
 
-#: ../src/proctable.cpp:280
+#: ../src/proctable.cpp:277
 msgid "X Server Memory"
 msgstr "X serveri mälu"
 
-#: ../src/proctable.cpp:281
+#: ../src/proctable.cpp:278
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:282
+#: ../src/proctable.cpp:279
 msgid "CPU Time"
 msgstr "CPU aeg"
 
-#: ../src/proctable.cpp:283
+#: ../src/proctable.cpp:280
 msgid "Started"
 msgstr "Käivitatud"
 
-#: ../src/proctable.cpp:284
+#: ../src/proctable.cpp:281
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.cpp:285
+#: ../src/proctable.cpp:282
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:286
+#: ../src/proctable.cpp:283
 msgid "Security Context"
 msgstr "Turvakontekst"
 
-#: ../src/proctable.cpp:287
+#: ../src/proctable.cpp:284
 msgid "Command Line"
 msgstr "Käsurida"
 
-#: ../src/proctable.cpp:288
+#: ../src/proctable.cpp:285
 msgid "Memory"
 msgstr "Mälu"
 
-#: ../src/proctable.cpp:472
+#: ../src/proctable.cpp:483
 msgid "Running"
 msgstr "Töötav"
 
-#: ../src/proctable.cpp:477
+#: ../src/proctable.cpp:487
 msgid "Stopped"
 msgstr "Seisatud"
 
-#: ../src/proctable.cpp:482
+#: ../src/proctable.cpp:491
 msgid "Zombie"
 msgstr "Zombi"
 
-#: ../src/proctable.cpp:487
+#: ../src/proctable.cpp:495
 msgid "Uninterruptible"
 msgstr "Katkestamatu"
 
-#: ../src/proctable.cpp:492
+#: ../src/proctable.cpp:499
 msgid "Sleeping"
 msgstr "Magav"
 
 #. xgettext: weeks, days
-#: ../src/proctable.cpp:638
+#: ../src/proctable.cpp:626
 #, c-format
 msgid "%uw%ud"
 msgstr "%un%up"
 
 #. xgettext: days, hours (0 -> 23)
-#: ../src/proctable.cpp:642
+#: ../src/proctable.cpp:630
 #, c-format
 msgid "%ud%02uh"
 msgstr "%up%02ut"
 
 #. xgettext: hours (0 -> 23), minutes, seconds
-#: ../src/proctable.cpp:646
+#: ../src/proctable.cpp:634
 #, c-format
 msgid "%u:%02u:%02u"
 msgstr "%u:%02u:%02u"
 
 #. xgettext: minutes, seconds, centiseconds
-#: ../src/proctable.cpp:649
+#: ../src/proctable.cpp:637
 #, c-format
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: ../src/proctable.cpp:1097
+#: ../src/proctable.cpp:1044
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Koormuse näit viimase 1, 5 ja 15 minuti kohta: %0.2f, %0.2f, %0.2f"
 
-#: ../src/sysinfo.cpp:48 ../src/sysinfo.cpp:230
-msgid "Unknown distribution"
-msgstr "Tundmatu distributsioon"
-
-#: ../src/sysinfo.cpp:50
-msgid "Unknown release"
-msgstr "Tundmatu väljalase"
-
-#: ../src/sysinfo.cpp:94
+#: ../src/sysinfo.cpp:85
 msgid "Unknown CPU model"
 msgstr "Tundmatu protsessorimudel"
 
-#: ../src/sysinfo.cpp:143
-msgid "Unknown version"
-msgstr "Tundmatu versioon"
-
-#: ../src/sysinfo.cpp:363
+#: ../src/sysinfo.cpp:370
 #, c-format
 msgid "Release %s (%s)"
 msgstr "Versioon %s (%s)"
 
-#: ../src/sysinfo.cpp:368
+#: ../src/sysinfo.cpp:375
 #, c-format
 msgid "Release %s"
 msgstr "Versioon %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:378
+#: ../src/sysinfo.cpp:385
 msgid "<b>Hardware</b>"
 msgstr "<b>Riistvara</b>"
 
-#: ../src/sysinfo.cpp:399
+#: ../src/sysinfo.cpp:406
 msgid "Memory:"
 msgstr "Mälu:"
 
-#: ../src/sysinfo.cpp:419
+#: ../src/sysinfo.cpp:426
 #, c-format
 msgid "Processor %d:"
 msgstr "Protsessor %d"
 
-#: ../src/sysinfo.cpp:424
+#: ../src/sysinfo.cpp:431
 msgid "Processor:"
 msgstr "Protsessor:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:444
+#: ../src/sysinfo.cpp:451
 msgid "<b>System Status</b>"
 msgstr "<b>Süsteemi olek</b>"
 
-#: ../src/sysinfo.cpp:465
+#: ../src/sysinfo.cpp:472
 msgid "Available disk space:"
 msgstr "Vaba kettaruum:"
 
