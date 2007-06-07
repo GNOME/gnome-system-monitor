@@ -15,7 +15,7 @@
 #include <math.h>
 #include <errno.h>
 
-#include <pcrecpp.h>
+#include "regex.h"
 
 #include <string>
 #include <vector>

@@ -4,11 +4,13 @@ INCLUDES = \
 	-DPROCMAN_DATADIR=\""$(datadir)/procman/"\" \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-DDATADIR=\""$(datadir)"\" \
-	@PROCMAN_CFLAGS@
+	@PROCMAN_CFLAGS@ \
+	@PCRECPP_CFLAGS@
 
 bin_PROGRAMS = gnome-system-monitor
 
 gnome_system_monitor_SOURCES = \
+	regex.h \
 	procman.cpp  procman.h \
 	interface.cpp interface.h \
 	callbacks.cpp callbacks.h \
@@ -32,7 +34,7 @@ gnome_system_monitor_SOURCES = \
 	e_date.c e_date.h
 
 
-gnome_system_monitor_LDADD = @PROCMAN_LIBS@ libbacon.la -lpcrecpp
+gnome_system_monitor_LDADD = @PROCMAN_LIBS@ @PCRECPP_LIBS@ libbacon.la
 
 
 noinst_LTLIBRARIES = libbacon.la

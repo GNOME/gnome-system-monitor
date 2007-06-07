@@ -13,7 +13,7 @@
 #include <sstream>
 #include <iterator>
 
-#include <pcrecpp.h>
+#include "regex.h"
 
 #include "procman.h"
 #include "lsof.h"

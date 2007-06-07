@@ -3,7 +3,7 @@
 
 #include <string>
 #include <tr1/memory>
-#include <pcrecpp.h>
+#include "regex.h"
 
 /* This file contains prettynames and icons for well-known applications, that by default has no .desktop entry */
 
