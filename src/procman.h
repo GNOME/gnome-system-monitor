@@ -100,12 +100,14 @@ class ProcInfo
 	typedef std::map<pid_t, ProcInfo*> List;
 	typedef List::iterator Iterator;
 
-	static List all;
-
+	// lock for the following operations
+	static Glib::Mutex mutex;
 	static ProcInfo* find(pid_t pid);
 	static Iterator begin() { return ProcInfo::all.begin(); }
 	static Iterator end() { return ProcInfo::all.end(); }
-
+	static void add(ProcInfo *info) { ProcInfo::all[info->pid] = info; }
+	static void remove(Iterator it) { ProcInfo::all.erase(it); }
+	static void remove_all() { ProcInfo::all.clear(); }
 
 	ProcInfo(pid_t pid);
 	~ProcInfo();
@@ -144,6 +146,9 @@ class ProcInfo
 
 	guint8		pcpu; /* 0% - 100% */
 	gint8		nice;
+
+ private:
+	static List all;
 };
 
 struct ProcData

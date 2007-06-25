@@ -61,6 +61,7 @@ static guint64 total_time_last = 1;
 
 
 ProcInfo::List ProcInfo::all;
+Glib::Mutex ProcInfo::mutex;
 
 
 ProcInfo* ProcInfo::find(pid_t pid)
@@ -824,16 +825,32 @@ ProcInfo::ProcInfo(pid_t pid)
 }
 
 
+static gboolean
+update_tree_view(gpointer)
+{
+  procman_debug("updating treeview");
+  for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it)
+    update_info_mutable_cols(it->second);
+  procman_debug("done");
+  return FALSE;
+}
+
+
+
 
 
 static void
 refresh_list (ProcData *procdata, const pid_t* pid_list, const guint n)
 {
+  Glib::Mutex::Lock lock(ProcInfo::mutex);
+
   typedef std::list<ProcInfo*> ProcList;
   ProcList addition;
 
 	GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
 	guint i;
+
+	procman_debug("A");
 
 	// Add or update processes in the process list
 	for(i = 0; i < n; ++i) {
@@ -841,13 +858,16 @@ refresh_list (ProcData *procdata, const pid_t* pid_list, const guint n)
 
 		if (!info) {
 			info = new ProcInfo(pid_list[i]);
-			ProcInfo::all[info->pid] = info;
+			ProcInfo::add(info);
 			addition.push_back(info);
 		}
 
 		update_info (procdata, info);
 	}
 
+
+
+	procman_debug("B");
 
 	// Remove dead processes from the process list and from the
 	// tree. children are queued to be readded at the right place
@@ -866,7 +886,7 @@ refresh_list (ProcData *procdata, const pid_t* pid_list, const guint n)
 	    procman_debug("ripping %d", info->pid);
 	    remove_info_from_tree(procdata, model, info, addition);
 	    addition.remove(info);
-	    ProcInfo::all.erase(it);
+	    ProcInfo::remove(it);
 	    delete info;
 	  }
 
@@ -875,6 +895,9 @@ refresh_list (ProcData *procdata, const pid_t* pid_list, const guint n)
 
 	// INVARIANT
 	// pid_list == ProcInfo::all + addition
+
+
+	procman_debug("C");
 
 
 	if (procdata->config.show_tree) {
@@ -940,9 +963,7 @@ refresh_list (ProcData *procdata, const pid_t* pid_list, const guint n)
 	    insert_info_to_tree(*it, procdata);
 	}
 
-
-	for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it)
-		update_info_mutable_cols(it->second);
+	g_timeout_add(0, update_tree_view, NULL);
 }
 
 
@@ -953,6 +974,8 @@ proctable_update_list (ProcData * const procdata)
 	glibtop_proclist proclist;
 	glibtop_cpu cpu;
 	gint which, arg;
+
+	procman_debug("start");
 
 	switch (procdata->config.whose_process) {
 	case ALL_PROCESSES:
@@ -973,7 +996,9 @@ proctable_update_list (ProcData * const procdata)
 		break;
 	}
 
+	procman_debug("calling libgtop");
 	pid_list = glibtop_get_proclist (&proclist, which, arg);
+	procman_debug("got proclist");
 
 	/* FIXME: total cpu time elapsed should be calculated on an individual basis here
 	** should probably have a total_time_last gint in the ProcInfo structure */
@@ -981,8 +1006,9 @@ proctable_update_list (ProcData * const procdata)
 	total_time = MAX(cpu.total - total_time_last, 1);
 	total_time_last = cpu.total;
 
+	procman_debug("update the list");
 	refresh_list (procdata, pid_list, proclist.number);
-
+	procman_debug("list updated");
 	g_free (pid_list);
 
 	/* proclist.number == g_list_length(procdata->info) == g_hash_table_size(procdata->pids) */
@@ -1020,10 +1046,12 @@ proctable_clear_tree (ProcData * const procdata)
 void
 proctable_free_table (ProcData * const procdata)
 {
+  Glib::Mutex::Lock lock(ProcInfo::mutex);
+
   for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it)
     delete it->second;
 
-  ProcInfo::all.clear();
+  ProcInfo::remove_all();
 }
 
 

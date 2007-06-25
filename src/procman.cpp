@@ -675,6 +675,7 @@ main (int argc, char *argv[])
 
 	startup_timestamp = get_startup_timestamp();
 
+	Glib::thread_init();
 	Gtk::Main kit(&argc, &argv);
 	procman_debug("post gtk_init");
 
