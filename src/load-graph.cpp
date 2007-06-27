@@ -96,6 +96,7 @@ load_graph_draw (LoadGraph *g)
 	double delx;
 	int real_draw_height;
 	guint i, j;
+	unsigned num_bars;
 
 	cr = cairo_create (g->buffer);
 
@@ -113,27 +114,39 @@ load_graph_draw (LoadGraph *g)
 			       CAIRO_FONT_WEIGHT_NORMAL);
 	cairo_set_font_size(cr, fontsize);
 
-	dely = (g->draw_height) / 5; /* round to int to avoid AA blur */
-	real_draw_height = dely * 5;
+	// keep 100 % num_bars == 0
+	switch (static_cast<int>(g->draw_height / (fontsize + 3)))
+	  {
+	  case 1:
+	    num_bars = 1;
+	    break;
+	  case 2:
+	  case 3:
+	    num_bars = 2;
+	    break;
+	  case 4:
+	    num_bars = 4;
+	    break;
+	  default:
+	    num_bars = 5;
+	  }
 
-	for (i = 0; i <= 5; ++i) {
+	dely = g->draw_height / num_bars; /* round to int to avoid AA blur */
+	real_draw_height = dely * num_bars;
+
+	for (i = 0; i <= num_bars; ++i) {
 		char *caption;
 		double y;
 
-		switch (i) {
-		case 0:
-			y = 0.5 + fontsize / 2.0;
-			break;
-		case 5:
-			y = i * dely + 0.5;
-			break;
-		default:
-			y = i * dely + fontsize / 2.0;
-			break;
-		}
+		if (i == 0)
+		  y = 0.5 + fontsize / 2.0;
+		else if (i == num_bars)
+		  y = i * dely + 0.5;
+		else
+		  y = i * dely + fontsize / 2.0;
 
 		cairo_move_to(cr, 0.0, y);
-		caption = g_strdup_printf("%3d %%", 100 - i * 20);
+		caption = g_strdup_printf("%3d %%", 100 - i * (100 / num_bars));
 		cairo_show_text(cr, caption);
 		g_free(caption);
 
