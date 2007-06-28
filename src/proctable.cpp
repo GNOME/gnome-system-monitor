@@ -963,13 +963,15 @@ proctable_update_list (ProcData * const procdata)
 	case ACTIVE_PROCESSES:
 		which = GLIBTOP_KERN_PROC_ALL | GLIBTOP_EXCLUDE_IDLE;
 		arg = 0;
-		proctable_clear_tree(procdata);
+		if (procdata->config.show_tree)
+		  proctable_clear_tree(procdata);
 		break;
 
 	default:
 		which = GLIBTOP_KERN_PROC_UID;
 		arg = getuid ();
-		proctable_clear_tree(procdata);
+		if (procdata->config.show_tree)
+		  proctable_clear_tree(procdata);
 		break;
 	}
 
