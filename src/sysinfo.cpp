@@ -39,9 +39,8 @@ namespace {
   public:
     string hostname;
     string distro_name;
-    string distro_codename;
-    string distro_release; // numerical version
-
+    string distro_release;
+    string kernel;
     guint64 memory_bytes;
     guint64 free_space_bytes;
 
@@ -125,8 +124,7 @@ namespace {
       uname(&name);
 
       this->hostname = name.nodename;
-      this->distro_name = name.sysname;
-      this->distro_release = name.release;
+      this->kernel = string(name.sysname) + ' ' + name.release;
     }
   };
 
@@ -190,12 +188,15 @@ namespace {
 				    0,
 				    &status,
 				    &error)) {
-
+	string release, codename;
 	if (!error and WIFEXITED(status) and WEXITSTATUS(status) == 0) {
 	  std::istringstream input(out);
 	  this->get_value(input, this->distro_name)
-	    and this->get_value(input, this->distro_release)
-	    and this->get_value(input, this->distro_codename);
+	    and this->get_value(input, release)
+	    and this->get_value(input, codename);
+	  this->distro_release = release;
+	  if (codename != "")
+	    this->distro_release += " (" + codename + ')';
 	}
       }
 
@@ -345,25 +346,30 @@ procman_create_sysinfo_view(void)
 			   );
   gtk_frame_set_shadow_type(GTK_FRAME(distro_frame), GTK_SHADOW_NONE);
   gtk_box_pack_start(GTK_BOX(vbox), distro_frame, FALSE, FALSE, 0);
-
   alignment = gtk_alignment_new(0.5, 0.5, 1.0, 1.0);
   gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
   gtk_container_add(GTK_CONTAINER(distro_frame), alignment);
 
-  if (data->distro_codename != "")
-    markup = g_strdup_printf(
-			     _("Release %s (%s)"),
-			     data->distro_release.c_str(),
-			     data->distro_codename.c_str());
-  else
-    markup = g_strdup_printf(
-			     _("Release %s"),
-			     data->distro_release.c_str());
-  distro_release_label = gtk_label_new(markup);
+  GtkWidget* distro_box = gtk_hbox_new(FALSE, 12);
+  gtk_container_add(GTK_CONTAINER(alignment), distro_box);
+
+  GtkWidget* distro_inner_box = gtk_vbox_new(FALSE, 6);
+  gtk_box_pack_start(GTK_BOX(distro_box), distro_inner_box, FALSE, FALSE, 0);
+
+  if (data->distro_release != "")
+    {
+      markup = g_strdup_printf(_("Release %s"), data->distro_release.c_str());
+      distro_release_label = gtk_label_new(markup);
+      gtk_misc_set_alignment(GTK_MISC(distro_release_label), 0.0, 0.5);
+      g_free(markup);
+      gtk_box_pack_start(GTK_BOX(distro_inner_box), distro_release_label, FALSE, FALSE, 0);
+    }
+
+  markup = g_strdup_printf(_("Kernel %s"), data->kernel.c_str());
+  GtkWidget* kernel_label = gtk_label_new(markup);
+  gtk_misc_set_alignment(GTK_MISC(kernel_label), 0.0, 0.5);
   g_free(markup);
-  gtk_misc_set_alignment(GTK_MISC(distro_release_label), 0.0, 0.5);
-  gtk_misc_set_padding(GTK_MISC(distro_release_label), 6, 6);
-  gtk_container_add(GTK_CONTAINER(alignment), distro_release_label);
+  gtk_box_pack_start(GTK_BOX(distro_inner_box), kernel_label, FALSE, FALSE, 0);
 
   /* hardware section */
 
