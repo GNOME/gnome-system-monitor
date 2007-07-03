@@ -3,6 +3,10 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 
+#include <libxml/parser.h>
+#include <libxml/xpath.h>
+#include <libxml/xpathInternals.h>
+
 #include <glibtop/fsusage.h>
 #include <glibtop/mountlist.h>
 #include <glibtop/mem.h>
@@ -41,6 +45,7 @@ namespace {
     string distro_name;
     string distro_release;
     string kernel;
+    string gnome_version;
     guint64 memory_bytes;
     guint64 free_space_bytes;
 
@@ -54,6 +59,7 @@ namespace {
       this->load_memory_info();
       this->load_disk_info();
       this->load_uname_info();
+      this->load_gnome_version();
     }
 
     virtual ~SysInfo()
@@ -125,6 +131,39 @@ namespace {
 
       this->hostname = name.nodename;
       this->kernel = string(name.sysname) + ' ' + name.release;
+    }
+
+
+    void load_gnome_version()
+    {
+      xmlDocPtr document;
+      xmlXPathContextPtr context;
+      const string nodes[3] = { "string(/gnome-version/platform)",
+				"string(/gnome-version/minor)",
+				"string(/gnome-version/micro)" };
+      string values[3];
+
+      if (not (document = xmlParseFile("/usr/share/gnome-about/gnome-version.xml")))
+	return;
+
+      if (not (context = xmlXPathNewContext(document)))
+	return;
+
+      for (size_t i = 0; i != 3; ++i)
+	{
+	  xmlXPathObjectPtr xpath;
+	  xpath = xmlXPathEvalExpression(BAD_CAST nodes[i].c_str(), context);
+	  
+	  if (xpath and xpath->type == XPATH_STRING)
+	    values[i] = reinterpret_cast<const char*>(xpath->stringval);
+
+	  xmlXPathFreeObject(xpath);
+	}
+
+      xmlXPathFreeContext(context);
+      xmlFreeDoc(document);
+
+      this->gnome_version = values[0] + '.' + values[1] + '.' + values[2];
     }
   };
 
@@ -370,6 +409,13 @@ procman_create_sysinfo_view(void)
   gtk_misc_set_alignment(GTK_MISC(kernel_label), 0.0, 0.5);
   g_free(markup);
   gtk_box_pack_start(GTK_BOX(distro_inner_box), kernel_label, FALSE, FALSE, 0);
+
+  markup = g_strdup_printf(_("Gnome %s"), data->gnome_version.c_str());
+  GtkWidget* gnome_label = gtk_label_new(markup);
+  gtk_misc_set_alignment(GTK_MISC(gnome_label), 0.0, 0.5);
+  g_free(markup);
+  gtk_box_pack_start(GTK_BOX(distro_inner_box), gnome_label, FALSE, FALSE, 0);
+
 
   /* hardware section */
 
