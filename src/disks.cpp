@@ -76,6 +76,12 @@ get_icon_for_device(const char *mountpoint)
 		volume = gnome_vfs_volume_monitor_get_volume_for_path(monitor, "/");
 	}
 
+	if (!volume)
+	  {
+	    g_warning("Cannot even get volume for mount point '/'");
+	    return NULL;
+	  }
+
 	icon_name = gnome_vfs_volume_get_icon(volume);
 	icon_theme = gtk_icon_theme_get_default();
 	pixbuf = gtk_icon_theme_load_icon(icon_theme, icon_name, 24, GTK_ICON_LOOKUP_USE_BUILTIN, NULL);
