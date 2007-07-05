@@ -143,7 +143,7 @@ namespace {
 				"string(/gnome-version/micro)" };
       string values[3];
 
-      if (not (document = xmlParseFile("/usr/share/gnome-about/gnome-version.xml")))
+      if (not (document = xmlParseFile(DATADIR "/gnome-about/gnome-version.xml")))
 	return;
 
       if (not (context = xmlXPathNewContext(document)))
@@ -410,12 +410,14 @@ procman_create_sysinfo_view(void)
   g_free(markup);
   gtk_box_pack_start(GTK_BOX(distro_inner_box), kernel_label, FALSE, FALSE, 0);
 
-  markup = g_strdup_printf(_("Gnome %s"), data->gnome_version.c_str());
-  GtkWidget* gnome_label = gtk_label_new(markup);
-  gtk_misc_set_alignment(GTK_MISC(gnome_label), 0.0, 0.5);
-  g_free(markup);
-  gtk_box_pack_start(GTK_BOX(distro_inner_box), gnome_label, FALSE, FALSE, 0);
-
+  if (data->gnome_version != "")
+    {
+      markup = g_strdup_printf(_("Gnome %s"), data->gnome_version.c_str());
+      GtkWidget* gnome_label = gtk_label_new(markup);
+      gtk_misc_set_alignment(GTK_MISC(gnome_label), 0.0, 0.5);
+      g_free(markup);
+      gtk_box_pack_start(GTK_BOX(distro_inner_box), gnome_label, FALSE, FALSE, 0);
+    }
 
   /* hardware section */
 
