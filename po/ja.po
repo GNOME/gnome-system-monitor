@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor (procman) trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-10 14:33+0900\n"
-"PO-Revision-Date: 2007-03-10 14:33+0900\n"
+"POT-Creation-Date: 2007-07-16 18:35+0900\n"
+"PO-Revision-Date: 2007-07-16 18:21+0900\n"
 "Last-Translator: Takeshi AIHANA <takeshi.aihana@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:155
-#: ../src/interface.cpp:667 ../src/procman.cpp:688
+#: ../src/interface.cpp:658 ../src/procman.cpp:705
 msgid "System Monitor"
 msgstr "システム・モニタ"
 
@@ -34,36 +34,36 @@ msgstr ""
 "Satoru SATOH <ss@gnome.gr.jp>\n"
 "日本GNOMEユーザー会 http://www.gnome.gr.jp"
 
-#: ../src/disks.cpp:307 ../src/memmaps.cpp:433
+#: ../src/disks.cpp:281 ../src/memmaps.cpp:488
 msgid "Device"
 msgstr "デバイス"
 
-#: ../src/disks.cpp:308
+#: ../src/disks.cpp:282
 msgid "Directory"
 msgstr "フォルダ"
 
-#: ../src/disks.cpp:309 ../src/openfiles.cpp:235
+#: ../src/disks.cpp:283 ../src/openfiles.cpp:235
 msgid "Type"
 msgstr "種類"
 
-#: ../src/disks.cpp:310
+#: ../src/disks.cpp:284
 msgid "Total"
 msgstr "合計"
 
-#: ../src/disks.cpp:311
+#: ../src/disks.cpp:285
 msgid "Free"
 msgstr "空き"
 
-#: ../src/disks.cpp:312
+#: ../src/disks.cpp:286
 msgid "Available"
 msgstr "利用可能"
 
-#: ../src/disks.cpp:313
+#: ../src/disks.cpp:287
 msgid "Used"
 msgstr "使用済み"
 
-#: ../src/disks.cpp:320 ../src/interface.cpp:751 ../src/procdialogs.cpp:686
-#: ../src/procdialogs.cpp:690
+#: ../src/disks.cpp:294 ../src/interface.cpp:734 ../src/procdialogs.cpp:718
+#: ../src/procdialogs.cpp:722
 msgid "File Systems"
 msgstr "ファイルシステム"
 
@@ -146,123 +146,136 @@ msgid "Enable/Disable smooth refresh"
 msgstr "スムース・リフレッシュの有効/無効"
 
 #: ../src/gnome-system-monitor.schemas.in.h:13
+msgid ""
+"If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu usage "
+"is divided by the total number of CPUs. Else it operates in 'Irix mode'."
+msgstr ""
+"TRUE にすると 'Solaris モード' で動作するようになります。これはタスクの CPU "
+"使用率を CPU の個数で割った値になるモードです。それ以外は 'Irix モード' で動"
+"作します。"
+
+#: ../src/gnome-system-monitor.schemas.in.h:14
 msgid "Main Window height"
 msgstr "メイン・ウィンドウの高さ"
 
-#: ../src/gnome-system-monitor.schemas.in.h:14
+#: ../src/gnome-system-monitor.schemas.in.h:15
 msgid "Main Window width"
 msgstr "メイン・ウィンドウの幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:15
+#: ../src/gnome-system-monitor.schemas.in.h:16
 msgid "Process view columns order"
 msgstr "プロセス表示の項目の順番"
 
-#: ../src/gnome-system-monitor.schemas.in.h:16
+#: ../src/gnome-system-monitor.schemas.in.h:17
 msgid "Process view sort column"
 msgstr "プロセス一覧の項目の並べ方"
 
-#: ../src/gnome-system-monitor.schemas.in.h:17
+#: ../src/gnome-system-monitor.schemas.in.h:18
 msgid "Process view sort order"
 msgstr "プロセス一覧の並べ方"
 
-#: ../src/gnome-system-monitor.schemas.in.h:18
+#: ../src/gnome-system-monitor.schemas.in.h:19
 msgid "Saves the currently viewed tab"
 msgstr "現在表示しているタブを保存するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
+#: ../src/gnome-system-monitor.schemas.in.h:20
 msgid "Show column zero on startup"
 msgstr "起動時に項目０を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:20
+#: ../src/gnome-system-monitor.schemas.in.h:21
 msgid "Show estimated memory usage column on startup"
 msgstr "起動時にメモリ使用量の項目を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:22
+#: ../src/gnome-system-monitor.schemas.in.h:23
 #, no-c-format
 msgid "Show process CPU % column on startup"
 msgstr "起動時に CPU 使用率の項目を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:23
+#: ../src/gnome-system-monitor.schemas.in.h:24
 msgid "Show process CPU time column on startup"
 msgstr "起動時に CPU 時間の項目を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:24
+#: ../src/gnome-system-monitor.schemas.in.h:25
 msgid "Show process PID column on startup"
 msgstr "起動時に PID の項目を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:25
+#: ../src/gnome-system-monitor.schemas.in.h:26
 msgid "Show process SELinux security context column on startup"
 msgstr "起動時に SELinux のセキュリティ・コンテキストの項目を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:26
+#: ../src/gnome-system-monitor.schemas.in.h:27
 msgid "Show process X server memory column zero startup"
 msgstr "起動時にＸサーバ・メモリの項目を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:27
+#: ../src/gnome-system-monitor.schemas.in.h:28
 msgid "Show process arguments column on startup"
 msgstr "起動時に引数の項目を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:28
+#: ../src/gnome-system-monitor.schemas.in.h:29
 msgid "Show process dependencies in tree form"
 msgstr "ツリー表示でプロセスの依存関係を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:29
+#: ../src/gnome-system-monitor.schemas.in.h:30
 msgid "Show process name column on startup"
 msgstr "起動時にプロセス名の項目を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:30
+#: ../src/gnome-system-monitor.schemas.in.h:31
 msgid "Show process nice column on startup"
 msgstr "起動時に Nice 値の項目を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:31
+#: ../src/gnome-system-monitor.schemas.in.h:32
 msgid "Show process owner column on startup"
 msgstr "起動時にユーザ名の項目を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:32
+#: ../src/gnome-system-monitor.schemas.in.h:33
 msgid "Show process resident memory column on startup"
 msgstr "起動時に Resident メモリの項目を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:33
+#: ../src/gnome-system-monitor.schemas.in.h:34
 msgid "Show process shared memory column on startup"
 msgstr "起動時に共有メモリの項目を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:34
+#: ../src/gnome-system-monitor.schemas.in.h:35
 msgid "Show process start time column on startup"
 msgstr "起動時に起動日時の項目を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:35
+#: ../src/gnome-system-monitor.schemas.in.h:36
 msgid "Show process status column on startup"
 msgstr "起動時に状態の項目を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:36
+#: ../src/gnome-system-monitor.schemas.in.h:37
 msgid "Show process virtual memory column on startup"
 msgstr "起動時に仮想メモリの項目を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:37
+#: ../src/gnome-system-monitor.schemas.in.h:38
 msgid "Show process writable memory column on startup"
 msgstr "起動時に書き込み可能なメモリの項目を表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:38
+#: ../src/gnome-system-monitor.schemas.in.h:39
 msgid "Show warning dialog when killing processes"
 msgstr "プロセスを強制終了する際に警告ダイアログを表示するか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:39
+#: ../src/gnome-system-monitor.schemas.in.h:40
+msgid "Solaris mode for CPU percentage"
+msgstr "CPU の使用率を Solaris モードで表示する"
+
+#: ../src/gnome-system-monitor.schemas.in.h:41
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "デバイス一覧の更新間隔 (ミリ秒)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:40
+#: ../src/gnome-system-monitor.schemas.in.h:42
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "グラフの更新間隔 (ミリ秒)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:41
+#: ../src/gnome-system-monitor.schemas.in.h:43
 msgid "Time in milliseconds between updates of the process view"
 msgstr "プロセス一覧の更新間隔 (ミリ秒)"
 
-#: ../src/gnome-system-monitor.schemas.in.h:42
+#: ../src/gnome-system-monitor.schemas.in.h:44
 msgid "Whether information about all filesystems should be displayed"
 msgstr "全てのファイルシステムの情報を表示するかどうか"
 
-#: ../src/gnome-system-monitor.schemas.in.h:43
+#: ../src/gnome-system-monitor.schemas.in.h:45
 msgid ""
 "Whether to display information about all filesystems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -272,68 +285,68 @@ msgstr ""
 "'procfs' のような類も含まれます)。現在マウントされている全てのファイルシステ"
 "ムの一覧を取得する際に使用します。"
 
-#: ../src/gnome-system-monitor.schemas.in.h:45
+#: ../src/gnome-system-monitor.schemas.in.h:47
 #, no-c-format
 msgid "Width of Process CPU % column"
 msgstr "CPU 使用率の項目の幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:46
+#: ../src/gnome-system-monitor.schemas.in.h:48
 msgid "Width of Process CPU time column"
 msgstr "CPU 時間の項目の幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:47
+#: ../src/gnome-system-monitor.schemas.in.h:49
 msgid "Width of Process PID column"
 msgstr "PID の項目の幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:48
+#: ../src/gnome-system-monitor.schemas.in.h:50
 msgid "Width of Process SELinux security context column"
 msgstr "SELinux のセキュリティ・コンテキストの項目の幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:49
+#: ../src/gnome-system-monitor.schemas.in.h:51
 msgid "Width of Process X server memory column"
 msgstr "Ｘサーバ・メモリ使用率の項目の幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:50
+#: ../src/gnome-system-monitor.schemas.in.h:52
 msgid "Width of Process arguments column"
 msgstr "引数の項目の幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:51
+#: ../src/gnome-system-monitor.schemas.in.h:53
 msgid "Width of Process estimated memory usage column"
 msgstr "メモリ使用量の項目の幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:52
+#: ../src/gnome-system-monitor.schemas.in.h:54
 msgid "Width of Process name column"
 msgstr "プロセス名の項目の幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:53
+#: ../src/gnome-system-monitor.schemas.in.h:55
 msgid "Width of Process nice column"
 msgstr "Nice 値の項目の幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:54
+#: ../src/gnome-system-monitor.schemas.in.h:56
 msgid "Width of Process owner column"
 msgstr "ユーザ名の項目の幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:55
+#: ../src/gnome-system-monitor.schemas.in.h:57
 msgid "Width of Process resident memory column"
 msgstr "Resident メモリの項目の幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:56
+#: ../src/gnome-system-monitor.schemas.in.h:58
 msgid "Width of Process shared memory column"
 msgstr "共有メモリの項目の幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:57
+#: ../src/gnome-system-monitor.schemas.in.h:59
 msgid "Width of Process start time column"
 msgstr "起動日時の項目の幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:58
+#: ../src/gnome-system-monitor.schemas.in.h:60
 msgid "Width of Process status column"
 msgstr "状態の項目の幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:59
+#: ../src/gnome-system-monitor.schemas.in.h:61
 msgid "Width of Process virtual memory column"
 msgstr "仮想メモリの項目の幅"
 
-#: ../src/gnome-system-monitor.schemas.in.h:60
+#: ../src/gnome-system-monitor.schemas.in.h:62
 msgid "Width of Process writable memory column"
 msgstr "書き込み可能なメモリの項目の幅"
 
@@ -385,7 +398,7 @@ msgstr "プロセスの再開(_C)"
 msgid "Continue process if stopped"
 msgstr "停止したプロセスの実行を再開します"
 
-#: ../src/interface.cpp:63 ../src/interface.cpp:183
+#: ../src/interface.cpp:63 ../src/interface.cpp:181
 msgid "End _Process"
 msgstr "プロセスの終了(_P)"
 
@@ -481,64 +494,64 @@ msgstr "ユーザのプロセス(_Y)"
 msgid "Show user own process"
 msgstr "ユーザが起動したプロセスを表示します"
 
-#: ../src/interface.cpp:251
+#: ../src/interface.cpp:248
 msgid "CPU History"
 msgstr "CPU 使用率の履歴"
 
-#: ../src/interface.cpp:302
+#: ../src/interface.cpp:298
 msgid "CPU:"
 msgstr "CPU:"
 
-#: ../src/interface.cpp:305
+#: ../src/interface.cpp:301
 #, c-format
 msgid "CPU%d:"
 msgstr "CPU%d:"
 
-#: ../src/interface.cpp:325
+#: ../src/interface.cpp:321
 msgid "Memory and Swap History"
 msgstr "メモリとスワップの履歴"
 
-#: ../src/interface.cpp:358
+#: ../src/interface.cpp:353
 msgid "User memory:"
 msgstr "ユーザのメモリ:"
 
-#: ../src/interface.cpp:376 ../src/interface.cpp:436
+#: ../src/interface.cpp:371 ../src/interface.cpp:431
 msgid "of"
 msgstr "/"
 
-#: ../src/interface.cpp:417
+#: ../src/interface.cpp:412
 msgid "Used swap:"
 msgstr "使用済みスワップ:"
 
-#: ../src/interface.cpp:476
+#: ../src/interface.cpp:471
 msgid "Network History"
 msgstr "ネットワークの履歴"
 
-#: ../src/interface.cpp:508
+#: ../src/interface.cpp:502
 msgid "Received:"
 msgstr "受信したデータ:"
 
-#: ../src/interface.cpp:528 ../src/interface.cpp:571
+#: ../src/interface.cpp:522 ../src/interface.cpp:565
 msgid "Total:"
 msgstr "合計:"
 
-#: ../src/interface.cpp:552
+#: ../src/interface.cpp:546
 msgid "Sent:"
 msgstr "送信したデータ:"
 
-#: ../src/interface.cpp:733
+#: ../src/interface.cpp:722
 msgid "System"
 msgstr "システム"
 
-#: ../src/interface.cpp:739 ../src/procdialogs.cpp:501
+#: ../src/interface.cpp:726 ../src/procdialogs.cpp:514
 msgid "Processes"
 msgstr "プロセス"
 
-#: ../src/interface.cpp:745 ../src/procdialogs.cpp:597
+#: ../src/interface.cpp:730 ../src/procdialogs.cpp:629
 msgid "Resources"
 msgstr "リソース"
 
-#: ../src/load-graph.cpp:424 ../src/load-graph.cpp:434
+#: ../src/load-graph.cpp:440 ../src/load-graph.cpp:450
 #, c-format
 msgid "%s/s"
 msgstr "%s/秒"
@@ -551,7 +564,7 @@ msgstr "プロセス"
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:377 ../src/memmaps.cpp:427
+#: ../src/lsof.cpp:377 ../src/memmaps.cpp:478
 msgid "Filename"
 msgstr "フルネーム"
 
@@ -572,35 +585,52 @@ msgstr "大/小文字を区別しない"
 msgid "S_earch results:"
 msgstr "検索した結果(_E):"
 
-#: ../src/memmaps.cpp:428
+#: ../src/memmaps.cpp:479
 msgid "VM Start"
 msgstr "VM の先頭"
 
-#: ../src/memmaps.cpp:429
+#: ../src/memmaps.cpp:480
 msgid "VM End"
 msgstr "VM の最後"
 
-#: ../src/memmaps.cpp:430
+#: ../src/memmaps.cpp:481
 msgid "VM Size"
 msgstr "VM のサイズ"
 
-#: ../src/memmaps.cpp:431
+#: ../src/memmaps.cpp:482
 msgid "Flags"
 msgstr "フラグ"
 
-#: ../src/memmaps.cpp:432
+#: ../src/memmaps.cpp:483
 msgid "VM Offset"
 msgstr "VM のオフセット"
 
-#: ../src/memmaps.cpp:434
+#: ../src/memmaps.cpp:484
+msgid "Private clean"
+msgstr "Private clean"
+
+#: ../src/memmaps.cpp:485
+msgid "Private dirty"
+msgstr "Private dirty"
+
+#: ../src/memmaps.cpp:486
+msgid "Shared clean"
+msgstr "Shared clean"
+
+#: ../src/memmaps.cpp:487
+msgid "Shared dirty"
+msgstr "Shared dirty"
+
+#: ../src/memmaps.cpp:489
 msgid "Inode"
 msgstr "I-ノード"
 
-#: ../src/memmaps.cpp:540
+#. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+#: ../src/memmaps.cpp:598
 msgid "Memory Maps"
 msgstr "メモリ・マップ"
 
-#: ../src/memmaps.cpp:560
+#: ../src/memmaps.cpp:617
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "プロセス \"%s\" (PID %u) のメモリ・マップ(_M):"
@@ -740,207 +770,216 @@ msgstr ""
 "プロセスの優先度は Nice 値で与えられます。小さい Nice 値は高いプロセスに相当"
 "します。"
 
-#: ../src/procdialogs.cpp:379
+#: ../src/procdialogs.cpp:392
 msgid "Process i_nformation shown in list:"
-msgstr "一覧に表示するプロセス情報(_N):"
+msgstr "一覧に表示するプロセスの情報(_N):"
 
-#: ../src/procdialogs.cpp:431
+#: ../src/procdialogs.cpp:444
 msgid "Icon"
 msgstr "アイコン"
 
-#: ../src/procdialogs.cpp:478
+#: ../src/procdialogs.cpp:491
 msgid "System Monitor Preferences"
 msgstr "システム・モニタの設定"
 
-#: ../src/procdialogs.cpp:508
+#: ../src/procdialogs.cpp:521
 msgid "Behavior"
 msgstr "動作"
 
-#: ../src/procdialogs.cpp:527 ../src/procdialogs.cpp:623
-#: ../src/procdialogs.cpp:709
+#: ../src/procdialogs.cpp:540 ../src/procdialogs.cpp:655
+#: ../src/procdialogs.cpp:741
 msgid "_Update interval in seconds:"
 msgstr "更新間隔(秒)(_U):"
 
-#: ../src/procdialogs.cpp:552
+#: ../src/procdialogs.cpp:565
 msgid "Enable _smooth refresh"
 msgstr "スムース・リフレッシュを有効にする(_S)"
 
-#: ../src/procdialogs.cpp:566
+#: ../src/procdialogs.cpp:579
 msgid "Alert before ending or _killing processes"
 msgstr "プロセスを終了または強制終了する前に警告する(_K)"
 
-#: ../src/procdialogs.cpp:579
+#: ../src/procdialogs.cpp:593
+msgid "Solaris mode"
+msgstr "Solaris モードにする"
+
+#: ../src/procdialogs.cpp:611
 msgid "Information Fields"
 msgstr "表示する項目"
 
-#: ../src/procdialogs.cpp:604
+#: ../src/procdialogs.cpp:636
 msgid "Graphs"
 msgstr "グラフ"
 
-#: ../src/procdialogs.cpp:645
+#: ../src/procdialogs.cpp:677
 msgid "_Background color:"
 msgstr "背景色(_B):"
 
-#: ../src/procdialogs.cpp:664
+#: ../src/procdialogs.cpp:696
 msgid "_Grid color:"
 msgstr "グリッドの色(_G):"
 
-#: ../src/procdialogs.cpp:729
+#: ../src/procdialogs.cpp:761
 msgid "Show _all filesystems"
 msgstr "全てのファイルシステムを表示する(_A)"
 
-#: ../src/proctable.cpp:273
+#: ../src/proctable.cpp:271
 msgid "Process Name"
 msgstr "プロセス名"
 
-#: ../src/proctable.cpp:274
+#: ../src/proctable.cpp:272
 msgid "User"
 msgstr "ユーザ"
 
-#: ../src/proctable.cpp:275
+#: ../src/proctable.cpp:273
 msgid "Status"
 msgstr "状態"
 
-#: ../src/proctable.cpp:276
+#: ../src/proctable.cpp:274
 msgid "Virtual Memory"
 msgstr "仮想メモリ"
 
-#: ../src/proctable.cpp:277
+#: ../src/proctable.cpp:275
 msgid "Resident Memory"
 msgstr "Resident メモリ"
 
-#: ../src/proctable.cpp:278
+#: ../src/proctable.cpp:276
 msgid "Writable Memory"
 msgstr "Writable メモリ"
 
-#: ../src/proctable.cpp:279
+#: ../src/proctable.cpp:277
 msgid "Shared Memory"
 msgstr "共有メモリ"
 
-#: ../src/proctable.cpp:280
+#: ../src/proctable.cpp:278
 msgid "X Server Memory"
 msgstr "X サーバ・メモリ"
 
-#: ../src/proctable.cpp:281
+#: ../src/proctable.cpp:279
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:282
+#: ../src/proctable.cpp:280
 msgid "CPU Time"
 msgstr "CPU 時間"
 
-#: ../src/proctable.cpp:283
+#: ../src/proctable.cpp:281
 msgid "Started"
 msgstr "起動日時"
 
-#: ../src/proctable.cpp:284
+#: ../src/proctable.cpp:282
 msgid "Nice"
 msgstr "Nice値"
 
-#: ../src/proctable.cpp:285
+#: ../src/proctable.cpp:283
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:286
+#: ../src/proctable.cpp:284
 msgid "Security Context"
 msgstr "セキュリティ・コンテキスト"
 
-#: ../src/proctable.cpp:287
+#: ../src/proctable.cpp:285
 msgid "Command Line"
 msgstr "コマンドライン"
 
-#: ../src/proctable.cpp:288
+#: ../src/proctable.cpp:286
 msgid "Memory"
 msgstr "メモリ"
 
-#: ../src/proctable.cpp:472
+#: ../src/proctable.cpp:480
 msgid "Running"
 msgstr "実行中"
 
-#: ../src/proctable.cpp:477
+#: ../src/proctable.cpp:484
 msgid "Stopped"
 msgstr "停止中"
 
-#: ../src/proctable.cpp:482
+#: ../src/proctable.cpp:488
 msgid "Zombie"
 msgstr "ゾンビ"
 
-#: ../src/proctable.cpp:487
+#: ../src/proctable.cpp:492
 msgid "Uninterruptible"
 msgstr "割り込み不可"
 
-#: ../src/proctable.cpp:492
+#: ../src/proctable.cpp:496
 msgid "Sleeping"
 msgstr "スリープ中"
 
 #. xgettext: weeks, days
-#: ../src/proctable.cpp:638
+#: ../src/proctable.cpp:623
 #, c-format
 msgid "%uw%ud"
 msgstr "%uw%ud"
 
 #. xgettext: days, hours (0 -> 23)
-#: ../src/proctable.cpp:642
+#: ../src/proctable.cpp:627
 #, c-format
 msgid "%ud%02uh"
 msgstr "%ud%02uh"
 
 #. xgettext: hours (0 -> 23), minutes, seconds
-#: ../src/proctable.cpp:646
+#: ../src/proctable.cpp:631
 #, c-format
 msgid "%u:%02u:%02u"
 msgstr "%u:%02u:%02u"
 
 #. xgettext: minutes, seconds, centiseconds
-#: ../src/proctable.cpp:649
+#: ../src/proctable.cpp:634
 #, c-format
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: ../src/proctable.cpp:1097
+#: ../src/proctable.cpp:1051
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "1, 5, 15分後の平均負荷: %0.2f, %0.2f, %0.2f"
 
-#: ../src/sysinfo.cpp:117
+#: ../src/sysinfo.cpp:92
 msgid "Unknown CPU model"
 msgstr "(CPU の型式は不明です)"
 
-#: ../src/sysinfo.cpp:401
-#, c-format
-msgid "Release %s (%s)"
-msgstr "リリース %s (%s)"
-
-#: ../src/sysinfo.cpp:406
+#: ../src/sysinfo.cpp:400
 #, c-format
 msgid "Release %s"
 msgstr "リリース %s"
 
+#: ../src/sysinfo.cpp:407
+#, c-format
+msgid "Kernel %s"
+msgstr "カーネル %s"
+
+#: ../src/sysinfo.cpp:415
+#, c-format
+msgid "GNOME %s"
+msgstr "GNOME %s"
+
 #. hardware section
-#: ../src/sysinfo.cpp:416
+#: ../src/sysinfo.cpp:424
 msgid "<b>Hardware</b>"
 msgstr "<b>ハードウェア</b>"
 
-#: ../src/sysinfo.cpp:437
+#: ../src/sysinfo.cpp:445
 msgid "Memory:"
 msgstr "メモリ:"
 
-#: ../src/sysinfo.cpp:457
+#: ../src/sysinfo.cpp:465
 #, c-format
 msgid "Processor %d:"
 msgstr "プロセッサ %d:"
 
-#: ../src/sysinfo.cpp:462
+#: ../src/sysinfo.cpp:470
 msgid "Processor:"
 msgstr "プロセッサ:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:482
+#: ../src/sysinfo.cpp:490
 msgid "<b>System Status</b>"
 msgstr "<b>システムの状態</b>"
 
-#: ../src/sysinfo.cpp:503
+#: ../src/sysinfo.cpp:511
 msgid "Available disk space:"
 msgstr "利用可能なディスク容量:"
 
@@ -965,12 +1004,3 @@ msgstr "%.1f Mバイト"
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f Gバイト"
-
-#~ msgid "Unknown distribution"
-#~ msgstr "(ディストリビューションは不明です)"
-
-#~ msgid "Unknown release"
-#~ msgstr "(リリース番号は不明です)"
-
-#~ msgid "Unknown version"
-#~ msgstr "(バージョン番号は不明です)"
