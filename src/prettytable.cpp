@@ -7,6 +7,9 @@
 #include <string.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gtkmm.h>
+#include <glibtop/procstate.h>
+
+#include <vector>
 
 #include "prettytable.h"
 #include "defaulttable.h"
@@ -125,9 +128,9 @@ PrettyTable::unregister_application(pid_t pid)
 
 
 Glib::RefPtr<Gdk::Pixbuf>
-PrettyTable::get_icon_from_theme(pid_t, const gchar* command)
+PrettyTable::get_icon_from_theme(const ProcInfo &info)
 {
-  return this->theme->load_icon(command, APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN);
+  return this->theme->load_icon(info.name, APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN);
 }
 
 
@@ -151,12 +154,12 @@ bool PrettyTable::get_default_icon_name(const string &cmd, string &name)
 */
 
 Glib::RefPtr<Gdk::Pixbuf>
-PrettyTable::get_icon_from_default(pid_t, const gchar* command)
+PrettyTable::get_icon_from_default(const ProcInfo &info)
 {
   Glib::RefPtr<Gdk::Pixbuf> pix;
   string name;
 
-  if (this->get_default_icon_name(command, name)) {
+  if (this->get_default_icon_name(info.name, name)) {
     IconCache::iterator it(this->defaults.find(name));
 
     if (it == this->defaults.end()) {
@@ -173,11 +176,11 @@ PrettyTable::get_icon_from_default(pid_t, const gchar* command)
 
 
 Glib::RefPtr<Gdk::Pixbuf>
-PrettyTable::get_icon_from_wnck(pid_t pid, const gchar*)
+PrettyTable::get_icon_from_wnck(const ProcInfo &info)
 {
   Glib::RefPtr<Gdk::Pixbuf> icon;
 
-  IconsForPID::iterator it(this->apps.find(pid));
+  IconsForPID::iterator it(this->apps.find(info.pid));
 
   if (it != this->apps.end())
     icon = it->second;
@@ -188,38 +191,75 @@ PrettyTable::get_icon_from_wnck(pid_t pid, const gchar*)
 
 
 Glib::RefPtr<Gdk::Pixbuf>
-PrettyTable::get_icon_from_name(pid_t, const gchar* command)
+PrettyTable::get_icon_from_name(const ProcInfo &info)
 {
-  return this->theme->load_icon(command, APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN);
+  return this->theme->load_icon(info.name, APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN);
 }
 
 
 Glib::RefPtr<Gdk::Pixbuf>
-PrettyTable::get_icon_dummy(pid_t, const gchar*)
+PrettyTable::get_icon_dummy(const ProcInfo &)
 {
   return this->theme->load_icon("applications-other", APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN);
 }
 
 
+namespace
+{
+  bool has_kthreadd()
+  {
+    glibtop_proc_state buf;
+    glibtop_get_proc_state(&buf, 2);
+
+    return buf.cmd == string("kthreadd");
+  }
+
+  // @pre: has_kthreadd
+  bool is_kthread(const ProcInfo &info)
+  {
+    return info.pid == 2 or info.ppid == 2;
+  }
+}
+
+
 Glib::RefPtr<Gdk::Pixbuf>
-PrettyTable::get_icon(const gchar* command, pid_t pid)
+PrettyTable::get_icon_for_kernel(const ProcInfo &info)
+{
+  if (is_kthread(info))
+    return this->theme->load_icon("applications-system", APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN);
+
+  return Glib::RefPtr<Gdk::Pixbuf>();
+}
+
+
+
+void
+PrettyTable::set_icon(ProcInfo &info)
 {
   typedef Glib::RefPtr<Gdk::Pixbuf>
-    (PrettyTable::*Getter)(pid_t pid, const gchar* command);
+    (PrettyTable::*Getter)(const ProcInfo &);
 
-  const Getter getters[] = {
-    &PrettyTable::get_icon_from_wnck,
-    &PrettyTable::get_icon_from_theme,
-    &PrettyTable::get_icon_from_default,
-    &PrettyTable::get_icon_from_name,
-    &PrettyTable::get_icon_dummy,
-  };
+  static std::vector<Getter> getters;
+
+  if (getters.empty())
+    {
+      getters.push_back(&PrettyTable::get_icon_from_wnck);
+      getters.push_back(&PrettyTable::get_icon_from_theme);
+      getters.push_back(&PrettyTable::get_icon_from_default);
+      getters.push_back(&PrettyTable::get_icon_from_name);
+      if (has_kthreadd())
+	{
+	  procman_debug("kthreadd is running with PID 2");
+	  getters.push_back(&PrettyTable::get_icon_for_kernel);
+	}
+      getters.push_back(&PrettyTable::get_icon_dummy);
+    }
 
   Glib::RefPtr<Gdk::Pixbuf> icon;
 
-  for (size_t i = 0; not icon and i < G_N_ELEMENTS(getters); ++i)
-    icon = (this->*getters[i])(pid, command);
+  for (size_t i = 0; not icon and i < getters.size(); ++i)
+    icon = (this->*getters[i])(info);
 
-  return icon;
+  info.set_icon(icon);
 }
 

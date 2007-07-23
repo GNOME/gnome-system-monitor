@@ -20,8 +20,6 @@ static const PrettyTableItem default_table[] = {
 	ITEM("(ba|z|tc|c|k)?sh", "utilities-terminal"),
 	ITEM("(k|sys|u)logd|logger", "internet-news-reader"),
 	ITEM("X(org)?", "display"),
-	ITEM("(ksoftirqd|aio|events|kondemand|reiserfs|kswapd|kblockd)/?\\d+", "applications-system"),
-	ITEM("kthread|khelper|khubd|kfand|ksuspend_usbd|pdflush", "applications-system"),
 	ITEM("apache2?|httpd|lighttpd", "internet-web-browser"),
 	ITEM(".*applet(-?2)?", "gnome-applets"),
 	ITEM("atd|cron|CRON|ntpd", "date"),

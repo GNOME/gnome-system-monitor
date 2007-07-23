@@ -708,13 +708,14 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, bool forced = false)
 
 	gtk_tree_store_set (GTK_TREE_STORE (model), &info->node,
 			    COL_POINTER, info,
-			    COL_PIXBUF, info->pixbuf->gobj(),
 			    COL_NAME, info->name,
 			    COL_ARGS, info->arguments,
 			    COL_TOOLTIP, info->tooltip,
 			    COL_PID, info->pid,
 			    COL_SECURITYCONTEXT, info->security_context,
 			    -1);
+
+	procdata->pretty_table.set_icon(*info);
 
 	procman_debug("inserted %d%s", info->pid, (forced ? " (forced)" : ""));
 }
@@ -820,8 +821,6 @@ ProcInfo::ProcInfo(pid_t pid)
 	info->start_time = proctime.start_time;
 
 	get_process_selinux_context (info);
-
-	info->pixbuf = ProcData::get_instance()->pretty_table.get_icon(info->name, pid);
 }
 
 
