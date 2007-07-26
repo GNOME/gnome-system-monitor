@@ -276,7 +276,7 @@ proctable_new (ProcData * const procdata)
 		N_("Writable Memory"),
 		N_("Shared Memory"),
 		N_("X Server Memory"),
-		/* xgettext:no-c-format */ N_("% CPU"),
+		/* translators:no-c-format */ N_("% CPU"),
 		N_("CPU Time"),
 		N_("Started"),
 		N_("Nice"),
@@ -619,18 +619,18 @@ format_duration_for_display(unsigned centiseconds)
 	       && divide(&weeks, &days, 7));
 
 	if (weeks)
-		/* xgettext: weeks, days */
+		/* translators: weeks, days */
 		return g_strdup_printf(_("%uw%ud"), weeks, days);
 
 	if (days)
-		/* xgettext: days, hours (0 -> 23) */
+		/* translators: days, hours (0 -> 23) */
 		return g_strdup_printf(_("%ud%02uh"), days, hours);
 
 	if (hours)
-		/* xgettext: hours (0 -> 23), minutes, seconds */
+		/* translators: hours (0 -> 23), minutes, seconds */
 		return g_strdup_printf(_("%u:%02u:%02u"), hours, minutes, seconds);
 
-	/* xgettext: minutes, seconds, centiseconds */
+	/* translators: minutes, seconds, centiseconds */
 	return g_strdup_printf(_("%u:%02u.%02u"), minutes, seconds, centiseconds);
 }
 
