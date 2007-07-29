@@ -102,32 +102,6 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 
 
 
-static GtkWidget *
-create_proctree(GtkTreeModel *model)
-{
-	GtkWidget *proctree;
-	GtkWidget* (*sexy_new)(void);
-	void (*sexy_set_column)(void*, guint);
-
-
-	if (FALSE && load_symbols("libsexy.so",
-			 "sexy_tree_view_new", &sexy_new,
-			 "sexy_tree_view_set_tooltip_label_column", &sexy_set_column,
-			 NULL)) {
-		proctree = sexy_new();
-		gtk_tree_view_set_model(GTK_TREE_VIEW(proctree), model);
-		sexy_set_column(proctree, COL_TOOLTIP);
-	} else {
-		proctree = gtk_tree_view_new_with_model(model);
-	}
-
-	return proctree;
-}
-
-
-
-
-
 static void
 set_proctree_reorderable(ProcData *procdata)
 {
@@ -319,7 +293,10 @@ proctable_new (ProcData * const procdata)
 				    G_TYPE_STRING	/* Sexy tooltip */
 		);
 
-	proctree = create_proctree(GTK_TREE_MODEL(model));
+	proctree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
+#if GTK_CHECK_VERSION(2, 11, 6)
+	gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (proctree), COL_TOOLTIP);
+#endif
 	gtk_tree_view_set_search_equal_func (GTK_TREE_VIEW (proctree),
 					     search_equal_func,
 					     NULL,
@@ -813,7 +790,10 @@ ProcInfo::ProcInfo(pid_t pid)
 	/* FIXME : wrong. name and arguments may change with exec* */
 	get_process_name (info, procstate.cmd, arguments[0]);
 
-	info->tooltip = g_strjoinv(" ", arguments);
+	char* tooltip = g_strjoinv(" ", arguments);
+	info->tooltip = g_markup_escape_text(tooltip, -1);
+	g_free(tooltip);
+
 	info->arguments = g_strescape(info->tooltip, "\\\"");
 	g_strfreev(arguments);
 
