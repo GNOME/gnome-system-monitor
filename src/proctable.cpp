@@ -56,10 +56,6 @@ extern "C" {
 #include "e_date.h"
 }
 
-static guint64 total_time = 1;
-static guint64 total_time_last = 1;
-
-
 
 ProcInfo::List ProcInfo::all;
 
@@ -755,7 +751,7 @@ update_info (ProcData *procdata, ProcInfo *info)
 
 	get_process_user(procdata, info, procstate.uid);
 
-	info->pcpu = (proctime.rtime - info->cpu_time_last) * 100 / total_time;
+	info->pcpu = (proctime.rtime - info->cpu_time_last) * 100 / procdata->cpu_total_time;
 	info->pcpu = MIN(info->pcpu, 100);
 
 	if (procdata->config.solaris_mode)
@@ -967,8 +963,8 @@ proctable_update_list (ProcData * const procdata)
 	/* FIXME: total cpu time elapsed should be calculated on an individual basis here
 	** should probably have a total_time_last gint in the ProcInfo structure */
 	glibtop_get_cpu (&cpu);
-	total_time = MAX(cpu.total - total_time_last, 1);
-	total_time_last = cpu.total;
+	procdata->cpu_total_time = MAX(cpu.total - procdata->cpu_total_time_last, 1);
+	procdata->cpu_total_time_last = cpu.total;
 
 	refresh_list (procdata, pid_list, proclist.number);
 

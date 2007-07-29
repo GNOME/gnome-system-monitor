@@ -43,6 +43,21 @@
 #include "util.h"
 #include "gconf-keys.h"
 
+
+
+ProcData::ProcData()
+  : tree(NULL),
+    cpu_graph(NULL),
+    mem_graph(NULL),
+    net_graph(NULL),
+    selected_process(NULL),
+    timeout(0),
+    disk_timeout(0),
+    cpu_total_time(1),
+    cpu_total_time_last(1)
+{ }
+
+
 ProcData* ProcData::get_instance()
 {
   static ProcData instance;
@@ -234,14 +249,6 @@ procman_data_new (GConfClient *client)
 	glibtop_cpu cpu;
 
 	pd = ProcData::get_instance();
-	
-	pd->tree = NULL;
-	pd->selected_process = NULL;
-	pd->timeout = 0;
-	pd->cpu_graph = NULL;
-	pd->mem_graph = NULL;
-	pd->net_graph = NULL;
-	pd->disk_timeout = 0;
 
 	/* username is usually 8 chars long
 	   for caching, we create chunks of 128 chars */

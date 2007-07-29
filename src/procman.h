@@ -184,6 +184,14 @@ struct ProcData
 	unsigned	frequency;
 
 	SmoothRefresh  *smooth_refresh;
+
+	guint64 cpu_total_time;
+	guint64 cpu_total_time_last;
+
+private:
+	ProcData();
+	/* undefined */ ProcData(const ProcData &);
+	/* undefined */ ProcData& operator=(const ProcData &);
 };
 
 void		procman_save_config (ProcData *data);
