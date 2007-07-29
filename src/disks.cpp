@@ -10,6 +10,7 @@
 #include "disks.h"
 #include "util.h"
 #include "interface.h"
+#include "iconthemewrapper.h"
 
 enum DiskColumns
 {
@@ -57,14 +58,13 @@ fsusage_stats(const glibtop_fsusage *buf,
 
 
 
-static GdkPixbuf *
+static Glib::RefPtr<Gdk::Pixbuf>
 get_icon_for_device(const char *mountpoint)
 {
-	GdkPixbuf *pixbuf;
-	GtkIconTheme *icon_theme;
+	IconThemeWrapper icon_theme;
 	GnomeVFSVolumeMonitor *monitor;
 	GnomeVFSVolume *volume;
-	char *icon_name;
+	string icon_name;
 
 	monitor = gnome_vfs_get_volume_monitor();
 	volume = gnome_vfs_volume_monitor_get_volume_for_path(monitor, mountpoint);
@@ -79,17 +79,15 @@ get_icon_for_device(const char *mountpoint)
 	if (!volume)
 	  {
 	    g_warning("Cannot even get volume for mount point '/'");
-	    return NULL;
+	    icon_name = "gnome-dev-harddisk";
+	  }
+	else
+	  {
+	    icon_name = make_string(gnome_vfs_volume_get_icon(volume));
+	    gnome_vfs_volume_unref(volume);
 	  }
 
-	icon_name = gnome_vfs_volume_get_icon(volume);
-	icon_theme = gtk_icon_theme_get_default();
-	pixbuf = gtk_icon_theme_load_icon(icon_theme, icon_name, 24, GTK_ICON_LOOKUP_USE_BUILTIN, NULL);
-
-	gnome_vfs_volume_unref(volume);
-	g_free(icon_name);
-
-	return pixbuf;
+	return icon_theme->load_icon(icon_name, 24, Gtk::ICON_LOOKUP_USE_BUILTIN);
 }
 
 
@@ -162,7 +160,7 @@ remove_old_disks(GtkTreeModel *model, const glibtop_mountentry *entries, guint n
 static void
 add_disk(GtkListStore *list, const glibtop_mountentry *entry)
 {
-	GdkPixbuf *pixbuf;
+	Glib::RefPtr<Gdk::Pixbuf> pixbuf;
 	GtkTreeIter iter;
 	glibtop_fsusage usage;
 	guint64 bused, bfree, bavail, btotal;
@@ -181,7 +179,7 @@ add_disk(GtkListStore *list, const glibtop_mountentry *entry)
 		gtk_list_store_append(list, &iter);
 
 	gtk_list_store_set(list, &iter,
-			   DISK_ICON, pixbuf,
+			   DISK_ICON, pixbuf->gobj(),
 			   DISK_DEVICE, entry->devname,
 			   DISK_DIR, entry->mountdir,
 			   DISK_TYPE, entry->type,
@@ -191,10 +189,6 @@ add_disk(GtkListStore *list, const glibtop_mountentry *entry)
 			   DISK_AVAIL, bavail,
 			   DISK_USED, bused,
 			   -1);
-
-	if (pixbuf)
-		g_object_unref(pixbuf);
-
 }
 
 

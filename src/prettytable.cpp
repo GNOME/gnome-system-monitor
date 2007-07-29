@@ -23,24 +23,6 @@ namespace
 }
 
 
-Glib::RefPtr<Gdk::Pixbuf>
-IconThemeWrapper::load_icon(const Glib::ustring& icon_name,
-			    int size, Gtk::IconLookupFlags flags) const
-{
-  try
-    {
-      return this->theme->load_icon(icon_name, size, flags);
-    }
-  catch (Gtk::IconThemeError &error)
-    {
-      if (error.code() != Gtk::IconThemeError::ICON_THEME_NOT_FOUND)
-	throw;
-      return Glib::RefPtr<Gdk::Pixbuf>();
-    }
-}
-
-
-
 PrettyTable::PrettyTable()
 {
   WnckScreen* screen = wnck_screen_get_default();

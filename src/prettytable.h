@@ -16,27 +16,12 @@ extern "C" {
 #include <libwnck/libwnck.h>
 }
 
+#include "iconthemewrapper.h"
+
 class ProcInfo;
 
 using std::string;
 
-
-class IconThemeWrapper
-{
- public:
-  IconThemeWrapper(Glib::RefPtr<Gtk::IconTheme> a_theme = Gtk::IconTheme::get_default())
-    : theme(a_theme)
-  { }
-
-  Glib::RefPtr<Gdk::Pixbuf>
-  load_icon(const Glib::ustring& icon_name, int size, Gtk::IconLookupFlags flags) const;
-
-  const IconThemeWrapper* operator->() const
-  { return this; }
-
- private:
-  Glib::RefPtr<Gtk::IconTheme> theme;
-};
 
 
 class PrettyTable

@@ -32,6 +32,7 @@ gnome_system_monitor_SOURCES = \
 	lsof.cpp lsof.h \
 	selection.cpp selection.h \
 	gconf-keys.cpp gconf-keys.h \
+	iconthemewrapper.cpp iconthemewrapper.h \
 	e_date.c e_date.h
 
 
