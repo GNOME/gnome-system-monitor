@@ -55,7 +55,7 @@ private:
 
   IconsForPID apps;
   IconCache defaults;
-  IconThemeWrapper theme;
+  procman::IconThemeWrapper theme;
 };
 
 

@@ -6,8 +6,8 @@
 
 
 Glib::RefPtr<Gdk::Pixbuf>
-IconThemeWrapper::load_icon(const Glib::ustring& icon_name,
-			    int size, Gtk::IconLookupFlags flags) const
+procman::IconThemeWrapper::load_icon(const Glib::ustring& icon_name,
+				     int size, Gtk::IconLookupFlags flags) const
 {
   try
     {

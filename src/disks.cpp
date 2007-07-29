@@ -61,7 +61,7 @@ fsusage_stats(const glibtop_fsusage *buf,
 static Glib::RefPtr<Gdk::Pixbuf>
 get_icon_for_device(const char *mountpoint)
 {
-	IconThemeWrapper icon_theme;
+	procman::IconThemeWrapper icon_theme;
 	GnomeVFSVolumeMonitor *monitor;
 	GnomeVFSVolume *volume;
 	string icon_name;
