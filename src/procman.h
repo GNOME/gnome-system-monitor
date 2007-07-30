@@ -144,6 +144,14 @@ class ProcInfo
 
 	guint8		pcpu; /* 0% - 100% */
 	gint8		nice;
+
+// private:
+	// tracks cpu time per process keeps growing because if a
+	// ProcInfo is deleted this does not mean that the process is
+	// not going to be recreated on the next update.  For example,
+	// if dependencies + (My or Active), the proclist is cleared
+	// on each update.  This is a workaround
+	static std::map<pid_t, guint64> cpu_times;
 };
 
 struct ProcData

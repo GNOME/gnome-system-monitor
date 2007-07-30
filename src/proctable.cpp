@@ -58,6 +58,7 @@ extern "C" {
 
 
 ProcInfo::List ProcInfo::all;
+std::map<pid_t, guint64> ProcInfo::cpu_times;
 
 
 ProcInfo* ProcInfo::find(pid_t pid)
@@ -757,7 +758,7 @@ update_info (ProcData *procdata, ProcInfo *info)
 	if (procdata->config.solaris_mode)
 	  info->pcpu /= procdata->config.num_cpus;
 
-	info->cpu_time_last = proctime.rtime;
+	ProcInfo::cpu_times[info->pid] = info->cpu_time_last = proctime.rtime;
 	info->nice = procuid.nice;
 	info->ppid = procuid.ppid;
 }
@@ -793,7 +794,14 @@ ProcInfo::ProcInfo(pid_t pid)
 	info->arguments = g_strescape(info->tooltip, "\\\"");
 	g_strfreev(arguments);
 
-	info->cpu_time_last = proctime.rtime;
+	guint64 cpu_time = proctime.rtime;
+	std::map<pid_t, guint64>::iterator it(ProcInfo::cpu_times.find(pid));
+	if (it != ProcInfo::cpu_times.end())
+	  {
+	    if (proctime.rtime >= it->second)
+	      cpu_time = it->second;
+	  }
+	info->cpu_time_last = cpu_time;
 	info->start_time = proctime.start_time;
 
 	get_process_selinux_context (info);
