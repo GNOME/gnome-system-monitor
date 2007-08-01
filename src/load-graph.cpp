@@ -437,7 +437,7 @@ get_net (LoadGraph *g)
 	net_scale(g, din, dout);
 
 	text1 = SI_gnome_vfs_format_file_size_for_display (din);
-	// translators: rate, 10MiB/s
+	// xgettext: rate, 10MiB/s
 	text2 = g_strdup_printf (_("%s/s"), text1);
 	gtk_label_set_text (GTK_LABEL (g->labels.net_in), text2);
 	g_free (text1);
@@ -448,7 +448,7 @@ get_net (LoadGraph *g)
 	g_free (text1);
 
 	text1 = SI_gnome_vfs_format_file_size_for_display (dout);
-	// translators: rate, 10MiB/s
+	// xgettext: rate, 10MiB/s
 	text2 = g_strdup_printf (_("%s/s"), text1);
 	gtk_label_set_text (GTK_LABEL (g->labels.net_out), text2);
 	g_free (text1);

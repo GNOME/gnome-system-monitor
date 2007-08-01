@@ -66,18 +66,18 @@ procdialog_create_kill_dialog (ProcData *procdata, int signal)
 
   	
   	if (signal == SIGKILL) {
-                /*translators: primary alert message*/
+                /*xgettext: primary alert message*/
   		primary = _("Kill the selected process?");
-		/*translators: secondary alert message*/
+		/*xgettext: secondary alert message*/
 		secondary = _("Killing a process may destroy data, break the "
 			      "session or introduce a security risk. "
 			      "Only unresponding processes should be killed.");
   		button_text = _("_Kill Process");
 		  	}
   	else {
-                /*translators: primary alert message*/
+                /*xgettext: primary alert message*/
                 primary = _("End the selected process?");
-	        /*translators: secondary alert message*/
+	        /*xgettext: secondary alert message*/
 		secondary = _("Ending a process may destroy data, break the "
 			      "session or introduce a security risk. "
 			      "Only unresponding processes should be ended.");

@@ -44,7 +44,7 @@ static void	cb_toggle_tree (GtkAction *action, gpointer data);
 
 static const GtkActionEntry menu_entries[] =
 {
-	// translators: noun, top level menu.
+	// xgettext: noun, top level menu.
 	// "File" did not make sense for system-monitor
 	{ "Monitor", NULL, N_("_Monitor") },
 	{ "Edit", NULL, N_("_Edit") },
@@ -369,7 +369,7 @@ create_sys_view (ProcData *procdata)
 			  GTK_FILL,
 			  0,
 			  0);
-	// translators: user memory: 123 MiB of 512MiB
+	// xgettext: user memory: 123 MiB of 512MiB
 	label = gtk_label_new (_("of"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
@@ -429,7 +429,7 @@ create_sys_view (ProcData *procdata)
 			  GTK_FILL,
 			  0,
 			  0);
-	// translators: swap: 10MiB of 1GiB
+	// xgettext: swap: 10MiB of 1GiB
 	label = gtk_label_new (_("of"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 3, 4, 1, 2, GTK_FILL, GTK_FILL, 0, 0);

@@ -151,7 +151,7 @@ filter_date (time_t date)
 	gboolean done = FALSE;
 	
 	if (date == 0)
-		// translators: ? stands for unknown
+		// xgettext: ? stands for unknown
 		return g_strdup (_("?"));
 	
 	localtime_r (&date, &then);

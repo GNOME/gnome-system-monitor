@@ -476,25 +476,25 @@ create_memmapsdata (ProcData *procdata)
 
 	const gchar * const titles[] = {
 		N_("Filename"),
-		// translators: virtual memory start
+		// xgettext: virtual memory start
 		N_("VM Start"),
-		// translators: virtual memory end
+		// xgettext: virtual memory end
 		N_("VM End"),
-		// translators: virtual memory syze
+		// xgettext: virtual memory syze
 		N_("VM Size"),
 		N_("Flags"),
-		// translators: virtual memory offset
+		// xgettext: virtual memory offset
 		N_("VM Offset"),
-		// translators: memory that has not been modified since
+		// xgettext: memory that has not been modified since
 		// it has been allocated
 		N_("Private clean"),
-		// translators: memory that has been modified since it
+		// xgettext: memory that has been modified since it
 		// has been allocated
 		N_("Private dirty"),
-		// translators: shared memory that has not been modified
+		// xgettext: shared memory that has not been modified
 		// since it has been allocated
 		N_("Shared clean"),
-		// translators: shared memory that has been modified
+		// xgettext: shared memory that has been modified
 		// since it has been allocated
 		N_("Shared dirty"),
 		N_("Device"),
