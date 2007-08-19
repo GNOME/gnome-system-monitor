@@ -8,14 +8,15 @@
 # Vinicius Pinheiro <vinnie.gp@gmail.com>, 2006.
 # Og Maciel <ogmaciel@ubuntu.com>, 2007.
 # Washington Lins <washington-lins@uol.com.br>, 2007.
+# Vladimir Melo <vladimirmelo@foresightlinux.org>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-05 17:44-0300\n"
-"PO-Revision-Date: 2007-08-05 16:52-0300\n"
-"Last-Translator: Washington Lins <washington-lins@uol.com.br>\n"
+"POT-Creation-Date: 2007-08-19 09:43-0300\n"
+"PO-Revision-Date: 2007-08-19 09:52-0300\n"
+"Last-Translator: Vladimir Melo <vladimirmelo@foresightlinux.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,7 +40,8 @@ msgstr ""
 "Afonso Celso Medina <medina@maua.br>\n"
 "Raphael Higino <phhigino@gmail.com>\n"
 "Vinicius Pinheiro <vinnie.gp@gmail.com>\n"
-"Og Maciel <ogmaciel@ubuntu.com>"
+"Og Maciel <ogmaciel@ubuntu.com>\n"
+"Vladimir Melo <vladimirmelo@foresightlinux.org>"
 
 #: ../src/disks.cpp:275 ../src/memmaps.cpp:500
 msgid "Device"
@@ -81,19 +83,19 @@ msgstr "?"
 
 #: ../src/e_date.c:162
 msgid "Today %l:%M %p"
-msgstr "Hoje %-H:%M"
+msgstr "Hoje %H:%M"
 
 #: ../src/e_date.c:171
 msgid "Yesterday %l:%M %p"
-msgstr "Ontem %-H:%M"
+msgstr "Ontem %H:%M"
 
 #: ../src/e_date.c:183
 msgid "%a %l:%M %p"
-msgstr "%a %-H:%M"
+msgstr "%a %H:%M"
 
 #: ../src/e_date.c:191
 msgid "%b %d %l:%M %p"
-msgstr "%d de %b %-H:%M"
+msgstr "%d de %b %H:%M"
 
 #: ../src/e_date.c:193
 msgid "%b %d %Y"
@@ -104,8 +106,8 @@ msgid ""
 "0 for the System Info, 1 for the processes list, 2 for the resources and 3 "
 "for the disks list"
 msgstr ""
-"0 para a Informação do Sistema, 1 para a lista de processos, 2 para as "
-"fontes, e 3 para a lista de discos"
+"0 para a Informação do Sistema, 1 para a lista de processos, 2 para os "
+"recursos, e 3 para a lista de discos"
 
 #: ../src/gnome-system-monitor.schemas.in.h:2
 msgid "Default graph background color"
@@ -120,18 +122,16 @@ msgid "Default graph frame color"
 msgstr "Cor padrão da moldura do gráfico"
 
 #: ../src/gnome-system-monitor.schemas.in.h:5
-#, fuzzy
 msgid "Default graph incoming network traffic color"
-msgstr "Cor padrão da entrada de rede no gráfico"
+msgstr "Cor padrão do gráfico de tráfego de entrada de rede"
 
 #: ../src/gnome-system-monitor.schemas.in.h:6
 msgid "Default graph mem color"
 msgstr "Cor padrão da memória no gráfico"
 
 #: ../src/gnome-system-monitor.schemas.in.h:7
-#, fuzzy
 msgid "Default graph outgoing network traffic color"
-msgstr "Cor padrão da entrada de rede no gráfico"
+msgstr "Cor padrão do gráfico de tráfego de saída de rede"
 
 #: ../src/gnome-system-monitor.schemas.in.h:8
 msgid "Default graph swap color"
@@ -158,6 +158,9 @@ msgid ""
 "If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu usage "
 "is divided by the total number of CPUs. Else it operates in 'Irix mode'."
 msgstr ""
+"Se VERDADEIRO, system-monitor opera no \"modo Solaris\" onde o uso da cpu "
+"pela tarefa é dividido pelo número total de CPUs. Caso contrário, opera no "
+"\"modo Irix\"."
 
 #: ../src/gnome-system-monitor.schemas.in.h:13
 msgid "Main Window height"
@@ -184,84 +187,71 @@ msgid "Saves the currently viewed tab"
 msgstr "Salva a aba exibida atualmente"
 
 #: ../src/gnome-system-monitor.schemas.in.h:20
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Show process 'CPU %' column on startup"
-msgstr "Mostrar a coluna de % da CPU ao iniciar"
+msgstr "Mostrar a coluna \"% CPU\" do processo ao inicializar"
 
 #: ../src/gnome-system-monitor.schemas.in.h:21
-#, fuzzy
 msgid "Show process 'CPU time' column on startup"
-msgstr "Mostrar a coluna tempo da CPU ao iniciar"
+msgstr "Mostrar a coluna \"tempo da CPU\" do processo ao inicializar"
 
 #: ../src/gnome-system-monitor.schemas.in.h:22
-#, fuzzy
 msgid "Show process 'PID' column on startup"
-msgstr "Mostrar a coluna do PID ao iniciar"
+msgstr "Mostrar a coluna \"PID\" do processo ao inicializar"
 
 #: ../src/gnome-system-monitor.schemas.in.h:23
-#, fuzzy
 msgid "Show process 'SELinux security context' column on startup"
-msgstr "Mostrar a coluna do contexto de segurança SELinux ao iniciar"
+msgstr ""
+"Mostrar a coluna \"contexto de segurança SELinux\" do processo ao inicializar"
 
 #: ../src/gnome-system-monitor.schemas.in.h:24
-#, fuzzy
 msgid "Show process 'X server memory' column on startup"
-msgstr "Mostrar a coluna da memória do servidor X ao iniciar"
+msgstr "Mostrar a coluna \"memória do servidor X\" do processo ao inicializar"
 
 #: ../src/gnome-system-monitor.schemas.in.h:25
-#, fuzzy
 msgid "Show process 'arguments' column on startup"
-msgstr "Mostrar a coluna de argumentos ao iniciar"
+msgstr "Mostrar a coluna \"argumentos\" do processo ao inicializar"
 
 #: ../src/gnome-system-monitor.schemas.in.h:26
-#, fuzzy
 msgid "Show process 'estimated memory usage' column on startup"
-msgstr "Mostrar a coluna do uso estimado da memória ao iniciar"
+msgstr ""
+"Mostrar a coluna \"uso estimado da memória\" do processo ao inicializar"
 
 #: ../src/gnome-system-monitor.schemas.in.h:27
-#, fuzzy
 msgid "Show process 'name' column on startup"
-msgstr "Mostrar a coluna do nome do processo ao iniciar"
+msgstr "Mostrar a coluna \"nome do processo\" ao inicializar"
 
 #: ../src/gnome-system-monitor.schemas.in.h:28
-#, fuzzy
 msgid "Show process 'nice' column on startup"
-msgstr "Mostrar a coluna do nice ao iniciar"
+msgstr "Mostrar a coluna \"nice\" do processo ao inicializar"
 
 #: ../src/gnome-system-monitor.schemas.in.h:29
-#, fuzzy
 msgid "Show process 'owner' column on startup"
-msgstr "Mostrar a coluna do dono ao iniciar"
+msgstr "Mostrar a coluna \"proprietário\" do processo ao inicializar"
 
 #: ../src/gnome-system-monitor.schemas.in.h:30
-#, fuzzy
 msgid "Show process 'resident memory' column on startup"
-msgstr "Mostrar a coluna da memória residente ao iniciar"
+msgstr "Mostrar a coluna \"memória residente\" do processo ao inicializar"
 
 #: ../src/gnome-system-monitor.schemas.in.h:31
-#, fuzzy
 msgid "Show process 'shared memory' column on startup"
-msgstr "Mostrar a coluna da memória compartilhada ao iniciar"
+msgstr "Mostrar a coluna \"memória compartilhada\" do processo ao inicializar"
 
 #: ../src/gnome-system-monitor.schemas.in.h:32
-#, fuzzy
 msgid "Show process 'start time' column on startup"
-msgstr "Mostrar a coluna do tempo de início ao iniciar"
+msgstr "Mostrar a coluna \"tempo de início\" do processo ao inicializar"
 
 #: ../src/gnome-system-monitor.schemas.in.h:33
-#, fuzzy
 msgid "Show process 'status' column on startup"
-msgstr "Mostrar a coluna do estado ao iniciar"
+msgstr "Mostrar a coluna \"status\" do processo ao inicializar"
 
 #: ../src/gnome-system-monitor.schemas.in.h:34
-#, fuzzy
 msgid "Show process 'virtual memory' column on startup"
-msgstr "Mostrar a coluna da memória virtual ao iniciar"
+msgstr "Mostrar a coluna \"memória virtual\" do processo ao inicializar"
 
 #: ../src/gnome-system-monitor.schemas.in.h:35
-#, fuzzy
 msgid "Show process 'writable memory' column on startup"
-msgstr "Mostrar a coluna da memória de escrita ao iniciar"
+msgstr "Mostrar a coluna \"memória gravável\" do processo ao inicializar"
 
 #: ../src/gnome-system-monitor.schemas.in.h:36
 msgid "Show process dependencies in tree form"
@@ -273,7 +263,7 @@ msgstr "Mostrar diálogo de aviso ao matar processos"
 
 #: ../src/gnome-system-monitor.schemas.in.h:38
 msgid "Solaris mode for CPU percentage"
-msgstr ""
+msgstr "Modo Solaris para porcentagem de CPU"
 
 #: ../src/gnome-system-monitor.schemas.in.h:39
 msgid "Time in milliseconds between updates of the devices list"
@@ -299,88 +289,73 @@ msgid ""
 "filesystems."
 msgstr ""
 "Se as informações sobre todos os sistemas de arquivos devem ser exibidas "
-"(incluindo tipos como 'autofs' e 'procfs'). Isso pode ser útil para obter "
-"uma lista de todos os sistemas de arquivos montados no momento."
+"(incluindo tipos como \"autofs\" e \"procfs\"). Isso pode ser útil para "
+"obter uma lista de todos os sistemas de arquivos montados no momento."
 
 #: ../src/gnome-system-monitor.schemas.in.h:45
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Width of process 'CPU %' column"
-msgstr "Largura da coluna de Porcentagem de CPU de Processos"
+msgstr "Largura da coluna \"% CPU\" do processo"
 
 #: ../src/gnome-system-monitor.schemas.in.h:46
-#, fuzzy
 msgid "Width of process 'CPU time' column"
-msgstr "Largura da coluna de Tempo de CPU de Processos"
+msgstr "Largura da coluna \"tempo da CPU\" do processo"
 
 #: ../src/gnome-system-monitor.schemas.in.h:47
-#, fuzzy
 msgid "Width of process 'PID' column"
-msgstr "Largura da coluna de PID de Processos"
+msgstr "Largura da coluna \"PID\" do processo"
 
 #: ../src/gnome-system-monitor.schemas.in.h:48
-#, fuzzy
 msgid "Width of process 'SELinux security context' column"
-msgstr "Largura da coluna de contexto de segurança SELinux de Processos"
+msgstr "Largura da coluna \"contexto de segurança SELinux\" do processo"
 
 #: ../src/gnome-system-monitor.schemas.in.h:49
-#, fuzzy
 msgid "Width of process 'X server memory' column"
-msgstr "Largura da coluna de memória do servidor X de Processos"
+msgstr "Largura da coluna \"memória do servidor X\" do processo"
 
 #: ../src/gnome-system-monitor.schemas.in.h:50
-#, fuzzy
 msgid "Width of process 'arguments' column"
-msgstr "Largura da coluna de argumentos de Processos"
+msgstr "Largura da coluna \"argumentos\" do processo"
 
 #: ../src/gnome-system-monitor.schemas.in.h:51
-#, fuzzy
 msgid "Width of process 'estimated memory usage' column"
-msgstr "Largura da coluna de uso estimado da memória de Processos"
+msgstr "Largura da coluna \"uso estimado da memória\" do processo"
 
 #: ../src/gnome-system-monitor.schemas.in.h:52
-#, fuzzy
 msgid "Width of process 'name' column"
-msgstr "Largura da coluna do nome de Processos"
+msgstr "Largura da coluna \"nome do processo\""
 
 #: ../src/gnome-system-monitor.schemas.in.h:53
-#, fuzzy
 msgid "Width of process 'nice' column"
-msgstr "Largura da coluna do nice de Processos"
+msgstr "Largura da coluna \"nice\" do processo"
 
 #: ../src/gnome-system-monitor.schemas.in.h:54
-#, fuzzy
 msgid "Width of process 'owner' column"
-msgstr "Largura da coluna do dono de Processos"
+msgstr "Largura da coluna \"proprietário\" do processo"
 
 #: ../src/gnome-system-monitor.schemas.in.h:55
-#, fuzzy
 msgid "Width of process 'resident memory' column"
-msgstr "Largura da coluna da memória residente de Processos"
+msgstr "Largura da coluna \"memória residente\" do processo"
 
 #: ../src/gnome-system-monitor.schemas.in.h:56
-#, fuzzy
 msgid "Width of process 'shared memory' column"
-msgstr "Largura da coluna da memória compartilhada de Processos"
+msgstr "Largura da coluna \"memória compartilhada\" do processo"
 
 #: ../src/gnome-system-monitor.schemas.in.h:57
-#, fuzzy
 msgid "Width of process 'start time' column"
-msgstr "Largura da coluna do tempo de início de Processos"
+msgstr "Largura da coluna \"tempo de início\" do processo"
 
 #: ../src/gnome-system-monitor.schemas.in.h:58
-#, fuzzy
 msgid "Width of process 'status' column"
-msgstr "Largura da coluna do status de Processos"
+msgstr "Largura da coluna \"status\" do processo"
 
 #: ../src/gnome-system-monitor.schemas.in.h:59
-#, fuzzy
 msgid "Width of process 'virtual memory' column"
-msgstr "Largura da coluna da memória virtual de Processos"
+msgstr "Largura da coluna \"memória virtual\" do processo"
 
 #: ../src/gnome-system-monitor.schemas.in.h:60
-#, fuzzy
 msgid "Width of process 'writable memory' column"
-msgstr "Largura da coluna da memória de escrita de Processos"
+msgstr "Largura da coluna \"memória gravável\" do processo"
 
 #. xgettext: noun, top level menu.
 #. "File" did not make sense for system-monitor
@@ -434,11 +409,11 @@ msgstr "Continua o processo se estiver parado"
 
 #: ../src/interface.cpp:65 ../src/interface.cpp:183
 msgid "End _Process"
-msgstr "_Finalizar Processo"
+msgstr "_Terminar Processo"
 
 #: ../src/interface.cpp:66
 msgid "Force process to finish normally"
-msgstr "Força o processo a terminar normalmente"
+msgstr "Força o processo a finalizar normalmente"
 
 #: ../src/interface.cpp:67 ../src/procdialogs.cpp:75
 msgid "_Kill Process"
@@ -530,7 +505,7 @@ msgstr "Mostra os processos do próprio usuário"
 
 #: ../src/interface.cpp:250
 msgid "CPU History"
-msgstr "Histório da CPU"
+msgstr "Histórico da CPU"
 
 #: ../src/interface.cpp:300
 msgid "CPU:"
@@ -650,31 +625,29 @@ msgstr "Deslocamento da VM"
 #. it has been allocated
 #: ../src/memmaps.cpp:490
 msgid "Private clean"
-msgstr ""
+msgstr "Limpa e reservada"
 
 #. xgettext: memory that has been modified since it
 #. has been allocated
 #: ../src/memmaps.cpp:493
 msgid "Private dirty"
-msgstr ""
+msgstr "Suja e reservada"
 
 #. xgettext: shared memory that has not been modified
 #. since it has been allocated
 #: ../src/memmaps.cpp:496
-#, fuzzy
 msgid "Shared clean"
-msgstr "Memória Compartilhada"
+msgstr "Limpa e compartilhada"
 
 #. xgettext: shared memory that has been modified
 #. since it has been allocated
 #: ../src/memmaps.cpp:499
-#, fuzzy
 msgid "Shared dirty"
-msgstr "Memória Compartilhada"
+msgstr "Suja e compartilhada"
 
 #: ../src/memmaps.cpp:501
 msgid "Inode"
-msgstr "Nó I"
+msgstr "Inode"
 
 #. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
 #: ../src/memmaps.cpp:610
@@ -700,7 +673,7 @@ msgstr "conexão de rede"
 
 #: ../src/openfiles.cpp:39
 msgid "local socket"
-msgstr "soquete local"
+msgstr "socket local"
 
 #: ../src/openfiles.cpp:41
 msgid "unknown type"
@@ -711,7 +684,7 @@ msgstr "tipo desconhecido"
 #. 2-3 characters for it to be able to fit in the UI.
 #: ../src/openfiles.cpp:234
 msgid "FD"
-msgstr "DA"
+msgstr "FD"
 
 #: ../src/openfiles.cpp:236
 msgid "Object"
@@ -755,14 +728,13 @@ msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponding processes should be killed."
 msgstr ""
-"Matando um processo, você pode destruir seus dados, interromper a sessão "
-"atual ou criar um risco à segurança. Apenas processos que não estejam "
-"respondendo devem ser mortos."
+"Matar um processo pode destruir dados, interromper a sessão atual ou criar "
+"um risco de segurança. Apenas processos que não respondem devem ser mortos."
 
 #. xgettext: primary alert message
 #: ../src/procdialogs.cpp:79
 msgid "End the selected process?"
-msgstr "Deseja finalizar o processo selecionado?"
+msgstr "Deseja terminar o processo selecionado?"
 
 #. xgettext: secondary alert message
 #: ../src/procdialogs.cpp:81
@@ -770,13 +742,13 @@ msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponding processes should be ended."
 msgstr ""
-"Finalizando um processo, você pode destruir seus dados, interromper a sessão "
-"atual ou criar um risco à segurança. Apenas processos que não estejam "
-"respondendo devem ser finalizados."
+"Terminar um processo pode destruir seus dados, interromper a sessão atual ou "
+"criar um risco de segurança. Apenas processos que não respondem devem ser "
+"terminados."
 
 #: ../src/procdialogs.cpp:84
 msgid "_End Process"
-msgstr "_Finalizar Processo"
+msgstr "_Terminar Processo"
 
 #: ../src/procdialogs.cpp:113
 msgid "(Very High Priority)"
@@ -849,11 +821,11 @@ msgstr "Habilitar atualização _suave"
 
 #: ../src/procdialogs.cpp:579
 msgid "Alert before ending or _killing processes"
-msgstr "Alertar antes de finalizar ou _matar processos"
+msgstr "Alertar antes de terminar ou _matar processos"
 
 #: ../src/procdialogs.cpp:593
 msgid "Solaris mode"
-msgstr ""
+msgstr "Modo Solaris"
 
 #: ../src/procdialogs.cpp:611
 msgid "Information Fields"
@@ -873,7 +845,7 @@ msgstr "Cor da _grade:"
 
 #: ../src/procdialogs.cpp:761
 msgid "Show _all filesystems"
-msgstr "Todos os sistemas de _arquivos"
+msgstr "Mostrar todos os sistemas de _arquivos"
 
 #: ../src/proctable.cpp:242
 msgid "Process Name"
@@ -1002,12 +974,12 @@ msgstr "Lançamento %s"
 #: ../src/sysinfo.cpp:408
 #, c-format
 msgid "Kernel %s"
-msgstr ""
+msgstr "Kernel %s"
 
 #: ../src/sysinfo.cpp:416
 #, c-format
 msgid "GNOME %s"
-msgstr ""
+msgstr "GNOME %s"
 
 #. hardware section
 #: ../src/sysinfo.cpp:425
@@ -1046,17 +1018,17 @@ msgstr[1] "%u bytes"
 #: ../src/util.cpp:84
 #, c-format
 msgid "%.1f KiB"
-msgstr "%.1f KB"
+msgstr "%.1f KiB"
 
 #: ../src/util.cpp:87
 #, c-format
 msgid "%.1f MiB"
-msgstr "%.1f MB"
+msgstr "%.1f MiB"
 
 #: ../src/util.cpp:90
 #, c-format
 msgid "%.1f GiB"
-msgstr "%.1f GB"
+msgstr "%.1f GiB"
 
 #~ msgid "Column zero saved width"
 #~ msgstr "Largura da coluna zero"
