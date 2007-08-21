@@ -280,7 +280,7 @@ sysinfo_logo_expose (GtkWidget *widget,
 
   cr = gdk_cairo_create(widget->window);
 
-  cairo_translate(cr, event->area.x, event->area.y);
+  cairo_translate(cr, widget->allocation.x, widget->allocation.y);
 
   cairo_move_to(cr, X_PAD + RADIUS, Y_PAD);
   cairo_line_to(cr, X_PAD + LOGO_W - RADIUS, Y_PAD);
