@@ -51,7 +51,7 @@ namespace
 
     void set(const glibtop_map_entry &last_map)
     {
-      this->format = (last_map.end <= G_MAXUINT32) ? "%08llx" : "%016llx";
+      this->format = (last_map.end <= G_MAXUINT32) ? "%08" G_GINT64_MODIFIER "x" : "%016" G_GINT64_MODIFIER "x";
     }
 
     string operator()(guint64 v) const
@@ -267,7 +267,7 @@ namespace
       guint16 dev = dev64 & 0xffff;
 
       if (dev != dev64)
-	g_warning("weird device %llx", dev64);
+	g_warning("weird device %" G_GINT64_MODIFIER "x", dev64);
 
       Map::iterator it(this->devices.find(dev));
 
