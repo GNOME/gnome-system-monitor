@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-05 08:43+0200\n"
-"PO-Revision-Date: 2007-03-05 16:03+0300\n"
+"POT-Creation-Date: 2007-09-12 12:51+0300\n"
+"PO-Revision-Date: 2007-09-12 16:03+0300\n"
 "Last-Translator: Maxim V. Dziumanenko <dziumanenko@gmail.com>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:155
-#: ../src/interface.cpp:667 ../src/procman.cpp:688
+#: ../src/interface.cpp:660 ../src/procman.cpp:712
 msgid "System Monitor"
 msgstr "Системний монітор"
 
@@ -31,60 +31,61 @@ msgstr ""
 "Юрій Сирота\n"
 "Максим Дзюманенко <dziumanenko@gmail.com>"
 
-#: ../src/disks.cpp:307 ../src/memmaps.cpp:433
+#: ../src/disks.cpp:275 ../src/memmaps.cpp:500
 msgid "Device"
 msgstr "Пристрій"
 
-#: ../src/disks.cpp:308
+#: ../src/disks.cpp:276
 msgid "Directory"
 msgstr "Каталог"
 
-#: ../src/disks.cpp:309 ../src/openfiles.cpp:235
+#: ../src/disks.cpp:277 ../src/openfiles.cpp:235
 msgid "Type"
 msgstr "Тип"
 
-#: ../src/disks.cpp:310
+#: ../src/disks.cpp:278
 msgid "Total"
 msgstr "Всього"
 
-#: ../src/disks.cpp:311
+#: ../src/disks.cpp:279
 msgid "Free"
 msgstr "Вільно"
 
-#: ../src/disks.cpp:312
+#: ../src/disks.cpp:280
 msgid "Available"
 msgstr "Доступно"
 
-#: ../src/disks.cpp:313
+#: ../src/disks.cpp:281
 msgid "Used"
 msgstr "Використано"
 
-#: ../src/disks.cpp:320 ../src/interface.cpp:751 ../src/procdialogs.cpp:686
-#: ../src/procdialogs.cpp:690
+#: ../src/disks.cpp:288 ../src/interface.cpp:736 ../src/procdialogs.cpp:718
+#: ../src/procdialogs.cpp:722
 msgid "File Systems"
 msgstr "Файлові системи"
 
-#: ../src/e_date.c:154
+#. xgettext: ? stands for unknown
+#: ../src/e_date.c:155
 msgid "?"
 msgstr "?"
 
-#: ../src/e_date.c:161
+#: ../src/e_date.c:162
 msgid "Today %l:%M %p"
 msgstr "Сьогодні %H:%M"
 
-#: ../src/e_date.c:170
+#: ../src/e_date.c:171
 msgid "Yesterday %l:%M %p"
 msgstr "Вчора %H:%M"
 
-#: ../src/e_date.c:182
+#: ../src/e_date.c:183
 msgid "%a %l:%M %p"
 msgstr "%a %H:%M"
 
-#: ../src/e_date.c:190
+#: ../src/e_date.c:191
 msgid "%b %d %l:%M %p"
 msgstr "%d %b %H:%M"
 
-#: ../src/e_date.c:192
+#: ../src/e_date.c:193
 msgid "%b %d %Y"
 msgstr "%d %b %Y"
 
@@ -96,38 +97,34 @@ msgstr ""
 "0 — інформація про систему, 1 — список процесів, 2 — ресурсів, 3 — дисків"
 
 #: ../src/gnome-system-monitor.schemas.in.h:2
-msgid "Column zero saved width"
-msgstr "Збережена ширина нульового стовпчика"
-
-#: ../src/gnome-system-monitor.schemas.in.h:3
 msgid "Default graph background color"
 msgstr "Типовий колір тла графіку"
 
-#: ../src/gnome-system-monitor.schemas.in.h:4
+#: ../src/gnome-system-monitor.schemas.in.h:3
 msgid "Default graph cpu color"
 msgstr "Типовий колір графіку ЦП"
 
-#: ../src/gnome-system-monitor.schemas.in.h:5
+#: ../src/gnome-system-monitor.schemas.in.h:4
 msgid "Default graph frame color"
 msgstr "Типовий колір рамки графіку"
+
+#: ../src/gnome-system-monitor.schemas.in.h:5
+msgid "Default graph incoming network traffic color"
+msgstr "Типовий колір графіку вхідного трафіку мережі"
 
 #: ../src/gnome-system-monitor.schemas.in.h:6
 msgid "Default graph mem color"
 msgstr "Типовий колір графіку пам'яті"
 
 #: ../src/gnome-system-monitor.schemas.in.h:7
-msgid "Default graph net in color"
-msgstr "Типовий колір графіку входу мережі"
+msgid "Default graph outgoing network traffic color"
+msgstr "Типовий колір графіку вхідного трафіку мережі"
 
 #: ../src/gnome-system-monitor.schemas.in.h:8
-msgid "Default graph net out color"
-msgstr "Типовий колір графіку входу мережі"
-
-#: ../src/gnome-system-monitor.schemas.in.h:9
 msgid "Default graph swap color"
 msgstr "Типовий колір графіку підкачки"
 
-#: ../src/gnome-system-monitor.schemas.in.h:10
+#: ../src/gnome-system-monitor.schemas.in.h:9
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
@@ -135,13 +132,21 @@ msgstr ""
 "Визначає, які процеси типово відображати. 0 - усі, 1 - користувача, 2 - "
 "активні"
 
-#: ../src/gnome-system-monitor.schemas.in.h:11
+#: ../src/gnome-system-monitor.schemas.in.h:10
 msgid "Disk view columns order"
 msgstr "Порядок стовпчиків перегляду диску"
 
-#: ../src/gnome-system-monitor.schemas.in.h:12
+#: ../src/gnome-system-monitor.schemas.in.h:11
 msgid "Enable/Disable smooth refresh"
 msgstr "Увімкнути/вимкнути плавне оновлення"
+
+#: ../src/gnome-system-monitor.schemas.in.h:12
+msgid ""
+"If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu usage "
+"is divided by the total number of CPUs. Else it operates in 'Irix mode'."
+msgstr ""
+"Якщо відмічено, системний монітор працює у режимі 'Solaris', у якому використання процесору "
+"ділиться на загальну кількість процесорів. У іншому випадку монітор працює у режимі 'Irix'."
 
 #: ../src/gnome-system-monitor.schemas.in.h:13
 msgid "Main Window height"
@@ -167,82 +172,82 @@ msgstr "Порядок сортування переліку процесів"
 msgid "Saves the currently viewed tab"
 msgstr "Зберігає поточну активну вкладку"
 
-#: ../src/gnome-system-monitor.schemas.in.h:19
-msgid "Show column zero on startup"
-msgstr "Показувати нульовий стовпчик при запуску"
-
 #: ../src/gnome-system-monitor.schemas.in.h:20
-msgid "Show estimated memory usage column on startup"
-msgstr "Показувати при старті стовпчик оціночного використання пам'яті"
+#, no-c-format
+msgid "Show process 'CPU %' column on startup"
+msgstr "Показувати на старті стовпчик використання процесору."
+
+#: ../src/gnome-system-monitor.schemas.in.h:21
+msgid "Show process 'CPU time' column on startup"
+msgstr "Показувати на старті стовпчик часу процесору"
 
 #: ../src/gnome-system-monitor.schemas.in.h:22
-#, no-c-format
-msgid "Show process CPU % column on startup"
-msgstr "Показувати при старті % використання процесора"
-
-#: ../src/gnome-system-monitor.schemas.in.h:23
-msgid "Show process CPU time column on startup"
-msgstr "Показувати нульовий стовпчик при запуску"
-
-#: ../src/gnome-system-monitor.schemas.in.h:24
-msgid "Show process PID column on startup"
+msgid "Show process 'PID' column on startup"
 msgstr "Показувати на старті PID процесу"
 
+#: ../src/gnome-system-monitor.schemas.in.h:23
+msgid "Show process 'SELinux security context' column on startup"
+msgstr "Показувати на старті стовпчик контекстів безпеки процесів SELinux"
+
+#: ../src/gnome-system-monitor.schemas.in.h:24
+msgid "Show process 'X server memory' column on startup"
+msgstr "Показувати на старті стовпчик використання пам'яті X-вервера"
+
 #: ../src/gnome-system-monitor.schemas.in.h:25
-msgid "Show process SELinux security context column on startup"
-msgstr "Показувати контексти безпеки процесів SELinux"
+msgid "Show process 'arguments' column on startup"
+msgstr "Показувати на старті стовпчик аргументів процесів"
 
 #: ../src/gnome-system-monitor.schemas.in.h:26
-msgid "Show process X server memory column zero startup"
-msgstr "Показувати нульовий стовпчик при запуску"
+msgid "Show process 'estimated memory usage' column on startup"
+msgstr "Показувати при старті стовпчик оціночного використання пам'яті"
 
 #: ../src/gnome-system-monitor.schemas.in.h:27
-msgid "Show process arguments column on startup"
-msgstr "Показувати при старті стовпчик аргументів процесів"
+msgid "Show process 'name' column on startup"
+msgstr "Показувати на старті стовпчик назв процесів"
 
 #: ../src/gnome-system-monitor.schemas.in.h:28
+msgid "Show process 'nice' column on startup"
+msgstr "Показувати на старті стовпчик значення nice процесів"
+
+#: ../src/gnome-system-monitor.schemas.in.h:29
+msgid "Show process 'owner' column on startup"
+msgstr "Показувати на старті стовпчик власника процесів"
+
+#: ../src/gnome-system-monitor.schemas.in.h:30
+msgid "Show process 'resident memory' column on startup"
+msgstr "Показувати на старті стовпчик резидентної пам'яті"
+
+#: ../src/gnome-system-monitor.schemas.in.h:31
+msgid "Show process 'shared memory' column on startup"
+msgstr "Показувати на старті стовпчик спільної пам'яті процесів"
+
+#: ../src/gnome-system-monitor.schemas.in.h:32
+msgid "Show process 'start time' column on startup"
+msgstr "Показувати на старі стовпчик часу запуску процесу"
+
+#: ../src/gnome-system-monitor.schemas.in.h:33
+msgid "Show process 'status' column on startup"
+msgstr "Показувати на старті стовпчик статусу процесу"
+
+#: ../src/gnome-system-monitor.schemas.in.h:34
+msgid "Show process 'virtual memory' column on startup"
+msgstr "Показувати на старті стовпчик віртуальної пам'яті процесів"
+
+#: ../src/gnome-system-monitor.schemas.in.h:35
+msgid "Show process 'writable memory' column on startup"
+msgstr "Показувати на старті стовпчик пам'яті процесу доступної для запису"
+
+#: ../src/gnome-system-monitor.schemas.in.h:36
 msgid "Show process dependencies in tree form"
 msgstr "Показувати залежності процесів у вигляді дерева"
 
-#: ../src/gnome-system-monitor.schemas.in.h:29
-msgid "Show process name column on startup"
-msgstr "Показувати стовпчик назв процесів"
-
-#: ../src/gnome-system-monitor.schemas.in.h:30
-msgid "Show process nice column on startup"
-msgstr "Показувати на старті стовпчик значення nice процесів"
-
-#: ../src/gnome-system-monitor.schemas.in.h:31
-msgid "Show process owner column on startup"
-msgstr "Показувати на старті стовпчик власника процесів"
-
-#: ../src/gnome-system-monitor.schemas.in.h:32
-msgid "Show process resident memory column on startup"
-msgstr "Показувати на старті стовпчик резидентної пам'яті"
-
-#: ../src/gnome-system-monitor.schemas.in.h:33
-msgid "Show process shared memory column on startup"
-msgstr "Показувати на старті стовпчик спільної пам'яті процесів"
-
-#: ../src/gnome-system-monitor.schemas.in.h:34
-msgid "Show process start time column on startup"
-msgstr "Показувати на старі стовпчик часу запуску процесу"
-
-#: ../src/gnome-system-monitor.schemas.in.h:35
-msgid "Show process status column on startup"
-msgstr "Показувати на старті стовпчик статусу процесу"
-
-#: ../src/gnome-system-monitor.schemas.in.h:36
-msgid "Show process virtual memory column on startup"
-msgstr "Показувати на старті стовпчик віртуальної пам'яті процесів"
-
 #: ../src/gnome-system-monitor.schemas.in.h:37
-msgid "Show process writable memory column on startup"
-msgstr "Показувати на старті стовпчик пам'яті процесу доступної для запису"
-
-#: ../src/gnome-system-monitor.schemas.in.h:38
 msgid "Show warning dialog when killing processes"
 msgstr "Показувати діалог попередження при знищенні процесів"
+
+#: ../src/gnome-system-monitor.schemas.in.h:38
+msgid "Solaris mode for CPU percentage"
+msgstr "Режим Solaris для показника використання процесору"
 
 #: ../src/gnome-system-monitor.schemas.in.h:39
 msgid "Time in milliseconds between updates of the devices list"
@@ -272,271 +277,276 @@ msgstr ""
 
 #: ../src/gnome-system-monitor.schemas.in.h:45
 #, no-c-format
-msgid "Width of Process CPU % column"
+msgid "Width of process 'CPU %' column"
 msgstr "Ширина стовпчика завантаження ЦП"
 
 #: ../src/gnome-system-monitor.schemas.in.h:46
-msgid "Width of Process CPU time column"
+msgid "Width of process 'CPU time' column"
 msgstr "Ширина стовпчика часу зайнятості ЦП процесом"
 
 #: ../src/gnome-system-monitor.schemas.in.h:47
-msgid "Width of Process PID column"
-msgstr "Ширина стовпчика PID процесса"
+msgid "Width of process 'PID' column"
+msgstr "Ширина стовпчика PID процесу"
 
 #: ../src/gnome-system-monitor.schemas.in.h:48
-msgid "Width of Process SELinux security context column"
+msgid "Width of process 'SELinux security context' column"
 msgstr "Ширина стовпчика контексту SELinux процесу"
 
 #: ../src/gnome-system-monitor.schemas.in.h:49
-msgid "Width of Process X server memory column"
+msgid "Width of process 'X server memory' column"
 msgstr "Ширина стовпчика пам'яті X-сервера процесу"
 
 #: ../src/gnome-system-monitor.schemas.in.h:50
-msgid "Width of Process arguments column"
+msgid "Width of process 'arguments' column"
 msgstr "Ширина стовпчика аргументів процесу"
 
 #: ../src/gnome-system-monitor.schemas.in.h:51
-msgid "Width of Process estimated memory usage column"
+msgid "Width of process 'estimated memory usage' column"
 msgstr "Ширина стовпчика розрахункового використання пам'яті процесом"
 
 #: ../src/gnome-system-monitor.schemas.in.h:52
-msgid "Width of Process name column"
+msgid "Width of process 'name' column"
 msgstr "Ширина стовпчика назви процесу"
 
 #: ../src/gnome-system-monitor.schemas.in.h:53
-msgid "Width of Process nice column"
+msgid "Width of process 'nice' column"
 msgstr "Ширина стовпчика пріоритету процесу"
 
 #: ../src/gnome-system-monitor.schemas.in.h:54
-msgid "Width of Process owner column"
+msgid "Width of process 'owner' column"
 msgstr "Ширина стовпчика власника процесу"
 
 #: ../src/gnome-system-monitor.schemas.in.h:55
-msgid "Width of Process resident memory column"
+msgid "Width of process 'resident memory' column"
 msgstr "Ширина стовпчика резидентної пам'яті процесу"
 
 #: ../src/gnome-system-monitor.schemas.in.h:56
-msgid "Width of Process shared memory column"
+msgid "Width of process 'shared memory' column"
 msgstr "Ширина стовпчика спільної пам'яті процесу"
 
 #: ../src/gnome-system-monitor.schemas.in.h:57
-msgid "Width of Process start time column"
+msgid "Width of process 'start time' column"
 msgstr "Ширина стовпчика часу запуску процесу"
 
 #: ../src/gnome-system-monitor.schemas.in.h:58
-msgid "Width of Process status column"
+msgid "Width of process 'status' column"
 msgstr "Ширина стовпчика стану процесу"
 
 #: ../src/gnome-system-monitor.schemas.in.h:59
-msgid "Width of Process virtual memory column"
+msgid "Width of process 'virtual memory' column"
 msgstr "Ширина стовпчика віртуальної пам'яті процесу"
 
 #: ../src/gnome-system-monitor.schemas.in.h:60
-msgid "Width of Process writable memory column"
+msgid "Width of process 'writable memory' column"
 msgstr "Ширина стовпчика доступної для запису пам'яті"
 
-#: ../src/interface.cpp:47
+#. xgettext: noun, top level menu.
+#. "File" did not make sense for system-monitor
+#: ../src/interface.cpp:49
 msgid "_Monitor"
 msgstr "_Монітор"
 
-#: ../src/interface.cpp:48
+#: ../src/interface.cpp:50
 msgid "_Edit"
 msgstr "_Правка"
 
-#: ../src/interface.cpp:49
+#: ../src/interface.cpp:51
 msgid "_View"
 msgstr "_Вигляд"
 
-#: ../src/interface.cpp:50
+#: ../src/interface.cpp:52
 msgid "_Help"
 msgstr "_Довідка"
 
-#: ../src/interface.cpp:52
+#: ../src/interface.cpp:54
 msgid "Search for _Open Files"
 msgstr "Зайти _відкриті файли"
 
-#: ../src/interface.cpp:53
+#: ../src/interface.cpp:55
 msgid "Search for open files"
 msgstr "Пошук відкритих файлів"
 
-#: ../src/interface.cpp:54
+#: ../src/interface.cpp:56
 msgid "_Quit"
 msgstr "Ви_йти"
 
-#: ../src/interface.cpp:55
+#: ../src/interface.cpp:57
 msgid "Quit the program"
 msgstr "Вийти з програми"
 
-#: ../src/interface.cpp:58
+#: ../src/interface.cpp:60
 msgid "_Stop Process"
 msgstr "З_упинити процес"
 
-#: ../src/interface.cpp:59
+#: ../src/interface.cpp:61
 msgid "Stop process"
 msgstr "Зупинити процес"
 
-#: ../src/interface.cpp:60
+#: ../src/interface.cpp:62
 msgid "_Continue Process"
 msgstr "_Продовжити процес"
 
-#: ../src/interface.cpp:61
+#: ../src/interface.cpp:63
 msgid "Continue process if stopped"
 msgstr "Продовжити зупинений процес"
 
-#: ../src/interface.cpp:63 ../src/interface.cpp:183
+#: ../src/interface.cpp:65 ../src/interface.cpp:183
 msgid "End _Process"
 msgstr "_Завершити процес"
 
-#: ../src/interface.cpp:64
+#: ../src/interface.cpp:66
 msgid "Force process to finish normally"
 msgstr "Коректно завершити процес"
 
-#: ../src/interface.cpp:65 ../src/procdialogs.cpp:75
+#: ../src/interface.cpp:67 ../src/procdialogs.cpp:75
 msgid "_Kill Process"
 msgstr "_Зняти процес"
 
-#: ../src/interface.cpp:66
+#: ../src/interface.cpp:68
 msgid "Force process to finish immediately"
 msgstr "Завершити процес негайно"
 
-#: ../src/interface.cpp:67
+#: ../src/interface.cpp:69
 msgid "_Change Priority..."
 msgstr "З_мінити пріоритет..."
 
-#: ../src/interface.cpp:68
+#: ../src/interface.cpp:70
 msgid "Change the order of priority of process"
 msgstr "Змінити пріоритет процесу"
 
-#: ../src/interface.cpp:69
+#: ../src/interface.cpp:71
 msgid "Prefere_nces"
 msgstr "П_араметри"
 
-#: ../src/interface.cpp:70
+#: ../src/interface.cpp:72
 msgid "Configure the application"
 msgstr "Налаштувати програму"
 
-#: ../src/interface.cpp:72
+#: ../src/interface.cpp:74
 msgid "_Memory Maps"
 msgstr "Мапи _пам'яті"
 
-#: ../src/interface.cpp:73
+#: ../src/interface.cpp:75
 msgid "Open the memory maps associated with a process"
 msgstr "Перегляд мап пам'яті, що відповідають процесу"
 
-#: ../src/interface.cpp:74
+#: ../src/interface.cpp:76
 msgid "Open _Files"
 msgstr "Відкриті _файли"
 
-#: ../src/interface.cpp:75
+#: ../src/interface.cpp:77
 msgid "View the files opened by a process"
 msgstr "Переглянути файли, що відкриті процесом"
 
-#: ../src/interface.cpp:77
+#: ../src/interface.cpp:79
 msgid "_Contents"
 msgstr "_Зміст"
 
-#: ../src/interface.cpp:78
+#: ../src/interface.cpp:80
 msgid "Open the manual"
 msgstr "Відкрити довідку"
 
-#: ../src/interface.cpp:79
+#: ../src/interface.cpp:81
 msgid "_About"
 msgstr "_Про програму"
 
-#: ../src/interface.cpp:80
+#: ../src/interface.cpp:82
 msgid "About this application"
 msgstr "Про цю програму"
 
-#: ../src/interface.cpp:85
+#: ../src/interface.cpp:87
 msgid "_Dependencies"
 msgstr "_Залежності"
 
-#: ../src/interface.cpp:86
+#: ../src/interface.cpp:88
 msgid "Show parent/child relationship between processes"
 msgstr "Відображати ієрархічні залежності процесів"
 
-#: ../src/interface.cpp:93
+#: ../src/interface.cpp:95
 msgid "_Active Processes"
 msgstr "_Активні процеси"
 
-#: ../src/interface.cpp:94
+#: ../src/interface.cpp:96
 msgid "Show active processes"
 msgstr "Показувати активні процеси"
 
-#: ../src/interface.cpp:95
+#: ../src/interface.cpp:97
 msgid "A_ll Processes"
 msgstr "_Усі процеси"
 
-#: ../src/interface.cpp:96
+#: ../src/interface.cpp:98
 msgid "Show all processes"
 msgstr "Показувати усі процеси"
 
-#: ../src/interface.cpp:97
+#: ../src/interface.cpp:99
 msgid "M_y Processes"
 msgstr "_Мої процеси"
 
-#: ../src/interface.cpp:98
+#: ../src/interface.cpp:100
 msgid "Show user own process"
 msgstr "Показати власні процес користувача"
 
-#: ../src/interface.cpp:251
+#: ../src/interface.cpp:250
 msgid "CPU History"
 msgstr "Історія ЦП"
 
-#: ../src/interface.cpp:302
+#: ../src/interface.cpp:300
 msgid "CPU:"
 msgstr "Процесор:"
 
-#: ../src/interface.cpp:305
+#: ../src/interface.cpp:303
 #, c-format
 msgid "CPU%d:"
 msgstr "ЦП%d:"
 
-#: ../src/interface.cpp:325
+#: ../src/interface.cpp:323
 msgid "Memory and Swap History"
 msgstr "Історія пам'яті та свопінгу"
 
-#: ../src/interface.cpp:358
+#: ../src/interface.cpp:355
 msgid "User memory:"
 msgstr "Пам'ять користувача:"
 
-#: ../src/interface.cpp:376 ../src/interface.cpp:436
+#. xgettext: user memory: 123 MiB of 512MiB
+#. xgettext: swap: 10MiB of 1GiB
+#: ../src/interface.cpp:373 ../src/interface.cpp:433
 msgid "of"
 msgstr "з"
 
-#: ../src/interface.cpp:417
+#: ../src/interface.cpp:414
 msgid "Used swap:"
 msgstr "Використано свопінгу:"
 
-#: ../src/interface.cpp:476
+#: ../src/interface.cpp:473
 msgid "Network History"
 msgstr "Історія мережі"
 
-#: ../src/interface.cpp:508
+#: ../src/interface.cpp:504
 msgid "Received:"
 msgstr "Отримано:"
 
-#: ../src/interface.cpp:528 ../src/interface.cpp:571
+#: ../src/interface.cpp:524 ../src/interface.cpp:567
 msgid "Total:"
 msgstr "Всього:"
 
-#: ../src/interface.cpp:552
+#: ../src/interface.cpp:548
 msgid "Sent:"
 msgstr "Надіслано:"
 
-#: ../src/interface.cpp:733
+#: ../src/interface.cpp:724
 msgid "System"
 msgstr "Система"
 
-#: ../src/interface.cpp:739 ../src/procdialogs.cpp:501
+#: ../src/interface.cpp:728 ../src/procdialogs.cpp:514
 msgid "Processes"
 msgstr "Процеси"
 
-#: ../src/interface.cpp:745 ../src/procdialogs.cpp:597
+#: ../src/interface.cpp:732 ../src/procdialogs.cpp:629
 msgid "Resources"
 msgstr "Ресурси"
 
-#: ../src/load-graph.cpp:424 ../src/load-graph.cpp:434
+#. xgettext: rate, 10MiB/s
+#: ../src/load-graph.cpp:441 ../src/load-graph.cpp:452
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
@@ -549,7 +559,7 @@ msgstr "Процеси"
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:377 ../src/memmaps.cpp:427
+#: ../src/lsof.cpp:377 ../src/memmaps.cpp:478
 msgid "Filename"
 msgstr "Назва файлу"
 
@@ -570,35 +580,64 @@ msgstr "Враховувати регістр"
 msgid "S_earch results:"
 msgstr "_Результати пошуку:"
 
-#: ../src/memmaps.cpp:428
+#. xgettext: virtual memory start
+#: ../src/memmaps.cpp:480
 msgid "VM Start"
 msgstr "Початок ВП"
 
-#: ../src/memmaps.cpp:429
+#. xgettext: virtual memory end
+#: ../src/memmaps.cpp:482
 msgid "VM End"
 msgstr "Кінець ВП"
 
-#: ../src/memmaps.cpp:430
+#. xgettext: virtual memory syze
+#: ../src/memmaps.cpp:484
 msgid "VM Size"
 msgstr "Розмір ВП"
 
-#: ../src/memmaps.cpp:431
+#: ../src/memmaps.cpp:485
 msgid "Flags"
 msgstr "Ознаки"
 
-#: ../src/memmaps.cpp:432
+#. xgettext: virtual memory offset
+#: ../src/memmaps.cpp:487
 msgid "VM Offset"
 msgstr "Зсув ВП"
 
-#: ../src/memmaps.cpp:434
+#. xgettext: memory that has not been modified since
+#. it has been allocated
+#: ../src/memmaps.cpp:490
+msgid "Private clean"
+msgstr "Приватна чиста"
+
+#. xgettext: memory that has been modified since it
+#. has been allocated
+#: ../src/memmaps.cpp:493
+msgid "Private dirty"
+msgstr "Приватна змінена"
+
+#. xgettext: shared memory that has not been modified
+#. since it has been allocated
+#: ../src/memmaps.cpp:496
+msgid "Shared clean"
+msgstr "Спільна чиста"
+
+#. xgettext: shared memory that has been modified
+#. since it has been allocated
+#: ../src/memmaps.cpp:499
+msgid "Shared dirty"
+msgstr "Спільна змінена"
+
+#: ../src/memmaps.cpp:501
 msgid "Inode"
 msgstr "I-вузол"
 
-#: ../src/memmaps.cpp:540
+#. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+#: ../src/memmaps.cpp:610
 msgid "Memory Maps"
 msgstr "Мапи пам'яті"
 
-#: ../src/memmaps.cpp:560
+#: ../src/memmaps.cpp:629
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "Мап _пам'яті процесу \"%s\" (PID %u):"
@@ -661,12 +700,12 @@ msgstr ""
 "Не вдається зняти процес %d за допомогою сигналу %d.\n"
 "%s"
 
-#. translators: primary alert message
+#. xgettext: primary alert message
 #: ../src/procdialogs.cpp:70
 msgid "Kill the selected process?"
 msgstr "Зняти виділений процес?"
 
-#. translators: secondary alert message
+#. xgettext: secondary alert message
 #: ../src/procdialogs.cpp:72
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
@@ -676,12 +715,12 @@ msgstr ""
 "створити загрозу безпеці. Знімати треба лише процеси, які не відповідають на "
 "запити."
 
-#. translators: primary alert message
+#. xgettext: primary alert message
 #: ../src/procdialogs.cpp:79
 msgid "End the selected process?"
 msgstr "Завершити виділений процес?"
 
-#. translators: secondary alert message
+#. xgettext: secondary alert message
 #: ../src/procdialogs.cpp:81
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
@@ -739,207 +778,217 @@ msgstr ""
 "Рівень nice пов'язаний з пріоритетом процесу. Менший рівень nice відповідає "
 "вищому рівню процесу."
 
-#: ../src/procdialogs.cpp:379
+#: ../src/procdialogs.cpp:392
 msgid "Process i_nformation shown in list:"
 msgstr "_Інформація про процеси зі списку:"
 
-#: ../src/procdialogs.cpp:431
+#: ../src/procdialogs.cpp:444
 msgid "Icon"
 msgstr "Значок"
 
-#: ../src/procdialogs.cpp:478
+#: ../src/procdialogs.cpp:491
 msgid "System Monitor Preferences"
 msgstr "Параметри системного монітора"
 
-#: ../src/procdialogs.cpp:508
+#: ../src/procdialogs.cpp:521
 msgid "Behavior"
 msgstr "Поведінка"
 
-#: ../src/procdialogs.cpp:527 ../src/procdialogs.cpp:623
-#: ../src/procdialogs.cpp:709
+#: ../src/procdialogs.cpp:540 ../src/procdialogs.cpp:655
+#: ../src/procdialogs.cpp:741
 msgid "_Update interval in seconds:"
 msgstr "Інтервал _оновлення у секундах:"
 
-#: ../src/procdialogs.cpp:552
+#: ../src/procdialogs.cpp:565
 msgid "Enable _smooth refresh"
 msgstr "Увімкнути _плавне оновлення"
 
-#: ../src/procdialogs.cpp:566
+#: ../src/procdialogs.cpp:579
 msgid "Alert before ending or _killing processes"
 msgstr "Попереджувати перед за_вершенням чи зняттям процесу"
 
-#: ../src/procdialogs.cpp:579
+#: ../src/procdialogs.cpp:593
+msgid "Solaris mode"
+msgstr "Режим Solaris"
+
+#: ../src/procdialogs.cpp:611
 msgid "Information Fields"
 msgstr "Інформаційні поля"
 
-#: ../src/procdialogs.cpp:604
+#: ../src/procdialogs.cpp:636
 msgid "Graphs"
 msgstr "Графіки"
 
-#: ../src/procdialogs.cpp:645
+#: ../src/procdialogs.cpp:677
 msgid "_Background color:"
 msgstr "Колір _тла:"
 
-#: ../src/procdialogs.cpp:664
+#: ../src/procdialogs.cpp:696
 msgid "_Grid color:"
 msgstr "Колір _розмітки:"
 
-#: ../src/procdialogs.cpp:729
+#: ../src/procdialogs.cpp:761
 msgid "Show _all filesystems"
 msgstr "Показати _усі файлові системи"
 
-#: ../src/proctable.cpp:273
+#: ../src/proctable.cpp:242
 msgid "Process Name"
 msgstr "Назва процесу"
 
-#: ../src/proctable.cpp:274
+#: ../src/proctable.cpp:243
 msgid "User"
 msgstr "Користувач"
 
-#: ../src/proctable.cpp:275
+#: ../src/proctable.cpp:244
 msgid "Status"
 msgstr "Статус"
 
-#: ../src/proctable.cpp:276
+#: ../src/proctable.cpp:245
 msgid "Virtual Memory"
 msgstr "Віртуальна пам'ять"
 
-#: ../src/proctable.cpp:277
+#: ../src/proctable.cpp:246
 msgid "Resident Memory"
 msgstr "Резидентна пам'ять"
 
-#: ../src/proctable.cpp:278
+#: ../src/proctable.cpp:247
 msgid "Writable Memory"
 msgstr "Записувана пам'ять"
 
-#: ../src/proctable.cpp:279
+#: ../src/proctable.cpp:248
 msgid "Shared Memory"
 msgstr "Спільна пам'ять"
 
-#: ../src/proctable.cpp:280
+#: ../src/proctable.cpp:249
 msgid "X Server Memory"
 msgstr "Пам'ять X-сервера"
 
-#: ../src/proctable.cpp:281
+#: ../src/proctable.cpp:250
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:282
+#: ../src/proctable.cpp:251
 msgid "CPU Time"
 msgstr "Час ЦП"
 
-#: ../src/proctable.cpp:283
+#: ../src/proctable.cpp:252
 msgid "Started"
 msgstr "Запущено"
 
-#: ../src/proctable.cpp:284
+#: ../src/proctable.cpp:253
 msgid "Nice"
 msgstr "Рівень"
 
-#: ../src/proctable.cpp:285
+#: ../src/proctable.cpp:254
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:286
+#: ../src/proctable.cpp:255
 msgid "Security Context"
 msgstr "Контекст безпеки"
 
-#: ../src/proctable.cpp:287
+#: ../src/proctable.cpp:256
 msgid "Command Line"
 msgstr "Командний рядок:"
 
-#: ../src/proctable.cpp:288
+#: ../src/proctable.cpp:257
 msgid "Memory"
 msgstr "Пам'ять"
 
-#: ../src/proctable.cpp:472
+#: ../src/proctable.cpp:454
 msgid "Running"
 msgstr "Запущено"
 
-#: ../src/proctable.cpp:477
+#: ../src/proctable.cpp:458
 msgid "Stopped"
 msgstr "Зупинено"
 
-#: ../src/proctable.cpp:482
+#: ../src/proctable.cpp:462
 msgid "Zombie"
 msgstr "Зомбі"
 
-#: ../src/proctable.cpp:487
+#: ../src/proctable.cpp:466
 msgid "Uninterruptible"
 msgstr "Неперерваний"
 
-#: ../src/proctable.cpp:492
+#: ../src/proctable.cpp:470
 msgid "Sleeping"
 msgstr "Очікування"
 
 #. xgettext: weeks, days
-#: ../src/proctable.cpp:638
+#: ../src/proctable.cpp:597
 #, c-format
 msgid "%uw%ud"
 msgstr "%uw%ud"
 
 #. xgettext: days, hours (0 -> 23)
-#: ../src/proctable.cpp:642
+#: ../src/proctable.cpp:601
 #, c-format
 msgid "%ud%02uh"
 msgstr "%ud%02uh"
 
 #. xgettext: hours (0 -> 23), minutes, seconds
-#: ../src/proctable.cpp:646
+#: ../src/proctable.cpp:605
 #, c-format
 msgid "%u:%02u:%02u"
 msgstr "%u:%02u:%02u"
 
 #. xgettext: minutes, seconds, centiseconds
-#: ../src/proctable.cpp:649
+#: ../src/proctable.cpp:608
 #, c-format
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: ../src/proctable.cpp:1097
+#: ../src/proctable.cpp:1034
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Середнє навантаження за останні 1, 5, 15 хвилин: %0.2f, %0.2f, %0.2f"
 
-#: ../src/sysinfo.cpp:117
+#: ../src/sysinfo.cpp:92
 msgid "Unknown CPU model"
 msgstr "Невідома модель ЦП"
 
+#. xgettext: Release 2.6.19
 #: ../src/sysinfo.cpp:401
-#, c-format
-msgid "Release %s (%s)"
-msgstr "Випуск %s (%s)"
-
-#: ../src/sysinfo.cpp:406
 #, c-format
 msgid "Release %s"
 msgstr "Випуск %s"
 
-#. hardware section
+#: ../src/sysinfo.cpp:408
+#, c-format
+msgid "Kernel %s"
+msgstr "Ядро %s"
+
 #: ../src/sysinfo.cpp:416
+#, c-format
+msgid "GNOME %s"
+msgstr "GNOME %s"
+
+#. hardware section
+#: ../src/sysinfo.cpp:425
 msgid "<b>Hardware</b>"
 msgstr "<b>Обладнання</b>"
 
-#: ../src/sysinfo.cpp:437
+#: ../src/sysinfo.cpp:446
 msgid "Memory:"
 msgstr "Пам'ять:"
 
-#: ../src/sysinfo.cpp:457
+#: ../src/sysinfo.cpp:466
 #, c-format
 msgid "Processor %d:"
 msgstr "Процесор %d:"
 
-#: ../src/sysinfo.cpp:462
+#: ../src/sysinfo.cpp:471
 msgid "Processor:"
 msgstr "Процесор:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:482
+#: ../src/sysinfo.cpp:491
 msgid "<b>System Status</b>"
 msgstr "<b>Стан системи</b>"
 
-#: ../src/sysinfo.cpp:503
+#: ../src/sysinfo.cpp:512
 msgid "Available disk space:"
 msgstr "Доступний дисковий простір:"
 
@@ -965,4 +1014,5 @@ msgstr "%.1f Мб"
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f Гб"
+
 
