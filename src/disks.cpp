@@ -129,7 +129,7 @@ remove_old_disks(GtkTreeModel *model, const glibtop_mountentry *entries, guint n
 	if (!gtk_tree_model_get_iter_first(model, &iter))
 		return;
 
-	do {
+	while (true) {
 		char *dir;
 		guint i;
 		gboolean found = FALSE;
@@ -145,14 +145,18 @@ remove_old_disks(GtkTreeModel *model, const glibtop_mountentry *entries, guint n
 			}
 		}
 
+		g_free(dir);
+
 		if (!found) {
 			if (!gtk_list_store_remove(GTK_LIST_STORE(model), &iter))
 				break;
+			else
+				continue;
 		}
 
-		g_free(dir);
-
-	} while (gtk_tree_model_iter_next(model, &iter));
+		if (!gtk_tree_model_iter_next(model, &iter))
+			break;
+	}
 }
 
 
