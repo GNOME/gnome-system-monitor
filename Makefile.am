@@ -19,7 +19,6 @@ Applications_DATA = $(Applications_in_files:.desktop.in=.desktop)
 distuninstallcheck_listfiles = find . -type f -print | grep -v 'scrollkeeper'
 
 DISTCLEANFILES = \
-  gnome-doc-utils.make \
   intltool-extract \
   intltool-merge \
   intltool-update \
