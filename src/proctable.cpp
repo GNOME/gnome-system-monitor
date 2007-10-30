@@ -342,14 +342,20 @@ proctable_new (ProcData * const procdata)
 
 		// type
 		switch (i) {
-		case COL_VMSIZE:
-		case COL_MEMRES:
-		case COL_MEMWRITABLE:
-		case COL_MEMSHARED:
 		case COL_MEMXSERVER:
-		case COL_MEM:
 		  gtk_tree_view_column_set_cell_data_func(col, cell,
 							  &procman::size_cell_data_func,
+							  GUINT_TO_POINTER(i),
+							  NULL);
+		  break;
+
+		case COL_VMSIZE:
+		case COL_MEMRES:
+		case COL_MEMSHARED:
+		case COL_MEM:
+		case COL_MEMWRITABLE:
+		  gtk_tree_view_column_set_cell_data_func(col, cell,
+							  &procman::size_na_cell_data_func,
 							  GUINT_TO_POINTER(i),
 							  NULL);
 		  break;
@@ -565,7 +571,8 @@ get_process_memory_info(ProcInfo *info)
 
 	get_process_memory_writable(info);
 
-	info->mem = info->memxserver + info->memwritable;
+	// fake the smart memory column if writable is not available
+	info->mem = info->memxserver + (info->memwritable ? info->memwritable : info->memres);
 }
 
 

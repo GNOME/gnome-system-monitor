@@ -229,4 +229,46 @@ namespace procman
     g_object_set(renderer, "text", str, NULL);
     g_free(str);
   }
+
+
+  /*
+    Same as above but handles size == 0 as not available
+   */
+  void size_na_cell_data_func(GtkTreeViewColumn *, GtkCellRenderer *renderer,
+			      GtkTreeModel *model, GtkTreeIter *iter,
+			      gpointer user_data)
+  {
+    const guint index = GPOINTER_TO_UINT(user_data);
+
+    guint64 size;
+    GValue value = { 0 };
+
+    gtk_tree_model_get_value(model, iter, index, &value);
+
+    switch (G_VALUE_TYPE(&value)) {
+    case G_TYPE_ULONG:
+      size = g_value_get_ulong(&value);
+      break;
+
+    case G_TYPE_UINT64:
+      size = g_value_get_uint64(&value);
+      break;
+
+    default:
+      g_assert_not_reached();
+    }
+
+    g_value_unset(&value);
+
+    if (size == 0)
+      g_object_set(renderer, "markup", _("<i>N/A</i>"), NULL);
+    else {
+      char *str = SI_gnome_vfs_format_file_size_for_display(size);
+      g_object_set(renderer, "text", str, NULL);
+      g_free(str);
+    }
+
+  }
+
+
 }
