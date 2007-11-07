@@ -124,7 +124,7 @@ class ProcInfo
 
 	time_t		start_time;
 	// raw proctime.rtime value
-	guint64		cpu_time_last;
+	guint64		cpu_time;
 
 	// all these members are filled with libgtop which uses
 	// guint64 (to have fixed size data) but we don't need more

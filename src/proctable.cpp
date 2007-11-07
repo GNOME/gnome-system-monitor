@@ -602,7 +602,7 @@ update_info_mutable_cols(ProcInfo *info)
 			    COL_MEMSHARED, info->memshared,
 			    COL_MEMXSERVER, info->memxserver,
 			    COL_CPU, guint(info->pcpu),
-			    COL_CPU_TIME, info->cpu_time_last,
+			    COL_CPU_TIME, info->cpu_time,
 			    COL_START_TIME, start_time,
 			    COL_NICE, gint(info->nice),
 			    COL_MEM, info->mem,
@@ -719,13 +719,13 @@ update_info (ProcData *procdata, ProcInfo *info)
 
 	get_process_user(procdata, info, procstate.uid);
 
-	info->pcpu = (proctime.rtime - info->cpu_time_last) * 100 / procdata->cpu_total_time;
+	info->pcpu = (proctime.rtime - info->cpu_time) * 100 / procdata->cpu_total_time;
 	info->pcpu = MIN(info->pcpu, 100);
 
 	if (procdata->config.solaris_mode)
 	  info->pcpu /= procdata->config.num_cpus;
 
-	ProcInfo::cpu_times[info->pid] = info->cpu_time_last = proctime.rtime;
+	ProcInfo::cpu_times[info->pid] = info->cpu_time = proctime.rtime;
 	info->nice = procuid.nice;
 	info->ppid = procuid.ppid;
 }
@@ -768,7 +768,7 @@ ProcInfo::ProcInfo(pid_t pid)
 	    if (proctime.rtime >= it->second)
 	      cpu_time = it->second;
 	  }
-	info->cpu_time_last = cpu_time;
+	info->cpu_time = cpu_time;
 	info->start_time = proctime.start_time;
 
 	get_process_selinux_context (info);
