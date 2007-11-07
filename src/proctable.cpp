@@ -66,29 +66,6 @@ ProcInfo* ProcInfo::find(pid_t pid)
 
 
 
-static gint
-sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer data)
-{
-	ProcInfo *infoa = NULL, *infob = NULL;
-	const gint col = GPOINTER_TO_INT (data);
-
-	gtk_tree_model_get (model, itera, COL_POINTER, &infoa, -1);
-	gtk_tree_model_get (model, iterb, COL_POINTER, &infob, -1);
-
-	g_assert(infoa);
-	g_assert(infob);
-
-	switch (col) {
-	case COL_CPU:
-		return PROCMAN_RCMP(infoa->pcpu, infob->pcpu);
-	default:
-		g_assert_not_reached();
-		return 0;
-	}
-}
-
-
-
 static void
 set_proctree_reorderable(ProcData *procdata)
 {
@@ -400,21 +377,6 @@ proctable_new (ProcData * const procdata)
 
 	gtk_container_add (GTK_CONTAINER (scrolled), proctree);
 
-
-	for(i = COL_NAME; i <= COL_MEM; i++)
-	{
-		switch(i)
-		{
-		case COL_CPU:
-			gtk_tree_sortable_set_sort_func (
-				GTK_TREE_SORTABLE (model),
-				i,
-				sort_ints,
-				GINT_TO_POINTER(i),
-				NULL);
-		}
-	}
-
 	procdata->tree = proctree;
 
 	set_proctree_reorderable(procdata);
@@ -630,11 +592,6 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, bool forced = false)
 	}
 	else
 		gtk_tree_store_insert (GTK_TREE_STORE (model), &info->node, NULL, 0);
-
-	/* COL_POINTER must be set first, because GtkTreeStore
-	 * will call sort_ints as soon as we set the column
-	 * that we're sorting on.
-	 */
 
 	gtk_tree_store_set (GTK_TREE_STORE (model), &info->node,
 			    COL_POINTER, info,
