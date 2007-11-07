@@ -52,10 +52,6 @@
 #include "util.h"
 #include "interface.h"
 #include "selinux.h"
-extern "C" {
-#include "e_date.h"
-}
-
 
 ProcInfo::List ProcInfo::all;
 std::map<pid_t, guint64> ProcInfo::cpu_times;
@@ -83,9 +79,6 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 	g_assert(infob);
 
 	switch (col) {
-	case COL_START_TIME:
-		return PROCMAN_CMP(infoa->start_time, infob->start_time);
-
 	case COL_CPU:
 		return PROCMAN_RCMP(infoa->pcpu, infob->pcpu);
 	default:
@@ -276,7 +269,7 @@ proctable_new (ProcData * const procdata)
 				    G_TYPE_ULONG,	/* X Server Memory */
 				    G_TYPE_UINT,	/* % CPU	*/
 				    G_TYPE_UINT64,	/* CPU time	*/
-				    G_TYPE_STRING,	/* Started	*/
+				    G_TYPE_ULONG,	/* Started	*/
 				    G_TYPE_INT,		/* Nice		*/
 				    G_TYPE_UINT,	/* ID		*/
 				    G_TYPE_STRING,	/* Security Context */
@@ -364,6 +357,13 @@ proctable_new (ProcData * const procdata)
 							  NULL);
 		  break;
 
+		case COL_START_TIME:
+		  gtk_tree_view_column_set_cell_data_func(col, cell,
+							  &procman::time_cell_data_func,
+							  GUINT_TO_POINTER(i),
+							  NULL);
+		  break;
+
 		default:
 		  gtk_tree_view_column_set_attributes(col, cell, "text", i, NULL);
 		  break;
@@ -405,7 +405,6 @@ proctable_new (ProcData * const procdata)
 	{
 		switch(i)
 		{
-		case COL_START_TIME:
 		case COL_CPU:
 			gtk_tree_sortable_set_sort_func (
 				GTK_TREE_SORTABLE (model),
@@ -587,12 +586,6 @@ update_info_mutable_cols(ProcInfo *info)
 	GtkTreeModel *model;
 	model = gtk_tree_view_get_model(GTK_TREE_VIEW(procdata->tree));
 
-	gchar *start_time;
-
-	/* FIXME: does it worths it to display relative to $now date ?
-	   absolute date wouldn't required to be updated on every refresh */
-	start_time = procman_format_date_for_display(info->start_time);
-
 	gtk_tree_store_set(GTK_TREE_STORE(model), &info->node,
 			    COL_STATUS, info->status,
 			    COL_USER, info->user,
@@ -603,14 +596,10 @@ update_info_mutable_cols(ProcInfo *info)
 			    COL_MEMXSERVER, info->memxserver,
 			    COL_CPU, guint(info->pcpu),
 			    COL_CPU_TIME, info->cpu_time,
-			    COL_START_TIME, start_time,
+			    COL_START_TIME, gulong(info->start_time),
 			    COL_NICE, gint(info->nice),
 			    COL_MEM, info->mem,
 			    -1);
-
-	/* FIXME: We don't bother updating COL_SECURITYCONTEXT as it can never change.
-	   even on fork ? */
-	g_free(start_time);
 }
 
 

@@ -13,6 +13,10 @@
 #include "util.h"
 #include "procman.h"
 
+extern "C" {
+#include "e_date.h"
+}
+
 static char *
 mnemonic_safe_process_name(const char *process_name)
 {
@@ -341,6 +345,34 @@ namespace procman
 
     time = 100 * time / ProcData::get_instance()->frequency;
     char *str = format_duration_for_display(time);
+    g_object_set(renderer, "text", str, NULL);
+    g_free(str);
+  }
+
+
+  void time_cell_data_func(GtkTreeViewColumn *, GtkCellRenderer *renderer,
+			   GtkTreeModel *model, GtkTreeIter *iter,
+			   gpointer user_data)
+  {
+    const guint index = GPOINTER_TO_UINT(user_data);
+
+    time_t time;
+    GValue value = { 0 };
+
+    gtk_tree_model_get_value(model, iter, index, &value);
+
+    switch (G_VALUE_TYPE(&value)) {
+    case G_TYPE_ULONG:
+      time = g_value_get_ulong(&value);
+      break;
+
+    default:
+      g_assert_not_reached();
+    }
+
+    g_value_unset(&value);
+
+    char *str = procman_format_date_for_display(time);
     g_object_set(renderer, "text", str, NULL);
     g_free(str);
   }

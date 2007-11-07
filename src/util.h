@@ -90,6 +90,9 @@ namespace procman
 			       GtkTreeModel *model, GtkTreeIter *iter,
 			       gpointer user_data);
 
+  void time_cell_data_func(GtkTreeViewColumn *col, GtkCellRenderer *renderer,
+			   GtkTreeModel *model, GtkTreeIter *iter,
+			   gpointer user_data);
 
   template<typename T>
   void poison(T &t, char c)
