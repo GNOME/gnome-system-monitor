@@ -11,7 +11,7 @@
 #include <stddef.h>
 
 #include "util.h"
-
+#include "procman.h"
 
 static char *
 mnemonic_safe_process_name(const char *process_name)
@@ -31,6 +31,48 @@ mnemonic_safe_process_name(const char *process_name)
 
 	return g_string_free (name, FALSE);
 }
+
+
+
+static inline unsigned divide(unsigned *q, unsigned *r, unsigned d)
+{
+	*q = *r / d;
+	*r = *r % d;
+	return *q != 0;
+}
+
+
+/*
+ * @param d: duration in centiseconds
+ * @type d: unsigned
+ */
+static char *
+format_duration_for_display(unsigned centiseconds)
+{
+	unsigned weeks = 0, days = 0, hours = 0, minutes = 0, seconds = 0;
+
+	(void)(divide(&seconds, &centiseconds, 100)
+	       && divide(&minutes, &seconds, 60)
+	       && divide(&hours, &minutes, 60)
+	       && divide(&days, &hours, 24)
+	       && divide(&weeks, &days, 7));
+
+	if (weeks)
+		/* xgettext: weeks, days */
+		return g_strdup_printf(_("%uw%ud"), weeks, days);
+
+	if (days)
+		/* xgettext: days, hours (0 -> 23) */
+		return g_strdup_printf(_("%ud%02uh"), days, hours);
+
+	if (hours)
+		/* xgettext: hours (0 -> 23), minutes, seconds */
+		return g_strdup_printf(_("%u:%02u:%02u"), hours, minutes, seconds);
+
+	/* xgettext: minutes, seconds, centiseconds */
+	return g_strdup_printf(_("%u:%02u.%02u"), minutes, seconds, centiseconds);
+}
+
 
 
 GtkWidget*
@@ -271,4 +313,38 @@ namespace procman
   }
 
 
+  void duration_cell_data_func(GtkTreeViewColumn *, GtkCellRenderer *renderer,
+			       GtkTreeModel *model, GtkTreeIter *iter,
+			       gpointer user_data)
+  {
+    const guint index = GPOINTER_TO_UINT(user_data);
+
+    unsigned time;
+    GValue value = { 0 };
+
+    gtk_tree_model_get_value(model, iter, index, &value);
+
+    switch (G_VALUE_TYPE(&value)) {
+    case G_TYPE_ULONG:
+      time = g_value_get_ulong(&value);
+      break;
+
+    case G_TYPE_UINT64:
+      time = g_value_get_uint64(&value);
+      break;
+
+    default:
+      g_assert_not_reached();
+    }
+
+    g_value_unset(&value);
+
+    time = 100 * time / ProcData::get_instance()->frequency;
+    char *str = format_duration_for_display(time);
+    g_object_set(renderer, "text", str, NULL);
+    g_free(str);
+  }
 }
+
+
+

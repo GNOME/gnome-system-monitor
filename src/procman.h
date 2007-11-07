@@ -123,6 +123,7 @@ class ProcInfo
 	gchar		*security_context;
 
 	time_t		start_time;
+	// raw proctime.rtime value
 	guint64		cpu_time_last;
 
 	// all these members are filled with libgtop which uses

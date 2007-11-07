@@ -83,9 +83,6 @@ sort_ints (GtkTreeModel *model, GtkTreeIter *itera, GtkTreeIter *iterb, gpointer
 	g_assert(infob);
 
 	switch (col) {
-	case COL_CPU_TIME:
-		return PROCMAN_RCMP(infoa->cpu_time_last, infob->cpu_time_last);
-
 	case COL_START_TIME:
 		return PROCMAN_CMP(infoa->start_time, infob->start_time);
 
@@ -278,7 +275,7 @@ proctable_new (ProcData * const procdata)
 				    G_TYPE_ULONG,	/* Shared Memory */
 				    G_TYPE_ULONG,	/* X Server Memory */
 				    G_TYPE_UINT,	/* % CPU	*/
-				    G_TYPE_STRING,	/* CPU time	*/
+				    G_TYPE_UINT64,	/* CPU time	*/
 				    G_TYPE_STRING,	/* Started	*/
 				    G_TYPE_INT,		/* Nice		*/
 				    G_TYPE_UINT,	/* ID		*/
@@ -360,6 +357,13 @@ proctable_new (ProcData * const procdata)
 							  NULL);
 		  break;
 
+		case COL_CPU_TIME:
+		  gtk_tree_view_column_set_cell_data_func(col, cell,
+							  &procman::duration_cell_data_func,
+							  GUINT_TO_POINTER(i),
+							  NULL);
+		  break;
+
 		default:
 		  gtk_tree_view_column_set_attributes(col, cell, "text", i, NULL);
 		  break;
@@ -401,7 +405,6 @@ proctable_new (ProcData * const procdata)
 	{
 		switch(i)
 		{
-		case COL_CPU_TIME:
 		case COL_START_TIME:
 		case COL_CPU:
 			gtk_tree_sortable_set_sort_func (
@@ -577,45 +580,6 @@ get_process_memory_info(ProcInfo *info)
 
 
 
-static inline unsigned divide(unsigned *q, unsigned *r, unsigned d)
-{
-	*q = *r / d;
-	*r = *r % d;
-	return *q != 0;
-}
-
-/*
- * @param d: duration in centiseconds
- * @type d: unsigned
- */
-static char *
-format_duration_for_display(unsigned centiseconds)
-{
-	unsigned weeks = 0, days = 0, hours = 0, minutes = 0, seconds = 0;
-
-	(void)(divide(&seconds, &centiseconds, 100)
-	       && divide(&minutes, &seconds, 60)
-	       && divide(&hours, &minutes, 60)
-	       && divide(&days, &hours, 24)
-	       && divide(&weeks, &days, 7));
-
-	if (weeks)
-		/* xgettext: weeks, days */
-		return g_strdup_printf(_("%uw%ud"), weeks, days);
-
-	if (days)
-		/* xgettext: days, hours (0 -> 23) */
-		return g_strdup_printf(_("%ud%02uh"), days, hours);
-
-	if (hours)
-		/* xgettext: hours (0 -> 23), minutes, seconds */
-		return g_strdup_printf(_("%u:%02u:%02u"), hours, minutes, seconds);
-
-	/* xgettext: minutes, seconds, centiseconds */
-	return g_strdup_printf(_("%u:%02u.%02u"), minutes, seconds, centiseconds);
-}
-
-
 static void
 update_info_mutable_cols(ProcInfo *info)
 {
@@ -623,10 +587,7 @@ update_info_mutable_cols(ProcInfo *info)
 	GtkTreeModel *model;
 	model = gtk_tree_view_get_model(GTK_TREE_VIEW(procdata->tree));
 
-	gchar *cpu_time, *start_time;
-
-	// expects centiseconds
-	cpu_time = format_duration_for_display(100 * info->cpu_time_last / procdata->frequency);
+	gchar *start_time;
 
 	/* FIXME: does it worths it to display relative to $now date ?
 	   absolute date wouldn't required to be updated on every refresh */
@@ -641,7 +602,7 @@ update_info_mutable_cols(ProcInfo *info)
 			    COL_MEMSHARED, info->memshared,
 			    COL_MEMXSERVER, info->memxserver,
 			    COL_CPU, guint(info->pcpu),
-			    COL_CPU_TIME, cpu_time,
+			    COL_CPU_TIME, info->cpu_time_last,
 			    COL_START_TIME, start_time,
 			    COL_NICE, gint(info->nice),
 			    COL_MEM, info->mem,
@@ -649,7 +610,6 @@ update_info_mutable_cols(ProcInfo *info)
 
 	/* FIXME: We don't bother updating COL_SECURITYCONTEXT as it can never change.
 	   even on fork ? */
-	g_free (cpu_time);
 	g_free(start_time);
 }
 
