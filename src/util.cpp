@@ -6,6 +6,7 @@
 
 #include <libgnomevfs/gnome-vfs-utils.h>
 #include <glibtop/proctime.h>
+#include <glibtop/procstate.h>
 #include <unistd.h>
 
 #include <stddef.h>
@@ -16,6 +17,40 @@
 extern "C" {
 #include "e_date.h"
 }
+
+
+static const char*
+format_process_state(guint state)
+{
+  const char *status;
+
+  switch (state)
+    {
+    case GLIBTOP_PROCESS_RUNNING:
+      status = _("Running");
+      break;
+
+    case GLIBTOP_PROCESS_STOPPED:
+      status = _("Stopped");
+      break;
+
+    case GLIBTOP_PROCESS_ZOMBIE:
+      status = _("Zombie");
+      break;
+
+    case GLIBTOP_PROCESS_UNINTERRUPTIBLE:
+      status = _("Uninterruptible");
+      break;
+
+    default:
+      status = _("Sleeping");
+      break;
+    }
+
+  return status;
+}
+
+
 
 static char *
 mnemonic_safe_process_name(const char *process_name)
@@ -375,6 +410,32 @@ namespace procman
     char *str = procman_format_date_for_display(time);
     g_object_set(renderer, "text", str, NULL);
     g_free(str);
+  }
+
+  void status_cell_data_func(GtkTreeViewColumn *, GtkCellRenderer *renderer,
+			     GtkTreeModel *model, GtkTreeIter *iter,
+			     gpointer user_data)
+  {
+    const guint index = GPOINTER_TO_UINT(user_data);
+
+    guint state;
+    GValue value = { 0 };
+
+    gtk_tree_model_get_value(model, iter, index, &value);
+
+    switch (G_VALUE_TYPE(&value)) {
+    case G_TYPE_UINT:
+      state = g_value_get_uint(&value);
+      break;
+
+    default:
+      g_assert_not_reached();
+    }
+
+    g_value_unset(&value);
+
+    const char *str = format_process_state(state);
+    g_object_set(renderer, "text", str, NULL);
   }
 }
 

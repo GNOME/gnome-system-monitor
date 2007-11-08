@@ -238,7 +238,7 @@ proctable_new (ProcData * const procdata)
 	model = gtk_tree_store_new (NUM_COLUMNS,
 				    G_TYPE_STRING,	/* Process Name */
 				    G_TYPE_STRING,	/* User		*/
-				    G_TYPE_STRING,	/* Status	*/
+				    G_TYPE_UINT,	/* Status	*/
 				    G_TYPE_ULONG,	/* VM Size	*/
 				    G_TYPE_ULONG,	/* Resident Memory */
 				    G_TYPE_ULONG,	/* Writable Memory */
@@ -341,6 +341,13 @@ proctable_new (ProcData * const procdata)
 							  NULL);
 		  break;
 
+		case COL_STATUS:
+		  gtk_tree_view_column_set_cell_data_func(col, cell,
+							  &procman::status_cell_data_func,
+							  GUINT_TO_POINTER(i),
+							  NULL);
+		  break;
+
 		default:
 		  gtk_tree_view_column_set_attributes(col, cell, "text", i, NULL);
 		  break;
@@ -411,35 +418,6 @@ ProcInfo::~ProcInfo()
   g_free(this->tooltip);
   g_free(this->arguments);
   g_free(this->security_context);
-}
-
-
-static void
-get_process_status (ProcInfo *info, const glibtop_proc_state *buf)
-{
-
-	switch(buf->state)
-	{
-	case GLIBTOP_PROCESS_RUNNING:
-		info->status = _("Running");
-		break;
-
-	case GLIBTOP_PROCESS_STOPPED:
-		info->status = _("Stopped");
-		break;
-
-	case GLIBTOP_PROCESS_ZOMBIE:
-		info->status = _("Zombie");
-		break;
-
-	case GLIBTOP_PROCESS_UNINTERRUPTIBLE:
-		info->status = _("Uninterruptible");
-		break;
-
-	default:
-		info->status = _("Sleeping");
-		break;
-	}
 }
 
 
@@ -656,10 +634,10 @@ update_info (ProcData *procdata, ProcInfo *info)
 	glibtop_proc_time proctime;
 
 	glibtop_get_proc_state (&procstate, info->pid);
+	info->status = procstate.state;
+
 	glibtop_get_proc_uid (&procuid, info->pid);
 	glibtop_get_proc_time (&proctime, info->pid);
-
-	get_process_status (info, &procstate);
 
 	get_process_memory_info(info);
 
@@ -682,7 +660,7 @@ ProcInfo::ProcInfo(pid_t pid)
     name(NULL),
     user(NULL),
     arguments(NULL),
-    status(NULL),
+    status(0),
     security_context(NULL),
     pid(pid),
     uid(-1)

@@ -119,7 +119,7 @@ class ProcInfo
 	gchar		*user; /* allocated with g_string_chunk, don't free it ! */
 	gchar		*arguments;
 
-	gchar		*status; /* shared, don't free it ! */
+	guint		status;
 	gchar		*security_context;
 
 	time_t		start_time;
