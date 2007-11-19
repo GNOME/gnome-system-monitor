@@ -87,7 +87,40 @@ struct _ProcConfig
 };
 
 
+
+struct MutableProcInfo
+{
+  MutableProcInfo()
+    : user(0),
+      status(0)
+  { }
+
+  // allocated with g_string_chunk, don't free it !
+  gchar* user;
+
+  // all these members are filled with libgtop which uses
+  // guint64 (to have fixed size data) but we don't need more
+  // than an unsigned long (even for 32bit apps on a 64bit
+  // kernel) as these data are amounts, not offsets.
+  gulong vmsize;
+  gulong memres;
+  gulong memshared;
+  gulong memwritable;
+  gulong mem;
+
+  // wnck gives an unsigned long
+  gulong memxserver;
+
+  gulong start_time;
+  guint64 cpu_time;
+  guint status;
+  guint pcpu;
+  gint nice;
+};
+
+
 class ProcInfo
+  : public MutableProcInfo
 {
 	/* undefined */ ProcInfo& operator=(const ProcInfo&);
 	/* undefined */ ProcInfo(const ProcInfo&);
@@ -116,35 +149,13 @@ class ProcInfo
 	Glib::RefPtr<Gdk::Pixbuf> pixbuf;
 	gchar		*tooltip;
 	gchar		*name;
-	gchar		*user; /* allocated with g_string_chunk, don't free it ! */
 	gchar		*arguments;
 
-	guint		status;
 	gchar		*security_context;
-
-	time_t		start_time;
-	// raw proctime.rtime value
-	guint64		cpu_time;
-
-	// all these members are filled with libgtop which uses
-	// guint64 (to have fixed size data) but we don't need more
-	// than an unsigned long (even for 32bit apps on a 64bit
-	// kernel) as these data are amounts, not offsets.
-	unsigned long	vmsize;
-	unsigned long	memres;
-	unsigned long	memwritable;
-	unsigned long	memshared;
-	unsigned long	mem; /* estimated memory usage */
-
-	// wnck gives an unsigned long
-	unsigned long	memxserver;
 
 	const guint	pid;
 	guint		ppid;
 	guint		uid;
-
-	guint8		pcpu; /* 0% - 100% */
-	gint8		nice;
 
 // private:
 	// tracks cpu time per process keeps growing because if a

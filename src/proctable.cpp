@@ -534,10 +534,10 @@ update_info_mutable_cols(ProcInfo *info)
 			    COL_MEMWRITABLE, info->memwritable,
 			    COL_MEMSHARED, info->memshared,
 			    COL_MEMXSERVER, info->memxserver,
-			    COL_CPU, guint(info->pcpu),
+			    COL_CPU, info->pcpu,
 			    COL_CPU_TIME, info->cpu_time,
-			    COL_START_TIME, gulong(info->start_time),
-			    COL_NICE, gint(info->nice),
+			    COL_START_TIME, info->start_time,
+			    COL_NICE, info->nice,
 			    COL_MEM, info->mem,
 			    -1);
 }
@@ -658,9 +658,7 @@ update_info (ProcData *procdata, ProcInfo *info)
 ProcInfo::ProcInfo(pid_t pid)
   : tooltip(NULL),
     name(NULL),
-    user(NULL),
     arguments(NULL),
-    status(0),
     security_context(NULL),
     pid(pid),
     uid(-1)
