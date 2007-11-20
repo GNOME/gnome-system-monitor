@@ -1,3 +1,5 @@
+// -*- mode: c++ -*-
+
 #ifndef H_GNOME_SYSTEM_MONITOR_UTIL_1123178725
 #define H_GNOME_SYSTEM_MONITOR_UTIL_1123178725
 
@@ -102,6 +104,39 @@ namespace procman
   void poison(T &t, char c)
   {
     memset(&t, c, sizeof t);
+  }
+
+
+
+  //
+  // Stuff to update a tree_store in a smart way
+  //
+
+  template<typename T>
+  void tree_store_update(GtkTreeModel* model, GtkTreeIter* iter, int column, const T& new_value)
+  {
+    T current_value;
+
+    gtk_tree_model_get(model, iter, column, &current_value, -1);
+
+    if (current_value != new_value)
+      gtk_tree_store_set(GTK_TREE_STORE(model), iter, column, new_value, -1);
+  }
+
+  // undefined
+  // catch every thing about pointers
+  // just to make sure i'm not doing anything wrong
+  template<typename T>
+  void tree_store_update(GtkTreeModel* model, GtkTreeIter* iter, int column, T* new_value);
+
+  // specialized versions for strings
+  template<>
+  void tree_store_update<const char>(GtkTreeModel* model, GtkTreeIter* iter, int column, const char* new_value);
+
+  template<>
+  inline void tree_store_update<char>(GtkTreeModel* model, GtkTreeIter* iter, int column, char* new_value)
+  {
+    tree_store_update<const char>(model, iter, column, new_value);
   }
 }
 

@@ -526,20 +526,20 @@ update_info_mutable_cols(ProcInfo *info)
 	GtkTreeModel *model;
 	model = gtk_tree_view_get_model(GTK_TREE_VIEW(procdata->tree));
 
-	gtk_tree_store_set(GTK_TREE_STORE(model), &info->node,
-			    COL_STATUS, info->status,
-			    COL_USER, info->user,
-			    COL_VMSIZE, info->vmsize,
-			    COL_MEMRES, info->memres,
-			    COL_MEMWRITABLE, info->memwritable,
-			    COL_MEMSHARED, info->memshared,
-			    COL_MEMXSERVER, info->memxserver,
-			    COL_CPU, info->pcpu,
-			    COL_CPU_TIME, info->cpu_time,
-			    COL_START_TIME, info->start_time,
-			    COL_NICE, info->nice,
-			    COL_MEM, info->mem,
-			    -1);
+	using procman::tree_store_update;
+
+	tree_store_update(model, &info->node, COL_STATUS, info->status);
+	tree_store_update(model, &info->node, COL_USER, info->user);
+	tree_store_update(model, &info->node, COL_VMSIZE, info->vmsize);
+	tree_store_update(model, &info->node, COL_MEMRES, info->memres);
+	tree_store_update(model, &info->node, COL_MEMWRITABLE, info->memwritable);
+	tree_store_update(model, &info->node, COL_MEMSHARED, info->memshared);
+	tree_store_update(model, &info->node, COL_MEMXSERVER, info->memxserver);
+	tree_store_update(model, &info->node, COL_CPU, info->pcpu);
+	tree_store_update(model, &info->node, COL_CPU_TIME, info->cpu_time);
+	tree_store_update(model, &info->node, COL_START_TIME, info->start_time);
+	tree_store_update(model, &info->node, COL_NICE, info->nice);
+	tree_store_update(model, &info->node, COL_MEM, info->mem);
 }
 
 

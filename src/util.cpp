@@ -10,6 +10,7 @@
 #include <unistd.h>
 
 #include <stddef.h>
+#include <cstring>
 
 #include "util.h"
 #include "procman.h"
@@ -436,6 +437,20 @@ namespace procman
 
     const char *str = format_process_state(state);
     g_object_set(renderer, "text", str, NULL);
+  }
+
+
+  template<>
+  void tree_store_update<const char>(GtkTreeModel* model, GtkTreeIter* iter, int column, const char* new_value)
+  {
+    char* current_value;
+
+    gtk_tree_model_get(model, iter, column, &current_value, -1);
+
+    if (!current_value or std::strcmp(current_value, new_value) != 0)
+      gtk_tree_store_set(GTK_TREE_STORE(model), iter, column, new_value, -1);
+
+    g_free(current_value);
   }
 }
 
