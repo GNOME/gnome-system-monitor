@@ -258,9 +258,7 @@ proctable_new (ProcData * const procdata)
 		);
 
 	proctree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
-#if GTK_CHECK_VERSION(2, 11, 6)
 	gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (proctree), COL_TOOLTIP);
-#endif
 	g_object_set(G_OBJECT(proctree),
 		     "show-expanders", procdata->config.show_tree,
 		     NULL);
