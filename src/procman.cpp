@@ -72,9 +72,14 @@ tree_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data
 	GConfValue *value = gconf_entry_get_value (entry);
 	
 	procdata->config.show_tree = gconf_value_get_bool (value);
+
+	g_object_set(G_OBJECT(procdata->tree),
+		     "show-expanders", procdata->config.show_tree,
+		     NULL);
+
 	proctable_clear_tree (procdata);
+
 	proctable_update_all (procdata);
-	
 }
 
 static void
