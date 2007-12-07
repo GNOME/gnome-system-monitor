@@ -679,9 +679,9 @@ ProcInfo::ProcInfo(pid_t pid)
 
 	char* tooltip = g_strjoinv(" ", arguments);
 	info->tooltip = g_markup_escape_text(tooltip, -1);
-	g_free(tooltip);
 
-	info->arguments = g_strescape(info->tooltip, "\\\"");
+	info->arguments = g_strescape(tooltip, "\\\"");
+	g_free(tooltip);
 	g_strfreev(arguments);
 
 	guint64 cpu_time = proctime.rtime;
