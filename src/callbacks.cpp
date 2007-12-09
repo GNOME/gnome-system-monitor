@@ -136,6 +136,7 @@ cb_about (GtkAction *action, gpointer data)
 		"Jorgen Scheibengruber",
 		"Benoît Dejean",
 		"Paolo Borelli",
+		"Karl Lattimer",
 		NULL
 	};
 

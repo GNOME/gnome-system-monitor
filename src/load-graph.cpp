@@ -19,6 +19,7 @@
 #include <glibtop/swap.h>
 #include <glibtop/netload.h>
 #include <glibtop/netlist.h>
+#include <math.h>
 
 #include <libgnomevfs/gnome-vfs-utils.h>
 
@@ -29,7 +30,7 @@
 #include "util.h"
 
 #define NUM_POINTS 100
-#define GRAPH_MIN_HEIGHT 30
+#define GRAPH_MIN_HEIGHT 80
 
 
 enum {
@@ -89,33 +90,20 @@ struct _LoadGraph {
 void
 load_graph_draw (LoadGraph *g)
 {
-	const double fontsize = 12.0;
+	const double fontsize = 8.0;
 	const double rmargin = 3.5 * fontsize;
+	const double indent = 8.0;
+	double dash[2] = { 1.0, 2.0 };
 	cairo_t *cr;
 	int dely;
 	double delx;
 	int real_draw_height;
 	guint i, j;
 	unsigned num_bars;
-
-	cr = cairo_create (g->buffer);
-
-	/* clear */
-	gdk_cairo_set_source_color (cr, &(g->colors [0]));
-	cairo_paint (cr);
-
-	/* draw frame */
-	cairo_translate (cr, FRAME_WIDTH, FRAME_WIDTH);
-	gdk_cairo_set_source_color (cr, &(g->colors [1]));
-	cairo_set_line_width (cr, 1.0);
-	cairo_select_font_face(cr,
-			       "monospace",
-			       CAIRO_FONT_SLANT_NORMAL,
-			       CAIRO_FONT_WEIGHT_NORMAL);
-	cairo_set_font_size(cr, fontsize);
+	GtkWidget *notebook;
 
 	// keep 100 % num_bars == 0
-	switch (static_cast<int>(g->draw_height / (fontsize + 3)))
+	switch (static_cast<int>(g->draw_height / (fontsize + 14)))
 	  {
 	  case 1:
 	    num_bars = 1;
@@ -134,9 +122,49 @@ load_graph_draw (LoadGraph *g)
 	dely = g->draw_height / num_bars; /* round to int to avoid AA blur */
 	real_draw_height = dely * num_bars;
 
+	/* GtkStyle gives us the theme background color, this should be in
+	 * load_graph_new but something causes load_graph_new to use the
+	 * default GTK color scheme rather than the current theme color
+	 * we also have to trawl through parent widgets to get to gtknotebook
+	 * *sigh*
+	 */
+	notebook = g->main_widget;
+	while (g_ascii_strncasecmp(gtk_widget_get_name(notebook),
+				   "GtkNotebook", 12)) {
+		notebook = gtk_widget_get_parent(notebook);
+		if (notebook == NULL) {
+			// Fall back to using the main_widget for styles
+			notebook = g->main_widget;
+			break;
+		}
+	}
+
+	GtkStyle *style = gtk_widget_get_style(notebook);
+
+	cr = cairo_create (g->buffer);
+
+	/* clear */
+	gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_NORMAL]);
+	cairo_paint (cr);
+
+	/* draw frame */
+	cairo_translate (cr, FRAME_WIDTH, FRAME_WIDTH);
+	
+	/* Draw background rectangle */
+	cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+	cairo_rectangle (cr, rmargin + indent, 0,
+			 g->draw_width - rmargin - indent, real_draw_height);
+	cairo_fill(cr);
+
+	cairo_set_source_rgb (cr, 0, 0, 0);
+	cairo_set_line_width (cr, 1.0);
+	cairo_set_dash(cr, dash, 2, 0);
+	cairo_set_font_size(cr, fontsize);
+
 	for (i = 0; i <= num_bars; ++i) {
 		char *caption;
 		double y;
+		cairo_text_extents_t extents;
 
 		if (i == 0)
 		  y = 0.5 + fontsize / 2.0;
@@ -145,35 +173,47 @@ load_graph_draw (LoadGraph *g)
 		else
 		  y = i * dely + fontsize / 2.0;
 
-		cairo_move_to(cr, 0.0, y);
 		caption = g_strdup_printf("%3d %%", 100 - i * (100 / num_bars));
+		cairo_text_extents (cr, caption, &extents);
+		cairo_move_to(cr, indent - extents.width / 2, y);
 		cairo_show_text(cr, caption);
 		g_free(caption);
 
 		cairo_move_to (cr, rmargin, i * dely + 0.5);
 		cairo_line_to (cr, g->draw_width - 0.5, i * dely + 0.5);
 	}
+	cairo_stroke (cr);
 
-	cairo_move_to (cr, rmargin, 0.5);
-	cairo_line_to (cr, rmargin, real_draw_height + 0.5);
+	cairo_set_dash(cr, dash, 2, 1.5);
+
+	for (unsigned i = 0; i < 7; i++) {
+		double x = (i + 1) * (g->draw_width - rmargin + indent) / 8;
+		cairo_move_to (cr, (ceil(x) + 0.5) + rmargin + indent, 0.5);
+		cairo_line_to (cr, (ceil(x) + 0.5) + rmargin + indent, real_draw_height + 0.5);
+	}
+
+	cairo_move_to (cr, rmargin + indent + 0.5, 0.5);
+	cairo_line_to (cr, rmargin + indent + 0.5, real_draw_height + 0.5);
 
 	cairo_move_to (cr, g->draw_width - 0.5, 0.5);
 	cairo_line_to (cr, g->draw_width - 0.5, real_draw_height + 0.5);
 
 	cairo_stroke (cr);
 
+	cairo_set_dash(cr, NULL, 0, 0);
+
 	/* draw the graph */
 	cairo_set_line_width (cr, 2.0);
 	cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
 	cairo_set_line_join (cr, CAIRO_LINE_JOIN_MITER);
 
-	delx = (g->draw_width - 2.0 - rmargin) / (NUM_POINTS - 1);
+	delx = (g->draw_width - 2.0 - rmargin - indent) / (NUM_POINTS - 1);
 
 	for (j = 0; j < g->n; ++j) {
 		cairo_move_to (cr,
 			       g->draw_width - 2.0,
 			       (1.0f - g->data[0][j]) * real_draw_height);
-		gdk_cairo_set_source_color (cr, &(g->colors [j + 2]));
+		gdk_cairo_set_source_color (cr, &(g->colors [j]));
 
 		for (i = 1; i < NUM_POINTS; ++i) {
 			if (g->data[i][j] == -1.0f)
@@ -599,22 +639,20 @@ load_graph_new (gint type, ProcData *procdata)
 
 	g->speed  = procdata->config.graph_update_interval;
 
-	g->colors = g_new0 (GdkColor, g->n + 2);
+	g->colors = g_new0 (GdkColor, g->n);
 
-	g->colors[0] = procdata->config.bg_color;
-	g->colors[1] = procdata->config.frame_color;
 	switch (type) {
 	case LOAD_GRAPH_CPU:
-		memcpy(g->colors + 2, procdata->config.cpu_color,
+		memcpy(g->colors, procdata->config.cpu_color,
 		       g->n * sizeof g->colors[0]);
 		break;
 	case LOAD_GRAPH_MEM:
-		g->colors[2] = procdata->config.mem_color;
-		g->colors[3] = procdata->config.swap_color;
+		g->colors[0] = procdata->config.mem_color;
+		g->colors[1] = procdata->config.swap_color;
 		break;
 	case LOAD_GRAPH_NET:
-		g->colors[2] = procdata->config.net_in_color;
-		g->colors[3] = procdata->config.net_out_color;
+		g->colors[0] = procdata->config.net_in_color;
+		g->colors[1] = procdata->config.net_out_color;
 		break;
 	}
 

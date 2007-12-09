@@ -476,12 +476,10 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	GtkWidget *spin_button;
 	GtkWidget *check_button;
 	GtkWidget *tab_label;
-	GtkWidget *color_picker;
 	GtkWidget *smooth_button;
 	GtkSizeGroup *size;
 	gfloat update;
 	gchar *tmp;
-	GdkColor color;
 	
 	if (prefs_dialog)
 		return;
@@ -674,42 +672,6 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	hbox2 = gtk_hbox_new (FALSE, 12);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, TRUE, TRUE, 0);
 	
-	label = gtk_label_new_with_mnemonic (_("_Background color:"));
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
-	gtk_size_group_add_widget (size, label);
-	
-	color.red   = procdata->config.bg_color.red;
-	color.green = procdata->config.bg_color.green;
-   	color.blue  = procdata->config.bg_color.blue;
-	color_picker = gtk_color_button_new_with_color (&color);
-
-	g_signal_connect (G_OBJECT (color_picker), "color_set",
-			          G_CALLBACK (cb_bg_color_changed), procdata);
-	gtk_box_pack_start (GTK_BOX (hbox2), color_picker, FALSE, FALSE, 0);
-	gtk_label_set_mnemonic_widget (GTK_LABEL (label), color_picker);
-	gtk_widget_show (color_picker);
-		
-	hbox2 = gtk_hbox_new (FALSE, 12);
-	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, TRUE, TRUE, 0);
-	  
-	label = gtk_label_new_with_mnemonic (_("_Grid color:"));
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
-	gtk_size_group_add_widget (size, label);
-	
-	color.red   = procdata->config.frame_color.red;
-	color.green = procdata->config.frame_color.green;
-   	color.blue  = procdata->config.frame_color.blue;
-	color_picker = gtk_color_button_new_with_color (&color);
-	
-	g_signal_connect (G_OBJECT (color_picker), "color_set",
-			    G_CALLBACK (cb_frame_color_changed), procdata);	  
-	gtk_box_pack_start (GTK_BOX (hbox2), color_picker, FALSE, FALSE, 0);
-	gtk_label_set_mnemonic_widget (GTK_LABEL (label), color_picker);
-	gtk_widget_show (color_picker);
-
-
 	/*
 	 * Devices
 	 */
