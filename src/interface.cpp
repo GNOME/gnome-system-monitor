@@ -53,7 +53,7 @@ static const GtkActionEntry menu_entries[] =
 
 	{ "Lsof", GTK_STOCK_FIND, N_("Search for _Open Files"), "<control>O",
 	  N_("Search for open files"), G_CALLBACK(cb_show_lsof) },
-	{ "Quit", GTK_STOCK_QUIT, N_("_Quit"), "<control>Q",
+	{ "Quit", GTK_STOCK_QUIT, NULL, NULL,
 	  N_("Quit the program"), G_CALLBACK (cb_app_exit) },
 
 
@@ -62,13 +62,13 @@ static const GtkActionEntry menu_entries[] =
 	{ "ContProcess", NULL, N_("_Continue Process"), "<control>C",
 	  N_("Continue process if stopped"), G_CALLBACK(cb_kill_sigcont) },
 
-	{ "EndProcess", NULL, N_("End _Process"), "<control>E",
+	{ "EndProcess", NULL, N_("_End Process"), "<control>E",
 	  N_("Force process to finish normally"), G_CALLBACK (cb_end_process) },
 	{ "KillProcess", NULL, N_("_Kill Process"), "<control>K",
 	  N_("Force process to finish immediately"), G_CALLBACK (cb_kill_process) },
 	{ "ChangePriority", NULL, N_("_Change Priority..."), "<control>R",
 	  N_("Change the order of priority of process"), G_CALLBACK (cb_renice) },
-	{ "Preferences", GTK_STOCK_PREFERENCES, N_("Prefere_nces"), NULL,
+	{ "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL,
 	  N_("Configure the application"), G_CALLBACK (cb_edit_preferences) },
 
 	{ "MemoryMaps", NULL, N_("_Memory Maps"), "<control>M",
@@ -78,7 +78,7 @@ static const GtkActionEntry menu_entries[] =
 
 	{ "HelpContents", GTK_STOCK_HELP, N_("_Contents"), "F1",
 	  N_("Open the manual"), G_CALLBACK (cb_help_contents) },
-	{ "About", GTK_STOCK_ABOUT, N_("_About"), NULL,
+	{ "About", GTK_STOCK_ABOUT, NULL, NULL,
 	  N_("About this application"), G_CALLBACK (cb_about) }
 };
 
