@@ -938,6 +938,6 @@ ProcInfo::set_icon(Glib::RefPtr<Gdk::Pixbuf> icon)
   GtkTreeModel *model;
   model = gtk_tree_view_get_model(GTK_TREE_VIEW(ProcData::get_instance()->tree));
   gtk_tree_store_set(GTK_TREE_STORE(model), &this->node,
-		     COL_PIXBUF, this->pixbuf->gobj(),
+		     COL_PIXBUF, (this->pixbuf ? this->pixbuf->gobj() : NULL),
 		     -1);
 }
