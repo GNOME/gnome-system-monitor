@@ -182,7 +182,7 @@ PrettyTable::get_icon_from_name(const ProcInfo &info)
 Glib::RefPtr<Gdk::Pixbuf>
 PrettyTable::get_icon_dummy(const ProcInfo &)
 {
-  return this->theme->load_icon("applications-other", APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN);
+  return this->theme->load_icon("application-x-executable", APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN);
 }
 
 
