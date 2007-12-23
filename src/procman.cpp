@@ -179,21 +179,9 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 	GConfValue *value = gconf_entry_get_value (entry);
 	const gchar *color = gconf_value_get_string (value);
 
-	if (g_str_equal (key, "/apps/procman/bg_color")) {
-		gdk_color_parse (color, &procdata->config.bg_color);
-		load_graph_get_colors(procdata->cpu_graph)[0] = procdata->config.bg_color;
-		load_graph_get_colors(procdata->mem_graph)[0] = procdata->config.bg_color;
-		load_graph_get_colors(procdata->net_graph)[0] = procdata->config.bg_color;
-	}
-	else if (g_str_equal (key, "/apps/procman/frame_color")) {
-		gdk_color_parse (color, &procdata->config.frame_color);
-		load_graph_get_colors(procdata->cpu_graph)[1] = procdata->config.frame_color;
-		load_graph_get_colors(procdata->mem_graph)[1] = procdata->config.frame_color;
-		load_graph_get_colors(procdata->net_graph)[1] = procdata->config.frame_color;
-	}
-	else if (g_str_equal (key, "/apps/procman/cpu_color")) {
+	if (g_str_equal (key, "/apps/procman/cpu_color")) {
 		gdk_color_parse (color, &procdata->config.cpu_color[0]);
-		load_graph_get_colors(procdata->cpu_graph)[2] = procdata->config.cpu_color[0];
+		load_graph_get_colors(procdata->cpu_graph)[0] = procdata->config.cpu_color[0];
 	}
 	else if (g_str_has_prefix (key, "/apps/procman/cpu_color")) {
 		gint i;
@@ -203,26 +191,26 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 			cpu_key = g_strdup_printf ("/apps/procman/cpu_color%d",i);
 			if (g_str_equal (key, cpu_key)) {
 				gdk_color_parse (color, &procdata->config.cpu_color[i]);
-				load_graph_get_colors(procdata->cpu_graph)[i+2] = procdata->config.cpu_color[i];
+				load_graph_get_colors(procdata->cpu_graph)[i] = procdata->config.cpu_color[i];
 			}
 			g_free (cpu_key);
 		}
 	}
 	else if (g_str_equal (key, "/apps/procman/mem_color")) {
 		gdk_color_parse (color, &procdata->config.mem_color);
-		load_graph_get_colors(procdata->mem_graph)[2] = procdata->config.mem_color;
+		load_graph_get_colors(procdata->mem_graph)[0] = procdata->config.mem_color;
 	}
 	else if (g_str_equal (key, "/apps/procman/swap_color")) {
 		gdk_color_parse (color, &procdata->config.swap_color);
-		load_graph_get_colors(procdata->mem_graph)[3] = procdata->config.swap_color;
+		load_graph_get_colors(procdata->mem_graph)[1] = procdata->config.swap_color;
 	}
 	else if (g_str_equal (key, "/apps/procman/net_in_color")) {
 		gdk_color_parse (color, &procdata->config.net_in_color);
-		load_graph_get_colors(procdata->net_graph)[2] = procdata->config.net_in_color;
+		load_graph_get_colors(procdata->net_graph)[0] = procdata->config.net_in_color;
 	}
 	else if (g_str_equal (key, "/apps/procman/net_out_color")) {
 		gdk_color_parse (color, &procdata->config.net_out_color);
-		load_graph_get_colors(procdata->net_graph)[3] = procdata->config.net_out_color;
+		load_graph_get_colors(procdata->net_graph)[1] = procdata->config.net_out_color;
 	}
 	else {
 		g_assert_not_reached();
@@ -305,22 +293,6 @@ procman_data_new (GConfClient *client)
 				 pd, NULL, NULL);
 	pd->config.current_tab = gconf_client_get_int (client, "/apps/procman/current_tab", NULL);
 
-	color = gconf_client_get_string (client, "/apps/procman/bg_color", NULL);
-	if (!color)
-		color = g_strdup ("#000000");
-	gconf_client_notify_add (client, "/apps/procman/bg_color", 
-			  	 color_changed_cb, pd, NULL, NULL);
-	gdk_color_parse(color, &pd->config.bg_color);
-	g_free (color);
-	
-	color = gconf_client_get_string (client, "/apps/procman/frame_color", NULL);
-	if (!color)
-		color = g_strdup ("#231e89aa2805");
-	gconf_client_notify_add (client, "/apps/procman/frame_color", 
-			  	 color_changed_cb, pd, NULL, NULL);
-	gdk_color_parse(color, &pd->config.frame_color);
-	g_free (color);
-	
 	color = gconf_client_get_string (client, "/apps/procman/cpu_color", NULL);
 	if (!color)
 		color = g_strdup ("#000000a200ff");

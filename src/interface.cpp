@@ -39,6 +39,7 @@
 #include "util.h"
 #include "disks.h"
 #include "sysinfo.h"
+#include "gsm_color_button.h"
 
 static void	cb_toggle_tree (GtkAction *action, gpointer data);
 
@@ -289,8 +290,8 @@ create_sys_view (ProcData *procdata)
 		g_signal_connect (G_OBJECT (temp_hbox), "size_request",
 					 G_CALLBACK(size_request), &cpu_size);
 
-		color_picker = gtk_color_button_new_with_color (
-			&load_graph_get_colors(cpu_graph)[i]);
+		color_picker = gsm_color_button_new (
+			&load_graph_get_colors(cpu_graph)[i], GSMCP_TYPE_CPU);
 
 		g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
@@ -346,8 +347,7 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (mem_graph_box), table, 
 			    FALSE, FALSE, 0);
 
-	color_picker = gtk_color_button_new_with_color (
-		&load_graph_get_colors(mem_graph)[0]);
+	color_picker = load_graph_get_mem_color_picker(mem_graph);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_mem_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
@@ -405,8 +405,7 @@ create_sys_view (ProcData *procdata)
 			  0,
 			  0);
 
-	color_picker = gtk_color_button_new_with_color (
-		&load_graph_get_colors(mem_graph)[1]);
+	color_picker = load_graph_get_swap_color_picker(mem_graph);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_swap_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
@@ -495,8 +494,8 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (net_graph_box), table,
 			    FALSE, FALSE, 0);
 
-	color_picker = gtk_color_button_new_with_color (
-		&load_graph_get_colors(net_graph)[0]);
+	color_picker = gsm_color_button_new (
+		&load_graph_get_colors(net_graph)[0], GSMCP_TYPE_NETWORK_IN);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_net_in_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
@@ -539,8 +538,8 @@ create_sys_view (ProcData *procdata)
 			  0,
 			  0);
 
-	color_picker = gtk_color_button_new_with_color (
-		&load_graph_get_colors(net_graph)[1]);
+	color_picker = gsm_color_button_new (
+		&load_graph_get_colors(net_graph)[1], GSMCP_TYPE_NETWORK_OUT);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_net_out_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);

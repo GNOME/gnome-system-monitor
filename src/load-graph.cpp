@@ -28,6 +28,7 @@
 #include "procman.h"
 #include "load-graph.h"
 #include "util.h"
+#include "gsm_color_button.h"
 
 #define NUM_POINTS 100
 #define GRAPH_MIN_HEIGHT 80
@@ -47,6 +48,7 @@ struct _LoadGraph {
 	guint draw_width, draw_height;
 
 	GdkColor *colors;
+	GtkWidget *notebook;
 
 	gfloat* data_block;
 	gfloat* data[NUM_POINTS];
@@ -61,6 +63,8 @@ struct _LoadGraph {
 	gboolean draw;
 
 	LoadGraphLabels labels;
+	GtkWidget *mem_color_picker;
+	GtkWidget *swap_color_picker;
 
 	/* union { */
 		struct {
@@ -100,7 +104,6 @@ load_graph_draw (LoadGraph *g)
 	int real_draw_height;
 	guint i, j;
 	unsigned num_bars;
-	GtkWidget *notebook;
 
 	// keep 100 % num_bars == 0
 	switch (static_cast<int>(g->draw_height / (fontsize + 14)))
@@ -122,24 +125,7 @@ load_graph_draw (LoadGraph *g)
 	dely = g->draw_height / num_bars; /* round to int to avoid AA blur */
 	real_draw_height = dely * num_bars;
 
-	/* GtkStyle gives us the theme background color, this should be in
-	 * load_graph_new but something causes load_graph_new to use the
-	 * default GTK color scheme rather than the current theme color
-	 * we also have to trawl through parent widgets to get to gtknotebook
-	 * *sigh*
-	 */
-	notebook = g->main_widget;
-	while (g_ascii_strncasecmp(gtk_widget_get_name(notebook),
-				   "GtkNotebook", 12)) {
-		notebook = gtk_widget_get_parent(notebook);
-		if (notebook == NULL) {
-			// Fall back to using the main_widget for styles
-			notebook = g->main_widget;
-			break;
-		}
-	}
-
-	GtkStyle *style = gtk_widget_get_style(notebook);
+	GtkStyle *style = gtk_widget_get_style (g->notebook);
 
 	cr = cairo_create (g->buffer);
 
@@ -158,8 +144,8 @@ load_graph_draw (LoadGraph *g)
 
 	cairo_set_source_rgb (cr, 0, 0, 0);
 	cairo_set_line_width (cr, 1.0);
-	cairo_set_dash(cr, dash, 2, 0);
-	cairo_set_font_size(cr, fontsize);
+	cairo_set_dash (cr, dash, 2, 0);
+	cairo_set_font_size (cr, fontsize);
 
 	for (i = 0; i <= num_bars; ++i) {
 		char *caption;
@@ -173,18 +159,18 @@ load_graph_draw (LoadGraph *g)
 		else
 		  y = i * dely + fontsize / 2.0;
 
-		caption = g_strdup_printf("%3d %%", 100 - i * (100 / num_bars));
+		caption = g_strdup_printf("%d %%", 100 - i * (100 / num_bars));
 		cairo_text_extents (cr, caption, &extents);
-		cairo_move_to(cr, indent - extents.width / 2, y);
-		cairo_show_text(cr, caption);
-		g_free(caption);
+		cairo_move_to (cr, indent - extents.width / 2, y);
+		cairo_show_text (cr, caption);
+		g_free (caption);
 
 		cairo_move_to (cr, rmargin, i * dely + 0.5);
 		cairo_line_to (cr, g->draw_width - 0.5, i * dely + 0.5);
 	}
 	cairo_stroke (cr);
 
-	cairo_set_dash(cr, dash, 2, 1.5);
+	cairo_set_dash (cr, dash, 2, 1.5);
 
 	for (unsigned i = 0; i < 7; i++) {
 		double x = (i + 1) * (g->draw_width - rmargin + indent) / 8;
@@ -200,10 +186,10 @@ load_graph_draw (LoadGraph *g)
 
 	cairo_stroke (cr);
 
-	cairo_set_dash(cr, NULL, 0, 0);
+	cairo_set_dash (cr, NULL, 0, 0);
 
 	/* draw the graph */
-	cairo_set_line_width (cr, 2.0);
+	cairo_set_line_width (cr, 1.5);
 	cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
 	cairo_set_line_join (cr, CAIRO_LINE_JOIN_MITER);
 
@@ -361,6 +347,8 @@ get_memory (LoadGraph *g)
 	gtk_label_set_text (GTK_LABEL (g->labels.memused), text2);
 	gtk_label_set_text (GTK_LABEL (g->labels.memtotal), text1);
 	gtk_label_set_text (GTK_LABEL (g->labels.mempercent), text3);
+	if (g->mem_color_picker != NULL)
+		gsm_color_button_set_fraction(GSM_COLOR_BUTTON(g->mem_color_picker), mempercent);
 	g_free (text1);
 	g_free (text2);
 	g_free (text3);
@@ -371,6 +359,8 @@ get_memory (LoadGraph *g)
 	gtk_label_set_text (GTK_LABEL (g->labels.swapused), text2);
 	gtk_label_set_text (GTK_LABEL (g->labels.swaptotal), text1);
 	gtk_label_set_text (GTK_LABEL (g->labels.swappercent), text3);
+	if (g->swap_color_picker != NULL)
+		gsm_color_button_set_fraction(GSM_COLOR_BUTTON(g->swap_color_picker), swappercent);
 	g_free (text1);
 	g_free (text2);
 	g_free (text3);
@@ -649,6 +639,10 @@ load_graph_new (gint type, ProcData *procdata)
 	case LOAD_GRAPH_MEM:
 		g->colors[0] = procdata->config.mem_color;
 		g->colors[1] = procdata->config.swap_color;
+		g->mem_color_picker = gsm_color_button_new (&g->colors[0], 
+							    GSMCP_TYPE_PIE);
+		g->swap_color_picker = gsm_color_button_new (&g->colors[1], 
+							     GSMCP_TYPE_PIE);
 		break;
 	case LOAD_GRAPH_NET:
 		g->colors[0] = procdata->config.net_in_color;
@@ -681,9 +675,24 @@ load_graph_new (gint type, ProcData *procdata)
 
 	gtk_widget_show_all (g->main_widget);
 
+        /* GtkStyle gives us the theme background color, we also have
+         * to trawl through parent widgets to get to GtkNotebook
+         * *sigh*
+         */
+        g->notebook = g->main_widget;
+        while (g_ascii_strncasecmp(gtk_widget_get_name(g->notebook),
+                                   "GtkNotebook", 12)) {
+                g->notebook = gtk_widget_get_parent(g->notebook);
+                if (g->notebook == NULL) {
+                        // Fall back to using the main_widget for styles
+                        g->notebook = g->main_widget;
+                        break;
+                }
+        }
+        
 	load_graph_start(g);
 	load_graph_stop(g);
-
+	
 	return g;
 }
 
@@ -745,4 +754,16 @@ GtkWidget*
 load_graph_get_widget (LoadGraph *g)
 {
 	return g->main_widget;
+}
+
+GtkWidget*
+load_graph_get_mem_color_picker(LoadGraph *g)
+{
+	return g->mem_color_picker;
+}
+
+GtkWidget*
+load_graph_get_swap_color_picker(LoadGraph *g)
+{
+	return g->swap_color_picker;
 }

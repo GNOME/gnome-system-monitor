@@ -33,7 +33,8 @@ gnome_system_monitor_SOURCES = \
 	selection.cpp selection.h \
 	gconf-keys.cpp gconf-keys.h \
 	iconthemewrapper.cpp iconthemewrapper.h \
-	e_date.c e_date.h
+	e_date.c e_date.h \
+        gsm_color_button.c gsm_color_button.h
 
 
 gnome_system_monitor_LDADD = @PROCMAN_LIBS@ @PCRECPP_LIBS@ libbacon.la

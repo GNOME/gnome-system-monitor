@@ -216,19 +216,19 @@ cb_end_process_button_pressed (GtkButton *button, gpointer data)
 
 
 static void change_gconf_color(GConfClient *client, const char *key,
-			       GtkColorButton *cp)
+			       GSMColorButton *cp)
 {
 	GdkColor c;
 	char color[24]; /* color should be 1 + 3*4 + 1 = 15 chars -> 24 */
 
-	gtk_color_button_get_color(cp, &c);
+	gsm_color_button_get_color(cp, &c);
 	g_snprintf(color, sizeof color, "#%04x%04x%04x", c.red, c.green, c.blue);
 	gconf_client_set_string (client, key, color, NULL);
 }
 
 
 void
-cb_cpu_color_changed (GtkColorButton *cp, gpointer data)
+cb_cpu_color_changed (GSMColorButton *cp, gpointer data)
 {
 	char key[80];
 	gint i = GPOINTER_TO_INT (data);
@@ -245,7 +245,7 @@ cb_cpu_color_changed (GtkColorButton *cp, gpointer data)
 }
 
 void
-cb_mem_color_changed (GtkColorButton *cp, gpointer data)
+cb_mem_color_changed (GSMColorButton *cp, gpointer data)
 {
 	ProcData * const procdata = static_cast<ProcData*>(data);
 	change_gconf_color(procdata->client, "/apps/procman/mem_color", cp);
@@ -253,40 +253,25 @@ cb_mem_color_changed (GtkColorButton *cp, gpointer data)
 
 
 void
-cb_swap_color_changed (GtkColorButton *cp, gpointer data)
+cb_swap_color_changed (GSMColorButton *cp, gpointer data)
 {
 	ProcData * const procdata = static_cast<ProcData*>(data);
 	change_gconf_color(procdata->client, "/apps/procman/swap_color", cp);
 }
 
 void
-cb_net_in_color_changed (GtkColorButton *cp, gpointer data)
+cb_net_in_color_changed (GSMColorButton *cp, gpointer data)
 {
 	ProcData * const procdata = static_cast<ProcData*>(data);
 	change_gconf_color(procdata->client, "/apps/procman/net_in_color", cp);
 }
 
 void
-cb_net_out_color_changed (GtkColorButton *cp, gpointer data)
+cb_net_out_color_changed (GSMColorButton *cp, gpointer data)
 {
 	ProcData * const procdata = static_cast<ProcData*>(data);
 	change_gconf_color(procdata->client, "/apps/procman/net_out_color", cp);
 }
-
-void
-cb_bg_color_changed (GtkColorButton *cp, gpointer data)
-{
-	ProcData * const procdata = static_cast<ProcData*>(data);
-	change_gconf_color(procdata->client, "/apps/procman/bg_color", cp);
-}
-
-void
-cb_frame_color_changed (GtkColorButton *cp, gpointer data)
-{
-	ProcData * const procdata = static_cast<ProcData*>(data);
-	change_gconf_color(procdata->client, "/apps/procman/frame_color", cp);
-}
-
 
 static void
 get_last_selected (GtkTreeModel *model, GtkTreePath *path,
