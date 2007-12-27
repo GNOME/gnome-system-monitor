@@ -68,7 +68,6 @@ struct _LoadGraph {
 
 	/* union { */
 		struct {
-			gboolean initialized;
 			guint now; /* 0 -> current, 1 -> last
 				    now ^ 1 each time */
 			/* times[now], times[now ^ 1] is last */
@@ -296,26 +295,27 @@ get_load (LoadGraph *g)
 		}
 	}
 
-	if (G_UNLIKELY(!g->cpu.initialized)) {
-		/* No data yet */
-		g->cpu.initialized = TRUE;
-	} else {
-		for (i = 0; i < g->n; i++) {
-			float load;
-			float total, used;
-			gchar *text;
+	// on the first call, LAST is 0
+	// which means data is set to the average load since boot
+	// that value has no meaning, we just want all the
+	// graphs to be aligned, so the CPU graph needs to start
+	// immediately
 
-			total = NOW[i][CPU_TOTAL] - LAST[i][CPU_TOTAL];
-			used  = NOW[i][CPU_USED]  - LAST[i][CPU_USED];
+	for (i = 0; i < g->n; i++) {
+		float load;
+		float total, used;
+		gchar *text;
 
-			load = used / MAX(total, 1.0f);
-			g->data[0][i] = load;
+		total = NOW[i][CPU_TOTAL] - LAST[i][CPU_TOTAL];
+		used  = NOW[i][CPU_USED]  - LAST[i][CPU_USED];
 
-			/* Update label */
-			text = g_strdup_printf("%.1f%%", load * 100.0f);
-			gtk_label_set_text(GTK_LABEL(g->labels.cpu[i]), text);
-			g_free(text);
-		}
+		load = used / MAX(total, 1.0f);
+		g->data[0][i] = load;
+
+		/* Update label */
+		text = g_strdup_printf("%.1f%%", load * 100.0f);
+		gtk_label_set_text(GTK_LABEL(g->labels.cpu[i]), text);
+		g_free(text);
 	}
 
 	g->cpu.now ^= 1;
