@@ -173,7 +173,7 @@ load_graph_draw (LoadGraph *g)
 	cairo_set_dash (cr, dash, 2, 1.5);
 
 	for (unsigned i = 0; i < 7; i++) {
-		double x = (i + 1) * (g->draw_width - rmargin + indent) / 8;
+		double x = (i + 1) * (g->draw_width - rmargin - indent) / 8;
 		cairo_move_to (cr, (ceil(x) + 0.5) + rmargin + indent, 0.5);
 		cairo_line_to (cr, (ceil(x) + 0.5) + rmargin + indent, real_draw_height + 0.5);
 	}
