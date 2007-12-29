@@ -92,8 +92,6 @@ static void gsm_color_button_style_set (GtkWidget * widget,
 					GtkStyle * previous_style);
 static gint gsm_color_button_clicked (GtkWidget * widget,
 				      GdkEventButton * event);
-static gboolean gsm_color_button_motion_notify (GtkWidget * widget,
-						GdkEventMotion * event);
 static gboolean gsm_color_button_enter_notify (GtkWidget * widget,
 					       GdkEventCrossing * event);
 static gboolean gsm_color_button_leave_notify (GtkWidget * widget,
@@ -179,7 +177,6 @@ gsm_color_button_class_init (GSMColorButtonClass * klass)
   widget_class->unrealize = gsm_color_button_unrealize;
   widget_class->style_set = gsm_color_button_style_set;
   widget_class->button_release_event = gsm_color_button_clicked;
-  widget_class->motion_notify_event = gsm_color_button_motion_notify;
   widget_class->enter_notify_event = gsm_color_button_enter_notify;
   widget_class->leave_notify_event = gsm_color_button_leave_notify;
 
@@ -233,14 +230,34 @@ static void
 render (GtkWidget * widget)
 {
   GSMColorButton *color_button = GSM_COLOR_BUTTON (widget);
-  GdkColor *color = &color_button->priv->color;
+  GdkColor *color, tmp_color = color_button->priv->color;
+  color = &tmp_color;
   cairo_t *cr = gdk_cairo_create (widget->window);
   cairo_path_t *path = NULL;
   gint width, height;
   gdouble radius, arc_start, arc_end;
   RsvgHandle *handle;
   GError *error = NULL;
+  gint highlight_factor;
 
+  if (color_button->priv->highlight > 0) {
+    highlight_factor = 8192 * color_button->priv->highlight;
+
+    if (color->red + highlight_factor > 65535) 
+      color->red = 65535;
+    else
+      color->red = color->red + highlight_factor;
+    
+    if (color->blue + highlight_factor > 65535) 
+      color->blue = 65535;
+    else
+      color->blue = color->blue + highlight_factor;
+    
+    if (color->green + highlight_factor > 65535) 
+      color->green = 65535;
+    else
+      color->green = color->green + highlight_factor;
+  }
   gdk_cairo_set_source_color (cr, color);
   gdk_drawable_get_size (widget->window, &width, &height);
 
@@ -269,36 +286,49 @@ render (GtkWidget * widget)
 	((2 * G_PI) * (-1 * color_button->priv->fraction)) - (0.5 * G_PI);
       arc_end = -1 * (G_PI / 2);
       cairo_set_line_width (cr, 1);
-
+      
       // Draw external stroke and fill
-      cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 2.25,
-		 arc_start, arc_end);
-      cairo_line_to (cr, (width / 2) + .5, (height / 2) + .5);
-
-      cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 2.25,
-		 arc_start, arc_start);
-      cairo_line_to (cr, (width / 2) + .5, (height / 2) + .5);
-
+      if (color_button->priv->fraction < 0.01) {
+        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, 4.5,
+		   0, 2 * G_PI);
+      } else if (color_button->priv->fraction > 0.99) { 
+        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 2.25,
+		   0, 2 * G_PI);
+      } else {
+        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 2.25,
+		   arc_start, arc_end);
+        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, 4.5,
+		   arc_end, arc_start);
+        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 2.25,
+		   arc_start, arc_start);
+      }
       cairo_fill_preserve (cr);
       cairo_set_source_rgba (cr, 0, 0, 0, 0.7);
       cairo_stroke (cr);
 
+      // Draw internal highlight
       cairo_set_source_rgba (cr, 1, 1, 1, 0.45);
       cairo_set_line_width (cr, 1);
 
-      // Draw internal highlight
-      cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 3.75,
-		 arc_start + (1 / (radius - 3.75)),
+      if (color_button->priv->fraction < 0.03) {
+        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, 3.25,
+			    0, 2 * G_PI);
+      } else if (color_button->priv->fraction > 0.99) {
+        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 3.5,
+			    0, 2 * G_PI);
+      } else {
+        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 3.5,
+		 arc_start + (1 / (radius - 3.75)), 
 		 arc_end - (1 / (radius - 3.75)));
-      //if (arc_end - 1)
-      cairo_arc_negative (cr, (width / 2) + .5, (height / 2) + .5, 1,
-		 arc_end - 1, arc_start + 1);
-      
-      cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 3.75,
-		 arc_start + (1 / (radius - 3.75)),
+        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, 3.25,
+		   arc_end - (1 / (radius - 3.75)),
+                   arc_start + (1 / (radius - 3.75)));
+        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 3.5,
+		 arc_start + (1 / (radius - 3.75)), 
 		 arc_start + (1 / (radius - 3.75)));
-
+      }
       cairo_stroke (cr);
+
       // Draw external shape
       cairo_set_line_width (cr, 1);
       cairo_set_source_rgba (cr, 0, 0, 0, 0.2);
@@ -395,7 +425,6 @@ render (GtkWidget * widget)
       break;
     }
   cairo_destroy (cr);
-  //g_print("Highlight: %f\n", color_button->priv->highlight);
 }
 
 /* Handle exposure events for the color picker's drawing area */
@@ -556,6 +585,7 @@ static void
 gsm_color_button_init (GSMColorButton * color_button)
 {
   color_button->priv = GSM_COLOR_BUTTON_GET_PRIVATE (color_button);
+  GtkTooltips *tooltips = gtk_tooltips_new();
 
   rsvg_init ();
 
@@ -582,6 +612,12 @@ gsm_color_button_init (GSMColorButton * color_button)
   g_signal_connect (color_button, "drag_data_get",
 		    G_CALLBACK (gsm_color_button_drag_data_get),
 		    color_button);
+
+  gtk_widget_add_events (GTK_WIDGET(color_button), GDK_ENTER_NOTIFY_MASK
+			 			 | GDK_LEAVE_NOTIFY_MASK);
+
+  gtk_tooltips_set_tip (tooltips, GTK_WIDGET(color_button),
+			"Click to set graph colors", NULL);
 
   g_signal_connect (color_button, "expose-event",
 		    G_CALLBACK (expose_event), color_button);
@@ -709,20 +745,11 @@ gsm_color_button_clicked (GtkWidget * widget, GdkEventButton * event)
 }
 
 static gboolean
-gsm_color_button_motion_notify (GtkWidget * widget, GdkEventMotion * event)
-{
-  GSMColorButton *color_button = GSM_COLOR_BUTTON (widget);
-  color_button->priv->highlight = 1.0;
-  g_print ("MOVE\n");
-  return FALSE;
-}
-
-static gboolean
 gsm_color_button_enter_notify (GtkWidget * widget, GdkEventCrossing * event)
 {
   GSMColorButton *color_button = GSM_COLOR_BUTTON (widget);
   color_button->priv->highlight = 1.0;
-  g_print ("ENTER\n");
+  gtk_widget_queue_draw(widget);
   return FALSE;
 }
 
@@ -731,7 +758,7 @@ gsm_color_button_leave_notify (GtkWidget * widget, GdkEventCrossing * event)
 {
   GSMColorButton *color_button = GSM_COLOR_BUTTON (widget);
   color_button->priv->highlight = 0;
-  g_print ("EXIT\n");
+  gtk_widget_queue_draw(widget);
   return FALSE;
 }
 
