@@ -160,7 +160,7 @@ load_graph_draw (LoadGraph *g)
 
 		caption = g_strdup_printf("%d %%", 100 - i * (100 / num_bars));
 		cairo_text_extents (cr, caption, &extents);
-		cairo_move_to (cr, indent - extents.width / 2, y);
+		cairo_move_to (cr, (indent*3) - extents.width, y);//extents.width, y);
 		cairo_show_text (cr, caption);
 		g_free (caption);
 
