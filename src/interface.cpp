@@ -281,16 +281,16 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (cpu_graph_box), hbox, 
 			    FALSE, FALSE, 0);
 
-	cpu_legend_box = gtk_hbox_new(TRUE, 10);
+	/*cpu_legend_box = gtk_hbox_new(TRUE, 10);
 	gtk_box_pack_start (GTK_BOX (hbox), cpu_legend_box, 
-			    TRUE, TRUE, 0);
+			    TRUE, TRUE, 0);*/
 
 	GtkWidget* cpu_table = gtk_table_new(std::min(procdata->config.num_cpus / 4, 1),
 					     std::min(procdata->config.num_cpus, 4),
 					     TRUE);
 	gtk_table_set_row_spacings(GTK_TABLE(cpu_table), 6);
 	gtk_table_set_col_spacings(GTK_TABLE(cpu_table), 12);
-	gtk_box_pack_start(GTK_BOX(cpu_legend_box), cpu_table, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(hbox), cpu_table, TRUE, TRUE, 0);
 
 	for (i=0;i<procdata->config.num_cpus; i++) {
 		GtkWidget *temp_hbox;
@@ -300,20 +300,31 @@ create_sys_view (ProcData *procdata)
 		gtk_table_attach(GTK_TABLE(cpu_table), temp_hbox,
 				 i % 4, i % 4 + 1,
 				 i / 4, i / 4 + 1,
-				 GTK_FILL, GTK_FILL,
+				 static_cast<GtkAttachOptions>(GTK_EXPAND | GTK_FILL), 
+				 static_cast<GtkAttachOptions>(GTK_EXPAND | GTK_FILL),
 				 0, 0);
-		gtk_size_group_add_widget (sizegroup, temp_hbox);
-		g_signal_connect (G_OBJECT (temp_hbox), "size_request",
+		//gtk_size_group_add_widget (sizegroup, temp_hbox);
+		/*g_signal_connect (G_OBJECT (temp_hbox), "size_request",
 					 G_CALLBACK(size_request), &cpu_size);
-
+*/
 		color_picker = gsm_color_button_new (
 			&load_graph_get_colors(cpu_graph)[i], GSMCP_TYPE_CPU);
-
 		g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
-		gtk_box_pack_start (GTK_BOX (temp_hbox), color_picker, FALSE, FALSE, 0);
+		gtk_box_pack_start (GTK_BOX (temp_hbox), color_picker, FALSE, TRUE, 0);
+		gtk_widget_set_size_request(GTK_WIDGET(color_picker), 32, -1);
+		if(procdata->config.num_cpus == 1) {
+			text = g_strdup (_("CPU"));
+		} else {
+			text = g_strdup_printf (_("CPU%d"), i+1);
+		}
+		label = gtk_label_new (text);
+		gtk_box_pack_start (GTK_BOX (temp_hbox), label, FALSE, FALSE, 6);
+		g_free (text);
+
 		cpu_label = gtk_label_new (NULL);
-		gtk_box_pack_start (GTK_BOX (temp_hbox), cpu_label, FALSE, FALSE, 0);
+		gtk_misc_set_alignment (GTK_MISC (cpu_label), 0.0, 0.5);
+		gtk_box_pack_start (GTK_BOX (temp_hbox), cpu_label, TRUE, TRUE, 0);
 		load_graph_get_labels(cpu_graph)->cpu[i] = cpu_label;
 		
 	}
@@ -358,7 +369,7 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (hbox), mem_legend_box, 
 			    TRUE, TRUE, 0);
 
-	table = gtk_table_new (2, 6, FALSE);
+	table = gtk_table_new (2, 7, FALSE);
 	gtk_table_set_row_spacings (GTK_TABLE (table), 6);
 	gtk_table_set_col_spacings (GTK_TABLE (table), 6);
 	gtk_box_pack_start (GTK_BOX (mem_legend_box), table, 
@@ -369,14 +380,14 @@ create_sys_view (ProcData *procdata)
 			    G_CALLBACK (cb_mem_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 2, GTK_SHRINK, GTK_SHRINK, 0, 0);
 	
-	label = gtk_label_new (_("User memory:"));
+	label = gtk_label_new (_("Memory"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 7, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 	
 	gtk_table_attach (GTK_TABLE (table),
 			  load_graph_get_labels(mem_graph)->memused,
-			  3,
-			  4,
+			  1,
+			  2,
 			  1,
 			  2,
 			  GTK_FILL,
@@ -385,12 +396,12 @@ create_sys_view (ProcData *procdata)
 			  0);
 	// xgettext: user memory: 123 MiB of 512MiB
 	label = gtk_label_new (_("of"));
-	gtk_table_attach (GTK_TABLE (table), label, 4, 5, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 5, 6, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 	
 	gtk_table_attach (GTK_TABLE (table),
 			  load_graph_get_labels(mem_graph)->memtotal,
-			  5,
 			  6,
+			  7,
 			  1,
 			  2,
 			  GTK_FILL,
@@ -400,8 +411,8 @@ create_sys_view (ProcData *procdata)
 	
 	gtk_table_attach (GTK_TABLE (table),
 			  load_graph_get_labels(mem_graph)->mempercent,
-			  1,
-			  2,
+			  3,
+			  4,
 			  1,
 			  2,
 			  GTK_FILL,
@@ -409,10 +420,13 @@ create_sys_view (ProcData *procdata)
 			  0,
 			  0);
 
-	label = gtk_label_new (_("used,"));
+	label = gtk_label_new (_("("));
 	gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 
-	table = gtk_table_new (2, 6, FALSE);
+	label = gtk_label_new (_(")"));
+	gtk_table_attach (GTK_TABLE (table), label, 4, 5, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+
+	table = gtk_table_new (2, 7, FALSE);
 	gtk_table_set_row_spacings (GTK_TABLE (table), 6);
 	gtk_table_set_col_spacings (GTK_TABLE (table), 6);
 	gtk_box_pack_start (GTK_BOX (mem_legend_box), table, 
@@ -423,14 +437,14 @@ create_sys_view (ProcData *procdata)
 			    G_CALLBACK (cb_swap_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 2, GTK_SHRINK, GTK_SHRINK, 0, 0);
 		  
-	label = gtk_label_new (_("Used swap:"));
+	label = gtk_label_new (_("Virtual Memory"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 1, 5, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 1, 7, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 	
 	gtk_table_attach (GTK_TABLE (table),
 			  load_graph_get_labels(mem_graph)->swapused,
-			  3,
-			  4,
+			  1,
+			  2,
 			  1,
 			  2,
 			  GTK_FILL,
@@ -439,12 +453,12 @@ create_sys_view (ProcData *procdata)
 			  0);
 	// xgettext: swap: 10MiB of 1GiB
 	label = gtk_label_new (_("of"));
-	gtk_table_attach (GTK_TABLE (table), label, 4, 5, 1, 2, GTK_FILL, GTK_FILL, 0, 0);	
+	gtk_table_attach (GTK_TABLE (table), label, 5, 6, 1, 2, GTK_FILL, GTK_FILL, 0, 0);	
 
 	gtk_table_attach (GTK_TABLE (table),
 			  load_graph_get_labels(mem_graph)->swaptotal,
-			  5,
 			  6,
+			  7,
 			  1,
 			  2,
 			  GTK_FILL,
@@ -454,8 +468,8 @@ create_sys_view (ProcData *procdata)
 
 	gtk_table_attach (GTK_TABLE (table),
 			  load_graph_get_labels(mem_graph)->swappercent,
-			  1,
-			  2,
+			  3,
+			  4,
 			  1,
 			  2,
 			  GTK_FILL,
@@ -463,8 +477,11 @@ create_sys_view (ProcData *procdata)
 			  0,
 			  0);
 
-	label = gtk_label_new (_("used,"));
+	label = gtk_label_new (_("("));
 	gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+
+	label = gtk_label_new (_(")"));
+	gtk_table_attach (GTK_TABLE (table), label, 4, 5, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 
 	procdata->mem_graph = mem_graph;
 
@@ -518,7 +535,7 @@ create_sys_view (ProcData *procdata)
 			    G_CALLBACK (cb_net_in_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 2, GTK_SHRINK, GTK_SHRINK, 0, 0);
 
-	label = gtk_label_new (_("Received:"));
+	label = gtk_label_new (_("Receiving"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
@@ -529,7 +546,7 @@ create_sys_view (ProcData *procdata)
 	gtk_table_attach (GTK_TABLE (table), load_graph_get_labels(net_graph)->net_in, 2, 3, 0, 1, 
 			  static_cast<GtkAttachOptions>(GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
 
-	label = gtk_label_new (_("Total:"));
+	label = gtk_label_new (_("Total Received"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 
@@ -563,7 +580,7 @@ create_sys_view (ProcData *procdata)
 			    G_CALLBACK (cb_net_out_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 2, GTK_SHRINK, GTK_SHRINK, 0, 0);
 
-	label = gtk_label_new (_("Sent:"));
+	label = gtk_label_new (_("Sending"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
@@ -583,7 +600,7 @@ create_sys_view (ProcData *procdata)
 	gtk_table_attach (GTK_TABLE (table), load_graph_get_labels(net_graph)->net_out, 2, 3, 0, 1, 
 			  static_cast<GtkAttachOptions>(GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
 
-	label = gtk_label_new (_("Total:"));
+	label = gtk_label_new (_("Total Received"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 

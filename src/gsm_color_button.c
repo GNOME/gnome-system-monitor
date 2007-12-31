@@ -264,7 +264,7 @@ render (GtkWidget * widget)
   switch (color_button->priv->type)
     {
     case GSMCP_TYPE_CPU:
-      gtk_widget_set_size_request (widget, GSMCP_MIN_WIDTH, GSMCP_MIN_HEIGHT);
+      //gtk_widget_set_size_request (widget, GSMCP_MIN_WIDTH, GSMCP_MIN_HEIGHT);
       cairo_paint (cr);
       cairo_set_line_width (cr, 1);
       cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
