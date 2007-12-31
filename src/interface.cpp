@@ -518,20 +518,21 @@ create_sys_view (ProcData *procdata)
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
-	hbox = gtk_hbox_new (FALSE, 0);
-	g_signal_connect (G_OBJECT (hbox), "size_request",
-			  G_CALLBACK(size_request), &net_size);
-
 	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(net_graph)->net_in),
 				1.0,
 				0.5);
+/*
+	hbox = gtk_hbox_new (FALSE, 0);
+	g_signal_connect (G_OBJECT (hbox), "size_request",
+			  G_CALLBACK(size_request), &net_size);
 	gtk_box_pack_start (GTK_BOX (hbox),
 			    load_graph_get_labels(net_graph)->net_in,
 			    TRUE,
 			    TRUE,
 			    0);
-
-	gtk_table_attach (GTK_TABLE (table), hbox, 2, 3, 0, 1, 
+*/
+	gtk_widget_set_size_request(GTK_WIDGET(load_graph_get_labels(net_graph)->net_in), 65, -1);
+	gtk_table_attach (GTK_TABLE (table), load_graph_get_labels(net_graph)->net_in, 2, 3, 0, 1, 
 			  static_cast<GtkAttachOptions>(GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
 
 	label = gtk_label_new (_("Total Received"));
@@ -572,20 +573,22 @@ create_sys_view (ProcData *procdata)
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
-	hbox = gtk_hbox_new (FALSE, 0);
-	g_signal_connect (G_OBJECT (hbox), "size_request",
-			  G_CALLBACK(size_request), &net_size);
-
 	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(net_graph)->net_out),
 				1.0,
 				0.5);
+/*
+	hbox = gtk_hbox_new (FALSE, 0);
+	g_signal_connect (G_OBJECT (load_graph_get_labels(net_graph)->net_out), "size_request",
+			  G_CALLBACK(size_request), &net_size);
+
 	gtk_box_pack_start (GTK_BOX (hbox),
 			    load_graph_get_labels(net_graph)->net_out,
 			    TRUE,
 			    TRUE,
 			    0);
-
-	gtk_table_attach (GTK_TABLE (table), hbox, 2, 3, 0, 1, 
+*/
+	gtk_widget_set_size_request(GTK_WIDGET(load_graph_get_labels(net_graph)->net_out), 65, -1);
+	gtk_table_attach (GTK_TABLE (table), load_graph_get_labels(net_graph)->net_out, 2, 3, 0, 1, 
 			  static_cast<GtkAttachOptions>(GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
 
 	label = gtk_label_new (_("Total Received"));

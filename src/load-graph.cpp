@@ -30,9 +30,9 @@
 #include "util.h"
 #include "gsm_color_button.h"
 
-#define NUM_POINTS 60
+#define NUM_POINTS 62
 #define GRAPH_MIN_HEIGHT 80
-
+#define FRAMES 10
 
 enum {
 	CPU_TOTAL,
@@ -46,6 +46,7 @@ struct _LoadGraph {
 	gint type;
 	guint speed;
 	guint draw_width, draw_height;
+	gint render_counter;
 
 	GdkColor *colors;
 	GtkWidget *notebook;
@@ -57,6 +58,8 @@ struct _LoadGraph {
 	GtkWidget *disp;
 
 	cairo_surface_t *buffer;
+	cairo_surface_t *graph_buffer;
+	cairo_surface_t *background_buffer;
 
 	guint timer_index;
 
@@ -87,21 +90,16 @@ struct _LoadGraph {
 
 
 #define FRAME_WIDTH 4
-
-
-/* Redraws the backing buffer for the load graph and updates the window */
-void
-load_graph_draw (LoadGraph *g)
-{
+void draw_background(LoadGraph *g) {
 	const double fontsize = 8.0;
 	const double rmargin = 3.5 * fontsize;
 	const double indent = 24.0;
 	double dash[2] = { 1.0, 2.0 };
 	cairo_t *cr;
+	cairo_t* tmp_cr;
 	int dely;
-	double delx;
 	int real_draw_height;
-	guint i, j;
+	guint i;
 	unsigned num_bars;
 	char *caption;
 	cairo_text_extents_t extents;
@@ -125,28 +123,28 @@ load_graph_draw (LoadGraph *g)
 
 	dely = (g->draw_height - 15) / num_bars; /* round to int to avoid AA blur */
 	real_draw_height = dely * num_bars;
-
-	GtkStyle *style = gtk_widget_get_style (g->notebook);
-
+	
 	cr = cairo_create (g->buffer);
-
-	/* clear */
-	gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_NORMAL]);
-	cairo_paint (cr);
+	g->background_buffer = cairo_surface_create_similar (cairo_get_target (cr),
+							     CAIRO_CONTENT_COLOR_ALPHA,
+							     g->draw_width + (2*FRAME_WIDTH),
+							     g->draw_height + FRAME_WIDTH);
+	
+	tmp_cr = cairo_create (g->background_buffer);
 
 	/* draw frame */
-	cairo_translate (cr, FRAME_WIDTH, FRAME_WIDTH);
+	cairo_translate (tmp_cr, FRAME_WIDTH, FRAME_WIDTH);
 	
 	/* Draw background rectangle */
-	cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
-	cairo_rectangle (cr, rmargin + indent, 0,
+	cairo_set_source_rgb (tmp_cr, 1.0, 1.0, 1.0);
+	cairo_rectangle (tmp_cr, rmargin + indent, 0,
 			 g->draw_width - rmargin - indent, real_draw_height);
-	cairo_fill(cr);
+	cairo_fill(tmp_cr);
 
-	cairo_set_source_rgb (cr, 0, 0, 0);
-	cairo_set_line_width (cr, 1.0);
-	cairo_set_dash (cr, dash, 2, 0);
-	cairo_set_font_size (cr, fontsize);
+	cairo_set_source_rgb (tmp_cr, 0, 0, 0);
+	cairo_set_line_width (tmp_cr, 1.0);
+	cairo_set_dash (tmp_cr, dash, 2, 0);
+	cairo_set_font_size (tmp_cr, fontsize);
 
 	for (i = 0; i <= num_bars; ++i) {
 		double y;
@@ -160,95 +158,164 @@ load_graph_draw (LoadGraph *g)
 
 		if (g->type == LOAD_GRAPH_NET) {
 			caption = g_strdup_printf("%d KB/s", (g->net.max/1000) - (((g->net.max/1000) / num_bars)*i));
-			cairo_text_extents (cr, caption, &extents);
-			cairo_move_to (cr, indent - extents.width + 20, y);
-			cairo_show_text (cr, caption);
+			cairo_text_extents (tmp_cr, caption, &extents);
+			cairo_move_to (tmp_cr, indent - extents.width + 20, y);
+			cairo_show_text (tmp_cr, caption);
 			g_free (caption);
 		} else {
 			caption = g_strdup_printf("%d %%", 100 - i * (100 / num_bars));
-			cairo_text_extents (cr, caption, &extents);
-			cairo_move_to (cr, indent - extents.width + 20, y);
-			cairo_show_text (cr, caption);
+			cairo_text_extents (tmp_cr, caption, &extents);
+			cairo_move_to (tmp_cr, indent - extents.width + 20, y);
+			cairo_show_text (tmp_cr, caption);
 			g_free (caption);
 		}
 
-		cairo_move_to (cr, rmargin + indent - 3, i * dely + 0.5);
-		cairo_line_to (cr, g->draw_width - 0.5, i * dely + 0.5);
+		cairo_move_to (tmp_cr, rmargin + indent - 3, i * dely + 0.5);
+		cairo_line_to (tmp_cr, g->draw_width - 0.5, i * dely + 0.5);
 	}
-	cairo_stroke (cr);
+	cairo_stroke (tmp_cr);
 
-	cairo_set_dash (cr, dash, 2, 1.5);
+	cairo_set_dash (tmp_cr, dash, 2, 1.5);
 
 	for (unsigned int i = 0; i < 5; i++) {
 		double x = (i + 1) * (g->draw_width - rmargin - indent) / 6;
-		cairo_move_to (cr, (ceil(x) + 0.5) + rmargin + indent, 0.5);
-		cairo_line_to (cr, (ceil(x) + 0.5) + rmargin + indent, real_draw_height + 4.5);
-		cairo_stroke(cr);
+		cairo_move_to (tmp_cr, (ceil(x) + 0.5) + rmargin + indent, 0.5);
+		cairo_line_to (tmp_cr, (ceil(x) + 0.5) + rmargin + indent, real_draw_height + 4.5);
+		cairo_stroke(tmp_cr);
 
 		caption = g_strdup_printf("%d", 50-((((g->speed/1000)*NUM_POINTS)/6)*i));
-		cairo_text_extents (cr, caption, &extents);
-		cairo_move_to (cr, ((ceil(x) + 0.5) + rmargin + indent) - (extents.width/2), g->draw_height);
-		cairo_show_text (cr, caption);
+		cairo_text_extents (tmp_cr, caption, &extents);
+		cairo_move_to (tmp_cr, ((ceil(x) + 0.5) + rmargin + indent) - (extents.width/2), g->draw_height);
+		cairo_show_text (tmp_cr, caption);
 		g_free (caption);
 	}
 
-	cairo_move_to (cr, rmargin + indent + 0.5, 0.5);
-	cairo_line_to (cr, rmargin + indent + 0.5, real_draw_height + 4.5);
-	cairo_stroke (cr);
+	cairo_move_to (tmp_cr, rmargin + indent + 0.5, 0.5);
+	cairo_line_to (tmp_cr, rmargin + indent + 0.5, real_draw_height + 4.5);
+	cairo_stroke (tmp_cr);
 
 	caption = g_strdup_printf("%d", 60);
-	cairo_text_extents (cr, caption, &extents);
-	cairo_move_to (cr, (rmargin + indent + 0.5) - (extents.width/2), g->draw_height);
-	cairo_show_text (cr, caption);
+	cairo_text_extents (tmp_cr, caption, &extents);
+	cairo_move_to (tmp_cr, (rmargin + indent + 0.5) - (extents.width/2), g->draw_height);
+	cairo_show_text (tmp_cr, caption);
 	g_free (caption);
 
-	caption = g_strdup_printf(_("seconds"), 60);
-	//cairo_text_extents (cr, caption, &extents);
-	cairo_move_to (cr, (rmargin + indent + 0.5) + extents.width, g->draw_height);
-	cairo_show_text (cr, caption);
+	caption = g_strdup_printf(_("seconds"));
+	cairo_move_to (tmp_cr, (rmargin + indent + 0.5) + extents.width, g->draw_height);
+	cairo_show_text (tmp_cr, caption);
 	g_free (caption);
 
-	cairo_move_to (cr, g->draw_width - 0.5, 0.5);
-	cairo_line_to (cr, g->draw_width - 0.5, real_draw_height + 4.5);
+	cairo_move_to (tmp_cr, g->draw_width - 0.5, 0.5);
+	cairo_line_to (tmp_cr, g->draw_width - 0.5, real_draw_height + 4.5);
 
 	caption = g_strdup_printf("0");
-	cairo_text_extents (cr, caption, &extents);
-	cairo_move_to (cr, (g->draw_width - 0.5) - (extents.width/2), g->draw_height);
-	cairo_show_text (cr, caption);
+	cairo_text_extents (tmp_cr, caption, &extents);
+	cairo_move_to (tmp_cr, (g->draw_width - 0.5) - (extents.width/2), g->draw_height);
+	cairo_show_text (tmp_cr, caption);
 	g_free (caption);
 
-	cairo_stroke (cr);
+	cairo_stroke (tmp_cr);
+	cairo_destroy (tmp_cr);
+	cairo_destroy (cr);
+}
 
-	cairo_set_dash (cr, NULL, 0, 0);
+/* Redraws the backing buffer for the load graph and updates the window */
+void
+load_graph_draw (LoadGraph *g)
+{
+	const double fontsize = 8.0;
+	const double rmargin = 3.5 * fontsize;
+	const double indent = 24.0;
+	cairo_t *cr;
+	int dely;
+	double delx;
+	int real_draw_height;
+	guint i, j;
+	unsigned num_bars;
+
+	// keep 100 % num_bars == 0
+	switch (static_cast<int>(g->draw_height / (fontsize + 14)))
+	  {
+	  case 1:
+	    num_bars = 1;
+	    break;
+	  case 2:
+	  case 3:
+	    num_bars = 2;
+	    break;
+	  case 4:
+	    num_bars = 4;
+	    break;
+	  default:
+	    num_bars = 5;
+	  }
+
+	cr = cairo_create (g->buffer);
+	GtkStyle *style = gtk_widget_get_style (g->notebook);
+	gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_NORMAL]);
+	cairo_paint (cr);
+
+	dely = (g->draw_height - 15) / num_bars; /* round to int to avoid AA blur */
+	delx = (g->draw_width - 2.0 - rmargin - indent) / (NUM_POINTS - 3);
+	real_draw_height = dely * num_bars;
 
 	/* draw the graph */
-	cairo_set_line_width (cr, 1.5);
-	cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
-	cairo_set_line_join (cr, CAIRO_LINE_JOIN_MITER);
-
-	delx = (g->draw_width - 2.0 - rmargin - indent) / (NUM_POINTS - 1);
-
-	for (j = 0; j < g->n; ++j) {
-		cairo_move_to (cr,
-			       g->draw_width - 2.0,
-			       (1.0f - g->data[0][j]) * real_draw_height);
-		gdk_cairo_set_source_color (cr, &(g->colors [j]));
-
-		for (i = 1; i < NUM_POINTS; ++i) {
-			if (g->data[i][j] == -1.0f)
-				continue;
-
-			cairo_curve_to (cr, 
-				       (g->draw_width - (i-1) * delx) - (delx/2),
-				       (1.0f - g->data[i-1][j]) * real_draw_height,
-				       (g->draw_width - i * delx) + (delx/2),
-				       (1.0f - g->data[i][j]) * real_draw_height,
-				       g->draw_width - i * delx,
-				       (1.0f - g->data[i][j]) * real_draw_height);
+	if (g->render_counter == 0) {
+		if (g->background_buffer != NULL) {
+			cairo_surface_destroy(g->background_buffer);
+			g->background_buffer = NULL;
 		}
+		cairo_surface_destroy(g->graph_buffer);
+		cairo_t* tmp_cr;
 
-		cairo_stroke (cr);
+		g->graph_buffer = cairo_surface_create_similar (cairo_get_target (cr),
+							 	CAIRO_CONTENT_COLOR_ALPHA,
+								g->draw_width,
+								g->draw_height);
+		tmp_cr = cairo_create (g->graph_buffer);
+
+		cairo_set_line_width (tmp_cr, 1.5);
+		cairo_set_line_cap (tmp_cr, CAIRO_LINE_CAP_ROUND);
+		cairo_set_line_join (tmp_cr, CAIRO_LINE_JOIN_MITER);
+
+
+		for (j = 0; j < g->n; ++j) {
+			cairo_move_to (tmp_cr,
+				       g->draw_width - 2.0,
+				       (1.0f - g->data[0][j]) * real_draw_height);
+			gdk_cairo_set_source_color (tmp_cr, &(g->colors [j]));
+
+			for (i = 1; i < NUM_POINTS; ++i) {
+				if (g->data[i][j] == -1.0f)
+					continue;
+
+				cairo_curve_to (tmp_cr, 
+					       (g->draw_width - (i-1) * delx) - (delx/2),
+					       (1.0f - g->data[i-1][j]) * real_draw_height,
+					       (g->draw_width - i * delx) + (delx/2),
+					       (1.0f - g->data[i][j]) * real_draw_height,
+					       g->draw_width - i * delx,
+					       (1.0f - g->data[i][j]) * real_draw_height);
+			}
+
+			cairo_stroke (tmp_cr);
+
+		}
+		cairo_destroy (tmp_cr);
 	}
+
+	/* Composite and clip the surfaces together */
+	if (g->background_buffer == NULL) {
+		draw_background(g);
+	}
+	cairo_set_source_surface (cr, g->background_buffer, 0, 0);
+	cairo_paint (cr);
+
+	cairo_set_source_surface (cr, g->graph_buffer, -1*((g->render_counter) * (delx/FRAMES)) + (1.5*delx) + FRAME_WIDTH, FRAME_WIDTH);
+	cairo_rectangle (cr, rmargin + indent + FRAME_WIDTH, FRAME_WIDTH,
+			 g->draw_width - rmargin - indent, real_draw_height +FRAME_WIDTH);
+	cairo_clip(cr);
+	cairo_paint (cr);
 
 	cairo_destroy (cr);
 
@@ -278,6 +345,12 @@ load_graph_configure (GtkWidget *widget,
 						  widget->allocation.height);
 
 	cairo_destroy (cr);
+	g->render_counter = 0;
+
+	if (g->background_buffer != NULL) {
+		cairo_surface_destroy(g->background_buffer);
+		g->background_buffer = NULL;
+	}
 
 	load_graph_draw (g);
 
@@ -557,24 +630,31 @@ load_graph_update (gpointer user_data)
 {
 	LoadGraph * const g = static_cast<LoadGraph*>(user_data);
 
-	shift_right(g);
+	if (g->render_counter == 0) {
+		shift_right(g);
 
-	switch (g->type) {
-	case LOAD_GRAPH_CPU:
-		get_load(g);
-		break;
-	case LOAD_GRAPH_MEM:
-		get_memory(g);
-		break;
-	case LOAD_GRAPH_NET:
-		get_net(g);
-		break;
-	default:
-		g_assert_not_reached();
-	}
+		switch (g->type) {
+		case LOAD_GRAPH_CPU:
+			get_load(g);
+			break;
+		case LOAD_GRAPH_MEM:
+			get_memory(g);
+			break;
+		case LOAD_GRAPH_NET:
+			get_net(g);
+			break;
+		default:
+			g_assert_not_reached();
+		}
+	} 
 
 	if (g->draw)
 		load_graph_draw (g);
+
+	g->render_counter++;
+
+	if (g->render_counter > FRAMES)
+		g->render_counter = 0;
 
 	return TRUE;
 }
@@ -685,7 +765,9 @@ load_graph_new (gint type, ProcData *procdata)
 	}
 
 	g->timer_index = 0;
-
+	g->render_counter = 0;
+	g->background_buffer = NULL;
+	g->graph_buffer = NULL;
 	g->draw = FALSE;
 
 	g->main_widget = gtk_vbox_new (FALSE, FALSE);
@@ -737,7 +819,7 @@ load_graph_start (LoadGraph *g)
 
 		load_graph_update(g);
 
-		g->timer_index = g_timeout_add (g->speed,
+		g->timer_index = g_timeout_add (g->speed / FRAMES,
 						load_graph_update,
 						g);
 	}
@@ -765,7 +847,7 @@ load_graph_change_speed (LoadGraph *g,
 
 	if(g->timer_index) {
 		g_source_remove (g->timer_index);
-		g->timer_index = g_timeout_add (g->speed,
+		g->timer_index = g_timeout_add (g->speed / FRAMES,
 						load_graph_update,
 						g);
 	}
