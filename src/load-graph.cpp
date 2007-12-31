@@ -102,6 +102,7 @@ void draw_background(LoadGraph *g) {
 	guint i;
 	unsigned num_bars;
 	char *caption;
+	gchar *tmp_text;
 	cairo_text_extents_t extents;
 
 	// keep 100 % num_bars == 0
@@ -157,10 +158,12 @@ void draw_background(LoadGraph *g) {
 		  y = i * dely + fontsize / 2.0;
 
 		if (g->type == LOAD_GRAPH_NET) {
-			caption = g_strdup_printf("%d KB/s", (g->net.max/1000) - (((g->net.max/1000) / num_bars)*i));
+			tmp_text = SI_gnome_vfs_format_file_size_for_display ((g->net.max) - (((g->net.max) / num_bars)*i));
+			caption = g_strdup_printf("%s/s", tmp_text);
 			cairo_text_extents (tmp_cr, caption, &extents);
 			cairo_move_to (tmp_cr, indent - extents.width + 20, y);
 			cairo_show_text (tmp_cr, caption);
+			g_free (tmp_text);
 			g_free (caption);
 		} else {
 			caption = g_strdup_printf("%d %%", 100 - i * (100 / num_bars));
@@ -630,7 +633,7 @@ load_graph_update (gpointer user_data)
 {
 	LoadGraph * const g = static_cast<LoadGraph*>(user_data);
 
-	if (g->render_counter == 0) {
+	if (g->render_counter == 10) {
 		shift_right(g);
 
 		switch (g->type) {
@@ -765,7 +768,7 @@ load_graph_new (gint type, ProcData *procdata)
 	}
 
 	g->timer_index = 0;
-	g->render_counter = 0;
+	g->render_counter = 10;
 	g->background_buffer = NULL;
 	g->graph_buffer = NULL;
 	g->draw = FALSE;
