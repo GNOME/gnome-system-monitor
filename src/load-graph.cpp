@@ -30,7 +30,7 @@
 #include "util.h"
 #include "gsm_color_button.h"
 
-#define NUM_POINTS 100
+#define NUM_POINTS 60
 #define GRAPH_MIN_HEIGHT 80
 
 
@@ -77,7 +77,7 @@ struct _LoadGraph {
 		struct {
 			guint64 last_in, last_out;
 			GTimeVal time;
-			unsigned max;
+			unsigned int max;
 			unsigned values[NUM_POINTS];
 			size_t cur;
 		} net;
@@ -95,7 +95,7 @@ load_graph_draw (LoadGraph *g)
 {
 	const double fontsize = 8.0;
 	const double rmargin = 3.5 * fontsize;
-	const double indent = 8.0;
+	const double indent = 24.0;
 	double dash[2] = { 1.0, 2.0 };
 	cairo_t *cr;
 	int dely;
@@ -103,6 +103,8 @@ load_graph_draw (LoadGraph *g)
 	int real_draw_height;
 	guint i, j;
 	unsigned num_bars;
+	char *caption;
+	cairo_text_extents_t extents;
 
 	// keep 100 % num_bars == 0
 	switch (static_cast<int>(g->draw_height / (fontsize + 14)))
@@ -121,7 +123,7 @@ load_graph_draw (LoadGraph *g)
 	    num_bars = 5;
 	  }
 
-	dely = g->draw_height / num_bars; /* round to int to avoid AA blur */
+	dely = (g->draw_height - 15) / num_bars; /* round to int to avoid AA blur */
 	real_draw_height = dely * num_bars;
 
 	GtkStyle *style = gtk_widget_get_style (g->notebook);
@@ -147,9 +149,7 @@ load_graph_draw (LoadGraph *g)
 	cairo_set_font_size (cr, fontsize);
 
 	for (i = 0; i <= num_bars; ++i) {
-		char *caption;
 		double y;
-		cairo_text_extents_t extents;
 
 		if (i == 0)
 		  y = 0.5 + fontsize / 2.0;
@@ -158,30 +158,64 @@ load_graph_draw (LoadGraph *g)
 		else
 		  y = i * dely + fontsize / 2.0;
 
-		caption = g_strdup_printf("%d %%", 100 - i * (100 / num_bars));
-		cairo_text_extents (cr, caption, &extents);
-		cairo_move_to (cr, (indent*3) - extents.width, y);//extents.width, y);
-		cairo_show_text (cr, caption);
-		g_free (caption);
+		if (g->type == LOAD_GRAPH_NET) {
+			caption = g_strdup_printf("%d KB/s", (g->net.max/1000) - (((g->net.max/1000) / num_bars)*i));
+			cairo_text_extents (cr, caption, &extents);
+			cairo_move_to (cr, indent - extents.width + 20, y);
+			cairo_show_text (cr, caption);
+			g_free (caption);
+		} else {
+			caption = g_strdup_printf("%d %%", 100 - i * (100 / num_bars));
+			cairo_text_extents (cr, caption, &extents);
+			cairo_move_to (cr, indent - extents.width + 20, y);
+			cairo_show_text (cr, caption);
+			g_free (caption);
+		}
 
-		cairo_move_to (cr, rmargin, i * dely + 0.5);
+		cairo_move_to (cr, rmargin + indent - 3, i * dely + 0.5);
 		cairo_line_to (cr, g->draw_width - 0.5, i * dely + 0.5);
 	}
 	cairo_stroke (cr);
 
 	cairo_set_dash (cr, dash, 2, 1.5);
 
-	for (unsigned i = 0; i < 7; i++) {
-		double x = (i + 1) * (g->draw_width - rmargin - indent) / 8;
+	for (unsigned int i = 0; i < 5; i++) {
+		double x = (i + 1) * (g->draw_width - rmargin - indent) / 6;
 		cairo_move_to (cr, (ceil(x) + 0.5) + rmargin + indent, 0.5);
-		cairo_line_to (cr, (ceil(x) + 0.5) + rmargin + indent, real_draw_height + 0.5);
+		cairo_line_to (cr, (ceil(x) + 0.5) + rmargin + indent, real_draw_height + 4.5);
+		cairo_stroke(cr);
+
+		caption = g_strdup_printf("%d", 50-((((g->speed/1000)*NUM_POINTS)/6)*i));
+		cairo_text_extents (cr, caption, &extents);
+		cairo_move_to (cr, ((ceil(x) + 0.5) + rmargin + indent) - (extents.width/2), g->draw_height);
+		cairo_show_text (cr, caption);
+		g_free (caption);
 	}
 
 	cairo_move_to (cr, rmargin + indent + 0.5, 0.5);
-	cairo_line_to (cr, rmargin + indent + 0.5, real_draw_height + 0.5);
+	cairo_line_to (cr, rmargin + indent + 0.5, real_draw_height + 4.5);
+	cairo_stroke (cr);
+
+	caption = g_strdup_printf("%d", 60);
+	cairo_text_extents (cr, caption, &extents);
+	cairo_move_to (cr, (rmargin + indent + 0.5) - (extents.width/2), g->draw_height);
+	cairo_show_text (cr, caption);
+	g_free (caption);
+
+	caption = g_strdup_printf(_("seconds"), 60);
+	//cairo_text_extents (cr, caption, &extents);
+	cairo_move_to (cr, (rmargin + indent + 0.5) + extents.width, g->draw_height);
+	cairo_show_text (cr, caption);
+	g_free (caption);
 
 	cairo_move_to (cr, g->draw_width - 0.5, 0.5);
-	cairo_line_to (cr, g->draw_width - 0.5, real_draw_height + 0.5);
+	cairo_line_to (cr, g->draw_width - 0.5, real_draw_height + 4.5);
+
+	caption = g_strdup_printf("0");
+	cairo_text_extents (cr, caption, &extents);
+	cairo_move_to (cr, (g->draw_width - 0.5) - (extents.width/2), g->draw_height);
+	cairo_show_text (cr, caption);
+	g_free (caption);
 
 	cairo_stroke (cr);
 

@@ -251,16 +251,9 @@ create_sys_view (ProcData *procdata)
 
 	label = make_title_label (_("CPU History"));
 	gtk_box_pack_start (GTK_BOX (cpu_box), label, FALSE, FALSE, 0);
-	
-	cpu_hbox = gtk_hbox_new (FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (cpu_box), cpu_hbox, TRUE, TRUE, 0);
-
-	spacer = gtk_label_new ("");
-	gtk_widget_set_size_request(GTK_WIDGET(spacer), 12, -1);
-	gtk_box_pack_start (GTK_BOX (cpu_hbox), spacer, FALSE, FALSE, 0);
 
 	cpu_graph_box = gtk_vbox_new (FALSE, 6);
-	gtk_box_pack_start (GTK_BOX (cpu_hbox), cpu_graph_box, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (cpu_box), cpu_graph_box, TRUE, TRUE, 0);
 
 	cpu_graph = load_graph_new (LOAD_GRAPH_CPU, procdata);
 	gtk_box_pack_start (GTK_BOX (cpu_graph_box),
@@ -336,16 +329,9 @@ create_sys_view (ProcData *procdata)
 
 	label = make_title_label (_("Memory and Swap History"));
 	gtk_box_pack_start (GTK_BOX (mem_box), label, FALSE, FALSE, 0);
-	
-	mem_hbox = gtk_hbox_new (FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (mem_box), mem_hbox, TRUE, TRUE, 0);
-
-	spacer = gtk_label_new ("");
-	gtk_widget_set_size_request(GTK_WIDGET(spacer), 12, -1);
-	gtk_box_pack_start (GTK_BOX (mem_hbox), spacer, FALSE, FALSE, 0);
 
 	mem_graph_box = gtk_vbox_new (FALSE, 6);
-	gtk_box_pack_start (GTK_BOX (mem_hbox), mem_graph_box, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (mem_box), mem_graph_box, TRUE, TRUE, 0);
 
 
 	mem_graph = load_graph_new (LOAD_GRAPH_MEM, procdata);
@@ -492,15 +478,8 @@ create_sys_view (ProcData *procdata)
 	label = make_title_label (_("Network History"));
 	gtk_box_pack_start (GTK_BOX (net_box), label, FALSE, FALSE, 0);
 
-	net_hbox = gtk_hbox_new (FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (net_box), net_hbox, TRUE, TRUE, 0);
-
-	spacer = gtk_label_new ("");
-	gtk_widget_set_size_request(GTK_WIDGET(spacer), 12, -1);
-	gtk_box_pack_start (GTK_BOX (net_hbox), spacer, FALSE, FALSE, 0);
-
 	net_graph_box = gtk_vbox_new (FALSE, 6);
-	gtk_box_pack_start (GTK_BOX (net_hbox), net_graph_box, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (net_box), net_graph_box, TRUE, TRUE, 0);
 
 	net_graph = load_graph_new (LOAD_GRAPH_NET, procdata);
 	gtk_box_pack_start (GTK_BOX (net_graph_box),
@@ -539,11 +518,20 @@ create_sys_view (ProcData *procdata)
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
+	hbox = gtk_hbox_new (FALSE, 0);
+	g_signal_connect (G_OBJECT (hbox), "size_request",
+			  G_CALLBACK(size_request), &net_size);
+
 	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(net_graph)->net_in),
 				1.0,
 				0.5);
+	gtk_box_pack_start (GTK_BOX (hbox),
+			    load_graph_get_labels(net_graph)->net_in,
+			    TRUE,
+			    TRUE,
+			    0);
 
-	gtk_table_attach (GTK_TABLE (table), load_graph_get_labels(net_graph)->net_in, 2, 3, 0, 1, 
+	gtk_table_attach (GTK_TABLE (table), hbox, 2, 3, 0, 1, 
 			  static_cast<GtkAttachOptions>(GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
 
 	label = gtk_label_new (_("Total Received"));
@@ -584,20 +572,20 @@ create_sys_view (ProcData *procdata)
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
-	//hbox = gtk_hbox_new (FALSE, 0);
-	//g_signal_connect (G_OBJECT (hbox), "size_request",
-	//		  G_CALLBACK(size_request), &net_size);
+	hbox = gtk_hbox_new (FALSE, 0);
+	g_signal_connect (G_OBJECT (hbox), "size_request",
+			  G_CALLBACK(size_request), &net_size);
 
 	gtk_misc_set_alignment (GTK_MISC (load_graph_get_labels(net_graph)->net_out),
 				1.0,
 				0.5);
-	/*gtk_box_pack_start (GTK_BOX (hbox),
+	gtk_box_pack_start (GTK_BOX (hbox),
 			    load_graph_get_labels(net_graph)->net_out,
 			    TRUE,
 			    TRUE,
-			    0);*/
+			    0);
 
-	gtk_table_attach (GTK_TABLE (table), load_graph_get_labels(net_graph)->net_out, 2, 3, 0, 1, 
+	gtk_table_attach (GTK_TABLE (table), hbox, 2, 3, 0, 1, 
 			  static_cast<GtkAttachOptions>(GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
 
 	label = gtk_label_new (_("Total Received"));
