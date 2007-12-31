@@ -266,7 +266,7 @@ create_sys_view (ProcData *procdata)
 
 	hbox = gtk_hbox_new(FALSE, 0);
 	spacer = gtk_label_new ("");
-	gtk_widget_set_size_request(GTK_WIDGET(spacer), 41, -1);
+	gtk_widget_set_size_request(GTK_WIDGET(spacer), 57, -1);
 	gtk_box_pack_start (GTK_BOX (hbox), spacer, 
 			    FALSE, FALSE, 0);
 
@@ -282,14 +282,14 @@ create_sys_view (ProcData *procdata)
 					     std::min(procdata->config.num_cpus, 4),
 					     TRUE);
 	gtk_table_set_row_spacings(GTK_TABLE(cpu_table), 6);
-	gtk_table_set_col_spacings(GTK_TABLE(cpu_table), 12);
+	gtk_table_set_col_spacings(GTK_TABLE(cpu_table), 6);
 	gtk_box_pack_start(GTK_BOX(hbox), cpu_table, TRUE, TRUE, 0);
 
 	for (i=0;i<procdata->config.num_cpus; i++) {
 		GtkWidget *temp_hbox;
 		gchar *text;
 		
-		temp_hbox = gtk_hbox_new (FALSE, 6);
+		temp_hbox = gtk_hbox_new (FALSE, 0);
 		gtk_table_attach(GTK_TABLE(cpu_table), temp_hbox,
 				 i % 4, i % 4 + 1,
 				 i / 4, i / 4 + 1,
@@ -343,7 +343,7 @@ create_sys_view (ProcData *procdata)
 
 	hbox = gtk_hbox_new(FALSE, 0);
 	spacer = gtk_label_new ("");
-	gtk_widget_set_size_request(GTK_WIDGET(spacer), 38, -1);
+	gtk_widget_set_size_request(GTK_WIDGET(spacer), 54, -1);
 	gtk_box_pack_start (GTK_BOX (hbox), spacer, 
 			    FALSE, FALSE, 0);
 
@@ -490,7 +490,7 @@ create_sys_view (ProcData *procdata)
 
 	hbox = gtk_hbox_new(FALSE, 0);
 	spacer = gtk_label_new ("");
-	gtk_widget_set_size_request(GTK_WIDGET(spacer), 38, -1);
+	gtk_widget_set_size_request(GTK_WIDGET(spacer), 54, -1);
 	gtk_box_pack_start (GTK_BOX (hbox), spacer, 
 			    FALSE, FALSE, 0);
 
