@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-29 17:30+0000\n"
-"PO-Revision-Date: 2007-12-30 01:16+0100\n"
+"POT-Creation-Date: 2007-12-31 08:32+0000\n"
+"PO-Revision-Date: 2007-12-31 13:21+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <<gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:156
-#: ../src/interface.cpp:628 ../src/procman.cpp:689
+#: ../src/interface.cpp:688 ../src/procman.cpp:689
 msgid "System Monitor"
 msgstr "Monitor del sistema"
 
@@ -68,7 +68,7 @@ msgstr "Disponible"
 msgid "Used"
 msgstr "Usada"
 
-#: ../src/disks.cpp:292 ../src/interface.cpp:704 ../src/procdialogs.cpp:680
+#: ../src/disks.cpp:292 ../src/interface.cpp:764 ../src/procdialogs.cpp:680
 #: ../src/procdialogs.cpp:684
 msgid "File Systems"
 msgstr "Sistemas de archivos"
@@ -485,58 +485,75 @@ msgstr "_Finalizar proceso"
 msgid "CPU History"
 msgstr "Histórico de la CPU"
 
-#: ../src/interface.cpp:311
+#: ../src/interface.cpp:310
+msgid "CPU"
+msgstr "CPU"
+
+#: ../src/interface.cpp:312
+#, c-format
+msgid "CPU%d"
+msgstr "CPU %d"
+
+#: ../src/interface.cpp:330
 msgid "Memory and Swap History"
 msgstr "Histórico de memoria e intercambio"
 
-#: ../src/interface.cpp:342
-msgid "User memory:"
-msgstr "Memoria de usuario:"
+#: ../src/interface.cpp:369 ../src/proctable.cpp:224
+msgid "Memory"
+msgstr "Memoria"
 
 #. xgettext: user memory: 123 MiB of 512MiB
 #. xgettext: swap: 10MiB of 1GiB
-#: ../src/interface.cpp:357 ../src/interface.cpp:405
+#: ../src/interface.cpp:384 ../src/interface.cpp:441
 msgid "of"
 msgstr "de"
 
-#: ../src/interface.cpp:382 ../src/interface.cpp:432
-msgid "used, "
-msgstr "usado, "
+#: ../src/interface.cpp:409 ../src/interface.cpp:466
+msgid "("
+msgstr "("
 
-#: ../src/interface.cpp:390
-msgid "Used swap:"
-msgstr "Intercambio usado:"
+#: ../src/interface.cpp:412 ../src/interface.cpp:469
+msgid ")"
+msgstr ")"
 
-#: ../src/interface.cpp:441
+#: ../src/interface.cpp:426 ../src/proctable.cpp:212
+msgid "Virtual Memory"
+msgstr "Memoria virtual"
+
+#: ../src/interface.cpp:478
 msgid "Network History"
 msgstr "Histórico de la red"
 
-#: ../src/interface.cpp:472
-msgid "Received:"
-msgstr "Recibidos:"
+#: ../src/interface.cpp:517
+msgid "Receiving"
+msgstr "Recibiendo"
 
-#: ../src/interface.cpp:492 ../src/interface.cpp:535
-msgid "Total:"
-msgstr "Total:"
+#: ../src/interface.cpp:537 ../src/interface.cpp:591
+msgid "Total Received"
+msgstr "Total recibidos:"
 
-#: ../src/interface.cpp:516
-msgid "Sent:"
-msgstr "Enviados:"
+#: ../src/interface.cpp:571
+msgid "Sending"
+msgstr "Enviando"
 
-#: ../src/interface.cpp:692
+#: ../src/interface.cpp:752
 msgid "System"
 msgstr "Sistema"
 
-#: ../src/interface.cpp:696 ../src/procdialogs.cpp:512
+#: ../src/interface.cpp:756 ../src/procdialogs.cpp:512
 msgid "Processes"
 msgstr "Procesos"
 
-#: ../src/interface.cpp:700 ../src/procdialogs.cpp:627
+#: ../src/interface.cpp:760 ../src/procdialogs.cpp:627
 msgid "Resources"
 msgstr "Recursos"
 
+#: ../src/load-graph.cpp:205
+msgid "seconds"
+msgstr "segundos"
+
 #. xgettext: rate, 10MiB/s
-#: ../src/load-graph.cpp:471 ../src/load-graph.cpp:482
+#: ../src/load-graph.cpp:505 ../src/load-graph.cpp:516
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
@@ -820,10 +837,6 @@ msgstr "Usuario"
 msgid "Status"
 msgstr "Estado"
 
-#: ../src/proctable.cpp:212
-msgid "Virtual Memory"
-msgstr "Memoria virtual"
-
 #: ../src/proctable.cpp:213
 msgid "Resident Memory"
 msgstr "Memoria residente"
@@ -868,10 +881,6 @@ msgstr "Contexto de seguridad"
 #: ../src/proctable.cpp:223
 msgid "Command Line"
 msgstr "Línea de comandos"
-
-#: ../src/proctable.cpp:224
-msgid "Memory"
-msgstr "Memoria"
 
 #: ../src/proctable.cpp:924
 #, c-format
