@@ -634,8 +634,6 @@ load_graph_update (gpointer user_data)
 	LoadGraph * const g = static_cast<LoadGraph*>(user_data);
 
 	if (g->render_counter == 10) {
-		shift_right(g);
-
 		switch (g->type) {
 		case LOAD_GRAPH_CPU:
 			get_load(g);
@@ -649,7 +647,9 @@ load_graph_update (gpointer user_data)
 		default:
 			g_assert_not_reached();
 		}
-	} 
+	} else if (g->render_counter == 1) {
+		shift_right(g);
+	}
 
 	if (g->draw)
 		load_graph_draw (g);
