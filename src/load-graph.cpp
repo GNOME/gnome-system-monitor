@@ -31,7 +31,7 @@
 #include "gsm_color_button.h"
 
 #define NUM_POINTS 62
-#define GRAPH_MIN_HEIGHT 80
+#define GRAPH_MIN_HEIGHT 40
 #define FRAMES 10
 
 enum {
