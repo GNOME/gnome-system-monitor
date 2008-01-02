@@ -138,6 +138,10 @@ namespace procman
   {
     tree_store_update<const char>(model, iter, column, new_value);
   }
+
+
+
+  std::string format_rate(GnomeVFSFileSize rate);
 }
 
 

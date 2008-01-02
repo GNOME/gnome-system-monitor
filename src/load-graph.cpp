@@ -132,7 +132,6 @@ void draw_background(LoadGraph *g) {
 	guint i;
 	unsigned num_bars;
 	char *caption;
-	gchar *tmp_text;
 	cairo_text_extents_t extents;
 
 
@@ -173,13 +172,12 @@ void draw_background(LoadGraph *g) {
 		  y = i * dely + fontsize / 2.0;
 
 		if (g->type == LOAD_GRAPH_NET) {
-			tmp_text = SI_gnome_vfs_format_file_size_for_display ((g->net.max) - (((g->net.max) / num_bars)*i));
-			caption = g_strdup_printf("%s/s", tmp_text);
-			cairo_text_extents (tmp_cr, caption, &extents);
+			unsigned rate = g->net.max - (g->net.max / num_bars * i);
+			procman_debug("rate %u", rate);
+			const std::string caption(procman::format_rate(rate));
+			cairo_text_extents (tmp_cr, caption.c_str(), &extents);
 			cairo_move_to (tmp_cr, indent - extents.width + 20, y);
-			cairo_show_text (tmp_cr, caption);
-			g_free (tmp_text);
-			g_free (caption);
+			cairo_show_text (tmp_cr, caption.c_str());
 		} else {
 			caption = g_strdup_printf("%d %%", 100 - i * (100 / num_bars));
 			cairo_text_extents (tmp_cr, caption, &extents);
@@ -533,7 +531,7 @@ get_net (LoadGraph *g)
 	guint64 in = 0, out = 0;
 	GTimeVal time;
 	unsigned din, dout;
-	gchar *text1, *text2;
+	gchar *text1;
 
 	ifnames = glibtop_get_netlist(&netlist);
 
@@ -576,23 +574,14 @@ get_net (LoadGraph *g)
 
 	net_scale(g, din, dout);
 
-	text1 = SI_gnome_vfs_format_file_size_for_display (din);
-	// xgettext: rate, 10MiB/s
-	text2 = g_strdup_printf (_("%s/s"), text1);
-	gtk_label_set_text (GTK_LABEL (g->labels.net_in), text2);
-	g_free (text1);
-	g_free (text2);
+
+	gtk_label_set_text (GTK_LABEL (g->labels.net_in), procman::format_rate(din).c_str());
 
 	text1 = SI_gnome_vfs_format_file_size_for_display (in);
 	gtk_label_set_text (GTK_LABEL (g->labels.net_in_total), text1);
 	g_free (text1);
 
-	text1 = SI_gnome_vfs_format_file_size_for_display (dout);
-	// xgettext: rate, 10MiB/s
-	text2 = g_strdup_printf (_("%s/s"), text1);
-	gtk_label_set_text (GTK_LABEL (g->labels.net_out), text2);
-	g_free (text1);
-	g_free (text2);
+	gtk_label_set_text (GTK_LABEL (g->labels.net_out), procman::format_rate(dout).c_str());
 
 	text1 = SI_gnome_vfs_format_file_size_for_display (out);
 	gtk_label_set_text (GTK_LABEL (g->labels.net_out_total), text1);

@@ -452,6 +452,16 @@ namespace procman
 
     g_free(current_value);
   }
+
+
+
+
+  std::string format_rate(GnomeVFSFileSize rate)
+  {
+    char* bytes = SI_gnome_vfs_format_file_size_for_display(rate);
+    // xgettext: rate, 10MiB/s
+    return make_string(g_strdup_printf(_("%s/s"), bytes));
+  }
 }
 
 
