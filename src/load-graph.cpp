@@ -172,8 +172,7 @@ void draw_background(LoadGraph *g) {
 		  y = i * dely + fontsize / 2.0;
 
 		if (g->type == LOAD_GRAPH_NET) {
-			unsigned rate = g->net.max - (g->net.max / num_bars * i);
-			procman_debug("rate %u", rate);
+			unsigned rate = g->net.max - (i * g->net.max / num_bars);
 			const std::string caption(procman::format_rate(rate));
 			cairo_text_extents (tmp_cr, caption.c_str(), &extents);
 			cairo_move_to (tmp_cr, indent - extents.width + 20, y);
