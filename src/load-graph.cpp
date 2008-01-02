@@ -40,7 +40,10 @@ enum {
 	N_CPU_STATES
 };
 
-struct _LoadGraph {
+struct LoadGraph {
+
+
+	unsigned num_bars(double fontsize) const;
 
 	guint n;
 	gint type;
@@ -89,6 +92,33 @@ struct _LoadGraph {
 
 
 
+unsigned LoadGraph::num_bars(double fontsize) const
+{
+	unsigned n;
+
+	// keep 100 % num_bars == 0
+	switch (static_cast<int>(this->draw_height / (fontsize + 14)))
+	{
+	case 0:
+	case 1:
+		n = 1;
+		break;
+	case 2:
+	case 3:
+		n = 2;
+		break;
+	case 4:
+		n = 4;
+		break;
+	default:
+		n = 5;
+	}
+
+	return n;
+}
+
+
+
 #define FRAME_WIDTH 4
 void draw_background(LoadGraph *g) {
 	const double fontsize = 8.0;
@@ -105,23 +135,8 @@ void draw_background(LoadGraph *g) {
 	gchar *tmp_text;
 	cairo_text_extents_t extents;
 
-	// keep 100 % num_bars == 0
-	switch (static_cast<int>(g->draw_height / (fontsize + 14)))
-	  {
-	  case 1:
-	    num_bars = 1;
-	    break;
-	  case 2:
-	  case 3:
-	    num_bars = 2;
-	    break;
-	  case 4:
-	    num_bars = 4;
-	    break;
-	  default:
-	    num_bars = 5;
-	  }
 
+	num_bars = g->num_bars(fontsize);
 	dely = (g->draw_height - 15) / num_bars; /* round to int to avoid AA blur */
 	real_draw_height = dely * num_bars;
 	
@@ -236,22 +251,7 @@ load_graph_draw (LoadGraph *g)
 	guint i, j;
 	unsigned num_bars;
 
-	// keep 100 % num_bars == 0
-	switch (static_cast<int>(g->draw_height / (fontsize + 14)))
-	  {
-	  case 1:
-	    num_bars = 1;
-	    break;
-	  case 2:
-	  case 3:
-	    num_bars = 2;
-	    break;
-	  case 4:
-	    num_bars = 4;
-	    break;
-	  default:
-	    num_bars = 5;
-	  }
+	num_bars = g->num_bars(fontsize);
 
 	cr = cairo_create (g->buffer);
 	GtkStyle *style = gtk_widget_get_style (g->notebook);

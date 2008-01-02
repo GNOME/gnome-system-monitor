@@ -4,7 +4,7 @@
 #include <glib/gtypes.h>
 #include <glibtop/cpu.h>
 
-typedef struct _LoadGraph LoadGraph;
+struct LoadGraph;
 typedef struct _LoadGraphLabels LoadGraphLabels;
 
 #include "procman.h"
