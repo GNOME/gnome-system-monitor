@@ -423,7 +423,7 @@ create_sys_view (ProcData *procdata)
 			    G_CALLBACK (cb_swap_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 2, GTK_SHRINK, GTK_SHRINK, 0, 0);
 		  
-	label = gtk_label_new (_("Virtual Memory"));
+	label = gtk_label_new (_("Swap"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 1, 7, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 	
