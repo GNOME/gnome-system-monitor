@@ -156,8 +156,7 @@ void draw_background(LoadGraph *g) {
 	cairo_rectangle (tmp_cr, g->rmargin + g->indent, 0,
 			 g->draw_width - g->rmargin - g->indent, real_draw_height);
 	cairo_fill(tmp_cr);
-
-	cairo_set_source_rgb (tmp_cr, 0, 0, 0);
+	
 	cairo_set_line_width (tmp_cr, 1.0);
 	cairo_set_dash (tmp_cr, dash, 2, 0);
 	cairo_set_font_size (tmp_cr, g->fontsize);
@@ -171,7 +170,7 @@ void draw_background(LoadGraph *g) {
 		  y = i * dely + 0.5;
 		else
 		  y = i * dely + g->fontsize / 2.0;
-
+		cairo_set_source_rgba (tmp_cr, 0, 0, 0, 1);
 		if (g->type == LOAD_GRAPH_NET) {
 			// operation orders matters so it's 0 if i == num_bars
 			unsigned rate = g->net.max - (i * g->net.max / num_bars);
@@ -188,6 +187,7 @@ void draw_background(LoadGraph *g) {
 			g_free (caption);
 		}
 
+		cairo_set_source_rgba (tmp_cr, 0, 0, 0, 0.75);
 		cairo_move_to (tmp_cr, g->rmargin + g->indent - 3, i * dely + 0.5);
 		cairo_line_to (tmp_cr, g->draw_width - 0.5, i * dely + 0.5);
 	}
