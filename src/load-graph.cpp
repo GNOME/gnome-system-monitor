@@ -194,47 +194,25 @@ void draw_background(LoadGraph *g) {
 	cairo_stroke (tmp_cr);
 
 	cairo_set_dash (tmp_cr, dash, 2, 1.5);
-
-	for (unsigned int i = 0; i < 5; i++) {
-		double x = (i + 1) * (g->draw_width - g->rmargin - g->indent) / 6;
+	for (unsigned int i = 0; i < 7; i++) {
+		double x = (i) * (g->draw_width - g->rmargin - g->indent) / 6;
 		cairo_move_to (tmp_cr, (ceil(x) + 0.5) + g->rmargin + g->indent, 0.5);
 		cairo_line_to (tmp_cr, (ceil(x) + 0.5) + g->rmargin + g->indent, real_draw_height + 4.5);
 		cairo_stroke(tmp_cr);
-
-		caption = g_strdup_printf("%d", 50-((((g->speed/1000)*NUM_POINTS)/6)*i));
+  
+		caption = g_strdup_printf("%d",( (g->speed*(NUM_POINTS-2)) - (((g->speed*(NUM_POINTS-2))/6)*i) )/1000);
 		cairo_text_extents (tmp_cr, caption, &extents);
 		cairo_move_to (tmp_cr, ((ceil(x) + 0.5) + g->rmargin + g->indent) - (extents.width/2), g->draw_height);
+		if (i == 0) {
+			caption = strcat(caption, g_strdup_printf(_(" seconds")));
+		}
 		cairo_show_text (tmp_cr, caption);
 		g_free (caption);
 	}
 
-	cairo_move_to (tmp_cr, g->rmargin + g->indent + 0.5, 0.5);
-	cairo_line_to (tmp_cr, g->rmargin + g->indent + 0.5, real_draw_height + 4.5);
-	cairo_stroke (tmp_cr);
-
-	caption = g_strdup_printf("%d", 60);
-	cairo_text_extents (tmp_cr, caption, &extents);
-	cairo_move_to (tmp_cr, (g->rmargin + g->indent + 0.5) - (extents.width/2), g->draw_height);
-	cairo_show_text (tmp_cr, caption);
-	g_free (caption);
-
-	caption = g_strdup_printf(_("seconds"));
-	cairo_move_to (tmp_cr, (g->rmargin + g->indent + 0.5) + extents.width, g->draw_height);
-	cairo_show_text (tmp_cr, caption);
-	g_free (caption);
-
-	cairo_move_to (tmp_cr, g->draw_width - 0.5, 0.5);
-	cairo_line_to (tmp_cr, g->draw_width - 0.5, real_draw_height + 4.5);
-
-	caption = g_strdup_printf("0");
-	cairo_text_extents (tmp_cr, caption, &extents);
-	cairo_move_to (tmp_cr, (g->draw_width - 0.5) - (extents.width/2), g->draw_height);
-	cairo_show_text (tmp_cr, caption);
-	g_free (caption);
-
 	cairo_stroke (tmp_cr);
 	cairo_destroy (tmp_cr);
-	cairo_destroy (cr);
+	cairo_destroy (cr); 
 }
 
 /* Redraws the backing buffer for the load graph and updates the window */
@@ -260,11 +238,7 @@ load_graph_draw (LoadGraph *g)
 	real_draw_height = dely * num_bars;
 
 	/* draw the graph */
-	if (g->render_counter == 0) {
-		if (g->background_buffer != NULL) {
-			cairo_surface_destroy(g->background_buffer);
-			g->background_buffer = NULL;
-		}
+	if ((g->render_counter == 0) || (g->background_buffer == NULL)) {
 		cairo_surface_destroy(g->graph_buffer);
 		cairo_t* tmp_cr;
 
@@ -276,8 +250,7 @@ load_graph_draw (LoadGraph *g)
 
 		cairo_set_line_width (tmp_cr, 1.5);
 		cairo_set_line_cap (tmp_cr, CAIRO_LINE_CAP_ROUND);
-		cairo_set_line_join (tmp_cr, CAIRO_LINE_JOIN_MITER);
-
+		cairo_set_line_join (tmp_cr, CAIRO_LINE_JOIN_ROUND);
 
 		for (j = 0; j < g->n; ++j) {
 			cairo_move_to (tmp_cr,
@@ -302,7 +275,7 @@ load_graph_draw (LoadGraph *g)
 
 		}
 		cairo_destroy (tmp_cr);
-	}
+	} 
 
 	/* Composite and clip the surfaces together */
 	if (g->background_buffer == NULL) {
@@ -312,11 +285,9 @@ load_graph_draw (LoadGraph *g)
 	cairo_paint (cr);
 
 	cairo_set_source_surface (cr, g->graph_buffer, -1*((g->render_counter) * (delx/FRAMES)) + (1.5*delx) + FRAME_WIDTH, FRAME_WIDTH);
-	cairo_rectangle (cr, g->rmargin + g->indent + FRAME_WIDTH, FRAME_WIDTH,
-			 g->draw_width - g->rmargin - g->indent, real_draw_height +FRAME_WIDTH);
-	cairo_clip(cr);
-	cairo_paint (cr);
-
+	cairo_rectangle (cr, g->rmargin + g->indent + FRAME_WIDTH + 1, FRAME_WIDTH - 1,
+			 g->draw_width - g->rmargin - g->indent - 1 , real_draw_height +FRAME_WIDTH - 1);
+	cairo_fill (cr);
 	cairo_destroy (cr);
 
 	/* repaint */
@@ -345,7 +316,6 @@ load_graph_configure (GtkWidget *widget,
 						  widget->allocation.height);
 
 	cairo_destroy (cr);
-	g->render_counter = 0;
 
 	if (g->background_buffer != NULL) {
 		cairo_surface_destroy(g->background_buffer);
@@ -368,11 +338,7 @@ load_graph_expose (GtkWidget *widget,
 	cr = gdk_cairo_create(widget->window);
 
 	cairo_set_source_surface(cr, g->buffer, 0, 0);
-	cairo_rectangle(cr,
-			event->area.x, event->area.y,
-			event->area.width, event->area.height);
-	cairo_fill(cr);
-
+	cairo_paint(cr);
 	cairo_destroy(cr);
 
 	return TRUE;
@@ -621,7 +587,9 @@ load_graph_update (gpointer user_data)
 {
 	LoadGraph * const g = static_cast<LoadGraph*>(user_data);
 
-	if (g->render_counter == 10) {
+	if (g->render_counter == 0) {
+		shift_right(g);
+
 		switch (g->type) {
 		case LOAD_GRAPH_CPU:
 			get_load(g);
@@ -635,8 +603,6 @@ load_graph_update (gpointer user_data)
 		default:
 			g_assert_not_reached();
 		}
-	} else if (g->render_counter == 1) {
-		shift_right(g);
 	}
 
 	if (g->draw)
@@ -846,6 +812,10 @@ load_graph_change_speed (LoadGraph *g,
 		g->timer_index = g_timeout_add (g->speed / FRAMES,
 						load_graph_update,
 						g);
+	}
+	if (g->background_buffer != NULL) {
+		cairo_surface_destroy(g->background_buffer);
+		g->background_buffer = NULL;
 	}
 }
 
