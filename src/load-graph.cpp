@@ -43,7 +43,11 @@ enum {
 struct LoadGraph {
 
 
-	unsigned num_bars(double fontsize) const;
+	unsigned num_bars() const;
+
+	double fontsize;
+	double rmargin;
+	double indent;
 
 	guint n;
 	gint type;
@@ -92,12 +96,12 @@ struct LoadGraph {
 
 
 
-unsigned LoadGraph::num_bars(double fontsize) const
+unsigned LoadGraph::num_bars() const
 {
 	unsigned n;
 
 	// keep 100 % num_bars == 0
-	switch (static_cast<int>(this->draw_height / (fontsize + 14)))
+	switch (static_cast<int>(this->draw_height / (this->fontsize + 14)))
 	{
 	case 0:
 	case 1:
@@ -121,9 +125,6 @@ unsigned LoadGraph::num_bars(double fontsize) const
 
 #define FRAME_WIDTH 4
 void draw_background(LoadGraph *g) {
-	const double fontsize = 8.0;
-	const double rmargin = 3.5 * fontsize;
-	const double indent = 24.0;
 	double dash[2] = { 1.0, 2.0 };
 	cairo_t *cr;
 	cairo_t* tmp_cr;
@@ -135,7 +136,7 @@ void draw_background(LoadGraph *g) {
 	cairo_text_extents_t extents;
 
 
-	num_bars = g->num_bars(fontsize);
+	num_bars = g->num_bars();
 	dely = (g->draw_height - 15) / num_bars; /* round to int to avoid AA blur */
 	real_draw_height = dely * num_bars;
 	
@@ -152,42 +153,42 @@ void draw_background(LoadGraph *g) {
 	
 	/* Draw background rectangle */
 	cairo_set_source_rgb (tmp_cr, 1.0, 1.0, 1.0);
-	cairo_rectangle (tmp_cr, rmargin + indent, 0,
-			 g->draw_width - rmargin - indent, real_draw_height);
+	cairo_rectangle (tmp_cr, g->rmargin + g->indent, 0,
+			 g->draw_width - g->rmargin - g->indent, real_draw_height);
 	cairo_fill(tmp_cr);
 
 	cairo_set_source_rgb (tmp_cr, 0, 0, 0);
 	cairo_set_line_width (tmp_cr, 1.0);
 	cairo_set_dash (tmp_cr, dash, 2, 0);
-	cairo_set_font_size (tmp_cr, fontsize);
+	cairo_set_font_size (tmp_cr, g->fontsize);
 
 	for (i = 0; i <= num_bars; ++i) {
 		double y;
 
 		if (i == 0)
-		  y = 0.5 + fontsize / 2.0;
+		  y = 0.5 + g->fontsize / 2.0;
 		else if (i == num_bars)
 		  y = i * dely + 0.5;
 		else
-		  y = i * dely + fontsize / 2.0;
+		  y = i * dely + g->fontsize / 2.0;
 
 		if (g->type == LOAD_GRAPH_NET) {
 			// operation orders matters so it's 0 if i == num_bars
 			unsigned rate = g->net.max - (i * g->net.max / num_bars);
 			const std::string caption(procman::format_rate(rate));
 			cairo_text_extents (tmp_cr, caption.c_str(), &extents);
-			cairo_move_to (tmp_cr, indent - extents.width + 20, y);
+			cairo_move_to (tmp_cr, g->indent - extents.width + 20, y);
 			cairo_show_text (tmp_cr, caption.c_str());
 		} else {
 			// operation orders matters so it's 0 if i == num_bars
 			caption = g_strdup_printf("%d %%", 100 - i * (100 / num_bars));
 			cairo_text_extents (tmp_cr, caption, &extents);
-			cairo_move_to (tmp_cr, indent - extents.width + 20, y);
+			cairo_move_to (tmp_cr, g->indent - extents.width + 20, y);
 			cairo_show_text (tmp_cr, caption);
 			g_free (caption);
 		}
 
-		cairo_move_to (tmp_cr, rmargin + indent - 3, i * dely + 0.5);
+		cairo_move_to (tmp_cr, g->rmargin + g->indent - 3, i * dely + 0.5);
 		cairo_line_to (tmp_cr, g->draw_width - 0.5, i * dely + 0.5);
 	}
 	cairo_stroke (tmp_cr);
@@ -195,30 +196,30 @@ void draw_background(LoadGraph *g) {
 	cairo_set_dash (tmp_cr, dash, 2, 1.5);
 
 	for (unsigned int i = 0; i < 5; i++) {
-		double x = (i + 1) * (g->draw_width - rmargin - indent) / 6;
-		cairo_move_to (tmp_cr, (ceil(x) + 0.5) + rmargin + indent, 0.5);
-		cairo_line_to (tmp_cr, (ceil(x) + 0.5) + rmargin + indent, real_draw_height + 4.5);
+		double x = (i + 1) * (g->draw_width - g->rmargin - g->indent) / 6;
+		cairo_move_to (tmp_cr, (ceil(x) + 0.5) + g->rmargin + g->indent, 0.5);
+		cairo_line_to (tmp_cr, (ceil(x) + 0.5) + g->rmargin + g->indent, real_draw_height + 4.5);
 		cairo_stroke(tmp_cr);
 
 		caption = g_strdup_printf("%d", 50-((((g->speed/1000)*NUM_POINTS)/6)*i));
 		cairo_text_extents (tmp_cr, caption, &extents);
-		cairo_move_to (tmp_cr, ((ceil(x) + 0.5) + rmargin + indent) - (extents.width/2), g->draw_height);
+		cairo_move_to (tmp_cr, ((ceil(x) + 0.5) + g->rmargin + g->indent) - (extents.width/2), g->draw_height);
 		cairo_show_text (tmp_cr, caption);
 		g_free (caption);
 	}
 
-	cairo_move_to (tmp_cr, rmargin + indent + 0.5, 0.5);
-	cairo_line_to (tmp_cr, rmargin + indent + 0.5, real_draw_height + 4.5);
+	cairo_move_to (tmp_cr, g->rmargin + g->indent + 0.5, 0.5);
+	cairo_line_to (tmp_cr, g->rmargin + g->indent + 0.5, real_draw_height + 4.5);
 	cairo_stroke (tmp_cr);
 
 	caption = g_strdup_printf("%d", 60);
 	cairo_text_extents (tmp_cr, caption, &extents);
-	cairo_move_to (tmp_cr, (rmargin + indent + 0.5) - (extents.width/2), g->draw_height);
+	cairo_move_to (tmp_cr, (g->rmargin + g->indent + 0.5) - (extents.width/2), g->draw_height);
 	cairo_show_text (tmp_cr, caption);
 	g_free (caption);
 
 	caption = g_strdup_printf(_("seconds"));
-	cairo_move_to (tmp_cr, (rmargin + indent + 0.5) + extents.width, g->draw_height);
+	cairo_move_to (tmp_cr, (g->rmargin + g->indent + 0.5) + extents.width, g->draw_height);
 	cairo_show_text (tmp_cr, caption);
 	g_free (caption);
 
@@ -240,9 +241,6 @@ void draw_background(LoadGraph *g) {
 void
 load_graph_draw (LoadGraph *g)
 {
-	const double fontsize = 8.0;
-	const double rmargin = 3.5 * fontsize;
-	const double indent = 24.0;
 	cairo_t *cr;
 	int dely;
 	double delx;
@@ -250,7 +248,7 @@ load_graph_draw (LoadGraph *g)
 	guint i, j;
 	unsigned num_bars;
 
-	num_bars = g->num_bars(fontsize);
+	num_bars = g->num_bars();
 
 	cr = cairo_create (g->buffer);
 	GtkStyle *style = gtk_widget_get_style (g->notebook);
@@ -258,7 +256,7 @@ load_graph_draw (LoadGraph *g)
 	cairo_paint (cr);
 
 	dely = (g->draw_height - 15) / num_bars; /* round to int to avoid AA blur */
-	delx = (g->draw_width - 2.0 - rmargin - indent) / (NUM_POINTS - 3);
+	delx = (g->draw_width - 2.0 - g->rmargin - g->indent) / (NUM_POINTS - 3);
 	real_draw_height = dely * num_bars;
 
 	/* draw the graph */
@@ -314,8 +312,8 @@ load_graph_draw (LoadGraph *g)
 	cairo_paint (cr);
 
 	cairo_set_source_surface (cr, g->graph_buffer, -1*((g->render_counter) * (delx/FRAMES)) + (1.5*delx) + FRAME_WIDTH, FRAME_WIDTH);
-	cairo_rectangle (cr, rmargin + indent + FRAME_WIDTH, FRAME_WIDTH,
-			 g->draw_width - rmargin - indent, real_draw_height +FRAME_WIDTH);
+	cairo_rectangle (cr, g->rmargin + g->indent + FRAME_WIDTH, FRAME_WIDTH,
+			 g->draw_width - g->rmargin - g->indent, real_draw_height +FRAME_WIDTH);
 	cairo_clip(cr);
 	cairo_paint (cr);
 
@@ -700,6 +698,11 @@ load_graph_new (gint type, ProcData *procdata)
 	guint i = 0;
 
 	g = g_new0 (LoadGraph, 1);
+
+
+	g->fontsize = 8.0;
+	g->rmargin = 3.5 * g->fontsize;
+	g->indent = 24.0;
 
 	g->type = type;
 	switch (type) {
