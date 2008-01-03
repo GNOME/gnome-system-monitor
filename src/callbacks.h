@@ -65,6 +65,7 @@ void		cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 				gint num, gpointer data);
 
 gint		cb_update_disks (gpointer data);
+gint		cb_user_refresh (GtkAction* action, gpointer data);
 gint		cb_timeout (gpointer data);
 
 void		cb_volume_mounted_or_unmounted(GnomeVFSVolumeMonitor *vfsvolumemonitor,

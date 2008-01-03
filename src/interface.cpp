@@ -72,6 +72,9 @@ static const GtkActionEntry menu_entries[] =
 	{ "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL,
 	  N_("Configure the application"), G_CALLBACK (cb_edit_preferences) },
 
+	{ "Refresh", NULL, N_("_Refresh"), "<control>R",
+	  N_("Refresh the process list"), G_CALLBACK(cb_user_refresh) },
+
 	{ "MemoryMaps", NULL, N_("_Memory Maps"), "<control>M",
 	  N_("Open the memory maps associated with a process"), G_CALLBACK (cb_show_memory_maps) },
 	{ "OpenFiles", NULL, N_("Open _Files"), "<control>F",
@@ -128,6 +131,8 @@ static const char ui_info[] =
 "      <separator />"
 "      <menuitem name=\"ViewMemoryMapsMenu\" action=\"MemoryMaps\" />"
 "      <menuitem name=\"ViewOpenFilesMenu\" action=\"OpenFiles\" />"
+"      <separator />"
+"      <menuitem name=\"ViewRefresh\" action=\"Refresh\" />"
 "    </menu>"
 "    <menu name=\"HelpMenu\" action=\"Help\">"
 "      <menuitem name=\"HelpContentsMenu\" action=\"HelpContents\" />"
@@ -828,7 +833,8 @@ update_sensitivity(ProcData *data)
 	const char * const processes_actions[] = { "ShowActiveProcesses",
 						   "ShowAllProcesses",
 						   "ShowMyProcesses",
-						   "ShowDependencies"
+						   "ShowDependencies",
+						   "Refresh"
 	};
 
 	size_t i;

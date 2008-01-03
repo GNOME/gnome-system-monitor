@@ -404,6 +404,15 @@ cb_volume_mounted_or_unmounted(GnomeVFSVolumeMonitor *vfsvolumemonitor,
 
 
 gint
+cb_user_refresh (GtkAction*, gpointer data)
+{
+	ProcData * const procdata = static_cast<ProcData*>(data);
+	proctable_update_all(procdata);
+	return FALSE;
+}
+
+
+gint
 cb_timeout (gpointer data)
 {
 	ProcData * const procdata = static_cast<ProcData*>(data);
