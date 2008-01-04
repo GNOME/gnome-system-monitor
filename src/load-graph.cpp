@@ -174,10 +174,12 @@ void draw_background(LoadGraph *g) {
 		if (g->type == LOAD_GRAPH_NET) {
 			// operation orders matters so it's 0 if i == num_bars
 			unsigned rate = g->net.max - (i * g->net.max / num_bars);
-			const std::string caption(procman::format_rate(rate));
-			cairo_text_extents (tmp_cr, caption.c_str(), &extents);
-			cairo_move_to (tmp_cr, g->indent - extents.width + 20, y);
-			cairo_show_text (tmp_cr, caption.c_str());
+			if (rate < g->net.max || i == 0){  // don't show intermediate values when they will be the same as the maximum
+				const std::string caption(procman::format_rate(rate));
+				cairo_text_extents (tmp_cr, caption.c_str(), &extents);
+				cairo_move_to (tmp_cr, g->indent - extents.width + 20, y);
+				cairo_show_text (tmp_cr, caption.c_str());
+			}
 		} else {
 			// operation orders matters so it's 0 if i == num_bars
 			caption = g_strdup_printf("%d %%", 100 - i * (100 / num_bars));
@@ -196,6 +198,7 @@ void draw_background(LoadGraph *g) {
 	cairo_set_dash (tmp_cr, dash, 2, 1.5);
 	for (unsigned int i = 0; i < 7; i++) {
 		double x = (i) * (g->draw_width - g->rmargin - g->indent) / 6;
+		cairo_set_source_rgba (tmp_cr, 0, 0, 0, 0.75);
 		cairo_move_to (tmp_cr, (ceil(x) + 0.5) + g->rmargin + g->indent, 0.5);
 		cairo_line_to (tmp_cr, (ceil(x) + 0.5) + g->rmargin + g->indent, real_draw_height + 4.5);
 		cairo_stroke(tmp_cr);
@@ -206,6 +209,8 @@ void draw_background(LoadGraph *g) {
 		if (i == 0) {
 			caption = strcat(caption, g_strdup_printf(_(" seconds")));
 		}
+
+		cairo_set_source_rgba (tmp_cr, 0, 0, 0, 1);
 		cairo_show_text (tmp_cr, caption);
 		g_free (caption);
 	}
