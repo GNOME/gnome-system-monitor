@@ -174,12 +174,10 @@ void draw_background(LoadGraph *g) {
 		if (g->type == LOAD_GRAPH_NET) {
 			// operation orders matters so it's 0 if i == num_bars
 			unsigned rate = g->net.max - (i * g->net.max / num_bars);
-			if (rate < g->net.max || i == 0){  // don't show intermediate values when they will be the same as the maximum
-				const std::string caption(procman::format_rate(rate));
-				cairo_text_extents (tmp_cr, caption.c_str(), &extents);
-				cairo_move_to (tmp_cr, g->indent - extents.width + 20, y);
-				cairo_show_text (tmp_cr, caption.c_str());
-			}
+			const std::string caption(procman::format_rate(rate));
+			cairo_text_extents (tmp_cr, caption.c_str(), &extents);
+			cairo_move_to (tmp_cr, g->indent - extents.width + 20, y);
+			cairo_show_text (tmp_cr, caption.c_str());
 		} else {
 			// operation orders matters so it's 0 if i == num_bars
 			caption = g_strdup_printf("%d %%", 100 - i * (100 / num_bars));
@@ -465,10 +463,25 @@ net_scale (LoadGraph *g, unsigned din, unsigned dout)
 		new_max = *std::max_element(&g->net.values[0],
 					    &g->net.values[NUM_POINTS]);
 
-	// round up
-	new_max = 11U * new_max / 10U;
 	// make sure max is not 0 to avoid / 0
-	new_max = std::max(new_max, 1U);
+	// default to 1 KiB * n_bars
+	new_max = std::max(new_max, 1024 * g->num_bars());
+	// round up to get some extra space
+	new_max = 11U * new_max / 10U;
+
+	unsigned pow2 = std::floor(log2(new_max));
+	unsigned pow10 = 3U * pow2 / 10U;
+
+	unsigned coef10 = new_max / std::pow(10.0, double(pow10));
+
+	// make coef10 divisible by num_bars
+	if (coef10 % g->num_bars() != 0)
+		coef10 = coef10 + (g->num_bars() - coef10 % g->num_bars());
+
+	g_assert(coef10 % g->num_bars() == 0);
+
+	procman_debug("new_max %u pow2 %u pow10 %u coef10 %u", new_max, pow2, pow10, coef10);
+	new_max = coef10 * std::pow(2.0, double(10U * pow10 / 3U));
 
 	if (new_max == g->net.max)
 		return;
