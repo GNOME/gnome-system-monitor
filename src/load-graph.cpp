@@ -485,6 +485,12 @@ net_scale (LoadGraph *g, unsigned din, unsigned dout)
 	procman_debug("dmax = %u max = %u new_max = %u", dmax, g->net.max, new_max);
 
 	g->net.max = new_max;
+
+	// force the graph background to be redrawn now that scale has changed
+	if (g->background_buffer != NULL) {
+		cairo_surface_destroy(g->background_buffer);
+		g->background_buffer = NULL;
+	}
 }
 
 static void
