@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-31 18:20+0000\n"
-"PO-Revision-Date: 2008-01-03 06:22+0100\n"
+"POT-Creation-Date: 2008-01-04 00:35+0000\n"
+"PO-Revision-Date: 2008-01-04 20:19+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <<gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:156
-#: ../src/interface.cpp:691 ../src/procman.cpp:689
+#: ../src/interface.cpp:696 ../src/procman.cpp:689
 msgid "System Monitor"
 msgstr "Monitor del sistema"
 
@@ -34,7 +34,7 @@ msgstr "Ver los procesos actuales y monitorizar el estado del sistema"
 #: ../src/callbacks.cpp:166
 msgid "translator-credits"
 msgstr ""
-"Jorge González <jorgegonz@svn.gnome.org>, 2007\n"
+"Jorge González <jorgegonz@svn.gnome.org>, 2007-2008\n"
 "Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004-2006\n"
 "Pablo Gonzalo del Campo <pablodc@bigfoot.com>, 2002, 2003\n"
 "Héctor García Álvarez <hector@scouts-es.org>, 2002\n"
@@ -48,7 +48,7 @@ msgstr "Dispositivo"
 msgid "Directory"
 msgstr "Directorio"
 
-#: ../src/disks.cpp:281 ../src/openfiles.cpp:235
+#: ../src/disks.cpp:281 ../src/gsm_color_button.c:211 ../src/openfiles.cpp:235
 msgid "Type"
 msgstr "Tipo"
 
@@ -68,7 +68,7 @@ msgstr "Disponible"
 msgid "Used"
 msgstr "Usada"
 
-#: ../src/disks.cpp:292 ../src/interface.cpp:767 ../src/procdialogs.cpp:680
+#: ../src/disks.cpp:292 ../src/interface.cpp:772 ../src/procdialogs.cpp:680
 #: ../src/procdialogs.cpp:684
 msgid "File Systems"
 msgstr "Sistemas de archivos"
@@ -343,6 +343,42 @@ msgstr "Anchura de la columna «memoria virtual» del proceso"
 msgid "Width of process 'writable memory' column"
 msgstr "Anchura de la columna «memoria escribible» del proceso"
 
+#: ../src/gsm_color_button.c:188
+msgid "Fraction"
+msgstr "Fracción"
+
+#: ../src/gsm_color_button.c:189
+msgid "Percentage full for pie colour pickers"
+msgstr "Porcentaje completo para los selectores de color de la tarta"
+
+#: ../src/gsm_color_button.c:196
+msgid "Title"
+msgstr "Título"
+
+#: ../src/gsm_color_button.c:197
+msgid "The title of the color selection dialog"
+msgstr "El título del diálogo de selección de color"
+
+#: ../src/gsm_color_button.c:198 ../src/gsm_color_button.c:598
+msgid "Pick a Color"
+msgstr "Escoja un color"
+
+#: ../src/gsm_color_button.c:204
+msgid "Current Color"
+msgstr "Color actual"
+
+#: ../src/gsm_color_button.c:205
+msgid "The selected color"
+msgstr "El color seleccionado"
+
+#: ../src/gsm_color_button.c:212
+msgid "Type of color picker"
+msgstr "Tipo de selector de color"
+
+#: ../src/gsm_color_button.c:518
+msgid "Received invalid color data\n"
+msgstr "Se han recibido datos de color que no son válidos\n"
+
 #. xgettext: noun, top level menu.
 #. "File" did not make sense for system-monitor
 #: ../src/interface.cpp:50
@@ -418,149 +454,151 @@ msgid "Configure the application"
 msgstr "Configurar la aplicación"
 
 #: ../src/interface.cpp:75
+msgid "_Refresh"
+msgstr "_Refrescar"
+
+#: ../src/interface.cpp:76
+msgid "Refresh the process list"
+msgstr "Refrescar la lista de procesos"
+
+#: ../src/interface.cpp:78
 msgid "_Memory Maps"
 msgstr "_Mapas de memoria"
 
-#: ../src/interface.cpp:76
+#: ../src/interface.cpp:79
 msgid "Open the memory maps associated with a process"
 msgstr "Abrir los mapas de memoria asociados con un proceso"
 
-#: ../src/interface.cpp:77
+#: ../src/interface.cpp:80
 msgid "Open _Files"
 msgstr "_Archivos abiertos"
 
-#: ../src/interface.cpp:78
+#: ../src/interface.cpp:81
 msgid "View the files opened by a process"
 msgstr "Ver los archivos abiertos por un proceso"
 
-#: ../src/interface.cpp:80
+#: ../src/interface.cpp:83
 msgid "_Contents"
 msgstr "_Índice"
 
-#: ../src/interface.cpp:81
+#: ../src/interface.cpp:84
 msgid "Open the manual"
 msgstr "Abrir el manual"
 
-#: ../src/interface.cpp:83
+#: ../src/interface.cpp:86
 msgid "About this application"
 msgstr "Acerca de esta aplicación"
 
-#: ../src/interface.cpp:88
+#: ../src/interface.cpp:91
 msgid "_Dependencies"
 msgstr "_Dependencias"
 
-#: ../src/interface.cpp:89
+#: ../src/interface.cpp:92
 msgid "Show parent/child relationship between processes"
 msgstr "Mostrar las relaciones de ascendencia entre los procesos"
 
-#: ../src/interface.cpp:96
+#: ../src/interface.cpp:99
 msgid "_Active Processes"
 msgstr "Procesos _activos"
 
-#: ../src/interface.cpp:97
+#: ../src/interface.cpp:100
 msgid "Show active processes"
 msgstr "Mostrar procesos activos"
 
-#: ../src/interface.cpp:98
+#: ../src/interface.cpp:101
 msgid "A_ll Processes"
 msgstr "_Todos los procesos"
 
-#: ../src/interface.cpp:99
+#: ../src/interface.cpp:102
 msgid "Show all processes"
 msgstr "Mostrar todos los procesos"
 
-#: ../src/interface.cpp:100
+#: ../src/interface.cpp:103
 msgid "M_y Processes"
 msgstr "M_is procesos"
 
-#: ../src/interface.cpp:101
+#: ../src/interface.cpp:104
 msgid "Show user own process"
 msgstr "Mostrar procesos pertenecientes al usuario"
 
-#: ../src/interface.cpp:184
+#: ../src/interface.cpp:189
 msgid "End _Process"
 msgstr "_Finalizar proceso"
 
-#: ../src/interface.cpp:252
+#: ../src/interface.cpp:257
 msgid "CPU History"
 msgstr "Histórico de la CPU"
 
-#: ../src/interface.cpp:310
+#: ../src/interface.cpp:315
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:312
+#: ../src/interface.cpp:317
 #, c-format
 msgid "CPU%d"
 msgstr "CPU %d"
 
-#: ../src/interface.cpp:330
+#: ../src/interface.cpp:335
 msgid "Memory and Swap History"
 msgstr "Histórico de memoria e intercambio"
 
-#: ../src/interface.cpp:369 ../src/proctable.cpp:224
+#: ../src/interface.cpp:374 ../src/proctable.cpp:224
 msgid "Memory"
 msgstr "Memoria"
 
 #. xgettext: user memory: 123 MiB of 512MiB
 #. xgettext: swap: 10MiB of 1GiB
-#: ../src/interface.cpp:384 ../src/interface.cpp:441
+#: ../src/interface.cpp:389 ../src/interface.cpp:446
 msgid "of"
 msgstr "de"
 
-#: ../src/interface.cpp:409 ../src/interface.cpp:466
+#: ../src/interface.cpp:414 ../src/interface.cpp:471
 msgid "("
 msgstr "("
 
-#: ../src/interface.cpp:412 ../src/interface.cpp:469
+#: ../src/interface.cpp:417 ../src/interface.cpp:474
 msgid ")"
 msgstr ")"
 
-#: ../src/interface.cpp:426 ../src/proctable.cpp:212
-msgid "Virtual Memory"
-msgstr "Memoria virtual"
+#: ../src/interface.cpp:431
+msgid "Swap"
+msgstr "Intercambio"
 
-#: ../src/interface.cpp:478
+#: ../src/interface.cpp:483
 msgid "Network History"
 msgstr "Histórico de la red"
 
-#: ../src/interface.cpp:517
+#: ../src/interface.cpp:522
 msgid "Receiving"
 msgstr "Recibiendo"
 
-#: ../src/interface.cpp:538
+#: ../src/interface.cpp:543
 msgid "Total Received"
 msgstr "Total recibidos:"
 
-#: ../src/interface.cpp:572
+#: ../src/interface.cpp:577
 msgid "Sending"
 msgstr "Enviando"
 
-#: ../src/interface.cpp:594
+#: ../src/interface.cpp:599
 msgid "Total Sent"
 msgstr "Total enviados"
 
-#: ../src/interface.cpp:755
+#: ../src/interface.cpp:760
 msgid "System"
 msgstr "Sistema"
 
-#: ../src/interface.cpp:759 ../src/procdialogs.cpp:512
+#: ../src/interface.cpp:764 ../src/procdialogs.cpp:512
 msgid "Processes"
 msgstr "Procesos"
 
-#: ../src/interface.cpp:763 ../src/procdialogs.cpp:627
+#: ../src/interface.cpp:768 ../src/procdialogs.cpp:627
 msgid "Resources"
 msgstr "Recursos"
 
-#: ../src/load-graph.cpp:206
-msgid "seconds"
-msgstr "segundos"
-
-#. xgettext: rate, 10MiB/s
-#: ../src/load-graph.cpp:581 ../src/load-graph.cpp:592
-#, c-format
-msgid "%s/s"
-msgstr "%s/s"
+#: ../src/load-graph.cpp:207
+msgid " seconds"
+msgstr " segundos"
 
 #: ../src/lsof.cpp:355
 msgid "Process"
@@ -841,6 +879,10 @@ msgstr "Usuario"
 msgid "Status"
 msgstr "Estado"
 
+#: ../src/proctable.cpp:212
+msgid "Virtual Memory"
+msgstr "Memoria virtual"
+
 #: ../src/proctable.cpp:213
 msgid "Resident Memory"
 msgstr "Memoria residente"
@@ -886,7 +928,7 @@ msgstr "Contexto de seguridad"
 msgid "Command Line"
 msgstr "Línea de comandos"
 
-#: ../src/proctable.cpp:924
+#: ../src/proctable.cpp:926
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Carga media para los últimos 1, 5 y 15 minutos: %0.2f, %0.2f, %0.2f"
@@ -1007,4 +1049,10 @@ msgstr "%.1f GiB"
 #: ../src/util.cpp:346
 msgid "<i>N/A</i>"
 msgstr "<i>N/D</i>"
+
+#. xgettext: rate, 10MiB/s
+#: ../src/util.cpp:463
+#, c-format
+msgid "%s/s"
+msgstr "%s/s"
 
