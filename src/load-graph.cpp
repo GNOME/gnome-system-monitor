@@ -194,20 +194,19 @@ void draw_background(LoadGraph *g) {
 	cairo_stroke (tmp_cr);
 
 	cairo_set_dash (tmp_cr, dash, 2, 1.5);
+
+	const unsigned total_seconds = g->speed * (NUM_POINTS - 2) / 1000;
+
 	for (unsigned int i = 0; i < 7; i++) {
 		double x = (i) * (g->draw_width - g->rmargin - g->indent) / 6;
 		cairo_set_source_rgba (tmp_cr, 0, 0, 0, 0.75);
 		cairo_move_to (tmp_cr, (ceil(x) + 0.5) + g->rmargin + g->indent, 0.5);
 		cairo_line_to (tmp_cr, (ceil(x) + 0.5) + g->rmargin + g->indent, real_draw_height + 4.5);
 		cairo_stroke(tmp_cr);
-  
-		caption = g_strdup_printf("%d",( (g->speed*(NUM_POINTS-2)) - (((g->speed*(NUM_POINTS-2))/6)*i) )/1000);
+		unsigned seconds = total_seconds - i * total_seconds / 6;
+		caption = g_strdup_printf((i == 0 ? _("%u seconds") : "%u"), seconds);
 		cairo_text_extents (tmp_cr, caption, &extents);
 		cairo_move_to (tmp_cr, ((ceil(x) + 0.5) + g->rmargin + g->indent) - (extents.width/2), g->draw_height);
-		if (i == 0) {
-			caption = strcat(caption, g_strdup_printf(_(" seconds")));
-		}
-
 		cairo_set_source_rgba (tmp_cr, 0, 0, 0, 1);
 		cairo_show_text (tmp_cr, caption);
 		g_free (caption);
