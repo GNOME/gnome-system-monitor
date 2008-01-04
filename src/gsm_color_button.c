@@ -213,7 +213,7 @@ gsm_color_button_class_init (GSMColorButtonClass * klass)
 						      0, 4, 0,
 						      G_PARAM_READWRITE));
 
-  color_button_signals[COLOR_SET] = g_signal_new (_("color_set"),
+  color_button_signals[COLOR_SET] = g_signal_new ("color_set",
 						  G_TYPE_FROM_CLASS
 						  (gobject_class),
 						  G_SIGNAL_RUN_FIRST,
