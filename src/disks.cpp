@@ -266,8 +266,8 @@ static void open_dir(GtkTreeView       *tree_view,
 GtkWidget *
 create_disk_view(ProcData *procdata)
 {
-	GtkWidget *disk_box, *disk_hbox;
-	GtkWidget *label, *spacer;
+	GtkWidget *disk_box;
+	GtkWidget *label;
 	GtkWidget *scrolled;
 	GtkWidget *disk_tree;
 	GtkListStore *model;
@@ -292,12 +292,6 @@ create_disk_view(ProcData *procdata)
 	label = make_title_label(_("File Systems"));
 	gtk_box_pack_start(GTK_BOX(disk_box), label, FALSE, FALSE, 0);
 
-	disk_hbox = gtk_hbox_new(FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(disk_box), disk_hbox, TRUE, TRUE, 0);
-
-	spacer = gtk_label_new("    ");
-	gtk_box_pack_start(GTK_BOX(disk_hbox), spacer, FALSE, FALSE, 0);
-
 	scrolled = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled),
 				       GTK_POLICY_AUTOMATIC,
@@ -305,7 +299,7 @@ create_disk_view(ProcData *procdata)
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolled),
 					    GTK_SHADOW_IN);
 
-	gtk_box_pack_start(GTK_BOX(disk_hbox), scrolled, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(disk_box), scrolled, TRUE, TRUE, 0);
 
 	model = gtk_list_store_new(DISK_N_COLUMNS,	/* n columns */
 				   G_TYPE_STRING,	/* DISK_DEVICE */
