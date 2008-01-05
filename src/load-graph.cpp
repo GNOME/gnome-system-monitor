@@ -462,25 +462,44 @@ net_scale (LoadGraph *g, unsigned din, unsigned dout)
 		new_max = *std::max_element(&g->net.values[0],
 					    &g->net.values[NUM_POINTS]);
 
-	// make sure max is not 0 to avoid / 0
-	// default to 1 KiB * n_bars
-	new_max = std::max(new_max, 1024 * g->num_bars());
+	//
+	// Round network maximum
+	//
+
+	const unsigned bak_max(new_max);
+
 	// round up to get some extra space
 	new_max = 11U * new_max / 10U;
+	// make sure max is not 0 to avoid / 0
+	// default to 1 KiB
+	new_max = std::max(new_max, 1024U);
+
+	// decompose new_max = coef10 * 2**(base10 * 10)
+	// where coef10 and base10 are integers and coef10 < 2**10
+	//
+	// e.g: ceil(100.5 KiB) = 101 KiB = 101 * 2**(1 * 10)
+	//      where base10 = 1, coef10 = 101, pow2 = 16
 
 	unsigned pow2 = std::floor(log2(new_max));
-	unsigned pow10 = 3U * pow2 / 10U;
+	unsigned base10 = pow2 / 10;
+	unsigned coef10 = std::ceil(new_max / double(1UL << (base10 * 10)));
+	g_assert(new_max <= (coef10 * (1UL << (base10 * 10))));
 
-	unsigned coef10 = new_max / std::pow(10.0, double(pow10));
+	// then decompose coef10 = x * 10**factor10
+	// where factor10 is integer and x < 10
+	// so we new_max has only 1 significant digit
 
-	// make coef10 divisible by num_bars
+	unsigned factor10 = std::pow(10.0, std::floor(std::log10(coef10)));
+	coef10 = std::ceil(coef10 / double(factor10)) * factor10;
+
+	// then make coef10 divisible by num_bars
 	if (coef10 % g->num_bars() != 0)
 		coef10 = coef10 + (g->num_bars() - coef10 % g->num_bars());
-
 	g_assert(coef10 % g->num_bars() == 0);
 
-	procman_debug("new_max %u pow2 %u pow10 %u coef10 %u", new_max, pow2, pow10, coef10);
-	new_max = coef10 * std::pow(2.0, double(10U * pow10 / 3U));
+	new_max = coef10 * (1UL << (base10 * 10));
+	procman_debug("bak %u new_max %u pow2 %u coef10 %u", bak_max, new_max, pow2, coef10);
+	g_assert(bak_max <= new_max);
 
 	if (new_max == g->net.max)
 		return;
