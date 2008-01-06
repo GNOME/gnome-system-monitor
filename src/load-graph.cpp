@@ -204,7 +204,12 @@ void draw_background(LoadGraph *g) {
 		cairo_line_to (tmp_cr, (ceil(x) + 0.5) + g->rmargin + g->indent, real_draw_height + 4.5);
 		cairo_stroke(tmp_cr);
 		unsigned seconds = total_seconds - i * total_seconds / 6;
-		caption = g_strdup_printf((i == 0 ? _("%u seconds") : "%u"), seconds);
+		const char* format;
+		if (i == 0)
+			format = dngettext(GETTEXT_PACKAGE, "%u second", "%u seconds", seconds);
+		else
+			format = "%u";
+		caption = g_strdup_printf(format, seconds);
 		cairo_text_extents (tmp_cr, caption, &extents);
 		cairo_move_to (tmp_cr, ((ceil(x) + 0.5) + g->rmargin + g->indent) - (extents.width/2), g->draw_height);
 		cairo_set_source_rgba (tmp_cr, 0, 0, 0, 1);
