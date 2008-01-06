@@ -400,11 +400,34 @@ get_load (LoadGraph *g)
 }
 
 
+namespace
+{
+
+  void set_memory_label_and_picker(GtkLabel* label, GSMColorButton* picker,
+				   guint64 used, guint64 total, double percent)
+  {
+    char* used_text;
+    char* total_text;
+    char* text;
+
+    used_text = SI_gnome_vfs_format_file_size_for_display(used);
+    total_text = SI_gnome_vfs_format_file_size_for_display(total);
+    // xgettext: 540MiB (53 %) of 1.0 GiB
+    text = g_strdup_printf(_("%s (%.1f %%) of %s"), used_text, percent, total_text);
+    gtk_label_set_text(label, text);
+    g_free(used_text);
+    g_free(total_text);
+    g_free(text);
+
+    if (picker)
+      gsm_color_button_set_fraction(picker, percent);
+  }
+}
+
 static void
 get_memory (LoadGraph *g)
 {
 	float mempercent, swappercent;
-	gchar *text1, *text2, *text3;
 
 	glibtop_mem mem;
 	glibtop_swap swap;
@@ -416,29 +439,13 @@ get_memory (LoadGraph *g)
 	swappercent = (swap.total ? (float)swap.used / (float)swap.total : 0.0f);
 	mempercent  = (float)mem.user  / (float)mem.total;
 
-	text1 = SI_gnome_vfs_format_file_size_for_display (mem.total);
-	text2 = SI_gnome_vfs_format_file_size_for_display (mem.user);
-	text3 = g_strdup_printf ("%.1f %%", mempercent * 100.0f);
-	gtk_label_set_text (GTK_LABEL (g->labels.memused), text2);
-	gtk_label_set_text (GTK_LABEL (g->labels.memtotal), text1);
-	gtk_label_set_text (GTK_LABEL (g->labels.mempercent), text3);
-	if (g->mem_color_picker != NULL)
-		gsm_color_button_set_fraction(GSM_COLOR_BUTTON(g->mem_color_picker), mempercent);
-	g_free (text1);
-	g_free (text2);
-	g_free (text3);
+	set_memory_label_and_picker(GTK_LABEL(g->labels.memory),
+				    GSM_COLOR_BUTTON(g->mem_color_picker),
+				    mem.user, mem.total, mempercent);
 
-	text1 = SI_gnome_vfs_format_file_size_for_display (swap.total);
-	text2 = SI_gnome_vfs_format_file_size_for_display (swap.used);
-	text3 = g_strdup_printf ("%.1f %%", swappercent * 100.0f);
-	gtk_label_set_text (GTK_LABEL (g->labels.swapused), text2);
-	gtk_label_set_text (GTK_LABEL (g->labels.swaptotal), text1);
-	gtk_label_set_text (GTK_LABEL (g->labels.swappercent), text3);
-	if (g->swap_color_picker != NULL)
-		gsm_color_button_set_fraction(GSM_COLOR_BUTTON(g->swap_color_picker), swappercent);
-	g_free (text1);
-	g_free (text2);
-	g_free (text3);
+	set_memory_label_and_picker(GTK_LABEL(g->labels.swap),
+				    GSM_COLOR_BUTTON(g->swap_color_picker),
+				    swap.used, swap.total, swappercent);
 
 	g->data[0][0] = mempercent;
 	g->data[0][1] = swappercent;
@@ -727,12 +734,8 @@ load_graph_new (gint type, ProcData *procdata)
 
 	case LOAD_GRAPH_MEM:
 		g->n = 2;
-		g->labels.memused = gtk_label_new(NULL);
-		g->labels.memtotal = gtk_label_new(NULL);
-		g->labels.mempercent = gtk_label_new(NULL);
-		g->labels.swapused = gtk_label_new(NULL);
-		g->labels.swaptotal = gtk_label_new(NULL);
-		g->labels.swappercent = gtk_label_new(NULL);
+		g->labels.memory = gtk_label_new(NULL);
+		g->labels.swap = gtk_label_new(NULL);
 		break;
 
 	case LOAD_GRAPH_NET:

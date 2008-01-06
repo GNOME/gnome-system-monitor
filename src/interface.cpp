@@ -376,7 +376,7 @@ create_sys_view (ProcData *procdata)
 	gtk_table_attach (GTK_TABLE (table), label, 1, 7, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 	
 	gtk_table_attach (GTK_TABLE (table),
-			  load_graph_get_labels(mem_graph)->memused,
+			  load_graph_get_labels(mem_graph)->memory,
 			  1,
 			  2,
 			  1,
@@ -385,37 +385,6 @@ create_sys_view (ProcData *procdata)
 			  GTK_FILL,
 			  0,
 			  0);
-	// xgettext: user memory: 123 MiB of 512MiB
-	label = gtk_label_new (_("of"));
-	gtk_table_attach (GTK_TABLE (table), label, 5, 6, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
-	
-	gtk_table_attach (GTK_TABLE (table),
-			  load_graph_get_labels(mem_graph)->memtotal,
-			  6,
-			  7,
-			  1,
-			  2,
-			  GTK_FILL,
-			  GTK_FILL,
-			  0,
-			  0);
-	
-	gtk_table_attach (GTK_TABLE (table),
-			  load_graph_get_labels(mem_graph)->mempercent,
-			  3,
-			  4,
-			  1,
-			  2,
-			  GTK_FILL,
-			  GTK_FILL,
-			  0,
-			  0);
-
-	label = gtk_label_new (_("("));
-	gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
-
-	label = gtk_label_new (_(")"));
-	gtk_table_attach (GTK_TABLE (table), label, 4, 5, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 
 	table = gtk_table_new (2, 7, FALSE);
 	gtk_table_set_row_spacings (GTK_TABLE (table), 6);
@@ -433,7 +402,7 @@ create_sys_view (ProcData *procdata)
 	gtk_table_attach (GTK_TABLE (table), label, 1, 7, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 	
 	gtk_table_attach (GTK_TABLE (table),
-			  load_graph_get_labels(mem_graph)->swapused,
+			  load_graph_get_labels(mem_graph)->swap,
 			  1,
 			  2,
 			  1,
@@ -442,37 +411,6 @@ create_sys_view (ProcData *procdata)
 			  GTK_FILL,
 			  0,
 			  0);
-	// xgettext: swap: 10MiB of 1GiB
-	label = gtk_label_new (_("of"));
-	gtk_table_attach (GTK_TABLE (table), label, 5, 6, 1, 2, GTK_FILL, GTK_FILL, 0, 0);	
-
-	gtk_table_attach (GTK_TABLE (table),
-			  load_graph_get_labels(mem_graph)->swaptotal,
-			  6,
-			  7,
-			  1,
-			  2,
-			  GTK_FILL,
-			  GTK_FILL,
-			  0,
-			  0);
-
-	gtk_table_attach (GTK_TABLE (table),
-			  load_graph_get_labels(mem_graph)->swappercent,
-			  3,
-			  4,
-			  1,
-			  2,
-			  GTK_FILL,
-			  GTK_FILL,
-			  0,
-			  0);
-
-	label = gtk_label_new (_("("));
-	gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
-
-	label = gtk_label_new (_(")"));
-	gtk_table_attach (GTK_TABLE (table), label, 4, 5, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 
 	procdata->mem_graph = mem_graph;
 

@@ -20,12 +20,8 @@ enum
 struct _LoadGraphLabels
 {
 	GtkWidget *cpu[GLIBTOP_NCPU];
-	GtkWidget *memused;
-	GtkWidget *memtotal;
-	GtkWidget *mempercent;
-	GtkWidget *swapused;
-	GtkWidget *swaptotal;
-	GtkWidget *swappercent;
+	GtkWidget *memory;
+	GtkWidget *swap;
 	GtkWidget *net_in;
 	GtkWidget *net_in_total;
 	GtkWidget *net_out;
