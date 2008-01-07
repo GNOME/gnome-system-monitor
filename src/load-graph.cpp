@@ -418,7 +418,7 @@ namespace
     used_text = SI_gnome_vfs_format_file_size_for_display(used);
     total_text = SI_gnome_vfs_format_file_size_for_display(total);
     // xgettext: 540MiB (53 %) of 1.0 GiB
-    text = g_strdup_printf(_("%s (%.1f %%) of %s"), used_text, percent, total_text);
+    text = g_strdup_printf(_("%s (%.1f %%) of %s"), used_text, 100.0 * percent, total_text);
     gtk_label_set_text(label, text);
     g_free(used_text);
     g_free(total_text);
