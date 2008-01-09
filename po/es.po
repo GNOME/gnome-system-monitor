@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-04 21:34+0000\n"
-"PO-Revision-Date: 2008-01-04 22:35+0100\n"
+"POT-Creation-Date: 2008-01-06 22:08+0000\n"
+"PO-Revision-Date: 2008-01-09 19:52+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <<gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:156
-#: ../src/interface.cpp:696 ../src/procman.cpp:689
+#: ../src/interface.cpp:634 ../src/procman.cpp:689
 msgid "System Monitor"
 msgstr "Monitor del sistema"
 
@@ -68,7 +68,7 @@ msgstr "Disponible"
 msgid "Used"
 msgstr "Usada"
 
-#: ../src/disks.cpp:292 ../src/interface.cpp:772 ../src/procdialogs.cpp:680
+#: ../src/disks.cpp:292 ../src/interface.cpp:710 ../src/procdialogs.cpp:680
 #: ../src/procdialogs.cpp:684
 msgid "File Systems"
 msgstr "Sistemas de archivos"
@@ -546,60 +546,54 @@ msgstr "Histórico de memoria e intercambio"
 msgid "Memory"
 msgstr "Memoria"
 
-#. xgettext: user memory: 123 MiB of 512MiB
-#. xgettext: swap: 10MiB of 1GiB
-#: ../src/interface.cpp:389 ../src/interface.cpp:446
-msgid "of"
-msgstr "de"
-
-#: ../src/interface.cpp:414 ../src/interface.cpp:471
-msgid "("
-msgstr "("
-
-#: ../src/interface.cpp:417 ../src/interface.cpp:474
-msgid ")"
-msgstr ")"
-
-#: ../src/interface.cpp:431
+#: ../src/interface.cpp:400
 msgid "Swap"
 msgstr "Intercambio"
 
-#: ../src/interface.cpp:483
+#: ../src/interface.cpp:421
 msgid "Network History"
 msgstr "Histórico de la red"
 
-#: ../src/interface.cpp:522
+#: ../src/interface.cpp:460
 msgid "Receiving"
 msgstr "Recibiendo"
 
-#: ../src/interface.cpp:543
+#: ../src/interface.cpp:481
 msgid "Total Received"
 msgstr "Total recibidos:"
 
-#: ../src/interface.cpp:577
+#: ../src/interface.cpp:515
 msgid "Sending"
 msgstr "Enviando"
 
-#: ../src/interface.cpp:599
+#: ../src/interface.cpp:537
 msgid "Total Sent"
 msgstr "Total enviados"
 
-#: ../src/interface.cpp:760
+#: ../src/interface.cpp:698
 msgid "System"
 msgstr "Sistema"
 
-#: ../src/interface.cpp:764 ../src/procdialogs.cpp:512
+#: ../src/interface.cpp:702 ../src/procdialogs.cpp:512
 msgid "Processes"
 msgstr "Procesos"
 
-#: ../src/interface.cpp:768 ../src/procdialogs.cpp:627
+#: ../src/interface.cpp:706 ../src/procdialogs.cpp:627
 msgid "Resources"
 msgstr "Recursos"
 
-#: ../src/load-graph.cpp:207
+#: ../src/load-graph.cpp:209
 #, c-format
-msgid "%u seconds"
-msgstr "%u segundos"
+msgid "%u second"
+msgid_plural "%u seconds"
+msgstr[0] "%u segundo"
+msgstr[1] "%u segundos"
+
+#. xgettext: 540MiB (53 %) of 1.0 GiB
+#: ../src/load-graph.cpp:421
+#, c-format
+msgid "%s (%.1f %%) of %s"
+msgstr "%s (%.1f %%) de %s"
 
 #: ../src/lsof.cpp:355
 msgid "Process"
