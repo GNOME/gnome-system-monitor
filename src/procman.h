@@ -180,6 +180,7 @@ struct ProcData
 	GtkWidget	*endprocessbutton;
 	GtkWidget	*popup_menu;
 	GtkWidget	*disk_list;
+	GtkWidget	*notebook;
 	ProcConfig	config;
 	LoadGraph	*cpu_graph;
 	LoadGraph	*mem_graph;

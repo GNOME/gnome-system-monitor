@@ -60,7 +60,6 @@ struct LoadGraph {
 	guint graph_buffer_offset;
 
 	GdkColor *colors;
-	GtkWidget *notebook;
 
 	gfloat* data_block;
 	gfloat* data[NUM_POINTS];
@@ -153,7 +152,7 @@ void draw_background(LoadGraph *g) {
 	tmp_cr = cairo_create (g->background_buffer);
 
 	// set the background colour
-	GtkStyle *style = gtk_widget_get_style (g->notebook);
+	GtkStyle *style = gtk_widget_get_style (ProcData::get_instance()->notebook);
 	gdk_cairo_set_source_color (tmp_cr, &style->bg[GTK_STATE_NORMAL]);
 	cairo_paint (tmp_cr);
 
@@ -810,21 +809,6 @@ load_graph_new (gint type, ProcData *procdata)
 
 	gtk_widget_show_all (g->main_widget);
 
-        /* GtkStyle gives us the theme background color, we also have
-         * to trawl through parent widgets to get to GtkNotebook
-         * *sigh*
-         */
-        g->notebook = g->main_widget;
-        while (g_ascii_strncasecmp(gtk_widget_get_name(g->notebook),
-                                   "GtkNotebook", 12)) {
-                g->notebook = gtk_widget_get_parent(g->notebook);
-                if (g->notebook == NULL) {
-                        // Fall back to using the main_widget for styles
-                        g->notebook = g->main_widget;
-                        break;
-                }
-        }
-        
 	load_graph_start(g);
 	load_graph_stop(g);
 	

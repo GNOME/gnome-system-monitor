@@ -687,7 +687,7 @@ create_main_window (ProcData *procdata)
 
 
 	/* create the main notebook */
-	notebook = gtk_notebook_new ();
+	procdata->notebook = notebook = gtk_notebook_new ();
   	gtk_box_pack_start (GTK_BOX (main_box), 
 	                    notebook, 
 	                    TRUE, 
