@@ -309,7 +309,10 @@ load_graph_configure (GtkWidget *widget,
 	g->draw_width = widget->allocation.width - 2 * FRAME_WIDTH;
 	g->draw_height = widget->allocation.height - 2 * FRAME_WIDTH;
 
-	g->frames_per_unit = g->draw_width/(NUM_POINTS);
+	// FIXME:
+	// g->frames_per_unit = g->draw_width/(NUM_POINTS);
+	// knock FRAMES down to 5 until cairo gets faster
+	g->frames_per_unit = 5;
 
 	if(g->timer_index) {
 		g_source_remove (g->timer_index);
