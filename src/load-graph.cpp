@@ -178,7 +178,7 @@ void draw_background(LoadGraph *g) {
 		  y = i * g->graph_dely + 0.5;
 		else
 		  y = i * g->graph_dely + g->fontsize / 2.0;
-		cairo_set_source_rgba (tmp_cr, 0, 0, 0, 1);
+		gdk_cairo_set_source_color (tmp_cr, &style->fg[GTK_STATE_NORMAL]);
 		if (g->type == LOAD_GRAPH_NET) {
 			// operation orders matters so it's 0 if i == num_bars
 			unsigned rate = g->net.max - (i * g->net.max / num_bars);
@@ -220,7 +220,7 @@ void draw_background(LoadGraph *g) {
 		caption = g_strdup_printf(format, seconds);
 		cairo_text_extents (tmp_cr, caption, &extents);
 		cairo_move_to (tmp_cr, ((ceil(x) + 0.5) + g->rmargin + g->indent) - (extents.width/2), g->draw_height);
-		cairo_set_source_rgba (tmp_cr, 0, 0, 0, 1);
+		gdk_cairo_set_source_color (tmp_cr, &style->fg[GTK_STATE_NORMAL]);
 		cairo_show_text (tmp_cr, caption);
 		g_free (caption);
 	}
