@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-02 20:04+0100\n"
-"PO-Revision-Date: 2008-01-02 20:05+0100\n"
+"POT-Creation-Date: 2008-01-14 19:02+0100\n"
+"PO-Revision-Date: 2008-01-14 19:04+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: ../gnome-system-monitor.desktop.in.in.h:1
 #: ../src/callbacks.cpp:156
-#: ../src/interface.cpp:691
+#: ../src/interface.cpp:634
 #: ../src/procman.cpp:689
 msgid "System Monitor"
 msgstr "Systemövervakare"
@@ -47,6 +47,7 @@ msgid "Directory"
 msgstr "Katalog"
 
 #: ../src/disks.cpp:281
+#: ../src/gsm_color_button.c:211
 #: ../src/openfiles.cpp:235
 msgid "Type"
 msgstr "Typ"
@@ -68,7 +69,7 @@ msgid "Used"
 msgstr "Använt"
 
 #: ../src/disks.cpp:292
-#: ../src/interface.cpp:767
+#: ../src/interface.cpp:710
 #: ../src/procdialogs.cpp:680
 #: ../src/procdialogs.cpp:684
 msgid "File Systems"
@@ -325,6 +326,43 @@ msgstr "Bredd på processkolumnen \"virtuellt minne\""
 msgid "Width of process 'writable memory' column"
 msgstr "Bredd på processkolumnen \"skrivbart minne\""
 
+#: ../src/gsm_color_button.c:188
+msgid "Fraction"
+msgstr "Del"
+
+#: ../src/gsm_color_button.c:189
+msgid "Percentage full for pie colour pickers"
+msgstr "Procentandel full för pajfärgväljare"
+
+#: ../src/gsm_color_button.c:196
+msgid "Title"
+msgstr "Titel"
+
+#: ../src/gsm_color_button.c:197
+msgid "The title of the color selection dialog"
+msgstr "Titeln på färgväljardialogen"
+
+#: ../src/gsm_color_button.c:198
+#: ../src/gsm_color_button.c:598
+msgid "Pick a Color"
+msgstr "Välj en färg"
+
+#: ../src/gsm_color_button.c:204
+msgid "Current Color"
+msgstr "Aktuell färg"
+
+#: ../src/gsm_color_button.c:205
+msgid "The selected color"
+msgstr "Den valda färgen"
+
+#: ../src/gsm_color_button.c:212
+msgid "Type of color picker"
+msgstr "Typ av färgväljare"
+
+#: ../src/gsm_color_button.c:518
+msgid "Received invalid color data\n"
+msgstr "Tog emot ogiltigt färgdata\n"
+
 #. xgettext: noun, top level menu.
 #. "File" did not make sense for system-monitor
 #: ../src/interface.cpp:50
@@ -402,158 +440,149 @@ msgid "Configure the application"
 msgstr "Konfigurera programmet"
 
 #: ../src/interface.cpp:75
+msgid "_Refresh"
+msgstr "_Uppdatera"
+
+#: ../src/interface.cpp:76
+msgid "Refresh the process list"
+msgstr "Uppdatera processlistan"
+
+#: ../src/interface.cpp:78
 msgid "_Memory Maps"
 msgstr "_Minneskartor"
 
-#: ../src/interface.cpp:76
+#: ../src/interface.cpp:79
 msgid "Open the memory maps associated with a process"
 msgstr "Öppna minneskartorna som är associerade med en process"
 
-#: ../src/interface.cpp:77
+#: ../src/interface.cpp:80
 msgid "Open _Files"
 msgstr "Öppna _filer"
 
-#: ../src/interface.cpp:78
+#: ../src/interface.cpp:81
 msgid "View the files opened by a process"
 msgstr "Visa de filer som öppnats av en process"
 
-#: ../src/interface.cpp:80
+#: ../src/interface.cpp:83
 msgid "_Contents"
 msgstr "_Innehåll"
 
-#: ../src/interface.cpp:81
+#: ../src/interface.cpp:84
 msgid "Open the manual"
 msgstr "Öppna manualen"
 
-#: ../src/interface.cpp:83
+#: ../src/interface.cpp:86
 msgid "About this application"
 msgstr "Om detta program"
 
-#: ../src/interface.cpp:88
+#: ../src/interface.cpp:91
 msgid "_Dependencies"
 msgstr "_Beroenden"
 
-#: ../src/interface.cpp:89
+#: ../src/interface.cpp:92
 msgid "Show parent/child relationship between processes"
 msgstr "Visa förälder-/barnrelationer mellan processer"
 
-#: ../src/interface.cpp:96
+#: ../src/interface.cpp:99
 msgid "_Active Processes"
 msgstr "_Aktiva processer"
 
-#: ../src/interface.cpp:97
+#: ../src/interface.cpp:100
 msgid "Show active processes"
 msgstr "Visa aktiva processer"
 
-#: ../src/interface.cpp:98
+#: ../src/interface.cpp:101
 msgid "A_ll Processes"
 msgstr "A_lla processer"
 
-#: ../src/interface.cpp:99
+#: ../src/interface.cpp:102
 msgid "Show all processes"
 msgstr "Visa alla processer"
 
-#: ../src/interface.cpp:100
+#: ../src/interface.cpp:103
 msgid "M_y Processes"
 msgstr "_Mina processer"
 
-#: ../src/interface.cpp:101
+#: ../src/interface.cpp:104
 msgid "Show user own process"
 msgstr "Visa användarens egna processer"
 
-#: ../src/interface.cpp:184
+#: ../src/interface.cpp:189
 msgid "End _Process"
 msgstr "Avsluta _process"
 
-#: ../src/interface.cpp:252
+#: ../src/interface.cpp:257
 msgid "CPU History"
 msgstr "Processorhistorik"
 
-#: ../src/interface.cpp:310
+#: ../src/interface.cpp:315
 msgid "CPU"
 msgstr "Processor"
 
-#: ../src/interface.cpp:312
+#: ../src/interface.cpp:317
 #, c-format
 msgid "CPU%d"
 msgstr "Processor%d"
 
-#: ../src/interface.cpp:330
+#: ../src/interface.cpp:335
 msgid "Memory and Swap History"
 msgstr "Historik över användning av minne och växlingsutrymme"
 
-#: ../src/interface.cpp:369
+#: ../src/interface.cpp:374
 #: ../src/proctable.cpp:224
 msgid "Memory"
 msgstr "Minne"
 
-#. xgettext: user memory: 123 MiB of 512MiB
-#. xgettext: swap: 10MiB of 1GiB
-#: ../src/interface.cpp:384
-#: ../src/interface.cpp:441
-msgid "of"
-msgstr "av"
+#: ../src/interface.cpp:400
+msgid "Swap"
+msgstr "Växlingsutrymme"
 
-#: ../src/interface.cpp:409
-#: ../src/interface.cpp:466
-msgid "("
-msgstr "("
-
-#: ../src/interface.cpp:412
-#: ../src/interface.cpp:469
-msgid ")"
-msgstr ")"
-
-#: ../src/interface.cpp:426
-#: ../src/proctable.cpp:212
-msgid "Virtual Memory"
-msgstr "Virtuellt minne"
-
-#: ../src/interface.cpp:478
+#: ../src/interface.cpp:421
 msgid "Network History"
 msgstr "Nätverkshistorik"
 
-#: ../src/interface.cpp:517
+#: ../src/interface.cpp:460
 msgid "Receiving"
 msgstr "Mottaget"
 
-#: ../src/interface.cpp:538
+#: ../src/interface.cpp:481
 msgid "Total Received"
 msgstr "Totalt mottaget"
 
-#: ../src/interface.cpp:572
+#: ../src/interface.cpp:515
 msgid "Sending"
 msgstr "Sänt"
 
-#: ../src/interface.cpp:594
+#: ../src/interface.cpp:537
 msgid "Total Sent"
 msgstr "Totalt sänt"
 
-#: ../src/interface.cpp:755
+#: ../src/interface.cpp:698
 msgid "System"
 msgstr "System"
 
-#: ../src/interface.cpp:759
+#: ../src/interface.cpp:702
 #: ../src/procdialogs.cpp:512
 msgid "Processes"
 msgstr "Processer"
 
-#: ../src/interface.cpp:763
+#: ../src/interface.cpp:706
 #: ../src/procdialogs.cpp:627
 msgid "Resources"
 msgstr "Resurser"
 
-#: ../src/load-graph.cpp:206
+#: ../src/load-graph.cpp:217
 #, c-format
-msgid "seconds"
-msgstr "sekunder"
+msgid "%u second"
+msgid_plural "%u seconds"
+msgstr[0] "%u sekund"
+msgstr[1] "%u sekunder"
 
-#. xgettext: rate, 10MiB/s
-#: ../src/load-graph.cpp:581
-#: ../src/load-graph.cpp:592
+#. xgettext: 540MiB (53 %) of 1.0 GiB
+#: ../src/load-graph.cpp:427
 #, c-format
-msgid "%s/s"
-msgstr "%s/s"
+msgid "%s (%.1f %%) of %s"
+msgstr "%s (%.1f %%) av %s"
 
 #: ../src/lsof.cpp:355
 msgid "Process"
@@ -823,6 +852,10 @@ msgstr "Användare"
 msgid "Status"
 msgstr "Status"
 
+#: ../src/proctable.cpp:212
+msgid "Virtual Memory"
+msgstr "Virtuellt minne"
+
 #: ../src/proctable.cpp:213
 msgid "Resident Memory"
 msgstr "Beständigt minne"
@@ -868,7 +901,7 @@ msgstr "Säkerhetskontext"
 msgid "Command Line"
 msgstr "Kommandorad"
 
-#: ../src/proctable.cpp:924
+#: ../src/proctable.cpp:926
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Belastningsgenomsnitt för de senaste 1, 5, 15 minuterna: %0.2f, %0.2f, %0.2f"
@@ -996,6 +1029,18 @@ msgstr "%.1f GiB"
 msgid "<i>N/A</i>"
 msgstr "<i>-</i>"
 
+#. xgettext: rate, 10MiB/s
+#: ../src/util.cpp:463
+#, c-format
+msgid "%s/s"
+msgstr "%s/s"
+
+#~ msgid "of"
+#~ msgstr "av"
+#~ msgid "("
+#~ msgstr "("
+#~ msgid ")"
+#~ msgstr ")"
 #~ msgid "Default graph background color"
 #~ msgstr "Bakgrundsfärg för standardgraf"
 #~ msgid "Default graph frame color"
@@ -1058,8 +1103,6 @@ msgstr "<i>-</i>"
 #~ msgstr "Visa varningsdialog då processer döljs"
 #~ msgid "_Hide Process"
 #~ msgstr "_Dölj process"
-#~ msgid "Hide process from list"
-#~ msgstr "Dölj process från lista"
 #~ msgid "_Hidden Processes"
 #~ msgstr "_Dolda processer"
 #~ msgid "Open the list of currently hidden processes"
