@@ -226,6 +226,36 @@ gsm_color_button_class_init (GSMColorButtonClass * klass)
   g_type_class_add_private (gobject_class, sizeof (GSMColorButtonPrivate));
 }
 
+
+static cairo_surface_t *
+fill_image_buffer_from_file (cairo_t *cr, const char *filePath)
+{
+  GError *error = NULL;
+  RsvgHandle *handle;
+  cairo_surface_t *tmp_surface;
+  cairo_t *tmp_cr;
+
+  handle = rsvg_handle_new_from_file (filePath, &error);
+
+  if (handle == NULL) {
+    g_warning("rsvg_handle_new_from_file(\"%s\") failed: %s",
+	      filePath, (error ? error->message : "unknown error"));
+    if (error)
+      g_error_free(error);
+    return NULL;
+  }
+
+  tmp_surface = cairo_surface_create_similar (cairo_get_target (cr),
+					      CAIRO_CONTENT_COLOR_ALPHA,
+					      32, 32);
+  tmp_cr = cairo_create (tmp_surface);
+  rsvg_handle_render_cairo (handle, tmp_cr);
+  cairo_destroy (tmp_cr);
+  rsvg_handle_free (handle);
+  return tmp_surface;
+}
+
+
 static void
 render (GtkWidget * widget)
 {
@@ -236,8 +266,6 @@ render (GtkWidget * widget)
   cairo_path_t *path = NULL;
   gint width, height;
   gdouble radius, arc_start, arc_end;
-  RsvgHandle *handle;
-  GError *error = NULL;
   gint highlight_factor;
 
   if (color_button->priv->highlight > 0) {
@@ -338,21 +366,9 @@ render (GtkWidget * widget)
 
       break;
     case GSMCP_TYPE_NETWORK_IN:
-      /* Fill the image buffer */
       if (color_button->priv->image_buffer == NULL)
-	{
-	  handle = rsvg_handle_new_from_file (DATADIR "/pixmaps/gnome-system-monitor/download.svg", &error);
-	  cairo_surface_t *tmp_surface;
-	  cairo_t *tmp_cr;
-	  tmp_surface = cairo_surface_create_similar (cairo_get_target (cr),
-						      CAIRO_CONTENT_COLOR_ALPHA,
-						      32, 32);
-	  tmp_cr = cairo_create (tmp_surface);
-	  rsvg_handle_render_cairo (handle, tmp_cr);
-	  cairo_destroy (tmp_cr);
-	  rsvg_handle_free (handle);
-	  color_button->priv->image_buffer = tmp_surface;
-	}
+	color_button->priv->image_buffer =
+	  fill_image_buffer_from_file (cr, DATADIR "/pixmaps/gnome-system-monitor/download.svg");
       gtk_widget_set_size_request (widget, 32, 32);
       cairo_move_to (cr, 8.5, 1.5);
       cairo_line_to (cr, 23.5, 1.5);
@@ -381,21 +397,9 @@ render (GtkWidget * widget)
 
       break;
     case GSMCP_TYPE_NETWORK_OUT:
-      /* Fill the image buffer */
       if (color_button->priv->image_buffer == NULL)
-	{
-	  handle = rsvg_handle_new_from_file (DATADIR "/pixmaps/gnome-system-monitor/upload.svg", &error);
-	  cairo_surface_t *tmp_surface;
-	  cairo_t *tmp_cr;
-	  tmp_surface = cairo_surface_create_similar (cairo_get_target (cr),
-						      CAIRO_CONTENT_COLOR_ALPHA,
-						      32, 32);
-	  tmp_cr = cairo_create (tmp_surface);
-	  rsvg_handle_render_cairo (handle, tmp_cr);
-	  cairo_destroy (tmp_cr);
-	  rsvg_handle_free (handle);
-	  color_button->priv->image_buffer = tmp_surface;
-	}
+	color_button->priv->image_buffer =
+	  fill_image_buffer_from_file (cr, DATADIR "/pixmaps/gnome-system-monitor/upload.svg");
       gtk_widget_set_size_request (widget, 32, 32);
       cairo_move_to (cr, 16.5, 1.5);
       cairo_line_to (cr, 29.5, 17.5);
