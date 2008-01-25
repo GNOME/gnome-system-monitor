@@ -16,7 +16,7 @@ procman::IconThemeWrapper::load_icon(const Glib::ustring& icon_name,
   catch (Gtk::IconThemeError &error)
     {
       if (error.code() != Gtk::IconThemeError::ICON_THEME_NOT_FOUND)
-	throw;
+	g_error("Cannot load icon '%s' from theme: %s", icon_name.c_str(), error.what().c_str());
       return Glib::RefPtr<Gdk::Pixbuf>();
     }
 }
