@@ -119,7 +119,7 @@ PrettyTable::get_icon_from_theme(const ProcInfo &info)
 bool PrettyTable::get_default_icon_name(const string &cmd, string &name)
 {
   for (size_t i = 0; i != G_N_ELEMENTS(default_table); ++i) {
-    if (default_table[i].command->FullMatch(cmd)) {
+    if (default_table[i].command->match(cmd)) {
       name = default_table[i].icon;
       return true;
     }

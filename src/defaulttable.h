@@ -2,17 +2,22 @@
 #define _PROCMAN_DEFAULTTABLE_H_
 
 #include <string>
-#include "regex.h"
+#include <glibmm.h>
 
 /* This file contains prettynames and icons for well-known applications, that by default has no .desktop entry */
 
 struct PrettyTableItem
 {
-  pcrecpp::RE* command;
+  Glib::RefPtr<Glib::Regex> command;
   std::string icon;
+
+  PrettyTableItem(const std::string& a_command, const std::string& a_icon)
+  : command(Glib::Regex::create("^(" + a_command + ")$")),
+    icon(a_icon)
+  { }
 };
 
-#define ITEM(CMD, ICON) { new pcrecpp::RE((CMD)), (ICON) }
+#define ITEM PrettyTableItem
 
 /* The current table is only a test */
 static const PrettyTableItem default_table[] = {
