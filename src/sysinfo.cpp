@@ -1,6 +1,7 @@
 #include <config.h>
 
 #include <glib.h>
+#include <glibmm.h>
 #include <glib/gi18n.h>
 
 #include <libxml/parser.h>
@@ -18,8 +19,6 @@
 #include <sys/wait.h>
 #include <math.h>
 #include <errno.h>
-
-#include "regex.h"
 
 #include <string>
 #include <vector>
@@ -196,7 +195,7 @@ namespace {
   {
   public:
     LSBSysInfo()
-      : re("^.+?:\\s*(.+)\\s*$")
+      : re(Glib::Regex::create("^.+?:\\s*(.+)\\s*$"))
     {
       this->lsb_release();
     }
@@ -205,8 +204,13 @@ namespace {
 
     void strip_description(string &s) const
     {
-      // make a copy to avoid aliasing
-      this->re.PartialMatch(string(s), &s);
+      const GRegexMatchFlags flags = static_cast<GRegexMatchFlags>(0);
+      GMatchInfo* info = 0;
+
+      if (g_regex_match(this->re->gobj(), s.c_str(), flags, &info)) {
+	s = make_string(g_match_info_fetch(info, 1));
+	g_match_info_free(info);
+      }
     }
 
     std::istream& get_value(std::istream &is, string &s) const
@@ -246,7 +250,7 @@ namespace {
     }
 
   private:
-    const pcrecpp::RE re;
+    Glib::RefPtr<Glib::Regex> re;
   };
 
 
