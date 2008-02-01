@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-31 18:20+0000\n"
-"PO-Revision-Date: 2008-01-03 09:08+0200\n"
+"POT-Creation-Date: 2008-01-07 11:08+0000\n"
+"PO-Revision-Date: 2008-01-29 20:12+0200\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:156
-#: ../src/interface.cpp:691 ../src/procman.cpp:689
+#: ../src/interface.cpp:634 ../src/procman.cpp:689
 msgid "System Monitor"
 msgstr "Süsteemijälgija"
 
@@ -45,7 +45,7 @@ msgstr "Seade"
 msgid "Directory"
 msgstr "Kataloog"
 
-#: ../src/disks.cpp:281 ../src/openfiles.cpp:235
+#: ../src/disks.cpp:281 ../src/gsm_color_button.c:211 ../src/openfiles.cpp:235
 msgid "Type"
 msgstr "Liik"
 
@@ -65,7 +65,7 @@ msgstr "Saadaval"
 msgid "Used"
 msgstr "Kasutuses"
 
-#: ../src/disks.cpp:292 ../src/interface.cpp:767 ../src/procdialogs.cpp:680
+#: ../src/disks.cpp:292 ../src/interface.cpp:710 ../src/procdialogs.cpp:680
 #: ../src/procdialogs.cpp:684
 msgid "File Systems"
 msgstr "Failisüsteemid"
@@ -341,6 +341,42 @@ msgstr "Protsessi virtuaalmälu veeru laius"
 msgid "Width of process 'writable memory' column"
 msgstr "Protsessi kirjutatava mälu veeru laius"
 
+#: ../src/gsm_color_button.c:188
+msgid "Fraction"
+msgstr ""
+
+#: ../src/gsm_color_button.c:189
+msgid "Percentage full for pie colour pickers"
+msgstr ""
+
+#: ../src/gsm_color_button.c:196
+msgid "Title"
+msgstr "Pealkiri"
+
+#: ../src/gsm_color_button.c:197
+msgid "The title of the color selection dialog"
+msgstr "Värvuse valimise dialoogi pealkiri"
+
+#: ../src/gsm_color_button.c:198 ../src/gsm_color_button.c:598
+msgid "Pick a Color"
+msgstr ""
+
+#: ../src/gsm_color_button.c:204
+msgid "Current Color"
+msgstr ""
+
+#: ../src/gsm_color_button.c:205
+msgid "The selected color"
+msgstr "Valitud värvus"
+
+#: ../src/gsm_color_button.c:212
+msgid "Type of color picker"
+msgstr ""
+
+#: ../src/gsm_color_button.c:518
+msgid "Received invalid color data\n"
+msgstr "Võeti vastu vigased värvuse andmed\n"
+
 #. xgettext: noun, top level menu.
 #. "File" did not make sense for system-monitor
 #: ../src/interface.cpp:50
@@ -416,149 +452,146 @@ msgid "Configure the application"
 msgstr "Rakenduse seadistamine"
 
 #: ../src/interface.cpp:75
+msgid "_Refresh"
+msgstr "_Värskenda"
+
+#: ../src/interface.cpp:76
+msgid "Refresh the process list"
+msgstr "Protsessinimekirja värskendamine"
+
+#: ../src/interface.cpp:78
 msgid "_Memory Maps"
 msgstr "_Mäluplaan"
 
-#: ../src/interface.cpp:76
+#: ../src/interface.cpp:79
 msgid "Open the memory maps associated with a process"
 msgstr "Protsessiga seotud mäluplaani avamine"
 
-#: ../src/interface.cpp:77
+#: ../src/interface.cpp:80
 msgid "Open _Files"
 msgstr "Avatud _failid"
 
-#: ../src/interface.cpp:78
+#: ../src/interface.cpp:81
 msgid "View the files opened by a process"
 msgstr "Protsessi poolt avatud failide vaatamine"
 
-#: ../src/interface.cpp:80
+#: ../src/interface.cpp:83
 msgid "_Contents"
 msgstr "_Sisukord"
 
-#: ../src/interface.cpp:81
+#: ../src/interface.cpp:84
 msgid "Open the manual"
 msgstr "Käsiraamatu avamine"
 
-#: ../src/interface.cpp:83
+#: ../src/interface.cpp:86
 msgid "About this application"
 msgstr "Teave programmi kohta"
 
-#: ../src/interface.cpp:88
+#: ../src/interface.cpp:91
 msgid "_Dependencies"
 msgstr "Näita _sõltuvusi"
 
-#: ../src/interface.cpp:89
+#: ../src/interface.cpp:92
 msgid "Show parent/child relationship between processes"
 msgstr "Vanem- ja lapsprotsesside näitamine koos nendevaheliste seostega"
 
-#: ../src/interface.cpp:96
+#: ../src/interface.cpp:99
 msgid "_Active Processes"
 msgstr "_Aktiivsed protsessid"
 
-#: ../src/interface.cpp:97
+#: ../src/interface.cpp:100
 msgid "Show active processes"
 msgstr "Kuva ainult aktiivseid protsesse"
 
-#: ../src/interface.cpp:98
+#: ../src/interface.cpp:101
 msgid "A_ll Processes"
 msgstr "_Kõik protsessid"
 
-#: ../src/interface.cpp:99
+#: ../src/interface.cpp:102
 msgid "Show all processes"
 msgstr "Kuva kõiki protsesse"
 
-#: ../src/interface.cpp:100
+#: ../src/interface.cpp:103
 msgid "M_y Processes"
 msgstr "_Minu protsessid"
 
-#: ../src/interface.cpp:101
+#: ../src/interface.cpp:104
 msgid "Show user own process"
 msgstr "Kuva ainult kasutaja enda protsesse"
 
-#: ../src/interface.cpp:184
+#: ../src/interface.cpp:189
 msgid "End _Process"
 msgstr "_Lõpeta protsess"
 
-#: ../src/interface.cpp:252
+#: ../src/interface.cpp:257
 msgid "CPU History"
 msgstr "Protsessori koormuse ajalugu"
 
-#: ../src/interface.cpp:310
+#: ../src/interface.cpp:315
 msgid "CPU"
 msgstr "Protsessor"
 
-#: ../src/interface.cpp:312
+#: ../src/interface.cpp:317
 #, c-format
 msgid "CPU%d"
 msgstr "Protsessor%d"
 
-#: ../src/interface.cpp:330
+#: ../src/interface.cpp:335
 msgid "Memory and Swap History"
 msgstr "Mälu ja saaleala kasutuse ajalugu"
 
-#: ../src/interface.cpp:369 ../src/proctable.cpp:224
+#: ../src/interface.cpp:374 ../src/proctable.cpp:224
 msgid "Memory"
 msgstr "Mälu"
 
-#. xgettext: user memory: 123 MiB of 512MiB
-#. xgettext: swap: 10MiB of 1GiB
-#: ../src/interface.cpp:384 ../src/interface.cpp:441
-msgid "of"
-msgstr "/"
+#: ../src/interface.cpp:400
+msgid "Swap"
+msgstr "Saaleala"
 
-#: ../src/interface.cpp:409 ../src/interface.cpp:466
-msgid "("
-msgstr "("
-
-#: ../src/interface.cpp:412 ../src/interface.cpp:469
-msgid ")"
-msgstr ")"
-
-#: ../src/interface.cpp:426 ../src/proctable.cpp:212
-msgid "Virtual Memory"
-msgstr "Virtuaalmälu"
-
-#: ../src/interface.cpp:478
+#: ../src/interface.cpp:421
 msgid "Network History"
 msgstr "Võrguliikluse ajalugu"
 
-#: ../src/interface.cpp:517
+#: ../src/interface.cpp:460
 msgid "Receiving"
 msgstr "Vastuvõtmine"
 
-#: ../src/interface.cpp:538
+#: ../src/interface.cpp:481
 msgid "Total Received"
 msgstr "Kokku vastu võetud"
 
-#: ../src/interface.cpp:572
+#: ../src/interface.cpp:515
 msgid "Sending"
 msgstr "Saatmine"
 
-#: ../src/interface.cpp:594
+#: ../src/interface.cpp:537
 msgid "Total Sent"
 msgstr "Kokku saadetud"
 
-#: ../src/interface.cpp:755
+#: ../src/interface.cpp:698
 msgid "System"
 msgstr "Süsteem"
 
-#: ../src/interface.cpp:759 ../src/procdialogs.cpp:512
+#: ../src/interface.cpp:702 ../src/procdialogs.cpp:512
 msgid "Processes"
 msgstr "Protsessid"
 
-#: ../src/interface.cpp:763 ../src/procdialogs.cpp:627
+#: ../src/interface.cpp:706 ../src/procdialogs.cpp:627
 msgid "Resources"
 msgstr "Vahendid"
 
-#: ../src/load-graph.cpp:206
-msgid "seconds"
-msgstr "sekundit"
-
-#. xgettext: rate, 10MiB/s
-#: ../src/load-graph.cpp:581 ../src/load-graph.cpp:592
+#: ../src/load-graph.cpp:209
 #, c-format
-msgid "%s/s"
-msgstr "%s/s"
+msgid "%u second"
+msgid_plural "%u seconds"
+msgstr[0] "%u sekund"
+msgstr[1] "%u sekundit"
+
+#. xgettext: 540MiB (53 %) of 1.0 GiB
+#: ../src/load-graph.cpp:421
+#, c-format
+msgid "%s (%.1f %%) of %s"
+msgstr "%s (%.1f %%) %s-st"
 
 #: ../src/lsof.cpp:355
 msgid "Process"
@@ -839,6 +872,10 @@ msgstr "Kasutaja"
 msgid "Status"
 msgstr "Olek"
 
+#: ../src/proctable.cpp:212
+msgid "Virtual Memory"
+msgstr "Virtuaalmälu"
+
 #: ../src/proctable.cpp:213
 msgid "Resident Memory"
 msgstr "Residentne mälu"
@@ -884,7 +921,7 @@ msgstr "Turvakontekst"
 msgid "Command Line"
 msgstr "Käsurida"
 
-#: ../src/proctable.cpp:924
+#: ../src/proctable.cpp:926
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Koormuse näit viimase 1, 5 ja 15 minuti kohta: %0.2f, %0.2f, %0.2f"
@@ -1005,6 +1042,21 @@ msgstr "%.1f GiB"
 #: ../src/util.cpp:346
 msgid "<i>N/A</i>"
 msgstr ""
+
+#. xgettext: rate, 10MiB/s
+#: ../src/util.cpp:463
+#, c-format
+msgid "%s/s"
+msgstr "%s/s"
+
+#~ msgid "of"
+#~ msgstr "/"
+
+#~ msgid "("
+#~ msgstr "("
+
+#~ msgid ")"
+#~ msgstr ")"
 
 #~ msgid "Default graph background color"
 #~ msgstr "Graafiku tausta vaikimisi värv"
