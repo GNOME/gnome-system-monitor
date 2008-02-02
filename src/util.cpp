@@ -153,18 +153,21 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
  **/
 
 gchar*
-SI_gnome_vfs_format_file_size_for_display (GnomeVFSFileSize size)
+SI_gnome_vfs_format_file_size_for_display (GnomeVFSFileSize size, GnomeVFSFileSize max_size)
 {
-	if (size < (GnomeVFSFileSize) KIBIBYTE_FACTOR) {
+	if (max_size == 0)
+		max_size = size;
+
+	if (max_size < (GnomeVFSFileSize) KIBIBYTE_FACTOR) {
 		return g_strdup_printf (dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes",(guint) size), (guint) size);
 	} else {
 		guint factor;
 		const char* format;
 
-		if (size < (GnomeVFSFileSize) MEBIBYTE_FACTOR) {
+		if (max_size < (GnomeVFSFileSize) MEBIBYTE_FACTOR) {
 		  factor = KIBIBYTE_FACTOR;
 		  format = N_("%.1f KiB");
-		} else if (size < (GnomeVFSFileSize) GIBIBYTE_FACTOR) {
+		} else if (max_size < (GnomeVFSFileSize) GIBIBYTE_FACTOR) {
 		  factor = MEBIBYTE_FACTOR;
 		  format = N_("%.1f MiB");
 		} else {
@@ -456,9 +459,9 @@ namespace procman
 
 
 
-  std::string format_rate(GnomeVFSFileSize rate)
+  std::string format_rate(GnomeVFSFileSize rate, GnomeVFSFileSize max_rate)
   {
-    char* bytes = SI_gnome_vfs_format_file_size_for_display(rate);
+    char* bytes = SI_gnome_vfs_format_file_size_for_display(rate, max_rate);
     // xgettext: rate, 10MiB/s
     return make_string(g_strdup_printf(_("%s/s"), bytes));
   }

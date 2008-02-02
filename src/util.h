@@ -35,7 +35,7 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
 
 
 gchar*
-SI_gnome_vfs_format_file_size_for_display (GnomeVFSFileSize size);
+SI_gnome_vfs_format_file_size_for_display (GnomeVFSFileSize size, GnomeVFSFileSize max = 0);
 
 
 gboolean
@@ -141,7 +141,7 @@ namespace procman
 
 
 
-  std::string format_rate(GnomeVFSFileSize rate);
+  std::string format_rate(GnomeVFSFileSize rate, GnomeVFSFileSize max_rate = 0);
 }
 
 
