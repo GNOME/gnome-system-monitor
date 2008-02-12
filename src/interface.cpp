@@ -633,6 +633,12 @@ create_main_window (ProcData *procdata)
 	app = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW(app), _("System Monitor"));
 
+	GdkScreen* screen = gtk_widget_get_screen(app);
+	GdkColormap* colormap = gdk_screen_get_rgba_colormap(screen);
+
+	if (colormap && gdk_screen_is_composited(screen))
+	  gtk_widget_set_default_colormap(colormap);
+
 	main_box = gtk_vbox_new (FALSE, 0);
 	gtk_container_add(GTK_CONTAINER(app), main_box);
 	
