@@ -636,8 +636,9 @@ create_main_window (ProcData *procdata)
 	GdkScreen* screen = gtk_widget_get_screen(app);
 	GdkColormap* colormap = gdk_screen_get_rgba_colormap(screen);
 
-	if (colormap && gdk_screen_is_composited(screen))
-	  gtk_widget_set_default_colormap(colormap);
+	/* use rgba colormap, if available */
+	if (colormap)
+		gtk_widget_set_default_colormap(colormap);
 
 	main_box = gtk_vbox_new (FALSE, 0);
 	gtk_container_add(GTK_CONTAINER(app), main_box);
