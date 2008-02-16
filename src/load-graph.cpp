@@ -617,33 +617,6 @@ get_net (LoadGraph *g)
 }
 
 
-/*
-  Shifts data right
-
-  data[i+1] = data[i]
-
-  data[i] are float*, so we just move the pointer, not the data.
-  But moving data loses data[n-1], so we save data[n-1] and reuse
-  it as new data[0]. In fact, we rotate data[].
-
-*/
-
-static void
-shift_right(LoadGraph *g)
-{
-	unsigned i;
-	float* last_data;
-
-	/* data[NUM_POINTS - 1] becomes data[0] */
-	last_data = g->data[NUM_POINTS - 1];
-
-	/* data[i+1] = data[i] */
-	for(i = NUM_POINTS - 1; i != 0; --i)
-		g->data[i] = g->data[i-1];
-
-	g->data[0] = last_data;
-}
-
 /* Updates the load graph when the timeout expires */
 static gboolean
 load_graph_update (gpointer user_data)
@@ -651,7 +624,7 @@ load_graph_update (gpointer user_data)
 	LoadGraph * const g = static_cast<LoadGraph*>(user_data);
 
 	if (g->render_counter == 0) {
-		shift_right(g);
+		std::rotate(&g->data[0], &g->data[NUM_POINTS - 1], &g->data[NUM_POINTS]);
 
 		switch (g->type) {
 		case LOAD_GRAPH_CPU:
