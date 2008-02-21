@@ -64,6 +64,24 @@ namespace {
     virtual ~SysInfo()
     { }
 
+    virtual void set_distro_labels(GtkWidget* name, GtkWidget* release)
+    {
+      g_object_set(G_OBJECT(name),
+		   "label",
+		   ("<big><big><b>" + this->distro_name + "</b></big></big>").c_str(),
+		   NULL);
+
+
+      char* markup = g_strdup_printf(_("Release %s"), this->distro_release.c_str());
+
+      g_object_set(G_OBJECT(release),
+		   "label",
+		   markup,
+		   NULL);
+
+      g_free(markup);
+    }
+
   private:
 
     void load_memory_info()
@@ -197,10 +215,23 @@ namespace {
     LSBSysInfo()
       : re(Glib::Regex::create("^.+?:\\s*(.+)\\s*$"))
     {
-      this->lsb_release();
+      // start();
     }
 
+    virtual void set_distro_labels(GtkWidget* name, GtkWidget* release)
+    {
+      this->name = name;
+      this->release = release;
+
+      this->start();
+    }
+
+
   private:
+
+    int fd;
+    GtkWidget* name;
+    GtkWidget* release;
 
     void strip_description(string &s) const
     {
@@ -219,6 +250,71 @@ namespace {
 	this->strip_description(s);
       return is;
     }
+
+
+    static void read_lsb(GPid pid, gint status, gpointer data)
+    {
+      LSBSysInfo * const that = static_cast<LSBSysInfo*>(data);
+
+      if (!WIFEXITED(status) or WEXITSTATUS(status) != 0) {
+	g_error("Child %d failed with status %d", int(pid), status);
+	return;
+      }
+
+      Glib::RefPtr<Glib::IOChannel> channel = Glib::IOChannel::create_from_fd(that->fd);
+      Glib::ustring content;
+
+      while (channel->read_to_end(content) == Glib::IO_STATUS_AGAIN)
+	;
+
+      channel->close();
+      Glib::spawn_close_pid(pid);
+
+      procman_debug("lsb_release output = '%s'", content.c_str());
+
+      string release, codename;
+      std::istringstream input(content);
+
+      that->get_value(input, that->distro_name)
+	and that->get_value(input, release)
+	and that->get_value(input, codename);
+
+      that->distro_release = release;
+      if (codename != "")
+	that->distro_release += " (" + codename + ')';
+
+      that->SysInfo::set_distro_labels(that->name, that->release);
+    }
+
+
+    void start()
+    {
+      const char * const argv[] = { "lsb_release", "-irc", NULL };
+      GSpawnFlags flags = static_cast<GSpawnFlags>(G_SPAWN_DO_NOT_REAP_CHILD
+						   | G_SPAWN_SEARCH_PATH
+						   | G_SPAWN_STDERR_TO_DEV_NULL);
+      GPid child;
+      GError* error = 0;
+
+      if (not g_spawn_async_with_pipes("/",
+				       const_cast<gchar**>(argv),
+				       NULL,
+				       flags,
+				       0,
+				       NULL,
+				       &child,
+				       NULL,
+				       &this->fd,
+				       NULL,
+				       &error)) {
+	g_error("g_spawn_async_with_pipes error: %s", error->message);
+	g_error_free(error);
+	return;
+      }
+
+      g_child_watch_add(child, read_lsb, this);
+    }
+
 
     void lsb_release()
     {
@@ -378,10 +474,7 @@ procman_create_sysinfo_view(void)
 
   /* distro section */
 
-  markup = g_strdup_printf("<big><big><b>%s</b></big></big>",
-    data->distro_name.c_str());
-  distro_frame = gtk_frame_new(markup);
-  g_free(markup);
+  distro_frame = gtk_frame_new("???");
   gtk_frame_set_label_align(GTK_FRAME(distro_frame), 0.0, 0.5);
   gtk_label_set_use_markup(
 			   GTK_LABEL(gtk_frame_get_label_widget(GTK_FRAME(distro_frame))),
@@ -399,15 +492,11 @@ procman_create_sysinfo_view(void)
   GtkWidget* distro_inner_box = gtk_vbox_new(FALSE, 6);
   gtk_box_pack_start(GTK_BOX(distro_box), distro_inner_box, FALSE, FALSE, 0);
 
-  if (data->distro_release != "")
-    {
-      // xgettext: Release 2.6.19
-      markup = g_strdup_printf(_("Release %s"), data->distro_release.c_str());
-      distro_release_label = gtk_label_new(markup);
+      distro_release_label = gtk_label_new("???");
       gtk_misc_set_alignment(GTK_MISC(distro_release_label), 0.0, 0.5);
-      g_free(markup);
       gtk_box_pack_start(GTK_BOX(distro_inner_box), distro_release_label, FALSE, FALSE, 0);
-    }
+
+  data->set_distro_labels(gtk_frame_get_label_widget(GTK_FRAME(distro_frame)), distro_release_label);
 
   markup = g_strdup_printf(_("Kernel %s"), data->kernel.c_str());
   GtkWidget* kernel_label = gtk_label_new(markup);
