@@ -260,7 +260,7 @@ create_sys_view (ProcData *procdata)
 	cpu_graph_box = gtk_vbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (cpu_box), cpu_graph_box, TRUE, TRUE, 0);
 
-	cpu_graph = load_graph_new (LOAD_GRAPH_CPU, procdata);
+	cpu_graph = new LoadGraph(LOAD_GRAPH_CPU);
 	gtk_box_pack_start (GTK_BOX (cpu_graph_box),
 			    load_graph_get_widget(cpu_graph),
 			    TRUE,
@@ -339,7 +339,7 @@ create_sys_view (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (mem_box), mem_graph_box, TRUE, TRUE, 0);
 
 
-	mem_graph = load_graph_new (LOAD_GRAPH_MEM, procdata);
+	mem_graph = new LoadGraph(LOAD_GRAPH_MEM);
 	gtk_box_pack_start (GTK_BOX (mem_graph_box),
 			    load_graph_get_widget(mem_graph),
 			    TRUE,
@@ -424,7 +424,7 @@ create_sys_view (ProcData *procdata)
 	net_graph_box = gtk_vbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (net_box), net_graph_box, TRUE, TRUE, 0);
 
-	net_graph = load_graph_new (LOAD_GRAPH_NET, procdata);
+	net_graph = new LoadGraph(LOAD_GRAPH_NET);
 	gtk_box_pack_start (GTK_BOX (net_graph_box),
 			    load_graph_get_widget(net_graph),
 			    TRUE,

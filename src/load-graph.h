@@ -4,11 +4,6 @@
 #include <glib/gtypes.h>
 #include <glibtop/cpu.h>
 
-struct LoadGraph;
-typedef struct _LoadGraphLabels LoadGraphLabels;
-
-#include "procman.h"
-
 enum
 {
 	LOAD_GRAPH_CPU,
@@ -17,7 +12,14 @@ enum
 };
 
 
-struct _LoadGraphLabels
+enum {
+	CPU_TOTAL,
+	CPU_USED,
+	N_CPU_STATES
+};
+
+
+struct LoadGraphLabels
 {
 	GtkWidget *cpu[GLIBTOP_NCPU];
 	GtkWidget *memory;
@@ -29,9 +31,71 @@ struct _LoadGraphLabels
 };
 
 
-/* Create new load graph. */
-LoadGraph *
-load_graph_new (gint type, ProcData *procdata);
+
+struct LoadGraph {
+
+	static const unsigned NUM_POINTS = 60;
+	static const unsigned GRAPH_MIN_HEIGHT = 40;
+
+	LoadGraph(guint type);
+	~LoadGraph();
+
+	unsigned num_bars() const;
+
+	double fontsize;
+	double rmargin;
+	double indent;
+
+	guint n;
+	gint type;
+	guint speed;
+	guint draw_width, draw_height;
+	guint render_counter;
+	guint frames_per_unit;
+	guint graph_dely;
+	guint real_draw_height;
+	double graph_delx;
+	guint graph_buffer_offset;
+
+	std::vector<GdkColor> colors;
+
+	std::vector<float> data_block;
+	gfloat* data[NUM_POINTS];
+
+	GtkWidget *main_widget;
+	GtkWidget *disp;
+
+	cairo_surface_t *buffer;
+	cairo_surface_t *graph_buffer;
+	cairo_surface_t *background_buffer;
+
+	guint timer_index;
+
+	gboolean draw;
+
+	LoadGraphLabels labels;
+	GtkWidget *mem_color_picker;
+	GtkWidget *swap_color_picker;
+
+	/* union { */
+		struct {
+			guint now; /* 0 -> current, 1 -> last
+				    now ^ 1 each time */
+			/* times[now], times[now ^ 1] is last */
+			guint64 times[2][GLIBTOP_NCPU][N_CPU_STATES];
+		} cpu;
+
+		struct {
+			guint64 last_in, last_out;
+			GTimeVal time;
+			unsigned int max;
+			unsigned values[NUM_POINTS];
+			size_t cur;
+		} net;
+	/* }; */
+};
+
+
 
 /* Force a drawing update */
 void
