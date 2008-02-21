@@ -291,8 +291,7 @@ create_sys_view (ProcData *procdata)
 		/*g_signal_connect (G_OBJECT (temp_hbox), "size_request",
 					 G_CALLBACK(size_request), &cpu_size);
 */
-		color_picker = gsm_color_button_new (
-			&load_graph_get_colors(cpu_graph)[i], GSMCP_TYPE_CPU);
+		color_picker = gsm_color_button_new (&cpu_graph->colors.at(i), GSMCP_TYPE_CPU);
 		g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
 		gtk_box_pack_start (GTK_BOX (temp_hbox), color_picker, FALSE, TRUE, 0);
@@ -438,7 +437,7 @@ create_sys_view (ProcData *procdata)
 			    TRUE, TRUE, 0);
 
 	color_picker = gsm_color_button_new (
-		&load_graph_get_colors(net_graph)[0], GSMCP_TYPE_NETWORK_IN);
+		&net_graph->colors.at(0), GSMCP_TYPE_NETWORK_IN);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_net_in_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 2, GTK_SHRINK, GTK_SHRINK, 0, 0);
@@ -493,7 +492,7 @@ create_sys_view (ProcData *procdata)
 			    TRUE, TRUE, 0);
 
 	color_picker = gsm_color_button_new (
-		&load_graph_get_colors(net_graph)[1], GSMCP_TYPE_NETWORK_OUT);
+		&net_graph->colors.at(1), GSMCP_TYPE_NETWORK_OUT);
 	g_signal_connect (G_OBJECT (color_picker), "color_set",
 			    G_CALLBACK (cb_net_out_color_changed), procdata);
 	gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 2, GTK_SHRINK, GTK_SHRINK, 0, 0);

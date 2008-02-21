@@ -114,9 +114,6 @@ void
 load_graph_change_speed (LoadGraph *g,
 			 guint new_speed);
 
-GdkColor*
-load_graph_get_colors (LoadGraph *g) G_GNUC_CONST;
-
 LoadGraphLabels*
 load_graph_get_labels (LoadGraph *g) G_GNUC_CONST;
 

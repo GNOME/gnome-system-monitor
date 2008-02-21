@@ -778,12 +778,6 @@ load_graph_change_speed (LoadGraph *g,
 	}
 }
 
-GdkColor*
-load_graph_get_colors (LoadGraph *g)
-{
-	return &g->colors[0];
-}
-
 
 LoadGraphLabels*
 load_graph_get_labels (LoadGraph *g)
