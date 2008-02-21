@@ -649,10 +649,7 @@ LoadGraph::LoadGraph(guint type)
 	switch (type) {
 	case LOAD_GRAPH_CPU:
 		memset(&this->cpu, 0, sizeof g->cpu);
-		if (ProcData::get_instance()->config.num_cpus == 0)
-			g->n = 1;
-		else
-			g->n = ProcData::get_instance()->config.num_cpus;
+		g->n = ProcData::get_instance()->config.num_cpus;
 
 		for(guint i = 0; i < G_N_ELEMENTS(g->labels.cpu); ++i)
 			g->labels.cpu[i] = gtk_label_new(NULL);
