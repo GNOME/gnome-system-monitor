@@ -229,7 +229,8 @@ namespace {
 
   private:
 
-    int fd;
+    sigc::connection child_watch;
+    int lsb_fd;
     GtkWidget* name;
     GtkWidget* release;
 
@@ -252,16 +253,16 @@ namespace {
     }
 
 
-    static void read_lsb(GPid pid, gint status, gpointer data)
+    void read_lsb(Glib::Pid pid, int status)
     {
-      LSBSysInfo * const that = static_cast<LSBSysInfo*>(data);
+      this->child_watch.disconnect();
 
       if (!WIFEXITED(status) or WEXITSTATUS(status) != 0) {
 	g_error("Child %d failed with status %d", int(pid), status);
 	return;
       }
 
-      Glib::RefPtr<Glib::IOChannel> channel = Glib::IOChannel::create_from_fd(that->fd);
+      Glib::RefPtr<Glib::IOChannel> channel = Glib::IOChannel::create_from_fd(this->lsb_fd);
       Glib::ustring content;
 
       while (channel->read_to_end(content) == Glib::IO_STATUS_AGAIN)
@@ -275,48 +276,49 @@ namespace {
       string release, codename;
       std::istringstream input(content);
 
-      that->get_value(input, that->distro_name)
-	and that->get_value(input, release)
-	and that->get_value(input, codename);
+      this->get_value(input, this->distro_name)
+	and this->get_value(input, release)
+	and this->get_value(input, codename);
 
-      that->distro_release = release;
+      this->distro_release = release;
       if (codename != "")
-	that->distro_release += " (" + codename + ')';
+	this->distro_release += " (" + codename + ')';
 
-      that->SysInfo::set_distro_labels(that->name, that->release);
+      this->SysInfo::set_distro_labels(this->name, this->release);
     }
 
 
     void start()
     {
-      const char * const argv[] = { "lsb_release", "-irc", NULL };
-      GSpawnFlags flags = static_cast<GSpawnFlags>(G_SPAWN_DO_NOT_REAP_CHILD
-						   | G_SPAWN_SEARCH_PATH
-						   | G_SPAWN_STDERR_TO_DEV_NULL);
-      GPid child;
-      GError* error = 0;
+      std::vector<string> argv(2);
+      argv[0] = "lsb_release";
+      argv[1] = "-irc";
 
-      if (not g_spawn_async_with_pipes("/",
-				       const_cast<gchar**>(argv),
-				       NULL,
-				       flags,
-				       0,
-				       NULL,
-				       &child,
-				       NULL,
-				       &this->fd,
-				       NULL,
-				       &error)) {
-	g_error("g_spawn_async_with_pipes error: %s", error->message);
-	g_error_free(error);
+      Glib::SpawnFlags flags = Glib::SPAWN_DO_NOT_REAP_CHILD
+	| Glib::SPAWN_SEARCH_PATH
+	| Glib::SPAWN_STDERR_TO_DEV_NULL;
+
+      Glib::Pid child;
+
+      try {
+	Glib::spawn_async_with_pipes("/", // wd
+				     argv,
+				     flags,
+				     sigc::slot<void>(), // child setup
+				     &child,
+				     0, // stdin
+				     &this->lsb_fd); // stdout
+      } catch (Glib::SpawnError &e) {
+	g_error("g_spawn_async_with_pipes error: %s", e.what().c_str());
 	return;
       }
 
-      g_child_watch_add(child, read_lsb, this);
+      sigc::slot<void,GPid, int> slot = sigc::mem_fun(this, &LSBSysInfo::read_lsb);
+      this->child_watch = Glib::signal_child_watch().connect(slot, child);
     }
 
 
-    void lsb_release()
+    void sync_lsb_release()
     {
       char *out= 0;
       GError *error = 0;
