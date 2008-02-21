@@ -215,31 +215,17 @@ make_title_label (const char *text)
   return label;
 }
 
-/* Make sure the cpu labels don't jump around. From the clock applet */
-static void
-size_request(GtkWidget* box, GtkRequisition* req, void* data)
-{
-  gint* size = static_cast<gint*>(data);
-  req->width = *size = std::max(req->width, *size);
-}
-
-
-
 
 static GtkWidget *
 create_sys_view (ProcData *procdata)
 {
-  static gint net_size;
-  static gint cpu_size;
-
 	GtkWidget *vbox, *hbox;
 	GtkWidget *cpu_box, *mem_box, *net_box;
-	GtkWidget *cpu_hbox, *mem_hbox, *net_hbox;
 	GtkWidget *cpu_graph_box, *mem_graph_box, *net_graph_box;
 	GtkWidget *label,*cpu_label, *spacer;
 	GtkWidget *table;
 	GtkWidget *color_picker;
-	GtkWidget *mem_legend_box, *net_legend_box, *cpu_legend_box;
+	GtkWidget *mem_legend_box, *net_legend_box;
 	GtkSizeGroup *sizegroup;
 	LoadGraph *cpu_graph, *mem_graph, *net_graph;
 	gint i;
