@@ -234,12 +234,7 @@ cb_cpu_color_changed (GSMColorButton *cp, gpointer data)
 	gint i = GPOINTER_TO_INT (data);
 	GConfClient *client = gconf_client_get_default ();
 
-	if (i == 0) {
-		strcpy(key, "/apps/procman/cpu_color");
-	}
-	else {
-		g_snprintf(key, sizeof key, "/apps/procman/cpu_color%d", i);
-	}
+	g_snprintf(key, sizeof key, "/apps/procman/cpu_color%d", i);
 
 	change_gconf_color(client, key, cp);
 }

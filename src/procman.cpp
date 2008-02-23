@@ -179,21 +179,14 @@ color_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer dat
 	GConfValue *value = gconf_entry_get_value (entry);
 	const gchar *color = gconf_value_get_string (value);
 
-	if (g_str_equal (key, "/apps/procman/cpu_color")) {
-		gdk_color_parse (color, &procdata->config.cpu_color[0]);
-		procdata->cpu_graph->colors.at(0) = procdata->config.cpu_color[0];
-	}
-	else if (g_str_has_prefix (key, "/apps/procman/cpu_color")) {
-		gint i;
-
-		for (i=1;i<GLIBTOP_NCPU;i++) {
-			gchar *cpu_key;
-			cpu_key = g_strdup_printf ("/apps/procman/cpu_color%d",i);
-			if (g_str_equal (key, cpu_key)) {
+	if (g_str_has_prefix (key, "/apps/procman/cpu_color")) {
+		for (int i = 0; i < GLIBTOP_NCPU; i++) {
+			string cpu_key = make_string(g_strdup_printf("/apps/procman/cpu_color%d", i));
+			if (cpu_key == key) {
 				gdk_color_parse (color, &procdata->config.cpu_color[i]);
 				procdata->cpu_graph->colors.at(i) = procdata->config.cpu_color[i];
+				break;
 			}
-			g_free (cpu_key);
 		}
 	}
 	else if (g_str_equal (key, "/apps/procman/mem_color")) {
@@ -293,15 +286,7 @@ procman_data_new (GConfClient *client)
 				 pd, NULL, NULL);
 	pd->config.current_tab = gconf_client_get_int (client, "/apps/procman/current_tab", NULL);
 
-	color = gconf_client_get_string (client, "/apps/procman/cpu_color", NULL);
-	if (!color)
-		color = g_strdup ("#000000a200ff");
-	gconf_client_notify_add (client, "/apps/procman/cpu_color", 
-			  	 color_changed_cb, pd, NULL, NULL);
-	gdk_color_parse(color, &pd->config.cpu_color[0]);
-	g_free (color);
-	
-	for (i=1;i<GLIBTOP_NCPU;i++) {
+	for (int i = 0; i < GLIBTOP_NCPU; i++) {
 		gchar *key;
 		key = g_strdup_printf ("/apps/procman/cpu_color%d", i);
 		
