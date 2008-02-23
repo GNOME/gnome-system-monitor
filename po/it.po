@@ -1,15 +1,15 @@
 # Italian messages for procman/gnome-system-monitor
 # Copyright (C) 2001-2005 Free Software Foundation, Inc.
-# Luca Ferretti <elle.uca@infinito.it> 2006.
+# Luca Ferretti <elle.uca@libero.it> 2006-2008.
 # Alessio Frusciante <algol@firenze.linux.it>, 2001-2007.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-system-monitor 2-14\n"
+"Project-Id-Version: gnome-system-monitor 2.21.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-02 10:49+0100\n"
-"PO-Revision-Date: 2008-02-02 10:50+0100\n"
-"Last-Translator: Alessio Frusciante <algol@firenze.linux.it>\n"
+"POT-Creation-Date: 2008-02-23 22:07+0100\n"
+"PO-Revision-Date: 2008-02-23 22:43+0100\n"
+"Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:156
-#: ../src/interface.cpp:634 ../src/procman.cpp:689
+#: ../src/interface.cpp:619 ../src/procman.cpp:674
 msgid "System Monitor"
 msgstr "Monitor di sistema"
 
@@ -27,7 +27,9 @@ msgstr "Visualizza i processi correnti e controlla lo stato del sistema"
 
 #: ../src/callbacks.cpp:166
 msgid "translator-credits"
-msgstr "Alessio Frusciante <algol@firenze.linux.it>"
+msgstr ""
+"Alessio Frusciante <algol@firenze.linux.it>\n"
+"Luca Ferretti <elle.uca@libero.it>"
 
 #: ../src/disks.cpp:279 ../src/memmaps.cpp:500
 msgid "Device"
@@ -50,18 +52,20 @@ msgstr "Totale"
 msgid "Free"
 msgstr "Libero"
 
+# spazio su disco, quindi maschile
 #: ../src/disks.cpp:284
 msgid "Available"
 msgstr "Disponibile"
 
+# spazio su disco, quindi maschile
 #: ../src/disks.cpp:285
 msgid "Used"
 msgstr "Usato"
 
-#: ../src/disks.cpp:292 ../src/interface.cpp:710 ../src/procdialogs.cpp:680
+#: ../src/disks.cpp:292 ../src/interface.cpp:702 ../src/procdialogs.cpp:680
 #: ../src/procdialogs.cpp:684
 msgid "File Systems"
-msgstr "File System"
+msgstr "File system"
 
 #. xgettext: ? stands for unknown
 #: ../src/e_date.c:155
@@ -133,11 +137,12 @@ msgstr "Ordine delle colonne della vista dischi"
 msgid "Enable/Disable smooth refresh"
 msgstr "Abilita/Disabilita aggiornamento fluido"
 
+# GNOME-2-22
 #: ../src/gnome-system-monitor.schemas.in.h:10
 msgid ""
 "If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu usage "
 "is divided by the total number of CPUs. Else it operates in 'Irix mode'."
-msgstr ""
+msgstr "Se impostata a VERO, il monitor di sistema opera in \"modalità Solaris\" in cui l'utilizzo di CPU di un task è diviso per il numero totale di CPU. In caso contrario opera in \"modalità Irix\"."
 
 #: ../src/gnome-system-monitor.schemas.in.h:11
 msgid "Main Window height"
@@ -332,43 +337,50 @@ msgstr "Larghezza della colonna memoria virtuale processo"
 msgid "Width of process 'writable memory' column"
 msgstr "Larghezza della colonna memoria scrivibile processo"
 
+# GNOME-2-22
 #: ../src/gsm_color_button.c:188
 msgid "Fraction"
-msgstr ""
+msgstr "Frazione"
 
+# GNOME-2-22
 #: ../src/gsm_color_button.c:189
 msgid "Percentage full for pie colour pickers"
-msgstr ""
+msgstr "Percentuale piena per selettore colore a torta"
 
+# GNOME-2-22
 #: ../src/gsm_color_button.c:196
-#, fuzzy
 msgid "Title"
-msgstr "file"
+msgstr "Titolo"
 
+# GNOME-2-22
 #: ../src/gsm_color_button.c:197
 msgid "The title of the color selection dialog"
-msgstr ""
+msgstr "Il titolo del dialogo di selezione del colore"
 
+# GNOME-2-22
 #: ../src/gsm_color_button.c:198 ../src/gsm_color_button.c:602
 msgid "Pick a Color"
-msgstr ""
+msgstr "Scegliere un colore"
 
+# GNOME-2-22
 #: ../src/gsm_color_button.c:204
 msgid "Current Color"
-msgstr ""
+msgstr "Colore attuale"
 
+# GNOME-2-22
 #: ../src/gsm_color_button.c:205
-#, fuzzy
 msgid "The selected color"
-msgstr "Terminare il processo selezionato?"
+msgstr "Il colore selezionato"
 
+# GNOME-2-22
 #: ../src/gsm_color_button.c:212
 msgid "Type of color picker"
-msgstr ""
+msgstr "Il tipo di selettore colore"
 
+# GNOME-2-22
 #: ../src/gsm_color_button.c:522
 msgid "Received invalid color data\n"
-msgstr ""
+msgstr "Ricevuti dati colore non validi\n"
 
 #. xgettext: noun, top level menu.
 #. "File" did not make sense for system-monitor
@@ -434,7 +446,7 @@ msgstr "Forza la fine immediata di un processo"
 
 #: ../src/interface.cpp:70
 msgid "_Change Priority..."
-msgstr "_Cambia priorità..."
+msgstr "Cambia _priorità..."
 
 #: ../src/interface.cpp:71
 msgid "Change the order of priority of process"
@@ -444,13 +456,15 @@ msgstr "Cambia l'ordine della priorità di un processo"
 msgid "Configure the application"
 msgstr "Configura l'applicazione"
 
+# GNOME-2-22
 #: ../src/interface.cpp:75
 msgid "_Refresh"
-msgstr ""
+msgstr "_Aggiorna"
 
+# GNOME-2-22
 #: ../src/interface.cpp:76
 msgid "Refresh the process list"
-msgstr ""
+msgstr "Aggiorna l'elenco dei processi"
 
 #: ../src/interface.cpp:78
 msgid "_Memory Maps"
@@ -458,7 +472,7 @@ msgstr "_Mappe memoria"
 
 #: ../src/interface.cpp:79
 msgid "Open the memory maps associated with a process"
-msgstr "Apre le mappe della memoria associate ad un processo"
+msgstr "Apre le mappe della memoria associate a un processo"
 
 #: ../src/interface.cpp:80
 msgid "Open _Files"
@@ -490,7 +504,7 @@ msgstr "Mostra la relazione genitore/figlio tra processi"
 
 #: ../src/interface.cpp:99
 msgid "_Active Processes"
-msgstr "Processi _attivi"
+msgstr "P_rocessi attivi"
 
 #: ../src/interface.cpp:100
 msgid "Show active processes"
@@ -506,7 +520,7 @@ msgstr "Mostra tutti i processi"
 
 #: ../src/interface.cpp:103
 msgid "M_y Processes"
-msgstr "Processi _personali"
+msgstr "_Processi personali"
 
 #: ../src/interface.cpp:104
 msgid "Show user own process"
@@ -516,81 +530,84 @@ msgstr "Mostra i processi che appartengono all'utente"
 msgid "End _Process"
 msgstr "_Termina processo"
 
-#: ../src/interface.cpp:257
+#: ../src/interface.cpp:243
 msgid "CPU History"
 msgstr "Cronologia CPU"
 
-#: ../src/interface.cpp:315
+#: ../src/interface.cpp:300
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:317
+#: ../src/interface.cpp:302
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:335
+#: ../src/interface.cpp:320
 msgid "Memory and Swap History"
 msgstr "Cronologia memoria e swap"
 
-#: ../src/interface.cpp:374 ../src/proctable.cpp:224
+#: ../src/interface.cpp:359 ../src/proctable.cpp:224
 msgid "Memory"
 msgstr "Memoria"
 
-#: ../src/interface.cpp:400
+# GNOME-2-22
+#: ../src/interface.cpp:385
 msgid "Swap"
-msgstr ""
+msgstr "Swap"
 
-#: ../src/interface.cpp:421
+#: ../src/interface.cpp:406
 msgid "Network History"
 msgstr "Cronologia rete"
 
-# byte/sec
-#: ../src/interface.cpp:460
-#, fuzzy
+# GNOME-2-22
+#: ../src/interface.cpp:445
 msgid "Receiving"
-msgstr "Ricevuti:"
+msgstr "Ricezione"
 
-# byte/sec
-#: ../src/interface.cpp:481
-#, fuzzy
+# GNOME-2-22
+# [GMk]byte
+#: ../src/interface.cpp:466
 msgid "Total Received"
-msgstr "Ricevuti:"
+msgstr "Totele ricevuti:"
 
-#: ../src/interface.cpp:515
-#, fuzzy
+# GNOME-2-22
+#: ../src/interface.cpp:500
 msgid "Sending"
-msgstr "Sleeping"
+msgstr "Invio"
 
-#: ../src/interface.cpp:537
-#, fuzzy
+# GNOME-2-22
+# [GMk]byte
+#: ../src/interface.cpp:522
 msgid "Total Sent"
-msgstr "Totale"
+msgstr "Totale inviati"
 
-#: ../src/interface.cpp:698
+#: ../src/interface.cpp:690
 msgid "System"
 msgstr "Sistema"
 
-#: ../src/interface.cpp:702 ../src/procdialogs.cpp:512
+#: ../src/interface.cpp:694 ../src/procdialogs.cpp:512
 msgid "Processes"
 msgstr "Processi"
 
-#: ../src/interface.cpp:706 ../src/procdialogs.cpp:627
+#: ../src/interface.cpp:698 ../src/procdialogs.cpp:627
 msgid "Resources"
 msgstr "Risorse"
 
-#: ../src/load-graph.cpp:217
+# GNOME-2-22
+#: ../src/load-graph.cpp:150
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%u secondo"
+msgstr[1] "%u secondi"
 
+# GNOME-2-22
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:430
+#: ../src/load-graph.cpp:363
 #, c-format
 msgid "%s (%.1f %%) of %s"
-msgstr ""
+msgstr "%s (%.1f %%) di %s"
 
 #: ../src/lsof.cpp:247
 msgid "Process"
@@ -600,9 +617,10 @@ msgstr "Processi"
 msgid "PID"
 msgstr "PID"
 
+# GNOME-2-22
 #: ../src/lsof.cpp:269 ../src/memmaps.cpp:478
 msgid "Filename"
-msgstr "Nome del file"
+msgstr "Nome file"
 
 #. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
 #: ../src/lsof.cpp:286
@@ -617,9 +635,10 @@ msgstr "_Nome contiene:"
 msgid "Case insensitive matching"
 msgstr "Corrispondenza senza distinzione Maiuscole/minuscole"
 
+# GNOME-2-22
 #: ../src/lsof.cpp:338
 msgid "S_earch results:"
-msgstr "Risultari ric_erca:"
+msgstr "Risultati della ric_erca:"
 
 #. xgettext: virtual memory start
 #: ../src/memmaps.cpp:480
@@ -645,31 +664,33 @@ msgstr "Flag"
 msgid "VM Offset"
 msgstr "Offset VM"
 
+# GNOME-2-22
 #. xgettext: memory that has not been modified since
 #. it has been allocated
 #: ../src/memmaps.cpp:490
 msgid "Private clean"
-msgstr ""
+msgstr "Privata clean"
 
+# GNOME-2-22
 #. xgettext: memory that has been modified since it
 #. has been allocated
 #: ../src/memmaps.cpp:493
 msgid "Private dirty"
-msgstr ""
+msgstr "Privata dirty"
 
+# GNOME-2-22
 #. xgettext: shared memory that has not been modified
 #. since it has been allocated
 #: ../src/memmaps.cpp:496
-#, fuzzy
 msgid "Shared clean"
-msgstr "Memoria condivisa"
+msgstr "Condivisa clean"
 
+# GNOME-2-22
 #. xgettext: shared memory that has been modified
 #. since it has been allocated
 #: ../src/memmaps.cpp:499
-#, fuzzy
 msgid "Shared dirty"
-msgstr "Memoria condivisa"
+msgstr "Condivisa dirty"
 
 #: ../src/memmaps.cpp:501
 msgid "Inode"
@@ -803,19 +824,23 @@ msgstr "Cambia _priorità"
 
 #: ../src/procdialogs.cpp:215
 msgid "_Nice value:"
-msgstr "Valore di _nice:"
+msgstr "_Valore di nice:"
 
 #: ../src/procdialogs.cpp:231
 msgid "Note:"
 msgstr "Nota:"
 
+# NdT: questo appare nella UI come
+#
+#    Nota: la priorità...
+#
+# È staccato per non mettere i markup, peccato si siano
+# dimenticati che anche i : vanno localizzati... mah  --Luca
 #: ../src/procdialogs.cpp:232
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
-msgstr ""
-"La priorità di un processo è data dal suo valore di nice. Un valore più "
-"basso corrisponde ad una priorità più alta."
+msgstr "la priorità di un processo è data dal suo valore di nice. Un valore più basso corrisponde ad una priorità più alta."
 
 #: ../src/procdialogs.cpp:392
 msgid "Process i_nformation shown in list:"
@@ -930,52 +955,51 @@ msgstr "Riga di comando"
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Carico medio per gli ultimi 1, 5, 15 minuti: %0.2f, %0.2f, %0.2f"
 
-#: ../src/sysinfo.cpp:91
-msgid "Unknown CPU model"
-msgstr "Modello CPU sconosciuto"
-
-#. xgettext: Release 2.6.19
-#: ../src/sysinfo.cpp:405
+#: ../src/sysinfo.cpp:75
 #, c-format
 msgid "Release %s"
 msgstr "Rilascio %s"
 
-#: ../src/sysinfo.cpp:412
+#: ../src/sysinfo.cpp:109
+msgid "Unknown CPU model"
+msgstr "Modello CPU sconosciuto"
+
+#: ../src/sysinfo.cpp:503
 #, c-format
 msgid "Kernel %s"
 msgstr "Kernel %s"
 
-#: ../src/sysinfo.cpp:420
+#: ../src/sysinfo.cpp:511
 #, c-format
 msgid "GNOME %s"
 msgstr "GNOME %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:429
+#: ../src/sysinfo.cpp:520
 #, c-format
 msgid "<b>Hardware</b>"
 msgstr "<b>Hardware</b>"
 
-#: ../src/sysinfo.cpp:450
+#: ../src/sysinfo.cpp:541
 msgid "Memory:"
 msgstr "Memoria:"
 
-#: ../src/sysinfo.cpp:470
+#: ../src/sysinfo.cpp:561
 #, c-format
 msgid "Processor %d:"
 msgstr "Processore %d:"
 
-#: ../src/sysinfo.cpp:475
+#: ../src/sysinfo.cpp:566
 msgid "Processor:"
 msgstr "Processore:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:495
+#: ../src/sysinfo.cpp:586
 #, c-format
 msgid "<b>System Status</b>"
 msgstr "<b>Stato del sistema</b>"
 
-#: ../src/sysinfo.cpp:516
+#: ../src/sysinfo.cpp:607
 msgid "Available disk space:"
 msgstr "Spazio disco disponibile:"
 
@@ -999,58 +1023,63 @@ msgstr "Non interrompibile"
 msgid "Sleeping"
 msgstr "Sleeping"
 
+# GNOME-2-22
 #. xgettext: weeks, days
 #: ../src/util.cpp:102
 #, c-format
 msgid "%uw%ud"
-msgstr ""
+msgstr "%us%ug"
 
+# GNOME-2-22
 #. xgettext: days, hours (0 -> 23)
 #: ../src/util.cpp:106
 #, c-format
 msgid "%ud%02uh"
-msgstr ""
+msgstr "%ug%02uh"
 
+# GNOME-2-22
 #. xgettext: hours (0 -> 23), minutes, seconds
 #: ../src/util.cpp:110
 #, c-format
 msgid "%u:%02u:%02u"
-msgstr ""
+msgstr "%u.%02u.%02u"
 
+# GNOME-2-22
 #. xgettext: minutes, seconds, centiseconds
 #: ../src/util.cpp:113
 #, c-format
 msgid "%u:%02u.%02u"
-msgstr ""
+msgstr "%u.%02u,%02u"
 
-#: ../src/util.cpp:159
+#: ../src/util.cpp:162
 #, c-format
 msgid "%u byte"
 msgid_plural "%u bytes"
 msgstr[0] "%u byte"
 msgstr[1] "%u byte"
 
-#: ../src/util.cpp:166
+#: ../src/util.cpp:169
 #, c-format
 msgid "%.1f KiB"
 msgstr "%.1f KiB"
 
-#: ../src/util.cpp:169
+#: ../src/util.cpp:172
 #, c-format
 msgid "%.1f MiB"
 msgstr "%.1f MiB"
 
-#: ../src/util.cpp:172
+#: ../src/util.cpp:175
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
 
-#: ../src/util.cpp:346
+# GNOME-2-22
+#: ../src/util.cpp:349
 msgid "<i>N/A</i>"
-msgstr ""
+msgstr "<i>N/D</i>"
 
 #. xgettext: rate, 10MiB/s
-#: ../src/util.cpp:463
+#: ../src/util.cpp:466
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
