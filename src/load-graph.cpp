@@ -169,6 +169,7 @@ load_graph_draw (LoadGraph *g)
 {
 	cairo_t *cr;
 	guint i, j;
+    gdouble tmp;
 
 	cr = cairo_create (g->buffer);
 
@@ -219,7 +220,12 @@ load_graph_draw (LoadGraph *g)
 	cairo_set_source_surface (cr, g->background_buffer, 0, 0);
 	cairo_paint (cr);
 
-	cairo_set_source_surface (cr, g->graph_buffer, g->graph_buffer_offset - g->render_counter, FRAME_WIDTH);
+    //g_print("%d\n", g->render_counter);
+    
+    tmp = (float)(g->draw_width - g->rmargin - g->indent) / (float)LoadGraph::NUM_POINTS;
+    tmp = tmp / g->frames_per_unit;
+    tmp = tmp * g->render_counter;
+	cairo_set_source_surface (cr, g->graph_buffer, g->graph_buffer_offset - tmp, FRAME_WIDTH);
 	cairo_rectangle (cr, g->rmargin + g->indent + FRAME_WIDTH + 1, FRAME_WIDTH - 1,
 			 g->draw_width - g->rmargin - g->indent - 1 , g->real_draw_height + FRAME_WIDTH - 1);
 	cairo_fill (cr);
@@ -245,7 +251,7 @@ load_graph_configure (GtkWidget *widget,
 	// FIXME:
 	// g->frames_per_unit = g->draw_width/(LoadGraph::NUM_POINTS);
 	// knock FRAMES down to 5 until cairo gets faster
-	g->frames_per_unit = 5;
+	//g->frames_per_unit = 5;
 
 	if(g->timer_index) {
 		g_source_remove (g->timer_index);
@@ -574,8 +580,8 @@ load_graph_update (gpointer user_data)
 		}
 	}
 
-	if (g->draw)
-		load_graph_draw (g);
+    if (g->draw)
+	   load_graph_draw (g);
 
 	g->render_counter++;
 
@@ -640,7 +646,7 @@ LoadGraph::LoadGraph(guint type)
 {
 	LoadGraph * const g = this;
 
-	g->frames_per_unit = 1;  // this will be changed but needs initialising
+	g->frames_per_unit = 5;  // this will be changed but needs initialising
 	g->fontsize = 8.0;
 	g->rmargin = 3.5 * g->fontsize;
 	g->indent = 24.0;
@@ -697,7 +703,7 @@ LoadGraph::LoadGraph(guint type)
 	}
 
 	g->timer_index = 0;
-	g->render_counter = 10;
+	g->render_counter = g->frames_per_unit;
 	g->background_buffer = NULL;
 	g->graph_buffer = NULL;
 	g->draw = FALSE;
