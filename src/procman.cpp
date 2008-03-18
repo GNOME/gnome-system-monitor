@@ -595,14 +595,20 @@ cb_server (const gchar *msg, gpointer user_data)
 {
 	GdkWindow *window;
 	ProcData *procdata;
-	guint32 timestamp;
+	guint32 timestamp = 0;
 
 	window = gdk_get_default_root_window ();
 
 	procdata = *(ProcData**)user_data;
 	g_assert (procdata != NULL);
 
-	timestamp = strtoul(msg, NULL, 0);
+	procman_debug("cb_server(%s)", msg);
+	if (msg != NULL && procman::SHOW_SYSTEM_TAB_CMD == msg) {
+		procman_debug("Changing to PROCMAN_TAB_SYSINFO via bacon message");
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(procdata->notebook), PROCMAN_TAB_SYSINFO);
+		cb_change_current_page(GTK_NOTEBOOK(procdata->notebook), PROCMAN_TAB_SYSINFO, procdata);
+	} else
+		timestamp = strtoul(msg, NULL, 0);
 
 	if (timestamp == 0)
 	{
@@ -630,6 +636,13 @@ init_volume_monitor(ProcData *procdata)
 }
 
 
+namespace procman
+{
+	const std::string SHOW_SYSTEM_TAB_CMD("SHOWSYSTAB");
+}
+
+
+
 int
 main (int argc, char *argv[])
 {
@@ -638,11 +651,27 @@ main (int argc, char *argv[])
 	ProcData *procdata;
 	BaconMessageConnection *conn;
 
+	/* Parse commandline arguments */
+	GError *error = NULL;
+	GOptionContext *context;
+	static gboolean show_system_tab = FALSE;
+	static GOptionEntry entries[] =
+	{
+		{ "show-system-tab", 's', 0, G_OPTION_ARG_NONE, &show_system_tab, "Show the System tab", NULL },
+		{ NULL }
+	};
+
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
 	startup_timestamp = get_startup_timestamp();
+
+	context = g_option_context_new(_("- a simple process and system monitor."));
+	g_option_context_set_ignore_unknown_options(context, TRUE);
+	g_option_context_add_main_entries(context, entries, GETTEXT_PACKAGE);
+	g_option_context_parse(context, &argc, &argv, &error);
+	g_option_context_free(context);
 
 	Gtk::Main kit(&argc, &argv);
 	procman_debug("post gtk_init");
@@ -659,6 +688,9 @@ main (int argc, char *argv[])
 		char *timestamp;
 
 		timestamp = g_strdup_printf ("%" G_GUINT32_FORMAT, startup_timestamp);
+
+		if (show_system_tab)
+			bacon_message_connection_send(conn, procman::SHOW_SYSTEM_TAB_CMD.c_str());
 
 		bacon_message_connection_send (conn, timestamp);
 
@@ -696,6 +728,12 @@ main (int argc, char *argv[])
 
 	g_assert(procdata->app);
 			
+	if (show_system_tab) {
+		procman_debug("Starting with PROCMAN_TAB_SYSINFO by commandline request");
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(procdata->notebook), PROCMAN_TAB_SYSINFO);
+		cb_change_current_page (GTK_NOTEBOOK(procdata->notebook), PROCMAN_TAB_SYSINFO, procdata);
+	}
+
  	gtk_widget_show(procdata->app);
        
 	procman_debug("begin gtk_main");
