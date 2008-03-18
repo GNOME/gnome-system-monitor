@@ -9,6 +9,7 @@ INCLUDES = \
 bin_PROGRAMS = gnome-system-monitor
 
 gnome_system_monitor_SOURCES = \
+	argv.h argv.cpp \
 	procman.cpp  procman.h \
 	interface.cpp interface.h \
 	callbacks.cpp callbacks.h \
