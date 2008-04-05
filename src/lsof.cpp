@@ -118,6 +118,12 @@ namespace
     }
 
 
+    void display_regex_error()
+    {
+      gtk_label_set_text(this->count, _("Invalid Perl regular expression"));
+    }
+
+
     void update_count(unsigned count)
     {
       string s = static_cast<std::ostringstream&>(std::ostringstream() << count).str();
@@ -138,10 +144,11 @@ namespace
 
       this->clear_results();
 
-      unsigned count = 0;
 
       try {
 	Lsof lsof(this->pattern(), this->case_insensitive);
+
+	unsigned count = 0;
 
 	for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it) {
 	  const ProcInfo &info(*it->second);
@@ -161,14 +168,15 @@ namespace
 			       -1);
 	  }
 	}
+
+	this->update_count(count);
       }
       catch (Glib::RegexError& error) {
 	procman_debug("Regex error with pattern '%s' : %s",
 		      this->pattern().c_str(),
 		      error.what().c_str());
+	this->display_regex_error();
       }
-
-      this->update_count(count);
     }
 
 
