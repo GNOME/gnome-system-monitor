@@ -34,7 +34,7 @@ struct LoadGraphLabels
 
 struct LoadGraph {
 
-	static const unsigned NUM_POINTS = 60;
+	static const unsigned NUM_POINTS = 60 + 2;
 	static const unsigned GRAPH_MIN_HEIGHT = 40;
 
 	LoadGraph(guint type);
