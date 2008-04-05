@@ -138,27 +138,34 @@ namespace
 
       this->clear_results();
 
-      Lsof lsof(this->pattern(), this->case_insensitive);
-      // lsof = new SimpleLsof(this->pattern(), this->case_insensitive);
       unsigned count = 0;
 
-      for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it) {
-	const ProcInfo &info(*it->second);
+      try {
+	Lsof lsof(this->pattern(), this->case_insensitive);
 
-	MatchSet matches;
-	lsof.search(info, std::inserter(matches, matches.begin()));
-	count += matches.size();
+	for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it) {
+	  const ProcInfo &info(*it->second);
 
-	for (iterator it(matches.begin()), end(matches.end()); it != end; ++it) {
-	  GtkTreeIter file;
-	  gtk_list_store_append(this->model, &file);
-	  gtk_list_store_set(this->model, &file,
-			     PROCMAN_LSOF_COL_PIXBUF, info.pixbuf->gobj(),
-			     PROCMAN_LSOF_COL_PROCESS, info.name,
-			     PROCMAN_LSOF_COL_PID, info.pid,
-			     PROCMAN_LSOF_COL_FILENAME, it->c_str(),
-			     -1);
+	  MatchSet matches;
+	  lsof.search(info, std::inserter(matches, matches.begin()));
+	  count += matches.size();
+
+	  for (iterator it(matches.begin()), end(matches.end()); it != end; ++it) {
+	    GtkTreeIter file;
+	    gtk_list_store_append(this->model, &file);
+	    gtk_list_store_set(this->model, &file,
+			       PROCMAN_LSOF_COL_PIXBUF, info.pixbuf->gobj(),
+			       PROCMAN_LSOF_COL_PROCESS, info.name,
+			       PROCMAN_LSOF_COL_PID, info.pid,
+			       PROCMAN_LSOF_COL_FILENAME, it->c_str(),
+			       -1);
+	  }
 	}
+      }
+      catch (Glib::RegexError& error) {
+	procman_debug("Regex error with pattern '%s' : %s",
+		      this->pattern().c_str(),
+		      error.what().c_str());
       }
 
       this->update_count(count);
