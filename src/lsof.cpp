@@ -118,9 +118,19 @@ namespace
     }
 
 
-    void display_regex_error()
+    void display_regex_error(const Glib::RegexError& error)
     {
-      gtk_label_set_text(this->count, _("Invalid Perl regular expression"));
+      const char * msg = _("<b>Error</b>\n"
+			   "'%s' is not a valid Perl regular expression.\n"
+			   "%s");
+      std::string message = make_string(g_strdup_printf(msg, this->pattern().c_str(), error.what().c_str()));
+
+      Gtk::MessageDialog dialog(message,
+				true, // use markup
+				Gtk::MESSAGE_ERROR,
+				Gtk::BUTTONS_OK,
+				true); // modal
+      dialog.run();
     }
 
 
@@ -172,10 +182,7 @@ namespace
 	this->update_count(count);
       }
       catch (Glib::RegexError& error) {
-	procman_debug("Regex error with pattern '%s' : %s",
-		      this->pattern().c_str(),
-		      error.what().c_str());
-	this->display_regex_error();
+	this->display_regex_error(error);
       }
     }
 
