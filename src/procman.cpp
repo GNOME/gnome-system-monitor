@@ -236,12 +236,6 @@ procman_data_new (GConfClient *client)
 
 	pd = ProcData::get_instance();
 
-	/* username is usually 8 chars long
-	   for caching, we create chunks of 128 chars */
-	pd->users = g_string_chunk_new(128);
-	/* push empty string */
-	g_string_chunk_insert_const(pd->users, "");
-
 	pd->config.width = gconf_client_get_int (client, "/apps/procman/width", NULL);
 	pd->config.height = gconf_client_get_int (client, "/apps/procman/height", NULL);
 	pd->config.show_tree = gconf_client_get_bool (client, "/apps/procman/show_tree", NULL);
@@ -370,7 +364,6 @@ procman_free_data (ProcData *procdata)
 {
 
 	proctable_free_table (procdata);
-	g_string_chunk_free(procdata->users);
 	delete procdata->smooth_refresh;
 }
 

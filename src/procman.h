@@ -29,6 +29,7 @@
 #include <glibtop/cpu.h>
 
 #include <time.h>
+#include <sys/types.h>
 
 #include <map>
 #include <string>
@@ -103,8 +104,8 @@ struct MutableProcInfo
       status(0)
   { }
 
-  // allocated with g_string_chunk, don't free it !
-  gchar* user;
+  // shared, don't free it !
+  const gchar* user;
 
   // all these members are filled with libgtop which uses
   // guint64 (to have fixed size data) but we don't need more
@@ -132,6 +133,11 @@ class ProcInfo
 {
 	/* undefined */ ProcInfo& operator=(const ProcInfo&);
 	/* undefined */ ProcInfo(const ProcInfo&);
+
+	typedef std::map<guint, const char*> UserMap;
+	/* cached username */
+	static UserMap users;
+
  public:
 
 	// TODO: use a set instead
@@ -152,6 +158,7 @@ class ProcInfo
 	~ProcInfo();
 	// adds one more ref to icon
 	void set_icon(Glib::RefPtr<Gdk::Pixbuf> icon);
+	void set_user(guint uid);
 
 	GtkTreeIter	node;
 	Glib::RefPtr<Gdk::Pixbuf> pixbuf;
@@ -205,10 +212,6 @@ struct ProcData
 	GConfClient	*client;
 	GtkWidget	*app;
 	GtkUIManager	*menu;
-
-
-	/* cached username */
-	GStringChunk	*users;
 
 	unsigned	frequency;
 

@@ -53,6 +53,8 @@
 #include "interface.h"
 #include "selinux.h"
 
+
+ProcInfo::UserMap ProcInfo::users;
 ProcInfo::List ProcInfo::all;
 std::map<pid_t, guint64> ProcInfo::cpu_times;
 
@@ -445,28 +447,34 @@ get_process_name (ProcInfo *info,
 
 
 
-static void
-get_process_user(ProcData* procdata, ProcInfo* info, uid_t uid)
+void
+ProcInfo::set_user(guint uid)
 {
-	struct passwd* pwd;
-	char* username;
-
-	if(G_LIKELY(info->uid == uid))
+	if (G_LIKELY(this->uid == uid))
 		return;
 
-	info->uid = uid;
+	this->uid = uid;
 
-	pwd = getpwuid(uid);
+	typedef std::pair<ProcInfo::UserMap::iterator, bool> Pair;
+	ProcInfo::UserMap::value_type hint(uid, "");
+	Pair p(ProcInfo::users.insert(hint));
 
-	if(pwd && pwd->pw_name)
-		username = g_strdup(pwd->pw_name);
-	else
-		username = g_strdup_printf("%u", (unsigned)uid);
+	// procman_debug("User lookup for uid %u: %s", uid, (p.second ? "MISS" : "HIT"));
 
-	/* don't free, because info->user belongs to procdata->users */
-	info->user = g_string_chunk_insert_const(procdata->users, username);
+	if (p.second) {
+		char* username;
+		struct passwd* pwd;
+		pwd = getpwuid(uid);
 
-	g_free(username);
+		if (pwd && pwd->pw_name)
+			username = g_strdup(pwd->pw_name);
+		else
+			username = g_strdup_printf("%u", uid);
+
+		p.first->second = username;
+	}
+
+	this->user = p.first->second;
 }
 
 
@@ -642,7 +650,7 @@ update_info (ProcData *procdata, ProcInfo *info)
 
 	get_process_memory_info(info);
 
-	get_process_user(procdata, info, procstate.uid);
+	info->set_user(procstate.uid);
 
 	info->pcpu = (proctime.rtime - info->cpu_time) * 100 / procdata->cpu_total_time;
 	info->pcpu = MIN(info->pcpu, 100);
