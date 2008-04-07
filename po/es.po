@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-18 21:37+0000\n"
-"PO-Revision-Date: 2008-03-30 13:32+0200\n"
+"POT-Creation-Date: 2008-04-06 03:16+0100\n"
+"PO-Revision-Date: 2008-04-07 19:56+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,13 +23,17 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:156
-#: ../src/interface.cpp:619 ../src/procman.cpp:702
+#: ../src/interface.cpp:619 ../src/procman.cpp:695
 msgid "System Monitor"
 msgstr "Monitor del sistema"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:157
 msgid "View current processes and monitor system state"
 msgstr "Vea los procesos actuales y monitorizar el estado del sistema"
+
+#: ../src/argv.cpp:17
+msgid "Show the System tab"
+msgstr "Mostrar la solapa Sistema"
 
 #: ../src/callbacks.cpp:166
 msgid "translator-credits"
@@ -542,7 +546,7 @@ msgstr "CPU %d"
 msgid "Memory and Swap History"
 msgstr "Histórico de memoria e intercambio"
 
-#: ../src/interface.cpp:359 ../src/proctable.cpp:224
+#: ../src/interface.cpp:359 ../src/proctable.cpp:226
 msgid "Memory"
 msgstr "Memoria"
 
@@ -595,32 +599,43 @@ msgstr[1] "%u segundos"
 msgid "%s (%.1f %%) of %s"
 msgstr "%s (%.1f %%) de %s"
 
-#: ../src/lsof.cpp:247
+#: ../src/lsof.cpp:123
+#, c-format
+msgid ""
+"<b>Error</b>\n"
+"'%s' is not a valid Perl regular expression.\n"
+"%s"
+msgstr ""
+"<b>Error</b>\n"
+"«%s« no es una expresión regular válida de Perl.\n"
+"%s"
+
+#: ../src/lsof.cpp:269
 msgid "Process"
 msgstr "Proceso"
 
-#: ../src/lsof.cpp:259
+#: ../src/lsof.cpp:281
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:269 ../src/memmaps.cpp:478
+#: ../src/lsof.cpp:291 ../src/memmaps.cpp:478
 msgid "Filename"
 msgstr "Archivo"
 
 #. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-#: ../src/lsof.cpp:286
+#: ../src/lsof.cpp:308
 msgid "Search for Open Files"
 msgstr "Busca archivos abiertos"
 
-#: ../src/lsof.cpp:314
+#: ../src/lsof.cpp:336
 msgid "_Name contains:"
 msgstr "El _nombre contiene:"
 
-#: ../src/lsof.cpp:330
+#: ../src/lsof.cpp:352
 msgid "Case insensitive matching"
 msgstr "Coincidencia insensible a capitalización"
 
-#: ../src/lsof.cpp:338
+#: ../src/lsof.cpp:360
 msgid "S_earch results:"
 msgstr "Resultados de la _búsqueda:"
 
@@ -862,72 +877,72 @@ msgstr "Gráficas"
 msgid "Show _all filesystems"
 msgstr "Mostrar _todos los sistemas de ficheros"
 
-#: ../src/procman.cpp:661
+#: ../src/procman.cpp:654
 msgid "A simple process and system monitor."
 msgstr "Un sencillo monitor de procesos y del sistema."
 
-#: ../src/proctable.cpp:209
+#: ../src/proctable.cpp:211
 msgid "Process Name"
 msgstr "Nombre del proceso"
 
-#: ../src/proctable.cpp:210
+#: ../src/proctable.cpp:212
 msgid "User"
 msgstr "Usuario"
 
-#: ../src/proctable.cpp:211
+#: ../src/proctable.cpp:213
 msgid "Status"
 msgstr "Estado"
 
-#: ../src/proctable.cpp:212
+#: ../src/proctable.cpp:214
 msgid "Virtual Memory"
 msgstr "Memoria virtual"
 
-#: ../src/proctable.cpp:213
+#: ../src/proctable.cpp:215
 msgid "Resident Memory"
 msgstr "Memoria residente"
 
-#: ../src/proctable.cpp:214
+#: ../src/proctable.cpp:216
 msgid "Writable Memory"
 msgstr "Memoria escribible"
 
-#: ../src/proctable.cpp:215
+#: ../src/proctable.cpp:217
 msgid "Shared Memory"
 msgstr "Memoria compartida"
 
-#: ../src/proctable.cpp:216
+#: ../src/proctable.cpp:218
 msgid "X Server Memory"
 msgstr "Memoria del servidor X"
 
-#: ../src/proctable.cpp:217
+#: ../src/proctable.cpp:219
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:218
+#: ../src/proctable.cpp:220
 msgid "CPU Time"
 msgstr "Tiempo de CPU"
 
-#: ../src/proctable.cpp:219
+#: ../src/proctable.cpp:221
 msgid "Started"
 msgstr "Iniciado"
 
-#: ../src/proctable.cpp:220
+#: ../src/proctable.cpp:222
 msgid "Nice"
 msgstr "Prioridad"
 
-#: ../src/proctable.cpp:221
+#: ../src/proctable.cpp:223
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:222
+#: ../src/proctable.cpp:224
 msgid "Security Context"
 msgstr "Contexto de seguridad"
 
-#: ../src/proctable.cpp:223
+#: ../src/proctable.cpp:225
 msgid "Command Line"
 msgstr "Línea de comandos"
 
-#: ../src/proctable.cpp:926
+#: ../src/proctable.cpp:934
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Carga media para los últimos 1, 5 y 15 minutos: %0.2f, %0.2f, %0.2f"
