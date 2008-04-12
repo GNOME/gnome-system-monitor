@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-27 03:16+0100\n"
-"PO-Revision-Date: 2008-02-17 21:47+0100\n"
+"PO-Revision-Date: 2008-04-12 10:56+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,8 +24,8 @@ msgstr ""
 
 #: ../gnome-system-monitor.desktop.in.in.h:1
 #: ../src/callbacks.cpp:156
-#: ../src/interface.cpp:634
-#: ../src/procman.cpp:689
+#: ../src/interface.cpp:619
+#: ../src/procman.cpp:695
 msgid "System Monitor"
 msgstr "Nadzornik sistema"
 
@@ -33,6 +33,10 @@ msgstr "Nadzornik sistema"
 #: ../src/callbacks.cpp:157
 msgid "View current processes and monitor system state"
 msgstr "Oglejte si trenutne procese in nadzorujte stanje sistema"
+
+#: ../src/argv.cpp:17
+msgid "Show the System tab"
+msgstr "Prikaži sistemski zavihek"
 
 #: ../src/callbacks.cpp:166
 msgid "translator-credits"
@@ -73,7 +77,7 @@ msgid "Used"
 msgstr "Uporabljeno"
 
 #: ../src/disks.cpp:292
-#: ../src/interface.cpp:717
+#: ../src/interface.cpp:702
 #: ../src/procdialogs.cpp:680
 #: ../src/procdialogs.cpp:684
 msgid "File Systems"
@@ -515,67 +519,67 @@ msgstr "Pokaži uporabnikove lastne procese"
 msgid "End _Process"
 msgstr "Končaj proces"
 
-#: ../src/interface.cpp:257
+#: ../src/interface.cpp:243
 msgid "CPU History"
 msgstr "Zgodovina uporabe CPE"
 
-#: ../src/interface.cpp:315
+#: ../src/interface.cpp:300
 msgid "CPU"
 msgstr "CPE"
 
-#: ../src/interface.cpp:317
+#: ../src/interface.cpp:302
 #, c-format
 msgid "CPU%d"
 msgstr "CPE%d"
 
-#: ../src/interface.cpp:335
+#: ../src/interface.cpp:320
 msgid "Memory and Swap History"
 msgstr "Zgodovina porabe pomnilnika in navideznega pomnilnika"
 
-#: ../src/interface.cpp:374
-#: ../src/proctable.cpp:224
+#: ../src/interface.cpp:359
+#: ../src/proctable.cpp:226
 msgid "Memory"
 msgstr "Pomnilnik"
 
-#: ../src/interface.cpp:400
+#: ../src/interface.cpp:385
 msgid "Swap"
 msgstr "Zamenjaj"
 
-#: ../src/interface.cpp:421
+#: ../src/interface.cpp:406
 msgid "Network History"
 msgstr "Zgodovina uporabe mrežnih povezav"
 
-#: ../src/interface.cpp:460
+#: ../src/interface.cpp:445
 msgid "Receiving"
 msgstr "Prejemanje"
 
-#: ../src/interface.cpp:481
+#: ../src/interface.cpp:466
 msgid "Total Received"
 msgstr "Skupaj prejeto"
 
-#: ../src/interface.cpp:515
+#: ../src/interface.cpp:500
 msgid "Sending"
 msgstr "Pošiljanje"
 
-#: ../src/interface.cpp:537
+#: ../src/interface.cpp:522
 msgid "Total Sent"
 msgstr "Skupaj poslano"
 
-#: ../src/interface.cpp:705
+#: ../src/interface.cpp:690
 msgid "System"
 msgstr "Sistem"
 
-#: ../src/interface.cpp:709
+#: ../src/interface.cpp:694
 #: ../src/procdialogs.cpp:512
 msgid "Processes"
 msgstr "Procesi"
 
-#: ../src/interface.cpp:713
+#: ../src/interface.cpp:698
 #: ../src/procdialogs.cpp:627
 msgid "Resources"
 msgstr "Viri"
 
-#: ../src/load-graph.cpp:217
+#: ../src/load-graph.cpp:150
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
@@ -585,38 +589,49 @@ msgstr[2] "%u sekundi"
 msgstr[3] "%u sekunde"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:430
+#: ../src/load-graph.cpp:366
 #, c-format
 msgid "%s (%.1f %%) of %s"
 msgstr "%s (%.1f %%) of %s"
 
-#: ../src/lsof.cpp:247
+#: ../src/lsof.cpp:123
+#, c-format
+msgid ""
+"<b>Error</b>\n"
+"'%s' is not a valid Perl regular expression.\n"
+"%s"
+msgstr ""
+"<b>Napaka</b>\n"
+"'%s' ni veljaven logični izraz Perl.\n"
+"%s"
+
+#: ../src/lsof.cpp:269
 msgid "Process"
 msgstr "Proces"
 
-#: ../src/lsof.cpp:259
+#: ../src/lsof.cpp:281
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:269
+#: ../src/lsof.cpp:291
 #: ../src/memmaps.cpp:478
 msgid "Filename"
 msgstr "Ime datoteke"
 
 #. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-#: ../src/lsof.cpp:286
+#: ../src/lsof.cpp:308
 msgid "Search for Open Files"
 msgstr "Iskanje odprtih datotek"
 
-#: ../src/lsof.cpp:314
+#: ../src/lsof.cpp:336
 msgid "_Name contains:"
 msgstr "_Ime vsebuje:"
 
-#: ../src/lsof.cpp:330
+#: ../src/lsof.cpp:352
 msgid "Case insensitive matching"
 msgstr "Ujemanje, neobčutljivo na velikost črt"
 
-#: ../src/lsof.cpp:338
+#: ../src/lsof.cpp:360
 msgid "S_earch results:"
 msgstr "Zadetki i_skanja:"
 
@@ -846,116 +861,121 @@ msgstr "Grafi"
 msgid "Show _all filesystems"
 msgstr "Pokaži _vse datotečne sisteme"
 
-#: ../src/proctable.cpp:209
+#: ../src/procman.cpp:654
+msgid "A simple process and system monitor."
+msgstr "Enostaven nadzornik sistema in procesov"
+
+#: ../src/proctable.cpp:211
 msgid "Process Name"
 msgstr "Ime procesa"
 
-#: ../src/proctable.cpp:210
+#: ../src/proctable.cpp:212
 msgid "User"
 msgstr "Uporabnik"
 
-#: ../src/proctable.cpp:211
+#: ../src/proctable.cpp:213
 msgid "Status"
 msgstr "Stanje"
 
-#: ../src/proctable.cpp:212
+#: ../src/proctable.cpp:214
 msgid "Virtual Memory"
 msgstr "Navidezni pomnilnik"
 
-#: ../src/proctable.cpp:213
+#: ../src/proctable.cpp:215
 msgid "Resident Memory"
 msgstr "Stalni pomnilnik"
 
-#: ../src/proctable.cpp:214
+#: ../src/proctable.cpp:216
 msgid "Writable Memory"
 msgstr "Zapisljiv pomnilnik"
 
-#: ../src/proctable.cpp:215
+#: ../src/proctable.cpp:217
 msgid "Shared Memory"
 msgstr "Skupni pomnilnik"
 
-#: ../src/proctable.cpp:216
+#: ../src/proctable.cpp:218
 msgid "X Server Memory"
 msgstr "Pomnilnik strežnika X"
 
-#: ../src/proctable.cpp:217
+#: ../src/proctable.cpp:219
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPE"
 
-#: ../src/proctable.cpp:218
+#: ../src/proctable.cpp:220
 msgid "CPU Time"
 msgstr "Procesorski čas"
 
-#: ../src/proctable.cpp:219
+#: ../src/proctable.cpp:221
 msgid "Started"
 msgstr "Zagnan"
 
-#: ../src/proctable.cpp:220
+#: ../src/proctable.cpp:222
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.cpp:221
+#: ../src/proctable.cpp:223
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:222
+#: ../src/proctable.cpp:224
 msgid "Security Context"
 msgstr "Varnostni kontekst"
 
-#: ../src/proctable.cpp:223
+#: ../src/proctable.cpp:225
 msgid "Command Line"
 msgstr "Ukazna vrstica"
 
-#: ../src/proctable.cpp:926
+#: ../src/proctable.cpp:934
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Povprečna obremenitev zadnjih 1, 5, 15 minut: %0.2f, %0.2f, %0.2f"
 
-#: ../src/sysinfo.cpp:91
-msgid "Unknown CPU model"
-msgstr "Neznan model procesorja"
-
-#. xgettext: Release 2.6.19
-#: ../src/sysinfo.cpp:405
+#: ../src/sysinfo.cpp:75
 #, c-format
 msgid "Release %s"
 msgstr "Izdaja %s"
 
-#: ../src/sysinfo.cpp:412
+#: ../src/sysinfo.cpp:109
+msgid "Unknown CPU model"
+msgstr "Neznan model procesorja"
+
+#: ../src/sysinfo.cpp:503
 #, c-format
 msgid "Kernel %s"
 msgstr "Kernel %s"
 
-#: ../src/sysinfo.cpp:420
+#: ../src/sysinfo.cpp:511
 #, c-format
 msgid "GNOME %s"
 msgstr "GNOME %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:429
+#: ../src/sysinfo.cpp:520
+#, c-format
 msgid "<b>Hardware</b>"
 msgstr "<b>Strojna oprema</b>"
 
-#: ../src/sysinfo.cpp:450
+#: ../src/sysinfo.cpp:541
 msgid "Memory:"
 msgstr "Pomnilnik:"
 
-#: ../src/sysinfo.cpp:470
+#: ../src/sysinfo.cpp:561
 #, c-format
 msgid "Processor %d:"
 msgstr "Procesor %d:"
 
-#: ../src/sysinfo.cpp:475
+#: ../src/sysinfo.cpp:566
 msgid "Processor:"
 msgstr "Procesor:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:495
+#: ../src/sysinfo.cpp:586
+#, c-format
 msgid "<b>System Status</b>"
 msgstr "<b>Stanje sistema</b>"
 
-#: ../src/sysinfo.cpp:516
+#: ../src/sysinfo.cpp:607
 msgid "Available disk space:"
 msgstr "Razpoložljiv prostor na disku:"
 
