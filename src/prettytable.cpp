@@ -41,31 +41,29 @@ PrettyTable::~PrettyTable()
 void
 PrettyTable::on_application_opened(WnckScreen* screen, WnckApplication* app, gpointer data)
 {
+  PrettyTable * const that = static_cast<PrettyTable*>(data);
+
   pid_t pid = wnck_application_get_pid(app);
 
   if (pid == 0)
     return;
 
-  // we don't own it
-  GList* list = wnck_application_get_windows(app);
+  const char* icon_name = wnck_application_get_icon_name(app);
 
-  if (not list)
-    return;
 
-  WnckWindow* win = static_cast<WnckWindow*>(list->data);
+  Glib::RefPtr<Gdk::Pixbuf> icon;
 
-  Glib::RefPtr<Gdk::Pixbuf> icon(Glib::wrap(wnck_window_get_icon(win),
-					    /* take_copy */ true));
+  icon = that->theme->load_icon(icon_name, APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN);
 
-  if (not icon)
-    return;
-
-  icon = icon->scale_simple(APP_ICON_SIZE, APP_ICON_SIZE, Gdk::INTERP_HYPER);
+  if (not icon) {
+    icon = Glib::wrap(wnck_application_get_icon(app), /* take_copy */ true);
+    icon = icon->scale_simple(APP_ICON_SIZE, APP_ICON_SIZE, Gdk::INTERP_HYPER);
+  }
 
   if (not icon)
     return;
 
-  static_cast<PrettyTable*>(data)->register_application(pid, icon);
+  that->register_application(pid, icon);
 }
 
 
@@ -80,6 +78,7 @@ PrettyTable::register_application(pid_t pid, Glib::RefPtr<Gdk::Pixbuf> icon)
       info->set_icon(icon);
       // move the ref to the map
       this->apps[pid] = icon;
+      procman_debug("WNCK OK for %u", unsigned(pid));
     }
 }
 
