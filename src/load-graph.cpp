@@ -216,7 +216,7 @@ load_graph_expose (GtkWidget *widget,
 	sample_width = (float)(g->draw_width - g->rmargin - g->indent) / (float)LoadGraph::NUM_POINTS;
 	/* General offset */
 	x_offset = g->draw_width - g->rmargin + (sample_width*2);
-	g_print ("%0f, %0f \n", x_offset, sample_width);
+
 	/* Subframe offset */
 	x_offset += g->rmargin - ((sample_width / g->frames_per_unit) * g->render_counter);
 
