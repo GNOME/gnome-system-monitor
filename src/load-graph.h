@@ -65,9 +65,8 @@ struct LoadGraph {
 	GtkWidget *main_widget;
 	GtkWidget *disp;
 
-	cairo_surface_t *buffer;
-	cairo_surface_t *graph_buffer;
-	cairo_surface_t *background_buffer;
+	GdkGC *gc;
+	GdkDrawable *background;
 
 	guint timer_index;
 
