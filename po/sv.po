@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-26 10:07+0100\n"
-"PO-Revision-Date: 2008-02-26 10:07+0100\n"
+"POT-Creation-Date: 2008-04-20 11:10+0200\n"
+"PO-Revision-Date: 2008-04-20 11:11+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: ../gnome-system-monitor.desktop.in.in.h:1
 #: ../src/callbacks.cpp:156
 #: ../src/interface.cpp:619
-#: ../src/procman.cpp:674
+#: ../src/procman.cpp:695
 msgid "System Monitor"
 msgstr "Systemövervakare"
 
@@ -27,6 +27,10 @@ msgstr "Systemövervakare"
 #: ../src/callbacks.cpp:157
 msgid "View current processes and monitor system state"
 msgstr "Visa aktuella processer och övervaka systemtillståndet"
+
+#: ../src/argv.cpp:17
+msgid "Show the System tab"
+msgstr "Visa fliken System"
 
 #: ../src/callbacks.cpp:166
 msgid "translator-credits"
@@ -529,7 +533,7 @@ msgid "Memory and Swap History"
 msgstr "Historik över användning av minne och växlingsutrymme"
 
 #: ../src/interface.cpp:359
-#: ../src/proctable.cpp:224
+#: ../src/proctable.cpp:226
 msgid "Memory"
 msgstr "Minne"
 
@@ -571,7 +575,7 @@ msgstr "Processer"
 msgid "Resources"
 msgstr "Resurser"
 
-#: ../src/load-graph.cpp:150
+#: ../src/load-graph.cpp:147
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
@@ -579,38 +583,49 @@ msgstr[0] "%u sekund"
 msgstr[1] "%u sekunder"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:363
+#: ../src/load-graph.cpp:326
 #, c-format
 msgid "%s (%.1f %%) of %s"
 msgstr "%s (%.1f %%) av %s"
 
-#: ../src/lsof.cpp:247
+#: ../src/lsof.cpp:123
+#, c-format
+msgid ""
+"<b>Error</b>\n"
+"'%s' is not a valid Perl regular expression.\n"
+"%s"
+msgstr ""
+"<b>Fel</b>\n"
+"\"%s\" är inte ett giltigt reguljärt Perl-uttryck.\n"
+"%s"
+
+#: ../src/lsof.cpp:269
 msgid "Process"
 msgstr "Process"
 
-#: ../src/lsof.cpp:259
+#: ../src/lsof.cpp:281
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:269
+#: ../src/lsof.cpp:291
 #: ../src/memmaps.cpp:478
 msgid "Filename"
 msgstr "Filnamn"
 
 #. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-#: ../src/lsof.cpp:286
+#: ../src/lsof.cpp:308
 msgid "Search for Open Files"
 msgstr "Sök efter öppna filer"
 
-#: ../src/lsof.cpp:314
+#: ../src/lsof.cpp:336
 msgid "_Name contains:"
 msgstr "_Namn innehåller:"
 
-#: ../src/lsof.cpp:330
+#: ../src/lsof.cpp:352
 msgid "Case insensitive matching"
 msgstr "Matchning inte känslig för skiftläge"
 
-#: ../src/lsof.cpp:338
+#: ../src/lsof.cpp:360
 msgid "S_earch results:"
 msgstr "S_ökresultat:"
 
@@ -840,68 +855,72 @@ msgstr "Grafer"
 msgid "Show _all filesystems"
 msgstr "Visa _alla filsystem"
 
-#: ../src/proctable.cpp:209
+#: ../src/procman.cpp:654
+msgid "A simple process and system monitor."
+msgstr "En enkel process- och systemövervakare."
+
+#: ../src/proctable.cpp:211
 msgid "Process Name"
 msgstr "Processnamn"
 
-#: ../src/proctable.cpp:210
+#: ../src/proctable.cpp:212
 msgid "User"
 msgstr "Användare"
 
-#: ../src/proctable.cpp:211
+#: ../src/proctable.cpp:213
 msgid "Status"
 msgstr "Status"
 
-#: ../src/proctable.cpp:212
+#: ../src/proctable.cpp:214
 msgid "Virtual Memory"
 msgstr "Virtuellt minne"
 
-#: ../src/proctable.cpp:213
+#: ../src/proctable.cpp:215
 msgid "Resident Memory"
 msgstr "Beständigt minne"
 
-#: ../src/proctable.cpp:214
+#: ../src/proctable.cpp:216
 msgid "Writable Memory"
 msgstr "Skrivbart minne"
 
-#: ../src/proctable.cpp:215
+#: ../src/proctable.cpp:217
 msgid "Shared Memory"
 msgstr "Delat minne"
 
-#: ../src/proctable.cpp:216
+#: ../src/proctable.cpp:218
 msgid "X Server Memory"
 msgstr "X-serverminne"
 
-#: ../src/proctable.cpp:217
+#: ../src/proctable.cpp:219
 #, no-c-format
 msgid "% CPU"
 msgstr "Processor %"
 
-#: ../src/proctable.cpp:218
+#: ../src/proctable.cpp:220
 msgid "CPU Time"
 msgstr "Processortid"
 
-#: ../src/proctable.cpp:219
+#: ../src/proctable.cpp:221
 msgid "Started"
 msgstr "Startad"
 
-#: ../src/proctable.cpp:220
+#: ../src/proctable.cpp:222
 msgid "Nice"
 msgstr "Processprioritet"
 
-#: ../src/proctable.cpp:221
+#: ../src/proctable.cpp:223
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:222
+#: ../src/proctable.cpp:224
 msgid "Security Context"
 msgstr "Säkerhetskontext"
 
-#: ../src/proctable.cpp:223
+#: ../src/proctable.cpp:225
 msgid "Command Line"
 msgstr "Kommandorad"
 
-#: ../src/proctable.cpp:926
+#: ../src/proctable.cpp:934
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Belastningsgenomsnitt för de senaste 1, 5, 15 minuterna: %0.2f, %0.2f, %0.2f"
