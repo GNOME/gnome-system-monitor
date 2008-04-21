@@ -153,21 +153,21 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
  **/
 
 gchar*
-procman::format_size(GnomeVFSFileSize size, GnomeVFSFileSize max_size)
+procman::format_size(guint64 size, guint64 max_size)
 {
 	if (max_size == 0)
 		max_size = size;
 
-	if (max_size < (GnomeVFSFileSize) KIBIBYTE_FACTOR) {
+	if (max_size < (guint64) KIBIBYTE_FACTOR) {
 		return g_strdup_printf (dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes",(guint) size), (guint) size);
 	} else {
 		guint factor;
 		const char* format;
 
-		if (max_size < (GnomeVFSFileSize) MEBIBYTE_FACTOR) {
+		if (max_size < (guint64) MEBIBYTE_FACTOR) {
 		  factor = KIBIBYTE_FACTOR;
 		  format = N_("%.1f KiB");
-		} else if (max_size < (GnomeVFSFileSize) GIBIBYTE_FACTOR) {
+		} else if (max_size < (guint64) GIBIBYTE_FACTOR) {
 		  factor = MEBIBYTE_FACTOR;
 		  format = N_("%.1f MiB");
 		} else {
@@ -459,7 +459,7 @@ namespace procman
 
 
 
-  std::string format_rate(GnomeVFSFileSize rate, GnomeVFSFileSize max_rate)
+  std::string format_rate(guint64 rate, guint64 max_rate)
   {
     char* bytes = procman::format_size(rate, max_rate);
     // xgettext: rate, 10MiB/s

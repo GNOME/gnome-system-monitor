@@ -135,9 +135,9 @@ namespace procman
   }
 
 
-  gchar* format_size(GnomeVFSFileSize size, GnomeVFSFileSize max = 0);
+  gchar* format_size(guint64 size, guint64 max = 0);
 
-  std::string format_rate(GnomeVFSFileSize rate, GnomeVFSFileSize max_rate = 0);
+  std::string format_rate(guint64 rate, guint64 max_rate = 0);
 }
 
 
