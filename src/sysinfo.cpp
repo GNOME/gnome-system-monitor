@@ -281,7 +281,7 @@ namespace {
 	and this->get_value(input, codename);
 
       this->distro_release = release;
-      if (codename != "")
+      if (codename != "" && codename != "n/a")
 	this->distro_release += " (" + codename + ')';
 
       this->SysInfo::set_distro_labels(this->name, this->release);
@@ -336,7 +336,7 @@ namespace {
 	    and this->get_value(input, release)
 	    and this->get_value(input, codename);
 	  this->distro_release = release;
-	  if (codename != "")
+	  if (codename != "" && codename != "n/a")
 	    this->distro_release += " (" + codename + ')';
 	}
       }
@@ -426,6 +426,7 @@ procman_create_sysinfo_view(void)
 
   GtkWidget *distro_frame;
   GtkWidget *distro_release_label;
+  GtkWidget *distro_table;
 
   GtkWidget *hardware_frame;
   GtkWidget *hardware_table;
@@ -488,31 +489,52 @@ procman_create_sysinfo_view(void)
   gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
   gtk_container_add(GTK_CONTAINER(distro_frame), alignment);
 
-  GtkWidget* distro_box = gtk_hbox_new(FALSE, 12);
-  gtk_container_add(GTK_CONTAINER(alignment), distro_box);
+  unsigned table_size = 2;
+  if (data->gnome_version != "")
+     table_size++;
+  distro_table = gtk_table_new(table_size, 1, FALSE);
+  gtk_table_set_row_spacings(GTK_TABLE(distro_table), 6);
+  gtk_table_set_col_spacings(GTK_TABLE(distro_table), 6);
+  gtk_container_set_border_width(GTK_CONTAINER(distro_table), 6);
+  gtk_container_add(GTK_CONTAINER(alignment), distro_table);
 
-  GtkWidget* distro_inner_box = gtk_vbox_new(FALSE, 6);
-  gtk_box_pack_start(GTK_BOX(distro_box), distro_inner_box, FALSE, FALSE, 0);
+  unsigned table_count = 0;
 
-      distro_release_label = gtk_label_new("???");
-      gtk_misc_set_alignment(GTK_MISC(distro_release_label), 0.0, 0.5);
-      gtk_box_pack_start(GTK_BOX(distro_inner_box), distro_release_label, FALSE, FALSE, 0);
+
+  distro_release_label = gtk_label_new("???");
+  gtk_misc_set_alignment(GTK_MISC(distro_release_label), 0.0, 0.5);
+  gtk_table_attach(
+		   GTK_TABLE(distro_table), distro_release_label,
+		   0, 1, table_count, table_count+1,
+		   GTK_FILL, GTK_FILL, 0, 0
+		   );
+  table_count++;
 
   data->set_distro_labels(gtk_frame_get_label_widget(GTK_FRAME(distro_frame)), distro_release_label);
 
   markup = g_strdup_printf(_("Kernel %s"), data->kernel.c_str());
-  GtkWidget* kernel_label = gtk_label_new(markup);
-  gtk_misc_set_alignment(GTK_MISC(kernel_label), 0.0, 0.5);
+  header = gtk_label_new(markup);
   g_free(markup);
-  gtk_box_pack_start(GTK_BOX(distro_inner_box), kernel_label, FALSE, FALSE, 0);
+  gtk_misc_set_alignment(GTK_MISC(header), 0.0, 0.5);
+  gtk_table_attach(
+		   GTK_TABLE(distro_table), header,
+		   0, 1, table_count, table_count + 1,
+		   GTK_FILL, GTK_FILL, 0, 0
+		   );
+  table_count++;
 
   if (data->gnome_version != "")
     {
       markup = g_strdup_printf(_("GNOME %s"), data->gnome_version.c_str());
-      GtkWidget* gnome_label = gtk_label_new(markup);
-      gtk_misc_set_alignment(GTK_MISC(gnome_label), 0.0, 0.5);
+      header = gtk_label_new(markup);
       g_free(markup);
-      gtk_box_pack_start(GTK_BOX(distro_inner_box), gnome_label, FALSE, FALSE, 0);
+      gtk_misc_set_alignment(GTK_MISC(header), 0.0, 0.5);
+      gtk_table_attach(
+		       GTK_TABLE(distro_table), header,
+		       0, 1, table_count, table_count + 1,
+		       GTK_FILL, GTK_FILL, 0, 0
+		       );
+      table_count++;
     }
 
   /* hardware section */
