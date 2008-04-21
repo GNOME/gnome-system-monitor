@@ -34,14 +34,11 @@
 #include <map>
 #include <string>
 
-typedef struct _ProcConfig ProcConfig;
 struct ProcInfo;
 struct ProcData;
+struct LoadGraph;
 
 #include "smooth_refresh.h"
-
-#include "load-graph.h"
-
 #include "prettytable.h"
 
 enum
@@ -72,7 +69,7 @@ enum ProcmanTab
 };
 
 
-struct _ProcConfig
+struct ProcConfig
 {
 	gint		width;
 	gint		height;
