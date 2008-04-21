@@ -33,11 +33,6 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
 					     const char *process_name,
 					     unsigned pid);
 
-
-gchar*
-SI_gnome_vfs_format_file_size_for_display (GnomeVFSFileSize size, GnomeVFSFileSize max = 0);
-
-
 gboolean
 load_symbols(const char *module, ...) G_GNUC_NULL_TERMINATED;
 
@@ -140,6 +135,7 @@ namespace procman
   }
 
 
+  gchar* format_size(GnomeVFSFileSize size, GnomeVFSFileSize max = 0);
 
   std::string format_rate(GnomeVFSFileSize rate, GnomeVFSFileSize max_rate = 0);
 }

@@ -142,7 +142,7 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
 
 
 /**
- * SI_gnome_vfs_format_file_size_for_display:
+ * procman::format_size:
  * @size:
  * 
  * Formats the file size passed in @bytes in a way that is easy for
@@ -153,7 +153,7 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
  **/
 
 gchar*
-SI_gnome_vfs_format_file_size_for_display (GnomeVFSFileSize size, GnomeVFSFileSize max_size)
+procman::format_size(GnomeVFSFileSize size, GnomeVFSFileSize max_size)
 {
 	if (max_size == 0)
 		max_size = size;
@@ -310,7 +310,7 @@ namespace procman
 
     g_value_unset(&value);
 
-    char *str = SI_gnome_vfs_format_file_size_for_display(size);
+    char *str = procman::format_size(size);
     g_object_set(renderer, "text", str, NULL);
     g_free(str);
   }
@@ -348,7 +348,7 @@ namespace procman
     if (size == 0)
       g_object_set(renderer, "markup", _("<i>N/A</i>"), NULL);
     else {
-      char *str = SI_gnome_vfs_format_file_size_for_display(size);
+      char *str = procman::format_size(size);
       g_object_set(renderer, "text", str, NULL);
       g_free(str);
     }
@@ -461,7 +461,7 @@ namespace procman
 
   std::string format_rate(GnomeVFSFileSize rate, GnomeVFSFileSize max_rate)
   {
-    char* bytes = SI_gnome_vfs_format_file_size_for_display(rate, max_rate);
+    char* bytes = procman::format_size(rate, max_rate);
     // xgettext: rate, 10MiB/s
     return make_string(g_strdup_printf(_("%s/s"), bytes));
   }

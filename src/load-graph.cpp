@@ -320,8 +320,8 @@ namespace
     char* total_text;
     char* text;
 
-    used_text = SI_gnome_vfs_format_file_size_for_display(used);
-    total_text = SI_gnome_vfs_format_file_size_for_display(total);
+    used_text = procman::format_size(used);
+    total_text = procman::format_size(total);
     // xgettext: 540MiB (53 %) of 1.0 GiB
     text = g_strdup_printf(_("%s (%.1f %%) of %s"), used_text, 100.0 * percent, total_text);
     gtk_label_set_text(label, text);
@@ -501,13 +501,13 @@ get_net (LoadGraph *g)
 
 	gtk_label_set_text (GTK_LABEL (g->labels.net_in), procman::format_rate(din).c_str());
 
-	text1 = SI_gnome_vfs_format_file_size_for_display (in);
+	text1 = procman::format_size (in);
 	gtk_label_set_text (GTK_LABEL (g->labels.net_in_total), text1);
 	g_free (text1);
 
 	gtk_label_set_text (GTK_LABEL (g->labels.net_out), procman::format_rate(dout).c_str());
 
-	text1 = SI_gnome_vfs_format_file_size_for_display (out);
+	text1 = procman::format_size (out);
 	gtk_label_set_text (GTK_LABEL (g->labels.net_out_total), text1);
 	g_free (text1);
 }

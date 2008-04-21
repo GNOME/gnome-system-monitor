@@ -546,7 +546,7 @@ procman_create_sysinfo_view(void)
 		   GTK_FILL, GTK_FILL, 0, 0
 		   );
 
-  markup = SI_gnome_vfs_format_file_size_for_display(data->memory_bytes);
+  markup = procman::format_size(data->memory_bytes);
   memory_label = gtk_label_new(markup);
   g_free(markup);
   gtk_misc_set_alignment(GTK_MISC(memory_label), 0.0, 0.5);
@@ -612,7 +612,7 @@ procman_create_sysinfo_view(void)
 		   GTK_FILL, GTK_FILL, 0, 0
 		   );
 
-  markup = SI_gnome_vfs_format_file_size_for_display(data->free_space_bytes);
+  markup = procman::format_size(data->free_space_bytes);
   disk_space_label = gtk_label_new(markup);
   g_free(markup);
   gtk_misc_set_alignment(GTK_MISC(disk_space_label), 0.0, 0.5);
