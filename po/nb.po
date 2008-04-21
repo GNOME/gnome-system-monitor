@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor 2.21.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-14 11:17+0100\n"
-"PO-Revision-Date: 2008-01-14 11:18+0100\n"
+"POT-Creation-Date: 2008-04-21 20:51+0200\n"
+"PO-Revision-Date: 2008-04-21 20:52+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian/Bokmaal <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -17,13 +17,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:156
-#: ../src/interface.cpp:634 ../src/procman.cpp:689
+#: ../src/interface.cpp:619 ../src/procman.cpp:695
 msgid "System Monitor"
 msgstr "Systemmonitor"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:157
 msgid "View current processes and monitor system state"
 msgstr "Vis aktive prosesser og overvåk systemets tilstand"
+
+#: ../src/argv.cpp:17
+msgid "Show the System tab"
+msgstr "Vis systemfanen"
 
 #: ../src/callbacks.cpp:166
 msgid "translator-credits"
@@ -57,7 +61,7 @@ msgstr "Tilgjengelig"
 msgid "Used"
 msgstr "Brukt"
 
-#: ../src/disks.cpp:292 ../src/interface.cpp:710 ../src/procdialogs.cpp:680
+#: ../src/disks.cpp:292 ../src/interface.cpp:702 ../src/procdialogs.cpp:680
 #: ../src/procdialogs.cpp:684
 msgid "File Systems"
 msgstr "Filsystemer"
@@ -348,7 +352,7 @@ msgstr "Tittel"
 msgid "The title of the color selection dialog"
 msgstr "Tittel for fargevalg-dialogen"
 
-#: ../src/gsm_color_button.c:198 ../src/gsm_color_button.c:598
+#: ../src/gsm_color_button.c:198 ../src/gsm_color_button.c:602
 msgid "Pick a Color"
 msgstr "Velg en farge"
 
@@ -364,7 +368,7 @@ msgstr "Valgt farge"
 msgid "Type of color picker"
 msgstr "Type fargevelger"
 
-#: ../src/gsm_color_button.c:518
+#: ../src/gsm_color_button.c:522
 msgid "Received invalid color data\n"
 msgstr "Fargedata for ugyldig mottak\n"
 
@@ -514,64 +518,64 @@ msgstr "Vis prosesser som tilhører brukere"
 msgid "End _Process"
 msgstr "Avslutt _prosess"
 
-#: ../src/interface.cpp:257
+#: ../src/interface.cpp:243
 msgid "CPU History"
 msgstr "Historikk for CPU-bruk"
 
-#: ../src/interface.cpp:315
+#: ../src/interface.cpp:300
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:317
+#: ../src/interface.cpp:302
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:335
+#: ../src/interface.cpp:320
 msgid "Memory and Swap History"
 msgstr "Historikk for minne- og swap-bruk"
 
-#: ../src/interface.cpp:374 ../src/proctable.cpp:224
+#: ../src/interface.cpp:359 ../src/proctable.cpp:226
 msgid "Memory"
 msgstr "Minne"
 
-#: ../src/interface.cpp:400
+#: ../src/interface.cpp:385
 msgid "Swap"
 msgstr "Swap"
 
-#: ../src/interface.cpp:421
+#: ../src/interface.cpp:406
 msgid "Network History"
 msgstr "Nettverkshistorikk"
 
-#: ../src/interface.cpp:460
+#: ../src/interface.cpp:445
 msgid "Receiving"
 msgstr "Mottar"
 
-#: ../src/interface.cpp:481
+#: ../src/interface.cpp:466
 msgid "Total Received"
 msgstr "Totalt mottatt"
 
-#: ../src/interface.cpp:515
+#: ../src/interface.cpp:500
 msgid "Sending"
 msgstr "Sender"
 
-#: ../src/interface.cpp:537
+#: ../src/interface.cpp:522
 msgid "Total Sent"
 msgstr "Totalt sendt"
 
-#: ../src/interface.cpp:698
+#: ../src/interface.cpp:690
 msgid "System"
 msgstr "System"
 
-#: ../src/interface.cpp:702 ../src/procdialogs.cpp:512
+#: ../src/interface.cpp:694 ../src/procdialogs.cpp:512
 msgid "Processes"
 msgstr "Prosesser"
 
-#: ../src/interface.cpp:706 ../src/procdialogs.cpp:627
+#: ../src/interface.cpp:698 ../src/procdialogs.cpp:627
 msgid "Resources"
 msgstr "Ressurser"
 
-#: ../src/load-graph.cpp:217
+#: ../src/load-graph.cpp:147
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
@@ -579,37 +583,48 @@ msgstr[0] "%u sekund"
 msgstr[1] "%u sekunder"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:427
+#: ../src/load-graph.cpp:326
 #, c-format
 msgid "%s (%.1f %%) of %s"
 msgstr "%s (%.1f %%) av %s"
 
-#: ../src/lsof.cpp:355
+#: ../src/lsof.cpp:123
+#, c-format
+msgid ""
+"<b>Error</b>\n"
+"'%s' is not a valid Perl regular expression.\n"
+"%s"
+msgstr ""
+"<b>Feil</b>\n"
+"«%s» er ikke et gyldig vanlig uttrykk i Perl.\n"
+"%s"
+
+#: ../src/lsof.cpp:269
 msgid "Process"
 msgstr "Prosess"
 
-#: ../src/lsof.cpp:367
+#: ../src/lsof.cpp:281
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:377 ../src/memmaps.cpp:478
+#: ../src/lsof.cpp:291 ../src/memmaps.cpp:478
 msgid "Filename"
 msgstr "Filnavn"
 
 #. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-#: ../src/lsof.cpp:394
+#: ../src/lsof.cpp:308
 msgid "Search for Open Files"
 msgstr "Søk etter åpne filer"
 
-#: ../src/lsof.cpp:422
+#: ../src/lsof.cpp:336
 msgid "_Name contains:"
 msgstr "_Navn inneholder:"
 
-#: ../src/lsof.cpp:438
+#: ../src/lsof.cpp:352
 msgid "Case insensitive matching"
 msgstr "Treff på små/store bokstaver"
 
-#: ../src/lsof.cpp:446
+#: ../src/lsof.cpp:360
 msgid "S_earch results:"
 msgstr "S_økeresultater:"
 
@@ -852,118 +867,121 @@ msgstr "Grafer"
 msgid "Show _all filesystems"
 msgstr "Vis _alle filsystemer"
 
-#: ../src/proctable.cpp:209
+#: ../src/procman.cpp:654
+msgid "A simple process and system monitor."
+msgstr "Et enkelt program for overvåking av systemet og dets prosesser."
+
+#: ../src/proctable.cpp:211
 msgid "Process Name"
 msgstr "Prosessnavn"
 
-#: ../src/proctable.cpp:210
+#: ../src/proctable.cpp:212
 msgid "User"
 msgstr "Bruker"
 
-#: ../src/proctable.cpp:211
+#: ../src/proctable.cpp:213
 msgid "Status"
 msgstr "Status"
 
-#: ../src/proctable.cpp:212
+#: ../src/proctable.cpp:214
 msgid "Virtual Memory"
 msgstr "Virtuelt minne"
 
-#: ../src/proctable.cpp:213
+#: ../src/proctable.cpp:215
 msgid "Resident Memory"
 msgstr "Resident minne"
 
-#: ../src/proctable.cpp:214
+#: ../src/proctable.cpp:216
 msgid "Writable Memory"
 msgstr "Skrivbart minne"
 
-#: ../src/proctable.cpp:215
+#: ../src/proctable.cpp:217
 msgid "Shared Memory"
 msgstr "Delt minne"
 
-#: ../src/proctable.cpp:216
+#: ../src/proctable.cpp:218
 msgid "X Server Memory"
 msgstr "Minne for X-tjener"
 
-#: ../src/proctable.cpp:217
+#: ../src/proctable.cpp:219
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:218
+#: ../src/proctable.cpp:220
 msgid "CPU Time"
 msgstr "CPU-tid"
 
-#: ../src/proctable.cpp:219
+#: ../src/proctable.cpp:221
 msgid "Started"
 msgstr "Startet"
 
-#: ../src/proctable.cpp:220
+#: ../src/proctable.cpp:222
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.cpp:221
+#: ../src/proctable.cpp:223
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:222
+#: ../src/proctable.cpp:224
 msgid "Security Context"
 msgstr "Sikkerhetskontekst"
 
-#: ../src/proctable.cpp:223
+#: ../src/proctable.cpp:225
 msgid "Command Line"
 msgstr "Kommandolinje"
 
-#: ../src/proctable.cpp:926
+#: ../src/proctable.cpp:934
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Snittbelastning for de siste 1, 5, 15 minutter: %0.2f, %0.2f, %0.2f"
 
-#: ../src/sysinfo.cpp:92
-msgid "Unknown CPU model"
-msgstr "Ukjent CPU-modell"
-
-#. xgettext: Release 2.6.19
-#: ../src/sysinfo.cpp:401
+#: ../src/sysinfo.cpp:75
 #, c-format
 msgid "Release %s"
 msgstr "Versjon %s"
 
-#: ../src/sysinfo.cpp:408
+#: ../src/sysinfo.cpp:109
+msgid "Unknown CPU model"
+msgstr "Ukjent CPU-modell"
+
+#: ../src/sysinfo.cpp:515
 #, c-format
 msgid "Kernel %s"
 msgstr "Kernel %s"
 
-#: ../src/sysinfo.cpp:416
+#: ../src/sysinfo.cpp:528
 #, c-format
 msgid "GNOME %s"
 msgstr "GNOME %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:425
+#: ../src/sysinfo.cpp:542
 #, c-format
 msgid "<b>Hardware</b>"
 msgstr "<b>Maskinvare</b>"
 
-#: ../src/sysinfo.cpp:446
+#: ../src/sysinfo.cpp:563
 msgid "Memory:"
 msgstr "Minne:"
 
-#: ../src/sysinfo.cpp:466
+#: ../src/sysinfo.cpp:583
 #, c-format
 msgid "Processor %d:"
 msgstr "Prosessor %d:"
 
-#: ../src/sysinfo.cpp:471
+#: ../src/sysinfo.cpp:588
 msgid "Processor:"
 msgstr "Prosessor:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:491
+#: ../src/sysinfo.cpp:608
 #, c-format
 msgid "<b>System Status</b>"
 msgstr "<b>Systemstatus</b>"
 
-#: ../src/sysinfo.cpp:512
+#: ../src/sysinfo.cpp:629
 msgid "Available disk space:"
 msgstr "Tilgjengelig diskplass:"
 
@@ -1011,46 +1029,34 @@ msgstr "%u:%02u:%02u"
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: ../src/util.cpp:159
+#: ../src/util.cpp:162
 #, c-format
 msgid "%u byte"
 msgid_plural "%u bytes"
 msgstr[0] "%u byte"
 msgstr[1] "%u bytes"
 
-#: ../src/util.cpp:166
+#: ../src/util.cpp:169
 #, c-format
 msgid "%.1f KiB"
 msgstr "%1.f KiB"
 
-#: ../src/util.cpp:169
+#: ../src/util.cpp:172
 #, c-format
 msgid "%.1f MiB"
 msgstr "%.1f MiB"
 
-#: ../src/util.cpp:172
+#: ../src/util.cpp:175
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
 
-#: ../src/util.cpp:346
+#: ../src/util.cpp:349
 msgid "<i>N/A</i>"
 msgstr "<i>I/T</i>"
 
 #. xgettext: rate, 10MiB/s
-#: ../src/util.cpp:463
+#: ../src/util.cpp:466
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
-
-#~ msgid "color_set"
-#~ msgstr "color_set"
-
-#~ msgid "of"
-#~ msgstr "av"
-
-#~ msgid "("
-#~ msgstr "("
-
-#~ msgid ")"
-#~ msgstr ")"
