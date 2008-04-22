@@ -21,8 +21,6 @@
 #include <glibtop/netlist.h>
 #include <math.h>
 
-#include <libgnomevfs/gnome-vfs-utils.h>
-
 #include <algorithm>
 
 #include "procman.h"

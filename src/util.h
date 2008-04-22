@@ -4,7 +4,6 @@
 #define H_GNOME_SYSTEM_MONITOR_UTIL_1123178725
 
 #include <glib.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
 #include <stddef.h>
 #include <cstring>
 #include <string>

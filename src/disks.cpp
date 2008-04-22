@@ -1,6 +1,7 @@
 #include <config.h>
 
-#include <libgnomevfs/gnome-vfs.h>
+#include <giomm.h>
+#include <giomm/themedicon.h>
 #include <gtk/gtk.h>
 #include <glibtop/mountlist.h>
 #include <glibtop/fsusage.h>
@@ -57,36 +58,47 @@ fsusage_stats(const glibtop_fsusage *buf,
 }
 
 
+namespace
+{
+  string get_icon_for_path(const std::string& path)
+  {
+    using namespace Glib;
+    using namespace Gio;
+
+    // FIXME: I don't know whether i should use Volume or Mount or UnixMount
+    // all i need an icon name.
+    RefPtr<VolumeMonitor> monitor = VolumeMonitor::get();
+
+    std::vector<RefPtr<Mount> > mounts = monitor->get_mounts();
+
+    for (size_t i = 0; i != mounts.size(); ++i) {
+      if (mounts[i]->get_name() != path)
+	continue;
+
+      RefPtr<Icon> icon = mounts[i]->get_icon();
+      RefPtr<ThemedIcon> themed_icon = RefPtr<ThemedIcon>::cast_dynamic(icon);
+
+      if (themed_icon) {
+	char* name = 0;
+	// FIXME: not wrapped yet
+	g_object_get(G_OBJECT(themed_icon->gobj()), "name", &name, NULL);
+	return make_string(name);
+      }
+    }
+
+    return "";
+  }
+}
+
 
 static Glib::RefPtr<Gdk::Pixbuf>
 get_icon_for_device(const char *mountpoint)
 {
 	procman::IconThemeWrapper icon_theme;
-	GnomeVFSVolumeMonitor *monitor;
-	GnomeVFSVolume *volume;
-	string icon_name;
-
-	monitor = gnome_vfs_get_volume_monitor();
-	volume = gnome_vfs_volume_monitor_get_volume_for_path(monitor, mountpoint);
-
-	if (!volume) {
-		g_warning("Cannot get volume for mount point '%s'",
-			  mountpoint);
-		/* Fallback using / icon */
-		volume = gnome_vfs_volume_monitor_get_volume_for_path(monitor, "/");
-	}
-
-	if (!volume)
-	  {
-	    g_warning("Cannot even get volume for mount point '/'");
-	    icon_name = "gnome-dev-harddisk";
-	  }
-	else
-	  {
-	    icon_name = make_string(gnome_vfs_volume_get_icon(volume));
-	    gnome_vfs_volume_unref(volume);
-	  }
-
+	string icon_name = get_icon_for_path(mountpoint);
+	if (icon_name == "")
+		// FIXME: defaults to a safe value
+		icon_name = "gnome-dev-harddisk"; // get_icon_for_path("/");
 	return icon_theme->load_icon(icon_name, 24, Gtk::ICON_LOOKUP_USE_BUILTIN);
 }
 
@@ -256,8 +268,11 @@ static void open_dir(GtkTreeView       *tree_view,
 
 	url = g_strdup_printf("file://%s", dir);
 
-	if (gnome_vfs_url_show(url) != GNOME_VFS_OK)
-		g_warning("Cannot open '%s'\n", url);
+	GError* error = 0;
+	if (!g_app_info_launch_default_for_uri(url, NULL, &error)) {
+		g_warning("Cannot open '%s' : %s\n", url, error->message);
+		g_error_free(error);
+	}
 
 	g_free(url);
 	g_free(dir);

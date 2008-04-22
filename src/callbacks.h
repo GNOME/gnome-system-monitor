@@ -24,7 +24,6 @@
 #include <gtk/gtk.h>
 #include "procman.h"
 #include "gsm_color_button.h"
-#include <libgnomevfs/gnome-vfs.h>
 
 
 void		cb_show_memory_maps (GtkAction *action, gpointer data);
@@ -67,10 +66,6 @@ void		cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
 gint		cb_update_disks (gpointer data);
 gint		cb_user_refresh (GtkAction* action, gpointer data);
 gint		cb_timeout (gpointer data);
-
-void		cb_volume_mounted_or_unmounted(GnomeVFSVolumeMonitor *vfsvolumemonitor,
-					       GnomeVFSVolume *vol,
-					       gpointer procdata);
 
 void		cb_radio_processes(GtkAction *action,
 				   GtkRadioAction *current,

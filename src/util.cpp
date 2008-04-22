@@ -4,7 +4,6 @@
 #include <glib/gstring.h>
 #include <gtk/gtk.h>
 
-#include <libgnomevfs/gnome-vfs-utils.h>
 #include <glibtop/proctime.h>
 #include <glibtop/procstate.h>
 #include <unistd.h>

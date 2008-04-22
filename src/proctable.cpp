@@ -42,8 +42,6 @@
 #include <set>
 #include <list>
 
-#include <libgnomevfs/gnome-vfs-utils.h>
-
 #include "procman.h"
 #include "selection.h"
 #include "proctable.h"

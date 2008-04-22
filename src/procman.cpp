@@ -22,12 +22,12 @@
 #include <stdlib.h>
 
 #include <gtkmm.h>
+#include <giomm.h>
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 #include <bacon-message-connection.h>
-#include <libgnomevfs/gnome-vfs.h>
 #include <gconf/gconf-client.h>
 #include <glibtop.h>
 #include <glibtop/close.h>
@@ -615,17 +615,26 @@ cb_server (const gchar *msg, gpointer user_data)
 }
 
 
+
+
+static void
+mount_changed(const Glib::RefPtr<Gio::Mount>&)
+{
+  cb_update_disks(ProcData::get_instance());
+}
+
+
 static void
 init_volume_monitor(ProcData *procdata)
 {
-	GnomeVFSVolumeMonitor *mon;
-	mon = gnome_vfs_get_volume_monitor();
+  using namespace Gio;
+  using namespace Glib;
 
-	g_signal_connect(mon, "volume_mounted",
-			 G_CALLBACK(cb_volume_mounted_or_unmounted), procdata);
+  RefPtr<VolumeMonitor> monitor = VolumeMonitor::get();
 
-	g_signal_connect(mon, "volume_unmounted",
-			 G_CALLBACK(cb_volume_mounted_or_unmounted), procdata);
+  monitor->signal_mount_added().connect(sigc::ptr_fun(&mount_changed));
+  monitor->signal_mount_changed().connect(sigc::ptr_fun(&mount_changed));
+  monitor->signal_mount_removed().connect(sigc::ptr_fun(&mount_changed));
 }
 
 
@@ -662,6 +671,7 @@ main (int argc, char *argv[])
 		g_error("Arguments parse error : %s", ex.what().c_str());
 	}
 
+	Gio::init();
 	Gtk::Main kit(&argc, &argv);
 	procman_debug("post gtk_init");
 
@@ -699,7 +709,6 @@ main (int argc, char *argv[])
 	client = gconf_client_get_default ();
 	gconf_client_add_dir(client, "/apps/procman", GCONF_CLIENT_PRELOAD_NONE, NULL);
 
-	gnome_vfs_init ();
 	glibtop_init ();
 
 	procman_debug("end init");
@@ -731,7 +740,6 @@ main (int argc, char *argv[])
 	procman_free_data (procdata);
 
 	glibtop_close ();
-	gnome_vfs_shutdown ();
 
 	return 0;
 }

@@ -19,7 +19,8 @@
 
 #include <config.h>
 
-#include <libgnomevfs/gnome-vfs.h>
+#include <giomm.h>
+
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <signal.h>
@@ -174,10 +175,11 @@ cb_about (GtkAction *action, gpointer data)
 void
 cb_help_contents (GtkAction *action, gpointer data)
 {
-  GnomeVFSResult res;
-
-  if ((res = gnome_vfs_url_show("ghelp:gnome-system-monitor")) != GNOME_VFS_OK)
-    g_warning("Could not display help : %s", gnome_vfs_result_to_string(res));
+  GError* error = 0;
+  if (!g_app_info_launch_default_for_uri("ghelp:gnome-system-monitor", NULL, &error)) {
+    g_warning("Could not display help : %s", error->message);
+    g_error_free(error);
+  }
 }
 
 
@@ -387,15 +389,6 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 	}
 }
 
-
-
-void
-cb_volume_mounted_or_unmounted(GnomeVFSVolumeMonitor *vfsvolumemonitor,
-			    GnomeVFSVolume *vol,
-			    gpointer procdata)
-{
-	cb_update_disks(static_cast<ProcData*>(procdata));
-}
 
 
 gint
