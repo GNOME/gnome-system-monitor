@@ -414,6 +414,59 @@ sysinfo_logo_expose (GtkWidget *widget,
   return FALSE;
 }
 
+static GtkWidget*
+add_section(GtkBox *vbox , const char * title, int num_row, int num_col, GtkWidget **out_frame)
+{
+  GtkWidget *table;
+
+  GtkWidget *frame = gtk_frame_new(title);
+  gtk_frame_set_label_align(GTK_FRAME(frame), 0.0, 0.5);
+  gtk_label_set_use_markup(
+			   GTK_LABEL(gtk_frame_get_label_widget(GTK_FRAME(frame))),
+			   TRUE
+			   );
+  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_NONE);
+  gtk_box_pack_start(GTK_BOX(vbox), frame, FALSE, FALSE, 0);
+
+  GtkWidget *alignment = gtk_alignment_new(0.5, 0.5, 1.0, 1.0);
+  gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
+  gtk_container_add(GTK_CONTAINER(frame), alignment);
+
+  table = gtk_table_new(num_row, num_col, FALSE);
+  gtk_table_set_row_spacings(GTK_TABLE(table), 6);
+  gtk_table_set_col_spacings(GTK_TABLE(table), 6);
+  gtk_container_set_border_width(GTK_CONTAINER(table), 6);
+  gtk_container_add(GTK_CONTAINER(alignment), table);
+
+  if(out_frame)
+    *out_frame = frame;
+
+  return table;
+}
+
+
+static GtkWidget* 
+add_row(GtkTable * table, const char * label, const char * value, int row)
+{
+  GtkWidget *header = gtk_label_new(label);
+  gtk_misc_set_alignment(GTK_MISC(header), 0.0, 0.5);
+  gtk_table_attach(
+		   table, header,
+		   0, 1, row, row + 1,
+		   GTK_FILL, GTK_FILL, 0, 0
+		   );
+
+  GtkWidget *label_widget = gtk_label_new(value);
+  gtk_misc_set_alignment(GTK_MISC(label_widget), 0.0, 0.5);
+  gtk_table_attach(
+		   table, label_widget,
+		   1, 2, row, row + 1,
+		   GTK_FILL, GTK_FILL, 0, 0
+		   );
+  return label_widget;
+}
+
+
 GtkWidget *
 procman_create_sysinfo_view(void)
 {
@@ -428,17 +481,14 @@ procman_create_sysinfo_view(void)
   GtkWidget *distro_release_label;
   GtkWidget *distro_table;
 
-  GtkWidget *hardware_frame;
   GtkWidget *hardware_table;
   GtkWidget *memory_label;
   GtkWidget *processor_label;
 
-  GtkWidget *disk_space_frame;
   GtkWidget *disk_space_table;
   GtkWidget *disk_space_label;
 
   GtkWidget *header;
-  GtkWidget *alignment;
 
   gchar *markup;
 
@@ -477,29 +527,12 @@ procman_create_sysinfo_view(void)
 
   /* distro section */
 
-  distro_frame = gtk_frame_new("???");
-  gtk_frame_set_label_align(GTK_FRAME(distro_frame), 0.0, 0.5);
-  gtk_label_set_use_markup(
-			   GTK_LABEL(gtk_frame_get_label_widget(GTK_FRAME(distro_frame))),
-			   TRUE
-			   );
-  gtk_frame_set_shadow_type(GTK_FRAME(distro_frame), GTK_SHADOW_NONE);
-  gtk_box_pack_start(GTK_BOX(vbox), distro_frame, FALSE, FALSE, 0);
-  alignment = gtk_alignment_new(0.5, 0.5, 1.0, 1.0);
-  gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
-  gtk_container_add(GTK_CONTAINER(distro_frame), alignment);
-
   unsigned table_size = 2;
   if (data->gnome_version != "")
      table_size++;
-  distro_table = gtk_table_new(table_size, 1, FALSE);
-  gtk_table_set_row_spacings(GTK_TABLE(distro_table), 6);
-  gtk_table_set_col_spacings(GTK_TABLE(distro_table), 6);
-  gtk_container_set_border_width(GTK_CONTAINER(distro_table), 6);
-  gtk_container_add(GTK_CONTAINER(alignment), distro_table);
+  distro_table = add_section(GTK_BOX(vbox), "???", table_size, 1, &distro_frame);
 
   unsigned table_count = 0;
-
 
   distro_release_label = gtk_label_new("???");
   gtk_misc_set_alignment(GTK_MISC(distro_release_label), 0.0, 0.5);
@@ -509,7 +542,6 @@ procman_create_sysinfo_view(void)
 		   GTK_FILL, GTK_FILL, 0, 0
 		   );
   table_count++;
-
   data->set_distro_labels(gtk_frame_get_label_widget(GTK_FRAME(distro_frame)), distro_release_label);
 
   markup = g_strdup_printf(_("Kernel %s"), data->kernel.c_str());
@@ -540,109 +572,44 @@ procman_create_sysinfo_view(void)
   /* hardware section */
 
   markup = g_strdup_printf(_("<b>Hardware</b>"));
-  hardware_frame = gtk_frame_new(markup);
+  hardware_table = add_section(GTK_BOX(vbox), markup, data->processors.size(), 2, NULL);
   g_free(markup);
-  gtk_frame_set_label_align(GTK_FRAME(hardware_frame), 0.0, 0.5);
-  gtk_label_set_use_markup(
-			   GTK_LABEL(gtk_frame_get_label_widget(GTK_FRAME(hardware_frame))),
-			   TRUE
-			   );
-  gtk_frame_set_shadow_type(GTK_FRAME(hardware_frame), GTK_SHADOW_NONE);
-  gtk_box_pack_start(GTK_BOX(vbox), hardware_frame, FALSE, FALSE, 0);
-
-  alignment = gtk_alignment_new(0.5, 0.5, 1.0, 1.0);
-  gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
-  gtk_container_add(GTK_CONTAINER(hardware_frame), alignment);
-
-  hardware_table = gtk_table_new(data->processors.size(), 2, FALSE);
-  gtk_table_set_row_spacings(GTK_TABLE(hardware_table), 6);
-  gtk_table_set_col_spacings(GTK_TABLE(hardware_table), 6);
-  gtk_container_set_border_width(GTK_CONTAINER(hardware_table), 6);
-  gtk_container_add(GTK_CONTAINER(alignment), hardware_table);
-
-  header = gtk_label_new(_("Memory:"));
-  gtk_misc_set_alignment(GTK_MISC(header), 0.0, 0.5);
-  gtk_table_attach(
-		   GTK_TABLE(hardware_table), header,
-		   0, 1, 0, 1,
-		   GTK_FILL, GTK_FILL, 0, 0
-		   );
 
   markup = procman::format_size(data->memory_bytes);
-  memory_label = gtk_label_new(markup);
+  memory_label = add_row(GTK_TABLE(hardware_table), _("Memory:"),
+                         markup, 0);
   g_free(markup);
-  gtk_misc_set_alignment(GTK_MISC(memory_label), 0.0, 0.5);
-  gtk_table_attach(
-		   GTK_TABLE(hardware_table), memory_label,
-		   1, 2, 0, 1,
-		   GTK_FILL, GTK_FILL, 0, 0
-		   );
+  header = gtk_label_new(_("Memory:"));
 
   for (guint i = 0; i < data->processors.size(); ++i) {
+    const gchar * t;
     if (data->processors.size() > 1) {
       markup = g_strdup_printf(_("Processor %d:"), i);
-      header = gtk_label_new(markup);
-      g_free(markup);
+      t = markup;
     }
-    else
-      header = gtk_label_new(_("Processor:"));
+    else {
+      markup = NULL;
+      t = _("Processor:");
+    }
 
-    gtk_misc_set_alignment(GTK_MISC(header), 0.0, 0.5);
-    gtk_table_attach(
-		     GTK_TABLE(hardware_table), header,
-		     0, 1, 1 + i, 2 + i,
-		     GTK_FILL, GTK_FILL, 0, 0
-		     );
+    processor_label = add_row(GTK_TABLE(hardware_table), t,
+                              data->processors[i].c_str(), 1 + i);
 
-    processor_label = gtk_label_new(data->processors[i].c_str());
-    gtk_misc_set_alignment(GTK_MISC(processor_label), 0.0, 0.5);
-    gtk_table_attach(
-		     GTK_TABLE(hardware_table), processor_label,
-		     1, 2, 1 + i, 2 + i,
-		     GTK_FILL, GTK_FILL, 0, 0
-		     );
+    if(markup)
+      g_free(markup);
   }
 
   /* disk space section */
 
   markup = g_strdup_printf(_("<b>System Status</b>"));
-  disk_space_frame = gtk_frame_new(markup);
+  disk_space_table = add_section(GTK_BOX(vbox), markup, 1, 2, NULL);
   g_free(markup);
-  gtk_frame_set_label_align(GTK_FRAME(disk_space_frame), 0.0, 0.5);
-  gtk_label_set_use_markup(
-			   GTK_LABEL(gtk_frame_get_label_widget(GTK_FRAME(disk_space_frame))),
-			   TRUE
-			   );
-  gtk_frame_set_shadow_type(GTK_FRAME(disk_space_frame), GTK_SHADOW_NONE);
-  gtk_box_pack_start(GTK_BOX(vbox), disk_space_frame, FALSE, FALSE, 0);
-
-  alignment = gtk_alignment_new(0.5, 0.5, 1.0, 1.0);
-  gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
-  gtk_container_add(GTK_CONTAINER(disk_space_frame), alignment);
-
-  disk_space_table = gtk_table_new(1, 2, FALSE);
-  gtk_table_set_row_spacings(GTK_TABLE(disk_space_table), 6);
-  gtk_table_set_col_spacings(GTK_TABLE(disk_space_table), 6);
-  gtk_container_set_border_width(GTK_CONTAINER(disk_space_table), 6);
-  gtk_container_add(GTK_CONTAINER(alignment), disk_space_table);
-
-  header = gtk_label_new(_("Available disk space:"));
-  gtk_misc_set_alignment(GTK_MISC(header), 0.0, 0.5);
-  gtk_table_attach(
-		   GTK_TABLE(disk_space_table), header,
-		   0, 1, 0, 1,
-		   GTK_FILL, GTK_FILL, 0, 0
-		   );
 
   markup = procman::format_size(data->free_space_bytes);
-  disk_space_label = gtk_label_new(markup);
+  disk_space_label = add_row(GTK_TABLE(disk_space_table), 
+                             _("Available disk space:"), markup,
+                             0);
   g_free(markup);
-  gtk_misc_set_alignment(GTK_MISC(disk_space_label), 0.0, 0.5);
-  gtk_table_attach(
-		   GTK_TABLE(disk_space_table), disk_space_label,
-		   1, 2, 0, 1,
-		   GTK_FILL, GTK_FILL, 0, 0
-		   );
 
   return hbox;
 }
