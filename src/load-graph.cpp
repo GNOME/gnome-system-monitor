@@ -1,6 +1,6 @@
 #include <config.h>
 
-#include <gtkmm.h>
+#include <gdkmm/pixbuf.h>
 
 #include <stdio.h>
 #include <sys/stat.h>

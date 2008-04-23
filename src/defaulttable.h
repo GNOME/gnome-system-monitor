@@ -2,7 +2,8 @@
 #define _PROCMAN_DEFAULTTABLE_H_
 
 #include <string>
-#include <glibmm.h>
+#include <glibmm/refptr.h>
+#include <glibmm/regex.h>
 
 /* This file contains prettynames and icons for well-known applications, that by default has no .desktop entry */
 

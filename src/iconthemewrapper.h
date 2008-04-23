@@ -1,7 +1,10 @@
 #ifndef H_PROCMAN_ICONTHEMEWRAPPER_H_1185707711
 #define H_PROCMAN_ICONTHEMEWRAPPER_H_1185707711
 
-#include <gtkmm.h>
+#include <glibmm/refptr.h>
+#include <glibmm/ustring.h>
+#include <gtkmm/icontheme.h>
+#include <gdkmm/pixbuf.h>
 
 namespace procman
 {

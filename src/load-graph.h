@@ -3,6 +3,7 @@
 
 #include <glib/gtypes.h>
 #include <glibtop/cpu.h>
+#include <vector>
 
 enum
 {
