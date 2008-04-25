@@ -21,8 +21,9 @@
 
 #include <stdlib.h>
 
-#include <gtkmm.h>
-#include <giomm.h>
+#include <gtkmm/main.h>
+#include <giomm/volumemonitor.h>
+#include <giomm/init.h>
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>

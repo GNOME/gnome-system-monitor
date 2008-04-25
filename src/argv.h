@@ -1,7 +1,7 @@
 #ifndef H_PROCMAN_ARGV_1205873424
 #define H_PROCMAN_ARGV_1205873424
 
-#include <glibmm.h>
+#include <glibmm/optiongroup.h>
 
 namespace procman
 {

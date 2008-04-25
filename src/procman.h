@@ -20,8 +20,7 @@
 #define _PROCMAN_PROCMAN_H_
 
 
-#include <gtkmm.h>
-
+#include <glibmm/refptr.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <glib.h>
 #include <gtk/gtk.h>

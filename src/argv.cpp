@@ -1,7 +1,8 @@
 #include <config.h>
 
-#include <glibmm.h>
 #include <glib/gi18n.h>
+#include <glibmm/optionentry.h>
+
 
 #include "argv.h"
 

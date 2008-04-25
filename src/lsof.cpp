@@ -1,5 +1,6 @@
 #include <config.h>
 
+#include <gtkmm/messagedialog.h>
 #include <glib/gi18n.h>
 #include <glibtop/procopenfiles.h>
 

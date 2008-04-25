@@ -3,10 +3,10 @@
 #ifndef _PROCMAN_PRETTYTABLE_H_
 #define _PROCMAN_PRETTYTABLE_H_
 
-#include <gtkmm/icontheme.h>
 #include <glib.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gtkmm.h>
+#include <glibmm/refptr.h>
+#include <gdkmm/pixbuf.h>
 
 #include <map>
 #include <string>

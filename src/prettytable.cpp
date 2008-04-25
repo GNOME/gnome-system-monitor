@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gtkmm.h>
 #include <glibtop/procstate.h>
 
 #include <vector>
