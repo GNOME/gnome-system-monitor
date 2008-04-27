@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-07 11:08+0000\n"
-"PO-Revision-Date: 2008-04-03 16:15+0300\n"
+"POT-Creation-Date: 2008-04-07 11:24+0100\n"
+"PO-Revision-Date: 2008-04-26 16:22+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -23,13 +23,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:156
-#: ../src/interface.cpp:634 ../src/procman.cpp:689
+#: ../src/interface.cpp:619 ../src/procman.cpp:695
 msgid "System Monitor"
 msgstr "Süsteemijälgija"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:157
 msgid "View current processes and monitor system state"
 msgstr "Süsteemi oleku ja protsesside jälgimine"
+
+#: ../src/argv.cpp:17
+msgid "Show the System tab"
+msgstr "Süsteemi kaardi näitamine"
 
 #: ../src/callbacks.cpp:166
 msgid "translator-credits"
@@ -65,7 +69,7 @@ msgstr "Saadaval"
 msgid "Used"
 msgstr "Kasutuses"
 
-#: ../src/disks.cpp:292 ../src/interface.cpp:710 ../src/procdialogs.cpp:680
+#: ../src/disks.cpp:292 ../src/interface.cpp:702 ../src/procdialogs.cpp:680
 #: ../src/procdialogs.cpp:684
 msgid "File Systems"
 msgstr "Failisüsteemid"
@@ -170,7 +174,7 @@ msgstr "Protsessivaate sortimisjärjestus"
 
 #: ../src/gnome-system-monitor.schemas.in.h:16
 msgid "Saves the currently viewed tab"
-msgstr "Hetkel kuvatava saki salvestamine"
+msgstr "Hetkel kuvatava kaardi salvestamine"
 
 #: ../src/gnome-system-monitor.schemas.in.h:18
 #, no-c-format
@@ -357,7 +361,7 @@ msgstr "Pealkiri"
 msgid "The title of the color selection dialog"
 msgstr "Värvuse valimise dialoogi pealkiri"
 
-#: ../src/gsm_color_button.c:198 ../src/gsm_color_button.c:598
+#: ../src/gsm_color_button.c:198 ../src/gsm_color_button.c:602
 msgid "Pick a Color"
 msgstr "Värvuse valimine"
 
@@ -373,7 +377,7 @@ msgstr "Valitud värvus"
 msgid "Type of color picker"
 msgstr "Värvusevalija liik"
 
-#: ../src/gsm_color_button.c:518
+#: ../src/gsm_color_button.c:522
 msgid "Received invalid color data\n"
 msgstr "Võeti vastu vigased värvuse andmed\n"
 
@@ -523,64 +527,64 @@ msgstr "Kuva ainult kasutaja enda protsesse"
 msgid "End _Process"
 msgstr "_Lõpeta protsess"
 
-#: ../src/interface.cpp:257
+#: ../src/interface.cpp:243
 msgid "CPU History"
 msgstr "Protsessori koormuse ajalugu"
 
-#: ../src/interface.cpp:315
+#: ../src/interface.cpp:300
 msgid "CPU"
 msgstr "Protsessor"
 
-#: ../src/interface.cpp:317
+#: ../src/interface.cpp:302
 #, c-format
 msgid "CPU%d"
 msgstr "Protsessor%d"
 
-#: ../src/interface.cpp:335
+#: ../src/interface.cpp:320
 msgid "Memory and Swap History"
 msgstr "Mälu ja saaleala kasutuse ajalugu"
 
-#: ../src/interface.cpp:374 ../src/proctable.cpp:224
+#: ../src/interface.cpp:359 ../src/proctable.cpp:226
 msgid "Memory"
 msgstr "Mälu"
 
-#: ../src/interface.cpp:400
+#: ../src/interface.cpp:385
 msgid "Swap"
 msgstr "Saaleala"
 
-#: ../src/interface.cpp:421
+#: ../src/interface.cpp:406
 msgid "Network History"
 msgstr "Võrguliikluse ajalugu"
 
-#: ../src/interface.cpp:460
+#: ../src/interface.cpp:445
 msgid "Receiving"
 msgstr "Vastuvõtmine"
 
-#: ../src/interface.cpp:481
+#: ../src/interface.cpp:466
 msgid "Total Received"
 msgstr "Kokku vastu võetud"
 
-#: ../src/interface.cpp:515
+#: ../src/interface.cpp:500
 msgid "Sending"
 msgstr "Saatmine"
 
-#: ../src/interface.cpp:537
+#: ../src/interface.cpp:522
 msgid "Total Sent"
 msgstr "Kokku saadetud"
 
-#: ../src/interface.cpp:698
+#: ../src/interface.cpp:690
 msgid "System"
 msgstr "Süsteem"
 
-#: ../src/interface.cpp:702 ../src/procdialogs.cpp:512
+#: ../src/interface.cpp:694 ../src/procdialogs.cpp:512
 msgid "Processes"
 msgstr "Protsessid"
 
-#: ../src/interface.cpp:706 ../src/procdialogs.cpp:627
+#: ../src/interface.cpp:698 ../src/procdialogs.cpp:627
 msgid "Resources"
 msgstr "Vahendid"
 
-#: ../src/load-graph.cpp:209
+#: ../src/load-graph.cpp:150
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
@@ -588,37 +592,48 @@ msgstr[0] "%u sekund"
 msgstr[1] "%u sekundit"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:421
+#: ../src/load-graph.cpp:366
 #, c-format
 msgid "%s (%.1f %%) of %s"
 msgstr "%s (%.1f %%) %s-st"
 
-#: ../src/lsof.cpp:355
+#: ../src/lsof.cpp:123
+#, c-format
+msgid ""
+"<b>Error</b>\n"
+"'%s' is not a valid Perl regular expression.\n"
+"%s"
+msgstr ""
+"<b>Viga</b>\n"
+"'%s' pole korrektne Perli regulaaravaldis.\n"
+"%s"
+
+#: ../src/lsof.cpp:269
 msgid "Process"
 msgstr "Protsess"
 
-#: ../src/lsof.cpp:367
+#: ../src/lsof.cpp:281
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:377 ../src/memmaps.cpp:478
+#: ../src/lsof.cpp:291 ../src/memmaps.cpp:478
 msgid "Filename"
 msgstr "Failinimi"
 
 #. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-#: ../src/lsof.cpp:394
+#: ../src/lsof.cpp:308
 msgid "Search for Open Files"
 msgstr "Avatud failide otsing"
 
-#: ../src/lsof.cpp:422
+#: ../src/lsof.cpp:336
 msgid "_Name contains:"
 msgstr "_Nimi sisaldab:"
 
-#: ../src/lsof.cpp:438
+#: ../src/lsof.cpp:352
 msgid "Case insensitive matching"
 msgstr "Tõstutundetud vastavused"
 
-#: ../src/lsof.cpp:446
+#: ../src/lsof.cpp:360
 msgid "S_earch results:"
 msgstr "O_tsingutulemused:"
 
@@ -860,116 +875,121 @@ msgstr "Graafikud"
 msgid "Show _all filesystems"
 msgstr "Näidatakse _kõiki failisüsteeme"
 
-#: ../src/proctable.cpp:209
+#: ../src/procman.cpp:654
+msgid "A simple process and system monitor."
+msgstr "Lihtne protsesside ja süsteemi monitor."
+
+#: ../src/proctable.cpp:211
 msgid "Process Name"
 msgstr "Protsessi nimi"
 
-#: ../src/proctable.cpp:210
+#: ../src/proctable.cpp:212
 msgid "User"
 msgstr "Kasutaja"
 
-#: ../src/proctable.cpp:211
+#: ../src/proctable.cpp:213
 msgid "Status"
 msgstr "Olek"
 
-#: ../src/proctable.cpp:212
+#: ../src/proctable.cpp:214
 msgid "Virtual Memory"
 msgstr "Virtuaalmälu"
 
-#: ../src/proctable.cpp:213
+#: ../src/proctable.cpp:215
 msgid "Resident Memory"
 msgstr "Residentne mälu"
 
-#: ../src/proctable.cpp:214
+#: ../src/proctable.cpp:216
 msgid "Writable Memory"
 msgstr "Kirjutatav mälu"
 
-#: ../src/proctable.cpp:215
+#: ../src/proctable.cpp:217
 msgid "Shared Memory"
 msgstr "Jagatud mälu"
 
-#: ../src/proctable.cpp:216
+#: ../src/proctable.cpp:218
 msgid "X Server Memory"
 msgstr "X serveri mälu"
 
-#: ../src/proctable.cpp:217
+#: ../src/proctable.cpp:219
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:218
+#: ../src/proctable.cpp:220
 msgid "CPU Time"
 msgstr "CPU aeg"
 
-#: ../src/proctable.cpp:219
+#: ../src/proctable.cpp:221
 msgid "Started"
 msgstr "Käivitatud"
 
-#: ../src/proctable.cpp:220
+#: ../src/proctable.cpp:222
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.cpp:221
+#: ../src/proctable.cpp:223
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:222
+#: ../src/proctable.cpp:224
 msgid "Security Context"
 msgstr "Turvakontekst"
 
-#: ../src/proctable.cpp:223
+#: ../src/proctable.cpp:225
 msgid "Command Line"
 msgstr "Käsurida"
 
-#: ../src/proctable.cpp:926
+#: ../src/proctable.cpp:934
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Koormuse näit viimase 1, 5 ja 15 minuti kohta: %0.2f, %0.2f, %0.2f"
 
-#: ../src/sysinfo.cpp:92
-msgid "Unknown CPU model"
-msgstr "Tundmatu protsessorimudel"
-
-#. xgettext: Release 2.6.19
-#: ../src/sysinfo.cpp:401
+#: ../src/sysinfo.cpp:75
 #, c-format
 msgid "Release %s"
 msgstr "Versioon %s"
 
-#: ../src/sysinfo.cpp:408
+#: ../src/sysinfo.cpp:109
+msgid "Unknown CPU model"
+msgstr "Tundmatu protsessorimudel"
+
+#: ../src/sysinfo.cpp:503
 #, c-format
 msgid "Kernel %s"
 msgstr "Kernel %s"
 
-#: ../src/sysinfo.cpp:416
+#: ../src/sysinfo.cpp:511
 #, c-format
 msgid "GNOME %s"
 msgstr "GNOME %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:425
+#: ../src/sysinfo.cpp:520
+#, c-format
 msgid "<b>Hardware</b>"
 msgstr "<b>Riistvara</b>"
 
-#: ../src/sysinfo.cpp:446
+#: ../src/sysinfo.cpp:541
 msgid "Memory:"
 msgstr "Mälu:"
 
-#: ../src/sysinfo.cpp:466
+#: ../src/sysinfo.cpp:561
 #, c-format
 msgid "Processor %d:"
 msgstr "Protsessor %d"
 
-#: ../src/sysinfo.cpp:471
+#: ../src/sysinfo.cpp:566
 msgid "Processor:"
 msgstr "Protsessor:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:491
+#: ../src/sysinfo.cpp:586
+#, c-format
 msgid "<b>System Status</b>"
 msgstr "<b>Süsteemi olek</b>"
 
-#: ../src/sysinfo.cpp:512
+#: ../src/sysinfo.cpp:607
 msgid "Available disk space:"
 msgstr "Vaba kettaruum:"
 
@@ -1017,34 +1037,34 @@ msgstr "%u:%02u:%02u"
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: ../src/util.cpp:159
+#: ../src/util.cpp:162
 #, c-format
 msgid "%u byte"
 msgid_plural "%u bytes"
 msgstr[0] "%u bait"
 msgstr[1] "%u baiti"
 
-#: ../src/util.cpp:166
+#: ../src/util.cpp:169
 #, c-format
 msgid "%.1f KiB"
 msgstr "%.1f KiB"
 
-#: ../src/util.cpp:169
+#: ../src/util.cpp:172
 #, c-format
 msgid "%.1f MiB"
 msgstr "%.1f MiB"
 
-#: ../src/util.cpp:172
+#: ../src/util.cpp:175
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
 
-#: ../src/util.cpp:346
+#: ../src/util.cpp:349
 msgid "<i>N/A</i>"
 msgstr "<i>pole saadaval</i>"
 
 #. xgettext: rate, 10MiB/s
-#: ../src/util.cpp:463
+#: ../src/util.cpp:466
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
