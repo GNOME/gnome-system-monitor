@@ -376,12 +376,12 @@ field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
 }
 
 static GtkWidget *
-create_proc_field_page (ProcData *procdata)
+create_field_page(GtkWidget *tree, const char* text)
 {
 	GtkWidget *vbox;
 	GtkWidget *scrolled;
 	GtkWidget *label;
-	GtkWidget *tree = procdata->tree, *treeview;
+	GtkWidget *treeview;
 	GList *it, *columns;
 	GtkListStore *model;
 	GtkTreeViewColumn *column;
@@ -389,7 +389,7 @@ create_proc_field_page (ProcData *procdata)
 
 	vbox = gtk_vbox_new (FALSE, 6);
 	
-	label = gtk_label_new_with_mnemonic (_("Process i_nformation shown in list:"));
+	label = gtk_label_new_with_mnemonic (text);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
 
@@ -469,7 +469,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	GtkWidget *proc_box;
 	GtkWidget *sys_box;
 	GtkWidget *main_vbox;
-	GtkWidget *vbox, *vbox2;
+	GtkWidget *vbox, *vbox2, *vbox3;
 	GtkWidget *hbox, *hbox2, *hbox3;
 	GtkWidget *label;
 	GtkAdjustment *adjustment;
@@ -619,7 +619,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	label = gtk_label_new ("    ");
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 	
-	vbox2 = create_proc_field_page (procdata);
+	vbox2 = create_field_page (procdata->tree, _("Process i_nformation shown in list:"));
 	gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
 	
 	sys_box = gtk_vbox_new (FALSE, 12);
@@ -728,6 +728,27 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_box_pack_start (GTK_BOX (hbox2), check_button, FALSE, FALSE, 0);
 
 
+	vbox2 = gtk_vbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
+
+	label = gtk_label_new ("    ");
+	gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
+	
+	tmp = g_strdup_printf ("<b>%s</b>", _("Information Fields"));
+	label = gtk_label_new (NULL);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_label_set_markup (GTK_LABEL (label), tmp);
+	g_free (tmp);
+	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+	
+	hbox = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+	
+	label = gtk_label_new ("    ");
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+	
+	vbox3 = create_field_page (procdata->disk_list, _("File system i_nformation shown in list:"));
+	gtk_box_pack_start (GTK_BOX (hbox), vbox3, TRUE, TRUE, 0);
 
 	gtk_widget_show_all (dialog);
 	g_signal_connect (G_OBJECT (dialog), "response",
