@@ -174,7 +174,7 @@ remove_old_disks(GtkTreeModel *model, const glibtop_mountentry *entries, guint n
 
 
 static void
-add_disk(GtkListStore *list, const glibtop_mountentry *entry)
+add_disk(GtkListStore *list, const glibtop_mountentry *entry, bool show_all_fs)
 {
 	Glib::RefPtr<Gdk::Pixbuf> pixbuf;
 	GtkTreeIter iter;
@@ -182,10 +182,13 @@ add_disk(GtkListStore *list, const glibtop_mountentry *entry)
 	guint64 bused, bfree, bavail, btotal;
 	gint percentage;
 
-	pixbuf = get_icon_for_device(entry->mountdir);
-
 	glibtop_get_fsusage(&usage, entry->mountdir);
+
+	if (not show_all_fs and usage.blocks == 0)
+		return;
+
 	fsusage_stats(&usage, &bused, &bfree, &bavail, &btotal, &percentage);
+	pixbuf = get_icon_for_device(entry->mountdir);
 
 	/* if we can find a row with the same mountpoint, we get it but we
 	   still need to update all the fields.
@@ -226,7 +229,7 @@ cb_update_disks(gpointer data)
 	remove_old_disks(GTK_TREE_MODEL(list), entries, mountlist.number);
 
 	for (i = 0; i < mountlist.number; i++)
-		add_disk(list, &entries[i]);
+		add_disk(list, &entries[i], procdata->config.show_all_fs);
 
 	g_free(entries);
 
