@@ -33,6 +33,7 @@
 #include <glibtop/proctime.h>
 #include <glibtop/procuid.h>
 #include <glibtop/procargs.h>
+#include <glibtop/prockernel.h>
 #include <glibtop/mem.h>
 #include <glibtop/swap.h>
 #include <sys/stat.h>
@@ -222,11 +223,10 @@ proctable_new (ProcData * const procdata)
 		N_("Security Context"),
 		N_("Command Line"),
 		N_("Memory"),
+		N_("wchan"),
 		NULL,
 		"POINTER"
 	};
-
-	g_assert(COL_MEM == 15);
 
 	gint i;
 
@@ -252,6 +252,7 @@ proctable_new (ProcData * const procdata)
 				    G_TYPE_STRING,	/* Security Context */
 				    G_TYPE_STRING,	/* Arguments	*/
 				    G_TYPE_ULONG,	/* Memory       */
+				    G_TYPE_STRING,	/* wchan	*/
 				    GDK_TYPE_PIXBUF,	/* Icon		*/
 				    G_TYPE_POINTER,	/* ProcInfo	*/
 				    G_TYPE_STRING	/* Sexy tooltip */
@@ -294,7 +295,7 @@ proctable_new (ProcData * const procdata)
 	gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
 
 
-	for (i = COL_USER; i <= COL_MEM; i++) {
+	for (i = COL_USER; i <= COL_WCHAN; i++) {
 
 		GtkCellRenderer *cell;
 		GtkTreeViewColumn *col;
@@ -547,6 +548,7 @@ update_info_mutable_cols(ProcInfo *info)
 	tree_store_update(model, &info->node, COL_START_TIME, info->start_time);
 	tree_store_update(model, &info->node, COL_NICE, info->nice);
 	tree_store_update(model, &info->node, COL_MEM, info->mem);
+	tree_store_update(model, &info->node, COL_WCHAN, info->wchan);
 }
 
 
@@ -639,6 +641,10 @@ update_info (ProcData *procdata, ProcInfo *info)
 	glibtop_proc_state procstate;
 	glibtop_proc_uid procuid;
 	glibtop_proc_time proctime;
+	glibtop_proc_kernel prockernel;
+
+	glibtop_get_proc_kernel(&prockernel, info->pid);
+	g_strlcpy(info->wchan, prockernel.wchan, sizeof info->wchan);
 
 	glibtop_get_proc_state (&procstate, info->pid);
 	info->status = procstate.state;

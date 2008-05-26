@@ -103,6 +103,8 @@ struct MutableProcInfo
   // shared, don't free it !
   const gchar* user;
 
+  gchar wchan[40];
+
   // all these members are filled with libgtop which uses
   // guint64 (to have fixed size data) but we don't need more
   // than an unsigned long (even for 32bit apps on a 64bit
