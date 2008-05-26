@@ -33,8 +33,10 @@ get_type_name(enum glibtop_file_type t)
 		return _("file");
 	case GLIBTOP_FILE_TYPE_PIPE:
 		return _("pipe");
+	case GLIBTOP_FILE_TYPE_INET6SOCKET:
+		return _("IPv6 network connection");
 	case GLIBTOP_FILE_TYPE_INETSOCKET:
-		return _("network connection");
+		return _("IPv4 network connection");
 	case GLIBTOP_FILE_TYPE_LOCALSOCKET:
 		return _("local socket");
 	default:
@@ -45,26 +47,34 @@ get_type_name(enum glibtop_file_type t)
 
 
 static char *
-friendlier_hostname(const char *dotted_quad, int port)
+friendlier_hostname(const char *addr_str, int port)
 {
-	struct in_addr addr4;
-	struct hostent *host;
+	struct addrinfo hints = { };
+	struct addrinfo *res = NULL;
+	char hostname[NI_MAXHOST];
+	char service[NI_MAXSERV];
+	char port_str[6];
 
-	if(inet_pton(AF_INET, dotted_quad, &addr4) <= 0)
+	if (!addr_str[0]) return g_strdup("");
+
+	snprintf(port_str, sizeof port_str, "%d", port);
+
+	hints.ai_family = AF_UNSPEC;
+	hints.ai_socktype = SOCK_STREAM;
+
+	if (getaddrinfo(addr_str, port_str, &hints, &res))
 		goto failsafe;
 
-	// cast needed because first argument may be const char*
-	// or const void*
-	host = gethostbyaddr(reinterpret_cast<const char*>(&addr4), sizeof addr4, AF_INET);
-
-	if(!host)
+	if (getnameinfo(res->ai_addr, res->ai_addrlen, hostname,
+			sizeof hostname, service, sizeof service, NI_IDN))
 		goto failsafe;
 
-	return g_strdup_printf("%s:%d", host->h_name, port);
+	if (res) freeaddrinfo(res);
+	return g_strdup_printf("%s, TCP port %d (%s)", hostname, port, service);
 
  failsafe:
-	if(!dotted_quad[0]) return g_strdup("");
-	return g_strdup_printf("%s:%d", dotted_quad, port);
+	if (res) freeaddrinfo(res);
+	return g_strdup_printf("%s, TCP port %d", addr_str, port);
 }
 
 
@@ -85,6 +95,7 @@ add_new_files (gpointer key, gpointer value, gpointer data)
 		object = g_strdup(openfiles->info.file.name);
 		break;
 
+	case GLIBTOP_FILE_TYPE_INET6SOCKET:
 	case GLIBTOP_FILE_TYPE_INETSOCKET:
 		object = friendlier_hostname(openfiles->info.sock.dest_host,
 					     openfiles->info.sock.dest_port);
