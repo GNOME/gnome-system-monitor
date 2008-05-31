@@ -223,7 +223,8 @@ proctable_new (ProcData * const procdata)
 		N_("Security Context"),
 		N_("Command Line"),
 		N_("Memory"),
-		N_("wchan"),
+		/* xgettext: wchan, see ps(1) or top(1) */
+		N_("Waiting Channel"),
 		NULL,
 		"POINTER"
 	};
