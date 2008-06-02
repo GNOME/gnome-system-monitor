@@ -220,7 +220,7 @@ gsm_color_button_class_init (GSMColorButtonClass * klass)
 						  G_STRUCT_OFFSET
 						  (GSMColorButtonClass,
 						   color_set), NULL, NULL,
-						  gtk_marshal_VOID__VOID,
+						  g_cclosure_marshal_VOID__VOID,
 						  G_TYPE_NONE, 0);
 
   g_type_class_add_private (gobject_class, sizeof (GSMColorButtonPrivate));
