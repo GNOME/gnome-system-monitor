@@ -465,6 +465,18 @@ get_net (LoadGraph *g)
 		if (netload.if_flags & (1 << GLIBTOP_IF_FLAGS_LOOPBACK))
 			continue;
 
+		/* Skip interfaces without any IPv4/IPv6 address (or
+		 those with only a LINK ipv6 addr) However we need to
+		 be able to exclude these while still keeping the
+		 value so when they get online (with NetworkManager
+		 for example) we don't get a suddent peak.  Once we're
+		 able to get this, ignoring down interfaces will be
+		 possible too.  */
+		if (not (netload.flags & (1 << GLIBTOP_NETLOAD_ADDRESS6)
+			 and netload.scope6 != GLIBTOP_IF_IN6_SCOPE_LINK)
+		    and not (netload.flags & (1 << GLIBTOP_NETLOAD_ADDRESS)))
+			continue;
+
 		/* Don't skip interfaces that are down (GLIBTOP_IF_FLAGS_UP)
 		   to avoid spikes when they are brought up */
 
