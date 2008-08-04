@@ -98,7 +98,7 @@ get_icon_for_device(const char *mountpoint)
 	string icon_name = get_icon_for_path(mountpoint);
 	if (icon_name == "")
 		// FIXME: defaults to a safe value
-		icon_name = "gnome-dev-harddisk"; // get_icon_for_path("/");
+		icon_name = "drive-harddisk"; // get_icon_for_path("/");
 	return icon_theme->load_icon(icon_name, 24, Gtk::ICON_LOOKUP_USE_BUILTIN);
 }
 
