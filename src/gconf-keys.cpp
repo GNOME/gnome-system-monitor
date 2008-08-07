@@ -7,6 +7,7 @@ namespace procman
   {
     const std::string root("/apps/procman");
     const std::string solaris_mode(root + "/solaris_mode");
+    const std::string open_files_tree_prefix(root + "/openfilestree");
   }
 }
 

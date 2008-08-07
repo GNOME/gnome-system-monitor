@@ -10,6 +10,7 @@ namespace procman
   {
     extern const std::string root;
     extern const std::string solaris_mode;
+    extern const std::string open_files_tree_prefix;
   }
 }
 
