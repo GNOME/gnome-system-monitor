@@ -426,20 +426,23 @@ ProcInfo::~ProcInfo()
 
 static void
 get_process_name (ProcInfo *info,
-		  const gchar *cmd, const gchar *args)
+		  const gchar *cmd, const GStrv args)
 {
-	if (args && *args)
-	{
-		char* basename;
-		basename = g_path_get_basename (args);
+	if (args) {
+		// look for /usr/bin/very_long_name
+		// and also /usr/bin/interpreter /usr/.../very_long_name
+		// which may have use prctl to alter 'cmd' name
+		for (int i = 0; i != 2 && args[i]; ++i) {
+			char* basename;
+			basename = g_path_get_basename(args[i]);
 
-		if(g_str_has_prefix (basename, cmd))
-		{
-			info->name = basename;
-			return;
+			if (g_str_has_prefix(basename, cmd)) {
+				info->name = basename;
+				return;
+			}
+
+			g_free(basename);
 		}
-
-		g_free (basename);
 	}
 
 	info->name = g_strdup (cmd);
@@ -688,7 +691,7 @@ ProcInfo::ProcInfo(pid_t pid)
 	arguments = glibtop_get_proc_argv (&procargs, pid, 0);
 
 	/* FIXME : wrong. name and arguments may change with exec* */
-	get_process_name (info, procstate.cmd, arguments[0]);
+	get_process_name (info, procstate.cmd, static_cast<const GStrv>(arguments));
 
 	std::string tooltip = make_string(g_strjoinv(" ", arguments));
 	if (tooltip.empty())
