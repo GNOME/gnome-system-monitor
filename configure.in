@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.52)
 
-AC_INIT([gnome-system-monitor], [2.23.6],
+AC_INIT([gnome-system-monitor], [2.23.90],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor])
 AC_CONFIG_SRCDIR(configure.in)
 AC_CONFIG_HEADERS(config.h)
@@ -35,8 +35,9 @@ GIOMM_REQUIRED=2.16.0
 GLIBMM_REQUIRED=2.14
 LIBXML_REQUIRED=2.0
 RSVG_REQUIRED=2.12
+DBUS_REQUIRED=0.7
 
-PKG_CHECK_MODULES(PROCMAN, glib-2.0 >= $GLIB_REQUIRED gconf-2.0 >= $GCONF_REQUIRED libgtop-2.0 >= $LIBGTOP_REQUIRED libwnck-1.0 >= $LIBWNCK_REQUIRED gtk+-2.0 >= $GTK_REQUIRED gnome-icon-theme >= $GNOME_ICON_THEME_REQUIRED gtkmm-2.4 >= $GTKMM_REQUIRED libxml-2.0 >= $LIBXML_REQUIRED librsvg-2.0 >= $RSVG_REQUIRED glibmm-2.4 >= $GLIBMM_REQUIRED giomm-2.4 >= $GIOMM_REQUIRED)
+PKG_CHECK_MODULES(PROCMAN, glib-2.0 >= $GLIB_REQUIRED gconf-2.0 >= $GCONF_REQUIRED libgtop-2.0 >= $LIBGTOP_REQUIRED libwnck-1.0 >= $LIBWNCK_REQUIRED gtk+-2.0 >= $GTK_REQUIRED gnome-icon-theme >= $GNOME_ICON_THEME_REQUIRED gtkmm-2.4 >= $GTKMM_REQUIRED libxml-2.0 >= $LIBXML_REQUIRED librsvg-2.0 >= $RSVG_REQUIRED glibmm-2.4 >= $GLIBMM_REQUIRED giomm-2.4 >= $GIOMM_REQUIRED dbus-glib-1 >= $DBUS_REQUIRED)
 
 
 AC_ARG_ENABLE(more-warnings,
