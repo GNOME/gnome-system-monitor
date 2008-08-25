@@ -310,9 +310,10 @@ render (GtkWidget * widget)
 	radius = width / 2;
       else
 	radius = height / 2;
-      arc_start =
-	((2 * G_PI) * (-1 * color_button->priv->fraction)) - (0.5 * G_PI);
-      arc_end = -1 * (G_PI / 2);
+
+      arc_start = -G_PI_2 + 2 * G_PI * color_button->priv->fraction;
+      arc_end = -G_PI_2;
+
       cairo_set_line_width (cr, 1);
       
       // Draw external stroke and fill
@@ -323,11 +324,11 @@ render (GtkWidget * widget)
         cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 2.25,
 		   0, 2 * G_PI);
       } else {
-        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 2.25,
+        cairo_arc_negative (cr, (width / 2) + .5, (height / 2) + .5, radius - 2.25,
 		   arc_start, arc_end);
-        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, 4.5,
+        cairo_arc_negative (cr, (width / 2) + .5, (height / 2) + .5, 4.5,
 		   arc_end, arc_start);
-        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 2.25,
+        cairo_arc_negative (cr, (width / 2) + .5, (height / 2) + .5, radius - 2.25,
 		   arc_start, arc_start);
       }
       cairo_fill_preserve (cr);
@@ -345,13 +346,13 @@ render (GtkWidget * widget)
         cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 3.5,
 			    0, 2 * G_PI);
       } else {
-        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 3.5,
+        cairo_arc_negative (cr, (width / 2) + .5, (height / 2) + .5, radius - 3.5,
 		 arc_start + (1 / (radius - 3.75)), 
 		 arc_end - (1 / (radius - 3.75)));
-        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, 3.25,
+        cairo_arc_negative (cr, (width / 2) + .5, (height / 2) + .5, 3.25,
 		   arc_end - (1 / (radius - 3.75)),
                    arc_start + (1 / (radius - 3.75)));
-        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 3.5,
+        cairo_arc_negative (cr, (width / 2) + .5, (height / 2) + .5, radius - 3.5,
 		 arc_start + (1 / (radius - 3.75)), 
 		 arc_start + (1 / (radius - 3.75)));
       }
