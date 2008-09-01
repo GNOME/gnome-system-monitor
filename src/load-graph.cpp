@@ -384,7 +384,8 @@ net_scale (LoadGraph *g, unsigned din, unsigned dout)
 	const unsigned bak_max(new_max);
 
 	// round up to get some extra space
-	new_max = 11U * new_max / 10U;
+	// yes, it can overflow
+	new_max = 1.1 * new_max;
 	// make sure max is not 0 to avoid / 0
 	// default to 1 KiB
 	new_max = std::max(new_max, 1024U);
@@ -414,14 +415,15 @@ net_scale (LoadGraph *g, unsigned din, unsigned dout)
 
 	new_max = coef10 * (1UL << (base10 * 10));
 	procman_debug("bak %u new_max %u pow2 %u coef10 %u", bak_max, new_max, pow2, coef10);
-	g_assert(bak_max <= new_max);
 
-	if (new_max == g->net.max)
-		return;
+	if (bak_max > new_max) {
+	  procman_debug("overflow detected: bak=%u new=%u", bak_max, new_max);
+	  new_max = bak_max;
+	}
 
-	// if max has decreased but not so much, don't do anything
-	// to avoid rescaling
-	if ((8U * g->net.max / 10U) < new_max && new_max < g->net.max)
+	// if max is the same or has decreased but not so much, don't
+	// do anything to avoid rescaling
+	if ((0.8 * g->net.max) < new_max && new_max <= g->net.max)
 		return;
 
 	const float scale = 1.0f * g->net.max / new_max;
@@ -433,7 +435,7 @@ net_scale (LoadGraph *g, unsigned din, unsigned dout)
 		}
 	}
 
-	procman_debug("dmax = %u max = %u new_max = %u", dmax, g->net.max, new_max);
+	procman_debug("rescale dmax = %u max = %u new_max = %u", dmax, g->net.max, new_max);
 
 	g->net.max = new_max;
 
