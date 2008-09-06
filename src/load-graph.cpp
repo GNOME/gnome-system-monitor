@@ -416,7 +416,11 @@ net_scale (LoadGraph *g, unsigned din, unsigned dout)
 
 	new_max = coef10 * (1UL << (base10 * 10));
 	procman_debug("bak %u new_max %u pow2 %u coef10 %u", bak_max, new_max, pow2, coef10);
-	g_assert(bak_max <= new_max);
+
+	if (bak_max > new_max) {
+		procman_debug("overflow detected: bak=%u > new=%u", bak_max, new_max);
+		new_max = bak_max;
+	}
 
 	if (new_max == g->net.max)
 		return;
