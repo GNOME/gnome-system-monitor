@@ -486,20 +486,22 @@ static void get_process_memory_writable(ProcInfo *info)
 {
 	glibtop_proc_map buf;
 	glibtop_map_entry *maps;
-	unsigned i;
-
-	info->memwritable = 0;
 
 	maps = glibtop_get_proc_map(&buf, info->pid);
 
-	for (i = 0; i < buf.number; ++i) {
+	gulong memwritable = 0;
+	const unsigned number = buf.number;
+
+	for (unsigned i = 0; i < number; ++i) {
 #ifdef __linux__
-		info->memwritable += maps[i].private_dirty;
+		memwritable += maps[i].private_dirty;
 #else
 		if (maps[i].perm & GLIBTOP_MAP_PERM_WRITE)
-			info->memwritable += maps[i].size;
+			memwritable += maps[i].size;
 #endif
 	}
+
+	info->memwritable = memwritable;
 
 	g_free(maps);
 }
