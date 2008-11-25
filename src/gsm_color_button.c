@@ -590,7 +590,6 @@ static void
 gsm_color_button_init (GSMColorButton * color_button)
 {
   color_button->priv = GSM_COLOR_BUTTON_GET_PRIVATE (color_button);
-  GtkTooltips *tooltips = gtk_tooltips_new();
 
   rsvg_init ();
 
@@ -621,8 +620,7 @@ gsm_color_button_init (GSMColorButton * color_button)
   gtk_widget_add_events (GTK_WIDGET(color_button), GDK_ENTER_NOTIFY_MASK
 			 			 | GDK_LEAVE_NOTIFY_MASK);
 
-  gtk_tooltips_set_tip (tooltips, GTK_WIDGET(color_button),
-			"Click to set graph colors", NULL);
+  gtk_widget_set_tooltip_text (GTK_WIDGET(color_button), _("Click to set graph colors"));
 
   g_signal_connect (color_button, "expose-event",
 		    G_CALLBACK (expose_event), color_button);
