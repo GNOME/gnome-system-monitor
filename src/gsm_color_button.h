@@ -24,7 +24,7 @@
 
 #include <glib.h>
 #include <gdk/gdk.h>
-#include <gtk/gtkdrawingarea.h>
+#include <gtk/gtk.h>
 #include <cairo.h>
 #include <librsvg/rsvg.h>
 #include <librsvg/rsvg-cairo.h>
