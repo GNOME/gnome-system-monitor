@@ -21,6 +21,8 @@
 
 #include <stdlib.h>
 
+#include <locale.h>
+
 #include <gtkmm/main.h>
 #include <giomm/volumemonitor.h>
 #include <giomm/init.h>
@@ -657,7 +659,8 @@ main (int argc, char *argv[])
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
-
+	setlocale (LC_ALL, "");
+	
 	startup_timestamp = get_startup_timestamp();
 
 	Glib::OptionContext context;
