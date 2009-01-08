@@ -462,7 +462,9 @@ namespace procman
   {
     char* bytes = procman::format_size(rate, max_rate);
     // xgettext: rate, 10MiB/s
-    return make_string(g_strdup_printf(_("%s/s"), bytes));
+    std::string formatted_rate(make_string(g_strdup_printf(_("%s/s"), bytes)));
+    g_free(bytes);
+    return formatted_rate;
   }
 }
 
