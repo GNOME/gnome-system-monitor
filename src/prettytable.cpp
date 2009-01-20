@@ -237,8 +237,19 @@ PrettyTable::set_icon(ProcInfo &info)
 
   Glib::RefPtr<Gdk::Pixbuf> icon;
 
-  for (size_t i = 0; not icon and i < getters.size(); ++i)
-    icon = (this->*getters[i])(info);
+  for (size_t i = 0; not icon and i < getters.size(); ++i) {
+    try {
+      icon = (this->*getters[i])(info);
+    }
+    catch (std::exception& e) {
+      g_warning("Failed to load icon for %s(%u) : %s", info.name, info.pid, e.what());
+      continue;
+    }
+    catch (Glib::Exception& e) {
+      g_warning("Failed to load icon for %s(%u) : %s", info.name, info.pid, e.what().c_str());
+      continue;
+    }
+  }
 
   info.set_icon(icon);
 }
