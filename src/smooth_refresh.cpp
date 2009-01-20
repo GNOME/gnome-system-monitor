@@ -26,13 +26,16 @@ unsigned SmoothRefresh::get_own_cpu_usage()
   glibtop_cpu cpu;
   glibtop_proc_time proctime;
   guint64 elapsed;
-  unsigned usage;
+  unsigned usage = PCPU_LO;
 
   glibtop_get_cpu (&cpu);
   elapsed = cpu.total - this->last_total_time;
 
-  glibtop_get_proc_time(&proctime, getpid());
-  usage = (proctime.rtime - this->last_cpu_time) * 100 / elapsed;
+  if (elapsed) { // avoid division by 0
+    glibtop_get_proc_time(&proctime, getpid());
+    usage = (proctime.rtime - this->last_cpu_time) * 100 / elapsed;
+  }
+
   usage = CLAMP(usage, 0, 100);
 
   this->last_total_time = cpu.total;
