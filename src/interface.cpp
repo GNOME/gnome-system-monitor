@@ -553,7 +553,7 @@ menu_item_select_cb (GtkMenuItem *proxy,
 	GtkAction *action;
 	char *message;
 
-	action = static_cast<GtkAction*>(g_object_get_data (G_OBJECT (proxy),  "gtk-action"));
+	action = gtk_widget_get_action(GTK_WIDGET(proxy));
 	g_assert(action);
 
 	g_object_get (G_OBJECT (action), "tooltip", &message, NULL);
