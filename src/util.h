@@ -4,6 +4,7 @@
 #define H_GNOME_SYSTEM_MONITOR_UTIL_1123178725
 
 #include <glib.h>
+#include <gtk/gtk.h>
 #include <stddef.h>
 #include <cstring>
 #include <string>

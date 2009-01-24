@@ -686,7 +686,7 @@ create_main_window (ProcData *procdata)
 	                    TRUE, 
 	                    0);
 
-	sysinfo_box = procman_create_sysinfo_view();
+	sysinfo_box = gtk_hbox_new(TRUE, 0); // procman_create_sysinfo_view();
 	sysinfo_label = gtk_label_new(_("System"));
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), sysinfo_box, sysinfo_label);
 

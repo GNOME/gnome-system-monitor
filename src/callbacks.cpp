@@ -36,7 +36,7 @@
 #include "load-graph.h"
 #include "disks.h"
 #include "lsof.h"
-
+#include "sysinfo.h"
 
 void
 cb_kill_sigstop(GtkAction *action, gpointer data)
@@ -386,6 +386,10 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 			g_source_remove (procdata->disk_timeout);
 			procdata->disk_timeout = 0;
 		}
+	}
+
+	if (num == PROCMAN_TAB_SYSINFO) {
+		procman::build_sysinfo_ui();
 	}
 }
 

@@ -1,6 +1,7 @@
 #include <config.h>
 
 #include <glib.h>
+#include <gtk/gtk.h>
 #include <glibmm.h>
 #include <glib/gi18n.h>
 
@@ -27,6 +28,7 @@
 #include <sys/utsname.h>
 
 #include "sysinfo.h"
+#include "procman.h"
 #include "util.h"
 
 
@@ -467,7 +469,7 @@ add_row(GtkTable * table, const char * label, const char * value, int row)
 }
 
 
-GtkWidget *
+static GtkWidget *
 procman_create_sysinfo_view(void)
 {
   GtkWidget *hbox;
@@ -614,3 +616,21 @@ procman_create_sysinfo_view(void)
   return hbox;
 }
 
+
+
+namespace procman
+{
+  void build_sysinfo_ui()
+  {
+    static GtkWidget* ui;
+
+    if (!ui) {
+      ProcData* procdata = ProcData::get_instance();
+      ui = procman_create_sysinfo_view();
+      GtkBox* box = GTK_BOX(gtk_notebook_get_nth_page(GTK_NOTEBOOK(procdata->notebook),
+						      PROCMAN_TAB_SYSINFO));
+      gtk_box_pack_start(box, ui, TRUE, TRUE, 0);
+      gtk_widget_show_all(ui);
+    }
+  }
+}
