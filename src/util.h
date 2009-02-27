@@ -45,6 +45,11 @@ procman_debug_real(const char *file, int line, const char *func,
 
 inline string make_string(char *c_str)
 {
+	if (!c_str) {
+		procman_debug("NULL string");
+		return string();
+	}
+
 	string s(c_str);
 	g_free(c_str);
 	return s;
