@@ -184,8 +184,11 @@ add_disk(GtkListStore *list, const glibtop_mountentry *entry, bool show_all_fs)
 
 	glibtop_get_fsusage(&usage, entry->mountdir);
 
-	if (not show_all_fs and usage.blocks == 0)
+	if (not show_all_fs and usage.blocks == 0) {
+		if (find_disk_in_model(GTK_TREE_MODEL(list), entry->mountdir, &iter))
+			gtk_list_store_remove(list, &iter);
 		return;
+	}
 
 	fsusage_stats(&usage, &bused, &bfree, &bavail, &btotal, &percentage);
 	pixbuf = get_icon_for_device(entry->mountdir);
