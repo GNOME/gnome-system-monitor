@@ -96,12 +96,10 @@ struct ProcConfig
 struct MutableProcInfo
 {
   MutableProcInfo()
-    : user(0),
-      status(0)
+    : status(0)
   { }
 
-  // shared, don't free it !
-  const gchar* user;
+  std::string user;
 
   gchar wchan[40];
 
@@ -132,7 +130,7 @@ class ProcInfo
 	/* undefined */ ProcInfo& operator=(const ProcInfo&);
 	/* undefined */ ProcInfo(const ProcInfo&);
 
-	typedef std::map<guint, const char*> UserMap;
+	typedef std::map<guint, std::string> UserMap;
 	/* cached username */
 	static UserMap users;
 

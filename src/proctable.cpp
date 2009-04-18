@@ -24,6 +24,7 @@
 #include <string.h>
 #include <math.h>
 #include <glib/gi18n.h>
+#include <glib/gprintf.h>
 #include <glibtop.h>
 #include <glibtop/loadavg.h>
 #include <glibtop/proclist.h>
@@ -465,16 +466,16 @@ ProcInfo::set_user(guint uid)
 	// procman_debug("User lookup for uid %u: %s", uid, (p.second ? "MISS" : "HIT"));
 
 	if (p.second) {
-		char* username;
 		struct passwd* pwd;
 		pwd = getpwuid(uid);
 
 		if (pwd && pwd->pw_name)
-			username = g_strdup(pwd->pw_name);
-		else
-			username = g_strdup_printf("%u", uid);
-
-		p.first->second = username;
+			p.first->second = pwd->pw_name;
+		else {
+			char username[16];
+			g_sprintf(username, "%u", uid);
+			p.first->second = username;
+		}
 	}
 
 	this->user = p.first->second;
@@ -543,7 +544,7 @@ update_info_mutable_cols(ProcInfo *info)
 	using procman::tree_store_update;
 
 	tree_store_update(model, &info->node, COL_STATUS, info->status);
-	tree_store_update(model, &info->node, COL_USER, info->user);
+	tree_store_update(model, &info->node, COL_USER, info->user.c_str());
 	tree_store_update(model, &info->node, COL_VMSIZE, info->vmsize);
 	tree_store_update(model, &info->node, COL_MEMRES, info->memres);
 	tree_store_update(model, &info->node, COL_MEMWRITABLE, info->memwritable);
