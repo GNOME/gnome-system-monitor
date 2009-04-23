@@ -72,7 +72,7 @@ static const GtkActionEntry menu_entries[] =
 	{ "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL,
 	  N_("Configure the application"), G_CALLBACK (cb_edit_preferences) },
 
-	{ "Refresh", NULL, N_("_Refresh"), "<control>R",
+	{ "Refresh", GTK_STOCK_REFRESH, N_("_Refresh"), "<control>R",
 	  N_("Refresh the process list"), G_CALLBACK(cb_user_refresh) },
 
 	{ "MemoryMaps", NULL, N_("_Memory Maps"), "<control>M",
