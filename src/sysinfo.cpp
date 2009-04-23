@@ -581,7 +581,6 @@ procman_create_sysinfo_view(void)
   memory_label = add_row(GTK_TABLE(hardware_table), _("Memory:"),
                          markup, 0);
   g_free(markup);
-  header = gtk_label_new(_("Memory:"));
 
   for (guint i = 0; i < data->processors.size(); ++i) {
     const gchar * t;
