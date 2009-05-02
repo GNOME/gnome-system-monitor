@@ -648,7 +648,7 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 	g_signal_connect(G_OBJECT(memmapsdialog), "delete-event",
 			 G_CALLBACK(window_delete_event), mmdata);
 
-	mmdata->timer = g_timeout_add (5000, memmaps_timer, mmdata);
+	mmdata->timer = g_timeout_add_seconds (5, memmaps_timer, mmdata);
 
 	update_memmaps_dialog (mmdata);
 }

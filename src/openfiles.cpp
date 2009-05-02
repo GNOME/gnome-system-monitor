@@ -378,7 +378,7 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 
 	gtk_widget_show_all (openfilesdialog);
 
-	timer = g_timeout_add (5000, openfiles_timer, tree);
+	timer = g_timeout_add_seconds (5, openfiles_timer, tree);
 	g_object_set_data (G_OBJECT (tree), "timer", GUINT_TO_POINTER (timer));
 
 	update_openfiles_dialog (tree);
