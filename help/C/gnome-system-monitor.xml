@@ -2,9 +2,9 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appversion "2.5.2">
-  <!ENTITY manrevision "2.1">
-  <!ENTITY date "February 2004">
+  <!ENTITY appversion "2.24.4">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "March 2009">
   <!ENTITY app "System Monitor">
 ]>
 
@@ -22,6 +22,10 @@
   <articleinfo> 
     <title>&app; Manual V&manrevision;</title>       
 
+    <copyright>
+      <year>2009</year>
+      <holder>Paul Cutler</holder>
+    </copyright>
     <copyright>
       <year>2004</year>
       <holder>Sun Microsystems</holder>
@@ -60,6 +64,14 @@
       <surname>Day</surname> 
       <affiliation><address><email>billday@bellatlantic.net</email></address></affiliation> 
     </author> 
+      <author>
+        <firstname>Paul</firstname>
+        <surname>Cutler</surname>
+        <affiliation>
+          <orgname>GNOME Documentation Project</orgname>
+          <address><email>pcutler@foresightlinux.org</email></address>
+        </affiliation>
+      </author>
       
 <!-- This is appropriate place for other contributors: translators,
      maintainers,  etc. Commented out by default.
@@ -76,38 +88,52 @@
 -->
     </authorgroup>
 
+    <releaseinfo revision="2.28" role="review">
+      <ulink type="review" url="http://bugzilla.gnome.org/show_bug.cgi?id=500559"/>
+    </releaseinfo>
+
     <revhistory>
       <revision> 
 	<revnumber>System Monitor Manual V&manrevision;</revnumber> 
-	<date>&date;</date> 
+	<date>March 2009</date>
 	<revdescription> 
+	  <para role="author">Paul Cutler
+	    <email>pcutler@foresightlinux.org</email>
+	  </para>
+	  <para role="publisher">GNOME Documentation Project</para>
+	</revdescription> 
+      </revision> 
+      <revision> 
+	<revnumber>System Monitor Manual V2.1</revnumber>
+	<date>February 2004</date>
+	<revdescription>
 	  <para role="author">Sun GNOME Documentation Team</para>
 	  <para role="publisher">GNOME Documentation Project</para>
-	</revdescription> 
-      </revision> 
-      <revision> 
-	<revnumber>System Monitor Manual V2.0</revnumber> 
-	<date>November 2002</date> 
-	<revdescription> 
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>System Monitor Manual V2.0</revnumber>
+	<date>November 2002</date>
+	<revdescription>
+	  <para role="author">Bill Day <email>billday@bellatlantic.net</email>
+	  </para>
+	  <para role="publisher">GNOME Documentation Project</para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>Procman Manual V0.11</revnumber>
+	<date>January 2002</date>
+	<revdescription>
 	  <para role="author">Bill Day 
 	    <email>billday@bellatlantic.net</email>
 	  </para>
 	  <para role="publisher">GNOME Documentation Project</para>
-	</revdescription> 
-      </revision> 
-      <revision> 
-	<revnumber>Procman Manual V0.11</revnumber> 
-	<date>January 2002</date> 
-	<revdescription> 
-	  <para role="author">Bill Day 
-	    <email>billday@bellatlantic.net</email>
-	  </para>
-	  <para role="publisher">GNOME Documentation Project</para>
-	</revdescription> 
-      </revision> 
+	</revdescription>
+      </revision>
     </revhistory> 
 
-    <releaseinfo>This manual describes version &appversion; of &app;.
+    <releaseinfo>
+      This manual describes version &appversion; of &app;.
     </releaseinfo> 
 
     <legalnotice> 
@@ -120,7 +146,11 @@
 
     </legalnotice> 
     <abstract role="description">
-      <para>User manual for &app;</para>
+      <para>
+	&app; gives users a graphical user interface for monitoring CPU,
+	network, and memory activities as well as a way for viewing
+	and stopping system processes.
+      </para>
     </abstract>
   </articleinfo> 
 
@@ -243,7 +273,7 @@
         </term>
         <listitem>
           <para>
-            Lists all mounted filesystems along with basic information about each.
+            Lists all mounted file systems along with basic information about each.
           </para>
         </listitem>
       </varlistentry>
@@ -326,7 +356,7 @@
                   <guilabel>Processes</guilabel>
                 </para>
                 <para>
-                  Contains a list of processes organized as a table, a list of load averages over the past few minutes, and an "End Process" button.
+                  Contains a list of processes organized as a table, a list of load averages over the past few minutes, and an <guibutton>End Process</guibutton> button.
                 </para>
               </listitem>
               <listitem>
@@ -373,8 +403,25 @@
         To display basic system information, select the <guilabel>System</guilabel> tab.
       </para>
       <para>
-        In the <guilabel>System</guilabel> tab, information is organized into three groups, 
+        In the <guilabel>System</guilabel> tab, information is organized into three groups:
       </para>
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    System Information
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Hardware
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    System Status
+	  </para>
+	</listitem>
+      </itemizedlist>
     </sect2>
 
     <sect2 id="gnome-system-monitor-display-processlist">
@@ -496,7 +543,11 @@
           </listitem>
           <listitem>
             <para>
-              Choose <guimenu>View</guimenu><guimenuitem>All Processes</guimenuitem>.
+              Choose
+	      <menuchoice>
+		<guimenu>View</guimenu>
+		<guimenuitem>All Processes</guimenuitem>
+	      </menuchoice>.
             </para>
           </listitem>
         </orderedlist>
@@ -515,7 +566,11 @@
           </listitem>
           <listitem>
             <para>
-              Choose <guimenu>View</guimenu><guimenuitem>My Processes</guimenuitem>.
+              Choose 
+	      <menuchoice>
+		<guimenu>View</guimenu>
+		<guimenuitem>My Processes</guimenuitem>
+	      </menuchoice>.
             </para>
           </listitem>
         </orderedlist>
@@ -534,7 +589,11 @@
           </listitem>
           <listitem>
             <para>
-              Choose <guimenu>View</guimenu><guimenuitem>Active Processes</guimenuitem>.
+              Choose 
+	      <menuchoice>
+		<guimenu>View</guimenu>
+		<guimenuitem>Active Processes</guimenuitem>
+	      </menuchoice>.
             </para>
           </listitem>
         </orderedlist>
@@ -700,7 +759,7 @@
           </listitem>
         </varlistentry>
         <varlistentry>
-          <term><guilabel>VM offset</guilabel></term>
+          <term><guilabel>VM Offset</guilabel></term>
           <listitem>
             <para>
               The virtual memory offset of the memory segment.
@@ -865,7 +924,7 @@
       <itemizedlist>
         <listitem>
           <para>
-            User memory out of total memory
+            Used memory out of total memory
           </para>
         </listitem>
         <listitem>
@@ -929,7 +988,7 @@
             Type
           </term>
           <listitem>
-            <para>Filesystem type</para>
+            <para>File system type</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -1382,7 +1441,7 @@
                     <guilabel>Show all filesystems</guilabel>
                   </para>
                   <para>
-                    Select this option to show all filesystems, including temporary and system ones.
+                    Select this option to show all file systems, including temporary and system ones.
                   </para>
                 </listitem>
               </itemizedlist>
