@@ -135,11 +135,6 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
 
 
 
-#define KIBIBYTE_FACTOR (1UL << 10)
-#define MEBIBYTE_FACTOR (1UL << 20)
-#define GIBIBYTE_FACTOR (1UL << 30)
-
-
 /**
  * procman::format_size:
  * @size:
@@ -152,26 +147,56 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
  **/
 
 gchar*
-procman::format_size(guint64 size, guint64 max_size)
+procman::format_size(guint64 size, guint64 max_size, bool want_bits)
 {
+	enum {
+		K_INDEX,
+		M_INDEX,
+		G_INDEX
+	};
+
+	struct Format {
+		guint64 factor;
+		const char* string;
+	};
+
+	const Format all_formats[2][3] = {
+		{ { 1UL << 10,	N_("%.1f KiB") },
+		  { 1UL << 20,	N_("%.1f MiB") },
+		  { 1UL << 30,	N_("%.1f GiB") } },
+		{ { 1000,	N_("%.1f kbit") },
+		  { 1000000,	N_("%.1f Mbit") },
+		  { 1000000000,	N_("%.1f Gbit") } }
+	};
+
+	const Format (&formats)[3] = all_formats[want_bits ? 1 : 0];
+
+	if (want_bits) {
+	  size *= 8;
+	  max_size *= 8;
+	}
+
 	if (max_size == 0)
 		max_size = size;
 
-	if (max_size < (guint64) KIBIBYTE_FACTOR) {
-		return g_strdup_printf (dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes",(guint) size), (guint) size);
+	if (max_size < formats[K_INDEX].factor) {
+		const char *format = (want_bits
+			  ? dngettext(GETTEXT_PACKAGE, "%u bit", "%u bits", (guint) size)
+			  : dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes",(guint) size));
+		return g_strdup_printf (format, (guint) size);
 	} else {
-		guint factor;
-		const char* format;
+		guint64 factor;
+		const char* format = NULL;
 
-		if (max_size < (guint64) MEBIBYTE_FACTOR) {
-		  factor = KIBIBYTE_FACTOR;
-		  format = N_("%.1f KiB");
-		} else if (max_size < (guint64) GIBIBYTE_FACTOR) {
-		  factor = MEBIBYTE_FACTOR;
-		  format = N_("%.1f MiB");
+		if (max_size < formats[M_INDEX].factor) {
+		  factor = formats[K_INDEX].factor;
+		  format = formats[K_INDEX].string;
+		} else if (max_size < formats[G_INDEX].factor) {
+		  factor = formats[M_INDEX].factor;
+		  format = formats[M_INDEX].string;
 		} else {
-		  factor = GIBIBYTE_FACTOR;
-		  format = N_("%.1f GiB");
+		  factor = formats[G_INDEX].factor;
+		  format = formats[G_INDEX].string;
 		}
 
 		return g_strdup_printf(_(format), size / (double)factor);
@@ -458,14 +483,27 @@ namespace procman
 
 
 
-  std::string format_rate(guint64 rate, guint64 max_rate)
+  std::string format_rate(guint64 rate, guint64 max_rate, bool want_bits)
   {
-    char* bytes = procman::format_size(rate, max_rate);
-    // xgettext: rate, 10MiB/s
+    char* bytes = procman::format_size(rate, max_rate, want_bits);
+    // xgettext: rate, 10MiB/s or 10Mbit/s
     std::string formatted_rate(make_string(g_strdup_printf(_("%s/s"), bytes)));
     g_free(bytes);
     return formatted_rate;
   }
+
+
+  std::string format_network(guint64 rate, guint64 max_rate)
+  {
+    return procman::format_size(rate, max_rate, ProcData::get_instance()->config.network_in_bits);
+  }
+
+
+  std::string format_network_rate(guint64 rate, guint64 max_rate)
+  {
+    return procman::format_rate(rate, max_rate, ProcData::get_instance()->config.network_in_bits);
+  }
+
 }
 
 

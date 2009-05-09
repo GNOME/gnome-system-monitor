@@ -89,6 +89,7 @@ struct ProcConfig
 	GdkColor	frame_color;
 	gint 		num_cpus;
 	bool solaris_mode;
+	bool network_in_bits;
 };
 
 

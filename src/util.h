@@ -139,10 +139,12 @@ namespace procman
     tree_store_update<const char>(model, iter, column, new_value);
   }
 
+  gchar* format_size(guint64 size, guint64 max = 0, bool want_bits = false);
 
-  gchar* format_size(guint64 size, guint64 max = 0);
+  std::string format_rate(guint64 rate, guint64 max_rate = 0, bool want_bits = false);
 
-  std::string format_rate(guint64 rate, guint64 max_rate = 0);
+  std::string format_network(guint64 rate, guint64 max_rate = 0);
+  std::string format_network_rate(guint64 rate, guint64 max_rate = 0);
 }
 
 
