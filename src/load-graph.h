@@ -41,6 +41,7 @@ struct LoadGraph {
 	~LoadGraph();
 
 	unsigned num_bars() const;
+	void clear_background();
 
 	double fontsize;
 	double rmargin;
