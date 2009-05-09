@@ -29,6 +29,14 @@
 #include "gsm_color_button.h"
 
 
+void LoadGraph::clear_background()
+{
+	if (this->background) {
+		g_object_unref(this->background);
+		this->background = NULL;
+	}
+}
+
 
 unsigned LoadGraph::num_bars() const
 {
@@ -176,10 +184,7 @@ load_graph_configure (GtkWidget *widget,
 	g->draw_width = widget->allocation.width - 2 * FRAME_WIDTH;
 	g->draw_height = widget->allocation.height - 2 * FRAME_WIDTH;
 
-	if (g->background) {
-		g_object_unref (g->background);
-		g->background = NULL;
-	}
+	g->clear_background();
 
 	if (g->gc == NULL) {
 		g->gc = gdk_gc_new (GDK_DRAWABLE (widget->window));
@@ -440,10 +445,7 @@ net_scale (LoadGraph *g, unsigned din, unsigned dout)
 	g->net.max = new_max;
 
 	// force the graph background to be redrawn now that scale has changed
-	if (g->background) {
-		g_object_unref (g->background);
-		g->background = NULL;
-	}
+	g->clear_background();
 }
 
 static void
@@ -569,8 +571,7 @@ LoadGraph::~LoadGraph()
   if (this->timer_index)
     g_source_remove(this->timer_index);
 
-  if (this->background)
-    g_object_unref (this->background);
+  this->clear_background();
 }
 
 
@@ -742,10 +743,7 @@ load_graph_change_speed (LoadGraph *g,
 						g);
 	}
 
-	if (g->background != NULL) {
-		g_object_unref(g->background);
-		g->background = NULL;
-	}
+	g->clear_background();
 }
 
 
