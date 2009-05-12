@@ -96,6 +96,18 @@ solaris_mode_changed_cb(GConfClient *client, guint id, GConfEntry *entry, gpoint
 }
 
 
+static void
+network_in_bits_changed_cb(GConfClient *client, guint id, GConfEntry *entry, gpointer data)
+{
+	ProcData *procdata = static_cast<ProcData*>(data);
+	GConfValue *value = gconf_entry_get_value (entry);
+
+	procdata->config.network_in_bits = gconf_value_get_bool(value);
+	// force scale to be redrawn
+	procdata->net_graph->clear_background();
+}
+
+
 
 static void
 view_as_changed_cb (GConfClient *client, guint id, GConfEntry *entry, gpointer data)
@@ -247,6 +259,9 @@ procman_data_new (GConfClient *client)
 
 	pd->config.solaris_mode = gconf_client_get_bool(client, procman::gconf::solaris_mode.c_str(), NULL);
 	gconf_client_notify_add(client, procman::gconf::solaris_mode.c_str(), solaris_mode_changed_cb, pd, NULL, NULL);
+
+	pd->config.network_in_bits = gconf_client_get_bool(client, procman::gconf::network_in_bits.c_str(), NULL);
+	gconf_client_notify_add(client, procman::gconf::network_in_bits.c_str(), network_in_bits_changed_cb, pd, NULL, NULL);
 
 
 	pd->config.show_kill_warning = gconf_client_get_bool (client, "/apps/procman/kill_dialog", 
