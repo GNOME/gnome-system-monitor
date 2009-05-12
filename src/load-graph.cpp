@@ -118,7 +118,7 @@ void draw_background(LoadGraph *g) {
 		if (g->type == LOAD_GRAPH_NET) {
 			// operation orders matters so it's 0 if i == num_bars
 			unsigned rate = g->net.max - (i * g->net.max / num_bars);
-			const std::string caption(procman::format_rate(rate, g->net.max));
+			const std::string caption(procman::format_network_rate(rate, g->net.max));
 			cairo_text_extents (cr, caption.c_str(), &extents);
 			cairo_move_to (cr, g->indent - extents.width + 20, y);
 			cairo_show_text (cr, caption.c_str());
@@ -457,7 +457,6 @@ get_net (LoadGraph *g)
 	guint64 in = 0, out = 0;
 	GTimeVal time;
 	unsigned din, dout;
-	gchar *text1;
 
 	ifnames = glibtop_get_netlist(&netlist);
 
@@ -513,17 +512,11 @@ get_net (LoadGraph *g)
 	net_scale(g, din, dout);
 
 
-	gtk_label_set_text (GTK_LABEL (g->labels.net_in), procman::format_rate(din).c_str());
+	gtk_label_set_text (GTK_LABEL (g->labels.net_in), procman::format_network_rate(din).c_str());
+	gtk_label_set_text (GTK_LABEL (g->labels.net_in_total), procman::format_network(in).c_str());
 
-	text1 = procman::format_size (in);
-	gtk_label_set_text (GTK_LABEL (g->labels.net_in_total), text1);
-	g_free (text1);
-
-	gtk_label_set_text (GTK_LABEL (g->labels.net_out), procman::format_rate(dout).c_str());
-
-	text1 = procman::format_size (out);
-	gtk_label_set_text (GTK_LABEL (g->labels.net_out_total), text1);
-	g_free (text1);
+	gtk_label_set_text (GTK_LABEL (g->labels.net_out), procman::format_network_rate(dout).c_str());
+	gtk_label_set_text (GTK_LABEL (g->labels.net_out_total), procman::format_network(out).c_str());
 }
 
 
