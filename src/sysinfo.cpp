@@ -14,6 +14,8 @@
 #include <glibtop/mem.h>
 #include <glibtop/sysinfo.h>
 
+#include <libhal.h>
+
 #include <unistd.h>
 #include <netdb.h>
 #include <sys/socket.h>
@@ -38,6 +40,18 @@ using std::vector;
 
 namespace {
 
+  string get_hal_property(LibHalContext * ctx, const char *udi, const char *prop_name,
+                          DBusError * error)
+  {
+    string prop_val;
+    char * property;
+    property = libhal_device_get_property_string(ctx, udi, prop_name, error);
+    if(property) {
+      prop_val = property;
+      libhal_free_string(property);
+    }
+    return prop_val;
+  }
 
   class SysInfo
   {
@@ -53,6 +67,12 @@ namespace {
     guint n_processors;
     vector<string> processors;
 
+    /* system info */
+    string bios_version;
+    string bios_date;
+    string machine_type_model;
+    string system_serial;
+    string system_board_serial;
 
     SysInfo()
     {
@@ -61,6 +81,7 @@ namespace {
       this->load_disk_info();
       this->load_uname_info();
       this->load_gnome_version();
+      this->load_system_info();
     }
 
     virtual ~SysInfo()
@@ -183,6 +204,49 @@ namespace {
       xmlFreeDoc(document);
 
       this->gnome_version = values[0] + '.' + values[1] + '.' + values[2];
+    }
+
+    void load_system_info()
+    {
+      //
+      DBusError error;
+      DBusConnection *connection;
+
+      dbus_error_init (&error);
+      connection = dbus_bus_get (DBUS_BUS_SYSTEM, &error);
+
+      LibHalContext * ctx = libhal_ctx_new();
+
+      if(ctx) {
+        libhal_ctx_set_dbus_connection (ctx, connection);
+        if(!libhal_ctx_init (ctx, &error)) {
+          printf("ctx init failed\n");
+          if (dbus_error_is_set (&error)) {
+            dbus_error_free (&error);
+            return;
+          }
+        }
+
+        this->bios_version = get_hal_property(ctx, "/org/freedesktop/Hal/devices/computer",
+                                              "system.firmware.version", NULL);
+        this->bios_date = get_hal_property(ctx, "/org/freedesktop/Hal/devices/computer",
+                                           "system.firmware.release_date", NULL);
+        this->machine_type_model = get_hal_property(ctx, "/org/freedesktop/Hal/devices/computer",
+                                                    "system.product", NULL);
+        if(this->machine_type_model.empty()) {
+          dbus_error_init(&error);
+          this->machine_type_model = get_hal_property(ctx, "/org/freedesktop/Hal/devices/computer",
+								"system.hardware.product", NULL);
+        }
+        this->system_serial = get_hal_property(ctx, "/org/freedesktop/Hal/devices/computer",
+                                               "system.hardware.serial", NULL);
+        this->system_board_serial = get_hal_property(ctx, "/org/freedesktop/Hal/devices/computer",
+                                                     "system.hardware.uuid", NULL);
+
+        libhal_ctx_shutdown (ctx, &error);
+        libhal_ctx_free(ctx);
+      }
+      dbus_error_free(&error);
     }
   };
 
@@ -487,6 +551,10 @@ procman_create_sysinfo_view(void)
   GtkWidget *memory_label;
   GtkWidget *processor_label;
 
+  GtkWidget *bios_table;
+  GtkWidget *bios_version_label;
+  GtkWidget *bios_date_label;
+
   GtkWidget *disk_space_table;
   GtkWidget *disk_space_label;
 
@@ -573,16 +641,16 @@ procman_create_sysinfo_view(void)
 
   /* hardware section */
 
-  markup = g_strdup_printf(_("<b>Hardware</b>"));
-  hardware_table = add_section(GTK_BOX(vbox), markup, data->processors.size(), 2, NULL);
-  g_free(markup);
+  hardware_table = add_section(GTK_BOX(vbox), _("<b>Hardware</b>"), 4 + data->processors.size(), 2, NULL);
+
+  add_row(GTK_TABLE(hardware_table), _("Machine model:"), data->machine_type_model.c_str(), 0);
 
   markup = procman::format_size(data->memory_bytes);
-  memory_label = add_row(GTK_TABLE(hardware_table), _("Memory:"),
-                         markup, 0);
+  memory_label = add_row(GTK_TABLE(hardware_table), _("Memory:"), markup, 1);
   g_free(markup);
 
-  for (guint i = 0; i < data->processors.size(); ++i) {
+  guint i;
+  for (i = 0; i < data->processors.size(); ++i) {
     const gchar * t;
     if (data->processors.size() > 1) {
       markup = g_strdup_printf(_("Processor %d:"), i);
@@ -594,20 +662,33 @@ procman_create_sysinfo_view(void)
     }
 
     processor_label = add_row(GTK_TABLE(hardware_table), t,
-                              data->processors[i].c_str(), 1 + i);
+                              data->processors[i].c_str(), 2 + i);
 
     if(markup)
       g_free(markup);
   }
 
-  /* disk space section */
 
-  markup = g_strdup_printf(_("<b>System Status</b>"));
-  disk_space_table = add_section(GTK_BOX(vbox), markup, 1, 2, NULL);
-  g_free(markup);
+  add_row(GTK_TABLE(hardware_table), _("Serial number:"),
+		  data->system_serial.c_str(), 2 + i);
+  add_row(GTK_TABLE(hardware_table), _("System UUID:"),
+          data->system_board_serial.c_str(), 3 + i);
+
+  /* bios section */
+
+  bios_table = add_section(GTK_BOX(vbox), _("<b>BIOS</b>"), 2, 2, NULL);
+
+  bios_version_label = add_row(GTK_TABLE(bios_table), _("BIOS version:"),
+                               data->bios_version.c_str(), 0);
+  bios_date_label = add_row(GTK_TABLE(bios_table), _("BIOS date:"),
+                               data->bios_date.c_str(), 1);
+
+  /* disk space section */
+  disk_space_table = add_section(GTK_BOX(vbox), _("<b>System Status</b>"),
+								 1, 2, NULL);
 
   markup = procman::format_size(data->free_space_bytes);
-  disk_space_label = add_row(GTK_TABLE(disk_space_table), 
+  disk_space_label = add_row(GTK_TABLE(disk_space_table),
                              _("Available disk space:"), markup,
                              0);
   g_free(markup);

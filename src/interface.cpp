@@ -1,5 +1,6 @@
 /* Procman - main window
  * Copyright (C) 2001 Kevin Vandersloot
+ * Copyright (C) 2008 Novell, Inc.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,6 +41,7 @@
 #include "disks.h"
 #include "sysinfo.h"
 #include "gsm_color_button.h"
+#include "hardware.h"
 
 static void	cb_toggle_tree (GtkAction *action, gpointer data);
 
@@ -610,9 +612,9 @@ create_main_window (ProcData *procdata)
 	GtkWidget *menubar;
 	GtkWidget *main_box;
 	GtkWidget *notebook;
-	GtkWidget *tab_label1, *tab_label2, *tab_label3;
+	GtkWidget *tab_label1, *tab_label2, *tab_label3 , *tab_label4;
 	GtkWidget *vbox1;
-	GtkWidget *sys_box, *devices_box;
+	GtkWidget *sys_box, *devices_box, *hardware_box;
 	GtkWidget *sysinfo_box, *sysinfo_label;
 
 	app = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -701,6 +703,10 @@ create_main_window (ProcData *procdata)
 	devices_box = create_disk_view (procdata);
 	tab_label3 = gtk_label_new (_("File Systems"));
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), devices_box, tab_label3);
+
+	hardware_box = procman::create_hardware_view ();
+	tab_label4 = gtk_label_new (_("Hardware"));
+	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), hardware_box, tab_label4);
 
 	g_signal_connect (G_OBJECT (notebook), "switch-page",
 			  G_CALLBACK (cb_switch_page), procdata);

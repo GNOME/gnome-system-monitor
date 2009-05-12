@@ -355,7 +355,7 @@ procman_data_new (GConfClient *client)
 	pd->config.whose_process = CLAMP (pd->config.whose_process, 0, 2);
 	pd->config.current_tab = CLAMP(pd->config.current_tab,
 				       PROCMAN_TAB_SYSINFO,
-				       PROCMAN_TAB_DISKS);
+				       PROCMAN_TAB_HARDWARE);
 	
 	/* Determinie number of cpus since libgtop doesn't really tell you*/
 	pd->config.num_cpus = 0;

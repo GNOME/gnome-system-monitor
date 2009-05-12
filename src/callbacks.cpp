@@ -391,6 +391,10 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 	if (num == PROCMAN_TAB_SYSINFO) {
 		procman::build_sysinfo_ui();
 	}
+
+	if (num == PROCMAN_TAB_HARDWARE) {
+	  // FIXME: lazy build it
+	}
 }
 
 
