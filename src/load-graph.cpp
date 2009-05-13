@@ -388,38 +388,50 @@ net_scale (LoadGraph *g, unsigned din, unsigned dout)
 
 	const unsigned bak_max(new_max);
 
-	// round up to get some extra space
-	// yes, it can overflow
-	new_max = 1.1 * new_max;
-	// make sure max is not 0 to avoid / 0
-	// default to 1 KiB
-	new_max = std::max(new_max, 1024U);
+	if (ProcData::get_instance()->config.network_in_bits) {
+	  // TODO: fix logic to give a nice scale with bits
 
-	// decompose new_max = coef10 * 2**(base10 * 10)
-	// where coef10 and base10 are integers and coef10 < 2**10
-	//
-	// e.g: ceil(100.5 KiB) = 101 KiB = 101 * 2**(1 * 10)
-	//      where base10 = 1, coef10 = 101, pow2 = 16
+	  // round up to get some extra space
+	  // yes, it can overflow
+	  new_max = 1.1 * new_max;
+	  // make sure max is not 0 to avoid / 0
+	  // default to 125 bytes == 1kbit
+	  new_max = std::max(new_max, 125U);
 
-	unsigned pow2 = std::floor(log2(new_max));
-	unsigned base10 = pow2 / 10;
-	unsigned coef10 = std::ceil(new_max / double(1UL << (base10 * 10)));
-	g_assert(new_max <= (coef10 * (1UL << (base10 * 10))));
+	} else {
+	  // round up to get some extra space
+	  // yes, it can overflow
+	  new_max = 1.1 * new_max;
+	  // make sure max is not 0 to avoid / 0
+	  // default to 1 KiB
+	  new_max = std::max(new_max, 1024U);
 
-	// then decompose coef10 = x * 10**factor10
-	// where factor10 is integer and x < 10
-	// so we new_max has only 1 significant digit
+	  // decompose new_max = coef10 * 2**(base10 * 10)
+	  // where coef10 and base10 are integers and coef10 < 2**10
+	  //
+	  // e.g: ceil(100.5 KiB) = 101 KiB = 101 * 2**(1 * 10)
+	  //      where base10 = 1, coef10 = 101, pow2 = 16
 
-	unsigned factor10 = std::pow(10.0, std::floor(std::log10(coef10)));
-	coef10 = std::ceil(coef10 / double(factor10)) * factor10;
+	  unsigned pow2 = std::floor(log2(new_max));
+	  unsigned base10 = pow2 / 10;
+	  unsigned coef10 = std::ceil(new_max / double(1UL << (base10 * 10)));
+	  g_assert(new_max <= (coef10 * (1UL << (base10 * 10))));
 
-	// then make coef10 divisible by num_bars
-	if (coef10 % g->num_bars() != 0)
-		coef10 = coef10 + (g->num_bars() - coef10 % g->num_bars());
-	g_assert(coef10 % g->num_bars() == 0);
+	  // then decompose coef10 = x * 10**factor10
+	  // where factor10 is integer and x < 10
+	  // so we new_max has only 1 significant digit
 
-	new_max = coef10 * (1UL << (base10 * 10));
-	procman_debug("bak %u new_max %u pow2 %u coef10 %u", bak_max, new_max, pow2, coef10);
+	  unsigned factor10 = std::pow(10.0, std::floor(std::log10(coef10)));
+	  coef10 = std::ceil(coef10 / double(factor10)) * factor10;
+
+	  // then make coef10 divisible by num_bars
+	  if (coef10 % g->num_bars() != 0)
+	    coef10 = coef10 + (g->num_bars() - coef10 % g->num_bars());
+	  g_assert(coef10 % g->num_bars() == 0);
+
+	  new_max = coef10 * (1UL << (base10 * 10));
+	  procman_debug("bak %u new_max %u pow2 %u coef10 %u", bak_max, new_max, pow2, coef10);
+	}
 
 	if (bak_max > new_max) {
 	  procman_debug("overflow detected: bak=%u new=%u", bak_max, new_max);
