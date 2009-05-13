@@ -163,7 +163,8 @@ void populate_hardware_view(GtkTreeStore * model)
 	for(; hd; hd = hd->next) {
 		const char * name = hd->model;
 		hd_hw_item_t iclass = hd->hw_class;
-		// for now skip network interfaces.
+		// FIXME: for now skip network interfaces.
+		// why ???
 		if(iclass == hw_network)
 			continue;
 		GtkTreeIter *parent = NULL;
