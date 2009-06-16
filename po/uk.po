@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-21 16:00+0000\n"
+"POT-Creation-Date: 2009-06-16 15:08+0300\n"
 "PO-Revision-Date: 2008-09-21 16:03+0300\n"
 "Last-Translator: Maxim V. Dziumanenko <dziumanenko@gmail.com>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:157
-#: ../src/interface.cpp:619 ../src/procman.cpp:706
+#: ../src/interface.cpp:619 ../src/procman.cpp:724
 msgid "System Monitor"
 msgstr "Системний монітор"
 
@@ -33,38 +33,39 @@ msgstr "Показати вкладку Система"
 msgid "translator-credits"
 msgstr ""
 "Юрій Сирота\n"
+"Кирило Полежаєв <polezhajev@ukr.net>\n"
 "Максим Дзюманенко <dziumanenko@gmail.com>"
 
-#: ../src/disks.cpp:297 ../src/memmaps.cpp:498
+#: ../src/disks.cpp:300 ../src/memmaps.cpp:498
 msgid "Device"
 msgstr "Пристрій"
 
-#: ../src/disks.cpp:298
+#: ../src/disks.cpp:301
 msgid "Directory"
 msgstr "Каталог"
 
-#: ../src/disks.cpp:299 ../src/gsm_color_button.c:211 ../src/openfiles.cpp:247
+#: ../src/disks.cpp:302 ../src/gsm_color_button.c:211 ../src/openfiles.cpp:247
 msgid "Type"
 msgstr "Тип"
 
-#: ../src/disks.cpp:300
+#: ../src/disks.cpp:303
 msgid "Total"
 msgstr "Всього"
 
-#: ../src/disks.cpp:301
+#: ../src/disks.cpp:304
 msgid "Free"
 msgstr "Вільно"
 
-#: ../src/disks.cpp:302
+#: ../src/disks.cpp:305
 msgid "Available"
 msgstr "Доступно"
 
-#: ../src/disks.cpp:303
+#: ../src/disks.cpp:306
 msgid "Used"
 msgstr "Використано"
 
-#: ../src/disks.cpp:310 ../src/interface.cpp:702 ../src/procdialogs.cpp:680
-#: ../src/procdialogs.cpp:684
+#: ../src/disks.cpp:313 ../src/interface.cpp:702 ../src/procdialogs.cpp:703
+#: ../src/procdialogs.cpp:707
 msgid "File Systems"
 msgstr "Файлові системи"
 
@@ -361,7 +362,7 @@ msgstr "Заголовок"
 msgid "The title of the color selection dialog"
 msgstr "Заголовок діалогу вибору кольору"
 
-#: ../src/gsm_color_button.c:198 ../src/gsm_color_button.c:603
+#: ../src/gsm_color_button.c:198 ../src/gsm_color_button.c:602
 msgid "Pick a Color"
 msgstr "Виберіть колір"
 
@@ -380,6 +381,10 @@ msgstr "Тип обрання кольору"
 #: ../src/gsm_color_button.c:523
 msgid "Received invalid color data\n"
 msgstr "Отримано некоректні дані кольору\n"
+
+#: ../src/gsm_color_button.c:623
+msgid "Click to set graph colors"
+msgstr "Клацніть для зміни кольорів графіку"
 
 #. xgettext: noun, top level menu.
 #. "File" did not make sense for system-monitor
@@ -544,7 +549,7 @@ msgstr "ЦП%d"
 msgid "Memory and Swap History"
 msgstr "Історія пам'яті та свопінгу"
 
-#: ../src/interface.cpp:359 ../src/proctable.cpp:225
+#: ../src/interface.cpp:359 ../src/proctable.cpp:226
 msgid "Memory"
 msgstr "Пам'ять"
 
@@ -572,19 +577,20 @@ msgstr "Надсилання"
 msgid "Total Sent"
 msgstr "Всього надіслано"
 
+#. procman_create_sysinfo_view();
 #: ../src/interface.cpp:690
 msgid "System"
 msgstr "Система"
 
-#: ../src/interface.cpp:694 ../src/procdialogs.cpp:512
+#: ../src/interface.cpp:694 ../src/procdialogs.cpp:523
 msgid "Processes"
 msgstr "Процеси"
 
-#: ../src/interface.cpp:698 ../src/procdialogs.cpp:627
+#: ../src/interface.cpp:698 ../src/procdialogs.cpp:638
 msgid "Resources"
 msgstr "Ресурси"
 
-#: ../src/load-graph.cpp:145
+#: ../src/load-graph.cpp:153
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
@@ -593,7 +599,7 @@ msgstr[1] "%u секунди"
 msgstr[2] "%u секунд"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:324
+#: ../src/load-graph.cpp:329
 #, c-format
 msgid "%s (%.1f %%) of %s"
 msgstr "%s (%.1f %%) з %s"
@@ -606,7 +612,7 @@ msgid ""
 "%s"
 msgstr ""
 "<b>Помилка</b>\n"
-"'%s' не є коректним виразом регулярних виразів Perl.\n"
+"'%s' не є коректним регулярним виразом Perl.\n"
 "%s"
 
 #: ../src/lsof.cpp:270
@@ -836,175 +842,179 @@ msgstr ""
 "Рівень nice пов'язаний з пріоритетом процесу. Менший рівень nice відповідає "
 "вищому рівню процесу."
 
-#: ../src/procdialogs.cpp:444
+#: ../src/procdialogs.cpp:455
 msgid "Icon"
 msgstr "Значок"
 
-#: ../src/procdialogs.cpp:489
+#: ../src/procdialogs.cpp:500
 msgid "System Monitor Preferences"
 msgstr "Параметри системного монітора"
 
-#: ../src/procdialogs.cpp:519
+#: ../src/procdialogs.cpp:530
 msgid "Behavior"
 msgstr "Поведінка"
 
-#: ../src/procdialogs.cpp:538 ../src/procdialogs.cpp:653
-#: ../src/procdialogs.cpp:703
+#: ../src/procdialogs.cpp:549 ../src/procdialogs.cpp:664
+#: ../src/procdialogs.cpp:726
 msgid "_Update interval in seconds:"
 msgstr "Інтервал _оновлення у секундах:"
 
-#: ../src/procdialogs.cpp:563
+#: ../src/procdialogs.cpp:574
 msgid "Enable _smooth refresh"
 msgstr "Увімкнути _плавне оновлення"
 
-#: ../src/procdialogs.cpp:577
+#: ../src/procdialogs.cpp:588
 msgid "Alert before ending or _killing processes"
 msgstr "Попереджувати перед за_вершенням чи зняттям процесу"
 
-#: ../src/procdialogs.cpp:591
+#: ../src/procdialogs.cpp:602
 msgid "Solaris mode"
 msgstr "Режим Solaris"
 
-#: ../src/procdialogs.cpp:609 ../src/procdialogs.cpp:737
+#: ../src/procdialogs.cpp:620 ../src/procdialogs.cpp:760
 msgid "Information Fields"
 msgstr "Інформаційні поля"
 
-#: ../src/procdialogs.cpp:622
+#: ../src/procdialogs.cpp:633
 msgid "Process i_nformation shown in list:"
 msgstr "_Інформація про процеси зі списку:"
 
-#: ../src/procdialogs.cpp:634
+#: ../src/procdialogs.cpp:645
 msgid "Graphs"
 msgstr "Графіки"
 
-#: ../src/procdialogs.cpp:723
+#: ../src/procdialogs.cpp:684
+msgid "Show network speed in bits"
+msgstr "Показати швидкість мережі у бітах"
+
+#: ../src/procdialogs.cpp:746
 msgid "Show _all filesystems"
 msgstr "Показати _усі файлові системи"
 
-#: ../src/procdialogs.cpp:750
+#: ../src/procdialogs.cpp:773
 msgid "File system i_nformation shown in list:"
 msgstr "Ін_формація про файлову систему зі списку:"
 
-#: ../src/procman.cpp:664
+#: ../src/procman.cpp:682
 msgid "A simple process and system monitor."
 msgstr "Простий монітор процесів та системи."
 
-#: ../src/proctable.cpp:210
+#: ../src/proctable.cpp:211
 msgid "Process Name"
 msgstr "Назва процесу"
 
-#: ../src/proctable.cpp:211
+#: ../src/proctable.cpp:212
 msgid "User"
 msgstr "Користувач"
 
-#: ../src/proctable.cpp:212
+#: ../src/proctable.cpp:213
 msgid "Status"
 msgstr "Статус"
 
-#: ../src/proctable.cpp:213
+#: ../src/proctable.cpp:214
 msgid "Virtual Memory"
 msgstr "Віртуальна пам'ять"
 
-#: ../src/proctable.cpp:214
+#: ../src/proctable.cpp:215
 msgid "Resident Memory"
 msgstr "Резидентна пам'ять"
 
-#: ../src/proctable.cpp:215
+#: ../src/proctable.cpp:216
 msgid "Writable Memory"
 msgstr "Записувана пам'ять"
 
-#: ../src/proctable.cpp:216
+#: ../src/proctable.cpp:217
 msgid "Shared Memory"
 msgstr "Спільна пам'ять"
 
-#: ../src/proctable.cpp:217
+#: ../src/proctable.cpp:218
 msgid "X Server Memory"
 msgstr "Пам'ять X-сервера"
 
-#: ../src/proctable.cpp:218
+#: ../src/proctable.cpp:219
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:219
+#: ../src/proctable.cpp:220
 msgid "CPU Time"
 msgstr "Час ЦП"
 
-#: ../src/proctable.cpp:220
+#: ../src/proctable.cpp:221
 msgid "Started"
 msgstr "Запущено"
 
-#: ../src/proctable.cpp:221
+#: ../src/proctable.cpp:222
 msgid "Nice"
 msgstr "Рівень"
 
-#: ../src/proctable.cpp:222
+#: ../src/proctable.cpp:223
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:223
+#: ../src/proctable.cpp:224
 msgid "Security Context"
 msgstr "Контекст безпеки"
 
-#: ../src/proctable.cpp:224
+#: ../src/proctable.cpp:225
 msgid "Command Line"
 msgstr "Командний рядок:"
 
 #. xgettext: wchan, see ps(1) or top(1)
-#: ../src/proctable.cpp:227
+#: ../src/proctable.cpp:228
 msgid "Waiting Channel"
 msgstr "Канал очікування"
 
-#: ../src/proctable.cpp:944
+#: ../src/proctable.cpp:945
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Середнє навантаження за останні 1, 5, 15 хвилин: %0.2f, %0.2f, %0.2f"
 
-#: ../src/sysinfo.cpp:75
+#: ../src/sysinfo.cpp:77
 #, c-format
 msgid "Release %s"
 msgstr "Випуск %s"
 
-#: ../src/sysinfo.cpp:109
+#: ../src/sysinfo.cpp:111
 msgid "Unknown CPU model"
 msgstr "Невідома модель ЦП"
 
-#: ../src/sysinfo.cpp:547
+#: ../src/sysinfo.cpp:549
 #, c-format
 msgid "Kernel %s"
 msgstr "Ядро %s"
 
-#: ../src/sysinfo.cpp:560
+#: ../src/sysinfo.cpp:562
 #, c-format
 msgid "GNOME %s"
 msgstr "GNOME %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:574
+#: ../src/sysinfo.cpp:576
 #, c-format
 msgid "<b>Hardware</b>"
 msgstr "<b>Обладнання</b>"
 
-#: ../src/sysinfo.cpp:579 ../src/sysinfo.cpp:582
+#: ../src/sysinfo.cpp:581
 msgid "Memory:"
 msgstr "Пам'ять:"
 
-#: ../src/sysinfo.cpp:587
+#: ../src/sysinfo.cpp:588
 #, c-format
 msgid "Processor %d:"
 msgstr "Процесор %d:"
 
-#: ../src/sysinfo.cpp:592
+#: ../src/sysinfo.cpp:593
 msgid "Processor:"
 msgstr "Процесор:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:604
+#: ../src/sysinfo.cpp:605
 #, c-format
 msgid "<b>System Status</b>"
 msgstr "<b>Стан системи</b>"
 
-#: ../src/sysinfo.cpp:610
+#: ../src/sysinfo.cpp:611
 msgid "Available disk space:"
 msgstr "Доступний дисковий простір:"
 
@@ -1052,35 +1062,58 @@ msgstr "%u:%02u:%02u"
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: ../src/util.cpp:161
+#: ../src/util.cpp:164
+#, c-format
+msgid "%.1f KiB"
+msgstr "%.1f КіБ"
+
+#: ../src/util.cpp:165
+#, c-format
+msgid "%.1f MiB"
+msgstr "%.1f МіБ"
+
+#: ../src/util.cpp:166
+#, c-format
+msgid "%.1f GiB"
+msgstr "%.1f ГіБ"
+
+#: ../src/util.cpp:167
+#, c-format
+msgid "%.1f kbit"
+msgstr "%.1f кбіт"
+
+#: ../src/util.cpp:168
+#, c-format
+msgid "%.1f Mbit"
+msgstr "%.1f Мбіт"
+
+#: ../src/util.cpp:169
+#, c-format
+msgid "%.1f Gbit"
+msgstr "%.1f Гбіт"
+
+#: ../src/util.cpp:184
+#, c-format
+msgid "%u bit"
+msgid_plural "%u bits"
+msgstr[0] "%u біт"
+msgstr[1] "%u біти"
+msgstr[2] "%u бітів"
+
+#: ../src/util.cpp:185
 #, c-format
 msgid "%u byte"
 msgid_plural "%u bytes"
 msgstr[0] "%u байт"
-msgstr[1] "%u байт"
+msgstr[1] "%u байти"
 msgstr[2] "%u байтів"
 
-#: ../src/util.cpp:168
-#, c-format
-msgid "%.1f KiB"
-msgstr "%.1f кб"
-
-#: ../src/util.cpp:171
-#, c-format
-msgid "%.1f MiB"
-msgstr "%.1f Мб"
-
-#: ../src/util.cpp:174
-#, c-format
-msgid "%.1f GiB"
-msgstr "%.1f Гб"
-
-#: ../src/util.cpp:348
+#: ../src/util.cpp:373
 msgid "<i>N/A</i>"
 msgstr "<i>Н/Д</i>"
 
-#. xgettext: rate, 10MiB/s
-#: ../src/util.cpp:465
+#. xgettext: rate, 10MiB/s or 10Mbit/s
+#: ../src/util.cpp:490
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
