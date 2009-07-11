@@ -88,13 +88,15 @@ procdialog_create_kill_dialog (ProcData *procdata, int signal)
 						    static_cast<GtkDialogFlags>(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
 						    GTK_MESSAGE_WARNING,
 						    GTK_BUTTONS_NONE,
-						    _(primary));
+						    "%s",
+						    primary);
 	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (kill_alert_dialog),
-						  _(secondary));
+						  "%s",
+						  secondary);
 
 	gtk_dialog_add_buttons (GTK_DIALOG (kill_alert_dialog),
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-				_(button_text), GTK_RESPONSE_OK,
+				button_text, GTK_RESPONSE_OK,
 				NULL);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (kill_alert_dialog),
