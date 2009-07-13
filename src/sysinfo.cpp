@@ -84,6 +84,11 @@ namespace {
       g_free(markup);
     }
 
+    static string system()
+    {
+      return uname().sysname;
+    }
+
   private:
 
     void load_memory_info()
@@ -141,15 +146,21 @@ namespace {
       g_free(entries);
     }
 
+    static const struct utsname & uname()
+    {
+      static struct utsname name;
+
+      if (!name.sysname[0]) {
+	::uname(&name);
+      }
+
+      return name;
+    }
 
     void load_uname_info()
     {
-      struct utsname name;
-
-      uname(&name);
-
-      this->hostname = name.nodename;
-      this->kernel = string(name.sysname) + ' ' + name.release;
+      this->hostname = uname().nodename;
+      this->kernel = string(uname().sysname) + ' ' + uname().release;
     }
 
 
@@ -354,14 +365,40 @@ namespace {
   };
 
 
+  class NetBSDSysInfo
+    : public SysInfo
+  {
+  public:
+    NetBSDSysInfo()
+    {
+      this->load_netbsd_info();
+    }
+
+  private:
+    void load_netbsd_info()
+    {
+      this->distro_name = "NetBSD";
+
+      std::ifstream input("/etc/release");
+
+      if (input)
+	std::getline(input, this->distro_release);
+    }
+  };
+
+
   SysInfo* get_sysinfo()
   {
     if (char *p = g_find_program_in_path("lsb_release")) {
       g_free(p);
       return new LSBSysInfo;
     }
-    else if (g_file_test("/etc/release", G_FILE_TEST_EXISTS))
+    else if (SysInfo::system() == "SunOS") {
       return new SolarisSysInfo;
+    }
+    else if (SysInfo::system() == "NetBSD") {
+      return new NetBSDSysInfo;
+    }
 
     return new SysInfo;
   }
