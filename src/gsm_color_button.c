@@ -714,7 +714,11 @@ gsm_color_button_clicked (GtkWidget * widget, GdkEventButton * event)
       color_dialog =
 	GTK_COLOR_SELECTION_DIALOG (color_button->priv->cs_dialog);
 
+#if GTK_CHECK_VERSION (2,18,0)
+      if (gtk_widget_is_toplevel (parent) && GTK_IS_WINDOW (parent))
+#else
       if (GTK_WIDGET_TOPLEVEL (parent) && GTK_IS_WINDOW (parent))
+#endif
 	{
 	  if (GTK_WINDOW (parent) !=
 	      gtk_window_get_transient_for (GTK_WINDOW (color_dialog)))
