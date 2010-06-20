@@ -128,7 +128,7 @@ renice_scale_changed (GtkAdjustment *adj, gpointer data)
 {
 	GtkWidget *label = GTK_WIDGET (data);
 	
-	new_nice_value = int(adj->value);
+	new_nice_value = int(gtk_adjustment_get_value (adj));
 	gtk_label_set_text (GTK_LABEL (label), get_nice_level (new_nice_value));		
 	
 }
@@ -182,7 +182,7 @@ procdialog_create_renice_dialog (ProcData *procdata)
 	gtk_container_set_border_width (GTK_CONTAINER (renice_dialog), 5);
   	
 	button = gtk_button_new ();
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+	gtk_widget_set_can_default (button, TRUE);
 		
 	align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 	gtk_container_add (GTK_CONTAINER (button), align);
@@ -201,7 +201,7 @@ procdialog_create_renice_dialog (ProcData *procdata)
   	gtk_dialog_set_default_response (GTK_DIALOG (renice_dialog), 100);
   	new_nice_value = -100;
   	  
-    	dialog_vbox = GTK_DIALOG (dialog)->vbox;
+	dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 	gtk_box_set_spacing (GTK_BOX (dialog_vbox), 2);
 	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 5);
     	    	
@@ -513,7 +513,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 	prefs_dialog = dialog;
 	
-	main_vbox = GTK_DIALOG (dialog)->vbox;
+	main_vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 	gtk_box_set_spacing (GTK_BOX (main_vbox), 2);
 	
 	notebook = gtk_notebook_new ();

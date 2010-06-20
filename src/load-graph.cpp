@@ -67,6 +67,7 @@ unsigned LoadGraph::num_bars() const
 
 #define FRAME_WIDTH 4
 void draw_background(LoadGraph *g) {
+	GtkAllocation allocation;
 	double dash[2] = { 1.0, 2.0 };
 	cairo_t *cr;
 	guint i;
@@ -80,9 +81,10 @@ void draw_background(LoadGraph *g) {
 	g->graph_delx = (g->draw_width - 2.0 - g->rmargin - g->indent) / (LoadGraph::NUM_POINTS - 3);
 	g->graph_buffer_offset = (int) (1.5 * g->graph_delx) + FRAME_WIDTH ;
 
-	g->background = gdk_pixmap_new (GDK_DRAWABLE (g->disp->window),
-					g->disp->allocation.width,
-					g->disp->allocation.height,
+	gtk_widget_get_allocation (g->disp, &allocation);
+	g->background = gdk_pixmap_new (GDK_DRAWABLE (gtk_widget_get_window (g->disp)),
+					allocation.width,
+					allocation.height,
 					-1);
 	cr = gdk_cairo_create (g->background);
 	
@@ -180,14 +182,17 @@ load_graph_configure (GtkWidget *widget,
 		      GdkEventConfigure *event,
 		      gpointer data_ptr)
 {
+	GtkAllocation allocation;
 	LoadGraph * const g = static_cast<LoadGraph*>(data_ptr);
-	g->draw_width = widget->allocation.width - 2 * FRAME_WIDTH;
-	g->draw_height = widget->allocation.height - 2 * FRAME_WIDTH;
+
+	gtk_widget_get_allocation (widget, &allocation);
+	g->draw_width = allocation.width - 2 * FRAME_WIDTH;
+	g->draw_height = allocation.height - 2 * FRAME_WIDTH;
 
 	g->clear_background();
 
 	if (g->gc == NULL) {
-		g->gc = gdk_gc_new (GDK_DRAWABLE (widget->window));
+		g->gc = gdk_gc_new (GDK_DRAWABLE (gtk_widget_get_window (widget)));
 	}
 
 	load_graph_draw (g);
@@ -201,6 +206,8 @@ load_graph_expose (GtkWidget *widget,
 		   gpointer data_ptr)
 {
 	LoadGraph * const g = static_cast<LoadGraph*>(data_ptr);
+	GtkAllocation allocation;
+	GdkWindow *window;
 
 	guint i, j;
 	gdouble sample_width, x_offset;
@@ -208,12 +215,15 @@ load_graph_expose (GtkWidget *widget,
 	if (g->background == NULL) {
 		draw_background(g);
 	}
-	gdk_draw_drawable (g->disp->window,
+
+	window = gtk_widget_get_window (g->disp);
+	gtk_widget_get_allocation (g->disp, &allocation);
+	gdk_draw_drawable (window,
 			   g->gc,
 			   g->background,
 			   0, 0, 0, 0, 
-			   g->disp->allocation.width, 
-			   g->disp->allocation.height);
+			   allocation.width,
+			   allocation.height);
 
 	/* Number of pixels wide for one graph point */
 	sample_width = (float)(g->draw_width - g->rmargin - g->indent) / (float)LoadGraph::NUM_POINTS;
@@ -226,7 +236,7 @@ load_graph_expose (GtkWidget *widget,
 	/* draw the graph */
 	cairo_t* cr;
 
-	cr = gdk_cairo_create (g->disp->window);
+	cr = gdk_cairo_create (window);
 
 	cairo_set_line_width (cr, 1);
 	cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);

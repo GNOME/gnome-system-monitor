@@ -416,12 +416,15 @@ sysinfo_logo_expose (GtkWidget *widget,
 		     GdkEventExpose *event,
 		     gpointer data_ptr)
 {
+  GtkAllocation allocation;
+  GtkStyle *style;
   cairo_t *cr;
   cairo_pattern_t *cp;
 
-  cr = gdk_cairo_create(widget->window);
+  cr = gdk_cairo_create(gtk_widget_get_window(widget));
 
-  cairo_translate(cr, widget->allocation.x, widget->allocation.y);
+  gtk_widget_get_allocation (widget, &allocation);
+  cairo_translate(cr, allocation.x, allocation.y);
 
   cairo_move_to(cr, X_PAD + RADIUS, Y_PAD);
   cairo_line_to(cr, X_PAD + LOGO_W - RADIUS, Y_PAD);
@@ -434,15 +437,16 @@ sysinfo_logo_expose (GtkWidget *widget,
   cairo_arc(cr,  X_PAD + RADIUS, Y_PAD + RADIUS, RADIUS, -1.0 * M_PI, -0.5 * M_PI);
 
   cp = cairo_pattern_create_linear(0, Y_PAD, 0, Y_PAD + LOGO_H);
+  style = gtk_widget_get_style (widget);
   cairo_pattern_add_color_stop_rgba(cp, 0.0,
-				    widget->style->base[GTK_STATE_SELECTED].red / 65535.0,
-				    widget->style->base[GTK_STATE_SELECTED].green / 65535.0,
-				    widget->style->base[GTK_STATE_SELECTED].blue / 65535.0,
+				    style->base[GTK_STATE_SELECTED].red / 65535.0,
+				    style->base[GTK_STATE_SELECTED].green / 65535.0,
+				    style->base[GTK_STATE_SELECTED].blue / 65535.0,
 				    1.0);
   cairo_pattern_add_color_stop_rgba(cp, 1.0,
-				    widget->style->base[GTK_STATE_SELECTED].red / 65535.0,
-				    widget->style->base[GTK_STATE_SELECTED].green / 65535.0,
-				    widget->style->base[GTK_STATE_SELECTED].blue / 65535.0,
+				    style->base[GTK_STATE_SELECTED].red / 65535.0,
+				    style->base[GTK_STATE_SELECTED].green / 65535.0,
+				    style->base[GTK_STATE_SELECTED].blue / 65535.0,
 				    0.0);
   cairo_set_source(cr, cp);
   cairo_fill(cr);

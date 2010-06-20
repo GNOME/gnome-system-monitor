@@ -338,7 +338,7 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 	gtk_dialog_set_has_separator (GTK_DIALOG (openfilesdialog), FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (openfilesdialog), 5);
 
-	vbox = GTK_DIALOG (openfilesdialog)->vbox;
+	vbox = gtk_dialog_get_content_area (GTK_DIALOG (openfilesdialog));
 	gtk_box_set_spacing (GTK_BOX (vbox), 2);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
 
