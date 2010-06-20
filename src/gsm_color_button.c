@@ -693,14 +693,6 @@ dialog_destroy (GtkWidget * widget, gpointer data)
   return FALSE;
 }
 
-static void
-dialog_cancel_clicked (GtkWidget * widget, gpointer data)
-{
-  GSMColorButton *color_button = GSM_COLOR_BUTTON (data);
-
-  gtk_widget_hide (color_button->priv->cs_dialog);
-}
-
 static gint
 gsm_color_button_clicked (GtkWidget * widget, GdkEventButton * event)
 {
