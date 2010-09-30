@@ -323,7 +323,7 @@ cb_tree_popup_menu (GtkWidget *widget, gpointer data)
 
 
 void
-cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
+cb_switch_page (GtkNotebook *nb, GtkWidget *page,
 		gint num, gpointer data)
 {
 	cb_change_current_page (nb, num, data);

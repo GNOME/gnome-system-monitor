@@ -60,7 +60,7 @@ gboolean	cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event,
 
 void		cb_change_current_page (GtkNotebook *nb,
 					gint num, gpointer data);
-void		cb_switch_page (GtkNotebook *nb, GtkNotebookPage *page,
+void		cb_switch_page (GtkNotebook *nb, GtkWidget *page,
 				gint num, gpointer data);
 
 gint		cb_update_disks (gpointer data);
