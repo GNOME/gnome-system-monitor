@@ -18,5 +18,5 @@ DOC_FIGURES = figures/addColumn.png \
 	      figures/systemMonitor.png \
 	      figures/viewMenu.png
 
-DOC_LINGUAS = ar bg ca cs da de el es fr oc pa sv zh_CN
+DOC_LINGUAS = ar bg ca cs da de el es fr oc pa sl sv zh_CN
 
