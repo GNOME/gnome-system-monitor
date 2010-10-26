@@ -288,7 +288,6 @@ GtkWidget *
 create_disk_view(ProcData *procdata)
 {
 	GtkWidget *disk_box;
-	GtkWidget *label;
 	GtkWidget *scrolled;
 	GtkWidget *disk_tree;
 	GtkListStore *model;
@@ -309,9 +308,6 @@ create_disk_view(ProcData *procdata)
 	disk_box = gtk_vbox_new(FALSE, 6);
 
 	gtk_container_set_border_width(GTK_CONTAINER(disk_box), 12);
-
-	label = make_title_label(_("File Systems"));
-	gtk_box_pack_start(GTK_BOX(disk_box), label, FALSE, FALSE, 0);
 
 	scrolled = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled),
