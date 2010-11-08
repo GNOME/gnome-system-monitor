@@ -1,669 +1,1180 @@
 # Persian translation of procman.
 # Copyright (C) 2003 The FarsiWeb Project Group
+# Copyright (C) 2010 Iranian Free Software Users Group (IFSUG.org)translation team
+# This file is distributed under the same license as the gnome-system-monitor package.
 # Roozbeh Pournader <roozbeh@sharif.edu>, 2003
+# Mahyar Moghimi <mahyar.moqimi@gmail.com>, 2010
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-17 02:04+0200\n"
-"PO-Revision-Date: 2003-02-24 19:45+0330\n"
-"Last-Translator: Roozbeh Pournader <roozbeh@sharif.edu>\n"
-"Language-Team: Persian <farsi@lists.sharif.edu>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor&component=general\n"
+"POT-Creation-Date: 2010-10-29 00:28+0000\n"
+"PO-Revision-Date: 2010-11-08 14:29+0330\n"
+"Last-Translator: Mahyar Moghimi <mahyar.moqimi@gmail.com>\n"
+"Language-Team: Persian <translate@ifsug.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 0.9.6\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: gnome-system-monitor.desktop.in.h:1 src/callbacks.c:144 src/interface.c:614
+#: ../gnome-system-monitor.desktop.in.in.h:1
+#: ../src/callbacks.cpp:157
+#: ../src/interface.cpp:619
+#: ../src/procman.cpp:724
 msgid "System Monitor"
-msgstr ""
+msgstr "پایشگر دستگاه"
 
-#: gnome-system-monitor.desktop.in.h:2
+#: ../gnome-system-monitor.desktop.in.in.h:2
+#: ../src/callbacks.cpp:158
 msgid "View current processes and monitor system state"
+msgstr "دیدن فرآیند‌های جاری پایش حالت سیستم"
+
+#: ../src/argv.cpp:18
+msgid "Show the System tab"
+msgstr "نمایش همیشگی زبانهٔ سیستم"
+
+#: ../src/callbacks.cpp:167
+msgid "translator-credits"
 msgstr ""
-
-#: src/callbacks.c:121
-#, fuzzy
-msgid "Kevin Vandersloot"
-msgstr "© 2001 Kevin Vandersloot"
-
-#: src/callbacks.c:122
-msgid "Jorgen Scheibengruber - nicer devices treeview"
-msgstr ""
-
-#: src/callbacks.c:130
-msgid "translator_credits"
-msgstr "ترجمه‌ی: روزبه پورنادر"
-
-#: src/callbacks.c:145
-msgid "(C) 2001 Kevin Vandersloot"
-msgstr "© 2001 Kevin Vandersloot"
-
-#: src/callbacks.c:146
-msgid "Simple process viewer using libgtop"
-msgstr ""
-
-#: src/defaulttable.h:8
-msgid "X window system"
-msgstr "سیستم پنجره‌ای X"
-
-#: src/defaulttable.h:9
-msgid "bourne again shell"
-msgstr ""
-
-#: src/defaulttable.h:10
-msgid "Gnome-Session"
-msgstr "نشست گنوم"
-
-#: src/favorites.c:344
-msgid "No processes are currently hidden."
-msgstr ""
-
-#: src/favorites.c:364
-msgid "Manage Hidden Processes"
-msgstr ""
-
-#: src/favorites.c:388
-#, fuzzy
-msgid "_Hidden processes:"
-msgstr "مخفی کردن فراروند"
-
-#: src/favorites.c:410
-msgid "_Remove From List"
-msgstr "حذف از فهرست"
-
-#: src/favorites.c:419 src/procdialogs.c:439
-msgid "Note:"
-msgstr ""
-
-#: src/favorites.c:420
-msgid ""
-"These are the processes you have chosen to hide. You can reshow a process by "
-"removing it from this list."
-msgstr ""
-
-#: src/infoview.c:81
-msgid "Process Info"
-msgstr "اطلاعات فراروند"
-
-#: src/infoview.c:95
-#, fuzzy
-msgid "Command:"
-msgstr "دستور : "
-
-#: src/infoview.c:99
-#, fuzzy
-msgid "Status:"
-msgstr "وضعیت"
-
-#: src/infoview.c:103
-#, fuzzy
-msgid "Priority:"
-msgstr "اولویت : "
-
-#: src/infoview.c:127
-msgid "Memory Usage"
-msgstr "استفاده از حافظه"
-
-#: src/infoview.c:141
-#, fuzzy
-msgid "Total:"
-msgstr "مجموع :"
-
-#: src/infoview.c:145
-msgid "RSS:"
-msgstr ""
-
-#: src/infoview.c:149
-#, fuzzy
-msgid "Shared:"
-msgstr "اشتراکی : "
-
-#: src/infoview.c:194
-#, c-format
-msgid "Very high - nice %d"
-msgstr ""
-
-#: src/infoview.c:196
-#, c-format
-msgid "High - nice %d"
-msgstr ""
-
-#: src/infoview.c:198
-#, c-format
-msgid "Normal - nice %d"
-msgstr ""
-
-#: src/infoview.c:200
-#, c-format
-msgid "Low - nice %d"
-msgstr ""
-
-#: src/infoview.c:202
-#, c-format
-msgid "Very low - nice %d"
-msgstr ""
-
-#: src/interface.c:53 src/interface.c:124
-msgid "_Change Priority..."
-msgstr "تغییر اولویت..."
-
-#: src/interface.c:53 src/interface.c:124
-msgid "Change the importance (nice value) of a process"
-msgstr ""
-
-#: src/interface.c:58 src/interface.c:135 src/procdialogs.c:155
-msgid "_Hide Process"
-msgstr "مخفی کردن فراروند"
-
-#: src/interface.c:58 src/interface.c:135
-msgid "Hide a process"
-msgstr ""
-
-#: src/interface.c:64 src/interface.c:230
-msgid "End _Process"
-msgstr ""
-
-#: src/interface.c:64
-msgid "Force a process to finish."
-msgstr ""
-
-#: src/interface.c:69 src/interface.c:146 src/procdialogs.c:217
-#: src/procdialogs.c:1008
-msgid "_Kill Process"
-msgstr "کشتن فراروند"
-
-#: src/interface.c:69
-msgid "Force a process to finish now."
-msgstr ""
-
-#: src/interface.c:75
-msgid "_Hidden Processes"
-msgstr ""
-
-#: src/interface.c:76
-msgid "View and edit your list of hidden processes"
-msgstr ""
-
-#: src/interface.c:87 src/interface.c:129
-msgid "_Memory Maps"
-msgstr "نقشه‌های حافظه"
-
-#: src/interface.c:87 src/interface.c:129
-msgid "View the memory maps associated with a process"
-msgstr ""
-
-#: src/interface.c:93
-msgid "Process _Dependencies"
-msgstr ""
-
-#: src/interface.c:93
-msgid "Display a tree showing process dependencies"
-msgstr ""
-
-#: src/interface.c:98
-msgid "_Threads"
-msgstr ""
-
-#: src/interface.c:98
-msgid "Display threads (subprocesses)"
-msgstr ""
-
-#: src/interface.c:141 src/procdialogs.c:222 src/procdialogs.c:1012
-msgid "_End Process"
-msgstr ""
-
-#: src/interface.c:141
-msgid "Force a process to finish"
-msgstr ""
-
-#: src/interface.c:146
-msgid "Force a process to finish now"
-msgstr ""
-
-#: src/interface.c:153
-msgid "More _Info >>"
-msgstr "اطلاعات بیشتر >>"
-
-#: src/interface.c:154
-msgid "<< Less _Info"
-msgstr ""
-
-#: src/interface.c:187
-msgid "Sea_rch:"
-msgstr ""
-
-#: src/interface.c:199
-msgid "All Processes"
-msgstr "همه‌ی فراروندها"
-
-#: src/interface.c:200
-msgid "My Processes"
-msgstr "فراروندهای من"
-
-#: src/interface.c:201
-msgid "Active Processes"
-msgstr "فراروندهای فعال"
-
-#: src/interface.c:208
-msgid "Vie_w:"
-msgstr ""
-
-#: src/interface.c:235
-msgid "More _Info"
-msgstr ""
-
-#: src/interface.c:334
-msgid "Name"
-msgstr "نام"
-
-#: src/interface.c:335
-msgid "Directory"
-msgstr "شاخه"
-
-#: src/interface.c:336
-msgid "Type"
-msgstr ""
-
-#: src/interface.c:337
-#, fuzzy
-msgid "Total"
-msgstr "مجموع :"
-
-#: src/interface.c:338
-#, fuzzy
-msgid "Used"
-msgstr "کاربر"
-
-#: src/interface.c:359
-msgid "CPU History"
-msgstr ""
-
-#: src/interface.c:400
-#, c-format
-msgid "CPU%d:"
-msgstr ""
-
-#: src/interface.c:419
-msgid "Memory and Swap History"
-msgstr ""
-
-#: src/interface.c:452
-#, fuzzy
-msgid "Used memory:"
-msgstr "حافظه‌ی اشتراکی"
-
-#: src/interface.c:461 src/interface.c:488
-msgid "of"
-msgstr ""
-
-#: src/interface.c:479
-msgid "Used swap:"
-msgstr ""
-
-#: src/interface.c:509 src/procdialogs.c:928
-msgid "Devices"
-msgstr "دستگاه‌ها"
-
-#: src/interface.c:626 src/procdialogs.c:753
-#, fuzzy
-msgid "Process Listing"
-msgstr "فهرست فراروند"
-
-#: src/interface.c:632 src/procdialogs.c:840
-msgid "Resource Monitor"
-msgstr ""
-
-#: src/interface.c:690
-msgid "Application Manager"
-msgstr "مدیر برنامه"
-
-#: src/interface.c:696
-msgid "Running Applications"
-msgstr ""
-
-#: src/interface.c:715
-msgid "_Close Application"
-msgstr "بستن برنامه"
-
-#: src/memmaps.c:227
-msgid "Filename"
-msgstr "نام پرونده"
-
-#: src/memmaps.c:227
-msgid "VM Start"
-msgstr ""
-
-#: src/memmaps.c:227
-msgid "VM End"
-msgstr ""
-
-#: src/memmaps.c:228 src/proctable.c:133
-msgid "VM Size"
-msgstr ""
-
-#: src/memmaps.c:228
-msgid "Flags"
-msgstr "نشان‌ها"
-
-#: src/memmaps.c:228
-msgid "VM Offset"
-msgstr ""
-
-#: src/memmaps.c:229
+"مهیار مقیمی <mahyar.moqimi@gmail.com>\n"
+"روزبه پورنادر <roozbeh@sharif.edu>"
+
+#: ../src/disks.cpp:299
+#: ../src/memmaps.cpp:498
 msgid "Device"
 msgstr "دستگاه"
 
-#: src/memmaps.c:229
-msgid "Inode"
-msgstr "Inode"
+#: ../src/disks.cpp:300
+msgid "Directory"
+msgstr "شاخه"
 
-#: src/memmaps.c:305
-msgid "Memory Maps"
-msgstr "نقشه‌های حافظه"
+#: ../src/disks.cpp:301
+#: ../src/gsm_color_button.c:211
+#: ../src/openfiles.cpp:247
+msgid "Type"
+msgstr "نوع"
 
-#: src/memmaps.c:325
-#, fuzzy
-msgid "Process name:"
-msgstr "نام فراروند :"
+#: ../src/disks.cpp:302
+msgid "Total"
+msgstr "مجموع"
 
-#: src/procactions.c:54
-msgid "No such process."
-msgstr ""
+#: ../src/disks.cpp:303
+msgid "Free"
+msgstr "آزاد"
 
-#: src/procactions.c:67
-#, c-format
-msgid ""
-"Process Name : %s \n"
-"\n"
-"You do not have permission to change the priority of this process. You can "
-"enter the root password to gain the necessary permission."
-msgstr ""
+#: ../src/disks.cpp:304
+msgid "Available"
+msgstr "موجود:"
 
-#: src/procactions.c:74
-#, c-format
-msgid ""
-"Process Name : %s \n"
-"\n"
-"You must be root to renice a process lower than 0. You can enter the root "
-"password to gain the necessary permission."
-msgstr ""
+#: ../src/disks.cpp:305
+msgid "Used"
+msgstr "استفاده شده"
 
-#: src/procactions.c:126
-#, c-format
-msgid ""
-"Process Name : %s \n"
-"\n"
-"You do not have permission to end this process. You can enter the root "
-"password to gain the necessary permission."
-msgstr ""
+#. xgettext: ? stands for unknown
+#: ../src/e_date.c:155
+msgid "?"
+msgstr "؟"
 
-#: src/procactions.c:145
-msgid "An error occured while killing the process."
-msgstr ""
+#: ../src/e_date.c:162
+msgid "Today %l:%M %p"
+msgstr "امروز %Ol:%OM %p"
 
-#: src/procdialogs.c:80
-msgid "Are you sure you want to hide this process?"
-msgstr ""
+#: ../src/e_date.c:171
+msgid "Yesterday %l:%M %p"
+msgstr "دیروز %Ol:%OM %p"
 
-#: src/procdialogs.c:81
-msgid ""
-"If you hide a process, you can unhide it by selecting 'Hidden Processes' in "
-"the Edit menu."
-msgstr ""
+#: ../src/e_date.c:183
+msgid "%a %l:%M %p"
+msgstr "%a %Ol:%OM %p"
 
-#: src/procdialogs.c:138 src/procdialogs.c:279
-#, fuzzy
-msgid "_Show this dialog next time"
-msgstr "نمایش محاوره در دفعه‌ی بعدی."
+#: ../src/e_date.c:191
+msgid "%b %d %l:%M %p"
+msgstr "%b %Id %Ol:%OM %p"
 
-#: src/procdialogs.c:215
-msgid "Are you sure you want to kill this process?"
-msgstr ""
+#: ../src/e_date.c:193
+msgid "%b %d %Y"
+msgstr "%b %d %Y"
 
-#: src/procdialogs.c:216
-msgid "If you kill a process, unsaved data will be lost."
-msgstr ""
+#: ../src/gnome-system-monitor.schemas.in.h:1
+msgid "0 for the System Info, 1 for the processes list, 2 for the resources and 3 for the disks list"
+msgstr "۰ برای اطلاعات سیستم، ۱ برای فهرست فرآیند‌ها، ۲ برای منابع و ۳ برای فهرست دیسک‌ها"
 
-#: src/procdialogs.c:220
-msgid "Are you sure you want to end this process?"
-msgstr ""
+#: ../src/gnome-system-monitor.schemas.in.h:2
+msgid "Default graph cpu color"
+msgstr "رنگ واحد پردازش مرکزی نمودار پیش‌فرض"
 
-#: src/procdialogs.c:221
-msgid "If you end a process, unsaved data will be lost."
-msgstr ""
+#: ../src/gnome-system-monitor.schemas.in.h:3
+msgid "Default graph incoming network traffic color"
+msgstr "رنگ ترافیک ورودی شبکه در نمودار پیش‌فرض"
 
-#: src/procdialogs.c:319
-#, fuzzy
-msgid "(Very High Priority)"
-msgstr "( اولویت خیلی بالا )"
+#: ../src/gnome-system-monitor.schemas.in.h:4
+msgid "Default graph mem color"
+msgstr "رنگ پیش‌فرض نمودار حافظه"
 
-#: src/procdialogs.c:321
-#, fuzzy
-msgid "(High Priority)"
-msgstr "( اولویت بالا )"
+#: ../src/gnome-system-monitor.schemas.in.h:5
+msgid "Default graph outgoing network traffic color"
+msgstr "رنگ ترافیک خروجی شبکه در نمودار پیش‌فرض"
 
-#: src/procdialogs.c:323
-#, fuzzy
-msgid "(Normal Priority)"
-msgstr "( اولویت عادی )"
+#: ../src/gnome-system-monitor.schemas.in.h:6
+msgid "Default graph swap color"
+msgstr "رنگ پس‌زمینه‌ی نمودار حافظه‌ی مبادله"
 
-#: src/procdialogs.c:325
-#, fuzzy
-msgid "(Low Priority)"
-msgstr "( اولویت پایین )"
+#: ../src/gnome-system-monitor.schemas.in.h:7
+msgid "Determines which processes to show by default. 0 is All, 1 is user, and 2 is active"
+msgstr "مشخص می‌کند که چه فرآیند‌هایی به طور پیش‌فرض نشان داده شوند. ۰ برای همه، ۱ برای کاربر، و ۲ برای فعال"
 
-#: src/procdialogs.c:327
-#, fuzzy
-msgid "(Very Low Priority)"
-msgstr "( اولویت خیلی پایین )"
+#: ../src/gnome-system-monitor.schemas.in.h:8
+msgid "Disk view columns order"
+msgstr "ترتیب ستون‌ها نمایه‌ی دیسک"
 
-#: src/procdialogs.c:381 src/procdialogs.c:1016
-msgid "Change Priority"
-msgstr ""
+#: ../src/gnome-system-monitor.schemas.in.h:9
+msgid "Enable/Disable smooth refresh"
+msgstr "به‌کارانداختن/از کارانداختن بازآوردی نرم"
 
-#: src/procdialogs.c:402 src/procdialogs.c:1017
-msgid "Change _Priority"
-msgstr ""
+#: ../src/gnome-system-monitor.schemas.in.h:10
+msgid "If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu usage is divided by the total number of CPUs. Else it operates in 'Irix mode'."
+msgstr "اگر درست باشد، پایشگر سیستم در ٬حالت سولاریس٬ کار خواهد کرد که در آن میزان مصرف واحد مرکزی پردازش توسط یک تکلیف تقسیم بر تعداد واحد‌های پردازش مرکزی می‌شود. در غیر این‌صورت در حالت آیریکس عمل خواهد کرد."
 
-#: src/procdialogs.c:423
-msgid "_Nice value:"
-msgstr ""
+#: ../src/gnome-system-monitor.schemas.in.h:11
+msgid "Main Window height"
+msgstr "طول پنجره اصلی"
 
-#: src/procdialogs.c:440
-msgid ""
-"The priority of a process is given by its nice value. A lower nice value "
-"corresponds to a higher priority."
-msgstr ""
+#: ../src/gnome-system-monitor.schemas.in.h:12
+msgid "Main Window width"
+msgstr "عرض پنجره اصلی"
 
-#: src/procdialogs.c:695
-msgid "Icon"
-msgstr "شمایل"
+#: ../src/gnome-system-monitor.schemas.in.h:13
+msgid "Process view columns order"
+msgstr "ترتیب ستون‌های نمایش واحد بردازش مرکزی"
 
-#: src/procdialogs.c:735
-msgid "Preferences"
-msgstr "ترجیحات"
+#: ../src/gnome-system-monitor.schemas.in.h:14
+msgid "Process view sort column"
+msgstr "ستون ترتیب نمایش واحد پردازش مرکزی"
 
-#: src/procdialogs.c:760
-msgid "Behavior"
-msgstr ""
+#: ../src/gnome-system-monitor.schemas.in.h:15
+msgid "Process view sort order"
+msgstr "ترتیب مرتب کردن نمایه‌ی فرآیندها"
 
-#: src/procdialogs.c:779 src/procdialogs.c:866
-#, fuzzy
-msgid "_Update interval:"
-msgstr "بازه‌ی به‌هنگام‌سازی ( ثانیه ) :"
+#: ../src/gnome-system-monitor.schemas.in.h:16
+msgid "Saves the currently viewed tab"
+msgstr "زبانهٔ جاری را ذخیره می‌کند"
 
-#: src/procdialogs.c:795 src/procdialogs.c:883 src/procdialogs.c:964
-msgid "seconds"
-msgstr ""
+#: ../src/gnome-system-monitor.schemas.in.h:18
+#, no-c-format
+msgid "Show process 'CPU %' column on startup"
+msgstr "در زمان راه‌اندازی ستون ٬ ٪ واحد پردازش مرکزی ٬ فرآیند نشان داده شود"
 
-#: src/procdialogs.c:802
-msgid "Show warning dialog when ending or _killing processes"
-msgstr ""
+#: ../src/gnome-system-monitor.schemas.in.h:19
+msgid "Show process 'CPU time' column on startup"
+msgstr "در زمان راه اندازی ستون «زمان واحد پردازش مرکزی» فرآیند نشان داده شود."
 
-#: src/procdialogs.c:812
-msgid "Show warning dialog when _hiding processes"
-msgstr ""
+#: ../src/gnome-system-monitor.schemas.in.h:20
+msgid "Show process 'PID' column on startup"
+msgstr "در زمان راه اندازی ستون «شناسه‌ی فرآیند» نشان داده شود."
 
-#: src/procdialogs.c:822
-#, fuzzy
-msgid "Process Fields"
-msgstr "نام فراروند"
+#: ../src/gnome-system-monitor.schemas.in.h:21
+msgid "Show process 'SELinux security context' column on startup"
+msgstr "در زمان راه اندازی ستون «متن امنیت سِلینوکس» نشان داده شود."
 
-#: src/procdialogs.c:847
-msgid "Graphs"
-msgstr "نمودارها"
+#: ../src/gnome-system-monitor.schemas.in.h:22
+msgid "Show process 'Waiting Channel' column on startup"
+msgstr "در زمان راه اندازی ستون «کانال منتظر» فرآیند نشان داده شود."
 
-#: src/procdialogs.c:890
-#, fuzzy
-msgid "_Background color:"
-msgstr "رنگ پس‌زمینه :"
+#: ../src/gnome-system-monitor.schemas.in.h:23
+msgid "Show process 'X server memory' column on startup"
+msgstr "در زمان راه اندازی ستون «حافظه‌ی خادم ایکس» فرآیند نشان داده شود."
 
-#: src/procdialogs.c:909
-msgid "_Grid color:"
-msgstr ""
+#: ../src/gnome-system-monitor.schemas.in.h:24
+msgid "Show process 'arguments' column on startup"
+msgstr "در زمان راه اندازی ستون «نشانوند‌ها»ی فرآیند نشان داده شود."
 
-#: src/procdialogs.c:947
-#, fuzzy
-msgid "Update _interval:"
-msgstr "بازه‌ی به‌هنگام‌سازی ( ثانیه ) :"
+#: ../src/gnome-system-monitor.schemas.in.h:25
+msgid "Show process 'estimated memory usage' column on startup"
+msgstr "در زمان راه‌اندازی ستون ٬ حافظه‌ی استفاده‌ شده‌ی تخمینی ٬ فرآیند نشان داده شود"
 
-#: src/procdialogs.c:1007
-msgid "Kill Process"
+#: ../src/gnome-system-monitor.schemas.in.h:26
+msgid "Show process 'name' column on startup"
+msgstr "در زمان راه‌اندازی ستون ٬ نام ٬ فرآیند نشان داده شود"
+
+#: ../src/gnome-system-monitor.schemas.in.h:27
+msgid "Show process 'nice' column on startup"
+msgstr "در زمان راه‌اندازی ستون ٬ نیس ٬ فرآیند نشان داده شود"
+
+#: ../src/gnome-system-monitor.schemas.in.h:28
+msgid "Show process 'owner' column on startup"
+msgstr "در زمان راه‌اندازی ستون ٬ مالک ٬ فرآیند نشان داده شود"
+
+#: ../src/gnome-system-monitor.schemas.in.h:29
+msgid "Show process 'resident memory' column on startup"
+msgstr "در زمان راه‌اندازی ستون ٬ حافظه‌ی مقیم ٬ فرآیند نشان داده شود"
+
+#: ../src/gnome-system-monitor.schemas.in.h:30
+msgid "Show process 'shared memory' column on startup"
+msgstr "در زمان راه‌اندازی ستون ٬ حافظه‌ی اشتراکی ٬ فرآیند نشان داده شود"
+
+#: ../src/gnome-system-monitor.schemas.in.h:31
+msgid "Show process 'start time' column on startup"
+msgstr "در زمان راه‌اندازی ستون ٬ زمان آغاز ٬ فرآیند نشان داده شود"
+
+#: ../src/gnome-system-monitor.schemas.in.h:32
+msgid "Show process 'status' column on startup"
+msgstr "در زمان راه‌اندازی ستون ٬ وضعیت ٬ فرآیند نشان داده شود"
+
+#: ../src/gnome-system-monitor.schemas.in.h:33
+msgid "Show process 'virtual memory' column on startup"
+msgstr "در زمان راه‌اندازی ستون ٬ حافظه‌ی مجازی ٬ فرآیند نشان داده شود"
+
+#: ../src/gnome-system-monitor.schemas.in.h:34
+msgid "Show process 'writable memory' column on startup"
+msgstr "در زمان راه‌اندازی ستون ٬ حافظه‌ی قابل نوشتن ٬ فرآیند نشان داده شود"
+
+#: ../src/gnome-system-monitor.schemas.in.h:35
+msgid "Show process dependencies in tree form"
+msgstr "وابستگی‌های فرآیند به فرم درختی نشان داده شوند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:36
+msgid "Show warning dialog when killing processes"
+msgstr "هنگام کشتن فرآیند‌ها جعبه‌ی محاوره‌ی اخطار نشان داده شود"
+
+#: ../src/gnome-system-monitor.schemas.in.h:37
+msgid "Solaris mode for CPU percentage"
+msgstr "حالت سولاریس برای درصد واحد پردازش مرکزی"
+
+#: ../src/gnome-system-monitor.schemas.in.h:38
+msgid "Time in milliseconds between updates of the devices list"
+msgstr "زمان بین به‌روزرسانی فهرست دستگاه‌ها بر حسب میلی ثانیه"
+
+#: ../src/gnome-system-monitor.schemas.in.h:39
+msgid "Time in milliseconds between updates of the graphs"
+msgstr "زمان بین به‌روزرسانی نمودار بر حسب میلی ثانیه"
+
+#: ../src/gnome-system-monitor.schemas.in.h:40
+msgid "Time in milliseconds between updates of the process view"
+msgstr "زمان بین به‌روزرسانی نمای فرآیند‌ها بر حسب میلی ثانیه"
+
+#: ../src/gnome-system-monitor.schemas.in.h:41
+msgid "Whether information about all filesystems should be displayed"
+msgstr "اینکه اطلاعات درباره‌ی همه‌ی سیستم‌های فایل نشان داده شود یا نه"
+
+#: ../src/gnome-system-monitor.schemas.in.h:42
+msgid "Whether to display information about all filesystems (including types like 'autofs' and 'procfs'). Useful for getting a list of all currently mounted filesystems."
+msgstr "اینکه اطلاعات درباره‌ی تمام سیستم‌های فایل نشان داده شود یا نه (شامل نوع‌هایی مثل «autofs» و «procfs»). برای گرفتن فهرستی از همه‌ی سیستم‌فایل‌های سوار‌شده‌ی جاری سودمند است."
+
+#: ../src/gnome-system-monitor.schemas.in.h:44
+#, no-c-format
+msgid "Width of process 'CPU %' column"
+msgstr "عرض ستون «٪ سی‌پی‌یو» فرآیند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:45
+msgid "Width of process 'CPU time' column"
+msgstr "عرض ستون «زمان سی‌پی‌یو» فرآیند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:46
+msgid "Width of process 'PID' column"
+msgstr "عرض ستون «شناسه‌»‌ی فرآیند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:47
+msgid "Width of process 'SELinux security context' column"
+msgstr "عرض ستون «متن امنیت سِلینوکس» فرآیند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:48
+msgid "Width of process 'Waiting Channel' column"
+msgstr "عرض ستون «کانال منتظر» فرآیند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:49
+msgid "Width of process 'X server memory' column"
+msgstr "عرض ستون «حافظه‌ی خادم ایکس» فرآیند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:50
+msgid "Width of process 'arguments' column"
+msgstr "عرض ستون «نشان‌وند‌ها»ی فرآیند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:51
+msgid "Width of process 'estimated memory usage' column"
+msgstr "عرض ستون «حافظه‌ی استفاده‌شده‌ی تخمینی» فرایند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:52
+msgid "Width of process 'name' column"
+msgstr "عرض ستون «نام» فرآیند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:53
+msgid "Width of process 'nice' column"
+msgstr "عرض ستون «نیس» فرآیند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:54
+msgid "Width of process 'owner' column"
+msgstr "عرض ستون «مالک» فرآیند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:55
+msgid "Width of process 'resident memory' column"
+msgstr "عرض ستون «حافظه‌ی مقیم» فرآیند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:56
+msgid "Width of process 'shared memory' column"
+msgstr "عرض ستون «حافظه‌ی اشتراکی» فرآیند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:57
+msgid "Width of process 'start time' column"
+msgstr "عرض ستون «زمان آغاز» فرآیند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:58
+msgid "Width of process 'status' column"
+msgstr "عرض ستون «وضعیت» فرآیند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:59
+msgid "Width of process 'virtual memory' column"
+msgstr "عرض ستون «حافظه‌ی مجازی» فرآیند"
+
+#: ../src/gnome-system-monitor.schemas.in.h:60
+msgid "Width of process 'writable memory' column"
+msgstr "عرض ستون «حافظه‌ی قابل نوشتن» فرایند"
+
+#: ../src/gsm_color_button.c:188
+msgid "Fraction"
+msgstr "کسر"
+
+#: ../src/gsm_color_button.c:189
+msgid "Percentage full for pie colour pickers"
+msgstr "درصد پر‌کردن برای گزینشگر رنگ درهم ریخته"
+
+#: ../src/gsm_color_button.c:196
+msgid "Title"
+msgstr "عنوان"
+
+#: ../src/gsm_color_button.c:197
+msgid "The title of the color selection dialog"
+msgstr "عنوان جعبه محاوره‌ی انتخاب رنگ"
+
+#: ../src/gsm_color_button.c:198
+#: ../src/gsm_color_button.c:605
+msgid "Pick a Color"
+msgstr "یک رنگ بردارید"
+
+#: ../src/gsm_color_button.c:204
+msgid "Current Color"
+msgstr "رنگ جاری"
+
+#: ../src/gsm_color_button.c:205
+msgid "The selected color"
+msgstr "رنگ انتخاب‌شده"
+
+#: ../src/gsm_color_button.c:212
+msgid "Type of color picker"
+msgstr "نوع رنگ بردار"
+
+#: ../src/gsm_color_button.c:526
+msgid "Received invalid color data\n"
+msgstr "داده‌های رنگ نامعتبر دریافت شد\n"
+
+#: ../src/gsm_color_button.c:626
+msgid "Click to set graph colors"
+msgstr "برای تنظیم رنگ‌های نمودار کلیک کنید"
+
+#. xgettext: noun, top level menu.
+#. "File" did not make sense for system-monitor
+#: ../src/interface.cpp:50
+msgid "_Monitor"
+msgstr "_پایشگر"
+
+#: ../src/interface.cpp:51
+msgid "_Edit"
+msgstr "ویرایش"
+
+#: ../src/interface.cpp:52
+msgid "_View"
+msgstr "نمایش"
+
+#: ../src/interface.cpp:53
+msgid "_Help"
+msgstr "_راهنما"
+
+#: ../src/interface.cpp:55
+msgid "Search for _Open Files"
+msgstr "جستجوی پرونده‌های _باز"
+
+#: ../src/interface.cpp:56
+msgid "Search for open files"
+msgstr "جستجوی پرونده‌های باز"
+
+#: ../src/interface.cpp:58
+msgid "Quit the program"
+msgstr "ترک برنامه"
+
+#: ../src/interface.cpp:61
+msgid "_Stop Process"
+msgstr "_توقف فرآیند"
+
+#: ../src/interface.cpp:62
+msgid "Stop process"
+msgstr "توقف فرآیند"
+
+#: ../src/interface.cpp:63
+msgid "_Continue Process"
+msgstr "_ادامه‌ی فرآیند"
+
+#: ../src/interface.cpp:64
+msgid "Continue process if stopped"
+msgstr "فرآیند را اگر متوقف شد ادامه بده"
+
+#: ../src/interface.cpp:66
+#: ../src/procdialogs.cpp:84
+msgid "_End Process"
+msgstr "پایان بردن فرآیند"
+
+#: ../src/interface.cpp:67
+msgid "Force process to finish normally"
+msgstr "فرآیند مجبور شود که به حالت معمولی به پایان برود"
+
+#: ../src/interface.cpp:68
+#: ../src/procdialogs.cpp:75
+msgid "_Kill Process"
 msgstr "کشتن فراروند"
 
-#: src/procdialogs.c:1011
-msgid "End Process"
-msgstr ""
+#: ../src/interface.cpp:69
+msgid "Force process to finish immediately"
+msgstr "فرآیند مجبور شود که فوری به پایان برود"
 
-#: src/procdialogs.c:1036
-msgid "Root Password :"
-msgstr "گذرواژه‌ی Root :"
+#: ../src/interface.cpp:70
+msgid "_Change Priority..."
+msgstr "تغییر اولویت..."
 
-#: src/procdialogs.c:1081
-msgid "Wrong Password."
-msgstr "گذرواژه‌ی غلط."
+#: ../src/interface.cpp:71
+msgid "Change the order of priority of process"
+msgstr "تغییر ترتیب اولویت فرآیند"
 
-#: src/procman.c:47
-msgid "show simple dialog to end processes and logout"
-msgstr ""
+#: ../src/interface.cpp:73
+msgid "Configure the application"
+msgstr "پیکربندی برنامه"
 
-#: src/proctable.c:131
-msgid "Process Name"
-msgstr "نام فراروند"
+#: ../src/interface.cpp:75
+msgid "_Refresh"
+msgstr "_بازآوردن:"
 
-#: src/proctable.c:131
-msgid "Arguments"
-msgstr "آرگومان‌ها"
+#: ../src/interface.cpp:76
+msgid "Refresh the process list"
+msgstr "باز‌آوری فهرست فرآیند‌ها"
 
-#: src/proctable.c:132
-msgid "User"
-msgstr "کاربر"
+#: ../src/interface.cpp:78
+msgid "_Memory Maps"
+msgstr "نقشه‌های حافظه"
 
-#: src/proctable.c:132
-msgid "Status"
-msgstr "وضعیت"
+#: ../src/interface.cpp:79
+msgid "Open the memory maps associated with a process"
+msgstr "نگاشت‌های حافظه‌ی همبسته با یک فرآیند باز شوند"
 
-#: src/proctable.c:133
+#: ../src/interface.cpp:80
+msgid "Open _Files"
+msgstr "_باز کردن پرونده‌ها"
+
+#: ../src/interface.cpp:81
+msgid "View the files opened by a process"
+msgstr "دیدن پرونده‌های باز شده توسط یک فرآیند"
+
+#: ../src/interface.cpp:83
+msgid "_Contents"
+msgstr "_محتویات"
+
+#: ../src/interface.cpp:84
+msgid "Open the manual"
+msgstr "باز کردن راهنما"
+
+#: ../src/interface.cpp:86
+msgid "About this application"
+msgstr "درباره‌ی این برنامه"
+
+#: ../src/interface.cpp:91
+msgid "_Dependencies"
+msgstr "_وابستگی‌ها"
+
+#: ../src/interface.cpp:92
+msgid "Show parent/child relationship between processes"
+msgstr "نشان دادن روابط مادر فرزندی فرآیندها"
+
+#: ../src/interface.cpp:99
+msgid "_Active Processes"
+msgstr "فرآیند‌های _فعال"
+
+#: ../src/interface.cpp:100
+msgid "Show active processes"
+msgstr "فرآیندهای فعال نشان داده شوند"
+
+#: ../src/interface.cpp:101
+msgid "A_ll Processes"
+msgstr "_همه‌ی فرآیند‌ها"
+
+#: ../src/interface.cpp:102
+msgid "Show all processes"
+msgstr "نمایش همه‌ی فرآیند‌ها"
+
+#: ../src/interface.cpp:103
+msgid "M_y Processes"
+msgstr "فرآیند‌های من"
+
+#: ../src/interface.cpp:104
+msgid "Show user own process"
+msgstr "نشان دادن فرآیند‌های خود کاربر"
+
+#: ../src/interface.cpp:189
+msgid "End _Process"
+msgstr "به‌_پایان بردن فرآیند"
+
+#: ../src/interface.cpp:243
+msgid "CPU History"
+msgstr "تاریخچه‌ی واحد پردازش مرکزی"
+
+#: ../src/interface.cpp:300
+msgid "CPU"
+msgstr "واحد پردازش مرکزی"
+
+#: ../src/interface.cpp:302
+#, c-format
+msgid "CPU%d"
+msgstr "واحد پردازش مرکزی%d"
+
+#: ../src/interface.cpp:320
+msgid "Memory and Swap History"
+msgstr "تاریخچه‌ی حافظه و فضای مبادله"
+
+#: ../src/interface.cpp:359
+#: ../src/proctable.cpp:226
 msgid "Memory"
 msgstr "حافظه"
 
-#: src/proctable.c:133
+#: ../src/interface.cpp:385
+msgid "Swap"
+msgstr "مبادله"
+
+#: ../src/interface.cpp:406
+msgid "Network History"
+msgstr "تاریخچه شبکه"
+
+#: ../src/interface.cpp:445
+msgid "Receiving"
+msgstr "در حال دریافت"
+
+#: ../src/interface.cpp:466
+msgid "Total Received"
+msgstr "کل دریافت شده"
+
+#: ../src/interface.cpp:500
+msgid "Sending"
+msgstr "در حال فرستادن"
+
+#: ../src/interface.cpp:522
+msgid "Total Sent"
+msgstr "کل فرستاده‌شده"
+
+#. procman_create_sysinfo_view();
+#: ../src/interface.cpp:690
+msgid "System"
+msgstr "سیستم"
+
+#: ../src/interface.cpp:694
+#: ../src/procdialogs.cpp:525
+msgid "Processes"
+msgstr "فرآیند‌ها"
+
+#: ../src/interface.cpp:698
+#: ../src/procdialogs.cpp:640
+msgid "Resources"
+msgstr "منابع"
+
+#: ../src/interface.cpp:702
+#: ../src/procdialogs.cpp:705
+#: ../src/procdialogs.cpp:709
+msgid "File Systems"
+msgstr "سیستم پرونده"
+
+#: ../src/load-graph.cpp:155
+#, c-format
+msgid "%u second"
+msgid_plural "%u seconds"
+msgstr[0] "%u ثانیه"
+msgstr[1] "%u ثانیه"
+
+#. xgettext: 540MiB (53 %) of 1.0 GiB
+#: ../src/load-graph.cpp:339
+#, c-format
+msgid "%s (%.1f %%) of %s"
+msgstr "%s (%.1f %%) از %s"
+
+#: ../src/lsof.cpp:124
+#, c-format
+msgid ""
+"<b>Error</b>\n"
+"'%s' is not a valid Perl regular expression.\n"
+"%s"
+msgstr ""
+"<b>خطا</b>\n"
+"'%s' یک عبارت با قائده‌ی پِرل نیست.\n"
+"%s"
+
+#: ../src/lsof.cpp:270
+msgid "Process"
+msgstr "فرآیند"
+
+#: ../src/lsof.cpp:282
+msgid "PID"
+msgstr "شناسه‌های فرآیند"
+
+#: ../src/lsof.cpp:292
+#: ../src/memmaps.cpp:476
+msgid "Filename"
+msgstr "نام پرونده"
+
+#. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+#: ../src/lsof.cpp:309
+msgid "Search for Open Files"
+msgstr "جستجوی پرونده‌های باز"
+
+#: ../src/lsof.cpp:337
+msgid "_Name contains:"
+msgstr "_نام حاوی:"
+
+#: ../src/lsof.cpp:353
+msgid "Case insensitive matching"
+msgstr "تطبیق غیر حساس به بزرگی و کوچکی"
+
+#: ../src/lsof.cpp:361
+msgid "S_earch results:"
+msgstr "_نتایج جستجو:"
+
+#. xgettext: virtual memory start
+#: ../src/memmaps.cpp:478
+msgid "VM Start"
+msgstr "آغاز حافظه‌ی مجازی"
+
+#. xgettext: virtual memory end
+#: ../src/memmaps.cpp:480
+msgid "VM End"
+msgstr "پایان حافظه‌ی مجازی"
+
+#. xgettext: virtual memory syze
+#: ../src/memmaps.cpp:482
+msgid "VM Size"
+msgstr "اندازه‌ی حافظه‌ی مجازی"
+
+#: ../src/memmaps.cpp:483
+msgid "Flags"
+msgstr "نشان‌ها"
+
+#. xgettext: virtual memory offset
+#: ../src/memmaps.cpp:485
+msgid "VM Offset"
+msgstr "انحراف حافظه‌ی مجازی"
+
+#. xgettext: memory that has not been modified since
+#. it has been allocated
+#: ../src/memmaps.cpp:488
+msgid "Private clean"
+msgstr "حافظه‌ی خصوصی و نوشته نشده"
+
+#. xgettext: memory that has been modified since it
+#. has been allocated
+#: ../src/memmaps.cpp:491
+msgid "Private dirty"
+msgstr "حافظه‌ی خصوصی نوشته شده"
+
+#. xgettext: shared memory that has not been modified
+#. since it has been allocated
+#: ../src/memmaps.cpp:494
+msgid "Shared clean"
+msgstr "حافظه‌ی به اشتراک گذاشته شده و نوشته نشده"
+
+#. xgettext: shared memory that has been modified
+#. since it has been allocated
+#: ../src/memmaps.cpp:497
+msgid "Shared dirty"
+msgstr "حافظه‌ی به اشتراک گذاشته شده و نوشته شده"
+
+#: ../src/memmaps.cpp:499
+msgid "Inode"
+msgstr "Inode"
+
+#. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+#: ../src/memmaps.cpp:608
+msgid "Memory Maps"
+msgstr "نقشه‌های حافظه"
+
+#: ../src/memmaps.cpp:627
+#, c-format
+msgid "_Memory maps for process \"%s\" (PID %u):"
+msgstr "نگاشت حافظه برای فرآیند \"%s\" (شناسه %u):"
+
+#: ../src/openfiles.cpp:34
+msgid "file"
+msgstr "پرونده"
+
+#: ../src/openfiles.cpp:36
+msgid "pipe"
+msgstr "لوله‌"
+
+#: ../src/openfiles.cpp:38
+msgid "IPv6 network connection"
+msgstr "اتصال‌های شبکه‌ی IPv6"
+
+#: ../src/openfiles.cpp:40
+msgid "IPv4 network connection"
+msgstr "اتصال‌های شبکه‌ی IPv4"
+
+#: ../src/openfiles.cpp:42
+msgid "local socket"
+msgstr "سوکت محلی"
+
+#: ../src/openfiles.cpp:44
+msgid "unknown type"
+msgstr "نوع ناشناخته"
+
+#. Translators: "FD" here means "File Descriptor". Please use
+#. a very short translation if possible, and at most
+#. 2-3 characters for it to be able to fit in the UI.
+#: ../src/openfiles.cpp:246
+msgid "FD"
+msgstr "ت.پ"
+
+#: ../src/openfiles.cpp:248
+msgid "Object"
+msgstr "شئ"
+
+#: ../src/openfiles.cpp:332
+msgid "Open Files"
+msgstr "پرونده‌های باز"
+
+#: ../src/openfiles.cpp:354
+#, c-format
+msgid "_Files opened by process \"%s\" (PID %u):"
+msgstr "پرونده‌هایی که با فرآیند «%s» (شناسه %u): باز شده‌اند:"
+
+#: ../src/procactions.cpp:75
+#, c-format
+msgid ""
+"Cannot change the priority of process with pid %d to %d.\n"
+"%s"
+msgstr ""
+"تغییر اولویت فرآیند با شناسه %d به %d امکان‌پذیر نیست.\n"
+"%s"
+
+#: ../src/procactions.cpp:155
+#, c-format
+msgid ""
+"Cannot kill process with pid %d with signal %d.\n"
+"%s"
+msgstr ""
+"کشتن فرآیند با شناسه %d با سیگنال %d امکان‌پذیر نیست.\n"
+"%s"
+
+#. xgettext: primary alert message
+#: ../src/procdialogs.cpp:70
+msgid "Kill the selected process?"
+msgstr "فرآیند گزیده شده کشته شود؟"
+
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:72
+msgid "Killing a process may destroy data, break the session or introduce a security risk. Only unresponding processes should be killed."
+msgstr "کشتن یک فرآیند می‌تواند باعث نابودی داده‌، شکسته‌شدن نشست، یا امکان خطر امنیتی شود. تنها می‌توان فرآیند‌های ناجوابگو را کشت."
+
+#. xgettext: primary alert message
+#: ../src/procdialogs.cpp:79
+msgid "End the selected process?"
+msgstr "فرآیند گزیده شده به پایان برده شود؟"
+
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:81
+msgid "Ending a process may destroy data, break the session or introduce a security risk. Only unresponding processes should be ended."
+msgstr "به پایان بردن یک فرآیند می‌تواند باعث نابودی داده‌، شکسته‌شدن نشست، یا امکان خطر امنیتی شود. تنها می‌توان فرآیند‌های ناجوابگو را کشت."
+
+#: ../src/procdialogs.cpp:115
+msgid "(Very High Priority)"
+msgstr "(اولویت خیلی بالا)"
+
+#: ../src/procdialogs.cpp:117
+msgid "(High Priority)"
+msgstr "(اولویت بالا)"
+
+#: ../src/procdialogs.cpp:119
+msgid "(Normal Priority)"
+msgstr "(اولویت معمولی)"
+
+#: ../src/procdialogs.cpp:121
+msgid "(Low Priority)"
+msgstr "(اولویت پایین)"
+
+#: ../src/procdialogs.cpp:123
+msgid "(Very Low Priority)"
+msgstr "( اولویت خیلی پایین )"
+
+#: ../src/procdialogs.cpp:175
+msgid "Change Priority"
+msgstr "تغییر اولویت..."
+
+#: ../src/procdialogs.cpp:196
+msgid "Change _Priority"
+msgstr "تغییر _اولویت"
+
+#: ../src/procdialogs.cpp:217
+msgid "_Nice value:"
+msgstr "مقدار _نیس:"
+
+#: ../src/procdialogs.cpp:233
+msgid "Note:"
+msgstr "نکته:"
+
+#: ../src/procdialogs.cpp:234
+msgid "The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."
+msgstr "اولویت یک فرآیند با مقدار نیس آن داده می‌شود. یک مقدار پایین‌تر نیس باعث اولویت بالاتر می‌شود."
+
+#: ../src/procdialogs.cpp:457
+msgid "Icon"
+msgstr "نشان"
+
+#: ../src/procdialogs.cpp:502
+msgid "System Monitor Preferences"
+msgstr "ترجیحات پایشگر دستگاه"
+
+#: ../src/procdialogs.cpp:532
+msgid "Behavior"
+msgstr "رفتار"
+
+#: ../src/procdialogs.cpp:551
+#: ../src/procdialogs.cpp:666
+#: ../src/procdialogs.cpp:728
+msgid "_Update interval in seconds:"
+msgstr "بازه‌ی به‌روزرسانی (ثانیه) :"
+
+#: ../src/procdialogs.cpp:576
+msgid "Enable _smooth refresh"
+msgstr "به کار انداختن بازآوری نرم"
+
+#: ../src/procdialogs.cpp:590
+msgid "Alert before ending or _killing processes"
+msgstr "قبل از _کشتن یا به پایان بردن فرآیند‌ها اخطار بده"
+
+#: ../src/procdialogs.cpp:604
+msgid "Solaris mode"
+msgstr "حالت مدل سولاریس"
+
+#: ../src/procdialogs.cpp:622
+#: ../src/procdialogs.cpp:762
+msgid "Information Fields"
+msgstr "_فیلدهای اطلاعات"
+
+#: ../src/procdialogs.cpp:635
+msgid "Process i_nformation shown in list:"
+msgstr "اطلاعات فرآیند که در فهرست نشان داده می‌شوند:"
+
+#: ../src/procdialogs.cpp:647
+msgid "Graphs"
+msgstr "نمودارها"
+
+#: ../src/procdialogs.cpp:686
+msgid "Show network speed in bits"
+msgstr "سرعت شبکه با بیت نشان داده شود"
+
+#: ../src/procdialogs.cpp:748
+msgid "Show _all filesystems"
+msgstr "نمایش _همه‌ی سیستم‌های پرونده"
+
+#: ../src/procdialogs.cpp:775
+msgid "File system i_nformation shown in list:"
+msgstr "اطلاعات سیستم که در فهرست نشان داده می‌شوند:"
+
+#: ../src/procman.cpp:682
+msgid "A simple process and system monitor."
+msgstr "یک فرآیند ساده و پایشگر‌ شبکه."
+
+#: ../src/proctable.cpp:211
+msgid "Process Name"
+msgstr "نام فراروند"
+
+#: ../src/proctable.cpp:212
+msgid "User"
+msgstr "کاربر"
+
+#: ../src/proctable.cpp:213
+msgid "Status"
+msgstr "وضعیت"
+
+#: ../src/proctable.cpp:214
+msgid "Virtual Memory"
+msgstr "حافظه‌ی مجازی"
+
+#: ../src/proctable.cpp:215
 msgid "Resident Memory"
 msgstr "حافظه‌ی مقیم"
 
-#: src/proctable.c:134
+#: ../src/proctable.cpp:216
+msgid "Writable Memory"
+msgstr "حافظه‌ی قابل نوشتن"
+
+#: ../src/proctable.cpp:217
 msgid "Shared Memory"
 msgstr "حافظه‌ی اشتراکی"
 
-#: src/proctable.c:134
-msgid "RSS Memory"
-msgstr ""
-
-#: src/proctable.c:135
-#, fuzzy
+#: ../src/proctable.cpp:218
 msgid "X Server Memory"
-msgstr "حافظه‌ی اشتراکی"
+msgstr "حافظه‌ی خادم ایکس"
 
-#: src/proctable.c:137
+#: ../src/proctable.cpp:219
 #, no-c-format
 msgid "% CPU"
-msgstr ""
+msgstr "٪ سی‌پی‌یو"
 
-#: src/proctable.c:138
+#: ../src/proctable.cpp:220
+msgid "CPU Time"
+msgstr "زمان واحد پردازش مرکزی"
+
+#: ../src/proctable.cpp:221
+msgid "Started"
+msgstr "آغاز شد"
+
+#: ../src/proctable.cpp:222
 msgid "Nice"
-msgstr ""
+msgstr "نیس"
 
-#: src/proctable.c:138
+#: ../src/proctable.cpp:223
 msgid "ID"
 msgstr "شناسه"
 
-#: src/proctable.c:282
+#: ../src/proctable.cpp:224
+msgid "Security Context"
+msgstr "متن امنیت"
+
+#: ../src/proctable.cpp:225
+msgid "Command Line"
+msgstr "خط فرمان"
+
+#. xgettext: wchan, see ps(1) or top(1)
+#: ../src/proctable.cpp:228
+msgid "Waiting Channel"
+msgstr "کانال منتظر"
+
+#: ../src/proctable.cpp:945
+#, c-format
+msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
+msgstr "میانگین بار برای ۱۵، ۵، ۱ دقیقه‌ی گذشته: %0.2f, %0.2f, %0.2f"
+
+#: ../src/sysinfo.cpp:77
+#, c-format
+msgid "Release %s"
+msgstr "رها‌کردن %s"
+
+#: ../src/sysinfo.cpp:116
+msgid "Unknown CPU model"
+msgstr "نوع واحد پردازش مرکزی ناشناخته"
+
+#: ../src/sysinfo.cpp:590
+#, c-format
+msgid "Kernel %s"
+msgstr "هسته %s"
+
+#: ../src/sysinfo.cpp:603
+#, c-format
+msgid "GNOME %s"
+msgstr "گنوم %s"
+
+#. hardware section
+#: ../src/sysinfo.cpp:617
+#, c-format
+msgid "<b>Hardware</b>"
+msgstr "<b>سخت‌افزار</b>"
+
+#: ../src/sysinfo.cpp:622
+msgid "Memory:"
+msgstr "حافظه"
+
+#: ../src/sysinfo.cpp:629
+#, c-format
+msgid "Processor %d:"
+msgstr "پردازنده %d:"
+
+#: ../src/sysinfo.cpp:634
+msgid "Processor:"
+msgstr "پردازنده:"
+
+#. disk space section
+#: ../src/sysinfo.cpp:646
+#, c-format
+msgid "<b>System Status</b>"
+msgstr "<b>وضعیت سیستم</b>"
+
+#: ../src/sysinfo.cpp:652
+msgid "Available disk space:"
+msgstr "فضای دیسک موجود:"
+
+#: ../src/util.cpp:30
 msgid "Running"
 msgstr "در حال اجرا"
 
-#: src/proctable.c:288
+#: ../src/util.cpp:34
 msgid "Stopped"
 msgstr "متوقف‌شده"
 
-#: src/proctable.c:293
+#: ../src/util.cpp:38
+msgid "Zombie"
+msgstr "خونخوار"
+
+#: ../src/util.cpp:42
+msgid "Uninterruptible"
+msgstr "غیر قابل وقفه‌اندازی"
+
+#: ../src/util.cpp:46
 msgid "Sleeping"
-msgstr ""
+msgstr "در حال خواب"
 
-#: src/proctable.c:412
-msgid " (thread)"
-msgstr ""
-
-#: src/proctable.c:982
+#. xgettext: weeks, days
+#: ../src/util.cpp:101
 #, c-format
-msgid "%s could not be found."
-msgstr ""
+msgid "%uw%ud"
+msgstr "%uه%uر"
 
-#: src/util.c:294
-#, fuzzy, c-format
-msgid "%d byte"
-msgid_plural "%d bytes"
-msgstr[0] "%d بایت"
-msgstr[1] "%d بایت"
-
-#: src/util.c:297
+#. xgettext: days, hours (0 -> 23)
+#: ../src/util.cpp:105
 #, c-format
-msgid "%d K"
-msgstr "%d کیلو"
+msgid "%ud%02uh"
+msgstr "%uر%02uس"
 
-#: src/util.c:301
+#. xgettext: hours (0 -> 23), minutes, seconds
+#: ../src/util.cpp:109
 #, c-format
-msgid "%.1f MB"
-msgstr "%.1f مگا"
+msgid "%u:%02u:%02u"
+msgstr "%u:%02u.%02u"
 
-#: src/util.c:303
+#. xgettext: minutes, seconds, centiseconds
+#: ../src/util.cpp:112
 #, c-format
-msgid "%.0f MB"
-msgstr "%.0f مگا"
+msgid "%u:%02u.%02u"
+msgstr "%u:%02u.%02u"
 
-#: src/util.c:306
+#: ../src/util.cpp:164
 #, c-format
-msgid "%.1f GB"
-msgstr "%.1f گیگا"
+msgid "%.1f KiB"
+msgstr "%.1f KiB"
 
+#: ../src/util.cpp:165
+#, c-format
+msgid "%.1f MiB"
+msgstr "%.1f MiB"
+
+#: ../src/util.cpp:166
+#, c-format
+msgid "%.1f GiB"
+msgstr "%.1f GiB"
+
+#: ../src/util.cpp:167
+#, c-format
+msgid "%.1f kbit"
+msgstr "%.1f kbit"
+
+#: ../src/util.cpp:168
+#, c-format
+msgid "%.1f Mbit"
+msgstr "%.1f Mbit"
+
+#: ../src/util.cpp:169
+#, c-format
+msgid "%.1f Gbit"
+msgstr "%.1f Gbit"
+
+#: ../src/util.cpp:184
+#, c-format
+msgid "%u bit"
+msgid_plural "%u bits"
+msgstr[0] "%u بیت"
+msgstr[1] "%u بیت"
+
+#: ../src/util.cpp:185
+#, c-format
+msgid "%u byte"
+msgid_plural "%u bytes"
+msgstr[0] "%u بایت"
+msgstr[1] "%u بایت"
+
+#: ../src/util.cpp:373
+msgid "<i>N/A</i>"
+msgstr "<i>بدون جواب</i>"
+
+#. xgettext: rate, 10MiB/s or 10Mbit/s
+#: ../src/util.cpp:490
+#, c-format
+msgid "%s/s"
+msgstr "%s/ثانیه"
+
+#, fuzzy
+#~ msgid "Kevin Vandersloot"
+#~ msgstr "© 2001 Kevin Vandersloot"
+#~ msgid "(C) 2001 Kevin Vandersloot"
+#~ msgstr "© 2001 Kevin Vandersloot"
+#~ msgid "X window system"
+#~ msgstr "سیستم پنجره‌ای X"
+#~ msgid "Gnome-Session"
+#~ msgstr "نشست گنوم"
+
+#, fuzzy
+#~ msgid "_Hidden processes:"
+#~ msgstr "مخفی کردن فراروند"
+#~ msgid "_Remove From List"
+#~ msgstr "حذف از فهرست"
+
+#, fuzzy
+#~ msgid "Status:"
+#~ msgstr "وضعیت"
+
+#, fuzzy
+#~ msgid "Priority:"
+#~ msgstr "اولویت : "
+#~ msgid "Memory Usage"
+#~ msgstr "استفاده از حافظه"
+
+#, fuzzy
+#~ msgid "Total:"
+#~ msgstr "مجموع :"
+#~ msgid "More _Info >>"
+#~ msgstr "اطلاعات بیشتر >>"
+#~ msgid "Name"
+#~ msgstr "نام"
+
+#, fuzzy
+#~ msgid "Used memory:"
+#~ msgstr "حافظه‌ی اشتراکی"
+#~ msgid "Devices"
+#~ msgstr "دستگاه‌ها"
+#~ msgid "Application Manager"
+#~ msgstr "مدیر برنامه"
+
+#, fuzzy
+#~ msgid "_Show this dialog next time"
+#~ msgstr "نمایش محاوره در دفعه‌ی بعدی."
+#~ msgid "Preferences"
+#~ msgstr "ترجیحات"
+
+#, fuzzy
+#~ msgid "_Background color:"
+#~ msgstr "رنگ پس‌زمینه :"
+
+#, fuzzy
+#~ msgid "Update _interval:"
+#~ msgstr "بازه‌ی به‌هنگام‌سازی ( ثانیه ) :"
+#~ msgid "Kill Process"
+#~ msgstr "کشتن فراروند"
+#~ msgid "Root Password :"
+#~ msgstr "گذرواژه‌ی Root :"
+#~ msgid "Wrong Password."
+#~ msgstr "گذرواژه‌ی غلط."
+#~ msgid "Arguments"
+#~ msgstr "آرگومان‌ها"
+#~ msgid "%d K"
+#~ msgstr "%d کیلو"
+#~ msgid "%.0f MB"
+#~ msgstr "%.0f مگا"
 #~ msgid "Erik Johnsson (zaphod@linux.nu) - icon support"
 #~ msgstr "اریک جانسون (ٍzaphod@linux.nu) - پشتییانی شمایل‌ها"
-
 #~ msgid "Status : "
 #~ msgstr "وضعیت : "
-
 #~ msgid "Total : "
 #~ msgstr "مجموع :‌"
-
 #~ msgid "Change Priority ..."
 #~ msgstr "تغییر اولویت ..."
-
 #~ msgid "Hide Process"
 #~ msgstr "مخفی کردن فراروند"
 
-#~ msgid "Total Space"
-#~ msgstr "مجموع فضا"
-
-#~ msgid "Swap"
-#~ msgstr "مبادله"
