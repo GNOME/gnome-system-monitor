@@ -66,7 +66,6 @@ struct LoadGraph {
 	GtkWidget *main_widget;
 	GtkWidget *disp;
 
-	GdkGC *gc;
 	GdkDrawable *background;
 
 	guint timer_index;
