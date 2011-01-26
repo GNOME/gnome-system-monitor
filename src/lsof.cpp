@@ -312,7 +312,6 @@ void procman_lsof(ProcData *procdata)
   //		   G_CALLBACK(close_dialog), NULL);
   gtk_window_set_resizable(GTK_WINDOW(dialog), TRUE);
   gtk_window_set_default_size(GTK_WINDOW(dialog), 575, 400);
-  // gtk_dialog_set_has_separator(GTK_DIALOG(dialog), FALSE);
   gtk_container_set_border_width(GTK_CONTAINER(dialog), 12);
   GtkWidget *mainbox = gtk_vbox_new(FALSE, 12);
   gtk_container_add(GTK_CONTAINER(dialog), mainbox);

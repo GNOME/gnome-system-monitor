@@ -178,7 +178,7 @@ procdialog_create_renice_dialog (ProcData *procdata)
 				              NULL);
   	renice_dialog = dialog;
 	gtk_window_set_resizable (GTK_WINDOW (renice_dialog), FALSE);
-	gtk_dialog_set_has_separator (GTK_DIALOG (renice_dialog), FALSE);
+	g_object_set (G_OBJECT (renice_dialog), "has-separator", FALSE, NULL);
 	gtk_container_set_border_width (GTK_CONTAINER (renice_dialog), 5);
   	
 	button = gtk_button_new ();
@@ -510,7 +510,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	/* any function to set list height by contents/items inside it. */
 	gtk_window_set_default_size (GTK_WINDOW (dialog), 400, 420);
 	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
-	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
+	g_object_set (G_OBJECT (dialog), "has-separator", FALSE, NULL);
 	prefs_dialog = dialog;
 	
 	main_vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog));

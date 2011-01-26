@@ -608,7 +608,6 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 	gtk_window_set_title(GTK_WINDOW(memmapsdialog), _("Memory Maps"));
 	gtk_window_set_resizable(GTK_WINDOW(memmapsdialog), TRUE);
 	gtk_window_set_default_size(GTK_WINDOW(memmapsdialog), 575, 400);
-	// gtk_dialog_set_has_separator(GTK_DIALOG(dialog), FALSE);
 	gtk_container_set_border_width(GTK_CONTAINER(memmapsdialog), 12);
 
 	GtkWidget *mainbox = gtk_vbox_new(FALSE, 12);
