@@ -595,8 +595,6 @@ gsm_color_button_init (GSMColorButton * color_button)
 {
   color_button->priv = GSM_COLOR_BUTTON_GET_PRIVATE (color_button);
 
-  rsvg_init ();
-
   color_button->priv->color.red = 0;
   color_button->priv->color.green = 0;
   color_button->priv->color.blue = 0;
@@ -645,7 +643,6 @@ gsm_color_button_finalize (GObject * object)
   cairo_surface_destroy (color_button->priv->image_buffer);
   color_button->priv->image_buffer = NULL;
 
-  rsvg_term ();
   G_OBJECT_CLASS (gsm_color_button_parent_class)->finalize (object);
 }
 
