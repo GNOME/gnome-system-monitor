@@ -717,9 +717,7 @@ main (int argc, char *argv[])
 
 	gtk_window_set_default_icon_name ("utilities-system-monitor");
 	g_set_application_name(_("System Monitor"));
-		    
-	gconf_init (argc, argv, NULL);
-			    
+
 	client = gconf_client_get_default ();
 	gconf_client_add_dir(client, "/apps/procman", GCONF_CLIENT_PRELOAD_NONE, NULL);
 
