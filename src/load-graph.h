@@ -1,7 +1,7 @@
 #ifndef _PROCMAN_LOAD_GRAPH_H_
 #define _PROCMAN_LOAD_GRAPH_H_
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <glibtop/cpu.h>
 
 enum

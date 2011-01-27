@@ -20,7 +20,7 @@
 #ifndef _PROCMAN_INTERFACE_H_
 #define _PROCMAN_INTERFACE_H_
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <gtk/gtk.h>
 #include "procman.h"
 

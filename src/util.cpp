@@ -1,7 +1,7 @@
 #include <config.h>
 
 #include <glib/gi18n.h>
-#include <glib/gstring.h>
+#include <glib.h>
 #include <gtk/gtk.h>
 
 #include <glibtop/proctime.h>

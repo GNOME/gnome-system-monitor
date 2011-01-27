@@ -1,7 +1,7 @@
 #ifndef _OPENFILES_H_
 #define _OPENFILES_H_
 
-#include <glib/gtypes.h>
+#include <glib.h>
 
 #include "procman.h"
 
