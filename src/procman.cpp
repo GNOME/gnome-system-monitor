@@ -548,25 +548,20 @@ void
 procman_save_config (ProcData *data)
 {
 	GConfClient *client = data->client;
-	gint width, height;
 
 	g_assert(data);
 		
 	procman_save_tree_state (data->client, data->tree, "/apps/procman/proctree");
 	procman_save_tree_state (data->client, data->disk_list, "/apps/procman/disktreenew");
-		
-	gdk_drawable_get_size (gtk_widget_get_window (data->app), &width, &height);
-	data->config.width = width;
-	data->config.height = height;
-	
+
+	data->config.width  = gdk_window_get_width (gtk_widget_get_window (data->app));
+	data->config.height = gdk_window_get_height(gtk_widget_get_window (data->app));
+
 	gconf_client_set_int (client, "/apps/procman/width", data->config.width, NULL);
 	gconf_client_set_int (client, "/apps/procman/height", data->config.height, NULL);	
 	gconf_client_set_int (client, "/apps/procman/current_tab", data->config.current_tab, NULL);
 
 	gconf_client_suggest_sync (client, NULL);
-	
-
-	
 }
 
 static guint32
