@@ -55,8 +55,19 @@ schema_DATA = $(schema_ins:.schemas.in=.schemas)
 EXTRA_DIST = \
 	$(schema_ins)
 
+# GSettings schemas, enum files and conversion file
+gsettings_ENUM_NAMESPACE = org.gnome.gnome-system-monitor
+gsettings_ENUM_FILES = $(top_srcdir)/src/*.h
+gsettings_SCHEMAS = org.gnome.gnome-system-monitor.gschema.xml
+
+@INTLTOOL_XML_NOMERGE_RULE@
+@GSETTINGS_RULES@
+
 CLEANFILES = \
-	$(schema_DATA)
+	$(schema_DATA) 		\
+	$(gsettings_SCHEMAS)
+
+MAINTAINERCLEANFILES = $(gsettings_SCHEMAS:.xml=.valid)
 
 if GCONF_SCHEMAS_INSTALL
 install-data-local:

@@ -1,0 +1,453 @@
+<schemalist>
+
+  <schema id="org.gnome.gnome-system-monitor" path="/apps/procman/">
+	<key name="width" type="i">
+	  <default>440
+	  </default>
+	  <_summary>Main Window width
+	  </_summary>
+	</key>
+
+	<key name="height" type="i">
+	  <default>495
+	  </default>
+	  <_summary>Main Window height
+	  </_summary>
+	</key>
+
+	<key name="show-tree" type="b">
+	  <default>false
+	  </default>
+	  <_summary>Show process dependencies in tree form
+	  </_summary>
+	</key>
+
+	<key name="solaris-mode" type="b">
+	  <default>false
+	  </default>
+	  <_summary>Solaris mode for CPU percentage
+	  </_summary>
+	  <_description>If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu usage is divided by the total number of CPUs. Else it operates in 'Irix mode'.
+	  </_description>
+	</key>
+
+	<key name="smooth-refresh" type="b">
+	  <default>true
+	  </default>
+	  <_summary>Enable/Disable smooth refresh
+	  </_summary>
+	</key>
+
+	<key name="kill-dialog" type="b">
+	  <default>true
+	  </default>
+	  <_summary>Show warning dialog when killing processes
+	  </_summary>
+	</key>
+
+	<key name="update-interval" type="i">
+	  <default>3000
+	  </default>
+	  <_summary>Time in milliseconds between updates of the process view
+	  </_summary>
+	</key>
+
+	<key name="graph-update-interval" type="i">
+	  <default>1000
+	  </default>
+	  <_summary>Time in milliseconds between updates of the graphs
+	  </_summary>
+	</key>
+
+	<key name="show-all-fs" type="b">
+	  <default>false
+	  </default>
+	  <_summary>Whether information about all filesystems should be displayed
+	  </_summary>
+	  <_description>Whether to display information about all filesystems (including types like 'autofs' and 'procfs'). Useful for getting a list of all currently mounted filesystems.
+	  </_description>
+	</key>
+
+	<key name="disks-interval" type="i">
+	  <default>5000
+	  </default>
+	  <_summary>Time in milliseconds between updates of the devices list
+	  </_summary>
+	</key>
+
+	<key name="view-as" type="i">
+	  <default>1
+	  </default>
+	  <_summary>Determines which processes to show by default. 0 is All, 1 is user, and 2 is active
+	  </_summary>
+	</key>
+
+	<key name="current-tab" type="i">
+	  <default>2
+	  </default>
+	  <_summary>Saves the currently viewed tab
+	  </_summary>
+	  <_description>0 for the System Info, 1 for the processes list, 2 for the resources and 3 for the disks list
+	  </_description>
+	</key>
+
+	<key name="cpu-color0" type="s">
+	  <default>'#FF6E00'
+	  </default>
+	  <_summary>Default graph cpu color
+	  </_summary>
+	</key>
+
+	<key name="cpu-color1" type="s">
+	  <default>'#CB0C29'
+	  </default>
+	  <_summary>Default graph cpu color
+	  </_summary>
+	</key>
+
+	<key name="cpu-color2" type="s">
+	  <default>'#49A835'
+	  </default>
+	  <_summary>Default graph cpu color
+	  </_summary>
+	</key>
+
+	<key name="cpu-color3" type="s">
+	  <default>'#2D7DB3'
+	  </default>
+	  <_summary>Default graph cpu color
+	  </_summary>
+	</key>
+
+	<key name="mem-color" type="s">
+	  <default>'#AB1852'
+	  </default>
+	  <_summary>Default graph mem color
+	  </_summary>
+	</key>
+
+	<key name="swap-color" type="s">
+	  <default>'#49A835'
+	  </default>
+	  <_summary>Default graph swap color
+	  </_summary>
+	</key>
+
+	<key name="net-in-color" type="s">
+	  <default>'#2D7DB3'
+	  </default>
+	  <_summary>Default graph incoming network traffic color
+	  </_summary>
+	</key>
+
+	<key name="net-out-color" type="s">
+	  <default>'#844798'
+	  </default>
+	  <_summary>Default graph outgoing network traffic color
+	  </_summary>
+	</key>
+	<child name="proctree" schema="org.gnome.gnome-system-monitor.proctree" />
+	<child name="disktreenew" schema="org.gnome.gnome-system-monitor.disktreenew" />
+	<child name="memmapstree" schema="org.gnome.gnome-system-monitor.memmapstree" />
+  </schema>
+
+  <schema id="org.gnome.gnome-system-monitor.proctree" path="/apps/procman/proctree/">
+	<key name="sort-col" type="i">
+	  <default>0
+	  </default>
+	  <_summary>Process view sort column
+	  </_summary>
+	</key>
+
+	<key name="columns-order" type="ai">
+	  <default>[ 0 ]
+	  </default>
+	  <_summary>Process view columns order
+	  </_summary>
+	</key>
+
+	<key name="sort-order" type="i">
+	  <default>0
+	  </default>
+	  <_summary>Process view sort order
+	  </_summary>
+	</key>
+
+	<key name="col-0-width" type="i">
+	  <default>198
+	  </default>
+	  <_summary>Width of process 'name' column
+	  </_summary>
+	</key>
+
+	<key name="col-0-visible" type="b">
+	  <default>true
+	  </default>
+	  <_summary>Show process 'name' column on startup
+	  </_summary>
+	</key>
+
+	<key name="col-1-width" type="i">
+	  <default>0
+	  </default>
+	  <_summary>Width of process 'owner' column
+	  </_summary>
+	</key>
+
+	<key name="col-1-visible" type="b">
+	  <default>false
+	  </default>
+	  <_summary>Show process 'owner' column on startup
+	  </_summary>
+	</key>
+
+	<key name="col-2-width" type="i">
+	  <default>37
+	  </default>
+	  <_summary>Width of process 'status' column
+	  </_summary>
+	</key>
+
+	<key name="col-2-visible" type="b">
+	  <default>true
+	  </default>
+	  <_summary>Show process 'status' column on startup
+	  </_summary>
+	</key>
+
+	<key name="col-3-width" type="i">
+	  <default>0
+	  </default>
+	  <_summary>Width of process 'virtual memory' column
+	  </_summary>
+	</key>
+
+	<key name="col-3-visible" type="b">
+	  <default>false
+	  </default>
+	  <_summary>Show process 'virtual memory' column on startup
+	  </_summary>
+	</key>
+
+	<key name="col-4-width" type="i">
+	  <default>53
+	  </default>
+	  <_summary>Width of process 'resident memory' column
+	  </_summary>
+	</key>
+
+	<key name="col-4-visible" type="b">
+	  <default>false
+	  </default>
+	  <_summary>Show process 'resident memory' column on startup
+	  </_summary>
+	</key>
+
+	<key name="col-5-width" type="i">
+	  <default>0
+	  </default>
+	  <_summary>Width of process 'writable memory' column
+	  </_summary>
+	</key>
+
+	<key name="col-5-visible" type="b">
+	  <default>false
+	  </default>
+	  <_summary>Show process 'writable memory' column on startup
+	  </_summary>
+	</key>
+
+	<key name="col-6-width" type="i">
+	  <default>0
+	  </default>
+	  <_summary>Width of process 'shared memory' column
+	  </_summary>
+	</key>
+
+	<key name="col-6-visible" type="b">
+	  <default>false
+	  </default>
+	  <_summary>Show process 'shared memory' column on startup
+	  </_summary>
+	</key>
+
+	<key name="col-7-width" type="i">
+	  <default>0
+	  </default>
+	  <_summary>Width of process 'X server memory' column
+	  </_summary>
+	</key>
+
+	<key name="col-7-visible" type="b">
+	  <default>false
+	  </default>
+	  <_summary>Show process 'X server memory' column on startup
+	  </_summary>
+	</key>
+
+	<key name="col-8-width" type="i">
+	  <default>0
+	  </default>
+	  <_summary>Width of process 'CPU %' column
+	  </_summary>
+	</key>
+
+	<key name="col-8-visible" type="b">
+	  <default>true
+	  </default>
+	  <_summary>Show process 'CPU %' column on startup
+	  </_summary>
+	</key>
+
+	<key name="col-9-width" type="i">
+	  <default>50
+	  </default>
+	  <_summary>Width of process 'CPU time' column
+	  </_summary>
+	</key>
+
+	<key name="col-9-visible" type="b">
+	  <default>false
+	  </default>
+	  <_summary>Show process 'CPU time' column on startup
+	  </_summary>
+	</key>
+
+	<key name="col-10-width" type="i">
+	  <default>0
+	  </default>
+	  <_summary>Width of process 'start time' column
+	  </_summary>
+	</key>
+
+	<key name="col-10-visible" type="b">
+	  <default>false
+	  </default>
+	  <_summary>Show process 'start time' column on startup
+	  </_summary>
+	</key>
+
+	<key name="col-11-width" type="i">
+	  <default>48
+	  </default>
+	  <_summary>Width of process 'nice' column
+	  </_summary>
+	</key>
+
+	<key name="col-11-visible" type="b">
+	  <default>true
+	  </default>
+	  <_summary>Show process 'nice' column on startup
+	  </_summary>
+	</key>
+
+	<key name="col-12-width" type="i">
+	  <default>48
+	  </default>
+	  <_summary>Width of process 'PID' column
+	  </_summary>
+	</key>
+
+	<key name="col-12-visible" type="b">
+	  <default>true
+	  </default>
+	  <_summary>Show process 'PID' column on startup
+	  </_summary>
+	</key>
+
+	<key name="col-13-width" type="i">
+	  <default>48
+	  </default>
+	  <_summary>Width of process 'SELinux security context' column
+	  </_summary>
+	</key>
+
+	<key name="col-13-visible" type="b">
+	  <default>false
+	  </default>
+	  <_summary>Show process 'SELinux security context' column on startup
+	  </_summary>
+	</key>
+
+	<key name="col-14-width" type="i">
+	  <default>48
+	  </default>
+	  <_summary>Width of process 'arguments' column
+	  </_summary>
+	</key>
+
+	<key name="col-14-visible" type="b">
+	  <default>false
+	  </default>
+	  <_summary>Show process 'arguments' column on startup
+	  </_summary>
+	</key>
+
+	<key name="col-15-width" type="i">
+	  <default>48
+	  </default>
+	  <_summary>Width of process 'estimated memory usage' column
+	  </_summary>
+	</key>
+
+	<key name="col-15-visible" type="b">
+	  <default>true
+	  </default>
+	  <_summary>Show process 'estimated memory usage' column on startup
+	  </_summary>
+	</key>
+
+	<key name="col-16-width" type="i">
+	  <default>48
+	  </default>
+	  <_summary>Width of process 'Waiting Channel' column
+	  </_summary>
+	</key>
+
+	<key name="col-16-visible" type="b">
+	  <default>true
+	  </default>
+	  <_summary>Show process 'Waiting Channel' column on startup
+	  </_summary>
+	</key>
+  </schema>
+
+  <schema id="org.gnome.gnome-system-monitor.disktreenew" path="/apps/procman/disktreenew/">
+	<key name="sort-col" type="i">
+	  <default>1
+	  </default>
+	  <_summary>Process view sort column
+	  </_summary>
+	</key>
+
+	<key name="sort-order" type="i">
+	  <default>0
+	  </default>
+	  <_summary>Process view sort order
+	  </_summary>
+	</key>
+
+	<key name="columns-order" type="ai">
+	  <default>[ 0 ]
+	  </default>
+	  <_summary>Disk view columns order
+	  </_summary>
+	</key>
+  </schema>
+
+  <schema id="org.gnome.gnome-system-monitor.memmapstree" path="/apps/procman/memmapstree/">
+	<key name="sort-col" type="i">
+	  <default>0
+	  </default>
+	  <_summary>Process view sort column
+	  </_summary>
+	</key>
+
+	<key name="sort-order" type="i">
+	  <default>0
+	  </default>
+	  <_summary>Process view sort order
+	  </_summary>
+	</key>
+  </schema>
+</schemalist>
