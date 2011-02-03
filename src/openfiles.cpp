@@ -215,11 +215,11 @@ static void
 close_openfiles_dialog (GtkDialog *dialog, gint id, gpointer data)
 {
 	GtkWidget *tree = static_cast<GtkWidget*>(data);
-	GConfClient *client;
+	GSettings *settings;
 	guint timer;
 
-	client = static_cast<GConfClient*>(g_object_get_data (G_OBJECT (tree), "client"));
-	procman_save_tree_state (client, tree, procman::gconf::open_files_tree_prefix.c_str());
+	settings = static_cast<GSettings*>(g_object_get_data (G_OBJECT (tree), "settings"));
+	procman_save_tree_state (settings, tree, procman::gconf::open_files_tree_prefix.c_str());
 
 	timer = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (tree), "timer"));
 	g_source_remove (timer);
@@ -288,7 +288,7 @@ create_openfiles_tree (ProcData *procdata)
   GTK_SORT_ASCENDING);*/
 #endif
 
-	procman_get_tree_state (procdata->client, tree, procman::gconf::open_files_tree_prefix.c_str());
+	// procman_get_tree_state (procdata->settings, tree, procman::gconf::open_files_tree_prefix.c_str());
 
 	return tree;
 
@@ -368,7 +368,7 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 	tree = create_openfiles_tree (procdata);
 	gtk_container_add (GTK_CONTAINER (scrolled), tree);
 	g_object_set_data (G_OBJECT (tree), "selected_info", info);
-	g_object_set_data (G_OBJECT (tree), "client", procdata->client);
+	g_object_set_data (G_OBJECT (tree), "settings", procdata->settings);
 
 	gtk_box_pack_start (GTK_BOX (dialog_vbox), scrolled, TRUE, TRUE, 0);
 	gtk_widget_show_all (scrolled);

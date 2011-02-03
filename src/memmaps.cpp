@@ -89,144 +89,6 @@ namespace
   };
 
 
-  void
-  procman_save_tree_state2(GConfClient *client, GtkWidget *tree, const gchar *cprefix)
-  {
-    const string prefix(cprefix);
-
-    GtkTreeModel *model;
-    gint sort_col;
-    GtkSortType order;
-
-    g_assert(tree);
-    g_assert(prefix != "");
-
-    model = gtk_tree_view_get_model(GTK_TREE_VIEW (tree));
-
-    if (gtk_tree_sortable_get_sort_column_id(GTK_TREE_SORTABLE(model), &sort_col, &order)) {
-      gconf_client_set_int(client, (prefix + "/sort_col").c_str(), sort_col, 0);
-      gconf_client_set_int(client, (prefix + "/sort_order").c_str(), order, 0);
-    }
-
-    GList * const columns = gtk_tree_view_get_columns(GTK_TREE_VIEW(tree));
-
-    GSList *list = 0;
-
-    for (GList *it = columns; it; it = it->next)
-      {
-	GtkTreeViewColumn *column;
-	ColumnState cs;
-
-	column = static_cast<GtkTreeViewColumn*>(it->data);
-	cs.id = gtk_tree_view_column_get_sort_column_id(column);
-	cs.visible = gtk_tree_view_column_get_visible(column);
-	cs.width = gtk_tree_view_column_get_width(column);
-
-	list = g_slist_append(list, GINT_TO_POINTER(cs.pack()));
-      }
-
-    g_list_free(columns);
-
-    GError *error = 0;
-
-    if (not gconf_client_set_list(client, (prefix + "/columns").c_str(),
-				  GCONF_VALUE_INT, list,
-				  &error)) {
-      g_critical("Failed to save tree state %s : %s",
-		 prefix.c_str(),
-		 error->message);
-      g_error_free(error);
-    }
-
-    g_slist_free(list);
-  }
-
-
-  gboolean procman_get_tree_state2(GConfClient *client, GtkWidget *tree, const gchar *cprefix)
-  {
-    const string prefix(cprefix);
-    GtkTreeModel *model;
-
-    gint sort_col;
-    GtkSortType order;
-
-    g_assert(tree);
-    g_assert(prefix != "");
-
-    if (!gconf_client_dir_exists(client, prefix.c_str(), 0))
-      return FALSE;
-
-    model = gtk_tree_view_get_model(GTK_TREE_VIEW(tree));
-
-    sort_col = gconf_client_get_int(client, (prefix + "/sort_col").c_str(), 0);
-    sort_order = gconf_client_get_int(client, (prefix + "/sort_order").c_str(), 0);
-
-    if (sort_col != -1)
-      gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(model), sort_col, order);
-
-    proctable_set_columns_order(GTK_TREE_VIEW(tree), order);
-
-    GSlist *list = gconf_client_get_list(client, (prefix + "/columns").c_str(),
-					 GCONF_VALUE_INT, 0);
-
-
-    for (GSList *it = list; it; it = it->next) {
-      ColumnState cs;
-      cs.unpack(GPOINTER_TO_INT(it->data));
-
-      GtkTreeViewColumn *column;
-      column = gtk_tree_view_get_column(GTK_TREE_VIEW(tree), cs.id);
-
-      if (!column)
-	continue;
-
-      gtk_tree_view_column_set_visible(column, cs.visible);
-      if (cs.visible)
-	gtk_tree_view_column_set_fixed_width(column, MAX(10, cs.width));
-    }
-
-    g_slist_free(list);
-
-
-    GList * const columns = gtk_tree_view_get_columns(GTK_TREE_VIEW(tree));
-
-    for (GList * it = columns; it; it = it->next)
-      {
-	GtkTreeViewColumn *column = static_cast<GtkTreeViewColumn*>(it->data);
-	unsigned id = gtk_tree_view_column_get_sort_column_id(column);
-
-	ColumnState &cs(states[id]);
-
-
-
-	key = g_strdup_printf("%s/col_%d_width", prefix, id);
-	value = gconf_client_get (client, key, NULL);
-	g_free (key);
-
-	if (value != NULL) {
-	  width = gconf_value_get_int(value);
-	  gconf_value_free (value);
-
-	  key = g_strdup_printf ("%s/col_%d_visible", prefix, id);
-	  visible = gconf_client_get_bool (client, key, NULL);
-	  g_free (key);
-
-	  column = gtk_tree_view_get_column (GTK_TREE_VIEW (tree), id);
-	  if(!column) continue;
-	  gtk_tree_view_column_set_visible (column, visible);
-	  if (visible) {
-	    /* ensure column is really visible */
-	    width = MAX(width, 10);
-	    gtk_tree_view_column_set_fixed_width(column, width);
-	  }
-	}
-      }
-
-    g_list_free(columns);
-
-    return TRUE;
-  }
-
 
 
 #endif
@@ -294,23 +156,23 @@ namespace
   public:
     guint timer;
     GtkWidget *tree;
-    GConfClient *client;
+    GSettings *settings;
     ProcInfo *info;
     OffsetFormater format;
     mutable InodeDevices devices;
-    const char * const key;
+    const char * const schema;
 
-    MemMapsData(GtkWidget *a_tree, GConfClient *a_client)
+    MemMapsData(GtkWidget *a_tree, GSettings *a_settings)
       : tree(a_tree),
-	client(a_client),
-	key("/apps/procman/memmapstree2")
+	settings(a_settings),
+	schema("memmapstree")
     {
-      procman_get_tree_state(this->client, this->tree, this->key);
+        procman_get_tree_state(this->settings, this->tree, this->schema);
     }
 
     ~MemMapsData()
     {
-      procman_save_tree_state(this->client, this->tree, this->key);
+        procman_save_tree_state(this->settings, this->tree, this->schema);
     }
   };
 }
@@ -562,7 +424,7 @@ create_memmapsdata (ProcData *procdata)
 		}
 	}
 
-	return new MemMapsData(tree, procdata->client);
+	return new MemMapsData(tree, procdata->settings);
 }
 
 

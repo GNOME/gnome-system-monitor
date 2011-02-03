@@ -262,14 +262,13 @@ static void
 show_kill_dialog_toggled (GtkToggleButton *button, gpointer data)
 {
 	ProcData *procdata = static_cast<ProcData*>(data);
-	GConfClient *client = procdata->client;
-	
+	GSettings *settings = procdata->settings;
+
 	gboolean toggled;
 	
 	toggled = gtk_toggle_button_get_active (button);
 	
-	gconf_client_set_bool (client, "/apps/procman/kill_dialog", toggled, NULL);
-		
+	g_settings_set_boolean (settings, "kill-dialog", toggled);
 }
 
 
@@ -278,10 +277,11 @@ static void
 solaris_mode_toggled(GtkToggleButton *button, gpointer data)
 {
 	ProcData *procdata = static_cast<ProcData*>(data);
-	GConfClient *client = procdata->client;
+	GSettings *settings = procdata->settings;
+
 	gboolean toggled;
 	toggled = gtk_toggle_button_get_active(button);
-	gconf_client_set_bool(client, procman::gconf::solaris_mode.c_str(), toggled, NULL);
+	g_settings_set_boolean(settings, procman::gconf::solaris_mode.c_str(), toggled);
 }
 
 
@@ -289,10 +289,11 @@ static void
 network_in_bits_toggled(GtkToggleButton *button, gpointer data)
 {
 	ProcData *procdata = static_cast<ProcData*>(data);
-	GConfClient *client = procdata->client;
+	GSettings *settings = procdata->settings;
+
 	gboolean toggled;
 	toggled = gtk_toggle_button_get_active(button);
-	gconf_client_set_bool(client, procman::gconf::network_in_bits.c_str(), toggled, NULL);
+	g_settings_set_boolean(settings, procman::gconf::network_in_bits.c_str(), toggled);
 }
 
 
@@ -301,13 +302,13 @@ static void
 smooth_refresh_toggled(GtkToggleButton *button, gpointer data)
 {
 	ProcData *procdata = static_cast<ProcData*>(data);
-	GConfClient *client = procdata->client;
-
+	GSettings *settings = procdata->settings;
+	
 	gboolean toggled;
 
 	toggled = gtk_toggle_button_get_active(button);
 
-	gconf_client_set_bool(client, SmoothRefresh::KEY.c_str(), toggled, NULL);
+	g_settings_set_boolean(settings, SmoothRefresh::KEY.c_str(), toggled);
 }
 
 
@@ -316,21 +317,21 @@ static void
 show_all_fs_toggled (GtkToggleButton *button, gpointer data)
 {
 	ProcData *procdata = static_cast<ProcData*>(data);
-	GConfClient *client = procdata->client;
-
+	GSettings *settings = procdata->settings;
+	
 	gboolean toggled;
 
 	toggled = gtk_toggle_button_get_active (button);
 
-	gconf_client_set_bool (client, "/apps/procman/show_all_fs", toggled, NULL);
+	g_settings_set_boolean (settings, "show-all-fs", toggled);
 }
 
 
 class SpinButtonUpdater
 {
 public:
-  SpinButtonUpdater(const string& gconf_key)
-    : gconf_key(gconf_key)
+  SpinButtonUpdater(const string& key)
+    : key(key)
   { }
 
   static gboolean callback(GtkWidget *widget, GdkEventFocus *event, gpointer data)
@@ -345,20 +346,14 @@ private:
   void update(GtkSpinButton* spin)
   {
     int new_value = int(1000 * gtk_spin_button_get_value(spin));
-    GError* e = 0;
 
-    if (not gconf_client_set_int(ProcData::get_instance()->client,
-				 this->gconf_key.c_str(), new_value,
-				 &e)) {
-      g_warning("Failed to gconf_client_set_int %s %d : %s\n",
-		this->gconf_key.c_str(), new_value, e->message);
-      g_error_free(e);
-    }
+    g_settings_set_int(ProcData::get_instance()->settings,
+                       this->key.c_str(), new_value);
 
-    procman_debug("set %s to %d", this->gconf_key.c_str(), new_value);
+    procman_debug("set %s to %d", this->key.c_str(), new_value);
   }
 
-  const string gconf_key;
+  const string key;
 };
 
 
@@ -474,9 +469,9 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 
 	typedef SpinButtonUpdater SBU;
 
-	static SBU interval_updater("/apps/procman/update_interval");
-	static SBU graph_interval_updater("/apps/procman/graph_update_interval");
-	static SBU disks_interval_updater("/apps/procman/disks_interval");
+	static SBU interval_updater("update-interval");
+	static SBU graph_interval_updater("graph-update-interval");
+	static SBU disks_interval_updater("disks-interval");
 
 	GtkWidget *notebook;
 	GtkWidget *proc_box;
@@ -575,9 +570,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 
 	smooth_button = gtk_check_button_new_with_mnemonic(_("Enable _smooth refresh"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(smooth_button),
-				     gconf_client_get_bool(procdata->client,
-							   SmoothRefresh::KEY.c_str(),
-							   NULL));
+				     g_settings_get_boolean(procdata->settings,
+							   SmoothRefresh::KEY.c_str()));
 	g_signal_connect(G_OBJECT(smooth_button), "toggled",
 			 G_CALLBACK(smooth_refresh_toggled), procdata);
 	gtk_box_pack_start(GTK_BOX(hbox2), smooth_button, TRUE, TRUE, 0);
@@ -603,9 +597,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	GtkWidget *solaris_button;
 	solaris_button = gtk_check_button_new_with_mnemonic(_("Solaris mode"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(solaris_button),
-				     gconf_client_get_bool(procdata->client,
-							   procman::gconf::solaris_mode.c_str(),
-							   NULL));
+				     g_settings_get_boolean(procdata->settings,
+							   procman::gconf::solaris_mode.c_str()));
 	g_signal_connect(G_OBJECT(solaris_button), "toggled",
 			 G_CALLBACK(solaris_mode_toggled), procdata);
 	gtk_box_pack_start(GTK_BOX(hbox2), solaris_button, TRUE, TRUE, 0);
@@ -685,9 +678,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	GtkWidget *bits_button;
 	bits_button = gtk_check_button_new_with_mnemonic(_("Show network speed in bits"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(bits_button),
-				     gconf_client_get_bool(procdata->client,
-							   procman::gconf::network_in_bits.c_str(),
-							   NULL));
+				     g_settings_get_boolean(procdata->settings,
+							   procman::gconf::network_in_bits.c_str()));
 	g_signal_connect(G_OBJECT(bits_button), "toggled",
 			 G_CALLBACK(network_in_bits_toggled), procdata);
 	gtk_box_pack_start(GTK_BOX(vbox2), bits_button, TRUE, TRUE, 0);

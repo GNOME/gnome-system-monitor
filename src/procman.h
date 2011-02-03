@@ -23,8 +23,8 @@
 #include <glibmm/refptr.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <glib.h>
+#include <gio/gio.h>
 #include <gtk/gtk.h>
-#include <gconf/gconf-client.h>
 #include <glibtop/cpu.h>
 
 #include <time.h>
@@ -39,6 +39,8 @@ struct LoadGraph;
 
 #include "smooth_refresh.h"
 #include "prettytable.h"
+
+#define GSM_GSETTINGS_SCHEMA "org.gnome.gnome-system-monitor"
 
 enum
 {
@@ -72,8 +74,8 @@ struct ProcConfig
 {
 	gint		width;
 	gint		height;
-        gboolean	show_kill_warning;
-        gboolean	show_tree;
+	gboolean	show_kill_warning;
+	gboolean	show_tree;
 	gboolean	show_all_fs;
 	int		update_interval;
  	int		graph_update_interval;
@@ -206,7 +208,7 @@ struct ProcData
 
 	PrettyTable	pretty_table;
 
-	GConfClient	*client;
+	GSettings	*settings;
 	GtkWidget	*app;
 	GtkUIManager	*menu;
 
@@ -224,8 +226,8 @@ private:
 };
 
 void		procman_save_config (ProcData *data);
-void		procman_save_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefix);
-gboolean	procman_get_tree_state (GConfClient *client, GtkWidget *tree, const gchar *prefix);
+void		procman_save_tree_state (GSettings *settings, GtkWidget *tree, const gchar *prefix);
+gboolean	procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *prefix);
 
 
 

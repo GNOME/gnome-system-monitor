@@ -2,8 +2,7 @@
 #define _PROCMAN_SMOOTH_REFRESH
 
 #include <glib.h>
-#include <gconf/gconf-client.h>
-
+#include <gio/gio.h>
 #include <string>
 
 using std::string;
@@ -22,7 +21,7 @@ public:
 
     @return : initialized SmoothRefresh
   */
-  SmoothRefresh();
+  SmoothRefresh(GSettings *a_settings);
 
   ~SmoothRefresh();
 
@@ -54,12 +53,11 @@ private:
 
   unsigned get_own_cpu_usage();
 
-  static void status_changed(GConfClient *client,
-			     guint cnxn_id,
-			     GConfEntry *entry,
-			     gpointer user_data);
+  static void status_changed(GSettings *settings,
+			     const gchar *key,
+                             gpointer user_data);
 
-  void load_gconf_value(GConfValue* value = NULL);
+  void load_settings_value(const gchar *key);
 
   /*
     fuzzy logic:
@@ -92,6 +90,7 @@ private:
     -last_cpu_time: Save last cpu and process times to compute CPU%
   */
 
+  GSettings *settings;
   bool active;
   guint connection;
   guint interval;

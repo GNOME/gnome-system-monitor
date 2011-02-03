@@ -217,7 +217,7 @@ cb_end_process_button_pressed (GtkButton *button, gpointer data)
 }
 
 
-static void change_gconf_color(GConfClient *client, const char *key,
+static void change_settings_color(GSettings *settings, const char *key,
 			       GSMColorButton *cp)
 {
 	GdkColor c;
@@ -225,27 +225,26 @@ static void change_gconf_color(GConfClient *client, const char *key,
 
 	gsm_color_button_get_color(cp, &c);
 	g_snprintf(color, sizeof color, "#%04x%04x%04x", c.red, c.green, c.blue);
-	gconf_client_set_string (client, key, color, NULL);
+	g_settings_set_string (settings, key, color);
 }
-
 
 void
 cb_cpu_color_changed (GSMColorButton *cp, gpointer data)
 {
 	char key[80];
 	gint i = GPOINTER_TO_INT (data);
-	GConfClient *client = gconf_client_get_default ();
+	GSettings *settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
 
-	g_snprintf(key, sizeof key, "/apps/procman/cpu_color%d", i);
+	g_snprintf(key, sizeof key, "cpu-color%d", i);
 
-	change_gconf_color(client, key, cp);
+	change_settings_color(settings, key, cp);
 }
 
 void
 cb_mem_color_changed (GSMColorButton *cp, gpointer data)
 {
 	ProcData * const procdata = static_cast<ProcData*>(data);
-	change_gconf_color(procdata->client, "/apps/procman/mem_color", cp);
+	change_settings_color(procdata->settings, "mem-color", cp);
 }
 
 
@@ -253,21 +252,21 @@ void
 cb_swap_color_changed (GSMColorButton *cp, gpointer data)
 {
 	ProcData * const procdata = static_cast<ProcData*>(data);
-	change_gconf_color(procdata->client, "/apps/procman/swap_color", cp);
+	change_settings_color(procdata->settings, "swap-color", cp);
 }
 
 void
 cb_net_in_color_changed (GSMColorButton *cp, gpointer data)
 {
 	ProcData * const procdata = static_cast<ProcData*>(data);
-	change_gconf_color(procdata->client, "/apps/procman/net_in_color", cp);
+	change_settings_color(procdata->settings, "net-in-color", cp);
 }
 
 void
 cb_net_out_color_changed (GSMColorButton *cp, gpointer data)
 {
 	ProcData * const procdata = static_cast<ProcData*>(data);
-	change_gconf_color(procdata->client, "/apps/procman/net_out_color", cp);
+	change_settings_color(procdata->settings, "net-out-color", cp);
 }
 
 static void
@@ -431,6 +430,6 @@ cb_radio_processes(GtkAction *action, GtkRadioAction *current, gpointer data)
 
 	procdata->config.whose_process = gtk_radio_action_get_current_value(current);
 
-	gconf_client_set_int (procdata->client, "/apps/procman/view_as",
-			      procdata->config.whose_process, NULL);
+	g_settings_set_int (procdata->settings, "view_as",
+			      procdata->config.whose_process);
 }

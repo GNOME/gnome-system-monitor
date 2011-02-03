@@ -245,9 +245,9 @@ cb_disk_columns_changed(GtkTreeView *treeview, gpointer user_data)
 {
 	ProcData * const procdata = static_cast<ProcData*>(user_data);
 
-	procman_save_tree_state(procdata->client,
+	procman_save_tree_state(procdata->settings,
 				GTK_WIDGET(treeview),
-				"/apps/procman/disktreenew");
+				"disktreenew");
 }
 
 
@@ -411,8 +411,8 @@ create_disk_view(ProcData *procdata)
 
 	gtk_widget_show_all(disk_box);
 
-	procman_get_tree_state(procdata->client, disk_tree,
-			       "/apps/procman/disktreenew");
+	procman_get_tree_state(procdata->settings, disk_tree,
+			       "disktreenew");
 
 	g_signal_connect (G_OBJECT(disk_tree), "columns-changed", 
 	                  G_CALLBACK(cb_disk_columns_changed), procdata);
