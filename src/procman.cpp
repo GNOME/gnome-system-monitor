@@ -462,7 +462,6 @@ procman_save_tree_state (GSettings *settings, GtkWidget *tree, const gchar *chil
 	}			       
 	
 	columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree));
-        g_print("%i\n", g_list_length(columns));
 
         if(!g_strcmp0(child_schema, "proctree"))
         {

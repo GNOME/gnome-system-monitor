@@ -288,7 +288,7 @@ create_openfiles_tree (ProcData *procdata)
   GTK_SORT_ASCENDING);*/
 #endif
 
-	// procman_get_tree_state (procdata->settings, tree, procman::gconf::open_files_tree_prefix.c_str());
+	procman_get_tree_state (procdata->settings, tree, procman::gconf::open_files_tree_prefix.c_str());
 
 	return tree;
 
