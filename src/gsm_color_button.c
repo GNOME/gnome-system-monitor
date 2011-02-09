@@ -81,8 +81,12 @@ static void gsm_color_button_get_property (GObject * object, guint param_id,
 					   GValue * value,
 					   GParamSpec * pspec);
 static void gsm_color_button_realize (GtkWidget * widget);
-static void gsm_color_button_size_request (GtkWidget * widget,
-					   GtkRequisition * requisition);
+static void gsm_color_button_get_preferred_width (GtkWidget * widget,
+                                                  gint * minimum,
+                                                  gint * natural);
+static void gsm_color_button_get_preferred_height (GtkWidget * widget,
+                                                   gint * minimum,
+                                                   gint * natural);
 static void gsm_color_button_size_allocate (GtkWidget * widget,
 					    GtkAllocation * allocation);
 static void gsm_color_button_unrealize (GtkWidget * widget);
@@ -171,7 +175,8 @@ gsm_color_button_class_init (GSMColorButtonClass * klass)
   gobject_class->set_property = gsm_color_button_set_property;
   gobject_class->finalize = gsm_color_button_finalize;
   widget_class->state_changed = gsm_color_button_state_changed;
-  widget_class->size_request = gsm_color_button_size_request;
+  widget_class->get_preferred_width  = gsm_color_button_get_preferred_width;
+  widget_class->get_preferred_height = gsm_color_button_get_preferred_height;
   widget_class->size_allocate = gsm_color_button_size_allocate;
   widget_class->realize = gsm_color_button_realize;
   widget_class->unrealize = gsm_color_button_unrealize;
@@ -435,7 +440,7 @@ render (GtkWidget * widget)
 
 /* Handle exposure events for the color picker's drawing area */
 static gint
-expose_event (GtkWidget * widget, GdkEventExpose * event, gpointer data)
+draw (GtkWidget * widget, cairo_t * cr, gpointer data)
 {
   render (GTK_WIDGET (data));
 
@@ -450,14 +455,27 @@ gsm_color_button_realize (GtkWidget * widget)
 }
 
 static void
-gsm_color_button_size_request (GtkWidget * widget,
-			       GtkRequisition * requisition)
+gsm_color_button_get_preferred_width (GtkWidget * widget,
+                                      gint      * minimum,
+                                      gint      * natural)
 {
-  g_return_if_fail (widget != NULL || requisition != NULL);
+  g_return_if_fail (widget != NULL || minimum != NULL || natural != NULL);
   g_return_if_fail (GSM_IS_COLOR_BUTTON (widget));
 
-  requisition->width = GSMCP_MIN_WIDTH;
-  requisition->height = GSMCP_MIN_HEIGHT;
+  *minimum = GSMCP_MIN_WIDTH;
+  *natural = GSMCP_MIN_WIDTH;
+}
+
+static void
+gsm_color_button_get_preferred_height (GtkWidget * widget,
+                                       gint      * minimum,
+                                       gint      * natural)
+{
+  g_return_if_fail (widget != NULL || minimum != NULL || natural != NULL);
+  g_return_if_fail (GSM_IS_COLOR_BUTTON (widget));
+
+  *minimum = GSMCP_MIN_HEIGHT;
+  *natural = GSMCP_MIN_HEIGHT;
 }
 
 static void
@@ -624,8 +642,8 @@ gsm_color_button_init (GSMColorButton * color_button)
 
   gtk_widget_set_tooltip_text (GTK_WIDGET(color_button), _("Click to set graph colors"));
 
-  g_signal_connect (color_button, "expose-event",
-		    G_CALLBACK (expose_event), color_button);
+  g_signal_connect (color_button, "draw",
+		    G_CALLBACK (draw), color_button);
 }
 
 static void

@@ -32,7 +32,7 @@
 void LoadGraph::clear_background()
 {
 	if (this->background) {
-		g_object_unref(this->background);
+		cairo_surface_destroy (this->background);
 		this->background = NULL;
 	}
 }
@@ -82,11 +82,11 @@ void draw_background(LoadGraph *g) {
 	g->graph_buffer_offset = (int) (1.5 * g->graph_delx) + FRAME_WIDTH ;
 
 	gtk_widget_get_allocation (g->disp, &allocation);
-	g->background = gdk_pixmap_new (GDK_DRAWABLE (gtk_widget_get_window (g->disp)),
-					allocation.width,
-					allocation.height,
-					-1);
-	cr = gdk_cairo_create (g->background);
+        g->background = gdk_window_create_similar_surface (gtk_widget_get_window (g->disp),
+                                                           CAIRO_CONTENT_COLOR,
+                                                           allocation.width,
+                                                           allocation.height);
+	cr = cairo_create (g->background);
 
 	// set the background colour
 	GtkStyle *style = gtk_widget_get_style (ProcData::get_instance()->notebook);
@@ -169,7 +169,7 @@ void draw_background(LoadGraph *g) {
 
 /* Redraws the backing buffer for the load graph and updates the window */
 void
-load_graph_draw (LoadGraph *g)
+load_graph_queue_draw (LoadGraph *g)
 {
 	/* repaint */
 	gtk_widget_queue_draw (g->disp);
@@ -191,15 +191,15 @@ load_graph_configure (GtkWidget *widget,
 
 	g->clear_background();
 
-	load_graph_draw (g);
+	load_graph_queue_draw (g);
 
 	return TRUE;
 }
 
 static gboolean
-load_graph_expose (GtkWidget *widget,
-		   GdkEventExpose *event,
-		   gpointer data_ptr)
+load_graph_draw (GtkWidget *widget,
+                 cairo_t * context,
+                 gpointer data_ptr)
 {
 	LoadGraph * const g = static_cast<LoadGraph*>(data_ptr);
 	GtkAllocation allocation;
@@ -213,8 +213,10 @@ load_graph_expose (GtkWidget *widget,
 
 	if (g->background == NULL) {
 		draw_background(g);
-		gdk_window_set_back_pixmap (window, g->background, FALSE);
-	}
+                cairo_pattern_t * pattern = cairo_pattern_create_for_surface (g->background);
+		gdk_window_set_background_pattern (window, pattern);
+                cairo_pattern_destroy (pattern);
+        }
 
 	/* Number of pixels wide for one graph point */
 	sample_width = (float)(g->draw_width - g->rmargin - g->indent) / (float)LoadGraph::NUM_POINTS;
@@ -558,7 +560,7 @@ load_graph_update (gpointer user_data)
 	}
 
 	if (g->draw)
-		load_graph_draw (g);
+		load_graph_queue_draw (g);
 
 	g->render_counter++;
 
@@ -687,8 +689,8 @@ LoadGraph::LoadGraph(guint type)
 
 	g->disp = gtk_drawing_area_new ();
 	gtk_widget_show (g->disp);
-	g_signal_connect (G_OBJECT (g->disp), "expose_event",
-			  G_CALLBACK (load_graph_expose), g);
+	g_signal_connect (G_OBJECT (g->disp), "draw",
+			  G_CALLBACK (load_graph_draw), g);
 	g_signal_connect (G_OBJECT(g->disp), "configure_event",
 			  G_CALLBACK (load_graph_configure), g);
 	g_signal_connect (G_OBJECT(g->disp), "destroy",
