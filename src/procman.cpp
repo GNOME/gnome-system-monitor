@@ -43,7 +43,7 @@
 #include "callbacks.h"
 #include "smooth_refresh.h"
 #include "util.h"
-#include "gconf-keys.h"
+#include "settings-keys.h"
 #include "argv.h"
 
 
@@ -236,12 +236,12 @@ procman_data_new (GSettings *settings)
 	pd->config.show_tree = g_settings_get_boolean (settings, "show-tree");
 	g_signal_connect (G_OBJECT(settings), "changed::show-tree", G_CALLBACK(tree_changed_cb), pd);
 
-	pd->config.solaris_mode = g_settings_get_boolean(settings, procman::gconf::solaris_mode.c_str());
-        std::string detail_string("changed::" + procman::gconf::solaris_mode);
+	pd->config.solaris_mode = g_settings_get_boolean(settings, procman::settings::solaris_mode.c_str());
+        std::string detail_string("changed::" + procman::settings::solaris_mode);
 	g_signal_connect(G_OBJECT(settings), detail_string.c_str(), G_CALLBACK(solaris_mode_changed_cb), pd);
 
-	pd->config.network_in_bits = g_settings_get_boolean(settings, procman::gconf::network_in_bits.c_str());
-        detail_string = "changed::" + procman::gconf::network_in_bits;
+	pd->config.network_in_bits = g_settings_get_boolean(settings, procman::settings::network_in_bits.c_str());
+        detail_string = "changed::" + procman::settings::network_in_bits;
         g_signal_connect(G_OBJECT(settings), detail_string.c_str(), G_CALLBACK(network_in_bits_changed_cb), pd);
 
 	pd->config.show_kill_warning = g_settings_get_boolean (settings, "kill-dialog");
@@ -689,7 +689,6 @@ main (int argc, char *argv[])
 	g_set_application_name(_("System Monitor"));
 
 	settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
-	// gconf_client_add_dir(settings, "/apps/procman", GCONF_CLIENT_PRELOAD_NONE, NULL);
 
 	glibtop_init ();
 

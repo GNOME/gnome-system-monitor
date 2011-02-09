@@ -31,7 +31,7 @@
 #include "procactions.h"
 #include "util.h"
 #include "load-graph.h"
-#include "gconf-keys.h"
+#include "settings-keys.h"
 #include "procman_gnomesu.h"
 #include "procman_gksu.h"
 
@@ -281,7 +281,7 @@ solaris_mode_toggled(GtkToggleButton *button, gpointer data)
 
 	gboolean toggled;
 	toggled = gtk_toggle_button_get_active(button);
-	g_settings_set_boolean(settings, procman::gconf::solaris_mode.c_str(), toggled);
+	g_settings_set_boolean(settings, procman::settings::solaris_mode.c_str(), toggled);
 }
 
 
@@ -293,7 +293,7 @@ network_in_bits_toggled(GtkToggleButton *button, gpointer data)
 
 	gboolean toggled;
 	toggled = gtk_toggle_button_get_active(button);
-	g_settings_set_boolean(settings, procman::gconf::network_in_bits.c_str(), toggled);
+	g_settings_set_boolean(settings, procman::settings::network_in_bits.c_str(), toggled);
 }
 
 
@@ -598,7 +598,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	solaris_button = gtk_check_button_new_with_mnemonic(_("Solaris mode"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(solaris_button),
 				     g_settings_get_boolean(procdata->settings,
-							   procman::gconf::solaris_mode.c_str()));
+							   procman::settings::solaris_mode.c_str()));
 	g_signal_connect(G_OBJECT(solaris_button), "toggled",
 			 G_CALLBACK(solaris_mode_toggled), procdata);
 	gtk_box_pack_start(GTK_BOX(hbox2), solaris_button, TRUE, TRUE, 0);
@@ -679,7 +679,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 	bits_button = gtk_check_button_new_with_mnemonic(_("Show network speed in bits"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(bits_button),
 				     g_settings_get_boolean(procdata->settings,
-							   procman::gconf::network_in_bits.c_str()));
+							   procman::settings::network_in_bits.c_str()));
 	g_signal_connect(G_OBJECT(bits_button), "toggled",
 			 G_CALLBACK(network_in_bits_toggled), procdata);
 	gtk_box_pack_start(GTK_BOX(vbox2), bits_button, TRUE, TRUE, 0);

@@ -30,7 +30,7 @@ gnome_system_monitor_SOURCES = \
 	sysinfo.cpp sysinfo.h \
 	lsof.cpp lsof.h \
 	selection.cpp selection.h \
-	gconf-keys.cpp gconf-keys.h \
+	settings-keys.cpp settings-keys.h \
 	iconthemewrapper.cpp iconthemewrapper.h \
 	e_date.c e_date.h \
         gsm_color_button.c gsm_color_button.h
@@ -38,45 +38,25 @@ gnome_system_monitor_SOURCES = \
 
 gnome_system_monitor_LDADD = @PROCMAN_LIBS@ libbacon.la
 
-
 noinst_LTLIBRARIES = libbacon.la
 libbacon_la_SOURCES = \
 	bacon-message-connection.c \
 	bacon-message-connection.h
 
-
 specdir = $(datadir)/procman
-
-schemadir   = $(GCONF_SCHEMA_FILE_DIR)
-schema_ins  = gnome-system-monitor.schemas.in
-schema_DATA = $(schema_ins:.schemas.in=.schemas)
-@INTLTOOL_SCHEMAS_RULE@
-
-EXTRA_DIST = \
-	$(schema_ins)
 
 # GSettings schemas, enum files and conversion file
 gsettings_ENUM_NAMESPACE = org.gnome.gnome-system-monitor
 gsettings_ENUM_FILES = $(top_srcdir)/src/*.h
-gsettings_SCHEMAS = org.gnome.gnome-system-monitor.gschema.xml
-
+gsettings_in_file = org.gnome.gnome-system-monitor.gschema.xml.in
+gsettings_SCHEMAS = $(gsettings_in_file:.xml.in=.xml)
 @INTLTOOL_XML_NOMERGE_RULE@
 @GSETTINGS_RULES@
 
+EXTRA_DIST = \
+	$(schema_ins)
+
 CLEANFILES = \
-	$(schema_DATA) 		\
 	$(gsettings_SCHEMAS)
 
 MAINTAINERCLEANFILES = $(gsettings_SCHEMAS:.xml=.valid)
-
-if GCONF_SCHEMAS_INSTALL
-install-data-local:
-	if test -z "$(DESTDIR)"; then \
-	  for p in $(schema_DATA); do \
-	    GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) \
-	      gconftool-2 --makefile-install-rule $(top_builddir)/src/$$p; \
-	  done; \
-	fi
-else
-install-data-local:
-endif

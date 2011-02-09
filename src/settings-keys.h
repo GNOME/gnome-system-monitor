@@ -1,12 +1,11 @@
-#ifndef H_PROCMAN_GCONF_KEYS_1177430397
-#define H_PROCMAN_GCONF_KEYS_1177430397
+#ifndef H_PROCMAN_SETTINGS_KEYS_1177430397
+#define H_PROCMAN_SETTINGS_KEYS_1177430397
 
 #include <string>
 
-
 namespace procman
 {
-  namespace gconf
+  namespace settings
   {
     extern const std::string root;
     extern const std::string solaris_mode;
@@ -16,4 +15,4 @@ namespace procman
 }
 
 
-#endif //  H_PROCMAN_GCONF_KEYS_1177430397
+#endif //  H_PROCMAN_SETTINGS_KEYS_1177430397

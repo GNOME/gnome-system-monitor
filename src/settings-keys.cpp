@@ -1,9 +1,9 @@
-#include "gconf-keys.h"
+#include "settings-keys.h"
 
 
 namespace procman
 {
-  namespace gconf
+  namespace settings
   {
     const std::string root("/apps/procman");
     const std::string solaris_mode("solaris-mode");

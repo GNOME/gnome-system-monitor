@@ -13,7 +13,7 @@
 #include "openfiles.h"
 #include "proctable.h"
 #include "util.h"
-#include "gconf-keys.h"
+#include "settings-keys.h"
 
 enum
 {
@@ -219,7 +219,7 @@ close_openfiles_dialog (GtkDialog *dialog, gint id, gpointer data)
 	guint timer;
 
 	settings = static_cast<GSettings*>(g_object_get_data (G_OBJECT (tree), "settings"));
-	procman_save_tree_state (settings, tree, procman::gconf::open_files_tree_prefix.c_str());
+	procman_save_tree_state (settings, tree, procman::settings::open_files_tree_prefix.c_str());
 
 	timer = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (tree), "timer"));
 	g_source_remove (timer);
@@ -288,7 +288,7 @@ create_openfiles_tree (ProcData *procdata)
   GTK_SORT_ASCENDING);*/
 #endif
 
-	procman_get_tree_state (procdata->settings, tree, procman::gconf::open_files_tree_prefix.c_str());
+	procman_get_tree_state (procdata->settings, tree, procman::settings::open_files_tree_prefix.c_str());
 
 	return tree;
 
