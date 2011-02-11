@@ -459,7 +459,7 @@ create_sys_view (ProcData *procdata)
 			    TRUE,
 			    0);
 */
-	gtk_widget_set_size_request(GTK_WIDGET(load_graph_get_labels(net_graph)->net_in), 65, -1);
+	gtk_widget_set_size_request(GTK_WIDGET(load_graph_get_labels(net_graph)->net_in), 100, -1);
 	gtk_table_attach (GTK_TABLE (table), load_graph_get_labels(net_graph)->net_in, 2, 3, 0, 1, 
 			  static_cast<GtkAttachOptions>(GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
 
@@ -515,7 +515,7 @@ create_sys_view (ProcData *procdata)
 			    TRUE,
 			    0);
 */
-	gtk_widget_set_size_request(GTK_WIDGET(load_graph_get_labels(net_graph)->net_out), 65, -1);
+	gtk_widget_set_size_request(GTK_WIDGET(load_graph_get_labels(net_graph)->net_out), 100, -1);
 	gtk_table_attach (GTK_TABLE (table), load_graph_get_labels(net_graph)->net_out, 2, 3, 0, 1, 
 			  static_cast<GtkAttachOptions>(GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
 
