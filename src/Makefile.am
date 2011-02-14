@@ -53,8 +53,8 @@ gsettings_SCHEMAS = $(gsettings_in_file:.xml.in=.xml)
 @INTLTOOL_XML_NOMERGE_RULE@
 @GSETTINGS_RULES@
 
-EXTRA_DIST = \
-	$(schema_ins)
+dist_noinst_DATA = \
+	$(gsettings_in_file)
 
 CLEANFILES = \
 	$(gsettings_SCHEMAS)
