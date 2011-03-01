@@ -803,5 +803,5 @@ cb_toggle_tree (GtkAction *action, gpointer data)
 	if (show == procdata->config.show_tree)
 		return;
 
-	g_settings_set_boolean (settings, "show_tree", show);
+	g_settings_set_boolean (settings, "show-tree", show);
 }
