@@ -113,7 +113,7 @@ namespace {
 							 keys[j]));
 
 	if (!model)
-	  model = _("Unknown CPU model");
+          continue;
 
 	this->processors.push_back(model);
       }
@@ -183,7 +183,7 @@ namespace {
 	{
 	  xmlXPathObjectPtr xpath;
 	  xpath = xmlXPathEvalExpression(BAD_CAST nodes[i].c_str(), context);
-	  
+
 	  if (xpath and xpath->type == XPATH_STRING)
 	    values[i] = reinterpret_cast<const char*>(xpath->stringval);
 
@@ -488,7 +488,7 @@ add_section(GtkBox *vbox , const char * title, int num_row, int num_col, GtkWidg
 }
 
 
-static GtkWidget* 
+static GtkWidget*
 add_row(GtkTable * table, const char * label, const char * value, int row)
 {
   GtkWidget *header = gtk_label_new(label);
@@ -648,7 +648,7 @@ procman_create_sysinfo_view(void)
   g_free(markup);
 
   markup = procman::format_size(data->free_space_bytes);
-  disk_space_label = add_row(GTK_TABLE(disk_space_table), 
+  disk_space_label = add_row(GTK_TABLE(disk_space_table),
                              _("Available disk space:"), markup,
                              0);
   g_free(markup);
