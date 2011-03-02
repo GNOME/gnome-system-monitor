@@ -316,14 +316,15 @@ update_memmaps_dialog (MemMapsData *mmdata)
 
 
 
-static gboolean window_delete_event(GtkWidget *, GdkEvent *, gpointer data)
+static void
+dialog_response (GtkDialog * dialog, gint response_id, gpointer data)
 {
 	MemMapsData * const mmdata = static_cast<MemMapsData*>(data);
 
 	g_source_remove (mmdata->timer);
 
 	delete mmdata;
-	return FALSE;
+        gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
 
@@ -463,26 +464,16 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 	mmdata = create_memmapsdata (procdata);
 	mmdata->info = info;
 
-	memmapsdialog = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_transient_for(GTK_WINDOW(memmapsdialog), GTK_WINDOW(procdata->app));
-	gtk_window_set_destroy_with_parent(GTK_WINDOW(memmapsdialog), TRUE);
-	// gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-	gtk_window_set_title(GTK_WINDOW(memmapsdialog), _("Memory Maps"));
+        memmapsdialog = gtk_dialog_new_with_buttons (_("Memory Maps"), GTK_WINDOW (procdata->app),
+                                                     GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                                                     NULL);
 	gtk_window_set_resizable(GTK_WINDOW(memmapsdialog), TRUE);
 	gtk_window_set_default_size(GTK_WINDOW(memmapsdialog), 575, 400);
-	gtk_container_set_border_width(GTK_CONTAINER(memmapsdialog), 12);
+	gtk_container_set_border_width(GTK_CONTAINER(memmapsdialog), 5);
 
-	GtkWidget *mainbox = gtk_vbox_new(FALSE, 12);
-	gtk_container_add(GTK_CONTAINER(memmapsdialog), mainbox);
-
-	vbox = mainbox;
-	gtk_box_set_spacing (GTK_BOX (vbox), 2);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
-
-	dialog_vbox = gtk_vbox_new (FALSE, 6);
+	dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG(memmapsdialog));
 	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 5);
-	gtk_box_pack_start (GTK_BOX (vbox), dialog_vbox, TRUE, TRUE, 0);
-
 
 	label = procman_make_label_for_mmaps_or_ofiles (
 		_("_Memory maps for process \"%s\" (PID %u):"),
@@ -504,11 +495,10 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 
 	gtk_box_pack_start (GTK_BOX (dialog_vbox), scrolled, TRUE, TRUE, 0);
 
-	gtk_widget_show_all (memmapsdialog);
+	g_signal_connect(G_OBJECT(memmapsdialog), "response",
+			 G_CALLBACK(dialog_response), mmdata);
 
-	g_signal_connect(G_OBJECT(memmapsdialog), "delete-event",
-			 G_CALLBACK(window_delete_event), mmdata);
-
+        gtk_widget_show_all (memmapsdialog);
 	mmdata->timer = g_timeout_add_seconds (5, memmaps_timer, mmdata);
 
 	update_memmaps_dialog (mmdata);
