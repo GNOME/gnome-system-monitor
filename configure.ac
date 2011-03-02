@@ -1,29 +1,30 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_PREREQ(2.52)
+AC_PREREQ([2.63])
 
-AC_INIT([gnome-system-monitor], [2.99.1],
-        [http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor])
-AC_CONFIG_SRCDIR(configure.ac)
-AC_CONFIG_HEADERS(config.h)
+AC_INIT([gnome-system-monitor],
+        [2.99.1],
+        [http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor],
+        [gnome-system-monitor])
 
-AM_INIT_AUTOMAKE
-AC_SUBST(ACLOCAL_AMFLAGS, [\${ACLOCAL_FLAGS}])
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_SRCDIR([configure.ac])
+AC_CONFIG_MACRO_DIR([m4])
 
-AM_PROG_LIBTOOL
+AM_INIT_AUTOMAKE([1.11 no-dist-gzip dist-bzip2])
+AM_SILENT_RULES([yes])
 
-IT_PROG_INTLTOOL([0.35.0])
-PKG_PROG_PKG_CONFIG([0.19])
-
-AC_ISC_POSIX
+# Check For programs
 AC_PROG_CC
 AC_PROG_CXX
-AC_LANG_CPLUSPLUS
+AC_LANG([C++])
 AC_LANG_COMPILER_REQUIRE
-AM_PROG_CC_STDC
-AC_HEADER_STDC
-GNOME_COMPILE_WARNINGS
 
+# Initialize libtool
+LT_PREREQ([2.2])
+LT_INIT
+
+# Package dependencies
 GLIB_REQUIRED=2.28.0
 LIBWNCK_REQUIRED=2.91.0
 LIBGTOP_REQUIRED=2.28.2
@@ -37,9 +38,11 @@ RSVG_REQUIRED=2.12
 
 PKG_CHECK_MODULES(PROCMAN, glib-2.0 >= $GLIB_REQUIRED libgtop-2.0 >= $LIBGTOP_REQUIRED libwnck-3.0 >= $LIBWNCK_REQUIRED gtk+-3.0 >= $GTK_REQUIRED gnome-icon-theme >= $GNOME_ICON_THEME_REQUIRED gtkmm-3.0 >= $GTKMM_REQUIRED libxml-2.0 >= $LIBXML_REQUIRED librsvg-2.0 >= $RSVG_REQUIRED glibmm-2.4 >= $GLIBMM_REQUIRED giomm-2.4 >= $GIOMM_REQUIRED)
 
+# Compiler warnings
+GNOME_COMPILE_WARNINGS([maximum])
 
 AC_ARG_ENABLE(more-warnings,
-[AC_HELP_STRING([--enable-more-warnings], [Maximum compiler warnings])],
+[AS_HELP_STRING([--enable-more-warnings],[Maximum compiler warnings])],
 set_more_warnings="$enableval",[
     set_more_warnings=yes
 ])
@@ -64,16 +67,20 @@ dnl CXXFLAGS="-fvisibility-inlines-hidden $CXXFLAGS"
 
 GLIB_GSETTINGS
 
+# i18n stuff
+IT_PROG_INTLTOOL([0.41.0])
+
 GETTEXT_PACKAGE=gnome-system-monitor
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE",
                    [The gettext catalog name])
 AM_GLIB_GNU_GETTEXT
-GNOME_DOC_INIT
 
 dnl Set PACKAGE_LOCALE_DIR in config.h.
 GLIB_DEFINE_LOCALEDIR(PACKAGE_LOCALE_DIR)
 
+# Documentation
+GNOME_DOC_INIT([0.20])
 
 AC_CONFIG_FILES([
 Makefile
