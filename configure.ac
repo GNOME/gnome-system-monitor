@@ -4,7 +4,7 @@ AC_PREREQ(2.52)
 
 AC_INIT([gnome-system-monitor], [2.99.1],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor])
-AC_CONFIG_SRCDIR(configure.in)
+AC_CONFIG_SRCDIR(configure.ac)
 AC_CONFIG_HEADERS(config.h)
 
 AM_INIT_AUTOMAKE
