@@ -77,6 +77,7 @@ static const GtkActionEntry menu_entries[] =
 
 	{ "MemoryMaps", NULL, N_("_Memory Maps"), "<control>M",
 	  N_("Open the memory maps associated with a process"), G_CALLBACK (cb_show_memory_maps) },
+        // Translators: this means 'Files that are open' (open is no verb here)
 	{ "OpenFiles", NULL, N_("Open _Files"), "<control>F",
 	  N_("View the files opened by a process"), G_CALLBACK (cb_show_open_files) },
 
