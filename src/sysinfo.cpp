@@ -105,7 +105,7 @@ namespace {
       const glibtop_sysinfo *info = glibtop_get_sysinfo();
 
       for (guint i = 0; i != info->ncpu; ++i) {
-	const char * const keys[] = { "model name", "cpu" };
+	const char * const keys[] = { "model name", "cpu", "Processor" };
 	gchar *model = 0;
 
 	for (guint j = 0; !model && j != G_N_ELEMENTS(keys); ++j)
