@@ -584,8 +584,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 				      procdata->config.show_kill_warning);
 	g_signal_connect (G_OBJECT (check_button), "toggled",
 			    G_CALLBACK (show_kill_dialog_toggled), procdata);
-	gtk_box_pack_start (GTK_BOX (hbox2), check_button, FALSE, FALSE, 0);
-	
+	gtk_box_pack_start (GTK_BOX (hbox2), check_button, TRUE, TRUE, 0);
+
 
 
 
