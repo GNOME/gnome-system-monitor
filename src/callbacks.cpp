@@ -430,6 +430,6 @@ cb_radio_processes(GtkAction *action, GtkRadioAction *current, gpointer data)
 
 	procdata->config.whose_process = gtk_radio_action_get_current_value(current);
 
-	g_settings_set_int (procdata->settings, "view_as",
+	g_settings_set_int (procdata->settings, "view-as",
 			      procdata->config.whose_process);
 }
