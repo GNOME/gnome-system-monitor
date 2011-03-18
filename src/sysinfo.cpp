@@ -173,7 +173,7 @@ namespace {
 				"string(/gnome-version/micro)" };
       string values[3];
 
-      if (not (document = xmlParseFile(DATADIR "/gnome-about/gnome-version.xml")))
+      if (not (document = xmlParseFile(DATADIR "/gnome/gnome-version.xml")))
 	return;
 
       if (not (context = xmlXPathNewContext(document)))
