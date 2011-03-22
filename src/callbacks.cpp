@@ -131,6 +131,8 @@ cb_show_lsof(GtkAction *action, gpointer data)
 void
 cb_about (GtkAction *action, gpointer data)
 {
+	ProcData *procdata = static_cast<ProcData*>(data);
+
 	const gchar * const authors[] = {
 		"Kevin Vandersloot",
 		"Erik Johnsson",
@@ -153,7 +155,7 @@ cb_about (GtkAction *action, gpointer data)
 	};
 
 	gtk_show_about_dialog (
-		NULL,
+		GTK_WINDOW (procdata->app),
 		"name",			_("System Monitor"),
 		"comments",		_("View current processes and monitor "
 					  "system state"),
