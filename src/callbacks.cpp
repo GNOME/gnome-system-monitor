@@ -237,7 +237,7 @@ cb_cpu_color_changed (GSMColorButton *cp, gpointer data)
 	gint i = GPOINTER_TO_INT (data);
 	GSettings *settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
 
-	g_snprintf(key, sizeof key, "cpu-color%d", i);
+	g_snprintf(key, sizeof key, "cpu-color%d", i%4);
 
 	change_settings_color(settings, key, cp);
 }

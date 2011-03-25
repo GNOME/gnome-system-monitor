@@ -181,7 +181,7 @@ color_changed_cb (GSettings *settings, const gchar *key, gpointer data)
 
 	if (g_str_has_prefix (key, "cpu-color")) {
 		for (int i = 0; i < procdata->config.num_cpus; i++) {
-			string cpu_key = make_string(g_strdup_printf("cpu-color%d", i));
+			string cpu_key = make_string(g_strdup_printf("cpu-color%d", i%4));
 			if (cpu_key == key) {
 				gdk_color_parse (color, &procdata->config.cpu_color[i]);
 				procdata->cpu_graph->colors.at(i) = procdata->config.cpu_color[i];
@@ -279,7 +279,7 @@ procman_data_new (GSettings *settings)
         
 	for (int i = 0; i < pd->config.num_cpus; i++) {
 		gchar *key;
-		key = g_strdup_printf ("cpu-color%d", i);
+		key = g_strdup_printf ("cpu-color%d", i%4);
 
 		color = g_settings_get_string (settings, key);
 		if (!color)
