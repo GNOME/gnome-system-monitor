@@ -451,7 +451,7 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 	ProcData * const procdata = static_cast<ProcData*>(data);
 	MemMapsData *mmdata;
 	GtkWidget *memmapsdialog;
-	GtkWidget *dialog_vbox, *vbox;
+	GtkWidget *dialog_vbox;
 	GtkWidget *label;
 	GtkWidget *scrolled;
 	ProcInfo *info;
