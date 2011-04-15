@@ -26,7 +26,7 @@
 /* These are the actual range of settable values. Values outside this range
    are scaled back to these limits. So show these limits in the slider
 */
-#ifdef linux
+#ifdef __linux__
 #define RENICE_VAL_MIN -20
 #define RENICE_VAL_MAX 19
 #else /* ! linux */
