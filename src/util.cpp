@@ -149,10 +149,12 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
 gchar*
 procman::format_size(guint64 size, guint64 max_size, bool want_bits)
 {
+
 	enum {
 		K_INDEX,
 		M_INDEX,
-		G_INDEX
+		G_INDEX,
+                T_INDEX
 	};
 
 	struct Format {
@@ -160,16 +162,18 @@ procman::format_size(guint64 size, guint64 max_size, bool want_bits)
 		const char* string;
 	};
 
-	const Format all_formats[2][3] = {
-		{ { 1UL << 10,	N_("%.1f KiB") },
-		  { 1UL << 20,	N_("%.1f MiB") },
-		  { 1UL << 30,	N_("%.1f GiB") } },
-		{ { 1000,	N_("%.1f kbit") },
-		  { 1000000,	N_("%.1f Mbit") },
-		  { 1000000000,	N_("%.1f Gbit") } }
+	const Format all_formats[2][4] = {
+		{ { 1UL << 10,	   N_("%.1f KiB")  },
+		  { 1UL << 20,	   N_("%.1f MiB")  },
+		  { 1UL << 30,	   N_("%.1f GiB")  },
+                  { 1UL << 40,     N_("%.1f TiB")  } },
+		{ { 1000,	   N_("%.1f kbit") },
+		  { 1000000,	   N_("%.1f Mbit") },
+		  { 1000000000,	   N_("%.1f Gbit") },
+                  { 1000000000000, N_("%.1f Tbit") } }
 	};
 
-	const Format (&formats)[3] = all_formats[want_bits ? 1 : 0];
+	const Format (&formats)[4] = all_formats[want_bits ? 1 : 0];
 
 	if (want_bits) {
 	  size *= 8;
@@ -194,9 +198,12 @@ procman::format_size(guint64 size, guint64 max_size, bool want_bits)
 		} else if (max_size < formats[G_INDEX].factor) {
 		  factor = formats[M_INDEX].factor;
 		  format = formats[M_INDEX].string;
-		} else {
+		} else if (max_size < formats[T_INDEX].factor) {
 		  factor = formats[G_INDEX].factor;
 		  format = formats[G_INDEX].string;
+		} else {
+		  factor = formats[T_INDEX].factor;
+		  format = formats[T_INDEX].string;
 		}
 
 		return g_strdup_printf(_(format), size / (double)factor);
