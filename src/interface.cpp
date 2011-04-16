@@ -227,7 +227,6 @@ create_sys_view (ProcData *procdata)
 	GtkWidget *table;
 	GtkWidget *color_picker;
 	GtkWidget *mem_legend_box, *net_legend_box;
-	GtkSizeGroup *sizegroup;
 	LoadGraph *cpu_graph, *mem_graph, *net_graph;
 	gint i;
 
@@ -253,8 +252,6 @@ create_sys_view (ProcData *procdata)
 			    TRUE,
 			    TRUE,
 			    0);
-
-	sizegroup = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
 	hbox = gtk_hbox_new(FALSE, 0);
 	spacer = gtk_label_new ("");
