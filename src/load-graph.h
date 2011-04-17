@@ -87,7 +87,7 @@ struct LoadGraph {
 		struct {
 			guint64 last_in, last_out;
 			GTimeVal time;
-			unsigned int max;
+			guint64 max;
 			unsigned values[NUM_POINTS];
 			size_t cur;
 		} net;

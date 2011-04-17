@@ -368,16 +368,16 @@ get_memory (LoadGraph *g)
 }
 
 static void
-net_scale (LoadGraph *g, unsigned din, unsigned dout)
+net_scale (LoadGraph *g, guint64 din, guint64 dout)
 {
 	g->data[0][0] = 1.0f * din / g->net.max;
 	g->data[0][1] = 1.0f * dout / g->net.max;
 
-	unsigned dmax = std::max(din, dout);
+        guint64 dmax = std::max(din, dout);
 	g->net.values[g->net.cur] = dmax;
 	g->net.cur = (g->net.cur + 1) % LoadGraph::NUM_POINTS;
 
-	unsigned new_max;
+	guint64 new_max;
 	// both way, new_max is the greatest value
 	if (dmax >= g->net.max)
 		new_max = dmax;
@@ -389,7 +389,7 @@ net_scale (LoadGraph *g, unsigned din, unsigned dout)
 	// Round network maximum
 	//
 
-	const unsigned bak_max(new_max);
+	const guint64 bak_max(new_max);
 
 	if (ProcData::get_instance()->config.network_in_bits) {
 	  // TODO: fix logic to give a nice scale with bits
@@ -399,7 +399,7 @@ net_scale (LoadGraph *g, unsigned din, unsigned dout)
 	  new_max = 1.1 * new_max;
 	  // make sure max is not 0 to avoid / 0
 	  // default to 125 bytes == 1kbit
-	  new_max = std::max(new_max, 125U);
+	  new_max = std::max(new_max, 125UL);
 
 	} else {
 	  // round up to get some extra space
@@ -407,7 +407,7 @@ net_scale (LoadGraph *g, unsigned din, unsigned dout)
 	  new_max = 1.1 * new_max;
 	  // make sure max is not 0 to avoid / 0
 	  // default to 1 KiB
-	  new_max = std::max(new_max, 1024U);
+	  new_max = std::max(new_max, 1024UL);
 
 	  // decompose new_max = coef10 * 2**(base10 * 10)
 	  // where coef10 and base10 are integers and coef10 < 2**10
@@ -415,16 +415,16 @@ net_scale (LoadGraph *g, unsigned din, unsigned dout)
 	  // e.g: ceil(100.5 KiB) = 101 KiB = 101 * 2**(1 * 10)
 	  //      where base10 = 1, coef10 = 101, pow2 = 16
 
-	  unsigned pow2 = std::floor(log2(new_max));
-	  unsigned base10 = pow2 / 10;
-	  unsigned coef10 = std::ceil(new_max / double(1UL << (base10 * 10)));
+	  guint64 pow2 = std::floor(log2(new_max));
+	  guint64 base10 = pow2 / 10.0;
+	  guint64 coef10 = std::ceil(new_max / double(1UL <<(base10 * 10)));
 	  g_assert(new_max <= (coef10 * (1UL << (base10 * 10))));
 
 	  // then decompose coef10 = x * 10**factor10
 	  // where factor10 is integer and x < 10
 	  // so we new_max has only 1 significant digit
 
-	  unsigned factor10 = std::pow(10.0, std::floor(std::log10(coef10)));
+	  guint64 factor10 = std::pow(10.0, std::floor(std::log10(coef10)));
 	  coef10 = std::ceil(coef10 / double(factor10)) * factor10;
 
 	  // then make coef10 divisible by num_bars
@@ -432,12 +432,12 @@ net_scale (LoadGraph *g, unsigned din, unsigned dout)
 	    coef10 = coef10 + (g->num_bars() - coef10 % g->num_bars());
 	  g_assert(coef10 % g->num_bars() == 0);
 
-	  new_max = coef10 * (1UL << (base10 * 10));
-	  procman_debug("bak %u new_max %u pow2 %u coef10 %u", bak_max, new_max, pow2, coef10);
+	  new_max = coef10 * (1UL << guint64(base10 * 10));
+	  procman_debug("bak %lu new_max %lu pow2 %lu coef10 %lu", bak_max, new_max, pow2, coef10);
 	}
 
 	if (bak_max > new_max) {
-	  procman_debug("overflow detected: bak=%u new=%u", bak_max, new_max);
+	  procman_debug("overflow detected: bak=%lu new=%lu", bak_max, new_max);
 	  new_max = bak_max;
 	}
 
@@ -446,7 +446,7 @@ net_scale (LoadGraph *g, unsigned din, unsigned dout)
 	if ((0.8 * g->net.max) < new_max && new_max <= g->net.max)
 		return;
 
-	const float scale = 1.0f * g->net.max / new_max;
+	const double scale = 1.0f * g->net.max / new_max;
 
 	for (size_t i = 0; i < LoadGraph::NUM_POINTS; i++) {
 		if (g->data[i][0] >= 0.0f) {
@@ -455,7 +455,7 @@ net_scale (LoadGraph *g, unsigned din, unsigned dout)
 		}
 	}
 
-	procman_debug("rescale dmax = %u max = %u new_max = %u", dmax, g->net.max, new_max);
+	procman_debug("rescale dmax = %lu max = %lu new_max = %lu", dmax, g->net.max, new_max);
 
 	g->net.max = new_max;
 
@@ -471,7 +471,7 @@ get_net (LoadGraph *g)
 	guint32 i;
 	guint64 in = 0, out = 0;
 	GTimeVal time;
-	unsigned din, dout;
+	guint64 din, dout;
 
 	ifnames = glibtop_get_netlist(&netlist);
 
@@ -510,9 +510,9 @@ get_net (LoadGraph *g)
 	    g->net.time.tv_sec != 0) {
 		float dtime;
 		dtime = time.tv_sec - g->net.time.tv_sec +
-			(float) (time.tv_usec - g->net.time.tv_usec) / G_USEC_PER_SEC;
-		din   = static_cast<unsigned>((in  - g->net.last_in)  / dtime);
-		dout  = static_cast<unsigned>((out - g->net.last_out) / dtime);
+			(double) (time.tv_usec - g->net.time.tv_usec) / G_USEC_PER_SEC;
+		din   = static_cast<guint64>((in  - g->net.last_in)  / dtime);
+		dout  = static_cast<guint64>((out - g->net.last_out) / dtime);
 	} else {
 		/* Don't calc anything if new data is less than old (interface
 		   removed, counters reset, ...) or if it is the first time */
