@@ -163,14 +163,14 @@ procman::format_size(guint64 size, guint64 max_size, bool want_bits)
 	};
 
 	const Format all_formats[2][4] = {
-		{ { 1UL << 10,	   N_("%.1f KiB")  },
-		  { 1UL << 20,	   N_("%.1f MiB")  },
-		  { 1UL << 30,	   N_("%.1f GiB")  },
-                  { 1UL << 40,     N_("%.1f TiB")  } },
-		{ { 1000,	   N_("%.1f kbit") },
-		  { 1000000,	   N_("%.1f Mbit") },
-		  { 1000000000,	   N_("%.1f Gbit") },
-                  { 1000000000000, N_("%.1f Tbit") } }
+          { { G_GUINT64_CONSTANT(1) << 10,       N_("%.1f KiB")  },
+            { G_GUINT64_CONSTANT(1) << 20,       N_("%.1f MiB")  },
+            { G_GUINT64_CONSTANT(1) << 30,       N_("%.1f GiB")  },
+            { G_GUINT64_CONSTANT(1) << 40,       N_("%.1f TiB")  } },
+          { { G_GUINT64_CONSTANT(1000),          N_("%.1f kbit") },
+            { G_GUINT64_CONSTANT(1000000),       N_("%.1f Mbit") },
+            { G_GUINT64_CONSTANT(1000000000),    N_("%.1f Gbit") },
+            { G_GUINT64_CONSTANT(1000000000000), N_("%.1f Tbit") } }
 	};
 
 	const Format (&formats)[4] = all_formats[want_bits ? 1 : 0];
