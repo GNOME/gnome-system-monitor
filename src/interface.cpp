@@ -102,7 +102,7 @@ static const GtkRadioActionEntry radio_menu_entries[] =
   { "ShowAllProcesses", NULL, N_("A_ll Processes"), NULL,
     N_("Show all processes"), ALL_PROCESSES },
   { "ShowMyProcesses", NULL, N_("M_y Processes"), NULL,
-    N_("Show user own process"), MY_PROCESSES }
+    N_("Show only user-owned processes"), MY_PROCESSES }
 };
 
 
