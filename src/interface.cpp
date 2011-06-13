@@ -42,6 +42,7 @@
 #include "gsm_color_button.h"
 
 static void	cb_toggle_tree (GtkAction *action, gpointer data);
+static void	cb_proc_goto_tab (gint tab);
 
 static const GtkActionEntry menu_entries[] =
 {
@@ -602,6 +603,7 @@ disconnect_proxy_cb (GtkUIManager *manager,
 void
 create_main_window (ProcData *procdata)
 {
+	gint i;
 	gint width, height;
 	GtkWidget *app;
 	GtkAction *action;
@@ -712,6 +714,17 @@ create_main_window (ProcData *procdata)
                           G_CALLBACK (cb_app_delete),
                           procdata);
 
+	GtkAccelGroup *accel_group;
+	GClosure *goto_tab_closure[4];
+	accel_group = gtk_accel_group_new ();
+	gtk_window_add_accel_group (GTK_WINDOW(app), accel_group);
+	for (i = 0; i < 4; ++i) {
+		goto_tab_closure[i] = g_cclosure_new_swap (G_CALLBACK (cb_proc_goto_tab),
+							   (gpointer) i, NULL);
+		gtk_accel_group_connect (accel_group, '0'+(i+1),
+					 GDK_MOD1_MASK, GTK_ACCEL_VISIBLE,
+					 goto_tab_closure[i]);
+	}
 
 	/* create the statusbar */
 	procdata->statusbar = gtk_statusbar_new();
@@ -802,4 +815,11 @@ cb_toggle_tree (GtkAction *action, gpointer data)
 		return;
 
 	g_settings_set_boolean (settings, "show-tree", show);
+}
+
+static void
+cb_proc_goto_tab (gint tab)
+{
+	ProcData *data = ProcData::get_instance ();
+	gtk_notebook_set_current_page (GTK_NOTEBOOK (data->notebook), tab);
 }
