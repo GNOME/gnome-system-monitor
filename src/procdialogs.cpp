@@ -155,23 +155,21 @@ procdialog_create_renice_dialog (ProcData *procdata)
 	GtkWidget *dialog = NULL;
 	GtkWidget *dialog_vbox;
 	GtkWidget *vbox;
-	GtkWidget *hbox;
   	GtkWidget *label;
   	GtkWidget *priority_label;
   	GtkWidget *table;
   	GtkAdjustment *renice_adj;
   	GtkWidget *hscale;
 	GtkWidget *button;
-	GtkWidget *align;
 	GtkWidget *icon;
   	gchar *text;
 
 	if (renice_dialog)
 		return;
-		
+
 	if (!info)
 		return;
-		
+
 	dialog = gtk_dialog_new_with_buttons (_("Change Priority"), NULL,
 				              GTK_DIALOG_DESTROY_WITH_PARENT,
 				              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -179,22 +177,12 @@ procdialog_create_renice_dialog (ProcData *procdata)
   	renice_dialog = dialog;
 	gtk_window_set_resizable (GTK_WINDOW (renice_dialog), FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (renice_dialog), 5);
-  	
-	button = gtk_button_new ();
+
+	button = gtk_button_new_with_mnemonic (_("Change _Priority"));
 	gtk_widget_set_can_default (button, TRUE);
-		
-	align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-	gtk_container_add (GTK_CONTAINER (button), align);
-		
-	hbox = gtk_hbox_new (FALSE, 2);
-	gtk_container_add (GTK_CONTAINER (align), hbox);
 
 	icon = gtk_image_new_from_stock (GTK_STOCK_OK, GTK_ICON_SIZE_BUTTON);
-	gtk_box_pack_start (GTK_BOX (hbox), icon, FALSE, FALSE, 0);
-
-	label = gtk_label_new_with_mnemonic (_("Change _Priority"));
-	gtk_label_set_mnemonic_widget (GTK_LABEL (label), button);
-	gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+        gtk_button_set_image (GTK_BUTTON (button), icon);
 
 	gtk_dialog_add_action_widget (GTK_DIALOG (renice_dialog), button, 100);
   	gtk_dialog_set_default_response (GTK_DIALOG (renice_dialog), 100);
