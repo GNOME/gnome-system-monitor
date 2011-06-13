@@ -396,7 +396,7 @@ proctable_new (ProcData * const procdata)
 	/* Override column settings by hiding this column if it's meaningless: */
 	if (!can_show_security_context_column ()) {
 		GtkTreeViewColumn *column;
-		column = gtk_tree_view_get_column (GTK_TREE_VIEW (proctree), COL_SECURITYCONTEXT);
+		column = my_gtk_tree_view_get_column_with_sort_column_id (GTK_TREE_VIEW (proctree), COL_SECURITYCONTEXT);
 		gtk_tree_view_column_set_visible (column, FALSE);
 	}
 
