@@ -15,6 +15,10 @@
 #include "util.h"
 #include "settings-keys.h"
 
+#ifndef NI_IDN
+#define NI_IDN 0
+#endif
+
 enum
 {
 	COL_FD,
