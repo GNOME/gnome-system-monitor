@@ -106,16 +106,25 @@ namespace {
 
       for (guint i = 0; i != info->ncpu; ++i) {
 	const char * const keys[] = { "model name", "cpu", "Processor" };
-	gchar *model = 0;
+	gchar *model = 0, *clock = 0;
+	guint last;
 
-	for (guint j = 0; !model && j != G_N_ELEMENTS(keys); ++j)
+	for (guint j = 0; !model && j != G_N_ELEMENTS(keys); ++j) {
+	  last = j;
 	  model = static_cast<char*>(g_hash_table_lookup(info->cpuinfo[i].values,
 							 keys[j]));
+	}
 
 	if (!model)
           continue;
 
-	this->processors.push_back(model);
+	if (!strcmp(keys[last], "cpu"))
+	  clock = static_cast<char*>(g_hash_table_lookup(info->cpuinfo[i].values,
+							 "clock"));
+	if (clock)
+	  this->processors.push_back(string(model) + " " + string(clock));
+	else
+	  this->processors.push_back(model);
       }
     }
 
