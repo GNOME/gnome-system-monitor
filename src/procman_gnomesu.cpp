@@ -12,29 +12,29 @@ gboolean (*gnomesu_exec)(const char *commandline);
 static void
 load_gnomesu(void)
 {
-	static gboolean init;
+    static gboolean init;
 
-	if (init)
-		return;
+    if (init)
+        return;
 
-	init = TRUE;
+    init = TRUE;
 
-	load_symbols("libgnomesu.so.0",
-		     "gnomesu_exec", &gnomesu_exec,
-		     NULL);
+    load_symbols("libgnomesu.so.0",
+                 "gnomesu_exec", &gnomesu_exec,
+                 NULL);
 }
 
 
 gboolean
 procman_gnomesu_create_root_password_dialog(const char *command)
 {
-	return gnomesu_exec(command);
+    return gnomesu_exec(command);
 }
 
 
 gboolean
 procman_has_gnomesu(void)
 {
-	load_gnomesu();
-	return gnomesu_exec != NULL;
+    load_gnomesu();
+    return gnomesu_exec != NULL;
 }

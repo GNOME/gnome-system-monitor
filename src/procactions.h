@@ -20,9 +20,9 @@
 #define _PROCACTIONS_H_
 
 #include "procman.h"
- 
-void		renice (ProcData *procdata, int nice);
-void		kill_process (ProcData *procdata, int sig);
+
+void            renice (ProcData *procdata, int nice);
+void            kill_process (ProcData *procdata, int sig);
 
 #endif
 

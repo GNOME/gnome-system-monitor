@@ -37,18 +37,18 @@
 
 typedef enum
 {
-	PROCMAN_ACTION_RENICE,
-	PROCMAN_ACTION_KILL
+    PROCMAN_ACTION_RENICE,
+    PROCMAN_ACTION_KILL
 } ProcmanActionType;
 
 
-void			procdialog_create_kill_dialog (ProcData *data, int signal);
-void 			procdialog_create_renice_dialog (ProcData *data);
-gboolean		procdialog_create_root_password_dialog (ProcmanActionType type,
-								ProcData *procdata,
-								gint pid, gint extra_value);
-void 			procdialog_create_memmaps_dialog (ProcData *data);
-void			procdialog_create_preferences_dialog (ProcData *data);
+void                    procdialog_create_kill_dialog (ProcData *data, int signal);
+void                    procdialog_create_renice_dialog (ProcData *data);
+gboolean                procdialog_create_root_password_dialog (ProcmanActionType type,
+                                                                ProcData *procdata,
+                                                                gint pid, gint extra_value);
+void                    procdialog_create_memmaps_dialog (ProcData *data);
+void                    procdialog_create_preferences_dialog (ProcData *data);
 
 #endif
 

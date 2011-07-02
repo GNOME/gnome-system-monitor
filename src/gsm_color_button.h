@@ -30,9 +30,9 @@
 #include <librsvg/rsvg-cairo.h>
 
 G_BEGIN_DECLS
-/* The GtkColorSelectionButton widget is a simple color picker in a button.	
- * The button displays a sample of the currently selected color.	When 
- * the user clicks on the button, a color selection dialog pops up.	
+/* The GtkColorSelectionButton widget is a simple color picker in a button.
+ * The button displays a sample of the currently selected color.        When
+ * the user clicks on the button, a color selection dialog pops up.
  * The color picker emits the "color_set" signal when the color is set.
  */
 #define GSM_TYPE_COLOR_BUTTON            (gsm_color_button_get_type ())
@@ -47,34 +47,34 @@ typedef struct _GSMColorButtonPrivate    GSMColorButtonPrivate;
 
 struct _GSMColorButton
 {
-  GtkDrawingArea widget;
+    GtkDrawingArea widget;
 
-  /*< private > */
+    /*< private > */
 
-  GSMColorButtonPrivate *priv;
+    GSMColorButtonPrivate *priv;
 };
 
 /* Widget types */
 enum
 {
-  GSMCP_TYPE_CPU,
-  GSMCP_TYPE_PIE,
-  GSMCP_TYPE_NETWORK_IN,
-  GSMCP_TYPE_NETWORK_OUT,
-  GSMCP_TYPES
+    GSMCP_TYPE_CPU,
+    GSMCP_TYPE_PIE,
+    GSMCP_TYPE_NETWORK_IN,
+    GSMCP_TYPE_NETWORK_OUT,
+    GSMCP_TYPES
 };
 
 struct _GSMColorButtonClass
 {
-  GtkWidgetClass parent_class;
+    GtkWidgetClass parent_class;
 
-  void (*color_set) (GSMColorButton * cp);
+    void (*color_set) (GSMColorButton * cp);
 
-  /* Padding for future expansion */
-  void (*_gtk_reserved1) (void);
-  void (*_gtk_reserved2) (void);
-  void (*_gtk_reserved3) (void);
-  void (*_gtk_reserved4) (void);
+    /* Padding for future expansion */
+    void (*_gtk_reserved1) (void);
+    void (*_gtk_reserved2) (void);
+    void (*_gtk_reserved3) (void);
+    void (*_gtk_reserved4) (void);
 };
 
 GType gsm_color_button_get_type (void) G_GNUC_CONST;

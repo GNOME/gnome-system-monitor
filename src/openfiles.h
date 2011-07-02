@@ -5,6 +5,6 @@
 
 #include "procman.h"
 
-void 		create_openfiles_dialog (ProcData *procdata);
+void            create_openfiles_dialog (ProcData *procdata);
 
 #endif

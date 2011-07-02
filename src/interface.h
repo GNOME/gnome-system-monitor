@@ -24,9 +24,9 @@
 #include <gtk/gtk.h>
 #include "procman.h"
 
-void		create_main_window (ProcData *data);
-void		update_sensitivity (ProcData *data);
+void            create_main_window (ProcData *data);
+void            update_sensitivity (ProcData *data);
 void            do_popup_menu(ProcData *data, GdkEventButton *event);
-GtkWidget *	make_title_label (const char *text);
+GtkWidget *     make_title_label (const char *text);
 
 #endif /* _PROCMAN_INTERFACE_H_ */

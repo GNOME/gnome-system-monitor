@@ -5,14 +5,14 @@
 
 namespace procman
 {
-  class OptionGroup
-    : public Glib::OptionGroup
-  {
-  public:
-    OptionGroup();
+    class OptionGroup
+        : public Glib::OptionGroup
+    {
+      public:
+        OptionGroup();
 
-    bool show_system_tab;
-  };
+        bool show_system_tab;
+    };
 }
 
 #endif // H_PROCMAN_ARGV_1205873424

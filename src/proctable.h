@@ -26,40 +26,40 @@
 
 enum
 {
-	COL_NAME = 0,
-	COL_USER,
-	COL_STATUS,
-	COL_VMSIZE,
-	COL_MEMRES,
-	COL_MEMWRITABLE,
-	COL_MEMSHARED,
-	COL_MEMXSERVER,
-	COL_CPU,
-	COL_CPU_TIME,
-	COL_START_TIME,
-	COL_NICE,
-	COL_PID,
-	COL_SECURITYCONTEXT,
-	COL_ARGS,
-	COL_MEM,
-	COL_WCHAN,
-	COL_PIXBUF,
-	COL_POINTER,
-	COL_TOOLTIP,
-	NUM_COLUMNS
+    COL_NAME = 0,
+    COL_USER,
+    COL_STATUS,
+    COL_VMSIZE,
+    COL_MEMRES,
+    COL_MEMWRITABLE,
+    COL_MEMSHARED,
+    COL_MEMXSERVER,
+    COL_CPU,
+    COL_CPU_TIME,
+    COL_START_TIME,
+    COL_NICE,
+    COL_PID,
+    COL_SECURITYCONTEXT,
+    COL_ARGS,
+    COL_MEM,
+    COL_WCHAN,
+    COL_PIXBUF,
+    COL_POINTER,
+    COL_TOOLTIP,
+    NUM_COLUMNS
 };
 
 
-GtkWidget*	proctable_new (ProcData *data);
-void		proctable_update_table (ProcData *data);
-void		proctable_update_list (ProcData *data);
-void		proctable_update_all (ProcData *data);
-void		proctable_clear_tree (ProcData *data);
-void		proctable_free_table (ProcData *data);
+GtkWidget*      proctable_new (ProcData *data);
+void            proctable_update_table (ProcData *data);
+void            proctable_update_list (ProcData *data);
+void            proctable_update_all (ProcData *data);
+void            proctable_clear_tree (ProcData *data);
+void            proctable_free_table (ProcData *data);
 
-GSList*		proctable_get_columns_order(GtkTreeView *treeview);
-void		proctable_set_columns_order(GtkTreeView *treeview, GSList *order);
+GSList*         proctable_get_columns_order(GtkTreeView *treeview);
+void            proctable_set_columns_order(GtkTreeView *treeview, GSList *order);
 
-char*		make_loadavg_string(void);
+char*           make_loadavg_string(void);
 
 #endif /* _PROCMAN_PROCTABLE_H_ */

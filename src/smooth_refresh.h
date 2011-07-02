@@ -11,92 +11,92 @@ using std::string;
 
 class SmoothRefresh
 {
-public:
+  public:
 
-  /*
-    smooth_refresh_new
+    /*
+      smooth_refresh_new
 
-    @config_interval : pointer to config_interval so we can observe
-    config_interval changes.
+      @config_interval : pointer to config_interval so we can observe
+      config_interval changes.
 
-    @return : initialized SmoothRefresh
-  */
-  SmoothRefresh(GSettings *a_settings);
+      @return : initialized SmoothRefresh
+    */
+    SmoothRefresh(GSettings *a_settings);
 
-  ~SmoothRefresh();
+    ~SmoothRefresh();
 
-  /*
-    smooth_refresh_reset
+    /*
+      smooth_refresh_reset
 
-    Resets state and re-read config_interval
-  */
-  void reset();
+      Resets state and re-read config_interval
+    */
+    void reset();
 
-  /*
-    smooth_refresh_get
+    /*
+      smooth_refresh_get
 
-    Computes the new refresh_interval so that CPU usage is lower than
-    SMOOTH_REFRESH_PCPU.
+      Computes the new refresh_interval so that CPU usage is lower than
+      SMOOTH_REFRESH_PCPU.
 
-    @new_interval : where the new refresh_interval is stored.
+      @new_interval : where the new refresh_interval is stored.
 
-    @return : TRUE is refresh_interval has changed. The new refresh_interval
-    is stored in @new_interval. Else FALSE;
-  */
-  bool get(guint &new_interval);
+      @return : TRUE is refresh_interval has changed. The new refresh_interval
+      is stored in @new_interval. Else FALSE;
+    */
+    bool get(guint &new_interval);
 
 
-  static const string KEY;
-  static const bool KEY_DEFAULT_VALUE;
+    static const string KEY;
+    static const bool KEY_DEFAULT_VALUE;
 
-private:
+  private:
 
-  unsigned get_own_cpu_usage();
+    unsigned get_own_cpu_usage();
 
-  static void status_changed(GSettings *settings,
-			     const gchar *key,
-                             gpointer user_data);
+    static void status_changed(GSettings *settings,
+                               const gchar *key,
+                               gpointer user_data);
 
-  void load_settings_value(const gchar *key);
+    void load_settings_value(const gchar *key);
 
-  /*
-    fuzzy logic:
-    - decrease refresh interval only if current CPU% and last CPU%
-    are higher than PCPU_LO
-    - increase refresh interval only if current CPU% and last CPU%
-    are higher than PCPU_HI
+    /*
+      fuzzy logic:
+      - decrease refresh interval only if current CPU% and last CPU%
+      are higher than PCPU_LO
+      - increase refresh interval only if current CPU% and last CPU%
+      are higher than PCPU_HI
 
-  */
+    */
 
-  enum
+    enum
     {
-      PCPU_HI = 22,
-      PCPU_LO = 18
+        PCPU_HI = 22,
+        PCPU_LO = 18
     };
 
-  /*
-    -self : procman's PID (so we call getpid() only once)
+    /*
+      -self : procman's PID (so we call getpid() only once)
 
-    -interval : current refresh interval
+      -interval : current refresh interval
 
-    -config_interval : pointer to the configuration refresh interval.
-    Used to watch configuration changes
+      -config_interval : pointer to the configuration refresh interval.
+      Used to watch configuration changes
 
-    -interval >= -config_interval
+      -interval >= -config_interval
 
-    -last_pcpu : to avoid spikes, the last CPU%. See PCPU_{LO,HI}
+      -last_pcpu : to avoid spikes, the last CPU%. See PCPU_{LO,HI}
 
-    -last_total_time:
-    -last_cpu_time: Save last cpu and process times to compute CPU%
-  */
+      -last_total_time:
+      -last_cpu_time: Save last cpu and process times to compute CPU%
+    */
 
-  GSettings *settings;
-  bool active;
-  guint connection;
-  guint interval;
-  unsigned  last_pcpu;
-  guint64 last_total_time;
-  guint64 last_cpu_time;
+    GSettings *settings;
+    bool active;
+    guint connection;
+    guint interval;
+    unsigned  last_pcpu;
+    guint64 last_total_time;
+    guint64 last_cpu_time;
 };
 
 
