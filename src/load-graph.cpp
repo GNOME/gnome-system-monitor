@@ -602,16 +602,16 @@ load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
 
 
 LoadGraph::LoadGraph(guint type)
-    : fontsize(0.0),
-      rmargin(0.0),
-      indent(0.0),
+    : fontsize(8.0),
+      rmargin(3.5 * fontsize),
+      indent(24.0),
       n(0),
-      type(0),
+      type(type),
       speed(0),
       draw_width(0),
       draw_height(0),
       render_counter(0),
-      frames_per_unit(0),
+      frames_per_unit(10), // this will be changed but needs initialising
       graph_dely(0),
       real_draw_height(0),
       graph_delx(0.0),
@@ -629,12 +629,7 @@ LoadGraph::LoadGraph(guint type)
     // FIXME:
     // on configure, g->frames_per_unit = g->draw_width/(LoadGraph::NUM_POINTS);
     // knock FRAMES down to 5 until cairo gets faster
-    g->frames_per_unit = 10;  // this will be changed but needs initialising
-    g->fontsize = 8.0;
-    g->rmargin = 3.5 * g->fontsize;
-    g->indent = 24.0;
 
-    g->type = type;
     switch (type) {
         case LOAD_GRAPH_CPU:
             memset(&this->cpu, 0, sizeof g->cpu);
