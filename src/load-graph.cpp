@@ -632,83 +632,83 @@ LoadGraph::LoadGraph(guint type)
 
     switch (type) {
         case LOAD_GRAPH_CPU:
-            memset(&this->cpu, 0, sizeof graph->cpu);
-            graph->n = ProcData::get_instance()->config.num_cpus;
+            memset(&cpu, 0, sizeof cpu);
+            n = ProcData::get_instance()->config.num_cpus;
 
-            for(guint i = 0; i < G_N_ELEMENTS(graph->labels.cpu); ++i)
-                graph->labels.cpu[i] = gtk_label_new(NULL);
+            for(guint i = 0; i < G_N_ELEMENTS(labels.cpu); ++i)
+                labels.cpu[i] = gtk_label_new(NULL);
 
             break;
 
         case LOAD_GRAPH_MEM:
-            graph->n = 2;
-            graph->labels.memory = gtk_label_new(NULL);
-            graph->labels.swap = gtk_label_new(NULL);
+            n = 2;
+            labels.memory = gtk_label_new(NULL);
+            labels.swap = gtk_label_new(NULL);
             break;
 
         case LOAD_GRAPH_NET:
-            memset(&this->net, 0, sizeof graph->net);
-            graph->n = 2;
-            graph->net.max = 1;
-            graph->labels.net_in = gtk_label_new(NULL);
-            graph->labels.net_in_total = gtk_label_new(NULL);
-            graph->labels.net_out = gtk_label_new(NULL);
-            graph->labels.net_out_total = gtk_label_new(NULL);
+            memset(&net, 0, sizeof net);
+            n = 2;
+            net.max = 1;
+            labels.net_in = gtk_label_new(NULL);
+            labels.net_in_total = gtk_label_new(NULL);
+            labels.net_out = gtk_label_new(NULL);
+            labels.net_out_total = gtk_label_new(NULL);
             break;
     }
 
-    graph->speed  = ProcData::get_instance()->config.graph_update_interval;
+    speed  = ProcData::get_instance()->config.graph_update_interval;
 
-    graph->colors.resize(graph->n);
+    colors.resize(n);
 
     switch (type) {
         case LOAD_GRAPH_CPU:
-            memcpy(&graph->colors[0], ProcData::get_instance()->config.cpu_color,
-                   graph->n * sizeof graph->colors[0]);
+            memcpy(&colors[0], ProcData::get_instance()->config.cpu_color,
+                   n * sizeof colors[0]);
             break;
         case LOAD_GRAPH_MEM:
-            graph->colors[0] = ProcData::get_instance()->config.mem_color;
-            graph->colors[1] = ProcData::get_instance()->config.swap_color;
-            graph->mem_color_picker = gsm_color_button_new (&graph->colors[0],
+            colors[0] = ProcData::get_instance()->config.mem_color;
+            colors[1] = ProcData::get_instance()->config.swap_color;
+            mem_color_picker = gsm_color_button_new (&colors[0],
                                                         GSMCP_TYPE_PIE);
-            graph->swap_color_picker = gsm_color_button_new (&graph->colors[1],
+            swap_color_picker = gsm_color_button_new (&colors[1],
                                                          GSMCP_TYPE_PIE);
             break;
         case LOAD_GRAPH_NET:
-            graph->colors[0] = ProcData::get_instance()->config.net_in_color;
-            graph->colors[1] = ProcData::get_instance()->config.net_out_color;
+            colors[0] = ProcData::get_instance()->config.net_in_color;
+            colors[1] = ProcData::get_instance()->config.net_out_color;
             break;
     }
 
-    graph->timer_index = 0;
-    graph->render_counter = (graph->frames_per_unit - 1);
-    graph->draw = FALSE;
+    timer_index = 0;
+    render_counter = (frames_per_unit - 1);
+    draw = FALSE;
 
-    graph->main_widget = gtk_vbox_new (FALSE, FALSE);
-    gtk_widget_set_size_request(graph->main_widget, -1, LoadGraph::GRAPH_MIN_HEIGHT);
-    gtk_widget_show (graph->main_widget);
+    main_widget = gtk_vbox_new (FALSE, FALSE);
+    gtk_widget_set_size_request(main_widget, -1, LoadGraph::GRAPH_MIN_HEIGHT);
+    gtk_widget_show (main_widget);
 
-    graph->disp = gtk_drawing_area_new ();
-    gtk_widget_show (graph->disp);
-    g_signal_connect (G_OBJECT (graph->disp), "draw",
+    disp = gtk_drawing_area_new ();
+    gtk_widget_show (disp);
+    g_signal_connect (G_OBJECT (disp), "draw",
                       G_CALLBACK (load_graph_draw), graph);
-    g_signal_connect (G_OBJECT(graph->disp), "configure_event",
+    g_signal_connect (G_OBJECT(disp), "configure_event",
                       G_CALLBACK (load_graph_configure), graph);
-    g_signal_connect (G_OBJECT(graph->disp), "destroy",
+    g_signal_connect (G_OBJECT(disp), "destroy",
                       G_CALLBACK (load_graph_destroy), graph);
 
-    gtk_widget_set_events (graph->disp, GDK_EXPOSURE_MASK);
+    gtk_widget_set_events (disp, GDK_EXPOSURE_MASK);
 
-    gtk_box_pack_start (GTK_BOX (graph->main_widget), graph->disp, TRUE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (main_widget), disp, TRUE, TRUE, 0);
 
 
     /* Allocate data in a contiguous block */
-    graph->data_block = std::vector<float>(graph->n * LoadGraph::NUM_POINTS, -1.0f);
+    data_block = std::vector<float>(n * LoadGraph::NUM_POINTS, -1.0f);
 
     for (guint i = 0; i < LoadGraph::NUM_POINTS; ++i)
-        graph->data[i] = &graph->data_block[0] + i * graph->n;
+        data[i] = &data_block[0] + i * n;
 
-    gtk_widget_show_all (graph->main_widget);
+    gtk_widget_show_all (main_widget);
 }
 
 void
