@@ -1,5 +1,3 @@
-// -*- c++ -*-
-
 #ifndef _PROCMAN_PRETTYTABLE_H_
 #define _PROCMAN_PRETTYTABLE_H_
 
