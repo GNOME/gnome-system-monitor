@@ -239,9 +239,20 @@ procdialog_create_renice_dialog (ProcData *procdata)
 static void
 prefs_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 {
-    gtk_widget_destroy (GTK_WIDGET (dialog));
-
-    prefs_dialog = NULL;
+    if (id == GTK_RESPONSE_HELP)
+    {
+        GError* error = 0;
+        if (!g_app_info_launch_default_for_uri("ghelp:gnome-system-monitor#gnome-system-monitor-prefs", NULL, &error))
+        {
+            g_warning("Could not display preferences help : %s", error->message);
+            g_error_free(error);
+        }
+    }
+    else
+    {
+        gtk_widget_destroy (GTK_WIDGET (dialog));
+        prefs_dialog = NULL;
+    }
 }
 
 
@@ -484,6 +495,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
     dialog = gtk_dialog_new_with_buttons (_("System Monitor Preferences"),
                                           GTK_WINDOW (procdata->app),
                                           GTK_DIALOG_DESTROY_WITH_PARENT,
+                                          GTK_STOCK_HELP, GTK_RESPONSE_HELP,
                                           GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
                                           NULL);
     /* FIXME: we should not declare the window size, but let it's   */
@@ -816,5 +828,3 @@ procdialog_create_root_password_dialog(ProcmanActionType type,
     g_free(command);
     return ret;
 }
-
-
