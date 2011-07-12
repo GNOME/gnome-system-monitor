@@ -2,12 +2,12 @@
       type="topic" style="task"
       id="commandline">
   <info>
-    <revision version="0.1" date="2011-06-18" status="stub"/>
-    <!--<link type="guide" xref="..." />-->
+    <revision version="0.1" date="2011-07-12" status="review"/>
+    <link type="guide" xref="index" />
 
     <credit type="author copyright">
-      <name>Phil Bull</name>
-      <email>philbull@gmail.com</email>
+      <name>Kelly Sinnott</name>
+      <email>ksinnott5ht@gmail.com</email>
       <years>2011</years>
     </credit>
 
@@ -21,12 +21,29 @@
     <p>Briefly list a few useful command line tools which can provide some of the same information as System Monitor. Don't go into too much detail.</p>
   </comment>
 
-  <p>Short introductory text...</p>
+  <p>If you would like to access the information provided by the System Monitor from the terminal, there are several handy command-line tools available.</p>
 
-  <steps>
-    <item><p>First step...</p></item>
-    <item><p>Second step...</p></item>
-    <item><p>Third step...</p></item>
-  </steps>
+<table shade="rows">
+  <tr>
+	<td><p>System information</p></td>
+	<td><p>The command <cmd>uname -a</cmd> will give you information about your system including your machine's hostname, operating system, and processor.</p></td>
 
+  </tr>
+  <tr>
+	<td><p>Running processes and other live system data</p></td>
+	<td><p>The tool <cmd>top</cmd> displays a continually updating view of current processes, their CPU and memory usage, and other details.</p></td>
+	</tr>
+  <tr>
+	<td><p>Disk space</p></td>
+	<td><p>To review available disk space, mount location, and file type of mounted file systems, issue the command <cmd>df -h</cmd>.</p>
+	</td>
+  </tr>
+
+  <tr>
+	<td><p>Network information</p></td>
+	<td><p>The command <cmd>iftop</cmd> works like <cmd>top</cmd>, displaying continually updating network statistics. This command must be run as an administrator.
+	Note: iftop may not be included in your distribution. It should be available via your package manager.</p>
+	</td>
+   </tr>
+</table>
 </page>
