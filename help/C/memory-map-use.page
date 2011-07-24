@@ -11,22 +11,131 @@
       <years>2011</years>
     </credit>
 
-    <desc>XXXX</desc>
+    <desc>The memory map of a process...</desc>
   </info>
 
   <title>Understand and use memory maps</title>
 
   <comment>
     <cite date="2011-06-18" href="mailto:philbull@gmail.com">Phil Bull</cite>
-    <p>Difficult conceptual topic. Explain how to use memory maps to do whatever the hell you're supposed to use them for.</p>
+    <p>Difficult conceptual topic. Explain how to use memory maps to do whatever
+ the hell you're supposed to use them for.</p>
   </comment>
 
-  <p>Short introductory text...</p>
+  <p>The virtual memory system is able to present more memory to the system's
+ running processes than is present in actual physical memory. When a program is
+ launched, the system assigns it a unique process ID (PID) and its <em>instructions</em>
+ and <em>data</em> are loaded into memory in <em>pages</em>. The page table of each
+ process maps the correspondence between its pages in virtual memory and their
+ location in physical memory. The <gui>memory map</gui> displays the total
+ virtual memory use of the process, and can be used to determine the memory cost
+ of running a single or multiple instances of the program, to ensure the use of
+ the correct shared libraries, to see the results of adjusting various performance
+ tuning parameters the program may have, or to diagnose issues such as memory
+ leaks.</p>
 
-  <steps>
-    <item><p>First step...</p></item>
-    <item><p>Second step...</p></item>
-    <item><p>Third step...</p></item>
-  </steps>
+  <p>If multiple copies of a program are running, the instructions (or <em>text</em>)
+ of the program only need to be loaded once into physical memory. Each time a
+ new instance of the program is launched (as a unique process with its own virtual
+ memory pages), its page table maps the location of the text in virtual memory to
+ those instructions in the original real memory location. In addition, any dynamic
+ shared libraries used by the process appear as distinct in virtual memory, but
+ are shared references to a single copy of the library's text segment in real
+ memory. When accounting for the total memory use of a process, it is important
+ to note that the cost of shared libraries loaded into memory can be spread
+ across all the processes currently using them.</p>
+
+  <p>When the system needs more pages of memory than are available, some of the
+ existing pages will be <em>paged out</em> or written to the <link xref="mem-swap">swap space</link>.
+ Text pages are flagged read-execute in memory and don't need to be written to
+ swap since they can be re-loaded from their original location on disk. Data
+ pages have read-write permissions, and if modified when in memory, they are
+ labeled <em>dirty</em>, and when designated for swapping, must be paged out.
+ When a page in swap space is required by a running process, it needs to be
+ swapped back in before use, perhaps causing another page to be paged out.</p>
+
+  <p>Reading the memory map:</p>
+  <list>
+
+    <item>
+      <p>Addresses are diplayed in hexadecimal (base 16).</p>
+    </item>
+    <item>
+      <p>Sizes are displayed in <link xref="units">IEC binary prefixes</link>.</p>
+    </item>
+    <item>
+      <p>At runtime the process can allocate more memory dynamically into an area called the <em>heap</em>, and store arguments and variables into another area called the <em>stack</em>.</p>
+    </item>
+    <item>
+      <p>The program itself and each of the shared libraries has three entries
+ each, one for the read-execute text segment, one for the read-write data segment
+ and one for a read-only data segment. Both data segments need to be paged out
+ at swap time.</p>
+    </item>
+  </list>
+
+ <terms>
+ <title>Properties</title>
+  <item>
+    <title><gui>Filename</gui></title>
+    <p>The location of a shared library that is currently used by the process.
+ If this field is blank, the memory information in this row describes memory
+ that is owned by the process whose name is displayed above the memory-map
+ table.</p>
+  </item>
+  <item>
+    <title><gui>VM Start</gui></title>
+    <p>The address at which the memory segment begins.</p>
+  </item>
+  <item>
+    <title><gui>VM End</gui></title>
+    <p>The address at which the memory segment ends.</p>
+  </item>
+  <item>
+    <title><gui>VM Size</gui></title>
+    <p>The size of the memory segment.</p>
+  </item>
+  <item>
+    <title><gui>Flags</gui></title>
+    <p>The following flags describe the different types of memory-segment access that the process can have:</p>
+    <terms>
+    <item>
+      <title><gui>p</gui></title>
+    <p>The memory segment is private to the process, and is not accessible to other processes.</p>
+    </item>
+    <item>
+      <title><gui>r</gui></title>
+    <p>The process has permission to read from the memory segment.</p>
+    </item>
+    <item>
+      <title><gui>s</gui></title>
+    <p>The memory segment is shared with other processes.</p>
+    </item>
+    <item>
+      <title><gui>w</gui></title>
+    <p>The process has permission to write into the memory segment.</p>
+    </item>
+    <item>
+      <title><gui>x</gui></title>
+    <p>The process has permission to execute instructions that are contained
+ within the memory segment.</p>
+    </item>
+    <item>
+      <title><gui>VM Offset</gui></title>
+    <p>The virtual memory offset of the memory segment.</p>
+    </item>
+    <item>
+      <title><gui>Device</gui></title>
+    <p>The major and minor device numbers of the device on which the shared
+ library filename is located.</p>
+    </item>
+    <item>
+      <title><gui>Inode</gui></title>
+    <p>The inode on the device from which the shared library location is loaded
+ into memory.</p>
+    </item>
+  </terms>
+  </item>
+</terms>
 
 </page>
