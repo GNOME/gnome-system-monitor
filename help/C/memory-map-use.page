@@ -22,17 +22,20 @@
  the hell you're supposed to use them for.</p>
   </comment>
 
-  <p>The virtual memory system is able to present more memory to the system's
- running processes than is present in actual physical memory. When a program is
- launched, the system assigns it a unique process ID (PID) and its <em>instructions</em>
- and <em>data</em> are loaded into memory in <em>pages</em>. The page table of each
- process maps the correspondence between its pages in virtual memory and their
- location in physical memory. The <gui>memory map</gui> displays the total
- virtual memory use of the process, and can be used to determine the memory cost
- of running a single or multiple instances of the program, to ensure the use of
- the correct shared libraries, to see the results of adjusting various performance
- tuning parameters the program may have, or to diagnose issues such as memory
- leaks.</p>
+  <p><gui>Virtual memory</gui> is a representation of the combined <gui>physical
+ memory</gui> and <gui>swap space</gui> in a system. It enables running processes
+ to access <em>more</em> than the existing physical memory by <gui>mapping</gui>
+ locations in physical memory to files on disk.</p>
+
+  <p>When a program is launched, the system assigns it a unique process ID (PID)
+ and its <em>instructions</em> and <em>data</em> are loaded into memory in
+ <em>pages</em>. The page table of each process maps the correspondence between
+ its pages in virtual memory and their location in physical memory. The
+ <gui>memory map</gui> displays the total virtual memory use of the process, and
+ can be used to determine the memory cost of running a single or multiple
+ instances of the program, to ensure the use of the correct shared libraries, to
+ see the results of adjusting various performance tuning parameters the program
+ may have, or to diagnose issues such as memory leaks.</p>
 
   <p>If multiple copies of a program are running, the instructions (or <em>text</em>)
  of the program only need to be loaded once into physical memory. Each time a
@@ -64,7 +67,9 @@
       <p>Sizes are displayed in <link xref="units">IEC binary prefixes</link>.</p>
     </item>
     <item>
-      <p>At runtime the process can allocate more memory dynamically into an area called the <em>heap</em>, and store arguments and variables into another area called the <em>stack</em>.</p>
+      <p>At runtime the process can allocate more memory dynamically into an area
+ called the <em>heap</em>, and store arguments and variables into another area
+ called the <em>stack</em>.</p>
     </item>
     <item>
       <p>The program itself and each of the shared libraries has three entries
@@ -85,23 +90,32 @@
   </item>
   <item>
     <title><gui>VM Start</gui></title>
-    <p>The address at which the memory segment begins.</p>
+    <p>The address at which the memory segment begins. VM Start, VM End and VM
+ Offset together specify the location on disk to which the shared library is
+ mapped.</p>
   </item>
   <item>
     <title><gui>VM End</gui></title>
     <p>The address at which the memory segment ends.</p>
   </item>
+    <item>
+      <title><gui>VM Offset</gui></title>
+    <p>The location of the address within the memory segment, measured from VM
+ Start.</p>
+    </item>
   <item>
     <title><gui>VM Size</gui></title>
     <p>The size of the memory segment.</p>
   </item>
   <item>
     <title><gui>Flags</gui></title>
-    <p>The following flags describe the different types of memory-segment access that the process can have:</p>
+    <p>The following flags describe the different types of memory-segment access
+ that the process can have:</p>
     <terms>
     <item>
       <title><gui>p</gui></title>
-    <p>The memory segment is private to the process, and is not accessible to other processes.</p>
+    <p>The memory segment is private to the process, and is not accessible to
+ other processes.</p>
     </item>
     <item>
       <title><gui>r</gui></title>
@@ -121,18 +135,15 @@
  within the memory segment.</p>
     </item>
     <item>
-      <title><gui>VM Offset</gui></title>
-    <p>The virtual memory offset of the memory segment.</p>
-    </item>
-    <item>
       <title><gui>Device</gui></title>
-    <p>The major and minor device numbers of the device on which the shared
- library filename is located.</p>
+    <p>The major and minor numbers of the device on which the shared library
+ filename is located. Together these specify a partition on the system.</p>
     </item>
     <item>
       <title><gui>Inode</gui></title>
     <p>The inode on the device from which the shared library location is loaded
- into memory.</p>
+ into memory. An inode is the structure the filesystem uses to store a file, and
+ the number assigned to it is unique.</p>
     </item>
   </terms>
   </item>
