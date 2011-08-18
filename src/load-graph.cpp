@@ -371,6 +371,33 @@ get_memory (LoadGraph *graph)
     graph->data[0][1] = swappercent;
 }
 
+/* Nice Numbers for Graph Labels after Paul Heckbert
+   nicenum: find a "nice" number approximately equal to x.
+   Round the number if round=1, take ceiling if round=0    */
+
+static double
+nicenum (double x, int round)
+{
+    int expv;				/* exponent of x */
+    double f;				/* fractional part of x */
+    double nf;				/* nice, rounded fraction */
+
+    expv = floor( log10(x) );
+    f = x/pow( 10.0, expv );		/* between 1 and 10 */
+    if (round) {
+        if ( f < 1.5 ) nf = 1.0;
+        else if ( f < 3.0 ) nf = 2.0;
+        else if ( f < 7.0 ) nf = 5.0;
+        else nf = 10.0;
+    } else {
+        if ( f <= 1.0 ) nf = 1.0;
+        else if ( f <= 2.0 ) nf = 2.0;
+        else if ( f <= 5.0 ) nf = 5.0;
+        else nf = 10.0;
+    }
+    return nf * pow(10.0, expv);
+}
+
 static void
 net_scale (LoadGraph *graph, guint64 din, guint64 dout)
 {
@@ -396,15 +423,20 @@ net_scale (LoadGraph *graph, guint64 din, guint64 dout)
     const guint64 bak_max(new_max);
 
     if (ProcData::get_instance()->config.network_in_bits) {
-        // TODO: fix logic to give a nice scale with bits
+        // nice number is for the ticks
+        unsigned ticks = graph->num_bars();
 
-        // round up to get some extra space
-        // yes, it can overflow
-        new_max = 1.1 * new_max;
-        // make sure max is not 0 to avoid / 0
-        // default to 125 bytes == 1kbit
-        new_max = std::max(new_max, G_GUINT64_CONSTANT(125));
+        // gets messy at low values due to division by 8
+        guint64 bit_max = std::max( new_max*8, G_GUINT64_CONSTANT(10000) );
 
+        // our tick size leads to max
+        double d = nicenum(bit_max/ticks, 0);
+        bit_max = ticks * d;
+        new_max = bit_max / 8;
+
+        procman_debug("bak*8 %" G_GUINT64_FORMAT ", ticks %d, d %f"
+                      ", bit_max %" G_GUINT64_FORMAT ", new_max %" G_GUINT64_FORMAT,
+                      bak_max*8, ticks, d, bit_max, new_max );
     } else {
         // round up to get some extra space
         // yes, it can overflow
