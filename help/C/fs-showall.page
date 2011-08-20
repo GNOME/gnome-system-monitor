@@ -2,12 +2,17 @@
       type="topic" style="task"
       id="fs-showall">
   <info>
-    <revision version="0.1" date="2011-06-18" status="stub"/>
-    <!--<link type="guide" xref="..." />-->
+    <revision version="0.1" date="2011-08-19" status="review"/>
+    <link type="guide" xref="index" group="filesystems" />
 
     <credit type="author copyright">
       <name>Phil Bull</name>
       <email>philbull@gmail.com</email>
+      <years>2011</years>
+    </credit>
+    <credit type="author copyright">
+      <name>Kelly Sinnott</name>
+      <email>ksinnott5ht@gmail.com</email>
       <years>2011</years>
     </credit>
 
@@ -21,12 +26,8 @@
     <p>Explain how you can show all file systems (Preferences), and (briefly) what sort of thing those file systems are likely to be for (system things, mounted network drives, etc.)</p>
   </comment>
 
-  <p>Short introductory text...</p>
+  <p>It is possible for <app>System Monitor</app> to display more than the basic, user-accessible devices that show up in the <gui>File Systems</gui> tab. To show all the file systems that exist on your system, click <guiseq><gui>Edit</gui><gui>Preferences</gui><gui>Show All Filesystems.</gui></guiseq> The <gui>File Systems</gui> tab should now show more file systems which were not visible before.</p>
 
-  <steps>
-    <item><p>First step...</p></item>
-    <item><p>Second step...</p></item>
-    <item><p>Third step...</p></item>
-  </steps>
+<p>Devices like <cmd>proc</cmd>, <cmd>run</cmd>, and <cmd>sys</cmd> contain system files that Linux requires to run. You might also see systems like <cmd>gvfs-fuse-daemon</cmd> or <cmd>fusectl</cmd>; these help to mount a virtual file system such as one on a network or a remote computer. <cmd>tmpfs</cmd> contains temporary files which are deleted on boot. It is unlikely that you will need to touch these filesystems, but it is good to know about them</p> 
 
 </page>

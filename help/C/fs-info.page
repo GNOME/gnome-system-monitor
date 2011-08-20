@@ -2,12 +2,17 @@
       type="topic" style="task"
       id="fs-info">
   <info>
-    <revision version="0.1" date="2011-06-18" status="stub"/>
-    <!--<link type="guide" xref="..." />-->
+    <revision version="0.1" date="2011-08-19" status="review"/>
+    <link type="guide" xref="index" group="filesystems" />
 
     <credit type="author copyright">
       <name>Phil Bull</name>
       <email>philbull@gmail.com</email>
+      <years>2011</years>
+    </credit>
+    <credit type="author copyright">
+      <name>Kelly Sinnott</name>
+      <email>ksinnott5ht@gmail.com</email>
       <years>2011</years>
     </credit>
 
@@ -16,17 +21,49 @@
 
   <title>Learn what the File System information means</title>
 
-  <comment>
-    <cite date="2011-06-18" href="mailto:philbull@gmail.com">Phil Bull</cite>
-    <p>Explain, in relatively simple terms, what each of the fields in the FS tab means.</p>
-  </comment>
+  <p>For each device listed in the <gui>File System</gui> tab, <app>System Monitor</app> provides information in a number of categories. </p>
 
-  <p>Short introductory text...</p>
+<table shade="rows">
+  <tr>
+	<td><p>Device</p></td>
+	<td><p>This column lists the system-assigned interface directory for a given device or partition.</p></td>
 
-  <steps>
-    <item><p>First step...</p></item>
-    <item><p>Second step...</p></item>
-    <item><p>Third step...</p></item>
-  </steps>
+  </tr>
+
+  <tr>
+	<td><p>Directory</p></td>
+	<td><p>This column contains the user-accessible location, or <em>path</em> where each device is <em>mounted</em> in the filesystem.</p></td>
+  </tr>
+
+  <tr>
+	<td><p>Type</p></td>
+	<td><p>The filesystem type of a device refers to the way the data is stored on it. For example, <cmd>ext3</cmd> filesystems are common for Home directories, while <cmd>fat32</cmd> is often seen in removable USB drives. </p>
+	</td>
+  </tr>
+
+  <tr>
+	<td><p>Total</p></td>
+	<td><p>This column lists the total capacity for each device.</p>
+	</td>
+   </tr>
+
+  <tr>
+	<td><p>Free</p></td>
+	<td><p>This column lists the space that is free for each device.</p></td>
+   </tr>
+
+  <tr>
+	<td><p>Available</p></td>
+	<td><p>The available disk space can be used by the system and installed programs.</p></td>
+   </tr>
+
+  <tr>
+	<td><p>Used</p></td>
+	<td><p>This column displays both the amount of disk space used and the percentage of available space this represents. </p></td>
+   </tr>
+
+</table>
+
+<note><p><gui>Available</gui> space may be less than <gui>Free</gui> space. The extra space holds data necessary for currently running processes.</p></note>
 
 </page>
