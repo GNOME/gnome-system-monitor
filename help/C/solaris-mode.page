@@ -22,17 +22,22 @@
  means. The current manual has some information.</p>
   </comment>
 
-  <p>In a system that has multiple CPUs, it is possible for the <gui>% CPU</gui>
- column to display values that total greater than 100% (i.e. 400% in a 4-CPU
- system). <gui>Solaris mode</gui> divides the <gui>% CPU</gui> for each process
- by the number of CPUs in the system so that the total will be 100%.</p>
+  <p>In a system that has multiple CPUs or <link xref="cpu-multicore">cores</link>,
+ processes can use more than one at the same time. It is possible for the
+ <gui>% CPU</gui> column to display values that total greater than 100% (i.e.
+ 400% in a 4-CPU system). <gui>Solaris mode</gui> divides the <gui>% CPU</gui>
+ for each process by the number of CPUs in the system so that the total will be
+ 100%.</p>
 
   <p>To display the <gui>% CPU</gui> in <gui>Solaris mode</gui>:</p>
 
   <steps>
     <item><p>Click <guiseq><gui>Edit</gui><gui>Preferences</gui></guiseq>.</p></item>
     <item><p>Click the <gui>Processes</gui> tab.</p></item>
-    <item><p>Select <gui>Solaris mode</gui>.</p></item>
+    <item><p>Select <gui>Divide CPU Usage by CPU Count</gui>.</p></item>
   </steps>
+
+    <note><p>The term <gui>Solaris mode</gui> derives from Sun's UNIX, compared
+ to the Linux default of IRIX mode, named for SGI's UNIX.</p></note>
 
 </page>
