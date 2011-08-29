@@ -2,7 +2,7 @@
       type="topic" style="task"
       id="process-status">
   <info>
-    <revision version="0.1" date="2011-08-19" status="stub"/>
+    <revision version="0.1" date="2011-08-28" status="review"/>
     <link type="guide" xref="index" group="processes-info" />
 
     <credit type="author copyright">
@@ -10,8 +10,13 @@
       <email>philbull@gmail.com</email>
       <years>2011</years>
     </credit>
+    <credit type="author copyright">
+      <name>Kelly Sinnott</name>
+      <email>ksinnott5ht@gmail.com</email>
+      <years>2011</years>
+    </credit>
 
-    <desc>XXXXX</desc>
+    <desc>The status of a process can be running, sleeping, stopped, or zombie.</desc>
   </info>
 
   <title>What do the process statuses mean?</title>
@@ -21,12 +26,29 @@
     <p>Briefly explain the different statuses a process can have.</p>
   </comment>
 
-  <p>Short introductory text...</p>
+  <p>The <gui>Status</gui> column for a process provides information on the state of the process. The possible states for a process are:</p>
 
-  <steps>
-    <item><p>First step...</p></item>
-    <item><p>Second step...</p></item>
-    <item><p>Third step...</p></item>
-  </steps>
+<table shade="rows">
+  <tr>
+	<td><p>Running</p></td>
+	<td><p>A process that is <gui>Running</gui> is actively executing its code. For example, when your browser is open and accessing a webpage, the browser process is running. </p></td>
+
+  </tr>
+  <tr>
+	<td><p>Sleeping</p></td>
+	<td><p>If a process is <gui>Sleeping</gui>, this means that it is not being executed and is currently waiting for an event from the user or the system to wake it up. This allows the process to be ready to execute without using up resources.</p></td>
+	</tr>
+  <tr>
+	<td><p>Stopped</p></td>
+	<td><p>A process can be stopped manually by right-clicking it and selecting <gui>Stop Process</gui>. This puts it in a state similar to sleep. It can be resumed with <gui>Continue Process</gui>.</p>
+	</td>
+  </tr>
+
+  <tr>
+	<td><p>Zombie</p></td>
+	<td><p>A Zombie process has been killed or otherwise has stopped running. It can't be killed because the process can no longer receive the "kill signal." All that is left is for the system to clean up the remnants of the process in memory.  </p>
+	</td>
+   </tr>
+</table>
 
 </page>
