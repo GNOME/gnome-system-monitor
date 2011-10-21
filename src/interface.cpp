@@ -545,61 +545,6 @@ create_sys_view (ProcData *procdata)
     return vbox;
 }
 
-static void
-menu_item_select_cb (GtkMenuItem *proxy,
-                     ProcData *procdata)
-{
-    GtkAction *action;
-    char *message;
-
-    action = gtk_activatable_get_related_action (GTK_ACTIVATABLE(proxy));
-    g_assert(action);
-
-    g_object_get (G_OBJECT (action), "tooltip", &message, NULL);
-    if (message)
-    {
-        gtk_statusbar_push (GTK_STATUSBAR (procdata->statusbar),
-                            procdata->tip_message_cid, message);
-        g_free (message);
-    }
-}
-
-static void
-menu_item_deselect_cb (GtkMenuItem *proxy,
-                       ProcData *procdata)
-{
-    gtk_statusbar_pop (GTK_STATUSBAR (procdata->statusbar),
-                       procdata->tip_message_cid);
-}
-
-static void
-connect_proxy_cb (GtkUIManager *manager,
-                  GtkAction *action,
-                  GtkWidget *proxy,
-                  ProcData *procdata)
-{
-    if (GTK_IS_MENU_ITEM (proxy)) {
-        g_signal_connect (proxy, "select",
-                          G_CALLBACK (menu_item_select_cb), procdata);
-        g_signal_connect (proxy, "deselect",
-                          G_CALLBACK (menu_item_deselect_cb), procdata);
-    }
-}
-
-static void
-disconnect_proxy_cb (GtkUIManager *manager,
-                     GtkAction *action,
-                     GtkWidget *proxy,
-                     ProcData *procdata)
-{
-    if (GTK_IS_MENU_ITEM (proxy)) {
-        g_signal_handlers_disconnect_by_func
-            (proxy, (void*)(G_CALLBACK(menu_item_select_cb)), procdata);
-        g_signal_handlers_disconnect_by_func
-            (proxy, (void*)(G_CALLBACK(menu_item_deselect_cb)), procdata);
-    }
-}
-
 void
 create_main_window (ProcData *procdata)
 {
@@ -635,12 +580,6 @@ create_main_window (ProcData *procdata)
 
     /* create the menubar */
     procdata->uimanager = gtk_ui_manager_new ();
-
-    /* show tooltips in the statusbar */
-    g_signal_connect (procdata->uimanager, "connect_proxy",
-                      G_CALLBACK (connect_proxy_cb), procdata);
-    g_signal_connect (procdata->uimanager, "disconnect_proxy",
-                      G_CALLBACK (disconnect_proxy_cb), procdata);
 
     gtk_window_add_accel_group (GTK_WINDOW (app),
                                 gtk_ui_manager_get_accel_group (procdata->uimanager));
@@ -725,13 +664,6 @@ create_main_window (ProcData *procdata)
                                  GDK_MOD1_MASK, GTK_ACCEL_VISIBLE,
                                  goto_tab_closure[i]);
     }
-
-    /* create the statusbar */
-    procdata->statusbar = gtk_statusbar_new();
-    gtk_box_pack_end(GTK_BOX(main_box), procdata->statusbar, FALSE, FALSE, 0);
-    procdata->tip_message_cid = gtk_statusbar_get_context_id
-        (GTK_STATUSBAR (procdata->statusbar), "tip_message");
-
 
     action = gtk_action_group_get_action (procdata->action_group, "ShowDependencies");
     gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),

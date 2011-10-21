@@ -187,8 +187,6 @@ struct ProcData
 
     GtkUIManager    *uimanager;
     GtkActionGroup  *action_group;
-    GtkWidget       *statusbar;
-    gint            tip_message_cid;
     GtkWidget       *tree;
     GtkWidget       *loadavg;
     GtkWidget       *endprocessbutton;
