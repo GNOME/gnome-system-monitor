@@ -742,8 +742,6 @@ load_graph_change_speed (LoadGraph *graph,
 
     graph->speed = new_speed;
 
-    g_assert(graph->timer_index);
-
     if(graph->timer_index) {
         g_source_remove (graph->timer_index);
         graph->timer_index = g_timeout_add (graph->speed / graph->frames_per_unit,
