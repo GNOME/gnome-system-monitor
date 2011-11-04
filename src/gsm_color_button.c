@@ -48,6 +48,8 @@ struct _GSMColorButtonPrivate
   guint type;
   cairo_surface_t *image_buffer;
   gdouble highlight;
+  gboolean button_down;
+  gboolean in_button;
 };
 
 /* Properties */
@@ -94,7 +96,9 @@ static void gsm_color_button_state_changed (GtkWidget * widget,
 					    GtkStateType previous_state);
 static void gsm_color_button_style_set (GtkWidget * widget,
 					GtkStyle * previous_style);
-static gint gsm_color_button_clicked (GtkWidget * widget,
+static gint gsm_color_button_pressed (GtkWidget * widget,
+				      GdkEventButton * event);
+static gint gsm_color_button_released (GtkWidget * widget,
 				      GdkEventButton * event);
 static gboolean gsm_color_button_enter_notify (GtkWidget * widget,
 					       GdkEventCrossing * event);
@@ -181,7 +185,8 @@ gsm_color_button_class_init (GSMColorButtonClass * klass)
   widget_class->realize = gsm_color_button_realize;
   widget_class->unrealize = gsm_color_button_unrealize;
   widget_class->style_set = gsm_color_button_style_set;
-  widget_class->button_release_event = gsm_color_button_clicked;
+  widget_class->button_release_event = gsm_color_button_released;
+  widget_class->button_press_event = gsm_color_button_pressed;
   widget_class->enter_notify_event = gsm_color_button_enter_notify;
   widget_class->leave_notify_event = gsm_color_button_leave_notify;
 
@@ -482,13 +487,10 @@ static void
 gsm_color_button_size_allocate (GtkWidget * widget,
 				GtkAllocation * allocation)
 {
-  GSMColorButton *color_button;
-
   g_return_if_fail (widget != NULL || allocation != NULL);
   g_return_if_fail (GSM_IS_COLOR_BUTTON (widget));
 
   gtk_widget_set_allocation (widget, allocation);
-  color_button = GSM_COLOR_BUTTON (widget);
 
   if (gtk_widget_get_realized (widget))
     {
@@ -620,6 +622,8 @@ gsm_color_button_init (GSMColorButton * color_button)
   color_button->priv->type = GSMCP_TYPE_CPU;
   color_button->priv->image_buffer = NULL;
   color_button->priv->title = g_strdup (_("Pick a Color")); 	/* default title */
+  color_button->priv->in_button = FALSE;
+  color_button->priv->button_down = FALSE;
 
   gtk_drag_dest_set (GTK_WIDGET (color_button),
 		     GTK_DEST_DEFAULT_MOTION |
@@ -761,11 +765,34 @@ gsm_color_button_clicked (GtkWidget * widget, GdkEventButton * event)
   return 0;
 }
 
+static gint
+gsm_color_button_pressed (GtkWidget * widget, GdkEventButton * event)
+{
+  if ( (event->type == GDK_BUTTON_PRESS) && (event->button == 1) )
+    {
+      GSMColorButton *color_button = GSM_COLOR_BUTTON (widget);
+      color_button->priv->button_down = TRUE;
+    }
+  return 0;
+}
+
+static gint
+gsm_color_button_released (GtkWidget * widget, GdkEventButton * event)
+{
+  GSMColorButton *color_button = GSM_COLOR_BUTTON (widget);
+  if (color_button->priv->button_down && color_button->priv->in_button)
+    gsm_color_button_clicked (widget, event);
+  color_button->priv->button_down = FALSE;
+  return 0;
+}
+
+
 static gboolean
 gsm_color_button_enter_notify (GtkWidget * widget, GdkEventCrossing * event)
 {
   GSMColorButton *color_button = GSM_COLOR_BUTTON (widget);
   color_button->priv->highlight = 1.0;
+  color_button->priv->in_button = TRUE;
   gtk_widget_queue_draw(widget);
   return FALSE;
 }
@@ -775,6 +802,7 @@ gsm_color_button_leave_notify (GtkWidget * widget, GdkEventCrossing * event)
 {
   GSMColorButton *color_button = GSM_COLOR_BUTTON (widget);
   color_button->priv->highlight = 0;
+  color_button->priv->in_button = FALSE;
   gtk_widget_queue_draw(widget);
   return FALSE;
 }
