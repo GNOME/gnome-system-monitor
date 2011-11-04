@@ -67,7 +67,9 @@ procdialog_create_kill_dialog (ProcData *procdata, int signal)
 
     if (signal == SIGKILL) {
         /*xgettext: primary alert message*/
-        primary = _("Kill the selected process?");
+        primary = g_strdup_printf (_("Kill the selected process »%s« (PID: %u)?"),
+                                   procdata->selected_process->name,
+                                   procdata->selected_process->pid);
         /*xgettext: secondary alert message*/
         secondary = _("Killing a process may destroy data, break the "
                       "session or introduce a security risk. "
@@ -76,7 +78,9 @@ procdialog_create_kill_dialog (ProcData *procdata, int signal)
     }
     else {
         /*xgettext: primary alert message*/
-        primary = _("End the selected process?");
+        primary = g_strdup_printf (_("End the selected process »%s« (PID: %u)?"),
+                                   procdata->selected_process->name,
+                                   procdata->selected_process->pid);
         /*xgettext: secondary alert message*/
         secondary = _("Ending a process may destroy data, break the "
                       "session or introduce a security risk. "
@@ -90,6 +94,8 @@ procdialog_create_kill_dialog (ProcData *procdata, int signal)
                                                 GTK_BUTTONS_NONE,
                                                 "%s",
                                                 primary);
+    g_free (primary);
+
     gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (kill_alert_dialog),
                                               "%s",
                                               secondary);
@@ -162,7 +168,8 @@ procdialog_create_renice_dialog (ProcData *procdata)
     GtkWidget *hscale;
     GtkWidget *button;
     GtkWidget *icon;
-    gchar *text;
+    gchar     *text;
+    gchar     *dialog_title;
 
     if (renice_dialog)
         return;
@@ -170,10 +177,14 @@ procdialog_create_renice_dialog (ProcData *procdata)
     if (!info)
         return;
 
-    dialog = gtk_dialog_new_with_buttons (_("Change Priority"), NULL,
+    dialog_title = g_strdup_printf (_("Change Priority of Process »%s« (PID: %u)"),
+                                    info->name, info->pid);
+    dialog = gtk_dialog_new_with_buttons (dialog_title, NULL,
                                           GTK_DIALOG_DESTROY_WITH_PARENT,
                                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                           NULL);
+    g_free (dialog_title);
+
     renice_dialog = dialog;
     gtk_window_set_resizable (GTK_WINDOW (renice_dialog), FALSE);
     gtk_container_set_border_width (GTK_CONTAINER (renice_dialog), 5);
