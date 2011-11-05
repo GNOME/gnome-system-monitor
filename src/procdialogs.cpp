@@ -346,6 +346,7 @@ public:
     static gboolean callback(GtkWidget *widget, GdkEventFocus *event, gpointer data)
     {
         SpinButtonUpdater* updater = static_cast<SpinButtonUpdater*>(data);
+        gtk_spin_button_update(GTK_SPIN_BUTTON(widget));
         updater->update(GTK_SPIN_BUTTON(widget));
         return FALSE;
     }
