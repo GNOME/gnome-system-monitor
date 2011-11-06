@@ -445,7 +445,7 @@ void
 procman_save_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child_schema)
 {
     GtkTreeModel *model;
-    GList *it, *columns;
+    GList *columns;
     gint sort_col;
     GtkSortType order;
 
@@ -462,31 +462,6 @@ procman_save_tree_state (GSettings *settings, GtkWidget *tree, const gchar *chil
     }
 
     columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree));
-
-    if(!g_strcmp0(child_schema, "proctree"))
-    {
-        for(it = columns; it; it = it->next)
-        {
-            GtkTreeViewColumn *column;
-            gboolean visible;
-            gint width;
-            gchar *key;
-            int id;
-
-            column = static_cast<GtkTreeViewColumn*>(it->data);
-            id = gtk_tree_view_column_get_sort_column_id (column);
-            visible = gtk_tree_view_column_get_visible (column);
-            width = gtk_tree_view_column_get_width (column);
-
-            key = g_strdup_printf ("col-%d-width", id);
-            g_settings_set_int (pt_settings, key, width);
-            g_free (key);
-
-            key = g_strdup_printf ("col-%d-visible", id);
-            g_settings_set_boolean (pt_settings, key, visible);
-            g_free (key);
-        }
-    }
 
     if(!g_strcmp0(child_schema, "proctree") || !g_strcmp0(child_schema, "disktreenew"))
     {

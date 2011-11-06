@@ -377,6 +377,9 @@ field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
     GtkTreeIter iter;
     GtkTreeViewColumn *column;
     gboolean toggled;
+    GSettings *settings = g_settings_get_child (ProcData::get_instance()->settings, "proctree");
+    gchar *key;
+    int id;
 
     if (!path)
         return;
@@ -388,6 +391,12 @@ field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
 
     gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, !toggled, -1);
     gtk_tree_view_column_set_visible (column, !toggled);
+
+    id = gtk_tree_view_column_get_sort_column_id (column);
+
+    key = g_strdup_printf ("col-%d-visible", id);
+    g_settings_set_boolean (settings, key, !toggled);
+    g_free (key);
 
     gtk_tree_path_free (path);
 
