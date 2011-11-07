@@ -229,8 +229,14 @@ create_sys_view (ProcData *procdata)
     GtkWidget *color_picker;
     GtkWidget *mem_legend_box, *net_legend_box;
     LoadGraph *cpu_graph, *mem_graph, *net_graph;
-    gint i;
 
+    gint i;
+    gchar *title_text;
+    gchar *label_text;
+    gchar *title_template;
+
+    // Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
+    title_template = g_strdup(_("Pick a Color for '%s'"));
 
     vbox = gtk_vbox_new (FALSE, 18);
 
@@ -277,7 +283,6 @@ create_sys_view (ProcData *procdata)
 
     for (i=0;i<procdata->config.num_cpus; i++) {
         GtkWidget *temp_hbox;
-        gchar *text;
 
         temp_hbox = gtk_hbox_new (FALSE, 0);
         gtk_table_attach(GTK_TABLE(cpu_table), temp_hbox,
@@ -296,13 +301,16 @@ create_sys_view (ProcData *procdata)
         gtk_box_pack_start (GTK_BOX (temp_hbox), color_picker, FALSE, TRUE, 0);
         gtk_widget_set_size_request(GTK_WIDGET(color_picker), 32, -1);
         if(procdata->config.num_cpus == 1) {
-            text = g_strdup (_("CPU"));
+            label_text = g_strdup (_("CPU"));
         } else {
-            text = g_strdup_printf (_("CPU%d"), i+1);
+            label_text = g_strdup_printf (_("CPU%d"), i+1);
         }
-        label = gtk_label_new (text);
+        title_text = g_strdup_printf(title_template, label_text);
+        label = gtk_label_new (label_text);
+        gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
+        g_free(title_text);
         gtk_box_pack_start (GTK_BOX (temp_hbox), label, FALSE, FALSE, 6);
-        g_free (text);
+        g_free (label_text);
 
         cpu_label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (cpu_label), 0.0, 0.5);
@@ -350,12 +358,17 @@ create_sys_view (ProcData *procdata)
     gtk_box_pack_start (GTK_BOX (mem_legend_box), table,
                         TRUE, TRUE, 0);
 
+    label_text = g_strdup(_("Memory"));
     color_picker = load_graph_get_mem_color_picker(mem_graph);
     g_signal_connect (G_OBJECT (color_picker), "color_set",
                       G_CALLBACK (cb_mem_color_changed), procdata);
+    title_text = g_strdup_printf(title_template, label_text);
+    gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
+    g_free(title_text);
     gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 2, GTK_SHRINK, GTK_SHRINK, 0, 0);
 
-    label = gtk_label_new (_("Memory"));
+    label = gtk_label_new (label_text);
+    g_free(label_text);
     gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
     gtk_table_attach (GTK_TABLE (table), label, 1, 7, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
@@ -376,12 +389,17 @@ create_sys_view (ProcData *procdata)
     gtk_box_pack_start (GTK_BOX (mem_legend_box), table,
                         TRUE, TRUE, 0);
 
+    label_text = g_strdup(_("Swap"));
     color_picker = load_graph_get_swap_color_picker(mem_graph);
     g_signal_connect (G_OBJECT (color_picker), "color_set",
                       G_CALLBACK (cb_swap_color_changed), procdata);
+    title_text = g_strdup_printf(title_template, label_text);
+    gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
+    g_free(title_text);
     gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 2, GTK_SHRINK, GTK_SHRINK, 0, 0);
 
-    label = gtk_label_new (_("Swap"));
+    label = gtk_label_new (label_text);
+    g_free(label_text);
     gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
     gtk_table_attach (GTK_TABLE (table), label, 1, 7, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
@@ -435,13 +453,19 @@ create_sys_view (ProcData *procdata)
     gtk_box_pack_start (GTK_BOX (net_legend_box), table,
                         TRUE, TRUE, 0);
 
+    label_text = g_strdup(_("Receiving"));
+
     color_picker = gsm_color_button_new (
         &net_graph->colors.at(0), GSMCP_TYPE_NETWORK_IN);
     g_signal_connect (G_OBJECT (color_picker), "color_set",
                       G_CALLBACK (cb_net_in_color_changed), procdata);
+    title_text = g_strdup_printf(title_template, label_text);
+    gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
+    g_free(title_text);
     gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 2, GTK_SHRINK, GTK_SHRINK, 0, 0);
 
-    label = gtk_label_new (_("Receiving"));
+    label = gtk_label_new (label_text);
+    g_free(label_text);
     gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
     gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
@@ -490,13 +514,19 @@ create_sys_view (ProcData *procdata)
     gtk_box_pack_start (GTK_BOX (net_legend_box), table,
                         TRUE, TRUE, 0);
 
+    label_text = g_strdup(_("Sending"));
+
     color_picker = gsm_color_button_new (
         &net_graph->colors.at(1), GSMCP_TYPE_NETWORK_OUT);
     g_signal_connect (G_OBJECT (color_picker), "color_set",
                       G_CALLBACK (cb_net_out_color_changed), procdata);
+    title_text = g_strdup_printf(title_template, label_text);
+    gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
+    g_free(title_text);
     gtk_table_attach (GTK_TABLE (table), color_picker, 0, 1, 0, 2, GTK_SHRINK, GTK_SHRINK, 0, 0);
 
-    label = gtk_label_new (_("Sending"));
+    label = gtk_label_new (label_text);
+    g_free(label_text);
     gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
     gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
@@ -541,6 +571,7 @@ create_sys_view (ProcData *procdata)
     gtk_table_attach (GTK_TABLE (table), spacer, 3, 4, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
     procdata->net_graph = net_graph;
+    g_free(title_template);
 
     return vbox;
 }
