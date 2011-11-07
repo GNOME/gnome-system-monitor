@@ -526,6 +526,7 @@ static GtkWidget*
 add_row(GtkTable * table, const char * label, const char * value, int row)
 {
     GtkWidget *header = gtk_label_new(label);
+    gtk_label_set_selectable(GTK_LABEL(header), TRUE);
     gtk_misc_set_alignment(GTK_MISC(header), 0.0, 0.5);
     gtk_table_attach(
         table, header,
@@ -534,6 +535,7 @@ add_row(GtkTable * table, const char * label, const char * value, int row)
         );
 
     GtkWidget *label_widget = gtk_label_new(value);
+    gtk_label_set_selectable(GTK_LABEL(label_widget), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label_widget), 0.0, 0.5);
     gtk_table_attach(
         table, label_widget,
@@ -609,6 +611,7 @@ procman_create_sysinfo_view(void)
     unsigned table_count = 0;
 
     distro_release_label = gtk_label_new("???");
+    gtk_label_set_selectable(GTK_LABEL(distro_release_label), TRUE);
     gtk_misc_set_alignment(GTK_MISC(distro_release_label), 0.0, 0.5);
     gtk_table_attach(
         GTK_TABLE(distro_table), distro_release_label,
@@ -620,6 +623,7 @@ procman_create_sysinfo_view(void)
 
     markup = g_strdup_printf(_("Kernel %s"), data->kernel.c_str());
     header = gtk_label_new(markup);
+    gtk_label_set_selectable(GTK_LABEL(header), TRUE);
     g_free(markup);
     gtk_misc_set_alignment(GTK_MISC(header), 0.0, 0.5);
     gtk_table_attach(
@@ -633,6 +637,7 @@ procman_create_sysinfo_view(void)
     {
         markup = g_strdup_printf(_("GNOME %s"), data->gnome_version.c_str());
         header = gtk_label_new(markup);
+        gtk_label_set_selectable(GTK_LABEL(header), TRUE);
         g_free(markup);
         gtk_misc_set_alignment(GTK_MISC(header), 0.0, 0.5);
         gtk_table_attach(
