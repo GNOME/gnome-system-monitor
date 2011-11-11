@@ -34,6 +34,7 @@
 #include "settings-keys.h"
 #include "procman_gnomesu.h"
 #include "procman_gksu.h"
+#include "cgroups.h"
 
 static GtkWidget *renice_dialog = NULL;
 static GtkWidget *prefs_dialog = NULL;
@@ -465,10 +466,15 @@ create_field_page(GtkWidget *tree, const char* text)
         GtkTreeIter iter;
         const gchar *title;
         gboolean visible;
+        gint column_id;
 
         title = gtk_tree_view_column_get_title (column);
         if (!title)
             title = _("Icon");
+
+        column_id = gtk_tree_view_column_get_sort_column_id(column);
+        if ((column_id == COL_CGROUP) && (!cgroups_enabled()))
+            continue;
 
         visible = gtk_tree_view_column_get_visible (column);
 

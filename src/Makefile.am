@@ -25,6 +25,7 @@ gnome_system_monitor_SOURCES = \
 	defaulttable.h \
 	disks.cpp disks.h \
 	selinux.h selinux.cpp \
+	cgroups.h cgroups.cpp \
 	procman_gnomesu.h procman_gnomesu.cpp \
 	procman_gksu.h procman_gksu.cpp \
 	sysinfo.cpp sysinfo.h \

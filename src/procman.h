@@ -168,6 +168,7 @@ class ProcInfo
     gchar           *arguments;
 
     gchar           *security_context;
+    gchar           *cgroup_name;
 
     const guint     pid;
     guint           ppid;

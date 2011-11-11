@@ -43,6 +43,7 @@ enum
     COL_ARGS,
     COL_MEM,
     COL_WCHAN,
+    COL_CGROUP,
     COL_PIXBUF,
     COL_POINTER,
     COL_TOOLTIP,
