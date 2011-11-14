@@ -228,7 +228,7 @@ socket_filename (const char *prefix)
     const char *tmpdir;
 
     pattern = g_strdup_printf ("%s.%s.*", prefix, g_get_user_name ());
-    tmpdir = g_get_tmp_dir ();
+    tmpdir = g_get_user_runtime_dir ();
     filename = find_file_with_pattern (tmpdir, pattern);
     if (filename == NULL)
     {
