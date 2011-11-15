@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-05 00:08+0300\n"
-"PO-Revision-Date: 2011-09-05 00:08+0300\n"
+"POT-Creation-Date: 2011-11-16 02:40+0300\n"
+"PO-Revision-Date: 2011-11-16 02:40+0300\n"
 "Last-Translator: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
 "Language: be\n"
@@ -17,7 +17,7 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:160
-#: ../src/interface.cpp:619 ../src/procman.cpp:689
+#: ../src/interface.cpp:595 ../src/procman.cpp:664
 msgid "System Monitor"
 msgstr "Сістэмны назіральнік"
 
@@ -44,7 +44,7 @@ msgstr "Прыстасаванне"
 msgid "Directory"
 msgstr "Каталог"
 
-#: ../src/disks.cpp:301 ../src/gsm_color_button.c:216 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:301 ../src/gsm_color_button.c:221 ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "Тып"
 
@@ -89,43 +89,43 @@ msgstr "%d %b, %k:%M"
 msgid "%b %d %Y"
 msgstr "%d %b, %Y"
 
-#: ../src/gsm_color_button.c:193
+#: ../src/gsm_color_button.c:198
 msgid "Fraction"
 msgstr "Частка"
 
-#: ../src/gsm_color_button.c:194
-msgid "Percentage full for pie colour pickers"
+#: ../src/gsm_color_button.c:199
+msgid "Percentage full for pie color pickers"
 msgstr ""
 
-#: ../src/gsm_color_button.c:201
+#: ../src/gsm_color_button.c:206
 msgid "Title"
 msgstr "Загаловак"
 
-#: ../src/gsm_color_button.c:202
+#: ../src/gsm_color_button.c:207
 msgid "The title of the color selection dialog"
 msgstr "Загаловак дыялогавага акенца выбару колеру"
 
-#: ../src/gsm_color_button.c:203 ../src/gsm_color_button.c:622
+#: ../src/gsm_color_button.c:208 ../src/gsm_color_button.c:624
 msgid "Pick a Color"
 msgstr "Выбраць колер"
 
-#: ../src/gsm_color_button.c:209
+#: ../src/gsm_color_button.c:214
 msgid "Current Color"
 msgstr "Бягучы колер"
 
-#: ../src/gsm_color_button.c:210
+#: ../src/gsm_color_button.c:215
 msgid "The selected color"
 msgstr "Выбраны колер"
 
-#: ../src/gsm_color_button.c:217
+#: ../src/gsm_color_button.c:222
 msgid "Type of color picker"
 msgstr "Тып дыялогавага акенца выбару колеру"
 
-#: ../src/gsm_color_button.c:545
+#: ../src/gsm_color_button.c:547
 msgid "Received invalid color data\n"
 msgstr "Атрыманыя хібныя даныя колеру\n"
 
-#: ../src/gsm_color_button.c:643
+#: ../src/gsm_color_button.c:647
 msgid "Click to set graph colors"
 msgstr "Пстрыкніце для настройкі колераў графіка"
 
@@ -175,7 +175,7 @@ msgstr "_Працягнуць працэс"
 msgid "Continue process if stopped"
 msgstr "Працягнуць прыпынены працэс"
 
-#: ../src/interface.cpp:67 ../src/procdialogs.cpp:84
+#: ../src/interface.cpp:67 ../src/procdialogs.cpp:88
 msgid "_End Process"
 msgstr "_Закончыць працэс"
 
@@ -183,7 +183,7 @@ msgstr "_Закончыць працэс"
 msgid "Force process to finish normally"
 msgstr "Прымусіць працэс карэктна закончыць працу"
 
-#: ../src/interface.cpp:69 ../src/procdialogs.cpp:75
+#: ../src/interface.cpp:69 ../src/procdialogs.cpp:77
 msgid "_Kill Process"
 msgstr "За_біць працэс"
 
@@ -192,8 +192,8 @@ msgid "Force process to finish immediately"
 msgstr "Прымусіць працэс неадкладна закончыць працу"
 
 #: ../src/interface.cpp:71
-msgid "_Change Priority..."
-msgstr "З_мяніць прыярытэт..."
+msgid "_Change Priority…"
+msgstr "_Змяніць прыярытэт..."
 
 #: ../src/interface.cpp:72
 msgid "Change the order of priority of process"
@@ -276,70 +276,75 @@ msgstr "Паказаць толькі працэсы, якія належаць 
 msgid "End _Process"
 msgstr "_Закончыць працэс"
 
-#: ../src/interface.cpp:244
+#. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
+#: ../src/interface.cpp:239
+#, c-format
+msgid "Pick a Color for '%s'"
+msgstr "Выбар колеру для \"%s\""
+
+#: ../src/interface.cpp:250
 msgid "CPU History"
 msgstr "Гісторыя выкарыстання працэсара"
 
-#: ../src/interface.cpp:299
+#: ../src/interface.cpp:304
 msgid "CPU"
 msgstr "Працэсар"
 
-#: ../src/interface.cpp:301
+#: ../src/interface.cpp:306
 #, c-format
 msgid "CPU%d"
 msgstr "Працэсар%d"
 
-#: ../src/interface.cpp:319
+#: ../src/interface.cpp:327
 msgid "Memory and Swap History"
 msgstr "Гісторыя выкарыстання памяці і своп-прасторы"
 
-#: ../src/interface.cpp:358 ../src/proctable.cpp:225
+#: ../src/interface.cpp:361 ../src/proctable.cpp:247
 msgid "Memory"
 msgstr "Памяць"
 
-#: ../src/interface.cpp:384
+#: ../src/interface.cpp:392
 msgid "Swap"
 msgstr "Своп"
 
-#: ../src/interface.cpp:405
+#: ../src/interface.cpp:423
 msgid "Network History"
 msgstr "Гісторыя выкарыстання сеткі"
 
-#: ../src/interface.cpp:444
+#: ../src/interface.cpp:456
 msgid "Receiving"
 msgstr "Атрыманне"
 
-#: ../src/interface.cpp:465
+#: ../src/interface.cpp:489
 msgid "Total Received"
 msgstr "Колькасць атрыманага"
 
-#: ../src/interface.cpp:499
+#: ../src/interface.cpp:517
 msgid "Sending"
 msgstr "Пасылка"
 
-#: ../src/interface.cpp:521
+#: ../src/interface.cpp:551
 msgid "Total Sent"
 msgstr "Колькасць пасланага"
 
 #. procman_create_sysinfo_view();
-#: ../src/interface.cpp:690
+#: ../src/interface.cpp:660
 msgid "System"
 msgstr "Сістэма"
 
-#: ../src/interface.cpp:694 ../src/procdialogs.cpp:518
+#: ../src/interface.cpp:664 ../src/procdialogs.cpp:539
 msgid "Processes"
 msgstr "Працэсы"
 
-#: ../src/interface.cpp:698 ../src/procdialogs.cpp:631
+#: ../src/interface.cpp:668 ../src/procdialogs.cpp:652
 msgid "Resources"
 msgstr "Рэсурсы"
 
-#: ../src/interface.cpp:702 ../src/procdialogs.cpp:695
-#: ../src/procdialogs.cpp:699
+#: ../src/interface.cpp:672 ../src/procdialogs.cpp:716
 msgid "File Systems"
 msgstr "Файлавыя сістэмы"
 
-#: ../src/load-graph.cpp:155
+#: ../src/load-graph.cpp:164
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
@@ -347,11 +352,15 @@ msgstr[0] "%u секунда"
 msgstr[1] "%u секунды"
 msgstr[2] "%u секунд"
 
+#: ../src/load-graph.cpp:342
+msgid "not available"
+msgstr "адсутнічае"
+
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:332
+#: ../src/load-graph.cpp:345
 #, c-format
-msgid "%s (%.1f %%) of %s"
-msgstr "%s (%.1f %%) з %s"
+msgid "%s (%.1f%%) of %s"
+msgstr "%s (%.1f%%) з %s"
 
 #: ../src/lsof.cpp:124
 #, c-format
@@ -505,16 +514,16 @@ msgid ""
 msgstr "0: сістэмная інфармацыя, 1: спіс працэсаў, 2: рэсурсы, 3: спіс дыскаў"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:2
-msgid "Default graph cpu color"
-msgstr "Прадвызначаны колер графіка выкарыстання працэсара"
+msgid "Default graph CPU color"
+msgstr "Прадвызначаны колер графіка працэсара"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
 msgid "Default graph incoming network traffic color"
 msgstr "Прадвызначаны колер графіка ўваходнага сеткавага трафіка"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
-msgid "Default graph mem color"
-msgstr "Прадвызначаны колер графіка выкарыстання памяці"
+msgid "Default graph memory color"
+msgstr "Прадвызначаны колер графіка памяці"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
 msgid "Default graph outgoing network traffic color"
@@ -542,8 +551,9 @@ msgstr "Пераключыць рэжым згладжанага абнаўле�
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
 msgid ""
-"If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu usage "
-"is divided by the total number of CPUs. Else it operates in 'Irix mode'."
+"If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
+"is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
+"mode'."
 msgstr ""
 "Калі ўключана, system-monitor дзейнічае ў \"рэжыме Solaris\", у якім "
 "узровень выкарыстання задачай працэсара дзеліцца на агульную колькасць "
@@ -583,68 +593,68 @@ msgid "Show process 'CPU %' column on startup"
 msgstr "Пры запуску паказваць слупок \"Працэсар %\""
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
-msgid "Show process 'CPU time' column on startup"
+msgid "Show process 'CPU Time' column on startup"
 msgstr "Пры запуску паказваць слупок \"Працэсарны час\""
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+msgid "Show process 'Commend Line' column on startup"
+msgstr "Пры запуску паказваць слупок \"Загад\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
+msgid "Show process 'Memory' column on startup"
+msgstr "Пры запуску паказваць слупок \"Памяць\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
+msgid "Show process 'Name' column on startup"
+msgstr "Пры запуску паказваць слупок \"Назва\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
+msgid "Show process 'Nice' column on startup"
+msgstr "Пры запуску паказваць слупок \"Nice\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
 msgid "Show process 'PID' column on startup"
 msgstr "Пры запуску паказваць слупок \"PID\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
+msgid "Show process 'Resident Memory' column on startup"
+msgstr "Пры запуску паказваць слупок \"Рэзідэнтная памяць\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
 msgid "Show process 'SELinux security context' column on startup"
 msgstr "Пры запуску паказваць слупок \"Кантэкст бяспекі SELinux\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
+msgid "Show process 'Shared Memory' column on startup"
+msgstr "Пры запуску паказваць слупок \"Супольная памяць\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
+msgid "Show process 'Started' column on startup"
+msgstr "Пры запуску паказваць слупок \"Час запуску\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
+msgid "Show process 'Status' column on startup"
+msgstr "Пры запуску паказваць слупок \"Стан\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
+msgid "Show process 'User' column on startup"
+msgstr "Пры запуску паказваць слупок \"Карыстальнік\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
+msgid "Show process 'Virtual Memory' column on startup"
+msgstr "Пры запуску паказваць слупок \"Віртуальная памяць\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
 msgid "Show process 'Waiting Channel' column on startup"
 msgstr "Пры запуску паказваць слупок \"Пункт чакання\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
-msgid "Show process 'X server memory' column on startup"
-msgstr "Пры запуску паказваць слупок \"Памяць X-сервера\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
-msgid "Show process 'arguments' column on startup"
-msgstr "Пры запуску паказваць слупок \"Аргументы\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
-msgid "Show process 'estimated memory usage' column on startup"
-msgstr "Пры запуску паказваць слупок \"Занятая памяць\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
-msgid "Show process 'name' column on startup"
-msgstr "Пры запуску паказваць слупок \"Назва\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
-msgid "Show process 'nice' column on startup"
-msgstr "Пры запуску паказваць слупок \"Nice\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
-msgid "Show process 'owner' column on startup"
-msgstr "Пры запуску паказваць слупок \"Уласнік\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
-msgid "Show process 'resident memory' column on startup"
-msgstr "Пры запуску паказваць слупок \"Рэзідэнтная памяць\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
-msgid "Show process 'shared memory' column on startup"
-msgstr "Пры запуску паказваць слупок \"Супольная памяць\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
-msgid "Show process 'start time' column on startup"
-msgstr "Пры запуску паказваць слупок \"Час запуску\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
-msgid "Show process 'status' column on startup"
-msgstr "Пры запуску паказваць слупок \"Стан\""
-
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
-msgid "Show process 'virtual memory' column on startup"
-msgstr "Пры запуску паказваць слупок \"Віртуальная памяць\""
+msgid "Show process 'Writable Memory' column on startup"
+msgstr "Пры запуску паказваць слупок \"Запісвальная памяць\""
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
-msgid "Show process 'writable memory' column on startup"
-msgstr "Пры запуску паказваць слупок \"Запісвальная памяць\""
+msgid "Show process 'X Server Memory' column on startup"
+msgstr "Пры запуску паказваць слупок \"Памяць X-сервера\""
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
 msgid "Show process dependencies in tree form"
@@ -671,14 +681,14 @@ msgid "Time in milliseconds between updates of the process view"
 msgstr "Інтэрвал у мілісекундах паміж абнаўленнямі ў рэжыме прагляду працэсаў"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
-msgid "Whether information about all filesystems should be displayed"
+msgid "Whether information about all file systems should be displayed"
 msgstr "Ці трэба паказваць інфармацыю аб усіх файлавых сістэмах"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
 msgid ""
-"Whether to display information about all filesystems (including types like "
+"Whether to display information about all file systems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
-"filesystems."
+"file systems."
 msgstr ""
 "Ці трэба паказваць інфармацыю аб усіх файлавых сістэмах (у тым ліку такіх "
 "тыпаў, як autofs ці procfs). Гэта опцыя можа прыдацца ў выпадку патрэбы ў "
@@ -690,73 +700,73 @@ msgid "Width of process 'CPU %' column"
 msgstr "Шырыня слупка \"Працэсар %\""
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
-msgid "Width of process 'CPU time' column"
+msgid "Width of process 'CPU Time' column"
 msgstr "Шырыня слупка \"Працэсарны час\""
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
+msgid "Width of process 'Command Line' column"
+msgstr "Шырыня слупка \"Загад\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
+msgid "Width of process 'Memory' column"
+msgstr "Шырыня слупка \"Памяць\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
+msgid "Width of process 'Name' column"
+msgstr "Шырыня слупка \"Назва\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
+msgid "Width of process 'Nice' column"
+msgstr "Шырыня слупка \"Nice\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
 msgid "Width of process 'PID' column"
 msgstr "Шырыня слупка \"PID\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
-msgid "Width of process 'SELinux security context' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
+msgid "Width of process 'Resident Memory' column"
+msgstr "Шырыня слупка \"Рэзідэнтная памяць\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
+msgid "Width of process 'SELinux Security Context' column"
 msgstr "Шырыня слупка \"Кантэкст бяспекі SELinux\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
+msgid "Width of process 'Shared Memory' column"
+msgstr "Шырыня слупка \"Супольная памяць\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
+msgid "Width of process 'Started' column"
+msgstr "Шырыня слупка \"Час запуску\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
+msgid "Width of process 'Status' column"
+msgstr "Шырыня слупка \"Стан\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
+msgid "Width of process 'User' column"
+msgstr "Шырыня слупка \"Карыстальнік\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
+msgid "Width of process 'Virtual Memory' column"
+msgstr "Шырыня слупка \"Віртуальная памяць\""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
 msgid "Width of process 'Waiting Channel' column"
 msgstr "Шырыня слупка \"Пункт чакання\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
-msgid "Width of process 'X server memory' column"
-msgstr "Шырыня слупка \"Памяць X-сервера\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
-msgid "Width of process 'arguments' column"
-msgstr "Шырыня слупка \"Аргументы\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
-msgid "Width of process 'estimated memory usage' column"
-msgstr "Шырыня слупка \"Занятая памяць\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
-msgid "Width of process 'name' column"
-msgstr "Шырыня слупка \"Назва\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
-msgid "Width of process 'nice' column"
-msgstr "Шырыня слупка \"Nice\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
-msgid "Width of process 'owner' column"
-msgstr "Шырыня слупка \"Уласнік\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
-msgid "Width of process 'resident memory' column"
-msgstr "Шырыня слупка \"Рэзідэнтная памяць\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
-msgid "Width of process 'shared memory' column"
-msgstr "Шырыня слупка \"Супольная памяць\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
-msgid "Width of process 'start time' column"
-msgstr "Шырыня слупка \"Час запуску\""
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
-msgid "Width of process 'status' column"
-msgstr "Шырыня слупка \"Стан\""
-
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
-msgid "Width of process 'virtual memory' column"
-msgstr "Шырыня слупка \"Віртуальная памяць\""
+msgid "Width of process 'Writable Memory' column"
+msgstr "Шырыня слупка \"Запісвальная памяць\""
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
-msgid "Width of process 'writable memory' column"
-msgstr "Шырыня слупка \"Запісвальная памяць\""
+msgid "Width of process 'X Server Memory' column"
+msgstr "Шырыня слупка \"Памяць X-сервера\""
 
 #: ../src/procactions.cpp:75
 #, c-format
 msgid ""
-"Cannot change the priority of process with pid %d to %d.\n"
+"Cannot change the priority of process with PID %d to %d.\n"
 "%s"
 msgstr ""
 "Не ўдалося змяніць прыярытэт працэсу (PID %d) на %d.\n"
@@ -765,7 +775,7 @@ msgstr ""
 #: ../src/procactions.cpp:155
 #, c-format
 msgid ""
-"Cannot kill process with pid %d with signal %d.\n"
+"Cannot kill process with PID %d with signal %d.\n"
 "%s"
 msgstr ""
 "Не ўдалося забіць працэс (PID %d) сігналам %d.\n"
@@ -773,69 +783,72 @@ msgstr ""
 
 #. xgettext: primary alert message
 #: ../src/procdialogs.cpp:70
-msgid "Kill the selected process?"
-msgstr "Забіць вылучаны працэс?"
+#, c-format
+msgid "Kill the selected process »%s« (PID: %u)?"
+msgstr "Забіць вылучаны працэс \"%s\" (PID: %u)?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:72
+#: ../src/procdialogs.cpp:74
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
-"security risk. Only unresponding processes should be killed."
+"security risk. Only unresponsive processes should be killed."
 msgstr ""
 "Забойства працэсу можа знішчыць даныя, пашкодзіць сеанс або стварыць рызыку "
 "небяспекі. Варта забіваць толькі тыя працэсы, якія не адказваюць на запыты."
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:79
-msgid "End the selected process?"
-msgstr "Закончыць вылучаны працэс?"
+#: ../src/procdialogs.cpp:81
+#, c-format
+msgid "End the selected process »%s« (PID: %u)?"
+msgstr "Закончыць вылучаны працэс \"%s\" (PID: %u)?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:81
+#: ../src/procdialogs.cpp:85
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
-"risk. Only unresponding processes should be ended."
+"risk. Only unresponsive processes should be ended."
 msgstr ""
 "Заканчэнне працэсу можа знішчыць даныя, пашкодзіць сеанс або стварыць рызыку "
 "небяспекі. Варта заканчваць толькі тыя працэсы, якія не адказваюць на запыты."
 
-#: ../src/procdialogs.cpp:115
+#: ../src/procdialogs.cpp:121
 msgid "(Very High Priority)"
 msgstr "(Вельмі высокі прыярытэт)"
 
-#: ../src/procdialogs.cpp:117
+#: ../src/procdialogs.cpp:123
 msgid "(High Priority)"
 msgstr "(Высокі прыярытэт)"
 
-#: ../src/procdialogs.cpp:119
+#: ../src/procdialogs.cpp:125
 msgid "(Normal Priority)"
 msgstr "(Звычайны прыярытэт)"
 
-#: ../src/procdialogs.cpp:121
+#: ../src/procdialogs.cpp:127
 msgid "(Low Priority)"
 msgstr "(Нізкі прыярытэт)"
 
-#: ../src/procdialogs.cpp:123
+#: ../src/procdialogs.cpp:129
 msgid "(Very Low Priority)"
 msgstr "(Вельмі нізкі прыярытэт)"
 
-#: ../src/procdialogs.cpp:173
-msgid "Change Priority"
-msgstr "Змяніць прыярытэт"
+#: ../src/procdialogs.cpp:180
+#, c-format
+msgid "Change Priority of Process »%s« (PID: %u)"
+msgstr "Змяненне прыярытэту працэсу \"%s\" (PID %u)"
 
-#: ../src/procdialogs.cpp:181
+#: ../src/procdialogs.cpp:192
 msgid "Change _Priority"
 msgstr "_Змяніць прыярытэт"
 
-#: ../src/procdialogs.cpp:204
+#: ../src/procdialogs.cpp:215
 msgid "_Nice value:"
 msgstr "_Значэнне Nice:"
 
-#: ../src/procdialogs.cpp:220
+#: ../src/procdialogs.cpp:231
 msgid "Note:"
 msgstr "Увага:"
 
-#: ../src/procdialogs.cpp:221
+#: ../src/procdialogs.cpp:232
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -843,134 +856,134 @@ msgstr ""
 "Прыярытэт працэсу вызначаецца значэннем \"Nice\". Ніжэйшае значэнне \"Nice\" "
 "адпавядае вышэйшаму прыярытэту."
 
-#: ../src/procdialogs.cpp:450
+#: ../src/procdialogs.cpp:471
 msgid "Icon"
 msgstr "Значок"
 
-#: ../src/procdialogs.cpp:495
+#: ../src/procdialogs.cpp:516
 msgid "System Monitor Preferences"
 msgstr "Настройкі сістэмнага назіральніка"
 
-#: ../src/procdialogs.cpp:525
+#: ../src/procdialogs.cpp:546 ../src/procdialogs.cpp:720
 msgid "Behavior"
 msgstr "Паводзіны"
 
-#: ../src/procdialogs.cpp:544 ../src/procdialogs.cpp:657
-#: ../src/procdialogs.cpp:718
+#: ../src/procdialogs.cpp:565 ../src/procdialogs.cpp:678
+#: ../src/procdialogs.cpp:739
 msgid "_Update interval in seconds:"
 msgstr "Інтэрвал _абнаўлення ў секундах:"
 
-#: ../src/procdialogs.cpp:569
+#: ../src/procdialogs.cpp:590
 msgid "Enable _smooth refresh"
 msgstr "_Уключыць згладжанае абнаўленне"
 
-#: ../src/procdialogs.cpp:582
+#: ../src/procdialogs.cpp:603
 msgid "Alert before ending or _killing processes"
 msgstr "Папярэджваць аб небяспецы перад _забойствам працэсаў"
 
-#: ../src/procdialogs.cpp:595
+#: ../src/procdialogs.cpp:616
 msgid "Divide CPU usage by CPU count"
 msgstr "Дзяліць узровень выкарыстання працэсараў на іх колькасць"
 
-#: ../src/procdialogs.cpp:596
+#: ../src/procdialogs.cpp:617
 msgid "Solaris mode"
 msgstr "Рэжым Solaris"
 
-#: ../src/procdialogs.cpp:613 ../src/procdialogs.cpp:752
+#: ../src/procdialogs.cpp:634 ../src/procdialogs.cpp:773
 msgid "Information Fields"
 msgstr "Інфармацыйныя графы"
 
-#: ../src/procdialogs.cpp:626
+#: ../src/procdialogs.cpp:647
 msgid "Process i_nformation shown in list:"
 msgstr "Інфармацыя аб працэсах, _якая паказваецца ў іх спісе:"
 
-#: ../src/procdialogs.cpp:638
+#: ../src/procdialogs.cpp:659
 msgid "Graphs"
 msgstr "Графікі"
 
-#: ../src/procdialogs.cpp:677
+#: ../src/procdialogs.cpp:698
 msgid "Show network speed in bits"
 msgstr "Вымяраць скорасць сеткі ў бітах"
 
-#: ../src/procdialogs.cpp:738
-msgid "Show _all filesystems"
-msgstr "Паказваць _усе файлавыя сістэмы"
+#: ../src/procdialogs.cpp:759
+msgid "Show _all file systems"
+msgstr "_Паказваць усе файлавыя сістэмы"
 
-#: ../src/procdialogs.cpp:765
+#: ../src/procdialogs.cpp:786
 msgid "File system i_nformation shown in list:"
 msgstr "Інфармацыя _аб файлавых сістэмах, якая паказваецца ў іх спісе:"
 
-#: ../src/procman.cpp:644
+#: ../src/procman.cpp:619
 msgid "A simple process and system monitor."
 msgstr "Зручная прылада для назірання за працэсамі і сістэмай."
 
-#: ../src/proctable.cpp:210
+#: ../src/proctable.cpp:232
 msgid "Process Name"
 msgstr "Назва працэсу"
 
-#: ../src/proctable.cpp:211
+#: ../src/proctable.cpp:233
 msgid "User"
 msgstr "Карыстальнік"
 
-#: ../src/proctable.cpp:212
+#: ../src/proctable.cpp:234
 msgid "Status"
 msgstr "Стан"
 
-#: ../src/proctable.cpp:213
+#: ../src/proctable.cpp:235
 msgid "Virtual Memory"
 msgstr "Віртуальная памяць"
 
-#: ../src/proctable.cpp:214
+#: ../src/proctable.cpp:236
 msgid "Resident Memory"
 msgstr "Рэзідэнтная памяць"
 
-#: ../src/proctable.cpp:215
+#: ../src/proctable.cpp:237
 msgid "Writable Memory"
 msgstr "Запісвальная памяць"
 
-#: ../src/proctable.cpp:216
+#: ../src/proctable.cpp:238
 msgid "Shared Memory"
 msgstr "Супольная памяць"
 
-#: ../src/proctable.cpp:217
+#: ../src/proctable.cpp:239
 msgid "X Server Memory"
 msgstr "Памяць X-сервера"
 
-#: ../src/proctable.cpp:218
+#: ../src/proctable.cpp:240
 #, no-c-format
 msgid "% CPU"
 msgstr "Працэсар %"
 
-#: ../src/proctable.cpp:219
+#: ../src/proctable.cpp:241
 msgid "CPU Time"
 msgstr "Працэсарны час"
 
-#: ../src/proctable.cpp:220
+#: ../src/proctable.cpp:242
 msgid "Started"
 msgstr "Запушчаны"
 
-#: ../src/proctable.cpp:221
+#: ../src/proctable.cpp:243
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.cpp:222
+#: ../src/proctable.cpp:244
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:223
+#: ../src/proctable.cpp:245
 msgid "Security Context"
 msgstr "Кантэкст бяспекі"
 
-#: ../src/proctable.cpp:224
+#: ../src/proctable.cpp:246
 msgid "Command Line"
 msgstr "Загадны радок"
 
 #. xgettext: wchan, see ps(1) or top(1)
-#: ../src/proctable.cpp:227
+#: ../src/proctable.cpp:249
 msgid "Waiting Channel"
 msgstr "Пункт чакання"
 
-#: ../src/proctable.cpp:944
+#: ../src/proctable.cpp:968
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Сярэдняя нагрузка за апошнія 1, 5, 15 хвілін: %0.2f, %0.2f, %0.2f"
@@ -980,42 +993,42 @@ msgstr "Сярэдняя нагрузка за апошнія 1, 5, 15 хвіл�
 msgid "Release %s"
 msgstr "Выданне %s"
 
-#: ../src/sysinfo.cpp:621
+#: ../src/sysinfo.cpp:624
 #, c-format
 msgid "Kernel %s"
 msgstr "Ядро %s"
 
-#: ../src/sysinfo.cpp:634
+#: ../src/sysinfo.cpp:638
 #, c-format
 msgid "GNOME %s"
 msgstr "GNOME %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:648
+#: ../src/sysinfo.cpp:653
 #, c-format
 msgid "<b>Hardware</b>"
 msgstr "<b>Абсталяванне</b>"
 
-#: ../src/sysinfo.cpp:653
+#: ../src/sysinfo.cpp:658
 msgid "Memory:"
 msgstr "Памяць:"
 
-#: ../src/sysinfo.cpp:660
+#: ../src/sysinfo.cpp:665
 #, c-format
 msgid "Processor %d:"
 msgstr "Працэсар %d:"
 
-#: ../src/sysinfo.cpp:665
+#: ../src/sysinfo.cpp:670
 msgid "Processor:"
 msgstr "Працэсар:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:677
+#: ../src/sysinfo.cpp:682
 #, c-format
 msgid "<b>System Status</b>"
 msgstr "<b>Стан сістэмы</b>"
 
-#: ../src/sysinfo.cpp:683
+#: ../src/sysinfo.cpp:688
 msgid "Available disk space:"
 msgstr "Вольная дыскавая прастора:"
 
@@ -1085,23 +1098,23 @@ msgstr "%.1f Тбайт"
 
 #: ../src/util.cpp:170
 #, c-format
-msgid "%.1f kbit"
-msgstr "%.1f кбіт"
+msgid "%.3g kbit"
+msgstr "%.3g кбіт"
 
 #: ../src/util.cpp:171
 #, c-format
-msgid "%.1f Mbit"
-msgstr "%.1f Мбіт"
+msgid "%.3g Mbit"
+msgstr "%.3g Мбіт"
 
 #: ../src/util.cpp:172
 #, c-format
-msgid "%.1f Gbit"
-msgstr "%.1f Гбіт"
+msgid "%.3g Gbit"
+msgstr "%.3g Гбіт"
 
 #: ../src/util.cpp:173
 #, c-format
-msgid "%.1f Tbit"
-msgstr "%.1f Тбіт"
+msgid "%.3g Tbit"
+msgstr "%.3g Тбіт"
 
 #: ../src/util.cpp:188
 #, c-format
