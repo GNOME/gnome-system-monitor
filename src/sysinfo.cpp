@@ -201,8 +201,8 @@ namespace {
 
             xmlXPathFreeContext(context);
             xmlFreeDoc(document);
-
-            this->gnome_version = values[0] + '.' + values[1] + '.' + values[2];
+            if (!values[0].empty() && !values[1].empty() && !values[2].empty())
+                this->gnome_version = values[0] + '.' + values[1] + '.' + values[2];
         }
     };
 
