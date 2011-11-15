@@ -134,7 +134,7 @@ void draw_background(LoadGraph *graph) {
             pango_cairo_show_layout (cr, layout);
         } else {
             // operation orders matters so it's 0 if i == num_bars
-            caption = g_strdup_printf("%d %%", 100 - i * (100 / num_bars));
+            caption = g_strdup_printf("%d%%", 100 - i * (100 / num_bars));
             pango_layout_set_text (layout, caption, -1);
             pango_layout_get_extents (layout, NULL, &extents);
             cairo_move_to (cr, graph->indent - 1.0 * extents.width / PANGO_SCALE + 20, y - 1.0 * extents.height / PANGO_SCALE / 2);
@@ -342,7 +342,7 @@ namespace
             text = g_strdup(_("not available"));
         } else {
             // xgettext: 540MiB (53 %) of 1.0 GiB
-            text = g_strdup_printf(_("%s (%.1f %%) of %s"), used_text, 100.0 * percent, total_text);
+            text = g_strdup_printf(_("%s (%.1f%%) of %s"), used_text, 100.0 * percent, total_text);
         }
         gtk_label_set_text(label, text);
         g_free(used_text);

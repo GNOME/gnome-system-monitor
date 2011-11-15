@@ -73,7 +73,7 @@ procdialog_create_kill_dialog (ProcData *procdata, int signal)
         /*xgettext: secondary alert message*/
         secondary = _("Killing a process may destroy data, break the "
                       "session or introduce a security risk. "
-                      "Only unresponding processes should be killed.");
+                      "Only unresponsive processes should be killed.");
         button_text = _("_Kill Process");
     }
     else {
@@ -84,7 +84,7 @@ procdialog_create_kill_dialog (ProcData *procdata, int signal)
         /*xgettext: secondary alert message*/
         secondary = _("Ending a process may destroy data, break the "
                       "session or introduce a security risk. "
-                      "Only unresponding processes should be ended.");
+                      "Only unresponsive processes should be ended.");
         button_text = _("_End Process");
     }
 
@@ -756,7 +756,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 
     hbox2 = gtk_hbox_new (FALSE, 6);
     gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
-    check_button = gtk_check_button_new_with_mnemonic (_("Show _all filesystems"));
+    check_button = gtk_check_button_new_with_mnemonic (_("Show _all file systems"));
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
                                   procdata->config.show_all_fs);
     g_signal_connect (G_OBJECT (check_button), "toggled",

@@ -68,7 +68,7 @@ static const GtkActionEntry menu_entries[] =
       N_("Force process to finish normally"), G_CALLBACK (cb_end_process) },
     { "KillProcess", NULL, N_("_Kill Process"), "<control>K",
       N_("Force process to finish immediately"), G_CALLBACK (cb_kill_process) },
-    { "ChangePriority", NULL, N_("_Change Priority..."), "<control>N",
+    { "ChangePriority", NULL, N_("_Change Priority…"), "<control>N",
       N_("Change the order of priority of process"), G_CALLBACK (cb_renice) },
     { "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL,
       N_("Configure the application"), G_CALLBACK (cb_edit_preferences) },

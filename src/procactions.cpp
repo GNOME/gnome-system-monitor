@@ -72,7 +72,7 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 
     /* failed */
     error_msg = g_strdup_printf (
-        _("Cannot change the priority of process with pid %d to %d.\n"
+        _("Cannot change the priority of process with PID %d to %d.\n"
           "%s"),
         info->pid, args->nice_value, g_strerror(saved_errno));
 
@@ -152,7 +152,7 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
 
     /* failed */
     error_msg = g_strdup_printf (
-        _("Cannot kill process with pid %d with signal %d.\n"
+        _("Cannot kill process with PID %d with signal %d.\n"
           "%s"),
         info->pid, args->signal, g_strerror(saved_errno));
 
