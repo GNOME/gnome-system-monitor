@@ -580,7 +580,7 @@ void
 create_main_window (ProcData *procdata)
 {
     gint i;
-    gint width, height;
+    gint width, height, xpos, ypos;
     GtkWidget *app;
     GtkAction *action;
     GtkWidget *menubar;
@@ -606,7 +606,10 @@ create_main_window (ProcData *procdata)
 
     width = procdata->config.width;
     height = procdata->config.height;
+    xpos = procdata->config.xpos;
+    ypos = procdata->config.ypos;
     gtk_window_set_default_size (GTK_WINDOW (app), width, height);
+    gtk_window_move(GTK_WINDOW (app), xpos, ypos);
     gtk_window_set_resizable (GTK_WINDOW (app), TRUE);
 
     /* create the menubar */
