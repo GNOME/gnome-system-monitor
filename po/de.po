@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-11-09 22:51+0000\n"
-"PO-Revision-Date: 2011-11-13 17:12+0100\n"
+"POT-Creation-Date: 2011-11-15 09:02+0000\n"
+"PO-Revision-Date: 2011-11-18 14:36+0100\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -107,7 +107,8 @@ msgid "Fraction"
 msgstr "Anteil"
 
 #: ../src/gsm_color_button.c:199
-msgid "Percentage full for pie colour pickers"
+#, fuzzy
+msgid "Percentage full for pie color pickers"
 msgstr "Füllstand des Ringdiagramms"
 
 #: ../src/gsm_color_button.c:206
@@ -205,7 +206,7 @@ msgid "Force process to finish immediately"
 msgstr "Sofortiges Beenden eines Prozesses erzwingen"
 
 #: ../src/interface.cpp:71
-msgid "_Change Priority..."
+msgid "_Change Priority…"
 msgstr "_Priorität ändern …"
 
 #: ../src/interface.cpp:72
@@ -357,22 +358,22 @@ msgstr "Ressourcen"
 msgid "File Systems"
 msgstr "Dateisysteme"
 
-#: ../src/load-graph.cpp:155
+#: ../src/load-graph.cpp:164
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u Sekunde"
 msgstr[1] "%u Sekunden"
 
-#: ../src/load-graph.cpp:332
+#: ../src/load-graph.cpp:342
 msgid "not available"
 msgstr "Nicht verfügbar"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:335
+#: ../src/load-graph.cpp:345
 #, c-format
-msgid "%s (%.1f %%) of %s"
-msgstr "%s (%.1f %%) von %s"
+msgid "%s (%.1f%%) of %s"
+msgstr "%s (%.1f%%) von %s"
 
 #: ../src/lsof.cpp:124
 #, c-format
@@ -529,7 +530,7 @@ msgstr ""
 "Datenträgerliste"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:2
-msgid "Default graph cpu color"
+msgid "Default graph CPU color"
 msgstr "Farbvorgabe für den CPU-Graph"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
@@ -537,7 +538,7 @@ msgid "Default graph incoming network traffic color"
 msgstr "Farbvorgabe für den Graph des eingehenden Netzwerkverkehrs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
-msgid "Default graph mem color"
+msgid "Default graph memory color"
 msgstr "Farbvorgabe für den Speicher-Graph"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
@@ -566,14 +567,13 @@ msgstr "Sanfte Auffrischung aktivieren bzw. deaktivieren"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
 msgid ""
-"If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu usage "
-"is divided by the total number of CPUs. Else it operates in 'Irix mode'."
+"If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
+"is divided by the total number of CPUs. Otherwise, it operates in 'Irix mode'."
 msgstr ""
 "Falls dieser Schlüssel WAHR ist, so verwendet die Systemüberwachung den "
 "»Solaris-Modus«, in welchem die CPU-Last eines Auftrags durch die "
 "Gesamtanzahl der Prozessoren dividiert wird. Bei FALSCH wird der »Irix-Modus« "
-"verwendet, in welchem die CPU-Last eines Auftrags nicht durch die Anzahl der "
-"Prozessoren geteilt wird."
+"verwendet."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
 msgid "Main Window height"
@@ -697,15 +697,15 @@ msgid "Time in milliseconds between updates of the process view"
 msgstr "Zeit in Millisekunden zwischen den Aktualisierungen der Prozessliste"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
-msgid "Whether information about all filesystems should be displayed"
+msgid "Whether information about all file systems should be displayed"
 msgstr ""
 "Legt fest, ob Informationen über alle Dateisysteme angezeigt werden sollen"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
 msgid ""
-"Whether to display information about all filesystems (including types like "
+"Whether to display information about all file systems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
-"filesystems."
+"file systems."
 msgstr ""
 "Legt fest, ob Informationen über alle Dateisysteme angezeigt werden sollen. "
 "Dies schließt Dateisystemarten wie »autofs« und »procfs« mit ein. Es kann "
@@ -784,7 +784,7 @@ msgstr "Breite der Spalte »X-Server-Speicher«"
 #: ../src/procactions.cpp:75
 #, c-format
 msgid ""
-"Cannot change the priority of process with pid %d to %d.\n"
+"Cannot change the priority of process with PID %d to %d.\n"
 "%s"
 msgstr ""
 "Die Priorität des Prozesses mit der Prozesskennung %d konnte nicht auf %d "
@@ -794,7 +794,7 @@ msgstr ""
 #: ../src/procactions.cpp:155
 #, c-format
 msgid ""
-"Cannot kill process with pid %d with signal %d.\n"
+"Cannot kill process with PID %d with signal %d.\n"
 "%s"
 msgstr ""
 "Der Prozess mit der Prozesskennung %d konnte nicht mit dem Signal %d "
@@ -811,7 +811,7 @@ msgstr "Den gewählten Prozess »%s« abwürgen? (PID: %u)"
 #: ../src/procdialogs.cpp:74
 msgid ""
 "Killing a process may destroy data, break the session or introduce a security "
-"risk. Only unresponding processes should be killed."
+"risk. Only unresponsive processes should be killed."
 msgstr ""
 "Durch Abwürgen eines Prozesses können Daten zerstört, die laufende Sitzung "
 "unterbrochen oder ein Sicherheitsrisiko erzeugt werden. Es sollten nur "
@@ -827,7 +827,7 @@ msgstr "Den gewählten Prozess »%s« beenden? (PID: %u)"
 #: ../src/procdialogs.cpp:85
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
-"risk. Only unresponding processes should be ended."
+"risk. Only unresponsive processes should be ended."
 msgstr ""
 "Durch Beenden eines Prozesses können Daten zerstört, die laufende Sitzung "
 "unterbrochen oder ein Sicherheitsrisiko erzeugt werden. Es sollten nur "
@@ -928,7 +928,7 @@ msgid "Show network speed in bits"
 msgstr "Netzwerkgeschwindigkeit in Bits anzeigen"
 
 #: ../src/procdialogs.cpp:759
-msgid "Show _all filesystems"
+msgid "Show _all file systems"
 msgstr "_Alle Dateisysteme anzeigen"
 
 #: ../src/procdialogs.cpp:786
@@ -1162,3 +1162,5 @@ msgstr "<i>k.A.</i>"
 msgid "%s/s"
 msgstr "%s/s"
 
+#~ msgid "_Change Priority..."
+#~ msgstr "_Priorität ändern …"
