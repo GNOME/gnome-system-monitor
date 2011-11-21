@@ -1,5 +1,4 @@
 dnl Process this file with autoconf to produce a configure script.
-
 AC_PREREQ([2.63])
 
 AC_INIT([gnome-system-monitor],
@@ -11,8 +10,11 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([configure.ac])
 AC_CONFIG_MACRO_DIR([m4])
 
-AM_INIT_AUTOMAKE([1.11 no-dist-gzip dist-bzip2])
+AM_INIT_AUTOMAKE([1.11.1 no-dist-gzip dist-bzip2])
 AM_SILENT_RULES([yes])
+
+AM_MAINTAINER_MODE([enable])
+GNOME_MAINTAINER_MODE_DEFINES
 
 # Check For programs
 AC_PROG_CC

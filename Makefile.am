@@ -20,10 +20,31 @@ Applications_DATA = $(Applications_in_files:.desktop.in=.desktop)
 
 distuninstallcheck_listfiles = find . -type f -print | grep -v 'scrollkeeper'
 
+if MAINTAINER_MODE
+dist-hook: dist-changelog
+else
+dist-hook:
+endif
+
+.PHONY: dist-changelog
+
+dist-changelog:
+	$(AM_V_at)if git --git-dir=$(top_srcdir)/.git --work-tree=$(top_srcdir) \
+		log --no-merges --date=short --pretty='tformat:%cd  %an  <%ae>%n%n%s%n%n%b' a5b4b868024f89e07fb9e1bf35d94df60568d841.. | \
+	 $(SED)	-e '/^[12]...-[01].-[0123].  [^<>]*  <[^<>]*>$$/,/^$$/ b' \
+		-e '/[^	 ]/,/^[	 ]*$$/ !d' \
+		-e 's/^[	 ]*/	/' \
+		-e 's/^[	 ]*$$//' >.ChangeLog.tmp; \
+	then mv -f .ChangeLog.tmp "$(top_distdir)/ChangeLog"; \
+	else rm -f .ChangeLog.tmp; exit 1; fi
+
+dist_noinst_DATA = \
+	ChangeLog.pre-git
+
 DISTCLEANFILES = \
-  intltool-extract \
-  intltool-merge \
-  intltool-update \
-  gnome-system-monitor.desktop
+	intltool-extract              \
+	intltool-merge                \
+	intltool-update               \
+	gnome-system-monitor.desktop
 
 DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper
