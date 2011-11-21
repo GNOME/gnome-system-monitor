@@ -24,6 +24,7 @@
 
 #include <signal.h>
 #include <string.h>
+#include <stdio.h>
 
 #ifdef HAVE_SYSTEMD
 #include <systemd/sd-daemon.h>
@@ -396,37 +397,20 @@ field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
 
 }
 
-static GtkWidget *
-create_field_page(GtkWidget *tree, const char* text)
+static void
+create_field_page(GtkBuilder* builder, GtkWidget *tree, gchar *widgetname)
 {
-    GtkWidget *vbox;
-    GtkWidget *scrolled;
-    GtkWidget *label;
-    GtkWidget *treeview;
+    GtkTreeView *treeview;
     GList *it, *columns;
     GtkListStore *model;
     GtkTreeViewColumn *column;
     GtkCellRenderer *cell;
 
-    vbox = gtk_vbox_new (FALSE, 6);
-
-    label = gtk_label_new_with_mnemonic (text);
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-    gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
-
-    scrolled = gtk_scrolled_window_new (NULL, NULL);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
-                                    GTK_POLICY_AUTOMATIC,
-                                    GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled), GTK_SHADOW_IN);
-    gtk_box_pack_start (GTK_BOX (vbox), scrolled, TRUE, TRUE, 0);
-
+    treeview = GTK_TREE_VIEW (gtk_builder_get_object (builder, widgetname));
     model = gtk_list_store_new (3, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_POINTER);
 
-    treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
-    gtk_container_add (GTK_CONTAINER (scrolled), treeview);
+    gtk_tree_view_set_model (GTK_TREE_VIEW(treeview), GTK_TREE_MODEL(model));
     g_object_unref (G_OBJECT (model));
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label), treeview);
 
     column = gtk_tree_view_column_new ();
 
@@ -449,7 +433,6 @@ create_field_page(GtkWidget *tree, const char* text)
 
     gtk_tree_view_column_set_title (column, "Not Shown");
     gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
-    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
 
     columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree));
 
@@ -487,14 +470,11 @@ create_field_page(GtkWidget *tree, const char* text)
 
     g_list_free(columns);
 
-    return vbox;
 }
 
 void
 procdialog_create_preferences_dialog (ProcData *procdata)
 {
-    static GtkWidget *dialog = NULL;
-
     typedef SpinButtonUpdater SBU;
 
     static SBU interval_updater("update-interval");
@@ -502,81 +482,24 @@ procdialog_create_preferences_dialog (ProcData *procdata)
     static SBU disks_interval_updater("disks-interval");
 
     GtkWidget *notebook;
-    GtkWidget *proc_box;
-    GtkWidget *sys_box;
-    GtkWidget *main_vbox;
-    GtkWidget *vbox, *vbox2, *vbox3;
-    GtkWidget *hbox, *hbox2, *hbox3;
-    GtkWidget *label;
     GtkAdjustment *adjustment;
     GtkWidget *spin_button;
     GtkWidget *check_button;
-    GtkWidget *tab_label;
     GtkWidget *smooth_button;
-    GtkSizeGroup *size;
+    GtkBuilder *builder;
     gfloat update;
-    gchar *tmp;
 
     if (prefs_dialog)
         return;
 
-    size = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+    builder = gtk_builder_new();
+    gtk_builder_add_from_file (builder, "preferences.ui", NULL);
 
-    dialog = gtk_dialog_new_with_buttons (_("System Monitor Preferences"),
-                                          GTK_WINDOW (procdata->app),
-                                          GTK_DIALOG_DESTROY_WITH_PARENT,
-                                          GTK_STOCK_HELP, GTK_RESPONSE_HELP,
-                                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-                                          NULL);
-    /* FIXME: we should not declare the window size, but let it's   */
-    /* driven by window childs. The problem is that the fields list */
-    /* have to show at least 4 items to respect HIG. I don't know   */
-    /* any function to set list height by contents/items inside it. */
-    gtk_window_set_default_size (GTK_WINDOW (dialog), 400, 420);
-    gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
-    prefs_dialog = dialog;
+    prefs_dialog = GTK_WIDGET (gtk_builder_get_object (builder, "preferences_dialog"));
 
-    main_vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
-    gtk_box_set_spacing (GTK_BOX (main_vbox), 2);
+    notebook = GTK_WIDGET (gtk_builder_get_object (builder, "notebook"));
 
-    notebook = gtk_notebook_new ();
-    gtk_container_set_border_width (GTK_CONTAINER (notebook), 5);
-    gtk_box_pack_start (GTK_BOX (main_vbox), notebook, TRUE, TRUE, 0);
-
-    proc_box = gtk_vbox_new (FALSE, 18);
-    gtk_container_set_border_width (GTK_CONTAINER (proc_box), 12);
-    tab_label = gtk_label_new (_("Processes"));
-    gtk_widget_show (tab_label);
-    gtk_notebook_append_page (GTK_NOTEBOOK (notebook), proc_box, tab_label);
-
-    vbox = gtk_vbox_new (FALSE, 6);
-    gtk_box_pack_start (GTK_BOX (proc_box), vbox, FALSE, FALSE, 0);
-
-    tmp = g_strdup_printf ("<b>%s</b>", _("Behavior"));
-    label = gtk_label_new (NULL);
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-    gtk_label_set_markup (GTK_LABEL (label), tmp);
-    g_free (tmp);
-    gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-
-    hbox = gtk_hbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-    label = gtk_label_new ("    ");
-    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-
-    vbox2 = gtk_vbox_new (FALSE, 6);
-    gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
-
-    hbox2 = gtk_hbox_new (FALSE, 12);
-    gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
-
-    label = gtk_label_new_with_mnemonic (_("_Update interval in seconds:"));
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-    gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
-
-    hbox3 = gtk_hbox_new (FALSE, 6);
-    gtk_box_pack_start (GTK_BOX (hbox2), hbox3, TRUE, TRUE, 0);
+    spin_button = GTK_WIDGET (gtk_builder_get_object (builder, "processes_interval_spinner"));
 
     update = (gfloat) procdata->config.update_interval;
     adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0,
@@ -586,216 +509,69 @@ procdialog_create_preferences_dialog (ProcData *procdata)
                                                       1.0,
                                                       0);
 
-    spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
-    gtk_box_pack_start (GTK_BOX (hbox3), spin_button, FALSE, FALSE, 0);
+    gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON(spin_button), adjustment);
     g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
                       G_CALLBACK (SBU::callback), &interval_updater);
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label), spin_button);
 
-
-    hbox2 = gtk_hbox_new(FALSE, 6);
-    gtk_box_pack_start(GTK_BOX(vbox2), hbox2, FALSE, FALSE, 0);
-
-    smooth_button = gtk_check_button_new_with_mnemonic(_("Enable _smooth refresh"));
+    smooth_button = GTK_WIDGET (gtk_builder_get_object (builder, "smooth_button"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(smooth_button),
                                  g_settings_get_boolean(procdata->settings,
                                                         SmoothRefresh::KEY.c_str()));
     g_signal_connect(G_OBJECT(smooth_button), "toggled",
                      G_CALLBACK(smooth_refresh_toggled), procdata);
-    gtk_box_pack_start(GTK_BOX(hbox2), smooth_button, TRUE, TRUE, 0);
 
-
-
-    hbox2 = gtk_hbox_new (FALSE, 6);
-    gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
-
-    check_button = gtk_check_button_new_with_mnemonic (_("Alert before ending or _killing processes"));
+    check_button = GTK_WIDGET (gtk_builder_get_object (builder, "check_button"));
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
                                   procdata->config.show_kill_warning);
     g_signal_connect (G_OBJECT (check_button), "toggled",
                       G_CALLBACK (show_kill_dialog_toggled), procdata);
-    gtk_box_pack_start (GTK_BOX (hbox2), check_button, TRUE, TRUE, 0);
 
-
-
-
-    hbox2 = gtk_hbox_new(FALSE, 6);
-    gtk_box_pack_start(GTK_BOX(vbox2), hbox2, FALSE, FALSE, 0);
-
-    GtkWidget *solaris_button = gtk_check_button_new_with_mnemonic(_("Divide CPU usage by CPU count"));
+    GtkWidget *solaris_button = GTK_WIDGET (gtk_builder_get_object (builder, "solaris_button"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(solaris_button),
                                  g_settings_get_boolean(procdata->settings,
                                                         procman::settings::solaris_mode.c_str()));
     g_signal_connect(G_OBJECT(solaris_button), "toggled",
                      G_CALLBACK(solaris_mode_toggled), procdata);
-    gtk_box_pack_start(GTK_BOX(hbox2), solaris_button, TRUE, TRUE, 0);
 
-
-
-
-    hbox2 = gtk_hbox_new (FALSE, 6);
-    gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
-
-    vbox = gtk_vbox_new (FALSE, 6);
-    gtk_box_pack_start (GTK_BOX (proc_box), vbox, TRUE, TRUE, 0);
-
-    tmp = g_strdup_printf ("<b>%s</b>", _("Information Fields"));
-    label = gtk_label_new (NULL);
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-    gtk_label_set_markup (GTK_LABEL (label), tmp);
-    g_free (tmp);
-    gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-
-    hbox = gtk_hbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-
-    label = gtk_label_new ("    ");
-    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-
-    vbox2 = create_field_page (procdata->tree, _("Process i_nformation shown in list:"));
-    gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
-
-    sys_box = gtk_vbox_new (FALSE, 12);
-    gtk_container_set_border_width (GTK_CONTAINER (sys_box), 12);
-    tab_label = gtk_label_new (_("Resources"));
-    gtk_widget_show (tab_label);
-    gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label);
-
-    vbox = gtk_vbox_new (FALSE, 6);
-    gtk_box_pack_start (GTK_BOX (sys_box), vbox, FALSE, FALSE, 0);
-
-    tmp = g_strdup_printf ("<b>%s</b>", _("Graphs"));
-    label = gtk_label_new (NULL);
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-    gtk_label_set_markup (GTK_LABEL (label), tmp);
-    g_free (tmp);
-    gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
-
-    hbox = gtk_hbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-    label = gtk_label_new ("    ");
-    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-
-    vbox2 = gtk_vbox_new (FALSE, 6);
-    gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
-
-    hbox2 = gtk_hbox_new (FALSE, 12);
-    gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
-
-    label = gtk_label_new_with_mnemonic (_("_Update interval in seconds:"));
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-    gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
-    gtk_size_group_add_widget (size, label);
-
-    hbox3 = gtk_hbox_new (FALSE, 6);
-    gtk_box_pack_start (GTK_BOX (hbox2), hbox3, TRUE, TRUE, 0);
+    create_field_page (builder, procdata->tree, "processes_columns_treeview");
 
     update = (gfloat) procdata->config.graph_update_interval;
     adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.25,
                                                       100.0, 0.25, 1.0, 0);
-    spin_button = gtk_spin_button_new (adjustment, 1.0, 2);
+    spin_button = GTK_WIDGET (gtk_builder_get_object (builder, "resources_interval_spinner"));
+    gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON(spin_button), adjustment);
     g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
                       G_CALLBACK(SBU::callback),
                       &graph_interval_updater);
-    gtk_box_pack_start (GTK_BOX (hbox3), spin_button, FALSE, FALSE, 0);
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label), spin_button);
 
+    GtkWidget *bits_button = GTK_WIDGET (gtk_builder_get_object (builder, "bits_button"));
 
-    GtkWidget *bits_button;
-    bits_button = gtk_check_button_new_with_mnemonic(_("Show network speed in bits"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(bits_button),
                                  g_settings_get_boolean(procdata->settings,
                                                         procman::settings::network_in_bits.c_str()));
     g_signal_connect(G_OBJECT(bits_button), "toggled",
                      G_CALLBACK(network_in_bits_toggled), procdata);
-    gtk_box_pack_start(GTK_BOX(vbox2), bits_button, TRUE, TRUE, 0);
-
-
-
-    hbox2 = gtk_hbox_new (FALSE, 12);
-    gtk_box_pack_start (GTK_BOX (vbox2), hbox2, TRUE, TRUE, 0);
-
-    /*
-     * Devices
-     */
-    vbox = gtk_vbox_new (FALSE, 6);
-    gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-    tab_label = gtk_label_new (_("File Systems"));
-    gtk_widget_show (tab_label);
-    gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, tab_label);
-
-    tmp = g_strdup_printf ("<b>%s</b>", _("Behavior"));
-    label = gtk_label_new (NULL);
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-    gtk_label_set_markup (GTK_LABEL (label), tmp);
-    g_free (tmp);
-    gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-
-    hbox = gtk_hbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-    label = gtk_label_new ("    ");
-    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-
-    vbox2 = gtk_vbox_new (FALSE, 6);
-    gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
-
-    hbox2 = gtk_hbox_new (FALSE, 12);
-    gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
-
-    label = gtk_label_new_with_mnemonic (_("_Update interval in seconds:"));
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-    gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
-
-    hbox3 = gtk_hbox_new (FALSE, 6);
-    gtk_box_pack_start (GTK_BOX (hbox2), hbox3, TRUE, TRUE, 0);
 
     update = (gfloat) procdata->config.disks_update_interval;
     adjustment = (GtkAdjustment *) gtk_adjustment_new (update / 1000.0, 1.0,
                                                        100.0, 1.0, 1.0, 0);
-    spin_button = gtk_spin_button_new (adjustment, 1.0, 0);
-    gtk_box_pack_start (GTK_BOX (hbox3), spin_button, FALSE, FALSE, 0);
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label), spin_button);
+    spin_button = GTK_WIDGET (gtk_builder_get_object (builder, "devices_interval_spinner"));
+    gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON(spin_button), adjustment);
     g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
                       G_CALLBACK(SBU::callback),
                       &disks_interval_updater);
 
 
-    hbox2 = gtk_hbox_new (FALSE, 6);
-    gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
-    check_button = gtk_check_button_new_with_mnemonic (_("Show _all file systems"));
+    check_button = GTK_WIDGET (gtk_builder_get_object (builder, "all_devices_check"));
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
                                   procdata->config.show_all_fs);
     g_signal_connect (G_OBJECT (check_button), "toggled",
                       G_CALLBACK (show_all_fs_toggled), procdata);
-    gtk_box_pack_start (GTK_BOX (hbox2), check_button, FALSE, FALSE, 0);
 
+    create_field_page (builder, procdata->disk_list, "devices_columns_treeview");
 
-    vbox2 = gtk_vbox_new (FALSE, 6);
-    gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
-
-    label = gtk_label_new ("    ");
-    gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
-
-    tmp = g_strdup_printf ("<b>%s</b>", _("Information Fields"));
-    label = gtk_label_new (NULL);
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-    gtk_label_set_markup (GTK_LABEL (label), tmp);
-    g_free (tmp);
-    gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-
-    hbox = gtk_hbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-
-    label = gtk_label_new ("    ");
-    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-
-    vbox3 = create_field_page (procdata->disk_list, _("File system i_nformation shown in list:"));
-    gtk_box_pack_start (GTK_BOX (hbox), vbox3, TRUE, TRUE, 0);
-
-    gtk_widget_show_all (dialog);
-    g_signal_connect (G_OBJECT (dialog), "response",
+    gtk_widget_show_all (prefs_dialog);
+    g_signal_connect (G_OBJECT (prefs_dialog), "response",
                       G_CALLBACK (prefs_dialog_button_pressed), procdata);
 
     switch (procdata->config.current_tab) {
@@ -811,6 +587,8 @@ procdialog_create_preferences_dialog (ProcData *procdata)
             break;
 
     }
+    gtk_builder_connect_signals (builder, NULL);
+    g_object_unref (G_OBJECT (builder));
 }
 
 
