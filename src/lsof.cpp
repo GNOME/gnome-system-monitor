@@ -14,7 +14,7 @@
 #include <sstream>
 #include <iterator>
 
-#include "regex.h"
+#include <glibmm/regex.h>
 
 #include "procman.h"
 #include "lsof.h"
