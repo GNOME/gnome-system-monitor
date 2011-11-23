@@ -23,19 +23,21 @@ cgroups_enabled(void)
 void
 append_cgroup_name(char *line, gchar **current_cgroup_name)
 {
-    gchar *controller, *path, *tmp;
+    gchar *controller, *path, *tmp, *path_plus_space;
     int paren_offset, off, tmp_size;
 
     controller = g_strstr_len(line, -1, ":") + 1;
-    path = g_strstr_len(controller, -1, ":") + 1;
-    *(path - 1) = '\0';
-
-    //printf("append_cgroup_name, controller: %s path: %s\n", controller, path);
-
-    if (std::strcmp(path, "/") == 0)
+    if (!controller)
         return;
 
-    if (g_strstr_len(controller, -1, "name=systemd"))
+    path = g_strstr_len(controller, -1, ":") + 1;
+    if (!path)
+        return;
+
+    *(path - 1) = '\0';
+    g_strdelimit(controller, ",", '/');
+
+    if ((std::strcmp(path, "/") == 0) || (std::strncmp(controller, "name=", 5) == 0))
         return;
 
     if (*current_cgroup_name == NULL) {
@@ -43,9 +45,12 @@ append_cgroup_name(char *line, gchar **current_cgroup_name)
         return;
     }
 
-    if ((tmp = g_strstr_len(*current_cgroup_name, -1, path))) {
+    /* add a space to the end of the path string */
+    path_plus_space = g_strdup_printf("%s ", path);
+
+    if ((tmp = g_strstr_len(*current_cgroup_name, -1, path_plus_space))) {
         tmp_size = strlen(*current_cgroup_name) + strlen(controller) + 1;
-        paren_offset = g_strstr_len(tmp, -1, ")") - tmp;
+        paren_offset = g_strstr_len(tmp + strlen(path), -1, ")") - *current_cgroup_name;
         *(*current_cgroup_name + paren_offset) = '\0';
         tmp = (gchar *)g_strnfill(tmp_size, '\0');
         off = g_strlcat(tmp, *current_cgroup_name, tmp_size);
@@ -54,50 +59,128 @@ append_cgroup_name(char *line, gchar **current_cgroup_name)
         off += g_strlcat(tmp + off, controller, tmp_size);
         *(tmp + off) = ')';
         off++;
-        off += g_strlcat(tmp + off, *current_cgroup_name + paren_offset + 1, tmp_size);
-        *(*current_cgroup_name + paren_offset) = ')';
-    } else  {
-        tmp = g_strdup_printf("%s, %s (%s)", *current_cgroup_name, path, controller);
-    }
+        g_strlcat(tmp + off, *current_cgroup_name + paren_offset + 1, tmp_size);
+    } else
+        tmp = g_strdup_printf("%s, %s(%s)", *current_cgroup_name, path_plus_space, controller);
 
+    g_free(path_plus_space);
     g_free(*current_cgroup_name);
     *current_cgroup_name = tmp;
+}
+
+int
+check_cgroup_changed(gchar *line, gchar *current_cgroup_set)
+{
+    /* check if line is contained in current_cgroup_set */
+    gchar *controller, *path, *tmp, *found, *close_paren, *open_paren;
+    int ret = 0;
+
+    controller = g_strstr_len(line, -1, ":") + 1;
+    if (!controller)
+        return 1;
+
+    path = g_strstr_len(controller, -1, ":") + 1;
+    if (!path)
+        return 1;
+
+    *(path - 1) = '\0';
+
+    if (std::strncmp(controller, "name=", 5) == 0)
+        goto out;
+
+    /* if there are multiple controllers just report string has changed */
+    if (g_strstr_len(controller, -1, ",")) {
+        ret = 1;
+        goto out;
+    }
+
+    if (!current_cgroup_set) {
+        if (std::strcmp(path, "/") != 0)
+            ret = 1;
+        goto out;
+    }
+
+    /* special case for root cgroup */
+    tmp = current_cgroup_set;
+    if (std::strcmp(path, "/") == 0) {
+        while ((found = g_strstr_len(tmp, -1, controller))) {
+            close_paren = g_strstr_len(found, -1, ")");
+            open_paren = g_strstr_len(found, -1, "(");
+            if (close_paren) {
+                if (!open_paren || (close_paren < open_paren)) {
+                    ret = 1;
+                    goto out;
+                }
+            }
+            tmp = found + strlen(controller);
+        }
+        goto out;
+    }
+
+    tmp = current_cgroup_set;
+    while ((found = g_strstr_len(tmp, -1, path))) {
+            found = found + strlen(path);
+            close_paren = g_strstr_len(found, -1, ")");
+            if (*found == ' ') {
+                if (g_strstr_len(found + 1, close_paren - found, controller))
+                    goto out;
+            }
+            tmp = close_paren + 1;
+    }
+    ret = 1;
+out:
+    *(path - 1) = ':';
+    return ret;
 }
 
 void
 get_process_cgroup_info(ProcInfo *info)
 {
     gchar *path;
-    GFile *file;
-    GFileInputStream *input_stream;
-    GDataInputStream *data_stream;
-    char *line;
     gchar *cgroup_name = NULL;
+    int cgroups_changed = 0;
+    gchar *text;
+    char **lines;
+    int i;
 
     if (!cgroups_enabled())
         return;
 
     /* read out of /proc/pid/cgroup */
     path = g_strdup_printf("/proc/%d/cgroup", info->pid);
-    file = g_file_new_for_path(path);
-    if(!(input_stream = g_file_read(file, NULL, NULL))) {
+    if (!path)
+        return;
+    if(!g_file_get_contents(path, &text, NULL, NULL))
         goto out;
-    }
-    data_stream = g_data_input_stream_new(G_INPUT_STREAM(input_stream));
+    lines = g_strsplit(text, "\n", -1);
+    g_free(text);
+    if (!lines)
+        goto out;
 
-    while ((line = g_data_input_stream_read_line(data_stream, NULL, NULL, NULL))) {
-        append_cgroup_name(line, &cgroup_name);
-        g_free(line);
-    }
-    if (cgroup_name) {
-        if (info->cgroup_name) {
-            g_free(info->cgroup_name);
+    for (i = 0; lines[i] != NULL; i++) {
+        if (lines[i][0] == '\0')
+            continue;
+        if (check_cgroup_changed(lines[i], info->cgroup_name)) {
+            cgroups_changed = 1;
+            break;
         }
-        info->cgroup_name = cgroup_name;
     }
-    g_object_unref(data_stream);
-    g_object_unref(input_stream);
+
+    if (cgroups_changed) {
+        for (i = 0; lines[i] != NULL; i++) {
+            if (lines[i][0] == '\0')
+                continue;
+            append_cgroup_name(lines[i], &cgroup_name);
+        }
+        if (info->cgroup_name)
+            g_free(info->cgroup_name);
+        if (!cgroup_name)
+            info->cgroup_name = g_strdup("");
+        else
+            info->cgroup_name = cgroup_name;
+    }
+
+    g_strfreev(lines);
 out:
-    g_object_unref(file);
     g_free(path);
 }

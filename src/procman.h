@@ -126,6 +126,7 @@ MutableProcInfo()
     guint status;
     guint pcpu;
     gint nice;
+    gchar *cgroup_name;
 };
 
 
@@ -168,7 +169,6 @@ class ProcInfo
     gchar           *arguments;
 
     gchar           *security_context;
-    gchar           *cgroup_name;
 
     const guint     pid;
     guint           ppid;
