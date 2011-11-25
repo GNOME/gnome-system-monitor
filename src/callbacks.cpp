@@ -30,6 +30,7 @@
 #include "proctable.h"
 #include "util.h"
 #include "procactions.h"
+#include "procman.h"
 #include "procdialogs.h"
 #include "memmaps.h"
 #include "openfiles.h"
@@ -82,11 +83,26 @@ cb_edit_preferences (GtkAction *action, gpointer data)
 
 
 void
-cb_renice (GtkAction *action, gpointer data)
+cb_renice (GtkAction *action, GtkRadioAction *current, gpointer data)
 {
     ProcData * const procdata = static_cast<ProcData*>(data);
 
-    procdialog_create_renice_dialog (procdata);
+    gint selected = gtk_radio_action_get_current_value(current);
+
+    if (selected == CUSTOM_PRIORITY)
+    {
+       procdialog_create_renice_dialog (procdata);
+    } else {
+       gint new_nice_value = 0;
+       switch (selected) {
+           case VERY_HIGH_PRIORITY: new_nice_value = -20; break;
+           case HIGH_PRIORITY: new_nice_value = -5; break;
+           case NORMAL_PRIORITY: new_nice_value = 0; break;
+           case LOW_PRIORITY: new_nice_value = 5; break;
+           case VERY_LOW_PRIORITY: new_nice_value = 19; break;
+       }
+       renice(procdata, new_nice_value);
+    }
 }
 
 
@@ -297,7 +313,24 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
     */
     gtk_tree_selection_selected_foreach (procdata->selection, get_last_selected,
                                          &procdata->selected_process);
+    if (procdata->selected_process) {
+        gint value;
+        gint nice = procdata->selected_process->nice;
+        if (nice < -7)
+            value = VERY_HIGH_PRIORITY;
+        else if (nice < -2)
+            value = HIGH_PRIORITY;
+        else if (nice < 3)
+            value = NORMAL_PRIORITY;
+        else if (nice < 7)
+            value = LOW_PRIORITY;
+        else
+            value = VERY_LOW_PRIORITY;
 
+        GtkRadioAction* normal = GTK_RADIO_ACTION(gtk_action_group_get_action(procdata->action_group, "Normal"));
+
+        gtk_radio_action_set_current_value(normal, value);
+    }
     update_sensitivity(procdata);
 }
 

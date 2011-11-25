@@ -49,6 +49,15 @@ enum
     ACTIVE_PROCESSES
 };
 
+enum
+{
+    VERY_HIGH_PRIORITY,
+    HIGH_PRIORITY,
+    NORMAL_PRIORITY,
+    LOW_PRIORITY,
+    VERY_LOW_PRIORITY,
+    CUSTOM_PRIORITY
+};
 
 static const unsigned MIN_UPDATE_INTERVAL =   1 * 1000;
 static const unsigned MAX_UPDATE_INTERVAL = 100 * 1000;

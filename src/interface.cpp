@@ -68,8 +68,8 @@ static const GtkActionEntry menu_entries[] =
       N_("Force process to finish normally"), G_CALLBACK (cb_end_process) },
     { "KillProcess", NULL, N_("_Kill Process"), "<control>K",
       N_("Force process to finish immediately"), G_CALLBACK (cb_kill_process) },
-    { "ChangePriority", NULL, N_("_Change Priority…"), "<control>N",
-      N_("Change the order of priority of process"), G_CALLBACK (cb_renice) },
+    { "ChangePriority", NULL, N_("_Change Priority"), NULL,
+      N_("Change the order of priority of process"), NULL },
     { "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL,
       N_("Configure the application"), G_CALLBACK (cb_edit_preferences) },
 
@@ -106,6 +106,22 @@ static const GtkRadioActionEntry radio_menu_entries[] =
       N_("Show only user-owned processes"), MY_PROCESSES }
 };
 
+static const GtkRadioActionEntry priority_menu_entries[] =
+{
+    { "VeryHigh", NULL, N_("Very High"), NULL,
+      N_("Set process priority to very high"), VERY_HIGH_PRIORITY },
+    { "High", NULL, N_("High"), NULL,
+      N_("Set process priority to high"), HIGH_PRIORITY },
+    { "Normal", NULL, N_("Normal"), NULL,
+      N_("Set process priority to normal"), NORMAL_PRIORITY },
+    { "Low", NULL, N_("Low"), NULL,
+      N_("Set process priority to low"), LOW_PRIORITY },
+    { "VeryLow", NULL, N_("Very Low"), NULL,
+      N_("Set process priority to very low"), VERY_LOW_PRIORITY },
+    { "Custom", NULL, N_("Custom"), NULL,
+      N_("Set process priority manually"), CUSTOM_PRIORITY }
+};
+
 
 static const char ui_info[] =
     "  <menubar name=\"MenuBar\">"
@@ -120,7 +136,15 @@ static const char ui_info[] =
     "      <menuitem name=\"EditEndProcessMenu\" action=\"EndProcess\" />"
     "      <menuitem name=\"EditKillProcessMenu\" action=\"KillProcess\" />"
     "      <separator />"
-    "      <menuitem name=\"EditChangePriorityMenu\" action=\"ChangePriority\" />"
+    "      <menu name=\"EditChangePriorityMenu\" action=\"ChangePriority\" >"
+    "        <menuitem action=\"VeryHigh\" />"
+    "        <menuitem action=\"High\" />"
+    "        <menuitem action=\"Normal\" />"
+    "        <menuitem action=\"Low\" />"
+    "        <menuitem action=\"VeryLow\" />"
+    "        <separator />"
+    "        <menuitem action=\"Custom\"/>"
+    "      </menu>"
     "      <separator />"
     "      <menuitem name=\"EditPreferencesMenu\" action=\"Preferences\" />"
     "    </menu>"
@@ -148,7 +172,15 @@ static const char ui_info[] =
     "    <menuitem action=\"EndProcess\" />"
     "    <menuitem action=\"KillProcess\" />"
     "    <separator />"
-    "    <menuitem action=\"ChangePriority\" />"
+    "    <menu name=\"ChangePriorityMenu\" action=\"ChangePriority\" >"
+    "      <menuitem action=\"VeryHigh\" />"
+    "      <menuitem action=\"High\" />"
+    "      <menuitem action=\"Normal\" />"
+    "      <menuitem action=\"Low\" />"
+    "      <menuitem action=\"VeryLow\" />"
+    "      <separator />"
+    "      <menuitem action=\"Custom\"/>"
+    "    </menu>"
     "    <separator />"
     "    <menuitem action=\"MemoryMaps\" />"
     "    <menuitem action=\"OpenFiles\" />"
@@ -641,6 +673,13 @@ create_main_window (ProcData *procdata)
                                         G_N_ELEMENTS (radio_menu_entries),
                                         procdata->config.whose_process,
                                         G_CALLBACK(cb_radio_processes),
+                                        procdata);
+
+    gtk_action_group_add_radio_actions (procdata->action_group,
+                                        priority_menu_entries,
+                                        G_N_ELEMENTS (priority_menu_entries),
+                                        NORMAL_PRIORITY,
+                                        G_CALLBACK(cb_renice),
                                         procdata);
 
     gtk_ui_manager_insert_action_group (procdata->uimanager,
