@@ -44,6 +44,7 @@ enum
     COL_MEM,
     COL_WCHAN,
     COL_CGROUP,
+    COL_PRIORITY,
     COL_PIXBUF,
     COL_POINTER,
     COL_TOOLTIP,

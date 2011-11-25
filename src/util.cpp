@@ -210,6 +210,20 @@ procman::format_size(guint64 size, guint64 max_size, bool want_bits)
     }
 }
 
+gchar *
+procman::get_nice_level (gint nice)
+{
+    if (nice < -7)
+        return _("Very High");
+    else if (nice < -2)
+        return _("High");
+    else if (nice < 3)
+        return _("Normal");
+    else if (nice < 7)
+        return _("Low");
+    else
+        return _("Very Low");
+}
 
 
 gboolean
@@ -473,6 +487,37 @@ namespace procman
         g_object_set(renderer, "text", str, NULL);
     }
 
+    void priority_cell_data_func(GtkTreeViewColumn *, GtkCellRenderer *renderer,
+                             GtkTreeModel *model, GtkTreeIter *iter,
+                             gpointer user_data)
+    {
+        const guint index = GPOINTER_TO_UINT(user_data);
+
+        GValue value = { 0 };
+
+        gtk_tree_model_get_value(model, iter, index, &value);
+
+        gint priority = g_value_get_int(&value);
+
+        g_value_unset(&value);
+
+        g_object_set(renderer, "text", procman::get_nice_level(priority), NULL);
+
+    }
+
+    gint priority_compare_func(GtkTreeModel* model, GtkTreeIter* first,
+                            GtkTreeIter* second, gpointer user_data)
+    {
+        const guint index = GPOINTER_TO_UINT(user_data);
+        GValue value1 = { 0 };
+        GValue value2 = { 0 };
+        gtk_tree_model_get_value(model, first, index, &value1);
+        gtk_tree_model_get_value(model, second, index, &value2);
+        gint result = g_value_get_int(&value1) - g_value_get_int(&value2);
+        g_value_unset(&value1);
+        g_value_unset(&value2);
+        return result;
+    }
 
     template<>
     void tree_store_update<const char>(GtkTreeModel* model, GtkTreeIter* iter, int column, const char* new_value)

@@ -115,28 +115,15 @@ procdialog_create_kill_dialog (ProcData *procdata, int signal)
     gtk_widget_show_all (kill_alert_dialog);
 }
 
-static gchar *
-get_nice_level (gint nice)
-{
-    if (nice < -7)
-        return _("(Very High Priority)");
-    else if (nice < -2)
-        return _("(High Priority)");
-    else if (nice < 3)
-        return _("(Normal Priority)");
-    else if (nice < 7)
-        return _("(Low Priority)");
-    else
-        return _("(Very Low Priority)");
-}
-
 static void
 renice_scale_changed (GtkAdjustment *adj, gpointer data)
 {
     GtkWidget *label = GTK_WIDGET (data);
 
     new_nice_value = int(gtk_adjustment_get_value (adj));
-    gtk_label_set_text (GTK_LABEL (label), get_nice_level (new_nice_value));
+    gchar* text = g_strdup_printf(_("(%s Priority)"), procman::get_nice_level (new_nice_value));
+    gtk_label_set_text (GTK_LABEL (label), text);
+    g_free(text);
 
 }
 
@@ -224,10 +211,11 @@ procdialog_create_renice_dialog (ProcData *procdata)
     gtk_scale_set_digits (GTK_SCALE (hscale), 0);
     gtk_table_attach (GTK_TABLE (table), hscale, 1, 2, 0, 1,
                       static_cast<GtkAttachOptions>(GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
-
-    priority_label = gtk_label_new (get_nice_level (info->nice));
+    text = g_strdup_printf(_("(%s Priority)"), procman::get_nice_level (info->nice));
+    priority_label = gtk_label_new (text);
     gtk_table_attach (GTK_TABLE (table), priority_label, 1, 2, 1, 2,
                       GTK_FILL, GTK_FILL, 0, 0);
+    g_free(text);
 
     text = g_strconcat("<small><i><b>", _("Note:"), "</b> ",
                        _("The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."),

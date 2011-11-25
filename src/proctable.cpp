@@ -67,7 +67,6 @@ ProcInfo* ProcInfo::find(pid_t pid)
 
 
 
-
 static void
 set_proctree_reorderable(ProcData *procdata)
 {
@@ -249,6 +248,7 @@ proctable_new (ProcData * const procdata)
         /* xgettext: combined noun, the function the process is waiting in, see wchan ps(1) */
         N_("Waiting Channel"),
         N_("Control Group"),
+        N_("Priority"),
         NULL,
         "POINTER"
     };
@@ -279,6 +279,7 @@ proctable_new (ProcData * const procdata)
                                 G_TYPE_ULONG,       /* Memory       */
                                 G_TYPE_STRING,      /* wchan        */
                                 G_TYPE_STRING,      /* Cgroup       */
+                                G_TYPE_STRING,      /* Priority     */
                                 GDK_TYPE_PIXBUF,    /* Icon         */
                                 G_TYPE_POINTER,     /* ProcInfo     */
                                 G_TYPE_STRING       /* Sexy tooltip */
@@ -322,7 +323,7 @@ proctable_new (ProcData * const procdata)
     gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
 
 
-    for (i = COL_USER; i <= COL_CGROUP; i++) {
+    for (i = COL_USER; i <= COL_PRIORITY; i++) {
 
         GtkCellRenderer *cell;
         GtkTreeViewColumn *col;
@@ -377,7 +378,15 @@ proctable_new (ProcData * const procdata)
                                                         GUINT_TO_POINTER(i),
                                                         NULL);
                 break;
-
+            case COL_PRIORITY:
+                gtk_tree_view_column_set_cell_data_func(col, cell,
+                                                        &procman::priority_cell_data_func,
+                                                        GUINT_TO_POINTER(COL_NICE),
+                                                        NULL);
+                gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(model), i,
+                                                procman::priority_compare_func,
+                                                GUINT_TO_POINTER(COL_NICE), NULL);
+                break;
             default:
                 gtk_tree_view_column_set_attributes(col, cell, "text", i, NULL);
                 break;

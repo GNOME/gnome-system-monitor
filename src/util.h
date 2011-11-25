@@ -97,6 +97,12 @@ namespace procman
     void status_cell_data_func(GtkTreeViewColumn *col, GtkCellRenderer *renderer,
                                GtkTreeModel *model, GtkTreeIter *iter,
                                gpointer user_data);
+    void priority_cell_data_func(GtkTreeViewColumn *col, GtkCellRenderer *renderer,
+                               GtkTreeModel *model, GtkTreeIter *iter,
+                               gpointer user_data);
+    gint priority_compare_func(GtkTreeModel* model, GtkTreeIter* first,
+                            GtkTreeIter* second, gpointer user_data);
+
 
     template<typename T>
     void poison(T &t, char c)
@@ -138,6 +144,8 @@ namespace procman
     }
 
     gchar* format_size(guint64 size, guint64 max = 0, bool want_bits = false);
+
+    gchar* get_nice_level (gint nice);
 
     std::string format_rate(guint64 rate, guint64 max_rate = 0, bool want_bits = false);
 
