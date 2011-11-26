@@ -544,6 +544,12 @@ get_startup_timestamp ()
     return retval;
 }
 
+static void
+set_tab(GtkNotebook* notebook, gint tab, ProcData* procdata)
+{
+    gtk_notebook_set_current_page(notebook, tab);
+    cb_change_current_page(notebook, tab, procdata);
+}
 
 static void
 cb_server (const gchar *msg, gpointer user_data)
@@ -558,10 +564,20 @@ cb_server (const gchar *msg, gpointer user_data)
     g_assert (procdata != NULL);
 
     procman_debug("cb_server(%s)", msg);
-    if (msg != NULL && procman::SHOW_SYSTEM_TAB_CMD == msg) {
-        procman_debug("Changing to PROCMAN_TAB_SYSINFO via bacon message");
-        gtk_notebook_set_current_page(GTK_NOTEBOOK(procdata->notebook), PROCMAN_TAB_SYSINFO);
-        cb_change_current_page(GTK_NOTEBOOK(procdata->notebook), PROCMAN_TAB_SYSINFO, procdata);
+    if (msg != NULL) {
+        if (procman::SHOW_SYSTEM_TAB_CMD == msg) {
+            procman_debug("Changing to PROCMAN_TAB_SYSINFO via bacon message");
+            set_tab(GTK_NOTEBOOK(procdata->notebook), PROCMAN_TAB_SYSINFO, procdata);
+        } else if (procman::SHOW_PROCESSES_TAB_CMD == msg) {
+            procman_debug("Changing to PROCMAN_TAB_PROCESSES via bacon message");
+            set_tab(GTK_NOTEBOOK(procdata->notebook), PROCMAN_TAB_PROCESSES, procdata);
+        } else if (procman::SHOW_RESOURCES_TAB_CMD == msg) {
+            procman_debug("Changing to PROCMAN_TAB_RESOURCES via bacon message");
+            set_tab(GTK_NOTEBOOK(procdata->notebook), PROCMAN_TAB_RESOURCES, procdata);
+        } else if (procman::SHOW_FILE_SYSTEMS_TAB_CMD == msg) {
+            procman_debug("Changing to PROCMAN_TAB_DISKS via bacon message");
+            set_tab(GTK_NOTEBOOK(procdata->notebook), PROCMAN_TAB_DISKS, procdata);
+        }
     } else
         timestamp = strtoul(msg, NULL, 0);
 
@@ -603,8 +619,10 @@ init_volume_monitor(ProcData *procdata)
 namespace procman
 {
     const std::string SHOW_SYSTEM_TAB_CMD("SHOWSYSTAB");
+    const std::string SHOW_PROCESSES_TAB_CMD("SHOWPROCTAB");
+    const std::string SHOW_RESOURCES_TAB_CMD("SHOWRESTAB");
+    const std::string SHOW_FILE_SYSTEMS_TAB_CMD("SHOWFSTAB");
 }
-
 
 
 int
@@ -654,6 +672,15 @@ main (int argc, char *argv[])
         if (option_group.show_system_tab)
             bacon_message_connection_send(conn, procman::SHOW_SYSTEM_TAB_CMD.c_str());
 
+        if (option_group.show_processes_tab)
+            bacon_message_connection_send(conn, procman::SHOW_PROCESSES_TAB_CMD.c_str());
+
+        if (option_group.show_resources_tab)
+            bacon_message_connection_send(conn, procman::SHOW_RESOURCES_TAB_CMD.c_str());
+
+        if (option_group.show_file_systems_tab)
+            bacon_message_connection_send(conn, procman::SHOW_FILE_SYSTEMS_TAB_CMD.c_str());
+
         bacon_message_connection_send (conn, timestamp);
 
         gdk_notify_startup_complete ();
@@ -691,8 +718,16 @@ main (int argc, char *argv[])
 
     if (option_group.show_system_tab) {
         procman_debug("Starting with PROCMAN_TAB_SYSINFO by commandline request");
-        gtk_notebook_set_current_page(GTK_NOTEBOOK(procdata->notebook), PROCMAN_TAB_SYSINFO);
-        cb_change_current_page (GTK_NOTEBOOK(procdata->notebook), PROCMAN_TAB_SYSINFO, procdata);
+        set_tab(GTK_NOTEBOOK(procdata->notebook), PROCMAN_TAB_SYSINFO, procdata);
+    } else if (option_group.show_processes_tab) {
+        procman_debug("Starting with PROCMAN_TAB_PROCESSES by commandline request");
+        set_tab(GTK_NOTEBOOK(procdata->notebook), PROCMAN_TAB_PROCESSES, procdata);
+    } else if (option_group.show_resources_tab) {
+        procman_debug("Starting with PROCMAN_TAB_RESOURCES by commandline request");
+        set_tab(GTK_NOTEBOOK(procdata->notebook), PROCMAN_TAB_RESOURCES, procdata);
+    } else if (option_group.show_file_systems_tab) {
+        procman_debug("Starting with PROCMAN_TAB_DISKS by commandline request");
+        set_tab(GTK_NOTEBOOK(procdata->notebook), PROCMAN_TAB_DISKS, procdata);
     }
 
     gtk_widget_set_name(procdata->app, "gnome-system-monitor");
