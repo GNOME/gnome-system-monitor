@@ -11,9 +11,9 @@ msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-07-11 00:35+0000\n"
-"PO-Revision-Date: 2011-08-21 22:59+0800\n"
-"Last-Translator: Wind He <lofwind@gmail.com>\n"
+"POT-Creation-Date: 2011-11-20 12:55+0000\n"
+"PO-Revision-Date: 2011-11-19 20:56+0800\n"
+"Last-Translator: Wylmer Wang <wantinghard@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:160
-#: ../src/interface.cpp:619 ../src/procman.cpp:689
+#: ../src/interface.cpp:595 ../src/procman.cpp:671
 msgid "System Monitor"
 msgstr "系统监视器"
 
@@ -31,15 +31,18 @@ msgstr "查看当前进程及监视系统状态"
 
 #: ../src/argv.cpp:18
 msgid "Show the System tab"
-msgstr "显示系统标签"
+msgstr "显示系统标签页"
 
 #: ../src/callbacks.cpp:171
 msgid "translator-credits"
 msgstr ""
 "GNOME 简体中文翻译 <i18n-translation@lists.linux.net.cn>.\n"
-"He Qiangqiang <carton@263.net>, 2002.\n"
-"Funda Wang <fundawang@linux.net.cn>, 2003-2005.\n"
-"Zhang Miao <mymzhang@gmail.com>,2009."
+"He Qiangqiang <carton@263.net>, 2002\n"
+"Funda Wang <fundawang@linux.net.cn>, 2003-2005\n"
+"Zhang Miao <mymzhang@gmail.com>,2009\n"
+"Aron Xu <happyaron.xu@gmail.com>, 2009\n"
+"Lele Long <schemacs@gmail.com>, 2011\n"
+"Wind He <lofwind@gmail.com>, 2011"
 
 #: ../src/disks.cpp:299 ../src/memmaps.cpp:361
 msgid "Device"
@@ -49,7 +52,7 @@ msgstr "设备"
 msgid "Directory"
 msgstr "目录"
 
-#: ../src/disks.cpp:301 ../src/gsm_color_button.c:216 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:301 ../src/gsm_color_button.c:221 ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "类型"
 
@@ -94,43 +97,43 @@ msgstr "%-m月%-d日 %H:%M"
 msgid "%b %d %Y"
 msgstr "%Y年%-m月%-d日"
 
-#: ../src/gsm_color_button.c:193
+#: ../src/gsm_color_button.c:198
 msgid "Fraction"
 msgstr "分数"
 
-#: ../src/gsm_color_button.c:194
-msgid "Percentage full for pie colour pickers"
+#: ../src/gsm_color_button.c:199
+msgid "Percentage full for pie color pickers"
 msgstr "饼状颜色拾取器的満百分比"
 
-#: ../src/gsm_color_button.c:201
+#: ../src/gsm_color_button.c:206
 msgid "Title"
 msgstr "标题"
 
-#: ../src/gsm_color_button.c:202
+#: ../src/gsm_color_button.c:207
 msgid "The title of the color selection dialog"
 msgstr "颜色选择对话框标题"
 
-#: ../src/gsm_color_button.c:203 ../src/gsm_color_button.c:622
+#: ../src/gsm_color_button.c:208 ../src/gsm_color_button.c:624
 msgid "Pick a Color"
 msgstr "拾取颜色"
 
-#: ../src/gsm_color_button.c:209
+#: ../src/gsm_color_button.c:214
 msgid "Current Color"
 msgstr "当前颜色"
 
-#: ../src/gsm_color_button.c:210
+#: ../src/gsm_color_button.c:215
 msgid "The selected color"
 msgstr "选中的颜色"
 
-#: ../src/gsm_color_button.c:217
+#: ../src/gsm_color_button.c:222
 msgid "Type of color picker"
 msgstr "颜色拾取器类型"
 
-#: ../src/gsm_color_button.c:545
+#: ../src/gsm_color_button.c:547
 msgid "Received invalid color data\n"
 msgstr "接收到非法颜色数据\n"
 
-#: ../src/gsm_color_button.c:643
+#: ../src/gsm_color_button.c:647
 msgid "Click to set graph colors"
 msgstr "点击以设置图形颜色"
 
@@ -180,7 +183,7 @@ msgstr "继续进程(_C)"
 msgid "Continue process if stopped"
 msgstr "如果进程已停止，则继续进程"
 
-#: ../src/interface.cpp:67 ../src/procdialogs.cpp:84
+#: ../src/interface.cpp:67 ../src/procdialogs.cpp:89
 msgid "_End Process"
 msgstr "结束进程(_E)"
 
@@ -188,7 +191,7 @@ msgstr "结束进程(_E)"
 msgid "Force process to finish normally"
 msgstr "强行中止一个进程"
 
-#: ../src/interface.cpp:69 ../src/procdialogs.cpp:75
+#: ../src/interface.cpp:69 ../src/procdialogs.cpp:78
 msgid "_Kill Process"
 msgstr "杀死进程(_K)"
 
@@ -197,8 +200,8 @@ msgid "Force process to finish immediately"
 msgstr "立即强行结束一个进程"
 
 #: ../src/interface.cpp:71
-msgid "_Change Priority..."
-msgstr "更改优先级(_C)..."
+msgid "_Change Priority…"
+msgstr "改变优先级(_C)..."
 
 #: ../src/interface.cpp:72
 msgid "Change the order of priority of process"
@@ -281,79 +284,88 @@ msgstr "仅显示用户所有的进程"
 msgid "End _Process"
 msgstr "结束进程(_P)"
 
-#: ../src/interface.cpp:244
+#. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
+#: ../src/interface.cpp:239
+#, c-format
+msgid "Pick a Color for '%s'"
+msgstr "为“%s”拾取一种颜色"
+
+#: ../src/interface.cpp:250
 msgid "CPU History"
 msgstr "CPU 历史"
 
-#: ../src/interface.cpp:299
+#: ../src/interface.cpp:304
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:301
+#: ../src/interface.cpp:306
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:319
+#: ../src/interface.cpp:327
 msgid "Memory and Swap History"
 msgstr "内存和交换历史"
 
-#: ../src/interface.cpp:358 ../src/proctable.cpp:225
+#: ../src/interface.cpp:361 ../src/proctable.cpp:248
 msgid "Memory"
 msgstr "内存"
 
-#: ../src/interface.cpp:384
+#: ../src/interface.cpp:392
 msgid "Swap"
 msgstr "交换"
 
-#: ../src/interface.cpp:405
+#: ../src/interface.cpp:423
 msgid "Network History"
 msgstr "网络历史"
 
-#: ../src/interface.cpp:444
+#: ../src/interface.cpp:456
 msgid "Receiving"
 msgstr "正在接收"
 
-#: ../src/interface.cpp:465
+#: ../src/interface.cpp:489
 msgid "Total Received"
 msgstr "总计已接收"
 
-#: ../src/interface.cpp:499
+#: ../src/interface.cpp:517
 msgid "Sending"
 msgstr "正在发送"
 
-#: ../src/interface.cpp:521
+#: ../src/interface.cpp:551
 msgid "Total Sent"
 msgstr "总计已发送"
 
 #. procman_create_sysinfo_view();
-#: ../src/interface.cpp:690
+#: ../src/interface.cpp:663
 msgid "System"
 msgstr "系统"
 
-#: ../src/interface.cpp:694 ../src/procdialogs.cpp:518
+#: ../src/interface.cpp:667 ../src/procdialogs.cpp:545
 msgid "Processes"
 msgstr "进程"
 
-#: ../src/interface.cpp:698 ../src/procdialogs.cpp:631
+#: ../src/interface.cpp:671 ../src/procdialogs.cpp:657
 msgid "Resources"
 msgstr "资源"
 
-#: ../src/interface.cpp:702 ../src/procdialogs.cpp:695
-#: ../src/procdialogs.cpp:699
+#: ../src/interface.cpp:675 ../src/procdialogs.cpp:721
 msgid "File Systems"
 msgstr "文件系统"
 
-#: ../src/load-graph.cpp:155
+#: ../src/load-graph.cpp:164
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u 秒"
 
+#: ../src/load-graph.cpp:342
+msgid "not available"
+msgstr "不可用"
+
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:332
+#: ../src/load-graph.cpp:345
 #, c-format
-msgid "%s (%.1f %%) of %s"
+msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%)，共 %s"
 
 #: ../src/lsof.cpp:124
@@ -508,7 +520,7 @@ msgid ""
 msgstr "0 代表系统信息，1 代表进程列表，2 代表资源，3 代表磁盘列表"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:2
-msgid "Default graph cpu color"
+msgid "Default graph CPU color"
 msgstr "图形中 CPU 的默认颜色"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
@@ -516,7 +528,7 @@ msgid "Default graph incoming network traffic color"
 msgstr "图形中网络流入流量的默认颜色"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
-msgid "Default graph mem color"
+msgid "Default graph memory color"
 msgstr "图形中内存的默认颜色"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
@@ -543,431 +555,453 @@ msgstr "启用/禁用平滑刷新"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
 msgid ""
-"If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu usage "
-"is divided by the total number of CPUs. Else it operates in 'Irix mode'."
+"If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
+"is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
+"mode'."
 msgstr ""
 "如果为 TRUE，系统监视器将工作在“Solaris 模式”，其中任务的 CPU 使用量将被除以"
 "总的 CPU 数目。否则它将工作在“Irix 模式”。"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
+msgid "Main Window X position"
+msgstr "主窗口水平位置"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
+msgid "Main Window Y position"
+msgstr "主窗口竖直位置"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
 msgid "Main Window height"
 msgstr "主窗口高度"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
 msgid "Main Window width"
 msgstr "主窗口宽度"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
 msgid "Process view columns order"
 msgstr "进程视图列顺序"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
 msgid "Process view sort column"
 msgstr "进程视图排序列的宽度"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
 msgid "Process view sort order"
 msgstr "进程视图排序顺序"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
 msgid "Saves the currently viewed tab"
 msgstr "保存目前查看的标签"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
 msgid "Show network traffic in bits"
 msgstr "以比特为单位显示网络流量"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
 #, no-c-format
 msgid "Show process 'CPU %' column on startup"
 msgstr "启动时显示进程“CPU 百分比”列"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
-msgid "Show process 'CPU time' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
+msgid "Show process 'CPU Time' column on startup"
 msgstr "启动时显示进程“CPU 时间”列"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
+msgid "Show process 'Command Line' column on startup"
+msgstr "启动时显示进程“命令行”列"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
+#, fuzzy
+#| msgid "Show process 'CPU %' column on startup"
+msgid "Show process 'Control Group' column on startup"
+msgstr "启动时显示进程“CPU 百分比”列"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
+msgid "Show process 'Memory' column on startup"
+msgstr "启动时显示进程“内存”列"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
+msgid "Show process 'Name' column on startup"
+msgstr "启动时显示进程“名称”列"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
+msgid "Show process 'Nice' column on startup"
+msgstr "启动时显示进程“nice 值”列"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
 msgid "Show process 'PID' column on startup"
 msgstr "启动时显示进程“PID”列"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
+msgid "Show process 'Resident Memory' column on startup"
+msgstr "启动时显示进程“常驻内存”列"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
 msgid "Show process 'SELinux security context' column on startup"
 msgstr "启动时显示进程“SELinux 安全环境”列"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
-msgid "Show process 'Waiting Channel' column on startup"
-msgstr "启动时显示进程“等候频道”列"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
-msgid "Show process 'X server memory' column on startup"
-msgstr "启动时显示进程“X 服务器内存”列"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
-msgid "Show process 'arguments' column on startup"
-msgstr "启动时显示进程“参数”列"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
-msgid "Show process 'estimated memory usage' column on startup"
-msgstr "启动时显示进程“预计内存使用”列"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
-msgid "Show process 'name' column on startup"
-msgstr "启动时显示进程“名称”列"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
-msgid "Show process 'nice' column on startup"
-msgstr "启动时显示进程“nice 值”列"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
-msgid "Show process 'owner' column on startup"
-msgstr "启动时显示进程“所有者”列"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
-msgid "Show process 'resident memory' column on startup"
-msgstr "启动时显示进程“常驻内存”列"
-
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
-msgid "Show process 'shared memory' column on startup"
+msgid "Show process 'Shared Memory' column on startup"
 msgstr "启动时显示进程“共享内存”列"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
-msgid "Show process 'start time' column on startup"
-msgstr "启动时显示进程“开始时间”列"
+msgid "Show process 'Started' column on startup"
+msgstr "启动时显示进程“开始于”列"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
-msgid "Show process 'status' column on startup"
+msgid "Show process 'Status' column on startup"
 msgstr "启动时显示进程“状态”列"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
-msgid "Show process 'virtual memory' column on startup"
-msgstr "启动时显示进程“虚拟内存”列"
+msgid "Show process 'User' column on startup"
+msgstr "启动时显示进程“用户”列"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
-msgid "Show process 'writable memory' column on startup"
-msgstr "启动时显示进程“可写内存”列"
+msgid "Show process 'Virtual Memory' column on startup"
+msgstr "启动时显示进程“虚拟内存”列"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
+msgid "Show process 'Waiting Channel' column on startup"
+msgstr "启动时显示进程“等候频道”列"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
+msgid "Show process 'Writable Memory' column on startup"
+msgstr "启动时显示进程“可写内存”列"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
+msgid "Show process 'X Server Memory' column on startup"
+msgstr "启动时显示进程“X 服务器内存”列"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
 msgid "Show process dependencies in tree form"
 msgstr "以树型显示进程依赖关系"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
 msgid "Show warning dialog when killing processes"
 msgstr "杀死进程时显示警告对话框"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
 msgid "Solaris mode for CPU percentage"
 msgstr "CPU 百分比使用 Solaris 模式"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "更新设备列表的时间间隔，以毫秒计"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "更新图形的时间间隔，以毫秒计"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:44
 msgid "Time in milliseconds between updates of the process view"
 msgstr "更新进程视图的时间间隔，以毫秒计"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
-msgid "Whether information about all filesystems should be displayed"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
+msgid "Whether information about all file systems should be displayed"
 msgstr "是否应显示关于全部文件系统的信息"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
 msgid ""
-"Whether to display information about all filesystems (including types like "
+"Whether to display information about all file systems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
-"filesystems."
+"file systems."
 msgstr ""
-"是否应显示关于全部文件系统的信息(包含类似“autofs”和“procfs”的文件系统)。您可"
-"以通过此功能获得目前已挂载的全部文件系统。"
+"是否应显示关于全部文件系统的信息(包含类似“autofs”和“procfs”的文件系统)。借此"
+"功能可以获知当前挂载的所有文件系统。"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
 #, no-c-format
 msgid "Width of process 'CPU %' column"
 msgstr "进程 CPU 百分比列的宽度"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
-msgid "Width of process 'CPU time' column"
-msgstr "进程 CPU 时间列的宽度"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
+msgid "Width of process 'CPU Time' column"
+msgstr "进程“CPU 时间”列的宽度"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
+msgid "Width of process 'Command Line' column"
+msgstr "进程“命令行”列的宽度"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
+#, fuzzy
+#| msgid "Width of process 'CPU %' column"
+msgid "Width of process 'Control Group' column"
+msgstr "进程 CPU 百分比列的宽度"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
+msgid "Width of process 'Memory' column"
+msgstr "进程“内存”列的宽度"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
+msgid "Width of process 'Name' column"
+msgstr "进程“名称”列的宽度"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
+msgid "Width of process 'Nice' column"
+msgstr "进程“nice 值”列的宽度"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
 msgid "Width of process 'PID' column"
 msgstr "进程 PID 列的宽度"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
-msgid "Width of process 'SELinux security context' column"
-msgstr "进程 SELinux 安全环境列的宽度"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
+msgid "Width of process 'Resident Memory' column"
+msgstr "进程“常驻内存”列的宽度"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
+msgid "Width of process 'SELinux Security Context' column"
+msgstr "进程“SELinux 安全环境”列的宽度"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
+msgid "Width of process 'Shared Memory' column"
+msgstr "进程“共享内存”列的宽度"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
+msgid "Width of process 'Started' column"
+msgstr "进程“开始于”列的宽度"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
+msgid "Width of process 'Status' column"
+msgstr "进程“状态”列的宽度"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
+msgid "Width of process 'User' column"
+msgstr "进程“用户”列的宽度"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
+msgid "Width of process 'Virtual Memory' column"
+msgstr "进程“虚拟内存”列的宽度"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
 msgid "Width of process 'Waiting Channel' column"
 msgstr "等候频道列的宽度"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
-msgid "Width of process 'X server memory' column"
-msgstr "进程 X 服务器内存列的宽度"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
+msgid "Width of process 'Writable Memory' column"
+msgstr "进程“可写内存”列的宽度"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
-msgid "Width of process 'arguments' column"
-msgstr "进程参数列的宽度"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
-msgid "Width of process 'estimated memory usage' column"
-msgstr "预计内存占用列的宽度"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
-msgid "Width of process 'name' column"
-msgstr "进程名列的宽度"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
-msgid "Width of process 'nice' column"
-msgstr "进程 nice 值列的宽度"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
-msgid "Width of process 'owner' column"
-msgstr "进程所有者列的宽度"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
-msgid "Width of process 'resident memory' column"
-msgstr "进程常驻内存列的宽度"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
-msgid "Width of process 'shared memory' column"
-msgstr "进程共享内存列的宽度"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
-msgid "Width of process 'start time' column"
-msgstr "启动时进程启动时间列的宽度"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
-msgid "Width of process 'status' column"
-msgstr "进程状态列的宽度"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
-msgid "Width of process 'virtual memory' column"
-msgstr "进程虚拟内存列的宽度"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
-msgid "Width of process 'writable memory' column"
-msgstr "进程可写内存列的宽度"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
+msgid "Width of process 'X Server Memory' column"
+msgstr "进程“X 服务器内存”列的宽度"
 
 #: ../src/procactions.cpp:75
 #, c-format
 msgid ""
-"Cannot change the priority of process with pid %d to %d.\n"
+"Cannot change the priority of process with PID %d to %d.\n"
 "%s"
 msgstr ""
-"无法将 pid 为 %d 的进程的优先级更改为 %d\n"
+"无法将 PID 为 %d 的进程的优先级更改为 %d\n"
 "%s"
 
 #: ../src/procactions.cpp:155
 #, c-format
 msgid ""
-"Cannot kill process with pid %d with signal %d.\n"
+"Cannot kill process with PID %d with signal %d.\n"
 "%s"
 msgstr ""
-"无法用信号 %2$d 杀死 pid 为 %1$d 的进程。\n"
+"无法用信号 %2$d 杀死 PID 为 %1$d 的进程。\n"
 "%3$s"
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:70
-msgid "Kill the selected process?"
-msgstr "杀死选中的进程吗？"
+#: ../src/procdialogs.cpp:71
+#, c-format
+msgid "Kill the selected process »%s« (PID: %u)?"
+msgstr "杀死选中的进程 »%s« (PID：%u)吗？"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:72
+#: ../src/procdialogs.cpp:75
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
-"security risk. Only unresponding processes should be killed."
+"security risk. Only unresponsive processes should be killed."
 msgstr ""
-"杀死进程可能导致您的数据损坏，工作过程被打断，甚至造成安全隐患。您应该只杀死"
-"不响应的进程。"
+"杀死进程可能导致数据损坏，中断会话或带来安全风险。您应该只杀死无响应的进程。"
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:79
-msgid "End the selected process?"
-msgstr "结束选中的进程吗？"
+#: ../src/procdialogs.cpp:82
+#, c-format
+msgid "End the selected process »%s« (PID: %u)?"
+msgstr "结束选中的进程 »%s« (PID：%u)吗？"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:81
+#: ../src/procdialogs.cpp:86
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
-"risk. Only unresponding processes should be ended."
+"risk. Only unresponsive processes should be ended."
 msgstr ""
-"结束进程可能导致您的数据损坏，工作过程被打断，甚至造成安全隐患。您应该只结束"
-"不响应的进程。"
+"结束进程可能导致数据损坏，中断会话或带来安全风险。您应该只结束无响应的进程。"
 
-#: ../src/procdialogs.cpp:115
+#: ../src/procdialogs.cpp:122
 msgid "(Very High Priority)"
 msgstr "(非常高优先级)"
 
-#: ../src/procdialogs.cpp:117
+#: ../src/procdialogs.cpp:124
 msgid "(High Priority)"
 msgstr "(高优先级)"
 
-#: ../src/procdialogs.cpp:119
+#: ../src/procdialogs.cpp:126
 msgid "(Normal Priority)"
 msgstr "(普通优先级)"
 
-#: ../src/procdialogs.cpp:121
+#: ../src/procdialogs.cpp:128
 msgid "(Low Priority)"
 msgstr "(低优先级)"
 
-#: ../src/procdialogs.cpp:123
+#: ../src/procdialogs.cpp:130
 msgid "(Very Low Priority)"
 msgstr "(非常低优先级)"
 
-#: ../src/procdialogs.cpp:173
-msgid "Change Priority"
-msgstr "改变优先级"
-
 #: ../src/procdialogs.cpp:181
+#, c-format
+msgid "Change Priority of Process »%s« (PID: %u)"
+msgstr "更改进程 »%s« (PID：%u) 的优先级"
+
+#: ../src/procdialogs.cpp:193
 msgid "Change _Priority"
 msgstr "改变优先级(_P)"
 
-#: ../src/procdialogs.cpp:204
+#: ../src/procdialogs.cpp:216
 msgid "_Nice value:"
 msgstr "_Nice 值："
 
-#: ../src/procdialogs.cpp:220
+#: ../src/procdialogs.cpp:232
 msgid "Note:"
 msgstr "备忘："
 
-#: ../src/procdialogs.cpp:221
+#: ../src/procdialogs.cpp:233
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
 msgstr "进程的优先级由它的 nice 值决定。低的 nice 值对应于高优先级。"
 
-#: ../src/procdialogs.cpp:450
+#: ../src/procdialogs.cpp:473
 msgid "Icon"
 msgstr "图标"
 
-#: ../src/procdialogs.cpp:495
+#: ../src/procdialogs.cpp:522
 msgid "System Monitor Preferences"
 msgstr "系统监视器首选项"
 
-#: ../src/procdialogs.cpp:525
+#: ../src/procdialogs.cpp:552 ../src/procdialogs.cpp:725
 msgid "Behavior"
 msgstr "行为"
 
-#: ../src/procdialogs.cpp:544 ../src/procdialogs.cpp:657
-#: ../src/procdialogs.cpp:718
+#: ../src/procdialogs.cpp:571 ../src/procdialogs.cpp:683
+#: ../src/procdialogs.cpp:744
 msgid "_Update interval in seconds:"
 msgstr "更新间隔，以秒计(_U)："
 
-#: ../src/procdialogs.cpp:569
+#: ../src/procdialogs.cpp:596
 msgid "Enable _smooth refresh"
 msgstr "启用平滑刷新(_S)"
 
-#: ../src/procdialogs.cpp:582
+#: ../src/procdialogs.cpp:609
 msgid "Alert before ending or _killing processes"
 msgstr "结束或杀死进程前警告(_K)"
 
-#: ../src/procdialogs.cpp:595
+#: ../src/procdialogs.cpp:622
 msgid "Divide CPU usage by CPU count"
 msgstr "总 CPU 使用率除以 CPU 数"
 
-#: ../src/procdialogs.cpp:596
-msgid "Solaris mode"
-msgstr "Solaris 模式"
-
-#: ../src/procdialogs.cpp:613 ../src/procdialogs.cpp:752
+#: ../src/procdialogs.cpp:639 ../src/procdialogs.cpp:778
 msgid "Information Fields"
 msgstr "信息域"
 
-#: ../src/procdialogs.cpp:626
+#: ../src/procdialogs.cpp:652
 msgid "Process i_nformation shown in list:"
 msgstr "此列表中显示的进程信息(_N)："
 
-#: ../src/procdialogs.cpp:638
+#: ../src/procdialogs.cpp:664
 msgid "Graphs"
 msgstr "图形"
 
-#: ../src/procdialogs.cpp:677
+#: ../src/procdialogs.cpp:703
 msgid "Show network speed in bits"
 msgstr "以比特为单位显示网络速度"
 
-#: ../src/procdialogs.cpp:738
-msgid "Show _all filesystems"
+#: ../src/procdialogs.cpp:764
+msgid "Show _all file systems"
 msgstr "显示全部文件系统(_A)"
 
-#: ../src/procdialogs.cpp:765
+#: ../src/procdialogs.cpp:791
 msgid "File system i_nformation shown in list:"
 msgstr "列表中显示的文件系统信息(_N)："
 
-#: ../src/procman.cpp:644
+#: ../src/procman.cpp:626
 msgid "A simple process and system monitor."
 msgstr "简单的进程和系统监视器。"
 
-#: ../src/proctable.cpp:210
+#: ../src/proctable.cpp:233
 msgid "Process Name"
 msgstr "进程名"
 
-#: ../src/proctable.cpp:211
+#: ../src/proctable.cpp:234
 msgid "User"
 msgstr "用户"
 
-#: ../src/proctable.cpp:212
+#: ../src/proctable.cpp:235
 msgid "Status"
 msgstr "状态"
 
-#: ../src/proctable.cpp:213
+#: ../src/proctable.cpp:236
 msgid "Virtual Memory"
 msgstr "虚拟内存"
 
-#: ../src/proctable.cpp:214
+#: ../src/proctable.cpp:237
 msgid "Resident Memory"
 msgstr "驻留内存"
 
-#: ../src/proctable.cpp:215
+#: ../src/proctable.cpp:238
 msgid "Writable Memory"
 msgstr "可写内存"
 
-#: ../src/proctable.cpp:216
+#: ../src/proctable.cpp:239
 msgid "Shared Memory"
 msgstr "共享内存"
 
-#: ../src/proctable.cpp:217
+#: ../src/proctable.cpp:240
 msgid "X Server Memory"
 msgstr "X 服务器内存"
 
-#: ../src/proctable.cpp:218
+#: ../src/proctable.cpp:241
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:219
+#: ../src/proctable.cpp:242
 msgid "CPU Time"
 msgstr "CPU 时间"
 
-#: ../src/proctable.cpp:220
+#: ../src/proctable.cpp:243
 msgid "Started"
 msgstr "开始于"
 
-#: ../src/proctable.cpp:221
+#: ../src/proctable.cpp:244
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.cpp:222
+#: ../src/proctable.cpp:245
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:223
+#: ../src/proctable.cpp:246
 msgid "Security Context"
 msgstr "安全环境"
 
-#: ../src/proctable.cpp:224
+#: ../src/proctable.cpp:247
 msgid "Command Line"
 msgstr "命令行"
 
-#. xgettext: wchan, see ps(1) or top(1)
-#: ../src/proctable.cpp:227
+#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
+#: ../src/proctable.cpp:250
 msgid "Waiting Channel"
 msgstr "等候频道"
 
-#: ../src/proctable.cpp:944
+#: ../src/proctable.cpp:251
+msgid "Control Group"
+msgstr ""
+
+#: ../src/proctable.cpp:985
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "前一分钟、五分钟、十五分钟的平均负载：%0.2f，%0.2f，%0.2f"
@@ -977,42 +1011,42 @@ msgstr "前一分钟、五分钟、十五分钟的平均负载：%0.2f，%0.2f�
 msgid "Release %s"
 msgstr "版本 %s"
 
-#: ../src/sysinfo.cpp:621
+#: ../src/sysinfo.cpp:624
 #, c-format
 msgid "Kernel %s"
 msgstr "内核 %s"
 
-#: ../src/sysinfo.cpp:634
+#: ../src/sysinfo.cpp:638
 #, c-format
 msgid "GNOME %s"
 msgstr "GNOME %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:648
+#: ../src/sysinfo.cpp:653
 #, c-format
 msgid "<b>Hardware</b>"
 msgstr "<b>硬件</b>"
 
-#: ../src/sysinfo.cpp:653
+#: ../src/sysinfo.cpp:658
 msgid "Memory:"
 msgstr "内存："
 
-#: ../src/sysinfo.cpp:660
+#: ../src/sysinfo.cpp:665
 #, c-format
 msgid "Processor %d:"
 msgstr "处理器 %d："
 
-#: ../src/sysinfo.cpp:665
+#: ../src/sysinfo.cpp:670
 msgid "Processor:"
 msgstr "处理器："
 
 #. disk space section
-#: ../src/sysinfo.cpp:677
+#: ../src/sysinfo.cpp:682
 #, c-format
 msgid "<b>System Status</b>"
 msgstr "<b>系统状态</b>"
 
-#: ../src/sysinfo.cpp:683
+#: ../src/sysinfo.cpp:688
 msgid "Available disk space:"
 msgstr "可用的磁盘空间："
 
@@ -1082,29 +1116,29 @@ msgstr "%.1f TiB"
 
 #: ../src/util.cpp:170
 #, c-format
-msgid "%.1f kbit"
-msgstr "%.1f Kbit"
+msgid "%.3g kbit"
+msgstr "%.3g kbit"
 
 #: ../src/util.cpp:171
 #, c-format
-msgid "%.1f Mbit"
-msgstr "%.1f Mbit"
+msgid "%.3g Mbit"
+msgstr "%.3g Mbit"
 
 #: ../src/util.cpp:172
 #, c-format
-msgid "%.1f Gbit"
-msgstr "%.1f Gbit"
+msgid "%.3g Gbit"
+msgstr "%.3g Gbit"
 
 #: ../src/util.cpp:173
 #, c-format
-msgid "%.1f Tbit"
-msgstr "%.1f Tbit"
+msgid "%.3g Tbit"
+msgstr "%.3g Tbit"
 
 #: ../src/util.cpp:188
 #, c-format
 msgid "%u bit"
 msgid_plural "%u bits"
-msgstr[0] "%u 比特"
+msgstr[0] "%u 位"
 
 #: ../src/util.cpp:189
 #, c-format
@@ -1114,13 +1148,31 @@ msgstr[0] "%u 字节"
 
 #: ../src/util.cpp:380
 msgid "<i>N/A</i>"
-msgstr "<i>N/A</i>"
+msgstr "<i>不可用</i>"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
 #: ../src/util.cpp:497
 #, c-format
 msgid "%s/s"
 msgstr "%s/秒"
+
+#~ msgid "_Change Priority..."
+#~ msgstr "更改优先级(_C)..."
+
+#~ msgid "Show process 'arguments' column on startup"
+#~ msgstr "启动时显示进程“参数”列"
+
+#~ msgid "Show process 'estimated memory usage' column on startup"
+#~ msgstr "启动时显示进程“预计内存使用”列"
+
+#~ msgid "Width of process 'arguments' column"
+#~ msgstr "进程参数列的宽度"
+
+#~ msgid "Width of process 'estimated memory usage' column"
+#~ msgstr "预计内存占用列的宽度"
+
+#~ msgid "Solaris mode"
+#~ msgstr "Solaris 模式"
 
 #~ msgid "Unknown CPU model"
 #~ msgstr "未知 CPU 型号"
