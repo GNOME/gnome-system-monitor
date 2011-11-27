@@ -50,8 +50,7 @@ namespace {
         guint64 memory_bytes;
         guint64 free_space_bytes;
 
-        guint n_processors;
-        vector<string> processors;
+        string processors;
 
 
         SysInfo()
@@ -99,36 +98,135 @@ namespace {
             this->memory_bytes = mem.total;
         }
 
+        typedef struct
+        {
+            const char* regex;
+            const char* replacement;
+        } ReplaceStrings;
+
+        static char* remove_duplicate_whitespace (const char* old)
+        {
+            char* result;
+            GRegex* re;
+            GError* error = NULL;
+            const GRegexMatchFlags flags = static_cast<GRegexMatchFlags>(0);
+
+            re = g_regex_new ("[ \t\n\r]+", G_REGEX_MULTILINE, flags, &error);
+            if (re == NULL) {
+                g_warning ("Error building regex: %s", error->message);
+                g_error_free (error);
+                return g_strdup (old);
+            }
+            result = g_regex_replace (re, old, -1, 0, " ", flags, &error);
+            g_regex_unref (re);
+            if (result == NULL) {
+                g_warning ("Error replacing string: %s", error->message);
+                g_error_free (error);
+                return g_strdup (old);
+            }
+
+            return result;
+        }
+
+        static char* prettify_info (const char *info)
+        {
+            char* pretty;
+            const GRegexCompileFlags cflags = static_cast<GRegexCompileFlags>(0);
+            const GRegexMatchFlags mflags = static_cast<GRegexMatchFlags>(0);
+
+            static const ReplaceStrings rs[] = {
+                { "Intel[(]R[)]", "Intel\302\256"},
+                { "Core[(]TM[)]", "Core\342\204\242"},
+                { "Atom[(]TM[)]", "Atom\342\204\242"},
+            };
+
+            pretty = g_markup_escape_text (info, -1);
+
+            for (uint i = 0; i < G_N_ELEMENTS (rs); i++) {
+                GError* error;
+                GRegex* re;
+                char* result;
+
+                error = NULL;
+
+                re = g_regex_new (rs[i].regex, cflags, mflags, &error);
+                if (re == NULL) {
+                    g_warning ("Error building regex: %s", error->message);
+                    g_error_free (error);
+                    continue;
+                }
+
+                result = g_regex_replace_literal (re, pretty, -1, 0,
+                                             rs[i].replacement, mflags, &error);
+
+                g_regex_unref (re);
+
+                if (error != NULL) {
+                    g_warning ("Error replacing %s: %s", rs[i].regex, error->message);
+                    g_error_free (error);
+                    continue;
+                }
+
+                g_free (pretty);
+                pretty = result;
+            }
+
+            return pretty;
+        }
 
         void load_processors_info()
         {
             const glibtop_sysinfo *info = glibtop_get_sysinfo();
 
-            for (guint i = 0; i != info->ncpu; ++i) {
-                const char * const keys[] = { "model name", "cpu", "Processor" };
-                gchar *model = 0, *clock = 0;
-                guint last;
+            GHashTable* counts;
+            GString* cpu;
+            GHashTableIter iter;
+            gpointer key, value;
 
-                for (guint j = 0; !model && j != G_N_ELEMENTS(keys); ++j) {
-                    last = j;
-                    model = static_cast<char*>(g_hash_table_lookup(info->cpuinfo[i].values,
-                                                                   keys[j]));
+            counts = g_hash_table_new (g_str_hash, g_str_equal);
+
+            /* count duplicates */
+            for (uint i = 0; i != info->ncpu; ++i) {
+                const char* const keys[] = { "model name", "cpu" };
+                char* model;
+                int* count;
+
+                model = NULL;
+
+                for (int j = 0; model == NULL && j != G_N_ELEMENTS (keys); ++j) {
+                    model = static_cast<char*>(g_hash_table_lookup (info->cpuinfo[i].values,
+                                                 keys[j]));
                 }
 
-                if (!model)
-                    continue;
+                if (model == NULL)
+                    model = _("Unknown model");
 
-                if (!strcmp(keys[last], "cpu"))
-                    clock = static_cast<char*>(g_hash_table_lookup(info->cpuinfo[i].values,
-                                                                   "clock"));
-                if (clock)
-                    this->processors.push_back(string(model) + " " + string(clock));
+                count = static_cast<int*>(g_hash_table_lookup (counts, model));
+                if (count == NULL)
+                    g_hash_table_insert (counts, model, GINT_TO_POINTER (1));
                 else
-                    this->processors.push_back(model);
+                    g_hash_table_replace (counts, model, GINT_TO_POINTER (GPOINTER_TO_INT (count) + 1));
             }
+
+            cpu = g_string_new (NULL);
+            g_hash_table_iter_init (&iter, counts);
+            while (g_hash_table_iter_next (&iter, &key, &value)) {
+                char* stripped;
+                int   count;
+
+                count = GPOINTER_TO_INT (value);
+                stripped = remove_duplicate_whitespace ((const char *)key);
+                if (count > 1)
+                    g_string_append_printf (cpu, "%s \303\227 %d ", stripped, count);
+                else
+                    g_string_append_printf (cpu, "%s ", stripped);
+                g_free (stripped);
+            }
+
+            g_hash_table_destroy (counts);
+            this->processors = string(prettify_info (cpu->str));
+            g_string_free (cpu, TRUE);
         }
-
-
 
         void load_disk_info()
         {
@@ -525,7 +623,8 @@ add_section(GtkBox *vbox , const char * title, int num_row, int num_col, GtkWidg
 static GtkWidget*
 add_row(GtkTable * table, const char * label, const char * value, int row)
 {
-    GtkWidget *header = gtk_label_new(label);
+    GtkWidget *header = gtk_label_new(NULL);
+    gtk_label_set_markup(GTK_LABEL(header), label);
     gtk_label_set_selectable(GTK_LABEL(header), TRUE);
     gtk_misc_set_alignment(GTK_MISC(header), 0.0, 0.5);
     gtk_table_attach(
@@ -651,7 +750,7 @@ procman_create_sysinfo_view(void)
     /* hardware section */
 
     markup = g_strdup_printf(_("<b>Hardware</b>"));
-    hardware_table = add_section(GTK_BOX(vbox), markup, data->processors.size(), 2, NULL);
+    hardware_table = add_section(GTK_BOX(vbox), markup, 1, 2, NULL);
     g_free(markup);
 
     markup = procman::format_size(data->memory_bytes);
@@ -659,23 +758,13 @@ procman_create_sysinfo_view(void)
             markup, 0);
     g_free(markup);
 
-    for (guint i = 0; i < data->processors.size(); ++i) {
-        const gchar * t;
-        if (data->processors.size() > 1) {
-            markup = g_strdup_printf(_("Processor %d:"), i);
-            t = markup;
-        }
-        else {
-            markup = NULL;
-            t = _("Processor:");
-        }
+    markup = NULL;
+    add_row(GTK_TABLE(hardware_table), _("Processor:"),
+            data->processors.c_str(), 1);
 
-        add_row(GTK_TABLE(hardware_table), t,
-                data->processors[i].c_str(), 1 + i);
+    if(markup)
+        g_free(markup);
 
-        if(markup)
-            g_free(markup);
-    }
 
     /* disk space section */
 
