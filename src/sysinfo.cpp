@@ -73,8 +73,11 @@ namespace {
                          NULL);
 
 
-            char* markup = g_strdup_printf(_("Release %s"), this->distro_release.c_str());
-
+            /* Translators: The first string parameter is release version (codename),
+             * the second one is the architecture, 32 or 64-bit */
+            char* markup = g_strdup_printf(_("Release %s %s"),
+                                           this->distro_release.c_str(),
+                                           this->get_os_type().c_str());
             g_object_set(G_OBJECT(release),
                          "label",
                          markup,
@@ -96,6 +99,20 @@ namespace {
 
             glibtop_get_mem(&mem);
             this->memory_bytes = mem.total;
+        }
+
+        string get_os_type ()
+        {
+            int bits;
+
+            if (GLIB_SIZEOF_VOID_P == 8)
+                bits = 64;
+            else
+                bits = 32;
+
+            /* translators: This is the type of architecture, for example:
+             * "64-bit" or "32-bit" */
+            return string(g_strdup_printf (_("%d-bit"), bits));
         }
 
         typedef struct
