@@ -809,6 +809,25 @@ update_sensitivity(ProcData *data)
     }
 }
 
+void
+block_priority_changed_handlers(ProcData *data, bool block)
+{
+    gint i;
+    if (block) {
+        for (i = 0; i != G_N_ELEMENTS(priority_menu_entries); ++i) {
+            GtkRadioAction *action = GTK_RADIO_ACTION(gtk_action_group_get_action(data->action_group,
+                                             priority_menu_entries[i].name));
+            g_signal_handlers_block_by_func(action, (gpointer)cb_renice, data);
+        }
+    } else {
+        for (i = 0; i != G_N_ELEMENTS(priority_menu_entries); ++i) {
+            GtkRadioAction *action = GTK_RADIO_ACTION(gtk_action_group_get_action(data->action_group,
+                                             priority_menu_entries[i].name));
+            g_signal_handlers_unblock_by_func(action, (gpointer)cb_renice, data);
+        }
+    }
+}
+
 static void
 cb_toggle_tree (GtkAction *action, gpointer data)
 {

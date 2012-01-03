@@ -47,7 +47,8 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 
     if (!info)
         return;
-
+    if (info->nice == args->nice_value)
+        return;
     error = setpriority (PRIO_PROCESS, info->pid, args->nice_value);
 
     /* success */

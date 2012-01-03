@@ -26,6 +26,7 @@
 
 void            create_main_window (ProcData *data);
 void            update_sensitivity (ProcData *data);
+void            block_priority_changed_handlers(ProcData *data, bool block);
 void            do_popup_menu(ProcData *data, GdkEventButton *event);
 GtkWidget *     make_title_label (const char *text);
 

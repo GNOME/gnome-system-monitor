@@ -347,8 +347,10 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
             value = VERY_LOW_PRIORITY;
 
         GtkRadioAction* normal = GTK_RADIO_ACTION(gtk_action_group_get_action(procdata->action_group, "Normal"));
-
+        block_priority_changed_handlers(procdata, TRUE);
         gtk_radio_action_set_current_value(normal, value);
+        block_priority_changed_handlers(procdata, FALSE);
+
     }
     update_sensitivity(procdata);
 }
