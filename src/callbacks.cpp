@@ -34,6 +34,7 @@
 #include "procdialogs.h"
 #include "memmaps.h"
 #include "openfiles.h"
+#include "procproperties.h"
 #include "load-graph.h"
 #include "disks.h"
 #include "lsof.h"
@@ -134,6 +135,13 @@ cb_show_open_files (GtkAction *action, gpointer data)
     ProcData *procdata = static_cast<ProcData*>(data);
 
     create_openfiles_dialog (procdata);
+}
+
+void
+cb_show_process_properties (GtkAction *action, gpointer data)
+{
+	ProcData *procdata = static_cast<ProcData*>(data);
+	create_procproperties_dialog (procdata);
 }
 
 void

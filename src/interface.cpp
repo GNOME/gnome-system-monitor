@@ -81,6 +81,9 @@ static const GtkActionEntry menu_entries[] =
     // Translators: this means 'Files that are open' (open is no verb here)
     { "OpenFiles", NULL, N_("Open _Files"), "<control>F",
       N_("View the files opened by a process"), G_CALLBACK (cb_show_open_files) },
+	{ "ProcessProperties", NULL, N_("_Properties"), NULL,
+	  N_("View additional information about a process"), G_CALLBACK (cb_show_process_properties) },
+
 
     { "HelpContents", GTK_STOCK_HELP, N_("_Contents"), "F1",
       N_("Open the manual"), G_CALLBACK (cb_help_contents) },
@@ -158,6 +161,8 @@ static const char ui_info[] =
     "      <menuitem name=\"ViewMemoryMapsMenu\" action=\"MemoryMaps\" />"
     "      <menuitem name=\"ViewOpenFilesMenu\" action=\"OpenFiles\" />"
     "      <separator />"
+    "      <menuitem name=\"ViewProcessPropertiesMenu\" action=\"ProcessProperties\" />"
+    "      <separator />"
     "      <menuitem name=\"ViewRefresh\" action=\"Refresh\" />"
     "    </menu>"
     "    <menu name=\"HelpMenu\" action=\"Help\">"
@@ -184,6 +189,9 @@ static const char ui_info[] =
     "    <separator />"
     "    <menuitem action=\"MemoryMaps\" />"
     "    <menuitem action=\"OpenFiles\" />"
+    "    <separator />"
+    "    <menuitem action=\"ProcessProperties\" />"
+
     "  </popup>";
 
 
@@ -774,7 +782,8 @@ update_sensitivity(ProcData *data)
                                               "KillProcess",
                                               "ChangePriority",
                                               "MemoryMaps",
-                                              "OpenFiles" };
+                                              "OpenFiles",
+                                              "ProcessProperties" };
 
     const char * const processes_actions[] = { "ShowActiveProcesses",
                                                "ShowAllProcesses",

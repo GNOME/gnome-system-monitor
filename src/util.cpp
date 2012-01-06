@@ -19,7 +19,7 @@ extern "C" {
 }
 
 
-static const char*
+const char*
 format_process_state(guint state)
 {
     const char *status;

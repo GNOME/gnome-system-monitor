@@ -34,6 +34,8 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
 gboolean
 load_symbols(const char *module, ...) G_GNUC_NULL_TERMINATED;
 
+const char*
+format_process_state(guint state);
 
 void
 procman_debug_real(const char *file, int line, const char *func,

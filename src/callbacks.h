@@ -28,6 +28,7 @@
 
 void            cb_show_memory_maps (GtkAction *action, gpointer data);
 void            cb_show_open_files (GtkAction *action, gpointer data);
+void            cb_show_process_properties (GtkAction *action, gpointer data);
 void            cb_show_lsof(GtkAction *action, gpointer data);
 void            cb_renice (GtkAction *action, GtkRadioAction *current, gpointer data);
 void            cb_end_process (GtkAction *action, gpointer data);
