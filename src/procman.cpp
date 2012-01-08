@@ -691,8 +691,7 @@ main (int argc, char *argv[])
         exit (0);
     }
 
-    /* initialize rsvg */
-    rsvg_init ();
+    g_type_init ();
 
     gtk_window_set_default_icon_name ("utilities-system-monitor");
     g_set_application_name(_("System Monitor"));
@@ -739,10 +738,6 @@ main (int argc, char *argv[])
     procman_free_data (procdata);
 
     glibtop_close ();
-
-    // This function should only be called just before program exit.
-    // See GNOME bug #592100 for a discussion about this.
-    rsvg_term ();
 
     return 0;
 }
