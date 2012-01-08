@@ -290,7 +290,8 @@ is_debug_enabled(void)
 }
 
 
-static double get_relative_time(void)
+static double
+get_relative_time(void)
 {
     static unsigned long start_time;
     GTimeVal tv;
@@ -305,8 +306,8 @@ static double get_relative_time(void)
     return (tv.tv_sec - start_time) + 1e-6 * tv.tv_usec;
 }
 
-static
-guint64 get_size_from_column(GtkTreeModel* model, GtkTreeIter* first,
+static guint64
+get_size_from_column(GtkTreeModel* model, GtkTreeIter* first,
                              const guint index)
 {
     GValue value = { 0 };
