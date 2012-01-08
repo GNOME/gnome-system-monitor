@@ -8,34 +8,44 @@ INCLUDES = \
 
 bin_PROGRAMS = gnome-system-monitor
 
-gnome_system_monitor_SOURCES = \
-	argv.h argv.cpp \
-	procman.cpp  procman.h \
-	interface.cpp interface.h \
-	callbacks.cpp callbacks.h \
-	load-graph.cpp load-graph.h \
-	proctable.cpp proctable.h \
-	prettytable.cpp prettytable.h \
-	util.cpp util.h \
-	procactions.cpp procactions.h \
-	procdialogs.cpp procdialogs.h \
-	memmaps.cpp memmaps.h \
-	openfiles.cpp openfiles.h \
-	smooth_refresh.cpp smooth_refresh.h \
-	defaulttable.h \
-	disks.cpp disks.h \
-	selinux.h selinux.cpp \
-	cgroups.h cgroups.cpp \
-	procman_gnomesu.h procman_gnomesu.cpp \
-	procman_gksu.h procman_gksu.cpp \
-	sysinfo.cpp sysinfo.h \
-	lsof.cpp lsof.h \
-	selection.cpp selection.h \
-	settings-keys.cpp settings-keys.h \
-	iconthemewrapper.cpp iconthemewrapper.h \
-	e_date.c e_date.h \
-        gsm_color_button.c gsm_color_button.h
+gnome_system_monitor_cpp_files = \
+	argv.cpp \
+	procman.cpp \
+	interface.cpp \
+	callbacks.cpp \
+	load-graph.cpp \
+	proctable.cpp \
+	prettytable.cpp \
+	util.cpp \
+	procactions.cpp \
+	procdialogs.cpp \
+	memmaps.cpp \
+	openfiles.cpp \
+	smooth_refresh.cpp \
+	disks.cpp \
+	selinux.cpp \
+	cgroups.cpp \
+	procman_gnomesu.cpp \
+	procman_gksu.cpp \
+	sysinfo.cpp \
+	lsof.cpp \
+	selection.cpp \
+	settings-keys.cpp \
+	iconthemewrapper.cpp
 
+gnome_system_monitor_c_files = \
+	e_date.c \
+	gsm_color_button.c
+
+gnome_system_monitor_h_files = \
+	$(gnome_system_monitor_cpp_files:.cpp=.h) \
+	$(gnome_system_monitor_c_files:.c=.h) \
+	defaulttable.h
+
+gnome_system_monitor_SOURCES = \
+  $(gnome_system_monitor_h_files) \
+  $(gnome_system_monitor_cpp_files) \
+  $(gnome_system_monitor_c_files)
 
 gnome_system_monitor_LDADD = @PROCMAN_LIBS@ libbacon.la
 
