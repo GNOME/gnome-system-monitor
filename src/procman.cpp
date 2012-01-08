@@ -174,22 +174,43 @@ timeouts_changed_cb (GSettings *settings, const gchar *key, gpointer data)
 }
 
 static void
+apply_cpu_color_settings(GSettings *settings, ProcData * const procdata)
+{
+    GVariant *cpu_colors_var = g_settings_get_value(settings, "cpu-colors");
+    gsize n = g_variant_n_children(cpu_colors_var);
+
+    guint cpu_i;
+    gchar *color;
+    for (guint i = 0; i < static_cast<guint>(procdata->config.num_cpus); i++) {
+        if(i <= n) {
+            g_variant_get_child(cpu_colors_var, i, "(us)", &cpu_i, &color);
+        }
+        if (!color)
+            color = g_strdup ("#f25915e815e8");
+
+        gdk_color_parse(color, &procdata->config.cpu_color[i]);
+        g_free (color);
+    }
+}
+
+static void
 color_changed_cb (GSettings *settings, const gchar *key, gpointer data)
 {
     ProcData * const procdata = static_cast<ProcData*>(data);
-    const gchar *color = g_settings_get_string (settings, key);
 
-    if (g_str_has_prefix (key, "cpu-color")) {
+    if (g_str_equal (key, "cpu-colors")) {
+        apply_cpu_color_settings(settings, procdata);
         for (int i = 0; i < procdata->config.num_cpus; i++) {
-            string cpu_key = make_string(g_strdup_printf("cpu-color%d", i%4));
-            if (cpu_key == key) {
-                gdk_color_parse (color, &procdata->config.cpu_color[i]);
-                procdata->cpu_graph->colors.at(i) = procdata->config.cpu_color[i];
+            if(!gdk_color_equal(&procdata->cpu_graph->colors[i], &procdata->config.cpu_color[i])) {
+                procdata->cpu_graph->colors[i] = procdata->config.cpu_color[i];
                 break;
             }
         }
+        return;
     }
-    else if (g_str_equal (key, "mem-color")) {
+
+    const gchar *color = g_settings_get_string (settings, key);
+    if (g_str_equal (key, "mem-color")) {
         gdk_color_parse (color, &procdata->config.mem_color);
         procdata->mem_graph->colors.at(0) = procdata->config.mem_color;
     }
@@ -268,7 +289,7 @@ procman_data_new (GSettings *settings)
     g_signal_connect (G_OBJECT(settings), "changed::view-as", G_CALLBACK(view_as_changed_cb),pd);
     pd->config.current_tab = g_settings_get_int (settings, "current-tab");
 
-    /* Determinie number of cpus since libgtop doesn't really tell you*/
+    /* Determine number of cpus since libgtop doesn't really tell you*/
     pd->config.num_cpus = 0;
     glibtop_get_cpu (&cpu);
     pd->frequency = cpu.frequency;
@@ -280,21 +301,10 @@ procman_data_new (GSettings *settings)
     if (pd->config.num_cpus == 0)
         pd->config.num_cpus = 1;
 
-    for (int i = 0; i < pd->config.num_cpus; i++) {
-        gchar *key;
-        key = g_strdup_printf ("cpu-color%d", i%4);
+    apply_cpu_color_settings(settings, pd);
+    g_signal_connect (G_OBJECT(settings), "changed::cpu-colors",
+                      G_CALLBACK(color_changed_cb), pd);
 
-        color = g_settings_get_string (settings, key);
-        if (!color)
-            color = g_strdup ("#f25915e815e8");
-
-        detail_string = std::string("changed::") + std::string(key);
-        g_signal_connect (G_OBJECT(settings), detail_string.c_str(),
-                          G_CALLBACK(color_changed_cb), pd);
-        gdk_color_parse(color, &pd->config.cpu_color[i]);
-        g_free (color);
-        g_free (key);
-    }
     color = g_settings_get_string (settings, "mem-color");
     if (!color)
         color = g_strdup ("#000000ff0082");

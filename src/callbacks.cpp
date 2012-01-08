@@ -236,6 +236,37 @@ cb_end_process_button_pressed (GtkButton *button, gpointer data)
     kill_process_helper(static_cast<ProcData*>(data), SIGTERM);
 }
 
+void
+cb_cpu_color_changed (GSMColorButton *cp, gpointer data)
+{
+    guint cpu_i = GPOINTER_TO_UINT (data);
+    GSettings *settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
+
+    /* Get current values */
+    GVariant *cpu_colors_var = g_settings_get_value(settings, "cpu-colors");
+    gsize children_n = g_variant_n_children(cpu_colors_var);
+
+    /* Create builder to contruct new setting with updated value for cpu i */
+    GVariantBuilder builder;
+    g_variant_builder_init(&builder, G_VARIANT_TYPE_ARRAY);
+
+    for (guint i = 0; i < children_n; i++) {
+        if(cpu_i == i) {
+            gchar color[24];
+            GdkColor button_color;
+            gsm_color_button_get_color(cp, &button_color);
+            g_snprintf(color, sizeof(color), "#%04x%04x%04x",
+                       button_color.red, button_color.green, button_color.blue);
+            g_variant_builder_add(&builder, "(us)", i, color);
+        } else {
+            g_variant_builder_add_value(&builder,
+                                        g_variant_get_child_value(cpu_colors_var, i));
+        }
+    }
+
+    /* Just set the value and let the changed::cpu-colors signal callback do the rest. */
+    g_settings_set_value(settings, "cpu-colors", g_variant_builder_end(&builder));
+}
 
 static void change_settings_color(GSettings *settings, const char *key,
                                   GSMColorButton *cp)
@@ -246,18 +277,6 @@ static void change_settings_color(GSettings *settings, const char *key,
     gsm_color_button_get_color(cp, &c);
     g_snprintf(color, sizeof color, "#%04x%04x%04x", c.red, c.green, c.blue);
     g_settings_set_string (settings, key, color);
-}
-
-void
-cb_cpu_color_changed (GSMColorButton *cp, gpointer data)
-{
-    char key[80];
-    gint i = GPOINTER_TO_INT (data);
-    GSettings *settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
-
-    g_snprintf(key, sizeof key, "cpu-color%d", i%4);
-
-    change_settings_color(settings, key, cp);
 }
 
 void
