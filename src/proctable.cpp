@@ -346,7 +346,6 @@ proctable_new (ProcData * const procdata)
                                                         GUINT_TO_POINTER(i),
                                                         NULL);
                 break;
-
             case COL_VMSIZE:
             case COL_MEMRES:
             case COL_MEMSHARED:
@@ -383,12 +382,33 @@ proctable_new (ProcData * const procdata)
                                                         &procman::priority_cell_data_func,
                                                         GUINT_TO_POINTER(COL_NICE),
                                                         NULL);
+                break;
+            default:
+                gtk_tree_view_column_set_attributes(col, cell, "text", i, NULL);
+                break;
+        }
+
+        // sorting
+        switch (i) {
+            case COL_MEMXSERVER:
+            case COL_VMSIZE:
+            case COL_MEMRES:
+            case COL_MEMSHARED:
+            case COL_MEM:
+            case COL_MEMWRITABLE:
+            case COL_CPU:
+            case COL_CPU_TIME:
+            case COL_START_TIME:
+                gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(model), i,
+                                                procman::number_compare_func, GUINT_TO_POINTER(i),
+                                                NULL);
+                break;
+            case COL_PRIORITY:
                 gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(model), i,
                                                 procman::priority_compare_func,
                                                 GUINT_TO_POINTER(COL_NICE), NULL);
                 break;
             default:
-                gtk_tree_view_column_set_attributes(col, cell, "text", i, NULL);
                 break;
         }
 

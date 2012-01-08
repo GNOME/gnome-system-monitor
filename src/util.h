@@ -102,6 +102,8 @@ namespace procman
                                gpointer user_data);
     gint priority_compare_func(GtkTreeModel* model, GtkTreeIter* first,
                             GtkTreeIter* second, gpointer user_data);
+    gint number_compare_func(GtkTreeModel* model, GtkTreeIter* first,
+                            GtkTreeIter* second, gpointer user_data);
 
 
     template<typename T>

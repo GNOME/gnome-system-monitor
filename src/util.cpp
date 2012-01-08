@@ -305,6 +305,31 @@ static double get_relative_time(void)
     return (tv.tv_sec - start_time) + 1e-6 * tv.tv_usec;
 }
 
+static
+guint64 get_size_from_column(GtkTreeModel* model, GtkTreeIter* first,
+                             const guint index)
+{
+    GValue value = { 0 };
+    gtk_tree_model_get_value(model, first, index, &value);
+
+    guint64 size;
+    switch (G_VALUE_TYPE(&value)) {
+        case G_TYPE_UINT:
+            size = g_value_get_uint(&value);
+            break;
+        case G_TYPE_ULONG:
+            size = g_value_get_ulong(&value);
+            break;
+        case G_TYPE_UINT64:
+            size = g_value_get_uint64(&value);
+            break;
+        default:
+            g_assert_not_reached();
+    }
+
+    g_value_unset(&value);
+    return size;
+}
 
 void
 procman_debug_real(const char *file, int line, const char *func,
@@ -519,6 +544,22 @@ namespace procman
         return result;
     }
 
+    gint number_compare_func(GtkTreeModel* model, GtkTreeIter* first,
+                            GtkTreeIter* second, gpointer user_data)
+    {
+        const guint index = GPOINTER_TO_UINT(user_data);
+
+        guint64 size1, size2;
+        size1 = get_size_from_column(model, first, index);
+        size2 = get_size_from_column(model, second, index);
+
+        if ( size2 > size1 )
+            return 1;
+        else if ( size2 < size1 )
+            return -1;
+        return 0;
+    }
+
     template<>
     void tree_store_update<const char>(GtkTreeModel* model, GtkTreeIter* iter, int column, const char* new_value)
     {
@@ -531,8 +572,6 @@ namespace procman
 
         g_free(current_value);
     }
-
-
 
 
     std::string format_rate(guint64 rate, guint64 max_rate, bool want_bits)
