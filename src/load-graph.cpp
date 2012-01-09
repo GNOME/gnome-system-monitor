@@ -85,9 +85,9 @@ void draw_background(LoadGraph *graph) {
 
     gtk_widget_get_allocation (graph->disp, &allocation);
     graph->background = gdk_window_create_similar_surface (gtk_widget_get_window (graph->disp),
-                                                       CAIRO_CONTENT_COLOR,
-                                                       allocation.width,
-                                                       allocation.height);
+                                                           CAIRO_CONTENT_COLOR,
+                                                           allocation.width,
+                                                           allocation.height);
     cr = cairo_create (graph->background);
 
     // set the background colour
@@ -130,14 +130,16 @@ void draw_background(LoadGraph *graph) {
             const std::string caption(procman::format_network_rate(rate, graph->net.max));
             pango_layout_set_text (layout, caption.c_str(), -1);
             pango_layout_get_extents (layout, NULL, &extents);
-            cairo_move_to (cr, graph->indent - 1.0 * extents.width / PANGO_SCALE + 20, y - 1.0 * extents.height / PANGO_SCALE / 2);
+            cairo_move_to (cr, graph->indent - 1.0 * extents.width / PANGO_SCALE + 20,
+                           y - 1.0 * extents.height / PANGO_SCALE / 2);
             pango_cairo_show_layout (cr, layout);
         } else {
             // operation orders matters so it's 0 if i == num_bars
             caption = g_strdup_printf("%d%%", 100 - i * (100 / num_bars));
             pango_layout_set_text (layout, caption, -1);
             pango_layout_get_extents (layout, NULL, &extents);
-            cairo_move_to (cr, graph->indent - 1.0 * extents.width / PANGO_SCALE + 20, y - 1.0 * extents.height / PANGO_SCALE / 2);
+            cairo_move_to (cr, graph->indent - 1.0 * extents.width / PANGO_SCALE + 20,
+                           y - 1.0 * extents.height / PANGO_SCALE / 2);
             pango_cairo_show_layout (cr, layout);
             g_free (caption);
         }
@@ -167,7 +169,9 @@ void draw_background(LoadGraph *graph) {
         caption = g_strdup_printf(format, seconds);
         pango_layout_set_text (layout, caption, -1);
         pango_layout_get_extents (layout, NULL, &extents);
-        cairo_move_to (cr, ((ceil(x) + 0.5) + graph->rmargin + graph->indent) - (1.0 * extents.width / PANGO_SCALE/2), graph->draw_height - 1.0 * extents.height / PANGO_SCALE);
+        cairo_move_to (cr,
+                       (ceil(x) + 0.5 + graph->rmargin + graph->indent) - (1.0 * extents.width / PANGO_SCALE / 2),
+                       graph->draw_height - 1.0 * extents.height / PANGO_SCALE);
         gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_NORMAL]);
         pango_cairo_show_layout (cr, layout);
         g_free (caption);
@@ -245,7 +249,8 @@ load_graph_draw (GtkWidget *widget,
     cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
     cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
     cairo_rectangle (cr, graph->rmargin + graph->indent + FRAME_WIDTH + 1, FRAME_WIDTH - 1,
-                     graph->draw_width - graph->rmargin - graph->indent - 1, graph->real_draw_height + FRAME_WIDTH - 1);
+                     graph->draw_width - graph->rmargin - graph->indent - 1,
+                     graph->real_draw_height + FRAME_WIDTH - 1);
     cairo_clip(cr);
 
     for (j = 0; j < graph->n; ++j) {
@@ -392,18 +397,26 @@ nicenum (double x, int round)
     double f;				/* fractional part of x */
     double nf;				/* nice, rounded fraction */
 
-    expv = floor( log10(x) );
-    f = x/pow( 10.0, expv );		/* between 1 and 10 */
+    expv = floor(log10(x));
+    f = x/pow(10.0, expv);		/* between 1 and 10 */
     if (round) {
-        if ( f < 1.5 ) nf = 1.0;
-        else if ( f < 3.0 ) nf = 2.0;
-        else if ( f < 7.0 ) nf = 5.0;
-        else nf = 10.0;
+        if (f < 1.5)
+            nf = 1.0;
+        else if (f < 3.0)
+            nf = 2.0;
+        else if (f < 7.0)
+            nf = 5.0;
+        else
+            nf = 10.0;
     } else {
-        if ( f <= 1.0 ) nf = 1.0;
-        else if ( f <= 2.0 ) nf = 2.0;
-        else if ( f <= 5.0 ) nf = 5.0;
-        else nf = 10.0;
+        if (f <= 1.0)
+            nf = 1.0;
+        else if (f <= 2.0)
+            nf = 2.0;
+        else if (f <= 5.0)
+            nf = 5.0;
+        else
+            nf = 10.0;
     }
     return nf * pow(10.0, expv);
 }
@@ -558,11 +571,10 @@ get_net (LoadGraph *graph)
 
     g_get_current_time (&time);
 
-    if (in >= graph->net.last_in && out >= graph->net.last_out &&
-        graph->net.time.tv_sec != 0) {
+    if (in >= graph->net.last_in && out >= graph->net.last_out && graph->net.time.tv_sec != 0) {
         float dtime;
         dtime = time.tv_sec - graph->net.time.tv_sec +
-            (double) (time.tv_usec - graph->net.time.tv_usec) / G_USEC_PER_SEC;
+                (double) (time.tv_usec - graph->net.time.tv_usec) / G_USEC_PER_SEC;
         din   = static_cast<guint64>((in  - graph->net.last_in)  / dtime);
         dout  = static_cast<guint64>((out - graph->net.last_out) / dtime);
     } else {
@@ -577,7 +589,6 @@ get_net (LoadGraph *graph)
     graph->net.time     = time;
 
     net_scale(graph, din, dout);
-
 
     gtk_label_set_text (GTK_LABEL (graph->labels.net_in), procman::format_network_rate(din).c_str());
     gtk_label_set_text (GTK_LABEL (graph->labels.net_in_total), procman::format_network(in).c_str());
@@ -594,7 +605,9 @@ load_graph_update (gpointer user_data)
     LoadGraph * const graph = static_cast<LoadGraph*>(user_data);
 
     if (graph->render_counter == graph->frames_per_unit - 1) {
-        std::rotate(&graph->data[0], &graph->data[LoadGraph::NUM_POINTS - 1], &graph->data[LoadGraph::NUM_POINTS]);
+        std::rotate(&graph->data[0],
+                    &graph->data[LoadGraph::NUM_POINTS - 1],
+                    &graph->data[LoadGraph::NUM_POINTS]);
 
         switch (graph->type) {
             case LOAD_GRAPH_CPU:
@@ -760,13 +773,13 @@ LoadGraph::LoadGraph(guint type)
 void
 load_graph_start (LoadGraph *graph)
 {
-    if(!graph->timer_index) {
+     if (!graph->timer_index) {
 
         load_graph_update(graph);
 
         graph->timer_index = g_timeout_add (graph->speed / graph->frames_per_unit,
-                                        load_graph_update,
-                                        graph);
+                                            load_graph_update,
+                                            graph);
     }
 
     graph->draw = TRUE;
@@ -788,11 +801,11 @@ load_graph_change_speed (LoadGraph *graph,
 
     graph->speed = new_speed;
 
-    if(graph->timer_index) {
+    if (graph->timer_index) {
         g_source_remove (graph->timer_index);
         graph->timer_index = g_timeout_add (graph->speed / graph->frames_per_unit,
-                                        load_graph_update,
-                                        graph);
+                                            load_graph_update,
+                                            graph);
     }
 
     graph->clear_background();
