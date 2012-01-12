@@ -44,6 +44,11 @@
 #include <set>
 #include <list>
 
+#ifdef HAVE_SYSTEMD
+#include <systemd/sd-daemon.h>
+#include <systemd/sd-login.h>
+#endif
+
 #include "procman.h"
 #include "selection.h"
 #include "proctable.h"
@@ -248,6 +253,10 @@ proctable_new (ProcData * const procdata)
         /* xgettext: combined noun, the function the process is waiting in, see wchan ps(1) */
         N_("Waiting Channel"),
         N_("Control Group"),
+        N_("Unit"),
+        N_("Session"),
+        N_("Seat"),
+        N_("Owner"),
         N_("Priority"),
         NULL,
         "POINTER"
@@ -279,6 +288,10 @@ proctable_new (ProcData * const procdata)
                                 G_TYPE_ULONG,       /* Memory       */
                                 G_TYPE_STRING,      /* wchan        */
                                 G_TYPE_STRING,      /* Cgroup       */
+                                G_TYPE_STRING,      /* Unit         */
+                                G_TYPE_STRING,      /* Session      */
+                                G_TYPE_STRING,      /* Seat         */
+                                G_TYPE_STRING,      /* Owner        */
                                 G_TYPE_STRING,      /* Priority     */
                                 GDK_TYPE_PIXBUF,    /* Icon         */
                                 G_TYPE_POINTER,     /* ProcInfo     */
@@ -463,6 +476,17 @@ proctable_new (ProcData * const procdata)
         gtk_tree_view_column_set_visible(column, FALSE);
     }
 
+#ifdef HAVE_SYSTEMD
+    if (sd_booted() <= 0)
+#endif
+    {
+        GtkTreeViewColumn *column;
+
+        for (i = COL_UNIT; i <= COL_OWNER; i++) {
+            column = my_gtk_tree_view_get_column_with_sort_column_id(GTK_TREE_VIEW(proctree), i);
+            gtk_tree_view_column_set_visible(column, FALSE);
+        }
+    }
 
     g_signal_connect (G_OBJECT (gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree))),
                       "changed",
@@ -486,6 +510,9 @@ ProcInfo::~ProcInfo()
     g_free(this->arguments);
     g_free(this->security_context);
     g_free(this->cgroup_name);
+    g_free(this->unit);
+    g_free(this->session);
+    g_free(this->seat);
 }
 
 
@@ -513,16 +540,9 @@ get_process_name (ProcInfo *info,
     info->name = g_strdup (cmd);
 }
 
-
-
-void
-ProcInfo::set_user(guint uid)
+std::string
+ProcInfo::lookup_user(guint uid)
 {
-    if (G_LIKELY(this->uid == uid))
-        return;
-
-    this->uid = uid;
-
     typedef std::pair<ProcInfo::UserMap::iterator, bool> Pair;
     ProcInfo::UserMap::value_type hint(uid, "");
     Pair p(ProcInfo::users.insert(hint));
@@ -542,10 +562,18 @@ ProcInfo::set_user(guint uid)
         }
     }
 
-    this->user = p.first->second;
+    return p.first->second;
 }
 
+void
+ProcInfo::set_user(guint uid)
+{
+    if (G_LIKELY(this->uid == uid))
+        return;
 
+    this->uid = uid;
+    this->user = lookup_user(uid);
+}
 
 static void get_process_memory_writable(ProcInfo *info)
 {
@@ -620,6 +648,10 @@ update_info_mutable_cols(ProcInfo *info)
     tree_store_update(model, &info->node, COL_MEM, info->mem);
     tree_store_update(model, &info->node, COL_WCHAN, info->wchan);
     tree_store_update(model, &info->node, COL_CGROUP, info->cgroup_name);
+    tree_store_update(model, &info->node, COL_UNIT, info->unit);
+    tree_store_update(model, &info->node, COL_SESSION, info->session);
+    tree_store_update(model, &info->node, COL_SEAT, info->seat);
+    tree_store_update(model, &info->node, COL_OWNER, info->owner.c_str());
 }
 
 
@@ -704,7 +736,35 @@ remove_info_from_tree (ProcData *procdata, GtkTreeModel *model,
     procman::poison(current->node, 0x69);
 }
 
+static void
+get_process_systemd_info(ProcInfo *info)
+{
+#ifdef HAVE_SYSTEMD
+    uid_t uid;
 
+    if (sd_booted() <= 0)
+        return;
+
+    free(info->unit);
+    info->unit = NULL;
+    sd_pid_get_unit(info->pid, &info->unit);
+
+    free(info->session);
+    info->session = NULL;
+    sd_pid_get_session(info->pid, &info->session);
+
+    free(info->seat);
+    info->seat = NULL;
+
+    if (info->session != NULL)
+        sd_session_get_seat(info->session, &info->seat);
+
+    if (sd_pid_get_owner_uid(info->pid, &uid) >= 0)
+        info->owner = info->lookup_user(uid);
+    else
+        info->owner = "";
+#endif
+}
 
 static void
 update_info (ProcData *procdata, ProcInfo *info)
@@ -739,6 +799,8 @@ update_info (ProcData *procdata, ProcInfo *info)
 
     /* get cgroup data */
     get_process_cgroup_info(info);
+
+    get_process_systemd_info(info);
 }
 
 
@@ -785,10 +847,10 @@ ProcInfo::ProcInfo(pid_t pid)
     get_process_selinux_context (info);
     info->cgroup_name = NULL;
     get_process_cgroup_info(info);
+
+    info->unit = info->session = info->seat = NULL;
+    get_process_systemd_info(info);
 }
-
-
-
 
 static void
 refresh_list (ProcData *procdata, const pid_t* pid_list, const guint n)

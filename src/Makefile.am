@@ -4,7 +4,8 @@ INCLUDES = \
 	-DPROCMAN_DATADIR=\""$(datadir)/procman/"\" \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-DDATADIR=\""$(datadir)"\" \
-	@PROCMAN_CFLAGS@
+	@PROCMAN_CFLAGS@ \
+	@SYSTEMD_CFLAGS@
 
 bin_PROGRAMS = gnome-system-monitor
 
@@ -47,7 +48,7 @@ gnome_system_monitor_SOURCES = \
   $(gnome_system_monitor_cpp_files) \
   $(gnome_system_monitor_c_files)
 
-gnome_system_monitor_LDADD = @PROCMAN_LIBS@ libbacon.la
+gnome_system_monitor_LDADD = @PROCMAN_LIBS@ @SYSTEMD_LIBS@ libbacon.la
 
 noinst_LTLIBRARIES = libbacon.la
 libbacon_la_SOURCES = \

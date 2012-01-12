@@ -139,6 +139,12 @@ MutableProcInfo()
     guint pcpu;
     gint nice;
     gchar *cgroup_name;
+
+    gchar *unit;
+    gchar *session;
+    gchar *seat;
+
+    std::string owner;
 };
 
 
@@ -173,6 +179,7 @@ class ProcInfo
     // adds one more ref to icon
     void set_icon(Glib::RefPtr<Gdk::Pixbuf> icon);
     void set_user(guint uid);
+    std::string lookup_user(guint uid);
 
     GtkTreeIter     node;
     Glib::RefPtr<Gdk::Pixbuf> pixbuf;

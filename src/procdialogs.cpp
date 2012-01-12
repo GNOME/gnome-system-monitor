@@ -24,6 +24,11 @@
 
 #include <signal.h>
 #include <string.h>
+
+#ifdef HAVE_SYSTEMD
+#include <systemd/sd-daemon.h>
+#endif
+
 #include "procdialogs.h"
 #include "proctable.h"
 #include "callbacks.h"
@@ -462,6 +467,16 @@ create_field_page(GtkWidget *tree, const char* text)
 
         column_id = gtk_tree_view_column_get_sort_column_id(column);
         if ((column_id == COL_CGROUP) && (!cgroups_enabled()))
+            continue;
+
+        if ((column_id == COL_UNIT ||
+             column_id == COL_SESSION ||
+             column_id == COL_SEAT ||
+             column_id == COL_OWNER)
+#ifdef HAVE_SYSTEMD
+            && sd_booted() <= 0
+#endif
+                )
             continue;
 
         visible = gtk_tree_view_column_get_visible (column);
