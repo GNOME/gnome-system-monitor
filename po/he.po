@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-30 11:16+0200\n"
-"PO-Revision-Date: 2011-12-30 11:19+0200\n"
+"POT-Creation-Date: 2012-01-13 09:29+0200\n"
+"PO-Revision-Date: 2012-01-13 09:30+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <sh.yaron@gmail.com>\n"
 "Language: he\n"
@@ -26,7 +26,7 @@ msgstr ""
 #: ../gnome-system-monitor.desktop.in.in.h:1
 #: ../src/callbacks.cpp:176
 #: ../src/interface.cpp:627
-#: ../src/procman.cpp:698
+#: ../src/procman.cpp:707
 msgid "System Monitor"
 msgstr "צג המערכת"
 
@@ -601,8 +601,8 @@ msgid "0 for the System Info, 1 for the processes list, 2 for the resources and 
 msgstr "0 for the System Info, 1 for the processes list, 2 for the resources and 3 for the disks list"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:2
-msgid "Default graph CPU color"
-msgstr "Default graph CPU color"
+msgid "CPU colors"
+msgstr "צבעי המעבדים"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
 msgid "Default graph incoming network traffic color"
@@ -637,248 +637,252 @@ msgid "Disk view sort order"
 msgstr "Disk view sort order"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
+msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
+msgstr "כל רשומה היא מהסוג (מס׳ מעבד, ערך הקסדצימלי של צבע)"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
 msgid "Enable/Disable smooth refresh"
 msgstr "Enable/Disable smooth refresh"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
 msgid "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage is divided by the total number of CPUs. Otherwise, it operates in 'Irix mode'."
 msgstr "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage is divided by the total number of CPUs. Otherwise, it operates in 'Irix mode'."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
 msgid "Main Window X position"
 msgstr "Main Window X position"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
 msgid "Main Window Y position"
 msgstr "Main Window Y position"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
 msgid "Main Window height"
 msgstr "Main Window height"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
 msgid "Main Window width"
 msgstr "Main Window width"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
 msgid "Memory map sort column"
 msgstr "Memory map sort column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
 msgid "Memory map sort order"
 msgstr "Memory map sort order"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
 msgid "Open files sort column"
 msgstr "Open files sort column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
 msgid "Open files sort order"
 msgstr "Open files sort order"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
 msgid "Process view columns order"
 msgstr "Process view columns order"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
 msgid "Process view sort column"
 msgstr "Process view sort column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
 msgid "Process view sort order"
 msgstr "Process view sort order"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
 msgid "Saves the currently viewed tab"
 msgstr "Saves the currently viewed tab"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
 msgid "Show network traffic in bits"
 msgstr "הצגת תעבורת הרשת בסיביות"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
 #, no-c-format
 msgid "Show process 'CPU %' column on startup"
 msgstr "Show process 'CPU %' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
 msgid "Show process 'CPU Time' column on startup"
 msgstr "Show process 'CPU Time' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
 msgid "Show process 'Command Line' column on startup"
 msgstr "Show process 'Command Line' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
 msgid "Show process 'Control Group' column on startup"
 msgstr "Show process 'Control Group' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
 msgid "Show process 'Memory' column on startup"
 msgstr "Show process 'Memory' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
 msgid "Show process 'Name' column on startup"
 msgstr "Show process 'Name' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
 msgid "Show process 'Nice' column on startup"
 msgstr "Show process 'Nice' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
 msgid "Show process 'PID' column on startup"
 msgstr "Show process 'PID' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
 msgid "Show process 'Priority' column on startup"
 msgstr "Show process 'Priority' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
 msgid "Show process 'Resident Memory' column on startup"
 msgstr "Show process 'Resident Memory' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
 msgid "Show process 'SELinux Security Context' column on startup"
 msgstr "Show process 'SELinux Security Context' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
 msgid "Show process 'Shared Memory' column on startup"
 msgstr "Show process 'Shared Memory' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
 msgid "Show process 'Started' column on startup"
 msgstr "Show process 'Started' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
 msgid "Show process 'Status' column on startup"
 msgstr "Show process 'Status' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
 msgid "Show process 'User' column on startup"
 msgstr "Show process 'User' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
 msgid "Show process 'Virtual Memory' column on startup"
 msgstr "Show process 'Virtual Memory' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:44
 msgid "Show process 'Waiting Channel' column on startup"
 msgstr "Show process 'Waiting Channel' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:44
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
 msgid "Show process 'Writable Memory' column on startup"
 msgstr "Show process 'Writable Memory' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
 msgid "Show process 'X Server Memory' column on startup"
 msgstr "Show process 'X Server Memory' column on startup"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
 msgid "Show process dependencies in tree form"
 msgstr "Show process dependencies in tree form"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
 msgid "Show warning dialog when killing processes"
 msgstr "Show warning dialog when killing processes"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
 msgid "Solaris mode for CPU percentage"
 msgstr "Solaris mode for CPU percentage"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Time in milliseconds between updates of the devices list"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Time in milliseconds between updates of the graphs"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Time in milliseconds between updates of the process view"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
 msgid "Whether information about all file systems should be displayed"
 msgstr "Whether information about all file systems should be displayed"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
 msgid "Whether to display information about all file systems (including types like 'autofs' and 'procfs'). Useful for getting a list of all currently mounted file systems."
 msgstr "Whether to display information about all file systems (including types like 'autofs' and 'procfs'). Useful for getting a list of all currently mounted file systems."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
 #, no-c-format
 msgid "Width of process 'CPU %' column"
 msgstr "Width of process 'CPU %' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
 msgid "Width of process 'CPU Time' column"
 msgstr "Width of process 'CPU Time' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
 msgid "Width of process 'Command Line' column"
 msgstr "Width of process 'Command Line' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
 msgid "Width of process 'Control Group' column"
 msgstr "Width of process 'Control Group' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
 msgid "Width of process 'Memory' column"
 msgstr "Width of process 'Memory' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
 msgid "Width of process 'Name' column"
 msgstr "Width of process 'Name' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
 msgid "Width of process 'Nice' column"
 msgstr "Width of process 'Nice' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
 msgid "Width of process 'PID' column"
 msgstr "Width of process 'PID' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
 msgid "Width of process 'Priority' column"
 msgstr "Width of process 'Priority' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
 msgid "Width of process 'Resident Memory' column"
 msgstr "Width of process 'Resident Memory' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
 msgid "Width of process 'SELinux Security Context' column"
 msgstr "Width of process 'SELinux Security Context' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
 msgid "Width of process 'Shared Memory' column"
 msgstr "Width of process 'Shared Memory' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
 msgid "Width of process 'Started' column"
 msgstr "Width of process 'Started' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
 msgid "Width of process 'Status' column"
 msgstr "Width of process 'Status' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
 msgid "Width of process 'User' column"
 msgstr "Width of process 'User' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
 msgid "Width of process 'Virtual Memory' column"
 msgstr "Width of process 'Virtual Memory' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
 msgid "Width of process 'Waiting Channel' column"
 msgstr "Width of process 'Waiting Channel' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
 msgid "Width of process 'Writable Memory' column"
 msgstr "Width of process 'Writable Memory' column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
 msgid "Width of process 'X Server Memory' column"
 msgstr "Width of process 'X Server Memory' column"
 
@@ -1005,7 +1009,7 @@ msgstr "הצגת _כל מערכות הקבצים"
 msgid "File system i_nformation shown in list:"
 msgstr "_מידע על מערכות קבצים שיוצג ברשימה:"
 
-#: ../src/procman.cpp:644
+#: ../src/procman.cpp:654
 msgid "A simple process and system monitor."
 msgstr "צג פשוט למעקב אחר המערכת על תהליכיה."
 
@@ -1083,7 +1087,7 @@ msgstr "קבוצת הבקרה"
 msgid "Priority"
 msgstr "עדיפות"
 
-#: ../src/proctable.cpp:994
+#: ../src/proctable.cpp:1014
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "ממוצעי עומס עבור ‎1, 5, 15 הדקות האחרונות: %0.2f, %0.2f, %0.2f"
@@ -1238,15 +1242,18 @@ msgid_plural "%u bytes"
 msgstr[0] "בית אחד"
 msgstr[1] "%u בתים"
 
-#: ../src/util.cpp:394
+#: ../src/util.cpp:420
 msgid "<i>N/A</i>"
 msgstr "לא זמין"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:542
+#: ../src/util.cpp:582
 #, c-format
 msgid "%s/s"
 msgstr "%s/שנייה"
+
+#~ msgid "Default graph CPU color"
+#~ msgstr "Default graph CPU color"
 
 #~ msgid "_Change Priority…"
 #~ msgstr "_שינוי העדיפות…"
