@@ -510,9 +510,12 @@ ProcInfo::~ProcInfo()
     g_free(this->arguments);
     g_free(this->security_context);
     g_free(this->cgroup_name);
-    g_free(this->unit);
-    g_free(this->session);
-    g_free(this->seat);
+    // The following are allocated inside of the sd_pid_get_*
+    // functions using malloc(). Free with free() instead of g_free()
+    // to insure proper clean up.
+    free(this->unit);
+    free(this->session);
+    free(this->seat);
 }
 
 
