@@ -25,7 +25,7 @@
 
 #include "procman.h"
 
-void 		create_procproperties_dialog (ProcData *procdata);
+void create_procproperties_dialog (ProcData *procdata);
 
 #endif
 

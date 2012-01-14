@@ -140,8 +140,8 @@ cb_show_open_files (GtkAction *action, gpointer data)
 void
 cb_show_process_properties (GtkAction *action, gpointer data)
 {
-	ProcData *procdata = static_cast<ProcData*>(data);
-	create_procproperties_dialog (procdata);
+    ProcData *procdata = static_cast<ProcData*>(data);
+    create_procproperties_dialog (procdata);
 }
 
 void

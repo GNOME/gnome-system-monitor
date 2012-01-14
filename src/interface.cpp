@@ -81,8 +81,8 @@ static const GtkActionEntry menu_entries[] =
     // Translators: this means 'Files that are open' (open is no verb here)
     { "OpenFiles", NULL, N_("Open _Files"), "<control>F",
       N_("View the files opened by a process"), G_CALLBACK (cb_show_open_files) },
-	{ "ProcessProperties", NULL, N_("_Properties"), NULL,
-	  N_("View additional information about a process"), G_CALLBACK (cb_show_process_properties) },
+    { "ProcessProperties", NULL, N_("_Properties"), NULL,
+      N_("View additional information about a process"), G_CALLBACK (cb_show_process_properties) },
 
 
     { "HelpContents", GTK_STOCK_HELP, N_("_Contents"), "F1",
