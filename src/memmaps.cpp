@@ -469,7 +469,7 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
                                                  GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
                                                  NULL);
     gtk_window_set_resizable(GTK_WINDOW(memmapsdialog), TRUE);
-    gtk_window_set_default_size(GTK_WINDOW(memmapsdialog), 575, 400);
+    gtk_window_set_default_size(GTK_WINDOW(memmapsdialog), 620, 400);
     gtk_container_set_border_width(GTK_CONTAINER(memmapsdialog), 5);
 
     dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG(memmapsdialog));
