@@ -179,17 +179,31 @@ apply_cpu_color_settings(GSettings *settings, ProcData * const procdata)
     GVariant *cpu_colors_var = g_settings_get_value(settings, "cpu-colors");
     gsize n = g_variant_n_children(cpu_colors_var);
 
-    guint cpu_i;
     gchar *color;
-    for (guint i = 0; i < static_cast<guint>(procdata->config.num_cpus); i++) {
-        if(i <= n) {
-            g_variant_get_child(cpu_colors_var, i, "(us)", &cpu_i, &color);
-        }
-        if (!color)
-            color = g_strdup ("#f25915e815e8");
 
+    // Create builder to add the new colors if user has more than the number of cores with defaults.
+    GVariantBuilder builder;
+    GVariant* child;
+    GVariant* full;
+
+    g_variant_builder_init(&builder, G_VARIANT_TYPE_ARRAY);
+
+    for (guint i = 0; i < static_cast<guint>(procdata->config.num_cpus); i++) {
+        if(i < n) {
+            child = g_variant_get_child_value ( cpu_colors_var, i );
+            g_variant_get_child( child, 1, "s", &color);
+            g_variant_builder_add_value ( &builder, child);
+        } else {
+            color = g_strdup ("#f25915e815e8");
+            g_variant_builder_add(&builder, "(us)", i, color);
+        }
         gdk_color_parse(color, &procdata->config.cpu_color[i]);
         g_free (color);
+    }
+    full = g_variant_builder_end(&builder);
+    // if the user has more cores than colors stored in the gsettings, store the newly built gvariant in gsettings
+    if (n < static_cast<guint>(procdata->config.num_cpus)) {
+        g_settings_set_value(settings, "cpu-colors", full);
     }
 }
 
