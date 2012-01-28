@@ -261,7 +261,7 @@ fill_image_buffer_from_file (cairo_t *cr, const char *filePath)
   tmp_cr = cairo_create (tmp_surface);
   rsvg_handle_render_cairo (handle, tmp_cr);
   cairo_destroy (tmp_cr);
-  rsvg_handle_free (handle);
+  g_object_unref (handle);
   return tmp_surface;
 }
 
