@@ -152,16 +152,10 @@ void
 procdialog_create_renice_dialog (ProcData *procdata)
 {
     ProcInfo *info = procdata->selected_process;
-    GtkWidget *dialog = NULL;
-    GtkWidget *dialog_vbox;
-    GtkWidget *vbox;
     GtkWidget *label;
     GtkWidget *priority_label;
-    GtkWidget *table;
     GtkAdjustment *renice_adj;
-    GtkWidget *hscale;
-    GtkWidget *button;
-    GtkWidget *icon;
+    GtkBuilder *builder;
     gchar     *text;
     gchar     *dialog_title;
 
@@ -171,75 +165,50 @@ procdialog_create_renice_dialog (ProcData *procdata)
     if (!info)
         return;
 
+    gchar* filename = g_build_filename (GSM_DATA_DIR, "preferences.ui", NULL);
+
+    builder = gtk_builder_new();
+    gtk_builder_add_from_file (builder, filename, NULL);
+
+    renice_dialog = GTK_WIDGET (gtk_builder_get_object (builder, "renice_dialog"));
+
     dialog_title = g_strdup_printf (_("Change Priority of Process »%s« (PID: %u)"),
                                     info->name, info->pid);
-    dialog = gtk_dialog_new_with_buttons (dialog_title, NULL,
-                                          GTK_DIALOG_DESTROY_WITH_PARENT,
-                                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                          NULL);
+
+    gtk_window_set_title (GTK_WINDOW(renice_dialog), dialog_title);
+    
     g_free (dialog_title);
 
-    renice_dialog = dialog;
-    gtk_window_set_resizable (GTK_WINDOW (renice_dialog), FALSE);
-    gtk_container_set_border_width (GTK_CONTAINER (renice_dialog), 5);
-
-    button = gtk_button_new_with_mnemonic (_("Change _Priority"));
-    gtk_widget_set_can_default (button, TRUE);
-
-    icon = gtk_image_new_from_stock (GTK_STOCK_OK, GTK_ICON_SIZE_BUTTON);
-    gtk_button_set_image (GTK_BUTTON (button), icon);
-
-    gtk_dialog_add_action_widget (GTK_DIALOG (renice_dialog), button, 100);
     gtk_dialog_set_default_response (GTK_DIALOG (renice_dialog), 100);
     new_nice_value = -100;
 
-    dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
-    gtk_box_set_spacing (GTK_BOX (dialog_vbox), 2);
-    gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 5);
+    renice_adj = GTK_ADJUSTMENT (gtk_builder_get_object (builder, "renice_adj"));
+    gtk_adjustment_configure( GTK_ADJUSTMENT(renice_adj), info->nice, RENICE_VAL_MIN, RENICE_VAL_MAX, 1, 1, 0);
 
-    vbox = gtk_vbox_new (FALSE, 12);
-    gtk_box_pack_start (GTK_BOX (dialog_vbox), vbox, TRUE, TRUE, 0);
-    gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-
-    table = gtk_table_new (2, 2, FALSE);
-    gtk_table_set_col_spacings (GTK_TABLE(table), 12);
-    gtk_table_set_row_spacings (GTK_TABLE(table), 6);
-    gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
-
-    label = gtk_label_new_with_mnemonic (_("_Nice value:"));
-    gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 2,
-                      GTK_FILL, GTK_FILL, 0, 0);
-
-    renice_adj = gtk_adjustment_new (info->nice, RENICE_VAL_MIN, RENICE_VAL_MAX, 1, 1, 0);
     new_nice_value = 0;
-    hscale = gtk_hscale_new (renice_adj);
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label), hscale);
-    gtk_scale_set_digits (GTK_SCALE (hscale), 0);
-    gtk_table_attach (GTK_TABLE (table), hscale, 1, 2, 0, 1,
-                      static_cast<GtkAttachOptions>(GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
-    text = g_strdup_printf(_("(%s Priority)"), procman::get_nice_level (info->nice));
-    priority_label = gtk_label_new (text);
-    gtk_table_attach (GTK_TABLE (table), priority_label, 1, 2, 1, 2,
-                      GTK_FILL, GTK_FILL, 0, 0);
-    g_free(text);
+    
+    priority_label =  GTK_WIDGET (gtk_builder_get_object (builder, "priority_label"));
+    gtk_label_set_label (GTK_LABEL(priority_label), procman::get_nice_level (info->nice));
 
     text = g_strconcat("<small><i><b>", _("Note:"), "</b> ",
                        _("The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."),
                        "</i></small>", NULL);
-    label = gtk_label_new (_(text));
+    label = GTK_WIDGET (gtk_builder_get_object (builder, "note_label"));
+    gtk_label_set_label (GTK_LABEL(label), _(text));
     gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-    gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-    gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
     g_free (text);
 
-    g_signal_connect (G_OBJECT (dialog), "response",
+    g_signal_connect (G_OBJECT (renice_dialog), "response",
                       G_CALLBACK (renice_dialog_button_pressed), procdata);
     g_signal_connect (G_OBJECT (renice_adj), "value_changed",
                       G_CALLBACK (renice_scale_changed), priority_label);
 
-    gtk_widget_show_all (dialog);
+    gtk_widget_show_all (renice_dialog);
 
+    gtk_builder_connect_signals (builder, NULL);
 
+    g_object_unref (G_OBJECT (builder));
+    //g_free (filename);
 }
 
 static void
@@ -591,6 +560,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
     }
     gtk_builder_connect_signals (builder, NULL);
     g_object_unref (G_OBJECT (builder));
+    g_free (filename);
 }
 
 
