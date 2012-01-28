@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
+  <object class="GtkImage" id="ok_image">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-ok</property>
+  </object>
   <object class="GtkDialog" id="preferences_dialog">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
@@ -13,10 +18,6 @@
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog_layout">
         <property name="can_focus">False</property>
-        <property name="margin_left">5</property>
-        <property name="margin_right">5</property>
-        <property name="margin_top">5</property>
-        <property name="margin_bottom">5</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child internal-child="action_area">
@@ -66,8 +67,6 @@
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <property name="column_spacing">2</property>
-            <property name="n_rows">1</property>
-            <property name="n_columns">1</property>
             <child>
               <object class="GtkNotebook" id="notebook">
                 <property name="visible">True</property>
@@ -84,15 +83,11 @@
                     <property name="border_width">12</property>
                     <property name="orientation">vertical</property>
                     <property name="row_spacing">18</property>
-                    <property name="n_rows">2</property>
-                    <property name="n_columns">1</property>
                     <child>
                       <object class="GtkGrid" id="processes_behavior">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="row_spacing">6</property>
-                        <property name="n_rows">2</property>
-                        <property name="n_columns">1</property>
                         <child>
                           <object class="GtkLabel" id="processes_behavior_label">
                             <property name="visible">True</property>
@@ -121,16 +116,12 @@
                             <property name="margin_left">12</property>
                             <property name="hexpand">True</property>
                             <property name="row_spacing">6</property>
-                            <property name="n_rows">4</property>
-                            <property name="n_columns">1</property>
                             <child>
                               <object class="GtkGrid" id="update_interval_grid">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
                                 <property name="column_spacing">12</property>
-                                <property name="n_rows">1</property>
-                                <property name="n_columns">2</property>
                                 <child>
                                   <object class="GtkLabel" id="processes_interval_label">
                                     <property name="visible">True</property>
@@ -249,8 +240,6 @@
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
                         <property name="row_spacing">6</property>
-                        <property name="n_rows">2</property>
-                        <property name="n_columns">1</property>
                         <child>
                           <object class="GtkLabel" id="processes_fields_label">
                             <property name="visible">True</property>
@@ -281,8 +270,6 @@
                             <property name="vexpand">True</property>
                             <property name="orientation">vertical</property>
                             <property name="row_spacing">6</property>
-                            <property name="n_rows">2</property>
-                            <property name="n_columns">1</property>
                             <child>
                               <object class="GtkLabel" id="processes_fields_table_label">
                                 <property name="visible">True</property>
@@ -362,16 +349,12 @@
                     <property name="border_width">12</property>
                     <property name="orientation">vertical</property>
                     <property name="row_spacing">18</property>
-                    <property name="n_rows">1</property>
-                    <property name="n_columns">1</property>
                     <child>
                       <object class="GtkGrid" id="resources_graphs">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="hexpand">True</property>
                         <property name="row_spacing">6</property>
-                        <property name="n_rows">2</property>
-                        <property name="n_columns">1</property>
                         <child>
                           <object class="GtkLabel" id="resources_graphs_label">
                             <property name="visible">True</property>
@@ -401,16 +384,12 @@
                             <property name="hexpand">True</property>
                             <property name="vexpand">True</property>
                             <property name="row_spacing">6</property>
-                            <property name="n_rows">2</property>
-                            <property name="n_columns">1</property>
                             <child>
                               <object class="GtkGrid" id="resources_update_interval">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
                                 <property name="column_spacing">12</property>
-                                <property name="n_rows">1</property>
-                                <property name="n_columns">2</property>
                                 <child>
                                   <object class="GtkLabel" id="resources_interval_label">
                                     <property name="visible">True</property>
@@ -510,15 +489,11 @@
                     <property name="border_width">12</property>
                     <property name="orientation">vertical</property>
                     <property name="row_spacing">18</property>
-                    <property name="n_rows">2</property>
-                    <property name="n_columns">1</property>
                     <child>
                       <object class="GtkGrid" id="devices_behavior">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="row_spacing">6</property>
-                        <property name="n_rows">2</property>
-                        <property name="n_columns">1</property>
                         <child>
                           <object class="GtkLabel" id="devices_behavior_label">
                             <property name="visible">True</property>
@@ -547,16 +522,12 @@
                             <property name="margin_left">12</property>
                             <property name="hexpand">True</property>
                             <property name="row_spacing">6</property>
-                            <property name="n_rows">2</property>
-                            <property name="n_columns">1</property>
                             <child>
                               <object class="GtkGrid" id="devices_interval_grid">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
                                 <property name="column_spacing">12</property>
-                                <property name="n_rows">1</property>
-                                <property name="n_columns">2</property>
                                 <child>
                                   <object class="GtkLabel" id="devices_interval_label">
                                     <property name="visible">True</property>
@@ -638,8 +609,6 @@
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
                         <property name="row_spacing">6</property>
-                        <property name="n_rows">2</property>
-                        <property name="n_columns">1</property>
                         <child>
                           <object class="GtkLabel" id="devices_fields_label">
                             <property name="visible">True</property>
@@ -670,8 +639,6 @@
                             <property name="vexpand">True</property>
                             <property name="orientation">vertical</property>
                             <property name="row_spacing">6</property>
-                            <property name="n_rows">2</property>
-                            <property name="n_columns">1</property>
                             <child>
                               <object class="GtkLabel" id="devices_fields_table_label">
                                 <property name="visible">True</property>
@@ -766,6 +733,168 @@
     <action-widgets>
       <action-widget response="-11">help_button</action-widget>
       <action-widget response="-7">close_button</action-widget>
+    </action-widgets>
+  </object>
+  <object class="GtkAdjustment" id="renice_adj">
+    <property name="lower">-20</property>
+    <property name="upper">20</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkDialog" id="renice_dialog">
+    <property name="can_focus">False</property>
+    <property name="border_width">5</property>
+    <property name="resizable">False</property>
+    <property name="destroy_with_parent">True</property>
+    <property name="type_hint">dialog</property>
+    <property name="has_resize_grip">False</property>
+    <child internal-child="vbox">
+      <object class="GtkBox" id="renice_layout">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox" id="renice_action_area">
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="cancel_button">
+                <property name="label">gtk-cancel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_action_appearance">False</property>
+                <property name="use_stock">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="change_priority_button">
+                <property name="label" translatable="yes">Change _Priority</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="can_default">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_action_appearance">False</property>
+                <property name="image">ok_image</property>
+                <property name="use_underline">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkGrid" id="dialog_content_grid">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="border_width">12</property>
+            <property name="orientation">vertical</property>
+            <property name="row_spacing">12</property>
+            <child>
+              <object class="GtkGrid" id="renice_grid">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
+                <property name="row_spacing">6</property>
+                <property name="column_spacing">12</property>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="nice_value_label">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="yalign">0.80000001192092896</property>
+                    <property name="label" translatable="yes">_Nice value:</property>
+                    <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">nice_value_scale</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">0</property>
+                    <property name="width">1</property>
+                    <property name="height">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkScale" id="nice_value_scale">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="adjustment">renice_adj</property>
+                    <property name="round_digits">1</property>
+                    <property name="digits">0</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">0</property>
+                    <property name="width">1</property>
+                    <property name="height">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="priority_label">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">1</property>
+                    <property name="width">1</property>
+                    <property name="height">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">0</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="note_label">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">&lt;small&gt;&lt;i&gt;&lt;b&gt;Note:&lt;/b&gt; The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority.&lt;/i&gt;&lt;/small&gt;</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">1</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">cancel_button</action-widget>
+      <action-widget response="100">change_priority_button</action-widget>
     </action-widgets>
   </object>
 </interface>
