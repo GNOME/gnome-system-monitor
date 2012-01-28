@@ -51,6 +51,8 @@ gnome_system_monitor_SOURCES = \
 
 gnome_system_monitor_LDADD = @PROCMAN_LIBS@ @SYSTEMD_LIBS@ libbacon.la
 
+gnome_system_monitor_CPPFLAGS = -DGSM_DATA_DIR=\""$(pkgdatadir)"\"
+
 noinst_LTLIBRARIES = libbacon.la
 libbacon_la_SOURCES = \
 	bacon-message-connection.c \

@@ -492,8 +492,10 @@ procdialog_create_preferences_dialog (ProcData *procdata)
     if (prefs_dialog)
         return;
 
+    gchar* filename = g_build_filename (GSM_DATA_DIR, "preferences.ui", NULL);
+
     builder = gtk_builder_new();
-    gtk_builder_add_from_file (builder, "preferences.ui", NULL);
+    gtk_builder_add_from_file (builder, filename, NULL);
 
     prefs_dialog = GTK_WIDGET (gtk_builder_get_object (builder, "preferences_dialog"));
 

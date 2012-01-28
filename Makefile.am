@@ -3,7 +3,11 @@ ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
 SUBDIRS = pixmaps po src help
 
+uidir = $(pkgdatadir)
+ui_DATA = data/preferences.ui
+
 EXTRA_DIST = \
+	$(ui_DATA) \
 	gnome-doc-utils.make \
 	gnome-system-monitor.desktop.in \
 	gnome-system-monitor.doap \
