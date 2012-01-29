@@ -679,7 +679,12 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, bool forced = false)
             GtkTreePath *parent_node = gtk_tree_model_get_path(model, &parent->node);
             gtk_tree_store_insert(GTK_TREE_STORE(model), &info->node, &parent->node, 0);
 
-            if (!gtk_tree_view_row_expanded(GTK_TREE_VIEW(procdata->tree), parent_node))
+            if (!gtk_tree_view_row_expanded(GTK_TREE_VIEW(procdata->tree), parent_node)
+#ifdef __linux__
+                // on linuxes we don't want to expand kthreadd by default (always has pid 2)
+                && (parent->pid != 2)
+#endif
+            )
                 gtk_tree_view_expand_row(GTK_TREE_VIEW(procdata->tree), parent_node, FALSE);
             gtk_tree_path_free(parent_node);
         } else
