@@ -196,6 +196,7 @@ gsm_color_button_class_init (GSMColorButtonClass * klass)
 				   PROP_PERCENTAGE,
 				   g_param_spec_double ("fraction",
 							_("Fraction"),
+                            // TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
 							_("Percentage full for pie color pickers"),
 							0, 1, 0.5,
 							G_PARAM_READWRITE));
