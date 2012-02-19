@@ -8,21 +8,22 @@
 #
 # Ivar Smolin <okul@linux.ee>, 2005-2009.
 # Priit Laes <amd store20 com>, 2005, 2006.
+# Mattias Põldaru <mahfiaz@gmail.com>, 2011, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
-"monitor&component=general\n"
-"POT-Creation-Date: 2011-02-14 10:47+0000\n"
-"PO-Revision-Date: 2011-02-19 10:42+0200\n"
-"Last-Translator: Ivar Smolin <okul@linux.ee>\n"
-"Language-Team: Estonian <gnome-et@linux.ee>\n"
+"monitor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-02-17 16:08+0000\n"
+"PO-Revision-Date: 2012-02-18 08:27+0200\n"
+"Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
+"Language-Team: Estonian <>\n"
+"Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Language: et\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Content-Transfer-Encoding: 8bits\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 msgid "System Monitor"
 msgstr "Süsteemijälgija"
@@ -33,10 +34,20 @@ msgstr "Süsteemi oleku ja protsesside jälgimine"
 msgid "Show the System tab"
 msgstr "Süsteemi kaardi näitamine"
 
+msgid "Show the Processes tab"
+msgstr "Protsesside saki kuvamine"
+
+msgid "Show the Resources tab"
+msgstr "Ressursside saki kuvamine"
+
+msgid "Show the File Systems tab"
+msgstr "Failisüsteemide saki kuvamine"
+
 msgid "translator-credits"
 msgstr ""
 "Ivar Smolin <okul@linux.ee>, 2005-2009.\n"
-"Priit Laes <amd@store20.com>, 2005, 2006."
+"Priit Laes <amd@store20.com>, 2005, 2006.\n"
+"Mattias Põldaru <mahfiaz@gmail.com>, 2012."
 
 msgid "Device"
 msgstr "Seade"
@@ -81,8 +92,9 @@ msgstr "%d. %b %Y"
 msgid "Fraction"
 msgstr "Alamhulk"
 
-msgid "Percentage full for pie colour pickers"
-msgstr "Sektori värvuse valija protsentuaalne osa"
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+msgid "Percentage full for pie color pickers"
+msgstr "Sektori värvuse valija täisprotsent"
 
 msgid "Title"
 msgstr "Pealkiri"
@@ -155,8 +167,8 @@ msgstr "_Kõrvalda protsess"
 msgid "Force process to finish immediately"
 msgstr "Protsessi kõrvaldamine jõumeetodil"
 
-msgid "_Change Priority..."
-msgstr "Muuda _tähtsust..."
+msgid "_Change Priority"
+msgstr "_Muuda tähtsust"
 
 msgid "Change the order of priority of process"
 msgstr "Protsessi tähtsuse muutmine"
@@ -176,11 +188,18 @@ msgstr "_Mäluplaan"
 msgid "Open the memory maps associated with a process"
 msgstr "Protsessiga seotud mäluplaani avamine"
 
+#. Translators: this means 'Files that are open' (open is no verb here)
 msgid "Open _Files"
 msgstr "Avatud _failid"
 
 msgid "View the files opened by a process"
 msgstr "Protsessi poolt avatud failide vaatamine"
+
+msgid "_Properties"
+msgstr "_Omadused"
+
+msgid "View additional information about a process"
+msgstr "Protsessi kohta lisateabe kuvamine"
 
 msgid "_Contents"
 msgstr "_Sisukord"
@@ -212,11 +231,52 @@ msgstr "Kuva kõiki protsesse"
 msgid "M_y Processes"
 msgstr "_Minu protsessid"
 
-msgid "Show user own process"
-msgstr "Kuva ainult kasutaja enda protsesse"
+msgid "Show only user-owned processes"
+msgstr "Ainult kasutaja enda protsesside kuvamine"
+
+msgid "Very High"
+msgstr "Väga kõrge"
+
+msgid "Set process priority to very high"
+msgstr "Protsessi prioriteedi tõstmine väga kõrgeks"
+
+msgid "High"
+msgstr "Kõrge"
+
+msgid "Set process priority to high"
+msgstr "Protsessi prioriteedi tõstmine kõrgeks"
+
+msgid "Normal"
+msgstr "Tavaline"
+
+msgid "Set process priority to normal"
+msgstr "Protsessi prioriteedi määramine tavaliseks"
+
+msgid "Low"
+msgstr "Madal"
+
+msgid "Set process priority to low"
+msgstr "Protsessi prioriteedi langetamine madalaks"
+
+msgid "Very Low"
+msgstr "Väga madal"
+
+msgid "Set process priority to very low"
+msgstr "Protsessi prioriteedi langetamine väga madalaks"
+
+msgid "Custom"
+msgstr "Kohandatud"
+
+msgid "Set process priority manually"
+msgstr "Protsessi prioriteedi määramine käsitsi"
 
 msgid "End _Process"
 msgstr "_Lõpeta protsess"
+
+#. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
+#, c-format
+msgid "Pick a Color for '%s'"
+msgstr "Värvuse valimine '%s' jaoks"
 
 msgid "CPU History"
 msgstr "Protsessori koormuse ajalugu"
@@ -271,10 +331,13 @@ msgid_plural "%u seconds"
 msgstr[0] "%u sekund"
 msgstr[1] "%u sekundit"
 
+msgid "not available"
+msgstr "pole saadaval"
+
 #. xgettext: 540MiB (53 %) of 1.0 GiB
 #, c-format
-msgid "%s (%.1f %%) of %s"
-msgstr "%s (%.1f %%) %s-st"
+msgid "%s (%.1f%%) of %s"
+msgstr "%s (%.1f%%) %s-st"
 
 #, c-format
 msgid ""
@@ -350,7 +413,6 @@ msgstr "Jagatud ja muudetud"
 msgid "Inode"
 msgstr "Inode"
 
-#. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
 msgid "Memory Maps"
 msgstr "Mälu jaotumine"
 
@@ -392,27 +454,58 @@ msgstr "Avatud failid"
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_Protsessi \"%s\" (PID %u) poolt avatud failid:"
 
+msgid "Main Window width"
+msgstr "Peaakna laius"
+
+msgid "Main Window height"
+msgstr "Peaakna kõrgus"
+
+msgid "Main Window X position"
+msgstr "Peaakna asukoht X-teljel"
+
+msgid "Main Window Y position"
+msgstr "Peaakna asukoht Y-teljel"
+
+msgid "Show process dependencies in tree form"
+msgstr "Protsessi sõltuvuste näitamine puuvaates"
+
+msgid "Solaris mode for CPU percentage"
+msgstr "Solarise protsessorikasutuse režiim"
+
 msgid ""
-"0 for the System Info, 1 for the processes list, 2 for the resources and 3 "
-"for the disks list"
+"If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
+"is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
+"mode'."
 msgstr ""
-"0 süsteemse teabe jaoks, 1 protsesside loetelu jaoks, 2 ressurside jaoks ja "
-"3 ketaste loetelu jaoks"
+"Kui märgitud, siis süsteemijälgija tegutseb \"Solarise režiimis\", kus "
+"protsessi protsessorikasutus on jagatuid protsessorite koguarvuga. Vastasel "
+"juhul tegutsetakse \"Irixi režiimis\"."
 
-msgid "Default graph cpu color"
-msgstr "Graafiku protsessorijoone vaikimisi värv"
+msgid "Enable/Disable smooth refresh"
+msgstr "Luba/keela sujuv värskendus"
 
-msgid "Default graph incoming network traffic color"
-msgstr "Võrgu siseneva liikluse vaikimisi värvus graafikus"
+msgid "Show warning dialog when killing processes"
+msgstr "Protsesside kõrvaldamisel kuvada hoiatusdialooge"
 
-msgid "Default graph mem color"
-msgstr "Graafiku mälujoone vaikimisi värv"
+msgid "Time in milliseconds between updates of the process view"
+msgstr "Protsessivaate värskendamise sagedus millisekundites"
 
-msgid "Default graph outgoing network traffic color"
-msgstr "Võrgu väljuva liikluse vaikimisi värvus graafikus"
+msgid "Time in milliseconds between updates of the graphs"
+msgstr "Graafikute värskendamise sagedus millisekundites"
 
-msgid "Default graph swap color"
-msgstr "Graafiku saalejoone vaikimisi värv"
+msgid "Whether information about all file systems should be displayed"
+msgstr "Kas näidata teavet kõikide failisüsteemide kohta"
+
+msgid ""
+"Whether to display information about all file systems (including types like "
+"'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
+"file systems."
+msgstr ""
+"Kas näidata kõikide failisüsteemide (nende hulgas ka 'autofs' ja 'procfs') "
+"andmeid. See on kasulik kõigi ühendatud failisüsteemide loetelu saamiseks."
+
+msgid "Time in milliseconds between updates of the devices list"
+msgstr "Seadmete loetelu värskendamise sagedus millisekundites"
 
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
@@ -421,179 +514,211 @@ msgstr ""
 "Määrab milliseid protsesse vaikimisi kuvatakse. 0 - kõik, 1 - kasutaja omad "
 "ja 2 - kõik aktiivsed"
 
-msgid "Disk view columns order"
-msgstr "Kettavaate tulpade järjestus"
-
-msgid "Enable/Disable smooth refresh"
-msgstr "Luba/Keela sujuv värskendus"
-
-msgid ""
-"If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu usage "
-"is divided by the total number of CPUs. Else it operates in 'Irix mode'."
-msgstr ""
-"Kui märgitud, siis süsteemijälgija tegutseb \"Solarise režiimis\", kus "
-"protsessi protsessorikasutus on jagatuid protsessorite koguarvuga. Vastasel "
-"juhul tegutsetakse \"Irixi režiimis\"."
-
-msgid "Main Window height"
-msgstr "Peaakna kõrgus"
-
-msgid "Main Window width"
-msgstr "Peaakna laius"
-
-msgid "Process view columns order"
-msgstr "Protsessivaate tulpade järjestus"
-
-msgid "Process view sort column"
-msgstr "Protsessivaate sortimistulp"
-
-msgid "Process view sort order"
-msgstr "Protsessivaate sortimisjärjestus"
-
 msgid "Saves the currently viewed tab"
 msgstr "Hetkel kuvatava kaardi salvestamine"
+
+msgid ""
+"0 for the System Info, 1 for the processes list, 2 for the resources and 3 "
+"for the disks list"
+msgstr ""
+"0 süsteemse teabe jaoks, 1 protsesside loetelu jaoks, 2 ressurside jaoks ja "
+"3 ketaste loetelu jaoks"
+
+msgid "CPU colors"
+msgstr "CPU värvid"
+
+msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
+msgstr "Iga kirje on vormingus (CPU nr, värvikood kuueteistkümnendsüsteemis)"
+
+msgid "Default graph memory color"
+msgstr "Graafiku mälujoone vaikimisi värvus"
+
+msgid "Default graph swap color"
+msgstr "Graafiku saalejoone vaikimisi värvus"
+
+msgid "Default graph incoming network traffic color"
+msgstr "Võrgu siseneva liikluse vaikimisi värvus graafikus"
+
+msgid "Default graph outgoing network traffic color"
+msgstr "Võrgu väljuva liikluse vaikimisi värvus graafikus"
 
 msgid "Show network traffic in bits"
 msgstr "Kuva võrguliiklust bittides"
 
-#, no-c-format
-msgid "Show process 'CPU %' column on startup"
-msgstr "Käivitamisel näidatakse protsessitabeli 'CPU %' veergu"
+msgid "Process view sort column"
+msgstr "Protsessivaate sortimistulp"
 
-msgid "Show process 'CPU time' column on startup"
-msgstr "Käivitamisel näidatakse protsessitabeli CPU aja veergu"
+msgid "Process view columns order"
+msgstr "Protsessivaate tulpade järjestus"
 
-msgid "Show process 'PID' column on startup"
-msgstr "Käivitamisel näidatakse protsessitabeli PID-veergu"
+msgid "Process view sort order"
+msgstr "Protsessivaate sortimisjärjestus"
 
-msgid "Show process 'SELinux security context' column on startup"
-msgstr ""
-"Käivitamisel näidatakse protsessitabeli SELinux-i turvakonteksti veergu"
+msgid "Width of process 'Name' column"
+msgstr "Protsessi nimeveeru laius"
 
-msgid "Show process 'Waiting Channel' column on startup"
-msgstr "Käivitamisel näidatakse protsessitabeli ootekanali veergu"
+msgid "Show process 'Name' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis nimeveergu"
 
-msgid "Show process 'X server memory' column on startup"
-msgstr "Käivitamisel näidatakse protsessitabeli X-serveri mälu veergu"
+msgid "Width of process 'User' column"
+msgstr "Protsessi kasutajaveeru laius"
 
-msgid "Show process 'arguments' column on startup"
-msgstr "Käivitamisel näidatakse protsessitabeli argumentide veergu"
+msgid "Show process 'User' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis kasutajaveergu"
 
-msgid "Show process 'estimated memory usage' column on startup"
-msgstr ""
-"Käivitamisel näidatakse protsessitabeli hinnangulise mälukasutuse veergu"
+msgid "Width of process 'Status' column"
+msgstr "Protsessi olekuveeru laius"
 
-msgid "Show process 'name' column on startup"
-msgstr "Käivitamisel näidatakse protsessitabeli nimeveergu"
+msgid "Show process 'Status' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis olekuveergu"
 
-msgid "Show process 'nice' column on startup"
-msgstr "Käivitamisel näidatakse protsessitabeli prioriteedi veergu"
+msgid "Width of process 'Virtual Memory' column"
+msgstr "Protsessi virtuaalmälu veeru laius"
 
-msgid "Show process 'owner' column on startup"
-msgstr "Käivitamisel näidatakse protsessitabeli omaniku veergu"
+msgid "Show process 'Virtual Memory' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis virtuaalmälu veergu"
 
-msgid "Show process 'resident memory' column on startup"
-msgstr "Käivitamisel näidatakse protsessitabeli residentse mälu veergu"
+msgid "Width of process 'Resident Memory' column"
+msgstr "Protsessi residentse mälu veeru laius"
 
-msgid "Show process 'shared memory' column on startup"
-msgstr "Käivitamisel näidatakse protsessitabeli jagatud mälu veergu"
+msgid "Show process 'Resident Memory' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis residentse mälu veergu"
 
-msgid "Show process 'start time' column on startup"
-msgstr "Käivitamisel näidatakse protsessitabeli alustamise aja veergu"
+msgid "Width of process 'Writable Memory' column"
+msgstr "Protsessi kirjutatava mälu veeru laius"
 
-msgid "Show process 'status' column on startup"
-msgstr "Käivitamisel näidatakse protsessitabeli olekuveergu"
+msgid "Show process 'Writable Memory' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis kirjutatava mälu veergu"
 
-msgid "Show process 'virtual memory' column on startup"
-msgstr "Käivitamisel näidatakse protsessitabeli virtuaalmälu veergu"
+msgid "Width of process 'Shared Memory' column"
+msgstr "Protsessi jagatud mälu veeru laius"
 
-msgid "Show process 'writable memory' column on startup"
-msgstr "Käivitamisel näidatakse protsessitabeli kirjutatava mälu veergu"
+msgid "Show process 'Shared Memory' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis jagatud mälu veergu"
 
-msgid "Show process dependencies in tree form"
-msgstr "Protsessi sõltuvuste näitamine puuvaates"
+msgid "Width of process 'X Server Memory' column"
+msgstr "Protsessi 'X-serveri mälu' veeru laius"
 
-msgid "Show warning dialog when killing processes"
-msgstr "Protsesside kõrvaldamisel kuvada hoiatusdialooge"
-
-msgid "Solaris mode for CPU percentage"
-msgstr "Solarise protsessorikasutuse režiim"
-
-msgid "Time in milliseconds between updates of the devices list"
-msgstr "Seadmete loetelu värskendamise sagedus millisekundites"
-
-msgid "Time in milliseconds between updates of the graphs"
-msgstr "Graafikute värskendamise sagedus millisekundites"
-
-msgid "Time in milliseconds between updates of the process view"
-msgstr "Protsessivaate värskendamise sagedus millisekundites"
-
-msgid "Whether information about all filesystems should be displayed"
-msgstr "Kas näidata teavet kõikide failisüsteemide kohta "
-
-msgid ""
-"Whether to display information about all filesystems (including types like "
-"'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
-"filesystems."
-msgstr ""
-"Kas näidata kõikide failisüsteemide (nende hulgas ka 'autofs' ja 'procfs') "
-"andmeid. See on kasulik kõigi ühendatud failisüsteemide loetelu saamiseks."
+msgid "Show process 'X Server Memory' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis X-serveri mälu veergu"
 
 #, no-c-format
 msgid "Width of process 'CPU %' column"
 msgstr "Protsessi 'CPU %' veeru laius"
 
-msgid "Width of process 'CPU time' column"
+#, no-c-format
+msgid "Show process 'CPU %' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis 'CPU %' veergu"
+
+msgid "Width of process 'CPU Time' column"
 msgstr "Protsessi 'CPU aeg' veeru laius"
+
+msgid "Show process 'CPU Time' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis CPU aja veergu"
+
+msgid "Width of process 'Started' column"
+msgstr "Protsessi alustamisaja veeru laius"
+
+msgid "Show process 'Started' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis alustamisaja veergu"
+
+msgid "Width of process 'Nice' column"
+msgstr "Protsessi prioriteedi veeru laius"
+
+msgid "Show process 'Nice' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis prioriteedi veergu"
 
 msgid "Width of process 'PID' column"
 msgstr "Protsessi PID-veeru laius"
 
-msgid "Width of process 'SELinux security context' column"
+msgid "Show process 'PID' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis PID-veergu"
+
+msgid "Width of process 'SELinux Security Context' column"
 msgstr "Protsessi 'SELinux-i turvakontekst' veeru laius"
 
+msgid "Show process 'SELinux Security Context' column on startup"
+msgstr ""
+"Käivitumisel näidatakse protsessitabelis SELinux-i turvakonteksti veergu"
+
+msgid "Width of process 'Command Line' column"
+msgstr "Protsessi käsurea veeru laius"
+
+msgid "Show process 'Command Line' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis käsurea veergu"
+
+msgid "Width of process 'Memory' column"
+msgstr "Protsessi mäluveeru laius"
+
+msgid "Show process 'Memory' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis mälu veergu"
+
 msgid "Width of process 'Waiting Channel' column"
-msgstr "Protsessi ootekanali nimeveeru laius"
+msgstr "Protsessi ootekanali veeru laius"
 
-msgid "Width of process 'X server memory' column"
-msgstr "Protsessi 'X-serveri mälu' veeru laius"
+msgid "Show process 'Waiting Channel' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis ootekanali veergu"
 
-msgid "Width of process 'arguments' column"
-msgstr "Protsessi argumentide veeru laius"
+msgid "Width of process 'Control Group' column"
+msgstr "Protsessi juhtgrupi veeru laius"
 
-msgid "Width of process 'estimated memory usage' column"
-msgstr "Protsessi hinnangulise mälukasutuse veeru laius"
+msgid "Show process 'Control Group' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis juhtgrupi veergu"
 
-msgid "Width of process 'name' column"
-msgstr "Protsessi nimeveeru laius"
+msgid "Width of process 'Unit' column"
+msgstr "Protsessi üksuse veeru laius"
 
-msgid "Width of process 'nice' column"
-msgstr "Protsessi prioriteedi veeru laius"
+msgid "Show process 'Unit' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis üksuse veergu"
 
-msgid "Width of process 'owner' column"
+msgid "Width of process 'Session' column"
+msgstr "Protsessi seansiveeru laius"
+
+msgid "Show process 'Session' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis seansiveergu"
+
+msgid "Width of process 'Seat' column"
+msgstr "Protsessi isteveeru laius"
+
+msgid "Show process 'Seat' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis isteveergu"
+
+msgid "Width of process 'Owner' column"
 msgstr "Protsessi omaniku veeru laius"
 
-msgid "Width of process 'resident memory' column"
-msgstr "Protsessi residentse mälu veeru laius"
+msgid "Show process 'Owner' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis omaniku veergu"
 
-msgid "Width of process 'shared memory' column"
-msgstr "Protsessi jagatud mälu veeru laius"
+msgid "Width of process 'Priority' column"
+msgstr "Protsessi tähtsuse veeru laius"
 
-msgid "Width of process 'start time' column"
-msgstr "Protsessi alustamisaja veeru laius"
+msgid "Show process 'Priority' column on startup"
+msgstr "Käivitumisel näidatakse protsessitabelis tähtsuse veergu"
 
-msgid "Width of process 'status' column"
-msgstr "Protsessi olekuveeru laius"
+msgid "Disk view sort column"
+msgstr "Kettavaate sortimistulp"
 
-msgid "Width of process 'virtual memory' column"
-msgstr "Protsessi virtuaalmälu veeru laius"
+msgid "Disk view sort order"
+msgstr "Kettavaate sortimisjärjestus"
 
-msgid "Width of process 'writable memory' column"
-msgstr "Protsessi kirjutatava mälu veeru laius"
+msgid "Disk view columns order"
+msgstr "Kettavaate tulpade järjestus"
+
+msgid "Memory map sort column"
+msgstr "Mäluvaate sortimistulp"
+
+msgid "Memory map sort order"
+msgstr "Mäluvaate sortimisjärjestus"
+
+msgid "Open files sort column"
+msgstr "Avatud failide vaate sortimistulp"
+
+msgid "Open files sort order"
+msgstr "Avatud failide vaate sortimisjärjestus"
 
 #, c-format
 msgid ""
-"Cannot change the priority of process with pid %d to %d.\n"
+"Cannot change the priority of process with PID %d to %d.\n"
 "%s"
 msgstr ""
 "Protsessi PID-iga %d tähtsust pole võimalik %d-ks muuta.\n"
@@ -601,54 +726,46 @@ msgstr ""
 
 #, c-format
 msgid ""
-"Cannot kill process with pid %d with signal %d.\n"
+"Cannot kill process with PID %d with signal %d.\n"
 "%s"
 msgstr ""
-"Protsessi PID-iga %d pole signaali %d abil võimalik kõrvaldada.\n"
+"Protsessi PID-ga %d pole signaali %d abil võimalik kõrvaldada.\n"
 "%s"
 
 #. xgettext: primary alert message
-msgid "Kill the selected process?"
-msgstr "Kas kõrvaldada valitud protsess?"
+#, c-format
+msgid "Kill the selected process »%s« (PID: %u)?"
+msgstr "Kas kõrvaldada valitud protsess »%s« (PID: %u)?"
 
 #. xgettext: secondary alert message
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
-"security risk. Only unresponding processes should be killed."
+"security risk. Only unresponsive processes should be killed."
 msgstr ""
 "Protsessi kõrvaldamine võib hävitada sinu andmed, lõhkuda tööseansi või "
 "põhjustada turvariski. Kõrvaldama peaks ainult protsesse, mis ei käitu "
 "õigesti."
 
 #. xgettext: primary alert message
-msgid "End the selected process?"
-msgstr "Kas lõpetada valitud protsessi töö?"
+#, c-format
+msgid "End the selected process »%s« (PID: %u)?"
+msgstr "Kas lõpetada valitud protsessi töö »%s« (PID: %u)?"
 
 #. xgettext: secondary alert message
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
-"risk. Only unresponding processes should be ended."
+"risk. Only unresponsive processes should be ended."
 msgstr ""
 "Protsessi töö lõpetamine võib hävitada sinu andmed, lõhkuda tööseansi või "
 "põhjustada turvariski. Lõpetama peaks ainult protsesse, mis ei käitu õigesti."
 
-msgid "(Very High Priority)"
-msgstr "(Väga kõrge tähtsusega)"
+#, c-format
+msgid "(%s Priority)"
+msgstr "(%s prioriteet)"
 
-msgid "(High Priority)"
-msgstr "(Kõrge tähtsusega)"
-
-msgid "(Normal Priority)"
-msgstr "(Tavalise tähtsusega)"
-
-msgid "(Low Priority)"
-msgstr "(Madala tähtsusega)"
-
-msgid "(Very Low Priority)"
-msgstr "(Väga madala tähtsusega)"
-
-msgid "Change Priority"
-msgstr "Tähtsuse muutmine"
+#, c-format
+msgid "Change Priority of Process »%s« (PID: %u)"
+msgstr "Protsessi prioriteedi muutmine »%s« (PID: %u)"
 
 msgid "Change _Priority"
 msgstr "Muuda _tähtsust"
@@ -668,42 +785,6 @@ msgstr ""
 
 msgid "Icon"
 msgstr "Ikoon"
-
-msgid "System Monitor Preferences"
-msgstr "Süsteemijälgija eelistused"
-
-msgid "Behavior"
-msgstr "Käitumine"
-
-msgid "_Update interval in seconds:"
-msgstr "_Värskendamise vahemik sekundites:"
-
-msgid "Enable _smooth refresh"
-msgstr "_Sujuv värskendus lubatud"
-
-msgid "Alert before ending or _killing processes"
-msgstr "Hoiatus enne protsessi _kõrvaldamist"
-
-msgid "Solaris mode"
-msgstr "Solarise režiim"
-
-msgid "Information Fields"
-msgstr "Teabeväljad"
-
-msgid "Process i_nformation shown in list:"
-msgstr "Loetelus näidatavad pro_tsessi andmed:"
-
-msgid "Graphs"
-msgstr "Graafikud"
-
-msgid "Show network speed in bits"
-msgstr "Kuva võrgukiirust bittides"
-
-msgid "Show _all filesystems"
-msgstr "Näidatakse _kõiki failisüsteeme"
-
-msgid "File system i_nformation shown in list:"
-msgstr "Loetelus näidatavad pro_tsessi andmed:"
 
 msgid "A simple process and system monitor."
 msgstr "Lihtne protsesside ja süsteemi monitor."
@@ -754,20 +835,63 @@ msgstr "Turvakontekst"
 msgid "Command Line"
 msgstr "Käsurida"
 
-#. xgettext: wchan, see ps(1) or top(1)
+#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
 msgid "Waiting Channel"
 msgstr "Ootekanal"
+
+msgid "Control Group"
+msgstr "Juhtgrupp"
+
+msgid "Unit"
+msgstr "Üksus"
+
+msgid "Session"
+msgstr "Seanss"
+
+# See peaks vist multiseat Linuxi puhul näitama, millise tooli taga oleva kasutaja heaks protsess töötab.
+msgid "Seat"
+msgstr "Iste"
+
+msgid "Owner"
+msgstr "Omanik"
+
+msgid "Priority"
+msgstr "Prioriteet"
 
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Koormuse näit viimase 1, 5 ja 15 minuti kohta: %0.2f, %0.2f, %0.2f"
 
-#, c-format
-msgid "Release %s"
-msgstr "Versioon %s"
+msgid "N/A"
+msgstr "pole"
 
-msgid "Unknown CPU model"
-msgstr "Tundmatu protsessorimudel"
+#, c-format
+msgid "%lld second"
+msgid_plural "%lld seconds"
+msgstr[0] "%lld sekund"
+msgstr[1] "%lld sekundit"
+
+msgid "Process Properties"
+msgstr "Protsessi omadused"
+
+#, c-format
+msgid "Properties of process \"%s\" (PID %u):"
+msgstr "Protsessi \"%s\" omadused (PID %u):"
+
+#. Translators: The first string parameter is release version (codename),
+#. * the second one is the architecture, 32 or 64-bit
+#, c-format
+msgid "Release %s %s"
+msgstr "Väljalase %s %s"
+
+#. translators: This is the type of architecture, for example:
+#. * "64-bit" or "32-bit"
+#, c-format
+msgid "%d-bit"
+msgstr "%d-bitine"
+
+msgid "Unknown model"
+msgstr "Tundmatu mudel"
 
 #, c-format
 msgid "Kernel %s"
@@ -784,10 +908,6 @@ msgstr "<b>Riistvara</b>"
 
 msgid "Memory:"
 msgstr "Mälu:"
-
-#, c-format
-msgid "Processor %d:"
-msgstr "Protsessor %d"
 
 msgid "Processor:"
 msgstr "Protsessor:"
@@ -848,16 +968,24 @@ msgid "%.1f GiB"
 msgstr "%.1f GiB"
 
 #, c-format
-msgid "%.1f kbit"
-msgstr "%.1f kbit"
+msgid "%.1f TiB"
+msgstr "%.1f TiB"
 
 #, c-format
-msgid "%.1f Mbit"
-msgstr "%.1f Mbit"
+msgid "%.3g kbit"
+msgstr "%.3g kbit"
 
 #, c-format
-msgid "%.1f Gbit"
-msgstr "%.1f Gbit"
+msgid "%.3g Mbit"
+msgstr "%.3g Mbit"
+
+#, c-format
+msgid "%.3g Gbit"
+msgstr "%.3g Gbit"
+
+#, c-format
+msgid "%.3g Tbit"
+msgstr "%.3g Tbit"
 
 #, c-format
 msgid "%u bit"
