@@ -255,6 +255,8 @@ proctable_new (ProcData * const procdata)
         N_("Control Group"),
         N_("Unit"),
         N_("Session"),
+        /* TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
+	for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration */
         N_("Seat"),
         N_("Owner"),
         N_("Priority"),
