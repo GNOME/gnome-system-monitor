@@ -4,16 +4,17 @@
 #
 # Andraž Tori <andraz.tori1@guest.arnes.si>, 2002.
 # Matic Žgur <mr.zgur@gmail.com>, 2006 - 2007.
-# Matej Urbančič <mateju@svn.gnome.org>, 2007 - 2011.
+# Matej Urbančič <mateju@svn.gnome.org>, 2007 - 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-06-13 23:55+0000\n"
-"PO-Revision-Date: 2011-09-26 14:36+0100\n"
-"Last-Translator: Andrej Žnidaršič <andrej.znidarsic@gmail.com>\n"
+"POT-Creation-Date: 2012-02-22 01:45+0000\n"
+"PO-Revision-Date: 2012-02-23 22:25+0100\n"
+"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,22 +24,34 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1
-#: ../src/callbacks.cpp:159
-#: ../src/interface.cpp:619
-#: ../src/procman.cpp:689
+#: ../src/callbacks.cpp:184
+#: ../src/interface.cpp:635
+#: ../src/procman.cpp:721
 msgid "System Monitor"
 msgstr "Nadzornik sistema"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2
-#: ../src/callbacks.cpp:160
+#: ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "Ogled trenutnih opravil in nadzor stanja sistema"
 
-#: ../src/argv.cpp:18
+#: ../src/argv.cpp:21
 msgid "Show the System tab"
 msgstr "Pokaži sistemski zavihek"
 
-#: ../src/callbacks.cpp:169
+#: ../src/argv.cpp:26
+msgid "Show the Processes tab"
+msgstr "Pokaži zavihek opravil"
+
+#: ../src/argv.cpp:31
+msgid "Show the Resources tab"
+msgstr "Pokaži zavihek virov"
+
+#: ../src/argv.cpp:36
+msgid "Show the File Systems tab"
+msgstr "Pokaži zavihek datotečnih sistemov"
+
+#: ../src/callbacks.cpp:195
 msgid "translator-credits"
 msgstr ""
 "Matic Žgur <mr.zgur@gmail.com>\n"
@@ -56,8 +69,8 @@ msgid "Directory"
 msgstr "Mapa"
 
 #: ../src/disks.cpp:301
-#: ../src/gsm_color_button.c:216
-#: ../src/openfiles.cpp:247
+#: ../src/gsm_color_button.c:222
+#: ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "Vrsta"
 
@@ -102,44 +115,45 @@ msgstr "%d. %b, %H:%M"
 msgid "%b %d %Y"
 msgstr "%d. %b %Y"
 
-#: ../src/gsm_color_button.c:193
+#: ../src/gsm_color_button.c:198
 msgid "Fraction"
 msgstr "Delež"
 
-#: ../src/gsm_color_button.c:194
-msgid "Percentage full for pie colour pickers"
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+#: ../src/gsm_color_button.c:200
+msgid "Percentage full for pie color pickers"
 msgstr "Odstotek za izbirnike barv v tortnem prikazu"
 
-#: ../src/gsm_color_button.c:201
+#: ../src/gsm_color_button.c:207
 msgid "Title"
 msgstr "Naslov"
 
-#: ../src/gsm_color_button.c:202
+#: ../src/gsm_color_button.c:208
 msgid "The title of the color selection dialog"
 msgstr "Naziv pogovornega okna izbire barv"
 
-#: ../src/gsm_color_button.c:203
-#: ../src/gsm_color_button.c:622
+#: ../src/gsm_color_button.c:209
+#: ../src/gsm_color_button.c:625
 msgid "Pick a Color"
 msgstr "Izbor barve"
 
-#: ../src/gsm_color_button.c:209
+#: ../src/gsm_color_button.c:215
 msgid "Current Color"
 msgstr "Trenutna barva"
 
-#: ../src/gsm_color_button.c:210
+#: ../src/gsm_color_button.c:216
 msgid "The selected color"
 msgstr "Izbrana barva"
 
-#: ../src/gsm_color_button.c:217
+#: ../src/gsm_color_button.c:223
 msgid "Type of color picker"
 msgstr "Vrsta izbirnika barv"
 
-#: ../src/gsm_color_button.c:545
+#: ../src/gsm_color_button.c:548
 msgid "Received invalid color data\n"
 msgstr "Sprejeti so neveljavni podatki o barvi\n"
 
-#: ../src/gsm_color_button.c:643
+#: ../src/gsm_color_button.c:648
 msgid "Click to set graph colors"
 msgstr "Kliknite za nastavitev barv grafa"
 
@@ -190,7 +204,7 @@ msgid "Continue process if stopped"
 msgstr "Nadaljuj zaustavljeno opravilo"
 
 #: ../src/interface.cpp:67
-#: ../src/procdialogs.cpp:84
+#: ../src/procdialogs.cpp:95
 msgid "_End Process"
 msgstr "_Končaj opravilo"
 
@@ -199,7 +213,7 @@ msgid "Force process to finish normally"
 msgstr "Prisili opravilo, da se normalno zaključi"
 
 #: ../src/interface.cpp:69
-#: ../src/procdialogs.cpp:75
+#: ../src/procdialogs.cpp:84
 msgid "_Kill Process"
 msgstr "_Uniči opravilo"
 
@@ -208,8 +222,8 @@ msgid "Force process to finish immediately"
 msgstr "Prisili opravilo, da se takoj zaključi"
 
 #: ../src/interface.cpp:71
-msgid "_Change Priority..."
-msgstr "_Spremeni prednost ..."
+msgid "_Change Priority"
+msgstr "_Spremeni prednost"
 
 #: ../src/interface.cpp:72
 msgid "Change the order of priority of process"
@@ -244,122 +258,187 @@ msgstr "Odpri _datoteke"
 msgid "View the files opened by a process"
 msgstr "Pokaži datoteke, ki jih je odprlo opravilo"
 
+#: ../src/interface.cpp:84
+msgid "_Properties"
+msgstr "_Lastnosti"
+
 #: ../src/interface.cpp:85
+msgid "View additional information about a process"
+msgstr "Pregled dodatnih podrobnosti opravila"
+
+#: ../src/interface.cpp:88
 msgid "_Contents"
 msgstr "_Vsebina"
 
-#: ../src/interface.cpp:86
+#: ../src/interface.cpp:89
 msgid "Open the manual"
 msgstr "Odpri priročnik"
 
-#: ../src/interface.cpp:88
+#: ../src/interface.cpp:91
 msgid "About this application"
 msgstr "O programu"
 
-#: ../src/interface.cpp:93
+#: ../src/interface.cpp:96
 msgid "_Dependencies"
 msgstr "_Odvisnosti"
 
-#: ../src/interface.cpp:94
+#: ../src/interface.cpp:97
 msgid "Show parent/child relationship between processes"
 msgstr "Pokaži odvisnosti nadrejeni/podrejeni med opravili"
 
-#: ../src/interface.cpp:101
+#: ../src/interface.cpp:104
 msgid "_Active Processes"
 msgstr "_Dejavna opravila"
 
-#: ../src/interface.cpp:102
+#: ../src/interface.cpp:105
 msgid "Show active processes"
 msgstr "Pokaži dejavna opravila"
 
-#: ../src/interface.cpp:103
+#: ../src/interface.cpp:106
 msgid "A_ll Processes"
 msgstr "_Vsa opravila"
 
-#: ../src/interface.cpp:104
+#: ../src/interface.cpp:107
 msgid "Show all processes"
 msgstr "Pokaži vsa opravila"
 
-#: ../src/interface.cpp:105
+#: ../src/interface.cpp:108
 msgid "M_y Processes"
 msgstr "_Moja opravila"
 
-#: ../src/interface.cpp:106
+#: ../src/interface.cpp:109
 msgid "Show only user-owned processes"
 msgstr "Pokaži le uporabniško zagnana opravila"
 
-#: ../src/interface.cpp:191
+#: ../src/interface.cpp:114
+#: ../src/util.cpp:217
+msgid "Very High"
+msgstr "Zelo visoko"
+
+#: ../src/interface.cpp:115
+msgid "Set process priority to very high"
+msgstr "Nastavi prednost opravila na zelo visoko."
+
+#: ../src/interface.cpp:116
+#: ../src/util.cpp:219
+msgid "High"
+msgstr "Visoko"
+
+#: ../src/interface.cpp:117
+msgid "Set process priority to high"
+msgstr "Nastavi prednost opravila na visoko."
+
+#: ../src/interface.cpp:118
+#: ../src/util.cpp:221
+msgid "Normal"
+msgstr "Običajno"
+
+#: ../src/interface.cpp:119
+msgid "Set process priority to normal"
+msgstr "Nastavi prednost opravila na običajno."
+
+#: ../src/interface.cpp:120
+#: ../src/util.cpp:223
+msgid "Low"
+msgstr "Nizko"
+
+#: ../src/interface.cpp:121
+msgid "Set process priority to low"
+msgstr "Nastavi prednost opravila na nizko."
+
+#: ../src/interface.cpp:122
+#: ../src/util.cpp:225
+msgid "Very Low"
+msgstr "Zelo nizko"
+
+#: ../src/interface.cpp:123
+msgid "Set process priority to very low"
+msgstr "Nastavi prednost opravila na zelo nizko."
+
+#: ../src/interface.cpp:124
+msgid "Custom"
+msgstr "Po meri"
+
+#: ../src/interface.cpp:125
+msgid "Set process priority manually"
+msgstr "Nastavi prednost opravila ročno."
+
+#: ../src/interface.cpp:231
 msgid "End _Process"
 msgstr "_Končaj opravilo"
 
-#: ../src/interface.cpp:244
+#. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
+#: ../src/interface.cpp:279
+#, c-format
+msgid "Pick a Color for '%s'"
+msgstr "Izbor barve za '%s'"
+
+#: ../src/interface.cpp:290
 msgid "CPU History"
 msgstr "Zgodovina uporabe CPE"
 
-#: ../src/interface.cpp:299
+#: ../src/interface.cpp:344
+#: ../src/procproperties.cpp:122
 msgid "CPU"
 msgstr "CPE"
 
-#: ../src/interface.cpp:301
+#: ../src/interface.cpp:346
 #, c-format
 msgid "CPU%d"
 msgstr "CPE%d"
 
-#: ../src/interface.cpp:319
+#: ../src/interface.cpp:367
 msgid "Memory and Swap History"
 msgstr "Zgodovina porabe pomnilnika in izmenjevalnega prostora"
 
-#: ../src/interface.cpp:358
-#: ../src/proctable.cpp:225
+#: ../src/interface.cpp:401
+#: ../src/proctable.cpp:252
+#: ../src/procproperties.cpp:116
 msgid "Memory"
 msgstr "Pomnilnik"
 
-#: ../src/interface.cpp:384
+#: ../src/interface.cpp:432
 msgid "Swap"
 msgstr "Izmenjevalni razdelek"
 
-#: ../src/interface.cpp:405
+#: ../src/interface.cpp:463
 msgid "Network History"
 msgstr "Zgodovina uporabe mrežnih povezav"
 
-#: ../src/interface.cpp:444
+#: ../src/interface.cpp:496
 msgid "Receiving"
 msgstr "Prejemanje"
 
-#: ../src/interface.cpp:465
+#: ../src/interface.cpp:529
 msgid "Total Received"
 msgstr "Skupaj prejeto"
 
-#: ../src/interface.cpp:499
+#: ../src/interface.cpp:557
 msgid "Sending"
 msgstr "Pošiljanje"
 
-#: ../src/interface.cpp:521
+#: ../src/interface.cpp:591
 msgid "Total Sent"
 msgstr "Skupaj poslano"
 
 #. procman_create_sysinfo_view();
-#: ../src/interface.cpp:690
+#: ../src/interface.cpp:710
 msgid "System"
 msgstr "Sistem"
 
-#: ../src/interface.cpp:694
-#: ../src/procdialogs.cpp:506
+#: ../src/interface.cpp:714
 msgid "Processes"
 msgstr "Opravila"
 
-#: ../src/interface.cpp:698
-#: ../src/procdialogs.cpp:619
+#: ../src/interface.cpp:718
 msgid "Resources"
 msgstr "Viri"
 
-#: ../src/interface.cpp:702
-#: ../src/procdialogs.cpp:683
-#: ../src/procdialogs.cpp:687
+#: ../src/interface.cpp:722
 msgid "File Systems"
 msgstr "Datotečni sistemi"
 
-#: ../src/load-graph.cpp:155
+#: ../src/load-graph.cpp:166
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
@@ -368,11 +447,15 @@ msgstr[1] "%u sekunda"
 msgstr[2] "%u sekundi"
 msgstr[3] "%u sekunde"
 
+#: ../src/load-graph.cpp:347
+msgid "not available"
+msgstr "ni na voljo"
+
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:332
+#: ../src/load-graph.cpp:350
 #, c-format
-msgid "%s (%.1f %%) of %s"
-msgstr "%s (%.1f %%) of %s"
+msgid "%s (%.1f%%) of %s"
+msgstr "%s (%.1f%%) od %s"
 
 #: ../src/lsof.cpp:124
 #, c-format
@@ -407,11 +490,11 @@ msgstr "Iskanje odprtih datotek"
 msgid "_Name contains:"
 msgstr "_Ime vsebuje:"
 
-#: ../src/lsof.cpp:352
+#: ../src/lsof.cpp:354
 msgid "Case insensitive matching"
 msgstr "Ne upoštevaj velikosti črk"
 
-#: ../src/lsof.cpp:360
+#: ../src/lsof.cpp:362
 msgid "S_earch results:"
 msgstr "Zadetki i_skanja:"
 
@@ -476,541 +559,632 @@ msgstr "Karte pomnilnika"
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "_Karte pomnilnika za opravilo \"%s\" (PID %u):"
 
-#: ../src/openfiles.cpp:34
+#: ../src/openfiles.cpp:38
 msgid "file"
 msgstr "datoteka"
 
-#: ../src/openfiles.cpp:36
+#: ../src/openfiles.cpp:40
 msgid "pipe"
 msgstr "cev"
 
-#: ../src/openfiles.cpp:38
+#: ../src/openfiles.cpp:42
 msgid "IPv6 network connection"
 msgstr "IPv6 omrežna povezava"
 
-#: ../src/openfiles.cpp:40
+#: ../src/openfiles.cpp:44
 msgid "IPv4 network connection"
 msgstr "IPv4 omrežna povezava"
 
-#: ../src/openfiles.cpp:42
+#: ../src/openfiles.cpp:46
 msgid "local socket"
 msgstr "krajevni vtič"
 
-#: ../src/openfiles.cpp:44
+#: ../src/openfiles.cpp:48
 msgid "unknown type"
 msgstr "neznana vrsta"
 
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.cpp:246
+#: ../src/openfiles.cpp:250
 msgid "FD"
 msgstr "FD"
 
-#: ../src/openfiles.cpp:248
+#: ../src/openfiles.cpp:252
 msgid "Object"
 msgstr "Predmet"
 
-#: ../src/openfiles.cpp:332
+#: ../src/openfiles.cpp:336
 msgid "Open Files"
 msgstr "Odpri datoteke"
 
-#: ../src/openfiles.cpp:353
+#: ../src/openfiles.cpp:357
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_Datoteke, ki jih je odprlo opravilo \"%s\" (PID %u):"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:1
-msgid "0 for the System Info, 1 for the processes list, 2 for the resources and 3 for the disks list"
-msgstr "O za podrobnosti o sistemu, 1 za seznam opravil, 2 za vire in 3 za seznam diskov"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:2
-msgid "Default graph cpu color"
-msgstr "Privzeta barva grafa cpe"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
-msgid "Default graph incoming network traffic color"
-msgstr "Privzeta barva grafa vhodnega omrežnega prometa"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
-msgid "Default graph mem color"
-msgstr "Privzeta barva grafa pomnilnika"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
-msgid "Default graph outgoing network traffic color"
-msgstr "Privzeta barva grafa odhodnega omrežnega prometa"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:6
-msgid "Default graph swap color"
-msgstr "Privzeta barva grafa izmenjevalnega prostora"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
-msgid "Determines which processes to show by default. 0 is All, 1 is user, and 2 is active"
-msgstr "Določa katera opravila so privzeto prikazana: 0 za vsa, 1 za uporabnikova in 2 za dejavna"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
-msgid "Disk view columns order"
-msgstr "Vrstni red stolpcev pogleda diskov"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
-msgid "Enable/Disable smooth refresh"
-msgstr "Omogoči/Onemogoči mehko osveževanje"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
-msgid "If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu usage is divided by the total number of CPUs. Else it operates in 'Irix mode'."
-msgstr "Možnost omogoča delovanje programa v 'Solaris načinu', kjer je poraba CPE razdeljena na skupno število CPE enot. V obratnem primeru deluje v 'Irix načinu'."
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
-msgid "Main Window height"
-msgstr "Višina glavnega okna"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
 msgid "Main Window width"
 msgstr "Širina glavnega okna"
 
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:2
+msgid "Main Window height"
+msgstr "Višina glavnega okna"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
+msgid "Main Window X position"
+msgstr "Položaj X glavnega okna"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
+msgid "Main Window Y position"
+msgstr "Položaj Y glavnega okna"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
+msgid "Show process dependencies in tree form"
+msgstr "Pokaži odvisnosti opravil v drevesnem diagramu"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:6
+msgid "Solaris mode for CPU percentage"
+msgstr "Solaris način za odstotek CPE"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
+msgid "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage is divided by the total number of CPUs. Otherwise, it operates in 'Irix mode'."
+msgstr "Izbrana možnost omogoča delovanje programa v 'načinu Solaris', kjer je poraba CPE razdeljena na skupno število enot. V obratnem primeru deluje v 'načinu Irix'."
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
+msgid "Enable/Disable smooth refresh"
+msgstr "Omogoči/Onemogoči mehko osveževanje"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
+msgid "Show warning dialog when killing processes"
+msgstr "Pokaži opozorilo pri med uničevanjem opravila"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
+msgid "Time in milliseconds between updates of the process view"
+msgstr "Čas v milisekundah med osvežitvami pogleda opravil"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
+msgid "Time in milliseconds between updates of the graphs"
+msgstr "Čas v milisekundah med osvežitvami grafov"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
+msgid "Whether information about all file systems should be displayed"
+msgstr "Ali naj bodo prikazani podatki o vseh datotečnih sistemih"
+
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
-msgid "Process view columns order"
-msgstr "Vrstni red stolpcev pogleda opravil"
+msgid "Whether to display information about all file systems (including types like 'autofs' and 'procfs'). Useful for getting a list of all currently mounted file systems."
+msgstr "Ali naj bodo prikazani podatki o vseh datotečnih sistemih (vključno z vrstami kot so 'autofs' in 'procfs'). Uporabno za pridobivanje seznama vseh trenutno priklopljenih datotečnih sistemov."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
-msgid "Process view sort column"
-msgstr "Stolpec vrste pogleda opravil"
+msgid "Time in milliseconds between updates of the devices list"
+msgstr "Čas v milisekundah med osvežitvami seznama naprav"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
-msgid "Process view sort order"
-msgstr "Vrstni red vrste pogleda opravil"
+msgid "Determines which processes to show by default. 0 is All, 1 is user, and 2 is active"
+msgstr "Določa katera opravila so privzeto prikazana: 0 za vsa, 1 za uporabnikova in 2 za dejavna"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
 msgid "Saves the currently viewed tab"
 msgstr "Shrani trenutno pogledan zavihek"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
+msgid "0 for the System Info, 1 for the processes list, 2 for the resources and 3 for the disks list"
+msgstr "O za podrobnosti o sistemu, 1 za seznam opravil, 2 za vire in 3 za seznam diskov"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
+msgid "CPU colors"
+msgstr "Barve CPE"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
+msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
+msgstr "Vsak vnos je zapisan v obliki (CPE#, šestnajstiška vrednost za barvo)"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
+msgid "Default graph memory color"
+msgstr "Privzeta barva grafa pomnilnika"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+msgid "Default graph swap color"
+msgstr "Privzeta barva grafa izmenjevalnega prostora"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
+msgid "Default graph incoming network traffic color"
+msgstr "Privzeta barva grafa vhodnega omrežnega prometa"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
+msgid "Default graph outgoing network traffic color"
+msgstr "Privzeta barva grafa odhodnega omrežnega prometa"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
 msgid "Show network traffic in bits"
 msgstr "Pokaži promet omrežne povezave v bitih"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
-#, no-c-format
-msgid "Show process 'CPU %' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'CPE %'"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
-msgid "Show process 'CPU time' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'procesorskega časa'"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
-msgid "Show process 'PID' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'PID'"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
-msgid "Show process 'SELinux security context' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'SELinux'"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
-msgid "Show process 'Waiting Channel' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'čakajočega kanala'"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
-msgid "Show process 'X server memory' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'pomnilnika X strežnika'"
-
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
-msgid "Show process 'arguments' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'argumentov'"
+msgid "Process view sort column"
+msgstr "Stolpec vrste pogleda opravil"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
-msgid "Show process 'estimated memory usage' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'ocenjene poraba pomnilnika'"
+msgid "Process view columns order"
+msgstr "Vrstni red stolpcev pogleda opravil"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
-msgid "Show process 'name' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'imena'"
+msgid "Process view sort order"
+msgstr "Vrstni red vrste pogleda opravil"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
-msgid "Show process 'nice' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'ocene prednostni delovanja'"
+msgid "Width of process 'Name' column"
+msgstr "Širina stolpca 'imena' opravila"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
-msgid "Show process 'owner' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'lastnika'"
+msgid "Show process 'Name' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'imena' opravila"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
-msgid "Show process 'resident memory' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'stalnega pomnilnika'"
+msgid "Width of process 'User' column"
+msgstr "Širina stolpca 'uporabnika' opravila"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
-msgid "Show process 'shared memory' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'skupnega pomnilnika'"
+msgid "Show process 'User' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'uporabnika' opravila"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
-msgid "Show process 'start time' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'začetega časa'"
+msgid "Width of process 'Status' column"
+msgstr "Širina stolpca 'stanja' opravila"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
-msgid "Show process 'status' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'stanja'"
+msgid "Show process 'Status' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'stanja' opravila"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
-msgid "Show process 'virtual memory' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'navideznega pomnilnika'"
+msgid "Width of process 'Virtual Memory' column"
+msgstr "Širina stolpca 'navideznega pomnilnika' opravila"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
-msgid "Show process 'writable memory' column on startup"
-msgstr "Ob zagonu pokaži stolpec 'zapisljivega pomnilnika'"
+msgid "Show process 'Virtual Memory' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'navideznega pomnilnika' opravila"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
-msgid "Show process dependencies in tree form"
-msgstr "Pokaži odvisnosti opravil v drevesnem diagramu"
+msgid "Width of process 'Resident Memory' column"
+msgstr "Širina stolpca 'stalnega pomnilnika' opravila"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
-msgid "Show warning dialog when killing processes"
-msgstr "Pokaži opozorilo pri med uničevanjem opravila"
+msgid "Show process 'Resident Memory' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'stalnega pomnilnika' opravila"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
-msgid "Solaris mode for CPU percentage"
-msgstr "Solaris način za odstotek CPE"
+msgid "Width of process 'Writable Memory' column"
+msgstr "Širina stolpca 'zapisljivega pomnilnika' opravila"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
-msgid "Time in milliseconds between updates of the devices list"
-msgstr "Čas v milisekundah med osvežitvami seznama naprav"
+msgid "Show process 'Writable Memory' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'zapisljivega pomnilnika' opravila"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
-msgid "Time in milliseconds between updates of the graphs"
-msgstr "Čas v milisekundah med osvežitvami grafov"
+msgid "Width of process 'Shared Memory' column"
+msgstr "Širina stolpca 'skupnega pomnilnika' opravila"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
-msgid "Time in milliseconds between updates of the process view"
-msgstr "Čas v milisekundah med osvežitvami pogleda opravil"
+msgid "Show process 'Shared Memory' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'skupnega pomnilnika' opravila"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
-msgid "Whether information about all filesystems should be displayed"
-msgstr "Ali naj bodo prikazani podatki o vseh datotečnih sistemih"
+msgid "Width of process 'X Server Memory' column"
+msgstr "Širina stolpca 'pomnilnika strežnika X' opravila"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
-msgid "Whether to display information about all filesystems (including types like 'autofs' and 'procfs'). Useful for getting a list of all currently mounted filesystems."
-msgstr "Ali naj bodo prikazani podatki o vseh datotečnih sistemih (vključno z vrstami kot so 'autofs' in 'procfs'). Uporabno za izdelavo seznama vseh trenutno priklopljenih datotečnih sistemov."
+msgid "Show process 'X Server Memory' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'pomnilnika strežnika X' opravila"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
 #, no-c-format
 msgid "Width of process 'CPU %' column"
 msgstr "Širina stolpca z odstotkom CPE"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
-msgid "Width of process 'CPU time' column"
-msgstr "Širina stolpca s procesorskim časom"
-
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
+#, no-c-format
+msgid "Show process 'CPU %' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'CPE %'"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
+msgid "Width of process 'CPU Time' column"
+msgstr "Širina stolpca 'procesorskega časa' opravila"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
+msgid "Show process 'CPU Time' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'procesorskega časa' opravila"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
+msgid "Width of process 'Started' column"
+msgstr "Širina stolpca 'časa začetka' opravila"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
+msgid "Show process 'Started' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'začetega časa' opravila"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
+msgid "Width of process 'Nice' column"
+msgstr "Širina stolpca 'ocene prednostni delovanja' opravila"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
+msgid "Show process 'Nice' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'ocene prednostni delovanja' opravila"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
 msgid "Width of process 'PID' column"
 msgstr "Širina stolpca PID"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
-msgid "Width of process 'SELinux security context' column"
-msgstr "Širina stolpca SELinux"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
+msgid "Show process 'PID' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'PID'"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
+msgid "Width of process 'SELinux Security Context' column"
+msgstr "Širina stolpca 'varnosti SELinux' opravila"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
+msgid "Show process 'SELinux Security Context' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'varnosti SELinux' opravila"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
+msgid "Width of process 'Command Line' column"
+msgstr "Širina stolpca 'ukazne enote' opravila"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
+msgid "Show process 'Command Line' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'ukazne vrstice' opravila"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
+msgid "Width of process 'Memory' column"
+msgstr "Širina stolpca 'pomnilnika' opravila"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
+msgid "Show process 'Memory' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'pomnilnika' opravila"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
 msgid "Width of process 'Waiting Channel' column"
 msgstr "Širina stolpca čakajočega kanala"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
-msgid "Width of process 'X server memory' column"
-msgstr "Širina stolpca pomnilnika strežnika X"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
+msgid "Show process 'Waiting Channel' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'čakajočega kanala'"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
-msgid "Width of process 'arguments' column"
-msgstr "Širina stolpca argumentov"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
+msgid "Width of process 'Control Group' column"
+msgstr "Širina stolpca 'nadzorne skupine' opravila"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
-msgid "Width of process 'estimated memory usage' column"
-msgstr "Širina stolpca z ocenjeno porabo pomnilnika"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
+msgid "Show process 'Control Group' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'nadzorne skupine' opravila"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
-msgid "Width of process 'name' column"
-msgstr "Širina stolpca z imenom"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
+msgid "Width of process 'Unit' column"
+msgstr "Širina stolpca 'enote' opravila"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
-msgid "Width of process 'nice' column"
-msgstr "Širina stolpca vrednosti ocene prednostni delovanja"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
+msgid "Show process 'Unit' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'enote' opravila"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
-msgid "Width of process 'owner' column"
-msgstr "Širina stolpca podatkov lastnika"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
+msgid "Width of process 'Session' column"
+msgstr "Širina stolpca 'seje' opravila"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
-msgid "Width of process 'resident memory' column"
-msgstr "Širina stolpca stalnega pomnilnika"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
+msgid "Show process 'Session' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'seje' opravila"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
-msgid "Width of process 'shared memory' column"
-msgstr "Širina stolpca skupnega pomnilnika"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
+msgid "Width of process 'Seat' column"
+msgstr "Širina stolpca 'večterminalnega odvoda' opravila"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
-msgid "Width of process 'start time' column"
-msgstr "Širina stolpca časa začetka"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
+msgid "Show process 'Seat' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'večterminalnega odvoda' opravila"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
-msgid "Width of process 'status' column"
-msgstr "Širina stolpca stanja"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
+msgid "Width of process 'Owner' column"
+msgstr "Širina stolpca 'lastnika' opravila"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
-msgid "Width of process 'virtual memory' column"
-msgstr "Širina stolpca navideznega pomnilnika"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
+msgid "Show process 'Owner' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'lastnika' opravila"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
-msgid "Width of process 'writable memory' column"
-msgstr "Širina stolpca zapisljivega pomnilnika"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
+msgid "Width of process 'Priority' column"
+msgstr "Širina stolpca 'prednosti' opravila"
 
-#: ../src/procactions.cpp:75
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
+msgid "Show process 'Priority' column on startup"
+msgstr "Ob zagonu pokaži stolpec 'prednosti' opravila"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
+msgid "Disk view sort column"
+msgstr "Stolpec razvrščanja pogleda diska"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
+msgid "Disk view sort order"
+msgstr "Način razvrščanja pogleda diska"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
+msgid "Disk view columns order"
+msgstr "Vrstni red stolpcev pogleda diskov"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
+msgid "Memory map sort column"
+msgstr "Stolpec razvrščanja pomnilnika"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
+msgid "Memory map sort order"
+msgstr "Način razvrščanja pomnilnika"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
+msgid "Open files sort column"
+msgstr "Stolpec razvrščanja odprtih datotek"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
+msgid "Open files sort order"
+msgstr "Način razvrščanja odprtih datotek"
+
+#: ../src/procactions.cpp:76
 #, c-format
 msgid ""
-"Cannot change the priority of process with pid %d to %d.\n"
+"Cannot change the priority of process with PID %d to %d.\n"
 "%s"
 msgstr ""
-"Ni mogoča sprememba prednosti opravila s pid %d na %d.\n"
+"Ni mogoče spremeniti prednosti opravila s PID %d na %d.\n"
 "%s"
 
-#: ../src/procactions.cpp:155
+#: ../src/procactions.cpp:156
 #, c-format
 msgid ""
-"Cannot kill process with pid %d with signal %d.\n"
+"Cannot kill process with PID %d with signal %d.\n"
 "%s"
 msgstr ""
-"Ni mogoče uničiti opravila s pid %d s signalom %d.\n"
+"Ni mogoče uničiti opravila s PID %d s signalom %d.\n"
 "%s"
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:70
-msgid "Kill the selected process?"
-msgstr "Ali želite uničiti izbrano opravilo?"
-
-#. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:72
-msgid "Killing a process may destroy data, break the session or introduce a security risk. Only unresponding processes should be killed."
-msgstr "Z uničevanjem opravila se podatki lahko izgubijo, sesuje se lahko seja ali pa dejanje predstavlja varnostno tveganje. Uničiti je treba le opravila, ki niso odzivna."
-
-#. xgettext: primary alert message
-#: ../src/procdialogs.cpp:79
-msgid "End the selected process?"
-msgstr "Ali želite končati izbrano opravilo?"
+#: ../src/procdialogs.cpp:77
+#, c-format
+msgid "Kill the selected process »%s« (PID: %u)?"
+msgstr "Ali želite uničiti izbrano opravilo »%s« (PID: %u)?"
 
 #. xgettext: secondary alert message
 #: ../src/procdialogs.cpp:81
-msgid "Ending a process may destroy data, break the session or introduce a security risk. Only unresponding processes should be ended."
-msgstr "S končanjem opravila se podatki lahko izgubijo, sesuje se lahko seja ali pa dejanje predstavlja varnostno tveganje. Vsiljeno končati je treba le opravila, ki niso odzivna."
+msgid "Killing a process may destroy data, break the session or introduce a security risk. Only unresponsive processes should be killed."
+msgstr "Z uničevanjem opravila se podatki lahko izgubijo, sesuje se lahko seja ali pa dejanje predstavlja varnostno tveganje. Uničiti je razumljivo le opravila, ki niso odzivna."
 
-#: ../src/procdialogs.cpp:115
-msgid "(Very High Priority)"
-msgstr "(Zelo visoka prednost)"
+#. xgettext: primary alert message
+#: ../src/procdialogs.cpp:88
+#, c-format
+msgid "End the selected process »%s« (PID: %u)?"
+msgstr "Ali želite končati izbrano opravilo »%s« (PID: %u)?"
 
-#: ../src/procdialogs.cpp:117
-msgid "(High Priority)"
-msgstr "(Visoka prednost)"
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:92
+msgid "Ending a process may destroy data, break the session or introduce a security risk. Only unresponsive processes should be ended."
+msgstr "Z vsiljenim končanjem opravila se podatki lahko izgubijo, sesuje se lahko seja ali pa dejanje predstavlja varnostno tveganje. Vsiljeno končati je razumljivo le opravila, ki niso odzivna."
 
-#: ../src/procdialogs.cpp:119
-msgid "(Normal Priority)"
-msgstr "(Običajna prednost)"
+#: ../src/procdialogs.cpp:130
+#: ../src/procdialogs.cpp:220
+#, c-format
+msgid "(%s Priority)"
+msgstr "(%s prednost)"
 
-#: ../src/procdialogs.cpp:121
-msgid "(Low Priority)"
-msgstr "(Nizka prednost)"
+#: ../src/procdialogs.cpp:174
+#, c-format
+msgid "Change Priority of Process »%s« (PID: %u)"
+msgstr "Spremeni prednost opravila »%s« (PID %u)"
 
-#: ../src/procdialogs.cpp:123
-msgid "(Very Low Priority)"
-msgstr "(Zelo nizka prednost)"
-
-#: ../src/procdialogs.cpp:173
-msgid "Change Priority"
-msgstr "Spremeni prednost"
-
-#: ../src/procdialogs.cpp:181
+#: ../src/procdialogs.cpp:186
 msgid "Change _Priority"
 msgstr "Spremeni _prednost"
 
-#: ../src/procdialogs.cpp:204
+#: ../src/procdialogs.cpp:209
 msgid "_Nice value:"
 msgstr "Ocena _prednostni delovanja:"
 
-#: ../src/procdialogs.cpp:220
+#: ../src/procdialogs.cpp:226
 msgid "Note:"
 msgstr "Opomba:"
 
-#: ../src/procdialogs.cpp:221
+#: ../src/procdialogs.cpp:227
 msgid "The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."
 msgstr "Prednost opravila je podana z oceno prednostni delovanja. Nižja vrednost ustreza višji prednosti."
 
-#: ../src/procdialogs.cpp:439
+#: ../src/procdialogs.cpp:449
 msgid "Icon"
 msgstr "Ikona"
 
-#: ../src/procdialogs.cpp:484
-msgid "System Monitor Preferences"
-msgstr "Možnosti nadzornika sistema"
-
-#: ../src/procdialogs.cpp:513
-msgid "Behavior"
-msgstr "Obnašanje"
-
-#: ../src/procdialogs.cpp:532
-#: ../src/procdialogs.cpp:645
-#: ../src/procdialogs.cpp:706
-msgid "_Update interval in seconds:"
-msgstr "_Časovni razmik posodabljanja v sekundah:"
-
-#: ../src/procdialogs.cpp:557
-msgid "Enable _smooth refresh"
-msgstr "Omogoči _mehko osveževanje"
-
-#: ../src/procdialogs.cpp:570
-msgid "Alert before ending or _killing processes"
-msgstr "Opozori pred končanjem ali _uničevanjem opravila"
-
-#: ../src/procdialogs.cpp:583
-msgid "Divide CPU usage by CPU count"
-msgstr "Razdeli uporabo CPE na število enot"
-
-#: ../src/procdialogs.cpp:584
-msgid "Solaris mode"
-msgstr "Solaris način"
-
-#: ../src/procdialogs.cpp:601
-#: ../src/procdialogs.cpp:740
-msgid "Information Fields"
-msgstr "Polja podrobnosti"
-
-#: ../src/procdialogs.cpp:614
-msgid "Process i_nformation shown in list:"
-msgstr "_Podatki o opravilih prikazanih v seznamu:"
-
-#: ../src/procdialogs.cpp:626
-msgid "Graphs"
-msgstr "Grafi"
-
-#: ../src/procdialogs.cpp:665
-msgid "Show network speed in bits"
-msgstr "Pokaži hitrost omrežne povezave v bitih"
-
-#: ../src/procdialogs.cpp:726
-msgid "Show _all filesystems"
-msgstr "Pokaži _vse datotečne sisteme"
-
-#: ../src/procdialogs.cpp:753
-msgid "File system i_nformation shown in list:"
-msgstr "Podatki o _datotečnem sistemu prikazani v seznamu:"
-
-#: ../src/procman.cpp:644
+#: ../src/procman.cpp:668
 msgid "A simple process and system monitor."
 msgstr "Enostaven nadzornik sistema in opravil"
 
-#: ../src/proctable.cpp:210
+#: ../src/proctable.cpp:237
+#: ../src/procproperties.cpp:113
 msgid "Process Name"
 msgstr "Ime opravila"
 
-#: ../src/proctable.cpp:211
+#: ../src/proctable.cpp:238
+#: ../src/procproperties.cpp:114
 msgid "User"
 msgstr "Uporabnik"
 
-#: ../src/proctable.cpp:212
+#: ../src/proctable.cpp:239
+#: ../src/procproperties.cpp:115
 msgid "Status"
 msgstr "Stanje"
 
-#: ../src/proctable.cpp:213
+#: ../src/proctable.cpp:240
+#: ../src/procproperties.cpp:117
 msgid "Virtual Memory"
 msgstr "Navidezni pomnilnik"
 
-#: ../src/proctable.cpp:214
+#: ../src/proctable.cpp:241
+#: ../src/procproperties.cpp:118
 msgid "Resident Memory"
 msgstr "Stalni pomnilnik"
 
-#: ../src/proctable.cpp:215
+#: ../src/proctable.cpp:242
+#: ../src/procproperties.cpp:119
 msgid "Writable Memory"
 msgstr "Zapisljiv pomnilnik"
 
-#: ../src/proctable.cpp:216
+#: ../src/proctable.cpp:243
+#: ../src/procproperties.cpp:120
 msgid "Shared Memory"
 msgstr "Skupni pomnilnik"
 
-#: ../src/proctable.cpp:217
+#: ../src/proctable.cpp:244
+#: ../src/procproperties.cpp:121
 msgid "X Server Memory"
 msgstr "Pomnilnik strežnika X"
 
-#: ../src/proctable.cpp:218
+#: ../src/proctable.cpp:245
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPE"
 
-#: ../src/proctable.cpp:219
+#: ../src/proctable.cpp:246
+#: ../src/procproperties.cpp:123
 msgid "CPU Time"
 msgstr "Procesorski čas"
 
-#: ../src/proctable.cpp:220
+#: ../src/proctable.cpp:247
+#: ../src/procproperties.cpp:124
 msgid "Started"
 msgstr "Začeto"
 
-#: ../src/proctable.cpp:221
+#: ../src/proctable.cpp:248
+#: ../src/procproperties.cpp:125
 msgid "Nice"
 msgstr "Ocena prednostni delovanja"
 
-#: ../src/proctable.cpp:222
+#: ../src/proctable.cpp:249
+#: ../src/procproperties.cpp:127
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:223
+#: ../src/proctable.cpp:250
+#: ../src/procproperties.cpp:128
 msgid "Security Context"
 msgstr "Vsebinska varnost"
 
-#: ../src/proctable.cpp:224
+#: ../src/proctable.cpp:251
+#: ../src/procproperties.cpp:129
 msgid "Command Line"
 msgstr "Ukazna vrstica"
 
-#. xgettext: wchan, see ps(1) or top(1)
-#: ../src/proctable.cpp:227
+#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
+#: ../src/proctable.cpp:254
+#: ../src/procproperties.cpp:130
 msgid "Waiting Channel"
 msgstr "Čakajoč kanal"
 
-#: ../src/proctable.cpp:944
+#: ../src/proctable.cpp:255
+msgid "Control Group"
+msgstr "Primerjalna skupina"
+
+#: ../src/proctable.cpp:256
+msgid "Unit"
+msgstr "Enota"
+
+#: ../src/proctable.cpp:257
+msgid "Session"
+msgstr "Seja"
+
+# multiseat = multi-station =  multiterminal
+#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
+#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
+#: ../src/proctable.cpp:260
+msgid "Seat"
+msgstr "Večterminalni odvod"
+
+#: ../src/proctable.cpp:261
+msgid "Owner"
+msgstr "Lastnik"
+
+#: ../src/proctable.cpp:262
+#: ../src/procproperties.cpp:126
+msgid "Priority"
+msgstr "Prednost"
+
+#: ../src/proctable.cpp:1086
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Povprečna obremenitev zadnjih 1, 5, 15 minut: %0.2f, %0.2f, %0.2f"
 
-#: ../src/sysinfo.cpp:77
-#, c-format
-msgid "Release %s"
-msgstr "Izdaja %s"
+#: ../src/procproperties.cpp:99
+msgid "N/A"
+msgstr "N/A"
 
-#: ../src/sysinfo.cpp:587
+#: ../src/procproperties.cpp:123
+#, c-format
+msgid "%lld second"
+msgid_plural "%lld seconds"
+msgstr[0] "%lld sekund"
+msgstr[1] "%lld sekunda"
+msgstr[2] "%lld sekundi"
+msgstr[3] "%lld sekunde"
+
+#: ../src/procproperties.cpp:241
+msgid "Process Properties"
+msgstr "Lastnosti opravila"
+
+#: ../src/procproperties.cpp:261
+#, c-format
+msgid "Properties of process \"%s\" (PID %u):"
+msgstr "Lastnosti opravila \"%s\" (PID %u):"
+
+#. Translators: The first string parameter is release version (codename),
+#. * the second one is the architecture, 32 or 64-bit
+#: ../src/sysinfo.cpp:78
+#, c-format
+msgid "Release %s %s"
+msgstr "Izdaja %s %s"
+
+#. translators: This is the type of architecture, for example:
+#. * "64-bit" or "32-bit"
+#: ../src/sysinfo.cpp:115
+#, c-format
+msgid "%d-bit"
+msgstr "%d-bitno"
+
+#: ../src/sysinfo.cpp:219
+msgid "Unknown model"
+msgstr "Neznan model"
+
+#: ../src/sysinfo.cpp:740
 #, c-format
 msgid "Kernel %s"
 msgstr "Jedro %s"
 
-#: ../src/sysinfo.cpp:600
+#: ../src/sysinfo.cpp:754
 #, c-format
 msgid "GNOME %s"
 msgstr "GNOME %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:614
+#: ../src/sysinfo.cpp:769
 #, c-format
 msgid "<b>Hardware</b>"
 msgstr "<b>Strojna oprema</b>"
 
-#: ../src/sysinfo.cpp:619
+#: ../src/sysinfo.cpp:774
 msgid "Memory:"
 msgstr "Pomnilnik:"
 
-#: ../src/sysinfo.cpp:626
-#, c-format
-msgid "Processor %d:"
-msgstr "Procesor %d:"
-
-#: ../src/sysinfo.cpp:631
+#: ../src/sysinfo.cpp:779
 msgid "Processor:"
 msgstr "Procesor:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:643
+#: ../src/sysinfo.cpp:788
 #, c-format
 msgid "<b>System Status</b>"
 msgstr "<b>Stanje sistema</b>"
 
-#: ../src/sysinfo.cpp:649
+#: ../src/sysinfo.cpp:794
 msgid "Available disk space:"
 msgstr "Prostor na disku:"
 
@@ -1080,23 +1254,23 @@ msgstr "%.1f TiB"
 
 #: ../src/util.cpp:170
 #, c-format
-msgid "%.1f kbit"
-msgstr "%.1f kbit"
+msgid "%.3g kbit"
+msgstr "%.3g kbitov"
 
 #: ../src/util.cpp:171
 #, c-format
-msgid "%.1f Mbit"
-msgstr "%.1f Mbit"
+msgid "%.3g Mbit"
+msgstr "%.3g Mbitov"
 
 #: ../src/util.cpp:172
 #, c-format
-msgid "%.1f Gbit"
-msgstr "%.1f Gbit"
+msgid "%.3g Gbit"
+msgstr "%.3g Gbitov"
 
 #: ../src/util.cpp:173
 #, c-format
-msgid "%.1f Tbit"
-msgstr "%.1f Tbit"
+msgid "%.3g Tbit"
+msgstr "%.3g Tbitov"
 
 #: ../src/util.cpp:188
 #, c-format
@@ -1116,15 +1290,82 @@ msgstr[1] "%u bajt"
 msgstr[2] "%u bajta"
 msgstr[3] "%u bajti"
 
-#: ../src/util.cpp:380
+#: ../src/util.cpp:420
 msgid "<i>N/A</i>"
 msgstr "<i>N/A</i>"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:497
+#: ../src/util.cpp:582
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#~ msgid "Unknown CPU model"
-#~ msgstr "Neznan model procesorja"
+#~ msgid "System Monitor Preferences"
+#~ msgstr "Možnosti nadzornika sistema"
+
+#~ msgid "Behavior"
+#~ msgstr "Obnašanje"
+
+#~ msgid "_Update interval in seconds:"
+#~ msgstr "_Časovni razmik posodabljanja v sekundah:"
+
+#~ msgid "Enable _smooth refresh"
+#~ msgstr "Omogoči _mehko osveževanje"
+
+#~ msgid "Alert before ending or _killing processes"
+#~ msgstr "Opozori pred končanjem ali _uničevanjem opravila"
+
+#~ msgid "Divide CPU usage by CPU count"
+#~ msgstr "Razdeli uporabo CPE na število enot"
+
+#~ msgid "Information Fields"
+#~ msgstr "Polja podrobnosti"
+
+#~ msgid "Process i_nformation shown in list:"
+#~ msgstr "_Podatki o opravilih prikazanih v seznamu:"
+
+#~ msgid "Graphs"
+#~ msgstr "Grafi"
+
+#~ msgid "Show network speed in bits"
+#~ msgstr "Pokaži hitrost omrežne povezave v bitih"
+
+#~ msgid "Show _all file systems"
+#~ msgstr "Pokaži _vse datotečne sisteme"
+
+#~ msgid "File system i_nformation shown in list:"
+#~ msgstr "Podatki o _datotečnem sistemu prikazani v seznamu:"
+
+#, fuzzy
+#~ msgid "Default graph CPU color"
+#~ msgstr "Privzeta barva grafa cpe"
+
+#~ msgid "_Change Priority..."
+#~ msgstr "_Spremeni prednost ..."
+
+#~ msgid "Show process 'arguments' column on startup"
+#~ msgstr "Ob zagonu pokaži stolpec 'argumentov'"
+
+#~ msgid "Show process 'estimated memory usage' column on startup"
+#~ msgstr "Ob zagonu pokaži stolpec 'ocenjene poraba pomnilnika'"
+
+#~ msgid "Width of process 'arguments' column"
+#~ msgstr "Širina stolpca argumentov"
+
+#~ msgid "Width of process 'estimated memory usage' column"
+#~ msgstr "Širina stolpca z ocenjeno porabo pomnilnika"
+
+#~ msgid "(High Priority)"
+#~ msgstr "(Visoka prednost)"
+
+#~ msgid "(Normal Priority)"
+#~ msgstr "(Običajna prednost)"
+
+#~ msgid "(Very Low Priority)"
+#~ msgstr "(Zelo nizka prednost)"
+
+#~ msgid "Solaris mode"
+#~ msgstr "Solaris način"
+
+#~ msgid "Processor %d:"
+#~ msgstr "Procesor %d:"
