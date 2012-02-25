@@ -6,14 +6,14 @@
 # Dinesh Nadarajah <n_dinesh@yahoo.com>, 2003.
 # Jayaradha N <jaya@pune.redhat.com>, 2004.
 # Felix <ifelix@redhat.com>, 2006.
-# Dr.T.Vasudevan <agnihot3@gmail.com>, 2007, 2011.
+# Dr.T.Vasudevan <agnihot3@gmail.com>, 2007, 2011, 2012.
 # I. Felix <ifelix@redhat.com>, 2008, 2009, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor.HEAD.ta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-13 17:34+0530\n"
-"PO-Revision-Date: 2011-09-13 17:36+0530\n"
+"POT-Creation-Date: 2012-02-25 11:50+0530\n"
+"PO-Revision-Date: 2012-02-25 16:10+0530\n"
 "Last-Translator: Dr.T.Vasudevan <agnihot3@gmail.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: \n"
@@ -30,20 +30,32 @@ msgstr ""
 "\n"
 "\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:160
-#: ../src/interface.cpp:619 ../src/procman.cpp:689
+#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:184
+#: ../src/interface.cpp:635 ../src/procman.cpp:721
 msgid "System Monitor"
 msgstr "அமைப்புக் கண்காணி"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:161
+#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "தற்போதைய செயல் மற்றும் கணினியின் நிலையை பார்க்கவும்"
 
-#: ../src/argv.cpp:18
+#: ../src/argv.cpp:21
 msgid "Show the System tab"
 msgstr "கணினி தத்தலை காட்டு"
 
-#: ../src/callbacks.cpp:171
+#: ../src/argv.cpp:26
+msgid "Show the Processes tab"
+msgstr "செயல்கள் கீற்றை காட்டு"
+
+#: ../src/argv.cpp:31
+msgid "Show the Resources tab"
+msgstr "மூலங்கள் கீற்றை காட்டு"
+
+#: ../src/argv.cpp:36
+msgid "Show the File Systems tab"
+msgstr "கோப்பு அமைப்புகள் கீற்றை காட்டு"
+
+#: ../src/callbacks.cpp:195
 msgid "translator-credits"
 msgstr "மொழிபெயர்ப்பாளர்-சன்மானம்"
 
@@ -55,7 +67,7 @@ msgstr "சாதனம்"
 msgid "Directory"
 msgstr "அடைவு"
 
-#: ../src/disks.cpp:301 ../src/gsm_color_button.c:216 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:301 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "þனம்"
 
@@ -100,43 +112,44 @@ msgstr "%b %d %l:%M %p"
 msgid "%b %d %Y"
 msgstr "%b %d %Y"
 
-#: ../src/gsm_color_button.c:193
+#: ../src/gsm_color_button.c:198
 msgid "Fraction"
 msgstr "பின்னம்"
 
-#: ../src/gsm_color_button.c:194
-msgid "Percentage full for pie colour pickers"
-msgstr "பை நிற எடுப்பிகளின் முழு சதவீதம்"
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+#: ../src/gsm_color_button.c:200
+msgid "Percentage full for pie color pickers"
+msgstr "பைக்கு நிற எடுப்பிகளின் முழு சதவீதம்"
 
-#: ../src/gsm_color_button.c:201
+#: ../src/gsm_color_button.c:207
 msgid "Title"
 msgstr "தலைப்பு"
 
-#: ../src/gsm_color_button.c:202
+#: ../src/gsm_color_button.c:208
 msgid "The title of the color selection dialog"
 msgstr "நிற தேர்ந்தெடுத்தல் உரையாடலின் தலைப்பு"
 
-#: ../src/gsm_color_button.c:203 ../src/gsm_color_button.c:622
+#: ../src/gsm_color_button.c:209 ../src/gsm_color_button.c:625
 msgid "Pick a Color"
 msgstr "ஒரு நிறத்தை எடு"
 
-#: ../src/gsm_color_button.c:209
+#: ../src/gsm_color_button.c:215
 msgid "Current Color"
 msgstr "நடப்பு நிறம்"
 
-#: ../src/gsm_color_button.c:210
+#: ../src/gsm_color_button.c:216
 msgid "The selected color"
 msgstr "தேர்ந்தெடுக்கப்பட்ட நிறம்"
 
-#: ../src/gsm_color_button.c:217
+#: ../src/gsm_color_button.c:223
 msgid "Type of color picker"
 msgstr "நிற எடுப்பியின் வகை"
 
-#: ../src/gsm_color_button.c:545
+#: ../src/gsm_color_button.c:548
 msgid "Received invalid color data\n"
 msgstr "தவறான நிற தரவு பெறப்பட்டது\n"
 
-#: ../src/gsm_color_button.c:643
+#: ../src/gsm_color_button.c:648
 msgid "Click to set graph colors"
 msgstr "வரைபட நிறங்களை அமைக்க சொடுக்கு"
 
@@ -160,7 +173,7 @@ msgstr "உதவி (_H)"
 
 #: ../src/interface.cpp:56
 msgid "Search for _Open Files"
-msgstr "_த திறந்த கோப்புகளுக்கு தேடல்"
+msgstr "_O திறந்த கோப்புகளுக்கு தேடல்"
 
 #: ../src/interface.cpp:57
 msgid "Search for open files"
@@ -186,7 +199,7 @@ msgstr "பணியை தொடரவும் (_C)"
 msgid "Continue process if stopped"
 msgstr "நிறுத்தப்பட்டால் செயலை தொடரவும்"
 
-#: ../src/interface.cpp:67 ../src/procdialogs.cpp:84
+#: ../src/interface.cpp:67 ../src/procdialogs.cpp:95
 msgid "_End Process"
 msgstr "(_E)செயல்களை முடி"
 
@@ -194,7 +207,7 @@ msgstr "(_E)செயல்களை முடி"
 msgid "Force process to finish normally"
 msgstr "சாதாரணமாக முடிக்க கட்டாயப்படுத்திய செயல்"
 
-#: ../src/interface.cpp:69 ../src/procdialogs.cpp:75
+#: ../src/interface.cpp:69 ../src/procdialogs.cpp:84
 msgid "_Kill Process"
 msgstr "(_K)செயலை கொல்"
 
@@ -203,8 +216,8 @@ msgid "Force process to finish immediately"
 msgstr "செயலை உடனடியாக முடிக்க கட்டாயப்படுத்தல்"
 
 #: ../src/interface.cpp:71
-msgid "_Change Priority..."
-msgstr "(_C)முன்னுரிமையை மாற்று..."
+msgid "_Change Priority"
+msgstr "_C முன்னுரிமையை மாற்று"
 
 #: ../src/interface.cpp:72
 msgid "Change the order of priority of process"
@@ -239,128 +252,194 @@ msgstr "கோப்புகளை திற (_F)"
 msgid "View the files opened by a process"
 msgstr "ஒரு செயலால் திறக்கப்பட்ட கோப்புகளை பார்க்கவும்"
 
+#: ../src/interface.cpp:84
+msgid "_Properties"
+msgstr "பண்புகள் (_P)"
+
 #: ../src/interface.cpp:85
+msgid "View additional information about a process"
+msgstr "ஒரு செயல் குறித்து கூடுதல் தகவலை காண்க"
+
+#: ../src/interface.cpp:88
 msgid "_Contents"
 msgstr "உள்ளடக்கங்கள் (_C)"
 
-#: ../src/interface.cpp:86
+#: ../src/interface.cpp:89
 msgid "Open the manual"
 msgstr "கையேட்டினை திறக்கவும்"
 
-#: ../src/interface.cpp:88
+#: ../src/interface.cpp:91
 msgid "About this application"
 msgstr "இந்த பயன்பாட்டினை பற்றி"
 
-#: ../src/interface.cpp:93
+#: ../src/interface.cpp:96
 msgid "_Dependencies"
 msgstr "சார்ந்தவை (_D)"
 
-#: ../src/interface.cpp:94
+#: ../src/interface.cpp:97
 msgid "Show parent/child relationship between processes"
 msgstr "செயல்களுக்கிடையே பெற்றோர்/சேய் உறவுமுறையை காட்டு"
 
-#: ../src/interface.cpp:101
+#: ../src/interface.cpp:104
 msgid "_Active Processes"
 msgstr "செயலில் உள்ள செயல்கள் (_A)"
 
-#: ../src/interface.cpp:102
+#: ../src/interface.cpp:105
 msgid "Show active processes"
 msgstr "செயலில் உள்ள செயல்களை காட்டு"
 
-#: ../src/interface.cpp:103
+#: ../src/interface.cpp:106
 msgid "A_ll Processes"
 msgstr "அனைத்து செயல்கள் (_l)"
 
-#: ../src/interface.cpp:104
+#: ../src/interface.cpp:107
 msgid "Show all processes"
 msgstr "அனைத்து செயல்களையும் காட்டு"
 
-#: ../src/interface.cpp:105
+#: ../src/interface.cpp:108
 msgid "M_y Processes"
 msgstr "என் செயல்கள் (_y)"
 
-#: ../src/interface.cpp:106
+#: ../src/interface.cpp:109
 msgid "Show only user-owned processes"
 msgstr "பயனரின் சொந்த செயலை மட்டும் காட்டு"
 
-#: ../src/interface.cpp:191
+#: ../src/interface.cpp:114 ../src/util.cpp:217
+msgid "Very High"
+msgstr "மிக அதிகம்"
+
+#: ../src/interface.cpp:115
+msgid "Set process priority to very high"
+msgstr "செயல் முன்னுரிமையை மிக அதிகம் என அமை"
+
+#: ../src/interface.cpp:116 ../src/util.cpp:219
+msgid "High"
+msgstr "அதிகம்"
+
+#: ../src/interface.cpp:117
+msgid "Set process priority to high"
+msgstr "செயல் முன்னுரிமையை அதிகம் என அமை"
+
+#: ../src/interface.cpp:118 ../src/util.cpp:221
+msgid "Normal"
+msgstr "இயல்பான"
+
+#: ../src/interface.cpp:119
+msgid "Set process priority to normal"
+msgstr "செயல் முன்னுரிமையை இயல்பான என அமை"
+
+#: ../src/interface.cpp:120 ../src/util.cpp:223
+msgid "Low"
+msgstr "குறைவு"
+
+#: ../src/interface.cpp:121
+msgid "Set process priority to low"
+msgstr "செயல் முன்னுரிமையை குறைவு என அமை"
+
+#: ../src/interface.cpp:122 ../src/util.cpp:225
+msgid "Very Low"
+msgstr "மிகக்குறைவு"
+
+#: ../src/interface.cpp:123
+msgid "Set process priority to very low"
+msgstr "செயல் முன்னுரிமையை மிகக்குறைவு என அமை"
+
+#: ../src/interface.cpp:124
+msgid "Custom"
+msgstr "தனிப்பயன்"
+
+#: ../src/interface.cpp:125
+msgid "Set process priority manually"
+msgstr "செயல் முன்னுரிமையை கைமுறையாக அமை"
+
+#: ../src/interface.cpp:231
 msgid "End _Process"
 msgstr "(_P)செயலை முடி"
 
-#: ../src/interface.cpp:244
+#. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
+#: ../src/interface.cpp:279
+#, c-format
+msgid "Pick a Color for '%s'"
+msgstr "'%s' க்கு ஒரு நிறத்தை தேர்வு செய்"
+
+#: ../src/interface.cpp:290
 msgid "CPU History"
 msgstr "CPU வரலாறு"
 
-#: ../src/interface.cpp:299
+#: ../src/interface.cpp:344 ../src/procproperties.cpp:122
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:301
+#: ../src/interface.cpp:346
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:319
+#: ../src/interface.cpp:367
 msgid "Memory and Swap History"
 msgstr "நினைவகம் மற்றும் ஸ்வாப் வரலாறு"
 
-#: ../src/interface.cpp:358 ../src/proctable.cpp:225
+#: ../src/interface.cpp:401 ../src/proctable.cpp:252
+#: ../src/procproperties.cpp:116
 msgid "Memory"
 msgstr "நினைவகம்"
 
-#: ../src/interface.cpp:384
+#: ../src/interface.cpp:432
 msgid "Swap"
 msgstr "இடமாற்று"
 
-#: ../src/interface.cpp:405
+#: ../src/interface.cpp:463
 msgid "Network History"
 msgstr "பிணைய வரலாறு"
 
-#: ../src/interface.cpp:444
+#: ../src/interface.cpp:496
 msgid "Receiving"
 msgstr "பெறுகிறது"
 
-#: ../src/interface.cpp:465
+#: ../src/interface.cpp:529
 msgid "Total Received"
 msgstr "மொத்தம் பெறப்பட்டது:"
 
-#: ../src/interface.cpp:499
+#: ../src/interface.cpp:557
 msgid "Sending"
 msgstr "அனுப்புகிறது"
 
-#: ../src/interface.cpp:521
+#: ../src/interface.cpp:591
 msgid "Total Sent"
 msgstr "மொத்தம் அனுப்பப்பட்டது"
 
 #. procman_create_sysinfo_view();
-#: ../src/interface.cpp:690
+#: ../src/interface.cpp:710
 msgid "System"
 msgstr "அமைப்பு"
 
-#: ../src/interface.cpp:694 ../src/procdialogs.cpp:518
+#: ../src/interface.cpp:714
 msgid "Processes"
 msgstr "செயல்கள்"
 
-#: ../src/interface.cpp:698 ../src/procdialogs.cpp:631
+#: ../src/interface.cpp:718
 msgid "Resources"
 msgstr "மூலங்கள்"
 
-#: ../src/interface.cpp:702 ../src/procdialogs.cpp:695
-#: ../src/procdialogs.cpp:699
+#: ../src/interface.cpp:722
 msgid "File Systems"
 msgstr "கோப்பு அமைப்புகள்"
 
-#: ../src/load-graph.cpp:155
+#: ../src/load-graph.cpp:166
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u விநாடி"
 msgstr[1] "%u விநாடிகள்"
 
+#: ../src/load-graph.cpp:347
+msgid "not available"
+msgstr "கிடைக்கவில்லை"
+
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:332
+#: ../src/load-graph.cpp:350
 #, c-format
-msgid "%s (%.1f %%) of %s"
+msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) %s இல் "
 
 #: ../src/lsof.cpp:124
@@ -395,11 +474,11 @@ msgstr "திறந்த கோப்புகளுக்கு தேடல�
 msgid "_Name contains:"
 msgstr "பெயர் கொண்ட: (_N)"
 
-#: ../src/lsof.cpp:352
+#: ../src/lsof.cpp:354
 msgid "Case insensitive matching"
 msgstr "எழுத்துவகை உதாசீனம் செய்த பொருத்தம்"
 
-#: ../src/lsof.cpp:360
+#: ../src/lsof.cpp:362
 msgid "S_earch results:"
 msgstr "(_e)தேடல் விடைகள்:"
 
@@ -515,16 +594,16 @@ msgid ""
 msgstr "அமைப்பு தகவலுக்கு 0, செயலாக்க பட்டியலுக்கு 1, மற்றும் வட்டுகள் பட்டியலுக்கு 3."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:2
-msgid "Default graph cpu color"
-msgstr "முன்னிருப்பு வரைபட cpu நிறம்"
+msgid "CPU colors"
+msgstr "சிபியூ நிறங்கள்"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
 msgid "Default graph incoming network traffic color"
 msgstr "முன்னிருப்பு உள்வரும் வலையமைப்பு போக்குவரத்து வரைபட நிறம்"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
-msgid "Default graph mem color"
-msgstr "முன்னிருப்பு வரைபட நினைவக நிறம்"
+msgid "Default graph memory color"
+msgstr "முன்னிருப்பு வரைபட நினைவகத்தின் நிறம்"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
 msgid "Default graph outgoing network traffic color"
@@ -547,309 +626,379 @@ msgid "Disk view columns order"
 msgstr "வட்டு பார்வை நிரல்கள் வரிசை"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
+msgid "Disk view sort column"
+msgstr "வட்டு காட்சியால் அடுக்கு பத்தி"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
+msgid "Disk view sort order"
+msgstr "வட்டு பார்வை அடுக்கல் வரிசை"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
+msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
+msgstr "ஒவ்வொரு உள்ளீடும் இந்த ஒழுங்கில் உள்ளது (சிபியூ#, அறும நிற மதிப்பு)"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
 msgid "Enable/Disable smooth refresh"
 msgstr "மென்மையான புதுப்பித்தலை செயல்படுத்து/செயல்நீக்கு"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
 msgid ""
-"If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu usage "
-"is divided by the total number of CPUs. Else it operates in 'Irix mode'."
+"If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
+"is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
+"mode'."
 msgstr ""
-"உண்மை எனில் கணினி அமைப்பு கண்காணிப்பாளர் சோலாரிஸ் பாணியில் செயலாற்றும். அதில் ' where a "
-"task's சிபியூ பயன்பாடு மொத்த சிபியூ எண்ணிக்கையால் வகுக்கப்படும், மற்றபடி அது 'Irix "
+"உண்மை எனில் கணினி அமைப்பு கண்காணிப்பாளர் 'சோலாரிஸ் பாணி' யில் செயலாற்றும். அதில் "
+"வேலையின் சிபியூ பயன்பாடு மொத்த சிபியூ எண்ணிக்கையால் வகுக்கப்படும், மற்றபடி அது 'Irix "
 "mode' இல் வேலை செய்யும்."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
+msgid "Main Window X position"
+msgstr "முதன்மை சாளரத்தின் எக்ஸ் ஆயம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
+msgid "Main Window Y position"
+msgstr "முதன்மை சாளரத்தின் ஒய் ஆயம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
 msgid "Main Window height"
 msgstr "முதன்மை சாளர உயரம்"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
 msgid "Main Window width"
 msgstr "முதன்மை சாளர அகலம்"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
+msgid "Memory map sort column"
+msgstr "நினைவக பட அடுக்கு பத்தி"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
+msgid "Memory map sort order"
+msgstr "நினைவக வரைபட அடுக்கல் வரிசை"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
+msgid "Open files sort column"
+msgstr "திறந்துள்ள கோப்புகள் அடுக்கல் பத்தி"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+msgid "Open files sort order"
+msgstr "திறந்துள்ள கோப்புகள் அடுக்கல் வரிசை"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
 msgid "Process view columns order"
 msgstr "செயல் பார்வை நிரல்கள் வரிசையில்"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
 msgid "Process view sort column"
 msgstr "செயல் பார்வை வரிசை நிரல்"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
 msgid "Process view sort order"
 msgstr "செயல் பார்வை வரிசை"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
 msgid "Saves the currently viewed tab"
 msgstr "தற்போது பார்க்கப்பட்ட தத்தலை சேமிக்கிறது"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
 msgid "Show network traffic in bits"
 msgstr "வலைப்பின்னல் போக்குவரத்தை  பிட்டுகளில் காட்டுக"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
 #, no-c-format
 msgid "Show process 'CPU %' column on startup"
-msgstr "துவக்கத்தில் செயல்பாடு சிபியூ %( 'CPU %' ) பத்தியை காட்டுக"
+msgstr "துவக்கத்தில் செயல்பாடு 'சிபியூ %' பத்தியை காட்டுக"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
-msgid "Show process 'CPU time' column on startup"
-msgstr "துவக்கத்தில் செயல்பாடு சிபியூ நேரம் ( 'CPU time' ) பத்தியை காட்டுக இயக்கு"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
+msgid "Show process 'CPU Time' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'சிபியூ நேரம்' பத்தியை காட்டுக"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
+msgid "Show process 'Command Line' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'கட்டளைவரி' பத்தியை காட்டுக"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
+msgid "Show process 'Control Group' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'கட்டுப்பாடு குழு' பத்தியை காட்டுக"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
+msgid "Show process 'Memory' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'நினைவகம்' பத்தியை காட்டுக"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
+msgid "Show process 'Name' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'பெயர்' பத்தியை காட்டுக"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
+msgid "Show process 'Nice' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'நைஸ்' பத்தியை காட்டுக"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
+msgid "Show process 'Owner' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'உரிமையாளர்' பத்தியை காட்டுக"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
 msgid "Show process 'PID' column on startup"
-msgstr "துவக்கத்தில் செயல்பாடு 'PID'  பத்தியை காட்டுக "
+msgstr "துவக்கத்தில் செயல்பாடு 'குறிப்பு எண்' பத்தியை காட்டுக "
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
-msgid "Show process 'SELinux security context' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
+msgid "Show process 'Priority' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'முன்னுரிமை' பத்தியை காட்டுக"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
+msgid "Show process 'Resident Memory' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'இருப்பில் உள்ள நினைவகம்' பத்தியை காட்டுக"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
+msgid "Show process 'SELinux Security Context' column on startup"
 msgstr ""
-"துவக்கத்தில் செயல்பாடு எஸ்ஈலினக்ஸ் பாதுகாப்பு சூழல் 'SELinux security context'  "
+"துவக்கத்தில் செயல்பாடு 'எஸ்ஈலினக்ஸ் பாதுகாப்பு சூழல்'"
 "பத்தியை காட்டுக"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
+msgid "Show process 'Seat' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'இருக்கை' பத்தியை காட்டுக"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
+msgid "Show process 'Session' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'அமர்வு' பத்தியை காட்டுக"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
+msgid "Show process 'Shared Memory' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'பகிர்ந்த நினைவகம்' பத்தியை காட்டுக"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
+msgid "Show process 'Started' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'துவங்கியது' பத்தியை காட்டுக"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:44
+msgid "Show process 'Status' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'நிலைமை' பத்தியை காட்டுக"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
+msgid "Show process 'Unit' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'அலகு' பத்தியை காட்டுக"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
+msgid "Show process 'User' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'பயனர்' பத்தியை காட்டுக"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
+msgid "Show process 'Virtual Memory' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'மெய்நிகர் நினைவகம் ' பத்தியை காட்டுக"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
 msgid "Show process 'Waiting Channel' column on startup"
 msgstr "துவக்கத்தில் செயல்பாடு 'காத்திருக்கும் சேனல்' பத்தியைக் காட்டுக"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
-msgid "Show process 'X server memory' column on startup"
-msgstr "துவக்கத்தில் செயல்பாடு எக்ஸ் வழங்கன் நினைவகம்  'X server memory'  பத்தியை காட்டுக"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
+msgid "Show process 'Writable Memory' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'எழுதக்கூடிய நினைவகம்' பத்தியை காட்டுக"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
-msgid "Show process 'arguments' column on startup"
-msgstr "துவக்கத்தில் செயல்பாடு தருமதிப்பு 'arguments' பத்தியை காட்டுக"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
+msgid "Show process 'X Server Memory' column on startup"
+msgstr "துவக்கத்தில் செயல்பாடு 'எக்ஸ் வழங்கன் நினைவகம்' பத்தியை காட்டுக"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
-msgid "Show process 'estimated memory usage' column on startup"
-msgstr ""
-"துவக்கத்தில் செயல்பாடு கணிக்கப்பட்ட நினைவக பயன்பாடு- 'estimated memory usage' பத்தியை "
-"காட்டுக"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
-msgid "Show process 'name' column on startup"
-msgstr "துவக்கத்தில் செயல்பாடு பெயர் 'name' பத்தியை காட்டுக"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
-msgid "Show process 'nice' column on startup"
-msgstr "துவக்கத்தில் செயல்பாடு நைஸ் 'nice' பத்தியை காட்டுக"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
-msgid "Show process 'owner' column on startup"
-msgstr "துவக்கத்தில் செயல்பாடு உரிமையாளர் 'owner' பத்தியை காட்டுக"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
-msgid "Show process 'resident memory' column on startup"
-msgstr "துவக்கத்தில் செயல்பாடு இருப்பில் உள்ள நினைவகம்- 'resident memory' பத்தியை காட்டுக"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
-msgid "Show process 'shared memory' column on startup"
-msgstr "துவக்கத்தில் செயல்பாடு பகிர்ந்த நினைவகம் 'shared memory' பத்தியை காட்டுக"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
-msgid "Show process 'start time' column on startup"
-msgstr "துவக்கத்தில் செயல்பாடு துவக்க நேரம்- 'start time' பத்தியை காட்டுக"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
-msgid "Show process 'status' column on startup"
-msgstr "துவக்கத்தில் செயல்பாடு நிலைமை 'status'  பத்தியை காட்டுக"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
-msgid "Show process 'virtual memory' column on startup"
-msgstr "துவக்கத்தில் செயல்பாடு மெய்நிகர் நினைவகம் 'virtual memory' பத்தியை காட்டுக"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
-msgid "Show process 'writable memory' column on startup"
-msgstr "துவக்கத்தில் செயல்பாடு எழுதக்கூடிய நினைவகம் 'writable memory' பத்தியை காட்டுக"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
 msgid "Show process dependencies in tree form"
 msgstr "செயல் சார்ந்திருப்பவைகளை கிளை வடிவில் காட்டு"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
 msgid "Show warning dialog when killing processes"
 msgstr "செயலை நிறுத்தும் போது எச்சரிக்கை உரையாடலை காட்டவும்"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
 msgid "Solaris mode for CPU percentage"
 msgstr "சிபியூ சதவிகிதத்திற்கு சோலாரிஸ் முறைமை"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "சாதனங்கள் பட்டியலில் மேம்பாடுகளுக்கிடையே நேரம் மில்லி விநாடிகளில்"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "வரைபடங்களின் மேம்பாடுகளுக்கிடையே நேரம் மில்லி விநாடிகளில்"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
 msgid "Time in milliseconds between updates of the process view"
 msgstr "செயல் பார்வையில் மேம்பாடுகளுக்கிடையே நேரம் மில்லி விநாடிகளில்"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
-msgid "Whether information about all filesystems should be displayed"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
+msgid "Whether information about all file systems should be displayed"
 msgstr "அனைத்து கோப்பு முறைமைகள் பற்றிய தகவலை காட்ட வேண்டுமா"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
 msgid ""
-"Whether to display information about all filesystems (including types like "
+"Whether to display information about all file systems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
-"filesystems."
+"file systems."
 msgstr ""
 "அனைத்து கோப்பு அமைப்புகள் பற்றிய தகவலும் ('autofs' மற்றும் 'procfs' போன்ற வகைகள் உட்பட) "
-"காட்ட வேண்டுமா. இது ஏற்றப்பட்ட அனைத்து கோப்பு அமைப்புகள் பட்டியலை பெற உதவும்."
+"காட்ட வேண்டுமா. இது இப்போது ஏற்றப்பட்ட அனைத்து கோப்பு அமைப்புகள் பட்டியலை பெற உதவும்."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
 #, no-c-format
 msgid "Width of process 'CPU %' column"
 msgstr "சிபியூ %( 'CPU %' ) செயலுக்கு பத்தி அகலம்"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
-msgid "Width of process 'CPU time' column"
-msgstr "'சிபியூ நேரம்' செயலுக்கு பத்தி அகலம்"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
+msgid "Width of process 'CPU Time' column"
+msgstr "செயல் 'சிபியூ நேரம்' பத்தி அகலம்"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
+msgid "Width of process 'Command Line' column"
+msgstr "செயல் 'கட்டளை வரி' பத்தி அகலம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
+msgid "Width of process 'Control Group' column"
+msgstr "செயல் 'கட்டுப்பாடுக் குழு' பத்தி அகலம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
+msgid "Width of process 'Memory' column"
+msgstr "செயல் 'நினைவகம்' பத்தி அகலம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
+msgid "Width of process 'Name' column"
+msgstr "செயல் 'பெயர்' பத்தி அகலம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
+msgid "Width of process 'Nice' column"
+msgstr "நைஸ் செயலுக்கு பத்திக்கு அகலம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
+msgid "Width of process 'Owner' column"
+msgstr "'உரிமையாளர்' செயலுக்கு பத்திக்கு அகலம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
 msgid "Width of process 'PID' column"
-msgstr "செயல்பாடு 'PID'   செயலுக்கு பத்தி அகலம்"
+msgstr "'செயல்பாடு' செயலுக்கு பத்தி அகலம்"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
-msgid "Width of process 'SELinux security context' column"
-msgstr ""
-"எஸ்ஈலினக்ஸ் பாதுகாப்பு சூழல் 'SELinux security context'  செயலுக்கு பத்திக்கு அகலம்"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
+msgid "Width of process 'Priority' column"
+msgstr "'முன்னுரிமை' செயலுக்கு பத்திக்கு அகலம்"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
+msgid "Width of process 'Resident Memory' column"
+msgstr "'இருப்பில் உள்ள நினைவகம்' செயலுக்கு பத்திக்கு அகலம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
+msgid "Width of process 'SELinux Security Context' column"
+msgstr "'எஸ்ஈலினக்ஸ் பாதுகாப்பு சூழல்' செயலுக்கு பத்திக்கு அகலம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
+msgid "Width of process 'Seat' column"
+msgstr "'இருக்கை'  செயலுக்கு பத்திக்கு அகலம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
+msgid "Width of process 'Session' column"
+msgstr "'அமர்வு'  செயலுக்கு பத்திக்கு அகலம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
+msgid "Width of process 'Shared Memory' column"
+msgstr "'பகிர்ந்த நினைவகம்' செயலுக்கு பத்திக்கு அகலம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
+msgid "Width of process 'Started' column"
+msgstr "'துவங்கியது' செயலுக்கு பத்திக்கு அகலம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
+msgid "Width of process 'Status' column"
+msgstr "'நிலைமை' செயலுக்கு பத்திக்கு அகலம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
+msgid "Width of process 'Unit' column"
+msgstr "'அலகு' செயலுக்கு பத்திக்கு அகலம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
+msgid "Width of process 'User' column"
+msgstr "'பயனர்'  செயலுக்கு பத்திக்கு அகலம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
+msgid "Width of process 'Virtual Memory' column"
+msgstr "'மெய்நிகர் நினைவகம்' செயலுக்கு பத்திக்கு அகலம்"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
 msgid "Width of process 'Waiting Channel' column"
 msgstr "'காத்திருக்கும் சேனல்' செயலுக்கு பத்தியின் அகலம்"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
-msgid "Width of process 'X server memory' column"
-msgstr "எக்ஸ் வழங்கன் நினைவகம்  'X server memory'  செயலுக்கு பத்திக்கு அகலம்"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
+msgid "Width of process 'Writable Memory' column"
+msgstr "'எழுதக்கூடிய நினைவகம்' செயலுக்கு பத்திக்கு அகலம்"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
-msgid "Width of process 'arguments' column"
-msgstr "தருமதிப்பு-'arguments' செயலுக்கு பத்திக்கு அகலம்"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
+msgid "Width of process 'X Server Memory' column"
+msgstr "'எக்ஸ் வழங்கன் நினைவகம்' செயலுக்கு பத்திக்கு அகலம்"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
-msgid "Width of process 'estimated memory usage' column"
-msgstr "கணிக்கப்பட்ட நினைவக பயன்பாடு- 'estimated memory usage' செயலுக்கு பத்திக்கு அகலம்"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
-msgid "Width of process 'name' column"
-msgstr "பெயர்  'name' செயலுக்கு பத்திக்கு அகலம்"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
-msgid "Width of process 'nice' column"
-msgstr "நைஸ் 'nice' செயலுக்கு பத்திக்கு அகலம்"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
-msgid "Width of process 'owner' column"
-msgstr "உரிமையாளர் 'owner' '  செயலுக்கு பத்திக்கு அகலம்"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
-msgid "Width of process 'resident memory' column"
-msgstr "இருப்பில் உள்ள நினைவகம்- 'resident memory'  செயலுக்கு பத்திக்கு அகலம்"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
-msgid "Width of process 'shared memory' column"
-msgstr "பகிர்ந்த நினைவகம் 'shared memory'  செயலுக்கு பத்திக்கு அகலம்"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
-msgid "Width of process 'start time' column"
-msgstr "துவக்க நேரம் 'start time'  செயலுக்கு பத்திக்கு அகலம்"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
-msgid "Width of process 'status' column"
-msgstr "நிலைமை 'status'  செயலுக்கு பத்திக்கு அகலம்"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
-msgid "Width of process 'virtual memory' column"
-msgstr "மெய்நிகர் நினைவகம்  'virtual memory'  செயலுக்கு பத்திக்கு அகலம்"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
-msgid "Width of process 'writable memory' column"
-msgstr " 'writable memory' செயலுக்கு பத்திக்கு அகலம்"
-
-#: ../src/procactions.cpp:75
+#: ../src/procactions.cpp:76
 #, c-format
 msgid ""
-"Cannot change the priority of process with pid %d to %d.\n"
+"Cannot change the priority of process with PID %d to %d.\n"
 "%s"
 msgstr ""
-"செயல்பாடு அடையாளம் (pid) %d ஐ %d க்கு மாற்ற இயலாது.\n"
+"செயல்பாடு (pid) %d க்கு முன்னுரிமையை %d க்கு மாற்ற இயலாது.\n"
 "%s"
 
-#: ../src/procactions.cpp:155
+#: ../src/procactions.cpp:156
 #, c-format
 msgid ""
-"Cannot kill process with pid %d with signal %d.\n"
+"Cannot kill process with PID %d with signal %d.\n"
 "%s"
 msgstr ""
-"pid %d செயல்பாட்டை ( %d சமிக்ஞை உடன் உள்ள) கொல்ல இயலாது\n"
+" %d சமிக்ஞை உடன் உள்ள pid %d செயல்பாட்டை கொல்ல இயலாது\n"
 "%s"
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:70
-msgid "Kill the selected process?"
-msgstr "தேர்ந்தெடுக்கப்பட்ட செயலை நிறத்த வேண்டுமா?"
+#: ../src/procdialogs.cpp:77
+#, c-format
+msgid "Kill the selected process »%s« (PID: %u)?"
+msgstr "தேர்ந்தெடுக்கப்பட்ட செயல் »%s« (PID: %u) ஐ நிறுத்த வேண்டுமா?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:72
+#: ../src/procdialogs.cpp:81
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
-"security risk. Only unresponding processes should be killed."
+"security risk. Only unresponsive processes should be killed."
 msgstr ""
 "ஒரு செயலை கொல்லுவது தரவை அழிக்கும், அமர்வை சிதைக்கும் அல்லது பாது காப்பு பிரச்சினையை "
 "உருவாக்கும். செயல் பதில் தராத செயல்கள் மட்டுமே கொல்லப்பட வேண்டும்."
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:79
-msgid "End the selected process?"
-msgstr "தேர்ந்தெடுக்கப்பட்ட செயலை முடிக்க வேண்டுமா?"
+#: ../src/procdialogs.cpp:88
+#, c-format
+msgid "End the selected process »%s« (PID: %u)?"
+msgstr "தேர்ந்தெடுக்கப்பட்ட செயல் »%s« (PID: %u) ஐ முடிக்க வேண்டுமா?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:81
+#: ../src/procdialogs.cpp:92
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
-"risk. Only unresponding processes should be ended."
+"risk. Only unresponsive processes should be ended."
 msgstr ""
 "ஒரு செயலை முடிப்பது தரவை அழிக்கும், அமர்வை சிதைக்கும் அல்லது பாது காப்பு பிரச்சினையை "
 "உருவாக்கும். செயல் பதில் தராத செயல்கள் மட்டுமே முடிக்கப்பட வேண்டும்."
 
-#: ../src/procdialogs.cpp:115
-msgid "(Very High Priority)"
-msgstr "(மிக முக்கியத்துவம்)"
+#: ../src/procdialogs.cpp:130 ../src/procdialogs.cpp:220
+#, c-format
+msgid "(%s Priority)"
+msgstr "(%s முன்னுரிமை)"
 
-#: ../src/procdialogs.cpp:117
-msgid "(High Priority)"
-msgstr "(முக்கியத்துவம்)"
+#: ../src/procdialogs.cpp:174
+#, c-format
+msgid "Change Priority of Process »%s« (PID: %u)"
+msgstr "செயல்பாடு  »%s« (PID: %u) க்கு முன்னுரிமையை மாற்று"
 
-#: ../src/procdialogs.cpp:119
-msgid "(Normal Priority)"
-msgstr "(இயல்பான முன்னுரிமை)"
-
-#: ../src/procdialogs.cpp:121
-msgid "(Low Priority)"
-msgstr "(குறைவான முன்னுரிமை)"
-
-#: ../src/procdialogs.cpp:123
-msgid "(Very Low Priority)"
-msgstr "(மிக குறைவான முன்னுரிமை)"
-
-#: ../src/procdialogs.cpp:173
-msgid "Change Priority"
-msgstr "முன்னுரிமையை மாற்று"
-
-#: ../src/procdialogs.cpp:181
+#: ../src/procdialogs.cpp:186
 msgid "Change _Priority"
 msgstr "(_P)முன்னுரிமையை மாற்று"
 
-#: ../src/procdialogs.cpp:204
+#: ../src/procdialogs.cpp:209
 msgid "_Nice value:"
 msgstr "(_N)நல்ல மதிப்பு:"
 
-#: ../src/procdialogs.cpp:220
+#: ../src/procdialogs.cpp:226
 msgid "Note:"
 msgstr "குறிப்பு:"
 
-#: ../src/procdialogs.cpp:221
+#: ../src/procdialogs.cpp:227
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -857,179 +1006,180 @@ msgstr ""
 "இந்த செயலுக்கு மிக நல்ல மதிப்பு தரப்பட்டுள்ளது. குறைந்த நன்மதிப்பு மிகமுக்கிய செயலை "
 "குறிக்கும்"
 
-#: ../src/procdialogs.cpp:450
+#: ../src/procdialogs.cpp:449
 msgid "Icon"
 msgstr "சின்னம்"
 
-#: ../src/procdialogs.cpp:495
-msgid "System Monitor Preferences"
-msgstr "கணினி திரையக முன்னுரிமைகள்"
-
-#: ../src/procdialogs.cpp:525
-msgid "Behavior"
-msgstr "ஒழுக்கம்"
-
-#: ../src/procdialogs.cpp:544 ../src/procdialogs.cpp:657
-#: ../src/procdialogs.cpp:718
-msgid "_Update interval in seconds:"
-msgstr "புதுப்பிக்கும் கால இடைவெளி நொடிகளில்: (_U)"
-
-#: ../src/procdialogs.cpp:569
-msgid "Enable _smooth refresh"
-msgstr "மென்மையான புதுப்பித்தலை செயல்படுத்து (_s)"
-
-#: ../src/procdialogs.cpp:582
-msgid "Alert before ending or _killing processes"
-msgstr "செயலை நிறுத்தும் போது அல்லது முடிக்கும் போது எச்சரிக்கை செய் (_k)"
-
-#: ../src/procdialogs.cpp:595
-msgid "Divide CPU usage by CPU count"
-msgstr "சிபியூ பயன்பாட்டை சிபியூ எண்ணால் வகு"
-
-#: ../src/procdialogs.cpp:596
-msgid "Solaris mode"
-msgstr "சோலாரிஸ் முறைமை"
-
-#: ../src/procdialogs.cpp:613 ../src/procdialogs.cpp:752
-msgid "Information Fields"
-msgstr "தகவல் புலங்கள்"
-
-#: ../src/procdialogs.cpp:626
-msgid "Process i_nformation shown in list:"
-msgstr "பட்டியலில் காட்டப்படும் செயல்பாடு தகவல்:"
-
-#: ../src/procdialogs.cpp:638
-msgid "Graphs"
-msgstr "வரைபடம்"
-
-#: ../src/procdialogs.cpp:677
-msgid "Show network speed in bits"
-msgstr "வலைப்பின்னல் வேகத்தை  பிட்டுகளில் காட்டுக"
-
-#: ../src/procdialogs.cpp:738
-msgid "Show _all filesystems"
-msgstr "அனைத்து கோப்பு முறைமைகளையும் காட்டு"
-
-#: ../src/procdialogs.cpp:765
-msgid "File system i_nformation shown in list:"
-msgstr "பட்டியலில் காட்டப்படும் கோப்பு முறைமை தகவல் (_n):"
-
-#: ../src/procman.cpp:644
+#: ../src/procman.cpp:668
 msgid "A simple process and system monitor."
 msgstr "ஒரு எளிய முறை மற்றும் கணினி கண்காணி."
 
-#: ../src/proctable.cpp:210
+#: ../src/proctable.cpp:237 ../src/procproperties.cpp:113
 msgid "Process Name"
 msgstr "செயல் பெயர்"
 
-#: ../src/proctable.cpp:211
+#: ../src/proctable.cpp:238 ../src/procproperties.cpp:114
 msgid "User"
 msgstr "பயனர்"
 
-#: ../src/proctable.cpp:212
+#: ../src/proctable.cpp:239 ../src/procproperties.cpp:115
 msgid "Status"
 msgstr "நிலை"
 
-#: ../src/proctable.cpp:213
+#: ../src/proctable.cpp:240 ../src/procproperties.cpp:117
 msgid "Virtual Memory"
 msgstr "மெய்நிகர் நினைவகம்"
 
-#: ../src/proctable.cpp:214
+#: ../src/proctable.cpp:241 ../src/procproperties.cpp:118
 msgid "Resident Memory"
 msgstr "இருப்பிட நினைவகம்"
 
-#: ../src/proctable.cpp:215
+#: ../src/proctable.cpp:242 ../src/procproperties.cpp:119
 msgid "Writable Memory"
 msgstr "எழுதப்படும் நினைவகம்"
 
-#: ../src/proctable.cpp:216
+#: ../src/proctable.cpp:243 ../src/procproperties.cpp:120
 msgid "Shared Memory"
 msgstr "பகிரப்பட்ட நினைவகம்"
 
-#: ../src/proctable.cpp:217
+#: ../src/proctable.cpp:244 ../src/procproperties.cpp:121
 msgid "X Server Memory"
 msgstr "X சேவகன் நினைவிடம்"
 
-#: ../src/proctable.cpp:218
+#: ../src/proctable.cpp:245
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:219
+#: ../src/proctable.cpp:246 ../src/procproperties.cpp:123
 msgid "CPU Time"
 msgstr "CPU நேரம்"
 
-#: ../src/proctable.cpp:220
+#: ../src/proctable.cpp:247 ../src/procproperties.cpp:124
 msgid "Started"
 msgstr "ஆரம்பிக்கப்பட்டது"
 
-#: ../src/proctable.cpp:221
+#: ../src/proctable.cpp:248 ../src/procproperties.cpp:125
 msgid "Nice"
 msgstr "நன்று"
 
-#: ../src/proctable.cpp:222
+#: ../src/proctable.cpp:249 ../src/procproperties.cpp:127
 msgid "ID"
 msgstr "எண்"
 
-#: ../src/proctable.cpp:223
+#: ../src/proctable.cpp:250 ../src/procproperties.cpp:128
 msgid "Security Context"
 msgstr "பாதுகாப்பு சூழல்"
 
-#: ../src/proctable.cpp:224
+#: ../src/proctable.cpp:251 ../src/procproperties.cpp:129
 msgid "Command Line"
 msgstr "கட்டளை வரி"
 
-#. xgettext: wchan, see ps(1) or top(1)
-#: ../src/proctable.cpp:227
+#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
+#: ../src/proctable.cpp:254 ../src/procproperties.cpp:130
 msgid "Waiting Channel"
 msgstr "காத்திருக்கும் சேனல்"
 
-#: ../src/proctable.cpp:944
+#: ../src/proctable.cpp:255
+msgid "Control Group"
+msgstr "கட்டுப்பாடு குழு"
+
+#: ../src/proctable.cpp:256
+msgid "Unit"
+msgstr "அலகு"
+
+#: ../src/proctable.cpp:257
+msgid "Session"
+msgstr "அமர்வு"
+
+#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
+#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
+#: ../src/proctable.cpp:260
+msgid "Seat"
+msgstr "இருக்கை"
+
+#: ../src/proctable.cpp:261
+msgid "Owner"
+msgstr "உரிமையாளர்"
+
+#: ../src/proctable.cpp:262 ../src/procproperties.cpp:126
+msgid "Priority"
+msgstr "முன்னுரிமை"
+
+#: ../src/proctable.cpp:1086
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "கடைசி 1, 5, 15 நிமிடங்களுக்கு சராசரிகளை ஏற்று: %0.2f, %0.2f, %0.2f"
 
-#: ../src/sysinfo.cpp:77
-#, c-format
-msgid "Release %s"
-msgstr "வெளியீடு  %s"
+#: ../src/procproperties.cpp:99
+msgid "N/A"
+msgstr "N/A"
 
-#: ../src/sysinfo.cpp:621
+#: ../src/procproperties.cpp:123
+#, c-format
+msgid "%lld second"
+msgid_plural "%lld seconds"
+msgstr[0] "%lld விநாடி"
+msgstr[1] "%lld விநாடிகள்"
+
+#: ../src/procproperties.cpp:241
+msgid "Process Properties"
+msgstr "செயல் பண்புகள்"
+
+#: ../src/procproperties.cpp:261
+#, c-format
+msgid "Properties of process \"%s\" (PID %u):"
+msgstr "செயல் \"%s\" (PID %u) இன் பண்புகள்: "
+
+#. Translators: The first string parameter is release version (codename),
+#. * the second one is the architecture, 32 or 64-bit
+#: ../src/sysinfo.cpp:78
+#, c-format
+msgid "Release %s %s"
+msgstr "வெளியீடு  %s %s"
+
+#. translators: This is the type of architecture, for example:
+#. * "64-bit" or "32-bit"
+#: ../src/sysinfo.cpp:115
+#, c-format
+msgid "%d-bit"
+msgstr "%d-பிட்"
+
+#: ../src/sysinfo.cpp:219
+msgid "Unknown model"
+msgstr "தெரியாத மாதிரி"
+
+#: ../src/sysinfo.cpp:740
 #, c-format
 msgid "Kernel %s"
 msgstr "உட்கரு %s"
 
-#: ../src/sysinfo.cpp:634
+#: ../src/sysinfo.cpp:754
 #, c-format
 msgid "GNOME %s"
 msgstr "க்னோம் %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:648
+#: ../src/sysinfo.cpp:769
 #, c-format
 msgid "<b>Hardware</b>"
 msgstr "<b> வண் பொருட்கள்</b>"
 
-#: ../src/sysinfo.cpp:653
+#: ../src/sysinfo.cpp:774
 msgid "Memory:"
 msgstr "நினைவகம்:"
 
-#: ../src/sysinfo.cpp:660
-#, c-format
-msgid "Processor %d:"
-msgstr "நுண்செயலி %d:"
-
-#: ../src/sysinfo.cpp:665
+#: ../src/sysinfo.cpp:779
 msgid "Processor:"
 msgstr "நுண்செயலி:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:677
+#: ../src/sysinfo.cpp:788
 #, c-format
 msgid "<b>System Status</b>"
 msgstr "<b> அமைப்பு நிலை</b>"
 
-#: ../src/sysinfo.cpp:683
+#: ../src/sysinfo.cpp:794
 msgid "Available disk space:"
 msgstr "இருப்பில் கிடைக்கக்கூடிய வட்டு இடைவெளி:"
 
@@ -1099,23 +1249,23 @@ msgstr "%.1f TiB"
 
 #: ../src/util.cpp:170
 #, c-format
-msgid "%.1f kbit"
-msgstr "%.1f Kbit"
+msgid "%.3g kbit"
+msgstr "%.3g Kbit"
 
 #: ../src/util.cpp:171
 #, c-format
-msgid "%.1f Mbit"
-msgstr "%.1f Mbit"
+msgid "%.3g Mbit"
+msgstr "%.3g Mbit"
 
 #: ../src/util.cpp:172
 #, c-format
-msgid "%.1f Gbit"
-msgstr "%.1f Gbit"
+msgid "%.3g Gbit"
+msgstr "%.3g Gbit"
 
 #: ../src/util.cpp:173
 #, c-format
-msgid "%.1f Tbit"
-msgstr "%.1f Tbit"
+msgid "%.3g Tbit"
+msgstr "%.3g Tbit"
 
 #: ../src/util.cpp:188
 #, c-format
@@ -1131,15 +1281,84 @@ msgid_plural "%u bytes"
 msgstr[0] "%u பைட்"
 msgstr[1] "%u பைட்கள்"
 
-#: ../src/util.cpp:380
+#: ../src/util.cpp:420
 msgid "<i>N/A</i>"
 msgstr "<i>N/A</i>"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:497
+#: ../src/util.cpp:582
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#~ msgid "Unknown CPU model"
-#~ msgstr "தெரியாத சிபியூ வடிவம்"
+#~ msgid "_Change Priority..."
+#~ msgstr "(_C)முன்னுரிமையை மாற்று..."
+
+#~ msgid "Default graph cpu color"
+#~ msgstr "முன்னிருப்பு வரைபட cpu நிறம்"
+
+#~ msgid "Show process 'arguments' column on startup"
+#~ msgstr "துவக்கத்தில் செயல்பாடு தருமதிப்பு 'arguments' பத்தியை காட்டுக"
+
+#~ msgid "Show process 'estimated memory usage' column on startup"
+#~ msgstr ""
+#~ "துவக்கத்தில் செயல்பாடு கணிக்கப்பட்ட நினைவக பயன்பாடு- 'estimated memory usage' "
+#~ "பத்தியை காட்டுக"
+
+#~ msgid "Width of process 'arguments' column"
+#~ msgstr "தருமதிப்பு-'arguments' செயலுக்கு பத்திக்கு அகலம்"
+
+#~ msgid "Width of process 'estimated memory usage' column"
+#~ msgstr ""
+#~ "கணிக்கப்பட்ட நினைவக பயன்பாடு- 'estimated memory usage' செயலுக்கு பத்திக்கு அகலம்"
+
+#~ msgid "(High Priority)"
+#~ msgstr "(முக்கியத்துவம்)"
+
+#~ msgid "(Normal Priority)"
+#~ msgstr "(இயல்பான முன்னுரிமை)"
+
+#~ msgid "(Very Low Priority)"
+#~ msgstr "(மிக குறைவான முன்னுரிமை)"
+
+#~ msgid "System Monitor Preferences"
+#~ msgstr "கணினி திரையக முன்னுரிமைகள்"
+
+#~ msgid "Behavior"
+#~ msgstr "ஒழுக்கம்"
+
+#~ msgid "_Update interval in seconds:"
+#~ msgstr "புதுப்பிக்கும் கால இடைவெளி நொடிகளில்: (_U)"
+
+#~ msgid "Enable _smooth refresh"
+#~ msgstr "மென்மையான புதுப்பித்தலை செயல்படுத்து (_s)"
+
+#~ msgid "Alert before ending or _killing processes"
+#~ msgstr "செயலை நிறுத்தும் போது அல்லது முடிக்கும் போது எச்சரிக்கை செய் (_k)"
+
+#~ msgid "Divide CPU usage by CPU count"
+#~ msgstr "சிபியூ பயன்பாட்டை சிபியூ எண்ணால் வகு"
+
+#~ msgid "Solaris mode"
+#~ msgstr "சோலாரிஸ் முறைமை"
+
+#~ msgid "Information Fields"
+#~ msgstr "தகவல் புலங்கள்"
+
+#~ msgid "Process i_nformation shown in list:"
+#~ msgstr "பட்டியலில் காட்டப்படும் செயல்பாடு தகவல்:"
+
+#~ msgid "Graphs"
+#~ msgstr "வரைபடம்"
+
+#~ msgid "Show network speed in bits"
+#~ msgstr "வலைப்பின்னல் வேகத்தை  பிட்டுகளில் காட்டுக"
+
+#~ msgid "Show _all filesystems"
+#~ msgstr "அனைத்து கோப்பு முறைமைகளையும் காட்டு"
+
+#~ msgid "File system i_nformation shown in list:"
+#~ msgstr "பட்டியலில் காட்டப்படும் கோப்பு முறைமை தகவல் (_n):"
+
+#~ msgid "Processor %d:"
+#~ msgstr "நுண்செயலி %d:"
