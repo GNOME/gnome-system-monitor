@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the gnome-system-monitor package.
 #
 # Young-Ho, Cha <ganadist@chollian.net> 2002, 2006, 2007
-# Changwoo Ryu <cwryu@debian.org> 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011.
+# Changwoo Ryu <cwryu@debian.org> 2003-2012.
 #
 # 새로 번역하시는 분은 아래 translator-credits에 추가하세요.
 #
@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-07-11 00:35+0000\n"
-"PO-Revision-Date: 2011-09-23 06:24+0900\n"
+"POT-Creation-Date: 2012-01-28 04:51+0000\n"
+"PO-Revision-Date: 2012-03-11 01:16+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -20,21 +20,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:160
-#: ../src/interface.cpp:619 ../src/procman.cpp:689
+#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:184
+#: ../src/interface.cpp:635 ../src/procman.cpp:721
 msgid "System Monitor"
 msgstr "시스템 정보"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:161
+#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "현재 프로세스와 시스템 상태를 봅니다"
 
 # command line option
-#: ../src/argv.cpp:18
+#: ../src/argv.cpp:21
 msgid "Show the System tab"
 msgstr "시스템 탭을 표시합니다"
 
-#: ../src/callbacks.cpp:171
+# command line option
+#: ../src/argv.cpp:26
+msgid "Show the Processes tab"
+msgstr "프로세스 탭을 표시합니다"
+
+# command line option
+#: ../src/argv.cpp:31
+msgid "Show the Resources tab"
+msgstr "자원 탭을 표시합니다"
+
+# command line option
+#: ../src/argv.cpp:36
+msgid "Show the File Systems tab"
+msgstr "파일 시스템 탭을 표시합니다"
+
+#: ../src/callbacks.cpp:195
 msgid "translator-credits"
 msgstr ""
 "류창우 <cwryu@debian.org>\n"
@@ -48,7 +63,7 @@ msgstr "장치"
 msgid "Directory"
 msgstr "디렉터리"
 
-#: ../src/disks.cpp:301 ../src/gsm_color_button.c:216 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:301 ../src/gsm_color_button.c:221 ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "종류"
 
@@ -93,43 +108,43 @@ msgstr "%b %d일 %p %l:%M"
 msgid "%b %d %Y"
 msgstr "%Y년 %b %d일"
 
-#: ../src/gsm_color_button.c:193
+#: ../src/gsm_color_button.c:198
 msgid "Fraction"
 msgstr "조각"
 
-#: ../src/gsm_color_button.c:194
-msgid "Percentage full for pie colour pickers"
+#: ../src/gsm_color_button.c:199
+msgid "Percentage full for pie color pickers"
 msgstr "파이 색 선택의 퍼센트 값"
 
-#: ../src/gsm_color_button.c:201
+#: ../src/gsm_color_button.c:206
 msgid "Title"
 msgstr "제목"
 
-#: ../src/gsm_color_button.c:202
+#: ../src/gsm_color_button.c:207
 msgid "The title of the color selection dialog"
 msgstr "색 선택 대화 창의 제목"
 
-#: ../src/gsm_color_button.c:203 ../src/gsm_color_button.c:622
+#: ../src/gsm_color_button.c:208 ../src/gsm_color_button.c:624
 msgid "Pick a Color"
 msgstr "색 선택"
 
-#: ../src/gsm_color_button.c:209
+#: ../src/gsm_color_button.c:214
 msgid "Current Color"
 msgstr "현재 색"
 
-#: ../src/gsm_color_button.c:210
+#: ../src/gsm_color_button.c:215
 msgid "The selected color"
 msgstr "선택한 색"
 
-#: ../src/gsm_color_button.c:217
+#: ../src/gsm_color_button.c:222
 msgid "Type of color picker"
 msgstr "색 선택 창의 종류"
 
-#: ../src/gsm_color_button.c:545
+#: ../src/gsm_color_button.c:547
 msgid "Received invalid color data\n"
 msgstr "잘못된 색 데이터를 받았습니다\n"
 
-#: ../src/gsm_color_button.c:643
+#: ../src/gsm_color_button.c:647
 msgid "Click to set graph colors"
 msgstr "그래프 색을 설정하려면 누르십시오"
 
@@ -179,7 +194,7 @@ msgstr "프로세스 진행(_C)"
 msgid "Continue process if stopped"
 msgstr "멈춘 프로세스를 계속 진행하게 합니다"
 
-#: ../src/interface.cpp:67 ../src/procdialogs.cpp:84
+#: ../src/interface.cpp:67 ../src/procdialogs.cpp:95
 msgid "_End Process"
 msgstr "프로세스 끝내기(_E)"
 
@@ -187,7 +202,7 @@ msgstr "프로세스 끝내기(_E)"
 msgid "Force process to finish normally"
 msgstr "정상적으로 프로세스를 마칩니다"
 
-#: ../src/interface.cpp:69 ../src/procdialogs.cpp:75
+#: ../src/interface.cpp:69 ../src/procdialogs.cpp:84
 msgid "_Kill Process"
 msgstr "프로세스 죽이기(_K)"
 
@@ -196,12 +211,12 @@ msgid "Force process to finish immediately"
 msgstr "강제로 프로세스를 마칩니다"
 
 #: ../src/interface.cpp:71
-msgid "_Change Priority..."
-msgstr "우선순위 바꾸기(_C)..."
+msgid "_Change Priority"
+msgstr "우선순위 바꾸기(_C)"
 
 #: ../src/interface.cpp:72
 msgid "Change the order of priority of process"
-msgstr "프로세스의 우선 순위 (nice 값)을 바꿉니다"
+msgstr "프로세스의 우선 순위를 바꿉니다"
 
 #: ../src/interface.cpp:74
 msgid "Configure the application"
@@ -232,128 +247,194 @@ msgstr "연 파일(_F)"
 msgid "View the files opened by a process"
 msgstr "프로세스가 연 파일을 봅니다"
 
+#: ../src/interface.cpp:84
+msgid "_Properties"
+msgstr "속성(_P)"
+
 #: ../src/interface.cpp:85
+msgid "View additional information about a process"
+msgstr "프로세스에 대한 추가 정보를 봅니다"
+
+#: ../src/interface.cpp:88
 msgid "_Contents"
 msgstr "차례(_C)"
 
-#: ../src/interface.cpp:86
+#: ../src/interface.cpp:89
 msgid "Open the manual"
 msgstr "도움말을 보여줍니다"
 
-#: ../src/interface.cpp:88
+#: ../src/interface.cpp:91
 msgid "About this application"
 msgstr "이 프로그램에 대한 정보"
 
-#: ../src/interface.cpp:93
+#: ../src/interface.cpp:96
 msgid "_Dependencies"
 msgstr "의존성(_D)"
 
-#: ../src/interface.cpp:94
+#: ../src/interface.cpp:97
 msgid "Show parent/child relationship between processes"
 msgstr "프로세스의 부모/자식 관계를 봅니다"
 
-#: ../src/interface.cpp:101
+#: ../src/interface.cpp:104
 msgid "_Active Processes"
 msgstr "활성 프로세스(_A)"
 
-#: ../src/interface.cpp:102
+#: ../src/interface.cpp:105
 msgid "Show active processes"
 msgstr "활성 프로세스를 봅니다"
 
-#: ../src/interface.cpp:103
+#: ../src/interface.cpp:106
 msgid "A_ll Processes"
 msgstr "모든 프로세스(_L)"
 
-#: ../src/interface.cpp:104
+#: ../src/interface.cpp:107
 msgid "Show all processes"
 msgstr "모든 프로세스를 봅니다"
 
-#: ../src/interface.cpp:105
+#: ../src/interface.cpp:108
 msgid "M_y Processes"
 msgstr "내 프로세스(_Y)"
 
-#: ../src/interface.cpp:106
+#: ../src/interface.cpp:109
 msgid "Show only user-owned processes"
 msgstr "사용자 소유의 프로세스만 봅니다"
 
-#: ../src/interface.cpp:191
+#: ../src/interface.cpp:114 ../src/util.cpp:217
+msgid "Very High"
+msgstr "아주 높음"
+
+#: ../src/interface.cpp:115
+msgid "Set process priority to very high"
+msgstr "프로세스 우선 순위 아주 높음으로 설정"
+
+#: ../src/interface.cpp:116 ../src/util.cpp:219
+msgid "High"
+msgstr "높음"
+
+#: ../src/interface.cpp:117
+msgid "Set process priority to high"
+msgstr "프로세스 우선 순위 높음으로 설정"
+
+#: ../src/interface.cpp:118 ../src/util.cpp:221
+msgid "Normal"
+msgstr "보통"
+
+#: ../src/interface.cpp:119
+msgid "Set process priority to normal"
+msgstr "프로세스 우선 순위 보통으로 설정"
+
+#: ../src/interface.cpp:120 ../src/util.cpp:223
+msgid "Low"
+msgstr "낮음"
+
+#: ../src/interface.cpp:121
+msgid "Set process priority to low"
+msgstr "프로세스 우선 순위 낮음으로 설정"
+
+#: ../src/interface.cpp:122 ../src/util.cpp:225
+msgid "Very Low"
+msgstr "매우 낮음"
+
+#: ../src/interface.cpp:123
+msgid "Set process priority to very low"
+msgstr "프로세스 우선 순위 매우 낮음으로 설정"
+
+#: ../src/interface.cpp:124
+msgid "Custom"
+msgstr "사용자 설정"
+
+#: ../src/interface.cpp:125
+msgid "Set process priority manually"
+msgstr "프로세스 우선 순위 수동으로 설정"
+
+#: ../src/interface.cpp:231
 msgid "End _Process"
 msgstr "프로세스 끝내기(_P)"
 
-#: ../src/interface.cpp:244
+#. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
+#: ../src/interface.cpp:279
+#, c-format
+msgid "Pick a Color for '%s'"
+msgstr "'%s'에 사용할 색 선택"
+
+#: ../src/interface.cpp:290
 msgid "CPU History"
 msgstr "CPU 사용 기록"
 
-#: ../src/interface.cpp:299
+#: ../src/interface.cpp:344 ../src/procproperties.cpp:122
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:301
+#: ../src/interface.cpp:346
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:319
+#: ../src/interface.cpp:367
 msgid "Memory and Swap History"
 msgstr "메모리 및 스왑 사용 기록"
 
-#: ../src/interface.cpp:358 ../src/proctable.cpp:225
+#: ../src/interface.cpp:401 ../src/proctable.cpp:252
+#: ../src/procproperties.cpp:116
 msgid "Memory"
 msgstr "메모리"
 
-#: ../src/interface.cpp:384
+#: ../src/interface.cpp:432
 msgid "Swap"
 msgstr "스왑"
 
-#: ../src/interface.cpp:405
+#: ../src/interface.cpp:463
 msgid "Network History"
 msgstr "네트워크 사용 기록"
 
-#: ../src/interface.cpp:444
+#: ../src/interface.cpp:496
 msgid "Receiving"
 msgstr "받기"
 
-#: ../src/interface.cpp:465
+#: ../src/interface.cpp:529
 msgid "Total Received"
 msgstr "전체 받음"
 
-#: ../src/interface.cpp:499
+#: ../src/interface.cpp:557
 msgid "Sending"
 msgstr "보내기"
 
-#: ../src/interface.cpp:521
+#: ../src/interface.cpp:591
 msgid "Total Sent"
 msgstr "전체 보냄"
 
 #. procman_create_sysinfo_view();
-#: ../src/interface.cpp:690
+#: ../src/interface.cpp:710
 msgid "System"
 msgstr "시스템"
 
-#: ../src/interface.cpp:694 ../src/procdialogs.cpp:518
+#: ../src/interface.cpp:714
 msgid "Processes"
 msgstr "프로세스"
 
-#: ../src/interface.cpp:698 ../src/procdialogs.cpp:631
+#: ../src/interface.cpp:718
 msgid "Resources"
 msgstr "자원"
 
-#: ../src/interface.cpp:702 ../src/procdialogs.cpp:695
-#: ../src/procdialogs.cpp:699
+#: ../src/interface.cpp:722
 msgid "File Systems"
 msgstr "파일시스템"
 
-#: ../src/load-graph.cpp:155
+#: ../src/load-graph.cpp:166
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u초"
 
+#: ../src/load-graph.cpp:347
+msgid "not available"
+msgstr "사용 불가능"
+
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:332
+#: ../src/load-graph.cpp:350
 #, c-format
-msgid "%s (%.1f %%) of %s"
-msgstr "%s (%.1f %%), 전체 %s"
+msgid "%s (%.1f%%) of %s"
+msgstr "%s (%.1f%%), 전체 %s"
 
 #: ../src/lsof.cpp:124
 #, c-format
@@ -387,11 +468,11 @@ msgstr "열린 파일을 찾습니다"
 msgid "_Name contains:"
 msgstr "이름에 포함(_N):"
 
-#: ../src/lsof.cpp:352
+#: ../src/lsof.cpp:354
 msgid "Case insensitive matching"
 msgstr "대소문자 구분하지 않음"
 
-#: ../src/lsof.cpp:360
+#: ../src/lsof.cpp:362
 msgid "S_earch results:"
 msgstr "검색 결과(_E):"
 
@@ -507,15 +588,15 @@ msgid ""
 msgstr "시스템정보는 0, 프로세스 목록은 1, 리소스는 2, 디스크 목록은 3"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:2
-msgid "Default graph cpu color"
-msgstr "기본 그래프 CPU 색"
+msgid "CPU colors"
+msgstr "CPU 색"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
 msgid "Default graph incoming network traffic color"
 msgstr "기본 그래프 입력 네트워크 색"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
-msgid "Default graph mem color"
+msgid "Default graph memory color"
 msgstr "기본 그래프 메모리 색"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
@@ -538,304 +619,373 @@ msgid "Disk view columns order"
 msgstr "디스크 보기 컬럼 순서"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
+msgid "Disk view sort column"
+msgstr "디스크 보기 정렬 열"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
+msgid "Disk view sort order"
+msgstr "디스크 보기 정렬 순서"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
+msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
+msgstr "각 항목은 (CPU 번호, 16진수 형식 색) 형식입니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
 msgid "Enable/Disable smooth refresh"
 msgstr "부드럽게 재생하기 켜기/끄기"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
 msgid ""
-"If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu usage "
-"is divided by the total number of CPUs. Else it operates in 'Irix mode'."
+"If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
+"is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
+"mode'."
 msgstr ""
 "참이면 시스템 감시는 '솔라리스 모드'로 동작하며, 작업의 CPU사용량은 CPU의 전"
 "체 개수로 나눠집니다. 거짓이면 '아이릭스 모드'로 동작합니다."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
+msgid "Main Window X position"
+msgstr "기본 창 가로 위치"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
+msgid "Main Window Y position"
+msgstr "기본 창 세로 위치"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
 msgid "Main Window height"
 msgstr "기본 창 높이"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
 msgid "Main Window width"
 msgstr "기본 창 너비"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
+msgid "Memory map sort column"
+msgstr "메모리 맵 정렬 열"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
+msgid "Memory map sort order"
+msgstr "메모리 맵 정렬 순서"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
+msgid "Open files sort column"
+msgstr "열린 파일 정렬 열"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+msgid "Open files sort order"
+msgstr "열린 파일 정렬 순서"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
 msgid "Process view columns order"
 msgstr "프로세스 보기 열 순서"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
 msgid "Process view sort column"
 msgstr "프로세스 보기 정렬 열"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
 msgid "Process view sort order"
 msgstr "프로세스 보기 정렬 순서"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
 msgid "Saves the currently viewed tab"
 msgstr "현재 표시하는 탭을 저장합니다"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
 msgid "Show network traffic in bits"
 msgstr "네트워크 통신량을 비트 단위로 표시"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
 #, no-c-format
 msgid "Show process 'CPU %' column on startup"
 msgstr "프로세스 'CPU %' 열을 시작할 때 표시합니다"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
-msgid "Show process 'CPU time' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
+msgid "Show process 'CPU Time' column on startup"
 msgstr "프로세스 'CPU 시간' 열을 시작할 때 표시합니다"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
+msgid "Show process 'Command Line' column on startup"
+msgstr "프로세스 '명령행' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
+msgid "Show process 'Control Group' column on startup"
+msgstr "프로세스 '컨트롤 그룹' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
+msgid "Show process 'Memory' column on startup"
+msgstr "프로세스 '메모리' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
+msgid "Show process 'Name' column on startup"
+msgstr "프로세스 '이름' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
+msgid "Show process 'Nice' column on startup"
+msgstr "프로세스 '나이스' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
+msgid "Show process 'Owner' column on startup"
+msgstr "프로세스 '소유자' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
 msgid "Show process 'PID' column on startup"
 msgstr "프로세스 'PID' 열을 시작할 때 표시합니다"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
-msgid "Show process 'SELinux security context' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
+msgid "Show process 'Priority' column on startup"
+msgstr "프로세스 '우선 순위' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
+msgid "Show process 'Resident Memory' column on startup"
+msgstr "프로세스 '상주 메모리' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
+msgid "Show process 'SELinux Security Context' column on startup"
 msgstr "프로세스 'SELinux 보안 컨텍스트' 열을 시작할 때 표시합니다"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
+msgid "Show process 'Seat' column on startup"
+msgstr "프로세스 '자리' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
+msgid "Show process 'Session' column on startup"
+msgstr "프로세스 '세션' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
+msgid "Show process 'Shared Memory' column on startup"
+msgstr "프로세스 '공유 메모리' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
+msgid "Show process 'Started' column on startup"
+msgstr "프로세스 '시작 시각' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:44
+msgid "Show process 'Status' column on startup"
+msgstr "프로세스 '상태' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
+msgid "Show process 'Unit' column on startup"
+msgstr "프로세스 '단위' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
+msgid "Show process 'User' column on startup"
+msgstr "프로세스 '사용자' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
+msgid "Show process 'Virtual Memory' column on startup"
+msgstr "프로세스 '가상 메모리' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
 msgid "Show process 'Waiting Channel' column on startup"
 msgstr "프로세스 '대기 채널' 열을 시작할 때 표시합니다"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
-msgid "Show process 'X server memory' column on startup"
-msgstr "프로세스 'X 서버 메모리' 열을 시작할 때 표시합니다"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
-msgid "Show process 'arguments' column on startup"
-msgstr "프로세스 '인자' 열을 시작할 때 표시합니다"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
-msgid "Show process 'estimated memory usage' column on startup"
-msgstr "프로세스 '예상 메모리 사용량' 열을 시작할 때 표시합니다"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
-msgid "Show process 'name' column on startup"
-msgstr "프로세스 '이름' 열을 시작할 때 표시합니다"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
-msgid "Show process 'nice' column on startup"
-msgstr "프로세스 '우선 순위' 열을 시작할 때 표시합니다"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
-msgid "Show process 'owner' column on startup"
-msgstr "프로세스 '소유자' 열을 시작할 때 표시합니다"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
-msgid "Show process 'resident memory' column on startup"
-msgstr "프로세스 '상주 메모리' 열을 시작할 때 표시합니다"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
-msgid "Show process 'shared memory' column on startup"
-msgstr "프로세스 '공유 메모리' 열을 시작할 때 표시합니다"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
-msgid "Show process 'start time' column on startup"
-msgstr "프로세스 '시작 시각' 열을 시작할 때 표시합니다"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
-msgid "Show process 'status' column on startup"
-msgstr "프로세스 '상태' 열을 시작할 때 표시합니다"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
-msgid "Show process 'virtual memory' column on startup"
-msgstr "프로세스 '가상 메모리' 열을 시작할 때 표시합니다"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
-msgid "Show process 'writable memory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
+msgid "Show process 'Writable Memory' column on startup"
 msgstr "프로세스 '쓰기 가능 메모리' 열을 시작할 때 표시합니다"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
+msgid "Show process 'X Server Memory' column on startup"
+msgstr "프로세스 'X 서버 메모리' 열을 시작할 때 표시합니다"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
 msgid "Show process dependencies in tree form"
 msgstr "프로세스 의존성 보기"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
 msgid "Show warning dialog when killing processes"
 msgstr "프로세스를 죽일 때 경고 대화상자 보기"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
 msgid "Solaris mode for CPU percentage"
 msgstr "CPU사용량을 솔라리스 모드로 보기"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "장치 목록 업데이트 간격 (천분의 일초 단위)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "그래프 업데이트 간격 (천분의 일초 단위)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
 msgid "Time in milliseconds between updates of the process view"
 msgstr "프로세스 보기 업데이트 간격 (천분의 일초 단위)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
-msgid "Whether information about all filesystems should be displayed"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
+msgid "Whether information about all file systems should be displayed"
 msgstr "모든 파일 시스템에 대한 정보를 표시할 지 여부"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
 msgid ""
-"Whether to display information about all filesystems (including types like "
+"Whether to display information about all file systems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
-"filesystems."
+"file systems."
 msgstr ""
 "모든 파일 시스템에 대한 정보를 표시할 지 여부('autofs'와 'procfs'같은 파일 시"
 "스템 형식을 포함). 현재 마운트된 파일 시스템의 모든 목록을 얻을 때 유용합니"
 "다."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
 #, no-c-format
 msgid "Width of process 'CPU %' column"
 msgstr "프로세스 'CPU %' 열 너비"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
-msgid "Width of process 'CPU time' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
+msgid "Width of process 'CPU Time' column"
 msgstr "프로세스 'CPU 시간' 열 너비"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
+msgid "Width of process 'Command Line' column"
+msgstr "프로세스 '명령행' 열 너비"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
+msgid "Width of process 'Control Group' column"
+msgstr "프로세스 '컨트롤 그룹' 열 너비"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
+msgid "Width of process 'Memory' column"
+msgstr "프로세스 '메모리' 열 너비"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
+msgid "Width of process 'Name' column"
+msgstr "프로세스 '이름' 열 너비"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
+msgid "Width of process 'Nice' column"
+msgstr "프로세스 '나이스' 열 너비"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
+msgid "Width of process 'Owner' column"
+msgstr "프로세스 '소유자' 열 너비"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
 msgid "Width of process 'PID' column"
 msgstr "프로세스 'PID 열' 너비"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
-msgid "Width of process 'SELinux security context' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
+msgid "Width of process 'Priority' column"
+msgstr "프로세스 '우선 순위' 열 너비"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
+msgid "Width of process 'Resident Memory' column"
+msgstr "프로세스 '상주 메모리' 열 너비"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
+msgid "Width of process 'SELinux Security Context' column"
 msgstr "프로세스 'SELinux 보안 컨텍스트' 열 너비"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
+msgid "Width of process 'Seat' column"
+msgstr "프로세스 '자리' 열 너비"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
+msgid "Width of process 'Session' column"
+msgstr "프로세스 '세션' 열 너비"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
+msgid "Width of process 'Shared Memory' column"
+msgstr "프로세스 '공유 메모리' 열 너비"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
+msgid "Width of process 'Started' column"
+msgstr "프로세스 '시작 시각' 열 너비"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
+msgid "Width of process 'Status' column"
+msgstr "프로세스 '상태' 열 너비"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
+msgid "Width of process 'Unit' column"
+msgstr "프로세스 '단위' 열 너비"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
+msgid "Width of process 'User' column"
+msgstr "프로세스 '사용자' 열 너비"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
+msgid "Width of process 'Virtual Memory' column"
+msgstr "프로세스 '가상 메모리' 열 너비"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
 msgid "Width of process 'Waiting Channel' column"
 msgstr "프로세스 '대기 채널' 열 너비"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
-msgid "Width of process 'X server memory' column"
-msgstr "프로세스 'X 서버 메모리' 열 너비"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
-msgid "Width of process 'arguments' column"
-msgstr "프로세스 '인자' 열 너비"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
-msgid "Width of process 'estimated memory usage' column"
-msgstr "프로세스 '예상 메모리' 사용량 열 너비"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
-msgid "Width of process 'name' column"
-msgstr "프로세스 '이름' 열 너비"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
-msgid "Width of process 'nice' column"
-msgstr "프로세스 '우선 순위' 열 너비"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
-msgid "Width of process 'owner' column"
-msgstr "프로세스 '소유자' 열 너비"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
-msgid "Width of process 'resident memory' column"
-msgstr "프로세스 '상주 메모리' 열 너비"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
-msgid "Width of process 'shared memory' column"
-msgstr "프로세스 '공유 메모리' 열 너비"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
-msgid "Width of process 'start time' column"
-msgstr "프로세스 '시작 시각' 열 너비"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
-msgid "Width of process 'status' column"
-msgstr "프로세스 '상태' 열 너비"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
-msgid "Width of process 'virtual memory' column"
-msgstr "프로세스 '가상 메모리' 열 너비"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
-msgid "Width of process 'writable memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
+msgid "Width of process 'Writable Memory' column"
 msgstr "프로세스 '쓰기 가능 메모리' 열 너비"
 
-#: ../src/procactions.cpp:75
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
+msgid "Width of process 'X Server Memory' column"
+msgstr "프로세스 'X 서버 메모리' 열 너비"
+
+#: ../src/procactions.cpp:76
 #, c-format
 msgid ""
-"Cannot change the priority of process with pid %d to %d.\n"
+"Cannot change the priority of process with PID %d to %d.\n"
 "%s"
 msgstr ""
-"pid %d인 프로세스의 우선 순위를 %d번으로 바꿀 수 없습니다.\n"
+"PID %d인 프로세스의 우선 순위를 %d번으로 바꿀 수 없습니다.\n"
 "%s"
 
-#: ../src/procactions.cpp:155
+#: ../src/procactions.cpp:156
 #, c-format
 msgid ""
-"Cannot kill process with pid %d with signal %d.\n"
+"Cannot kill process with PID %d with signal %d.\n"
 "%s"
 msgstr ""
-"pid %d인 프로세스를 시그널 %d번으로 죽일 수 없습니다.\n"
+"PID %d인 프로세스를 시그널 %d번으로 죽일 수 없습니다.\n"
 "%s"
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:70
-msgid "Kill the selected process?"
-msgstr "선택한 프로세스를 강제로 죽이겠습니까?"
-
-#. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:72
-msgid ""
-"Killing a process may destroy data, break the session or introduce a "
-"security risk. Only unresponding processes should be killed."
-msgstr ""
-"프로세스를 강제로 죽입니다. 데이터가 파괴되거나, 실행하는 세션을 망치거나 보"
-"안 결함을 만들 수 있습니다. 잘못된 프로세스만 죽이도록 하십시오."
-
-#. xgettext: primary alert message
-#: ../src/procdialogs.cpp:79
-msgid "End the selected process?"
-msgstr "프로세스를 끝내겠습니까?"
+#: ../src/procdialogs.cpp:77
+#, c-format
+msgid "Kill the selected process »%s« (PID: %u)?"
+msgstr "선택한 프로세스를 (»%s«, PID: %u) 죽이시겠습니까?"
 
 #. xgettext: secondary alert message
 #: ../src/procdialogs.cpp:81
 msgid ""
+"Killing a process may destroy data, break the session or introduce a "
+"security risk. Only unresponsive processes should be killed."
+msgstr "프로세스를 강제로 죽입니다. 데이터가 파괴되거나, 실행하는 세션을 망치거나 보안 결함을 만들 수 있습니다. 반응이 없는 잘못된 프로세스만 죽이도록 하십시오."
+
+#. xgettext: primary alert message
+#: ../src/procdialogs.cpp:88
+#, c-format
+msgid "End the selected process »%s« (PID: %u)?"
+msgstr "선택한 프로세스를 (»%s«, PID: %u) 마치시겠습니까?"
+
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:92
+msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
-"risk. Only unresponding processes should be ended."
-msgstr ""
-"프로세스를 끝냅니다. 데이터가 파괴되거나, 실행하는 세션을 망치거나 보안 결함"
-"을 만들 수 있습니다. 잘못된 프로세스만 죽이도록 하십시오."
+"risk. Only unresponsive processes should be ended."
+msgstr "프로세스를 끝냅니다. 데이터가 파괴되거나, 실행하는 세션을 망치거나 보안 결함을 만들 수 있습니다. 반응이 없는 잘못된 프로세스만 끝내도록 하십시오."
 
-#: ../src/procdialogs.cpp:115
-msgid "(Very High Priority)"
-msgstr "(아주 높은 우선 순위)"
+#: ../src/procdialogs.cpp:130 ../src/procdialogs.cpp:220
+#, c-format
+msgid "(%s Priority)"
+msgstr "(%s 우선 순위)"
 
-#: ../src/procdialogs.cpp:117
-msgid "(High Priority)"
-msgstr "(높은 우선 순위)"
+#: ../src/procdialogs.cpp:174
+#, c-format
+msgid "Change Priority of Process »%s« (PID: %u)"
+msgstr "프로세스 (»%s«, PID: %u) 우선 순위 바꾸기"
 
-#: ../src/procdialogs.cpp:119
-msgid "(Normal Priority)"
-msgstr "(보통 우선 순위)"
-
-#: ../src/procdialogs.cpp:121
-msgid "(Low Priority)"
-msgstr "(낮은 우선 순위)"
-
-#: ../src/procdialogs.cpp:123
-msgid "(Very Low Priority)"
-msgstr "(아주 낮은 우선 순위)"
-
-#: ../src/procdialogs.cpp:173
-msgid "Change Priority"
-msgstr "우선순위 바꾸기"
-
-#: ../src/procdialogs.cpp:181
+#: ../src/procdialogs.cpp:186
 msgid "Change _Priority"
 msgstr "우선순위 바꾸기(_P)"
 
-#: ../src/procdialogs.cpp:204
+#: ../src/procdialogs.cpp:209
 msgid "_Nice value:"
 msgstr "NICE 값(_N):"
 
-#: ../src/procdialogs.cpp:220
+#: ../src/procdialogs.cpp:226
 msgid "Note:"
 msgstr "주의:"
 
-#: ../src/procdialogs.cpp:221
+#: ../src/procdialogs.cpp:227
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -843,179 +993,177 @@ msgstr ""
 "프로세스의 우선순위는 그 nice 값에 따라 결정됩니다. nice 값이 낮을 수록 우선"
 "순위가 높습니다."
 
-#: ../src/procdialogs.cpp:450
+#: ../src/procdialogs.cpp:449
 msgid "Icon"
 msgstr "아이콘"
 
-#: ../src/procdialogs.cpp:495
-msgid "System Monitor Preferences"
-msgstr "시스템 정보 기본 설정"
-
-#: ../src/procdialogs.cpp:525
-msgid "Behavior"
-msgstr "동작"
-
-#: ../src/procdialogs.cpp:544 ../src/procdialogs.cpp:657
-#: ../src/procdialogs.cpp:718
-msgid "_Update interval in seconds:"
-msgstr "업데이트 간격(_U):"
-
-#: ../src/procdialogs.cpp:569
-msgid "Enable _smooth refresh"
-msgstr "부드럽게 새로 고침(_S)"
-
-#: ../src/procdialogs.cpp:582
-msgid "Alert before ending or _killing processes"
-msgstr "프로세스를 끝내거나 죽일 때 알림(_K)"
-
-#: ../src/procdialogs.cpp:595
-msgid "Divide CPU usage by CPU count"
-msgstr "CPU 사용량 CPU 수로 나누기"
-
-#: ../src/procdialogs.cpp:596
-msgid "Solaris mode"
-msgstr "솔라리스 모드"
-
-#: ../src/procdialogs.cpp:613 ../src/procdialogs.cpp:752
-msgid "Information Fields"
-msgstr "정보 필드"
-
-#: ../src/procdialogs.cpp:626
-msgid "Process i_nformation shown in list:"
-msgstr "목록에 표시하는 프로세스 정보(_N):"
-
-#: ../src/procdialogs.cpp:638
-msgid "Graphs"
-msgstr "그래프"
-
-#: ../src/procdialogs.cpp:677
-msgid "Show network speed in bits"
-msgstr "네트워크 속도를 비트 단위로 표시"
-
-#: ../src/procdialogs.cpp:738
-msgid "Show _all filesystems"
-msgstr "모든 파일 시스템 표시(_A)"
-
-#: ../src/procdialogs.cpp:765
-msgid "File system i_nformation shown in list:"
-msgstr "목록에 표시하는 파일 시스템 정보(_N):"
-
-#: ../src/procman.cpp:644
+#: ../src/procman.cpp:668
 msgid "A simple process and system monitor."
 msgstr "간단한 프로세스 및 시스템 정보."
 
-#: ../src/proctable.cpp:210
+#: ../src/proctable.cpp:237 ../src/procproperties.cpp:113
 msgid "Process Name"
 msgstr "프로세스 이름"
 
-#: ../src/proctable.cpp:211
+#: ../src/proctable.cpp:238 ../src/procproperties.cpp:114
 msgid "User"
 msgstr "사용자"
 
-#: ../src/proctable.cpp:212
+#: ../src/proctable.cpp:239 ../src/procproperties.cpp:115
 msgid "Status"
 msgstr "상태"
 
-#: ../src/proctable.cpp:213
+#: ../src/proctable.cpp:240 ../src/procproperties.cpp:117
 msgid "Virtual Memory"
 msgstr "가상 메모리"
 
-#: ../src/proctable.cpp:214
+#: ../src/proctable.cpp:241 ../src/procproperties.cpp:118
 msgid "Resident Memory"
 msgstr "상주 메모리"
 
-#: ../src/proctable.cpp:215
+#: ../src/proctable.cpp:242 ../src/procproperties.cpp:119
 msgid "Writable Memory"
 msgstr "쓰기 가능한 메모리"
 
-#: ../src/proctable.cpp:216
+#: ../src/proctable.cpp:243 ../src/procproperties.cpp:120
 msgid "Shared Memory"
 msgstr "공유 메모리"
 
-#: ../src/proctable.cpp:217
+#: ../src/proctable.cpp:244 ../src/procproperties.cpp:121
 msgid "X Server Memory"
 msgstr "X 서버 메모리"
 
-#: ../src/proctable.cpp:218
+#: ../src/proctable.cpp:245
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:219
+#: ../src/proctable.cpp:246 ../src/procproperties.cpp:123
 msgid "CPU Time"
 msgstr "CPU 시간"
 
-#: ../src/proctable.cpp:220
+#: ../src/proctable.cpp:247 ../src/procproperties.cpp:124
 msgid "Started"
 msgstr "시작됨"
 
-#: ../src/proctable.cpp:221
+#: ../src/proctable.cpp:248 ../src/procproperties.cpp:125
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.cpp:222
+#: ../src/proctable.cpp:249 ../src/procproperties.cpp:127
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:223
+#: ../src/proctable.cpp:250 ../src/procproperties.cpp:128
 msgid "Security Context"
 msgstr "보안 컨텍스트"
 
-#: ../src/proctable.cpp:224
+#: ../src/proctable.cpp:251 ../src/procproperties.cpp:129
 msgid "Command Line"
 msgstr "명령행"
 
-#. xgettext: wchan, see ps(1) or top(1)
-#: ../src/proctable.cpp:227
+#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
+#: ../src/proctable.cpp:254 ../src/procproperties.cpp:130
 msgid "Waiting Channel"
 msgstr "대기 채널"
 
-#: ../src/proctable.cpp:944
+#: ../src/proctable.cpp:255
+msgid "Control Group"
+msgstr "컨트롤 그룹"
+
+#: ../src/proctable.cpp:256
+msgid "Unit"
+msgstr "단위"
+
+#: ../src/proctable.cpp:257
+msgid "Session"
+msgstr "세션"
+
+#: ../src/proctable.cpp:258
+msgid "Seat"
+msgstr "자리"
+
+#: ../src/proctable.cpp:259
+msgid "Owner"
+msgstr "소유자"
+
+#: ../src/proctable.cpp:260 ../src/procproperties.cpp:126
+msgid "Priority"
+msgstr "우선 순위"
+
+#: ../src/proctable.cpp:1079
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "최근 1분, 5분, 15분 사이의 평균 부하: %0.2f, %0.2f, %0.2f"
 
-#: ../src/sysinfo.cpp:77
-#, c-format
-msgid "Release %s"
-msgstr "릴리즈 %s"
+#: ../src/procproperties.cpp:99
+msgid "N/A"
+msgstr "없음"
 
-#: ../src/sysinfo.cpp:621
+#: ../src/procproperties.cpp:123
+#, c-format
+msgid "%lld second"
+msgid_plural "%lld seconds"
+msgstr[0] "%lld초"
+
+#: ../src/procproperties.cpp:241
+msgid "Process Properties"
+msgstr "프로세스 속성"
+
+#: ../src/procproperties.cpp:261
+#, c-format
+msgid "Properties of process \"%s\" (PID %u):"
+msgstr "\"%s\" 프로세스의 (PID %u) 속성:"
+
+#. Translators: The first string parameter is release version (codename),
+#. * the second one is the architecture, 32 or 64-bit
+#: ../src/sysinfo.cpp:78
+#, c-format
+msgid "Release %s %s"
+msgstr "릴리즈 %s %s"
+
+#. translators: This is the type of architecture, for example:
+#. * "64-bit" or "32-bit"
+#: ../src/sysinfo.cpp:115
+#, c-format
+msgid "%d-bit"
+msgstr "%d비트"
+
+#: ../src/sysinfo.cpp:219
+msgid "Unknown model"
+msgstr "알 수 없는 모델"
+
+#: ../src/sysinfo.cpp:740
 #, c-format
 msgid "Kernel %s"
 msgstr "커널 %s"
 
-#: ../src/sysinfo.cpp:634
+#: ../src/sysinfo.cpp:754
 #, c-format
 msgid "GNOME %s"
 msgstr "그놈 %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:648
+#: ../src/sysinfo.cpp:769
 #, c-format
 msgid "<b>Hardware</b>"
 msgstr "<b>하드웨어</b>"
 
-#: ../src/sysinfo.cpp:653
+#: ../src/sysinfo.cpp:774
 msgid "Memory:"
 msgstr "메모리:"
 
-#: ../src/sysinfo.cpp:660
-#, c-format
-msgid "Processor %d:"
-msgstr "프로세서 %d:"
-
-#: ../src/sysinfo.cpp:665
+#: ../src/sysinfo.cpp:779
 msgid "Processor:"
 msgstr "프로세서:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:677
+#: ../src/sysinfo.cpp:788
 #, c-format
 msgid "<b>System Status</b>"
 msgstr "<b>시스템 상태</b>"
 
-#: ../src/sysinfo.cpp:683
+#: ../src/sysinfo.cpp:794
 msgid "Available disk space:"
 msgstr "사용 가능한 디스크 공간:"
 
@@ -1085,23 +1233,23 @@ msgstr "%.1f TiB"
 
 #: ../src/util.cpp:170
 #, c-format
-msgid "%.1f kbit"
-msgstr "%.1f kbit"
+msgid "%.3g kbit"
+msgstr "%.3g kbit"
 
 #: ../src/util.cpp:171
 #, c-format
-msgid "%.1f Mbit"
-msgstr "%.1f Mbit"
+msgid "%.3g Mbit"
+msgstr "%.3g Mbit"
 
 #: ../src/util.cpp:172
 #, c-format
-msgid "%.1f Gbit"
-msgstr "%.1f Gbit"
+msgid "%.3g Gbit"
+msgstr "%.3g Gbit"
 
 #: ../src/util.cpp:173
 #, c-format
-msgid "%.1f Tbit"
-msgstr "%.1f Tbit"
+msgid "%.3g Tbit"
+msgstr "%.3g Tbit"
 
 #: ../src/util.cpp:188
 #, c-format
@@ -1115,12 +1263,12 @@ msgid "%u byte"
 msgid_plural "%u bytes"
 msgstr[0] "%u 바이트"
 
-#: ../src/util.cpp:380
+#: ../src/util.cpp:420
 msgid "<i>N/A</i>"
 msgstr "<i>해당없음</i>"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:497
+#: ../src/util.cpp:582
 #, c-format
 msgid "%s/s"
 msgstr "%s/초"
