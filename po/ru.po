@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor trunk\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-01-28 04:51+0000\n"
-"PO-Revision-Date: 2012-02-26 18:24+0300\n"
+"POT-Creation-Date: 2012-03-17 17:59+0000\n"
+"PO-Revision-Date: 2012-03-19 11:57+0300\n"
 "Last-Translator: Yuri Myasoedov <omerta13@yandex.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -33,6 +33,67 @@ msgstr "Системный монитор"
 #: ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "Программа для просмотра текущих процессов и мониторинга состояния системы"
+
+#: ../data/preferences.ui.h:1
+msgid "System Monitor Preferences"
+msgstr "Настройки системного монитора"
+
+#: ../data/preferences.ui.h:2
+msgid "Behavior"
+msgstr "Поведение"
+
+#: ../data/preferences.ui.h:3
+msgid "_Update interval in seconds:"
+msgstr "_Интервал обновления в секундах:"
+
+#: ../data/preferences.ui.h:4
+msgid "Enable _smooth refresh"
+msgstr "Включить _плавное обновление"
+
+#: ../data/preferences.ui.h:5
+msgid "Alert before ending or _killing processes"
+msgstr "Предупреждать перед _завершением или снятием процессов"
+
+#: ../data/preferences.ui.h:6
+#| msgid "Divide CPU usage by CPU count"
+msgid "_Divide CPU usage by CPU count"
+msgstr "_Разбить использование ЦП по кол-ву ЦП"
+
+#: ../data/preferences.ui.h:7
+msgid "Information Fields"
+msgstr "Информационные поля"
+
+#: ../data/preferences.ui.h:8
+msgid "Process i_nformation shown in list:"
+msgstr "Информация о процессах, показываемая в списке:"
+
+#: ../data/preferences.ui.h:9
+#: ../src/interface.cpp:714
+msgid "Processes"
+msgstr "Процессы"
+
+#: ../data/preferences.ui.h:10
+msgid "Graphs"
+msgstr "Графики"
+
+#: ../data/preferences.ui.h:11
+#| msgid "Show network speed in bits"
+msgid "_Show network speed in bits"
+msgstr "_Показывать скорость сети в битах"
+
+#: ../data/preferences.ui.h:12
+#: ../src/interface.cpp:718
+msgid "Resources"
+msgstr "Ресурсы"
+
+#: ../data/preferences.ui.h:13
+msgid "Show _all file systems"
+msgstr "Показывать _все файловые системы"
+
+#: ../data/preferences.ui.h:14
+#: ../src/interface.cpp:722
+msgid "File Systems"
+msgstr "Файловые системы"
 
 #: ../src/argv.cpp:21
 msgid "Show the System tab"
@@ -71,7 +132,7 @@ msgid "Directory"
 msgstr "Каталог"
 
 #: ../src/disks.cpp:301
-#: ../src/gsm_color_button.c:221
+#: ../src/gsm_color_button.c:222
 #: ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "Тип"
@@ -121,40 +182,41 @@ msgstr "%d %b %Y"
 msgid "Fraction"
 msgstr "Доля"
 
-#: ../src/gsm_color_button.c:199
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+#: ../src/gsm_color_button.c:200
 msgid "Percentage full for pie color pickers"
 msgstr "Доля заполнения для полос выбора цвета"
 
-#: ../src/gsm_color_button.c:206
+#: ../src/gsm_color_button.c:207
 msgid "Title"
 msgstr "Заголовок"
 
-#: ../src/gsm_color_button.c:207
+#: ../src/gsm_color_button.c:208
 msgid "The title of the color selection dialog"
 msgstr "Заголовок окна диалога выбора цвета"
 
-#: ../src/gsm_color_button.c:208
-#: ../src/gsm_color_button.c:624
+#: ../src/gsm_color_button.c:209
+#: ../src/gsm_color_button.c:625
 msgid "Pick a Color"
 msgstr "Выбрать цвет"
 
-#: ../src/gsm_color_button.c:214
+#: ../src/gsm_color_button.c:215
 msgid "Current Color"
 msgstr "Текущий цвет"
 
-#: ../src/gsm_color_button.c:215
+#: ../src/gsm_color_button.c:216
 msgid "The selected color"
 msgstr "Выбранный цвет"
 
-#: ../src/gsm_color_button.c:222
+#: ../src/gsm_color_button.c:223
 msgid "Type of color picker"
 msgstr "Вид диалога выбора цвета"
 
-#: ../src/gsm_color_button.c:547
+#: ../src/gsm_color_button.c:548
 msgid "Received invalid color data\n"
 msgstr "Получены некорректные данные о цвете\n"
 
-#: ../src/gsm_color_button.c:647
+#: ../src/gsm_color_button.c:648
 msgid "Click to set graph colors"
 msgstr "Щёлкните для изменения цветов графика"
 
@@ -260,7 +322,6 @@ msgid "View the files opened by a process"
 msgstr "Просмотреть файлы, открытые процессом"
 
 #: ../src/interface.cpp:84
-#| msgid "Processes"
 msgid "_Properties"
 msgstr "_Свойства"
 
@@ -428,18 +489,6 @@ msgstr "Всего отправлено"
 msgid "System"
 msgstr "Система"
 
-#: ../src/interface.cpp:714
-msgid "Processes"
-msgstr "Процессы"
-
-#: ../src/interface.cpp:718
-msgid "Resources"
-msgstr "Ресурсы"
-
-#: ../src/interface.cpp:722
-msgid "File Systems"
-msgstr "Файловые системы"
-
 #: ../src/load-graph.cpp:166
 #, c-format
 msgid "%u second"
@@ -605,334 +654,326 @@ msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "Файлы, открытые процессом «%s» (PID %u):"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:1
-msgid "0 for the System Info, 1 for the processes list, 2 for the resources and 3 for the disks list"
-msgstr "0 — информация о системе, 1 — список процессов, 2 — ресурсов, 3 — дисков"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:2
-msgid "CPU colors"
-msgstr "Цвета ЦПУ"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
-msgid "Default graph incoming network traffic color"
-msgstr "Цвет графика приёма по сети"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
-msgid "Default graph memory color"
-msgstr "Цвет графика памяти по умолчанию"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
-msgid "Default graph outgoing network traffic color"
-msgstr "Цвет графика отправки по сети"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:6
-msgid "Default graph swap color"
-msgstr "Цвет графика подкачки по умолчанию"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
-msgid "Determines which processes to show by default. 0 is All, 1 is user, and 2 is active"
-msgstr "Определяет, какие процессы показывать по умолчанию. 0 — все, 1 — пользователя, 2 — активные"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
-msgid "Disk view columns order"
-msgstr "Порядок столбцов просмотра диска"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
-msgid "Disk view sort column"
-msgstr "Столбец сортировки списка дисков"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
-msgid "Disk view sort order"
-msgstr "Порядок сортировки списка дисков"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
-msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
-msgstr "Каждая запись имеет формат (№ ЦПУ, шестнадцатеричное значение цвета)"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
-msgid "Enable/Disable smooth refresh"
-msgstr "Включить/выключить плавное обновление"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
-msgid "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage is divided by the total number of CPUs. Otherwise, it operates in 'Irix mode'."
-msgstr "Если установлено, системный монитор работает в «режиме Solaris», при котором загрузка ЦПУ для задачи делится на общее число ЦПУ. В противном случае используется «режим Irix»."
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
-msgid "Main Window X position"
-msgstr "Положение главного окна по оси X"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
-msgid "Main Window Y position"
-msgstr "Положение главного окна по оси Y"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
-msgid "Main Window height"
-msgstr "Высота основного окна"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
 msgid "Main Window width"
 msgstr "Ширина основного окна"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
-msgid "Memory map sort column"
-msgstr "Столбец сортировки отображения памяти"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:2
+msgid "Main Window height"
+msgstr "Высота основного окна"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
-msgid "Memory map sort order"
-msgstr "Порядок сортировки отображения памяти"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
+msgid "Main Window X position"
+msgstr "Положение главного окна по оси X"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
-msgid "Open files sort column"
-msgstr "Столбец сортировки открытых файлов"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
+msgid "Main Window Y position"
+msgstr "Положение главного окна по оси Y"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
-msgid "Open files sort order"
-msgstr "Порядок сортировки списка открытых файлов"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
-msgid "Process view columns order"
-msgstr "Порядок столбцов просмотра процессов"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
-msgid "Process view sort column"
-msgstr "Столбец сортировки списка процессов"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
-msgid "Process view sort order"
-msgstr "Порядок сортировки списка процессов"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
-msgid "Saves the currently viewed tab"
-msgstr "Сохраняет текущую активную вкладку"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
-msgid "Show network traffic in bits"
-msgstr "Показывать траффик сети в битах"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
-#, no-c-format
-msgid "Show process 'CPU %' column on startup"
-msgstr "Показывать при запуске столбец загрузки ЦПУ процессом в процентах"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
-msgid "Show process 'CPU Time' column on startup"
-msgstr "Показывать при запуске столбец времени занятости ЦПУ процессом"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
-msgid "Show process 'Command Line' column on startup"
-msgstr "Показывать при запуске столбец командной строки"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
-msgid "Show process 'Control Group' column on startup"
-msgstr "Показывать при запуске столбец контрольной группы"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
-msgid "Show process 'Memory' column on startup"
-msgstr "Показывать при запуске столбец памяти"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
-msgid "Show process 'Name' column on startup"
-msgstr "Показывать при запуске столбец имени процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
-msgid "Show process 'Nice' column on startup"
-msgstr "Показывать при запуске столбец фактора уступчивости (nice) процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
-#| msgid "Show process 'User' column on startup"
-msgid "Show process 'Owner' column on startup"
-msgstr "Показывать при запуске столбец владельца процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
-msgid "Show process 'PID' column on startup"
-msgstr "Показывать при запуске столбец PID процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
-msgid "Show process 'Priority' column on startup"
-msgstr "Показывать при запуске столбец приоритета"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
-msgid "Show process 'Resident Memory' column on startup"
-msgstr "Показывать при запуске столбец резидентной памяти процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
-msgid "Show process 'SELinux Security Context' column on startup"
-msgstr "Показывать при запуске столбец контекста SELinux процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
-#| msgid "Show process 'Status' column on startup"
-msgid "Show process 'Seat' column on startup"
-msgstr "Показывать при запуске столбец рабочего места процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
-#| msgid "Show process 'Memory' column on startup"
-msgid "Show process 'Session' column on startup"
-msgstr "Показывать при запуске столбец сеанса процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
-msgid "Show process 'Shared Memory' column on startup"
-msgstr "Показывать при запуске столбец разделяемой памяти процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
-msgid "Show process 'Started' column on startup"
-msgstr "Показывать при запуске столбец времени запуска процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:44
-msgid "Show process 'Status' column on startup"
-msgstr "Показывать при запуске столбец состояния процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
-#| msgid "Show process 'Nice' column on startup"
-msgid "Show process 'Unit' column on startup"
-msgstr "Показывать при запуске столбец единицы измерения процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
-msgid "Show process 'User' column on startup"
-msgstr "Показывать при запуске столбец пользователя процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
-msgid "Show process 'Virtual Memory' column on startup"
-msgstr "Показывать при запуске столбец виртуальной памяти процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
-msgid "Show process 'Waiting Channel' column on startup"
-msgstr "Показывать при запуске столбец ожидания в ядре"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
-msgid "Show process 'Writable Memory' column on startup"
-msgstr "Показывать при запуске столбец доступной для записи памяти процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
-msgid "Show process 'X Server Memory' column on startup"
-msgstr "Показывать при запуске столбец памяти X-сервера для процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
 msgid "Show process dependencies in tree form"
 msgstr "Показывать зависимости процессов в виде дерева"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
-msgid "Show warning dialog when killing processes"
-msgstr "Выводить диалог предупреждения при снятии процессов"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:6
 msgid "Solaris mode for CPU percentage"
 msgstr "Режим Solaris для загрузки ЦПУ в процентах"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
-msgid "Time in milliseconds between updates of the devices list"
-msgstr "Время в миллисекундах между обновлениями списка устройств"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
+msgid "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage is divided by the total number of CPUs. Otherwise, it operates in 'Irix mode'."
+msgstr "Если установлено, системный монитор работает в «режиме Solaris», при котором загрузка ЦПУ для задачи делится на общее число ЦПУ. В противном случае используется «режим Irix»."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
-msgid "Time in milliseconds between updates of the graphs"
-msgstr "Время в миллисекундах между обновлением графиков"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
+msgid "Enable/Disable smooth refresh"
+msgstr "Включить/выключить плавное обновление"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
+msgid "Show warning dialog when killing processes"
+msgstr "Выводить диалог предупреждения при снятии процессов"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Время в миллисекундах между обновлением обзора процессов"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
+msgid "Time in milliseconds between updates of the graphs"
+msgstr "Время в миллисекундах между обновлением графиков"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
 msgid "Whether information about all file systems should be displayed"
 msgstr "Должны ли отображаться сведения о файловой системе"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
 msgid "Whether to display information about all file systems (including types like 'autofs' and 'procfs'). Useful for getting a list of all currently mounted file systems."
 msgstr "Должны ли отображаться сведения обо всех файловых системах (включая такие, как autofs и procfs). Может быть полезным для получения полного списка всех смонтированных файловых систем."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
+msgid "Time in milliseconds between updates of the devices list"
+msgstr "Время в миллисекундах между обновлениями списка устройств"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
+msgid "Determines which processes to show by default. 0 is All, 1 is user, and 2 is active"
+msgstr "Определяет, какие процессы показывать по умолчанию. 0 — все, 1 — пользователя, 2 — активные"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
+msgid "Saves the currently viewed tab"
+msgstr "Сохраняет текущую активную вкладку"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
+msgid "0 for the System Info, 1 for the processes list, 2 for the resources and 3 for the disks list"
+msgstr "0 — информация о системе, 1 — список процессов, 2 — ресурсов, 3 — дисков"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
+msgid "CPU colors"
+msgstr "Цвета ЦПУ"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
+msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
+msgstr "Каждая запись имеет формат (№ ЦПУ, шестнадцатеричное значение цвета)"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
+msgid "Default graph memory color"
+msgstr "Цвет графика памяти по умолчанию"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+msgid "Default graph swap color"
+msgstr "Цвет графика подкачки по умолчанию"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
+msgid "Default graph incoming network traffic color"
+msgstr "Цвет графика приёма по сети"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
+msgid "Default graph outgoing network traffic color"
+msgstr "Цвет графика отправки по сети"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
+msgid "Show network traffic in bits"
+msgstr "Показывать траффик сети в битах"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
+msgid "Process view sort column"
+msgstr "Столбец сортировки списка процессов"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
+msgid "Process view columns order"
+msgstr "Порядок столбцов просмотра процессов"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
+msgid "Process view sort order"
+msgstr "Порядок сортировки списка процессов"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
+msgid "Width of process 'Name' column"
+msgstr "Ширина столбца имени процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
+msgid "Show process 'Name' column on startup"
+msgstr "Показывать при запуске столбец имени процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
+msgid "Width of process 'User' column"
+msgstr "Ширина столбца пользователя процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
+msgid "Show process 'User' column on startup"
+msgstr "Показывать при запуске столбец пользователя процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
+msgid "Width of process 'Status' column"
+msgstr "Ширина столбца состояния процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
+msgid "Show process 'Status' column on startup"
+msgstr "Показывать при запуске столбец состояния процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
+msgid "Width of process 'Virtual Memory' column"
+msgstr "Ширина столбца виртуальной памяти процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
+msgid "Show process 'Virtual Memory' column on startup"
+msgstr "Показывать при запуске столбец виртуальной памяти процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
+msgid "Width of process 'Resident Memory' column"
+msgstr "Ширина столбца резидентной памяти процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
+msgid "Show process 'Resident Memory' column on startup"
+msgstr "Показывать при запуске столбец резидентной памяти процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
+msgid "Width of process 'Writable Memory' column"
+msgstr "Ширина столбца доступной для записи памяти процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
+msgid "Show process 'Writable Memory' column on startup"
+msgstr "Показывать при запуске столбец доступной для записи памяти процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
+msgid "Width of process 'Shared Memory' column"
+msgstr "Ширина столбца разделяемой памяти процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
+msgid "Show process 'Shared Memory' column on startup"
+msgstr "Показывать при запуске столбец разделяемой памяти процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
+msgid "Width of process 'X Server Memory' column"
+msgstr "Ширина столбца памяти X-сервера для процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
+msgid "Show process 'X Server Memory' column on startup"
+msgstr "Показывать при запуске столбец памяти X-сервера для процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
 #, no-c-format
 msgid "Width of process 'CPU %' column"
 msgstr "Ширина столбца процентной загрузки ЦПУ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
+#, no-c-format
+msgid "Show process 'CPU %' column on startup"
+msgstr "Показывать при запуске столбец загрузки ЦПУ процессом в процентах"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
 msgid "Width of process 'CPU Time' column"
 msgstr "Ширина столбца времени занятости ЦПУ процессом"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
-msgid "Width of process 'Command Line' column"
-msgstr "Ширина столбца командной строки"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
+msgid "Show process 'CPU Time' column on startup"
+msgstr "Показывать при запуске столбец времени занятости ЦПУ процессом"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
-msgid "Width of process 'Control Group' column"
-msgstr "Ширина столбца контрольной группы"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
-msgid "Width of process 'Memory' column"
-msgstr "Ширина столбца памяти процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
-msgid "Width of process 'Name' column"
-msgstr "Ширина столбца имени процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
-msgid "Width of process 'Nice' column"
-msgstr "Ширина столбца фактора уступчивости (nice) процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
-#| msgid "Width of process 'User' column"
-msgid "Width of process 'Owner' column"
-msgstr "Ширина столбца владельца процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
-msgid "Width of process 'PID' column"
-msgstr "Ширина столбца PID процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
-msgid "Width of process 'Priority' column"
-msgstr "Ширина столбца приоритета"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
-msgid "Width of process 'Resident Memory' column"
-msgstr "Ширина столбца резидентной памяти процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
-msgid "Width of process 'SELinux Security Context' column"
-msgstr "Ширина столбца контекста SELinux процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
-#| msgid "Width of process 'Status' column"
-msgid "Width of process 'Seat' column"
-msgstr "Ширина столбца рабочего места процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
-#| msgid "Width of process 'Memory' column"
-msgid "Width of process 'Session' column"
-msgstr "Ширина столбца сеанса процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
-msgid "Width of process 'Shared Memory' column"
-msgstr "Ширина столбца разделяемой памяти процесса"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
 msgid "Width of process 'Started' column"
 msgstr "Ширина столбца времени запуска процесса"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
-msgid "Width of process 'Status' column"
-msgstr "Ширина столбца состояния процесса"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
+msgid "Show process 'Started' column on startup"
+msgstr "Показывать при запуске столбец времени запуска процесса"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
-#| msgid "Width of process 'Nice' column"
-msgid "Width of process 'Unit' column"
-msgstr "Ширина столбца единицы измерения процесса"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
+msgid "Width of process 'Nice' column"
+msgstr "Ширина столбца фактора уступчивости (nice) процесса"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
-msgid "Width of process 'User' column"
-msgstr "Ширина столбца пользователя процесса"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
+msgid "Show process 'Nice' column on startup"
+msgstr "Показывать при запуске столбец фактора уступчивости (nice) процесса"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
-msgid "Width of process 'Virtual Memory' column"
-msgstr "Ширина столбца виртуальной памяти процесса"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
+msgid "Width of process 'PID' column"
+msgstr "Ширина столбца PID процесса"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
+msgid "Show process 'PID' column on startup"
+msgstr "Показывать при запуске столбец PID процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
+msgid "Width of process 'SELinux Security Context' column"
+msgstr "Ширина столбца контекста SELinux процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
+msgid "Show process 'SELinux Security Context' column on startup"
+msgstr "Показывать при запуске столбец контекста SELinux процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
+msgid "Width of process 'Command Line' column"
+msgstr "Ширина столбца командной строки"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
+msgid "Show process 'Command Line' column on startup"
+msgstr "Показывать при запуске столбец командной строки"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
+msgid "Width of process 'Memory' column"
+msgstr "Ширина столбца памяти процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
+msgid "Show process 'Memory' column on startup"
+msgstr "Показывать при запуске столбец памяти"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
 msgid "Width of process 'Waiting Channel' column"
 msgstr "Ширина столбца ожидания в ядре"
 
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
+msgid "Show process 'Waiting Channel' column on startup"
+msgstr "Показывать при запуске столбец ожидания в ядре"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
+msgid "Width of process 'Control Group' column"
+msgstr "Ширина столбца контрольной группы"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
+msgid "Show process 'Control Group' column on startup"
+msgstr "Показывать при запуске столбец контрольной группы"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
+msgid "Width of process 'Unit' column"
+msgstr "Ширина столбца единицы измерения процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
+msgid "Show process 'Unit' column on startup"
+msgstr "Показывать при запуске столбец единицы измерения процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
+msgid "Width of process 'Session' column"
+msgstr "Ширина столбца сеанса процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
+msgid "Show process 'Session' column on startup"
+msgstr "Показывать при запуске столбец сеанса процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
+msgid "Width of process 'Seat' column"
+msgstr "Ширина столбца рабочего места процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
+msgid "Show process 'Seat' column on startup"
+msgstr "Показывать при запуске столбец рабочего места процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
+msgid "Width of process 'Owner' column"
+msgstr "Ширина столбца владельца процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
+msgid "Show process 'Owner' column on startup"
+msgstr "Показывать при запуске столбец владельца процесса"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
+msgid "Width of process 'Priority' column"
+msgstr "Ширина столбца приоритета"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
+msgid "Show process 'Priority' column on startup"
+msgstr "Показывать при запуске столбец приоритета"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
+msgid "Disk view sort column"
+msgstr "Столбец сортировки списка дисков"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
+msgid "Disk view sort order"
+msgstr "Порядок сортировки списка дисков"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
+msgid "Disk view columns order"
+msgstr "Порядок столбцов просмотра диска"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
+msgid "Memory map sort column"
+msgstr "Столбец сортировки отображения памяти"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
+msgid "Memory map sort order"
+msgstr "Порядок сортировки отображения памяти"
+
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
-msgid "Width of process 'Writable Memory' column"
-msgstr "Ширина столбца доступной для записи памяти процесса"
+msgid "Open files sort column"
+msgstr "Столбец сортировки открытых файлов"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
-msgid "Width of process 'X Server Memory' column"
-msgstr "Ширина столбца памяти X-сервера для процесса"
+msgid "Open files sort order"
+msgstr "Порядок сортировки списка открытых файлов"
 
 #: ../src/procactions.cpp:76
 #, c-format
@@ -1102,21 +1143,22 @@ msgstr "Единица измерения"
 msgid "Session"
 msgstr "Сеанс"
 
-#: ../src/proctable.cpp:258
-#| msgid "Status"
+#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
+#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
+#: ../src/proctable.cpp:260
 msgid "Seat"
 msgstr "Рабочее место"
 
-#: ../src/proctable.cpp:259
+#: ../src/proctable.cpp:261
 msgid "Owner"
 msgstr "Владелец"
 
-#: ../src/proctable.cpp:260
+#: ../src/proctable.cpp:262
 #: ../src/procproperties.cpp:126
 msgid "Priority"
 msgstr "Приоритет"
 
-#: ../src/proctable.cpp:1079
+#: ../src/proctable.cpp:1086
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Средняя загрузка за последние 1, 5, 15 минут: %0.2f, %0.2f, %0.2f"
@@ -1127,8 +1169,6 @@ msgstr "Н/Д"
 
 #: ../src/procproperties.cpp:123
 #, c-format
-#| msgid "%u second"
-#| msgid_plural "%u seconds"
 msgid "%lld second"
 msgid_plural "%lld seconds"
 msgstr[0] "%lld секунда"
@@ -1136,13 +1176,11 @@ msgstr[1] "%lld секунды"
 msgstr[2] "%lld секунд"
 
 #: ../src/procproperties.cpp:241
-#| msgid "Processes"
 msgid "Process Properties"
 msgstr "Свойства процесса"
 
 #: ../src/procproperties.cpp:261
 #, c-format
-#| msgid "_Memory maps for process \"%s\" (PID %u):"
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "Свойства процесса «%s» (PID %u):"
 
@@ -1310,39 +1348,6 @@ msgstr "%s/с"
 
 #~ msgid "Default graph CPU color"
 #~ msgstr "Цвет графика ЦП по умолчанию"
-
-#~ msgid "System Monitor Preferences"
-#~ msgstr "Настройки системного монитора"
-
-#~ msgid "Behavior"
-#~ msgstr "Поведение"
-
-#~ msgid "_Update interval in seconds:"
-#~ msgstr "_Интервал обновления в секундах:"
-
-#~ msgid "Enable _smooth refresh"
-#~ msgstr "Включить _плавное обновление"
-
-#~ msgid "Alert before ending or _killing processes"
-#~ msgstr "Предупреждать перед _завершением или снятием процессов"
-
-#~ msgid "Divide CPU usage by CPU count"
-#~ msgstr "Разбить использование ЦП по кол-ву ЦП"
-
-#~ msgid "Information Fields"
-#~ msgstr "Информационные поля"
-
-#~ msgid "Process i_nformation shown in list:"
-#~ msgstr "Информация о процессах, показываемая в списке:"
-
-#~ msgid "Graphs"
-#~ msgstr "Графики"
-
-#~ msgid "Show network speed in bits"
-#~ msgstr "Показывать скорость сети в битах"
-
-#~ msgid "Show _all file systems"
-#~ msgstr "Показывать _все файловые системы"
 
 #~ msgid "File system i_nformation shown in list:"
 #~ msgstr "Информация о файловой _системе, показываемая в списке:"
