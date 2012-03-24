@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 12:55+0200\n"
-"PO-Revision-Date: 2012-01-28 12:56+0200\n"
+"POT-Creation-Date: 2012-03-24 19:09+0200\n"
+"PO-Revision-Date: 2012-03-24 19:09+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <sh.yaron@gmail.com>\n"
 "Language: he\n"
@@ -34,6 +34,65 @@ msgstr "צג המערכת"
 #: ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "הצגת התהליכים הנוכחיים ומעקב אחר מצב המערכת"
+
+#: ../data/preferences.ui.h:1
+msgid "Alert before ending or _killing processes"
+msgstr "יש להתריע לפני _סיום או חיסול תהליכים"
+
+#: ../data/preferences.ui.h:2
+msgid "Behavior"
+msgstr "התנהגות"
+
+#: ../data/preferences.ui.h:3
+msgid "Enable _smooth refresh"
+msgstr "הפעלת _רענון חלק"
+
+#: ../data/preferences.ui.h:4
+#: ../src/interface.cpp:722
+msgid "File Systems"
+msgstr "מערכות קבצים"
+
+#: ../data/preferences.ui.h:5
+msgid "Graphs"
+msgstr "תרשימים"
+
+#: ../data/preferences.ui.h:6
+msgid "Information Fields"
+msgstr "שדות מידע"
+
+#: ../data/preferences.ui.h:7
+msgid "Process i_nformation shown in list:"
+msgstr "_מידע על תהליכים אשר מוצג ברשימה:"
+
+#: ../data/preferences.ui.h:8
+#: ../src/interface.cpp:714
+msgid "Processes"
+msgstr "תהליכים"
+
+#: ../data/preferences.ui.h:9
+#: ../src/interface.cpp:718
+msgid "Resources"
+msgstr "משאבים"
+
+#: ../data/preferences.ui.h:10
+msgid "Show _all file systems"
+msgstr "הצגת _כל מערכות הקבצים"
+
+#: ../data/preferences.ui.h:11
+msgid "System Monitor Preferences"
+msgstr "העדפות צג המערכת"
+
+#: ../data/preferences.ui.h:12
+msgid "_Divide CPU usage by CPU count"
+msgstr "_פיצול השימוש במעבד לפי מספר המעבדים"
+
+#: ../data/preferences.ui.h:13
+msgid "_Show network speed in bits"
+msgstr "הצגת מהירות הרשת ב_סיביות"
+
+#: ../data/preferences.ui.h:14
+msgid "_Update interval in seconds:"
+msgstr "מרווח _עדכון בשניות:"
 
 #: ../src/argv.cpp:21
 msgid "Show the System tab"
@@ -71,7 +130,7 @@ msgid "Directory"
 msgstr "תיקייה"
 
 #: ../src/disks.cpp:301
-#: ../src/gsm_color_button.c:221
+#: ../src/gsm_color_button.c:222
 #: ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "סוג"
@@ -121,40 +180,41 @@ msgstr "%d %b %Y"
 msgid "Fraction"
 msgstr "שבר"
 
-#: ../src/gsm_color_button.c:199
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+#: ../src/gsm_color_button.c:200
 msgid "Percentage full for pie color pickers"
 msgstr "אחוז מלא עבור בוחר הצבע לתרשימי העוגה"
 
-#: ../src/gsm_color_button.c:206
+#: ../src/gsm_color_button.c:207
 msgid "Title"
 msgstr "כותרת"
 
-#: ../src/gsm_color_button.c:207
+#: ../src/gsm_color_button.c:208
 msgid "The title of the color selection dialog"
 msgstr "הכותרת של חלון בחירת הצבע"
 
-#: ../src/gsm_color_button.c:208
-#: ../src/gsm_color_button.c:624
+#: ../src/gsm_color_button.c:209
+#: ../src/gsm_color_button.c:625
 msgid "Pick a Color"
 msgstr "בחירת צבע"
 
-#: ../src/gsm_color_button.c:214
+#: ../src/gsm_color_button.c:215
 msgid "Current Color"
 msgstr "הצבע הנוכחי"
 
-#: ../src/gsm_color_button.c:215
+#: ../src/gsm_color_button.c:216
 msgid "The selected color"
 msgstr "הצבע הנבחר"
 
-#: ../src/gsm_color_button.c:222
+#: ../src/gsm_color_button.c:223
 msgid "Type of color picker"
 msgstr "סוג בוחר הצבע"
 
-#: ../src/gsm_color_button.c:547
+#: ../src/gsm_color_button.c:548
 msgid "Received invalid color data\n"
 msgstr "התקבלו נתוני צבע בלתי תקינים\n"
 
-#: ../src/gsm_color_button.c:647
+#: ../src/gsm_color_button.c:648
 msgid "Click to set graph colors"
 msgstr "יש ללחוץ כדי להגדיר את צבעי הגרף"
 
@@ -427,18 +487,6 @@ msgstr "סה״כ שנשלח"
 #: ../src/interface.cpp:710
 msgid "System"
 msgstr "מערכת"
-
-#: ../src/interface.cpp:714
-msgid "Processes"
-msgstr "תהליכים"
-
-#: ../src/interface.cpp:718
-msgid "Resources"
-msgstr "משאבים"
-
-#: ../src/interface.cpp:722
-msgid "File Systems"
-msgstr "מערכות קבצים"
 
 #: ../src/load-graph.cpp:166
 #, c-format
@@ -1093,20 +1141,22 @@ msgstr "יחידה"
 msgid "Session"
 msgstr "הפעלה"
 
-#: ../src/proctable.cpp:258
+#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
+#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
+#: ../src/proctable.cpp:260
 msgid "Seat"
 msgstr "תושבת"
 
-#: ../src/proctable.cpp:259
+#: ../src/proctable.cpp:261
 msgid "Owner"
 msgstr "בעלים"
 
-#: ../src/proctable.cpp:260
+#: ../src/proctable.cpp:262
 #: ../src/procproperties.cpp:126
 msgid "Priority"
 msgstr "עדיפות"
 
-#: ../src/proctable.cpp:1079
+#: ../src/proctable.cpp:1086
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "ממוצעי עומס עבור ‎1, 5, 15 הדקות האחרונות: %0.2f, %0.2f, %0.2f"
@@ -1290,39 +1340,6 @@ msgstr "לא זמין"
 #, c-format
 msgid "%s/s"
 msgstr "%s/שנייה"
-
-#~ msgid "System Monitor Preferences"
-#~ msgstr "העדפות צג המערכת"
-
-#~ msgid "Behavior"
-#~ msgstr "התנהגות"
-
-#~ msgid "_Update interval in seconds:"
-#~ msgstr "מרווח _עדכון בשניות:"
-
-#~ msgid "Enable _smooth refresh"
-#~ msgstr "הפעלת _רענון חלק"
-
-#~ msgid "Alert before ending or _killing processes"
-#~ msgstr "יש להתריע לפני _סיום או חיסול תהליכים"
-
-#~ msgid "Divide CPU usage by CPU count"
-#~ msgstr "פיצול השימוש במעבד לפי מספר המעבדים"
-
-#~ msgid "Information Fields"
-#~ msgstr "שדות מידע"
-
-#~ msgid "Process i_nformation shown in list:"
-#~ msgstr "_מידע על תהליכים אשר מוצג ברשימה:"
-
-#~ msgid "Graphs"
-#~ msgstr "תרשימים"
-
-#~ msgid "Show network speed in bits"
-#~ msgstr "הצגת מהירות הרשת בסיביות"
-
-#~ msgid "Show _all file systems"
-#~ msgstr "הצגת _כל מערכות הקבצים"
 
 #~ msgid "File system i_nformation shown in list:"
 #~ msgstr "_מידע על מערכות קבצים שיוצג ברשימה:"
