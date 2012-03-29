@@ -6,10 +6,10 @@
 # Torstein Adolf Winterseth <kvikende@fsfe.org>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-system-monitor 3.3.x\n"
+"Project-Id-Version: gnome-system-monitor 3.4.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 16:04+0100\n"
-"PO-Revision-Date: 2012-01-28 16:05+0100\n"
+"POT-Creation-Date: 2012-03-29 09:53+0200\n"
+"PO-Revision-Date: 2012-03-29 09:55+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -26,6 +26,62 @@ msgstr "Systemmonitor"
 #: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "Vis aktive prosesser og overvåk systemets tilstand"
+
+#: ../data/preferences.ui.h:1
+msgid "System Monitor Preferences"
+msgstr "Brukervalg for systemmonitor"
+
+#: ../data/preferences.ui.h:2
+msgid "Behavior"
+msgstr "Oppførsel"
+
+#: ../data/preferences.ui.h:3
+msgid "_Update interval in seconds:"
+msgstr "_Oppdateringsintervall i sekunder:"
+
+#: ../data/preferences.ui.h:4
+msgid "Enable _smooth refresh"
+msgstr "_Slå på jevn oppdatering"
+
+#: ../data/preferences.ui.h:5
+msgid "Alert before ending or _killing processes"
+msgstr "Vis advarsel når _prosesser termineres eller avsluttes"
+
+#: ../data/preferences.ui.h:6
+msgid "_Divide CPU usage by CPU count"
+msgstr "_Del opp CPU-bruk etter antall CPUer"
+
+#: ../data/preferences.ui.h:7
+msgid "Information Fields"
+msgstr "Informasjonsfelter"
+
+#: ../data/preferences.ui.h:8
+msgid "Process i_nformation shown in list:"
+msgstr "Prosessi_nformasjon som vises i listen:"
+
+#: ../data/preferences.ui.h:9 ../src/interface.cpp:714
+msgid "Processes"
+msgstr "Prosesser"
+
+#: ../data/preferences.ui.h:10
+msgid "Graphs"
+msgstr "Grafer"
+
+#: ../data/preferences.ui.h:11
+msgid "_Show network speed in bits"
+msgstr "Vi_s nettverkstrafikk i bits"
+
+#: ../data/preferences.ui.h:12 ../src/interface.cpp:718
+msgid "Resources"
+msgstr "Ressurser"
+
+#: ../data/preferences.ui.h:13
+msgid "Show _all file systems"
+msgstr "Vis _alle filsystemer"
+
+#: ../data/preferences.ui.h:14 ../src/interface.cpp:722
+msgid "File Systems"
+msgstr "Filsystemer"
 
 #: ../src/argv.cpp:21
 msgid "Show the System tab"
@@ -57,7 +113,7 @@ msgstr "Enhet"
 msgid "Directory"
 msgstr "Katalog"
 
-#: ../src/disks.cpp:301 ../src/gsm_color_button.c:221 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:301 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "Type"
 
@@ -106,39 +162,40 @@ msgstr "%d %b %Y"
 msgid "Fraction"
 msgstr "Del"
 
-#: ../src/gsm_color_button.c:199
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+#: ../src/gsm_color_button.c:200
 msgid "Percentage full for pie color pickers"
 msgstr "Prosent full for fargevelgere for pai"
 
-#: ../src/gsm_color_button.c:206
+#: ../src/gsm_color_button.c:207
 msgid "Title"
 msgstr "Tittel"
 
-#: ../src/gsm_color_button.c:207
+#: ../src/gsm_color_button.c:208
 msgid "The title of the color selection dialog"
 msgstr "Tittel for fargevalg-dialogen"
 
-#: ../src/gsm_color_button.c:208 ../src/gsm_color_button.c:624
+#: ../src/gsm_color_button.c:209 ../src/gsm_color_button.c:625
 msgid "Pick a Color"
 msgstr "Velg en farge"
 
-#: ../src/gsm_color_button.c:214
+#: ../src/gsm_color_button.c:215
 msgid "Current Color"
 msgstr "Aktiv farge"
 
-#: ../src/gsm_color_button.c:215
+#: ../src/gsm_color_button.c:216
 msgid "The selected color"
 msgstr "Valgt farge"
 
-#: ../src/gsm_color_button.c:222
+#: ../src/gsm_color_button.c:223
 msgid "Type of color picker"
 msgstr "Type fargevelger"
 
-#: ../src/gsm_color_button.c:547
+#: ../src/gsm_color_button.c:548
 msgid "Received invalid color data\n"
 msgstr "Fargedata for ugyldig mottak\n"
 
-#: ../src/gsm_color_button.c:647
+#: ../src/gsm_color_button.c:648
 msgid "Click to set graph colors"
 msgstr "Klikk for å sette farger for grafen"
 
@@ -401,18 +458,6 @@ msgstr "Totalt sendt"
 #: ../src/interface.cpp:710
 msgid "System"
 msgstr "System"
-
-#: ../src/interface.cpp:714
-msgid "Processes"
-msgstr "Prosesser"
-
-#: ../src/interface.cpp:718
-msgid "Resources"
-msgstr "Ressurser"
-
-#: ../src/interface.cpp:722
-msgid "File Systems"
-msgstr "Filsystemer"
 
 #: ../src/load-graph.cpp:166
 #, c-format
@@ -1084,19 +1129,21 @@ msgstr "Enhet"
 msgid "Session"
 msgstr "Økt"
 
-#: ../src/proctable.cpp:258
+#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
+#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
+#: ../src/proctable.cpp:260
 msgid "Seat"
 msgstr "Sete"
 
-#: ../src/proctable.cpp:259
+#: ../src/proctable.cpp:261
 msgid "Owner"
 msgstr "Eier"
 
-#: ../src/proctable.cpp:260 ../src/procproperties.cpp:126
+#: ../src/proctable.cpp:262 ../src/procproperties.cpp:126
 msgid "Priority"
 msgstr "Prioritet"
 
-#: ../src/proctable.cpp:1079
+#: ../src/proctable.cpp:1086
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Snittbelastning for de siste 1, 5, 15 minutter: %0.2f, %0.2f, %0.2f"
