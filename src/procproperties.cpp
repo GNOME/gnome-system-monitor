@@ -24,7 +24,12 @@
 #include <glibtop/procmem.h>
 #include <glibtop/procmap.h>
 #include <glibtop/procstate.h>
+#if defined (__linux__)
 #include <asm/param.h>
+#elif defined (__OpenBSD__)
+#include <sys/param.h>
+#include <sys/sysctl.h>
+#endif
 
 #include "procman.h"
 #include "procproperties.h"
@@ -108,6 +113,18 @@ fill_proc_properties (GtkWidget *tree, ProcInfo *info)
     GtkListStore *store;
 
     get_process_memory_info(info);
+
+#if defined (__OpenBSD__)
+    struct clockinfo cinf;
+    size_t size = sizeof (cinf);
+    int HZ;
+    int mib[] = { CTL_KERN, KERN_CLOCKRATE };
+
+    if (sysctl (mib, nitems(mib), &cinf, &size, NULL, 0) == -1)
+        HZ = 100;
+    else
+        HZ = cinf.hz;
+#endif
 
     proc_arg proc_props[] = {
         { N_("Process Name"), g_strdup_printf("%s", info->name)},
