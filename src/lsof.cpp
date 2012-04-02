@@ -347,7 +347,7 @@ void procman_lsof(ProcData *procdata)
     gtk_box_pack_start(GTK_BOX(hbox), search_button, FALSE, FALSE, 0);
     GtkWidget *clear_button = gtk_button_new_from_stock(GTK_STOCK_CLEAR);
     /* The default accelerator collides with the default close accelerator. */
-    gtk_button_set_label(GTK_BUTTON(clear_button), "C_lear");
+    gtk_button_set_label(GTK_BUTTON(clear_button), _("C_lear"));
     gtk_box_pack_start(GTK_BOX(hbox), clear_button, FALSE, FALSE, 0);
 
 
