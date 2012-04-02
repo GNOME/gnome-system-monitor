@@ -568,7 +568,7 @@ namespace procman
 
         gtk_tree_model_get(model, iter, column, &current_value, -1);
 
-        if (!current_value or std::strcmp(current_value, new_value) != 0)
+        if (g_strcmp0(current_value, new_value) != 0)
             gtk_tree_store_set(GTK_TREE_STORE(model), iter, column, new_value, -1);
 
         g_free(current_value);
