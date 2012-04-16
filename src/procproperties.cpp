@@ -26,7 +26,7 @@
 #include <glibtop/procstate.h>
 #if defined (__linux__)
 #include <asm/param.h>
-#elif defined (__OpenBSD__)
+#elif defined(__OpenBSD__) || defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
 #include <sys/param.h>
 #include <sys/sysctl.h>
 #endif
@@ -114,7 +114,7 @@ fill_proc_properties (GtkWidget *tree, ProcInfo *info)
 
     get_process_memory_info(info);
 
-#if defined (__OpenBSD__)
+#if defined(__OpenBSD__) || defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
     struct clockinfo cinf;
     size_t size = sizeof (cinf);
     int HZ;
