@@ -16,14 +16,15 @@
 # Fábio Nogueira <fnogueira@gnome.org>, 2012.
 # Djavan Fagundes <djavan@comum.org>, 2012.
 # Enrico Nicoletto <liverig@gmail.com>, 2012.
+# Jonh Wendell <jwendell@gnome.org>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-21 15:03-0300\n"
-"PO-Revision-Date: 2012-03-21 09:55-0300\n"
-"Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
+"POT-Creation-Date: 2012-04-28 11:02-0300\n"
+"PO-Revision-Date: 2012-04-28 11:02-0300\n"
+"Last-Translator: Jonh Wendell <jwendell@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -436,7 +437,7 @@ msgstr "Selecione uma cor para \"%s\""
 msgid "CPU History"
 msgstr "Histórico da CPU"
 
-#: ../src/interface.cpp:344 ../src/procproperties.cpp:122
+#: ../src/interface.cpp:344 ../src/procproperties.cpp:139
 msgid "CPU"
 msgstr "CPU"
 
@@ -450,7 +451,7 @@ msgid "Memory and Swap History"
 msgstr "Histórico da memória e swap"
 
 #: ../src/interface.cpp:401 ../src/proctable.cpp:252
-#: ../src/procproperties.cpp:116
+#: ../src/procproperties.cpp:133
 msgid "Memory"
 msgstr "Memória"
 
@@ -531,6 +532,11 @@ msgstr "Pesquisar por arquivos abertos"
 #: ../src/lsof.cpp:336
 msgid "_Name contains:"
 msgstr "_Nome contém:"
+
+#. The default accelerator collides with the default close accelerator.
+#: ../src/lsof.cpp:350
+msgid "C_lear"
+msgstr "_Limpar"
 
 #: ../src/lsof.cpp:354
 msgid "Case insensitive matching"
@@ -1076,35 +1082,35 @@ msgstr "Ícone"
 msgid "A simple process and system monitor."
 msgstr "Um simples monitor de processos do sistema."
 
-#: ../src/proctable.cpp:237 ../src/procproperties.cpp:113
+#: ../src/proctable.cpp:237 ../src/procproperties.cpp:130
 msgid "Process Name"
 msgstr "Nome do processo"
 
-#: ../src/proctable.cpp:238 ../src/procproperties.cpp:114
+#: ../src/proctable.cpp:238 ../src/procproperties.cpp:131
 msgid "User"
 msgstr "Usuário"
 
-#: ../src/proctable.cpp:239 ../src/procproperties.cpp:115
+#: ../src/proctable.cpp:239 ../src/procproperties.cpp:132
 msgid "Status"
 msgstr "Estado"
 
-#: ../src/proctable.cpp:240 ../src/procproperties.cpp:117
+#: ../src/proctable.cpp:240 ../src/procproperties.cpp:134
 msgid "Virtual Memory"
 msgstr "Memória virtual"
 
-#: ../src/proctable.cpp:241 ../src/procproperties.cpp:118
+#: ../src/proctable.cpp:241 ../src/procproperties.cpp:135
 msgid "Resident Memory"
 msgstr "Memória residente"
 
-#: ../src/proctable.cpp:242 ../src/procproperties.cpp:119
+#: ../src/proctable.cpp:242 ../src/procproperties.cpp:136
 msgid "Writable Memory"
 msgstr "Memória gravável"
 
-#: ../src/proctable.cpp:243 ../src/procproperties.cpp:120
+#: ../src/proctable.cpp:243 ../src/procproperties.cpp:137
 msgid "Shared Memory"
 msgstr "Memória compartilhada"
 
-#: ../src/proctable.cpp:244 ../src/procproperties.cpp:121
+#: ../src/proctable.cpp:244 ../src/procproperties.cpp:138
 msgid "X Server Memory"
 msgstr "Memória do Servidor X"
 
@@ -1113,32 +1119,32 @@ msgstr "Memória do Servidor X"
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:246 ../src/procproperties.cpp:123
+#: ../src/proctable.cpp:246 ../src/procproperties.cpp:140
 msgid "CPU Time"
 msgstr "Tempo da CPU"
 
-#: ../src/proctable.cpp:247 ../src/procproperties.cpp:124
+#: ../src/proctable.cpp:247 ../src/procproperties.cpp:141
 msgid "Started"
 msgstr "Iniciada"
 
-#: ../src/proctable.cpp:248 ../src/procproperties.cpp:125
+#: ../src/proctable.cpp:248 ../src/procproperties.cpp:142
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.cpp:249 ../src/procproperties.cpp:127
+#: ../src/proctable.cpp:249 ../src/procproperties.cpp:144
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:250 ../src/procproperties.cpp:128
+#: ../src/proctable.cpp:250 ../src/procproperties.cpp:145
 msgid "Security Context"
 msgstr "Contexto de segurança"
 
-#: ../src/proctable.cpp:251 ../src/procproperties.cpp:129
+#: ../src/proctable.cpp:251 ../src/procproperties.cpp:146
 msgid "Command Line"
 msgstr "Linha de comando"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/proctable.cpp:254 ../src/procproperties.cpp:130
+#: ../src/proctable.cpp:254 ../src/procproperties.cpp:147
 msgid "Waiting Channel"
 msgstr "Aguardando canal"
 
@@ -1164,7 +1170,7 @@ msgstr "Assento"
 msgid "Owner"
 msgstr "Proprietário"
 
-#: ../src/proctable.cpp:262 ../src/procproperties.cpp:126
+#: ../src/proctable.cpp:262 ../src/procproperties.cpp:143
 msgid "Priority"
 msgstr "Prioridade"
 
@@ -1173,22 +1179,22 @@ msgstr "Prioridade"
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Cargas médias para os últimos 1, 5, 15 minutos: %0.2f, %0.2f, %0.2f"
 
-#: ../src/procproperties.cpp:99
+#: ../src/procproperties.cpp:104
 msgid "N/A"
 msgstr "N/D"
 
-#: ../src/procproperties.cpp:123
+#: ../src/procproperties.cpp:140
 #, c-format
 msgid "%lld second"
 msgid_plural "%lld seconds"
 msgstr[0] "%lld segundo"
 msgstr[1] "%lld segundos"
 
-#: ../src/procproperties.cpp:241
+#: ../src/procproperties.cpp:258
 msgid "Process Properties"
 msgstr "Propriedades do processo"
 
-#: ../src/procproperties.cpp:261
+#: ../src/procproperties.cpp:278
 #, c-format
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "Propriedades do processo \"%s\" (PID: %u):"
