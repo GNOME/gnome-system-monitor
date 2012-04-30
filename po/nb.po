@@ -6,10 +6,10 @@
 # Torstein Adolf Winterseth <kvikende@fsfe.org>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-system-monitor 3.4.x\n"
+"Project-Id-Version: gnome-system-monitor 3.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-29 09:53+0200\n"
-"PO-Revision-Date: 2012-03-29 09:55+0200\n"
+"POT-Creation-Date: 2012-04-30 11:14+0200\n"
+"PO-Revision-Date: 2012-04-30 11:14+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -412,7 +412,7 @@ msgstr "Velg en farge for «%s»"
 msgid "CPU History"
 msgstr "Historikk for CPU-bruk"
 
-#: ../src/interface.cpp:344 ../src/procproperties.cpp:122
+#: ../src/interface.cpp:344 ../src/procproperties.cpp:139
 msgid "CPU"
 msgstr "CPU"
 
@@ -426,7 +426,7 @@ msgid "Memory and Swap History"
 msgstr "Historikk for minne- og swap-bruk"
 
 #: ../src/interface.cpp:401 ../src/proctable.cpp:252
-#: ../src/procproperties.cpp:116
+#: ../src/procproperties.cpp:133
 msgid "Memory"
 msgstr "Minne"
 
@@ -507,6 +507,11 @@ msgstr "Søk etter åpne filer"
 #: ../src/lsof.cpp:336
 msgid "_Name contains:"
 msgstr "_Navn inneholder:"
+
+#. The default accelerator collides with the default close accelerator.
+#: ../src/lsof.cpp:350
+msgid "C_lear"
+msgstr "Tø_m"
 
 #: ../src/lsof.cpp:354
 msgid "Case insensitive matching"
@@ -1051,35 +1056,35 @@ msgstr "Ikon"
 msgid "A simple process and system monitor."
 msgstr "Et enkelt program for overvåking av systemet og dets prosesser."
 
-#: ../src/proctable.cpp:237 ../src/procproperties.cpp:113
+#: ../src/proctable.cpp:237 ../src/procproperties.cpp:130
 msgid "Process Name"
 msgstr "Prosessnavn"
 
-#: ../src/proctable.cpp:238 ../src/procproperties.cpp:114
+#: ../src/proctable.cpp:238 ../src/procproperties.cpp:131
 msgid "User"
 msgstr "Bruker"
 
-#: ../src/proctable.cpp:239 ../src/procproperties.cpp:115
+#: ../src/proctable.cpp:239 ../src/procproperties.cpp:132
 msgid "Status"
 msgstr "Status"
 
-#: ../src/proctable.cpp:240 ../src/procproperties.cpp:117
+#: ../src/proctable.cpp:240 ../src/procproperties.cpp:134
 msgid "Virtual Memory"
 msgstr "Virtuelt minne"
 
-#: ../src/proctable.cpp:241 ../src/procproperties.cpp:118
+#: ../src/proctable.cpp:241 ../src/procproperties.cpp:135
 msgid "Resident Memory"
 msgstr "Resident minne"
 
-#: ../src/proctable.cpp:242 ../src/procproperties.cpp:119
+#: ../src/proctable.cpp:242 ../src/procproperties.cpp:136
 msgid "Writable Memory"
 msgstr "Skrivbart minne"
 
-#: ../src/proctable.cpp:243 ../src/procproperties.cpp:120
+#: ../src/proctable.cpp:243 ../src/procproperties.cpp:137
 msgid "Shared Memory"
 msgstr "Delt minne"
 
-#: ../src/proctable.cpp:244 ../src/procproperties.cpp:121
+#: ../src/proctable.cpp:244 ../src/procproperties.cpp:138
 msgid "X Server Memory"
 msgstr "Minne for X-tjener"
 
@@ -1088,32 +1093,32 @@ msgstr "Minne for X-tjener"
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:246 ../src/procproperties.cpp:123
+#: ../src/proctable.cpp:246 ../src/procproperties.cpp:140
 msgid "CPU Time"
 msgstr "CPU-tid"
 
-#: ../src/proctable.cpp:247 ../src/procproperties.cpp:124
+#: ../src/proctable.cpp:247 ../src/procproperties.cpp:141
 msgid "Started"
 msgstr "Startet"
 
-#: ../src/proctable.cpp:248 ../src/procproperties.cpp:125
+#: ../src/proctable.cpp:248 ../src/procproperties.cpp:142
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.cpp:249 ../src/procproperties.cpp:127
+#: ../src/proctable.cpp:249 ../src/procproperties.cpp:144
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:250 ../src/procproperties.cpp:128
+#: ../src/proctable.cpp:250 ../src/procproperties.cpp:145
 msgid "Security Context"
 msgstr "Sikkerhetskontekst"
 
-#: ../src/proctable.cpp:251 ../src/procproperties.cpp:129
+#: ../src/proctable.cpp:251 ../src/procproperties.cpp:146
 msgid "Command Line"
 msgstr "Kommandolinje"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/proctable.cpp:254 ../src/procproperties.cpp:130
+#: ../src/proctable.cpp:254 ../src/procproperties.cpp:147
 msgid "Waiting Channel"
 msgstr "Ventende kanal"
 
@@ -1139,7 +1144,7 @@ msgstr "Sete"
 msgid "Owner"
 msgstr "Eier"
 
-#: ../src/proctable.cpp:262 ../src/procproperties.cpp:126
+#: ../src/proctable.cpp:262 ../src/procproperties.cpp:143
 msgid "Priority"
 msgstr "Prioritet"
 
@@ -1148,22 +1153,22 @@ msgstr "Prioritet"
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Snittbelastning for de siste 1, 5, 15 minutter: %0.2f, %0.2f, %0.2f"
 
-#: ../src/procproperties.cpp:99
+#: ../src/procproperties.cpp:104
 msgid "N/A"
 msgstr "I/T"
 
-#: ../src/procproperties.cpp:123
+#: ../src/procproperties.cpp:140
 #, c-format
 msgid "%lld second"
 msgid_plural "%lld seconds"
 msgstr[0] "%lld sekund"
 msgstr[1] "%lld sekunder"
 
-#: ../src/procproperties.cpp:241
+#: ../src/procproperties.cpp:258
 msgid "Process Properties"
 msgstr "Egenskaper for prosess"
 
-#: ../src/procproperties.cpp:261
+#: ../src/procproperties.cpp:278
 #, c-format
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "Egenskaper for prosess «%s» (PID %u):"
