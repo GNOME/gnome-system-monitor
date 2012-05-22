@@ -204,7 +204,7 @@ namespace {
 
             /* count duplicates */
             for (uint i = 0; i != info->ncpu; ++i) {
-                const char* const keys[] = { "model name", "cpu" };
+                const char* const keys[] = { "model name", "cpu", "Processor" };
                 char* model;
                 int* count;
 
