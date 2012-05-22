@@ -216,7 +216,7 @@ namespace {
                 }
 
                 if (model == NULL)
-                    model = _("Unknown model");
+                    continue;
 
                 count = static_cast<int*>(g_hash_table_lookup (counts, model));
                 if (count == NULL)
