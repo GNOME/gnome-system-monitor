@@ -120,7 +120,7 @@ fill_proc_properties (GtkWidget *tree, ProcInfo *info)
     int HZ;
     int mib[] = { CTL_KERN, KERN_CLOCKRATE };
 
-    if (sysctl (mib, nitems(mib), &cinf, &size, NULL, 0) == -1)
+    if (sysctl (mib, G_N_ELEMENTS (mib), &cinf, &size, NULL, 0) == -1)
         HZ = 100;
     else
         HZ = cinf.hz;
