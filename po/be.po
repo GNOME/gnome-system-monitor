@@ -4,9 +4,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor.master\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-15 19:58+0300\n"
-"PO-Revision-Date: 2012-02-15 19:58+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
+"monitor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-07-05 21:39+0000\n"
+"PO-Revision-Date: 2012-07-15 11:45+0300\n"
 "Last-Translator: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
 "Language: be\n"
@@ -24,6 +25,62 @@ msgstr "Сістэмны назіральнік"
 #: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "Прагляд актыўных працэсаў і назіранне за станам сістэмы"
+
+#: ../data/preferences.ui.h:1
+msgid "System Monitor Preferences"
+msgstr "Настройкі сістэмнага назіральніка"
+
+#: ../data/preferences.ui.h:2
+msgid "Behavior"
+msgstr "Паводзіны"
+
+#: ../data/preferences.ui.h:3
+msgid "_Update interval in seconds:"
+msgstr "_Прамежак абнаўлення ў секундах:"
+
+#: ../data/preferences.ui.h:4
+msgid "Enable _smooth refresh"
+msgstr "Уключыць _гладкае абнаўленне"
+
+#: ../data/preferences.ui.h:5
+msgid "Alert before ending or _killing processes"
+msgstr "Папярэджваць аб _заканчэнні ці забойстве працэсаў"
+
+#: ../data/preferences.ui.h:6
+msgid "_Divide CPU usage by CPU count"
+msgstr "_Дзяліць узровень выкарыстання працэсараў на іх колькасць"
+
+#: ../data/preferences.ui.h:7
+msgid "Information Fields"
+msgstr "Інфармацыйныя графы"
+
+#: ../data/preferences.ui.h:8
+msgid "Process i_nformation shown in list:"
+msgstr "І_нфармацыя аб працэсах для паказу ў спісе:"
+
+#: ../data/preferences.ui.h:9 ../src/interface.cpp:714
+msgid "Processes"
+msgstr "Працэсы"
+
+#: ../data/preferences.ui.h:10
+msgid "Graphs"
+msgstr "Графікі"
+
+#: ../data/preferences.ui.h:11
+msgid "_Show network speed in bits"
+msgstr "Вы_мяраць хуткасць сеткі ў бітах"
+
+#: ../data/preferences.ui.h:12 ../src/interface.cpp:718
+msgid "Resources"
+msgstr "Рэсурсы"
+
+#: ../data/preferences.ui.h:13
+msgid "Show _all file systems"
+msgstr "Па_казваць усе файлавыя сістэмы"
+
+#: ../data/preferences.ui.h:14 ../src/interface.cpp:722
+msgid "File Systems"
+msgstr "Файлавыя сістэмы"
 
 #: ../src/argv.cpp:21
 msgid "Show the System tab"
@@ -355,7 +412,7 @@ msgstr "Выбар колеру для \"%s\""
 msgid "CPU History"
 msgstr "Гісторыя выкарыстання працэсара"
 
-#: ../src/interface.cpp:344 ../src/procproperties.cpp:122
+#: ../src/interface.cpp:344 ../src/procproperties.cpp:139
 msgid "CPU"
 msgstr "Працэсар"
 
@@ -369,7 +426,7 @@ msgid "Memory and Swap History"
 msgstr "Гісторыя выкарыстання памяці і своп-прасторы"
 
 #: ../src/interface.cpp:401 ../src/proctable.cpp:252
-#: ../src/procproperties.cpp:116
+#: ../src/procproperties.cpp:133
 msgid "Memory"
 msgstr "Памяць"
 
@@ -401,18 +458,6 @@ msgstr "Колькасць пасланага"
 #: ../src/interface.cpp:710
 msgid "System"
 msgstr "Сістэма"
-
-#: ../src/interface.cpp:714
-msgid "Processes"
-msgstr "Працэсы"
-
-#: ../src/interface.cpp:718
-msgid "Resources"
-msgstr "Рэсурсы"
-
-#: ../src/interface.cpp:722
-msgid "File Systems"
-msgstr "Файлавыя сістэмы"
 
 #: ../src/load-graph.cpp:166
 #, c-format
@@ -463,6 +508,11 @@ msgstr "Пошук адкрытых файлаў"
 #: ../src/lsof.cpp:336
 msgid "_Name contains:"
 msgstr "_Назва змяшчае:"
+
+#. The default accelerator collides with the default close accelerator.
+#: ../src/lsof.cpp:350
+msgid "C_lear"
+msgstr "_Ачысціць"
 
 #: ../src/lsof.cpp:354
 msgid "Case insensitive matching"
@@ -613,7 +663,7 @@ msgstr ""
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
 msgid "Enable/Disable smooth refresh"
-msgstr "Пераключыць рэжым згладжанага абнаўлення"
+msgstr "Пераключыць рэжым гладкага абнаўлення"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
 msgid "Show warning dialog when killing processes"
@@ -1003,35 +1053,35 @@ msgstr "Значок"
 msgid "A simple process and system monitor."
 msgstr "Зручная прылада для назірання за працэсамі і сістэмай."
 
-#: ../src/proctable.cpp:237 ../src/procproperties.cpp:113
+#: ../src/proctable.cpp:237 ../src/procproperties.cpp:130
 msgid "Process Name"
 msgstr "Назва працэсу"
 
-#: ../src/proctable.cpp:238 ../src/procproperties.cpp:114
+#: ../src/proctable.cpp:238 ../src/procproperties.cpp:131
 msgid "User"
 msgstr "Карыстальнік"
 
-#: ../src/proctable.cpp:239 ../src/procproperties.cpp:115
+#: ../src/proctable.cpp:239 ../src/procproperties.cpp:132
 msgid "Status"
 msgstr "Стан"
 
-#: ../src/proctable.cpp:240 ../src/procproperties.cpp:117
+#: ../src/proctable.cpp:240 ../src/procproperties.cpp:134
 msgid "Virtual Memory"
 msgstr "Віртуальная памяць"
 
-#: ../src/proctable.cpp:241 ../src/procproperties.cpp:118
+#: ../src/proctable.cpp:241 ../src/procproperties.cpp:135
 msgid "Resident Memory"
 msgstr "Рэзідэнтная памяць"
 
-#: ../src/proctable.cpp:242 ../src/procproperties.cpp:119
+#: ../src/proctable.cpp:242 ../src/procproperties.cpp:136
 msgid "Writable Memory"
 msgstr "Запісвальная памяць"
 
-#: ../src/proctable.cpp:243 ../src/procproperties.cpp:120
+#: ../src/proctable.cpp:243 ../src/procproperties.cpp:137
 msgid "Shared Memory"
 msgstr "Супольная памяць"
 
-#: ../src/proctable.cpp:244 ../src/procproperties.cpp:121
+#: ../src/proctable.cpp:244 ../src/procproperties.cpp:138
 msgid "X Server Memory"
 msgstr "Памяць X-сервера"
 
@@ -1040,32 +1090,32 @@ msgstr "Памяць X-сервера"
 msgid "% CPU"
 msgstr "Працэсар %"
 
-#: ../src/proctable.cpp:246 ../src/procproperties.cpp:123
+#: ../src/proctable.cpp:246 ../src/procproperties.cpp:140
 msgid "CPU Time"
 msgstr "Працэсарны час"
 
-#: ../src/proctable.cpp:247 ../src/procproperties.cpp:124
+#: ../src/proctable.cpp:247 ../src/procproperties.cpp:141
 msgid "Started"
 msgstr "Запушчаны"
 
-#: ../src/proctable.cpp:248 ../src/procproperties.cpp:125
+#: ../src/proctable.cpp:248 ../src/procproperties.cpp:142
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/proctable.cpp:249 ../src/procproperties.cpp:127
+#: ../src/proctable.cpp:249 ../src/procproperties.cpp:144
 msgid "ID"
 msgstr "ID"
 
-#: ../src/proctable.cpp:250 ../src/procproperties.cpp:128
+#: ../src/proctable.cpp:250 ../src/procproperties.cpp:145
 msgid "Security Context"
 msgstr "Кантэкст бяспекі"
 
-#: ../src/proctable.cpp:251 ../src/procproperties.cpp:129
+#: ../src/proctable.cpp:251 ../src/procproperties.cpp:146
 msgid "Command Line"
 msgstr "Загадны радок"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/proctable.cpp:254 ../src/procproperties.cpp:130
+#: ../src/proctable.cpp:254 ../src/procproperties.cpp:147
 msgid "Waiting Channel"
 msgstr "Пункт чакання"
 
@@ -1081,28 +1131,30 @@ msgstr "Служба"
 msgid "Session"
 msgstr "Сеанс"
 
-#: ../src/proctable.cpp:258
+#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
+#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
+#: ../src/proctable.cpp:260
 msgid "Seat"
 msgstr "Працоўнае месца"
 
-#: ../src/proctable.cpp:259
+#: ../src/proctable.cpp:261
 msgid "Owner"
 msgstr "Уласнік"
 
-#: ../src/proctable.cpp:260 ../src/procproperties.cpp:126
+#: ../src/proctable.cpp:262 ../src/procproperties.cpp:143
 msgid "Priority"
 msgstr "Прыярытэт"
 
-#: ../src/proctable.cpp:1079
+#: ../src/proctable.cpp:1086
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Сярэдняя нагрузка за апошнія 1, 5, 15 хвілін: %0.2f, %0.2f, %0.2f"
 
-#: ../src/procproperties.cpp:99
+#: ../src/procproperties.cpp:104
 msgid "N/A"
 msgstr "Невядома"
 
-#: ../src/procproperties.cpp:123
+#: ../src/procproperties.cpp:140
 #, c-format
 msgid "%lld second"
 msgid_plural "%lld seconds"
@@ -1110,11 +1162,11 @@ msgstr[0] "%lld секунда"
 msgstr[1] "%lld секунды"
 msgstr[2] "%lld секунд"
 
-#: ../src/procproperties.cpp:241
+#: ../src/procproperties.cpp:258
 msgid "Process Properties"
 msgstr "Уласцівасці працэсу"
 
-#: ../src/procproperties.cpp:261
+#: ../src/procproperties.cpp:278
 #, c-format
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "Уласцівасці працэсу \"%s\" (PID %u):"
@@ -1132,10 +1184,6 @@ msgstr "Выданне %s %s"
 #, c-format
 msgid "%d-bit"
 msgstr "%d-бітная"
-
-#: ../src/sysinfo.cpp:219
-msgid "Unknown model"
-msgstr "Невядомая мадэль"
 
 #: ../src/sysinfo.cpp:740
 #, c-format
@@ -1280,3 +1328,4 @@ msgstr "<i>Невядома</i>"
 #, c-format
 msgid "%s/s"
 msgstr "%s/с"
+
