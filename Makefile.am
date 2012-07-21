@@ -4,7 +4,8 @@ ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 SUBDIRS = pixmaps po src help
 
 uidir = $(pkgdatadir)
-ui_DATA = data/preferences.ui
+ui_DATA = data/preferences.ui \
+          data/renice.ui
 
 EXTRA_DIST = \
 	$(ui_DATA) \
