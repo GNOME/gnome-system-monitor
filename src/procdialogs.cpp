@@ -367,7 +367,7 @@ field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
 }
 
 static void
-create_field_page(GtkBuilder* builder, GtkWidget *tree, gchar *widgetname)
+create_field_page(GtkBuilder* builder, GtkWidget *tree, const gchar *widgetname)
 {
     GtkTreeView *treeview;
     GList *it, *columns;
