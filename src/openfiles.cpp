@@ -320,8 +320,7 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 {
     ProcData *procdata = static_cast<ProcData*>(data);
     GtkWidget *openfilesdialog;
-    GtkWidget *dialog_vbox, *vbox;
-    GtkWidget *cmd_hbox;
+    GtkWidget *cmd_grid;
     GtkWidget *label;
     GtkWidget *scrolled;
     GtkWidget *tree;
@@ -333,24 +332,14 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
     if (!info)
         return;
 
-    openfilesdialog = gtk_dialog_new_with_buttons (_("Open Files"), NULL,
-                                                   GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                   GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-                                                   NULL);
-    gtk_window_set_resizable (GTK_WINDOW (openfilesdialog), TRUE);
-    gtk_window_set_default_size (GTK_WINDOW (openfilesdialog), 575, 400);
-    gtk_container_set_border_width (GTK_CONTAINER (openfilesdialog), 5);
+    gchar* filename = g_build_filename (GSM_DATA_DIR, "openfiles.ui", NULL);
 
-    vbox = gtk_dialog_get_content_area (GTK_DIALOG (openfilesdialog));
-    gtk_box_set_spacing (GTK_BOX (vbox), 2);
-    gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
+    GtkBuilder *builder = gtk_builder_new();
+    gtk_builder_add_from_file (builder, filename, NULL);
 
-    dialog_vbox = gtk_vbox_new (FALSE, 6);
-    gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 5);
-    gtk_box_pack_start (GTK_BOX (vbox), dialog_vbox, TRUE, TRUE, 0);
+    openfilesdialog = GTK_WIDGET (gtk_builder_get_object (builder, "openfiles_dialog"));
 
-    cmd_hbox = gtk_hbox_new (FALSE, 12);
-    gtk_box_pack_start (GTK_BOX (dialog_vbox), cmd_hbox, FALSE, FALSE, 0);
+    cmd_grid = GTK_WIDGET (gtk_builder_get_object (builder, "cmd_grid"));
 
 
     label = procman_make_label_for_mmaps_or_ofiles (
@@ -358,26 +347,19 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
         info->name,
         info->pid);
 
-    gtk_box_pack_start (GTK_BOX (cmd_hbox),label, FALSE, FALSE, 0);
+    gtk_container_add (GTK_CONTAINER (cmd_grid), label);
 
-
-    scrolled = gtk_scrolled_window_new (NULL, NULL);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
-                                    GTK_POLICY_AUTOMATIC,
-                                    GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
-                                         GTK_SHADOW_IN);
+    scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "scrolled"));
 
     tree = create_openfiles_tree (procdata);
     gtk_container_add (GTK_CONTAINER (scrolled), tree);
     g_object_set_data (G_OBJECT (tree), "selected_info", info);
     g_object_set_data (G_OBJECT (tree), "settings", procdata->settings);
 
-    gtk_box_pack_start (GTK_BOX (dialog_vbox), scrolled, TRUE, TRUE, 0);
-    gtk_widget_show_all (scrolled);
-
     g_signal_connect (G_OBJECT (openfilesdialog), "response",
                       G_CALLBACK (close_openfiles_dialog), tree);
+
+    gtk_builder_connect_signals (builder, NULL);
 
     gtk_widget_show_all (openfilesdialog);
 

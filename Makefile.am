@@ -6,7 +6,8 @@ SUBDIRS = pixmaps po src help
 uidir = $(pkgdatadir)
 ui_DATA = data/preferences.ui \
           data/renice.ui \
-          data/lsof.ui
+          data/lsof.ui \
+          data/openfiles.ui
 
 EXTRA_DIST = \
 	$(ui_DATA) \
