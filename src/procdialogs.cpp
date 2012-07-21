@@ -165,7 +165,7 @@ procdialog_create_renice_dialog (ProcData *procdata)
     if (!info)
         return;
 
-    gchar* filename = g_build_filename (GSM_DATA_DIR, "preferences.ui", NULL);
+    gchar* filename = g_build_filename (GSM_DATA_DIR, "renice.ui", NULL);
 
     builder = gtk_builder_new();
     gtk_builder_add_from_file (builder, filename, NULL);
