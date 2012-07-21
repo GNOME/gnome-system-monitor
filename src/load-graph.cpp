@@ -743,7 +743,7 @@ LoadGraph::LoadGraph(guint type)
     render_counter = (frames_per_unit - 1);
     draw = FALSE;
 
-    main_widget = gtk_vbox_new (FALSE, FALSE);
+    main_widget = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_widget_set_size_request(main_widget, -1, LoadGraph::GRAPH_MIN_HEIGHT);
     gtk_widget_show (main_widget);
 
