@@ -302,86 +302,33 @@ void procman_lsof(ProcData *procdata)
                           GTK_DIALOG_DESTROY_WITH_PARENT,
                           GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
                           NULL); */
-    dialog = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    //dialog = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gchar* filename = g_build_filename (GSM_DATA_DIR, "lsof.ui", NULL);
+
+    GtkBuilder *builder = gtk_builder_new();
+    gtk_builder_add_from_file (builder, filename, NULL);
+
+    dialog = GTK_WIDGET (gtk_builder_get_object (builder, "lsof_dialog"));
+
     gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(procdata->app));
-    gtk_window_set_destroy_with_parent(GTK_WINDOW(dialog), TRUE);
-    // gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-    gtk_window_set_title(GTK_WINDOW(dialog), _("Search for Open Files"));
-
-    // g_signal_connect(G_OBJECT(dialog), "response",
-    //               G_CALLBACK(close_dialog), NULL);
-    gtk_window_set_resizable(GTK_WINDOW(dialog), TRUE);
-    gtk_window_set_default_size(GTK_WINDOW(dialog), 575, 400);
-    gtk_container_set_border_width(GTK_CONTAINER(dialog), 12);
-    GtkWidget *mainbox = gtk_vbox_new(FALSE, 12);
-    gtk_container_add(GTK_CONTAINER(dialog), mainbox);
-    gtk_box_set_spacing(GTK_BOX(mainbox), 6);
-
-
-    // Label, entry and search button
-
-    GtkWidget *hbox1 = gtk_hbox_new(FALSE, 12);
-    gtk_box_pack_start(GTK_BOX(mainbox), hbox1, FALSE, FALSE, 0);
-
-    GtkWidget *image = gtk_image_new_from_stock(GTK_STOCK_FIND, GTK_ICON_SIZE_DIALOG);
-    gtk_box_pack_start(GTK_BOX(hbox1), image, FALSE, FALSE, 0);
-
-
-    GtkWidget *vbox2 = gtk_vbox_new(FALSE, 12);
-    gtk_box_pack_start(GTK_BOX(hbox1), vbox2, TRUE, TRUE, 0);
-
-
-    GtkWidget *hbox = gtk_hbox_new(FALSE, 12);
-    gtk_box_pack_start(GTK_BOX(vbox2), hbox, TRUE, TRUE, 0);
-    GtkWidget *label = gtk_label_new_with_mnemonic(_("_Name contains:"));
-    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-    GtkWidget *entry = gtk_entry_new();
 
     // entry = sexy_icon_entry_new();
     // sexy_icon_entry_add_clear_button(SEXY_ICON_ENTRY(entry));
     // GtkWidget *icon = gtk_image_new_from_stock(GTK_STOCK_FIND, GTK_ICON_SIZE_MENU);
     // sexy_icon_entry_set_icon(SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_PRIMARY, GTK_IMAGE(icon));
 
-    gtk_box_pack_start(GTK_BOX(hbox), entry, TRUE, TRUE, 0);
-    GtkWidget *search_button = gtk_button_new_from_stock(GTK_STOCK_FIND);
-    gtk_box_pack_start(GTK_BOX(hbox), search_button, FALSE, FALSE, 0);
-    GtkWidget *clear_button = gtk_button_new_from_stock(GTK_STOCK_CLEAR);
-    /* The default accelerator collides with the default close accelerator. */
-    gtk_button_set_label(GTK_BUTTON(clear_button), _("C_lear"));
-    gtk_box_pack_start(GTK_BOX(hbox), clear_button, FALSE, FALSE, 0);
+    GtkWidget *entry =  GTK_WIDGET (gtk_builder_get_object (builder, "entry"));
+    GtkWidget *search_button =  GTK_WIDGET (gtk_builder_get_object (builder, "search_button"));
+    GtkWidget *clear_button =  GTK_WIDGET (gtk_builder_get_object (builder, "clear_button"));
 
-
-    GtkWidget *case_button = gtk_check_button_new_with_mnemonic(_("Case insensitive matching"));
-    GtkWidget *hbox3 = gtk_hbox_new(FALSE, 12);
-    gtk_box_pack_start(GTK_BOX(hbox3), case_button, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox2), hbox3, FALSE, FALSE, 0);
-
-
-    GtkWidget *results_box = gtk_hbox_new(FALSE, 12);
-    gtk_box_pack_start(GTK_BOX(mainbox), results_box, FALSE, FALSE, 0);
-    GtkWidget *results_label = gtk_label_new_with_mnemonic(_("S_earch results:"));
-    gtk_box_pack_start(GTK_BOX(results_box), results_label, FALSE, FALSE, 0);
-    GtkWidget *count_label = gtk_label_new(NULL);
-    gtk_box_pack_end(GTK_BOX(results_box), count_label, FALSE, FALSE, 0);
-
-
-
+    GtkWidget *case_button =  GTK_WIDGET (gtk_builder_get_object (builder, "case_button"));
+    GtkWidget *count_label =  GTK_WIDGET (gtk_builder_get_object (builder, "count_label"));
+    GtkWidget *close_button =  GTK_WIDGET (gtk_builder_get_object (builder, "close_button"));
 
     // Scrolled TreeView
-    GtkWidget *scrolled = gtk_scrolled_window_new(NULL, NULL);
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled),
-                                   GTK_POLICY_AUTOMATIC,
-                                   GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolled),
-                                        GTK_SHADOW_IN);
+    GtkWidget *scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "scrolled"));
+
     gtk_container_add(GTK_CONTAINER(scrolled), tree);
-    gtk_box_pack_start(GTK_BOX(mainbox), scrolled, TRUE, TRUE, 0);
-
-    GtkWidget *bottom_box = gtk_hbox_new(FALSE, 12);
-    GtkWidget *close_button = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
-    gtk_box_pack_start(GTK_BOX(mainbox), bottom_box, FALSE, FALSE, 0);
-    gtk_box_pack_end(GTK_BOX(bottom_box), close_button, FALSE, FALSE, 0);
-
 
     GUI *gui = new GUI; // wil be deleted by the close button or delete-event
     gui->procdata = procdata;
@@ -403,6 +350,7 @@ void procman_lsof(ProcData *procdata)
     g_signal_connect(G_OBJECT(dialog), "delete-event",
                      G_CALLBACK(GUI::window_delete_event), gui);
 
+    gtk_builder_connect_signals (builder, NULL);
 
     gtk_widget_show_all(dialog);
 }
