@@ -368,6 +368,8 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 
     update_openfiles_dialog (tree);
 
+    g_object_unref (G_OBJECT (builder));
+    g_free (filename);
 }
 
 

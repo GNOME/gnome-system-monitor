@@ -208,7 +208,7 @@ procdialog_create_renice_dialog (ProcData *procdata)
     gtk_builder_connect_signals (builder, NULL);
 
     g_object_unref (G_OBJECT (builder));
-    //g_free (filename);
+    g_free (filename);
 }
 
 static void

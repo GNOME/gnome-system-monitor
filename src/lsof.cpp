@@ -353,5 +353,8 @@ void procman_lsof(ProcData *procdata)
     gtk_builder_connect_signals (builder, NULL);
 
     gtk_widget_show_all(dialog);
+    
+    g_object_unref (G_OBJECT (builder));
+    g_free (filename);
 }
 
