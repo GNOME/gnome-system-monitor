@@ -3,8 +3,8 @@
 
 #include "procman.h"
 
-GtkWidget *
-create_disk_view(ProcData *procdata);
+void
+create_disk_view(ProcData *procdata, GtkBuilder *builder);
 
 int
 cb_update_disks(gpointer procdata);

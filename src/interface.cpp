@@ -225,7 +225,7 @@ create_proc_view(ProcData *procdata, GtkBuilder * builder)
     g_free (string);
 
     proctree = proctable_new (procdata);
-    scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "scrolled"));
+    scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "processes_scrolled"));
 
     gtk_container_add (GTK_CONTAINER (scrolled), proctree);
 
@@ -237,10 +237,9 @@ create_proc_view(ProcData *procdata, GtkBuilder * builder)
     procdata->popup_menu = gtk_ui_manager_get_widget (procdata->uimanager, "/PopupMenu");
 }
 
-static GtkWidget *
+static void
 create_sys_view (ProcData *procdata, GtkBuilder * builder)
 {
-    GtkWidget *vbox;
     GtkWidget *cpu_graph_box, *mem_graph_box, *net_graph_box;
     GtkWidget *label,*cpu_label;
     GtkWidget *table;
@@ -255,8 +254,6 @@ create_sys_view (ProcData *procdata, GtkBuilder * builder)
 
     // Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
     title_template = g_strdup(_("Pick a Color for '%s'"));
-
-    vbox = GTK_WIDGET (gtk_builder_get_object (builder, "res_box"));
 
     /* The CPU BOX */
 
@@ -274,7 +271,7 @@ create_sys_view (ProcData *procdata, GtkBuilder * builder)
     for (i=0;i<procdata->config.num_cpus; i++) {
         GtkWidget *temp_hbox;
 
-        temp_hbox = gtk_hbox_new (FALSE, 0);
+        temp_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
         if (i < cols) {
             gtk_grid_insert_column(GTK_GRID(cpu_table), i%cols);
         }
@@ -394,7 +391,6 @@ create_sys_view (ProcData *procdata, GtkBuilder * builder)
     procdata->net_graph = net_graph;
     g_free(title_template);
 
-    return vbox;
 }
 
 void
@@ -407,7 +403,6 @@ create_main_window (ProcData *procdata)
     GtkWidget *menubar;
     GtkWidget *main_box;
     GtkWidget *notebook;
-    GtkWidget *devices_box;
 
     gchar* filename = g_build_filename (GSM_DATA_DIR, "interface2.ui", NULL);
 
@@ -483,10 +478,8 @@ create_main_window (ProcData *procdata)
 
     create_sys_view (procdata, builder);
     
-    devices_box = create_disk_view (procdata);
-    GtkWidget *fs_box = GTK_WIDGET (gtk_builder_get_object (builder, "fs_box"));
-    gtk_box_pack_end(GTK_BOX (fs_box), devices_box, TRUE, TRUE, 0);
-
+    create_disk_view (procdata, builder);
+    
     g_signal_connect (G_OBJECT (notebook), "switch-page",
                       G_CALLBACK (cb_switch_page), procdata);
     g_signal_connect (G_OBJECT (notebook), "change-current-page",

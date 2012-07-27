@@ -284,10 +284,9 @@ static void open_dir(GtkTreeView       *tree_view,
     g_free(dir);
 }
 
-GtkWidget *
-create_disk_view(ProcData *procdata)
+void
+create_disk_view(ProcData *procdata, GtkBuilder *builder)
 {
-    GtkWidget *disk_box;
     GtkWidget *scrolled;
     GtkWidget *disk_tree;
     GtkListStore *model;
@@ -305,18 +304,7 @@ create_disk_view(ProcData *procdata)
         N_("Used")
     };
 
-    disk_box = gtk_vbox_new(FALSE, 6);
-
-    gtk_container_set_border_width(GTK_CONTAINER(disk_box), 12);
-
-    scrolled = gtk_scrolled_window_new(NULL, NULL);
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled),
-                                   GTK_POLICY_AUTOMATIC,
-                                   GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolled),
-                                        GTK_SHADOW_IN);
-
-    gtk_box_pack_start(GTK_BOX(disk_box), scrolled, TRUE, TRUE, 0);
+    scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "disks_scrolled"));
 
     model = gtk_list_store_new(DISK_N_COLUMNS,      /* n columns */
                                G_TYPE_STRING,       /* DISK_DEVICE */
@@ -409,13 +397,10 @@ create_disk_view(ProcData *procdata)
 
     /* numeric sort */
 
-    gtk_widget_show_all(disk_box);
-
     procman_get_tree_state(procdata->settings, disk_tree,
                            "disktreenew");
 
     g_signal_connect (G_OBJECT(disk_tree), "columns-changed",
                       G_CALLBACK(cb_disk_columns_changed), procdata);
 
-    return disk_box;
 }
