@@ -685,7 +685,7 @@ procman_create_sysinfo_view(void)
     gchar *markup;
 
 
-    hbox = gtk_hbox_new(FALSE, 12);
+    hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
     gtk_container_set_border_width(GTK_CONTAINER(hbox), 6);
 
     /* left-side logo */
@@ -698,7 +698,7 @@ procman_create_sysinfo_view(void)
     g_signal_connect(G_OBJECT(logo), "draw",
                      G_CALLBACK(sysinfo_logo_draw), NULL);
 
-    vbox = gtk_vbox_new(FALSE, 12);
+    vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 12);
     gtk_container_set_border_width(GTK_CONTAINER(vbox), 12);
     gtk_box_pack_start(GTK_BOX(hbox), vbox, TRUE, TRUE, 0);
 
