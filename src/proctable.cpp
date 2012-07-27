@@ -227,7 +227,6 @@ GtkWidget *
 proctable_new (ProcData * const procdata)
 {
     GtkWidget *proctree;
-    GtkWidget *scrolled;
     GtkTreeStore *model;
     GtkTreeSelection *selection;
     GtkTreeViewColumn *column;
@@ -265,11 +264,6 @@ proctable_new (ProcData * const procdata)
     };
 
     gint i;
-
-    scrolled = gtk_scrolled_window_new (NULL, NULL);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
-                                    GTK_POLICY_AUTOMATIC,
-                                    GTK_POLICY_AUTOMATIC);
 
     model = gtk_tree_store_new (NUM_COLUMNS,
                                 G_TYPE_STRING,      /* Process Name */
@@ -456,8 +450,6 @@ proctable_new (ProcData * const procdata)
         }
     }
 
-    gtk_container_add (GTK_CONTAINER (scrolled), proctree);
-
     procdata->tree = proctree;
 
     set_proctree_reorderable(procdata);
@@ -501,7 +493,7 @@ proctable_new (ProcData * const procdata)
     g_signal_connect (G_OBJECT(proctree), "columns-changed",
                       G_CALLBACK(cb_columns_changed), procdata);
 
-    return scrolled;
+    return proctree;
 }
 
 

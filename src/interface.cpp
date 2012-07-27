@@ -195,52 +195,6 @@ static const char ui_info[] =
     "  </popup>";
 
 
-static GtkWidget *
-create_proc_view (ProcData *procdata)
-{
-    GtkWidget *vbox1;
-    GtkWidget *hbox1;
-    GtkWidget *scrolled;
-    GtkWidget *hbox2;
-    char* string;
-
-    vbox1 = gtk_vbox_new (FALSE, 18);
-    gtk_container_set_border_width (GTK_CONTAINER (vbox1), 12);
-
-    hbox1 = gtk_hbox_new (FALSE, 12);
-    gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
-
-    string = make_loadavg_string ();
-    procdata->loadavg = gtk_label_new (string);
-    g_free (string);
-    gtk_box_pack_start (GTK_BOX (hbox1), procdata->loadavg, FALSE, FALSE, 0);
-
-
-    scrolled = proctable_new (procdata);
-    if (!scrolled)
-        return NULL;
-    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
-                                         GTK_SHADOW_IN);
-
-    gtk_box_pack_start (GTK_BOX (vbox1), scrolled, TRUE, TRUE, 0);
-
-
-    hbox2 = gtk_hbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (vbox1), hbox2, FALSE, FALSE, 0);
-
-    procdata->endprocessbutton = gtk_button_new_with_mnemonic (_("End _Process"));
-    gtk_box_pack_end (GTK_BOX (hbox2), procdata->endprocessbutton, FALSE, FALSE, 0);
-    g_signal_connect (G_OBJECT (procdata->endprocessbutton), "clicked",
-                      G_CALLBACK (cb_end_process_button_pressed), procdata);
-
-
-    /* create popup_menu */
-    procdata->popup_menu = gtk_ui_manager_get_widget (procdata->uimanager, "/PopupMenu");
-
-    return vbox1;
-}
-
-
 GtkWidget *
 make_title_label (const char *text)
 {
@@ -257,12 +211,37 @@ make_title_label (const char *text)
     return label;
 }
 
+static void 
+create_proc_view(ProcData *procdata, GtkBuilder * builder) 
+{
+    GtkWidget *proctree;
+    GtkWidget *scrolled;
+    char* string;
+
+    /* create the processes tab */
+    string = make_loadavg_string ();
+    procdata->loadavg = GTK_WIDGET (gtk_builder_get_object (builder, "load_avg_label"));
+    gtk_label_set_text (GTK_LABEL (procdata->loadavg), string);
+    g_free (string);
+
+    proctree = proctable_new (procdata);
+    scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "scrolled"));
+
+    gtk_container_add (GTK_CONTAINER (scrolled), proctree);
+
+    procdata->endprocessbutton = GTK_WIDGET (gtk_builder_get_object (builder, "endprocessbutton"));
+    g_signal_connect (G_OBJECT (procdata->endprocessbutton), "clicked",
+                      G_CALLBACK (cb_end_process_button_pressed), procdata);
+
+    /* create popup_menu for the processes tab */
+    procdata->popup_menu = gtk_ui_manager_get_widget (procdata->uimanager, "/PopupMenu");
+}
 
 static GtkWidget *
-create_sys_view (ProcData *procdata)
+create_sys_view (ProcData *procdata, GtkBuilder * builder)
 {
     GtkWidget *vbox, *hbox;
-    GtkWidget *cpu_box, *mem_box, *net_box;
+    GtkWidget *mem_box, *net_box;
     GtkWidget *cpu_graph_box, *mem_graph_box, *net_graph_box;
     GtkWidget *label,*cpu_label, *spacer;
     GtkWidget *table;
@@ -278,20 +257,11 @@ create_sys_view (ProcData *procdata)
     // Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
     title_template = g_strdup(_("Pick a Color for '%s'"));
 
-    vbox = gtk_vbox_new (FALSE, 18);
-
-    gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+    vbox = GTK_WIDGET (gtk_builder_get_object (builder, "res_box"));
 
     /* The CPU BOX */
 
-    cpu_box = gtk_vbox_new (FALSE, 6);
-    gtk_box_pack_start (GTK_BOX (vbox), cpu_box, TRUE, TRUE, 0);
-
-    label = make_title_label (_("CPU History"));
-    gtk_box_pack_start (GTK_BOX (cpu_box), label, FALSE, FALSE, 0);
-
-    cpu_graph_box = gtk_vbox_new (FALSE, 6);
-    gtk_box_pack_start (GTK_BOX (cpu_box), cpu_graph_box, TRUE, TRUE, 0);
+    cpu_graph_box = GTK_WIDGET (gtk_builder_get_object (builder, "cpu_graph_box"));
 
     cpu_graph = new LoadGraph(LOAD_GRAPH_CPU);
     gtk_box_pack_start (GTK_BOX (cpu_graph_box),
@@ -300,37 +270,39 @@ create_sys_view (ProcData *procdata)
                         TRUE,
                         0);
 
-    hbox = gtk_hbox_new(FALSE, 0);
-    spacer = gtk_label_new ("");
-    gtk_widget_set_size_request(GTK_WIDGET(spacer), 57, -1);
-    gtk_box_pack_start (GTK_BOX (hbox), spacer,
-                        FALSE, FALSE, 0);
+    hbox = GTK_WIDGET (gtk_builder_get_object (builder, "hbox"));
+    //spacer = gtk_label_new ("");
+    //gtk_widget_set_size_request(GTK_WIDGET(spacer), 57, -1);
+    //gtk_box_pack_start (GTK_BOX (hbox), spacer,
+    //                    FALSE, FALSE, 0);
 
 
-    gtk_box_pack_start (GTK_BOX (cpu_graph_box), hbox,
-                        FALSE, FALSE, 0);
+    //gtk_box_pack_start (GTK_BOX (cpu_graph_box), hbox,
+    //                    FALSE, FALSE, 0);
 
     /*cpu_legend_box = gtk_hbox_new(TRUE, 10);
       gtk_box_pack_start (GTK_BOX (hbox), cpu_legend_box,
       TRUE, TRUE, 0);*/
 
-    GtkWidget* cpu_table = gtk_table_new(std::min(procdata->config.num_cpus / 4, 1),
-                                         std::min(procdata->config.num_cpus, 4),
-                                         TRUE);
-    gtk_table_set_row_spacings(GTK_TABLE(cpu_table), 6);
-    gtk_table_set_col_spacings(GTK_TABLE(cpu_table), 6);
-    gtk_box_pack_start(GTK_BOX(hbox), cpu_table, TRUE, TRUE, 0);
-
+    GtkWidget* cpu_table = GTK_WIDGET (gtk_builder_get_object (builder, "cpu_table"));
+    // gtk_table_new(std::min(procdata->config.num_cpus / 4, 1),
+    //                                   std::min(procdata->config.num_cpus, 4),
+    //                                     TRUE);
+    //gtk_table_set_row_spacings(GTK_TABLE(cpu_table), 6);
+    //gtk_table_set_col_spacings(GTK_TABLE(cpu_table), 6);
+    //gtk_box_pack_start(GTK_BOX(hbox), cpu_table, TRUE, TRUE, 0);
+    gint cols = 4;
     for (i=0;i<procdata->config.num_cpus; i++) {
         GtkWidget *temp_hbox;
 
         temp_hbox = gtk_hbox_new (FALSE, 0);
-        gtk_table_attach(GTK_TABLE(cpu_table), temp_hbox,
-                         i % 4, i % 4 + 1,
-                         i / 4, i / 4 + 1,
-                         static_cast<GtkAttachOptions>(GTK_EXPAND | GTK_FILL),
-                         static_cast<GtkAttachOptions>(GTK_EXPAND | GTK_FILL),
-                         0, 0);
+        if (i < cols) {
+            gtk_grid_insert_column(GTK_GRID(cpu_table), i%cols);
+        }
+        if ((i+1)%cols ==cols) {
+            gtk_grid_insert_row(GTK_GRID(cpu_table), (i+1)/cols);
+        }
+        gtk_grid_attach(GTK_GRID (cpu_table), temp_hbox, i%cols, i/cols, 1, 1);
         //gtk_size_group_add_widget (sizegroup, temp_hbox);
         /*g_signal_connect (G_OBJECT (temp_hbox), "size_request",
           G_CALLBACK(size_request), &cpu_size);
@@ -626,14 +598,15 @@ create_main_window (ProcData *procdata)
     GtkWidget *menubar;
     GtkWidget *main_box;
     GtkWidget *notebook;
-    GtkWidget *tab_label1, *tab_label2, *tab_label3;
-    GtkWidget *vbox1;
-    GtkWidget *sys_box, *devices_box;
-    GtkWidget *sysinfo_box, *sysinfo_label;
+    GtkWidget *devices_box;
 
-    app = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(app), _("System Monitor"));
+    gchar* filename = g_build_filename (GSM_DATA_DIR, "interface2.ui", NULL);
 
+    GtkBuilder *builder = gtk_builder_new();
+    gtk_builder_add_from_file (builder, filename, NULL);
+
+    app = GTK_WIDGET (gtk_builder_get_object (builder, "main_window"));
+    main_box = GTK_WIDGET (gtk_builder_get_object (builder, "main_box"));
     GdkScreen* screen = gtk_widget_get_screen(app);
     GdkVisual* visual = gdk_screen_get_rgba_visual(screen);
 
@@ -641,16 +614,12 @@ create_main_window (ProcData *procdata)
     if (visual)
         gtk_widget_set_visual(app, visual);
 
-    main_box = gtk_vbox_new (FALSE, 0);
-    gtk_container_add(GTK_CONTAINER(app), main_box);
-
     width = procdata->config.width;
     height = procdata->config.height;
     xpos = procdata->config.xpos;
     ypos = procdata->config.ypos;
     gtk_window_set_default_size (GTK_WINDOW (app), width, height);
     gtk_window_move(GTK_WINDOW (app), xpos, ypos);
-    gtk_window_set_resizable (GTK_WINDOW (app), TRUE);
 
     /* create the menubar */
     procdata->uimanager = gtk_ui_manager_new ();
@@ -699,28 +668,15 @@ create_main_window (ProcData *procdata)
 
 
     /* create the main notebook */
-    procdata->notebook = notebook = gtk_notebook_new ();
-    gtk_box_pack_start (GTK_BOX (main_box),
-                        notebook,
-                        TRUE,
-                        TRUE,
-                        0);
+    procdata->notebook = notebook = GTK_WIDGET (gtk_builder_get_object (builder, "notebook"));
 
-    sysinfo_box = gtk_hbox_new(TRUE, 0); // procman_create_sysinfo_view();
-    sysinfo_label = gtk_label_new(_("System"));
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), sysinfo_box, sysinfo_label);
+    create_proc_view(procdata, builder);
 
-    vbox1 = create_proc_view (procdata);
-    tab_label1 = gtk_label_new (_("Processes"));
-    gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox1, tab_label1);
-
-    sys_box = create_sys_view (procdata);
-    tab_label2 = gtk_label_new (_("Resources"));
-    gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sys_box, tab_label2);
-
+    create_sys_view (procdata, builder);
+    
     devices_box = create_disk_view (procdata);
-    tab_label3 = gtk_label_new (_("File Systems"));
-    gtk_notebook_append_page (GTK_NOTEBOOK (notebook), devices_box, tab_label3);
+    GtkWidget *fs_box = GTK_WIDGET (gtk_builder_get_object (builder, "fs_box"));
+    gtk_box_pack_end(GTK_BOX (fs_box), devices_box, TRUE, TRUE, 0);
 
     g_signal_connect (G_OBJECT (notebook), "switch-page",
                       G_CALLBACK (cb_switch_page), procdata);
@@ -745,13 +701,19 @@ create_main_window (ProcData *procdata)
                                  GDK_MOD1_MASK, GTK_ACCEL_VISIBLE,
                                  goto_tab_closure[i]);
     }
-
     action = gtk_action_group_get_action (procdata->action_group, "ShowDependencies");
     gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
                                   procdata->config.show_tree);
 
+    
+    gtk_builder_connect_signals (builder, NULL);
+
     gtk_widget_show_all(app);
     procdata->app = app;
+
+    g_object_unref (G_OBJECT (builder));
+    g_free (filename);
+
 }
 
 void
