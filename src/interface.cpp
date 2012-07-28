@@ -404,7 +404,7 @@ create_main_window (ProcData *procdata)
     GtkWidget *main_box;
     GtkWidget *notebook;
 
-    gchar* filename = g_build_filename (GSM_DATA_DIR, "interface2.ui", NULL);
+    gchar* filename = g_build_filename (GSM_DATA_DIR, "interface.ui", NULL);
 
     GtkBuilder *builder = gtk_builder_new();
     gtk_builder_add_from_file (builder, filename, NULL);
