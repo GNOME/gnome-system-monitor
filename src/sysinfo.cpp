@@ -624,9 +624,9 @@ add_section(GtkBox *vbox , const char * title, int num_row, int num_col, GtkWidg
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
     gtk_container_add(GTK_CONTAINER(frame), alignment);
 
-    table = gtk_table_new(num_row, num_col, FALSE);
-    gtk_table_set_row_spacings(GTK_TABLE(table), 6);
-    gtk_table_set_col_spacings(GTK_TABLE(table), 6);
+    table = gtk_grid_new();
+    gtk_grid_set_row_spacing(GTK_GRID(table), 6);
+    gtk_grid_set_column_spacing(GTK_GRID(table), 6);
     gtk_container_set_border_width(GTK_CONTAINER(table), 6);
     gtk_container_add(GTK_CONTAINER(alignment), table);
 
@@ -638,26 +638,22 @@ add_section(GtkBox *vbox , const char * title, int num_row, int num_col, GtkWidg
 
 
 static GtkWidget*
-add_row(GtkTable * table, const char * label, const char * value, int row)
+add_row(GtkGrid * table, const char * label, const char * value, int row)
 {
     GtkWidget *header = gtk_label_new(NULL);
     gtk_label_set_markup(GTK_LABEL(header), label);
     gtk_label_set_selectable(GTK_LABEL(header), TRUE);
     gtk_misc_set_alignment(GTK_MISC(header), 0.0, 0.5);
-    gtk_table_attach(
+    gtk_grid_attach(
         table, header,
-        0, 1, row, row + 1,
-        GTK_FILL, GTK_FILL, 0, 0
-        );
+        0, row, 1, 1);
 
     GtkWidget *label_widget = gtk_label_new(value);
     gtk_label_set_selectable(GTK_LABEL(label_widget), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label_widget), 0.0, 0.5);
-    gtk_table_attach(
+    gtk_grid_attach(
         table, label_widget,
-        1, 2, row, row + 1,
-        GTK_FILL, GTK_FILL, 0, 0
-        );
+        1, row, 1, 1);
     return label_widget;
 }
 
@@ -729,11 +725,9 @@ procman_create_sysinfo_view(void)
     distro_release_label = gtk_label_new("???");
     gtk_label_set_selectable(GTK_LABEL(distro_release_label), TRUE);
     gtk_misc_set_alignment(GTK_MISC(distro_release_label), 0.0, 0.5);
-    gtk_table_attach(
-        GTK_TABLE(distro_table), distro_release_label,
-        0, 1, table_count, table_count+1,
-        GTK_FILL, GTK_FILL, 0, 0
-        );
+    gtk_grid_attach(
+        GTK_GRID(distro_table), distro_release_label,
+        0, table_count, 1, 1);
     table_count++;
     data->set_distro_labels(gtk_frame_get_label_widget(GTK_FRAME(distro_frame)), distro_release_label);
 
@@ -742,11 +736,9 @@ procman_create_sysinfo_view(void)
     gtk_label_set_selectable(GTK_LABEL(header), TRUE);
     g_free(markup);
     gtk_misc_set_alignment(GTK_MISC(header), 0.0, 0.5);
-    gtk_table_attach(
-        GTK_TABLE(distro_table), header,
-        0, 1, table_count, table_count + 1,
-        GTK_FILL, GTK_FILL, 0, 0
-        );
+    gtk_grid_attach(
+        GTK_GRID(distro_table), header,
+        0, table_count, 1, 1);
     table_count++;
 
     if (data->gnome_version != "")
@@ -756,11 +748,9 @@ procman_create_sysinfo_view(void)
         gtk_label_set_selectable(GTK_LABEL(header), TRUE);
         g_free(markup);
         gtk_misc_set_alignment(GTK_MISC(header), 0.0, 0.5);
-        gtk_table_attach(
-            GTK_TABLE(distro_table), header,
-            0, 1, table_count, table_count + 1,
-            GTK_FILL, GTK_FILL, 0, 0
-            );
+        gtk_grid_attach(
+            GTK_GRID(distro_table), header,
+            0, table_count, 1, 1);
         table_count++;
     }
 
@@ -771,12 +761,12 @@ procman_create_sysinfo_view(void)
     g_free(markup);
 
     markup = procman::format_size(data->memory_bytes);
-    add_row(GTK_TABLE(hardware_table), _("Memory:"),
+    add_row(GTK_GRID(hardware_table), _("Memory:"),
             markup, 0);
     g_free(markup);
 
     markup = NULL;
-    add_row(GTK_TABLE(hardware_table), _("Processor:"),
+    add_row(GTK_GRID(hardware_table), _("Processor:"),
             data->processors.c_str(), 1);
 
     if(markup)
@@ -790,7 +780,7 @@ procman_create_sysinfo_view(void)
     g_free(markup);
 
     markup = procman::format_size(data->free_space_bytes);
-    add_row(GTK_TABLE(disk_space_table),
+    add_row(GTK_GRID(disk_space_table),
             _("Available disk space:"), markup,
             0);
     g_free(markup);
