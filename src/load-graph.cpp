@@ -255,7 +255,7 @@ load_graph_draw (GtkWidget *widget,
 
     for (j = 0; j < graph->n; ++j) {
         cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height);
-        gdk_cairo_set_source_color (cr, &(graph->colors [j]));
+        gdk_cairo_set_source_rgba (cr, &(graph->colors [j]));
 
         for (i = 1; i < LoadGraph::NUM_POINTS; ++i) {
             if (graph->data[i][j] == -1.0f)
