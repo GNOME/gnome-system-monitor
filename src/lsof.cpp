@@ -121,10 +121,12 @@ namespace
 
         void display_regex_error(const Glib::RegexError& error)
         {
-            const char * msg = _("<b>Error</b>\n"
-                                 "'%s' is not a valid Perl regular expression.\n"
-                                 "%s");
+            char * msg = g_strdup_printf ("<b>%s</b>\n%s\n%s",
+                                          _("Error"),
+                                          _("'%s' is not a valid Perl regular expression."),
+                                          "%s");
             std::string message = make_string(g_strdup_printf(msg, this->pattern().c_str(), error.what().c_str()));
+            g_free(msg);
 
             Gtk::MessageDialog dialog(message,
                                       true, // use markup

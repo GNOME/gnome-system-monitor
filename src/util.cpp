@@ -416,8 +416,11 @@ namespace procman
 
         g_value_unset(&value);
 
-        if (size == 0)
-            g_object_set(renderer, "markup", _("<i>N/A</i>"), NULL);
+        if (size == 0) {
+            char *str = g_strdup_printf ("<i>%s</i>", _("N/A"));
+            g_object_set(renderer, "markup", str, NULL);
+            g_free(str);
+        }
         else {
             char *str = procman::format_size(size);
             g_object_set(renderer, "text", str, NULL);

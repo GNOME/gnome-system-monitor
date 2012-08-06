@@ -756,7 +756,7 @@ procman_create_sysinfo_view(void)
 
     /* hardware section */
 
-    markup = g_strdup_printf(_("<b>Hardware</b>"));
+    markup = g_strdup_printf("<b>%s</b>", _("Hardware"));
     hardware_table = add_section(GTK_BOX(vbox), markup, 1, 2, NULL);
     g_free(markup);
 
@@ -775,7 +775,7 @@ procman_create_sysinfo_view(void)
 
     /* disk space section */
 
-    markup = g_strdup_printf(_("<b>System Status</b>"));
+    markup = g_strdup_printf("<b>%s</b>", _("System Status"));
     disk_space_table = add_section(GTK_BOX(vbox), markup, 1, 2, NULL);
     g_free(markup);
 
