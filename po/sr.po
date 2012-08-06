@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product"
 "=system-monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-04-03 03:09+0000\n"
-"PO-Revision-Date: 2012-04-03 10:32+0200\n"
+"POT-Creation-Date: 2012-07-29 15:46+0000\n"
+"PO-Revision-Date: 2012-08-06 08:48+0200\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -21,14 +21,103 @@ msgstr ""
 "n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Project-Style: gnome\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:184
-#: ../src/interface.cpp:635 ../src/procman.cpp:721
+#: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
+#: ../src/callbacks.cpp:184 ../src/procman.cpp:721
 msgid "System Monitor"
 msgstr "Праћење система"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "Прегледајте текуће процесе и пратите стање система"
+
+#: ../gnome-system-monitor.desktop.in.in.h:3
+msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
+msgstr "Праћење;Систем;Процес;Процесор;Меморија;Мрежа;Историјат;Употреба;"
+
+#: ../data/interface.ui.h:2
+msgid "System"
+msgstr "Систем"
+
+#: ../data/interface.ui.h:3
+msgid "End _Process"
+msgstr "_Окончај процес"
+
+#: ../data/interface.ui.h:4 ../data/preferences.ui.h:9
+msgid "Processes"
+msgstr "Процеси"
+
+#: ../data/interface.ui.h:5
+msgid "CPU History"
+msgstr "Временски дијаграм процесора"
+
+#: ../data/interface.ui.h:6
+msgid "Memory and Swap History"
+msgstr "Временски дијаграм оперативне и виртуелне меморије"
+
+#: ../data/interface.ui.h:7 ../src/interface.cpp:327
+#: ../src/procproperties.cpp:133 ../src/proctable.cpp:251
+msgid "Memory"
+msgstr "Оперативна меморија"
+
+#: ../data/interface.ui.h:8 ../src/interface.cpp:338
+msgid "Swap"
+msgstr "Виртуелна меморија"
+
+#: ../data/interface.ui.h:9
+msgid "Network History"
+msgstr "Временски дијаграм мрежног саобраћаја"
+
+#: ../data/interface.ui.h:10 ../src/interface.cpp:363
+msgid "Receiving"
+msgstr "Брзина примања"
+
+#: ../data/interface.ui.h:11
+msgid "Total Received"
+msgstr "Укупно примљено"
+
+#: ../data/interface.ui.h:12
+msgid "Sent"
+msgstr "Послато"
+
+#: ../data/interface.ui.h:13
+msgid "Total Sent"
+msgstr "Укупно послато"
+
+#: ../data/interface.ui.h:14
+msgid "\n"
+msgstr "\n"
+
+#: ../data/interface.ui.h:16 ../data/preferences.ui.h:12
+msgid "Resources"
+msgstr "Ресурси"
+
+#: ../data/interface.ui.h:17 ../data/preferences.ui.h:14
+msgid "File Systems"
+msgstr "Системи датотека"
+
+#: ../data/lsof.ui.h:1
+msgid "Search for Open Files"
+msgstr "Потражите отворене датотеке"
+
+#: ../data/lsof.ui.h:2
+msgid "_Name contains:"
+msgstr "_Назив садржи:"
+
+#: ../data/lsof.ui.h:3
+msgid "Case insensitive matching"
+msgstr "Занемари величину слова"
+
+#: ../data/lsof.ui.h:4
+msgid "C_lear"
+msgstr "_Очисти"
+
+#: ../data/lsof.ui.h:5
+msgid "S_earch results:"
+msgstr "Резултати _претраге:"
+
+#: ../data/openfiles.ui.h:1
+msgid "Open Files"
+msgstr "Отворене датотеке"
 
 #: ../data/preferences.ui.h:1
 msgid "System Monitor Preferences"
@@ -48,7 +137,7 @@ msgstr "Укључи прецизно, _меко освежавање"
 
 #: ../data/preferences.ui.h:5
 msgid "Alert before ending or _killing processes"
-msgstr "Прикажи упозорење пре окончавања или у_бијања процеса"
+msgstr "Прикажи упозорење пре _окончавања или убијања процеса"
 
 #: ../data/preferences.ui.h:6
 msgid "_Divide CPU usage by CPU count"
@@ -60,11 +149,7 @@ msgstr "Поља са подацима"
 
 #: ../data/preferences.ui.h:8
 msgid "Process i_nformation shown in list:"
-msgstr "По_даци о процесима приказани у списку:"
-
-#: ../data/preferences.ui.h:9 ../src/interface.cpp:714
-msgid "Processes"
-msgstr "Процеси"
+msgstr "Подаци о _процесима приказани у списку:"
 
 #: ../data/preferences.ui.h:10
 msgid "Graphs"
@@ -74,33 +159,41 @@ msgstr "Графици"
 msgid "_Show network speed in bits"
 msgstr "_Прикажи брзину мреже у битовима"
 
-#: ../data/preferences.ui.h:12 ../src/interface.cpp:718
-msgid "Resources"
-msgstr "Ресурси"
-
 #: ../data/preferences.ui.h:13
 msgid "Show _all file systems"
 msgstr "Прикажи _све системе датотека"
 
-#: ../data/preferences.ui.h:14 ../src/interface.cpp:722
-msgid "File Systems"
-msgstr "Системи датотека"
+#: ../data/renice.ui.h:1
+msgid "Change _Priority"
+msgstr "Промени _приоритет"
+
+#: ../data/renice.ui.h:2
+msgid "_Nice value:"
+msgstr "Вредност за _лепо понашање:"
+
+#: ../data/renice.ui.h:3
+msgid ""
+"<small><i><b>Note:</b> The priority of a process is given by its nice value. "
+"A lower nice value corresponds to a higher priority.</i></small>"
+msgstr ""
+"<small><i><b>Напомена:</b> Приоритет процеса је задат вредношћу његовог "
+"лепог понашања. Нижа вредност представља виши приоритет.</i></small>"
 
 #: ../src/argv.cpp:21
 msgid "Show the System tab"
-msgstr "Прикажи лист система"
+msgstr "Прикажи језичак система"
 
 #: ../src/argv.cpp:26
 msgid "Show the Processes tab"
-msgstr "Прикажи лист процеса"
+msgstr "Прикажи језичак процеса"
 
 #: ../src/argv.cpp:31
 msgid "Show the Resources tab"
-msgstr "Прикажи лист ресурса"
+msgstr "Прикажи језичак ресурса"
 
 #: ../src/argv.cpp:36
 msgid "Show the File Systems tab"
-msgstr "Прикажи лист система датотека"
+msgstr "Прикажи језичак система датотека"
 
 #: ../src/callbacks.cpp:195
 msgid "translator-credits"
@@ -113,31 +206,31 @@ msgstr ""
 "\n"
 "Prevod.org — превод на српски језик."
 
-#: ../src/disks.cpp:299 ../src/memmaps.cpp:361
+#: ../src/disks.cpp:298 ../src/memmaps.cpp:361
 msgid "Device"
 msgstr "Уређај"
 
-#: ../src/disks.cpp:300
+#: ../src/disks.cpp:299
 msgid "Directory"
 msgstr "Директоријум"
 
-#: ../src/disks.cpp:301 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:300 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "Врста"
 
-#: ../src/disks.cpp:302
+#: ../src/disks.cpp:301
 msgid "Total"
 msgstr "Укупно"
 
-#: ../src/disks.cpp:303
+#: ../src/disks.cpp:302
 msgid "Free"
 msgstr "Слободно"
 
-#: ../src/disks.cpp:304
+#: ../src/disks.cpp:303
 msgid "Available"
 msgstr "Расположиво"
 
-#: ../src/disks.cpp:305
+#: ../src/disks.cpp:304
 msgid "Used"
 msgstr "Заузето"
 
@@ -181,11 +274,11 @@ msgstr "Наслов"
 
 #: ../src/gsm_color_button.c:208
 msgid "The title of the color selection dialog"
-msgstr "Назив прозорчета за избор боје"
+msgstr "Наслов прозорчета за избор боје"
 
 #: ../src/gsm_color_button.c:209 ../src/gsm_color_button.c:625
 msgid "Pick a Color"
-msgstr "Изабери боју"
+msgstr "Изаберите боју"
 
 #: ../src/gsm_color_button.c:215
 msgid "Current Color"
@@ -223,11 +316,11 @@ msgstr "П_реглед"
 
 #: ../src/interface.cpp:54
 msgid "_Help"
-msgstr "_Помоћ"
+msgstr "По_моћ"
 
 #: ../src/interface.cpp:56
 msgid "Search for _Open Files"
-msgstr "Тра_жи отворене датотеке"
+msgstr "Тражи _отворене датотеке"
 
 #: ../src/interface.cpp:57
 msgid "Search for open files"
@@ -263,7 +356,7 @@ msgstr "Приморајте процес да се уобичајено око�
 
 #: ../src/interface.cpp:69 ../src/procdialogs.cpp:84
 msgid "_Kill Process"
-msgstr "У_биј процес"
+msgstr "_Убиј процес"
 
 #: ../src/interface.cpp:70
 msgid "Force process to finish immediately"
@@ -291,7 +384,7 @@ msgstr "Освежите списак процеса"
 
 #: ../src/interface.cpp:79
 msgid "_Memory Maps"
-msgstr "Мапе мемори_је"
+msgstr "Мапе _меморије"
 
 #: ../src/interface.cpp:80
 msgid "Open the memory maps associated with a process"
@@ -328,7 +421,7 @@ msgstr "О овом програму"
 
 #: ../src/interface.cpp:96
 msgid "_Dependencies"
-msgstr "М_еђузависности"
+msgstr "_Међузависности"
 
 #: ../src/interface.cpp:97
 msgid "Show parent/child relationship between processes"
@@ -400,72 +493,30 @@ msgstr "Подесите приоритет процеса на врло низ�
 
 #: ../src/interface.cpp:124
 msgid "Custom"
-msgstr "Произвољан"
+msgstr "Произвољно"
 
 #: ../src/interface.cpp:125
 msgid "Set process priority manually"
 msgstr "Подесите приоритет процеса ручно"
 
-#: ../src/interface.cpp:231
-msgid "End _Process"
-msgstr "_Окончај процес"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:279
+#: ../src/interface.cpp:256
 #, c-format
 msgid "Pick a Color for '%s'"
 msgstr "Изаберите боју за „%s“"
 
-#: ../src/interface.cpp:290
-msgid "CPU History"
-msgstr "Временски дијаграм процесора"
-
-#: ../src/interface.cpp:344 ../src/procproperties.cpp:122
+#: ../src/interface.cpp:292 ../src/procproperties.cpp:139
 msgid "CPU"
 msgstr "Процесор"
 
-#: ../src/interface.cpp:346
+#: ../src/interface.cpp:294
 #, c-format
 msgid "CPU%d"
 msgstr "Процесор %d"
 
-#: ../src/interface.cpp:367
-msgid "Memory and Swap History"
-msgstr "Временски дијаграм оперативне и виртуелне меморије"
-
-#: ../src/interface.cpp:401 ../src/proctable.cpp:252
-#: ../src/procproperties.cpp:116
-msgid "Memory"
-msgstr "Оперативна меморија"
-
-#: ../src/interface.cpp:432
-msgid "Swap"
-msgstr "Виртуелна меморија"
-
-#: ../src/interface.cpp:463
-msgid "Network History"
-msgstr "Временски дијаграм мрежног саобраћаја"
-
-#: ../src/interface.cpp:496
-msgid "Receiving"
-msgstr "Брзина примања"
-
-#: ../src/interface.cpp:529
-msgid "Total Received"
-msgstr "Укупно примљено"
-
-#: ../src/interface.cpp:557
+#: ../src/interface.cpp:378
 msgid "Sending"
 msgstr "Брзина слања"
-
-#: ../src/interface.cpp:591
-msgid "Total Sent"
-msgstr "Укупно послато"
-
-#. procman_create_sysinfo_view();
-#: ../src/interface.cpp:710
-msgid "System"
-msgstr "Систем"
 
 # bug(slobo): Множински облици. Данило — овај је твој.
 #: ../src/load-graph.cpp:166
@@ -509,28 +560,6 @@ msgstr "ПИД"
 #: ../src/lsof.cpp:292 ../src/memmaps.cpp:339
 msgid "Filename"
 msgstr "Назив датотеке"
-
-#. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-#: ../src/lsof.cpp:309
-msgid "Search for Open Files"
-msgstr "Потражите отворене датотеке"
-
-#: ../src/lsof.cpp:336
-msgid "_Name contains:"
-msgstr "_Назив садржи:"
-
-#. The default accelerator collides with the default close accelerator.
-#: ../src/lsof.cpp:350
-msgid "C_lear"
-msgstr "_Очисти"
-
-#: ../src/lsof.cpp:354
-msgid "Case insensitive matching"
-msgstr "Занемари величину слова"
-
-#: ../src/lsof.cpp:362
-msgid "S_earch results:"
-msgstr "Р_езултати претраге:"
 
 #. xgettext: virtual memory start
 #: ../src/memmaps.cpp:341
@@ -622,17 +651,13 @@ msgstr "непозната врста"
 #. 2-3 characters for it to be able to fit in the UI.
 #: ../src/openfiles.cpp:250
 msgid "FD"
-msgstr "ОД"
+msgstr "Описник"
 
 #: ../src/openfiles.cpp:252
 msgid "Object"
 msgstr "Објекат"
 
-#: ../src/openfiles.cpp:336
-msgid "Open Files"
-msgstr "Отворене датотеке"
-
-#: ../src/openfiles.cpp:357
+#: ../src/openfiles.cpp:346
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_Датотеке које је отворио процес „%s“ (ИБ процеса %u):"
@@ -1029,29 +1054,21 @@ msgstr ""
 "проузроковати безбедносни пропуст. Требало би окончавати само процесе који "
 "се не одазивају."
 
-#: ../src/procdialogs.cpp:130 ../src/procdialogs.cpp:220
+#: ../src/procdialogs.cpp:130
 #, c-format
 msgid "(%s Priority)"
 msgstr "(%s приоритет)"
 
-#: ../src/procdialogs.cpp:174
+#: ../src/procdialogs.cpp:175
 #, c-format
 msgid "Change Priority of Process »%s« (PID: %u)"
 msgstr "Измените приоритет процеса „%s“ (ИБ процеса %u)"
 
-#: ../src/procdialogs.cpp:186
-msgid "Change _Priority"
-msgstr "Промени _приоритет"
-
-#: ../src/procdialogs.cpp:209
-msgid "_Nice value:"
-msgstr "Вредност за _лепо понашање:"
-
-#: ../src/procdialogs.cpp:226
+#: ../src/procdialogs.cpp:193
 msgid "Note:"
 msgstr "Обавештење:"
 
-#: ../src/procdialogs.cpp:227
+#: ../src/procdialogs.cpp:194
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1059,7 +1076,7 @@ msgstr ""
 "Приоритет процеса је задат вредношћу његовог лепог понашања. Нижа вредност "
 "представља виши приоритет."
 
-#: ../src/procdialogs.cpp:449
+#: ../src/procdialogs.cpp:418
 msgid "Icon"
 msgstr "Иконица"
 
@@ -1067,109 +1084,48 @@ msgstr "Иконица"
 msgid "A simple process and system monitor."
 msgstr "Једноставан програм за праћење система и процеса."
 
-#: ../src/proctable.cpp:237 ../src/procproperties.cpp:113
-msgid "Process Name"
-msgstr "Назив процеса"
-
-#: ../src/proctable.cpp:238 ../src/procproperties.cpp:114
-msgid "User"
-msgstr "Корисник"
-
-#: ../src/proctable.cpp:239 ../src/procproperties.cpp:115
-msgid "Status"
-msgstr "Стање"
-
-#: ../src/proctable.cpp:240 ../src/procproperties.cpp:117
-msgid "Virtual Memory"
-msgstr "Виртуелна меморија"
-
-#: ../src/proctable.cpp:241 ../src/procproperties.cpp:118
-msgid "Resident Memory"
-msgstr "Резидентна меморија"
-
-#: ../src/proctable.cpp:242 ../src/procproperties.cpp:119
-msgid "Writable Memory"
-msgstr "Уписива меморија"
-
-#: ../src/proctable.cpp:243 ../src/procproperties.cpp:120
-msgid "Shared Memory"
-msgstr "Дељена меморија"
-
-#: ../src/proctable.cpp:244 ../src/procproperties.cpp:121
-msgid "X Server Memory"
-msgstr "Меморија Икс сервера"
-
-#: ../src/proctable.cpp:245
-#, no-c-format
-msgid "% CPU"
-msgstr "Процесор — %"
-
-#: ../src/proctable.cpp:246 ../src/procproperties.cpp:123
-msgid "CPU Time"
-msgstr "Време процесора"
-
-#: ../src/proctable.cpp:247 ../src/procproperties.cpp:124
-msgid "Started"
-msgstr "Започет"
-
-#: ../src/proctable.cpp:248 ../src/procproperties.cpp:125
-msgid "Nice"
-msgstr "Приоритет"
-
-#: ../src/proctable.cpp:249 ../src/procproperties.cpp:127
-msgid "ID"
-msgstr "ИБ"
-
-#: ../src/proctable.cpp:250 ../src/procproperties.cpp:128
-msgid "Security Context"
-msgstr "Безбедносни контекст"
-
-#: ../src/proctable.cpp:251 ../src/procproperties.cpp:129
-msgid "Command Line"
-msgstr "Линија наредби"
-
-#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/proctable.cpp:254 ../src/procproperties.cpp:130
-msgid "Waiting Channel"
-msgstr "Канал чекања"
-
-#: ../src/proctable.cpp:255
-msgid "Control Group"
-msgstr "Група управљања"
-
-#: ../src/proctable.cpp:256
-msgid "Unit"
-msgstr "Јединица"
-
-#: ../src/proctable.cpp:257
-msgid "Session"
-msgstr "Сесија"
-
-#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
-#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:260
-msgid "Seat"
-msgstr "Смештај"
-
-#: ../src/proctable.cpp:261
-msgid "Owner"
-msgstr "Власник"
-
-#: ../src/proctable.cpp:262 ../src/procproperties.cpp:126
-msgid "Priority"
-msgstr "Приоритет"
-
-#: ../src/proctable.cpp:1086
-#, c-format
-msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
-msgstr "Просечно оптерећење у последњих 1, 5 и 15 минута: %0.2f; %0.2f; %0.2f"
-
-#: ../src/procproperties.cpp:99
+#: ../src/procproperties.cpp:104
 msgid "N/A"
 msgstr "Н/Д"
 
+#: ../src/procproperties.cpp:130 ../src/proctable.cpp:236
+msgid "Process Name"
+msgstr "Назив процеса"
+
+#: ../src/procproperties.cpp:131 ../src/proctable.cpp:237
+msgid "User"
+msgstr "Корисник"
+
+#: ../src/procproperties.cpp:132 ../src/proctable.cpp:238
+msgid "Status"
+msgstr "Стање"
+
+#: ../src/procproperties.cpp:134 ../src/proctable.cpp:239
+msgid "Virtual Memory"
+msgstr "Виртуелна меморија"
+
+#: ../src/procproperties.cpp:135 ../src/proctable.cpp:240
+msgid "Resident Memory"
+msgstr "Резидентна меморија"
+
+#: ../src/procproperties.cpp:136 ../src/proctable.cpp:241
+msgid "Writable Memory"
+msgstr "Уписива меморија"
+
+#: ../src/procproperties.cpp:137 ../src/proctable.cpp:242
+msgid "Shared Memory"
+msgstr "Дељена меморија"
+
+#: ../src/procproperties.cpp:138 ../src/proctable.cpp:243
+msgid "X Server Memory"
+msgstr "Меморија Икс сервера"
+
+#: ../src/procproperties.cpp:140 ../src/proctable.cpp:245
+msgid "CPU Time"
+msgstr "Време процесора"
+
 # bug(slobo): Множински облици. Данило — овај је твој.
-#: ../src/procproperties.cpp:123
+#: ../src/procproperties.cpp:140
 #, c-format
 msgid "%lld second"
 msgid_plural "%lld seconds"
@@ -1178,37 +1134,94 @@ msgstr[1] "%lld секунде"
 msgstr[2] "%lld секунди"
 msgstr[3] "Једна секунда"
 
-#: ../src/procproperties.cpp:241
+#: ../src/procproperties.cpp:141 ../src/proctable.cpp:246
+msgid "Started"
+msgstr "Покренут"
+
+#: ../src/procproperties.cpp:142 ../src/proctable.cpp:247
+msgid "Nice"
+msgstr "Приоритет"
+
+#: ../src/procproperties.cpp:143 ../src/proctable.cpp:261
+msgid "Priority"
+msgstr "Важност"
+
+#: ../src/procproperties.cpp:144 ../src/proctable.cpp:248
+msgid "ID"
+msgstr "ИБ"
+
+#: ../src/procproperties.cpp:145 ../src/proctable.cpp:249
+msgid "Security Context"
+msgstr "Безбедносни контекст"
+
+#: ../src/procproperties.cpp:146 ../src/proctable.cpp:250
+msgid "Command Line"
+msgstr "Линија наредби"
+
+#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
+#: ../src/procproperties.cpp:147 ../src/proctable.cpp:253
+msgid "Waiting Channel"
+msgstr "Канал чекања"
+
+#: ../src/procproperties.cpp:258
 msgid "Process Properties"
 msgstr "Својства процеса"
 
-#: ../src/procproperties.cpp:261
+#: ../src/procproperties.cpp:278
 #, c-format
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "Својства процеса „%s“ (ИБ процеса %u):"
+
+#: ../src/proctable.cpp:244
+#, no-c-format
+msgid "% CPU"
+msgstr "Процесор — %"
+
+#: ../src/proctable.cpp:254
+msgid "Control Group"
+msgstr "Група управљања"
+
+#: ../src/proctable.cpp:255
+msgid "Unit"
+msgstr "Јединица"
+
+#: ../src/proctable.cpp:256
+msgid "Session"
+msgstr "Сесија"
+
+#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
+#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
+#: ../src/proctable.cpp:259
+msgid "Seat"
+msgstr "Смештај"
+
+#: ../src/proctable.cpp:260
+msgid "Owner"
+msgstr "Власник"
+
+#: ../src/proctable.cpp:1078
+#, c-format
+msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
+msgstr "Просечно оптерећење у последњих 1, 5 и 15 минута: %0.2f; %0.2f; %0.2f"
 
 #. Translators: The first string parameter is release version (codename),
 #. * the second one is the architecture, 32 or 64-bit
 #: ../src/sysinfo.cpp:78
 #, c-format
 msgid "Release %s %s"
-msgstr "Издање %s %s"
+msgstr "Издање: %s %s"
 
 #. translators: This is the type of architecture, for example:
 #. * "64-bit" or "32-bit"
 #: ../src/sysinfo.cpp:115
 #, c-format
 msgid "%d-bit"
-msgstr "%d-битни"
-
-#: ../src/sysinfo.cpp:219
-msgid "Unknown model"
-msgstr "Непознат модел"
+msgstr "%d бита"
 
 #: ../src/sysinfo.cpp:740
 #, c-format
 msgid "Kernel %s"
-msgstr "Језгро %s"
+msgstr "Језгро: %s"
 
 #: ../src/sysinfo.cpp:754
 #, c-format
@@ -1287,7 +1300,7 @@ msgstr "%u:%02u.%02u"
 #: ../src/util.cpp:166
 #, c-format
 msgid "%.1f KiB"
-msgstr "%.1f Kib"
+msgstr "%.1f KiB"
 
 #: ../src/util.cpp:167
 #, c-format
@@ -1354,408 +1367,3 @@ msgstr "<i>недоступно</i>"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
-
-#~ msgid "_Change Priority..."
-#~ msgstr "_Промени приоритет..."
-
-#~ msgid "Default graph cpu color"
-#~ msgstr "Подразумевана боја процесора на графику"
-
-#~ msgid "Show process 'arguments' column on startup"
-#~ msgstr "Приказује колону „аргументи“ по покретању"
-
-#~ msgid "Show process 'estimated memory usage' column on startup"
-#~ msgstr "Приказује колону „процењено коришћење меморије“ по покретању"
-
-#~ msgid "Width of process 'arguments' column"
-#~ msgstr "Ширина колоне „аргументи“"
-
-#~ msgid "Width of process 'estimated memory usage' column"
-#~ msgstr "Ширина колоне „процењено коришћење меморије“"
-
-#~ msgid "(High Priority)"
-#~ msgstr "(Висок приоритет)"
-
-#~ msgid "(Normal Priority)"
-#~ msgstr "(Обичан приоритет)"
-
-#~ msgid "(Very Low Priority)"
-#~ msgstr "(Врло низак приоритет)"
-
-#~ msgid "Solaris mode"
-#~ msgstr "Соларис режим"
-
-#~ msgid "File system i_nformation shown in list:"
-#~ msgstr "Подаци о _систему датотека у списку:"
-
-#~ msgid "Processor %d:"
-#~ msgstr "Процесор %d:"
-
-#~ msgid "Devices"
-#~ msgstr "Уређаји"
-
-#~ msgid "No hidden processes"
-#~ msgstr "Нема скривених процеса"
-
-#~ msgid ""
-#~ "There are no hidden processes in the list. To show all running processes, "
-#~ "select the \"All processes\" option in the main window."
-#~ msgstr ""
-#~ "Нема сакривених процеса у списку. Да прикажете све покренуте процесе, "
-#~ "изаберите опцију „Сви процеси“ из главног прозора."
-
-#~ msgid "Hidden Processes"
-#~ msgstr "Сакривени процеси"
-
-#~ msgid "Currently _hidden processes:"
-#~ msgstr "Тренутно _скривени процеси:"
-
-#~ msgid "_Remove From List"
-#~ msgstr "_Уклони из списка"
-
-#~ msgid ""
-#~ "These are the processes you have chosen to hide. You can reshow a process "
-#~ "by removing it from this list."
-#~ msgstr ""
-#~ "Ово су процеси које сте изабрали да буду сакривени. Можете их опет "
-#~ "учинити видљивим уклањањем са овог списка."
-
-#~ msgid "Column zero saved width"
-#~ msgstr "Сачувана ширина нултог ступца"
-
-#~ msgid "Default graph background color"
-#~ msgstr "Подразумевана боја позадине графика"
-
-#~ msgid "Default graph frame color"
-#~ msgstr "Подразумевана боја оквира на графику"
-
-#~ msgid "Default graph net out color"
-#~ msgstr "Подразумевана боја на графику за одлазни мрежни саобраћај"
-
-#~ msgid "Show process threads"
-#~ msgstr "Прикажи нити процеса"
-
-#~ msgid "Show warning dialog when hiding processes"
-#~ msgstr "Прикажи упозорење пре скривања процеса"
-
-#~ msgid "_File"
-#~ msgstr "_Датотека"
-
-#~ msgid "_Quit"
-#~ msgstr "_Изађи"
-
-#~ msgid "Prefere_nces"
-#~ msgstr "По_ставке"
-
-#~ msgid "_Hide Process"
-#~ msgstr "_Сакриј процес"
-
-#~ msgid "_Hidden Processes"
-#~ msgstr "Са_кривени процеси"
-
-#~ msgid "Open the list of currently hidden processes"
-#~ msgstr "Отвори списак тренутно скривених процеса"
-
-#~ msgid "_About"
-#~ msgstr "_О програму"
-
-#~ msgid "User memory:"
-#~ msgstr "Корисничка меморија:"
-
-#~ msgid "of"
-#~ msgstr "од"
-
-# bug(slobo): превод за swap
-#~ msgid "Used swap:"
-#~ msgstr "Заузета замена:"
-
-#~ msgid "Total:"
-#~ msgstr "Укупно:"
-
-#~ msgid "Sent:"
-#~ msgstr "Послато:"
-
-#~ msgid "Hide the selected process?"
-#~ msgstr "Сакриј изабрани процес?"
-
-#~ msgid ""
-#~ "Hidden processes are no longer visible in the process list. You can re-"
-#~ "enable them by selecting the \"Hidden Processes\" entry in the View menu."
-#~ msgstr ""
-#~ "Сакривени процеси се не приказују у списку процеса. Можете их поново "
-#~ "приказати избором „Сакривени процеси“ у менију Преглед."
-
-#~ msgid "Alert before _hiding processes"
-#~ msgstr "Прикажи упозорење пре _скривања процеса"
-
-#~ msgid "_Background color:"
-#~ msgstr "Боја _позадине:"
-
-#~ msgid "_Grid color:"
-#~ msgstr "Боја _мреже:"
-
-#~ msgid "Arguments"
-#~ msgstr "Аргументи"
-
-#~ msgid "Update _interval:"
-#~ msgstr "Период _освежавања:"
-
-#~ msgid "Jorgen Scheibengruber - nicer devices treeview"
-#~ msgstr "Jorgen Scheibengruber — лепше дрво уређаја"
-
-# bug(mdfk): Не знам како да транскрибујем, па остављам изворно
-#~ msgid "Benoît Dejean - maintainer"
-#~ msgstr "Benoît Dejean — одржавалац"
-
-#~ msgid "Show advanced info tab on startup"
-#~ msgstr "Прикажи лист са напредним подацима по покретању"
-
-#~ msgid "Less _info"
-#~ msgstr "_Мање података"
-
-#~ msgid "More _info"
-#~ msgstr "Више подата_ка"
-
-#~ msgid "Process Info"
-#~ msgstr "Подаци о процесу"
-
-#~ msgid "Status:"
-#~ msgstr "Стање:"
-
-#~ msgid "Memory Usage"
-#~ msgstr "Искоришћеност меморије"
-
-#~ msgid "RSS:"
-#~ msgstr "RSS:"
-
-#~ msgid "Very high - nice %d"
-#~ msgstr "Врло висок — пристојно %d"
-
-#~ msgid "High - nice %d"
-#~ msgstr "Висок — пристојно %d"
-
-#~ msgid "Normal - nice %d"
-#~ msgstr "Нормалан — пристојно %d"
-
-#~ msgid "Low - nice %d"
-#~ msgstr "Низак — пристојно %d"
-
-#~ msgid "Very low - nice %d"
-#~ msgstr "Врло низак — пристојно %d"
-
-#~ msgid "_Threads"
-#~ msgstr "_Нити"
-
-#~ msgid "Show each thread as a separate process"
-#~ msgstr "Прикажи сваку нит као засебан процес"
-
-#~ msgid "RSS Memory"
-#~ msgstr "RSS меморија"
-
-#~ msgid "%s (thread)"
-#~ msgstr "%s (нит)"
-
-#~ msgid "Saves the pane position for the system monitor tab"
-#~ msgstr "Држи положај плоча за лист праћења система"
-
-#~ msgid "Force a process to finish normally"
-#~ msgstr "Приморај процес да се уобичајено оконча"
-
-#~ msgid "Force a process to finish immediately"
-#~ msgstr "Приморај процес да се истовремено оконча"
-
-#~ msgid "Open the memory maps associated with the process"
-#~ msgstr "Отвори мапе меморије које користи процес"
-
-#~ msgid "View the files opened by the process"
-#~ msgstr "Погледај датотеке које користи процес"
-
-#~ msgid "Sea_rch:"
-#~ msgstr "Претра_жи:"
-
-#~ msgid "Sho_w:"
-#~ msgstr "При_кажи:"
-
-#~ msgid "More _Info >>"
-#~ msgstr "Више _података >>"
-
-#~ msgid "No such process."
-#~ msgstr "Нема таквог процеса."
-
-#~ msgid ""
-#~ "Process Name: %s \n"
-#~ "\n"
-#~ "You do not have permission to change the priority of this process. You "
-#~ "can enter the root password to gain the necessary permission."
-#~ msgstr ""
-#~ "Име процеса: %s \n"
-#~ "\n"
-#~ "Нисте овлашћени да мењате важност овог процеса. Можете унети "
-#~ "администраторску лозинку да би добили потребна овлашћења."
-
-#~ msgid ""
-#~ "Process Name: %s\n"
-#~ "\n"
-#~ "You must be root to decrease a nice value of this process or set a nice "
-#~ "value less than 0. You can enter the root password to gain the necessary "
-#~ "permission."
-#~ msgstr ""
-#~ "Име процеса : %s \n"
-#~ "\n"
-#~ "Морате бити администратор да бисте процес учинили мање пристојним (nice "
-#~ "вредност испод нуле). Можете унети администраторску лозинку да би добили "
-#~ "потребна овлашћења."
-
-#~ msgid ""
-#~ "Process Name: %s \n"
-#~ "\n"
-#~ "You do not have permission to end this process. You can enter the root "
-#~ "password to gain the necessary permission."
-#~ msgstr ""
-#~ "Име процеса : %s \n"
-#~ "\n"
-#~ "Нисте овлашћени да окончате овај процес. Можете унети администраторску "
-#~ "лозинку да би добили потребна овлашћења."
-
-#~ msgid "An error occured while killing the process."
-#~ msgstr "Догодила се грешка при убијању процеса."
-
-#~ msgid "Could not find \"%s\""
-#~ msgstr "Не могу да нађем „%s“"
-
-#~ msgid ""
-#~ "There are no processes containing the searched string. Please note that "
-#~ "the search is performed only on processes shown in the process list."
-#~ msgstr ""
-#~ "Нема процеса који садрже тражену ниску. Приметите да се претрага изводи "
-#~ "само међу процесима приказаним у списку."
-
-#~ msgid "Kevin Vandersloot"
-#~ msgstr "Кевин Вандерслот (Vandersloot)"
-
-#~ msgid "(C) 2001 Kevin Vandersloot"
-#~ msgstr "© 2001 Кевин Вандерслот (Vandersloot)"
-
-#~ msgid "Simple process viewer using libgtop"
-#~ msgstr "Програм за праћење процеса који користи libgtop"
-
-#~ msgid "X window system"
-#~ msgstr "X window систем"
-
-#~ msgid "bourne again shell"
-#~ msgstr "bourne again љуска"
-
-#~ msgid "No processes are currently hidden."
-#~ msgstr "Тренутно нема сакривених процеса"
-
-#~ msgid "Manage Hidden Processes"
-#~ msgstr "Управљај скривеним процесима"
-
-#~ msgid "Force a process to finish."
-#~ msgstr "Приморај процес да се оконча."
-
-#~ msgid "Force a process to finish now."
-#~ msgstr "Приморај процес да се оконча истог тренутка."
-
-#~ msgid "Display a tree showing process dependencies"
-#~ msgstr "Прикажи дрво које осликава међузависност процеса"
-
-#~ msgid "Display threads (subprocesses)"
-#~ msgstr "Прикажи нити (подпроцесе)"
-
-#~ msgid "Name"
-#~ msgstr "Име"
-
-#~ msgid "Application Manager"
-#~ msgstr "Управник програмима"
-
-#~ msgid "Running Applications"
-#~ msgstr "Покренути програми"
-
-#~ msgid "Are you sure you want to hide this process?"
-#~ msgstr "Да ли сте сигурни да желите да сакријете овај процес?"
-
-#~ msgid "_Show this dialog next time"
-#~ msgstr "_Прикажи ово прозорче и следећи пут"
-
-#~ msgid "Are you sure you want to kill this process?"
-#~ msgstr "Да ли сте сигурни да желите да убијете овај процес?"
-
-#~ msgid "If you kill a process, unsaved data will be lost."
-#~ msgstr "Уколико убијете процес, несачувани подаци ће бити изгубљени."
-
-#~ msgid "Are you sure you want to end this process?"
-#~ msgstr "Да ли сте сигурни да желите да окончате овај процес?"
-
-#~ msgid "If you end a process, unsaved data will be lost."
-#~ msgstr "Уколико окончате процес, несачувани подаци ће бити изгубљени."
-
-#~ msgid "Kill Process"
-#~ msgstr "Убиј Процес"
-
-#~ msgid "End Process"
-#~ msgstr "Окончај Процес"
-
-#~ msgid "Root Password :"
-#~ msgstr "Root лозинка :"
-
-#~ msgid "Wrong Password."
-#~ msgstr "Погрешна Лозинка."
-
-#~ msgid "show simple dialog to end processes and logout"
-#~ msgstr "прикажи једноставно прозорче за окончање процеса и одјављивање"
-
-#~ msgid "%s could not be found."
-#~ msgstr "Не може да нађе %s."
-
-#~ msgid "%d K"
-#~ msgstr "%d К"
-
-#~ msgid "%.0f MB"
-#~ msgstr "%.0f MB"
-
-#~ msgid "View processes being run by all users"
-#~ msgstr "Види процесе свих корисника"
-
-#~ msgid "View processes being run by you"
-#~ msgstr "Види своје процесе"
-
-#~ msgid "View only active processes"
-#~ msgstr "Види само активне процесе"
-
-#~ msgid "Kevin Vandersloot (kfv101@psu.edu)"
-#~ msgstr "Kevin Vandersloot (kfv101@psu.edu)"
-
-#~ msgid "Used CPU:"
-#~ msgstr "Заузет проц.:"
-
-#~ msgid "Change Priority ..."
-#~ msgstr "Промени Приоритет ..."
-
-#~ msgid "Hide Process"
-#~ msgstr "Сакриј Процес"
-
-#~ msgid ""
-#~ "Are you sure you want to hide this process?\n"
-#~ "(Choose 'Hidden Processes' in the Settings menu to reshow)"
-#~ msgstr ""
-#~ "Да ли сте сигурни да желите да сакријете овај процес?\n"
-#~ "(Изаберите `Скривен Процеси` из менија Подешавања да би их опет видели)"
-
-#~ msgid "Erik Johnsson (zaphod@linux.nu) - icon support"
-#~ msgstr "Kevin Vandersloot (kfv101@psu.edu) - подршка за иконе"
-
-#~ msgid "Status : "
-#~ msgstr "Стање : "
-
-#~ msgid "Total : "
-#~ msgstr "Укупно : "
-
-#~ msgid "Used Space"
-#~ msgstr "Заузет простор"
-
-#~ msgid "Update Speed ( seconds ) :"
-#~ msgstr "Брзина Освежавања ( секунде ) :"
-
-#~ msgid "Se_t"
-#~ msgstr "Под_еси"
