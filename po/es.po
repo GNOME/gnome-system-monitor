@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-07-29 15:46+0000\n"
-"PO-Revision-Date: 2012-07-29 19:04+0200\n"
+"POT-Creation-Date: 2012-08-07 01:52+0000\n"
+"PO-Revision-Date: 2012-08-07 20:21+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -177,9 +177,6 @@ msgid "_Nice value:"
 msgstr "Valor _nice:"
 
 #: ../data/renice.ui.h:3
-#| msgid ""
-#| "The priority of a process is given by its nice value. A lower nice value "
-#| "corresponds to a higher priority."
 msgid ""
 "<small><i><b>Note:</b> The priority of a process is given by its nice value. "
 "A lower nice value corresponds to a higher priority.</i></small>"
@@ -542,26 +539,28 @@ msgstr "no disponible"
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) de %s"
 
-#: ../src/lsof.cpp:124
-#, c-format
-msgid ""
-"<b>Error</b>\n"
-"'%s' is not a valid Perl regular expression.\n"
-"%s"
-msgstr ""
-"<b>Error</b>\n"
-"«%s« no es una expresión regular válida de Perl.\n"
-"%s"
+#: ../src/lsof.cpp:125
+msgid "Error"
+msgstr "Error"
 
-#: ../src/lsof.cpp:270
+#: ../src/lsof.cpp:126
+#, c-format
+#| msgid ""
+#| "<b>Error</b>\n"
+#| "'%s' is not a valid Perl regular expression.\n"
+#| "%s"
+msgid "'%s' is not a valid Perl regular expression."
+msgstr "«%s« no es una expresión regular de Perl válida."
+
+#: ../src/lsof.cpp:272
 msgid "Process"
 msgstr "Proceso"
 
-#: ../src/lsof.cpp:282
+#: ../src/lsof.cpp:284
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:292 ../src/memmaps.cpp:339
+#: ../src/lsof.cpp:294 ../src/memmaps.cpp:339
 msgid "Filename"
 msgstr "Archivo"
 
@@ -1091,7 +1090,7 @@ msgstr "Icono"
 msgid "A simple process and system monitor."
 msgstr "Un sencillo monitor de procesos y del sistema."
 
-#: ../src/procproperties.cpp:104
+#: ../src/procproperties.cpp:104 ../src/util.cpp:420
 msgid "N/A"
 msgstr "N/D"
 
@@ -1222,37 +1221,37 @@ msgstr "Versión %s de %s"
 msgid "%d-bit"
 msgstr "%d-bit"
 
-#: ../src/sysinfo.cpp:740
+#: ../src/sysinfo.cpp:734
 #, c-format
 msgid "Kernel %s"
 msgstr "Núcleo %s"
 
-#: ../src/sysinfo.cpp:754
+#: ../src/sysinfo.cpp:746
 #, c-format
 msgid "GNOME %s"
 msgstr "GNOME %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:769
-#, c-format
-msgid "<b>Hardware</b>"
-msgstr "<b>Hardware</b>"
+#: ../src/sysinfo.cpp:759
+#| msgid "<b>Hardware</b>"
+msgid "Hardware"
+msgstr "Hardware"
 
-#: ../src/sysinfo.cpp:774
+#: ../src/sysinfo.cpp:764
 msgid "Memory:"
 msgstr "Memoria:"
 
-#: ../src/sysinfo.cpp:779
+#: ../src/sysinfo.cpp:769
 msgid "Processor:"
 msgstr "Procesador:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:788
-#, c-format
-msgid "<b>System Status</b>"
-msgstr "<b>Estado del sistema</b>"
+#: ../src/sysinfo.cpp:778
+#| msgid "<b>System Status</b>"
+msgid "System Status"
+msgstr "Estado del sistema"
 
-#: ../src/sysinfo.cpp:794
+#: ../src/sysinfo.cpp:784
 msgid "Available disk space:"
 msgstr "Espacio disponible en disco:"
 
@@ -1354,15 +1353,14 @@ msgid_plural "%u bytes"
 msgstr[0] "%u byte"
 msgstr[1] "%u bytes"
 
-#: ../src/util.cpp:420
-msgid "<i>N/A</i>"
-msgstr "<i>N/D</i>"
-
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:582
+#: ../src/util.cpp:585
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "<i>N/A</i>"
+#~ msgstr "<i>N/D</i>"
 
 #~ msgid "Unknown model"
 #~ msgstr "Modelo desconocido"
