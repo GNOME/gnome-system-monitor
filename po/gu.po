@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gu\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
 "cgi?product=system-monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-07-29 15:46+0000\n"
-"PO-Revision-Date: 2012-08-03 16:53+0530\n"
+"POT-Creation-Date: 2012-08-07 01:52+0000\n"
+"PO-Revision-Date: 2012-08-07 13:37+0530\n"
 "Last-Translator: \n"
 "Language-Team: gu_IN <kde-i18n-doc@kde.org>\n"
 "Language: \n"
@@ -153,7 +153,6 @@ msgid "Alert before ending or _killing processes"
 msgstr "પ્રક્રિયાઓનો અંત કરવા અથવા તેમને મારી નાંખવા પહેલા ચેતવો (_k)"
 
 #: ../data/preferences.ui.h:6
-#| msgid "Divide CPU usage by CPU count"
 msgid "_Divide CPU usage by CPU count"
 msgstr "CPU ગણતરી દ્દારા CPU વપરાશ અલગ કરો (_D)"
 
@@ -170,12 +169,10 @@ msgid "Graphs"
 msgstr "આલેખો"
 
 #: ../data/preferences.ui.h:11
-#| msgid "Show network speed in bits"
 msgid "_Show network speed in bits"
 msgstr "બિટમાં નેટવર્ક ઝડપને બતાવો (_S)"
 
 #: ../data/preferences.ui.h:13
-#| msgid "Show _all filesystems"
 msgid "Show _all file systems"
 msgstr "બધી ફાઈલસિસ્ટમો બતાવો (_a)"
 
@@ -188,15 +185,12 @@ msgid "_Nice value:"
 msgstr "_Nice કિંમત:"
 
 #: ../data/renice.ui.h:3
-#| msgid ""
-#| "The priority of a process is given by its nice value. A lower nice value "
-#| "corresponds to a higher priority."
 msgid ""
 "<small><i><b>Note:</b> The priority of a process is given by its nice value. "
 "A lower nice value corresponds to a higher priority.</i></small>"
 msgstr ""
-"<small><i><b>નોંધ:</b> પ્રક્રિયાનું પ્રાધાન્ય nice ની કિંમત દ્વારા મળે છે. ઓછી nice ની કિંમત "
-"ઊંચું પ્રાધાન્ય સૂચવે છે.</i></small>"
+"<small><i><b>નોંધ:</b> પ્રક્રિયાનું પ્રાધાન્ય nice ની કિંમત દ્વારા મળે છે. ઓછી nice ની "
+"કિંમત ઊંચું પ્રાધાન્ય સૂચવે છે.</i></small>"
 
 #: ../src/argv.cpp:21
 msgid "Show the System tab"
@@ -547,27 +541,29 @@ msgstr "ઉપલબ્ધ નથી"
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) એ %s નું "
 
-#: ../src/lsof.cpp:124
-#, c-format
-msgid ""
-"<b>Error</b>\n"
-"'%s' is not a valid Perl regular expression.\n"
-"%s"
-msgstr ""
-"<b>ભૂલ</b>\n"
-"'%s' Perl regular expression યોગ્ય નથી.\n"
-"%s"
+#: ../src/lsof.cpp:125
+msgid "Error"
+msgstr "ભૂલ"
 
-#: ../src/lsof.cpp:270
+#: ../src/lsof.cpp:126
+#, c-format
+#| msgid ""
+#| "<b>Error</b>\n"
+#| "'%s' is not a valid Perl regular expression.\n"
+#| "%s"
+msgid "'%s' is not a valid Perl regular expression."
+msgstr "'%s' એ માન્ય Perl નિયમિત સમીકરણ નથી."
+
+#: ../src/lsof.cpp:272
 msgid "Process"
 msgstr "પ્રક્રિયા"
 
 # libgnomeui/gnome-client.c:833
-#: ../src/lsof.cpp:282
+#: ../src/lsof.cpp:284
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:292 ../src/memmaps.cpp:339
+#: ../src/lsof.cpp:294 ../src/memmaps.cpp:339
 msgid "Filename"
 msgstr "ફાઇલનું નામ"
 
@@ -1088,7 +1084,7 @@ msgstr "ચિહ્ન"
 msgid "A simple process and system monitor."
 msgstr "સાદી પ્રક્રિયા અને સિસ્ટમ મૉનિટર."
 
-#: ../src/procproperties.cpp:104
+#: ../src/procproperties.cpp:104 ../src/util.cpp:420
 msgid "N/A"
 msgstr "N/A"
 
@@ -1220,37 +1216,37 @@ msgstr "પ્રકાશન %s %s"
 msgid "%d-bit"
 msgstr "%d-બીટ"
 
-#: ../src/sysinfo.cpp:740
+#: ../src/sysinfo.cpp:734
 #, c-format
 msgid "Kernel %s"
 msgstr "કર્નલ %s"
 
-#: ../src/sysinfo.cpp:754
+#: ../src/sysinfo.cpp:746
 #, c-format
 msgid "GNOME %s"
 msgstr "જીનોમ %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:769
-#, c-format
-msgid "<b>Hardware</b>"
-msgstr "<b>હાર્ડવેર</b>"
+#: ../src/sysinfo.cpp:759
+#| msgid "<b>Hardware</b>"
+msgid "Hardware"
+msgstr "હાર્ડવેર"
 
-#: ../src/sysinfo.cpp:774
+#: ../src/sysinfo.cpp:764
 msgid "Memory:"
 msgstr "મેમરી:"
 
-#: ../src/sysinfo.cpp:779
+#: ../src/sysinfo.cpp:769
 msgid "Processor:"
 msgstr "પ્રોસેસર:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:788
-#, c-format
-msgid "<b>System Status</b>"
-msgstr "<b>સિસ્ટમ પરિસ્થિતિ</b>"
+#: ../src/sysinfo.cpp:778
+#| msgid "<b>System Status</b>"
+msgid "System Status"
+msgstr "સિસ્ટમ પરિસ્થિતિ"
 
-#: ../src/sysinfo.cpp:794
+#: ../src/sysinfo.cpp:784
 msgid "Available disk space:"
 msgstr "ઉપલબ્ધ ડિસ્ક જગ્યા:"
 
@@ -1353,15 +1349,14 @@ msgid_plural "%u bytes"
 msgstr[0] "%u બાઈટ"
 msgstr[1] "%u બાઈટો"
 
-#: ../src/util.cpp:420
-msgid "<i>N/A</i>"
-msgstr "<i>N/A</i>"
-
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:582
+#: ../src/util.cpp:585
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "<i>N/A</i>"
+#~ msgstr "<i>N/A</i>"
 
 #~| msgid "Unknown CPU model"
 #~ msgid "Unknown model"
