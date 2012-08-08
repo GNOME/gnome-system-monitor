@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product"
 "=system-monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-07-29 15:46+0000\n"
-"PO-Revision-Date: 2012-08-06 08:48+0200\n"
+"POT-Creation-Date: 2012-08-07 01:52+0000\n"
+"PO-Revision-Date: 2012-08-08 08:50+0200\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -538,26 +538,28 @@ msgstr "није доступан"
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) од %s"
 
-#: ../src/lsof.cpp:124
-#, c-format
-msgid ""
-"<b>Error</b>\n"
-"'%s' is not a valid Perl regular expression.\n"
-"%s"
-msgstr ""
-"<b>Грешка</b>\n"
-"„%s“ није исправан регуларни израз у Перлу.\n"
-"%s"
+#: ../src/lsof.cpp:125
+msgid "Error"
+msgstr "Грeшкa"
 
-#: ../src/lsof.cpp:270
+#: ../src/lsof.cpp:126
+#, c-format
+#| msgid ""
+#| "<b>Error</b>\n"
+#| "'%s' is not a valid Perl regular expression.\n"
+#| "%s"
+msgid "'%s' is not a valid Perl regular expression."
+msgstr "„%s“ није исправан регуларни израз у Перлу."
+
+#: ../src/lsof.cpp:272
 msgid "Process"
 msgstr "Процес"
 
-#: ../src/lsof.cpp:282
+#: ../src/lsof.cpp:284
 msgid "PID"
 msgstr "ПИД"
 
-#: ../src/lsof.cpp:292 ../src/memmaps.cpp:339
+#: ../src/lsof.cpp:294 ../src/memmaps.cpp:339
 msgid "Filename"
 msgstr "Назив датотеке"
 
@@ -1084,7 +1086,7 @@ msgstr "Иконица"
 msgid "A simple process and system monitor."
 msgstr "Једноставан програм за праћење система и процеса."
 
-#: ../src/procproperties.cpp:104
+#: ../src/procproperties.cpp:104 ../src/util.cpp:420
 msgid "N/A"
 msgstr "Н/Д"
 
@@ -1218,37 +1220,37 @@ msgstr "Издање: %s %s"
 msgid "%d-bit"
 msgstr "%d бита"
 
-#: ../src/sysinfo.cpp:740
+#: ../src/sysinfo.cpp:734
 #, c-format
 msgid "Kernel %s"
 msgstr "Језгро: %s"
 
-#: ../src/sysinfo.cpp:754
+#: ../src/sysinfo.cpp:746
 #, c-format
 msgid "GNOME %s"
 msgstr "Гном %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:769
-#, c-format
-msgid "<b>Hardware</b>"
-msgstr "<b>Делови рачунара</b>"
+#: ../src/sysinfo.cpp:759
+#| msgid "<b>Hardware</b>"
+msgid "Hardware"
+msgstr "Делови рачунара"
 
-#: ../src/sysinfo.cpp:774
+#: ../src/sysinfo.cpp:764
 msgid "Memory:"
 msgstr "Меморија:"
 
-#: ../src/sysinfo.cpp:779
+#: ../src/sysinfo.cpp:769
 msgid "Processor:"
 msgstr "Процесор:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:788
-#, c-format
-msgid "<b>System Status</b>"
-msgstr "<b>Стање система</b>"
+#: ../src/sysinfo.cpp:778
+#| msgid "<b>System Status</b>"
+msgid "System Status"
+msgstr "Стање система"
 
-#: ../src/sysinfo.cpp:794
+#: ../src/sysinfo.cpp:784
 msgid "Available disk space:"
 msgstr "Расположив простор на диску:"
 
@@ -1358,12 +1360,11 @@ msgstr[1] "%u бајта"
 msgstr[2] "%u бајтова"
 msgstr[3] "Један бајт"
 
-#: ../src/util.cpp:420
-msgid "<i>N/A</i>"
-msgstr "<i>недоступно</i>"
-
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:582
+#: ../src/util.cpp:585
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "<i>N/A</i>"
+#~ msgstr "<i>недоступно</i>"
