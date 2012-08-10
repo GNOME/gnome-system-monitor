@@ -216,14 +216,12 @@ load_graph_draw (GtkWidget *widget,
                  gpointer data_ptr)
 {
     LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
-    GtkAllocation allocation;
     GdkWindow *window;
 
     guint i, j;
     gdouble sample_width, x_offset;
 
     window = gtk_widget_get_window (graph->disp);
-    gtk_widget_get_allocation (graph->disp, &allocation);
 
     if (graph->background == NULL) {
         draw_background(graph);
