@@ -498,7 +498,7 @@ create_main_window (ProcData *procdata)
     gtk_window_add_accel_group (GTK_WINDOW(app), accel_group);
     for (i = 0; i < 4; ++i) {
         goto_tab_closure[i] = g_cclosure_new_swap (G_CALLBACK (cb_proc_goto_tab),
-                                                   (gpointer) i, NULL);
+                                                   GINT_TO_POINTER (i), NULL);
         gtk_accel_group_connect (accel_group, '0'+(i+1),
                                  GDK_MOD1_MASK, GTK_ACCEL_VISIBLE,
                                  goto_tab_closure[i]);
