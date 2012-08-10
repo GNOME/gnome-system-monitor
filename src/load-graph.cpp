@@ -126,7 +126,7 @@ void draw_background(LoadGraph *graph) {
         gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_NORMAL]);
         if (graph->type == LOAD_GRAPH_NET) {
             // operation orders matters so it's 0 if i == num_bars
-            unsigned rate = graph->net.max - (i * graph->net.max / num_bars);
+            guint64 rate = graph->net.max - (i * graph->net.max / num_bars);
             const std::string caption(procman::format_network_rate(rate, graph->net.max));
             pango_layout_set_text (layout, caption.c_str(), -1);
             pango_layout_get_extents (layout, NULL, &extents);
