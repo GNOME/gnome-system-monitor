@@ -12,13 +12,11 @@ ui_DATA = data/preferences.ui \
 
 EXTRA_DIST = \
 	$(ui_DATA) \
-	gnome-doc-utils.make \
 	gnome-system-monitor.desktop.in \
 	gnome-system-monitor.doap \
 	intltool-extract.in \
 	intltool-merge.in \
 	intltool-update.in \
-	omf.make \
 	xmldocs.make
 
 Applicationsdir = $(datadir)/applications

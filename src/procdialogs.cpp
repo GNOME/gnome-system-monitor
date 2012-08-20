@@ -217,7 +217,7 @@ prefs_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
     if (id == GTK_RESPONSE_HELP)
     {
         GError* error = 0;
-        if (!g_app_info_launch_default_for_uri("ghelp:gnome-system-monitor#gnome-system-monitor-prefs", NULL, &error))
+        if (!g_app_info_launch_default_for_uri("help:gnome-system-monitor/gnome-system-monitor-prefs", NULL, &error))
         {
             g_warning("Could not display preferences help : %s", error->message);
             g_error_free(error);

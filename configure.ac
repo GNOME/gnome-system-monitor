@@ -98,7 +98,7 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE",
                    [The gettext catalog name])
 
 # Documentation
-GNOME_DOC_INIT([0.20])
+YELP_HELP_INIT
 
 AC_CONFIG_FILES([
 Makefile

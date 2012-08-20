@@ -204,7 +204,7 @@ void
 cb_help_contents (GtkAction *action, gpointer data)
 {
     GError* error = 0;
-    if (!g_app_info_launch_default_for_uri("ghelp:gnome-system-monitor", NULL, &error)) {
+    if (!g_app_info_launch_default_for_uri("help:gnome-system-monitor", NULL, &error)) {
         g_warning("Could not display help : %s", error->message);
         g_error_free(error);
     }
