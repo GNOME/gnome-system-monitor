@@ -16,8 +16,7 @@ EXTRA_DIST = \
 	gnome-system-monitor.doap \
 	intltool-extract.in \
 	intltool-merge.in \
-	intltool-update.in \
-	xmldocs.make
+	intltool-update.in
 
 Applicationsdir = $(datadir)/applications
 Applications_in_files = gnome-system-monitor.desktop.in
