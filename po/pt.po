@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 3.4\n"
+"Project-Id-Version: 3.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-21 11:20+0000\n"
-"PO-Revision-Date: 2012-03-21 11:45+0000\n"
+"POT-Creation-Date: 2012-09-01 01:32+0100\n"
+"PO-Revision-Date: 2012-09-01 01:35+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "Language: pt\n"
@@ -17,14 +17,103 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:184
-#: ../src/interface.cpp:635 ../src/procman.cpp:721
+#: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
+#: ../src/callbacks.cpp:184 ../src/procman.cpp:721
 msgid "System Monitor"
 msgstr "Monitor de Sistema"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "Ver processos actuais e monitorizar o estado do sistema"
+
+#: ../gnome-system-monitor.desktop.in.in.h:3
+msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
+msgstr "Monitor;Sistema;Processo;CPU;Memória;Rede;Histórico;Utilização;"
+
+#: ../data/interface.ui.h:2
+msgid "System"
+msgstr "Sistema"
+
+#: ../data/interface.ui.h:3
+msgid "End _Process"
+msgstr "Terminar _Processo"
+
+#: ../data/interface.ui.h:4 ../data/preferences.ui.h:9
+msgid "Processes"
+msgstr "Processos"
+
+#: ../data/interface.ui.h:5
+msgid "CPU History"
+msgstr "Histórico de CPU"
+
+#: ../data/interface.ui.h:6
+msgid "Memory and Swap History"
+msgstr "Histórico de Memória e Swap"
+
+#: ../data/interface.ui.h:7 ../src/interface.cpp:327
+#: ../src/procproperties.cpp:133 ../src/proctable.cpp:251
+msgid "Memory"
+msgstr "Memória"
+
+#: ../data/interface.ui.h:8 ../src/interface.cpp:338
+msgid "Swap"
+msgstr "Swap"
+
+#: ../data/interface.ui.h:9
+msgid "Network History"
+msgstr "Histórico de Rede"
+
+#: ../data/interface.ui.h:10 ../src/interface.cpp:363
+msgid "Receiving"
+msgstr "A Receber"
+
+#: ../data/interface.ui.h:11
+msgid "Total Received"
+msgstr "Total Recebido"
+
+#: ../data/interface.ui.h:12
+msgid "Sent"
+msgstr "Enviado"
+
+#: ../data/interface.ui.h:13
+msgid "Total Sent"
+msgstr "Total Enviado"
+
+#: ../data/interface.ui.h:14
+msgid "\n"
+msgstr "\n"
+
+#: ../data/interface.ui.h:16 ../data/preferences.ui.h:12
+msgid "Resources"
+msgstr "Recursos"
+
+#: ../data/interface.ui.h:17 ../data/preferences.ui.h:14
+msgid "File Systems"
+msgstr "Sistema de Ficheiros"
+
+#: ../data/lsof.ui.h:1
+msgid "Search for Open Files"
+msgstr "Procurar por Ficheiros Abertos"
+
+#: ../data/lsof.ui.h:2
+msgid "_Name contains:"
+msgstr "_Nome contém:"
+
+#: ../data/lsof.ui.h:3
+msgid "Case insensitive matching"
+msgstr "Equivalência insensível à capitalização"
+
+#: ../data/lsof.ui.h:4
+msgid "C_lear"
+msgstr "_Limpar"
+
+#: ../data/lsof.ui.h:5
+msgid "S_earch results:"
+msgstr "R_esultados da procura:"
+
+#: ../data/openfiles.ui.h:1
+msgid "Open Files"
+msgstr "Ficheiros Abertos"
 
 #: ../data/preferences.ui.h:1
 msgid "System Monitor Preferences"
@@ -58,10 +147,6 @@ msgstr "Campos de Informação"
 msgid "Process i_nformation shown in list:"
 msgstr "I_nformação do processo apresentada na lista:"
 
-#: ../data/preferences.ui.h:9 ../src/interface.cpp:714
-msgid "Processes"
-msgstr "Processos"
-
 #: ../data/preferences.ui.h:10
 msgid "Graphs"
 msgstr "Gráficos"
@@ -70,17 +155,25 @@ msgstr "Gráficos"
 msgid "_Show network speed in bits"
 msgstr "_Apresentar a velocidade da rede em bits"
 
-#: ../data/preferences.ui.h:12 ../src/interface.cpp:718
-msgid "Resources"
-msgstr "Recursos"
-
 #: ../data/preferences.ui.h:13
 msgid "Show _all file systems"
 msgstr "Apresentar _todos os sistemas de ficheiros"
 
-#: ../data/preferences.ui.h:14 ../src/interface.cpp:722
-msgid "File Systems"
-msgstr "Sistema de Ficheiros"
+#: ../data/renice.ui.h:1
+msgid "Change _Priority"
+msgstr "Alterar _Prioridade"
+
+#: ../data/renice.ui.h:2
+msgid "_Nice value:"
+msgstr "Valor _nice:"
+
+#: ../data/renice.ui.h:3
+msgid ""
+"<small><i><b>Note:</b> The priority of a process is given by its nice value. "
+"A lower nice value corresponds to a higher priority.</i></small>"
+msgstr ""
+"<small><i><b>Nota:</b> A prioridade de um processo é indicada pelo seu valor "
+"nice. Um valor nice reduzido corresponde a uma prioridade mais elevada.</i></small>"
 
 #: ../src/argv.cpp:21
 msgid "Show the System tab"
@@ -102,31 +195,31 @@ msgstr "Apresentar o separador de Sistemas de Ficheiros"
 msgid "translator-credits"
 msgstr "Duarte Loreto <happyguy_pt@hotmail.com>"
 
-#: ../src/disks.cpp:299 ../src/memmaps.cpp:361
+#: ../src/disks.cpp:298 ../src/memmaps.cpp:361
 msgid "Device"
 msgstr "Dispositivo"
 
-#: ../src/disks.cpp:300
+#: ../src/disks.cpp:299
 msgid "Directory"
 msgstr "Directório"
 
-#: ../src/disks.cpp:301 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:300 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "Tipo"
 
-#: ../src/disks.cpp:302
+#: ../src/disks.cpp:301
 msgid "Total"
 msgstr "Total"
 
-#: ../src/disks.cpp:303
+#: ../src/disks.cpp:302
 msgid "Free"
 msgstr "Livre"
 
-#: ../src/disks.cpp:304
+#: ../src/disks.cpp:303
 msgid "Available"
 msgstr "Disponível"
 
-#: ../src/disks.cpp:305
+#: ../src/disks.cpp:304
 msgid "Used"
 msgstr "Utilizado"
 
@@ -395,66 +488,24 @@ msgstr "Personalizada"
 msgid "Set process priority manually"
 msgstr "Definir a prioridade do processo manualmente"
 
-#: ../src/interface.cpp:231
-msgid "End _Process"
-msgstr "Terminar _Processo"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:279
+#: ../src/interface.cpp:256
 #, c-format
 msgid "Pick a Color for '%s'"
 msgstr "Seleccione uma Cor para '%s'"
 
-#: ../src/interface.cpp:290
-msgid "CPU History"
-msgstr "Histórico de CPU"
-
-#: ../src/interface.cpp:344 ../src/procproperties.cpp:122
+#: ../src/interface.cpp:292 ../src/procproperties.cpp:139
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:346
+#: ../src/interface.cpp:294
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:367
-msgid "Memory and Swap History"
-msgstr "Histórico de Memória e Swap"
-
-#: ../src/interface.cpp:401 ../src/proctable.cpp:252
-#: ../src/procproperties.cpp:116
-msgid "Memory"
-msgstr "Memória"
-
-#: ../src/interface.cpp:432
-msgid "Swap"
-msgstr "Swap"
-
-#: ../src/interface.cpp:463
-msgid "Network History"
-msgstr "Histórico de Rede"
-
-#: ../src/interface.cpp:496
-msgid "Receiving"
-msgstr "A Receber"
-
-#: ../src/interface.cpp:529
-msgid "Total Received"
-msgstr "Total Recebido"
-
-#: ../src/interface.cpp:557
+#: ../src/interface.cpp:378
 msgid "Sending"
 msgstr "A Enviar"
-
-#: ../src/interface.cpp:591
-msgid "Total Sent"
-msgstr "Total Enviado"
-
-#. procman_create_sysinfo_view();
-#: ../src/interface.cpp:710
-msgid "System"
-msgstr "Sistema"
 
 #: ../src/load-graph.cpp:166
 #, c-format
@@ -463,55 +514,36 @@ msgid_plural "%u seconds"
 msgstr[0] "%u segundo"
 msgstr[1] "%u segundos"
 
-#: ../src/load-graph.cpp:347
+#: ../src/load-graph.cpp:345
 msgid "not available"
 msgstr "indisponível"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:350
+#: ../src/load-graph.cpp:348
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) de %s"
 
-#: ../src/lsof.cpp:124
-#, c-format
-msgid ""
-"<b>Error</b>\n"
-"'%s' is not a valid Perl regular expression.\n"
-"%s"
-msgstr ""
-"<b>Erro</b>\n"
-"'%s' não é uma expressão regular Perl válida.\n"
-"%s"
+#: ../src/lsof.cpp:125
+msgid "Error"
+msgstr "Erro"
 
-#: ../src/lsof.cpp:270
+#: ../src/lsof.cpp:126
+#, c-format
+msgid "'%s' is not a valid Perl regular expression."
+msgstr "'%s' não é uma expressão regular Perl válida."
+
+#: ../src/lsof.cpp:272
 msgid "Process"
 msgstr "Processo"
 
-#: ../src/lsof.cpp:282
+#: ../src/lsof.cpp:284
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:292 ../src/memmaps.cpp:339
+#: ../src/lsof.cpp:294 ../src/memmaps.cpp:339
 msgid "Filename"
 msgstr "Nome de ficheiro"
-
-#. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-#: ../src/lsof.cpp:309
-msgid "Search for Open Files"
-msgstr "Procurar por Ficheiros Abertos"
-
-#: ../src/lsof.cpp:336
-msgid "_Name contains:"
-msgstr "_Nome contém:"
-
-#: ../src/lsof.cpp:354
-msgid "Case insensitive matching"
-msgstr "Equivalência insensível à capitalização"
-
-#: ../src/lsof.cpp:362
-msgid "S_earch results:"
-msgstr "R_esultados da procura:"
 
 #. xgettext: virtual memory start
 #: ../src/memmaps.cpp:341
@@ -609,11 +641,7 @@ msgstr "DF"
 msgid "Object"
 msgstr "Objecto"
 
-#: ../src/openfiles.cpp:336
-msgid "Open Files"
-msgstr "Ficheiros Abertos"
-
-#: ../src/openfiles.cpp:357
+#: ../src/openfiles.cpp:346
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_Ficheiros abertos pelo processo \"%s\" (PID %u):"
@@ -1013,29 +1041,21 @@ msgstr ""
 "trabalho instável ou criar um risco de segurança. Apenas deverão ser "
 "terminados processos que não estejam a responder."
 
-#: ../src/procdialogs.cpp:130 ../src/procdialogs.cpp:220
+#: ../src/procdialogs.cpp:130
 #, c-format
 msgid "(%s Priority)"
 msgstr "(Prioridade %s)"
 
-#: ../src/procdialogs.cpp:174
+#: ../src/procdialogs.cpp:175
 #, c-format
 msgid "Change Priority of Process »%s« (PID: %u)"
 msgstr "Alterar a Prioridade do Processo »%s« (PID: %u)"
 
-#: ../src/procdialogs.cpp:186
-msgid "Change _Priority"
-msgstr "Alterar _Prioridade"
-
-#: ../src/procdialogs.cpp:209
-msgid "_Nice value:"
-msgstr "Valor _nice:"
-
-#: ../src/procdialogs.cpp:226
+#: ../src/procdialogs.cpp:193
 msgid "Note:"
 msgstr "Nota:"
 
-#: ../src/procdialogs.cpp:227
+#: ../src/procdialogs.cpp:194
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1043,7 +1063,7 @@ msgstr ""
 "A prioridade de um processo é indicada pelo seu valor nice. Um valor nice "
 "reduzido corresponde a uma prioridade mais elevada."
 
-#: ../src/procdialogs.cpp:449
+#: ../src/procdialogs.cpp:418
 msgid "Icon"
 msgstr "Ícone"
 
@@ -1051,122 +1071,122 @@ msgstr "Ícone"
 msgid "A simple process and system monitor."
 msgstr "Um simples monitor de processos e de sistema."
 
-#: ../src/proctable.cpp:237 ../src/procproperties.cpp:113
-msgid "Process Name"
-msgstr "Nome de Processo"
-
-#: ../src/proctable.cpp:238 ../src/procproperties.cpp:114
-msgid "User"
-msgstr "Utilizador"
-
-#: ../src/proctable.cpp:239 ../src/procproperties.cpp:115
-msgid "Status"
-msgstr "Estado"
-
-#: ../src/proctable.cpp:240 ../src/procproperties.cpp:117
-msgid "Virtual Memory"
-msgstr "Memória Virtual"
-
-#: ../src/proctable.cpp:241 ../src/procproperties.cpp:118
-msgid "Resident Memory"
-msgstr "Memória Residente"
-
-#: ../src/proctable.cpp:242 ../src/procproperties.cpp:119
-msgid "Writable Memory"
-msgstr "Memória para Escrita"
-
-#: ../src/proctable.cpp:243 ../src/procproperties.cpp:120
-msgid "Shared Memory"
-msgstr "Memória Partilhada"
-
-#: ../src/proctable.cpp:244 ../src/procproperties.cpp:121
-msgid "X Server Memory"
-msgstr "Memória do Servidor X"
-
-#: ../src/proctable.cpp:245
-#, no-c-format
-msgid "% CPU"
-msgstr "% CPU"
-
-#: ../src/proctable.cpp:246 ../src/procproperties.cpp:123
-msgid "CPU Time"
-msgstr "Tempo de CPU"
-
-#: ../src/proctable.cpp:247 ../src/procproperties.cpp:124
-msgid "Started"
-msgstr "Iniciada"
-
-#: ../src/proctable.cpp:248 ../src/procproperties.cpp:125
-msgid "Nice"
-msgstr "Nice"
-
-#: ../src/proctable.cpp:249 ../src/procproperties.cpp:127
-msgid "ID"
-msgstr "ID"
-
-#: ../src/proctable.cpp:250 ../src/procproperties.cpp:128
-msgid "Security Context"
-msgstr "Contexto de Segurança"
-
-#: ../src/proctable.cpp:251 ../src/procproperties.cpp:129
-msgid "Command Line"
-msgstr "Linha de Comando"
-
-#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/proctable.cpp:254 ../src/procproperties.cpp:130
-msgid "Waiting Channel"
-msgstr "Canal de Espera"
-
-#: ../src/proctable.cpp:255
-msgid "Control Group"
-msgstr "Grupo de Controlo"
-
-#: ../src/proctable.cpp:256
-msgid "Unit"
-msgstr "Unidade"
-
-#: ../src/proctable.cpp:257
-msgid "Session"
-msgstr "Sessão"
-
-#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
-#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:260
-msgid "Seat"
-msgstr "Lugar"
-
-#: ../src/proctable.cpp:261
-msgid "Owner"
-msgstr "Dono"
-
-#: ../src/proctable.cpp:262 ../src/procproperties.cpp:126
-msgid "Priority"
-msgstr "Prioridade"
-
-#: ../src/proctable.cpp:1086
-#, c-format
-msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
-msgstr "Média de carga nos últimos 1, 5 e 15 minutos: %0.2f, %0.2f, %0.2f"
-
-#: ../src/procproperties.cpp:99
+#: ../src/procproperties.cpp:104 ../src/util.cpp:420
 msgid "N/A"
 msgstr "N/A"
 
-#: ../src/procproperties.cpp:123
+#: ../src/procproperties.cpp:130 ../src/proctable.cpp:236
+msgid "Process Name"
+msgstr "Nome de Processo"
+
+#: ../src/procproperties.cpp:131 ../src/proctable.cpp:237
+msgid "User"
+msgstr "Utilizador"
+
+#: ../src/procproperties.cpp:132 ../src/proctable.cpp:238
+msgid "Status"
+msgstr "Estado"
+
+#: ../src/procproperties.cpp:134 ../src/proctable.cpp:239
+msgid "Virtual Memory"
+msgstr "Memória Virtual"
+
+#: ../src/procproperties.cpp:135 ../src/proctable.cpp:240
+msgid "Resident Memory"
+msgstr "Memória Residente"
+
+#: ../src/procproperties.cpp:136 ../src/proctable.cpp:241
+msgid "Writable Memory"
+msgstr "Memória para Escrita"
+
+#: ../src/procproperties.cpp:137 ../src/proctable.cpp:242
+msgid "Shared Memory"
+msgstr "Memória Partilhada"
+
+#: ../src/procproperties.cpp:138 ../src/proctable.cpp:243
+msgid "X Server Memory"
+msgstr "Memória do Servidor X"
+
+#: ../src/procproperties.cpp:140 ../src/proctable.cpp:245
+msgid "CPU Time"
+msgstr "Tempo de CPU"
+
+#: ../src/procproperties.cpp:140
 #, c-format
 msgid "%lld second"
 msgid_plural "%lld seconds"
 msgstr[0] "%lld segundo"
 msgstr[1] "%lld segundos"
 
-#: ../src/procproperties.cpp:241
+#: ../src/procproperties.cpp:141 ../src/proctable.cpp:246
+msgid "Started"
+msgstr "Iniciada"
+
+#: ../src/procproperties.cpp:142 ../src/proctable.cpp:247
+msgid "Nice"
+msgstr "Nice"
+
+#: ../src/procproperties.cpp:143 ../src/proctable.cpp:261
+msgid "Priority"
+msgstr "Prioridade"
+
+#: ../src/procproperties.cpp:144 ../src/proctable.cpp:248
+msgid "ID"
+msgstr "ID"
+
+#: ../src/procproperties.cpp:145 ../src/proctable.cpp:249
+msgid "Security Context"
+msgstr "Contexto de Segurança"
+
+#: ../src/procproperties.cpp:146 ../src/proctable.cpp:250
+msgid "Command Line"
+msgstr "Linha de Comando"
+
+#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
+#: ../src/procproperties.cpp:147 ../src/proctable.cpp:253
+msgid "Waiting Channel"
+msgstr "Canal de Espera"
+
+#: ../src/procproperties.cpp:258
 msgid "Process Properties"
 msgstr "Propriedades do Processo"
 
-#: ../src/procproperties.cpp:261
+#: ../src/procproperties.cpp:278
 #, c-format
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "Propriedades do processo \"%s\" (PID %u):"
+
+#: ../src/proctable.cpp:244
+#, no-c-format
+msgid "% CPU"
+msgstr "% CPU"
+
+#: ../src/proctable.cpp:254
+msgid "Control Group"
+msgstr "Grupo de Controlo"
+
+#: ../src/proctable.cpp:255
+msgid "Unit"
+msgstr "Unidade"
+
+#: ../src/proctable.cpp:256
+msgid "Session"
+msgstr "Sessão"
+
+#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
+#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
+#: ../src/proctable.cpp:259
+msgid "Seat"
+msgstr "Lugar"
+
+#: ../src/proctable.cpp:260
+msgid "Owner"
+msgstr "Dono"
+
+#: ../src/proctable.cpp:1078
+#, c-format
+msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
+msgstr "Média de carga nos últimos 1, 5 e 15 minutos: %0.2f, %0.2f, %0.2f"
 
 #. Translators: The first string parameter is release version (codename),
 #. * the second one is the architecture, 32 or 64-bit
@@ -1182,41 +1202,35 @@ msgstr "Distribuição %s %s"
 msgid "%d-bit"
 msgstr "%d-bit"
 
-#: ../src/sysinfo.cpp:219
-msgid "Unknown model"
-msgstr "Modelo desconhecido"
-
-#: ../src/sysinfo.cpp:740
+#: ../src/sysinfo.cpp:734
 #, c-format
 msgid "Kernel %s"
 msgstr "Kernel %s"
 
-#: ../src/sysinfo.cpp:754
+#: ../src/sysinfo.cpp:746
 #, c-format
 msgid "GNOME %s"
 msgstr "GNOME %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:769
-#, c-format
-msgid "<b>Hardware</b>"
-msgstr "<b>Equipamento</b>"
+#: ../src/sysinfo.cpp:759
+msgid "Hardware"
+msgstr "Equipamento"
 
-#: ../src/sysinfo.cpp:774
+#: ../src/sysinfo.cpp:764
 msgid "Memory:"
 msgstr "Memória:"
 
-#: ../src/sysinfo.cpp:779
+#: ../src/sysinfo.cpp:769
 msgid "Processor:"
 msgstr "Processador:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:788
-#, c-format
-msgid "<b>System Status</b>"
-msgstr "<b>Estado do Sistema</b>"
+#: ../src/sysinfo.cpp:778
+msgid "System Status"
+msgstr "Estado do Sistema"
 
-#: ../src/sysinfo.cpp:794
+#: ../src/sysinfo.cpp:784
 msgid "Available disk space:"
 msgstr "Espaço disponível em disco:"
 
@@ -1318,15 +1332,17 @@ msgid_plural "%u bytes"
 msgstr[0] "%u byte"
 msgstr[1] "%u bytes"
 
-#: ../src/util.cpp:420
-msgid "<i>N/A</i>"
-msgstr "<i>N/A</i>"
-
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:582
+#: ../src/util.cpp:585
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "Unknown model"
+#~ msgstr "Modelo desconhecido"
+
+#~ msgid "<i>N/A</i>"
+#~ msgstr "<i>N/A</i>"
 
 #~ msgid "_Change Priority..."
 #~ msgstr "_Alterar a Prioridade..."
@@ -1393,9 +1409,6 @@ msgstr "%s/s"
 
 #~ msgid "Total:"
 #~ msgstr "Total:"
-
-#~ msgid "Sent:"
-#~ msgstr "Enviado:"
 
 #~ msgid "_Background color:"
 #~ msgstr "Cor de _fundo:"
