@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-03 21:25+0200\n"
-"PO-Revision-Date: 2012-04-03 21:25+0100\n"
+"POT-Creation-Date: 2012-09-02 10:51+0200\n"
+"PO-Revision-Date: 2012-09-02 10:53+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1
+#: ../data/interface.ui.h:1
 #: ../src/callbacks.cpp:184
-#: ../src/interface.cpp:635
 #: ../src/procman.cpp:721
 msgid "System Monitor"
 msgstr "Systemövervakare"
@@ -28,6 +28,102 @@ msgstr "Systemövervakare"
 #: ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "Visa aktuella processer och övervaka systemtillståndet"
+
+#: ../gnome-system-monitor.desktop.in.in.h:3
+msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
+msgstr "Skärm;Monitor;System;Process;CPU;Processor;Minne;Nätverk;Historik;Användning;"
+
+#: ../data/interface.ui.h:2
+msgid "System"
+msgstr "System"
+
+#: ../data/interface.ui.h:3
+msgid "End _Process"
+msgstr "Avsluta _process"
+
+#: ../data/interface.ui.h:4
+#: ../data/preferences.ui.h:9
+msgid "Processes"
+msgstr "Processer"
+
+#: ../data/interface.ui.h:5
+msgid "CPU History"
+msgstr "Processorhistorik"
+
+#: ../data/interface.ui.h:6
+msgid "Memory and Swap History"
+msgstr "Historik över användning av minne och växlingsutrymme"
+
+#: ../data/interface.ui.h:7
+#: ../src/interface.cpp:327
+#: ../src/procproperties.cpp:133
+#: ../src/proctable.cpp:251
+msgid "Memory"
+msgstr "Minne"
+
+#: ../data/interface.ui.h:8
+#: ../src/interface.cpp:338
+msgid "Swap"
+msgstr "Växlingsutrymme"
+
+#: ../data/interface.ui.h:9
+msgid "Network History"
+msgstr "Nätverkshistorik"
+
+#: ../data/interface.ui.h:10
+#: ../src/interface.cpp:363
+msgid "Receiving"
+msgstr "Mottaget"
+
+#: ../data/interface.ui.h:11
+msgid "Total Received"
+msgstr "Totalt mottaget"
+
+#: ../data/interface.ui.h:12
+msgid "Sent"
+msgstr "Skickat"
+
+#: ../data/interface.ui.h:13
+msgid "Total Sent"
+msgstr "Totalt sänt"
+
+#: ../data/interface.ui.h:14
+msgid "\n"
+msgstr "\n"
+
+#: ../data/interface.ui.h:16
+#: ../data/preferences.ui.h:12
+msgid "Resources"
+msgstr "Resurser"
+
+#: ../data/interface.ui.h:17
+#: ../data/preferences.ui.h:14
+msgid "File Systems"
+msgstr "Filsystem"
+
+#: ../data/lsof.ui.h:1
+msgid "Search for Open Files"
+msgstr "Sök efter öppna filer"
+
+#: ../data/lsof.ui.h:2
+msgid "_Name contains:"
+msgstr "_Namn innehåller:"
+
+#: ../data/lsof.ui.h:3
+msgid "Case insensitive matching"
+msgstr "Matchning inte känslig för skiftläge"
+
+#: ../data/lsof.ui.h:4
+msgid "C_lear"
+msgstr "Tö_m"
+
+#: ../data/lsof.ui.h:5
+msgid "S_earch results:"
+msgstr "S_ökresultat:"
+
+#: ../data/openfiles.ui.h:1
+msgid "Open Files"
+msgstr "Öppna filer"
 
 #: ../data/preferences.ui.h:1
 msgid "System Monitor Preferences"
@@ -61,11 +157,6 @@ msgstr "Informationsfält"
 msgid "Process i_nformation shown in list:"
 msgstr "Processi_nformation visad i listan:"
 
-#: ../data/preferences.ui.h:9
-#: ../src/interface.cpp:714
-msgid "Processes"
-msgstr "Processer"
-
 #: ../data/preferences.ui.h:10
 msgid "Graphs"
 msgstr "Diagram"
@@ -74,19 +165,21 @@ msgstr "Diagram"
 msgid "_Show network speed in bits"
 msgstr "_Visa nätverkshastighet i bitar"
 
-#: ../data/preferences.ui.h:12
-#: ../src/interface.cpp:718
-msgid "Resources"
-msgstr "Resurser"
-
 #: ../data/preferences.ui.h:13
 msgid "Show _all file systems"
 msgstr "Visa _alla filsystem"
 
-#: ../data/preferences.ui.h:14
-#: ../src/interface.cpp:722
-msgid "File Systems"
-msgstr "Filsystem"
+#: ../data/renice.ui.h:1
+msgid "Change _Priority"
+msgstr "Ändra _prioritet"
+
+#: ../data/renice.ui.h:2
+msgid "_Nice value:"
+msgstr "_Nice-värde:"
+
+#: ../data/renice.ui.h:3
+msgid "<small><i><b>Note:</b> The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority.</i></small>"
+msgstr "<small><i><b>Observera:</b> Prioriteten för en process anges av dess nice-värde. Ett lägre nice-värde motsvarar en högre prioritet.</i></small>"
 
 #: ../src/argv.cpp:21
 msgid "Show the System tab"
@@ -113,34 +206,34 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>."
 
-#: ../src/disks.cpp:299
+#: ../src/disks.cpp:298
 #: ../src/memmaps.cpp:361
 msgid "Device"
 msgstr "Enhet"
 
-#: ../src/disks.cpp:300
+#: ../src/disks.cpp:299
 msgid "Directory"
 msgstr "Katalog"
 
-#: ../src/disks.cpp:301
+#: ../src/disks.cpp:300
 #: ../src/gsm_color_button.c:222
 #: ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "Typ"
 
-#: ../src/disks.cpp:302
+#: ../src/disks.cpp:301
 msgid "Total"
 msgstr "Totalt"
 
-#: ../src/disks.cpp:303
+#: ../src/disks.cpp:302
 msgid "Free"
 msgstr "Ledigt"
 
-#: ../src/disks.cpp:304
+#: ../src/disks.cpp:303
 msgid "Available"
 msgstr "Tillgängligt"
 
-#: ../src/disks.cpp:305
+#: ../src/disks.cpp:304
 msgid "Used"
 msgstr "Använt"
 
@@ -417,68 +510,25 @@ msgstr "Anpassad"
 msgid "Set process priority manually"
 msgstr "Ställ in processprioritet manuellt"
 
-#: ../src/interface.cpp:231
-msgid "End _Process"
-msgstr "Avsluta _process"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:279
+#: ../src/interface.cpp:256
 #, c-format
 msgid "Pick a Color for '%s'"
 msgstr "Välj en färg för \"%s\""
 
-#: ../src/interface.cpp:290
-msgid "CPU History"
-msgstr "Processorhistorik"
-
-#: ../src/interface.cpp:344
+#: ../src/interface.cpp:292
 #: ../src/procproperties.cpp:139
 msgid "CPU"
 msgstr "Processor"
 
-#: ../src/interface.cpp:346
+#: ../src/interface.cpp:294
 #, c-format
 msgid "CPU%d"
 msgstr "Processor%d"
 
-#: ../src/interface.cpp:367
-msgid "Memory and Swap History"
-msgstr "Historik över användning av minne och växlingsutrymme"
-
-#: ../src/interface.cpp:401
-#: ../src/proctable.cpp:252
-#: ../src/procproperties.cpp:133
-msgid "Memory"
-msgstr "Minne"
-
-#: ../src/interface.cpp:432
-msgid "Swap"
-msgstr "Växlingsutrymme"
-
-#: ../src/interface.cpp:463
-msgid "Network History"
-msgstr "Nätverkshistorik"
-
-#: ../src/interface.cpp:496
-msgid "Receiving"
-msgstr "Mottaget"
-
-#: ../src/interface.cpp:529
-msgid "Total Received"
-msgstr "Totalt mottaget"
-
-#: ../src/interface.cpp:557
+#: ../src/interface.cpp:378
 msgid "Sending"
 msgstr "Sänt"
-
-#: ../src/interface.cpp:591
-msgid "Total Sent"
-msgstr "Totalt sänt"
-
-#. procman_create_sysinfo_view();
-#: ../src/interface.cpp:710
-msgid "System"
-msgstr "System"
 
 #: ../src/load-graph.cpp:166
 #, c-format
@@ -487,61 +537,37 @@ msgid_plural "%u seconds"
 msgstr[0] "%u sekund"
 msgstr[1] "%u sekunder"
 
-#: ../src/load-graph.cpp:347
+#: ../src/load-graph.cpp:345
 msgid "not available"
 msgstr "inte tillgänglig"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:350
+#: ../src/load-graph.cpp:348
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) av %s"
 
-#: ../src/lsof.cpp:124
-#, c-format
-msgid ""
-"<b>Error</b>\n"
-"'%s' is not a valid Perl regular expression.\n"
-"%s"
-msgstr ""
-"<b>Fel</b>\n"
-"\"%s\" är inte ett giltigt reguljärt Perl-uttryck.\n"
-"%s"
+#: ../src/lsof.cpp:125
+msgid "Error"
+msgstr "Fel"
 
-#: ../src/lsof.cpp:270
+#: ../src/lsof.cpp:126
+#, c-format
+msgid "'%s' is not a valid Perl regular expression."
+msgstr "\"%s\" är inte ett giltigt reguljärt Perl-uttryck."
+
+#: ../src/lsof.cpp:272
 msgid "Process"
 msgstr "Process"
 
-#: ../src/lsof.cpp:282
+#: ../src/lsof.cpp:284
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:292
+#: ../src/lsof.cpp:294
 #: ../src/memmaps.cpp:339
 msgid "Filename"
 msgstr "Filnamn"
-
-#. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-#: ../src/lsof.cpp:309
-msgid "Search for Open Files"
-msgstr "Sök efter öppna filer"
-
-#: ../src/lsof.cpp:336
-msgid "_Name contains:"
-msgstr "_Namn innehåller:"
-
-#. The default accelerator collides with the default close accelerator.
-#: ../src/lsof.cpp:350
-msgid "C_lear"
-msgstr "Tö_m"
-
-#: ../src/lsof.cpp:354
-msgid "Case insensitive matching"
-msgstr "Matchning inte känslig för skiftläge"
-
-#: ../src/lsof.cpp:362
-msgid "S_earch results:"
-msgstr "S_ökresultat:"
 
 #. xgettext: virtual memory start
 #: ../src/memmaps.cpp:341
@@ -639,11 +665,7 @@ msgstr "FD"
 msgid "Object"
 msgstr "Objekt"
 
-#: ../src/openfiles.cpp:336
-msgid "Open Files"
-msgstr "Öppna filer"
-
-#: ../src/openfiles.cpp:357
+#: ../src/openfiles.cpp:346
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_Filer som öppnats av processen \"%s\" (PID %u):"
@@ -1011,33 +1033,24 @@ msgid "Ending a process may destroy data, break the session or introduce a secur
 msgstr "Att avsluta en process kan förstöra data, ha sönder sessionen eller introducera en säkerhetsrisk. Endast processer som inte svarar bör avslutas."
 
 #: ../src/procdialogs.cpp:130
-#: ../src/procdialogs.cpp:220
 #, c-format
 msgid "(%s Priority)"
 msgstr "(%s prioritet)"
 
-#: ../src/procdialogs.cpp:174
+#: ../src/procdialogs.cpp:175
 #, c-format
 msgid "Change Priority of Process »%s« (PID: %u)"
 msgstr "Ändra prioritet för processen \"%s\" (PID: %u)"
 
-#: ../src/procdialogs.cpp:186
-msgid "Change _Priority"
-msgstr "Ändra _prioritet"
-
-#: ../src/procdialogs.cpp:209
-msgid "_Nice value:"
-msgstr "_Nice-värde:"
-
-#: ../src/procdialogs.cpp:226
+#: ../src/procdialogs.cpp:193
 msgid "Note:"
 msgstr "Observera:"
 
-#: ../src/procdialogs.cpp:227
+#: ../src/procdialogs.cpp:194
 msgid "The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."
 msgstr "Prioriteten hos en process ges av dess nice-värde. Ett lägre nice-värde motsvarar en högre prioritet."
 
-#: ../src/procdialogs.cpp:449
+#: ../src/procdialogs.cpp:418
 msgid "Icon"
 msgstr "Ikon"
 
@@ -1045,122 +1058,55 @@ msgstr "Ikon"
 msgid "A simple process and system monitor."
 msgstr "En enkel process- och systemövervakare."
 
-#: ../src/proctable.cpp:237
+#: ../src/procproperties.cpp:104
+#: ../src/util.cpp:420
+msgid "N/A"
+msgstr "Inte tillgänglig"
+
 #: ../src/procproperties.cpp:130
+#: ../src/proctable.cpp:236
 msgid "Process Name"
 msgstr "Processnamn"
 
-#: ../src/proctable.cpp:238
 #: ../src/procproperties.cpp:131
+#: ../src/proctable.cpp:237
 msgid "User"
 msgstr "Användare"
 
-#: ../src/proctable.cpp:239
 #: ../src/procproperties.cpp:132
+#: ../src/proctable.cpp:238
 msgid "Status"
 msgstr "Status"
 
-#: ../src/proctable.cpp:240
 #: ../src/procproperties.cpp:134
+#: ../src/proctable.cpp:239
 msgid "Virtual Memory"
 msgstr "Virtuellt minne"
 
-#: ../src/proctable.cpp:241
 #: ../src/procproperties.cpp:135
+#: ../src/proctable.cpp:240
 msgid "Resident Memory"
 msgstr "Beständigt minne"
 
-#: ../src/proctable.cpp:242
 #: ../src/procproperties.cpp:136
+#: ../src/proctable.cpp:241
 msgid "Writable Memory"
 msgstr "Skrivbart minne"
 
-#: ../src/proctable.cpp:243
 #: ../src/procproperties.cpp:137
+#: ../src/proctable.cpp:242
 msgid "Shared Memory"
 msgstr "Delat minne"
 
-#: ../src/proctable.cpp:244
 #: ../src/procproperties.cpp:138
+#: ../src/proctable.cpp:243
 msgid "X Server Memory"
 msgstr "X-serverminne"
 
-#: ../src/proctable.cpp:245
-#, no-c-format
-msgid "% CPU"
-msgstr "Processor %"
-
-#: ../src/proctable.cpp:246
 #: ../src/procproperties.cpp:140
+#: ../src/proctable.cpp:245
 msgid "CPU Time"
 msgstr "Processortid"
-
-#: ../src/proctable.cpp:247
-#: ../src/procproperties.cpp:141
-msgid "Started"
-msgstr "Startad"
-
-#: ../src/proctable.cpp:248
-#: ../src/procproperties.cpp:142
-msgid "Nice"
-msgstr "Processprioritet"
-
-#: ../src/proctable.cpp:249
-#: ../src/procproperties.cpp:144
-msgid "ID"
-msgstr "ID"
-
-#: ../src/proctable.cpp:250
-#: ../src/procproperties.cpp:145
-msgid "Security Context"
-msgstr "Säkerhetskontext"
-
-#: ../src/proctable.cpp:251
-#: ../src/procproperties.cpp:146
-msgid "Command Line"
-msgstr "Kommandorad"
-
-#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/proctable.cpp:254
-#: ../src/procproperties.cpp:147
-msgid "Waiting Channel"
-msgstr "Väntande kanal"
-
-#: ../src/proctable.cpp:255
-msgid "Control Group"
-msgstr "Styrgrupp"
-
-#: ../src/proctable.cpp:256
-msgid "Unit"
-msgstr "Enhet"
-
-#: ../src/proctable.cpp:257
-msgid "Session"
-msgstr "Session"
-
-#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
-#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:260
-msgid "Seat"
-msgstr "Seat"
-
-#: ../src/proctable.cpp:261
-msgid "Owner"
-msgstr "Ägare"
-
-#: ../src/proctable.cpp:262
-#: ../src/procproperties.cpp:143
-msgid "Priority"
-msgstr "Prioritet"
-
-#: ../src/proctable.cpp:1086
-#, c-format
-msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
-msgstr "Belastningsgenomsnitt för de senaste 1, 5, 15 minuterna: %0.2f, %0.2f, %0.2f"
-
-#: ../src/procproperties.cpp:104
-msgid "N/A"
-msgstr "Inte tillgänglig"
 
 #: ../src/procproperties.cpp:140
 #, c-format
@@ -1168,6 +1114,42 @@ msgid "%lld second"
 msgid_plural "%lld seconds"
 msgstr[0] "%lld sekund"
 msgstr[1] "%lld sekunder"
+
+#: ../src/procproperties.cpp:141
+#: ../src/proctable.cpp:246
+msgid "Started"
+msgstr "Startad"
+
+#: ../src/procproperties.cpp:142
+#: ../src/proctable.cpp:247
+msgid "Nice"
+msgstr "Processprioritet"
+
+#: ../src/procproperties.cpp:143
+#: ../src/proctable.cpp:261
+msgid "Priority"
+msgstr "Prioritet"
+
+#: ../src/procproperties.cpp:144
+#: ../src/proctable.cpp:248
+msgid "ID"
+msgstr "ID"
+
+#: ../src/procproperties.cpp:145
+#: ../src/proctable.cpp:249
+msgid "Security Context"
+msgstr "Säkerhetskontext"
+
+#: ../src/procproperties.cpp:146
+#: ../src/proctable.cpp:250
+msgid "Command Line"
+msgstr "Kommandorad"
+
+#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
+#: ../src/procproperties.cpp:147
+#: ../src/proctable.cpp:253
+msgid "Waiting Channel"
+msgstr "Väntande kanal"
 
 #: ../src/procproperties.cpp:258
 msgid "Process Properties"
@@ -1177,6 +1159,38 @@ msgstr "Processegenskaper"
 #, c-format
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "Egenskaper för processen \"%s\" (PID %u):"
+
+#: ../src/proctable.cpp:244
+#, no-c-format
+msgid "% CPU"
+msgstr "Processor %"
+
+#: ../src/proctable.cpp:254
+msgid "Control Group"
+msgstr "Styrgrupp"
+
+#: ../src/proctable.cpp:255
+msgid "Unit"
+msgstr "Enhet"
+
+#: ../src/proctable.cpp:256
+msgid "Session"
+msgstr "Session"
+
+#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
+#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
+#: ../src/proctable.cpp:259
+msgid "Seat"
+msgstr "Seat"
+
+#: ../src/proctable.cpp:260
+msgid "Owner"
+msgstr "Ägare"
+
+#: ../src/proctable.cpp:1078
+#, c-format
+msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
+msgstr "Belastningsgenomsnitt för de senaste 1, 5, 15 minuterna: %0.2f, %0.2f, %0.2f"
 
 #. Translators: The first string parameter is release version (codename),
 #. * the second one is the architecture, 32 or 64-bit
@@ -1192,41 +1206,35 @@ msgstr "Utgåva %s %s"
 msgid "%d-bit"
 msgstr "%d-bitars"
 
-#: ../src/sysinfo.cpp:219
-msgid "Unknown model"
-msgstr "Okänd modell"
-
-#: ../src/sysinfo.cpp:740
+#: ../src/sysinfo.cpp:734
 #, c-format
 msgid "Kernel %s"
 msgstr "Kärna %s"
 
-#: ../src/sysinfo.cpp:754
+#: ../src/sysinfo.cpp:746
 #, c-format
 msgid "GNOME %s"
 msgstr "GNOME %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:769
-#, c-format
-msgid "<b>Hardware</b>"
-msgstr "<b>Hårdvara</b>"
+#: ../src/sysinfo.cpp:759
+msgid "Hardware"
+msgstr "Hårdvara"
 
-#: ../src/sysinfo.cpp:774
+#: ../src/sysinfo.cpp:764
 msgid "Memory:"
 msgstr "Minne:"
 
-#: ../src/sysinfo.cpp:779
+#: ../src/sysinfo.cpp:769
 msgid "Processor:"
 msgstr "Processor:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:788
-#, c-format
-msgid "<b>System Status</b>"
-msgstr "<b>Systemstatus</b>"
+#: ../src/sysinfo.cpp:778
+msgid "System Status"
+msgstr "Systemstatus"
 
-#: ../src/sysinfo.cpp:794
+#: ../src/sysinfo.cpp:784
 msgid "Available disk space:"
 msgstr "Tillgängligt diskutrymme:"
 
@@ -1334,223 +1342,11 @@ msgid_plural "%u bytes"
 msgstr[0] "%u byte"
 msgstr[1] "%u byte"
 
-# Platsbrist, annars "Inte tillgängligt"
-#: ../src/util.cpp:420
-msgid "<i>N/A</i>"
-msgstr "<i>-</i>"
-
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:582
+#: ../src/util.cpp:585
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#~ msgid "File system i_nformation shown in list:"
-#~ msgstr "Filsystemsi_nformation visad i listan:"
-
-#~ msgid "_Change Priority..."
-#~ msgstr "_Ändra prioritet..."
-
-#~ msgid "Default graph cpu color"
-#~ msgstr "Färg på standarddiagram för processor"
-
-#~ msgid "Show process 'arguments' column on startup"
-#~ msgstr "Visa processkolumnen \"argument\" vid uppstart"
-
-#~ msgid "Show process 'estimated memory usage' column on startup"
-#~ msgstr "Visa processkolumnen \"beräknad minnesanvändning\" vid uppstart"
-
-#~ msgid "Width of process 'arguments' column"
-#~ msgstr "Bredd på processkolumnen \"argument\""
-
-#~ msgid "Width of process 'estimated memory usage' column"
-#~ msgstr "Bredd på processkolumnen \"beräknad minnesanvändning\""
-
-#~ msgid "(High Priority)"
-#~ msgstr "(Hög prioritet)"
-
-#~ msgid "(Normal Priority)"
-#~ msgstr "(Normal prioritet)"
-
-#~ msgid "(Very Low Priority)"
-#~ msgstr "(Mycket låg prioritet)"
-
-#~ msgid "Solaris mode"
-#~ msgstr "Solaris-läge"
-
-#~ msgid "Release %s"
-#~ msgstr "Utgåva %s"
-
-#~ msgid "Processor %d:"
-#~ msgstr "Processor %d:"
-
-#~ msgid "of"
-#~ msgstr "av"
-
-#~ msgid "("
-#~ msgstr "("
-
-#~ msgid ")"
-#~ msgstr ")"
-
-#~ msgid "Default graph background color"
-#~ msgstr "Bakgrundsfärg för standardgraf"
-
-#~ msgid "Default graph frame color"
-#~ msgstr "Färg på standardgraf för ram"
-
-#~ msgid "_Quit"
-#~ msgstr "_Avsluta"
-
-#~ msgid "Prefere_nces"
-#~ msgstr "_Inställningar"
-
-#~ msgid "_About"
-#~ msgstr "_Om"
-
-#~ msgid "User memory:"
-#~ msgstr "Användarminne:"
-
-#~ msgid "Used swap:"
-#~ msgstr "Använt växlingsutrymme:"
-
-#~ msgid "Total:"
-#~ msgstr "Totalt:"
-
-#~ msgid "Sent:"
-#~ msgstr "Skickat:"
-
-#~ msgid "_Background color:"
-#~ msgstr "_Bakgrundsfärg:"
-
-#~ msgid "_Grid color:"
-#~ msgstr "_Rutnätsfärg:"
-
-#~ msgid "Column zero saved width"
-#~ msgstr "Sparad bredd för kolumn noll"
-
-#~ msgid "Default graph net out color"
-#~ msgstr "Nät ut-färg för standardgraf"
-
-#~ msgid "Show column zero on startup"
-#~ msgstr "Visa kolumn noll vid uppstart"
-
-#~ msgid "Unknown distribution"
-#~ msgstr "Okänd distribution"
-
-#~ msgid "Unknown release"
-#~ msgstr "Okänd utgåva"
-
-#~ msgid "Unknown version"
-#~ msgstr "Okänd version"
-
-#~ msgid "No hidden processes"
-#~ msgstr "Inga dolda processer"
-
-#~ msgid ""
-#~ "There are no hidden processes in the list. To show all running processes, "
-#~ "select the \"All processes\" option in the main window."
-#~ msgstr ""
-#~ "Det finns inga dolda processer i listan. För att visa alla processer som "
-#~ "körs väljer du alternativet \"Alla processer\" i huvudfönstret."
-
-#~ msgid "Hidden Processes"
-#~ msgstr "Dolda processer"
-
-#~ msgid "Currently _hidden processes:"
-#~ msgstr "_Dolda processer för tillfället:"
-
-#~ msgid "_Remove From List"
-#~ msgstr "_Ta bort från listan"
-
-#~ msgid ""
-#~ "These are the processes you have chosen to hide. You can reshow a process "
-#~ "by removing it from this list."
-#~ msgstr ""
-#~ "Detta är de processer som du har valt att dölja. Du kan visa en process "
-#~ "igen genom att ta bort den från denna lista."
-
-#~ msgid "Show process threads"
-#~ msgstr "Visa processtrådar"
-
-#~ msgid "Show warning dialog when hiding processes"
-#~ msgstr "Visa varningsdialog då processer döljs"
-
-#~ msgid "_Hide Process"
-#~ msgstr "_Dölj process"
-
-#~ msgid "_Hidden Processes"
-#~ msgstr "_Dolda processer"
-
-#~ msgid "Open the list of currently hidden processes"
-#~ msgstr "Öppna listan över dolda processer"
-
-#~ msgid "Hide the selected process?"
-#~ msgstr "Dölj den valda processen?"
-
-#~ msgid ""
-#~ "Hidden processes are no longer visible in the process list. You can re-"
-#~ "enable them by selecting the \"Hidden Processes\" entry in the View menu."
-#~ msgstr ""
-#~ "Dolda processer syns inte längre i processlistan. Du kan återaktivera dem "
-#~ "genom att välja posten \"Dolda processer\" i Visa-menyn."
-
-#~ msgid "Alert before _hiding processes"
-#~ msgstr "Varna innan processer _döljs"
-
-#~ msgid "User Space Free:"
-#~ msgstr "Ledigt användarutrymme:"
-
-#~ msgid "Process CPU % column saved width"
-#~ msgstr "Sparad bredd för kolumnen Process CPU %"
-
-#~ msgid "Process CPU time column saved width"
-#~ msgstr "Sparad bredd för kolumnen Process CPU-tid"
-
-#~ msgid "Process PID column saved width"
-#~ msgstr "Sparad bredd för kolumnen Process PID"
-
-#~ msgid "Process SELinux security context column saved width"
-#~ msgstr "Sparad bredd för kolumnen Process SELinux säkerhetssammanhang"
-
-#~ msgid "Process arguments column saved width"
-#~ msgstr "Sparad bredd för kolumnen Processargument"
-
-#~ msgid "Process name column saved width"
-#~ msgstr "Sparad bredd för kolumnen Processnamn"
-
-#~ msgid "Process nice column saved width"
-#~ msgstr "Sparad bredd för kolumnen Processprioritet (nice)"
-
-#~ msgid "Process owner column saved width"
-#~ msgstr "Sparad bredd för kolumnen Processägare"
-
-#~ msgid "Process resident memory column saved width"
-#~ msgstr "Sparad bredd för kolumnen Process fast minne"
-
-#~ msgid "Process shared memory column saved width"
-#~ msgstr "Sparad bredd för kolumnen Process delat minne"
-
-#~ msgid "Process start time column saved width"
-#~ msgstr "Sparad bredd för kolumnen Process starttid"
-
-#~ msgid "Process status column saved width"
-#~ msgstr "Sparad bredd för kolumnen Processtatus"
-
-#~ msgid "Process virtual memory column saved width"
-#~ msgstr "Sparad bredd för kolumnen Process virtuellt minne"
-
-#~ msgid "Show process writable memory column saved width"
-#~ msgstr "Visa sparad bredd för kolumnen Process skrivbart minne"
-
-#~ msgid "_Lsof"
-#~ msgstr "_Lsof"
-
-#~ msgid "Lsof"
-#~ msgstr "Lsof"
-
-#~ msgid "Arguments"
-#~ msgstr "Argument"
-
-#~ msgid "Devices"
-#~ msgstr "Enheter"
+#~ msgid "Unknown model"
+#~ msgstr "Okänd modell"
