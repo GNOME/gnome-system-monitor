@@ -11,23 +11,109 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-03-23 17:26+0000\n"
-"PO-Revision-Date: 2012-03-27 01:44+0900\n"
+"POT-Creation-Date: 2012-09-05 07:15+0000\n"
+"PO-Revision-Date: 2012-09-15 17:38+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:184
-#: ../src/interface.cpp:635 ../src/procman.cpp:721
+#: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
+#: ../src/callbacks.cpp:184 ../src/procman.cpp:721
 msgid "System Monitor"
 msgstr "시스템 정보"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "현재 프로세스와 시스템 상태를 봅니다"
+
+#: ../gnome-system-monitor.desktop.in.in.h:3
+msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
+msgstr ""
+
+#: ../data/interface.ui.h:2
+msgid "System"
+msgstr "시스템"
+
+#: ../data/interface.ui.h:3
+msgid "End _Process"
+msgstr "프로세스 끝내기(_P)"
+
+#: ../data/interface.ui.h:4 ../data/preferences.ui.h:9
+msgid "Processes"
+msgstr "프로세스"
+
+#: ../data/interface.ui.h:5
+msgid "CPU History"
+msgstr "CPU 사용 기록"
+
+#: ../data/interface.ui.h:6
+msgid "Memory and Swap History"
+msgstr "메모리 및 스왑 사용 기록"
+
+#: ../data/interface.ui.h:7 ../src/interface.cpp:327
+#: ../src/procproperties.cpp:133 ../src/proctable.cpp:251
+msgid "Memory"
+msgstr "메모리"
+
+#: ../data/interface.ui.h:8 ../src/interface.cpp:338
+msgid "Swap"
+msgstr "스왑"
+
+#: ../data/interface.ui.h:9
+msgid "Network History"
+msgstr "네트워크 사용 기록"
+
+#: ../data/interface.ui.h:10 ../src/interface.cpp:363
+msgid "Receiving"
+msgstr "받기"
+
+#: ../data/interface.ui.h:11
+msgid "Total Received"
+msgstr "전체 받음"
+
+#: ../data/interface.ui.h:12
+msgid "Sent"
+msgstr ""
+
+#: ../data/interface.ui.h:13
+msgid "Total Sent"
+msgstr "전체 보냄"
+
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:12
+msgid "Resources"
+msgstr "자원"
+
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:14
+msgid "File Systems"
+msgstr "파일시스템"
+
+#: ../data/lsof.ui.h:1
+msgid "Search for Open Files"
+msgstr "열린 파일을 찾습니다"
+
+#: ../data/lsof.ui.h:2
+msgid "_Name contains:"
+msgstr "이름에 포함(_N):"
+
+#: ../data/lsof.ui.h:3
+msgid "Case insensitive matching"
+msgstr "대소문자 구분하지 않음"
+
+#: ../data/lsof.ui.h:4
+msgid "C_lear"
+msgstr ""
+
+#: ../data/lsof.ui.h:5
+msgid "S_earch results:"
+msgstr "검색 결과(_E):"
+
+#: ../data/openfiles.ui.h:1
+msgid "Open Files"
+msgstr "연 파일"
 
 #: ../data/preferences.ui.h:1
 msgid "System Monitor Preferences"
@@ -61,10 +147,6 @@ msgstr "정보란"
 msgid "Process i_nformation shown in list:"
 msgstr "목록에 표시할 프로세스 정보(_N):"
 
-#: ../data/preferences.ui.h:9 ../src/interface.cpp:714
-msgid "Processes"
-msgstr "프로세스"
-
 #: ../data/preferences.ui.h:10
 msgid "Graphs"
 msgstr "그래프"
@@ -73,17 +155,23 @@ msgstr "그래프"
 msgid "_Show network speed in bits"
 msgstr "네트워크 속도 비트 단위로 표시(_S)"
 
-#: ../data/preferences.ui.h:12 ../src/interface.cpp:718
-msgid "Resources"
-msgstr "자원"
-
 #: ../data/preferences.ui.h:13
 msgid "Show _all file systems"
 msgstr "모든 파일 시스템 표시(_A)"
 
-#: ../data/preferences.ui.h:14 ../src/interface.cpp:722
-msgid "File Systems"
-msgstr "파일시스템"
+#: ../data/renice.ui.h:1
+msgid "Change _Priority"
+msgstr "우선순위 바꾸기(_P)"
+
+#: ../data/renice.ui.h:2
+msgid "_Nice value:"
+msgstr "NICE 값(_N):"
+
+#: ../data/renice.ui.h:3
+msgid ""
+"<small><i><b>Note:</b> The priority of a process is given by its nice value. "
+"A lower nice value corresponds to a higher priority.</i></small>"
+msgstr "<small><i><b>주의:</b> 프로세스의 우선순위는 그 nice 값에 따라 결정됩니다. nice 값이 낮을 수록 우선순위가 높습니다.</i></small>"
 
 # command line option
 #: ../src/argv.cpp:21
@@ -111,31 +199,31 @@ msgstr ""
 "류창우 <cwryu@debian.org>\n"
 "차영호 <ganadist@gmail.com>"
 
-#: ../src/disks.cpp:299 ../src/memmaps.cpp:361
+#: ../src/disks.cpp:298 ../src/memmaps.cpp:361
 msgid "Device"
 msgstr "장치"
 
-#: ../src/disks.cpp:300
+#: ../src/disks.cpp:299
 msgid "Directory"
 msgstr "디렉터리"
 
-#: ../src/disks.cpp:301 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:300 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "종류"
 
-#: ../src/disks.cpp:302
+#: ../src/disks.cpp:301
 msgid "Total"
 msgstr "전체"
 
-#: ../src/disks.cpp:303
+#: ../src/disks.cpp:302
 msgid "Free"
 msgstr "남은 양"
 
-#: ../src/disks.cpp:304
+#: ../src/disks.cpp:303
 msgid "Available"
 msgstr "사용 가능"
 
-#: ../src/disks.cpp:305
+#: ../src/disks.cpp:304
 msgid "Used"
 msgstr "사용 중"
 
@@ -404,66 +492,24 @@ msgstr "사용자 설정"
 msgid "Set process priority manually"
 msgstr "프로세스 우선 순위 수동으로 설정"
 
-#: ../src/interface.cpp:231
-msgid "End _Process"
-msgstr "프로세스 끝내기(_P)"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:279
+#: ../src/interface.cpp:256
 #, c-format
 msgid "Pick a Color for '%s'"
 msgstr "'%s'에 사용할 색 선택"
 
-#: ../src/interface.cpp:290
-msgid "CPU History"
-msgstr "CPU 사용 기록"
-
-#: ../src/interface.cpp:344 ../src/procproperties.cpp:122
+#: ../src/interface.cpp:292 ../src/procproperties.cpp:139
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:346
+#: ../src/interface.cpp:294
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:367
-msgid "Memory and Swap History"
-msgstr "메모리 및 스왑 사용 기록"
-
-#: ../src/interface.cpp:401 ../src/proctable.cpp:252
-#: ../src/procproperties.cpp:116
-msgid "Memory"
-msgstr "메모리"
-
-#: ../src/interface.cpp:432
-msgid "Swap"
-msgstr "스왑"
-
-#: ../src/interface.cpp:463
-msgid "Network History"
-msgstr "네트워크 사용 기록"
-
-#: ../src/interface.cpp:496
-msgid "Receiving"
-msgstr "받기"
-
-#: ../src/interface.cpp:529
-msgid "Total Received"
-msgstr "전체 받음"
-
-#: ../src/interface.cpp:557
+#: ../src/interface.cpp:378
 msgid "Sending"
 msgstr "보내기"
-
-#: ../src/interface.cpp:591
-msgid "Total Sent"
-msgstr "전체 보냄"
-
-#. procman_create_sysinfo_view();
-#: ../src/interface.cpp:710
-msgid "System"
-msgstr "시스템"
 
 #: ../src/load-graph.cpp:166
 #, c-format
@@ -471,55 +517,36 @@ msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u초"
 
-#: ../src/load-graph.cpp:347
+#: ../src/load-graph.cpp:345
 msgid "not available"
 msgstr "사용 불가능"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:350
+#: ../src/load-graph.cpp:348
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%), 전체 %s"
 
-#: ../src/lsof.cpp:124
-#, c-format
-msgid ""
-"<b>Error</b>\n"
-"'%s' is not a valid Perl regular expression.\n"
-"%s"
+#: ../src/lsof.cpp:125
+msgid "Error"
 msgstr ""
-"<b>오류</b>\n"
-"'%s': 올바른 펄 정규식이 아닙니다.\n"
-"%s"
 
-#: ../src/lsof.cpp:270
+#: ../src/lsof.cpp:126
+#, c-format
+msgid "'%s' is not a valid Perl regular expression."
+msgstr "'%s': 올바른 펄 정규식이 아닙니다."
+
+#: ../src/lsof.cpp:272
 msgid "Process"
 msgstr "프로세스"
 
-#: ../src/lsof.cpp:282
+#: ../src/lsof.cpp:284
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:292 ../src/memmaps.cpp:339
+#: ../src/lsof.cpp:294 ../src/memmaps.cpp:339
 msgid "Filename"
 msgstr "파일 이름"
-
-#. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-#: ../src/lsof.cpp:309
-msgid "Search for Open Files"
-msgstr "열린 파일을 찾습니다"
-
-#: ../src/lsof.cpp:336
-msgid "_Name contains:"
-msgstr "이름에 포함(_N):"
-
-#: ../src/lsof.cpp:354
-msgid "Case insensitive matching"
-msgstr "대소문자 구분하지 않음"
-
-#: ../src/lsof.cpp:362
-msgid "S_earch results:"
-msgstr "검색 결과(_E):"
 
 #. xgettext: virtual memory start
 #: ../src/memmaps.cpp:341
@@ -617,11 +644,7 @@ msgstr "FD"
 msgid "Object"
 msgstr "개체"
 
-#: ../src/openfiles.cpp:336
-msgid "Open Files"
-msgstr "연 파일"
-
-#: ../src/openfiles.cpp:357
+#: ../src/openfiles.cpp:346
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "\"%s\" 프로세스가 연 파일(_F) (PID %u):"
@@ -669,11 +692,11 @@ msgstr "프로세스를 죽일 때 경고 대화상자 보기"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
 msgid "Time in milliseconds between updates of the process view"
-msgstr "프로세스 보기 업데이트 간격 (천분의 일초 단위)"
+msgstr "프로세스 보기 업데이트 간격(천분의 일초 단위)"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
 msgid "Time in milliseconds between updates of the graphs"
-msgstr "그래프 업데이트 간격 (천분의 일초 단위)"
+msgstr "그래프 업데이트 간격(천분의 일초 단위)"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
 msgid "Whether information about all file systems should be displayed"
@@ -691,7 +714,7 @@ msgstr ""
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
 msgid "Time in milliseconds between updates of the devices list"
-msgstr "장치 목록 업데이트 간격 (천분의 일초 단위)"
+msgstr "장치 목록 업데이트 간격(천분의 일초 단위)"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
 msgid ""
@@ -716,7 +739,7 @@ msgstr "CPU 색"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
-msgstr "각 항목은 (CPU 번호, 16진수 형식 색) 형식입니다"
+msgstr "각 항목의 형식은 다음과 같습니다: CPU 번호, 16진수 형식 색"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
 msgid "Default graph memory color"
@@ -1012,29 +1035,21 @@ msgstr ""
 "프로세스를 끝냅니다. 데이터가 파괴되거나, 실행하는 세션을 망치거나 보안 결함"
 "을 만들 수 있습니다. 반응이 없는 잘못된 프로세스만 끝내도록 하십시오."
 
-#: ../src/procdialogs.cpp:130 ../src/procdialogs.cpp:220
+#: ../src/procdialogs.cpp:130
 #, c-format
 msgid "(%s Priority)"
 msgstr "(%s 우선 순위)"
 
-#: ../src/procdialogs.cpp:174
+#: ../src/procdialogs.cpp:175
 #, c-format
 msgid "Change Priority of Process »%s« (PID: %u)"
 msgstr "프로세스 (»%s«, PID: %u) 우선 순위 바꾸기"
 
-#: ../src/procdialogs.cpp:186
-msgid "Change _Priority"
-msgstr "우선순위 바꾸기(_P)"
-
-#: ../src/procdialogs.cpp:209
-msgid "_Nice value:"
-msgstr "NICE 값(_N):"
-
-#: ../src/procdialogs.cpp:226
+#: ../src/procdialogs.cpp:193
 msgid "Note:"
 msgstr "주의:"
 
-#: ../src/procdialogs.cpp:227
+#: ../src/procdialogs.cpp:194
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1042,7 +1057,7 @@ msgstr ""
 "프로세스의 우선순위는 그 nice 값에 따라 결정됩니다. nice 값이 낮을 수록 우선"
 "순위가 높습니다."
 
-#: ../src/procdialogs.cpp:449
+#: ../src/procdialogs.cpp:418
 msgid "Icon"
 msgstr "아이콘"
 
@@ -1050,121 +1065,121 @@ msgstr "아이콘"
 msgid "A simple process and system monitor."
 msgstr "간단한 프로세스 및 시스템 정보."
 
-#: ../src/proctable.cpp:237 ../src/procproperties.cpp:113
-msgid "Process Name"
-msgstr "프로세스 이름"
-
-#: ../src/proctable.cpp:238 ../src/procproperties.cpp:114
-msgid "User"
-msgstr "사용자"
-
-#: ../src/proctable.cpp:239 ../src/procproperties.cpp:115
-msgid "Status"
-msgstr "상태"
-
-#: ../src/proctable.cpp:240 ../src/procproperties.cpp:117
-msgid "Virtual Memory"
-msgstr "가상 메모리"
-
-#: ../src/proctable.cpp:241 ../src/procproperties.cpp:118
-msgid "Resident Memory"
-msgstr "상주 메모리"
-
-#: ../src/proctable.cpp:242 ../src/procproperties.cpp:119
-msgid "Writable Memory"
-msgstr "쓰기 가능한 메모리"
-
-#: ../src/proctable.cpp:243 ../src/procproperties.cpp:120
-msgid "Shared Memory"
-msgstr "공유 메모리"
-
-#: ../src/proctable.cpp:244 ../src/procproperties.cpp:121
-msgid "X Server Memory"
-msgstr "X 서버 메모리"
-
-#: ../src/proctable.cpp:245
-#, no-c-format
-msgid "% CPU"
-msgstr "% CPU"
-
-#: ../src/proctable.cpp:246 ../src/procproperties.cpp:123
-msgid "CPU Time"
-msgstr "CPU 시간"
-
-#: ../src/proctable.cpp:247 ../src/procproperties.cpp:124
-msgid "Started"
-msgstr "시작됨"
-
-#: ../src/proctable.cpp:248 ../src/procproperties.cpp:125
-msgid "Nice"
-msgstr "Nice"
-
-#: ../src/proctable.cpp:249 ../src/procproperties.cpp:127
-msgid "ID"
-msgstr "ID"
-
-#: ../src/proctable.cpp:250 ../src/procproperties.cpp:128
-msgid "Security Context"
-msgstr "보안 컨텍스트"
-
-#: ../src/proctable.cpp:251 ../src/procproperties.cpp:129
-msgid "Command Line"
-msgstr "명령행"
-
-#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/proctable.cpp:254 ../src/procproperties.cpp:130
-msgid "Waiting Channel"
-msgstr "대기 채널"
-
-#: ../src/proctable.cpp:255
-msgid "Control Group"
-msgstr "컨트롤 그룹"
-
-#: ../src/proctable.cpp:256
-msgid "Unit"
-msgstr "단위"
-
-#: ../src/proctable.cpp:257
-msgid "Session"
-msgstr "세션"
-
-#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
-#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:260
-msgid "Seat"
-msgstr "자리"
-
-#: ../src/proctable.cpp:261
-msgid "Owner"
-msgstr "소유자"
-
-#: ../src/proctable.cpp:262 ../src/procproperties.cpp:126
-msgid "Priority"
-msgstr "우선 순위"
-
-#: ../src/proctable.cpp:1086
-#, c-format
-msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
-msgstr "최근 1분, 5분, 15분 사이의 평균 부하: %0.2f, %0.2f, %0.2f"
-
-#: ../src/procproperties.cpp:99
+#: ../src/procproperties.cpp:104 ../src/util.cpp:420
 msgid "N/A"
 msgstr "없음"
 
-#: ../src/procproperties.cpp:123
+#: ../src/procproperties.cpp:130 ../src/proctable.cpp:236
+msgid "Process Name"
+msgstr "프로세스 이름"
+
+#: ../src/procproperties.cpp:131 ../src/proctable.cpp:237
+msgid "User"
+msgstr "사용자"
+
+#: ../src/procproperties.cpp:132 ../src/proctable.cpp:238
+msgid "Status"
+msgstr "상태"
+
+#: ../src/procproperties.cpp:134 ../src/proctable.cpp:239
+msgid "Virtual Memory"
+msgstr "가상 메모리"
+
+#: ../src/procproperties.cpp:135 ../src/proctable.cpp:240
+msgid "Resident Memory"
+msgstr "상주 메모리"
+
+#: ../src/procproperties.cpp:136 ../src/proctable.cpp:241
+msgid "Writable Memory"
+msgstr "쓰기 가능한 메모리"
+
+#: ../src/procproperties.cpp:137 ../src/proctable.cpp:242
+msgid "Shared Memory"
+msgstr "공유 메모리"
+
+#: ../src/procproperties.cpp:138 ../src/proctable.cpp:243
+msgid "X Server Memory"
+msgstr "X 서버 메모리"
+
+#: ../src/procproperties.cpp:140 ../src/proctable.cpp:245
+msgid "CPU Time"
+msgstr "CPU 시간"
+
+#: ../src/procproperties.cpp:140
 #, c-format
 msgid "%lld second"
 msgid_plural "%lld seconds"
 msgstr[0] "%lld초"
 
-#: ../src/procproperties.cpp:241
+#: ../src/procproperties.cpp:141 ../src/proctable.cpp:246
+msgid "Started"
+msgstr "시작됨"
+
+#: ../src/procproperties.cpp:142 ../src/proctable.cpp:247
+msgid "Nice"
+msgstr "Nice"
+
+#: ../src/procproperties.cpp:143 ../src/proctable.cpp:261
+msgid "Priority"
+msgstr "우선 순위"
+
+#: ../src/procproperties.cpp:144 ../src/proctable.cpp:248
+msgid "ID"
+msgstr "ID"
+
+#: ../src/procproperties.cpp:145 ../src/proctable.cpp:249
+msgid "Security Context"
+msgstr "보안 컨텍스트"
+
+#: ../src/procproperties.cpp:146 ../src/proctable.cpp:250
+msgid "Command Line"
+msgstr "명령행"
+
+#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
+#: ../src/procproperties.cpp:147 ../src/proctable.cpp:253
+msgid "Waiting Channel"
+msgstr "대기 채널"
+
+#: ../src/procproperties.cpp:258
 msgid "Process Properties"
 msgstr "프로세스 속성"
 
-#: ../src/procproperties.cpp:261
+#: ../src/procproperties.cpp:278
 #, c-format
 msgid "Properties of process \"%s\" (PID %u):"
-msgstr "\"%s\" 프로세스의 (PID %u) 속성:"
+msgstr "\"%s\" 프로세스의(PID %u) 속성:"
+
+#: ../src/proctable.cpp:244
+#, no-c-format
+msgid "% CPU"
+msgstr "% CPU"
+
+#: ../src/proctable.cpp:254
+msgid "Control Group"
+msgstr "컨트롤 그룹"
+
+#: ../src/proctable.cpp:255
+msgid "Unit"
+msgstr "단위"
+
+#: ../src/proctable.cpp:256
+msgid "Session"
+msgstr "세션"
+
+#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
+#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
+#: ../src/proctable.cpp:259
+msgid "Seat"
+msgstr "자리"
+
+#: ../src/proctable.cpp:260
+msgid "Owner"
+msgstr "소유자"
+
+#: ../src/proctable.cpp:1078
+#, c-format
+msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
+msgstr "최근 1분, 5분, 15분 사이의 평균 부하: %0.2f, %0.2f, %0.2f"
 
 #. Translators: The first string parameter is release version (codename),
 #. * the second one is the architecture, 32 or 64-bit
@@ -1180,41 +1195,35 @@ msgstr "릴리즈 %s %s"
 msgid "%d-bit"
 msgstr "%d비트"
 
-#: ../src/sysinfo.cpp:219
-msgid "Unknown model"
-msgstr "알 수 없는 모델"
-
-#: ../src/sysinfo.cpp:740
+#: ../src/sysinfo.cpp:734
 #, c-format
 msgid "Kernel %s"
 msgstr "커널 %s"
 
-#: ../src/sysinfo.cpp:754
+#: ../src/sysinfo.cpp:746
 #, c-format
 msgid "GNOME %s"
 msgstr "그놈 %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:769
-#, c-format
-msgid "<b>Hardware</b>"
-msgstr "<b>하드웨어</b>"
+#: ../src/sysinfo.cpp:759
+msgid "Hardware"
+msgstr "하드웨어"
 
-#: ../src/sysinfo.cpp:774
+#: ../src/sysinfo.cpp:764
 msgid "Memory:"
 msgstr "메모리:"
 
-#: ../src/sysinfo.cpp:779
+#: ../src/sysinfo.cpp:769
 msgid "Processor:"
 msgstr "프로세서:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:788
-#, c-format
-msgid "<b>System Status</b>"
-msgstr "<b>시스템 상태</b>"
+#: ../src/sysinfo.cpp:778
+msgid "System Status"
+msgstr "시스템 상태"
 
-#: ../src/sysinfo.cpp:794
+#: ../src/sysinfo.cpp:784
 msgid "Available disk space:"
 msgstr "사용 가능한 디스크 공간:"
 
@@ -1314,12 +1323,14 @@ msgid "%u byte"
 msgid_plural "%u bytes"
 msgstr[0] "%u 바이트"
 
-#: ../src/util.cpp:420
-msgid "<i>N/A</i>"
-msgstr "<i>해당없음</i>"
-
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:582
+#: ../src/util.cpp:585
 #, c-format
 msgid "%s/s"
 msgstr "%s/초"
+
+#~ msgid "Unknown model"
+#~ msgstr "알 수 없는 모델"
+
+#~ msgid "<i>N/A</i>"
+#~ msgstr "<i>해당없음</i>"
