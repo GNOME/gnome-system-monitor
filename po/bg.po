@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-07 21:01+0300\n"
-"PO-Revision-Date: 2012-04-07 21:00+0300\n"
+"POT-Creation-Date: 2012-09-20 06:49+0300\n"
+"PO-Revision-Date: 2012-09-20 06:48+0300\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -20,14 +20,99 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:184
-#: ../src/interface.cpp:635 ../src/procman.cpp:721
+#: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
+#: ../src/callbacks.cpp:184 ../src/procman.cpp:721
 msgid "System Monitor"
 msgstr "Наблюдение на системата"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "Показване на текущите процеси и следене на състоянието на системата"
+
+#: ../gnome-system-monitor.desktop.in.in.h:3
+msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
+msgstr "Наблюдение;Система;Процеси;Процесори;Памет;Мрежа;История;Използване;"
+
+#: ../data/interface.ui.h:2
+msgid "System"
+msgstr "Система"
+
+#: ../data/interface.ui.h:3
+msgid "End _Process"
+msgstr "_Прекратяване на процес"
+
+#: ../data/interface.ui.h:4 ../data/preferences.ui.h:9
+msgid "Processes"
+msgstr "Процеси"
+
+#: ../data/interface.ui.h:5
+msgid "CPU History"
+msgstr "История на процесора"
+
+#: ../data/interface.ui.h:6
+msgid "Memory and Swap History"
+msgstr "История на паметта/страницирането"
+
+#: ../data/interface.ui.h:7 ../src/interface.cpp:327
+#: ../src/procproperties.cpp:133 ../src/proctable.cpp:251
+msgid "Memory"
+msgstr "Памет"
+
+#: ../data/interface.ui.h:8 ../src/interface.cpp:338
+msgid "Swap"
+msgstr "Странициране"
+
+#: ../data/interface.ui.h:9
+msgid "Network History"
+msgstr "История на мрежата"
+
+#: ../data/interface.ui.h:10 ../src/interface.cpp:363
+msgid "Receiving"
+msgstr "Получаване"
+
+#: ../data/interface.ui.h:11
+msgid "Total Received"
+msgstr "Общо получени"
+
+#: ../data/interface.ui.h:12
+msgid "Sent"
+msgstr "Изпратени"
+
+#: ../data/interface.ui.h:13
+msgid "Total Sent"
+msgstr "Общо изпратени"
+
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:12
+msgid "Resources"
+msgstr "Ресурси"
+
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:14
+msgid "File Systems"
+msgstr "Файлови системи"
+
+#: ../data/lsof.ui.h:1
+msgid "Search for Open Files"
+msgstr "Търсене за отворени файлове"
+
+#: ../data/lsof.ui.h:2
+msgid "_Name contains:"
+msgstr "_Името съдържа:"
+
+#: ../data/lsof.ui.h:3
+msgid "Case insensitive matching"
+msgstr "Без разлика главни/малки"
+
+#: ../data/lsof.ui.h:4
+msgid "C_lear"
+msgstr "_Изчистване"
+
+#: ../data/lsof.ui.h:5
+msgid "S_earch results:"
+msgstr "_Резултати от търсенето:"
+
+#: ../data/openfiles.ui.h:1
+msgid "Open Files"
+msgstr "Отворени файлове"
 
 #: ../data/preferences.ui.h:1
 msgid "System Monitor Preferences"
@@ -61,10 +146,6 @@ msgstr "Полета с информация"
 msgid "Process i_nformation shown in list:"
 msgstr "И_нформация за процесите:"
 
-#: ../data/preferences.ui.h:9 ../src/interface.cpp:714
-msgid "Processes"
-msgstr "Процеси"
-
 #: ../data/preferences.ui.h:10
 msgid "Graphs"
 msgstr "Графики"
@@ -73,17 +154,26 @@ msgstr "Графики"
 msgid "_Show network speed in bits"
 msgstr "_Извеждане на скоростта на мрежата в битове"
 
-#: ../data/preferences.ui.h:12 ../src/interface.cpp:718
-msgid "Resources"
-msgstr "Ресурси"
-
 #: ../data/preferences.ui.h:13
 msgid "Show _all file systems"
 msgstr "Показване на _всички файлови системи"
 
-#: ../data/preferences.ui.h:14 ../src/interface.cpp:722
-msgid "File Systems"
-msgstr "Файлови системи"
+#: ../data/renice.ui.h:1
+msgid "Change _Priority"
+msgstr "_Промяна на приоритет"
+
+#: ../data/renice.ui.h:2
+msgid "_Nice value:"
+msgstr "_Стойност на nice:"
+
+#: ../data/renice.ui.h:3
+msgid ""
+"<small><i><b>Note:</b> The priority of a process is given by its nice value. "
+"A lower nice value corresponds to a higher priority.</i></small>"
+msgstr ""
+"<small><i><b>Бележка:</b> Приоритетът на процеса се задава с неговата "
+"стойност в nice. Ниска стойност на nice съответства на висок приоритет.</i></"
+"small>"
 
 #: ../src/argv.cpp:21
 msgid "Show the System tab"
@@ -114,31 +204,31 @@ msgstr ""
 "Докладвайте за грешки на <a href=\"http://gnome.cult.bg/bugs\">http://gnome."
 "cult.bg/bugs</a>"
 
-#: ../src/disks.cpp:299 ../src/memmaps.cpp:361
+#: ../src/disks.cpp:298 ../src/memmaps.cpp:361
 msgid "Device"
 msgstr "Устройство"
 
-#: ../src/disks.cpp:300
+#: ../src/disks.cpp:299
 msgid "Directory"
 msgstr "Папка"
 
-#: ../src/disks.cpp:301 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:300 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "Вид"
 
-#: ../src/disks.cpp:302
+#: ../src/disks.cpp:301
 msgid "Total"
 msgstr "Общо"
 
-#: ../src/disks.cpp:303
+#: ../src/disks.cpp:302
 msgid "Free"
 msgstr "Свободни"
 
-#: ../src/disks.cpp:304
+#: ../src/disks.cpp:303
 msgid "Available"
 msgstr "Налични"
 
-#: ../src/disks.cpp:305
+#: ../src/disks.cpp:304
 msgid "Used"
 msgstr "Използвани"
 
@@ -407,66 +497,24 @@ msgstr "Друг"
 msgid "Set process priority manually"
 msgstr "Задаване на друг приоритет на процеса"
 
-#: ../src/interface.cpp:231
-msgid "End _Process"
-msgstr "_Прекратяване на процес"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:279
+#: ../src/interface.cpp:256
 #, c-format
 msgid "Pick a Color for '%s'"
 msgstr "Избор на цвят за „%s“"
 
-#: ../src/interface.cpp:290
-msgid "CPU History"
-msgstr "История на процесора"
-
-#: ../src/interface.cpp:344 ../src/procproperties.cpp:139
+#: ../src/interface.cpp:292 ../src/procproperties.cpp:139
 msgid "CPU"
-msgstr "Процесор"
+msgstr "Процесори"
 
-#: ../src/interface.cpp:346
+#: ../src/interface.cpp:294
 #, c-format
 msgid "CPU%d"
 msgstr "Процесор № %d"
 
-#: ../src/interface.cpp:367
-msgid "Memory and Swap History"
-msgstr "История на паметта/страницирането"
-
-#: ../src/interface.cpp:401 ../src/proctable.cpp:252
-#: ../src/procproperties.cpp:133
-msgid "Memory"
-msgstr "Памет"
-
-#: ../src/interface.cpp:432
-msgid "Swap"
-msgstr "Странициране"
-
-#: ../src/interface.cpp:463
-msgid "Network History"
-msgstr "История на мрежата"
-
-#: ../src/interface.cpp:496
-msgid "Receiving"
-msgstr "Получаване"
-
-#: ../src/interface.cpp:529
-msgid "Total Received"
-msgstr "Общо получени"
-
-#: ../src/interface.cpp:557
+#: ../src/interface.cpp:378
 msgid "Sending"
 msgstr "Изпращане"
-
-#: ../src/interface.cpp:591
-msgid "Total Sent"
-msgstr "Общо изпратени"
-
-#. procman_create_sysinfo_view();
-#: ../src/interface.cpp:710
-msgid "System"
-msgstr "Система"
 
 #: ../src/load-graph.cpp:166
 #, c-format
@@ -475,60 +523,36 @@ msgid_plural "%u seconds"
 msgstr[0] "%u секунда"
 msgstr[1] "%u секунди"
 
-#: ../src/load-graph.cpp:347
+#: ../src/load-graph.cpp:345
 msgid "not available"
 msgstr "няма"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:350
+#: ../src/load-graph.cpp:348
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) от %s"
 
-#: ../src/lsof.cpp:124
-#, c-format
-msgid ""
-"<b>Error</b>\n"
-"'%s' is not a valid Perl regular expression.\n"
-"%s"
-msgstr ""
-"<b>Грешка</b>\n"
-"„%s“ не е валиден регулярен израз на Пърл.\n"
-"%s"
+#: ../src/lsof.cpp:125
+msgid "Error"
+msgstr "Грешка"
 
-#: ../src/lsof.cpp:270
+#: ../src/lsof.cpp:126
+#, c-format
+msgid "'%s' is not a valid Perl regular expression."
+msgstr "„%s“ не е валиден регулярен израз на Пърл."
+
+#: ../src/lsof.cpp:272
 msgid "Process"
 msgstr "Процес"
 
-#: ../src/lsof.cpp:282
+#: ../src/lsof.cpp:284
 msgid "PID"
 msgstr "ИдПр"
 
-#: ../src/lsof.cpp:292 ../src/memmaps.cpp:339
+#: ../src/lsof.cpp:294 ../src/memmaps.cpp:339
 msgid "Filename"
 msgstr "Име на файл"
-
-#. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-#: ../src/lsof.cpp:309
-msgid "Search for Open Files"
-msgstr "Търсене за отворени файлове"
-
-#: ../src/lsof.cpp:336
-msgid "_Name contains:"
-msgstr "_Името съдържа:"
-
-#. The default accelerator collides with the default close accelerator.
-#: ../src/lsof.cpp:350
-msgid "C_lear"
-msgstr "_Изчистване"
-
-#: ../src/lsof.cpp:354
-msgid "Case insensitive matching"
-msgstr "Без разлика главни/малки"
-
-#: ../src/lsof.cpp:362
-msgid "S_earch results:"
-msgstr "_Резултати от търсенето:"
 
 #. xgettext: virtual memory start
 #: ../src/memmaps.cpp:341
@@ -626,11 +650,7 @@ msgstr "УкФ"
 msgid "Object"
 msgstr "Обект"
 
-#: ../src/openfiles.cpp:336
-msgid "Open Files"
-msgstr "Отворени файлове"
-
-#: ../src/openfiles.cpp:357
+#: ../src/openfiles.cpp:346
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_Отворени файлове от процес „%s“ (ИдПр: %u):"
@@ -1030,29 +1050,21 @@ msgstr ""
 "или да създадете риск за сигурността на системата. Добре е да прекратявате "
 "само процеси, които не отговарят на потребителските заявки."
 
-#: ../src/procdialogs.cpp:130 ../src/procdialogs.cpp:220
+#: ../src/procdialogs.cpp:130
 #, c-format
 msgid "(%s Priority)"
 msgstr "(Приоритет: %s)"
 
-#: ../src/procdialogs.cpp:174
+#: ../src/procdialogs.cpp:175
 #, c-format
 msgid "Change Priority of Process »%s« (PID: %u)"
 msgstr "Промяна на приоритета на процеса „%s“ (ИдПр: %u)"
 
-#: ../src/procdialogs.cpp:186
-msgid "Change _Priority"
-msgstr "_Промяна на приоритет"
-
-#: ../src/procdialogs.cpp:209
-msgid "_Nice value:"
-msgstr "_Стойност на nice:"
-
-#: ../src/procdialogs.cpp:226
+#: ../src/procdialogs.cpp:193
 msgid "Note:"
 msgstr "Бележка:"
 
-#: ../src/procdialogs.cpp:227
+#: ../src/procdialogs.cpp:194
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1060,7 +1072,7 @@ msgstr ""
 "Приоритетът на процеса се задава с неговата стойност в nice. Ниска стойност "
 "на nice съответства на висок приоритет."
 
-#: ../src/procdialogs.cpp:449
+#: ../src/procdialogs.cpp:418
 msgid "Icon"
 msgstr "Икона"
 
@@ -1068,106 +1080,45 @@ msgstr "Икона"
 msgid "A simple process and system monitor."
 msgstr "Програма за наблюдение на системата и процесите."
 
-#: ../src/proctable.cpp:237 ../src/procproperties.cpp:130
+#: ../src/procproperties.cpp:104 ../src/util.cpp:420
+msgid "N/A"
+msgstr "Няма"
+
+#: ../src/procproperties.cpp:130 ../src/proctable.cpp:236
 msgid "Process Name"
 msgstr "Име на процес"
 
-#: ../src/proctable.cpp:238 ../src/procproperties.cpp:131
+#: ../src/procproperties.cpp:131 ../src/proctable.cpp:237
 msgid "User"
 msgstr "Потребител"
 
-#: ../src/proctable.cpp:239 ../src/procproperties.cpp:132
+#: ../src/procproperties.cpp:132 ../src/proctable.cpp:238
 msgid "Status"
 msgstr "Състояние"
 
-#: ../src/proctable.cpp:240 ../src/procproperties.cpp:134
+#: ../src/procproperties.cpp:134 ../src/proctable.cpp:239
 msgid "Virtual Memory"
 msgstr "Виртуална памет"
 
-#: ../src/proctable.cpp:241 ../src/procproperties.cpp:135
+#: ../src/procproperties.cpp:135 ../src/proctable.cpp:240
 msgid "Resident Memory"
 msgstr "Постоянна памет"
 
-#: ../src/proctable.cpp:242 ../src/procproperties.cpp:136
+#: ../src/procproperties.cpp:136 ../src/proctable.cpp:241
 msgid "Writable Memory"
 msgstr "Памет за запис"
 
-#: ../src/proctable.cpp:243 ../src/procproperties.cpp:137
+#: ../src/procproperties.cpp:137 ../src/proctable.cpp:242
 msgid "Shared Memory"
 msgstr "Споделена памет"
 
-#: ../src/proctable.cpp:244 ../src/procproperties.cpp:138
+#: ../src/procproperties.cpp:138 ../src/proctable.cpp:243
 msgid "X Server Memory"
 msgstr "Памет за X сървъра"
 
-#: ../src/proctable.cpp:245
-#, no-c-format
-msgid "% CPU"
-msgstr "% проц."
-
-#: ../src/proctable.cpp:246 ../src/procproperties.cpp:140
+#: ../src/procproperties.cpp:140 ../src/proctable.cpp:245
 msgid "CPU Time"
 msgstr "Процесорно време"
-
-#: ../src/proctable.cpp:247 ../src/procproperties.cpp:141
-msgid "Started"
-msgstr "Стартиран на"
-
-#: ../src/proctable.cpp:248 ../src/procproperties.cpp:142
-msgid "Nice"
-msgstr "Приоритет (nice)"
-
-#: ../src/proctable.cpp:249 ../src/procproperties.cpp:144
-msgid "ID"
-msgstr "ИдПр"
-
-#: ../src/proctable.cpp:250 ../src/procproperties.cpp:145
-msgid "Security Context"
-msgstr "Контекст на сигурността"
-
-#: ../src/proctable.cpp:251 ../src/procproperties.cpp:146
-msgid "Command Line"
-msgstr "Команден ред"
-
-#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/proctable.cpp:254 ../src/procproperties.cpp:147
-msgid "Waiting Channel"
-msgstr "Канал на изчакване"
-
-#: ../src/proctable.cpp:255
-msgid "Control Group"
-msgstr "Контролирана група"
-
-#: ../src/proctable.cpp:256
-msgid "Unit"
-msgstr "Мерна единица"
-
-#: ../src/proctable.cpp:257
-msgid "Session"
-msgstr "Сесия"
-
-#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
-#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:260
-msgid "Seat"
-msgstr "Място"
-
-#: ../src/proctable.cpp:261
-msgid "Owner"
-msgstr "Собственик"
-
-#: ../src/proctable.cpp:262 ../src/procproperties.cpp:143
-msgid "Priority"
-msgstr "Приоритет"
-
-#: ../src/proctable.cpp:1086
-#, c-format
-msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
-msgstr "Средно натоварване за последните 1, 5, 15 минути: %0.2f, %0.2f, %0.2f"
-
-#: ../src/procproperties.cpp:104
-msgid "N/A"
-msgstr "Няма"
 
 #: ../src/procproperties.cpp:140
 #, c-format
@@ -1175,6 +1126,35 @@ msgid "%lld second"
 msgid_plural "%lld seconds"
 msgstr[0] "%lld секунда"
 msgstr[1] "%lld секунди"
+
+#: ../src/procproperties.cpp:141 ../src/proctable.cpp:246
+msgid "Started"
+msgstr "Стартиран на"
+
+#: ../src/procproperties.cpp:142 ../src/proctable.cpp:247
+msgid "Nice"
+msgstr "Приоритет (nice)"
+
+#: ../src/procproperties.cpp:143 ../src/proctable.cpp:261
+msgid "Priority"
+msgstr "Приоритет"
+
+#: ../src/procproperties.cpp:144 ../src/proctable.cpp:248
+msgid "ID"
+msgstr "ИдПр"
+
+#: ../src/procproperties.cpp:145 ../src/proctable.cpp:249
+msgid "Security Context"
+msgstr "Контекст на сигурността"
+
+#: ../src/procproperties.cpp:146 ../src/proctable.cpp:250
+msgid "Command Line"
+msgstr "Команден ред"
+
+#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
+#: ../src/procproperties.cpp:147 ../src/proctable.cpp:253
+msgid "Waiting Channel"
+msgstr "Канал на изчакване"
 
 #: ../src/procproperties.cpp:258
 msgid "Process Properties"
@@ -1184,6 +1164,38 @@ msgstr "Информация за процеса"
 #, c-format
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "Информация за процес „%s“ (ИдПр %u):"
+
+#: ../src/proctable.cpp:244
+#, no-c-format
+msgid "% CPU"
+msgstr "% проц."
+
+#: ../src/proctable.cpp:254
+msgid "Control Group"
+msgstr "Контролирана група"
+
+#: ../src/proctable.cpp:255
+msgid "Unit"
+msgstr "Мерна единица"
+
+#: ../src/proctable.cpp:256
+msgid "Session"
+msgstr "Сесия"
+
+#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
+#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
+#: ../src/proctable.cpp:259
+msgid "Seat"
+msgstr "Място"
+
+#: ../src/proctable.cpp:260
+msgid "Owner"
+msgstr "Собственик"
+
+#: ../src/proctable.cpp:1078
+#, c-format
+msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
+msgstr "Средно натоварване за последните 1, 5, 15 минути: %0.2f, %0.2f, %0.2f"
 
 #. Translators: The first string parameter is release version (codename),
 #. * the second one is the architecture, 32 or 64-bit
@@ -1199,41 +1211,35 @@ msgstr "Версия %s %s"
 msgid "%d-bit"
 msgstr "%d бита"
 
-#: ../src/sysinfo.cpp:219
-msgid "Unknown model"
-msgstr "Неизвестен модел"
-
-#: ../src/sysinfo.cpp:740
+#: ../src/sysinfo.cpp:734
 #, c-format
 msgid "Kernel %s"
 msgstr "Ядро %s"
 
-#: ../src/sysinfo.cpp:754
+#: ../src/sysinfo.cpp:746
 #, c-format
 msgid "GNOME %s"
 msgstr "GNOME %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:769
-#, c-format
-msgid "<b>Hardware</b>"
-msgstr "<b>Хардуер</b>"
+#: ../src/sysinfo.cpp:759
+msgid "Hardware"
+msgstr "Хардуер"
 
-#: ../src/sysinfo.cpp:774
+#: ../src/sysinfo.cpp:764
 msgid "Memory:"
 msgstr "Памет:"
 
-#: ../src/sysinfo.cpp:779
+#: ../src/sysinfo.cpp:769
 msgid "Processor:"
 msgstr "Процесор:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:788
-#, c-format
-msgid "<b>System Status</b>"
-msgstr "<b>Състояние на системата</b>"
+#: ../src/sysinfo.cpp:778
+msgid "System Status"
+msgstr "Състояние на системата"
 
-#: ../src/sysinfo.cpp:794
+#: ../src/sysinfo.cpp:784
 msgid "Available disk space:"
 msgstr "Налично дисково пространство:"
 
@@ -1335,12 +1341,8 @@ msgid_plural "%u bytes"
 msgstr[0] "%u байт"
 msgstr[1] "%u байта"
 
-#: ../src/util.cpp:420
-msgid "<i>N/A</i>"
-msgstr "<i>няма</i>"
-
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:582
+#: ../src/util.cpp:585
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
