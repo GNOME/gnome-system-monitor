@@ -13,23 +13,111 @@ msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-04-13 19:45+0000\n"
-"PO-Revision-Date: 2012-04-14 20:58+0800\n"
-"Last-Translator: YunQiang Su <wzssyqa@gmail.com>\n"
+"POT-Creation-Date: 2012-09-16 15:22+0000\n"
+"PO-Revision-Date: 2012-09-17 18:45+0800\n"
+"Last-Translator: tuhaihe <1132321739qq@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../gnome-system-monitor.desktop.in.in.h:1 ../src/callbacks.cpp:184
-#: ../src/interface.cpp:635 ../src/procman.cpp:721
+#: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
+#: ../src/callbacks.cpp:184 ../src/procman.cpp:721
 msgid "System Monitor"
 msgstr "系统监视器"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "查看当前进程及监视系统状态"
+
+#: ../gnome-system-monitor.desktop.in.in.h:3
+msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
+msgstr ""
+"Monitor;System;Process;CPU;Memory;Network;History;Usage;监视器;系统;进程;内"
+"存;网络;历史;使用;占用;用量;"
+
+#: ../data/interface.ui.h:2
+msgid "System"
+msgstr "系统"
+
+#: ../data/interface.ui.h:3
+msgid "End _Process"
+msgstr "结束进程(_P)"
+
+#: ../data/interface.ui.h:4 ../data/preferences.ui.h:9
+msgid "Processes"
+msgstr "进程"
+
+#: ../data/interface.ui.h:5
+msgid "CPU History"
+msgstr "CPU 历史"
+
+#: ../data/interface.ui.h:6
+msgid "Memory and Swap History"
+msgstr "内存和交换历史"
+
+#: ../data/interface.ui.h:7 ../src/interface.cpp:327
+#: ../src/procproperties.cpp:133 ../src/proctable.cpp:251
+msgid "Memory"
+msgstr "内存"
+
+#: ../data/interface.ui.h:8 ../src/interface.cpp:338
+msgid "Swap"
+msgstr "交换"
+
+#: ../data/interface.ui.h:9
+msgid "Network History"
+msgstr "网络历史"
+
+#: ../data/interface.ui.h:10 ../src/interface.cpp:363
+msgid "Receiving"
+msgstr "正在接收"
+
+#: ../data/interface.ui.h:11
+msgid "Total Received"
+msgstr "总计已接收"
+
+#: ../data/interface.ui.h:12
+msgid "Sent"
+msgstr "已发送"
+
+#: ../data/interface.ui.h:13
+msgid "Total Sent"
+msgstr "总计已发送"
+
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:12
+msgid "Resources"
+msgstr "资源"
+
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:14
+msgid "File Systems"
+msgstr "文件系统"
+
+#: ../data/lsof.ui.h:1
+msgid "Search for Open Files"
+msgstr "搜索打开的文件"
+
+#: ../data/lsof.ui.h:2
+msgid "_Name contains:"
+msgstr "名称包含(_N)："
+
+#: ../data/lsof.ui.h:3
+msgid "Case insensitive matching"
+msgstr "区分大小写"
+
+#: ../data/lsof.ui.h:4
+msgid "C_lear"
+msgstr "清除(_L)"
+
+#: ../data/lsof.ui.h:5
+msgid "S_earch results:"
+msgstr "搜索结果(_E)："
+
+#: ../data/openfiles.ui.h:1
+msgid "Open Files"
+msgstr "打开文件"
 
 #: ../data/preferences.ui.h:1
 msgid "System Monitor Preferences"
@@ -63,10 +151,6 @@ msgstr "信息域"
 msgid "Process i_nformation shown in list:"
 msgstr "此列表中显示的进程信息(_N)："
 
-#: ../data/preferences.ui.h:9 ../src/interface.cpp:714
-msgid "Processes"
-msgstr "进程"
-
 #: ../data/preferences.ui.h:10
 msgid "Graphs"
 msgstr "图形"
@@ -75,17 +159,25 @@ msgstr "图形"
 msgid "_Show network speed in bits"
 msgstr "以比特为单位显示网络速度(_S)"
 
-#: ../data/preferences.ui.h:12 ../src/interface.cpp:718
-msgid "Resources"
-msgstr "资源"
-
 #: ../data/preferences.ui.h:13
 msgid "Show _all file systems"
 msgstr "显示全部文件系统(_A)"
 
-#: ../data/preferences.ui.h:14 ../src/interface.cpp:722
-msgid "File Systems"
-msgstr "文件系统"
+#: ../data/renice.ui.h:1
+msgid "Change _Priority"
+msgstr "改变优先级(_P)"
+
+#: ../data/renice.ui.h:2
+msgid "_Nice value:"
+msgstr "_Nice 值："
+
+#: ../data/renice.ui.h:3
+msgid ""
+"<small><i><b>Note:</b> The priority of a process is given by its nice value. "
+"A lower nice value corresponds to a higher priority.</i></small>"
+msgstr ""
+"<small><i><b>注：</b>进程的优先级由它的 nice 值指定。较低的 nice 值对应较高的"
+"优先级。</i></small>"
 
 #: ../src/argv.cpp:21
 msgid "Show the System tab"
@@ -114,33 +206,34 @@ msgstr ""
 "Lele Long <schemacs@gmail.com>, 2011\n"
 "Wind He <lofwind@gmail.com>, 2011\n"
 "Mike Manilone <crtmike@gmail.com>, 2012\n"
-"YunQiang Su <wzssyqa@gmail.com>, 2012"
+"YunQiang Su <wzssyqa@gmail.com>, 2012\n"
+"tuhaihe <1132321739qq@gmail.com>, 2012"
 
-#: ../src/disks.cpp:299 ../src/memmaps.cpp:361
+#: ../src/disks.cpp:298 ../src/memmaps.cpp:361
 msgid "Device"
 msgstr "设备"
 
-#: ../src/disks.cpp:300
+#: ../src/disks.cpp:299
 msgid "Directory"
 msgstr "目录"
 
-#: ../src/disks.cpp:301 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:300 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "类型"
 
-#: ../src/disks.cpp:302
+#: ../src/disks.cpp:301
 msgid "Total"
 msgstr "总数"
 
-#: ../src/disks.cpp:303
+#: ../src/disks.cpp:302
 msgid "Free"
 msgstr "空闲"
 
-#: ../src/disks.cpp:304
+#: ../src/disks.cpp:303
 msgid "Available"
 msgstr "可用"
 
-#: ../src/disks.cpp:305
+#: ../src/disks.cpp:304
 msgid "Used"
 msgstr "已用"
 
@@ -176,7 +269,7 @@ msgstr "分数"
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
 #: ../src/gsm_color_button.c:200
 msgid "Percentage full for pie color pickers"
-msgstr "饼状颜色拾取器的満百分比"
+msgstr "饼状颜色拾取器的完整百分比"
 
 #: ../src/gsm_color_button.c:207
 msgid "Title"
@@ -294,11 +387,11 @@ msgstr "刷新进程列表"
 
 #: ../src/interface.cpp:79
 msgid "_Memory Maps"
-msgstr "内存映像(_M)"
+msgstr "内存映射(_M)"
 
 #: ../src/interface.cpp:80
 msgid "Open the memory maps associated with a process"
-msgstr "打开与进程关联的内存映像"
+msgstr "打开与进程关联的内存映射"
 
 #. Translators: this means 'Files that are open' (open is no verb here)
 #: ../src/interface.cpp:82
@@ -409,66 +502,24 @@ msgstr "自定义"
 msgid "Set process priority manually"
 msgstr "手动设置进程优先级"
 
-#: ../src/interface.cpp:231
-msgid "End _Process"
-msgstr "结束进程(_P)"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:279
+#: ../src/interface.cpp:256
 #, c-format
 msgid "Pick a Color for '%s'"
 msgstr "为“%s”拾取一种颜色"
 
-#: ../src/interface.cpp:290
-msgid "CPU History"
-msgstr "CPU 历史"
-
-#: ../src/interface.cpp:344 ../src/procproperties.cpp:122
+#: ../src/interface.cpp:292 ../src/procproperties.cpp:139
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:346
+#: ../src/interface.cpp:294
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:367
-msgid "Memory and Swap History"
-msgstr "内存和交换历史"
-
-#: ../src/interface.cpp:401 ../src/proctable.cpp:252
-#: ../src/procproperties.cpp:116
-msgid "Memory"
-msgstr "内存"
-
-#: ../src/interface.cpp:432
-msgid "Swap"
-msgstr "交换"
-
-#: ../src/interface.cpp:463
-msgid "Network History"
-msgstr "网络历史"
-
-#: ../src/interface.cpp:496
-msgid "Receiving"
-msgstr "正在接收"
-
-#: ../src/interface.cpp:529
-msgid "Total Received"
-msgstr "总计已接收"
-
-#: ../src/interface.cpp:557
+#: ../src/interface.cpp:378
 msgid "Sending"
 msgstr "正在发送"
-
-#: ../src/interface.cpp:591
-msgid "Total Sent"
-msgstr "总计已发送"
-
-#. procman_create_sysinfo_view();
-#: ../src/interface.cpp:710
-msgid "System"
-msgstr "系统"
 
 #: ../src/load-graph.cpp:166
 #, c-format
@@ -476,60 +527,36 @@ msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u 秒"
 
-#: ../src/load-graph.cpp:347
+#: ../src/load-graph.cpp:345
 msgid "not available"
 msgstr "不可用"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:350
+#: ../src/load-graph.cpp:348
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%)，共 %s"
 
-#: ../src/lsof.cpp:124
-#, c-format
-msgid ""
-"<b>Error</b>\n"
-"'%s' is not a valid Perl regular expression.\n"
-"%s"
-msgstr ""
-"<b>错误</b>\n"
-"“%s”不是有效的 Perl 正则表达式。\n"
-"%s"
+#: ../src/lsof.cpp:125
+msgid "Error"
+msgstr "错误"
 
-#: ../src/lsof.cpp:270
+#: ../src/lsof.cpp:126
+#, c-format
+msgid "'%s' is not a valid Perl regular expression."
+msgstr "“%s”不是有效的 Perl 正则表达式。"
+
+#: ../src/lsof.cpp:272
 msgid "Process"
 msgstr "进程"
 
-#: ../src/lsof.cpp:282
+#: ../src/lsof.cpp:284
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:292 ../src/memmaps.cpp:339
+#: ../src/lsof.cpp:294 ../src/memmaps.cpp:339
 msgid "Filename"
 msgstr "文件名"
-
-#. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-#: ../src/lsof.cpp:309
-msgid "Search for Open Files"
-msgstr "搜索打开的文件"
-
-#: ../src/lsof.cpp:336
-msgid "_Name contains:"
-msgstr "名称包含(_N)："
-
-#. The default accelerator collides with the default close accelerator.
-#: ../src/lsof.cpp:350
-msgid "C_lear"
-msgstr "清除(_L)"
-
-#: ../src/lsof.cpp:354
-msgid "Case insensitive matching"
-msgstr "区分大小写"
-
-#: ../src/lsof.cpp:362
-msgid "S_earch results:"
-msgstr "搜索结果(_E)："
 
 #. xgettext: virtual memory start
 #: ../src/memmaps.cpp:341
@@ -583,6 +610,7 @@ msgstr "已被修改的共享内存"
 msgid "Inode"
 msgstr "Inode"
 
+# 与下面的统一下翻译。
 #: ../src/memmaps.cpp:467
 msgid "Memory Maps"
 msgstr "内存映射"
@@ -590,7 +618,7 @@ msgstr "内存映射"
 #: ../src/memmaps.cpp:479
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
-msgstr "进程“%s”(PID %u)的内存映像(_M)："
+msgstr "进程“%s”(PID %u)的内存映射(_M)："
 
 #: ../src/openfiles.cpp:38
 msgid "file"
@@ -627,11 +655,7 @@ msgstr "FD"
 msgid "Object"
 msgstr "对象"
 
-#: ../src/openfiles.cpp:336
-msgid "Open Files"
-msgstr "打开的文件"
-
-#: ../src/openfiles.cpp:357
+#: ../src/openfiles.cpp:346
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "进程“%s”(PID %u)所打开的文件(_F)："
@@ -1018,35 +1042,27 @@ msgid ""
 msgstr ""
 "结束进程可能导致数据损坏，中断会话或带来安全风险。您应该只结束无响应的进程。"
 
-#: ../src/procdialogs.cpp:130 ../src/procdialogs.cpp:220
+#: ../src/procdialogs.cpp:130
 #, c-format
 msgid "(%s Priority)"
 msgstr "(%s优先级)"
 
-#: ../src/procdialogs.cpp:174
+#: ../src/procdialogs.cpp:175
 #, c-format
 msgid "Change Priority of Process »%s« (PID: %u)"
 msgstr "更改进程 »%s« (PID：%u) 的优先级"
 
-#: ../src/procdialogs.cpp:186
-msgid "Change _Priority"
-msgstr "改变优先级(_P)"
-
-#: ../src/procdialogs.cpp:209
-msgid "_Nice value:"
-msgstr "_Nice 值："
-
-#: ../src/procdialogs.cpp:226
+#: ../src/procdialogs.cpp:193
 msgid "Note:"
 msgstr "备忘："
 
-#: ../src/procdialogs.cpp:227
+#: ../src/procdialogs.cpp:194
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
-msgstr "进程的优先级由它的 nice 值决定。低的 nice 值对应于高优先级。"
+msgstr "进程的优先级由它的 nice 值指定。较低的 nice 值对应较高的优先级。"
 
-#: ../src/procdialogs.cpp:449
+#: ../src/procdialogs.cpp:418
 msgid "Icon"
 msgstr "图标"
 
@@ -1054,121 +1070,121 @@ msgstr "图标"
 msgid "A simple process and system monitor."
 msgstr "简单的进程和系统监视器。"
 
-#: ../src/proctable.cpp:237 ../src/procproperties.cpp:113
-msgid "Process Name"
-msgstr "进程名"
-
-#: ../src/proctable.cpp:238 ../src/procproperties.cpp:114
-msgid "User"
-msgstr "用户"
-
-#: ../src/proctable.cpp:239 ../src/procproperties.cpp:115
-msgid "Status"
-msgstr "状态"
-
-#: ../src/proctable.cpp:240 ../src/procproperties.cpp:117
-msgid "Virtual Memory"
-msgstr "虚拟内存"
-
-#: ../src/proctable.cpp:241 ../src/procproperties.cpp:118
-msgid "Resident Memory"
-msgstr "驻留内存"
-
-#: ../src/proctable.cpp:242 ../src/procproperties.cpp:119
-msgid "Writable Memory"
-msgstr "可写内存"
-
-#: ../src/proctable.cpp:243 ../src/procproperties.cpp:120
-msgid "Shared Memory"
-msgstr "共享内存"
-
-#: ../src/proctable.cpp:244 ../src/procproperties.cpp:121
-msgid "X Server Memory"
-msgstr "X 服务器内存"
-
-#: ../src/proctable.cpp:245
-#, no-c-format
-msgid "% CPU"
-msgstr "% CPU"
-
-#: ../src/proctable.cpp:246 ../src/procproperties.cpp:123
-msgid "CPU Time"
-msgstr "CPU 时间"
-
-#: ../src/proctable.cpp:247 ../src/procproperties.cpp:124
-msgid "Started"
-msgstr "开始于"
-
-#: ../src/proctable.cpp:248 ../src/procproperties.cpp:125
-msgid "Nice"
-msgstr "Nice"
-
-#: ../src/proctable.cpp:249 ../src/procproperties.cpp:127
-msgid "ID"
-msgstr "ID"
-
-#: ../src/proctable.cpp:250 ../src/procproperties.cpp:128
-msgid "Security Context"
-msgstr "安全环境"
-
-#: ../src/proctable.cpp:251 ../src/procproperties.cpp:129
-msgid "Command Line"
-msgstr "命令行"
-
-#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/proctable.cpp:254 ../src/procproperties.cpp:130
-msgid "Waiting Channel"
-msgstr "等候频道"
-
-#: ../src/proctable.cpp:255
-msgid "Control Group"
-msgstr "控制组"
-
-#: ../src/proctable.cpp:256
-msgid "Unit"
-msgstr "单元"
-
-#: ../src/proctable.cpp:257
-msgid "Session"
-msgstr "会话"
-
-#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
-#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:260
-msgid "Seat"
-msgstr "席位"
-
-#: ../src/proctable.cpp:261
-msgid "Owner"
-msgstr "拥有者"
-
-#: ../src/proctable.cpp:262 ../src/procproperties.cpp:126
-msgid "Priority"
-msgstr "优先级"
-
-#: ../src/proctable.cpp:1086
-#, c-format
-msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
-msgstr "前一分钟、五分钟、十五分钟的平均负载：%0.2f，%0.2f，%0.2f"
-
-#: ../src/procproperties.cpp:99
+#: ../src/procproperties.cpp:104 ../src/util.cpp:420
 msgid "N/A"
 msgstr "不适用"
 
-#: ../src/procproperties.cpp:123
+#: ../src/procproperties.cpp:130 ../src/proctable.cpp:236
+msgid "Process Name"
+msgstr "进程名"
+
+#: ../src/procproperties.cpp:131 ../src/proctable.cpp:237
+msgid "User"
+msgstr "用户"
+
+#: ../src/procproperties.cpp:132 ../src/proctable.cpp:238
+msgid "Status"
+msgstr "状态"
+
+#: ../src/procproperties.cpp:134 ../src/proctable.cpp:239
+msgid "Virtual Memory"
+msgstr "虚拟内存"
+
+#: ../src/procproperties.cpp:135 ../src/proctable.cpp:240
+msgid "Resident Memory"
+msgstr "驻留内存"
+
+#: ../src/procproperties.cpp:136 ../src/proctable.cpp:241
+msgid "Writable Memory"
+msgstr "可写内存"
+
+#: ../src/procproperties.cpp:137 ../src/proctable.cpp:242
+msgid "Shared Memory"
+msgstr "共享内存"
+
+#: ../src/procproperties.cpp:138 ../src/proctable.cpp:243
+msgid "X Server Memory"
+msgstr "X 服务器内存"
+
+#: ../src/procproperties.cpp:140 ../src/proctable.cpp:245
+msgid "CPU Time"
+msgstr "CPU 时间"
+
+#: ../src/procproperties.cpp:140
 #, c-format
 msgid "%lld second"
 msgid_plural "%lld seconds"
 msgstr[0] "%lld 秒"
 
-#: ../src/procproperties.cpp:241
+#: ../src/procproperties.cpp:141 ../src/proctable.cpp:246
+msgid "Started"
+msgstr "开始于"
+
+#: ../src/procproperties.cpp:142 ../src/proctable.cpp:247
+msgid "Nice"
+msgstr "Nice"
+
+#: ../src/procproperties.cpp:143 ../src/proctable.cpp:261
+msgid "Priority"
+msgstr "优先级"
+
+#: ../src/procproperties.cpp:144 ../src/proctable.cpp:248
+msgid "ID"
+msgstr "ID"
+
+#: ../src/procproperties.cpp:145 ../src/proctable.cpp:249
+msgid "Security Context"
+msgstr "安全环境"
+
+#: ../src/procproperties.cpp:146 ../src/proctable.cpp:250
+msgid "Command Line"
+msgstr "命令行"
+
+#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
+#: ../src/procproperties.cpp:147 ../src/proctable.cpp:253
+msgid "Waiting Channel"
+msgstr "等候频道"
+
+#: ../src/procproperties.cpp:258
 msgid "Process Properties"
 msgstr "进程属性"
 
-#: ../src/procproperties.cpp:261
+#: ../src/procproperties.cpp:278
 #, c-format
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "进程“%s”(PID %u)的属性："
+
+#: ../src/proctable.cpp:244
+#, no-c-format
+msgid "% CPU"
+msgstr "% CPU"
+
+#: ../src/proctable.cpp:254
+msgid "Control Group"
+msgstr "控制组"
+
+#: ../src/proctable.cpp:255
+msgid "Unit"
+msgstr "单元"
+
+#: ../src/proctable.cpp:256
+msgid "Session"
+msgstr "会话"
+
+#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
+#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
+#: ../src/proctable.cpp:259
+msgid "Seat"
+msgstr "席位"
+
+#: ../src/proctable.cpp:260
+msgid "Owner"
+msgstr "拥有者"
+
+#: ../src/proctable.cpp:1078
+#, c-format
+msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
+msgstr "前一分钟、五分钟、十五分钟的平均负载：%0.2f，%0.2f，%0.2f"
 
 #. Translators: The first string parameter is release version (codename),
 #. * the second one is the architecture, 32 or 64-bit
@@ -1184,41 +1200,35 @@ msgstr "版本 %s %s"
 msgid "%d-bit"
 msgstr "%d 位"
 
-#: ../src/sysinfo.cpp:219
-msgid "Unknown model"
-msgstr "未知型号"
-
-#: ../src/sysinfo.cpp:740
+#: ../src/sysinfo.cpp:734
 #, c-format
 msgid "Kernel %s"
 msgstr "内核 %s"
 
-#: ../src/sysinfo.cpp:754
+#: ../src/sysinfo.cpp:746
 #, c-format
 msgid "GNOME %s"
 msgstr "GNOME %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:769
-#, c-format
-msgid "<b>Hardware</b>"
-msgstr "<b>硬件</b>"
+#: ../src/sysinfo.cpp:759
+msgid "Hardware"
+msgstr "硬件"
 
-#: ../src/sysinfo.cpp:774
+#: ../src/sysinfo.cpp:764
 msgid "Memory:"
 msgstr "内存："
 
-#: ../src/sysinfo.cpp:779
+#: ../src/sysinfo.cpp:769
 msgid "Processor:"
 msgstr "处理器："
 
 #. disk space section
-#: ../src/sysinfo.cpp:788
-#, c-format
-msgid "<b>System Status</b>"
-msgstr "<b>系统状态</b>"
+#: ../src/sysinfo.cpp:778
+msgid "System Status"
+msgstr "系统状态"
 
-#: ../src/sysinfo.cpp:794
+#: ../src/sysinfo.cpp:784
 msgid "Available disk space:"
 msgstr "可用的磁盘空间："
 
@@ -1318,15 +1328,17 @@ msgid "%u byte"
 msgid_plural "%u bytes"
 msgstr[0] "%u 字节"
 
-#: ../src/util.cpp:420
-msgid "<i>N/A</i>"
-msgstr "<i>不可用</i>"
-
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:582
+#: ../src/util.cpp:585
 #, c-format
 msgid "%s/s"
 msgstr "%s/秒"
+
+#~ msgid "Unknown model"
+#~ msgstr "未知型号"
+
+#~ msgid "<i>N/A</i>"
+#~ msgstr "<i>不可用</i>"
 
 #~ msgid "_Change Priority…"
 #~ msgstr "改变优先级(_C)..."
