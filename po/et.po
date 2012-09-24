@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-03-20 17:34+0000\n"
-"PO-Revision-Date: 2012-03-21 10:38+0200\n"
+"POT-Creation-Date: 2012-09-22 17:13+0000\n"
+"PO-Revision-Date: 2012-09-23 10:08+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
 "Language-Team: Estonian <>\n"
 "Language: et\n"
@@ -30,6 +30,69 @@ msgstr "Süsteemijälgija"
 
 msgid "View current processes and monitor system state"
 msgstr "Süsteemi oleku ja protsesside jälgimine"
+
+msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
+msgstr "Monitor;Süsteem;Protsess;Protsessor;CPU;Mälu;Võrk;Ajalugu;Kasutus"
+
+msgid "System"
+msgstr "Süsteem"
+
+msgid "End _Process"
+msgstr "_Lõpeta protsess"
+
+msgid "Processes"
+msgstr "Protsessid"
+
+msgid "CPU History"
+msgstr "Protsessori koormuse ajalugu"
+
+msgid "Memory and Swap History"
+msgstr "Mälu ja saaleala kasutuse ajalugu"
+
+msgid "Memory"
+msgstr "Mälu"
+
+msgid "Swap"
+msgstr "Saaleala"
+
+msgid "Network History"
+msgstr "Võrguliikluse ajalugu"
+
+msgid "Receiving"
+msgstr "Vastuvõtmine"
+
+msgid "Total Received"
+msgstr "Kokku vastu võetud"
+
+msgid "Sent"
+msgstr "Saadetud"
+
+msgid "Total Sent"
+msgstr "Kokku saadetud"
+
+msgid "Resources"
+msgstr "Vahendid"
+
+msgid "File Systems"
+msgstr "Failisüsteemid"
+
+msgid "Search for Open Files"
+msgstr "Avatud failide otsing"
+
+msgid "_Name contains:"
+msgstr "_Nimi sisaldab:"
+
+msgid "Case insensitive matching"
+msgstr "Tõstutundetud vastavused"
+
+msgid "C_lear"
+msgstr "_Puhasta"
+
+msgid "S_earch results:"
+msgstr "O_tsingutulemused:"
+
+msgid "Open Files"
+msgstr "Avatud failid"
 
 msgid "System Monitor Preferences"
 msgstr "Süsteemijälgija eelistused"
@@ -55,23 +118,27 @@ msgstr "Andmeväljad"
 msgid "Process i_nformation shown in list:"
 msgstr "Protsessi _andmed, mida kuvatakse loendis:"
 
-msgid "Processes"
-msgstr "Protsessid"
-
 msgid "Graphs"
 msgstr "Graafikud"
 
 msgid "_Show network speed in bits"
 msgstr "Võrguliiklust kuvatakes _bittides"
 
-msgid "Resources"
-msgstr "Vahendid"
-
 msgid "Show _all file systems"
 msgstr "Kuvatakse _kõiki failisüsteeme"
 
-msgid "File Systems"
-msgstr "Failisüsteemid"
+msgid "Change _Priority"
+msgstr "Muuda _tähtsust"
+
+msgid "_Nice value:"
+msgstr "Tähtsuse _väärtus:"
+
+msgid ""
+"<small><i><b>Note:</b> The priority of a process is given by its nice value. "
+"A lower nice value corresponds to a higher priority.</i></small>"
+msgstr ""
+"<small><i><b>Märkus:</b> Protsessi prioriteet on antud tema nice väärtusega. "
+"Madalam nice väärtus tähendab suuremat prioriteeti.</i></small>"
 
 msgid "Show the System tab"
 msgstr "Süsteemi kaardi näitamine"
@@ -312,16 +379,10 @@ msgstr "Kohandatud"
 msgid "Set process priority manually"
 msgstr "Protsessi prioriteedi määramine käsitsi"
 
-msgid "End _Process"
-msgstr "_Lõpeta protsess"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
 #, c-format
 msgid "Pick a Color for '%s'"
 msgstr "Värvuse valimine '%s' jaoks"
-
-msgid "CPU History"
-msgstr "Protsessori koormuse ajalugu"
 
 msgid "CPU"
 msgstr "Protsessor"
@@ -330,33 +391,8 @@ msgstr "Protsessor"
 msgid "CPU%d"
 msgstr "Protsessor%d"
 
-msgid "Memory and Swap History"
-msgstr "Mälu ja saaleala kasutuse ajalugu"
-
-msgid "Memory"
-msgstr "Mälu"
-
-msgid "Swap"
-msgstr "Saaleala"
-
-msgid "Network History"
-msgstr "Võrguliikluse ajalugu"
-
-msgid "Receiving"
-msgstr "Vastuvõtmine"
-
-msgid "Total Received"
-msgstr "Kokku vastu võetud"
-
 msgid "Sending"
 msgstr "Saatmine"
-
-msgid "Total Sent"
-msgstr "Kokku saadetud"
-
-#. procman_create_sysinfo_view();
-msgid "System"
-msgstr "Süsteem"
 
 #, c-format
 msgid "%u second"
@@ -372,15 +408,12 @@ msgstr "pole saadaval"
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) %s-st"
 
+msgid "Error"
+msgstr "Viga"
+
 #, c-format
-msgid ""
-"<b>Error</b>\n"
-"'%s' is not a valid Perl regular expression.\n"
-"%s"
-msgstr ""
-"<b>Viga</b>\n"
-"'%s' pole korrektne Perli regulaaravaldis.\n"
-"%s"
+msgid "'%s' is not a valid Perl regular expression."
+msgstr "'%s' pole korrektne Perli regulaaravaldis."
 
 msgid "Process"
 msgstr "Protsess"
@@ -390,19 +423,6 @@ msgstr "PID"
 
 msgid "Filename"
 msgstr "Failinimi"
-
-#. gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-msgid "Search for Open Files"
-msgstr "Avatud failide otsing"
-
-msgid "_Name contains:"
-msgstr "_Nimi sisaldab:"
-
-msgid "Case insensitive matching"
-msgstr "Tõstutundetud vastavused"
-
-msgid "S_earch results:"
-msgstr "O_tsingutulemused:"
 
 #. xgettext: virtual memory start
 msgid "VM Start"
@@ -479,9 +499,6 @@ msgstr "FD"
 
 msgid "Object"
 msgstr "Objekt"
-
-msgid "Open Files"
-msgstr "Avatud failid"
 
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
@@ -800,12 +817,6 @@ msgstr "(%s prioriteet)"
 msgid "Change Priority of Process »%s« (PID: %u)"
 msgstr "Protsessi prioriteedi muutmine »%s« (PID: %u)"
 
-msgid "Change _Priority"
-msgstr "Muuda _tähtsust"
-
-msgid "_Nice value:"
-msgstr "Tähtsuse _väärtus:"
-
 msgid "Note:"
 msgstr "Märkus:"
 
@@ -821,6 +832,9 @@ msgstr "Ikoon"
 
 msgid "A simple process and system monitor."
 msgstr "Lihtne protsesside ja süsteemi monitor."
+
+msgid "N/A"
+msgstr "pole"
 
 msgid "Process Name"
 msgstr "Protsessi nimi"
@@ -846,18 +860,23 @@ msgstr "Jagatud mälu"
 msgid "X Server Memory"
 msgstr "X serveri mälu"
 
-#, no-c-format
-msgid "% CPU"
-msgstr "% CPU"
-
 msgid "CPU Time"
 msgstr "CPU aeg"
+
+#, c-format
+msgid "%lld second"
+msgid_plural "%lld seconds"
+msgstr[0] "%lld sekund"
+msgstr[1] "%lld sekundit"
 
 msgid "Started"
 msgstr "Käivitatud"
 
 msgid "Nice"
 msgstr "Nice"
+
+msgid "Priority"
+msgstr "Prioriteet"
 
 msgid "ID"
 msgstr "ID"
@@ -871,6 +890,17 @@ msgstr "Käsurida"
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
 msgid "Waiting Channel"
 msgstr "Ootekanal"
+
+msgid "Process Properties"
+msgstr "Protsessi omadused"
+
+#, c-format
+msgid "Properties of process \"%s\" (PID %u):"
+msgstr "Protsessi \"%s\" omadused (PID %u):"
+
+#, no-c-format
+msgid "% CPU"
+msgstr "% CPU"
 
 msgid "Control Group"
 msgstr "Juhtgrupp"
@@ -890,28 +920,9 @@ msgstr "Iste"
 msgid "Owner"
 msgstr "Omanik"
 
-msgid "Priority"
-msgstr "Prioriteet"
-
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Koormuse näit viimase 1, 5 ja 15 minuti kohta: %0.2f, %0.2f, %0.2f"
-
-msgid "N/A"
-msgstr "pole"
-
-#, c-format
-msgid "%lld second"
-msgid_plural "%lld seconds"
-msgstr[0] "%lld sekund"
-msgstr[1] "%lld sekundit"
-
-msgid "Process Properties"
-msgstr "Protsessi omadused"
-
-#, c-format
-msgid "Properties of process \"%s\" (PID %u):"
-msgstr "Protsessi \"%s\" omadused (PID %u):"
 
 #. Translators: The first string parameter is release version (codename),
 #. * the second one is the architecture, 32 or 64-bit
@@ -925,9 +936,6 @@ msgstr "Väljalase %s %s"
 msgid "%d-bit"
 msgstr "%d-bitine"
 
-msgid "Unknown model"
-msgstr "Tundmatu mudel"
-
 #, c-format
 msgid "Kernel %s"
 msgstr "Kernel %s"
@@ -937,9 +945,8 @@ msgid "GNOME %s"
 msgstr "GNOME %s"
 
 #. hardware section
-#, c-format
-msgid "<b>Hardware</b>"
-msgstr "<b>Riistvara</b>"
+msgid "Hardware"
+msgstr "Riistvara"
 
 msgid "Memory:"
 msgstr "Mälu:"
@@ -948,9 +955,8 @@ msgid "Processor:"
 msgstr "Protsessor:"
 
 #. disk space section
-#, c-format
-msgid "<b>System Status</b>"
-msgstr "<b>Süsteemi olek</b>"
+msgid "System Status"
+msgstr "Süsteemi olek"
 
 msgid "Available disk space:"
 msgstr "Vaba kettaruum:"
@@ -1033,9 +1039,6 @@ msgid "%u byte"
 msgid_plural "%u bytes"
 msgstr[0] "%u bait"
 msgstr[1] "%u baiti"
-
-msgid "<i>N/A</i>"
-msgstr "<i>pole saadaval</i>"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
 #, c-format
