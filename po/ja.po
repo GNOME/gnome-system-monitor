@@ -6,14 +6,15 @@
 # Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>, 2010-2011.
 # Jiro Matsuzawa <jmatsuzawa@gnome.org>, 2011-2012.
 # Hideki Yamane <henrich@debian.org>, 2011.
+# Noriko Mizumoto <noriko@fedoraproject.org>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-08-19 16:24+0000\n"
-"PO-Revision-Date: 2012-08-20 12:41+0900\n"
-"Last-Translator: OKANO Takayoshi <kano@na.rim.or.jp>\n"
+"POT-Creation-Date: 2012-09-22 17:13+0000\n"
+"PO-Revision-Date: 2012-09-24 11:43+0000\n"
+"Last-Translator: Noriko Mizumoto <noriko@fedoraproject.org>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +33,7 @@ msgstr "現在のプロセスを表示してシステムの状態を監視しま
 
 #: ../gnome-system-monitor.desktop.in.in.h:3
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
-msgstr ""
+msgstr "Monitor;System;Process;CPU;Memory;Network;History;Usage;モニター;システム;ププロセス;CPU;メモリー;ネットワーク;履歴;使用量;"
 
 #: ../data/interface.ui.h:2
 msgid "System"
@@ -83,15 +84,11 @@ msgstr "送信:"
 msgid "Total Sent"
 msgstr "送信の合計:"
 
-#: ../data/interface.ui.h:14
-msgid "\n"
-msgstr ""
-
-#: ../data/interface.ui.h:16 ../data/preferences.ui.h:12
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:12
 msgid "Resources"
 msgstr "リソース"
 
-#: ../data/interface.ui.h:17 ../data/preferences.ui.h:14
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:14
 msgid "File Systems"
 msgstr "ファイルシステム"
 
@@ -172,10 +169,8 @@ msgid "_Nice value:"
 msgstr "Nice 値(_N):"
 
 #: ../data/renice.ui.h:3
-#, fuzzy
-#| msgid "The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."
 msgid "<small><i><b>Note:</b> The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority.</i></small>"
-msgstr "プロセスの優先度は、Nice 値で与えられます。小さい Nice 値は高い優先度に相当します。"
+msgstr "<small><i><b>注記:</b> プロセスの優先度は Nice 値で与えます。Nice 値が低いほど優先度は高くなります。</i></small>"
 
 #: ../src/argv.cpp:21
 msgid "Show the System tab"
@@ -403,7 +398,7 @@ msgstr "プロパティ(_P)"
 
 #: ../src/interface.cpp:85
 msgid "View additional information about a process"
-msgstr ""
+msgstr "プロセスに関する詳細情報を表示します"
 
 #: ../src/interface.cpp:88
 msgid "_Contents"
@@ -452,52 +447,61 @@ msgstr "ユーザー所有のプロセスのみを表示します"
 #: ../src/interface.cpp:114 ../src/util.cpp:217
 #, fuzzy
 msgid "Very High"
-msgstr "(一番高い優先度)"
+msgstr "非常に高い"
 
 #: ../src/interface.cpp:115
+#, fuzzy
 msgid "Set process priority to very high"
-msgstr ""
+msgstr "プロセスの優先度を非常に高いに設定します"
 
 #: ../src/interface.cpp:116 ../src/util.cpp:219
+#, fuzzy
 msgid "High"
-msgstr ""
+msgstr "高い"
 
 #: ../src/interface.cpp:117
+#, fuzzy
 msgid "Set process priority to high"
-msgstr ""
+msgstr "プロセスの優先度を高いに設定します"
 
 #: ../src/interface.cpp:118 ../src/util.cpp:221
+#, fuzzy
 msgid "Normal"
-msgstr ""
+msgstr "普通"
 
 #: ../src/interface.cpp:119
 #, fuzzy
 msgid "Set process priority to normal"
-msgstr "プロセスを正常に終了します"
+msgstr "プロセスの優先度を普通に設定します"
 
 #: ../src/interface.cpp:120 ../src/util.cpp:223
+#, fuzzy
 msgid "Low"
-msgstr ""
+msgstr "低い"
 
 #: ../src/interface.cpp:121
+#, fuzzy
 msgid "Set process priority to low"
-msgstr ""
+msgstr "プロセスの優先度を低いに設定します"
 
 #: ../src/interface.cpp:122 ../src/util.cpp:225
+#, fuzzy
 msgid "Very Low"
-msgstr ""
+msgstr "非常に低い"
 
 #: ../src/interface.cpp:123
+#, fuzzy
 msgid "Set process priority to very low"
-msgstr ""
+msgstr "プロセスの優先度を非常に低いに設定します"
 
 #: ../src/interface.cpp:124
 msgid "Custom"
 msgstr "カスタム"
 
 #: ../src/interface.cpp:125
+#, fuzzy
 msgid "Set process priority manually"
-msgstr ""
+msgstr "プロセスの優先度を手作業で設定します"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
 #: ../src/interface.cpp:256
@@ -525,9 +529,8 @@ msgid_plural "%u seconds"
 msgstr[0] "%u 秒"
 
 #: ../src/load-graph.cpp:345
-#, fuzzy
 msgid "not available"
-msgstr "利用可能"
+msgstr "利用できません"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
 #: ../src/load-graph.cpp:348
@@ -666,14 +669,12 @@ msgid "Main Window height"
 msgstr "メインウィンドウの高さ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
-#, fuzzy
 msgid "Main Window X position"
-msgstr "メインウィンドウの幅"
+msgstr "メインウィンドウ X の位置"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
-#, fuzzy
 msgid "Main Window Y position"
-msgstr "メインウィンドウの幅"
+msgstr "メインウィンドウ Y の位置"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
 msgid "Show process dependencies in tree form"
@@ -704,14 +705,12 @@ msgid "Time in milliseconds between updates of the graphs"
 msgstr "グラフの更新間隔 (ミリ秒)"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
-#, fuzzy
 msgid "Whether information about all file systems should be displayed"
 msgstr "すべてのファイルシステムの情報を表示するかどうか"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
-#, fuzzy
 msgid "Whether to display information about all file systems (including types like 'autofs' and 'procfs'). Useful for getting a list of all currently mounted file systems."
-msgstr "すべてのファイルシステムの情報を表示するかどうかです (これは 'autofs' や 'procfs' のような類も含まれます)。現在マウントされているすべてのファイルシステムの一覧を取得する際に使用します。"
+msgstr "すべてのファイルシステムの情報を表示するかどうかです (これは 'autofs' や 'procfs' のような種類も含まれます)。現在マウントされているすべてのファイルシステムの一覧を取得する際に便利です。"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
 msgid "Time in milliseconds between updates of the devices list"
@@ -719,11 +718,11 @@ msgstr "デバイス一覧の更新間隔 (ミリ秒)"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
 msgid "Determines which processes to show by default. 0 is All, 1 is user, and 2 is active"
-msgstr "デフォルトでどのレベルのプロセスを表示するか (0: すべて、1: ユーザー・プロセス、2: 動作中のプロセス)"
+msgstr "デフォルトで表示するプロセスを指定します (0: 全プロセス、1: ユーザープロセス、2: 動作中のプロセス)"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
 msgid "Saves the currently viewed tab"
-msgstr "現在表示しているタブを保存するか"
+msgstr "現在表示しているタブを保存します"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
 msgid "0 for the System Info, 1 for the processes list, 2 for the resources and 3 for the disks list"
@@ -735,7 +734,7 @@ msgstr "CPUの色"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
-msgstr ""
+msgstr "各エントリはこの形式になります (CPU#、16進数の色の値)"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
 msgid "Default graph memory color"
@@ -778,74 +777,60 @@ msgid "Show process 'Name' column on startup"
 msgstr "起動時にプロセス名の項目を表示するか"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
-#, fuzzy
 msgid "Width of process 'User' column"
-msgstr "ユーザー名の項目の幅"
+msgstr "「ユーザー」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
-#, fuzzy
 msgid "Show process 'User' column on startup"
-msgstr "起動時にユーザー名の項目を表示するか"
+msgstr "起動時に「ユーザー」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
-#, fuzzy
 msgid "Width of process 'Status' column"
-msgstr "状態の項目の幅"
+msgstr "「状態」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
-#, fuzzy
 msgid "Show process 'Status' column on startup"
-msgstr "起動時に状態の項目を表示するか"
+msgstr "起動時に「状態」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
-#, fuzzy
 msgid "Width of process 'Virtual Memory' column"
-msgstr "仮想メモリの項目の幅"
+msgstr "「仮想メモリ」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
-#, fuzzy
 msgid "Show process 'Virtual Memory' column on startup"
-msgstr "起動時に仮想メモリの項目を表示するか"
+msgstr "起動時に「仮想メモリ」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
-#, fuzzy
 msgid "Width of process 'Resident Memory' column"
-msgstr "物理メモリの項目の幅"
+msgstr "「物理メモリ」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
-#, fuzzy
 msgid "Show process 'Resident Memory' column on startup"
-msgstr "起動時に物理メモリの項目を表示するか"
+msgstr "起動時に「物理メモリ」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
-#, fuzzy
 msgid "Width of process 'Writable Memory' column"
-msgstr "書き込み可能メモリの項目の幅"
+msgstr "「書き込み可能メモリー」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
-#, fuzzy
 msgid "Show process 'Writable Memory' column on startup"
-msgstr "起動時に書き込み可能メモリの項目を表示するか"
+msgstr "起動時に「書き込み可能メモリー」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
-#, fuzzy
 msgid "Width of process 'Shared Memory' column"
-msgstr "共有メモリの項目の幅"
+msgstr "「共有メモリー」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
-#, fuzzy
 msgid "Show process 'Shared Memory' column on startup"
-msgstr "起動時に共有メモリの項目を表示するか"
+msgstr "起動時に「共有メモリー」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
-#, fuzzy
 msgid "Width of process 'X Server Memory' column"
-msgstr "X サーバーメモリの項目の幅"
+msgstr "「X サーバーメモリー」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
-#, fuzzy
 msgid "Show process 'X Server Memory' column on startup"
-msgstr "起動時に X サーバーメモリの項目を表示するか"
+msgstr "起動時に「X サーバーメモリー」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
 #, no-c-format
@@ -858,34 +843,28 @@ msgid "Show process 'CPU %' column on startup"
 msgstr "起動時に CPU 使用率の項目を表示するか"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
-#, fuzzy
 msgid "Width of process 'CPU Time' column"
-msgstr "CPU 時間の項目の幅"
+msgstr "「CPU 時間」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
-#, fuzzy
 msgid "Show process 'CPU Time' column on startup"
-msgstr "起動時に CPU 時間の項目を表示するか"
+msgstr "起動時に「CPU 時間」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
-#, fuzzy
 msgid "Width of process 'Started' column"
-msgstr "起動日時の項目の幅"
+msgstr "「起動日時」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
-#, fuzzy
 msgid "Show process 'Started' column on startup"
-msgstr "起動時に起動日時の項目を表示するか"
+msgstr "起動時に「起動日時」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
-#, fuzzy
 msgid "Width of process 'Nice' column"
-msgstr "Nice値の項目の幅"
+msgstr "「Nice値」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
-#, fuzzy
 msgid "Show process 'Nice' column on startup"
-msgstr "起動時に Nice 値の項目を表示するか"
+msgstr "起動時に「Nice 値」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
 msgid "Width of process 'PID' column"
@@ -896,34 +875,28 @@ msgid "Show process 'PID' column on startup"
 msgstr "起動時に PID の項目を表示するか"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
-#, fuzzy
 msgid "Width of process 'SELinux Security Context' column"
-msgstr "SELinux のセキュリティコンテキストの項目の幅"
+msgstr "「SELinux のセキュリティコンテキスト」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
-#, fuzzy
 msgid "Show process 'SELinux Security Context' column on startup"
-msgstr "起動時に SELinux のセキュリティコンテキストの項目を表示するか"
+msgstr "起動時に「SELinux のセキュリティコンテキスト」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
-#, fuzzy
 msgid "Width of process 'Command Line' column"
-msgstr "Nice値の項目の幅"
+msgstr "「コマンドライン」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
-#, fuzzy
 msgid "Show process 'Command Line' column on startup"
-msgstr "起動時に Nice 値の項目を表示するか"
+msgstr "起動時に「コマンドライン」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
-#, fuzzy
 msgid "Width of process 'Memory' column"
-msgstr "ユーザー名の項目の幅"
+msgstr "「メモリー」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
-#, fuzzy
 msgid "Show process 'Memory' column on startup"
-msgstr "起動時にユーザー名の項目を表示するか"
+msgstr "起動時に「メモリー」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
 msgid "Width of process 'Waiting Channel' column"
@@ -934,98 +907,80 @@ msgid "Show process 'Waiting Channel' column on startup"
 msgstr "起動時に休止中の関数名の項目を表示するか"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
-#, fuzzy
 msgid "Width of process 'Control Group' column"
-msgstr "ユーザー名の項目の幅"
+msgstr "「コントロールグループ」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
-#, fuzzy
 msgid "Show process 'Control Group' column on startup"
-msgstr "起動時にユーザー名の項目を表示するか"
+msgstr "起動時に「コントロールグループ」の項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
-#, fuzzy
 msgid "Width of process 'Unit' column"
-msgstr "Nice値の項目の幅"
+msgstr "「単位」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
-#, fuzzy
 msgid "Show process 'Unit' column on startup"
-msgstr "起動時に Nice 値の項目を表示するか"
+msgstr "起動時に「単位」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
-#, fuzzy
 msgid "Width of process 'Session' column"
-msgstr "ユーザー名の項目の幅"
+msgstr "「セッション」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
-#, fuzzy
 msgid "Show process 'Session' column on startup"
-msgstr "起動時にユーザー名の項目を表示するか"
+msgstr "起動時に「セッション」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
-#, fuzzy
 msgid "Width of process 'Seat' column"
-msgstr "状態の項目の幅"
+msgstr "「シート」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
-#, fuzzy
 msgid "Show process 'Seat' column on startup"
-msgstr "起動時に状態の項目を表示するか"
+msgstr "起動時に「シート」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
-#, fuzzy
 msgid "Width of process 'Owner' column"
-msgstr "ユーザー名の項目の幅"
+msgstr "「所有者」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
-#, fuzzy
 msgid "Show process 'Owner' column on startup"
-msgstr "起動時にユーザー名の項目を表示するか"
+msgstr "起動時に「所有者」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
-#, fuzzy
 msgid "Width of process 'Priority' column"
-msgstr "ユーザー名の項目の幅"
+msgstr "「優先度」プロセスの項目の幅"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
-#, fuzzy
 msgid "Show process 'Priority' column on startup"
-msgstr "起動時にユーザー名の項目を表示するか"
+msgstr "起動時に「優先度」プロセスの項目を表示"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
-#, fuzzy
 msgid "Disk view sort column"
-msgstr "プロセス一覧の項目の並べ方"
+msgstr "表示するディスクの項目の並べ方"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
-#, fuzzy
 msgid "Disk view sort order"
-msgstr "デバイスの一覧表示で表示する項目の順番"
+msgstr "表示するディスクの並び順"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
 msgid "Disk view columns order"
-msgstr "デバイスの一覧表示で表示する項目の順番"
+msgstr "表示するディスク項目の順序"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
-#, fuzzy
 msgid "Memory map sort column"
-msgstr "プロセス一覧の項目の並べ方"
+msgstr "メモリーマップの項目の並べ方"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
-#, fuzzy
 msgid "Memory map sort order"
-msgstr "メモリとスワップの履歴"
+msgstr "メモリーマップの並び順"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
-#, fuzzy
 msgid "Open files sort column"
-msgstr "プロセス一覧の項目の並べ方"
+msgstr "オープンしたファイルの項目の並べ方"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
-#, fuzzy
 msgid "Open files sort order"
-msgstr "プロセス一覧の並べ方"
+msgstr "オープンしたファイルの並び順"
 
 #: ../src/procactions.cpp:76
 #, c-format
@@ -1070,7 +1025,7 @@ msgstr "プロセスを終了すると、データの破損、セッションの
 #: ../src/procdialogs.cpp:130
 #, fuzzy, c-format
 msgid "(%s Priority)"
-msgstr "(低い優先度)"
+msgstr "(%s 優先度)"
 
 #: ../src/procdialogs.cpp:175
 #, c-format
@@ -1188,22 +1143,21 @@ msgstr "Control Group"
 
 #: ../src/proctable.cpp:255
 msgid "Unit"
-msgstr ""
+msgstr "単位"
 
 #: ../src/proctable.cpp:256
 msgid "Session"
-msgstr ""
+msgstr "セッション"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
 #: ../src/proctable.cpp:259
-#, fuzzy
 msgid "Seat"
-msgstr "状態"
+msgstr "シート"
 
 #: ../src/proctable.cpp:260
 msgid "Owner"
-msgstr ""
+msgstr "所有者"
 
 #: ../src/proctable.cpp:1078
 #, c-format
