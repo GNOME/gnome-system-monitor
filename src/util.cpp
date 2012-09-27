@@ -225,6 +225,20 @@ procman::get_nice_level (gint nice)
         return _("Very Low");
 }
 
+gchar *
+procman::get_nice_level_with_priority (gint nice)
+{
+    if (nice < -7)
+        return _("Very High Priority");
+    else if (nice < -2)
+        return _("High Priority");
+    else if (nice < 3)
+        return _("Normal Priority");
+    else if (nice < 7)
+        return _("Low Priority");
+    else
+        return _("Very Low Priority");
+}
 
 gboolean
 load_symbols(const char *module, ...)

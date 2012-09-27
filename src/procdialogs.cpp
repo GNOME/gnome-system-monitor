@@ -127,7 +127,7 @@ renice_scale_changed (GtkAdjustment *adj, gpointer data)
     GtkWidget *label = GTK_WIDGET (data);
 
     new_nice_value = int(gtk_adjustment_get_value (adj));
-    gchar* text = g_strdup_printf(_("(%s Priority)"), procman::get_nice_level (new_nice_value));
+    gchar* text = g_strdup(procman::get_nice_level_with_priority (new_nice_value));
     gtk_label_set_text (GTK_LABEL (label), text);
     g_free(text);
 
@@ -188,7 +188,7 @@ procdialog_create_renice_dialog (ProcData *procdata)
     new_nice_value = 0;
     
     priority_label =  GTK_WIDGET (gtk_builder_get_object (builder, "priority_label"));
-    gtk_label_set_label (GTK_LABEL(priority_label), procman::get_nice_level (info->nice));
+    gtk_label_set_label (GTK_LABEL(priority_label), procman::get_nice_level_with_priority (info->nice));
 
     text = g_strconcat("<small><i><b>", _("Note:"), "</b> ",
                        _("The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."),

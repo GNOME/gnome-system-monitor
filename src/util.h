@@ -151,6 +151,8 @@ namespace procman
 
     gchar* get_nice_level (gint nice);
 
+    gchar* get_nice_level_with_priority (gint nice);
+
     std::string format_rate(guint64 rate, guint64 max_rate = 0, bool want_bits = false);
 
     std::string format_network(guint64 rate, guint64 max_rate = 0);
