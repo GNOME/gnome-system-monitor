@@ -74,7 +74,7 @@ procdialog_create_kill_dialog (ProcData *procdata, int signal)
 
     if (signal == SIGKILL) {
         /*xgettext: primary alert message*/
-        primary = g_strdup_printf (_("Kill the selected process »%s« (PID: %u)?"),
+        primary = g_strdup_printf (_("Kill the selected process “%s” (PID: %u)?"),
                                    procdata->selected_process->name,
                                    procdata->selected_process->pid);
         /*xgettext: secondary alert message*/
@@ -85,7 +85,7 @@ procdialog_create_kill_dialog (ProcData *procdata, int signal)
     }
     else {
         /*xgettext: primary alert message*/
-        primary = g_strdup_printf (_("End the selected process »%s« (PID: %u)?"),
+        primary = g_strdup_printf (_("End the selected process “%s” (PID: %u)?"),
                                    procdata->selected_process->name,
                                    procdata->selected_process->pid);
         /*xgettext: secondary alert message*/
@@ -172,7 +172,7 @@ procdialog_create_renice_dialog (ProcData *procdata)
 
     renice_dialog = GTK_WIDGET (gtk_builder_get_object (builder, "renice_dialog"));
 
-    dialog_title = g_strdup_printf (_("Change Priority of Process »%s« (PID: %u)"),
+    dialog_title = g_strdup_printf (_("Change Priority of Process “%s” (PID: %u)"),
                                     info->name, info->pid);
 
     gtk_window_set_title (GTK_WINDOW(renice_dialog), dialog_title);
