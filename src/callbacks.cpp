@@ -477,15 +477,16 @@ cb_timeout (gpointer data)
 {
     ProcData * const procdata = static_cast<ProcData*>(data);
     guint new_interval;
+    if (!procdata->terminating) {
+        proctable_update_all (procdata);
 
-    proctable_update_all (procdata);
-
-    if (procdata->smooth_refresh->get(new_interval))
-    {
-        procdata->timeout = g_timeout_add(new_interval,
+        if (procdata->smooth_refresh->get(new_interval))
+        {
+            procdata->timeout = g_timeout_add(new_interval,
                                           cb_timeout,
                                           procdata);
-        return FALSE;
+            return FALSE;
+        }
     }
 
     return TRUE;
