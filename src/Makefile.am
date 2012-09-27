@@ -33,7 +33,8 @@ gnome_system_monitor_cpp_files = \
 	lsof.cpp \
 	selection.cpp \
 	settings-keys.cpp \
-	iconthemewrapper.cpp
+	iconthemewrapper.cpp \
+	procman-app.cpp
 
 gnome_system_monitor_c_files = \
 	e_date.c \
@@ -49,14 +50,9 @@ gnome_system_monitor_SOURCES = \
   $(gnome_system_monitor_cpp_files) \
   $(gnome_system_monitor_c_files)
 
-gnome_system_monitor_LDADD = @PROCMAN_LIBS@ @SYSTEMD_LIBS@ libbacon.la
+gnome_system_monitor_LDADD = @PROCMAN_LIBS@ @SYSTEMD_LIBS@
 
 gnome_system_monitor_CPPFLAGS = -DGSM_DATA_DIR=\""$(pkgdatadir)"\"
-
-noinst_LTLIBRARIES = libbacon.la
-libbacon_la_SOURCES = \
-	bacon-message-connection.c \
-	bacon-message-connection.h
 
 specdir = $(datadir)/procman
 
