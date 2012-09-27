@@ -86,6 +86,7 @@ struct ProcConfig
 {
     gint            width;
     gint            height;
+    gboolean        maximized;
     gint            xpos;
     gint            ypos;
     gboolean        show_kill_warning;
