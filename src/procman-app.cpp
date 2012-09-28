@@ -235,6 +235,7 @@ procman_data_new (GSettings *settings)
     pd->config.height = g_settings_get_int (settings, "height");
     pd->config.xpos = g_settings_get_int (settings, "x-position");
     pd->config.ypos = g_settings_get_int (settings, "y-position");
+    pd->config.maximized = g_settings_get_boolean (settings, "maximized");
 
     pd->config.show_tree = g_settings_get_boolean (settings, "show-tree");
     g_signal_connect (G_OBJECT(settings), "changed::show-tree", G_CALLBACK(tree_changed_cb), pd);
