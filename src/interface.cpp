@@ -394,7 +394,7 @@ create_sys_view (ProcData *procdata, GtkBuilder * builder)
 }
 
 void
-create_main_window (ProcData *procdata)
+create_main_window (ProcData *procdata, GtkApplication *application)
 {
     gint i;
     gint width, height, xpos, ypos;
@@ -410,6 +410,8 @@ create_main_window (ProcData *procdata)
     gtk_builder_add_from_file (builder, filename, NULL);
 
     app = GTK_WIDGET (gtk_builder_get_object (builder, "main_window"));
+    gtk_window_set_application (GTK_WINDOW (app), application);
+
     main_box = GTK_WIDGET (gtk_builder_get_object (builder, "main_box"));
     GdkScreen* screen = gtk_widget_get_screen(app);
     GdkVisual* visual = gdk_screen_get_rgba_visual(screen);

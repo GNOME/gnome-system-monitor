@@ -421,14 +421,11 @@ void ProcmanApp::on_startup()
     procdata = procman_data_new (settings);
     procdata->settings = g_settings_new(GSM_GSETTINGS_SCHEMA);
 
-    create_main_window (procdata);
+    create_main_window (procdata, this->gobj());
     init_volume_monitor (procdata);
 
-    Gtk::Window *window = Glib::wrap(GTK_WINDOW(procdata->app));
-    window->show();
-    window->set_name ("gnome-system-monitor");
-
-    add_window (*window);
+    gtk_widget_show (procdata->app);
+    gtk_widget_set_name (procdata->app, "gnome-system-monitor");
 }
 
 void ProcmanApp::on_shutdown()
