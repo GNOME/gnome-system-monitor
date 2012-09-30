@@ -1,3 +1,5 @@
+#include <config.h>
+
 #include <glib/gi18n.h>
 #include <glibtop.h>
 #include <glibtop/close.h>
@@ -407,9 +409,59 @@ int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>&
     return 0;
 }
 
+void
+ProcmanApp::on_help_activate(const Glib::VariantBase&)
+{
+    cb_help_contents (NULL, NULL);
+}
+
+void
+ProcmanApp::on_lsof_activate(const Glib::VariantBase&)
+{
+    cb_show_lsof (NULL, procdata);
+}
+
+void
+ProcmanApp::on_preferences_activate(const Glib::VariantBase&)
+{
+    cb_edit_preferences (NULL, procdata);
+}
+
+void
+ProcmanApp::on_quit_activate(const Glib::VariantBase&)
+{
+    this->quit();
+}
+
+
 void ProcmanApp::on_startup()
 {
     Gtk::Application::on_startup();
+
+    Glib::RefPtr<Gio::SimpleAction> action;
+
+    action = Gio::SimpleAction::create("quit");
+    action->signal_activate().connect(sigc::mem_fun(*this, &ProcmanApp::on_quit_activate));
+    add_action(action);
+
+    action = Gio::SimpleAction::create("help");
+    action->signal_activate().connect(sigc::mem_fun(*this, &ProcmanApp::on_help_activate));
+    add_action(action);
+
+    action = Gio::SimpleAction::create("lsof");
+    action->signal_activate().connect(sigc::mem_fun(*this, &ProcmanApp::on_lsof_activate));
+    add_action(action);
+
+    action = Gio::SimpleAction::create("preferences");
+    action->signal_activate().connect(sigc::mem_fun(*this, &ProcmanApp::on_preferences_activate));
+    add_action(action);
+
+    char* filename = g_build_filename (GSM_DATA_DIR, "menus.ui", NULL);
+    Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file(filename);
+    g_free (filename);
+
+    Glib::RefPtr<Gio::Menu> menu = Glib::RefPtr<Gio::Menu>::cast_static(builder->get_object ("app-menu"));
+    set_app_menu (menu);
 
     GSettings *settings;
 

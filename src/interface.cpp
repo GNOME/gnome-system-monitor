@@ -46,18 +46,7 @@ static void     cb_proc_goto_tab (gint tab);
 
 static const GtkActionEntry menu_entries[] =
 {
-    // xgettext: noun, top level menu.
-    // "File" did not make sense for system-monitor
-    { "Monitor", NULL, N_("_Monitor") },
-    { "Edit", NULL, N_("_Edit") },
     { "View", NULL, N_("_View") },
-    { "Help", NULL, N_("_Help") },
-
-    { "Lsof", GTK_STOCK_FIND, N_("Search for _Open Files"), "<control>O",
-      N_("Search for open files"), G_CALLBACK(cb_show_lsof) },
-    { "Quit", GTK_STOCK_QUIT, NULL, NULL,
-      N_("Quit the program"), G_CALLBACK (cb_app_exit) },
-
 
     { "StopProcess", NULL, N_("_Stop Process"), "<control>S",
       N_("Stop process"), G_CALLBACK(cb_kill_sigstop) },
@@ -70,8 +59,6 @@ static const GtkActionEntry menu_entries[] =
       N_("Force process to finish immediately"), G_CALLBACK (cb_kill_process) },
     { "ChangePriority", NULL, N_("_Change Priority"), NULL,
       N_("Change the order of priority of process"), NULL },
-    { "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL,
-      N_("Configure the application"), G_CALLBACK (cb_edit_preferences) },
 
     { "Refresh", GTK_STOCK_REFRESH, N_("_Refresh"), "<control>R",
       N_("Refresh the process list"), G_CALLBACK(cb_user_refresh) },
@@ -83,12 +70,6 @@ static const GtkActionEntry menu_entries[] =
       N_("View the files opened by a process"), G_CALLBACK (cb_show_open_files) },
     { "ProcessProperties", NULL, N_("_Properties"), NULL,
       N_("View additional information about a process"), G_CALLBACK (cb_show_process_properties) },
-
-
-    { "HelpContents", GTK_STOCK_HELP, N_("_Contents"), "F1",
-      N_("Open the manual"), G_CALLBACK (cb_help_contents) },
-    { "About", GTK_STOCK_ABOUT, NULL, NULL,
-      N_("About this application"), G_CALLBACK (cb_about) }
 };
 
 static const GtkToggleActionEntry toggle_menu_entries[] =
@@ -127,49 +108,6 @@ static const GtkRadioActionEntry priority_menu_entries[] =
 
 
 static const char ui_info[] =
-    "  <menubar name=\"MenuBar\">"
-    "    <menu name=\"MonitorMenu\" action=\"Monitor\">"
-    "      <menuitem name=\"MonitorLsofMenu\" action=\"Lsof\" />"
-    "      <menuitem name=\"MonitorQuitMenu\" action=\"Quit\" />"
-    "    </menu>"
-    "    <menu name=\"EditMenu\" action=\"Edit\">"
-    "      <menuitem name=\"EditStopProcessMenu\" action=\"StopProcess\" />"
-    "      <menuitem name=\"EditContProcessMenu\" action=\"ContProcess\" />"
-    "      <separator />"
-    "      <menuitem name=\"EditEndProcessMenu\" action=\"EndProcess\" />"
-    "      <menuitem name=\"EditKillProcessMenu\" action=\"KillProcess\" />"
-    "      <separator />"
-    "      <menu name=\"EditChangePriorityMenu\" action=\"ChangePriority\" >"
-    "        <menuitem action=\"VeryHigh\" />"
-    "        <menuitem action=\"High\" />"
-    "        <menuitem action=\"Normal\" />"
-    "        <menuitem action=\"Low\" />"
-    "        <menuitem action=\"VeryLow\" />"
-    "        <separator />"
-    "        <menuitem action=\"Custom\"/>"
-    "      </menu>"
-    "      <separator />"
-    "      <menuitem name=\"EditPreferencesMenu\" action=\"Preferences\" />"
-    "    </menu>"
-    "    <menu name=\"ViewMenu\" action=\"View\">"
-    "      <menuitem name=\"ViewActiveProcesses\" action=\"ShowActiveProcesses\" />"
-    "      <menuitem name=\"ViewAllProcesses\" action=\"ShowAllProcesses\" />"
-    "      <menuitem name=\"ViewMyProcesses\" action=\"ShowMyProcesses\" />"
-    "      <separator />"
-    "      <menuitem name=\"ViewDependenciesMenu\" action=\"ShowDependencies\" />"
-    "      <separator />"
-    "      <menuitem name=\"ViewMemoryMapsMenu\" action=\"MemoryMaps\" />"
-    "      <menuitem name=\"ViewOpenFilesMenu\" action=\"OpenFiles\" />"
-    "      <separator />"
-    "      <menuitem name=\"ViewProcessPropertiesMenu\" action=\"ProcessProperties\" />"
-    "      <separator />"
-    "      <menuitem name=\"ViewRefresh\" action=\"Refresh\" />"
-    "    </menu>"
-    "    <menu name=\"HelpMenu\" action=\"Help\">"
-    "      <menuitem name=\"HelpContentsMenu\" action=\"HelpContents\" />"
-    "      <menuitem name=\"HelpAboutMenu\" action=\"About\" />"
-    "    </menu>"
-    "  </menubar>"
     "  <popup name=\"PopupMenu\" action=\"Popup\">"
     "    <menuitem action=\"StopProcess\" />"
     "    <menuitem action=\"ContProcess\" />"
@@ -191,7 +129,13 @@ static const char ui_info[] =
     "    <menuitem action=\"OpenFiles\" />"
     "    <separator />"
     "    <menuitem action=\"ProcessProperties\" />"
-
+    "  </popup>"
+    "  <popup name=\"ViewMenu\" action=\"View\">"
+    "    <menuitem name=\"ViewActiveProcesses\" action=\"ShowActiveProcesses\" />"
+    "    <menuitem name=\"ViewAllProcesses\" action=\"ShowAllProcesses\" />"
+    "    <menuitem name=\"ViewMyProcesses\" action=\"ShowMyProcesses\" />"
+    "    <separator />"
+    "    <menuitem name=\"ViewDependencies\" action=\"ShowDependencies\" />"
     "  </popup>";
 
 
@@ -216,6 +160,9 @@ create_proc_view(ProcData *procdata, GtkBuilder * builder)
 {
     GtkWidget *proctree;
     GtkWidget *scrolled;
+    GtkWidget *viewmenu;
+    GtkWidget *button;
+    GtkAction *action;
     char* string;
 
     /* create the processes tab */
@@ -232,6 +179,15 @@ create_proc_view(ProcData *procdata, GtkBuilder * builder)
     procdata->endprocessbutton = GTK_WIDGET (gtk_builder_get_object (builder, "endprocessbutton"));
     g_signal_connect (G_OBJECT (procdata->endprocessbutton), "clicked",
                       G_CALLBACK (cb_end_process_button_pressed), procdata);
+
+    button = GTK_WIDGET (gtk_builder_get_object (builder, "viewmenubutton"));
+    viewmenu = gtk_ui_manager_get_widget (procdata->uimanager, "/ViewMenu");
+    gtk_widget_set_halign (viewmenu, GTK_ALIGN_END);
+    gtk_menu_button_set_popup (GTK_MENU_BUTTON (button), viewmenu);
+
+    button = GTK_WIDGET (gtk_builder_get_object (builder, "refreshbutton"));
+    action = gtk_action_group_get_action (procdata->action_group, "Refresh");
+    gtk_activatable_set_related_action (GTK_ACTIVATABLE (button), action);
 
     /* create popup_menu for the processes tab */
     procdata->popup_menu = gtk_ui_manager_get_widget (procdata->uimanager, "/PopupMenu");
@@ -393,6 +349,12 @@ create_sys_view (ProcData *procdata, GtkBuilder * builder)
 
 }
 
+static void
+on_activate_about (GSimpleAction *, GVariant *, gpointer data)
+{
+    cb_about (NULL, data);
+}
+
 void
 create_main_window (ProcData *procdata, GtkApplication *application)
 {
@@ -400,8 +362,6 @@ create_main_window (ProcData *procdata, GtkApplication *application)
     gint width, height, xpos, ypos;
     GtkWidget *app;
     GtkAction *action;
-    GtkWidget *menubar;
-    GtkWidget *main_box;
     GtkWidget *notebook;
 
     gchar* filename = g_build_filename (GSM_DATA_DIR, "interface.ui", NULL);
@@ -412,7 +372,15 @@ create_main_window (ProcData *procdata, GtkApplication *application)
     app = GTK_WIDGET (gtk_builder_get_object (builder, "main_window"));
     gtk_window_set_application (GTK_WINDOW (app), application);
 
-    main_box = GTK_WIDGET (gtk_builder_get_object (builder, "main_box"));
+    GActionEntry win_action_entries[] = {
+        { "about", on_activate_about, NULL, NULL, NULL }
+    };
+
+    g_action_map_add_action_entries (G_ACTION_MAP (app),
+                                     win_action_entries,
+                                     G_N_ELEMENTS (win_action_entries),
+                                     procdata);
+
     GdkScreen* screen = gtk_widget_get_screen(app);
     GdkVisual* visual = gdk_screen_get_rgba_visual(screen);
 
@@ -430,7 +398,6 @@ create_main_window (ProcData *procdata, GtkApplication *application)
         gtk_window_maximize(GTK_WINDOW(app));
     }
 
-    /* create the menubar */
     procdata->uimanager = gtk_ui_manager_new ();
 
     gtk_window_add_accel_group (GTK_WINDOW (app),
@@ -471,10 +438,6 @@ create_main_window (ProcData *procdata, GtkApplication *application)
     gtk_ui_manager_insert_action_group (procdata->uimanager,
                                         procdata->action_group,
                                         0);
-
-    menubar = gtk_ui_manager_get_widget (procdata->uimanager, "/MenuBar");
-    gtk_box_pack_start (GTK_BOX (main_box), menubar, FALSE, FALSE, 0);
-
 
     /* create the main notebook */
     procdata->notebook = notebook = GTK_WIDGET (gtk_builder_get_object (builder, "notebook"));

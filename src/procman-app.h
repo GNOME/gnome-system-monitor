@@ -7,7 +7,13 @@
 
 class ProcmanApp : public Gtk::Application
 {
+private:
     ProcData *procdata;
+
+    void on_preferences_activate(const Glib::VariantBase&);
+    void on_lsof_activate(const Glib::VariantBase&);
+    void on_help_activate(const Glib::VariantBase&);
+    void on_quit_activate(const Glib::VariantBase&);
 protected:
     ProcmanApp();
 public:
