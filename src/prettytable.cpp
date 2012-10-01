@@ -7,6 +7,10 @@
 #include <string.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <glibtop/procstate.h>
+#include <giomm/error.h>
+#include <giomm/file.h>
+#include <glibmm/miscutils.h>
+#include <iostream>
 
 #include <vector>
 
@@ -29,6 +33,20 @@ PrettyTable::PrettyTable()
 		   G_CALLBACK(PrettyTable::on_application_opened), this);
   g_signal_connect(G_OBJECT(screen), "application_closed",
 		   G_CALLBACK(PrettyTable::on_application_closed), this);
+
+  // init GIO apps cache
+  std::vector<std::string> dirs = Glib::get_system_data_dirs();
+  for (std::vector<std::string>::iterator it = dirs.begin(); it != dirs.end(); ++it) {
+    std::string path = (*it).append("/applications");
+    Glib::RefPtr<Gio::File> file = Gio::File::create_for_path(path);
+    Glib::RefPtr<Gio::FileMonitor> monitor = file->monitor_directory();
+    monitor->set_rate_limit(1000); // 1 second
+
+    monitor->signal_changed().connect(sigc::mem_fun(this, &PrettyTable::file_monitor_event));
+    monitors[path] = monitor;
+  }
+
+  this->init_gio_app_cache();
 }
 
 
@@ -105,7 +123,24 @@ PrettyTable::unregister_application(pid_t pid)
     this->apps.erase(it);
 }
 
+void PrettyTable::init_gio_app_cache ()
+{
+  this->gio_apps.clear();
 
+  Glib::ListHandle<Glib::RefPtr<Gio::AppInfo> > apps = Gio::AppInfo::get_all();
+  for (Glib::ListHandle<Glib::RefPtr<Gio::AppInfo> >::const_iterator it = apps.begin();
+       it != apps.end(); ++it) {
+    Glib::RefPtr<Gio::AppInfo> app = *it;
+    this->gio_apps[app->get_executable()] = app;
+  }
+}
+
+void PrettyTable::file_monitor_event(Glib::RefPtr<Gio::File>,
+                                     Glib::RefPtr<Gio::File>,
+                                     Gio::FileMonitorEvent)
+{
+  this->init_gio_app_cache();
+}
 
 Glib::RefPtr<Gdk::Pixbuf>
 PrettyTable::get_icon_from_theme(const ProcInfo &info)
@@ -153,7 +188,26 @@ PrettyTable::get_icon_from_default(const ProcInfo &info)
   return pix;
 }
 
+Glib::RefPtr<Gdk::Pixbuf>
+PrettyTable::get_icon_from_gio(const ProcInfo &info)
+{
+  gchar **cmdline = g_strsplit(info.name, " ", 2);
+  const gchar *executable = cmdline[0];
+  Glib::RefPtr<Gdk::Pixbuf> icon;
 
+  if (executable) {
+    Glib::RefPtr<Gio::AppInfo> app = this->gio_apps[executable];
+    Glib::RefPtr<Gio::Icon> gicon;
+
+    if (app)
+      gicon = app->get_icon();
+
+    if (gicon)
+      icon = this->theme->load_gicon(gicon, APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN);
+  }
+
+  return icon;
+}
 
 Glib::RefPtr<Gdk::Pixbuf>
 PrettyTable::get_icon_from_wnck(const ProcInfo &info)
@@ -223,6 +277,7 @@ PrettyTable::set_icon(ProcInfo &info)
 
   if (getters.empty())
     {
+      getters.push_back(&PrettyTable::get_icon_from_gio);
       getters.push_back(&PrettyTable::get_icon_from_wnck);
       getters.push_back(&PrettyTable::get_icon_from_theme);
       getters.push_back(&PrettyTable::get_icon_from_default);
