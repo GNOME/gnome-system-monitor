@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
+<policyconfig>
+  <vendor>The GNOME Project</vendor>
+  <vendor_url>http://www.gnome.org/</vendor_url>
+  <icon_name>utilities-system-monitor</icon_name>
+
+  <action id="org.gnome.gnome-system-monitor.kill">
+    <_description>Kill process</_description>
+    <_message>Privileges are required to kill process</_message>
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/bin/kill</annotate>
+    <annotate key="org.freedesktop.policykit.exec.allow_gui">FALSE</annotate>
+  </action>
+
+  <action id="org.gnome.gnome-system-monitor.renice">
+    <_description>Renice process</_description>
+    <_message>Privileges are required to renice process</_message>
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/renice</annotate>
+    <annotate key="org.freedesktop.policykit.exec.allow_gui">FALSE</annotate>
+  </action>
+
+</policyconfig>

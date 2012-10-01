@@ -40,6 +40,7 @@
 #include "settings-keys.h"
 #include "procman_gnomesu.h"
 #include "procman_gksu.h"
+#include "procman_pkexec.h"
 #include "cgroups.h"
 
 static GtkWidget *renice_dialog = NULL;
@@ -603,6 +604,8 @@ procdialog_create_root_password_dialog(ProcmanActionType type,
         ret = procman_gksu_create_root_password_dialog(command);
     else if (procman_has_gnomesu())
         ret = procman_gnomesu_create_root_password_dialog(command);
+    else if (procman_has_pkexec())
+        ret = procman_pkexec_create_root_password_dialog(command);
 
     g_free(command);
     return ret;

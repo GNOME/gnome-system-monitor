@@ -13,11 +13,17 @@ ui_DATA = data/preferences.ui \
 
 EXTRA_DIST = \
 	$(ui_DATA) \
+	org.gnome.gnome-system-monitor.policy.in \
 	gnome-system-monitor.desktop.in \
 	gnome-system-monitor.doap \
 	intltool-extract.in \
 	intltool-merge.in \
 	intltool-update.in
+
+@INTLTOOL_POLICY_RULE@
+polkit_policydir = $(datadir)/polkit-1/actions
+polkit_policy_in_files = org.gnome.gnome-system-monitor.policy.in
+polkit_policy_DATA = $(polkit_policy_in_files:.policy.in=.policy)
 
 Applicationsdir = $(datadir)/applications
 Applications_in_files = gnome-system-monitor.desktop.in
@@ -51,6 +57,7 @@ DISTCLEANFILES = \
 	intltool-extract              \
 	intltool-merge                \
 	intltool-update               \
-	gnome-system-monitor.desktop
+	gnome-system-monitor.desktop  \
+	org.gnome.gnome-system-monitor.policy
 
 DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper
