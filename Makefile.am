@@ -9,7 +9,8 @@ ui_DATA = data/preferences.ui \
           data/lsof.ui \
           data/openfiles.ui \
           data/interface.ui \
-          data/menus.ui
+          data/menus.ui \
+          data/popups.ui
 
 EXTRA_DIST = \
 	$(ui_DATA) \

@@ -107,38 +107,6 @@ static const GtkRadioActionEntry priority_menu_entries[] =
 };
 
 
-static const char ui_info[] =
-    "  <popup name=\"PopupMenu\" action=\"Popup\">"
-    "    <menuitem action=\"StopProcess\" />"
-    "    <menuitem action=\"ContProcess\" />"
-    "    <separator />"
-    "    <menuitem action=\"EndProcess\" />"
-    "    <menuitem action=\"KillProcess\" />"
-    "    <separator />"
-    "    <menu name=\"ChangePriorityMenu\" action=\"ChangePriority\" >"
-    "      <menuitem action=\"VeryHigh\" />"
-    "      <menuitem action=\"High\" />"
-    "      <menuitem action=\"Normal\" />"
-    "      <menuitem action=\"Low\" />"
-    "      <menuitem action=\"VeryLow\" />"
-    "      <separator />"
-    "      <menuitem action=\"Custom\"/>"
-    "    </menu>"
-    "    <separator />"
-    "    <menuitem action=\"MemoryMaps\" />"
-    "    <menuitem action=\"OpenFiles\" />"
-    "    <separator />"
-    "    <menuitem action=\"ProcessProperties\" />"
-    "  </popup>"
-    "  <popup name=\"ViewMenu\" action=\"View\">"
-    "    <menuitem name=\"ViewActiveProcesses\" action=\"ShowActiveProcesses\" />"
-    "    <menuitem name=\"ViewAllProcesses\" action=\"ShowAllProcesses\" />"
-    "    <menuitem name=\"ViewMyProcesses\" action=\"ShowMyProcesses\" />"
-    "    <separator />"
-    "    <menuitem name=\"ViewDependencies\" action=\"ShowDependencies\" />"
-    "  </popup>";
-
-
 GtkWidget *
 make_title_label (const char *text)
 {
@@ -368,6 +336,7 @@ create_main_window (ProcData *procdata, GtkApplication *application)
 
     GtkBuilder *builder = gtk_builder_new();
     gtk_builder_add_from_file (builder, filename, NULL);
+    g_free (filename);
 
     app = GTK_WIDGET (gtk_builder_get_object (builder, "main_window"));
     gtk_window_set_application (GTK_WINDOW (app), application);
@@ -403,13 +372,14 @@ create_main_window (ProcData *procdata, GtkApplication *application)
     gtk_window_add_accel_group (GTK_WINDOW (app),
                                 gtk_ui_manager_get_accel_group (procdata->uimanager));
 
-    if (!gtk_ui_manager_add_ui_from_string (procdata->uimanager,
-                                            ui_info,
-                                            -1,
+    filename = g_build_filename (GSM_DATA_DIR, "popups.ui", NULL);
+
+    if (!gtk_ui_manager_add_ui_from_file (procdata->uimanager,
+                                            filename,
                                             NULL)) {
         g_error("building menus failed");
     }
-
+    g_free (filename);
     procdata->action_group = gtk_action_group_new ("ProcmanActions");
     gtk_action_group_set_translation_domain (procdata->action_group, NULL);
     gtk_action_group_add_actions (procdata->action_group,
@@ -482,8 +452,6 @@ create_main_window (ProcData *procdata, GtkApplication *application)
     procdata->app = app;
 
     g_object_unref (G_OBJECT (builder));
-    g_free (filename);
-
 }
 
 void
