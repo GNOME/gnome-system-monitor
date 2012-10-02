@@ -484,10 +484,6 @@ net_scale (LoadGraph *graph, guint64 din, guint64 dout)
         guint64 factor10 = std::pow(10.0, std::floor(std::log10(coef10)));
         coef10 = std::ceil(coef10 / double(factor10)) * factor10;
 
-        // then make coef10 divisible by num_bars
-        if (coef10 % graph->num_bars() != 0)
-            coef10 = coef10 + (graph->num_bars() - coef10 % graph->num_bars());
-        g_assert(coef10 % graph->num_bars() == 0);
         new_max = coef10 * (G_GUINT64_CONSTANT(1) << guint64(base10 * 10));
         procman_debug("bak %" G_GUINT64_FORMAT " new_max %" G_GUINT64_FORMAT
                       "pow2 %" G_GUINT64_FORMAT " coef10 %" G_GUINT64_FORMAT,
