@@ -165,7 +165,7 @@ apply_cpu_color_settings(GSettings *settings, gpointer data)
             color = g_strdup ("#f25915e815e8");
             g_variant_builder_add(&builder, "(us)", i, color);
         }
-        gdk_color_parse(color, &app->config.cpu_color[i]);
+        gdk_rgba_parse(&app->config.cpu_color[i], color);
         g_free (color);
     }
     full = g_variant_builder_end(&builder);
@@ -183,7 +183,7 @@ color_changed_cb (GSettings *settings, const gchar *key, gpointer data)
     if (g_str_equal (key, "cpu-colors")) {
         apply_cpu_color_settings(settings, app);
         for (int i = 0; i < app->config.num_cpus; i++) {
-            if(!gdk_color_equal(&app->cpu_graph->colors[i], &app->config.cpu_color[i])) {
+            if(!gdk_rgba_equal(&app->cpu_graph->colors[i], &app->config.cpu_color[i])) {
                 app->cpu_graph->colors[i] = app->config.cpu_color[i];
                 break;
             }
@@ -193,19 +193,19 @@ color_changed_cb (GSettings *settings, const gchar *key, gpointer data)
 
     const gchar *color = g_settings_get_string (settings, key);
     if (g_str_equal (key, "mem-color")) {
-        gdk_color_parse (color, &app->config.mem_color);
+        gdk_rgba_parse (&app->config.mem_color, color);
         app->mem_graph->colors.at(0) = app->config.mem_color;
     }
     else if (g_str_equal (key, "swap-color")) {
-        gdk_color_parse (color, &app->config.swap_color);
+        gdk_rgba_parse (&app->config.swap_color, color);
         app->mem_graph->colors.at(1) = app->config.swap_color;
     }
     else if (g_str_equal (key, "net-in-color")) {
-        gdk_color_parse (color, &app->config.net_in_color);
+        gdk_rgba_parse (&app->config.net_in_color, color);
         app->net_graph->colors.at(0) = app->config.net_in_color;
     }
     else if (g_str_equal (key, "net-out-color")) {
-        gdk_color_parse (color, &app->config.net_out_color);
+        gdk_rgba_parse (&app->config.net_out_color, color);
         app->net_graph->colors.at(1) = app->config.net_out_color;
     }
     else {
@@ -292,7 +292,7 @@ ProcmanApp::load_settings()
         color = g_strdup ("#000000ff0082");
     g_signal_connect (G_OBJECT(settings), "changed::mem-color",
                       G_CALLBACK(color_changed_cb), this);
-    gdk_color_parse(color, &config.mem_color);
+    gdk_rgba_parse(&config.mem_color, color);
 
     g_free (color);
 
@@ -301,7 +301,7 @@ ProcmanApp::load_settings()
         color = g_strdup ("#00b6000000ff");
     g_signal_connect (G_OBJECT(settings), "changed::swap-color",
                       G_CALLBACK(color_changed_cb), this);
-    gdk_color_parse(color, &config.swap_color);
+    gdk_rgba_parse(&config.swap_color, color);
     g_free (color);
 
     color = g_settings_get_string (settings, "net-in-color");
@@ -309,7 +309,7 @@ ProcmanApp::load_settings()
         color = g_strdup ("#000000f200f2");
     g_signal_connect (G_OBJECT(settings), "changed::net-in-color",
                       G_CALLBACK(color_changed_cb), this);
-    gdk_color_parse(color, &config.net_in_color);
+    gdk_rgba_parse(&config.net_in_color, color);
     g_free (color);
 
     color = g_settings_get_string (settings, "net-out-color");
@@ -317,7 +317,7 @@ ProcmanApp::load_settings()
         color = g_strdup ("#00f2000000c1");
     g_signal_connect (G_OBJECT(settings), "changed::net-out-color",
                       G_CALLBACK(color_changed_cb), this);
-    gdk_color_parse(color, &config.net_out_color);
+    gdk_rgba_parse(&config.net_out_color, color);
     g_free (color);
 
     /* Sanity checks */

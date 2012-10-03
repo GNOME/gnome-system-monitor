@@ -25,8 +25,6 @@
 #include <glib.h>
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
-#include <cairo.h>
-#include <librsvg/rsvg.h>
 
 G_BEGIN_DECLS
 /* The GtkColorSelectionButton widget is a simple color picker in a button.
@@ -77,11 +75,11 @@ struct _GSMColorButtonClass
 };
 
 GType gsm_color_button_get_type (void) G_GNUC_CONST;
-GtkWidget *gsm_color_button_new (const GdkColor * color, guint type);
-void gsm_color_button_set_color (GSMColorButton * color_button, const GdkColor * color);
+GtkWidget *gsm_color_button_new (const GdkRGBA * color, guint type);
+void gsm_color_button_set_color (GSMColorButton * color_button, const GdkRGBA * color);
 void gsm_color_button_set_fraction (GSMColorButton * color_button, const gdouble fraction);
 void gsm_color_button_set_cbtype (GSMColorButton * color_button, guint type);
-void gsm_color_button_get_color (GSMColorButton * color_button, GdkColor * color);
+void gsm_color_button_get_color (GSMColorButton * color_button, GdkRGBA * color);
 gdouble gsm_color_button_get_fraction (GSMColorButton * color_button);
 guint gsm_color_button_get_cbtype (GSMColorButton * color_button);
 void gsm_color_button_set_title (GSMColorButton * color_button, const gchar * title);

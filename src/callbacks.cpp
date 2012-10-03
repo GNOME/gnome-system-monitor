@@ -245,12 +245,12 @@ cb_cpu_color_changed (GSMColorButton *cp, gpointer data)
 
     for (guint i = 0; i < children_n; i++) {
         if(cpu_i == i) {
-            gchar color[24];
-            GdkColor button_color;
+            gchar *color;
+            GdkRGBA button_color;
             gsm_color_button_get_color(cp, &button_color);
-            g_snprintf(color, sizeof(color), "#%04x%04x%04x",
-                       button_color.red, button_color.green, button_color.blue);
+            color = gdk_rgba_to_string (&button_color);
             g_variant_builder_add(&builder, "(us)", i, color);
+            g_free (color);
         } else {
             g_variant_builder_add_value(&builder,
                                         g_variant_get_child_value(cpu_colors_var, i));
@@ -264,12 +264,13 @@ cb_cpu_color_changed (GSMColorButton *cp, gpointer data)
 static void change_settings_color(GSettings *settings, const char *key,
                                   GSMColorButton *cp)
 {
-    GdkColor c;
-    char color[24]; /* color should be 1 + 3*4 + 1 = 15 chars -> 24 */
+    GdkRGBA c;
+    char *color;
 
     gsm_color_button_get_color(cp, &c);
-    g_snprintf(color, sizeof color, "#%04x%04x%04x", c.red, c.green, c.blue);
+    color = gdk_rgba_to_string (&c);
     g_settings_set_string (settings, key, color);
+    g_free (color);
 }
 
 void

@@ -76,6 +76,7 @@ void draw_background(LoadGraph *graph) {
     PangoLayout* layout;
     PangoFontDescription* font_desc;
     PangoRectangle extents;
+    GdkRGBA fg, bg;
 
     num_bars = graph->num_bars();
     graph->graph_dely = (graph->draw_height - 15) / num_bars; /* round to int to avoid AA blur */
@@ -90,13 +91,16 @@ void draw_background(LoadGraph *graph) {
                                                            allocation.height);
     cr = cairo_create (graph->background);
 
+    GtkStyleContext *context = gtk_widget_get_style_context (ProcmanApp::get()->notebook);
+    gtk_style_context_get_background_color (context, GTK_STATE_FLAG_NORMAL, &bg);
+    gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &fg);
+
     // set the background colour
-    GtkStyle *style = gtk_widget_get_style (ProcmanApp::get()->notebook);
-    gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_NORMAL]);
+    gdk_cairo_set_source_rgba (cr, &bg);
     cairo_paint (cr);
 
     layout = pango_cairo_create_layout (cr);
-    font_desc = pango_font_description_copy (style->font_desc);
+    font_desc = pango_font_description_copy (gtk_style_context_get_font (context, GTK_STATE_FLAG_NORMAL));
     pango_font_description_set_size (font_desc, 0.8 * graph->fontsize * PANGO_SCALE);
     pango_layout_set_font_description (layout, font_desc);
     pango_font_description_free (font_desc);
@@ -123,7 +127,7 @@ void draw_background(LoadGraph *graph) {
         else
             y = i * graph->graph_dely + graph->fontsize / 2.0;
 
-        gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_NORMAL]);
+        gdk_cairo_set_source_rgba (cr, &fg);
         if (graph->type == LOAD_GRAPH_NET) {
             // operation orders matters so it's 0 if i == num_bars
             guint64 rate = graph->net.max - (i * graph->net.max / num_bars);
@@ -172,7 +176,7 @@ void draw_background(LoadGraph *graph) {
         cairo_move_to (cr,
                        (ceil(x) + 0.5 + graph->rmargin + graph->indent) - (1.0 * extents.width / PANGO_SCALE / 2),
                        graph->draw_height - 1.0 * extents.height / PANGO_SCALE);
-        gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_NORMAL]);
+        gdk_cairo_set_source_rgba (cr, &fg);
         pango_cairo_show_layout (cr, layout);
         g_free (caption);
     }
@@ -253,7 +257,7 @@ load_graph_draw (GtkWidget *widget,
 
     for (j = 0; j < graph->n; ++j) {
         cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height);
-        gdk_cairo_set_source_color (cr, &(graph->colors [j]));
+        gdk_cairo_set_source_rgba (cr, &(graph->colors [j]));
 
         for (i = 1; i < LoadGraph::NUM_POINTS; ++i) {
             if (graph->data[i][j] == -1.0f)
