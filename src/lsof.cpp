@@ -16,7 +16,7 @@
 
 #include <glibmm/regex.h>
 
-#include "procman.h"
+#include "procman-app.h"
 #include "lsof.h"
 #include "util.h"
 
@@ -89,7 +89,7 @@ namespace
         GtkEntry *entry;
         GtkWindow *window;
         GtkLabel *count;
-        ProcData *procdata;
+        ProcmanApp *app;
         bool case_insensitive;
 
 
@@ -235,7 +235,7 @@ namespace
 
 
 
-void procman_lsof(ProcData *procdata)
+void procman_lsof(ProcmanApp *app)
 {
     GtkListStore *model = \
         gtk_list_store_new(PROCMAN_LSOF_NCOLS,
@@ -312,7 +312,7 @@ void procman_lsof(ProcData *procdata)
 
     dialog = GTK_WIDGET (gtk_builder_get_object (builder, "lsof_dialog"));
 
-    gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(procdata->app));
+    gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(app->main_window));
 
     // entry = sexy_icon_entry_new();
     // sexy_icon_entry_add_clear_button(SEXY_ICON_ENTRY(entry));
@@ -333,7 +333,7 @@ void procman_lsof(ProcData *procdata)
     gtk_container_add(GTK_CONTAINER(scrolled), tree);
 
     GUI *gui = new GUI; // wil be deleted by the close button or delete-event
-    gui->procdata = procdata;
+    gui->app = app;
     gui->model = model;
     gui->window = GTK_WINDOW(dialog);
     gui->entry = GTK_ENTRY(entry);

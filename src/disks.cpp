@@ -7,7 +7,7 @@
 #include <glibtop/fsusage.h>
 #include <glib/gi18n.h>
 
-#include "procman.h"
+#include "procman-app.h"
 #include "disks.h"
 #include "util.h"
 #include "interface.h"
@@ -218,21 +218,20 @@ add_disk(GtkListStore *list, const glibtop_mountentry *entry, bool show_all_fs)
 int
 cb_update_disks(gpointer data)
 {
-    ProcData *const procdata = static_cast<ProcData*>(data);
-
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
     GtkListStore *list;
     glibtop_mountentry * entries;
     glibtop_mountlist mountlist;
     guint i;
 
-    list = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(procdata->disk_list)));
+    list = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(app->disk_list)));
 
-    entries = glibtop_get_mountlist(&mountlist, procdata->config.show_all_fs);
+    entries = glibtop_get_mountlist(&mountlist, app->config.show_all_fs);
 
     remove_old_disks(GTK_TREE_MODEL(list), entries, mountlist.number);
 
     for (i = 0; i < mountlist.number; i++)
-        add_disk(list, &entries[i], procdata->config.show_all_fs);
+        add_disk(list, &entries[i], app->config.show_all_fs);
 
     g_free(entries);
 
@@ -241,11 +240,11 @@ cb_update_disks(gpointer data)
 
 
 static void
-cb_disk_columns_changed(GtkTreeView *treeview, gpointer user_data)
+cb_disk_columns_changed(GtkTreeView *treeview, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(user_data);
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
 
-    procman_save_tree_state(procdata->settings,
+    procman_save_tree_state(app->settings,
                             GTK_WIDGET(treeview),
                             "disktreenew");
 }
@@ -284,8 +283,14 @@ static void open_dir(GtkTreeView       *tree_view,
     g_free(dir);
 }
 
+static void
+cb_disk_list_destroying (GtkWidget *self, gpointer data)
+{
+    g_signal_handlers_disconnect_by_func(self, (gpointer) cb_disk_columns_changed, data);
+}
+
 void
-create_disk_view(ProcData *procdata, GtkBuilder *builder)
+create_disk_view(ProcmanApp *app, GtkBuilder *builder)
 {
     GtkWidget *scrolled;
     GtkWidget *disk_tree;
@@ -320,7 +325,7 @@ create_disk_view(ProcData *procdata, GtkBuilder *builder)
 
     disk_tree = gtk_tree_view_new_with_model(GTK_TREE_MODEL(model));
     g_signal_connect(G_OBJECT(disk_tree), "row-activated", G_CALLBACK(open_dir), NULL);
-    procdata->disk_list = disk_tree;
+    app->disk_list = disk_tree;
     gtk_container_add(GTK_CONTAINER(scrolled), disk_tree);
     gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(disk_tree), TRUE);
     g_object_unref(G_OBJECT(model));
@@ -397,10 +402,14 @@ create_disk_view(ProcData *procdata, GtkBuilder *builder)
 
     /* numeric sort */
 
-    procman_get_tree_state(procdata->settings, disk_tree,
+    procman_get_tree_state(app->settings, disk_tree,
                            "disktreenew");
 
+    g_signal_connect (G_OBJECT(disk_tree), "destroy",
+                      G_CALLBACK(cb_disk_list_destroying),
+                      app);
+
     g_signal_connect (G_OBJECT(disk_tree), "columns-changed",
-                      G_CALLBACK(cb_disk_columns_changed), procdata);
+                      G_CALLBACK(cb_disk_columns_changed), app);
 
 }

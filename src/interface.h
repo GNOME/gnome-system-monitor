@@ -22,12 +22,12 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
-#include "procman.h"
+#include "procman-app.h"
 
-void            create_main_window (ProcData *data, GtkApplication *application);
-void            update_sensitivity (ProcData *data);
-void            block_priority_changed_handlers(ProcData *data, bool block);
-void            do_popup_menu(ProcData *data, GdkEventButton *event);
+void            create_main_window (ProcmanApp *app);
+void            update_sensitivity (ProcmanApp *app);
+void            block_priority_changed_handlers(ProcmanApp *app, bool block);
+void            do_popup_menu(ProcmanApp *app, GdkEventButton *event);
 GtkWidget *     make_title_label (const char *text);
 
 #endif /* _PROCMAN_INTERFACE_H_ */

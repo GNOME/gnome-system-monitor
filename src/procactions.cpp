@@ -26,7 +26,7 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 #include "procactions.h"
-#include "procman.h"
+#include "procman-app.h"
 #include "proctable.h"
 #include "procdialogs.h"
 #include "callbacks.h"
@@ -61,7 +61,7 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
         gboolean success;
 
         success = procdialog_create_root_password_dialog (
-            PROCMAN_ACTION_RENICE, args->procdata, info->pid,
+            PROCMAN_ACTION_RENICE, args->app, info->pid,
             args->nice_value);
 
         if(success) return;
@@ -91,24 +91,24 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 
 
 void
-renice (ProcData *procdata, int nice)
+renice (ProcmanApp *app, int nice)
 {
-    struct ReniceArgs args = { procdata, nice };
+    struct ReniceArgs args = { app, nice };
 
     /* EEEK - ugly hack - make sure the table is not updated as a crash
     ** occurs if you first kill a process and the tree node is removed while
     ** still in the foreach function
     */
-    g_source_remove(procdata->timeout);
+    g_source_remove(app->timeout);
 
-    gtk_tree_selection_selected_foreach(procdata->selection, renice_single_process,
+    gtk_tree_selection_selected_foreach(app->selection, renice_single_process,
                                         &args);
 
-    procdata->timeout = g_timeout_add(procdata->config.update_interval,
-                                      cb_timeout,
-                                      procdata);
+    app->timeout = g_timeout_add(app->config.update_interval,
+                                 cb_timeout,
+                                 app);
 
-    proctable_update_all (procdata);
+    proctable_update_all (app);
 }
 
 
@@ -141,7 +141,7 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
         gboolean success;
 
         success = procdialog_create_root_password_dialog (
-            PROCMAN_ACTION_KILL, args->procdata, info->pid,
+            PROCMAN_ACTION_KILL, args->app, info->pid,
             args->signal);
 
         if(success) return;
@@ -171,21 +171,21 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
 
 
 void
-kill_process (ProcData *procdata, int sig)
+kill_process (ProcmanApp *app, int sig)
 {
-    struct KillArgs args = { procdata, sig };
+    struct KillArgs args = { app, sig };
 
     /* EEEK - ugly hack - make sure the table is not updated as a crash
     ** occurs if you first kill a process and the tree node is removed while
     ** still in the foreach function
     */
-    g_source_remove (procdata->timeout);
+    g_source_remove (app->timeout);
 
-    gtk_tree_selection_selected_foreach (procdata->selection, kill_single_process,
+    gtk_tree_selection_selected_foreach (app->selection, kill_single_process,
                                          &args);
 
-    procdata->timeout = g_timeout_add (procdata->config.update_interval,
-                                       cb_timeout,
-                                       procdata);
-    proctable_update_all (procdata);
+    app->timeout = g_timeout_add (app->config.update_interval,
+                                  cb_timeout,
+                                  app);
+    proctable_update_all (app);
 }

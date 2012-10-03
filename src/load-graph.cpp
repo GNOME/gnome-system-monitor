@@ -23,7 +23,7 @@
 
 #include <algorithm>
 
-#include "procman.h"
+#include "procman-app.h"
 #include "load-graph.h"
 #include "util.h"
 #include "gsm_color_button.h"
@@ -91,7 +91,7 @@ void draw_background(LoadGraph *graph) {
     cr = cairo_create (graph->background);
 
     // set the background colour
-    GtkStyle *style = gtk_widget_get_style (ProcData::get_instance()->notebook);
+    GtkStyle *style = gtk_widget_get_style (ProcmanApp::get()->notebook);
     gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_NORMAL]);
     cairo_paint (cr);
 
@@ -443,7 +443,7 @@ net_scale (LoadGraph *graph, guint64 din, guint64 dout)
 
     const guint64 bak_max(new_max);
 
-    if (ProcData::get_instance()->config.network_in_bits) {
+    if (ProcmanApp::get()->config.network_in_bits) {
         // nice number is for the ticks
         unsigned ticks = graph->num_bars();
 
@@ -686,7 +686,7 @@ LoadGraph::LoadGraph(guint type)
     switch (type) {
         case LOAD_GRAPH_CPU:
             memset(&cpu, 0, sizeof cpu);
-            n = ProcData::get_instance()->config.num_cpus;
+            n = ProcmanApp::get()->config.num_cpus;
 
             for(guint i = 0; i < G_N_ELEMENTS(labels.cpu); ++i)
                 labels.cpu[i] = gtk_label_new(NULL);
@@ -720,26 +720,26 @@ LoadGraph::LoadGraph(guint type)
             break;
     }
 
-    speed  = ProcData::get_instance()->config.graph_update_interval;
+    speed  = ProcmanApp::get()->config.graph_update_interval;
 
     colors.resize(n);
 
     switch (type) {
         case LOAD_GRAPH_CPU:
-            memcpy(&colors[0], ProcData::get_instance()->config.cpu_color,
+            memcpy(&colors[0], ProcmanApp::get()->config.cpu_color,
                    n * sizeof colors[0]);
             break;
         case LOAD_GRAPH_MEM:
-            colors[0] = ProcData::get_instance()->config.mem_color;
-            colors[1] = ProcData::get_instance()->config.swap_color;
+            colors[0] = ProcmanApp::get()->config.mem_color;
+            colors[1] = ProcmanApp::get()->config.swap_color;
             mem_color_picker = gsm_color_button_new (&colors[0],
                                                         GSMCP_TYPE_PIE);
             swap_color_picker = gsm_color_button_new (&colors[1],
                                                          GSMCP_TYPE_PIE);
             break;
         case LOAD_GRAPH_NET:
-            colors[0] = ProcData::get_instance()->config.net_in_color;
-            colors[1] = ProcData::get_instance()->config.net_out_color;
+            colors[0] = ProcmanApp::get()->config.net_in_color;
+            colors[1] = ProcmanApp::get()->config.net_out_color;
             break;
     }
 

@@ -22,7 +22,6 @@
 #define _PROCMAN_CALLBACKS_H_
 
 #include <gtk/gtk.h>
-#include "procman.h"
 #include "gsm_color_button.h"
 
 
@@ -38,8 +37,7 @@ void            cb_edit_preferences (GtkAction *action, gpointer data);
 void            cb_help_contents (GtkAction *action, gpointer data);
 void            cb_about (GtkAction *action, gpointer data);
 
-void            cb_app_exit (GtkAction *action, gpointer data);
-gboolean        cb_app_delete (GtkWidget *window, GdkEventAny *event, gpointer data);
+gboolean        cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data);
 
 void            cb_end_process_button_pressed (GtkButton *button, gpointer data);
 void            cb_logout (GtkButton *button, gpointer data);

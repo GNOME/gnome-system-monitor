@@ -23,9 +23,9 @@
 
 #include <glib.h>
 
-#include "procman.h"
+#include "procman-app.h"
 
-void create_procproperties_dialog (ProcData *procdata);
+void create_procproperties_dialog (ProcmanApp *app);
 
 #endif
 

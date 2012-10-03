@@ -12,7 +12,7 @@
 #include <cstring>
 
 #include "util.h"
-#include "procman.h"
+#include "procman-app.h"
 
 extern "C" {
 #include "e_date.h"
@@ -470,7 +470,7 @@ namespace procman
 
         g_value_unset(&value);
 
-        time = 100 * time / ProcData::get_instance()->frequency;
+        time = 100 * time / ProcmanApp::get()->frequency;
         char *str = format_duration_for_display(time);
         g_object_set(renderer, "text", str, NULL);
         g_free(str);
@@ -604,13 +604,13 @@ namespace procman
 
     std::string format_network(guint64 rate, guint64 max_rate)
     {
-        return procman::format_size(rate, max_rate, ProcData::get_instance()->config.network_in_bits);
+        return procman::format_size(rate, max_rate, ProcmanApp::get()->config.network_in_bits);
     }
 
 
     std::string format_network_rate(guint64 rate, guint64 max_rate)
     {
-        return procman::format_rate(rate, max_rate, ProcData::get_instance()->config.network_in_bits);
+        return procman::format_rate(rate, max_rate, ProcmanApp::get()->config.network_in_bits);
     }
 
 }

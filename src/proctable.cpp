@@ -49,7 +49,7 @@
 #include <systemd/sd-login.h>
 #endif
 
-#include "procman.h"
+#include "procman-app.h"
 #include "selection.h"
 #include "proctable.h"
 #include "callbacks.h"
@@ -73,12 +73,12 @@ ProcInfo* ProcInfo::find(pid_t pid)
 
 
 static void
-set_proctree_reorderable(ProcData *procdata)
+set_proctree_reorderable(ProcmanApp *app)
 {
     GList *columns, *col;
     GtkTreeView *proctree;
 
-    proctree = GTK_TREE_VIEW(procdata->tree);
+    proctree = GTK_TREE_VIEW(app->tree);
 
     columns = gtk_tree_view_get_columns (proctree);
 
@@ -90,11 +90,11 @@ set_proctree_reorderable(ProcData *procdata)
 
 
 static void
-cb_columns_changed(GtkTreeView *treeview, gpointer user_data)
+cb_columns_changed(GtkTreeView *treeview, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(user_data);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
 
-    procman_save_tree_state(procdata->settings,
+    procman_save_tree_state(app->settings,
                             GTK_WIDGET(treeview),
                             "proctree");
 }
@@ -183,7 +183,7 @@ cb_proctable_column_resized(GtkWidget *widget)
     GSettings *settings;
     gint saved_width;
 
-    settings = g_settings_get_child (ProcData::get_instance()->settings, "proctree");
+    settings = g_settings_get_child (ProcmanApp::get()->settings, "proctree");
     id = gtk_tree_view_column_get_sort_column_id (column);
     width = gtk_tree_view_column_get_width (column);
     key = g_strdup_printf ("col-%d-width", id);
@@ -221,10 +221,14 @@ search_equal_func(GtkTreeModel *model,
     return found;
 }
 
-
+static void
+cb_proctree_destroying (GtkTreeView *self, gpointer data)
+{
+    g_signal_handlers_disconnect_by_func(self, (gpointer) cb_columns_changed, data);
+}
 
 GtkWidget *
-proctable_new (ProcData * const procdata)
+proctable_new (ProcmanApp * const app)
 {
     GtkWidget *proctree;
     GtkTreeStore *model;
@@ -297,7 +301,7 @@ proctable_new (ProcData * const procdata)
     proctree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
     gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (proctree), COL_TOOLTIP);
     g_object_set(G_OBJECT(proctree),
-                 "show-expanders", procdata->config.show_tree,
+                 "show-expanders", app->config.show_tree,
                  NULL);
     gtk_tree_view_set_search_equal_func (GTK_TREE_VIEW (proctree),
                                          search_equal_func,
@@ -450,11 +454,11 @@ proctable_new (ProcData * const procdata)
         }
     }
 
-    procdata->tree = proctree;
+    app->tree = proctree;
 
-    set_proctree_reorderable(procdata);
+    set_proctree_reorderable(app);
 
-    procman_get_tree_state (procdata->settings, proctree, "proctree");
+    procman_get_tree_state (app->settings, proctree, "proctree");
 
     /* Override column settings by hiding this column if it's meaningless: */
     if (!can_show_security_context_column ()) {
@@ -484,14 +488,18 @@ proctable_new (ProcData * const procdata)
 
     g_signal_connect (G_OBJECT (gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree))),
                       "changed",
-                      G_CALLBACK (cb_row_selected), procdata);
+                      G_CALLBACK (cb_row_selected), app);
     g_signal_connect (G_OBJECT (proctree), "popup_menu",
-                      G_CALLBACK (cb_tree_popup_menu), procdata);
+                      G_CALLBACK (cb_tree_popup_menu), app);
     g_signal_connect (G_OBJECT (proctree), "button_press_event",
-                      G_CALLBACK (cb_tree_button_pressed), procdata);
+                      G_CALLBACK (cb_tree_button_pressed), app);
+
+    g_signal_connect (G_OBJECT(proctree), "destroy",
+                      G_CALLBACK(cb_proctree_destroying),
+                      app);
 
     g_signal_connect (G_OBJECT(proctree), "columns-changed",
-                      G_CALLBACK(cb_columns_changed), procdata);
+                      G_CALLBACK(cb_columns_changed), app);
 
     return proctree;
 }
@@ -625,9 +633,8 @@ get_process_memory_info(ProcInfo *info)
 static void
 update_info_mutable_cols(ProcInfo *info)
 {
-    ProcData * const procdata = ProcData::get_instance();
     GtkTreeModel *model;
-    model = gtk_tree_view_get_model(GTK_TREE_VIEW(procdata->tree));
+    model = gtk_tree_view_get_model(GTK_TREE_VIEW(ProcmanApp::get()->tree));
 
     using procman::tree_store_update;
 
@@ -654,13 +661,13 @@ update_info_mutable_cols(ProcInfo *info)
 
 
 static void
-insert_info_to_tree (ProcInfo *info, ProcData *procdata, bool forced = false)
+insert_info_to_tree (ProcInfo *info, ProcmanApp *app, bool forced = false)
 {
     GtkTreeModel *model;
 
-    model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
+    model = gtk_tree_view_get_model (GTK_TREE_VIEW (app->tree));
 
-    if (procdata->config.show_tree) {
+    if (app->config.show_tree) {
 
         ProcInfo *parent = 0;
 
@@ -671,13 +678,13 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, bool forced = false)
             GtkTreePath *parent_node = gtk_tree_model_get_path(model, &parent->node);
             gtk_tree_store_insert(GTK_TREE_STORE(model), &info->node, &parent->node, 0);
 
-            if (!gtk_tree_view_row_expanded(GTK_TREE_VIEW(procdata->tree), parent_node)
+            if (!gtk_tree_view_row_expanded(GTK_TREE_VIEW(app->tree), parent_node)
 #ifdef __linux__
                 // on linuxes we don't want to expand kthreadd by default (always has pid 2)
                 && (parent->pid != 2)
 #endif
             )
-                gtk_tree_view_expand_row(GTK_TREE_VIEW(procdata->tree), parent_node, FALSE);
+                gtk_tree_view_expand_row(GTK_TREE_VIEW(app->tree), parent_node, FALSE);
             gtk_tree_path_free(parent_node);
         } else
             gtk_tree_store_insert(GTK_TREE_STORE(model), &info->node, NULL, 0);
@@ -694,7 +701,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, bool forced = false)
                         COL_SECURITYCONTEXT, info->security_context,
                         -1);
 
-    procdata->pretty_table.set_icon(*info);
+    app->pretty_table->set_icon(*info);
 
     procman_debug("inserted %d%s", info->pid, (forced ? " (forced)" : ""));
 }
@@ -705,7 +712,7 @@ insert_info_to_tree (ProcInfo *info, ProcData *procdata, bool forced = false)
 */
 template<typename List>
 static void
-remove_info_from_tree (ProcData *procdata, GtkTreeModel *model,
+remove_info_from_tree (ProcmanApp *app, GtkTreeModel *model,
                        ProcInfo *current, List &orphans, unsigned lvl = 0)
 {
     GtkTreeIter child_node;
@@ -725,13 +732,13 @@ remove_info_from_tree (ProcData *procdata, GtkTreeModel *model,
     while (gtk_tree_model_iter_children(model, &child_node, &current->node)) {
         ProcInfo *child = 0;
         gtk_tree_model_get(model, &child_node, COL_POINTER, &child, -1);
-        remove_info_from_tree(procdata, model, child, orphans, lvl + 1);
+        remove_info_from_tree(app, model, child, orphans, lvl + 1);
     }
 
     g_assert(not gtk_tree_model_iter_has_child(model, &current->node));
 
-    if (procdata->selected_process == current)
-        procdata->selected_process = NULL;
+    if (app->selected_process == current)
+        app->selected_process = NULL;
 
     orphans.push_back(current);
     gtk_tree_store_remove(GTK_TREE_STORE(model), &current->node);
@@ -769,7 +776,7 @@ get_process_systemd_info(ProcInfo *info)
 }
 
 static void
-update_info (ProcData *procdata, ProcInfo *info)
+update_info (ProcmanApp *app, ProcInfo *info)
 {
     glibtop_proc_state procstate;
     glibtop_proc_uid procuid;
@@ -789,11 +796,11 @@ update_info (ProcData *procdata, ProcInfo *info)
 
     info->set_user(procstate.uid);
 
-    info->pcpu = (proctime.rtime - info->cpu_time) * 100 / procdata->cpu_total_time;
+    info->pcpu = (proctime.rtime - info->cpu_time) * 100 / app->cpu_total_time;
     info->pcpu = MIN(info->pcpu, 100);
 
-    if (not procdata->config.solaris_mode)
-        info->pcpu *= procdata->config.num_cpus;
+    if (not app->config.solaris_mode)
+        info->pcpu *= app->config.num_cpus;
 
     ProcInfo::cpu_times[info->pid] = info->cpu_time = proctime.rtime;
     info->nice = procuid.nice;
@@ -855,12 +862,12 @@ ProcInfo::ProcInfo(pid_t pid)
 }
 
 static void
-refresh_list (ProcData *procdata, const pid_t* pid_list, const guint n)
+refresh_list (ProcmanApp *app, const pid_t* pid_list, const guint n)
 {
     typedef std::list<ProcInfo*> ProcList;
     ProcList addition;
 
-    GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
+    GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (app->tree));
     guint i;
 
     // Add or update processes in the process list
@@ -873,7 +880,7 @@ refresh_list (ProcData *procdata, const pid_t* pid_list, const guint n)
             addition.push_back(info);
         }
 
-        update_info (procdata, info);
+        update_info (app, info);
     }
 
 
@@ -892,7 +899,7 @@ refresh_list (ProcData *procdata, const pid_t* pid_list, const guint n)
 
         if (pids.find(info->pid) == pids.end()) {
             procman_debug("ripping %d", info->pid);
-            remove_info_from_tree(procdata, model, info, addition);
+            remove_info_from_tree(app, model, info, addition);
             addition.remove(info);
             ProcInfo::all.erase(it);
             delete info;
@@ -905,7 +912,7 @@ refresh_list (ProcData *procdata, const pid_t* pid_list, const guint n)
     // pid_list == ProcInfo::all + addition
 
 
-    if (procdata->config.show_tree) {
+    if (app->config.show_tree) {
 
         // insert process in the tree. walk through the addition list
         // (new process + process that have a new parent). This loop
@@ -942,7 +949,7 @@ refresh_list (ProcData *procdata, const pid_t* pid_list, const guint n)
 
 
                 if ((*it)->ppid == 0 or in_tree.find((*it)->ppid) != in_tree.end()) {
-                    insert_info_to_tree(*it, procdata);
+                    insert_info_to_tree(*it, app);
                     in_tree.insert((*it)->pid);
                     it = addition.erase(it);
                     continue;
@@ -952,7 +959,7 @@ refresh_list (ProcData *procdata, const pid_t* pid_list, const guint n)
                 // if the parent is unreachable
                 if (not parent) {
                     // or std::find(addition.begin(), addition.end(), parent) == addition.end()) {
-                    insert_info_to_tree(*it, procdata, true);
+                    insert_info_to_tree(*it, app, true);
                     in_tree.insert((*it)->pid);
                     it = addition.erase(it);
                     continue;
@@ -965,7 +972,7 @@ refresh_list (ProcData *procdata, const pid_t* pid_list, const guint n)
     else {
         // don't care of the tree
         for (ProcList::iterator it(addition.begin()); it != addition.end(); ++it)
-            insert_info_to_tree(*it, procdata);
+            insert_info_to_tree(*it, app);
     }
 
 
@@ -975,7 +982,7 @@ refresh_list (ProcData *procdata, const pid_t* pid_list, const guint n)
 
 
 void
-proctable_update_list (ProcData * const procdata)
+proctable_update_list (ProcmanApp *app)
 {
     pid_t* pid_list;
     glibtop_proclist proclist;
@@ -983,7 +990,7 @@ proctable_update_list (ProcData * const procdata)
     gint which, arg;
     procman::SelectionMemento selection;
 
-    switch (procdata->config.whose_process) {
+    switch (app->config.whose_process) {
         case ALL_PROCESSES:
             which = GLIBTOP_KERN_PROC_ALL;
             arg = 0;
@@ -992,18 +999,18 @@ proctable_update_list (ProcData * const procdata)
         case ACTIVE_PROCESSES:
             which = GLIBTOP_KERN_PROC_ALL | GLIBTOP_EXCLUDE_IDLE;
             arg = 0;
-            if (procdata->config.show_tree)
+            if (app->config.show_tree)
             {
-                selection.save(procdata->tree);
+                selection.save(app->tree);
             }
             break;
 
         default:
             which = GLIBTOP_KERN_PROC_UID;
             arg = getuid ();
-            if (procdata->config.show_tree)
+            if (app->config.show_tree)
             {
-                selection.save(procdata->tree);
+                selection.save(app->tree);
             }
             break;
     }
@@ -1013,12 +1020,12 @@ proctable_update_list (ProcData * const procdata)
     /* FIXME: total cpu time elapsed should be calculated on an individual basis here
     ** should probably have a total_time_last gint in the ProcInfo structure */
     glibtop_get_cpu (&cpu);
-    procdata->cpu_total_time = MAX(cpu.total - procdata->cpu_total_time_last, 1);
-    procdata->cpu_total_time_last = cpu.total;
+    app->cpu_total_time = MAX(cpu.total - app->cpu_total_time_last, 1);
+    app->cpu_total_time_last = cpu.total;
 
-    refresh_list (procdata, pid_list, proclist.number);
+    refresh_list (app, pid_list, proclist.number);
 
-    selection.restore(procdata->tree);
+    selection.restore(app->tree);
 
     g_free (pid_list);
 
@@ -1027,35 +1034,35 @@ proctable_update_list (ProcData * const procdata)
 
 
 void
-proctable_update_all (ProcData * const procdata)
+proctable_update_all (ProcmanApp * const app)
 {
     char* string;
 
     string = make_loadavg_string();
-    gtk_label_set_text (GTK_LABEL(procdata->loadavg), string);
+    gtk_label_set_text (GTK_LABEL(app->loadavg), string);
     g_free (string);
 
-    proctable_update_list (procdata);
+    proctable_update_list (app);
 }
 
 
 void
-proctable_clear_tree (ProcData * const procdata)
+proctable_clear_tree (ProcmanApp * const app)
 {
     GtkTreeModel *model;
 
-    model = gtk_tree_view_get_model (GTK_TREE_VIEW (procdata->tree));
+    model = gtk_tree_view_get_model (GTK_TREE_VIEW (app->tree));
 
     gtk_tree_store_clear (GTK_TREE_STORE (model));
 
-    proctable_free_table (procdata);
+    proctable_free_table (app);
 
-    update_sensitivity(procdata);
+    update_sensitivity(app);
 }
 
 
 void
-proctable_free_table (ProcData * const procdata)
+proctable_free_table (ProcmanApp * const app)
 {
     for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it)
         delete it->second;
@@ -1088,7 +1095,7 @@ ProcInfo::set_icon(Glib::RefPtr<Gdk::Pixbuf> icon)
     this->pixbuf = icon;
 
     GtkTreeModel *model;
-    model = gtk_tree_view_get_model(GTK_TREE_VIEW(ProcData::get_instance()->tree));
+    model = gtk_tree_view_get_model(GTK_TREE_VIEW(ProcmanApp::get()->tree));
     gtk_tree_store_set(GTK_TREE_STORE(model), &this->node,
                        COL_PIXBUF, (this->pixbuf ? this->pixbuf->gobj() : NULL),
                        -1);

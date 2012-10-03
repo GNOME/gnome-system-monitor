@@ -1,10 +1,10 @@
 #ifndef H_GNOME_SYSTEM_MONITOR_DISKS_1123719137
 #define H_GNOME_SYSTEM_MONITOR_DISKS_1123719137
 
-#include "procman.h"
+#include "procman-app.h"
 
 void
-create_disk_view(ProcData *procdata, GtkBuilder *builder);
+create_disk_view(ProcmanApp *app, GtkBuilder *builder);
 
 int
 cb_update_disks(gpointer procdata);

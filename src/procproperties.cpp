@@ -31,7 +31,7 @@
 #include <sys/sysctl.h>
 #endif
 
-#include "procman.h"
+#include "procman-app.h"
 #include "procproperties.h"
 #include "proctable.h"
 #include "util.h"
@@ -188,7 +188,7 @@ close_procprop_dialog (GtkDialog *dialog, gint id, gpointer data)
 }
 
 static GtkWidget *
-create_procproperties_tree (ProcData *procdata)
+create_procproperties_tree (ProcmanApp *app)
 {
     GtkWidget *tree;
     GtkListStore *model;
@@ -217,7 +217,7 @@ create_procproperties_tree (ProcData *procdata)
     }
 
     gtk_tree_view_set_headers_visible (GTK_TREE_VIEW(tree), FALSE);
-    fill_proc_properties(tree, procdata->selected_process);
+    fill_proc_properties(tree, app->selected_process);
 
     return tree;
 }
@@ -240,7 +240,8 @@ static void
 create_single_procproperties_dialog (GtkTreeModel *model, GtkTreePath *path,
                                      GtkTreeIter *iter, gpointer data)
 {
-    ProcData *procdata = static_cast<ProcData*>(data);
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+
     GtkWidget *procpropdialog;
     GtkWidget *dialog_vbox, *vbox;
     GtkWidget *cmd_hbox;
@@ -288,7 +289,7 @@ create_single_procproperties_dialog (GtkTreeModel *model, GtkTreePath *path,
     gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
                                          GTK_SHADOW_IN);
 
-    tree = create_procproperties_tree (procdata);
+    tree = create_procproperties_tree (app);
     gtk_container_add (GTK_CONTAINER (scrolled), tree);
     g_object_set_data (G_OBJECT (tree), "selected_info", info);
 
@@ -307,8 +308,8 @@ create_single_procproperties_dialog (GtkTreeModel *model, GtkTreePath *path,
 }
 
 void
-create_procproperties_dialog (ProcData *procdata)
+create_procproperties_dialog (ProcmanApp *app)
 {
-    gtk_tree_selection_selected_foreach (procdata->selection, create_single_procproperties_dialog,
-                                         procdata);
+    gtk_tree_selection_selected_foreach (app->selection, create_single_procproperties_dialog,
+                                         app);
 }

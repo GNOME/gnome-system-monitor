@@ -14,7 +14,7 @@
 using std::string;
 
 
-#include "procman.h"
+#include "procman-app.h"
 #include "memmaps.h"
 #include "proctable.h"
 #include "util.h"
@@ -329,7 +329,7 @@ dialog_response (GtkDialog * dialog, gint response_id, gpointer data)
 
 
 static MemMapsData*
-create_memmapsdata (ProcData *procdata)
+create_memmapsdata (ProcmanApp *app)
 {
     GtkWidget *tree;
     GtkListStore *model;
@@ -425,7 +425,7 @@ create_memmapsdata (ProcData *procdata)
         }
     }
 
-    return new MemMapsData(tree, procdata->settings);
+    return new MemMapsData(tree, app->settings);
 }
 
 
@@ -448,7 +448,7 @@ static void
 create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
                               GtkTreeIter *iter, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
     MemMapsData *mmdata;
     GtkWidget *memmapsdialog;
     GtkWidget *dialog_vbox;
@@ -461,10 +461,10 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
     if (!info)
         return;
 
-    mmdata = create_memmapsdata (procdata);
+    mmdata = create_memmapsdata (app);
     mmdata->info = info;
 
-    memmapsdialog = gtk_dialog_new_with_buttons (_("Memory Maps"), GTK_WINDOW (procdata->app),
+    memmapsdialog = gtk_dialog_new_with_buttons (_("Memory Maps"), GTK_WINDOW (app->main_window),
                                                  GTK_DIALOG_DESTROY_WITH_PARENT,
                                                  GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
                                                  NULL);
@@ -506,9 +506,9 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 
 
 void
-create_memmaps_dialog (ProcData *procdata)
+create_memmaps_dialog (ProcmanApp *app)
 {
     /* TODO: do we really want to open multiple dialogs ? */
-    gtk_tree_selection_selected_foreach (procdata->selection, create_single_memmaps_dialog,
-                                         procdata);
+    gtk_tree_selection_selected_foreach (app->selection, create_single_memmaps_dialog,
+                                         app);
 }

@@ -3,7 +3,7 @@
 
 #include <glib.h>
 
-#include "procman.h"
+#include "procman-app.h"
 
 void
 get_process_cgroup_info (ProcInfo *info);

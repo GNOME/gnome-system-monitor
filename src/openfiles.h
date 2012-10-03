@@ -3,8 +3,8 @@
 
 #include <glib.h>
 
-#include "procman.h"
+#include "procman-app.h"
 
-void            create_openfiles_dialog (ProcData *procdata);
+void            create_openfiles_dialog (ProcmanApp *app);
 
 #endif

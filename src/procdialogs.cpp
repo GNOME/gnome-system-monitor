@@ -56,28 +56,28 @@ kill_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
     gtk_widget_destroy (GTK_WIDGET (dialog));
 
     if (id == GTK_RESPONSE_OK)
-        kill_process (kargs->procdata, kargs->signal);
+        kill_process (kargs->app, kargs->signal);
 
     g_free (kargs);
 }
 
 void
-procdialog_create_kill_dialog (ProcData *procdata, int signal)
+procdialog_create_kill_dialog (ProcmanApp *app, int signal)
 {
     GtkWidget *kill_alert_dialog;
     gchar *primary, *secondary, *button_text;
     struct KillArgs *kargs;
 
     kargs = g_new(KillArgs, 1);
-    kargs->procdata = procdata;
+    kargs->app = app;
     kargs->signal = signal;
 
 
     if (signal == SIGKILL) {
         /*xgettext: primary alert message*/
         primary = g_strdup_printf (_("Kill the selected process “%s” (PID: %u)?"),
-                                   procdata->selected_process->name,
-                                   procdata->selected_process->pid);
+                                   app->selected_process->name,
+                                   app->selected_process->pid);
         /*xgettext: secondary alert message*/
         secondary = _("Killing a process may destroy data, break the "
                       "session or introduce a security risk. "
@@ -87,8 +87,8 @@ procdialog_create_kill_dialog (ProcData *procdata, int signal)
     else {
         /*xgettext: primary alert message*/
         primary = g_strdup_printf (_("End the selected process “%s” (PID: %u)?"),
-                                   procdata->selected_process->name,
-                                   procdata->selected_process->pid);
+                                   app->selected_process->name,
+                                   app->selected_process->pid);
         /*xgettext: secondary alert message*/
         secondary = _("Ending a process may destroy data, break the "
                       "session or introduce a security risk. "
@@ -96,7 +96,7 @@ procdialog_create_kill_dialog (ProcData *procdata, int signal)
         button_text = _("_End Process");
     }
 
-    kill_alert_dialog = gtk_message_dialog_new (GTK_WINDOW (procdata->app),
+    kill_alert_dialog = gtk_message_dialog_new (GTK_WINDOW (app->main_window),
                                                 static_cast<GtkDialogFlags>(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
                                                 GTK_MESSAGE_WARNING,
                                                 GTK_BUTTONS_NONE,
@@ -137,12 +137,11 @@ renice_scale_changed (GtkAdjustment *adj, gpointer data)
 static void
 renice_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 {
-    ProcData *procdata = static_cast<ProcData*>(data);
-
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
     if (id == 100) {
         if (new_nice_value == -100)
             return;
-        renice(procdata, new_nice_value);
+        renice(app, new_nice_value);
     }
 
     gtk_widget_destroy (GTK_WIDGET (dialog));
@@ -150,9 +149,9 @@ renice_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 }
 
 void
-procdialog_create_renice_dialog (ProcData *procdata)
+procdialog_create_renice_dialog (ProcmanApp *app)
 {
-    ProcInfo *info = procdata->selected_process;
+    ProcInfo *info = app->selected_process;
     GtkWidget *label;
     GtkWidget *priority_label;
     GtkAdjustment *renice_adj;
@@ -200,7 +199,7 @@ procdialog_create_renice_dialog (ProcData *procdata)
     g_free (text);
 
     g_signal_connect (G_OBJECT (renice_dialog), "response",
-                      G_CALLBACK (renice_dialog_button_pressed), procdata);
+                      G_CALLBACK (renice_dialog_button_pressed), app);
     g_signal_connect (G_OBJECT (renice_adj), "value_changed",
                       G_CALLBACK (renice_scale_changed), priority_label);
 
@@ -235,8 +234,8 @@ prefs_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 static void
 show_kill_dialog_toggled (GtkToggleButton *button, gpointer data)
 {
-    ProcData *procdata = static_cast<ProcData*>(data);
-    GSettings *settings = procdata->settings;
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GSettings *settings = app->settings;
 
     gboolean toggled;
 
@@ -250,8 +249,8 @@ show_kill_dialog_toggled (GtkToggleButton *button, gpointer data)
 static void
 solaris_mode_toggled(GtkToggleButton *button, gpointer data)
 {
-    ProcData *procdata = static_cast<ProcData*>(data);
-    GSettings *settings = procdata->settings;
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GSettings *settings = app->settings;
 
     gboolean toggled;
     toggled = gtk_toggle_button_get_active(button);
@@ -262,8 +261,8 @@ solaris_mode_toggled(GtkToggleButton *button, gpointer data)
 static void
 network_in_bits_toggled(GtkToggleButton *button, gpointer data)
 {
-    ProcData *procdata = static_cast<ProcData*>(data);
-    GSettings *settings = procdata->settings;
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GSettings *settings = app->settings;
 
     gboolean toggled;
     toggled = gtk_toggle_button_get_active(button);
@@ -275,8 +274,8 @@ network_in_bits_toggled(GtkToggleButton *button, gpointer data)
 static void
 smooth_refresh_toggled(GtkToggleButton *button, gpointer data)
 {
-    ProcData *procdata = static_cast<ProcData*>(data);
-    GSettings *settings = procdata->settings;
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GSettings *settings = app->settings;
 
     gboolean toggled;
 
@@ -290,8 +289,8 @@ smooth_refresh_toggled(GtkToggleButton *button, gpointer data)
 static void
 show_all_fs_toggled (GtkToggleButton *button, gpointer data)
 {
-    ProcData *procdata = static_cast<ProcData*>(data);
-    GSettings *settings = procdata->settings;
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GSettings *settings = app->settings;
 
     gboolean toggled;
 
@@ -322,7 +321,7 @@ private:
     {
         int new_value = int(1000 * gtk_spin_button_get_value(spin));
 
-        g_settings_set_int(ProcData::get_instance()->settings,
+        g_settings_set_int(ProcmanApp::get()->settings,
                            this->key.c_str(), new_value);
 
         procman_debug("set %s to %d", this->key.c_str(), new_value);
@@ -342,7 +341,7 @@ field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
     GtkTreeIter iter;
     GtkTreeViewColumn *column;
     gboolean toggled;
-    GSettings *settings = g_settings_get_child (ProcData::get_instance()->settings, "proctree");
+    GSettings *settings = g_settings_get_child (ProcmanApp::get()->settings, "proctree");
     gchar *key;
     int id;
 
@@ -443,7 +442,7 @@ create_field_page(GtkBuilder* builder, GtkWidget *tree, const gchar *widgetname)
 }
 
 void
-procdialog_create_preferences_dialog (ProcData *procdata)
+procdialog_create_preferences_dialog (ProcmanApp *app)
 {
     typedef SpinButtonUpdater SBU;
 
@@ -473,7 +472,7 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 
     spin_button = GTK_WIDGET (gtk_builder_get_object (builder, "processes_interval_spinner"));
 
-    update = (gfloat) procdata->config.update_interval;
+    update = (gfloat) app->config.update_interval;
     adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0,
                                                       MIN_UPDATE_INTERVAL / 1000,
                                                       MAX_UPDATE_INTERVAL / 1000,
@@ -487,27 +486,27 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 
     smooth_button = GTK_WIDGET (gtk_builder_get_object (builder, "smooth_button"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(smooth_button),
-                                 g_settings_get_boolean(procdata->settings,
+                                 g_settings_get_boolean(app->settings,
                                                         SmoothRefresh::KEY.c_str()));
     g_signal_connect(G_OBJECT(smooth_button), "toggled",
-                     G_CALLBACK(smooth_refresh_toggled), procdata);
+                     G_CALLBACK(smooth_refresh_toggled), app);
 
     check_button = GTK_WIDGET (gtk_builder_get_object (builder, "check_button"));
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
-                                  procdata->config.show_kill_warning);
+                                  app->config.show_kill_warning);
     g_signal_connect (G_OBJECT (check_button), "toggled",
-                      G_CALLBACK (show_kill_dialog_toggled), procdata);
+                      G_CALLBACK (show_kill_dialog_toggled), app);
 
     GtkWidget *solaris_button = GTK_WIDGET (gtk_builder_get_object (builder, "solaris_button"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(solaris_button),
-                                 g_settings_get_boolean(procdata->settings,
+                                 g_settings_get_boolean(app->settings,
                                                         procman::settings::solaris_mode.c_str()));
     g_signal_connect(G_OBJECT(solaris_button), "toggled",
-                     G_CALLBACK(solaris_mode_toggled), procdata);
+                     G_CALLBACK(solaris_mode_toggled), app);
 
-    create_field_page (builder, procdata->tree, "processes_columns_treeview");
+    create_field_page (builder, app->tree, "processes_columns_treeview");
 
-    update = (gfloat) procdata->config.graph_update_interval;
+    update = (gfloat) app->config.graph_update_interval;
     adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.25,
                                                       100.0, 0.25, 1.0, 0);
     spin_button = GTK_WIDGET (gtk_builder_get_object (builder, "resources_interval_spinner"));
@@ -519,12 +518,12 @@ procdialog_create_preferences_dialog (ProcData *procdata)
     GtkWidget *bits_button = GTK_WIDGET (gtk_builder_get_object (builder, "bits_button"));
 
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(bits_button),
-                                 g_settings_get_boolean(procdata->settings,
+                                 g_settings_get_boolean(app->settings,
                                                         procman::settings::network_in_bits.c_str()));
     g_signal_connect(G_OBJECT(bits_button), "toggled",
-                     G_CALLBACK(network_in_bits_toggled), procdata);
+                     G_CALLBACK(network_in_bits_toggled), app);
 
-    update = (gfloat) procdata->config.disks_update_interval;
+    update = (gfloat) app->config.disks_update_interval;
     adjustment = (GtkAdjustment *) gtk_adjustment_new (update / 1000.0, 1.0,
                                                        100.0, 1.0, 1.0, 0);
     spin_button = GTK_WIDGET (gtk_builder_get_object (builder, "devices_interval_spinner"));
@@ -536,17 +535,17 @@ procdialog_create_preferences_dialog (ProcData *procdata)
 
     check_button = GTK_WIDGET (gtk_builder_get_object (builder, "all_devices_check"));
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
-                                  procdata->config.show_all_fs);
+                                  app->config.show_all_fs);
     g_signal_connect (G_OBJECT (check_button), "toggled",
-                      G_CALLBACK (show_all_fs_toggled), procdata);
+                      G_CALLBACK (show_all_fs_toggled), app);
 
-    create_field_page (builder, procdata->disk_list, "devices_columns_treeview");
+    create_field_page (builder, app->disk_list, "devices_columns_treeview");
 
     gtk_widget_show_all (prefs_dialog);
     g_signal_connect (G_OBJECT (prefs_dialog), "response",
-                      G_CALLBACK (prefs_dialog_button_pressed), procdata);
+                      G_CALLBACK (prefs_dialog_button_pressed), app);
 
-    switch (procdata->config.current_tab) {
+    switch (app->config.current_tab) {
         case PROCMAN_TAB_SYSINFO:
         case PROCMAN_TAB_PROCESSES:
             gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
@@ -589,7 +588,7 @@ procman_action_to_command(ProcmanActionType type,
  */
 gboolean
 procdialog_create_root_password_dialog(ProcmanActionType type,
-                                       ProcData *procdata,
+                                       ProcmanApp *app,
                                        gint pid,
                                        gint extra_value)
 {

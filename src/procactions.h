@@ -19,10 +19,10 @@
 #ifndef _PROCACTIONS_H_
 #define _PROCACTIONS_H_
 
-#include "procman.h"
+#include "procman-app.h"
 
-void            renice (ProcData *procdata, int nice);
-void            kill_process (ProcData *procdata, int sig);
+void            renice (ProcmanApp *app, int nice);
+void            kill_process (ProcmanApp *app, int sig);
 
 #endif
 

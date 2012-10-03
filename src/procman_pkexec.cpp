@@ -1,6 +1,6 @@
 #include <config.h>
 
-#include "procman.h"
+#include "procman-app.h"
 #include "procman_pkexec.h"
 #include "util.h"
 

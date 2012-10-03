@@ -2,7 +2,7 @@
 
 #include <glib.h>
 
-#include "procman.h"
+#include "procman-app.h"
 #include "procman_gnomesu.h"
 #include "util.h"
 

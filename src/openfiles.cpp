@@ -9,7 +9,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#include "procman.h"
+#include "procman-app.h"
 #include "openfiles.h"
 #include "proctable.h"
 #include "util.h"
@@ -235,7 +235,7 @@ close_openfiles_dialog (GtkDialog *dialog, gint id, gpointer data)
 
 
 static GtkWidget *
-create_openfiles_tree (ProcData *procdata)
+create_openfiles_tree (ProcmanApp *app)
 {
     GtkWidget *tree;
     GtkListStore *model;
@@ -292,7 +292,7 @@ create_openfiles_tree (ProcData *procdata)
   GTK_SORT_ASCENDING);*/
 #endif
 
-    procman_get_tree_state (procdata->settings, tree, procman::settings::open_files_tree_prefix.c_str());
+    procman_get_tree_state (app->settings, tree, procman::settings::open_files_tree_prefix.c_str());
 
     return tree;
 
@@ -318,7 +318,7 @@ static void
 create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
                                 GtkTreeIter *iter, gpointer data)
 {
-    ProcData *procdata = static_cast<ProcData*>(data);
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
     GtkWidget *openfilesdialog;
     GtkWidget *cmd_grid;
     GtkWidget *label;
@@ -351,10 +351,10 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 
     scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "scrolled"));
 
-    tree = create_openfiles_tree (procdata);
+    tree = create_openfiles_tree (app);
     gtk_container_add (GTK_CONTAINER (scrolled), tree);
     g_object_set_data (G_OBJECT (tree), "selected_info", info);
-    g_object_set_data (G_OBJECT (tree), "settings", procdata->settings);
+    g_object_set_data (G_OBJECT (tree), "settings", app->settings);
 
     g_signal_connect (G_OBJECT (openfilesdialog), "response",
                       G_CALLBACK (close_openfiles_dialog), tree);
@@ -374,8 +374,8 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 
 
 void
-create_openfiles_dialog (ProcData *procdata)
+create_openfiles_dialog (ProcmanApp *app)
 {
-    gtk_tree_selection_selected_foreach (procdata->selection, create_single_openfiles_dialog,
-                                         procdata);
+    gtk_tree_selection_selected_foreach (app->selection, create_single_openfiles_dialog,
+                                         app);
 }

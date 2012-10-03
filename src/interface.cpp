@@ -30,7 +30,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <math.h>
 
-#include "procman.h"
 #include "callbacks.h"
 #include "interface.h"
 #include "proctable.h"
@@ -124,7 +123,7 @@ make_title_label (const char *text)
 }
 
 static void 
-create_proc_view(ProcData *procdata, GtkBuilder * builder) 
+create_proc_view(ProcmanApp *app, GtkBuilder * builder)
 {
     GtkWidget *proctree;
     GtkWidget *scrolled;
@@ -135,34 +134,34 @@ create_proc_view(ProcData *procdata, GtkBuilder * builder)
 
     /* create the processes tab */
     string = make_loadavg_string ();
-    procdata->loadavg = GTK_WIDGET (gtk_builder_get_object (builder, "load_avg_label"));
-    gtk_label_set_text (GTK_LABEL (procdata->loadavg), string);
+    app->loadavg = GTK_WIDGET (gtk_builder_get_object (builder, "load_avg_label"));
+    gtk_label_set_text (GTK_LABEL (app->loadavg), string);
     g_free (string);
 
-    proctree = proctable_new (procdata);
+    proctree = proctable_new (app);
     scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "processes_scrolled"));
 
     gtk_container_add (GTK_CONTAINER (scrolled), proctree);
 
-    procdata->endprocessbutton = GTK_WIDGET (gtk_builder_get_object (builder, "endprocessbutton"));
-    g_signal_connect (G_OBJECT (procdata->endprocessbutton), "clicked",
-                      G_CALLBACK (cb_end_process_button_pressed), procdata);
+    app->endprocessbutton = GTK_WIDGET (gtk_builder_get_object (builder, "endprocessbutton"));
+    g_signal_connect (G_OBJECT (app->endprocessbutton), "clicked",
+                      G_CALLBACK (cb_end_process_button_pressed), app);
 
     button = GTK_WIDGET (gtk_builder_get_object (builder, "viewmenubutton"));
-    viewmenu = gtk_ui_manager_get_widget (procdata->uimanager, "/ViewMenu");
+    viewmenu = gtk_ui_manager_get_widget (app->uimanager, "/ViewMenu");
     gtk_widget_set_halign (viewmenu, GTK_ALIGN_END);
     gtk_menu_button_set_popup (GTK_MENU_BUTTON (button), viewmenu);
 
     button = GTK_WIDGET (gtk_builder_get_object (builder, "refreshbutton"));
-    action = gtk_action_group_get_action (procdata->action_group, "Refresh");
+    action = gtk_action_group_get_action (app->action_group, "Refresh");
     gtk_activatable_set_related_action (GTK_ACTIVATABLE (button), action);
 
     /* create popup_menu for the processes tab */
-    procdata->popup_menu = gtk_ui_manager_get_widget (procdata->uimanager, "/PopupMenu");
+    app->popup_menu = gtk_ui_manager_get_widget (app->uimanager, "/PopupMenu");
 }
 
 static void
-create_sys_view (ProcData *procdata, GtkBuilder * builder)
+create_sys_view (ProcmanApp *app, GtkBuilder * builder)
 {
     GtkWidget *cpu_graph_box, *mem_graph_box, *net_graph_box;
     GtkWidget *label,*cpu_label;
@@ -192,7 +191,7 @@ create_sys_view (ProcData *procdata, GtkBuilder * builder)
 
     GtkWidget* cpu_table = GTK_WIDGET (gtk_builder_get_object (builder, "cpu_table"));
     gint cols = 4;
-    for (i=0;i<procdata->config.num_cpus; i++) {
+    for (i=0;i<app->config.num_cpus; i++) {
         GtkWidget *temp_hbox;
 
         temp_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -212,7 +211,7 @@ create_sys_view (ProcData *procdata, GtkBuilder * builder)
                           G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
         gtk_box_pack_start (GTK_BOX (temp_hbox), color_picker, FALSE, TRUE, 0);
         gtk_widget_set_size_request(GTK_WIDGET(color_picker), 32, -1);
-        if(procdata->config.num_cpus == 1) {
+        if(app->config.num_cpus == 1) {
             label_text = g_strdup (_("CPU"));
         } else {
             label_text = g_strdup_printf (_("CPU%d"), i+1);
@@ -231,7 +230,7 @@ create_sys_view (ProcData *procdata, GtkBuilder * builder)
 
     }
 
-    procdata->cpu_graph = cpu_graph;
+    app->cpu_graph = cpu_graph;
 
     /** The memory box */
     mem_graph_box = GTK_WIDGET (gtk_builder_get_object (builder, "mem_graph_box"));
@@ -247,7 +246,7 @@ create_sys_view (ProcData *procdata, GtkBuilder * builder)
 
     color_picker = load_graph_get_mem_color_picker(mem_graph);
     g_signal_connect (G_OBJECT (color_picker), "color_set",
-                      G_CALLBACK (cb_mem_color_changed), procdata);
+                      G_CALLBACK (cb_mem_color_changed), app);
     title_text = g_strdup_printf(title_template, _("Memory"));
     gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
     g_free(title_text);
@@ -258,7 +257,7 @@ create_sys_view (ProcData *procdata, GtkBuilder * builder)
 
     color_picker = load_graph_get_swap_color_picker(mem_graph);
     g_signal_connect (G_OBJECT (color_picker), "color_set",
-                      G_CALLBACK (cb_swap_color_changed), procdata);
+                      G_CALLBACK (cb_swap_color_changed), app);
     title_text = g_strdup_printf(title_template, _("Swap"));
     gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
     g_free(title_text);
@@ -266,7 +265,7 @@ create_sys_view (ProcData *procdata, GtkBuilder * builder)
 
     gtk_grid_attach (GTK_GRID (table),  load_graph_get_labels(mem_graph)->swap, 3, 1, 1, 1);
 
-    procdata->mem_graph = mem_graph;
+    app->mem_graph = mem_graph;
 
     /* The net box */
     net_graph_box = GTK_WIDGET (gtk_builder_get_object (builder, "net_graph_box"));
@@ -283,7 +282,7 @@ create_sys_view (ProcData *procdata, GtkBuilder * builder)
     color_picker = gsm_color_button_new (
         &net_graph->colors.at(0), GSMCP_TYPE_NETWORK_IN);
     g_signal_connect (G_OBJECT (color_picker), "color_set",
-                      G_CALLBACK (cb_net_in_color_changed), procdata);
+                      G_CALLBACK (cb_net_in_color_changed), app);
     title_text = g_strdup_printf(title_template, _("Receiving"));
     gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
     g_free(title_text);
@@ -298,7 +297,7 @@ create_sys_view (ProcData *procdata, GtkBuilder * builder)
     color_picker = gsm_color_button_new (
         &net_graph->colors.at(1), GSMCP_TYPE_NETWORK_OUT);
     g_signal_connect (G_OBJECT (color_picker), "color_set",
-                      G_CALLBACK (cb_net_out_color_changed), procdata);
+                      G_CALLBACK (cb_net_out_color_changed), app);
     title_text = g_strdup_printf(title_template, _("Sending"));
     gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
     g_free(title_text);
@@ -312,7 +311,7 @@ create_sys_view (ProcData *procdata, GtkBuilder * builder)
 
     gtk_grid_attach (GTK_GRID (table),  load_graph_get_labels(net_graph)->net_out_total, 6, 1, 1, 1);
 
-    procdata->net_graph = net_graph;
+    app->net_graph = net_graph;
     g_free(title_template);
 
 }
@@ -324,11 +323,11 @@ on_activate_about (GSimpleAction *, GVariant *, gpointer data)
 }
 
 void
-create_main_window (ProcData *procdata, GtkApplication *application)
+create_main_window (ProcmanApp *app)
 {
     gint i;
     gint width, height, xpos, ypos;
-    GtkWidget *app;
+    GtkWidget *main_window;
     GtkAction *action;
     GtkWidget *notebook;
 
@@ -338,102 +337,105 @@ create_main_window (ProcData *procdata, GtkApplication *application)
     gtk_builder_add_from_file (builder, filename, NULL);
     g_free (filename);
 
-    app = GTK_WIDGET (gtk_builder_get_object (builder, "main_window"));
-    gtk_window_set_application (GTK_WINDOW (app), application);
+    main_window = GTK_WIDGET (gtk_builder_get_object (builder, "main_window"));
+    gtk_window_set_application (GTK_WINDOW (main_window), app->gobj());
+    gtk_widget_set_name (main_window, "gnome-system-monitor");
 
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL }
     };
 
-    g_action_map_add_action_entries (G_ACTION_MAP (app),
+    g_action_map_add_action_entries (G_ACTION_MAP (main_window),
                                      win_action_entries,
                                      G_N_ELEMENTS (win_action_entries),
-                                     procdata);
+                                     app);
 
-    GdkScreen* screen = gtk_widget_get_screen(app);
+    GdkScreen* screen = gtk_widget_get_screen(main_window);
     GdkVisual* visual = gdk_screen_get_rgba_visual(screen);
 
     /* use visual, if available */
     if (visual)
-        gtk_widget_set_visual(app, visual);
+        gtk_widget_set_visual(main_window, visual);
 
-    width = procdata->config.width;
-    height = procdata->config.height;
-    xpos = procdata->config.xpos;
-    ypos = procdata->config.ypos;
-    gtk_window_set_default_size (GTK_WINDOW (app), width, height);
-    gtk_window_move(GTK_WINDOW (app), xpos, ypos);
-    if (procdata->config.maximized) {
-        gtk_window_maximize(GTK_WINDOW(app));
+    width = app->config.width;
+    height = app->config.height;
+    xpos = app->config.xpos;
+    ypos = app->config.ypos;
+    gtk_window_set_default_size (GTK_WINDOW (main_window), width, height);
+    gtk_window_move(GTK_WINDOW (main_window), xpos, ypos);
+    if (app->config.maximized) {
+        gtk_window_maximize(GTK_WINDOW(main_window));
     }
 
-    procdata->uimanager = gtk_ui_manager_new ();
+    app->uimanager = gtk_ui_manager_new ();
 
-    gtk_window_add_accel_group (GTK_WINDOW (app),
-                                gtk_ui_manager_get_accel_group (procdata->uimanager));
+    gtk_window_add_accel_group (GTK_WINDOW (main_window),
+                                gtk_ui_manager_get_accel_group (app->uimanager));
 
     filename = g_build_filename (GSM_DATA_DIR, "popups.ui", NULL);
 
-    if (!gtk_ui_manager_add_ui_from_file (procdata->uimanager,
+    if (!gtk_ui_manager_add_ui_from_file (app->uimanager,
                                             filename,
                                             NULL)) {
         g_error("building menus failed");
     }
     g_free (filename);
-    procdata->action_group = gtk_action_group_new ("ProcmanActions");
-    gtk_action_group_set_translation_domain (procdata->action_group, NULL);
-    gtk_action_group_add_actions (procdata->action_group,
+    app->action_group = gtk_action_group_new ("ProcmanActions");
+    gtk_action_group_set_translation_domain (app->action_group, NULL);
+    gtk_action_group_add_actions (app->action_group,
                                   menu_entries,
                                   G_N_ELEMENTS (menu_entries),
-                                  procdata);
-    gtk_action_group_add_toggle_actions (procdata->action_group,
+                                  app);
+    gtk_action_group_add_toggle_actions (app->action_group,
                                          toggle_menu_entries,
                                          G_N_ELEMENTS (toggle_menu_entries),
-                                         procdata);
+                                         app);
 
-    gtk_action_group_add_radio_actions (procdata->action_group,
+    gtk_action_group_add_radio_actions (app->action_group,
                                         radio_menu_entries,
                                         G_N_ELEMENTS (radio_menu_entries),
-                                        procdata->config.whose_process,
+                                        app->config.whose_process,
                                         G_CALLBACK(cb_radio_processes),
-                                        procdata);
+                                        app);
 
-    gtk_action_group_add_radio_actions (procdata->action_group,
+    gtk_action_group_add_radio_actions (app->action_group,
                                         priority_menu_entries,
                                         G_N_ELEMENTS (priority_menu_entries),
                                         NORMAL_PRIORITY,
                                         G_CALLBACK(cb_renice),
-                                        procdata);
+                                        app);
 
-    gtk_ui_manager_insert_action_group (procdata->uimanager,
-                                        procdata->action_group,
+    gtk_ui_manager_insert_action_group (app->uimanager,
+                                        app->action_group,
                                         0);
 
     /* create the main notebook */
-    procdata->notebook = notebook = GTK_WIDGET (gtk_builder_get_object (builder, "notebook"));
+    app->notebook = notebook = GTK_WIDGET (gtk_builder_get_object (builder, "notebook"));
 
-    create_proc_view(procdata, builder);
 
-    create_sys_view (procdata, builder);
+    create_proc_view(app, builder);
+
+    create_sys_view (app, builder);
     
-    create_disk_view (procdata, builder);
-    
+    create_disk_view (app, builder);
+
+
     g_signal_connect (G_OBJECT (notebook), "switch-page",
-                      G_CALLBACK (cb_switch_page), procdata);
+                      G_CALLBACK (cb_switch_page), app);
     g_signal_connect (G_OBJECT (notebook), "change-current-page",
-                      G_CALLBACK (cb_change_current_page), procdata);
+                      G_CALLBACK (cb_change_current_page), app);
 
     gtk_widget_show_all(notebook); // need to make page switch work
-    gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab);
-    cb_change_current_page (GTK_NOTEBOOK (notebook), procdata->config.current_tab, procdata);
-    g_signal_connect (G_OBJECT (app), "delete_event",
-                      G_CALLBACK (cb_app_delete),
-                      procdata);
+    gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), app->config.current_tab);
+    cb_change_current_page (GTK_NOTEBOOK (notebook), app->config.current_tab, app);
+    g_signal_connect (G_OBJECT (main_window), "delete_event",
+                      G_CALLBACK (cb_main_window_delete),
+                      app);
 
     GtkAccelGroup *accel_group;
     GClosure *goto_tab_closure[4];
     accel_group = gtk_accel_group_new ();
-    gtk_window_add_accel_group (GTK_WINDOW(app), accel_group);
+    gtk_window_add_accel_group (GTK_WINDOW(main_window), accel_group);
     for (i = 0; i < 4; ++i) {
         goto_tab_closure[i] = g_cclosure_new_swap (G_CALLBACK (cb_proc_goto_tab),
                                                    GINT_TO_POINTER (i), NULL);
@@ -441,21 +443,21 @@ create_main_window (ProcData *procdata, GtkApplication *application)
                                  GDK_MOD1_MASK, GTK_ACCEL_VISIBLE,
                                  goto_tab_closure[i]);
     }
-    action = gtk_action_group_get_action (procdata->action_group, "ShowDependencies");
+    action = gtk_action_group_get_action (app->action_group, "ShowDependencies");
     gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
-                                  procdata->config.show_tree);
+                                  app->config.show_tree);
 
     
     gtk_builder_connect_signals (builder, NULL);
 
-    gtk_widget_show_all(app);
-    procdata->app = app;
+    gtk_widget_show_all(main_window);
+    app->main_window = main_window;
 
     g_object_unref (G_OBJECT (builder));
 }
 
 void
-do_popup_menu (ProcData *procdata, GdkEventButton *event)
+do_popup_menu (ProcmanApp *app, GdkEventButton *event)
 {
     guint button;
     guint32 event_time;
@@ -469,12 +471,12 @@ do_popup_menu (ProcData *procdata, GdkEventButton *event)
         event_time = gtk_get_current_event_time ();
     }
 
-    gtk_menu_popup (GTK_MENU (procdata->popup_menu), NULL, NULL,
+    gtk_menu_popup (GTK_MENU (app->popup_menu), NULL, NULL,
                     NULL, NULL, button, event_time);
 }
 
 void
-update_sensitivity(ProcData *data)
+update_sensitivity(ProcmanApp *app)
 {
     const char * const selected_actions[] = { "StopProcess",
                                               "ContProcess",
@@ -496,43 +498,43 @@ update_sensitivity(ProcData *data)
     gboolean processes_sensitivity, selected_sensitivity;
     GtkAction *action;
 
-    processes_sensitivity = (data->config.current_tab == PROCMAN_TAB_PROCESSES);
-    selected_sensitivity = (processes_sensitivity && data->selected_process != NULL);
+    processes_sensitivity = (app->config.current_tab == PROCMAN_TAB_PROCESSES);
+    selected_sensitivity = (processes_sensitivity && app->selected_process != NULL);
 
-    if(data->endprocessbutton) {
+    if(app->endprocessbutton) {
         /* avoid error on startup if endprocessbutton
            has not been built yet */
-        gtk_widget_set_sensitive(data->endprocessbutton, selected_sensitivity);
+        gtk_widget_set_sensitive(app->endprocessbutton, selected_sensitivity);
     }
 
     for (i = 0; i != G_N_ELEMENTS(processes_actions); ++i) {
-        action = gtk_action_group_get_action(data->action_group,
+        action = gtk_action_group_get_action(app->action_group,
                                              processes_actions[i]);
         gtk_action_set_sensitive(action, processes_sensitivity);
     }
 
     for (i = 0; i != G_N_ELEMENTS(selected_actions); ++i) {
-        action = gtk_action_group_get_action(data->action_group,
+        action = gtk_action_group_get_action(app->action_group,
                                              selected_actions[i]);
         gtk_action_set_sensitive(action, selected_sensitivity);
     }
 }
 
 void
-block_priority_changed_handlers(ProcData *data, bool block)
+block_priority_changed_handlers(ProcmanApp *app, bool block)
 {
     gint i;
     if (block) {
         for (i = 0; i != G_N_ELEMENTS(priority_menu_entries); ++i) {
-            GtkRadioAction *action = GTK_RADIO_ACTION(gtk_action_group_get_action(data->action_group,
+            GtkRadioAction *action = GTK_RADIO_ACTION(gtk_action_group_get_action(app->action_group,
                                              priority_menu_entries[i].name));
-            g_signal_handlers_block_by_func(action, (gpointer)cb_renice, data);
+            g_signal_handlers_block_by_func(action, (gpointer)cb_renice, app);
         }
     } else {
         for (i = 0; i != G_N_ELEMENTS(priority_menu_entries); ++i) {
-            GtkRadioAction *action = GTK_RADIO_ACTION(gtk_action_group_get_action(data->action_group,
+            GtkRadioAction *action = GTK_RADIO_ACTION(gtk_action_group_get_action(app->action_group,
                                              priority_menu_entries[i].name));
-            g_signal_handlers_unblock_by_func(action, (gpointer)cb_renice, data);
+            g_signal_handlers_unblock_by_func(action, (gpointer)cb_renice, app);
         }
     }
 }
@@ -540,11 +542,12 @@ block_priority_changed_handlers(ProcData *data, bool block)
 static void
 cb_toggle_tree (GtkAction *action, gpointer data)
 {
-    ProcData *procdata = static_cast<ProcData*>(data);
-    GSettings *settings = procdata->settings;       gboolean show;
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GSettings *settings = app->settings;
+    gboolean show;
 
     show = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-    if (show == procdata->config.show_tree)
+    if (show == app->config.show_tree)
         return;
 
     g_settings_set_boolean (settings, "show-tree", show);
@@ -553,6 +556,6 @@ cb_toggle_tree (GtkAction *action, gpointer data)
 static void
 cb_proc_goto_tab (gint tab)
 {
-    ProcData *data = ProcData::get_instance ();
-    gtk_notebook_set_current_page (GTK_NOTEBOOK (data->notebook), tab);
+    Glib::RefPtr<ProcmanApp> app = ProcmanApp::get();
+    gtk_notebook_set_current_page (GTK_NOTEBOOK (app->notebook), tab);
 }

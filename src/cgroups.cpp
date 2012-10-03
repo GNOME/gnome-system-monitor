@@ -3,7 +3,7 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 
-#include "procman.h"
+#include "procman-app.h"
 #include "util.h"
 
 gboolean

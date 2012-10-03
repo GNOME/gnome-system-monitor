@@ -30,7 +30,7 @@
 #include "proctable.h"
 #include "util.h"
 #include "procactions.h"
-#include "procman.h"
+#include "procman-app.h"
 #include "procdialogs.h"
 #include "memmaps.h"
 #include "openfiles.h"
@@ -43,10 +43,10 @@
 void
 cb_kill_sigstop(GtkAction *action, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
 
     /* no confirmation */
-    kill_process (procdata, SIGSTOP);
+    kill_process (app, SIGSTOP);
 }
 
 
@@ -55,44 +55,43 @@ cb_kill_sigstop(GtkAction *action, gpointer data)
 void
 cb_kill_sigcont(GtkAction *action, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
 
     /* no confirmation */
-    kill_process (procdata, SIGCONT);
+    kill_process (app, SIGCONT);
 }
 
 
 
-
 static void
-kill_process_helper(ProcData *procdata, int sig)
+kill_process_helper(ProcmanApp *app, int sig)
 {
-    if (procdata->config.show_kill_warning)
-        procdialog_create_kill_dialog (procdata, sig);
+    if (app->config.show_kill_warning)
+        procdialog_create_kill_dialog (app, sig);
     else
-        kill_process (procdata, sig);
+        kill_process (app, sig);
 }
 
 
 void
 cb_edit_preferences (GtkAction *action, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
 
-    procdialog_create_preferences_dialog (procdata);
+    procdialog_create_preferences_dialog (app);
 }
 
 
 void
 cb_renice (GtkAction *action, GtkRadioAction *current, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
 
     gint selected = gtk_radio_action_get_current_value(current);
 
     if (selected == CUSTOM_PRIORITY)
     {
-       procdialog_create_renice_dialog (procdata);
+       procdialog_create_renice_dialog (app);
     } else {
        gint new_nice_value = 0;
        switch (selected) {
@@ -102,7 +101,7 @@ cb_renice (GtkAction *action, GtkRadioAction *current, gpointer data)
            case LOW_PRIORITY: new_nice_value = 5; break;
            case VERY_LOW_PRIORITY: new_nice_value = 19; break;
        }
-       renice(procdata, new_nice_value);
+       renice(app, new_nice_value);
     }
 }
 
@@ -110,52 +109,53 @@ cb_renice (GtkAction *action, GtkRadioAction *current, gpointer data)
 void
 cb_end_process (GtkAction *action, gpointer data)
 {
-    kill_process_helper(static_cast<ProcData*>(data), SIGTERM);
+    kill_process_helper(static_cast<ProcmanApp *>(data), SIGTERM);
 }
 
 
 void
 cb_kill_process (GtkAction *action, gpointer data)
 {
-    kill_process_helper(static_cast<ProcData*>(data), SIGKILL);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
+    kill_process_helper(app, SIGKILL);
 }
 
 
 void
 cb_show_memory_maps (GtkAction *action, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
 
-    create_memmaps_dialog (procdata);
+    create_memmaps_dialog (app);
 }
 
 void
 cb_show_open_files (GtkAction *action, gpointer data)
 {
-    ProcData *procdata = static_cast<ProcData*>(data);
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
 
-    create_openfiles_dialog (procdata);
+    create_openfiles_dialog (app);
 }
 
 void
 cb_show_process_properties (GtkAction *action, gpointer data)
 {
-    ProcData *procdata = static_cast<ProcData*>(data);
-    create_procproperties_dialog (procdata);
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    create_procproperties_dialog (app);
 }
 
 void
 cb_show_lsof(GtkAction *action, gpointer data)
 {
-    ProcData *procdata = static_cast<ProcData*>(data);
-    procman_lsof(procdata);
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    procman_lsof(app);
 }
 
 
 void
 cb_about (GtkAction *action, gpointer data)
 {
-    ProcData *procdata = static_cast<ProcData*>(data);
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
 
     const gchar * const authors[] = {
         "Kevin Vandersloot",
@@ -180,7 +180,7 @@ cb_about (GtkAction *action, gpointer data)
     };
 
     gtk_show_about_dialog (
-        GTK_WINDOW (procdata->app),
+        GTK_WINDOW (app->main_window),
         "name",                 _("System Monitor"),
         "comments",             _("View current processes and monitor "
                                   "system state"),
@@ -211,38 +211,22 @@ cb_help_contents (GtkAction *action, gpointer data)
 }
 
 
-void
-cb_app_exit (GtkAction *action, gpointer data)
-{
-    ProcData * const procdata = static_cast<ProcData*>(data);
-
-    cb_app_delete (NULL, NULL, procdata);
-    gtk_widget_destroy (procdata->app);
-}
-
-
 gboolean
-cb_app_delete (GtkWidget *window, GdkEventAny *event, gpointer data)
+cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
 
-    procman_save_config (procdata);
-    if (procdata->timeout)
-        g_source_remove (procdata->timeout);
-    if (procdata->disk_timeout)
-        g_source_remove (procdata->disk_timeout);
+    app->shutdown ();
 
-    procdata->terminating = TRUE;
-
-    return FALSE;
+    return TRUE;
 }
-
 
 
 void
 cb_end_process_button_pressed (GtkButton *button, gpointer data)
 {
-    kill_process_helper(static_cast<ProcData*>(data), SIGTERM);
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    kill_process_helper(app, SIGTERM);
 }
 
 void
@@ -291,30 +275,30 @@ static void change_settings_color(GSettings *settings, const char *key,
 void
 cb_mem_color_changed (GSMColorButton *cp, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
-    change_settings_color(procdata->settings, "mem-color", cp);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
+    change_settings_color(app->settings, "mem-color", cp);
 }
 
 
 void
 cb_swap_color_changed (GSMColorButton *cp, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
-    change_settings_color(procdata->settings, "swap-color", cp);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
+    change_settings_color(app->settings, "swap-color", cp);
 }
 
 void
 cb_net_in_color_changed (GSMColorButton *cp, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
-    change_settings_color(procdata->settings, "net-in-color", cp);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
+    change_settings_color(app->settings, "net-in-color", cp);
 }
 
 void
 cb_net_out_color_changed (GSMColorButton *cp, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
-    change_settings_color(procdata->settings, "net-out-color", cp);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
+    change_settings_color(app->settings, "net-out-color", cp);
 }
 
 static void
@@ -330,20 +314,20 @@ get_last_selected (GtkTreeModel *model, GtkTreePath *path,
 void
 cb_row_selected (GtkTreeSelection *selection, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
 
-    procdata->selection = selection;
+    app->selection = selection;
 
-    procdata->selected_process = NULL;
+    app->selected_process = NULL;
 
     /* get the most recent selected process and determine if there are
     ** no selected processes
     */
-    gtk_tree_selection_selected_foreach (procdata->selection, get_last_selected,
-                                         &procdata->selected_process);
-    if (procdata->selected_process) {
+    gtk_tree_selection_selected_foreach (app->selection, get_last_selected,
+                                         &app->selected_process);
+    if (app->selected_process) {
         gint value;
-        gint nice = procdata->selected_process->nice;
+        gint nice = app->selected_process->nice;
         if (nice < -7)
             value = VERY_HIGH_PRIORITY;
         else if (nice < -2)
@@ -355,13 +339,13 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
         else
             value = VERY_LOW_PRIORITY;
 
-        GtkRadioAction* normal = GTK_RADIO_ACTION(gtk_action_group_get_action(procdata->action_group, "Normal"));
-        block_priority_changed_handlers(procdata, TRUE);
+        GtkRadioAction* normal = GTK_RADIO_ACTION(gtk_action_group_get_action(app->action_group, "Normal"));
+        block_priority_changed_handlers(app, TRUE);
         gtk_radio_action_set_current_value(normal, value);
-        block_priority_changed_handlers(procdata, FALSE);
+        block_priority_changed_handlers(app, FALSE);
 
     }
-    update_sensitivity(procdata);
+    update_sensitivity(app);
 }
 
 
@@ -370,10 +354,10 @@ cb_tree_button_pressed (GtkWidget *widget,
                         GdkEventButton *event,
                         gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
 
     if (event->button == 3 && event->type == GDK_BUTTON_PRESS)
-        do_popup_menu (procdata, event);
+        do_popup_menu (app, event);
 
     return FALSE;
 }
@@ -382,9 +366,9 @@ cb_tree_button_pressed (GtkWidget *widget,
 gboolean
 cb_tree_popup_menu (GtkWidget *widget, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
 
-    do_popup_menu (procdata, NULL);
+    do_popup_menu (app, NULL);
 
     return TRUE;
 }
@@ -400,59 +384,59 @@ cb_switch_page (GtkNotebook *nb, GtkWidget *page,
 void
 cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
 
-    procdata->config.current_tab = num;
+    app->config.current_tab = num;
 
 
     if (num == PROCMAN_TAB_PROCESSES) {
 
-        cb_timeout (procdata);
+        cb_timeout (app);
 
-        if (!procdata->timeout)
-            procdata->timeout = g_timeout_add (
-                procdata->config.update_interval,
-                cb_timeout, procdata);
+        if (!app->timeout)
+            app->timeout = g_timeout_add (
+                app->config.update_interval,
+                cb_timeout, app);
 
-        update_sensitivity(procdata);
+        update_sensitivity(app);
     }
     else {
-        if (procdata->timeout) {
-            g_source_remove (procdata->timeout);
-            procdata->timeout = 0;
+        if (app->timeout) {
+            g_source_remove (app->timeout);
+            app->timeout = 0;
         }
 
-        update_sensitivity(procdata);
+        update_sensitivity(app);
     }
 
 
     if (num == PROCMAN_TAB_RESOURCES) {
-        load_graph_start (procdata->cpu_graph);
-        load_graph_start (procdata->mem_graph);
-        load_graph_start (procdata->net_graph);
+        load_graph_start (app->cpu_graph);
+        load_graph_start (app->mem_graph);
+        load_graph_start (app->net_graph);
     }
     else {
-        load_graph_stop (procdata->cpu_graph);
-        load_graph_stop (procdata->mem_graph);
-        load_graph_stop (procdata->net_graph);
+        load_graph_stop (app->cpu_graph);
+        load_graph_stop (app->mem_graph);
+        load_graph_stop (app->net_graph);
     }
 
 
     if (num == PROCMAN_TAB_DISKS) {
 
-        cb_update_disks (procdata);
+        cb_update_disks (app);
 
-        if(!procdata->disk_timeout) {
-            procdata->disk_timeout =
-                g_timeout_add (procdata->config.disks_update_interval,
+        if(!app->disk_timeout) {
+            app->disk_timeout =
+                g_timeout_add (app->config.disks_update_interval,
                                cb_update_disks,
-                               procdata);
+                               app);
         }
     }
     else {
-        if(procdata->disk_timeout) {
-            g_source_remove (procdata->disk_timeout);
-            procdata->disk_timeout = 0;
+        if(app->disk_timeout) {
+            g_source_remove (app->disk_timeout);
+            app->disk_timeout = 0;
         }
     }
 
@@ -466,8 +450,8 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
 gint
 cb_user_refresh (GtkAction*, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
-    proctable_update_all(procdata);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
+    proctable_update_all(app);
     return FALSE;
 }
 
@@ -475,18 +459,18 @@ cb_user_refresh (GtkAction*, gpointer data)
 gint
 cb_timeout (gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
     guint new_interval;
-    if (!procdata->terminating) {
-        proctable_update_all (procdata);
 
-        if (procdata->smooth_refresh->get(new_interval))
-        {
-            procdata->timeout = g_timeout_add(new_interval,
-                                          cb_timeout,
-                                          procdata);
-            return FALSE;
-        }
+
+    proctable_update_all (app);
+
+    if (app->smooth_refresh->get(new_interval))
+    {
+        app->timeout = g_timeout_add(new_interval,
+                                     cb_timeout,
+                                     app);
+        return FALSE;
     }
 
     return TRUE;
@@ -496,10 +480,10 @@ cb_timeout (gpointer data)
 void
 cb_radio_processes(GtkAction *action, GtkRadioAction *current, gpointer data)
 {
-    ProcData * const procdata = static_cast<ProcData*>(data);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
 
-    procdata->config.whose_process = gtk_radio_action_get_current_value(current);
+    app->config.whose_process = gtk_radio_action_get_current_value(current);
 
-    g_settings_set_int (procdata->settings, "view-as",
-                        procdata->config.whose_process);
+    g_settings_set_int (app->settings, "view-as",
+                        app->config.whose_process);
 }

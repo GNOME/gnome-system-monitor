@@ -28,7 +28,7 @@
 #include <sys/utsname.h>
 
 #include "sysinfo.h"
-#include "procman.h"
+#include "procman-app.h"
 #include "util.h"
 
 
@@ -797,9 +797,8 @@ namespace procman
         static GtkWidget* ui;
 
         if (!ui) {
-            ProcData* procdata = ProcData::get_instance();
             ui = procman_create_sysinfo_view();
-            GtkBox* box = GTK_BOX(gtk_notebook_get_nth_page(GTK_NOTEBOOK(procdata->notebook),
+            GtkBox* box = GTK_BOX(gtk_notebook_get_nth_page(GTK_NOTEBOOK(ProcmanApp::get()->notebook),
                                                             PROCMAN_TAB_SYSINFO));
             gtk_box_pack_start(box, ui, TRUE, TRUE, 0);
             gtk_widget_show_all(ui);

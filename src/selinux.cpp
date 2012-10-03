@@ -3,7 +3,7 @@
 #include <glib.h>
 
 #include "selinux.h"
-#include "procman.h"
+#include "procman-app.h"
 #include "util.h"
 
 

@@ -21,7 +21,7 @@
 
 
 #include <glib.h>
-#include "procman.h"
+#include "procman-app.h"
 
 /* These are the actual range of settable values. Values outside this range
    are scaled back to these limits. So show these limits in the slider
@@ -42,13 +42,13 @@ typedef enum
 } ProcmanActionType;
 
 
-void                    procdialog_create_kill_dialog (ProcData *data, int signal);
-void                    procdialog_create_renice_dialog (ProcData *data);
+void                    procdialog_create_kill_dialog (ProcmanApp *app, int signal);
+void                    procdialog_create_renice_dialog (ProcmanApp *app);
 gboolean                procdialog_create_root_password_dialog (ProcmanActionType type,
-                                                                ProcData *procdata,
+                                                                ProcmanApp *app,
                                                                 gint pid, gint extra_value);
-void                    procdialog_create_memmaps_dialog (ProcData *data);
-void                    procdialog_create_preferences_dialog (ProcData *data);
+void                    procdialog_create_memmaps_dialog (ProcmanApp *app);
+void                    procdialog_create_preferences_dialog (ProcmanApp *app);
 
 #endif
 
