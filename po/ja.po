@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-22 17:13+0000\n"
-"PO-Revision-Date: 2012-09-24 11:43+0000\n"
-"Last-Translator: Noriko Mizumoto <noriko@fedoraproject.org>\n"
+"POT-Creation-Date: 2012-09-28 17:43+0000\n"
+"PO-Revision-Date: 2012-10-01 05:58+0000\n"
+"Last-Translator: OKANO Takayoshi <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -123,6 +123,9 @@ msgstr "ネットワークの速度をビット単位で表示する(_S)"
 
 msgid "Show _all file systems"
 msgstr "すべてのファイルシステムを表示する(_A)"
+
+msgid "File system i_nformation shown in list:"
+msgstr "一覧に表示するファイルシステムの情報(_N):"
 
 msgid "Change _Priority"
 msgstr "優先度の変更(_P)"
@@ -340,50 +343,39 @@ msgstr "ユーザーのプロセス(_Y)"
 msgid "Show only user-owned processes"
 msgstr "ユーザー所有のプロセスのみを表示します"
 
-#, fuzzy
 msgid "Very High"
 msgstr "非常に高い"
 
-#, fuzzy
 msgid "Set process priority to very high"
 msgstr "プロセスの優先度を非常に高いに設定します"
 
-#, fuzzy
 msgid "High"
 msgstr "高い"
 
-#, fuzzy
 msgid "Set process priority to high"
 msgstr "プロセスの優先度を高いに設定します"
 
-#, fuzzy
 msgid "Normal"
 msgstr "普通"
 
-#, fuzzy
 msgid "Set process priority to normal"
 msgstr "プロセスの優先度を普通に設定します"
 
-#, fuzzy
 msgid "Low"
 msgstr "低い"
 
-#, fuzzy
 msgid "Set process priority to low"
 msgstr "プロセスの優先度を低いに設定します"
 
-#, fuzzy
 msgid "Very Low"
 msgstr "非常に低い"
 
-#, fuzzy
 msgid "Set process priority to very low"
 msgstr "プロセスの優先度を非常に低いに設定します"
 
 msgid "Custom"
 msgstr "カスタム"
 
-#, fuzzy
 msgid "Set process priority manually"
 msgstr "プロセスの優先度を手作業で設定します"
 
@@ -516,6 +508,9 @@ msgstr "メインウィンドウの幅"
 
 msgid "Main Window height"
 msgstr "メインウィンドウの高さ"
+
+msgid "Main Window should open maximized"
+msgstr "メインウィンドウを最大化して開くか"
 
 msgid "Main Window X position"
 msgstr "メインウィンドウ X の位置"
@@ -771,8 +766,8 @@ msgstr ""
 
 #. xgettext: primary alert message
 #, c-format
-msgid "Kill the selected process »%s« (PID: %u)?"
-msgstr "選択したプロセス »%s« (PID: %u) を強制終了しますか?"
+msgid "Kill the selected process “%s” (PID: %u)?"
+msgstr "選択したプロセス “%s” (PID: %u) を強制終了しますか?"
 
 #. xgettext: secondary alert message
 msgid "Killing a process may destroy data, break the session or introduce a security risk. Only unresponsive processes should be killed."
@@ -780,20 +775,16 @@ msgstr "プロセスを強制終了すると、データの破損、セッショ
 
 #. xgettext: primary alert message
 #, c-format
-msgid "End the selected process »%s« (PID: %u)?"
-msgstr "選択したプロセス »%s« (PID: %u) を終了しますか?"
+msgid "End the selected process “%s” (PID: %u)?"
+msgstr "選択したプロセス “%s” (PID: %u) を終了しますか?"
 
 #. xgettext: secondary alert message
 msgid "Ending a process may destroy data, break the session or introduce a security risk. Only unresponsive processes should be ended."
 msgstr "プロセスを終了すると、データの破損、セッションの異常終了、あるいはセキュリティ上の危険性の増加につながる恐れがあります。反応が無いプロセスのみを終了してください。"
 
-#, fuzzy, c-format
-msgid "(%s Priority)"
-msgstr "(%s 優先度)"
-
 #, c-format
-msgid "Change Priority of Process »%s« (PID: %u)"
-msgstr "プロセス »%s« (PID: %u) の優先度の変更"
+msgid "Change Priority of Process “%s” (PID: %u)"
+msgstr "プロセス “%s” (PID: %u) の優先度の変更"
 
 msgid "Note:"
 msgstr "メモ:"
@@ -1010,10 +1001,29 @@ msgid "%u byte"
 msgid_plural "%u bytes"
 msgstr[0] "%u バイト"
 
+msgid "Very High Priority"
+msgstr "非常に高い優先度"
+
+msgid "High Priority"
+msgstr "高い優先度"
+
+msgid "Normal Priority"
+msgstr "普通の優先度"
+
+msgid "Low Priority"
+msgstr "低い優先度"
+
+msgid "Very Low Priority"
+msgstr "非常に低い優先度"
+
 #. xgettext: rate, 10MiB/s or 10Mbit/s
 #, c-format
 msgid "%s/s"
 msgstr "%s/秒"
+
+#, fuzzy
+#~ msgid "(%s Priority)"
+#~ msgstr "(%s 優先度)"
 
 #~ msgid "<i>N/A</i>"
 #~ msgstr "<i>N/A</i>"
@@ -1025,9 +1035,6 @@ msgstr "%s/秒"
 #~| msgid "Default graph cpu color"
 #~ msgid "Default graph CPU color"
 #~ msgstr "CPU グラフの色 (デフォルト)"
-
-#~ msgid "File system i_nformation shown in list:"
-#~ msgstr "一覧に表示するファイルシステムの情報(_N):"
 
 #~ msgid "_Change Priority..."
 #~ msgstr "優先度の変更(_C)..."
@@ -1043,15 +1050,6 @@ msgstr "%s/秒"
 
 #~ msgid "Width of process 'estimated memory usage' column"
 #~ msgstr "メモリ使用量の項目の幅"
-
-#~ msgid "(High Priority)"
-#~ msgstr "(高い優先度)"
-
-#~ msgid "(Normal Priority)"
-#~ msgstr "(通常の優先度)"
-
-#~ msgid "(Very Low Priority)"
-#~ msgstr "(一番低い優先度)"
 
 #~ msgid "Solaris mode"
 #~ msgstr "Solaris モードにする"
