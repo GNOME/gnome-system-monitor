@@ -112,7 +112,10 @@ namespace {
 
             /* translators: This is the type of architecture, for example:
              * "64-bit" or "32-bit" */
-            return string(g_strdup_printf (_("%d-bit"), bits));
+            char* bytes = g_strdup_printf (_("%d-bit"), bits);
+            string retval(bytes);
+            g_free(bytes);
+            return retval;
         }
 
         typedef struct

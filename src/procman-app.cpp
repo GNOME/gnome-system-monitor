@@ -161,6 +161,7 @@ apply_cpu_color_settings(GSettings *settings, gpointer data)
             child = g_variant_get_child_value ( cpu_colors_var, i );
             g_variant_get_child( child, 1, "s", &color);
             g_variant_builder_add_value ( &builder, child);
+            g_variant_unref (child);
         } else {
             color = g_strdup ("#f25915e815e8");
             g_variant_builder_add(&builder, "(us)", i, color);
@@ -172,7 +173,11 @@ apply_cpu_color_settings(GSettings *settings, gpointer data)
     // if the user has more cores than colors stored in the gsettings, store the newly built gvariant in gsettings
     if (n < static_cast<guint>(app->config.num_cpus)) {
         g_settings_set_value(settings, "cpu-colors", full);
+    } else {
+        g_variant_unref(full);
     }
+
+    g_variant_unref(cpu_colors_var);
 }
 
 static void
@@ -191,7 +196,7 @@ color_changed_cb (GSettings *settings, const gchar *key, gpointer data)
         return;
     }
 
-    const gchar *color = g_settings_get_string (settings, key);
+    gchar *color = g_settings_get_string (settings, key);
     if (g_str_equal (key, "mem-color")) {
         gdk_rgba_parse (&app->config.mem_color, color);
         app->mem_graph->colors.at(0) = app->config.mem_color;
@@ -211,6 +216,7 @@ color_changed_cb (GSettings *settings, const gchar *key, gpointer data)
     else {
         g_assert_not_reached();
     }
+    g_free (color);
 }
 
 static void
@@ -436,6 +442,7 @@ procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child
 
         proctable_set_columns_order(GTK_TREE_VIEW(tree), order);
 
+        g_variant_unref(value);
         g_slist_free(order);
     }
 

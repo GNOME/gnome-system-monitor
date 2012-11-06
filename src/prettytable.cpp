@@ -206,6 +206,7 @@ PrettyTable::get_icon_from_gio(const ProcInfo &info)
       icon = this->theme->load_gicon(gicon, APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN);
   }
 
+  g_strfreev(cmdline);
   return icon;
 }
 
