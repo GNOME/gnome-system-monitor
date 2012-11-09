@@ -257,6 +257,17 @@ solaris_mode_toggled(GtkToggleButton *button, gpointer data)
     g_settings_set_boolean(settings, procman::settings::solaris_mode.c_str(), toggled);
 }
 
+static void
+draw_stacked_toggled(GtkToggleButton *button, gpointer data)
+{
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GSettings *settings = app->settings;
+
+    gboolean toggled;
+    toggled = gtk_toggle_button_get_active(button);
+    g_settings_set_boolean(settings, procman::settings::draw_stacked.c_str(), toggled);
+}
+
 
 static void
 network_in_bits_toggled(GtkToggleButton *button, gpointer data)
@@ -503,6 +514,13 @@ procdialog_create_preferences_dialog (ProcmanApp *app)
                                                         procman::settings::solaris_mode.c_str()));
     g_signal_connect(G_OBJECT(solaris_button), "toggled",
                      G_CALLBACK(solaris_mode_toggled), app);
+
+    GtkWidget *draw_stacked_button = GTK_WIDGET (gtk_builder_get_object (builder, "draw_stacked_button"));
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(draw_stacked_button),
+                                 g_settings_get_boolean(app->settings,
+                                                        procman::settings::draw_stacked.c_str()));
+    g_signal_connect(G_OBJECT(draw_stacked_button), "toggled",
+                     G_CALLBACK(draw_stacked_toggled), app);
 
     create_field_page (builder, app->tree, "processes_columns_treeview");
 

@@ -54,7 +54,17 @@ solaris_mode_changed_cb(GSettings *settings, const gchar *key, gpointer data)
     ProcmanApp *app = static_cast<ProcmanApp *>(data);
 
     app->config.solaris_mode = g_settings_get_boolean(settings, key);
+    app->cpu_graph->clear_background();
     proctable_update_all (app);
+}
+
+static void
+draw_stacked_changed_cb(GSettings *settings, const gchar *key, gpointer data)
+{
+    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+
+    app->config.draw_stacked = g_settings_get_boolean(settings, key);
+    app->cpu_graph->clear_background();
 }
 
 
@@ -251,6 +261,10 @@ ProcmanApp::load_settings()
     config.solaris_mode = g_settings_get_boolean(settings, procman::settings::solaris_mode.c_str());
     std::string detail_string("changed::" + procman::settings::solaris_mode);
     g_signal_connect(G_OBJECT(settings), detail_string.c_str(), G_CALLBACK(solaris_mode_changed_cb), this);
+
+    config.draw_stacked = g_settings_get_boolean(settings, procman::settings::draw_stacked.c_str());
+    detail_string = "changed::" + procman::settings::draw_stacked;
+    g_signal_connect(G_OBJECT(settings), detail_string.c_str(), G_CALLBACK(draw_stacked_changed_cb), this);
 
     config.network_in_bits = g_settings_get_boolean(settings, procman::settings::network_in_bits.c_str());
     detail_string = "changed::" + procman::settings::network_in_bits;

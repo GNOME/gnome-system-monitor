@@ -139,7 +139,11 @@ void draw_background(LoadGraph *graph) {
             pango_cairo_show_layout (cr, layout);
         } else {
             // operation orders matters so it's 0 if i == num_bars
-            caption = g_strdup_printf("%d%%", 100 - i * (100 / num_bars));
+            guint max = 100;
+            if (graph->type == LOAD_GRAPH_CPU && !ProcmanApp::get()->config.solaris_mode) {
+                max = 100 * graph->n;
+            }
+            caption = g_strdup_printf("%d %%", max - i * (max / num_bars));
             pango_layout_set_text (layout, caption, -1);
             pango_layout_get_extents (layout, NULL, &extents);
             cairo_move_to (cr, graph->indent - 1.0 * extents.width / PANGO_SCALE + 20,
@@ -222,7 +226,8 @@ load_graph_draw (GtkWidget *widget,
     LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
     GdkWindow *window;
 
-    guint i, j;
+    guint i;
+    gint j;
     gdouble sample_width, x_offset;
 
     window = gtk_widget_get_window (graph->disp);
@@ -255,10 +260,14 @@ load_graph_draw (GtkWidget *widget,
                      graph->real_draw_height + FRAME_WIDTH - 1);
     cairo_clip(cr);
 
-    for (j = 0; j < graph->n; ++j) {
-        cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height);
+    bool drawStacked = graph->type == LOAD_GRAPH_CPU && ProcmanApp::get()->config.draw_stacked;
+    for (j = graph->n-1; j >= 0; j--) {
         gdk_cairo_set_source_rgba (cr, &(graph->colors [j]));
-
+        if (drawStacked) {
+            cairo_move_to (cr, x_offset, graph->real_draw_height);
+        } else {
+            cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height);
+        }
         for (i = 1; i < LoadGraph::NUM_POINTS; ++i) {
             if (graph->data[i][j] == -1.0f)
                 continue;
@@ -270,8 +279,12 @@ load_graph_draw (GtkWidget *widget,
                             x_offset - (i * graph->graph_delx),
                             (1.0f - graph->data[i][j]) * graph->real_draw_height + 3.5f);
         }
-        cairo_stroke (cr);
-
+        if (drawStacked) {
+            cairo_rel_line_to (cr, x_offset - (LoadGraph::NUM_POINTS * graph->graph_delx), graph->real_draw_height);
+            cairo_fill(cr);
+        } else {
+            cairo_stroke (cr);
+        }
     }
 
     cairo_destroy (cr);
@@ -318,7 +331,10 @@ get_load (LoadGraph *graph)
         used  = NOW[i][CPU_USED]  - LAST[i][CPU_USED];
 
         load = used / MAX(total, 1.0f);
-        graph->data[0][i] = load;
+        graph->data[0][i] = load / graph->n;
+        if (i > 0) {
+            graph->data[0][i] += graph->data[0][i-1];
+        }
 
         /* Update label */
         text = g_strdup_printf("%.1f%%", load * 100.0f);
