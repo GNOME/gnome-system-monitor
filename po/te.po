@@ -3,27 +3,27 @@
 # # Copyright (C) 2007,2011,2012 Swecha Telugu Localisation Team <localization@swecha.net>.
 # # This file is distributed under the same license as the gnome-system-monitor package.
 # #
+#
 # # Pramod <pramod@swecha.net>, 2007.
-# # Krishna Babu K <kkrothap@redhat.com>, 2009.
+# # Krishna Babu K <kkrothap@redhat.com>, 2009, 2012.
 # # Hari Krishna <hari@swecha.net>, 2011,2012.
 # # Bhuvan Krishna <bhuvan@swecha.net>, 2012.
 # Praveen Illa <mail2ipn@gmail.com>, 2012.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor.master.te\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-07-29 15:46+0000\n"
-"PO-Revision-Date: 2012-07-30 00:26+0530\n"
-"Last-Translator: Praveen Illa <mail2ipn@gmail.com>\n"
-"Language-Team: Telugu <indlinux-telugu@lists.sourceforge.net>\n"
+"POT-Creation-Date: 2012-09-27 21:17+0000\n"
+"PO-Revision-Date: 2012-11-28 16:58+0530\n"
+"Last-Translator: Krishnababu Krothapalli <kkrothap@redhat.com>\n"
+"Language-Team: Telugu <Fedora-trans-te@redhat.com>\n"
 "Language: te\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.5\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
 #: ../src/callbacks.cpp:184 ../src/procman.cpp:721
@@ -87,15 +87,11 @@ msgstr "పంపినది"
 msgid "Total Sent"
 msgstr "మొత్తం పంపినది"
 
-#: ../data/interface.ui.h:14
-msgid "\n"
-msgstr "\n"
-
-#: ../data/interface.ui.h:16 ../data/preferences.ui.h:12
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:12
 msgid "Resources"
 msgstr "వనరులు"
 
-#: ../data/interface.ui.h:17 ../data/preferences.ui.h:14
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:14
 msgid "File Systems"
 msgstr "దస్త్ర వ్యవస్థలు"
 
@@ -180,7 +176,8 @@ msgid ""
 "<small><i><b>Note:</b> The priority of a process is given by its nice value. "
 "A lower nice value corresponds to a higher priority.</i></small>"
 msgstr ""
-"<small><i><b>గమనిక:</b> ప్రక్రియ యొక్క ప్రాముఖ్యత దాని నైస్ విలువ ద్వారా యివ్వబడుతుంది. తక్కువ నైస్ "
+"<small><i><b>గమనిక:</b> ప్రక్రియ యొక్క ప్రాముఖ్యత దాని నైస్ విలువ ద్వారా "
+"యివ్వబడుతుంది. తక్కువ నైస్ "
 "విలువ అధిక ప్రాముఖ్యతను సూచిస్తుంది.</i></small>"
 
 #: ../src/argv.cpp:21
@@ -525,36 +522,38 @@ msgid_plural "%u seconds"
 msgstr[0] "%u సెకను"
 msgstr[1] "%u సెకనులు"
 
-#: ../src/load-graph.cpp:347
+#: ../src/load-graph.cpp:345
 msgid "not available"
 msgstr "అందుబాటులో లేదు"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:350
+#: ../src/load-graph.cpp:348
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) of %s"
 
-#: ../src/lsof.cpp:124
-#, c-format
-msgid ""
-"<b>Error</b>\n"
-"'%s' is not a valid Perl regular expression.\n"
-"%s"
-msgstr ""
-"<b>దోషం</b>\n"
-"'%s' అనునది సరైన Perl సమీకరణం కాదు.\n"
-"%s"
+#: ../src/lsof.cpp:125
+msgid "Error"
+msgstr "దోషము"
 
-#: ../src/lsof.cpp:270
+#: ../src/lsof.cpp:126
+#, c-format
+#| msgid ""
+#| "<b>Error</b>\n"
+#| "'%s' is not a valid Perl regular expression.\n"
+#| "%s"
+msgid "'%s' is not a valid Perl regular expression."
+msgstr "'%s' అనునది చెల్లునటువంటి పెర్ల్ సాధారమ సమీకరణ కాదు."
+
+#: ../src/lsof.cpp:272
 msgid "Process"
 msgstr "ప్రక్రియ"
 
-#: ../src/lsof.cpp:282
+#: ../src/lsof.cpp:284
 msgid "PID"
 msgstr "పిఐడి"
 
-#: ../src/lsof.cpp:292 ../src/memmaps.cpp:339
+#: ../src/lsof.cpp:294 ../src/memmaps.cpp:339
 msgid "Filename"
 msgstr "దస్త్రముపేరు"
 
@@ -689,8 +688,10 @@ msgid ""
 "is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
 "mode'."
 msgstr ""
-"నిజమైతే (TRUE), సిస్టమ్-పర్యవేక్షకి 'సాలారీస్ రీతి' నందు నిర్వహించబడుతుంది అప్పుడు కర్తవ్యంయొక్క సిపియు "
-"వినియోగం మొత్తం సిపియులచే విభాగించబడుతుంది. లేదంటే అది 'ఐరిక్స్ రీతి'నందు నిర్వహించ బడుతుంది."
+"నిజమైతే (TRUE), సిస్టమ్-పర్యవేక్షకి 'సాలారీస్ రీతి' నందు నిర్వహించబడుతుంది "
+"అప్పుడు కర్తవ్యంయొక్క సిపియు "
+"వినియోగం మొత్తం సిపియులచే విభాగించబడుతుంది. లేదంటే అది 'ఐరిక్స్ రీతి'నందు "
+"నిర్వహించ బడుతుంది."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
 msgid "Enable/Disable smooth refresh"
@@ -718,8 +719,10 @@ msgid ""
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
 "file systems."
 msgstr ""
-"అన్ని దస్త్రవ్యవస్థల గురించి సమాచారమును ప్రదర్శించాలా ('autofs' మరియు 'procfs' వంటి రకములతో "
-"కలుపుకొని). ప్రస్తుతం మరల్పైవున్న అన్ని దస్త్రవ్యవస్థల జాబితాను పొందుటకు వుపయోగకరంగా వుంటుంది."
+"అన్ని దస్త్రవ్యవస్థల గురించి సమాచారమును ప్రదర్శించాలా ('autofs' మరియు "
+"'procfs' వంటి రకములతో "
+"కలుపుకొని). ప్రస్తుతం మరల్పైవున్న అన్ని దస్త్రవ్యవస్థల జాబితాను పొందుటకు "
+"వుపయోగకరంగా వుంటుంది."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
 msgid "Time in milliseconds between updates of the devices list"
@@ -730,7 +733,8 @@ msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
 msgstr ""
-"అప్రమేయంగా ఏఏ కార్యక్రమములను చూపాలో నిర్ణయిస్తుంది. 0 అంటే అన్నీ, 1 అంటే వినియోగదారి, 2 అంటే "
+"అప్రమేయంగా ఏఏ కార్యక్రమములను చూపాలో నిర్ణయిస్తుంది. 0 అంటే అన్నీ, 1 అంటే "
+"వినియోగదారి, 2 అంటే "
 "క్రియాశీలమైనవి"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
@@ -742,7 +746,8 @@ msgid ""
 "0 for the System Info, 1 for the processes list, 2 for the resources and 3 "
 "for the disks list"
 msgstr ""
-"వ్యవస్థ సమాచారం కొరకు 0, కార్యక్రమముల జాబితా కొరకు 1, వనరుల కొరకు 2 మరియు డిస్కుల జాబితా కొరకు 3"
+"వ్యవస్థ సమాచారం కొరకు 0, కార్యక్రమముల జాబితా కొరకు 1, వనరుల కొరకు 2 మరియు "
+"డిస్కుల జాబితా కొరకు 3"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
 msgid "CPU colors"
@@ -896,7 +901,8 @@ msgstr "ప్రక్రియ 'SELinux రక్షణా సందర్భ'
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
 msgid "Show process 'SELinux Security Context' column on startup"
-msgstr "ప్రారంభించునపుడు ప్రక్రియ 'SELinux రక్షణ సందర్భం' నిలువుపట్టీను చూపించు"
+msgstr ""
+"ప్రారంభించునపుడు ప్రక్రియ 'SELinux రక్షణ సందర్భం' నిలువుపట్టీను చూపించు"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
 msgid "Width of process 'Command Line' column"
@@ -1028,7 +1034,8 @@ msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
 msgstr ""
-"ఒక ప్రక్రియను అంతము చేయుటవలన డాటా నష్టం జరుగవచ్చు, విభాగము(సెషన్) అంతరాయం కలుగవచ్చు లేదా కొత్త "
+"ఒక ప్రక్రియను అంతము చేయుటవలన డాటా నష్టం జరుగవచ్చు, విభాగము(సెషన్) అంతరాయం "
+"కలుగవచ్చు లేదా కొత్త "
 "రక్షణా సమస్య లేవనెత్తవచ్చు. స్పందించని ప్రక్రియలు మాత్రమే అంతమొందించాలి."
 
 #. xgettext: primary alert message
@@ -1043,7 +1050,8 @@ msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponsive processes should be ended."
 msgstr ""
-"ప్రక్రియను ముగించుట డాటాను నష్టం కలిగించవచ్చు, విభాగము(సెషన్) అంతరాయం కలుగవచ్చు లేదా కొత్త రక్షణా "
+"ప్రక్రియను ముగించుట డాటాను నష్టం కలిగించవచ్చు, విభాగము(సెషన్) అంతరాయం "
+"కలుగవచ్చు లేదా కొత్త రక్షణా "
 "సమస్య లేవనెత్తవచ్చు. స్పందించని ప్రక్రియలు మాత్రమే ముగించాలి."
 
 #: ../src/procdialogs.cpp:130
@@ -1065,7 +1073,8 @@ msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
 msgstr ""
-"ప్రక్రియ యొక్క ప్రాముఖ్యత దాని నైస్ విలువ ద్వారా యివ్వబడుతుంది. తక్కువ నైస్ విలువ అధిక ప్రాముఖ్యతను "
+"ప్రక్రియ యొక్క ప్రాముఖ్యత దాని నైస్ విలువ ద్వారా యివ్వబడుతుంది. తక్కువ నైస్ "
+"విలువ అధిక ప్రాముఖ్యతను "
 "సూచిస్తుంది."
 
 #: ../src/procdialogs.cpp:418
@@ -1076,7 +1085,7 @@ msgstr "ప్రతీక"
 msgid "A simple process and system monitor."
 msgstr "ఒక సరళ ప్రక్రియ మరియు వ్యవస్థ పర్యవేక్షకం."
 
-#: ../src/procproperties.cpp:104
+#: ../src/procproperties.cpp:104 ../src/util.cpp:420
 msgid "N/A"
 msgstr "వర్తించదు"
 
@@ -1207,37 +1216,37 @@ msgstr "విడుదల %s %s"
 msgid "%d-bit"
 msgstr "%d-బిట్"
 
-#: ../src/sysinfo.cpp:740
+#: ../src/sysinfo.cpp:734
 #, c-format
 msgid "Kernel %s"
 msgstr "కెర్నెల్ %s"
 
-#: ../src/sysinfo.cpp:754
+#: ../src/sysinfo.cpp:746
 #, c-format
 msgid "GNOME %s"
 msgstr "గ్నోమ్ %s"
 
 #. hardware section
-#: ../src/sysinfo.cpp:769
-#, c-format
-msgid "<b>Hardware</b>"
-msgstr "<b>హార్డ్‍వేర్</b>"
+#: ../src/sysinfo.cpp:759
+#| msgid "<b>Hardware</b>"
+msgid "Hardware"
+msgstr "హార్డువేర్"
 
-#: ../src/sysinfo.cpp:774
+#: ../src/sysinfo.cpp:764
 msgid "Memory:"
 msgstr "జ్ఞాపకశక్తి:"
 
-#: ../src/sysinfo.cpp:779
+#: ../src/sysinfo.cpp:769
 msgid "Processor:"
 msgstr "క్రమణిక:"
 
 #. disk space section
-#: ../src/sysinfo.cpp:788
-#, c-format
-msgid "<b>System Status</b>"
-msgstr "<b>వ్యవస్థ స్థితి</b>"
+#: ../src/sysinfo.cpp:778
+#| msgid "<b>System Status</b>"
+msgid "System Status"
+msgstr "వ్యవస్థ స్థితి"
 
-#: ../src/sysinfo.cpp:794
+#: ../src/sysinfo.cpp:784
 msgid "Available disk space:"
 msgstr "అందుబాటులోవున్న డిస్కు స్థలం:"
 
@@ -1339,15 +1348,17 @@ msgid_plural "%u bytes"
 msgstr[0] "%u బైట్"
 msgstr[1] "%u బైట్స్"
 
-#: ../src/util.cpp:420
-msgid "<i>N/A</i>"
-msgstr "<i>వర్తించదు</i>"
-
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:582
+#: ../src/util.cpp:585
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "\n"
+#~ msgstr "\n"
+
+#~ msgid "<i>N/A</i>"
+#~ msgstr "<i>వర్తించదు</i>"
 
 #~ msgid "Unknown model"
 #~ msgstr "తెలియని  నమూనా"
