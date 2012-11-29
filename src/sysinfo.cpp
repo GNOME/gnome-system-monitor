@@ -536,9 +536,44 @@ namespace {
         }
     };
 
+    class GenericSysInfo
+        : public SysInfo
+    {
+    public:
+        GenericSysInfo()
+        {
+            this->load_os_release();
+        }
+
+    private:
+        void load_os_release()
+        {
+            std::ifstream input("/etc/os-release");
+
+            if (input) {
+                while (!input.eof()) {
+                    string s;
+                    int len;
+                    std::getline(input, s);
+                    if (s.find("NAME=") == 0) {
+                        len = strlen("NAME=");
+                        this->distro_name = s.substr(len);
+                    } else if (s.find("VERSION=") == 0) {
+                        len = strlen("VERSION=");
+                        // also strip the surrounding quotes
+                        this->distro_release = s.substr(len + 1, s.size() - len - 2);
+                    }
+                }
+            }
+        }
+    };
+
     SysInfo* get_sysinfo()
     {
-        if (char *p = g_find_program_in_path("lsb_release")) {
+        if (g_file_test ("/etc/os-release", G_FILE_TEST_EXISTS)) {
+            return new GenericSysInfo;
+        }
+        else if (char *p = g_find_program_in_path("lsb_release")) {
             g_free(p);
             return new LSBSysInfo;
         }
