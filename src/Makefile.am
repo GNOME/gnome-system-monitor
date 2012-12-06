@@ -30,7 +30,6 @@ gnome_system_monitor_cpp_files = \
 	procman_gnomesu.cpp \
 	procman_gksu.cpp \
 	procman_pkexec.cpp \
-	sysinfo.cpp \
 	lsof.cpp \
 	selection.cpp \
 	settings-keys.cpp \

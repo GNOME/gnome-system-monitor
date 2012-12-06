@@ -37,7 +37,6 @@
 #include "load-graph.h"
 #include "util.h"
 #include "disks.h"
-#include "sysinfo.h"
 #include "gsm_color_button.h"
 
 static void     cb_toggle_tree (GtkAction *action, gpointer data);

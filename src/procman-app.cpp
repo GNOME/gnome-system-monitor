@@ -350,7 +350,7 @@ ProcmanApp::load_settings()
     config.disks_update_interval = MAX (config.disks_update_interval, 1000);
     config.whose_process = CLAMP (config.whose_process, 0, 2);
     config.current_tab = CLAMP(config.current_tab,
-                               PROCMAN_TAB_SYSINFO,
+                               PROCMAN_TAB_PROCESSES,
                                PROCMAN_TAB_DISKS);
 }
 
@@ -553,10 +553,7 @@ int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>&
         g_error("Arguments parse error : %s", ex.what().c_str());
     }
 
-    if (option_group.show_system_tab) {
-        procman_debug("Starting with PROCMAN_TAB_SYSINFO by commandline request");
-        set_tab(GTK_NOTEBOOK(notebook), PROCMAN_TAB_SYSINFO, this);
-    } else if (option_group.show_processes_tab) {
+    if (option_group.show_processes_tab) {
         procman_debug("Starting with PROCMAN_TAB_PROCESSES by commandline request");
         set_tab(GTK_NOTEBOOK(notebook), PROCMAN_TAB_PROCESSES, this);
     } else if (option_group.show_resources_tab) {
