@@ -164,6 +164,7 @@ cb_about (GtkAction *action, gpointer data)
         "Paolo Borelli",
         "Karl Lattimer",
         "Chris Kühl",
+        "Robert Roth",
         NULL
     };
 
