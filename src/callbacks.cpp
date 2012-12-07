@@ -356,9 +356,10 @@ cb_tree_button_pressed (GtkWidget *widget,
 {
     ProcmanApp * const app = static_cast<ProcmanApp *>(data);
 
-    if (event->button == 3 && event->type == GDK_BUTTON_PRESS)
+    if (event->button == 3 && event->type == GDK_BUTTON_PRESS) {
         do_popup_menu (app, event);
-
+        return TRUE;
+    }
     return FALSE;
 }
 
