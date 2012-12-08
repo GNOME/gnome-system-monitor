@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
-SUBDIRS = pixmaps po src help
+SUBDIRS = pixmaps po scripts src help
 
 uidir = $(pkgdatadir)
 ui_DATA = data/preferences.ui \
@@ -12,14 +12,23 @@ ui_DATA = data/preferences.ui \
           data/menus.ui \
           data/popups.ui
 
+
+runnabledir = $(pkglibexecdir)
+runnable_SCRIPTS = scripts/gsm-renice \
+                   scripts/gsm-kill
+
 EXTRA_DIST = \
 	$(ui_DATA) \
+	$(runnable_SCRIPTS) \
 	org.gnome.gnome-system-monitor.policy.in \
 	gnome-system-monitor.desktop.in \
 	gnome-system-monitor.doap \
 	intltool-extract.in \
 	intltool-merge.in \
 	intltool-update.in
+
+org.gnome.gnome-system-monitor.policy.in: org.gnome.gnome-system-monitor.policy.in.in Makefile
+	$(AM_V_GEN) sed -e "s|\@pkglibexecdir\@|$(pkglibexecdir)|" $< > $@
 
 @INTLTOOL_POLICY_RULE@
 polkit_policydir = $(datadir)/polkit-1/actions
@@ -59,6 +68,7 @@ DISTCLEANFILES = \
 	intltool-merge                \
 	intltool-update               \
 	gnome-system-monitor.desktop  \
-	org.gnome.gnome-system-monitor.policy
+	org.gnome.gnome-system-monitor.policy \
+        org.gnome.gnome-system-monitor.policy.in 
 
 DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper

@@ -43,6 +43,8 @@ SYSTEMD_EXCLUDED=43
 
 PKG_CHECK_MODULES(PROCMAN, glib-2.0 >= $GLIB_REQUIRED libgtop-2.0 >= $LIBGTOP_REQUIRED libwnck-3.0 >= $LIBWNCK_REQUIRED gtk+-3.0 >= $GTK_REQUIRED gnome-icon-theme >= $GNOME_ICON_THEME_REQUIRED gtkmm-3.0 >= $GTKMM_REQUIRED libxml-2.0 >= $LIBXML_REQUIRED librsvg-2.0 >= $RSVG_REQUIRED glibmm-2.4 >= $GLIBMM_REQUIRED giomm-2.4 >= $GIOMM_REQUIRED gmodule-2.0)
 
+PKG_CHECK_MODULES(SCRIPTS, glib-2.0 >= $GLIB_REQUIRED)
+
 have_systemd=no
 AC_ARG_ENABLE(systemd, AS_HELP_STRING([--disable-systemd], [disable systemd support]),,enable_systemd=no)
 if test "x$enable_systemd" != "xno"; then
@@ -102,6 +104,7 @@ YELP_HELP_INIT
 
 AC_CONFIG_FILES([
 Makefile
+scripts/Makefile
 src/Makefile
 pixmaps/Makefile
 po/Makefile.in

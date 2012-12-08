@@ -52,7 +52,8 @@ gnome_system_monitor_SOURCES = \
 
 gnome_system_monitor_LDADD = @PROCMAN_LIBS@ @SYSTEMD_LIBS@
 
-gnome_system_monitor_CPPFLAGS = -DGSM_DATA_DIR=\""$(pkgdatadir)"\"
+gnome_system_monitor_CPPFLAGS = -DGSM_DATA_DIR=\""$(pkgdatadir)"\" \
+                                -DGSM_LIBEXEC_DIR=\""$(pkglibexecdir)"\"
 
 specdir = $(datadir)/procman
 

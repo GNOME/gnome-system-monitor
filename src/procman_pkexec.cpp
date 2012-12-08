@@ -8,7 +8,7 @@ gboolean procman_pkexec_create_root_password_dialog(const char *command)
 {
     gint *exit_status = NULL;
     GError *error = NULL;
-    if (!g_spawn_command_line_sync( g_strdup_printf("pkexec %s", command), NULL, NULL, exit_status, &error)) {
+    if (!g_spawn_command_line_sync( g_strdup_printf("pkexec %s/gsm-%s", GSM_LIBEXEC_DIR, command), NULL, NULL, exit_status, &error)) {
         g_critical("Could not run pkexec(\"%s\") : %s\n",
                    command, error->message);
         g_error_free(error);
