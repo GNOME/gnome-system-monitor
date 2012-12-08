@@ -31,7 +31,6 @@ gnome_system_monitor_cpp_files = \
 	procman_gksu.cpp \
 	procman_pkexec.cpp \
 	lsof.cpp \
-	selection.cpp \
 	settings-keys.cpp \
 	iconthemewrapper.cpp \
 	procman-app.cpp

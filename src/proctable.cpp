@@ -50,7 +50,6 @@
 #endif
 
 #include "procman-app.h"
-#include "selection.h"
 #include "proctable.h"
 #include "callbacks.h"
 #include "prettytable.h"
@@ -988,7 +987,6 @@ proctable_update_list (ProcmanApp *app)
     glibtop_proclist proclist;
     glibtop_cpu cpu;
     gint which, arg;
-    procman::SelectionMemento selection;
 
     switch (app->config.whose_process) {
         case ALL_PROCESSES:
@@ -999,19 +997,11 @@ proctable_update_list (ProcmanApp *app)
         case ACTIVE_PROCESSES:
             which = GLIBTOP_KERN_PROC_ALL | GLIBTOP_EXCLUDE_IDLE;
             arg = 0;
-            if (app->config.show_tree)
-            {
-                selection.save(app->tree);
-            }
             break;
 
         default:
             which = GLIBTOP_KERN_PROC_UID;
             arg = getuid ();
-            if (app->config.show_tree)
-            {
-                selection.save(app->tree);
-            }
             break;
     }
 
@@ -1024,8 +1014,6 @@ proctable_update_list (ProcmanApp *app)
     app->cpu_total_time_last = cpu.total;
 
     refresh_list (app, pid_list, proclist.number);
-
-    selection.restore(app->tree);
 
     g_free (pid_list);
 
