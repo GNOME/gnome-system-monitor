@@ -633,29 +633,28 @@ static void
 update_info_mutable_cols(ProcInfo *info)
 {
     GtkTreeModel *model;
-    GtkTreeView *tree = GTK_TREE_VIEW(ProcmanApp::get()->tree);
-    model = gtk_tree_view_get_model(tree);
+    model = gtk_tree_view_get_model(GTK_TREE_VIEW(ProcmanApp::get()->tree));
 
     using procman::tree_store_update;
 
-    tree_store_update(tree, model, &info->node, COL_STATUS, info->status);
-    tree_store_update(tree, model, &info->node, COL_USER, info->user.c_str());
-    tree_store_update(tree, model, &info->node, COL_VMSIZE, info->vmsize);
-    tree_store_update(tree, model, &info->node, COL_MEMRES, info->memres);
-    tree_store_update(tree, model, &info->node, COL_MEMWRITABLE, info->memwritable);
-    tree_store_update(tree, model, &info->node, COL_MEMSHARED, info->memshared);
-    tree_store_update(tree, model, &info->node, COL_MEMXSERVER, info->memxserver);
-    tree_store_update(tree, model, &info->node, COL_CPU, info->pcpu);
-    tree_store_update(tree, model, &info->node, COL_CPU_TIME, info->cpu_time);
-    tree_store_update(tree, model, &info->node, COL_START_TIME, info->start_time);
-    tree_store_update(tree, model, &info->node, COL_NICE, info->nice);
-    tree_store_update(tree, model, &info->node, COL_MEM, info->mem);
-    tree_store_update(tree, model, &info->node, COL_WCHAN, info->wchan);
-    tree_store_update(tree, model, &info->node, COL_CGROUP, info->cgroup_name);
-    tree_store_update(tree, model, &info->node, COL_UNIT, info->unit);
-    tree_store_update(tree, model, &info->node, COL_SESSION, info->session);
-    tree_store_update(tree, model, &info->node, COL_SEAT, info->seat);
-    tree_store_update(tree, model, &info->node, COL_OWNER, info->owner.c_str());
+    tree_store_update(model, &info->node, COL_STATUS, info->status);
+    tree_store_update(model, &info->node, COL_USER, info->user.c_str());
+    tree_store_update(model, &info->node, COL_VMSIZE, info->vmsize);
+    tree_store_update(model, &info->node, COL_MEMRES, info->memres);
+    tree_store_update(model, &info->node, COL_MEMWRITABLE, info->memwritable);
+    tree_store_update(model, &info->node, COL_MEMSHARED, info->memshared);
+    tree_store_update(model, &info->node, COL_MEMXSERVER, info->memxserver);
+    tree_store_update(model, &info->node, COL_CPU, info->pcpu);
+    tree_store_update(model, &info->node, COL_CPU_TIME, info->cpu_time);
+    tree_store_update(model, &info->node, COL_START_TIME, info->start_time);
+    tree_store_update(model, &info->node, COL_NICE, info->nice);
+    tree_store_update(model, &info->node, COL_MEM, info->mem);
+    tree_store_update(model, &info->node, COL_WCHAN, info->wchan);
+    tree_store_update(model, &info->node, COL_CGROUP, info->cgroup_name);
+    tree_store_update(model, &info->node, COL_UNIT, info->unit);
+    tree_store_update(model, &info->node, COL_SESSION, info->session);
+    tree_store_update(model, &info->node, COL_SEAT, info->seat);
+    tree_store_update(model, &info->node, COL_OWNER, info->owner.c_str());
 }
 
 

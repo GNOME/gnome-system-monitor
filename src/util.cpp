@@ -579,18 +579,16 @@ namespace procman
     }
 
     template<>
-    void tree_store_update<const char>(GtkTreeView* tree, GtkTreeModel* model, GtkTreeIter* iter, int column, const char* new_value)
+    void tree_store_update<const char>(GtkTreeModel* model, GtkTreeIter* iter, int column, const char* new_value)
     {
-        GtkTreeViewColumn* tree_column = gtk_tree_view_get_column(tree, column+1);
-        if (gtk_tree_view_column_get_visible(tree_column)) {
-            char* current_value;
+        char* current_value;
 
-            gtk_tree_model_get(model, iter, column, &current_value, -1);
+        gtk_tree_model_get(model, iter, column, &current_value, -1);
 
-            if (g_strcmp0(current_value, new_value) != 0)
-                gtk_tree_store_set(GTK_TREE_STORE(model), iter, column, new_value, -1);
-            g_free(current_value);
-        }
+        if (g_strcmp0(current_value, new_value) != 0)
+            gtk_tree_store_set(GTK_TREE_STORE(model), iter, column, new_value, -1);
+
+        g_free(current_value);
     }
 
 

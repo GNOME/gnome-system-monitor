@@ -121,33 +121,30 @@ namespace procman
     //
 
     template<typename T>
-    void tree_store_update(GtkTreeView* tree, GtkTreeModel* model, GtkTreeIter* iter, int column, const T& new_value)
+    void tree_store_update(GtkTreeModel* model, GtkTreeIter* iter, int column, const T& new_value)
     {
-        GtkTreeViewColumn* tree_column = gtk_tree_view_get_column(tree, column+1);
-        if (gtk_tree_view_column_get_visible(tree_column)) {
-            T current_value;
+        T current_value;
 
-            gtk_tree_model_get(model, iter, column, &current_value, -1);
+        gtk_tree_model_get(model, iter, column, &current_value, -1);
 
-            if (current_value != new_value)
-                gtk_tree_store_set(GTK_TREE_STORE(model), iter, column, new_value, -1);
-        }
+        if (current_value != new_value)
+            gtk_tree_store_set(GTK_TREE_STORE(model), iter, column, new_value, -1);
     }
 
     // undefined
     // catch every thing about pointers
     // just to make sure i'm not doing anything wrong
     template<typename T>
-    void tree_store_update(GtkTreeView* tree, GtkTreeModel* model, GtkTreeIter* iter, int column, T* new_value);
+    void tree_store_update(GtkTreeModel* model, GtkTreeIter* iter, int column, T* new_value);
 
     // specialized versions for strings
     template<>
-    void tree_store_update<const char>(GtkTreeView* tree, GtkTreeModel* model, GtkTreeIter* iter, int column, const char* new_value);
+    void tree_store_update<const char>(GtkTreeModel* model, GtkTreeIter* iter, int column, const char* new_value);
 
     template<>
-    inline void tree_store_update<char>(GtkTreeView* tree, GtkTreeModel* model, GtkTreeIter* iter, int column, char* new_value)
+    inline void tree_store_update<char>(GtkTreeModel* model, GtkTreeIter* iter, int column, char* new_value)
     {
-        tree_store_update<const char>(tree, model, iter, column, new_value);
+        tree_store_update<const char>(model, iter, column, new_value);
     }
 
     gchar* format_size(guint64 size, guint64 max = 0, bool want_bits = false);
