@@ -87,6 +87,7 @@ view_as_changed_cb (GSettings *settings, const gchar *key, gpointer data)
     app->config.whose_process = CLAMP (app->config.whose_process, 0, 2);
     proctable_clear_tree (app);
     proctable_update_all (app);
+    proctable_check_applications (app);
 }
 
 static void

@@ -100,6 +100,7 @@ MutableProcInfo()
     guint pcpu;
     gint nice;
     gchar *cgroup_name;
+    gchar *application_name;
 
     gchar *unit;
     gchar *session;

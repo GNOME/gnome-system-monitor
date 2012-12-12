@@ -49,6 +49,7 @@ enum
     COL_SEAT,
     COL_OWNER,
     COL_PRIORITY,
+    COL_APPLICATION,
     COL_PIXBUF,
     COL_POINTER,
     COL_TOOLTIP,
@@ -62,6 +63,7 @@ void            proctable_update_list (ProcmanApp *app);
 void            proctable_update_all (ProcmanApp *app);
 void            proctable_clear_tree (ProcmanApp *app);
 void            proctable_free_table (ProcmanApp *app);
+void            proctable_check_applications(ProcmanApp *app);
 
 GSList*         proctable_get_columns_order(GtkTreeView *treeview);
 void            proctable_set_columns_order(GtkTreeView *treeview, GSList *order);

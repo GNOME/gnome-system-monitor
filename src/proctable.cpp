@@ -62,14 +62,11 @@ ProcInfo::UserMap ProcInfo::users;
 ProcInfo::List ProcInfo::all;
 std::map<pid_t, guint64> ProcInfo::cpu_times;
 
-
 ProcInfo* ProcInfo::find(pid_t pid)
 {
     Iterator it(ProcInfo::all.find(pid));
     return (it == ProcInfo::all.end() ? NULL : it->second);
 }
-
-
 
 static void
 set_proctree_reorderable(ProcmanApp *app)
@@ -98,6 +95,48 @@ cb_columns_changed(GtkTreeView *treeview, gpointer data)
                             "proctree");
 }
 
+static void
+cb_application_name_changed(WnckApplication* app, gpointer user_data);
+
+static void
+update_app_info(WnckApplication* app)
+{
+    if (app == NULL) 
+        return;
+    int pid = wnck_application_get_pid(app);
+    if (pid != 0) {
+        g_signal_connect(app, "name-changed", G_CALLBACK(cb_application_name_changed), NULL);
+        ProcInfo *info = ProcInfo::find(pid);
+        if ((info != NULL) && (app != NULL)) 
+            info ->application_name = g_strdup(wnck_application_get_name(app));
+    }
+}
+
+static void 
+set_application_info_for_process (gpointer data, gpointer user_data)
+{
+    WnckWindow* window = static_cast<WnckWindow*>(data);
+    WnckApplication *app = wnck_window_get_application(window);
+    update_app_info(app);
+}
+
+static void
+cb_application_opened (WnckScreen*, WnckApplication* app, gpointer user_data)
+{
+    update_app_info(app);
+}
+
+static void
+cb_application_closed (WnckScreen*, WnckApplication* app, gpointer user_data)
+{
+    g_signal_handlers_disconnect_by_func(app, (gpointer) cb_application_name_changed, NULL);
+}
+
+static void
+cb_application_name_changed(WnckApplication* app, gpointer user_data)
+{
+    update_app_info(app);
+}
 
 static GtkTreeViewColumn*
 my_gtk_tree_view_get_column_with_sort_column_id(GtkTreeView *treeview, int id)
@@ -226,6 +265,25 @@ cb_proctree_destroying (GtkTreeView *self, gpointer data)
     g_signal_handlers_disconnect_by_func(self, (gpointer) cb_columns_changed, data);
 }
 
+void
+proctable_check_applications(ProcmanApp * const app)
+{
+    GList * windows = wnck_screen_get_windows(wnck_screen_get_default());
+    g_list_foreach(windows, set_application_info_for_process, NULL);
+}
+
+
+static void
+setup_application_info_watches()
+{
+    WnckScreen* screen = wnck_screen_get_default();
+    g_signal_connect(screen, "application-opened", G_CALLBACK(cb_application_opened), NULL);
+    g_signal_connect(screen, "application-closed", G_CALLBACK(cb_application_closed), NULL);
+
+    proctable_check_applications(NULL);
+
+}
+
 GtkWidget *
 proctable_new (ProcmanApp * const app)
 {
@@ -262,6 +320,7 @@ proctable_new (ProcmanApp * const app)
         N_("Seat"),
         N_("Owner"),
         N_("Priority"),
+        N_("Application name"),
         NULL,
         "POINTER"
     };
@@ -292,6 +351,7 @@ proctable_new (ProcmanApp * const app)
                                 G_TYPE_STRING,      /* Seat         */
                                 G_TYPE_STRING,      /* Owner        */
                                 G_TYPE_STRING,      /* Priority     */
+                                G_TYPE_STRING,      /* Application  */
                                 GDK_TYPE_PIXBUF,    /* Icon         */
                                 G_TYPE_POINTER,     /* ProcInfo     */
                                 G_TYPE_STRING       /* Sexy tooltip */
@@ -335,7 +395,7 @@ proctable_new (ProcmanApp * const app)
     gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
 
 
-    for (i = COL_USER; i <= COL_PRIORITY; i++) {
+    for (i = COL_USER; i <= COL_APPLICATION; i++) {
 
         GtkCellRenderer *cell;
         GtkTreeViewColumn *col;
@@ -484,6 +544,7 @@ proctable_new (ProcmanApp * const app)
             gtk_tree_view_column_set_visible(column, FALSE);
         }
     }
+    setup_application_info_watches();
 
     g_signal_connect (G_OBJECT (gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree))),
                       "changed",
@@ -511,6 +572,7 @@ ProcInfo::~ProcInfo()
     g_free(this->arguments);
     g_free(this->security_context);
     g_free(this->cgroup_name);
+    g_free(this->application_name);
     // The following are allocated inside of the sd_pid_get_*
     // functions using malloc(). Free with free() instead of g_free()
     // to insure proper clean up.
@@ -654,6 +716,7 @@ update_info_mutable_cols(ProcInfo *info)
     tree_store_update(model, &info->node, COL_UNIT, info->unit);
     tree_store_update(model, &info->node, COL_SESSION, info->session);
     tree_store_update(model, &info->node, COL_SEAT, info->seat);
+    tree_store_update(model, &info->node, COL_APPLICATION, info->application_name);
     tree_store_update(model, &info->node, COL_OWNER, info->owner.c_str());
 }
 
@@ -812,9 +875,9 @@ update_info (ProcmanApp *app, ProcInfo *info)
 
     /* get cgroup data */
     get_process_cgroup_info(info);
-
     get_process_systemd_info(info);
 }
+
 
 
 ProcInfo::ProcInfo(pid_t pid)
@@ -862,6 +925,7 @@ ProcInfo::ProcInfo(pid_t pid)
     get_process_cgroup_info(info);
 
     info->unit = info->session = info->seat = NULL;
+    info->application_name = NULL;
     get_process_systemd_info(info);
 }
 
@@ -979,7 +1043,6 @@ refresh_list (ProcmanApp *app, const pid_t* pid_list, const guint n)
             insert_info_to_tree(*it, app);
     }
 
-
     for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it)
         update_info_mutable_cols(it->second);
 }
@@ -1037,7 +1100,6 @@ proctable_update_all (ProcmanApp * const app)
 
     proctable_update_list (app);
 }
-
 
 void
 proctable_clear_tree (ProcmanApp * const app)
