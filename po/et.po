@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-22 17:13+0000\n"
-"PO-Revision-Date: 2012-09-23 10:08+0300\n"
+"POT-Creation-Date: 2012-12-16 22:04+0000\n"
+"PO-Revision-Date: 2012-12-19 17:44+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
 "Language-Team: Estonian <>\n"
 "Language: et\n"
@@ -32,10 +32,22 @@ msgid "View current processes and monitor system state"
 msgstr "Süsteemi oleku ja protsesside jälgimine"
 
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
-msgstr "Monitor;Süsteem;Protsess;Protsessor;CPU;Mälu;Võrk;Ajalugu;Kasutus;"
+msgstr "Monitor;Süsteem;Protsess;Protsessor;CPU;Mälu;Võrk;Ajalugu;Kasutus"
 
-msgid "System"
-msgstr "Süsteem"
+msgid "Kill process"
+msgstr "Kõrvalda protsess"
+
+msgid "Privileges are required to kill process"
+msgstr "Protsessi kõrvaldamiseks on vajalikud vastavad õigused"
+
+msgid "Renice process"
+msgstr "Muuda protsessi olulisust"
+
+msgid "Privileges are required to renice process"
+msgstr "Protsessi olulisuse muutmiseks on vajalikud vastavad õigused"
+
+msgid "View"
+msgstr "Vaade"
 
 msgid "End _Process"
 msgstr "_Lõpeta protsess"
@@ -76,6 +88,7 @@ msgstr "Vahendid"
 msgid "File Systems"
 msgstr "Failisüsteemid"
 
+msgctxt "Window title for 'Search for Open Files' dialog"
 msgid "Search for Open Files"
 msgstr "Avatud failide otsing"
 
@@ -90,6 +103,22 @@ msgstr "_Puhasta"
 
 msgid "S_earch results:"
 msgstr "O_tsingutulemused:"
+
+msgctxt "Menu item to Open 'Search for Open Files' dialog"
+msgid "Search for Open Files"
+msgstr "Otsi avatud faile"
+
+msgid "Preferences"
+msgstr "Eelistused"
+
+msgid "Help"
+msgstr "Abi"
+
+msgid "About"
+msgstr "Lähemalt"
+
+msgid "Quit"
+msgstr "Lõpeta"
 
 msgid "Open Files"
 msgstr "Avatud failid"
@@ -124,8 +153,14 @@ msgstr "Graafikud"
 msgid "_Show network speed in bits"
 msgstr "Võrguliiklust kuvatakes _bittides"
 
+msgid "_Draw CPU chart as stacked area chart"
+msgstr "_CPU andmeid kuvatakse virnastatud graafikuna"
+
 msgid "Show _all file systems"
 msgstr "Kuvatakse _kõiki failisüsteeme"
+
+msgid "File system i_nformation shown in list:"
+msgstr "Failisüsteemi _andmed, mida kuvatakse loendis:"
 
 msgid "Change _Priority"
 msgstr "Muuda _tähtsust"
@@ -139,9 +174,6 @@ msgid ""
 msgstr ""
 "<small><i><b>Märkus:</b> Protsessi prioriteet on antud tema nice väärtusega. "
 "Madalam nice väärtus tähendab suuremat prioriteeti.</i></small>"
-
-msgid "Show the System tab"
-msgstr "Süsteemi kaardi näitamine"
 
 msgid "Show the Processes tab"
 msgstr "Protsesside saki kuvamine"
@@ -229,28 +261,8 @@ msgstr "Võeti vastu vigased värvuse andmed\n"
 msgid "Click to set graph colors"
 msgstr "Graafiku värvide muutmiseks klõpsa siia"
 
-#. xgettext: noun, top level menu.
-#. "File" did not make sense for system-monitor
-msgid "_Monitor"
-msgstr "_Jälgija"
-
-msgid "_Edit"
-msgstr "_Redaktor"
-
 msgid "_View"
 msgstr "_Vaade"
-
-msgid "_Help"
-msgstr "A_bi"
-
-msgid "Search for _Open Files"
-msgstr "_Otsi avatud faile"
-
-msgid "Search for open files"
-msgstr "Avatud failide otsimine"
-
-msgid "Quit the program"
-msgstr "Programmist väljumine"
 
 msgid "_Stop Process"
 msgstr "_Peata protsess"
@@ -282,9 +294,6 @@ msgstr "_Muuda tähtsust"
 msgid "Change the order of priority of process"
 msgstr "Protsessi tähtsuse muutmine"
 
-msgid "Configure the application"
-msgstr "Rakenduse seadistamine"
-
 msgid "_Refresh"
 msgstr "_Värskenda"
 
@@ -309,15 +318,6 @@ msgstr "_Omadused"
 
 msgid "View additional information about a process"
 msgstr "Protsessi kohta lisateabe kuvamine"
-
-msgid "_Contents"
-msgstr "_Sisukord"
-
-msgid "Open the manual"
-msgstr "Käsiraamatu avamine"
-
-msgid "About this application"
-msgstr "Teave programmi kohta"
 
 msgid "_Dependencies"
 msgstr "Näita _sõltuvusi"
@@ -510,6 +510,9 @@ msgstr "Peaakna laius"
 msgid "Main Window height"
 msgstr "Peaakna kõrgus"
 
+msgid "Main Window should open maximized"
+msgstr "Peaaken peaks avanema maksimeeritult"
+
 msgid "Main Window X position"
 msgstr "Peaakna asukoht X-teljel"
 
@@ -530,6 +533,16 @@ msgstr ""
 "Kui märgitud, siis süsteemijälgija tegutseb \"Solarise režiimis\", kus "
 "protsessi protsessorikasutus on jagatuid protsessorite koguarvuga. Vastasel "
 "juhul tegutsetakse \"Irixi režiimis\"."
+
+msgid "Show CPU chart as stacked area chart"
+msgstr "CPU graafiku kuvamine virnastatud graafikuna"
+
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
+"of a line chart."
+msgstr ""
+"Kui TÕENE, kuvab system-monitor CPU graafikut joongraafiku asemel "
+"virnastatud graafikuna."
 
 msgid "Enable/Disable smooth refresh"
 msgstr "Luba/keela sujuv värskendus"
@@ -784,8 +797,8 @@ msgstr ""
 
 #. xgettext: primary alert message
 #, c-format
-msgid "Kill the selected process »%s« (PID: %u)?"
-msgstr "Kas kõrvaldada valitud protsess »%s« (PID: %u)?"
+msgid "Kill the selected process “%s” (PID: %u)?"
+msgstr "Kas kõrvaldada valitud protsess „%s” (PID: %u)?"
 
 #. xgettext: secondary alert message
 msgid ""
@@ -798,8 +811,8 @@ msgstr ""
 
 #. xgettext: primary alert message
 #, c-format
-msgid "End the selected process »%s« (PID: %u)?"
-msgstr "Kas lõpetada valitud protsessi töö »%s« (PID: %u)?"
+msgid "End the selected process “%s” (PID: %u)?"
+msgstr "Kas lõpetada valitud protsessi töö „%s” (PID: %u)?"
 
 #. xgettext: secondary alert message
 msgid ""
@@ -810,12 +823,8 @@ msgstr ""
 "põhjustada turvariski. Lõpetama peaks ainult protsesse, mis ei käitu õigesti."
 
 #, c-format
-msgid "(%s Priority)"
-msgstr "(%s prioriteet)"
-
-#, c-format
-msgid "Change Priority of Process »%s« (PID: %u)"
-msgstr "Protsessi prioriteedi muutmine »%s« (PID: %u)"
+msgid "Change Priority of Process “%s” (PID: %u)"
+msgstr "Protsessi prioriteedi muutmine „%s” (PID: %u)"
 
 msgid "Note:"
 msgstr "Märkus:"
@@ -924,43 +933,6 @@ msgstr "Omanik"
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Koormuse näit viimase 1, 5 ja 15 minuti kohta: %0.2f, %0.2f, %0.2f"
 
-#. Translators: The first string parameter is release version (codename),
-#. * the second one is the architecture, 32 or 64-bit
-#, c-format
-msgid "Release %s %s"
-msgstr "Väljalase %s %s"
-
-#. translators: This is the type of architecture, for example:
-#. * "64-bit" or "32-bit"
-#, c-format
-msgid "%d-bit"
-msgstr "%d-bitine"
-
-#, c-format
-msgid "Kernel %s"
-msgstr "Kernel %s"
-
-#, c-format
-msgid "GNOME %s"
-msgstr "GNOME %s"
-
-#. hardware section
-msgid "Hardware"
-msgstr "Riistvara"
-
-msgid "Memory:"
-msgstr "Mälu:"
-
-msgid "Processor:"
-msgstr "Protsessor:"
-
-#. disk space section
-msgid "System Status"
-msgstr "Süsteemi olek"
-
-msgid "Available disk space:"
-msgstr "Vaba kettaruum:"
-
 msgid "Running"
 msgstr "Töötav"
 
@@ -1040,7 +1012,85 @@ msgid_plural "%u bytes"
 msgstr[0] "%u bait"
 msgstr[1] "%u baiti"
 
+msgid "Very High Priority"
+msgstr "Väga kõrge prioriteet"
+
+msgid "High Priority"
+msgstr "Kõrge prioriteet"
+
+msgid "Normal Priority"
+msgstr "Tavaline prioriteet"
+
+msgid "Low Priority"
+msgstr "Madal prioriteet"
+
+msgid "Very Low Priority"
+msgstr "Väga madal prioriteet"
+
 #. xgettext: rate, 10MiB/s or 10Mbit/s
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "System"
+#~ msgstr "Süsteem"
+
+#~ msgid "Show the System tab"
+#~ msgstr "Süsteemi kaardi näitamine"
+
+#~ msgid "_Monitor"
+#~ msgstr "_Jälgija"
+
+#~ msgid "_Edit"
+#~ msgstr "_Redaktor"
+
+#~ msgid "Search for _Open Files"
+#~ msgstr "_Otsi avatud faile"
+
+#~ msgid "Search for open files"
+#~ msgstr "Avatud failide otsimine"
+
+#~ msgid "Quit the program"
+#~ msgstr "Programmist väljumine"
+
+#~ msgid "Configure the application"
+#~ msgstr "Rakenduse seadistamine"
+
+#~ msgid "_Contents"
+#~ msgstr "_Sisukord"
+
+#~ msgid "Open the manual"
+#~ msgstr "Käsiraamatu avamine"
+
+#~ msgid "About this application"
+#~ msgstr "Teave programmi kohta"
+
+#~ msgid "(%s Priority)"
+#~ msgstr "(%s prioriteet)"
+
+#~ msgid "Release %s %s"
+#~ msgstr "Väljalase %s %s"
+
+#~ msgid "%d-bit"
+#~ msgstr "%d-bitine"
+
+#~ msgid "Kernel %s"
+#~ msgstr "Kernel %s"
+
+#~ msgid "GNOME %s"
+#~ msgstr "GNOME %s"
+
+#~ msgid "Hardware"
+#~ msgstr "Riistvara"
+
+#~ msgid "Memory:"
+#~ msgstr "Mälu:"
+
+#~ msgid "Processor:"
+#~ msgstr "Protsessor:"
+
+#~ msgid "System Status"
+#~ msgstr "Süsteemi olek"
+
+#~ msgid "Available disk space:"
+#~ msgstr "Vaba kettaruum:"
