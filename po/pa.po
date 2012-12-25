@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-08-07 01:52+0000\n"
-"PO-Revision-Date: 2012-08-17 06:58+0530\n"
+"POT-Creation-Date: 2012-12-06 21:28+0000\n"
+"PO-Revision-Date: 2012-12-25 08:31+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
 "Language: pa\n"
@@ -21,26 +21,45 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "\n"
 "\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Lokalize 1.5\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/callbacks.cpp:184 ../src/procman.cpp:721
+#: ../src/callbacks.cpp:183 ../src/procman-app.cpp:359
 msgid "System Monitor"
 msgstr "ਸਿਸਟਮ ਨਿਗਰਾਨ"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:185
+#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:184
 msgid "View current processes and monitor system state"
 msgstr "ਮੌਜੂਦਾ ਪਰੋਸੈੱਸ ਵੇਖੋ ਅਤੇ ਸਿਸਟਮ ਹਾਲਤ ਦੀ ਨਿਗਰਾਨੀ"
 
 #: ../gnome-system-monitor.desktop.in.in.h:3
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr ""
-"Monitor;System;Process;CPU;Memory;Network;History;Usage;ਨਿਗਾਰਨੀ;ਸਿਸਟਮ;ਕਾਰਵਾਈ;ਪ"
-"ਰੋਸੈਸ,;ਸੀਪੀਯੂ;ਪ੍ਰੋਸੈਸਰ;ਨੈੱਟਵਰਕ;ਅਤੀਤ;ਵਰਤੋਂ;ਮੈਮੋਰੀ;"
+"Monitor;System;Process;CPU;Memory;Network;History;Usage;ਨਿਗਾਰਨੀ;ਸਿਸਟਮ;ਕਾਰਵਾਈ;"
+"ਪਰੋਸੈਸ,;ਸੀਪੀਯੂ;ਪ੍ਰੋਸੈਸਰ;ਨੈੱਟਵਰਕ;ਅਤੀਤ;ਵਰਤੋਂ;ਮੈਮੋਰੀ;"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.h:1
+#| msgid "_Kill Process"
+msgid "Kill process"
+msgstr "ਪਰੋਸੈੱਸ ਹੁਣੇ ਖਤਮ"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.h:2
+msgid "Privileges are required to kill process"
+msgstr "ਪਰੋਸੈੱਸ ਖਤਮ (ਕਿੱਲ) ਕਰਨ ਲਈ ਅਧਿਕਾਰ ਚਾਹੀਦੇ ਹਨ"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.h:3
+#| msgid "_Continue Process"
+msgid "Renice process"
+msgstr "ਪਰੋਸੈੱਸ ਰੀ-ਨਾਈਸ"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.h:4
+msgid "Privileges are required to renice process"
+msgstr "ਪਰੋਸੈੱਸ ਰੀ-ਨਾਈਸ ਕਰਨ ਲਈ ਅਧਿਕਾਰ ਚਾਹੀਦੇ ਹਨ"
 
 #: ../data/interface.ui.h:2
-msgid "System"
-msgstr "ਸਿਸਟਮ"
+#| msgid "_View"
+msgid "View"
+msgstr "ਵੇਖੋ"
 
 #: ../data/interface.ui.h:3
 msgid "End _Process"
@@ -58,12 +77,12 @@ msgstr "CPU ਅਤੀਤ"
 msgid "Memory and Swap History"
 msgstr "ਮੈਮੋਰੀ ਅਤੇ ਸਵੈਪ ਅਤੀਤ"
 
-#: ../data/interface.ui.h:7 ../src/interface.cpp:327
-#: ../src/procproperties.cpp:133 ../src/proctable.cpp:251
+#: ../data/interface.ui.h:7 ../src/interface.cpp:249
+#: ../src/procproperties.cpp:133 ../src/proctable.cpp:255
 msgid "Memory"
 msgstr "ਮੈਮੋਰੀ"
 
-#: ../data/interface.ui.h:8 ../src/interface.cpp:338
+#: ../data/interface.ui.h:8 ../src/interface.cpp:260
 msgid "Swap"
 msgstr "ਸਵੈਪ"
 
@@ -71,7 +90,7 @@ msgstr "ਸਵੈਪ"
 msgid "Network History"
 msgstr "ਨੈੱਟਵਰਕ ਅਤੀਤ"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:363
+#: ../data/interface.ui.h:10 ../src/interface.cpp:285
 msgid "Receiving"
 msgstr "ਲਏ"
 
@@ -87,21 +106,19 @@ msgstr "ਭੇਜੇ"
 msgid "Total Sent"
 msgstr "ਕੁੱਲ ਭੇਜੇ"
 
-#: ../data/interface.ui.h:14
-msgid "\n"
-msgstr "\n"
-
-#: ../data/interface.ui.h:16 ../data/preferences.ui.h:12
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:13
 msgid "Resources"
 msgstr "ਸਰੋਤ"
 
-#: ../data/interface.ui.h:17 ../data/preferences.ui.h:14
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:16
 msgid "File Systems"
 msgstr "ਫਾਇਲ ਸਿਸਟਮ"
 
 #: ../data/lsof.ui.h:1
+#| msgid "Search for Open Files"
+msgctxt "Window title for 'Search for Open Files' dialog"
 msgid "Search for Open Files"
-msgstr "ਖੁੱਲ੍ਹੀਆਂ ਫਾਇਲਾਂ ਦੀ ਖੋਜ"
+msgstr "ਖੁੱਲ੍ਹੀ ਫਾਇਲ ਲਈ ਖੋਜ"
 
 #: ../data/lsof.ui.h:2
 msgid "_Name contains:"
@@ -118,6 +135,32 @@ msgstr "ਸਾਫ਼ ਕਰੋ(_l)"
 #: ../data/lsof.ui.h:5
 msgid "S_earch results:"
 msgstr "ਖੋਜ ਨਤੀਜੇ(_e):"
+
+#: ../data/menus.ui.h:1
+#| msgid "Search for Open Files"
+msgctxt "Menu item to Open 'Search for Open Files' dialog"
+msgid "Search for Open Files"
+msgstr "ਖੁੱਲ੍ਹੀਆਂ ਫਾਇਲਾਂ ਲਈ ਖੋਜ"
+
+#: ../data/menus.ui.h:2
+#| msgid "Prefere_nces"
+msgid "Preferences"
+msgstr "ਮੇਰੀ ਪਸੰਦ"
+
+#: ../data/menus.ui.h:3
+#| msgid "_Help"
+msgid "Help"
+msgstr "ਮੱਦਦ"
+
+#: ../data/menus.ui.h:4
+#| msgid "_About"
+msgid "About"
+msgstr "ਇਸ ਬਾਰੇ"
+
+#: ../data/menus.ui.h:5
+#| msgid "_Quit"
+msgid "Quit"
+msgstr "ਬਾਹਰ"
 
 #: ../data/openfiles.ui.h:1
 msgid "Open Files"
@@ -163,9 +206,17 @@ msgstr "ਗਰਾਫ਼"
 msgid "_Show network speed in bits"
 msgstr "ਨੈੱਟਵਰਕ ਸਪੀਡ ਬਿੱਟ ਵਿੱਚ ਵੇਖੋ(_S)"
 
-#: ../data/preferences.ui.h:13
+#: ../data/preferences.ui.h:12
+msgid "_Draw CPU chart as stacked area chart"
+msgstr "CPU ਚਾਰਟ ਨੂੰ ਸਟੈਕ ਕੀਤੇ ਖੇਤਰ ਚਾਰਟ ਬਣਾਓ(_D)"
+
+#: ../data/preferences.ui.h:14
 msgid "Show _all file systems"
 msgstr "ਸਭ ਫਾਇਲ-ਸਿਸਟਮ ਵੇਖਾਓ(_a)"
+
+#: ../data/preferences.ui.h:15
+msgid "File system i_nformation shown in list:"
+msgstr "ਲਿਸਟ ਵਿੱਚ ਵੇਖਾਈ ਫਾਈਲ ਸਿਸਟਮ ਜਾਣਕਾਰੀ(_n):"
 
 #: ../data/renice.ui.h:1
 msgid "Change _Priority"
@@ -176,33 +227,27 @@ msgid "_Nice value:"
 msgstr "ਨਾਇਸ ਮੁੱਲ(_N):"
 
 #: ../data/renice.ui.h:3
-#| msgid ""
-#| "The priority of a process is given by its nice value. A lower nice value "
-#| "corresponds to a higher priority."
 msgid ""
 "<small><i><b>Note:</b> The priority of a process is given by its nice value. "
 "A lower nice value corresponds to a higher priority.</i></small>"
 msgstr ""
 "<small><i><b>ਨੋਟ:</b>ਪਰੋਸੈੱਸ ਦੀ ਤਰਜੀਹ ਇਸ ਦੇ ਨਾਇਸ ਮੁੱਲ ਕਰਕੇ ਹੁੰਦੀ ਹੈ। ਘੱਟ ਨਾਇਸ "
-"ਮੁੱਲ ਦਾ ਮਤਲਬ ਜਿਆਦਾ ਤਰਜੀਹ।</i></small>"
+"ਮੁੱਲ ਦਾ ਮਤਲਬ "
+"ਜਿਆਦਾ ਤਰਜੀਹ।</i></small>"
 
-#: ../src/argv.cpp:21
-msgid "Show the System tab"
-msgstr "ਸਿਸਟਮ ਟੈਬ ਵੇਖੋ"
-
-#: ../src/argv.cpp:26
+#: ../src/argv.cpp:20
 msgid "Show the Processes tab"
 msgstr "ਪਰੋਸੈੱਸ ਟੈਬ ਵੇਖੋ"
 
-#: ../src/argv.cpp:31
+#: ../src/argv.cpp:25
 msgid "Show the Resources tab"
 msgstr "ਸਰੋਤ ਟੈਬ ਵੇਖੋ"
 
-#: ../src/argv.cpp:36
+#: ../src/argv.cpp:30
 msgid "Show the File Systems tab"
 msgstr "ਫਾਇਲ ਸਿਸਟਮ ਟੈਬ ਵੇਖੋ"
 
-#: ../src/callbacks.cpp:195
+#: ../src/callbacks.cpp:194
 msgid "translator-credits"
 msgstr ""
 "ਜਸਵਿੰਦਰ ਸਿੰਘ ਫੂਲੇਵਾਲਾ ੨੦੦੪\n"
@@ -210,31 +255,31 @@ msgstr ""
 "Punjabi Open Source Team (Satluj Project)\n"
 "http://www.satluj.com/"
 
-#: ../src/disks.cpp:298 ../src/memmaps.cpp:361
+#: ../src/disks.cpp:303 ../src/memmaps.cpp:361
 msgid "Device"
 msgstr "ਜੰਤਰ"
 
-#: ../src/disks.cpp:299
+#: ../src/disks.cpp:304
 msgid "Directory"
 msgstr "ਡਾਇਰੈਕਟਰੀ"
 
-#: ../src/disks.cpp:300 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:305 ../src/gsm_color_button.c:223 ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "ਟਾਈਪ"
 
-#: ../src/disks.cpp:301
+#: ../src/disks.cpp:306
 msgid "Total"
 msgstr "ਕੁੱਲ"
 
-#: ../src/disks.cpp:302
+#: ../src/disks.cpp:307
 msgid "Free"
 msgstr "ਖਾਲੀ"
 
-#: ../src/disks.cpp:303
+#: ../src/disks.cpp:308
 msgid "Available"
 msgstr "ਉਪਲੱਬਧ"
 
-#: ../src/disks.cpp:304
+#: ../src/disks.cpp:309
 msgid "Used"
 msgstr "ਵਰਤੋਂ"
 
@@ -263,278 +308,236 @@ msgstr "%d %b %l:%M %p"
 msgid "%b %d %Y"
 msgstr "%d %b %Y"
 
-#: ../src/gsm_color_button.c:198
+#: ../src/gsm_color_button.c:199
 msgid "Fraction"
 msgstr "ਦਸ਼ਮਲਵ"
 
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:200
+#: ../src/gsm_color_button.c:201
 msgid "Percentage full for pie color pickers"
 msgstr "ਪਾਈ ਰੰਗ ਪਿਕਰ ਲਈ ਫੀਸਦੀ ਪੂਰਾ"
 
-#: ../src/gsm_color_button.c:207
+#: ../src/gsm_color_button.c:208
 msgid "Title"
 msgstr "ਟਾਈਟਲ"
 
-#: ../src/gsm_color_button.c:208
+#: ../src/gsm_color_button.c:209
 msgid "The title of the color selection dialog"
 msgstr "ਰੰਗ ਚੋਣਕਾਰ ਡਾਈਲਾਗ ਦਾ ਟਾਈਟਲ"
 
-#: ../src/gsm_color_button.c:209 ../src/gsm_color_button.c:625
+#: ../src/gsm_color_button.c:210 ../src/gsm_color_button.c:628
 msgid "Pick a Color"
 msgstr "ਇੱਕ ਰੰਗ ਚੁਣੋ"
 
-#: ../src/gsm_color_button.c:215
+#: ../src/gsm_color_button.c:216
 msgid "Current Color"
 msgstr "ਮੌਜੂਦਾ ਰੰਗ"
 
-#: ../src/gsm_color_button.c:216
+#: ../src/gsm_color_button.c:217
 msgid "The selected color"
 msgstr "ਚੁਣੇ ਰੰਗ"
 
-#: ../src/gsm_color_button.c:223
+#: ../src/gsm_color_button.c:224
 msgid "Type of color picker"
 msgstr "ਰੰਗ ਚੋਣਕਾਰ ਦੀ ਟਾਈਪ"
 
-#: ../src/gsm_color_button.c:548
+#: ../src/gsm_color_button.c:550
 msgid "Received invalid color data\n"
 msgstr "ਗਲਤ ਰੰਗ ਡਾਟਾ ਕੋਡ ਮਿਲਿਆ ਹੈ।\n"
 
-#: ../src/gsm_color_button.c:648
+#: ../src/gsm_color_button.c:651
 msgid "Click to set graph colors"
 msgstr "ਗਰਾਫ਼ ਰੰਗ ਸੈੱਟ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ"
 
-#. xgettext: noun, top level menu.
-#. "File" did not make sense for system-monitor
-#: ../src/interface.cpp:51
-msgid "_Monitor"
-msgstr "ਮਾਨੀਟਰ(_M)"
-
-#: ../src/interface.cpp:52
-msgid "_Edit"
-msgstr "ਸੋਧ(_E)"
-
-#: ../src/interface.cpp:53
+#: ../src/interface.cpp:47
 msgid "_View"
 msgstr "ਵੇਖੋ(_V)"
 
-#: ../src/interface.cpp:54
-msgid "_Help"
-msgstr "ਮੱਦਦ(_H)"
-
-#: ../src/interface.cpp:56
-msgid "Search for _Open Files"
-msgstr "ਖੁੱਲ੍ਹੀਆਂ ਫਾਇਲਾਂ ਦੀ ਖੋਜ(_O)"
-
-#: ../src/interface.cpp:57
-msgid "Search for open files"
-msgstr "ਖੁੱਲ੍ਹੀਆਂ ਫਾਇਲਾਂ ਦੀ ਖੋਜ"
-
-#: ../src/interface.cpp:59
-msgid "Quit the program"
-msgstr "ਪਰੋਗਰਾਮ ਬੰਦ ਕਰੋ"
-
-#: ../src/interface.cpp:62
+#: ../src/interface.cpp:49
 msgid "_Stop Process"
 msgstr "ਪਰੋਸੈੱਸ ਰੋਕੋ(_S)"
 
-#: ../src/interface.cpp:63
+#: ../src/interface.cpp:50
 msgid "Stop process"
 msgstr "ਪਰੋਸੈੱਸ ਰੋਕੋ"
 
-#: ../src/interface.cpp:64
+#: ../src/interface.cpp:51
 msgid "_Continue Process"
 msgstr "ਪਰੋਸੈੱਸ ਜਾਰੀ ਰੱਖੋ(_C)"
 
-#: ../src/interface.cpp:65
+#: ../src/interface.cpp:52
 msgid "Continue process if stopped"
 msgstr "ਜੇਕਰ ਰੁਕਿਆ ਹੈ ਤਾਂ ਪਰੋਸੈੱਸ ਜਾਰੀ ਰੱਖੋ"
 
-#: ../src/interface.cpp:67 ../src/procdialogs.cpp:95
+#: ../src/interface.cpp:54 ../src/procdialogs.cpp:96
 msgid "_End Process"
 msgstr "ਪਰੋਸੈੱਸ ਸਮਾਪਤ(_E)"
 
-#: ../src/interface.cpp:68
+#: ../src/interface.cpp:55
 msgid "Force process to finish normally"
 msgstr "ਪਰੋਸੈੱਸ ਨੂੰ ਸਧਾਰਨ ਢੰਗ ਨਾਲ ਸਮਾਪਤ ਹੋਣ ਲਈ ਮਜਬੂਰ ਕਰੋ"
 
-#: ../src/interface.cpp:69 ../src/procdialogs.cpp:84
+#: ../src/interface.cpp:56 ../src/procdialogs.cpp:85
 msgid "_Kill Process"
 msgstr "ਪਰੋਸੈੱਸ ਹੁਣੇ ਖਤਮ(_K)"
 
-#: ../src/interface.cpp:70
+#: ../src/interface.cpp:57
 msgid "Force process to finish immediately"
 msgstr "ਪਰੋਸੈੱਸ ਨੂੰ ਹੁਣੇ ਸਮਾਪਤ ਹੋਣ ਲਈ ਮਜਬੂਰ ਕਰੋ"
 
-#: ../src/interface.cpp:71
+#: ../src/interface.cpp:58
 msgid "_Change Priority"
 msgstr "ਤਰਜੀਹ ਬਦਲੋ(_C)"
 
-#: ../src/interface.cpp:72
+#: ../src/interface.cpp:59
 msgid "Change the order of priority of process"
 msgstr "ਪਰੋਸੈੱਸ ਦਾ ਤਰਜੀਹ ਕਰਮ ਬਦਲੋ"
 
-#: ../src/interface.cpp:74
-msgid "Configure the application"
-msgstr "ਐਪਲੀਕੇਸ਼ਨ ਸੰਰਚਨਾ"
-
-#: ../src/interface.cpp:76
+#: ../src/interface.cpp:61
 msgid "_Refresh"
 msgstr "ਤਾਜ਼ਾ ਕਰੋ(_R)"
 
-#: ../src/interface.cpp:77
+#: ../src/interface.cpp:62
 msgid "Refresh the process list"
 msgstr "ਪਰੋਸੈੱਸ ਲਿਸਟ ਤਾਜ਼ਾ ਕਰੋ"
 
-#: ../src/interface.cpp:79
+#: ../src/interface.cpp:64
 msgid "_Memory Maps"
 msgstr "ਮੈਮੋਰੀ ਮੈਪ(_M)"
 
-#: ../src/interface.cpp:80
+#: ../src/interface.cpp:65
 msgid "Open the memory maps associated with a process"
 msgstr "ਪਰੋਸੈੱਸ ਨਾਲ ਸਬੰਧਤ ਮੈਮੋਰੀ ਮੈਪ ਖੋਲ੍ਹੋ"
 
 #. Translators: this means 'Files that are open' (open is no verb here)
-#: ../src/interface.cpp:82
+#: ../src/interface.cpp:67
 msgid "Open _Files"
 msgstr "ਫਾਇਲਾਂ ਖੋਲ੍ਹੋ(_F)"
 
-#: ../src/interface.cpp:83
+#: ../src/interface.cpp:68
 msgid "View the files opened by a process"
 msgstr "ਪਰੋਸੈੱਸ ਰਾਹੀਂ ਖੋਲ੍ਹੀਆਂ ਫਾਇਲਾਂ ਵੇਖੋ"
 
-#: ../src/interface.cpp:84
+#: ../src/interface.cpp:69
 msgid "_Properties"
 msgstr "ਵਿਸ਼ੇਸ਼ਤਾ(_P)"
 
-#: ../src/interface.cpp:85
+#: ../src/interface.cpp:70
 msgid "View additional information about a process"
 msgstr "ਪਰੋਸੈਸ ਬਾਰੇ ਵਾਧੂ ਜਾਣਕਾਰੀ ਵੇਖੋ"
 
-#: ../src/interface.cpp:88
-msgid "_Contents"
-msgstr "ਸਮੱਗਰੀ(_C)"
-
-#: ../src/interface.cpp:89
-msgid "Open the manual"
-msgstr "ਮੈਨੂਅਲ ਖੋਲ੍ਹੋ"
-
-#: ../src/interface.cpp:91
-msgid "About this application"
-msgstr "ਇਸ ਐਪਲੀਕੇਸ਼ਨ ਬਾਰੇ"
-
-#: ../src/interface.cpp:96
+#: ../src/interface.cpp:75
 msgid "_Dependencies"
 msgstr "ਨਿਰਭਰਤਾ(_D)"
 
-#: ../src/interface.cpp:97
+#: ../src/interface.cpp:76
 msgid "Show parent/child relationship between processes"
 msgstr "ਪਰੋਸੈੱਸ ਵਿੱਚ ਪੇਰੈਂਟ/ਚਾਈਲਡ ਸਬੰਧ ਵੇਖੋ"
 
-#: ../src/interface.cpp:104
+#: ../src/interface.cpp:83
 msgid "_Active Processes"
 msgstr "ਐਕਟਿਵ ਪਰੋਸੈੱਸ(_A)"
 
-#: ../src/interface.cpp:105
+#: ../src/interface.cpp:84
 msgid "Show active processes"
 msgstr "ਐਕਟਿਵ ਪਰੋਸੈੱਸ ਵੇਖੋ"
 
-#: ../src/interface.cpp:106
+#: ../src/interface.cpp:85
 msgid "A_ll Processes"
 msgstr "ਸਭ ਪਰੋਸੈੱਸ(_L)"
 
-#: ../src/interface.cpp:107
+#: ../src/interface.cpp:86
 msgid "Show all processes"
 msgstr "ਸਭ ਪਰੋਸੈੱਸ ਵੇਖੋ"
 
-#: ../src/interface.cpp:108
+#: ../src/interface.cpp:87
 msgid "M_y Processes"
 msgstr "ਮੇਰੇ ਪਰੋਸੈੱਸ(_Y)"
 
-#: ../src/interface.cpp:109
+#: ../src/interface.cpp:88
 msgid "Show only user-owned processes"
 msgstr "ਯੂਜ਼ਰ-ਓਵ ਪਰੋਸੈੱਸ ਹੀ ਵੇਖਾਓ"
 
-#: ../src/interface.cpp:114 ../src/util.cpp:217
+#: ../src/interface.cpp:93 ../src/util.cpp:217
 msgid "Very High"
 msgstr "ਬਹੁਤ ਵੱਧ"
 
-#: ../src/interface.cpp:115
+#: ../src/interface.cpp:94
 msgid "Set process priority to very high"
 msgstr "ਪਰੋਸੈਸ ਤਰਜੀਹ ਬਹੁਤ ਵੱਧ ਸੈੱਟ ਕਰੋ"
 
-#: ../src/interface.cpp:116 ../src/util.cpp:219
+#: ../src/interface.cpp:95 ../src/util.cpp:219
 msgid "High"
 msgstr "ਉੱਚ"
 
-#: ../src/interface.cpp:117
+#: ../src/interface.cpp:96
 msgid "Set process priority to high"
 msgstr "ਪਰੋਸੈਸ ਤਰਜੀਹ ਵੱਧ ਸੈੱਟ ਕਰੋ"
 
-#: ../src/interface.cpp:118 ../src/util.cpp:221
+#: ../src/interface.cpp:97 ../src/util.cpp:221
 msgid "Normal"
 msgstr "ਸਧਾਰਨ"
 
-#: ../src/interface.cpp:119
+#: ../src/interface.cpp:98
 msgid "Set process priority to normal"
 msgstr "ਪਰੋਸੈਸ ਤਰਜੀਹ ਸਧਾਰਨ ਸੈੱਟ ਕਰੋ"
 
-#: ../src/interface.cpp:120 ../src/util.cpp:223
+#: ../src/interface.cpp:99 ../src/util.cpp:223
 msgid "Low"
 msgstr "ਘੱਟ"
 
-#: ../src/interface.cpp:121
+#: ../src/interface.cpp:100
 msgid "Set process priority to low"
 msgstr "ਪਰੋਸੈਸ ਤਰਜੀਹ ਘੱਟ ਸੈੱਟ ਕਰੋ"
 
-#: ../src/interface.cpp:122 ../src/util.cpp:225
+#: ../src/interface.cpp:101 ../src/util.cpp:225
 msgid "Very Low"
 msgstr "ਬਹੁਤ ਘੱਟ"
 
-#: ../src/interface.cpp:123
+#: ../src/interface.cpp:102
 msgid "Set process priority to very low"
 msgstr "ਪਰੋਸੈਸ ਤਰਜੀਹ ਬਹੁਤ ਘੱਟ ਸੈੱਟ ਕਰੋ"
 
-#: ../src/interface.cpp:124
+#: ../src/interface.cpp:103
 msgid "Custom"
 msgstr "ਪਸੰਦੀਦਾ"
 
-#: ../src/interface.cpp:125
+#: ../src/interface.cpp:104
 msgid "Set process priority manually"
 msgstr "ਪਰੋਸੈਸ ਤਰਜੀਹ ਖੁਦ ਸੈੱਟ ਕਰੋ"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:256
+#: ../src/interface.cpp:178
 #, c-format
 msgid "Pick a Color for '%s'"
 msgstr "'%s' ਲਈ ਰੰਗ ਚੁਣੋ"
 
-#: ../src/interface.cpp:292 ../src/procproperties.cpp:139
+#: ../src/interface.cpp:214 ../src/procproperties.cpp:139
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:294
+#: ../src/interface.cpp:216
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:378
+#: ../src/interface.cpp:300
 msgid "Sending"
 msgstr "ਭੇਜੇ ਜਾ ਰਹੇ"
 
-#: ../src/load-graph.cpp:166
+#: ../src/load-graph.cpp:174
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u ਸਕਿੰਟ"
 msgstr[1] "%u ਸਕਿੰਟ"
 
-#: ../src/load-graph.cpp:347
+#: ../src/load-graph.cpp:365
 msgid "not available"
 msgstr "ਉਪਲੱਬਧ ਨਹੀਂ"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:350
+#: ../src/load-graph.cpp:368
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%3$s  ਵਿੱਚੋਂ %1$s (%2$.1f%%)"
@@ -545,10 +548,6 @@ msgstr "ਗਲਤੀ"
 
 #: ../src/lsof.cpp:126
 #, c-format
-#| msgid ""
-#| "<b>Error</b>\n"
-#| "'%s' is not a valid Perl regular expression.\n"
-#| "%s"
 msgid "'%s' is not a valid Perl regular expression."
 msgstr "'%s' ਇੱਕ ਠੀਕ ਪਰਲ ਰੈਗੂਲਰ ਸਮੀਕਰਨ ਨਹੀਂ ਹੈ।"
 
@@ -674,22 +673,26 @@ msgid "Main Window height"
 msgstr "ਮੁੱਖ ਵਿੰਡੋ ਉਚਾਈ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
+msgid "Main Window should open maximized"
+msgstr "ਮੁੱਖ ਵਿੰਡੋ ਨੂੰ ਵੱਧ ਤੋਂ ਵੱਧ ਰੂਪ ਵਿੱਚ ਖੋਲ੍ਹੋ"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
 msgid "Main Window X position"
 msgstr "ਮੁੱਖ ਵਿੰਡੋ X ਸਥਿਤੀ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
 msgid "Main Window Y position"
 msgstr "ਮੁੱਖ ਵਿੰਡੋ Y ਸਥਿਤੀ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:6
 msgid "Show process dependencies in tree form"
 msgstr "ਟਰੀ ਰੂਪ ਵਿੱਚ ਪਰੋਸੈੱਸ ਨਿਰਭਰਤਾ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:6
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
 msgid "Solaris mode for CPU percentage"
 msgstr "CPU ਫੀਸਦੀ ਲਈ ਸਲੋਰਸ ਮੋਡ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
 msgid ""
 "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
 "is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
@@ -699,27 +702,39 @@ msgstr ""
 "ਕੁੱਲ CPU ਦੀ "
 "ਗਿਣਤੀ ਮੁਤਾਬਕ ਵੰਡਿਆ ਜਾਂਦਾ ਹੈ। ਨਹੀਂ ਤਾਂ ਇਹ 'Irix ਢੰਗ' ਵਿੱਚ ਚੱਲਦਾ ਹੈ।"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
+msgid "Show CPU chart as stacked area chart"
+msgstr "CPU ਚਾਰਟ ਨੂੰ ਸਟੈਕ ਕੀਤੇ ਖੇਤਰ ਚਾਰਟ ਵਜੋਂ ਵੇਖਾਓ"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
+"of a line chart."
+msgstr ""
+"ਜੇ ਸਹੀ ਦੀ ਚੋਣ ਕੀਤੀ ਤਾਂ ਸਿਸਟਮ-ਮਾਨੀਟਰ CPU ਚਾਰਟ ਨੂੰ ਰੇਖਾ ਚਾਰਟ ਦੀ ਬਜਾਏ ਸਟੈਕ ਖੇਤਰ "
+"ਚਾਰਟ ਵਜੋਂ ਵੇਖਾਏਗਾ।"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
 msgid "Enable/Disable smooth refresh"
 msgstr "ਸਮੂਥ ਤਾਜ਼ਾ ਯੋਗ/ਅਯੋਗ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
 msgid "Show warning dialog when killing processes"
 msgstr "ਜਦੋਂ ਪਰੋਸੈੱਸ ਖਤਮ (kill) ਕਰਨੇ ਹੋਣ ਤਾਂ ਚੇਤਾਵਨੀ ਡਾਈਲਾਗ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
 msgid "Time in milliseconds between updates of the process view"
 msgstr "ਪਰੋਸੈੱਸ ਝਲਕ ਦੇ ਅੱਪਡੇਟ ਦਾ ਸਮਾਂ (ਮਿਲੀ ਸਕਿੰਟ ਵਿੱਚ)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "ਗਰਾਫ਼ ਦੇ ਅੱਪਡੇਟ ਦਾ ਸਮਾਂ (ਮਿਲੀ ਸਕਿੰਟ ਵਿੱਚ)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
 msgid "Whether information about all file systems should be displayed"
 msgstr "ਕੀ ਸਭ ਫਾਇਲ ਸਿਸਟਮਾਂ ਬਾਰੇ ਜਾਣਕਾਰੀ ਨੂੰ ਵਿਖਾਇਆ ਜਾਵੇ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
 msgid ""
 "Whether to display information about all file systems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -730,11 +745,11 @@ msgstr ""
 "'procfs' ਸਮੇਤ)। ਇਹ ਇਸ ਸਮੇਂ ਸਭ ਮਾਊਟ ਫਾਇਲ ਸਿਸਟਮਾਂ ਦੀ ਲਿਸਟ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ ਸਹਾਇਕ "
 "ਹੈ।"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "ਜੰਤਰ ਲਿਸਟ ਦੇ ਅੱਪਡੇਟ ਦਾ ਸਮਾਂ (ਮਿਲੀ ਸਕਿੰਟ ਵਿੱਚ)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
@@ -742,268 +757,268 @@ msgstr ""
 "ਉਹ ਚੁਣੋ ਕਿ ਕਿਹੜੇ ਪਰੋਸੈੱਸ ਡਿਫਾਲਟ ਰੂਪ ਵਿੱਚ ਵੇਖਾਉਣੇ ਹਨ, 0 ਸਭ, 1 ਯੂਜ਼ਰ, ਅਤੇ 2 "
 "ਐਕਟਿਵ ਲਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
 msgid "Saves the currently viewed tab"
 msgstr "ਮੌਜੂਦਾ ਵੇਖੀ ਟੈਬ ਸੰਭਾਲੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
 msgid ""
 "0 for the System Info, 1 for the processes list, 2 for the resources and 3 "
 "for the disks list"
 msgstr ""
 "0 ਸਿਸਟਮ ਜਾਣਕਾਰੀ ਲਈ, 1 ਪਰੋਸੈੱਸਾਂ ਲਿਸਟ ਲਈ, 2 ਸਰੋਤਾਂ ਲਈ ਅਤੇ 3 ਡਿਸਕ ਲਿਸਟ ਲਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
 msgid "CPU colors"
 msgstr "CPU ਰੰਗ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr "ਫਾਰਮੈਟ ਵਿੱਚ ਹਰੇਕ ਐਂਟਰੀ ਦਿਉ (CPU#, ਹੈਕਸਾਡੈਸੀਮਲ ਰੰਗ ਮੁੱਲ)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
 msgid "Default graph memory color"
 msgstr "ਡਿਫਾਲਟ ਗਰਾਫ਼ ਮੈਮੋਰੀ ਰੰਗ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
 msgid "Default graph swap color"
 msgstr "ਡਿਫਾਲਟ ਗਰਾਫ਼ ਸਵੈਪ ਰੰਗ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
 msgid "Default graph incoming network traffic color"
 msgstr "ਡਿਫਾਲਟ ਗਰਾਫ਼ ਆ ਰਿਹਾ ਨੈਟਵਰਕ ਟਰੈਫਿਕ ਰੰਗ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
 msgid "Default graph outgoing network traffic color"
 msgstr "ਡਿਫਾਲਟ ਗਰਾਫ਼ ਜਾ ਰਿਹਾ ਨੈਟਵਰਕ ਟਰੈਫਿਕ ਰੰਗ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
 msgid "Show network traffic in bits"
 msgstr "ਨੈੱਟਵਰਕ ਸਪੀਡ ਬਿੱਟ ਵਿੱਚ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
 msgid "Process view sort column"
 msgstr "ਪਰੋਸੈੱਸ ਝਲਕ ਕ੍ਰਮ ਕਾਲਮ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
 msgid "Process view columns order"
 msgstr "ਪਰੋਸੈੱਸ ਝਲਕ ਕਾਲਮ ਕ੍ਰਮ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
 msgid "Process view sort order"
 msgstr "ਪਰੋਸੈੱਸ ਝਲਕ ਕ੍ਰਮ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
 msgid "Width of process 'Name' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਨਾਂ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
 msgid "Show process 'Name' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਨਾਂ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
 msgid "Width of process 'User' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਯੂਜ਼ਰ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
 msgid "Show process 'User' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਯੂਜ਼ਰ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
 msgid "Width of process 'Status' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਹਾਲਤ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
 msgid "Show process 'Status' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਹਾਲਤ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
 msgid "Width of process 'Virtual Memory' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਵੁਰਚੁਅਲ ਮੈਮੋਰੀ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
 msgid "Show process 'Virtual Memory' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਵੁਰਚੁਅਲ ਮੈਮੋਰੀ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
 msgid "Width of process 'Resident Memory' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਰੈਜ਼ੀਡੈਂਟ ਮੈਮੋਰੀ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
 msgid "Show process 'Resident Memory' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਰੈਜ਼ੀਡੈਂਟ ਮੈਮੋਰੀ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
 msgid "Width of process 'Writable Memory' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਲਿਖਣਯੋਗ ਮੈਮੋਰੀ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
 msgid "Show process 'Writable Memory' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਲਿਖਣਯੋਗ ਮੈਮੋਰੀ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
 msgid "Width of process 'Shared Memory' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਸਾਂਝੀ ਮੈਮੋਰੀ' ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:44
 msgid "Show process 'Shared Memory' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਸਾਂਝੀ ਮੈਮੋਰੀ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
 msgid "Width of process 'X Server Memory' column"
 msgstr "ਪਰੋਸੈੱਸ 'X ਸਰਵਰ ਮੈਮੋਰੀ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
 msgid "Show process 'X Server Memory' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'X ਸਰਵਰ ਮੈਮੋਰੀ' ਕਾਲਮ ਸਿਫ਼ਰ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
 #, no-c-format
 msgid "Width of process 'CPU %' column"
 msgstr "ਪਰੋਸੈੱਸ 'CPU %' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
 #, no-c-format
 msgid "Show process 'CPU %' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'CPU %' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
 msgid "Width of process 'CPU Time' column"
 msgstr "ਪਰੋਸੈੱਸ 'CPU ਸਮੇਂ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
 msgid "Show process 'CPU Time' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'CPU ਸਮਾਂ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
 msgid "Width of process 'Started' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਸ਼ੁਰੂ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
 msgid "Show process 'Started' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਸ਼ੁਰੂ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
 msgid "Width of process 'Nice' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਨਾਈਸ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
 msgid "Show process 'Nice' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਨਾਈਸ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
 msgid "Width of process 'PID' column"
 msgstr "ਪਰੋਸੈੱਸ 'PID' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
 msgid "Show process 'PID' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'PID' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
 msgid "Width of process 'SELinux Security Context' column"
 msgstr "ਪਰੋਸੈੱਸ 'SELinux ਸੁਰੱਖਿਆ ਪਰਸੰਗ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
 msgid "Show process 'SELinux Security Context' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'SELinux ਸੁਰੱਖਿਆ ਪਰਸੰਗ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
 msgid "Width of process 'Command Line' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਕਮਾਂਡ ਲਾਈਨ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
 msgid "Show process 'Command Line' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਕਮਾਂਡ ਲਾਈਨ' ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
 msgid "Width of process 'Memory' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਮੈਮੋਰੀ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
 msgid "Show process 'Memory' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਮੈਮੋਰੀ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
 msgid "Width of process 'Waiting Channel' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਉਡੀਕ ਚੈਨਲ' ਕਾਮਲ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
 msgid "Show process 'Waiting Channel' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਉਡੀਕ ਚੈਨਲ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
 msgid "Width of process 'Control Group' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਕੰਟਰੋਲ ਗਰੁੱਪ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
 msgid "Show process 'Control Group' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਕੰਟਰੋਲ ਗਰੁੱਪ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
 msgid "Width of process 'Unit' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਯੂਨਿਟ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
 msgid "Show process 'Unit' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਯੂਨਿਟ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
 msgid "Width of process 'Session' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਸ਼ੈਸ਼ਨ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
 msgid "Show process 'Session' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਸ਼ੈਸ਼ਨ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
 msgid "Width of process 'Seat' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਸੀਟ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
 msgid "Show process 'Seat' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਸੀਟ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
 msgid "Width of process 'Owner' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਓਨਰ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
 msgid "Show process 'Owner' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਓਨਰ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
 msgid "Width of process 'Priority' column"
 msgstr "ਪਰੋਸੈੱਸ 'ਤਰਜੀਹ' ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
 msgid "Show process 'Priority' column on startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਪਰੋਸੈੱਸ 'ਤਰਜੀਹ' ਕਾਲਮ ਵੇਖੋ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
 msgid "Disk view sort column"
 msgstr "ਡਿਸਕ ਝਲਕ ਕ੍ਰਮ ਕਾਲਮ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
 msgid "Disk view sort order"
 msgstr "ਡਿਸਕ ਝਲਕ ਲੜੀਬੱਧ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
 msgid "Disk view columns order"
 msgstr "ਡਿਸਕ ਝਲਕ ਕਾਲਮ ਕ੍ਰਮ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
 msgid "Memory map sort column"
 msgstr "ਮੈਮੋਰੀ ਮੈਪਕ੍ਰਮ ਕਾਲਮ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:83
 msgid "Memory map sort order"
 msgstr "ਮੈਮੋਰੀ ਮੈਪ ਲੜੀਬੱਧ ਕ੍ਰਮ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:84
 msgid "Open files sort column"
 msgstr "ਖੁੱਲ੍ਹੀਆਂ ਫਾਇਲਾਂ ਲੜੀਬੱਧ ਕਾਲਮ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:85
 msgid "Open files sort order"
 msgstr "ਖੁੱਲ੍ਹੀਆਂ ਫਾਇਲਾਂ ਲੜੀਬੱਧ"
 
@@ -1026,13 +1041,14 @@ msgstr ""
 "%3$s"
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:77
+#: ../src/procdialogs.cpp:78
 #, c-format
-msgid "Kill the selected process »%s« (PID: %u)?"
-msgstr "ਚੁਣਿਆ ਪਰੋਸੈੱਸ »%s« (PID: %u) ਖਤਮ (kill) ਕਰਨਾ ਹੈ?"
+#| msgid "Kill the selected process »%s« (PID: %u)?"
+msgid "Kill the selected process “%s” (PID: %u)?"
+msgstr "ਚੁਣਿਆ ਪਰੋਸੈੱਸ \"%s\" (PID: %u) ਖਤਮ (kill) ਕਰਨਾ ਹੈ?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:81
+#: ../src/procdialogs.cpp:82
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1042,13 +1058,14 @@ msgstr ""
 "ਆ ਸਕਦੀ ਹੈ। ਸਿਰਫ਼ ਗ਼ੈਰ-ਜਵਾਬ ਦਿੰਦੇ ਪਰੋਸੈੱਸ ਹੀ ਬੰਦ ਕਰੋ।"
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:88
+#: ../src/procdialogs.cpp:89
 #, c-format
-msgid "End the selected process »%s« (PID: %u)?"
-msgstr "ਕੀ ਚੁਣਿਆ ਪਰੋਸੈੱਸ »%s« (PID: %u) ਸਮਾਪਤ (end) ਕਰਨਾ ਹੈ?"
+#| msgid "End the selected process »%s« (PID: %u)?"
+msgid "End the selected process “%s” (PID: %u)?"
+msgstr "ਕੀ ਚੁਣਿਆ ਪਰੋਸੈੱਸ \"%s\" (PID: %u) ਸਮਾਪਤ (end) ਕਰਨਾ ਹੈ?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:92
+#: ../src/procdialogs.cpp:93
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponsive processes should be ended."
@@ -1057,15 +1074,11 @@ msgstr ""
 "ਜਾਂ ਸੁਰੱਖਿਆ "
 "ਸਮੱਸਿਆ ਆ ਸਕਦੀ ਹੈ। ਸਿਰਫ਼ ਗ਼ੈਰ-ਜਵਾਬ ਦਿੰਦੇ ਪਰੋਸੈੱਸ ਹੀ ਬੰਦ ਕਰੋ।"
 
-#: ../src/procdialogs.cpp:130
-#, c-format
-msgid "(%s Priority)"
-msgstr "(%s ਤਰਜੀਹ)"
-
 #: ../src/procdialogs.cpp:175
 #, c-format
-msgid "Change Priority of Process »%s« (PID: %u)"
-msgstr "ਪਰੋਸੈਸ »%s« (PID: %u) ਦੀ ਤਰਜੀਹ ਬਦਲੋ"
+#| msgid "Change Priority of Process »%s« (PID: %u)"
+msgid "Change Priority of Process “%s” (PID: %u)"
+msgstr "ਪਰੋਸੈਸ \"%s\" (PID: %u) ਦੀ ਤਰਜੀਹ ਬਦਲੋ"
 
 #: ../src/procdialogs.cpp:193
 msgid "Note:"
@@ -1079,51 +1092,51 @@ msgstr ""
 "ਪਰੋਸੈੱਸ ਦੀ ਤਰਜੀਹ ਇਸ ਦੇ ਨਾਇਸ ਮੁੱਲ ਕਰਕੇ ਹੁੰਦੀ ਹੈ। ਘੱਟ ਨਾਇਸ ਮੁੱਲ ਦਾ ਮਤਲਬ ਜਿਆਦਾ "
 "ਤਰਜੀਹ।"
 
-#: ../src/procdialogs.cpp:418
+#: ../src/procdialogs.cpp:429
 msgid "Icon"
 msgstr "ਆਈਕਾਨ"
 
-#: ../src/procman.cpp:668
+#: ../src/procman-app.cpp:545
 msgid "A simple process and system monitor."
 msgstr "ਇੱਕ ਆਮ ਪਰੋਸੈੱਸ ਅਤੇ ਸਿਸਟਮ ਨਿਗਰਾਨ।"
 
-#: ../src/procproperties.cpp:104 ../src/util.cpp:420
+#: ../src/procproperties.cpp:104 ../src/util.cpp:434
 msgid "N/A"
 msgstr "ਲਾਗੂ ਨਹੀਂ"
 
-#: ../src/procproperties.cpp:130 ../src/proctable.cpp:236
+#: ../src/procproperties.cpp:130 ../src/proctable.cpp:240
 msgid "Process Name"
 msgstr "ਪਰੋਸੈੱਸ ਨਾਂ"
 
-#: ../src/procproperties.cpp:131 ../src/proctable.cpp:237
+#: ../src/procproperties.cpp:131 ../src/proctable.cpp:241
 msgid "User"
 msgstr "ਯੂਜ਼ਰ"
 
-#: ../src/procproperties.cpp:132 ../src/proctable.cpp:238
+#: ../src/procproperties.cpp:132 ../src/proctable.cpp:242
 msgid "Status"
 msgstr "ਹਾਲਤ"
 
-#: ../src/procproperties.cpp:134 ../src/proctable.cpp:239
+#: ../src/procproperties.cpp:134 ../src/proctable.cpp:243
 msgid "Virtual Memory"
 msgstr "ਵੁਰਚੁਅਲ ਮੈਮੋਰੀ"
 
-#: ../src/procproperties.cpp:135 ../src/proctable.cpp:240
+#: ../src/procproperties.cpp:135 ../src/proctable.cpp:244
 msgid "Resident Memory"
 msgstr "ਰੈਜ਼ੀਡੇਂਟ ਮੈਮੋਰੀ"
 
-#: ../src/procproperties.cpp:136 ../src/proctable.cpp:241
+#: ../src/procproperties.cpp:136 ../src/proctable.cpp:245
 msgid "Writable Memory"
 msgstr "ਲਿਖਣਯੋਗ ਮੈਮੋਰੀ"
 
-#: ../src/procproperties.cpp:137 ../src/proctable.cpp:242
+#: ../src/procproperties.cpp:137 ../src/proctable.cpp:246
 msgid "Shared Memory"
 msgstr "ਸਾਂਝੀ ਮੈਮੋਰੀ"
 
-#: ../src/procproperties.cpp:138 ../src/proctable.cpp:243
+#: ../src/procproperties.cpp:138 ../src/proctable.cpp:247
 msgid "X Server Memory"
 msgstr "X ਸਰਵਰ ਮੈਮੋਰੀ"
 
-#: ../src/procproperties.cpp:140 ../src/proctable.cpp:245
+#: ../src/procproperties.cpp:140 ../src/proctable.cpp:249
 msgid "CPU Time"
 msgstr "CPU ਟਾਈਪ"
 
@@ -1134,123 +1147,75 @@ msgid_plural "%lld seconds"
 msgstr[0] "%lld ਸਕਿੰਟ"
 msgstr[1] "%lld ਸਕਿੰਟ"
 
-#: ../src/procproperties.cpp:141 ../src/proctable.cpp:246
+#: ../src/procproperties.cpp:141 ../src/proctable.cpp:250
 msgid "Started"
 msgstr "ਸ਼ੁਰੂ"
 
-#: ../src/procproperties.cpp:142 ../src/proctable.cpp:247
+#: ../src/procproperties.cpp:142 ../src/proctable.cpp:251
 msgid "Nice"
 msgstr "ਨਾਇਸ"
 
-#: ../src/procproperties.cpp:143 ../src/proctable.cpp:261
+#: ../src/procproperties.cpp:143 ../src/proctable.cpp:265
 msgid "Priority"
 msgstr "ਤਰਜੀਹ"
 
-#: ../src/procproperties.cpp:144 ../src/proctable.cpp:248
+#: ../src/procproperties.cpp:144 ../src/proctable.cpp:252
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:145 ../src/proctable.cpp:249
+#: ../src/procproperties.cpp:145 ../src/proctable.cpp:253
 msgid "Security Context"
 msgstr "ਸੁਰੱਖਿਆ ਜਾਣਕਾਰੀ"
 
-#: ../src/procproperties.cpp:146 ../src/proctable.cpp:250
+#: ../src/procproperties.cpp:146 ../src/proctable.cpp:254
 msgid "Command Line"
 msgstr "ਕਮਾਂਡ ਲਾਈਨ"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:147 ../src/proctable.cpp:253
+#: ../src/procproperties.cpp:147 ../src/proctable.cpp:257
 msgid "Waiting Channel"
 msgstr "ਉਡੀਕ ਚੈਨਲ"
 
-#: ../src/procproperties.cpp:258
+#: ../src/procproperties.cpp:259
 msgid "Process Properties"
 msgstr "ਪਰੋਸੈੱਸ ਵਿਸ਼ੇਸ਼ਤਾ"
 
-#: ../src/procproperties.cpp:278
+#: ../src/procproperties.cpp:279
 #, c-format
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "ਪਰੋਸੈਸ \"%s\" (PID %u) ਦੀ ਵਿਸ਼ੇਸ਼ਤਾ:"
 
-#: ../src/proctable.cpp:244
+#: ../src/proctable.cpp:248
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:254
+#: ../src/proctable.cpp:258
 msgid "Control Group"
 msgstr "ਕੰਟਰੋਲ ਗਰੁੱਪ"
 
-#: ../src/proctable.cpp:255
+#: ../src/proctable.cpp:259
 msgid "Unit"
 msgstr "ਯੂਨਿਟ"
 
-#: ../src/proctable.cpp:256
+#: ../src/proctable.cpp:260
 msgid "Session"
 msgstr "ਸ਼ੈਸ਼ਨ"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:259
+#: ../src/proctable.cpp:263
 msgid "Seat"
 msgstr "ਸੀਟ"
 
-#: ../src/proctable.cpp:260
+#: ../src/proctable.cpp:264
 msgid "Owner"
 msgstr "ਓਨਰ"
 
-#: ../src/proctable.cpp:1078
+#: ../src/proctable.cpp:1083
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "ਆਖਰੀ ੧, ੫, ੧੫ ਮਿੰਟਾਂ 'ਚ ਲੋਡ ਔਸਤ: %0.2f, %0.2f, %0.2f"
-
-#. Translators: The first string parameter is release version (codename),
-#. * the second one is the architecture, 32 or 64-bit
-#: ../src/sysinfo.cpp:78
-#, c-format
-msgid "Release %s %s"
-msgstr "ਰੀਲਿਜ਼ %s %s"
-
-#. translators: This is the type of architecture, for example:
-#. * "64-bit" or "32-bit"
-#: ../src/sysinfo.cpp:115
-#, c-format
-msgid "%d-bit"
-msgstr "%d-ਬਿੱਟ"
-
-#: ../src/sysinfo.cpp:734
-#, c-format
-msgid "Kernel %s"
-msgstr "ਕਰਨਲ %s"
-
-#: ../src/sysinfo.cpp:746
-#, c-format
-msgid "GNOME %s"
-msgstr "ਗਨੋਮ %s"
-
-#. hardware section
-#: ../src/sysinfo.cpp:759
-#| msgid "<b>Hardware</b>"
-msgid "Hardware"
-msgstr "ਹਾਰਡਵੇਅਰ"
-
-#: ../src/sysinfo.cpp:764
-msgid "Memory:"
-msgstr "ਮੈਮੋਰੀ:"
-
-#: ../src/sysinfo.cpp:769
-msgid "Processor:"
-msgstr "ਪ੍ਰੋਸੈਸਰ:"
-
-#. disk space section
-#: ../src/sysinfo.cpp:778
-#| msgid "<b>System Status</b>"
-msgid "System Status"
-msgstr "ਸਿਸਟਮ ਹਾਲਤ"
-
-#: ../src/sysinfo.cpp:784
-msgid "Available disk space:"
-msgstr "ਉਪਲੱਬਧ ਡਿਸਕ ਥਾਂ:"
 
 #: ../src/util.cpp:30
 msgid "Running"
@@ -1350,11 +1315,104 @@ msgid_plural "%u bytes"
 msgstr[0] "%u ਬਾਇਟ"
 msgstr[1] "%u ਬਾਇਟ"
 
+#: ../src/util.cpp:232
+#| msgid "(High Priority)"
+msgid "Very High Priority"
+msgstr "ਬਹੁਤ ਵੱਧ ਤਰਜੀਹ"
+
+#: ../src/util.cpp:234
+#| msgid "(High Priority)"
+msgid "High Priority"
+msgstr "ਵੱਧ ਤਰਜੀਹ"
+
+#: ../src/util.cpp:236
+#| msgid "(Normal Priority)"
+msgid "Normal Priority"
+msgstr "ਸਾਧਾਰਨ ਤਰਜੀਹ"
+
+#: ../src/util.cpp:238
+#| msgid "Priority"
+msgid "Low Priority"
+msgstr "ਘੱਟ ਤਰਜੀਹ"
+
+#: ../src/util.cpp:240
+#| msgid "(Very Low Priority)"
+msgid "Very Low Priority"
+msgstr "ਬਹੁਤ ਘੱਟ ਤਰਜੀਹ"
+
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:585
+#: ../src/util.cpp:599
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "System"
+#~ msgstr "ਸਿਸਟਮ"
+
+#~ msgid "\n"
+#~ msgstr "\n"
+
+#~ msgid "Show the System tab"
+#~ msgstr "ਸਿਸਟਮ ਟੈਬ ਵੇਖੋ"
+
+#~ msgid "_Monitor"
+#~ msgstr "ਮਾਨੀਟਰ(_M)"
+
+#~ msgid "_Edit"
+#~ msgstr "ਸੋਧ(_E)"
+
+#~ msgid "Search for _Open Files"
+#~ msgstr "ਖੁੱਲ੍ਹੀਆਂ ਫਾਇਲਾਂ ਦੀ ਖੋਜ(_O)"
+
+#~ msgid "Search for open files"
+#~ msgstr "ਖੁੱਲ੍ਹੀਆਂ ਫਾਇਲਾਂ ਦੀ ਖੋਜ"
+
+#~ msgid "Quit the program"
+#~ msgstr "ਪਰੋਗਰਾਮ ਬੰਦ ਕਰੋ"
+
+#~ msgid "Configure the application"
+#~ msgstr "ਐਪਲੀਕੇਸ਼ਨ ਸੰਰਚਨਾ"
+
+#~ msgid "_Contents"
+#~ msgstr "ਸਮੱਗਰੀ(_C)"
+
+#~ msgid "Open the manual"
+#~ msgstr "ਮੈਨੂਅਲ ਖੋਲ੍ਹੋ"
+
+#~ msgid "About this application"
+#~ msgstr "ਇਸ ਐਪਲੀਕੇਸ਼ਨ ਬਾਰੇ"
+
+#~ msgid "(%s Priority)"
+#~ msgstr "(%s ਤਰਜੀਹ)"
+
+#~ msgid "Release %s %s"
+#~ msgstr "ਰੀਲਿਜ਼ %s %s"
+
+#~ msgid "%d-bit"
+#~ msgstr "%d-ਬਿੱਟ"
+
+#~ msgid "Kernel %s"
+#~ msgstr "ਕਰਨਲ %s"
+
+#~ msgid "GNOME %s"
+#~ msgstr "ਗਨੋਮ %s"
+
+#~| msgid "<b>Hardware</b>"
+#~ msgid "Hardware"
+#~ msgstr "ਹਾਰਡਵੇਅਰ"
+
+#~ msgid "Memory:"
+#~ msgstr "ਮੈਮੋਰੀ:"
+
+#~ msgid "Processor:"
+#~ msgstr "ਪ੍ਰੋਸੈਸਰ:"
+
+#~| msgid "<b>System Status</b>"
+#~ msgid "System Status"
+#~ msgstr "ਸਿਸਟਮ ਹਾਲਤ"
+
+#~ msgid "Available disk space:"
+#~ msgstr "ਉਪਲੱਬਧ ਡਿਸਕ ਥਾਂ:"
 
 #~ msgid "Unknown model"
 #~ msgstr "ਅਣਜਾਣ ਮਾਡਲ"
@@ -1380,20 +1438,8 @@ msgstr "%s/s"
 #~ msgid "Width of process 'estimated memory usage' column"
 #~ msgstr "ਪਰੋਸੈੱਸ 'ਅਨੁਮਾਨਿਤ ਮੈਮੋਰੀ' ਵਰਤੋਂ ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#~ msgid "(High Priority)"
-#~ msgstr "(ਵੱਧ ਤਰਜੀਹ)"
-
-#~ msgid "(Normal Priority)"
-#~ msgstr "(ਸਾਧਾਰਨ ਤਰਜੀਹ)"
-
-#~ msgid "(Very Low Priority)"
-#~ msgstr "(ਬਹੁਤ ਘੱਟ ਤਰਜੀਹ)"
-
 #~ msgid "Solaris mode"
 #~ msgstr "ਸਲੋਰਸ ਮੋਡ"
-
-#~ msgid "File system i_nformation shown in list:"
-#~ msgstr "ਲਿਸਟ ਵਿੱਚ ਵੇਖਾਈ ਫਾਈਲ ਸਿਸਟਮ ਜਾਣਕਾਰੀ(_n):"
 
 #~ msgid "Processor %d:"
 #~ msgstr "ਪ੍ਰੋਸੈਸਰ %d:"
@@ -1403,15 +1449,6 @@ msgstr "%s/s"
 
 #~ msgid "Default graph frame color"
 #~ msgstr "ਮੂਲ ਗਰਾਫ਼ ਫਰੇਮ ਰੰਗ"
-
-#~ msgid "_Quit"
-#~ msgstr "ਬਾਹਰ(_Q)"
-
-#~ msgid "Prefere_nces"
-#~ msgstr "ਮੇਰੀ ਪਸੰਦ(_n)"
-
-#~ msgid "_About"
-#~ msgstr "ਇਸ ਬਾਰੇ(_A)"
 
 #~ msgid "User memory:"
 #~ msgstr "ਯੂਜ਼ਰ ਮੈਮੋਰੀ:"
