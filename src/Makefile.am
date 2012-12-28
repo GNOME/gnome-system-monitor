@@ -11,7 +11,6 @@ bin_PROGRAMS = gnome-system-monitor
 
 gnome_system_monitor_cpp_files = \
 	argv.cpp \
-	procman.cpp \
 	interface.cpp \
 	callbacks.cpp \
 	load-graph.cpp \
@@ -47,7 +46,8 @@ gnome_system_monitor_h_files = \
 gnome_system_monitor_SOURCES = \
   $(gnome_system_monitor_h_files) \
   $(gnome_system_monitor_cpp_files) \
-  $(gnome_system_monitor_c_files)
+  $(gnome_system_monitor_c_files) \
+  procman.cpp
 
 gnome_system_monitor_LDADD = @PROCMAN_LIBS@ @SYSTEMD_LIBS@
 
