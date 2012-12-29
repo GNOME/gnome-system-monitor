@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-28 17:43+0000\n"
+"POT-Creation-Date: 2012-12-07 20:08+0000\n"
 "PO-Revision-Date: 2012-10-01 05:58+0000\n"
 "Last-Translator: OKANO Takayoshi <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -31,8 +31,26 @@ msgstr "現在のプロセスを表示してシステムの状態を監視しま
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr "Monitor;System;Process;CPU;Memory;Network;History;Usage;モニター;システム;ププロセス;CPU;メモリー;ネットワーク;履歴;使用量;"
 
-msgid "System"
-msgstr "システム"
+#, fuzzy
+#| msgid "_Kill Process"
+msgid "Kill process"
+msgstr "プロセスの強制終了(_K)"
+
+msgid "Privileges are required to kill process"
+msgstr ""
+
+#, fuzzy
+#| msgid "_Continue Process"
+msgid "Renice process"
+msgstr "プロセスの再開(_C)"
+
+msgid "Privileges are required to renice process"
+msgstr ""
+
+#, fuzzy
+#| msgid "_View"
+msgid "View"
+msgstr "表示(_V)"
 
 msgid "End _Process"
 msgstr "プロセスの終了(_P)"
@@ -73,6 +91,9 @@ msgstr "リソース"
 msgid "File Systems"
 msgstr "ファイルシステム"
 
+#, fuzzy
+#| msgid "Search for Open Files"
+msgctxt "Window title for 'Search for Open Files' dialog"
 msgid "Search for Open Files"
 msgstr "オープンしたファイルの検索"
 
@@ -87,6 +108,26 @@ msgstr "クリア(_L)"
 
 msgid "S_earch results:"
 msgstr "検索結果(_E):"
+
+#, fuzzy
+#| msgid "Search for Open Files"
+msgctxt "Menu item to Open 'Search for Open Files' dialog"
+msgid "Search for Open Files"
+msgstr "オープンしたファイルの検索"
+
+msgid "Preferences"
+msgstr ""
+
+#, fuzzy
+#| msgid "_Help"
+msgid "Help"
+msgstr "ヘルプ(_H)"
+
+msgid "About"
+msgstr ""
+
+msgid "Quit"
+msgstr ""
 
 msgid "Open Files"
 msgstr "オープンしたファイル"
@@ -121,6 +162,9 @@ msgstr "グラフ"
 msgid "_Show network speed in bits"
 msgstr "ネットワークの速度をビット単位で表示する(_S)"
 
+msgid "_Draw CPU chart as stacked area chart"
+msgstr ""
+
 msgid "Show _all file systems"
 msgstr "すべてのファイルシステムを表示する(_A)"
 
@@ -135,9 +179,6 @@ msgstr "Nice 値(_N):"
 
 msgid "<small><i><b>Note:</b> The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority.</i></small>"
 msgstr "<small><i><b>注記:</b> プロセスの優先度は Nice 値で与えます。Nice 値が低いほど優先度は高くなります。</i></small>"
-
-msgid "Show the System tab"
-msgstr "起動時にシステムのタブを表示する"
 
 msgid "Show the Processes tab"
 msgstr "起動時にプロセスのタブを表示する"
@@ -229,28 +270,8 @@ msgstr "おかしな色データを受け取りました\n"
 msgid "Click to set graph colors"
 msgstr "クリックしてグラフの色を指定します"
 
-#. xgettext: noun, top level menu.
-#. "File" did not make sense for system-monitor
-msgid "_Monitor"
-msgstr "監視(_M)"
-
-msgid "_Edit"
-msgstr "編集(_E)"
-
 msgid "_View"
 msgstr "表示(_V)"
-
-msgid "_Help"
-msgstr "ヘルプ(_H)"
-
-msgid "Search for _Open Files"
-msgstr "オープンしたファイルの検索(_O)"
-
-msgid "Search for open files"
-msgstr "オープンしているファイルを検索します"
-
-msgid "Quit the program"
-msgstr "プログラムを終了します"
 
 msgid "_Stop Process"
 msgstr "プロセスの停止(_S)"
@@ -282,9 +303,6 @@ msgstr "優先度の変更(_C)"
 msgid "Change the order of priority of process"
 msgstr "プロセスの優先度を変更します"
 
-msgid "Configure the application"
-msgstr "プログラムを設定します"
-
 msgid "_Refresh"
 msgstr "更新する(_R)"
 
@@ -309,15 +327,6 @@ msgstr "プロパティ(_P)"
 
 msgid "View additional information about a process"
 msgstr "プロセスに関する詳細情報を表示します"
-
-msgid "_Contents"
-msgstr "目次(_C)"
-
-msgid "Open the manual"
-msgstr "ヘルプを表示します"
-
-msgid "About this application"
-msgstr "このアプリケーションの情報を表示します"
 
 msgid "_Dependencies"
 msgstr "スレッド表示にする(_D)"
@@ -526,6 +535,12 @@ msgstr "CPU の使用率を Solaris モードで表示する"
 
 msgid "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage is divided by the total number of CPUs. Otherwise, it operates in 'Irix mode'."
 msgstr "TRUE にすると 'Solaris モード' で動作するようになります。これはタスクの CPU 使用率を CPU の個数で割った値になるモードです。それ以外は 'IRIX モード' で動作します。"
+
+msgid "Show CPU chart as stacked area chart"
+msgstr ""
+
+msgid "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead of a line chart."
+msgstr ""
 
 msgid "Enable/Disable smooth refresh"
 msgstr "更新をスムーズにするかどうか"
@@ -887,43 +902,6 @@ msgstr "所有者"
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "最近1, 5, 15分間の平均負荷: %0.2f, %0.2f, %0.2f"
 
-#. Translators: The first string parameter is release version (codename),
-#. * the second one is the architecture, 32 or 64-bit
-#, c-format
-msgid "Release %s %s"
-msgstr "リリース %s %s"
-
-#. translators: This is the type of architecture, for example:
-#. * "64-bit" or "32-bit"
-#, c-format
-msgid "%d-bit"
-msgstr "%d-bit"
-
-#, c-format
-msgid "Kernel %s"
-msgstr "カーネル %s"
-
-#, c-format
-msgid "GNOME %s"
-msgstr "GNOME %s"
-
-#. hardware section
-msgid "Hardware"
-msgstr "ハードウェア"
-
-msgid "Memory:"
-msgstr "メモリ:"
-
-msgid "Processor:"
-msgstr "プロセッサ:"
-
-#. disk space section
-msgid "System Status"
-msgstr "システムの状態"
-
-msgid "Available disk space:"
-msgstr "利用可能なディスク容量:"
-
 msgid "Running"
 msgstr "実行中"
 
@@ -1020,6 +998,66 @@ msgstr "非常に低い優先度"
 #, c-format
 msgid "%s/s"
 msgstr "%s/秒"
+
+#~ msgid "System"
+#~ msgstr "システム"
+
+#~ msgid "Show the System tab"
+#~ msgstr "起動時にシステムのタブを表示する"
+
+#~ msgid "_Monitor"
+#~ msgstr "監視(_M)"
+
+#~ msgid "_Edit"
+#~ msgstr "編集(_E)"
+
+#~ msgid "Search for _Open Files"
+#~ msgstr "オープンしたファイルの検索(_O)"
+
+#~ msgid "Search for open files"
+#~ msgstr "オープンしているファイルを検索します"
+
+#~ msgid "Quit the program"
+#~ msgstr "プログラムを終了します"
+
+#~ msgid "Configure the application"
+#~ msgstr "プログラムを設定します"
+
+#~ msgid "_Contents"
+#~ msgstr "目次(_C)"
+
+#~ msgid "Open the manual"
+#~ msgstr "ヘルプを表示します"
+
+#~ msgid "About this application"
+#~ msgstr "このアプリケーションの情報を表示します"
+
+#~ msgid "Release %s %s"
+#~ msgstr "リリース %s %s"
+
+#~ msgid "%d-bit"
+#~ msgstr "%d-bit"
+
+#~ msgid "Kernel %s"
+#~ msgstr "カーネル %s"
+
+#~ msgid "GNOME %s"
+#~ msgstr "GNOME %s"
+
+#~ msgid "Hardware"
+#~ msgstr "ハードウェア"
+
+#~ msgid "Memory:"
+#~ msgstr "メモリ:"
+
+#~ msgid "Processor:"
+#~ msgstr "プロセッサ:"
+
+#~ msgid "System Status"
+#~ msgstr "システムの状態"
+
+#~ msgid "Available disk space:"
+#~ msgstr "利用可能なディスク容量:"
 
 #, fuzzy
 #~ msgid "(%s Priority)"
