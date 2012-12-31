@@ -125,7 +125,6 @@ fill_proc_properties (GtkWidget *tree, ProcInfo *info)
     else
         HZ = cinf.hz;
 #endif
-
     proc_arg proc_props[] = {
         { N_("Process Name"), g_strdup_printf("%s", info->name)},
         { N_("User"), g_strdup_printf("%s (%d)", info->user.c_str(), info->uid)},
@@ -145,6 +144,7 @@ fill_proc_properties (GtkWidget *tree, ProcInfo *info)
         { N_("Security Context"), g_strdup_printf("%s", info->security_context)},
         { N_("Command Line"), g_strdup_printf("%s", info->arguments)},
         { N_("Waiting Channel"), g_strdup_printf("%s", info->wchan)},
+        { N_("Control Group"), info->cgroup_name?g_strdup_printf("%s", info->cgroup_name):g_strdup("")},
         { NULL, NULL}
     };
 
