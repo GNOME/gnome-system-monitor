@@ -17,18 +17,18 @@ runnabledir = $(pkglibexecdir)
 runnable_SCRIPTS = scripts/gsm-renice \
                    scripts/gsm-kill
 
+org.gnome.gnome-system-monitor.policy.in: org.gnome.gnome-system-monitor.policy.in.in Makefile
+	$(AM_V_GEN) sed -e "s|\@pkglibexecdir\@|$(pkglibexecdir)|" $< > $@
+
 EXTRA_DIST = \
 	$(ui_DATA) \
 	$(runnable_SCRIPTS) \
-	org.gnome.gnome-system-monitor.policy.in \
+	org.gnome.gnome-system-monitor.policy.in.in \
 	gnome-system-monitor.desktop.in \
 	gnome-system-monitor.doap \
 	intltool-extract.in \
 	intltool-merge.in \
 	intltool-update.in
-
-org.gnome.gnome-system-monitor.policy.in: org.gnome.gnome-system-monitor.policy.in.in Makefile
-	$(AM_V_GEN) sed -e "s|\@pkglibexecdir\@|$(pkglibexecdir)|" $< > $@
 
 @INTLTOOL_POLICY_RULE@
 polkit_policydir = $(datadir)/polkit-1/actions
@@ -69,6 +69,6 @@ DISTCLEANFILES = \
 	intltool-update               \
 	gnome-system-monitor.desktop  \
 	org.gnome.gnome-system-monitor.policy \
-        org.gnome.gnome-system-monitor.policy.in 
+    org.gnome.gnome-system-monitor.policy.in 
 
 DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper
