@@ -123,7 +123,7 @@ fill_proc_properties (GtkWidget *tree, ProcInfo *info)
     if (sysctl (mib, G_N_ELEMENTS (mib), &cinf, &size, NULL, 0) == -1)
         HZ = 100;
     else
-        HZ = cinf.hz;
+        HZ = (cinf.stathz ? cinf.stathz : cinf.hz);
 #endif
     proc_arg proc_props[] = {
         { N_("Process Name"), g_strdup_printf("%s", info->name)},
