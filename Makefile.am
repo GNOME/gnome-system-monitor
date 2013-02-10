@@ -25,7 +25,7 @@ EXTRA_DIST = \
 	$(runnable_SCRIPTS) \
 	org.gnome.gnome-system-monitor.policy.in.in \
 	gnome-system-monitor.desktop.in \
-    gnome-system-monitor-kde.desktop.in \
+	gnome-system-monitor-kde.desktop.in \
 	gnome-system-monitor.doap \
 	intltool-extract.in \
 	intltool-merge.in \
@@ -69,7 +69,7 @@ DISTCLEANFILES = \
 	intltool-merge                \
 	intltool-update               \
 	gnome-system-monitor.desktop  \
-    gnome-system-monitor-kde.desktop  \
+	gnome-system-monitor-kde.desktop  \
 	org.gnome.gnome-system-monitor.policy \
     org.gnome.gnome-system-monitor.policy.in 
 
