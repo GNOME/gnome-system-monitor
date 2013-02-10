@@ -12,6 +12,7 @@
 #include "settings-keys.h"
 #include "argv.h"
 #include "util.h"
+#include "cgroups.h"
 
 static void
 mount_changed(const Glib::RefPtr<Gio::Mount>&, ProcmanApp *app)
@@ -388,7 +389,8 @@ procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child
     GList *columns, *it;
     gint sort_col;
     GtkSortType order;
-
+    GtkWidget *header_menu;
+   
     g_assert(tree);
     g_assert(child_schema);
 
@@ -410,13 +412,18 @@ procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child
     if(!g_strcmp0(child_schema, "proctree") ||
        !g_strcmp0(child_schema, "disktreenew"))
     {
+        header_menu = gtk_menu_new();
+        
         for(it = columns; it; it = it->next)
         {
             GtkTreeViewColumn *column;
             gint width;
             gboolean visible;
             int id;
+            const gchar *title;
             gchar *key;
+            GtkWidget* column_item;
+            GtkWidget* button;
 
             column = static_cast<GtkTreeViewColumn*>(it->data);
             id = gtk_tree_view_column_get_sort_column_id (column);
@@ -432,13 +439,39 @@ procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child
             column = gtk_tree_view_get_column (GTK_TREE_VIEW (tree), id);
             if(!column) continue;
             gtk_tree_view_column_set_visible (column, visible);
-            if (visible) {
-                /* ensure column is really visible */
-                width = MAX(width, 10);
-                gtk_tree_view_column_set_fixed_width(column, width);
-            }
+            /* ensure column is really visible */
+            width = MAX(width, 50);
+            gtk_tree_view_column_set_fixed_width(column, width);
+
+            if ((id == COL_CGROUP) && (!cgroups_enabled()))
+                continue;
+
+            if ((id == COL_UNIT ||
+                id == COL_SESSION ||
+                id == COL_SEAT ||
+                id == COL_OWNER)
+#ifdef HAVE_SYSTEMD
+                && sd_booted() <= 0
+#endif
+                )
+                continue;
+            // set the states for the columns visibility menu available by header right click
+            title = gtk_tree_view_column_get_title (column);
+
+            if (!title)
+                title = _("Icon");
+            button = gtk_tree_view_column_get_button(column);
+            g_signal_connect(G_OBJECT(button), "button_press_event", G_CALLBACK(cb_column_header_clicked), header_menu);
+
+            key = g_strdup_printf ("col-%d-visible", id);
+            column_item = gtk_check_menu_item_new_with_label(title);
+            g_settings_bind(pt_settings, key, G_OBJECT(column_item), "active", G_SETTINGS_BIND_DEFAULT);
+            g_settings_bind(pt_settings, key, G_OBJECT(column), "visible", G_SETTINGS_BIND_DEFAULT);
+            g_free (key);
+
+            gtk_menu_shell_append(GTK_MENU_SHELL(header_menu), column_item);
         }
-        
+        gtk_widget_show_all(header_menu);
         GVariant     *value;
         GVariantIter iter;
         int          sortIndex;

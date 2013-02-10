@@ -79,4 +79,8 @@ void            cb_kill_sigstop(GtkAction *action,
 void            cb_kill_sigcont(GtkAction *action,
                                 gpointer data);
 
+gboolean        cb_column_header_clicked (GtkTreeViewColumn* column, 
+                                          GdkEvent* event, 
+                                          gpointer data);
+
 #endif /* _PROCMAN_CALLBACKS_H_ */

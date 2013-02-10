@@ -509,3 +509,31 @@ cb_column_resized(GtkWidget *widget, GParamSpec* param, gpointer data)
     }
     g_free (key);
 }
+
+
+static void
+cb_header_menu_position_function(GtkMenu* menu, gint *x, gint *y, gboolean *push_in, gpointer data)
+{
+    GdkEventButton* event = static_cast<GdkEventButton*>(data);
+    gint wx, wy, ww, wh;
+    gdk_window_get_geometry(event->window, &wx, &wy, &ww, &wh);
+    gdk_window_get_origin(event->window, &wx, &wy);
+    
+    *x = wx + event->x;
+    *y = wy + wh;
+    *push_in = TRUE;
+}
+
+gboolean
+cb_column_header_clicked (GtkTreeViewColumn* column, GdkEvent* event, gpointer data)
+{
+    GtkMenu *menu = static_cast<GtkMenu*>(data);
+    if (event->button.button == GDK_BUTTON_SECONDARY) {
+        gtk_menu_popup(GTK_MENU(menu), NULL, NULL, cb_header_menu_position_function, &(event->button), event->button.button, event->button.time);
+        return TRUE;
+    }
+
+    return FALSE;
+    
+}
+

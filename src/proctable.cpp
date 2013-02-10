@@ -302,6 +302,7 @@ proctable_new (ProcmanApp * const app)
                                          "text", COL_NAME,
                                          NULL);
     gtk_tree_view_column_set_title (column, _(titles[0]));
+
     gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
     gtk_tree_view_column_set_resizable (column, TRUE);
     gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
@@ -309,7 +310,6 @@ proctable_new (ProcmanApp * const app)
     g_signal_connect(G_OBJECT(column), "notify::width", G_CALLBACK(cb_column_resized), settings);
     gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
     gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
-
 
     for (i = COL_USER; i <= COL_PRIORITY; i++) {
 
@@ -325,7 +325,6 @@ proctable_new (ProcmanApp * const app)
         g_signal_connect(G_OBJECT(col), "notify::width", G_CALLBACK(cb_column_resized), settings);
         gtk_tree_view_column_set_reorderable(col, TRUE);
         gtk_tree_view_append_column(GTK_TREE_VIEW(proctree), col);
-
         // type
         switch (i) {
             case COL_MEMXSERVER:
@@ -428,12 +427,10 @@ proctable_new (ProcmanApp * const app)
                 break;
         }
     }
-
     app->tree = proctree;
     set_proctree_reorderable(app);
 
     procman_get_tree_state (app->settings, proctree, "proctree");
-
     /* Override column settings by hiding this column if it's meaningless: */
     if (!can_show_security_context_column ()) {
         GtkTreeViewColumn *column;

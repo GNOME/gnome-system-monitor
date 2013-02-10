@@ -325,7 +325,7 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
                                GDK_TYPE_PIXBUF,     /* DISK_ICON */
                                G_TYPE_INT           /* DISK_USED_PERCENTAGE */
         );
-
+    
     disk_tree = gtk_tree_view_new_with_model(GTK_TREE_MODEL(model));
     g_signal_connect(G_OBJECT(disk_tree), "row-activated", G_CALLBACK(open_dir), NULL);
     app->disk_list = disk_tree;
@@ -353,6 +353,7 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
     gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
     gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
 
+
     /* sizes - used */
 
     for (i = DISK_DIR; i <= DISK_AVAIL; i++) {
@@ -366,7 +367,6 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
         gtk_tree_view_column_set_reorderable(col, TRUE);
         gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
         gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
-
         switch (i) {
             case DISK_TOTAL:
             case DISK_FREE:
