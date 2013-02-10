@@ -4,24 +4,26 @@
 # FSF-India <locale@gnu.org.in>, 2003.
 # Ani Peter <apeter@redhat.com>, 2006, 2012.
 # Hari Vishnu <harivishnu@gmail.com>, 2008.
+# Anish A <aneesh.nl@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor.master.ml\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
-"cgi?product=system-monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-05 07:15+0000\n"
-"PO-Revision-Date: 2012-09-19 00:15+0000\n"
-"Last-Translator: Ani Peter <apeter@redhat.com>\n"
-"Language-Team: Malayalam <discuss@lists.smc.org.in>\n"
-"Language: \n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
+"monitor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-02-10 12:31+0000\n"
+"PO-Revision-Date: 2013-02-10 21:25+0530\n"
+"Last-Translator: Anish A <aneesh.nl@gmail.com>\n"
+"Language-Team: Swatantra Malayalam Computing\n"
+"Language: ml\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.1\n"
+"X-Project-Style: gnome\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/callbacks.cpp:184 ../src/procman.cpp:721
+#: ../src/callbacks.cpp:184 ../src/procman-app.cpp:359
 msgid "System Monitor"
 msgstr "സിസ്റ്റം നിരീക്ഷകന്‍"
 
@@ -33,9 +35,25 @@ msgstr "നിലവിലുളള പ്രക്രിയകള്‍ വീ�
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
+msgid "Kill process"
+msgstr "പ്രക്രിയ ഇല്ലാതാക്കുക"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:2
+msgid "Privileges are required to kill process"
+msgstr "പ്രക്രിയ ഇല്ലാതാക്കുവാന്‍ അവകാശം ആവശ്യമുണ്ട്"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:3
+msgid "Renice process"
+msgstr "പ്രക്രിയ റീനൈസ് ചെയ്യുക"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:4
+msgid "Privileges are required to renice process"
+msgstr "പ്രക്രിയ റീനൈസ് ചെയ്യുവാന്‍ അവകാശം ആവശ്യമുണ്ട്"
+
 #: ../data/interface.ui.h:2
-msgid "System"
-msgstr "സിസ്റ്റം"
+msgid "View"
+msgstr "കാണുക"
 
 #: ../data/interface.ui.h:3
 msgid "End _Process"
@@ -53,12 +71,12 @@ msgstr "സി.പി.യു ചരിത്രം"
 msgid "Memory and Swap History"
 msgstr "മെമ്മറിയും Swap ചരിത്രവും"
 
-#: ../data/interface.ui.h:7 ../src/interface.cpp:327
-#: ../src/procproperties.cpp:133 ../src/proctable.cpp:251
+#: ../data/interface.ui.h:7 ../src/interface.cpp:249
+#: ../src/procproperties.cpp:132 ../src/proctable.cpp:230
 msgid "Memory"
 msgstr "മെമ്മറി"
 
-#: ../data/interface.ui.h:8 ../src/interface.cpp:338
+#: ../data/interface.ui.h:8 ../src/interface.cpp:260
 msgid "Swap"
 msgstr "സ്വാപ്"
 
@@ -66,7 +84,7 @@ msgstr "സ്വാപ്"
 msgid "Network History"
 msgstr "ശൃംഖലയുടെ ചരിത്രം"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:363
+#: ../data/interface.ui.h:10 ../src/interface.cpp:285
 msgid "Receiving"
 msgstr "സ്വീകരിച്ചുകൊണ്ടിരിയ്ക്കുന്നു"
 
@@ -82,15 +100,16 @@ msgstr "അയച്ചു"
 msgid "Total Sent"
 msgstr "മൊത്തം അയച്ചതു്"
 
-#: ../data/interface.ui.h:14 ../data/preferences.ui.h:12
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:13
 msgid "Resources"
 msgstr "വിഭവങ്ങള്‍"
 
-#: ../data/interface.ui.h:15 ../data/preferences.ui.h:14
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:16
 msgid "File Systems"
 msgstr "ഫയല്‍ സിസ്റ്റങ്ങള്‍"
 
 #: ../data/lsof.ui.h:1
+msgctxt "Window title for 'Search for Open Files' dialog"
 msgid "Search for Open Files"
 msgstr "തുറന്ന ഫയലുക്കള്‍ക്ക് തിരയുക"
 
@@ -109,6 +128,27 @@ msgstr "വെടിപ്പാക്കു_ക"
 #: ../data/lsof.ui.h:5
 msgid "S_earch results:"
 msgstr "_തിരയല്‍ ഫലം:"
+
+#: ../data/menus.ui.h:1
+msgctxt "Menu item to Open 'Search for Open Files' dialog"
+msgid "Search for Open Files"
+msgstr "തുറന്ന ഫയലുക്കള്‍ക്ക് തിരയുക"
+
+#: ../data/menus.ui.h:2
+msgid "Preferences"
+msgstr "മുന്‍ഗണനകള്‍"
+
+#: ../data/menus.ui.h:3
+msgid "Help"
+msgstr "സഹായം"
+
+#: ../data/menus.ui.h:4
+msgid "About"
+msgstr "കുറിച്ചു്"
+
+#: ../data/menus.ui.h:5
+msgid "Quit"
+msgstr "നിര്‍ത്തുക"
 
 #: ../data/openfiles.ui.h:1
 msgid "Open Files"
@@ -151,14 +191,20 @@ msgid "Graphs"
 msgstr "ഗ്രാഫുകള്‍"
 
 #: ../data/preferences.ui.h:11
-#| msgid "Show network speed in bits"
 msgid "_Show network speed in bits"
 msgstr "നെറ്റ്‌വര്‍ക്ക് വേഗത ബിറ്റ്സില്‍ കാണിക്കു_ക"
 
-#: ../data/preferences.ui.h:13
-#| msgid "Show _all filesystems"
+#: ../data/preferences.ui.h:12
+msgid "_Draw CPU chart as stacked area chart"
+msgstr "CPU ചാര്‍ട്ട് ഒരു സ്റ്റാക്ക്ഡ് എര്യ ചാര്‍ട്ടായി _വരയ്ക്കുക"
+
+#: ../data/preferences.ui.h:14
 msgid "Show _all file systems"
 msgstr "_എല്ലാ ഫയല്‍ സിസ്റ്റങ്ങളും കാണിക്കുക"
+
+#: ../data/preferences.ui.h:15
+msgid "File system i_nformation shown in list:"
+msgstr "പട്ടികയില്‍ കാണിച്ചിരിക്കുന്ന ഫയലുകളുടെ വി_വരങ്ങള്‍:"
 
 #: ../data/renice.ui.h:1
 msgid "Change _Priority"
@@ -169,32 +215,22 @@ msgid "_Nice value:"
 msgstr "_നൈസ് മൂല്യം:"
 
 #: ../data/renice.ui.h:3
-#| msgid ""
-#| "The priority of a process is given by its nice value. A lower nice value "
-#| "corresponds to a higher priority."
 msgid ""
 "<small><i><b>Note:</b> The priority of a process is given by its nice value. "
 "A lower nice value corresponds to a higher priority.</i></small>"
 msgstr ""
-"<small><i><b>കുറിപ്പു്:</b> പ്രക്രിയയുടെ മുന്‍ഗണന ലഭ്യമാകുന്നതു് അതിന്റെ മൂല്യം കാരണമാണ്. "
-"ചെറിയ മൂല്ല്യത്തിന് മുന്‍ഗണന കൂടുതലാണു്.</i></small>"
+"<small><i><b>കുറിപ്പു്:</b> പ്രക്രിയയുടെ മുന്‍ഗണന ലഭ്യമാകുന്നതു് അതിന്റെ മൂല്യം കാരണമാണ്. ചെറിയ "
+"മൂല്ല്യത്തിന് മുന്‍ഗണന കൂടുതലാണു്.</i></small>"
 
-#: ../src/argv.cpp:21
-msgid "Show the System tab"
-msgstr "സിസ്റ്റം കിളിവാതില്‍ കാണിക്കുക"
-
-#: ../src/argv.cpp:26
-#| msgid "Show active processes"
+#: ../src/argv.cpp:20
 msgid "Show the Processes tab"
 msgstr "പ്രക്രിയകള്‍ റ്റാബ് കാണിക്കുക"
 
-#: ../src/argv.cpp:31
-#| msgid "Show the System tab"
+#: ../src/argv.cpp:25
 msgid "Show the Resources tab"
 msgstr "റിസോഴ്സുകള്‍ റ്റാബ് കാണിക്കുക"
 
-#: ../src/argv.cpp:36
-#| msgid "Show the System tab"
+#: ../src/argv.cpp:30
 msgid "Show the File Systems tab"
 msgstr "ഫയല്‍ സിസ്റ്റം റ്റാബ് കാണിക്കുക"
 
@@ -205,31 +241,31 @@ msgstr ""
 "അനി പീറ്റര്‍ <peter.ani@gmail.com>\n"
 "ഹരി വിഷ്ണു <harivishnu@gmail.com>"
 
-#: ../src/disks.cpp:298 ../src/memmaps.cpp:361
+#: ../src/disks.cpp:304 ../src/memmaps.cpp:361
 msgid "Device"
 msgstr "ഉപകരണം"
 
-#: ../src/disks.cpp:299
+#: ../src/disks.cpp:305
 msgid "Directory"
 msgstr "തട്ടു്"
 
-#: ../src/disks.cpp:300 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:306 ../src/gsm_color_button.c:223 ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "തരം"
 
-#: ../src/disks.cpp:301
+#: ../src/disks.cpp:307
 msgid "Total"
 msgstr "മൊത്തം"
 
-#: ../src/disks.cpp:302
+#: ../src/disks.cpp:308
 msgid "Free"
 msgstr "ഉപയോഗത്തിലല്ലാത്ത"
 
-#: ../src/disks.cpp:303
+#: ../src/disks.cpp:309
 msgid "Available"
 msgstr "ലഭ്യമായ"
 
-#: ../src/disks.cpp:304
+#: ../src/disks.cpp:310
 msgid "Used"
 msgstr "ഉപയോഗത്തിലുളള"
 
@@ -258,287 +294,237 @@ msgstr "%b %d %l:%M %p"
 msgid "%b %d %Y"
 msgstr "%b %d %Y"
 
-#: ../src/gsm_color_button.c:198
+#: ../src/gsm_color_button.c:199
 msgid "Fraction"
 msgstr "വിഭഗം"
 
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:200
-#| msgid "Percentage full for pie colour pickers"
+#: ../src/gsm_color_button.c:201
 msgid "Percentage full for pie color pickers"
 msgstr "പൈ നിറം തെരഞ്ഞെടുക്കലിനുള്ള ശതമാനം നിറഞ്ഞിരിക്കുന്നു"
 
-#: ../src/gsm_color_button.c:207
+#: ../src/gsm_color_button.c:208
 msgid "Title"
 msgstr "തലക്കെട്ട്"
 
-#: ../src/gsm_color_button.c:208
+#: ../src/gsm_color_button.c:209
 msgid "The title of the color selection dialog"
 msgstr "നിറം തെരഞ്ഞെടുക്കല്‍ സംഭാഷണത്തിന്റെ തലകെട്ട്"
 
-#: ../src/gsm_color_button.c:209 ../src/gsm_color_button.c:625
+#: ../src/gsm_color_button.c:210 ../src/gsm_color_button.c:628
 msgid "Pick a Color"
 msgstr "ഒരു നിറം തെരഞ്ഞെടുക്കുക"
 
-#: ../src/gsm_color_button.c:215
+#: ../src/gsm_color_button.c:216
 msgid "Current Color"
 msgstr "നിലവിലുള്ള നിറം"
 
-#: ../src/gsm_color_button.c:216
+#: ../src/gsm_color_button.c:217
 msgid "The selected color"
 msgstr "തെരഞ്ഞെടുത്ത നിറം"
 
-#: ../src/gsm_color_button.c:223
+#: ../src/gsm_color_button.c:224
 msgid "Type of color picker"
 msgstr "നിറം തെരഞ്ഞെടുക്കലിനുള്ള തരം"
 
-#: ../src/gsm_color_button.c:548
+#: ../src/gsm_color_button.c:550
 msgid "Received invalid color data\n"
 msgstr "നിറത്തേ കുറിച്ച് അസാധുവായ വിവരം ലഭിച്ചു\n"
 
-#: ../src/gsm_color_button.c:648
+#: ../src/gsm_color_button.c:651
 msgid "Click to set graph colors"
 msgstr "ഗ്രാഫ് നിറങ്ങള്‍ സജ്ജമാക്കുന്നതിനായി ക്ലിക്ക് ചെയ്യുക"
 
-#. xgettext: noun, top level menu.
-#. "File" did not make sense for system-monitor
-#: ../src/interface.cpp:51
-msgid "_Monitor"
-msgstr "_നിരീക്ഷകന്‍"
-
-#: ../src/interface.cpp:52
-msgid "_Edit"
-msgstr "_മാറ്റം വരുത്തുക"
-
-#: ../src/interface.cpp:53
+#: ../src/interface.cpp:47
 msgid "_View"
 msgstr "_കാണുക"
 
-#: ../src/interface.cpp:54
-msgid "_Help"
-msgstr "_സഹായം"
-
-#: ../src/interface.cpp:56
-msgid "Search for _Open Files"
-msgstr "_തുറന്നിരിക്കുന്ന ഫയലുകള്‍ക്ക് തിരയുക"
-
-#: ../src/interface.cpp:57
-msgid "Search for open files"
-msgstr "തുറന്നിരിക്കുന്ന ഫയലുകള്‍ക്ക് തിരയുക"
-
-#: ../src/interface.cpp:59
-msgid "Quit the program"
-msgstr "പ്രോഗ്രാമില്‍ നിന്നും പുറത്ത് കടക്കുക"
-
-#: ../src/interface.cpp:62
+#: ../src/interface.cpp:49
 msgid "_Stop Process"
 msgstr "പ്രക്രിയ _നിര്‍ത്തുക"
 
-#: ../src/interface.cpp:63
+#: ../src/interface.cpp:50
 msgid "Stop process"
 msgstr "പ്രക്രിയ നിര്‍ത്തുക"
 
-#: ../src/interface.cpp:64
+#: ../src/interface.cpp:51
 msgid "_Continue Process"
 msgstr "പ്രക്രിയയുമായി _മുമ്പോട്ട് പോകുക"
 
-#: ../src/interface.cpp:65
+#: ../src/interface.cpp:52
 msgid "Continue process if stopped"
 msgstr "നിര്‍ത്തിയെങ്കില്‍ പ്രക്രിയയുമായി മുമ്പോട്ട് പോകുക"
 
-#: ../src/interface.cpp:67 ../src/procdialogs.cpp:95
+#: ../src/interface.cpp:54 ../src/procdialogs.cpp:96
 msgid "_End Process"
 msgstr "പ്രക്രിയ _അവസാനിപ്പിക്കുക"
 
-#: ../src/interface.cpp:68
+#: ../src/interface.cpp:55
 msgid "Force process to finish normally"
 msgstr "പ്രക്രിയയെ സാധാരണയായി അവസാനിപ്പിക്കുന്നതിന് നിര്‍ബന്ധിക്കുക"
 
-#: ../src/interface.cpp:69 ../src/procdialogs.cpp:84
+#: ../src/interface.cpp:56 ../src/procdialogs.cpp:85
 msgid "_Kill Process"
 msgstr "പ്രക്രിയ ‌_ഇല്ലാതാക്കുക"
 
-#: ../src/interface.cpp:70
+#: ../src/interface.cpp:57
 msgid "Force process to finish immediately"
 msgstr "പ്രക്രിയയെ ഉടനെ അവസാനിപ്പിക്കുന്നതിന് നിര്‍ബന്ധിക്കുക"
 
-#: ../src/interface.cpp:71
-#| msgid "Change Priority"
+#: ../src/interface.cpp:58
 msgid "_Change Priority"
 msgstr "മുന്‍ഗണന _മാറ്റുക"
 
-#: ../src/interface.cpp:72
+#: ../src/interface.cpp:59
 msgid "Change the order of priority of process"
 msgstr "പ്രക്രിയകളുടെ മുന്‍ഗണനയുടെ ക്രമം മാറ്റുക"
 
-#: ../src/interface.cpp:74
-msgid "Configure the application"
-msgstr "പ്രയോഗം ക്രമീകരിക്കുക"
-
-#: ../src/interface.cpp:76
+#: ../src/interface.cpp:61
 msgid "_Refresh"
 msgstr "_പുതുക്കുക"
 
-#: ../src/interface.cpp:77
+#: ../src/interface.cpp:62
 msgid "Refresh the process list"
 msgstr "പ്രക്രിയ പട്ടിക പുതുക്കുക"
 
-#: ../src/interface.cpp:79
+#: ../src/interface.cpp:64
 msgid "_Memory Maps"
 msgstr "_മെമ്മറി മാപ്പുകള്‍"
 
-#: ../src/interface.cpp:80
+#: ../src/interface.cpp:65
 msgid "Open the memory maps associated with a process"
 msgstr "പ്രക്രിയയുമായി ബന്ധമുളള മെമ്മറി മാപ്പുകള്‍ തുറക്കുക"
 
 #. Translators: this means 'Files that are open' (open is no verb here)
-#: ../src/interface.cpp:82
+#: ../src/interface.cpp:67
 msgid "Open _Files"
 msgstr "_ഫയലുകള്‍ തുറക്കുക"
 
-#: ../src/interface.cpp:83
+#: ../src/interface.cpp:68
 msgid "View the files opened by a process"
 msgstr "ഒരു പ്രക്രിയയാല്‍ തുറന്നിട്ടുളള ഫയലുകള്‍ കാണുക"
 
-#: ../src/interface.cpp:84
+#: ../src/interface.cpp:69
 msgid "_Properties"
 msgstr "വിശേ_ഷതകള്‍"
 
-#: ../src/interface.cpp:85
+#: ../src/interface.cpp:70
 msgid "View additional information about a process"
 msgstr "ഒരു പ്രക്രിയയെപ്പറ്റി കൂടുതല്‍ വിവരം കാണിയ്ക്കുക"
 
-#: ../src/interface.cpp:88
-msgid "_Contents"
-msgstr "_ഉളളടക്കം"
-
-#: ../src/interface.cpp:89
-msgid "Open the manual"
-msgstr "മാനുവല്‍ തുറക്കുക"
-
-#: ../src/interface.cpp:91
-msgid "About this application"
-msgstr "ഈ പ്രയോഗം സംബന്ധിച്ച് "
-
-#: ../src/interface.cpp:96
+#: ../src/interface.cpp:75
 msgid "_Dependencies"
 msgstr "_ആശ്രയങ്ങള്‍"
 
-#: ../src/interface.cpp:97
+#: ../src/interface.cpp:76
 msgid "Show parent/child relationship between processes"
 msgstr "പ്രക്രിയയുമായി പേരന്റ്/ചൈള്‍ഡിനുളള ബന്ധം കാണിക്കുക"
 
-#: ../src/interface.cpp:104
+#: ../src/interface.cpp:83
 msgid "_Active Processes"
 msgstr "_സജീവ പ്രക്രിയകള്‍"
 
-#: ../src/interface.cpp:105
+#: ../src/interface.cpp:84
 msgid "Show active processes"
 msgstr "സജീവ പ്രക്രിയകള്‍ കാണിക്കുക"
 
-#: ../src/interface.cpp:106
+#: ../src/interface.cpp:85
 msgid "A_ll Processes"
 msgstr "എ_ല്ലാ പ്രക്രിയകളും"
 
-#: ../src/interface.cpp:107
+#: ../src/interface.cpp:86
 msgid "Show all processes"
 msgstr "എല്ലാ പ്രക്രിയകളും കാണിക്കുക"
 
-#: ../src/interface.cpp:108
+#: ../src/interface.cpp:87
 msgid "M_y Processes"
 msgstr "എ_ന്റെ പ്രക്രിയകള്‍"
 
-#: ../src/interface.cpp:109
-#| msgid "Show user own process"
+#: ../src/interface.cpp:88
 msgid "Show only user-owned processes"
 msgstr " ഉപയോക്താവിന്റെ സ്വന്തം പ്രക്രിയകള്‍ കാണിക്കുക"
 
-#: ../src/interface.cpp:114 ../src/util.cpp:217
-#| msgid "(Very High Priority)"
+#: ../src/interface.cpp:93 ../src/util.cpp:217
 msgid "Very High"
 msgstr "ഏറ്റവും കൂടുതല്‍"
 
-#: ../src/interface.cpp:115
+#: ../src/interface.cpp:94
 msgid "Set process priority to very high"
 msgstr "പ്രക്രിയയുടെ മുന്‍ഗണന വളരെ കൂടിയതായി സജ്ജമാക്കുക"
 
-#: ../src/interface.cpp:116 ../src/util.cpp:219
+#: ../src/interface.cpp:95 ../src/util.cpp:219
 msgid "High"
 msgstr "കൂടിയതു്"
 
-#: ../src/interface.cpp:117
+#: ../src/interface.cpp:96
 msgid "Set process priority to high"
 msgstr "പ്രക്രിയയുടെ മുന്‍ഗണന കൂടിയതായി സജ്ജമാക്കുക"
 
-#: ../src/interface.cpp:118 ../src/util.cpp:221
+#: ../src/interface.cpp:97 ../src/util.cpp:221
 msgid "Normal"
 msgstr "സാധാരണ"
 
-#: ../src/interface.cpp:119
-#| msgid "Force process to finish normally"
+#: ../src/interface.cpp:98
 msgid "Set process priority to normal"
 msgstr "പ്രക്രിയയുടെ മുന്‍ഗണന സാധാരണയായി സജ്ജമാക്കുക"
 
-#: ../src/interface.cpp:120 ../src/util.cpp:223
+#: ../src/interface.cpp:99 ../src/util.cpp:223
 msgid "Low"
 msgstr "കുറഞ്ഞ"
 
-#: ../src/interface.cpp:121
+#: ../src/interface.cpp:100
 msgid "Set process priority to low"
 msgstr "പ്രക്രിയയുടെ മുന്‍ഗണന കുറഞ്ഞതായി സജ്ജമാക്കുക"
 
-#: ../src/interface.cpp:122 ../src/util.cpp:225
+#: ../src/interface.cpp:101 ../src/util.cpp:225
 msgid "Very Low"
 msgstr "ഏറ്റവും കുറഞ്ഞതു്"
 
-#: ../src/interface.cpp:123
+#: ../src/interface.cpp:102
 msgid "Set process priority to very low"
 msgstr "പ്രക്രിയയുടെ മുന്‍ഗണന വളരെ കുറഞ്ഞതായി സജ്ജമാക്കുക"
 
-#: ../src/interface.cpp:124
+#: ../src/interface.cpp:103
 msgid "Custom"
 msgstr "യഥേഷ്ടം"
 
-#: ../src/interface.cpp:125
+#: ../src/interface.cpp:104
 msgid "Set process priority manually"
 msgstr "പ്രക്രിയയുടെ മുന്‍ഗണന നിങ്ങള്‍ സ്വയമായി സജ്ജമാക്കുക"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:256
+#: ../src/interface.cpp:178
 #, c-format
-#| msgid "Pick a Color"
 msgid "Pick a Color for '%s'"
 msgstr "'%s'-നുള്ളൊരു നിറം തെരഞ്ഞെടുക്കുക"
 
-#: ../src/interface.cpp:292 ../src/procproperties.cpp:139
+#: ../src/interface.cpp:214 ../src/procproperties.cpp:138
 msgid "CPU"
 msgstr "സി.പി.യു"
 
-#: ../src/interface.cpp:294
+#: ../src/interface.cpp:216
 #, c-format
 msgid "CPU%d"
 msgstr "സി.പി.യു%d"
 
-#: ../src/interface.cpp:378
+#: ../src/interface.cpp:300
 msgid "Sending"
 msgstr "അയയ്ക്കുന്നു"
 
-#: ../src/load-graph.cpp:166
+#: ../src/load-graph.cpp:174
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u സെക്കന്റ്"
 msgstr[1] "%u സെക്കന്റുകള്‍"
 
-#: ../src/load-graph.cpp:345
-#| msgid "Available"
+#: ../src/load-graph.cpp:369
 msgid "not available"
 msgstr "ലഭ്യമല്ല"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:348
+#: ../src/load-graph.cpp:372
 #, c-format
-#| msgid "%s (%.1f %%) of %s"
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) of %s"
 
@@ -548,10 +534,6 @@ msgstr "പിശക്"
 
 #: ../src/lsof.cpp:126
 #, c-format
-#| msgid ""
-#| "<b>Error</b>\n"
-#| "'%s' is not a valid Perl regular expression.\n"
-#| "%s"
 msgid "'%s' is not a valid Perl regular expression."
 msgstr "'%s' ഒരു ശരിയായ പേള്‍ എക്സ്പ്രെഷന്‍ അല്ല."
 
@@ -677,28 +659,26 @@ msgid "Main Window height"
 msgstr "പ്രധാന ജാലകത്തിന്റെ ഉയരം"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
-#| msgid "Main Window width"
+msgid "Main Window should open maximized"
+msgstr "പ്രധാന ജാലകം തുറക്കുമ്പോള്‍ തന്നെ വലുതാക്കുക"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
 msgid "Main Window X position"
 msgstr "പ്രധാന ജാലകം എക്സിന്റെ സ്ഥാനം"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
-#| msgid "Main Window width"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
 msgid "Main Window Y position"
 msgstr "പ്രധാന ജാലകം വൈയുടെ സ്ഥാനം"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:6
 msgid "Show process dependencies in tree form"
 msgstr "പ്രക്രിയയുടെ ഡിപന്‍ഡന്‍സികള്‍ വൃക്ഷ രൂപത്തില്‍ കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:6
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
 msgid "Solaris mode for CPU percentage"
 msgstr "സി.പി.യു ശതമാനത്തിന് സൊളാരിസ് ദശ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
-#| msgid ""
-#| "If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu "
-#| "usage is divided by the total number of CPUs. Else it operates in 'Irix "
-#| "mode'."
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
 msgid ""
 "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
 "is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
@@ -708,32 +688,39 @@ msgstr ""
 "സി.പി.യു ഉപയോഗം ഉള്ളത്തറെയും സി.പി.യു-കളുടെ എണ്ണവുമായ് വീതിക്കുക. ഇല്ലെങ്കില്‍ ഇത് 'ഐറിക്സ്' "
 "മോഡില്‍ പ്രവര്‍ത്തിക്കുന്നു."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
+msgid "Show CPU chart as stacked area chart"
+msgstr "CPU ചാര്‍ട്ട് ഒരു സ്റ്റാക്ക്ഡ് എര്യ ചാര്‍ട്ടായി കാണിക്കുക"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
+"of a line chart."
+msgstr ""
+"TRUE ആണെങ്കില്‍, സിസ്റ്റം മോണിറ്റര്‍ CPU ചാര്‍ട്ട് രേഖാ ചാര്‍ട്ടിന് പകരം സ്റ്റാക്ക്ഡ് എര്യ "
+"ചാര്‍ട്ടായി കാണിക്കും."
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
 msgid "Enable/Disable smooth refresh"
 msgstr "പുതുക്കല്‍ പ്രക്രിയ പ്രവര്‍ത്തന സജ്ജമാക്കുക/രഹിതമാക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
 msgid "Show warning dialog when killing processes"
 msgstr "പ്രക്രിയകള്‍ ഇല്ലാതാക്കുമ്പോള്‍ മുന്നറിയിപ്പ് ഡയലോഗുകള്‍ കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
 msgid "Time in milliseconds between updates of the process view"
 msgstr "പ്രക്രിയയുടെ കാഴ്ചയുടെ പുതുക്കലിന് ഇടയിലുളള സമയം (മില്ലിസെക്കന്‍ഡ്സില്‍)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "ഗ്രാഫുകളുടെ പുതുക്കലിന് ഇടയിലുളള സമയം (മില്ലിസെക്കന്‍ഡ്സില്‍)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
-#| msgid "Whether information about all filesystems should be displayed"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
 msgid "Whether information about all file systems should be displayed"
 msgstr "ഫയല്‍ സിസ്റ്റങ്ങളെപ്പറ്റിയുളള വിവരങ്ങള്‍ കാണിക്കണമോ എന്ന്"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
-#| msgid ""
-#| "Whether to display information about all filesystems (including types "
-#| "like 'autofs' and 'procfs'). Useful for getting a list of all currently "
-#| "mounted filesystems."
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
 msgid ""
 "Whether to display information about all file systems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -743,11 +730,11 @@ msgstr ""
 "ഉള്‍പ്പെടുന്നു). നിലവില്‍ മൌണ്ട് ചെയ്തിട്ടുളള എല്ലാ ഫയല്‍ സിസ്റ്റങ്ങളുടേയും ലിസ്റ്റ് ലഭിക്കുന്നതിന് "
 "ഉപയോഗപ്പെടുന്നു."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "ഉപകരണം ലിസ്റ്റുകളുടെ പുതുക്കലിന് ഇടയിലുളള സമയം (മില്ലിസെക്കന്‍ഡ്സില്‍)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
@@ -755,11 +742,11 @@ msgstr ""
 "സഹജമായി ഏത് പ്രക്രിയ കാണിക്കണമെന്ന് തീരുമാനിക്കുന്നു. എല്ലാം കാണിക്കണമെങ്കില്‍ 0, ഉപയോക്താവ് 1 "
 "ആണ്, പ്രവര്‍ത്തിനുളളത് ആണെങ്കില്‍ 2"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
 msgid "Saves the currently viewed tab"
 msgstr "ഇപ്പോള്‍ വീക്ഷിച്ച കിളിവാതില്‍ സംരക്ഷിക്കുന്നു"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
 msgid ""
 "0 for the System Info, 1 for the processes list, 2 for the resources and 3 "
 "for the disks list"
@@ -767,313 +754,318 @@ msgstr ""
 "0 എന്നാല്‍ സിസ്റ്റം വിവരം, 1 എന്നാല്‍ പ്രക്രിയ പട്ടിക, 2 എന്നാല്‍ വിഭവങ്ങള്‍, 3 എന്നാല്‍ "
 "ഡിസ്കുകളുടെ പട്ടിക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
 msgid "CPU colors"
 msgstr "സിപിയു നിറങ്ങള്‍"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr "ഓരോ എന്‍ട്രിയുടെ ഫോര്‍മാറ്റ് (CPU#, ഹെക്സാഡെസിമല്‍ നിറക്കിന്റെ മൂല്ല്യം)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
-#| msgid "Default graph mem color"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
 msgid "Default graph memory color"
 msgstr "സഹജമായ ഗ്രാഫിലെ മെമ്മറി നിറം"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
 msgid "Default graph swap color"
 msgstr "സഹജമായ ഗ്രാഫിലെ swap നിറം"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
 msgid "Default graph incoming network traffic color"
 msgstr "സഹജമായ ഗ്രാഫിലെ ശൃംഖലയുടെ അകത്തേക്കുളള ട്രാഫിക്കിന്റെ നിറം"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
 msgid "Default graph outgoing network traffic color"
 msgstr "സഹജമായ ഗ്രാഫിലെ പുറത്തേക്ക് പോകുന്ന വിവരങ്ങളുടെ നിറം"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
-#| msgid "Show network speed in bits"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
 msgid "Show network traffic in bits"
 msgstr "നെറ്റ്‌വര്‍ക്ക് വേഗത ബിറ്റ്സില്‍ കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
 msgid "Process view sort column"
 msgstr "പ്രക്രിയ കാണുന്ന കോളത്തിന്റെ തരം തിരിയ്ക്കുന്ന ക്രമം"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
 msgid "Process view columns order"
 msgstr "പ്രക്രിയ കാണുന്ന കോളത്തിന്റെ ക്രമം"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
 msgid "Process view sort order"
 msgstr " പ്രക്രിയ കാണുന്നതിന്റെ തരം തിരിയ്ക്കുന്ന ക്രമം"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
-#| msgid "Width of process 'name' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
 msgid "Width of process 'Name' column"
 msgstr "'നാമങ്ങളുടെ'  പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
-#| msgid "Show process 'name' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
 msgid "Show process 'Name' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ 'നാമങ്ങളുടെ' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
-#| msgid "Width of process 'owner' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
 msgid "Width of process 'User' column"
 msgstr "'ഉപയോക്താവു്'  പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
-#| msgid "Show process 'owner' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
 msgid "Show process 'User' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ 'ഉപയോക്താവു്' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
-#| msgid "Width of process 'status' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
 msgid "Width of process 'Status' column"
 msgstr "'അവസ്ഥയുടെ' പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
-#| msgid "Show process 'status' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
 msgid "Show process 'Status' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ 'അവസ്ഥയുടെ' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
-#| msgid "Width of process 'virtual memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
 msgid "Width of process 'Virtual Memory' column"
 msgstr "'വിര്‍ച്ച്വല്‍ മെമ്മറിയുടെ' പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
-#| msgid "Show process 'virtual memory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
 msgid "Show process 'Virtual Memory' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ 'വിര്‍ച്ച്വല്‍ മെമ്മറിയുടെ' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
-#| msgid "Width of process 'resident memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
 msgid "Width of process 'Resident Memory' column"
 msgstr "'ഉപയോഗത്തിലുളള മെമ്മറിയുടെ' പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
-#| msgid "Show process 'resident memory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
 msgid "Show process 'Resident Memory' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ 'ഉപയോഗത്തിലുളള മെമ്മറിയുടെ' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
-#| msgid "Width of process 'writable memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
 msgid "Width of process 'Writable Memory' column"
 msgstr "'ഉപയോഗിക്കാന്‍ സാധ്യമുളള മെമ്മറിയുടെ' പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
-#| msgid "Show process 'writable memory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
 msgid "Show process 'Writable Memory' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ 'ഉപയോഗിക്കാന്‍ സാധ്യമുളള മെമ്മറിയുടെ' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
-#| msgid "Width of process 'shared memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
 msgid "Width of process 'Shared Memory' column"
 msgstr "'ഷെയര്‍ഡ് മെമ്മറിയുടെ' പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
-#| msgid "Show process 'shared memory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:44
 msgid "Show process 'Shared Memory' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ 'പങ്കിട്ടുള്ള മെമ്മറിയുടെ' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
-#| msgid "Width of process 'X server memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
 msgid "Width of process 'X Server Memory' column"
 msgstr "'X സര്‍വര്‍ മെമ്മറി'  പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
-#| msgid "Show process 'X server memory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
 msgid "Show process 'X Server Memory' column on startup"
 msgstr "ആരംഭത്തില്‍ 'X സര്‍വര്‍ മെമ്മറി' കോളം  പ്രക്രിയ കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
 #, no-c-format
 msgid "Width of process 'CPU %' column"
 msgstr "'സി.പി.യു %'  പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
 #, no-c-format
 msgid "Show process 'CPU %' column on startup"
 msgstr "ആരംഭിക്കുമ്പോള്‍ 'സി.പി.യു %' പ്രക്രിയ നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
-#| msgid "Width of process 'CPU time' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
 msgid "Width of process 'CPU Time' column"
 msgstr "'സി.പി.യു സമയം'  പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
-#| msgid "Show process 'CPU time' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
 msgid "Show process 'CPU Time' column on startup"
 msgstr "ആരംഭിക്കുമ്പോള്‍ 'സി.പി.യു സമയം' പ്രക്രിയ നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
-#| msgid "Width of process 'start time' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
 msgid "Width of process 'Started' column"
 msgstr "'ആരംഭ സമയത്തിന്റെ' പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
-#| msgid "Show process 'start time' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
 msgid "Show process 'Started' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ 'ആരംഭ സമയത്തിന്റെ' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
-#| msgid "Width of process 'nice' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
 msgid "Width of process 'Nice' column"
 msgstr "'നൈസ്'  പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
-#| msgid "Show process 'nice' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
 msgid "Show process 'Nice' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ 'നൈസ്' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
 msgid "Width of process 'PID' column"
 msgstr "'PID'  പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
 msgid "Show process 'PID' column on startup"
 msgstr "ആരംഭിക്കുമ്പോള്‍ 'PID' പ്രക്രിയ നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
-#| msgid "Width of process 'SELinux security context' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
 msgid "Width of process 'SELinux Security Context' column"
 msgstr "'SELinux സുരക്ഷ കോണ്‍ടക്സ്റ്റ്'  പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
-#| msgid "Show process 'SELinux security context' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
 msgid "Show process 'SELinux Security Context' column on startup"
 msgstr "ആരംഭത്തില്‍ 'SELinux സുരക്ഷ കോണ്‍ടക്സ്റ്റ്' കോളം കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
-#| msgid "Width of process 'nice' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
 msgid "Width of process 'Command Line' column"
 msgstr "'കമാന്‍ഡ് ലൈന്‍'  പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
-#| msgid "Show process 'nice' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
 msgid "Show process 'Command Line' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ 'കമാന്‍ഡ് ലൈന്‍' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
-#| msgid "Width of process 'owner' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
 msgid "Width of process 'Memory' column"
 msgstr "'മെമ്മറി'  പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
-#| msgid "Show process 'owner' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
 msgid "Show process 'Memory' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ 'മെമ്മറി' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
 msgid "Width of process 'Waiting Channel' column"
 msgstr "'കാത്തിരിക്കുന്ന ചാനല്‍'  പ്രക്രിയയുടെ നിരയുടെ  വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
 msgid "Show process 'Waiting Channel' column on startup"
 msgstr "ആരംഭത്തില്‍ 'കാത്തിരിക്കുന്ന സമയം' പ്രക്രിയയുടെ നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
-#| msgid "Width of process 'owner' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
 msgid "Width of process 'Control Group' column"
 msgstr "'നിയന്ത്രണ ഗ്രൂപ്പ്' പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
-#| msgid "Show process 'owner' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
 msgid "Show process 'Control Group' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ 'നിയന്ത്രണ ഗ്രൂപ്പ്' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
-#| msgid "Width of process 'nice' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
 msgid "Width of process 'Unit' column"
 msgstr "'യൂണിറ്റ്'  പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
-#| msgid "Show process 'nice' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
 msgid "Show process 'Unit' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ 'യൂണിറ്റ്' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
-#| msgid "Width of process 'owner' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
 msgid "Width of process 'Session' column"
 msgstr "'സെഷന്‍'  പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
-#| msgid "Show process 'owner' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
 msgid "Show process 'Session' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ 'സെഷന്‍' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
-#| msgid "Width of process 'status' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
 msgid "Width of process 'Seat' column"
 msgstr "'സീറ്റ്' പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
-#| msgid "Show process 'status' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
 msgid "Show process 'Seat' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ 'സീറ്റ്' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
-#| msgid "Width of process 'owner' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
 msgid "Width of process 'Owner' column"
 msgstr "' ഉടമസ്ഥ'  പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
-#| msgid "Show process 'owner' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
 msgid "Show process 'Owner' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ 'ഉടമസ്ഥ' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
-#| msgid "Width of process 'owner' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
 msgid "Width of process 'Priority' column"
 msgstr "'മുന്‍ഗണനം'  പ്രക്രിയയുടെ നിരയുടെ വീതി"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
-#| msgid "Show process 'owner' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
 msgid "Show process 'Priority' column on startup"
 msgstr "ആരംഭത്തില്‍ പ്രക്രിയയുടെ ''മുന്‍ഗണനം' നിര കാണിക്കുക"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
-#| msgid "Process view sort column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
 msgid "Disk view sort column"
 msgstr "പ്രക്രിയ കാണുന്ന കോളത്തിന്റെ തരം തിരിയ്ക്കുന്ന ക്രമം"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
-#| msgid "Process view sort order"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
 msgid "Disk view sort order"
 msgstr "പ്രക്രിയ കാണുന്നതിന്റെ തരം തിരിയ്ക്കുന്ന ക്രമം"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
 msgid "Disk view columns order"
 msgstr "ഡിസ്ക് കാഴ്ചയുടെ കളങ്ങളുടെ ക്രമം"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
-#| msgid "Process view sort column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
+msgid "Width of disk view 'Device' column"
+msgstr "ഡിസ്ക്ക് കാഴ്ച്ചയില്‍ 'ഉപകരണ' നിരയുടെ വീതി"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:83
+msgid "Show disk view 'Device' column on startup"
+msgstr "ആരംഭത്തില്‍ ഡിസ്ക്ക് കാഴ്ച്ചയുടെ 'ഉപകരണ' നിര കാണിക്കുക"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:84
+msgid "Width of disk view 'Directory' column"
+msgstr "ഡിസ്ക്ക് കാഴ്ച്ചയില്‍ 'ഡയറക്ടറി' നിരയുടെ വീതി"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:85
+msgid "Show disk view 'Directory' column on startup"
+msgstr "ആരംഭത്തില്‍ ഡിസ്ക്ക് കാഴ്ച്ചയുടെ 'ഡയറക്ടറി' നിര കാണിക്കുക"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:86
+msgid "Width of disk view 'Type' column"
+msgstr "ഡിസ്ക്ക് കാഴ്ച്ചയില്‍ 'തരം' നിരയുടെ വീതി"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:87
+msgid "Show disk view 'Type' column on startup"
+msgstr "ആരംഭത്തില്‍ ഡിസ്ക്ക് കാഴ്ച്ചയുടെ 'തരം' നിര കാണിക്കുക"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:88
+msgid "Width of disk view 'Total' column"
+msgstr "ഡിസ്ക്ക് കാഴ്ച്ചയില്‍ 'ആകെ' നിരയുടെ വീതി"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:89
+msgid "Show disk view 'Total' column on startup"
+msgstr "ആരംഭത്തില്‍ ഡിസ്ക്ക് കാഴ്ച്ചയുടെ 'ആകെ' നിര കാണിക്കുക"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:90
+msgid "Width of disk view 'Free' column"
+msgstr "ഡിസ്ക്ക് കാഴ്ച്ചയില്‍ 'ശുന്യം' നിരയുടെ വീതി"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:91
+msgid "Show disk view 'Free' column on startup"
+msgstr "ആരംഭത്തില്‍ ഡിസ്ക്ക് കാഴ്ച്ചയുടെ 'ശുന്യം' നിര കാണിക്കുക"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:92
+msgid "Width of disk view 'Available' column"
+msgstr "ഡിസ്ക്ക് കാഴ്ച്ചയില്‍ 'ലഭ്യം' നിരയുടെ വീതി"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:93
+msgid "Show disk view 'Available' column on startup"
+msgstr "ആരംഭത്തില്‍ ഡിസ്ക്ക് കാഴ്ച്ചയുടെ 'ലഭ്യം' നിര കാണിക്കുക"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:94
+msgid "Width of disk view 'Used' column"
+msgstr "ഡിസ്ക്ക് കാഴ്ച്ചയില്‍ 'ഉപയോഗിച്ച' നിരയുടെ വീതി"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:95
+msgid "Show disk view 'Used' column on startup"
+msgstr "ആരംഭത്തില്‍ ഡിസ്ക്ക് കാഴ്ച്ചയുടെ 'ഉപയോഗിച്ച' നിര കാണിക്കുക"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:96
 msgid "Memory map sort column"
 msgstr "മെമ്മറി മാപ്പിന്റെ തരം തിരിയ്ക്കുന്ന നിര"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
-#| msgid "Memory and Swap History"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:97
 msgid "Memory map sort order"
 msgstr "മെമ്മറി മാപ്പിന്റെ തരം തിരിയ്ക്കുന്ന ക്രമം"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
-#| msgid "Process view sort column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:98
 msgid "Open files sort column"
 msgstr "ഫയലുകള്‍ തുറക്കുന്ന ക്രമത്തിന്റെ നിര"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
-#| msgid "Process view sort order"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:99
 msgid "Open files sort order"
 msgstr "ഫയലുകള്‍ തുറക്കുന്ന ക്രമം"
 
 #: ../src/procactions.cpp:76
 #, c-format
-#| msgid ""
-#| "Cannot change the priority of process with pid %d to %d.\n"
-#| "%s"
 msgid ""
 "Cannot change the priority of process with PID %d to %d.\n"
 "%s"
@@ -1083,9 +1075,6 @@ msgstr ""
 
 #: ../src/procactions.cpp:156
 #, c-format
-#| msgid ""
-#| "Cannot kill process with pid %d with signal %d.\n"
-#| "%s"
 msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
 "%s"
@@ -1094,17 +1083,13 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:77
+#: ../src/procdialogs.cpp:78
 #, c-format
-#| msgid "Kill the selected process?"
-msgid "Kill the selected process »%s« (PID: %u)?"
-msgstr "തെരഞ്ഞെടുത്ത പ്രക്രിയ ഇല്ലാതാക്കുക »%s« (PID: %u)?"
+msgid "Kill the selected process “%s” (PID: %u)?"
+msgstr "തെരഞ്ഞെടുത്ത പ്രക്രിയ ഇല്ലാതാക്കുക \"%s\" (PID: %u)?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:81
-#| msgid ""
-#| "Killing a process may destroy data, break the session or introduce a "
-#| "security risk. Only unresponding processes should be killed."
+#: ../src/procdialogs.cpp:82
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1113,17 +1098,13 @@ msgstr ""
 "പ്രശ്നം ഉണ്ടാക്കുകയോ ചെയ്യുന്നു. അതിനാല്‍, പ്രവര്‍ത്തനമറ്റ പ്രക്രിയകള്‍ മാത്രമേ ഇല്ലാതാക്കന്‍ പാടുള്ളൂ."
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:88
+#: ../src/procdialogs.cpp:89
 #, c-format
-#| msgid "End the selected process?"
-msgid "End the selected process »%s« (PID: %u)?"
-msgstr "തെരഞ്ഞെടുത്ത പ്രക്രിയ അവസാനിപ്പിയ്ക്കണമോ »%s« (PID: %u)?"
+msgid "End the selected process “%s” (PID: %u)?"
+msgstr "തെരഞ്ഞെടുത്ത പ്രക്രിയ അവസാനിപ്പിയ്ക്കണമോ \"%s\" (PID: %u)?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:92
-#| msgid ""
-#| "Ending a process may destroy data, break the session or introduce a "
-#| "security risk. Only unresponding processes should be ended."
+#: ../src/procdialogs.cpp:93
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponsive processes should be ended."
@@ -1132,17 +1113,10 @@ msgstr ""
 "പ്രശ്നം ഉണ്ടാക്കുകയോ ചെയ്യുന്നു. അതിനാല്‍, പ്രവര്‍ത്തനമറ്റ പ്രക്രിയകള്‍ മാത്രമേ അവസാനിപ്പിക്കുവാന്‍ "
 "പാടുള്ളൂ."
 
-#: ../src/procdialogs.cpp:130
-#, c-format
-#| msgid "(Low Priority)"
-msgid "(%s Priority)"
-msgstr "(%s മുന്‍ഗണന)"
-
 #: ../src/procdialogs.cpp:175
 #, c-format
-#| msgid "_Memory maps for process \"%s\" (PID %u):"
-msgid "Change Priority of Process »%s« (PID: %u)"
-msgstr "പ്രക്രിയയുടെ മുന്‍ഗണന മാറ്റുക »%s« (PID: %u)"
+msgid "Change Priority of Process “%s” (PID: %u)"
+msgstr "പ്രക്രിയയുടെ മുന്‍ഗണന മാറ്റുക \"%s\" (PID: %u)"
 
 #: ../src/procdialogs.cpp:193
 msgid "Note:"
@@ -1156,184 +1130,130 @@ msgstr ""
 "പ്രക്രിയയുടെ മുന്‍ഗണന ലഭ്യമാകുന്നത് അതിന്റെ നല്ല മൂല്യം കാരണമാണ്. ചെറിയ മൂല്ല്യത്തിന് മുന്‍ഗണന "
 "കൂടുതലാണ്."
 
-#: ../src/procdialogs.cpp:418
+#: ../src/procdialogs.cpp:446
 msgid "Icon"
 msgstr "ചിഹ്നം"
 
-#: ../src/procman.cpp:668
+#: ../src/procman-app.cpp:542
 msgid "A simple process and system monitor."
 msgstr "ഒരു ലളിതമായ പ്രക്രിയയുടേയും സിസ്റ്റത്തിന്റേയും നിരീക്ഷകന്‍."
 
-#: ../src/procproperties.cpp:104 ../src/util.cpp:420
+#: ../src/procproperties.cpp:104 ../src/util.cpp:434
 msgid "N/A"
 msgstr "N/A"
 
-#: ../src/procproperties.cpp:130 ../src/proctable.cpp:236
+#: ../src/procproperties.cpp:129 ../src/proctable.cpp:215
 msgid "Process Name"
 msgstr "പ്രക്രിയയുടെ പേരു്"
 
-#: ../src/procproperties.cpp:131 ../src/proctable.cpp:237
+#: ../src/procproperties.cpp:130 ../src/proctable.cpp:216
 msgid "User"
 msgstr "ഉപയോക്താവ്"
 
-#: ../src/procproperties.cpp:132 ../src/proctable.cpp:238
+#: ../src/procproperties.cpp:131 ../src/proctable.cpp:217
 msgid "Status"
 msgstr "അവസ്ഥ"
 
-#: ../src/procproperties.cpp:134 ../src/proctable.cpp:239
+#: ../src/procproperties.cpp:133 ../src/proctable.cpp:218
 msgid "Virtual Memory"
 msgstr "വിര്‍ച്ച്വല്‍ മെമ്മറി"
 
-#: ../src/procproperties.cpp:135 ../src/proctable.cpp:240
+#: ../src/procproperties.cpp:134 ../src/proctable.cpp:219
 msgid "Resident Memory"
 msgstr "ഉപയോഗിച്ച മെമ്മറി"
 
-#: ../src/procproperties.cpp:136 ../src/proctable.cpp:241
+#: ../src/procproperties.cpp:135 ../src/proctable.cpp:220
 msgid "Writable Memory"
 msgstr "ഉപയോഗിക്കുവാന്‍ സാധിക്കുന്ന (റൈറ്റബിള്‍) മെമ്മറി"
 
-#: ../src/procproperties.cpp:137 ../src/proctable.cpp:242
+#: ../src/procproperties.cpp:136 ../src/proctable.cpp:221
 msgid "Shared Memory"
 msgstr "പങ്കിട്ട മെമ്മറി"
 
-#: ../src/procproperties.cpp:138 ../src/proctable.cpp:243
+#: ../src/procproperties.cpp:137 ../src/proctable.cpp:222
 msgid "X Server Memory"
 msgstr "X സര്‍വര്‍ മെമ്മറി"
 
-#: ../src/procproperties.cpp:140 ../src/proctable.cpp:245
+#: ../src/procproperties.cpp:139 ../src/proctable.cpp:224
 msgid "CPU Time"
 msgstr "സി.പി.യു സമയം"
 
-#: ../src/procproperties.cpp:140
+#: ../src/procproperties.cpp:139
 #, c-format
-#| msgid "%u second"
-#| msgid_plural "%u seconds"
 msgid "%lld second"
 msgid_plural "%lld seconds"
 msgstr[0] "%lld സെക്കന്റ്"
 msgstr[1] "%lld സെക്കന്റുകള്‍"
 
-#: ../src/procproperties.cpp:141 ../src/proctable.cpp:246
+#: ../src/procproperties.cpp:140 ../src/proctable.cpp:225
 msgid "Started"
 msgstr "ആരംഭിച്ചു"
 
-#: ../src/procproperties.cpp:142 ../src/proctable.cpp:247
+#: ../src/procproperties.cpp:141 ../src/proctable.cpp:226
 msgid "Nice"
 msgstr "നല്ലത്"
 
-#: ../src/procproperties.cpp:143 ../src/proctable.cpp:261
-#| msgid "(Low Priority)"
+#: ../src/procproperties.cpp:142 ../src/proctable.cpp:240
 msgid "Priority"
 msgstr "മുന്‍ഗണന"
 
-#: ../src/procproperties.cpp:144 ../src/proctable.cpp:248
+#: ../src/procproperties.cpp:143 ../src/proctable.cpp:227
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:145 ../src/proctable.cpp:249
+#: ../src/procproperties.cpp:144 ../src/proctable.cpp:228
 msgid "Security Context"
 msgstr "സൂരക്ഷാ കോണ്‍ടക്സ്റ്റ്"
 
-#: ../src/procproperties.cpp:146 ../src/proctable.cpp:250
+#: ../src/procproperties.cpp:145 ../src/proctable.cpp:229
 msgid "Command Line"
 msgstr "ആജ്ഞാ സ്ഥാനം"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:147 ../src/proctable.cpp:253
+#: ../src/procproperties.cpp:146 ../src/proctable.cpp:232
 msgid "Waiting Channel"
 msgstr "കാത്തിരിക്കുന്ന ചാനല്‍"
 
-#: ../src/procproperties.cpp:258
-#| msgid "Processes"
+#: ../src/procproperties.cpp:147 ../src/proctable.cpp:233
+msgid "Control Group"
+msgstr "നിയന്ത്രണ ഗ്രൂപ്പ്"
+
+#: ../src/procproperties.cpp:259
 msgid "Process Properties"
 msgstr "പ്രക്രിയ വിശേഷതകള്‍"
 
-#: ../src/procproperties.cpp:278
+#: ../src/procproperties.cpp:279
 #, c-format
-#| msgid "_Files opened by process \"%s\" (PID %u):"
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "\"%s\" (PID %u) പ്രക്രിയയുടെ വിശേഷതകള്‍:"
 
-#: ../src/proctable.cpp:244
+#: ../src/proctable.cpp:223
 #, no-c-format
 msgid "% CPU"
 msgstr "% സി.പി.യു"
 
-#: ../src/proctable.cpp:254
-msgid "Control Group"
-msgstr "നിയന്ത്രണ ഗ്രൂപ്പ്"
-
-#: ../src/proctable.cpp:255
+#: ../src/proctable.cpp:234
 msgid "Unit"
 msgstr "യൂണിറ്റ്"
 
-#: ../src/proctable.cpp:256
+#: ../src/proctable.cpp:235
 msgid "Session"
 msgstr "സെഷന്‍"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:259
+#: ../src/proctable.cpp:238
 msgid "Seat"
 msgstr "സീറ്റ്"
 
-#: ../src/proctable.cpp:260
+#: ../src/proctable.cpp:239
 msgid "Owner"
 msgstr "ഉടമസ്ഥന്‍"
 
-#: ../src/proctable.cpp:1078
+#: ../src/proctable.cpp:1051
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "കഴിഞ്ഞ 1,5,15 മിനിറ്റുകളിലുളള ലോഡ് ശരാശരി: %0.2f, %0.2f, %0.2f "
-
-#. Translators: The first string parameter is release version (codename),
-#. * the second one is the architecture, 32 or 64-bit
-#: ../src/sysinfo.cpp:78
-#, c-format
-#| msgid "Release %s"
-msgid "Release %s %s"
-msgstr "റിലീസ് %s %s"
-
-#. translators: This is the type of architecture, for example:
-#. * "64-bit" or "32-bit"
-#: ../src/sysinfo.cpp:115
-#, c-format
-msgid "%d-bit"
-msgstr "%d-ബിറ്റ്"
-
-#: ../src/sysinfo.cpp:734
-#, c-format
-msgid "Kernel %s"
-msgstr "കെര്‍ണല്‍ %s"
-
-#: ../src/sysinfo.cpp:746
-#, c-format
-msgid "GNOME %s"
-msgstr "ഗ്നോം %s"
-
-#. hardware section
-#: ../src/sysinfo.cpp:759
-#| msgid "<b>Hardware</b>"
-msgid "Hardware"
-msgstr "ഹാര്‍ഡ്‌വെയര്‍"
-
-#: ../src/sysinfo.cpp:764
-msgid "Memory:"
-msgstr "മെമ്മറി:"
-
-#: ../src/sysinfo.cpp:769
-msgid "Processor:"
-msgstr "പ്രൊസസ്സര്‍:"
-
-#. disk space section
-#: ../src/sysinfo.cpp:778
-#| msgid "<b>System Status</b>"
-msgid "System Status"
-msgstr "സിസ്റ്റം അവസ്ഥ"
-
-#: ../src/sysinfo.cpp:784
-msgid "Available disk space:"
-msgstr "ലഭ്യമായ ഡിസ്ക് സ്ഥലം:"
 
 #: ../src/util.cpp:30
 msgid "Running"
@@ -1396,25 +1316,21 @@ msgstr "%.1f GiB"
 
 #: ../src/util.cpp:169
 #, c-format
-#| msgid "%.1f KiB"
 msgid "%.1f TiB"
 msgstr "%.1f TiB"
 
 #: ../src/util.cpp:170
 #, c-format
-#| msgid "%.1f kbit"
 msgid "%.3g kbit"
 msgstr "%.3g kbit"
 
 #: ../src/util.cpp:171
 #, c-format
-#| msgid "%.1f Mbit"
 msgid "%.3g Mbit"
 msgstr "%.3g Mbit"
 
 #: ../src/util.cpp:172
 #, c-format
-#| msgid "%.1f Gbit"
 msgid "%.3g Gbit"
 msgstr "%.3g Gbit"
 
@@ -1437,11 +1353,98 @@ msgid_plural "%u bytes"
 msgstr[0] "%u ബൈറ്റ്"
 msgstr[1] "%u ബൈറ്റ്സ്"
 
+#: ../src/util.cpp:232
+msgid "Very High Priority"
+msgstr "ഏറ്റവും കൂടുതല്‍ മുന്‍ഗണന"
+
+#: ../src/util.cpp:234
+msgid "High Priority"
+msgstr "കൂടുതല്‍ മുന്‍ഗണന"
+
+#: ../src/util.cpp:236
+msgid "Normal Priority"
+msgstr "സാധാരണ മുന്‍ഗണന"
+
+#: ../src/util.cpp:238
+msgid "Low Priority"
+msgstr "കുറഞ്ഞ മുന്‍ഗണന"
+
+#: ../src/util.cpp:240
+msgid "Very Low Priority"
+msgstr "വളരെ കുറഞ്ഞ മുന്‍ഗണന"
+
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:585
+#: ../src/util.cpp:599
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "System"
+#~ msgstr "സിസ്റ്റം"
+
+#~ msgid "Show the System tab"
+#~ msgstr "സിസ്റ്റം കിളിവാതില്‍ കാണിക്കുക"
+
+#~ msgid "_Monitor"
+#~ msgstr "_നിരീക്ഷകന്‍"
+
+#~ msgid "_Edit"
+#~ msgstr "_മാറ്റം വരുത്തുക"
+
+#~ msgid "Search for _Open Files"
+#~ msgstr "_തുറന്നിരിക്കുന്ന ഫയലുകള്‍ക്ക് തിരയുക"
+
+#~ msgid "Search for open files"
+#~ msgstr "തുറന്നിരിക്കുന്ന ഫയലുകള്‍ക്ക് തിരയുക"
+
+#~ msgid "Quit the program"
+#~ msgstr "പ്രോഗ്രാമില്‍ നിന്നും പുറത്ത് കടക്കുക"
+
+#~ msgid "Configure the application"
+#~ msgstr "പ്രയോഗം ക്രമീകരിക്കുക"
+
+#~ msgid "_Contents"
+#~ msgstr "_ഉളളടക്കം"
+
+#~ msgid "Open the manual"
+#~ msgstr "മാനുവല്‍ തുറക്കുക"
+
+#~ msgid "About this application"
+#~ msgstr "ഈ പ്രയോഗം സംബന്ധിച്ച് "
+
+#~| msgid "(Low Priority)"
+#~ msgid "(%s Priority)"
+#~ msgstr "(%s മുന്‍ഗണന)"
+
+#~| msgid "Release %s"
+#~ msgid "Release %s %s"
+#~ msgstr "റിലീസ് %s %s"
+
+#~ msgid "%d-bit"
+#~ msgstr "%d-ബിറ്റ്"
+
+#~ msgid "Kernel %s"
+#~ msgstr "കെര്‍ണല്‍ %s"
+
+#~ msgid "GNOME %s"
+#~ msgstr "ഗ്നോം %s"
+
+#~| msgid "<b>Hardware</b>"
+#~ msgid "Hardware"
+#~ msgstr "ഹാര്‍ഡ്‌വെയര്‍"
+
+#~ msgid "Memory:"
+#~ msgstr "മെമ്മറി:"
+
+#~ msgid "Processor:"
+#~ msgstr "പ്രൊസസ്സര്‍:"
+
+#~| msgid "<b>System Status</b>"
+#~ msgid "System Status"
+#~ msgstr "സിസ്റ്റം അവസ്ഥ"
+
+#~ msgid "Available disk space:"
+#~ msgstr "ലഭ്യമായ ഡിസ്ക് സ്ഥലം:"
 
 #~ msgid "Default graph cpu color"
 #~ msgstr "സഹജമായ ഗ്രാഫിലെ സി.പി.യുവിന്റെ നിറം"
@@ -1461,20 +1464,8 @@ msgstr "%s/s"
 #~ msgid "_Change Priority..."
 #~ msgstr "മുന്‍ഗണന _മാറ്റുക..."
 
-#~ msgid "(High Priority)"
-#~ msgstr "(കൂടുതല്‍ മുന്‍ഗണന)"
-
-#~ msgid "(Normal Priority)"
-#~ msgstr "(സാധാരണ മുന്‍ഗണന)"
-
-#~ msgid "(Very Low Priority)"
-#~ msgstr "(വളരെ കുറഞ്ഞ മുന്‍ഗണന)"
-
 #~ msgid "Solaris mode"
 #~ msgstr "സൊളാരിസ് ദശ"
-
-#~ msgid "File system i_nformation shown in list:"
-#~ msgstr "പട്ടികയില്‍ കാണിച്ചിരിക്കുന്ന ഫയലുകളുടെ വി_വരങ്ങള്‍:"
 
 #~ msgid "Unknown CPU model"
 #~ msgstr "അറിയാത്ത സി.പി.യു മോഡല്‍"
