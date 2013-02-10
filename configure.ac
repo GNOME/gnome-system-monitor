@@ -110,6 +110,7 @@ pixmaps/Makefile
 po/Makefile.in
 help/Makefile
 gnome-system-monitor.desktop.in
+gnome-system-monitor-kde.desktop.in
 ])
 
 AC_OUTPUT
