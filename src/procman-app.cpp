@@ -407,7 +407,8 @@ procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child
 
     columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree));
 
-    if(!g_strcmp0(child_schema, "proctree"))
+    if(!g_strcmp0(child_schema, "proctree") ||
+       !g_strcmp0(child_schema, "disktreenew"))
     {
         for(it = columns; it; it = it->next)
         {
@@ -437,11 +438,7 @@ procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child
                 gtk_tree_view_column_set_fixed_width(column, width);
             }
         }
-    }
-
-    if(!g_strcmp0(child_schema, "proctree") ||
-       !g_strcmp0(child_schema, "disktreenew"))
-    {
+        
         GVariant     *value;
         GVariantIter iter;
         int          sortIndex;

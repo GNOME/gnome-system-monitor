@@ -341,18 +341,15 @@ private:
     const string key;
 };
 
-
-
-
 static void
-field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
+field_toggled (const gchar *gconf_parent, GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
 {
     GtkTreeModel *model = static_cast<GtkTreeModel*>(data);
     GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
     GtkTreeIter iter;
     GtkTreeViewColumn *column;
     gboolean toggled;
-    GSettings *settings = g_settings_get_child (ProcmanApp::get()->settings, "proctree");
+    GSettings *settings = g_settings_get_child (ProcmanApp::get()->settings, gconf_parent);
     gchar *key;
     int id;
 
@@ -378,6 +375,18 @@ field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
 }
 
 static void
+proc_field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
+{
+    field_toggled("proctree", cell, path_str, data);
+}
+
+static void
+disk_field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
+{
+    field_toggled("disktreenew", cell, path_str, data);
+}
+
+static void
 create_field_page(GtkBuilder* builder, GtkWidget *tree, const gchar *widgetname)
 {
     GtkTreeView *treeview;
@@ -385,8 +394,12 @@ create_field_page(GtkBuilder* builder, GtkWidget *tree, const gchar *widgetname)
     GtkListStore *model;
     GtkTreeViewColumn *column;
     GtkCellRenderer *cell;
+    gchar *full_widgetname;
 
-    treeview = GTK_TREE_VIEW (gtk_builder_get_object (builder, widgetname));
+    full_widgetname = g_strdup_printf ("%s_columns", widgetname);
+    treeview = GTK_TREE_VIEW (gtk_builder_get_object (builder, full_widgetname));
+    g_free (full_widgetname);
+
     model = gtk_list_store_new (3, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_POINTER);
 
     gtk_tree_view_set_model (GTK_TREE_VIEW(treeview), GTK_TREE_MODEL(model));
@@ -399,7 +412,11 @@ create_field_page(GtkBuilder* builder, GtkWidget *tree, const gchar *widgetname)
     gtk_tree_view_column_set_attributes (column, cell,
                                          "active", 0,
                                          NULL);
-    g_signal_connect (G_OBJECT (cell), "toggled", G_CALLBACK (field_toggled), model);
+    if(!g_strcmp0(widgetname, "proctree")) 
+        g_signal_connect (G_OBJECT (cell), "toggled", G_CALLBACK (proc_field_toggled), model);
+    else if(!g_strcmp0(widgetname, "disktreenew")) 
+        g_signal_connect (G_OBJECT (cell), "toggled", G_CALLBACK (disk_field_toggled), model);
+
     gtk_tree_view_column_set_clickable (column, TRUE);
     gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
@@ -522,7 +539,7 @@ procdialog_create_preferences_dialog (ProcmanApp *app)
     g_signal_connect(G_OBJECT(draw_stacked_button), "toggled",
                      G_CALLBACK(draw_stacked_toggled), app);
 
-    create_field_page (builder, app->tree, "processes_columns_treeview");
+    create_field_page (builder, app->tree, "proctree");
 
     update = (gfloat) app->config.graph_update_interval;
     adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.25,
@@ -557,7 +574,7 @@ procdialog_create_preferences_dialog (ProcmanApp *app)
     g_signal_connect (G_OBJECT (check_button), "toggled",
                       G_CALLBACK (show_all_fs_toggled), app);
 
-    create_field_page (builder, app->disk_list, "devices_columns_treeview");
+    create_field_page (builder, app->disk_list, "disktreenew");
 
     gtk_widget_show_all (prefs_dialog);
     g_signal_connect (G_OBJECT (prefs_dialog), "response",

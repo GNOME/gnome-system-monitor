@@ -8,6 +8,7 @@
 #include <glib/gi18n.h>
 
 #include "procman-app.h"
+#include "callbacks.h"
 #include "disks.h"
 #include "util.h"
 #include "interface.h"
@@ -309,6 +310,8 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
         N_("Used")
     };
 
+    GSettings * settings = g_settings_get_child (app->settings, "disktreenew");
+
     scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "disks_scrolled"));
 
     model = gtk_list_store_new(DISK_N_COLUMNS,      /* n columns */
@@ -334,6 +337,7 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
 
     col = gtk_tree_view_column_new();
     cell = gtk_cell_renderer_pixbuf_new();
+    g_signal_connect(G_OBJECT(col), "notify::width", G_CALLBACK(cb_column_resized), settings);
     gtk_tree_view_column_pack_start(col, cell, FALSE);
     gtk_tree_view_column_set_attributes(col, cell, "pixbuf", DISK_ICON,
                                         NULL);
@@ -346,6 +350,7 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
     gtk_tree_view_column_set_sort_column_id(col, DISK_DEVICE);
     gtk_tree_view_column_set_reorderable(col, TRUE);
     gtk_tree_view_column_set_resizable(col, TRUE);
+    gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
     gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
 
     /* sizes - used */
@@ -356,8 +361,10 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
         gtk_tree_view_column_pack_start(col, cell, TRUE);
         gtk_tree_view_column_set_title(col, _(titles[i]));
         gtk_tree_view_column_set_resizable(col, TRUE);
+        g_signal_connect(G_OBJECT(col), "notify::width", G_CALLBACK(cb_column_resized), settings);
         gtk_tree_view_column_set_sort_column_id(col, i);
         gtk_tree_view_column_set_reorderable(col, TRUE);
+        gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
         gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
 
         switch (i) {
@@ -383,7 +390,9 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
 
     col = gtk_tree_view_column_new();
     cell = gtk_cell_renderer_text_new();
+    g_signal_connect(G_OBJECT(col), "notify::width", G_CALLBACK(cb_column_resized), settings);
     g_object_set(cell, "xalign", 1.0f, NULL);
+    gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
     gtk_tree_view_column_pack_start(col, cell, FALSE);
     gtk_tree_view_column_set_cell_data_func(col, cell,
                                             &procman::size_cell_data_func,

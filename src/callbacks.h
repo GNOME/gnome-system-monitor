@@ -70,6 +70,7 @@ void            cb_radio_processes(GtkAction *action,
                                    GtkRadioAction *current,
                                    gpointer data);
 
+void            cb_column_resized (GtkWidget* column, GParamSpec* param, gpointer data);
 
 
 void            cb_kill_sigstop(GtkAction *action,

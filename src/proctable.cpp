@@ -172,29 +172,6 @@ proctable_get_columns_order(GtkTreeView *treeview)
     return order;
 }
 
-void
-cb_proctable_column_resized(GtkWidget *widget)
-{
-    GtkTreeViewColumn *column = GTK_TREE_VIEW_COLUMN(widget);
-    gint width;
-    gchar *key;
-    int id;
-    GSettings *settings;
-    gint saved_width;
-
-    settings = g_settings_get_child (ProcmanApp::get()->settings, "proctree");
-    id = gtk_tree_view_column_get_sort_column_id (column);
-    width = gtk_tree_view_column_get_width (column);
-    key = g_strdup_printf ("col-%d-width", id);
-
-    g_settings_get (settings, key, "i", &saved_width);
-    if (saved_width!=width)
-    {
-        g_settings_set_int(settings, key, width);
-    }
-    g_free (key);
-}
-
 static gboolean
 search_equal_func(GtkTreeModel *model,
                   gint column,
@@ -234,7 +211,6 @@ proctable_new (ProcmanApp * const app)
     GtkTreeSelection *selection;
     GtkTreeViewColumn *column;
     GtkCellRenderer *cell_renderer;
-
     const gchar *titles[] = {
         N_("Process Name"),
         N_("User"),
@@ -267,7 +243,7 @@ proctable_new (ProcmanApp * const app)
     };
 
     gint i;
-
+    GSettings * settings = g_settings_get_child (app->settings, "proctree");
     model = gtk_tree_store_new (NUM_COLUMNS,
                                 G_TYPE_STRING,      /* Process Name */
                                 G_TYPE_STRING,      /* User         */
@@ -330,7 +306,7 @@ proctable_new (ProcmanApp * const app)
     gtk_tree_view_column_set_resizable (column, TRUE);
     gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
     gtk_tree_view_column_set_min_width (column, 1);
-    g_signal_connect(G_OBJECT(column), "notify::width", G_CALLBACK(cb_proctable_column_resized), NULL);
+    g_signal_connect(G_OBJECT(column), "notify::width", G_CALLBACK(cb_column_resized), settings);
     gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
     gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
 
@@ -346,7 +322,7 @@ proctable_new (ProcmanApp * const app)
         gtk_tree_view_column_set_title(col, _(titles[i]));
         gtk_tree_view_column_set_resizable(col, TRUE);
         gtk_tree_view_column_set_sort_column_id(col, i);
-        g_signal_connect(G_OBJECT(col), "notify::width", G_CALLBACK(cb_proctable_column_resized), NULL);
+        g_signal_connect(G_OBJECT(col), "notify::width", G_CALLBACK(cb_column_resized), settings);
         gtk_tree_view_column_set_reorderable(col, TRUE);
         gtk_tree_view_append_column(GTK_TREE_VIEW(proctree), col);
 
@@ -441,10 +417,10 @@ proctable_new (ProcmanApp * const app)
                 break;
         }
 
+        gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
         // sizing
         switch (i) {
             case COL_ARGS:
-                gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
                 gtk_tree_view_column_set_min_width(col, 150);
                 break;
             default:
@@ -454,7 +430,6 @@ proctable_new (ProcmanApp * const app)
     }
 
     app->tree = proctree;
-
     set_proctree_reorderable(app);
 
     procman_get_tree_state (app->settings, proctree, "proctree");
