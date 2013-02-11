@@ -283,21 +283,6 @@ network_in_bits_toggled(GtkToggleButton *button, gpointer data)
 
 
 static void
-smooth_refresh_toggled(GtkToggleButton *button, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-    GSettings *settings = app->settings;
-
-    gboolean toggled;
-
-    toggled = gtk_toggle_button_get_active(button);
-
-    g_settings_set_boolean(settings, SmoothRefresh::KEY.c_str(), toggled);
-}
-
-
-
-static void
 show_all_fs_toggled (GtkToggleButton *button, gpointer data)
 {
     ProcmanApp *app = static_cast<ProcmanApp *>(data);
@@ -513,11 +498,7 @@ procdialog_create_preferences_dialog (ProcmanApp *app)
                       G_CALLBACK (SBU::callback), &interval_updater);
 
     smooth_button = GTK_WIDGET (gtk_builder_get_object (builder, "smooth_button"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(smooth_button),
-                                 g_settings_get_boolean(app->settings,
-                                                        SmoothRefresh::KEY.c_str()));
-    g_signal_connect(G_OBJECT(smooth_button), "toggled",
-                     G_CALLBACK(smooth_refresh_toggled), app);
+    g_settings_bind(app->settings, SmoothRefresh::KEY.c_str(), smooth_button, "active", G_SETTINGS_BIND_DEFAULT);
 
     check_button = GTK_WIDGET (gtk_builder_get_object (builder, "check_button"));
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
