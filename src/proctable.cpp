@@ -70,24 +70,6 @@ ProcInfo* ProcInfo::find(pid_t pid)
 }
 
 
-
-static void
-set_proctree_reorderable(ProcmanApp *app)
-{
-    GList *columns, *col;
-    GtkTreeView *proctree;
-
-    proctree = GTK_TREE_VIEW(app->tree);
-
-    columns = gtk_tree_view_get_columns (proctree);
-
-    for(col = columns; col; col = col->next)
-        gtk_tree_view_column_set_reorderable(static_cast<GtkTreeViewColumn*>(col->data), TRUE);
-
-    g_list_free(columns);
-}
-
-
 static void
 cb_columns_changed(GtkTreeView *treeview, gpointer data)
 {
@@ -307,6 +289,7 @@ proctable_new (ProcmanApp * const app)
     gtk_tree_view_column_set_resizable (column, TRUE);
     gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
     gtk_tree_view_column_set_min_width (column, 1);
+    gtk_tree_view_column_set_reorderable(column, TRUE);
     g_signal_connect(G_OBJECT(column), "notify::width", G_CALLBACK(cb_column_resized), settings);
     gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
     gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
@@ -428,7 +411,6 @@ proctable_new (ProcmanApp * const app)
         }
     }
     app->tree = proctree;
-    set_proctree_reorderable(app);
 
     procman_get_tree_state (app->settings, proctree, "proctree");
     /* Override column settings by hiding this column if it's meaningless: */
