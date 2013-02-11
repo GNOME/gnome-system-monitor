@@ -249,10 +249,11 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     title_text = g_strdup_printf(title_template, _("Memory"));
     gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
     g_free(title_text);
-    
-    gtk_grid_attach (GTK_GRID (table), color_picker, 0, 0, 1, 2);
 
-    gtk_grid_attach (GTK_GRID (table), load_graph_get_labels(mem_graph)->memory, 1, 1, 1, 1);
+    label = GTK_WIDGET(gtk_builder_get_object(builder, "memory_label"));
+
+    gtk_grid_attach_next_to (GTK_GRID (table), color_picker, label, GTK_POS_LEFT, 1, 2);
+    gtk_grid_attach_next_to (GTK_GRID (table), load_graph_get_labels(mem_graph)->memory, label, GTK_POS_BOTTOM, 1, 1);
 
     color_picker = load_graph_get_swap_color_picker(mem_graph);
     g_signal_connect (G_OBJECT (color_picker), "color_set",
@@ -260,9 +261,11 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     title_text = g_strdup_printf(title_template, _("Swap"));
     gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
     g_free(title_text);
-    gtk_grid_attach (GTK_GRID (table), color_picker, 2, 0, 1, 2);
 
-    gtk_grid_attach (GTK_GRID (table),  load_graph_get_labels(mem_graph)->swap, 3, 1, 1, 1);
+    label = GTK_WIDGET(gtk_builder_get_object(builder, "swap_label"));
+
+    gtk_grid_attach_next_to (GTK_GRID (table), color_picker, label, GTK_POS_LEFT, 1, 2);
+    gtk_grid_attach_next_to (GTK_GRID (table), load_graph_get_labels(mem_graph)->swap, label, GTK_POS_BOTTOM, 1, 1);
 
     app->mem_graph = mem_graph;
 
@@ -289,9 +292,10 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     gtk_container_add (GTK_CONTAINER (picker_alignment), color_picker);
 
     //gtk_widget_set_size_request(GTK_WIDGET(load_graph_get_labels(net_graph)->net_in), 100, -1);
-    gtk_grid_attach (GTK_GRID (table), load_graph_get_labels(net_graph)->net_in, 2, 0, 1, 1);
-
-    gtk_grid_attach (GTK_GRID (table), load_graph_get_labels(net_graph)->net_in_total, 2, 1, 1, 1);
+    label = GTK_WIDGET (gtk_builder_get_object(builder, "receiving_label"));
+    gtk_grid_attach_next_to (GTK_GRID (table), load_graph_get_labels(net_graph)->net_in, label, GTK_POS_RIGHT, 1, 1);
+    label = GTK_WIDGET (gtk_builder_get_object(builder, "total_received_label"));
+    gtk_grid_attach_next_to (GTK_GRID (table), load_graph_get_labels(net_graph)->net_in_total, label, GTK_POS_RIGHT, 1, 1);
 
     color_picker = gsm_color_button_new (
         &net_graph->colors.at(1), GSMCP_TYPE_NETWORK_OUT);
@@ -305,10 +309,10 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     gtk_container_add (GTK_CONTAINER (picker_alignment), color_picker);
 
     //gtk_widget_set_size_request(GTK_WIDGET(load_graph_get_labels(net_graph)->net_out), 100, -1);
-    
-    gtk_grid_attach (GTK_GRID (table), load_graph_get_labels(net_graph)->net_out, 6, 0, 1, 1);
-
-    gtk_grid_attach (GTK_GRID (table),  load_graph_get_labels(net_graph)->net_out_total, 6, 1, 1, 1);
+    label = GTK_WIDGET (gtk_builder_get_object(builder, "sending_label"));
+    gtk_grid_attach_next_to (GTK_GRID (table), load_graph_get_labels(net_graph)->net_out, label, GTK_POS_RIGHT, 1, 1);
+    label = GTK_WIDGET (gtk_builder_get_object(builder, "total_sent_label"));
+    gtk_grid_attach_next_to (GTK_GRID (table),  load_graph_get_labels(net_graph)->net_out_total, label, GTK_POS_RIGHT, 1, 1);
 
     app->net_graph = net_graph;
     g_free(title_template);
