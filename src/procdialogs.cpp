@@ -231,71 +231,6 @@ prefs_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 }
 
 
-static void
-show_kill_dialog_toggled (GtkToggleButton *button, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-    GSettings *settings = app->settings;
-
-    gboolean toggled;
-
-    toggled = gtk_toggle_button_get_active (button);
-
-    g_settings_set_boolean (settings, "kill-dialog", toggled);
-}
-
-
-
-static void
-solaris_mode_toggled(GtkToggleButton *button, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-    GSettings *settings = app->settings;
-
-    gboolean toggled;
-    toggled = gtk_toggle_button_get_active(button);
-    g_settings_set_boolean(settings, procman::settings::solaris_mode.c_str(), toggled);
-}
-
-static void
-draw_stacked_toggled(GtkToggleButton *button, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-    GSettings *settings = app->settings;
-
-    gboolean toggled;
-    toggled = gtk_toggle_button_get_active(button);
-    g_settings_set_boolean(settings, procman::settings::draw_stacked.c_str(), toggled);
-}
-
-
-static void
-network_in_bits_toggled(GtkToggleButton *button, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-    GSettings *settings = app->settings;
-
-    gboolean toggled;
-    toggled = gtk_toggle_button_get_active(button);
-    g_settings_set_boolean(settings, procman::settings::network_in_bits.c_str(), toggled);
-}
-
-
-
-static void
-show_all_fs_toggled (GtkToggleButton *button, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-    GSettings *settings = app->settings;
-
-    gboolean toggled;
-
-    toggled = gtk_toggle_button_get_active (button);
-
-    g_settings_set_boolean (settings, "show-all-fs", toggled);
-}
-
-
 class SpinButtonUpdater
 {
 public:
@@ -501,24 +436,13 @@ procdialog_create_preferences_dialog (ProcmanApp *app)
     g_settings_bind(app->settings, SmoothRefresh::KEY.c_str(), smooth_button, "active", G_SETTINGS_BIND_DEFAULT);
 
     check_button = GTK_WIDGET (gtk_builder_get_object (builder, "check_button"));
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
-                                  app->config.show_kill_warning);
-    g_signal_connect (G_OBJECT (check_button), "toggled",
-                      G_CALLBACK (show_kill_dialog_toggled), app);
+    g_settings_bind(app->settings, "kill-dialog", check_button, "active", G_SETTINGS_BIND_DEFAULT);
 
     GtkWidget *solaris_button = GTK_WIDGET (gtk_builder_get_object (builder, "solaris_button"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(solaris_button),
-                                 g_settings_get_boolean(app->settings,
-                                                        procman::settings::solaris_mode.c_str()));
-    g_signal_connect(G_OBJECT(solaris_button), "toggled",
-                     G_CALLBACK(solaris_mode_toggled), app);
+    g_settings_bind(app->settings, procman::settings::solaris_mode.c_str(), solaris_button, "active", G_SETTINGS_BIND_DEFAULT);
 
     GtkWidget *draw_stacked_button = GTK_WIDGET (gtk_builder_get_object (builder, "draw_stacked_button"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(draw_stacked_button),
-                                 g_settings_get_boolean(app->settings,
-                                                        procman::settings::draw_stacked.c_str()));
-    g_signal_connect(G_OBJECT(draw_stacked_button), "toggled",
-                     G_CALLBACK(draw_stacked_toggled), app);
+    g_settings_bind(app->settings, procman::settings::draw_stacked.c_str(), draw_stacked_button, "active", G_SETTINGS_BIND_DEFAULT);
 
     create_field_page (builder, app->tree, "proctree");
 
@@ -532,12 +456,7 @@ procdialog_create_preferences_dialog (ProcmanApp *app)
                       &graph_interval_updater);
 
     GtkWidget *bits_button = GTK_WIDGET (gtk_builder_get_object (builder, "bits_button"));
-
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(bits_button),
-                                 g_settings_get_boolean(app->settings,
-                                                        procman::settings::network_in_bits.c_str()));
-    g_signal_connect(G_OBJECT(bits_button), "toggled",
-                     G_CALLBACK(network_in_bits_toggled), app);
+    g_settings_bind(app->settings, procman::settings::network_in_bits.c_str(), bits_button, "active", G_SETTINGS_BIND_DEFAULT);
 
     update = (gfloat) app->config.disks_update_interval;
     adjustment = (GtkAdjustment *) gtk_adjustment_new (update / 1000.0, 1.0,
@@ -550,10 +469,7 @@ procdialog_create_preferences_dialog (ProcmanApp *app)
 
 
     check_button = GTK_WIDGET (gtk_builder_get_object (builder, "all_devices_check"));
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
-                                  app->config.show_all_fs);
-    g_signal_connect (G_OBJECT (check_button), "toggled",
-                      G_CALLBACK (show_all_fs_toggled), app);
+    g_settings_bind(app->settings, "show-all-fs", check_button, "active", G_SETTINGS_BIND_DEFAULT);
 
     create_field_page (builder, app->disk_list, "disktreenew");
 
