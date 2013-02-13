@@ -131,12 +131,8 @@ void draw_background(LoadGraph *graph) {
         if (graph->type == LOAD_GRAPH_NET) {
             // operation orders matters so it's 0 if i == num_bars
             guint64 rate = graph->net.max - (i * graph->net.max / num_bars);
-            const std::string caption(procman::format_network_rate(rate, graph->net.max));
-            pango_layout_set_text (layout, caption.c_str(), -1);
-            pango_layout_get_extents (layout, NULL, &extents);
-            cairo_move_to (cr, graph->indent - 1.0 * extents.width / PANGO_SCALE + 20,
-                           y - 1.0 * extents.height / PANGO_SCALE / 2);
-            pango_cairo_show_layout (cr, layout);
+            const std::string captionstr(procman::format_network_rate(rate, graph->net.max));
+            caption = g_strdup(captionstr.c_str());
         } else {
             // operation orders matters so it's 0 if i == num_bars
             guint max = 100;
@@ -144,13 +140,13 @@ void draw_background(LoadGraph *graph) {
                 max = 100 * graph->n;
             }
             caption = g_strdup_printf("%d %%", max - i * (max / num_bars));
-            pango_layout_set_text (layout, caption, -1);
-            pango_layout_get_extents (layout, NULL, &extents);
-            cairo_move_to (cr, graph->indent - 1.0 * extents.width / PANGO_SCALE + 20,
-                           y - 1.0 * extents.height / PANGO_SCALE / 2);
-            pango_cairo_show_layout (cr, layout);
-            g_free (caption);
         }
+        pango_layout_set_text (layout, caption, -1);
+        pango_layout_get_extents (layout, NULL, &extents);
+        cairo_move_to (cr, graph->indent - 1.0 * extents.width / PANGO_SCALE + 20,
+                       y - 1.0 * extents.height / PANGO_SCALE / 2);
+        pango_cairo_show_layout (cr, layout);
+        g_free(caption);
 
         cairo_set_source_rgba (cr, 0, 0, 0, 0.75);
         cairo_move_to (cr, graph->rmargin + graph->indent - 3, i * graph->graph_dely + 0.5);
