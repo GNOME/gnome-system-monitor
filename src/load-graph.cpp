@@ -359,8 +359,8 @@ namespace
         char* total_text;
         char* text;
 
-        used_text = procman::format_size(used);
-        total_text = procman::format_size(total);
+        used_text = g_format_size_full(used, G_FORMAT_SIZE_IEC_UNITS);
+        total_text = g_format_size_full(total, G_FORMAT_SIZE_IEC_UNITS);
         if (total == 0) {
             text = g_strdup(_("not available"));
         } else {

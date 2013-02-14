@@ -88,6 +88,11 @@ namespace procman
                                 GtkTreeModel *model, GtkTreeIter *iter,
                                 gpointer user_data);
 
+    void size_si_cell_data_func(GtkTreeViewColumn *col, GtkCellRenderer *renderer,
+                                GtkTreeModel *model, GtkTreeIter *iter,
+                                gpointer user_data);
+
+
     void duration_cell_data_func(GtkTreeViewColumn *col, GtkCellRenderer *renderer,
                                  GtkTreeModel *model, GtkTreeIter *iter,
                                  gpointer user_data);

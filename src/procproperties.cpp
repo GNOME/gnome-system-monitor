@@ -103,7 +103,7 @@ format_memsize(guint64 size)
     if (size == 0)
         return g_strdup(_("N/A"));
     else
-        return procman::format_size(size);
+        return g_format_size_full(size, G_FORMAT_SIZE_IEC_UNITS);
 }
 
 static void
