@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-20 16:59+0200\n"
-"PO-Revision-Date: 2012-12-26 19:35+0200\n"
+"POT-Creation-Date: 2013-02-21 19:48+0200\n"
+"PO-Revision-Date: 2013-02-21 19:48+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <sh.yaron@gmail.com>\n"
 "Language: he\n"
@@ -26,18 +26,24 @@ msgstr ""
 #: ../gnome-system-monitor.desktop.in.in.h:1
 #: ../data/interface.ui.h:1
 #: ../src/callbacks.cpp:184
-#: ../src/procman-app.cpp:359
+#: ../src/procman-app.cpp:360
 msgid "System Monitor"
 msgstr "צג המערכת"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2
 #: ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "הצגת התהליכים הנוכחיים ומעקב אחר מצב המערכת"
 
 #: ../gnome-system-monitor.desktop.in.in.h:3
+#: ../gnome-system-monitor-kde.desktop.in.in.h:3
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr "צג;מוניטור;מעקב;מערכת;תהליך;מעבד;זיכרון;זכרון;רשת;היסטוריה;שימוש;ניצולת;ניצול;"
+
+#: ../gnome-system-monitor-kde.desktop.in.in.h:1
+msgid "GNOME System Monitor"
+msgstr "צג המערכת מבית GNOME"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
 msgid "Kill process"
@@ -78,13 +84,13 @@ msgstr "היסטוריית זיכרון ותחלופה"
 
 #: ../data/interface.ui.h:7
 #: ../src/interface.cpp:249
-#: ../src/procproperties.cpp:133
-#: ../src/proctable.cpp:254
+#: ../src/procproperties.cpp:132
+#: ../src/proctable.cpp:212
 msgid "Memory"
 msgstr "זיכרון"
 
 #: ../data/interface.ui.h:8
-#: ../src/interface.cpp:260
+#: ../src/interface.cpp:261
 msgid "Swap"
 msgstr "תחלופה"
 
@@ -93,7 +99,7 @@ msgid "Network History"
 msgstr "היסטוריית רשת"
 
 #: ../data/interface.ui.h:10
-#: ../src/interface.cpp:285
+#: ../src/interface.cpp:288
 msgid "Receiving"
 msgstr "מתקבל"
 
@@ -251,34 +257,34 @@ msgstr ""
 "פרויקט תרגום GNOME לעברית:\n"
 "‏http://gnome-il.berlios.de"
 
-#: ../src/disks.cpp:303
+#: ../src/disks.cpp:304
 #: ../src/memmaps.cpp:361
 msgid "Device"
 msgstr "התקן"
 
-#: ../src/disks.cpp:304
+#: ../src/disks.cpp:305
 msgid "Directory"
 msgstr "תיקייה"
 
-#: ../src/disks.cpp:305
+#: ../src/disks.cpp:306
 #: ../src/gsm_color_button.c:223
 #: ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "סוג"
 
-#: ../src/disks.cpp:306
+#: ../src/disks.cpp:307
 msgid "Total"
 msgstr "סה״כ"
 
-#: ../src/disks.cpp:307
+#: ../src/disks.cpp:308
 msgid "Free"
 msgstr "פנוי"
 
-#: ../src/disks.cpp:308
+#: ../src/disks.cpp:309
 msgid "Available"
 msgstr "זמין"
 
-#: ../src/disks.cpp:309
+#: ../src/disks.cpp:310
 msgid "Used"
 msgstr "מנוצל"
 
@@ -521,7 +527,7 @@ msgid "Pick a Color for '%s'"
 msgstr "בחירת צבע עבור '%s'"
 
 #: ../src/interface.cpp:214
-#: ../src/procproperties.cpp:139
+#: ../src/procproperties.cpp:138
 msgid "CPU"
 msgstr "מעבד"
 
@@ -530,11 +536,11 @@ msgstr "מעבד"
 msgid "CPU%d"
 msgstr "מעבד־%d"
 
-#: ../src/interface.cpp:300
+#: ../src/interface.cpp:304
 msgid "Sending"
 msgstr "נשלח"
 
-#: ../src/load-graph.cpp:174
+#: ../src/load-graph.cpp:170
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
@@ -993,18 +999,74 @@ msgid "Disk view columns order"
 msgstr "Disk view columns order"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
+msgid "Width of disk view 'Device' column"
+msgstr "Width of disk view 'Device' column"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:83
+msgid "Show disk view 'Device' column on startup"
+msgstr "Show disk view 'Device' column on startup"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:84
+msgid "Width of disk view 'Directory' column"
+msgstr "Width of disk view 'Directory' column"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:85
+msgid "Show disk view 'Directory' column on startup"
+msgstr "Show disk view 'Directory' column on startup"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:86
+msgid "Width of disk view 'Type' column"
+msgstr "Width of disk view 'Type' column"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:87
+msgid "Show disk view 'Type' column on startup"
+msgstr "Show disk view 'Type' column on startup"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:88
+msgid "Width of disk view 'Total' column"
+msgstr "Width of disk view 'Total' column"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:89
+msgid "Show disk view 'Total' column on startup"
+msgstr "Show disk view 'Total' column on startup"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:90
+msgid "Width of disk view 'Free' column"
+msgstr "Width of disk view 'Free' column"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:91
+msgid "Show disk view 'Free' column on startup"
+msgstr "Show disk view 'Free' column on startup"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:92
+msgid "Width of disk view 'Available' column"
+msgstr "Width of disk view 'Available' column"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:93
+msgid "Show disk view 'Available' column on startup"
+msgstr "Show disk view 'Available' column on startup"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:94
+msgid "Width of disk view 'Used' column"
+msgstr "Width of disk view 'Used' column"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:95
+msgid "Show disk view 'Used' column on startup"
+msgstr "Show disk view 'Used' column on startup"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:96
 msgid "Memory map sort column"
 msgstr "Memory map sort column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:83
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:97
 msgid "Memory map sort order"
 msgstr "Memory map sort order"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:84
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:98
 msgid "Open files sort column"
 msgstr "Open files sort column"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:85
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:99
 msgid "Open files sort order"
 msgstr "Open files sort order"
 
@@ -1061,11 +1123,12 @@ msgstr "הערה:"
 msgid "The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."
 msgstr "העדיפות של התהליך. ערך נמוך שווה ערך לעדיפות גבוהה."
 
-#: ../src/procdialogs.cpp:429
+#: ../src/procdialogs.cpp:366
+#: ../src/procman-app.cpp:462
 msgid "Icon"
 msgstr "סמל"
 
-#: ../src/procman-app.cpp:545
+#: ../src/procman-app.cpp:575
 msgid "A simple process and system monitor."
 msgstr "צג פשוט למעקב אחר המערכת על תהליכיה."
 
@@ -1074,93 +1137,98 @@ msgstr "צג פשוט למעקב אחר המערכת על תהליכיה."
 msgid "N/A"
 msgstr "לא זמין"
 
-#: ../src/procproperties.cpp:130
-#: ../src/proctable.cpp:239
+#: ../src/procproperties.cpp:129
+#: ../src/proctable.cpp:197
 msgid "Process Name"
 msgstr "שם התהליך"
 
-#: ../src/procproperties.cpp:131
-#: ../src/proctable.cpp:240
+#: ../src/procproperties.cpp:130
+#: ../src/proctable.cpp:198
 msgid "User"
 msgstr "משתמש"
 
-#: ../src/procproperties.cpp:132
-#: ../src/proctable.cpp:241
+#: ../src/procproperties.cpp:131
+#: ../src/proctable.cpp:199
 msgid "Status"
 msgstr "מצב"
 
-#: ../src/procproperties.cpp:134
-#: ../src/proctable.cpp:242
+#: ../src/procproperties.cpp:133
+#: ../src/proctable.cpp:200
 msgid "Virtual Memory"
 msgstr "זיכרון וירטואלי"
 
-#: ../src/procproperties.cpp:135
-#: ../src/proctable.cpp:243
+#: ../src/procproperties.cpp:134
+#: ../src/proctable.cpp:201
 msgid "Resident Memory"
 msgstr "זיכרון מקומי"
 
-#: ../src/procproperties.cpp:136
-#: ../src/proctable.cpp:244
+#: ../src/procproperties.cpp:135
+#: ../src/proctable.cpp:202
 msgid "Writable Memory"
 msgstr "זיכרון ניתן לכתיבה"
 
-#: ../src/procproperties.cpp:137
-#: ../src/proctable.cpp:245
+#: ../src/procproperties.cpp:136
+#: ../src/proctable.cpp:203
 msgid "Shared Memory"
 msgstr "זיכרון משותף"
 
-#: ../src/procproperties.cpp:138
-#: ../src/proctable.cpp:246
+#: ../src/procproperties.cpp:137
+#: ../src/proctable.cpp:204
 msgid "X Server Memory"
 msgstr "זיכרון שרת X"
 
-#: ../src/procproperties.cpp:140
-#: ../src/proctable.cpp:248
+#: ../src/procproperties.cpp:139
+#: ../src/proctable.cpp:206
 msgid "CPU Time"
 msgstr "זמן מעבד"
 
-#: ../src/procproperties.cpp:140
+#: ../src/procproperties.cpp:139
 #, c-format
 msgid "%lld second"
 msgid_plural "%lld seconds"
 msgstr[0] "שנייה אחת"
 msgstr[1] "%lld שניות"
 
-#: ../src/procproperties.cpp:141
-#: ../src/proctable.cpp:249
+#: ../src/procproperties.cpp:140
+#: ../src/proctable.cpp:207
 msgid "Started"
 msgstr "הופעל"
 
-#: ../src/procproperties.cpp:142
-#: ../src/proctable.cpp:250
+#: ../src/procproperties.cpp:141
+#: ../src/proctable.cpp:208
 msgid "Nice"
 msgstr "עדיפות"
 
-#: ../src/procproperties.cpp:143
-#: ../src/proctable.cpp:264
+#: ../src/procproperties.cpp:142
+#: ../src/proctable.cpp:222
 msgid "Priority"
 msgstr "עדיפות"
 
-#: ../src/procproperties.cpp:144
-#: ../src/proctable.cpp:251
+#: ../src/procproperties.cpp:143
+#: ../src/proctable.cpp:209
 msgid "ID"
 msgstr "מזהה"
 
-#: ../src/procproperties.cpp:145
-#: ../src/proctable.cpp:252
+#: ../src/procproperties.cpp:144
+#: ../src/proctable.cpp:210
 msgid "Security Context"
 msgstr "הקשר אבטחה"
 
-#: ../src/procproperties.cpp:146
-#: ../src/proctable.cpp:253
+#: ../src/procproperties.cpp:145
+#: ../src/proctable.cpp:211
 msgid "Command Line"
 msgstr "פקודה"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:147
-#: ../src/proctable.cpp:256
+#: ../src/procproperties.cpp:146
+#: ../src/proctable.cpp:214
 msgid "Waiting Channel"
 msgstr "ערוץ המתנה"
+
+#: ../src/procproperties.cpp:147
+#: ../src/proctable.cpp:215
+msgid "Control Group"
+msgstr "קבוצת הבקרה"
 
 #: ../src/procproperties.cpp:259
 msgid "Process Properties"
@@ -1171,34 +1239,30 @@ msgstr "מאפייני תהליך"
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "מאפייני התהליך „%s“ (המזהה %u):"
 
-#: ../src/proctable.cpp:247
+#: ../src/proctable.cpp:205
 #, no-c-format
 msgid "% CPU"
 msgstr "% מהמעבד"
 
-#: ../src/proctable.cpp:257
-msgid "Control Group"
-msgstr "קבוצת הבקרה"
-
-#: ../src/proctable.cpp:258
+#: ../src/proctable.cpp:216
 msgid "Unit"
 msgstr "יחידה"
 
-#: ../src/proctable.cpp:259
+#: ../src/proctable.cpp:217
 msgid "Session"
 msgstr "הפעלה"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:262
+#: ../src/proctable.cpp:220
 msgid "Seat"
 msgstr "תושבת"
 
-#: ../src/proctable.cpp:263
+#: ../src/proctable.cpp:221
 msgid "Owner"
 msgstr "בעלים"
 
-#: ../src/proctable.cpp:1076
+#: ../src/proctable.cpp:1030
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "ממוצעי עומס עבור ‎1, 5, 15 הדקות האחרונות: %0.2f, %0.2f, %0.2f"
@@ -1322,7 +1386,7 @@ msgid "Very Low Priority"
 msgstr "עדיפות נמוכה מאוד"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:599
+#: ../src/util.cpp:632
 #, c-format
 msgid "%s/s"
 msgstr "%s/שנייה"
