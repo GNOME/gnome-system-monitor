@@ -541,6 +541,7 @@ procman_save_tree_state (GSettings *settings, GtkWidget *tree, const gchar *chil
         order_variant = g_variant_new("ai", builder);
         g_settings_set_value(pt_settings, "columns-order", order_variant);
 
+        g_variant_builder_unref(builder);
         g_slist_free(order);
     }
 
@@ -599,6 +600,8 @@ int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>&
     }
 
     on_activate ();
+
+    g_strfreev(argv);
 
     return 0;
 }
