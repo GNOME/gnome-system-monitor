@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-12-06 21:28+0000\n"
+"POT-Creation-Date: 2013-02-11 20:59+0000\n"
 "PO-Revision-Date: 2012-09-07 18:53+0300\n"
 "Last-Translator: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
@@ -18,33 +18,39 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/callbacks.cpp:183 ../src/procman-app.cpp:359
+#: ../src/callbacks.cpp:184 ../src/procman-app.cpp:360
 msgid "System Monitor"
 msgstr "Сістэмны назіральнік"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:184
+#: ../gnome-system-monitor.desktop.in.in.h:2
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "Прагляд актыўных працэсаў і назіранне за станам сістэмы"
 
 #: ../gnome-system-monitor.desktop.in.in.h:3
+#: ../gnome-system-monitor-kde.desktop.in.in.h:3
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr ""
 "Назіральнік;Манітор;Працэс;Працэсар;CPU;Памяць;Сетка;Сеціва;Гісторыя;Графік;"
 "Рэсурсы;"
 
-#: ../org.gnome.gnome-system-monitor.policy.in.h:1
+#: ../gnome-system-monitor-kde.desktop.in.in.h:1
+msgid "GNOME System Monitor"
+msgstr "Сістэмны назіральнік GNOME"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
 msgid "Kill process"
 msgstr "Забіць працэс"
 
-#: ../org.gnome.gnome-system-monitor.policy.in.h:2
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:2
 msgid "Privileges are required to kill process"
 msgstr "Для забойства працэсу патрэбны адпаведны дазвол"
 
-#: ../org.gnome.gnome-system-monitor.policy.in.h:3
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:3
 msgid "Renice process"
 msgstr "_Змяніць прыярытэт працэсу"
 
-#: ../org.gnome.gnome-system-monitor.policy.in.h:4
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:4
 msgid "Privileges are required to renice process"
 msgstr "Для змянення прыярытэту працэсу патрэбны адпаведны дазвол"
 
@@ -69,7 +75,7 @@ msgid "Memory and Swap History"
 msgstr "Гісторыя выкарыстання памяці і своп-прасторы"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:249
-#: ../src/procproperties.cpp:133 ../src/proctable.cpp:255
+#: ../src/procproperties.cpp:132 ../src/proctable.cpp:230
 msgid "Memory"
 msgstr "Памяць"
 
@@ -231,38 +237,38 @@ msgstr "Паказаць картку рэсурсаў"
 msgid "Show the File Systems tab"
 msgstr "Паказаць картку файлавых сістэм"
 
-#: ../src/callbacks.cpp:194
+#: ../src/callbacks.cpp:195
 msgid "translator-credits"
 msgstr ""
 "Vital Khilko <dojlid@mova.org>\n"
 "Ales Nyakhaychyk <nab@mail.by>\n"
 "Ihar Hrachyshka <ihar.hrachyshka@gmail.com>"
 
-#: ../src/disks.cpp:303 ../src/memmaps.cpp:361
+#: ../src/disks.cpp:304 ../src/memmaps.cpp:361
 msgid "Device"
 msgstr "Прыстасаванне"
 
-#: ../src/disks.cpp:304
+#: ../src/disks.cpp:305
 msgid "Directory"
 msgstr "Каталог"
 
-#: ../src/disks.cpp:305 ../src/gsm_color_button.c:223 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:306 ../src/gsm_color_button.c:223 ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "Тып"
 
-#: ../src/disks.cpp:306
+#: ../src/disks.cpp:307
 msgid "Total"
 msgstr "Агулам"
 
-#: ../src/disks.cpp:307
+#: ../src/disks.cpp:308
 msgid "Free"
 msgstr "Вольна"
 
-#: ../src/disks.cpp:308
+#: ../src/disks.cpp:309
 msgid "Available"
 msgstr "Наяўна"
 
-#: ../src/disks.cpp:309
+#: ../src/disks.cpp:310
 msgid "Used"
 msgstr "Ужыта"
 
@@ -495,7 +501,7 @@ msgstr "Надаць працэсу асаблівы прыярытэт"
 msgid "Pick a Color for '%s'"
 msgstr "Выбар колеру для \"%s\""
 
-#: ../src/interface.cpp:214 ../src/procproperties.cpp:139
+#: ../src/interface.cpp:214 ../src/procproperties.cpp:138
 msgid "CPU"
 msgstr "Працэсар"
 
@@ -516,12 +522,12 @@ msgstr[0] "%u секунда"
 msgstr[1] "%u секунды"
 msgstr[2] "%u секунд"
 
-#: ../src/load-graph.cpp:365
+#: ../src/load-graph.cpp:369
 msgid "not available"
 msgstr "адсутнічае"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:368
+#: ../src/load-graph.cpp:372
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) з %s"
@@ -989,18 +995,74 @@ msgid "Disk view columns order"
 msgstr "Парадак слупкоў у рэжыме прагляду дыскаў"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
+msgid "Width of disk view 'Device' column"
+msgstr "Шырыня слупка прыстасаванняў у рэжыме прагляду дыскаў"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:83
+msgid "Show disk view 'Device' column on startup"
+msgstr "Пры запуску паказваць слупок прыстасаванняў у рэжыме прагляду дыскаў"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:84
+msgid "Width of disk view 'Directory' column"
+msgstr "Шырыня слупка каталогаў у рэжыме прагляду дыскаў"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:85
+msgid "Show disk view 'Directory' column on startup"
+msgstr "Пры запуску паказваць слупок каталогаў у рэжыме прагляду дыскаў"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:86
+msgid "Width of disk view 'Type' column"
+msgstr "Шырыня слупка тыпу ў рэжыме прагляду дыскаў"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:87
+msgid "Show disk view 'Type' column on startup"
+msgstr "Пры запуску паказваць слупок тыпу ў рэжыме прагляду дыскаў"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:88
+msgid "Width of disk view 'Total' column"
+msgstr "Шырыня слупка \"Агулам\" у рэжыме прагляду дыскаў"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:89
+msgid "Show disk view 'Total' column on startup"
+msgstr "Пры запуску паказваць слупок \"Агулам\" у рэжыме прагляду дыскаў"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:90
+msgid "Width of disk view 'Free' column"
+msgstr "Шырыня слупка вольнай прасторы ў рэжыме прагляду дыскаў"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:91
+msgid "Show disk view 'Free' column on startup"
+msgstr "Пры запуску паказваць слупок вольнай прасторы ў рэжыме прагляду дыскаў"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:92
+msgid "Width of disk view 'Available' column"
+msgstr "Шырыня слупка наяўнай прасторы ў рэжыме прагляду дыскаў"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:93
+msgid "Show disk view 'Available' column on startup"
+msgstr "Пры запуску паказваць слупок наяўнай прасторы ў рэжыме прагляду дыскаў"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:94
+msgid "Width of disk view 'Used' column"
+msgstr "Шырыня слупка ўжытай прасторы ў рэжыме прагляду дыскаў"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:95
+msgid "Show disk view 'Used' column on startup"
+msgstr "Пры запуску паказваць слупок ужытай прасторы ў рэжыме прагляду дыскаў"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:96
 msgid "Memory map sort column"
 msgstr "Слупок для сартавання ў рэжыме карты памяці"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:83
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:97
 msgid "Memory map sort order"
 msgstr "Парадак сартавання ў рэжыме карты памяці"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:84
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:98
 msgid "Open files sort column"
 msgstr "Слупок для сартавання ў рэжыме прагляду адкрытых файлаў"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:85
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:99
 msgid "Open files sort order"
 msgstr "Парадак сартавання ў рэжыме прагляду адкрытых файлаў"
 
@@ -1069,11 +1131,11 @@ msgstr ""
 "Прыярытэт працэсу вызначаецца значэннем \"Nice\". Ніжэйшае значэнне \"Nice\" "
 "адпавядае вышэйшаму прыярытэту."
 
-#: ../src/procdialogs.cpp:429
+#: ../src/procdialogs.cpp:446 ../src/procman-app.cpp:462
 msgid "Icon"
 msgstr "Значок"
 
-#: ../src/procman-app.cpp:545
+#: ../src/procman-app.cpp:575
 msgid "A simple process and system monitor."
 msgstr "Зручная прылада для назірання за працэсамі і сістэмай."
 
@@ -1081,43 +1143,43 @@ msgstr "Зручная прылада для назірання за працэ�
 msgid "N/A"
 msgstr "Невядома"
 
-#: ../src/procproperties.cpp:130 ../src/proctable.cpp:240
+#: ../src/procproperties.cpp:129 ../src/proctable.cpp:215
 msgid "Process Name"
 msgstr "Назва працэсу"
 
-#: ../src/procproperties.cpp:131 ../src/proctable.cpp:241
+#: ../src/procproperties.cpp:130 ../src/proctable.cpp:216
 msgid "User"
 msgstr "Карыстальнік"
 
-#: ../src/procproperties.cpp:132 ../src/proctable.cpp:242
+#: ../src/procproperties.cpp:131 ../src/proctable.cpp:217
 msgid "Status"
 msgstr "Стан"
 
-#: ../src/procproperties.cpp:134 ../src/proctable.cpp:243
+#: ../src/procproperties.cpp:133 ../src/proctable.cpp:218
 msgid "Virtual Memory"
 msgstr "Віртуальная памяць"
 
-#: ../src/procproperties.cpp:135 ../src/proctable.cpp:244
+#: ../src/procproperties.cpp:134 ../src/proctable.cpp:219
 msgid "Resident Memory"
 msgstr "Рэзідэнтная памяць"
 
-#: ../src/procproperties.cpp:136 ../src/proctable.cpp:245
+#: ../src/procproperties.cpp:135 ../src/proctable.cpp:220
 msgid "Writable Memory"
 msgstr "Запісвальная памяць"
 
-#: ../src/procproperties.cpp:137 ../src/proctable.cpp:246
+#: ../src/procproperties.cpp:136 ../src/proctable.cpp:221
 msgid "Shared Memory"
 msgstr "Супольная памяць"
 
-#: ../src/procproperties.cpp:138 ../src/proctable.cpp:247
+#: ../src/procproperties.cpp:137 ../src/proctable.cpp:222
 msgid "X Server Memory"
 msgstr "Памяць X-сервера"
 
-#: ../src/procproperties.cpp:140 ../src/proctable.cpp:249
+#: ../src/procproperties.cpp:139 ../src/proctable.cpp:224
 msgid "CPU Time"
 msgstr "Працэсарны час"
 
-#: ../src/procproperties.cpp:140
+#: ../src/procproperties.cpp:139
 #, c-format
 msgid "%lld second"
 msgid_plural "%lld seconds"
@@ -1125,34 +1187,38 @@ msgstr[0] "%lld секунда"
 msgstr[1] "%lld секунды"
 msgstr[2] "%lld секунд"
 
-#: ../src/procproperties.cpp:141 ../src/proctable.cpp:250
+#: ../src/procproperties.cpp:140 ../src/proctable.cpp:225
 msgid "Started"
 msgstr "Запушчаны"
 
-#: ../src/procproperties.cpp:142 ../src/proctable.cpp:251
+#: ../src/procproperties.cpp:141 ../src/proctable.cpp:226
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/procproperties.cpp:143 ../src/proctable.cpp:265
+#: ../src/procproperties.cpp:142 ../src/proctable.cpp:240
 msgid "Priority"
 msgstr "Прыярытэт"
 
-#: ../src/procproperties.cpp:144 ../src/proctable.cpp:252
+#: ../src/procproperties.cpp:143 ../src/proctable.cpp:227
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:145 ../src/proctable.cpp:253
+#: ../src/procproperties.cpp:144 ../src/proctable.cpp:228
 msgid "Security Context"
 msgstr "Кантэкст бяспекі"
 
-#: ../src/procproperties.cpp:146 ../src/proctable.cpp:254
+#: ../src/procproperties.cpp:145 ../src/proctable.cpp:229
 msgid "Command Line"
 msgstr "Загадны радок"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:147 ../src/proctable.cpp:257
+#: ../src/procproperties.cpp:146 ../src/proctable.cpp:232
 msgid "Waiting Channel"
 msgstr "Пункт чакання"
+
+#: ../src/procproperties.cpp:147 ../src/proctable.cpp:233
+msgid "Control Group"
+msgstr "Кіроўная група"
 
 #: ../src/procproperties.cpp:259
 msgid "Process Properties"
@@ -1163,34 +1229,30 @@ msgstr "Уласцівасці працэсу"
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "Уласцівасці працэсу \"%s\" (PID %u):"
 
-#: ../src/proctable.cpp:248
+#: ../src/proctable.cpp:223
 #, no-c-format
 msgid "% CPU"
 msgstr "Працэсар %"
 
-#: ../src/proctable.cpp:258
-msgid "Control Group"
-msgstr "Кіроўная група"
-
-#: ../src/proctable.cpp:259
+#: ../src/proctable.cpp:234
 msgid "Unit"
 msgstr "Служба"
 
-#: ../src/proctable.cpp:260
+#: ../src/proctable.cpp:235
 msgid "Session"
 msgstr "Сеанс"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:263
+#: ../src/proctable.cpp:238
 msgid "Seat"
 msgstr "Працоўнае месца"
 
-#: ../src/proctable.cpp:264
+#: ../src/proctable.cpp:239
 msgid "Owner"
 msgstr "Уласнік"
 
-#: ../src/proctable.cpp:1083
+#: ../src/proctable.cpp:1048
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Сярэдняя нагрузка за апошнія 1, 5, 15 хвілін: %0.2f, %0.2f, %0.2f"
@@ -1320,4 +1382,3 @@ msgstr "Вельмі нізкі прыярытэт"
 #, c-format
 msgid "%s/s"
 msgstr "%s/с"
-
