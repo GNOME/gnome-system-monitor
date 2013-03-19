@@ -12,16 +12,15 @@
 # Timo Jyrinki <timo.jyrinki@iki.fi>, 2008.
 # Tommi Vainikainen <thv@iki.fi>, 2009-2011.
 # sampo555 https://launchpad.net/~sampo555 , 2012.
-# Jiri Grönroos <jiri.gronroos@iki.fi>, 2012.
+# Jiri Grönroos <jiri.gronroos@iki.fi>, 2012, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
-"monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-05 07:15+0000\n"
-"PO-Revision-Date: 2012-09-14 19:00+0300\n"
-"Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
-"Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-03-19 12:59+0200\n"
+"PO-Revision-Date: 2013-03-17 21:23+0200\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
+"Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,23 +30,45 @@ msgstr ""
 "X-Generator: Lokalize 1.5\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/callbacks.cpp:184 ../src/procman.cpp:721
+#: ../src/callbacks.cpp:184 ../src/procman-app.cpp:364
 msgid "System Monitor"
 msgstr "Järjestelmän valvonta"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:185
+#: ../gnome-system-monitor.desktop.in.in.h:2
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "Katsele aktiivisia prosesseja ja valvo järjestelmän tilaa"
 
 #: ../gnome-system-monitor.desktop.in.in.h:3
+#: ../gnome-system-monitor-kde.desktop.in.in.h:3
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr ""
-"Monitor;System;Process;CPU;Memory;Network;History;Usage;Tarkkaile;Järjestelmä;"
-"Prosessi;Suoritin;Muisti;Verkko;Historia;Käyttö;"
+"Monitor;System;Process;CPU;Memory;Network;History;Usage;Tarkkaile;"
+"Järjestelmä;Prosessi;Suoritin;Muisti;Verkko;Historia;Käyttö;"
+
+#: ../gnome-system-monitor-kde.desktop.in.in.h:1
+msgid "GNOME System Monitor"
+msgstr "Gnomen järjestelmän valvonta"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
+msgid "Kill process"
+msgstr "Tapa prosessi"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:2
+msgid "Privileges are required to kill process"
+msgstr "Prosessin tappaminen vaatii riittävät oikeudet"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:3
+msgid "Renice process"
+msgstr "Muuta prosessin prioriteettia"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:4
+msgid "Privileges are required to renice process"
+msgstr "Prosessin prioriteetin muuttaminen vaatii riittävät oikeudet"
 
 #: ../data/interface.ui.h:2
-msgid "System"
-msgstr "Järjestelmä"
+msgid "View"
+msgstr "Näytä"
 
 #: ../data/interface.ui.h:3
 msgid "End _Process"
@@ -65,12 +86,12 @@ msgstr "Suorittimen käyttöaste"
 msgid "Memory and Swap History"
 msgstr "Muistin ja sivutuksen historia"
 
-#: ../data/interface.ui.h:7 ../src/interface.cpp:327
-#: ../src/procproperties.cpp:133 ../src/proctable.cpp:251
+#: ../data/interface.ui.h:7 ../src/interface.cpp:249
+#: ../src/procproperties.cpp:132 ../src/proctable.cpp:212
 msgid "Memory"
 msgstr "Muisti"
 
-#: ../data/interface.ui.h:8 ../src/interface.cpp:338
+#: ../data/interface.ui.h:8 ../src/interface.cpp:261
 msgid "Swap"
 msgstr "Swap"
 
@@ -78,7 +99,7 @@ msgstr "Swap"
 msgid "Network History"
 msgstr "Verkonkäytön historia"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:363
+#: ../data/interface.ui.h:10 ../src/interface.cpp:288
 msgid "Receiving"
 msgstr "Vastaanotettu"
 
@@ -94,15 +115,17 @@ msgstr "Lähetetty"
 msgid "Total Sent"
 msgstr "Lähetetty kaikkiaan"
 
-#: ../data/interface.ui.h:14 ../data/preferences.ui.h:12
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:13
 msgid "Resources"
 msgstr "Resurssit"
 
-#: ../data/interface.ui.h:15 ../data/preferences.ui.h:14
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:16
 msgid "File Systems"
 msgstr "Tiedostojärjestelmät"
 
 #: ../data/lsof.ui.h:1
+#, fuzzy
+msgctxt "Window title for 'Search for Open Files' dialog"
 msgid "Search for Open Files"
 msgstr "Etsi avoimia tiedostoja"
 
@@ -121,6 +144,28 @@ msgstr "T_yhjennä"
 #: ../data/lsof.ui.h:5
 msgid "S_earch results:"
 msgstr "Haku_tulokset:"
+
+#: ../data/menus.ui.h:1
+msgctxt "Menu item to Open 'Search for Open Files' dialog"
+msgid "Search for Open Files"
+msgstr "Etsi avoimia tiedostoja"
+
+#: ../data/menus.ui.h:2
+msgid "Preferences"
+msgstr "Asetukset"
+
+#: ../data/menus.ui.h:3
+#, fuzzy
+msgid "Help"
+msgstr "Ohje"
+
+#: ../data/menus.ui.h:4
+msgid "About"
+msgstr "Tietoja"
+
+#: ../data/menus.ui.h:5
+msgid "Quit"
+msgstr "Lopeta"
 
 #: ../data/openfiles.ui.h:1
 msgid "Open Files"
@@ -166,9 +211,17 @@ msgstr "Käyrät"
 msgid "_Show network speed in bits"
 msgstr "_Näytä verkkoliikenteen nopeus bitteinä"
 
-#: ../data/preferences.ui.h:13
+#: ../data/preferences.ui.h:12
+msgid "_Draw CPU chart as stacked area chart"
+msgstr ""
+
+#: ../data/preferences.ui.h:14
 msgid "Show _all file systems"
 msgstr "Näytä kaikki tie_dostojärjestelmät"
+
+#: ../data/preferences.ui.h:15
+msgid "File system i_nformation shown in list:"
+msgstr "Luettelossa näytettävät tie_dostojärjestelmän tiedot:"
 
 #: ../data/renice.ui.h:1
 msgid "Change _Priority"
@@ -179,9 +232,6 @@ msgid "_Nice value:"
 msgstr "_Nice-arvo:"
 
 #: ../data/renice.ui.h:3
-#| msgid ""
-#| "The priority of a process is given by its nice value. A lower nice value "
-#| "corresponds to a higher priority."
 msgid ""
 "<small><i><b>Note:</b> The priority of a process is given by its nice value. "
 "A lower nice value corresponds to a higher priority.</i></small>"
@@ -189,19 +239,15 @@ msgstr ""
 "<small><i><b>Huomautus:</b>Prosessin prioriteetin määrää sen nice-arvo. "
 "Matalampi nice-arvo vastaa korkeampaa suoritustärkeyttä.</i></small>"
 
-#: ../src/argv.cpp:21
-msgid "Show the System tab"
-msgstr "Näytä Järjestelmä -välilehti"
-
-#: ../src/argv.cpp:26
+#: ../src/argv.cpp:20
 msgid "Show the Processes tab"
 msgstr "Näytä Prosessit-välilehti"
 
-#: ../src/argv.cpp:31
+#: ../src/argv.cpp:25
 msgid "Show the Resources tab"
 msgstr "Näytä Resurssit-välilehti"
 
-#: ../src/argv.cpp:36
+#: ../src/argv.cpp:30
 msgid "Show the File Systems tab"
 msgstr "Näytä Tiedostojärjestelmät-välilehti"
 
@@ -225,31 +271,31 @@ msgstr ""
 "  sampo555 https://launchpad.net/~sampo555\n"
 "  sopsys https://launchpad.net/~sopsys"
 
-#: ../src/disks.cpp:298 ../src/memmaps.cpp:361
+#: ../src/disks.cpp:304 ../src/memmaps.cpp:361
 msgid "Device"
 msgstr "Laite"
 
-#: ../src/disks.cpp:299
+#: ../src/disks.cpp:305
 msgid "Directory"
 msgstr "Kansio"
 
-#: ../src/disks.cpp:300 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:306 ../src/gsm_color_button.c:223 ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "Tyyppi"
 
-#: ../src/disks.cpp:301
+#: ../src/disks.cpp:307
 msgid "Total"
 msgstr "Yhteensä"
 
-#: ../src/disks.cpp:302
+#: ../src/disks.cpp:308
 msgid "Free"
 msgstr "Vapaana"
 
-#: ../src/disks.cpp:303
+#: ../src/disks.cpp:309
 msgid "Available"
 msgstr "Käytettävissä"
 
-#: ../src/disks.cpp:304
+#: ../src/disks.cpp:310
 msgid "Used"
 msgstr "Käyttö"
 
@@ -278,279 +324,237 @@ msgstr "%b %d %l:%M %p"
 msgid "%b %d %Y"
 msgstr "%b %d %Y"
 
-#: ../src/gsm_color_button.c:198
+#: ../src/gsm_color_button.c:199
 msgid "Fraction"
 msgstr "Osuus"
 
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:200
+#: ../src/gsm_color_button.c:201
 #, fuzzy
 msgid "Percentage full for pie color pickers"
 msgstr "Täyttöprosentti piirakkamallisille värivalitsimille"
 
-#: ../src/gsm_color_button.c:207
+#: ../src/gsm_color_button.c:208
 msgid "Title"
 msgstr "Otsikko"
 
-#: ../src/gsm_color_button.c:208
+#: ../src/gsm_color_button.c:209
 msgid "The title of the color selection dialog"
 msgstr "Värinvalintaikkunan otsikko"
 
-#: ../src/gsm_color_button.c:209 ../src/gsm_color_button.c:625
+#: ../src/gsm_color_button.c:210 ../src/gsm_color_button.c:628
 msgid "Pick a Color"
 msgstr "Valitse väri"
 
-#: ../src/gsm_color_button.c:215
+#: ../src/gsm_color_button.c:216
 msgid "Current Color"
 msgstr "Nykyinen väri"
 
-#: ../src/gsm_color_button.c:216
+#: ../src/gsm_color_button.c:217
 msgid "The selected color"
 msgstr "Valittu väri"
 
-#: ../src/gsm_color_button.c:223
+#: ../src/gsm_color_button.c:224
 msgid "Type of color picker"
 msgstr "Värivalitsimen tyyppi"
 
-#: ../src/gsm_color_button.c:548
+#: ../src/gsm_color_button.c:550
 msgid "Received invalid color data\n"
 msgstr "Saatiin virheellisiä väritietoja\n"
 
-#: ../src/gsm_color_button.c:648
+#: ../src/gsm_color_button.c:651
 msgid "Click to set graph colors"
 msgstr "Aseta käyrän väri napsauttamalla"
 
-#. xgettext: noun, top level menu.
-#. "File" did not make sense for system-monitor
-#: ../src/interface.cpp:51
-msgid "_Monitor"
-msgstr "_Tarkkaile"
-
-#: ../src/interface.cpp:52
-msgid "_Edit"
-msgstr "_Muokkaa"
-
-#: ../src/interface.cpp:53
+#: ../src/interface.cpp:47
 msgid "_View"
 msgstr "_Näytä"
 
-#: ../src/interface.cpp:54
-msgid "_Help"
-msgstr "O_hje"
-
-#: ../src/interface.cpp:56
-msgid "Search for _Open Files"
-msgstr "Etsi _avoimia tiedostoja"
-
-#: ../src/interface.cpp:57
-msgid "Search for open files"
-msgstr "Etsi avoimia tiedostoja"
-
-#: ../src/interface.cpp:59
-msgid "Quit the program"
-msgstr "Lopeta ohjelma"
-
-#: ../src/interface.cpp:62
+#: ../src/interface.cpp:49
 msgid "_Stop Process"
 msgstr "_Pysäytä prosessi"
 
-#: ../src/interface.cpp:63
+#: ../src/interface.cpp:50
 msgid "Stop process"
 msgstr "Pysäytä prosessi"
 
-#: ../src/interface.cpp:64
+#: ../src/interface.cpp:51
 msgid "_Continue Process"
 msgstr "_Jatka prosessin suoritusta"
 
-#: ../src/interface.cpp:65
+#: ../src/interface.cpp:52
 msgid "Continue process if stopped"
 msgstr "Piilottaa prosessin luettelosta"
 
-#: ../src/interface.cpp:67 ../src/procdialogs.cpp:95
+#: ../src/interface.cpp:54 ../src/procdialogs.cpp:96
 msgid "_End Process"
 msgstr "_Lopeta prosessi"
 
-#: ../src/interface.cpp:68
+#: ../src/interface.cpp:55
 msgid "Force process to finish normally"
 msgstr "Lopeta prosessi tavallisesti"
 
-#: ../src/interface.cpp:69 ../src/procdialogs.cpp:84
+#: ../src/interface.cpp:56 ../src/procdialogs.cpp:85
 msgid "_Kill Process"
 msgstr "_Tapa prosessi"
 
-#: ../src/interface.cpp:70
+#: ../src/interface.cpp:57
 msgid "Force process to finish immediately"
 msgstr "Lopeta prosessi välittömästi"
 
-#: ../src/interface.cpp:71
+#: ../src/interface.cpp:58
 msgid "_Change Priority"
 msgstr "_Vaihda prioriteettia"
 
-#: ../src/interface.cpp:72
+#: ../src/interface.cpp:59
 msgid "Change the order of priority of process"
 msgstr "Vaihtaa prosessin prioriteettia (nice-arvo)"
 
-#: ../src/interface.cpp:74
-msgid "Configure the application"
-msgstr "Muokkaa ohjelman asetuksia"
-
-#: ../src/interface.cpp:76
+#: ../src/interface.cpp:61
 msgid "_Refresh"
 msgstr "_Päivitä"
 
-#: ../src/interface.cpp:77
+#: ../src/interface.cpp:62
 msgid "Refresh the process list"
 msgstr "Päivitä prosessiluettelo"
 
-#: ../src/interface.cpp:79
+#: ../src/interface.cpp:64
 msgid "_Memory Maps"
 msgstr "_Muistikartat"
 
-#: ../src/interface.cpp:80
+#: ../src/interface.cpp:65
 msgid "Open the memory maps associated with a process"
 msgstr "Avaa prosessiin liittyvät muistikartat"
 
 #. Translators: this means 'Files that are open' (open is no verb here)
-#: ../src/interface.cpp:82
+#: ../src/interface.cpp:67
 msgid "Open _Files"
 msgstr "Avoimet _tiedostot"
 
-#: ../src/interface.cpp:83
+#: ../src/interface.cpp:68
 msgid "View the files opened by a process"
 msgstr "Näytä prosessin avaamat tiedostot"
 
-#: ../src/interface.cpp:84
+#: ../src/interface.cpp:69
 msgid "_Properties"
 msgstr "_Ominaisuudet"
 
-#: ../src/interface.cpp:85
+#: ../src/interface.cpp:70
 msgid "View additional information about a process"
 msgstr "Näytä lisätietoa prosessista"
 
-#: ../src/interface.cpp:88
-msgid "_Contents"
-msgstr "_Sisältö"
-
-#: ../src/interface.cpp:89
-msgid "Open the manual"
-msgstr "Avaa manuaali"
-
-#: ../src/interface.cpp:91
-msgid "About this application"
-msgstr "Tietoja tästä ohjelmasta"
-
-#: ../src/interface.cpp:96
+#: ../src/interface.cpp:75
 msgid "_Dependencies"
 msgstr "_Riippuvuudet"
 
-#: ../src/interface.cpp:97
+#: ../src/interface.cpp:76
 msgid "Show parent/child relationship between processes"
 msgstr "Näytä isä/lapsi-riippuvuudet prosessien välillä"
 
-#: ../src/interface.cpp:104
+#: ../src/interface.cpp:83
 msgid "_Active Processes"
 msgstr "_Aktiiviset prosessit"
 
-#: ../src/interface.cpp:105
+#: ../src/interface.cpp:84
 msgid "Show active processes"
 msgstr "Näytä aktiiviset prosessit"
 
-#: ../src/interface.cpp:106
+#: ../src/interface.cpp:85
 msgid "A_ll Processes"
 msgstr "_Kaikki prosessit"
 
-#: ../src/interface.cpp:107
+#: ../src/interface.cpp:86
 msgid "Show all processes"
 msgstr "Näytä kaikki prosessit"
 
-#: ../src/interface.cpp:108
+#: ../src/interface.cpp:87
 msgid "M_y Processes"
 msgstr "_Omat prosessit"
 
-#: ../src/interface.cpp:109
+#: ../src/interface.cpp:88
 msgid "Show only user-owned processes"
 msgstr "Näytä vain käyttäjän omat prosessit"
 
-#: ../src/interface.cpp:114 ../src/util.cpp:217
+#: ../src/interface.cpp:93 ../src/util.cpp:217
 msgid "Very High"
 msgstr "Erittäin korkea"
 
-#: ../src/interface.cpp:115
+#: ../src/interface.cpp:94
 msgid "Set process priority to very high"
 msgstr "Aseta prosessin prioriteetti todella korkeaksi"
 
-#: ../src/interface.cpp:116 ../src/util.cpp:219
+#: ../src/interface.cpp:95 ../src/util.cpp:219
 msgid "High"
 msgstr "Korkea"
 
-#: ../src/interface.cpp:117
+#: ../src/interface.cpp:96
 msgid "Set process priority to high"
 msgstr "Aseta prosessin prioriteetti korkeaksi"
 
-#: ../src/interface.cpp:118 ../src/util.cpp:221
+#: ../src/interface.cpp:97 ../src/util.cpp:221
 msgid "Normal"
 msgstr "Normaali"
 
-#: ../src/interface.cpp:119
+#: ../src/interface.cpp:98
 msgid "Set process priority to normal"
 msgstr "Aseta prosessin prioriteetti normaaliksi"
 
-#: ../src/interface.cpp:120 ../src/util.cpp:223
+#: ../src/interface.cpp:99 ../src/util.cpp:223
 msgid "Low"
 msgstr "Matala"
 
-#: ../src/interface.cpp:121
+#: ../src/interface.cpp:100
 msgid "Set process priority to low"
 msgstr "Aseta prosessin prioriteetti matalaksi"
 
-#: ../src/interface.cpp:122 ../src/util.cpp:225
+#: ../src/interface.cpp:101 ../src/util.cpp:225
 msgid "Very Low"
 msgstr "Erittäin matala"
 
-#: ../src/interface.cpp:123
+#: ../src/interface.cpp:102
 msgid "Set process priority to very low"
 msgstr "Aseta prosessin prioriteetti todella matalaksi"
 
-#: ../src/interface.cpp:124
+#: ../src/interface.cpp:103
 msgid "Custom"
 msgstr "Mukautettu"
 
-#: ../src/interface.cpp:125
+#: ../src/interface.cpp:104
 msgid "Set process priority manually"
 msgstr "Aseta prosessin prioriteetti käsin"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:256
+#: ../src/interface.cpp:178
 #, c-format
 msgid "Pick a Color for '%s'"
 msgstr "Valitse väri kohteelle '%s'"
 
-#: ../src/interface.cpp:292 ../src/procproperties.cpp:139
+#: ../src/interface.cpp:214 ../src/procproperties.cpp:138
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:294
+#: ../src/interface.cpp:216
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:378
+#: ../src/interface.cpp:304
 msgid "Sending"
 msgstr "Lähettää"
 
-#: ../src/load-graph.cpp:166
+#: ../src/load-graph.cpp:170
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u sekunti"
 msgstr[1] "%u sekuntia"
 
-#: ../src/load-graph.cpp:345
+#: ../src/load-graph.cpp:365
 msgid "not available"
 msgstr "ei saatavilla"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:348
+#: ../src/load-graph.cpp:368
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) / %s"
@@ -561,10 +565,6 @@ msgstr "Virhe"
 
 #: ../src/lsof.cpp:126
 #, c-format
-#| msgid ""
-#| "<b>Error</b>\n"
-#| "'%s' is not a valid Perl regular expression.\n"
-#| "%s"
 msgid "'%s' is not a valid Perl regular expression."
 msgstr "”%s” ei ole kelvollinen perlin säännöllinen lauseke."
 
@@ -690,22 +690,26 @@ msgid "Main Window height"
 msgstr "Pääikkunan korkeus"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
+msgid "Main Window should open maximized"
+msgstr "Pääikkuna tulisi avata suurennettuna"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
 msgid "Main Window X position"
 msgstr "Pääikkunan sijainti X-akselilla"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
 msgid "Main Window Y position"
 msgstr "Pääikkunan sijainti Y-akselilla"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:6
 msgid "Show process dependencies in tree form"
 msgstr "Näytä prosessien riippuvuudet puuna"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:6
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
 msgid "Solaris mode for CPU percentage"
 msgstr "Käytä Solaris-tilaa CPU-prosenteille"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
 msgid ""
 "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
 "is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
@@ -715,27 +719,37 @@ msgstr ""
 "suoritinkäyttö on jaettu suorittimien määrällä. Muussa tapauksessa valvonta "
 "toimii Irix-tilassa."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
+msgid "Show CPU chart as stacked area chart"
+msgstr ""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
+"of a line chart."
+msgstr ""
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
 msgid "Enable/Disable smooth refresh"
 msgstr "Käytä tai älä käytä pehmeää päivitystä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
 msgid "Show warning dialog when killing processes"
 msgstr "Näytä varoitusikkuna ennen prosessin lopettamista väkisin"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Aika (ms) prosessinäkymän päivitysten välillä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Aika (ms) käyrien päivitysten välillä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
 msgid "Whether information about all file systems should be displayed"
 msgstr "Näytetäänkö tieto kaikista tiedostojärjestelmistä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
 msgid ""
 "Whether to display information about all file systems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -746,11 +760,11 @@ msgstr ""
 "tarvitaan luettelo kaikista tällä hetkellä liitetyistä "
 "tiedostojärjestelmistä."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Aika (ms) laiteluettelon päivitysten välillä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
@@ -758,281 +772,351 @@ msgstr ""
 "Määrittelee, mitkä prosessit näkyvät oletusarvoisesti. Mahdollisia valintoja "
 "ovat: 0 (kaikki), 1 (käyttäjän prosessit), 2 (aktiiviset prosessit)."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
 msgid "Saves the currently viewed tab"
 msgstr "Tallentaa nyt katseltavan välilehden"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
 msgid ""
 "0 for the System Info, 1 for the processes list, 2 for the resources and 3 "
 "for the disks list"
 msgstr "0 järjestelmätiedot, 1 prosessilista, 2 resurssit ja 3 levylista"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
 msgid "CPU colors"
 msgstr "Suorittimen värit"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr ""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
 msgid "Default graph memory color"
 msgstr "Oletusväri muistikaaviolle"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
 msgid "Default graph swap color"
 msgstr "Oletusarvoinen sivutuskäyrän väri"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
 msgid "Default graph incoming network traffic color"
 msgstr "Oletusarvoinen verkkokäyrän saapuvan liikenteen väri"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
 msgid "Default graph outgoing network traffic color"
 msgstr "Oletusarvoinen verkkokäyrän lähtevän liikenteen väri"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
 msgid "Show network traffic in bits"
 msgstr "Näytä verkkoliikenne bitteinä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
 msgid "Process view sort column"
 msgstr "Prosessinäkymän lajittelusarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
 msgid "Process view columns order"
 msgstr "Prosessinäkymän sarakkeiden järjestys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
 msgid "Process view sort order"
 msgstr "Prosessinäkymän järjestys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
 msgid "Width of process 'Name' column"
 msgstr "Prosessinäkymän Nimi-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
 msgid "Show process 'Name' column on startup"
 msgstr "Näytä prosessinäkymän Nimi-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
 msgid "Width of process 'User' column"
 msgstr "Prosessinäkymän Käyttäjä-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
 msgid "Show process 'User' column on startup"
 msgstr "Näytä prosessinäkymän Käyttäjä-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
 msgid "Width of process 'Status' column"
 msgstr "Prosessinäkymän Tila-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
 msgid "Show process 'Status' column on startup"
 msgstr "Näytä prosessinäkymän Tila-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
 msgid "Width of process 'Virtual Memory' column"
 msgstr "Prosessinäkymän Virtuaalimuisti-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
 msgid "Show process 'Virtual Memory' column on startup"
 msgstr "Näytä prosessinäkymän Virtuaalimuisti-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
 msgid "Width of process 'Resident Memory' column"
 msgstr "Prosessinäkymän Käytetty muisti -sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
 msgid "Show process 'Resident Memory' column on startup"
 msgstr "Näytä prosessinäkymän Käytetty muisti -sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
 msgid "Width of process 'Writable Memory' column"
 msgstr "Prosessinäkymän Kirjoitettava muisti -sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
 msgid "Show process 'Writable Memory' column on startup"
 msgstr "Näytä prosessinäkymän Kirjoitettava muisti -sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
 msgid "Width of process 'Shared Memory' column"
 msgstr "Prosessinäkymän Jaettu muisti -sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:44
 msgid "Show process 'Shared Memory' column on startup"
 msgstr "Näytä prosessinäkymän Jaettu muisti -sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
 msgid "Width of process 'X Server Memory' column"
 msgstr "Prosessinäkymän X-palvelimen muisti -sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
 msgid "Show process 'X Server Memory' column on startup"
 msgstr "Näytä prosessinäkymän X-palvelimen muisti -sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
 #, no-c-format
 msgid "Width of process 'CPU %' column"
 msgstr "Prosessin ”CPU %”-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
 #, no-c-format
 msgid "Show process 'CPU %' column on startup"
 msgstr "Näytä prosessin ”CPU %”-sarake käynnistyttyä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
 msgid "Width of process 'CPU Time' column"
 msgstr "Prosessinäkymän CPU-aika -sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
 msgid "Show process 'CPU Time' column on startup"
 msgstr "Näytä prosessinäkymän CPU-aika -sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
 msgid "Width of process 'Started' column"
 msgstr "Prosessinäkymän Aloitettu-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
 msgid "Show process 'Started' column on startup"
 msgstr "Näytä prosessinäkymän Aloitettu-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
 msgid "Width of process 'Nice' column"
 msgstr "Prosessinäkymän Nice-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
 msgid "Show process 'Nice' column on startup"
 msgstr "Näytä prosessinäkymän Nice-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
 msgid "Width of process 'PID' column"
 msgstr "Prosessin ”PID”-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
 msgid "Show process 'PID' column on startup"
 msgstr "Näytä prosessin ”PID”-sarake käynnistyttyä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
 msgid "Width of process 'SELinux Security Context' column"
 msgstr "Prosessinäkymän Turvakonteksti-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
 #, fuzzy
 msgid "Show process 'SELinux Security Context' column on startup"
 msgstr "Näytä prosessinäkymän Turvakonteksti-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
 msgid "Width of process 'Command Line' column"
 msgstr "Prosessinäkymän Komentorivi-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
 msgid "Show process 'Command Line' column on startup"
 msgstr "Näytä prosessinäkymän Komentorivi-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
 msgid "Width of process 'Memory' column"
 msgstr "Prosessinäkymän Muisti-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
 msgid "Show process 'Memory' column on startup"
 msgstr "Näytä prosessinäkymän Muisti-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
 msgid "Width of process 'Waiting Channel' column"
 msgstr "Prosessin ”Odottaa kanavaa”-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
 msgid "Show process 'Waiting Channel' column on startup"
 msgstr "Näytä prosessin ”Odottaa kanavaa”-sarake käynnistyttyä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
 msgid "Width of process 'Control Group' column"
 msgstr "Prosessinäkymän Hallintaryhmä-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
 msgid "Show process 'Control Group' column on startup"
 msgstr "Näytä prosessinäkymän Hallintaryhmä-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
 #, fuzzy
 msgid "Width of process 'Unit' column"
 msgstr "Prosessin ”nice”-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
 #, fuzzy
 msgid "Show process 'Unit' column on startup"
 msgstr "Näytä prosessin ”nice”-sarake käynnistyttyä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
 #, fuzzy
 msgid "Width of process 'Session' column"
 msgstr "Prosessin ”omistaja”-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
 #, fuzzy
 msgid "Show process 'Session' column on startup"
 msgstr "Näytä prosessin ”omistaja”-sarake käynnistyttyä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
 #, fuzzy
 msgid "Width of process 'Seat' column"
 msgstr "Prosessin ”tila”-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
 #, fuzzy
 msgid "Show process 'Seat' column on startup"
 msgstr "Näytä prosessin ”tila”-sarake käynnistyttyä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
 msgid "Width of process 'Owner' column"
 msgstr "Prosessinäkymän Omistaja-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
 msgid "Show process 'Owner' column on startup"
 msgstr "Näytä prosessinäkymän Omistaja-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
 #, fuzzy
 msgid "Width of process 'Priority' column"
 msgstr "Prosessin ”omistaja”-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
 #, fuzzy
 msgid "Show process 'Priority' column on startup"
 msgstr "Näytä prosessin ”omistaja”-sarake käynnistyttyä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
 #, fuzzy
 msgid "Disk view sort column"
 msgstr "Prosessinäkymän lajittelusarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
 #, fuzzy
 msgid "Disk view sort order"
 msgstr "Levynäkymän sarakkeiden järjestys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
 msgid "Disk view columns order"
 msgstr "Levynäkymän sarakkeiden järjestys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
+#, fuzzy
+msgid "Width of disk view 'Device' column"
+msgstr "Prosessinäkymän Nice-sarakkeen leveys"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:83
+#, fuzzy
+msgid "Show disk view 'Device' column on startup"
+msgstr "Näytä prosessinäkymän Nice-sarake"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:84
+#, fuzzy
+msgid "Width of disk view 'Directory' column"
+msgstr "Prosessinäkymän Muisti-sarakkeen leveys"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:85
+#, fuzzy
+msgid "Show disk view 'Directory' column on startup"
+msgstr "Näytä prosessinäkymän Muisti-sarake"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:86
+#, fuzzy
+msgid "Width of disk view 'Type' column"
+msgstr "Prosessinäkymän Nimi-sarakkeen leveys"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:87
+#, fuzzy
+msgid "Show disk view 'Type' column on startup"
+msgstr "Näytä prosessinäkymän Nimi-sarake"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:88
+#, fuzzy
+msgid "Width of disk view 'Total' column"
+msgstr "Prosessinäkymän Tila-sarakkeen leveys"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:89
+#, fuzzy
+msgid "Show disk view 'Total' column on startup"
+msgstr "Näytä prosessinäkymän Tila-sarake"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:90
+#, fuzzy
+msgid "Width of disk view 'Free' column"
+msgstr "Prosessinäkymän Nimi-sarakkeen leveys"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:91
+#, fuzzy
+msgid "Show disk view 'Free' column on startup"
+msgstr "Näytä prosessinäkymän Nimi-sarake"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:92
+#, fuzzy
+msgid "Width of disk view 'Available' column"
+msgstr "Prosessinäkymän Nimi-sarakkeen leveys"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:93
+#, fuzzy
+msgid "Show disk view 'Available' column on startup"
+msgstr "Näytä prosessinäkymän Nimi-sarake"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:94
+#, fuzzy
+msgid "Width of disk view 'Used' column"
+msgstr "Prosessinäkymän Käyttäjä-sarakkeen leveys"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:95
+#, fuzzy
+msgid "Show disk view 'Used' column on startup"
+msgstr "Näytä prosessinäkymän Käyttäjä-sarake"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:96
 #, fuzzy
 msgid "Memory map sort column"
 msgstr "Prosessinäkymän lajittelusarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:97
 #, fuzzy
 msgid "Memory map sort order"
 msgstr "Muistin ja sivutuksen historia"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:98
 #, fuzzy
 msgid "Open files sort column"
 msgstr "Prosessinäkymän lajittelusarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:99
 #, fuzzy
 msgid "Open files sort order"
 msgstr "Prosessinäkymän järjestys"
@@ -1056,13 +1140,13 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:77
-#, c-format
-msgid "Kill the selected process »%s« (PID: %u)?"
-msgstr "Tapa valittu prosessi »%s« (PID: %u)?"
+#: ../src/procdialogs.cpp:78
+#, fuzzy, c-format
+msgid "Kill the selected process “%s” (PID: %u)?"
+msgstr "Tapetaanko valittu prosessi “%s” (PID: %u)?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:81
+#: ../src/procdialogs.cpp:82
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1071,13 +1155,13 @@ msgstr ""
 "turvallisuusriskejä. Vain jumittuneet prosessit tulisi tappaa."
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:88
-#, c-format
-msgid "End the selected process »%s« (PID: %u)?"
-msgstr "Lopeta valittu prosessi »%s« (PID: %u)?"
+#: ../src/procdialogs.cpp:89
+#, fuzzy, c-format
+msgid "End the selected process “%s” (PID: %u)?"
+msgstr "Lopetetaanko valittu prosessi “%s” (PID: %u)?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:92
+#: ../src/procdialogs.cpp:93
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponsive processes should be ended."
@@ -1085,15 +1169,10 @@ msgstr ""
 "Prosessien lopettaminen voi tuhota tietoja, rikkoa istunnon tai aiheuttaa "
 "turvallisuusriskejä. Vain jumittuneet prosessit tulisi lopettaa."
 
-#: ../src/procdialogs.cpp:130
-#, c-format
-msgid "(%s Priority)"
-msgstr "(%s prioriteetti)"
-
 #: ../src/procdialogs.cpp:175
-#, c-format
-msgid "Change Priority of Process »%s« (PID: %u)"
-msgstr "Vaihda prosessin »%s« (PID: %u) prioriteettia"
+#, fuzzy, c-format
+msgid "Change Priority of Process “%s” (PID: %u)"
+msgstr "Vaihda prosessin “%s” (PID: %u) prioriteettia"
 
 #: ../src/procdialogs.cpp:193
 msgid "Note:"
@@ -1107,178 +1186,130 @@ msgstr ""
 "Prosessin prioriteetin määrää sen nice-arvo. Matalampi nice-arvo vastaa "
 "korkeampaa suoritustärkeyttä."
 
-#: ../src/procdialogs.cpp:418
+#: ../src/procdialogs.cpp:366 ../src/procman-app.cpp:466
 msgid "Icon"
 msgstr "Kuvake"
 
-#: ../src/procman.cpp:668
+#: ../src/procman-app.cpp:580
 msgid "A simple process and system monitor."
 msgstr "Yksinkertainen prosessien ja järjestelmän tarkkailija."
 
-#: ../src/procproperties.cpp:104 ../src/util.cpp:420
+#: ../src/procproperties.cpp:104 ../src/util.cpp:434
 msgid "N/A"
 msgstr "-"
 
-#: ../src/procproperties.cpp:130 ../src/proctable.cpp:236
+#: ../src/procproperties.cpp:129 ../src/proctable.cpp:197
 msgid "Process Name"
 msgstr "Prosessin nimi"
 
-#: ../src/procproperties.cpp:131 ../src/proctable.cpp:237
+#: ../src/procproperties.cpp:130 ../src/proctable.cpp:198
 msgid "User"
 msgstr "Käyttäjä"
 
-#: ../src/procproperties.cpp:132 ../src/proctable.cpp:238
+#: ../src/procproperties.cpp:131 ../src/proctable.cpp:199
 msgid "Status"
 msgstr "Tila"
 
-#: ../src/procproperties.cpp:134 ../src/proctable.cpp:239
+#: ../src/procproperties.cpp:133 ../src/proctable.cpp:200
 msgid "Virtual Memory"
 msgstr "Virtuaalimuisti"
 
-#: ../src/procproperties.cpp:135 ../src/proctable.cpp:240
+#: ../src/procproperties.cpp:134 ../src/proctable.cpp:201
 msgid "Resident Memory"
 msgstr "Käytetty muisti"
 
-#: ../src/procproperties.cpp:136 ../src/proctable.cpp:241
+#: ../src/procproperties.cpp:135 ../src/proctable.cpp:202
 msgid "Writable Memory"
 msgstr "Kirjoitettava muisti"
 
-#: ../src/procproperties.cpp:137 ../src/proctable.cpp:242
+#: ../src/procproperties.cpp:136 ../src/proctable.cpp:203
 msgid "Shared Memory"
 msgstr "Jaettu muisti"
 
-#: ../src/procproperties.cpp:138 ../src/proctable.cpp:243
+#: ../src/procproperties.cpp:137 ../src/proctable.cpp:204
 msgid "X Server Memory"
 msgstr "X-palvelimen muisti"
 
-#: ../src/procproperties.cpp:140 ../src/proctable.cpp:245
+#: ../src/procproperties.cpp:139 ../src/proctable.cpp:206
 msgid "CPU Time"
 msgstr "CPU-aika"
 
-#: ../src/procproperties.cpp:140
+#: ../src/procproperties.cpp:139
 #, c-format
 msgid "%lld second"
 msgid_plural "%lld seconds"
 msgstr[0] "%lld sekunti"
 msgstr[1] "%lld sekuntia"
 
-#: ../src/procproperties.cpp:141 ../src/proctable.cpp:246
+#: ../src/procproperties.cpp:140 ../src/proctable.cpp:207
 msgid "Started"
 msgstr "Aloitettu"
 
-#: ../src/procproperties.cpp:142 ../src/proctable.cpp:247
+#: ../src/procproperties.cpp:141 ../src/proctable.cpp:208
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/procproperties.cpp:143 ../src/proctable.cpp:261
+#: ../src/procproperties.cpp:142 ../src/proctable.cpp:222
 msgid "Priority"
 msgstr "Prioriteetti"
 
-#: ../src/procproperties.cpp:144 ../src/proctable.cpp:248
+#: ../src/procproperties.cpp:143 ../src/proctable.cpp:209
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:145 ../src/proctable.cpp:249
+#: ../src/procproperties.cpp:144 ../src/proctable.cpp:210
 msgid "Security Context"
 msgstr "Turvakonteksti"
 
-#: ../src/procproperties.cpp:146 ../src/proctable.cpp:250
+#: ../src/procproperties.cpp:145 ../src/proctable.cpp:211
 msgid "Command Line"
 msgstr "Komentorivi"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:147 ../src/proctable.cpp:253
+#: ../src/procproperties.cpp:146 ../src/proctable.cpp:214
 msgid "Waiting Channel"
 msgstr "Odottaa kanavaa"
 
-#: ../src/procproperties.cpp:258
+#: ../src/procproperties.cpp:147 ../src/proctable.cpp:215
+msgid "Control Group"
+msgstr "Kontrolliryhmä"
+
+#: ../src/procproperties.cpp:259
 msgid "Process Properties"
 msgstr "Prosessin ominaisuudet"
 
-#: ../src/procproperties.cpp:278
+#: ../src/procproperties.cpp:279
 #, c-format
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "Prosessin ”%s” (PID %u) ominaisuudet:"
 
-#: ../src/proctable.cpp:244
+#: ../src/proctable.cpp:205
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:254
-msgid "Control Group"
-msgstr ""
-
-#: ../src/proctable.cpp:255
+#: ../src/proctable.cpp:216
 msgid "Unit"
 msgstr "Yksikkö"
 
-#: ../src/proctable.cpp:256
+#: ../src/proctable.cpp:217
 msgid "Session"
 msgstr "Istunto"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:259
+#: ../src/proctable.cpp:220
 msgid "Seat"
 msgstr "Käyttöpaikka"
 
-#: ../src/proctable.cpp:260
+#: ../src/proctable.cpp:221
 msgid "Owner"
 msgstr "Omistaja"
 
-#: ../src/proctable.cpp:1078
+#: ../src/proctable.cpp:1030
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Keskiarvokuorma viimeisille 1, 5 ja 15 minuutille: %0.2f, %0.2f, %0.2f"
-
-#. Translators: The first string parameter is release version (codename),
-#. * the second one is the architecture, 32 or 64-bit
-#: ../src/sysinfo.cpp:78
-#, c-format
-msgid "Release %s %s"
-msgstr "Julkaisu %s %s"
-
-#. translators: This is the type of architecture, for example:
-#. * "64-bit" or "32-bit"
-#: ../src/sysinfo.cpp:115
-#, c-format
-msgid "%d-bit"
-msgstr "%d-bit"
-
-#: ../src/sysinfo.cpp:734
-#, c-format
-msgid "Kernel %s"
-msgstr "Ydin %s"
-
-#: ../src/sysinfo.cpp:746
-#, c-format
-msgid "GNOME %s"
-msgstr "Gnome %s"
-
-#. hardware section
-#: ../src/sysinfo.cpp:759
-#| msgid "<b>Hardware</b>"
-msgid "Hardware"
-msgstr "Laitteisto"
-
-#: ../src/sysinfo.cpp:764
-msgid "Memory:"
-msgstr "Muisti:"
-
-#: ../src/sysinfo.cpp:769
-msgid "Processor:"
-msgstr "Suoritin:"
-
-#. disk space section
-#: ../src/sysinfo.cpp:778
-#| msgid "<b>System Status</b>"
-msgid "System Status"
-msgstr "Järjestelmän tila"
-
-#: ../src/sysinfo.cpp:784
-msgid "Available disk space:"
-msgstr "Käytettävissä oleva levytila:"
 
 #: ../src/util.cpp:30
 msgid "Running"
@@ -1378,11 +1409,94 @@ msgid_plural "%u bytes"
 msgstr[0] "%u tavu"
 msgstr[1] "%u tavua"
 
+#: ../src/util.cpp:232
+msgid "Very High Priority"
+msgstr "Erittäin korkea prioriteetti"
+
+#: ../src/util.cpp:234
+msgid "High Priority"
+msgstr "Korkea prioriteetti"
+
+#: ../src/util.cpp:236
+msgid "Normal Priority"
+msgstr "Normaali prioriteetti"
+
+#: ../src/util.cpp:238
+msgid "Low Priority"
+msgstr "Matala prioriteetti"
+
+#: ../src/util.cpp:240
+msgid "Very Low Priority"
+msgstr "Erittäin matala prioriteetti"
+
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:585
+#: ../src/util.cpp:632
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "System"
+#~ msgstr "Järjestelmä"
+
+#~ msgid "Show the System tab"
+#~ msgstr "Näytä Järjestelmä -välilehti"
+
+#~ msgid "_Monitor"
+#~ msgstr "_Tarkkaile"
+
+#~ msgid "_Edit"
+#~ msgstr "_Muokkaa"
+
+#~ msgid "Search for _Open Files"
+#~ msgstr "Etsi _avoimia tiedostoja"
+
+#~ msgid "Search for open files"
+#~ msgstr "Etsi avoimia tiedostoja"
+
+#~ msgid "Quit the program"
+#~ msgstr "Lopeta ohjelma"
+
+#~ msgid "Configure the application"
+#~ msgstr "Muokkaa ohjelman asetuksia"
+
+#~ msgid "_Contents"
+#~ msgstr "_Sisältö"
+
+#~ msgid "Open the manual"
+#~ msgstr "Avaa manuaali"
+
+#~ msgid "About this application"
+#~ msgstr "Tietoja tästä ohjelmasta"
+
+#~ msgid "(%s Priority)"
+#~ msgstr "(%s prioriteetti)"
+
+#~ msgid "Release %s %s"
+#~ msgstr "Julkaisu %s %s"
+
+#~ msgid "%d-bit"
+#~ msgstr "%d-bit"
+
+#~ msgid "Kernel %s"
+#~ msgstr "Ydin %s"
+
+#~ msgid "GNOME %s"
+#~ msgstr "Gnome %s"
+
+#~ msgid "Hardware"
+#~ msgstr "Laitteisto"
+
+#~ msgid "Memory:"
+#~ msgstr "Muisti:"
+
+#~ msgid "Processor:"
+#~ msgstr "Suoritin:"
+
+#~ msgid "System Status"
+#~ msgstr "Järjestelmän tila"
+
+#~ msgid "Available disk space:"
+#~ msgstr "Käytettävissä oleva levytila:"
 
 #~ msgid "Unknown model"
 #~ msgstr "Tuntematon malli"
