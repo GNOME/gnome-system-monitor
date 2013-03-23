@@ -2,14 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Shankar Prasad <svenkate@redhat.com>, 2008, 2009, 2012.
+# Shankar Prasad <svenkate@redhat.com>, 2008, 2009, 2012, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor.master.kn\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-27 21:17+0000\n"
-"PO-Revision-Date: 2012-12-07 23:22+0530\n"
+"POT-Creation-Date: 2013-02-11 20:59+0000\n"
+"PO-Revision-Date: 2013-03-23 22:16+0530\n"
 "Last-Translator: Shankar Prasad <svenkate@redhat.com>\n"
 "Language-Team: Kannada <en@li.org>\n"
 "Language: kn\n"
@@ -20,21 +20,47 @@ msgstr ""
 "X-Generator: Lokalize 1.5\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/callbacks.cpp:184 ../src/procman.cpp:721
+#: ../src/callbacks.cpp:184 ../src/procman-app.cpp:360
 msgid "System Monitor"
 msgstr "ಗಣಕ ಮೇಲ್ವಿಚಾರಕ"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:185
+#: ../gnome-system-monitor.desktop.in.in.h:2
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/callbacks.cpp:185
 msgid "View current processes and monitor system state"
 msgstr "ಪ್ರಸಕ್ತ ಪ್ರಕ್ರಿಯೆಗಳು ಹಾಗು ಮೇಲ್ವಿಚಾರಣ ವ್ಯವಸ್ಥೆಯ ಸ್ಥಿತಿಯನ್ನು ನೋಡಿ"
 
 #: ../gnome-system-monitor.desktop.in.in.h:3
+#: ../gnome-system-monitor-kde.desktop.in.in.h:3
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr "ಮೇಲ್ವಿಚಾರಕ;ವ್ಯವಸ್ಥೆ;ಪ್ರಕ್ರಿಯೆ;CPU;ಮೆಮೊರಿ;ಜಾಲಬಂಧ;ಇತಿಹಾಸ;ಬಳಕೆ;"
 
+#: ../gnome-system-monitor-kde.desktop.in.in.h:1
+#| msgid "System Monitor"
+msgid "GNOME System Monitor"
+msgstr "GNOME ಗಣಕ ಮೇಲ್ವಿಚಾರಕ"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
+#| msgid "_Kill Process"
+msgid "Kill process"
+msgstr "ಪ್ರಕ್ರಿಯೆಯನ್ನು ನಿಲ್ಲಿಸು"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:2
+msgid "Privileges are required to kill process"
+msgstr "ಪ್ರಕ್ರಿಯೆಯನ್ನು ನಿಲ್ಲಿಸಲು ಅಧಿಕಾರಗಳ ಅಗತ್ಯವಿರುತ್ತದೆ"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:3
+#| msgid "_Continue Process"
+msgid "Renice process"
+msgstr "Renice ಪ್ರಕ್ರಿಯೆ"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:4
+msgid "Privileges are required to renice process"
+msgstr "ಪ್ರಕ್ರಿಯೆಯನ್ನು renice ಮಾಡಲು ಅಧಿಕಾರಗಳ ಅಗತ್ಯವಿರುತ್ತದೆ"
+
 #: ../data/interface.ui.h:2
-msgid "System"
-msgstr "ಗಣಕ"
+#| msgid "_View"
+msgid "View"
+msgstr "ನೋಟ"
 
 #: ../data/interface.ui.h:3
 msgid "End _Process"
@@ -52,12 +78,12 @@ msgstr "CPU ಇತಿಹಾಸ"
 msgid "Memory and Swap History"
 msgstr "ಮೆಮೊರಿ ಹಾಗು ಸ್ವಾಪ್ ಇತಿಹಾಸ"
 
-#: ../data/interface.ui.h:7 ../src/interface.cpp:327
-#: ../src/procproperties.cpp:133 ../src/proctable.cpp:251
+#: ../data/interface.ui.h:7 ../src/interface.cpp:249
+#: ../src/procproperties.cpp:132 ../src/proctable.cpp:230
 msgid "Memory"
 msgstr "ಮೆಮೊರಿ"
 
-#: ../data/interface.ui.h:8 ../src/interface.cpp:338
+#: ../data/interface.ui.h:8 ../src/interface.cpp:260
 msgid "Swap"
 msgstr "ಸ್ವಾಪ್"
 
@@ -65,7 +91,7 @@ msgstr "ಸ್ವಾಪ್"
 msgid "Network History"
 msgstr "ಜಾಲಬಂಧ ಇತಿಹಾಸ"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:363
+#: ../data/interface.ui.h:10 ../src/interface.cpp:285
 msgid "Receiving"
 msgstr "ಪಡೆಯಲಾಗುತ್ತಿದೆ"
 
@@ -81,17 +107,19 @@ msgstr "ಕಳುಹಿಸಲಾಗಿದೆ"
 msgid "Total Sent"
 msgstr "ಒಟ್ಟು ಕಳುಹಿಸಲಾದವು"
 
-#: ../data/interface.ui.h:14 ../data/preferences.ui.h:12
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:13
 msgid "Resources"
 msgstr "ಸಂಪನ್ಮೂಲಗಳು"
 
-#: ../data/interface.ui.h:15 ../data/preferences.ui.h:14
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:16
 msgid "File Systems"
 msgstr "ಕಡತ ವ್ಯವಸ್ಥೆಗಳು"
 
 #: ../data/lsof.ui.h:1
+#| msgid "Search for Open Files"
+msgctxt "Window title for 'Search for Open Files' dialog"
 msgid "Search for Open Files"
-msgstr "ತೆರೆಯಲ್ಪಟ್ಟ ಕಡತಗಳಿಗಾಗು ಹುಡುಕು"
+msgstr "ತೆರೆಯಲ್ಪಟ್ಟ ಕಡತಗಳಿಗಾಗಿ ಹುಡುಕು"
 
 #: ../data/lsof.ui.h:2
 msgid "_Name contains:"
@@ -108,6 +136,29 @@ msgstr "ಅಳಿಸು (_l)"
 #: ../data/lsof.ui.h:5
 msgid "S_earch results:"
 msgstr "ಹುಡುಕು ಫಲಿತಾಂಶಗಳು (_e):"
+
+#: ../data/menus.ui.h:1
+#| msgid "Search for Open Files"
+msgctxt "Menu item to Open 'Search for Open Files' dialog"
+msgid "Search for Open Files"
+msgstr "ತೆರೆಯಲ್ಪಟ್ಟ ಕಡತಗಳಿಗಾಗಿ ಹುಡುಕು"
+
+#: ../data/menus.ui.h:2
+msgid "Preferences"
+msgstr "ಆದ್ಯತೆಗಳು"
+
+#: ../data/menus.ui.h:3
+#| msgid "_Help"
+msgid "Help"
+msgstr "ನೆರವು"
+
+#: ../data/menus.ui.h:4
+msgid "About"
+msgstr "ಬಗ್ಗೆ"
+
+#: ../data/menus.ui.h:5
+msgid "Quit"
+msgstr "ನಿರ್ಗಮಿಸು"
 
 #: ../data/openfiles.ui.h:1
 msgid "Open Files"
@@ -150,14 +201,20 @@ msgid "Graphs"
 msgstr "ನಕ್ಷೆಗಳು"
 
 #: ../data/preferences.ui.h:11
-#| msgid "Show network speed in bits"
 msgid "_Show network speed in bits"
 msgstr "ಜಾಲಬಂಧದ ವೇಗವನ್ನು ಬಿಟ್‌ಗಳಲ್ಲಿ ತೋರಿಸು (_S)"
 
-#: ../data/preferences.ui.h:13
-#| msgid "Show _all filesystems"
+#: ../data/preferences.ui.h:12
+msgid "_Draw CPU chart as stacked area chart"
+msgstr "CPU ನಕ್ಷೆಯನ್ನು ಸ್ಟ್ಯಾಕ್‌ ಸ್ಥಳದ ನಕ್ಷೆಯಾಗಿ ಚಿತ್ರಿಸು (_D)"
+
+#: ../data/preferences.ui.h:14
 msgid "Show _all file systems"
 msgstr "ಎಲ್ಲಾ ಕಡತವ್ಯವಸ್ಥೆಗಳನ್ನು ತೋರಿಸು (_a)"
+
+#: ../data/preferences.ui.h:15
+msgid "File system i_nformation shown in list:"
+msgstr "ಪಟ್ಟಿಯಲ್ಲಿ ತೋರಿಸಲಾದ ಪ್ರಕ್ರಿಯೆಯ ಮಾಹಿತಿ(_n):"
 
 #: ../data/renice.ui.h:1
 msgid "Change _Priority"
@@ -168,33 +225,23 @@ msgid "_Nice value:"
 msgstr "ನೈಸ್ ಮೌಲ್ಯ (_N):"
 
 #: ../data/renice.ui.h:3
-#| msgid ""
-#| "The priority of a process is given by its nice value. A lower nice value "
-#| "corresponds to a higher priority."
 msgid ""
 "<small><i><b>Note:</b> The priority of a process is given by its nice value. "
 "A lower nice value corresponds to a higher priority.</i></small>"
 msgstr ""
 "<small><i><b>ಸೂಚನೆ:</b>ಒಂದು ಪ್ರಕ್ರಿಯೆಯ ಆದ್ಯತೆಯು ಅದರ ನೈಸ್ ಮೌಲ್ಯದಿಂದ "
-"ತಿಳಿಯಲ್ಪಡುತ್ತದೆ. ಕಡಿಮೆ ನೈಸ್ "
-"ಮೌಲ್ಯವು ಇದ್ದರೆ ಅದು ಹೆಚ್ಚಿನ ಆದ್ಯತೆಯನ್ನು ಸೂಚಿಸುತ್ತದೆ.</i></small>"
+"ತಿಳಿಯಲ್ಪಡುತ್ತದೆ. "
+"ಕಡಿಮೆ ನೈಸ್ ಮೌಲ್ಯವು ಇದ್ದರೆ ಅದು ಹೆಚ್ಚಿನ ಆದ್ಯತೆಯನ್ನು ಸೂಚಿಸುತ್ತದೆ.</i></small>"
 
-#: ../src/argv.cpp:21
-msgid "Show the System tab"
-msgstr "ವ್ಯವಸ್ಥೆಯ ಟ್ಯಾಬನ್ನು ತೋರಿಸು"
-
-#: ../src/argv.cpp:26
-#| msgid "Show active processes"
+#: ../src/argv.cpp:20
 msgid "Show the Processes tab"
 msgstr "ಪ್ರಕ್ರಿಯೆಗಳ ಟ್ಯಾಬ್‌ಗಳನ್ನು ತೋರಿಸು"
 
-#: ../src/argv.cpp:31
-#| msgid "Show the System tab"
+#: ../src/argv.cpp:25
 msgid "Show the Resources tab"
 msgstr "ಸಂಪನ್ಮೂಲಗಳನ್ನು ಟ್ಯಾಬನ್ನು ತೋರಿಸು"
 
-#: ../src/argv.cpp:36
-#| msgid "Show the System tab"
+#: ../src/argv.cpp:30
 msgid "Show the File Systems tab"
 msgstr "ಕಡತ ವ್ಯವಸ್ಥೆಗಳ ಟ್ಯಾಬನ್ನು ತೋರಿಸು"
 
@@ -202,31 +249,31 @@ msgstr "ಕಡತ ವ್ಯವಸ್ಥೆಗಳ ಟ್ಯಾಬನ್ನು ತ
 msgid "translator-credits"
 msgstr "ಶಂಕರ್ ಪ್ರಸಾದ್ ಎಂ. ವಿ. <svenkate@redhat.com>"
 
-#: ../src/disks.cpp:298 ../src/memmaps.cpp:361
+#: ../src/disks.cpp:304 ../src/memmaps.cpp:361
 msgid "Device"
 msgstr "ಸಾಧನ"
 
-#: ../src/disks.cpp:299
+#: ../src/disks.cpp:305
 msgid "Directory"
 msgstr "ಕೋಶ"
 
-#: ../src/disks.cpp:300 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:306 ../src/gsm_color_button.c:223 ../src/openfiles.cpp:251
 msgid "Type"
 msgstr "ಬಗೆ"
 
-#: ../src/disks.cpp:301
+#: ../src/disks.cpp:307
 msgid "Total"
 msgstr "ಒಟ್ಟು ಸಂಖ್ಯೆ"
 
-#: ../src/disks.cpp:302
+#: ../src/disks.cpp:308
 msgid "Free"
 msgstr "ಮುಕ್ತ"
 
-#: ../src/disks.cpp:303
+#: ../src/disks.cpp:309
 msgid "Available"
 msgstr "ಲಭ್ಯ"
 
-#: ../src/disks.cpp:304
+#: ../src/disks.cpp:310
 msgid "Used"
 msgstr "ಬಳಕೆಯಾದ"
 
@@ -255,287 +302,237 @@ msgstr "%b %d %l:%M %p"
 msgid "%b %d %Y"
 msgstr "%b %d %Y"
 
-#: ../src/gsm_color_button.c:198
+#: ../src/gsm_color_button.c:199
 msgid "Fraction"
 msgstr "ಅನುಪಾತ"
 
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:200
-#| msgid "Percentage full for pie colour pickers"
+#: ../src/gsm_color_button.c:201
 msgid "Percentage full for pie color pickers"
 msgstr "ಪೈ ಬಣ್ಣ ಆಯ್ಕೆಗಾರಗಳಿಗಾಗಿ ಪ್ರತಿಶತವು ತುಂಬಿದೆ"
 
-#: ../src/gsm_color_button.c:207
+#: ../src/gsm_color_button.c:208
 msgid "Title"
 msgstr "ಶೀರ್ಷಿಕೆ"
 
-#: ../src/gsm_color_button.c:208
+#: ../src/gsm_color_button.c:209
 msgid "The title of the color selection dialog"
 msgstr "ಬಣ್ಣ ಆಯ್ಕೆ ಸಂವಾದದ ಬಣ್ಣ"
 
-#: ../src/gsm_color_button.c:209 ../src/gsm_color_button.c:625
+#: ../src/gsm_color_button.c:210 ../src/gsm_color_button.c:628
 msgid "Pick a Color"
 msgstr "ಒಂದು ಬಣ್ಣವನ್ನು ಆರಿಸು"
 
-#: ../src/gsm_color_button.c:215
+#: ../src/gsm_color_button.c:216
 msgid "Current Color"
 msgstr "ಈಗಿರುವ ಬಣ್ಣ"
 
-#: ../src/gsm_color_button.c:216
+#: ../src/gsm_color_button.c:217
 msgid "The selected color"
 msgstr "ಆರಿಸಲಾದ ಬಣ್ಣ"
 
-#: ../src/gsm_color_button.c:223
+#: ../src/gsm_color_button.c:224
 msgid "Type of color picker"
 msgstr "ಬಣ್ಣದ ಆಯ್ಕೆಗಾರದ ಬಗೆ"
 
-#: ../src/gsm_color_button.c:548
+#: ../src/gsm_color_button.c:550
 msgid "Received invalid color data\n"
 msgstr "ಅಮಾನ್ಯ ಬಣ್ಣದ ದತ್ತಾಂಶವನ್ನು ಪಡೆಯಲಾಗಿದೆ\n"
 
-#: ../src/gsm_color_button.c:648
+#: ../src/gsm_color_button.c:651
 msgid "Click to set graph colors"
 msgstr "ನಕ್ಷೆಯ ಬಣ್ಣಗಳನ್ನು ಬದಲಾಯಿಸಲು ಕ್ಲಿಕ್ ಮಾಡಿ"
 
-#. xgettext: noun, top level menu.
-#. "File" did not make sense for system-monitor
-#: ../src/interface.cpp:51
-msgid "_Monitor"
-msgstr "ಮೇಲ್ವಿಚಾರಣೆ (_M)"
-
-#: ../src/interface.cpp:52
-msgid "_Edit"
-msgstr "ಸಂಪಾದನೆ (_E)"
-
-#: ../src/interface.cpp:53
+#: ../src/interface.cpp:47
 msgid "_View"
 msgstr "ನೋಟ (_V)"
 
-#: ../src/interface.cpp:54
-msgid "_Help"
-msgstr "ಸಹಾಯ (_H)"
-
-#: ../src/interface.cpp:56
-msgid "Search for _Open Files"
-msgstr "ತೆರೆದ ಕಡತಗಳಿಗಾಗಿ ಹುಡುಕಾಟ (_O)"
-
-#: ../src/interface.cpp:57
-msgid "Search for open files"
-msgstr "ತೆರೆದ ಕಡತಗಳಿಗಾಗಿ ಹುಡುಕಾಟ"
-
-#: ../src/interface.cpp:59
-msgid "Quit the program"
-msgstr "ಪ್ರೋಗ್ರಾಂನಿಂದ ನಿರ್ಗಮಿಸು"
-
-#: ../src/interface.cpp:62
+#: ../src/interface.cpp:49
 msgid "_Stop Process"
 msgstr "ಪ್ರಕ್ರಿಯೆಯನ್ನು ನಿಲ್ಲಿಸು (_S)"
 
-#: ../src/interface.cpp:63
+#: ../src/interface.cpp:50
 msgid "Stop process"
 msgstr "ಪ್ರಕ್ರಿಯೆಯನ್ನು ನಿಲ್ಲಿಸು"
 
-#: ../src/interface.cpp:64
+#: ../src/interface.cpp:51
 msgid "_Continue Process"
 msgstr "ಮುಂದುವರೆಯುವ ಪ್ರಕ್ರಿಯೆ (_C)"
 
-#: ../src/interface.cpp:65
+#: ../src/interface.cpp:52
 msgid "Continue process if stopped"
 msgstr "ಪ್ರಕ್ರಿಯೆಯು ನಿಲ್ಲಲ್ಪಟ್ಟಲ್ಲಿ ಮುಂದುವರೆಸು"
 
-#: ../src/interface.cpp:67 ../src/procdialogs.cpp:95
+#: ../src/interface.cpp:54 ../src/procdialogs.cpp:96
 msgid "_End Process"
 msgstr "ಪ್ರಕ್ರಿಯೆಯನ್ನು ಕೊನೆಗೊಳಿಸು (_E)"
 
-#: ../src/interface.cpp:68
+#: ../src/interface.cpp:55
 msgid "Force process to finish normally"
 msgstr "ಪ್ರಕ್ರಿಯೆಯು ಮಾಮೂಲಿಯಾಗಿ ಕೊನೆಗೊಳ್ಳುವಂತೆ ಒತ್ತಾಯಿಸು"
 
-#: ../src/interface.cpp:69 ../src/procdialogs.cpp:84
+#: ../src/interface.cpp:56 ../src/procdialogs.cpp:85
 msgid "_Kill Process"
 msgstr "ಪ್ರಕ್ರಿಯೆಯನ್ನು ನಿಲ್ಲಿಸು (_K)"
 
-#: ../src/interface.cpp:70
+#: ../src/interface.cpp:57
 msgid "Force process to finish immediately"
 msgstr "ಪ್ರಕ್ರಿಯೆಯು ತಕ್ಷಣವೆ ಮುಕ್ತಾಯಗೊಳ್ಳುವಂತೆ ಒತ್ತಾಯಿಸು"
 
-#: ../src/interface.cpp:71
-#| msgid "Change Priority"
+#: ../src/interface.cpp:58
 msgid "_Change Priority"
 msgstr "ಆದ್ಯತೆಯನ್ನು ಬದಲಾಯಿಸು (_C)"
 
-#: ../src/interface.cpp:72
+#: ../src/interface.cpp:59
 msgid "Change the order of priority of process"
 msgstr "ಪ್ರಕ್ರಿಯೆಯ ಆದ್ಯತೆಯ ಕ್ರಮವನ್ನು ಬದಲಾಯಿಸು"
 
-#: ../src/interface.cpp:74
-msgid "Configure the application"
-msgstr "ಅನ್ವಯವನ್ನು ಸಂರಚಿಸು"
-
-#: ../src/interface.cpp:76
+#: ../src/interface.cpp:61
 msgid "_Refresh"
 msgstr "ಪುನಶ್ಚೇತನಗೊಳಿಸು (_R)"
 
-#: ../src/interface.cpp:77
+#: ../src/interface.cpp:62
 msgid "Refresh the process list"
 msgstr "ಪ್ರಕ್ರಿಯೆಯ ಪಟ್ಟಿಯನ್ನು ಪುನಶ್ಚೇತನಗೊಳಿಸು"
 
-#: ../src/interface.cpp:79
+#: ../src/interface.cpp:64
 msgid "_Memory Maps"
 msgstr "ಮೆಮೊರಿ ನಕ್ಷೆಗಳು (_M)"
 
-#: ../src/interface.cpp:80
+#: ../src/interface.cpp:65
 msgid "Open the memory maps associated with a process"
 msgstr "ಒಂದು ಪ್ರಕ್ರಿಯೆಗೆ ಸಂಬಂಧಿತವಾದ ಮೆಮೊರಿ ನಕ್ಷೆಗಳನ್ನು ತೆರೆ"
 
 #. Translators: this means 'Files that are open' (open is no verb here)
-#: ../src/interface.cpp:82
+#: ../src/interface.cpp:67
 msgid "Open _Files"
 msgstr "ಕಡತಗಳನ್ನು ತೆರೆ (_F)"
 
-#: ../src/interface.cpp:83
+#: ../src/interface.cpp:68
 msgid "View the files opened by a process"
 msgstr "ಒಂದು ಪ್ರಕ್ರಿಯೆಯಿಂದ ತೆರೆಯಲ್ಪಟ್ಟ ಕಡತಗಳನ್ನು ನೋಡು"
 
-#: ../src/interface.cpp:84
+#: ../src/interface.cpp:69
 msgid "_Properties"
 msgstr "ಗುಣಗಳು (_P)"
 
-#: ../src/interface.cpp:85
+#: ../src/interface.cpp:70
 msgid "View additional information about a process"
 msgstr "ಒಂದು ಪ್ರಕ್ರಿಯೆಯ ಕುರಿತು ಹೆಚ್ಚುವರಿ ಮಾಹಿತಿಯನ್ನು ನೋಡಿ"
 
-#: ../src/interface.cpp:88
-msgid "_Contents"
-msgstr "ವಿಷಯಗಳು (_C)"
-
-#: ../src/interface.cpp:89
-msgid "Open the manual"
-msgstr "ಕೈಪಿಡಿಯನ್ನು ತೆರೆ"
-
-#: ../src/interface.cpp:91
-msgid "About this application"
-msgstr "ಈ ಅನ್ವಯದ ಬಗ್ಗೆ"
-
-#: ../src/interface.cpp:96
+#: ../src/interface.cpp:75
 msgid "_Dependencies"
-msgstr "ಅವಲಂಬನೆಗಳು (_D)"
+msgstr "ಅವಉದ್ದನೆಗಳು (_D)"
 
-#: ../src/interface.cpp:97
+#: ../src/interface.cpp:76
 msgid "Show parent/child relationship between processes"
 msgstr "ಪ್ರಕ್ರಿಯೆಗಳ ನಡುವಿನ ಮೂಲ/ಚೈಲ್ಡ್‍ ಸಂಬಂಧಗಳನ್ನು ತೋರಿಸು"
 
-#: ../src/interface.cpp:104
+#: ../src/interface.cpp:83
 msgid "_Active Processes"
 msgstr "ಸಕ್ರಿಯ ಪ್ರಕ್ರಿಯೆಗಳು (_A)"
 
-#: ../src/interface.cpp:105
+#: ../src/interface.cpp:84
 msgid "Show active processes"
 msgstr "ಸಕ್ರಿಯ ಪ್ರಕ್ರಿಯೆಗಳನ್ನು ತೋರಿಸು"
 
-#: ../src/interface.cpp:106
+#: ../src/interface.cpp:85
 msgid "A_ll Processes"
 msgstr "ಎಲ್ಲಾ ಪ್ರಕ್ರಿಯೆಗಳು (_l)"
 
-#: ../src/interface.cpp:107
+#: ../src/interface.cpp:86
 msgid "Show all processes"
 msgstr "ಎಲ್ಲಾ ಪ್ರಕ್ರಿಯೆಗಳನ್ನು ತೋರಿಸು"
 
-#: ../src/interface.cpp:108
+#: ../src/interface.cpp:87
 msgid "M_y Processes"
 msgstr "ನನ್ನ ಪ್ರಕ್ರಿಯೆಗಳು (_y)"
 
-#: ../src/interface.cpp:109
-#| msgid "Show user own process"
+#: ../src/interface.cpp:88
 msgid "Show only user-owned processes"
 msgstr "ಬಳಕೆದಾರರಿಂದ-ಮಾಲಿಕತ್ವವನ್ನು ಹೊಂದಿದ ಪ್ರಕ್ರಿಯೆಗಳನ್ನು ಮಾತ್ರ ತೋರಿಸು"
 
-#: ../src/interface.cpp:114 ../src/util.cpp:217
-#| msgid "(Very High Priority)"
+#: ../src/interface.cpp:93 ../src/util.cpp:217
 msgid "Very High"
 msgstr "ಅತ್ಯಂತ ಮೇಲ್ಮಟ್ಟ"
 
-#: ../src/interface.cpp:115
+#: ../src/interface.cpp:94
 msgid "Set process priority to very high"
 msgstr "ಪ್ರಕ್ರಿಯೆಯ ಆದ್ಯತೆಯನ್ನು ಅತ್ಯಂತ ಮೇಲ್ಮಟ್ಟಕ್ಕೆ ಹೊಂದಿಸಿ"
 
-#: ../src/interface.cpp:116 ../src/util.cpp:219
+#: ../src/interface.cpp:95 ../src/util.cpp:219
 msgid "High"
 msgstr "ಮೇಲ್ಮಟ್ಟ"
 
-#: ../src/interface.cpp:117
+#: ../src/interface.cpp:96
 msgid "Set process priority to high"
 msgstr "ಪ್ರಕ್ರಿಯೆಯ ಆದ್ಯತೆಯನ್ನು ಮೇಲ್ಮಟ್ಟಕ್ಕೆ ಹೊಂದಿಸಿ"
 
-#: ../src/interface.cpp:118 ../src/util.cpp:221
+#: ../src/interface.cpp:97 ../src/util.cpp:221
 msgid "Normal"
 msgstr "ಸಾಮಾನ್ಯ"
 
-#: ../src/interface.cpp:119
-#| msgid "Force process to finish normally"
+#: ../src/interface.cpp:98
 msgid "Set process priority to normal"
 msgstr "ಪ್ರಕ್ರಿಯೆಯ ಆದ್ಯತೆಯನ್ನು ಸಾಮಾನ್ಯಕ್ಕೆ ಹೊಂದಿಸಿ"
 
-#: ../src/interface.cpp:120 ../src/util.cpp:223
+#: ../src/interface.cpp:99 ../src/util.cpp:223
 msgid "Low"
 msgstr "ಕೆಳ ಮಟ್ಟ"
 
-#: ../src/interface.cpp:121
+#: ../src/interface.cpp:100
 msgid "Set process priority to low"
 msgstr "ಪ್ರಕ್ರಿಯೆಯ ಆದ್ಯತೆಯನ್ನು ಕೆಳಮಟ್ಟಕ್ಕೆ ಹೊಂದಿಸಿ"
 
-#: ../src/interface.cpp:122 ../src/util.cpp:225
+#: ../src/interface.cpp:101 ../src/util.cpp:225
 msgid "Very Low"
 msgstr "ಅತ್ಯಂತ ಕೆಳ ಮಟ್ಟ"
 
-#: ../src/interface.cpp:123
+#: ../src/interface.cpp:102
 msgid "Set process priority to very low"
 msgstr "ಪ್ರಕ್ರಿಯೆಯ ಆದ್ಯತೆಯನ್ನು ಅತ್ಯಂತ ಕೆಳಮಟ್ಟಕ್ಕೆ ಹೊಂದಿಸಿ"
 
-#: ../src/interface.cpp:124
+#: ../src/interface.cpp:103
 msgid "Custom"
 msgstr "ಅಗತ್ಯಾನುಗುಣ"
 
-#: ../src/interface.cpp:125
+#: ../src/interface.cpp:104
 msgid "Set process priority manually"
 msgstr "ಪ್ರಕ್ರಿಯೆಯ ಆದ್ಯತೆಯನ್ನು ಕೈಯಾರೆ ಹೊಂದಿಸಿ"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:256
+#: ../src/interface.cpp:178
 #, c-format
-#| msgid "Pick a Color"
 msgid "Pick a Color for '%s'"
 msgstr "'%s' ಗಾಗಿ ಒಂದು ಬಣ್ಣವನ್ನು ಆರಿಸಿ"
 
-#: ../src/interface.cpp:292 ../src/procproperties.cpp:139
+#: ../src/interface.cpp:214 ../src/procproperties.cpp:138
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:294
+#: ../src/interface.cpp:216
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:378
+#: ../src/interface.cpp:300
 msgid "Sending"
 msgstr "ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ"
 
-#: ../src/load-graph.cpp:166
+#: ../src/load-graph.cpp:174
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u ಸೆಕೆಂಡ್"
 msgstr[1] "%u ಸೆಕೆಂಡ್‍ಗಳು"
 
-#: ../src/load-graph.cpp:345
-#| msgid "Available"
+#: ../src/load-graph.cpp:369
 msgid "not available"
 msgstr "ಲಭ್ಯವಿಲ್ಲ"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:348
+#: ../src/load-graph.cpp:372
 #, c-format
-#| msgid "%s (%.1f %%) of %s"
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%), %s ನಲ್ಲಿ"
 
@@ -545,10 +542,6 @@ msgstr "ದೋಷ"
 
 #: ../src/lsof.cpp:126
 #, c-format
-#| msgid ""
-#| "<b>Error</b>\n"
-#| "'%s' is not a valid Perl regular expression.\n"
-#| "%s"
 msgid "'%s' is not a valid Perl regular expression."
 msgstr "'%s' ಯು ಒಂದು ಮಾನ್ಯವಾದ Perl ರೆಗ್ಯುಲರ್ ಎಕ್ಸ್‌ಪ್ರೆಶನ್ ಆಗಿಲ್ಲ."
 
@@ -674,28 +667,26 @@ msgid "Main Window height"
 msgstr "ಮುಖ್ಯ ವಿಂಡೊದ ಎತ್ತರ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
-#| msgid "Main Window width"
+msgid "Main Window should open maximized"
+msgstr "ಮುಖ್ಯ ಕಿಟಕಿಯನ್ನು ತೆರೆದು ಗರಿಷ್ಟಗೊಳಿಸಬೇಕು"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
 msgid "Main Window X position"
 msgstr "ಮುಖ್ಯ ಕಿಟಕಿಯ X ಸ್ಥಾನ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
-#| msgid "Main Window width"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
 msgid "Main Window Y position"
 msgstr "ಮುಖ್ಯ ಕಿಟಕಿಯ Y ಸ್ಥಾನ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
-msgid "Show process dependencies in tree form"
-msgstr "ಪ್ರಕ್ರಿಯೆಗಳ ಅವಲಂಬನೆಗಳನ್ನು ವೃಕ್ಷದ ಮಾದರಿಯಲ್ಲಿ ತೋರಿಸು"
-
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:6
+msgid "Show process dependencies in tree form"
+msgstr "ಪ್ರಕ್ರಿಯೆಗಳ ಅವಉದ್ದನೆಗಳನ್ನು ವೃಕ್ಷದ ಮಾದರಿಯಲ್ಲಿ ತೋರಿಸು"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
 msgid "Solaris mode for CPU percentage"
 msgstr "CPU ಪ್ರತಿಶತಕ್ಕಾಗಿ Solaris ವಿಧಾನ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
-#| msgid ""
-#| "If TRUE, system-monitor operates in 'Solaris mode' where a task's cpu "
-#| "usage is divided by the total number of CPUs. Else it operates in 'Irix "
-#| "mode'."
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
 msgid ""
 "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
 "is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
@@ -707,32 +698,39 @@ msgstr ""
 "'Irix "
 "ವಿಧಾನ'ದಲ್ಲಿ ಕಾರ್ಯ ನಿರ್ವಹಿಸುತ್ತದೆ."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
+msgid "Show CPU chart as stacked area chart"
+msgstr "CPU ನಕ್ಷೆಯನ್ನು ಸ್ಟ್ಯಾಕ್‌ ಸ್ಥಳದ ನಕ್ಷೆಯಾಗಿ ತೋರಿಸು"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
+"of a line chart."
+msgstr ""
+"TRUE ಆಗಿದ್ದಲ್ಲಿ, ವ್ಯವಸ್ಥೆ-ಮೇಲ್ವಿಚಾರಕವು CPU ನಕ್ಷೆಯನ್ನು ರೇಖಾ ನಕ್ಷೆಯ ರೂಪದಲ್ಲಿ "
+"ತೋರಿಸುವ ಬದಲಿಗೆ ಒಂದು ಸ್ಟಾಕ್ ಮಾಡಲಾದ ಜಾಗದ ನಕ್ಷೆಯ ರೂಪದಲ್ಲಿ ತೋರಿಸುತ್ತದೆ."
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
 msgid "Enable/Disable smooth refresh"
 msgstr "ಮೃದುವಾದ ಪುನಶ್ಚೇತನಗೊಳಿಕೆಯನ್ನು ಶಕ್ತಗೊಳಿಸು/ಅಶಕ್ತಗೊಳಿಸು"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
 msgid "Show warning dialog when killing processes"
 msgstr "ಪ್ರಕ್ರಿಯೆಗಳನ್ನು ನಿಲ್ಲಿಸುವಾಗ ಎಚ್ಚರಿಕೆಯ ಸಂದೇಶವನ್ನು ತೋರಿಸು"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
 msgid "Time in milliseconds between updates of the process view"
 msgstr "ಪ್ರಕ್ರಿಯೆಯ ನೋಟದ ಅಪ್ಡೇಟ್‍ಗಳ ನಡುವಿನ ಸಮಯ, ಮಿಲಿಸೆಕೆಂಡುಗಳಲ್ಲಿ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "ನಕ್ಷೆಗಳ ಅಪ್ಡೇಟ್‍ಗಳ ನಡುವಿನ ಸಮಯ, ಮಿಲಿಸೆಕೆಂಡುಗಳಲ್ಲಿ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
-#| msgid "Whether information about all filesystems should be displayed"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
 msgid "Whether information about all file systems should be displayed"
 msgstr "ಎಲ್ಲಾ ಕಡತ ವ್ಯವಸ್ಥೆಗಳ ಬಗೆಗಿನ ಮಾಹಿತಿಯನ್ನು ತೋರಿಸಬೇಕೆ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
-#| msgid ""
-#| "Whether to display information about all filesystems (including types "
-#| "like 'autofs' and 'procfs'). Useful for getting a list of all currently "
-#| "mounted filesystems."
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
 msgid ""
 "Whether to display information about all file systems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -743,11 +741,11 @@ msgstr ""
 "ಬಗೆಯವನ್ನೂ ಸೇರಿಸಿ). ಈಗ ಏರಿಸಲಾಗಿರುವ ಕಡತವ್ಯವಸ್ಥೆಗಳ ಪಟ್ಟಿಯನ್ನು ಪಡೆಯಲು "
 "ಸಹಕಾರಿಯಾಗುತ್ತದೆ."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "ಸಾಧನಗಳ ಪಟ್ಟಿಯ ಅಪ್ಡೇಟ್‍ಗಳ ನಡುವಿನ ಸಮಯ, ಮಿಲಿಸೆಕೆಂಡುಗಳಲ್ಲಿ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
 msgid ""
 "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
 "active"
@@ -755,11 +753,11 @@ msgstr ""
 "ಪೂರ್ವನಿಯೋಜಿತವಾಗಿ ಯಾವ ಪ್ರಕ್ರಿಯೆಗಳನ್ನು ತೋರಿಸಬೇಕು ಎಂದು ನಿರ್ಧರಿಸುತ್ತದೆ. 0 ಆದಲ್ಲಿ "
 "ಎಲ್ಲವನ್ನೂ, 1 ಆದಲ್ಲಿ ಬಳಕೆದಾರ, ಹಾಗು 2 ಆದಲ್ಲಿ ಸಕ್ರಿಯವಾದ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
 msgid "Saves the currently viewed tab"
 msgstr "ಈಗ ನೋಡುತ್ತಿರುವ ಹಾಳೆಯನ್ನು ಉಳಿಸುತ್ತದೆ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
 msgid ""
 "0 for the System Info, 1 for the processes list, 2 for the resources and 3 "
 "for the disks list"
@@ -767,314 +765,333 @@ msgstr ""
 "0 ಯು ಗಣಕದ ಮಾಹಿತಿಗಾಗಿ, 1 ಪ್ರಕ್ರಿಯೆಗಳ ಪಟ್ಟಿಗಾಗಿ, 2 ಸಂಪನ್ಮೂಲಗಳು ಹಾಗು 3 ಡಿಸ್ಕ್‍ಗಳ "
 "ಪಟ್ಟಿಗಾಗಿ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
 msgid "CPU colors"
 msgstr "CPU ಬಣ್ಣಗಳು"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr ""
 "ಪ್ರತಿಯೊಂದು ನಮೂದು ಸಹ (CPU#, ಹೆಕ್ಸಾಡೆಸಿಮಲ್ ಬಣ್ಣದ ಮೌಲ್ಯ) ವಿನ್ಯಾಸದಲ್ಲಿ ಇರುತ್ತದೆ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
-#| msgid "Default graph mem color"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
 msgid "Default graph memory color"
 msgstr "ಪೂರ್ವನಿಯೋಜಿತವಾದ ನಕ್ಷೆಯ ಮೆಮೊರಿ ಬಣ್ಣ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
 msgid "Default graph swap color"
 msgstr "ಪೂರ್ವನಿಯೋಜಿತವಾದ ನಕ್ಷೆಯ ಸ್ವಾಪ್ ಬಣ್ಣ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
 msgid "Default graph incoming network traffic color"
 msgstr "ಪೂರ್ವನಿಯೋಜಿತ ನಕ್ಷೆ ಒಳಬರುವ ಜಾಲಬಂಧ ಸಂಚಾರದ ಬಣ್ಣ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
 msgid "Default graph outgoing network traffic color"
 msgstr "ಪೂರ್ವನಿಯೋಜಿತ ನಕ್ಷೆ ಹೊರಹೋಗುವ ಜಾಲಬಂಧ ಸಂಚಾರದ ಬಣ್ಣ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
-#| msgid "Show network speed in bits"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
 msgid "Show network traffic in bits"
 msgstr "ಜಾಲಬಂಧದ ವೇಗವನ್ನು ಬಿಟ್‌ಗಳಲ್ಲಿ ತೋರಿಸು"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
 msgid "Process view sort column"
-msgstr "ಪ್ರಕ್ರಿಯೆಗಳ ನೋಟ ವಿಂಗಡಣಾ ಲಂಬಸಾಲು"
+msgstr "ಪ್ರಕ್ರಿಯೆಗಳ ನೋಟ ವಿಂಗಡಣಾ ಉದ್ದಸಾಲು"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
 msgid "Process view columns order"
-msgstr "ಪ್ರಕ್ರಿಯೆಗಳ ನೋಟ ಲಂಬಸಾಲುಗಳ ಅನುಕ್ರಮ"
+msgstr "ಪ್ರಕ್ರಿಯೆಗಳ ನೋಟ ಉದ್ದಸಾಲುಗಳ ಅನುಕ್ರಮ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
 msgid "Process view sort order"
 msgstr "ಪ್ರಕ್ರಿಯೆಗಳ ನೋಟ ವಿಂಗಡಣಾ ಅನುಕ್ರಮ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
-#| msgid "Width of process 'name' column"
-msgid "Width of process 'Name' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ಹೆಸರು' ಲಂಬಸಾಲಿನ ಅಗಲ"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
-#| msgid "Show process 'name' column on startup"
-msgid "Show process 'Name' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಹೆಸರು' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
-#| msgid "Width of process 'owner' column"
-msgid "Width of process 'User' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ಬಳಕೆದಾರ' ಲಂಬಸಾಲಿನ ಅಗಲ"
-
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
-#| msgid "Show process 'owner' column on startup"
-msgid "Show process 'User' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಬಳಕೆದಾರ' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'Name' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ಹೆಸರು' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
-#| msgid "Width of process 'status' column"
-msgid "Width of process 'Status' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ಸ್ಥಿತಿ' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'Name' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಹೆಸರು' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
-#| msgid "Show process 'status' column on startup"
-msgid "Show process 'Status' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಸ್ಥಿತಿ' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'User' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ಬಳಕೆದಾರ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
-#| msgid "Width of process 'virtual memory' column"
-msgid "Width of process 'Virtual Memory' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ವರ್ಚುವಲ್ ಮೆಮೊರಿ' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'User' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಬಳಕೆದಾರ' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
-#| msgid "Show process 'virtual memory' column on startup"
-msgid "Show process 'Virtual Memory' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ವರ್ಚುವಲ್ ಮೆಮೊರಿ' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'Status' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ಸ್ಥಿತಿ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
-#| msgid "Width of process 'resident memory' column"
-msgid "Width of process 'Resident Memory' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ರೆಸಿಡೆಂಟ್ ಮೆಮೊರಿ' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'Status' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಸ್ಥಿತಿ' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
-#| msgid "Show process 'resident memory' column on startup"
-msgid "Show process 'Resident Memory' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ರೆಸಿಡೆಂಟ್ ಮೆಮೊರಿ' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'Virtual Memory' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ವರ್ಚುವಲ್ ಮೆಮೊರಿ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
-#| msgid "Width of process 'writable memory' column"
-msgid "Width of process 'Writable Memory' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ಬರೆಯಬಹುದಾದ ಮೆಮೊರಿ' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'Virtual Memory' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ವರ್ಚುವಲ್ ಮೆಮೊರಿ' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
-#| msgid "Show process 'writable memory' column on startup"
-msgid "Show process 'Writable Memory' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಬರೆಯಬಹುದಾದ ಮೆಮೊರಿ' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'Resident Memory' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ರೆಸಿಡೆಂಟ್ ಮೆಮೊರಿ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
-#| msgid "Width of process 'shared memory' column"
-msgid "Width of process 'Shared Memory' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ಹಂಚಲಾದ ಮೆಮೊರಿ' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'Resident Memory' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ರೆಸಿಡೆಂಟ್ ಮೆಮೊರಿ' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
-#| msgid "Show process 'shared memory' column on startup"
-msgid "Show process 'Shared Memory' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಹಂಚಲಾದ ಮೆಮೊರಿ' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'Writable Memory' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ಬರೆಯಬಹುದಾದ ಮೆಮೊರಿ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
-#| msgid "Width of process 'X server memory' column"
-msgid "Width of process 'X Server Memory' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'X ಪೂರೈಕೆಗಣಕದ ಮೆಮೊರಿ' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'Writable Memory' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಬರೆಯಬಹುದಾದ ಮೆಮೊರಿ' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
-#| msgid "Show process 'X server memory' column on startup"
-msgid "Show process 'X Server Memory' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'X ಪೂರೈಕೆ ಗಣಕದ ಮೆಮೊರಿ' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'Shared Memory' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ಹಂಚಲಾದ ಮೆಮೊರಿ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:44
+msgid "Show process 'Shared Memory' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಹಂಚಲಾದ ಮೆಮೊರಿ' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
-#, no-c-format
-msgid "Width of process 'CPU %' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'CPU %' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Width of process 'X Server Memory' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'X ಪೂರೈಕೆಗಣಕದ ಮೆಮೊರಿ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
-#, no-c-format
-msgid "Show process 'CPU %' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'CPU %' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
+msgid "Show process 'X Server Memory' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'X ಪೂರೈಕೆ ಗಣಕದ ಮೆಮೊರಿ' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
-#| msgid "Width of process 'CPU time' column"
-msgid "Width of process 'CPU Time' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'CPU ಸಮಯ' ಲಂಬಸಾಲಿನ ಅಗಲ"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
-#| msgid "Show process 'CPU time' column on startup"
-msgid "Show process 'CPU Time' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'CPU ಸಮಯ'ದ ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+#, no-c-format
+msgid "Width of process 'CPU %' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'CPU %' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
-#| msgid "Width of process 'start time' column"
-msgid "Width of process 'Started' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ಆರಂಭಿಸಿದ್ದು' ಲಂಬಸಾಲಿನ ಅಗಲ"
+#, no-c-format
+msgid "Show process 'CPU %' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'CPU %' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
-#| msgid "Show process 'start time' column on startup"
-msgid "Show process 'Started' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಆರಂಭಿಸಿದ್ದು' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'CPU Time' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'CPU ಸಮಯ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
-#| msgid "Width of process 'nice' column"
-msgid "Width of process 'Nice' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ನೈಸ್' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'CPU Time' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'CPU ಸಮಯ'ದ ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
-#| msgid "Show process 'nice' column on startup"
-msgid "Show process 'Nice' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ನೈಸ್' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'Started' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ಆರಂಭಿಸಿದ್ದು' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
-msgid "Width of process 'PID' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'PID' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'Started' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಆರಂಭಿಸಿದ್ದು' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
-msgid "Show process 'PID' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'PID' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'Nice' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ನೈಸ್' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
-#| msgid "Width of process 'SELinux security context' column"
-msgid "Width of process 'SELinux Security Context' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'SELinux ಸುರಕ್ಷತಾ ಸನ್ನಿವೇಶ' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'Nice' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ನೈಸ್' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
-#| msgid "Show process 'SELinux security context' column on startup"
-msgid "Show process 'SELinux Security Context' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'SELinux ಸುರಕ್ಷತಾ ಸನ್ನಿವೇಶ' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'PID' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'PID' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
-#| msgid "Width of process 'nice' column"
-msgid "Width of process 'Command Line' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ಆಜ್ಞಾ ಸಾಲು' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'PID' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'PID' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
-#| msgid "Show process 'nice' column on startup"
-msgid "Show process 'Command Line' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಆಜ್ಞಾ ಸಾಲು' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'SELinux Security Context' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'SELinux ಸುರಕ್ಷತಾ ಸನ್ನಿವೇಶ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
-#| msgid "Width of process 'owner' column"
-msgid "Width of process 'Memory' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ಮೆಮೊರಿ' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'SELinux Security Context' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'SELinux ಸುರಕ್ಷತಾ ಸನ್ನಿವೇಶ' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
-#| msgid "Show process 'owner' column on startup"
-msgid "Show process 'Memory' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಮೆಮೊರಿ' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'Command Line' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ಆಜ್ಞಾ ಸಾಲು' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
-msgid "Width of process 'Waiting Channel' column"
-msgstr "'ಕಾಯುವ ಚಾನಲ್‌' ಲಂಬಸಾಲು ಪ್ರಕ್ರಿಯೆ ಅಗಲ"
+msgid "Show process 'Command Line' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಆಜ್ಞಾ ಸಾಲು' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
-msgid "Show process 'Waiting Channel' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಕಾಯುವ ಚಾನಲ್' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'Memory' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ಮೆಮೊರಿ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
-#| msgid "Width of process 'owner' column"
-msgid "Width of process 'Control Group' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ನಿಯಂತ್ರಣ ಗುಂಪು' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'Memory' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಮೆಮೊರಿ' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
-#| msgid "Show process 'owner' column on startup"
-msgid "Show process 'Control Group' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ನಿಯಂತ್ರಣ ಗುಂಪು' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'Waiting Channel' column"
+msgstr "'ಕಾಯುವ ಚಾನಲ್‌' ಉದ್ದಸಾಲು ಪ್ರಕ್ರಿಯೆ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
-#| msgid "Width of process 'nice' column"
-msgid "Width of process 'Unit' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ಘಟಕ' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'Waiting Channel' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಕಾಯುವ ಚಾನಲ್' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
-#| msgid "Show process 'nice' column on startup"
-msgid "Show process 'Unit' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಘಟಕ' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'Control Group' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ನಿಯಂತ್ರಣ ಗುಂಪು' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
-#| msgid "Width of process 'owner' column"
-msgid "Width of process 'Session' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ಅಧಿವೇಶನ' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'Control Group' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ನಿಯಂತ್ರಣ ಗುಂಪು' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
-#| msgid "Show process 'owner' column on startup"
-msgid "Show process 'Session' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಅಧಿವೇಶನ' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'Unit' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ಘಟಕ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
-#| msgid "Width of process 'status' column"
-msgid "Width of process 'Seat' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ಸ್ಥಾನ' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'Unit' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಘಟಕ' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
-#| msgid "Show process 'status' column on startup"
-msgid "Show process 'Seat' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಸ್ಥಾನ' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'Session' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ಅಧಿವೇಶನ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
-#| msgid "Width of process 'owner' column"
-msgid "Width of process 'Owner' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ಮಾಲಿಕ' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'Session' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಅಧಿವೇಶನ' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
-#| msgid "Show process 'owner' column on startup"
-msgid "Show process 'Owner' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಮಾಲಿಕ' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'Seat' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ಸ್ಥಾನ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
-#| msgid "Width of process 'owner' column"
-msgid "Width of process 'Priority' column"
-msgstr "ಪ್ರಕ್ರಿಯೆ 'ಆದ್ಯತೆ' ಲಂಬಸಾಲಿನ ಅಗಲ"
+msgid "Show process 'Seat' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಸ್ಥಾನ' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
-#| msgid "Show process 'owner' column on startup"
-msgid "Show process 'Priority' column on startup"
-msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಆದ್ಯತೆ' ಲಂಬಸಾಲನ್ನು ತೋರಿಸು"
+msgid "Width of process 'Owner' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ಮಾಲಿಕ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
-#| msgid "Process view sort column"
-msgid "Disk view sort column"
-msgstr "ಡಿಸ್ಕ್‍ ನೋಟ ವಿಂಗಡಣಾ ಲಂಬಸಾಲು"
+msgid "Show process 'Owner' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಮಾಲಿಕ' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
-#| msgid "Process view sort order"
+msgid "Width of process 'Priority' column"
+msgstr "ಪ್ರಕ್ರಿಯೆ 'ಆದ್ಯತೆ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
+msgid "Show process 'Priority' column on startup"
+msgstr "ಆರಂಭಿಸಿದಾಗ ಪ್ರಕ್ರಿಯೆ 'ಆದ್ಯತೆ' ಉದ್ದಸಾಲನ್ನು ತೋರಿಸು"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
+msgid "Disk view sort column"
+msgstr "ಡಿಸ್ಕ್‍ ನೋಟ ವಿಂಗಡಣಾ ಉದ್ದಸಾಲು"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
 msgid "Disk view sort order"
 msgstr "ಪ್ರಕ್ರಿಯೆಗಳ ನೋಟ ಜೋಡಣಾ ಅನುಕ್ರಮ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
 msgid "Disk view columns order"
-msgstr "ಡಿಸ್ಕ್‌ ನೋಟ ಲಂಬಸಾಲುಗಳ ಕ್ರಮ"
+msgstr "ಡಿಸ್ಕ್‌ ನೋಟ ಉದ್ದಸಾಲುಗಳ ಕ್ರಮ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
-#| msgid "Process view sort column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
+#| msgid "Width of process 'Nice' column"
+msgid "Width of disk view 'Device' column"
+msgstr "ಡಿಸ್ಕ್‍ ನೋಟ 'ಸಾಧನ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:83
+#| msgid "Show process 'Nice' column on startup"
+msgid "Show disk view 'Device' column on startup"
+msgstr "ಡಿಸ್ಕ್‍ ನೋಟ 'ಸಾಧನ' ಉದ್ದಸಾಲನ್ನು ಆರಂಭದಲ್ಲಿ ತೋರಿಸು"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:84
+#| msgid "Width of process 'Memory' column"
+msgid "Width of disk view 'Directory' column"
+msgstr "ಡಿಸ್ಕ್‍ ನೋಟ 'ಕೋಶ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:85
+#| msgid "Show process 'Memory' column on startup"
+msgid "Show disk view 'Directory' column on startup"
+msgstr "ಡಿಸ್ಕ್‍ ನೋಟ 'ಕೋಶ' ಉದ್ದಸಾಲನ್ನು ಆರಂಭದಲ್ಲಿ ತೋರಿಸು"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:86
+#| msgid "Width of process 'Name' column"
+msgid "Width of disk view 'Type' column"
+msgstr "ಡಿಸ್ಕ್‍ ನೋಟ 'ಬಗೆ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:87
+#| msgid "Show process 'Name' column on startup"
+msgid "Show disk view 'Type' column on startup"
+msgstr "ಡಿಸ್ಕ್‍ ನೋಟ 'ಬಗೆ' ಉದ್ದಸಾಲನ್ನು ಆರಂಭದಲ್ಲಿ ತೋರಿಸು"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:88
+#| msgid "Width of process 'Status' column"
+msgid "Width of disk view 'Total' column"
+msgstr "ಡಿಸ್ಕ್‍ ನೋಟ 'ಒಟ್ಟು' ಉದ್ದಸಾಲಿನ ಅಗಲ"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:89
+#| msgid "Show process 'Status' column on startup"
+msgid "Show disk view 'Total' column on startup"
+msgstr "ಡಿಸ್ಕ್‍ ನೋಟ 'ಒಟ್ಟು' ಉದ್ದಸಾಲನ್ನು ಆರಂಭದಲ್ಲಿ ತೋರಿಸು"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:90
+#| msgid "Width of process 'Name' column"
+msgid "Width of disk view 'Free' column"
+msgstr "ಡಿಸ್ಕ್‍ ನೋಟ 'ಮುಕ್ತ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:91
+#| msgid "Show process 'Name' column on startup"
+msgid "Show disk view 'Free' column on startup"
+msgstr "ಡಿಸ್ಕ್‍ ನೋಟ 'ಮುಕ್ತ' ಉದ್ದಸಾಲನ್ನು ಆರಂಭದಲ್ಲಿ ತೋರಿಸು"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:92
+#| msgid "Width of process 'Name' column"
+msgid "Width of disk view 'Available' column"
+msgstr "ಡಿಸ್ಕ್‍ ನೋಟ 'ಲಭ್ಯ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:93
+#| msgid "Show process 'Name' column on startup"
+msgid "Show disk view 'Available' column on startup"
+msgstr "ಡಿಸ್ಕ್‍ ನೋಟ 'ಲಭ್ಯ' ಉದ್ದಸಾಲನ್ನು ಆರಂಭದಲ್ಲಿ ತೋರಿಸು"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:94
+#| msgid "Width of process 'User' column"
+msgid "Width of disk view 'Used' column"
+msgstr "ಡಿಸ್ಕ್‍ ನೋಟ 'ಬಳಸಲಾದ' ಉದ್ದಸಾಲಿನ ಅಗಲ"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:95
+#| msgid "Show process 'User' column on startup"
+msgid "Show disk view 'Used' column on startup"
+msgstr "ಡಿಸ್ಕ್‍ ನೋಟ 'ಬಳಸಲಾದ' ಉದ್ದಸಾಲನ್ನು ಆರಂಭದಲ್ಲಿ ತೋರಿಸು"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:96
 msgid "Memory map sort column"
-msgstr "ಮೆಮೊರಿ ನಕ್ಷೆ ಜೋಡಣಾ ಲಂಬಸಾಲು"
+msgstr "ಮೆಮೊರಿ ನಕ್ಷೆ ಜೋಡಣಾ ಉದ್ದಸಾಲು"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
-#| msgid "Memory and Swap History"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:97
 msgid "Memory map sort order"
 msgstr "ಮೆಮೊರಿ ನಕ್ಷೆ ಜೋಡಣಾ ಕ್ರಮ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
-#| msgid "Process view sort column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:98
 msgid "Open files sort column"
-msgstr "ತೆರೆದ ಕಡತಗಳ ಜೋಡಣಾ ಲಂಬಸಾಲು"
+msgstr "ತೆರೆದ ಕಡತಗಳ ಜೋಡಣಾ ಉದ್ದಸಾಲು"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
-#| msgid "Process view sort order"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:99
 msgid "Open files sort order"
 msgstr "ತೆರೆದ ಕಡತಗಳ ಜೋಡಣಾ ಕ್ರಮ"
 
 #: ../src/procactions.cpp:76
 #, c-format
-#| msgid ""
-#| "Cannot change the priority of process with pid %d to %d.\n"
-#| "%s"
 msgid ""
 "Cannot change the priority of process with PID %d to %d.\n"
 "%s"
@@ -1084,9 +1101,6 @@ msgstr ""
 
 #: ../src/procactions.cpp:156
 #, c-format
-#| msgid ""
-#| "Cannot kill process with pid %d with signal %d.\n"
-#| "%s"
 msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
 "%s"
@@ -1095,17 +1109,14 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:77
+#: ../src/procdialogs.cpp:78
 #, c-format
-#| msgid "Kill the selected process?"
-msgid "Kill the selected process »%s« (PID: %u)?"
-msgstr "ಆರಿಸಲಾದ ಪ್ರಕ್ರಿಯೆಯನ್ನು  »%s« ನಿಲ್ಲಿಸಬೇಕೆ (PID: %u)?"
+#| msgid "Kill the selected process »%s« (PID: %u)?"
+msgid "Kill the selected process “%s” (PID: %u)?"
+msgstr "ಆರಿಸಲಾದ ಪ್ರಕ್ರಿಯೆಯನ್ನು  “%s” ನಿಲ್ಲಿಸಬೇಕೆ (PID: %u)?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:81
-#| msgid ""
-#| "Killing a process may destroy data, break the session or introduce a "
-#| "security risk. Only unresponding processes should be killed."
+#: ../src/procdialogs.cpp:82
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1116,17 +1127,14 @@ msgstr ""
 "ನಿಲ್ಲಿಸಬೇಕು."
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:88
+#: ../src/procdialogs.cpp:89
 #, c-format
-#| msgid "End the selected process?"
-msgid "End the selected process »%s« (PID: %u)?"
-msgstr "ಆರಿಸಲಾದ ಪ್ರಕ್ರಿಯೆಯನ್ನು  »%s« ಕೊನೆಗೊಳಿಸಬೇಕೆ (PID: %u)?"
+#| msgid "End the selected process »%s« (PID: %u)?"
+msgid "End the selected process “%s” (PID: %u)?"
+msgstr "ಆರಿಸಲಾದ ಪ್ರಕ್ರಿಯೆಯನ್ನು  “%s” ಕೊನೆಗೊಳಿಸಬೇಕೆ (PID: %u)?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:92
-#| msgid ""
-#| "Ending a process may destroy data, break the session or introduce a "
-#| "security risk. Only unresponding processes should be ended."
+#: ../src/procdialogs.cpp:93
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponsive processes should be ended."
@@ -1136,17 +1144,11 @@ msgstr ""
 "ಸುರಕ್ಷತಾ ತೊಂದರೆಗೆ ಕಾರಣವಾಗಬಹುದು. ಕೇವಲ ಪ್ರತಿಸ್ಪಂದಿಸದ ಪ್ರಕ್ರಿಯೆಗಳನ್ನು ಮಾತ್ರ "
 "ಕೊನೆಗೊಳಿಸಬೇಕು."
 
-#: ../src/procdialogs.cpp:130
-#, c-format
-#| msgid "(Low Priority)"
-msgid "(%s Priority)"
-msgstr "(%s ಆದ್ಯತೆ)"
-
 #: ../src/procdialogs.cpp:175
 #, c-format
-#| msgid "_Memory maps for process \"%s\" (PID %u):"
-msgid "Change Priority of Process »%s« (PID: %u)"
-msgstr "»%s« ಪ್ರಕ್ರಿಯೆಯ ಆದ್ಯತೆಯ ಕ್ರಮವನ್ನು ಬದಲಾಯಿಸು (PID: %u)"
+#| msgid "Change Priority of Process »%s« (PID: %u)"
+msgid "Change Priority of Process “%s” (PID: %u)"
+msgstr "“%s” ಪ್ರಕ್ರಿಯೆಯ ಆದ್ಯತೆಯ ಕ್ರಮವನ್ನು ಬದಲಾಯಿಸು (PID: %u)"
 
 #: ../src/procdialogs.cpp:193
 msgid "Note:"
@@ -1161,184 +1163,130 @@ msgstr ""
 "ಮೌಲ್ಯವು ಇದ್ದರೆ "
 "ಅದು ಹೆಚ್ಚಿನ ಆದ್ಯತೆಯನ್ನು ಸೂಚಿಸುತ್ತದೆ."
 
-#: ../src/procdialogs.cpp:418
+#: ../src/procdialogs.cpp:446 ../src/procman-app.cpp:462
 msgid "Icon"
 msgstr "ಚಿಹ್ನೆ"
 
-#: ../src/procman.cpp:668
+#: ../src/procman-app.cpp:575
 msgid "A simple process and system monitor."
 msgstr "ಒಂದು ಸರಳ ಪ್ರಕ್ರಿಯೆ ಹಾಗು ವ್ಯವಸ್ಥೆ ಮೇಲ್ವಿಚಾರಕ."
 
-#: ../src/procproperties.cpp:104 ../src/util.cpp:420
+#: ../src/procproperties.cpp:104 ../src/util.cpp:434
 msgid "N/A"
 msgstr "ಲಭ್ಯವಿಲ್ಲ"
 
-#: ../src/procproperties.cpp:130 ../src/proctable.cpp:236
+#: ../src/procproperties.cpp:129 ../src/proctable.cpp:215
 msgid "Process Name"
 msgstr "ಪ್ರಕ್ರಿಯೆಯ ಹೆಸರು"
 
-#: ../src/procproperties.cpp:131 ../src/proctable.cpp:237
+#: ../src/procproperties.cpp:130 ../src/proctable.cpp:216
 msgid "User"
 msgstr "ಬಳಕೆದಾರ"
 
-#: ../src/procproperties.cpp:132 ../src/proctable.cpp:238
+#: ../src/procproperties.cpp:131 ../src/proctable.cpp:217
 msgid "Status"
 msgstr "ಸ್ಥಿತಿ"
 
-#: ../src/procproperties.cpp:134 ../src/proctable.cpp:239
+#: ../src/procproperties.cpp:133 ../src/proctable.cpp:218
 msgid "Virtual Memory"
 msgstr "ವಾಸ್ತವಿಕ ಮೆಮೊರಿ"
 
-#: ../src/procproperties.cpp:135 ../src/proctable.cpp:240
+#: ../src/procproperties.cpp:134 ../src/proctable.cpp:219
 msgid "Resident Memory"
 msgstr "ರೆಸಿಡೆಂಟ್ ಮೆಮೊರಿ"
 
-#: ../src/procproperties.cpp:136 ../src/proctable.cpp:241
+#: ../src/procproperties.cpp:135 ../src/proctable.cpp:220
 msgid "Writable Memory"
 msgstr "ಓದಬಲ್ಲ ಮೆಮೊರಿ"
 
-#: ../src/procproperties.cpp:137 ../src/proctable.cpp:242
+#: ../src/procproperties.cpp:136 ../src/proctable.cpp:221
 msgid "Shared Memory"
 msgstr "ಹಂಚಲಾದ ಮೆಮೊರಿ"
 
-#: ../src/procproperties.cpp:138 ../src/proctable.cpp:243
+#: ../src/procproperties.cpp:137 ../src/proctable.cpp:222
 msgid "X Server Memory"
 msgstr "X ಪರಿಚಾರಕ ಮೆಮೊರಿ"
 
-#: ../src/procproperties.cpp:140 ../src/proctable.cpp:245
+#: ../src/procproperties.cpp:139 ../src/proctable.cpp:224
 msgid "CPU Time"
 msgstr "CPU ಸಮಯ"
 
-#: ../src/procproperties.cpp:140
+#: ../src/procproperties.cpp:139
 #, c-format
-#| msgid "%u second"
-#| msgid_plural "%u seconds"
 msgid "%lld second"
 msgid_plural "%lld seconds"
 msgstr[0] "%lld ಸೆಕೆಂಡ್"
 msgstr[1] "%lld ಸೆಕೆಂಡುಗಳು"
 
-#: ../src/procproperties.cpp:141 ../src/proctable.cpp:246
+#: ../src/procproperties.cpp:140 ../src/proctable.cpp:225
 msgid "Started"
 msgstr "ಆರಂಭಿಸಲ್ಪಟ್ಟ"
 
-#: ../src/procproperties.cpp:142 ../src/proctable.cpp:247
+#: ../src/procproperties.cpp:141 ../src/proctable.cpp:226
 msgid "Nice"
 msgstr "ನೈಸ್"
 
-#: ../src/procproperties.cpp:143 ../src/proctable.cpp:261
-#| msgid "(Low Priority)"
+#: ../src/procproperties.cpp:142 ../src/proctable.cpp:240
 msgid "Priority"
 msgstr "ಆದ್ಯತೆ"
 
-#: ../src/procproperties.cpp:144 ../src/proctable.cpp:248
+#: ../src/procproperties.cpp:143 ../src/proctable.cpp:227
 msgid "ID"
 msgstr "ಐಡಿ"
 
-#: ../src/procproperties.cpp:145 ../src/proctable.cpp:249
+#: ../src/procproperties.cpp:144 ../src/proctable.cpp:228
 msgid "Security Context"
 msgstr "ಸುರಕ್ಷತಾ ಸನ್ನಿವೇಶ"
 
-#: ../src/procproperties.cpp:146 ../src/proctable.cpp:250
+#: ../src/procproperties.cpp:145 ../src/proctable.cpp:229
 msgid "Command Line"
 msgstr "ಆಜ್ಞಾ ಸಾಲು"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:147 ../src/proctable.cpp:253
+#: ../src/procproperties.cpp:146 ../src/proctable.cpp:232
 msgid "Waiting Channel"
 msgstr "ಕಾಯುವ ಚಾನಲ್"
 
-#: ../src/procproperties.cpp:258
-#| msgid "Processes"
+#: ../src/procproperties.cpp:147 ../src/proctable.cpp:233
+msgid "Control Group"
+msgstr "ನಿಯಂತ್ರಣ ಗುಂಪು"
+
+#: ../src/procproperties.cpp:259
 msgid "Process Properties"
 msgstr "ಪ್ರಕ್ರಿಯೆಯ ಗುಣಗಳು"
 
-#: ../src/procproperties.cpp:278
+#: ../src/procproperties.cpp:279
 #, c-format
-#| msgid "_Files opened by process \"%s\" (PID %u):"
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "\"%s\" ಪ್ರಕ್ರಿಯೆಯ ಗುಣಗಳು (PID %u):"
 
-#: ../src/proctable.cpp:244
+#: ../src/proctable.cpp:223
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:254
-msgid "Control Group"
-msgstr "ನಿಯಂತ್ರಣ ಗುಂಪು"
-
-#: ../src/proctable.cpp:255
+#: ../src/proctable.cpp:234
 msgid "Unit"
 msgstr "ಘಟಕ"
 
-#: ../src/proctable.cpp:256
+#: ../src/proctable.cpp:235
 msgid "Session"
 msgstr "ಅಧಿವೇಶನ"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:259
+#: ../src/proctable.cpp:238
 msgid "Seat"
 msgstr "ಸ್ಥಾನ"
 
-#: ../src/proctable.cpp:260
+#: ../src/proctable.cpp:239
 msgid "Owner"
 msgstr "ಮಾಲಿಕ"
 
-#: ../src/proctable.cpp:1078
+#: ../src/proctable.cpp:1048
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "ಕೊನೆಯ 1, 5, 15 ನಿಮಿಷಗಳ ಲೋಡ್ ಸರಾಸರಿಗಳು: %0.2f, %0.2f, %0.2f"
-
-#. Translators: The first string parameter is release version (codename),
-#. * the second one is the architecture, 32 or 64-bit
-#: ../src/sysinfo.cpp:78
-#, c-format
-#| msgid "Release %s"
-msgid "Release %s %s"
-msgstr "ಬಿಡುಗಡೆ %s %s"
-
-#. translators: This is the type of architecture, for example:
-#. * "64-bit" or "32-bit"
-#: ../src/sysinfo.cpp:115
-#, c-format
-msgid "%d-bit"
-msgstr "%d-bit"
-
-#: ../src/sysinfo.cpp:734
-#, c-format
-msgid "Kernel %s"
-msgstr "ಕರ್ನಲ್ %s"
-
-#: ../src/sysinfo.cpp:746
-#, c-format
-msgid "GNOME %s"
-msgstr "GNOME %s"
-
-#. hardware section
-#: ../src/sysinfo.cpp:759
-#| msgid "<b>Hardware</b>"
-msgid "Hardware"
-msgstr "ಯಂತ್ರಾಂಶ"
-
-#: ../src/sysinfo.cpp:764
-msgid "Memory:"
-msgstr "ಮೆಮೊರಿ:"
-
-#: ../src/sysinfo.cpp:769
-msgid "Processor:"
-msgstr "ಸಂಸ್ಕಾರಕ:"
-
-#. disk space section
-#: ../src/sysinfo.cpp:778
-#| msgid "<b>System Status</b>"
-msgid "System Status"
-msgstr "ವ್ಯವಸ್ಥೆಯ ಸ್ಥಿತಿ"
-
-#: ../src/sysinfo.cpp:784
-msgid "Available disk space:"
-msgstr "ಲಭ್ಯವಿರುವ ಡಿಸ್ಕ್‍ ಜಾಗ:"
 
 #: ../src/util.cpp:30
 msgid "Running"
@@ -1401,25 +1349,21 @@ msgstr "%.1f GiB"
 
 #: ../src/util.cpp:169
 #, c-format
-#| msgid "%.1f KiB"
 msgid "%.1f TiB"
 msgstr "%.1f TiB"
 
 #: ../src/util.cpp:170
 #, c-format
-#| msgid "%.1f kbit"
 msgid "%.3g kbit"
 msgstr "%.3g kbit"
 
 #: ../src/util.cpp:171
 #, c-format
-#| msgid "%.1f Mbit"
 msgid "%.3g Mbit"
 msgstr "%.3g Mbit"
 
 #: ../src/util.cpp:172
 #, c-format
-#| msgid "%.1f Gbit"
 msgid "%.3g Gbit"
 msgstr "%.3g Gbit"
 
@@ -1442,11 +1386,103 @@ msgid_plural "%u bytes"
 msgstr[0] "%u ಬೈಟ್"
 msgstr[1] "%u ಬೈಟ್‍ಗಳು"
 
+#: ../src/util.cpp:232
+#| msgid "(High Priority)"
+msgid "Very High Priority"
+msgstr "ಅತಿ ಹೆಚ್ಚಿನ ಆದ್ಯತೆ"
+
+#: ../src/util.cpp:234
+#| msgid "(High Priority)"
+msgid "High Priority"
+msgstr "ಹೆಚ್ಚಿನ ಆದ್ಯತೆ"
+
+#: ../src/util.cpp:236
+#| msgid "(Normal Priority)"
+msgid "Normal Priority"
+msgstr "ಸಾಮಾನ್ಯ ಆದ್ಯತೆ"
+
+#: ../src/util.cpp:238
+#| msgid "Priority"
+msgid "Low Priority"
+msgstr "ಕಡಿಮೆ ಆದ್ಯತೆ"
+
+#: ../src/util.cpp:240
+#| msgid "(Very Low Priority)"
+msgid "Very Low Priority"
+msgstr "ಅತಿ ಕೆಳಮಟ್ಟದ ಆದ್ಯತೆ"
+
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:585
+#: ../src/util.cpp:599
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "System"
+#~ msgstr "ಗಣಕ"
+
+#~ msgid "Show the System tab"
+#~ msgstr "ವ್ಯವಸ್ಥೆಯ ಟ್ಯಾಬನ್ನು ತೋರಿಸು"
+
+#~ msgid "_Monitor"
+#~ msgstr "ಮೇಲ್ವಿಚಾರಣೆ (_M)"
+
+#~ msgid "_Edit"
+#~ msgstr "ಸಂಪಾದನೆ (_E)"
+
+#~ msgid "Search for _Open Files"
+#~ msgstr "ತೆರೆದ ಕಡತಗಳಿಗಾಗಿ ಹುಡುಕಾಟ (_O)"
+
+#~ msgid "Search for open files"
+#~ msgstr "ತೆರೆದ ಕಡತಗಳಿಗಾಗಿ ಹುಡುಕಾಟ"
+
+#~ msgid "Quit the program"
+#~ msgstr "ಪ್ರೋಗ್ರಾಂನಿಂದ ನಿರ್ಗಮಿಸು"
+
+#~ msgid "Configure the application"
+#~ msgstr "ಅನ್ವಯವನ್ನು ಸಂರಚಿಸು"
+
+#~ msgid "_Contents"
+#~ msgstr "ವಿಷಯಗಳು (_C)"
+
+#~ msgid "Open the manual"
+#~ msgstr "ಕೈಪಿಡಿಯನ್ನು ತೆರೆ"
+
+#~ msgid "About this application"
+#~ msgstr "ಈ ಅನ್ವಯದ ಬಗ್ಗೆ"
+
+#~| msgid "(Low Priority)"
+#~ msgid "(%s Priority)"
+#~ msgstr "(%s ಆದ್ಯತೆ)"
+
+#~| msgid "Release %s"
+#~ msgid "Release %s %s"
+#~ msgstr "ಬಿಡುಗಡೆ %s %s"
+
+#~ msgid "%d-bit"
+#~ msgstr "%d-bit"
+
+#~ msgid "Kernel %s"
+#~ msgstr "ಕರ್ನಲ್ %s"
+
+#~ msgid "GNOME %s"
+#~ msgstr "GNOME %s"
+
+#~| msgid "<b>Hardware</b>"
+#~ msgid "Hardware"
+#~ msgstr "ಯಂತ್ರಾಂಶ"
+
+#~ msgid "Memory:"
+#~ msgstr "ಮೆಮೊರಿ:"
+
+#~ msgid "Processor:"
+#~ msgstr "ಸಂಸ್ಕಾರಕ:"
+
+#~| msgid "<b>System Status</b>"
+#~ msgid "System Status"
+#~ msgstr "ವ್ಯವಸ್ಥೆಯ ಸ್ಥಿತಿ"
+
+#~ msgid "Available disk space:"
+#~ msgstr "ಲಭ್ಯವಿರುವ ಡಿಸ್ಕ್‍ ಜಾಗ:"
 
 #~ msgid "Default graph cpu color"
 #~ msgstr "ಪೂರ್ವನಿಯೋಜಿತವಾದ ನಕ್ಷೆ cpu ಬಣ್ಣ"
@@ -1466,20 +1502,8 @@ msgstr "%s/s"
 #~ msgid "_Change Priority..."
 #~ msgstr "ಆದ್ಯತೆಯನ್ನು ಬದಲಾಯಿಸು(_C)..."
 
-#~ msgid "(High Priority)"
-#~ msgstr "(ಹೆಚ್ಚಿನ ಆದ್ಯತೆ)"
-
-#~ msgid "(Normal Priority)"
-#~ msgstr "(ಸಾಮಾನ್ಯ ಆದ್ಯತೆ)"
-
-#~ msgid "(Very Low Priority)"
-#~ msgstr "(ಅತಿ ಕೆಳಮಟ್ಟದ ಆದ್ಯತೆ)"
-
 #~ msgid "Solaris mode"
 #~ msgstr "ಸೊಲಾರಿಸ್ ವಿಧಾನ"
-
-#~ msgid "File system i_nformation shown in list:"
-#~ msgstr "ಪಟ್ಟಿಯಲ್ಲಿ ತೋರಿಸಲಾದ ಪ್ರಕ್ರಿಯೆಯ ಮಾಹಿತಿ(_n):"
 
 #~ msgid "Unknown CPU model"
 #~ msgstr "ಗೊತ್ತಿರದ CPU ಮಾದರಿ"
