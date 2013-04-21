@@ -26,6 +26,9 @@ inline int procman_cmp(T x, T y)
 #define PROCMAN_CMP(X, Y) procman_cmp((X), (Y))
 #define PROCMAN_RCMP(X, Y) procman_cmp((Y), (X));
 
+/* check if logind is running */
+#define LOGIND_RUNNING() (access("/run/systemd/seats/", F_OK) >= 0)
+
 GtkWidget*
 procman_make_label_for_mmaps_or_ofiles(const char *format,
                                        const char *process_name,

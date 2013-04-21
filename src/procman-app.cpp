@@ -4,10 +4,6 @@
 #include <glibtop.h>
 #include <glibtop/close.h>
 
-#ifdef HAVE_SYSTEMD
-#include <systemd/sd-daemon.h>
-#endif
-
 #include "procman-app.h"
 #include "interface.h"
 #include "proctable.h"
@@ -455,7 +451,7 @@ procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child
                 id == COL_SEAT ||
                 id == COL_OWNER)
 #ifdef HAVE_SYSTEMD
-                && sd_booted() <= 0
+                && !LOGIND_RUNNING()
 #endif
                 )
                 continue;
