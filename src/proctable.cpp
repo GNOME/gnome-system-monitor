@@ -45,7 +45,6 @@
 #include <list>
 
 #ifdef HAVE_SYSTEMD
-#include <systemd/sd-daemon.h>
 #include <systemd/sd-login.h>
 #endif
 
@@ -428,7 +427,7 @@ proctable_new (ProcmanApp * const app)
     }
 
 #ifdef HAVE_SYSTEMD
-    if (sd_booted() <= 0)
+    if (!LOGIND_RUNNING())
 #endif
     {
         GtkTreeViewColumn *column;
@@ -704,7 +703,7 @@ get_process_systemd_info(ProcInfo *info)
 #ifdef HAVE_SYSTEMD
     uid_t uid;
 
-    if (sd_booted() <= 0)
+    if (!LOGIND_RUNNING())
         return;
 
     free(info->unit);

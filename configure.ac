@@ -48,7 +48,7 @@ PKG_CHECK_MODULES(SCRIPTS, glib-2.0 >= $GLIB_REQUIRED)
 have_systemd=no
 AC_ARG_ENABLE(systemd, AS_HELP_STRING([--disable-systemd], [disable systemd support]),,enable_systemd=no)
 if test "x$enable_systemd" != "xno"; then
-        PKG_CHECK_MODULES(SYSTEMD, [ libsystemd-daemon >= $SYSTEMD_REQUIRED libsystemd-login >= $SYSTEMD_REQUIRED ],
+        PKG_CHECK_MODULES(SYSTEMD, [ libsystemd-login >= $SYSTEMD_REQUIRED ],
                                    [ PKG_CHECK_MODULES(SYSTEMD_EX, [ libsystemd-login = $SYSTEMD_EXCLUDED ],
                                                                    AC_MSG_ERROR([*** systemd v43 found but it has a bug in its header files (uses C++ keyword)]), # Can't use systemd v43 
                                                                    [AC_DEFINE(HAVE_SYSTEMD, 1, [Define if systemd is available]) have_systemd=yes])],
