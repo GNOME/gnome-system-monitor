@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product"
 "=system-monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-02-11 20:59+0000\n"
-"PO-Revision-Date: 2013-02-26 10:09+0300\n"
+"POT-Creation-Date: 2013-04-05 20:49+0000\n"
+"PO-Revision-Date: 2013-04-25 08:26+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@gnome.gr\n"
 "Language: el\n"
@@ -29,7 +29,7 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/callbacks.cpp:184 ../src/procman-app.cpp:360
+#: ../src/callbacks.cpp:184 ../src/procman-app.cpp:364
 msgid "System Monitor"
 msgstr "Παρακολούθηση συστήματος"
 
@@ -46,7 +46,6 @@ msgstr ""
 "System;Process;CPU;Memory;Network;History;Usage;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#| msgid "System Monitor"
 msgid "GNOME System Monitor"
 msgstr "Παρακολούθηση συστήματος GNOME"
 
@@ -92,11 +91,11 @@ msgid "Memory and Swap History"
 msgstr "Ιστορικό μνήμης και Swap"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:249
-#: ../src/procproperties.cpp:132 ../src/proctable.cpp:230
+#: ../src/procproperties.cpp:132 ../src/proctable.cpp:212
 msgid "Memory"
 msgstr "Μνήμη"
 
-#: ../data/interface.ui.h:8 ../src/interface.cpp:260
+#: ../data/interface.ui.h:8 ../src/interface.cpp:261
 msgid "Swap"
 msgstr "Swap"
 
@@ -105,7 +104,7 @@ msgstr "Swap"
 msgid "Network History"
 msgstr "Ιστορικό δικτύου"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:285
+#: ../data/interface.ui.h:10 ../src/interface.cpp:288
 msgid "Receiving"
 msgstr "Λήψη"
 
@@ -113,9 +112,9 @@ msgstr "Λήψη"
 msgid "Total Received"
 msgstr "Σύνολο ληφθέντων"
 
-#: ../data/interface.ui.h:12
-msgid "Sent"
-msgstr "Απεσταλμένα"
+#: ../data/interface.ui.h:12 ../src/interface.cpp:304
+msgid "Sending"
+msgstr "Αποστολή"
 
 #: ../data/interface.ui.h:13
 msgid "Total Sent"
@@ -264,11 +263,11 @@ msgstr "Εμφάνιση της καρτέλας του συστήματος α�
 msgid "translator-credits"
 msgstr ""
 "Ελληνική μεταφραστική ομάδα GNOME\n"
-" Δημήτρης Σπίγγος <dmtrs32@gmail.com>, 2013\n"
-" Σίμος Ξενιτέλλης <simos@gnome.org>, 2009\n"
-" Κώστας Παπαδήμας <pkst@gnome.org>, 2009\n"
-" Νίκος Χαρωνιτάκης <nikosx@gmail.com>, 2009\n"
-" Τζένη Πετούμενου <epetoumenou@gmail.com>, 2009\n"
+" Δημήτρης Σπίγγος <dmtrs32@gmail.com>\n"
+" Σίμος Ξενιτέλλης <simos@gnome.org>\n"
+" Κώστας Παπαδήμας <pkst@gnome.org>\n"
+" Νίκος Χαρωνιτάκης <nikosx@gmail.com>\n"
+" Τζένη Πετούμενου <epetoumenou@gmail.com>\n"
 "\n"
 "Για περισσότερες πληροφορίες, επισκεφθείτε την σελίδα http://www.gnome.gr/"
 
@@ -555,23 +554,19 @@ msgstr "CPU"
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:300
-msgid "Sending"
-msgstr "Αποστολή"
-
-#: ../src/load-graph.cpp:174
+#: ../src/load-graph.cpp:170
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u δευτερόλεπτο"
 msgstr[1] "%u δευτερόλεπτα"
 
-#: ../src/load-graph.cpp:369
+#: ../src/load-graph.cpp:365
 msgid "not available"
 msgstr "μη διαθέσιμη"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:372
+#: ../src/load-graph.cpp:368
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) από %s"
@@ -807,12 +802,12 @@ msgid "Saves the currently viewed tab"
 msgstr "Αποθηκεύει την τρέχουσα προβαλλόμενη καρτέλα"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
-msgid ""
-"0 for the System Info, 1 for the processes list, 2 for the resources and 3 "
-"for the disks list"
+#| msgid ""
+#| "0 for the System Info, 1 for the processes list, 2 for the resources and "
+#| "3 for the disks list"
+msgid "0 for the processes list, 1 for the resources and 2 for the disks list"
 msgstr ""
-"0 για τις πληροφορίες συστήματος, 1 για τη λίστα διεργασιών, 2 για τους "
-"πόρους και 3 για τη λίστα των δίσκων"
+"0 για τη λίστα διεργασιών, 1 για τους πόρους και 2 για τη λίστα των δίσκων"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
 msgid "CPU colors"
@@ -1198,11 +1193,11 @@ msgstr ""
 "Η προτεραιότητα μιας διεργασίας δίνεται από την τιμή nice της διεργασίας. "
 "Μια χαμηλή τιμή nice αντιστοιχεί σε υψηλότερη προτεραιότητα."
 
-#: ../src/procdialogs.cpp:446 ../src/procman-app.cpp:462
+#: ../src/procdialogs.cpp:366 ../src/procman-app.cpp:466
 msgid "Icon"
 msgstr "Εικονίδιο"
 
-#: ../src/procman-app.cpp:575
+#: ../src/procman-app.cpp:580
 msgid "A simple process and system monitor."
 msgstr "Μια απλή εφαρμογή παρακολούθησης των διεργασιών και του συστήματος."
 
@@ -1211,45 +1206,45 @@ msgid "N/A"
 msgstr "N/A"
 
 #
-#: ../src/procproperties.cpp:129 ../src/proctable.cpp:215
+#: ../src/procproperties.cpp:129 ../src/proctable.cpp:197
 msgid "Process Name"
 msgstr "Όνομα διεργασίας"
 
 # sysdeps/names/mem.c:49
-#: ../src/procproperties.cpp:130 ../src/proctable.cpp:216
+#: ../src/procproperties.cpp:130 ../src/proctable.cpp:198
 msgid "User"
 msgstr "Χρήστης"
 
-#: ../src/procproperties.cpp:131 ../src/proctable.cpp:217
+#: ../src/procproperties.cpp:131 ../src/proctable.cpp:199
 msgid "Status"
 msgstr "Κατάσταση"
 
 #
-#: ../src/procproperties.cpp:133 ../src/proctable.cpp:218
+#: ../src/procproperties.cpp:133 ../src/proctable.cpp:200
 msgid "Virtual Memory"
 msgstr "Εικονική Μνήμη"
 
 #
-#: ../src/procproperties.cpp:134 ../src/proctable.cpp:219
+#: ../src/procproperties.cpp:134 ../src/proctable.cpp:201
 msgid "Resident Memory"
 msgstr "Παραμένουσα Μνήμη"
 
 #
-#: ../src/procproperties.cpp:135 ../src/proctable.cpp:220
+#: ../src/procproperties.cpp:135 ../src/proctable.cpp:202
 msgid "Writable Memory"
 msgstr "Εγγράψιμη μνήμη"
 
 # sysdeps/names/mem.c:46
-#: ../src/procproperties.cpp:136 ../src/proctable.cpp:221
+#: ../src/procproperties.cpp:136 ../src/proctable.cpp:203
 msgid "Shared Memory"
 msgstr "Κοινόχρηστη μνήμη"
 
 # sysdeps/names/mem.c:46
-#: ../src/procproperties.cpp:137 ../src/proctable.cpp:222
+#: ../src/procproperties.cpp:137 ../src/proctable.cpp:204
 msgid "X Server Memory"
 msgstr "Μνήμη εξυπηρετητή X"
 
-#: ../src/procproperties.cpp:139 ../src/proctable.cpp:224
+#: ../src/procproperties.cpp:139 ../src/proctable.cpp:206
 msgid "CPU Time"
 msgstr "Ώρα CPU"
 
@@ -1260,38 +1255,38 @@ msgid_plural "%lld seconds"
 msgstr[0] "%lld δευτερόλεπτο"
 msgstr[1] "%lld δευτερόλεπτα"
 
-#: ../src/procproperties.cpp:140 ../src/proctable.cpp:225
+#: ../src/procproperties.cpp:140 ../src/proctable.cpp:207
 msgid "Started"
 msgstr "Ξεκίνησε"
 
 # sysdeps/names/procuid.c:51
-#: ../src/procproperties.cpp:141 ../src/proctable.cpp:226
+#: ../src/procproperties.cpp:141 ../src/proctable.cpp:208
 msgid "Nice"
 msgstr "Nice"
 
 # sysdeps/names/procuid.c:51
-#: ../src/procproperties.cpp:142 ../src/proctable.cpp:240
+#: ../src/procproperties.cpp:142 ../src/proctable.cpp:222
 msgid "Priority"
 msgstr "Προτεραιότητα"
 
-#: ../src/procproperties.cpp:143 ../src/proctable.cpp:227
+#: ../src/procproperties.cpp:143 ../src/proctable.cpp:209
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:144 ../src/proctable.cpp:228
+#: ../src/procproperties.cpp:144 ../src/proctable.cpp:210
 msgid "Security Context"
 msgstr "Περιβάλλον ασφάλειας"
 
-#: ../src/procproperties.cpp:145 ../src/proctable.cpp:229
+#: ../src/procproperties.cpp:145 ../src/proctable.cpp:211
 msgid "Command Line"
 msgstr "Γραμμή εντολών"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:146 ../src/proctable.cpp:232
+#: ../src/procproperties.cpp:146 ../src/proctable.cpp:214
 msgid "Waiting Channel"
 msgstr "Κανάλι αναμονής"
 
-#: ../src/procproperties.cpp:147 ../src/proctable.cpp:233
+#: ../src/procproperties.cpp:147 ../src/proctable.cpp:215
 msgid "Control Group"
 msgstr "Ομάδα ελέγχου"
 
@@ -1305,30 +1300,30 @@ msgstr "Ιδιότητες διεργασιών"
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "Properties of process \"%s\" (PID %u):"
 
-#: ../src/proctable.cpp:223
+#: ../src/proctable.cpp:205
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:234
+#: ../src/proctable.cpp:216
 msgid "Unit"
 msgstr "Μονάδα"
 
-#: ../src/proctable.cpp:235
+#: ../src/proctable.cpp:217
 msgid "Session"
 msgstr "Συνεδρία"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:238
+#: ../src/proctable.cpp:220
 msgid "Seat"
 msgstr "Seat"
 
-#: ../src/proctable.cpp:239
+#: ../src/proctable.cpp:221
 msgid "Owner"
 msgstr "Ιδιοκτήτης"
 
-#: ../src/proctable.cpp:1048
+#: ../src/proctable.cpp:1030
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Μέσος φόρτος για τα τελευταία 1, 5, 15 λεπτά: %0.2f, %0.2f, %0.2f"
@@ -1455,10 +1450,13 @@ msgid "Very Low Priority"
 msgstr "Πολύ χαμηλή προτεραιότητα"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:599
+#: ../src/util.cpp:632
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "Sent"
+#~ msgstr "Απεσταλμένα"
 
 #~ msgid "System"
 #~ msgstr "Σύστημα"
