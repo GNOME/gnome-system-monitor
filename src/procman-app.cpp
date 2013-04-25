@@ -584,6 +584,8 @@ int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>&
         g_error("Arguments parse error : %s", ex.what().c_str());
     }
 
+    g_strfreev(argv);
+
     if (option_group.show_processes_tab) {
         procman_debug("Starting with PROCMAN_TAB_PROCESSES by commandline request");
         set_tab(GTK_NOTEBOOK(notebook), PROCMAN_TAB_PROCESSES, this);
@@ -593,11 +595,13 @@ int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>&
     } else if (option_group.show_file_systems_tab) {
         procman_debug("Starting with PROCMAN_TAB_DISKS by commandline request");
         set_tab(GTK_NOTEBOOK(notebook), PROCMAN_TAB_DISKS, this);
+    } else if (option_group.print_version) {
+        g_print("%s %s\n", _("GNOME Image Viewer"), VERSION);
+	exit (EXIT_SUCCESS);
+	return 0;
     }
 
     on_activate ();
-
-    g_strfreev(argv);
 
     return 0;
 }

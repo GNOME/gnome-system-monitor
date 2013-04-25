@@ -12,7 +12,8 @@ namespace procman
         : Glib::OptionGroup("", ""),
           show_processes_tab(false),
           show_resources_tab(false),
-          show_file_systems_tab(false)
+          show_file_systems_tab(false),
+          print_version(false)
     {
         Glib::OptionEntry proc_tab;
         proc_tab.set_long_name("show-processes-tab");
@@ -29,9 +30,14 @@ namespace procman
         fs_tab.set_short_name('f');
         fs_tab.set_description(_("Show the File Systems tab"));
 
+	Glib::OptionEntry show_version;
+        show_version.set_long_name("version");
+        show_version.set_description(_("Show the application's version"));
+
         this->add_entry(proc_tab, this->show_processes_tab);
         this->add_entry(res_tab, this->show_resources_tab);
         this->add_entry(fs_tab, this->show_file_systems_tab);
+        this->add_entry(show_version, this->print_version);
     }
 }
 

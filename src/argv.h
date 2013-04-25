@@ -15,6 +15,7 @@ namespace procman
         bool show_processes_tab;
         bool show_resources_tab;
         bool show_file_systems_tab;
+        bool print_version;
     };
 }
 
