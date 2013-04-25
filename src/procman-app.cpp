@@ -596,7 +596,7 @@ int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>&
         procman_debug("Starting with PROCMAN_TAB_DISKS by commandline request");
         set_tab(GTK_NOTEBOOK(notebook), PROCMAN_TAB_DISKS, this);
     } else if (option_group.print_version) {
-        g_print("%s %s\n", _("GNOME Image Viewer"), VERSION);
+        g_print("%s %s\n", _("GNOME System Monitor"), VERSION);
 	exit (EXIT_SUCCESS);
 	return 0;
     }
