@@ -56,7 +56,7 @@ can_show_security_context_column (void)
                hide the security context column */
 
         default:
-            g_warning("SELinux was found but is not enabled.\n");
+            procman_debug("SELinux was found but is not enabled.\n");
             return FALSE;
     }
 }
