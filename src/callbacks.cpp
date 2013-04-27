@@ -475,6 +475,20 @@ cb_timeout (gpointer data)
     return TRUE;
 }
 
+void
+cb_refresh_icons (GtkIconTheme *theme, gpointer data)
+{
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
+    if(app->timeout) {
+        g_source_remove (app->timeout);
+    }
+
+    for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it) {
+        app->pretty_table->set_icon(*(it->second));
+    }
+
+    cb_timeout(app);
+}
 
 void
 cb_radio_processes(GtkAction *action, GtkRadioAction *current, gpointer data)
