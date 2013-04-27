@@ -81,7 +81,7 @@ void draw_background(LoadGraph *graph) {
     num_bars = graph->num_bars();
     graph->graph_dely = (graph->draw_height - 15) / num_bars; /* round to int to avoid AA blur */
     graph->real_draw_height = graph->graph_dely * num_bars;
-    graph->graph_delx = (graph->draw_width - 2.0 - graph->rmargin - graph->indent) / (LoadGraph::NUM_POINTS - 3);
+    graph->graph_delx = (graph->draw_width - 2.0 - graph->indent) / (LoadGraph::NUM_POINTS - 3);
     graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH ;
 
     gtk_widget_get_allocation (graph->disp, &allocation);
@@ -110,7 +110,7 @@ void draw_background(LoadGraph *graph) {
 
     /* Draw background rectangle */
     cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
-    cairo_rectangle (cr, graph->rmargin + graph->indent, 0,
+    cairo_rectangle (cr, graph->indent, 0,
                      graph->draw_width - graph->rmargin - graph->indent, graph->real_draw_height);
     cairo_fill(cr);
 
@@ -141,16 +141,17 @@ void draw_background(LoadGraph *graph) {
             }
             caption = g_strdup_printf("%d %%", max - i * (max / num_bars));
         }
+        pango_layout_set_alignment (layout, PANGO_ALIGN_LEFT);
         pango_layout_set_text (layout, caption, -1);
         pango_layout_get_extents (layout, NULL, &extents);
-        cairo_move_to (cr, graph->indent - 1.0 * extents.width / PANGO_SCALE + 20,
+        cairo_move_to (cr, graph->draw_width - graph->indent - 23,
                        y - 1.0 * extents.height / PANGO_SCALE / 2);
         pango_cairo_show_layout (cr, layout);
         g_free(caption);
 
         cairo_set_source_rgba (cr, 0, 0, 0, 0.75);
-        cairo_move_to (cr, graph->rmargin + graph->indent - 3, i * graph->graph_dely + 0.5);
-        cairo_line_to (cr, graph->draw_width - 0.5, i * graph->graph_dely + 0.5);
+        cairo_move_to (cr, graph->indent, i * graph->graph_dely + 0.5);
+        cairo_line_to (cr, graph->draw_width - graph->rmargin + 0.5 + 4, i * graph->graph_dely + 0.5);
     }
     cairo_stroke (cr);
 
@@ -161,8 +162,8 @@ void draw_background(LoadGraph *graph) {
     for (unsigned int i = 0; i < 7; i++) {
         double x = (i) * (graph->draw_width - graph->rmargin - graph->indent) / 6;
         cairo_set_source_rgba (cr, 0, 0, 0, 0.75);
-        cairo_move_to (cr, (ceil(x) + 0.5) + graph->rmargin + graph->indent, 0.5);
-        cairo_line_to (cr, (ceil(x) + 0.5) + graph->rmargin + graph->indent, graph->real_draw_height + 4.5);
+        cairo_move_to (cr, (ceil(x) + 0.5) + graph->indent, 0.5);
+        cairo_line_to (cr, (ceil(x) + 0.5) + graph->indent, graph->real_draw_height + 4.5);
         cairo_stroke(cr);
         unsigned seconds = total_seconds - i * total_seconds / 6;
         const char* format;
@@ -174,7 +175,7 @@ void draw_background(LoadGraph *graph) {
         pango_layout_set_text (layout, caption, -1);
         pango_layout_get_extents (layout, NULL, &extents);
         cairo_move_to (cr,
-                       (ceil(x) + 0.5 + graph->rmargin + graph->indent) - (1.0 * extents.width / PANGO_SCALE / 2),
+                       (ceil(x) + 0.5 + graph->indent) - (1.0 * extents.width / PANGO_SCALE / 2),
                        graph->draw_height - 1.0 * extents.height / PANGO_SCALE);
         gdk_cairo_set_source_rgba (cr, &fg);
         pango_cairo_show_layout (cr, layout);
@@ -238,7 +239,7 @@ load_graph_draw (GtkWidget *widget,
     /* Number of pixels wide for one graph point */
     sample_width = (float)(graph->draw_width - graph->rmargin - graph->indent) / (float)LoadGraph::NUM_POINTS;
     /* General offset */
-    x_offset = graph->draw_width - graph->rmargin + (sample_width*2);
+    x_offset = graph->draw_width - graph->rmargin;
 
     /* Subframe offset */
     x_offset += graph->rmargin - ((sample_width / graph->frames_per_unit) * graph->render_counter);
@@ -251,7 +252,7 @@ load_graph_draw (GtkWidget *widget,
     cairo_set_line_width (cr, 1);
     cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
     cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
-    cairo_rectangle (cr, graph->rmargin + graph->indent + FRAME_WIDTH + 1, FRAME_WIDTH - 1,
+    cairo_rectangle (cr, graph->indent + FRAME_WIDTH + 1, FRAME_WIDTH - 1,
                      graph->draw_width - graph->rmargin - graph->indent - 1,
                      graph->real_draw_height + FRAME_WIDTH - 1);
     cairo_clip(cr);
@@ -676,7 +677,7 @@ load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
 
 LoadGraph::LoadGraph(guint type)
     : fontsize(8.0),
-      rmargin(3.5 * fontsize),
+      rmargin(7 * fontsize),
       indent(24.0),
       n(0),
       type(type),
