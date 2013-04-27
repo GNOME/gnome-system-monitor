@@ -66,6 +66,8 @@ gint            cb_update_disks (gpointer data);
 gint            cb_user_refresh (GtkAction* action, gpointer data);
 gint            cb_timeout (gpointer data);
 
+void            cb_refresh_icons (GtkIconTheme *theme, gpointer data);
+
 void            cb_radio_processes(GtkAction *action,
                                    GtkRadioAction *current,
                                    gpointer data);

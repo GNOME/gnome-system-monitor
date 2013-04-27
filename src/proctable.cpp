@@ -427,6 +427,9 @@ proctable_new (ProcmanApp * const app)
         gtk_tree_view_column_set_visible(column, FALSE);
     }
 
+    GtkIconTheme* theme = gtk_icon_theme_get_default();
+    g_signal_connect(G_OBJECT (theme), "changed", G_CALLBACK (cb_refresh_icons), app);
+    
 #ifdef HAVE_SYSTEMD
     if (sd_booted() <= 0)
 #endif
