@@ -552,7 +552,7 @@ get_net (LoadGraph *graph)
     guint64 in = 0, out = 0;
     GTimeVal time;
     guint64 din, dout;
-
+    gboolean first = true;
     ifnames = glibtop_get_netlist(&netlist);
 
     for (i = 0; i < netlist.number; ++i)
@@ -599,11 +599,13 @@ get_net (LoadGraph *graph)
         dout = 0;
     }
 
+    first = first && (graph->net.time.tv_sec==0);
     graph->net.last_in  = in;
     graph->net.last_out = out;
     graph->net.time     = time;
 
-    net_scale(graph, din, dout);
+    if (!first)
+        net_scale(graph, din, dout);
 
     gtk_label_set_text (GTK_LABEL (graph->labels.net_in), procman::format_network_rate(din).c_str());
     gtk_label_set_text (GTK_LABEL (graph->labels.net_in_total), procman::format_network(in).c_str());
