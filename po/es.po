@@ -15,19 +15,19 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-04-05 20:49+0000\n"
-"PO-Revision-Date: 2013-04-22 17:45+0200\n"
+"POT-Creation-Date: 2013-04-25 21:09+0000\n"
+"PO-Revision-Date: 2013-04-28 20:50+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Gtranslator 2.91.5\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/callbacks.cpp:184 ../src/procman-app.cpp:364
+#: ../src/callbacks.cpp:184 ../src/procman-app.cpp:360
 msgid "System Monitor"
 msgstr "Monitor del sistema"
 
@@ -41,7 +41,7 @@ msgstr "Vea los procesos actuales y monitorizar el estado del sistema"
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr "Monitor;Sistema;Proceso;CPU;Memoria;Red;Histórico;Uso;"
 
-#: ../gnome-system-monitor-kde.desktop.in.in.h:1
+#: ../gnome-system-monitor-kde.desktop.in.in.h:1 ../src/procman-app.cpp:599
 msgid "GNOME System Monitor"
 msgstr "Monitor del sistema de GNOME"
 
@@ -50,16 +50,18 @@ msgid "Kill process"
 msgstr "Matar proceso"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:2
-msgid "Privileges are required to kill process"
-msgstr "Se necesitan privilegios para matar el proceso"
+#| msgid "Privileges are required to kill process"
+msgid "Privileges are required to kill other users' processes"
+msgstr "Se necesitan privilegios para matar procesos de otros usuarios"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:3
 msgid "Renice process"
 msgstr "Cambiar la prioridad del proceso"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:4
-msgid "Privileges are required to renice process"
-msgstr "Se necesitan privilegios para cambiar la prioridad del proceso"
+#| msgid "Privileges are required to renice process"
+msgid "Privileges are required to change the priority of processes"
+msgstr "Se necesitan privilegios para cambiar la prioridad de los procesos"
 
 #: ../data/interface.ui.h:2
 msgid "View"
@@ -82,7 +84,7 @@ msgid "Memory and Swap History"
 msgstr "Histórico de memoria e intercambio"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:249
-#: ../src/procproperties.cpp:132 ../src/proctable.cpp:212
+#: ../src/procproperties.cpp:132 ../src/proctable.cpp:211
 msgid "Memory"
 msgstr "Memoria"
 
@@ -232,17 +234,22 @@ msgstr ""
 "<small><i><b>Nota:</b> la prioridad de un proceso está dada por su valor "
 "nice. Un valor nice bajo corresponde a una prioridad más alta.</i></small>"
 
-#: ../src/argv.cpp:20
+#: ../src/argv.cpp:21
 msgid "Show the Processes tab"
 msgstr "Mostrar la pestaña Procesos"
 
-#: ../src/argv.cpp:25
+#: ../src/argv.cpp:26
 msgid "Show the Resources tab"
 msgstr "Mostrar la pestaña Recursos"
 
-#: ../src/argv.cpp:30
+#: ../src/argv.cpp:31
 msgid "Show the File Systems tab"
 msgstr "Mostrar la pestaña Sistemas de archivos"
+
+#: ../src/argv.cpp:35
+#| msgid "Configure the application"
+msgid "Show the application's version"
+msgstr "Mostrar la versión de la aplicación"
 
 #: ../src/callbacks.cpp:195
 msgid "translator-credits"
@@ -368,7 +375,7 @@ msgstr "_Continuar proceso"
 msgid "Continue process if stopped"
 msgstr "Continuar el proceso si está detenido"
 
-#: ../src/interface.cpp:54 ../src/procdialogs.cpp:96
+#: ../src/interface.cpp:54 ../src/procdialogs.cpp:92
 msgid "_End Process"
 msgstr "_Finalizar proceso"
 
@@ -376,7 +383,7 @@ msgstr "_Finalizar proceso"
 msgid "Force process to finish normally"
 msgstr "Forzar al proceso a finalizar normalmente"
 
-#: ../src/interface.cpp:56 ../src/procdialogs.cpp:85
+#: ../src/interface.cpp:56 ../src/procdialogs.cpp:81
 msgid "_Kill Process"
 msgstr "_Matar proceso"
 
@@ -759,9 +766,6 @@ msgid "Saves the currently viewed tab"
 msgstr "Guarda la pestaña actualmente vista"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
-#| msgid ""
-#| "0 for the System Info, 1 for the processes list, 2 for the resources and "
-#| "3 for the disks list"
 msgid "0 for the processes list, 1 for the resources and 2 for the disks list"
 msgstr ""
 "0 para la lista de procesos, 1 para los recursos y 2 para la lista de discos"
@@ -1096,13 +1100,13 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:78
+#: ../src/procdialogs.cpp:74
 #, c-format
 msgid "Kill the selected process “%s” (PID: %u)?"
 msgstr "¿Quiere matar el proceso «%s» seleccionado (PID: %u)?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:82
+#: ../src/procdialogs.cpp:78
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1111,13 +1115,13 @@ msgstr ""
 "un riesgo de seguridad. Sólo deberían matarse los procesos que no respondan."
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:89
+#: ../src/procdialogs.cpp:85
 #, c-format
 msgid "End the selected process “%s” (PID: %u)?"
 msgstr "¿Terminar el proceso «%s» seleccionado (PID: %u)?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:93
+#: ../src/procdialogs.cpp:89
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponsive processes should be ended."
@@ -1126,16 +1130,16 @@ msgstr ""
 "crear un riesgo de seguridad. Sólo deberían finalizarse los procesos que no "
 "respondan."
 
-#: ../src/procdialogs.cpp:175
+#: ../src/procdialogs.cpp:171
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Cambiar la prioridad del proceso «%s» (PID: %u)"
 
-#: ../src/procdialogs.cpp:193
+#: ../src/procdialogs.cpp:189
 msgid "Note:"
 msgstr "Nota:"
 
-#: ../src/procdialogs.cpp:194
+#: ../src/procdialogs.cpp:190
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1143,11 +1147,11 @@ msgstr ""
 "La prioridad de un proceso está dada por su valor nice. Un valor nice bajo "
 "corresponde a una prioridad más alta."
 
-#: ../src/procdialogs.cpp:366 ../src/procman-app.cpp:466
+#: ../src/procdialogs.cpp:362 ../src/procman-app.cpp:462
 msgid "Icon"
 msgstr "Icono"
 
-#: ../src/procman-app.cpp:580
+#: ../src/procman-app.cpp:576
 msgid "A simple process and system monitor."
 msgstr "Un sencillo monitor de procesos y del sistema."
 
@@ -1155,39 +1159,39 @@ msgstr "Un sencillo monitor de procesos y del sistema."
 msgid "N/A"
 msgstr "N/D"
 
-#: ../src/procproperties.cpp:129 ../src/proctable.cpp:197
+#: ../src/procproperties.cpp:129 ../src/proctable.cpp:196
 msgid "Process Name"
 msgstr "Nombre del proceso"
 
-#: ../src/procproperties.cpp:130 ../src/proctable.cpp:198
+#: ../src/procproperties.cpp:130 ../src/proctable.cpp:197
 msgid "User"
 msgstr "Usuario"
 
-#: ../src/procproperties.cpp:131 ../src/proctable.cpp:199
+#: ../src/procproperties.cpp:131 ../src/proctable.cpp:198
 msgid "Status"
 msgstr "Estado"
 
-#: ../src/procproperties.cpp:133 ../src/proctable.cpp:200
+#: ../src/procproperties.cpp:133 ../src/proctable.cpp:199
 msgid "Virtual Memory"
 msgstr "Memoria virtual"
 
-#: ../src/procproperties.cpp:134 ../src/proctable.cpp:201
+#: ../src/procproperties.cpp:134 ../src/proctable.cpp:200
 msgid "Resident Memory"
 msgstr "Memoria residente"
 
-#: ../src/procproperties.cpp:135 ../src/proctable.cpp:202
+#: ../src/procproperties.cpp:135 ../src/proctable.cpp:201
 msgid "Writable Memory"
 msgstr "Memoria escribible"
 
-#: ../src/procproperties.cpp:136 ../src/proctable.cpp:203
+#: ../src/procproperties.cpp:136 ../src/proctable.cpp:202
 msgid "Shared Memory"
 msgstr "Memoria compartida"
 
-#: ../src/procproperties.cpp:137 ../src/proctable.cpp:204
+#: ../src/procproperties.cpp:137 ../src/proctable.cpp:203
 msgid "X Server Memory"
 msgstr "Memoria del servidor X"
 
-#: ../src/procproperties.cpp:139 ../src/proctable.cpp:206
+#: ../src/procproperties.cpp:139 ../src/proctable.cpp:205
 msgid "CPU Time"
 msgstr "Tiempo de CPU"
 
@@ -1198,36 +1202,36 @@ msgid_plural "%lld seconds"
 msgstr[0] "%lld segundo"
 msgstr[1] "%lld segundos"
 
-#: ../src/procproperties.cpp:140 ../src/proctable.cpp:207
+#: ../src/procproperties.cpp:140 ../src/proctable.cpp:206
 msgid "Started"
 msgstr "Iniciado"
 
-#: ../src/procproperties.cpp:141 ../src/proctable.cpp:208
+#: ../src/procproperties.cpp:141 ../src/proctable.cpp:207
 msgid "Nice"
 msgstr "Prioridad"
 
-#: ../src/procproperties.cpp:142 ../src/proctable.cpp:222
+#: ../src/procproperties.cpp:142 ../src/proctable.cpp:221
 msgid "Priority"
 msgstr "Prioridad"
 
-#: ../src/procproperties.cpp:143 ../src/proctable.cpp:209
+#: ../src/procproperties.cpp:143 ../src/proctable.cpp:208
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:144 ../src/proctable.cpp:210
+#: ../src/procproperties.cpp:144 ../src/proctable.cpp:209
 msgid "Security Context"
 msgstr "Contexto de seguridad"
 
-#: ../src/procproperties.cpp:145 ../src/proctable.cpp:211
+#: ../src/procproperties.cpp:145 ../src/proctable.cpp:210
 msgid "Command Line"
 msgstr "Línea de comandos"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:146 ../src/proctable.cpp:214
+#: ../src/procproperties.cpp:146 ../src/proctable.cpp:213
 msgid "Waiting Channel"
 msgstr "Canal en espera"
 
-#: ../src/procproperties.cpp:147 ../src/proctable.cpp:215
+#: ../src/procproperties.cpp:147 ../src/proctable.cpp:214
 msgid "Control Group"
 msgstr "Grupo de control"
 
@@ -1240,30 +1244,30 @@ msgstr "Propiedades del proceso"
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "Propiedades del proceso «%s» (PID %u):"
 
-#: ../src/proctable.cpp:205
+#: ../src/proctable.cpp:204
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:216
+#: ../src/proctable.cpp:215
 msgid "Unit"
 msgstr "Unidad"
 
-#: ../src/proctable.cpp:217
+#: ../src/proctable.cpp:216
 msgid "Session"
 msgstr "Sesión"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:220
+#: ../src/proctable.cpp:219
 msgid "Seat"
 msgstr "Estado"
 
-#: ../src/proctable.cpp:221
+#: ../src/proctable.cpp:220
 msgid "Owner"
 msgstr "Propietario"
 
-#: ../src/proctable.cpp:1030
+#: ../src/proctable.cpp:1029
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Carga media para los últimos 1, 5 y 15 minutos: %0.2f, %0.2f, %0.2f"
@@ -1418,9 +1422,6 @@ msgstr "%s/s"
 
 #~ msgid "Quit the program"
 #~ msgstr "Sale del programa"
-
-#~ msgid "Configure the application"
-#~ msgstr "Configurar la aplicación"
 
 #~ msgid "_Contents"
 #~ msgstr "Índ_ice"
