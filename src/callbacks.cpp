@@ -401,6 +401,7 @@ cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
                 cb_timeout, app);
 
         update_sensitivity(app);
+        gtk_widget_grab_focus(app->tree);
     }
     else {
         if (app->timeout) {
