@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-02-14 22:35+0000\n"
-"PO-Revision-Date: 2013-02-12 23:36+0000\n"
+"POT-Creation-Date: 2013-04-28 19:02+0000\n"
+"PO-Revision-Date: 2013-04-23 17:52+0100\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -43,7 +43,7 @@ msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr "Monitor;Systém;Proces;Procesor;CPU;Pamäť;Sieť;História;Využitie;"
 
 # desktop entry name
-#: ../gnome-system-monitor-kde.desktop.in.in.h:1
+#: ../gnome-system-monitor-kde.desktop.in.in.h:1 ../src/procman-app.cpp:599
 msgid "GNOME System Monitor"
 msgstr "GNOME monitor systému"
 
@@ -54,8 +54,8 @@ msgstr "Zabitie procesu"
 
 # action message
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:2
-msgid "Privileges are required to kill process"
-msgstr "Na zabitie procesu sú vyžadované privilégiá"
+msgid "Privileges are required to kill other users' processes"
+msgstr "Na zabitie procesov iných používateľov sú vyžadované privilégiá"
 
 # PM: Zmena ohľaduplnosti procesu
 #  PK: ja som jednoznacne za ponechanie nice
@@ -66,8 +66,8 @@ msgstr "Zmena vlastnosti nice procesu"
 
 #  action message
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:4
-msgid "Privileges are required to renice process"
-msgstr "Na zmenenie nice sú vyžadované privilégiá"
+msgid "Privileges are required to change the priority of processes"
+msgstr "Na zmenenie priority procesov sú vyžadované privilégiá"
 
 #  GtkMenuButton GtkLabel label
 #: ../data/interface.ui.h:2
@@ -96,7 +96,7 @@ msgstr "História využitia pamäte a odkladacieho priestoru"
 
 # GtkLabel label
 #: ../data/interface.ui.h:7 ../src/interface.cpp:249
-#: ../src/procproperties.cpp:132 ../src/proctable.cpp:212
+#: ../src/procproperties.cpp:132 ../src/proctable.cpp:211
 msgid "Memory"
 msgstr "Pamäť"
 
@@ -120,9 +120,9 @@ msgstr "Prijímanie"
 msgid "Total Received"
 msgstr "Spolu prijatých"
 
-# GtkLabel label
-#: ../data/interface.ui.h:12
-msgid "Sent"
+# Pick color for "Sending"
+#: ../data/interface.ui.h:12 ../src/interface.cpp:304
+msgid "Sending"
 msgstr "Odosielanie"
 
 # GtkLabel label
@@ -277,19 +277,23 @@ msgstr ""
 "Nižšia hodnota znamená vyššiu prioritu.</i></small>"
 
 # cmd desc
-#: ../src/argv.cpp:20
+#: ../src/argv.cpp:21
 msgid "Show the Processes tab"
 msgstr "Zobrazí kartu „Procesy“"
 
 # cmd desc
-#: ../src/argv.cpp:25
+#: ../src/argv.cpp:26
 msgid "Show the Resources tab"
 msgstr "Zobrazí kartu „Zdroje“"
 
 # cmd desc
-#: ../src/argv.cpp:30
+#: ../src/argv.cpp:31
 msgid "Show the File Systems tab"
 msgstr "Zobrazí kartu „Súborové systémy“"
+
+#: ../src/argv.cpp:35
+msgid "Show the application's version"
+msgstr "Zobrazí verziu aplikácie"
 
 #: ../src/callbacks.cpp:195
 msgid "translator-credits"
@@ -437,7 +441,7 @@ msgid "Continue process if stopped"
 msgstr "Bude pokračovať v procese, ak bol zastavený"
 
 # action menu entry
-#: ../src/interface.cpp:54 ../src/procdialogs.cpp:96
+#: ../src/interface.cpp:54 ../src/procdialogs.cpp:92
 msgid "_End Process"
 msgstr "_Ukončiť proces"
 
@@ -447,7 +451,7 @@ msgid "Force process to finish normally"
 msgstr "Vynúti normálne ukončenie procesu"
 
 # action menu entry
-#: ../src/interface.cpp:56 ../src/procdialogs.cpp:85
+#: ../src/interface.cpp:56 ../src/procdialogs.cpp:81
 msgid "_Kill Process"
 msgstr "Za_biť proces"
 
@@ -624,12 +628,7 @@ msgstr "Procesor"
 msgid "CPU%d"
 msgstr "CPU č. %d"
 
-# Pick color for "Sending"
-#: ../src/interface.cpp:304
-msgid "Sending"
-msgstr "Odosielanie"
-
-#: ../src/load-graph.cpp:170
+#: ../src/load-graph.cpp:171
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
@@ -637,12 +636,12 @@ msgstr[0] "%u sekúnd"
 msgstr[1] "%u sekunda"
 msgstr[2] "%u sekundy"
 
-#: ../src/load-graph.cpp:365
+#: ../src/load-graph.cpp:366
 msgid "not available"
 msgstr "nedostupné"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:368
+#: ../src/load-graph.cpp:369
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) z %s"
@@ -912,12 +911,8 @@ msgstr "Ukladá aktuálne zobrazenú kartu"
 
 # desc
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
-msgid ""
-"0 for the System Info, 1 for the processes list, 2 for the resources and 3 "
-"for the disks list"
-msgstr ""
-"Hodnota 0 pre informácie o systéme, 1 pre zoznam procesov, 2 pre zdroje a 3 "
-"pre zoznam diskov"
+msgid "0 for the processes list, 1 for the resources and 2 for the disks list"
+msgstr "Hodnota 0 pre zoznam procesov, 1 pre zdroje a 2 pre zoznam diskov"
 
 # gsettings summary
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
@@ -1330,13 +1325,13 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:78
+#: ../src/procdialogs.cpp:74
 #, c-format
 msgid "Kill the selected process “%s” (PID: %u)?"
 msgstr "Zabiť zvolený proces „%s“ (PID: %u)?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:82
+#: ../src/procdialogs.cpp:78
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1345,13 +1340,13 @@ msgstr ""
 "bezpečnostné riziko. Len procesy, ktoré neodpovedajú, by mali byť zabité."
 
 #. xgettext: primary alert message
-#: ../src/procdialogs.cpp:89
+#: ../src/procdialogs.cpp:85
 #, c-format
 msgid "End the selected process “%s” (PID: %u)?"
 msgstr "Ukončiť zvolený proces „%s“ (PID: %u)?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:93
+#: ../src/procdialogs.cpp:89
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponsive processes should be ended."
@@ -1361,16 +1356,16 @@ msgstr ""
 "ukončené."
 
 # dialog title
-#: ../src/procdialogs.cpp:175
+#: ../src/procdialogs.cpp:171
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Zmena prioritu procesu „%s“ (PID: %u)"
 
-#: ../src/procdialogs.cpp:193
+#: ../src/procdialogs.cpp:189
 msgid "Note:"
 msgstr "Poznámka:"
 
-#: ../src/procdialogs.cpp:194
+#: ../src/procdialogs.cpp:190
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1379,12 +1374,12 @@ msgstr ""
 "prioritu."
 
 # column title
-#: ../src/procdialogs.cpp:366 ../src/procman-app.cpp:462
+#: ../src/procdialogs.cpp:362 ../src/procman-app.cpp:462
 msgid "Icon"
 msgstr "Ikona"
 
 # cmd context
-#: ../src/procman-app.cpp:575
+#: ../src/procman-app.cpp:576
 msgid "A simple process and system monitor."
 msgstr "Jednoduchý monitor procesov a systému."
 
@@ -1393,47 +1388,47 @@ msgid "N/A"
 msgstr "-"
 
 # column title
-#: ../src/procproperties.cpp:129 ../src/proctable.cpp:197
+#: ../src/procproperties.cpp:129 ../src/proctable.cpp:196
 msgid "Process Name"
 msgstr "Názov procesu"
 
 # column title
-#: ../src/procproperties.cpp:130 ../src/proctable.cpp:198
+#: ../src/procproperties.cpp:130 ../src/proctable.cpp:197
 msgid "User"
 msgstr "Používateľ"
 
 # column title
-#: ../src/procproperties.cpp:131 ../src/proctable.cpp:199
+#: ../src/procproperties.cpp:131 ../src/proctable.cpp:198
 msgid "Status"
 msgstr "Stav"
 
 # column title
-#: ../src/procproperties.cpp:133 ../src/proctable.cpp:200
+#: ../src/procproperties.cpp:133 ../src/proctable.cpp:199
 msgid "Virtual Memory"
 msgstr "Virtuálna pamäť"
 
 # column title
-#: ../src/procproperties.cpp:134 ../src/proctable.cpp:201
+#: ../src/procproperties.cpp:134 ../src/proctable.cpp:200
 msgid "Resident Memory"
 msgstr "Rezidentná pamäť"
 
 # column title
-#: ../src/procproperties.cpp:135 ../src/proctable.cpp:202
+#: ../src/procproperties.cpp:135 ../src/proctable.cpp:201
 msgid "Writable Memory"
 msgstr "Zapisovateľná pamäť"
 
 # column title
-#: ../src/procproperties.cpp:136 ../src/proctable.cpp:203
+#: ../src/procproperties.cpp:136 ../src/proctable.cpp:202
 msgid "Shared Memory"
 msgstr "Zdieľaná pamäť"
 
 # column title
-#: ../src/procproperties.cpp:137 ../src/proctable.cpp:204
+#: ../src/procproperties.cpp:137 ../src/proctable.cpp:203
 msgid "X Server Memory"
 msgstr "Pamäť X servera"
 
 # column title
-#: ../src/procproperties.cpp:139 ../src/proctable.cpp:206
+#: ../src/procproperties.cpp:139 ../src/proctable.cpp:205
 msgid "CPU Time"
 msgstr "Čas procesora"
 
@@ -1446,43 +1441,43 @@ msgstr[1] "%lld sekunda"
 msgstr[2] "%lld sekundy"
 
 # column title
-#: ../src/procproperties.cpp:140 ../src/proctable.cpp:207
+#: ../src/procproperties.cpp:140 ../src/proctable.cpp:206
 msgid "Started"
 msgstr "Čas štartu"
 
 # column title
-#: ../src/procproperties.cpp:141 ../src/proctable.cpp:208
+#: ../src/procproperties.cpp:141 ../src/proctable.cpp:207
 msgid "Nice"
 msgstr "Nice"
 
 # column title
-#: ../src/procproperties.cpp:142 ../src/proctable.cpp:222
+#: ../src/procproperties.cpp:142 ../src/proctable.cpp:221
 msgid "Priority"
 msgstr "Priorita"
 
 # column title
-#: ../src/procproperties.cpp:143 ../src/proctable.cpp:209
+#: ../src/procproperties.cpp:143 ../src/proctable.cpp:208
 msgid "ID"
 msgstr "Identifikátor"
 
 # column title
-#: ../src/procproperties.cpp:144 ../src/proctable.cpp:210
+#: ../src/procproperties.cpp:144 ../src/proctable.cpp:209
 msgid "Security Context"
 msgstr "Bezpečnostný kontext"
 
 # column title
-#: ../src/procproperties.cpp:145 ../src/proctable.cpp:211
+#: ../src/procproperties.cpp:145 ../src/proctable.cpp:210
 msgid "Command Line"
 msgstr "Príkazový riadok"
 
 # column title
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:146 ../src/proctable.cpp:214
+#: ../src/procproperties.cpp:146 ../src/proctable.cpp:213
 msgid "Waiting Channel"
 msgstr "Čakací kanál"
 
 # column title
-#: ../src/procproperties.cpp:147 ../src/proctable.cpp:215
+#: ../src/procproperties.cpp:147 ../src/proctable.cpp:214
 msgid "Control Group"
 msgstr "Kontrolná skupina"
 
@@ -1498,19 +1493,19 @@ msgid "Properties of process \"%s\" (PID %u):"
 msgstr "Vlastnosti procesu „%s“ (PID %u):"
 
 # column title
-#: ../src/proctable.cpp:205
+#: ../src/proctable.cpp:204
 #, no-c-format
 msgid "% CPU"
 msgstr "% procesora"
 
 # PK: nie som si isty
 # column title
-#: ../src/proctable.cpp:216
+#: ../src/proctable.cpp:215
 msgid "Unit"
 msgstr "Jednotka"
 
 # column title
-#: ../src/proctable.cpp:217
+#: ../src/proctable.cpp:216
 msgid "Session"
 msgstr "Relácia"
 
@@ -1518,17 +1513,17 @@ msgstr "Relácia"
 # column title
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:220
+#: ../src/proctable.cpp:219
 msgid "Seat"
 msgstr "Sedenie"
 
 # column title
-#: ../src/proctable.cpp:221
+#: ../src/proctable.cpp:220
 msgid "Owner"
 msgstr "Vlastník"
 
 # label
-#: ../src/proctable.cpp:1030
+#: ../src/proctable.cpp:1032
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Priemery záťaže pre posledných 1, 5, 15 minút: %0.2f, %0.2f, %0.2f"
@@ -1668,3 +1663,7 @@ msgstr "Veľmi nízka priorita"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+# GtkLabel label
+#~ msgid "Sent"
+#~ msgstr "Odosielanie"
