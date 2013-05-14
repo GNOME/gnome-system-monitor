@@ -201,10 +201,6 @@ public:
     guint             timeout;
     guint             disk_timeout;
 
-    GtkTreePath      *top_of_tree;
-    gdouble          last_vscroll_max;
-    gdouble          last_vscroll_value;
-
     PrettyTable      *pretty_table;
 
     GSettings        *settings;
