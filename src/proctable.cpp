@@ -410,6 +410,9 @@ proctable_new (ProcmanApp * const app)
         }
     }
     app->tree = proctree;
+    app->top_of_tree = NULL;
+    app->last_vscroll_max = 0;
+    app->last_vscroll_value = 0;
 
     procman_get_tree_state (app->settings, proctree, "proctree");
     /* Override column settings by hiding this column if it's meaningless: */
@@ -979,30 +982,31 @@ proctable_update_list (ProcmanApp *app)
     
     // juggling with tree scroll position to fix https://bugzilla.gnome.org/show_bug.cgi?id=92724
     GtkTreePath* current_top;
-    gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(app->tree), 0,0, &current_top, NULL, NULL, NULL);
-    gdouble current_max = gtk_adjustment_get_upper(vadjustment);
-    gdouble current_value = gtk_adjustment_get_value(vadjustment);
-    if (app->top_of_tree) {
-        // if the visible cell from the top of the tree is still the same, as last time 
-        if (gtk_tree_path_compare(app->top_of_tree, current_top) == 0) 
-        {   
-            //but something from the scroll parameters has changed compared to the last values
-            if (app->last_vscroll_value==0 && current_value!=app->last_vscroll_value) 
+    if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(app->tree), 0,0, &current_top, NULL, NULL, NULL)) {
+        gdouble current_max = gtk_adjustment_get_upper(vadjustment);
+        gdouble current_value = gtk_adjustment_get_value(vadjustment);
+        if (app->top_of_tree) {
+            // if the visible cell from the top of the tree is still the same, as last time 
+            if (gtk_tree_path_compare(app->top_of_tree, current_top) == 0) 
             {
-                // the tree was scrolled to top, and something has been added above the current top row
-                gtk_tree_view_scroll_to_point(GTK_TREE_VIEW(app->tree), -1, 0);
-            } 
-            else if (current_max > app->last_vscroll_max && current_value == app->last_vscroll_value)
-            {
-                // the tree was scrolled to bottom, something has been added below the current bottom row
-                gtk_tree_view_scroll_to_point(GTK_TREE_VIEW(app->tree), -1, current_max);
+                //but something from the scroll parameters has changed compared to the last values
+                if (app->last_vscroll_value==0 && current_value!=app->last_vscroll_value) 
+                {
+                    // the tree was scrolled to top, and something has been added above the current top row
+                    gtk_tree_view_scroll_to_point(GTK_TREE_VIEW(app->tree), -1, 0);
+                }
+                else if (current_max > app->last_vscroll_max && current_value == app->last_vscroll_value)
+                {
+                    // the tree was scrolled to bottom, something has been added below the current bottom row
+                    gtk_tree_view_scroll_to_point(GTK_TREE_VIEW(app->tree), -1, current_max);
+                }
             }
+            gtk_tree_path_free(app->top_of_tree);
         }
-        gtk_tree_path_free(app->top_of_tree);
+        app->top_of_tree = current_top;
+        app->last_vscroll_value = current_value;
+        app->last_vscroll_max = current_max;
     }
-    app->top_of_tree = current_top;
-    app->last_vscroll_value = current_value;
-    app->last_vscroll_max = current_max;
 
     g_free (pid_list);
 
