@@ -410,6 +410,7 @@ proctable_new (ProcmanApp * const app)
         }
     }
     app->tree = proctree;
+    app->top_of_tree = NULL;
     app->last_vscroll_max = 0;
     app->last_vscroll_value = 0;
 
