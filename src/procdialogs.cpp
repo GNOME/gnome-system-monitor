@@ -105,7 +105,7 @@ procdialog_create_kill_dialog (ProcmanApp *app, int signal)
                                               secondary);
 
     gtk_dialog_add_buttons (GTK_DIALOG (kill_alert_dialog),
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
                             button_text, GTK_RESPONSE_OK,
                             NULL);
 

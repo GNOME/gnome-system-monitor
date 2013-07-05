@@ -48,55 +48,6 @@ typedef struct _proc_arg {
     gchar *val;
 } proc_arg;
 
-static void
-get_process_memory_writable (ProcInfo *info)
-{
-    glibtop_proc_map buf;
-    glibtop_map_entry *maps;
-
-    maps = glibtop_get_proc_map(&buf, info->pid);
-
-    gulong memwritable = 0;
-    const unsigned number = buf.number;
-
-    for (unsigned i = 0; i < number; ++i) {
-#ifdef __linux__
-        memwritable += maps[i].private_dirty;
-#else
-        if (maps[i].perm & GLIBTOP_MAP_PERM_WRITE)
-            memwritable += maps[i].size;
-#endif
-    }
-
-    info->memwritable = memwritable;
-
-    g_free(maps);
-}
-
-static void
-get_process_memory_info (ProcInfo *info)
-{
-    glibtop_proc_mem procmem;
-    WnckResourceUsage xresources;
-
-    wnck_pid_read_resource_usage (gdk_screen_get_display (gdk_screen_get_default ()),
-                                  info->pid,
-                                  &xresources);
-
-    glibtop_get_proc_mem(&procmem, info->pid);
-
-    info->vmsize	= procmem.vsize;
-    info->memres	= procmem.resident;
-    info->memshared	= procmem.share;
-
-    info->memxserver = xresources.total_bytes_estimate;
-
-    get_process_memory_writable(info);
-
-    // fake the smart memory column if writable is not available
-    info->mem = info->memxserver + (info->memwritable ? info->memwritable : info->memres);
-}
-
 static gchar*
 format_memsize(guint64 size)
 {
@@ -257,7 +208,7 @@ create_single_procproperties_dialog (GtkTreeModel *model, GtkTreePath *path,
 
     procpropdialog = gtk_dialog_new_with_buttons (_("Process Properties"), NULL,
                                                   GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                  GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                                                  _("_Close"), GTK_RESPONSE_CLOSE,
                                                   NULL);
     gtk_window_set_resizable (GTK_WINDOW (procpropdialog), TRUE);
     gtk_window_set_default_size (GTK_WINDOW (procpropdialog), 575, 400);

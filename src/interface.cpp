@@ -58,7 +58,7 @@ static const GtkActionEntry menu_entries[] =
     { "ChangePriority", NULL, N_("_Change Priority"), NULL,
       N_("Change the order of priority of process"), NULL },
 
-    { "Refresh", GTK_STOCK_REFRESH, N_("_Refresh"), "<control>R",
+    { "Refresh", NULL, N_("_Refresh"), "<control>R",
       N_("Refresh the process list"), G_CALLBACK(cb_user_refresh) },
 
     { "MemoryMaps", NULL, N_("_Memory Maps"), "<control>M",
