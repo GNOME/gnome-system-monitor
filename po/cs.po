@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-05-14 20:43+0000\n"
-"PO-Revision-Date: 2013-05-29 01:42+0200\n"
+"POT-Creation-Date: 2013-07-06 00:01+0000\n"
+"PO-Revision-Date: 2013-07-06 13:16+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -72,7 +72,7 @@ msgstr "Zobrazit"
 msgid "End _Process"
 msgstr "U_končit proces"
 
-#: ../data/interface.ui.h:4 ../data/preferences.ui.h:9
+#: ../data/interface.ui.h:4 ../data/preferences.ui.h:11
 msgid "Processes"
 msgstr "Procesy"
 
@@ -85,7 +85,7 @@ msgid "Memory and Swap History"
 msgstr "Historie použití paměti a odkládacího prostoru"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:249
-#: ../src/procproperties.cpp:132 ../src/proctable.cpp:211
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:211
 msgid "Memory"
 msgstr "Paměť"
 
@@ -113,11 +113,11 @@ msgstr "Odesílání"
 msgid "Total Sent"
 msgstr "Celkem odesláno"
 
-#: ../data/interface.ui.h:14 ../data/preferences.ui.h:13
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:15
 msgid "Resources"
 msgstr "Zdroje"
 
-#: ../data/interface.ui.h:15 ../data/preferences.ui.h:16
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:18
 msgid "File Systems"
 msgstr "Souborové systémy"
 
@@ -131,16 +131,25 @@ msgid "_Name contains:"
 msgstr "_Název obsahuje:"
 
 #: ../data/lsof.ui.h:3
+msgid "_Find"
+msgstr "_Hledat"
+
+#: ../data/lsof.ui.h:4
 msgid "Case insensitive matching"
 msgstr "Shoda s rozlišením velikosti písmen"
 
-#: ../data/lsof.ui.h:4
+#: ../data/lsof.ui.h:5
 msgid "C_lear"
 msgstr "V_ymazat"
 
-#: ../data/lsof.ui.h:5
+#: ../data/lsof.ui.h:6
 msgid "S_earch results:"
 msgstr "Výsledky hl_edání:"
+
+#: ../data/lsof.ui.h:7 ../data/openfiles.ui.h:2 ../data/preferences.ui.h:3
+#: ../src/memmaps.cpp:469 ../src/procproperties.cpp:211
+msgid "_Close"
+msgstr "_Zavřít"
 
 #: ../data/menus.ui.h:1
 msgctxt "Menu item to Open 'Search for Open Files' dialog"
@@ -172,62 +181,70 @@ msgid "System Monitor Preferences"
 msgstr "Předvolby sledování systému"
 
 #: ../data/preferences.ui.h:2
+msgid "_Help"
+msgstr "_Nápověda"
+
+#: ../data/preferences.ui.h:4
 msgid "Behavior"
 msgstr "Chování"
 
-#: ../data/preferences.ui.h:3
+#: ../data/preferences.ui.h:5
 msgid "_Update interval in seconds:"
 msgstr "Interval akt_ualizace v sekundách:"
 
-#: ../data/preferences.ui.h:4
+#: ../data/preferences.ui.h:6
 msgid "Enable _smooth refresh"
 msgstr "Povolit plynulé občer_stvování"
 
-#: ../data/preferences.ui.h:5
+#: ../data/preferences.ui.h:7
 msgid "Alert before ending or _killing processes"
 msgstr "Varovat před u_končením nebo zabitím procesů"
 
-#: ../data/preferences.ui.h:6
+#: ../data/preferences.ui.h:8
 msgid "_Divide CPU usage by CPU count"
 msgstr "_Dělit vytížení procesoru počtem procesorů"
 
-#: ../data/preferences.ui.h:7
+#: ../data/preferences.ui.h:9
 msgid "Information Fields"
 msgstr "Informační pole"
 
-#: ../data/preferences.ui.h:8
+#: ../data/preferences.ui.h:10
 msgid "Process i_nformation shown in list:"
 msgstr "I_nformace o procesech zobrazované v seznamu:"
 
-#: ../data/preferences.ui.h:10
+#: ../data/preferences.ui.h:12
 msgid "Graphs"
 msgstr "Grafy"
 
-#: ../data/preferences.ui.h:11
+#: ../data/preferences.ui.h:13
 msgid "_Show network speed in bits"
 msgstr "Zobrazovat rychlo_st sítě v bitech"
 
-#: ../data/preferences.ui.h:12
+#: ../data/preferences.ui.h:14
 msgid "_Draw CPU chart as stacked area chart"
 msgstr "_Vykreslovat graf CPU jako skládaný plošný graf"
 
-#: ../data/preferences.ui.h:14
+#: ../data/preferences.ui.h:16
 msgid "Show _all file systems"
 msgstr "Zobr_azovat všechny souborové systémy"
 
-#: ../data/preferences.ui.h:15
+#: ../data/preferences.ui.h:17
 msgid "File system i_nformation shown in list:"
 msgstr "I_nformace o souborových systémech zobrazené v seznamu:"
 
-#: ../data/renice.ui.h:1
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:108
+msgid "_Cancel"
+msgstr "_Zrušit"
+
+#: ../data/renice.ui.h:2
 msgid "Change _Priority"
 msgstr "Změnit _prioritu"
 
-#: ../data/renice.ui.h:2
+#: ../data/renice.ui.h:3
 msgid "_Nice value:"
 msgstr "Hodnota _nice:"
 
-#: ../data/renice.ui.h:3
+#: ../data/renice.ui.h:4
 msgid ""
 "<small><i><b>Note:</b> The priority of a process is given by its nice value. "
 "A lower nice value corresponds to a higher priority.</i></small>"
@@ -269,7 +286,7 @@ msgstr "Zařízení"
 msgid "Directory"
 msgstr "Složka"
 
-#: ../src/disks.cpp:306 ../src/gsm_color_button.c:223 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:306 ../src/gsm_color_button.c:223 ../src/openfiles.cpp:252
 msgid "Type"
 msgstr "Typ"
 
@@ -518,7 +535,7 @@ msgstr "Nastavit prioritu procesu manuálně"
 msgid "Pick a Color for '%s'"
 msgstr "Vybrat barvu pro „%s“"
 
-#: ../src/interface.cpp:214 ../src/procproperties.cpp:138
+#: ../src/interface.cpp:214 ../src/procproperties.cpp:90
 msgid "CPU"
 msgstr "CPU"
 
@@ -654,15 +671,15 @@ msgstr "neznámý typ"
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.cpp:250
+#: ../src/openfiles.cpp:251
 msgid "FD"
 msgstr "FD"
 
-#: ../src/openfiles.cpp:252
+#: ../src/openfiles.cpp:253
 msgid "Object"
 msgstr "Objekt"
 
-#: ../src/openfiles.cpp:346
+#: ../src/openfiles.cpp:347
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_Soubory otevřené procesem „%s“ (PID %u):"
@@ -1150,47 +1167,47 @@ msgstr "Ikona"
 msgid "A simple process and system monitor."
 msgstr "Jednoduché sledování procesů a systému."
 
-#: ../src/procproperties.cpp:104 ../src/util.cpp:434
+#: ../src/procproperties.cpp:55 ../src/util.cpp:434
 msgid "N/A"
 msgstr "---"
 
-#: ../src/procproperties.cpp:129 ../src/proctable.cpp:196
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:196
 msgid "Process Name"
 msgstr "Název procesu"
 
-#: ../src/procproperties.cpp:130 ../src/proctable.cpp:197
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:197
 msgid "User"
 msgstr "Uživatel"
 
-#: ../src/procproperties.cpp:131 ../src/proctable.cpp:198
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:198
 msgid "Status"
 msgstr "Stav"
 
-#: ../src/procproperties.cpp:133 ../src/proctable.cpp:199
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:199
 msgid "Virtual Memory"
 msgstr "Virtuální paměť"
 
-#: ../src/procproperties.cpp:134 ../src/proctable.cpp:200
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:200
 msgid "Resident Memory"
 msgstr "Rezidentní paměť"
 
-#: ../src/procproperties.cpp:135 ../src/proctable.cpp:201
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:201
 msgid "Writable Memory"
 msgstr "Zapisovatelná paměť"
 
-#: ../src/procproperties.cpp:136 ../src/proctable.cpp:202
+#: ../src/procproperties.cpp:88 ../src/proctable.cpp:202
 msgid "Shared Memory"
 msgstr "Sdílená paměť"
 
-#: ../src/procproperties.cpp:137 ../src/proctable.cpp:203
+#: ../src/procproperties.cpp:89 ../src/proctable.cpp:203
 msgid "X Server Memory"
 msgstr "Paměť serveru X"
 
-#: ../src/procproperties.cpp:139 ../src/proctable.cpp:205
+#: ../src/procproperties.cpp:91 ../src/proctable.cpp:205
 msgid "CPU Time"
 msgstr "Čas CPU"
 
-#: ../src/procproperties.cpp:139
+#: ../src/procproperties.cpp:91
 #, c-format
 msgid "%lld second"
 msgid_plural "%lld seconds"
@@ -1198,44 +1215,44 @@ msgstr[0] "%lld sekunda"
 msgstr[1] "%lld sekundy"
 msgstr[2] "%lld sekund"
 
-#: ../src/procproperties.cpp:140 ../src/proctable.cpp:206
+#: ../src/procproperties.cpp:92 ../src/proctable.cpp:206
 msgid "Started"
 msgstr "Spuštěn"
 
-#: ../src/procproperties.cpp:141 ../src/proctable.cpp:207
+#: ../src/procproperties.cpp:93 ../src/proctable.cpp:207
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/procproperties.cpp:142 ../src/proctable.cpp:221
+#: ../src/procproperties.cpp:94 ../src/proctable.cpp:221
 msgid "Priority"
 msgstr "Priorita"
 
-#: ../src/procproperties.cpp:143 ../src/proctable.cpp:208
+#: ../src/procproperties.cpp:95 ../src/proctable.cpp:208
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:144 ../src/proctable.cpp:209
+#: ../src/procproperties.cpp:96 ../src/proctable.cpp:209
 msgid "Security Context"
 msgstr "Kontext zabezpečení"
 
-#: ../src/procproperties.cpp:145 ../src/proctable.cpp:210
+#: ../src/procproperties.cpp:97 ../src/proctable.cpp:210
 msgid "Command Line"
 msgstr "Příkazový řádek"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:146 ../src/proctable.cpp:213
+#: ../src/procproperties.cpp:98 ../src/proctable.cpp:213
 msgid "Waiting Channel"
 msgstr "Kanál čekání"
 
-#: ../src/procproperties.cpp:147 ../src/proctable.cpp:214
+#: ../src/procproperties.cpp:99 ../src/proctable.cpp:214
 msgid "Control Group"
 msgstr "Skupina vlastníků"
 
-#: ../src/procproperties.cpp:259
+#: ../src/procproperties.cpp:209
 msgid "Process Properties"
 msgstr "Vlastnosti procesu"
 
-#: ../src/procproperties.cpp:279
+#: ../src/procproperties.cpp:229
 #, c-format
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "Vlastnosti procesu „%s“ (PID %u):"
