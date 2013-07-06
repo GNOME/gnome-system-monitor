@@ -466,7 +466,7 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 
     memmapsdialog = gtk_dialog_new_with_buttons (_("Memory Maps"), GTK_WINDOW (app->main_window),
                                                  GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                 GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                                                 _("_Close"), GTK_RESPONSE_CLOSE,
                                                  NULL);
     gtk_window_set_resizable(GTK_WINDOW(memmapsdialog), TRUE);
     gtk_window_set_default_size(GTK_WINDOW(memmapsdialog), 620, 400);
