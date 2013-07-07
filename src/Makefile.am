@@ -7,7 +7,25 @@ INCLUDES = \
 	@PROCMAN_CFLAGS@ \
 	@SYSTEMD_CFLAGS@
 
-bin_PROGRAMS = gnome-system-monitor
+bin_PROGRAMS = gnome-system-monitor nextmon
+
+nextmon_c_files = \
+    sysmon.c \
+    system-monitor.c
+
+nextmon_h_files = \
+    sysmon.h
+
+nextmon_SOURCES = \
+    $(nextmon_h_files) \
+    $(nextmon_c_files)
+
+nextmon_LDADD = @PROCMAN_LIBS@ $(top_builddir)/uber/libuber-1.0.la -ldl
+
+nextmon_CPPFLAGS = \
+	-I$(top_srcdir)	\
+	-I$(top_builddir)/uber \
+	-DGSM_DATA_DIR=\""$(pkgdatadir)"\"
 
 gnome_system_monitor_cpp_files = \
 	argv.cpp \

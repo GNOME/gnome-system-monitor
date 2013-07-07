@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
-SUBDIRS = pixmaps po scripts src help
+SUBDIRS = pixmaps po uber scripts src help
 
 uidir = $(pkgdatadir)
 ui_DATA = data/preferences.ui \
