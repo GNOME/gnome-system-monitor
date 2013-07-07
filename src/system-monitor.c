@@ -76,10 +76,6 @@ main (gint   argc,   /* IN */
 	smon_next_cpu_info();
 	smon_next_cpu_freq_info();
 	/*
-	 * Install event hook to track how many X events we are doing.
-	 */
-	gdk_event_handler_set(smon_gdk_event_hook, NULL, NULL);
-	/*
 	 * Create window and graphs.
 	 */
 	window = uber_window_new();

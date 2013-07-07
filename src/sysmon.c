@@ -6,7 +6,6 @@
 
 #include "sysmon.h"
 
-UIInfo       ui_info          = { 0 };
 CpuInfo      cpu_info         = { 0 };
 NetInfo      net_info         = { 0 };
 
@@ -20,36 +19,6 @@ smon_cpu_has_freq_scaling (gint cpu)
 	ret = g_file_test(path, G_FILE_TEST_IS_DIR);
 	g_free(path);
 	return ret;
-}
-
-void
-smon_gdk_event_hook (GdkEvent *event, /* IN */
-                gpointer  data)  /* IN */
-{
-	ui_info.gdk_event_count++;
-	gtk_main_do_event(event);
-}
-
-gdouble
-smon_get_xevent_info (UberLineGraph *graph,     /* IN */
-                 guint          line,      /* IN */
-                 gpointer       user_data) /* IN */
-{
-	gdouble value = UBER_LINE_GRAPH_NO_VALUE;
-
-	switch (line) {
-	case 1:
-		value = ui_info.gdk_event_count;
-		ui_info.gdk_event_count = 0;
-		break;
-	case 2:
-		value = ui_info.x_event_count;
-		ui_info.x_event_count = 0;
-		break;
-	default:
-		g_assert_not_reached();
-	}
-	return value;
 }
 
 gdouble
@@ -96,30 +65,6 @@ smon_get_net_info (UberLineGraph *graph,     /* IN */
 		g_assert_not_reached();
 	}
 	return value;
-}
-
-int
-XNextEvent (Display *display,      /* IN */
-            XEvent  *event_return) /* OUT */
-{
-	static gsize initialized = FALSE;
-	static int (*Real_XNextEvent) (Display*disp, XEvent*evt);
-	gpointer lib;
-	int ret;
-	
-	if (G_UNLIKELY(g_once_init_enter(&initialized))) {
-		if (!(lib = dlopen("libX11.so.6", RTLD_LAZY))) {
-			g_error("Could not load libX11.so.6");
-		}
-		if (!(Real_XNextEvent = dlsym(lib, "XNextEvent"))) {
-			g_error("Could not find XNextEvent in libX11.so.6");
-		}
-		g_once_init_leave(&initialized, TRUE);
-	}
-
-	ret = Real_XNextEvent(display, event_return);
-	ui_info.x_event_count++;
-	return ret;
 }
 
 void

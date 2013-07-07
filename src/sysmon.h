@@ -26,19 +26,10 @@ typedef struct
 	gdouble last_total_out;
 } NetInfo;
 
-typedef struct
-{
-	gulong gdk_event_count;
-	gulong x_event_count;
-} UIInfo;
-
-extern UIInfo       ui_info;
 extern CpuInfo      cpu_info;
 extern NetInfo      net_info;
 
 gboolean smon_cpu_has_freq_scaling (gint cpu);
-void smon_gdk_event_hook (GdkEvent *event, gpointer  data);
-gdouble smon_get_xevent_info (UberLineGraph *graph, guint line, gpointer user_data);
 
 gdouble
 smon_get_cpu_info (UberLineGraph *graph,     /* IN */
