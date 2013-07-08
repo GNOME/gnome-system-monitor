@@ -33,18 +33,16 @@ smon_get_cpu_info (UberLineGraph *graph,     /* IN */
 	g_assert_cmpint(line, >, 0);
 	g_assert_cmpint(line, <=, cpu_info.len * 2);
 
-	if ((line % 2) == 0) {
-		value = cpu_info.freq[((line - 1) / 2)];
-	} else {
+	if ((line % 2) != 0) {
 		i = (line - 1) / 2;
-		value = cpu_info.total[i];
+		value = cpu_info.total[i] * cpu_info.freq[i] / 100.0;
 		/*
 		 * Update label text.
 		 */
 		text = g_strdup_printf("CPU%d  %0.1f %%", i + 1, value);
 		uber_label_set_text(UBER_LABEL(cpu_info.labels[i]), text);
 		g_free(text);
-	}
+	} // else value = cpu_info.freq[((line - 1) / 2)];
 	return value;
 }
 
