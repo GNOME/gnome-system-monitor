@@ -23,9 +23,6 @@
 #include <sys/sysinfo.h>
 #include <stdlib.h>
 
-#include <gdk/gdkx.h>
-#include <gdk/gdkkeysyms.h>
-
 #include "uber.h"
 #include "sysmon.h"
 
