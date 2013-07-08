@@ -30,7 +30,7 @@
  * Section overview.
  */
 
-G_DEFINE_TYPE(UberWindow, uber_window, GTK_TYPE_WINDOW)
+G_DEFINE_TYPE(UberWindow, uber_window, GTK_TYPE_APPLICATION_WINDOW)
 
 struct _UberWindowPrivate
 {
@@ -319,7 +319,7 @@ uber_window_init (UberWindow *window) /* IN */
 	 */
 	priv->notebook = gtk_notebook_new();
 	gtk_notebook_set_show_border(GTK_NOTEBOOK(priv->notebook), FALSE);
-	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(priv->notebook), FALSE);
+	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(priv->notebook), TRUE);
 	gtk_container_add(GTK_CONTAINER(window), priv->notebook);
 	gtk_widget_show(priv->notebook);
 	/*
@@ -328,6 +328,6 @@ uber_window_init (UberWindow *window) /* IN */
 	priv->table = gtk_grid_new();
     gtk_grid_set_row_homogeneous(GTK_GRID(priv->table), TRUE);
     gtk_grid_set_column_homogeneous(GTK_GRID(priv->table), TRUE);
-	gtk_notebook_append_page(GTK_NOTEBOOK(priv->notebook), priv->table, NULL);
+	gtk_notebook_append_page(GTK_NOTEBOOK(priv->notebook), priv->table, gtk_label_new("Resources"));
 	gtk_widget_show(priv->table);
 }

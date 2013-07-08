@@ -39,7 +39,7 @@ typedef struct _UberWindowPrivate UberWindowPrivate;
 
 struct _UberWindow
 {
-	GtkWindow parent;
+	GtkApplicationWindow parent;
 
 	/*< private >*/
 	UberWindowPrivate *priv;
@@ -47,7 +47,7 @@ struct _UberWindow
 
 struct _UberWindowClass
 {
-	GtkWindowClass parent_class;
+	GtkApplicationWindowClass parent_class;
 };
 
 GType      uber_window_get_type    (void) G_GNUC_CONST;
