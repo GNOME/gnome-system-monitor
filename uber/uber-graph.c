@@ -2145,7 +2145,7 @@ uber_graph_init (UberGraph *graph) /* IN */
 	 * Prepare default values.
 	 */
 	priv->tick_len = 10;
-	priv->fps = 20;
+	priv->fps = 35;
 	priv->fps_real = 1000. / priv->fps;
 	priv->dps = 1.;
 	priv->x_slots = 60;
