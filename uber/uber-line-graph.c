@@ -504,7 +504,6 @@ uber_line_graph_render_line (UberLineGraph *graph, /* IN */
 			 * Just move to the right position on first entry.
 			 */
 			cairo_move_to(cr, x, y);
-			goto next;
 		} else {
 			/*
 			 * Draw curve to data point using the last X/Y positions as
@@ -516,7 +515,6 @@ uber_line_graph_render_line (UberLineGraph *graph, /* IN */
 			               last_x - (each / 2.),
 			               y, x, y);
 		}
-	  next:
 		last_y = y;
 		last_x = x;
 	}

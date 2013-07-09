@@ -70,16 +70,12 @@ void
 uber_window_show_labels (UberWindow *window, /* IN */
                          UberGraph  *graph)  /* IN */
 {
-	UberWindowPrivate *priv;
 	GtkWidget *labels;
 	GtkWidget *align;
 	GList *list;
-	gboolean show;
 
-	g_return_if_fail(UBER_IS_WINDOW(window));
 	g_return_if_fail(UBER_IS_GRAPH(graph));
 
-	priv = window->priv;
 	/*
 	 * Get the widgets labels.
 	 */
@@ -87,7 +83,6 @@ uber_window_show_labels (UberWindow *window, /* IN */
 	/*
 	 * Show/hide ticks and labels.
 	 */
-	show = !!labels;
 	if (labels) {
 		align = gtk_bin_get_child(GTK_BIN(labels));
 		list = gtk_container_get_children(GTK_CONTAINER(align));
@@ -95,31 +90,8 @@ uber_window_show_labels (UberWindow *window, /* IN */
 			gtk_widget_show(labels);
 		} else {
 			gtk_widget_hide(labels);
-			show = FALSE;
 		}
 		g_list_free(list);
-	}
-	if (graph == (gpointer)g_list_last(priv->graphs)) {
-		show = TRUE;
-	}
-	uber_graph_set_show_xlabels(graph, show);
-	/*
-	 * Hide labels/xlabels for other graphs.
-	 */
-	for (list = priv->graphs; list && list->next; list = list->next) {
-		if (list->data != graph) {
-			uber_graph_set_show_xlabels(list->data, FALSE);
-			labels = uber_graph_get_labels(list->data);
-			if (labels) {
-				gtk_widget_hide(labels);
-			}
-		}
-	}
-	/*
-	 * Ensure the last graph always has labels.
-	 */
-	if (list) {
-		uber_graph_set_show_xlabels(UBER_GRAPH(list->data), TRUE);
 	}
 }
 
