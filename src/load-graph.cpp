@@ -216,6 +216,20 @@ load_graph_configure (GtkWidget *widget,
 }
 
 static gboolean
+load_graph_state_changed (GtkWidget *widget,
+                      GtkStateFlags *flags,
+                      gpointer data_ptr)
+{
+    LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
+
+    graph->clear_background();
+
+    load_graph_queue_draw (graph);
+
+    return TRUE;
+}
+
+static gboolean
 load_graph_draw (GtkWidget *widget,
                  cairo_t * context,
                  gpointer data_ptr)
@@ -782,6 +796,8 @@ LoadGraph::LoadGraph(guint type)
                       G_CALLBACK (load_graph_configure), graph);
     g_signal_connect (G_OBJECT(disp), "destroy",
                       G_CALLBACK (load_graph_destroy), graph);
+    g_signal_connect (G_OBJECT(disp), "state-flags-changed",
+                      G_CALLBACK (load_graph_state_changed), graph);
 
     gtk_widget_set_events (disp, GDK_EXPOSURE_MASK);
 
