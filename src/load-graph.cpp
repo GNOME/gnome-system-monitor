@@ -100,7 +100,7 @@ void draw_background(LoadGraph *graph) {
     cairo_paint (cr);
 
     layout = pango_cairo_create_layout (cr);
-    font_desc = pango_font_description_copy (gtk_style_context_get_font (context, GTK_STATE_FLAG_NORMAL));
+    gtk_style_context_get (context, GTK_STATE_FLAG_NORMAL, GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
     pango_font_description_set_size (font_desc, 0.8 * graph->fontsize * PANGO_SCALE);
     pango_layout_set_font_description (layout, font_desc);
     pango_font_description_free (font_desc);
