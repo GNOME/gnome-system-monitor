@@ -51,7 +51,6 @@ gint
 main (gint   argc,   /* IN */
       gchar *argv[]) /* IN */
 {
-	gdouble dashes[] = { 1.0, 4.0 };
 	UberRange cpu_range = { 0., 100., 100. };
 	UberRange net_range = { 0., 512., 512. };
 	GtkWidget *window;
@@ -60,18 +59,21 @@ main (gint   argc,   /* IN */
 	GtkWidget *label;
 	GtkAccelGroup *ag;
 	GdkRGBA color;
-	gint lineno;
-	gint nprocs;
+    gchar* text;
+	gsize nprocs;
+    gsize nnet;
 	gint i;
 	gint mod;
 
 	gtk_init(&argc, &argv);
-	nprocs = get_nprocs();
 	/*
 	 * Warm up differential samplers.
 	 */
 	smon_next_cpu_info();
 	smon_next_cpu_freq_info();
+    smon_next_net_info();
+    nprocs = smon_get_cpu_count();
+    nnet = smon_get_net_interface_count();
 	/*
 	 * Create window and graphs.
 	 */
@@ -98,11 +100,11 @@ main (gint   argc,   /* IN */
 		 * XXX: Add the line regardless. Just dont populate it if we don't
 		 *      have data.
 		 */
-		lineno = uber_line_graph_add_line(UBER_LINE_GRAPH(cpu), &color, NULL);
-		if (smon_cpu_has_freq_scaling(i)) {
-			uber_line_graph_set_line_dash(UBER_LINE_GRAPH(cpu), lineno,
-			                              dashes, G_N_ELEMENTS(dashes), 0);
-		}
+		//lineno = uber_line_graph_add_line(UBER_LINE_GRAPH(cpu), &color, NULL);
+		//if (smon_cpu_has_freq_scaling(i)) {
+		//	uber_line_graph_set_line_dash(UBER_LINE_GRAPH(cpu), lineno,
+		//	                              dashes, G_N_ELEMENTS(dashes), 0);
+		//}
 	}
 	/*
 	 * Add lines for bytes in/out.
@@ -111,15 +113,23 @@ main (gint   argc,   /* IN */
 	uber_line_graph_set_data_func(UBER_LINE_GRAPH(net),
 	                              smon_get_net_info, NULL, NULL);
 	uber_graph_set_format(UBER_GRAPH(net), UBER_GRAPH_FORMAT_DIRECT1024);
-	label = uber_label_new();
-	uber_label_set_text(UBER_LABEL(label), "Bytes In");
-	gdk_rgba_parse(&color, "#a40000");
-	uber_line_graph_add_line(UBER_LINE_GRAPH(net), &color, UBER_LABEL(label));
-	label = uber_label_new();
-	uber_label_set_text(UBER_LABEL(label), "Bytes Out");
-	gdk_rgba_parse(&color, "#4e9a06");
-	uber_line_graph_add_line(UBER_LINE_GRAPH(net), &color, UBER_LABEL(label));
 
+    for (i = 0; i < nnet; i++) {
+	    label = uber_label_new();
+        text = g_strdup_printf("%s Bytes In", net_info.ifnames[i]);
+	    uber_label_set_text(UBER_LABEL(label),text);
+        g_free(text);
+	    gdk_rgba_parse(&color, "#a40000");
+	    uber_line_graph_add_line(UBER_LINE_GRAPH(net), &color, UBER_LABEL(label));
+        net_info.labels[2*i] = label;
+	    label = uber_label_new();
+	    text = g_strdup_printf("%s Bytes Out", net_info.ifnames[i]);
+	    uber_label_set_text(UBER_LABEL(label),text);
+        g_free(text);
+	    gdk_rgba_parse(&color, "#4e9a06");
+	    uber_line_graph_add_line(UBER_LINE_GRAPH(net), &color, UBER_LABEL(label));
+        net_info.labels[2*i+1] = label;
+    }
 	/*
 	 * Add graphs.
 	 */

@@ -1,13 +1,13 @@
 #ifndef __SMONCPU_H__
 #define __SMONCPU_H__
 
-#include <gdk/gdkx.h>
 #include <glib.h>
 
 #include "uber-line-graph.h"
 
 typedef struct
 {
+    // number of cores
 	guint       len;
 	gdouble    *total;
 	gdouble    *freq;
@@ -20,10 +20,13 @@ typedef struct
 
 typedef struct
 {
-	gdouble total_in;
-	gdouble total_out;
-	gdouble last_total_in;
-	gdouble last_total_out;
+    guint    len;
+    gchar   **ifnames;
+	gdouble *total_in;
+	gdouble *total_out;
+	gdouble *last_total_in;
+	gdouble *last_total_out;
+    GtkWidget **labels;
 } NetInfo;
 
 extern CpuInfo      cpu_info;
@@ -49,5 +52,11 @@ smon_next_cpu_freq_info (void);
 
 void
 smon_next_net_info (void);
+
+gsize
+smon_get_cpu_count (void);
+
+gsize
+smon_get_net_interface_count (void);
 
 #endif /* __SMONCPU_H__ */

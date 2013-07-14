@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <dlfcn.h>
 #include <gtk/gtk.h>
+#include <glib.h>
+#include <glibtop/netlist.h>
+#include <glibtop/netload.h>
 
 #include "sysmon.h"
 
@@ -21,6 +24,22 @@ smon_cpu_has_freq_scaling (gint cpu)
 	return ret;
 }
 
+gsize
+smon_get_cpu_count (void)
+{
+   return get_nprocs();
+}
+
+gsize
+smon_get_net_interface_count (void)
+{  
+   if (G_UNLIKELY(!net_info.len)) {
+       glibtop_netlist dummy;
+       return g_strv_length(glibtop_get_netlist(&dummy));
+   }
+   return net_info.len;
+}
+
 gdouble
 smon_get_cpu_info (UberLineGraph *graph,     /* IN */
               guint          line,      /* IN */
@@ -31,18 +50,14 @@ smon_get_cpu_info (UberLineGraph *graph,     /* IN */
 	gdouble value = UBER_LINE_GRAPH_NO_VALUE;
 
 	g_assert_cmpint(line, >, 0);
-	g_assert_cmpint(line, <=, cpu_info.len * 2);
+	g_assert_cmpint(line, <=, cpu_info.len);
 
-	if ((line % 2) != 0) {
-		i = (line - 1) / 2;
-		value = cpu_info.total[i] * cpu_info.freq[i] / 100.0;
-		/*
-		 * Update label text.
-		 */
-		text = g_strdup_printf("CPU%d  %0.1f %%", i + 1, value);
-		uber_label_set_text(UBER_LABEL(cpu_info.labels[i]), text);
-		g_free(text);
-	} // else value = cpu_info.freq[((line - 1) / 2)];
+    i = line-1;
+    value = cpu_info.total[i] * cpu_info.freq[i] / 100.0;
+	/* Update label text. */
+	text = g_strdup_printf("CPU%d  %0.1f %%", i + 1, value);
+	uber_label_set_text(UBER_LABEL(cpu_info.labels[i]), text);
+	g_free(text);
 	return value;
 }
 
@@ -52,12 +67,14 @@ smon_get_net_info (UberLineGraph *graph,     /* IN */
               gpointer       user_data) /* IN */
 {
 	gdouble value = UBER_LINE_GRAPH_NO_VALUE;
-	switch (line) {
-	case 1:
-		value = net_info.total_in;
+	switch (line % 2) {
+	case 0:
+        if (net_info.total_in!=NULL)
+		value = net_info.total_in[line / 2];
 		break;
-	case 2:
-		value = net_info.total_out;
+	case 1:
+        if (net_info.total_out !=NULL)
+		value = net_info.total_out[line / 2];
 		break;
 	default:
 		g_assert_not_reached();
@@ -202,54 +219,61 @@ smon_next_cpu_freq_info (void)
 void
 smon_next_net_info (void)
 {
-	GError *error = NULL;
 	gulong total_in = 0;
 	gulong total_out = 0;
-	gulong bytes_in;
-	gulong bytes_out;
-	gulong dummy;
-	gchar *buf = NULL;
-	gchar iface[32] = { 0 };
-	gchar *line;
 	gsize len;
-	gint l = 0;
+    gsize count = 0;
 	gint i;
 
-	if (!g_file_get_contents("/proc/net/dev", &buf, &len, &error)) {
-		g_printerr("%s", error->message);
-		g_error_free(error);
-		return;
+   if (G_UNLIKELY(!net_info.len)) {
+        glibtop_netlist netlist;
+
+        net_info.ifnames = glibtop_get_netlist(&netlist);
+        
+        net_info.len = g_strv_length(net_info.ifnames);
+
+        g_assert(net_info.len);
+		/*
+		 * Allocate data for sampling.
+		 */
+		net_info.labels = g_new0(GtkWidget*, 2*net_info.len);
+        net_info.total_out = g_new0(gdouble, net_info.len);
+		net_info.total_in = g_new0(gdouble, net_info.len);
+		net_info.last_total_out = g_new0(gdouble, net_info.len);
+		net_info.last_total_in = g_new0(gdouble, net_info.len);
+
 	}
 
-	line = buf;
+    len = net_info.len;
+
 	for (i = 0; i < len; i++) {
-		if (buf[i] == ':') {
-			buf[i] = ' ';
-		} else if (buf[i] == '\n') {
-			buf[i] = '\0';
-			if (++l > 2) { // ignore first two lines
-				if (sscanf(line, "%31s %lu %lu %lu %lu %lu %lu %lu %lu %lu",
-				           iface, &bytes_in,
-				           &dummy, &dummy, &dummy, &dummy,
-				           &dummy, &dummy, &dummy,
-				           &bytes_out) != 10) {
-					g_warning("Skipping invalid line: %s", line);
-				} else if (g_strcmp0(iface, "lo") != 0) {
-					total_in += bytes_in;
-					total_out += bytes_out;
-				}
-				line = NULL;
-			}
-			line = &buf[++i];
-		}
-	}
+        glibtop_netload netload;
+        glibtop_get_netload (&netload, net_info.ifnames[i]);
+        if (netload.if_flags & (1 << GLIBTOP_IF_FLAGS_LOOPBACK))
+            continue;
 
-	if ((net_info.last_total_in != 0.) && (net_info.last_total_out != 0.)) {
-		net_info.total_in = (total_in - net_info.last_total_in);
-		net_info.total_out = (total_out - net_info.last_total_out);
+        /* Skip interfaces without any IPv4/IPv6 address (or
+           those with only a LINK ipv6 addr) However we need to
+           be able to exclude these while still keeping the
+           value so when they get online (with NetworkManager
+           for example) we don't get a suddent peak.  Once we're
+           able to get this, ignoring down interfaces will be
+           possible too.  */
+        if (!(netload.flags & (1 << GLIBTOP_NETLOAD_ADDRESS6)
+                 & (netload.scope6 != GLIBTOP_IF_IN6_SCOPE_LINK))
+            & !(netload.flags & (1 << GLIBTOP_NETLOAD_ADDRESS)))
+            continue;
+		total_in = netload.bytes_in;
+		total_out = netload.bytes_out;
+        if ((net_info.last_total_in[i] != 0.) && (net_info.last_total_out[count] != 0.)) {
+		    net_info.total_in[count] = (total_in - net_info.last_total_in[count]);
+		    net_info.total_out[count] = (total_out - net_info.last_total_out[count]);
+	    }
+        net_info.ifnames[count] = net_info.ifnames[i];
+        net_info.last_total_in[count] = total_in;
+        net_info.last_total_out[count] = total_out;
+        count++;
 	}
+    net_info.len = count;
 
-	net_info.last_total_in = total_in;
-	net_info.last_total_out = total_out;
-	g_free(buf);
 }
