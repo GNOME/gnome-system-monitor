@@ -9,7 +9,6 @@
 #include <dirent.h>
 #include <string.h>
 #include <time.h>
-#include <gdk/gdkx.h>
 
 #include <glib/gi18n.h>
 
