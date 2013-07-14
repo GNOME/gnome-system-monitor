@@ -303,6 +303,12 @@ load_graph_draw (GtkWidget *widget,
     return TRUE;
 }
 
+void
+load_graph_reset (LoadGraph *graph)
+{
+    std::fill(graph->data_block.begin(), graph->data_block.end(), -1.0f);
+}
+
 static void
 get_load (LoadGraph *graph)
 {
