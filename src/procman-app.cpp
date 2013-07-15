@@ -670,9 +670,7 @@ void ProcmanApp::on_startup()
     action->signal_activate().connect(sigc::mem_fun(*this, &ProcmanApp::on_preferences_activate));
     add_action(action);
 
-    char* filename = g_build_filename (GSM_DATA_DIR, "menus.ui", NULL);
-    Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file(filename);
-    g_free (filename);
+    Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_resource("/org/gnome/gnome-system-monitor/data/menus.ui");
 
     Glib::RefPtr<Gio::Menu> menu = Glib::RefPtr<Gio::Menu>::cast_static(builder->get_object ("app-menu"));
     set_app_menu (menu);

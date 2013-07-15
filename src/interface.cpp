@@ -317,11 +317,8 @@ create_main_window (ProcmanApp *app)
     GtkAction *action;
     GtkWidget *notebook;
 
-    gchar* filename = g_build_filename (GSM_DATA_DIR, "interface.ui", NULL);
-
     GtkBuilder *builder = gtk_builder_new();
-    gtk_builder_add_from_file (builder, filename, NULL);
-    g_free (filename);
+    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/interface.ui", NULL);
 
     main_window = GTK_WIDGET (gtk_builder_get_object (builder, "main_window"));
     gtk_window_set_application (GTK_WINDOW (main_window), app->gobj());
@@ -358,14 +355,12 @@ create_main_window (ProcmanApp *app)
     gtk_window_add_accel_group (GTK_WINDOW (main_window),
                                 gtk_ui_manager_get_accel_group (app->uimanager));
 
-    filename = g_build_filename (GSM_DATA_DIR, "popups.ui", NULL);
-
-    if (!gtk_ui_manager_add_ui_from_file (app->uimanager,
-                                            filename,
-                                            NULL)) {
+    if (!gtk_ui_manager_add_ui_from_resource (app->uimanager,
+                                              "/org/gnome/gnome-system-monitor/data/popups.ui",
+                                              NULL)) {
         g_error("building menus failed");
     }
-    g_free (filename);
+
     app->action_group = gtk_action_group_new ("ProcmanActions");
     gtk_action_group_set_translation_domain (app->action_group, NULL);
     gtk_action_group_add_actions (app->action_group,

@@ -1,17 +1,20 @@
 ## Process this file with automake to produce Makefile.in
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
-SUBDIRS = pixmaps po scripts src help
+SUBDIRS = po scripts src help
 
-uidir = $(pkgdatadir)
-ui_DATA = data/preferences.ui \
-          data/renice.ui \
-          data/lsof.ui \
-          data/openfiles.ui \
-          data/interface.ui \
-          data/menus.ui \
-          data/popups.ui
+ui_files = \
+	data/preferences.ui \
+	data/renice.ui \
+	data/lsof.ui \
+	data/openfiles.ui \
+	data/interface.ui \
+	data/menus.ui \
+	data/popups.ui
 
+pixmap_files = \
+	pixmaps/download.svg \
+	pixmaps/upload.svg
 
 runnabledir = $(pkglibexecdir)
 runnable_SCRIPTS = scripts/gsm-renice \
@@ -21,7 +24,8 @@ org.gnome.gnome-system-monitor.policy.in: org.gnome.gnome-system-monitor.policy.
 	$(AM_V_GEN) sed -e "s|\@pkglibexecdir\@|$(pkglibexecdir)|" $< > $@
 
 EXTRA_DIST = \
-	$(ui_DATA) \
+	$(ui_files) \
+	$(pixmap_files) \
 	$(runnable_SCRIPTS) \
 	org.gnome.gnome-system-monitor.policy.in.in \
 	gnome-system-monitor.desktop.in \

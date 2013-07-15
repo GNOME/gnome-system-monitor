@@ -161,10 +161,8 @@ procdialog_create_renice_dialog (ProcmanApp *app)
     if (!info)
         return;
 
-    gchar* filename = g_build_filename (GSM_DATA_DIR, "renice.ui", NULL);
-
     builder = gtk_builder_new();
-    gtk_builder_add_from_file (builder, filename, NULL);
+    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/renice.ui", NULL);
 
     renice_dialog = GTK_WIDGET (gtk_builder_get_object (builder, "renice_dialog"));
 
@@ -204,7 +202,6 @@ procdialog_create_renice_dialog (ProcmanApp *app)
     gtk_builder_connect_signals (builder, NULL);
 
     g_object_unref (G_OBJECT (builder));
-    g_free (filename);
 }
 
 static void
@@ -405,10 +402,8 @@ procdialog_create_preferences_dialog (ProcmanApp *app)
     if (prefs_dialog)
         return;
 
-    gchar* filename = g_build_filename (GSM_DATA_DIR, "preferences.ui", NULL);
-
     builder = gtk_builder_new();
-    gtk_builder_add_from_file (builder, filename, NULL);
+    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/preferences.ui", NULL);
 
     prefs_dialog = GTK_WIDGET (gtk_builder_get_object (builder, "preferences_dialog"));
 
@@ -487,7 +482,6 @@ procdialog_create_preferences_dialog (ProcmanApp *app)
     }
     gtk_builder_connect_signals (builder, NULL);
     g_object_unref (G_OBJECT (builder));
-    g_free (filename);
 }
 
 

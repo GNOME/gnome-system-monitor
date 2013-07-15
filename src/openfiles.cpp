@@ -333,10 +333,8 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
     if (!info)
         return;
 
-    gchar* filename = g_build_filename (GSM_DATA_DIR, "openfiles.ui", NULL);
-
     GtkBuilder *builder = gtk_builder_new();
-    gtk_builder_add_from_file (builder, filename, NULL);
+    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/openfiles.ui", NULL);
 
     openfilesdialog = GTK_WIDGET (gtk_builder_get_object (builder, "openfiles_dialog"));
 
@@ -370,7 +368,6 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
     update_openfiles_dialog (tree);
 
     g_object_unref (G_OBJECT (builder));
-    g_free (filename);
 }
 
 

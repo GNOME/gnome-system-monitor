@@ -124,7 +124,6 @@ AC_CONFIG_FILES([
 Makefile
 scripts/Makefile
 src/Makefile
-pixmaps/Makefile
 po/Makefile.in
 help/Makefile
 gnome-system-monitor.desktop.in
