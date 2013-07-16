@@ -104,23 +104,6 @@ static const GtkRadioActionEntry priority_menu_entries[] =
       N_("Set process priority manually"), CUSTOM_PRIORITY }
 };
 
-
-GtkWidget *
-make_title_label (const char *text)
-{
-    GtkWidget *label;
-    char *full;
-
-    full = g_strdup_printf ("<span weight=\"bold\">%s</span>", text);
-    label = gtk_label_new (full);
-    g_free (full);
-
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0f, 0.5f);
-    gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-
-    return label;
-}
-
 static void 
 create_proc_view(ProcmanApp *app, GtkBuilder * builder)
 {
