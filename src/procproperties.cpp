@@ -86,7 +86,9 @@ fill_proc_properties (GtkWidget *tree, ProcInfo *info)
         { N_("Resident Memory"), format_memsize(info->memres)},
         { N_("Writable Memory"), format_memsize(info->memwritable)},
         { N_("Shared Memory"), format_memsize(info->memshared)},
+#ifdef HAVE_WNCK
         { N_("X Server Memory"), format_memsize(info->memxserver)},
+#endif
         { N_("CPU"), g_strdup_printf("%d%%", info->pcpu)},
         { N_("CPU Time"), g_strdup_printf(ngettext("%lld second", "%lld seconds", info->cpu_time/HZ), (unsigned long long)info->cpu_time/HZ) },
         { N_("Started"), g_strdup_printf("%s", ctime((const time_t*)(&info->start_time)))},

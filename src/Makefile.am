@@ -5,7 +5,8 @@ INCLUDES = \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-DDATADIR=\""$(datadir)"\" \
 	@PROCMAN_CFLAGS@ \
-	@SYSTEMD_CFLAGS@
+	@SYSTEMD_CFLAGS@ \
+	@WNCK_CFLAGS@
 
 bin_PROGRAMS = gnome-system-monitor
 
@@ -49,7 +50,7 @@ gnome_system_monitor_SOURCES = \
   $(gnome_system_monitor_c_files) \
   procman.cpp
 
-gnome_system_monitor_LDADD = @PROCMAN_LIBS@ @SYSTEMD_LIBS@
+gnome_system_monitor_LDADD = @PROCMAN_LIBS@ @SYSTEMD_LIBS@ @WNCK_LIBS@
 
 gnome_system_monitor_CPPFLAGS = -DGSM_DATA_DIR=\""$(pkgdatadir)"\" \
                                 -DGSM_LIBEXEC_DIR=\""$(pkglibexecdir)"\"
