@@ -40,7 +40,6 @@
 #include "gsm_color_button.h"
 
 static void     cb_toggle_tree (GtkAction *action, gpointer data);
-static void     cb_proc_goto_tab (gint tab);
 
 static const GtkActionEntry menu_entries[] =
 {
@@ -308,6 +307,78 @@ on_activate_about (GSimpleAction *, GVariant *, gpointer data)
     cb_about (NULL, data);
 }
 
+static void
+on_activate_radio (GSimpleAction *action, GVariant *parameter, gpointer data)
+{
+    g_action_change_state (G_ACTION (action), parameter);
+}
+
+static void
+change_show_page_state (GSimpleAction *action, GVariant *state, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    g_simple_action_set_state (action, state);
+    g_settings_set_value (app->settings, "current-tab", state);
+}
+
+void
+update_page_activities (ProcmanApp *app)
+{
+    int current_page = gtk_notebook_get_current_page (GTK_NOTEBOOK (app->notebook));
+
+    if (current_page == PROCMAN_TAB_PROCESSES) {
+        cb_timeout (app);
+
+        if (!app->timeout) {
+            app->timeout = g_timeout_add (app->config.update_interval,
+                                          cb_timeout, app);
+        }
+
+        update_sensitivity (app);
+
+        gtk_widget_grab_focus (app->tree);
+    } else {
+        if (app->timeout) {
+            g_source_remove (app->timeout);
+            app->timeout = 0;
+        }
+
+        update_sensitivity (app);
+    }
+
+    if (current_page == PROCMAN_TAB_RESOURCES) {
+        load_graph_start (app->cpu_graph);
+        load_graph_start (app->mem_graph);
+        load_graph_start (app->net_graph);
+    } else {
+        load_graph_stop (app->cpu_graph);
+        load_graph_stop (app->mem_graph);
+        load_graph_stop (app->net_graph);
+    }
+
+    if (current_page == PROCMAN_TAB_DISKS) {
+        cb_update_disks (app);
+
+        if (!app->disk_timeout) {
+            app->disk_timeout = g_timeout_add (app->config.disks_update_interval,
+                                               cb_update_disks,
+                                               app);
+        }
+    } else {
+        if (app->disk_timeout) {
+            g_source_remove (app->disk_timeout);
+            app->disk_timeout = 0;
+        }
+    }
+}
+
+static void
+cb_change_current_page (GtkNotebook *notebook, GParamSpec *pspec, gpointer data)
+{
+    update_page_activities ((ProcmanApp *)data);
+}
+
 void
 create_main_window (ProcmanApp *app)
 {
@@ -325,7 +396,8 @@ create_main_window (ProcmanApp *app)
     gtk_widget_set_name (main_window, "gnome-system-monitor");
 
     GActionEntry win_action_entries[] = {
-        { "about", on_activate_about, NULL, NULL, NULL }
+        { "about", on_activate_about, NULL, NULL, NULL },
+        { "show-page", on_activate_radio, "i", "0", change_show_page_state }
     };
 
     g_action_map_add_action_entries (G_ACTION_MAP (main_window),
@@ -393,37 +465,22 @@ create_main_window (ProcmanApp *app)
     /* create the main notebook */
     app->notebook = notebook = GTK_WIDGET (gtk_builder_get_object (builder, "notebook"));
 
-
     create_proc_view(app, builder);
 
     create_sys_view (app, builder);
     
     create_disk_view (app, builder);
 
+    g_settings_bind (app->settings, "current-tab", notebook, "page", G_SETTINGS_BIND_DEFAULT);
 
-    g_signal_connect (G_OBJECT (notebook), "switch-page",
-                      G_CALLBACK (cb_switch_page), app);
-    g_signal_connect (G_OBJECT (notebook), "change-current-page",
+    g_signal_connect (G_OBJECT (notebook), "notify::page",
                       G_CALLBACK (cb_change_current_page), app);
+    update_page_activities (app);
 
-    gtk_widget_show_all(notebook); // need to make page switch work
-    gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), app->config.current_tab);
-    cb_change_current_page (GTK_NOTEBOOK (notebook), app->config.current_tab, app);
     g_signal_connect (G_OBJECT (main_window), "delete_event",
                       G_CALLBACK (cb_main_window_delete),
                       app);
 
-    GtkAccelGroup *accel_group;
-    GClosure *goto_tab_closure[4];
-    accel_group = gtk_accel_group_new ();
-    gtk_window_add_accel_group (GTK_WINDOW(main_window), accel_group);
-    for (i = 0; i < 4; ++i) {
-        goto_tab_closure[i] = g_cclosure_new_swap (G_CALLBACK (cb_proc_goto_tab),
-                                                   GINT_TO_POINTER (i), NULL);
-        gtk_accel_group_connect (accel_group, '0'+(i+1),
-                                 GDK_MOD1_MASK, GTK_ACCEL_VISIBLE,
-                                 goto_tab_closure[i]);
-    }
     action = gtk_action_group_get_action (app->action_group, "ShowDependencies");
     gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
                                   app->config.show_tree);
@@ -479,7 +536,7 @@ update_sensitivity(ProcmanApp *app)
     gboolean processes_sensitivity, selected_sensitivity;
     GtkAction *action;
 
-    processes_sensitivity = (app->config.current_tab == PROCMAN_TAB_PROCESSES);
+    processes_sensitivity = (g_settings_get_int (app->settings, "current-tab") == PROCMAN_TAB_PROCESSES);
     selected_sensitivity = (processes_sensitivity && app->selected_process != NULL);
 
     if(app->endprocessbutton) {
@@ -532,11 +589,4 @@ cb_toggle_tree (GtkAction *action, gpointer data)
         return;
 
     g_settings_set_boolean (settings, "show-tree", show);
-}
-
-static void
-cb_proc_goto_tab (gint tab)
-{
-    Glib::RefPtr<ProcmanApp> app = ProcmanApp::get();
-    gtk_notebook_set_current_page (GTK_NOTEBOOK (app->notebook), tab);
 }

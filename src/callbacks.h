@@ -56,12 +56,6 @@ gboolean        cb_tree_popup_menu (GtkWidget *widget, gpointer data);
 gboolean        cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event,
                                         gpointer data);
 
-
-void            cb_change_current_page (GtkNotebook *nb,
-                                        gint num, gpointer data);
-void            cb_switch_page (GtkNotebook *nb, GtkWidget *page,
-                                gint num, gpointer data);
-
 gint            cb_update_disks (gpointer data);
 gint            cb_user_refresh (GtkAction* action, gpointer data);
 gint            cb_timeout (gpointer data);

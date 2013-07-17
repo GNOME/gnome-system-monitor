@@ -291,7 +291,6 @@ ProcmanApp::load_settings()
 
     config.whose_process = g_settings_get_int (settings, "view-as");
     g_signal_connect (G_OBJECT(settings), "changed::view-as", G_CALLBACK(view_as_changed_cb), this);
-    config.current_tab = g_settings_get_int (settings, "current-tab");
 
     /* Determine number of cpus since libgtop doesn't really tell you*/
     config.num_cpus = 0;
@@ -351,9 +350,6 @@ ProcmanApp::load_settings()
     config.graph_update_interval = MAX (config.graph_update_interval, 250);
     config.disks_update_interval = MAX (config.disks_update_interval, 1000);
     config.whose_process = CLAMP (config.whose_process, 0, 2);
-    config.current_tab = CLAMP(config.current_tab,
-                               PROCMAN_TAB_PROCESSES,
-                               PROCMAN_TAB_DISKS);
 }
 
 ProcmanApp::ProcmanApp() : Gtk::Application("org.gnome.SystemMonitor", Gio::APPLICATION_HANDLES_COMMAND_LINE)
@@ -374,13 +370,6 @@ Glib::RefPtr<ProcmanApp> ProcmanApp::get ()
 void ProcmanApp::on_activate()
 {
     gtk_window_present (GTK_WINDOW (main_window));
-}
-
-static void
-set_tab(GtkNotebook* notebook, gint tab, ProcmanApp *app)
-{
-    gtk_notebook_set_current_page(notebook, tab);
-    cb_change_current_page(notebook, tab, app);
 }
 
 gboolean
@@ -561,8 +550,6 @@ ProcmanApp::save_config ()
     g_settings_set_int (settings, "y-position", config.ypos);
     g_settings_set_boolean (settings, "maximized", config.maximized);
 
-    g_settings_set_int (settings, "current-tab", config.current_tab);
-
     g_settings_sync ();
 }
 
@@ -587,13 +574,13 @@ int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>&
 
     if (option_group.show_processes_tab) {
         procman_debug("Starting with PROCMAN_TAB_PROCESSES by commandline request");
-        set_tab(GTK_NOTEBOOK(notebook), PROCMAN_TAB_PROCESSES, this);
+        g_settings_set_int (settings, "current-tab", PROCMAN_TAB_PROCESSES);
     } else if (option_group.show_resources_tab) {
         procman_debug("Starting with PROCMAN_TAB_RESOURCES by commandline request");
-        set_tab(GTK_NOTEBOOK(notebook), PROCMAN_TAB_RESOURCES, this);
+        g_settings_set_int (settings, "current-tab", PROCMAN_TAB_RESOURCES);
     } else if (option_group.show_file_systems_tab) {
         procman_debug("Starting with PROCMAN_TAB_DISKS by commandline request");
-        set_tab(GTK_NOTEBOOK(notebook), PROCMAN_TAB_DISKS, this);
+        g_settings_set_int (settings, "current-tab", PROCMAN_TAB_DISKS);
     } else if (option_group.print_version) {
         g_print("%s %s\n", _("GNOME System Monitor"), VERSION);
 	exit (EXIT_SUCCESS);
@@ -687,6 +674,10 @@ void ProcmanApp::on_startup()
     create_main_window (this);
 
     init_volume_monitor (this);
+
+    add_accelerator ("<Alt>1", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_PROCESSES));
+    add_accelerator ("<Alt>2", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_RESOURCES));
+    add_accelerator ("<Alt>3", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_DISKS));
 
     gtk_widget_show (main_window);
 }
