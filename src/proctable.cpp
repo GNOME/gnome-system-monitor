@@ -261,9 +261,8 @@ proctable_new (ProcmanApp * const app)
 
     proctree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
     gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (proctree), COL_TOOLTIP);
-    g_object_set(G_OBJECT(proctree),
-                 "show-expanders", app->config.show_tree,
-                 NULL);
+    gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (proctree),
+                                      g_settings_get_boolean (app->settings, "show-dependencies"));
     gtk_tree_view_set_search_equal_func (GTK_TREE_VIEW (proctree),
                                          search_equal_func,
                                          NULL,
@@ -649,7 +648,7 @@ insert_info_to_tree (ProcInfo *info, ProcmanApp *app, bool forced = false)
 
     model = gtk_tree_view_get_model (GTK_TREE_VIEW (app->tree));
 
-    if (app->config.show_tree) {
+    if (g_settings_get_boolean (app->settings, "show-dependencies")) {
 
         ProcInfo *parent = 0;
 
@@ -899,7 +898,7 @@ refresh_list (ProcmanApp *app, const pid_t* pid_list, const guint n)
     // pid_list == ProcInfo::all + addition
 
 
-    if (app->config.show_tree) {
+    if (g_settings_get_boolean (app->settings, "show-dependencies")) {
 
         // insert process in the tree. walk through the addition list
         // (new process + process that have a new parent). This loop
@@ -976,21 +975,16 @@ proctable_update_list (ProcmanApp *app)
     glibtop_cpu cpu;
     gint which, arg;
 
-    switch (app->config.whose_process) {
-        case ALL_PROCESSES:
-            which = GLIBTOP_KERN_PROC_ALL;
-            arg = 0;
-            break;
-
-        case ACTIVE_PROCESSES:
-            which = GLIBTOP_KERN_PROC_ALL | GLIBTOP_EXCLUDE_IDLE;
-            arg = 0;
-            break;
-
-        default:
-            which = GLIBTOP_KERN_PROC_UID;
-            arg = getuid ();
-            break;
+    const char* whose_processes = g_settings_get_string (app->settings, "show-whose-processes");
+    if (strcmp (whose_processes, "all") == 0) {
+        which = GLIBTOP_KERN_PROC_ALL;
+        arg = 0;
+    } else if (strcmp (whose_processes, "active") == 0) {
+        which = GLIBTOP_KERN_PROC_ALL | GLIBTOP_EXCLUDE_IDLE;
+        arg = 0;
+    } else if (strcmp (whose_processes, "user") == 0) {
+      which = GLIBTOP_KERN_PROC_UID;
+      arg = getuid ();
     }
 
     pid_list = glibtop_get_proclist (&proclist, which, arg);

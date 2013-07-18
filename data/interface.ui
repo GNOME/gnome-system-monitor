@@ -61,6 +61,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="halign">end</property>
+                        <property name="menu_model">view-menu</property>
                         <child>
                           <object class="GtkBox" id="box1">
                             <property name="visible">True</property>
@@ -617,4 +618,30 @@
       </object>
     </child>
   </object>
+  <menu id="view-menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Active Processes</attribute>
+        <attribute name="action">win.show-whose-processes</attribute>
+        <attribute name="target">active</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">A_ll Processes</attribute>
+        <attribute name="action">win.show-whose-processes</attribute>
+        <attribute name="target">all</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">M_y Processes</attribute>
+        <attribute name="action">win.show-whose-processes</attribute>
+        <attribute name="target">user</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Dependencies</attribute>
+        <attribute name="action">win.show-dependencies</attribute>
+        <attribute name="accel">&lt;Primary&gt;d</attribute>
+      </item>
+    </section>
+  </menu>
 </interface>

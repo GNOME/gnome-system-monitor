@@ -39,12 +39,8 @@
 #include "disks.h"
 #include "gsm_color_button.h"
 
-static void     cb_toggle_tree (GtkAction *action, gpointer data);
-
 static const GtkActionEntry menu_entries[] =
 {
-    { "View", NULL, N_("_View") },
-
     { "StopProcess", NULL, N_("_Stop Process"), "<control>S",
       N_("Stop process"), G_CALLBACK(cb_kill_sigstop) },
     { "ContProcess", NULL, N_("_Continue Process"), "<control>C",
@@ -67,24 +63,6 @@ static const GtkActionEntry menu_entries[] =
       N_("View the files opened by a process"), G_CALLBACK (cb_show_open_files) },
     { "ProcessProperties", NULL, N_("_Properties"), NULL,
       N_("View additional information about a process"), G_CALLBACK (cb_show_process_properties) },
-};
-
-static const GtkToggleActionEntry toggle_menu_entries[] =
-{
-    { "ShowDependencies", NULL, N_("_Dependencies"), "<control>D",
-      N_("Show parent/child relationship between processes"),
-      G_CALLBACK (cb_toggle_tree), TRUE },
-};
-
-
-static const GtkRadioActionEntry radio_menu_entries[] =
-{
-    { "ShowActiveProcesses", NULL, N_("_Active Processes"), NULL,
-      N_("Show active processes"), ACTIVE_PROCESSES },
-    { "ShowAllProcesses", NULL, N_("A_ll Processes"), NULL,
-      N_("Show all processes"), ALL_PROCESSES },
-    { "ShowMyProcesses", NULL, N_("M_y Processes"), NULL,
-      N_("Show only user-owned processes"), MY_PROCESSES }
 };
 
 static const GtkRadioActionEntry priority_menu_entries[] =
@@ -129,9 +107,6 @@ create_proc_view(ProcmanApp *app, GtkBuilder * builder)
                       G_CALLBACK (cb_end_process_button_pressed), app);
 
     button = GTK_WIDGET (gtk_builder_get_object (builder, "viewmenubutton"));
-    viewmenu = gtk_ui_manager_get_widget (app->uimanager, "/ViewMenu");
-    gtk_widget_set_halign (viewmenu, GTK_ALIGN_END);
-    gtk_menu_button_set_popup (GTK_MENU_BUTTON (button), viewmenu);
 
     button = GTK_WIDGET (gtk_builder_get_object (builder, "refreshbutton"));
     action = gtk_action_group_get_action (app->action_group, "Refresh");
@@ -314,12 +289,38 @@ on_activate_radio (GSimpleAction *action, GVariant *parameter, gpointer data)
 }
 
 static void
+on_activate_toggle (GSimpleAction *action, GVariant *parameter, gpointer data)
+{
+    GVariant *state = g_action_get_state (G_ACTION (action));
+    g_action_change_state (G_ACTION (action), g_variant_new_boolean (!g_variant_get_boolean (state)));
+    g_variant_unref (state);
+}
+
+static void
 change_show_page_state (GSimpleAction *action, GVariant *state, gpointer data)
 {
     ProcmanApp *app = (ProcmanApp *) data;
 
     g_simple_action_set_state (action, state);
     g_settings_set_value (app->settings, "current-tab", state);
+}
+
+static void
+change_show_processes_state (GSimpleAction *action, GVariant *state, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    g_simple_action_set_state (action, state);
+    g_settings_set_value (app->settings, "show-whose-processes", state);
+}
+
+static void
+change_show_dependencies_state (GSimpleAction *action, GVariant *state, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    g_simple_action_set_state (action, state);
+    g_settings_set_value (app->settings, "show-dependencies", state);
 }
 
 void
@@ -385,7 +386,6 @@ create_main_window (ProcmanApp *app)
     gint i;
     gint width, height, xpos, ypos;
     GtkWidget *main_window;
-    GtkAction *action;
     GtkWidget *notebook;
 
     GtkBuilder *builder = gtk_builder_new();
@@ -394,10 +394,13 @@ create_main_window (ProcmanApp *app)
     main_window = GTK_WIDGET (gtk_builder_get_object (builder, "main_window"));
     gtk_window_set_application (GTK_WINDOW (main_window), app->gobj());
     gtk_widget_set_name (main_window, "gnome-system-monitor");
+    app->main_window = main_window;
 
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL },
-        { "show-page", on_activate_radio, "i", "0", change_show_page_state }
+        { "show-page", on_activate_radio, "i", "0", change_show_page_state },
+        { "show-whose-processes", on_activate_radio, "s", "'all'", change_show_processes_state },
+        { "show-dependencies", on_activate_toggle, NULL, "false", change_show_dependencies_state }
     };
 
     g_action_map_add_action_entries (G_ACTION_MAP (main_window),
@@ -439,17 +442,6 @@ create_main_window (ProcmanApp *app)
                                   menu_entries,
                                   G_N_ELEMENTS (menu_entries),
                                   app);
-    gtk_action_group_add_toggle_actions (app->action_group,
-                                         toggle_menu_entries,
-                                         G_N_ELEMENTS (toggle_menu_entries),
-                                         app);
-
-    gtk_action_group_add_radio_actions (app->action_group,
-                                        radio_menu_entries,
-                                        G_N_ELEMENTS (radio_menu_entries),
-                                        app->config.whose_process,
-                                        G_CALLBACK(cb_radio_processes),
-                                        app);
 
     gtk_action_group_add_radio_actions (app->action_group,
                                         priority_menu_entries,
@@ -481,15 +473,21 @@ create_main_window (ProcmanApp *app)
                       G_CALLBACK (cb_main_window_delete),
                       app);
 
-    action = gtk_action_group_get_action (app->action_group, "ShowDependencies");
-    gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
-                                  app->config.show_tree);
+    GAction *action;
+    action = g_action_map_lookup_action (G_ACTION_MAP (main_window),
+                                         "show-dependencies");
+    g_action_change_state (action,
+                           g_settings_get_value (app->settings, "show-dependencies"));
 
-    
+
+    action = g_action_map_lookup_action (G_ACTION_MAP (main_window),
+                                         "show-whose-processes");
+    g_action_change_state (action,
+                           g_settings_get_value (app->settings, "show-whose-processes"));
+
     gtk_builder_connect_signals (builder, NULL);
 
     gtk_widget_show_all(main_window);
-    app->main_window = main_window;
 
     g_object_unref (G_OBJECT (builder));
 }
@@ -525,16 +523,14 @@ update_sensitivity(ProcmanApp *app)
                                               "OpenFiles",
                                               "ProcessProperties" };
 
-    const char * const processes_actions[] = { "ShowActiveProcesses",
-                                               "ShowAllProcesses",
-                                               "ShowMyProcesses",
-                                               "ShowDependencies",
-                                               "Refresh"
-    };
+    // FIXME: add Refresh when ported
+    const char * const processes_actions[] = { "show-whose-processes",
+                                               "show-dependencies" };
 
     size_t i;
     gboolean processes_sensitivity, selected_sensitivity;
     GtkAction *action;
+    GAction *gaction;
 
     processes_sensitivity = (g_settings_get_int (app->settings, "current-tab") == PROCMAN_TAB_PROCESSES);
     selected_sensitivity = (processes_sensitivity && app->selected_process != NULL);
@@ -546,9 +542,9 @@ update_sensitivity(ProcmanApp *app)
     }
 
     for (i = 0; i != G_N_ELEMENTS(processes_actions); ++i) {
-        action = gtk_action_group_get_action(app->action_group,
-                                             processes_actions[i]);
-        gtk_action_set_sensitive(action, processes_sensitivity);
+        gaction = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
+                                              processes_actions[i]);
+        g_simple_action_set_enabled (G_SIMPLE_ACTION (gaction), processes_sensitivity);
     }
 
     for (i = 0; i != G_N_ELEMENTS(selected_actions); ++i) {
@@ -575,18 +571,4 @@ block_priority_changed_handlers(ProcmanApp *app, bool block)
             g_signal_handlers_unblock_by_func(action, (gpointer)cb_renice, app);
         }
     }
-}
-
-static void
-cb_toggle_tree (GtkAction *action, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-    GSettings *settings = app->settings;
-    gboolean show;
-
-    show = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-    if (show == app->config.show_tree)
-        return;
-
-    g_settings_set_boolean (settings, "show-tree", show);
 }

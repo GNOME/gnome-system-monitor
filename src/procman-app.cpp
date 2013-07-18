@@ -35,15 +35,12 @@ init_volume_monitor(ProcmanApp *app)
 }
 
 static void
-tree_changed_cb (GSettings *settings, const gchar *key, gpointer data)
+cb_show_dependencies_changed (GSettings *settings, const gchar *key, gpointer data)
 {
     ProcmanApp *app = static_cast<ProcmanApp *>(data);
 
-    app->config.show_tree = g_settings_get_boolean(settings, key);
-
-    g_object_set(G_OBJECT(app->tree),
-                 "show-expanders", app->config.show_tree,
-                 NULL);
+    gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (app->tree),
+                                      g_settings_get_boolean (settings, "show-dependencies"));
 
     proctable_clear_tree (app);
     proctable_update_all (app);
@@ -81,12 +78,10 @@ network_in_bits_changed_cb(GSettings *settings, const gchar *key, gpointer data)
 }
 
 static void
-view_as_changed_cb (GSettings *settings, const gchar *key, gpointer data)
+cb_show_whose_processes_changed (GSettings *settings, const gchar *key, gpointer data)
 {
     ProcmanApp *app = static_cast<ProcmanApp *>(data);
 
-    app->config.whose_process = g_settings_get_int (settings, key);
-    app->config.whose_process = CLAMP (app->config.whose_process, 0, 2);
     proctable_clear_tree (app);
     proctable_update_all (app);
 }
@@ -257,8 +252,7 @@ ProcmanApp::load_settings()
     config.ypos = g_settings_get_int (settings, "y-position");
     config.maximized = g_settings_get_boolean (settings, "maximized");
 
-    config.show_tree = g_settings_get_boolean (settings, "show-tree");
-    g_signal_connect (G_OBJECT(settings), "changed::show-tree", G_CALLBACK(tree_changed_cb), this);
+    g_signal_connect (G_OBJECT(settings), "changed::show-dependencies", G_CALLBACK(cb_show_dependencies_changed), this);
 
     config.solaris_mode = g_settings_get_boolean(settings, procman::settings::solaris_mode.c_str());
     std::string detail_string("changed::" + procman::settings::solaris_mode);
@@ -289,8 +283,7 @@ ProcmanApp::load_settings()
     g_signal_connect (settings, "changed::show-all-fs", G_CALLBACK(show_all_fs_changed_cb), this);
 
 
-    config.whose_process = g_settings_get_int (settings, "view-as");
-    g_signal_connect (G_OBJECT(settings), "changed::view-as", G_CALLBACK(view_as_changed_cb), this);
+    g_signal_connect (G_OBJECT(settings), "changed::show-whose-processes", G_CALLBACK(cb_show_whose_processes_changed), this);
 
     /* Determine number of cpus since libgtop doesn't really tell you*/
     config.num_cpus = 0;
@@ -349,7 +342,6 @@ ProcmanApp::load_settings()
     config.update_interval = MAX (config.update_interval, 1000);
     config.graph_update_interval = MAX (config.graph_update_interval, 250);
     config.disks_update_interval = MAX (config.disks_update_interval, 1000);
-    config.whose_process = CLAMP (config.whose_process, 0, 2);
 }
 
 ProcmanApp::ProcmanApp() : Gtk::Application("org.gnome.SystemMonitor", Gio::APPLICATION_HANDLES_COMMAND_LINE)

@@ -420,16 +420,6 @@ cb_refresh_icons (GtkIconTheme *theme, gpointer data)
     cb_timeout(app);
 }
 
-void
-cb_radio_processes(GtkAction *action, GtkRadioAction *current, gpointer data)
-{
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
-
-    app->config.whose_process = gtk_radio_action_get_current_value(current);
-
-    g_settings_set_int (app->settings, "view-as",
-                        app->config.whose_process);
-}
 
 void
 cb_column_resized(GtkWidget *widget, GParamSpec* param, gpointer data)

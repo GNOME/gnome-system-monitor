@@ -14,13 +14,6 @@ struct LoadGraph;
 
 enum
 {
-    ALL_PROCESSES,
-    MY_PROCESSES,
-    ACTIVE_PROCESSES
-};
-
-enum
-{
     VERY_HIGH_PRIORITY,
     HIGH_PRIORITY,
     NORMAL_PRIORITY,
@@ -49,12 +42,10 @@ struct ProcConfig
     gint            ypos;
     gboolean        maximized;
     gboolean        show_kill_warning;
-    gboolean        show_tree;
     gboolean        show_all_fs;
     int             update_interval;
     int             graph_update_interval;
     int             disks_update_interval;
-    gint            whose_process;
     GdkRGBA         cpu_color[GLIBTOP_NCPU];
     GdkRGBA         mem_color;
     GdkRGBA         swap_color;
