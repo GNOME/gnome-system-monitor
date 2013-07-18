@@ -189,6 +189,29 @@ cb_proctree_destroying (GtkTreeView *self, gpointer data)
     g_signal_handlers_disconnect_by_func(self, (gpointer) cb_columns_changed, data);
 }
 
+static gboolean
+cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    if (gdk_event_triggers_context_menu ((GdkEvent *) event)) {
+        do_popup_menu (app, event);
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+static gboolean
+cb_tree_popup_menu (GtkWidget *widget, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    do_popup_menu (app, NULL);
+
+    return TRUE;
+}
+
 GtkWidget *
 proctable_new (ProcmanApp * const app)
 {
@@ -973,7 +996,8 @@ proctable_update_list (ProcmanApp *app)
     pid_t* pid_list;
     glibtop_proclist proclist;
     glibtop_cpu cpu;
-    gint which, arg;
+    int which = 0;
+    int arg = 0;
 
     const char* whose_processes = g_settings_get_string (app->settings, "show-whose-processes");
     if (strcmp (whose_processes, "all") == 0) {

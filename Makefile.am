@@ -9,8 +9,7 @@ ui_files = \
 	data/lsof.ui \
 	data/openfiles.ui \
 	data/interface.ui \
-	data/menus.ui \
-	data/popups.ui
+	data/menus.ui
 
 pixmap_files = \
 	pixmaps/download.svg \

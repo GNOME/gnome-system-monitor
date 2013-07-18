@@ -12,16 +12,6 @@ struct LoadGraph;
 
 #define GSM_GSETTINGS_SCHEMA "org.gnome.gnome-system-monitor"
 
-enum
-{
-    VERY_HIGH_PRIORITY,
-    HIGH_PRIORITY,
-    NORMAL_PRIORITY,
-    LOW_PRIORITY,
-    VERY_LOW_PRIORITY,
-    CUSTOM_PRIORITY
-};
-
 static const unsigned MIN_UPDATE_INTERVAL =   1 * 1000;
 static const unsigned MAX_UPDATE_INTERVAL = 100 * 1000;
 
@@ -41,7 +31,6 @@ struct ProcConfig
     gint            xpos;
     gint            ypos;
     gboolean        maximized;
-    gboolean        show_kill_warning;
     gboolean        show_all_fs;
     int             update_interval;
     int             graph_update_interval;
@@ -174,11 +163,8 @@ public:
     void save_config();
     void shutdown();
 
-    GtkUIManager     *uimanager;
-    GtkActionGroup   *action_group;
     GtkWidget        *tree;
     GtkWidget        *loadavg;
-    GtkWidget        *endprocessbutton;
     GtkWidget        *popup_menu;
     GtkWidget        *disk_list;
     GtkWidget        *notebook;
@@ -201,7 +187,6 @@ public:
 
     GSettings        *settings;
     GtkWidget        *main_window;
-    GtkUIManager     *menu;
 
     unsigned         frequency;
 

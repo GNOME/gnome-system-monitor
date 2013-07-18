@@ -87,16 +87,6 @@ cb_show_whose_processes_changed (GSettings *settings, const gchar *key, gpointer
 }
 
 static void
-warning_changed_cb (GSettings *settings, const gchar *key, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-
-    if (g_str_equal (key, "kill-dialog")) {
-        app->config.show_kill_warning = g_settings_get_boolean (settings, key);
-    }
-}
-
-static void
 timeouts_changed_cb (GSettings *settings, const gchar *key, gpointer data)
 {
     ProcmanApp *app = static_cast<ProcmanApp *>(data);
@@ -266,8 +256,6 @@ ProcmanApp::load_settings()
     detail_string = "changed::" + procman::settings::network_in_bits;
     g_signal_connect(G_OBJECT(settings), detail_string.c_str(), G_CALLBACK(network_in_bits_changed_cb), this);
 
-    config.show_kill_warning = g_settings_get_boolean (settings, "kill-dialog");
-    g_signal_connect (G_OBJECT(settings), "changed::kill-dialog", G_CALLBACK(warning_changed_cb), this);
     config.update_interval = g_settings_get_int (settings, "update-interval");
     g_signal_connect (G_OBJECT(settings), "changed::update-interval", G_CALLBACK(timeouts_changed_cb), this);
     config.graph_update_interval = g_settings_get_int (settings,

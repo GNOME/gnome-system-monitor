@@ -25,22 +25,13 @@
 #include "gsm_color_button.h"
 
 
-void            cb_show_memory_maps (GtkAction *action, gpointer data);
-void            cb_show_open_files (GtkAction *action, gpointer data);
-void            cb_show_process_properties (GtkAction *action, gpointer data);
 void            cb_show_lsof(GtkAction *action, gpointer data);
-void            cb_renice (GtkAction *action, GtkRadioAction *current, gpointer data);
-void            cb_end_process (GtkAction *action, gpointer data);
-void            cb_kill_process (GtkAction *action, gpointer data);
 void            cb_edit_preferences (GtkAction *action, gpointer data);
 
 void            cb_help_contents (GtkAction *action, gpointer data);
 void            cb_about (GtkAction *action, gpointer data);
 
 gboolean        cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data);
-
-void            cb_end_process_button_pressed (GtkButton *button, gpointer data);
-void            cb_logout (GtkButton *button, gpointer data);
 
 void            cb_info_button_pressed (GtkButton *button, gpointer user_data);
 
@@ -52,23 +43,12 @@ void            cb_net_out_color_changed (GSMColorButton *widget, gpointer user_
 
 void            cb_row_selected (GtkTreeSelection *selection, gpointer data);
 
-gboolean        cb_tree_popup_menu (GtkWidget *widget, gpointer data);
-gboolean        cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event,
-                                        gpointer data);
-
 gint            cb_update_disks (gpointer data);
 gint            cb_timeout (gpointer data);
 
 void            cb_refresh_icons (GtkIconTheme *theme, gpointer data);
 
 void            cb_column_resized (GtkWidget* column, GParamSpec* param, gpointer data);
-
-
-void            cb_kill_sigstop(GtkAction *action,
-                                gpointer data);
-
-void            cb_kill_sigcont(GtkAction *action,
-                                gpointer data);
 
 gboolean        cb_column_header_clicked (GtkTreeViewColumn* column, 
                                           GdkEvent* event, 

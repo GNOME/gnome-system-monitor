@@ -34,57 +34,21 @@
 #include "interface.h"
 #include "proctable.h"
 #include "procactions.h"
+#include "procdialogs.h"
+#include "memmaps.h"
+#include "openfiles.h"
+#include "procproperties.h"
 #include "load-graph.h"
 #include "util.h"
 #include "disks.h"
 #include "gsm_color_button.h"
 
-static const GtkActionEntry menu_entries[] =
-{
-    { "StopProcess", NULL, N_("_Stop Process"), "<control>S",
-      N_("Stop process"), G_CALLBACK(cb_kill_sigstop) },
-    { "ContProcess", NULL, N_("_Continue Process"), "<control>C",
-      N_("Continue process if stopped"), G_CALLBACK(cb_kill_sigcont) },
-
-    { "EndProcess", NULL, N_("_End Process"), "<control>E",
-      N_("Force process to finish normally"), G_CALLBACK (cb_end_process) },
-    { "KillProcess", NULL, N_("_Kill Process"), "<control>K",
-      N_("Force process to finish immediately"), G_CALLBACK (cb_kill_process) },
-    { "ChangePriority", NULL, N_("_Change Priority"), NULL,
-      N_("Change the order of priority of process"), NULL },
-
-    { "MemoryMaps", NULL, N_("_Memory Maps"), "<control>M",
-      N_("Open the memory maps associated with a process"), G_CALLBACK (cb_show_memory_maps) },
-    // Translators: this means 'Files that are open' (open is no verb here)
-    { "OpenFiles", NULL, N_("Open _Files"), "<control>F",
-      N_("View the files opened by a process"), G_CALLBACK (cb_show_open_files) },
-    { "ProcessProperties", NULL, N_("_Properties"), NULL,
-      N_("View additional information about a process"), G_CALLBACK (cb_show_process_properties) },
-};
-
-static const GtkRadioActionEntry priority_menu_entries[] =
-{
-    { "VeryHigh", NULL, N_("Very High"), NULL,
-      N_("Set process priority to very high"), VERY_HIGH_PRIORITY },
-    { "High", NULL, N_("High"), NULL,
-      N_("Set process priority to high"), HIGH_PRIORITY },
-    { "Normal", NULL, N_("Normal"), NULL,
-      N_("Set process priority to normal"), NORMAL_PRIORITY },
-    { "Low", NULL, N_("Low"), NULL,
-      N_("Set process priority to low"), LOW_PRIORITY },
-    { "VeryLow", NULL, N_("Very Low"), NULL,
-      N_("Set process priority to very low"), VERY_LOW_PRIORITY },
-    { "Custom", NULL, N_("Custom"), NULL,
-      N_("Set process priority manually"), CUSTOM_PRIORITY }
-};
 
 static void 
 create_proc_view(ProcmanApp *app, GtkBuilder * builder)
 {
     GtkWidget *proctree;
     GtkWidget *scrolled;
-    GtkWidget *viewmenu;
-    GtkAction *action;
     char* string;
 
     /* create the processes tab */
@@ -98,12 +62,10 @@ create_proc_view(ProcmanApp *app, GtkBuilder * builder)
 
     gtk_container_add (GTK_CONTAINER (scrolled), proctree);
 
-    app->endprocessbutton = GTK_WIDGET (gtk_builder_get_object (builder, "endprocessbutton"));
-    g_signal_connect (G_OBJECT (app->endprocessbutton), "clicked",
-                      G_CALLBACK (cb_end_process_button_pressed), app);
-
     /* create popup_menu for the processes tab */
-    app->popup_menu = gtk_ui_manager_get_widget (app->uimanager, "/PopupMenu");
+    GMenuModel *menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-popup-menu"));
+    app->popup_menu = gtk_menu_new_from_model (menu_model);
+    gtk_menu_attach_to_widget (GTK_MENU (app->popup_menu), app->main_window, NULL);
 }
 
 static void
@@ -279,6 +241,73 @@ on_activate_refresh (GSimpleAction *, GVariant *, gpointer data)
     proctable_update_all (app);
 }
 
+static void
+kill_process_with_confirmation (ProcmanApp *app, int signal) {
+    gboolean kill_dialog = g_settings_get_boolean (app->settings, "kill-dialog");
+
+    if (kill_dialog)
+        procdialog_create_kill_dialog (app, signal);
+    else
+        kill_process (app, signal);
+}
+
+static void
+on_activate_send_signal_stop (GSimpleAction *, GVariant *, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    /* no confirmation */
+    kill_process (app, SIGSTOP);
+}
+
+static void
+on_activate_send_signal_cont (GSimpleAction *, GVariant *, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    /* no confirmation */
+    kill_process (app, SIGCONT);
+}
+
+static void
+on_activate_send_signal_end (GSimpleAction *, GVariant *, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    kill_process_with_confirmation (app, SIGTERM);
+}
+
+static void
+on_activate_send_signal_kill (GSimpleAction *, GVariant *, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    kill_process_with_confirmation (app, SIGKILL);
+}
+
+static void
+on_activate_memory_maps (GSimpleAction *, GVariant *, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    create_memmaps_dialog (app);
+}
+
+static void
+on_activate_open_files (GSimpleAction *, GVariant *, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    create_openfiles_dialog (app);
+}
+
+static void
+on_activate_process_properties (GSimpleAction *, GVariant *, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    create_procproperties_dialog (app);
+}
 
 static void
 on_activate_radio (GSimpleAction *action, GVariant *parameter, gpointer data)
@@ -319,6 +348,42 @@ change_show_dependencies_state (GSimpleAction *action, GVariant *state, gpointer
 
     g_simple_action_set_state (action, state);
     g_settings_set_value (app->settings, "show-dependencies", state);
+}
+
+static void
+on_activate_priority (GSimpleAction *action, GVariant *parameter, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    g_action_change_state (G_ACTION (action), parameter);
+
+    const char *priority = g_variant_get_string (parameter, NULL);
+
+    if (strcmp (priority, "custom") == 0) {
+        procdialog_create_renice_dialog (app);
+    } else {
+      int new_nice_value = 0;
+
+      if (strcmp (priority, "very-high") == 0) {
+          new_nice_value = -20;
+      } else if (strcmp (priority, "high") == 0) {
+          new_nice_value = -5;
+      } else if (strcmp (priority, "normal") == 0) {
+          new_nice_value = 0;
+      } else if (strcmp (priority, "low") == 0) {
+          new_nice_value = 5;
+      } else if (strcmp (priority, "very-low") == 0) {
+          new_nice_value = 19;
+      }
+
+      renice (app, new_nice_value);
+    }
+}
+
+static void
+change_priority_state (GSimpleAction *action, GVariant *state, gpointer data)
+{
+    g_simple_action_set_state (action, state);
 }
 
 void
@@ -381,7 +446,6 @@ cb_change_current_page (GtkNotebook *notebook, GParamSpec *pspec, gpointer data)
 void
 create_main_window (ProcmanApp *app)
 {
-    gint i;
     gint width, height, xpos, ypos;
     GtkWidget *main_window;
     GtkWidget *notebook;
@@ -396,6 +460,14 @@ create_main_window (ProcmanApp *app)
 
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL },
+        { "send-signal-stop", on_activate_send_signal_stop, NULL, NULL, NULL },
+        { "send-signal-cont", on_activate_send_signal_cont, NULL, NULL, NULL },
+        { "send-signal-end", on_activate_send_signal_end, NULL, NULL, NULL },
+        { "send-signal-kill", on_activate_send_signal_kill, NULL, NULL, NULL },
+        { "priority", on_activate_priority, "s", "'normal'", change_priority_state },
+        { "memory-maps", on_activate_memory_maps, NULL, NULL, NULL },
+        { "open-files", on_activate_open_files, NULL, NULL, NULL },
+        { "process-properties", on_activate_process_properties, NULL, NULL, NULL },
         { "refresh", on_activate_refresh, NULL, NULL, NULL },
         { "show-page", on_activate_radio, "i", "0", change_show_page_state },
         { "show-whose-processes", on_activate_radio, "s", "'all'", change_show_processes_state },
@@ -423,35 +495,6 @@ create_main_window (ProcmanApp *app)
     if (app->config.maximized) {
         gtk_window_maximize(GTK_WINDOW(main_window));
     }
-
-    app->uimanager = gtk_ui_manager_new ();
-
-    gtk_window_add_accel_group (GTK_WINDOW (main_window),
-                                gtk_ui_manager_get_accel_group (app->uimanager));
-
-    if (!gtk_ui_manager_add_ui_from_resource (app->uimanager,
-                                              "/org/gnome/gnome-system-monitor/data/popups.ui",
-                                              NULL)) {
-        g_error("building menus failed");
-    }
-
-    app->action_group = gtk_action_group_new ("ProcmanActions");
-    gtk_action_group_set_translation_domain (app->action_group, NULL);
-    gtk_action_group_add_actions (app->action_group,
-                                  menu_entries,
-                                  G_N_ELEMENTS (menu_entries),
-                                  app);
-
-    gtk_action_group_add_radio_actions (app->action_group,
-                                        priority_menu_entries,
-                                        G_N_ELEMENTS (priority_menu_entries),
-                                        NORMAL_PRIORITY,
-                                        G_CALLBACK(cb_renice),
-                                        app);
-
-    gtk_ui_manager_insert_action_group (app->uimanager,
-                                        app->action_group,
-                                        0);
 
     /* create the main notebook */
     app->notebook = notebook = GTK_WIDGET (gtk_builder_get_object (builder, "notebook"));
@@ -484,8 +527,6 @@ create_main_window (ProcmanApp *app)
     g_action_change_state (action,
                            g_settings_get_value (app->settings, "show-whose-processes"));
 
-    gtk_builder_connect_signals (builder, NULL);
-
     gtk_widget_show_all(main_window);
 
     g_object_unref (G_OBJECT (builder));
@@ -513,14 +554,14 @@ do_popup_menu (ProcmanApp *app, GdkEventButton *event)
 void
 update_sensitivity(ProcmanApp *app)
 {
-    const char * const selected_actions[] = { "StopProcess",
-                                              "ContProcess",
-                                              "EndProcess",
-                                              "KillProcess",
-                                              "ChangePriority",
-                                              "MemoryMaps",
-                                              "OpenFiles",
-                                              "ProcessProperties" };
+    const char * const selected_actions[] = { "send-signal-stop",
+                                              "send-signal-cont",
+                                              "send-signal-end",
+                                              "send-signal-kill",
+                                              "priority",
+                                              "memory-maps",
+                                              "open-files",
+                                              "process-properties" };
 
     const char * const processes_actions[] = { "refresh",
                                                "show-whose-processes",
@@ -528,46 +569,20 @@ update_sensitivity(ProcmanApp *app)
 
     size_t i;
     gboolean processes_sensitivity, selected_sensitivity;
-    GtkAction *action;
-    GAction *gaction;
+    GAction *action;
 
     processes_sensitivity = (g_settings_get_int (app->settings, "current-tab") == PROCMAN_TAB_PROCESSES);
     selected_sensitivity = (processes_sensitivity && app->selected_process != NULL);
 
-    if(app->endprocessbutton) {
-        /* avoid error on startup if endprocessbutton
-           has not been built yet */
-        gtk_widget_set_sensitive(app->endprocessbutton, selected_sensitivity);
-    }
-
     for (i = 0; i != G_N_ELEMENTS(processes_actions); ++i) {
-        gaction = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
+        action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
                                               processes_actions[i]);
-        g_simple_action_set_enabled (G_SIMPLE_ACTION (gaction), processes_sensitivity);
+        g_simple_action_set_enabled (G_SIMPLE_ACTION (action), processes_sensitivity);
     }
 
     for (i = 0; i != G_N_ELEMENTS(selected_actions); ++i) {
-        action = gtk_action_group_get_action(app->action_group,
+        action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
                                              selected_actions[i]);
-        gtk_action_set_sensitive(action, selected_sensitivity);
-    }
-}
-
-void
-block_priority_changed_handlers(ProcmanApp *app, bool block)
-{
-    gint i;
-    if (block) {
-        for (i = 0; i != G_N_ELEMENTS(priority_menu_entries); ++i) {
-            GtkRadioAction *action = GTK_RADIO_ACTION(gtk_action_group_get_action(app->action_group,
-                                             priority_menu_entries[i].name));
-            g_signal_handlers_block_by_func(action, (gpointer)cb_renice, app);
-        }
-    } else {
-        for (i = 0; i != G_N_ELEMENTS(priority_menu_entries); ++i) {
-            GtkRadioAction *action = GTK_RADIO_ACTION(gtk_action_group_get_action(app->action_group,
-                                             priority_menu_entries[i].name));
-            g_signal_handlers_unblock_by_func(action, (gpointer)cb_renice, app);
-        }
+        g_simple_action_set_enabled (G_SIMPLE_ACTION (action), selected_sensitivity);
     }
 }
