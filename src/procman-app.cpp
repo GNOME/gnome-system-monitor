@@ -670,6 +670,7 @@ void ProcmanApp::on_startup()
     add_accelerator ("<Alt>1", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_PROCESSES));
     add_accelerator ("<Alt>2", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_RESOURCES));
     add_accelerator ("<Alt>3", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_DISKS));
+    add_accelerator ("<Primary>r", "win.refresh", NULL);
 
     gtk_widget_show (main_window);
 }

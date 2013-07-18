@@ -53,9 +53,6 @@ static const GtkActionEntry menu_entries[] =
     { "ChangePriority", NULL, N_("_Change Priority"), NULL,
       N_("Change the order of priority of process"), NULL },
 
-    { "Refresh", NULL, N_("_Refresh"), "<control>R",
-      N_("Refresh the process list"), G_CALLBACK(cb_user_refresh) },
-
     { "MemoryMaps", NULL, N_("_Memory Maps"), "<control>M",
       N_("Open the memory maps associated with a process"), G_CALLBACK (cb_show_memory_maps) },
     // Translators: this means 'Files that are open' (open is no verb here)
@@ -87,7 +84,6 @@ create_proc_view(ProcmanApp *app, GtkBuilder * builder)
     GtkWidget *proctree;
     GtkWidget *scrolled;
     GtkWidget *viewmenu;
-    GtkWidget *button;
     GtkAction *action;
     char* string;
 
@@ -105,12 +101,6 @@ create_proc_view(ProcmanApp *app, GtkBuilder * builder)
     app->endprocessbutton = GTK_WIDGET (gtk_builder_get_object (builder, "endprocessbutton"));
     g_signal_connect (G_OBJECT (app->endprocessbutton), "clicked",
                       G_CALLBACK (cb_end_process_button_pressed), app);
-
-    button = GTK_WIDGET (gtk_builder_get_object (builder, "viewmenubutton"));
-
-    button = GTK_WIDGET (gtk_builder_get_object (builder, "refreshbutton"));
-    action = gtk_action_group_get_action (app->action_group, "Refresh");
-    gtk_activatable_set_related_action (GTK_ACTIVATABLE (button), action);
 
     /* create popup_menu for the processes tab */
     app->popup_menu = gtk_ui_manager_get_widget (app->uimanager, "/PopupMenu");
@@ -283,6 +273,14 @@ on_activate_about (GSimpleAction *, GVariant *, gpointer data)
 }
 
 static void
+on_activate_refresh (GSimpleAction *, GVariant *, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+    proctable_update_all (app);
+}
+
+
+static void
 on_activate_radio (GSimpleAction *action, GVariant *parameter, gpointer data)
 {
     g_action_change_state (G_ACTION (action), parameter);
@@ -398,6 +396,7 @@ create_main_window (ProcmanApp *app)
 
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL },
+        { "refresh", on_activate_refresh, NULL, NULL, NULL },
         { "show-page", on_activate_radio, "i", "0", change_show_page_state },
         { "show-whose-processes", on_activate_radio, "s", "'all'", change_show_processes_state },
         { "show-dependencies", on_activate_toggle, NULL, "false", change_show_dependencies_state }
@@ -523,8 +522,8 @@ update_sensitivity(ProcmanApp *app)
                                               "OpenFiles",
                                               "ProcessProperties" };
 
-    // FIXME: add Refresh when ported
-    const char * const processes_actions[] = { "show-whose-processes",
+    const char * const processes_actions[] = { "refresh",
+                                               "show-whose-processes",
                                                "show-dependencies" };
 
     size_t i;

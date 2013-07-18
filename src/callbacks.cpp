@@ -377,15 +377,6 @@ cb_tree_popup_menu (GtkWidget *widget, gpointer data)
 
 
 gint
-cb_user_refresh (GtkAction*, gpointer data)
-{
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
-    proctable_update_all(app);
-    return FALSE;
-}
-
-
-gint
 cb_timeout (gpointer data)
 {
     ProcmanApp * const app = static_cast<ProcmanApp *>(data);
