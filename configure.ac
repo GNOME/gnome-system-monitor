@@ -136,13 +136,12 @@ echo "
 
 Configuration:
 
-	Source code location:	${srcdir}
-	C Compiler:		${CC}
-	C++ Compiler:		${CXX}
-	CFLAGS:			${CFLAGS}
-	CXXFLAGS:		${CXXFLAGS}
-	Maintainer mode:	${USER_MAINTAINER_MODE}
-	Languages:		${ALL_LINGUAS}
+        Source code location:   ${srcdir}
+        C Compiler:             ${CC}
+        C++ Compiler:           ${CXX}
+        CFLAGS:                 ${CFLAGS}
+        CXXFLAGS:               ${CXXFLAGS}
+        Maintainer mode:        ${USE_MAINTAINER_MODE}
         systemd support:        ${have_systemd}
-        wnck support:        ${enable_wnck}
+        wnck support:           ${enable_wnck}
 "
