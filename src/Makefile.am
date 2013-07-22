@@ -1,11 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
-INCLUDES = \
-	-DPROCMAN_DATADIR=\""$(datadir)/procman/"\" \
+AM_CPPFLAGS = \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
-	-DDATADIR=\""$(datadir)"\" \
-	@PROCMAN_CFLAGS@ \
-	@SYSTEMD_CFLAGS@
+	-DGSM_LIBEXEC_DIR=\""$(pkglibexecdir)"\" \
+	$(PROCMAN_CFLAGS) \
+	$(SYSTEMD_CFLAGS) \
+	$(WNCK_CFLAGS)
 
 bin_PROGRAMS = gnome-system-monitor nextmon
 
@@ -23,9 +23,12 @@ nextmon_SOURCES = \
 nextmon_LDADD = @PROCMAN_LIBS@ $(top_builddir)/uber/libuber-1.0.la -ldl
 
 nextmon_CPPFLAGS = \
+        $(PROCMAN_CFLAGS) \
 	-I$(top_srcdir)	\
 	-I$(top_builddir)/uber \
 	-DGSM_DATA_DIR=\""$(pkgdatadir)"\"
+
+BUILT_SOURCES = gsm-resources.c
 
 gnome_system_monitor_cpp_files = \
 	argv.cpp \
@@ -62,17 +65,20 @@ gnome_system_monitor_h_files = \
 	defaulttable.h
 
 gnome_system_monitor_SOURCES = \
-  $(gnome_system_monitor_h_files) \
-  $(gnome_system_monitor_cpp_files) \
-  $(gnome_system_monitor_c_files) \
-  procman.cpp
+	$(BUILT_SOURCES) \
+	$(gnome_system_monitor_h_files) \
+	$(gnome_system_monitor_cpp_files) \
+	$(gnome_system_monitor_c_files) \
+	procman.cpp
 
-gnome_system_monitor_LDADD = @PROCMAN_LIBS@ @SYSTEMD_LIBS@
+LDADD = \
+	$(PROCMAN_LIBS) \
+	$(SYSTEMD_LIBS) \
+	$(WNCK_LIBS)
 
-gnome_system_monitor_CPPFLAGS = -DGSM_DATA_DIR=\""$(pkgdatadir)"\" \
-                                -DGSM_LIBEXEC_DIR=\""$(pkglibexecdir)"\"
+gsm-resources.c: gsm.gresource.xml $(shell glib-compile-resources --sourcedir=$(top_srcdir) --generate-dependencies gsm.gresource.xml)
+	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(top_srcdir) --generate-source gsm.gresource.xml
 
-specdir = $(datadir)/procman
 
 # GSettings schemas, enum files and conversion file
 gsettings_ENUM_NAMESPACE = org.gnome.gnome-system-monitor
@@ -85,7 +91,11 @@ gsettings_SCHEMAS = $(gsettings_in_file:.xml.in=.xml)
 dist_noinst_DATA = \
 	$(gsettings_in_file)
 
+EXTRA_DIST = \
+	gsm.gresource.xml
+
 CLEANFILES = \
-	$(gsettings_SCHEMAS)
+	$(gsettings_SCHEMAS) \
+	$(BUILT_SOURCES)
 
 MAINTAINERCLEANFILES = $(gsettings_SCHEMAS:.xml=.valid)

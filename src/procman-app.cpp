@@ -66,6 +66,7 @@ draw_stacked_changed_cb(GSettings *settings, const gchar *key, gpointer data)
 
     app->config.draw_stacked = g_settings_get_boolean(settings, key);
     app->cpu_graph->clear_background();
+    load_graph_reset(app->cpu_graph);
 }
 
 
@@ -436,8 +437,6 @@ procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child
             visible = g_settings_get_boolean (pt_settings, key);
             g_free (key);
 
-            column = gtk_tree_view_get_column (GTK_TREE_VIEW (tree), id);
-            if(!column) continue;
             gtk_tree_view_column_set_visible (column, visible);
             /* ensure column is really visible */
             width = MAX(width, 50);
@@ -671,9 +670,7 @@ void ProcmanApp::on_startup()
     action->signal_activate().connect(sigc::mem_fun(*this, &ProcmanApp::on_preferences_activate));
     add_action(action);
 
-    char* filename = g_build_filename (GSM_DATA_DIR, "menus.ui", NULL);
-    Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file(filename);
-    g_free (filename);
+    Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_resource("/org/gnome/gnome-system-monitor/data/menus.ui");
 
     Glib::RefPtr<Gio::Menu> menu = Glib::RefPtr<Gio::Menu>::cast_static(builder->get_object ("app-menu"));
     set_app_menu (menu);

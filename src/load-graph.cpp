@@ -9,7 +9,6 @@
 #include <dirent.h>
 #include <string.h>
 #include <time.h>
-#include <gdk/gdkx.h>
 
 #include <glib/gi18n.h>
 
@@ -301,6 +300,12 @@ load_graph_draw (GtkWidget *widget,
     cairo_destroy (cr);
 
     return TRUE;
+}
+
+void
+load_graph_reset (LoadGraph *graph)
+{
+    std::fill(graph->data_block.begin(), graph->data_block.end(), -1.0f);
 }
 
 static void

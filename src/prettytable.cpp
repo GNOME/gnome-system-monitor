@@ -1,6 +1,10 @@
 #include <config.h>
+
+#ifdef HAVE_WNCK
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
+#endif
+
 #include <dirent.h>
 #include <sys/stat.h>
 #include <stdio.h>
@@ -28,11 +32,13 @@ namespace
 
 PrettyTable::PrettyTable()
 {
+#ifdef HAVE_WNCK
   WnckScreen* screen = wnck_screen_get_default();
   g_signal_connect(G_OBJECT(screen), "application_opened",
 		   G_CALLBACK(PrettyTable::on_application_opened), this);
   g_signal_connect(G_OBJECT(screen), "application_closed",
 		   G_CALLBACK(PrettyTable::on_application_closed), this);
+#endif
 
   // init GIO apps cache
   std::vector<std::string> dirs = Glib::get_system_data_dirs();
@@ -54,7 +60,7 @@ PrettyTable::~PrettyTable()
 {
 }
 
-
+#ifdef HAVE_WNCK
 void
 PrettyTable::on_application_opened(WnckScreen* screen, WnckApplication* app, gpointer data)
 {
@@ -122,6 +128,7 @@ PrettyTable::unregister_application(pid_t pid)
   if (it != this->apps.end())
     this->apps.erase(it);
 }
+#endif // HAVE_WNCK
 
 void PrettyTable::init_gio_app_cache ()
 {
@@ -210,6 +217,7 @@ PrettyTable::get_icon_from_gio(const ProcInfo &info)
   return icon;
 }
 
+#ifdef HAVE_WNCK
 Glib::RefPtr<Gdk::Pixbuf>
 PrettyTable::get_icon_from_wnck(const ProcInfo &info)
 {
@@ -222,7 +230,7 @@ PrettyTable::get_icon_from_wnck(const ProcInfo &info)
 
   return icon;
 }
-
+#endif
 
 
 Glib::RefPtr<Gdk::Pixbuf>
@@ -279,7 +287,9 @@ PrettyTable::set_icon(ProcInfo &info)
   if (getters.empty())
     {
       getters.push_back(&PrettyTable::get_icon_from_gio);
+#ifdef HAVE_WNCK
       getters.push_back(&PrettyTable::get_icon_from_wnck);
+#endif
       getters.push_back(&PrettyTable::get_icon_from_theme);
       getters.push_back(&PrettyTable::get_icon_from_default);
       getters.push_back(&PrettyTable::get_icon_from_name);

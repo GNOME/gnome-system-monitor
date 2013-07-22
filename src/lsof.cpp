@@ -300,24 +300,14 @@ void procman_lsof(ProcmanApp *app)
     gtk_tree_view_append_column(GTK_TREE_VIEW(tree), column);
 
 
-    GtkWidget *dialog; /* = gtk_dialog_new_with_buttons(_("Search for Open Files"), NULL,
-                          GTK_DIALOG_DESTROY_WITH_PARENT,
-                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-                          NULL); */
-    //dialog = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gchar* filename = g_build_filename (GSM_DATA_DIR, "lsof.ui", NULL);
+    GtkWidget *dialog;
 
     GtkBuilder *builder = gtk_builder_new();
-    gtk_builder_add_from_file (builder, filename, NULL);
+    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/lsof.ui", NULL);
 
     dialog = GTK_WIDGET (gtk_builder_get_object (builder, "lsof_dialog"));
 
     gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(app->main_window));
-
-    // entry = sexy_icon_entry_new();
-    // sexy_icon_entry_add_clear_button(SEXY_ICON_ENTRY(entry));
-    // GtkWidget *icon = gtk_image_new_from_stock(GTK_STOCK_FIND, GTK_ICON_SIZE_MENU);
-    // sexy_icon_entry_set_icon(SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_PRIMARY, GTK_IMAGE(icon));
 
     GtkWidget *entry =  GTK_WIDGET (gtk_builder_get_object (builder, "entry"));
     GtkWidget *search_button =  GTK_WIDGET (gtk_builder_get_object (builder, "search_button"));
@@ -357,6 +347,5 @@ void procman_lsof(ProcmanApp *app)
     gtk_widget_show_all(dialog);
     
     g_object_unref (G_OBJECT (builder));
-    g_free (filename);
 }
 

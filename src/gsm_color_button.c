@@ -240,18 +240,24 @@ gsm_color_button_class_init (GSMColorButtonClass * klass)
 
 
 static cairo_surface_t *
-fill_image_buffer_from_file (cairo_t *cr, const char *filePath)
+fill_image_buffer_from_resource (cairo_t *cr, const char *path)
 {
+  GBytes *bytes;
+  const guint8 *data;
+  gsize len;
   GError *error = NULL;
   RsvgHandle *handle;
   cairo_surface_t *tmp_surface;
   cairo_t *tmp_cr;
 
-  handle = rsvg_handle_new_from_file (filePath, &error);
+  bytes = g_resources_lookup_data (path, 0 , NULL);
+  data = g_bytes_get_data (bytes, &len);
+
+  handle = rsvg_handle_new_from_data (data, len, &error);
 
   if (handle == NULL) {
-    g_warning("rsvg_handle_new_from_file(\"%s\") failed: %s",
-	      filePath, (error ? error->message : "unknown error"));
+    g_warning("rsvg_handle_new_from_data(\"%s\") failed: %s",
+	      path, (error ? error->message : "unknown error"));
     if (error)
       g_error_free(error);
     return NULL;
@@ -383,7 +389,7 @@ render (GtkWidget * widget)
     case GSMCP_TYPE_NETWORK_IN:
       if (color_button->priv->image_buffer == NULL)
 	color_button->priv->image_buffer =
-	  fill_image_buffer_from_file (cr, DATADIR "/pixmaps/gnome-system-monitor/download.svg");
+	  fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/download.svg");
       gtk_widget_set_size_request (widget, 32, 32);
       cairo_move_to (cr, 8.5, 1.5);
       cairo_line_to (cr, 23.5, 1.5);
@@ -414,7 +420,7 @@ render (GtkWidget * widget)
     case GSMCP_TYPE_NETWORK_OUT:
       if (color_button->priv->image_buffer == NULL)
 	color_button->priv->image_buffer =
-	  fill_image_buffer_from_file (cr, DATADIR "/pixmaps/gnome-system-monitor/upload.svg");
+	  fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/upload.svg");
       gtk_widget_set_size_request (widget, 32, 32);
       cairo_move_to (cr, 16.5, 1.5);
       cairo_line_to (cr, 29.5, 17.5);

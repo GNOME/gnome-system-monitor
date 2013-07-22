@@ -43,7 +43,25 @@ SYSTEMD_REQUIRED=38
 # systemd v43 used the C++ keyword 'class' as a function parameter. This breaks the build for C++ programs.
 SYSTEMD_EXCLUDED=43
 
-PKG_CHECK_MODULES(PROCMAN, glib-2.0 >= $GLIB_REQUIRED libgtop-2.0 >= $LIBGTOP_REQUIRED libwnck-3.0 >= $LIBWNCK_REQUIRED gtk+-3.0 >= $GTK_REQUIRED gnome-icon-theme >= $GNOME_ICON_THEME_REQUIRED gtkmm-3.0 >= $GTKMM_REQUIRED libxml-2.0 >= $LIBXML_REQUIRED librsvg-2.0 >= $RSVG_REQUIRED glibmm-2.4 >= $GLIBMM_REQUIRED giomm-2.4 >= $GIOMM_REQUIRED gmodule-2.0)
+PKG_CHECK_MODULES(PROCMAN,
+  glib-2.0 >= $GLIB_REQUIRED
+  libgtop-2.0 >= $LIBGTOP_REQUIRED
+  gtk+-3.0 >= $GTK_REQUIRED
+  gnome-icon-theme >= $GNOME_ICON_THEME_REQUIRED
+  gtkmm-3.0 >= $GTKMM_REQUIRED
+  libxml-2.0 >= $LIBXML_REQUIRED
+  librsvg-2.0 >= $RSVG_REQUIRED
+  glibmm-2.4 >= $GLIBMM_REQUIRED
+  giomm-2.4 >= $GIOMM_REQUIRED
+  gmodule-2.0
+)
+
+AC_ARG_ENABLE(wnck, AS_HELP_STRING([--enable-wnck], [enable wnck support]),enable_wnck=yes,enable_wnck=no)
+if test "x$enable_wnck" != "xno"; then
+        PKG_CHECK_MODULES(WNCK, libwnck-3.0 >= $LIBWNCK_REQUIRED)
+        AC_DEFINE(HAVE_WNCK, 1, [Define if libwnck is available])
+fi
+AM_CONDITIONAL(HAVE_WNCK, [test "enable_wnck" = "yes"])
 
 PKG_CHECK_MODULES(SCRIPTS, glib-2.0 >= $GLIB_REQUIRED)
 
@@ -111,7 +129,6 @@ Makefile
 scripts/Makefile
 uber/Makefile
 src/Makefile
-pixmaps/Makefile
 po/Makefile.in
 help/Makefile
 gnome-system-monitor.desktop.in
@@ -124,12 +141,12 @@ echo "
 
 Configuration:
 
-	Source code location:	${srcdir}
-	C Compiler:		${CC}
-	C++ Compiler:		${CXX}
-	CFLAGS:			${CFLAGS}
-	CXXFLAGS:		${CXXFLAGS}
-	Maintainer mode:	${USER_MAINTAINER_MODE}
-	Languages:		${ALL_LINGUAS}
+        Source code location:   ${srcdir}
+        C Compiler:             ${CC}
+        C++ Compiler:           ${CXX}
+        CFLAGS:                 ${CFLAGS}
+        CXXFLAGS:               ${CXXFLAGS}
+        Maintainer mode:        ${USE_MAINTAINER_MODE}
         systemd support:        ${have_systemd}
+        wnck support:           ${enable_wnck}
 "

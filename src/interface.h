@@ -28,6 +28,5 @@ void            create_main_window (ProcmanApp *app);
 void            update_sensitivity (ProcmanApp *app);
 void            block_priority_changed_handlers(ProcmanApp *app, bool block);
 void            do_popup_menu(ProcmanApp *app, GdkEventButton *event);
-GtkWidget *     make_title_label (const char *text);
 
 #endif /* _PROCMAN_INTERFACE_H_ */
