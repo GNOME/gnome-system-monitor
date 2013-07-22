@@ -642,6 +642,14 @@ void ProcmanApp::on_startup()
     Glib::RefPtr<Gio::Menu> menu = Glib::RefPtr<Gio::Menu>::cast_static(builder->get_object ("app-menu"));
     set_app_menu (menu);
 
+    add_accelerator("<Primary>d", "win.show-dependencies", NULL);
+    add_accelerator("<Primary>s", "win.send-signal-stop", NULL);
+    add_accelerator("<Primary>c", "win.send-signal-cont", NULL);
+    add_accelerator("<Primary>e", "win.send-signal-end", NULL);
+    add_accelerator("<Primary>k", "win.send-signal-kill", NULL);
+    add_accelerator("<Primary>m", "win.memory-maps", NULL);
+    add_accelerator("<Primary>f", "win.open-files", NULL);
+
     Gtk::Window::set_default_icon_name ("utilities-system-monitor");
 
     glibtop_init ();
