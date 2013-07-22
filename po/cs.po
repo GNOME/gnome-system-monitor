@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-07-06 00:01+0000\n"
-"PO-Revision-Date: 2013-07-06 13:16+0200\n"
+"POT-Creation-Date: 2013-07-22 20:03+0000\n"
+"PO-Revision-Date: 2013-07-22 22:29+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -29,12 +29,12 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/callbacks.cpp:184 ../src/procman-app.cpp:360
+#: ../src/callbacks.cpp:86 ../src/procman-app.cpp:337
 msgid "System Monitor"
 msgstr "Sledování systému"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2
-#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/callbacks.cpp:185
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/callbacks.cpp:87
 msgid "View current processes and monitor system state"
 msgstr "Zobrazit aktuální procesy a sledovat stav systému"
 
@@ -44,7 +44,7 @@ msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr ""
 "Sledování;Systém;Proces;CPU;Procesor;Paměť;RAM;Síť;Historie;Využití;Zátěž;"
 
-#: ../gnome-system-monitor-kde.desktop.in.in.h:1 ../src/procman-app.cpp:599
+#: ../gnome-system-monitor-kde.desktop.in.in.h:1 ../src/procman-app.cpp:565
 msgid "GNOME System Monitor"
 msgstr "Sledování systému GNOME"
 
@@ -84,12 +84,12 @@ msgstr "Historie CPU"
 msgid "Memory and Swap History"
 msgstr "Historie použití paměti a odkládacího prostoru"
 
-#: ../data/interface.ui.h:7 ../src/interface.cpp:249
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:211
+#: ../data/interface.ui.h:7 ../src/interface.cpp:158
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:239
 msgid "Memory"
 msgstr "Paměť"
 
-#: ../data/interface.ui.h:8 ../src/interface.cpp:261
+#: ../data/interface.ui.h:8 ../src/interface.cpp:170
 msgid "Swap"
 msgstr "Odkládací prostor"
 
@@ -97,7 +97,7 @@ msgstr "Odkládací prostor"
 msgid "Network History"
 msgstr "Historie sítě"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:288
+#: ../data/interface.ui.h:10 ../src/interface.cpp:197
 msgid "Receiving"
 msgstr "Příjem"
 
@@ -105,7 +105,7 @@ msgstr "Příjem"
 msgid "Total Received"
 msgstr "Celkem přijato"
 
-#: ../data/interface.ui.h:12 ../src/interface.cpp:304
+#: ../data/interface.ui.h:12 ../src/interface.cpp:213
 msgid "Sending"
 msgstr "Odesílání"
 
@@ -120,6 +120,78 @@ msgstr "Prostředky"
 #: ../data/interface.ui.h:15 ../data/preferences.ui.h:18
 msgid "File Systems"
 msgstr "Souborové systémy"
+
+#: ../data/interface.ui.h:16
+msgid "_Active Processes"
+msgstr "_Aktivní procesy"
+
+#: ../data/interface.ui.h:17
+msgid "A_ll Processes"
+msgstr "_Všechny procesy"
+
+#: ../data/interface.ui.h:18
+msgid "M_y Processes"
+msgstr "_Moje procesy"
+
+#: ../data/interface.ui.h:19
+msgid "_Dependencies"
+msgstr "Zá_vislosti"
+
+#: ../data/interface.ui.h:20
+msgid "_Stop Process"
+msgstr "Za_stavit proces"
+
+#: ../data/interface.ui.h:21
+msgid "_Continue Process"
+msgstr "_Pokračovat v procesu"
+
+#: ../data/interface.ui.h:22 ../src/procdialogs.cpp:92
+msgid "_End Process"
+msgstr "U_končit proces"
+
+#: ../data/interface.ui.h:23 ../src/procdialogs.cpp:81
+msgid "_Kill Process"
+msgstr "_Zabít proces"
+
+#: ../data/interface.ui.h:24
+msgid "_Change Priority"
+msgstr "_Změnit prioritu"
+
+#: ../data/interface.ui.h:25 ../src/util.cpp:217
+msgid "Very High"
+msgstr "Velmi vysoká"
+
+#: ../data/interface.ui.h:26 ../src/util.cpp:219
+msgid "High"
+msgstr "Vysoká"
+
+#: ../data/interface.ui.h:27 ../src/util.cpp:221
+msgid "Normal"
+msgstr "Normální"
+
+#: ../data/interface.ui.h:28 ../src/util.cpp:223
+msgid "Low"
+msgstr "Nízká"
+
+#: ../data/interface.ui.h:29 ../src/util.cpp:225
+msgid "Very Low"
+msgstr "Velmi nízká"
+
+#: ../data/interface.ui.h:30
+msgid "Custom"
+msgstr "Volitelná"
+
+#: ../data/interface.ui.h:31
+msgid "_Memory Maps"
+msgstr "_Mapy paměti"
+
+#: ../data/interface.ui.h:32
+msgid "Open _Files"
+msgstr "Otevřené _soubory"
+
+#: ../data/interface.ui.h:33
+msgid "_Properties"
+msgstr "_Vlastnosti"
 
 #: ../data/lsof.ui.h:1
 msgctxt "Window title for 'Search for Open Files' dialog"
@@ -147,7 +219,7 @@ msgid "S_earch results:"
 msgstr "Výsledky hl_edání:"
 
 #: ../data/lsof.ui.h:7 ../data/openfiles.ui.h:2 ../data/preferences.ui.h:3
-#: ../src/memmaps.cpp:469 ../src/procproperties.cpp:211
+#: ../src/memmaps.cpp:469 ../src/procproperties.cpp:213
 msgid "_Close"
 msgstr "_Zavřít"
 
@@ -268,7 +340,7 @@ msgstr "Zobrazit kartu Souborové systémy"
 msgid "Show the application's version"
 msgstr "Zobrazit verzi aplikace"
 
-#: ../src/callbacks.cpp:195
+#: ../src/callbacks.cpp:97
 msgid "translator-credits"
 msgstr ""
 "Miloslav Trmač <mitr@volny.cz>\n"
@@ -348,7 +420,7 @@ msgstr "Nadpis"
 msgid "The title of the color selection dialog"
 msgstr "Nadpis dialogu výběru barvy"
 
-#: ../src/gsm_color_button.c:210 ../src/gsm_color_button.c:628
+#: ../src/gsm_color_button.c:210 ../src/gsm_color_button.c:634
 msgid "Pick a Color"
 msgstr "Vybrat barvu"
 
@@ -364,187 +436,30 @@ msgstr "Vybraná barva"
 msgid "Type of color picker"
 msgstr "Typ výběru barvy"
 
-#: ../src/gsm_color_button.c:550
+#: ../src/gsm_color_button.c:556
 msgid "Received invalid color data\n"
 msgstr "Přijata neplatná data barvy\n"
 
-#: ../src/gsm_color_button.c:651
+#: ../src/gsm_color_button.c:657
 msgid "Click to set graph colors"
 msgstr "Kliknutím nastavíte barvy grafu"
 
-#: ../src/interface.cpp:47
-msgid "_View"
-msgstr "_Zobrazit"
-
-#: ../src/interface.cpp:49
-msgid "_Stop Process"
-msgstr "Za_stavit proces"
-
-#: ../src/interface.cpp:50
-msgid "Stop process"
-msgstr "Zastavit proces"
-
-#: ../src/interface.cpp:51
-msgid "_Continue Process"
-msgstr "_Pokračovat v procesu"
-
-#: ../src/interface.cpp:52
-msgid "Continue process if stopped"
-msgstr "Pokračovat v procesu, je-li zastaven"
-
-#: ../src/interface.cpp:54 ../src/procdialogs.cpp:92
-msgid "_End Process"
-msgstr "U_končit proces"
-
-#: ../src/interface.cpp:55
-msgid "Force process to finish normally"
-msgstr "Vynutit běžné ukončení procesu"
-
-#: ../src/interface.cpp:56 ../src/procdialogs.cpp:81
-msgid "_Kill Process"
-msgstr "_Zabít proces"
-
-#: ../src/interface.cpp:57
-msgid "Force process to finish immediately"
-msgstr "Vynutit okamžité ukončení procesu"
-
-#: ../src/interface.cpp:58
-msgid "_Change Priority"
-msgstr "_Změnit prioritu"
-
-#: ../src/interface.cpp:59
-msgid "Change the order of priority of process"
-msgstr "Změnit prioritu procesu"
-
-#: ../src/interface.cpp:61
-msgid "_Refresh"
-msgstr "_Aktualizovat"
-
-#: ../src/interface.cpp:62
-msgid "Refresh the process list"
-msgstr "Aktualizovat seznam procesů"
-
-#: ../src/interface.cpp:64
-msgid "_Memory Maps"
-msgstr "_Mapy paměti"
-
-#: ../src/interface.cpp:65
-msgid "Open the memory maps associated with a process"
-msgstr "Otevřít mapy paměti asociované s procesem"
-
-#. Translators: this means 'Files that are open' (open is no verb here)
-#: ../src/interface.cpp:67
-msgid "Open _Files"
-msgstr "Otevřené _soubory"
-
-#: ../src/interface.cpp:68
-msgid "View the files opened by a process"
-msgstr "Zobrazit soubory otevřené procesem"
-
-#: ../src/interface.cpp:69
-msgid "_Properties"
-msgstr "_Vlastnosti"
-
-#: ../src/interface.cpp:70
-msgid "View additional information about a process"
-msgstr "Zobrazit doplňující informace o procesu"
-
-#: ../src/interface.cpp:75
-msgid "_Dependencies"
-msgstr "Zá_vislosti"
-
-#: ../src/interface.cpp:76
-msgid "Show parent/child relationship between processes"
-msgstr "Zobrazovat vztahy rodič/potomek mezi procesy"
-
-#: ../src/interface.cpp:83
-msgid "_Active Processes"
-msgstr "_Aktivní procesy"
-
-#: ../src/interface.cpp:84
-msgid "Show active processes"
-msgstr "Zobrazit aktivní procesy"
-
-#: ../src/interface.cpp:85
-msgid "A_ll Processes"
-msgstr "_Všechny procesy"
-
-#: ../src/interface.cpp:86
-msgid "Show all processes"
-msgstr "Zobrazit všechny procesy"
-
-#: ../src/interface.cpp:87
-msgid "M_y Processes"
-msgstr "_Moje procesy"
-
-#: ../src/interface.cpp:88
-msgid "Show only user-owned processes"
-msgstr "Zobrazit jen procesy patřící uživateli"
-
-#: ../src/interface.cpp:93 ../src/util.cpp:217
-msgid "Very High"
-msgstr "Velmi vysoká"
-
-#: ../src/interface.cpp:94
-msgid "Set process priority to very high"
-msgstr "Nastavit prioritu procesu jako velmi vysokou"
-
-#: ../src/interface.cpp:95 ../src/util.cpp:219
-msgid "High"
-msgstr "Vysoká"
-
-#: ../src/interface.cpp:96
-msgid "Set process priority to high"
-msgstr "Nastavit prioritu procesu jako vysokou"
-
-#: ../src/interface.cpp:97 ../src/util.cpp:221
-msgid "Normal"
-msgstr "Normální"
-
-#: ../src/interface.cpp:98
-msgid "Set process priority to normal"
-msgstr "Nastavit prioritu procesu jako normální"
-
-#: ../src/interface.cpp:99 ../src/util.cpp:223
-msgid "Low"
-msgstr "Nízká"
-
-#: ../src/interface.cpp:100
-msgid "Set process priority to low"
-msgstr "Nastavit prioritu procesu jako nízkou"
-
-#: ../src/interface.cpp:101 ../src/util.cpp:225
-msgid "Very Low"
-msgstr "Velmi nízká"
-
-#: ../src/interface.cpp:102
-msgid "Set process priority to very low"
-msgstr "Nastavit prioritu procesu jako velmi nízkou"
-
-#: ../src/interface.cpp:103
-msgid "Custom"
-msgstr "Volitelná"
-
-#: ../src/interface.cpp:104
-msgid "Set process priority manually"
-msgstr "Nastavit prioritu procesu manuálně"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:178
+#: ../src/interface.cpp:87
 #, c-format
 msgid "Pick a Color for '%s'"
 msgstr "Vybrat barvu pro „%s“"
 
-#: ../src/interface.cpp:214 ../src/procproperties.cpp:90
+#: ../src/interface.cpp:123 ../src/procproperties.cpp:92
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:216
+#: ../src/interface.cpp:125
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/load-graph.cpp:171
+#: ../src/load-graph.cpp:170
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
@@ -552,12 +467,12 @@ msgstr[0] "%u sekunda"
 msgstr[1] "%u sekundy"
 msgstr[2] "%u sekund"
 
-#: ../src/load-graph.cpp:366
+#: ../src/load-graph.cpp:385
 msgid "not available"
 msgstr "nedostupné"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:369
+#: ../src/load-graph.cpp:388
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) z %s"
@@ -679,7 +594,7 @@ msgstr "FD"
 msgid "Object"
 msgstr "Objekt"
 
-#: ../src/openfiles.cpp:347
+#: ../src/openfiles.cpp:345
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_Soubory otevřené procesem „%s“ (PID %u):"
@@ -769,12 +684,8 @@ msgid "Time in milliseconds between updates of the devices list"
 msgstr "Čas v milisekundách mezi aktualizacemi seznamu zařízení"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
-msgid ""
-"Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
-"active"
-msgstr ""
-"Určuje, které procesy zobrazovat jako výchozí. 0 znamená všechny, 1 znamená "
-"uživatele a 2 znamená aktivní"
+msgid "Determines which processes to show."
+msgstr "Určuje, které procesy se mají zobrazit."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
 msgid "Saves the currently viewed tab"
@@ -1142,16 +1053,16 @@ msgstr ""
 "Ukončení procesu může zničit data, přerušit sezení, nebo způsobit "
 "bezpečnostní riziko. Ukončovat by se měly jen neodpovídající procesy."
 
-#: ../src/procdialogs.cpp:171
+#: ../src/procdialogs.cpp:169
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Změnit prioritu procesu „%s“ (PID: %u)"
 
-#: ../src/procdialogs.cpp:189
+#: ../src/procdialogs.cpp:187
 msgid "Note:"
 msgstr "Poznámka:"
 
-#: ../src/procdialogs.cpp:190
+#: ../src/procdialogs.cpp:188
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1159,11 +1070,11 @@ msgstr ""
 "Priorita procesu je dána jeho hodnotou nice. Nižší hodnota nice odpovídá "
 "vyšší prioritě."
 
-#: ../src/procdialogs.cpp:362 ../src/procman-app.cpp:462
+#: ../src/procdialogs.cpp:359 ../src/procman-app.cpp:430
 msgid "Icon"
 msgstr "Ikona"
 
-#: ../src/procman-app.cpp:576
+#: ../src/procman-app.cpp:542
 msgid "A simple process and system monitor."
 msgstr "Jednoduché sledování procesů a systému."
 
@@ -1171,43 +1082,43 @@ msgstr "Jednoduché sledování procesů a systému."
 msgid "N/A"
 msgstr "---"
 
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:196
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:224
 msgid "Process Name"
 msgstr "Název procesu"
 
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:197
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:225
 msgid "User"
 msgstr "Uživatel"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:198
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:226
 msgid "Status"
 msgstr "Stav"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:199
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:227
 msgid "Virtual Memory"
 msgstr "Virtuální paměť"
 
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:200
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:228
 msgid "Resident Memory"
 msgstr "Rezidentní paměť"
 
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:201
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:229
 msgid "Writable Memory"
 msgstr "Zapisovatelná paměť"
 
-#: ../src/procproperties.cpp:88 ../src/proctable.cpp:202
+#: ../src/procproperties.cpp:88 ../src/proctable.cpp:230
 msgid "Shared Memory"
 msgstr "Sdílená paměť"
 
-#: ../src/procproperties.cpp:89 ../src/proctable.cpp:203
+#: ../src/procproperties.cpp:90 ../src/proctable.cpp:231
 msgid "X Server Memory"
 msgstr "Paměť serveru X"
 
-#: ../src/procproperties.cpp:91 ../src/proctable.cpp:205
+#: ../src/procproperties.cpp:93 ../src/proctable.cpp:233
 msgid "CPU Time"
 msgstr "Čas CPU"
 
-#: ../src/procproperties.cpp:91
+#: ../src/procproperties.cpp:93
 #, c-format
 msgid "%lld second"
 msgid_plural "%lld seconds"
@@ -1215,72 +1126,72 @@ msgstr[0] "%lld sekunda"
 msgstr[1] "%lld sekundy"
 msgstr[2] "%lld sekund"
 
-#: ../src/procproperties.cpp:92 ../src/proctable.cpp:206
+#: ../src/procproperties.cpp:94 ../src/proctable.cpp:234
 msgid "Started"
 msgstr "Spuštěn"
 
-#: ../src/procproperties.cpp:93 ../src/proctable.cpp:207
+#: ../src/procproperties.cpp:95 ../src/proctable.cpp:235
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/procproperties.cpp:94 ../src/proctable.cpp:221
+#: ../src/procproperties.cpp:96 ../src/proctable.cpp:249
 msgid "Priority"
 msgstr "Priorita"
 
-#: ../src/procproperties.cpp:95 ../src/proctable.cpp:208
+#: ../src/procproperties.cpp:97 ../src/proctable.cpp:236
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:96 ../src/proctable.cpp:209
+#: ../src/procproperties.cpp:98 ../src/proctable.cpp:237
 msgid "Security Context"
 msgstr "Kontext zabezpečení"
 
-#: ../src/procproperties.cpp:97 ../src/proctable.cpp:210
+#: ../src/procproperties.cpp:99 ../src/proctable.cpp:238
 msgid "Command Line"
 msgstr "Příkazový řádek"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:98 ../src/proctable.cpp:213
+#: ../src/procproperties.cpp:100 ../src/proctable.cpp:241
 msgid "Waiting Channel"
 msgstr "Kanál čekání"
 
-#: ../src/procproperties.cpp:99 ../src/proctable.cpp:214
+#: ../src/procproperties.cpp:101 ../src/proctable.cpp:242
 msgid "Control Group"
 msgstr "Skupina vlastníků"
 
-#: ../src/procproperties.cpp:209
+#: ../src/procproperties.cpp:211
 msgid "Process Properties"
 msgstr "Vlastnosti procesu"
 
-#: ../src/procproperties.cpp:229
+#: ../src/procproperties.cpp:231
 #, c-format
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "Vlastnosti procesu „%s“ (PID %u):"
 
-#: ../src/proctable.cpp:204
+#: ../src/proctable.cpp:232
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:215
+#: ../src/proctable.cpp:243
 msgid "Unit"
 msgstr "Součást"
 
-#: ../src/proctable.cpp:216
+#: ../src/proctable.cpp:244
 msgid "Session"
 msgstr "Sezení"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:219
+#: ../src/proctable.cpp:247
 msgid "Seat"
 msgstr "Sídlo"
 
-#: ../src/proctable.cpp:220
+#: ../src/proctable.cpp:248
 msgid "Owner"
 msgstr "Vlastník"
 
-#: ../src/proctable.cpp:1064
+#: ../src/proctable.cpp:1106
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Průměry zátěže za posledních 1, 5, 15 minut: %0.2f, %0.2f, %0.2f"
