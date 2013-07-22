@@ -449,14 +449,21 @@ create_main_window (ProcmanApp *app)
     gint width, height, xpos, ypos;
     GtkWidget *main_window;
     GtkWidget *notebook;
+    GtkWidget *view_menu_button;
+    GMenuModel *view_menu_model;
 
     GtkBuilder *builder = gtk_builder_new();
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/interface.ui", NULL);
+    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/menus.ui", NULL);
 
     main_window = GTK_WIDGET (gtk_builder_get_object (builder, "main_window"));
     gtk_window_set_application (GTK_WINDOW (main_window), app->gobj());
     gtk_widget_set_name (main_window, "gnome-system-monitor");
     app->main_window = main_window;
+
+    view_menu_button = GTK_WIDGET (gtk_builder_get_object (builder, "viewmenubutton"));
+    view_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "view-menu"));
+    gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (view_menu_button), view_menu_model);
 
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL },
