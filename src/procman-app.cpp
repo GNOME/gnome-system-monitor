@@ -5,6 +5,7 @@
 #include <glibtop/close.h>
 
 #include "procman-app.h"
+#include "procdialogs.h"
 #include "interface.h"
 #include "proctable.h"
 #include "callbacks.h"
@@ -13,6 +14,7 @@
 #include "argv.h"
 #include "util.h"
 #include "cgroups.h"
+#include "lsof.h"
 
 static void
 mount_changed(const Glib::RefPtr<Gio::Mount>&, ProcmanApp *app)
@@ -575,19 +577,23 @@ int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>&
 void
 ProcmanApp::on_help_activate(const Glib::VariantBase&)
 {
-    cb_help_contents (NULL, this);
+    GError* error = 0;
+    if (!g_app_info_launch_default_for_uri("help:gnome-system-monitor", NULL, &error)) {
+        g_warning("Could not display help : %s", error->message);
+        g_error_free(error);
+    }
 }
 
 void
 ProcmanApp::on_lsof_activate(const Glib::VariantBase&)
 {
-    cb_show_lsof (NULL, this);
+    procman_lsof(this);
 }
 
 void
 ProcmanApp::on_preferences_activate(const Glib::VariantBase&)
 {
-    cb_edit_preferences (NULL, this);
+    procdialog_create_preferences_dialog (this);
 }
 
 void

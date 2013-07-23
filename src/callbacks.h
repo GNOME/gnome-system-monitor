@@ -24,16 +24,9 @@
 #include <gtk/gtk.h>
 #include "gsm_color_button.h"
 
-
-void            cb_show_lsof(GtkAction *action, gpointer data);
-void            cb_edit_preferences (GtkAction *action, gpointer data);
-
-void            cb_help_contents (GtkAction *action, gpointer data);
 void            cb_about (GtkAction *action, gpointer data);
 
 gboolean        cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data);
-
-void            cb_info_button_pressed (GtkButton *button, gpointer user_data);
 
 void            cb_cpu_color_changed (GSMColorButton *widget, gpointer user_data);
 void            cb_mem_color_changed (GSMColorButton *widget, gpointer user_data);

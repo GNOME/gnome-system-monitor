@@ -37,23 +37,6 @@
 #include "lsof.h"
 
 void
-cb_edit_preferences (GtkAction *action, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-
-    procdialog_create_preferences_dialog (app);
-}
-
-
-void
-cb_show_lsof(GtkAction *action, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-    procman_lsof(app);
-}
-
-
-void
 cb_about (GtkAction *action, gpointer data)
 {
     ProcmanApp *app = static_cast<ProcmanApp *>(data);
@@ -100,18 +83,6 @@ cb_about (GtkAction *action, gpointer data)
         NULL
         );
 }
-
-
-void
-cb_help_contents (GtkAction *action, gpointer data)
-{
-    GError* error = 0;
-    if (!g_app_info_launch_default_for_uri("help:gnome-system-monitor", NULL, &error)) {
-        g_warning("Could not display help : %s", error->message);
-        g_error_free(error);
-    }
-}
-
 
 gboolean
 cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data)
