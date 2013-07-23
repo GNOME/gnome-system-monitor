@@ -7,19 +7,7 @@ HELP_FILES =			\
 		legal.xml
 
 HELP_MEDIA = 					\
-		figures/addColumn.png		\
-		figures/changePriority.png	\
-		figures/colorPanel.png		\
-		figures/columnContextMenu.png	\
-		figures/gnome-system-monitor_window.png \
-		figures/memoryMaps.png		\
-		figures/moreInfo.png		\
-		figures/processListing.png	\
-		figures/sortButton.png		\
-		figures/sortMenu2.png		\
-		figures/sortMenu.png		\
-		figures/systemMonitor.png	\
-		figures/viewMenu.png
+		figures/gnome-system-monitor_window.png
 
 HELP_LINGUAS = ar bg ca cs da de el es eu fr gl ja oc pa pt_BR ru sl sv zh_CN
 

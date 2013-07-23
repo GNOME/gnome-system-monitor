@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <interface>
   <menu id="app-menu">
     <section>
@@ -16,6 +17,7 @@
       <item>
         <attribute name="label" translatable="yes">Help</attribute>
         <attribute name="action">app.help</attribute>
+        <attribute name="accel">F1</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">About</attribute>
@@ -25,6 +27,115 @@
         <attribute name="label" translatable="yes">Quit</attribute>
         <attribute name="action">app.quit</attribute>
         <attribute name="accel">&lt;Primary&gt;q</attribute>
+      </item>
+    </section>
+  </menu>
+   <menu id="view-menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Active Processes</attribute>
+        <attribute name="action">win.show-whose-processes</attribute>
+        <attribute name="target">active</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">A_ll Processes</attribute>
+        <attribute name="action">win.show-whose-processes</attribute>
+        <attribute name="target">all</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">M_y Processes</attribute>
+        <attribute name="action">win.show-whose-processes</attribute>
+        <attribute name="target">user</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Dependencies</attribute>
+        <attribute name="action">win.show-dependencies</attribute>
+        <attribute name="accel">&lt;Primary&gt;d</attribute>
+      </item>
+    </section>
+  </menu>
+  <menu id="process-popup-menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Stop Process</attribute>
+        <attribute name="action">win.send-signal-stop</attribute>
+        <attribute name="accel">&lt;Primary&gt;s</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Continue Process</attribute>
+        <attribute name="action">win.send-signal-cont</attribute>
+        <attribute name="accel">&lt;Primary&gt;c</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_End Process</attribute>
+        <attribute name="action">win.send-signal-end</attribute>
+        <attribute name="accel">&lt;Primary&gt;e</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Kill Process</attribute>
+        <attribute name="action">win.send-signal-kill</attribute>
+        <attribute name="accel">&lt;Primary&gt;k</attribute>
+      </item>
+    </section>
+    <section>
+      <submenu>
+        <attribute name="label" translatable="yes">_Change Priority</attribute>
+        <section>
+          <item>
+            <attribute name="label" translatable="yes">Very High</attribute>
+            <attribute name="action">win.priority</attribute>
+            <attribute name="target">very-high</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">High</attribute>
+            <attribute name="action">win.priority</attribute>
+            <attribute name="target">high</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Normal</attribute>
+            <attribute name="action">win.priority</attribute>
+            <attribute name="target">normal</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Low</attribute>
+            <attribute name="action">win.priority</attribute>
+            <attribute name="target">low</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">Very Low</attribute>
+            <attribute name="action">win.priority</attribute>
+            <attribute name="target">very-low</attribute>
+          </item>
+        </section>
+        <section>
+          <item>
+            <attribute name="label" translatable="yes">Custom</attribute>
+            <attribute name="action">win.priority</attribute>
+            <attribute name="target">custom</attribute>
+          </item>
+        </section>
+      </submenu>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Memory Maps</attribute>
+        <attribute name="action">win.memory-maps</attribute>
+        <attribute name="accel">&lt;Primary&gt;m</attribute>
+      </item>
+      <item>
+	<attribute name="label" translatable="yes" comments="Translators: this means 'Files that are open' (open is not a verb here)">Open _Files</attribute>
+        <attribute name="action">win.open-files</attribute>
+        <attribute name="accel">&lt;Primary&gt;f</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Properties</attribute>
+        <attribute name="action">win.process-properties</attribute>
       </item>
     </section>
   </menu>

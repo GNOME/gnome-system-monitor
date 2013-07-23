@@ -32,124 +32,9 @@
 #include "procactions.h"
 #include "procman-app.h"
 #include "procdialogs.h"
-#include "memmaps.h"
-#include "openfiles.h"
-#include "procproperties.h"
 #include "load-graph.h"
 #include "disks.h"
 #include "lsof.h"
-
-void
-cb_kill_sigstop(GtkAction *action, gpointer data)
-{
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
-
-    /* no confirmation */
-    kill_process (app, SIGSTOP);
-}
-
-
-
-
-void
-cb_kill_sigcont(GtkAction *action, gpointer data)
-{
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
-
-    /* no confirmation */
-    kill_process (app, SIGCONT);
-}
-
-
-
-static void
-kill_process_helper(ProcmanApp *app, int sig)
-{
-    if (app->config.show_kill_warning)
-        procdialog_create_kill_dialog (app, sig);
-    else
-        kill_process (app, sig);
-}
-
-
-void
-cb_edit_preferences (GtkAction *action, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-
-    procdialog_create_preferences_dialog (app);
-}
-
-
-void
-cb_renice (GtkAction *action, GtkRadioAction *current, gpointer data)
-{
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
-
-    gint selected = gtk_radio_action_get_current_value(current);
-
-    if (selected == CUSTOM_PRIORITY)
-    {
-       procdialog_create_renice_dialog (app);
-    } else {
-       gint new_nice_value = 0;
-       switch (selected) {
-           case VERY_HIGH_PRIORITY: new_nice_value = -20; break;
-           case HIGH_PRIORITY: new_nice_value = -5; break;
-           case NORMAL_PRIORITY: new_nice_value = 0; break;
-           case LOW_PRIORITY: new_nice_value = 5; break;
-           case VERY_LOW_PRIORITY: new_nice_value = 19; break;
-       }
-       renice(app, new_nice_value);
-    }
-}
-
-
-void
-cb_end_process (GtkAction *action, gpointer data)
-{
-    kill_process_helper(static_cast<ProcmanApp *>(data), SIGTERM);
-}
-
-
-void
-cb_kill_process (GtkAction *action, gpointer data)
-{
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
-    kill_process_helper(app, SIGKILL);
-}
-
-
-void
-cb_show_memory_maps (GtkAction *action, gpointer data)
-{
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
-
-    create_memmaps_dialog (app);
-}
-
-void
-cb_show_open_files (GtkAction *action, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-
-    create_openfiles_dialog (app);
-}
-
-void
-cb_show_process_properties (GtkAction *action, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-    create_procproperties_dialog (app);
-}
-
-void
-cb_show_lsof(GtkAction *action, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-    procman_lsof(app);
-}
-
 
 void
 cb_about (GtkAction *action, gpointer data)
@@ -199,18 +84,6 @@ cb_about (GtkAction *action, gpointer data)
         );
 }
 
-
-void
-cb_help_contents (GtkAction *action, gpointer data)
-{
-    GError* error = 0;
-    if (!g_app_info_launch_default_for_uri("help:gnome-system-monitor", NULL, &error)) {
-        g_warning("Could not display help : %s", error->message);
-        g_error_free(error);
-    }
-}
-
-
 gboolean
 cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data)
 {
@@ -219,14 +92,6 @@ cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data)
     app->shutdown ();
 
     return TRUE;
-}
-
-
-void
-cb_end_process_button_pressed (GtkButton *button, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-    kill_process_helper(app, SIGTERM);
 }
 
 void
@@ -327,132 +192,25 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
     gtk_tree_selection_selected_foreach (app->selection, get_last_selected,
                                          &app->selected_process);
     if (app->selected_process) {
-        gint value;
+        GVariant *priority;
         gint nice = app->selected_process->nice;
         if (nice < -7)
-            value = VERY_HIGH_PRIORITY;
+            priority = g_variant_new_string ("very-high");
         else if (nice < -2)
-            value = HIGH_PRIORITY;
+            priority = g_variant_new_string ("high");
         else if (nice < 3)
-            value = NORMAL_PRIORITY;
+            priority = g_variant_new_string ("normal");
         else if (nice < 7)
-            value = LOW_PRIORITY;
+            priority = g_variant_new_string ("low");
         else
-            value = VERY_LOW_PRIORITY;
+            priority = g_variant_new_string ("very-low");
 
-        GtkRadioAction* normal = GTK_RADIO_ACTION(gtk_action_group_get_action(app->action_group, "Normal"));
-        block_priority_changed_handlers(app, TRUE);
-        gtk_radio_action_set_current_value(normal, value);
-        block_priority_changed_handlers(app, FALSE);
+        GAction *action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
+                                                      "priority");
 
+        g_action_change_state (action, priority);
     }
     update_sensitivity(app);
-}
-
-
-gboolean
-cb_tree_button_pressed (GtkWidget *widget,
-                        GdkEventButton *event,
-                        gpointer data)
-{
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
-
-    if (event->button == 3 && event->type == GDK_BUTTON_PRESS) {
-        do_popup_menu (app, event);
-        return TRUE;
-    }
-    return FALSE;
-}
-
-
-gboolean
-cb_tree_popup_menu (GtkWidget *widget, gpointer data)
-{
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
-
-    do_popup_menu (app, NULL);
-
-    return TRUE;
-}
-
-
-void
-cb_switch_page (GtkNotebook *nb, GtkWidget *page,
-                gint num, gpointer data)
-{
-    cb_change_current_page (nb, num, data);
-}
-
-void
-cb_change_current_page (GtkNotebook *nb, gint num, gpointer data)
-{
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
-
-    app->config.current_tab = num;
-
-
-    if (num == PROCMAN_TAB_PROCESSES) {
-
-        cb_timeout (app);
-
-        if (!app->timeout)
-            app->timeout = g_timeout_add (
-                app->config.update_interval,
-                cb_timeout, app);
-
-        update_sensitivity(app);
-        gtk_widget_grab_focus(app->tree);
-    }
-    else {
-        if (app->timeout) {
-            g_source_remove (app->timeout);
-            app->timeout = 0;
-        }
-
-        update_sensitivity(app);
-    }
-
-
-    if (num == PROCMAN_TAB_RESOURCES) {
-        load_graph_start (app->cpu_graph);
-        load_graph_start (app->mem_graph);
-        load_graph_start (app->net_graph);
-    }
-    else {
-        load_graph_stop (app->cpu_graph);
-        load_graph_stop (app->mem_graph);
-        load_graph_stop (app->net_graph);
-    }
-
-
-    if (num == PROCMAN_TAB_DISKS) {
-
-        cb_update_disks (app);
-
-        if(!app->disk_timeout) {
-            app->disk_timeout =
-                g_timeout_add (app->config.disks_update_interval,
-                               cb_update_disks,
-                               app);
-        }
-    }
-    else {
-        if(app->disk_timeout) {
-            g_source_remove (app->disk_timeout);
-            app->disk_timeout = 0;
-        }
-    }
-
-}
-
-
-
-gint
-cb_user_refresh (GtkAction*, gpointer data)
-{
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
-    proctable_update_all(app);
-    return FALSE;
 }
 
 
@@ -491,16 +249,6 @@ cb_refresh_icons (GtkIconTheme *theme, gpointer data)
     cb_timeout(app);
 }
 
-void
-cb_radio_processes(GtkAction *action, GtkRadioAction *current, gpointer data)
-{
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
-
-    app->config.whose_process = gtk_radio_action_get_current_value(current);
-
-    g_settings_set_int (app->settings, "view-as",
-                        app->config.whose_process);
-}
 
 void
 cb_column_resized(GtkWidget *widget, GParamSpec* param, gpointer data)

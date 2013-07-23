@@ -5,6 +5,7 @@
 #include <glibtop/close.h>
 
 #include "procman-app.h"
+#include "procdialogs.h"
 #include "interface.h"
 #include "proctable.h"
 #include "callbacks.h"
@@ -13,6 +14,7 @@
 #include "argv.h"
 #include "util.h"
 #include "cgroups.h"
+#include "lsof.h"
 
 static void
 mount_changed(const Glib::RefPtr<Gio::Mount>&, ProcmanApp *app)
@@ -35,15 +37,12 @@ init_volume_monitor(ProcmanApp *app)
 }
 
 static void
-tree_changed_cb (GSettings *settings, const gchar *key, gpointer data)
+cb_show_dependencies_changed (GSettings *settings, const gchar *key, gpointer data)
 {
     ProcmanApp *app = static_cast<ProcmanApp *>(data);
 
-    app->config.show_tree = g_settings_get_boolean(settings, key);
-
-    g_object_set(G_OBJECT(app->tree),
-                 "show-expanders", app->config.show_tree,
-                 NULL);
+    gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (app->tree),
+                                      g_settings_get_boolean (settings, "show-dependencies"));
 
     proctable_clear_tree (app);
     proctable_update_all (app);
@@ -81,24 +80,12 @@ network_in_bits_changed_cb(GSettings *settings, const gchar *key, gpointer data)
 }
 
 static void
-view_as_changed_cb (GSettings *settings, const gchar *key, gpointer data)
+cb_show_whose_processes_changed (GSettings *settings, const gchar *key, gpointer data)
 {
     ProcmanApp *app = static_cast<ProcmanApp *>(data);
 
-    app->config.whose_process = g_settings_get_int (settings, key);
-    app->config.whose_process = CLAMP (app->config.whose_process, 0, 2);
     proctable_clear_tree (app);
     proctable_update_all (app);
-}
-
-static void
-warning_changed_cb (GSettings *settings, const gchar *key, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-
-    if (g_str_equal (key, "kill-dialog")) {
-        app->config.show_kill_warning = g_settings_get_boolean (settings, key);
-    }
 }
 
 static void
@@ -257,8 +244,7 @@ ProcmanApp::load_settings()
     config.ypos = g_settings_get_int (settings, "y-position");
     config.maximized = g_settings_get_boolean (settings, "maximized");
 
-    config.show_tree = g_settings_get_boolean (settings, "show-tree");
-    g_signal_connect (G_OBJECT(settings), "changed::show-tree", G_CALLBACK(tree_changed_cb), this);
+    g_signal_connect (G_OBJECT(settings), "changed::show-dependencies", G_CALLBACK(cb_show_dependencies_changed), this);
 
     config.solaris_mode = g_settings_get_boolean(settings, procman::settings::solaris_mode.c_str());
     std::string detail_string("changed::" + procman::settings::solaris_mode);
@@ -272,8 +258,6 @@ ProcmanApp::load_settings()
     detail_string = "changed::" + procman::settings::network_in_bits;
     g_signal_connect(G_OBJECT(settings), detail_string.c_str(), G_CALLBACK(network_in_bits_changed_cb), this);
 
-    config.show_kill_warning = g_settings_get_boolean (settings, "kill-dialog");
-    g_signal_connect (G_OBJECT(settings), "changed::kill-dialog", G_CALLBACK(warning_changed_cb), this);
     config.update_interval = g_settings_get_int (settings, "update-interval");
     g_signal_connect (G_OBJECT(settings), "changed::update-interval", G_CALLBACK(timeouts_changed_cb), this);
     config.graph_update_interval = g_settings_get_int (settings,
@@ -289,9 +273,7 @@ ProcmanApp::load_settings()
     g_signal_connect (settings, "changed::show-all-fs", G_CALLBACK(show_all_fs_changed_cb), this);
 
 
-    config.whose_process = g_settings_get_int (settings, "view-as");
-    g_signal_connect (G_OBJECT(settings), "changed::view-as", G_CALLBACK(view_as_changed_cb), this);
-    config.current_tab = g_settings_get_int (settings, "current-tab");
+    g_signal_connect (G_OBJECT(settings), "changed::show-whose-processes", G_CALLBACK(cb_show_whose_processes_changed), this);
 
     /* Determine number of cpus since libgtop doesn't really tell you*/
     config.num_cpus = 0;
@@ -350,10 +332,6 @@ ProcmanApp::load_settings()
     config.update_interval = MAX (config.update_interval, 1000);
     config.graph_update_interval = MAX (config.graph_update_interval, 250);
     config.disks_update_interval = MAX (config.disks_update_interval, 1000);
-    config.whose_process = CLAMP (config.whose_process, 0, 2);
-    config.current_tab = CLAMP(config.current_tab,
-                               PROCMAN_TAB_PROCESSES,
-                               PROCMAN_TAB_DISKS);
 }
 
 ProcmanApp::ProcmanApp() : Gtk::Application("org.gnome.SystemMonitor", Gio::APPLICATION_HANDLES_COMMAND_LINE)
@@ -374,13 +352,6 @@ Glib::RefPtr<ProcmanApp> ProcmanApp::get ()
 void ProcmanApp::on_activate()
 {
     gtk_window_present (GTK_WINDOW (main_window));
-}
-
-static void
-set_tab(GtkNotebook* notebook, gint tab, ProcmanApp *app)
-{
-    gtk_notebook_set_current_page(notebook, tab);
-    cb_change_current_page(notebook, tab, app);
 }
 
 gboolean
@@ -561,8 +532,6 @@ ProcmanApp::save_config ()
     g_settings_set_int (settings, "y-position", config.ypos);
     g_settings_set_boolean (settings, "maximized", config.maximized);
 
-    g_settings_set_int (settings, "current-tab", config.current_tab);
-
     g_settings_sync ();
 }
 
@@ -587,13 +556,13 @@ int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>&
 
     if (option_group.show_processes_tab) {
         procman_debug("Starting with PROCMAN_TAB_PROCESSES by commandline request");
-        set_tab(GTK_NOTEBOOK(notebook), PROCMAN_TAB_PROCESSES, this);
+        g_settings_set_int (settings, "current-tab", PROCMAN_TAB_PROCESSES);
     } else if (option_group.show_resources_tab) {
         procman_debug("Starting with PROCMAN_TAB_RESOURCES by commandline request");
-        set_tab(GTK_NOTEBOOK(notebook), PROCMAN_TAB_RESOURCES, this);
+        g_settings_set_int (settings, "current-tab", PROCMAN_TAB_RESOURCES);
     } else if (option_group.show_file_systems_tab) {
         procman_debug("Starting with PROCMAN_TAB_DISKS by commandline request");
-        set_tab(GTK_NOTEBOOK(notebook), PROCMAN_TAB_DISKS, this);
+        g_settings_set_int (settings, "current-tab", PROCMAN_TAB_DISKS);
     } else if (option_group.print_version) {
         g_print("%s %s\n", _("GNOME System Monitor"), VERSION);
 	exit (EXIT_SUCCESS);
@@ -608,19 +577,23 @@ int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>&
 void
 ProcmanApp::on_help_activate(const Glib::VariantBase&)
 {
-    cb_help_contents (NULL, this);
+    GError* error = 0;
+    if (!g_app_info_launch_default_for_uri("help:gnome-system-monitor", NULL, &error)) {
+        g_warning("Could not display help : %s", error->message);
+        g_error_free(error);
+    }
 }
 
 void
 ProcmanApp::on_lsof_activate(const Glib::VariantBase&)
 {
-    cb_show_lsof (NULL, this);
+    procman_lsof(this);
 }
 
 void
 ProcmanApp::on_preferences_activate(const Glib::VariantBase&)
 {
-    cb_edit_preferences (NULL, this);
+    procdialog_create_preferences_dialog (this);
 }
 
 void
@@ -675,6 +648,14 @@ void ProcmanApp::on_startup()
     Glib::RefPtr<Gio::Menu> menu = Glib::RefPtr<Gio::Menu>::cast_static(builder->get_object ("app-menu"));
     set_app_menu (menu);
 
+    add_accelerator("<Primary>d", "win.show-dependencies", NULL);
+    add_accelerator("<Primary>s", "win.send-signal-stop", NULL);
+    add_accelerator("<Primary>c", "win.send-signal-cont", NULL);
+    add_accelerator("<Primary>e", "win.send-signal-end", NULL);
+    add_accelerator("<Primary>k", "win.send-signal-kill", NULL);
+    add_accelerator("<Primary>m", "win.memory-maps", NULL);
+    add_accelerator("<Primary>f", "win.open-files", NULL);
+
     Gtk::Window::set_default_icon_name ("utilities-system-monitor");
 
     glibtop_init ();
@@ -687,6 +668,11 @@ void ProcmanApp::on_startup()
     create_main_window (this);
 
     init_volume_monitor (this);
+
+    add_accelerator ("<Alt>1", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_PROCESSES));
+    add_accelerator ("<Alt>2", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_RESOURCES));
+    add_accelerator ("<Alt>3", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_DISKS));
+    add_accelerator ("<Primary>r", "win.refresh", NULL);
 
     gtk_widget_show (main_window);
 }

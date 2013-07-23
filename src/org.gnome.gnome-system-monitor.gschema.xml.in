@@ -35,7 +35,7 @@
       </_summary>
     </key>
 
-    <key name="show-tree" type="b">
+    <key name="show-dependencies" type="b">
       <default>false
       </default>
       <_summary>Show process dependencies in tree form
@@ -103,14 +103,18 @@
       </_summary>
     </key>
 
-    <key name="view-as" type="i">
-      <default>1
-      </default>
-      <_summary>Determines which processes to show by default. 0 is All, 1 is user, and 2 is active
-      </_summary>
+    <key name="show-whose-processes" type="s">
+      <default>'user'</default>
+      <choices>
+        <choice value="all"/>
+        <choice value="user"/>
+        <choice value="active"/>
+      </choices>
+      <_summary>Determines which processes to show.</_summary>
     </key>
 
     <key name="current-tab" type="i">
+      <range min="0" max="2"/>
       <default>1
       </default>
       <_summary>Saves the currently viewed tab

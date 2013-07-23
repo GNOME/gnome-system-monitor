@@ -76,8 +76,8 @@ LDADD = \
 	$(SYSTEMD_LIBS) \
 	$(WNCK_LIBS)
 
-gsm-resources.c: gsm.gresource.xml $(shell glib-compile-resources --sourcedir=$(top_srcdir) --generate-dependencies gsm.gresource.xml)
-	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(top_srcdir) --generate-source gsm.gresource.xml
+gsm-resources.c: gsm.gresource.xml $(shell glib-compile-resources --sourcedir=$(top_srcdir) --generate-dependencies $(srcdir)/gsm.gresource.xml)
+	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(top_srcdir) --generate-source $(srcdir)/gsm.gresource.xml
 
 
 # GSettings schemas, enum files and conversion file
