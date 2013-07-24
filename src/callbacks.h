@@ -26,6 +26,4 @@
 gint            cb_update_disks (gpointer data);
 gint            cb_timeout (gpointer data);
 
-void            cb_column_resized (GtkWidget* column, GParamSpec* param, gpointer data);
-
 #endif /* _PROCMAN_CALLBACKS_H_ */

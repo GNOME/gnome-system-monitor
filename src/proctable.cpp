@@ -273,6 +273,13 @@ cb_refresh_icons (GtkIconTheme *theme, gpointer data)
     cb_timeout(app);
 }
 
+static void
+cb_column_resized (GtkWidget *column, GParamSpec *pspec, gpointer data)
+{
+    save_column_size (GTK_TREE_VIEW_COLUMN (column), G_SETTINGS (data));
+}
+
+
 GtkWidget *
 proctable_new (ProcmanApp * const app)
 {

@@ -652,4 +652,22 @@ namespace procman
 }
 
 
+void
+save_column_size (GtkTreeViewColumn *column, GSettings *settings)
+{
+    int width;
+    char *key;
+    int id;
+    int saved_width;
 
+    id = gtk_tree_view_column_get_sort_column_id (column);
+    width = gtk_tree_view_column_get_width (column);
+    key = g_strdup_printf ("col-%d-width", id);
+
+    g_settings_get (settings, key, "i", &saved_width);
+    if (saved_width != width) {
+        g_settings_set_int (settings, key, width);
+    }
+
+    g_free (key);
+}

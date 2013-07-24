@@ -55,26 +55,3 @@ cb_timeout (gpointer data)
 
     return TRUE;
 }
-
-void
-cb_column_resized(GtkWidget *widget, GParamSpec* param, gpointer data)
-{
-    GSettings * settings = static_cast<GSettings *>(data);
-    GtkTreeViewColumn *column = GTK_TREE_VIEW_COLUMN(widget);
-    gint width;
-    gchar *key;
-    int id;
-    
-    gint saved_width;
-
-    id = gtk_tree_view_column_get_sort_column_id (column);
-    width = gtk_tree_view_column_get_width (column);
-    key = g_strdup_printf ("col-%d-width", id);
-
-    g_settings_get (settings, key, "i", &saved_width);
-    if (saved_width!=width)
-    {
-        g_settings_set_int(settings, key, width);
-    }
-    g_free (key);
-}

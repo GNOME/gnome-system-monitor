@@ -290,6 +290,13 @@ cb_disk_list_destroying (GtkWidget *self, gpointer data)
     g_signal_handlers_disconnect_by_func(self, (gpointer) cb_disk_columns_changed, data);
 }
 
+static void
+cb_column_resized (GtkWidget *column, GParamSpec *pspec, gpointer data)
+{
+    save_column_size (GTK_TREE_VIEW_COLUMN (column), G_SETTINGS (data));
+}
+
+
 void
 create_disk_view(ProcmanApp *app, GtkBuilder *builder)
 {

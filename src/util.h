@@ -167,5 +167,7 @@ namespace procman
     std::string format_network_rate(guint64 rate, guint64 max_rate = 0);
 }
 
+void save_column_size (GtkTreeViewColumn *column, GSettings *settings);
+
 
 #endif /* H_GNOME_SYSTEM_MONITOR_UTIL_1123178725 */
