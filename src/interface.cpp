@@ -456,27 +456,16 @@ on_activate_priority (GSimpleAction *action, GVariant *parameter, gpointer data)
 
     g_action_change_state (G_ACTION (action), parameter);
 
-    const char *priority = g_variant_get_string (parameter, NULL);
-
-    if (strcmp (priority, "custom") == 0) {
-        procdialog_create_renice_dialog (app);
-    } else {
-      int new_nice_value = 0;
-
-      if (strcmp (priority, "very-high") == 0) {
-          new_nice_value = -20;
-      } else if (strcmp (priority, "high") == 0) {
-          new_nice_value = -5;
-      } else if (strcmp (priority, "normal") == 0) {
-          new_nice_value = 0;
-      } else if (strcmp (priority, "low") == 0) {
-          new_nice_value = 5;
-      } else if (strcmp (priority, "very-low") == 0) {
-          new_nice_value = 19;
-      }
-
-      renice (app, new_nice_value);
+    const gint32 priority = g_variant_get_int32 (parameter);
+    switch (priority) {
+	    case 32: 
+	        procdialog_create_renice_dialog (app);
+	        break;
+	    default:
+	        renice (app, priority);
+	        break;
     }
+
 }
 
 static void
@@ -572,7 +561,7 @@ create_main_window (ProcmanApp *app)
         { "send-signal-cont", on_activate_send_signal, "i", NULL, NULL },
         { "send-signal-end", on_activate_send_signal, "i", NULL, NULL },
         { "send-signal-kill", on_activate_send_signal, "i", NULL, NULL },
-        { "priority", on_activate_priority, "s", "'normal'", change_priority_state },
+        { "priority", on_activate_priority, "i", "@i 0", change_priority_state },
         { "memory-maps", on_activate_memory_maps, NULL, NULL, NULL },
         { "open-files", on_activate_open_files, NULL, NULL, NULL },
         { "process-properties", on_activate_process_properties, NULL, NULL, NULL },

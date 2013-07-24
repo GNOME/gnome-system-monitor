@@ -238,15 +238,15 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
         GVariant *priority;
         gint nice = app->selected_process->nice;
         if (nice < -7)
-            priority = g_variant_new_string ("very-high");
+            priority = g_variant_new_int32 (-20);
         else if (nice < -2)
-            priority = g_variant_new_string ("high");
+            priority = g_variant_new_int32 (-5);
         else if (nice < 3)
-            priority = g_variant_new_string ("normal");
+            priority = g_variant_new_int32 (0);
         else if (nice < 7)
-            priority = g_variant_new_string ("low");
+            priority = g_variant_new_int32 (5);
         else
-            priority = g_variant_new_string ("very-low");
+            priority = g_variant_new_int32 (19);
 
         GAction *action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
                                                       "priority");
