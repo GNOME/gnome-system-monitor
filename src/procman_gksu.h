@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #ifndef H_GNOME_SYSTEM_MONITOR_GKSU_H_1132171928
 #define H_GNOME_SYSTEM_MONITOR_GKSU_H_1132171928
 

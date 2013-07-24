@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* Procman process actions
  * Copyright (C) 2001 Kevin Vandersloot
  *
