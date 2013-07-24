@@ -22,24 +22,9 @@
 #define _PROCMAN_CALLBACKS_H_
 
 #include <gtk/gtk.h>
-#include "gsm_color_button.h"
-
-void            cb_about (GtkAction *action, gpointer data);
-
-gboolean        cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data);
-
-void            cb_cpu_color_changed (GSMColorButton *widget, gpointer user_data);
-void            cb_mem_color_changed (GSMColorButton *widget, gpointer user_data);
-void            cb_swap_color_changed (GSMColorButton *widget, gpointer user_data);
-void            cb_net_in_color_changed (GSMColorButton *widget, gpointer user_data);
-void            cb_net_out_color_changed (GSMColorButton *widget, gpointer user_data);
-
-void            cb_row_selected (GtkTreeSelection *selection, gpointer data);
 
 gint            cb_update_disks (gpointer data);
 gint            cb_timeout (gpointer data);
-
-void            cb_refresh_icons (GtkIconTheme *theme, gpointer data);
 
 void            cb_column_resized (GtkWidget* column, GParamSpec* param, gpointer data);
 

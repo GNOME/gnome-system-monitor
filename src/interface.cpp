@@ -68,6 +68,79 @@ create_proc_view(ProcmanApp *app, GtkBuilder * builder)
     gtk_menu_attach_to_widget (GTK_MENU (app->popup_menu), app->main_window, NULL);
 }
 
+void
+cb_cpu_color_changed (GSMColorButton *cp, gpointer data)
+{
+    guint cpu_i = GPOINTER_TO_UINT (data);
+    GSettings *settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
+
+    /* Get current values */
+    GVariant *cpu_colors_var = g_settings_get_value(settings, "cpu-colors");
+    gsize children_n = g_variant_n_children(cpu_colors_var);
+
+    /* Create builder to contruct new setting with updated value for cpu i */
+    GVariantBuilder builder;
+    g_variant_builder_init(&builder, G_VARIANT_TYPE_ARRAY);
+
+    for (guint i = 0; i < children_n; i++) {
+        if(cpu_i == i) {
+            gchar *color;
+            GdkRGBA button_color;
+            gsm_color_button_get_color(cp, &button_color);
+            color = gdk_rgba_to_string (&button_color);
+            g_variant_builder_add(&builder, "(us)", i, color);
+            g_free (color);
+        } else {
+            g_variant_builder_add_value(&builder,
+                                        g_variant_get_child_value(cpu_colors_var, i));
+        }
+    }
+
+    /* Just set the value and let the changed::cpu-colors signal callback do the rest. */
+    g_settings_set_value(settings, "cpu-colors", g_variant_builder_end(&builder));
+}
+
+static void change_settings_color(GSettings *settings, const char *key,
+                                  GSMColorButton *cp)
+{
+    GdkRGBA c;
+    char *color;
+
+    gsm_color_button_get_color(cp, &c);
+    color = gdk_rgba_to_string (&c);
+    g_settings_set_string (settings, key, color);
+    g_free (color);
+}
+
+static void
+cb_mem_color_changed (GSMColorButton *cp, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+    change_settings_color(app->settings, "mem-color", cp);
+}
+
+
+static void
+cb_swap_color_changed (GSMColorButton *cp, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+    change_settings_color(app->settings, "swap-color", cp);
+}
+
+static void
+cb_net_in_color_changed (GSMColorButton *cp, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+    change_settings_color(app->settings, "net-in-color", cp);
+}
+
+static void
+cb_net_out_color_changed (GSMColorButton *cp, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+    change_settings_color(app->settings, "net-out-color", cp);
+}
+
 static void
 create_sys_view (ProcmanApp *app, GtkBuilder * builder)
 {
@@ -231,7 +304,49 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
 static void
 on_activate_about (GSimpleAction *, GVariant *, gpointer data)
 {
-    cb_about (NULL, data);
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    const gchar * const authors[] = {
+        "Kevin Vandersloot",
+        "Erik Johnsson",
+        "Jorgen Scheibengruber",
+        "Benoît Dejean",
+        "Paolo Borelli",
+        "Karl Lattimer",
+        "Chris Kühl",
+        "Robert Roth",
+        NULL
+    };
+
+    const gchar * const documenters[] = {
+        "Bill Day",
+        "Sun Microsystems",
+        NULL
+    };
+
+    const gchar * const artists[] = {
+        "Baptiste Mille-Mathias",
+        NULL
+    };
+
+    gtk_show_about_dialog (
+        GTK_WINDOW (app->main_window),
+        "name",                 _("System Monitor"),
+        "comments",             _("View current processes and monitor "
+                                  "system state"),
+        "version",              VERSION,
+        "copyright",            "Copyright \xc2\xa9 2001-2004 Kevin Vandersloot\n"
+                                "Copyright \xc2\xa9 2005-2007 Benoît Dejean\n"
+                                "Copyright \xc2\xa9 2011 Chris Kühl",
+        "logo-icon-name",       "utilities-system-monitor",
+        "authors",              authors,
+        "artists",              artists,
+        "documenters",          documenters,
+        "translator-credits",   _("translator-credits"),
+        "license",              "GPL 2+",
+        "wrap-license",         TRUE,
+        NULL
+        );
 }
 
 static void
@@ -441,6 +556,16 @@ static void
 cb_change_current_page (GtkNotebook *notebook, GParamSpec *pspec, gpointer data)
 {
     update_page_activities ((ProcmanApp *)data);
+}
+
+static gboolean
+cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    app->shutdown ();
+
+    return TRUE;
 }
 
 void

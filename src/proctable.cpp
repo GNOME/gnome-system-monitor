@@ -212,6 +212,67 @@ cb_tree_popup_menu (GtkWidget *widget, gpointer data)
     return TRUE;
 }
 
+static void
+get_last_selected (GtkTreeModel *model, GtkTreePath *path,
+                   GtkTreeIter *iter, gpointer data)
+{
+    ProcInfo **info = (ProcInfo**) data;
+
+    gtk_tree_model_get (model, iter, COL_POINTER, info, -1);
+}
+
+void
+cb_row_selected (GtkTreeSelection *selection, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    app->selection = selection;
+
+    app->selected_process = NULL;
+
+    /* get the most recent selected process and determine if there are
+    ** no selected processes
+    */
+    gtk_tree_selection_selected_foreach (app->selection, get_last_selected,
+                                         &app->selected_process);
+    if (app->selected_process) {
+        GVariant *priority;
+        gint nice = app->selected_process->nice;
+        if (nice < -7)
+            priority = g_variant_new_string ("very-high");
+        else if (nice < -2)
+            priority = g_variant_new_string ("high");
+        else if (nice < 3)
+            priority = g_variant_new_string ("normal");
+        else if (nice < 7)
+            priority = g_variant_new_string ("low");
+        else
+            priority = g_variant_new_string ("very-low");
+
+        GAction *action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
+                                                      "priority");
+
+        g_action_change_state (action, priority);
+    }
+    update_sensitivity(app);
+}
+
+static void
+cb_refresh_icons (GtkIconTheme *theme, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    if(app->timeout) {
+        g_source_remove (app->timeout);
+    }
+
+    for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it) {
+        app->pretty_table->set_icon(*(it->second));
+    }
+
+    cb_timeout(app);
+}
+
 GtkWidget *
 proctable_new (ProcmanApp * const app)
 {
