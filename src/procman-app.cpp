@@ -354,6 +354,32 @@ void ProcmanApp::on_activate()
     gtk_window_present (GTK_WINDOW (main_window));
 }
 
+static void
+cb_header_menu_position_function (GtkMenu* menu, gint *x, gint *y, gboolean *push_in, gpointer data)
+{
+    GdkEventButton* event = (GdkEventButton *) data;
+    gint wx, wy, ww, wh;
+    gdk_window_get_geometry(event->window, &wx, &wy, &ww, &wh);
+    gdk_window_get_origin(event->window, &wx, &wy);
+
+    *x = wx + event->x;
+    *y = wy + wh;
+    *push_in = TRUE;
+}
+
+static gboolean
+cb_column_header_clicked (GtkTreeViewColumn* column, GdkEvent* event, gpointer data)
+{
+    GtkMenu *menu = (GtkMenu *) data;
+
+    if (event->button.button == GDK_BUTTON_SECONDARY) {
+        gtk_menu_popup(GTK_MENU(menu), NULL, NULL, cb_header_menu_position_function, &(event->button), event->button.button, event->button.time);
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
 gboolean
 procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child_schema)
 {

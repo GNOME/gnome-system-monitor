@@ -28,8 +28,4 @@ gint            cb_timeout (gpointer data);
 
 void            cb_column_resized (GtkWidget* column, GParamSpec* param, gpointer data);
 
-gboolean        cb_column_header_clicked (GtkTreeViewColumn* column, 
-                                          GdkEvent* event, 
-                                          gpointer data);
-
 #endif /* _PROCMAN_CALLBACKS_H_ */
