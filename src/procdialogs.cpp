@@ -28,7 +28,6 @@
 
 #include "procdialogs.h"
 #include "proctable.h"
-#include "callbacks.h"
 #include "prettytable.h"
 #include "procactions.h"
 #include "util.h"

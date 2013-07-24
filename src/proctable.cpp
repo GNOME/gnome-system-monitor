@@ -55,7 +55,6 @@
 
 #include "procman-app.h"
 #include "proctable.h"
-#include "callbacks.h"
 #include "prettytable.h"
 #include "util.h"
 #include "interface.h"
@@ -255,6 +254,24 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
         g_action_change_state (action, priority);
     }
     update_sensitivity(app);
+}
+
+static gint
+cb_timeout (gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+    guint new_interval;
+
+    proctable_update_all (app);
+
+    if (app->smooth_refresh->get(new_interval)) {
+        app->timeout = g_timeout_add(new_interval,
+                                     cb_timeout,
+                                     app);
+        return G_SOURCE_REMOVE;
+    }
+
+    return G_SOURCE_CONTINUE;
 }
 
 static void
@@ -1190,4 +1207,28 @@ ProcInfo::set_icon(Glib::RefPtr<Gdk::Pixbuf> icon)
     gtk_tree_store_set(GTK_TREE_STORE(model), &this->node,
                        COL_PIXBUF, (this->pixbuf ? this->pixbuf->gobj() : NULL),
                        -1);
+}
+
+void
+proctable_freeze (ProcmanApp *app)
+{
+    if (app->timeout) {
+      g_source_remove (app->timeout);
+      app->timeout = 0;
+    }
+}
+
+void
+proctable_thaw (ProcmanApp *app)
+{
+    app->timeout = g_timeout_add (app->config.update_interval,
+                                  cb_timeout,
+                                  app);
+}
+
+void
+proctable_reset_timeout (ProcmanApp *app)
+{
+    proctable_freeze (app);
+    proctable_thaw (app);
 }

@@ -8,13 +8,13 @@
 #include "procdialogs.h"
 #include "interface.h"
 #include "proctable.h"
-#include "callbacks.h"
 #include "load-graph.h"
 #include "settings-keys.h"
 #include "argv.h"
 #include "util.h"
 #include "cgroups.h"
 #include "lsof.h"
+#include "disks.h"
 
 static void
 mount_changed(const Glib::RefPtr<Gio::Mount>&, ProcmanApp *app)
@@ -100,12 +100,7 @@ timeouts_changed_cb (GSettings *settings, const gchar *key, gpointer data)
 
         app->smooth_refresh->reset();
 
-        if(app->timeout) {
-            g_source_remove (app->timeout);
-            app->timeout = g_timeout_add (app->config.update_interval,
-                                          cb_timeout,
-                                          app);
-        }
+        proctable_reset_timeout (app);
     }
     else if (g_str_equal (key, "graph-update-interval")){
         app->config.graph_update_interval = g_settings_get_int (settings, key);

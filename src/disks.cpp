@@ -8,7 +8,6 @@
 #include <glib/gi18n.h>
 
 #include "procman-app.h"
-#include "callbacks.h"
 #include "disks.h"
 #include "util.h"
 #include "interface.h"

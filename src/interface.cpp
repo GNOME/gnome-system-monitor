@@ -30,7 +30,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <math.h>
 
-#include "callbacks.h"
 #include "interface.h"
 #include "proctable.h"
 #include "procactions.h"
@@ -507,21 +506,13 @@ update_page_activities (ProcmanApp *app)
     int current_page = gtk_notebook_get_current_page (GTK_NOTEBOOK (app->notebook));
 
     if (current_page == PROCMAN_TAB_PROCESSES) {
-        cb_timeout (app);
-
-        if (!app->timeout) {
-            app->timeout = g_timeout_add (app->config.update_interval,
-                                          cb_timeout, app);
-        }
+        proctable_thaw (app);
 
         update_sensitivity (app);
 
         gtk_widget_grab_focus (app->tree);
     } else {
-        if (app->timeout) {
-            g_source_remove (app->timeout);
-            app->timeout = 0;
-        }
+        proctable_freeze (app);
 
         update_sensitivity (app);
     }

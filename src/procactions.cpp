@@ -29,7 +29,6 @@
 #include "procman-app.h"
 #include "proctable.h"
 #include "procdialogs.h"
-#include "callbacks.h"
 
 
 static void
@@ -99,14 +98,12 @@ renice (ProcmanApp *app, int nice)
     ** occurs if you first kill a process and the tree node is removed while
     ** still in the foreach function
     */
-    g_source_remove(app->timeout);
+    proctable_freeze (app);
 
     gtk_tree_selection_selected_foreach(app->selection, renice_single_process,
                                         &args);
 
-    app->timeout = g_timeout_add(app->config.update_interval,
-                                 cb_timeout,
-                                 app);
+    proctable_thaw (app);
 
     proctable_update_all (app);
 }
@@ -179,13 +176,12 @@ kill_process (ProcmanApp *app, int sig)
     ** occurs if you first kill a process and the tree node is removed while
     ** still in the foreach function
     */
-    g_source_remove (app->timeout);
+    proctable_freeze (app);
 
     gtk_tree_selection_selected_foreach (app->selection, kill_single_process,
                                          &args);
 
-    app->timeout = g_timeout_add (app->config.update_interval,
-                                  cb_timeout,
-                                  app);
+    proctable_thaw (app);
+
     proctable_update_all (app);
 }
