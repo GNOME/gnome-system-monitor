@@ -366,37 +366,22 @@ kill_process_with_confirmation (ProcmanApp *app, int signal) {
 }
 
 static void
-on_activate_send_signal_stop (GSimpleAction *, GVariant *, gpointer data)
+on_activate_send_signal (GSimpleAction *, GVariant *parameter, gpointer data)
 {
     ProcmanApp *app = (ProcmanApp *) data;
 
     /* no confirmation */
-    kill_process (app, SIGSTOP);
-}
-
-static void
-on_activate_send_signal_cont (GSimpleAction *, GVariant *, gpointer data)
-{
-    ProcmanApp *app = (ProcmanApp *) data;
-
-    /* no confirmation */
-    kill_process (app, SIGCONT);
-}
-
-static void
-on_activate_send_signal_end (GSimpleAction *, GVariant *, gpointer data)
-{
-    ProcmanApp *app = (ProcmanApp *) data;
-
-    kill_process_with_confirmation (app, SIGTERM);
-}
-
-static void
-on_activate_send_signal_kill (GSimpleAction *, GVariant *, gpointer data)
-{
-    ProcmanApp *app = (ProcmanApp *) data;
-
-    kill_process_with_confirmation (app, SIGKILL);
+    gint32 signal = g_variant_get_int32(parameter);
+    switch (signal) {
+        case SIGSTOP:
+        case SIGCONT:
+            kill_process (app, signal);
+            break;
+        case SIGTERM:
+        case SIGKILL:
+            kill_process_with_confirmation (app, signal);
+            break;
+    }
 }
 
 static void
@@ -583,10 +568,10 @@ create_main_window (ProcmanApp *app)
 
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL },
-        { "send-signal-stop", on_activate_send_signal_stop, NULL, NULL, NULL },
-        { "send-signal-cont", on_activate_send_signal_cont, NULL, NULL, NULL },
-        { "send-signal-end", on_activate_send_signal_end, NULL, NULL, NULL },
-        { "send-signal-kill", on_activate_send_signal_kill, NULL, NULL, NULL },
+        { "send-signal-stop", on_activate_send_signal, "i", NULL, NULL },
+        { "send-signal-cont", on_activate_send_signal, "i", NULL, NULL },
+        { "send-signal-end", on_activate_send_signal, "i", NULL, NULL },
+        { "send-signal-kill", on_activate_send_signal, "i", NULL, NULL },
         { "priority", on_activate_priority, "s", "'normal'", change_priority_state },
         { "memory-maps", on_activate_memory_maps, NULL, NULL, NULL },
         { "open-files", on_activate_open_files, NULL, NULL, NULL },

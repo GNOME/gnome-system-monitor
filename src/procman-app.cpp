@@ -3,6 +3,7 @@
 #include <glib/gi18n.h>
 #include <glibtop.h>
 #include <glibtop/close.h>
+#include <signal.h>
 
 #include "procman-app.h"
 #include "procdialogs.h"
@@ -670,10 +671,10 @@ void ProcmanApp::on_startup()
     set_app_menu (menu);
 
     add_accelerator("<Primary>d", "win.show-dependencies", NULL);
-    add_accelerator("<Primary>s", "win.send-signal-stop", NULL);
-    add_accelerator("<Primary>c", "win.send-signal-cont", NULL);
-    add_accelerator("<Primary>e", "win.send-signal-end", NULL);
-    add_accelerator("<Primary>k", "win.send-signal-kill", NULL);
+    add_accelerator("<Primary>s", "win.send-signal-stop", g_variant_new_int32(SIGSTOP));
+    add_accelerator("<Primary>c", "win.send-signal-cont", g_variant_new_int32(SIGCONT));
+    add_accelerator("<Primary>e", "win.send-signal-end", g_variant_new_int32(SIGTERM));
+    add_accelerator("<Primary>k", "win.send-signal-kill", g_variant_new_int32 (SIGKILL));
     add_accelerator("<Primary>m", "win.memory-maps", NULL);
     add_accelerator("<Primary>f", "win.open-files", NULL);
 
