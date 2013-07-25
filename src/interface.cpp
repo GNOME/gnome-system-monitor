@@ -483,11 +483,17 @@ update_page_activities (ProcmanApp *app)
     if (strcmp (current_page, "processes") == 0) {
         proctable_thaw (app);
 
+        gtk_widget_show (app->refresh_button);
+        gtk_widget_show (app->view_menu_button);
+
         update_sensitivity (app);
 
         gtk_widget_grab_focus (app->tree);
     } else {
         proctable_freeze (app);
+
+        gtk_widget_hide (app->refresh_button);
+        gtk_widget_hide (app->view_menu_button);
 
         update_sensitivity (app);
     }
@@ -544,9 +550,11 @@ create_main_window (ProcmanApp *app)
     gtk_widget_set_name (main_window, "gnome-system-monitor");
     app->main_window = main_window;
 
-    view_menu_button = GTK_WIDGET (gtk_builder_get_object (builder, "viewmenubutton"));
+    app->view_menu_button = view_menu_button = GTK_WIDGET (gtk_builder_get_object (builder, "viewmenubutton"));
     view_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "view-menu"));
     gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (view_menu_button), view_menu_model);
+
+    app->refresh_button = GTK_WIDGET (gtk_builder_get_object (builder, "refresh_button"));
 
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL },
@@ -599,7 +607,6 @@ create_main_window (ProcmanApp *app)
 
     g_signal_connect (G_OBJECT (stack), "notify::visible-child",
                       G_CALLBACK (cb_change_current_page), app);
-    update_page_activities (app);
 
     g_signal_connect (G_OBJECT (main_window), "delete_event",
                       G_CALLBACK (cb_main_window_delete),
@@ -618,6 +625,8 @@ create_main_window (ProcmanApp *app)
                            g_settings_get_value (app->settings, "show-whose-processes"));
 
     gtk_widget_show_all(main_window);
+
+    update_page_activities (app);
 
     g_object_unref (G_OBJECT (builder));
 }
@@ -661,7 +670,7 @@ update_sensitivity(ProcmanApp *app)
     gboolean processes_sensitivity, selected_sensitivity;
     GAction *action;
 
-    processes_sensitivity = (strcmp (g_settings_get_string (app->settings, "current-tab"), "processes") == 0);
+    processes_sensitivity = (strcmp (gtk_stack_get_visible_child_name (GTK_STACK (app->stack)), "processes") == 0);
     selected_sensitivity = (processes_sensitivity && app->selected_process != NULL);
 
     for (i = 0; i != G_N_ELEMENTS(processes_actions); ++i) {

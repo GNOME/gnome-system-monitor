@@ -169,6 +169,8 @@ public:
     GtkWidget        *popup_menu;
     GtkWidget        *disk_list;
     GtkWidget        *stack;
+    GtkWidget        *refresh_button;
+    GtkWidget        *view_menu_button;
     ProcConfig        config;
     LoadGraph        *cpu_graph;
     LoadGraph        *mem_graph;
