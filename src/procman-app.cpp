@@ -412,7 +412,6 @@ procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child
         {
             GtkTreeViewColumn *column;
             gint width;
-            gboolean visible;
             int id;
             const gchar *title;
             gchar *key;
@@ -422,16 +421,8 @@ procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child
             column = static_cast<GtkTreeViewColumn*>(it->data);
             id = gtk_tree_view_column_get_sort_column_id (column);
 
-            key = g_strdup_printf ("col-%d-width", id);
-            g_settings_get (pt_settings, key, "i", &width);
-            g_free (key);
-
-            key = g_strdup_printf ("col-%d-visible", id);
-            visible = g_settings_get_boolean (pt_settings, key);
-            g_free (key);
-
-            gtk_tree_view_column_set_visible (column, visible);
             /* ensure column is really visible */
+            width = gtk_tree_view_column_get_fixed_width(column);
             width = MAX(width, 50);
             gtk_tree_view_column_set_fixed_width(column, width);
 

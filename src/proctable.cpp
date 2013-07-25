@@ -290,13 +290,6 @@ cb_refresh_icons (GtkIconTheme *theme, gpointer data)
     cb_timeout(app);
 }
 
-static void
-cb_column_resized (GtkWidget *column, GParamSpec *pspec, gpointer data)
-{
-    save_column_size (GTK_TREE_VIEW_COLUMN (column), G_SETTINGS (data));
-}
-
-
 GtkWidget *
 proctable_new (ProcmanApp * const app)
 {
@@ -397,18 +390,17 @@ proctable_new (ProcmanApp * const app)
     gtk_tree_view_column_set_title (column, _(titles[0]));
 
     gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
+    bind_column_to_gsetting (settings, column);
     gtk_tree_view_column_set_resizable (column, TRUE);
     gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
     gtk_tree_view_column_set_min_width (column, 1);
     gtk_tree_view_column_set_reorderable(column, TRUE);
-    g_signal_connect(G_OBJECT(column), "notify::width", G_CALLBACK(cb_column_resized), settings);
     gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
     gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
 
     for (i = COL_USER; i <= COL_PRIORITY; i++) {
-
-        GtkCellRenderer *cell;
         GtkTreeViewColumn *col;
+        GtkCellRenderer *cell;
 
 #ifndef HAVE_WNCK
         if (i == COL_MEMXSERVER) {
@@ -421,7 +413,7 @@ proctable_new (ProcmanApp * const app)
         gtk_tree_view_column_set_title(col, _(titles[i]));
         gtk_tree_view_column_set_resizable(col, TRUE);
         gtk_tree_view_column_set_sort_column_id(col, i);
-        g_signal_connect(G_OBJECT(col), "notify::width", G_CALLBACK(cb_column_resized), settings);
+        bind_column_to_gsetting (settings, col);
         gtk_tree_view_column_set_reorderable(col, TRUE);
         gtk_tree_view_append_column(GTK_TREE_VIEW(proctree), col);
 
