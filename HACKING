@@ -1,0 +1,34 @@
+Coding style
+============
+
+The current codebase is not really consistent about coding
+style. However, for new code we should conform to what seems to be the
+most common habits:
+
+  * Use four-space indents.
+
+  * Put open curly braces on the same line of the associated
+    statement. Omit braces if *both* sides of the statement are on one
+    line. So for instance
+
+        if (foo = 0) {
+            bar ();
+            baz ();
+        } else {
+            qux ();
+        }
+
+    and
+
+        if (foo = 0)
+            bar ();
+        else
+            qux ();
+
+  * Put one space between the function name and the open parenthesis, so
+
+        foo ();
+
+    and not
+
+        foo();

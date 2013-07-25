@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* Procman - dialogs
  * Copyright (C) 2001 Kevin Vandersloot
  *
@@ -28,7 +29,6 @@
 
 #include "procdialogs.h"
 #include "proctable.h"
-#include "callbacks.h"
 #include "prettytable.h"
 #include "procactions.h"
 #include "util.h"
@@ -468,18 +468,14 @@ procdialog_create_preferences_dialog (ProcmanApp *app)
     g_signal_connect (G_OBJECT (prefs_dialog), "response",
                       G_CALLBACK (prefs_dialog_button_pressed), app);
 
-    switch (g_settings_get_int (app->settings, "current-tab")) {
-        case PROCMAN_TAB_PROCESSES:
-            gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
-            break;
-        case PROCMAN_TAB_RESOURCES:
-            gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 1);
-            break;
-        case PROCMAN_TAB_DISKS:
-            gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 2);
-            break;
+    const char* current_tab = g_settings_get_string (app->settings, "current-tab");
+    if (strcmp (current_tab, "processes") == 0)
+        gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
+    else if (strcmp (current_tab, "resources") == 0)
+        gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 1);
+    else if (strcmp (current_tab, "disks") == 0)
+        gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 2);
 
-    }
     gtk_builder_connect_signals (builder, NULL);
     g_object_unref (G_OBJECT (builder));
 }

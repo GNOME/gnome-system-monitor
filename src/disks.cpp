@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #include <config.h>
 
 #include <giomm.h>
@@ -8,7 +9,6 @@
 #include <glib/gi18n.h>
 
 #include "procman-app.h"
-#include "callbacks.h"
 #include "disks.h"
 #include "util.h"
 #include "interface.h"
@@ -214,12 +214,24 @@ add_disk(GtkListStore *list, const glibtop_mountentry *entry, bool show_all_fs)
                        -1);
 }
 
-
-
-int
-cb_update_disks(gpointer data)
+static void
+mount_changed (GVolumeMonitor *monitor, GMount *mount, ProcmanApp *app)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    disks_update(app);
+}
+
+static gboolean
+cb_timeout (gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+    disks_update (app);
+
+    return G_SOURCE_CONTINUE;
+}
+
+void
+disks_update(ProcmanApp *app)
+{
     GtkListStore *list;
     glibtop_mountentry * entries;
     glibtop_mountlist mountlist;
@@ -235,10 +247,44 @@ cb_update_disks(gpointer data)
         add_disk(list, &entries[i], app->config.show_all_fs);
 
     g_free(entries);
-
-    return TRUE;
 }
 
+static void
+init_volume_monitor (ProcmanApp *app)
+{
+    GVolumeMonitor *monitor = g_volume_monitor_get ();
+
+    g_signal_connect (monitor, "mount-added", G_CALLBACK (mount_changed), app);
+    g_signal_connect (monitor, "mount-changed", G_CALLBACK (mount_changed), app);
+    g_signal_connect (monitor, "mount-removed", G_CALLBACK (mount_changed), app);
+}
+
+void
+disks_freeze (ProcmanApp *app)
+{
+  if (app->disk_timeout) {
+      g_source_remove (app->disk_timeout);
+      app->disk_timeout = 0;
+  }
+}
+
+void
+disks_thaw (ProcmanApp *app)
+{
+  if (app->disk_timeout)
+      return;
+
+  app->disk_timeout = g_timeout_add (app->config.disks_update_interval,
+                                     cb_timeout,
+                                     app);
+}
+
+void
+disks_reset_timeout (ProcmanApp *app)
+{
+    disks_freeze (app);
+    disks_thaw (app);
+}
 
 static void
 cb_disk_columns_changed(GtkTreeView *treeview, gpointer data)
@@ -300,6 +346,7 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
     GtkCellRenderer *cell;
     guint i;
 
+    init_volume_monitor (app);
     const gchar * const titles[] = {
         N_("Device"),
         N_("Directory"),
@@ -337,7 +384,7 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
 
     col = gtk_tree_view_column_new();
     cell = gtk_cell_renderer_pixbuf_new();
-    g_signal_connect(G_OBJECT(col), "notify::width", G_CALLBACK(cb_column_resized), settings);
+    
     gtk_tree_view_column_pack_start(col, cell, FALSE);
     gtk_tree_view_column_set_attributes(col, cell, "pixbuf", DISK_ICON,
                                         NULL);
@@ -348,6 +395,7 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
                                         NULL);
     gtk_tree_view_column_set_title(col, _(titles[DISK_DEVICE]));
     gtk_tree_view_column_set_sort_column_id(col, DISK_DEVICE);
+    bind_column_to_gsetting (settings, col);  
     gtk_tree_view_column_set_reorderable(col, TRUE);
     gtk_tree_view_column_set_resizable(col, TRUE);
     gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
@@ -362,8 +410,8 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
         gtk_tree_view_column_pack_start(col, cell, TRUE);
         gtk_tree_view_column_set_title(col, _(titles[i]));
         gtk_tree_view_column_set_resizable(col, TRUE);
-        g_signal_connect(G_OBJECT(col), "notify::width", G_CALLBACK(cb_column_resized), settings);
         gtk_tree_view_column_set_sort_column_id(col, i);
+        bind_column_to_gsetting (settings, col);
         gtk_tree_view_column_set_reorderable(col, TRUE);
         gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
         gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
@@ -390,7 +438,6 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
 
     col = gtk_tree_view_column_new();
     cell = gtk_cell_renderer_text_new();
-    g_signal_connect(G_OBJECT(col), "notify::width", G_CALLBACK(cb_column_resized), settings);
     g_object_set(cell, "xalign", 1.0f, NULL);
     gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
     gtk_tree_view_column_pack_start(col, cell, FALSE);
@@ -407,6 +454,7 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
     gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
     gtk_tree_view_column_set_resizable(col, TRUE);
     gtk_tree_view_column_set_sort_column_id(col, DISK_USED);
+    bind_column_to_gsetting (settings, col);
     gtk_tree_view_column_set_reorderable(col, TRUE);
 
     /* numeric sort */

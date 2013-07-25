@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #ifndef _PROCMAN_SMOOTH_REFRESH
 #define _PROCMAN_SMOOTH_REFRESH
 

@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #ifndef H_PROCMAN_ICONTHEMEWRAPPER_H_1185707711
 #define H_PROCMAN_ICONTHEMEWRAPPER_H_1185707711
 

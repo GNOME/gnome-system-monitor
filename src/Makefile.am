@@ -33,7 +33,6 @@ BUILT_SOURCES = gsm-resources.c
 gnome_system_monitor_cpp_files = \
 	argv.cpp \
 	interface.cpp \
-	callbacks.cpp \
 	load-graph.cpp \
 	proctable.cpp \
 	prettytable.cpp \

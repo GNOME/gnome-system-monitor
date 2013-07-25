@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* Procman tree view and process updating
  * Copyright (C) 2001 Kevin Vandersloot
  *
@@ -55,7 +56,6 @@
 
 #include "procman-app.h"
 #include "proctable.h"
-#include "callbacks.h"
 #include "prettytable.h"
 #include "util.h"
 #include "interface.h"
@@ -212,6 +212,85 @@ cb_tree_popup_menu (GtkWidget *widget, gpointer data)
     return TRUE;
 }
 
+static void
+get_last_selected (GtkTreeModel *model, GtkTreePath *path,
+                   GtkTreeIter *iter, gpointer data)
+{
+    ProcInfo **info = (ProcInfo**) data;
+
+    gtk_tree_model_get (model, iter, COL_POINTER, info, -1);
+}
+
+void
+cb_row_selected (GtkTreeSelection *selection, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    app->selection = selection;
+
+    app->selected_process = NULL;
+
+    /* get the most recent selected process and determine if there are
+    ** no selected processes
+    */
+    gtk_tree_selection_selected_foreach (app->selection, get_last_selected,
+                                         &app->selected_process);
+    if (app->selected_process) {
+        GVariant *priority;
+        gint nice = app->selected_process->nice;
+        if (nice < -7)
+            priority = g_variant_new_int32 (-20);
+        else if (nice < -2)
+            priority = g_variant_new_int32 (-5);
+        else if (nice < 3)
+            priority = g_variant_new_int32 (0);
+        else if (nice < 7)
+            priority = g_variant_new_int32 (5);
+        else
+            priority = g_variant_new_int32 (19);
+
+        GAction *action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
+                                                      "priority");
+
+        g_action_change_state (action, priority);
+    }
+    update_sensitivity(app);
+}
+
+static gint
+cb_timeout (gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+    guint new_interval;
+
+    proctable_update_all (app);
+
+    if (app->smooth_refresh->get(new_interval)) {
+        app->timeout = g_timeout_add(new_interval,
+                                     cb_timeout,
+                                     app);
+        return G_SOURCE_REMOVE;
+    }
+
+    return G_SOURCE_CONTINUE;
+}
+
+static void
+cb_refresh_icons (GtkIconTheme *theme, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    if(app->timeout) {
+        g_source_remove (app->timeout);
+    }
+
+    for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it) {
+        app->pretty_table->set_icon(*(it->second));
+    }
+
+    cb_timeout(app);
+}
+
 GtkWidget *
 proctable_new (ProcmanApp * const app)
 {
@@ -312,18 +391,17 @@ proctable_new (ProcmanApp * const app)
     gtk_tree_view_column_set_title (column, _(titles[0]));
 
     gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
+    bind_column_to_gsetting (settings, column);
     gtk_tree_view_column_set_resizable (column, TRUE);
     gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
     gtk_tree_view_column_set_min_width (column, 1);
     gtk_tree_view_column_set_reorderable(column, TRUE);
-    g_signal_connect(G_OBJECT(column), "notify::width", G_CALLBACK(cb_column_resized), settings);
     gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
     gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
 
     for (i = COL_USER; i <= COL_PRIORITY; i++) {
-
-        GtkCellRenderer *cell;
         GtkTreeViewColumn *col;
+        GtkCellRenderer *cell;
 
 #ifndef HAVE_WNCK
         if (i == COL_MEMXSERVER) {
@@ -336,7 +414,7 @@ proctable_new (ProcmanApp * const app)
         gtk_tree_view_column_set_title(col, _(titles[i]));
         gtk_tree_view_column_set_resizable(col, TRUE);
         gtk_tree_view_column_set_sort_column_id(col, i);
-        g_signal_connect(G_OBJECT(col), "notify::width", G_CALLBACK(cb_column_resized), settings);
+        bind_column_to_gsetting (settings, col);
         gtk_tree_view_column_set_reorderable(col, TRUE);
         gtk_tree_view_append_column(GTK_TREE_VIEW(proctree), col);
 
@@ -1122,4 +1200,28 @@ ProcInfo::set_icon(Glib::RefPtr<Gdk::Pixbuf> icon)
     gtk_tree_store_set(GTK_TREE_STORE(model), &this->node,
                        COL_PIXBUF, (this->pixbuf ? this->pixbuf->gobj() : NULL),
                        -1);
+}
+
+void
+proctable_freeze (ProcmanApp *app)
+{
+    if (app->timeout) {
+      g_source_remove (app->timeout);
+      app->timeout = 0;
+    }
+}
+
+void
+proctable_thaw (ProcmanApp *app)
+{
+    app->timeout = g_timeout_add (app->config.update_interval,
+                                  cb_timeout,
+                                  app);
+}
+
+void
+proctable_reset_timeout (ProcmanApp *app)
+{
+    proctable_freeze (app);
+    proctable_thaw (app);
 }

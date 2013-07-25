@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #ifndef PROCMAN_CGROUP_H_20111103
 #define PROCMAN_CGROUP_H_20111103
 

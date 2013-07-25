@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #ifndef H_GNOME_SYSTEM_MONITOR_UTIL_1123178725
 #define H_GNOME_SYSTEM_MONITOR_UTIL_1123178725
 
@@ -10,21 +11,6 @@
 #include <algorithm>
 
 using std::string;
-
-template<typename T>
-inline int procman_cmp(T x, T y)
-{
-    if (x == y)
-        return 0;
-
-    if (x < y)
-        return -1;
-
-    return 1;
-}
-
-#define PROCMAN_CMP(X, Y) procman_cmp((X), (Y))
-#define PROCMAN_RCMP(X, Y) procman_cmp((Y), (X));
 
 /* check if logind is running */
 #define LOGIND_RUNNING() (access("/run/systemd/seats/", F_OK) >= 0)
@@ -56,28 +42,6 @@ inline string make_string(char *c_str)
     string s(c_str);
     g_free(c_str);
     return s;
-}
-
-
-
-
-template<typename Map>
-class UnrefMapValues
-    : public std::unary_function<void, Map>
-{
-public:
-    void operator()(const typename Map::value_type &it) const
-    {
-        if (it.second)
-            g_object_unref(it.second);
-    }
-};
-
-
-template<typename Map>
-inline void unref_map_values(Map &map)
-{
-    std::for_each(map.begin(), map.end(), UnrefMapValues<Map>());
 }
 
 
@@ -166,6 +130,8 @@ namespace procman
     std::string format_network(guint64 rate, guint64 max_rate = 0);
     std::string format_network_rate(guint64 rate, guint64 max_rate = 0);
 }
+
+void bind_column_to_gsetting (GSettings *settings, GtkTreeViewColumn *column);
 
 
 #endif /* H_GNOME_SYSTEM_MONITOR_UTIL_1123178725 */

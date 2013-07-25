@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* Procman - tree view
  * Copyright (C) 2001 Kevin Vandersloot
  *
@@ -62,6 +63,9 @@ void            proctable_update_list (ProcmanApp *app);
 void            proctable_update_all (ProcmanApp *app);
 void            proctable_clear_tree (ProcmanApp *app);
 void            proctable_free_table (ProcmanApp *app);
+void            proctable_freeze (ProcmanApp *app);
+void            proctable_thaw (ProcmanApp *app);
+void            proctable_reset_timeout (ProcmanApp *app);
 
 GSList*         proctable_get_columns_order(GtkTreeView *treeview);
 void            proctable_set_columns_order(GtkTreeView *treeview, GSList *order);

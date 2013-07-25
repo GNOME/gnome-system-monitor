@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #ifndef H_PROCMAN_SETTINGS_KEYS_1177430397
 #define H_PROCMAN_SETTINGS_KEYS_1177430397
 

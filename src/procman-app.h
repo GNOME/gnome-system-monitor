@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #ifndef _PROCMAN_PROCMAN_APP_H_
 #define _PROCMAN_PROCMAN_APP_H_
 
@@ -167,7 +168,10 @@ public:
     GtkWidget        *loadavg;
     GtkWidget        *popup_menu;
     GtkWidget        *disk_list;
-    GtkWidget        *notebook;
+    GtkWidget        *stack;
+    GtkWidget        *refresh_button;
+    GtkWidget        *view_menu_button;
+    GtkWidget        *end_process_button;
     ProcConfig        config;
     LoadGraph        *cpu_graph;
     LoadGraph        *mem_graph;

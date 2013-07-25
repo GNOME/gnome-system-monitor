@@ -1,40 +1,22 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #include <config.h>
 
 #include <glib/gi18n.h>
 #include <glibtop.h>
 #include <glibtop/close.h>
+#include <signal.h>
 
 #include "procman-app.h"
 #include "procdialogs.h"
 #include "interface.h"
 #include "proctable.h"
-#include "callbacks.h"
 #include "load-graph.h"
 #include "settings-keys.h"
 #include "argv.h"
 #include "util.h"
 #include "cgroups.h"
 #include "lsof.h"
-
-static void
-mount_changed(const Glib::RefPtr<Gio::Mount>&, ProcmanApp *app)
-{
-    cb_update_disks(app);
-}
-
-
-static void
-init_volume_monitor(ProcmanApp *app)
-{
-    using namespace Gio;
-    using namespace Glib;
-
-    RefPtr<VolumeMonitor> monitor = VolumeMonitor::get();
-
-    monitor->signal_mount_added().connect(sigc::bind<ProcmanApp *>(sigc::ptr_fun(&mount_changed), app));
-    monitor->signal_mount_changed().connect(sigc::bind<ProcmanApp *>(sigc::ptr_fun(&mount_changed), app));
-    monitor->signal_mount_removed().connect(sigc::bind<ProcmanApp *>(sigc::ptr_fun(&mount_changed), app));
-}
+#include "disks.h"
 
 static void
 cb_show_dependencies_changed (GSettings *settings, const gchar *key, gpointer data)
@@ -100,12 +82,7 @@ timeouts_changed_cb (GSettings *settings, const gchar *key, gpointer data)
 
         app->smooth_refresh->reset();
 
-        if(app->timeout) {
-            g_source_remove (app->timeout);
-            app->timeout = g_timeout_add (app->config.update_interval,
-                                          cb_timeout,
-                                          app);
-        }
+        proctable_reset_timeout (app);
     }
     else if (g_str_equal (key, "graph-update-interval")){
         app->config.graph_update_interval = g_settings_get_int (settings, key);
@@ -125,13 +102,7 @@ timeouts_changed_cb (GSettings *settings, const gchar *key, gpointer data)
         app->config.disks_update_interval =
             MAX (app->config.disks_update_interval, 1000);
 
-        if(app->disk_timeout) {
-            g_source_remove (app->disk_timeout);
-            app->disk_timeout = \
-                g_timeout_add (app->config.disks_update_interval,
-                               cb_update_disks,
-                               app);
-        }
+        disks_reset_timeout (app);
     }
     else {
         g_assert_not_reached();
@@ -225,7 +196,7 @@ show_all_fs_changed_cb (GSettings *settings, const gchar *key, gpointer data)
 
     app->config.show_all_fs = g_settings_get_boolean (settings, key);
 
-    cb_update_disks (app);
+    disks_update (app);
 }
 
 void
@@ -354,6 +325,32 @@ void ProcmanApp::on_activate()
     gtk_window_present (GTK_WINDOW (main_window));
 }
 
+static void
+cb_header_menu_position_function (GtkMenu* menu, gint *x, gint *y, gboolean *push_in, gpointer data)
+{
+    GdkEventButton* event = (GdkEventButton *) data;
+    gint wx, wy, ww, wh;
+    gdk_window_get_geometry(event->window, &wx, &wy, &ww, &wh);
+    gdk_window_get_origin(event->window, &wx, &wy);
+
+    *x = wx + event->x;
+    *y = wy + wh;
+    *push_in = TRUE;
+}
+
+static gboolean
+cb_column_header_clicked (GtkTreeViewColumn* column, GdkEvent* event, gpointer data)
+{
+    GtkMenu *menu = (GtkMenu *) data;
+
+    if (event->button.button == GDK_BUTTON_SECONDARY) {
+        gtk_menu_popup(GTK_MENU(menu), NULL, NULL, cb_header_menu_position_function, &(event->button), event->button.button, event->button.time);
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
 gboolean
 procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child_schema)
 {
@@ -390,7 +387,6 @@ procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child
         {
             GtkTreeViewColumn *column;
             gint width;
-            gboolean visible;
             int id;
             const gchar *title;
             gchar *key;
@@ -400,16 +396,8 @@ procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child
             column = static_cast<GtkTreeViewColumn*>(it->data);
             id = gtk_tree_view_column_get_sort_column_id (column);
 
-            key = g_strdup_printf ("col-%d-width", id);
-            g_settings_get (pt_settings, key, "i", &width);
-            g_free (key);
-
-            key = g_strdup_printf ("col-%d-visible", id);
-            visible = g_settings_get_boolean (pt_settings, key);
-            g_free (key);
-
-            gtk_tree_view_column_set_visible (column, visible);
             /* ensure column is really visible */
+            width = gtk_tree_view_column_get_fixed_width(column);
             width = MAX(width, 50);
             gtk_tree_view_column_set_fixed_width(column, width);
 
@@ -554,20 +542,18 @@ int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>&
 
     g_strfreev(argv);
 
-    if (option_group.show_processes_tab) {
-        procman_debug("Starting with PROCMAN_TAB_PROCESSES by commandline request");
-        g_settings_set_int (settings, "current-tab", PROCMAN_TAB_PROCESSES);
-    } else if (option_group.show_resources_tab) {
-        procman_debug("Starting with PROCMAN_TAB_RESOURCES by commandline request");
-        g_settings_set_int (settings, "current-tab", PROCMAN_TAB_RESOURCES);
-    } else if (option_group.show_file_systems_tab) {
-        procman_debug("Starting with PROCMAN_TAB_DISKS by commandline request");
-        g_settings_set_int (settings, "current-tab", PROCMAN_TAB_DISKS);
-    } else if (option_group.print_version) {
+    if (option_group.print_version) {
         g_print("%s %s\n", _("GNOME System Monitor"), VERSION);
-	exit (EXIT_SUCCESS);
-	return 0;
+        exit (EXIT_SUCCESS);
     }
+
+    if (option_group.show_processes_tab)
+        g_settings_set_string (settings, "current-tab", "processes");
+    else if (option_group.show_resources_tab)
+        g_settings_set_string (settings, "current-tab", "resources");
+    else if (option_group.show_file_systems_tab)
+        g_settings_set_string (settings, "current-tab", "disks");
+    else if (option_group.print_version)
 
     on_activate ();
 
@@ -649,10 +635,10 @@ void ProcmanApp::on_startup()
     set_app_menu (menu);
 
     add_accelerator("<Primary>d", "win.show-dependencies", NULL);
-    add_accelerator("<Primary>s", "win.send-signal-stop", NULL);
-    add_accelerator("<Primary>c", "win.send-signal-cont", NULL);
-    add_accelerator("<Primary>e", "win.send-signal-end", NULL);
-    add_accelerator("<Primary>k", "win.send-signal-kill", NULL);
+    add_accelerator("<Primary>s", "win.send-signal-stop", g_variant_new_int32(SIGSTOP));
+    add_accelerator("<Primary>c", "win.send-signal-cont", g_variant_new_int32(SIGCONT));
+    add_accelerator("<Primary>e", "win.send-signal-end", g_variant_new_int32(SIGTERM));
+    add_accelerator("<Primary>k", "win.send-signal-kill", g_variant_new_int32 (SIGKILL));
     add_accelerator("<Primary>m", "win.memory-maps", NULL);
     add_accelerator("<Primary>f", "win.open-files", NULL);
 
@@ -667,11 +653,9 @@ void ProcmanApp::on_startup()
 
     create_main_window (this);
 
-    init_volume_monitor (this);
-
-    add_accelerator ("<Alt>1", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_PROCESSES));
-    add_accelerator ("<Alt>2", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_RESOURCES));
-    add_accelerator ("<Alt>3", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_DISKS));
+    add_accelerator ("<Alt>1", "win.show-page", g_variant_new_string ("processes"));
+    add_accelerator ("<Alt>2", "win.show-page", g_variant_new_string ("resources"));
+    add_accelerator ("<Alt>3", "win.show-page", g_variant_new_string ("disks"));
     add_accelerator ("<Primary>r", "win.refresh", NULL);
 
     gtk_widget_show (main_window);

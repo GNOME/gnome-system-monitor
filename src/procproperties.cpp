@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* Process properties dialog
  * Copyright (C) 2010 Krishnan Parthasarathi <krishnan.parthasarathi@gmail.com>
  *                    Robert Ancell <robert.ancell@canonical.com>

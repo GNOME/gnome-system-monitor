@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* Procman - main window
  * Copyright (C) 2001 Kevin Vandersloot
  *
@@ -30,7 +31,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <math.h>
 
-#include "callbacks.h"
 #include "interface.h"
 #include "proctable.h"
 #include "procactions.h"
@@ -66,6 +66,79 @@ create_proc_view(ProcmanApp *app, GtkBuilder * builder)
     GMenuModel *menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-popup-menu"));
     app->popup_menu = gtk_menu_new_from_model (menu_model);
     gtk_menu_attach_to_widget (GTK_MENU (app->popup_menu), app->main_window, NULL);
+}
+
+void
+cb_cpu_color_changed (GSMColorButton *cp, gpointer data)
+{
+    guint cpu_i = GPOINTER_TO_UINT (data);
+    GSettings *settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
+
+    /* Get current values */
+    GVariant *cpu_colors_var = g_settings_get_value(settings, "cpu-colors");
+    gsize children_n = g_variant_n_children(cpu_colors_var);
+
+    /* Create builder to contruct new setting with updated value for cpu i */
+    GVariantBuilder builder;
+    g_variant_builder_init(&builder, G_VARIANT_TYPE_ARRAY);
+
+    for (guint i = 0; i < children_n; i++) {
+        if(cpu_i == i) {
+            gchar *color;
+            GdkRGBA button_color;
+            gsm_color_button_get_color(cp, &button_color);
+            color = gdk_rgba_to_string (&button_color);
+            g_variant_builder_add(&builder, "(us)", i, color);
+            g_free (color);
+        } else {
+            g_variant_builder_add_value(&builder,
+                                        g_variant_get_child_value(cpu_colors_var, i));
+        }
+    }
+
+    /* Just set the value and let the changed::cpu-colors signal callback do the rest. */
+    g_settings_set_value(settings, "cpu-colors", g_variant_builder_end(&builder));
+}
+
+static void change_settings_color(GSettings *settings, const char *key,
+                                  GSMColorButton *cp)
+{
+    GdkRGBA c;
+    char *color;
+
+    gsm_color_button_get_color(cp, &c);
+    color = gdk_rgba_to_string (&c);
+    g_settings_set_string (settings, key, color);
+    g_free (color);
+}
+
+static void
+cb_mem_color_changed (GSMColorButton *cp, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+    change_settings_color(app->settings, "mem-color", cp);
+}
+
+
+static void
+cb_swap_color_changed (GSMColorButton *cp, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+    change_settings_color(app->settings, "swap-color", cp);
+}
+
+static void
+cb_net_in_color_changed (GSMColorButton *cp, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+    change_settings_color(app->settings, "net-in-color", cp);
+}
+
+static void
+cb_net_out_color_changed (GSMColorButton *cp, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+    change_settings_color(app->settings, "net-out-color", cp);
 }
 
 static void
@@ -231,7 +304,49 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
 static void
 on_activate_about (GSimpleAction *, GVariant *, gpointer data)
 {
-    cb_about (NULL, data);
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    const gchar * const authors[] = {
+        "Kevin Vandersloot",
+        "Erik Johnsson",
+        "Jorgen Scheibengruber",
+        "Benoît Dejean",
+        "Paolo Borelli",
+        "Karl Lattimer",
+        "Chris Kühl",
+        "Robert Roth",
+        NULL
+    };
+
+    const gchar * const documenters[] = {
+        "Bill Day",
+        "Sun Microsystems",
+        NULL
+    };
+
+    const gchar * const artists[] = {
+        "Baptiste Mille-Mathias",
+        NULL
+    };
+
+    gtk_show_about_dialog (
+        GTK_WINDOW (app->main_window),
+        "name",                 _("System Monitor"),
+        "comments",             _("View current processes and monitor "
+                                  "system state"),
+        "version",              VERSION,
+        "copyright",            "Copyright \xc2\xa9 2001-2004 Kevin Vandersloot\n"
+                                "Copyright \xc2\xa9 2005-2007 Benoît Dejean\n"
+                                "Copyright \xc2\xa9 2011 Chris Kühl",
+        "logo-icon-name",       "utilities-system-monitor",
+        "authors",              authors,
+        "artists",              artists,
+        "documenters",          documenters,
+        "translator-credits",   _("translator-credits"),
+        "license",              "GPL 2+",
+        "wrap-license",         TRUE,
+        NULL
+        );
 }
 
 static void
@@ -252,37 +367,22 @@ kill_process_with_confirmation (ProcmanApp *app, int signal) {
 }
 
 static void
-on_activate_send_signal_stop (GSimpleAction *, GVariant *, gpointer data)
+on_activate_send_signal (GSimpleAction *, GVariant *parameter, gpointer data)
 {
     ProcmanApp *app = (ProcmanApp *) data;
 
     /* no confirmation */
-    kill_process (app, SIGSTOP);
-}
-
-static void
-on_activate_send_signal_cont (GSimpleAction *, GVariant *, gpointer data)
-{
-    ProcmanApp *app = (ProcmanApp *) data;
-
-    /* no confirmation */
-    kill_process (app, SIGCONT);
-}
-
-static void
-on_activate_send_signal_end (GSimpleAction *, GVariant *, gpointer data)
-{
-    ProcmanApp *app = (ProcmanApp *) data;
-
-    kill_process_with_confirmation (app, SIGTERM);
-}
-
-static void
-on_activate_send_signal_kill (GSimpleAction *, GVariant *, gpointer data)
-{
-    ProcmanApp *app = (ProcmanApp *) data;
-
-    kill_process_with_confirmation (app, SIGKILL);
+    gint32 signal = g_variant_get_int32(parameter);
+    switch (signal) {
+        case SIGSTOP:
+        case SIGCONT:
+            kill_process (app, signal);
+            break;
+        case SIGTERM:
+        case SIGKILL:
+            kill_process_with_confirmation (app, signal);
+            break;
+    }
 }
 
 static void
@@ -357,27 +457,16 @@ on_activate_priority (GSimpleAction *action, GVariant *parameter, gpointer data)
 
     g_action_change_state (G_ACTION (action), parameter);
 
-    const char *priority = g_variant_get_string (parameter, NULL);
-
-    if (strcmp (priority, "custom") == 0) {
-        procdialog_create_renice_dialog (app);
-    } else {
-      int new_nice_value = 0;
-
-      if (strcmp (priority, "very-high") == 0) {
-          new_nice_value = -20;
-      } else if (strcmp (priority, "high") == 0) {
-          new_nice_value = -5;
-      } else if (strcmp (priority, "normal") == 0) {
-          new_nice_value = 0;
-      } else if (strcmp (priority, "low") == 0) {
-          new_nice_value = 5;
-      } else if (strcmp (priority, "very-low") == 0) {
-          new_nice_value = 19;
-      }
-
-      renice (app, new_nice_value);
+    const gint32 priority = g_variant_get_int32 (parameter);
+    switch (priority) {
+	    case 32: 
+	        procdialog_create_renice_dialog (app);
+	        break;
+	    default:
+	        renice (app, priority);
+	        break;
     }
+
 }
 
 static void
@@ -389,29 +478,29 @@ change_priority_state (GSimpleAction *action, GVariant *state, gpointer data)
 void
 update_page_activities (ProcmanApp *app)
 {
-    int current_page = gtk_notebook_get_current_page (GTK_NOTEBOOK (app->notebook));
+    const char *current_page = gtk_stack_get_visible_child_name (GTK_STACK (app->stack));
 
-    if (current_page == PROCMAN_TAB_PROCESSES) {
-        cb_timeout (app);
+    if (strcmp (current_page, "processes") == 0) {
+        proctable_thaw (app);
 
-        if (!app->timeout) {
-            app->timeout = g_timeout_add (app->config.update_interval,
-                                          cb_timeout, app);
-        }
+        gtk_widget_show (app->end_process_button);
+        gtk_widget_show (app->refresh_button);
+        gtk_widget_show (app->view_menu_button);
 
         update_sensitivity (app);
 
         gtk_widget_grab_focus (app->tree);
     } else {
-        if (app->timeout) {
-            g_source_remove (app->timeout);
-            app->timeout = 0;
-        }
+        proctable_freeze (app);
+
+        gtk_widget_hide (app->end_process_button);
+        gtk_widget_hide (app->refresh_button);
+        gtk_widget_hide (app->view_menu_button);
 
         update_sensitivity (app);
     }
 
-    if (current_page == PROCMAN_TAB_RESOURCES) {
+    if (strcmp (current_page, "resources") == 0) {
         load_graph_start (app->cpu_graph);
         load_graph_start (app->mem_graph);
         load_graph_start (app->net_graph);
@@ -421,26 +510,28 @@ update_page_activities (ProcmanApp *app)
         load_graph_stop (app->net_graph);
     }
 
-    if (current_page == PROCMAN_TAB_DISKS) {
-        cb_update_disks (app);
-
-        if (!app->disk_timeout) {
-            app->disk_timeout = g_timeout_add (app->config.disks_update_interval,
-                                               cb_update_disks,
-                                               app);
-        }
+    if (strcmp (current_page, "disks") == 0) {
+		disks_update (app);
+		disks_thaw (app);
     } else {
-        if (app->disk_timeout) {
-            g_source_remove (app->disk_timeout);
-            app->disk_timeout = 0;
-        }
+		disks_freeze (app);
     }
 }
 
 static void
-cb_change_current_page (GtkNotebook *notebook, GParamSpec *pspec, gpointer data)
+cb_change_current_page (GtkStack *stack, GParamSpec *pspec, gpointer data)
 {
     update_page_activities ((ProcmanApp *)data);
+}
+
+static gboolean
+cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    app->shutdown ();
+
+    return TRUE;
 }
 
 void
@@ -448,7 +539,7 @@ create_main_window (ProcmanApp *app)
 {
     gint width, height, xpos, ypos;
     GtkWidget *main_window;
-    GtkWidget *notebook;
+    GtkWidget *stack;
     GtkWidget *view_menu_button;
     GMenuModel *view_menu_model;
 
@@ -461,22 +552,25 @@ create_main_window (ProcmanApp *app)
     gtk_widget_set_name (main_window, "gnome-system-monitor");
     app->main_window = main_window;
 
-    view_menu_button = GTK_WIDGET (gtk_builder_get_object (builder, "viewmenubutton"));
+    app->view_menu_button = view_menu_button = GTK_WIDGET (gtk_builder_get_object (builder, "viewmenubutton"));
     view_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "view-menu"));
     gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (view_menu_button), view_menu_model);
 
+    app->refresh_button = GTK_WIDGET (gtk_builder_get_object (builder, "refresh_button"));
+    app->end_process_button = GTK_WIDGET (gtk_builder_get_object (builder, "end_process_button"));
+
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL },
-        { "send-signal-stop", on_activate_send_signal_stop, NULL, NULL, NULL },
-        { "send-signal-cont", on_activate_send_signal_cont, NULL, NULL, NULL },
-        { "send-signal-end", on_activate_send_signal_end, NULL, NULL, NULL },
-        { "send-signal-kill", on_activate_send_signal_kill, NULL, NULL, NULL },
-        { "priority", on_activate_priority, "s", "'normal'", change_priority_state },
+        { "send-signal-stop", on_activate_send_signal, "i", NULL, NULL },
+        { "send-signal-cont", on_activate_send_signal, "i", NULL, NULL },
+        { "send-signal-end", on_activate_send_signal, "i", NULL, NULL },
+        { "send-signal-kill", on_activate_send_signal, "i", NULL, NULL },
+        { "priority", on_activate_priority, "i", "@i 0", change_priority_state },
         { "memory-maps", on_activate_memory_maps, NULL, NULL, NULL },
         { "open-files", on_activate_open_files, NULL, NULL, NULL },
         { "process-properties", on_activate_process_properties, NULL, NULL, NULL },
         { "refresh", on_activate_refresh, NULL, NULL, NULL },
-        { "show-page", on_activate_radio, "i", "0", change_show_page_state },
+        { "show-page", on_activate_radio, "s", "'resources'", change_show_page_state },
         { "show-whose-processes", on_activate_radio, "s", "'all'", change_show_processes_state },
         { "show-dependencies", on_activate_toggle, NULL, "false", change_show_dependencies_state }
     };
@@ -503,8 +597,8 @@ create_main_window (ProcmanApp *app)
         gtk_window_maximize(GTK_WINDOW(main_window));
     }
 
-    /* create the main notebook */
-    app->notebook = notebook = GTK_WIDGET (gtk_builder_get_object (builder, "notebook"));
+    /* create the main stack */
+    app->stack = stack = GTK_WIDGET (gtk_builder_get_object (builder, "stack"));
 
     create_proc_view(app, builder);
 
@@ -512,11 +606,10 @@ create_main_window (ProcmanApp *app)
     
     create_disk_view (app, builder);
 
-    g_settings_bind (app->settings, "current-tab", notebook, "page", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind (app->settings, "current-tab", stack, "visible-child-name", G_SETTINGS_BIND_DEFAULT);
 
-    g_signal_connect (G_OBJECT (notebook), "notify::page",
+    g_signal_connect (G_OBJECT (stack), "notify::visible-child",
                       G_CALLBACK (cb_change_current_page), app);
-    update_page_activities (app);
 
     g_signal_connect (G_OBJECT (main_window), "delete_event",
                       G_CALLBACK (cb_main_window_delete),
@@ -535,6 +628,8 @@ create_main_window (ProcmanApp *app)
                            g_settings_get_value (app->settings, "show-whose-processes"));
 
     gtk_widget_show_all(main_window);
+
+    update_page_activities (app);
 
     g_object_unref (G_OBJECT (builder));
 }
@@ -578,7 +673,7 @@ update_sensitivity(ProcmanApp *app)
     gboolean processes_sensitivity, selected_sensitivity;
     GAction *action;
 
-    processes_sensitivity = (g_settings_get_int (app->settings, "current-tab") == PROCMAN_TAB_PROCESSES);
+    processes_sensitivity = (strcmp (gtk_stack_get_visible_child_name (GTK_STACK (app->stack)), "processes") == 0);
     selected_sensitivity = (processes_sensitivity && app->selected_process != NULL);
 
     for (i = 0; i != G_N_ELEMENTS(processes_actions); ++i) {

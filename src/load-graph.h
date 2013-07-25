@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #ifndef _PROCMAN_LOAD_GRAPH_H_
 #define _PROCMAN_LOAD_GRAPH_H_
 
