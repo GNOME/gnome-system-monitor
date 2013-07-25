@@ -1866,8 +1866,8 @@ uber_graph_take_screenshot (UberGraph *graph) /* IN */
 	dialog = gtk_file_chooser_dialog_new(_("Save As"),
 	                                     GTK_WINDOW(gtk_widget_get_toplevel(widget)),
 	                                     GTK_FILE_CHOOSER_ACTION_SAVE,
-	                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-	                                     GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+	                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+	                                     _("_Save"), GTK_RESPONSE_ACCEPT,
 	                                     NULL);
 	if (GTK_RESPONSE_ACCEPT == gtk_dialog_run(GTK_DIALOG(dialog))) {
 		/*
