@@ -76,7 +76,7 @@ void draw_background(LoadGraph *graph) {
     PangoLayout* layout;
     PangoFontDescription* font_desc;
     PangoRectangle extents;
-    GdkRGBA fg, bg;
+    GdkRGBA fg;
 
     num_bars = graph->num_bars();
     graph->graph_dely = (graph->draw_height - 15) / num_bars; /* round to int to avoid AA blur */
@@ -86,19 +86,16 @@ void draw_background(LoadGraph *graph) {
 
     gtk_widget_get_allocation (graph->disp, &allocation);
     graph->background = gdk_window_create_similar_surface (gtk_widget_get_window (graph->disp),
-                                                           CAIRO_CONTENT_COLOR,
+                                                           CAIRO_CONTENT_COLOR_ALPHA,
                                                            allocation.width,
                                                            allocation.height);
     cr = cairo_create (graph->background);
 
     GtkStyleContext *context = gtk_widget_get_style_context (ProcmanApp::get()->stack);
-    gtk_style_context_get_background_color (context, GTK_STATE_FLAG_NORMAL, &bg);
+    
     gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &fg);
 
-    // set the background colour
-    gdk_cairo_set_source_rgba (cr, &bg);
-    cairo_paint (cr);
-
+    cairo_paint_with_alpha (cr, 0.0);
     layout = pango_cairo_create_layout (cr);
     gtk_style_context_get (context, GTK_STATE_FLAG_NORMAL, GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
     pango_font_description_set_size (font_desc, 0.8 * graph->fontsize * PANGO_SCALE);
