@@ -483,6 +483,7 @@ update_page_activities (ProcmanApp *app)
     if (strcmp (current_page, "processes") == 0) {
         proctable_thaw (app);
 
+        gtk_widget_show (app->end_process_button);
         gtk_widget_show (app->refresh_button);
         gtk_widget_show (app->view_menu_button);
 
@@ -492,6 +493,7 @@ update_page_activities (ProcmanApp *app)
     } else {
         proctable_freeze (app);
 
+        gtk_widget_hide (app->end_process_button);
         gtk_widget_hide (app->refresh_button);
         gtk_widget_hide (app->view_menu_button);
 
@@ -555,6 +557,7 @@ create_main_window (ProcmanApp *app)
     gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (view_menu_button), view_menu_model);
 
     app->refresh_button = GTK_WIDGET (gtk_builder_get_object (builder, "refresh_button"));
+    app->end_process_button = GTK_WIDGET (gtk_builder_get_object (builder, "end_process_button"));
 
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL },

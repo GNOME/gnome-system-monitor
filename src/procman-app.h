@@ -171,6 +171,7 @@ public:
     GtkWidget        *stack;
     GtkWidget        *refresh_button;
     GtkWidget        *view_menu_button;
+    GtkWidget        *end_process_button;
     ProcConfig        config;
     LoadGraph        *cpu_graph;
     LoadGraph        *mem_graph;
