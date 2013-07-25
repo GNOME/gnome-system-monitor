@@ -502,18 +502,10 @@ update_page_activities (ProcmanApp *app)
     }
 
     if (current_page == PROCMAN_TAB_DISKS) {
-        cb_update_disks (app);
-
-        if (!app->disk_timeout) {
-            app->disk_timeout = g_timeout_add (app->config.disks_update_interval,
-                                               cb_update_disks,
-                                               app);
-        }
+		disks_update (app);
+		disks_thaw (app);
     } else {
-        if (app->disk_timeout) {
-            g_source_remove (app->disk_timeout);
-            app->disk_timeout = 0;
-        }
+		disks_freeze (app);
     }
 }
 

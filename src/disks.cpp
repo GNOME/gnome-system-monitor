@@ -213,12 +213,24 @@ add_disk(GtkListStore *list, const glibtop_mountentry *entry, bool show_all_fs)
                        -1);
 }
 
-
-
-int
-cb_update_disks(gpointer data)
+static void
+mount_changed (GVolumeMonitor *monitor, GMount *mount, ProcmanApp *app)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    disks_update(app);
+}
+
+static gboolean
+cb_timeout (gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+    disks_update (app);
+
+    return G_SOURCE_CONTINUE;
+}
+
+void
+disks_update(ProcmanApp *app)
+{
     GtkListStore *list;
     glibtop_mountentry * entries;
     glibtop_mountlist mountlist;
@@ -234,10 +246,44 @@ cb_update_disks(gpointer data)
         add_disk(list, &entries[i], app->config.show_all_fs);
 
     g_free(entries);
-
-    return TRUE;
 }
 
+static void
+init_volume_monitor (ProcmanApp *app)
+{
+    GVolumeMonitor *monitor = g_volume_monitor_get ();
+
+    g_signal_connect (monitor, "mount-added", G_CALLBACK (mount_changed), app);
+    g_signal_connect (monitor, "mount-changed", G_CALLBACK (mount_changed), app);
+    g_signal_connect (monitor, "mount-removed", G_CALLBACK (mount_changed), app);
+}
+
+void
+disks_freeze (ProcmanApp *app)
+{
+  if (app->disk_timeout) {
+      g_source_remove (app->disk_timeout);
+      app->disk_timeout = 0;
+  }
+}
+
+void
+disks_thaw (ProcmanApp *app)
+{
+  if (app->disk_timeout)
+      return;
+
+  app->disk_timeout = g_timeout_add (app->config.disks_update_interval,
+                                     cb_timeout,
+                                     app);
+}
+
+void
+disks_reset_timeout (ProcmanApp *app)
+{
+    disks_freeze (app);
+    disks_thaw (app);
+}
 
 static void
 cb_disk_columns_changed(GtkTreeView *treeview, gpointer data)
@@ -299,6 +345,7 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
     GtkCellRenderer *cell;
     guint i;
 
+    init_volume_monitor (app);
     const gchar * const titles[] = {
         N_("Device"),
         N_("Directory"),

@@ -18,26 +18,6 @@
 #include "disks.h"
 
 static void
-mount_changed(const Glib::RefPtr<Gio::Mount>&, ProcmanApp *app)
-{
-    cb_update_disks(app);
-}
-
-
-static void
-init_volume_monitor(ProcmanApp *app)
-{
-    using namespace Gio;
-    using namespace Glib;
-
-    RefPtr<VolumeMonitor> monitor = VolumeMonitor::get();
-
-    monitor->signal_mount_added().connect(sigc::bind<ProcmanApp *>(sigc::ptr_fun(&mount_changed), app));
-    monitor->signal_mount_changed().connect(sigc::bind<ProcmanApp *>(sigc::ptr_fun(&mount_changed), app));
-    monitor->signal_mount_removed().connect(sigc::bind<ProcmanApp *>(sigc::ptr_fun(&mount_changed), app));
-}
-
-static void
 cb_show_dependencies_changed (GSettings *settings, const gchar *key, gpointer data)
 {
     ProcmanApp *app = static_cast<ProcmanApp *>(data);
@@ -121,13 +101,7 @@ timeouts_changed_cb (GSettings *settings, const gchar *key, gpointer data)
         app->config.disks_update_interval =
             MAX (app->config.disks_update_interval, 1000);
 
-        if(app->disk_timeout) {
-            g_source_remove (app->disk_timeout);
-            app->disk_timeout = \
-                g_timeout_add (app->config.disks_update_interval,
-                               cb_update_disks,
-                               app);
-        }
+        disks_reset_timeout (app);
     }
     else {
         g_assert_not_reached();
@@ -221,7 +195,7 @@ show_all_fs_changed_cb (GSettings *settings, const gchar *key, gpointer data)
 
     app->config.show_all_fs = g_settings_get_boolean (settings, key);
 
-    cb_update_disks (app);
+    disks_update (app);
 }
 
 void
@@ -679,8 +653,6 @@ void ProcmanApp::on_startup()
     smooth_refresh = new SmoothRefresh(settings);
 
     create_main_window (this);
-
-    init_volume_monitor (this);
 
     add_accelerator ("<Alt>1", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_PROCESSES));
     add_accelerator ("<Alt>2", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_RESOURCES));
