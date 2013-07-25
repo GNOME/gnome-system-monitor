@@ -168,7 +168,7 @@ public:
     GtkWidget        *loadavg;
     GtkWidget        *popup_menu;
     GtkWidget        *disk_list;
-    GtkWidget        *notebook;
+    GtkWidget        *stack;
     ProcConfig        config;
     LoadGraph        *cpu_graph;
     LoadGraph        *mem_graph;

@@ -478,9 +478,9 @@ change_priority_state (GSimpleAction *action, GVariant *state, gpointer data)
 void
 update_page_activities (ProcmanApp *app)
 {
-    int current_page = gtk_notebook_get_current_page (GTK_NOTEBOOK (app->notebook));
+    const char *current_page = gtk_stack_get_visible_child_name (GTK_STACK (app->stack));
 
-    if (current_page == PROCMAN_TAB_PROCESSES) {
+    if (strcmp (current_page, "processes") == 0) {
         proctable_thaw (app);
 
         update_sensitivity (app);
@@ -492,7 +492,7 @@ update_page_activities (ProcmanApp *app)
         update_sensitivity (app);
     }
 
-    if (current_page == PROCMAN_TAB_RESOURCES) {
+    if (strcmp (current_page, "resources") == 0) {
         load_graph_start (app->cpu_graph);
         load_graph_start (app->mem_graph);
         load_graph_start (app->net_graph);
@@ -502,7 +502,7 @@ update_page_activities (ProcmanApp *app)
         load_graph_stop (app->net_graph);
     }
 
-    if (current_page == PROCMAN_TAB_DISKS) {
+    if (strcmp (current_page, "disks") == 0) {
 		disks_update (app);
 		disks_thaw (app);
     } else {
@@ -511,7 +511,7 @@ update_page_activities (ProcmanApp *app)
 }
 
 static void
-cb_change_current_page (GtkNotebook *notebook, GParamSpec *pspec, gpointer data)
+cb_change_current_page (GtkStack *stack, GParamSpec *pspec, gpointer data)
 {
     update_page_activities ((ProcmanApp *)data);
 }
@@ -531,7 +531,7 @@ create_main_window (ProcmanApp *app)
 {
     gint width, height, xpos, ypos;
     GtkWidget *main_window;
-    GtkWidget *notebook;
+    GtkWidget *stack;
     GtkWidget *view_menu_button;
     GMenuModel *view_menu_model;
 
@@ -559,7 +559,7 @@ create_main_window (ProcmanApp *app)
         { "open-files", on_activate_open_files, NULL, NULL, NULL },
         { "process-properties", on_activate_process_properties, NULL, NULL, NULL },
         { "refresh", on_activate_refresh, NULL, NULL, NULL },
-        { "show-page", on_activate_radio, "i", "0", change_show_page_state },
+        { "show-page", on_activate_radio, "s", "'resources'", change_show_page_state },
         { "show-whose-processes", on_activate_radio, "s", "'all'", change_show_processes_state },
         { "show-dependencies", on_activate_toggle, NULL, "false", change_show_dependencies_state }
     };
@@ -586,8 +586,8 @@ create_main_window (ProcmanApp *app)
         gtk_window_maximize(GTK_WINDOW(main_window));
     }
 
-    /* create the main notebook */
-    app->notebook = notebook = GTK_WIDGET (gtk_builder_get_object (builder, "notebook"));
+    /* create the main stack */
+    app->stack = stack = GTK_WIDGET (gtk_builder_get_object (builder, "stack"));
 
     create_proc_view(app, builder);
 
@@ -595,9 +595,9 @@ create_main_window (ProcmanApp *app)
     
     create_disk_view (app, builder);
 
-    g_settings_bind (app->settings, "current-tab", notebook, "page", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind (app->settings, "current-tab", stack, "visible-child-name", G_SETTINGS_BIND_DEFAULT);
 
-    g_signal_connect (G_OBJECT (notebook), "notify::page",
+    g_signal_connect (G_OBJECT (stack), "notify::visible-child",
                       G_CALLBACK (cb_change_current_page), app);
     update_page_activities (app);
 
@@ -661,7 +661,7 @@ update_sensitivity(ProcmanApp *app)
     gboolean processes_sensitivity, selected_sensitivity;
     GAction *action;
 
-    processes_sensitivity = (g_settings_get_int (app->settings, "current-tab") == PROCMAN_TAB_PROCESSES);
+    processes_sensitivity = (strcmp (g_settings_get_string (app->settings, "current-tab"), "processes") == 0);
     selected_sensitivity = (processes_sensitivity && app->selected_process != NULL);
 
     for (i = 0; i != G_N_ELEMENTS(processes_actions); ++i) {

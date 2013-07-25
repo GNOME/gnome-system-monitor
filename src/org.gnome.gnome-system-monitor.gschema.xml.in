@@ -113,14 +113,15 @@
       <_summary>Determines which processes to show.</_summary>
     </key>
 
-    <key name="current-tab" type="i">
-      <range min="0" max="2"/>
-      <default>1
-      </default>
+    <key name="current-tab" type="s">
+      <choices>
+        <choice value="processes"/>
+        <choice value="resources"/>
+        <choice value="disks"/>
+      </choices>
+      <default>'resources'</default>
       <_summary>Saves the currently viewed tab
       </_summary>
-      <_description>0 for the processes list, 1 for the resources and 2 for the disks list
-      </_description>
     </key>
 
     <key name="cpu-colors" type="a(us)">

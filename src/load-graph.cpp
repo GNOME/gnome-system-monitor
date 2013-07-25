@@ -91,7 +91,7 @@ void draw_background(LoadGraph *graph) {
                                                            allocation.height);
     cr = cairo_create (graph->background);
 
-    GtkStyleContext *context = gtk_widget_get_style_context (ProcmanApp::get()->notebook);
+    GtkStyleContext *context = gtk_widget_get_style_context (ProcmanApp::get()->stack);
     gtk_style_context_get_background_color (context, GTK_STATE_FLAG_NORMAL, &bg);
     gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &fg);
 

@@ -542,20 +542,18 @@ int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>&
 
     g_strfreev(argv);
 
-    if (option_group.show_processes_tab) {
-        procman_debug("Starting with PROCMAN_TAB_PROCESSES by commandline request");
-        g_settings_set_int (settings, "current-tab", PROCMAN_TAB_PROCESSES);
-    } else if (option_group.show_resources_tab) {
-        procman_debug("Starting with PROCMAN_TAB_RESOURCES by commandline request");
-        g_settings_set_int (settings, "current-tab", PROCMAN_TAB_RESOURCES);
-    } else if (option_group.show_file_systems_tab) {
-        procman_debug("Starting with PROCMAN_TAB_DISKS by commandline request");
-        g_settings_set_int (settings, "current-tab", PROCMAN_TAB_DISKS);
-    } else if (option_group.print_version) {
+    if (option_group.print_version) {
         g_print("%s %s\n", _("GNOME System Monitor"), VERSION);
-	exit (EXIT_SUCCESS);
-	return 0;
+        exit (EXIT_SUCCESS);
     }
+
+    if (option_group.show_processes_tab)
+        g_settings_set_string (settings, "current-tab", "processes");
+    else if (option_group.show_resources_tab)
+        g_settings_set_string (settings, "current-tab", "resources");
+    else if (option_group.show_file_systems_tab)
+        g_settings_set_string (settings, "current-tab", "disks");
+    else if (option_group.print_version)
 
     on_activate ();
 
@@ -655,9 +653,9 @@ void ProcmanApp::on_startup()
 
     create_main_window (this);
 
-    add_accelerator ("<Alt>1", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_PROCESSES));
-    add_accelerator ("<Alt>2", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_RESOURCES));
-    add_accelerator ("<Alt>3", "win.show-page", g_variant_new_int32 (PROCMAN_TAB_DISKS));
+    add_accelerator ("<Alt>1", "win.show-page", g_variant_new_string ("processes"));
+    add_accelerator ("<Alt>2", "win.show-page", g_variant_new_string ("resources"));
+    add_accelerator ("<Alt>3", "win.show-page", g_variant_new_string ("disks"));
     add_accelerator ("<Primary>r", "win.refresh", NULL);
 
     gtk_widget_show (main_window);
