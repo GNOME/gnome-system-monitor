@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* main.c
  *
  * Copyright (C) 2010 Christian Hergert <chris@dronelabs.com>
