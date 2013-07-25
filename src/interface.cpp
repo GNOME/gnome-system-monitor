@@ -160,7 +160,7 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     title_template = g_strdup(_("Pick a Color for '%s'"));
 
     /* The CPU BOX */
-
+    
     cpu_graph_box = GTK_WIDGET (gtk_builder_get_object (builder, "cpu_graph_box"));
 
     cpu_graph = new LoadGraph(LOAD_GRAPH_CPU);
@@ -183,10 +183,6 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
             gtk_grid_insert_row(GTK_GRID(cpu_table), (i+1)/cols);
         }
         gtk_grid_attach(GTK_GRID (cpu_table), temp_hbox, i%cols, i/cols, 1, 1);
-        //gtk_size_group_add_widget (sizegroup, temp_hbox);
-        /*g_signal_connect (G_OBJECT (temp_hbox), "size_request",
-          G_CALLBACK(size_request), &cpu_size);
-        */
         color_picker = gsm_color_button_new (&cpu_graph->colors.at(i), GSMCP_TYPE_CPU);
         g_signal_connect (G_OBJECT (color_picker), "color_set",
                           G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
@@ -214,6 +210,7 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     app->cpu_graph = cpu_graph;
 
     /** The memory box */
+    
     mem_graph_box = GTK_WIDGET (gtk_builder_get_object (builder, "mem_graph_box"));
 
     mem_graph = new LoadGraph(LOAD_GRAPH_MEM);
@@ -252,6 +249,7 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     app->mem_graph = mem_graph;
 
     /* The net box */
+    
     net_graph_box = GTK_WIDGET (gtk_builder_get_object (builder, "net_graph_box"));
 
     net_graph = new LoadGraph(LOAD_GRAPH_NET);
@@ -273,7 +271,6 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     picker_alignment = GTK_WIDGET (gtk_builder_get_object (builder, "receiving_picker_alignment"));
     gtk_container_add (GTK_CONTAINER (picker_alignment), color_picker);
 
-    //gtk_widget_set_size_request(GTK_WIDGET(load_graph_get_labels(net_graph)->net_in), 100, -1);
     label = GTK_WIDGET (gtk_builder_get_object(builder, "receiving_label"));
     gtk_grid_attach_next_to (GTK_GRID (table), load_graph_get_labels(net_graph)->net_in, label, GTK_POS_RIGHT, 1, 1);
     label = GTK_WIDGET (gtk_builder_get_object(builder, "total_received_label"));
@@ -290,7 +287,6 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     picker_alignment = GTK_WIDGET (gtk_builder_get_object (builder, "sending_picker_alignment"));
     gtk_container_add (GTK_CONTAINER (picker_alignment), color_picker);
 
-    //gtk_widget_set_size_request(GTK_WIDGET(load_graph_get_labels(net_graph)->net_out), 100, -1);
     label = GTK_WIDGET (gtk_builder_get_object(builder, "sending_label"));
     gtk_grid_attach_next_to (GTK_GRID (table), load_graph_get_labels(net_graph)->net_out, label, GTK_POS_RIGHT, 1, 1);
     label = GTK_WIDGET (gtk_builder_get_object(builder, "total_sent_label"));
@@ -628,7 +624,18 @@ create_main_window (ProcmanApp *app)
                            g_settings_get_value (app->settings, "show-whose-processes"));
 
     gtk_widget_show_all(main_window);
-
+    
+    GtkWidget *cpu_box, *mem_box, *net_box;
+    
+    cpu_box = GTK_WIDGET (gtk_builder_get_object (builder, "cpu_box"));
+    g_settings_bind(app->settings, "show-cpu", cpu_box, "visible", G_SETTINGS_BIND_GET);
+    
+    mem_box = GTK_WIDGET (gtk_builder_get_object (builder, "mem_box"));
+    g_settings_bind(app->settings, "show-mem", mem_box, "visible", G_SETTINGS_BIND_GET);
+    
+    net_box = GTK_WIDGET (gtk_builder_get_object (builder, "net_box"));
+    g_settings_bind(app->settings, "show-network", net_box, "visible", G_SETTINGS_BIND_GET);
+    
     update_page_activities (app);
 
     g_object_unref (G_OBJECT (builder));
