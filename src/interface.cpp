@@ -626,15 +626,23 @@ create_main_window (ProcmanApp *app)
     gtk_widget_show_all(main_window);
     
     GtkWidget *cpu_box, *mem_box, *net_box;
+    GtkWidget *cpu_exp, *mem_exp, *net_exp;
+
+    cpu_exp = GTK_WIDGET (gtk_builder_get_object (builder, "cpu_exp"));
+    mem_exp = GTK_WIDGET (gtk_builder_get_object (builder, "mem_exp"));
+    net_exp = GTK_WIDGET (gtk_builder_get_object (builder, "net_exp"));
     
     cpu_box = GTK_WIDGET (gtk_builder_get_object (builder, "cpu_box"));
-    g_settings_bind(app->settings, "show-cpu", cpu_box, "visible", G_SETTINGS_BIND_GET);
-    
     mem_box = GTK_WIDGET (gtk_builder_get_object (builder, "mem_box"));
-    g_settings_bind(app->settings, "show-mem", mem_box, "visible", G_SETTINGS_BIND_GET);
-    
     net_box = GTK_WIDGET (gtk_builder_get_object (builder, "net_box"));
-    g_settings_bind(app->settings, "show-network", net_box, "visible", G_SETTINGS_BIND_GET);
+
+    g_object_bind_property(cpu_exp, "expanded", cpu_box, "visible", G_BINDING_DEFAULT);
+    g_object_bind_property(mem_exp, "expanded", mem_box, "visible", G_BINDING_DEFAULT);
+    g_object_bind_property(net_exp, "expanded", net_box, "visible", G_BINDING_DEFAULT);
+
+    g_settings_bind(app->settings, "show-cpu", cpu_exp, "expanded", G_SETTINGS_BIND_GET);
+    g_settings_bind(app->settings, "show-mem", mem_exp, "expanded", G_SETTINGS_BIND_GET);
+    g_settings_bind(app->settings, "show-network", net_exp, "expanded", G_SETTINGS_BIND_GET);
     
     update_page_activities (app);
 

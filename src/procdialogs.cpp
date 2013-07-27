@@ -459,15 +459,6 @@ procdialog_create_preferences_dialog (ProcmanApp *app)
                       &disks_interval_updater);
 
 
-    check_button = GTK_WIDGET (gtk_builder_get_object (builder, "draw_cpu"));
-    g_settings_bind(app->settings, "show-cpu", check_button, "active", G_SETTINGS_BIND_DEFAULT);
-    
-    check_button = GTK_WIDGET (gtk_builder_get_object (builder, "draw_mem"));
-    g_settings_bind(app->settings, "show-mem", check_button, "active", G_SETTINGS_BIND_DEFAULT);
-    
-    check_button = GTK_WIDGET (gtk_builder_get_object (builder, "draw_net"));
-    g_settings_bind(app->settings, "show-network", check_button, "active", G_SETTINGS_BIND_DEFAULT);
-    
     check_button = GTK_WIDGET (gtk_builder_get_object (builder, "all_devices_check"));
     g_settings_bind(app->settings, "show-all-fs", check_button, "active", G_SETTINGS_BIND_DEFAULT);
 
