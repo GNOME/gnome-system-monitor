@@ -145,6 +145,7 @@ static void
 create_sys_view (ProcmanApp *app, GtkBuilder * builder)
 {
     GtkWidget *cpu_graph_box, *mem_graph_box, *net_graph_box;
+    GtkWidget *cpu_exp, *mem_exp, *net_exp;
     GtkWidget *label,*cpu_label;
     GtkWidget *table;
     GtkWidget *color_picker;
@@ -295,6 +296,17 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     app->net_graph = net_graph;
     g_free(title_template);
 
+    cpu_exp = GTK_WIDGET (gtk_builder_get_object (builder, "cpu_exp"));
+    mem_exp = GTK_WIDGET (gtk_builder_get_object (builder, "mem_exp"));
+    net_exp = GTK_WIDGET (gtk_builder_get_object (builder, "net_exp"));
+
+    g_object_bind_property(cpu_exp, "expanded", cpu_graph_box, "visible", G_BINDING_DEFAULT);
+    g_object_bind_property(mem_exp, "expanded", mem_graph_box, "visible", G_BINDING_DEFAULT);
+    g_object_bind_property(net_exp, "expanded", net_graph_box, "visible", G_BINDING_DEFAULT);
+
+    g_settings_bind(app->settings, "show-cpu", cpu_exp, "expanded", G_SETTINGS_BIND_GET);
+    g_settings_bind(app->settings, "show-mem", mem_exp, "expanded", G_SETTINGS_BIND_GET);
+    g_settings_bind(app->settings, "show-network", net_exp, "expanded", G_SETTINGS_BIND_GET);
 }
 
 static void
@@ -624,25 +636,6 @@ create_main_window (ProcmanApp *app)
                            g_settings_get_value (app->settings, "show-whose-processes"));
 
     gtk_widget_show_all(main_window);
-    
-    GtkWidget *cpu_box, *mem_box, *net_box;
-    GtkWidget *cpu_exp, *mem_exp, *net_exp;
-
-    cpu_exp = GTK_WIDGET (gtk_builder_get_object (builder, "cpu_exp"));
-    mem_exp = GTK_WIDGET (gtk_builder_get_object (builder, "mem_exp"));
-    net_exp = GTK_WIDGET (gtk_builder_get_object (builder, "net_exp"));
-    
-    cpu_box = GTK_WIDGET (gtk_builder_get_object (builder, "cpu_box"));
-    mem_box = GTK_WIDGET (gtk_builder_get_object (builder, "mem_box"));
-    net_box = GTK_WIDGET (gtk_builder_get_object (builder, "net_box"));
-
-    g_object_bind_property(cpu_exp, "expanded", cpu_box, "visible", G_BINDING_DEFAULT);
-    g_object_bind_property(mem_exp, "expanded", mem_box, "visible", G_BINDING_DEFAULT);
-    g_object_bind_property(net_exp, "expanded", net_box, "visible", G_BINDING_DEFAULT);
-
-    g_settings_bind(app->settings, "show-cpu", cpu_exp, "expanded", G_SETTINGS_BIND_GET);
-    g_settings_bind(app->settings, "show-mem", mem_exp, "expanded", G_SETTINGS_BIND_GET);
-    g_settings_bind(app->settings, "show-network", net_exp, "expanded", G_SETTINGS_BIND_GET);
     
     update_page_activities (app);
 
