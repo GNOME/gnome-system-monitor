@@ -300,13 +300,14 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     mem_exp = GTK_WIDGET (gtk_builder_get_object (builder, "mem_exp"));
     net_exp = GTK_WIDGET (gtk_builder_get_object (builder, "net_exp"));
 
-    g_object_bind_property(cpu_exp, "expanded", cpu_graph_box, "visible", G_BINDING_DEFAULT);
-    g_object_bind_property(mem_exp, "expanded", mem_graph_box, "visible", G_BINDING_DEFAULT);
-    g_object_bind_property(net_exp, "expanded", net_graph_box, "visible", G_BINDING_DEFAULT);
+    g_object_bind_property(cpu_exp, "expanded", cpu_graph_box, "visible", G_BINDING_SYNC_CREATE);
+    g_object_bind_property(mem_exp, "expanded", mem_graph_box, "visible", G_BINDING_SYNC_CREATE);
+    g_object_bind_property(net_exp, "expanded", net_graph_box, "visible", G_BINDING_SYNC_CREATE);
 
-    g_settings_bind(app->settings, "show-cpu", cpu_exp, "expanded", G_SETTINGS_BIND_GET);
-    g_settings_bind(app->settings, "show-mem", mem_exp, "expanded", G_SETTINGS_BIND_GET);
-    g_settings_bind(app->settings, "show-network", net_exp, "expanded", G_SETTINGS_BIND_GET);
+    g_settings_bind(app->settings, "show-cpu", cpu_exp, "expanded", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind(app->settings, "show-mem", mem_exp, "expanded", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind(app->settings, "show-network", net_exp, "expanded", G_SETTINGS_BIND_DEFAULT);
+    
 }
 
 static void
