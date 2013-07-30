@@ -683,7 +683,7 @@ GtkWidget *
 gsm_color_button_new (const GdkRGBA * color, guint type)
 {
   return g_object_new (GSM_TYPE_COLOR_BUTTON, "color", color, "type", type,
-		       NULL);
+		               "visible", TRUE, NULL);
 }
 
 static void

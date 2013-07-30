@@ -576,6 +576,8 @@ proctable_new (ProcmanApp * const app)
     g_signal_connect (G_OBJECT(proctree), "columns-changed",
                       G_CALLBACK(cb_columns_changed), app);
 
+    gtk_widget_show (proctree);
+
     return proctree;
 }
 

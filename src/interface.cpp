@@ -177,6 +177,7 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
         GtkWidget *temp_hbox;
 
         temp_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+        gtk_widget_show (temp_hbox);
         if (i < cols) {
             gtk_grid_insert_column(GTK_GRID(cpu_table), i%cols);
         }
@@ -199,11 +200,14 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
         gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
         g_free(title_text);
         gtk_box_pack_start (GTK_BOX (temp_hbox), label, FALSE, FALSE, 6);
+        gtk_widget_show (label);
         g_free (label_text);
 
         cpu_label = gtk_label_new (NULL);
+
         gtk_misc_set_alignment (GTK_MISC (cpu_label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (temp_hbox), cpu_label, FALSE, FALSE, 0);
+        gtk_widget_show (cpu_label);
         load_graph_get_labels(cpu_graph)->cpu[i] = cpu_label;
 
     }
@@ -294,20 +298,20 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     gtk_grid_attach_next_to (GTK_GRID (table),  load_graph_get_labels(net_graph)->net_out_total, label, GTK_POS_RIGHT, 1, 1);
 
     app->net_graph = net_graph;
-    g_free(title_template);
+    g_free (title_template);
 
     cpu_exp = GTK_WIDGET (gtk_builder_get_object (builder, "cpu_exp"));
     mem_exp = GTK_WIDGET (gtk_builder_get_object (builder, "mem_exp"));
     net_exp = GTK_WIDGET (gtk_builder_get_object (builder, "net_exp"));
 
-    g_object_bind_property(cpu_exp, "expanded", cpu_graph_box, "visible", G_BINDING_SYNC_CREATE);
-    g_object_bind_property(mem_exp, "expanded", mem_graph_box, "visible", G_BINDING_SYNC_CREATE);
-    g_object_bind_property(net_exp, "expanded", net_graph_box, "visible", G_BINDING_SYNC_CREATE);
+    g_object_bind_property (cpu_exp, "expanded", cpu_graph_box, "visible", G_BINDING_SYNC_CREATE);
+    g_object_bind_property (mem_exp, "expanded", mem_graph_box, "visible", G_BINDING_SYNC_CREATE);
+    g_object_bind_property (net_exp, "expanded", net_graph_box, "visible", G_BINDING_SYNC_CREATE);
 
-    g_settings_bind(app->settings, "show-cpu", cpu_exp, "expanded", G_SETTINGS_BIND_DEFAULT);
-    g_settings_bind(app->settings, "show-mem", mem_exp, "expanded", G_SETTINGS_BIND_DEFAULT);
-    g_settings_bind(app->settings, "show-network", net_exp, "expanded", G_SETTINGS_BIND_DEFAULT);
-    
+    g_settings_bind (app->settings, "show-cpu", cpu_exp, "expanded", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind (app->settings, "show-mem", mem_exp, "expanded", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind (app->settings, "show-network", net_exp, "expanded", G_SETTINGS_BIND_DEFAULT);
+
 }
 
 static void
@@ -636,7 +640,7 @@ create_main_window (ProcmanApp *app)
     g_action_change_state (action,
                            g_settings_get_value (app->settings, "show-whose-processes"));
 
-    gtk_widget_show_all(main_window);
+    gtk_widget_show (main_window);
     
     update_page_activities (app);
 

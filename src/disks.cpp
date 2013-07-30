@@ -459,7 +459,7 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
 
     /* numeric sort */
 
-    procman_get_tree_state(app->settings, disk_tree,
+    procman_get_tree_state (app->settings, disk_tree,
                            "disktreenew");
 
     g_signal_connect (G_OBJECT(disk_tree), "destroy",
@@ -468,5 +468,5 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
 
     g_signal_connect (G_OBJECT(disk_tree), "columns-changed",
                       G_CALLBACK(cb_disk_columns_changed), app);
-
+    gtk_widget_show (disk_tree);
 }
