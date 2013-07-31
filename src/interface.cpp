@@ -44,6 +44,23 @@
 #include "gsm_color_button.h"
 
 
+static gboolean
+window_key_press_event_cb (GtkWidget *widget,
+                           GdkEvent  *event,
+                           gpointer   user_data)
+{
+    return gtk_search_bar_handle_event (GTK_SEARCH_BAR (user_data), event);
+}
+
+static void
+search_text_changed (GtkEditable *entry, gpointer data)
+{
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
+    gtk_tree_model_filter_refilter (GTK_TREE_MODEL_FILTER (gtk_tree_model_sort_get_model (
+	                                  GTK_TREE_MODEL_SORT (gtk_tree_view_get_model(
+	                                    GTK_TREE_VIEW (app->tree))))));
+}
+
 static void 
 create_proc_view(ProcmanApp *app, GtkBuilder * builder)
 {
@@ -66,6 +83,15 @@ create_proc_view(ProcmanApp *app, GtkBuilder * builder)
     GMenuModel *menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-popup-menu"));
     app->popup_menu = gtk_menu_new_from_model (menu_model);
     gtk_menu_attach_to_widget (GTK_MENU (app->popup_menu), app->main_window, NULL);
+    
+    GtkSearchBar *search_bar = GTK_SEARCH_BAR (gtk_builder_get_object (builder, "proc_searchbar"));
+    app->search_entry = GTK_WIDGET (gtk_builder_get_object (builder, "proc_searchentry"));
+    
+    gtk_search_bar_connect_entry (search_bar, GTK_ENTRY (app->search_entry));
+    g_signal_connect (app->main_window, "key-press-event",
+                  G_CALLBACK (window_key_press_event_cb), search_bar);
+                  
+    g_signal_connect (app->search_entry, "changed", G_CALLBACK (search_text_changed), app);
 }
 
 void

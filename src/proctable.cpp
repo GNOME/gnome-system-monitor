@@ -292,10 +292,31 @@ cb_refresh_icons (GtkIconTheme *theme, gpointer data)
 }
 
 gboolean process_visibility_func (GtkTreeModel *model,
-                                  GtkTreeIter  *iter,
+								  GtkTreeIter  *iter,
                                   gpointer      data)
 {
-    return !search_equal_func(model, 0, "", iter, data);
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
+    const gchar * search_text = app->search_entry == NULL ? "" : gtk_entry_get_text (GTK_ENTRY (app->search_entry));
+    GtkTreePath *tree_path = gtk_tree_model_get_path (model, iter);
+	// in case we are in dependencies view, we show (and expand) rows not matching the text, but having a matching child
+    gboolean match = false;
+    if (g_settings_get_boolean (app->settings, "show-dependencies")) {
+		
+        if (!search_equal_func (model, 0, search_text, iter, data)) {
+		    match = true;
+            if (strlen (search_text) > 0)
+                gtk_tree_view_expand_to_path (GTK_TREE_VIEW (app->tree), tree_path);
+        } else {
+            GtkTreeIter child;
+            if (gtk_tree_model_iter_children (model, &child, iter)) {
+                while ((match = !process_visibility_func (model, &child, data)) && gtk_tree_model_iter_next (model, &child)) ;
+                match = !match;
+            }
+        }
+    } else match = !search_equal_func (model, 0, search_text, iter, data);
+        
+    gtk_tree_path_free (tree_path);
+    return match;
 }
                                                         
 GtkWidget *
@@ -373,7 +394,7 @@ proctable_new (ProcmanApp * const app)
 
     model_filter = GTK_TREE_MODEL_FILTER (gtk_tree_model_filter_new (GTK_TREE_MODEL (model), NULL));
         
-    gtk_tree_model_filter_set_visible_func(model_filter, process_visibility_func, NULL, NULL);
+    gtk_tree_model_filter_set_visible_func(model_filter, process_visibility_func, app, NULL);
     
     model_sort = GTK_TREE_MODEL_SORT (gtk_tree_model_sort_new_with_model (GTK_TREE_MODEL (model_filter)));
     
