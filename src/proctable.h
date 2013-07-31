@@ -72,4 +72,6 @@ void            proctable_set_columns_order(GtkTreeView *treeview, GSList *order
 
 char*           make_loadavg_string(void);
 
+void            get_process_memory_writable (ProcInfo *info);
+
 #endif /* _PROCMAN_PROCTABLE_H_ */

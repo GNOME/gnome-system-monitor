@@ -460,6 +460,10 @@ proctable_new (ProcmanApp * const app)
           continue;
         }
 #endif
+
+        if (i == COL_MEMWRITABLE)
+            continue;
+
         cell = gtk_cell_renderer_text_new();
         col = gtk_tree_view_column_new();
         gtk_tree_view_column_pack_start(col, cell, TRUE);
@@ -484,7 +488,6 @@ proctable_new (ProcmanApp * const app)
             case COL_MEMRES:
             case COL_MEMSHARED:
             case COL_MEM:
-            case COL_MEMWRITABLE:
                 gtk_tree_view_column_set_cell_data_func(col, cell,
                                                         &procman::size_na_cell_data_func,
                                                         GUINT_TO_POINTER(i),
@@ -531,7 +534,6 @@ proctable_new (ProcmanApp * const app)
             case COL_MEMRES:
             case COL_MEMSHARED:
             case COL_MEM:
-            case COL_MEMWRITABLE:
             case COL_CPU:
             case COL_CPU_TIME:
             case COL_START_TIME:
@@ -553,7 +555,6 @@ proctable_new (ProcmanApp * const app)
         {
             case COL_VMSIZE:
             case COL_MEMRES:
-            case COL_MEMWRITABLE:
             case COL_MEMSHARED:
 #ifdef HAVE_WNCK
             case COL_MEMXSERVER:
@@ -712,7 +713,8 @@ ProcInfo::set_user(guint uid)
     this->user = lookup_user(uid);
 }
 
-static void get_process_memory_writable(ProcInfo *info)
+void
+get_process_memory_writable (ProcInfo *info)
 {
     glibtop_proc_map buf;
     glibtop_map_entry *maps;
@@ -756,10 +758,7 @@ get_process_memory_info(ProcInfo *info)
     info->memres    = procmem.resident;
     info->memshared = procmem.share;
 
-    get_process_memory_writable(info);
-
-    // fake the smart memory column if writable is not available
-    info->mem = info->memwritable ? info->memwritable : info->memres;
+    info->mem = info->memres - info->memshared;
 #ifdef HAVE_WNCK
     info->mem += info->memxserver;
 #endif
@@ -781,7 +780,6 @@ update_info_mutable_cols(ProcInfo *info)
     tree_store_update(model, &info->node, COL_USER, info->user.c_str());
     tree_store_update(model, &info->node, COL_VMSIZE, info->vmsize);
     tree_store_update(model, &info->node, COL_MEMRES, info->memres);
-    tree_store_update(model, &info->node, COL_MEMWRITABLE, info->memwritable);
     tree_store_update(model, &info->node, COL_MEMSHARED, info->memshared);
 #ifdef HAVE_WNCK
     tree_store_update(model, &info->node, COL_MEMXSERVER, info->memxserver);

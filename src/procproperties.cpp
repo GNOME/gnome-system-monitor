@@ -67,6 +67,8 @@ fill_proc_properties (GtkWidget *tree, ProcInfo *info)
     if (!info)
         return;
 
+    get_process_memory_writable (info);
+
 #if defined(__OpenBSD__) || defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
     struct clockinfo cinf;
     size_t size = sizeof (cinf);
