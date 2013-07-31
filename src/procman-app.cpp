@@ -209,10 +209,9 @@ ProcmanApp::load_settings()
 
     settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
 
-    config.width = g_settings_get_int (settings, "width");
-    config.height = g_settings_get_int (settings, "height");
-    config.xpos = g_settings_get_int (settings, "x-position");
-    config.ypos = g_settings_get_int (settings, "y-position");
+    g_settings_get (settings, "window-state", "(iiii)",
+                    &config.width, &config.height, &config.xpos, &config.ypos);
+
     config.maximized = g_settings_get_boolean (settings, "maximized");
 
     g_signal_connect (G_OBJECT(settings), "changed::show-dependencies", G_CALLBACK(cb_show_dependencies_changed), this);
@@ -517,13 +516,10 @@ ProcmanApp::save_config ()
 
     config.maximized = gdk_window_get_state(gtk_widget_get_window (main_window)) & GDK_WINDOW_STATE_MAXIMIZED;
 
-    g_settings_set_int (settings, "width", config.width);
-    g_settings_set_int (settings, "height", config.height);
-    g_settings_set_int (settings, "x-position", config.xpos);
-    g_settings_set_int (settings, "y-position", config.ypos);
-    g_settings_set_boolean (settings, "maximized", config.maximized);
+    g_settings_set (settings, "window-state", "(iiii)",
+                    config.width, config.height, config.xpos, config.ypos);
 
-    g_settings_sync ();
+    g_settings_set_boolean (settings, "maximized", config.maximized);
 }
 
 int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>& command_line)
