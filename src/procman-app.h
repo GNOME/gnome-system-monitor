@@ -170,7 +170,7 @@ public:
     GtkWidget        *disk_list;
     GtkWidget        *stack;
     GtkWidget        *refresh_button;
-    GtkWidget        *view_menu_button;
+    GtkWidget        *process_menu_button;
     GtkWidget        *end_process_button;
     GtkWidget        *search_entry;
     ProcConfig        config;

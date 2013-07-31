@@ -523,8 +523,7 @@ update_page_activities (ProcmanApp *app)
         proctable_thaw (app);
 
         gtk_widget_show (app->end_process_button);
-        gtk_widget_show (app->refresh_button);
-        gtk_widget_show (app->view_menu_button);
+        gtk_widget_show (app->process_menu_button);
 
         update_sensitivity (app);
 
@@ -533,8 +532,7 @@ update_page_activities (ProcmanApp *app)
         proctable_freeze (app);
 
         gtk_widget_hide (app->end_process_button);
-        gtk_widget_hide (app->refresh_button);
-        gtk_widget_hide (app->view_menu_button);
+        gtk_widget_hide (app->process_menu_button);
 
         update_sensitivity (app);
     }
@@ -579,8 +577,8 @@ create_main_window (ProcmanApp *app)
     gint width, height, xpos, ypos;
     GtkWidget *main_window;
     GtkWidget *stack;
-    GtkWidget *view_menu_button;
-    GMenuModel *view_menu_model;
+    GtkWidget *process_menu_button;
+    GMenuModel *process_menu_model;
 
     GtkBuilder *builder = gtk_builder_new();
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/interface.ui", NULL);
@@ -591,11 +589,10 @@ create_main_window (ProcmanApp *app)
     gtk_widget_set_name (main_window, "gnome-system-monitor");
     app->main_window = main_window;
 
-    app->view_menu_button = view_menu_button = GTK_WIDGET (gtk_builder_get_object (builder, "viewmenubutton"));
-    view_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "view-menu"));
-    gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (view_menu_button), view_menu_model);
+    app->process_menu_button = process_menu_button = GTK_WIDGET (gtk_builder_get_object (builder, "process_menu_button"));
+    process_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-window-menu"));
+    gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (process_menu_button), process_menu_model);
 
-    app->refresh_button = GTK_WIDGET (gtk_builder_get_object (builder, "refresh_button"));
     app->end_process_button = GTK_WIDGET (gtk_builder_get_object (builder, "end_process_button"));
 
     GActionEntry win_action_entries[] = {
