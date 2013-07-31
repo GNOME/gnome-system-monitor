@@ -291,11 +291,21 @@ cb_refresh_icons (GtkIconTheme *theme, gpointer data)
     cb_timeout(app);
 }
 
+gboolean process_visibility_func (GtkTreeModel *model,
+                                  GtkTreeIter  *iter,
+                                  gpointer      data)
+{
+    return !search_equal_func(model, 0, "", iter, data);
+}
+                                                        
 GtkWidget *
 proctable_new (ProcmanApp * const app)
 {
     GtkWidget *proctree;
     GtkTreeStore *model;
+    GtkTreeModelFilter *model_filter;
+    GtkTreeModelSort *model_sort;
+    
     GtkTreeSelection *selection;
     GtkTreeViewColumn *column;
     GtkCellRenderer *cell_renderer;
@@ -361,7 +371,13 @@ proctable_new (ProcmanApp * const app)
                                 G_TYPE_STRING       /* Sexy tooltip */
         );
 
-    proctree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
+    model_filter = GTK_TREE_MODEL_FILTER (gtk_tree_model_filter_new (GTK_TREE_MODEL (model), NULL));
+        
+    gtk_tree_model_filter_set_visible_func(model_filter, process_visibility_func, NULL, NULL);
+    
+    model_sort = GTK_TREE_MODEL_SORT (gtk_tree_model_sort_new_with_model (GTK_TREE_MODEL (model_filter)));
+    
+    proctree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model_sort));
     gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (proctree), COL_TOOLTIP);
     gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (proctree),
                                       g_settings_get_boolean (app->settings, "show-dependencies"));
@@ -716,7 +732,9 @@ static void
 update_info_mutable_cols(ProcInfo *info)
 {
     GtkTreeModel *model;
-    model = gtk_tree_view_get_model(GTK_TREE_VIEW(ProcmanApp::get()->tree));
+    model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
+            gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT(
+            gtk_tree_view_get_model (GTK_TREE_VIEW(ProcmanApp::get()->tree))))));
 
     using procman::tree_store_update;
 
@@ -749,7 +767,9 @@ insert_info_to_tree (ProcInfo *info, ProcmanApp *app, bool forced = false)
 {
     GtkTreeModel *model;
 
-    model = gtk_tree_view_get_model (GTK_TREE_VIEW (app->tree));
+    model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
+            gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT(
+            gtk_tree_view_get_model (GTK_TREE_VIEW(app->tree))))));
 
     if (g_settings_get_boolean (app->settings, "show-dependencies")) {
 
@@ -956,7 +976,9 @@ refresh_list (ProcmanApp *app, const pid_t* pid_list, const guint n)
     typedef std::list<ProcInfo*> ProcList;
     ProcList addition;
 
-    GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (app->tree));
+    GtkTreeModel    *model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
+                             gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT (
+                             gtk_tree_view_get_model (GTK_TREE_VIEW(app->tree))))));
     guint i;
 
     // Add or update processes in the process list
@@ -1153,7 +1175,9 @@ proctable_clear_tree (ProcmanApp * const app)
 {
     GtkTreeModel *model;
 
-    model = gtk_tree_view_get_model (GTK_TREE_VIEW (app->tree));
+    model =  gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
+             gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT (
+             gtk_tree_view_get_model (GTK_TREE_VIEW(app->tree))))));
 
     gtk_tree_store_clear (GTK_TREE_STORE (model));
 
@@ -1197,7 +1221,9 @@ ProcInfo::set_icon(Glib::RefPtr<Gdk::Pixbuf> icon)
     this->pixbuf = icon;
 
     GtkTreeModel *model;
-    model = gtk_tree_view_get_model(GTK_TREE_VIEW(ProcmanApp::get()->tree));
+    model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
+            gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT(
+            gtk_tree_view_get_model (GTK_TREE_VIEW(ProcmanApp::get()->tree))))));
     gtk_tree_store_set(GTK_TREE_STORE(model), &this->node,
                        COL_PIXBUF, (this->pixbuf ? this->pixbuf->gobj() : NULL),
                        -1);
