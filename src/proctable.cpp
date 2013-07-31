@@ -84,6 +84,15 @@ cb_columns_changed(GtkTreeView *treeview, gpointer data)
                             "proctree");
 }
 
+static void
+cb_sort_changed (GtkTreeSortable *model, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    procman_save_tree_state (app->settings,
+                             GTK_WIDGET (app->tree),
+                             "proctree");
+}
 
 static GtkTreeViewColumn*
 my_gtk_tree_view_get_column_with_sort_column_id(GtkTreeView *treeview, int id)
@@ -186,7 +195,13 @@ search_equal_func(GtkTreeModel *model,
 static void
 cb_proctree_destroying (GtkTreeView *self, gpointer data)
 {
-    g_signal_handlers_disconnect_by_func(self, (gpointer) cb_columns_changed, data);
+    g_signal_handlers_disconnect_by_func (self,
+                                          (gpointer) cb_columns_changed,
+                                          data);
+
+    g_signal_handlers_disconnect_by_func (gtk_tree_view_get_model (self),
+                                          (gpointer) cb_sort_changed,
+                                          data);
 }
 
 static gboolean
@@ -606,12 +621,15 @@ proctable_new (ProcmanApp * const app)
     g_signal_connect (G_OBJECT (proctree), "button_press_event",
                       G_CALLBACK (cb_tree_button_pressed), app);
 
-    g_signal_connect (G_OBJECT(proctree), "destroy",
-                      G_CALLBACK(cb_proctree_destroying),
+    g_signal_connect (G_OBJECT (proctree), "destroy",
+                      G_CALLBACK (cb_proctree_destroying),
                       app);
 
-    g_signal_connect (G_OBJECT(proctree), "columns-changed",
-                      G_CALLBACK(cb_columns_changed), app);
+    g_signal_connect (G_OBJECT (proctree), "columns-changed",
+                      G_CALLBACK (cb_columns_changed), app);
+
+    g_signal_connect (G_OBJECT (model), "sort-column-changed",
+                      G_CALLBACK (cb_sort_changed), app);
 
     gtk_widget_show (proctree);
 

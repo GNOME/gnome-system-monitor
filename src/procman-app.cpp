@@ -507,9 +507,6 @@ procman_save_tree_state (GSettings *settings, GtkWidget *tree, const gchar *chil
 void
 ProcmanApp::save_config ()
 {
-    procman_save_tree_state (settings, tree, "proctree");
-    procman_save_tree_state (settings, disk_list, "disktreenew");
-
     config.width  = gdk_window_get_width (gtk_widget_get_window (main_window));
     config.height = gdk_window_get_height(gtk_widget_get_window (main_window));
     gtk_window_get_position(GTK_WINDOW(main_window), &config.xpos, &config.ypos);
