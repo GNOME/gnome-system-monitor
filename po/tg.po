@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Tajik Gnome\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-08-01 03:11+0000\n"
-"PO-Revision-Date: 2013-08-01 12:42-0000\n"
+"POT-Creation-Date: 2013-08-01 15:01+0000\n"
+"PO-Revision-Date: 2013-08-01 23:00-0000\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: \n"
 "Language: Tajik\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 1.5.7\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/interface.cpp:373 ../src/procman-app.cpp:309
+#: ../src/interface.cpp:373 ../src/procman-app.cpp:299
 msgid "System Monitor"
 msgstr "Монитори система"
 
@@ -33,7 +33,7 @@ msgstr "Намоиши равандҳои ҷорӣ ва назорати ҳол�
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr "Монитор;Система;Раванд;CPU;Хотира;Шабака;Таърих;Истифода;"
 
-#: ../gnome-system-monitor-kde.desktop.in.in.h:1 ../src/procman-app.cpp:538
+#: ../gnome-system-monitor-kde.desktop.in.in.h:1 ../src/procman-app.cpp:531
 msgid "GNOME System Monitor"
 msgstr "Монитори системаи GNOME"
 
@@ -178,20 +178,22 @@ msgid "_Dependencies"
 msgstr "_Вобастагиҳо"
 
 #: ../data/menus.ui.h:11
-msgid "_Stop Process"
-msgstr "_Манъ кардани раванд"
+#| msgid "Stopped"
+msgid "_Stop"
+msgstr "_Манъ кардан"
 
 #: ../data/menus.ui.h:12
-msgid "_Continue Process"
-msgstr "_Идома додани раванд"
+#| msgid "_Continue Process"
+msgid "_Continue"
+msgstr "_Идома додан"
 
-#: ../data/menus.ui.h:13 ../src/procdialogs.cpp:92
-msgid "_End Process"
-msgstr "_Анҷоми раванд"
+#: ../data/menus.ui.h:13
+msgid "_End"
+msgstr "_Анҷом додан"
 
-#: ../data/menus.ui.h:14 ../src/procdialogs.cpp:81
-msgid "_Kill Process"
-msgstr "_Қатъи раванд"
+#: ../data/menus.ui.h:14
+msgid "_Kill"
+msgstr "_Қатъ кардан"
 
 #: ../data/menus.ui.h:15
 msgid "_Change Priority"
@@ -1017,6 +1019,10 @@ msgstr ""
 "Қатъи раванд метавонад иттилоотро вайрон карда сессияро барҳам диҳад ё боиси "
 "хатари амниятӣ шавад. Танҳо раванди бемасъулият бояд қатъ карда шавад."
 
+#: ../src/procdialogs.cpp:81
+msgid "_Kill Process"
+msgstr "_Қатъи раванд"
+
 #. xgettext: primary alert message
 #: ../src/procdialogs.cpp:85
 #, c-format
@@ -1031,6 +1037,10 @@ msgid ""
 msgstr ""
 "Анҷоми раванд метавонад иттилоотро вайрон карда сессияро барҳам диҳад ё "
 "боиси хатари амниятӣ шавад. Танҳо раванди бемасъулият бояд анҷом дода шавад."
+
+#: ../src/procdialogs.cpp:92
+msgid "_End Process"
+msgstr "_Анҷоми раванд"
 
 #: ../src/procdialogs.cpp:169
 #, c-format
@@ -1049,11 +1059,11 @@ msgstr ""
 "Афзалияти раванд бо қимати хуби он дода мешавад. Қимати хуби камтар боиси "
 "афзалияти баландтар мешавад."
 
-#: ../src/procdialogs.cpp:359 ../src/procman-app.cpp:418
+#: ../src/procdialogs.cpp:359 ../src/procman-app.cpp:408
 msgid "Icon"
 msgstr "Нишона"
 
-#: ../src/procman-app.cpp:524
+#: ../src/procman-app.cpp:517
 msgid "A simple process and system monitor."
 msgstr "Раванди сода ва назорати система."
 
@@ -1169,7 +1179,7 @@ msgstr "Курсӣ"
 msgid "Owner"
 msgstr "Соҳиб"
 
-#: ../src/proctable.cpp:1246
+#: ../src/proctable.cpp:1245
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr ""
@@ -1298,6 +1308,9 @@ msgstr "Афзалияти хеле кам"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Stop Process"
+#~ msgstr "_Манъ кардани раванд"
 
 #~ msgid "View"
 #~ msgstr "Намоиш"
