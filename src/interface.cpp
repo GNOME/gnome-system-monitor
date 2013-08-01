@@ -724,7 +724,7 @@ update_sensitivity(ProcmanApp *app)
     GAction *action;
 
     processes_sensitivity = (strcmp (gtk_stack_get_visible_child_name (GTK_STACK (app->stack)), "processes") == 0);
-    selected_sensitivity = (processes_sensitivity && app->selected_process != NULL);
+    selected_sensitivity = (processes_sensitivity && gtk_tree_selection_count_selected_rows (app->selection) > 0);
 
     for (i = 0; i != G_N_ELEMENTS(processes_actions); ++i) {
         action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),

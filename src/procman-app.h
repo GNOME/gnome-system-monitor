@@ -175,7 +175,6 @@ public:
     LoadGraph        *net_graph;
     gint              cpu_label_fixed_width;
     gint              net_label_fixed_width;
-    ProcInfo         *selected_process;
     GtkTreeSelection *selection;
     guint             timeout;
     guint             disk_timeout;

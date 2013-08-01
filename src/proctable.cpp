@@ -227,7 +227,7 @@ cb_tree_popup_menu (GtkWidget *widget, gpointer data)
     return TRUE;
 }
 
-static void
+void
 get_last_selected (GtkTreeModel *model, GtkTreePath *path,
                    GtkTreeIter *iter, gpointer data)
 {
@@ -243,16 +243,16 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
 
     app->selection = selection;
 
-    app->selected_process = NULL;
+    ProcInfo *selected_process = NULL;
 
     /* get the most recent selected process and determine if there are
     ** no selected processes
     */
     gtk_tree_selection_selected_foreach (app->selection, get_last_selected,
-                                         &app->selected_process);
-    if (app->selected_process) {
+                                         &selected_process);
+    if (selected_process) {
         GVariant *priority;
-        gint nice = app->selected_process->nice;
+        gint nice = selected_process->nice;
         if (nice < -7)
             priority = g_variant_new_int32 (-20);
         else if (nice < -2)
@@ -345,7 +345,6 @@ proctable_new (ProcmanApp * const app)
     GtkTreeModelFilter *model_filter;
     GtkTreeModelSort *model_sort;
     
-    GtkTreeSelection *selection;
     GtkTreeViewColumn *column;
     GtkCellRenderer *cell_renderer;
     const gchar *titles[] = {
@@ -423,9 +422,6 @@ proctable_new (ProcmanApp * const app)
     gtk_tree_view_set_enable_search (GTK_TREE_VIEW (proctree), FALSE);
     gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (proctree), TRUE);
     g_object_unref (G_OBJECT (model));
-
-    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
-    gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
 
     column = gtk_tree_view_column_new ();
 
@@ -613,7 +609,10 @@ proctable_new (ProcmanApp * const app)
         }
     }
 
-    g_signal_connect (G_OBJECT (gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree))),
+    app->selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
+    gtk_tree_selection_set_mode (app->selection, GTK_SELECTION_MULTIPLE);
+    
+    g_signal_connect (G_OBJECT (app->selection),
                       "changed",
                       G_CALLBACK (cb_row_selected), app);
     g_signal_connect (G_OBJECT (proctree), "popup_menu",
@@ -886,9 +885,6 @@ remove_info_from_tree (ProcmanApp *app, GtkTreeModel *model,
     }
 
     g_assert(not gtk_tree_model_iter_has_child(model, &current->node));
-
-    if (app->selected_process == current)
-        app->selected_process = NULL;
 
     orphans.push_back(current);
     gtk_tree_store_remove(GTK_TREE_STORE(model), &current->node);
