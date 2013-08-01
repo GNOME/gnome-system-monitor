@@ -78,10 +78,12 @@ struct _GSMColorButtonClass
 GType gsm_color_button_get_type (void) G_GNUC_CONST;
 GtkWidget *gsm_color_button_new (const GdkRGBA * color, guint type);
 void gsm_color_button_set_color (GSMColorButton * color_button, const GdkRGBA * color);
+void gsm_color_button_set_sensitive (GSMColorButton * color_button, const gboolean sensitive);
 void gsm_color_button_set_fraction (GSMColorButton * color_button, const gdouble fraction);
 void gsm_color_button_set_cbtype (GSMColorButton * color_button, guint type);
 void gsm_color_button_get_color (GSMColorButton * color_button, GdkRGBA * color);
 gdouble gsm_color_button_get_fraction (GSMColorButton * color_button);
+gboolean gsm_color_button_get_sensitive (GSMColorButton * color_button);
 guint gsm_color_button_get_cbtype (GSMColorButton * color_button);
 void gsm_color_button_set_title (GSMColorButton * color_button, const gchar * title);
 G_CONST_RETURN gchar *gsm_color_button_get_title (GSMColorButton * color_button);
