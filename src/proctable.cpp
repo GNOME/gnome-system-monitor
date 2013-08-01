@@ -417,10 +417,7 @@ proctable_new (ProcmanApp * const app)
     gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (proctree), COL_TOOLTIP);
     gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (proctree),
                                       g_settings_get_boolean (app->settings, "show-dependencies"));
-    gtk_tree_view_set_search_equal_func (GTK_TREE_VIEW (proctree),
-                                         search_equal_func,
-                                         NULL,
-                                         NULL);
+    gtk_tree_view_set_enable_search (GTK_TREE_VIEW (proctree), FALSE);
     gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (proctree), TRUE);
     g_object_unref (G_OBJECT (model));
 
