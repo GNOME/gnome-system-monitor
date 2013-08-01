@@ -522,6 +522,8 @@ update_page_activities (ProcmanApp *app)
     const char *current_page = gtk_stack_get_visible_child_name (GTK_STACK (app->stack));
 
     if (strcmp (current_page, "processes") == 0) {
+        GAction *search_action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
+                                                             "search");
         proctable_thaw (app);
 
         gtk_widget_show (app->end_process_button);
@@ -530,7 +532,10 @@ update_page_activities (ProcmanApp *app)
 
         update_sensitivity (app);
 
-        gtk_widget_grab_focus (app->tree);
+        if (g_variant_get_boolean (g_action_get_state (search_action)))
+            gtk_widget_grab_focus (app->search_entry);
+        else
+            gtk_widget_grab_focus (app->tree);
     } else {
         proctable_freeze (app);
 
