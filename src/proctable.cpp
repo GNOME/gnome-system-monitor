@@ -324,10 +324,12 @@ gboolean process_visibility_func (GtkTreeModel *model,
         }
         
         match |= !search_equal_func (model, 0, search_text, iter, data);
-        
-        if (match && (strlen (search_text) > 0)) {
-            gtk_tree_view_expand_to_path (GTK_TREE_VIEW (app->tree), tree_path);
-        }
+        // TODO auto-expand items not matching the search string but having matching children
+        // complicated because of treestore nested in treemodelfilter nested in treemodelsort
+        // expand to path requires the path string in the treemodelsort, but tree_path is the path in the double nested treestore
+        //if (match && (strlen (search_text) > 0)) {
+        //    gtk_tree_view_expand_to_path (GTK_TREE_VIEW (app->tree), tree_path);
+        //}
                 
     } else match = !search_equal_func (model, 0, search_text, iter, data);
         
