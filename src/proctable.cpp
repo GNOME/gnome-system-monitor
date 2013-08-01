@@ -456,9 +456,8 @@ proctable_new (ProcmanApp * const app)
         GtkCellRenderer *cell;
 
 #ifndef HAVE_WNCK
-        if (i == COL_MEMXSERVER) {
+        if (i == COL_MEMXSERVER)
           continue;
-        }
 #endif
 
         if (i == COL_MEMWRITABLE)
