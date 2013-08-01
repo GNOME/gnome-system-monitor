@@ -92,6 +92,8 @@ create_proc_view(ProcmanApp *app, GtkBuilder * builder)
                   G_CALLBACK (window_key_press_event_cb), search_bar);
                   
     g_signal_connect (app->search_entry, "changed", G_CALLBACK (search_text_changed), app);
+
+    g_object_bind_property (app->search_button, "active", search_bar, "search-mode-enabled", G_BINDING_BIDIRECTIONAL);
 }
 
 void
@@ -612,6 +614,7 @@ create_main_window (ProcmanApp *app)
 
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL },
+        { "search", on_activate_toggle, NULL, "false", NULL },
         { "send-signal-stop", on_activate_send_signal, "i", NULL, NULL },
         { "send-signal-cont", on_activate_send_signal, "i", NULL, NULL },
         { "send-signal-end", on_activate_send_signal, "i", NULL, NULL },
@@ -707,6 +710,7 @@ update_sensitivity(ProcmanApp *app)
                                               "process-properties" };
 
     const char * const processes_actions[] = { "refresh",
+                                               "search",
                                                "show-whose-processes",
                                                "show-dependencies" };
 
