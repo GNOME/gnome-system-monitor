@@ -317,17 +317,18 @@ gboolean process_visibility_func (GtkTreeModel *model,
     gboolean match = false;
     if (g_settings_get_boolean (app->settings, "show-dependencies")) {
 		
-        if (!search_equal_func (model, 0, search_text, iter, data)) {
-		    match = true;
-            if (strlen (search_text) > 0)
-                gtk_tree_view_expand_to_path (GTK_TREE_VIEW (app->tree), tree_path);
-        } else {
-            GtkTreeIter child;
-            if (gtk_tree_model_iter_children (model, &child, iter)) {
-                while ((match = !process_visibility_func (model, &child, data)) && gtk_tree_model_iter_next (model, &child)) ;
-                match = !match;
-            }
+        GtkTreeIter child;
+        if (gtk_tree_model_iter_children (model, &child, iter)) {
+            while ((match = !process_visibility_func (model, &child, data)) && gtk_tree_model_iter_next (model, &child)) ;
+            match = !match;
         }
+        
+        match |= !search_equal_func (model, 0, search_text, iter, data);
+        
+        if (match && (strlen (search_text) > 0)) {
+            gtk_tree_view_expand_to_path (GTK_TREE_VIEW (app->tree), tree_path);
+        }
+                
     } else match = !search_equal_func (model, 0, search_text, iter, data);
         
     gtk_tree_path_free (tree_path);
@@ -799,11 +800,12 @@ static void
 insert_info_to_tree (ProcInfo *info, ProcmanApp *app, bool forced = false)
 {
     GtkTreeModel *model;
-
-    model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
-            gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT(
-            gtk_tree_view_get_model (GTK_TREE_VIEW(app->tree))))));
-
+    GtkTreeModel *filtered;
+    GtkTreeModel *sorted;
+    sorted = gtk_tree_view_get_model (GTK_TREE_VIEW(app->tree));
+    filtered = gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT(sorted));
+    model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (filtered));
+    
     if (g_settings_get_boolean (app->settings, "show-dependencies")) {
 
         ProcInfo *parent = 0;
@@ -814,15 +816,24 @@ insert_info_to_tree (ProcInfo *info, ProcmanApp *app, bool forced = false)
         if (parent) {
             GtkTreePath *parent_node = gtk_tree_model_get_path(model, &parent->node);
             gtk_tree_store_insert(GTK_TREE_STORE(model), &info->node, &parent->node, 0);
-
-            if (!gtk_tree_view_row_expanded(GTK_TREE_VIEW(app->tree), parent_node)
+            
+            GtkTreePath *filtered_parent = gtk_tree_model_filter_convert_child_path_to_path (GTK_TREE_MODEL_FILTER (filtered), parent_node);
+            if (filtered_parent != NULL) {
+                GtkTreePath *sorted_parent = gtk_tree_model_sort_convert_child_path_to_path (GTK_TREE_MODEL_SORT (sorted), filtered_parent);
+            
+                if (sorted_parent != NULL) {
+                    if (!gtk_tree_view_row_expanded(GTK_TREE_VIEW(app->tree), sorted_parent)
 #ifdef __linux__
-                // on linuxes we don't want to expand kthreadd by default (always has pid 2)
-                && (parent->pid != 2)
+                        // on linuxes we don't want to expand kthreadd by default (always has pid 2)
+                        && (parent->pid != 2)
 #endif
-            )
-                gtk_tree_view_expand_row(GTK_TREE_VIEW(app->tree), parent_node, FALSE);
-            gtk_tree_path_free(parent_node);
+                    )
+                        gtk_tree_view_expand_row(GTK_TREE_VIEW(app->tree), sorted_parent, FALSE);
+                    gtk_tree_path_free (sorted_parent);
+                }
+                gtk_tree_path_free (filtered_parent);
+            }
+            gtk_tree_path_free (parent_node);
         } else
             gtk_tree_store_insert(GTK_TREE_STORE(model), &info->node, NULL, 0);
     }
