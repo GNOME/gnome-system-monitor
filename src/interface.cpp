@@ -523,6 +523,7 @@ update_page_activities (ProcmanApp *app)
         proctable_thaw (app);
 
         gtk_widget_show (app->end_process_button);
+        gtk_widget_show (app->search_button);
         gtk_widget_show (app->process_menu_button);
 
         update_sensitivity (app);
@@ -532,6 +533,7 @@ update_page_activities (ProcmanApp *app)
         proctable_freeze (app);
 
         gtk_widget_hide (app->end_process_button);
+        gtk_widget_hide (app->search_button);
         gtk_widget_hide (app->process_menu_button);
 
         update_sensitivity (app);
@@ -605,6 +607,8 @@ create_main_window (ProcmanApp *app)
     gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (process_menu_button), process_menu_model);
 
     app->end_process_button = GTK_WIDGET (gtk_builder_get_object (builder, "end_process_button"));
+
+    app->search_button = GTK_WIDGET (gtk_builder_get_object (builder, "search_button"));
 
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL },

@@ -41,6 +41,24 @@
               </packing>
             </child>
             <child>
+              <object class="GtkToggleButton" id="search_button">
+                <property name="visible">True</property>
+                <style>
+                    <class name="image-button"/>
+                </style>
+                <child>
+                  <object class="GtkImage" id="search_image">
+                    <property name="visible">True</property>
+                    <property name="icon_size">1</property>
+                    <property name="icon_name">edit-find-symbolic</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="pack_type">end</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkMenuButton" id="process_menu_button">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -74,24 +92,19 @@
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
                 <property name="vexpand">True</property>
-                <property name="border_width">12</property>
                 <property name="orientation">vertical</property>
-                <property name="spacing">18</property>
                 <child>
-                  <object class="GtkBox" id="proc_top_box">
-                    <property name="visible">True</property>
+                  <object class="GtkSearchBar" id="proc_searchbar">
+		    <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkLabel" id="load_avg_label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="halign">start</property>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
+		      <object class="GtkSearchEntry" id="proc_searchentry">
+			<property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="halign">fill</property>
+		      </object>
                     </child>
                   </object>
                   <packing>
@@ -101,38 +114,30 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkLabel" id="load_avg_label">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin">12</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkBox" id="proclist_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
-                    <child>
-                      <object class="GtkSearchBar" id="proc_searchbar">
-				        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="show-close-button">True</property>
-                        <child>
-						  <object class="GtkSearchEntry" id="proc_searchentry">
-							<property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="hexpand">True</property>
-                            <property name="vexpand">True</property>
-                            <property name="halign">fill</property>
-						  </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
                     <child>
                       <object class="GtkScrolledWindow" id="processes_scrolled">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="shadow_type">in</property>
+                        <property name="shadow_type">none</property>
                         <child>
                           <placeholder/>
                         </child>
@@ -147,7 +152,7 @@
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
               </object>
@@ -548,16 +553,14 @@
               <object class="GtkBox" id="fs_box">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="border_width">12</property>
                 <property name="orientation">vertical</property>
-                <property name="spacing">6</property>
                 <child>
                   <object class="GtkScrolledWindow" id="disks_scrolled">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
-                    <property name="shadow_type">in</property>
+                    <property name="shadow_type">none</property>
                     <child>
                       <placeholder/>
                     </child>
