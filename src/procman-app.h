@@ -27,11 +27,6 @@ enum ProcmanTab
 
 struct ProcConfig
 {
-    gint            width;
-    gint            height;
-    gint            xpos;
-    gint            ypos;
-    gboolean        maximized;
     gboolean        show_all_fs;
     int             update_interval;
     int             graph_update_interval;

@@ -574,11 +574,12 @@ cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data)
 void
 create_main_window (ProcmanApp *app)
 {
-    gint width, height, xpos, ypos;
     GtkWidget *main_window;
     GtkWidget *stack;
     GtkWidget *process_menu_button;
     GMenuModel *process_menu_model;
+
+    int width, height, xpos, ypos;
 
     GtkBuilder *builder = gtk_builder_new();
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/interface.ui", NULL);
@@ -588,6 +589,16 @@ create_main_window (ProcmanApp *app)
     gtk_window_set_application (GTK_WINDOW (main_window), app->gobj());
     gtk_widget_set_name (main_window, "gnome-system-monitor");
     app->main_window = main_window;
+
+    g_settings_get (app->settings, "window-state", "(iiii)",
+                    &width, &height, &xpos, &ypos);
+    width = CLAMP (width, 50, gdk_screen_width ());
+    height = CLAMP (height, 50, gdk_screen_height ());
+
+    gtk_window_set_default_size (GTK_WINDOW (main_window), width, height);
+    gtk_window_move (GTK_WINDOW (main_window), xpos, ypos);
+    if (g_settings_get_boolean (app->settings, "maximized"))
+        gtk_window_maximize (GTK_WINDOW (main_window));
 
     app->process_menu_button = process_menu_button = GTK_WIDGET (gtk_builder_get_object (builder, "process_menu_button"));
     process_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-window-menu"));
@@ -622,16 +633,6 @@ create_main_window (ProcmanApp *app)
     /* use visual, if available */
     if (visual)
         gtk_widget_set_visual(main_window, visual);
-
-    width = app->config.width;
-    height = app->config.height;
-    xpos = app->config.xpos;
-    ypos = app->config.ypos;
-    gtk_window_set_default_size (GTK_WINDOW (main_window), width, height);
-    gtk_window_move(GTK_WINDOW (main_window), xpos, ypos);
-    if (app->config.maximized) {
-        gtk_window_maximize(GTK_WINDOW(main_window));
-    }
 
     /* create the main stack */
     app->stack = stack = GTK_WIDGET (gtk_builder_get_object (builder, "stack"));

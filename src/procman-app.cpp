@@ -203,16 +203,10 @@ void
 ProcmanApp::load_settings()
 {
     gchar *color;
-    gint swidth, sheight;
     gint i;
     glibtop_cpu cpu;
 
     settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
-
-    g_settings_get (settings, "window-state", "(iiii)",
-                    &config.width, &config.height, &config.xpos, &config.ypos);
-
-    config.maximized = g_settings_get_boolean (settings, "maximized");
 
     g_signal_connect (G_OBJECT(settings), "changed::show-dependencies", G_CALLBACK(cb_show_dependencies_changed), this);
 
@@ -295,10 +289,6 @@ ProcmanApp::load_settings()
     g_free (color);
 
     /* Sanity checks */
-    swidth = gdk_screen_width ();
-    sheight = gdk_screen_height ();
-    config.width = CLAMP (config.width, 50, swidth);
-    config.height = CLAMP (config.height, 50, sheight);
     config.update_interval = MAX (config.update_interval, 1000);
     config.graph_update_interval = MAX (config.graph_update_interval, 250);
     config.disks_update_interval = MAX (config.disks_update_interval, 1000);
@@ -503,16 +493,19 @@ procman_save_tree_state (GSettings *settings, GtkWidget *tree, const gchar *chil
 void
 ProcmanApp::save_config ()
 {
-    config.width  = gdk_window_get_width (gtk_widget_get_window (main_window));
-    config.height = gdk_window_get_height(gtk_widget_get_window (main_window));
-    gtk_window_get_position(GTK_WINDOW(main_window), &config.xpos, &config.ypos);
+    int width, height, xpos, ypos;
+    gboolean maximized;
 
-    config.maximized = gdk_window_get_state(gtk_widget_get_window (main_window)) & GDK_WINDOW_STATE_MAXIMIZED;
+    width  = gdk_window_get_width (gtk_widget_get_window (main_window));
+    height = gdk_window_get_height (gtk_widget_get_window (main_window));
+    gtk_window_get_position (GTK_WINDOW (main_window), &xpos, &ypos);
+
+    maximized = gdk_window_get_state (gtk_widget_get_window (main_window)) & GDK_WINDOW_STATE_MAXIMIZED;
 
     g_settings_set (settings, "window-state", "(iiii)",
-                    config.width, config.height, config.xpos, config.ypos);
+                    width, height, xpos, ypos);
 
-    g_settings_set_boolean (settings, "maximized", config.maximized);
+    g_settings_set_boolean (settings, "maximized", maximized);
 }
 
 int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>& command_line)
