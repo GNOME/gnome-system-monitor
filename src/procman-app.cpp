@@ -364,9 +364,7 @@ procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child
 
     GSettings *pt_settings = g_settings_get_child (settings, child_schema);
     model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
-    if (!g_strcmp0(child_schema, "proctree"))
-        model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (model))));
-
+    
     sort_col = g_settings_get_int (pt_settings, "sort-col");
 
     order = static_cast<GtkSortType>(g_settings_get_int (pt_settings, "sort-order"));
@@ -469,9 +467,7 @@ procman_save_tree_state (GSettings *settings, GtkWidget *tree, const gchar *chil
 
     GSettings *pt_settings = g_settings_get_child (settings, child_schema);
     model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
-    if (!g_strcmp0(child_schema, "proctree")) 
-        model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (model))));
-        
+   
     if (gtk_tree_sortable_get_sort_column_id (GTK_TREE_SORTABLE (model), &sort_col,
                                               &order)) {
         g_settings_set_int (pt_settings, "sort-col", sort_col);

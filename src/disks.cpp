@@ -33,7 +33,15 @@ enum DiskColumns
     DISK_N_COLUMNS
 };
 
+static void
+cb_sort_changed (GtkTreeSortable *model, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
 
+    procman_save_tree_state (app->settings,
+                             GTK_WIDGET (app->disk_list),
+                             "disktreenew");
+}
 
 static void
 fsusage_stats(const glibtop_fsusage *buf,
@@ -334,6 +342,10 @@ static void
 cb_disk_list_destroying (GtkWidget *self, gpointer data)
 {
     g_signal_handlers_disconnect_by_func(self, (gpointer) cb_disk_columns_changed, data);
+    
+    g_signal_handlers_disconnect_by_func (gtk_tree_view_get_model (GTK_TREE_VIEW(self)),
+                                          (gpointer) cb_sort_changed,
+                                          data);
 }
 
 void
@@ -468,5 +480,8 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
 
     g_signal_connect (G_OBJECT(disk_tree), "columns-changed",
                       G_CALLBACK(cb_disk_columns_changed), app);
+                      
+    g_signal_connect (G_OBJECT (model), "sort-column-changed",
+                      G_CALLBACK (cb_sort_changed), app);
     gtk_widget_show (disk_tree);
 }

@@ -629,7 +629,7 @@ proctable_new (ProcmanApp * const app)
     g_signal_connect (G_OBJECT (proctree), "columns-changed",
                       G_CALLBACK (cb_columns_changed), app);
 
-    g_signal_connect (G_OBJECT (model), "sort-column-changed",
+    g_signal_connect (G_OBJECT (model_sort), "sort-column-changed",
                       G_CALLBACK (cb_sort_changed), app);
 
     gtk_widget_show (proctree);
