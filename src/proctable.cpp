@@ -335,7 +335,44 @@ process_visibility_func (GtkTreeModel *model, GtkTreeIter *iter, gpointer data)
 
     return match;
 }
+
+static void
+proctable_clear_tree (ProcmanApp * const app)
+{
+    GtkTreeModel *model;
+
+    model =  gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
+             gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT (
+             gtk_tree_view_get_model (GTK_TREE_VIEW(app->tree))))));
+
+    gtk_tree_store_clear (GTK_TREE_STORE (model));
+
+    proctable_free_table (app);
+
+    update_sensitivity(app);
+}
                                                         
+static void
+cb_show_dependencies_changed (GSettings *settings, const gchar *key, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (app->tree),
+                                      g_settings_get_boolean (settings, "show-dependencies"));
+
+    proctable_clear_tree (app);
+    proctable_update_all (app);
+}
+
+static void
+cb_show_whose_processes_changed (GSettings *settings, const gchar *key, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    proctable_clear_tree (app);
+    proctable_update_all (app);
+}
+
 GtkWidget *
 proctable_new (ProcmanApp * const app)
 {
@@ -630,11 +667,16 @@ proctable_new (ProcmanApp * const app)
     g_signal_connect (G_OBJECT (model_sort), "sort-column-changed",
                       G_CALLBACK (cb_sort_changed), app);
 
+    g_signal_connect (app->settings, "changed::show-dependencies",
+                      G_CALLBACK (cb_show_dependencies_changed), app);
+
+    g_signal_connect (app->settings, "changed::show-whose-processes",
+                      G_CALLBACK (cb_show_whose_processes_changed), app);
+
     gtk_widget_show (proctree);
 
     return proctree;
 }
-
 
 ProcInfo::~ProcInfo()
 {
@@ -650,7 +692,6 @@ ProcInfo::~ProcInfo()
     free(this->session);
     free(this->seat);
 }
-
 
 static void
 get_process_name (ProcInfo *info,
@@ -762,8 +803,6 @@ get_process_memory_info(ProcInfo *info)
 #endif
 }
 
-
-
 static void
 update_info_mutable_cols(ProcInfo *info)
 {
@@ -794,8 +833,6 @@ update_info_mutable_cols(ProcInfo *info)
     tree_store_update(model, &info->node, COL_SEAT, info->seat);
     tree_store_update(model, &info->node, COL_OWNER, info->owner.c_str());
 }
-
-
 
 static void
 insert_info_to_tree (ProcInfo *info, ProcmanApp *app, bool forced = false)
@@ -854,7 +891,6 @@ insert_info_to_tree (ProcInfo *info, ProcmanApp *app, bool forced = false)
 
     procman_debug("inserted %d%s", info->pid, (forced ? " (forced)" : ""));
 }
-
 
 /* Removing a node with children - make sure the children are queued
 ** to be readded.
@@ -962,7 +998,6 @@ update_info (ProcmanApp *app, ProcInfo *info)
 
     get_process_systemd_info(info);
 }
-
 
 ProcInfo::ProcInfo(pid_t pid)
     : tooltip(NULL),
@@ -1133,7 +1168,6 @@ refresh_list (ProcmanApp *app, const pid_t* pid_list, const guint n)
         update_info_mutable_cols(it->second);
 }
 
-
 void
 proctable_update_list (ProcmanApp *app)
 {
@@ -1198,7 +1232,6 @@ proctable_update_list (ProcmanApp *app)
     /* proclist.number == g_list_length(procdata->info) == g_hash_table_size(procdata->pids) */
 }
 
-
 void
 proctable_update_all (ProcmanApp * const app)
 {
@@ -1211,24 +1244,6 @@ proctable_update_all (ProcmanApp * const app)
     proctable_update_list (app);
 }
 
-
-void
-proctable_clear_tree (ProcmanApp * const app)
-{
-    GtkTreeModel *model;
-
-    model =  gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
-             gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT (
-             gtk_tree_view_get_model (GTK_TREE_VIEW(app->tree))))));
-
-    gtk_tree_store_clear (GTK_TREE_STORE (model));
-
-    proctable_free_table (app);
-
-    update_sensitivity(app);
-}
-
-
 void
 proctable_free_table (ProcmanApp * const app)
 {
@@ -1237,8 +1252,6 @@ proctable_free_table (ProcmanApp * const app)
 
     ProcInfo::all.clear();
 }
-
-
 
 char*
 make_loadavg_string(void)
@@ -1254,8 +1267,6 @@ make_loadavg_string(void)
         buf.loadavg[1],
         buf.loadavg[2]);
 }
-
-
 
 void
 ProcInfo::set_icon(Glib::RefPtr<Gdk::Pixbuf> icon)

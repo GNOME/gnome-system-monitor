@@ -19,18 +19,6 @@
 #include "disks.h"
 
 static void
-cb_show_dependencies_changed (GSettings *settings, const gchar *key, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-
-    gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (app->tree),
-                                      g_settings_get_boolean (settings, "show-dependencies"));
-
-    proctable_clear_tree (app);
-    proctable_update_all (app);
-}
-
-static void
 solaris_mode_changed_cb(GSettings *settings, const gchar *key, gpointer data)
 {
     ProcmanApp *app = static_cast<ProcmanApp *>(data);
@@ -59,15 +47,6 @@ network_in_bits_changed_cb(GSettings *settings, const gchar *key, gpointer data)
     app->config.network_in_bits = g_settings_get_boolean(settings, key);
     // force scale to be redrawn
     app->net_graph->clear_background();
-}
-
-static void
-cb_show_whose_processes_changed (GSettings *settings, const gchar *key, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-
-    proctable_clear_tree (app);
-    proctable_update_all (app);
 }
 
 static void
@@ -198,8 +177,6 @@ ProcmanApp::load_settings()
 
     settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
 
-    g_signal_connect (G_OBJECT(settings), "changed::show-dependencies", G_CALLBACK(cb_show_dependencies_changed), this);
-
     config.solaris_mode = g_settings_get_boolean(settings, procman::settings::solaris_mode.c_str());
     std::string detail_string("changed::" + procman::settings::solaris_mode);
     g_signal_connect(G_OBJECT(settings), detail_string.c_str(), G_CALLBACK(solaris_mode_changed_cb), this);
@@ -220,9 +197,6 @@ ProcmanApp::load_settings()
                       G_CALLBACK(timeouts_changed_cb), this);
     config.disks_update_interval = g_settings_get_int (settings, "disks-interval");
     g_signal_connect (G_OBJECT(settings), "changed::disks-interval", G_CALLBACK(timeouts_changed_cb), this);
-
-
-    g_signal_connect (G_OBJECT(settings), "changed::show-whose-processes", G_CALLBACK(cb_show_whose_processes_changed), this);
 
     /* Determine number of cpus since libgtop doesn't really tell you*/
     config.num_cpus = 0;
