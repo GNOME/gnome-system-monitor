@@ -49,7 +49,12 @@ window_key_press_event_cb (GtkWidget *widget,
                            GdkEvent  *event,
                            gpointer   user_data)
 {
-    return gtk_search_bar_handle_event (GTK_SEARCH_BAR (user_data), event);
+    const char *current_page = gtk_stack_get_visible_child_name (GTK_STACK (ProcmanApp::get()->stack));
+
+    if (strcmp (current_page, "processes") == 0)
+        return gtk_search_bar_handle_event (GTK_SEARCH_BAR (user_data), event);
+    
+    return FALSE;
 }
 
 static void
