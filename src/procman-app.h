@@ -27,7 +27,6 @@ enum ProcmanTab
 
 struct ProcConfig
 {
-    gboolean        show_all_fs;
     int             update_interval;
     int             graph_update_interval;
     int             disks_update_interval;

@@ -189,16 +189,6 @@ color_changed_cb (GSettings *settings, const gchar *key, gpointer data)
     g_free (color);
 }
 
-static void
-show_all_fs_changed_cb (GSettings *settings, const gchar *key, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-
-    app->config.show_all_fs = g_settings_get_boolean (settings, key);
-
-    disks_update (app);
-}
-
 void
 ProcmanApp::load_settings()
 {
@@ -230,11 +220,6 @@ ProcmanApp::load_settings()
                       G_CALLBACK(timeouts_changed_cb), this);
     config.disks_update_interval = g_settings_get_int (settings, "disks-interval");
     g_signal_connect (G_OBJECT(settings), "changed::disks-interval", G_CALLBACK(timeouts_changed_cb), this);
-
-
-    /* show_all_fs */
-    config.show_all_fs = g_settings_get_boolean (settings, "show-all-fs");
-    g_signal_connect (settings, "changed::show-all-fs", G_CALLBACK(show_all_fs_changed_cb), this);
 
 
     g_signal_connect (G_OBJECT(settings), "changed::show-whose-processes", G_CALLBACK(cb_show_whose_processes_changed), this);

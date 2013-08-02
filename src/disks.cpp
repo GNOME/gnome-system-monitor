@@ -244,15 +244,17 @@ disks_update(ProcmanApp *app)
     glibtop_mountentry * entries;
     glibtop_mountlist mountlist;
     guint i;
+    gboolean show_all_fs;
 
     list = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(app->disk_list)));
+    show_all_fs = g_settings_get_boolean (app->settings, "show-all-fs");
 
-    entries = glibtop_get_mountlist(&mountlist, app->config.show_all_fs);
+    entries = glibtop_get_mountlist (&mountlist, show_all_fs);
 
     remove_old_disks(GTK_TREE_MODEL(list), entries, mountlist.number);
 
     for (i = 0; i < mountlist.number; i++)
-        add_disk(list, &entries[i], app->config.show_all_fs);
+        add_disk(list, &entries[i], show_all_fs);
 
     g_free(entries);
 }
@@ -347,6 +349,16 @@ cb_disk_list_destroying (GtkWidget *self, gpointer data)
                                           (gpointer) cb_sort_changed,
                                           data);
 }
+
+static void
+cb_show_all_fs_changed (GSettings *settings, const gchar *key, gpointer data)
+{
+    ProcmanApp *app = (ProcmanApp *) data;
+
+    disks_update (app);
+    disks_reset_timeout (app);
+}
+
 
 void
 create_disk_view(ProcmanApp *app, GtkBuilder *builder)
@@ -483,5 +495,9 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
                       
     g_signal_connect (G_OBJECT (model), "sort-column-changed",
                       G_CALLBACK (cb_sort_changed), app);
+
+    g_signal_connect (app->settings, "changed::show-all-fs",
+                      G_CALLBACK (cb_show_all_fs_changed), app);
+
     gtk_widget_show (disk_tree);
 }
