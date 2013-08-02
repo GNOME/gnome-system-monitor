@@ -73,7 +73,6 @@ ProcInfo* ProcInfo::find(pid_t pid)
     return (it == ProcInfo::all.end() ? NULL : it->second);
 }
 
-
 static void
 cb_columns_changed(GtkTreeView *treeview, gpointer data)
 {
@@ -116,7 +115,6 @@ my_gtk_tree_view_get_column_with_sort_column_id(GtkTreeView *treeview, int id)
     return col;
 }
 
-
 void
 proctable_set_columns_order(GtkTreeView *treeview, GSList *order)
 {
@@ -142,8 +140,6 @@ proctable_set_columns_order(GtkTreeView *treeview, GSList *order)
     }
 }
 
-
-
 GSList*
 proctable_get_columns_order(GtkTreeView *treeview)
 {
@@ -165,31 +161,6 @@ proctable_get_columns_order(GtkTreeView *treeview)
     order = g_slist_reverse(order);
 
     return order;
-}
-
-static gboolean
-search_equal_func(GtkTreeModel *model,
-                  gint column,
-                  const gchar *key,
-                  GtkTreeIter *iter,
-                  gpointer search_data)
-{
-    char* name;
-    char* user;
-    gboolean found;
-
-    gtk_tree_model_get(model, iter,
-                       COL_NAME, &name,
-                       COL_USER, &user,
-                       -1);
-
-    found = !((name && strcasestr(name, key))
-              || (user && strcasestr(user, key)));
-
-    g_free(name);
-    g_free(user);
-
-    return found;
 }
 
 static void
@@ -306,34 +277,62 @@ cb_refresh_icons (GtkIconTheme *theme, gpointer data)
     cb_timeout(app);
 }
 
-gboolean process_visibility_func (GtkTreeModel *model,
-								  GtkTreeIter  *iter,
-                                  gpointer      data)
+static gboolean
+iter_matches_search_key (GtkTreeModel *model, GtkTreeIter *iter, const gchar *key)
+{
+    char *name;
+    char *user;
+    gboolean found;
+
+    gtk_tree_model_get (model, iter,
+                        COL_NAME, &name,
+                        COL_USER, &user,
+                        -1);
+
+    found = (name && strcasestr (name, key)) || (user && strcasestr (user, key));
+
+    g_free (name);
+    g_free (user);
+
+    return found;
+}
+
+static gboolean
+process_visibility_func (GtkTreeModel *model, GtkTreeIter *iter, gpointer data)
 {
     ProcmanApp * const app = static_cast<ProcmanApp *>(data);
     const gchar * search_text = app->search_entry == NULL ? "" : gtk_entry_get_text (GTK_ENTRY (app->search_entry));
     GtkTreePath *tree_path = gtk_tree_model_get_path (model, iter);
+
+    if (strcmp (search_text, "") == 0)
+        return TRUE;
+
 	// in case we are in dependencies view, we show (and expand) rows not matching the text, but having a matching child
     gboolean match = false;
     if (g_settings_get_boolean (app->settings, "show-dependencies")) {
-		
         GtkTreeIter child;
         if (gtk_tree_model_iter_children (model, &child, iter)) {
-            while ((match = !process_visibility_func (model, &child, data)) && gtk_tree_model_iter_next (model, &child)) ;
-            match = !match;
+            gboolean child_match = FALSE;
+            do {
+                child_match = process_visibility_func (model, &child, data);
+            } while (gtk_tree_model_iter_next (model, &child) && !child_match);
+            match = child_match;
         }
-        
-        match |= !search_equal_func (model, 0, search_text, iter, data);
+
+        match |= iter_matches_search_key (model, iter, search_text);
         // TODO auto-expand items not matching the search string but having matching children
         // complicated because of treestore nested in treemodelfilter nested in treemodelsort
         // expand to path requires the path string in the treemodelsort, but tree_path is the path in the double nested treestore
         //if (match && (strlen (search_text) > 0)) {
         //    gtk_tree_view_expand_to_path (GTK_TREE_VIEW (app->tree), tree_path);
         //}
-                
-    } else match = !search_equal_func (model, 0, search_text, iter, data);
+
+    } else {
+        match = iter_matches_search_key (model, iter, search_text);
+    }
         
     gtk_tree_path_free (tree_path);
+
     return match;
 }
                                                         
