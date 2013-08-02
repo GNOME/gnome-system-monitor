@@ -287,11 +287,6 @@ ProcmanApp::load_settings()
                       G_CALLBACK(color_changed_cb), this);
     gdk_rgba_parse(&config.net_out_color, color);
     g_free (color);
-
-    /* Sanity checks */
-    config.update_interval = MAX (config.update_interval, 1000);
-    config.graph_update_interval = MAX (config.graph_update_interval, 250);
-    config.disks_update_interval = MAX (config.disks_update_interval, 1000);
 }
 
 ProcmanApp::ProcmanApp() : Gtk::Application("org.gnome.SystemMonitor", Gio::APPLICATION_HANDLES_COMMAND_LINE)
