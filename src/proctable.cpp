@@ -531,14 +531,15 @@ proctable_new (ProcmanApp * const app)
             case COL_CPU:
             case COL_CPU_TIME:
             case COL_START_TIME:
-                gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(model), i,
-                                                procman::number_compare_func, GUINT_TO_POINTER(i),
-                                                NULL);
+                gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model_sort), i,
+                                                 procman::number_compare_func,
+                                                 GUINT_TO_POINTER (i),
+                                                 NULL);
                 break;
             case COL_PRIORITY:
-                gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(model), i,
-                                                procman::priority_compare_func,
-                                                GUINT_TO_POINTER(COL_NICE), NULL);
+                gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model_sort), i,
+                                                 procman::priority_compare_func,
+                                                 GUINT_TO_POINTER (COL_NICE), NULL);
                 break;
             default:
                 break;
