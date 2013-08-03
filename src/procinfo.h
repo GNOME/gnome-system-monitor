@@ -8,12 +8,9 @@
 
 #include <procman-app.h>
 
-struct MutableProcInfo
+class ProcInfo
 {
-MutableProcInfo()
-: status(0)
-    { }
-
+  public:
     std::string user;
 
     gchar wchan[40];
@@ -45,20 +42,18 @@ MutableProcInfo()
     gchar *seat;
 
     std::string owner;
-};
 
+    GtkTreeIter     node;
+    Glib::RefPtr<Gdk::Pixbuf> pixbuf;
+    gchar           *tooltip;
+    gchar           *name;
+    gchar           *arguments;
 
-class ProcInfo
-: public MutableProcInfo
-{
-    /* undefined */ ProcInfo& operator=(const ProcInfo&);
-    /* undefined */ ProcInfo(const ProcInfo&);
+    gchar           *security_context;
 
-    typedef std::map<guint, std::string> UserMap;
-    /* cached username */
-    static UserMap users;
-
-  public:
+    const guint     pid;
+    guint           ppid;
+    guint           uid;
 
     // TODO: use a set instead
     // sorted by pid. The map has a nice property : it is sorted
@@ -73,7 +68,6 @@ class ProcInfo
     static Iterator begin() { return ProcInfo::all.begin(); }
     static Iterator end() { return ProcInfo::all.end(); }
 
-
     ProcInfo(pid_t pid);
     ~ProcInfo();
     // adds one more ref to icon
@@ -81,19 +75,13 @@ class ProcInfo
     void set_user(guint uid);
     std::string lookup_user(guint uid);
 
-    GtkTreeIter     node;
-    Glib::RefPtr<Gdk::Pixbuf> pixbuf;
-    gchar           *tooltip;
-    gchar           *name;
-    gchar           *arguments;
+    void update (ProcmanApp *app);
 
-    gchar           *security_context;
+ private:
+    typedef std::map<guint, std::string> UserMap;
+    /* cached username */
+    static UserMap users;
 
-    const guint     pid;
-    guint           ppid;
-    guint           uid;
-
-// private:
     // tracks cpu time per process keeps growing because if a
     // ProcInfo is deleted this does not mean that the process is
     // not going to be recreated on the next update.  For example,
@@ -102,7 +90,6 @@ class ProcInfo
     static std::map<pid_t, guint64> cpu_times;
 };
 
-void update_info (ProcmanApp *app, ProcInfo *info);
 void get_process_memory_writable (ProcInfo *info);
 
 #endif /* _GSM_PROCINFO_H_ */

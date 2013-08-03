@@ -162,12 +162,14 @@ get_process_memory_info(ProcInfo *info)
 }
 
 void
-update_info (ProcmanApp *app, ProcInfo *info)
+ProcInfo::update (ProcmanApp *app)
 {
     glibtop_proc_state procstate;
     glibtop_proc_uid procuid;
     glibtop_proc_time proctime;
     glibtop_proc_kernel prockernel;
+
+    ProcInfo *info = this;
 
     glibtop_get_proc_kernel(&prockernel, info->pid);
     g_strlcpy(info->wchan, prockernel.wchan, sizeof info->wchan);
@@ -239,7 +241,8 @@ ProcInfo::set_user(guint uid)
 }
 
 ProcInfo::ProcInfo(pid_t pid)
-    : tooltip(NULL),
+    : status(0),
+      tooltip(NULL),
       name(NULL),
       arguments(NULL),
       security_context(NULL),

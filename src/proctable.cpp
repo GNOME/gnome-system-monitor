@@ -828,7 +828,7 @@ refresh_list (ProcmanApp *app, const pid_t* pid_list, const guint n)
             addition.push_back(info);
         }
 
-        update_info (app, info);
+        info->update (app);
     }
 
 
