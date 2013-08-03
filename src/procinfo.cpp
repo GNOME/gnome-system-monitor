@@ -111,12 +111,12 @@ get_process_systemd_info(ProcInfo *info)
 }
 
 void
-get_process_memory_writable (ProcInfo *info)
+ProcInfo::get_writable_memory ()
 {
     glibtop_proc_map buf;
     glibtop_map_entry *maps;
 
-    maps = glibtop_get_proc_map(&buf, info->pid);
+    maps = glibtop_get_proc_map(&buf, this->pid);
 
     gulong memwritable = 0;
     const unsigned number = buf.number;
@@ -130,7 +130,7 @@ get_process_memory_writable (ProcInfo *info)
 #endif
     }
 
-    info->memwritable = memwritable;
+    this->memwritable = memwritable;
 
     g_free(maps);
 }

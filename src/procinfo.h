@@ -76,6 +76,7 @@ class ProcInfo
     std::string lookup_user(guint uid);
 
     void update (ProcmanApp *app);
+    void get_writable_memory ();
 
  private:
     typedef std::map<guint, std::string> UserMap;
@@ -89,7 +90,5 @@ class ProcInfo
     // on each update.  This is a workaround
     static std::map<pid_t, guint64> cpu_times;
 };
-
-void get_process_memory_writable (ProcInfo *info);
 
 #endif /* _GSM_PROCINFO_H_ */
