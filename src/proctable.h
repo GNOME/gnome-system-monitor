@@ -70,7 +70,6 @@ void            proctable_set_columns_order(GtkTreeView *treeview, GSList *order
 
 char*           make_loadavg_string(void);
 
-void            get_process_memory_writable (ProcInfo *info);
 void            get_last_selected (GtkTreeModel *model, GtkTreePath *path,
                                    GtkTreeIter *iter, gpointer data);
 

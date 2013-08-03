@@ -28,6 +28,8 @@
 #include <stdio.h>
 
 #include "procdialogs.h"
+
+#include "procinfo.h"
 #include "proctable.h"
 #include "prettytable.h"
 #include "procactions.h"

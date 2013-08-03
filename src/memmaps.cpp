@@ -18,6 +18,7 @@ using std::string;
 #include "procman-app.h"
 #include "memmaps.h"
 #include "proctable.h"
+#include "procinfo.h"
 #include "util.h"
 
 

@@ -17,7 +17,7 @@
 
 #include <glibmm/regex.h>
 
-#include "procman-app.h"
+#include "procinfo.h"
 #include "lsof.h"
 #include "util.h"
 

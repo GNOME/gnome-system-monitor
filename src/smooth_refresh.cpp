@@ -13,6 +13,7 @@
 
 #include "smooth_refresh.h"
 #include "procman-app.h"
+#include "procinfo.h"
 #include "util.h"
 
 

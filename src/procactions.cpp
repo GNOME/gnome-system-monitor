@@ -26,9 +26,11 @@
 #include <signal.h>
 #include <sys/time.h>
 #include <sys/resource.h>
+
 #include "procactions.h"
 #include "procman-app.h"
 #include "proctable.h"
+#include "procinfo.h"
 #include "procdialogs.h"
 
 

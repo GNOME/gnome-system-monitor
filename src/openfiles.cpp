@@ -13,6 +13,7 @@
 #include "procman-app.h"
 #include "openfiles.h"
 #include "proctable.h"
+#include "procinfo.h"
 #include "util.h"
 #include "settings-keys.h"
 

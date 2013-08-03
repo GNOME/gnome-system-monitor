@@ -35,6 +35,7 @@
 #include "procman-app.h"
 #include "procproperties.h"
 #include "proctable.h"
+#include "procinfo.h"
 #include "util.h"
 
 enum
