@@ -77,18 +77,6 @@ class ProcInfo
 
     void update (ProcmanApp *app);
     void get_writable_memory ();
-
- private:
-    typedef std::map<guint, std::string> UserMap;
-    /* cached username */
-    static UserMap users;
-
-    // tracks cpu time per process keeps growing because if a
-    // ProcInfo is deleted this does not mean that the process is
-    // not going to be recreated on the next update.  For example,
-    // if dependencies + (My or Active), the proclist is cleared
-    // on each update.  This is a workaround
-    static std::map<pid_t, guint64> cpu_times;
 };
 
 #endif /* _GSM_PROCINFO_H_ */

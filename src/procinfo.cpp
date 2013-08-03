@@ -30,10 +30,18 @@
 #include "selinux.h"
 #include "util.h"
 
+typedef std::map<guint, std::string> UserMap;
+/* cached username */
+static UserMap users;
 
-ProcInfo::UserMap ProcInfo::users;
+// tracks cpu time per process keeps growing because if a
+// ProcInfo is deleted this does not mean that the process is
+// not going to be recreated on the next update.  For example,
+// if dependencies + (My or Active), the proclist is cleared
+// on each update.  This is a workaround
+static std::map<pid_t, guint64> cpu_times;
+
 ProcInfo::List ProcInfo::all;
-std::map<pid_t, guint64> ProcInfo::cpu_times;
 
 ProcInfo* ProcInfo::find(pid_t pid)
 {
@@ -195,7 +203,7 @@ ProcInfo::update (ProcmanApp *app)
     if (not app->config.solaris_mode)
         info->pcpu *= app->config.num_cpus;
 
-    ProcInfo::cpu_times[info->pid] = info->cpu_time = proctime.rtime;
+    cpu_times[info->pid] = info->cpu_time = proctime.rtime;
     info->nice = procuid.nice;
     info->ppid = procuid.ppid;
 
@@ -208,9 +216,9 @@ ProcInfo::update (ProcmanApp *app)
 std::string
 ProcInfo::lookup_user(guint uid)
 {
-    typedef std::pair<ProcInfo::UserMap::iterator, bool> Pair;
-    ProcInfo::UserMap::value_type hint(uid, "");
-    Pair p(ProcInfo::users.insert(hint));
+    typedef std::pair<UserMap::iterator, bool> Pair;
+    UserMap::value_type hint(uid, "");
+    Pair p(users.insert(hint));
 
     // procman_debug("User lookup for uid %u: %s", uid, (p.second ? "MISS" : "HIT"));
 
@@ -272,8 +280,8 @@ ProcInfo::ProcInfo(pid_t pid)
     g_strfreev(arguments);
 
     guint64 cpu_time = proctime.rtime;
-    std::map<pid_t, guint64>::iterator it(ProcInfo::cpu_times.find(pid));
-    if (it != ProcInfo::cpu_times.end())
+    std::map<pid_t, guint64>::iterator it(cpu_times.find(pid));
+    if (it != cpu_times.end())
     {
         if (proctime.rtime >= it->second)
             cpu_time = it->second;
