@@ -56,8 +56,6 @@ timeouts_changed_cb (GSettings *settings, const gchar *key, gpointer data)
 
     if (g_str_equal (key, "update-interval")) {
         app->config.update_interval = g_settings_get_int (settings, key);
-        app->config.update_interval =
-            MAX (app->config.update_interval, 1000);
 
         app->smooth_refresh->reset();
 
@@ -65,9 +63,6 @@ timeouts_changed_cb (GSettings *settings, const gchar *key, gpointer data)
     }
     else if (g_str_equal (key, "graph-update-interval")){
         app->config.graph_update_interval = g_settings_get_int (settings, key);
-        app->config.graph_update_interval =
-            MAX (app->config.graph_update_interval,
-                 250);
         load_graph_change_speed(app->cpu_graph,
                                 app->config.graph_update_interval);
         load_graph_change_speed(app->mem_graph,
@@ -76,11 +71,7 @@ timeouts_changed_cb (GSettings *settings, const gchar *key, gpointer data)
                                 app->config.graph_update_interval);
     }
     else if (g_str_equal(key, "disks-interval")) {
-
         app->config.disks_update_interval = g_settings_get_int (settings, key);
-        app->config.disks_update_interval =
-            MAX (app->config.disks_update_interval, 1000);
-
         disks_reset_timeout (app);
     }
     else {
