@@ -67,31 +67,50 @@ procdialog_create_kill_dialog (ProcmanApp *app, int signal)
     kargs = g_new(KillArgs, 1);
     kargs->app = app;
     kargs->signal = signal;
+    gint selected_count = gtk_tree_selection_count_selected_rows (app->selection);
 
-
-    if (signal == SIGKILL) {
-        /*xgettext: primary alert message*/
-        primary = g_strdup_printf (_("Kill the selected process “%s” (PID: %u)?"),
-                                   app->selected_process->name,
-                                   app->selected_process->pid);
+    if ( selected_count == 1 ) {
+        ProcInfo *selected_process = NULL;
+        // get the last selected row
+        gtk_tree_selection_selected_foreach (app->selection, get_last_selected,
+                                         &selected_process);
+        if (signal == SIGKILL) {
+            /*xgettext: primary alert message for killing single process*/
+            primary = g_strdup_printf (_("Are you sure you want to kill the selected process “%s” (PID: %u)?"),
+                                       selected_process->name,
+                                       selected_process->pid);
+        } else {
+            /*xgettext: primary alert message for ending single process*/
+            primary = g_strdup_printf (_("Are you sure you want to end the selected process “%s” (PID: %u)?"),
+                                       selected_process->name,
+                                       selected_process->pid);
+        }
+    } else {
+        if (signal == SIGKILL) {
+            /*xgettext: primary alert message for killing multiple processes*/
+            primary = g_strdup_printf (ngettext("Are you sure you want to kill the selected process?", "Are you sure you want to kill the %d selected processes?", selected_count),
+                                       selected_count);
+        } else {
+            /*xgettext: primary alert message for ending multiple processes*/
+            primary = g_strdup_printf (ngettext("Are you sure you want to end the selected process?", "Are you sure you want to end the %d selected processes?", selected_count),
+                                       selected_count);
+        }
+    }
+    
+    if ( signal == SIGKILL ) {
         /*xgettext: secondary alert message*/
         secondary = _("Killing a process may destroy data, break the "
                       "session or introduce a security risk. "
                       "Only unresponsive processes should be killed.");
-        button_text = _("_Kill Process");
-    }
-    else {
-        /*xgettext: primary alert message*/
-        primary = g_strdup_printf (_("End the selected process “%s” (PID: %u)?"),
-                                   app->selected_process->name,
-                                   app->selected_process->pid);
+        button_text = ngettext("_Kill Process", "_Kill Processes", selected_count);
+    } else {
         /*xgettext: secondary alert message*/
-        secondary = _("Ending a process may destroy data, break the "
+        secondary = _("Killing a process may destroy data, break the "
                       "session or introduce a security risk. "
-                      "Only unresponsive processes should be ended.");
-        button_text = _("_End Process");
+                      "Only unresponsive processes should be killed.");
+        button_text = ngettext("_End Process", "_End Processes", selected_count);
     }
-
+    
     kill_alert_dialog = gtk_message_dialog_new (GTK_WINDOW (app->main_window),
                                                 static_cast<GtkDialogFlags>(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
                                                 GTK_MESSAGE_WARNING,
@@ -147,7 +166,8 @@ renice_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 void
 procdialog_create_renice_dialog (ProcmanApp *app)
 {
-    ProcInfo *info = app->selected_process;
+    ProcInfo *info;
+    
     GtkWidget *label;
     GtkWidget *priority_label;
     GtkAdjustment *renice_adj;
@@ -158,6 +178,9 @@ procdialog_create_renice_dialog (ProcmanApp *app)
     if (renice_dialog)
         return;
 
+    gtk_tree_selection_selected_foreach (app->selection, get_last_selected,
+                                         &info);
+    gint selected_count = gtk_tree_selection_count_selected_rows (app->selection);
     if (!info)
         return;
 
@@ -165,9 +188,13 @@ procdialog_create_renice_dialog (ProcmanApp *app)
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/renice.ui", NULL);
 
     renice_dialog = GTK_WIDGET (gtk_builder_get_object (builder, "renice_dialog"));
-
-    dialog_title = g_strdup_printf (_("Change Priority of Process “%s” (PID: %u)"),
-                                    info->name, info->pid);
+    if ( selected_count == 1 ) {
+        dialog_title = g_strdup_printf (_("Change Priority of Process “%s” (PID: %u)"),
+                                        info->name, info->pid);
+    } else {
+        dialog_title = g_strdup_printf (ngettext("Change Priority of the selected process", "Change Priority of %d selected processes", selected_count),
+                                        selected_count);
+    }
 
     gtk_window_set_title (GTK_WINDOW(renice_dialog), dialog_title);
     

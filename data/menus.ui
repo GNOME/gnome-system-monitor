@@ -30,7 +30,14 @@
       </item>
     </section>
   </menu>
-   <menu id="view-menu">
+  <menu id="process-window-menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Refresh</attribute>
+        <attribute name="action">win.refresh</attribute>
+        <attribute name="accel">&lt;Primary&gt;r</attribute>
+      </item>
+    </section>
     <section>
       <item>
         <attribute name="label" translatable="yes">_Active Processes</attribute>
@@ -59,13 +66,13 @@
   <menu id="process-popup-menu">
     <section>
       <item>
-        <attribute name="label" translatable="yes">_Stop Process</attribute>
+        <attribute name="label" translatable="yes">_Stop</attribute>
         <attribute name="action">win.send-signal-stop</attribute>
         <attribute name="accel">&lt;Primary&gt;s</attribute>
         <attribute name="target" type="i">19</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Continue Process</attribute>
+        <attribute name="label" translatable="yes">_Continue</attribute>
         <attribute name="action">win.send-signal-cont</attribute>
         <attribute name="accel">&lt;Primary&gt;c</attribute>
         <attribute name="target" type="i">18</attribute>
@@ -73,13 +80,13 @@
     </section>
     <section>
       <item>
-        <attribute name="label" translatable="yes">_End Process</attribute>
+        <attribute name="label" translatable="yes">_End</attribute>
         <attribute name="action">win.send-signal-end</attribute>
         <attribute name="accel">&lt;Primary&gt;e</attribute>
         <attribute name="target" type="i">15</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Kill Process</attribute>
+        <attribute name="label" translatable="yes">_Kill</attribute>
         <attribute name="action">win.send-signal-kill</attribute>
         <attribute name="accel">&lt;Primary&gt;k</attribute>
         <attribute name="target" type="i">9</attribute>
@@ -133,7 +140,6 @@
       <item>
 	<attribute name="label" translatable="yes" comments="Translators: this means 'Files that are open' (open is not a verb here)">Open _Files</attribute>
         <attribute name="action">win.open-files</attribute>
-        <attribute name="accel">&lt;Primary&gt;f</attribute>
       </item>
     </section>
     <section>

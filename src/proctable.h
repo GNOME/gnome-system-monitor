@@ -58,10 +58,8 @@ enum
 
 
 GtkWidget*      proctable_new (ProcmanApp *app);
-void            proctable_update_table (ProcmanApp *app);
 void            proctable_update_list (ProcmanApp *app);
 void            proctable_update_all (ProcmanApp *app);
-void            proctable_clear_tree (ProcmanApp *app);
 void            proctable_free_table (ProcmanApp *app);
 void            proctable_freeze (ProcmanApp *app);
 void            proctable_thaw (ProcmanApp *app);
@@ -71,5 +69,9 @@ GSList*         proctable_get_columns_order(GtkTreeView *treeview);
 void            proctable_set_columns_order(GtkTreeView *treeview, GSList *order);
 
 char*           make_loadavg_string(void);
+
+void            get_process_memory_writable (ProcInfo *info);
+void            get_last_selected (GtkTreeModel *model, GtkTreePath *path,
+                                   GtkTreeIter *iter, gpointer data);
 
 #endif /* _PROCMAN_PROCTABLE_H_ */

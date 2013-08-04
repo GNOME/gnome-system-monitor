@@ -67,6 +67,8 @@ fill_proc_properties (GtkWidget *tree, ProcInfo *info)
     if (!info)
         return;
 
+    get_process_memory_writable (info);
+
 #if defined(__OpenBSD__) || defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
     struct clockinfo cinf;
     size_t size = sizeof (cinf);
@@ -141,7 +143,7 @@ close_procprop_dialog (GtkDialog *dialog, gint id, gpointer data)
 }
 
 static GtkWidget *
-create_procproperties_tree (ProcmanApp *app)
+create_procproperties_tree (ProcmanApp *app, ProcInfo *info)
 {
     GtkWidget *tree;
     GtkListStore *model;
@@ -170,7 +172,7 @@ create_procproperties_tree (ProcmanApp *app)
     }
 
     gtk_tree_view_set_headers_visible (GTK_TREE_VIEW(tree), FALSE);
-    fill_proc_properties(tree, app->selected_process);
+    fill_proc_properties(tree, info);
 
     return tree;
 }
@@ -242,7 +244,7 @@ create_single_procproperties_dialog (GtkTreeModel *model, GtkTreePath *path,
     gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
                                          GTK_SHADOW_IN);
 
-    tree = create_procproperties_tree (app);
+    tree = create_procproperties_tree (app, info);
     gtk_container_add (GTK_CONTAINER (scrolled), tree);
     g_object_set_data (G_OBJECT (tree), "selected_info", GUINT_TO_POINTER (info->pid));
 

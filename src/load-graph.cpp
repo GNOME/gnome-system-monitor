@@ -409,7 +409,6 @@ get_memory (LoadGraph *graph)
     /* There's no swap on LiveCD : 0.0f is better than NaN :) */
     swappercent = (swap.total ? (float)swap.used / (float)swap.total : 0.0f);
     mempercent  = (float)mem.user  / (float)mem.total;
-
     set_memory_label_and_picker(GTK_LABEL(graph->labels.memory),
                                 GSM_COLOR_BUTTON(graph->mem_color_picker),
                                 mem.user, mem.total, mempercent);
@@ -417,9 +416,11 @@ get_memory (LoadGraph *graph)
     set_memory_label_and_picker(GTK_LABEL(graph->labels.swap),
                                 GSM_COLOR_BUTTON(graph->swap_color_picker),
                                 swap.used, swap.total, swappercent);
-
+    
+    gsm_color_button_set_sensitive (GSM_COLOR_BUTTON(graph->swap_color_picker), swap.total > 0);
+    
     graph->data[0][0] = mempercent;
-    graph->data[0][1] = swappercent;
+    graph->data[0][1] = swap.total>0 ? swappercent : -1.0f;
 }
 
 /* Nice Numbers for Graph Labels after Paul Heckbert
@@ -737,8 +738,10 @@ LoadGraph::LoadGraph(guint type)
             n = 2;
             labels.memory = gtk_label_new(NULL);
             gtk_misc_set_alignment (GTK_MISC (labels.memory), 0.0, 0.5);
+            gtk_widget_show (labels.memory);
             labels.swap = gtk_label_new(NULL);
             gtk_misc_set_alignment (GTK_MISC (labels.swap), 0.0, 0.5);
+            gtk_widget_show (labels.swap);
             break;
 
         case LOAD_GRAPH_NET:
@@ -746,17 +749,25 @@ LoadGraph::LoadGraph(guint type)
             n = 2;
             net.max = 1;
             labels.net_in = gtk_label_new(NULL);
-            gtk_label_set_width_chars(GTK_LABEL(labels.net_in), 15);
+            gtk_label_set_width_chars(GTK_LABEL(labels.net_in), 10);
             gtk_misc_set_alignment (GTK_MISC (labels.net_in), 1.0, 0.5);
+            gtk_widget_show (labels.net_in);
+
             labels.net_in_total = gtk_label_new(NULL);
             gtk_misc_set_alignment (GTK_MISC (labels.net_in_total), 1.0, 0.5);
-            gtk_label_set_width_chars(GTK_LABEL(labels.net_in_total), 15);
+            gtk_label_set_width_chars(GTK_LABEL(labels.net_in_total), 10);
+            gtk_widget_show (labels.net_in_total);
+
             labels.net_out = gtk_label_new(NULL);
             gtk_misc_set_alignment (GTK_MISC (labels.net_out), 1.0, 0.5);
-            gtk_label_set_width_chars(GTK_LABEL(labels.net_out), 15);
+            gtk_label_set_width_chars(GTK_LABEL(labels.net_out), 10);
+            gtk_widget_show (labels.net_out);
+
             labels.net_out_total = gtk_label_new(NULL);
             gtk_misc_set_alignment (GTK_MISC (labels.net_out_total), 1.0, 0.5);
-            gtk_label_set_width_chars(GTK_LABEL(labels.net_out_total), 15);
+            gtk_label_set_width_chars(GTK_LABEL(labels.net_out_total), 10);
+            gtk_widget_show (labels.net_out_total);
+
             break;
     }
 

@@ -27,12 +27,6 @@ enum ProcmanTab
 
 struct ProcConfig
 {
-    gint            width;
-    gint            height;
-    gint            xpos;
-    gint            ypos;
-    gboolean        maximized;
-    gboolean        show_all_fs;
     int             update_interval;
     int             graph_update_interval;
     int             disks_update_interval;
@@ -170,15 +164,16 @@ public:
     GtkWidget        *disk_list;
     GtkWidget        *stack;
     GtkWidget        *refresh_button;
-    GtkWidget        *view_menu_button;
+    GtkWidget        *process_menu_button;
     GtkWidget        *end_process_button;
+    GtkWidget        *search_button;
+    GtkWidget        *search_entry;
     ProcConfig        config;
     LoadGraph        *cpu_graph;
     LoadGraph        *mem_graph;
     LoadGraph        *net_graph;
     gint              cpu_label_fixed_width;
     gint              net_label_fixed_width;
-    ProcInfo         *selected_process;
     GtkTreeSelection *selection;
     guint             timeout;
     guint             disk_timeout;

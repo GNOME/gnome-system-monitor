@@ -44,6 +44,28 @@
 #include "gsm_color_button.h"
 
 
+static gboolean
+window_key_press_event_cb (GtkWidget *widget,
+                           GdkEvent  *event,
+                           gpointer   user_data)
+{
+    const char *current_page = gtk_stack_get_visible_child_name (GTK_STACK (ProcmanApp::get()->stack));
+
+    if (strcmp (current_page, "processes") == 0)
+        return gtk_search_bar_handle_event (GTK_SEARCH_BAR (user_data), event);
+    
+    return FALSE;
+}
+
+static void
+search_text_changed (GtkEditable *entry, gpointer data)
+{
+    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
+    gtk_tree_model_filter_refilter (GTK_TREE_MODEL_FILTER (gtk_tree_model_sort_get_model (
+	                                  GTK_TREE_MODEL_SORT (gtk_tree_view_get_model(
+	                                    GTK_TREE_VIEW (app->tree))))));
+}
+
 static void 
 create_proc_view(ProcmanApp *app, GtkBuilder * builder)
 {
@@ -66,6 +88,17 @@ create_proc_view(ProcmanApp *app, GtkBuilder * builder)
     GMenuModel *menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-popup-menu"));
     app->popup_menu = gtk_menu_new_from_model (menu_model);
     gtk_menu_attach_to_widget (GTK_MENU (app->popup_menu), app->main_window, NULL);
+    
+    GtkSearchBar *search_bar = GTK_SEARCH_BAR (gtk_builder_get_object (builder, "proc_searchbar"));
+    app->search_entry = GTK_WIDGET (gtk_builder_get_object (builder, "proc_searchentry"));
+    
+    gtk_search_bar_connect_entry (search_bar, GTK_ENTRY (app->search_entry));
+    g_signal_connect (app->main_window, "key-press-event",
+                  G_CALLBACK (window_key_press_event_cb), search_bar);
+                  
+    g_signal_connect (app->search_entry, "changed", G_CALLBACK (search_text_changed), app);
+
+    g_object_bind_property (app->search_button, "active", search_bar, "search-mode-enabled", G_BINDING_BIDIRECTIONAL);
 }
 
 void
@@ -145,6 +178,7 @@ static void
 create_sys_view (ProcmanApp *app, GtkBuilder * builder)
 {
     GtkWidget *cpu_graph_box, *mem_graph_box, *net_graph_box;
+    GtkWidget *cpu_exp, *mem_exp, *net_exp;
     GtkWidget *label,*cpu_label;
     GtkWidget *table;
     GtkWidget *color_picker;
@@ -160,7 +194,7 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     title_template = g_strdup(_("Pick a Color for '%s'"));
 
     /* The CPU BOX */
-
+    
     cpu_graph_box = GTK_WIDGET (gtk_builder_get_object (builder, "cpu_graph_box"));
 
     cpu_graph = new LoadGraph(LOAD_GRAPH_CPU);
@@ -176,6 +210,7 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
         GtkWidget *temp_hbox;
 
         temp_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+        gtk_widget_show (temp_hbox);
         if (i < cols) {
             gtk_grid_insert_column(GTK_GRID(cpu_table), i%cols);
         }
@@ -183,10 +218,6 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
             gtk_grid_insert_row(GTK_GRID(cpu_table), (i+1)/cols);
         }
         gtk_grid_attach(GTK_GRID (cpu_table), temp_hbox, i%cols, i/cols, 1, 1);
-        //gtk_size_group_add_widget (sizegroup, temp_hbox);
-        /*g_signal_connect (G_OBJECT (temp_hbox), "size_request",
-          G_CALLBACK(size_request), &cpu_size);
-        */
         color_picker = gsm_color_button_new (&cpu_graph->colors.at(i), GSMCP_TYPE_CPU);
         g_signal_connect (G_OBJECT (color_picker), "color_set",
                           G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
@@ -202,11 +233,14 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
         gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
         g_free(title_text);
         gtk_box_pack_start (GTK_BOX (temp_hbox), label, FALSE, FALSE, 6);
+        gtk_widget_show (label);
         g_free (label_text);
 
         cpu_label = gtk_label_new (NULL);
+
         gtk_misc_set_alignment (GTK_MISC (cpu_label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (temp_hbox), cpu_label, FALSE, FALSE, 0);
+        gtk_widget_show (cpu_label);
         load_graph_get_labels(cpu_graph)->cpu[i] = cpu_label;
 
     }
@@ -214,6 +248,7 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     app->cpu_graph = cpu_graph;
 
     /** The memory box */
+    
     mem_graph_box = GTK_WIDGET (gtk_builder_get_object (builder, "mem_graph_box"));
 
     mem_graph = new LoadGraph(LOAD_GRAPH_MEM);
@@ -252,6 +287,7 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     app->mem_graph = mem_graph;
 
     /* The net box */
+    
     net_graph_box = GTK_WIDGET (gtk_builder_get_object (builder, "net_graph_box"));
 
     net_graph = new LoadGraph(LOAD_GRAPH_NET);
@@ -273,7 +309,6 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     picker_alignment = GTK_WIDGET (gtk_builder_get_object (builder, "receiving_picker_alignment"));
     gtk_container_add (GTK_CONTAINER (picker_alignment), color_picker);
 
-    //gtk_widget_set_size_request(GTK_WIDGET(load_graph_get_labels(net_graph)->net_in), 100, -1);
     label = GTK_WIDGET (gtk_builder_get_object(builder, "receiving_label"));
     gtk_grid_attach_next_to (GTK_GRID (table), load_graph_get_labels(net_graph)->net_in, label, GTK_POS_RIGHT, 1, 1);
     label = GTK_WIDGET (gtk_builder_get_object(builder, "total_received_label"));
@@ -290,14 +325,25 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     picker_alignment = GTK_WIDGET (gtk_builder_get_object (builder, "sending_picker_alignment"));
     gtk_container_add (GTK_CONTAINER (picker_alignment), color_picker);
 
-    //gtk_widget_set_size_request(GTK_WIDGET(load_graph_get_labels(net_graph)->net_out), 100, -1);
     label = GTK_WIDGET (gtk_builder_get_object(builder, "sending_label"));
     gtk_grid_attach_next_to (GTK_GRID (table), load_graph_get_labels(net_graph)->net_out, label, GTK_POS_RIGHT, 1, 1);
     label = GTK_WIDGET (gtk_builder_get_object(builder, "total_sent_label"));
     gtk_grid_attach_next_to (GTK_GRID (table),  load_graph_get_labels(net_graph)->net_out_total, label, GTK_POS_RIGHT, 1, 1);
 
     app->net_graph = net_graph;
-    g_free(title_template);
+    g_free (title_template);
+
+    cpu_exp = GTK_WIDGET (gtk_builder_get_object (builder, "cpu_exp"));
+    mem_exp = GTK_WIDGET (gtk_builder_get_object (builder, "mem_exp"));
+    net_exp = GTK_WIDGET (gtk_builder_get_object (builder, "net_exp"));
+
+    g_object_bind_property (cpu_exp, "expanded", cpu_graph_box, "visible", G_BINDING_SYNC_CREATE);
+    g_object_bind_property (mem_exp, "expanded", mem_graph_box, "visible", G_BINDING_SYNC_CREATE);
+    g_object_bind_property (net_exp, "expanded", net_graph_box, "visible", G_BINDING_SYNC_CREATE);
+
+    g_settings_bind (app->settings, "show-cpu", cpu_exp, "expanded", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind (app->settings, "show-mem", mem_exp, "expanded", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind (app->settings, "show-network", net_exp, "expanded", G_SETTINGS_BIND_DEFAULT);
 
 }
 
@@ -481,21 +527,26 @@ update_page_activities (ProcmanApp *app)
     const char *current_page = gtk_stack_get_visible_child_name (GTK_STACK (app->stack));
 
     if (strcmp (current_page, "processes") == 0) {
+        GAction *search_action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
+                                                             "search");
         proctable_thaw (app);
 
         gtk_widget_show (app->end_process_button);
-        gtk_widget_show (app->refresh_button);
-        gtk_widget_show (app->view_menu_button);
+        gtk_widget_show (app->search_button);
+        gtk_widget_show (app->process_menu_button);
 
         update_sensitivity (app);
 
-        gtk_widget_grab_focus (app->tree);
+        if (g_variant_get_boolean (g_action_get_state (search_action)))
+            gtk_widget_grab_focus (app->search_entry);
+        else
+            gtk_widget_grab_focus (app->tree);
     } else {
         proctable_freeze (app);
 
         gtk_widget_hide (app->end_process_button);
-        gtk_widget_hide (app->refresh_button);
-        gtk_widget_hide (app->view_menu_button);
+        gtk_widget_hide (app->search_button);
+        gtk_widget_hide (app->process_menu_button);
 
         update_sensitivity (app);
     }
@@ -537,11 +588,12 @@ cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data)
 void
 create_main_window (ProcmanApp *app)
 {
-    gint width, height, xpos, ypos;
     GtkWidget *main_window;
     GtkWidget *stack;
-    GtkWidget *view_menu_button;
-    GMenuModel *view_menu_model;
+    GtkWidget *process_menu_button;
+    GMenuModel *process_menu_model;
+
+    int width, height, xpos, ypos;
 
     GtkBuilder *builder = gtk_builder_new();
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/interface.ui", NULL);
@@ -552,15 +604,27 @@ create_main_window (ProcmanApp *app)
     gtk_widget_set_name (main_window, "gnome-system-monitor");
     app->main_window = main_window;
 
-    app->view_menu_button = view_menu_button = GTK_WIDGET (gtk_builder_get_object (builder, "viewmenubutton"));
-    view_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "view-menu"));
-    gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (view_menu_button), view_menu_model);
+    g_settings_get (app->settings, "window-state", "(iiii)",
+                    &width, &height, &xpos, &ypos);
+    width = CLAMP (width, 50, gdk_screen_width ());
+    height = CLAMP (height, 50, gdk_screen_height ());
 
-    app->refresh_button = GTK_WIDGET (gtk_builder_get_object (builder, "refresh_button"));
+    gtk_window_set_default_size (GTK_WINDOW (main_window), width, height);
+    gtk_window_move (GTK_WINDOW (main_window), xpos, ypos);
+    if (g_settings_get_boolean (app->settings, "maximized"))
+        gtk_window_maximize (GTK_WINDOW (main_window));
+
+    app->process_menu_button = process_menu_button = GTK_WIDGET (gtk_builder_get_object (builder, "process_menu_button"));
+    process_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-window-menu"));
+    gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (process_menu_button), process_menu_model);
+
     app->end_process_button = GTK_WIDGET (gtk_builder_get_object (builder, "end_process_button"));
+
+    app->search_button = GTK_WIDGET (gtk_builder_get_object (builder, "search_button"));
 
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL },
+        { "search", on_activate_toggle, NULL, "false", NULL },
         { "send-signal-stop", on_activate_send_signal, "i", NULL, NULL },
         { "send-signal-cont", on_activate_send_signal, "i", NULL, NULL },
         { "send-signal-end", on_activate_send_signal, "i", NULL, NULL },
@@ -586,16 +650,6 @@ create_main_window (ProcmanApp *app)
     /* use visual, if available */
     if (visual)
         gtk_widget_set_visual(main_window, visual);
-
-    width = app->config.width;
-    height = app->config.height;
-    xpos = app->config.xpos;
-    ypos = app->config.ypos;
-    gtk_window_set_default_size (GTK_WINDOW (main_window), width, height);
-    gtk_window_move(GTK_WINDOW (main_window), xpos, ypos);
-    if (app->config.maximized) {
-        gtk_window_maximize(GTK_WINDOW(main_window));
-    }
 
     /* create the main stack */
     app->stack = stack = GTK_WIDGET (gtk_builder_get_object (builder, "stack"));
@@ -627,8 +681,8 @@ create_main_window (ProcmanApp *app)
     g_action_change_state (action,
                            g_settings_get_value (app->settings, "show-whose-processes"));
 
-    gtk_widget_show_all(main_window);
-
+    gtk_widget_show (main_window);
+    
     update_page_activities (app);
 
     g_object_unref (G_OBJECT (builder));
@@ -666,6 +720,7 @@ update_sensitivity(ProcmanApp *app)
                                               "process-properties" };
 
     const char * const processes_actions[] = { "refresh",
+                                               "search",
                                                "show-whose-processes",
                                                "show-dependencies" };
 
@@ -674,7 +729,7 @@ update_sensitivity(ProcmanApp *app)
     GAction *action;
 
     processes_sensitivity = (strcmp (gtk_stack_get_visible_child_name (GTK_STACK (app->stack)), "processes") == 0);
-    selected_sensitivity = (processes_sensitivity && app->selected_process != NULL);
+    selected_sensitivity = (processes_sensitivity && gtk_tree_selection_count_selected_rows (app->selection) > 0);
 
     for (i = 0; i != G_N_ELEMENTS(processes_actions); ++i) {
         action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),

@@ -1,37 +1,14 @@
 <schemalist>
   <schema id="org.gnome.gnome-system-monitor" path="/org/gnome/gnome-system-monitor/">
-    <key name="width" type="i">
-      <default>440
-      </default>
-      <_summary>Main Window width
-      </_summary>
-    </key>
-
-    <key name="height" type="i">
-      <default>495
-      </default>
-      <_summary>Main Window height
-      </_summary>
+    <key name="window-state" type="(iiii)">
+      <default>(700, 500, 50, 50)</default>
+      <_summary>Main window size and position in the form (width, height, xpos, ypos)</_summary>
     </key>
 
     <key name="maximized" type="b">
       <default>false
       </default>
       <_summary>Main Window should open maximized
-      </_summary>
-    </key>
-
-    <key name="x-position" type="i">
-      <default>0
-      </default>
-      <_summary>Main Window X position
-      </_summary>
-    </key>
-
-    <key name="y-position" type="i">
-      <default>0
-      </default>
-      <_summary>Main Window Y position
       </_summary>
     </key>
 
@@ -74,17 +51,15 @@
     </key>
 
     <key name="update-interval" type="i">
-      <default>3000
-      </default>
-      <_summary>Time in milliseconds between updates of the process view
-      </_summary>
+      <range min="1000" max="100000"/>
+      <default>3000</default>
+      <_summary>Time in milliseconds between updates of the process view</_summary>
     </key>
 
     <key name="graph-update-interval" type="i">
-      <default>1000
-      </default>
-      <_summary>Time in milliseconds between updates of the graphs
-      </_summary>
+      <range min="250" max="100000"/>
+      <default>1000</default>
+      <_summary>Time in milliseconds between updates of the graphs</_summary>
     </key>
 
     <key name="show-all-fs" type="b">
@@ -97,10 +72,9 @@
     </key>
 
     <key name="disks-interval" type="i">
-      <default>5000
-      </default>
-      <_summary>Time in milliseconds between updates of the devices list
-      </_summary>
+      <range min="1000" max="100000"/>
+      <default>5000</default>
+      <_summary>Time in milliseconds between updates of the devices list</_summary>
     </key>
 
     <key name="show-whose-processes" type="s">
@@ -168,6 +142,27 @@
       </_summary>
     </key>
 
+    <key type="b" name="show-cpu">
+      <default>true
+      </default>
+      <_summary>Show processor usage graph
+      </_summary>
+    </key>
+    
+    <key type="b" name="show-mem">
+      <default>true
+      </default>
+      <_summary>Show memory and swap usage graph
+      </_summary>
+    </key>
+    
+    <key type="b" name="show-network">
+      <default>true
+      </default>
+      <_summary>Show network traffic graph
+      </_summary>
+    </key>
+    
     <child name="proctree" schema="org.gnome.gnome-system-monitor.proctree" />
     <child name="disktreenew" schema="org.gnome.gnome-system-monitor.disktreenew" />
     <child name="memmapstree" schema="org.gnome.gnome-system-monitor.memmapstree" />

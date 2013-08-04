@@ -19,18 +19,6 @@
 #include "disks.h"
 
 static void
-cb_show_dependencies_changed (GSettings *settings, const gchar *key, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-
-    gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (app->tree),
-                                      g_settings_get_boolean (settings, "show-dependencies"));
-
-    proctable_clear_tree (app);
-    proctable_update_all (app);
-}
-
-static void
 solaris_mode_changed_cb(GSettings *settings, const gchar *key, gpointer data)
 {
     ProcmanApp *app = static_cast<ProcmanApp *>(data);
@@ -62,23 +50,12 @@ network_in_bits_changed_cb(GSettings *settings, const gchar *key, gpointer data)
 }
 
 static void
-cb_show_whose_processes_changed (GSettings *settings, const gchar *key, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-
-    proctable_clear_tree (app);
-    proctable_update_all (app);
-}
-
-static void
 timeouts_changed_cb (GSettings *settings, const gchar *key, gpointer data)
 {
     ProcmanApp *app = static_cast<ProcmanApp *>(data);
 
     if (g_str_equal (key, "update-interval")) {
         app->config.update_interval = g_settings_get_int (settings, key);
-        app->config.update_interval =
-            MAX (app->config.update_interval, 1000);
 
         app->smooth_refresh->reset();
 
@@ -86,9 +63,6 @@ timeouts_changed_cb (GSettings *settings, const gchar *key, gpointer data)
     }
     else if (g_str_equal (key, "graph-update-interval")){
         app->config.graph_update_interval = g_settings_get_int (settings, key);
-        app->config.graph_update_interval =
-            MAX (app->config.graph_update_interval,
-                 250);
         load_graph_change_speed(app->cpu_graph,
                                 app->config.graph_update_interval);
         load_graph_change_speed(app->mem_graph,
@@ -97,11 +71,7 @@ timeouts_changed_cb (GSettings *settings, const gchar *key, gpointer data)
                                 app->config.graph_update_interval);
     }
     else if (g_str_equal(key, "disks-interval")) {
-
         app->config.disks_update_interval = g_settings_get_int (settings, key);
-        app->config.disks_update_interval =
-            MAX (app->config.disks_update_interval, 1000);
-
         disks_reset_timeout (app);
     }
     else {
@@ -189,33 +159,14 @@ color_changed_cb (GSettings *settings, const gchar *key, gpointer data)
     g_free (color);
 }
 
-static void
-show_all_fs_changed_cb (GSettings *settings, const gchar *key, gpointer data)
-{
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-
-    app->config.show_all_fs = g_settings_get_boolean (settings, key);
-
-    disks_update (app);
-}
-
 void
 ProcmanApp::load_settings()
 {
     gchar *color;
-    gint swidth, sheight;
     gint i;
     glibtop_cpu cpu;
 
     settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
-
-    config.width = g_settings_get_int (settings, "width");
-    config.height = g_settings_get_int (settings, "height");
-    config.xpos = g_settings_get_int (settings, "x-position");
-    config.ypos = g_settings_get_int (settings, "y-position");
-    config.maximized = g_settings_get_boolean (settings, "maximized");
-
-    g_signal_connect (G_OBJECT(settings), "changed::show-dependencies", G_CALLBACK(cb_show_dependencies_changed), this);
 
     config.solaris_mode = g_settings_get_boolean(settings, procman::settings::solaris_mode.c_str());
     std::string detail_string("changed::" + procman::settings::solaris_mode);
@@ -237,14 +188,6 @@ ProcmanApp::load_settings()
                       G_CALLBACK(timeouts_changed_cb), this);
     config.disks_update_interval = g_settings_get_int (settings, "disks-interval");
     g_signal_connect (G_OBJECT(settings), "changed::disks-interval", G_CALLBACK(timeouts_changed_cb), this);
-
-
-    /* show_all_fs */
-    config.show_all_fs = g_settings_get_boolean (settings, "show-all-fs");
-    g_signal_connect (settings, "changed::show-all-fs", G_CALLBACK(show_all_fs_changed_cb), this);
-
-
-    g_signal_connect (G_OBJECT(settings), "changed::show-whose-processes", G_CALLBACK(cb_show_whose_processes_changed), this);
 
     /* Determine number of cpus since libgtop doesn't really tell you*/
     config.num_cpus = 0;
@@ -294,15 +237,6 @@ ProcmanApp::load_settings()
                       G_CALLBACK(color_changed_cb), this);
     gdk_rgba_parse(&config.net_out_color, color);
     g_free (color);
-
-    /* Sanity checks */
-    swidth = gdk_screen_width ();
-    sheight = gdk_screen_height ();
-    config.width = CLAMP (config.width, 50, swidth);
-    config.height = CLAMP (config.height, 50, sheight);
-    config.update_interval = MAX (config.update_interval, 1000);
-    config.graph_update_interval = MAX (config.graph_update_interval, 250);
-    config.disks_update_interval = MAX (config.disks_update_interval, 1000);
 }
 
 ProcmanApp::ProcmanApp() : Gtk::Application("org.gnome.SystemMonitor", Gio::APPLICATION_HANDLES_COMMAND_LINE)
@@ -364,9 +298,8 @@ procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child
     g_assert(child_schema);
 
     GSettings *pt_settings = g_settings_get_child (settings, child_schema);
-
     model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
-
+    
     sort_col = g_settings_get_int (pt_settings, "sort-col");
 
     order = static_cast<GtkSortType>(g_settings_get_int (pt_settings, "sort-order"));
@@ -468,8 +401,8 @@ procman_save_tree_state (GSettings *settings, GtkWidget *tree, const gchar *chil
     g_assert(child_schema);
 
     GSettings *pt_settings = g_settings_get_child (settings, child_schema);
-
     model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
+   
     if (gtk_tree_sortable_get_sort_column_id (GTK_TREE_SORTABLE (model), &sort_col,
                                               &order)) {
         g_settings_set_int (pt_settings, "sort-col", sort_col);
@@ -505,22 +438,19 @@ procman_save_tree_state (GSettings *settings, GtkWidget *tree, const gchar *chil
 void
 ProcmanApp::save_config ()
 {
-    procman_save_tree_state (settings, tree, "proctree");
-    procman_save_tree_state (settings, disk_list, "disktreenew");
+    int width, height, xpos, ypos;
+    gboolean maximized;
 
-    config.width  = gdk_window_get_width (gtk_widget_get_window (main_window));
-    config.height = gdk_window_get_height(gtk_widget_get_window (main_window));
-    gtk_window_get_position(GTK_WINDOW(main_window), &config.xpos, &config.ypos);
+    width  = gdk_window_get_width (gtk_widget_get_window (main_window));
+    height = gdk_window_get_height (gtk_widget_get_window (main_window));
+    gtk_window_get_position (GTK_WINDOW (main_window), &xpos, &ypos);
 
-    config.maximized = gdk_window_get_state(gtk_widget_get_window (main_window)) & GDK_WINDOW_STATE_MAXIMIZED;
+    maximized = gdk_window_get_state (gtk_widget_get_window (main_window)) & GDK_WINDOW_STATE_MAXIMIZED;
 
-    g_settings_set_int (settings, "width", config.width);
-    g_settings_set_int (settings, "height", config.height);
-    g_settings_set_int (settings, "x-position", config.xpos);
-    g_settings_set_int (settings, "y-position", config.ypos);
-    g_settings_set_boolean (settings, "maximized", config.maximized);
+    g_settings_set (settings, "window-state", "(iiii)",
+                    width, height, xpos, ypos);
 
-    g_settings_sync ();
+    g_settings_set_boolean (settings, "maximized", maximized);
 }
 
 int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>& command_line)
@@ -640,7 +570,7 @@ void ProcmanApp::on_startup()
     add_accelerator("<Primary>e", "win.send-signal-end", g_variant_new_int32(SIGTERM));
     add_accelerator("<Primary>k", "win.send-signal-kill", g_variant_new_int32 (SIGKILL));
     add_accelerator("<Primary>m", "win.memory-maps", NULL);
-    add_accelerator("<Primary>f", "win.open-files", NULL);
+    add_accelerator("<Primary>f", "win.search", NULL);
 
     Gtk::Window::set_default_icon_name ("utilities-system-monitor");
 
