@@ -54,14 +54,13 @@ timeouts_changed_cb (GSettings *settings, const gchar *key, gpointer data)
 {
     ProcmanApp *app = static_cast<ProcmanApp *>(data);
 
-    if (g_str_equal (key, "update-interval")) {
+    if (strcmp (key, GSM_SETTING_PROCESS_UPDATE_INTERVAL) == 0) {
         app->config.update_interval = g_settings_get_int (settings, key);
 
         app->smooth_refresh->reset();
 
         proctable_reset_timeout (app);
-    }
-    else if (g_str_equal (key, "graph-update-interval")){
+    } else if (strcmp (key, GSM_SETTING_GRAPH_UPDATE_INTERVAL) == 0) {
         app->config.graph_update_interval = g_settings_get_int (settings, key);
         load_graph_change_speed(app->cpu_graph,
                                 app->config.graph_update_interval);
@@ -69,13 +68,9 @@ timeouts_changed_cb (GSettings *settings, const gchar *key, gpointer data)
                                 app->config.graph_update_interval);
         load_graph_change_speed(app->net_graph,
                                 app->config.graph_update_interval);
-    }
-    else if (g_str_equal(key, "disks-interval")) {
+    } else if (strcmp (key, GSM_SETTING_DISKS_UPDATE_INTERVAL) == 0) {
         app->config.disks_update_interval = g_settings_get_int (settings, key);
         disks_reset_timeout (app);
-    }
-    else {
-        g_assert_not_reached();
     }
 }
 
@@ -84,7 +79,7 @@ apply_cpu_color_settings(GSettings *settings, gpointer data)
 {
     ProcmanApp *app = static_cast<ProcmanApp *>(data);
 
-    GVariant *cpu_colors_var = g_settings_get_value(settings, "cpu-colors");
+    GVariant *cpu_colors_var = g_settings_get_value (settings, GSM_SETTING_CPU_COLORS);
     gsize n = g_variant_n_children(cpu_colors_var);
 
     gchar *color;
@@ -112,7 +107,7 @@ apply_cpu_color_settings(GSettings *settings, gpointer data)
     full = g_variant_builder_end(&builder);
     // if the user has more cores than colors stored in the gsettings, store the newly built gvariant in gsettings
     if (n < static_cast<guint>(app->config.num_cpus)) {
-        g_settings_set_value(settings, "cpu-colors", full);
+        g_settings_set_value(settings, GSM_SETTING_CPU_COLORS, full);
     } else {
         g_variant_unref(full);
     }
@@ -125,7 +120,7 @@ color_changed_cb (GSettings *settings, const gchar *key, gpointer data)
 {
     ProcmanApp *app = static_cast<ProcmanApp *>(data);
 
-    if (g_str_equal (key, "cpu-colors")) {
+    if (strcmp (key, GSM_SETTING_CPU_COLORS) == 0) {
         apply_cpu_color_settings(settings, app);
         for (int i = 0; i < app->config.num_cpus; i++) {
             if(!gdk_rgba_equal(&app->cpu_graph->colors[i], &app->config.cpu_color[i])) {
@@ -137,24 +132,18 @@ color_changed_cb (GSettings *settings, const gchar *key, gpointer data)
     }
 
     gchar *color = g_settings_get_string (settings, key);
-    if (g_str_equal (key, "mem-color")) {
+    if (strcmp (key, GSM_SETTING_MEM_COLOR) == 0) {
         gdk_rgba_parse (&app->config.mem_color, color);
         app->mem_graph->colors.at(0) = app->config.mem_color;
-    }
-    else if (g_str_equal (key, "swap-color")) {
+    } else if (strcmp (key, GSM_SETTING_SWAP_COLOR) == 0) {
         gdk_rgba_parse (&app->config.swap_color, color);
         app->mem_graph->colors.at(1) = app->config.swap_color;
-    }
-    else if (g_str_equal (key, "net-in-color")) {
+    } else if (strcmp (key, GSM_SETTING_NET_IN_COLOR) == 0) {
         gdk_rgba_parse (&app->config.net_in_color, color);
         app->net_graph->colors.at(0) = app->config.net_in_color;
-    }
-    else if (g_str_equal (key, "net-out-color")) {
+    } else if (strcmp (key, GSM_SETTING_NET_OUT_COLOR) == 0) {
         gdk_rgba_parse (&app->config.net_out_color, color);
         app->net_graph->colors.at(1) = app->config.net_out_color;
-    }
-    else {
-        g_assert_not_reached();
     }
     g_free (color);
 }
@@ -168,26 +157,27 @@ ProcmanApp::load_settings()
 
     settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
 
-    config.solaris_mode = g_settings_get_boolean(settings, procman::settings::solaris_mode.c_str());
-    std::string detail_string("changed::" + procman::settings::solaris_mode);
-    g_signal_connect(G_OBJECT(settings), detail_string.c_str(), G_CALLBACK(solaris_mode_changed_cb), this);
+    config.solaris_mode = g_settings_get_boolean (settings, GSM_SETTING_SOLARIS_MODE);
+    g_signal_connect (settings, "changed::" GSM_SETTING_SOLARIS_MODE,
+                      G_CALLBACK(solaris_mode_changed_cb), this);
 
-    config.draw_stacked = g_settings_get_boolean(settings, procman::settings::draw_stacked.c_str());
-    detail_string = "changed::" + procman::settings::draw_stacked;
-    g_signal_connect(G_OBJECT(settings), detail_string.c_str(), G_CALLBACK(draw_stacked_changed_cb), this);
+    config.draw_stacked = g_settings_get_boolean (settings, GSM_SETTING_DRAW_STACKED);
+    g_signal_connect (settings, "changed::" GSM_SETTING_DRAW_STACKED,
+                      G_CALLBACK (draw_stacked_changed_cb), this);
 
-    config.network_in_bits = g_settings_get_boolean(settings, procman::settings::network_in_bits.c_str());
-    detail_string = "changed::" + procman::settings::network_in_bits;
-    g_signal_connect(G_OBJECT(settings), detail_string.c_str(), G_CALLBACK(network_in_bits_changed_cb), this);
+    config.network_in_bits = g_settings_get_boolean (settings, GSM_SETTING_NETWORK_IN_BITS);
+    g_signal_connect (settings, "changed::" GSM_SETTING_NETWORK_IN_BITS,
+                      G_CALLBACK (network_in_bits_changed_cb), this);
 
-    config.update_interval = g_settings_get_int (settings, "update-interval");
-    g_signal_connect (G_OBJECT(settings), "changed::update-interval", G_CALLBACK(timeouts_changed_cb), this);
-    config.graph_update_interval = g_settings_get_int (settings,
-                                                           "graph-update-interval");
-    g_signal_connect (G_OBJECT(settings), "changed::graph-update-interval",
-                      G_CALLBACK(timeouts_changed_cb), this);
-    config.disks_update_interval = g_settings_get_int (settings, "disks-interval");
-    g_signal_connect (G_OBJECT(settings), "changed::disks-interval", G_CALLBACK(timeouts_changed_cb), this);
+    config.update_interval = g_settings_get_int (settings, GSM_SETTING_PROCESS_UPDATE_INTERVAL);
+    g_signal_connect (settings, "changed::" GSM_SETTING_PROCESS_UPDATE_INTERVAL,
+                      G_CALLBACK (timeouts_changed_cb), this);
+    config.graph_update_interval = g_settings_get_int (settings, GSM_SETTING_GRAPH_UPDATE_INTERVAL);
+    g_signal_connect (settings, "changed::" GSM_SETTING_GRAPH_UPDATE_INTERVAL,
+                      G_CALLBACK (timeouts_changed_cb), this);
+    config.disks_update_interval = g_settings_get_int (settings, GSM_SETTING_DISKS_UPDATE_INTERVAL);
+    g_signal_connect (settings, "changed::" GSM_SETTING_DISKS_UPDATE_INTERVAL,
+                      G_CALLBACK (timeouts_changed_cb), this);
 
     /* Determine number of cpus since libgtop doesn't really tell you*/
     config.num_cpus = 0;
@@ -201,41 +191,40 @@ ProcmanApp::load_settings()
     if (config.num_cpus == 0)
         config.num_cpus = 1;
 
-    apply_cpu_color_settings(settings, this);
-    g_signal_connect (G_OBJECT(settings), "changed::cpu-colors",
-                      G_CALLBACK(color_changed_cb), this);
+    apply_cpu_color_settings (settings, this);
+    g_signal_connect (settings, "changed::" GSM_SETTING_CPU_COLORS,
+                      G_CALLBACK (color_changed_cb), this);
 
-    color = g_settings_get_string (settings, "mem-color");
+    color = g_settings_get_string (settings, GSM_SETTING_MEM_COLOR);
     if (!color)
         color = g_strdup ("#000000ff0082");
-    g_signal_connect (G_OBJECT(settings), "changed::mem-color",
-                      G_CALLBACK(color_changed_cb), this);
-    gdk_rgba_parse(&config.mem_color, color);
-
+    g_signal_connect (settings, "changed::" GSM_SETTING_MEM_COLOR,
+                      G_CALLBACK (color_changed_cb), this);
+    gdk_rgba_parse (&config.mem_color, color);
     g_free (color);
 
-    color = g_settings_get_string (settings, "swap-color");
+    color = g_settings_get_string (settings, GSM_SETTING_SWAP_COLOR);
     if (!color)
         color = g_strdup ("#00b6000000ff");
-    g_signal_connect (G_OBJECT(settings), "changed::swap-color",
-                      G_CALLBACK(color_changed_cb), this);
-    gdk_rgba_parse(&config.swap_color, color);
+    g_signal_connect (settings, "changed::" GSM_SETTING_SWAP_COLOR,
+                      G_CALLBACK (color_changed_cb), this);
+    gdk_rgba_parse (&config.swap_color, color);
     g_free (color);
 
-    color = g_settings_get_string (settings, "net-in-color");
+    color = g_settings_get_string (settings, GSM_SETTING_NET_IN_COLOR);
     if (!color)
         color = g_strdup ("#000000f200f2");
-    g_signal_connect (G_OBJECT(settings), "changed::net-in-color",
-                      G_CALLBACK(color_changed_cb), this);
-    gdk_rgba_parse(&config.net_in_color, color);
+    g_signal_connect (settings, "changed::" GSM_SETTING_NET_IN_COLOR,
+                      G_CALLBACK (color_changed_cb), this);
+    gdk_rgba_parse (&config.net_in_color, color);
     g_free (color);
 
-    color = g_settings_get_string (settings, "net-out-color");
+    color = g_settings_get_string (settings, GSM_SETTING_NET_OUT_COLOR);
     if (!color)
         color = g_strdup ("#00f2000000c1");
-    g_signal_connect (G_OBJECT(settings), "changed::net-out-color",
-                      G_CALLBACK(color_changed_cb), this);
-    gdk_rgba_parse(&config.net_out_color, color);
+    g_signal_connect (settings, "changed::" GSM_SETTING_NET_OUT_COLOR,
+                      G_CALLBACK (color_changed_cb), this);
+    gdk_rgba_parse (&config.net_out_color, color);
     g_free (color);
 }
 
@@ -447,10 +436,10 @@ ProcmanApp::save_config ()
 
     maximized = gdk_window_get_state (gtk_widget_get_window (main_window)) & GDK_WINDOW_STATE_MAXIMIZED;
 
-    g_settings_set (settings, "window-state", "(iiii)",
+    g_settings_set (settings, GSM_SETTING_WINDOW_STATE, "(iiii)",
                     width, height, xpos, ypos);
 
-    g_settings_set_boolean (settings, "maximized", maximized);
+    g_settings_set_boolean (settings, GSM_SETTING_MAXIMIZED, maximized);
 }
 
 int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>& command_line)
@@ -478,11 +467,11 @@ int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>&
     }
 
     if (option_group.show_processes_tab)
-        g_settings_set_string (settings, "current-tab", "processes");
+        g_settings_set_string (settings, GSM_SETTING_CURRENT_TAB, "processes");
     else if (option_group.show_resources_tab)
-        g_settings_set_string (settings, "current-tab", "resources");
+        g_settings_set_string (settings, GSM_SETTING_CURRENT_TAB, "resources");
     else if (option_group.show_file_systems_tab)
-        g_settings_set_string (settings, "current-tab", "disks");
+        g_settings_set_string (settings, GSM_SETTING_CURRENT_TAB, "disks");
     else if (option_group.print_version)
 
     on_activate ();

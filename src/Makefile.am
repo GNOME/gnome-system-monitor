@@ -31,7 +31,6 @@ gnome_system_monitor_cpp_files = \
 	procman_gksu.cpp \
 	procman_pkexec.cpp \
 	lsof.cpp \
-	settings-keys.cpp \
 	iconthemewrapper.cpp \
 	procman-app.cpp
 
@@ -42,7 +41,8 @@ gnome_system_monitor_c_files = \
 gnome_system_monitor_h_files = \
 	$(gnome_system_monitor_cpp_files:.cpp=.h) \
 	$(gnome_system_monitor_c_files:.c=.h) \
-	defaulttable.h
+	defaulttable.h \
+	settings-keys.h
 
 gnome_system_monitor_SOURCES = \
 	$(BUILT_SOURCES) \

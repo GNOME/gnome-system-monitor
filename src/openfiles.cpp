@@ -225,7 +225,7 @@ close_openfiles_dialog (GtkDialog *dialog, gint id, gpointer data)
     guint timer;
 
     settings = static_cast<GSettings*>(g_object_get_data (G_OBJECT (tree), "settings"));
-    procman_save_tree_state (settings, tree, procman::settings::open_files_tree_prefix.c_str());
+    procman_save_tree_state (settings, tree, GSM_SETTINGS_CHILD_OPEN_FILES);
 
     timer = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (tree), "timer"));
     g_source_remove (timer);
@@ -294,7 +294,7 @@ create_openfiles_tree (ProcmanApp *app)
   GTK_SORT_ASCENDING);*/
 #endif
 
-    procman_get_tree_state (app->settings, tree, procman::settings::open_files_tree_prefix.c_str());
+    procman_get_tree_state (app->settings, tree, GSM_SETTINGS_CHILD_OPEN_FILES);
 
     return tree;
 

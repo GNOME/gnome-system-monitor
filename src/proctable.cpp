@@ -60,6 +60,7 @@
 #include "util.h"
 #include "interface.h"
 #include "selinux.h"
+#include "settings-keys.h"
 #include "cgroups.h"
 
 ProcInfo::UserMap ProcInfo::users;
@@ -78,9 +79,9 @@ cb_columns_changed(GtkTreeView *treeview, gpointer data)
 {
     ProcmanApp * const app = static_cast<ProcmanApp *>(data);
 
-    procman_save_tree_state(app->settings,
-                            GTK_WIDGET(treeview),
-                            "proctree");
+    procman_save_tree_state (app->settings,
+                             GTK_WIDGET(treeview),
+                             GSM_SETTINGS_CHILD_PROCESSES);
 }
 
 static void
@@ -90,7 +91,7 @@ cb_sort_changed (GtkTreeSortable *model, gpointer data)
 
     procman_save_tree_state (app->settings,
                              GTK_WIDGET (app->tree),
-                             "proctree");
+                             GSM_SETTINGS_CHILD_PROCESSES);
 }
 
 static GtkTreeViewColumn*
@@ -309,7 +310,7 @@ process_visibility_func (GtkTreeModel *model, GtkTreeIter *iter, gpointer data)
 
 	// in case we are in dependencies view, we show (and expand) rows not matching the text, but having a matching child
     gboolean match = false;
-    if (g_settings_get_boolean (app->settings, "show-dependencies")) {
+    if (g_settings_get_boolean (app->settings, GSM_SETTING_SHOW_DEPENDENCIES)) {
         GtkTreeIter child;
         if (gtk_tree_model_iter_children (model, &child, iter)) {
             gboolean child_match = FALSE;
@@ -358,7 +359,7 @@ cb_show_dependencies_changed (GSettings *settings, const gchar *key, gpointer da
     ProcmanApp *app = (ProcmanApp *) data;
 
     gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (app->tree),
-                                      g_settings_get_boolean (settings, "show-dependencies"));
+                                      g_settings_get_boolean (settings, GSM_SETTING_SHOW_DEPENDENCIES));
 
     proctable_clear_tree (app);
     proctable_update_all (app);
@@ -415,7 +416,7 @@ proctable_new (ProcmanApp * const app)
     };
 
     gint i;
-    GSettings * settings = g_settings_get_child (app->settings, "proctree");
+    GSettings * settings = g_settings_get_child (app->settings, GSM_SETTINGS_CHILD_PROCESSES);
     model = gtk_tree_store_new (NUM_COLUMNS,
                                 G_TYPE_STRING,      /* Process Name */
                                 G_TYPE_STRING,      /* User         */
@@ -454,7 +455,7 @@ proctable_new (ProcmanApp * const app)
     proctree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model_sort));
     gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (proctree), COL_TOOLTIP);
     gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (proctree),
-                                      g_settings_get_boolean (app->settings, "show-dependencies"));
+                                      g_settings_get_boolean (app->settings, GSM_SETTING_SHOW_DEPENDENCIES));
     gtk_tree_view_set_enable_search (GTK_TREE_VIEW (proctree), FALSE);
     gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (proctree), TRUE);
     g_object_unref (G_OBJECT (model));
@@ -667,10 +668,10 @@ proctable_new (ProcmanApp * const app)
     g_signal_connect (G_OBJECT (model_sort), "sort-column-changed",
                       G_CALLBACK (cb_sort_changed), app);
 
-    g_signal_connect (app->settings, "changed::show-dependencies",
+    g_signal_connect (app->settings, "changed::" GSM_SETTING_SHOW_DEPENDENCIES,
                       G_CALLBACK (cb_show_dependencies_changed), app);
 
-    g_signal_connect (app->settings, "changed::show-whose-processes",
+    g_signal_connect (app->settings, "changed::" GSM_SETTING_SHOW_WHOSE_PROCESSES,
                       G_CALLBACK (cb_show_whose_processes_changed), app);
 
     gtk_widget_show (proctree);
@@ -844,7 +845,7 @@ insert_info_to_tree (ProcInfo *info, ProcmanApp *app, bool forced = false)
     filtered = gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT(sorted));
     model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (filtered));
     
-    if (g_settings_get_boolean (app->settings, "show-dependencies")) {
+    if (g_settings_get_boolean (app->settings, GSM_SETTING_SHOW_DEPENDENCIES)) {
 
         ProcInfo *parent = 0;
 
@@ -1100,7 +1101,7 @@ refresh_list (ProcmanApp *app, const pid_t* pid_list, const guint n)
     // pid_list == ProcInfo::all + addition
 
 
-    if (g_settings_get_boolean (app->settings, "show-dependencies")) {
+    if (g_settings_get_boolean (app->settings, GSM_SETTING_SHOW_DEPENDENCIES)) {
 
         // insert process in the tree. walk through the addition list
         // (new process + process that have a new parent). This loop
@@ -1177,7 +1178,7 @@ proctable_update_list (ProcmanApp *app)
     int which = 0;
     int arg = 0;
 
-    const char* whose_processes = g_settings_get_string (app->settings, "show-whose-processes");
+    const char* whose_processes = g_settings_get_string (app->settings, GSM_SETTING_SHOW_WHOSE_PROCESSES);
     if (strcmp (whose_processes, "all") == 0) {
         which = GLIBTOP_KERN_PROC_ALL;
         arg = 0;
