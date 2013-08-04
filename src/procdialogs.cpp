@@ -88,11 +88,11 @@ procdialog_create_kill_dialog (ProcmanApp *app, int signal)
     } else {
         if (signal == SIGKILL) {
             /*xgettext: primary alert message for killing multiple processes*/
-            primary = g_strdup_printf (_("Are you sure you want to kill the %d selected processes?"),
+            primary = g_strdup_printf (ngettext("Are you sure you want to kill the selected process?", "Are you sure you want to kill the %d selected processes?", selected_count),
                                        selected_count);
         } else {
             /*xgettext: primary alert message for ending multiple processes*/
-            primary = g_strdup_printf (_("Are you sure you want to end the %d selected processes?"),
+            primary = g_strdup_printf (ngettext("Are you sure you want to end the selected process?", "Are you sure you want to end the %d selected processes?", selected_count),
                                        selected_count);
         }
     }
@@ -192,7 +192,7 @@ procdialog_create_renice_dialog (ProcmanApp *app)
         dialog_title = g_strdup_printf (_("Change Priority of Process “%s” (PID: %u)"),
                                         info->name, info->pid);
     } else {
-        dialog_title = g_strdup_printf (_("Change Priority of %d selected processes"),
+        dialog_title = g_strdup_printf (ngettext("Change Priority of the selected process", "Change Priority of %d selected processes", selected_count),
                                         selected_count);
     }
 
