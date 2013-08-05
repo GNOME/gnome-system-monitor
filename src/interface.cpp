@@ -697,25 +697,6 @@ create_main_window (ProcmanApp *app)
 }
 
 void
-do_popup_menu (ProcmanApp *app, GdkEventButton *event)
-{
-    guint button;
-    guint32 event_time;
-
-    if (event) {
-        button = event->button;
-        event_time = event->time;
-    }
-    else {
-        button = 0;
-        event_time = gtk_get_current_event_time ();
-    }
-
-    gtk_menu_popup (GTK_MENU (app->popup_menu), NULL, NULL,
-                    NULL, NULL, button, event_time);
-}
-
-void
 update_sensitivity(ProcmanApp *app)
 {
     const char * const selected_actions[] = { "send-signal-stop",

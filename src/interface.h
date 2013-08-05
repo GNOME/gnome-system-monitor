@@ -27,6 +27,5 @@
 
 void            create_main_window (ProcmanApp *app);
 void            update_sensitivity (ProcmanApp *app);
-void            do_popup_menu(ProcmanApp *app, GdkEventButton *event);
 
 #endif /* _PROCMAN_INTERFACE_H_ */

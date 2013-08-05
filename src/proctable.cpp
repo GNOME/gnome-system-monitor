@@ -182,7 +182,9 @@ cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event, gpointer data)
     ProcmanApp *app = (ProcmanApp *) data;
 
     if (gdk_event_triggers_context_menu ((GdkEvent *) event)) {
-        do_popup_menu (app, event);
+        gtk_menu_popup (GTK_MENU (app->popup_menu),
+                        NULL, NULL, NULL, NULL,
+                        event->button, event->time);
         return TRUE;
     }
 
@@ -194,7 +196,9 @@ cb_tree_popup_menu (GtkWidget *widget, gpointer data)
 {
     ProcmanApp *app = (ProcmanApp *) data;
 
-    do_popup_menu (app, NULL);
+    gtk_menu_popup (GTK_MENU (app->popup_menu),
+                    NULL, NULL, NULL, NULL,
+                    0, gtk_get_current_event_time ());
 
     return TRUE;
 }
