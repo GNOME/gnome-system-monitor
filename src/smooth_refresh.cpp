@@ -13,10 +13,11 @@
 
 #include "smooth_refresh.h"
 #include "procman-app.h"
+#include "settings-keys.h"
 #include "util.h"
 
 
-const string SmoothRefresh::KEY("smooth-refresh");
+const string SmoothRefresh::KEY(GSM_SETTING_SMOOTH_REFRESH);
 
 
 

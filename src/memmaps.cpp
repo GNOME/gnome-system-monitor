@@ -18,6 +18,7 @@ using std::string;
 #include "procman-app.h"
 #include "memmaps.h"
 #include "proctable.h"
+#include "settings-keys.h"
 #include "util.h"
 
 
@@ -166,7 +167,7 @@ namespace
         MemMapsData(GtkWidget *a_tree, GSettings *a_settings)
             : tree(a_tree),
               settings(a_settings),
-              schema("memmapstree")
+              schema(GSM_SETTINGS_CHILD_MEMMAP)
         {
             procman_get_tree_state(this->settings, this->tree, this->schema);
         }

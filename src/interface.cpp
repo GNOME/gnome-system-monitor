@@ -41,6 +41,7 @@
 #include "load-graph.h"
 #include "util.h"
 #include "disks.h"
+#include "settings-keys.h"
 #include "gsm_color_button.h"
 
 
@@ -108,7 +109,7 @@ cb_cpu_color_changed (GSMColorButton *cp, gpointer data)
     GSettings *settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
 
     /* Get current values */
-    GVariant *cpu_colors_var = g_settings_get_value(settings, "cpu-colors");
+    GVariant *cpu_colors_var = g_settings_get_value (settings, GSM_SETTING_CPU_COLORS);
     gsize children_n = g_variant_n_children(cpu_colors_var);
 
     /* Create builder to contruct new setting with updated value for cpu i */
@@ -130,7 +131,8 @@ cb_cpu_color_changed (GSMColorButton *cp, gpointer data)
     }
 
     /* Just set the value and let the changed::cpu-colors signal callback do the rest. */
-    g_settings_set_value(settings, "cpu-colors", g_variant_builder_end(&builder));
+    g_settings_set_value (settings, GSM_SETTING_CPU_COLORS,
+                          g_variant_builder_end(&builder));
 }
 
 static void change_settings_color(GSettings *settings, const char *key,
@@ -149,7 +151,7 @@ static void
 cb_mem_color_changed (GSMColorButton *cp, gpointer data)
 {
     ProcmanApp *app = (ProcmanApp *) data;
-    change_settings_color(app->settings, "mem-color", cp);
+    change_settings_color (app->settings, GSM_SETTING_MEM_COLOR, cp);
 }
 
 
@@ -157,21 +159,21 @@ static void
 cb_swap_color_changed (GSMColorButton *cp, gpointer data)
 {
     ProcmanApp *app = (ProcmanApp *) data;
-    change_settings_color(app->settings, "swap-color", cp);
+    change_settings_color (app->settings, GSM_SETTING_SWAP_COLOR, cp);
 }
 
 static void
 cb_net_in_color_changed (GSMColorButton *cp, gpointer data)
 {
     ProcmanApp *app = (ProcmanApp *) data;
-    change_settings_color(app->settings, "net-in-color", cp);
+    change_settings_color (app->settings, GSM_SETTING_NET_IN_COLOR, cp);
 }
 
 static void
 cb_net_out_color_changed (GSMColorButton *cp, gpointer data)
 {
     ProcmanApp *app = (ProcmanApp *) data;
-    change_settings_color(app->settings, "net-out-color", cp);
+    change_settings_color(app->settings, GSM_SETTING_NET_OUT_COLOR, cp);
 }
 
 static void
@@ -341,9 +343,15 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
     g_object_bind_property (mem_exp, "expanded", mem_graph_box, "visible", G_BINDING_SYNC_CREATE);
     g_object_bind_property (net_exp, "expanded", net_graph_box, "visible", G_BINDING_SYNC_CREATE);
 
-    g_settings_bind (app->settings, "show-cpu", cpu_exp, "expanded", G_SETTINGS_BIND_DEFAULT);
-    g_settings_bind (app->settings, "show-mem", mem_exp, "expanded", G_SETTINGS_BIND_DEFAULT);
-    g_settings_bind (app->settings, "show-network", net_exp, "expanded", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind (app->settings, GSM_SETTING_SHOW_CPU,
+                     cpu_exp, "expanded",
+                     G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind (app->settings, GSM_SETTING_SHOW_MEM,
+                     mem_exp, "expanded",
+                     G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind (app->settings, GSM_SETTING_SHOW_NETWORK,
+                     net_exp, "expanded",
+                     G_SETTINGS_BIND_DEFAULT);
 
 }
 
@@ -404,7 +412,7 @@ on_activate_refresh (GSimpleAction *, GVariant *, gpointer data)
 
 static void
 kill_process_with_confirmation (ProcmanApp *app, int signal) {
-    gboolean kill_dialog = g_settings_get_boolean (app->settings, "kill-dialog");
+    gboolean kill_dialog = g_settings_get_boolean (app->settings, GSM_SETTING_SHOW_KILL_DIALOG);
 
     if (kill_dialog)
         procdialog_create_kill_dialog (app, signal);
@@ -475,7 +483,7 @@ change_show_page_state (GSimpleAction *action, GVariant *state, gpointer data)
     ProcmanApp *app = (ProcmanApp *) data;
 
     g_simple_action_set_state (action, state);
-    g_settings_set_value (app->settings, "current-tab", state);
+    g_settings_set_value (app->settings, GSM_SETTING_CURRENT_TAB, state);
 }
 
 static void
@@ -484,7 +492,7 @@ change_show_processes_state (GSimpleAction *action, GVariant *state, gpointer da
     ProcmanApp *app = (ProcmanApp *) data;
 
     g_simple_action_set_state (action, state);
-    g_settings_set_value (app->settings, "show-whose-processes", state);
+    g_settings_set_value (app->settings, GSM_SETTING_SHOW_WHOSE_PROCESSES, state);
 }
 
 static void
@@ -493,7 +501,7 @@ change_show_dependencies_state (GSimpleAction *action, GVariant *state, gpointer
     ProcmanApp *app = (ProcmanApp *) data;
 
     g_simple_action_set_state (action, state);
-    g_settings_set_value (app->settings, "show-dependencies", state);
+    g_settings_set_value (app->settings, GSM_SETTING_SHOW_DEPENDENCIES, state);
 }
 
 static void
@@ -604,14 +612,14 @@ create_main_window (ProcmanApp *app)
     gtk_widget_set_name (main_window, "gnome-system-monitor");
     app->main_window = main_window;
 
-    g_settings_get (app->settings, "window-state", "(iiii)",
+    g_settings_get (app->settings, GSM_SETTING_WINDOW_STATE, "(iiii)",
                     &width, &height, &xpos, &ypos);
     width = CLAMP (width, 50, gdk_screen_width ());
     height = CLAMP (height, 50, gdk_screen_height ());
 
     gtk_window_set_default_size (GTK_WINDOW (main_window), width, height);
     gtk_window_move (GTK_WINDOW (main_window), xpos, ypos);
-    if (g_settings_get_boolean (app->settings, "maximized"))
+    if (g_settings_get_boolean (app->settings, GSM_SETTING_MAXIMIZED))
         gtk_window_maximize (GTK_WINDOW (main_window));
 
     app->process_menu_button = process_menu_button = GTK_WIDGET (gtk_builder_get_object (builder, "process_menu_button"));
@@ -660,7 +668,7 @@ create_main_window (ProcmanApp *app)
     
     create_disk_view (app, builder);
 
-    g_settings_bind (app->settings, "current-tab", stack, "visible-child-name", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind (app->settings, GSM_SETTING_CURRENT_TAB, stack, "visible-child-name", G_SETTINGS_BIND_DEFAULT);
 
     g_signal_connect (G_OBJECT (stack), "notify::visible-child",
                       G_CALLBACK (cb_change_current_page), app);
@@ -673,13 +681,13 @@ create_main_window (ProcmanApp *app)
     action = g_action_map_lookup_action (G_ACTION_MAP (main_window),
                                          "show-dependencies");
     g_action_change_state (action,
-                           g_settings_get_value (app->settings, "show-dependencies"));
+                           g_settings_get_value (app->settings, GSM_SETTING_SHOW_DEPENDENCIES));
 
 
     action = g_action_map_lookup_action (G_ACTION_MAP (main_window),
                                          "show-whose-processes");
     g_action_change_state (action,
-                           g_settings_get_value (app->settings, "show-whose-processes"));
+                           g_settings_get_value (app->settings, GSM_SETTING_SHOW_WHOSE_PROCESSES));
 
     gtk_widget_show (main_window);
     

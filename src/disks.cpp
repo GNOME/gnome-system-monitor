@@ -8,11 +8,11 @@
 #include <glibtop/fsusage.h>
 #include <glib/gi18n.h>
 
-#include "procman-app.h"
 #include "disks.h"
+#include "procman-app.h"
 #include "util.h"
-#include "interface.h"
 #include "iconthemewrapper.h"
+#include "settings-keys.h"
 
 enum DiskColumns
 {
@@ -40,7 +40,7 @@ cb_sort_changed (GtkTreeSortable *model, gpointer data)
 
     procman_save_tree_state (app->settings,
                              GTK_WIDGET (app->disk_list),
-                             "disktreenew");
+                             GSM_SETTINGS_CHILD_DISKS);
 }
 
 static void
@@ -247,8 +247,7 @@ disks_update(ProcmanApp *app)
     gboolean show_all_fs;
 
     list = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(app->disk_list)));
-    show_all_fs = g_settings_get_boolean (app->settings, "show-all-fs");
-
+    show_all_fs = g_settings_get_boolean (app->settings, GSM_SETTING_SHOW_ALL_FS);
     entries = glibtop_get_mountlist (&mountlist, show_all_fs);
 
     remove_old_disks(GTK_TREE_MODEL(list), entries, mountlist.number);
@@ -301,9 +300,9 @@ cb_disk_columns_changed(GtkTreeView *treeview, gpointer data)
 {
     ProcmanApp *app = static_cast<ProcmanApp *>(data);
 
-    procman_save_tree_state(app->settings,
-                            GTK_WIDGET(treeview),
-                            "disktreenew");
+    procman_save_tree_state (app->settings,
+                             GTK_WIDGET (treeview),
+                             GSM_SETTINGS_CHILD_DISKS);
 }
 
 
@@ -381,7 +380,7 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
         N_("Used")
     };
 
-    GSettings * settings = g_settings_get_child (app->settings, "disktreenew");
+    GSettings * settings = g_settings_get_child (app->settings, GSM_SETTINGS_CHILD_DISKS);
 
     scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "disks_scrolled"));
 
@@ -484,7 +483,7 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
     /* numeric sort */
 
     procman_get_tree_state (app->settings, disk_tree,
-                           "disktreenew");
+                            GSM_SETTINGS_CHILD_DISKS);
 
     g_signal_connect (G_OBJECT(disk_tree), "destroy",
                       G_CALLBACK(cb_disk_list_destroying),
@@ -496,7 +495,7 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
     g_signal_connect (G_OBJECT (model), "sort-column-changed",
                       G_CALLBACK (cb_sort_changed), app);
 
-    g_signal_connect (app->settings, "changed::show-all-fs",
+    g_signal_connect (app->settings, "changed::" GSM_SETTING_SHOW_ALL_FS,
                       G_CALLBACK (cb_show_all_fs_changed), app);
 
     gtk_widget_show (disk_tree);

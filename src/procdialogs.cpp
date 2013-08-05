@@ -282,14 +282,14 @@ private:
 };
 
 static void
-field_toggled (const gchar *gconf_parent, GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
+field_toggled (const gchar *gsettings_parent, GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
 {
     GtkTreeModel *model = static_cast<GtkTreeModel*>(data);
     GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
     GtkTreeIter iter;
     GtkTreeViewColumn *column;
     gboolean toggled;
-    GSettings *settings = g_settings_get_child (ProcmanApp::get()->settings, gconf_parent);
+    GSettings *settings = g_settings_get_child (ProcmanApp::get()->settings, gsettings_parent);
     gchar *key;
     int id;
 
@@ -454,13 +454,19 @@ procdialog_create_preferences_dialog (ProcmanApp *app)
     g_settings_bind(app->settings, SmoothRefresh::KEY.c_str(), smooth_button, "active", G_SETTINGS_BIND_DEFAULT);
 
     check_button = GTK_WIDGET (gtk_builder_get_object (builder, "check_button"));
-    g_settings_bind(app->settings, "kill-dialog", check_button, "active", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind (app->settings, GSM_SETTING_SHOW_KILL_DIALOG,
+                     check_button, "active",
+                     G_SETTINGS_BIND_DEFAULT);
 
     GtkWidget *solaris_button = GTK_WIDGET (gtk_builder_get_object (builder, "solaris_button"));
-    g_settings_bind(app->settings, procman::settings::solaris_mode.c_str(), solaris_button, "active", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind (app->settings, GSM_SETTING_SOLARIS_MODE,
+                     solaris_button, "active",
+                     G_SETTINGS_BIND_DEFAULT);
 
     GtkWidget *draw_stacked_button = GTK_WIDGET (gtk_builder_get_object (builder, "draw_stacked_button"));
-    g_settings_bind(app->settings, procman::settings::draw_stacked.c_str(), draw_stacked_button, "active", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind (app->settings, GSM_SETTING_DRAW_STACKED,
+                     draw_stacked_button, "active",
+                     G_SETTINGS_BIND_DEFAULT);
 
     create_field_page (builder, app->tree, "proctree");
 
@@ -474,7 +480,9 @@ procdialog_create_preferences_dialog (ProcmanApp *app)
                       &graph_interval_updater);
 
     GtkWidget *bits_button = GTK_WIDGET (gtk_builder_get_object (builder, "bits_button"));
-    g_settings_bind(app->settings, procman::settings::network_in_bits.c_str(), bits_button, "active", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind(app->settings, GSM_SETTING_NETWORK_IN_BITS,
+                    bits_button, "active",
+                    G_SETTINGS_BIND_DEFAULT);
 
     update = (gfloat) app->config.disks_update_interval;
     adjustment = (GtkAdjustment *) gtk_adjustment_new (update / 1000.0, 1.0,
@@ -487,7 +495,9 @@ procdialog_create_preferences_dialog (ProcmanApp *app)
 
 
     check_button = GTK_WIDGET (gtk_builder_get_object (builder, "all_devices_check"));
-    g_settings_bind(app->settings, "show-all-fs", check_button, "active", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind (app->settings, GSM_SETTING_SHOW_ALL_FS,
+                     check_button, "active",
+                     G_SETTINGS_BIND_DEFAULT);
 
     create_field_page (builder, app->disk_list, "disktreenew");
 
@@ -495,7 +505,7 @@ procdialog_create_preferences_dialog (ProcmanApp *app)
     g_signal_connect (G_OBJECT (prefs_dialog), "response",
                       G_CALLBACK (prefs_dialog_button_pressed), app);
 
-    const char* current_tab = g_settings_get_string (app->settings, "current-tab");
+    const char* current_tab = g_settings_get_string (app->settings, GSM_SETTING_CURRENT_TAB);
     if (strcmp (current_tab, "processes") == 0)
         gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
     else if (strcmp (current_tab, "resources") == 0)
