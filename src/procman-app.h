@@ -11,8 +11,6 @@ struct LoadGraph;
 #include "smooth_refresh.h"
 #include "prettytable.h"
 
-#define GSM_GSETTINGS_SCHEMA "org.gnome.gnome-system-monitor"
-
 static const unsigned MIN_UPDATE_INTERVAL =   1 * 1000;
 static const unsigned MAX_UPDATE_INTERVAL = 100 * 1000;
 

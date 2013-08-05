@@ -2,6 +2,8 @@
 #ifndef H_PROCMAN_SETTINGS_KEYS_1177430397
 #define H_PROCMAN_SETTINGS_KEYS_1177430397
 
+#define GSM_GSETTINGS_SCHEMA                "org.gnome.gnome-system-monitor"
+
 #define GSM_SETTINGS_CHILD_OPEN_FILES       "openfilestree"
 #define GSM_SETTINGS_CHILD_DISKS            "disktreenew"
 #define GSM_SETTINGS_CHILD_PROCESSES        "proctree"
