@@ -46,9 +46,7 @@
 
 
 static gboolean
-window_key_press_event_cb (GtkWidget *widget,
-                           GdkEvent  *event,
-                           gpointer   user_data)
+cb_window_key_press_event (GtkWidget *widget, GdkEvent *event, gpointer user_data)
 {
     const char *current_page = gtk_stack_get_visible_child_name (GTK_STACK (ProcmanApp::get()->stack));
 
@@ -95,7 +93,7 @@ create_proc_view(ProcmanApp *app, GtkBuilder * builder)
     
     gtk_search_bar_connect_entry (search_bar, GTK_ENTRY (app->search_entry));
     g_signal_connect (app->main_window, "key-press-event",
-                  G_CALLBACK (window_key_press_event_cb), search_bar);
+                      G_CALLBACK (cb_window_key_press_event), search_bar);
                   
     g_signal_connect (app->search_entry, "changed", G_CALLBACK (search_text_changed), app);
 
