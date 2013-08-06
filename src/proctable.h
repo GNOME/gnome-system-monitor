@@ -58,8 +58,7 @@ enum
 
 
 GtkWidget*      proctable_new (ProcmanApp *app);
-void            proctable_update_list (ProcmanApp *app);
-void            proctable_update_all (ProcmanApp *app);
+void            proctable_update (ProcmanApp *app);
 void            proctable_free_table (ProcmanApp *app);
 void            proctable_freeze (ProcmanApp *app);
 void            proctable_thaw (ProcmanApp *app);

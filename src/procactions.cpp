@@ -106,7 +106,7 @@ renice (ProcmanApp *app, int nice)
 
     proctable_thaw (app);
 
-    proctable_update_all (app);
+    proctable_update (app);
 }
 
 
@@ -184,5 +184,5 @@ kill_process (ProcmanApp *app, int sig)
 
     proctable_thaw (app);
 
-    proctable_update_all (app);
+    proctable_update (app);
 }

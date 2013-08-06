@@ -25,7 +25,7 @@ cb_solaris_mode_changed (GSettings *settings, const gchar *key, gpointer data)
 
     app->config.solaris_mode = g_settings_get_boolean(settings, key);
     app->cpu_graph->clear_background();
-    proctable_update_all (app);
+    proctable_update (app);
 }
 
 static void

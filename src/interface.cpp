@@ -405,7 +405,7 @@ static void
 on_activate_refresh (GSimpleAction *, GVariant *, gpointer data)
 {
     ProcmanApp *app = (ProcmanApp *) data;
-    proctable_update_all (app);
+    proctable_update (app);
 }
 
 static void

@@ -254,7 +254,7 @@ cb_timeout (gpointer data)
     ProcmanApp *app = (ProcmanApp *) data;
     guint new_interval;
 
-    proctable_update_all (app);
+    proctable_update (app);
 
     if (app->smooth_refresh->get(new_interval)) {
         app->timeout = g_timeout_add(new_interval,
@@ -366,7 +366,7 @@ cb_show_dependencies_changed (GSettings *settings, const gchar *key, gpointer da
                                       g_settings_get_boolean (settings, GSM_SETTING_SHOW_DEPENDENCIES));
 
     proctable_clear_tree (app);
-    proctable_update_all (app);
+    proctable_update (app);
 }
 
 static void
@@ -375,7 +375,7 @@ cb_show_whose_processes_changed (GSettings *settings, const gchar *key, gpointer
     ProcmanApp *app = (ProcmanApp *) data;
 
     proctable_clear_tree (app);
-    proctable_update_all (app);
+    proctable_update (app);
 }
 
 GtkWidget *
@@ -1173,7 +1173,7 @@ refresh_list (ProcmanApp *app, const pid_t* pid_list, const guint n)
         update_info_mutable_cols(it->second);
 }
 
-void
+static void
 proctable_update_list (ProcmanApp *app)
 {
     pid_t* pid_list;
@@ -1238,7 +1238,7 @@ proctable_update_list (ProcmanApp *app)
 }
 
 void
-proctable_update_all (ProcmanApp * const app)
+proctable_update (ProcmanApp * const app)
 {
     char* string;
 
