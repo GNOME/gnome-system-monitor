@@ -27,9 +27,9 @@ gnome_system_monitor_cpp_files = \
 	disks.cpp \
 	selinux.cpp \
 	cgroups.cpp \
-	procman_gnomesu.cpp \
-	procman_gksu.cpp \
-	procman_pkexec.cpp \
+	gsm_gnomesu.cpp \
+	gsm_gksu.cpp \
+	gsm_pkexec.cpp \
 	lsof.cpp \
 	iconthemewrapper.cpp \
 	prefsdialog.cpp \

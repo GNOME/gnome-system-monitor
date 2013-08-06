@@ -2,7 +2,7 @@
 #include <config.h>
 
 #include "application.h"
-#include "procman_gksu.h"
+#include "gsm_gksu.h"
 #include "util.h"
 
 static gboolean (*gksu_run)(const char *, GError **);
@@ -26,7 +26,7 @@ static void load_gksu(void)
 
 
 
-gboolean procman_gksu_create_root_password_dialog(const char *command)
+gboolean gsm_gksu_create_root_password_dialog(const char *command)
 {
     GError *e = NULL;
 

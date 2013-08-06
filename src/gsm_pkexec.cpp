@@ -2,10 +2,10 @@
 #include <config.h>
 
 #include "application.h"
-#include "procman_pkexec.h"
+#include "gsm_pkexec.h"
 #include "util.h"
 
-gboolean procman_pkexec_create_root_password_dialog(const char *command)
+gboolean gsm_pkexec_create_root_password_dialog(const char *command)
 {
     gint *exit_status = NULL;
     GError *error = NULL;

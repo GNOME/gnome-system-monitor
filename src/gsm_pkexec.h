@@ -5,7 +5,7 @@
 #include <glib.h>
 
 gboolean
-procman_pkexec_create_root_password_dialog(const char *command);
+gsm_pkexec_create_root_password_dialog(const char *command);
 
 gboolean
 procman_has_pkexec(void) G_GNUC_CONST;

@@ -5,7 +5,7 @@
 #include <glib.h>
 
 gboolean
-procman_gksu_create_root_password_dialog(const char * command);
+gsm_gksu_create_root_password_dialog(const char * command);
 
 gboolean
 procman_has_gksu(void) G_GNUC_CONST;

@@ -4,7 +4,7 @@
 #include <glib.h>
 
 #include "application.h"
-#include "procman_gnomesu.h"
+#include "gsm_gnomesu.h"
 #include "util.h"
 
 gboolean (*gnomesu_exec)(const char *commandline);
@@ -27,7 +27,7 @@ load_gnomesu(void)
 
 
 gboolean
-procman_gnomesu_create_root_password_dialog(const char *command)
+gsm_gnomesu_create_root_password_dialog(const char *command)
 {
     return gnomesu_exec(command);
 }

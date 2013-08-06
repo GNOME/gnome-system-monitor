@@ -32,9 +32,9 @@
 #include "prettytable.h"
 #include "procactions.h"
 #include "util.h"
-#include "procman_gnomesu.h"
-#include "procman_gksu.h"
-#include "procman_pkexec.h"
+#include "gsm_gnomesu.h"
+#include "gsm_gksu.h"
+#include "gsm_pkexec.h"
 #include "cgroups.h"
 
 static GtkWidget *renice_dialog = NULL;
@@ -265,11 +265,11 @@ procdialog_create_root_password_dialog(ProcmanActionType type,
     procman_debug("Trying to run '%s' as root", command);
 
     if (procman_has_pkexec())
-        ret = procman_pkexec_create_root_password_dialog(command);
+        ret = gsm_pkexec_create_root_password_dialog(command);
     else if (procman_has_gksu())
-        ret = procman_gksu_create_root_password_dialog(command);
+        ret = gsm_gksu_create_root_password_dialog(command);
     else if (procman_has_gnomesu())
-        ret = procman_gnomesu_create_root_password_dialog(command);
+        ret = gsm_gnomesu_create_root_password_dialog(command);
 
     g_free(command);
     return ret;
