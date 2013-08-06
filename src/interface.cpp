@@ -61,8 +61,8 @@ search_text_changed (GtkEditable *entry, gpointer data)
 {
     GsmApplication * const app = static_cast<GsmApplication *>(data);
     gtk_tree_model_filter_refilter (GTK_TREE_MODEL_FILTER (gtk_tree_model_sort_get_model (
-	                                  GTK_TREE_MODEL_SORT (gtk_tree_view_get_model(
-	                                    GTK_TREE_VIEW (app->tree))))));
+                                    GTK_TREE_MODEL_SORT (gtk_tree_view_get_model(
+                                    GTK_TREE_VIEW (app->tree))))));
 }
 
 static void 
@@ -511,12 +511,12 @@ on_activate_priority (GSimpleAction *action, GVariant *parameter, gpointer data)
 
     const gint32 priority = g_variant_get_int32 (parameter);
     switch (priority) {
-	    case 32: 
-	        procdialog_create_renice_dialog (app);
-	        break;
-	    default:
-	        renice (app, priority);
-	        break;
+        case 32: 
+            procdialog_create_renice_dialog (app);
+            break;
+        default:
+            renice (app, priority);
+            break;
     }
 
 }
@@ -568,10 +568,10 @@ update_page_activities (GsmApplication *app)
     }
 
     if (strcmp (current_page, "disks") == 0) {
-		disks_update (app);
-		disks_thaw (app);
+        disks_update (app);
+        disks_thaw (app);
     } else {
-		disks_freeze (app);
+        disks_freeze (app);
     }
 }
 
