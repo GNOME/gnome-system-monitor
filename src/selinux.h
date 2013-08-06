@@ -4,7 +4,7 @@
 
 #include <glib.h>
 
-#include "procman-app.h"
+#include "application.h"
 
 void
 get_process_selinux_context (ProcInfo *info);

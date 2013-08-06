@@ -4,7 +4,7 @@
 #include <glib.h>
 
 #include "selinux.h"
-#include "procman-app.h"
+#include "application.h"
 #include "util.h"
 
 

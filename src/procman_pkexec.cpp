@@ -1,7 +1,7 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #include <config.h>
 
-#include "procman-app.h"
+#include "application.h"
 #include "procman_pkexec.h"
 #include "util.h"
 

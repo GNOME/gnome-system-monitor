@@ -55,7 +55,7 @@ private:
     {
         int new_value = int(1000 * gtk_spin_button_get_value(spin));
 
-        g_settings_set_int(ProcmanApp::get()->settings,
+        g_settings_set_int(GsmApplication::get()->settings,
                            this->key.c_str(), new_value);
 
         procman_debug("set %s to %d", this->key.c_str(), new_value);
@@ -72,7 +72,7 @@ field_toggled (const gchar *gsettings_parent, GtkCellRendererToggle *cell, gchar
     GtkTreeIter iter;
     GtkTreeViewColumn *column;
     gboolean toggled;
-    GSettings *settings = g_settings_get_child (ProcmanApp::get()->settings, gsettings_parent);
+    GSettings *settings = g_settings_get_child (GsmApplication::get()->settings, gsettings_parent);
     gchar *key;
     int id;
 
@@ -193,7 +193,7 @@ create_field_page(GtkBuilder* builder, GtkWidget *tree, const gchar *widgetname)
 }
 
 void
-create_preferences_dialog (ProcmanApp *app)
+create_preferences_dialog (GsmApplication *app)
 {
     typedef SpinButtonUpdater SBU;
 

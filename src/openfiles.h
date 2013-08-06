@@ -4,8 +4,8 @@
 
 #include <glib.h>
 
-#include "procman-app.h"
+#include "application.h"
 
-void            create_openfiles_dialog (ProcmanApp *app);
+void            create_openfiles_dialog (GsmApplication *app);
 
 #endif

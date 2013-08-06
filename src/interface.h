@@ -23,9 +23,9 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
-#include "procman-app.h"
+#include "application.h"
 
-void            create_main_window (ProcmanApp *app);
-void            update_sensitivity (ProcmanApp *app);
+void            create_main_window (GsmApplication *app);
+void            update_sensitivity (GsmApplication *app);
 
 #endif /* _PROCMAN_INTERFACE_H_ */

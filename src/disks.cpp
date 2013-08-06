@@ -9,7 +9,7 @@
 #include <glib/gi18n.h>
 
 #include "disks.h"
-#include "procman-app.h"
+#include "application.h"
 #include "util.h"
 #include "iconthemewrapper.h"
 #include "settings-keys.h"
@@ -36,7 +36,7 @@ enum DiskColumns
 static void
 cb_sort_changed (GtkTreeSortable *model, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     procman_save_tree_state (app->settings,
                              GTK_WIDGET (app->disk_list),
@@ -223,7 +223,7 @@ add_disk(GtkListStore *list, const glibtop_mountentry *entry, bool show_all_fs)
 }
 
 static void
-mount_changed (GVolumeMonitor *monitor, GMount *mount, ProcmanApp *app)
+mount_changed (GVolumeMonitor *monitor, GMount *mount, GsmApplication *app)
 {
     disks_update(app);
 }
@@ -231,14 +231,14 @@ mount_changed (GVolumeMonitor *monitor, GMount *mount, ProcmanApp *app)
 static gboolean
 cb_timeout (gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
     disks_update (app);
 
     return G_SOURCE_CONTINUE;
 }
 
 void
-disks_update(ProcmanApp *app)
+disks_update(GsmApplication *app)
 {
     GtkListStore *list;
     glibtop_mountentry * entries;
@@ -259,7 +259,7 @@ disks_update(ProcmanApp *app)
 }
 
 static void
-init_volume_monitor (ProcmanApp *app)
+init_volume_monitor (GsmApplication *app)
 {
     GVolumeMonitor *monitor = g_volume_monitor_get ();
 
@@ -269,7 +269,7 @@ init_volume_monitor (ProcmanApp *app)
 }
 
 void
-disks_freeze (ProcmanApp *app)
+disks_freeze (GsmApplication *app)
 {
   if (app->disk_timeout) {
       g_source_remove (app->disk_timeout);
@@ -278,7 +278,7 @@ disks_freeze (ProcmanApp *app)
 }
 
 void
-disks_thaw (ProcmanApp *app)
+disks_thaw (GsmApplication *app)
 {
   if (app->disk_timeout)
       return;
@@ -289,7 +289,7 @@ disks_thaw (ProcmanApp *app)
 }
 
 void
-disks_reset_timeout (ProcmanApp *app)
+disks_reset_timeout (GsmApplication *app)
 {
     disks_freeze (app);
     disks_thaw (app);
@@ -298,7 +298,7 @@ disks_reset_timeout (ProcmanApp *app)
 static void
 cb_disk_columns_changed(GtkTreeView *treeview, gpointer data)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GsmApplication *app = static_cast<GsmApplication *>(data);
 
     procman_save_tree_state (app->settings,
                              GTK_WIDGET (treeview),
@@ -352,7 +352,7 @@ cb_disk_list_destroying (GtkWidget *self, gpointer data)
 static void
 cb_show_all_fs_changed (GSettings *settings, const gchar *key, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     disks_update (app);
     disks_reset_timeout (app);
@@ -360,7 +360,7 @@ cb_show_all_fs_changed (GSettings *settings, const gchar *key, gpointer data)
 
 
 void
-create_disk_view(ProcmanApp *app, GtkBuilder *builder)
+create_disk_view(GsmApplication *app, GtkBuilder *builder)
 {
     GtkWidget *scrolled;
     GtkWidget *disk_tree;

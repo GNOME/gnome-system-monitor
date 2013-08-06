@@ -27,7 +27,7 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 #include "procactions.h"
-#include "procman-app.h"
+#include "application.h"
 #include "proctable.h"
 #include "procdialogs.h"
 
@@ -91,7 +91,7 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 
 
 void
-renice (ProcmanApp *app, int nice)
+renice (GsmApplication *app, int nice)
 {
     struct ReniceArgs args = { app, nice };
 
@@ -169,7 +169,7 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
 
 
 void
-kill_process (ProcmanApp *app, int sig)
+kill_process (GsmApplication *app, int sig)
 {
     struct KillArgs args = { app, sig };
 

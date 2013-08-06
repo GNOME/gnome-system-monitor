@@ -139,7 +139,7 @@ class ProcInfo
 
 
 
-class ProcmanApp : public Gtk::Application
+class GsmApplication : public Gtk::Application
 {
 private:
     void load_settings();
@@ -149,9 +149,9 @@ private:
     void on_help_activate(const Glib::VariantBase&);
     void on_quit_activate(const Glib::VariantBase&);
 protected:
-    ProcmanApp();
+    GsmApplication();
 public:
-    static Glib::RefPtr<ProcmanApp> get ();
+    static Glib::RefPtr<GsmApplication> get ();
 
     void save_config();
     void shutdown();
@@ -200,14 +200,14 @@ protected:
 
 struct ReniceArgs
 {
-    ProcmanApp *app;
+    GsmApplication *app;
     int nice_value;
 };
 
 
 struct KillArgs
 {
-    ProcmanApp *app;
+    GsmApplication *app;
     int signal;
 };
 

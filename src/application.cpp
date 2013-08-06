@@ -6,7 +6,7 @@
 #include <glibtop/close.h>
 #include <signal.h>
 
-#include "procman-app.h"
+#include "application.h"
 #include "procdialogs.h"
 #include "prefsdialog.h"
 #include "interface.h"
@@ -22,7 +22,7 @@
 static void
 cb_solaris_mode_changed (GSettings *settings, const gchar *key, gpointer data)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GsmApplication *app = static_cast<GsmApplication *>(data);
 
     app->config.solaris_mode = g_settings_get_boolean(settings, key);
     app->cpu_graph->clear_background();
@@ -32,7 +32,7 @@ cb_solaris_mode_changed (GSettings *settings, const gchar *key, gpointer data)
 static void
 cb_draw_stacked_changed (GSettings *settings, const gchar *key, gpointer data)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GsmApplication *app = static_cast<GsmApplication *>(data);
 
     app->config.draw_stacked = g_settings_get_boolean(settings, key);
     app->cpu_graph->clear_background();
@@ -43,7 +43,7 @@ cb_draw_stacked_changed (GSettings *settings, const gchar *key, gpointer data)
 static void
 cb_network_in_bits_changed (GSettings *settings, const gchar *key, gpointer data)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GsmApplication *app = static_cast<GsmApplication *>(data);
 
     app->config.network_in_bits = g_settings_get_boolean(settings, key);
     // force scale to be redrawn
@@ -53,7 +53,7 @@ cb_network_in_bits_changed (GSettings *settings, const gchar *key, gpointer data
 static void
 cb_timeouts_changed (GSettings *settings, const gchar *key, gpointer data)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GsmApplication *app = static_cast<GsmApplication *>(data);
 
     if (strcmp (key, GSM_SETTING_PROCESS_UPDATE_INTERVAL) == 0) {
         app->config.update_interval = g_settings_get_int (settings, key);
@@ -78,7 +78,7 @@ cb_timeouts_changed (GSettings *settings, const gchar *key, gpointer data)
 static void
 apply_cpu_color_settings(GSettings *settings, gpointer data)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GsmApplication *app = static_cast<GsmApplication *>(data);
 
     GVariant *cpu_colors_var = g_settings_get_value (settings, GSM_SETTING_CPU_COLORS);
     gsize n = g_variant_n_children(cpu_colors_var);
@@ -119,7 +119,7 @@ apply_cpu_color_settings(GSettings *settings, gpointer data)
 static void
 cb_color_changed (GSettings *settings, const gchar *key, gpointer data)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GsmApplication *app = static_cast<GsmApplication *>(data);
 
     if (strcmp (key, GSM_SETTING_CPU_COLORS) == 0) {
         apply_cpu_color_settings(settings, app);
@@ -150,7 +150,7 @@ cb_color_changed (GSettings *settings, const gchar *key, gpointer data)
 }
 
 void
-ProcmanApp::load_settings()
+GsmApplication::load_settings()
 {
     gchar *color;
     gint i;
@@ -229,22 +229,22 @@ ProcmanApp::load_settings()
     g_free (color);
 }
 
-ProcmanApp::ProcmanApp() : Gtk::Application("org.gnome.SystemMonitor", Gio::APPLICATION_HANDLES_COMMAND_LINE)
+GsmApplication::GsmApplication() : Gtk::Application("org.gnome.SystemMonitor", Gio::APPLICATION_HANDLES_COMMAND_LINE)
 {
     Glib::set_application_name(_("System Monitor"));
 }
 
-Glib::RefPtr<ProcmanApp> ProcmanApp::get ()
+Glib::RefPtr<GsmApplication> GsmApplication::get ()
 {
-    static Glib::RefPtr<ProcmanApp> singleton;
+    static Glib::RefPtr<GsmApplication> singleton;
 
     if (!singleton) {
-        singleton = Glib::RefPtr<ProcmanApp>(new ProcmanApp());
+        singleton = Glib::RefPtr<GsmApplication>(new GsmApplication());
     }
     return singleton;
 }
 
-void ProcmanApp::on_activate()
+void GsmApplication::on_activate()
 {
     gtk_window_present (GTK_WINDOW (main_window));
 }
@@ -426,7 +426,7 @@ procman_save_tree_state (GSettings *settings, GtkWidget *tree, const gchar *chil
 }
 
 void
-ProcmanApp::save_config ()
+GsmApplication::save_config ()
 {
     int width, height, xpos, ypos;
     gboolean maximized;
@@ -443,7 +443,7 @@ ProcmanApp::save_config ()
     g_settings_set_boolean (settings, GSM_SETTING_MAXIMIZED, maximized);
 }
 
-int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>& command_line)
+int GsmApplication::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>& command_line)
 {
     int argc = 0;
     char** argv = command_line->get_arguments(argc);
@@ -481,7 +481,7 @@ int ProcmanApp::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>&
 }
 
 void
-ProcmanApp::on_help_activate(const Glib::VariantBase&)
+GsmApplication::on_help_activate(const Glib::VariantBase&)
 {
     GError* error = 0;
     if (!g_app_info_launch_default_for_uri("help:gnome-system-monitor", NULL, &error)) {
@@ -491,25 +491,25 @@ ProcmanApp::on_help_activate(const Glib::VariantBase&)
 }
 
 void
-ProcmanApp::on_lsof_activate(const Glib::VariantBase&)
+GsmApplication::on_lsof_activate(const Glib::VariantBase&)
 {
     procman_lsof(this);
 }
 
 void
-ProcmanApp::on_preferences_activate(const Glib::VariantBase&)
+GsmApplication::on_preferences_activate(const Glib::VariantBase&)
 {
     create_preferences_dialog (this);
 }
 
 void
-ProcmanApp::on_quit_activate(const Glib::VariantBase&)
+GsmApplication::on_quit_activate(const Glib::VariantBase&)
 {
     shutdown ();
 }
 
 void
-ProcmanApp::shutdown()
+GsmApplication::shutdown()
 {
     save_config ();
 
@@ -527,26 +527,26 @@ ProcmanApp::shutdown()
     quit();
 }
 
-void ProcmanApp::on_startup()
+void GsmApplication::on_startup()
 {
     Gtk::Application::on_startup();
 
     Glib::RefPtr<Gio::SimpleAction> action;
 
     action = Gio::SimpleAction::create("quit");
-    action->signal_activate().connect(sigc::mem_fun(*this, &ProcmanApp::on_quit_activate));
+    action->signal_activate().connect(sigc::mem_fun(*this, &GsmApplication::on_quit_activate));
     add_action(action);
 
     action = Gio::SimpleAction::create("help");
-    action->signal_activate().connect(sigc::mem_fun(*this, &ProcmanApp::on_help_activate));
+    action->signal_activate().connect(sigc::mem_fun(*this, &GsmApplication::on_help_activate));
     add_action(action);
 
     action = Gio::SimpleAction::create("lsof");
-    action->signal_activate().connect(sigc::mem_fun(*this, &ProcmanApp::on_lsof_activate));
+    action->signal_activate().connect(sigc::mem_fun(*this, &GsmApplication::on_lsof_activate));
     add_action(action);
 
     action = Gio::SimpleAction::create("preferences");
-    action->signal_activate().connect(sigc::mem_fun(*this, &ProcmanApp::on_preferences_activate));
+    action->signal_activate().connect(sigc::mem_fun(*this, &GsmApplication::on_preferences_activate));
     add_action(action);
 
     Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_resource("/org/gnome/gnome-system-monitor/data/menus.ui");

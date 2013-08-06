@@ -15,7 +15,7 @@
 using std::string;
 
 
-#include "procman-app.h"
+#include "application.h"
 #include "memmaps.h"
 #include "proctable.h"
 #include "settings-keys.h"
@@ -331,7 +331,7 @@ dialog_response (GtkDialog * dialog, gint response_id, gpointer data)
 
 
 static MemMapsData*
-create_memmapsdata (ProcmanApp *app)
+create_memmapsdata (GsmApplication *app)
 {
     GtkWidget *tree;
     GtkListStore *model;
@@ -450,7 +450,7 @@ static void
 create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
                               GtkTreeIter *iter, gpointer data)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GsmApplication *app = static_cast<GsmApplication *>(data);
     MemMapsData *mmdata;
     GtkWidget *memmapsdialog;
     GtkWidget *dialog_vbox;
@@ -508,7 +508,7 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 
 
 void
-create_memmaps_dialog (ProcmanApp *app)
+create_memmaps_dialog (GsmApplication *app)
 {
     /* TODO: do we really want to open multiple dialogs ? */
     gtk_tree_selection_selected_foreach (app->selection, create_single_memmaps_dialog,

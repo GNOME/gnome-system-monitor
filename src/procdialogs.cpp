@@ -55,7 +55,7 @@ kill_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 }
 
 void
-procdialog_create_kill_dialog (ProcmanApp *app, int signal)
+procdialog_create_kill_dialog (GsmApplication *app, int signal)
 {
     GtkWidget *kill_alert_dialog;
     gchar *primary, *secondary, *button_text;
@@ -149,7 +149,7 @@ renice_scale_changed (GtkAdjustment *adj, gpointer data)
 static void
 renice_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GsmApplication *app = static_cast<GsmApplication *>(data);
     if (id == 100) {
         if (new_nice_value == -100)
             return;
@@ -161,7 +161,7 @@ renice_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 }
 
 void
-procdialog_create_renice_dialog (ProcmanApp *app)
+procdialog_create_renice_dialog (GsmApplication *app)
 {
     ProcInfo *info;
     
@@ -253,7 +253,7 @@ procman_action_to_command(ProcmanActionType type,
  */
 gboolean
 procdialog_create_root_password_dialog(ProcmanActionType type,
-                                       ProcmanApp *app,
+                                       GsmApplication *app,
                                        gint pid,
                                        gint extra_value)
 {

@@ -13,7 +13,7 @@
 #include <cstring>
 
 #include "util.h"
-#include "procman-app.h"
+#include "application.h"
 
 extern "C" {
 #include "e_date.h"
@@ -504,7 +504,7 @@ namespace procman
 
         g_value_unset(&value);
 
-        time = 100 * time / ProcmanApp::get()->frequency;
+        time = 100 * time / GsmApplication::get()->frequency;
         char *str = format_duration_for_display(time);
         g_object_set(renderer, "text", str, NULL);
         g_free(str);
@@ -638,7 +638,7 @@ namespace procman
 
     std::string format_network(guint64 rate, guint64 max_rate)
     {
-        char* bytes = procman::format_size(rate, max_rate, ProcmanApp::get()->config.network_in_bits);
+        char* bytes = procman::format_size(rate, max_rate, GsmApplication::get()->config.network_in_bits);
         std::string formatted(bytes);
         g_free(bytes);
         return formatted;
@@ -647,7 +647,7 @@ namespace procman
 
     std::string format_network_rate(guint64 rate, guint64 max_rate)
     {
-        return procman::format_rate(rate, max_rate, ProcmanApp::get()->config.network_in_bits);
+        return procman::format_rate(rate, max_rate, GsmApplication::get()->config.network_in_bits);
     }
 
 }

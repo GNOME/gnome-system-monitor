@@ -23,7 +23,7 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
-#include "procman-app.h"
+#include "application.h"
 
 enum
 {
@@ -57,12 +57,12 @@ enum
 };
 
 
-GtkWidget*      proctable_new (ProcmanApp *app);
-void            proctable_update (ProcmanApp *app);
-void            proctable_free_table (ProcmanApp *app);
-void            proctable_freeze (ProcmanApp *app);
-void            proctable_thaw (ProcmanApp *app);
-void            proctable_reset_timeout (ProcmanApp *app);
+GtkWidget*      proctable_new (GsmApplication *app);
+void            proctable_update (GsmApplication *app);
+void            proctable_free_table (GsmApplication *app);
+void            proctable_freeze (GsmApplication *app);
+void            proctable_thaw (GsmApplication *app);
+void            proctable_reset_timeout (GsmApplication *app);
 
 GSList*         proctable_get_columns_order(GtkTreeView *treeview);
 void            proctable_set_columns_order(GtkTreeView *treeview, GSList *order);

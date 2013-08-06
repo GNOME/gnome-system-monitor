@@ -48,7 +48,7 @@
 static gboolean
 cb_window_key_press_event (GtkWidget *widget, GdkEvent *event, gpointer user_data)
 {
-    const char *current_page = gtk_stack_get_visible_child_name (GTK_STACK (ProcmanApp::get()->stack));
+    const char *current_page = gtk_stack_get_visible_child_name (GTK_STACK (GsmApplication::get()->stack));
 
     if (strcmp (current_page, "processes") == 0)
         return gtk_search_bar_handle_event (GTK_SEARCH_BAR (user_data), event);
@@ -59,14 +59,14 @@ cb_window_key_press_event (GtkWidget *widget, GdkEvent *event, gpointer user_dat
 static void
 search_text_changed (GtkEditable *entry, gpointer data)
 {
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
+    GsmApplication * const app = static_cast<GsmApplication *>(data);
     gtk_tree_model_filter_refilter (GTK_TREE_MODEL_FILTER (gtk_tree_model_sort_get_model (
 	                                  GTK_TREE_MODEL_SORT (gtk_tree_view_get_model(
 	                                    GTK_TREE_VIEW (app->tree))))));
 }
 
 static void 
-create_proc_view(ProcmanApp *app, GtkBuilder * builder)
+create_proc_view(GsmApplication *app, GtkBuilder * builder)
 {
     GtkWidget *proctree;
     GtkWidget *scrolled;
@@ -148,7 +148,7 @@ static void change_settings_color(GSettings *settings, const char *key,
 static void
 cb_mem_color_changed (GSMColorButton *cp, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
     change_settings_color (app->settings, GSM_SETTING_MEM_COLOR, cp);
 }
 
@@ -156,26 +156,26 @@ cb_mem_color_changed (GSMColorButton *cp, gpointer data)
 static void
 cb_swap_color_changed (GSMColorButton *cp, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
     change_settings_color (app->settings, GSM_SETTING_SWAP_COLOR, cp);
 }
 
 static void
 cb_net_in_color_changed (GSMColorButton *cp, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
     change_settings_color (app->settings, GSM_SETTING_NET_IN_COLOR, cp);
 }
 
 static void
 cb_net_out_color_changed (GSMColorButton *cp, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
     change_settings_color(app->settings, GSM_SETTING_NET_OUT_COLOR, cp);
 }
 
 static void
-create_sys_view (ProcmanApp *app, GtkBuilder * builder)
+create_sys_view (GsmApplication *app, GtkBuilder * builder)
 {
     GtkWidget *cpu_graph_box, *mem_graph_box, *net_graph_box;
     GtkWidget *cpu_exp, *mem_exp, *net_exp;
@@ -356,7 +356,7 @@ create_sys_view (ProcmanApp *app, GtkBuilder * builder)
 static void
 on_activate_about (GSimpleAction *, GVariant *, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     const gchar * const authors[] = {
         "Kevin Vandersloot",
@@ -404,12 +404,12 @@ on_activate_about (GSimpleAction *, GVariant *, gpointer data)
 static void
 on_activate_refresh (GSimpleAction *, GVariant *, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
     proctable_update (app);
 }
 
 static void
-kill_process_with_confirmation (ProcmanApp *app, int signal) {
+kill_process_with_confirmation (GsmApplication *app, int signal) {
     gboolean kill_dialog = g_settings_get_boolean (app->settings, GSM_SETTING_SHOW_KILL_DIALOG);
 
     if (kill_dialog)
@@ -421,7 +421,7 @@ kill_process_with_confirmation (ProcmanApp *app, int signal) {
 static void
 on_activate_send_signal (GSimpleAction *, GVariant *parameter, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     /* no confirmation */
     gint32 signal = g_variant_get_int32(parameter);
@@ -440,7 +440,7 @@ on_activate_send_signal (GSimpleAction *, GVariant *parameter, gpointer data)
 static void
 on_activate_memory_maps (GSimpleAction *, GVariant *, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     create_memmaps_dialog (app);
 }
@@ -448,7 +448,7 @@ on_activate_memory_maps (GSimpleAction *, GVariant *, gpointer data)
 static void
 on_activate_open_files (GSimpleAction *, GVariant *, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     create_openfiles_dialog (app);
 }
@@ -456,7 +456,7 @@ on_activate_open_files (GSimpleAction *, GVariant *, gpointer data)
 static void
 on_activate_process_properties (GSimpleAction *, GVariant *, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     create_procproperties_dialog (app);
 }
@@ -478,7 +478,7 @@ on_activate_toggle (GSimpleAction *action, GVariant *parameter, gpointer data)
 static void
 change_show_page_state (GSimpleAction *action, GVariant *state, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     g_simple_action_set_state (action, state);
     g_settings_set_value (app->settings, GSM_SETTING_CURRENT_TAB, state);
@@ -487,7 +487,7 @@ change_show_page_state (GSimpleAction *action, GVariant *state, gpointer data)
 static void
 change_show_processes_state (GSimpleAction *action, GVariant *state, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     g_simple_action_set_state (action, state);
     g_settings_set_value (app->settings, GSM_SETTING_SHOW_WHOSE_PROCESSES, state);
@@ -496,7 +496,7 @@ change_show_processes_state (GSimpleAction *action, GVariant *state, gpointer da
 static void
 change_show_dependencies_state (GSimpleAction *action, GVariant *state, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     g_simple_action_set_state (action, state);
     g_settings_set_value (app->settings, GSM_SETTING_SHOW_DEPENDENCIES, state);
@@ -505,7 +505,7 @@ change_show_dependencies_state (GSimpleAction *action, GVariant *state, gpointer
 static void
 on_activate_priority (GSimpleAction *action, GVariant *parameter, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     g_action_change_state (G_ACTION (action), parameter);
 
@@ -528,7 +528,7 @@ change_priority_state (GSimpleAction *action, GVariant *state, gpointer data)
 }
 
 void
-update_page_activities (ProcmanApp *app)
+update_page_activities (GsmApplication *app)
 {
     const char *current_page = gtk_stack_get_visible_child_name (GTK_STACK (app->stack));
 
@@ -578,13 +578,13 @@ update_page_activities (ProcmanApp *app)
 static void
 cb_change_current_page (GtkStack *stack, GParamSpec *pspec, gpointer data)
 {
-    update_page_activities ((ProcmanApp *)data);
+    update_page_activities ((GsmApplication *)data);
 }
 
 static gboolean
 cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     app->shutdown ();
 
@@ -592,7 +592,7 @@ cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data)
 }
 
 void
-create_main_window (ProcmanApp *app)
+create_main_window (GsmApplication *app)
 {
     GtkWidget *main_window;
     GtkWidget *stack;
@@ -695,7 +695,7 @@ create_main_window (ProcmanApp *app)
 }
 
 void
-update_sensitivity(ProcmanApp *app)
+update_sensitivity(GsmApplication *app)
 {
     const char * const selected_actions[] = { "send-signal-stop",
                                               "send-signal-cont",

@@ -10,7 +10,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#include "procman-app.h"
+#include "application.h"
 #include "openfiles.h"
 #include "proctable.h"
 #include "util.h"
@@ -237,7 +237,7 @@ close_openfiles_dialog (GtkDialog *dialog, gint id, gpointer data)
 
 
 static GtkWidget *
-create_openfiles_tree (ProcmanApp *app)
+create_openfiles_tree (GsmApplication *app)
 {
     GtkWidget *tree;
     GtkListStore *model;
@@ -320,7 +320,7 @@ static void
 create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
                                 GtkTreeIter *iter, gpointer data)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GsmApplication *app = static_cast<GsmApplication *>(data);
     GtkWidget *openfilesdialog;
     GtkWidget *cmd_grid;
     GtkWidget *label;
@@ -373,7 +373,7 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 
 
 void
-create_openfiles_dialog (ProcmanApp *app)
+create_openfiles_dialog (GsmApplication *app)
 {
     gtk_tree_selection_selected_foreach (app->selection, create_single_openfiles_dialog,
                                          app);

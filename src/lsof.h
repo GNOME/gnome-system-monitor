@@ -3,8 +3,8 @@
 #define H_PROCMAN_LSOF_1161179202
 
 #include <glib.h>
-#include "procman-app.h"
+#include "application.h"
 
-void procman_lsof(ProcmanApp *app);
+void procman_lsof(GsmApplication *app);
 
 #endif /* H_PROCMAN_LSOF_1161179202 */

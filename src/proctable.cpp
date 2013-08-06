@@ -54,7 +54,7 @@
 #include <libwnck/libwnck.h>
 #endif
 
-#include "procman-app.h"
+#include "application.h"
 #include "proctable.h"
 #include "prettytable.h"
 #include "util.h"
@@ -77,7 +77,7 @@ ProcInfo* ProcInfo::find(pid_t pid)
 static void
 cb_columns_changed(GtkTreeView *treeview, gpointer data)
 {
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
+    GsmApplication * const app = static_cast<GsmApplication *>(data);
 
     procman_save_tree_state (app->settings,
                              GTK_WIDGET(treeview),
@@ -87,7 +87,7 @@ cb_columns_changed(GtkTreeView *treeview, gpointer data)
 static void
 cb_sort_changed (GtkTreeSortable *model, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     procman_save_tree_state (app->settings,
                              GTK_WIDGET (app->tree),
@@ -179,7 +179,7 @@ cb_proctree_destroying (GtkTreeView *self, gpointer data)
 static gboolean
 cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     if (gdk_event_triggers_context_menu ((GdkEvent *) event)) {
         gtk_menu_popup (GTK_MENU (app->popup_menu),
@@ -194,7 +194,7 @@ cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event, gpointer data)
 static gboolean
 cb_tree_popup_menu (GtkWidget *widget, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     gtk_menu_popup (GTK_MENU (app->popup_menu),
                     NULL, NULL, NULL, NULL,
@@ -215,7 +215,7 @@ get_last_selected (GtkTreeModel *model, GtkTreePath *path,
 void
 cb_row_selected (GtkTreeSelection *selection, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     app->selection = selection;
 
@@ -251,7 +251,7 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
 static gint
 cb_timeout (gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
     guint new_interval;
 
     proctable_update (app);
@@ -269,7 +269,7 @@ cb_timeout (gpointer data)
 static void
 cb_refresh_icons (GtkIconTheme *theme, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     if(app->timeout) {
         g_source_remove (app->timeout);
@@ -305,7 +305,7 @@ iter_matches_search_key (GtkTreeModel *model, GtkTreeIter *iter, const gchar *ke
 static gboolean
 process_visibility_func (GtkTreeModel *model, GtkTreeIter *iter, gpointer data)
 {
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
+    GsmApplication * const app = static_cast<GsmApplication *>(data);
     const gchar * search_text = app->search_entry == NULL ? "" : gtk_entry_get_text (GTK_ENTRY (app->search_entry));
     GtkTreePath *tree_path = gtk_tree_model_get_path (model, iter);
 
@@ -342,7 +342,7 @@ process_visibility_func (GtkTreeModel *model, GtkTreeIter *iter, gpointer data)
 }
 
 static void
-proctable_clear_tree (ProcmanApp * const app)
+proctable_clear_tree (GsmApplication * const app)
 {
     GtkTreeModel *model;
 
@@ -360,7 +360,7 @@ proctable_clear_tree (ProcmanApp * const app)
 static void
 cb_show_dependencies_changed (GSettings *settings, const gchar *key, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (app->tree),
                                       g_settings_get_boolean (settings, GSM_SETTING_SHOW_DEPENDENCIES));
@@ -372,14 +372,14 @@ cb_show_dependencies_changed (GSettings *settings, const gchar *key, gpointer da
 static void
 cb_show_whose_processes_changed (GSettings *settings, const gchar *key, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     proctable_clear_tree (app);
     proctable_update (app);
 }
 
 GtkWidget *
-proctable_new (ProcmanApp * const app)
+proctable_new (GsmApplication * const app)
 {
     GtkWidget *proctree;
     GtkTreeStore *model;
@@ -814,7 +814,7 @@ update_info_mutable_cols(ProcInfo *info)
     GtkTreeModel *model;
     model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
             gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT(
-            gtk_tree_view_get_model (GTK_TREE_VIEW(ProcmanApp::get()->tree))))));
+            gtk_tree_view_get_model (GTK_TREE_VIEW(GsmApplication::get()->tree))))));
 
     using procman::tree_store_update;
 
@@ -840,7 +840,7 @@ update_info_mutable_cols(ProcInfo *info)
 }
 
 static void
-insert_info_to_tree (ProcInfo *info, ProcmanApp *app, bool forced = false)
+insert_info_to_tree (ProcInfo *info, GsmApplication *app, bool forced = false)
 {
     GtkTreeModel *model;
     GtkTreeModel *filtered;
@@ -902,7 +902,7 @@ insert_info_to_tree (ProcInfo *info, ProcmanApp *app, bool forced = false)
 */
 template<typename List>
 static void
-remove_info_from_tree (ProcmanApp *app, GtkTreeModel *model,
+remove_info_from_tree (GsmApplication *app, GtkTreeModel *model,
                        ProcInfo *current, List &orphans, unsigned lvl = 0)
 {
     GtkTreeIter child_node;
@@ -963,7 +963,7 @@ get_process_systemd_info(ProcInfo *info)
 }
 
 static void
-update_info (ProcmanApp *app, ProcInfo *info)
+update_info (GsmApplication *app, ProcInfo *info)
 {
     glibtop_proc_state procstate;
     glibtop_proc_uid procuid;
@@ -1053,7 +1053,7 @@ ProcInfo::ProcInfo(pid_t pid)
 }
 
 static void
-refresh_list (ProcmanApp *app, const pid_t* pid_list, const guint n)
+refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
 {
     typedef std::list<ProcInfo*> ProcList;
     ProcList addition;
@@ -1174,7 +1174,7 @@ refresh_list (ProcmanApp *app, const pid_t* pid_list, const guint n)
 }
 
 static void
-proctable_update_list (ProcmanApp *app)
+proctable_update_list (GsmApplication *app)
 {
     pid_t* pid_list;
     glibtop_proclist proclist;
@@ -1238,7 +1238,7 @@ proctable_update_list (ProcmanApp *app)
 }
 
 void
-proctable_update (ProcmanApp * const app)
+proctable_update (GsmApplication * const app)
 {
     char* string;
 
@@ -1250,7 +1250,7 @@ proctable_update (ProcmanApp * const app)
 }
 
 void
-proctable_free_table (ProcmanApp * const app)
+proctable_free_table (GsmApplication * const app)
 {
     for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it)
         delete it->second;
@@ -1281,14 +1281,14 @@ ProcInfo::set_icon(Glib::RefPtr<Gdk::Pixbuf> icon)
     GtkTreeModel *model;
     model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
             gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT(
-            gtk_tree_view_get_model (GTK_TREE_VIEW(ProcmanApp::get()->tree))))));
+            gtk_tree_view_get_model (GTK_TREE_VIEW(GsmApplication::get()->tree))))));
     gtk_tree_store_set(GTK_TREE_STORE(model), &this->node,
                        COL_PIXBUF, (this->pixbuf ? this->pixbuf->gobj() : NULL),
                        -1);
 }
 
 void
-proctable_freeze (ProcmanApp *app)
+proctable_freeze (GsmApplication *app)
 {
     if (app->timeout) {
       g_source_remove (app->timeout);
@@ -1297,7 +1297,7 @@ proctable_freeze (ProcmanApp *app)
 }
 
 void
-proctable_thaw (ProcmanApp *app)
+proctable_thaw (GsmApplication *app)
 {
     app->timeout = g_timeout_add (app->config.update_interval,
                                   cb_timeout,
@@ -1305,7 +1305,7 @@ proctable_thaw (ProcmanApp *app)
 }
 
 void
-proctable_reset_timeout (ProcmanApp *app)
+proctable_reset_timeout (GsmApplication *app)
 {
     proctable_freeze (app);
     proctable_thaw (app);
