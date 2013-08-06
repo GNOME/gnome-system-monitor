@@ -32,6 +32,7 @@ gnome_system_monitor_cpp_files = \
 	procman_pkexec.cpp \
 	lsof.cpp \
 	iconthemewrapper.cpp \
+	prefsdialog.cpp \
 	procman-app.cpp
 
 gnome_system_monitor_c_files = \

@@ -8,6 +8,7 @@
 
 #include "procman-app.h"
 #include "procdialogs.h"
+#include "prefsdialog.h"
 #include "interface.h"
 #include "proctable.h"
 #include "load-graph.h"
@@ -498,7 +499,7 @@ ProcmanApp::on_lsof_activate(const Glib::VariantBase&)
 void
 ProcmanApp::on_preferences_activate(const Glib::VariantBase&)
 {
-    procdialog_create_preferences_dialog (this);
+    create_preferences_dialog (this);
 }
 
 void

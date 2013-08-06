@@ -49,7 +49,6 @@ gboolean                procdialog_create_root_password_dialog (ProcmanActionTyp
                                                                 ProcmanApp *app,
                                                                 gint pid, gint extra_value);
 void                    procdialog_create_memmaps_dialog (ProcmanApp *app);
-void                    procdialog_create_preferences_dialog (ProcmanApp *app);
 
 #endif
 
