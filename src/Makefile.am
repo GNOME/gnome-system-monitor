@@ -50,7 +50,7 @@ gnome_system_monitor_SOURCES = \
 	$(gnome_system_monitor_h_files) \
 	$(gnome_system_monitor_cpp_files) \
 	$(gnome_system_monitor_c_files) \
-	procman.cpp
+	main.cpp
 
 LDADD = \
 	$(PROCMAN_LIBS) \
