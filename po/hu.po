@@ -11,24 +11,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-20 17:35+0100\n"
-"PO-Revision-Date: 2013-03-20 03:53+0100\n"
+"POT-Creation-Date: 2013-08-06 10:01+0200\n"
+"PO-Revision-Date: 2013-08-06 06:29+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
-"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
+"Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Lokalize 1.5\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/callbacks.cpp:184 ../src/procman-app.cpp:364
+#: ../src/interface.cpp:386 ../src/procman-app.cpp:233
 msgid "System Monitor"
 msgstr "Rendszerfigyelő"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2
-#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/callbacks.cpp:185
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:387
 msgid "View current processes and monitor system state"
 msgstr "A jelenlegi folyamatok megtekintése és a rendszerállapot figyelése"
 
@@ -39,7 +39,7 @@ msgstr ""
 "Figyelő;Rendszer;Folyamat;CPU;Memória;Hálózat;Előzmények;Használat;Erőforrás;"
 "Sávszélesség;"
 
-#: ../gnome-system-monitor-kde.desktop.in.in.h:1
+#: ../gnome-system-monitor-kde.desktop.in.in.h:1 ../src/procman-app.cpp:465
 msgid "GNOME System Monitor"
 msgstr "GNOME rendszerfigyelő"
 
@@ -48,71 +48,67 @@ msgid "Kill process"
 msgstr "Folyamat kilövése"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:2
-msgid "Privileges are required to kill process"
-msgstr "Hitelesítés szükséges a folyamat kilövéséhez"
+msgid "Privileges are required to control other users' processes"
+msgstr "Hitelesítés szükséges más felhasználó folyamatainak vezérléséhez"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:3
 msgid "Renice process"
 msgstr "Folyamat nice értékének módosítása"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:4
-msgid "Privileges are required to renice process"
-msgstr "Hitelesítés szükséges a folyamat nice értékének módosításához"
+msgid "Privileges are required to change the priority of processes"
+msgstr "Hitelesítés szükséges a folyamatok prioritásának módosításához"
 
 #: ../data/interface.ui.h:2
-msgid "View"
-msgstr "Nézet"
-
-#: ../data/interface.ui.h:3
 msgid "End _Process"
 msgstr "Folyamat befeje_zése"
 
-#: ../data/interface.ui.h:4 ../data/preferences.ui.h:9
+#: ../data/interface.ui.h:3 ../data/preferences.ui.h:11
 msgid "Processes"
 msgstr "Folyamatok"
 
-#: ../data/interface.ui.h:5
+#: ../data/interface.ui.h:4
 msgid "CPU History"
 msgstr "CPU-használat előzményei"
 
-#: ../data/interface.ui.h:6
-msgid "Memory and Swap History"
-msgstr "Memória- és swap használat előzményei"
-
-#: ../data/interface.ui.h:7 ../src/interface.cpp:249
-#: ../src/procproperties.cpp:132 ../src/proctable.cpp:212
+#: ../data/interface.ui.h:5 ../src/interface.cpp:266
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:407
 msgid "Memory"
 msgstr "Memória"
 
-#: ../data/interface.ui.h:8 ../src/interface.cpp:261
+#: ../data/interface.ui.h:6 ../src/interface.cpp:278
 msgid "Swap"
 msgstr "Swap"
 
-#: ../data/interface.ui.h:9
-msgid "Network History"
-msgstr "Hálózat előzményei"
+#: ../data/interface.ui.h:7
+msgid "Memory and Swap History"
+msgstr "Memória- és swap használat előzményei"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:288
+#: ../data/interface.ui.h:8 ../src/interface.cpp:306
 msgid "Receiving"
 msgstr "Fogadás"
 
-#: ../data/interface.ui.h:11
+#: ../data/interface.ui.h:9
 msgid "Total Received"
 msgstr "Fogadva összesen"
 
-#: ../data/interface.ui.h:12
-msgid "Sent"
+#: ../data/interface.ui.h:10 ../src/interface.cpp:321
+msgid "Sending"
 msgstr "Küldés"
 
-#: ../data/interface.ui.h:13
+#: ../data/interface.ui.h:11
 msgid "Total Sent"
 msgstr "Küldve összesen"
 
-#: ../data/interface.ui.h:14 ../data/preferences.ui.h:13
+#: ../data/interface.ui.h:12
+msgid "Network History"
+msgstr "Hálózat előzményei"
+
+#: ../data/interface.ui.h:13 ../data/preferences.ui.h:15
 msgid "Resources"
 msgstr "Erőforrások"
 
-#: ../data/interface.ui.h:15 ../data/preferences.ui.h:16
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:18
 msgid "File Systems"
 msgstr "Fájlrendszerek"
 
@@ -126,16 +122,25 @@ msgid "_Name contains:"
 msgstr "_Név tartalmazza:"
 
 #: ../data/lsof.ui.h:3
+msgid "_Find"
+msgstr "_Keresés"
+
+#: ../data/lsof.ui.h:4
 msgid "Case insensitive matching"
 msgstr "Kis- és nagybetű nem különböző"
 
-#: ../data/lsof.ui.h:4
+#: ../data/lsof.ui.h:5
 msgid "C_lear"
 msgstr "_Törlés"
 
-#: ../data/lsof.ui.h:5
+#: ../data/lsof.ui.h:6
 msgid "S_earch results:"
 msgstr "_Keresés eredménye:"
+
+#: ../data/lsof.ui.h:7 ../data/openfiles.ui.h:2 ../data/preferences.ui.h:3
+#: ../src/memmaps.cpp:471 ../src/procproperties.cpp:216
+msgid "_Close"
+msgstr "_Bezárás"
 
 #: ../data/menus.ui.h:1
 msgctxt "Menu item to Open 'Search for Open Files' dialog"
@@ -158,6 +163,83 @@ msgstr "Névjegy"
 msgid "Quit"
 msgstr "Kilépés"
 
+#: ../data/menus.ui.h:6
+msgid "_Refresh"
+msgstr "_Frissítés"
+
+#: ../data/menus.ui.h:7
+msgid "_Active Processes"
+msgstr "_Aktív folyamatok"
+
+#: ../data/menus.ui.h:8
+msgid "A_ll Processes"
+msgstr "Min_den folyamat"
+
+#: ../data/menus.ui.h:9
+msgid "M_y Processes"
+msgstr "Saját f_olyamatok"
+
+#: ../data/menus.ui.h:10
+msgid "_Dependencies"
+msgstr "_Függőségek"
+
+#: ../data/menus.ui.h:11
+msgid "_Stop"
+msgstr "_Leállítás"
+
+#: ../data/menus.ui.h:12
+msgid "_Continue"
+msgstr "_Folytatás"
+
+#: ../data/menus.ui.h:13
+msgid "_End"
+msgstr "_Befejezés"
+
+#: ../data/menus.ui.h:14
+msgid "_Kill"
+msgstr "_Kilövés"
+
+#: ../data/menus.ui.h:15
+msgid "_Change Priority"
+msgstr "_Prioritás megváltoztatása"
+
+#: ../data/menus.ui.h:16 ../src/util.cpp:218
+msgid "Very High"
+msgstr "Nagyon magas"
+
+#: ../data/menus.ui.h:17 ../src/util.cpp:220
+msgid "High"
+msgstr "Magas"
+
+#: ../data/menus.ui.h:18 ../src/util.cpp:222
+msgid "Normal"
+msgstr "Normális"
+
+#: ../data/menus.ui.h:19 ../src/util.cpp:224
+msgid "Low"
+msgstr "Alacsony"
+
+#: ../data/menus.ui.h:20 ../src/util.cpp:226
+msgid "Very Low"
+msgstr "Nagyon alacsony"
+
+#: ../data/menus.ui.h:21
+msgid "Custom"
+msgstr "Egyéni"
+
+#: ../data/menus.ui.h:22
+msgid "_Memory Maps"
+msgstr "_Memóriatérképek"
+
+#. Translators: this means 'Files that are open' (open is not a verb here)
+#: ../data/menus.ui.h:24
+msgid "Open _Files"
+msgstr "_Nyitott fájlok"
+
+#: ../data/menus.ui.h:25
+msgid "_Properties"
+msgstr "_Tulajdonságok"
+
 #: ../data/openfiles.ui.h:1
 msgid "Open Files"
 msgstr "Nyitott fájlok"
@@ -167,64 +249,72 @@ msgid "System Monitor Preferences"
 msgstr "Rendszerfigyelő beállításai"
 
 #: ../data/preferences.ui.h:2
+msgid "_Help"
+msgstr "_Súgó"
+
+#: ../data/preferences.ui.h:4
 msgid "Behavior"
 msgstr "Viselkedés"
 
-#: ../data/preferences.ui.h:3
+#: ../data/preferences.ui.h:5
 msgid "_Update interval in seconds:"
 msgstr "_Frissítési időköz másodpercben:"
 
-#: ../data/preferences.ui.h:4
+#: ../data/preferences.ui.h:6
 msgid "Enable _smooth refresh"
 msgstr "Egyenlete_s frissítés engedélyezése"
 
-#: ../data/preferences.ui.h:5
+#: ../data/preferences.ui.h:7
 msgid "Alert before ending or _killing processes"
 msgstr ""
 "F_olyamatok befejeztetése vagy kilövése előtt figyelmeztető üzenet "
 "megjelenítése"
 
-#: ../data/preferences.ui.h:6
+#: ../data/preferences.ui.h:8
 msgid "_Divide CPU usage by CPU count"
 msgstr "_CPU használat osztása a CPU-k számával"
 
-#: ../data/preferences.ui.h:7
+#: ../data/preferences.ui.h:9
 msgid "Information Fields"
 msgstr "Információs mezők"
 
-#: ../data/preferences.ui.h:8
+#: ../data/preferences.ui.h:10
 msgid "Process i_nformation shown in list:"
 msgstr "A listában megjelenített foly_amatinformációk:"
 
-#: ../data/preferences.ui.h:10
+#: ../data/preferences.ui.h:12
 msgid "Graphs"
 msgstr "Grafikonok"
 
-#: ../data/preferences.ui.h:11
-msgid "_Show network speed in bits"
-msgstr "_Hálózati sebesség megjelenítése bitekben"
-
-#: ../data/preferences.ui.h:12
+#: ../data/preferences.ui.h:13
 msgid "_Draw CPU chart as stacked area chart"
 msgstr "_CPU grafikon rajzolása színes területdiagramként"
 
 #: ../data/preferences.ui.h:14
+msgid "_Show network speed in bits"
+msgstr "_Hálózati sebesség megjelenítése bitekben"
+
+#: ../data/preferences.ui.h:16
 msgid "Show _all file systems"
 msgstr "Min_den fájlrendszer megjelenítése"
 
-#: ../data/preferences.ui.h:15
+#: ../data/preferences.ui.h:17
 msgid "File system i_nformation shown in list:"
 msgstr "A listában megjelenített fájl_rendszer-információk:"
 
-#: ../data/renice.ui.h:1
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:127
+msgid "_Cancel"
+msgstr "Mé_gse"
+
+#: ../data/renice.ui.h:2
 msgid "Change _Priority"
 msgstr "Prioritás _megváltoztatása"
 
-#: ../data/renice.ui.h:2
+#: ../data/renice.ui.h:3
 msgid "_Nice value:"
 msgstr "_Nice érték:"
 
-#: ../data/renice.ui.h:3
+#: ../data/renice.ui.h:4
 msgid ""
 "<small><i><b>Note:</b> The priority of a process is given by its nice value. "
 "A lower nice value corresponds to a higher priority.</i></small>"
@@ -232,19 +322,140 @@ msgstr ""
 "<small><i><b>Megjegyzés:</b> A folyamat prioritását a nice értéke adja meg. "
 "Alacsony nice érték magasabb prioritásnak felel meg.</i></small>"
 
-#: ../src/argv.cpp:20
+#: ../src/argv.cpp:22
 msgid "Show the Processes tab"
 msgstr "A Folyamatok lap megjelenítése"
 
-#: ../src/argv.cpp:25
+#: ../src/argv.cpp:27
 msgid "Show the Resources tab"
 msgstr "Az Erőforrások lap megjelenítése"
 
-#: ../src/argv.cpp:30
+#: ../src/argv.cpp:32
 msgid "Show the File Systems tab"
 msgstr "A Fájlrendszerek lap megjelenítése"
 
-#: ../src/callbacks.cpp:195
+#: ../src/argv.cpp:36
+msgid "Show the application's version"
+msgstr "Az alkalmazás verziószámának megjelenítése"
+
+#: ../src/disks.cpp:374 ../src/memmaps.cpp:363
+msgid "Device"
+msgstr "Eszköz"
+
+#: ../src/disks.cpp:375
+msgid "Directory"
+msgstr "Könyvtár"
+
+#: ../src/disks.cpp:376 ../src/gsm_color_button.c:233 ../src/openfiles.cpp:253
+msgid "Type"
+msgstr "Típus"
+
+#: ../src/disks.cpp:377
+msgid "Total"
+msgstr "Összesen"
+
+#: ../src/disks.cpp:378
+msgid "Free"
+msgstr "Szabad"
+
+#: ../src/disks.cpp:379
+msgid "Available"
+msgstr "Elérhető"
+
+#: ../src/disks.cpp:380
+msgid "Used"
+msgstr "Használt"
+
+#. xgettext: ? stands for unknown
+#: ../src/e_date.c:156
+msgid "?"
+msgstr "?"
+
+#: ../src/e_date.c:163
+msgid "Today %l:%M %p"
+msgstr "Ma %k.%M"
+
+#: ../src/e_date.c:172
+msgid "Yesterday %l:%M %p"
+msgstr "Tegnap %k.%M"
+
+#: ../src/e_date.c:184
+msgid "%a %l:%M %p"
+msgstr "%a., %k.%M"
+
+#: ../src/e_date.c:192
+msgid "%b %d %l:%M %p"
+msgstr "%b. %e., %k.%M"
+
+#: ../src/e_date.c:194
+msgid "%b %d %Y"
+msgstr "%Y %b. %d"
+
+#: ../src/gsm_color_button.c:201
+msgid "Fraction"
+msgstr "Tört"
+
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+#: ../src/gsm_color_button.c:203
+msgid "Percentage full for pie color pickers"
+msgstr "Teljes százalékos arány a torta színválasztókhoz"
+
+#: ../src/gsm_color_button.c:210
+msgid "Title"
+msgstr "Cím"
+
+#: ../src/gsm_color_button.c:211
+msgid "The title of the color selection dialog"
+msgstr "A színválasztó ablak címkéje"
+
+#: ../src/gsm_color_button.c:212 ../src/gsm_color_button.c:640
+msgid "Pick a Color"
+msgstr "Szín kiválasztása"
+
+#: ../src/gsm_color_button.c:218
+msgid "Current Color"
+msgstr "Jelenlegi szín"
+
+#: ../src/gsm_color_button.c:219
+msgid "The selected color"
+msgstr "A kiválasztott szín"
+
+#: ../src/gsm_color_button.c:226
+msgid "Sensitive"
+msgstr "Érzékeny"
+
+#: ../src/gsm_color_button.c:227
+msgid "The sensitivity value"
+msgstr "Az érzékenység értéke"
+
+#: ../src/gsm_color_button.c:234
+msgid "Type of color picker"
+msgstr "Színválasztó típusa"
+
+#: ../src/gsm_color_button.c:560
+msgid "Received invalid color data\n"
+msgstr "Érvénytelen színadat\n"
+
+#: ../src/gsm_color_button.c:664 ../src/gsm_color_button.c:873
+msgid "Click to set graph colors"
+msgstr "Kattintson a grafikon színeinek beállításához"
+
+#. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
+#: ../src/interface.cpp:194
+#, c-format
+msgid "Pick a Color for '%s'"
+msgstr "Válasszon színt ehhez: „%s”"
+
+#: ../src/interface.cpp:227 ../src/procproperties.cpp:95
+msgid "CPU"
+msgstr "CPU"
+
+#: ../src/interface.cpp:229
+#, c-format
+msgid "CPU%d"
+msgstr "%d. CPU"
+
+#: ../src/interface.cpp:397
 msgid "translator-credits"
 msgstr ""
 "Dvornik László <dvornik at gnome dot hu>\n"
@@ -252,407 +463,137 @@ msgstr ""
 "Tímár András <timar at gnome dot hu>\n"
 "Ványi Róbert <robi at mora.u-szeged dot hu>"
 
-#: ../src/disks.cpp:304 ../src/memmaps.cpp:361
-msgid "Device"
-msgstr "Eszköz"
-
-#: ../src/disks.cpp:305
-msgid "Directory"
-msgstr "Könyvtár"
-
-#: ../src/disks.cpp:306 ../src/gsm_color_button.c:223 ../src/openfiles.cpp:251
-msgid "Type"
-msgstr "Típus"
-
-#: ../src/disks.cpp:307
-msgid "Total"
-msgstr "Összesen"
-
-#: ../src/disks.cpp:308
-msgid "Free"
-msgstr "Szabad"
-
-#: ../src/disks.cpp:309
-msgid "Available"
-msgstr "Elérhető"
-
-#: ../src/disks.cpp:310
-msgid "Used"
-msgstr "Használt"
-
-#. xgettext: ? stands for unknown
-#: ../src/e_date.c:155
-msgid "?"
-msgstr "?"
-
-#: ../src/e_date.c:162
-msgid "Today %l:%M %p"
-msgstr "Ma %k.%M"
-
-#: ../src/e_date.c:171
-msgid "Yesterday %l:%M %p"
-msgstr "Tegnap %k.%M"
-
-#: ../src/e_date.c:183
-msgid "%a %l:%M %p"
-msgstr "%a., %k.%M"
-
-#: ../src/e_date.c:191
-msgid "%b %d %l:%M %p"
-msgstr "%b. %e., %k.%M"
-
-#: ../src/e_date.c:193
-msgid "%b %d %Y"
-msgstr "%Y %b. %d"
-
-#: ../src/gsm_color_button.c:199
-msgid "Fraction"
-msgstr "Tört"
-
-#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:201
-msgid "Percentage full for pie color pickers"
-msgstr "Teljes százalékos arány a torta színválasztókhoz"
-
-#: ../src/gsm_color_button.c:208
-msgid "Title"
-msgstr "Cím"
-
-#: ../src/gsm_color_button.c:209
-msgid "The title of the color selection dialog"
-msgstr "A színválasztó ablak címkéje"
-
-#: ../src/gsm_color_button.c:210 ../src/gsm_color_button.c:628
-msgid "Pick a Color"
-msgstr "Szín kiválasztása"
-
-#: ../src/gsm_color_button.c:216
-msgid "Current Color"
-msgstr "Jelenlegi szín"
-
-#: ../src/gsm_color_button.c:217
-msgid "The selected color"
-msgstr "A kiválasztott szín"
-
-#: ../src/gsm_color_button.c:224
-msgid "Type of color picker"
-msgstr "Színválasztó típusa"
-
-#: ../src/gsm_color_button.c:550
-msgid "Received invalid color data\n"
-msgstr "Érvénytelen színadat\n"
-
-#: ../src/gsm_color_button.c:651
-msgid "Click to set graph colors"
-msgstr "Kattintson a grafikon színeinek beállításához"
-
-#: ../src/interface.cpp:47
-msgid "_View"
-msgstr "_Nézet"
-
-#: ../src/interface.cpp:49
-msgid "_Stop Process"
-msgstr "Folyamat _megállítása"
-
-#: ../src/interface.cpp:50
-msgid "Stop process"
-msgstr "Folyamat megállítása"
-
-#: ../src/interface.cpp:51
-msgid "_Continue Process"
-msgstr "Folyamat _folytatása"
-
-#: ../src/interface.cpp:52
-msgid "Continue process if stopped"
-msgstr "Folyamat folytatása, ha meg van állítva"
-
-#: ../src/interface.cpp:54 ../src/procdialogs.cpp:96
-msgid "_End Process"
-msgstr "Folyamat _befejezése"
-
-#: ../src/interface.cpp:55
-msgid "Force process to finish normally"
-msgstr "Folyamat kényszerítése normális befejeződésre"
-
-#: ../src/interface.cpp:56 ../src/procdialogs.cpp:85
-msgid "_Kill Process"
-msgstr "Folyamat _kilövése"
-
-#: ../src/interface.cpp:57
-msgid "Force process to finish immediately"
-msgstr "Folyamat kényszerítése azonnali befejeződésre"
-
-#: ../src/interface.cpp:58
-msgid "_Change Priority"
-msgstr "_Prioritás megváltoztatása"
-
-#: ../src/interface.cpp:59
-msgid "Change the order of priority of process"
-msgstr "Folyamat prioritásának megváltoztatása"
-
-#: ../src/interface.cpp:61
-msgid "_Refresh"
-msgstr "_Frissítés"
-
-#: ../src/interface.cpp:62
-msgid "Refresh the process list"
-msgstr "A folyamatlista frissítése"
-
-#: ../src/interface.cpp:64
-msgid "_Memory Maps"
-msgstr "_Memóriatérképek"
-
-#: ../src/interface.cpp:65
-msgid "Open the memory maps associated with a process"
-msgstr "Egy folyamathoz hozzárendelt memóriatérképek megnyitása"
-
-#. Translators: this means 'Files that are open' (open is no verb here)
-#: ../src/interface.cpp:67
-msgid "Open _Files"
-msgstr "_Nyitott fájlok"
-
-#: ../src/interface.cpp:68
-msgid "View the files opened by a process"
-msgstr "Egy folyamat által megnyitott fájlok megtekintése"
-
-#: ../src/interface.cpp:69
-msgid "_Properties"
-msgstr "_Tulajdonságok"
-
-#: ../src/interface.cpp:70
-msgid "View additional information about a process"
-msgstr "További információk megjelenítése egy folyamatról"
-
-#: ../src/interface.cpp:75
-msgid "_Dependencies"
-msgstr "_Függőségek"
-
-#: ../src/interface.cpp:76
-msgid "Show parent/child relationship between processes"
-msgstr "Szülő/gyermek kapcsolat megjelenítése a folyamatok között"
-
-#: ../src/interface.cpp:83
-msgid "_Active Processes"
-msgstr "_Aktív folyamatok"
-
-#: ../src/interface.cpp:84
-msgid "Show active processes"
-msgstr "Aktív folyamatok megjelenítése"
-
-#: ../src/interface.cpp:85
-msgid "A_ll Processes"
-msgstr "Min_den folyamat"
-
-#: ../src/interface.cpp:86
-msgid "Show all processes"
-msgstr "Összes folyamat megjelenítése"
-
-#: ../src/interface.cpp:87
-msgid "M_y Processes"
-msgstr "Saját f_olyamatok"
-
-#: ../src/interface.cpp:88
-msgid "Show only user-owned processes"
-msgstr "Csak a felhasználó folyamatainak megjelenítése"
-
-#: ../src/interface.cpp:93 ../src/util.cpp:217
-msgid "Very High"
-msgstr "Nagyon magas"
-
-#: ../src/interface.cpp:94
-msgid "Set process priority to very high"
-msgstr "Folyamat prioritásának beállítása nagyon magasra"
-
-#: ../src/interface.cpp:95 ../src/util.cpp:219
-msgid "High"
-msgstr "Magas"
-
-#: ../src/interface.cpp:96
-msgid "Set process priority to high"
-msgstr "Folyamat prioritásának beállítása magasra"
-
-#: ../src/interface.cpp:97 ../src/util.cpp:221
-msgid "Normal"
-msgstr "Normális"
-
-#: ../src/interface.cpp:98
-msgid "Set process priority to normal"
-msgstr "Folyamat prioritásának beállítása normálisra"
-
-#: ../src/interface.cpp:99 ../src/util.cpp:223
-msgid "Low"
-msgstr "Alacsony"
-
-#: ../src/interface.cpp:100
-msgid "Set process priority to low"
-msgstr "Folyamat prioritásának beállítása alacsonyra"
-
-#: ../src/interface.cpp:101 ../src/util.cpp:225
-msgid "Very Low"
-msgstr "Nagyon alacsony"
-
-#: ../src/interface.cpp:102
-msgid "Set process priority to very low"
-msgstr "Folyamat prioritásának beállítása nagyon alacsonyra"
-
-#: ../src/interface.cpp:103
-msgid "Custom"
-msgstr "Egyéni"
-
-#: ../src/interface.cpp:104
-msgid "Set process priority manually"
-msgstr "Folyamat prioritásának beállítása saját kezűleg"
-
-#. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:178
-#, c-format
-msgid "Pick a Color for '%s'"
-msgstr "Válasszon színt ehhez: „%s”"
-
-#: ../src/interface.cpp:214 ../src/procproperties.cpp:138
-msgid "CPU"
-msgstr "CPU"
-
-#: ../src/interface.cpp:216
-#, c-format
-msgid "CPU%d"
-msgstr "%d. CPU"
-
-#: ../src/interface.cpp:304
-msgid "Sending"
-msgstr "Küldés"
-
-#: ../src/load-graph.cpp:170
+#: ../src/load-graph.cpp:168
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u másodperc"
 msgstr[1] "%u másodperc"
 
-#: ../src/load-graph.cpp:365
+#: ../src/load-graph.cpp:383
 msgid "not available"
 msgstr "nem érhető el"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:368
+#: ../src/load-graph.cpp:386
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%), összesen %s"
 
-#: ../src/lsof.cpp:125
+#: ../src/lsof.cpp:126
 msgid "Error"
 msgstr "Hiba"
 
-#: ../src/lsof.cpp:126
+#: ../src/lsof.cpp:127
 #, c-format
 msgid "'%s' is not a valid Perl regular expression."
 msgstr "A(z) „%s” nem egy érvényes Perl reguláris kifejezés."
 
-#: ../src/lsof.cpp:272
+#: ../src/lsof.cpp:273
 msgid "Process"
 msgstr "Folyamat"
 
-#: ../src/lsof.cpp:284
+#: ../src/lsof.cpp:285
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:294 ../src/memmaps.cpp:339
+#: ../src/lsof.cpp:295 ../src/memmaps.cpp:341
 msgid "Filename"
 msgstr "Fájlnév"
 
 #. xgettext: virtual memory start
-#: ../src/memmaps.cpp:341
+#: ../src/memmaps.cpp:343
 msgid "VM Start"
 msgstr "VM-kezdet"
 
 #. xgettext: virtual memory end
-#: ../src/memmaps.cpp:343
+#: ../src/memmaps.cpp:345
 msgid "VM End"
 msgstr "VM-vég"
 
 #. xgettext: virtual memory syze
-#: ../src/memmaps.cpp:345
+#: ../src/memmaps.cpp:347
 msgid "VM Size"
 msgstr "VM-méret"
 
-#: ../src/memmaps.cpp:346
+#: ../src/memmaps.cpp:348
 msgid "Flags"
 msgstr "Flag-ek"
 
 #. xgettext: virtual memory offset
-#: ../src/memmaps.cpp:348
+#: ../src/memmaps.cpp:350
 msgid "VM Offset"
 msgstr "VM-eltolás"
 
 #. xgettext: memory that has not been modified since
 #. it has been allocated
-#: ../src/memmaps.cpp:351
+#: ../src/memmaps.cpp:353
 msgid "Private clean"
 msgstr "Tiszta saját"
 
 #. xgettext: memory that has been modified since it
 #. has been allocated
-#: ../src/memmaps.cpp:354
+#: ../src/memmaps.cpp:356
 msgid "Private dirty"
 msgstr "Piszkos saját"
 
 #. xgettext: shared memory that has not been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:357
+#: ../src/memmaps.cpp:359
 msgid "Shared clean"
 msgstr "Osztott tiszta"
 
 #. xgettext: shared memory that has been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:360
+#: ../src/memmaps.cpp:362
 msgid "Shared dirty"
 msgstr "Osztott piszkos"
 
-#: ../src/memmaps.cpp:362
+#: ../src/memmaps.cpp:364
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.cpp:467
+#: ../src/memmaps.cpp:469
 msgid "Memory Maps"
 msgstr "Memóriatérképek"
 
-#: ../src/memmaps.cpp:479
+#: ../src/memmaps.cpp:481
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "„%s” (PID: %u) folyamat _memóriatérképei:"
 
-#: ../src/openfiles.cpp:38
+#: ../src/openfiles.cpp:39
 msgid "file"
 msgstr "fájl"
 
-#: ../src/openfiles.cpp:40
+#: ../src/openfiles.cpp:41
 msgid "pipe"
 msgstr "csővezeték"
 
-#: ../src/openfiles.cpp:42
+#: ../src/openfiles.cpp:43
 msgid "IPv6 network connection"
 msgstr "IPv6 hálózati kapcsolat"
 
-#: ../src/openfiles.cpp:44
+#: ../src/openfiles.cpp:45
 msgid "IPv4 network connection"
 msgstr "IPv4 hálózati kapcsolat"
 
-#: ../src/openfiles.cpp:46
+#: ../src/openfiles.cpp:47
 msgid "local socket"
 msgstr "helyi foglalat"
 
-#: ../src/openfiles.cpp:48
+#: ../src/openfiles.cpp:49
 msgid "unknown type"
 msgstr "ismeretlen típus"
 
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.cpp:250
+#: ../src/openfiles.cpp:252
 msgid "FD"
 msgstr "FD"
 
-#: ../src/openfiles.cpp:252
+#: ../src/openfiles.cpp:254
 msgid "Object"
 msgstr "Objektum"
 
@@ -662,34 +603,23 @@ msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "„%s” (PID: %u) folyamat által meg_nyitott fájlok:"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:1
-msgid "Main Window width"
-msgstr "Főablak szélessége"
+msgid "Main window size and position in the form (width, height, xpos, ypos)"
+msgstr ""
+"A főablak mérete és pozíciója (szélesség, magasság, xpoz, ypoz) formában"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:2
-msgid "Main Window height"
-msgstr "Főablak magassága"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
 msgid "Main Window should open maximized"
 msgstr "A főablak teljes méretben induljon"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
-msgid "Main Window X position"
-msgstr "Főablak X pozíciója"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
-msgid "Main Window Y position"
-msgstr "Főablak Y pozíciója"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:6
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
 msgid "Show process dependencies in tree form"
 msgstr "Folyamat függőségeinek megjelenítése fanézetben"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
 msgid "Solaris mode for CPU percentage"
 msgstr "Solaris mód a CPU százalékos arányhoz"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
 msgid ""
 "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
 "is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
@@ -699,11 +629,11 @@ msgstr ""
 "feladat processzorhasználata el van osztva a processzorok teljes számával. "
 "Ellenkező esetben Irix módban működik."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:6
 msgid "Show CPU chart as stacked area chart"
 msgstr "CPU grafikon megjelenítése színes területdiagramként"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
 msgid ""
 "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
 "of a line chart."
@@ -711,27 +641,27 @@ msgstr ""
 "Ha igazra van állítva, akkor a Rendszerfigyelő a CPU diagramot "
 "területdiagramként jeleníti meg vonaldiagram helyett."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
 msgid "Enable/Disable smooth refresh"
 msgstr "Egyenletes frissítés engedélyezése/tiltása"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
 msgid "Show warning dialog when killing processes"
 msgstr "Folyamatok kilövésénél figyelmeztető párbeszédablak megjelenítése"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
 msgid "Time in milliseconds between updates of the process view"
 msgstr "A folyamatnézet frissítései közötti idő ezredmásodpercben"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Az grafikonok frissítései közötti idő ezredmásodpercben"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
 msgid "Whether information about all file systems should be displayed"
 msgstr "A fájlrendszer-információk megjelenjenek-e"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
 msgid ""
 "Whether to display information about all file systems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -741,339 +671,339 @@ msgstr ""
 "hez és a „procfs”-hez hasonló típusokat is). Hasznos lehet az összes "
 "csatlakoztatott fájlrendszer kilistázásához."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Az eszközlista frissítései közötti idő ezredmásodpercben"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
-msgid ""
-"Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
-"active"
-msgstr ""
-"Megadja, hogy alapértelmezésben mely folyamatok látszódjanak. Lehetséges "
-"értékek: 0 (Mind), 1 (Felhasználói) és 2 (Aktív)."
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
+msgid "Determines which processes to show."
+msgstr "Megadja, hogy alapértelmezésben mely folyamatok látszódjanak."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
 msgid "Saves the currently viewed tab"
 msgstr "Elmenti a jelenleg megjelenített lapot"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
-msgid ""
-"0 for the System Info, 1 for the processes list, 2 for the resources and 3 "
-"for the disks list"
-msgstr ""
-"0 - rendszerinformációk, 1 - folyamatlista, 2 - erőforrások és 3 - lemezek "
-"listája"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
 msgid "CPU colors"
 msgstr "CPU színei"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr "Minden bejegyzés formátuma (CPU száma, hexa színérték)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
 msgid "Default graph memory color"
 msgstr "A memória alapértelmezett színe a grafikonon"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
 msgid "Default graph swap color"
 msgstr "A swap alapértelmezett színe a grafikonon"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
 msgid "Default graph incoming network traffic color"
 msgstr "A hálózati bejövő forgalom alapértelmezett színe a grafikonon"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
 msgid "Default graph outgoing network traffic color"
 msgstr "A hálózati kimenő forgalom alapértelmezett színe a grafikonon"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
 msgid "Show network traffic in bits"
 msgstr "Hálózati forgalom megjelenítése bitekben"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
+msgid "Show processor usage graph"
+msgstr "A processzorhasználati grafikon megjelenítése"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
+msgid "Show memory and swap usage graph"
+msgstr "A memória- és swaphasználati grafikon megjelenítése"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
+msgid "Show network traffic graph"
+msgstr "A hálózati forgalom grafikon megjelenítése "
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
 msgid "Process view sort column"
 msgstr "Folyamatlista-nézet rendezése ezen oszlop szerint"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
 msgid "Process view columns order"
 msgstr "Folyamatnézet rendezési iránya"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
 msgid "Process view sort order"
 msgstr "Folyamatlista-nézet rendezési iránya "
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
 msgid "Width of process 'Name' column"
 msgstr "A folyamat „Név” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
 msgid "Show process 'Name' column on startup"
 msgstr "A folyamat „Név” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
 msgid "Width of process 'User' column"
 msgstr "A folyamat „Felhasználó” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
 msgid "Show process 'User' column on startup"
 msgstr "A folyamat „Felhasználó” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
 msgid "Width of process 'Status' column"
 msgstr "A folyamat „Állapot” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
 msgid "Show process 'Status' column on startup"
 msgstr "A folyamat „Állapot” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
 msgid "Width of process 'Virtual Memory' column"
 msgstr "A folyamat „Virtuális memória” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
 msgid "Show process 'Virtual Memory' column on startup"
 msgstr "A folyamat „Virtuális memória” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
 msgid "Width of process 'Resident Memory' column"
 msgstr "A folyamat „Rezidens memória” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
 msgid "Show process 'Resident Memory' column on startup"
 msgstr "A folyamat „Rezidens memória” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
 msgid "Width of process 'Writable Memory' column"
 msgstr "A folyamat „Írható memória” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
 msgid "Show process 'Writable Memory' column on startup"
 msgstr "A folyamat „Írható memória” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
 msgid "Width of process 'Shared Memory' column"
 msgstr "A folyamat „Osztott memória” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:44
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
 msgid "Show process 'Shared Memory' column on startup"
 msgstr "A folyamat „Osztott memória” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:44
 msgid "Width of process 'X Server Memory' column"
 msgstr "A folyamat „X kiszolgáló memória” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
 msgid "Show process 'X Server Memory' column on startup"
 msgstr "A folyamat „X kiszolgáló memória” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
 #, no-c-format
 msgid "Width of process 'CPU %' column"
 msgstr "A folyamat „CPU %” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
 #, no-c-format
 msgid "Show process 'CPU %' column on startup"
 msgstr "A folyamat „CPU %” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
 msgid "Width of process 'CPU Time' column"
 msgstr "A folyamat „CPU idő” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
 msgid "Show process 'CPU Time' column on startup"
 msgstr "A folyamat „CPU idő” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
 msgid "Width of process 'Started' column"
 msgstr "A folyamat „Indítva” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
 msgid "Show process 'Started' column on startup"
 msgstr "A folyamat „Indítva” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
 msgid "Width of process 'Nice' column"
 msgstr "A folyamat „Nice” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
 msgid "Show process 'Nice' column on startup"
 msgstr "A folyamat „Nice” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
 msgid "Width of process 'PID' column"
 msgstr "A folyamat „Azonosító” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
 msgid "Show process 'PID' column on startup"
 msgstr "A folyamat „Azonosító” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
 msgid "Width of process 'SELinux Security Context' column"
 msgstr "A folyamat „SELinux biztonsági környezete” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
 msgid "Show process 'SELinux Security Context' column on startup"
 msgstr ""
 "A folyamat „SELinux biztonsági környezete” oszlopának megjelenítése "
 "indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
 msgid "Width of process 'Command Line' column"
 msgstr "A folyamat „Parancssor” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
 msgid "Show process 'Command Line' column on startup"
 msgstr "A folyamat „Parancssor” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
 msgid "Width of process 'Memory' column"
 msgstr "A folyamat „Memória” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
 msgid "Show process 'Memory' column on startup"
 msgstr "A folyamat „Memória” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
 msgid "Width of process 'Waiting Channel' column"
 msgstr "A folyamat „Várakozási csatorna” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
 msgid "Show process 'Waiting Channel' column on startup"
 msgstr "A folyamat „Várakozási csatorna” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
 msgid "Width of process 'Control Group' column"
 msgstr "A folyamat „Vezérlési csoport” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
 msgid "Show process 'Control Group' column on startup"
 msgstr "A folyamat „Vezérlési csoport” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
 msgid "Width of process 'Unit' column"
 msgstr "A folyamat „Egység” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
 msgid "Show process 'Unit' column on startup"
 msgstr "A folyamat „Egység” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
 msgid "Width of process 'Session' column"
 msgstr "A folyamat „Munkamenet” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
 msgid "Show process 'Session' column on startup"
 msgstr "A folyamat „Munkamenet” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
 msgid "Width of process 'Seat' column"
 msgstr "A folyamat „Ülés” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
 msgid "Show process 'Seat' column on startup"
 msgstr "A folyamat „Ülés” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
 msgid "Width of process 'Owner' column"
 msgstr "A folyamat „Tulajdonos” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
 msgid "Show process 'Owner' column on startup"
 msgstr "A folyamat „Tulajdonos” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
 msgid "Width of process 'Priority' column"
 msgstr "A folyamat „Prioritás” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
 msgid "Show process 'Priority' column on startup"
 msgstr "A folyamat „Prioritás” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
 msgid "Disk view sort column"
 msgstr "Lemeznézet rendezése ezen oszlop szerint"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
 msgid "Disk view sort order"
 msgstr "Lemeznézet rendezési iránya"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
 msgid "Disk view columns order"
 msgstr "Lemeznézet rendezési iránya"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
 msgid "Width of disk view 'Device' column"
 msgstr "A lemeznézet „Eszköz” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:83
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
 msgid "Show disk view 'Device' column on startup"
 msgstr "A lemeznézet „Eszköz” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:84
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:83
 msgid "Width of disk view 'Directory' column"
 msgstr "A lemeznézet „Könyvtár” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:85
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:84
 msgid "Show disk view 'Directory' column on startup"
 msgstr "A lemeznézet „Könyvtár” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:86
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:85
 msgid "Width of disk view 'Type' column"
 msgstr "A lemeznézet „Típus” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:87
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:86
 msgid "Show disk view 'Type' column on startup"
 msgstr "A lemeznézet „Típus” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:88
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:87
 msgid "Width of disk view 'Total' column"
 msgstr "A lemeznézet „Összesen” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:89
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:88
 msgid "Show disk view 'Total' column on startup"
 msgstr "A lemeznézet „Összesen” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:90
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:89
 msgid "Width of disk view 'Free' column"
 msgstr "A lemeznézet „Szabad” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:91
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:90
 msgid "Show disk view 'Free' column on startup"
 msgstr "A lemeznézet „Szabad” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:92
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:91
 msgid "Width of disk view 'Available' column"
 msgstr "A lemeznézet „Elérhető” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:93
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:92
 msgid "Show disk view 'Available' column on startup"
 msgstr "A lemeznézet „Elérhető” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:94
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:93
 msgid "Width of disk view 'Used' column"
 msgstr "A lemeznézet „Használt” oszlopának szélessége"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:95
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:94
 msgid "Show disk view 'Used' column on startup"
 msgstr "A lemeznézet „Használt” oszlopának megjelenítése indításkor"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:96
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:95
 msgid "Memory map sort column"
 msgstr "Memóriatérkép rendezése ezen oszlop szerint"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:97
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:96
 msgid "Memory map sort order"
 msgstr "Memóriatérkép rendezési iránya"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:98
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:97
 msgid "Open files sort column"
 msgstr "Nyitott fájlok rendezése ezen oszlop szerint"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:99
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:98
 msgid "Open files sort order"
 msgstr "Nyitott fájlok rendezési iránya"
 
@@ -1087,7 +1017,7 @@ msgstr ""
 "%d.\n"
 "%s"
 
-#: ../src/procactions.cpp:156
+#: ../src/procactions.cpp:154
 #, c-format
 msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
@@ -1096,14 +1026,36 @@ msgstr ""
 "A(z) %d azonosítójú folyamat nem lőhető ki %d jelzéssel.\n"
 "%s"
 
-#. xgettext: primary alert message
-#: ../src/procdialogs.cpp:78
+#. xgettext: primary alert message for killing single process
+#: ../src/procdialogs.cpp:79
 #, c-format
-msgid "Kill the selected process “%s” (PID: %u)?"
-msgstr "Kilövi a kijelölt „%s” folyamatot (azonosító: %u)?"
+msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
+msgstr "Biztosan kilövi a kijelölt „%s” folyamatot (azonosító: %u)?"
+
+#. xgettext: primary alert message for ending single process
+#: ../src/procdialogs.cpp:84
+#, c-format
+msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
+msgstr "Biztosan befejezteti a kijelölt „%s” folyamatot (azonosító: %u)?"
+
+#. xgettext: primary alert message for killing multiple processes
+#: ../src/procdialogs.cpp:91
+#, c-format
+msgid "Are you sure you want to kill the selected process?"
+msgid_plural "Are you sure you want to kill the %d selected processes?"
+msgstr[0] "Biztosan kilövi a kijelölt folyamatot?"
+msgstr[1] "Biztosan kilövi a kijelölt %d folyamatot?"
+
+#. xgettext: primary alert message for ending multiple processes
+#: ../src/procdialogs.cpp:95
+#, c-format
+msgid "Are you sure you want to end the selected process?"
+msgid_plural "Are you sure you want to end the %d selected processes?"
+msgstr[0] "Biztosan befejezteti a kijelölt folyamatot?"
+msgstr[1] "Biztosan befejezteti a kijelölt %d folyamatot?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:82
+#: ../src/procdialogs.cpp:102 ../src/procdialogs.cpp:108
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1112,32 +1064,35 @@ msgstr ""
 "munkamenetét vagy biztonsági kockázatot okozhat. Csak a nem válaszoló "
 "folyamatokat szabad kilőni."
 
-#. xgettext: primary alert message
-#: ../src/procdialogs.cpp:89
-#, c-format
-msgid "End the selected process “%s” (PID: %u)?"
-msgstr "Befejezteti a kijelölt „%s” folyamatot (azonosító: %u)?"
+#: ../src/procdialogs.cpp:105
+msgid "_Kill Process"
+msgid_plural "_Kill Processes"
+msgstr[0] "Folyamat _kilövése"
+msgstr[1] "Folyamatok _kilövése"
 
-#. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:93
-msgid ""
-"Ending a process may destroy data, break the session or introduce a security "
-"risk. Only unresponsive processes should be ended."
-msgstr ""
-"Egy folyamat befejeztetésével megsemmisítheti adatait, tönkreteheti a "
-"munkamenetét vagy biztonsági kockázatot okozhat. Csak a nem válaszoló "
-"folyamatokat szabad befejeztetni."
+#: ../src/procdialogs.cpp:111
+msgid "_End Process"
+msgid_plural "_End Processes"
+msgstr[0] "Folyamat _befejezése"
+msgstr[1] "Folyamatok _befejezése"
 
-#: ../src/procdialogs.cpp:175
+#: ../src/procdialogs.cpp:192
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "„%s” (azonosító: %u) folyamat prioritásának megváltoztatása"
 
-#: ../src/procdialogs.cpp:193
+#: ../src/procdialogs.cpp:195
+#, c-format
+msgid "Change Priority of the selected process"
+msgid_plural "Change Priority of %d selected processes"
+msgstr[0] "A kijelölt folyamat prioritásának megváltoztatása"
+msgstr[1] "A kijelölt %d folyamat prioritásának megváltoztatása"
+
+#: ../src/procdialogs.cpp:214
 msgid "Note:"
 msgstr "Megjegyzés:"
 
-#: ../src/procdialogs.cpp:194
+#: ../src/procdialogs.cpp:215
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1145,254 +1100,357 @@ msgstr ""
 "A folyamat prioritását a nice értéke adja meg. Alacsony nice érték magasabb "
 "prioritásnak felel meg."
 
-#: ../src/procdialogs.cpp:366 ../src/procman-app.cpp:466
+#: ../src/procdialogs.cpp:386 ../src/procman-app.cpp:342
 msgid "Icon"
 msgstr "Ikon"
 
-#: ../src/procman-app.cpp:580
+#: ../src/procman-app.cpp:451
 msgid "A simple process and system monitor."
 msgstr "Egyszerű folyamat- és rendszerfigyelő."
 
-#: ../src/procproperties.cpp:104 ../src/util.cpp:434
+#: ../src/procproperties.cpp:56 ../src/util.cpp:435
 msgid "N/A"
 msgstr "---"
 
-#: ../src/procproperties.cpp:129 ../src/proctable.cpp:197
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:392
 msgid "Process Name"
 msgstr "Folyamatnév"
 
-#: ../src/procproperties.cpp:130 ../src/proctable.cpp:198
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:393
 msgid "User"
 msgstr "Felhasználó"
 
-#: ../src/procproperties.cpp:131 ../src/proctable.cpp:199
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:394
 msgid "Status"
 msgstr "Állapot"
 
-#: ../src/procproperties.cpp:133 ../src/proctable.cpp:200
+#: ../src/procproperties.cpp:88 ../src/proctable.cpp:395
 msgid "Virtual Memory"
 msgstr "Virtuális memória"
 
-#: ../src/procproperties.cpp:134 ../src/proctable.cpp:201
+#: ../src/procproperties.cpp:89 ../src/proctable.cpp:396
 msgid "Resident Memory"
 msgstr "Rezidens memória"
 
-#: ../src/procproperties.cpp:135 ../src/proctable.cpp:202
+#: ../src/procproperties.cpp:90 ../src/proctable.cpp:397
 msgid "Writable Memory"
 msgstr "Írható memória"
 
-#: ../src/procproperties.cpp:136 ../src/proctable.cpp:203
+#: ../src/procproperties.cpp:91 ../src/proctable.cpp:398
 msgid "Shared Memory"
 msgstr "Osztott memória"
 
-#: ../src/procproperties.cpp:137 ../src/proctable.cpp:204
+#: ../src/procproperties.cpp:93 ../src/proctable.cpp:399
 msgid "X Server Memory"
 msgstr "X-kiszolgáló memória"
 
-#: ../src/procproperties.cpp:139 ../src/proctable.cpp:206
+#: ../src/procproperties.cpp:96 ../src/proctable.cpp:401
 msgid "CPU Time"
 msgstr "CPU idő"
 
-#: ../src/procproperties.cpp:139
+#: ../src/procproperties.cpp:96
 #, c-format
 msgid "%lld second"
 msgid_plural "%lld seconds"
 msgstr[0] "%lld másodperc"
 msgstr[1] "%lld másodperc"
 
-#: ../src/procproperties.cpp:140 ../src/proctable.cpp:207
+#: ../src/procproperties.cpp:97 ../src/proctable.cpp:402
 msgid "Started"
 msgstr "Indítva"
 
-#: ../src/procproperties.cpp:141 ../src/proctable.cpp:208
+#: ../src/procproperties.cpp:98 ../src/proctable.cpp:403
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/procproperties.cpp:142 ../src/proctable.cpp:222
+#: ../src/procproperties.cpp:99 ../src/proctable.cpp:417
 msgid "Priority"
 msgstr "Prioritás"
 
-#: ../src/procproperties.cpp:143 ../src/proctable.cpp:209
+#: ../src/procproperties.cpp:100 ../src/proctable.cpp:404
 msgid "ID"
 msgstr "Azonosító"
 
-#: ../src/procproperties.cpp:144 ../src/proctable.cpp:210
+#: ../src/procproperties.cpp:101 ../src/proctable.cpp:405
 msgid "Security Context"
 msgstr "Biztonsági környezet"
 
-#: ../src/procproperties.cpp:145 ../src/proctable.cpp:211
+#: ../src/procproperties.cpp:102 ../src/proctable.cpp:406
 msgid "Command Line"
 msgstr "Parancssor"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:146 ../src/proctable.cpp:214
+#: ../src/procproperties.cpp:103 ../src/proctable.cpp:409
 msgid "Waiting Channel"
 msgstr "Várakozási csatorna"
 
-#: ../src/procproperties.cpp:147 ../src/proctable.cpp:215
+#: ../src/procproperties.cpp:104 ../src/proctable.cpp:410
 msgid "Control Group"
 msgstr "Vezérlési csoport"
 
-#: ../src/procproperties.cpp:259
+#: ../src/procproperties.cpp:214
 msgid "Process Properties"
 msgstr "Folyamat tulajdonságai"
 
-#: ../src/procproperties.cpp:279
+#: ../src/procproperties.cpp:234
 #, c-format
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "„%s” (azonosító: %u) folyamat tulajdonságai:"
 
-#: ../src/proctable.cpp:205
+#: ../src/proctable.cpp:400
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:216
+#: ../src/proctable.cpp:411
 msgid "Unit"
 msgstr "Egység"
 
-#: ../src/proctable.cpp:217
+#: ../src/proctable.cpp:412
 msgid "Session"
 msgstr "Munkamenet"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:220
+#: ../src/proctable.cpp:415
 msgid "Seat"
 msgstr "Ülés"
 
-#: ../src/proctable.cpp:221
+#: ../src/proctable.cpp:416
 msgid "Owner"
 msgstr "Tulajdonos"
 
-#: ../src/proctable.cpp:1030
+#: ../src/proctable.cpp:1269
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "Átlagos terhelés az elmúlt 1, 5, 15 percben: %0.2f, %0.2f, %0.2f"
 
-#: ../src/util.cpp:30
+#: ../src/util.cpp:31
 msgid "Running"
 msgstr "Fut"
 
-#: ../src/util.cpp:34
+#: ../src/util.cpp:35
 msgid "Stopped"
 msgstr "Leállítva"
 
-#: ../src/util.cpp:38
+#: ../src/util.cpp:39
 msgid "Zombie"
 msgstr "Zombi"
 
-#: ../src/util.cpp:42
+#: ../src/util.cpp:43
 msgid "Uninterruptible"
 msgstr "Megszakíthatatlan"
 
-#: ../src/util.cpp:46
+#: ../src/util.cpp:47
 msgid "Sleeping"
 msgstr "Alszik"
 
 #. xgettext: weeks, days
-#: ../src/util.cpp:101
+#: ../src/util.cpp:102
 #, c-format
 msgid "%uw%ud"
 msgstr "%uh%un"
 
 #. xgettext: days, hours (0 -> 23)
-#: ../src/util.cpp:105
+#: ../src/util.cpp:106
 #, c-format
 msgid "%ud%02uh"
 msgstr "%un%02uó"
 
 #. xgettext: hours (0 -> 23), minutes, seconds
-#: ../src/util.cpp:109
+#: ../src/util.cpp:110
 #, c-format
 msgid "%u:%02u:%02u"
 msgstr "%u.%02u.%02u"
 
 #. xgettext: minutes, seconds, centiseconds
-#: ../src/util.cpp:112
+#: ../src/util.cpp:113
 #, c-format
 msgid "%u:%02u.%02u"
 msgstr "%u.%02u.%02u"
 
-#: ../src/util.cpp:166
+#: ../src/util.cpp:167
 #, c-format
 msgid "%.1f KiB"
 msgstr "%.1f KiB"
 
-#: ../src/util.cpp:167
+#: ../src/util.cpp:168
 #, c-format
 msgid "%.1f MiB"
 msgstr "%.1f MiB"
 
-#: ../src/util.cpp:168
+#: ../src/util.cpp:169
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
 
-#: ../src/util.cpp:169
+#: ../src/util.cpp:170
 #, c-format
 msgid "%.1f TiB"
 msgstr "%.1f TiB"
 
-#: ../src/util.cpp:170
+#: ../src/util.cpp:171
 #, c-format
 msgid "%.3g kbit"
 msgstr "%.3g kbit"
 
-#: ../src/util.cpp:171
+#: ../src/util.cpp:172
 #, c-format
 msgid "%.3g Mbit"
 msgstr "%.3g Mbit"
 
-#: ../src/util.cpp:172
+#: ../src/util.cpp:173
 #, c-format
 msgid "%.3g Gbit"
 msgstr "%.3g Gbit"
 
-#: ../src/util.cpp:173
+#: ../src/util.cpp:174
 #, c-format
 msgid "%.3g Tbit"
 msgstr "%.3g Tbit"
 
-#: ../src/util.cpp:188
+#: ../src/util.cpp:189
 #, c-format
 msgid "%u bit"
 msgid_plural "%u bits"
 msgstr[0] "%u bit"
 msgstr[1] "%u bit"
 
-#: ../src/util.cpp:189
+#: ../src/util.cpp:190
 #, c-format
 msgid "%u byte"
 msgid_plural "%u bytes"
 msgstr[0] "%u bájt"
 msgstr[1] "%u bájt"
 
-#: ../src/util.cpp:232
+#: ../src/util.cpp:233
 msgid "Very High Priority"
 msgstr "Nagyon magas prioritás"
 
-#: ../src/util.cpp:234
+#: ../src/util.cpp:235
 msgid "High Priority"
 msgstr "Magas prioritás"
 
-#: ../src/util.cpp:236
+#: ../src/util.cpp:237
 msgid "Normal Priority"
 msgstr "Normál prioritás"
 
-#: ../src/util.cpp:238
+#: ../src/util.cpp:239
 msgid "Low Priority"
 msgstr "Alacsony prioritás"
 
-#: ../src/util.cpp:240
+#: ../src/util.cpp:241
 msgid "Very Low Priority"
 msgstr "Nagyon alacsony prioritás"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:632
+#: ../src/util.cpp:633
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "Privileges are required to kill process"
+#~ msgstr "Hitelesítés szükséges a folyamat kilövéséhez"
+
+#~ msgid "View"
+#~ msgstr "Nézet"
+
+#~ msgid "Sent"
+#~ msgstr "Küldés"
+
+#~ msgid "_View"
+#~ msgstr "_Nézet"
+
+#~ msgid "_Stop Process"
+#~ msgstr "Folyamat _megállítása"
+
+#~ msgid "Stop process"
+#~ msgstr "Folyamat megállítása"
+
+#~ msgid "Continue process if stopped"
+#~ msgstr "Folyamat folytatása, ha meg van állítva"
+
+#~ msgid "Force process to finish normally"
+#~ msgstr "Folyamat kényszerítése normális befejeződésre"
+
+#~ msgid "Force process to finish immediately"
+#~ msgstr "Folyamat kényszerítése azonnali befejeződésre"
+
+#~ msgid "Refresh the process list"
+#~ msgstr "A folyamatlista frissítése"
+
+#~ msgid "Open the memory maps associated with a process"
+#~ msgstr "Egy folyamathoz hozzárendelt memóriatérképek megnyitása"
+
+#~ msgid "View the files opened by a process"
+#~ msgstr "Egy folyamat által megnyitott fájlok megtekintése"
+
+#~ msgid "View additional information about a process"
+#~ msgstr "További információk megjelenítése egy folyamatról"
+
+#~ msgid "Show parent/child relationship between processes"
+#~ msgstr "Szülő/gyermek kapcsolat megjelenítése a folyamatok között"
+
+#~ msgid "Show active processes"
+#~ msgstr "Aktív folyamatok megjelenítése"
+
+#~ msgid "Show all processes"
+#~ msgstr "Összes folyamat megjelenítése"
+
+#~ msgid "Show only user-owned processes"
+#~ msgstr "Csak a felhasználó folyamatainak megjelenítése"
+
+#~ msgid "Set process priority to very high"
+#~ msgstr "Folyamat prioritásának beállítása nagyon magasra"
+
+#~ msgid "Set process priority to high"
+#~ msgstr "Folyamat prioritásának beállítása magasra"
+
+#~ msgid "Set process priority to normal"
+#~ msgstr "Folyamat prioritásának beállítása normálisra"
+
+#~ msgid "Set process priority to low"
+#~ msgstr "Folyamat prioritásának beállítása alacsonyra"
+
+#~ msgid "Set process priority to very low"
+#~ msgstr "Folyamat prioritásának beállítása nagyon alacsonyra"
+
+#~ msgid "Set process priority manually"
+#~ msgstr "Folyamat prioritásának beállítása saját kezűleg"
+
+#~ msgid "Main Window width"
+#~ msgstr "Főablak szélessége"
+
+#~ msgid "Main Window height"
+#~ msgstr "Főablak magassága"
+
+#~ msgid "Main Window X position"
+#~ msgstr "Főablak X pozíciója"
+
+#~ msgid "Main Window Y position"
+#~ msgstr "Főablak Y pozíciója"
+
+#~ msgid ""
+#~ "Determines which processes to show by default. 0 is All, 1 is user, and 2 "
+#~ "is active"
+#~ msgstr ""
+#~ "Megadja, hogy alapértelmezésben mely folyamatok látszódjanak. Lehetséges "
+#~ "értékek: 0 (Mind), 1 (Felhasználói) és 2 (Aktív)."
+
+#~ msgid ""
+#~ "0 for the System Info, 1 for the processes list, 2 for the resources and "
+#~ "3 for the disks list"
+#~ msgstr ""
+#~ "0 - rendszerinformációk, 1 - folyamatlista, 2 - erőforrások és 3 - "
+#~ "lemezek listája"
+
+#~ msgid ""
+#~ "Ending a process may destroy data, break the session or introduce a "
+#~ "security risk. Only unresponsive processes should be ended."
+#~ msgstr ""
+#~ "Egy folyamat befejeztetésével megsemmisítheti adatait, tönkreteheti a "
+#~ "munkamenetét vagy biztonsági kockázatot okozhat. Csak a nem válaszoló "
+#~ "folyamatokat szabad befejeztetni."
 
 #~ msgid "System"
 #~ msgstr "Rendszer"
@@ -1417,9 +1475,6 @@ msgstr "%s/s"
 
 #~ msgid "Quit the program"
 #~ msgstr "Kilépés a programból"
-
-#~ msgid "Configure the application"
-#~ msgstr "Az alkalmazás beállítása"
 
 #~ msgid "_Contents"
 #~ msgstr "_Tartalom"
