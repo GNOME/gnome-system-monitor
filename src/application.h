@@ -3,6 +3,7 @@
 #define _PROCMAN_PROCMAN_APP_H_
 
 #include <gtkmm.h>
+#include <glibtop/cpu.h>
 
 struct ProcInfo;
 struct LoadGraph;
