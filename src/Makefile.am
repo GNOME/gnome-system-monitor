@@ -3,7 +3,7 @@
 AM_CPPFLAGS = \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-DGSM_LIBEXEC_DIR=\""$(pkglibexecdir)"\" \
-	$(PROCMAN_CFLAGS) \
+	$(GSM_CFLAGS) \
 	$(SYSTEMD_CFLAGS) \
 	$(WNCK_CFLAGS)
 
@@ -53,7 +53,7 @@ gnome_system_monitor_SOURCES = \
 	main.cpp
 
 LDADD = \
-	$(PROCMAN_LIBS) \
+	$(GSM_LIBS) \
 	$(SYSTEMD_LIBS) \
 	$(WNCK_LIBS)
 

@@ -41,7 +41,7 @@ SYSTEMD_REQUIRED=38
 # systemd v43 used the C++ keyword 'class' as a function parameter. This breaks the build for C++ programs.
 SYSTEMD_EXCLUDED=43
 
-PKG_CHECK_MODULES(PROCMAN,
+PKG_CHECK_MODULES(GSM,
   glib-2.0 >= $GLIB_REQUIRED
   libgtop-2.0 >= $LIBGTOP_REQUIRED
   gtk+-3.0 >= $GTK_REQUIRED
