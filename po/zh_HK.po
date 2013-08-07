@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor 3.3.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-03 21:11+0800\n"
-"PO-Revision-Date: 2013-08-03 21:11+0800\n"
+"POT-Creation-Date: 2013-08-07 12:47+0800\n"
+"PO-Revision-Date: 2013-08-07 12:47+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
 "Language: \n"
@@ -22,12 +22,12 @@ msgstr ""
 "X-Generator: Poedit 1.5.5\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/interface.cpp:380 ../src/procman-app.cpp:253
+#: ../src/application.cpp:234 ../src/interface.cpp:386
 msgid "System Monitor"
 msgstr "系統監控"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2
-#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:381
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:387
 msgid "View current processes and monitor system state"
 msgstr "顯示目前的程序並監控系統的狀態"
 
@@ -36,7 +36,7 @@ msgstr "顯示目前的程序並監控系統的狀態"
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr "Monitor;System;Process;CPU;Memory;Network;History;Usage;監視器;系統;處理器;記憶體;網絡;紀錄;使用量;"
 
-#: ../gnome-system-monitor-kde.desktop.in.in.h:1 ../src/procman-app.cpp:485
+#: ../gnome-system-monitor-kde.desktop.in.in.h:1 ../src/application.cpp:466
 msgid "GNOME System Monitor"
 msgstr "GNOME 系統監控程式"
 
@@ -69,7 +69,7 @@ msgid "CPU History"
 msgstr "CPU 使用量記錄"
 
 #: ../data/interface.ui.h:5 ../src/interface.cpp:266
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:402
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:407
 msgid "Memory"
 msgstr "記憶體"
 
@@ -135,7 +135,7 @@ msgid "S_earch results:"
 msgstr "搜尋結果(_E):"
 
 #: ../data/lsof.ui.h:7 ../data/openfiles.ui.h:2 ../data/preferences.ui.h:3
-#: ../src/memmaps.cpp:470 ../src/procproperties.cpp:216
+#: ../src/memmaps.cpp:471 ../src/procproperties.cpp:216
 msgid "_Close"
 msgstr "關閉(_C)"
 
@@ -298,7 +298,7 @@ msgstr "顯示所有的檔案系統(_A)"
 msgid "File system i_nformation shown in list:"
 msgstr "清單中顯示的檔案系統資訊(_N):"
 
-#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:127
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:124
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -316,6 +316,14 @@ msgid ""
 "A lower nice value corresponds to a higher priority.</i></small>"
 msgstr "<small><i><b>注意：</b> 程序是否優先執行可由它的 nice 值得出。較低的 nice 值表示較優先執行。</i></small>"
 
+#: ../src/application.cpp:343 ../src/prefsdialog.cpp:169
+msgid "Icon"
+msgstr "圖示"
+
+#: ../src/application.cpp:452
+msgid "A simple process and system monitor."
+msgstr "簡易的程序和系統監視器。"
+
 #: ../src/argv.cpp:22
 msgid "Show the Processes tab"
 msgstr "顯示程序分頁"
@@ -332,31 +340,31 @@ msgstr "顯示檔案系統分頁"
 msgid "Show the application's version"
 msgstr "顯示應用程式的版本"
 
-#: ../src/disks.cpp:375 ../src/memmaps.cpp:362
+#: ../src/disks.cpp:374 ../src/memmaps.cpp:363
 msgid "Device"
 msgstr "裝置"
 
-#: ../src/disks.cpp:376
+#: ../src/disks.cpp:375
 msgid "Directory"
 msgstr "目錄"
 
-#: ../src/disks.cpp:377 ../src/gsm_color_button.c:233 ../src/openfiles.cpp:253
+#: ../src/disks.cpp:376 ../src/gsm_color_button.c:233 ../src/openfiles.cpp:253
 msgid "Type"
 msgstr "類型"
 
-#: ../src/disks.cpp:378
+#: ../src/disks.cpp:377
 msgid "Total"
 msgstr "總數"
 
-#: ../src/disks.cpp:379
+#: ../src/disks.cpp:378
 msgid "Free"
 msgstr "剩餘"
 
-#: ../src/disks.cpp:380
+#: ../src/disks.cpp:379
 msgid "Available"
 msgstr "可用空間"
 
-#: ../src/disks.cpp:381
+#: ../src/disks.cpp:380
 msgid "Used"
 msgstr "已使用"
 
@@ -449,7 +457,7 @@ msgstr "CPU"
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:391
+#: ../src/interface.cpp:397
 msgid "translator-credits"
 msgstr ""
 "如對翻譯有任何意見，請送一封電子郵件給\n"
@@ -492,67 +500,67 @@ msgstr "程序"
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:295 ../src/memmaps.cpp:340
+#: ../src/lsof.cpp:295 ../src/memmaps.cpp:341
 msgid "Filename"
 msgstr "檔案名稱"
 
 #. xgettext: virtual memory start
-#: ../src/memmaps.cpp:342
+#: ../src/memmaps.cpp:343
 msgid "VM Start"
 msgstr "VM 開始"
 
 #. xgettext: virtual memory end
-#: ../src/memmaps.cpp:344
+#: ../src/memmaps.cpp:345
 msgid "VM End"
 msgstr "VM 終結"
 
 #. xgettext: virtual memory syze
-#: ../src/memmaps.cpp:346
+#: ../src/memmaps.cpp:347
 msgid "VM Size"
 msgstr "VM 大小"
 
-#: ../src/memmaps.cpp:347
+#: ../src/memmaps.cpp:348
 msgid "Flags"
 msgstr "旗標"
 
 #. xgettext: virtual memory offset
-#: ../src/memmaps.cpp:349
+#: ../src/memmaps.cpp:350
 msgid "VM Offset"
 msgstr "VM Offset"
 
 #. xgettext: memory that has not been modified since
 #. it has been allocated
-#: ../src/memmaps.cpp:352
+#: ../src/memmaps.cpp:353
 msgid "Private clean"
 msgstr "記憶體內容未被修改"
 
 #. xgettext: memory that has been modified since it
 #. has been allocated
-#: ../src/memmaps.cpp:355
+#: ../src/memmaps.cpp:356
 msgid "Private dirty"
 msgstr "記憶體內容已被修改"
 
 #. xgettext: shared memory that has not been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:358
+#: ../src/memmaps.cpp:359
 msgid "Shared clean"
 msgstr "分享記憶體未被修改"
 
 #. xgettext: shared memory that has been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:361
+#: ../src/memmaps.cpp:362
 msgid "Shared dirty"
 msgstr "分享記憶體已被修改"
 
-#: ../src/memmaps.cpp:363
+#: ../src/memmaps.cpp:364
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.cpp:468
+#: ../src/memmaps.cpp:469
 msgid "Memory Maps"
 msgstr "記憶對映"
 
-#: ../src/memmaps.cpp:480
+#: ../src/memmaps.cpp:481
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "程序 “%s” (_PID %u) 的記憶配置："
@@ -1010,111 +1018,106 @@ msgstr ""
 "%3$s"
 
 #. xgettext: primary alert message for killing single process
-#: ../src/procdialogs.cpp:79
+#: ../src/procdialogs.cpp:76
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr "你確定要強行終止選取的程序“%s”(PID: %u)？"
 
 #. xgettext: primary alert message for ending single process
-#: ../src/procdialogs.cpp:84
+#: ../src/procdialogs.cpp:81
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr "你確定要結束選取的程序“%s”(PID: %u)？"
 
 #. xgettext: primary alert message for killing multiple processes
-#: ../src/procdialogs.cpp:91
+#: ../src/procdialogs.cpp:88
 #, c-format
-msgid "Are you sure you want to kill the %d selected processes?"
-msgstr "你確定要強行終止 %d 個選取的程序？"
+msgid "Are you sure you want to kill the selected process?"
+msgid_plural "Are you sure you want to kill the %d selected processes?"
+msgstr[0] "你確定要強行終止 %d 個選取的程序？"
 
 #. xgettext: primary alert message for ending multiple processes
-#: ../src/procdialogs.cpp:95
+#: ../src/procdialogs.cpp:92
 #, c-format
-msgid "Are you sure you want to end the %d selected processes?"
-msgstr "你確定要結束 %d 個選取的程序？"
+msgid "Are you sure you want to end the selected process?"
+msgid_plural "Are you sure you want to end the %d selected processes?"
+msgstr[0] "你確定要結束 %d 個選取的程序？"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:102 ../src/procdialogs.cpp:108
+#: ../src/procdialogs.cpp:99 ../src/procdialogs.cpp:105
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
 msgstr "強行終止程序可能導致損失資料，中斷作業階段，甚至可以造成安全性漏洞。請只強行終止無回應的程序。"
 
-#: ../src/procdialogs.cpp:105
+#: ../src/procdialogs.cpp:102
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "終止程序(_K)"
 
-#: ../src/procdialogs.cpp:111
+#: ../src/procdialogs.cpp:108
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "結束程序(_E)"
 
-#: ../src/procdialogs.cpp:192
+#: ../src/procdialogs.cpp:189
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "改變程序“%s”的優先等級 (PID: %u)"
 
-#: ../src/procdialogs.cpp:195
+#: ../src/procdialogs.cpp:192
 #, c-format
-msgid "Change Priority of %d selected processes"
-msgstr "更改 %d 個選取程序的優先等級"
+msgid "Change Priority of the selected process"
+msgid_plural "Change Priority of %d selected processes"
+msgstr[0] "更改 %d 個選取程序的優先等級"
 
-#: ../src/procdialogs.cpp:214
+#: ../src/procdialogs.cpp:211
 msgid "Note:"
 msgstr "記錄："
 
-#: ../src/procdialogs.cpp:215
+#: ../src/procdialogs.cpp:212
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
 msgstr "程序是否優先執行可由它的 nice 值得出。較低的 nice 值表示較優先執行。"
 
-#: ../src/procdialogs.cpp:386 ../src/procman-app.cpp:362
-msgid "Icon"
-msgstr "圖示"
-
-#: ../src/procman-app.cpp:471
-msgid "A simple process and system monitor."
-msgstr "簡易的程序和系統監視器。"
-
 #: ../src/procproperties.cpp:56 ../src/util.cpp:435
 msgid "N/A"
 msgstr "N/A"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:387
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:392
 msgid "Process Name"
 msgstr "程序名稱"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:388
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:393
 msgid "User"
 msgstr "使用者"
 
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:389
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:394
 msgid "Status"
 msgstr "狀態"
 
-#: ../src/procproperties.cpp:88 ../src/proctable.cpp:390
+#: ../src/procproperties.cpp:88 ../src/proctable.cpp:395
 msgid "Virtual Memory"
 msgstr "虛擬記憶體"
 
-#: ../src/procproperties.cpp:89 ../src/proctable.cpp:391
+#: ../src/procproperties.cpp:89 ../src/proctable.cpp:396
 msgid "Resident Memory"
 msgstr "常駐記憶體"
 
-#: ../src/procproperties.cpp:90 ../src/proctable.cpp:392
+#: ../src/procproperties.cpp:90 ../src/proctable.cpp:397
 msgid "Writable Memory"
 msgstr "可寫記憶體"
 
-#: ../src/procproperties.cpp:91 ../src/proctable.cpp:393
+#: ../src/procproperties.cpp:91 ../src/proctable.cpp:398
 msgid "Shared Memory"
 msgstr "分享記憶體"
 
-#: ../src/procproperties.cpp:93 ../src/proctable.cpp:394
+#: ../src/procproperties.cpp:93 ../src/proctable.cpp:399
 msgid "X Server Memory"
 msgstr "X 伺服器記憶體"
 
-#: ../src/procproperties.cpp:96 ../src/proctable.cpp:396
+#: ../src/procproperties.cpp:96 ../src/proctable.cpp:401
 msgid "CPU Time"
 msgstr "CPU 運行時間"
 
@@ -1124,37 +1127,37 @@ msgid "%lld second"
 msgid_plural "%lld seconds"
 msgstr[0] "%lld 秒"
 
-#: ../src/procproperties.cpp:97 ../src/proctable.cpp:397
+#: ../src/procproperties.cpp:97 ../src/proctable.cpp:402
 msgid "Started"
 msgstr "已開始"
 
-#: ../src/procproperties.cpp:98 ../src/proctable.cpp:398
+#: ../src/procproperties.cpp:98 ../src/proctable.cpp:403
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/procproperties.cpp:99 ../src/proctable.cpp:412
+#: ../src/procproperties.cpp:99 ../src/proctable.cpp:417
 msgid "Priority"
 msgstr "優先等級"
 
-#: ../src/procproperties.cpp:100 ../src/proctable.cpp:399
+#: ../src/procproperties.cpp:100 ../src/proctable.cpp:404
 msgid "ID"
 msgstr "ID"
 
 # (Abel) 和 selinux 有關?
-#: ../src/procproperties.cpp:101 ../src/proctable.cpp:400
+#: ../src/procproperties.cpp:101 ../src/proctable.cpp:405
 msgid "Security Context"
 msgstr "安全性內容"
 
-#: ../src/procproperties.cpp:102 ../src/proctable.cpp:401
+#: ../src/procproperties.cpp:102 ../src/proctable.cpp:406
 msgid "Command Line"
 msgstr "命令列"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:103 ../src/proctable.cpp:404
+#: ../src/procproperties.cpp:103 ../src/proctable.cpp:409
 msgid "Waiting Channel"
 msgstr "等待頻道"
 
-#: ../src/procproperties.cpp:104 ../src/proctable.cpp:405
+#: ../src/procproperties.cpp:104 ../src/proctable.cpp:410
 msgid "Control Group"
 msgstr "控制羣組"
 
@@ -1167,30 +1170,30 @@ msgstr "程序屬性"
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "程序「%s」的屬性 (PID %u)："
 
-#: ../src/proctable.cpp:395
+#: ../src/proctable.cpp:400
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:406
+#: ../src/proctable.cpp:411
 msgid "Unit"
 msgstr "單位"
 
-#: ../src/proctable.cpp:407
+#: ../src/proctable.cpp:412
 msgid "Session"
 msgstr "作業階段"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:410
+#: ../src/proctable.cpp:415
 msgid "Seat"
 msgstr "Seat"
 
-#: ../src/proctable.cpp:411
+#: ../src/proctable.cpp:416
 msgid "Owner"
 msgstr "擁有者"
 
-#: ../src/proctable.cpp:1264
+#: ../src/proctable.cpp:1269
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "最後 1、5、15 分鐘的平均負載：%0.2f, %0.2f, %0.2f"
