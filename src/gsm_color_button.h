@@ -20,8 +20,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GSM_COLOR_BUTTON_H__
-#define __GSM_COLOR_BUTTON_H__
+#ifndef _GSM_COLOR_BUTTON_H_
+#define _GSM_COLOR_BUTTON_H_
 
 #include <glib.h>
 #include <gdk/gdk.h>
@@ -89,4 +89,4 @@ void gsm_color_button_set_title (GSMColorButton * color_button, const gchar * ti
 G_CONST_RETURN gchar *gsm_color_button_get_title (GSMColorButton * color_button);
 
 G_END_DECLS
-#endif /* __GSM_COLOR_BUTTON_H__ */
+#endif /* _GSM_COLOR_BUTTON_H_ */

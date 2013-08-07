@@ -1,6 +1,6 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-#ifndef H_GNOME_SYSTEM_MONITOR_GNOMESU_H_1132171917
-#define H_GNOME_SYSTEM_MONITOR_GNOMESU_H_1132171917
+#ifndef _GSM_GSM_GNOMESU_H_
+#define _GSM_GSM_GNOMESU_H_
 
 #include <glib.h>
 
@@ -10,4 +10,4 @@ gsm_gnomesu_create_root_password_dialog(const char * message);
 gboolean
 procman_has_gnomesu(void) G_GNUC_CONST;
 
-#endif /* H_GNOME_SYSTEM_MONITOR_GNOMESU_H_1132171917 */
+#endif /* _GSM_GSM_GNOMESU_H_ */

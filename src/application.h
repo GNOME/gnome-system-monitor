@@ -1,6 +1,6 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-#ifndef _PROCMAN_PROCMAN_APP_H_
-#define _PROCMAN_PROCMAN_APP_H_
+#ifndef _GSM_APPLICATION_H_
+#define _GSM_APPLICATION_H_
 
 #include <gtkmm.h>
 #include <glibtop/cpu.h>
@@ -217,4 +217,4 @@ gboolean        procman_get_tree_state (GSettings *settings, GtkWidget *tree, co
 
 
 
-#endif  /* _PROCMAN_PROCMAN_APP_H_ */
+#endif /* _GSM_APPLICATION_H_ */

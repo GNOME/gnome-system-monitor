@@ -1,6 +1,6 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-#ifndef H_GNOME_SYSTEM_MONITOR_GKSU_H_1132171928
-#define H_GNOME_SYSTEM_MONITOR_GKSU_H_1132171928
+#ifndef _GSM_GSM_GKSU_H_
+#define _GSM_GSM_GKSU_H_
 
 #include <glib.h>
 
@@ -10,4 +10,4 @@ gsm_gksu_create_root_password_dialog(const char * command);
 gboolean
 procman_has_gksu(void) G_GNUC_CONST;
 
-#endif /* H_GNOME_SYSTEM_MONITOR_GKSU_H_1132171928 */
+#endif /* _GSM_GSM_GKSU_H_ */

@@ -1,6 +1,6 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-#ifndef H_GNOME_SYSTEM_MONITOR_DISKS_1123719137
-#define H_GNOME_SYSTEM_MONITOR_DISKS_1123719137
+#ifndef _GSM_DISKS_H_
+#define _GSM_DISKS_H_
 
 #include "application.h"
 
@@ -10,4 +10,5 @@ void disks_update (GsmApplication *app);
 void disks_freeze (GsmApplication *app);
 void disks_thaw (GsmApplication *app);
 void disks_reset_timeout (GsmApplication *app);
-#endif /* H_GNOME_SYSTEM_MONITOR_DISKLIST_1123719137 */
+
+#endif /* _GSM_DISKS_H_ */

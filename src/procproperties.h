@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef _PROCPROPERTIES_H_
-#define _PROCPROPERTIES_H_
+#ifndef _GSM_PROCPROPERTIES_H_
+#define _GSM_PROCPROPERTIES_H_
 
 #include <glib.h>
 
@@ -28,5 +28,4 @@
 
 void create_procproperties_dialog (GsmApplication *app);
 
-#endif
-
+#endif /* _GSM_PROCPROPERTIES_H_ */

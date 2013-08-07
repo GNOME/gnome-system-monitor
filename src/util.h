@@ -1,6 +1,6 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-#ifndef H_GNOME_SYSTEM_MONITOR_UTIL_1123178725
-#define H_GNOME_SYSTEM_MONITOR_UTIL_1123178725
+#ifndef _GSM_UTIL_H_
+#define _GSM_UTIL_H_
 
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -134,4 +134,4 @@ namespace procman
 void bind_column_to_gsetting (GSettings *settings, GtkTreeViewColumn *column);
 
 
-#endif /* H_GNOME_SYSTEM_MONITOR_UTIL_1123178725 */
+#endif /* _GSM_UTIL_H_ */

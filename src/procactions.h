@@ -17,13 +17,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  *
  */
-#ifndef _PROCACTIONS_H_
-#define _PROCACTIONS_H_
+#ifndef _GSM_PROCACTIONS_H_
+#define _GSM_PROCACTIONS_H_
 
 #include "application.h"
 
 void            renice (GsmApplication *app, int nice);
 void            kill_process (GsmApplication *app, int sig);
 
-#endif
-
+#endif /* _GSM_PROCACTIONS_H_ */

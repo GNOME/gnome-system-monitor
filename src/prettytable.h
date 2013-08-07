@@ -1,6 +1,6 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-#ifndef _PROCMAN_PRETTYTABLE_H_
-#define _PROCMAN_PRETTYTABLE_H_
+#ifndef _GSM_PRETTY_TABLE_H_
+#define _GSM_PRETTY_TABLE_H_
 
 #include <glib.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -74,4 +74,4 @@ private:
 };
 
 
-#endif /* _PROCMAN_PRETTYTABLE_H_ */
+#endif /* _GSM_PRETTY_TABLE_H_ */

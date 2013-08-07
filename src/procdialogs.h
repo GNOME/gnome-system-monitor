@@ -17,8 +17,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  *
  */
-#ifndef _PROCDIALOGS_H_
-#define _PROCDIALOGS_H_
+#ifndef _GSM_PROCDIALOGS_H_
+#define _GSM_PROCDIALOGS_H_
 
 
 #include <glib.h>
@@ -50,5 +50,4 @@ gboolean                procdialog_create_root_password_dialog (ProcmanActionTyp
                                                                 gint pid, gint extra_value);
 void                    procdialog_create_memmaps_dialog (GsmApplication *app);
 
-#endif
-
+#endif /* _GSM_PROCDIALOGS_H_ */

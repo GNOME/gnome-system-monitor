@@ -1,6 +1,6 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-#ifndef _PROCMAN_DEFAULTTABLE_H_
-#define _PROCMAN_DEFAULTTABLE_H_
+#ifndef _GSM_DEFAULT_TABLE_H_
+#define _GSM_DEFAULT_TABLE_H_
 
 #include <string>
 #include <glibmm/refptr.h>
@@ -50,4 +50,4 @@ static const PrettyTableItem default_table[] = {
 
 #undef ITEM
 
-#endif /* _PROCMAN_DEFAULTTABLE_H_ */
+#endif /* _GSM_DEFAULT_TABLE_H_ */

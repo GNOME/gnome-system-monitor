@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef _PROCMAN_PROCTABLE_H_
-#define _PROCMAN_PROCTABLE_H_
+#ifndef _GSM_PROCTABLE_H_
+#define _GSM_PROCTABLE_H_
 
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -73,4 +73,4 @@ void            get_process_memory_writable (ProcInfo *info);
 void            get_last_selected (GtkTreeModel *model, GtkTreePath *path,
                                    GtkTreeIter *iter, gpointer data);
 
-#endif /* _PROCMAN_PROCTABLE_H_ */
+#endif /* _GSM_PROCTABLE_H_ */

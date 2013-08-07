@@ -1,6 +1,6 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-#ifndef H_PROCMAN_ICONTHEMEWRAPPER_H_1185707711
-#define H_PROCMAN_ICONTHEMEWRAPPER_H_1185707711
+#ifndef _GSM_ICON_THEME_WRAPPER_H_
+#define _GSM_ICON_THEME_WRAPPER_H_
 
 #include <glibmm/refptr.h>
 #include <glibmm/ustring.h>
@@ -23,4 +23,4 @@ namespace procman
     };
 }
 
-#endif // H_PROCMAN_ICONTHEMEWRAPPER_H_1185707711
+#endif /* _GSM_ICON_THEME_WRAPPER_H_ */
