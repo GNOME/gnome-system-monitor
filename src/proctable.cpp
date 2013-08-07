@@ -75,19 +75,9 @@ ProcInfo* ProcInfo::find(pid_t pid)
 }
 
 static void
-cb_columns_changed(GtkTreeView *treeview, gpointer data)
+cb_save_tree_state(gpointer, gpointer data)
 {
     GsmApplication * const app = static_cast<GsmApplication *>(data);
-
-    procman_save_tree_state (app->settings,
-                             GTK_WIDGET(treeview),
-                             GSM_SETTINGS_CHILD_PROCESSES);
-}
-
-static void
-cb_sort_changed (GtkTreeSortable *model, gpointer data)
-{
-    GsmApplication *app = (GsmApplication *) data;
 
     procman_save_tree_state (app->settings,
                              GTK_WIDGET (app->tree),
@@ -168,11 +158,11 @@ static void
 cb_proctree_destroying (GtkTreeView *self, gpointer data)
 {
     g_signal_handlers_disconnect_by_func (self,
-                                          (gpointer) cb_columns_changed,
+                                          (gpointer) cb_save_tree_state,
                                           data);
 
     g_signal_handlers_disconnect_by_func (gtk_tree_view_get_model (self),
-                                          (gpointer) cb_sort_changed,
+                                          (gpointer) cb_save_tree_state,
                                           data);
 }
 
@@ -667,10 +657,10 @@ proctable_new (GsmApplication * const app)
                       app);
 
     g_signal_connect (G_OBJECT (proctree), "columns-changed",
-                      G_CALLBACK (cb_columns_changed), app);
+                      G_CALLBACK (cb_save_tree_state), app);
 
     g_signal_connect (G_OBJECT (model_sort), "sort-column-changed",
-                      G_CALLBACK (cb_sort_changed), app);
+                      G_CALLBACK (cb_save_tree_state), app);
 
     g_signal_connect (app->settings, "changed::" GSM_SETTING_SHOW_DEPENDENCIES,
                       G_CALLBACK (cb_show_dependencies_changed), app);
