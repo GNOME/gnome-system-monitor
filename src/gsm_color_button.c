@@ -397,11 +397,10 @@ gsm_color_button_get_preferred_width (GtkWidget * widget,
                                       gint      * minimum,
                                       gint      * natural)
 {
-  g_return_if_fail (widget != NULL || minimum != NULL || natural != NULL);
-  g_return_if_fail (GSM_IS_COLOR_BUTTON (widget));
-
-  *minimum = GSMCP_MIN_WIDTH;
-  *natural = GSMCP_MIN_WIDTH;
+  if (minimum)
+    *minimum = GSMCP_MIN_WIDTH;
+  if (natural)
+    *natural = GSMCP_MIN_WIDTH;
 }
 
 static void
@@ -409,11 +408,10 @@ gsm_color_button_get_preferred_height (GtkWidget * widget,
                                        gint      * minimum,
                                        gint      * natural)
 {
-  g_return_if_fail (widget != NULL || minimum != NULL || natural != NULL);
-  g_return_if_fail (GSM_IS_COLOR_BUTTON (widget));
-
-  *minimum = GSMCP_MIN_HEIGHT;
-  *natural = GSMCP_MIN_HEIGHT;
+  if (minimum)
+    *minimum = GSMCP_MIN_HEIGHT;
+  if (natural)
+    *natural = GSMCP_MIN_HEIGHT;
 }
 
 static void
