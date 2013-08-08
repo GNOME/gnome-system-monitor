@@ -41,15 +41,10 @@ G_BEGIN_DECLS
 
 typedef struct _GsmColorButton           GsmColorButton;
 typedef struct _GsmColorButtonClass      GsmColorButtonClass;
-typedef struct _GsmColorButtonPrivate    GsmColorButtonPrivate;
 
 struct _GsmColorButton
 {
-    GtkDrawingArea widget;
-
-    /*< private > */
-
-    GsmColorButtonPrivate *priv;
+    GtkDrawingArea parent_instance;
 };
 
 /* Widget types */
@@ -69,7 +64,7 @@ struct _GsmColorButtonClass
     void (*color_set) (GsmColorButton * cp);
 };
 
-GType       gsm_color_button_get_type      (void) G_GNUC_CONST;
+GType       gsm_color_button_get_type      (void);
 GtkWidget * gsm_color_button_new           (const GdkRGBA * color, guint type);
 void        gsm_color_button_set_color     (GsmColorButton * color_button, const GdkRGBA * color);
 void        gsm_color_button_set_sensitive (GsmColorButton * color_button, const gboolean sensitive);
