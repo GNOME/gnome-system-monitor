@@ -65,7 +65,7 @@ private:
 };
 
 static void
-field_toggled (const gchar *gsettings_parent, GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
+field_toggled (const gchar *gsettings_parent, gchar *path_str, gpointer data)
 {
     GtkTreeModel *model = static_cast<GtkTreeModel*>(data);
     GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
@@ -82,8 +82,8 @@ field_toggled (const gchar *gsettings_parent, GtkCellRendererToggle *cell, gchar
     gtk_tree_model_get_iter (model, &iter, path);
 
     gtk_tree_model_get (model, &iter, 2, &column, -1);
-    toggled = gtk_cell_renderer_toggle_get_active (cell);
 
+    gtk_tree_model_get (model, &iter, 0, &toggled, -1);
     gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, !toggled, -1);
     gtk_tree_view_column_set_visible (column, !toggled);
 
@@ -97,16 +97,26 @@ field_toggled (const gchar *gsettings_parent, GtkCellRendererToggle *cell, gchar
 
 }
 
+static void 
+field_row_activated ( GtkTreeView *tree, GtkTreePath *path, 
+                      GtkTreeViewColumn *column, gpointer data)
+{
+    GtkTreeModel * model = gtk_tree_view_get_model (tree);
+    gchar * path_str = gtk_tree_path_to_string (path);
+    field_toggled((gchar*)data, path_str, model );
+    g_free (path_str);
+}
+
 static void
 proc_field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
 {
-    field_toggled("proctree", cell, path_str, data);
+    field_toggled("proctree", path_str, data);
 }
 
 static void
 disk_field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
 {
-    field_toggled("disktreenew", cell, path_str, data);
+    field_toggled("disktreenew", path_str, data);
 }
 
 static void
@@ -125,7 +135,7 @@ create_field_page(GtkBuilder* builder, GtkWidget *tree, const gchar *widgetname)
 
     model = gtk_list_store_new (3, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_POINTER);
 
-    gtk_tree_view_set_model (GTK_TREE_VIEW(treeview), GTK_TREE_MODEL(model));
+    gtk_tree_view_set_model (GTK_TREE_VIEW (treeview), GTK_TREE_MODEL(model));
     g_object_unref (G_OBJECT (model));
 
     column = gtk_tree_view_column_new ();
@@ -139,7 +149,9 @@ create_field_page(GtkBuilder* builder, GtkWidget *tree, const gchar *widgetname)
         g_signal_connect (G_OBJECT (cell), "toggled", G_CALLBACK (proc_field_toggled), model);
     else if(!g_strcmp0(widgetname, "disktreenew")) 
         g_signal_connect (G_OBJECT (cell), "toggled", G_CALLBACK (disk_field_toggled), model);
-
+        
+    g_signal_connect (G_OBJECT (GTK_TREE_VIEW (treeview)), "row-activated", G_CALLBACK (field_row_activated), (gpointer)widgetname);
+    
     gtk_tree_view_column_set_clickable (column, TRUE);
     gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
