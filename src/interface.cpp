@@ -219,7 +219,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
         }
         gtk_grid_attach(GTK_GRID (cpu_table), temp_hbox, i%cols, i/cols, 1, 1);
         color_picker = gsm_color_button_new (&cpu_graph->colors.at(i), GSMCP_TYPE_CPU);
-        g_signal_connect (G_OBJECT (color_picker), "color_set",
+        g_signal_connect (G_OBJECT (color_picker), "color-set",
                           G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
         gtk_box_pack_start (GTK_BOX (temp_hbox), color_picker, FALSE, TRUE, 0);
         gtk_widget_set_size_request(GTK_WIDGET(color_picker), 32, -1);
@@ -261,7 +261,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     table = GTK_WIDGET (gtk_builder_get_object (builder, "mem_table"));
 
     color_picker = load_graph_get_mem_color_picker(mem_graph);
-    g_signal_connect (G_OBJECT (color_picker), "color_set",
+    g_signal_connect (G_OBJECT (color_picker), "color-set",
                       G_CALLBACK (cb_mem_color_changed), app);
     title_text = g_strdup_printf(title_template, _("Memory"));
     gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
@@ -273,7 +273,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     gtk_grid_attach_next_to (GTK_GRID (table), load_graph_get_labels(mem_graph)->memory, label, GTK_POS_BOTTOM, 1, 1);
 
     color_picker = load_graph_get_swap_color_picker(mem_graph);
-    g_signal_connect (G_OBJECT (color_picker), "color_set",
+    g_signal_connect (G_OBJECT (color_picker), "color-set",
                       G_CALLBACK (cb_swap_color_changed), app);
     title_text = g_strdup_printf(title_template, _("Swap"));
     gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
@@ -301,7 +301,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
 
     color_picker = gsm_color_button_new (
         &net_graph->colors.at(0), GSMCP_TYPE_NETWORK_IN);
-    g_signal_connect (G_OBJECT (color_picker), "color_set",
+    g_signal_connect (G_OBJECT (color_picker), "color-set",
                       G_CALLBACK (cb_net_in_color_changed), app);
     title_text = g_strdup_printf(title_template, _("Receiving"));
     gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
@@ -316,7 +316,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
 
     color_picker = gsm_color_button_new (
         &net_graph->colors.at(1), GSMCP_TYPE_NETWORK_OUT);
-    g_signal_connect (G_OBJECT (color_picker), "color_set",
+    g_signal_connect (G_OBJECT (color_picker), "color-set",
                       G_CALLBACK (cb_net_out_color_changed), app);
     title_text = g_strdup_printf(title_template, _("Sending"));
     gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);

@@ -417,7 +417,7 @@ get_memory (LoadGraph *graph)
                                 GSM_COLOR_BUTTON(graph->swap_color_picker),
                                 swap.used, swap.total, swappercent);
     
-    gsm_color_button_set_sensitive (GSM_COLOR_BUTTON(graph->swap_color_picker), swap.total > 0);
+    gtk_widget_set_sensitive (GTK_WIDGET (graph->swap_color_picker), swap.total > 0);
     
     graph->data[0][0] = mempercent;
     graph->data[0][1] = swap.total>0 ? swappercent : -1.0f;

@@ -60,19 +60,15 @@ enum
 struct _GsmColorButtonClass
 {
     GtkDrawingAreaClass parent_class;
-
-    void (*color_set) (GsmColorButton * cp);
 };
 
 GType       gsm_color_button_get_type      (void);
 GtkWidget * gsm_color_button_new           (const GdkRGBA * color, guint type);
 void        gsm_color_button_set_color     (GsmColorButton * color_button, const GdkRGBA * color);
-void        gsm_color_button_set_sensitive (GsmColorButton * color_button, const gboolean sensitive);
 void        gsm_color_button_set_fraction  (GsmColorButton * color_button, const gdouble fraction);
 void        gsm_color_button_set_cbtype    (GsmColorButton * color_button, guint type);
 void        gsm_color_button_get_color     (GsmColorButton * color_button, GdkRGBA * color);
 gdouble     gsm_color_button_get_fraction  (GsmColorButton * color_button);
-gboolean    gsm_color_button_get_sensitive (GsmColorButton * color_button);
 guint       gsm_color_button_get_cbtype    (GsmColorButton * color_button);
 void        gsm_color_button_set_title     (GsmColorButton * color_button, const gchar * title);
 gchar     * gsm_color_button_get_title     (GsmColorButton * color_button);
