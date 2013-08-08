@@ -101,7 +101,7 @@ create_proc_view(GsmApplication *app, GtkBuilder * builder)
 }
 
 void
-cb_cpu_color_changed (GSMColorButton *cp, gpointer data)
+cb_cpu_color_changed (GsmColorButton *cp, gpointer data)
 {
     guint cpu_i = GPOINTER_TO_UINT (data);
     GSettings *settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
@@ -134,7 +134,7 @@ cb_cpu_color_changed (GSMColorButton *cp, gpointer data)
 }
 
 static void change_settings_color(GSettings *settings, const char *key,
-                                  GSMColorButton *cp)
+                                  GsmColorButton *cp)
 {
     GdkRGBA c;
     char *color;
@@ -146,7 +146,7 @@ static void change_settings_color(GSettings *settings, const char *key,
 }
 
 static void
-cb_mem_color_changed (GSMColorButton *cp, gpointer data)
+cb_mem_color_changed (GsmColorButton *cp, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
     change_settings_color (app->settings, GSM_SETTING_MEM_COLOR, cp);
@@ -154,21 +154,21 @@ cb_mem_color_changed (GSMColorButton *cp, gpointer data)
 
 
 static void
-cb_swap_color_changed (GSMColorButton *cp, gpointer data)
+cb_swap_color_changed (GsmColorButton *cp, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
     change_settings_color (app->settings, GSM_SETTING_SWAP_COLOR, cp);
 }
 
 static void
-cb_net_in_color_changed (GSMColorButton *cp, gpointer data)
+cb_net_in_color_changed (GsmColorButton *cp, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
     change_settings_color (app->settings, GSM_SETTING_NET_IN_COLOR, cp);
 }
 
 static void
-cb_net_out_color_changed (GSMColorButton *cp, gpointer data)
+cb_net_out_color_changed (GsmColorButton *cp, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
     change_settings_color(app->settings, GSM_SETTING_NET_OUT_COLOR, cp);

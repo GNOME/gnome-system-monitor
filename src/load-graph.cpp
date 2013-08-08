@@ -370,7 +370,7 @@ get_load (LoadGraph *graph)
 namespace
 {
 
-    void set_memory_label_and_picker(GtkLabel* label, GSMColorButton* picker,
+    void set_memory_label_and_picker(GtkLabel* label, GsmColorButton* picker,
                                      guint64 used, guint64 total, double percent)
     {
         char* used_text;
