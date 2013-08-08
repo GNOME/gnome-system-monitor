@@ -309,20 +309,13 @@ procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child
         for(it = columns; it; it = it->next)
         {
             GtkTreeViewColumn *column;
-            gint width;
             int id;
             const gchar *title;
-            gchar *key;
             GtkWidget* column_item;
             GtkWidget* button;
 
             column = static_cast<GtkTreeViewColumn*>(it->data);
             id = gtk_tree_view_column_get_sort_column_id (column);
-
-            /* ensure column is really visible */
-            width = gtk_tree_view_column_get_fixed_width(column);
-            width = MAX(width, 50);
-            gtk_tree_view_column_set_fixed_width(column, width);
 
             if ((id == COL_CGROUP) && (!cgroups_enabled()))
                 continue;
@@ -344,12 +337,9 @@ procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *child
             button = gtk_tree_view_column_get_button(column);
             g_signal_connect(G_OBJECT(button), "button_press_event", G_CALLBACK(cb_column_header_clicked), header_menu);
 
-            key = g_strdup_printf ("col-%d-visible", id);
             column_item = gtk_check_menu_item_new_with_label(title);
-            g_settings_bind(pt_settings, key, G_OBJECT(column_item), "active", G_SETTINGS_BIND_DEFAULT);
-            g_settings_bind(pt_settings, key, G_OBJECT(column), "visible", G_SETTINGS_BIND_DEFAULT);
-            g_free (key);
-
+            g_object_bind_property (column, "visible", column_item, "active",
+                                    (GBindingFlags) (G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE));
             gtk_menu_shell_append(GTK_MENU_SHELL(header_menu), column_item);
         }
         gtk_widget_show_all(header_menu);
