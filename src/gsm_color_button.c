@@ -74,6 +74,8 @@ static void gsm_color_button_set_property (GObject * object, guint param_id,
 static void gsm_color_button_get_property (GObject * object, guint param_id,
 					   GValue * value,
 					   GParamSpec * pspec);
+static gboolean gsm_color_button_draw (GtkWidget *widget,
+                                       cairo_t   *cr);
 static void gsm_color_button_get_preferred_width (GtkWidget * widget,
                                                   gint * minimum,
                                                   gint * natural);
@@ -126,6 +128,7 @@ gsm_color_button_class_init (GsmColorButtonClass * klass)
   gobject_class->get_property = gsm_color_button_get_property;
   gobject_class->set_property = gsm_color_button_set_property;
   gobject_class->finalize = gsm_color_button_finalize;
+  widget_class->draw = gsm_color_button_draw;
   widget_class->get_preferred_width  = gsm_color_button_get_preferred_width;
   widget_class->get_preferred_height = gsm_color_button_get_preferred_height;
   widget_class->button_release_event = gsm_color_button_released;
@@ -209,14 +212,12 @@ fill_image_buffer_from_resource (cairo_t *cr, const char *path)
   return tmp_surface;
 }
 
-
-static void
-render (GtkWidget * widget)
+static gboolean
+gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
 {
   GsmColorButton *color_button = GSM_COLOR_BUTTON (widget);
   GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
   GdkRGBA *color = gdk_rgba_copy(&priv->color);
-  cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (widget));
   cairo_path_t *path = NULL;
   gint width, height;
   gdouble radius, arc_start, arc_end;
@@ -380,14 +381,6 @@ render (GtkWidget * widget)
 
       break;
     }
-  cairo_destroy (cr);
-}
-
-/* Handle exposure events for the color picker's drawing area */
-static gint
-draw (GtkWidget * widget, cairo_t * cr, gpointer data)
-{
-  render (GTK_WIDGET (data));
 
   return FALSE;
 }
@@ -541,9 +534,6 @@ gsm_color_button_init (GsmColorButton * color_button)
 			 			 | GDK_LEAVE_NOTIFY_MASK);
 
   gtk_widget_set_tooltip_text (GTK_WIDGET(color_button), _("Click to set graph colors"));
-
-  g_signal_connect (color_button, "draw",
-		    G_CALLBACK (draw), color_button);
 }
 
 static void
