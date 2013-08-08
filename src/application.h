@@ -73,12 +73,13 @@ MutableProcInfo()
     guint status;
     guint pcpu;
     gint nice;
+    gint tty;
     gchar *cgroup_name;
 
     gchar *unit;
     gchar *session;
     gchar *seat;
-
+    
     std::string owner;
 };
 

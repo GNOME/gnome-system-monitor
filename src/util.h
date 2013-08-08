@@ -74,6 +74,11 @@ namespace procman
     void priority_cell_data_func(GtkTreeViewColumn *col, GtkCellRenderer *renderer,
                                GtkTreeModel *model, GtkTreeIter *iter,
                                gpointer user_data);
+                               
+    void tty_cell_data_func (GtkTreeViewColumn *col, GtkCellRenderer *renderer,
+                               GtkTreeModel *model, GtkTreeIter *iter,
+                               gpointer user_data);
+                               
     gint priority_compare_func(GtkTreeModel* model, GtkTreeIter* first,
                             GtkTreeIter* second, gpointer user_data);
     gint number_compare_func(GtkTreeModel* model, GtkTreeIter* first,

@@ -405,6 +405,7 @@ proctable_new (GsmApplication * const app)
         N_("Seat"),
         N_("Owner"),
         N_("Priority"),
+        N_("TTY"),
         NULL,
         "POINTER"
     };
@@ -435,6 +436,7 @@ proctable_new (GsmApplication * const app)
                                 G_TYPE_STRING,      /* Seat         */
                                 G_TYPE_STRING,      /* Owner        */
                                 G_TYPE_STRING,      /* Priority     */
+                                G_TYPE_INT,         /* TTY          */
                                 GDK_TYPE_PIXBUF,    /* Icon         */
                                 G_TYPE_POINTER,     /* ProcInfo     */
                                 G_TYPE_STRING       /* Sexy tooltip */
@@ -478,7 +480,7 @@ proctable_new (GsmApplication * const app)
     gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
     gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
 
-    for (i = COL_USER; i <= COL_PRIORITY; i++) {
+    for (i = COL_USER; i <= COL_TTY; i++) {
         GtkTreeViewColumn *col;
         GtkCellRenderer *cell;
 
@@ -546,6 +548,13 @@ proctable_new (GsmApplication * const app)
                                                         GUINT_TO_POINTER(COL_NICE),
                                                         NULL);
                 break;
+            case COL_TTY:
+                gtk_tree_view_column_set_cell_data_func(col, cell,
+                                                        &procman::tty_cell_data_func,
+                                                        GUINT_TO_POINTER(i),
+                                                        NULL);
+                break;
+                
             default:
                 gtk_tree_view_column_set_attributes(col, cell, "text", i, NULL);
                 break;
@@ -880,6 +889,7 @@ insert_info_to_tree (ProcInfo *info, GsmApplication *app, bool forced = false)
                         COL_TOOLTIP, info->tooltip,
                         COL_PID, info->pid,
                         COL_SECURITYCONTEXT, info->security_context,
+                        COL_TTY, info->tty,
                         -1);
 
     app->pretty_table->set_icon(*info);
@@ -987,7 +997,8 @@ update_info (GsmApplication *app, ProcInfo *info)
     ProcInfo::cpu_times[info->pid] = info->cpu_time = proctime.rtime;
     info->nice = procuid.nice;
     info->ppid = procuid.ppid;
-
+    info->tty = procuid.tty;
+    
     /* get cgroup data */
     get_process_cgroup_info(info);
 

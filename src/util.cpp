@@ -581,6 +581,28 @@ namespace procman
         g_object_set(renderer, "text", procman::get_nice_level(priority), NULL);
 
     }
+    
+    void tty_cell_data_func (GtkTreeViewColumn *, GtkCellRenderer *renderer,
+                             GtkTreeModel *model, GtkTreeIter *iter,
+                             gpointer user_data)
+    {
+        const guint index = GPOINTER_TO_UINT(user_data);
+
+        GValue value = { 0 };
+
+        gtk_tree_model_get_value(model, iter, index, &value);
+
+        gint tty = g_value_get_int(&value);
+
+        g_value_unset(&value);
+        
+        gchar *tty_name = g_strdup_printf ("%s (%d)", ttyname(tty), tty);
+        
+        g_object_set(renderer, "text", tty_name, NULL);
+        
+        g_free (tty_name);
+
+    }
 
     gint priority_compare_func(GtkTreeModel* model, GtkTreeIter* first,
                             GtkTreeIter* second, gpointer user_data)

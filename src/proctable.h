@@ -50,6 +50,7 @@ enum
     COL_SEAT,
     COL_OWNER,
     COL_PRIORITY,
+    COL_TTY,
     COL_PIXBUF,
     COL_POINTER,
     COL_TOOLTIP,
