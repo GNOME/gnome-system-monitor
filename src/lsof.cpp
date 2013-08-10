@@ -7,9 +7,6 @@
 
 #include <sys/wait.h>
 
-// #include <libsexy/sexy-icon-entry.h>
-
-
 #include <set>
 #include <string>
 #include <sstream>

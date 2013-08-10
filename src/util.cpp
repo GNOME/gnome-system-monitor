@@ -7,10 +7,6 @@
 
 #include <glibtop/proctime.h>
 #include <glibtop/procstate.h>
-#include <unistd.h>
-
-#include <stddef.h>
-#include <cstring>
 
 #include "util.h"
 #include "application.h"
