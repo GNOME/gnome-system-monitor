@@ -357,7 +357,7 @@ procman_debug_real(const char *file, int line, const char *func,
     msg = g_strdup_vprintf(format, args);
     va_end(args);
 
-    g_debug("[%.3f %s:%d %s] %s", get_relative_time(), file, line, func, msg);
+    g_print ("[%.3f %s:%d %s] %s\n", get_relative_time(), file, line, func, msg);
 
     g_free(msg);
 }
