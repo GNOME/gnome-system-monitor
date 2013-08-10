@@ -729,8 +729,10 @@ LoadGraph::LoadGraph(guint type)
             memset(&cpu, 0, sizeof cpu);
             n = GsmApplication::get()->config.num_cpus;
 
-            for(guint i = 0; i < G_N_ELEMENTS(labels.cpu); ++i)
+            for(guint i = 0; i < G_N_ELEMENTS(labels.cpu); ++i) {
                 labels.cpu[i] = gtk_label_new(NULL);
+                gtk_label_set_width_chars (GTK_LABEL (labels.cpu[i]), 12);
+            }
 
             break;
 

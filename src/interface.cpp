@@ -211,7 +211,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
 
         temp_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
         gtk_widget_show (temp_hbox);
-        if (i < cols) {
+        if (i < cols-1) {
             gtk_grid_insert_column(GTK_GRID(cpu_table), i%cols);
         }
         if ((i+1)%cols ==cols) {
@@ -222,7 +222,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
         g_signal_connect (G_OBJECT (color_picker), "color-set",
                           G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
         gtk_box_pack_start (GTK_BOX (temp_hbox), color_picker, FALSE, TRUE, 0);
-        gtk_widget_set_size_request(GTK_WIDGET(color_picker), 32, -1);
+        gtk_widget_set_size_request(GTK_WIDGET(color_picker), 24, -1);
         if(app->config.num_cpus == 1) {
             label_text = g_strdup (_("CPU"));
         } else {
