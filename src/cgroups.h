@@ -6,10 +6,7 @@
 
 #include "application.h"
 
-void
-get_process_cgroup_info (ProcInfo *info);
-
-gboolean
-cgroups_enabled (void);
+void get_process_cgroup_info (ProcInfo *info);
+gboolean cgroups_enabled (void);
 
 #endif /* _GSM_CGROUPS_H_ */

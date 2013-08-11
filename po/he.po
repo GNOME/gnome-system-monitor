@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-03 14:04+0300\n"
-"PO-Revision-Date: 2013-08-03 14:06+0200\n"
+"POT-Creation-Date: 2013-08-10 15:04+0300\n"
+"PO-Revision-Date: 2013-08-10 15:04+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <sh.yaron@gmail.com>\n"
 "Language: he\n"
@@ -22,12 +22,12 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/interface.cpp:380 ../src/procman-app.cpp:253
+#: ../src/application.cpp:234 ../src/interface.cpp:386
 msgid "System Monitor"
 msgstr "צג המערכת"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2
-#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:381
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:387
 msgid "View current processes and monitor system state"
 msgstr "הצגת התהליכים הנוכחיים ומעקב אחר מצב המערכת"
 
@@ -38,7 +38,7 @@ msgstr ""
 "צג;מוניטור;מעקב;מערכת;תהליך;מעבד;זיכרון;זכרון;רשת;היסטוריה;שימוש;ניצולת;"
 "ניצול;"
 
-#: ../gnome-system-monitor-kde.desktop.in.in.h:1 ../src/procman-app.cpp:485
+#: ../gnome-system-monitor-kde.desktop.in.in.h:1 ../src/application.cpp:456
 msgid "GNOME System Monitor"
 msgstr "צג המערכת מבית GNOME"
 
@@ -71,7 +71,7 @@ msgid "CPU History"
 msgstr "היסטוריית המעבד"
 
 #: ../data/interface.ui.h:5 ../src/interface.cpp:266
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:402
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:397
 msgid "Memory"
 msgstr "זיכרון"
 
@@ -137,7 +137,7 @@ msgid "S_earch results:"
 msgstr "_תוצאות חיפוש:"
 
 #: ../data/lsof.ui.h:7 ../data/openfiles.ui.h:2 ../data/preferences.ui.h:3
-#: ../src/memmaps.cpp:470 ../src/procproperties.cpp:216
+#: ../src/memmaps.cpp:471 ../src/procproperties.cpp:216
 msgid "_Close"
 msgstr "_סגירה"
 
@@ -299,7 +299,7 @@ msgstr "הצגת _כל מערכות הקבצים"
 msgid "File system i_nformation shown in list:"
 msgstr "_מידע על מערכות קבצים שיוצג ברשימה:"
 
-#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:127
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:124
 msgid "_Cancel"
 msgstr "_ביטול"
 
@@ -319,6 +319,14 @@ msgstr ""
 "<small><b>לתשומת לבך:</b> העדיפות של התהליך נקבעת על פי ערך הייפוי שלו. ערך "
 "ייפוי נמוך גורר עדיפות גבוהה יותר.</small>"
 
+#: ../src/application.cpp:336 ../src/prefsdialog.cpp:181
+msgid "Icon"
+msgstr "סמל"
+
+#: ../src/application.cpp:442
+msgid "A simple process and system monitor."
+msgstr "צג פשוט למעקב אחר המערכת על תהליכיה."
+
 #: ../src/argv.cpp:22
 msgid "Show the Processes tab"
 msgstr "הצגת לשונית התהליכים"
@@ -335,31 +343,31 @@ msgstr "הצגת לשונית מערכת הקבצים"
 msgid "Show the application's version"
 msgstr "הצגת גרסת היישום"
 
-#: ../src/disks.cpp:375 ../src/memmaps.cpp:362
+#: ../src/disks.cpp:374 ../src/memmaps.cpp:363
 msgid "Device"
 msgstr "התקן"
 
-#: ../src/disks.cpp:376
+#: ../src/disks.cpp:375
 msgid "Directory"
 msgstr "תיקייה"
 
-#: ../src/disks.cpp:377 ../src/gsm_color_button.c:233 ../src/openfiles.cpp:253
+#: ../src/disks.cpp:376 ../src/gsm_color_button.c:166 ../src/openfiles.cpp:253
 msgid "Type"
 msgstr "סוג"
 
-#: ../src/disks.cpp:378
+#: ../src/disks.cpp:377
 msgid "Total"
 msgstr "סה״כ"
 
-#: ../src/disks.cpp:379
+#: ../src/disks.cpp:378
 msgid "Free"
 msgstr "פנוי"
 
-#: ../src/disks.cpp:380
+#: ../src/disks.cpp:379
 msgid "Available"
 msgstr "זמין"
 
-#: ../src/disks.cpp:381
+#: ../src/disks.cpp:380
 msgid "Used"
 msgstr "מנוצל"
 
@@ -388,52 +396,44 @@ msgstr "%d %b ‎%I:%M"
 msgid "%b %d %Y"
 msgstr "%d %b %Y"
 
-#: ../src/gsm_color_button.c:201
+#: ../src/gsm_color_button.c:142
 msgid "Fraction"
 msgstr "שבר"
 
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:203
+#: ../src/gsm_color_button.c:144
 msgid "Percentage full for pie color pickers"
 msgstr "אחוז מלא עבור בוחר הצבע לתרשימי העוגה"
 
-#: ../src/gsm_color_button.c:210
+#: ../src/gsm_color_button.c:151
 msgid "Title"
 msgstr "כותרת"
 
-#: ../src/gsm_color_button.c:211
+#: ../src/gsm_color_button.c:152
 msgid "The title of the color selection dialog"
 msgstr "הכותרת של חלון בחירת הצבע"
 
-#: ../src/gsm_color_button.c:212 ../src/gsm_color_button.c:640
+#: ../src/gsm_color_button.c:153 ../src/gsm_color_button.c:513
 msgid "Pick a Color"
 msgstr "בחירת צבע"
 
-#: ../src/gsm_color_button.c:218
+#: ../src/gsm_color_button.c:159
 msgid "Current Color"
 msgstr "הצבע הנוכחי"
 
-#: ../src/gsm_color_button.c:219
+#: ../src/gsm_color_button.c:160
 msgid "The selected color"
 msgstr "הצבע הנבחר"
 
-#: ../src/gsm_color_button.c:226
-msgid "Sensitive"
-msgstr "רגיש"
-
-#: ../src/gsm_color_button.c:227
-msgid "The sensitivity value"
-msgstr "ערך הרגישות"
-
-#: ../src/gsm_color_button.c:234
+#: ../src/gsm_color_button.c:167
 msgid "Type of color picker"
 msgstr "סוג בוחר הצבע"
 
-#: ../src/gsm_color_button.c:560
+#: ../src/gsm_color_button.c:435
 msgid "Received invalid color data\n"
 msgstr "התקבלו נתוני צבע בלתי תקינים\n"
 
-#: ../src/gsm_color_button.c:664 ../src/gsm_color_button.c:873
+#: ../src/gsm_color_button.c:536
 msgid "Click to set graph colors"
 msgstr "יש ללחוץ כדי להגדיר את צבעי הגרף"
 
@@ -452,7 +452,7 @@ msgstr "מעבד"
 msgid "CPU%d"
 msgstr "מעבד־%d"
 
-#: ../src/interface.cpp:391
+#: ../src/interface.cpp:397
 msgid "translator-credits"
 msgstr ""
 "גיל אשר <dolfin@rpg.org.il>\n"
@@ -496,67 +496,67 @@ msgstr "תהליך"
 msgid "PID"
 msgstr "מזהה תהליך"
 
-#: ../src/lsof.cpp:295 ../src/memmaps.cpp:340
+#: ../src/lsof.cpp:295 ../src/memmaps.cpp:341
 msgid "Filename"
 msgstr "שם קובץ"
 
 #. xgettext: virtual memory start
-#: ../src/memmaps.cpp:342
+#: ../src/memmaps.cpp:343
 msgid "VM Start"
 msgstr "תחילת ה־VM"
 
 #. xgettext: virtual memory end
-#: ../src/memmaps.cpp:344
+#: ../src/memmaps.cpp:345
 msgid "VM End"
 msgstr "סוף ה־VM"
 
 #. xgettext: virtual memory syze
-#: ../src/memmaps.cpp:346
+#: ../src/memmaps.cpp:347
 msgid "VM Size"
 msgstr "גודל ה־VM"
 
-#: ../src/memmaps.cpp:347
+#: ../src/memmaps.cpp:348
 msgid "Flags"
 msgstr "דגלים"
 
 #. xgettext: virtual memory offset
-#: ../src/memmaps.cpp:349
+#: ../src/memmaps.cpp:350
 msgid "VM Offset"
 msgstr "היסט ה־VM"
 
 #. xgettext: memory that has not been modified since
 #. it has been allocated
-#: ../src/memmaps.cpp:352
+#: ../src/memmaps.cpp:353
 msgid "Private clean"
 msgstr "זיכרון פרטי נקי"
 
 #. xgettext: memory that has been modified since it
 #. has been allocated
-#: ../src/memmaps.cpp:355
+#: ../src/memmaps.cpp:356
 msgid "Private dirty"
 msgstr "זיכרון פרטי מלוכלך"
 
 #. xgettext: shared memory that has not been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:358
+#: ../src/memmaps.cpp:359
 msgid "Shared clean"
 msgstr "זיכרון משותף נקי"
 
 #. xgettext: shared memory that has been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:361
+#: ../src/memmaps.cpp:362
 msgid "Shared dirty"
 msgstr "זיכרון משותף מלוכלך"
 
-#: ../src/memmaps.cpp:363
+#: ../src/memmaps.cpp:364
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.cpp:468
+#: ../src/memmaps.cpp:469
 msgid "Memory Maps"
 msgstr "מפות זיכרון"
 
-#: ../src/memmaps.cpp:480
+#: ../src/memmaps.cpp:481
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "מפות זיכרון עבור התהליך \"%s\" (מזהה תהליך %u):"
@@ -1022,31 +1022,35 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: ../src/procdialogs.cpp:79
+#: ../src/procdialogs.cpp:76
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr "האם לחסל את התהליך הנבחר „%s“ (מזהה תהליך: %u)?"
 
 #. xgettext: primary alert message for ending single process
-#: ../src/procdialogs.cpp:84
+#: ../src/procdialogs.cpp:81
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr "האם לסיים את התהליך הנבחר „%s“ (מזהה תהליך: %u)?"
 
 #. xgettext: primary alert message for killing multiple processes
-#: ../src/procdialogs.cpp:91
+#: ../src/procdialogs.cpp:88
 #, c-format
-msgid "Are you sure you want to kill the %d selected processes?"
-msgstr "אם לחסל את %d התהליכים הנבחרים?"
+msgid "Are you sure you want to kill the selected process?"
+msgid_plural "Are you sure you want to kill the %d selected processes?"
+msgstr[0] "אם לחסל את התהליך הנבחר?"
+msgstr[1] "אם לחסל את %d התהליכים הנבחרים?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: ../src/procdialogs.cpp:95
+#: ../src/procdialogs.cpp:92
 #, c-format
-msgid "Are you sure you want to end the %d selected processes?"
-msgstr "האם לסיים את %d התהליכים הנבחרים?"
+msgid "Are you sure you want to end the selected process?"
+msgid_plural "Are you sure you want to end the %d selected processes?"
+msgstr[0] "האם לסיים את התהליך הנבחר?"
+msgstr[1] "האם לסיים את %d התהליכים הנבחרים?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:102 ../src/procdialogs.cpp:108
+#: ../src/procdialogs.cpp:99 ../src/procdialogs.cpp:105
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1054,83 +1058,77 @@ msgstr ""
 "חיסול תהליך עלול לגרום לאיבוד מידע, לשיבוש ההפעלה ולפגיעה באבטחה. יש לחסל "
 "תהליך רק אם אינו מגיב."
 
-#: ../src/procdialogs.cpp:105
+#: ../src/procdialogs.cpp:102
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "_חיסול התהליך"
 msgstr[1] "_חיסול התהליכים"
 
-#: ../src/procdialogs.cpp:111
+#: ../src/procdialogs.cpp:108
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "_סיום התהליך"
 msgstr[1] "_סיום התהליכים"
 
-#: ../src/procdialogs.cpp:192
+#: ../src/procdialogs.cpp:189
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "שינוי עדיפות התהליך „%s“ (מזהה תהליך: %u)"
 
-#: ../src/procdialogs.cpp:195
+#: ../src/procdialogs.cpp:192
 #, c-format
-msgid "Change Priority of %d selected processes"
-msgstr "שינוי העדיפות של %d התהליכים הנבחרים"
+msgid "Change Priority of the selected process"
+msgid_plural "Change Priority of %d selected processes"
+msgstr[0] "שינוי העדיפות של התהליך הנבחר"
+msgstr[1] "שינוי העדיפות של %d התהליכים הנבחרים"
 
-#: ../src/procdialogs.cpp:214
+#: ../src/procdialogs.cpp:211
 msgid "Note:"
 msgstr "הערה:"
 
-#: ../src/procdialogs.cpp:215
+#: ../src/procdialogs.cpp:212
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
 msgstr "העדיפות של התהליך. ערך נמוך שווה ערך לעדיפות גבוהה."
 
-#: ../src/procdialogs.cpp:386 ../src/procman-app.cpp:362
-msgid "Icon"
-msgstr "סמל"
-
-#: ../src/procman-app.cpp:471
-msgid "A simple process and system monitor."
-msgstr "צג פשוט למעקב אחר המערכת על תהליכיה."
-
 #: ../src/procproperties.cpp:56 ../src/util.cpp:435
 msgid "N/A"
 msgstr "לא זמין"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:387
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:382
 msgid "Process Name"
 msgstr "שם התהליך"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:388
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:383
 msgid "User"
 msgstr "משתמש"
 
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:389
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:384
 msgid "Status"
 msgstr "מצב"
 
-#: ../src/procproperties.cpp:88 ../src/proctable.cpp:390
+#: ../src/procproperties.cpp:88 ../src/proctable.cpp:385
 msgid "Virtual Memory"
 msgstr "זיכרון וירטואלי"
 
-#: ../src/procproperties.cpp:89 ../src/proctable.cpp:391
+#: ../src/procproperties.cpp:89 ../src/proctable.cpp:386
 msgid "Resident Memory"
 msgstr "זיכרון מקומי"
 
-#: ../src/procproperties.cpp:90 ../src/proctable.cpp:392
+#: ../src/procproperties.cpp:90 ../src/proctable.cpp:387
 msgid "Writable Memory"
 msgstr "זיכרון ניתן לכתיבה"
 
-#: ../src/procproperties.cpp:91 ../src/proctable.cpp:393
+#: ../src/procproperties.cpp:91 ../src/proctable.cpp:388
 msgid "Shared Memory"
 msgstr "זיכרון משותף"
 
-#: ../src/procproperties.cpp:93 ../src/proctable.cpp:394
+#: ../src/procproperties.cpp:93 ../src/proctable.cpp:389
 msgid "X Server Memory"
 msgstr "זיכרון שרת X"
 
-#: ../src/procproperties.cpp:96 ../src/proctable.cpp:396
+#: ../src/procproperties.cpp:96 ../src/proctable.cpp:391
 msgid "CPU Time"
 msgstr "זמן מעבד"
 
@@ -1141,36 +1139,36 @@ msgid_plural "%lld seconds"
 msgstr[0] "שנייה אחת"
 msgstr[1] "%lld שניות"
 
-#: ../src/procproperties.cpp:97 ../src/proctable.cpp:397
+#: ../src/procproperties.cpp:97 ../src/proctable.cpp:392
 msgid "Started"
 msgstr "הופעל"
 
-#: ../src/procproperties.cpp:98 ../src/proctable.cpp:398
+#: ../src/procproperties.cpp:98 ../src/proctable.cpp:393
 msgid "Nice"
 msgstr "עדיפות"
 
-#: ../src/procproperties.cpp:99 ../src/proctable.cpp:412
+#: ../src/procproperties.cpp:99 ../src/proctable.cpp:407
 msgid "Priority"
 msgstr "עדיפות"
 
-#: ../src/procproperties.cpp:100 ../src/proctable.cpp:399
+#: ../src/procproperties.cpp:100 ../src/proctable.cpp:394
 msgid "ID"
 msgstr "מזהה"
 
-#: ../src/procproperties.cpp:101 ../src/proctable.cpp:400
+#: ../src/procproperties.cpp:101 ../src/proctable.cpp:395
 msgid "Security Context"
 msgstr "הקשר אבטחה"
 
-#: ../src/procproperties.cpp:102 ../src/proctable.cpp:401
+#: ../src/procproperties.cpp:102 ../src/proctable.cpp:396
 msgid "Command Line"
 msgstr "פקודה"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:103 ../src/proctable.cpp:404
+#: ../src/procproperties.cpp:103 ../src/proctable.cpp:399
 msgid "Waiting Channel"
 msgstr "ערוץ המתנה"
 
-#: ../src/procproperties.cpp:104 ../src/proctable.cpp:405
+#: ../src/procproperties.cpp:104 ../src/proctable.cpp:400
 msgid "Control Group"
 msgstr "קבוצת הבקרה"
 
@@ -1183,30 +1181,30 @@ msgstr "מאפייני תהליך"
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "מאפייני התהליך „%s“ (המזהה %u):"
 
-#: ../src/proctable.cpp:395
+#: ../src/proctable.cpp:390
 #, no-c-format
 msgid "% CPU"
 msgstr "% מהמעבד"
 
-#: ../src/proctable.cpp:406
+#: ../src/proctable.cpp:401
 msgid "Unit"
 msgstr "יחידה"
 
-#: ../src/proctable.cpp:407
+#: ../src/proctable.cpp:402
 msgid "Session"
 msgstr "הפעלה"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:410
+#: ../src/proctable.cpp:405
 msgid "Seat"
 msgstr "תושבת"
 
-#: ../src/proctable.cpp:411
+#: ../src/proctable.cpp:406
 msgid "Owner"
 msgstr "בעלים"
 
-#: ../src/proctable.cpp:1264
+#: ../src/proctable.cpp:1259
 #, c-format
 msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 msgstr "ממוצעי עומס עבור ‎1, 5, 15 הדקות האחרונות: %0.2f, %0.2f, %0.2f"
@@ -1334,6 +1332,12 @@ msgstr "עדיפות נמוכה מאוד"
 #, c-format
 msgid "%s/s"
 msgstr "%s/שנייה"
+
+#~ msgid "Sensitive"
+#~ msgstr "רגיש"
+
+#~ msgid "The sensitivity value"
+#~ msgstr "ערך הרגישות"
 
 #~ msgid "_Stop Process"
 #~ msgstr "_עצירת התהליך"

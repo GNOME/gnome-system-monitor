@@ -1,15 +1,11 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #include <config.h>
 
-#include <sys/types.h>
-#include <unistd.h>
-
 #include <glib.h>
+
 #include <glibtop.h>
 #include <glibtop/proctime.h>
 #include <glibtop/cpu.h>
-
-#include <algorithm>
 
 #include "smooth_refresh.h"
 #include "application.h"

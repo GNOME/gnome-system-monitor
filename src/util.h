@@ -4,11 +4,7 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
-#include <stddef.h>
-#include <cstring>
 #include <string>
-#include <functional>
-#include <algorithm>
 
 using std::string;
 
@@ -130,8 +126,5 @@ namespace procman
     std::string format_network(guint64 rate, guint64 max_rate = 0);
     std::string format_network_rate(guint64 rate, guint64 max_rate = 0);
 }
-
-void bind_column_to_gsetting (GSettings *settings, GtkTreeViewColumn *column);
-
 
 #endif /* _GSM_UTIL_H_ */

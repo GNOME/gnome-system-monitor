@@ -25,4 +25,10 @@
 void            renice (GsmApplication *app, int nice);
 void            kill_process (GsmApplication *app, int sig);
 
+struct ProcActionArgs
+{
+    GsmApplication *app;
+    int arg_value;
+};
+
 #endif /* _GSM_PROCACTIONS_H_ */

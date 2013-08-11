@@ -1,16 +1,6 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #include <config.h>
 
-#include <gdkmm/pixbuf.h>
-
-#include <stdio.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <signal.h>
-#include <dirent.h>
-#include <string.h>
-#include <time.h>
-
 #include <glib/gi18n.h>
 
 #include <glibtop.h>
@@ -19,9 +9,6 @@
 #include <glibtop/swap.h>
 #include <glibtop/netload.h>
 #include <glibtop/netlist.h>
-#include <math.h>
-
-#include <algorithm>
 
 #include "application.h"
 #include "load-graph.h"

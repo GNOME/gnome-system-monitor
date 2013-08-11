@@ -4,7 +4,6 @@
 #include <glib/gi18n.h>
 #include <glibmm/optionentry.h>
 
-
 #include "argv.h"
 
 namespace procman

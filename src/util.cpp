@@ -7,10 +7,6 @@
 
 #include <glibtop/proctime.h>
 #include <glibtop/procstate.h>
-#include <unistd.h>
-
-#include <stddef.h>
-#include <cstring>
 
 #include "util.h"
 #include "application.h"
@@ -361,7 +357,7 @@ procman_debug_real(const char *file, int line, const char *func,
     msg = g_strdup_vprintf(format, args);
     va_end(args);
 
-    g_debug("[%.3f %s:%d %s] %s", get_relative_time(), file, line, func, msg);
+    g_print ("[%.3f %s:%d %s] %s\n", get_relative_time(), file, line, func, msg);
 
     g_free(msg);
 }
@@ -650,17 +646,4 @@ namespace procman
         return procman::format_rate(rate, max_rate, GsmApplication::get()->config.network_in_bits);
     }
 
-}
-
-void
-bind_column_to_gsetting (GSettings *settings, GtkTreeViewColumn *column)
-{
-    char *key;
-    gint column_id = gtk_tree_view_column_get_sort_column_id(column);
-    key = g_strdup_printf ("col-%d-width", column_id);
-    g_settings_bind (settings, key, column, "fixed-width", G_SETTINGS_BIND_DEFAULT);
-    g_free (key);
-    key = g_strdup_printf ("col-%d-visible", column_id);
-    g_settings_bind (settings, key, column, "visible", G_SETTINGS_BIND_DEFAULT);
-    g_free (key);
 }

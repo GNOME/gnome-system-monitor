@@ -13,6 +13,7 @@
 #include "util.h"
 #include "iconthemewrapper.h"
 #include "settings-keys.h"
+#include "treeview.h"
 
 enum DiskColumns
 {
@@ -38,9 +39,7 @@ cb_sort_changed (GtkTreeSortable *model, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
-    procman_save_tree_state (app->settings,
-                             GTK_WIDGET (app->disk_list),
-                             GSM_SETTINGS_CHILD_DISKS);
+    gsm_tree_view_save_state (GSM_TREE_VIEW (app->disk_list));
 }
 
 static void
@@ -298,11 +297,7 @@ disks_reset_timeout (GsmApplication *app)
 static void
 cb_disk_columns_changed(GtkTreeView *treeview, gpointer data)
 {
-    GsmApplication *app = static_cast<GsmApplication *>(data);
-
-    procman_save_tree_state (app->settings,
-                             GTK_WIDGET (treeview),
-                             GSM_SETTINGS_CHILD_DISKS);
+    gsm_tree_view_save_state (GSM_TREE_VIEW (treeview));
 }
 
 
@@ -395,8 +390,9 @@ create_disk_view(GsmApplication *app, GtkBuilder *builder)
                                GDK_TYPE_PIXBUF,     /* DISK_ICON */
                                G_TYPE_INT           /* DISK_USED_PERCENTAGE */
         );
-    
-    disk_tree = gtk_tree_view_new_with_model(GTK_TREE_MODEL(model));
+    disk_tree = gsm_tree_view_new (settings, TRUE);
+    gtk_tree_view_set_model (GTK_TREE_VIEW (disk_tree), GTK_TREE_MODEL (model));
+
     g_signal_connect(G_OBJECT(disk_tree), "row-activated", G_CALLBACK(open_dir), NULL);
     app->disk_list = disk_tree;
     gtk_container_add(GTK_CONTAINER(scrolled), disk_tree);
@@ -418,11 +414,10 @@ create_disk_view(GsmApplication *app, GtkBuilder *builder)
                                         NULL);
     gtk_tree_view_column_set_title(col, _(titles[DISK_DEVICE]));
     gtk_tree_view_column_set_sort_column_id(col, DISK_DEVICE);
-    bind_column_to_gsetting (settings, col);  
     gtk_tree_view_column_set_reorderable(col, TRUE);
     gtk_tree_view_column_set_resizable(col, TRUE);
     gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
+    gsm_tree_view_append_and_bind_column (GSM_TREE_VIEW (disk_tree), col);
 
 
     /* sizes - used */
@@ -434,10 +429,9 @@ create_disk_view(GsmApplication *app, GtkBuilder *builder)
         gtk_tree_view_column_set_title(col, _(titles[i]));
         gtk_tree_view_column_set_resizable(col, TRUE);
         gtk_tree_view_column_set_sort_column_id(col, i);
-        bind_column_to_gsetting (settings, col);
         gtk_tree_view_column_set_reorderable(col, TRUE);
         gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
-        gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
+        gsm_tree_view_append_and_bind_column (GSM_TREE_VIEW (disk_tree), col);
         switch (i) {
             case DISK_TOTAL:
             case DISK_FREE:
@@ -474,17 +468,14 @@ create_disk_view(GsmApplication *app, GtkBuilder *builder)
     gtk_tree_view_column_pack_start(col, cell, TRUE);
     gtk_tree_view_column_set_attributes(col, cell, "value",
                                         DISK_USED_PERCENTAGE, NULL);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
     gtk_tree_view_column_set_resizable(col, TRUE);
     gtk_tree_view_column_set_sort_column_id(col, DISK_USED);
-    bind_column_to_gsetting (settings, col);
     gtk_tree_view_column_set_reorderable(col, TRUE);
+    gsm_tree_view_append_and_bind_column (GSM_TREE_VIEW (disk_tree), col);
 
     /* numeric sort */
 
-    procman_get_tree_state (app->settings, disk_tree,
-                            GSM_SETTINGS_CHILD_DISKS);
-
+    gsm_tree_view_load_state (GSM_TREE_VIEW (disk_tree));
     g_signal_connect (G_OBJECT(disk_tree), "destroy",
                       G_CALLBACK(cb_disk_list_destroying),
                       app);

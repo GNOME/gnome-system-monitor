@@ -20,11 +20,7 @@
 
 #include <config.h>
 
-#include <stdlib.h>
-
 #include <locale.h>
-
-#include <gtkmm.h>
 #include <glib/gi18n.h>
 
 #include "application.h"

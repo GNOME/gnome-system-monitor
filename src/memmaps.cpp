@@ -19,6 +19,7 @@ using std::string;
 #include "memmaps.h"
 #include "proctable.h"
 #include "settings-keys.h"
+#include "treeview.h"
 #include "util.h"
 
 
@@ -158,23 +159,19 @@ namespace
     public:
         guint timer;
         GtkWidget *tree;
-        GSettings *settings;
         ProcInfo *info;
         OffsetFormater format;
         mutable InodeDevices devices;
-        const char * const schema;
 
-        MemMapsData(GtkWidget *a_tree, GSettings *a_settings)
-            : tree(a_tree),
-              settings(a_settings),
-              schema(GSM_SETTINGS_CHILD_MEMMAP)
+        MemMapsData(GtkWidget *a_tree)
+            : tree(a_tree)
         {
-            procman_get_tree_state(this->settings, this->tree, this->schema);
+            gsm_tree_view_load_state (GSM_TREE_VIEW (this->tree));
         }
 
         ~MemMapsData()
         {
-            procman_save_tree_state(this->settings, this->tree, this->schema);
+            gsm_tree_view_save_state (GSM_TREE_VIEW (this->tree));
         }
     };
 }
@@ -379,7 +376,10 @@ create_memmapsdata (GsmApplication *app)
                                 G_TYPE_UINT64 /* MMAP_COL_INODE      */
         );
 
-    tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
+    GSettings *settings = g_settings_get_child (app->settings, GSM_SETTINGS_CHILD_MEMMAP);
+
+    tree = gsm_tree_view_new (settings, FALSE);
+    gtk_tree_view_set_model (GTK_TREE_VIEW (tree), GTK_TREE_MODEL (model));
     gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree), TRUE);
     g_object_unref (G_OBJECT (model));
 
@@ -427,7 +427,7 @@ create_memmapsdata (GsmApplication *app)
         }
     }
 
-    return new MemMapsData(tree, app->settings);
+    return new MemMapsData(tree);
 }
 
 
