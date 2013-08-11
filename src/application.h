@@ -198,17 +198,4 @@ protected:
     virtual void on_startup();
 };
 
-struct ReniceArgs
-{
-    GsmApplication *app;
-    int nice_value;
-};
-
-
-struct KillArgs
-{
-    GsmApplication *app;
-    int signal;
-};
-
 #endif /* _GSM_APPLICATION_H_ */

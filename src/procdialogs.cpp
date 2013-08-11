@@ -44,12 +44,12 @@ static gint new_nice_value = 0;
 static void
 kill_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 {
-    struct KillArgs *kargs = static_cast<KillArgs*>(data);
+    struct ProcActionArgs *kargs = static_cast<ProcActionArgs*>(data);
 
     gtk_widget_destroy (GTK_WIDGET (dialog));
 
     if (id == GTK_RESPONSE_OK)
-        kill_process (kargs->app, kargs->signal);
+        kill_process (kargs->app, kargs->arg_value);
 
     g_free (kargs);
 }
@@ -59,11 +59,11 @@ procdialog_create_kill_dialog (GsmApplication *app, int signal)
 {
     GtkWidget *kill_alert_dialog;
     gchar *primary, *secondary, *button_text;
-    struct KillArgs *kargs;
+    struct ProcActionArgs *kargs;
 
-    kargs = g_new(KillArgs, 1);
+    kargs = g_new(ProcActionArgs, 1);
     kargs->app = app;
-    kargs->signal = signal;
+    kargs->arg_value = signal;
     gint selected_count = gtk_tree_selection_count_selected_rows (app->selection);
 
     if ( selected_count == 1 ) {
