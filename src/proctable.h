@@ -64,9 +64,6 @@ void            proctable_freeze (GsmApplication *app);
 void            proctable_thaw (GsmApplication *app);
 void            proctable_reset_timeout (GsmApplication *app);
 
-GSList*         proctable_get_columns_order(GtkTreeView *treeview);
-void            proctable_set_columns_order(GtkTreeView *treeview, GSList *order);
-
 char*           make_loadavg_string(void);
 
 void            get_process_memory_writable (ProcInfo *info);

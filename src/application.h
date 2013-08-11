@@ -211,10 +211,4 @@ struct KillArgs
     int signal;
 };
 
-
-void            procman_save_tree_state (GSettings *settings, GtkWidget *tree, const gchar *prefix);
-gboolean        procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *prefix);
-
-
-
 #endif /* _GSM_APPLICATION_H_ */

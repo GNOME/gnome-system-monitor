@@ -127,7 +127,4 @@ namespace procman
     std::string format_network_rate(guint64 rate, guint64 max_rate = 0);
 }
 
-void bind_column_to_gsetting (GSettings *settings, GtkTreeViewColumn *column);
-
-
 #endif /* _GSM_UTIL_H_ */

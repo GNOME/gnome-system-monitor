@@ -37,7 +37,8 @@ gnome_system_monitor_cpp_files = \
 
 gnome_system_monitor_c_files = \
 	e_date.c \
-	gsm_color_button.c
+	gsm_color_button.c \
+	treeview.c
 
 gnome_system_monitor_h_files = \
 	$(gnome_system_monitor_cpp_files:.cpp=.h) \

@@ -7,7 +7,7 @@
 #define GSM_SETTINGS_CHILD_OPEN_FILES       "openfilestree"
 #define GSM_SETTINGS_CHILD_DISKS            "disktreenew"
 #define GSM_SETTINGS_CHILD_PROCESSES        "proctree"
-#define GSM_SETTINGS_CHILD_MEMMAP           "memmaptree"
+#define GSM_SETTINGS_CHILD_MEMMAP           "memmapstree"
 
 #define GSM_SETTING_WINDOW_STATE            "window-state"
 #define GSM_SETTING_MAXIMIZED               "maximized"
