@@ -671,7 +671,7 @@ static gboolean
 load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
 {
     LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
-
+    g_list_free (graph->cpu_color_pickers);
     delete graph;
 
     return FALSE;
