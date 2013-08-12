@@ -21,7 +21,6 @@ enum
 
 struct LoadGraphLabels
 {
-    GtkWidget *cpu[GLIBTOP_NCPU];
     GtkWidget *memory;
     GtkWidget *swap;
     GtkWidget *net_in;

@@ -760,7 +760,7 @@ LoadGraph::LoadGraph(guint type)
         case LOAD_GRAPH_CPU:
             memcpy(&colors[0], GsmApplication::get()->config.cpu_color,
                    n * sizeof colors[0]);
-            for(guint i = 0; i < G_N_ELEMENTS(labels.cpu); ++i) {
+            for(guint i = 0; i < n; ++i) {
                 cpu_color_pickers = g_list_append (cpu_color_pickers, GTK_WIDGET (gsm_color_button_new (&colors[i], GSMCP_TYPE_CPU)));
             }
             break;
