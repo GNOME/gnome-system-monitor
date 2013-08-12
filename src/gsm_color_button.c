@@ -249,8 +249,7 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
   switch (priv->type)
     {
     case GSMCP_TYPE_CPU:
-      //gtk_widget_set_size_request (widget, GSMCP_MIN_WIDTH, GSMCP_MIN_HEIGHT);
-          
+      // colored background
       cairo_paint (cr);
       cairo_set_line_width (cr, 1);
       cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
@@ -260,6 +259,7 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
       cairo_set_source_rgba (cr, 1, 1, 1, 0.4);
       cairo_rectangle (cr, 1.5, 1.5, width - 3, height - 3);
       cairo_stroke (cr);
+      // label text with the usage percentage
       layout = pango_cairo_create_layout (cr);
       gtk_style_context_get (context, GTK_STATE_FLAG_NORMAL, GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
       pango_font_description_set_size (font_desc, 10 * PANGO_SCALE );
@@ -270,8 +270,7 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
       pango_layout_set_text (layout, caption, -1);
       g_free (caption);
       pango_layout_get_extents (layout, NULL, &extents);
-      //printf ("%f from %d\n", 1.0 * extents.height / PANGO_SCALE, width);
-      
+      // draw label outline
       cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 5.1 ,
                      (height - 1.3 * extents.height / PANGO_SCALE)/2 + 2);
       
@@ -279,7 +278,7 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
       cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1.0);
       pango_cairo_layout_path (cr, layout);
       cairo_stroke (cr);
-      
+      // draw label text
       cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 4.7,
                      (height - 1.3 * extents.height / PANGO_SCALE)/2 + 2);
       cairo_set_line_width (cr, 1);
