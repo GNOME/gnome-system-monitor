@@ -327,7 +327,6 @@ get_load (LoadGraph *graph)
     for (i = 0; i < graph->n; i++) {
         float load;
         float total, used;
-        gchar *text;
 
         total = NOW[i][CPU_TOTAL] - LAST[i][CPU_TOTAL];
         used  = NOW[i][CPU_USED]  - LAST[i][CPU_USED];
@@ -341,10 +340,7 @@ get_load (LoadGraph *graph)
             }
         }
 
-        /* Update label */
-        text = g_strdup_printf("%.1f%%", load * 100.0f);
-        gtk_label_set_text(GTK_LABEL(graph->labels.cpu[i]), text);
-        g_free(text);
+        gsm_color_button_set_fraction (GSM_COLOR_BUTTON (load_graph_get_cpu_color_picker (graph, i)), load);
     }
 
     graph->cpu.now ^= 1;
@@ -703,7 +699,8 @@ LoadGraph::LoadGraph(guint type)
       timer_index(0),
       draw(FALSE),
       mem_color_picker(NULL),
-      swap_color_picker(NULL)
+      swap_color_picker(NULL),
+      cpu_color_pickers(NULL)
 {
     LoadGraph * const graph = this;
 
@@ -715,11 +712,6 @@ LoadGraph::LoadGraph(guint type)
         case LOAD_GRAPH_CPU:
             memset(&cpu, 0, sizeof cpu);
             n = GsmApplication::get()->config.num_cpus;
-
-            for(guint i = 0; i < G_N_ELEMENTS(labels.cpu); ++i) {
-                labels.cpu[i] = gtk_label_new(NULL);
-                gtk_label_set_width_chars (GTK_LABEL (labels.cpu[i]), 12);
-            }
 
             break;
 
@@ -768,6 +760,9 @@ LoadGraph::LoadGraph(guint type)
         case LOAD_GRAPH_CPU:
             memcpy(&colors[0], GsmApplication::get()->config.cpu_color,
                    n * sizeof colors[0]);
+            for(guint i = 0; i < G_N_ELEMENTS(labels.cpu); ++i) {
+                cpu_color_pickers = g_list_append (cpu_color_pickers, GTK_WIDGET (gsm_color_button_new (&colors[i], GSMCP_TYPE_CPU)));
+            }
             break;
         case LOAD_GRAPH_MEM:
             colors[0] = GsmApplication::get()->config.mem_color;
@@ -880,4 +875,10 @@ GtkWidget*
 load_graph_get_swap_color_picker(LoadGraph *graph)
 {
     return graph->swap_color_picker;
+}
+
+GtkWidget*
+load_graph_get_cpu_color_picker(LoadGraph *graph, guint nr)
+{
+    return GTK_WIDGET (g_list_nth_data (graph->cpu_color_pickers, nr));
 }

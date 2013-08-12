@@ -265,23 +265,23 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
       pango_font_description_set_size (font_desc, 10 * PANGO_SCALE );
       pango_layout_set_font_description (layout, font_desc);
       pango_font_description_free (font_desc);
-      pango_layout_set_alignment (layout, PANGO_ALIGN_LEFT);
-      caption = g_strdup_printf ("%.1f%%", priv->fraction * 100);
+      pango_layout_set_alignment (layout, PANGO_ALIGN_RIGHT);
+      caption = g_strdup_printf ("%.1f%%", priv->fraction * 100.0f);
       pango_layout_set_text (layout, caption, -1);
       g_free (caption);
       pango_layout_get_extents (layout, NULL, &extents);
       //printf ("%f from %d\n", 1.0 * extents.height / PANGO_SCALE, width);
       
-      cairo_move_to (cr, (width - 1.0 * extents.width / PANGO_SCALE)/2 +0.5 ,
-                     0);
+      cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 5.1 ,
+                     (height - 1.3 * extents.height / PANGO_SCALE)/2 + 2);
       
-      cairo_set_line_width (cr, 2.5);
-      cairo_set_source_rgba (cr, 0.3, 0.3, 0.3, 1.0);
+      cairo_set_line_width (cr, 4);
+      cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1.0);
       pango_cairo_layout_path (cr, layout);
       cairo_stroke (cr);
       
-      cairo_move_to (cr, (width - 1.0 * extents.width / PANGO_SCALE)/2,
-                     0);
+      cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 4.7,
+                     (height - 1.3 * extents.height / PANGO_SCALE)/2 + 2);
       cairo_set_line_width (cr, 1);
       cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 1.0);
       
