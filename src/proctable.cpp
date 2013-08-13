@@ -1148,6 +1148,20 @@ proctable_update_list (GsmApplication *app)
     /* proclist.number == g_list_length(procdata->info) == g_hash_table_size(procdata->pids) */
 }
 
+static char *
+make_loadavg_string (void)
+{
+    glibtop_loadavg buf;
+
+    glibtop_get_loadavg (&buf);
+
+    return g_strdup_printf (_("Load averages for the last 1, 5, 15 minutes: "
+                              "%0.2f, %0.2f, %0.2f"),
+                            buf.loadavg[0],
+                            buf.loadavg[1],
+                            buf.loadavg[2]);
+}
+
 void
 proctable_update (GsmApplication * const app)
 {
@@ -1167,21 +1181,6 @@ proctable_free_table (GsmApplication * const app)
         delete it->second;
 
     ProcInfo::all.clear();
-}
-
-char*
-make_loadavg_string(void)
-{
-    glibtop_loadavg buf;
-
-    glibtop_get_loadavg(&buf);
-
-    return g_strdup_printf(
-        _("Load averages for the last 1, 5, 15 minutes: "
-          "%0.2f, %0.2f, %0.2f"),
-        buf.loadavg[0],
-        buf.loadavg[1],
-        buf.loadavg[2]);
 }
 
 void
