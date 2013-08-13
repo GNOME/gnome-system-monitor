@@ -1234,6 +1234,9 @@ proctable_freeze (GsmApplication *app)
 void
 proctable_thaw (GsmApplication *app)
 {
+    if (app->timeout)
+        return;
+
     app->timeout = g_timeout_add (app->config.update_interval,
                                   cb_timeout,
                                   app);
