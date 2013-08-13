@@ -545,10 +545,9 @@ proctable_new (GsmApplication * const app)
         gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_CGROUP);
 
 #ifdef HAVE_SYSTEMD
-    if (!LOGIND_RUNNING ()) {
-#else
-    {
+    if (!LOGIND_RUNNING ())
 #endif
+    {
         gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_UNIT);
         gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_SESSION);
         gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_SEAT);
@@ -564,27 +563,8 @@ proctable_new (GsmApplication * const app)
         gtk_tree_view_column_set_visible (column, FALSE);
     }
 
-    if (!cgroups_enabled()) {
-        GtkTreeViewColumn *column;
-
-        column = gsm_tree_view_get_column_from_id (GSM_TREE_VIEW(proctree), COL_CGROUP);
-        gtk_tree_view_column_set_visible(column, FALSE);
-    }
-
     GtkIconTheme* theme = gtk_icon_theme_get_default();
     g_signal_connect(G_OBJECT (theme), "changed", G_CALLBACK (cb_refresh_icons), app);
-    
-#ifdef HAVE_SYSTEMD
-    if (!LOGIND_RUNNING())
-#endif
-    {
-        GtkTreeViewColumn *column;
-
-        for (i = COL_UNIT; i <= COL_OWNER; i++) {
-            column = gsm_tree_view_get_column_from_id (GSM_TREE_VIEW(proctree), i);
-            gtk_tree_view_column_set_visible(column, FALSE);
-        }
-    }
 
     app->selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
     gtk_tree_selection_set_mode (app->selection, GTK_SELECTION_MULTIPLE);

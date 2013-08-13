@@ -153,8 +153,10 @@ gsm_tree_view_load_state (GsmTreeView *tree_view)
             sort_id = gtk_tree_view_column_get_sort_column_id (col);
 
             if (priv->excluded_columns &&
-                g_hash_table_contains (priv->excluded_columns, GINT_TO_POINTER (sort_id)))
+                g_hash_table_contains (priv->excluded_columns, GINT_TO_POINTER (sort_id))) {
+                gtk_tree_view_column_set_visible (col, FALSE);
                 continue;
+            }
 
             title = gtk_tree_view_column_get_title (col);
 
