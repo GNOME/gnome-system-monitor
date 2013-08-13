@@ -554,14 +554,10 @@ proctable_new (GsmApplication * const app)
         gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_OWNER);
     }
 
-    gsm_tree_view_load_state (GSM_TREE_VIEW (proctree));
+    if (!can_show_security_context_column ())
+        gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_SECURITYCONTEXT);
 
-    /* Override column settings by hiding this column if it's meaningless: */
-    if (!can_show_security_context_column ()) {
-        GtkTreeViewColumn *column;
-        column = gsm_tree_view_get_column_from_id (GSM_TREE_VIEW (proctree), COL_SECURITYCONTEXT);
-        gtk_tree_view_column_set_visible (column, FALSE);
-    }
+    gsm_tree_view_load_state (GSM_TREE_VIEW (proctree));
 
     GtkIconTheme* theme = gtk_icon_theme_get_default();
     g_signal_connect(G_OBJECT (theme), "changed", G_CALLBACK (cb_refresh_icons), app);
