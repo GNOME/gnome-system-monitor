@@ -102,16 +102,14 @@ gsm_tree_view_get_column_from_id (GsmTreeView *tree_view, gint sort_id)
 }
 
 static gboolean
-cb_column_header_clicked (GtkTreeViewColumn* column, GdkEvent* event, gpointer data)
+cb_column_header_clicked (GtkTreeViewColumn *column, GdkEventButton *event, gpointer data)
 {
     GtkMenu *menu = GTK_MENU (data);
 
-    if (event->button.button == GDK_BUTTON_SECONDARY) {
-        gtk_menu_popup (menu, NULL, NULL,
-                        NULL,
-                        &(event->button),
-                        event->button.button,
-                        event->button.time);
+    if (event->button == GDK_BUTTON_SECONDARY) {
+        gtk_menu_popup (menu, NULL, NULL, NULL, NULL,
+                        event->button,
+                        event->time);
         return TRUE;
     }
 
