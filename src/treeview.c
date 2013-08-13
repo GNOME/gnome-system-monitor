@@ -102,16 +102,14 @@ gsm_tree_view_get_column_from_id (GsmTreeView *tree_view, gint sort_id)
 }
 
 static gboolean
-cb_column_header_clicked (GtkTreeViewColumn* column, GdkEvent* event, gpointer data)
+cb_column_header_clicked (GtkTreeViewColumn *column, GdkEventButton *event, gpointer data)
 {
     GtkMenu *menu = GTK_MENU (data);
 
-    if (event->button.button == GDK_BUTTON_SECONDARY) {
-        gtk_menu_popup (menu, NULL, NULL,
-                        NULL,
-                        &(event->button),
-                        event->button.button,
-                        event->button.time);
+    if (event->button == GDK_BUTTON_SECONDARY) {
+        gtk_menu_popup (menu, NULL, NULL, NULL, NULL,
+                        event->button,
+                        event->time);
         return TRUE;
     }
 
@@ -148,6 +146,7 @@ gsm_tree_view_load_state (GsmTreeView *tree_view)
 
         for (iter = columns; iter != NULL; iter = iter->next) {
             const char *title;
+            char *key;
             GtkWidget *button;
             GtkWidget *column_item;
 
@@ -155,8 +154,10 @@ gsm_tree_view_load_state (GsmTreeView *tree_view)
             sort_id = gtk_tree_view_column_get_sort_column_id (col);
 
             if (priv->excluded_columns &&
-                g_hash_table_contains (priv->excluded_columns, GINT_TO_POINTER (sort_id)))
+                g_hash_table_contains (priv->excluded_columns, GINT_TO_POINTER (sort_id))) {
+                gtk_tree_view_column_set_visible (col, FALSE);
                 continue;
+            }
 
             title = gtk_tree_view_column_get_title (col);
 
@@ -171,6 +172,14 @@ gsm_tree_view_load_state (GsmTreeView *tree_view)
                                     G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
             gtk_menu_shell_append (GTK_MENU_SHELL (header_menu), column_item);
+
+            key = g_strdup_printf ("col-%d-width", sort_id);
+            gtk_tree_view_column_set_fixed_width (col, g_settings_get_int (priv->settings, key));
+            g_free (key);
+
+            key = g_strdup_printf ("col-%d-visible", sort_id);
+            gtk_tree_view_column_set_visible (col, g_settings_get_boolean (priv->settings, key));
+            g_free (key);
         }
 
         gtk_widget_show_all (header_menu);
@@ -201,12 +210,47 @@ gsm_tree_view_add_excluded_column (GsmTreeView *tree_view, gint column_id)
     g_hash_table_add (priv->excluded_columns, GINT_TO_POINTER (column_id));
 }
 
+static guint timeout_id = 0;
+static GtkTreeViewColumn *current_column;
+
+static gboolean
+save_column_state (gpointer data)
+{
+    GSettings *settings = G_SETTINGS (data);
+    gint column_id = gtk_tree_view_column_get_sort_column_id (current_column);
+    gint width = gtk_tree_view_column_get_width (current_column);
+    gboolean visible = gtk_tree_view_column_get_visible (current_column);
+
+    gchar *key;
+
+    key = g_strdup_printf ("col-%d-width", column_id);
+    g_settings_set_int (settings, key, width);
+    g_free (key);
+
+    key = g_strdup_printf ("col-%d-visible", column_id);
+    g_settings_set_boolean (settings, key, visible);
+    g_free (key);
+
+    return FALSE;
+}
+
+static void
+cb_update_column_state (GObject *object, GParamSpec *pspec, gpointer data)
+{
+    GtkTreeViewColumn *column = GTK_TREE_VIEW_COLUMN (object);
+
+    current_column = column;
+
+    if (timeout_id)
+        g_source_remove (timeout_id);
+
+    timeout_id = g_timeout_add (250, save_column_state, data);
+}
+
 void
 gsm_tree_view_append_and_bind_column (GsmTreeView *tree_view, GtkTreeViewColumn *column)
 {
     GsmTreeViewPrivate *priv;
-    gchar *key;
-    gint column_id;
 
     g_return_if_fail (GSM_IS_TREE_VIEW (tree_view));
     g_return_if_fail (GTK_IS_TREE_VIEW_COLUMN (column));
@@ -216,15 +260,13 @@ gsm_tree_view_append_and_bind_column (GsmTreeView *tree_view, GtkTreeViewColumn 
     gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view),
                                  column);
 
-    column_id = gtk_tree_view_column_get_sort_column_id (column);
+    g_signal_connect (column, "notify::fixed-width",
+                      G_CALLBACK (cb_update_column_state),
+                      priv->settings);
 
-    key = g_strdup_printf ("col-%d-width", column_id);
-    g_settings_bind (priv->settings, key, column, "fixed-width", G_SETTINGS_BIND_DEFAULT);
-    g_free (key);
-
-    key = g_strdup_printf ("col-%d-visible", column_id);
-    g_settings_bind (priv->settings, key, column, "visible", G_SETTINGS_BIND_DEFAULT);
-    g_free (key);
+    g_signal_connect (column, "notify::visible",
+                      G_CALLBACK (cb_update_column_state),
+                      priv->settings);
 }
 
 

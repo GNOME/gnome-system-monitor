@@ -545,46 +545,22 @@ proctable_new (GsmApplication * const app)
         gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_CGROUP);
 
 #ifdef HAVE_SYSTEMD
-    if (!LOGIND_RUNNING ()) {
-#else
-    {
+    if (!LOGIND_RUNNING ())
 #endif
+    {
         gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_UNIT);
         gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_SESSION);
         gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_SEAT);
         gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_OWNER);
     }
 
+    if (!can_show_security_context_column ())
+        gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_SECURITYCONTEXT);
+
     gsm_tree_view_load_state (GSM_TREE_VIEW (proctree));
-
-    /* Override column settings by hiding this column if it's meaningless: */
-    if (!can_show_security_context_column ()) {
-        GtkTreeViewColumn *column;
-        column = gsm_tree_view_get_column_from_id (GSM_TREE_VIEW (proctree), COL_SECURITYCONTEXT);
-        gtk_tree_view_column_set_visible (column, FALSE);
-    }
-
-    if (!cgroups_enabled()) {
-        GtkTreeViewColumn *column;
-
-        column = gsm_tree_view_get_column_from_id (GSM_TREE_VIEW(proctree), COL_CGROUP);
-        gtk_tree_view_column_set_visible(column, FALSE);
-    }
 
     GtkIconTheme* theme = gtk_icon_theme_get_default();
     g_signal_connect(G_OBJECT (theme), "changed", G_CALLBACK (cb_refresh_icons), app);
-    
-#ifdef HAVE_SYSTEMD
-    if (!LOGIND_RUNNING())
-#endif
-    {
-        GtkTreeViewColumn *column;
-
-        for (i = COL_UNIT; i <= COL_OWNER; i++) {
-            column = gsm_tree_view_get_column_from_id (GSM_TREE_VIEW(proctree), i);
-            gtk_tree_view_column_set_visible(column, FALSE);
-        }
-    }
 
     app->selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
     gtk_tree_selection_set_mode (app->selection, GTK_SELECTION_MULTIPLE);
@@ -1172,6 +1148,20 @@ proctable_update_list (GsmApplication *app)
     /* proclist.number == g_list_length(procdata->info) == g_hash_table_size(procdata->pids) */
 }
 
+static char *
+make_loadavg_string (void)
+{
+    glibtop_loadavg buf;
+
+    glibtop_get_loadavg (&buf);
+
+    return g_strdup_printf (_("Load averages for the last 1, 5, 15 minutes: "
+                              "%0.2f, %0.2f, %0.2f"),
+                            buf.loadavg[0],
+                            buf.loadavg[1],
+                            buf.loadavg[2]);
+}
+
 void
 proctable_update (GsmApplication * const app)
 {
@@ -1191,21 +1181,6 @@ proctable_free_table (GsmApplication * const app)
         delete it->second;
 
     ProcInfo::all.clear();
-}
-
-char*
-make_loadavg_string(void)
-{
-    glibtop_loadavg buf;
-
-    glibtop_get_loadavg(&buf);
-
-    return g_strdup_printf(
-        _("Load averages for the last 1, 5, 15 minutes: "
-          "%0.2f, %0.2f, %0.2f"),
-        buf.loadavg[0],
-        buf.loadavg[1],
-        buf.loadavg[2]);
 }
 
 void
@@ -1234,6 +1209,9 @@ proctable_freeze (GsmApplication *app)
 void
 proctable_thaw (GsmApplication *app)
 {
+    if (app->timeout)
+        return;
+
     app->timeout = g_timeout_add (app->config.update_interval,
                                   cb_timeout,
                                   app);

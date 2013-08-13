@@ -70,13 +70,9 @@ create_proc_view(GsmApplication *app, GtkBuilder * builder)
 {
     GtkWidget *proctree;
     GtkWidget *scrolled;
-    char* string;
 
     /* create the processes tab */
-    string = make_loadavg_string ();
     app->loadavg = GTK_WIDGET (gtk_builder_get_object (builder, "load_avg_label"));
-    gtk_label_set_text (GTK_LABEL (app->loadavg), string);
-    g_free (string);
 
     proctree = proctable_new (app);
     scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "processes_scrolled"));
