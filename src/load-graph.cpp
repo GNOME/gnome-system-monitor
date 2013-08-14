@@ -340,7 +340,9 @@ get_load (LoadGraph *graph)
             }
         }
 
-        gsm_color_button_set_fraction (GSM_COLOR_BUTTON (load_graph_get_cpu_color_picker (graph, i)), load);
+        gchar *label = g_strdup_printf("%.1f%%", load * 100.0f);
+        gsm_color_button_set_text (GSM_COLOR_BUTTON (load_graph_get_cpu_color_picker (graph, i)), label);
+        g_free (label);
     }
 
     graph->cpu.now ^= 1;
@@ -608,8 +610,8 @@ get_net (LoadGraph *graph)
     if (!first)
         net_scale(graph, din, dout);
 
-    gsm_color_button_set_fraction (GSM_COLOR_BUTTON (graph->net_in_color_picker), din);
-    gsm_color_button_set_fraction (GSM_COLOR_BUTTON (graph->net_out_color_picker), dout);
+    gsm_color_button_set_text (GSM_COLOR_BUTTON (graph->net_in_color_picker), procman::format_network_rate(din).c_str());
+    gsm_color_button_set_text (GSM_COLOR_BUTTON (graph->net_out_color_picker), procman::format_network_rate(dout).c_str());
 }
 
 
@@ -760,7 +762,7 @@ LoadGraph::LoadGraph(guint type)
             memcpy(&colors[0], GsmApplication::get()->config.cpu_color,
                    n * sizeof colors[0]);
             for(guint i = 0; i < n; ++i) {
-                cpu_color_pickers = g_list_append (cpu_color_pickers, GTK_WIDGET (gsm_color_button_new (&colors[i], GSMCP_TYPE_CPU)));
+                cpu_color_pickers = g_list_append (cpu_color_pickers, GTK_WIDGET (gsm_color_button_new (&colors[i], GSMCP_TYPE_RECTANGLE)));
             }
             break;
         case LOAD_GRAPH_MEM:
@@ -775,9 +777,9 @@ LoadGraph::LoadGraph(guint type)
             colors[0] = GsmApplication::get()->config.net_in_color;
             colors[1] = GsmApplication::get()->config.net_out_color;
             net_in_color_picker = gsm_color_button_new (&colors[0],
-                                                        GSMCP_TYPE_NETWORK);
+                                                        GSMCP_TYPE_RECTANGLE);
             net_out_color_picker = gsm_color_button_new (&colors[1],
-                                                        GSMCP_TYPE_NETWORK);
+                                                        GSMCP_TYPE_RECTANGLE);
             break;
     }
 

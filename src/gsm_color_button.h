@@ -50,9 +50,8 @@ struct _GsmColorButton
 /* Widget types */
 enum
 {
-    GSMCP_TYPE_CPU,
+    GSMCP_TYPE_RECTANGLE,
     GSMCP_TYPE_PIE,
-    GSMCP_TYPE_NETWORK,
     GSMCP_TYPES
 };
 
@@ -71,6 +70,8 @@ gdouble     gsm_color_button_get_fraction  (GsmColorButton * color_button);
 guint       gsm_color_button_get_cbtype    (GsmColorButton * color_button);
 void        gsm_color_button_set_title     (GsmColorButton * color_button, const gchar * title);
 gchar     * gsm_color_button_get_title     (GsmColorButton * color_button);
+void        gsm_color_button_set_text      (GsmColorButton * color_button, const gchar * text);
+gchar     * gsm_color_button_get_text      (GsmColorButton * color_button);
 
 G_END_DECLS
 

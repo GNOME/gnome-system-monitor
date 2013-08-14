@@ -33,7 +33,8 @@ typedef struct
   GtkWidget *cc_dialog;		/* Color chooser dialog */
 
   gchar *title;			/* Title for the color selection window */
-
+  gchar *text; 
+  
   GdkRGBA color;
   gdouble fraction;		/* Only used by GSMCP_TYPE_PIE */
   guint type;
@@ -53,6 +54,7 @@ enum
   PROP_TITLE,
   PROP_COLOR,
   PROP_TYPE, 
+  PROP_TEXT, 
 };
 
 /* Signals */
@@ -152,6 +154,14 @@ gsm_color_button_class_init (GsmColorButtonClass * klass)
 							_("The title of the color selection dialog"),
 							_("Pick a Color"),
 							G_PARAM_READWRITE));
+                            
+  g_object_class_install_property (gobject_class,
+				   PROP_TEXT,
+				   g_param_spec_string ("text",
+							_("Text"),
+							_("The text on the color picker"),
+							NULL,
+							G_PARAM_READWRITE));
 
   g_object_class_install_property (gobject_class,
 				   PROP_COLOR,
@@ -191,7 +201,7 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
   PangoLayout* layout;
   PangoFontDescription* font_desc;
   PangoRectangle extents;
-  gchar * caption = NULL;
+  GtkStyleContext *context = gtk_widget_get_style_context (GTK_WIDGET (widget));
   
   if (sensitive && priv->highlight > 0) {
     highlight_factor = 0.125 * priv->highlight;
@@ -201,20 +211,17 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
     color->blue = MIN (1.0, color->blue + highlight_factor) ;
     
     color->green = MIN (1.0, color->green + highlight_factor);
-  } else if (!sensitive) {
-    GtkStyleContext *context = gtk_widget_get_style_context (widget);
-    
+  } else if (!sensitive)
     gtk_style_context_get_color (context, GTK_STATE_FLAG_INSENSITIVE, color);
-  }
+  
   gdk_cairo_set_source_rgba (cr, color);
   width  = gdk_window_get_width (gtk_widget_get_window (widget));
   height = gdk_window_get_height(gtk_widget_get_window (widget));
-  GtkStyleContext *context = gtk_widget_get_style_context (GTK_WIDGET (widget));
+  
   
   switch (priv->type)
     {
-    case GSMCP_TYPE_NETWORK:
-    case GSMCP_TYPE_CPU:
+    case GSMCP_TYPE_RECTANGLE:
       // colored background
       cairo_paint (cr);
       cairo_set_line_width (cr, 1);
@@ -225,37 +232,35 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
       cairo_set_source_rgba (cr, 1, 1, 1, 0.4);
       cairo_rectangle (cr, 1.5, 1.5, width - 3, height - 3);
       cairo_stroke (cr);
-      // label text with the usage percentage
-      layout = pango_cairo_create_layout (cr);
-      gtk_style_context_get (context, GTK_STATE_FLAG_NORMAL, GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
-      pango_font_description_set_size (font_desc, 10 * PANGO_SCALE );
-      pango_layout_set_font_description (layout, font_desc);
-      pango_font_description_free (font_desc);
-      pango_layout_set_alignment (layout, PANGO_ALIGN_RIGHT);
-      if (priv->type == GSMCP_TYPE_NETWORK) {
-        char* rate = g_format_size(priv->fraction);
-        caption = g_strdup_printf ("%s", rate);
-        g_free (rate);
-      }  else if (priv->type == GSMCP_TYPE_CPU) {
-        caption = g_strdup_printf ("%.1f%%", priv->fraction * 100.0f);
-      }
-      pango_layout_set_text (layout, caption, -1);
-      g_free (caption);
-      pango_layout_get_extents (layout, NULL, &extents);
-      // draw label outline
-      cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 9.5 ,
-                     (height - 1.3 * extents.height / PANGO_SCALE)/2 + 2.5);
       
-      cairo_set_line_width (cr, 3);
-      cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1.0);
-      pango_cairo_layout_path (cr, layout);
-      cairo_stroke (cr);
-      // draw label text
-      cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 9.1,
-                     (height - 1.3 * extents.height / PANGO_SCALE)/2 + 2);
-      cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 1.0);
       
-      pango_cairo_show_layout (cr, layout);
+      if (priv->text != NULL) {
+        // label text with the usage percentage or network rate
+        layout = pango_cairo_create_layout (cr);
+        gtk_style_context_get (context, GTK_STATE_FLAG_NORMAL, GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
+        pango_font_description_set_size (font_desc, 10 * PANGO_SCALE );
+        pango_layout_set_font_description (layout, font_desc);
+        pango_font_description_free (font_desc);
+        pango_layout_set_alignment (layout, PANGO_ALIGN_RIGHT);
+        pango_layout_set_text (layout, priv->text, -1);
+        pango_layout_get_extents (layout, NULL, &extents);
+        // draw label outline
+        cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 9.5 ,
+                       (height - 1.3 * extents.height / PANGO_SCALE)/2 + 2.5);
+      
+        cairo_set_line_width (cr, 3);
+        cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1.0);
+        pango_cairo_layout_path (cr, layout);
+        cairo_stroke (cr);
+        // draw label text
+        cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 9.1,
+                       (height - 1.3 * extents.height / PANGO_SCALE)/2 + 2);
+        cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 1.0);
+      
+        pango_cairo_show_layout (cr, layout);
+      } 
+      
+      
       break;
     case GSMCP_TYPE_PIE:
       if (width < 32)		// 32px minimum size
@@ -448,9 +453,10 @@ gsm_color_button_init (GsmColorButton * color_button)
   priv->color.green = 0;
   priv->color.blue = 0;
   priv->fraction = 0.5;
-  priv->type = GSMCP_TYPE_CPU;
+  priv->type = GSMCP_TYPE_RECTANGLE;
   priv->image_buffer = NULL;
   priv->title = g_strdup (_("Pick a Color")); 	/* default title */
+  priv->text = NULL;
   priv->in_button = FALSE;
   priv->button_down = FALSE;
   
@@ -488,7 +494,9 @@ gsm_color_button_finalize (GObject * object)
 
   g_free (priv->title);
   priv->title = NULL;
-
+  if (priv->text != NULL)
+    g_free (priv->text);
+  priv->text = NULL;
   cairo_surface_destroy (priv->image_buffer);
   priv->image_buffer = NULL;
 
@@ -739,6 +747,36 @@ gsm_color_button_get_title (GsmColorButton * color_button)
   return priv->title;
 }
 
+void
+gsm_color_button_set_text (GsmColorButton * color_button,
+                            const gchar * text)
+{
+  GsmColorButtonPrivate *priv;
+  gchar *old_text;
+
+  g_return_if_fail (GSM_IS_COLOR_BUTTON (color_button));
+
+  priv = gsm_color_button_get_instance_private (color_button);
+
+  old_text = priv->text;
+  priv->text = g_strdup (text);
+  if (old_text != NULL)
+    g_free (old_text);
+
+  g_object_notify (G_OBJECT (color_button), "text");
+}
+
+gchar *
+gsm_color_button_get_text (GsmColorButton * color_button)
+{
+  GsmColorButtonPrivate *priv;
+
+  g_return_val_if_fail (GSM_IS_COLOR_BUTTON (color_button), NULL);
+
+  priv = gsm_color_button_get_instance_private (color_button);
+  return priv->text;
+}
+
 static void
 gsm_color_button_set_property (GObject * object,
 			       guint param_id,
@@ -754,6 +792,9 @@ gsm_color_button_set_property (GObject * object,
       break;
     case PROP_TITLE:
       gsm_color_button_set_title (color_button, g_value_get_string (value));
+      break;
+    case PROP_TEXT:
+      gsm_color_button_set_text (color_button, g_value_get_string (value));
       break;
     case PROP_COLOR:
       gsm_color_button_set_color (color_button, g_value_get_boxed (value));
@@ -783,6 +824,9 @@ gsm_color_button_get_property (GObject * object,
       break;
     case PROP_TITLE:
       g_value_set_string (value, gsm_color_button_get_title (color_button));
+      break;
+    case PROP_TEXT:
+      g_value_set_string (value, gsm_color_button_get_text (color_button));
       break;
     case PROP_COLOR:
       gsm_color_button_get_color (color_button, &color);
