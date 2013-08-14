@@ -234,17 +234,17 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
       pango_layout_set_alignment (layout, PANGO_ALIGN_RIGHT);
       if (priv->type == GSMCP_TYPE_NETWORK) {
         char* rate = g_format_size(priv->fraction);
-        caption = g_strdup_printf ("<span font-weight='ultrabold'>%s</span>", rate);
+        caption = g_strdup_printf ("%s", rate);
         g_free (rate);
       }  else if (priv->type == GSMCP_TYPE_CPU) {
-        caption = g_strdup_printf ("<span font-weight='ultrabold'>%.1f%%</span>", priv->fraction * 100.0f);
+        caption = g_strdup_printf ("%.1f%%", priv->fraction * 100.0f);
       }
-      pango_layout_set_markup (layout, caption, -1);
+      pango_layout_set_text (layout, caption, -1);
       g_free (caption);
       pango_layout_get_extents (layout, NULL, &extents);
       // draw label outline
       cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 9.5 ,
-                     (height - 1.3 * extents.height / PANGO_SCALE)/2 + 2);
+                     (height - 1.3 * extents.height / PANGO_SCALE)/2 + 2.5);
       
       cairo_set_line_width (cr, 3);
       cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1.0);
