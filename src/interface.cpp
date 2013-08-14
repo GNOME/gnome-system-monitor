@@ -178,7 +178,6 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     GtkWidget *label;
     GtkWidget *table;
     GtkWidget *color_picker;
-    GtkWidget *picker_alignment;
     LoadGraph *cpu_graph, *mem_graph, *net_graph;
 
     gint i;
@@ -235,7 +234,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
         g_signal_connect (G_OBJECT (color_picker), "color-set",
                           G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
         gtk_box_pack_start (GTK_BOX (temp_hbox), color_picker, FALSE, TRUE, 0);
-        gtk_widget_set_size_request(GTK_WIDGET(color_picker), 80, 20);
+        gtk_widget_set_size_request(GTK_WIDGET(color_picker), 100, 24);
         
 
     }
@@ -294,36 +293,27 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
 
     table = GTK_WIDGET (gtk_builder_get_object (builder, "net_table"));
 
-    color_picker = gsm_color_button_new (
-        &net_graph->colors.at(0), GSMCP_TYPE_NETWORK_IN);
+    color_picker = load_graph_get_net_in_color_picker (net_graph);
+    gtk_widget_set_size_request(GTK_WIDGET(color_picker), 100, 24);
     g_signal_connect (G_OBJECT (color_picker), "color-set",
                       G_CALLBACK (cb_net_in_color_changed), app);
     title_text = g_strdup_printf(title_template, _("Receiving"));
     gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
     g_free(title_text);
-    picker_alignment = GTK_WIDGET (gtk_builder_get_object (builder, "receiving_picker_alignment"));
-    gtk_container_add (GTK_CONTAINER (picker_alignment), color_picker);
 
     label = GTK_WIDGET (gtk_builder_get_object(builder, "receiving_label"));
-    gtk_grid_attach_next_to (GTK_GRID (table), load_graph_get_labels(net_graph)->net_in, label, GTK_POS_RIGHT, 1, 1);
-    label = GTK_WIDGET (gtk_builder_get_object(builder, "total_received_label"));
-    gtk_grid_attach_next_to (GTK_GRID (table), load_graph_get_labels(net_graph)->net_in_total, label, GTK_POS_RIGHT, 1, 1);
+    gtk_grid_attach_next_to (GTK_GRID (table), color_picker, label, GTK_POS_RIGHT, 1, 1);
 
-    color_picker = gsm_color_button_new (
-        &net_graph->colors.at(1), GSMCP_TYPE_NETWORK_OUT);
+    color_picker = load_graph_get_net_out_color_picker (net_graph);
+    gtk_widget_set_size_request(GTK_WIDGET(color_picker), 100, 24);
     g_signal_connect (G_OBJECT (color_picker), "color-set",
                       G_CALLBACK (cb_net_out_color_changed), app);
     title_text = g_strdup_printf(title_template, _("Sending"));
     gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
     g_free(title_text);
 
-    picker_alignment = GTK_WIDGET (gtk_builder_get_object (builder, "sending_picker_alignment"));
-    gtk_container_add (GTK_CONTAINER (picker_alignment), color_picker);
-
     label = GTK_WIDGET (gtk_builder_get_object(builder, "sending_label"));
-    gtk_grid_attach_next_to (GTK_GRID (table), load_graph_get_labels(net_graph)->net_out, label, GTK_POS_RIGHT, 1, 1);
-    label = GTK_WIDGET (gtk_builder_get_object(builder, "total_sent_label"));
-    gtk_grid_attach_next_to (GTK_GRID (table),  load_graph_get_labels(net_graph)->net_out_total, label, GTK_POS_RIGHT, 1, 1);
+    gtk_grid_attach_next_to (GTK_GRID (table), color_picker, label, GTK_POS_RIGHT, 1, 1);
 
     app->net_graph = net_graph;
     g_free (title_template);

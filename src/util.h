@@ -4,9 +4,16 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
+
+#ifdef __cplusplus
+#define EXTERNC extern "C"
 #include <string>
 
 using std::string;
+
+#else
+#define EXTERNC
+#endif
 
 /* check if logind is running */
 #define LOGIND_RUNNING() (access("/run/systemd/seats/", F_OK) >= 0)
@@ -21,6 +28,19 @@ load_symbols(const char *module, ...) G_GNUC_NULL_TERMINATED;
 
 const char*
 format_process_state(guint state);
+
+
+EXTERNC 
+gchar* 
+procman_format_rate(guint64 size, guint64 max, gboolean want_bits);
+
+
+#ifdef __cplusplus
+
+gchar* 
+procman_format_size(guint64 size, guint64 max = 0, gboolean want_bits = false);
+gchar* 
+procman_format_rate(guint64 size, guint64 max = 0, gboolean want_bits = false);
 
 void
 procman_debug_real(const char *file, int line, const char *func,
@@ -115,8 +135,6 @@ namespace procman
         tree_store_update<const char>(model, iter, column, new_value);
     }
 
-    gchar* format_size(guint64 size, guint64 max = 0, bool want_bits = false);
-
     gchar* get_nice_level (gint nice);
 
     gchar* get_nice_level_with_priority (gint nice);
@@ -126,5 +144,5 @@ namespace procman
     std::string format_network(guint64 rate, guint64 max_rate = 0);
     std::string format_network_rate(guint64 rate, guint64 max_rate = 0);
 }
-
+#endif /* __cpluspluc */
 #endif /* _GSM_UTIL_H_ */

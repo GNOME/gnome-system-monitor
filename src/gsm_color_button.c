@@ -178,47 +178,12 @@ gsm_color_button_class_init (GsmColorButtonClass * klass)
 }
 
 
-static cairo_surface_t *
-fill_image_buffer_from_resource (cairo_t *cr, const char *path)
-{
-  GBytes *bytes;
-  const guint8 *data;
-  gsize len;
-  GError *error = NULL;
-  RsvgHandle *handle;
-  cairo_surface_t *tmp_surface;
-  cairo_t *tmp_cr;
-
-  bytes = g_resources_lookup_data (path, 0 , NULL);
-  data = g_bytes_get_data (bytes, &len);
-
-  handle = rsvg_handle_new_from_data (data, len, &error);
-
-  if (handle == NULL) {
-    g_warning("rsvg_handle_new_from_data(\"%s\") failed: %s",
-	      path, (error ? error->message : "unknown error"));
-    if (error)
-      g_error_free(error);
-    return NULL;
-  }
-
-  tmp_surface = cairo_surface_create_similar (cairo_get_target (cr),
-					      CAIRO_CONTENT_COLOR_ALPHA,
-					      32, 32);
-  tmp_cr = cairo_create (tmp_surface);
-  rsvg_handle_render_cairo (handle, tmp_cr);
-  cairo_destroy (tmp_cr);
-  g_object_unref (handle);
-  return tmp_surface;
-}
-
 static gboolean
 gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
 {
   GsmColorButton *color_button = GSM_COLOR_BUTTON (widget);
   GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
   GdkRGBA *color = gdk_rgba_copy(&priv->color);
-  cairo_path_t *path = NULL;
   gint width, height;
   gdouble radius, arc_start, arc_end;
   gdouble highlight_factor;
@@ -226,7 +191,7 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
   PangoLayout* layout;
   PangoFontDescription* font_desc;
   PangoRectangle extents;
-  gchar * caption;
+  gchar * caption = NULL;
   
   if (sensitive && priv->highlight > 0) {
     highlight_factor = 0.125 * priv->highlight;
@@ -248,6 +213,7 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
   
   switch (priv->type)
     {
+    case GSMCP_TYPE_NETWORK:
     case GSMCP_TYPE_CPU:
       // colored background
       cairo_paint (cr);
@@ -266,12 +232,18 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
       pango_layout_set_font_description (layout, font_desc);
       pango_font_description_free (font_desc);
       pango_layout_set_alignment (layout, PANGO_ALIGN_RIGHT);
-      caption = g_strdup_printf ("<span font-weight='ultrabold'>%.1f%%</span>", priv->fraction * 100.0f);
+      if (priv->type == GSMCP_TYPE_NETWORK) {
+        char* rate = g_format_size(priv->fraction);
+        caption = g_strdup_printf ("<span font-weight='ultrabold'>%s</span>", rate);
+        g_free (rate);
+      }  else if (priv->type == GSMCP_TYPE_CPU) {
+        caption = g_strdup_printf ("<span font-weight='ultrabold'>%.1f%%</span>", priv->fraction * 100.0f);
+      }
       pango_layout_set_markup (layout, caption, -1);
       g_free (caption);
       pango_layout_get_extents (layout, NULL, &extents);
       // draw label outline
-      cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 5.1 ,
+      cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 9.5 ,
                      (height - 1.3 * extents.height / PANGO_SCALE)/2 + 2);
       
       cairo_set_line_width (cr, 3);
@@ -279,7 +251,7 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
       pango_cairo_layout_path (cr, layout);
       cairo_stroke (cr);
       // draw label text
-      cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 4.7,
+      cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 9.1,
                      (height - 1.3 * extents.height / PANGO_SCALE)/2 + 2);
       cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 1.0);
       
@@ -346,68 +318,6 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
       cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 1.25, 0,
 		 G_PI * 2);
       cairo_stroke (cr);
-
-      break;
-    case GSMCP_TYPE_NETWORK_IN:
-      if (priv->image_buffer == NULL)
-          priv->image_buffer =
-	  fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/download.svg");
-      gtk_widget_set_size_request (widget, 32, 32);
-      cairo_move_to (cr, 8.5, 1.5);
-      cairo_line_to (cr, 23.5, 1.5);
-      cairo_line_to (cr, 23.5, 11.5);
-      cairo_line_to (cr, 29.5, 11.5);
-      cairo_line_to (cr, 16.5, 27.5);
-      cairo_line_to (cr, 15.5, 27.5);
-      cairo_line_to (cr, 2.5, 11.5);
-      cairo_line_to (cr, 8.5, 11.5);
-      cairo_line_to (cr, 8.5, 1.5);
-      cairo_close_path (cr);
-      path = cairo_copy_path (cr);
-      cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
-      cairo_set_line_join (cr, CAIRO_LINE_JOIN_MITER);
-      cairo_set_line_width (cr, 1);
-      cairo_fill_preserve (cr);
-      cairo_set_miter_limit (cr, 5.0);
-      cairo_stroke (cr);
-      cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
-      cairo_append_path (cr, path);
-      cairo_path_destroy(path);
-      cairo_stroke (cr);
-      cairo_set_source_surface (cr, priv->image_buffer, 0.0,
-				0.0);
-      cairo_paint (cr);
-
-      break;
-    case GSMCP_TYPE_NETWORK_OUT:
-      if (priv->image_buffer == NULL)
-          priv->image_buffer =
-	  fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/upload.svg");
-      gtk_widget_set_size_request (widget, 32, 32);
-      cairo_move_to (cr, 16.5, 1.5);
-      cairo_line_to (cr, 29.5, 17.5);
-      cairo_line_to (cr, 23.5, 17.5);
-      cairo_line_to (cr, 23.5, 27.5);
-      cairo_line_to (cr, 8.5, 27.5);
-      cairo_line_to (cr, 8.5, 17.5);
-      cairo_line_to (cr, 2.5, 17.5);
-      cairo_line_to (cr, 15.5, 1.5);
-      cairo_line_to (cr, 16.5, 1.5);
-      cairo_close_path (cr);
-      path = cairo_copy_path (cr);
-      cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
-      cairo_set_line_join (cr, CAIRO_LINE_JOIN_MITER);
-      cairo_set_line_width (cr, 1);
-      cairo_fill_preserve (cr);
-      cairo_set_miter_limit (cr, 5.0);
-      cairo_stroke (cr);
-      cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
-      cairo_append_path (cr, path);
-      cairo_path_destroy(path);
-      cairo_stroke (cr);
-      cairo_set_source_surface (cr, priv->image_buffer, 0.0,
-				0.0);
-      cairo_paint (cr);
 
       break;
     }

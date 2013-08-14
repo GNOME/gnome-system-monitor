@@ -608,11 +608,8 @@ get_net (LoadGraph *graph)
     if (!first)
         net_scale(graph, din, dout);
 
-    gtk_label_set_text (GTK_LABEL (graph->labels.net_in), procman::format_network_rate(din).c_str());
-    gtk_label_set_text (GTK_LABEL (graph->labels.net_in_total), procman::format_network(in).c_str());
-
-    gtk_label_set_text (GTK_LABEL (graph->labels.net_out), procman::format_network_rate(dout).c_str());
-    gtk_label_set_text (GTK_LABEL (graph->labels.net_out_total), procman::format_network(out).c_str());
+    gsm_color_button_set_fraction (GSM_COLOR_BUTTON (graph->net_in_color_picker), din);
+    gsm_color_button_set_fraction (GSM_COLOR_BUTTON (graph->net_out_color_picker), dout);
 }
 
 
@@ -700,7 +697,9 @@ LoadGraph::LoadGraph(guint type)
       draw(FALSE),
       mem_color_picker(NULL),
       swap_color_picker(NULL),
-      cpu_color_pickers(NULL)
+      cpu_color_pickers(NULL),
+      net_in_color_picker(NULL),
+      net_out_color_picker(NULL)
 {
     LoadGraph * const graph = this;
 
@@ -775,6 +774,10 @@ LoadGraph::LoadGraph(guint type)
         case LOAD_GRAPH_NET:
             colors[0] = GsmApplication::get()->config.net_in_color;
             colors[1] = GsmApplication::get()->config.net_out_color;
+            net_in_color_picker = gsm_color_button_new (&colors[0],
+                                                        GSMCP_TYPE_NETWORK);
+            net_out_color_picker = gsm_color_button_new (&colors[1],
+                                                        GSMCP_TYPE_NETWORK);
             break;
     }
 
@@ -882,3 +885,16 @@ load_graph_get_cpu_color_picker(LoadGraph *graph, guint nr)
 {
     return GTK_WIDGET (g_list_nth_data (graph->cpu_color_pickers, nr));
 }
+
+GtkWidget*
+load_graph_get_net_in_color_picker(LoadGraph *graph)
+{
+    return graph->net_in_color_picker;
+}
+
+GtkWidget*
+load_graph_get_net_out_color_picker(LoadGraph *graph)
+{
+    return graph->net_out_color_picker;
+}
+

@@ -428,6 +428,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">horizontal</property>
+                        <property name="margin_right">56</property>
                         <child>
                           <object class="GtkLabel" id="net_label">
                             <property name="visible">True</property>
@@ -448,36 +449,20 @@
                           <object class="GtkGrid" id="net_table">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="hexpand">True</property>
                             <property name="row_spacing">6</property>
                             <property name="column_spacing">6</property>
                             <property name="row_homogeneous">True</property>
+                            <property name="column_homogeneous">True</property>
                             <child>
                               <object class="GtkLabel" id="receiving_label">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="hexpand">True</property>
-                                <property name="xalign">0</property>
+                                <property name="xalign">1</property>
                                 <property name="label" translatable="yes">Receiving</property>
                               </object>
                               <packing>
-                                <property name="left_attach">1</property>
+                                <property name="left_attach">0</property>
                                 <property name="top_attach">0</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="total_received_label">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="hexpand">True</property>
-                                <property name="xalign">0</property>
-                                <property name="label" translatable="yes">Total Received</property>
-                              </object>
-                              <packing>
-                                <property name="left_attach">1</property>
-                                <property name="top_attach">1</property>
                                 <property name="width">1</property>
                                 <property name="height">1</property>
                               </packing>
@@ -486,76 +471,14 @@
                               <object class="GtkLabel" id="sending_label">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="hexpand">True</property>
-                                <property name="xalign">0</property>
+                                <property name="xalign">1</property>
                                 <property name="label" translatable="yes">Sending</property>
                               </object>
                               <packing>
-                                <property name="left_attach">5</property>
+                                <property name="left_attach">2</property>
                                 <property name="top_attach">0</property>
                                 <property name="width">1</property>
                                 <property name="height">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="total_sent_label">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="hexpand">True</property>
-                                <property name="xalign">0</property>
-                                <property name="label" translatable="yes">Total Sent</property>
-                              </object>
-                              <packing>
-                                <property name="left_attach">5</property>
-                                <property name="top_attach">1</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="spacer">
-                                <property name="width_request">16</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label"></property>
-                              </object>
-                              <packing>
-                                <property name="left_attach">3</property>
-                                <property name="top_attach">0</property>
-                                <property name="width">1</property>
-                                <property name="height">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkAlignment" id="receiving_picker_alignment">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="border_width">6</property>
-                                <child>
-                                  <placeholder/>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="left_attach">0</property>
-                                <property name="top_attach">0</property>
-                                <property name="width">1</property>
-                                <property name="height">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkAlignment" id="sending_picker_alignment">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="border_width">6</property>
-                                <child>
-                                  <placeholder/>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="left_attach">4</property>
-                                <property name="top_attach">0</property>
-                                <property name="width">1</property>
-                                <property name="height">2</property>
                               </packing>
                             </child>
                             <child>
@@ -567,7 +490,7 @@
                           </object>
                           <packing>
                             <property name="expand">False</property>
-                            <property name="fill">True</property>
+                            <property name="fill">False</property>
                             <property name="pack_type">end</property>
                             <property name="position">0</property>
                           </packing>
@@ -630,7 +553,7 @@
   </object>
   <object class="GtkSizeGroup" id="explabels">
     <widgets>
-      <widget name="net_table"/>
+      <!--<widget name="net_table"/>-->
       <widget name="cpu_table"/>
       <widget name="mem_table"/>
     </widgets>

@@ -144,7 +144,7 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
  **/
 
 gchar*
-procman::format_size(guint64 size, guint64 max_size, bool want_bits)
+procman_format_size(guint64 size, guint64 max_size, bool want_bits)
 {
 
     enum {
@@ -207,6 +207,15 @@ procman::format_size(guint64 size, guint64 max_size, bool want_bits)
     }
 }
 
+gchar* procman_format_rate(guint64 rate, guint64 max_rate, bool want_bits)
+{
+    char* bytes = procman_format_size(rate, max_rate, want_bits);
+    // xgettext: rate, 10MiB/s or 10Mbit/s
+    gchar* formatted_rate = g_strdup_printf(_("%s/s"), bytes);
+    g_free(bytes);
+    return formatted_rate;
+}
+    
 gchar *
 procman::get_nice_level (gint nice)
 {
@@ -622,28 +631,18 @@ namespace procman
     }
 
 
-    std::string format_rate(guint64 rate, guint64 max_rate, bool want_bits)
-    {
-        char* bytes = procman::format_size(rate, max_rate, want_bits);
-        // xgettext: rate, 10MiB/s or 10Mbit/s
-        std::string formatted_rate(make_string(g_strdup_printf(_("%s/s"), bytes)));
-        g_free(bytes);
-        return formatted_rate;
-    }
-
 
     std::string format_network(guint64 rate, guint64 max_rate)
     {
-        char* bytes = procman::format_size(rate, max_rate, GsmApplication::get()->config.network_in_bits);
+        char* bytes = procman_format_size(rate, max_rate, GsmApplication::get()->config.network_in_bits);
         std::string formatted(bytes);
         g_free(bytes);
         return formatted;
     }
-
-
+    
     std::string format_network_rate(guint64 rate, guint64 max_rate)
     {
-        return procman::format_rate(rate, max_rate, GsmApplication::get()->config.network_in_bits);
+        return procman_format_rate (rate, max_rate, GsmApplication::get()->config.network_in_bits);
     }
 
 }

@@ -73,7 +73,8 @@ struct LoadGraph
     GtkWidget *mem_color_picker;
     GtkWidget *swap_color_picker;
     GList * cpu_color_pickers;
-
+    GtkWidget *net_in_color_picker;
+    GtkWidget *net_out_color_picker;
     /* union { */
     struct
     {
@@ -129,5 +130,11 @@ load_graph_get_swap_color_picker(LoadGraph *g) G_GNUC_CONST;
 
 GtkWidget*
 load_graph_get_cpu_color_picker(LoadGraph *g, guint nr) G_GNUC_CONST;
+
+GtkWidget*
+load_graph_get_net_out_color_picker(LoadGraph *g) G_GNUC_CONST;
+
+GtkWidget*
+load_graph_get_net_in_color_picker(LoadGraph *g) G_GNUC_CONST;
 
 #endif /* _GSM_LOAD_GRAPH_H_ */
