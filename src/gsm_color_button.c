@@ -33,7 +33,7 @@ typedef struct
   GtkWidget *cc_dialog;		/* Color chooser dialog */
 
   gchar *title;			/* Title for the color selection window */
-  gchar *text; 
+  gchar *text;          /* Only used by GSMCP_TYPE_RECTANGLE */
   
   GdkRGBA color;
   gdouble fraction;		/* Only used by GSMCP_TYPE_PIE */
@@ -54,7 +54,7 @@ enum
   PROP_TITLE,
   PROP_COLOR,
   PROP_TYPE, 
-  PROP_TEXT, 
+  PROP_TEXT
 };
 
 /* Signals */
