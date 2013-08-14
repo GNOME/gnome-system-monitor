@@ -266,22 +266,21 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
       pango_layout_set_font_description (layout, font_desc);
       pango_font_description_free (font_desc);
       pango_layout_set_alignment (layout, PANGO_ALIGN_RIGHT);
-      caption = g_strdup_printf ("%.1f%%", priv->fraction * 100.0f);
-      pango_layout_set_text (layout, caption, -1);
+      caption = g_strdup_printf ("<span font-weight='ultrabold'>%.1f%%</span>", priv->fraction * 100.0f);
+      pango_layout_set_markup (layout, caption, -1);
       g_free (caption);
       pango_layout_get_extents (layout, NULL, &extents);
       // draw label outline
       cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 5.1 ,
                      (height - 1.3 * extents.height / PANGO_SCALE)/2 + 2);
       
-      cairo_set_line_width (cr, 4);
+      cairo_set_line_width (cr, 3);
       cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1.0);
       pango_cairo_layout_path (cr, layout);
       cairo_stroke (cr);
       // draw label text
       cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 4.7,
                      (height - 1.3 * extents.height / PANGO_SCALE)/2 + 2);
-      cairo_set_line_width (cr, 1);
       cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 1.0);
       
       pango_cairo_show_layout (cr, layout);
