@@ -108,7 +108,7 @@ cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event, gpointer data)
         return FALSE;
 
     if (!gtk_tree_selection_path_is_selected (app->selection, path)) {
-        if (!(event->state & GDK_CONTROL_MASK))
+        if (!(event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)))
             gtk_tree_selection_unselect_all (app->selection);
         gtk_tree_selection_select_path (app->selection, path);
     }
