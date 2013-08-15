@@ -591,7 +591,7 @@ dialog_response (GtkWidget * widget, GtkResponseType response, gpointer data)
 static gboolean
 dialog_destroy (GtkWidget * widget, gpointer data)
 {
-  GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (GSM_COLOR_BUTTON (widget));
+  GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (GSM_COLOR_BUTTON (data));
 
   priv->cc_dialog = NULL;
 
@@ -623,7 +623,7 @@ gsm_color_button_clicked (GtkWidget * widget, GdkEventButton * event)
                         G_CALLBACK (dialog_response), color_button);
 
       g_signal_connect (cc_dialog, "destroy",
-			G_CALLBACK (dialog_destroy), color_button);
+                        G_CALLBACK (dialog_destroy), color_button);
 
       priv->cc_dialog = cc_dialog;
     }
