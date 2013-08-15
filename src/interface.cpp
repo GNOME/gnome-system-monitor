@@ -220,23 +220,17 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
             label_text = g_strdup_printf (_("CPU%d"), i+1);
         }
         
-        label = gtk_label_new (label_text);
-        gtk_box_pack_start (GTK_BOX (temp_hbox), label, FALSE, FALSE, 6);
-        gtk_widget_show (label);
-        g_free (label_text);
-        
         color_picker = load_graph_get_cpu_color_picker (cpu_graph, i);
         
-        title_text = g_strdup_printf(title_template, label_text);
-        gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
-        g_free(title_text);
+        title_text = g_strdup_printf (title_template, label_text);
+        gsm_color_button_set_title (GSM_COLOR_BUTTON(color_picker), title_text);
+        g_free (title_text);
+        g_free (label_text);
         
         g_signal_connect (G_OBJECT (color_picker), "color-set",
                           G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
         gtk_box_pack_start (GTK_BOX (temp_hbox), color_picker, FALSE, TRUE, 0);
         gtk_widget_set_size_request(GTK_WIDGET(color_picker), 100, 24);
-        
-
     }
 
     app->cpu_graph = cpu_graph;
