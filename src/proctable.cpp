@@ -27,7 +27,6 @@
 #include <glib/gi18n.h>
 #include <glib/gprintf.h>
 #include <glibtop.h>
-#include <glibtop/loadavg.h>
 #include <glibtop/proclist.h>
 #include <glibtop/procstate.h>
 #include <glibtop/procmem.h>
@@ -1060,7 +1059,7 @@ refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
                 // FIXME: this is broken if the unreachable parent becomes active
                 // i.e. it gets active or changes ower
                 // so we just clear the tree on __each__ update
-                // see proctable_update_list (ProcData * const procdata)
+                // see proctable_update (ProcData * const procdata)
 
 
                 if ((*it)->ppid == 0 or in_tree.find((*it)->ppid) != in_tree.end()) {
@@ -1095,8 +1094,8 @@ refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
         update_info_mutable_cols(it->second);
 }
 
-static void
-proctable_update_list (GsmApplication *app)
+void
+proctable_update (GsmApplication *app)
 {
     pid_t* pid_list;
     glibtop_proclist proclist;
@@ -1157,32 +1156,6 @@ proctable_update_list (GsmApplication *app)
     g_free (pid_list);
 
     /* proclist.number == g_list_length(procdata->info) == g_hash_table_size(procdata->pids) */
-}
-
-static char *
-make_loadavg_string (void)
-{
-    glibtop_loadavg buf;
-
-    glibtop_get_loadavg (&buf);
-
-    return g_strdup_printf (_("Load averages for the last 1, 5, 15 minutes: "
-                              "%0.2f, %0.2f, %0.2f"),
-                            buf.loadavg[0],
-                            buf.loadavg[1],
-                            buf.loadavg[2]);
-}
-
-void
-proctable_update (GsmApplication * const app)
-{
-    char* string;
-
-    string = make_loadavg_string();
-    gtk_label_set_text (GTK_LABEL(app->loadavg), string);
-    g_free (string);
-
-    proctable_update_list (app);
 }
 
 void

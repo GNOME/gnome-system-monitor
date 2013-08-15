@@ -157,7 +157,6 @@ public:
     void shutdown();
 
     GtkWidget        *tree;
-    GtkWidget        *loadavg;
     GtkWidget        *popup_menu;
     GtkWidget        *disk_list;
     GtkWidget        *stack;
