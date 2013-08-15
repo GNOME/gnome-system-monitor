@@ -199,7 +199,6 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
   gdouble highlight_factor;
   gboolean sensitive = gtk_widget_get_sensitive (widget);
   PangoLayout* layout;
-  PangoFontDescription* font_desc;
   PangoRectangle extents;
   GtkStyleContext *context = gtk_widget_get_style_context (GTK_WIDGET (widget));
   
@@ -232,32 +231,19 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
       cairo_set_source_rgba (cr, 1, 1, 1, 0.4);
       cairo_rectangle (cr, 1.5, 1.5, width - 3, height - 3);
       cairo_stroke (cr);
-      
-      
+
       if (priv->text != NULL) {
         // label text with the usage percentage or network rate
+        gchar *markup = g_strdup_printf ("<span font='sans'>%s</span>", priv->text);
         layout = pango_cairo_create_layout (cr);
-        gtk_style_context_get (context, GTK_STATE_FLAG_NORMAL, GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
-        pango_font_description_set_size (font_desc, 10 * PANGO_SCALE );
-        pango_layout_set_font_description (layout, font_desc);
-        pango_font_description_free (font_desc);
-        pango_layout_set_alignment (layout, PANGO_ALIGN_RIGHT);
-        pango_layout_set_text (layout, priv->text, -1);
-        pango_layout_get_extents (layout, NULL, &extents);
-        // draw label outline
-        cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 9.5 ,
-                       (height - 1.3 * extents.height / PANGO_SCALE)/2 + 2.5);
-      
-        cairo_set_line_width (cr, 3);
-        cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1.0);
-        pango_cairo_layout_path (cr, layout);
-        cairo_stroke (cr);
-        // draw label text
-        cairo_move_to (cr, (width - 1.3 * extents.width / PANGO_SCALE)/2 + 9.1,
-                       (height - 1.3 * extents.height / PANGO_SCALE)/2 + 2);
-        cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 1.0);
-      
-        pango_cairo_show_layout (cr, layout);
+        pango_layout_set_markup (layout, markup, -1);
+        g_free (markup);
+        pango_layout_get_pixel_extents (layout, NULL, &extents);
+
+        gtk_render_layout (context, cr,
+                           (width - extents.width) / 2,
+                           (height - extents.height) / 2,
+                           layout);
       } 
       
       
@@ -443,11 +429,18 @@ gsm_color_button_drag_data_get (GtkWidget * widget,
 			  16, (guchar *) dropped, 8);
 }
 
+static const char css_data[] =
+    "* {"
+    "    color: white;"
+    "    text-shadow: 1px 1px black;"
+    "}";
 
 static void
 gsm_color_button_init (GsmColorButton * color_button)
 {
   GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
+  GtkStyleContext *context;
+  GtkCssProvider *css_provider;
 
   priv->color.red = 0;
   priv->color.green = 0;
@@ -459,7 +452,12 @@ gsm_color_button_init (GsmColorButton * color_button)
   priv->text = NULL;
   priv->in_button = FALSE;
   priv->button_down = FALSE;
-  
+
+  css_provider = gtk_css_provider_new ();
+  gtk_css_provider_load_from_data (css_provider, css_data, -1, NULL);
+  context = gtk_widget_get_style_context (GTK_WIDGET (color_button));
+  gtk_style_context_add_provider (context, GTK_STYLE_PROVIDER (css_provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
   gtk_drag_dest_set (GTK_WIDGET (color_button),
 		     GTK_DEST_DEFAULT_MOTION |
 		     GTK_DEST_DEFAULT_HIGHLIGHT |
