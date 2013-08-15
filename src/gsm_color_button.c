@@ -64,8 +64,8 @@ enum
   LAST_SIGNAL
 };
 
-#define GSMCP_MIN_WIDTH 15
-#define GSMCP_MIN_HEIGHT 15
+#define GSMCP_MIN_WIDTH 28
+#define GSMCP_MIN_HEIGHT 28
 
 static void gsm_color_button_class_init (GsmColorButtonClass * klass);
 static void gsm_color_button_init (GsmColorButton * color_button);
@@ -216,21 +216,21 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
   gdk_cairo_set_source_rgba (cr, color);
   width  = gdk_window_get_width (gtk_widget_get_window (widget));
   height = gdk_window_get_height(gtk_widget_get_window (widget));
+  // colored background
   
+  cairo_paint (cr);
+  cairo_set_line_width (cr, 1);
+  cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
+  cairo_rectangle (cr, 0.5, 0.5, width - 1, height - 1);
+  cairo_stroke (cr);
+  cairo_set_line_width (cr, 1);
+  cairo_set_source_rgba (cr, 1, 1, 1, 0.4);
+  cairo_rectangle (cr, 1.5, 1.5, width - 3, height - 3);
+  cairo_stroke (cr);  
   
   switch (priv->type)
     {
     case GSMCP_TYPE_RECTANGLE:
-      // colored background
-      cairo_paint (cr);
-      cairo_set_line_width (cr, 1);
-      cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
-      cairo_rectangle (cr, 0.5, 0.5, width - 1, height - 1);
-      cairo_stroke (cr);
-      cairo_set_line_width (cr, 1);
-      cairo_set_source_rgba (cr, 1, 1, 1, 0.4);
-      cairo_rectangle (cr, 1.5, 1.5, width - 3, height - 3);
-      cairo_stroke (cr);
 
       if (priv->text != NULL) {
         // label text with the usage percentage or network rate
@@ -249,64 +249,55 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
       
       break;
     case GSMCP_TYPE_PIE:
-      if (width < 32)		// 32px minimum size
-	gtk_widget_set_size_request (widget, 32, 32);
-      if (width < height)
-	radius = width / 2;
-      else
-	radius = height / 2;
+      if (width < GSMCP_MIN_WIDTH)		// 24px minimum size
+        gtk_widget_set_size_request (widget, GSMCP_MIN_WIDTH, -1);
+      radius = MIN (width, height) / 2;
+      if (priv->text != NULL) {
+        // label text with the usage percentage or network rate
+        gchar *markup = g_strdup_printf ("<span font='sans'>%s</span>", priv->text);
+        layout = pango_cairo_create_layout (cr);
+        pango_layout_set_markup (layout, markup, -1);
+        g_free (markup);
+        pango_layout_get_pixel_extents (layout, NULL, &extents);
 
+        gtk_render_layout (context, cr,
+                           MIN (width, height) + (width - MIN (width, height) - extents.width) / 2,
+                           (height - extents.height) / 2,
+                           layout);
+      }
       arc_start = -G_PI_2 + 2 * G_PI * priv->fraction;
       arc_end = -G_PI_2;
 
       cairo_set_line_width (cr, 1);
-      
-      // Draw external stroke and fill
-      if (priv->fraction < 0.01) {
-        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, 4.5,
-		   0, 2 * G_PI);
-      } else if (priv->fraction > 0.99) { 
-        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 2.25,
-		   0, 2 * G_PI);
-      } else {
-        cairo_arc_negative (cr, (width / 2) + .5, (height / 2) + .5, radius - 2.25,
-		   arc_start, arc_end);
-        cairo_arc_negative (cr, (width / 2) + .5, (height / 2) + .5, 4.5,
-		   arc_end, arc_start);
-        cairo_arc_negative (cr, (width / 2) + .5, (height / 2) + .5, radius - 2.25,
-		   arc_start, arc_start);
-      }
-      cairo_fill_preserve (cr);
-      cairo_set_source_rgba (cr, 0, 0, 0, 0.7);
-      cairo_stroke (cr);
+      cairo_set_operator (cr, CAIRO_OPERATOR_ATOP);
 
       // Draw internal highlight
       cairo_set_source_rgba (cr, 1, 1, 1, 0.45);
       cairo_set_line_width (cr, 1);
 
       if (priv->fraction < 0.03) {
-        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, 3.25,
+        cairo_arc (cr, (MIN (width, height) / 2) + .5, (MIN (width, height) / 2) + .5, 3.25,
 			    0, 2 * G_PI);
       } else if (priv->fraction > 0.99) {
-        cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 3.5,
+        cairo_arc (cr, (MIN (width, height) / 2) + .5, (MIN (width, height) / 2) + .5, radius - 3.5,
 			    0, 2 * G_PI);
       } else {
-        cairo_arc_negative (cr, (width / 2) + .5, (height / 2) + .5, radius - 3.5,
+        cairo_arc_negative (cr, (MIN (width, height) / 2) + .5, (MIN (width, height) / 2) + .5, radius - 3.5,
 		 arc_start + (1 / (radius - 3.75)), 
 		 arc_end - (1 / (radius - 3.75)));
-        cairo_arc_negative (cr, (width / 2) + .5, (height / 2) + .5, 3.25,
+        cairo_arc_negative (cr, (MIN (width, height) / 2) + .5, (MIN (width, height) / 2) + .5, 3.25,
 		   arc_end - (1 / (radius - 3.75)),
                    arc_start + (1 / (radius - 3.75)));
-        cairo_arc_negative (cr, (width / 2) + .5, (height / 2) + .5, radius - 3.5,
+        cairo_arc_negative (cr, (MIN (width, height) / 2) + .5, (MIN (width, height) / 2) + .5, radius - 3.5,
 		 arc_start + (1 / (radius - 3.75)), 
 		 arc_start + (1 / (radius - 3.75)));
       }
-      cairo_stroke (cr);
+      cairo_fill (cr);
 
       // Draw external shape
       cairo_set_line_width (cr, 1);
       cairo_set_source_rgba (cr, 0, 0, 0, 0.2);
-      cairo_arc (cr, (width / 2) + .5, (height / 2) + .5, radius - 1.25, 0,
+      cairo_arc (cr, (MIN (width, height) / 2) + .5, (MIN (width, height) / 2) + .5, radius - 2.25, 0,
 		 G_PI * 2);
       cairo_stroke (cr);
 

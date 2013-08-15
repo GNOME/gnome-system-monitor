@@ -225,7 +225,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
                           G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
         gtk_grid_attach(GTK_GRID (cpu_table), color_picker, i%cols, i/cols, 1, 1);
         gtk_widget_show (color_picker);
-        gtk_widget_set_size_request(GTK_WIDGET(color_picker), 100, 24);
+        gtk_widget_set_size_request(GTK_WIDGET(color_picker), 100, 28);
     }
 
     app->cpu_graph = cpu_graph;
@@ -251,8 +251,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     g_free(title_text);
 
     label = GTK_WIDGET(gtk_builder_get_object(builder, "memory_label"));
-
-    gtk_grid_attach_next_to (GTK_GRID (table), color_picker, label, GTK_POS_LEFT, 1, 2);
+    gtk_widget_set_size_request(GTK_WIDGET(color_picker), 100, 28);
+    gtk_grid_attach_next_to (GTK_GRID (table), color_picker, label, GTK_POS_LEFT, 1, 1);
     gtk_grid_attach_next_to (GTK_GRID (table), load_graph_get_labels(mem_graph)->memory, label, GTK_POS_BOTTOM, 1, 1);
 
     color_picker = load_graph_get_swap_color_picker(mem_graph);
@@ -263,8 +263,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     g_free(title_text);
 
     label = GTK_WIDGET(gtk_builder_get_object(builder, "swap_label"));
-
-    gtk_grid_attach_next_to (GTK_GRID (table), color_picker, label, GTK_POS_LEFT, 1, 2);
+    gtk_widget_set_size_request(GTK_WIDGET(color_picker), 100, 28);
+    gtk_grid_attach_next_to (GTK_GRID (table), color_picker, label, GTK_POS_LEFT, 1, 1);
     gtk_grid_attach_next_to (GTK_GRID (table), load_graph_get_labels(mem_graph)->swap, label, GTK_POS_BOTTOM, 1, 1);
 
     app->mem_graph = mem_graph;
@@ -283,7 +283,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     table = GTK_WIDGET (gtk_builder_get_object (builder, "net_table"));
 
     color_picker = load_graph_get_net_in_color_picker (net_graph);
-    gtk_widget_set_size_request(GTK_WIDGET(color_picker), 100, 24);
+    gtk_widget_set_size_request(GTK_WIDGET(color_picker), 100, 28);
     g_signal_connect (G_OBJECT (color_picker), "color-set",
                       G_CALLBACK (cb_net_in_color_changed), app);
     title_text = g_strdup_printf(title_template, _("Receiving"));
@@ -294,7 +294,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     gtk_grid_attach_next_to (GTK_GRID (table), color_picker, label, GTK_POS_RIGHT, 1, 1);
 
     color_picker = load_graph_get_net_out_color_picker (net_graph);
-    gtk_widget_set_size_request(GTK_WIDGET(color_picker), 100, 24);
+    gtk_widget_set_size_request(GTK_WIDGET(color_picker), 100, 28);
     g_signal_connect (G_OBJECT (color_picker), "color-set",
                       G_CALLBACK (cb_net_out_color_changed), app);
     title_text = g_strdup_printf(title_template, _("Sending"));

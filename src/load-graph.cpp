@@ -368,15 +368,19 @@ namespace
             text = g_strdup(_("not available"));
         } else {
             // xgettext: 540MiB (53 %) of 1.0 GiB
-            text = g_strdup_printf(_("%s (%.1f%%) of %s"), used_text, 100.0 * percent, total_text);
+            text = g_strdup_printf(_("%s of %s"), used_text, total_text);
         }
         gtk_label_set_text(label, text);
         g_free(used_text);
         g_free(total_text);
         g_free(text);
 
-        if (picker)
+        if (picker) {
             gsm_color_button_set_fraction(picker, percent);
+            text = total == 0? g_strdup(_("not available")):g_strdup_printf("%.1f%%", 100 * percent);
+            gsm_color_button_set_text(picker, text);
+            g_free (text);
+        } 
     }
 }
 
