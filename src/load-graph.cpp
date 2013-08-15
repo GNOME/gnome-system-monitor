@@ -377,7 +377,7 @@ namespace
 
         if (picker) {
             gsm_color_button_set_fraction(picker, percent);
-            text = total == 0? g_strdup(_("not available")):g_strdup_printf("%.1f%%", 100 * percent);
+            text = total == 0? g_strdup(_("N/A")):g_strdup_printf("%.1f%%", 100 * percent);
             gsm_color_button_set_text(picker, text);
             g_free (text);
         } 
