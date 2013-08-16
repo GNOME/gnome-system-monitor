@@ -7,62 +7,65 @@
     <property name="default_width">440</property>
     <property name="default_height">495</property>
     <property name="has_resize_grip">False</property>
-    <property name="hide_titlebar_when_maximized">True</property>
+    <child type="titlebar">
+      <object class="GtkHeaderBar" id="header_bar">
+        <property name="visible">True</property>
+        <property name="show_close_button">True</property>
+        <style>
+          <class name="titlebar"/>
+        </style>
+        <child type="title">
+          <object class="GtkStackSwitcher" id="stack_switcher">
+            <property name="visible">True</property>
+            <property name="stack">stack</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkToggleButton" id="search_button">
+            <property name="visible">True</property>
+            <property name="action_name">win.search</property>
+            <style>
+              <class name="image-button"/>
+            </style>
+            <child>
+              <object class="GtkImage" id="search_image">
+                <property name="visible">True</property>
+                <property name="icon_size">1</property>
+                <property name="icon_name">edit-find-symbolic</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="pack_type">end</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkMenuButton" id="process_menu_button">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="halign">end</property>
+            <style>
+              <class name="image-button"/>
+            </style>
+            <child>
+              <object class="GtkImage" id="menu_button_image">
+                <property name="visible">True</property>
+                <property name="icon_size">1</property>
+                <property name="icon_name">emblem-system-symbolic</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="pack_type">end</property>
+          </packing>
+        </child>
+      </object>
+    </child>
     <child>
       <object class="GtkBox" id="main_box">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
-        <child>
-          <object class="GtkHeaderBar" id="header_bar">
-            <property name="visible">True</property>
-            <child type="title">
-              <object class="GtkStackSwitcher" id="stack_switcher">
-                <property name="visible">True</property>
-                <property name="stack">stack</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkToggleButton" id="search_button">
-                <property name="visible">True</property>
-                <property name="action_name">win.search</property>
-                <style>
-                    <class name="image-button"/>
-                </style>
-                <child>
-                  <object class="GtkImage" id="search_image">
-                    <property name="visible">True</property>
-                    <property name="icon_size">1</property>
-                    <property name="icon_name">edit-find-symbolic</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="pack_type">end</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkMenuButton" id="process_menu_button">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="halign">end</property>
-                <style>
-                    <class name="image-button"/>
-                </style>
-                <child>
-                  <object class="GtkImage" id="menu_button_image">
-                    <property name="visible">True</property>
-                    <property name="icon_size">1</property>
-                    <property name="icon_name">emblem-system-symbolic</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="pack_type">end</property>
-              </packing>
-            </child>
-          </object>
-        </child>
         <child>
           <object class="GtkStack" id="stack">
             <property name="visible">True</property>
