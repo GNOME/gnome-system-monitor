@@ -55,7 +55,6 @@ unsigned LoadGraph::num_bars() const
 #define FRAME_WIDTH 4
 void draw_background(LoadGraph *graph) {
     GtkAllocation allocation;
-    double dash[2] = { 1.0, 2.0 };
     cairo_t *cr;
     guint i;
     unsigned num_bars;
@@ -99,8 +98,8 @@ void draw_background(LoadGraph *graph) {
     cairo_fill(cr);
 
     cairo_set_line_width (cr, 1.0);
-    cairo_set_dash (cr, dash, 2, 0);
-
+    cairo_set_source_rgb (cr, 0.89, 0.89, 0.89);
+    
     for (i = 0; i <= num_bars; ++i) {
         double y;
 
@@ -133,19 +132,25 @@ void draw_background(LoadGraph *graph) {
         pango_cairo_show_layout (cr, layout);
         g_free(caption);
 
-        cairo_set_source_rgba (cr, 0, 0, 0, 0.75);
+        if (i==0 || i==num_bars)
+          cairo_set_source_rgb (cr, 0.70, 0.71, 0.70);
+        else 
+          cairo_set_source_rgb (cr, 0.89, 0.89, 0.89);
         cairo_move_to (cr, graph->indent, i * graph->graph_dely + 0.5);
         cairo_line_to (cr, graph->draw_width - graph->rmargin + 0.5 + 4, i * graph->graph_dely + 0.5);
+        cairo_stroke (cr);
     }
-    cairo_stroke (cr);
-
-    cairo_set_dash (cr, dash, 2, 1.5);
+    
 
     const unsigned total_seconds = graph->speed * (LoadGraph::NUM_POINTS - 2) / 1000;
 
     for (unsigned int i = 0; i < 7; i++) {
         double x = (i) * (graph->draw_width - graph->rmargin - graph->indent) / 6;
-        cairo_set_source_rgba (cr, 0, 0, 0, 0.75);
+        if (i==0 || i==6)
+          cairo_set_source_rgb (cr, 0.70, 0.71, 0.70);
+        else 
+          cairo_set_source_rgb (cr, 0.89, 0.89, 0.89);
+
         cairo_move_to (cr, (ceil(x) + 0.5) + graph->indent, 0.5);
         cairo_line_to (cr, (ceil(x) + 0.5) + graph->indent, graph->real_draw_height + 4.5);
         cairo_stroke(cr);
