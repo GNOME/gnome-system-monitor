@@ -227,19 +227,19 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
   cairo_set_source_rgba (cr, 1, 1, 1, 0.4);
   cairo_rectangle (cr, 1.5, 1.5, width - 3, height - 3);
   cairo_stroke (cr);  
-  
+  if (priv->text != NULL) {
+    // label text with the usage percentage or network rate
+    gchar *markup = g_strdup_printf ("<span font='sans'>%s</span>", priv->text);
+    layout = pango_cairo_create_layout (cr);
+    pango_layout_set_markup (layout, markup, -1);
+    g_free (markup);
+    pango_layout_get_pixel_extents (layout, NULL, &extents);
+  } 
   switch (priv->type)
     {
     case GSMCP_TYPE_RECTANGLE:
 
       if (priv->text != NULL) {
-        // label text with the usage percentage or network rate
-        gchar *markup = g_strdup_printf ("<span font='sans'>%s</span>", priv->text);
-        layout = pango_cairo_create_layout (cr);
-        pango_layout_set_markup (layout, markup, -1);
-        g_free (markup);
-        pango_layout_get_pixel_extents (layout, NULL, &extents);
-
         gtk_render_layout (context, cr,
                            (width - extents.width) / 2,
                            (height - extents.height) / 2,
@@ -256,13 +256,6 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
       radius = pie_size / 2;
       
       if (priv->text != NULL) {
-        // label text with the usage percentage or network rate
-        gchar *markup = g_strdup_printf ("<span font='sans'>%s</span>", priv->text);
-        layout = pango_cairo_create_layout (cr);
-        pango_layout_set_markup (layout, markup, -1);
-        g_free (markup);
-        pango_layout_get_pixel_extents (layout, NULL, &extents);
-
         gtk_render_layout (context, cr,
                            pie_size + 2 * pie_padding + (width - pie_size - 2 * pie_padding- extents.width) / 2,
                            (height - extents.height) / 2,
