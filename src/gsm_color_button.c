@@ -251,7 +251,10 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
     case GSMCP_TYPE_PIE:
       if (width < GSMCP_MIN_WIDTH)		// 24px minimum size
         gtk_widget_set_size_request (widget, GSMCP_MIN_WIDTH, -1);
-      radius = MIN (width, height) / 2;
+      guint pie_padding = 2;
+      guint pie_size = MIN (width, height) - 2*pie_padding;
+      radius = pie_size / 2;
+      
       if (priv->text != NULL) {
         // label text with the usage percentage or network rate
         gchar *markup = g_strdup_printf ("<span font='sans'>%s</span>", priv->text);
@@ -261,7 +264,7 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
         pango_layout_get_pixel_extents (layout, NULL, &extents);
 
         gtk_render_layout (context, cr,
-                           MIN (width, height) + (width - MIN (width, height) - extents.width) / 2,
+                           pie_size + 2 * pie_padding + (width - pie_size - 2 * pie_padding- extents.width) / 2,
                            (height - extents.height) / 2,
                            layout);
       }
@@ -276,19 +279,19 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
       cairo_set_line_width (cr, 1);
 
       if (priv->fraction < 0.03) {
-        cairo_arc (cr, (MIN (width, height) / 2) + .5, (MIN (width, height) / 2) + .5, 3.25,
+        cairo_arc (cr, pie_padding+pie_size/2 + .5, pie_padding+pie_size/2, 3.25,
 			    0, 2 * G_PI);
       } else if (priv->fraction > 0.99) {
-        cairo_arc (cr, (MIN (width, height) / 2) + .5, (MIN (width, height) / 2) + .5, radius - 3.5,
+        cairo_arc (cr, pie_padding+pie_size/2 + .5, pie_padding+pie_size/2, radius - 3.5,
 			    0, 2 * G_PI);
       } else {
-        cairo_arc_negative (cr, (MIN (width, height) / 2) + .5, (MIN (width, height) / 2) + .5, radius - 3.5,
+        cairo_arc_negative (cr, pie_padding+pie_size/2 + .5, pie_padding+pie_size/2, radius - 3.5,
 		 arc_start + (1 / (radius - 3.75)), 
 		 arc_end - (1 / (radius - 3.75)));
-        cairo_arc_negative (cr, (MIN (width, height) / 2) + .5, (MIN (width, height) / 2) + .5, 3.25,
+        cairo_arc_negative (cr, pie_padding+pie_size/2 + .5, pie_padding+pie_size/2, 3.25,
 		   arc_end - (1 / (radius - 3.75)),
                    arc_start + (1 / (radius - 3.75)));
-        cairo_arc_negative (cr, (MIN (width, height) / 2) + .5, (MIN (width, height) / 2) + .5, radius - 3.5,
+        cairo_arc_negative (cr, pie_padding+pie_size/2 + .5, pie_padding+pie_size/2, radius - 3.5,
 		 arc_start + (1 / (radius - 3.75)), 
 		 arc_start + (1 / (radius - 3.75)));
       }
@@ -297,7 +300,7 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
       // Draw external shape
       cairo_set_line_width (cr, 1);
       cairo_set_source_rgba (cr, 0, 0, 0, 0.2);
-      cairo_arc (cr, (MIN (width, height) / 2) + .5, (MIN (width, height) / 2) + .5, radius - 2.25, 0,
+      cairo_arc (cr, pie_padding+pie_size/2 + .5, pie_padding+pie_size/2, radius - 2.25, 0,
 		 G_PI * 2);
       cairo_stroke (cr);
 
