@@ -348,6 +348,7 @@ get_load (LoadGraph *graph)
         gchar *label = g_strdup_printf("%.1f%%", load * 100.0f);
         gsm_color_button_set_text (GSM_COLOR_BUTTON (load_graph_get_cpu_color_picker (graph, i)), label);
         g_free (label);
+        gtk_widget_queue_draw (load_graph_get_cpu_color_picker (graph, i));
     }
 
     graph->cpu.now ^= 1;
@@ -385,6 +386,7 @@ namespace
             text = total == 0? g_strdup(_("N/A")):g_strdup_printf("%.1f%%", 100 * percent);
             gsm_color_button_set_text(picker, text);
             g_free (text);
+            gtk_widget_queue_draw ( GTK_WIDGET (picker));
         } 
     }
 }
@@ -621,6 +623,8 @@ get_net (LoadGraph *graph)
 
     gsm_color_button_set_text (GSM_COLOR_BUTTON (graph->net_in_color_picker), procman::format_network_rate(din).c_str());
     gsm_color_button_set_text (GSM_COLOR_BUTTON (graph->net_out_color_picker), procman::format_network_rate(dout).c_str());
+    gtk_widget_queue_draw ( graph->net_in_color_picker);
+    gtk_widget_queue_draw ( graph->net_out_color_picker);
 }
 
 
