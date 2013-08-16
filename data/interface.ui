@@ -23,25 +23,6 @@
               </object>
             </child>
             <child>
-              <object class="GtkButton" id="end_process_button">
-                <property name="label" translatable="yes">End _Process</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="halign">end</property>
-                <property name="use_underline">True</property>
-                <property name="action_name">win.send-signal-end</property>
-                <property name="action_target">@i 15</property>
-                <accelerator key="Delete" signal="clicked"/>
-                <style>
-                    <class name="text-button"/>
-                </style>
-              </object>
-              <packing>
-                <property name="pack_type">start</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkToggleButton" id="search_button">
                 <property name="visible">True</property>
                 <property name="action_name">win.search</property>
@@ -137,6 +118,48 @@
                         <property name="fill">True</property>
                         <property name="position">1</property>
                       </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRevealer" id="proc_toolbar_revealer">
+                        <property name="visible">True</property>
+                        <property name="transition_type">slide-up</property>
+                        <child>
+                          <object class="GtkBox" id="proc_toolbar_box">
+                            <property name="visible">True</property>
+                            <property name="orientation">horizontal</property>
+                            <property name="margin">6</property>
+                            <child>
+                              <object class="GtkButton" id="end_process_button">
+                                <property name="label" translatable="yes">End _Process</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="halign">start</property>
+                                <property name="use_underline">True</property>
+                                <property name="action_name">win.send-signal-end</property>
+                                <property name="action_target">@i 15</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="proc_properties_button">
+                                <property name="visible">True</property>
+                                <property name="tooltip_text" translatable="yes">Show process properties</property>
+                                <property name="action_name">win.process-properties</property>
+                                <child>
+                                  <object class="GtkImage" id="proc_properties_image">
+                                    <property name="visible">True</property>
+                                    <property name="icon_size">1</property>
+                                    <property name="icon_name">document-properties-symbolic</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="pack_type">end</property>
+                              </packing>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
                     </child>
                   </object>
                   <packing>

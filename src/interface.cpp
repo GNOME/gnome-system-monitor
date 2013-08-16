@@ -76,6 +76,8 @@ create_proc_view(GsmApplication *app, GtkBuilder * builder)
 
     gtk_container_add (GTK_CONTAINER (scrolled), proctree);
 
+    app->proc_toolbar_revealer = GTK_WIDGET (gtk_builder_get_object (builder, "proc_toolbar_revealer"));
+
     /* create popup_menu for the processes tab */
     GMenuModel *menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-popup-menu"));
     app->popup_menu = gtk_menu_new_from_model (menu_model);
@@ -709,17 +711,22 @@ update_sensitivity(GsmApplication *app)
     GAction *action;
 
     processes_sensitivity = (strcmp (gtk_stack_get_visible_child_name (GTK_STACK (app->stack)), "processes") == 0);
-    selected_sensitivity = (processes_sensitivity && gtk_tree_selection_count_selected_rows (app->selection) > 0);
+    selected_sensitivity = gtk_tree_selection_count_selected_rows (app->selection) > 0;
 
-    for (i = 0; i != G_N_ELEMENTS(processes_actions); ++i) {
+    for (i = 0; i != G_N_ELEMENTS (processes_actions); ++i) {
         action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
-                                              processes_actions[i]);
-        g_simple_action_set_enabled (G_SIMPLE_ACTION (action), processes_sensitivity);
+                                             processes_actions[i]);
+        g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                                     processes_sensitivity);
     }
 
-    for (i = 0; i != G_N_ELEMENTS(selected_actions); ++i) {
+    for (i = 0; i != G_N_ELEMENTS (selected_actions); ++i) {
         action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
                                              selected_actions[i]);
-        g_simple_action_set_enabled (G_SIMPLE_ACTION (action), selected_sensitivity);
+        g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                                     processes_sensitivity & selected_sensitivity);
     }
+
+    gtk_revealer_set_reveal_child (GTK_REVEALER (app->proc_toolbar_revealer),
+                                   selected_sensitivity);
 }
