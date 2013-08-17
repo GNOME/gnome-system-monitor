@@ -11,6 +11,9 @@ ui_files = \
 	data/interface.ui \
 	data/menus.ui
 
+css_files = \
+	data/gsm.css
+
 pixmap_files = \
 	pixmaps/download.svg \
 	pixmaps/upload.svg
@@ -24,6 +27,7 @@ org.gnome.gnome-system-monitor.policy.in: org.gnome.gnome-system-monitor.policy.
 
 EXTRA_DIST = \
 	$(ui_files) \
+	$(css_files) \
 	$(pixmap_files) \
 	$(runnable_SCRIPTS) \
 	org.gnome.gnome-system-monitor.policy.in.in \
