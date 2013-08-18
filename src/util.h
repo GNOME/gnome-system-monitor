@@ -28,6 +28,8 @@ procman_debug_real(const char *file, int line, const char *func,
 
 #define procman_debug(FMT, ...) procman_debug_real(__FILE__, __LINE__, __func__, FMT, ##__VA_ARGS__)
 
+gchar * get_monospace_system_font_name (void);
+
 inline string make_string(char *c_str)
 {
     if (!c_str) {

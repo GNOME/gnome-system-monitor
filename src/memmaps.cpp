@@ -63,41 +63,6 @@ namespace
         }
     };
 
-
-
-
-#if 0
-
-    struct ColumnState
-    {
-        unsigned visible;
-        unsigned id;
-        unsigned width;
-
-        int pack() const
-        {
-            unsigned p = 0;
-            p |= (this->visible & 0x0001) << 24;
-            p |= (this->id      & 0x00ff) << 16;
-            p |= (this->width   & 0xffff);
-            return p;
-        }
-
-        void unpack(int i)
-        {
-            this->visible = 0x0001 & (i >> 24);
-            this->id      = 0x00ff & (i >> 16);
-            this->width   = 0xffff & i;
-        }
-    };
-
-
-
-
-#endif
-
-
-
     class InodeDevices
     {
         typedef std::map<guint16, string> Map;
@@ -383,6 +348,8 @@ create_memmapsdata (GsmApplication *app)
     gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree), TRUE);
     g_object_unref (G_OBJECT (model));
 
+    gchar *font = get_monospace_system_font_name ();
+
     for (i = 0; i < MMAP_COL_MAX; i++) {
         GtkCellRenderer *cell;
         GtkTreeViewColumn *col;
@@ -415,17 +382,17 @@ create_memmapsdata (GsmApplication *app)
                 break;
         }
 
-
         switch (i) {
             case MMAP_COL_VMSTART:
             case MMAP_COL_VMEND:
             case MMAP_COL_FLAGS:
             case MMAP_COL_VMOFFSET:
-            case MMAP_COL_DEVICE:
-                g_object_set(cell, "family", "monospace", NULL);
+                g_object_set (cell, "font", font, NULL);
                 break;
         }
     }
+
+    g_free (font);
 
     return new MemMapsData(tree);
 }
