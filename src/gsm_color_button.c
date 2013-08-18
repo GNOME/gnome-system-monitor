@@ -235,6 +235,7 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
     // label text with the usage percentage or network rate
     gchar *text = g_strdup (priv->text);
     layout = pango_cairo_create_layout (cr);
+    pango_font_description_set_weight (font_desc, (PANGO_WEIGHT_NORMAL + PANGO_WEIGHT_BOLD)/2);
     pango_layout_set_font_description (layout, font_desc);
     pango_font_description_free (font_desc);
     pango_layout_set_text (layout, text, -1);
