@@ -186,7 +186,7 @@ struct glibtop_map_entry_cmp
 
     bool operator()(const guint64 &start, const glibtop_map_entry &a) const
     {
-        return not (*this)(a, start);
+        return start < a.start;
     }
 
 };
