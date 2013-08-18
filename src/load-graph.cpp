@@ -67,7 +67,7 @@ void draw_background(LoadGraph *graph) {
     num_bars = graph->num_bars();
     graph->graph_dely = (graph->draw_height - 15) / num_bars; /* round to int to avoid AA blur */
     graph->real_draw_height = graph->graph_dely * num_bars;
-    graph->graph_delx = (graph->draw_width - 2.0 - graph->indent) / (LoadGraph::NUM_POINTS - 3);
+    graph->graph_delx = (graph->draw_width - 2.0 - graph->indent/2) / (LoadGraph::NUM_POINTS - 3);
     graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH ;
 
     gtk_widget_get_allocation (graph->disp, &allocation);
@@ -94,7 +94,7 @@ void draw_background(LoadGraph *graph) {
     /* Draw background rectangle */
     cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
     cairo_rectangle (cr, graph->indent, 0,
-                     graph->draw_width - graph->rmargin - graph->indent, graph->real_draw_height);
+                     graph->draw_width - graph->rmargin - graph->indent/2, graph->real_draw_height);
     cairo_fill(cr);
 
     cairo_set_line_width (cr, 1.0);
@@ -127,7 +127,7 @@ void draw_background(LoadGraph *graph) {
         pango_layout_set_alignment (layout, PANGO_ALIGN_LEFT);
         pango_layout_set_text (layout, caption, -1);
         pango_layout_get_extents (layout, NULL, &extents);
-        cairo_move_to (cr, graph->draw_width - graph->indent - 23,
+        cairo_move_to (cr, graph->draw_width - graph->indent/2 - 23,
                        y - 1.0 * extents.height / PANGO_SCALE / 2);
         pango_cairo_show_layout (cr, layout);
         g_free(caption);
@@ -137,7 +137,7 @@ void draw_background(LoadGraph *graph) {
         else 
           cairo_set_source_rgb (cr, 0.89, 0.89, 0.89);
         cairo_move_to (cr, graph->indent, i * graph->graph_dely + 0.5);
-        cairo_line_to (cr, graph->draw_width - graph->rmargin + 0.5 + 4, i * graph->graph_dely + 0.5);
+        cairo_line_to (cr, graph->draw_width - graph->rmargin + graph->indent/2 + 0.5 + 4, i * graph->graph_dely + 0.5);
         cairo_stroke (cr);
     }
     
@@ -145,7 +145,7 @@ void draw_background(LoadGraph *graph) {
     const unsigned total_seconds = graph->speed * (LoadGraph::NUM_POINTS - 2) / 1000;
 
     for (unsigned int i = 0; i < 7; i++) {
-        double x = (i) * (graph->draw_width - graph->rmargin - graph->indent) / 6;
+        double x = (i) * (graph->draw_width - graph->rmargin - graph->indent/2) / 6;
         if (i==0 || i==6)
           cairo_set_source_rgb (cr, 0.70, 0.71, 0.70);
         else 
@@ -240,7 +240,7 @@ load_graph_draw (GtkWidget *widget,
     }
 
     /* Number of pixels wide for one graph point */
-    sample_width = (float)(graph->draw_width - graph->rmargin - graph->indent) / (float)LoadGraph::NUM_POINTS;
+    sample_width = (float)(graph->draw_width - graph->rmargin - graph->indent/2) / (float)LoadGraph::NUM_POINTS;
     /* General offset */
     x_offset = graph->draw_width - graph->rmargin;
 
@@ -256,7 +256,7 @@ load_graph_draw (GtkWidget *widget,
     cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
     cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
     cairo_rectangle (cr, graph->indent + FRAME_WIDTH + 1, FRAME_WIDTH - 1,
-                     graph->draw_width - graph->rmargin - graph->indent - 1,
+                     graph->draw_width - graph->rmargin - graph->indent/2 - 1,
                      graph->real_draw_height + FRAME_WIDTH - 1);
     cairo_clip(cr);
 
