@@ -173,7 +173,6 @@ static void
 create_sys_view (GsmApplication *app, GtkBuilder * builder)
 {
     GtkWidget *cpu_graph_box, *mem_graph_box, *net_graph_box;
-    GtkWidget *cpu_exp, *mem_exp, *net_exp;
     GtkWidget *label,*cpu_label;
     GtkWidget *table;
     GtkWidget *color_picker;
@@ -327,24 +326,6 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
 
     app->net_graph = net_graph;
     g_free (title_template);
-
-    cpu_exp = GTK_WIDGET (gtk_builder_get_object (builder, "cpu_exp"));
-    mem_exp = GTK_WIDGET (gtk_builder_get_object (builder, "mem_exp"));
-    net_exp = GTK_WIDGET (gtk_builder_get_object (builder, "net_exp"));
-
-    g_object_bind_property (cpu_exp, "expanded", cpu_graph_box, "visible", G_BINDING_SYNC_CREATE);
-    g_object_bind_property (mem_exp, "expanded", mem_graph_box, "visible", G_BINDING_SYNC_CREATE);
-    g_object_bind_property (net_exp, "expanded", net_graph_box, "visible", G_BINDING_SYNC_CREATE);
-
-    g_settings_bind (app->settings, GSM_SETTING_SHOW_CPU,
-                     cpu_exp, "expanded",
-                     G_SETTINGS_BIND_DEFAULT);
-    g_settings_bind (app->settings, GSM_SETTING_SHOW_MEM,
-                     mem_exp, "expanded",
-                     G_SETTINGS_BIND_DEFAULT);
-    g_settings_bind (app->settings, GSM_SETTING_SHOW_NETWORK,
-                     net_exp, "expanded",
-                     G_SETTINGS_BIND_DEFAULT);
 
 }
 
