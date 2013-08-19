@@ -343,6 +343,7 @@ on_activate_about (GSimpleAction *, GVariant *, gpointer data)
         "Karl Lattimer",
         "Chris Kühl",
         "Robert Roth",
+        "Stefano Facchini",
         NULL
     };
 
