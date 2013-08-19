@@ -1103,7 +1103,7 @@ proctable_update (GsmApplication *app)
     int which = 0;
     int arg = 0;
 
-    const char* whose_processes = g_settings_get_string (app->settings, GSM_SETTING_SHOW_WHOSE_PROCESSES);
+    char *whose_processes = g_settings_get_string (app->settings, GSM_SETTING_SHOW_WHOSE_PROCESSES);
     if (strcmp (whose_processes, "all") == 0) {
         which = GLIBTOP_KERN_PROC_ALL;
         arg = 0;
@@ -1114,6 +1114,7 @@ proctable_update (GsmApplication *app)
       which = GLIBTOP_KERN_PROC_UID;
       arg = getuid ();
     }
+    g_free (whose_processes);
 
     pid_list = glibtop_get_proclist (&proclist, which, arg);
 

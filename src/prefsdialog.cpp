@@ -300,13 +300,15 @@ create_preferences_dialog (GsmApplication *app)
     g_signal_connect (G_OBJECT (prefs_dialog), "response",
                       G_CALLBACK (prefs_dialog_button_pressed), app);
 
-    const char* current_tab = g_settings_get_string (app->settings, GSM_SETTING_CURRENT_TAB);
+    char *current_tab = g_settings_get_string (app->settings, GSM_SETTING_CURRENT_TAB);
     if (strcmp (current_tab, "processes") == 0)
         gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
     else if (strcmp (current_tab, "resources") == 0)
         gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 1);
     else if (strcmp (current_tab, "disks") == 0)
         gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 2);
+
+    g_free (current_tab);
 
     gtk_builder_connect_signals (builder, NULL);
     g_object_unref (G_OBJECT (builder));
