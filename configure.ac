@@ -124,6 +124,7 @@ AC_CONFIG_FILES([
 Makefile
 scripts/Makefile
 src/Makefile
+src/org.gnome.gnome-system-monitor.gschema.xml.in
 po/Makefile.in
 help/Makefile
 gnome-system-monitor.desktop.in
