@@ -11,6 +11,9 @@ ui_files = \
 	data/interface.ui \
 	data/menus.ui
 
+appdatadir = $(datadir)/appdata
+appdata_files = gnome-system-monitor.appdata.xml
+
 css_files = \
 	data/gsm.css
 
@@ -28,6 +31,7 @@ org.gnome.gnome-system-monitor.policy.in: org.gnome.gnome-system-monitor.policy.
 EXTRA_DIST = \
 	$(ui_files) \
 	$(css_files) \
+    $(appdata_files) \
 	$(pixmap_files) \
 	$(runnable_SCRIPTS) \
 	org.gnome.gnome-system-monitor.policy.in.in \
