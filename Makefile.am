@@ -11,9 +11,6 @@ ui_files = \
 	data/interface.ui \
 	data/menus.ui
 
-appdatadir = $(datadir)/appdata
-appdata_DATA = gnome-system-monitor.appdata.xml
-
 css_files = \
 	data/gsm.css
 
@@ -31,7 +28,7 @@ org.gnome.gnome-system-monitor.policy.in: org.gnome.gnome-system-monitor.policy.
 EXTRA_DIST = \
 	$(ui_files) \
 	$(css_files) \
-	$(appdata_DATA) \
+	$(appdata_in_files) \
 	$(pixmap_files) \
 	$(runnable_SCRIPTS) \
 	org.gnome.gnome-system-monitor.policy.in.in \
@@ -50,7 +47,12 @@ polkit_policy_DATA = $(polkit_policy_in_files:.policy.in=.policy)
 Applicationsdir = $(datadir)/applications
 Applications_in_files = gnome-system-monitor.desktop.in gnome-system-monitor-kde.desktop.in
 Applications_DATA = $(Applications_in_files:.desktop.in=.desktop)
+
+appdatadir = $(datadir)/appdata
+appdata_DATA = $(appdata_in_files:.xml.in=.xml)
+appdata_in_files = gnome-system-monitor.appdata.xml.in
 @INTLTOOL_DESKTOP_RULE@
+@INTLTOOL_XML_NOMERGE_RULE@
 
 distuninstallcheck_listfiles = find . -type f -print | grep -v 'scrollkeeper'
 
@@ -79,6 +81,7 @@ DISTCLEANFILES = \
 	intltool-extract              \
 	intltool-merge                \
 	intltool-update               \
+    $(appdata_DATA) \
 	gnome-system-monitor.desktop  \
 	gnome-system-monitor-kde.desktop  \
 	org.gnome.gnome-system-monitor.policy \
