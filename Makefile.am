@@ -52,7 +52,7 @@ appdatadir = $(datadir)/appdata
 appdata_DATA = $(appdata_in_files:.xml.in=.xml)
 appdata_in_files = gnome-system-monitor.appdata.xml.in
 @INTLTOOL_DESKTOP_RULE@
-@INTLTOOL_XML_NOMERGE_RULE@
+@INTLTOOL_XML_RULE@
 
 distuninstallcheck_listfiles = find . -type f -print | grep -v 'scrollkeeper'
 
