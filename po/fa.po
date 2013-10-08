@@ -9,10 +9,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
-"monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-02-11 20:59+0000\n"
-"PO-Revision-Date: 2013-03-21 13:18+0330\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-09-23 20:47+0000\n"
+"PO-Revision-Date: 2013-10-08 20:07+0330\n"
 "Last-Translator: Arash Mousavi <mousavi.arash@gmail.com>\n"
 "Language-Team: Persian\n"
 "Language: fa\n"
@@ -21,15 +20,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/callbacks.cpp:184 ../src/procman-app.cpp:360
+#: ../src/application.cpp:233 ../src/interface.cpp:363
 msgid "System Monitor"
 msgstr "پایشگر سیستم"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2
-#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/callbacks.cpp:185
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:364
 msgid "View current processes and monitor system state"
 msgstr "دیدن فراروند‌های جاری پایش حالت سیستم"
 
@@ -39,38 +38,54 @@ msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr "نمایشگر;سیستم;پردازش;حافظه;شبکه;تاریخچه;استفاده;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#| msgid "System Monitor"
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:289
 msgid "GNOME System Monitor"
 msgstr "پایشگر سیستم گنوم"
 
+#: ../gnome-system-monitor.appdata.xml.in.h:2
+msgid "View and manage system resources"
+msgstr "نمایش و مدیریت منابع سیستم"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:3
+msgid "System Monitor is a process viewer and system monitor with an attractive, easy-to-use interface."
+msgstr "پایشگر سیستم، یک نمایشگر فراروندها و یک نظارت کننده‌ی سیستم، با یک واسط کاربری جذاب و ساده است."
+
+#: ../gnome-system-monitor.appdata.xml.in.h:4
+msgid "System Monitor can help you find out what applications are using the processor or the memory of your computer, can manage the running applications, force stop processes not responding, and change the state or priority of existing processes."
+msgstr "پایشگر سیستم به شما این امکان را می‌دهد که متوجه شوید چه برنامه‌هایی از پردازشکر و یا حافظه شما استفاده می‌کنند، می‌توانید برنامه‌های درحال اجرا را مدیریت کنید، فراروندهایی که پاسخگو نیستند را مجبور به توقف کنید، و الویت یا وضعیت فراروندهای موجود را تغییر دهید."
+
+#: ../gnome-system-monitor.appdata.xml.in.h:5
+msgid "The resource graphs feature shows you a quick overview of what is going on with your computer displaying recent network, memory and processor usage."
+msgstr "امکان نمایش نمودار منابع‌، یک مرور کلی از اتفاقاتی که در حال حاضر در رایانه شما در حال رخ دادن است را با نمایش میزان استفاده از شبکه، حافظه و پردازشگر، به شما نشان می‌دهد."
+
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
-#| msgid "Kill Process"
 msgid "Kill process"
 msgstr "کشتن فراروند"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:2
-msgid "Privileges are required to kill process"
-msgstr "دسترسی‌ها جهت کشتن فراروند لازم هستند"
+#| msgid "Privileges are required to renice process"
+msgid "Privileges are required to control other users' processes"
+msgstr "دسترسی‌ها جهت کنترل فراروند‌های سایر کاربران لازم است"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:3
-#| msgid "Hide Process"
 msgid "Renice process"
 msgstr "نایس مجدد فراروند"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:4
-msgid "Privileges are required to renice process"
-msgstr "دسترسی‌ها جهت نایس مجدد فراروند لازم است"
+#| msgid "Privileges are required to renice process"
+msgid "Privileges are required to change the priority of processes"
+msgstr "دسترسی‌ها جهت تغییر الویت فراروندها لازم است"
 
 #: ../data/interface.ui.h:2
-#| msgid "_View"
-msgid "View"
-msgstr "نما"
-
-#: ../data/interface.ui.h:3
 msgid "End _Process"
 msgstr "به‌_پایان بردن فراروند"
 
-#: ../data/interface.ui.h:4 ../data/preferences.ui.h:9
+#: ../data/interface.ui.h:3
+#| msgid "Process Properties"
+msgid "Show process properties"
+msgstr "نمایش ترجیحات فراروند"
+
+#: ../data/interface.ui.h:4 ../data/preferences.ui.h:11
 msgid "Processes"
 msgstr "فراروند‌ها"
 
@@ -82,12 +97,12 @@ msgstr "تاریخچه‌ی واحد پردازش مرکزی"
 msgid "Memory and Swap History"
 msgstr "تاریخچه‌ی حافظه و فضای مبادله"
 
-#: ../data/interface.ui.h:7 ../src/interface.cpp:249
-#: ../src/procproperties.cpp:132 ../src/proctable.cpp:230
+#: ../data/interface.ui.h:7 ../src/interface.cpp:260
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:336
 msgid "Memory"
 msgstr "حافظه"
 
-#: ../data/interface.ui.h:8 ../src/interface.cpp:260
+#: ../data/interface.ui.h:8 ../src/interface.cpp:272
 msgid "Swap"
 msgstr "حافظه جانشین"
 
@@ -95,7 +110,7 @@ msgstr "حافظه جانشین"
 msgid "Network History"
 msgstr "تاریخچه شبکه"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:285
+#: ../data/interface.ui.h:10 ../src/interface.cpp:300
 msgid "Receiving"
 msgstr "در حال دریافت"
 
@@ -103,24 +118,23 @@ msgstr "در حال دریافت"
 msgid "Total Received"
 msgstr "کل دریافت شده"
 
-#: ../data/interface.ui.h:12
-msgid "Sent"
-msgstr "ارسال شد"
+#: ../data/interface.ui.h:12 ../src/interface.cpp:315
+msgid "Sending"
+msgstr "در حال فرستادن"
 
 #: ../data/interface.ui.h:13
 msgid "Total Sent"
 msgstr "کل فرستاده‌شده"
 
-#: ../data/interface.ui.h:14 ../data/preferences.ui.h:13
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:15
 msgid "Resources"
 msgstr "منابع"
 
-#: ../data/interface.ui.h:15 ../data/preferences.ui.h:16
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:18
 msgid "File Systems"
 msgstr "سیستم پرونده"
 
 #: ../data/lsof.ui.h:1
-#| msgid "Search for Open Files"
 msgctxt "Window title for 'Search for Open Files' dialog"
 msgid "Search for Open Files"
 msgstr "جستجو برای پرونده‌های باز"
@@ -130,19 +144,27 @@ msgid "_Name contains:"
 msgstr "_نام حاوی:"
 
 #: ../data/lsof.ui.h:3
+msgid "_Find"
+msgstr "_پیدا کردن"
+
+#: ../data/lsof.ui.h:4
 msgid "Case insensitive matching"
 msgstr "تطبیق غیر حساس به بزرگی و کوچکی"
 
-#: ../data/lsof.ui.h:4
+#: ../data/lsof.ui.h:5
 msgid "C_lear"
 msgstr "_پاک کردن"
 
-#: ../data/lsof.ui.h:5
+#: ../data/lsof.ui.h:6
 msgid "S_earch results:"
 msgstr "_نتایج جستجو:"
 
+#: ../data/lsof.ui.h:7 ../data/openfiles.ui.h:2 ../data/preferences.ui.h:3
+#: ../src/memmaps.cpp:438 ../src/procproperties.cpp:216
+msgid "_Close"
+msgstr "_بستن"
+
 #: ../data/menus.ui.h:1
-#| msgid "Search for Open Files"
 msgctxt "Menu item to Open 'Search for Open Files' dialog"
 msgid "Search for Open Files"
 msgstr "جستجو برای پرونده‌های باز"
@@ -152,7 +174,6 @@ msgid "Preferences"
 msgstr "ترجیحات"
 
 #: ../data/menus.ui.h:3
-#| msgid "_Help"
 msgid "Help"
 msgstr "راهنما"
 
@@ -164,6 +185,85 @@ msgstr "درباره"
 msgid "Quit"
 msgstr "خروج"
 
+#: ../data/menus.ui.h:6
+msgid "_Refresh"
+msgstr "_نوسازی"
+
+#: ../data/menus.ui.h:7
+msgid "_Active Processes"
+msgstr "فراروند‌های _فعال"
+
+#: ../data/menus.ui.h:8
+msgid "A_ll Processes"
+msgstr "_همه‌ی فراروند‌ها"
+
+#: ../data/menus.ui.h:9
+msgid "M_y Processes"
+msgstr "فراروند‌های من"
+
+#: ../data/menus.ui.h:10
+msgid "_Dependencies"
+msgstr "_وابستگی‌ها"
+
+#: ../data/menus.ui.h:11
+#| msgid "Stopped"
+msgid "_Stop"
+msgstr "_متوقف کردن"
+
+#: ../data/menus.ui.h:12
+#| msgid "_Continue Process"
+msgid "_Continue"
+msgstr "_ادامه‌ دادن"
+
+#: ../data/menus.ui.h:13
+msgid "_End"
+msgstr "_پایان"
+
+#: ../data/menus.ui.h:14
+msgid "_Kill"
+msgstr "_کشتن"
+
+#: ../data/menus.ui.h:15
+msgid "_Change Priority"
+msgstr "_تغییر اولویت"
+
+#: ../data/menus.ui.h:16 ../src/util.cpp:214
+msgid "Very High"
+msgstr "خیلی زیاد"
+
+#: ../data/menus.ui.h:17 ../src/util.cpp:216
+msgid "High"
+msgstr "بالا"
+
+#: ../data/menus.ui.h:18 ../src/util.cpp:218
+msgid "Normal"
+msgstr "عادی"
+
+#: ../data/menus.ui.h:19 ../src/util.cpp:220
+msgid "Low"
+msgstr "پایین"
+
+#: ../data/menus.ui.h:20 ../src/util.cpp:222
+msgid "Very Low"
+msgstr "خیلی پایین"
+
+#: ../data/menus.ui.h:21
+msgid "Custom"
+msgstr "سفارشی"
+
+#: ../data/menus.ui.h:22
+msgid "_Memory Maps"
+msgstr "نگاشت‌های _حافظه"
+
+#. Translators: this means 'Files that are open' (open is not a verb here)
+#: ../data/menus.ui.h:24
+msgid "Open _Files"
+msgstr "_باز کردن پرونده‌ها"
+
+#: ../data/menus.ui.h:25
+msgid "_Properties"
+msgstr "_ترجیحات"
+
 #: ../data/openfiles.ui.h:1
 msgid "Open Files"
 msgstr "پرونده‌های باز"
@@ -173,924 +273,727 @@ msgid "System Monitor Preferences"
 msgstr "ترجیحات پایشگر دستگاه"
 
 #: ../data/preferences.ui.h:2
+#| msgid "Help"
+msgid "_Help"
+msgstr "_راهنما"
+
+#: ../data/preferences.ui.h:4
 msgid "Behavior"
 msgstr "رفتار"
 
-#: ../data/preferences.ui.h:3
+#: ../data/preferences.ui.h:5
 msgid "_Update interval in seconds:"
 msgstr "بازه‌ی _به‌روزرسانی بر حسب ثانیه:"
 
-#: ../data/preferences.ui.h:4
+#: ../data/preferences.ui.h:6
 msgid "Enable _smooth refresh"
 msgstr "به کار انداختن بازآوری نرم"
 
-#: ../data/preferences.ui.h:5
+#: ../data/preferences.ui.h:7
 msgid "Alert before ending or _killing processes"
 msgstr "قبل از _کشتن یا به پایان بردن فراروند‌ها اخطار بده"
 
-#: ../data/preferences.ui.h:6
+#: ../data/preferences.ui.h:8
 msgid "_Divide CPU usage by CPU count"
 msgstr "_تقسیم استفاده از سی‌پی‌یو بر حسب تعداد سی‌پی‌یو"
 
-#: ../data/preferences.ui.h:7
+#: ../data/preferences.ui.h:9
 msgid "Information Fields"
 msgstr "فیلدهای اطلاعات"
 
-#: ../data/preferences.ui.h:8
+#: ../data/preferences.ui.h:10
 msgid "Process i_nformation shown in list:"
 msgstr "ا_طلاعات فراروند که در فهرست نشان داده می‌شوند:"
 
-#: ../data/preferences.ui.h:10
+#: ../data/preferences.ui.h:12
 msgid "Graphs"
 msgstr "نمودارها"
 
-#: ../data/preferences.ui.h:11
-msgid "_Show network speed in bits"
-msgstr "_نمایش سرعت شبکه با بیت"
-
-#: ../data/preferences.ui.h:12
+#: ../data/preferences.ui.h:13
 msgid "_Draw CPU chart as stacked area chart"
 msgstr "_کشیدن نمودار CPU به شکل نمودار سطحی"
 
 #: ../data/preferences.ui.h:14
+msgid "_Show network speed in bits"
+msgstr "_نمایش سرعت شبکه با بیت"
+
+#: ../data/preferences.ui.h:16
 msgid "Show _all file systems"
 msgstr "نمایش _همه‌ی سیستم‌های پرونده"
 
-#: ../data/preferences.ui.h:15
+#: ../data/preferences.ui.h:17
 msgid "File system i_nformation shown in list:"
 msgstr "ا_طلاعات سیستم که در فهرست نشان داده می‌شوند:"
 
-#: ../data/renice.ui.h:1
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:124
+msgid "_Cancel"
+msgstr "_لغو"
+
+#: ../data/renice.ui.h:2
 msgid "Change _Priority"
 msgstr "تغییر _اولویت"
 
-#: ../data/renice.ui.h:2
+#: ../data/renice.ui.h:3
 msgid "_Nice value:"
 msgstr "مقدار _نایس:"
 
-#: ../data/renice.ui.h:3
-msgid ""
-"<small><i><b>Note:</b> The priority of a process is given by its nice value. "
-"A lower nice value corresponds to a higher priority.</i></small>"
-msgstr ""
-"<small><i><b>نکته:</b> اولویت یک فراروند با مقدار نایس آن تعیین می‌شود. هرچه "
-"میزان نایس پایین‌تر باشد، الویت بیشتری دارد.</i></small>"
+#: ../data/renice.ui.h:4
+msgid "<small><i><b>Note:</b> The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority.</i></small>"
+msgstr "<small><i><b>نکته:</b> اولویت یک فراروند با مقدار نایس آن تعیین می‌شود. هرچه میزان نایس پایین‌تر باشد، الویت بیشتری دارد.</i></small>"
 
-#: ../src/argv.cpp:20
+#: ../src/application.cpp:275
+msgid "A simple process and system monitor."
+msgstr "یک فراروند ساده و پایشگر‌ شبکه."
+
+#: ../src/argv.cpp:21
 msgid "Show the Processes tab"
 msgstr "نمایش زبانه‌ی فراروندها"
 
-#: ../src/argv.cpp:25
+#: ../src/argv.cpp:26
 msgid "Show the Resources tab"
 msgstr "نمایش زبانه‌ی منابع"
 
-#: ../src/argv.cpp:30
+#: ../src/argv.cpp:31
 msgid "Show the File Systems tab"
 msgstr "نمایش زبانه‌ی سیستم پرونده"
 
-#: ../src/callbacks.cpp:195
+#: ../src/argv.cpp:35
+#| msgid "Configure the application"
+msgid "Show the application's version"
+msgstr "نمایش نسخه برنامه"
+
+#: ../src/disks.cpp:369 ../src/memmaps.cpp:325
+msgid "Device"
+msgstr "دستگاه"
+
+#: ../src/disks.cpp:370
+msgid "Directory"
+msgstr "شاخه"
+
+#: ../src/disks.cpp:371 ../src/gsm_color_button.c:166 ../src/openfiles.cpp:252
+msgid "Type"
+msgstr "نوع"
+
+#: ../src/disks.cpp:372
+msgid "Total"
+msgstr "مجموع"
+
+#: ../src/disks.cpp:373
+msgid "Free"
+msgstr "آزاد"
+
+#: ../src/disks.cpp:374
+msgid "Available"
+msgstr "موجود"
+
+#: ../src/disks.cpp:375
+msgid "Used"
+msgstr "استفاده شده"
+
+#. xgettext: ? stands for unknown
+#: ../src/e_date.c:156
+msgid "?"
+msgstr "؟"
+
+#: ../src/e_date.c:163
+msgid "Today %l:%M %p"
+msgstr "امروز %Ol:%OM %p"
+
+#: ../src/e_date.c:172
+msgid "Yesterday %l:%M %p"
+msgstr "دیروز %Ol:%OM %p"
+
+#: ../src/e_date.c:184
+msgid "%a %l:%M %p"
+msgstr "%a %Ol:%OM %p"
+
+#: ../src/e_date.c:192
+msgid "%b %d %l:%M %p"
+msgstr "%b %Id %Ol:%OM %p"
+
+#: ../src/e_date.c:194
+msgid "%b %d %Y"
+msgstr "%b %d %Y"
+
+#: ../src/gsm_color_button.c:142
+msgid "Fraction"
+msgstr "کسر"
+
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+#: ../src/gsm_color_button.c:144
+msgid "Percentage full for pie color pickers"
+msgstr "درصد پُر برای انتخابگر رنگ"
+
+#: ../src/gsm_color_button.c:151
+msgid "Title"
+msgstr "عنوان"
+
+#: ../src/gsm_color_button.c:152
+msgid "The title of the color selection dialog"
+msgstr "عنوان جعبه محاوره‌ی انتخاب رنگ"
+
+#: ../src/gsm_color_button.c:153 ../src/gsm_color_button.c:513
+msgid "Pick a Color"
+msgstr "یک رنگ بردارید"
+
+#: ../src/gsm_color_button.c:159
+msgid "Current Color"
+msgstr "رنگ جاری"
+
+#: ../src/gsm_color_button.c:160
+msgid "The selected color"
+msgstr "رنگ انتخاب‌شده"
+
+#: ../src/gsm_color_button.c:167
+msgid "Type of color picker"
+msgstr "نوع انتخابگر رنگ"
+
+#: ../src/gsm_color_button.c:435
+msgid "Received invalid color data\n"
+msgstr "داده‌های رنگ نامعتبر دریافت شد\n"
+
+#: ../src/gsm_color_button.c:536
+msgid "Click to set graph colors"
+msgstr "برای تنظیم رنگ‌های نمودار کلیک کنید"
+
+#. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
+#: ../src/interface.cpp:188
+#, c-format
+msgid "Pick a Color for '%s'"
+msgstr "یک رنگ برای %s بردارید"
+
+#: ../src/interface.cpp:221 ../src/procproperties.cpp:95
+msgid "CPU"
+msgstr "واحد پردازش مرکزی"
+
+#: ../src/interface.cpp:223
+#, c-format
+msgid "CPU%d"
+msgstr "سی‌پی‌یو%Id"
+
+#: ../src/interface.cpp:374
 msgid "translator-credits"
 msgstr ""
 "آرش موسوی <mousavi.arash@gmail.com>\n"
 "مهیار مقیمی <mahyar.moqimi@gmail.com>\n"
 "روزبه پورنادر <roozbeh@sharif.edu>"
 
-#: ../src/disks.cpp:304 ../src/memmaps.cpp:361
-msgid "Device"
-msgstr "دستگاه"
-
-#: ../src/disks.cpp:305
-msgid "Directory"
-msgstr "شاخه"
-
-#: ../src/disks.cpp:306 ../src/gsm_color_button.c:223 ../src/openfiles.cpp:251
-msgid "Type"
-msgstr "نوع"
-
-#: ../src/disks.cpp:307
-msgid "Total"
-msgstr "مجموع"
-
-#: ../src/disks.cpp:308
-msgid "Free"
-msgstr "آزاد"
-
-#: ../src/disks.cpp:309
-msgid "Available"
-msgstr "موجود"
-
-#: ../src/disks.cpp:310
-msgid "Used"
-msgstr "استفاده شده"
-
-#. xgettext: ? stands for unknown
-#: ../src/e_date.c:155
-msgid "?"
-msgstr "؟"
-
-#: ../src/e_date.c:162
-msgid "Today %l:%M %p"
-msgstr "امروز %Ol:%OM %p"
-
-#: ../src/e_date.c:171
-msgid "Yesterday %l:%M %p"
-msgstr "دیروز %Ol:%OM %p"
-
-#: ../src/e_date.c:183
-msgid "%a %l:%M %p"
-msgstr "%a %Ol:%OM %p"
-
-#: ../src/e_date.c:191
-msgid "%b %d %l:%M %p"
-msgstr "%b %Id %Ol:%OM %p"
-
-#: ../src/e_date.c:193
-msgid "%b %d %Y"
-msgstr "%b %d %Y"
-
-#: ../src/gsm_color_button.c:199
-msgid "Fraction"
-msgstr "کسر"
-
-#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:201
-msgid "Percentage full for pie color pickers"
-msgstr "درصد پُر برای انتخابگر رنگ"
-
-#: ../src/gsm_color_button.c:208
-msgid "Title"
-msgstr "عنوان"
-
-#: ../src/gsm_color_button.c:209
-msgid "The title of the color selection dialog"
-msgstr "عنوان جعبه محاوره‌ی انتخاب رنگ"
-
-#: ../src/gsm_color_button.c:210 ../src/gsm_color_button.c:628
-msgid "Pick a Color"
-msgstr "یک رنگ بردارید"
-
-#: ../src/gsm_color_button.c:216
-msgid "Current Color"
-msgstr "رنگ جاری"
-
-#: ../src/gsm_color_button.c:217
-msgid "The selected color"
-msgstr "رنگ انتخاب‌شده"
-
-#: ../src/gsm_color_button.c:224
-msgid "Type of color picker"
-msgstr "نوع انتخابگر رنگ"
-
-#: ../src/gsm_color_button.c:550
-msgid "Received invalid color data\n"
-msgstr "داده‌های رنگ نامعتبر دریافت شد\n"
-
-#: ../src/gsm_color_button.c:651
-msgid "Click to set graph colors"
-msgstr "برای تنظیم رنگ‌های نمودار کلیک کنید"
-
-#: ../src/interface.cpp:47
-msgid "_View"
-msgstr "_نما"
-
-#: ../src/interface.cpp:49
-msgid "_Stop Process"
-msgstr "_توقف فراروند"
-
-#: ../src/interface.cpp:50
-msgid "Stop process"
-msgstr "توقف فراروند"
-
-#: ../src/interface.cpp:51
-msgid "_Continue Process"
-msgstr "_ادامه‌ی فراروند"
-
-#: ../src/interface.cpp:52
-msgid "Continue process if stopped"
-msgstr "فراروند را اگر متوقف شد ادامه بده"
-
-#: ../src/interface.cpp:54 ../src/procdialogs.cpp:96
-msgid "_End Process"
-msgstr "_پایان بردن فراروند"
-
-#: ../src/interface.cpp:55
-msgid "Force process to finish normally"
-msgstr "اجبار فراروند جهت پایان بردن به حالت معمولی"
-
-#: ../src/interface.cpp:56 ../src/procdialogs.cpp:85
-msgid "_Kill Process"
-msgstr "_کشتن فراروند"
-
-#: ../src/interface.cpp:57
-msgid "Force process to finish immediately"
-msgstr "فراروند مجبور شود که فوری به پایان برود"
-
-#: ../src/interface.cpp:58
-msgid "_Change Priority"
-msgstr "_تغییر اولویت"
-
-#: ../src/interface.cpp:59
-msgid "Change the order of priority of process"
-msgstr "تغییر ترتیب اولویت فراروند"
-
-#: ../src/interface.cpp:61
-msgid "_Refresh"
-msgstr "_نوسازی"
-
-#: ../src/interface.cpp:62
-msgid "Refresh the process list"
-msgstr "نوسازی فهرست فراروند‌ها"
-
-#: ../src/interface.cpp:64
-msgid "_Memory Maps"
-msgstr "نگاشت‌های _حافظه"
-
-#: ../src/interface.cpp:65
-msgid "Open the memory maps associated with a process"
-msgstr "نگاشت‌های حافظه‌ی همبسته با یک فراروند باز شوند"
-
-#. Translators: this means 'Files that are open' (open is no verb here)
-#: ../src/interface.cpp:67
-msgid "Open _Files"
-msgstr "_باز کردن پرونده‌ها"
-
-#: ../src/interface.cpp:68
-msgid "View the files opened by a process"
-msgstr "دیدن پرونده‌های باز شده توسط یک فراروند"
-
-#: ../src/interface.cpp:69
-msgid "_Properties"
-msgstr "_ترجیحات"
-
-#: ../src/interface.cpp:70
-msgid "View additional information about a process"
-msgstr "نمایش اطلاعات بیشتر درباره یک فراروند"
-
-#: ../src/interface.cpp:75
-msgid "_Dependencies"
-msgstr "_وابستگی‌ها"
-
-#: ../src/interface.cpp:76
-msgid "Show parent/child relationship between processes"
-msgstr "نشان دادن روابط مادر فرزندی فراروندها"
-
-#: ../src/interface.cpp:83
-msgid "_Active Processes"
-msgstr "فراروند‌های _فعال"
-
-#: ../src/interface.cpp:84
-msgid "Show active processes"
-msgstr "فراروندهای فعال نشان داده شوند"
-
-#: ../src/interface.cpp:85
-msgid "A_ll Processes"
-msgstr "_همه‌ی فراروند‌ها"
-
-#: ../src/interface.cpp:86
-msgid "Show all processes"
-msgstr "نمایش همه‌ی فراروند‌ها"
-
-#: ../src/interface.cpp:87
-msgid "M_y Processes"
-msgstr "فراروند‌های من"
-
-#: ../src/interface.cpp:88
-msgid "Show only user-owned processes"
-msgstr "تنها نمایش فرآروند‌های مربوط به کاربر"
-
-#: ../src/interface.cpp:93 ../src/util.cpp:217
-msgid "Very High"
-msgstr "خیلی زیاد"
-
-#: ../src/interface.cpp:94
-msgid "Set process priority to very high"
-msgstr "تنظیم الویت فراروند به خیلی بالا"
-
-#: ../src/interface.cpp:95 ../src/util.cpp:219
-msgid "High"
-msgstr "بالا"
-
-#: ../src/interface.cpp:96
-msgid "Set process priority to high"
-msgstr "تنظیم الویت فراروند به بالا"
-
-#: ../src/interface.cpp:97 ../src/util.cpp:221
-msgid "Normal"
-msgstr "عادی"
-
-#: ../src/interface.cpp:98
-msgid "Set process priority to normal"
-msgstr "تنظیم الویت فراروند به عادی"
-
-#: ../src/interface.cpp:99 ../src/util.cpp:223
-msgid "Low"
-msgstr "پایین"
-
-#: ../src/interface.cpp:100
-msgid "Set process priority to low"
-msgstr "تنظیم الویت فراروند به پایین"
-
-#: ../src/interface.cpp:101 ../src/util.cpp:225
-msgid "Very Low"
-msgstr "خیلی پایین"
-
-#: ../src/interface.cpp:102
-msgid "Set process priority to very low"
-msgstr "تنظیم الویت فراروند به خیلی پایین"
-
-#: ../src/interface.cpp:103
-msgid "Custom"
-msgstr "سفارشی"
-
-#: ../src/interface.cpp:104
-msgid "Set process priority manually"
-msgstr "تنظیم دستیِ الویت فراروند"
-
-#. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:178
-#, c-format
-msgid "Pick a Color for '%s'"
-msgstr "یک رنگ برای %s بردارید"
-
-#: ../src/interface.cpp:214 ../src/procproperties.cpp:138
-msgid "CPU"
-msgstr "واحد پردازش مرکزی"
-
-#: ../src/interface.cpp:216
-#, c-format
-msgid "CPU%d"
-msgstr "سی‌پی‌یو%Id"
-
-#: ../src/interface.cpp:300
-msgid "Sending"
-msgstr "در حال فرستادن"
-
-#: ../src/load-graph.cpp:174
+#: ../src/load-graph.cpp:160
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%Iu ثانیه"
 msgstr[1] "%Iu ثانیه"
 
-#: ../src/load-graph.cpp:369
+#: ../src/load-graph.cpp:375
 msgid "not available"
 msgstr "موجود نیست"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:372
+#: ../src/load-graph.cpp:378
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (٪%I.1f) از %s"
 
-#: ../src/lsof.cpp:125
+#: ../src/lsof.cpp:123
 msgid "Error"
 msgstr "خطا"
 
-#: ../src/lsof.cpp:126
+#: ../src/lsof.cpp:124
 #, c-format
 msgid "'%s' is not a valid Perl regular expression."
 msgstr "«%s» یک عبارت با قائده‌ی معتبر پِرل نیست."
 
-#: ../src/lsof.cpp:272
+#: ../src/lsof.cpp:270
 msgid "Process"
 msgstr "فراروند"
 
-#: ../src/lsof.cpp:284
+#: ../src/lsof.cpp:282
 msgid "PID"
 msgstr "شناسه‌های فراروند"
 
-#: ../src/lsof.cpp:294 ../src/memmaps.cpp:339
+#: ../src/lsof.cpp:292 ../src/memmaps.cpp:303
 msgid "Filename"
 msgstr "نام پرونده"
 
 #. xgettext: virtual memory start
-#: ../src/memmaps.cpp:341
+#: ../src/memmaps.cpp:305
 msgid "VM Start"
 msgstr "آغاز حافظه‌ی مجازی"
 
 #. xgettext: virtual memory end
-#: ../src/memmaps.cpp:343
+#: ../src/memmaps.cpp:307
 msgid "VM End"
 msgstr "پایان حافظه‌ی مجازی"
 
 #. xgettext: virtual memory syze
-#: ../src/memmaps.cpp:345
+#: ../src/memmaps.cpp:309
 msgid "VM Size"
 msgstr "اندازه‌ی حافظه‌ی مجازی"
 
-#: ../src/memmaps.cpp:346
+#: ../src/memmaps.cpp:310
 msgid "Flags"
 msgstr "نشان‌ها"
 
 #. xgettext: virtual memory offset
-#: ../src/memmaps.cpp:348
+#: ../src/memmaps.cpp:312
 msgid "VM Offset"
 msgstr "انحراف حافظه‌ی مجازی"
 
 #. xgettext: memory that has not been modified since
 #. it has been allocated
-#: ../src/memmaps.cpp:351
+#: ../src/memmaps.cpp:315
 msgid "Private clean"
 msgstr "حافظه‌ی خصوصی و نوشته نشده"
 
 #. xgettext: memory that has been modified since it
 #. has been allocated
-#: ../src/memmaps.cpp:354
+#: ../src/memmaps.cpp:318
 msgid "Private dirty"
 msgstr "حافظه‌ی خصوصی نوشته شده"
 
 #. xgettext: shared memory that has not been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:357
+#: ../src/memmaps.cpp:321
 msgid "Shared clean"
 msgstr "حافظه‌ی به اشتراک گذاشته شده و نوشته نشده"
 
 #. xgettext: shared memory that has been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:360
+#: ../src/memmaps.cpp:324
 msgid "Shared dirty"
 msgstr "حافظه‌ی به اشتراک گذاشته شده و نوشته شده"
 
-#: ../src/memmaps.cpp:362
+#: ../src/memmaps.cpp:326
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.cpp:467
+#: ../src/memmaps.cpp:436
 msgid "Memory Maps"
 msgstr "نقشه‌های حافظه"
 
-#: ../src/memmaps.cpp:479
+#: ../src/memmaps.cpp:448
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "نگاشت حافظه برای فراروند «%s» (شناسه %Iu):"
 
-#: ../src/openfiles.cpp:38
+#: ../src/openfiles.cpp:40
 msgid "file"
 msgstr "پرونده"
 
-#: ../src/openfiles.cpp:40
+#: ../src/openfiles.cpp:42
 msgid "pipe"
 msgstr "لوله‌"
 
-#: ../src/openfiles.cpp:42
+#: ../src/openfiles.cpp:44
 msgid "IPv6 network connection"
 msgstr "اتصال‌های شبکه‌ی IPv6"
 
-#: ../src/openfiles.cpp:44
+#: ../src/openfiles.cpp:46
 msgid "IPv4 network connection"
 msgstr "اتصال‌های شبکه‌ی IPv4"
 
-#: ../src/openfiles.cpp:46
+#: ../src/openfiles.cpp:48
 msgid "local socket"
 msgstr "سوکت محلی"
 
-#: ../src/openfiles.cpp:48
+#: ../src/openfiles.cpp:50
 msgid "unknown type"
 msgstr "نوع ناشناخته"
 
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.cpp:250
+#: ../src/openfiles.cpp:251
 msgid "FD"
 msgstr "FD"
 
-#: ../src/openfiles.cpp:252
+#: ../src/openfiles.cpp:253
 msgid "Object"
 msgstr "شئ"
 
-#: ../src/openfiles.cpp:346
+#: ../src/openfiles.cpp:337
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_پرونده‌هایی که با فراروند «%s» (شناسه %Iu): باز شده‌اند:"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:1
-msgid "Main Window width"
-msgstr "عرض پنجره اصلی"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:1
+msgid "Main window size and position in the form (width, height, xpos, ypos)"
+msgstr "اندازه و مکان پنجره اصلی در شکل (width, height, xpos, ypos)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:2
-msgid "Main Window height"
-msgstr "طول پنجره اصلی"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:2
 msgid "Main Window should open maximized"
 msgstr "پنجره اصلی باید در حالت بیشینه باز شود"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
-msgid "Main Window X position"
-msgstr "مکان X پنجره اصلی"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
-msgid "Main Window Y position"
-msgstr "مکان Y پنجره اصلی"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:6
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:3
 msgid "Show process dependencies in tree form"
 msgstr "وابستگی‌های فراروند به فرم درختی نشان داده شوند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:4
 msgid "Solaris mode for CPU percentage"
 msgstr "حالت سولاریس برای درصد واحد پردازش مرکزی"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
-msgid ""
-"If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
-"is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
-"mode'."
-msgstr ""
-"اگر درست باشد، پایشگر سیستم در «حالت سولاریس» اجرا خواهد شد که در آن میزان "
-"مصرف واحد پردازش مرکزی توسط یک تکلیف تقسیم بر تعداد واحد‌های پردازش مرکزی "
-"می‌شود. در غیر این‌صورت در «حالت Irix» عمل خواهد کرد."
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:5
+msgid "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage is divided by the total number of CPUs. Otherwise, it operates in 'Irix mode'."
+msgstr "اگر درست باشد، پایشگر سیستم در «حالت سولاریس» اجرا خواهد شد که در آن میزان مصرف واحد پردازش مرکزی توسط یک تکلیف تقسیم بر تعداد واحد‌های پردازش مرکزی می‌شود. در غیر این‌صورت در «حالت Irix» عمل خواهد کرد."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:6
 msgid "Show CPU chart as stacked area chart"
 msgstr "نمایش نمودار CPU به شکل نمودار سطحی"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
-msgid ""
-"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
-"of a line chart."
-msgstr ""
-"اگر درست باشد، پایشگر سیستم نمودار CPU را به شکل نمودار سطحی، به‌جای نمودار "
-"خطی، نمایش می‌دهد."
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:7
+msgid "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead of a line chart."
+msgstr "اگر درست باشد، پایشگر سیستم نمودار CPU را به شکل نمودار سطحی، به‌جای نمودار خطی، نمایش می‌دهد."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:8
 msgid "Enable/Disable smooth refresh"
 msgstr "به‌کارانداختن/از کارانداختن نوسازی نرم"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
 msgid "Show warning dialog when killing processes"
 msgstr "هنگام کشتن فراروند‌ها جعبه‌ی محاوره‌ی اخطار نشان داده شود"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:10
 msgid "Time in milliseconds between updates of the process view"
 msgstr "زمان بین به‌روزرسانی نمای فراروند‌ها بر حسب میلی ثانیه"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:11
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "زمان بین به‌روزرسانی نمودار بر حسب میلی ثانیه"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:12
 msgid "Whether information about all file systems should be displayed"
 msgstr "اینکه اطلاعات درباره‌ی همه‌ی سیستم‌های پرونده‌ای نشان داده شود یا نه"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
-msgid ""
-"Whether to display information about all file systems (including types like "
-"'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
-"file systems."
-msgstr ""
-"اینکه اطلاعات درباره‌ی تمام سیستم‌های پرونده‌ای نشان داده شود یا نه (از جمله "
-"«autofs» و «procfs»). برای گرفتن فهرستی از همه‌ی سیستم‌های سوار‌شده‌ی جاری مفید "
-"است."
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:13
+msgid "Whether to display information about all file systems (including types like 'autofs' and 'procfs'). Useful for getting a list of all currently mounted file systems."
+msgstr "اینکه اطلاعات درباره‌ی تمام سیستم‌های پرونده‌ای نشان داده شود یا نه (از جمله «autofs» و «procfs»). برای گرفتن فهرستی از همه‌ی سیستم‌های سوار‌شده‌ی جاری مفید است."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:14
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "زمان بین به‌روزرسانی فهرست دستگاه‌ها بر حسب میلی ثانیه"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
-msgid ""
-"Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
-"active"
-msgstr ""
-"مشخص می‌کند که چه فراروند‌هایی به طور پیش‌فرض نشان داده شوند. ۰ برای همه، ۱ "
-"برای کاربر، و ۲ برای فعال"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
+msgid "Determines which processes to show."
+msgstr "تعیین می‌کند که کدام فراروند نمایش داده شود."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:16
 msgid "Saves the currently viewed tab"
 msgstr "زبانه جاری را ذخیره می‌کند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
-msgid ""
-"0 for the System Info, 1 for the processes list, 2 for the resources and 3 "
-"for the disks list"
-msgstr ""
-"۰ برای اطلاعات سیستم، ۱ برای فهرست فراروند‌ها، ۲ برای منابع و ۳ برای فهرست "
-"دیسک‌ها"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:17
 msgid "CPU colors"
 msgstr "رنگ‌های سی‌پی‌یو"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:18
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr "هر ورودی در قالب است (CPU#، مقدار هگزادسیمال رنگ) "
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:19
 msgid "Default graph memory color"
 msgstr "رنگ پیش‌فرض گراف حافظه"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:20
 msgid "Default graph swap color"
 msgstr "رنگ پس‌زمینه‌ی نمودار حافظه‌ی مبادله"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:21
 msgid "Default graph incoming network traffic color"
 msgstr "رنگ ترافیک ورودی شبکه در نمودار پیش‌فرض"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:22
 msgid "Default graph outgoing network traffic color"
 msgstr "رنگ ترافیک خروجی شبکه در نمودار پیش‌فرض"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:23
 msgid "Show network traffic in bits"
 msgstr "نمایش ترافیک شبکه بر حسب بیت"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:24
 msgid "Process view sort column"
 msgstr "ستون ترتیب نمایش واحد پردازش مرکزی"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:25
 msgid "Process view columns order"
 msgstr "ترتیب ستون‌های نمایش واحد بردازش مرکزی"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:26
 msgid "Process view sort order"
 msgstr "ترتیب مرتب کردن نمایه‌ی فراروندها"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:27
 msgid "Width of process 'Name' column"
 msgstr "عرض ستون «نام» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:28
 msgid "Show process 'Name' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «نام» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:29
 msgid "Width of process 'User' column"
 msgstr "عرض ستون «کاربر» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:30
 msgid "Show process 'User' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «کاربر» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:31
 msgid "Width of process 'Status' column"
 msgstr "عرض ستون «وضعیت» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:32
 msgid "Show process 'Status' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «وضعیت» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:33
 msgid "Width of process 'Virtual Memory' column"
 msgstr "عرض ستون «حافظه‌ی مجازی» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:34
 msgid "Show process 'Virtual Memory' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «حافظه‌ی مجازی» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:35
 msgid "Width of process 'Resident Memory' column"
 msgstr "عرض ستون «حافظه‌ی مقیم» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:36
 msgid "Show process 'Resident Memory' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «حافظه‌ی مقیم» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:37
 msgid "Width of process 'Writable Memory' column"
 msgstr "عرض ستون «حافظه‌ی قابل نوشتن» فرایند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:38
 msgid "Show process 'Writable Memory' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «حافظه‌ی قابل نوشتن» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:39
 msgid "Width of process 'Shared Memory' column"
 msgstr "عرض ستون «حافظه‌ی اشتراکی» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:44
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:40
 msgid "Show process 'Shared Memory' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «حافظه‌ی اشتراکی» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:41
 msgid "Width of process 'X Server Memory' column"
 msgstr "عرض ستون «حافظه‌ی کارگزار ایکس» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:46
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:42
 msgid "Show process 'X Server Memory' column on startup"
 msgstr "در زمان راه اندازی، ستونِ «حافظه‌ی کارگزار ایکس» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:44
 #, no-c-format
 msgid "Width of process 'CPU %' column"
 msgstr "عرض ستون «٪ سی‌پی‌یو» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:46
 #, no-c-format
 msgid "Show process 'CPU %' column on startup"
 msgstr "در زمان راه‌اندازی ستون «٪ سی‌پی‌یو» فراروند نشان داده شود"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:47
 msgid "Width of process 'CPU Time' column"
 msgstr "عرض ستون «زمان سی‌پی‌یو» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:48
 msgid "Show process 'CPU Time' column on startup"
 msgstr "در زمان راه اندازی، ستونِ «زمانِ واحد پردازش مرکزیِ» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:49
 msgid "Width of process 'Started' column"
 msgstr "عرض ستون «زمان آغاز» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:50
 msgid "Show process 'Started' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «زمان آغاز» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:51
 msgid "Width of process 'Nice' column"
 msgstr "عرض ستون «نایس» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:52
 msgid "Show process 'Nice' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «نایس» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:53
 msgid "Width of process 'PID' column"
 msgstr "عرض ستون «شناسه‌»‌ی فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:54
 msgid "Show process 'PID' column on startup"
 msgstr "در زمان راه اندازی ستون «شناسه‌ی فراروند» نشان داده شود."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:55
 msgid "Width of process 'SELinux Security Context' column"
 msgstr "عرض ستون «محتویات امنیت سِلینوکس» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:56
 msgid "Show process 'SELinux Security Context' column on startup"
 msgstr "در زمان راه اندازی، ستونِ «متنِ امنیتِ سِلینوکس» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:57
 msgid "Width of process 'Command Line' column"
 msgstr "عرض ستون «نایس» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:58
 msgid "Show process 'Command Line' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «خط فرمان» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:59
 msgid "Width of process 'Memory' column"
 msgstr "عرض ستون «حافظه»ی فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:60
 msgid "Show process 'Memory' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «حافظه» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:61
 msgid "Width of process 'Waiting Channel' column"
 msgstr "عرض ستون «کانال انتظار» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:62
 msgid "Show process 'Waiting Channel' column on startup"
 msgstr "در زمان راه اندازی ستون «کانال انتظار» فراروند نشان داده شود."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:63
 msgid "Width of process 'Control Group' column"
 msgstr "عرض ستون «گروه کنترل» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:64
 msgid "Show process 'Control Group' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «گروه کنترل» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:65
 msgid "Width of process 'Unit' column"
 msgstr "عرض ستون «واحد» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:66
 msgid "Show process 'Unit' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «واحد» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:67
 msgid "Width of process 'Session' column"
 msgstr "عرض ستون «نشست» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:68
 msgid "Show process 'Session' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «نشست» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:69
 msgid "Width of process 'Seat' column"
 msgstr "عرض ستون «جایگاه» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:70
 msgid "Show process 'Seat' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «جایگاه» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:71
 msgid "Width of process 'Owner' column"
 msgstr "عرض ستون «مالک» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:72
 msgid "Show process 'Owner' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «مالک» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:73
 msgid "Width of process 'Priority' column"
 msgstr "عرض ستون «الویت» فراروند"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:74
 msgid "Show process 'Priority' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «الویت» فراروند را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:75
 msgid "Disk view sort column"
 msgstr "ترتیب ستون نمایه‌ی دیسک"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
 msgid "Disk view sort order"
 msgstr "ترتیب چیدمان نمایه‌ی دیسک"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
 msgid "Disk view columns order"
 msgstr "ترتیب ستون‌ها نمایه‌ی دیسک"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
-#| msgid "Width of process 'Nice' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
 msgid "Width of disk view 'Device' column"
 msgstr "عرض ستون «دستگاه» در نمای دیسک"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:83
-#| msgid "Show process 'Nice' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
 msgid "Show disk view 'Device' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «دستگاه» در نمای دیسک را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:84
-#| msgid "Width of process 'Memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
 msgid "Width of disk view 'Directory' column"
 msgstr "عرض ستون «شاخه» در نمای دیسک"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:85
-#| msgid "Show process 'Memory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
 msgid "Show disk view 'Directory' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «شاخه» در نمای دیسک را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:86
-#| msgid "Width of process 'Name' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
 msgid "Width of disk view 'Type' column"
 msgstr "عرض ستون «نوع» در نمای دیسک"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:87
-#| msgid "Show process 'Name' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
 msgid "Show disk view 'Type' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «نوع» در نمای دیسک را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:88
-#| msgid "Width of process 'Status' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
 msgid "Width of disk view 'Total' column"
 msgstr "عرض ستون «مجموع» در نمای دیسک"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:89
-#| msgid "Show process 'Status' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
 msgid "Show disk view 'Total' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «مجموع» در نمای دیسک را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:90
-#| msgid "Width of process 'Name' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
 msgid "Width of disk view 'Free' column"
 msgstr "عرض ستون «آزاد» در نمای دیسک"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:91
-#| msgid "Show process 'Name' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
 msgid "Show disk view 'Free' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «آزاد» در نمای دیسک را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:92
-#| msgid "Width of process 'Name' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
 msgid "Width of disk view 'Available' column"
 msgstr "عرض ستون «موجود» در نمای دیسک"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:93
-#| msgid "Show process 'Name' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
 msgid "Show disk view 'Available' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «موجود» در نمای دیسک را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:94
-#| msgid "Width of process 'User' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
 msgid "Width of disk view 'Used' column"
 msgstr "عرض ستون «استفاده شده» در نمای دیسک"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:95
-#| msgid "Show process 'User' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
 msgid "Show disk view 'Used' column on startup"
 msgstr "در زمان راه‌اندازی، ستونِ «استفاده شده» در نمای دیسک را نشان بده"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:96
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
 msgid "Memory map sort column"
 msgstr "ترتیب ستون نگاشت حافظه"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:97
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
 msgid "Memory map sort order"
 msgstr "ترتیب چیدمان نگاشت‌های حافظه"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:98
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
 msgid "Open files sort column"
 msgstr "ستون ترتیب پرونده‌های باز"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:99
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
 msgid "Open files sort order"
 msgstr "ترتیب چیدمان پرونده‌های باز"
+
+#: ../src/prefsdialog.cpp:181
+msgid "Icon"
+msgstr "شمایل"
 
 #: ../src/procactions.cpp:76
 #, c-format
@@ -1101,7 +1004,7 @@ msgstr ""
 "تغییر اولویت فراروند با شناسه %Id به %Id امکان‌پذیر نیست.\n"
 "%s"
 
-#: ../src/procactions.cpp:156
+#: ../src/procactions.cpp:154
 #, c-format
 msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
@@ -1110,309 +1013,418 @@ msgstr ""
 "کشتن فراروند با شناسه %Id با سیگنال %Id امکان‌پذیر نیست.\n"
 "%s"
 
-#. xgettext: primary alert message
-#: ../src/procdialogs.cpp:78
+#. xgettext: primary alert message for killing single process
+#: ../src/procdialogs.cpp:76
 #, c-format
-#| msgid "Kill the selected process »%s« (PID: %u)?"
-msgid "Kill the selected process “%s” (PID: %u)?"
-msgstr "فراروند انتخاب شده «%s» کشته شود (شناسه: %Iu)؟"
+#| msgid "Kill the selected process “%s” (PID: %u)?"
+msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
+msgstr "آیا مطمئنید که می‌خواهید فراروند انتخاب شده «%s» کشته شود (شناسه: %Iu)؟"
+
+#. xgettext: primary alert message for ending single process
+#: ../src/procdialogs.cpp:81
+#, c-format
+#| msgid "End the selected process “%s” (PID: %u)?"
+msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
+msgstr "آیا مطمئنید که میی‌خواهید فراروند انتخاب شده «%s» به پایان برده شود (شناسه: %Iu)؟"
+
+#. xgettext: primary alert message for killing multiple processes
+#: ../src/procdialogs.cpp:88
+#, c-format
+msgid "Are you sure you want to kill the selected process?"
+msgid_plural "Are you sure you want to kill the %d selected processes?"
+msgstr[0] "آیا مطمئنید که می‌خواهید فراروند انتخاب شده را بکشید؟"
+msgstr[1] "آیا مطمئنید که می‌خواهید %Id فراروند انتخاب شده را بکشید؟"
+
+#. xgettext: primary alert message for ending multiple processes
+#: ../src/procdialogs.cpp:92
+#, c-format
+msgid "Are you sure you want to end the selected process?"
+msgid_plural "Are you sure you want to end the %d selected processes?"
+msgstr[0] "آیا مطمئنید که می‌خواهید به فراروند انتخاب شده پایان دهید؟"
+msgstr[1] "آیا مطمئنید که می‌خواهید به %Id فراروند انتخاب شده پایان دهید؟"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:82
-msgid ""
-"Killing a process may destroy data, break the session or introduce a "
-"security risk. Only unresponsive processes should be killed."
-msgstr ""
-"کشتن یک فراروند می‌تواند باعث از بین رفتن اطلاعات‌، شکسته‌شدن نشست، یا امکان "
-"ایجاد خطر امنیتی شود. تنها می‌توان فراروند‌های ناجوابگو را کشت."
+#: ../src/procdialogs.cpp:99 ../src/procdialogs.cpp:105
+msgid "Killing a process may destroy data, break the session or introduce a security risk. Only unresponsive processes should be killed."
+msgstr "کشتن یک فراروند می‌تواند باعث از بین رفتن اطلاعات‌، شکسته‌شدن نشست، یا امکان ایجاد خطر امنیتی شود. تنها می‌توان فراروند‌های ناجوابگو را کشت."
 
-#. xgettext: primary alert message
-#: ../src/procdialogs.cpp:89
+#: ../src/procdialogs.cpp:102
+#| msgid "_Kill Process"
+msgid "_Kill Process"
+msgid_plural "_Kill Processes"
+msgstr[0] "_کشتن فراروند"
+msgstr[1] "_کشتن فراروندها"
+
+#: ../src/procdialogs.cpp:108
+#| msgid "_End Process"
+msgid "_End Process"
+msgid_plural "_End Processes"
+msgstr[0] "_پایان بردن فراروند"
+msgstr[1] "_پایان بردن فراروندها"
+
+#: ../src/procdialogs.cpp:189
 #, c-format
-#| msgid "End the selected process »%s« (PID: %u)?"
-msgid "End the selected process “%s” (PID: %u)?"
-msgstr "فراروند انتخاب شده «%s» به پایان برده شود (شناسه: %Iu)؟"
-
-#. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:93
-msgid ""
-"Ending a process may destroy data, break the session or introduce a security "
-"risk. Only unresponsive processes should be ended."
-msgstr ""
-"به پایان بردن یک فراروند می‌تواند باعث از بین رفتن اطلاعات‌، شکسته‌شدن نشست، یا "
-"امکان ایجاد خطر امنیتی شود. تنها می‌توان فراروند‌های ناجوابگو را به پایان برد."
-
-#: ../src/procdialogs.cpp:175
-#, c-format
-#| msgid "Change Priority of Process »%s« (PID: %u)"
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "تغییر الویت فراروند «%s» (شناسه: %Iu)"
 
-#: ../src/procdialogs.cpp:193
+#: ../src/procdialogs.cpp:192
+#, c-format
+#| msgid "Change the order of priority of process"
+msgid "Change Priority of the selected process"
+msgid_plural "Change Priority of %d selected processes"
+msgstr[0] "تغییر اولویت فراروند انتخاب شده"
+msgstr[1] "تغییر اولویت %Id فراروند انتخاب شده"
+
+#: ../src/procdialogs.cpp:211
 msgid "Note:"
 msgstr "نکته:"
 
-#: ../src/procdialogs.cpp:194
-msgid ""
-"The priority of a process is given by its nice value. A lower nice value "
-"corresponds to a higher priority."
-msgstr ""
-"اولویت یک فراروند با مقدار نایس آن تعیین می‌شود. هرچه میزان نایس پایین‌تر "
-"باشد، الویت بیشتری دارد."
+#: ../src/procdialogs.cpp:212
+msgid "The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."
+msgstr "اولویت یک فراروند با مقدار نایس آن تعیین می‌شود. هرچه میزان نایس پایین‌تر باشد، الویت بیشتری دارد."
 
-#: ../src/procdialogs.cpp:446 ../src/procman-app.cpp:462
-msgid "Icon"
-msgstr "شمایل"
-
-#: ../src/procman-app.cpp:575
-msgid "A simple process and system monitor."
-msgstr "یک فراروند ساده و پایشگر‌ شبکه."
-
-#: ../src/procproperties.cpp:104 ../src/util.cpp:434
+#: ../src/procproperties.cpp:56 ../src/util.cpp:431
 msgid "N/A"
 msgstr "نامعلوم"
 
-#: ../src/procproperties.cpp:129 ../src/proctable.cpp:215
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:321
 msgid "Process Name"
 msgstr "نام فراروند"
 
-#: ../src/procproperties.cpp:130 ../src/proctable.cpp:216
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:322
 msgid "User"
 msgstr "کاربر"
 
-#: ../src/procproperties.cpp:131 ../src/proctable.cpp:217
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:323
 msgid "Status"
 msgstr "وضعیت"
 
-#: ../src/procproperties.cpp:133 ../src/proctable.cpp:218
+#: ../src/procproperties.cpp:88 ../src/proctable.cpp:324
 msgid "Virtual Memory"
 msgstr "حافظه‌ی مجازی"
 
-#: ../src/procproperties.cpp:134 ../src/proctable.cpp:219
+#: ../src/procproperties.cpp:89 ../src/proctable.cpp:325
 msgid "Resident Memory"
 msgstr "حافظه‌ی مقیم"
 
-#: ../src/procproperties.cpp:135 ../src/proctable.cpp:220
+#: ../src/procproperties.cpp:90 ../src/proctable.cpp:326
 msgid "Writable Memory"
 msgstr "حافظه‌ی قابل نوشتن"
 
-#: ../src/procproperties.cpp:136 ../src/proctable.cpp:221
+#: ../src/procproperties.cpp:91 ../src/proctable.cpp:327
 msgid "Shared Memory"
 msgstr "حافظه‌ی اشتراکی"
 
-#: ../src/procproperties.cpp:137 ../src/proctable.cpp:222
+#: ../src/procproperties.cpp:93 ../src/proctable.cpp:328
 msgid "X Server Memory"
 msgstr "حافظه‌ی کارگزار ایکس"
 
-#: ../src/procproperties.cpp:139 ../src/proctable.cpp:224
+#: ../src/procproperties.cpp:96 ../src/proctable.cpp:330
 msgid "CPU Time"
 msgstr "زمان سی‌پی‌یو"
 
-#: ../src/procproperties.cpp:139
+#: ../src/procproperties.cpp:96
 #, c-format
 msgid "%lld second"
 msgid_plural "%lld seconds"
 msgstr[0] "%Illd ثانیه"
 msgstr[1] "%Illd ثانیه"
 
-#: ../src/procproperties.cpp:140 ../src/proctable.cpp:225
+#: ../src/procproperties.cpp:97 ../src/proctable.cpp:331
 msgid "Started"
 msgstr "آغاز شد"
 
-#: ../src/procproperties.cpp:141 ../src/proctable.cpp:226
+#: ../src/procproperties.cpp:98 ../src/proctable.cpp:332
 msgid "Nice"
 msgstr "نایس"
 
-#: ../src/procproperties.cpp:142 ../src/proctable.cpp:240
+#: ../src/procproperties.cpp:99 ../src/proctable.cpp:346
 msgid "Priority"
 msgstr "اولویت"
 
-#: ../src/procproperties.cpp:143 ../src/proctable.cpp:227
+#: ../src/procproperties.cpp:100 ../src/proctable.cpp:333
 msgid "ID"
 msgstr "شناسه"
 
-#: ../src/procproperties.cpp:144 ../src/proctable.cpp:228
+#: ../src/procproperties.cpp:101 ../src/proctable.cpp:334
 msgid "Security Context"
 msgstr "متن امنیت"
 
-#: ../src/procproperties.cpp:145 ../src/proctable.cpp:229
+#: ../src/procproperties.cpp:102 ../src/proctable.cpp:335
 msgid "Command Line"
 msgstr "خط فرمان"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:146 ../src/proctable.cpp:232
+#: ../src/procproperties.cpp:103 ../src/proctable.cpp:338
 msgid "Waiting Channel"
 msgstr "کانال انتظار"
 
-#: ../src/procproperties.cpp:147 ../src/proctable.cpp:233
+#: ../src/procproperties.cpp:104 ../src/proctable.cpp:339
 msgid "Control Group"
 msgstr "گروه کنترل"
 
-#: ../src/procproperties.cpp:259
+#: ../src/procproperties.cpp:214
 msgid "Process Properties"
 msgstr "ترجیحات فراروند"
 
-#: ../src/procproperties.cpp:279
+#: ../src/procproperties.cpp:234
 #, c-format
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "ترجیحات فراروند «%s» (شناسه %Iu):"
 
-#: ../src/proctable.cpp:223
+#: ../src/proctable.cpp:329
 #, no-c-format
 msgid "% CPU"
 msgstr "٪ سی‌پی‌یو"
 
-#: ../src/proctable.cpp:234
+#: ../src/proctable.cpp:340
 msgid "Unit"
 msgstr "واحد"
 
-#: ../src/proctable.cpp:235
+#: ../src/proctable.cpp:341
 msgid "Session"
 msgstr "نشست"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:238
+#: ../src/proctable.cpp:344
 msgid "Seat"
 msgstr "جایگاه"
 
-#: ../src/proctable.cpp:239
+#: ../src/proctable.cpp:345
 msgid "Owner"
 msgstr "مالک"
 
-#: ../src/proctable.cpp:1048
-#, c-format
-msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
-msgstr "میانگین بار کردن در ۱، ۵، ۱۵ دقیقه‌ی گذشته: %I0.2f، %I0.2f، %I0.2f"
-
-#: ../src/util.cpp:30
+#: ../src/util.cpp:27
 msgid "Running"
 msgstr "در حال اجرا"
 
-#: ../src/util.cpp:34
+#: ../src/util.cpp:31
 msgid "Stopped"
 msgstr "متوقف‌شده"
 
-#: ../src/util.cpp:38
+#: ../src/util.cpp:35
 msgid "Zombie"
 msgstr "خونخوار"
 
-#: ../src/util.cpp:42
+#: ../src/util.cpp:39
 msgid "Uninterruptible"
 msgstr "غیر قابل وقفه‌اندازی"
 
-#: ../src/util.cpp:46
+#: ../src/util.cpp:43
 msgid "Sleeping"
 msgstr "خواب"
 
 #. xgettext: weeks, days
-#: ../src/util.cpp:101
+#: ../src/util.cpp:98
 #, c-format
 msgid "%uw%ud"
 msgstr "%Iu هفته %Iu روز"
 
 #. xgettext: days, hours (0 -> 23)
-#: ../src/util.cpp:105
+#: ../src/util.cpp:102
 #, c-format
 msgid "%ud%02uh"
 msgstr "%Iu روز %I02u ساعت"
 
 #. xgettext: hours (0 -> 23), minutes, seconds
-#: ../src/util.cpp:109
+#: ../src/util.cpp:106
 #, c-format
 msgid "%u:%02u:%02u"
 msgstr "%Iu:%I02u.%I02u"
 
 #. xgettext: minutes, seconds, centiseconds
-#: ../src/util.cpp:112
+#: ../src/util.cpp:109
 #, c-format
 msgid "%u:%02u.%02u"
 msgstr "%Iu:%I02u.%I02u"
 
-#: ../src/util.cpp:166
+#: ../src/util.cpp:163
 #, c-format
 msgid "%.1f KiB"
 msgstr "%I.1f کیلوبایت"
 
-#: ../src/util.cpp:167
+#: ../src/util.cpp:164
 #, c-format
 msgid "%.1f MiB"
 msgstr "%I.1f مگابایت"
 
-#: ../src/util.cpp:168
+#: ../src/util.cpp:165
 #, c-format
 msgid "%.1f GiB"
 msgstr "%I.1f گیگابایت"
 
-#: ../src/util.cpp:169
+#: ../src/util.cpp:166
 #, c-format
 msgid "%.1f TiB"
 msgstr "%I.1f کیلوبایت"
 
-#: ../src/util.cpp:170
+#: ../src/util.cpp:167
 #, c-format
 msgid "%.3g kbit"
 msgstr "%I.1g کیلوبیت"
 
-#: ../src/util.cpp:171
+#: ../src/util.cpp:168
 #, c-format
 msgid "%.3g Mbit"
 msgstr "%I.1g مگابیت"
 
-#: ../src/util.cpp:172
+#: ../src/util.cpp:169
 #, c-format
 msgid "%.3g Gbit"
 msgstr "%I.1g گیگابیت"
 
-#: ../src/util.cpp:173
+#: ../src/util.cpp:170
 #, c-format
 msgid "%.3g Tbit"
 msgstr "%I.1g تترابیت"
 
-#: ../src/util.cpp:188
+#: ../src/util.cpp:185
 #, c-format
 msgid "%u bit"
 msgid_plural "%u bits"
 msgstr[0] "%Iu بیت"
 msgstr[1] "%Iu بیت"
 
-#: ../src/util.cpp:189
+#: ../src/util.cpp:186
 #, c-format
 msgid "%u byte"
 msgid_plural "%u bytes"
 msgstr[0] "%Iu بایت"
 msgstr[1] "%Iu بایت"
 
-#: ../src/util.cpp:232
-#| msgid "(High Priority)"
+#: ../src/util.cpp:229
 msgid "Very High Priority"
 msgstr "اولویت خیلی بالا"
 
-#: ../src/util.cpp:234
-#| msgid "(High Priority)"
+#: ../src/util.cpp:231
 msgid "High Priority"
 msgstr "اولویت بالا"
 
-#: ../src/util.cpp:236
-#| msgid "(Normal Priority)"
+#: ../src/util.cpp:233
 msgid "Normal Priority"
 msgstr "اولویت معمولی"
 
-#: ../src/util.cpp:238
-#| msgid "Priority"
+#: ../src/util.cpp:235
 msgid "Low Priority"
 msgstr "اولویت پایین"
 
-#: ../src/util.cpp:240
-#| msgid "(Very Low Priority)"
+#: ../src/util.cpp:237
 msgid "Very Low Priority"
 msgstr "اولویت خیلی پایین"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:599
+#: ../src/util.cpp:629
 #, c-format
 msgid "%s/s"
 msgstr "%s/ثانیه"
+
+#~ msgid "Privileges are required to kill process"
+#~ msgstr "دسترسی‌ها جهت کشتن فراروند لازم هستند"
+#~| msgid "_View"
+
+#~ msgid "View"
+#~ msgstr "نما"
+
+#~ msgid "Sent"
+#~ msgstr "ارسال شد"
+
+#~ msgid "_View"
+#~ msgstr "_نما"
+
+#~ msgid "_Stop Process"
+#~ msgstr "_توقف فراروند"
+
+#~ msgid "Stop process"
+#~ msgstr "توقف فراروند"
+
+#~ msgid "Continue process if stopped"
+#~ msgstr "فراروند را اگر متوقف شد ادامه بده"
+
+#~ msgid "Force process to finish normally"
+#~ msgstr "اجبار فراروند جهت پایان بردن به حالت معمولی"
+
+#~ msgid "Force process to finish immediately"
+#~ msgstr "فراروند مجبور شود که فوری به پایان برود"
+
+#~ msgid "Refresh the process list"
+#~ msgstr "نوسازی فهرست فراروند‌ها"
+
+#~ msgid "Open the memory maps associated with a process"
+#~ msgstr "نگاشت‌های حافظه‌ی همبسته با یک فراروند باز شوند"
+
+#~ msgid "View the files opened by a process"
+#~ msgstr "دیدن پرونده‌های باز شده توسط یک فراروند"
+
+#~ msgid "View additional information about a process"
+#~ msgstr "نمایش اطلاعات بیشتر درباره یک فراروند"
+
+#~ msgid "Show parent/child relationship between processes"
+#~ msgstr "نشان دادن روابط مادر فرزندی فراروندها"
+
+#~ msgid "Show active processes"
+#~ msgstr "فراروندهای فعال نشان داده شوند"
+
+#~ msgid "Show all processes"
+#~ msgstr "نمایش همه‌ی فراروند‌ها"
+
+#~ msgid "Show only user-owned processes"
+#~ msgstr "تنها نمایش فرآروند‌های مربوط به کاربر"
+
+#~ msgid "Set process priority to very high"
+#~ msgstr "تنظیم الویت فراروند به خیلی بالا"
+
+#~ msgid "Set process priority to high"
+#~ msgstr "تنظیم الویت فراروند به بالا"
+
+#~ msgid "Set process priority to normal"
+#~ msgstr "تنظیم الویت فراروند به عادی"
+
+#~ msgid "Set process priority to low"
+#~ msgstr "تنظیم الویت فراروند به پایین"
+
+#~ msgid "Set process priority to very low"
+#~ msgstr "تنظیم الویت فراروند به خیلی پایین"
+
+#~ msgid "Set process priority manually"
+#~ msgstr "تنظیم دستیِ الویت فراروند"
+
+#~ msgid "Main Window width"
+#~ msgstr "عرض پنجره اصلی"
+
+#~ msgid "Main Window height"
+#~ msgstr "طول پنجره اصلی"
+
+#~ msgid "Main Window X position"
+#~ msgstr "مکان X پنجره اصلی"
+
+#~ msgid "Main Window Y position"
+#~ msgstr "مکان Y پنجره اصلی"
+
+#~ msgid ""
+#~ "Determines which processes to show by default. 0 is All, 1 is user, and 2 "
+#~ "is active"
+#~ msgstr ""
+#~ "مشخص می‌کند که چه فراروند‌هایی به طور پیش‌فرض نشان داده شوند. ۰ برای همه، ۱ "
+#~ "برای کاربر، و ۲ برای فعال"
+
+#~ msgid ""
+#~ "0 for the System Info, 1 for the processes list, 2 for the resources and "
+#~ "3 for the disks list"
+#~ msgstr ""
+#~ "۰ برای اطلاعات سیستم، ۱ برای فهرست فراروند‌ها، ۲ برای منابع و ۳ برای فهرست "
+#~ "دیسک‌ها"
+
+#~ msgid ""
+#~ "Ending a process may destroy data, break the session or introduce a "
+#~ "security risk. Only unresponsive processes should be ended."
+#~ msgstr ""
+#~ "به پایان بردن یک فراروند می‌تواند باعث از بین رفتن اطلاعات‌، شکسته‌شدن نشست، "
+#~ "یا امکان ایجاد خطر امنیتی شود. تنها می‌توان فراروند‌های ناجوابگو را به "
+#~ "پایان برد."
+
+#~ msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
+#~ msgstr "میانگین بار کردن در ۱، ۵، ۱۵ دقیقه‌ی گذشته: %I0.2f، %I0.2f، %I0.2f"
 
 #~ msgid "System"
 #~ msgstr "سیستم"
@@ -1434,9 +1446,6 @@ msgstr "%s/ثانیه"
 
 #~ msgid "Quit the program"
 #~ msgstr "خارج کردن برنامه"
-
-#~ msgid "Configure the application"
-#~ msgstr "پیکربندی برنامه"
 
 #~ msgid "_Contents"
 #~ msgstr "_محتویات"
@@ -1461,8 +1470,8 @@ msgstr "%s/ثانیه"
 
 #~ msgid "GNOME %s"
 #~ msgstr "گنوم %s"
-
 #~| msgid "<b>Hardware</b>"
+
 #~ msgid "Hardware"
 #~ msgstr "سخت‌افزار"
 
@@ -1471,8 +1480,8 @@ msgstr "%s/ثانیه"
 
 #~ msgid "Processor:"
 #~ msgstr "پردازنده:"
-
 #~| msgid "<b>System Status</b>"
+
 #~ msgid "System Status"
 #~ msgstr "وضعیت سیستم"
 
