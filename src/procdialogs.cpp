@@ -32,41 +32,38 @@
 #include "prettytable.h"
 #include "procactions.h"
 #include "util.h"
-#include "load-graph.h"
-#include "settings-keys.h"
-#include "procman_gnomesu.h"
-#include "procman_gksu.h"
-#include "procman_pkexec.h"
+#include "gsm_gnomesu.h"
+#include "gsm_gksu.h"
+#include "gsm_pkexec.h"
 #include "cgroups.h"
 
 static GtkWidget *renice_dialog = NULL;
-static GtkWidget *prefs_dialog = NULL;
 static gint new_nice_value = 0;
 
 
 static void
 kill_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 {
-    struct KillArgs *kargs = static_cast<KillArgs*>(data);
+    struct ProcActionArgs *kargs = static_cast<ProcActionArgs*>(data);
 
     gtk_widget_destroy (GTK_WIDGET (dialog));
 
     if (id == GTK_RESPONSE_OK)
-        kill_process (kargs->app, kargs->signal);
+        kill_process (kargs->app, kargs->arg_value);
 
     g_free (kargs);
 }
 
 void
-procdialog_create_kill_dialog (ProcmanApp *app, int signal)
+procdialog_create_kill_dialog (GsmApplication *app, int signal)
 {
     GtkWidget *kill_alert_dialog;
     gchar *primary, *secondary, *button_text;
-    struct KillArgs *kargs;
+    struct ProcActionArgs *kargs;
 
-    kargs = g_new(KillArgs, 1);
+    kargs = g_new(ProcActionArgs, 1);
     kargs->app = app;
-    kargs->signal = signal;
+    kargs->arg_value = signal;
     gint selected_count = gtk_tree_selection_count_selected_rows (app->selection);
 
     if ( selected_count == 1 ) {
@@ -152,7 +149,7 @@ renice_scale_changed (GtkAdjustment *adj, gpointer data)
 static void
 renice_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GsmApplication *app = static_cast<GsmApplication *>(data);
     if (id == 100) {
         if (new_nice_value == -100)
             return;
@@ -164,7 +161,7 @@ renice_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 }
 
 void
-procdialog_create_renice_dialog (ProcmanApp *app)
+procdialog_create_renice_dialog (GsmApplication *app)
 {
     ProcInfo *info;
     
@@ -231,292 +228,6 @@ procdialog_create_renice_dialog (ProcmanApp *app)
     g_object_unref (G_OBJECT (builder));
 }
 
-static void
-prefs_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
-{
-    if (id == GTK_RESPONSE_HELP)
-    {
-        GError* error = 0;
-        if (!g_app_info_launch_default_for_uri("help:gnome-system-monitor/gnome-system-monitor-prefs", NULL, &error))
-        {
-            g_warning("Could not display preferences help : %s", error->message);
-            g_error_free(error);
-        }
-    }
-    else
-    {
-        gtk_widget_destroy (GTK_WIDGET (dialog));
-        prefs_dialog = NULL;
-    }
-}
-
-
-class SpinButtonUpdater
-{
-public:
-    SpinButtonUpdater(const string& key)
-        : key(key)
-    { }
-
-    static gboolean callback(GtkWidget *widget, GdkEventFocus *event, gpointer data)
-    {
-        SpinButtonUpdater* updater = static_cast<SpinButtonUpdater*>(data);
-        gtk_spin_button_update(GTK_SPIN_BUTTON(widget));
-        updater->update(GTK_SPIN_BUTTON(widget));
-        return FALSE;
-    }
-
-private:
-
-    void update(GtkSpinButton* spin)
-    {
-        int new_value = int(1000 * gtk_spin_button_get_value(spin));
-
-        g_settings_set_int(ProcmanApp::get()->settings,
-                           this->key.c_str(), new_value);
-
-        procman_debug("set %s to %d", this->key.c_str(), new_value);
-    }
-
-    const string key;
-};
-
-static void
-field_toggled (const gchar *gsettings_parent, GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
-{
-    GtkTreeModel *model = static_cast<GtkTreeModel*>(data);
-    GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
-    GtkTreeIter iter;
-    GtkTreeViewColumn *column;
-    gboolean toggled;
-    GSettings *settings = g_settings_get_child (ProcmanApp::get()->settings, gsettings_parent);
-    gchar *key;
-    int id;
-
-    if (!path)
-        return;
-
-    gtk_tree_model_get_iter (model, &iter, path);
-
-    gtk_tree_model_get (model, &iter, 2, &column, -1);
-    toggled = gtk_cell_renderer_toggle_get_active (cell);
-
-    gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, !toggled, -1);
-    gtk_tree_view_column_set_visible (column, !toggled);
-
-    id = gtk_tree_view_column_get_sort_column_id (column);
-
-    key = g_strdup_printf ("col-%d-visible", id);
-    g_settings_set_boolean (settings, key, !toggled);
-    g_free (key);
-
-    gtk_tree_path_free (path);
-
-}
-
-static void
-proc_field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
-{
-    field_toggled("proctree", cell, path_str, data);
-}
-
-static void
-disk_field_toggled (GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
-{
-    field_toggled("disktreenew", cell, path_str, data);
-}
-
-static void
-create_field_page(GtkBuilder* builder, GtkWidget *tree, const gchar *widgetname)
-{
-    GtkTreeView *treeview;
-    GList *it, *columns;
-    GtkListStore *model;
-    GtkTreeViewColumn *column;
-    GtkCellRenderer *cell;
-    gchar *full_widgetname;
-
-    full_widgetname = g_strdup_printf ("%s_columns", widgetname);
-    treeview = GTK_TREE_VIEW (gtk_builder_get_object (builder, full_widgetname));
-    g_free (full_widgetname);
-
-    model = gtk_list_store_new (3, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_POINTER);
-
-    gtk_tree_view_set_model (GTK_TREE_VIEW(treeview), GTK_TREE_MODEL(model));
-    g_object_unref (G_OBJECT (model));
-
-    column = gtk_tree_view_column_new ();
-
-    cell = gtk_cell_renderer_toggle_new ();
-    gtk_tree_view_column_pack_start (column, cell, FALSE);
-    gtk_tree_view_column_set_attributes (column, cell,
-                                         "active", 0,
-                                         NULL);
-    if(!g_strcmp0(widgetname, "proctree")) 
-        g_signal_connect (G_OBJECT (cell), "toggled", G_CALLBACK (proc_field_toggled), model);
-    else if(!g_strcmp0(widgetname, "disktreenew")) 
-        g_signal_connect (G_OBJECT (cell), "toggled", G_CALLBACK (disk_field_toggled), model);
-
-    gtk_tree_view_column_set_clickable (column, TRUE);
-    gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
-
-    column = gtk_tree_view_column_new ();
-
-    cell = gtk_cell_renderer_text_new ();
-    gtk_tree_view_column_pack_start (column, cell, FALSE);
-    gtk_tree_view_column_set_attributes (column, cell,
-                                         "text", 1,
-                                         NULL);
-
-    gtk_tree_view_column_set_title (column, "Not Shown");
-    gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
-
-    columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree));
-
-    for(it = columns; it; it = it->next)
-    {
-        GtkTreeViewColumn *column = static_cast<GtkTreeViewColumn*>(it->data);
-        GtkTreeIter iter;
-        const gchar *title;
-        gboolean visible;
-        gint column_id;
-
-        title = gtk_tree_view_column_get_title (column);
-        if (!title)
-            title = _("Icon");
-
-        column_id = gtk_tree_view_column_get_sort_column_id(column);
-        if ((column_id == COL_CGROUP) && (!cgroups_enabled()))
-            continue;
-
-        if ((column_id == COL_UNIT ||
-             column_id == COL_SESSION ||
-             column_id == COL_SEAT ||
-             column_id == COL_OWNER)
-#ifdef HAVE_SYSTEMD
-            && !LOGIND_RUNNING()
-#endif
-                )
-            continue;
-
-        visible = gtk_tree_view_column_get_visible (column);
-
-        gtk_list_store_append (model, &iter);
-        gtk_list_store_set (model, &iter, 0, visible, 1, title, 2, column,-1);
-    }
-
-    g_list_free(columns);
-
-}
-
-void
-procdialog_create_preferences_dialog (ProcmanApp *app)
-{
-    typedef SpinButtonUpdater SBU;
-
-    static SBU interval_updater("update-interval");
-    static SBU graph_interval_updater("graph-update-interval");
-    static SBU disks_interval_updater("disks-interval");
-
-    GtkWidget *notebook;
-    GtkAdjustment *adjustment;
-    GtkWidget *spin_button;
-    GtkWidget *check_button;
-    GtkWidget *smooth_button;
-    GtkBuilder *builder;
-    gfloat update;
-
-    if (prefs_dialog)
-        return;
-
-    builder = gtk_builder_new();
-    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/preferences.ui", NULL);
-
-    prefs_dialog = GTK_WIDGET (gtk_builder_get_object (builder, "preferences_dialog"));
-
-    notebook = GTK_WIDGET (gtk_builder_get_object (builder, "notebook"));
-
-    spin_button = GTK_WIDGET (gtk_builder_get_object (builder, "processes_interval_spinner"));
-
-    update = (gfloat) app->config.update_interval;
-    adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0,
-                                                      MIN_UPDATE_INTERVAL / 1000,
-                                                      MAX_UPDATE_INTERVAL / 1000,
-                                                      0.25,
-                                                      1.0,
-                                                      0);
-
-    gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON(spin_button), adjustment);
-    g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-                      G_CALLBACK (SBU::callback), &interval_updater);
-
-    smooth_button = GTK_WIDGET (gtk_builder_get_object (builder, "smooth_button"));
-    g_settings_bind(app->settings, SmoothRefresh::KEY.c_str(), smooth_button, "active", G_SETTINGS_BIND_DEFAULT);
-
-    check_button = GTK_WIDGET (gtk_builder_get_object (builder, "check_button"));
-    g_settings_bind (app->settings, GSM_SETTING_SHOW_KILL_DIALOG,
-                     check_button, "active",
-                     G_SETTINGS_BIND_DEFAULT);
-
-    GtkWidget *solaris_button = GTK_WIDGET (gtk_builder_get_object (builder, "solaris_button"));
-    g_settings_bind (app->settings, GSM_SETTING_SOLARIS_MODE,
-                     solaris_button, "active",
-                     G_SETTINGS_BIND_DEFAULT);
-
-    GtkWidget *draw_stacked_button = GTK_WIDGET (gtk_builder_get_object (builder, "draw_stacked_button"));
-    g_settings_bind (app->settings, GSM_SETTING_DRAW_STACKED,
-                     draw_stacked_button, "active",
-                     G_SETTINGS_BIND_DEFAULT);
-
-    create_field_page (builder, app->tree, "proctree");
-
-    update = (gfloat) app->config.graph_update_interval;
-    adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.25,
-                                                      100.0, 0.25, 1.0, 0);
-    spin_button = GTK_WIDGET (gtk_builder_get_object (builder, "resources_interval_spinner"));
-    gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON(spin_button), adjustment);
-    g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-                      G_CALLBACK(SBU::callback),
-                      &graph_interval_updater);
-
-    GtkWidget *bits_button = GTK_WIDGET (gtk_builder_get_object (builder, "bits_button"));
-    g_settings_bind(app->settings, GSM_SETTING_NETWORK_IN_BITS,
-                    bits_button, "active",
-                    G_SETTINGS_BIND_DEFAULT);
-
-    update = (gfloat) app->config.disks_update_interval;
-    adjustment = (GtkAdjustment *) gtk_adjustment_new (update / 1000.0, 1.0,
-                                                       100.0, 1.0, 1.0, 0);
-    spin_button = GTK_WIDGET (gtk_builder_get_object (builder, "devices_interval_spinner"));
-    gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON(spin_button), adjustment);
-    g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-                      G_CALLBACK(SBU::callback),
-                      &disks_interval_updater);
-
-
-    check_button = GTK_WIDGET (gtk_builder_get_object (builder, "all_devices_check"));
-    g_settings_bind (app->settings, GSM_SETTING_SHOW_ALL_FS,
-                     check_button, "active",
-                     G_SETTINGS_BIND_DEFAULT);
-
-    create_field_page (builder, app->disk_list, "disktreenew");
-
-    gtk_widget_show_all (prefs_dialog);
-    g_signal_connect (G_OBJECT (prefs_dialog), "response",
-                      G_CALLBACK (prefs_dialog_button_pressed), app);
-
-    const char* current_tab = g_settings_get_string (app->settings, GSM_SETTING_CURRENT_TAB);
-    if (strcmp (current_tab, "processes") == 0)
-        gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
-    else if (strcmp (current_tab, "resources") == 0)
-        gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 1);
-    else if (strcmp (current_tab, "disks") == 0)
-        gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 2);
-
-    gtk_builder_connect_signals (builder, NULL);
-    g_object_unref (G_OBJECT (builder));
-}
-
 
 
 static char *
@@ -542,7 +253,7 @@ procman_action_to_command(ProcmanActionType type,
  */
 gboolean
 procdialog_create_root_password_dialog(ProcmanActionType type,
-                                       ProcmanApp *app,
+                                       GsmApplication *app,
                                        gint pid,
                                        gint extra_value)
 {
@@ -554,11 +265,11 @@ procdialog_create_root_password_dialog(ProcmanActionType type,
     procman_debug("Trying to run '%s' as root", command);
 
     if (procman_has_pkexec())
-        ret = procman_pkexec_create_root_password_dialog(command);
+        ret = gsm_pkexec_create_root_password_dialog(command);
     else if (procman_has_gksu())
-        ret = procman_gksu_create_root_password_dialog(command);
+        ret = gsm_gksu_create_root_password_dialog(command);
     else if (procman_has_gnomesu())
-        ret = procman_gnomesu_create_root_password_dialog(command);
+        ret = gsm_gnomesu_create_root_password_dialog(command);
 
     g_free(command);
     return ret;

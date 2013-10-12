@@ -20,36 +20,31 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GSM_COLOR_BUTTON_H__
-#define __GSM_COLOR_BUTTON_H__
+#ifndef _GSM_COLOR_BUTTON_H_
+#define _GSM_COLOR_BUTTON_H_
 
-#include <glib.h>
-#include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
+
 /* The GtkColorSelectionButton widget is a simple color picker in a button.
- * The button displays a sample of the currently selected color.        When
+ * The button displays a sample of the currently selected color. When
  * the user clicks on the button, a color selection dialog pops up.
  * The color picker emits the "color_set" signal when the color is set.
  */
 #define GSM_TYPE_COLOR_BUTTON            (gsm_color_button_get_type ())
-#define GSM_COLOR_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSM_TYPE_COLOR_BUTTON, GSMColorButton))
-#define GSM_COLOR_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GSM_TYPE_COLOR_BUTTON, GSMColorButtonClass))
+#define GSM_COLOR_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSM_TYPE_COLOR_BUTTON, GsmColorButton))
+#define GSM_COLOR_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GSM_TYPE_COLOR_BUTTON, GsmColorButtonClass))
 #define GSM_IS_COLOR_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSM_TYPE_COLOR_BUTTON))
 #define GSM_IS_COLOR_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GSM_TYPE_COLOR_BUTTON))
-#define GSM_COLOR_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GSM_TYPE_COLOR_BUTTON, GSMColorButtonClass))
-typedef struct _GSMColorButton           GSMColorButton;
-typedef struct _GSMColorButtonClass      GSMColorButtonClass;
-typedef struct _GSMColorButtonPrivate    GSMColorButtonPrivate;
+#define GSM_COLOR_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GSM_TYPE_COLOR_BUTTON, GsmColorButtonClass))
 
-struct _GSMColorButton
+typedef struct _GsmColorButton           GsmColorButton;
+typedef struct _GsmColorButtonClass      GsmColorButtonClass;
+
+struct _GsmColorButton
 {
-    GtkDrawingArea widget;
-
-    /*< private > */
-
-    GSMColorButtonPrivate *priv;
+    GtkDrawingArea parent_instance;
 };
 
 /* Widget types */
@@ -62,31 +57,22 @@ enum
     GSMCP_TYPES
 };
 
-struct _GSMColorButtonClass
+struct _GsmColorButtonClass
 {
-    GtkWidgetClass parent_class;
-
-    void (*color_set) (GSMColorButton * cp);
-
-    /* Padding for future expansion */
-    void (*_gtk_reserved1) (void);
-    void (*_gtk_reserved2) (void);
-    void (*_gtk_reserved3) (void);
-    void (*_gtk_reserved4) (void);
+    GtkDrawingAreaClass parent_class;
 };
 
-GType gsm_color_button_get_type (void) G_GNUC_CONST;
-GtkWidget *gsm_color_button_new (const GdkRGBA * color, guint type);
-void gsm_color_button_set_color (GSMColorButton * color_button, const GdkRGBA * color);
-void gsm_color_button_set_sensitive (GSMColorButton * color_button, const gboolean sensitive);
-void gsm_color_button_set_fraction (GSMColorButton * color_button, const gdouble fraction);
-void gsm_color_button_set_cbtype (GSMColorButton * color_button, guint type);
-void gsm_color_button_get_color (GSMColorButton * color_button, GdkRGBA * color);
-gdouble gsm_color_button_get_fraction (GSMColorButton * color_button);
-gboolean gsm_color_button_get_sensitive (GSMColorButton * color_button);
-guint gsm_color_button_get_cbtype (GSMColorButton * color_button);
-void gsm_color_button_set_title (GSMColorButton * color_button, const gchar * title);
-G_CONST_RETURN gchar *gsm_color_button_get_title (GSMColorButton * color_button);
+GType       gsm_color_button_get_type      (void);
+GtkWidget * gsm_color_button_new           (const GdkRGBA * color, guint type);
+void        gsm_color_button_set_color     (GsmColorButton * color_button, const GdkRGBA * color);
+void        gsm_color_button_set_fraction  (GsmColorButton * color_button, const gdouble fraction);
+void        gsm_color_button_set_cbtype    (GsmColorButton * color_button, guint type);
+void        gsm_color_button_get_color     (GsmColorButton * color_button, GdkRGBA * color);
+gdouble     gsm_color_button_get_fraction  (GsmColorButton * color_button);
+guint       gsm_color_button_get_cbtype    (GsmColorButton * color_button);
+void        gsm_color_button_set_title     (GsmColorButton * color_button, const gchar * title);
+gchar     * gsm_color_button_get_title     (GsmColorButton * color_button);
 
 G_END_DECLS
-#endif /* __GSM_COLOR_BUTTON_H__ */
+
+#endif /* _GSM_COLOR_BUTTON_H_ */

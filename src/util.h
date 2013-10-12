@@ -1,14 +1,10 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-#ifndef H_GNOME_SYSTEM_MONITOR_UTIL_1123178725
-#define H_GNOME_SYSTEM_MONITOR_UTIL_1123178725
+#ifndef _GSM_UTIL_H_
+#define _GSM_UTIL_H_
 
 #include <glib.h>
 #include <gtk/gtk.h>
-#include <stddef.h>
-#include <cstring>
 #include <string>
-#include <functional>
-#include <algorithm>
 
 using std::string;
 
@@ -31,6 +27,8 @@ procman_debug_real(const char *file, int line, const char *func,
                    const char *format, ...) G_GNUC_PRINTF(4, 5);
 
 #define procman_debug(FMT, ...) procman_debug_real(__FILE__, __LINE__, __func__, FMT, ##__VA_ARGS__)
+
+gchar * get_monospace_system_font_name (void);
 
 inline string make_string(char *c_str)
 {
@@ -131,7 +129,4 @@ namespace procman
     std::string format_network_rate(guint64 rate, guint64 max_rate = 0);
 }
 
-void bind_column_to_gsetting (GSettings *settings, GtkTreeViewColumn *column);
-
-
-#endif /* H_GNOME_SYSTEM_MONITOR_UTIL_1123178725 */
+#endif /* _GSM_UTIL_H_ */

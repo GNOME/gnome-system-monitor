@@ -1,11 +1,13 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-#ifndef H_PROCMAN_SETTINGS_KEYS_1177430397
-#define H_PROCMAN_SETTINGS_KEYS_1177430397
+#ifndef _GSM_SETTINGS_KEYS_H_
+#define _GSM_SETTINGS_KEYS_H_
+
+#define GSM_GSETTINGS_SCHEMA                "org.gnome.gnome-system-monitor"
 
 #define GSM_SETTINGS_CHILD_OPEN_FILES       "openfilestree"
 #define GSM_SETTINGS_CHILD_DISKS            "disktreenew"
 #define GSM_SETTINGS_CHILD_PROCESSES        "proctree"
-#define GSM_SETTINGS_CHILD_MEMMAP           "memmaptree"
+#define GSM_SETTINGS_CHILD_MEMMAP           "memmapstree"
 
 #define GSM_SETTING_WINDOW_STATE            "window-state"
 #define GSM_SETTING_MAXIMIZED               "maximized"
@@ -30,4 +32,4 @@
 #define GSM_SETTING_SHOW_ALL_FS             "show-all-fs"
 #define GSM_SETTING_SMOOTH_REFRESH          "smooth-refresh"
 
-#endif //  H_PROCMAN_SETTINGS_KEYS_1177430397
+#endif /* _GSM_SETTINGS_KEYS_H_ */

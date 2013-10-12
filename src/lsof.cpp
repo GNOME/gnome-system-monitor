@@ -7,9 +7,6 @@
 
 #include <sys/wait.h>
 
-// #include <libsexy/sexy-icon-entry.h>
-
-
 #include <set>
 #include <string>
 #include <sstream>
@@ -17,7 +14,7 @@
 
 #include <glibmm/regex.h>
 
-#include "procman-app.h"
+#include "application.h"
 #include "lsof.h"
 #include "util.h"
 
@@ -90,7 +87,7 @@ namespace
         GtkEntry *entry;
         GtkWindow *window;
         GtkLabel *count;
-        ProcmanApp *app;
+        GsmApplication *app;
         bool case_insensitive;
 
 
@@ -236,7 +233,7 @@ namespace
 
 
 
-void procman_lsof(ProcmanApp *app)
+void procman_lsof(GsmApplication *app)
 {
     GtkListStore *model = \
         gtk_list_store_new(PROCMAN_LSOF_NCOLS,

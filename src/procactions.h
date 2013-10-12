@@ -17,13 +17,18 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  *
  */
-#ifndef _PROCACTIONS_H_
-#define _PROCACTIONS_H_
+#ifndef _GSM_PROCACTIONS_H_
+#define _GSM_PROCACTIONS_H_
 
-#include "procman-app.h"
+#include "application.h"
 
-void            renice (ProcmanApp *app, int nice);
-void            kill_process (ProcmanApp *app, int sig);
+void            renice (GsmApplication *app, int nice);
+void            kill_process (GsmApplication *app, int sig);
 
-#endif
+struct ProcActionArgs
+{
+    GsmApplication *app;
+    int arg_value;
+};
 
+#endif /* _GSM_PROCACTIONS_H_ */

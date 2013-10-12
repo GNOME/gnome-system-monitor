@@ -20,14 +20,10 @@
 
 #include <config.h>
 
-#include <stdlib.h>
-
 #include <locale.h>
-
-#include <gtkmm.h>
 #include <glib/gi18n.h>
 
-#include "procman-app.h"
+#include "application.h"
 
 
 int
@@ -38,7 +34,7 @@ main (int argc, char *argv[])
     textdomain (GETTEXT_PACKAGE);
     setlocale (LC_ALL, "");
 
-    Glib::RefPtr<ProcmanApp> application = ProcmanApp::get();
+    Glib::RefPtr<GsmApplication> application = GsmApplication::get();
     return application->run (argc, argv);
 }
 

@@ -1,6 +1,6 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-#ifndef _PROCMAN_SMOOTH_REFRESH
-#define _PROCMAN_SMOOTH_REFRESH
+#ifndef _GSM_SMOOTH_REFRESH_H
+#define _GSM_SMOOTH_REFRESH_H
 
 #include <glib.h>
 #include <gio/gio.h>
@@ -101,4 +101,4 @@ class SmoothRefresh
 };
 
 
-#endif /* _PROCMAN_SMOOTH_REFRESH */
+#endif /* _GSM_SMOOTH_REFRESH_H */

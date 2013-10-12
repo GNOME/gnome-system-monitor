@@ -3,7 +3,7 @@
 AM_CPPFLAGS = \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-DGSM_LIBEXEC_DIR=\""$(pkglibexecdir)"\" \
-	$(PROCMAN_CFLAGS) \
+	$(GSM_CFLAGS) \
 	$(SYSTEMD_CFLAGS) \
 	$(WNCK_CFLAGS)
 
@@ -46,16 +46,18 @@ gnome_system_monitor_cpp_files = \
 	disks.cpp \
 	selinux.cpp \
 	cgroups.cpp \
-	procman_gnomesu.cpp \
-	procman_gksu.cpp \
-	procman_pkexec.cpp \
+	gsm_gnomesu.cpp \
+	gsm_gksu.cpp \
+	gsm_pkexec.cpp \
 	lsof.cpp \
 	iconthemewrapper.cpp \
-	procman-app.cpp
+	prefsdialog.cpp \
+	application.cpp
 
 gnome_system_monitor_c_files = \
 	e_date.c \
-	gsm_color_button.c
+	gsm_color_button.c \
+	treeview.c
 
 gnome_system_monitor_h_files = \
 	$(gnome_system_monitor_cpp_files:.cpp=.h) \
@@ -68,10 +70,10 @@ gnome_system_monitor_SOURCES = \
 	$(gnome_system_monitor_h_files) \
 	$(gnome_system_monitor_cpp_files) \
 	$(gnome_system_monitor_c_files) \
-	procman.cpp
+	main.cpp
 
 LDADD = \
-	$(PROCMAN_LIBS) \
+	$(GSM_LIBS) \
 	$(SYSTEMD_LIBS) \
 	$(WNCK_LIBS)
 

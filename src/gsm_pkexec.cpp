@@ -1,11 +1,11 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #include <config.h>
 
-#include "procman-app.h"
-#include "procman_pkexec.h"
+#include "application.h"
+#include "gsm_pkexec.h"
 #include "util.h"
 
-gboolean procman_pkexec_create_root_password_dialog(const char *command)
+gboolean gsm_pkexec_create_root_password_dialog(const char *command)
 {
     gint *exit_status = NULL;
     GError *error = NULL;

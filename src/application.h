@@ -1,6 +1,6 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-#ifndef _PROCMAN_PROCMAN_APP_H_
-#define _PROCMAN_PROCMAN_APP_H_
+#ifndef _GSM_APPLICATION_H_
+#define _GSM_APPLICATION_H_
 
 #include <gtkmm.h>
 #include <glibtop/cpu.h>
@@ -10,8 +10,6 @@ struct LoadGraph;
 
 #include "smooth_refresh.h"
 #include "prettytable.h"
-
-#define GSM_GSETTINGS_SCHEMA "org.gnome.gnome-system-monitor"
 
 static const unsigned MIN_UPDATE_INTERVAL =   1 * 1000;
 static const unsigned MAX_UPDATE_INTERVAL = 100 * 1000;
@@ -141,7 +139,7 @@ class ProcInfo
 
 
 
-class ProcmanApp : public Gtk::Application
+class GsmApplication : public Gtk::Application
 {
 private:
     void load_settings();
@@ -151,15 +149,15 @@ private:
     void on_help_activate(const Glib::VariantBase&);
     void on_quit_activate(const Glib::VariantBase&);
 protected:
-    ProcmanApp();
+    GsmApplication();
 public:
-    static Glib::RefPtr<ProcmanApp> get ();
+    static Glib::RefPtr<GsmApplication> get ();
 
     void save_config();
     void shutdown();
 
     GtkWidget        *tree;
-    GtkWidget        *loadavg;
+    GtkWidget        *proc_toolbar_revealer;
     GtkWidget        *popup_menu;
     GtkWidget        *disk_list;
     GtkWidget        *stack;
@@ -200,23 +198,4 @@ protected:
     virtual void on_startup();
 };
 
-struct ReniceArgs
-{
-    ProcmanApp *app;
-    int nice_value;
-};
-
-
-struct KillArgs
-{
-    ProcmanApp *app;
-    int signal;
-};
-
-
-void            procman_save_tree_state (GSettings *settings, GtkWidget *tree, const gchar *prefix);
-gboolean        procman_get_tree_state (GSettings *settings, GtkWidget *tree, const gchar *prefix);
-
-
-
-#endif  /* _PROCMAN_PROCMAN_APP_H_ */
+#endif /* _GSM_APPLICATION_H_ */

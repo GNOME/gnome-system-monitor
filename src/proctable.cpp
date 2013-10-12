@@ -27,7 +27,6 @@
 #include <glib/gi18n.h>
 #include <glib/gprintf.h>
 #include <glibtop.h>
-#include <glibtop/loadavg.h>
 #include <glibtop/proclist.h>
 #include <glibtop/procstate.h>
 #include <glibtop/procmem.h>
@@ -54,7 +53,7 @@
 #include <libwnck/libwnck.h>
 #endif
 
-#include "procman-app.h"
+#include "application.h"
 #include "proctable.h"
 #include "prettytable.h"
 #include "util.h"
@@ -62,6 +61,7 @@
 #include "selinux.h"
 #include "settings-keys.h"
 #include "cgroups.h"
+#include "treeview.h"
 
 ProcInfo::UserMap ProcInfo::users;
 ProcInfo::List ProcInfo::all;
@@ -75,126 +75,59 @@ ProcInfo* ProcInfo::find(pid_t pid)
 }
 
 static void
-cb_columns_changed(GtkTreeView *treeview, gpointer data)
+cb_save_tree_state(gpointer, gpointer data)
 {
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
+    GsmApplication * const app = static_cast<GsmApplication *>(data);
 
-    procman_save_tree_state (app->settings,
-                             GTK_WIDGET(treeview),
-                             GSM_SETTINGS_CHILD_PROCESSES);
-}
-
-static void
-cb_sort_changed (GtkTreeSortable *model, gpointer data)
-{
-    ProcmanApp *app = (ProcmanApp *) data;
-
-    procman_save_tree_state (app->settings,
-                             GTK_WIDGET (app->tree),
-                             GSM_SETTINGS_CHILD_PROCESSES);
-}
-
-static GtkTreeViewColumn*
-my_gtk_tree_view_get_column_with_sort_column_id(GtkTreeView *treeview, int id)
-{
-    GList *columns, *it;
-    GtkTreeViewColumn *col = NULL;
-
-    columns = gtk_tree_view_get_columns(treeview);
-
-    for(it = columns; it; it = it->next)
-    {
-        if(gtk_tree_view_column_get_sort_column_id(static_cast<GtkTreeViewColumn*>(it->data)) == id)
-        {
-            col = static_cast<GtkTreeViewColumn*>(it->data);
-            break;
-        }
-    }
-
-    g_list_free(columns);
-
-    return col;
-}
-
-void
-proctable_set_columns_order(GtkTreeView *treeview, GSList *order)
-{
-    GtkTreeViewColumn* last = NULL;
-    GSList *it;
-
-    for(it = order; it; it = it->next)
-    {
-        int id;
-        GtkTreeViewColumn *cur;
-
-        id = GPOINTER_TO_INT(it->data);
-
-        g_assert(id >= 0 && id < NUM_COLUMNS);
-
-        cur = my_gtk_tree_view_get_column_with_sort_column_id(treeview, id);
-
-        if(cur && cur != last)
-        {
-            gtk_tree_view_move_column_after(treeview, cur, last);
-            last = cur;
-        }
-    }
-}
-
-GSList*
-proctable_get_columns_order(GtkTreeView *treeview)
-{
-    GList *columns, *col;
-    GSList *order = NULL;
-
-    columns = gtk_tree_view_get_columns(treeview);
-
-    for(col = columns; col; col = col->next)
-    {
-        int id;
-
-        id = gtk_tree_view_column_get_sort_column_id(static_cast<GtkTreeViewColumn*>(col->data));
-        order = g_slist_prepend(order, GINT_TO_POINTER(id));
-    }
-
-    g_list_free(columns);
-
-    order = g_slist_reverse(order);
-
-    return order;
+    gsm_tree_view_save_state (GSM_TREE_VIEW (app->tree));
 }
 
 static void
 cb_proctree_destroying (GtkTreeView *self, gpointer data)
 {
     g_signal_handlers_disconnect_by_func (self,
-                                          (gpointer) cb_columns_changed,
+                                          (gpointer) cb_save_tree_state,
                                           data);
 
     g_signal_handlers_disconnect_by_func (gtk_tree_view_get_model (self),
-                                          (gpointer) cb_sort_changed,
+                                          (gpointer) cb_save_tree_state,
                                           data);
 }
 
 static gboolean
 cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
+    GtkTreePath *path;
 
-    if (gdk_event_triggers_context_menu ((GdkEvent *) event)) {
-        do_popup_menu (app, event);
-        return TRUE;
+    if (!gdk_event_triggers_context_menu ((GdkEvent *) event))
+        return FALSE;
+
+    if (!gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (app->tree), event->x, event->y, &path, NULL, NULL, NULL))
+        return FALSE;
+
+    if (!gtk_tree_selection_path_is_selected (app->selection, path)) {
+        if (!(event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)))
+            gtk_tree_selection_unselect_all (app->selection);
+        gtk_tree_selection_select_path (app->selection, path);
     }
 
-    return FALSE;
+    gtk_tree_path_free (path);
+
+    gtk_menu_popup (GTK_MENU (app->popup_menu),
+                    NULL, NULL, NULL, NULL,
+                    event->button, event->time);
+    return TRUE;
 }
 
 static gboolean
 cb_tree_popup_menu (GtkWidget *widget, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
-    do_popup_menu (app, NULL);
+    gtk_menu_popup (GTK_MENU (app->popup_menu),
+                    NULL, NULL, NULL, NULL,
+                    0, gtk_get_current_event_time ());
 
     return TRUE;
 }
@@ -211,7 +144,7 @@ get_last_selected (GtkTreeModel *model, GtkTreePath *path,
 void
 cb_row_selected (GtkTreeSelection *selection, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     app->selection = selection;
 
@@ -247,10 +180,10 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
 static gint
 cb_timeout (gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
     guint new_interval;
 
-    proctable_update_all (app);
+    proctable_update (app);
 
     if (app->smooth_refresh->get(new_interval)) {
         app->timeout = g_timeout_add(new_interval,
@@ -265,7 +198,7 @@ cb_timeout (gpointer data)
 static void
 cb_refresh_icons (GtkIconTheme *theme, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     if(app->timeout) {
         g_source_remove (app->timeout);
@@ -301,7 +234,7 @@ iter_matches_search_key (GtkTreeModel *model, GtkTreeIter *iter, const gchar *ke
 static gboolean
 process_visibility_func (GtkTreeModel *model, GtkTreeIter *iter, gpointer data)
 {
-    ProcmanApp * const app = static_cast<ProcmanApp *>(data);
+    GsmApplication * const app = static_cast<GsmApplication *>(data);
     const gchar * search_text = app->search_entry == NULL ? "" : gtk_entry_get_text (GTK_ENTRY (app->search_entry));
     GtkTreePath *tree_path = gtk_tree_model_get_path (model, iter);
 
@@ -338,7 +271,7 @@ process_visibility_func (GtkTreeModel *model, GtkTreeIter *iter, gpointer data)
 }
 
 static void
-proctable_clear_tree (ProcmanApp * const app)
+proctable_clear_tree (GsmApplication * const app)
 {
     GtkTreeModel *model;
 
@@ -356,26 +289,26 @@ proctable_clear_tree (ProcmanApp * const app)
 static void
 cb_show_dependencies_changed (GSettings *settings, const gchar *key, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (app->tree),
                                       g_settings_get_boolean (settings, GSM_SETTING_SHOW_DEPENDENCIES));
 
     proctable_clear_tree (app);
-    proctable_update_all (app);
+    proctable_update (app);
 }
 
 static void
 cb_show_whose_processes_changed (GSettings *settings, const gchar *key, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     proctable_clear_tree (app);
-    proctable_update_all (app);
+    proctable_update (app);
 }
 
 GtkWidget *
-proctable_new (ProcmanApp * const app)
+proctable_new (GsmApplication * const app)
 {
     GtkWidget *proctree;
     GtkTreeStore *model;
@@ -452,7 +385,9 @@ proctable_new (ProcmanApp * const app)
     
     model_sort = GTK_TREE_MODEL_SORT (gtk_tree_model_sort_new_with_model (GTK_TREE_MODEL (model_filter)));
     
-    proctree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model_sort));
+    proctree = gsm_tree_view_new (settings, TRUE);
+    gtk_tree_view_set_model (GTK_TREE_VIEW (proctree), GTK_TREE_MODEL (model_sort));
+
     gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (proctree), COL_TOOLTIP);
     gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (proctree),
                                       g_settings_get_boolean (app->settings, GSM_SETTING_SHOW_DEPENDENCIES));
@@ -476,12 +411,12 @@ proctable_new (ProcmanApp * const app)
     gtk_tree_view_column_set_title (column, _(titles[0]));
 
     gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
-    bind_column_to_gsetting (settings, column);
     gtk_tree_view_column_set_resizable (column, TRUE);
     gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
     gtk_tree_view_column_set_min_width (column, 1);
     gtk_tree_view_column_set_reorderable(column, TRUE);
-    gtk_tree_view_append_column (GTK_TREE_VIEW (proctree), column);
+
+    gsm_tree_view_append_and_bind_column (GSM_TREE_VIEW (proctree), column);
     gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
 
     for (i = COL_USER; i <= COL_PRIORITY; i++) {
@@ -502,9 +437,8 @@ proctable_new (ProcmanApp * const app)
         gtk_tree_view_column_set_title(col, _(titles[i]));
         gtk_tree_view_column_set_resizable(col, TRUE);
         gtk_tree_view_column_set_sort_column_id(col, i);
-        bind_column_to_gsetting (settings, col);
         gtk_tree_view_column_set_reorderable(col, TRUE);
-        gtk_tree_view_append_column(GTK_TREE_VIEW(proctree), col);
+        gsm_tree_view_append_and_bind_column (GSM_TREE_VIEW (proctree), col);
 
         // type
         switch (i) {
@@ -617,35 +551,26 @@ proctable_new (ProcmanApp * const app)
     app->last_vscroll_max = 0;
     app->last_vscroll_value = 0;
 
-    procman_get_tree_state (app->settings, proctree, "proctree");
-    /* Override column settings by hiding this column if it's meaningless: */
-    if (!can_show_security_context_column ()) {
-        GtkTreeViewColumn *column;
-        column = my_gtk_tree_view_get_column_with_sort_column_id (GTK_TREE_VIEW (proctree), COL_SECURITYCONTEXT);
-        gtk_tree_view_column_set_visible (column, FALSE);
+    if (!cgroups_enabled ())
+        gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_CGROUP);
+
+#ifdef HAVE_SYSTEMD
+    if (!LOGIND_RUNNING ())
+#endif
+    {
+        gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_UNIT);
+        gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_SESSION);
+        gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_SEAT);
+        gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_OWNER);
     }
 
-    if (!cgroups_enabled()) {
-        GtkTreeViewColumn *column;
+    if (!can_show_security_context_column ())
+        gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_SECURITYCONTEXT);
 
-        column = my_gtk_tree_view_get_column_with_sort_column_id(GTK_TREE_VIEW(proctree), COL_CGROUP);
-        gtk_tree_view_column_set_visible(column, FALSE);
-    }
+    gsm_tree_view_load_state (GSM_TREE_VIEW (proctree));
 
     GtkIconTheme* theme = gtk_icon_theme_get_default();
     g_signal_connect(G_OBJECT (theme), "changed", G_CALLBACK (cb_refresh_icons), app);
-    
-#ifdef HAVE_SYSTEMD
-    if (!LOGIND_RUNNING())
-#endif
-    {
-        GtkTreeViewColumn *column;
-
-        for (i = COL_UNIT; i <= COL_OWNER; i++) {
-            column = my_gtk_tree_view_get_column_with_sort_column_id(GTK_TREE_VIEW(proctree), i);
-            gtk_tree_view_column_set_visible(column, FALSE);
-        }
-    }
 
     app->selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
     gtk_tree_selection_set_mode (app->selection, GTK_SELECTION_MULTIPLE);
@@ -663,10 +588,10 @@ proctable_new (ProcmanApp * const app)
                       app);
 
     g_signal_connect (G_OBJECT (proctree), "columns-changed",
-                      G_CALLBACK (cb_columns_changed), app);
+                      G_CALLBACK (cb_save_tree_state), app);
 
     g_signal_connect (G_OBJECT (model_sort), "sort-column-changed",
-                      G_CALLBACK (cb_sort_changed), app);
+                      G_CALLBACK (cb_save_tree_state), app);
 
     g_signal_connect (app->settings, "changed::" GSM_SETTING_SHOW_DEPENDENCIES,
                       G_CALLBACK (cb_show_dependencies_changed), app);
@@ -810,7 +735,7 @@ update_info_mutable_cols(ProcInfo *info)
     GtkTreeModel *model;
     model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
             gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT(
-            gtk_tree_view_get_model (GTK_TREE_VIEW(ProcmanApp::get()->tree))))));
+            gtk_tree_view_get_model (GTK_TREE_VIEW(GsmApplication::get()->tree))))));
 
     using procman::tree_store_update;
 
@@ -836,7 +761,7 @@ update_info_mutable_cols(ProcInfo *info)
 }
 
 static void
-insert_info_to_tree (ProcInfo *info, ProcmanApp *app, bool forced = false)
+insert_info_to_tree (ProcInfo *info, GsmApplication *app, bool forced = false)
 {
     GtkTreeModel *model;
     GtkTreeModel *filtered;
@@ -898,7 +823,7 @@ insert_info_to_tree (ProcInfo *info, ProcmanApp *app, bool forced = false)
 */
 template<typename List>
 static void
-remove_info_from_tree (ProcmanApp *app, GtkTreeModel *model,
+remove_info_from_tree (GsmApplication *app, GtkTreeModel *model,
                        ProcInfo *current, List &orphans, unsigned lvl = 0)
 {
     GtkTreeIter child_node;
@@ -959,7 +884,7 @@ get_process_systemd_info(ProcInfo *info)
 }
 
 static void
-update_info (ProcmanApp *app, ProcInfo *info)
+update_info (GsmApplication *app, ProcInfo *info)
 {
     glibtop_proc_state procstate;
     glibtop_proc_uid procuid;
@@ -1049,7 +974,7 @@ ProcInfo::ProcInfo(pid_t pid)
 }
 
 static void
-refresh_list (ProcmanApp *app, const pid_t* pid_list, const guint n)
+refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
 {
     typedef std::list<ProcInfo*> ProcList;
     ProcList addition;
@@ -1134,7 +1059,7 @@ refresh_list (ProcmanApp *app, const pid_t* pid_list, const guint n)
                 // FIXME: this is broken if the unreachable parent becomes active
                 // i.e. it gets active or changes ower
                 // so we just clear the tree on __each__ update
-                // see proctable_update_list (ProcData * const procdata)
+                // see proctable_update (ProcData * const procdata)
 
 
                 if ((*it)->ppid == 0 or in_tree.find((*it)->ppid) != in_tree.end()) {
@@ -1170,7 +1095,7 @@ refresh_list (ProcmanApp *app, const pid_t* pid_list, const guint n)
 }
 
 void
-proctable_update_list (ProcmanApp *app)
+proctable_update (GsmApplication *app)
 {
     pid_t* pid_list;
     glibtop_proclist proclist;
@@ -1178,7 +1103,7 @@ proctable_update_list (ProcmanApp *app)
     int which = 0;
     int arg = 0;
 
-    const char* whose_processes = g_settings_get_string (app->settings, GSM_SETTING_SHOW_WHOSE_PROCESSES);
+    char *whose_processes = g_settings_get_string (app->settings, GSM_SETTING_SHOW_WHOSE_PROCESSES);
     if (strcmp (whose_processes, "all") == 0) {
         which = GLIBTOP_KERN_PROC_ALL;
         arg = 0;
@@ -1189,6 +1114,7 @@ proctable_update_list (ProcmanApp *app)
       which = GLIBTOP_KERN_PROC_UID;
       arg = getuid ();
     }
+    g_free (whose_processes);
 
     pid_list = glibtop_get_proclist (&proclist, which, arg);
 
@@ -1234,39 +1160,12 @@ proctable_update_list (ProcmanApp *app)
 }
 
 void
-proctable_update_all (ProcmanApp * const app)
-{
-    char* string;
-
-    string = make_loadavg_string();
-    gtk_label_set_text (GTK_LABEL(app->loadavg), string);
-    g_free (string);
-
-    proctable_update_list (app);
-}
-
-void
-proctable_free_table (ProcmanApp * const app)
+proctable_free_table (GsmApplication * const app)
 {
     for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it)
         delete it->second;
 
     ProcInfo::all.clear();
-}
-
-char*
-make_loadavg_string(void)
-{
-    glibtop_loadavg buf;
-
-    glibtop_get_loadavg(&buf);
-
-    return g_strdup_printf(
-        _("Load averages for the last 1, 5, 15 minutes: "
-          "%0.2f, %0.2f, %0.2f"),
-        buf.loadavg[0],
-        buf.loadavg[1],
-        buf.loadavg[2]);
 }
 
 void
@@ -1277,14 +1176,14 @@ ProcInfo::set_icon(Glib::RefPtr<Gdk::Pixbuf> icon)
     GtkTreeModel *model;
     model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
             gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT(
-            gtk_tree_view_get_model (GTK_TREE_VIEW(ProcmanApp::get()->tree))))));
+            gtk_tree_view_get_model (GTK_TREE_VIEW(GsmApplication::get()->tree))))));
     gtk_tree_store_set(GTK_TREE_STORE(model), &this->node,
                        COL_PIXBUF, (this->pixbuf ? this->pixbuf->gobj() : NULL),
                        -1);
 }
 
 void
-proctable_freeze (ProcmanApp *app)
+proctable_freeze (GsmApplication *app)
 {
     if (app->timeout) {
       g_source_remove (app->timeout);
@@ -1293,15 +1192,18 @@ proctable_freeze (ProcmanApp *app)
 }
 
 void
-proctable_thaw (ProcmanApp *app)
+proctable_thaw (GsmApplication *app)
 {
+    if (app->timeout)
+        return;
+
     app->timeout = g_timeout_add (app->config.update_interval,
                                   cb_timeout,
                                   app);
 }
 
 void
-proctable_reset_timeout (ProcmanApp *app)
+proctable_reset_timeout (GsmApplication *app)
 {
     proctable_freeze (app);
     proctable_thaw (app);

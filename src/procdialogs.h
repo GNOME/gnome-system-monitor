@@ -17,12 +17,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  *
  */
-#ifndef _PROCDIALOGS_H_
-#define _PROCDIALOGS_H_
+#ifndef _GSM_PROCDIALOGS_H_
+#define _GSM_PROCDIALOGS_H_
 
 
 #include <glib.h>
-#include "procman-app.h"
+#include "application.h"
 
 /* These are the actual range of settable values. Values outside this range
    are scaled back to these limits. So show these limits in the slider
@@ -43,13 +43,11 @@ typedef enum
 } ProcmanActionType;
 
 
-void                    procdialog_create_kill_dialog (ProcmanApp *app, int signal);
-void                    procdialog_create_renice_dialog (ProcmanApp *app);
+void                    procdialog_create_kill_dialog (GsmApplication *app, int signal);
+void                    procdialog_create_renice_dialog (GsmApplication *app);
 gboolean                procdialog_create_root_password_dialog (ProcmanActionType type,
-                                                                ProcmanApp *app,
+                                                                GsmApplication *app,
                                                                 gint pid, gint extra_value);
-void                    procdialog_create_memmaps_dialog (ProcmanApp *app);
-void                    procdialog_create_preferences_dialog (ProcmanApp *app);
+void                    procdialog_create_memmaps_dialog (GsmApplication *app);
 
-#endif
-
+#endif /* _GSM_PROCDIALOGS_H_ */

@@ -1,15 +1,12 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-#ifndef PROCMAN_CGROUP_H_20111103
-#define PROCMAN_CGROUP_H_20111103
+#ifndef _GSM_CGROUPS_H_
+#define _GSM_CGROUPS_H_
 
 #include <glib.h>
 
-#include "procman-app.h"
+#include "application.h"
 
-void
-get_process_cgroup_info (ProcInfo *info);
+void get_process_cgroup_info (ProcInfo *info);
+gboolean cgroups_enabled (void);
 
-gboolean
-cgroups_enabled (void);
-
-#endif /* PROCMAN_CGROUP_H_20111103 */
+#endif /* _GSM_CGROUPS_H_ */

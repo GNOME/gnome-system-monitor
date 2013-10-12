@@ -3,8 +3,10 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <cstring>
 
-#include "procman-app.h"
+#include "cgroups.h"
+#include "application.h"
 #include "util.h"
 
 gboolean
@@ -21,7 +23,7 @@ cgroups_enabled(void)
     return has_cgroups;
 }
 
-void
+static void
 append_cgroup_name(char *line, gchar **current_cgroup_name)
 {
     gchar *controller, *path, *tmp, *path_plus_space;
@@ -69,7 +71,7 @@ append_cgroup_name(char *line, gchar **current_cgroup_name)
     *current_cgroup_name = tmp;
 }
 
-int
+static int
 check_cgroup_changed(gchar *line, gchar *current_cgroup_set)
 {
     /* check if line is contained in current_cgroup_set */

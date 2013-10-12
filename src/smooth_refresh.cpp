@@ -1,18 +1,14 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #include <config.h>
 
-#include <sys/types.h>
-#include <unistd.h>
-
 #include <glib.h>
+
 #include <glibtop.h>
 #include <glibtop/proctime.h>
 #include <glibtop/cpu.h>
 
-#include <algorithm>
-
 #include "smooth_refresh.h"
-#include "procman-app.h"
+#include "application.h"
 #include "settings-keys.h"
 #include "util.h"
 
@@ -85,7 +81,7 @@ void SmoothRefresh::reset()
     glibtop_get_cpu(&cpu);
     glibtop_get_proc_time(&proctime, getpid());
 
-    this->interval = ProcmanApp::get()->config.update_interval;
+    this->interval = GsmApplication::get()->config.update_interval;
     this->last_pcpu = PCPU_LO;
     this->last_total_time = cpu.total;
     this->last_cpu_time = proctime.rtime;
@@ -104,7 +100,7 @@ SmoothRefresh::~SmoothRefresh()
 bool
 SmoothRefresh::get(guint &new_interval)
 {
-    const unsigned config_interval = ProcmanApp::get()->config.update_interval;
+    const unsigned config_interval = GsmApplication::get()->config.update_interval;
 
     g_assert(this->interval >= config_interval);
 

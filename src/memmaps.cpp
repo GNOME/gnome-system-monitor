@@ -15,10 +15,11 @@
 using std::string;
 
 
-#include "procman-app.h"
+#include "application.h"
 #include "memmaps.h"
 #include "proctable.h"
 #include "settings-keys.h"
+#include "treeview.h"
 #include "util.h"
 
 
@@ -61,41 +62,6 @@ namespace
             return buffer;
         }
     };
-
-
-
-
-#if 0
-
-    struct ColumnState
-    {
-        unsigned visible;
-        unsigned id;
-        unsigned width;
-
-        int pack() const
-        {
-            unsigned p = 0;
-            p |= (this->visible & 0x0001) << 24;
-            p |= (this->id      & 0x00ff) << 16;
-            p |= (this->width   & 0xffff);
-            return p;
-        }
-
-        void unpack(int i)
-        {
-            this->visible = 0x0001 & (i >> 24);
-            this->id      = 0x00ff & (i >> 16);
-            this->width   = 0xffff & i;
-        }
-    };
-
-
-
-
-#endif
-
-
 
     class InodeDevices
     {
@@ -158,23 +124,19 @@ namespace
     public:
         guint timer;
         GtkWidget *tree;
-        GSettings *settings;
         ProcInfo *info;
         OffsetFormater format;
         mutable InodeDevices devices;
-        const char * const schema;
 
-        MemMapsData(GtkWidget *a_tree, GSettings *a_settings)
-            : tree(a_tree),
-              settings(a_settings),
-              schema(GSM_SETTINGS_CHILD_MEMMAP)
+        MemMapsData(GtkWidget *a_tree)
+            : tree(a_tree)
         {
-            procman_get_tree_state(this->settings, this->tree, this->schema);
+            gsm_tree_view_load_state (GSM_TREE_VIEW (this->tree));
         }
 
         ~MemMapsData()
         {
-            procman_save_tree_state(this->settings, this->tree, this->schema);
+            gsm_tree_view_save_state (GSM_TREE_VIEW (this->tree));
         }
     };
 }
@@ -189,7 +151,7 @@ struct glibtop_map_entry_cmp
 
     bool operator()(const guint64 &start, const glibtop_map_entry &a) const
     {
-        return not (*this)(a, start);
+        return start < a.start;
     }
 
 };
@@ -331,7 +293,7 @@ dialog_response (GtkDialog * dialog, gint response_id, gpointer data)
 
 
 static MemMapsData*
-create_memmapsdata (ProcmanApp *app)
+create_memmapsdata (GsmApplication *app)
 {
     GtkWidget *tree;
     GtkListStore *model;
@@ -379,9 +341,14 @@ create_memmapsdata (ProcmanApp *app)
                                 G_TYPE_UINT64 /* MMAP_COL_INODE      */
         );
 
-    tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
+    GSettings *settings = g_settings_get_child (app->settings, GSM_SETTINGS_CHILD_MEMMAP);
+
+    tree = gsm_tree_view_new (settings, FALSE);
+    gtk_tree_view_set_model (GTK_TREE_VIEW (tree), GTK_TREE_MODEL (model));
     gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree), TRUE);
     g_object_unref (G_OBJECT (model));
+
+    gchar *font = get_monospace_system_font_name ();
 
     for (i = 0; i < MMAP_COL_MAX; i++) {
         GtkCellRenderer *cell;
@@ -415,19 +382,19 @@ create_memmapsdata (ProcmanApp *app)
                 break;
         }
 
-
         switch (i) {
             case MMAP_COL_VMSTART:
             case MMAP_COL_VMEND:
             case MMAP_COL_FLAGS:
             case MMAP_COL_VMOFFSET:
-            case MMAP_COL_DEVICE:
-                g_object_set(cell, "family", "monospace", NULL);
+                g_object_set (cell, "font", font, NULL);
                 break;
         }
     }
 
-    return new MemMapsData(tree, app->settings);
+    g_free (font);
+
+    return new MemMapsData(tree);
 }
 
 
@@ -450,7 +417,7 @@ static void
 create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
                               GtkTreeIter *iter, gpointer data)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GsmApplication *app = static_cast<GsmApplication *>(data);
     MemMapsData *mmdata;
     GtkWidget *memmapsdialog;
     GtkWidget *dialog_vbox;
@@ -508,7 +475,7 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 
 
 void
-create_memmaps_dialog (ProcmanApp *app)
+create_memmaps_dialog (GsmApplication *app)
 {
     /* TODO: do we really want to open multiple dialogs ? */
     gtk_tree_selection_selected_foreach (app->selection, create_single_memmaps_dialog,

@@ -1,16 +1,6 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #include <config.h>
 
-#include <gdkmm/pixbuf.h>
-
-#include <stdio.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <signal.h>
-#include <dirent.h>
-#include <string.h>
-#include <time.h>
-
 #include <glib/gi18n.h>
 
 #include <glibtop.h>
@@ -19,11 +9,8 @@
 #include <glibtop/swap.h>
 #include <glibtop/netload.h>
 #include <glibtop/netlist.h>
-#include <math.h>
 
-#include <algorithm>
-
-#include "procman-app.h"
+#include "application.h"
 #include "load-graph.h"
 #include "util.h"
 #include "gsm_color_button.h"
@@ -68,7 +55,6 @@ unsigned LoadGraph::num_bars() const
 #define FRAME_WIDTH 4
 void draw_background(LoadGraph *graph) {
     GtkAllocation allocation;
-    double dash[2] = { 1.0, 2.0 };
     cairo_t *cr;
     guint i;
     unsigned num_bars;
@@ -91,7 +77,7 @@ void draw_background(LoadGraph *graph) {
                                                            allocation.height);
     cr = cairo_create (graph->background);
 
-    GtkStyleContext *context = gtk_widget_get_style_context (ProcmanApp::get()->stack);
+    GtkStyleContext *context = gtk_widget_get_style_context (GsmApplication::get()->stack);
     
     gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &fg);
 
@@ -112,8 +98,8 @@ void draw_background(LoadGraph *graph) {
     cairo_fill(cr);
 
     cairo_set_line_width (cr, 1.0);
-    cairo_set_dash (cr, dash, 2, 0);
-
+    cairo_set_source_rgb (cr, 0.89, 0.89, 0.89);
+    
     for (i = 0; i <= num_bars; ++i) {
         double y;
 
@@ -133,7 +119,7 @@ void draw_background(LoadGraph *graph) {
         } else {
             // operation orders matters so it's 0 if i == num_bars
             guint max = 100;
-            if (graph->type == LOAD_GRAPH_CPU && !ProcmanApp::get()->config.solaris_mode) {
+            if (graph->type == LOAD_GRAPH_CPU && !GsmApplication::get()->config.solaris_mode) {
                 max = 100 * graph->n;
             }
             caption = g_strdup_printf("%d %%", max - i * (max / num_bars));
@@ -146,19 +132,25 @@ void draw_background(LoadGraph *graph) {
         pango_cairo_show_layout (cr, layout);
         g_free(caption);
 
-        cairo_set_source_rgba (cr, 0, 0, 0, 0.75);
+        if (i==0 || i==num_bars)
+          cairo_set_source_rgb (cr, 0.70, 0.71, 0.70);
+        else 
+          cairo_set_source_rgb (cr, 0.89, 0.89, 0.89);
         cairo_move_to (cr, graph->indent, i * graph->graph_dely + 0.5);
         cairo_line_to (cr, graph->draw_width - graph->rmargin + 0.5 + 4, i * graph->graph_dely + 0.5);
+        cairo_stroke (cr);
     }
-    cairo_stroke (cr);
-
-    cairo_set_dash (cr, dash, 2, 1.5);
+    
 
     const unsigned total_seconds = graph->speed * (LoadGraph::NUM_POINTS - 2) / 1000;
 
     for (unsigned int i = 0; i < 7; i++) {
         double x = (i) * (graph->draw_width - graph->rmargin - graph->indent) / 6;
-        cairo_set_source_rgba (cr, 0, 0, 0, 0.75);
+        if (i==0 || i==6)
+          cairo_set_source_rgb (cr, 0.70, 0.71, 0.70);
+        else 
+          cairo_set_source_rgb (cr, 0.89, 0.89, 0.89);
+
         cairo_move_to (cr, (ceil(x) + 0.5) + graph->indent, 0.5);
         cairo_line_to (cr, (ceil(x) + 0.5) + graph->indent, graph->real_draw_height + 4.5);
         cairo_stroke(cr);
@@ -268,7 +260,7 @@ load_graph_draw (GtkWidget *widget,
                      graph->real_draw_height + FRAME_WIDTH - 1);
     cairo_clip(cr);
 
-    bool drawStacked = graph->type == LOAD_GRAPH_CPU && ProcmanApp::get()->config.draw_stacked;
+    bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get()->config.draw_stacked;
     for (j = graph->n-1; j >= 0; j--) {
         gdk_cairo_set_source_rgba (cr, &(graph->colors [j]));
         if (drawStacked) {
@@ -335,7 +327,7 @@ get_load (LoadGraph *graph)
     // that value has no meaning, we just want all the
     // graphs to be aligned, so the CPU graph needs to start
     // immediately
-    bool drawStacked = graph->type == LOAD_GRAPH_CPU && ProcmanApp::get()->config.draw_stacked;
+    bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get()->config.draw_stacked;
 
     for (i = 0; i < graph->n; i++) {
         float load;
@@ -370,7 +362,7 @@ get_load (LoadGraph *graph)
 namespace
 {
 
-    void set_memory_label_and_picker(GtkLabel* label, GSMColorButton* picker,
+    void set_memory_label_and_picker(GtkLabel* label, GsmColorButton* picker,
                                      guint64 used, guint64 total, double percent)
     {
         char* used_text;
@@ -417,7 +409,7 @@ get_memory (LoadGraph *graph)
                                 GSM_COLOR_BUTTON(graph->swap_color_picker),
                                 swap.used, swap.total, swappercent);
     
-    gsm_color_button_set_sensitive (GSM_COLOR_BUTTON(graph->swap_color_picker), swap.total > 0);
+    gtk_widget_set_sensitive (GTK_WIDGET (graph->swap_color_picker), swap.total > 0);
     
     graph->data[0][0] = mempercent;
     graph->data[0][1] = swap.total>0 ? swappercent : -1.0f;
@@ -482,7 +474,7 @@ net_scale (LoadGraph *graph, guint64 din, guint64 dout)
 
     const guint64 bak_max(new_max);
 
-    if (ProcmanApp::get()->config.network_in_bits) {
+    if (GsmApplication::get()->config.network_in_bits) {
         // nice number is for the ticks
         unsigned ticks = graph->num_bars();
 
@@ -727,7 +719,7 @@ LoadGraph::LoadGraph(guint type)
     switch (type) {
         case LOAD_GRAPH_CPU:
             memset(&cpu, 0, sizeof cpu);
-            n = ProcmanApp::get()->config.num_cpus;
+            n = GsmApplication::get()->config.num_cpus;
 
             for(guint i = 0; i < G_N_ELEMENTS(labels.cpu); ++i)
                 labels.cpu[i] = gtk_label_new(NULL);
@@ -771,26 +763,26 @@ LoadGraph::LoadGraph(guint type)
             break;
     }
 
-    speed  = ProcmanApp::get()->config.graph_update_interval;
+    speed  = GsmApplication::get()->config.graph_update_interval;
 
     colors.resize(n);
 
     switch (type) {
         case LOAD_GRAPH_CPU:
-            memcpy(&colors[0], ProcmanApp::get()->config.cpu_color,
+            memcpy(&colors[0], GsmApplication::get()->config.cpu_color,
                    n * sizeof colors[0]);
             break;
         case LOAD_GRAPH_MEM:
-            colors[0] = ProcmanApp::get()->config.mem_color;
-            colors[1] = ProcmanApp::get()->config.swap_color;
+            colors[0] = GsmApplication::get()->config.mem_color;
+            colors[1] = GsmApplication::get()->config.swap_color;
             mem_color_picker = gsm_color_button_new (&colors[0],
                                                         GSMCP_TYPE_PIE);
             swap_color_picker = gsm_color_button_new (&colors[1],
                                                          GSMCP_TYPE_PIE);
             break;
         case LOAD_GRAPH_NET:
-            colors[0] = ProcmanApp::get()->config.net_in_color;
-            colors[1] = ProcmanApp::get()->config.net_out_color;
+            colors[0] = GsmApplication::get()->config.net_in_color;
+            colors[1] = GsmApplication::get()->config.net_out_color;
             break;
     }
 

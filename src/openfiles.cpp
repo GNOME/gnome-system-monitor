@@ -10,11 +10,12 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#include "procman-app.h"
+#include "application.h"
 #include "openfiles.h"
 #include "proctable.h"
 #include "util.h"
 #include "settings-keys.h"
+#include "treeview.h"
 
 #ifndef NI_IDN
 #define NI_IDN 0
@@ -221,11 +222,9 @@ static void
 close_openfiles_dialog (GtkDialog *dialog, gint id, gpointer data)
 {
     GtkWidget *tree = static_cast<GtkWidget*>(data);
-    GSettings *settings;
     guint timer;
 
-    settings = static_cast<GSettings*>(g_object_get_data (G_OBJECT (tree), "settings"));
-    procman_save_tree_state (settings, tree, GSM_SETTINGS_CHILD_OPEN_FILES);
+    gsm_tree_view_save_state (GSM_TREE_VIEW (tree));
 
     timer = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (tree), "timer"));
     g_source_remove (timer);
@@ -237,7 +236,7 @@ close_openfiles_dialog (GtkDialog *dialog, gint id, gpointer data)
 
 
 static GtkWidget *
-create_openfiles_tree (ProcmanApp *app)
+create_openfiles_tree (GsmApplication *app)
 {
     GtkWidget *tree;
     GtkListStore *model;
@@ -261,7 +260,10 @@ create_openfiles_tree (ProcmanApp *app)
                                 G_TYPE_POINTER      /* open_files_entry */
         );
 
-    tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
+    GSettings *settings = g_settings_get_child (app->settings, GSM_SETTINGS_CHILD_OPEN_FILES);
+
+    tree = gsm_tree_view_new (settings, FALSE);
+    gtk_tree_view_set_model (GTK_TREE_VIEW (tree), GTK_TREE_MODEL (model));
     gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree), TRUE);
     g_object_unref (G_OBJECT (model));
 
@@ -283,18 +285,7 @@ create_openfiles_tree (ProcmanApp *app)
         gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
     }
 
-#if 0
-    gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model),
-                                     COL_VMSZ,
-                                     sort_ints,
-                                     GINT_TO_POINTER (COL_FD),
-                                     NULL);
-/*gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model),
-  0,
-  GTK_SORT_ASCENDING);*/
-#endif
-
-    procman_get_tree_state (app->settings, tree, GSM_SETTINGS_CHILD_OPEN_FILES);
+    gsm_tree_view_load_state (GSM_TREE_VIEW (tree));
 
     return tree;
 
@@ -320,7 +311,7 @@ static void
 create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
                                 GtkTreeIter *iter, gpointer data)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GsmApplication *app = static_cast<GsmApplication *>(data);
     GtkWidget *openfilesdialog;
     GtkWidget *cmd_grid;
     GtkWidget *label;
@@ -354,7 +345,6 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
     tree = create_openfiles_tree (app);
     gtk_container_add (GTK_CONTAINER (scrolled), tree);
     g_object_set_data (G_OBJECT (tree), "selected_info", GUINT_TO_POINTER (info->pid));
-    g_object_set_data (G_OBJECT (tree), "settings", app->settings);
 
     g_signal_connect (G_OBJECT (openfilesdialog), "response",
                       G_CALLBACK (close_openfiles_dialog), tree);
@@ -373,7 +363,7 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 
 
 void
-create_openfiles_dialog (ProcmanApp *app)
+create_openfiles_dialog (GsmApplication *app)
 {
     gtk_tree_selection_selected_foreach (app->selection, create_single_openfiles_dialog,
                                          app);

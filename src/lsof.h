@@ -1,10 +1,10 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-#ifndef H_PROCMAN_LSOF_1161179202
-#define H_PROCMAN_LSOF_1161179202
+#ifndef _GSM_LSOF_H_
+#define _GSM_LSOF_H_
 
 #include <glib.h>
-#include "procman-app.h"
+#include "application.h"
 
-void procman_lsof(ProcmanApp *app);
+void procman_lsof(GsmApplication *app);
 
-#endif /* H_PROCMAN_LSOF_1161179202 */
+#endif /* _GSM_LSOF_H_ */

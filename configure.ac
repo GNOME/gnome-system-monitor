@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.63])
 
 AC_INIT([gnome-system-monitor],
-        [3.9.5],
+        [3.10.0],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor],
         [gnome-system-monitor])
 
@@ -29,10 +29,10 @@ LT_PREREQ([2.2])
 LT_INIT
 
 # Package dependencies
-GLIB_REQUIRED=2.28.0
+GLIB_REQUIRED=2.37.3
 LIBWNCK_REQUIRED=2.91.0
 LIBGTOP_REQUIRED=2.28.2
-GTK_REQUIRED=3.5.12
+GTK_REQUIRED=3.9.5
 GNOME_ICON_THEME_REQUIRED=2.31
 GTKMM_REQUIRED=3.3.18
 GIOMM_REQUIRED=2.27
@@ -43,7 +43,7 @@ SYSTEMD_REQUIRED=38
 # systemd v43 used the C++ keyword 'class' as a function parameter. This breaks the build for C++ programs.
 SYSTEMD_EXCLUDED=43
 
-PKG_CHECK_MODULES(PROCMAN,
+PKG_CHECK_MODULES(GSM,
   glib-2.0 >= $GLIB_REQUIRED
   libgtop-2.0 >= $LIBGTOP_REQUIRED
   gtk+-3.0 >= $GTK_REQUIRED
@@ -113,9 +113,6 @@ GLIB_GSETTINGS
 # i18n stuff
 IT_PROG_INTLTOOL([0.41.0])
 
-AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.17])
-
 GETTEXT_PACKAGE=gnome-system-monitor
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE",
@@ -129,6 +126,7 @@ Makefile
 scripts/Makefile
 uber/Makefile
 src/Makefile
+src/org.gnome.gnome-system-monitor.gschema.xml.in
 po/Makefile.in
 help/Makefile
 gnome-system-monitor.desktop.in

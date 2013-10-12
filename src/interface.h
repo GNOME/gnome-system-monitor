@@ -18,15 +18,14 @@
  *
  */
 
-#ifndef _PROCMAN_INTERFACE_H_
-#define _PROCMAN_INTERFACE_H_
+#ifndef _GSM_INTERFACE_H_
+#define _GSM_INTERFACE_H_
 
 #include <glib.h>
 #include <gtk/gtk.h>
-#include "procman-app.h"
+#include "application.h"
 
-void            create_main_window (ProcmanApp *app);
-void            update_sensitivity (ProcmanApp *app);
-void            do_popup_menu(ProcmanApp *app, GdkEventButton *event);
+void            create_main_window (GsmApplication *app);
+void            update_sensitivity (GsmApplication *app);
 
-#endif /* _PROCMAN_INTERFACE_H_ */
+#endif /* _GSM_INTERFACE_H_ */

@@ -9,10 +9,11 @@
 #include <glib/gi18n.h>
 
 #include "disks.h"
-#include "procman-app.h"
+#include "application.h"
 #include "util.h"
 #include "iconthemewrapper.h"
 #include "settings-keys.h"
+#include "treeview.h"
 
 enum DiskColumns
 {
@@ -36,11 +37,9 @@ enum DiskColumns
 static void
 cb_sort_changed (GtkTreeSortable *model, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
-    procman_save_tree_state (app->settings,
-                             GTK_WIDGET (app->disk_list),
-                             GSM_SETTINGS_CHILD_DISKS);
+    gsm_tree_view_save_state (GSM_TREE_VIEW (app->disk_list));
 }
 
 static void
@@ -223,7 +222,7 @@ add_disk(GtkListStore *list, const glibtop_mountentry *entry, bool show_all_fs)
 }
 
 static void
-mount_changed (GVolumeMonitor *monitor, GMount *mount, ProcmanApp *app)
+mount_changed (GVolumeMonitor *monitor, GMount *mount, GsmApplication *app)
 {
     disks_update(app);
 }
@@ -231,14 +230,14 @@ mount_changed (GVolumeMonitor *monitor, GMount *mount, ProcmanApp *app)
 static gboolean
 cb_timeout (gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
     disks_update (app);
 
     return G_SOURCE_CONTINUE;
 }
 
 void
-disks_update(ProcmanApp *app)
+disks_update(GsmApplication *app)
 {
     GtkListStore *list;
     glibtop_mountentry * entries;
@@ -259,7 +258,7 @@ disks_update(ProcmanApp *app)
 }
 
 static void
-init_volume_monitor (ProcmanApp *app)
+init_volume_monitor (GsmApplication *app)
 {
     GVolumeMonitor *monitor = g_volume_monitor_get ();
 
@@ -269,7 +268,7 @@ init_volume_monitor (ProcmanApp *app)
 }
 
 void
-disks_freeze (ProcmanApp *app)
+disks_freeze (GsmApplication *app)
 {
   if (app->disk_timeout) {
       g_source_remove (app->disk_timeout);
@@ -278,7 +277,7 @@ disks_freeze (ProcmanApp *app)
 }
 
 void
-disks_thaw (ProcmanApp *app)
+disks_thaw (GsmApplication *app)
 {
   if (app->disk_timeout)
       return;
@@ -289,7 +288,7 @@ disks_thaw (ProcmanApp *app)
 }
 
 void
-disks_reset_timeout (ProcmanApp *app)
+disks_reset_timeout (GsmApplication *app)
 {
     disks_freeze (app);
     disks_thaw (app);
@@ -298,11 +297,7 @@ disks_reset_timeout (ProcmanApp *app)
 static void
 cb_disk_columns_changed(GtkTreeView *treeview, gpointer data)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
-
-    procman_save_tree_state (app->settings,
-                             GTK_WIDGET (treeview),
-                             GSM_SETTINGS_CHILD_DISKS);
+    gsm_tree_view_save_state (GSM_TREE_VIEW (treeview));
 }
 
 
@@ -352,7 +347,7 @@ cb_disk_list_destroying (GtkWidget *self, gpointer data)
 static void
 cb_show_all_fs_changed (GSettings *settings, const gchar *key, gpointer data)
 {
-    ProcmanApp *app = (ProcmanApp *) data;
+    GsmApplication *app = (GsmApplication *) data;
 
     disks_update (app);
     disks_reset_timeout (app);
@@ -360,7 +355,7 @@ cb_show_all_fs_changed (GSettings *settings, const gchar *key, gpointer data)
 
 
 void
-create_disk_view(ProcmanApp *app, GtkBuilder *builder)
+create_disk_view(GsmApplication *app, GtkBuilder *builder)
 {
     GtkWidget *scrolled;
     GtkWidget *disk_tree;
@@ -395,8 +390,9 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
                                GDK_TYPE_PIXBUF,     /* DISK_ICON */
                                G_TYPE_INT           /* DISK_USED_PERCENTAGE */
         );
-    
-    disk_tree = gtk_tree_view_new_with_model(GTK_TREE_MODEL(model));
+    disk_tree = gsm_tree_view_new (settings, TRUE);
+    gtk_tree_view_set_model (GTK_TREE_VIEW (disk_tree), GTK_TREE_MODEL (model));
+
     g_signal_connect(G_OBJECT(disk_tree), "row-activated", G_CALLBACK(open_dir), NULL);
     app->disk_list = disk_tree;
     gtk_container_add(GTK_CONTAINER(scrolled), disk_tree);
@@ -418,11 +414,10 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
                                         NULL);
     gtk_tree_view_column_set_title(col, _(titles[DISK_DEVICE]));
     gtk_tree_view_column_set_sort_column_id(col, DISK_DEVICE);
-    bind_column_to_gsetting (settings, col);  
     gtk_tree_view_column_set_reorderable(col, TRUE);
     gtk_tree_view_column_set_resizable(col, TRUE);
     gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
+    gsm_tree_view_append_and_bind_column (GSM_TREE_VIEW (disk_tree), col);
 
 
     /* sizes - used */
@@ -434,10 +429,9 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
         gtk_tree_view_column_set_title(col, _(titles[i]));
         gtk_tree_view_column_set_resizable(col, TRUE);
         gtk_tree_view_column_set_sort_column_id(col, i);
-        bind_column_to_gsetting (settings, col);
         gtk_tree_view_column_set_reorderable(col, TRUE);
         gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
-        gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
+        gsm_tree_view_append_and_bind_column (GSM_TREE_VIEW (disk_tree), col);
         switch (i) {
             case DISK_TOTAL:
             case DISK_FREE:
@@ -474,17 +468,14 @@ create_disk_view(ProcmanApp *app, GtkBuilder *builder)
     gtk_tree_view_column_pack_start(col, cell, TRUE);
     gtk_tree_view_column_set_attributes(col, cell, "value",
                                         DISK_USED_PERCENTAGE, NULL);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(disk_tree), col);
     gtk_tree_view_column_set_resizable(col, TRUE);
     gtk_tree_view_column_set_sort_column_id(col, DISK_USED);
-    bind_column_to_gsetting (settings, col);
     gtk_tree_view_column_set_reorderable(col, TRUE);
+    gsm_tree_view_append_and_bind_column (GSM_TREE_VIEW (disk_tree), col);
 
     /* numeric sort */
 
-    procman_get_tree_state (app->settings, disk_tree,
-                            GSM_SETTINGS_CHILD_DISKS);
-
+    gsm_tree_view_load_state (GSM_TREE_VIEW (disk_tree));
     g_signal_connect (G_OBJECT(disk_tree), "destroy",
                       G_CALLBACK(cb_disk_list_destroying),
                       app);

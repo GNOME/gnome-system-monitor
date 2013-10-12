@@ -27,7 +27,7 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 #include "procactions.h"
-#include "procman-app.h"
+#include "application.h"
 #include "proctable.h"
 #include "procdialogs.h"
 
@@ -35,7 +35,7 @@
 static void
 renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
-    const struct ReniceArgs * const args = static_cast<ReniceArgs*>(data);
+    const struct ProcActionArgs * const args = static_cast<ProcActionArgs*>(data);
 
     ProcInfo *info = NULL;
     gint error;
@@ -47,9 +47,9 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 
     if (!info)
         return;
-    if (info->nice == args->nice_value)
+    if (info->nice == args->arg_value)
         return;
-    error = setpriority (PRIO_PROCESS, info->pid, args->nice_value);
+    error = setpriority (PRIO_PROCESS, info->pid, args->arg_value);
 
     /* success */
     if(error != -1) return;
@@ -62,7 +62,7 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 
         success = procdialog_create_root_password_dialog (
             PROCMAN_ACTION_RENICE, args->app, info->pid,
-            args->nice_value);
+            args->arg_value);
 
         if(success) return;
 
@@ -75,7 +75,7 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
     error_msg = g_strdup_printf (
         _("Cannot change the priority of process with PID %d to %d.\n"
           "%s"),
-        info->pid, args->nice_value, g_strerror(saved_errno));
+        info->pid, args->arg_value, g_strerror(saved_errno));
 
     dialog = gtk_message_dialog_new (
         NULL,
@@ -91,9 +91,9 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 
 
 void
-renice (ProcmanApp *app, int nice)
+renice (GsmApplication *app, int nice)
 {
-    struct ReniceArgs args = { app, nice };
+    struct ProcActionArgs args = { app, nice };
 
     /* EEEK - ugly hack - make sure the table is not updated as a crash
     ** occurs if you first kill a process and the tree node is removed while
@@ -106,7 +106,7 @@ renice (ProcmanApp *app, int nice)
 
     proctable_thaw (app);
 
-    proctable_update_all (app);
+    proctable_update (app);
 }
 
 
@@ -115,7 +115,7 @@ renice (ProcmanApp *app, int nice)
 static void
 kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
-    const struct KillArgs * const args = static_cast<KillArgs*>(data);
+    const struct ProcActionArgs * const args = static_cast<ProcActionArgs*>(data);
     char *error_msg;
     ProcInfo *info;
     int error;
@@ -127,7 +127,7 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
     if (!info)
         return;
 
-    error = kill (info->pid, args->signal);
+    error = kill (info->pid, args->arg_value);
 
     /* success */
     if(error != -1) return;
@@ -140,7 +140,7 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
 
         success = procdialog_create_root_password_dialog (
             PROCMAN_ACTION_KILL, args->app, info->pid,
-            args->signal);
+            args->arg_value);
 
         if(success) return;
 
@@ -153,7 +153,7 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
     error_msg = g_strdup_printf (
         _("Cannot kill process with PID %d with signal %d.\n"
           "%s"),
-        info->pid, args->signal, g_strerror(saved_errno));
+        info->pid, args->arg_value, g_strerror(saved_errno));
 
     dialog = gtk_message_dialog_new (
         NULL,
@@ -169,9 +169,9 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
 
 
 void
-kill_process (ProcmanApp *app, int sig)
+kill_process (GsmApplication *app, int sig)
 {
-    struct KillArgs args = { app, sig };
+    struct ProcActionArgs args = { app, sig };
 
     /* EEEK - ugly hack - make sure the table is not updated as a crash
     ** occurs if you first kill a process and the tree node is removed while
@@ -184,5 +184,5 @@ kill_process (ProcmanApp *app, int sig)
 
     proctable_thaw (app);
 
-    proctable_update_all (app);
+    proctable_update (app);
 }

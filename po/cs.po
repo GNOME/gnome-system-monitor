@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-08-04 09:13+0000\n"
-"PO-Revision-Date: 2013-08-04 21:51+0200\n"
+"POT-Creation-Date: 2013-09-16 23:07+0000\n"
+"PO-Revision-Date: 2013-09-17 10:57+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -29,12 +29,12 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/interface.cpp:380 ../src/procman-app.cpp:253
+#: ../src/application.cpp:233 ../src/interface.cpp:363
 msgid "System Monitor"
 msgstr "Sledování systému"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2
-#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:381
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:364
 msgid "View current processes and monitor system state"
 msgstr "Zobrazit aktuální procesy a sledovat stav systému"
 
@@ -44,9 +44,42 @@ msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr ""
 "Sledování;Systém;Proces;CPU;Procesor;Paměť;RAM;Síť;Historie;Využití;Zátěž;"
 
-#: ../gnome-system-monitor-kde.desktop.in.in.h:1 ../src/procman-app.cpp:485
+#: ../gnome-system-monitor-kde.desktop.in.in.h:1
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:289
 msgid "GNOME System Monitor"
 msgstr "Sledování systému GNOME"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:2
+msgid "View and manage system resources"
+msgstr "Zobrazit a spravovat systémové prostředky"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:3
+msgid ""
+"System Monitor is a process viewer and system monitor with an attractive, "
+"easy-to-use interface."
+msgstr ""
+"Sledování systému je prohlížeč procesů a sledování systému v přívětivém "
+"uživatelském rozhraní se snadnou obsluhou."
+
+#: ../gnome-system-monitor.appdata.xml.in.h:4
+msgid ""
+"System Monitor can help you find out what applications are using the "
+"processor or the memory of your computer, can manage the running "
+"applications, force stop processes not responding, and change the state or "
+"priority of existing processes."
+msgstr ""
+"Sledování systému vám může pomoci najít, která aplikace vám vytěžuje "
+"procesor nebo paměť ve vašem počítači, můžete v něm spravovat běžící "
+"aplikace, násilně ukončovat procesy, které nereagují, a měnit stav a "
+"prioritu stávajících procesů."
+
+#: ../gnome-system-monitor.appdata.xml.in.h:5
+msgid ""
+"The resource graphs feature shows you a quick overview of what is going on "
+"with your computer displaying recent network, memory and processor usage."
+msgstr ""
+"Na grafech využití prostředů, které zobrazují vytížení sítě, paměti a "
+"procesoru, získáte rychlý přehled, co se ve vašem počítači děje."
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
 msgid "Kill process"
@@ -68,52 +101,56 @@ msgstr "Ke změně priority procesu je nutné oprávnění"
 msgid "End _Process"
 msgstr "U_končit proces"
 
-#: ../data/interface.ui.h:3 ../data/preferences.ui.h:11
+#: ../data/interface.ui.h:3
+msgid "Show process properties"
+msgstr "Zobrazit vlastnosti procesu"
+
+#: ../data/interface.ui.h:4 ../data/preferences.ui.h:11
 msgid "Processes"
 msgstr "Procesy"
 
-#: ../data/interface.ui.h:4
+#: ../data/interface.ui.h:5
 msgid "CPU History"
 msgstr "Historie CPU"
 
-#: ../data/interface.ui.h:5 ../src/interface.cpp:266
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:402
-msgid "Memory"
-msgstr "Paměť"
-
-#: ../data/interface.ui.h:6 ../src/interface.cpp:278
-msgid "Swap"
-msgstr "Odkládací prostor"
-
-#: ../data/interface.ui.h:7
+#: ../data/interface.ui.h:6
 msgid "Memory and Swap History"
 msgstr "Historie použití paměti a odkládacího prostoru"
 
-#: ../data/interface.ui.h:8 ../src/interface.cpp:306
-msgid "Receiving"
-msgstr "Příjem"
+#: ../data/interface.ui.h:7 ../src/interface.cpp:260
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:336
+msgid "Memory"
+msgstr "Paměť"
+
+#: ../data/interface.ui.h:8 ../src/interface.cpp:272
+msgid "Swap"
+msgstr "Odkládací prostor"
 
 #: ../data/interface.ui.h:9
-msgid "Total Received"
-msgstr "Celkem přijato"
-
-#: ../data/interface.ui.h:10 ../src/interface.cpp:321
-msgid "Sending"
-msgstr "Odesílání"
-
-#: ../data/interface.ui.h:11
-msgid "Total Sent"
-msgstr "Celkem odesláno"
-
-#: ../data/interface.ui.h:12
 msgid "Network History"
 msgstr "Historie sítě"
 
-#: ../data/interface.ui.h:13 ../data/preferences.ui.h:15
+#: ../data/interface.ui.h:10 ../src/interface.cpp:300
+msgid "Receiving"
+msgstr "Příjem"
+
+#: ../data/interface.ui.h:11
+msgid "Total Received"
+msgstr "Celkem přijato"
+
+#: ../data/interface.ui.h:12 ../src/interface.cpp:315
+msgid "Sending"
+msgstr "Odesílání"
+
+#: ../data/interface.ui.h:13
+msgid "Total Sent"
+msgstr "Celkem odesláno"
+
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:15
 msgid "Resources"
 msgstr "Prostředky"
 
-#: ../data/interface.ui.h:14 ../data/preferences.ui.h:18
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:18
 msgid "File Systems"
 msgstr "Souborové systémy"
 
@@ -143,7 +180,7 @@ msgid "S_earch results:"
 msgstr "Výsledky hl_edání:"
 
 #: ../data/lsof.ui.h:7 ../data/openfiles.ui.h:2 ../data/preferences.ui.h:3
-#: ../src/memmaps.cpp:470 ../src/procproperties.cpp:216
+#: ../src/memmaps.cpp:438 ../src/procproperties.cpp:216
 msgid "_Close"
 msgstr "_Zavřít"
 
@@ -208,23 +245,23 @@ msgstr "Za_bít"
 msgid "_Change Priority"
 msgstr "_Změnit prioritu"
 
-#: ../data/menus.ui.h:16 ../src/util.cpp:218
+#: ../data/menus.ui.h:16 ../src/util.cpp:214
 msgid "Very High"
 msgstr "Velmi vysoká"
 
-#: ../data/menus.ui.h:17 ../src/util.cpp:220
+#: ../data/menus.ui.h:17 ../src/util.cpp:216
 msgid "High"
 msgstr "Vysoká"
 
-#: ../data/menus.ui.h:18 ../src/util.cpp:222
+#: ../data/menus.ui.h:18 ../src/util.cpp:218
 msgid "Normal"
 msgstr "Normální"
 
-#: ../data/menus.ui.h:19 ../src/util.cpp:224
+#: ../data/menus.ui.h:19 ../src/util.cpp:220
 msgid "Low"
 msgstr "Nízká"
 
-#: ../data/menus.ui.h:20 ../src/util.cpp:226
+#: ../data/menus.ui.h:20 ../src/util.cpp:222
 msgid "Very Low"
 msgstr "Velmi nízká"
 
@@ -305,7 +342,7 @@ msgstr "Zobr_azovat všechny souborové systémy"
 msgid "File system i_nformation shown in list:"
 msgstr "I_nformace o souborových systémech zobrazené v seznamu:"
 
-#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:127
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:124
 msgid "_Cancel"
 msgstr "_Zrušit"
 
@@ -325,47 +362,51 @@ msgstr ""
 "<small><i><b>Poznámka:</b> Priorita procesu je dána jeho hodnotou nice. "
 "Nižší hodnota nice odpovídá vyšší prioritě.</i></small>"
 
-#: ../src/argv.cpp:22
+#: ../src/application.cpp:275
+msgid "A simple process and system monitor."
+msgstr "Jednoduché sledování procesů a systému."
+
+#: ../src/argv.cpp:21
 msgid "Show the Processes tab"
 msgstr "Zobrazit kartu Procesy"
 
-#: ../src/argv.cpp:27
+#: ../src/argv.cpp:26
 msgid "Show the Resources tab"
 msgstr "Zobrazit kartu Prostředky"
 
-#: ../src/argv.cpp:32
+#: ../src/argv.cpp:31
 msgid "Show the File Systems tab"
 msgstr "Zobrazit kartu Souborové systémy"
 
-#: ../src/argv.cpp:36
+#: ../src/argv.cpp:35
 msgid "Show the application's version"
 msgstr "Zobrazit verzi aplikace"
 
-#: ../src/disks.cpp:375 ../src/memmaps.cpp:362
+#: ../src/disks.cpp:369 ../src/memmaps.cpp:325
 msgid "Device"
 msgstr "Zařízení"
 
-#: ../src/disks.cpp:376
+#: ../src/disks.cpp:370
 msgid "Directory"
 msgstr "Složka"
 
-#: ../src/disks.cpp:377 ../src/gsm_color_button.c:233 ../src/openfiles.cpp:253
+#: ../src/disks.cpp:371 ../src/gsm_color_button.c:166 ../src/openfiles.cpp:252
 msgid "Type"
 msgstr "Typ"
 
-#: ../src/disks.cpp:378
+#: ../src/disks.cpp:372
 msgid "Total"
 msgstr "Celkem"
 
-#: ../src/disks.cpp:379
+#: ../src/disks.cpp:373
 msgid "Free"
 msgstr "Volné"
 
-#: ../src/disks.cpp:380
+#: ../src/disks.cpp:374
 msgid "Available"
 msgstr "K dispozici"
 
-#: ../src/disks.cpp:381
+#: ../src/disks.cpp:375
 msgid "Used"
 msgstr "Použito"
 
@@ -394,71 +435,63 @@ msgstr "%e. %B %H:%M"
 msgid "%b %d %Y"
 msgstr "%e. %B %Y"
 
-#: ../src/gsm_color_button.c:201
+#: ../src/gsm_color_button.c:142
 msgid "Fraction"
 msgstr "Podíl"
 
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:203
+#: ../src/gsm_color_button.c:144
 msgid "Percentage full for pie color pickers"
 msgstr "Plný procentuální podíl výběrů barvy výsečového grafu"
 
-#: ../src/gsm_color_button.c:210
+#: ../src/gsm_color_button.c:151
 msgid "Title"
 msgstr "Nadpis"
 
-#: ../src/gsm_color_button.c:211
+#: ../src/gsm_color_button.c:152
 msgid "The title of the color selection dialog"
 msgstr "Nadpis dialogu výběru barvy"
 
-#: ../src/gsm_color_button.c:212 ../src/gsm_color_button.c:640
+#: ../src/gsm_color_button.c:153 ../src/gsm_color_button.c:513
 msgid "Pick a Color"
 msgstr "Vybrat barvu"
 
-#: ../src/gsm_color_button.c:218
+#: ../src/gsm_color_button.c:159
 msgid "Current Color"
 msgstr "Aktuální barva"
 
-#: ../src/gsm_color_button.c:219
+#: ../src/gsm_color_button.c:160
 msgid "The selected color"
 msgstr "Vybraná barva"
 
-#: ../src/gsm_color_button.c:226
-msgid "Sensitive"
-msgstr "Citlivost"
-
-#: ../src/gsm_color_button.c:227
-msgid "The sensitivity value"
-msgstr "Hodnota citlivosti"
-
-#: ../src/gsm_color_button.c:234
+#: ../src/gsm_color_button.c:167
 msgid "Type of color picker"
 msgstr "Typ výběru barvy"
 
-#: ../src/gsm_color_button.c:560
+#: ../src/gsm_color_button.c:435
 msgid "Received invalid color data\n"
 msgstr "Přijata neplatná data barvy\n"
 
-#: ../src/gsm_color_button.c:664 ../src/gsm_color_button.c:873
+#: ../src/gsm_color_button.c:536
 msgid "Click to set graph colors"
 msgstr "Kliknutím nastavíte barvy grafu"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:194
+#: ../src/interface.cpp:188
 #, c-format
 msgid "Pick a Color for '%s'"
 msgstr "Vybrat barvu pro „%s“"
 
-#: ../src/interface.cpp:227 ../src/procproperties.cpp:95
+#: ../src/interface.cpp:221 ../src/procproperties.cpp:95
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:229
+#: ../src/interface.cpp:223
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:391
+#: ../src/interface.cpp:374
 msgid "translator-credits"
 msgstr ""
 "Miloslav Trmač <mitr@volny.cz>\n"
@@ -468,7 +501,7 @@ msgstr ""
 "Otakar Jašek <jasek.ota@gmail.com>\n"
 "Adam Matoušek <adydas95@gmail.com>"
 
-#: ../src/load-graph.cpp:168
+#: ../src/load-graph.cpp:160
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
@@ -476,157 +509,157 @@ msgstr[0] "%u sekunda"
 msgstr[1] "%u sekundy"
 msgstr[2] "%u sekund"
 
-#: ../src/load-graph.cpp:383
+#: ../src/load-graph.cpp:375
 msgid "not available"
 msgstr "nedostupné"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:386
+#: ../src/load-graph.cpp:378
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) z %s"
 
-#: ../src/lsof.cpp:126
+#: ../src/lsof.cpp:123
 msgid "Error"
 msgstr "Chyba"
 
-#: ../src/lsof.cpp:127
+#: ../src/lsof.cpp:124
 #, c-format
 msgid "'%s' is not a valid Perl regular expression."
 msgstr "„%s“ není platným Perlovým regulárním výrazem"
 
-#: ../src/lsof.cpp:273
+#: ../src/lsof.cpp:270
 msgid "Process"
 msgstr "Proces"
 
-#: ../src/lsof.cpp:285
+#: ../src/lsof.cpp:282
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:295 ../src/memmaps.cpp:340
+#: ../src/lsof.cpp:292 ../src/memmaps.cpp:303
 msgid "Filename"
 msgstr "Název souboru"
 
 #. xgettext: virtual memory start
-#: ../src/memmaps.cpp:342
+#: ../src/memmaps.cpp:305
 msgid "VM Start"
 msgstr "Začátek VP"
 
 #. xgettext: virtual memory end
-#: ../src/memmaps.cpp:344
+#: ../src/memmaps.cpp:307
 msgid "VM End"
 msgstr "Konec VP"
 
 #. xgettext: virtual memory syze
-#: ../src/memmaps.cpp:346
+#: ../src/memmaps.cpp:309
 msgid "VM Size"
 msgstr "Velikost VP"
 
-#: ../src/memmaps.cpp:347
+#: ../src/memmaps.cpp:310
 msgid "Flags"
 msgstr "Příznaky"
 
 #. xgettext: virtual memory offset
-#: ../src/memmaps.cpp:349
+#: ../src/memmaps.cpp:312
 msgid "VM Offset"
 msgstr "Posun VM"
 
 #. xgettext: memory that has not been modified since
 #. it has been allocated
-#: ../src/memmaps.cpp:352
+#: ../src/memmaps.cpp:315
 msgid "Private clean"
 msgstr "Soukromá čistá paměť"
 
 #. xgettext: memory that has been modified since it
 #. has been allocated
-#: ../src/memmaps.cpp:355
+#: ../src/memmaps.cpp:318
 msgid "Private dirty"
 msgstr "Soukromá špinavá paměť"
 
 #. xgettext: shared memory that has not been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:358
+#: ../src/memmaps.cpp:321
 msgid "Shared clean"
 msgstr "Sdílená čistá paměť"
 
 #. xgettext: shared memory that has been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:361
+#: ../src/memmaps.cpp:324
 msgid "Shared dirty"
 msgstr "Sdílená špinavá paměť"
 
-#: ../src/memmaps.cpp:363
+#: ../src/memmaps.cpp:326
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.cpp:468
+#: ../src/memmaps.cpp:436
 msgid "Memory Maps"
 msgstr "Mapy paměti"
 
-#: ../src/memmaps.cpp:480
+#: ../src/memmaps.cpp:448
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "_Mapy paměti procesu „%s“ (PID %u):"
 
-#: ../src/openfiles.cpp:39
+#: ../src/openfiles.cpp:40
 msgid "file"
 msgstr "soubor"
 
-#: ../src/openfiles.cpp:41
+#: ../src/openfiles.cpp:42
 msgid "pipe"
 msgstr "roura"
 
-#: ../src/openfiles.cpp:43
+#: ../src/openfiles.cpp:44
 msgid "IPv6 network connection"
 msgstr "Připojení k síti IPv6"
 
-#: ../src/openfiles.cpp:45
+#: ../src/openfiles.cpp:46
 msgid "IPv4 network connection"
 msgstr "Připojení k síti IPv4"
 
-#: ../src/openfiles.cpp:47
+#: ../src/openfiles.cpp:48
 msgid "local socket"
 msgstr "místní socket"
 
-#: ../src/openfiles.cpp:49
+#: ../src/openfiles.cpp:50
 msgid "unknown type"
 msgstr "neznámý typ"
 
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.cpp:252
+#: ../src/openfiles.cpp:251
 msgid "FD"
 msgstr "FD"
 
-#: ../src/openfiles.cpp:254
+#: ../src/openfiles.cpp:253
 msgid "Object"
 msgstr "Objekt"
 
-#: ../src/openfiles.cpp:346
+#: ../src/openfiles.cpp:337
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_Soubory otevřené procesem „%s“ (PID %u):"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:1
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:1
 msgid "Main window size and position in the form (width, height, xpos, ypos)"
 msgstr ""
 "Velikost a umístění hlavního okna v podobě (šířka, výška, souřadnice_x, "
 "souřadnice_y)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:2
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:2
 msgid "Main Window should open maximized"
 msgstr "Hlavní okno se má otevírat maximalizováné"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:3
 msgid "Show process dependencies in tree form"
 msgstr "Zobrazovat závislosti procesů ve formě stromu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:4
 msgid "Solaris mode for CPU percentage"
 msgstr "Režim Solaris CPU"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:5
 msgid ""
 "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
 "is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
@@ -636,11 +669,11 @@ msgstr ""
 "vytížení procesoru u úlohy děleno celkovým počtem procesorů. Jinak pracuje v "
 "„režimu Irix“."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:6
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:6
 msgid "Show CPU chart as stacked area chart"
 msgstr "Zobrazit graf CPU jako skládaný plošný graf"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:7
 msgid ""
 "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
 "of a line chart."
@@ -648,27 +681,27 @@ msgstr ""
 "Pokud je zapnuto, system-monitor zobrazuje graf CPU jako skládaný plošný "
 "graf namísto čárového grafu."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:8
 msgid "Enable/Disable smooth refresh"
 msgstr "Povolit/zakázat plynulé aktualizování"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
 msgid "Show warning dialog when killing processes"
 msgstr "Zobrazit varovný dialog při zabíjení procesů"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:10
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Čas v milisekundách mezi aktualizacemi zobrazení procesů"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:11
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Čas v milisekundách mezi aktualizacemi grafů"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:12
 msgid "Whether information about all file systems should be displayed"
 msgstr "Jestli se má zobrazovat informace o všech souborových systémech"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:13
 msgid ""
 "Whether to display information about all file systems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -678,339 +711,331 @@ msgstr ""
 "jako „autofs“ a „procfs“). Užitečné pro získání seznamu všech připojených "
 "souborových systémech."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:14
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Čas v milisekundách mezi aktualizacemi seznamu zařízení"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
 msgid "Determines which processes to show."
 msgstr "Určuje, které procesy se mají zobrazit."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:16
 msgid "Saves the currently viewed tab"
 msgstr "Uloží aktuálně zobrazovanou kartu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:17
 msgid "CPU colors"
 msgstr "Barvy CPU"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:18
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr "Každá položka je ve formátu (CPU#, barva šestnáctkově)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:19
 msgid "Default graph memory color"
 msgstr "Výchozí barva grafu paměti"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:20
 msgid "Default graph swap color"
 msgstr "Výchozí barva grafu odkládacího prostoru"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:21
 msgid "Default graph incoming network traffic color"
 msgstr "Výchozí barva grafu příchozího síťového provozu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:22
 msgid "Default graph outgoing network traffic color"
 msgstr "Výchozí barva grafu odchozího síťového provozu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:23
 msgid "Show network traffic in bits"
 msgstr "Zobrazovat síťový provoz v bitech"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
-msgid "Show processor usage graph"
-msgstr "Zobrazovat graf využití procesorů"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
-msgid "Show memory and swap usage graph"
-msgstr "Zobrazovat graf využití paměti a odkládacího oddílu"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
-msgid "Show network traffic graph"
-msgstr "Zobrazovat graf síťového provozu"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:24
 msgid "Process view sort column"
 msgstr "Sloupec řazení zobrazení procesů"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:25
 msgid "Process view columns order"
 msgstr "Pořadí sloupců zobrazení procesů"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:26
 msgid "Process view sort order"
 msgstr "Pořadí řazení zobrazení procesů"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:27
 msgid "Width of process 'Name' column"
 msgstr "Šířka sloupce „Název“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:28
 msgid "Show process 'Name' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Název“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:29
 msgid "Width of process 'User' column"
 msgstr "Šířka sloupce „Vlastník“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:30
 msgid "Show process 'User' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Vlastník“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:31
 msgid "Width of process 'Status' column"
 msgstr "Šířka sloupce „Stav“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:32
 msgid "Show process 'Status' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Stav“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:33
 msgid "Width of process 'Virtual Memory' column"
 msgstr "Šířka sloupce „Virtuální paměť“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:34
 msgid "Show process 'Virtual Memory' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Virtuální paměť“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:35
 msgid "Width of process 'Resident Memory' column"
 msgstr "Šířka sloupce „Rezidentní paměť“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:36
 msgid "Show process 'Resident Memory' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Rezidentní paměť“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:37
 msgid "Width of process 'Writable Memory' column"
 msgstr "Šířka sloupce „Zapisovatelná paměť“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:38
 msgid "Show process 'Writable Memory' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Zapisovatelná paměť“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:39
 msgid "Width of process 'Shared Memory' column"
 msgstr "Šířka sloupce „Sdílená paměť“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:40
 msgid "Show process 'Shared Memory' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Sdílená paměť“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:44
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:41
 msgid "Width of process 'X Server Memory' column"
 msgstr "Šířka sloupce „Paměť serveru X“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:42
 msgid "Show process 'X Server Memory' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Paměť serveru X“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:44
 #, no-c-format
 msgid "Width of process 'CPU %' column"
 msgstr "Šířka sloupce „% CPU“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:46
 #, no-c-format
 msgid "Show process 'CPU %' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „% CPU“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:47
 msgid "Width of process 'CPU Time' column"
 msgstr "Šířka sloupce „Čas CPU“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:48
 msgid "Show process 'CPU Time' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Čas CPU“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:49
 msgid "Width of process 'Started' column"
 msgstr "Šířka sloupce „Spuštěn“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:50
 msgid "Show process 'Started' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Spuštěn“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:51
 msgid "Width of process 'Nice' column"
 msgstr "Šířka sloupce „Nice“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:52
 msgid "Show process 'Nice' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Nice“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:53
 msgid "Width of process 'PID' column"
 msgstr "Šířka sloupce „PID“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:54
 msgid "Show process 'PID' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „PID“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:55
 msgid "Width of process 'SELinux Security Context' column"
 msgstr "Šířka sloupce „Kontext zabezpečení SELinux“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:56
 msgid "Show process 'SELinux Security Context' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Kontext zabezpečení SELinux“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:57
 msgid "Width of process 'Command Line' column"
 msgstr "Šířka sloupce „Příkaz“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:58
 msgid "Show process 'Command Line' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Příkaz“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:59
 msgid "Width of process 'Memory' column"
 msgstr "Šířka sloupce „Paměť“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:60
 msgid "Show process 'Memory' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Paměť“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:61
 msgid "Width of process 'Waiting Channel' column"
 msgstr "Šířka sloupce „Kanál čekání“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:62
 msgid "Show process 'Waiting Channel' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Kanál čekání“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:63
 msgid "Width of process 'Control Group' column"
 msgstr "Šířka sloupce „Skupina vlastníků“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:64
 msgid "Show process 'Control Group' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Skupina vlastníků“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:65
 msgid "Width of process 'Unit' column"
 msgstr "Šířka sloupce „Součást“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:66
 msgid "Show process 'Unit' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Součást“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:67
 msgid "Width of process 'Session' column"
 msgstr "Šířka sloupce „Sezení“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:68
 msgid "Show process 'Session' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Sezení“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:69
 msgid "Width of process 'Seat' column"
 msgstr "Šířka sloupce „Sídlo“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:70
 msgid "Show process 'Seat' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Sídlo“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:71
 msgid "Width of process 'Owner' column"
 msgstr "Šířka sloupce „Vlastník“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:72
 msgid "Show process 'Owner' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Vlastník“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:73
 msgid "Width of process 'Priority' column"
 msgstr "Šířka sloupce „Priorita“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:74
 msgid "Show process 'Priority' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Priorita“ procesu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:75
 msgid "Disk view sort column"
 msgstr "Sloupec řazení zobrazení disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
 msgid "Disk view sort order"
 msgstr "Pořadí řazení zobrazení disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
 msgid "Disk view columns order"
 msgstr "Pořadí sloupců zobrazení disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
 msgid "Width of disk view 'Device' column"
 msgstr "Šířka sloupce „Zařízení“ v seznamu disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
 msgid "Show disk view 'Device' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Zařízení“ v seznamu disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:83
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
 msgid "Width of disk view 'Directory' column"
 msgstr "Šířka sloupce „Složka“ v seznamu disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:84
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
 msgid "Show disk view 'Directory' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Složka“ v seznamu disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:85
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
 msgid "Width of disk view 'Type' column"
 msgstr "Šířka sloupce „Typ“ v seznamu disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:86
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
 msgid "Show disk view 'Type' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Typ“ v seznamu disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:87
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
 msgid "Width of disk view 'Total' column"
 msgstr "Šířka sloupce „Celkem“ v seznamu disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:88
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
 msgid "Show disk view 'Total' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Celkem“ v seznamu disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:89
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
 msgid "Width of disk view 'Free' column"
 msgstr "Šířka sloupce „Volné“ v seznamu disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:90
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
 msgid "Show disk view 'Free' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Volné“ v seznamu disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:91
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
 msgid "Width of disk view 'Available' column"
 msgstr "Šířka sloupce „K dispozici“ v seznamu disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:92
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
 msgid "Show disk view 'Available' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „K dispozici“ v seznamu disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:93
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
 msgid "Width of disk view 'Used' column"
 msgstr "Šířka sloupce „Použito“ v seznamu disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:94
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
 msgid "Show disk view 'Used' column on startup"
 msgstr "Zobrazovat po spuštění sloupec „Použito“ v seznamu disků"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:95
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
 msgid "Memory map sort column"
 msgstr "Sloupec řazení paměťových map"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:96
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
 msgid "Memory map sort order"
 msgstr "Pořadí řazení paměťových map"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:97
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
 msgid "Open files sort column"
 msgstr "Sloupec řazení otevřených souborů"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:98
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
 msgid "Open files sort order"
 msgstr "Pořadí řazení otevřených souborů"
+
+#: ../src/prefsdialog.cpp:181
+msgid "Icon"
+msgstr "Ikona"
 
 #: ../src/procactions.cpp:76
 #, c-format
@@ -1031,19 +1056,19 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: ../src/procdialogs.cpp:79
+#: ../src/procdialogs.cpp:76
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr "Opravdu chcete zabít vybraný proces „%s“ (PID: %u)?"
 
 #. xgettext: primary alert message for ending single process
-#: ../src/procdialogs.cpp:84
+#: ../src/procdialogs.cpp:81
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr "Opravdu chcete ukončit vybraný proces „%s“ (PID: %u)?"
 
 #. xgettext: primary alert message for killing multiple processes
-#: ../src/procdialogs.cpp:91
+#: ../src/procdialogs.cpp:88
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
@@ -1052,7 +1077,7 @@ msgstr[1] "Opravdu chcete zabít %d vybrané procesy?"
 msgstr[2] "Opravdu chcete zabít %d vybraných procesů?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: ../src/procdialogs.cpp:95
+#: ../src/procdialogs.cpp:92
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
@@ -1061,7 +1086,7 @@ msgstr[1] "Opravdu chcete ukončit %d vybrané procesy?"
 msgstr[2] "Opravdu chcete ukončit %d vybraných procesů?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:102 ../src/procdialogs.cpp:108
+#: ../src/procdialogs.cpp:99 ../src/procdialogs.cpp:105
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1069,26 +1094,26 @@ msgstr ""
 "Zabití procesu může zničit data, přerušit sezení, nebo způsobit bezpečnostní "
 "riziko. Zabíjet by se měly jen neodpovídající procesy."
 
-#: ../src/procdialogs.cpp:105
+#: ../src/procdialogs.cpp:102
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "_Zabít proces"
 msgstr[1] "_Zabít procesy"
 msgstr[2] "_Zabít procesy"
 
-#: ../src/procdialogs.cpp:111
+#: ../src/procdialogs.cpp:108
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "U_končit proces"
 msgstr[1] "U_končit procesy"
 msgstr[2] "U_končit procesy"
 
-#: ../src/procdialogs.cpp:192
+#: ../src/procdialogs.cpp:189
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Změnit prioritu procesu „%s“ (PID: %u)"
 
-#: ../src/procdialogs.cpp:195
+#: ../src/procdialogs.cpp:192
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
@@ -1096,11 +1121,11 @@ msgstr[0] "Změnit prioritu vybraného procesu"
 msgstr[1] "Změnit prioritu %d vybraných procesů"
 msgstr[2] "Změnit prioritu %d vybraných procesů"
 
-#: ../src/procdialogs.cpp:214
+#: ../src/procdialogs.cpp:211
 msgid "Note:"
 msgstr "Poznámka:"
 
-#: ../src/procdialogs.cpp:215
+#: ../src/procdialogs.cpp:212
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1108,51 +1133,43 @@ msgstr ""
 "Priorita procesu je dána jeho hodnotou nice. Nižší hodnota nice odpovídá "
 "vyšší prioritě."
 
-#: ../src/procdialogs.cpp:386 ../src/procman-app.cpp:362
-msgid "Icon"
-msgstr "Ikona"
-
-#: ../src/procman-app.cpp:471
-msgid "A simple process and system monitor."
-msgstr "Jednoduché sledování procesů a systému."
-
-#: ../src/procproperties.cpp:56 ../src/util.cpp:435
+#: ../src/procproperties.cpp:56 ../src/util.cpp:431
 msgid "N/A"
 msgstr "---"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:387
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:321
 msgid "Process Name"
 msgstr "Název procesu"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:388
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:322
 msgid "User"
 msgstr "Uživatel"
 
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:389
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:323
 msgid "Status"
 msgstr "Stav"
 
-#: ../src/procproperties.cpp:88 ../src/proctable.cpp:390
+#: ../src/procproperties.cpp:88 ../src/proctable.cpp:324
 msgid "Virtual Memory"
 msgstr "Virtuální paměť"
 
-#: ../src/procproperties.cpp:89 ../src/proctable.cpp:391
+#: ../src/procproperties.cpp:89 ../src/proctable.cpp:325
 msgid "Resident Memory"
 msgstr "Rezidentní paměť"
 
-#: ../src/procproperties.cpp:90 ../src/proctable.cpp:392
+#: ../src/procproperties.cpp:90 ../src/proctable.cpp:326
 msgid "Writable Memory"
 msgstr "Zapisovatelná paměť"
 
-#: ../src/procproperties.cpp:91 ../src/proctable.cpp:393
+#: ../src/procproperties.cpp:91 ../src/proctable.cpp:327
 msgid "Shared Memory"
 msgstr "Sdílená paměť"
 
-#: ../src/procproperties.cpp:93 ../src/proctable.cpp:394
+#: ../src/procproperties.cpp:93 ../src/proctable.cpp:328
 msgid "X Server Memory"
 msgstr "Paměť serveru X"
 
-#: ../src/procproperties.cpp:96 ../src/proctable.cpp:396
+#: ../src/procproperties.cpp:96 ../src/proctable.cpp:330
 msgid "CPU Time"
 msgstr "Čas CPU"
 
@@ -1164,36 +1181,36 @@ msgstr[0] "%lld sekunda"
 msgstr[1] "%lld sekundy"
 msgstr[2] "%lld sekund"
 
-#: ../src/procproperties.cpp:97 ../src/proctable.cpp:397
+#: ../src/procproperties.cpp:97 ../src/proctable.cpp:331
 msgid "Started"
 msgstr "Spuštěn"
 
-#: ../src/procproperties.cpp:98 ../src/proctable.cpp:398
+#: ../src/procproperties.cpp:98 ../src/proctable.cpp:332
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/procproperties.cpp:99 ../src/proctable.cpp:412
+#: ../src/procproperties.cpp:99 ../src/proctable.cpp:346
 msgid "Priority"
 msgstr "Priorita"
 
-#: ../src/procproperties.cpp:100 ../src/proctable.cpp:399
+#: ../src/procproperties.cpp:100 ../src/proctable.cpp:333
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:101 ../src/proctable.cpp:400
+#: ../src/procproperties.cpp:101 ../src/proctable.cpp:334
 msgid "Security Context"
 msgstr "Kontext zabezpečení"
 
-#: ../src/procproperties.cpp:102 ../src/proctable.cpp:401
+#: ../src/procproperties.cpp:102 ../src/proctable.cpp:335
 msgid "Command Line"
 msgstr "Příkazový řádek"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:103 ../src/proctable.cpp:404
+#: ../src/procproperties.cpp:103 ../src/proctable.cpp:338
 msgid "Waiting Channel"
 msgstr "Kanál čekání"
 
-#: ../src/procproperties.cpp:104 ../src/proctable.cpp:405
+#: ../src/procproperties.cpp:104 ../src/proctable.cpp:339
 msgid "Control Group"
 msgstr "Skupina vlastníků"
 
@@ -1206,119 +1223,114 @@ msgstr "Vlastnosti procesu"
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "Vlastnosti procesu „%s“ (PID %u):"
 
-#: ../src/proctable.cpp:395
+#: ../src/proctable.cpp:329
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:406
+#: ../src/proctable.cpp:340
 msgid "Unit"
 msgstr "Součást"
 
-#: ../src/proctable.cpp:407
+#: ../src/proctable.cpp:341
 msgid "Session"
 msgstr "Sezení"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:410
+#: ../src/proctable.cpp:344
 msgid "Seat"
 msgstr "Sídlo"
 
-#: ../src/proctable.cpp:411
+#: ../src/proctable.cpp:345
 msgid "Owner"
 msgstr "Vlastník"
 
-#: ../src/proctable.cpp:1264
-#, c-format
-msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
-msgstr "Průměry zátěže za posledních 1, 5, 15 minut: %0.2f, %0.2f, %0.2f"
-
-#: ../src/util.cpp:31
+#: ../src/util.cpp:27
 msgid "Running"
 msgstr "Běží"
 
-#: ../src/util.cpp:35
+#: ../src/util.cpp:31
 msgid "Stopped"
 msgstr "Zastaven"
 
-#: ../src/util.cpp:39
+#: ../src/util.cpp:35
 msgid "Zombie"
 msgstr "Zombie"
 
-#: ../src/util.cpp:43
+#: ../src/util.cpp:39
 msgid "Uninterruptible"
 msgstr "Nepřerušitelný"
 
-#: ../src/util.cpp:47
+#: ../src/util.cpp:43
 msgid "Sleeping"
 msgstr "Spí"
 
 #. xgettext: weeks, days
-#: ../src/util.cpp:102
+#: ../src/util.cpp:98
 #, c-format
 msgid "%uw%ud"
 msgstr "%ut%ud"
 
 #. xgettext: days, hours (0 -> 23)
-#: ../src/util.cpp:106
+#: ../src/util.cpp:102
 #, c-format
 msgid "%ud%02uh"
 msgstr "%ud%02uh"
 
 #. xgettext: hours (0 -> 23), minutes, seconds
-#: ../src/util.cpp:110
+#: ../src/util.cpp:106
 #, c-format
 msgid "%u:%02u:%02u"
 msgstr "%u:%02u:%02u"
 
 #. xgettext: minutes, seconds, centiseconds
-#: ../src/util.cpp:113
+#: ../src/util.cpp:109
 #, c-format
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: ../src/util.cpp:167
+#: ../src/util.cpp:163
 #, c-format
 msgid "%.1f KiB"
 msgstr "%.1f KiB"
 
-#: ../src/util.cpp:168
+#: ../src/util.cpp:164
 #, c-format
 msgid "%.1f MiB"
 msgstr "%.1f MiB"
 
-#: ../src/util.cpp:169
+#: ../src/util.cpp:165
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
 
-#: ../src/util.cpp:170
+#: ../src/util.cpp:166
 #, c-format
 msgid "%.1f TiB"
 msgstr "%.1f TiB"
 
-#: ../src/util.cpp:171
+#: ../src/util.cpp:167
 #, c-format
 msgid "%.3g kbit"
 msgstr "%.3g kbit"
 
-#: ../src/util.cpp:172
+#: ../src/util.cpp:168
 #, c-format
 msgid "%.3g Mbit"
 msgstr "%.3g Mbit"
 
-#: ../src/util.cpp:173
+#: ../src/util.cpp:169
 #, c-format
 msgid "%.3g Gbit"
 msgstr "%.3g Gbit"
 
-#: ../src/util.cpp:174
+#: ../src/util.cpp:170
 #, c-format
 msgid "%.3g Tbit"
 msgstr "%.3g Tbit"
 
-#: ../src/util.cpp:189
+#: ../src/util.cpp:185
 #, c-format
 msgid "%u bit"
 msgid_plural "%u bits"
@@ -1326,7 +1338,7 @@ msgstr[0] "%u bit"
 msgstr[1] "%u bity"
 msgstr[2] "%u bitů"
 
-#: ../src/util.cpp:190
+#: ../src/util.cpp:186
 #, c-format
 msgid "%u byte"
 msgid_plural "%u bytes"
@@ -1334,28 +1346,28 @@ msgstr[0] "%u bajt"
 msgstr[1] "%u bajty"
 msgstr[2] "%u bajtů"
 
-#: ../src/util.cpp:233
+#: ../src/util.cpp:229
 msgid "Very High Priority"
 msgstr "Velmi vysoká priorita"
 
-#: ../src/util.cpp:235
+#: ../src/util.cpp:231
 msgid "High Priority"
 msgstr "Vysoká priorita"
 
-#: ../src/util.cpp:237
+#: ../src/util.cpp:233
 msgid "Normal Priority"
 msgstr "Normální priorita"
 
-#: ../src/util.cpp:239
+#: ../src/util.cpp:235
 msgid "Low Priority"
 msgstr "Nízká priorita"
 
-#: ../src/util.cpp:241
+#: ../src/util.cpp:237
 msgid "Very Low Priority"
 msgstr "Velmi nízká priorita"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:633
+#: ../src/util.cpp:629
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"

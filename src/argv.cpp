@@ -4,7 +4,6 @@
 #include <glib/gi18n.h>
 #include <glibmm/optionentry.h>
 
-
 #include "argv.h"
 
 namespace procman
@@ -31,7 +30,7 @@ namespace procman
         fs_tab.set_short_name('f');
         fs_tab.set_description(_("Show the File Systems tab"));
 
-	Glib::OptionEntry show_version;
+        Glib::OptionEntry show_version;
         show_version.set_long_name("version");
         show_version.set_description(_("Show the application's version"));
 

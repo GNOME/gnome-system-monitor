@@ -139,7 +139,10 @@ void PrettyTable::init_gio_app_cache ()
   for (Glib::ListHandle<Glib::RefPtr<Gio::AppInfo> >::const_iterator it = apps.begin();
        it != apps.end(); ++it) {
     Glib::RefPtr<Gio::AppInfo> app = *it;
-    this->gio_apps[app->get_executable()] = app;
+    std::string executable = app->get_executable();
+    if (executable != "sh" &&
+        executable != "env")
+        this->gio_apps[executable] = app;
   }
 }
 

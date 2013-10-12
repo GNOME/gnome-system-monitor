@@ -32,7 +32,7 @@
 #include <sys/sysctl.h>
 #endif
 
-#include "procman-app.h"
+#include "application.h"
 #include "procproperties.h"
 #include "proctable.h"
 #include "util.h"
@@ -143,7 +143,7 @@ close_procprop_dialog (GtkDialog *dialog, gint id, gpointer data)
 }
 
 static GtkWidget *
-create_procproperties_tree (ProcmanApp *app, ProcInfo *info)
+create_procproperties_tree (GsmApplication *app, ProcInfo *info)
 {
     GtkWidget *tree;
     GtkListStore *model;
@@ -195,7 +195,7 @@ static void
 create_single_procproperties_dialog (GtkTreeModel *model, GtkTreePath *path,
                                      GtkTreeIter *iter, gpointer data)
 {
-    ProcmanApp *app = static_cast<ProcmanApp *>(data);
+    GsmApplication *app = static_cast<GsmApplication *>(data);
 
     GtkWidget *procpropdialog;
     GtkWidget *dialog_vbox, *vbox;
@@ -263,7 +263,7 @@ create_single_procproperties_dialog (GtkTreeModel *model, GtkTreePath *path,
 }
 
 void
-create_procproperties_dialog (ProcmanApp *app)
+create_procproperties_dialog (GsmApplication *app)
 {
     gtk_tree_selection_selected_foreach (app->selection, create_single_procproperties_dialog,
                                          app);

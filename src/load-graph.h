@@ -1,6 +1,6 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-#ifndef _PROCMAN_LOAD_GRAPH_H_
-#define _PROCMAN_LOAD_GRAPH_H_
+#ifndef _GSM_LOAD_GRAPH_H_
+#define _GSM_LOAD_GRAPH_H_
 
 #include <glib.h>
 #include <glibtop/cpu.h>
@@ -127,4 +127,4 @@ load_graph_get_mem_color_picker(LoadGraph *g) G_GNUC_CONST;
 GtkWidget*
 load_graph_get_swap_color_picker(LoadGraph *g) G_GNUC_CONST;
 
-#endif /* _PROCMAN_LOAD_GRAPH_H_ */
+#endif /* _GSM_LOAD_GRAPH_H_ */
