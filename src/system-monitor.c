@@ -55,6 +55,7 @@ main (gint   argc,   /* IN */
 	UberRange cpu_range = { 0., 100., 100. };
 	UberRange net_range = { 0., 512., 512. };
 	GtkWidget *window;
+    GtkWidget *container;
 	GtkWidget *cpu;
 	GtkWidget *net;
 	GtkWidget *label;
@@ -78,7 +79,10 @@ main (gint   argc,   /* IN */
 	/*
 	 * Create window and graphs.
 	 */
-	window = uber_window_new();
+	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    container = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
+    gtk_container_add(GTK_CONTAINER(window), container);
+    
 	cpu = uber_line_graph_new();
 	net = uber_line_graph_new();
 	/*
@@ -134,8 +138,8 @@ main (gint   argc,   /* IN */
 	/*
 	 * Add graphs.
 	 */
-	uber_window_add_graph(UBER_WINDOW(window), UBER_GRAPH(cpu), "CPU");
-	uber_window_add_graph(UBER_WINDOW(window), UBER_GRAPH(net), "Network");
+	gtk_box_pack_start(GTK_BOX(container), GTK_WIDGET(cpu), TRUE, TRUE, 6);
+	gtk_box_pack_start(GTK_BOX(container), GTK_WIDGET(net), TRUE, TRUE, 6);
 	/*
 	 * Disable X tick labels by default (except last).
 	 */
@@ -146,6 +150,7 @@ main (gint   argc,   /* IN */
 	 */
 	gtk_widget_show(net);
 	gtk_widget_show(cpu);
+    gtk_widget_show(container);
 	gtk_widget_show(window);
 	/*
 	 * Show cpu labels by default.

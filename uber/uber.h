@@ -21,10 +21,7 @@
 
 #include "uber-graph.h"
 #include "uber-line-graph.h"
-#include "uber-heat-map.h"
 #include "uber-range.h"
-#include "uber-scatter.h"
 #include "uber-scale.h"
-#include "uber-window.h"
 
 #endif /* __UBER_H__ */
