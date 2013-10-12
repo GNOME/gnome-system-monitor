@@ -20,10 +20,10 @@ nextmon_SOURCES = \
     $(nextmon_h_files) \
     $(nextmon_c_files)
 
-nextmon_LDADD = @PROCMAN_LIBS@ $(top_builddir)/uber/libuber-1.0.la -ldl
+nextmon_LDADD = @GSM_LIBS@ $(top_builddir)/uber/libuber-1.0.la -ldl
 
 nextmon_CPPFLAGS = \
-        $(PROCMAN_CFLAGS) \
+        $(GSM_CFLAGS) \
 	-I$(top_srcdir)	\
 	-I$(top_builddir)/uber \
 	-DGSM_DATA_DIR=\""$(pkgdatadir)"\"
@@ -72,7 +72,7 @@ gnome_system_monitor_SOURCES = \
 	$(gnome_system_monitor_c_files) \
 	main.cpp
 
-LDADD = \
+gnome_system_monitor_LDADD = \
 	$(GSM_LIBS) \
 	$(SYSTEMD_LIBS) \
 	$(WNCK_LIBS)
