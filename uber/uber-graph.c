@@ -105,8 +105,6 @@ struct _UberGraphPrivate
 	                                 * If false, draws will try to only add new
 	                                 * content to the back buffer.
 	                                 */
-	GtkWidget       *labels;        /* Container for graph labels. */
-	GtkWidget       *align;         /* Alignment for labels. */
 	gint             fps_count;     /* Track actual FPS. */
 };
 
@@ -270,25 +268,6 @@ uber_graph_set_show_ylines (UberGraph *graph,       /* IN */
 	gtk_widget_queue_draw(GTK_WIDGET(graph));
 }
 
-/**
- * uber_graph_get_labels:
- * @graph: A #UberGraph.
- *
- * XXX
- *
- * Returns: None.
- * Side effects: None.
- */
-GtkWidget*
-uber_graph_get_labels (UberGraph *graph) /* IN */
-{
-	UberGraphPrivate *priv;
-
-	g_return_val_if_fail(UBER_IS_GRAPH(graph), NULL);
-
-	priv = graph->priv;
-	return priv->align;
-}
 
 /**
  * uber_graph_scale_changed:
@@ -529,11 +508,7 @@ uber_graph_calculate_rects (UberGraph *graph) /* IN */
 	 */
 	priv->nonvis_rect = priv->content_rect;
 	priv->nonvis_rect.width = priv->dps_each * priv->x_slots;
-	/*
-	 * Update positioning for label alignment.
-	 */
-	gtk_alignment_set_padding(GTK_ALIGNMENT(priv->align),
-	                          6, 6, priv->content_rect.x, 0);
+
 }
 
 /**
@@ -1812,30 +1787,6 @@ uber_graph_get_preferred_height (GtkWidget      *widget, /* IN */
 }
 
 /**
- * uber_graph_add_label:
- * @graph: A #UberGraph.
- *
- * XXX
- *
- * Returns: None.
- * Side effects: None.
- */
-void
-uber_graph_add_label (UberGraph *graph, /* IN */
-                      UberLabel *label) /* IN */
-{
-	UberGraphPrivate *priv;
-
-	g_return_if_fail(UBER_IS_GRAPH(graph));
-	g_return_if_fail(UBER_IS_LABEL(label));
-
-	priv = graph->priv;
-	gtk_box_pack_start(GTK_BOX(priv->labels), GTK_WIDGET(label),
-	                   TRUE, TRUE, 0);
-	gtk_widget_show(GTK_WIDGET(label));
-}
-
-/**
  * uber_graph_take_screenshot:
  * @graph: A #UberGraph.
  *
@@ -2154,12 +2105,5 @@ uber_graph_init (UberGraph *graph) /* IN */
 	priv->full_draw = TRUE;
 	priv->show_xlines = TRUE;
 	priv->show_ylines = TRUE;
-	/*
-	 * TODO: Support labels in a grid.
-	 */
-	priv->labels = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
-	gtk_box_set_homogeneous (GTK_BOX(priv->labels), TRUE);
-	priv->align = gtk_alignment_new(.5, .5, 1., 1.);
-	gtk_container_add(GTK_CONTAINER(priv->align), priv->labels);
-	gtk_widget_show(priv->labels);
+
 }

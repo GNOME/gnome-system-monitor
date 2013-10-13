@@ -98,8 +98,7 @@ main (gint   argc,   /* IN */
 		gdk_rgba_parse(&color, default_colors[mod]);
 		label = uber_label_new();
 		uber_label_set_color(UBER_LABEL(label), &color);
-		uber_line_graph_add_line(UBER_LINE_GRAPH(cpu), &color,
-		                         UBER_LABEL(label));
+		uber_line_graph_add_line(UBER_LINE_GRAPH(cpu), &color);
 		cpu_info.labels[i] = label;
 		/*
 		 * XXX: Add the line regardless. Just dont populate it if we don't
@@ -125,14 +124,14 @@ main (gint   argc,   /* IN */
 	    uber_label_set_text(UBER_LABEL(label),text);
         g_free(text);
 	    gdk_rgba_parse(&color, "#a40000");
-	    uber_line_graph_add_line(UBER_LINE_GRAPH(net), &color, UBER_LABEL(label));
+	    uber_line_graph_add_line(UBER_LINE_GRAPH(net), &color);
         net_info.labels[2*i] = label;
 	    label = uber_label_new();
 	    text = g_strdup_printf("%s Bytes Out", net_info.ifnames[i]);
 	    uber_label_set_text(UBER_LABEL(label),text);
         g_free(text);
 	    gdk_rgba_parse(&color, "#4e9a06");
-	    uber_line_graph_add_line(UBER_LINE_GRAPH(net), &color, UBER_LABEL(label));
+	    uber_line_graph_add_line(UBER_LINE_GRAPH(net), &color);
         net_info.labels[2*i+1] = label;
     }
 	/*
@@ -145,6 +144,8 @@ main (gint   argc,   /* IN */
 	 */
 	uber_graph_set_show_xlabels(UBER_GRAPH(cpu), FALSE);
 	uber_graph_set_show_xlabels(UBER_GRAPH(net), FALSE);
+    uber_graph_set_fps(UBER_GRAPH(cpu), 35);
+    uber_graph_set_fps(UBER_GRAPH(net), 35);
 	/*
 	 * Show widgets.
 	 */

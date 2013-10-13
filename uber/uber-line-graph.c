@@ -225,8 +225,8 @@ uber_line_graph_get_autoscale (UberLineGraph *graph) /* IN */
  */
 gint
 uber_line_graph_add_line (UberLineGraph  *graph, /* IN */
-                          const GdkRGBA  *color, /* IN */
-                          UberLabel      *label) /* IN */
+                          const GdkRGBA  *color) /* IN */
+                          //UberLabel      *label) /* IN */
 {
 	UberLineGraphPrivate *priv;
 	LineInfo info = { 0 };
@@ -234,7 +234,7 @@ uber_line_graph_add_line (UberLineGraph  *graph, /* IN */
 	g_return_val_if_fail(UBER_IS_LINE_GRAPH(graph), 0);
 
 	priv = graph->priv;
-	info.width = 1.0;
+	info.width = 3;
 	/*
 	 * Retrieve the lines color.
 	 */
@@ -249,7 +249,7 @@ uber_line_graph_add_line (UberLineGraph  *graph, /* IN */
 	info.raw_data = g_ring_sized_new(sizeof(gdouble), priv->stride, NULL);
 	uber_line_graph_init_ring(info.raw_data);
 	/*
-	 * Store the newly crated line.
+	 * Store the newly created line.
 	 */
 	g_array_append_val(priv->lines, info);
 	/*
@@ -259,11 +259,10 @@ uber_line_graph_add_line (UberLineGraph  *graph, /* IN */
 	/*
 	 * Attach label.
 	 */
-	if (label) {
-		uber_line_graph_bind_label(graph, priv->lines->len, label);
-		uber_graph_add_label(UBER_GRAPH(graph), label);
-		uber_label_set_color(label, &info.color);
-	}
+	//if (label) {
+	//	uber_line_graph_bind_label(graph, priv->lines->len, label);
+	//	uber_label_set_color(label, &info.color);
+	//}
 	/*
 	 * Line indexes start from 1.
 	 */

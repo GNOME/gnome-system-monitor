@@ -66,6 +66,8 @@ typedef struct
 	guint   pos;
 } GRing;
 
+#define G_TYPE_RING       (g_ring_get_type ())
+
 GType  g_ring_get_type    (void) G_GNUC_CONST;
 GRing* g_ring_sized_new   (guint           element_size,
                            guint           reserved_size,

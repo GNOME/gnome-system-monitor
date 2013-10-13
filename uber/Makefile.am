@@ -5,6 +5,7 @@ INST_H_FILES =				\
 	uber.h			\
 	uber-graph.h		\
 	uber-frame-source.h	\
+	uber-line-info.h		\
 	uber-line-graph.h		\
 	uber-label.h		\
 	uber-range.h		\
@@ -19,6 +20,7 @@ libuber_1_0_la_SOURCES = 		\
 	$(NOINST_H_FILES)		\
 	uber-graph.c		\
 	uber-frame-source.c	\
+	uber-line-info.c		\
 	uber-line-graph.c		\
 	uber-label.c		\
 	uber-range.c		\

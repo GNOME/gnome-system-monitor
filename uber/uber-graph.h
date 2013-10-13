@@ -84,11 +84,8 @@ void       uber_graph_set_fps          (UberGraph       *graph,
 void       uber_graph_redraw           (UberGraph       *graph);
 void       uber_graph_set_format       (UberGraph       *graph,
                                         UberGraphFormat  format);
-GtkWidget* uber_graph_get_labels       (UberGraph       *graph);
 void       uber_graph_get_content_area (UberGraph       *graph,
                                         GdkRectangle    *rect);
-void       uber_graph_add_label        (UberGraph       *graph,
-                                        UberLabel       *label);
 gboolean   uber_graph_get_show_xlines  (UberGraph       *graph);
 void       uber_graph_set_show_xlines  (UberGraph       *graph,
                                         gboolean         show_xlines);

@@ -69,8 +69,8 @@ struct _UberLineGraphClass
 };
 
 gint              uber_line_graph_add_line       (UberLineGraph     *graph,
-                                                  const GdkRGBA     *color,
-                                                  UberLabel         *label);
+                                                  const GdkRGBA     *color);
+                                                  //UberLabel         *label);
 cairo_antialias_t uber_line_graph_get_antialias  (UberLineGraph     *graph);
 GType             uber_line_graph_get_type       (void) G_GNUC_CONST;
 GtkWidget*        uber_line_graph_new            (void);
