@@ -1,18 +1,19 @@
 # Thai translation of gnome-system-monitor.
-# Copyright (C) 2004-2012 Free Software Foundation, Inc.
+# Copyright (C) 2004-2013 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-system-monitor
 # package.
 #
 # Theppitak Karoonboonyanan <thep@linux.thai.net>, 2004-2012.
+# Akom Chotiphantawanon <knight2000@gmail.com>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: procman 2.9.1\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-05 07:15+0000\n"
-"PO-Revision-Date: 2012-09-12 19:56+0700\n"
-"Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
+"POT-Creation-Date: 2013-10-08 16:39+0000\n"
+"PO-Revision-Date: 2013-10-15 13:51+0700\n"
+"Last-Translator: Akom Chotiphantawanon <knight2000@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
@@ -21,27 +22,80 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/callbacks.cpp:184 ../src/procman.cpp:721
+#: ../src/application.cpp:233 ../src/interface.cpp:363
 msgid "System Monitor"
 msgstr "เครื่องมือเฝ้าสังเกตระบบ"
 
-#: ../gnome-system-monitor.desktop.in.in.h:2 ../src/callbacks.cpp:185
+#: ../gnome-system-monitor.desktop.in.in.h:2
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:364
 msgid "View current processes and monitor system state"
 msgstr "แสดงโพรเซสปัจจุบันและเฝ้าสังเกตสถานะของระบบ"
 
 #: ../gnome-system-monitor.desktop.in.in.h:3
+#: ../gnome-system-monitor-kde.desktop.in.in.h:3
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr "เฝ้าสังเกต;ระบบ;โพรเซส;ซีพียู;หน่วยความจำ;เครือข่าย;สถิติ;การใช้งาน;"
 
-#: ../data/interface.ui.h:2
-msgid "System"
-msgstr "ระบบ"
+#: ../gnome-system-monitor-kde.desktop.in.in.h:1
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:289
+msgid "GNOME System Monitor"
+msgstr "เครื่องมือเฝ้าสังเกตระบบของ GNOME"
 
-#: ../data/interface.ui.h:3
+#: ../gnome-system-monitor.appdata.xml.in.h:2
+msgid "View and manage system resources"
+msgstr "ดูและจัดการทรัพยากรระบบ"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:3
+msgid ""
+"System Monitor is a process viewer and system monitor with an attractive, "
+"easy-to-use interface."
+msgstr ""
+"เครื่องมือเฝ้าสังเกตระบบเป็นเครื่องมือสำหรับดูโพรเซสและเฝ้าสังเกตระบบ ที่หน้าตาดึงดูดและใช้ง่าย"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:4
+msgid ""
+"System Monitor can help you find out what applications are using the "
+"processor or the memory of your computer, can manage the running "
+"applications, force stop processes not responding, and change the state or "
+"priority of existing processes."
+msgstr ""
+"เครื่องมือเฝ้าสังเกตระบบสามารถช่วยคุณหาโปรแกรมที่กำลังใช้งานตัวประมวลผลหรือหน่วยความจำของคอมพิวเตอร์ของคุณอยู่ "
+"สามารถจัดการโปรแกรมที่กำลังทำงานอยู่ บังคับหยุดโพรเซสที่ไม่ตอบสนอง "
+"และเปลี่ยนสถานะหรือลำดับความสำคัญของโพรเซสต่างๆ ที่มีอยู่ได้"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:5
+msgid ""
+"The resource graphs feature shows you a quick overview of what is going on "
+"with your computer displaying recent network, memory and processor usage."
+msgstr ""
+"กราฟทรัพยากรจะช่วยแสดงให้คุณเห็นภาพรวมคร่าวๆ ของสิ่งที่เกิดขึ้นกับคอมพิวเตอร์ของคุณ "
+"โดยแสดงการใช้งานล่าสุดของเครือข่าย หน่วยความจำ และตัวประมวลผล"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
+msgid "Kill process"
+msgstr "ฆ่าโพรเซส"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:2
+msgid "Privileges are required to control other users' processes"
+msgstr "ต้องใช้สิทธิพิเศษในการควบคุมโพรเซสของผู้ใช้อื่น"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:3
+msgid "Renice process"
+msgstr "เปลี่ยนค่า nice ของโพรเซส"
+
+#: ../org.gnome.gnome-system-monitor.policy.in.in.h:4
+msgid "Privileges are required to change the priority of processes"
+msgstr "ต้องใช้สิทธิพิเศษในการเปลี่ยนลำดับความสำคัญของโพรเซส"
+
+#: ../data/interface.ui.h:2
 msgid "End _Process"
 msgstr "_จบโพรเซส"
 
-#: ../data/interface.ui.h:4 ../data/preferences.ui.h:9
+#: ../data/interface.ui.h:3
+msgid "Show process properties"
+msgstr "แสดงคุณสมบัติของโพรเซส"
+
+#: ../data/interface.ui.h:4 ../data/preferences.ui.h:11
 msgid "Processes"
 msgstr "โพรเซส"
 
@@ -53,12 +107,12 @@ msgstr "สถิติการใช้ซีพียู"
 msgid "Memory and Swap History"
 msgstr "สถิติการใช้หน่วยความจำและพื้นที่สลับ"
 
-#: ../data/interface.ui.h:7 ../src/interface.cpp:327
-#: ../src/procproperties.cpp:133 ../src/proctable.cpp:251
+#: ../data/interface.ui.h:7 ../src/interface.cpp:260
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:336
 msgid "Memory"
 msgstr "หน่วยความจำ"
 
-#: ../data/interface.ui.h:8 ../src/interface.cpp:338
+#: ../data/interface.ui.h:8 ../src/interface.cpp:272
 msgid "Swap"
 msgstr "พื้นที่สลับ"
 
@@ -66,7 +120,7 @@ msgstr "พื้นที่สลับ"
 msgid "Network History"
 msgstr "สถิติการใช้เครือข่าย"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:363
+#: ../data/interface.ui.h:10 ../src/interface.cpp:300
 msgid "Receiving"
 msgstr "กำลังรับ"
 
@@ -74,23 +128,24 @@ msgstr "กำลังรับ"
 msgid "Total Received"
 msgstr "ได้รับทั้งหมด"
 
-#: ../data/interface.ui.h:12
-msgid "Sent"
-msgstr "ส่งไป"
+#: ../data/interface.ui.h:12 ../src/interface.cpp:315
+msgid "Sending"
+msgstr "กำลังส่ง"
 
 #: ../data/interface.ui.h:13
 msgid "Total Sent"
 msgstr "ส่งทั้งหมด"
 
-#: ../data/interface.ui.h:14 ../data/preferences.ui.h:12
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:15
 msgid "Resources"
 msgstr "ทรัพยากร"
 
-#: ../data/interface.ui.h:15 ../data/preferences.ui.h:14
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:18
 msgid "File Systems"
 msgstr "ระบบแฟ้ม"
 
 #: ../data/lsof.ui.h:1
+msgctxt "Window title for 'Search for Open Files' dialog"
 msgid "Search for Open Files"
 msgstr "ค้นหาแฟ้มที่เปิด"
 
@@ -99,16 +154,123 @@ msgid "_Name contains:"
 msgstr "_ชื่อมีคำว่า:"
 
 #: ../data/lsof.ui.h:3
+msgid "_Find"
+msgstr "_หา"
+
+#: ../data/lsof.ui.h:4
 msgid "Case insensitive matching"
 msgstr "ค้นหาโดยตัวพิมพ์ใหญ่-เล็กตรงกัน"
 
-#: ../data/lsof.ui.h:4
+#: ../data/lsof.ui.h:5
 msgid "C_lear"
 msgstr "_ล้าง"
 
-#: ../data/lsof.ui.h:5
+#: ../data/lsof.ui.h:6
 msgid "S_earch results:"
 msgstr "ผลการ_ค้นหา:"
+
+#: ../data/lsof.ui.h:7 ../data/openfiles.ui.h:2 ../data/preferences.ui.h:3
+#: ../src/memmaps.cpp:438 ../src/procproperties.cpp:216
+msgid "_Close"
+msgstr "ปิ_ด"
+
+#: ../data/menus.ui.h:1
+msgctxt "Menu item to Open 'Search for Open Files' dialog"
+msgid "Search for Open Files"
+msgstr "ค้นหาแฟ้มที่เปิด"
+
+#: ../data/menus.ui.h:2
+msgid "Preferences"
+msgstr "ปรับแต่ง"
+
+#: ../data/menus.ui.h:3
+msgid "Help"
+msgstr "วิธีใช้"
+
+#: ../data/menus.ui.h:4
+msgid "About"
+msgstr "เกี่ยวกับ"
+
+#: ../data/menus.ui.h:5
+msgid "Quit"
+msgstr "ออก"
+
+#: ../data/menus.ui.h:6
+msgid "_Refresh"
+msgstr "_ปรับข้อมูล"
+
+#: ../data/menus.ui.h:7
+msgid "_Active Processes"
+msgstr "โพรเซสที่_กำลังทำงาน"
+
+#: ../data/menus.ui.h:8
+msgid "A_ll Processes"
+msgstr "_ทุกโพรเซส"
+
+#: ../data/menus.ui.h:9
+msgid "M_y Processes"
+msgstr "โพรเซสของ_ฉัน"
+
+#: ../data/menus.ui.h:10
+msgid "_Dependencies"
+msgstr "ความ_ขึ้นต่อกัน"
+
+#: ../data/menus.ui.h:11
+msgid "_Stop"
+msgstr "_หยุด"
+
+#: ../data/menus.ui.h:12
+msgid "_Continue"
+msgstr "_ทำต่อ"
+
+#: ../data/menus.ui.h:13
+msgid "_End"
+msgstr "_จบ"
+
+#: ../data/menus.ui.h:14
+msgid "_Kill"
+msgstr "ฆ่_า"
+
+#: ../data/menus.ui.h:15
+msgid "_Change Priority"
+msgstr "เ_ปลี่ยนลำดับความสำคัญ"
+
+#: ../data/menus.ui.h:16 ../src/util.cpp:214
+msgid "Very High"
+msgstr "สูงมาก"
+
+#: ../data/menus.ui.h:17 ../src/util.cpp:216
+msgid "High"
+msgstr "สูง"
+
+#: ../data/menus.ui.h:18 ../src/util.cpp:218
+msgid "Normal"
+msgstr "ปกติ"
+
+#: ../data/menus.ui.h:19 ../src/util.cpp:220
+msgid "Low"
+msgstr "ต่ำ"
+
+#: ../data/menus.ui.h:20 ../src/util.cpp:222
+msgid "Very Low"
+msgstr "ต่ำมาก"
+
+#: ../data/menus.ui.h:21
+msgid "Custom"
+msgstr "กำหนดเอง"
+
+#: ../data/menus.ui.h:22
+msgid "_Memory Maps"
+msgstr "_ผังหน่วยความจำ"
+
+#. Translators: this means 'Files that are open' (open is not a verb here)
+#: ../data/menus.ui.h:24
+msgid "Open _Files"
+msgstr "แ_ฟ้มที่เปิด"
+
+#: ../data/menus.ui.h:25
+msgid "_Properties"
+msgstr "คุณ_สมบัติ"
 
 #: ../data/openfiles.ui.h:1
 msgid "Open Files"
@@ -119,54 +281,70 @@ msgid "System Monitor Preferences"
 msgstr "ปรับแต่งโปรแกรมเฝ้าสังเกตระบบ"
 
 #: ../data/preferences.ui.h:2
+msgid "_Help"
+msgstr "_วิธีใช้"
+
+#: ../data/preferences.ui.h:4
 msgid "Behavior"
 msgstr "พฤติกรรม"
 
-#: ../data/preferences.ui.h:3
+#: ../data/preferences.ui.h:5
 msgid "_Update interval in seconds:"
 msgstr "ช่วงเวลา_ปรับข้อมูลเป็นวินาที:"
 
-#: ../data/preferences.ui.h:4
+#: ../data/preferences.ui.h:6
 msgid "Enable _smooth refresh"
 msgstr "เปิดใช้การอ่านข้อมูลแบบ_ยืดหยุ่น"
 
-#: ../data/preferences.ui.h:5
+#: ../data/preferences.ui.h:7
 msgid "Alert before ending or _killing processes"
 msgstr "เตือนก่อน_จบหรือฆ่าโพรเซส"
 
-#: ../data/preferences.ui.h:6
+#: ../data/preferences.ui.h:8
 msgid "_Divide CPU usage by CPU count"
 msgstr "_หารปริมาณการใช้ CPU ด้วยจำนวน CPU"
 
-#: ../data/preferences.ui.h:7
+#: ../data/preferences.ui.h:9
 msgid "Information Fields"
 msgstr "ฟิลด์ข้อมูล"
 
-#: ../data/preferences.ui.h:8
+#: ../data/preferences.ui.h:10
 msgid "Process i_nformation shown in list:"
 msgstr "_ข้อมูลของโพรเซสที่แสดงในรายการ:"
 
-#: ../data/preferences.ui.h:10
+#: ../data/preferences.ui.h:12
 msgid "Graphs"
 msgstr "กราฟ"
 
-#: ../data/preferences.ui.h:11
+#: ../data/preferences.ui.h:13
+msgid "_Draw CPU chart as stacked area chart"
+msgstr "วาดแผนภูมิ CPU เป็นแบบ_พื้นที่วางซ้อนกัน"
+
+#: ../data/preferences.ui.h:14
 msgid "_Show network speed in bits"
 msgstr "แ_สดงอัตราเร็วเครือข่ายในหน่วยบิต"
 
-#: ../data/preferences.ui.h:13
+#: ../data/preferences.ui.h:16
 msgid "Show _all file systems"
 msgstr "แสดงทุก_ระบบแฟ้ม"
 
-#: ../data/renice.ui.h:1
+#: ../data/preferences.ui.h:17
+msgid "File system i_nformation shown in list:"
+msgstr "_ข้อมูลของระบบแฟ้มที่แสดงในรายการ:"
+
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:124
+msgid "_Cancel"
+msgstr "_ยกเลิก"
+
+#: ../data/renice.ui.h:2
 msgid "Change _Priority"
 msgstr "เปลี่ยนลำดับความ_สำคัญ"
 
-#: ../data/renice.ui.h:2
+#: ../data/renice.ui.h:3
 msgid "_Nice value:"
 msgstr "ค่าไ_นซ์:"
 
-#: ../data/renice.ui.h:3
+#: ../data/renice.ui.h:4
 msgid ""
 "<small><i><b>Note:</b> The priority of a process is given by its nice value. "
 "A lower nice value corresponds to a higher priority.</i></small>"
@@ -174,501 +352,295 @@ msgstr ""
 "<small><i><b>หมายเหตุ:</b> ลำดับความสำคัญของโพรเซสกำหนดโดยค่าไนซ์ "
 "ค่าไนซ์ที่ต่ำหมายถึงลำดับความสำคัญสูง</i></small>"
 
-#: ../src/argv.cpp:21
-msgid "Show the System tab"
-msgstr "แสดงแท็บ \"ระบบ\""
+#: ../src/application.cpp:275
+msgid "A simple process and system monitor."
+msgstr "เครื่องมือง่ายๆ สำหรับเฝ้าสังเกตโพรเซสและระบบ"
 
-#: ../src/argv.cpp:26
+#: ../src/argv.cpp:21
 msgid "Show the Processes tab"
 msgstr "แสดงแท็บ \"โพรเซส\""
 
-#: ../src/argv.cpp:31
+#: ../src/argv.cpp:26
 msgid "Show the Resources tab"
 msgstr "แสดงแท็บ \"ทรัพยากร\""
 
-#: ../src/argv.cpp:36
+#: ../src/argv.cpp:31
 msgid "Show the File Systems tab"
 msgstr "แสดงแท็บ \"ระบบแฟ้ม\""
 
-#: ../src/callbacks.cpp:195
-msgid "translator-credits"
-msgstr "Theppitak Karoonboonyanan <thep@linux.thai.net>"
+#: ../src/argv.cpp:35
+msgid "Show the application's version"
+msgstr "แสดงรุ่นของโปรแกรม"
 
-#: ../src/disks.cpp:298 ../src/memmaps.cpp:361
+#: ../src/disks.cpp:369 ../src/memmaps.cpp:325
 msgid "Device"
 msgstr "อุปกรณ์"
 
-#: ../src/disks.cpp:299
+#: ../src/disks.cpp:370
 msgid "Directory"
 msgstr "ไดเรกทอรี"
 
-#: ../src/disks.cpp:300 ../src/gsm_color_button.c:222 ../src/openfiles.cpp:251
+#: ../src/disks.cpp:371 ../src/gsm_color_button.c:166 ../src/openfiles.cpp:252
 msgid "Type"
 msgstr "ชนิด"
 
-#: ../src/disks.cpp:301
+#: ../src/disks.cpp:372
 msgid "Total"
 msgstr "รวม"
 
-#: ../src/disks.cpp:302
+#: ../src/disks.cpp:373
 msgid "Free"
 msgstr "ว่าง"
 
-#: ../src/disks.cpp:303
+#: ../src/disks.cpp:374
 msgid "Available"
 msgstr "ใช้ได้"
 
-#: ../src/disks.cpp:304
+#: ../src/disks.cpp:375
 msgid "Used"
 msgstr "ใช้ไป"
 
 #. xgettext: ? stands for unknown
-#: ../src/e_date.c:155
+#: ../src/e_date.c:156
 msgid "?"
 msgstr "?"
 
-#: ../src/e_date.c:162
+#: ../src/e_date.c:163
 msgid "Today %l:%M %p"
 msgstr "วันนี้ %H:%M น."
 
-#: ../src/e_date.c:171
+#: ../src/e_date.c:172
 msgid "Yesterday %l:%M %p"
 msgstr "เมื่อวาน %H:%M น."
 
-#: ../src/e_date.c:183
+#: ../src/e_date.c:184
 msgid "%a %l:%M %p"
 msgstr "%a %H:%M น."
 
-#: ../src/e_date.c:191
+#: ../src/e_date.c:192
 msgid "%b %d %l:%M %p"
 msgstr "%d %b %H:%M น."
 
-#: ../src/e_date.c:193
+#: ../src/e_date.c:194
 msgid "%b %d %Y"
 msgstr "%d %b %Ey"
 
-#: ../src/gsm_color_button.c:198
+#: ../src/gsm_color_button.c:142
 msgid "Fraction"
 msgstr "อัตราส่วน"
 
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:200
+#: ../src/gsm_color_button.c:144
 msgid "Percentage full for pie color pickers"
 msgstr "อัตราส่วนเทียบกับค่าเต็มสำหรับปุ่มเลือกสี"
 
-#: ../src/gsm_color_button.c:207
+#: ../src/gsm_color_button.c:151
 msgid "Title"
 msgstr "หัวเรื่อง"
 
-#: ../src/gsm_color_button.c:208
+#: ../src/gsm_color_button.c:152
 msgid "The title of the color selection dialog"
 msgstr "หัวเรื่องของกล่องโต้ตอบเลือกสี"
 
-#: ../src/gsm_color_button.c:209 ../src/gsm_color_button.c:625
+#: ../src/gsm_color_button.c:153 ../src/gsm_color_button.c:513
 msgid "Pick a Color"
 msgstr "เลือกสี"
 
-#: ../src/gsm_color_button.c:215
+#: ../src/gsm_color_button.c:159
 msgid "Current Color"
 msgstr "สีปัจจุบัน"
 
-#: ../src/gsm_color_button.c:216
+#: ../src/gsm_color_button.c:160
 msgid "The selected color"
 msgstr "สีที่เลือกอยู่"
 
-#: ../src/gsm_color_button.c:223
+#: ../src/gsm_color_button.c:167
 msgid "Type of color picker"
 msgstr "ชนิดของปุ่มเลือกสี"
 
-#: ../src/gsm_color_button.c:548
+#: ../src/gsm_color_button.c:435
 msgid "Received invalid color data\n"
 msgstr "ได้รับข้อมูลสีที่ผิดรูปแบบ\n"
 
-#: ../src/gsm_color_button.c:648
+#: ../src/gsm_color_button.c:536
 msgid "Click to set graph colors"
 msgstr "คลิกเพื่อกำหนดสีของกราฟ"
 
-#. xgettext: noun, top level menu.
-#. "File" did not make sense for system-monitor
-#: ../src/interface.cpp:51
-msgid "_Monitor"
-msgstr "เ_ฝ้าสังเกต"
-
-#: ../src/interface.cpp:52
-msgid "_Edit"
-msgstr "แ_ก้ไข"
-
-#: ../src/interface.cpp:53
-msgid "_View"
-msgstr "มุ_มมอง"
-
-#: ../src/interface.cpp:54
-msgid "_Help"
-msgstr "_วิธีใช้"
-
-#: ../src/interface.cpp:56
-msgid "Search for _Open Files"
-msgstr "ค้นหาแฟ้มที่_เปิด"
-
-#: ../src/interface.cpp:57
-msgid "Search for open files"
-msgstr "ค้นหาแฟ้มที่เปิด"
-
-#: ../src/interface.cpp:59
-msgid "Quit the program"
-msgstr "ออกจากโปรแกรม"
-
-#: ../src/interface.cpp:62
-msgid "_Stop Process"
-msgstr "_หยุดโพรเซส"
-
-#: ../src/interface.cpp:63
-msgid "Stop process"
-msgstr "หยุดโพรเซส"
-
-#: ../src/interface.cpp:64
-msgid "_Continue Process"
-msgstr "ให้โพรเซสทำงาน_ต่อ"
-
-#: ../src/interface.cpp:65
-msgid "Continue process if stopped"
-msgstr "ให้โพรเซสที่หยุดไว้ทำงานต่อ"
-
-#: ../src/interface.cpp:67 ../src/procdialogs.cpp:95
-msgid "_End Process"
-msgstr "_จบโพรเซส"
-
-#: ../src/interface.cpp:68
-msgid "Force process to finish normally"
-msgstr "บังคับให้โพรเซสจบการทำงานตามขั้นตอนปกติ"
-
-#: ../src/interface.cpp:69 ../src/procdialogs.cpp:84
-msgid "_Kill Process"
-msgstr "_ฆ่าโพรเซส"
-
-#: ../src/interface.cpp:70
-msgid "Force process to finish immediately"
-msgstr "บังคับให้โพรเซสจบการทำงานทันที"
-
-#: ../src/interface.cpp:71
-msgid "_Change Priority"
-msgstr "เ_ปลี่ยนลำดับความสำคัญ"
-
-#: ../src/interface.cpp:72
-msgid "Change the order of priority of process"
-msgstr "เปลี่ยนลำดับความสำคัญของโพรเซส"
-
-#: ../src/interface.cpp:74
-msgid "Configure the application"
-msgstr "ปรับแต่งการทำงานของโปรแกรม"
-
-#: ../src/interface.cpp:76
-msgid "_Refresh"
-msgstr "_ปรับข้อมูล"
-
-#: ../src/interface.cpp:77
-msgid "Refresh the process list"
-msgstr "ปรับข้อมูลรายการโพรเซส"
-
-#: ../src/interface.cpp:79
-msgid "_Memory Maps"
-msgstr "_ผังหน่วยความจำ"
-
-#: ../src/interface.cpp:80
-msgid "Open the memory maps associated with a process"
-msgstr "ดูผังหน่วยความจำที่เชื่อมโยงกับโพรเซส"
-
-#. Translators: this means 'Files that are open' (open is no verb here)
-#: ../src/interface.cpp:82
-msgid "Open _Files"
-msgstr "แ_ฟ้มที่เปิด"
-
-#: ../src/interface.cpp:83
-msgid "View the files opened by a process"
-msgstr "ดูแฟ้มที่โพรเซสเปิด"
-
-#: ../src/interface.cpp:84
-msgid "_Properties"
-msgstr "คุณ_สมบัติ"
-
-#: ../src/interface.cpp:85
-msgid "View additional information about a process"
-msgstr "ดูข้อมูลเพิ่มเติมเกี่ยวกับโพรเซส"
-
-#: ../src/interface.cpp:88
-msgid "_Contents"
-msgstr "เนื้อ_หา"
-
-#: ../src/interface.cpp:89
-msgid "Open the manual"
-msgstr "เปิดคู่มือการใช้งาน"
-
-#: ../src/interface.cpp:91
-msgid "About this application"
-msgstr "เกี่ยวกับโปรแกรมนี้"
-
-#: ../src/interface.cpp:96
-msgid "_Dependencies"
-msgstr "ความ_ขึ้นต่อกัน"
-
-#: ../src/interface.cpp:97
-msgid "Show parent/child relationship between processes"
-msgstr "แสดงความสัมพันธ์แบบแม่-ลูกระหว่างโพรเซสต่างๆ"
-
-#: ../src/interface.cpp:104
-msgid "_Active Processes"
-msgstr "โพรเซสที่_กำลังทำงาน"
-
-#: ../src/interface.cpp:105
-msgid "Show active processes"
-msgstr "แสดงโพรเซสที่กำลังทำงาน"
-
-#: ../src/interface.cpp:106
-msgid "A_ll Processes"
-msgstr "_ทุกโพรเซส"
-
-#: ../src/interface.cpp:107
-msgid "Show all processes"
-msgstr "แสดงทุกโพรเซส"
-
-#: ../src/interface.cpp:108
-msgid "M_y Processes"
-msgstr "โพรเซสของ_ฉัน"
-
-#: ../src/interface.cpp:109
-msgid "Show only user-owned processes"
-msgstr "แสดงเฉพาะโพรเซสของผู้ใช้"
-
-#: ../src/interface.cpp:114 ../src/util.cpp:217
-msgid "Very High"
-msgstr "สูงมาก"
-
-#: ../src/interface.cpp:115
-msgid "Set process priority to very high"
-msgstr "กำหนดให้โพรเซสมีลำดับความสำคัญสูงมาก"
-
-#: ../src/interface.cpp:116 ../src/util.cpp:219
-msgid "High"
-msgstr "สูง"
-
-#: ../src/interface.cpp:117
-msgid "Set process priority to high"
-msgstr "กำหนดให้โพรเซสมีลำดับความสำคัญสูง"
-
-#: ../src/interface.cpp:118 ../src/util.cpp:221
-msgid "Normal"
-msgstr "ปกติ"
-
-#: ../src/interface.cpp:119
-msgid "Set process priority to normal"
-msgstr "กำหนดให้โพรเซสมีลำดับความสำคัญปกติ"
-
-#: ../src/interface.cpp:120 ../src/util.cpp:223
-msgid "Low"
-msgstr "ต่ำ"
-
-#: ../src/interface.cpp:121
-msgid "Set process priority to low"
-msgstr "กำหนดให้โพรเซสมีลำดับความสำคัญต่ำ"
-
-#: ../src/interface.cpp:122 ../src/util.cpp:225
-msgid "Very Low"
-msgstr "ต่ำมาก"
-
-#: ../src/interface.cpp:123
-msgid "Set process priority to very low"
-msgstr "กำหนดให้โพรเซสมีลำดับความสำคัญต่ำมาก"
-
-#: ../src/interface.cpp:124
-msgid "Custom"
-msgstr "กำหนดเอง"
-
-#: ../src/interface.cpp:125
-msgid "Set process priority manually"
-msgstr "กำหนดลำดับความสำคัญของโพรเซสเป็นตัวเลข"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:256
+#: ../src/interface.cpp:188
 #, c-format
 msgid "Pick a Color for '%s'"
 msgstr "เลือกสีสำหรับ '%s'"
 
-#: ../src/interface.cpp:292 ../src/procproperties.cpp:139
+#: ../src/interface.cpp:221 ../src/procproperties.cpp:95
 msgid "CPU"
 msgstr "ซีพียู"
 
-#: ../src/interface.cpp:294
+#: ../src/interface.cpp:223
 #, c-format
 msgid "CPU%d"
 msgstr "ซีพียู %d"
 
-#: ../src/interface.cpp:378
-msgid "Sending"
-msgstr "กำลังส่ง"
+#: ../src/interface.cpp:374
+msgid "translator-credits"
+msgstr "Theppitak Karoonboonyanan <thep@linux.thai.net>"
 
-#: ../src/load-graph.cpp:166
+#: ../src/load-graph.cpp:160
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u วินาที"
 
-#: ../src/load-graph.cpp:345
+#: ../src/load-graph.cpp:375
 msgid "not available"
 msgstr "ไม่มีข้อมูล"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:348
+#: ../src/load-graph.cpp:378
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) จาก %s"
 
-#: ../src/lsof.cpp:125
+#: ../src/lsof.cpp:123
 msgid "Error"
 msgstr "ข้อผิดพลาด"
 
-#: ../src/lsof.cpp:126
+#: ../src/lsof.cpp:124
 #, c-format
 msgid "'%s' is not a valid Perl regular expression."
 msgstr "'%s' ไม่ใช่นิพจน์เรกิวลาร์ของ Perl ที่ถูกต้อง"
 
-#: ../src/lsof.cpp:272
+#: ../src/lsof.cpp:270
 msgid "Process"
 msgstr "โพรเซส"
 
-#: ../src/lsof.cpp:284
+#: ../src/lsof.cpp:282
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:294 ../src/memmaps.cpp:339
+#: ../src/lsof.cpp:292 ../src/memmaps.cpp:303
 msgid "Filename"
 msgstr "ชื่อแฟ้ม"
 
 #. xgettext: virtual memory start
-#: ../src/memmaps.cpp:341
+#: ../src/memmaps.cpp:305
 msgid "VM Start"
 msgstr "VM เริ่ม"
 
 #. xgettext: virtual memory end
-#: ../src/memmaps.cpp:343
+#: ../src/memmaps.cpp:307
 msgid "VM End"
 msgstr "VM จบ"
 
 #. xgettext: virtual memory syze
-#: ../src/memmaps.cpp:345
+#: ../src/memmaps.cpp:309
 msgid "VM Size"
 msgstr "ขนาด VM"
 
-#: ../src/memmaps.cpp:346
+#: ../src/memmaps.cpp:310
 msgid "Flags"
 msgstr "แฟล็ก"
 
 #. xgettext: virtual memory offset
-#: ../src/memmaps.cpp:348
+#: ../src/memmaps.cpp:312
 msgid "VM Offset"
 msgstr "ออฟเซต VM"
 
 #. xgettext: memory that has not been modified since
 #. it has been allocated
-#: ../src/memmaps.cpp:351
+#: ../src/memmaps.cpp:315
 msgid "Private clean"
 msgstr "ส่วนตัว สะอาด"
 
 #. xgettext: memory that has been modified since it
 #. has been allocated
-#: ../src/memmaps.cpp:354
+#: ../src/memmaps.cpp:318
 msgid "Private dirty"
 msgstr "ส่วนตัว เปื้อน"
 
 #. xgettext: shared memory that has not been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:357
+#: ../src/memmaps.cpp:321
 msgid "Shared clean"
 msgstr "ใช้ร่วม สะอาด"
 
 #. xgettext: shared memory that has been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:360
+#: ../src/memmaps.cpp:324
 msgid "Shared dirty"
 msgstr "ใช้ร่วม เปื้อน"
 
-#: ../src/memmaps.cpp:362
+#: ../src/memmaps.cpp:326
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.cpp:467
+#: ../src/memmaps.cpp:436
 msgid "Memory Maps"
 msgstr "ผังหน่วยความจำ"
 
-#: ../src/memmaps.cpp:479
+#: ../src/memmaps.cpp:448
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "_ผังหน่วยความจำของโพรเซส \"%s\" (PID %u):"
 
-#: ../src/openfiles.cpp:38
+#: ../src/openfiles.cpp:40
 msgid "file"
 msgstr "แฟ้ม"
 
-#: ../src/openfiles.cpp:40
+#: ../src/openfiles.cpp:42
 msgid "pipe"
 msgstr "ไปป์"
 
-#: ../src/openfiles.cpp:42
+#: ../src/openfiles.cpp:44
 msgid "IPv6 network connection"
 msgstr "การเชื่อมต่อเครือข่าย IPv6"
 
-#: ../src/openfiles.cpp:44
+#: ../src/openfiles.cpp:46
 msgid "IPv4 network connection"
 msgstr "การเชื่อมต่อเครือข่าย IPv4"
 
-#: ../src/openfiles.cpp:46
+#: ../src/openfiles.cpp:48
 msgid "local socket"
 msgstr "ซ็อกเก็ตภายใน"
 
-#: ../src/openfiles.cpp:48
+#: ../src/openfiles.cpp:50
 msgid "unknown type"
 msgstr "ไม่ทราบชนิด"
 
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.cpp:250
+#: ../src/openfiles.cpp:251
 msgid "FD"
 msgstr "FD"
 
-#: ../src/openfiles.cpp:252
+#: ../src/openfiles.cpp:253
 msgid "Object"
 msgstr "อ็อบเจกต์"
 
-#: ../src/openfiles.cpp:346
+#: ../src/openfiles.cpp:337
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "แ_ฟ้มที่โพรเซส \"%s\" (PID %u) เปิด:"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:1
-msgid "Main Window width"
-msgstr "ความกว้างของหน้าต่างหลัก"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:1
+msgid "Main window size and position in the form (width, height, xpos, ypos)"
+msgstr ""
+"ขนาดและตำแหน่งของหน้าต่างหลักในรูปแบบ (ความกว้าง, ความสูง, ตำแหน่ง x, ตำแหน่ง y)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:2
-msgid "Main Window height"
-msgstr "ความสูงของหน้าต่างหลัก"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:2
+msgid "Main Window should open maximized"
+msgstr "เปิดหน้าต่างหลักแบบขยายแผ่"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:3
-msgid "Main Window X position"
-msgstr "ตำแหน่ง X ของหน้าต่างหลัก"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:4
-msgid "Main Window Y position"
-msgstr "ตำแหน่ง Y ของหน้าต่างหลัก"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:5
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:3
 msgid "Show process dependencies in tree form"
 msgstr "แสดงความขึ้นต่อกันของโพรเซสแบบต้นไม้"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:6
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:4
 msgid "Solaris mode for CPU percentage"
 msgstr "เปอร์เซ็นต์ซีพียูแบบ Solaris"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:7
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:5
 msgid ""
 "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
 "is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
@@ -677,27 +649,38 @@ msgstr ""
 "ถ้าเป็นค่าจริง โปรแกรมเฝ้าสังเกตระบบจะทำงานในแบบ Solaris ซึ่งการใช้ซีพียูของงานหนึ่งๆ "
 "จะถูกหารด้วยจำนวนซีพียูทั้งหมด มิฉะนั้น ก็จะทำงานในแบบ Irix"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:8
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:6
+msgid "Show CPU chart as stacked area chart"
+msgstr "แสดงแผนภูมิ CPU เป็นแบบพื้นที่วางซ้อนกัน"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:7
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
+"of a line chart."
+msgstr ""
+"ถ้าเป็นค่าจริง เครื่องมือเฝ้าสังเกตระบบแสดงแผนภูมิ CPU เป็นแบบพื้นที่วางซ้อนกันแทนแบบกราฟเส้น"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:8
 msgid "Enable/Disable smooth refresh"
 msgstr "เปิดใช้/ปิดใช้การอ่านข้อมูลแบบยืดหยุ่น"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:9
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
 msgid "Show warning dialog when killing processes"
 msgstr "เตือนก่อนฆ่าโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:10
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:10
 msgid "Time in milliseconds between updates of the process view"
 msgstr "ช่วงเวลาระหว่างการปรับข้อมูลรายการโพรเซส เป็นมิลลิวินาที"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:11
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:11
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "ช่วงเวลาระหว่างการปรับข้อมูลกราฟ เป็นมิลลิวินาที"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:12
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:12
 msgid "Whether information about all file systems should be displayed"
 msgstr "จะแสดงข้อมูลของทุกระบบแฟ้มหรือไม่"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:13
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:13
 msgid ""
 "Whether to display information about all file systems (including types like "
 "'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
@@ -706,282 +689,331 @@ msgstr ""
 "จะแสดงข้อมูลเกี่ยวกับระบบแฟ้มทั้งหมด (รวมถึงชนิดอย่าง 'autofs' และ 'procfs') หรือไม่ "
 "ซึ่งจะมีประโยชน์ในการดูรายการระบบแฟ้มที่เมานท์อยู่ทั้งหมด"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:14
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "ช่วงเวลาระหว่างการปรับข้อมูลรายการอุปกรณ์ เป็นมิลลิวินาที"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:15
-msgid ""
-"Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
-"active"
-msgstr ""
-"กำหนดชุดโพรเซสที่จะแสดงโดยปริยาย ค่า 0 หมายถึงทุกโพรเซส, 1 หมายถึงโพรเซสของผู้ใช้ และ 2 "
-"หมายถึงโพรเซสที่กำลังทำงาน"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
+msgid "Determines which processes to show."
+msgstr "กำหนดโพรเซสที่แสดง"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:16
 msgid "Saves the currently viewed tab"
 msgstr "เก็บแท็บที่ดู"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:17
-msgid ""
-"0 for the System Info, 1 for the processes list, 2 for the resources and 3 "
-"for the disks list"
-msgstr ""
-"0 สำหรับข้อมูลระบบ, 1 สำหรับรายการโพรเซส, 2 สำหรับทรัพยากร และ 3 สำหรับรายการดิสก์"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:18
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:17
 msgid "CPU colors"
 msgstr "สีของซีพียู"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:18
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr "แต่ละรายการอยู่ในรูปแบบ (#ซีพียู, ค่าสีฐานสิบหก)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:20
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:19
 msgid "Default graph memory color"
 msgstr "สีกราฟหน่วยความจำโดยปริยาย"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:20
 msgid "Default graph swap color"
 msgstr "สีกราฟพื้นที่สลับโดยปริยาย"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:21
 msgid "Default graph incoming network traffic color"
 msgstr "สีกราฟเน็ตขาเข้าโดยปริยาย"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:22
 msgid "Default graph outgoing network traffic color"
 msgstr "สีกราฟเน็ตขาออกโดยปริยาย"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:24
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:23
 msgid "Show network traffic in bits"
 msgstr "แสดงการจราจรเครือข่ายในหน่วยบิต"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:25
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:24
 msgid "Process view sort column"
 msgstr "คอลัมน์ที่ใช้เรียงลำดับรายการในหน้าแสดงโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:26
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:25
 msgid "Process view columns order"
 msgstr "ลำดับการเรียงคอลัมน์ในหน้าแสดงโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:27
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:26
 msgid "Process view sort order"
 msgstr "ลำดับการเรียงในหน้าแสดงโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:28
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:27
 msgid "Width of process 'Name' column"
 msgstr "ความกว้างของคอลัมน์ 'ชื่อ' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:29
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:28
 msgid "Show process 'Name' column on startup"
 msgstr "แสดงคอลัมน์ 'ชื่อ' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:30
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:29
 msgid "Width of process 'User' column"
 msgstr "ความกว้างของคอลัมน์ 'ผู้ใช้' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:31
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:30
 msgid "Show process 'User' column on startup"
 msgstr "แสดงคอลัมน์ 'ผู้ใช้' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:32
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:31
 msgid "Width of process 'Status' column"
 msgstr "ความกว้างของคอลัมน์ 'สถานะ' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:33
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:32
 msgid "Show process 'Status' column on startup"
 msgstr "แสดงคอลัมน์ 'สถานะ' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:34
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:33
 msgid "Width of process 'Virtual Memory' column"
 msgstr "ความกว้างของคอลัมน์ 'หน่วยความจำเสมือน' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:35
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:34
 msgid "Show process 'Virtual Memory' column on startup"
 msgstr "แสดงคอลัมน์ 'หน่วยความจำเสมือน' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:36
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:35
 msgid "Width of process 'Resident Memory' column"
 msgstr "ความกว้างของคอลัมน์ 'หน่วยความจำ resident' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:37
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:36
 msgid "Show process 'Resident Memory' column on startup"
 msgstr "แสดงคอลัมน์ 'หน่วยความจำ resident' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:38
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:37
 msgid "Width of process 'Writable Memory' column"
 msgstr "ความกว้างของคอลัมน์ 'หน่วยความจำที่เขียนได้' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:39
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:38
 msgid "Show process 'Writable Memory' column on startup"
 msgstr "แสดงคอลัมน์ 'หน่วยความจำที่เขียนได้' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:40
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:39
 msgid "Width of process 'Shared Memory' column"
 msgstr "ความกว้างของคอลัมน์ 'หน่วยความจำใช้ร่วม' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:41
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:40
 msgid "Show process 'Shared Memory' column on startup"
 msgstr "แสดงคอลัมน์ 'หน่วยความจำใช้ร่วม' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:42
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:41
 msgid "Width of process 'X Server Memory' column"
 msgstr "ความกว้างของคอลัมน์ 'หน่วยความจำ X server' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:43
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:42
 msgid "Show process 'X Server Memory' column on startup"
 msgstr "แสดงคอลัมน์ 'หน่วยความจำ X server' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:45
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:44
 #, no-c-format
 msgid "Width of process 'CPU %' column"
 msgstr "ความกว้างของคอลัมน์ '% ซีพียู' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:47
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:46
 #, no-c-format
 msgid "Show process 'CPU %' column on startup"
 msgstr "แสดงคอลัมน์ '% ซีพียู' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:48
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:47
 msgid "Width of process 'CPU Time' column"
 msgstr "ความกว้างของคอลัมน์ 'เวลาซีพียู' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:49
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:48
 msgid "Show process 'CPU Time' column on startup"
 msgstr "แสดงคอลัมน์ 'เวลาซีพียู' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:50
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:49
 msgid "Width of process 'Started' column"
 msgstr "ความกว้างของคอลัมน์ 'เริ่ม' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:51
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:50
 msgid "Show process 'Started' column on startup"
 msgstr "แสดงคอลัมน์ 'เริ่ม' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:52
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:51
 msgid "Width of process 'Nice' column"
 msgstr "ความกว้างของคอลัมน์ 'ไนซ์' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:53
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:52
 msgid "Show process 'Nice' column on startup"
 msgstr "แสดงคอลัมน์ 'ไนซ์' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:54
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:53
 msgid "Width of process 'PID' column"
 msgstr "ความกว้างของคอลัมน์ 'PID' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:55
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:54
 msgid "Show process 'PID' column on startup"
 msgstr "แสดงคอลัมน์ 'PID' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:56
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:55
 msgid "Width of process 'SELinux Security Context' column"
 msgstr "ความกว้างของคอลัมน์ 'Security Context สำหรับ SELinux' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:57
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:56
 msgid "Show process 'SELinux Security Context' column on startup"
 msgstr "แสดงคอลัมน์ 'Security Context สำหรับ SELinux' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:58
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:57
 msgid "Width of process 'Command Line' column"
 msgstr "ความกว้างของคอลัมน์ 'บรรทัดคำสั่ง' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:59
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:58
 msgid "Show process 'Command Line' column on startup"
 msgstr "แสดงคอลัมน์ 'บรรทัดคำสั่ง' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:60
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:59
 msgid "Width of process 'Memory' column"
 msgstr "ความกว้างของคอลัมน์ 'หน่วยความจำ' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:61
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:60
 msgid "Show process 'Memory' column on startup"
 msgstr "แสดงคอลัมน์ 'หน่วยความจำ' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:62
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:61
 msgid "Width of process 'Waiting Channel' column"
 msgstr "ความกว้างของคอลัมน์ 'ช่องที่คอย' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:63
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:62
 msgid "Show process 'Waiting Channel' column on startup"
 msgstr "แสดงคอลัมน์ 'ช่องที่คอย' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:64
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:63
 msgid "Width of process 'Control Group' column"
 msgstr "ความกว้างของคอลัมน์ 'กลุ่มที่ควบคุม' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:65
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:64
 msgid "Show process 'Control Group' column on startup"
 msgstr "แสดงคอลัมน์ 'กลุ่มที่ควบคุม' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:66
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:65
 msgid "Width of process 'Unit' column"
 msgstr "ความกว้างของคอลัมน์ 'ยูนิต' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:67
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:66
 msgid "Show process 'Unit' column on startup"
 msgstr "แสดงคอลัมน์ 'ยูนิต' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:68
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:67
 msgid "Width of process 'Session' column"
 msgstr "ความกว้างของคอลัมน์ 'วาระ' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:69
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:68
 msgid "Show process 'Session' column on startup"
 msgstr "แสดงคอลัมน์ 'วาระ' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:70
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:69
 msgid "Width of process 'Seat' column"
 msgstr "ความกว้างของคอลัมน์ 'ที่นั่ง' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:71
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:70
 msgid "Show process 'Seat' column on startup"
 msgstr "แสดงคอลัมน์ 'ที่นั่ง' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:72
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:71
 msgid "Width of process 'Owner' column"
 msgstr "ความกว้างของคอลัมน์ 'เจ้าของ' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:73
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:72
 msgid "Show process 'Owner' column on startup"
 msgstr "แสดงคอลัมน์ 'เจ้าของ' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:74
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:73
 msgid "Width of process 'Priority' column"
 msgstr "ความกว้างของคอลัมน์ 'ลำดับความสำคัญ' ของโพรเซส"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:75
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:74
 msgid "Show process 'Priority' column on startup"
 msgstr "แสดงคอลัมน์ 'ลำดับความสำคัญ' ของโพรเซสเมื่อเริ่มโปรแกรม"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:76
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:75
 msgid "Disk view sort column"
 msgstr "คอลัมน์ที่ใช้เรียงลำดับรายการในหน้าแสดงการใช้ดิสก์"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:77
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
 msgid "Disk view sort order"
 msgstr "ลำดับการเรียงในหน้าแสดงการใช้ดิสก์"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:78
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
 msgid "Disk view columns order"
 msgstr "ลำดับการเรียงคอลัมน์ในหน้าแสดงการใช้ดิสก์"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:79
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
+msgid "Width of disk view 'Device' column"
+msgstr "ความกว้างของคอลัมน์ 'อุปกรณ์' ในมุมมองดิสก์"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
+msgid "Show disk view 'Device' column on startup"
+msgstr "แสดงคอลัมน์ 'อุปกรณ์' ในมุมมองดิสก์เมื่อเริ่มโปรแกรม"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
+msgid "Width of disk view 'Directory' column"
+msgstr "ความกว้างของคอลัมน์ 'ไดเรกทอรี' ในมุมมองดิสก์"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
+msgid "Show disk view 'Directory' column on startup"
+msgstr "แสดงคอลัมน์ 'ไดเรกทอรี' ในมุมมองดิสก์เมื่อเริ่มโปรแกรม"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
+msgid "Width of disk view 'Type' column"
+msgstr "ความกว้างของคอลัมน์ 'ชนิด' ในมุมมองดิสก์"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
+msgid "Show disk view 'Type' column on startup"
+msgstr "แสดงคอลัมน์ 'ชนิด' ในมุมมองดิสก์เมื่อเริ่มโปรแกรม"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
+msgid "Width of disk view 'Total' column"
+msgstr "ความกว้างของคอลัมน์ 'รวม' ในมุมมองดิสก์"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
+msgid "Show disk view 'Total' column on startup"
+msgstr "แสดงคอลัมน์ 'รวม' ในมุมมองดิสก์เมื่อเริ่มโปรแกรม"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
+msgid "Width of disk view 'Free' column"
+msgstr "ความกว้างของคอลัมน์ 'ว่าง' ในมุมมองดิสก์"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
+msgid "Show disk view 'Free' column on startup"
+msgstr "แสดงคอลัมน์ 'ว่าง' ในมุมมองดิสก์เมื่อเริ่มโปรแกรม"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
+msgid "Width of disk view 'Available' column"
+msgstr "ความกว้างของคอลัมน์ 'ใช้ได้' ในมุมมองดิสก์"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
+msgid "Show disk view 'Available' column on startup"
+msgstr "แสดงคอลัมน์ 'ใช้ได้' ในมุมมองดิสก์เมื่อเริ่มโปรแกรม"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
+msgid "Width of disk view 'Used' column"
+msgstr "ความกว้างของคอลัมน์ 'ใช้ไป' ในมุมมองดิสก์"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
+msgid "Show disk view 'Used' column on startup"
+msgstr "แสดงคอลัมน์ 'ใช้ไป' ในมุมมองดิสก์เมื่อเริ่มโปรแกรม"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
 msgid "Memory map sort column"
 msgstr "คอลัมน์ที่ใช้เรียงลำดับรายการในหน้าแสดงผังหน่วยความจำ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:80
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
 msgid "Memory map sort order"
 msgstr "ลำดับการเรียงคอลัมน์ในหน้าแสดงผังหน่วยความจำ"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:81
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
 msgid "Open files sort column"
 msgstr "คอลัมน์ที่ใช้เรียงลำดับรายการในหน้าแสดงแฟ้มที่เปิด"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.h:82
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
 msgid "Open files sort order"
 msgstr "ลำดับการเรียงในหน้าแสดงแฟ้มที่เปิด"
+
+#: ../src/prefsdialog.cpp:181
+msgid "Icon"
+msgstr "ไอคอน"
 
 #: ../src/procactions.cpp:76
 #, c-format
@@ -992,7 +1024,7 @@ msgstr ""
 "ไม่สามารถเปลี่ยนลำดับความสำคัญของโพรเซสหมายเลข %d ไปเป็น %d\n"
 "%s"
 
-#: ../src/procactions.cpp:156
+#: ../src/procactions.cpp:154
 #, c-format
 msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
@@ -1001,14 +1033,34 @@ msgstr ""
 "ไม่สามารถฆ่าโพรเซสหมายเลข %d ด้วยสัญญาณ %d\n"
 "%s"
 
-#. xgettext: primary alert message
-#: ../src/procdialogs.cpp:77
+#. xgettext: primary alert message for killing single process
+#: ../src/procdialogs.cpp:76
 #, c-format
-msgid "Kill the selected process »%s« (PID: %u)?"
-msgstr "จะฆ่าโพรเซส “%s” (PID: %u) ที่เลือกหรือไม่?"
+msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
+msgstr "คุณแน่ใจหรือไม่ ว่าคุณต้องการฆ่าโพรเซส “%s” (PID: %u) ที่เลือก?"
+
+#. xgettext: primary alert message for ending single process
+#: ../src/procdialogs.cpp:81
+#, c-format
+msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
+msgstr "คุณแน่ใจหรือไม่ ว่าคุณต้องการจบโพรเซส “%s” (PID: %u) ที่เลือก?"
+
+#. xgettext: primary alert message for killing multiple processes
+#: ../src/procdialogs.cpp:88
+#, c-format
+msgid "Are you sure you want to kill the selected process?"
+msgid_plural "Are you sure you want to kill the %d selected processes?"
+msgstr[0] "คุณแน่ใจหรือไม่ ว่าคุณต้องการฆ่าโพรเซส %d โพรเซสที่เลือก?"
+
+#. xgettext: primary alert message for ending multiple processes
+#: ../src/procdialogs.cpp:92
+#, c-format
+msgid "Are you sure you want to end the selected process?"
+msgid_plural "Are you sure you want to end the %d selected processes?"
+msgstr[0] "คุณแน่ใจหรือไม่ ว่าคุณต้องการจบโพรเซส %d โพรเซสที่เลือก?"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:81
+#: ../src/procdialogs.cpp:99 ../src/procdialogs.cpp:105
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1016,312 +1068,431 @@ msgstr ""
 "การฆ่าโพรเซสอาจหมายถึงการสูญเสียข้อมูล การทำลายวาระที่กำลังทำงานอยู่ "
 "หรือการสร้างช่องโหว่ในระบบรักษาความปลอดภัย จึงควรสั่งฆ่าเฉพาะโพรเซสที่ไม่มีการตอบสนองเท่านั้น"
 
-#. xgettext: primary alert message
-#: ../src/procdialogs.cpp:88
-#, c-format
-msgid "End the selected process »%s« (PID: %u)?"
-msgstr "จะจบโพรเซส “%s” (PID: %u) ที่เลือกหรือไม่?"
+#: ../src/procdialogs.cpp:102
+msgid "_Kill Process"
+msgid_plural "_Kill Processes"
+msgstr[0] "ฆ่_าโพรเซส"
 
-#. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:92
-msgid ""
-"Ending a process may destroy data, break the session or introduce a security "
-"risk. Only unresponsive processes should be ended."
-msgstr ""
-"การจบโพรเซสอาจหมายถึงการสูญเสียข้อมูล การทำลายวาระที่กำลังทำงานอยู่ "
-"หรือการสร้างช่องโหว่ในระบบรักษาความปลอดภัย จึงควรสั่งจบเฉพาะโพรเซสที่ไม่มีการตอบสนองเท่านั้น"
+#: ../src/procdialogs.cpp:108
+msgid "_End Process"
+msgid_plural "_End Processes"
+msgstr[0] "_จบโพรเซส"
 
-#: ../src/procdialogs.cpp:130
+#: ../src/procdialogs.cpp:189
 #, c-format
-msgid "(%s Priority)"
-msgstr "(ความสำคัญ%s)"
-
-#: ../src/procdialogs.cpp:175
-#, c-format
-msgid "Change Priority of Process »%s« (PID: %u)"
+msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "เปลี่ยนลำดับความสำคัญของโพรเซส “%s” (PID: %u)"
 
-#: ../src/procdialogs.cpp:193
+#: ../src/procdialogs.cpp:192
+#, c-format
+msgid "Change Priority of the selected process"
+msgid_plural "Change Priority of %d selected processes"
+msgstr[0] "เปลี่ยนลำดับความสำคัญของโพรเซส %d โพรเซสที่เลือก"
+
+#: ../src/procdialogs.cpp:211
 msgid "Note:"
 msgstr "หมายเหตุ:"
 
-#: ../src/procdialogs.cpp:194
+#: ../src/procdialogs.cpp:212
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
 msgstr "ลำดับความสำคัญของโพรเซสกำหนดโดยค่าไนซ์ ค่าไนซ์ที่ต่ำหมายถึงลำดับความสำคัญสูง"
 
-#: ../src/procdialogs.cpp:418
-msgid "Icon"
-msgstr "ไอคอน"
-
-#: ../src/procman.cpp:668
-msgid "A simple process and system monitor."
-msgstr "เครื่องมือง่ายๆ สำหรับเฝ้าสังเกตโพรเซสและระบบ"
-
-#: ../src/procproperties.cpp:104 ../src/util.cpp:420
+#: ../src/procproperties.cpp:56 ../src/util.cpp:431
 msgid "N/A"
 msgstr "N/A"
 
-#: ../src/procproperties.cpp:130 ../src/proctable.cpp:236
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:321
 msgid "Process Name"
 msgstr "ชื่อโพรเซส"
 
-#: ../src/procproperties.cpp:131 ../src/proctable.cpp:237
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:322
 msgid "User"
 msgstr "ผู้ใช้"
 
-#: ../src/procproperties.cpp:132 ../src/proctable.cpp:238
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:323
 msgid "Status"
 msgstr "สถานะ"
 
-#: ../src/procproperties.cpp:134 ../src/proctable.cpp:239
+#: ../src/procproperties.cpp:88 ../src/proctable.cpp:324
 msgid "Virtual Memory"
 msgstr "หน่วยความจำเสมือน"
 
-#: ../src/procproperties.cpp:135 ../src/proctable.cpp:240
+#: ../src/procproperties.cpp:89 ../src/proctable.cpp:325
 msgid "Resident Memory"
 msgstr "หน่วยความจำ resident"
 
-#: ../src/procproperties.cpp:136 ../src/proctable.cpp:241
+#: ../src/procproperties.cpp:90 ../src/proctable.cpp:326
 msgid "Writable Memory"
 msgstr "หน่วยความจำที่เขียนได้"
 
-#: ../src/procproperties.cpp:137 ../src/proctable.cpp:242
+#: ../src/procproperties.cpp:91 ../src/proctable.cpp:327
 msgid "Shared Memory"
 msgstr "หน่วยความจำใช้ร่วม"
 
-#: ../src/procproperties.cpp:138 ../src/proctable.cpp:243
+#: ../src/procproperties.cpp:93 ../src/proctable.cpp:328
 msgid "X Server Memory"
 msgstr "หน่วยความจำ X server"
 
-#: ../src/procproperties.cpp:140 ../src/proctable.cpp:245
+#: ../src/procproperties.cpp:96 ../src/proctable.cpp:330
 msgid "CPU Time"
 msgstr "เวลาซีพียู"
 
-#: ../src/procproperties.cpp:140
+#: ../src/procproperties.cpp:96
 #, c-format
 msgid "%lld second"
 msgid_plural "%lld seconds"
 msgstr[0] "%lld วินาที"
 
-#: ../src/procproperties.cpp:141 ../src/proctable.cpp:246
+#: ../src/procproperties.cpp:97 ../src/proctable.cpp:331
 msgid "Started"
 msgstr "เริ่ม"
 
-#: ../src/procproperties.cpp:142 ../src/proctable.cpp:247
+#: ../src/procproperties.cpp:98 ../src/proctable.cpp:332
 msgid "Nice"
 msgstr "ไนซ์"
 
-#: ../src/procproperties.cpp:143 ../src/proctable.cpp:261
+#: ../src/procproperties.cpp:99 ../src/proctable.cpp:346
 msgid "Priority"
 msgstr "ลำดับความสำคัญ"
 
-#: ../src/procproperties.cpp:144 ../src/proctable.cpp:248
+#: ../src/procproperties.cpp:100 ../src/proctable.cpp:333
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:145 ../src/proctable.cpp:249
+#: ../src/procproperties.cpp:101 ../src/proctable.cpp:334
 msgid "Security Context"
 msgstr "Security Context"
 
-#: ../src/procproperties.cpp:146 ../src/proctable.cpp:250
+#: ../src/procproperties.cpp:102 ../src/proctable.cpp:335
 msgid "Command Line"
 msgstr "บรรทัดคำสั่ง"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:147 ../src/proctable.cpp:253
+#: ../src/procproperties.cpp:103 ../src/proctable.cpp:338
 msgid "Waiting Channel"
 msgstr "ช่องที่คอย"
 
-#: ../src/procproperties.cpp:258
+#: ../src/procproperties.cpp:104 ../src/proctable.cpp:339
+msgid "Control Group"
+msgstr "กลุ่มที่ควบคุม"
+
+#: ../src/procproperties.cpp:214
 msgid "Process Properties"
 msgstr "คุณสมบัติของโพรเซส"
 
-#: ../src/procproperties.cpp:278
+#: ../src/procproperties.cpp:234
 #, c-format
 msgid "Properties of process \"%s\" (PID %u):"
 msgstr "คุณสมบัติของโพรเซส \"%s\" (PID %u):"
 
-#: ../src/proctable.cpp:244
+#: ../src/proctable.cpp:329
 #, no-c-format
 msgid "% CPU"
 msgstr "% ซีพียู"
 
-#: ../src/proctable.cpp:254
-msgid "Control Group"
-msgstr "กลุ่มที่ควบคุม"
-
-#: ../src/proctable.cpp:255
+#: ../src/proctable.cpp:340
 msgid "Unit"
 msgstr "ยูนิต"
 
-#: ../src/proctable.cpp:256
+#: ../src/proctable.cpp:341
 msgid "Session"
 msgstr "วาระ"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:259
+#: ../src/proctable.cpp:344
 msgid "Seat"
 msgstr "ที่นั่ง"
 
-#: ../src/proctable.cpp:260
+#: ../src/proctable.cpp:345
 msgid "Owner"
 msgstr "เจ้าของ"
 
-#: ../src/proctable.cpp:1078
-#, c-format
-msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
-msgstr "โหลดเฉลี่ยใน 1, 5, 15 นาทีที่ผ่านมา: %0.2f, %0.2f, %0.2f"
-
-#. Translators: The first string parameter is release version (codename),
-#. * the second one is the architecture, 32 or 64-bit
-#: ../src/sysinfo.cpp:78
-#, c-format
-msgid "Release %s %s"
-msgstr "รุ่น %s %s"
-
-#. translators: This is the type of architecture, for example:
-#. * "64-bit" or "32-bit"
-#: ../src/sysinfo.cpp:115
-#, c-format
-msgid "%d-bit"
-msgstr "%d บิต"
-
-#: ../src/sysinfo.cpp:734
-#, c-format
-msgid "Kernel %s"
-msgstr "เคอร์เนล %s"
-
-#: ../src/sysinfo.cpp:746
-#, c-format
-msgid "GNOME %s"
-msgstr "GNOME %s"
-
-#. hardware section
-#: ../src/sysinfo.cpp:759
-msgid "Hardware"
-msgstr "ฮาร์ดแวร์"
-
-#: ../src/sysinfo.cpp:764
-msgid "Memory:"
-msgstr "หน่วยความจำ:"
-
-#: ../src/sysinfo.cpp:769
-msgid "Processor:"
-msgstr "โพรเซสเซอร์:"
-
-#. disk space section
-#: ../src/sysinfo.cpp:778
-msgid "System Status"
-msgstr "สถานะระบบ"
-
-#: ../src/sysinfo.cpp:784
-msgid "Available disk space:"
-msgstr "เนื้อที่ว่างในดิสก์:"
-
-#: ../src/util.cpp:30
+#: ../src/util.cpp:27
 msgid "Running"
 msgstr "กำลังทำงาน"
 
-#: ../src/util.cpp:34
+#: ../src/util.cpp:31
 msgid "Stopped"
 msgstr "หยุดชั่วคราว"
 
-#: ../src/util.cpp:38
+#: ../src/util.cpp:35
 msgid "Zombie"
 msgstr "ผีดิบ"
 
-#: ../src/util.cpp:42
+#: ../src/util.cpp:39
 msgid "Uninterruptible"
 msgstr "ห้ามขัดจังหวะ"
 
-#: ../src/util.cpp:46
+#: ../src/util.cpp:43
 msgid "Sleeping"
 msgstr "หลับ"
 
 #. xgettext: weeks, days
-#: ../src/util.cpp:101
+#: ../src/util.cpp:98
 #, c-format
 msgid "%uw%ud"
 msgstr "%uw%ud"
 
 #. xgettext: days, hours (0 -> 23)
-#: ../src/util.cpp:105
+#: ../src/util.cpp:102
 #, c-format
 msgid "%ud%02uh"
 msgstr "%ud%02uh"
 
 #. xgettext: hours (0 -> 23), minutes, seconds
-#: ../src/util.cpp:109
+#: ../src/util.cpp:106
 #, c-format
 msgid "%u:%02u:%02u"
 msgstr "%u:%02u:%02u"
 
 #. xgettext: minutes, seconds, centiseconds
-#: ../src/util.cpp:112
+#: ../src/util.cpp:109
 #, c-format
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: ../src/util.cpp:166
+#: ../src/util.cpp:163
 #, c-format
 msgid "%.1f KiB"
 msgstr "%.1f KiB"
 
-#: ../src/util.cpp:167
+#: ../src/util.cpp:164
 #, c-format
 msgid "%.1f MiB"
 msgstr "%.1f MiB"
 
-#: ../src/util.cpp:168
+#: ../src/util.cpp:165
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
 
-#: ../src/util.cpp:169
+#: ../src/util.cpp:166
 #, c-format
 msgid "%.1f TiB"
 msgstr "%.1f TiB"
 
-#: ../src/util.cpp:170
+#: ../src/util.cpp:167
 #, c-format
 msgid "%.3g kbit"
 msgstr "%.3g kbit"
 
-#: ../src/util.cpp:171
+#: ../src/util.cpp:168
 #, c-format
 msgid "%.3g Mbit"
 msgstr "%.3g Mbit"
 
-#: ../src/util.cpp:172
+#: ../src/util.cpp:169
 #, c-format
 msgid "%.3g Gbit"
 msgstr "%.3g Gbit"
 
-#: ../src/util.cpp:173
+#: ../src/util.cpp:170
 #, c-format
 msgid "%.3g Tbit"
 msgstr "%.3g Tbit"
 
-#: ../src/util.cpp:188
+#: ../src/util.cpp:185
 #, c-format
 msgid "%u bit"
 msgid_plural "%u bits"
 msgstr[0] "%u บิต"
 
-#: ../src/util.cpp:189
+#: ../src/util.cpp:186
 #, c-format
 msgid "%u byte"
 msgid_plural "%u bytes"
 msgstr[0] "%u ไบต์"
 
+#: ../src/util.cpp:229
+msgid "Very High Priority"
+msgstr "ความสำคัญสูงมาก"
+
+#: ../src/util.cpp:231
+msgid "High Priority"
+msgstr "ความสำคัญสูง"
+
+#: ../src/util.cpp:233
+msgid "Normal Priority"
+msgstr "ความสำคัญปกติ"
+
+#: ../src/util.cpp:235
+msgid "Low Priority"
+msgstr "ความสำคัญต่ำ"
+
+#: ../src/util.cpp:237
+msgid "Very Low Priority"
+msgstr "ความสำคัญต่ำมาก"
+
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:585
+#: ../src/util.cpp:629
 #, c-format
 msgid "%s/s"
 msgstr "%s/วินาที"
+
+#~ msgid "System"
+#~ msgstr "ระบบ"
+
+#~ msgid "Sent"
+#~ msgstr "ส่งไป"
+
+#~ msgid "Show the System tab"
+#~ msgstr "แสดงแท็บ \"ระบบ\""
+
+#~ msgid "_Monitor"
+#~ msgstr "เ_ฝ้าสังเกต"
+
+#~ msgid "_Edit"
+#~ msgstr "แ_ก้ไข"
+
+#~ msgid "_View"
+#~ msgstr "มุ_มมอง"
+
+#~ msgid "Search for _Open Files"
+#~ msgstr "ค้นหาแฟ้มที่_เปิด"
+
+#~ msgid "Search for open files"
+#~ msgstr "ค้นหาแฟ้มที่เปิด"
+
+#~ msgid "Quit the program"
+#~ msgstr "ออกจากโปรแกรม"
+
+#~ msgid "_Stop Process"
+#~ msgstr "_หยุดโพรเซส"
+
+#~ msgid "Stop process"
+#~ msgstr "หยุดโพรเซส"
+
+#~ msgid "Continue process if stopped"
+#~ msgstr "ให้โพรเซสที่หยุดไว้ทำงานต่อ"
+
+#~ msgid "Force process to finish normally"
+#~ msgstr "บังคับให้โพรเซสจบการทำงานตามขั้นตอนปกติ"
+
+#~ msgid "Force process to finish immediately"
+#~ msgstr "บังคับให้โพรเซสจบการทำงานทันที"
+
+#~ msgid "Refresh the process list"
+#~ msgstr "ปรับข้อมูลรายการโพรเซส"
+
+#~ msgid "Open the memory maps associated with a process"
+#~ msgstr "ดูผังหน่วยความจำที่เชื่อมโยงกับโพรเซส"
+
+#~ msgid "View the files opened by a process"
+#~ msgstr "ดูแฟ้มที่โพรเซสเปิด"
+
+#~ msgid "View additional information about a process"
+#~ msgstr "ดูข้อมูลเพิ่มเติมเกี่ยวกับโพรเซส"
+
+#~ msgid "_Contents"
+#~ msgstr "เนื้อ_หา"
+
+#~ msgid "Open the manual"
+#~ msgstr "เปิดคู่มือการใช้งาน"
+
+#~ msgid "About this application"
+#~ msgstr "เกี่ยวกับโปรแกรมนี้"
+
+#~ msgid "Show parent/child relationship between processes"
+#~ msgstr "แสดงความสัมพันธ์แบบแม่-ลูกระหว่างโพรเซสต่างๆ"
+
+#~ msgid "Show active processes"
+#~ msgstr "แสดงโพรเซสที่กำลังทำงาน"
+
+#~ msgid "Show all processes"
+#~ msgstr "แสดงทุกโพรเซส"
+
+#~ msgid "Show only user-owned processes"
+#~ msgstr "แสดงเฉพาะโพรเซสของผู้ใช้"
+
+#~ msgid "Set process priority to very high"
+#~ msgstr "กำหนดให้โพรเซสมีลำดับความสำคัญสูงมาก"
+
+#~ msgid "Set process priority to high"
+#~ msgstr "กำหนดให้โพรเซสมีลำดับความสำคัญสูง"
+
+#~ msgid "Set process priority to normal"
+#~ msgstr "กำหนดให้โพรเซสมีลำดับความสำคัญปกติ"
+
+#~ msgid "Set process priority to low"
+#~ msgstr "กำหนดให้โพรเซสมีลำดับความสำคัญต่ำ"
+
+#~ msgid "Set process priority to very low"
+#~ msgstr "กำหนดให้โพรเซสมีลำดับความสำคัญต่ำมาก"
+
+#~ msgid "Set process priority manually"
+#~ msgstr "กำหนดลำดับความสำคัญของโพรเซสเป็นตัวเลข"
+
+#~ msgid "Main Window width"
+#~ msgstr "ความกว้างของหน้าต่างหลัก"
+
+#~ msgid "Main Window height"
+#~ msgstr "ความสูงของหน้าต่างหลัก"
+
+#~ msgid "Main Window X position"
+#~ msgstr "ตำแหน่ง X ของหน้าต่างหลัก"
+
+#~ msgid "Main Window Y position"
+#~ msgstr "ตำแหน่ง Y ของหน้าต่างหลัก"
+
+#~ msgid ""
+#~ "Determines which processes to show by default. 0 is All, 1 is user, and 2 "
+#~ "is active"
+#~ msgstr ""
+#~ "กำหนดชุดโพรเซสที่จะแสดงโดยปริยาย ค่า 0 หมายถึงทุกโพรเซส, 1 หมายถึงโพรเซสของผู้ใช้ "
+#~ "และ 2 หมายถึงโพรเซสที่กำลังทำงาน"
+
+#~ msgid ""
+#~ "0 for the System Info, 1 for the processes list, 2 for the resources and "
+#~ "3 for the disks list"
+#~ msgstr ""
+#~ "0 สำหรับข้อมูลระบบ, 1 สำหรับรายการโพรเซส, 2 สำหรับทรัพยากร และ 3 สำหรับรายการดิสก์"
+
+#~ msgid "Kill the selected process »%s« (PID: %u)?"
+#~ msgstr "จะฆ่าโพรเซส “%s” (PID: %u) ที่เลือกหรือไม่?"
+
+#~ msgid "End the selected process »%s« (PID: %u)?"
+#~ msgstr "จะจบโพรเซส “%s” (PID: %u) ที่เลือกหรือไม่?"
+
+#~ msgid ""
+#~ "Ending a process may destroy data, break the session or introduce a "
+#~ "security risk. Only unresponsive processes should be ended."
+#~ msgstr ""
+#~ "การจบโพรเซสอาจหมายถึงการสูญเสียข้อมูล การทำลายวาระที่กำลังทำงานอยู่ "
+#~ "หรือการสร้างช่องโหว่ในระบบรักษาความปลอดภัย "
+#~ "จึงควรสั่งจบเฉพาะโพรเซสที่ไม่มีการตอบสนองเท่านั้น"
+
+#~ msgid "(%s Priority)"
+#~ msgstr "(ความสำคัญ%s)"
+
+#~ msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
+#~ msgstr "โหลดเฉลี่ยใน 1, 5, 15 นาทีที่ผ่านมา: %0.2f, %0.2f, %0.2f"
+
+#~ msgid "Release %s %s"
+#~ msgstr "รุ่น %s %s"
+
+#~ msgid "%d-bit"
+#~ msgstr "%d บิต"
+
+#~ msgid "Kernel %s"
+#~ msgstr "เคอร์เนล %s"
+
+#~ msgid "Hardware"
+#~ msgstr "ฮาร์ดแวร์"
+
+#~ msgid "Memory:"
+#~ msgstr "หน่วยความจำ:"
+
+#~ msgid "Processor:"
+#~ msgstr "ตัวประมวลผล:"
+
+#~ msgid "System Status"
+#~ msgstr "สถานะระบบ"
+
+#~ msgid "Available disk space:"
+#~ msgstr "เนื้อที่ว่างในดิสก์:"
 
 #~ msgid "_Change Priority..."
 #~ msgstr "เ_ปลี่ยนลำดับความสำคัญ..."
@@ -1341,26 +1512,14 @@ msgstr "%s/วินาที"
 #~ msgid "Width of process 'estimated memory usage' column"
 #~ msgstr "ความกว้างของคอลัมน์ 'หน่วยความจำประเมิน' ของโพรเซส"
 
-#~ msgid "(High Priority)"
-#~ msgstr "(ความสำคัญสูง)"
-
-#~ msgid "(Normal Priority)"
-#~ msgstr "(ความสำคัญปกติ)"
-
-#~ msgid "(Very Low Priority)"
-#~ msgstr "(ความสำคัญต่ำมาก)"
-
 #~ msgid "Solaris mode"
 #~ msgstr "แบบ Solaris"
-
-#~ msgid "File system i_nformation shown in list:"
-#~ msgstr "_ข้อมูลของระบบแฟ้มที่แสดงในรายการ:"
 
 #~ msgid "Release %s"
 #~ msgstr "รุ่น %s"
 
 #~ msgid "Processor %d:"
-#~ msgstr "โพรเซสเซอร์ %d:"
+#~ msgstr "ตัวประมวลผล %d:"
 
 #~ msgid "Unknown CPU model"
 #~ msgstr "ไม่ทราบรุ่นซีพียู"
@@ -1370,15 +1529,6 @@ msgstr "%s/วินาที"
 
 #~ msgid "Default graph frame color"
 #~ msgstr "สีตารางโดยปริยายของกราฟ"
-
-#~ msgid "_Quit"
-#~ msgstr "_ออก"
-
-#~ msgid "Prefere_nces"
-#~ msgstr "ปรับแ_ต่ง"
-
-#~ msgid "_About"
-#~ msgstr "เ_กี่ยวกับ"
 
 #~ msgid "User memory:"
 #~ msgstr "หน่วยความจำที่ใช้:"
@@ -1439,17 +1589,11 @@ msgstr "%s/วินาที"
 #~ msgid "Show warning dialog when hiding processes"
 #~ msgstr "เตือนก่อนซ่อนโพรเซส"
 
-#~ msgid "_Hide Process"
-#~ msgstr "_ซ่อนโพรเซส"
-
 #~ msgid "_Hidden Processes"
 #~ msgstr "โพรเซสซ่อ_น"
 
 #~ msgid "Open the list of currently hidden processes"
 #~ msgstr "แสดงรายการโพรเซสที่คุณซ่อนไว้"
-
-#~ msgid "Hide the selected process?"
-#~ msgstr "จะซ่อนโพรเซสที่เลือกหรือไม่?"
 
 #~ msgid ""
 #~ "Hidden processes are no longer visible in the process list. You can re-"
@@ -1644,9 +1788,6 @@ msgstr "%s/วินาที"
 #~ msgid "Force a process to finish."
 #~ msgstr "บังคับให้โพรเซสจบการทำงาน"
 
-#~ msgid "Force a process to finish now."
-#~ msgstr "บังคับให้โพรเซสจบการทำงานทันที"
-
 #~ msgid "Display a tree showing process dependencies"
 #~ msgstr "แสดงโครงสร้างต้นไม้ของโพรเซสที่ขึ้นต่อกัน"
 
@@ -1654,25 +1795,16 @@ msgstr "%s/วินาที"
 #~ msgstr "แสดงเธรด (สายการทำงานย่อยในโพรเซส)"
 
 #~ msgid "Are you sure you want to hide this process?"
-#~ msgstr "แน่ใจหรือ ว่าต้องการซ่อนโพรเซสนี้?"
+#~ msgstr "คุณแน่ใจหรือไม่ ว่าต้องการซ่อนโพรเซสนี้?"
 
 #~ msgid "_Show this dialog next time"
 #~ msgstr "แ_สดงกล่องโต้ตอบนี้คราวหน้า"
 
-#~ msgid "Are you sure you want to kill this process?"
-#~ msgstr "แน่ใจหรือ ว่าจะฆ่าโพรเซสนี้?"
-
 #~ msgid "If you kill a process, unsaved data will be lost."
 #~ msgstr "ถ้าคุณฆ่าโพรเซส ข้อมูลที่ยังไม่จัดเก็บอาจสูญหายได้"
 
-#~ msgid "Are you sure you want to end this process?"
-#~ msgstr "แน่ใจหรือ ว่าคุณต้องการจบโพรเซสนี้?"
-
 #~ msgid "If you end a process, unsaved data will be lost."
 #~ msgstr "ถ้าคุณจบโพรเซส ข้อมูลที่ยังไม่จัดเก็บอาจสูญหายได้"
-
-#~ msgid "Kill Process"
-#~ msgstr "ฆ่าโพรเซส"
 
 #~ msgid "End Process"
 #~ msgstr "จบโพรเซส"
