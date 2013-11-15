@@ -7,17 +7,25 @@
 
 gboolean gsm_pkexec_create_root_password_dialog(const char *command)
 {
+    gboolean ret = FALSE;
     gint *exit_status = NULL;
     GError *error = NULL;
-    if (!g_spawn_command_line_sync( g_strdup_printf("pkexec %s/gsm-%s", GSM_LIBEXEC_DIR, command), NULL, NULL, exit_status, &error)) {
+    gchar *command_line = g_strdup_printf("pkexec %s/gsm-%s",
+                                          GSM_LIBEXEC_DIR, command);
+    if (!g_spawn_command_line_sync(command_line, NULL, NULL, exit_status, &error)) {
         g_critical("Could not run pkexec(\"%s\") : %s\n",
                    command, error->message);
         g_error_free(error);
-        return FALSE;
+    }
+    else
+    {
+        g_message("pkexec did fine\n");
+        ret = TRUE;
     }
 
-    g_message("pkexec did fine\n");
-    return TRUE;
+    g_free (command_line);
+
+    return ret;
 }
 
 
