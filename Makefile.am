@@ -77,6 +77,10 @@ dist-changelog:
 dist_noinst_DATA = \
 	ChangeLog.pre-git
 
+check-local: $(appdata_DATA) $(Applications_DATA) \
+             $(APPDATA_VALIDATE) $(appdata_DATA) \
+             $(DESKTOP_FILE_VALIDATE) $(Applications_DATA)
+
 DISTCLEANFILES = \
 	intltool-extract              \
 	intltool-merge                \
