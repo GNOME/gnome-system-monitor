@@ -234,14 +234,14 @@ create_preferences_dialog (GsmApplication *app)
     spin_button = GTK_WIDGET (gtk_builder_get_object (builder, "processes_interval_spinner"));
 
     update = (gfloat) app->config.update_interval;
-    adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0,
-                                                      MIN_UPDATE_INTERVAL / 1000,
-                                                      MAX_UPDATE_INTERVAL / 1000,
-                                                      0.25,
-                                                      1.0,
-                                                      0);
-
-    gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON(spin_button), adjustment);
+    adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON(spin_button));
+    gtk_adjustment_configure (adjustment,
+                              update / 1000.0,
+                              MIN_UPDATE_INTERVAL / 1000,
+                              MAX_UPDATE_INTERVAL / 1000,
+                              0.25,
+                              1.0,
+                              0);
     g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
                       G_CALLBACK (SBU::callback), &interval_updater);
 
@@ -266,10 +266,10 @@ create_preferences_dialog (GsmApplication *app)
     create_field_page (builder, app->tree, "proctree");
 
     update = (gfloat) app->config.graph_update_interval;
-    adjustment = (GtkAdjustment *) gtk_adjustment_new(update / 1000.0, 0.25,
-                                                      100.0, 0.25, 1.0, 0);
-    spin_button = GTK_WIDGET (gtk_builder_get_object (builder, "resources_interval_spinner"));
-    gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON(spin_button), adjustment);
+    spin_button = GTK_WIDGET (gtk_builder_get_object (builder, "resources_interval_spinner"));                                                 
+    adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON(spin_button));
+    gtk_adjustment_configure (adjustment, update / 1000.0, 0.25,
+                              100.0, 0.25, 1.0, 0);
     g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
                       G_CALLBACK(SBU::callback),
                       &graph_interval_updater);
@@ -280,10 +280,10 @@ create_preferences_dialog (GsmApplication *app)
                     G_SETTINGS_BIND_DEFAULT);
 
     update = (gfloat) app->config.disks_update_interval;
-    adjustment = (GtkAdjustment *) gtk_adjustment_new (update / 1000.0, 1.0,
-                                                       100.0, 1.0, 1.0, 0);
     spin_button = GTK_WIDGET (gtk_builder_get_object (builder, "devices_interval_spinner"));
-    gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON(spin_button), adjustment);
+    adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON(spin_button));
+    gtk_adjustment_configure (adjustment, update / 1000.0, 1.0,
+                              100.0, 1.0, 1.0, 0);
     g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
                       G_CALLBACK(SBU::callback),
                       &disks_interval_updater);
