@@ -73,7 +73,7 @@ gsm_tree_view_save_state (GsmTreeView *tree_view)
         }
 
         g_settings_set_value (priv->settings, "columns-order",
-                              g_variant_new ("ai", builder));
+                              g_variant_builder_end (&builder));
 
         g_list_free (columns);
     }
