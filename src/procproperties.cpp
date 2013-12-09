@@ -98,10 +98,10 @@ fill_proc_properties (GtkWidget *tree, ProcInfo *info)
         { N_("Nice"), g_strdup_printf("%d", info->nice)},
         { N_("Priority"), g_strdup_printf("%s", procman::get_nice_level(info->nice)) },
         { N_("ID"), g_strdup_printf("%d", info->pid)},
-        { N_("Security Context"), g_strdup_printf("%s", info->security_context)},
+        { N_("Security Context"), info->security_context?g_strdup_printf("%s", info->security_context):g_strdup(_("N/A"))},
         { N_("Command Line"), g_strdup_printf("%s", info->arguments)},
         { N_("Waiting Channel"), g_strdup_printf("%s", info->wchan)},
-        { N_("Control Group"), info->cgroup_name?g_strdup_printf("%s", info->cgroup_name):g_strdup("")},
+        { N_("Control Group"), info->cgroup_name?g_strdup_printf("%s", info->cgroup_name):g_strdup(_("N/A"))},
         { NULL, NULL}
     };
 
