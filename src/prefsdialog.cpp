@@ -9,6 +9,7 @@
 
 #include "cgroups.h"
 #include "proctable.h"
+#include "selinux.h"
 #include "settings-keys.h"
 #include "util.h"
 
@@ -182,6 +183,8 @@ create_field_page(GtkBuilder* builder, GtkWidget *tree, const gchar *widgetname)
 
         column_id = gtk_tree_view_column_get_sort_column_id(column);
         if ((column_id == COL_CGROUP) && (!cgroups_enabled()))
+            continue;
+        if ((column_id == COL_SECURITYCONTEXT) && (!can_show_security_context_column ()))
             continue;
 
         if ((column_id == COL_UNIT ||
