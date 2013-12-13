@@ -575,6 +575,7 @@ create_main_window (GsmApplication *app)
     GtkWidget *stack;
     GtkWidget *process_menu_button;
     GMenuModel *process_menu_model;
+    GtkWidget *header_box;
 
     int width, height, xpos, ypos;
 
@@ -602,9 +603,18 @@ create_main_window (GsmApplication *app)
     gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (process_menu_button), process_menu_model);
 
     app->end_process_button = GTK_WIDGET (gtk_builder_get_object (builder, "end_process_button"));
-
-    app->search_button = GTK_WIDGET (gtk_builder_get_object (builder, "search_button"));
-
+    header_box = GTK_WIDGET (gtk_builder_get_object(builder, "header_box"));
+    GtkSettings *gtk_settings = gtk_settings_get_default ();
+    GValue alternative_ui = G_VALUE_INIT;
+    g_value_init  (&alternative_ui, G_TYPE_BOOLEAN);
+    g_object_get_property (G_OBJECT (gtk_settings), "gtk-shell-shows-menubar", &alternative_ui);
+    if (!g_value_get_boolean (&alternative_ui)) {
+        app->search_button = GTK_WIDGET (gtk_builder_get_object (builder, "search_button"));
+        //gtk_widget_set_visible (header_box, FALSE);
+    } else {
+        app->search_button = GTK_WIDGET (gtk_builder_get_object (builder, "search_button2"));
+    }
+    
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL },
         { "search", on_activate_toggle, NULL, "false", NULL },
