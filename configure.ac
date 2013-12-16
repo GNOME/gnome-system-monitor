@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.63])
 
 AC_INIT([gnome-system-monitor],
-        [3.11.2],
+        [3.11.3],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor],
         [gnome-system-monitor])
 
