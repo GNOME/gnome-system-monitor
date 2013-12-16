@@ -232,13 +232,6 @@ load_graph_draw (GtkWidget *widget,
 
     window = gtk_widget_get_window (graph->disp);
 
-    if (graph->background == NULL) {
-        draw_background(graph);
-        cairo_pattern_t * pattern = cairo_pattern_create_for_surface (graph->background);
-        gdk_window_set_background_pattern (window, pattern);
-        cairo_pattern_destroy (pattern);
-    }
-
     /* Number of pixels wide for one graph point */
     sample_width = (float)(graph->draw_width - graph->rmargin - graph->indent) / (float)LoadGraph::NUM_POINTS;
     /* General offset */
@@ -251,6 +244,15 @@ load_graph_draw (GtkWidget *widget,
     cairo_t* cr;
 
     cr = gdk_cairo_create (window);
+
+    if (graph->background == NULL) {
+        draw_background(graph);
+    }
+
+    cairo_pattern_t * pattern = cairo_pattern_create_for_surface (graph->background);
+    cairo_set_source (cr, pattern);
+    cairo_paint (cr);
+    cairo_pattern_destroy (pattern);
 
     cairo_set_line_width (cr, 1);
     cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
