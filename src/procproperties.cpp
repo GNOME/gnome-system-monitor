@@ -268,3 +268,34 @@ create_procproperties_dialog (GsmApplication *app)
     gtk_tree_selection_selected_foreach (app->selection, create_single_procproperties_dialog,
                                          app);
 }
+
+void create_simple_procproperties_dialog (GsmApplication *app, ProcInfo* info) 
+{
+  GtkWidget *box, *listbox, *headerbar, *cancel, *kill;
+  cancel = gtk_button_new_with_mnemonic (_("_Cancel"));
+  kill = gtk_button_new_with_mnemonic (_("_Kill"));
+  gtk_style_context_add_class (gtk_widget_get_style_context (kill), "destructive-action");
+  
+  
+  headerbar = gtk_header_bar_new ();
+  gtk_header_bar_set_title (GTK_HEADER_BAR (headerbar), info->name);
+  gtk_header_bar_pack_start (GTK_HEADER_BAR (headerbar), cancel);
+  gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), kill);
+
+  GtkWidget *window = gtk_dialog_new ();
+  gtk_window_set_application (GTK_WINDOW (window), app->gobj());
+  gtk_window_set_modal (GTK_WINDOW (window), TRUE);
+  //gtk_window_set_transient_for (GTK_WINDOW (window), GTK_WINDOW (app->main_window));
+  gtk_window_set_title (GTK_WINDOW (window), info->name);
+  //gtk_widget_set_size_request (window, 400, 300);
+  gtk_window_set_resizable (GTK_WINDOW (window), FALSE);
+  gtk_window_set_titlebar (GTK_WINDOW (window), headerbar);
+  
+  //box = gtk_box_new ( GTK_ORIENTATION_VERTICAL, 6);
+  //gtk_container_add (GTK_CONTAINER (window), box);
+  
+  //gtk_box_pack_start (GTK_BOX (box), headerbar, FALSE, FALSE, 0);
+  gtk_widget_show_all (window);
+  gtk_dialog_run (GTK_DIALOG (window));
+  
+}

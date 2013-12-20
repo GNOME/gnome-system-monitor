@@ -62,6 +62,7 @@
 #include "settings-keys.h"
 #include "cgroups.h"
 #include "treeview.h"
+#include "procproperties.h"
 
 ProcInfo::UserMap ProcInfo::users;
 ProcInfo::List ProcInfo::all;
@@ -305,6 +306,23 @@ cb_show_whose_processes_changed (GSettings *settings, const gchar *key, gpointer
 
     proctable_clear_tree (app);
     proctable_update (app);
+}
+
+static void 
+cb_proctree_double_clicked (GtkTreeView*        tree_view, 
+                            GtkTreePath*        path, 
+                            GtkTreeViewColumn*  column, 
+                            GsmApplication*     app) 
+{
+  GtkTreeIter iter;
+  GtkTreeModel *model = gtk_tree_view_get_model (tree_view);
+  if (gtk_tree_model_get_iter (model, &iter, path)) {
+    gchar *name;
+    gpointer info;
+    gtk_tree_model_get (model, &iter, COL_NAME, &name, COL_POINTER, &info, -1);
+    create_simple_procproperties_dialog (app, (ProcInfo*)info);
+    g_free (name);
+  }
 }
 
 GtkWidget *
@@ -593,6 +611,9 @@ proctable_new (GsmApplication * const app)
     g_signal_connect (G_OBJECT (model_sort), "sort-column-changed",
                       G_CALLBACK (cb_save_tree_state), app);
 
+    g_signal_connect (G_OBJECT (proctree), "row-activated",
+                      G_CALLBACK (cb_proctree_double_clicked), app);
+                      
     g_signal_connect (app->settings, "changed::" GSM_SETTING_SHOW_DEPENDENCIES,
                       G_CALLBACK (cb_show_dependencies_changed), app);
 

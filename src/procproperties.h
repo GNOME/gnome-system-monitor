@@ -27,5 +27,6 @@
 #include "application.h"
 
 void create_procproperties_dialog (GsmApplication *app);
+void create_simple_procproperties_dialog (GsmApplication *app, ProcInfo* info);
 
 #endif /* _GSM_PROCPROPERTIES_H_ */
