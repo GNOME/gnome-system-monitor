@@ -19,7 +19,7 @@
 void LoadGraph::clear_background()
 {
     if (background) {
-        cairo_surface_destroy (background);
+        cairo_pattern_destroy (background);
         background = NULL;
     }
 }
@@ -62,6 +62,7 @@ void draw_background(LoadGraph *graph) {
     PangoLayout* layout;
     PangoFontDescription* font_desc;
     PangoRectangle extents;
+    cairo_surface_t *surface;
     GdkRGBA fg;
 
     num_bars = graph->num_bars();
@@ -71,11 +72,11 @@ void draw_background(LoadGraph *graph) {
     graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH ;
 
     gtk_widget_get_allocation (graph->disp, &allocation);
-    graph->background = gdk_window_create_similar_surface (gtk_widget_get_window (graph->disp),
+    surface = gdk_window_create_similar_surface (gtk_widget_get_window (graph->disp),
                                                            CAIRO_CONTENT_COLOR_ALPHA,
                                                            allocation.width,
                                                            allocation.height);
-    cr = cairo_create (graph->background);
+    cr = cairo_create (surface);
 
     GtkStyleContext *context = gtk_widget_get_style_context (GsmApplication::get()->stack);
     
@@ -173,6 +174,8 @@ void draw_background(LoadGraph *graph) {
     g_object_unref(layout);
     cairo_stroke (cr);
     cairo_destroy (cr);
+    graph->background = cairo_pattern_create_for_surface (surface);
+    cairo_surface_destroy (surface);
 }
 
 /* Redraws the backing buffer for the load graph and updates the window */
@@ -248,11 +251,8 @@ load_graph_draw (GtkWidget *widget,
     if (graph->background == NULL) {
         draw_background(graph);
     }
-
-    cairo_pattern_t * pattern = cairo_pattern_create_for_surface (graph->background);
-    cairo_set_source (cr, pattern);
+    cairo_set_source (cr, graph->background);
     cairo_paint (cr);
-    cairo_pattern_destroy (pattern);
 
     cairo_set_line_width (cr, 1);
     cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
