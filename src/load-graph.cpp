@@ -19,7 +19,7 @@
 void LoadGraph::clear_background()
 {
     if (background) {
-        cairo_pattern_destroy (background);
+        cairo_surface_destroy (background);
         background = NULL;
     }
 }
@@ -174,8 +174,7 @@ void draw_background(LoadGraph *graph) {
     g_object_unref(layout);
     cairo_stroke (cr);
     cairo_destroy (cr);
-    graph->background = cairo_pattern_create_for_surface (surface);
-    cairo_surface_destroy (surface);
+    graph->background = surface;
 }
 
 /* Redraws the backing buffer for the load graph and updates the window */
@@ -245,7 +244,7 @@ load_graph_draw (GtkWidget *widget,
     if (graph->background == NULL) {
         draw_background(graph);
     }
-    cairo_set_source (cr, graph->background);
+    cairo_set_source_surface (cr, graph->background, 0, 0);
     cairo_paint (cr);
 
     cairo_set_line_width (cr, 1);

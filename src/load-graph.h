@@ -64,7 +64,7 @@ struct LoadGraph
     GtkWidget *main_widget;
     GtkWidget *disp;
 
-    cairo_pattern_t *background;
+    cairo_surface_t *background;
 
     guint timer_index;
 
