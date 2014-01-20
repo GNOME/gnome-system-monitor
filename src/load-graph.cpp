@@ -276,8 +276,6 @@ load_graph_draw (GtkWidget *widget,
         }
         if (drawStacked) {
             cairo_rel_line_to (cr, 0, graph->real_draw_height + 3.5f);
-            //cairo_stroke_preserve(cr);
-            //cairo_close_path(cr);
             cairo_fill(cr);
         } else {
             cairo_stroke (cr);
@@ -322,7 +320,6 @@ get_load (LoadGraph *graph)
     // that value has no meaning, we just want all the
     // graphs to be aligned, so the CPU graph needs to start
     // immediately
-    bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get()->config.draw_stacked;
 
     for (i = 0; i < graph->n; i++) {
         float load;
@@ -334,11 +331,9 @@ get_load (LoadGraph *graph)
 
         load = used / MAX(total, 1.0f);
         graph->data[0][i] = load;
-        if (drawStacked) {
-            graph->data[0][i] /= graph->n;
-            if (i > 0) {
-                graph->data[0][i] += graph->data[0][i-1];
-            }
+        graph->data[0][i] /= graph->n;
+        if (i > 0) {
+            graph->data[0][i] += graph->data[0][i-1];
         }
 
         /* Update label */

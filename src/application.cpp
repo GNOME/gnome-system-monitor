@@ -35,7 +35,6 @@ cb_draw_stacked_changed (GSettings *settings, const gchar *key, gpointer data)
 
     app->config.draw_stacked = g_settings_get_boolean(settings, key);
     app->cpu_graph->clear_background();
-    load_graph_reset(app->cpu_graph);
 }
 
 
