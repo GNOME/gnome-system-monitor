@@ -259,9 +259,9 @@ load_graph_draw (GtkWidget *widget,
     for (j = graph->n-1; j >= 0; j--) {
         gdk_cairo_set_source_rgba (cr, &(graph->colors [j]));
         if (drawStacked) {
-            cairo_move_to (cr, x_offset, graph->real_draw_height);
+            cairo_move_to (cr, x_offset, graph->real_draw_height + 3.5f);
         } else {
-            cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height);
+            cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height + 3.5f);
         }
         for (i = 1; i < LoadGraph::NUM_POINTS; ++i) {
             if (graph->data[i][j] == -1.0f)
@@ -275,7 +275,9 @@ load_graph_draw (GtkWidget *widget,
                             (1.0f - graph->data[i][j]) * graph->real_draw_height + 3.5f);
         }
         if (drawStacked) {
-            cairo_rel_line_to (cr, x_offset - (LoadGraph::NUM_POINTS * graph->graph_delx), graph->real_draw_height);
+            cairo_rel_line_to (cr, 0, graph->real_draw_height + 3.5f);
+            //cairo_stroke_preserve(cr);
+            //cairo_close_path(cr);
             cairo_fill(cr);
         } else {
             cairo_stroke (cr);
