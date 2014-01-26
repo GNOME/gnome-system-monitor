@@ -3,27 +3,29 @@
       id="fs-device">
 
   <info>
-    <revision version="0.1" date="2011-08-19" status="review"/>
+    <revision version="0.1" date="2014-01-26" status="review"/>
     <link type="guide" xref="index" group="filesystems" />
+    <link type="seealso" xref="fs-info" />
+    
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+    
     <credit type="author copyright">
       <name>Phil Bull</name>
       <email>philbull@gmail.com</email>
-      <years>2011</years>
-    </credit>
-    <credit type="author copyright">
-      <name>Kelly Sinnott</name>
-      <email>ksinnott5ht@gmail.com</email>
-      <years>2011</years>
+      <years>2014</years>
     </credit>
 
     <desc>Each device corresponds to a <em>partition</em> on a hard disk.</desc>
   </info>
 
-  <title>What are the different devices in the File System tab?</title>
+  <title>What are the different devices in the File Systems tab?</title>
 
-    <p>The <gui>File Systems</gui> tab of <app>System Monitor</app> displays a list of the <em>disk devices</em> on your computer. The path given in the column <gui>Device</gui> is an interface assigned by your computer during start-up to a given <em>partition</em> of the disk it exists on. The term "partition" describes one or more physical areas of storage on a single physical drive. The computer makes these partitions accessible to the user via an assigned <em>file system</em> in a process referred to as <em>mounting</em>. The <gui>Device</gui> column shows the automatically assigned interface (which may or may not be mounted) while the <gui>Directory</gui> column shows the mounted location. You can double-click the device to open up the mounted directory in <app>Nautilus</app>.</p>
-    <p>The identifiers assigned by the computer (in the <gui>Device</gui> column) reflect the physical location of each device. <cmd>/dev/sda</cmd> is the first disk. <cmd>/dev/sda1</cmd> is the first partition on the first disk. <cmd>/dev/sdb2</cmd> is the second partition on the second disk, and so on. The final letter describes the disk, and the number describes the partition on that disk.</p>
-
-    <note><p>To learn more about disk setup, look for the <app>Disk Utility</app> application in the <gui>Activities</gui> menu. This tool provides comprehensive information about your computer's drives and their partitions.</p></note>
+  <p>Each device listed under the <gui>File Systems</gui> tab is a storage disk (like a hard drive or USB memory stick), or a disk partition. For each device, you can see what its total capacity is, how much of its capacity has been used, and some technical information about what <link xref="fs-info">type of filesystem it is</link> and <link xref="fs-info">where it is "mounted"</link>.</p>
+  
+  <p>The disk space on a single physical hard disk can be split up into multiple chunks, called <em>partitions</em>, each of which can be used as if it were a separate disk. If your hard disk has been partitioned (perhaps by you or the computer manufacturer), each partition will be listed separately in the File Systems list.</p>
+  
+  <note>
+    <p>You can manage disks and partitions and see more detailed disk information with the <app>Disk Utility</app> application.</p>
+  </note>
 
 </page>

@@ -2,43 +2,31 @@
       type="topic" style="task"
       id="process-kill">
   <info>
-    <revision version="0.1" date="2011-08-28" status="review"/>
+    <revision version="0.1" date="2014-01-25" status="review"/>
     <link type="guide" xref="index" group="processes-tasks" />
-
+    <link type="seealso" xref="process-end-kill" />
+    
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+    
     <credit type="author copyright">
       <name>Phil Bull</name>
       <email>philbull@gmail.com</email>
-      <years>2011</years>
-    </credit>
-    <credit type="author copyright">
-      <name>Kelly Sinnott</name>
-      <email>ksinnott5ht@gmail.com</email>
-      <years>2011</years>
+      <years>2014</years>
     </credit>
 
-    <desc>If an application won't close normally or stops responding, you might want to "kill" it.</desc>
+    <desc>If a program stops working or freezes, you can force it to close.</desc>
   </info>
 
   <title>Kill (close) a program immediately</title>
 
-  <comment>
-    <cite date="2011-06-18" href="mailto:philbull@gmail.com">Phil Bull</cite>
-    <p>Explain how to kill a program, and why you might want to do that.</p>
-  </comment>
-
-  <p>If a program has frozen and it will not allow you to close it, you may want to end or kill that program using <app>System Monitor</app>.</p>
-
+  <p>If a program stops working or freezes, you can force it to close ("kill" it) using <app>System Monitor</app>:</p>
+  
   <steps>
-    <item><p>Click the <gui>Processes</gui> tab.</p></item>
-    <item><p>Find the process you would like to kill.</p></item>
-    <item><p>Press the <gui>End Process</gui> button in the lower right of the window.</p></item>
+    <item><p>Go to the <gui>Processes</gui> tab and click to select the process you want to kill.</p></item>
+    <item><p>Click <gui>End Process</gui>.</p></item>
+    <item><p>If the process does not close after a few seconds, right-click it and select <gui>Kill</gui> from the menu that appears.</p></item>
   </steps>
-
-<p>If the <gui>End Process</gui> button fails the stop the program, you may wish to kill the process as follows:</p>
-  <steps>
-    <item><p>Right click on the process you would like to kill.</p></item>
-    <item><p>Select <gui>Kill Process</gui> from the menu.</p></item>
-  </steps>
-
-<note><p><gui>Kill Process</gui> forces the process to close immediately, without bringing the program to a natural end. It should be used only if <gui>End Process</gui> does not work.</p></note>
+  
+  <p>Using <gui>End Process</gui> tries to close the process properly, giving it time to save files and so on, whereas <gui>Kill</gui> forces it to close straight away. You should always try <gui>End Process</gui> first.</p>
+  
 </page>

@@ -2,18 +2,15 @@
       type="topic" style="task"
       id="process-files">
   <info>
-    <revision version="0.1" date="2011-08-28" status="review"/>
+    <revision version="0.1" date="2014-01-25" status="review"/>
     <link type="guide" xref="index" group="processes-tasks" />
-
+    
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+    
     <credit type="author copyright">
       <name>Phil Bull</name>
       <email>philbull@gmail.com</email>
-      <years>2011</years>
-    </credit>
-    <credit type="author copyright">
-      <name>Kelly Sinnott</name>
-      <email>ksinnott5ht@gmail.com</email>
-      <years>2011</years>
+      <years>2014</years>
     </credit>
 
     <desc>View files being accessed by processes.</desc>
@@ -21,18 +18,14 @@
 
   <title>List which files a process has open</title>
 
-  <comment>
-    <cite date="2011-06-18" href="mailto:philbull@gmail.com">Phil Bull</cite>
-    <p>Explain how to show which files a process has open, and what it means for a process to have a file open.</p>
-  </comment>
-
-  <p>In order to function, processes may need access to certain files. To view which 
-files a process is using, you can do the following: </p>
-
+  <p>Processes sometimes need to keep files open. They could be files that you are viewing or editing, or temporary or system files that the process needs to work properly.</p>
+  
+  <p>To see which files a process has open:</p>
   <steps>
-    <item><p>Click the <gui>Processes</gui> tab in <app>System Monitor</app>.</p></item>
-    <item><p>Right-click on the process you would like to view.</p></item>
-    <item><p>Select <gui>Open Files</gui> from the drop-down menu.</p></item>
+    <item><p>Find the process in the <gui>Processes</gui> tab and click once to select it.</p></item>
+    <item><p>Right-click the process and select <gui>Open Files</gui>.</p></item>
   </steps>
+  
+  <p>In the list of open files that appears, you might find some special files called <em>sockets</em>. These are actually a way for processes to communicate with one another, and are not normal files that you can view or edit.</p>
 
 </page>

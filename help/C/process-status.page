@@ -2,18 +2,17 @@
       type="topic" style="task"
       id="process-status">
   <info>
-    <revision version="0.1" date="2011-08-28" status="review"/>
+    <revision version="0.1" date="2014-01-26" status="review"/>
     <link type="guide" xref="index" group="processes-info" />
-
+    <link type="seealso" xref="process-kill" />
+    <link type="seealso" xref="cpu-check" />
+    
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+    
     <credit type="author copyright">
       <name>Phil Bull</name>
       <email>philbull@gmail.com</email>
-      <years>2011</years>
-    </credit>
-    <credit type="author copyright">
-      <name>Kelly Sinnott</name>
-      <email>ksinnott5ht@gmail.com</email>
-      <years>2011</years>
+      <years>2014</years>
     </credit>
 
     <desc>The status of a process can be running, sleeping, stopped, or zombie.</desc>
@@ -21,34 +20,33 @@
 
   <title>What do the process statuses mean?</title>
 
-  <comment>
-    <cite date="2011-06-18" href="mailto:philbull@gmail.com">Phil Bull</cite>
-    <p>Briefly explain the different statuses a process can have.</p>
-  </comment>
+  <p>The status of a process tells you whether it is currently doing something or not. There are four statuses that a process can have:</p>
 
-  <p>The <gui>Status</gui> column for a process provides information on the state of the process. The possible states for a process are:</p>
-
-<table shade="rows">
+  <table shade="rows">
   <tr>
-	<td><p>Running</p></td>
-	<td><p>A process that is <gui>Running</gui> is actively executing its code. For example, when your browser is open and accessing a webpage, the browser process is running. </p></td>
-
+    <td><p>Running</p></td>
+    <td><p>Processes that are currently doing something (for example, a web browser loading a web page). Running processes are those that are actively using the processor (CPU).</p></td>
   </tr>
   <tr>
-	<td><p>Sleeping</p></td>
-	<td><p>If a process is <gui>Sleeping</gui>, this means that it is not being executed and is currently waiting for an event from the user or the system to wake it up. This allows the process to be ready to execute without using up resources.</p></td>
-	</tr>
-  <tr>
-	<td><p>Stopped</p></td>
-	<td><p>A process can be stopped manually by right-clicking it and selecting <gui>Stop Process</gui>. This puts it in a state similar to sleep. It can be resumed with <gui>Continue Process</gui>.</p>
-	</td>
+    <td><p>Sleeping</p></td>
+    <td><p>Processes that are not currently doing anything (for example, because they are waiting for something to happen). They don't use any of the processor's time, but still take up memory. If they need to do something, they will "wake up" and change their status to <em>running</em>.</p></td>
   </tr>
-
   <tr>
-	<td><p>Zombie</p></td>
-	<td><p>A Zombie process has been killed or otherwise has stopped running. It can't be killed because the process can no longer receive the "kill signal." All that is left is for the system to clean up the remnants of the process in memory.  </p>
-	</td>
-   </tr>
-</table>
+    <td><p>Stopped</p></td>
+    <td>
+      <p>A <em>stopped</em> process is one that has been put to sleep manually. You might want to stop a process temporarily if it is using too much processing time, for example.</p>
+      <p>To do this, click the process in the <gui>Processes</gui> tab, then right-click it and select <gui>Stop</gui> from the menu that appears. (You can wake it up again by clicking <gui>Continue</gui> on the same menu.)</p>
+    </td>
+  </tr>
+  <tr>
+    <td><p>Zombie</p></td>
+    <td>
+      <p>A zombie process is one that has finished running and will never start again, but is being kept in the list of processes for some reason. This usually happens because it was started by another program that needs to know if it finished successfully or not, but that hasn't checked on it yet.</p>
+      <p>Zombies do not use any memory or processing time, and will eventually go away. You do not need to do anything to get rid of them.</p>
+    </td>
+  </tr>
+  </table>
+
+  <p>The majority of processes will either be running or sleeping.</p>
 
 </page>
