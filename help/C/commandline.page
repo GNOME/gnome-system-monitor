@@ -2,49 +2,66 @@
       type="topic" style="task"
       id="commandline">
   <info>
-    <revision version="0.1" date="2011-08-19" status="review"/>
+    <revision version="0.2" pkgversion="3.11" date="2014-01-26" status="review"/>
     <link type="guide" xref="index" group="other" />
 
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+
     <credit type="author copyright">
-      <name>Kelly Sinnott</name>
-      <email>ksinnott5ht@gmail.com</email>
+      <name>Phil Bull</name>
+      <email>philbull@gmail.com</email>
       <years>2011</years>
     </credit>
+    <credit type="author copyright">
+      <name>Michael Hill</name>
+      <email>mdhillca@gmail.com</email>
+      <years>2014</years>
+    </credit>
 
-    <desc>All of the information in the System Monitor can also be found using command line tools.</desc>
+    <desc>Information in System Monitor can also be found using command line
+    tools.</desc>
   </info>
 
   <title>Get the same information from the command line</title>
 
-    <comment>
+  <comment>
     <cite date="2011-06-18" href="mailto:philbull@gmail.com">Phil Bull</cite>
-    <p>Briefly list a few useful command line tools which can provide some of the same information as System Monitor. Don't go into too much detail.</p>
+    <p>Briefly list a few useful command line tools which can provide some of
+    the same information as System Monitor. Don't go into too much detail.</p>
   </comment>
 
-
-  <p>If you would like to access the information provided by the System Monitor from the terminal, there are several handy command-line tools available.</p>
+  <p>Most of the information displayed by System Monitor can also be obtained
+  using these command line tools.</p>
 
 <table shade="rows">
-  <tr>
-	<td><p>System information</p></td>
-	<td><p>The command <cmd>uname -a</cmd> will give you information about your system including your machine's hostname, operating system, and processor.</p></td>
-
-  </tr>
-  <tr>
-	<td><p>Running processes and other live system data</p></td>
-	<td><p>The tool <cmd>top</cmd> displays a continually updating view of current processes, their CPU and memory usage, and other details.</p></td>
-	</tr>
-  <tr>
-	<td><p>Disk space</p></td>
-	<td><p>To review available disk space, mount location, and file type of mounted file systems, issue the command <cmd>df -h</cmd>.</p>
-	</td>
-  </tr>
 
   <tr>
-	<td><p>Network information</p></td>
-	<td><p>The command <cmd>iftop</cmd> works like <cmd>top</cmd>, displaying continually updating network statistics. This command must be run as an administrator.
-	Note: iftop may not be included in your distribution. It should be available via your package manager.</p>
-	</td>
+	<td><p><cmd>top</cmd></p></td>
+	<td><p>provides a continually updated list of running processes, and
+        allows you to manipulate them.</p></td>
    </tr>
+
+  <tr>
+	<td><p><cmd>lsof</cmd></p></td>
+	<td><p>provides a list of open files and the processes that opened
+        them.</p></td>
+   </tr>
+
+  <tr>
+	<td><p><cmd>free -m</cmd></p></td>
+	<td><p>shows you how much memory is available.</p></td>
+   </tr>
+
+  <tr>
+	<td><p><cmd>vmstat</cmd></p></td>
+	<td><p>provides information about current virtual memory use.</p></td>
+   </tr>
+
+  <tr>
+	<td><p><cmd>df -h</cmd></p></td>
+	<td><p>displays available disk space on mounted filesystems.</p></td>
+   </tr>
+
 </table>
+
 </page>

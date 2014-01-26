@@ -2,8 +2,10 @@
       type="topic" style="task"
       id="memory-map-use">
   <info>
-    <revision version="0.1" date="2011-08-19" status="review"/>
+    <revision version="0.2" pkgversion="3.11" date="2014-01-26" status="incomplete"/>
     <link type="guide" xref="index" group="memory" />
+
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
 
     <credit type="author copyright">
       <name>Phil Bull</name>
@@ -14,7 +16,7 @@
     <credit type="author copyright">
       <name>Michael Hill</name>
       <email>mdhillca@gmail.com</email>
-      <years>2011</years>
+      <years>2014</years>
     </credit>
 
     <desc>Display the memory map of a process.</desc>
@@ -31,8 +33,8 @@
 
   <steps>
     <item><p>Click the <gui>Processes</gui> tab.</p></item>
-    <item><p>Select the desired process in the <gui>process list</gui>.</p></item>
-    <item><p>Click <gui>Memory Maps</gui> in the <gui>View</gui> menu.</p></item>
+    <item><p>Right click the desired process in the <gui>process list</gui>.</p></item>
+    <item><p>Click <gui>Memory Maps</gui>.</p></item>
   </steps>
 
   <p>When a program is launched, the system assigns it a unique process ID (PID)
@@ -80,44 +82,53 @@
  called the <em>stack</em>.</p>
     </item>
     <item>
-      <p>The program itself and each of the shared libraries have three entries
+      <p>The program itself and each of the shared libraries has three entries
  each, one for the read-execute text segment, one for the read-write data segment
  and one for a read-only data segment. Both data segments need to be paged out
  at swap time.</p>
     </item>
   </list>
 
- <terms>
- <title>Properties</title>
-  <item>
-    <title><gui>Filename</gui></title>
-    <p>The location of a shared library that is currently used by the process.
+<table shade="rows">
+
+  <tr>
+	<td><p>Properties</p></td>
+   </tr>
+
+  <tr>
+	<td><p>Filename</p></td>
+	<td><p>The location of a shared library that is currently used by the process.
  If this field is blank, the memory information in this row describes memory
  that is owned by the process whose name is displayed above the memory-map
- table.</p>
-  </item>
-  <item>
-    <title><gui>VM Start</gui></title>
-    <p>The address at which the memory segment begins. VM Start, VM End and VM
+ table.</p></td>
+   </tr>
+
+  <tr>
+	<td><p>VM Start</p></td>
+	<td><p>The address at which the memory segment begins. VM Start, VM End and VM
  Offset together specify the location on disk to which the shared library is
- mapped.</p>
-  </item>
-  <item>
-    <title><gui>VM End</gui></title>
-    <p>The address at which the memory segment ends.</p>
-  </item>
-    <item>
-      <title><gui>VM Offset</gui></title>
-    <p>The location of the address within the memory segment, measured from VM
- Start.</p>
-    </item>
-  <item>
-    <title><gui>VM Size</gui></title>
-    <p>The size of the memory segment.</p>
-  </item>
-  <item>
-    <title><gui>Flags</gui></title>
-    <p>The following flags describe the different types of memory-segment access
+ mapped.</p></td>
+   </tr>
+
+  <tr>
+	<td><p>VM End</p></td>
+	<td><p>The address at which the memory segment ends.</p></td>
+   </tr>
+
+  <tr>
+	<td><p>VM Offset</p></td>
+	<td><p>The location of the address within the memory segment, measured from VM
+ Start.</p></td>
+   </tr>
+
+  <tr>
+	<td><p>VM Size</p></td>
+	<td><p>The size of the memory segment.</p></td>
+   </tr>
+
+  <tr>
+	<td><p>Flags</p></td>
+	<td><p>The following flags describe the different types of memory-segment access
  that the process can have:</p>
     <terms>
     <item>
@@ -142,19 +153,21 @@
     <p>The process has permission to execute instructions that are contained
  within the memory segment.</p>
     </item>
-    <item>
-      <title><gui>Device</gui></title>
-    <p>The major and minor numbers of the device on which the shared library
- filename is located. Together these specify a partition on the system.</p>
-    </item>
-    <item>
-      <title><gui>Inode</gui></title>
-    <p>The inode on the device from which the shared library location is loaded
+    </terms>
+   </td>
+   </tr>
+  <tr>
+	<td><p>Device</p></td>
+	<td><p>The major and minor numbers of the device on which the shared library
+ filename is located. Together these specify a partition on the system.</p></td>
+   </tr>
+  <tr>
+	<td><p>Inode</p></td>
+	<td><p>The inode on the device from which the shared library location is loaded
  into memory. An inode is the structure the filesystem uses to store a file, and
- the number assigned to it is unique.</p>
-    </item>
-  </terms>
-  </item>
-</terms>
+ the number assigned to it is unique.</p></td>
+   </tr>
+
+</table>
 
 </page>
