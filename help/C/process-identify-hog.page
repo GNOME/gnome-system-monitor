@@ -2,8 +2,10 @@
       type="topic" style="task"
       id="process-identify-hog">
   <info>
-    <revision version="0.1" date="2011-08-19" status="stub"/>
+    <revision version="0.2" pkgversion="3.11" date="2014-01-26" status="review"/>
     <link type="guide" xref="index" group="processes-tasks" />
+
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
 
     <credit type="author copyright">
       <name>Phil Bull</name>
@@ -14,7 +16,7 @@
     <credit type="author copyright">
       <name>Michael Hill</name>
       <email>mdhillca@gmail.com</email>
-      <years>2011</years>
+      <years>2011, 2014</years>
     </credit>
 
     <desc>Sort the list of processes by <gui>% CPU</gui> to see which
@@ -30,7 +32,8 @@
     similar if they hang, for example.)</p>
   </comment>
 
-  <p>To find a process that might be using more resources than it should:</p>
+  <p>A program that is using more than its share of the CPU may slow down the
+  whole computer. To find which process could be doing this:</p>
 
   <steps>	
     <item>
@@ -41,14 +44,19 @@
       according to CPU use.</p>
       <note>
 	<p>The arrow in the column header shows the sort direction; click again
-        to reverse it. If the arrow points up, the processes using the highest
-        percentage CPU appear at the top of the list.</p>
-      </note>
-       <note style = "tip"><p>A process that has hung or crashed might use 100%
-       CPU. If this happens you may need to <link xref="process-kill">kill</link>
-       the process.</p>
+        to reverse it. The arrow should point up.</p>
       </note>
    </item>
   </steps>
+
+  <p>The processes at the top of the list are using the highest percentage CPU.
+  Once you identify which one might be using more resources than it should, you
+  can decide whether to close the program itself, or close other programs to
+  try to reduce the CPU load.</p>
+
+  <note style = "tip">
+    <p>A process that has hung or crashed might use 100% CPU. If this happens
+    you may need to <link xref="process-kill">kill</link> the process.</p>
+  </note>
 
 </page>
