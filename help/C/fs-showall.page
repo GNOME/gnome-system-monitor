@@ -2,32 +2,26 @@
       type="topic" style="task"
       id="fs-showall">
   <info>
-    <revision version="0.1" date="2011-08-19" status="review"/>
+    <revision version="0.1" date="2014-01-27" status="review"/>
     <link type="guide" xref="index" group="filesystems" />
+    
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
 
     <credit type="author copyright">
       <name>Phil Bull</name>
       <email>philbull@gmail.com</email>
-      <years>2011</years>
-    </credit>
-    <credit type="author copyright">
-      <name>Kelly Sinnott</name>
-      <email>ksinnott5ht@gmail.com</email>
-      <years>2011</years>
+      <years>2014</years>
     </credit>
 
-    <desc>In addition to the file systems used to store your files, Linux also has some special ones.</desc>
+    <desc>There are hidden file systems that the operating system uses.</desc>
   </info>
 
   <title>Show all file systems, including hidden and system ones</title>
 
-  <comment>
-    <cite date="2011-06-18" href="mailto:philbull@gmail.com">Phil Bull</cite>
-    <p>Explain how you can show all file systems (Preferences), and (briefly) what sort of thing those file systems are likely to be for (system things, mounted network drives, etc.)</p>
-  </comment>
-
-  <p>It is possible for <app>System Monitor</app> to display more than the basic, user-accessible devices that show up in the <gui>File Systems</gui> tab. To show all the file systems that exist on your system, click <guiseq><gui>Edit</gui><gui>Preferences</gui><gui>Show All Filesystems.</gui></guiseq> The <gui>File Systems</gui> tab should now show more file systems which were not visible before.</p>
-
-<p>Devices like <cmd>proc</cmd>, <cmd>run</cmd>, and <cmd>sys</cmd> contain system files that Linux requires to run. You might also see systems like <cmd>gvfs-fuse-daemon</cmd> or <cmd>fusectl</cmd>; these help to mount a virtual file system such as one on a network or a remote computer. <cmd>tmpfs</cmd> contains temporary files which are deleted on boot. It is unlikely that you will need to touch these filesystems, but it is good to know about them</p> 
+  <p>By default, the <gui>File Systems</gui> tab only shows disks and partitions that hold your files and applications. There are also a number of special filesystems that the operating system uses, but these are hidden by default.</p>
+  
+  <p>To see these special filesystems, click <guiseq><gui>System Monitor</gui><gui>Preferences</gui></guiseq>, and under the <gui>File Systems</gui> tab, check <gui>Show all file systems</gui>.</p>
+  
+  <p>Most of the entries in the list are "virtual" filesystems. These are not real disks or partitions. Instead, they are used by the operating system as a convenient layer of abstraction for various things, like managing hardware devices and storing temporary files. The system manages these automatically, so there is rarely any need for you to look at them yourself.</p>
 
 </page>
