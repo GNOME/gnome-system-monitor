@@ -1,8 +1,9 @@
 <page xmlns="http://projectmallard.org/1.0/"
       type="topic" style="task"
       id="memory-map-what">
+
   <info>
-    <revision version="0.2" pkgversion="3.11" date="2014-01-26" status="review"/>
+    <revision pkgversion="3.11" date="2014-01-28" status="candidate"/>
     <link type="guide" xref="index" group="memory" />
 
     <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
@@ -19,50 +20,60 @@
       <years>2011, 2014</years>
     </credit>
 
-    <desc>The memory map of a process can help diagnose certain memory issues.</desc>
+    <desc>The memory map of a process can help diagnose certain memory
+    issues.</desc>
   </info>
 
   <title>What is a memory map?</title>
 
   <comment>
     <cite date="2011-06-18" href="mailto:philbull@gmail.com">Phil Bull</cite>
-    <p>Difficult conceptual topic. Explain how to use memory maps to do whatever
- the hell you're supposed to use them for.</p>
+    <p>Difficult conceptual topic. Explain how to use memory maps to do
+    whatever the hell you're supposed to use them for.</p>
   </comment>
 
-  <p><gui>Virtual memory</gui> is a representation of the combined <gui>physical
- memory</gui> and <link xref="mem-swap">swap space</link> in a system. It enables running processes
- to access <em>more</em> than the existing physical memory by <gui>mapping</gui>
- locations in physical memory to files on disk.</p>
+  <comment>
+    <cite date="2014-01-28" href="mailto:kittykat3756@gmail.com">Kat</cite>
+    <p>TODO: check gui tags.</p>
+  </comment>
 
-  <p>When a program is launched, the system assigns it a unique process ID (PID)
- and its <em>instructions</em> and <em>data</em> are loaded into memory in
- <em>pages</em>. The page table of each process maps the correspondence between
- its pages in virtual memory and their location in physical memory. The
- <gui>memory map</gui> displays the total virtual memory use of the process, and
- can be used to determine the memory cost of running a single or multiple
- instances of the program, to ensure the use of the correct shared libraries, to
- see the results of adjusting various performance tuning parameters the program
- may have, or to diagnose issues such as memory leaks.</p>
+  <p><gui>Virtual memory</gui> is a representation of the combined
+  <gui>physical memory</gui> and <link xref="mem-swap">swap space</link> in a
+  system. It enables running processes to access <em>more</em> than the
+  existing physical memory by <gui>mapping</gui> locations in physical memory
+  to files on disk.</p>
 
-  <p>If multiple copies of a program are running, the instructions (or <em>text</em>)
- of the program only need to be loaded once into physical memory. Each time a
- new instance of the program is launched (as a unique process with its own virtual
- memory pages), its page table maps the location of the text in virtual memory to
- those instructions in the original real memory location. In addition, any dynamic
- shared libraries used by the process appear as distinct in virtual memory, but
- are shared references to a single copy of the library's text segment in real
- memory. When accounting for the total memory use of a process, it is important
- to note that the cost of shared libraries loaded into memory can be spread
- across all processes currently using them.</p>
+  <p>When a program is launched, the system assigns it a unique process ID
+  (PID) and its <em>instructions</em> and <em>data</em> are loaded into memory
+  in <em>pages</em>. The page table of each process maps the correspondence
+  between its pages in virtual memory and their location in physical memory.
+  The <gui>memory map</gui> displays the total virtual memory use of the
+  process, and can be used to determine the memory cost of running a single or
+  multiple instances of the program, to ensure the use of the correct shared
+  libraries, to see the results of adjusting various performance tuning
+  parameters the program may have, or to diagnose issues such as memory
+  leaks.</p>
+
+  <p>If multiple copies of a program are running, the instructions (or
+  <em>text</em>) of the program only need to be loaded once into physical
+  memory. Each time a new instance of the program is launched (as a unique
+  process with its own virtual memory pages), its page table maps the location
+  of the text in virtual memory to those instructions in the original real
+  memory location. In addition, any dynamic shared libraries used by the
+  process appear as distinct in virtual memory, but are shared references to a
+  single copy of the library's text segment in real memory. When accounting for
+  the total memory use of a process, it is important to note that the cost of
+  shared libraries loaded into memory can be spread across all processes
+  currently using them.</p>
 
   <p>When the system needs more pages of memory than are available, some of the
- existing pages will be <em>paged out</em> or written to the <gui>swap space</gui>.
- Text pages are flagged read-execute in memory and don't need to be written to
- swap since they can be re-loaded from their original location on disk. Data
- pages have read-write permissions, and if modified when in memory, they are
- labeled <em>dirty</em>, and when designated for swapping, must be paged out.
- When a page in swap space is required by a running process, it needs to be
- swapped back in before use, perhaps causing another page to be paged out.</p>
+  existing pages will be <em>paged out</em> or written to the <gui>swap
+  space</gui>. Text pages are flagged read-execute in memory and don't need to
+  be written to swap since they can be re-loaded from their original location
+  on disk. Data pages have read-write permissions, and if modified when in
+  memory, they are labeled <em>dirty</em>, and when designated for swapping,
+  must be paged out.  When a page in swap space is required by a running
+  process, it needs to be swapped back in before use, perhaps causing another
+  page to be paged out.</p>
 
 </page>
