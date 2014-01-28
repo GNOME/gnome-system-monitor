@@ -1,8 +1,9 @@
 <page xmlns="http://projectmallard.org/1.0/"
       type="topic" style="task"
       id="mem-check">
+
   <info>
-    <revision version="0.2" pkgversion="3.11" date="2014-01-26" status="review"/>
+    <revision pkgversion="3.11" date="2014-01-28" status="candidate"/>
     <link type="guide" xref="index" group="memory" />
 
     <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
@@ -25,10 +26,10 @@
     </credit>
 
     <desc>The <gui>Resources</gui> tab tells you how much of your computer's
-    memory is being used.</desc>
+    memory (RAM) is being used.</desc>
   </info>
 
-  <title>Check how much memory (RAM) is being used</title>
+  <title>How much memory is being used?</title>
 
   <comment>
     <cite date="2011-06-18" href="mailto:philbull@gmail.com">Phil Bull</cite>
@@ -40,35 +41,40 @@
    <p>To check the current memory usage of your computer:</p>
 
   <steps>
-    <item><p>Click the <gui>Resources</gui> tab.</p>
+    <item>
+      <p>Click the <gui>Resources</gui> tab.</p>
     </item>
   </steps>
-  <list>
-    <item><p><gui>Memory and Swap History</gui> displays a running line graph
-    for memory and swap as a percentage of the total available. These are plotted
-    against time, with the current time at the right.</p>
-      <note style = "tip"><p>The color of each line is indicated by the pie
-      graphs below. Click the pie graph to change the color of the line graph.</p>
-      </note>
-    </item>
-    <item><p>The <gui>Memory</gui> pie graph shows memory usage in
-    <link xref="units">GiB</link> and as a percentage of the total available.</p>
-    </item>
-  </list>
+
+  <p><gui>Memory and Swap History</gui> displays a running line graph for
+  memory and swap as a percentage of the total available. These are plotted
+  against time, with the current time at the right.</p>
+
+  <note style="tip">
+    <p>The color of each line is indicated by the pie graphs below. Click the
+    pie graph to change the color of the line graph.</p>
+  </note>
+
+  <p>The <gui>Memory</gui> pie graph shows memory usage in
+  <link xref="units">GiB</link> and as a percentage of the total available.</p>
 
   <p>To change the <gui>update interval</gui>:</p>
 
-    <steps>
-      <item><p>Click
-        <guiseq><gui>System Monitor</gui><gui>Preferences</gui></guiseq>.</p>
-      </item>
-      <item><p>Click the <gui>Resources</gui> tab.</p></item>
-      <item><p>Enter a value for <gui>Update interval in seconds</gui>.</p>
-      </item>
-    </steps>
+  <steps>
+    <item>
+      <p>Click
+      <guiseq><gui>System Monitor</gui><gui>Preferences</gui></guiseq>.</p>
+    </item>
+    <item>
+      <p>Click the <gui>Resources</gui> tab.</p>
+    </item>
+    <item>
+      <p>Enter a value for <gui>Update interval in seconds</gui>.</p>
+    </item>
+  </steps>
 
 <section id="highusage">
-  <title></title>
+  <title>Which processes are using the most memory?</title>
 
   <p>To check which processes are using the most memory:</p>
 
@@ -87,4 +93,5 @@
     </item>
   </steps>
 </section>
+
 </page>
