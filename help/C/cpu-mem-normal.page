@@ -2,29 +2,34 @@
       type="topic" style="task"
       id="cpu-mem-normal">
   <info>
-    <revision version="0.1" date="2011-08-19" status="review"/>
+    <revision version="0.1" date="2014-01-28" status="review"/>
     <link type="guide" xref="index" group="cpu" />
+    
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+    
     <credit type="author copyright">
       <name>Phil Bull</name>
       <email>philbull@gmail.com</email>
-      <years>2011</years>
-    </credit>
-    <credit type="author copyright">
-      <name>Kelly Sinnott</name>
-      <email>ksinnott5ht@gmail.com</email>
-      <years>2011</years>
+      <years>2014</years>
     </credit>
 
-    <desc>Lots of memory or CPU time will be used if the computer is performing difficult tasks, like playing a game or ripping music from a CD.</desc>
+    <desc>If the computer is doing a lot of work, it will use more processor time and more memory.</desc>
   </info>
 
   <title>Is it normal for my computer to be using this much CPU or memory?</title>
+    
+  <p>All of the programs running on your computer share CPU (processor) time and memory. If you run many programs at once, or if some programs are doing a lot of work, a higher percentage of both of these things will be used.</p>
 
-    <p> There are certain tasks which require more processing time or memory.  This may include playing video (in a media player or in your web browser), playing a graphics-intensive game, burning a CD or DVD, or other complex tasks. Another possibility is that there are simply too many processes running; a cumulative effect may be just as taxing as a single culprit. For example, you may have several browser windows open, each full of tabs with loaded web pages. Keeping these tabs ready to spring open at a moment's notice requires extra memory. Yet another issue might be that a process has frozen or continues to run after an application has closed.</p> 
+  <p>If the CPU usage is around 100%, this means that your computer is trying to do more work than it has the capacity for. This is usually OK, but it means that programs may slow down a little. Computers tend to use close to 100% of the CPU when they are doing computationally-intensive things like running games.</p>
 
-<p>You can try to identify these resource-heavy processes in the <gui>Processes</gui> tab of <app>System Monitor</app>. Using the buttons across the top of the process list, you can sort by <gui>% CPU</gui> or <gui>Memory</gui> to identify the worst offenders. To toggle between ascending and descending sorting, click the button again. If you find a process which seems to be using a lot of CPU or memory, you can right click on it to bring up a menu which allows you to end it.</p>
+  <p>If the processor is running at 100% for a long time, this could make your computer annoyingly slow. In this case, you should <link xref="process-identify-hog">find out which program is using up so much CPU time</link>.</p>
 
-<note><p>The right-click menu for a process contains <gui>Stop Process</gui>, <gui>End Process</gui>, and <gui>Kill Process</gui>. <gui>Stop Process</gui> means to pause the process temporarily. It can be resumed with <gui>Continue Process</gui>. <gui>End Process</gui> tries to end the process as the programmer intended, using the built in "quit" or "exit" function. <gui>Kill Process</gui> forces the process to close immediately, and should be used only if <gui>End Process</gui> does not work.</p></note>
-
+  <p>If the memory usage is close to 100%, this can slow things down a lot. This is because the computer will then try to use your hard disk as a temporary memory store, called <link xref="mem-swap">swap memory</link>. Hard disks are much slower than the system memory.</p>
+  
+  <p>You can try to free up some system memory by closing some programs. If things get too slow, try restarting the computer.</p>
+  
+  <note>
+    <p>The memory shown in the <gui>Resources</gui> tab is <em>system memory</em> (also called RAM). This is used to hold programs temporarily, while they are running on the computer. This is not the same as a hard disk or other kinds of memory, which are used to store files and programs more permanently.</p>
+  </note>
 
 </page>
