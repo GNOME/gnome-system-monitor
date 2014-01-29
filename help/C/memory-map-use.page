@@ -1,4 +1,5 @@
 <page xmlns="http://projectmallard.org/1.0/"
+      xmlns:ui="http://projectmallard.org/ui/1.0/"
       type="topic" style="task"
       id="memory-map-use">
 
@@ -40,7 +41,7 @@
   </steps>
 
 <section id="read">
-  <title>Reading the memory map:</title>
+  <title>Reading the memory map</title>
 
   <list>
     <item>
@@ -62,5 +63,81 @@
       be paged out at swap time.</p>
     </item>
   </list>
+</section>
+
+<section id="properties">
+
+<table shade="rows" ui:expanded="false">
+<title>Properties</title>
+  <tr>
+	  <td><p>Filename</p></td>
+	  <td><p>The location of a shared library that is currently used by the
+    process. If this field is blank, the memory information in this row
+    describes memory that is owned by the process whose name is displayed above
+    the memory-map table.</p></td>
+  </tr>
+  <tr>
+	  <td><p>VM Start</p></td>
+	  <td><p>The address at which the memory segment begins. VM Start, VM End and
+    VM Offset together specify the location on disk to which the shared library
+    is mapped.</p></td>
+  </tr>
+  <tr>
+	  <td><p>VM End</p></td>
+	  <td><p>The address at which the memory segment ends.</p></td>
+  </tr>
+  <tr>
+	  <td><p>VM Offset</p></td>
+	  <td><p>The location of the address within the memory segment, measured from
+    VM Start.</p></td>
+  </tr>
+  <tr>
+	  <td><p>VM Size</p></td>
+	  <td><p>The size of the memory segment.</p></td>
+  </tr>
+  <tr>
+	  <td><p>Flags</p></td>
+	  <td><p>The following flags describe the different types of memory-segment
+    access that the process can have:</p>
+    <terms>
+      <item>
+        <title><gui>p</gui></title>
+        <p>The memory segment is private to the process, and is not accessible
+        to other processes.</p>
+      </item>
+      <item>
+        <title><gui>r</gui></title>
+        <p>The process has permission to read from the memory segment.</p>
+      </item>
+      <item>
+        <title><gui>s</gui></title>
+        <p>The memory segment is shared with other processes.</p>
+      </item>
+      <item>
+        <title><gui>w</gui></title>
+        <p>The process has permission to write into the memory segment.</p>
+      </item>
+      <item>
+        <title><gui>x</gui></title>
+        <p>The process has permission to execute instructions that are
+        contained within the memory segment.</p>
+      </item>
+    </terms>
+    </td>
+  </tr>
+  <tr>
+	  <td><p>Device</p></td>
+	  <td><p>The major and minor numbers of the device on which the shared
+    library filename is located. Together these specify a partition on the
+    system.</p></td>
+  </tr>
+  <tr>
+	  <td><p>Inode</p></td>
+	  <td><p>The inode on the device from which the shared library location
+    is loaded into memory. An inode is the structure the filesystem uses to
+    store a file, and the number assigned to it is unique.</p></td>
+  </tr>
+</table>
+
 </section>
 </page>
