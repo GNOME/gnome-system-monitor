@@ -31,6 +31,21 @@
     <p>Explain how to use the Memory Map feature.</p>
   </comment>
 
+  <p><gui>Virtual memory</gui> is a representation of the combined
+  <gui>physical memory</gui> and <link xref="mem-swap">swap space</link> in a
+  system. It enables running processes to access <em>more</em> than the
+  existing physical memory by <gui>mapping</gui> locations in physical memory
+  to files on disk. When the system needs more pages of memory than are
+  available, some of the existing pages will be <em>paged out</em> or written
+  to the swap space.</p>
+
+  <p>The <gui>memory map</gui> displays the total virtual memory use of the
+  process, and can be used to determine the memory cost of running a single or
+  multiple instances of the program, to ensure the use of the correct shared
+  libraries, to see the results of adjusting various performance tuning
+  parameters the program may have, or to diagnose issues such as memory
+  leaks.</p>
+
   <p>To display the <link xref="memory-map-what">memory map</link> of a
   process:</p>
 
@@ -84,11 +99,6 @@
 	  <td><p>The address at which the memory segment ends.</p></td>
   </tr>
   <tr>
-	  <td><p>VM Offset</p></td>
-	  <td><p>The location of the address within the memory segment, measured from
-    VM Start.</p></td>
-  </tr>
-  <tr>
 	  <td><p>VM Size</p></td>
 	  <td><p>The size of the memory segment.</p></td>
   </tr>
@@ -121,6 +131,30 @@
       </item>
     </terms>
     </td>
+  </tr>
+  <tr>
+	  <td><p>VM Offset</p></td>
+	  <td><p>The location of the address within the memory segment,
+    measured from VM Start.</p></td>
+  </tr>
+  <tr>
+	  <td><p>Private, Shared, Clean, Dirty</p></td>
+<!--	  <td><p>Text pages are flagged read-execute in memory and don't need to
+  be written to swap since they can be re-loaded from their original location
+  on disk. Data pages have read-write permissions, and if modified when in
+  memory, they are labeled <em>dirty</em>, and when designated for swapping,
+  must be paged out.</p></td>
+-->
+          <td><list><item><p><em>private</em> pages are accessed by one
+  process</p></item>
+          <item><p><em>shared</em> pages can be accessed by more than
+  one process</p></item>
+          <item><p><em>clean</em> pages have not yet been modified
+  while in memory and can be discarded when designated to be swapped
+  out</p></item>
+          <item><p><em>dirty</em> pages have been modified while in
+  memory and must be written to disk when designated to be swapped
+  out</p></item></list></td>
   </tr>
   <tr>
 	  <td><p>Device</p></td>
