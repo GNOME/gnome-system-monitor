@@ -2,9 +2,7 @@
 
 HELP_ID = gnome-system-monitor
 
-HELP_FILES =			\
-		index.docbook	\
-		legal.xml
+HELP_FILES =
 
 HELP_MEDIA = 					\
 		figures/gnome-system-monitor_window.png
