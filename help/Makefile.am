@@ -6,5 +6,4 @@ HELP_FILES =
 
 HELP_MEDIA =
 
-HELP_LINGUAS = ar bg ca cs da de el es eu fr gl ja oc pa pt_BR ru sl sv zh_CN
-
+HELP_LINGUAS =
