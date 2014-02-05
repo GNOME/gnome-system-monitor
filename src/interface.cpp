@@ -568,6 +568,42 @@ cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data)
     return TRUE;
 }
 
+static gboolean
+cb_main_window_state_changed (GtkWidget *window, GdkEventWindowState *event, gpointer data)
+{
+    GsmApplication *app = (GsmApplication *) data;
+    gchar * current_page = g_settings_get_string (app->settings, GSM_SETTING_CURRENT_TAB);
+    if (event->new_window_state & GDK_WINDOW_STATE_BELOW ||
+        event->new_window_state & GDK_WINDOW_STATE_ICONIFIED ||
+        event->new_window_state & GDK_WINDOW_STATE_WITHDRAWN)
+    {
+        printf ("Obscured\n");
+        if (strcmp (current_page, "processes") == 0) {
+            proctable_freeze (app);
+        } else if (strcmp (current_page, "resources") == 0) {
+            load_graph_stop (app->cpu_graph);
+            load_graph_stop (app->mem_graph);
+            load_graph_stop (app->net_graph);
+        } else if (strcmp (current_page, "disks") == 0) {
+            disks_freeze (app);
+        }
+    } else  {
+        printf ("Visible\n");
+        if (strcmp (current_page, "processes") == 0) {
+            proctable_update (app);
+            proctable_thaw (app);
+        } else if (strcmp (current_page, "resources") == 0) {
+            load_graph_start (app->cpu_graph);
+            load_graph_start (app->mem_graph);
+            load_graph_start (app->net_graph);
+        } else if (strcmp (current_page, "disks") == 0) {
+            disks_update (app);
+            disks_thaw (app);
+        }
+    }
+    return FALSE;
+}
+
 void
 create_main_window (GsmApplication *app)
 {
@@ -650,6 +686,9 @@ create_main_window (GsmApplication *app)
 
     g_signal_connect (G_OBJECT (main_window), "delete_event",
                       G_CALLBACK (cb_main_window_delete),
+                      app);
+    g_signal_connect (G_OBJECT (main_window), "window-state-event",
+                      G_CALLBACK (cb_main_window_state_changed),
                       app);
 
     GAction *action;
