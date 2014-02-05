@@ -511,6 +511,7 @@ update_page_activities (GsmApplication *app)
     if (strcmp (current_page, "processes") == 0) {
         GAction *search_action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
                                                              "search");
+        proctable_update (app);
         proctable_thaw (app);
 
         gtk_widget_show (app->end_process_button);
