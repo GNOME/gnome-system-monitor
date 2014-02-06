@@ -91,4 +91,12 @@ DISTCLEANFILES = \
 	org.gnome.gnome-system-monitor.policy \
     org.gnome.gnome-system-monitor.policy.in 
 
+GITIGNOREFILES = \
+	$(GITIGNORE_MAINTAINERCLEANFILES_TOPLEVEL) \
+	$(GITIGNORE_MAINTAINERCLEANFILES_MAKEFILE_IN) \
+    *.make \
+    m4
+
 DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper
+
+-include $(top_srcdir)/git.mk

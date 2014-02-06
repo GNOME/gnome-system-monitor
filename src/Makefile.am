@@ -81,3 +81,5 @@ CLEANFILES = \
 	$(BUILT_SOURCES)
 
 MAINTAINERCLEANFILES = $(gsettings_SCHEMAS:.xml=.valid)
+
+-include $(top_srcdir)/git.mk
