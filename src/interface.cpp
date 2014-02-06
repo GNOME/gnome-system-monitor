@@ -577,7 +577,6 @@ cb_main_window_state_changed (GtkWidget *window, GdkEventWindowState *event, gpo
         event->new_window_state & GDK_WINDOW_STATE_ICONIFIED ||
         event->new_window_state & GDK_WINDOW_STATE_WITHDRAWN)
     {
-        printf ("Obscured\n");
         if (strcmp (current_page, "processes") == 0) {
             proctable_freeze (app);
         } else if (strcmp (current_page, "resources") == 0) {
@@ -588,7 +587,6 @@ cb_main_window_state_changed (GtkWidget *window, GdkEventWindowState *event, gpo
             disks_freeze (app);
         }
     } else  {
-        printf ("Visible\n");
         if (strcmp (current_page, "processes") == 0) {
             proctable_update (app);
             proctable_thaw (app);
