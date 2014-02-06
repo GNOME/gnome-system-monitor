@@ -25,7 +25,9 @@ cb_solaris_mode_changed (GSettings *settings, const gchar *key, gpointer data)
 
     app->config.solaris_mode = g_settings_get_boolean(settings, key);
     app->cpu_graph->clear_background();
-    proctable_update (app);
+    if (app->timeout) {
+        proctable_update (app);
+    }
 }
 
 static void
@@ -57,8 +59,9 @@ cb_timeouts_changed (GSettings *settings, const gchar *key, gpointer data)
         app->config.update_interval = g_settings_get_int (settings, key);
 
         app->smooth_refresh->reset();
-
-        proctable_reset_timeout (app);
+        if (app->timeout) {
+            proctable_reset_timeout (app);
+        }
     } else if (strcmp (key, GSM_SETTING_GRAPH_UPDATE_INTERVAL) == 0) {
         app->config.graph_update_interval = g_settings_get_int (settings, key);
         load_graph_change_speed(app->cpu_graph,
