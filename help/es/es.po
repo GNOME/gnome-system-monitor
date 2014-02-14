@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
-"POT-Creation-Date: 2014-02-10 08:36+0000\n"
-"PO-Revision-Date: 2014-02-13 11:37+0100\n"
+"POT-Creation-Date: 2014-02-14 08:39+0000\n"
+"PO-Revision-Date: 2014-02-14 18:24+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -449,6 +449,11 @@ msgid ""
 "the most space. After deleting some files, you should then empty the "
 "<gui>Trash</gui> to make sure they are fully removed from the computer."
 msgstr ""
+"Una de ellas es eliminar archivos innecesarios manualmente. Puede usar el "
+"<app>Analizador de uso del disco</app> para ver qué archivos y carpetas "
+"ocupan la mayor parte del espacio. Después de eliminar algunos archivos, "
+"debe vaciar la <gui>Papelera</gui> para asegurarse de que se eliminan por "
+"completo del equipo."
 
 #. (itstool) path: section/p
 #: C/fs-diskusage.page:35
@@ -511,6 +516,10 @@ msgid ""
 "it. For hard disks, it will usually look something like <file>/dev/sda</"
 "file>."
 msgstr ""
+"<gui>Dispositivo</gui> lista el nombre que el sistema operativo ha a signado "
+"al disco. Cada componente hardware conectado al equipo tiene una entrada en "
+"la carpeta <file>/dev</file> y se usa para identificarlo. Para los discos "
+"duros, normalmente esta entrada se parece a <file>/dev/sda</file>."
 
 #. (itstool) path: item/p
 #: C/fs-info.page:31
@@ -524,6 +533,14 @@ msgid ""
 "<file>/media/disk</file>, you can access the files by going to the <file>/"
 "media/disk</file> folder on your computer."
 msgstr ""
+"<gui>Carpeta</gui> indica dónde se ha <em>montado</em> la partición. Montar "
+"es el término técnico para hacer que un disco o una partición estén "
+"disponible para poder usarlos. Un disco se puede coenctar físicamente al "
+"equipo pero, a menos que se monte, no se podrá acceder a los archivos. "
+"cuando se monta un disco, se enlazará a una carpeta que puede visitar para "
+"acceder a los archivos del disco. Por ejemplo, si la <gui>Carpeta</gui> "
+"mostrada es <file>/media/disk</file>, puede acceder a los archivos yendo a "
+"la carpeta <file>/media/disk</file> de su equipo."
 
 #. (itstool) path: item/p
 #: C/fs-info.page:35
@@ -534,6 +551,11 @@ msgid ""
 "filesystem types and not others, so it can be useful to check which "
 "filesystem an external hard disk uses, for example."
 msgstr ""
+"<gui>Tipo</gui> le indica el tipo de <em>sistema de archivos</em> que se usa "
+"en el disco o en la partición. Un sistema de archivos especifica cómo debe "
+"el equipo guardar los datos en el disco. Algunos sistemas operativos sólo "
+"pueden entender ciertos sistemas de archivos y otros no, por lo que es útil "
+"saber qué tipo de sistema operativo usa un disco duro externo, por ejemplo."
 
 #. (itstool) path: item/p
 #: C/fs-info.page:39
@@ -542,6 +564,10 @@ msgid ""
 "gui> shows how much of that capacity is available to use for files and "
 "programs. <gui>Used</gui> shows how much disk space is already being used."
 msgstr ""
+"<gui>Total</gui> muestra la capacidad total del disco y <gui>Disponible</"
+"gui> muestra cuánta de esta capacidad está disponible para archivos y "
+"programas. <gui>Usado</gui> muestra la cantidad de disco usada en este "
+"momento."
 
 #. (itstool) path: page/p
 #: C/fs-info.page:44
@@ -567,6 +593,12 @@ msgid ""
 "difference from the capacity you expect, it might be because your disk has "
 "been split up into multiple partitions."
 msgstr ""
+"También es posible que el valor Total no coincida con la capacidad anunciada "
+"del disco duro. Esto es normal, y se debe a varias razones. Una es que el "
+"fabricante de disco duro use una manera ligeramente diferente de medir la "
+"capacidad del disco. Otra es que parte del espacio del disco puede estar "
+"reservado para uso del sistema operativo. Si hay mucha diferencia respecto a "
+"lo que esperaba, es posible que el disco esté dividido en varias particiones."
 
 #. (itstool) path: info/desc
 #: C/fs-showall.page:16
@@ -587,6 +619,10 @@ msgid ""
 "that hold your files and applications. There are also a number of special "
 "filesystems that the operating system uses, but these are hidden by default."
 msgstr ""
+"De manera predeterminada, la pestaña <gui>Sistemas de archivos</gui> sólo "
+"muestra los discos y particiones que contiene archivos y aplicaciones. "
+"También hay varios sistemas de archivos especiales que usa el sistema "
+"operativo, pero están ocultos de manera predeterminada."
 
 #. (itstool) path: page/p
 #: C/fs-showall.page:23
@@ -609,6 +645,12 @@ msgid ""
 "devices and storing temporary files. The system manages these automatically, "
 "so there is rarely any need for you to look at them yourself."
 msgstr ""
+"La mayoría de las entradas en la lista son sistemas de archivos «virtuales». "
+"Estos no son discos o particiones reales. En lugar de eso, las usa el "
+"sistema operativo como una capa de abstracción para varias cosas, como "
+"gestionar dispositivos de hardware y almacenar archivos temporales. El "
+"sistema los gestiona automáticamente, por lo que rara vez necesitará usarlos "
+"por su cuenta."
 
 #. (itstool) path: info/title
 #: C/index.page:6
@@ -726,6 +768,10 @@ msgid ""
 "and swap as a percentage of the total available. These are plotted against "
 "time, with the current time at the right."
 msgstr ""
+"El <gui>Histórico de memoria e intercambio</gui> muestra un gráfico dinámico "
+"para la memoria y el área de intercambio como un porcentaje del total "
+"disponible. Este gráfico se dibuja respecto al tiempo, con la hora actual a "
+"la derecha."
 
 #. (itstool) path: note/p
 #: C/mem-check.page:54
@@ -733,6 +779,8 @@ msgid ""
 "The color of each line is indicated by the pie graphs below. Click the pie "
 "graph to change the color of the line graph."
 msgstr ""
+"El color de cada línea se indica debajo del gráfico de tarta. Pulse en el "
+"gráfico para cambiar el color de la línea."
 
 #. (itstool) path: page/p
 #: C/mem-check.page:58
@@ -740,6 +788,8 @@ msgid ""
 "The <gui>Memory</gui> pie graph shows memory usage in <link xref=\"units"
 "\">GiB</link> and as a percentage of the total available."
 msgstr ""
+"El gráfico de tarta <gui>Memoria</gui> muestra el uso de memoria en <link "
+"xref=\"units\">GiB</link> y el porcentaje del total disponible."
 
 #. (itstool) path: page/p
 #: C/mem-check.page:61
@@ -793,6 +843,10 @@ msgid ""
 "reverse it. If the arrow points up, the processes using the most memory "
 "appear at the top of the list."
 msgstr ""
+"La flecha en la cabecera de la columna muestra la dirección de la "
+"ordenación; púlsela otra vez para invertir el orden. Si la flecha apunta "
+"hacia arriba, los procesos que usen más memoria aparecerán en la parte "
+"superior de la lista."
 
 #. (itstool) path: info/desc
 #: C/mem-swap.page:23
@@ -800,6 +854,8 @@ msgid ""
 "Swap memory allows your computer to run more applications at the same time "
 "than will fit into the system memory (RAM)."
 msgstr ""
+"La memoria «swap» permite al equipo ejecutar más aplicaciones al mismo "
+"tiempo de las que caben en la memoria del sistema (RAM)."
 
 #. (itstool) path: page/title
 #: C/mem-swap.page:27
@@ -814,6 +870,10 @@ msgid ""
 "<em>swap file</em> when Linux is first installed, but can also be added "
 "later."
 msgstr ""
+"La memoria «swap» o <em>espacio de intercambio</em> es una parte de la "
+"memoria virtual del sistema en disco. Está configurada como una "
+"<em>partición de intercambio</em> o un <em>archivo de intercambio</em> donde "
+"se ha instalado Linux, pero se puede haber añadido posteriormente."
 
 #. (itstool) path: note/p
 #: C/mem-swap.page:41
@@ -823,12 +883,19 @@ msgid ""
 "system is unable to find enough free memory. In this situation the only "
 "solution is to add more RAM."
 msgstr ""
+"El acceso a disco es <em>muy</em> lento comparado comparado con el acceso a "
+"la memoria. El sistema se ejecuta más lentamente si hay un intercambio "
+"excesivo o <em>thrashing</em>, cuando el sistema no es capaz de encontrar "
+"suficiente memoria libre. En esta situación, la única solución es añadir más "
+"RAM."
 
 #. (itstool) path: page/p
 #: C/mem-swap.page:47
 msgid ""
 "To see whether swapping, or <em>paging</em>, has become a performance issue:"
 msgstr ""
+"Para ver si el intercambio o la <em>paginación</em>, se ha convertido en un "
+"problema de rendimiento:"
 
 #. (itstool) path: item/p
 #: C/mem-swap.page:55
@@ -836,6 +903,8 @@ msgid ""
 "The <gui>Memory and Swap History</gui> graph shows memory and swap use as "
 "percentages."
 msgstr ""
+"El gráfico <gui>Histórico de memoria e intercambio</gui> muestra el uso de "
+"memoria y de «swap» en porcentajes."
 
 #. (itstool) path: info/desc
 #: C/memory-map-use.page:24
@@ -857,6 +926,14 @@ msgid ""
 "When the system needs more pages of memory than are available, some of the "
 "existing pages will be <em>paged out</em> or written to the swap space."
 msgstr ""
+"La <gui>Memoria virtual</gui> es la representación combinada de la "
+"<gui>memoria física</gui> y el <link xref=\"mem-swap\">espacio de "
+"intercambio</link> en un sistema. Permite ejecutar procesos que puedan "
+"acceder a <em>más</em> memoria de la física <gui>mapeando</gui> ubicaciones "
+"de la memoria física a archivos en el disco. Cuando el sistema necesita más "
+"páginas de memoria de las que hay disponibles, algunas de las páginas "
+"existentes se <em>paginarán</em>, es decir, se es escribirán en el espacio "
+"de intercambio."
 
 #. (itstool) path: page/p
 #: C/memory-map-use.page:42
@@ -867,6 +944,12 @@ msgid ""
 "libraries, to see the results of adjusting various performance tuning "
 "parameters the program may have, or to diagnose issues such as memory leaks."
 msgstr ""
+"El <gui>mapa de memoria</gui> muestra la memoria virtual total usada por el "
+"proceso, y se puede usar para determinar el coste en memoria de ejecutar una "
+"o varias instancias del programa, para asegurarse del correcto uso de "
+"bibliotecas compartidas, para ver el resultado de ajustar varios parámetros "
+"de configuración del rendimiento que el programa pueda tener o para "
+"diagnosticar problemas como fugas de memoria."
 
 #. (itstool) path: page/p
 #: C/memory-map-use.page:49
@@ -909,6 +992,9 @@ msgid ""
 "called the <em>heap</em>, and store arguments and variables into another "
 "area called the <em>stack</em>."
 msgstr ""
+"Al ejecutarse, el proceso puede reservar memoria dinámicamente en un área "
+"llamada <em>montículo</em>, y guardar argumentos y variables en otra área "
+"llamada <em>pila</em>."
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:75
@@ -918,6 +1004,11 @@ msgid ""
 "and one for a read-only data segment. Both data segments need to be paged "
 "out at swap time."
 msgstr ""
+"El programa en sí y cada una de las bibliotecas compartidas tienen tres "
+"entradas cada uno, una para el segmento de texto leer-ejecutar, una el "
+"segmento de datos leer-escribir y una para el segmento de datos de sólo "
+"lectura. Ambos segmentos de datos se deben paginar al realizar el "
+"intercambio."
 
 #. (itstool) path: table/title
 #: C/memory-map-use.page:83
@@ -954,6 +1045,9 @@ msgid ""
 "Offset together specify the location on disk to which the shared library is "
 "mapped."
 msgstr ""
+"La dirección en la que empieza el segmento de memoria. Inicio MV, Fin MV y "
+"Desplazamiento MV especifican la ubicación en el disco en la que está la "
+"biblioteca compartida."
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:98
@@ -1058,6 +1152,8 @@ msgid ""
 "The location of the address within the memory segment, measured from VM "
 "Start."
 msgstr ""
+"La ubicación de la dirección con el segmento de memoria, medido desde Inicio "
+"MV."
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:141
@@ -1067,12 +1163,12 @@ msgstr "Privada, compartida, limpia, sucia"
 #. (itstool) path: item/p
 #: C/memory-map-use.page:148
 msgid "<em>private</em> pages are accessed by one process"
-msgstr ""
+msgstr "A las páginas <em>privadas</em> accede un proceso"
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:150
 msgid "<em>shared</em> pages can be accessed by more than one process"
-msgstr ""
+msgstr "A las páginas <em>compartidas</em> puede acceder más de un proceso"
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:152
@@ -1080,6 +1176,8 @@ msgid ""
 "<em>clean</em> pages have not yet been modified while in memory and can be "
 "discarded when designated to be swapped out"
 msgstr ""
+"Las páginas <em>limpias</em> todavía no se han modificado en la memoria y se "
+"pueden descartar al marcarlas para la paginación"
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:155
@@ -1087,6 +1185,8 @@ msgid ""
 "<em>dirty</em> pages have been modified while in memory and must be written "
 "to disk when designated to be swapped out"
 msgstr ""
+"Las páginas <em>sucias</em> se han modificado en la memoria y se deben "
+"escribir en el diso al marcarlas para la paginación"
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:160
@@ -1099,6 +1199,8 @@ msgid ""
 "The major and minor numbers of the device on which the shared library "
 "filename is located. Together these specify a partition on the system."
 msgstr ""
+"Los números mayor y menor del dispositivo en el que se encuentra la "
+"biblioteca compartida. Juntos especifican una partición en el sistema."
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:166
@@ -1112,6 +1214,9 @@ msgid ""
 "into memory. An inode is the structure the filesystem uses to store a file, "
 "and the number assigned to it is unique."
 msgstr ""
+"El nodo-i del dispositivo desde el que se carga la biblioteca compartida en "
+"la memoria. Un nodo-i es la estructura que el sistema de archivos usa para "
+"guardar un archivo y el número que tiene asignado es único."
 
 #. (itstool) path: info/desc
 #: C/net-bits.page:22
@@ -1130,6 +1235,9 @@ msgid ""
 "Network speed is often shown in bits per second, rather than bytes per "
 "second. This is called the <em>bit rate</em>, or <em>data rate</em>."
 msgstr ""
+"A menudo, la velocidad de la red se muestra en bits por segundo, en lugar de "
+"en bytes por segundo. Esto se llama <em>tasa de bits</em>, o <em>tasa de "
+"datos</em>."
 
 #. (itstool) path: page/p
 #: C/net-bits.page:35
@@ -1158,6 +1266,9 @@ msgid ""
 "system. When an application is launched, the system assigns a unique process "
 "ID (PID), and its instructions and data are loaded into memory."
 msgstr ""
+"Un <gui>proceso</gui> es un programa o una aplicación que el sistema "
+"ejecuta. Cuando se lanza la aplicación, el sistema le asigna un ID de "
+"proceso único (PDI) y sus instrucciones y sus datos se cargan en la memoria."
 
 #. (itstool) path: page/p
 #: C/process-explain.page:38
@@ -1169,6 +1280,12 @@ msgid ""
 "which run in the background providing various services that keep a computer "
 "running."
 msgstr ""
+"La pestaña <gui>Procesos</gui> muestra información sobre los procesos y le "
+"permite <gui>Detener</gui>, <gui>Continuar</gui>, <gui>Finalizar</gui>, "
+"<gui>Matar</gui>, o cambiar la prioridad de un proceso. Si elige mostrar "
+"<gui>Todos los procesos</gui>, la lista de procesos incluirá los "
+"<em>procesos del sistema</em>, que se ejecutan en segundo planto "
+"proporcionando varios servicios que mantienen el equipo en ejecución."
 
 #. (itstool) path: info/desc
 #: C/process-files.page:16
@@ -1187,6 +1304,9 @@ msgid ""
 "are viewing or editing, or temporary or system files that the process needs "
 "to work properly."
 msgstr ""
+"Los procesos algunas veces mantienen archivos abiertos. Pueden ser archivos "
+"que esté viendo o editando, o archivos temporales o del sistema que el "
+"proceso necesita para funcionar correctamente."
 
 #. (itstool) path: page/p
 #: C/process-files.page:23
@@ -1216,6 +1336,10 @@ msgid ""
 "communicate with one another, and are not normal files that you can view or "
 "edit."
 msgstr ""
+"En la lista de archivos abiertos que aparece, puede encontrar algunos "
+"archivos especiales llamados <em>sockets</em>. Estos son una forma que "
+"tienen los procesos para comunicarse entre ellos, y no son archivos normales "
+"que pueda ver o editar."
 
 #. (itstool) path: info/desc
 #: C/process-identify-file.page:22
@@ -1265,6 +1389,9 @@ msgid ""
 "the file or files that match the search. Quitting the program should allow "
 "you to access the device or edit the file."
 msgstr ""
+"Esto mostrará una lista de los procesos en ejecución que actualmente están "
+"accediendo a los archivos que coincidan con la búsqueda. Salir del programa "
+"le debería permitir acceder al dispositivo o editar el archivo."
 
 #. (itstool) path: info/desc
 #: C/process-identify-hog.page:22
@@ -1272,6 +1399,8 @@ msgid ""
 "Sort the list of processes by <gui>% CPU</gui> to see which application is "
 "using up the computer's resources."
 msgstr ""
+"Ordene la lista de procesos por <gui>% CPU</gui> para ver qué aplicación "
+"está consumiendo los recursos del sistema."
 
 #. (itstool) path: page/title
 #: C/process-identify-hog.page:26
@@ -1284,6 +1413,8 @@ msgid ""
 "A program that is using more than its share of the CPU may slow down the "
 "whole computer. To find which process could be doing this:"
 msgstr ""
+"Un programa que esté consumiendo más memoria de la que le corresponde puede "
+"ralentizar todo el equipo. Para saber qué proceso puede estar haciendo esto:"
 
 #. (itstool) path: item/p
 #: C/process-identify-hog.page:43
@@ -1300,6 +1431,9 @@ msgid ""
 "The arrow in the column header shows the sort direction; click again to "
 "reverse it. The arrow should point up."
 msgstr ""
+"La flecha en la cabecera de la columna muestra la dirección de la "
+"ordenación; púlsela otra vez para invertir el orden. La flecha debería "
+"apuntar hacia arriba."
 
 #. (itstool) path: page/p
 #: C/process-identify-hog.page:52
@@ -1309,6 +1443,10 @@ msgid ""
 "you can decide whether to close the program itself, or close other programs "
 "to try to reduce the CPU load."
 msgstr ""
+"Los procesos de la parte superior de la lista están usando el mayor "
+"porcentaje de CPU. Una vez que haya identificado cuál puede estar usando más "
+"recursos de los que debería, puede decidir si cerrar el programa en sí o si "
+"cerrar otros programas para reducir la carga de la CPU."
 
 #. (itstool) path: note/p
 #: C/process-identify-hog.page:58
@@ -1316,6 +1454,8 @@ msgid ""
 "A process that has hung or crashed might use 100% CPU. If this happens you "
 "may need to <link xref=\"process-kill\">kill</link> the process."
 msgstr ""
+"Un proceso que se ha colgado o que ha fallado puede usar el 100% de la CPU. "
+"Si esto sucede, deberá <link xref=\"process-kill\">matar</link> el proceso."
 
 #. (itstool) path: info/desc
 #: C/process-kill.page:17
@@ -1335,6 +1475,10 @@ msgid ""
 "click to select the process you want to kill. Then, click <gui>End Process</"
 "gui>."
 msgstr ""
+"Si un programa deja de funcionar o se cuelga, puede forzar su cierre "
+"(«matarlo») usando el <app>Monitor del sistema</app>. Vaya a la pestaña "
+"<gui>Procesos</gui> y pulse sobre el proceso que quiere matar. Luego, pulse "
+"<gui>T\terminar proceso</gui>."
 
 #. (itstool) path: page/p
 #: C/process-kill.page:25
@@ -1342,6 +1486,8 @@ msgid ""
 "If the process does not close after a few seconds, right-click it and select "
 "<gui>Kill</gui> from the menu that appears."
 msgstr ""
+"Si el proceso no se cierra pasados unos segundos, púlselo con el botón "
+"derecho y seleccione <gui>Matar</gui> en el menú que aparece."
 
 #. (itstool) path: page/p
 #: C/process-kill.page:27
@@ -1351,6 +1497,11 @@ msgid ""
 "straight away. For some programs, this might mean that you lose unsaved "
 "files. You should always try <gui>End Process</gui> first."
 msgstr ""
+"Usar <gui>Terminar proceso</gui> intenta cerrar el proceso adecuadamente, "
+"dándole tiempo para guardar archivos, etc, mientas que <gui>Matar</gui> "
+"fuerza a que se cierre de inmediato. En el caso de ciertos programas, esto "
+"significa que pierde los archivos que no haya guardado. Siempre debe "
+"intentar primero la opción <gui>Terminar proceso</gui>."
 
 #. (itstool) path: info/desc
 #: C/process-many.page:16
@@ -1372,6 +1523,12 @@ msgid ""
 "the computer run correctly. These are started automatically when you log in, "
 "and typically run quietly in the background."
 msgstr ""
+"Normalmente hay muchos procesos en la pestaña <gui>Procesos</gui>. Sólo unos "
+"pocos de estos programas serán programas que ha iniciado el usuario. El "
+"resto son en su mayoría procesos que necesita el sistema operativo para que "
+"el equipo funcione correctamente. Estos procesos se inician automáticamente "
+"cuando inicia sesión y generalmente se ejecutan silenciosamente en segundo "
+"plano."
 
 #. (itstool) path: info/desc
 #: C/process-priority-change.page:19
@@ -1379,6 +1536,8 @@ msgid ""
 "Decide whether a process should get a bigger or smaller share of the "
 "processor's time."
 msgstr ""
+"Decidir si un proceso debe tener un tiempo de procesador compartido mayor o "
+"menor."
 
 #. (itstool) path: page/title
 #: C/process-priority-change.page:22
@@ -1394,6 +1553,11 @@ msgid ""
 "You can also give a process a <em>lower</em> priority if you think it is "
 "taking up too much processing power."
 msgstr ""
+"Puede indicar al equipo que un proceso tenga una prioridad superior a la del "
+"resto, y también puede darle un mayor tiempo compartido de procesador. Esto "
+"puede hacer que el proceso se ejecuta más rápido, pero sólo en ciertos "
+"casos. También puede dar a un proceso una prioridad <em>más baja</em> si "
+"piensa que está ocupando demasiado procesador."
 
 #. (itstool) path: item/p
 #: C/process-priority-change.page:27
@@ -1401,6 +1565,8 @@ msgid ""
 "Go to the <gui>Processes</gui> tab and click on the process you want to have "
 "a different priority."
 msgstr ""
+"Vaya a la pestaña <gui>Procesos</gui> y pulse sobre el proceso que quiere "
+"que tenga una prioridad diferente."
 
 #. (itstool) path: item/p
 #: C/process-priority-change.page:28
@@ -1408,6 +1574,8 @@ msgid ""
 "Right-click the process, and use the <gui>Change Priority</gui> menu to "
 "assign the process a higher or lower priority."
 msgstr ""
+"Pulse con el botón derecho sobre el proceso y use el menú <gui>Cambiar "
+"prioridad</gui> para asignar al proceso una prioridad mayor o menor."
 
 #. (itstool) path: page/p
 #: C/process-priority-change.page:31
@@ -1417,6 +1585,10 @@ msgid ""
 "managing the priority of processes is called <link xref=\"process-priority-"
 "what\">nice</link>.)"
 msgstr ""
+"Generalmente hay poca necesidad de cambiar la prioridad de un proceso "
+"manualmente. El equipo suele hace un buen trabajo gestionándolas él mismo. "
+"(El sistema para gestionar las prioridades de los procesos se llama <link "
+"xref=\"process-priority-what\">nice</link>)."
 
 #. (itstool) path: section/title
 #: C/process-priority-change.page:35
@@ -1433,6 +1605,12 @@ msgid ""
 "already be running as fast as possible. Changing their priority won't make a "
 "difference."
 msgstr ""
+"El equipo comparte su tiempo de procesador entre todos los procesos en "
+"ejecución. Normalmente esto se hace de manera inteligente, por lo que los "
+"programas que están haciendo más trabajo reciben automáticamente una mayor "
+"cantidad de recursos. La mayor parte del tiempo, los procesos recibirán "
+"tanto tiempo de procesador como necesiten, por lo que se ejecutarán lo más "
+"rápido posible. Cambiar su prioridad no supondrá una gran diferencia."
 
 #. (itstool) path: section/p
 #: C/process-priority-change.page:39
@@ -1443,6 +1621,12 @@ msgid ""
 "in use). You may notice that other programs run slower than usual because "
 "there is not enough processing time to share between all of them."
 msgstr ""
+"Si el equipo está ejecutando varios procesos muy pesados al mismo tiempo, "
+"sin embargo, el tiempo de procesamiento se puede «sobrepasar» (es decir, se "
+"usará toda la <link xref=\"process-identify-hog\">capacidad del procesador</"
+"link>). Es posible que note que otros programas se ejecutan más lentos de lo "
+"habitual porque no hay suficiente tiempo de procesador para compartir entre "
+"todos ellos."
 
 #. (itstool) path: section/p
 #: C/process-priority-change.page:41
@@ -1580,6 +1764,8 @@ msgid ""
 "Refresh the information shown in the System Monitor with a longer or shorter "
 "interval."
 msgstr ""
+"Actualizar la información mostrada en el Monitor del sistema con un "
+"intervalo mayor o menor."
 
 #. (itstool) path: page/title
 #: C/process-update-speed.page:26
@@ -1606,6 +1792,8 @@ msgid ""
 "Setting the <gui>Update interval</gui> to a lower value will cause "
 "<gui>System Monitor</gui> itself to use more of the CPU."
 msgstr ""
+"Configurar el <gui>Intervalo de actualización</gui> a un valor menor hará "
+"que el <gui>Monitor del sistema</gui> como tal use más CPU."
 
 #. (itstool) path: info/desc
 #: C/solaris-mode.page:22
@@ -1627,6 +1815,12 @@ msgid ""
 "CPU</gui> for each process by the number of CPUs in the system so that the "
 "total will be 100%."
 msgstr ""
+"En sistemas que tienen varias CPU o varios <link xref=\"cpu-multicore"
+"\">núcleos</link>, los procesos pueden usar más de uno al mismo tiempo. Es "
+"posible que la columna <gui>% CPU</gui> muestre valores superiores al 100% "
+"(ej 400% en un sistema de 4 CPU). El <gui>modo Solaris</gui> divide el <gui>"
+"% CPU</gui> de cada proceso entre el número de CPU del sistema, por lo que "
+"el total será el 100%."
 
 #. (itstool) path: page/p
 #: C/solaris-mode.page:40
@@ -1671,6 +1865,12 @@ msgid ""
 "(multiples of 1024) from decimal sizes (multiples of 1000) commonly used, "
 "for instance, in packaging of hard disks."
 msgstr ""
+"Las estadísticas de memoria y de espacio de disco se muestran usando "
+"<em>prefijos binarios IEC</em>, KiB, MiB, GiB, TiB (para kibi, mebi, gibi y "
+"tebi). Estos es así para distinguir los tamaños en binario usados por el "
+"Monitor del sistema (múltiplos de 1024) de los tamaños decimales (múltiplos "
+"de 1000) usados frecuentemente, por ejemplo, en las especificaciones de los "
+"discos duros."
 
 #. (itstool) path: page/p
 #: C/units.page:38
