@@ -79,6 +79,12 @@ fill_proc_properties (GtkWidget *tree, ProcInfo *info)
     else
         HZ = (cinf.stathz ? cinf.stathz : cinf.hz);
 #endif
+#ifdef __GNU__
+    int HZ;
+    HZ = sysconf(_SC_CLK_TCK);
+    if (HZ < 0)
+        HZ = 100;
+#endif
     proc_arg proc_props[] = {
         { N_("Process Name"), g_strdup_printf("%s", info->name)},
         { N_("User"), g_strdup_printf("%s (%d)", info->user.c_str(), info->uid)},
