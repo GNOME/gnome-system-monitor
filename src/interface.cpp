@@ -82,16 +82,16 @@ create_proc_view(GsmApplication *app, GtkBuilder * builder)
     app->popup_menu = gtk_menu_new_from_model (menu_model);
     gtk_menu_attach_to_widget (GTK_MENU (app->popup_menu), app->main_window, NULL);
     
-    GtkSearchBar *search_bar = GTK_SEARCH_BAR (gtk_builder_get_object (builder, "proc_searchbar"));
+    app->search_bar = GTK_WIDGET (gtk_builder_get_object (builder, "proc_searchbar"));
     app->search_entry = GTK_WIDGET (gtk_builder_get_object (builder, "proc_searchentry"));
     
-    gtk_search_bar_connect_entry (search_bar, GTK_ENTRY (app->search_entry));
+    gtk_search_bar_connect_entry (GTK_SEARCH_BAR(app->search_bar), GTK_ENTRY (app->search_entry));
     g_signal_connect (app->main_window, "key-press-event",
-                      G_CALLBACK (cb_window_key_press_event), search_bar);
+                      G_CALLBACK (cb_window_key_press_event), app->search_bar);
                   
     g_signal_connect (app->search_entry, "changed", G_CALLBACK (search_text_changed), app);
 
-    g_object_bind_property (app->search_button, "active", search_bar, "search-mode-enabled", G_BINDING_BIDIRECTIONAL);
+    g_object_bind_property (app->search_bar, "search-mode-enabled", app->search_button, "active", (GBindingFlags)(G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE));
 }
 
 void
@@ -447,7 +447,22 @@ static void
 on_activate_toggle (GSimpleAction *action, GVariant *parameter, gpointer data)
 {
     GVariant *state = g_action_get_state (G_ACTION (action));
-    g_action_change_state (G_ACTION (action), g_variant_new_boolean (!g_variant_get_boolean (state)));
+    g_action_change_state (G_ACTION (action), g_variant_new_boolean (!g_variant_get_boolean (state)));    
+    g_variant_unref (state);
+}
+
+static void
+on_activate_search (GSimpleAction *action, GVariant *parameter, gpointer data)
+{
+    GsmApplication *app = (GsmApplication *) data;
+    GVariant *state = g_action_get_state (G_ACTION (action));
+    gboolean is_search_shortcut = g_variant_get_boolean (parameter);
+    gboolean is_search_bar = gtk_search_bar_get_search_mode (GTK_SEARCH_BAR (app->search_bar));
+    if (is_search_shortcut && is_search_bar) {
+        gtk_widget_grab_focus (app->search_entry);
+    } else {
+        g_action_change_state (G_ACTION (action), g_variant_new_boolean (!g_variant_get_boolean (state)));
+    }
     g_variant_unref (state);
 }
 
@@ -641,7 +656,7 @@ create_main_window (GsmApplication *app)
 
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL },
-        { "search", on_activate_toggle, NULL, "false", NULL },
+        { "search", on_activate_search, "b", "false", NULL },
         { "send-signal-stop", on_activate_send_signal, "i", NULL, NULL },
         { "send-signal-cont", on_activate_send_signal, "i", NULL, NULL },
         { "send-signal-end", on_activate_send_signal, "i", NULL, NULL },
