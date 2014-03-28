@@ -166,6 +166,7 @@ public:
     GtkWidget        *end_process_button;
     GtkWidget        *search_button;
     GtkWidget        *search_entry;
+    GtkWidget        *search_bar;
     ProcConfig        config;
     LoadGraph        *cpu_graph;
     LoadGraph        *mem_graph;

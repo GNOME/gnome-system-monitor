@@ -62,6 +62,7 @@ void draw_background(LoadGraph *graph) {
     PangoLayout* layout;
     PangoFontDescription* font_desc;
     PangoRectangle extents;
+    cairo_surface_t *surface;
     GdkRGBA fg;
 
     num_bars = graph->num_bars();
@@ -71,11 +72,11 @@ void draw_background(LoadGraph *graph) {
     graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH ;
 
     gtk_widget_get_allocation (graph->disp, &allocation);
-    graph->background = gdk_window_create_similar_surface (gtk_widget_get_window (graph->disp),
+    surface = gdk_window_create_similar_surface (gtk_widget_get_window (graph->disp),
                                                            CAIRO_CONTENT_COLOR_ALPHA,
                                                            allocation.width,
                                                            allocation.height);
-    cr = cairo_create (graph->background);
+    cr = cairo_create (surface);
 
     GtkStyleContext *context = gtk_widget_get_style_context (GsmApplication::get()->stack);
     
@@ -173,6 +174,7 @@ void draw_background(LoadGraph *graph) {
     g_object_unref(layout);
     cairo_stroke (cr);
     cairo_destroy (cr);
+    graph->background = surface;
 }
 
 /* Redraws the backing buffer for the load graph and updates the window */
@@ -220,17 +222,14 @@ load_graph_state_changed (GtkWidget *widget,
 
 static gboolean
 load_graph_draw (GtkWidget *widget,
-                 cairo_t * context,
+                 cairo_t * cr,
                  gpointer data_ptr)
 {
     LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
-    GdkWindow *window;
 
     guint i;
     gint j;
     gdouble sample_width, x_offset;
-
-    window = gtk_widget_get_window (graph->disp);
 
     /* Number of pixels wide for one graph point */
     sample_width = (float)(graph->draw_width - graph->rmargin - graph->indent) / (float)LoadGraph::NUM_POINTS;
@@ -241,18 +240,12 @@ load_graph_draw (GtkWidget *widget,
     x_offset += graph->rmargin - ((sample_width / graph->frames_per_unit) * graph->render_counter);
 
     /* draw the graph */
-    cairo_t* cr;
-
-    cr = gdk_cairo_create (window);
 
     if (graph->background == NULL) {
         draw_background(graph);
     }
-
-    cairo_pattern_t * pattern = cairo_pattern_create_for_surface (graph->background);
-    cairo_set_source (cr, pattern);
+    cairo_set_source_surface (cr, graph->background, 0, 0);
     cairo_paint (cr);
-    cairo_pattern_destroy (pattern);
 
     cairo_set_line_width (cr, 1);
     cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
@@ -266,9 +259,9 @@ load_graph_draw (GtkWidget *widget,
     for (j = graph->n-1; j >= 0; j--) {
         gdk_cairo_set_source_rgba (cr, &(graph->colors [j]));
         if (drawStacked) {
-            cairo_move_to (cr, x_offset, graph->real_draw_height);
+            cairo_move_to (cr, x_offset, graph->real_draw_height + 3.5f);
         } else {
-            cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height);
+            cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height + 3.5f);
         }
         for (i = 1; i < LoadGraph::NUM_POINTS; ++i) {
             if (graph->data[i][j] == -1.0f)
@@ -282,14 +275,12 @@ load_graph_draw (GtkWidget *widget,
                             (1.0f - graph->data[i][j]) * graph->real_draw_height + 3.5f);
         }
         if (drawStacked) {
-            cairo_rel_line_to (cr, x_offset - (LoadGraph::NUM_POINTS * graph->graph_delx), graph->real_draw_height);
+            cairo_rel_line_to (cr, 0, graph->real_draw_height + 3.5f);
             cairo_fill(cr);
         } else {
             cairo_stroke (cr);
         }
     }
-
-    cairo_destroy (cr);
 
     return TRUE;
 }
@@ -329,7 +320,6 @@ get_load (LoadGraph *graph)
     // that value has no meaning, we just want all the
     // graphs to be aligned, so the CPU graph needs to start
     // immediately
-    bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get()->config.draw_stacked;
 
     for (i = 0; i < graph->n; i++) {
         float load;
@@ -341,11 +331,9 @@ get_load (LoadGraph *graph)
 
         load = used / MAX(total, 1.0f);
         graph->data[0][i] = load;
-        if (drawStacked) {
-            graph->data[0][i] /= graph->n;
-            if (i > 0) {
-                graph->data[0][i] += graph->data[0][i-1];
-            }
+        graph->data[0][i] /= graph->n;
+        if (i > 0) {
+            graph->data[0][i] += graph->data[0][i-1];
         }
 
         /* Update label */

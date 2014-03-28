@@ -1,0 +1,45 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="topic" style="task"
+      id="process-priority-change">
+  <info>
+    <revision version="0.1" date="2014-01-26" status="review"/>
+    <link type="guide" xref="index" group="processes-tasks" />
+    <link type="seealso" xref="cpu-check" />
+    <link type="seealso" xref="process-identify-hog" />
+    <link type="seealso" xref="process-priority-what" />
+    
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+    
+    <credit type="author copyright">
+      <name>Phil Bull</name>
+      <email>philbull@gmail.com</email>
+      <years>2014</years>
+    </credit>
+
+    <desc>Decide whether a process should get a bigger or smaller share of the processor's time.</desc>
+  </info>
+
+  <title>Change the priority of a process</title>
+
+  <p>You can tell the computer that certain processes should have a higher priority than others, and so should be given a bigger share of the available computing time. This can make them run faster, but only in certain cases. You can also give a process a <em>lower</em> priority if you think it is taking up too much processing power.</p>
+  
+  <steps>
+    <item><p>Go to the <gui>Processes</gui> tab and click on the process you want to have a different priority.</p></item>
+    <item><p>Right-click the process, and use the <gui>Change Priority</gui> menu to assign the process a higher or lower priority.</p></item>
+  </steps>
+  
+  <p>There is typically little need to change process priorities manually. The computer will usually do a good job of managing them itself. (The system for managing the priority of processes is called <link xref="process-priority-what">nice</link>.)</p>
+  
+
+  <section id="faster">
+    <title>Does higher priority make a process run faster?</title>
+    
+    <p>The computer shares its processing time between all of the running processes. This is normally shared intelligently, so programs that are doing more work automatically get a bigger share of the resources. Most of the time, processes will get as much processing time as they need, and so will already be running as fast as possible. Changing their priority won't make a difference.</p>
+    
+    <p>If your computer is running several computationally-intensive programs at once, however, its processing time may be "over-subscribed" (that is, the <link xref="process-identify-hog">processor's full capacity</link> will be in use). You may notice that other programs run slower than usual because there is not enough processing time to share between all of them.</p>
+    
+    <p>In this case, changing the priority of processes can be helpful. You could lower the priority of one of the computationally-intensive processes to free up more processing time for other programs. Alternatively, you could increase the priority of a process that is more important to you, and that you want to run faster.</p>
+    
+  </section>
+
+</page>

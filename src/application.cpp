@@ -25,7 +25,9 @@ cb_solaris_mode_changed (GSettings *settings, const gchar *key, gpointer data)
 
     app->config.solaris_mode = g_settings_get_boolean(settings, key);
     app->cpu_graph->clear_background();
-    proctable_update (app);
+    if (app->timeout) {
+        proctable_update (app);
+    }
 }
 
 static void
@@ -35,7 +37,6 @@ cb_draw_stacked_changed (GSettings *settings, const gchar *key, gpointer data)
 
     app->config.draw_stacked = g_settings_get_boolean(settings, key);
     app->cpu_graph->clear_background();
-    load_graph_reset(app->cpu_graph);
 }
 
 
@@ -58,8 +59,9 @@ cb_timeouts_changed (GSettings *settings, const gchar *key, gpointer data)
         app->config.update_interval = g_settings_get_int (settings, key);
 
         app->smooth_refresh->reset();
-
-        proctable_reset_timeout (app);
+        if (app->timeout) {
+            proctable_reset_timeout (app);
+        }
     } else if (strcmp (key, GSM_SETTING_GRAPH_UPDATE_INTERVAL) == 0) {
         app->config.graph_update_interval = g_settings_get_int (settings, key);
         load_graph_change_speed(app->cpu_graph,
@@ -393,14 +395,14 @@ void GsmApplication::on_startup()
     set_app_menu (menu);
 
     add_accelerator("<Primary>d", "win.show-dependencies", NULL);
-    add_accelerator("<Primary>s", "win.send-signal-stop", g_variant_new_int32(SIGSTOP));
-    add_accelerator("<Primary>c", "win.send-signal-cont", g_variant_new_int32(SIGCONT));
-    add_accelerator("<Primary>e", "win.send-signal-end", g_variant_new_int32(SIGTERM));
+    add_accelerator("<Primary>s", "win.send-signal-stop", g_variant_new_int32 (SIGSTOP));
+    add_accelerator("<Primary>c", "win.send-signal-cont", g_variant_new_int32 (SIGCONT));
+    add_accelerator("<Primary>e", "win.send-signal-end", g_variant_new_int32 (SIGTERM));
     add_accelerator("<Primary>k", "win.send-signal-kill", g_variant_new_int32 (SIGKILL));
     add_accelerator("<Primary>m", "win.memory-maps", NULL);
     add_accelerator("<Primary>o", "win.open-files", NULL);
     add_accelerator("<Alt>Return", "win.process-properties", NULL);
-    add_accelerator("<Primary>f", "win.search", NULL);
+    add_accelerator("<Primary>f", "win.search", g_variant_new_boolean (TRUE));
 
     Gtk::Window::set_default_icon_name ("utilities-system-monitor");
 

@@ -14,8 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU Library General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+ * License along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -79,6 +78,12 @@ fill_proc_properties (GtkWidget *tree, ProcInfo *info)
         HZ = 100;
     else
         HZ = (cinf.stathz ? cinf.stathz : cinf.hz);
+#endif
+#ifdef __GNU__
+    int HZ;
+    HZ = sysconf(_SC_CLK_TCK);
+    if (HZ < 0)
+        HZ = 100;
 #endif
     proc_arg proc_props[] = {
         { N_("Process Name"), g_strdup_printf("%s", info->name)},

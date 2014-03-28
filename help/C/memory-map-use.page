@@ -1,0 +1,174 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      xmlns:ui="http://projectmallard.org/ui/1.0/"
+      type="topic" style="task"
+      id="memory-map-use">
+
+  <info>
+    <revision pkgversion="3.11" date="2014-01-28" status="candidate"/>
+    <link type="guide" xref="index" group="memory" />
+
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+
+    <credit type="author copyright">
+      <name>Phil Bull</name>
+      <email>philbull@gmail.com</email>
+      <years>2011</years>
+    </credit>
+
+    <credit type="author copyright">
+      <name>Michael Hill</name>
+      <email>mdhillca@gmail.com</email>
+      <years>2011, 2014</years>
+    </credit>
+
+    <desc>View the memory map of a process.</desc>
+  </info>
+
+  <title>Using memory maps</title>
+
+  <comment>
+    <cite date="2011-06-18" href="mailto:philbull@gmail.com">Phil Bull</cite>
+    <p>Explain how to use the Memory Map feature.</p>
+  </comment>
+
+  <p><gui>Virtual memory</gui> is a representation of the combined
+  <gui>physical memory</gui> and <link xref="mem-swap">swap space</link> in a
+  system. It enables running processes to access <em>more</em> than the
+  existing physical memory by <gui>mapping</gui> locations in physical memory
+  to files on disk. When the system needs more pages of memory than are
+  available, some of the existing pages will be <em>paged out</em> or written
+  to the swap space.</p>
+
+  <p>The <gui>memory map</gui> displays the total virtual memory use of the
+  process, and can be used to determine the memory cost of running a single or
+  multiple instances of the program, to ensure the use of the correct shared
+  libraries, to see the results of adjusting various performance tuning
+  parameters the program may have, or to diagnose issues such as memory
+  leaks.</p>
+
+  <p>To display the <link xref="memory-map-what">memory map</link> of a
+  process:</p>
+
+  <steps>
+    <item><p>Click the <gui>Processes</gui> tab.</p></item>
+    <item><p>Right click the desired process in the <gui>process list</gui>.</p></item>
+    <item><p>Click <gui>Memory Maps</gui>.</p></item>
+  </steps>
+
+<section id="read">
+  <title>Reading the memory map</title>
+
+  <list>
+    <item>
+      <p>Addresses are diplayed in hexadecimal (base 16).</p>
+    </item>
+    <item>
+      <p>Sizes are displayed in <link xref="units">IEC binary
+      prefixes</link>.</p>
+    </item>
+    <item>
+      <p>At runtime the process can allocate more memory dynamically into an
+      area called the <em>heap</em>, and store arguments and variables into
+      another area called the <em>stack</em>.</p>
+    </item>
+    <item>
+      <p>The program itself and each of the shared libraries has three entries
+      each, one for the read-execute text segment, one for the read-write data
+      segment and one for a read-only data segment. Both data segments need to
+      be paged out at swap time.</p>
+    </item>
+  </list>
+
+<table shade="rows" ui:expanded="false">
+<title>Properties</title>
+  <tr>
+	  <td><p>Filename</p></td>
+	  <td><p>The location of a shared library that is currently used by the
+    process. If this field is blank, the memory information in this row
+    describes memory that is owned by the process whose name is displayed above
+    the memory-map table.</p></td>
+  </tr>
+  <tr>
+	  <td><p>VM Start</p></td>
+	  <td><p>The address at which the memory segment begins. VM Start, VM End and
+    VM Offset together specify the location on disk to which the shared library
+    is mapped.</p></td>
+  </tr>
+  <tr>
+	  <td><p>VM End</p></td>
+	  <td><p>The address at which the memory segment ends.</p></td>
+  </tr>
+  <tr>
+	  <td><p>VM Size</p></td>
+	  <td><p>The size of the memory segment.</p></td>
+  </tr>
+  <tr>
+	  <td><p>Flags</p></td>
+	  <td><p>The following flags describe the different types of memory-segment
+    access that the process can have:</p>
+    <terms>
+      <item>
+        <title><gui>p</gui></title>
+        <p>The memory segment is private to the process, and is not accessible
+        to other processes.</p>
+      </item>
+      <item>
+        <title><gui>r</gui></title>
+        <p>The process has permission to read from the memory segment.</p>
+      </item>
+      <item>
+        <title><gui>s</gui></title>
+        <p>The memory segment is shared with other processes.</p>
+      </item>
+      <item>
+        <title><gui>w</gui></title>
+        <p>The process has permission to write into the memory segment.</p>
+      </item>
+      <item>
+        <title><gui>x</gui></title>
+        <p>The process has permission to execute instructions that are
+        contained within the memory segment.</p>
+      </item>
+    </terms>
+    </td>
+  </tr>
+  <tr>
+	  <td><p>VM Offset</p></td>
+	  <td><p>The location of the address within the memory segment,
+    measured from VM Start.</p></td>
+  </tr>
+  <tr>
+	  <td><p>Private, Shared, Clean, Dirty</p></td>
+<!--	  <td><p>Text pages are flagged read-execute in memory and don't need to
+  be written to swap since they can be re-loaded from their original location
+  on disk. Data pages have read-write permissions, and if modified when in
+  memory, they are labeled <em>dirty</em>, and when designated for swapping,
+  must be paged out.</p></td>
+-->
+          <td><list><item><p><em>private</em> pages are accessed by one
+  process</p></item>
+          <item><p><em>shared</em> pages can be accessed by more than
+  one process</p></item>
+          <item><p><em>clean</em> pages have not yet been modified
+  while in memory and can be discarded when designated to be swapped
+  out</p></item>
+          <item><p><em>dirty</em> pages have been modified while in
+  memory and must be written to disk when designated to be swapped
+  out</p></item></list></td>
+  </tr>
+  <tr>
+	  <td><p>Device</p></td>
+	  <td><p>The major and minor numbers of the device on which the shared
+    library filename is located. Together these specify a partition on the
+    system.</p></td>
+  </tr>
+  <tr>
+	  <td><p>Inode</p></td>
+	  <td><p>The inode on the device from which the shared library location
+    is loaded into memory. An inode is the structure the filesystem uses to
+    store a file, and the number assigned to it is unique.</p></td>
+  </tr>
+</table>
+
+</section>
+</page>

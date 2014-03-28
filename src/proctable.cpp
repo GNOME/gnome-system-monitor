@@ -13,8 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU Library General Public
- * License along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+ * License along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -291,21 +290,23 @@ static void
 cb_show_dependencies_changed (GSettings *settings, const gchar *key, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
-
-    gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (app->tree),
+    if (app->timeout) {
+        gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (app->tree),
                                       g_settings_get_boolean (settings, GSM_SETTING_SHOW_DEPENDENCIES));
 
-    proctable_clear_tree (app);
-    proctable_update (app);
+        proctable_clear_tree (app);
+        proctable_update (app);
+    }
 }
 
 static void
 cb_show_whose_processes_changed (GSettings *settings, const gchar *key, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
-
-    proctable_clear_tree (app);
-    proctable_update (app);
+    if (app->timeout) {
+        proctable_clear_tree (app);
+        proctable_update (app);
+    }
 }
 
 static void 
@@ -1123,7 +1124,6 @@ proctable_update (GsmApplication *app)
     glibtop_cpu cpu;
     int which = 0;
     int arg = 0;
-
     char *whose_processes = g_settings_get_string (app->settings, GSM_SETTING_SHOW_WHOSE_PROCESSES);
     if (strcmp (whose_processes, "all") == 0) {
         which = GLIBTOP_KERN_PROC_ALL;
