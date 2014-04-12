@@ -230,7 +230,39 @@ GsmApplication::load_settings()
     g_free (color);
 }
 
-GsmApplication::GsmApplication() : Gtk::Application("org.gnome.SystemMonitor", Gio::APPLICATION_HANDLES_COMMAND_LINE)
+
+GsmApplication::GsmApplication()
+    : Gtk::Application("org.gnome.SystemMonitor", Gio::APPLICATION_HANDLES_COMMAND_LINE),
+      tree(NULL),
+      proc_toolbar_revealer(NULL),
+      popup_menu(NULL),
+      disk_list(NULL),
+      stack(NULL),
+      refresh_button(NULL),
+      process_menu_button(NULL),
+      end_process_button(NULL),
+      search_button(NULL),
+      search_entry(NULL),
+      search_bar(NULL),
+      config(),
+      cpu_graph(NULL),
+      mem_graph(NULL),
+      net_graph(NULL),
+      cpu_label_fixed_width(0),
+      net_label_fixed_width(0),
+      selection(NULL),
+      timeout(0U),
+      disk_timeout(0U),
+      top_of_tree(NULL),
+      last_vscroll_max(0.0),
+      last_vscroll_value(0.0),
+      pretty_table(NULL),
+      settings(NULL),
+      main_window(NULL),
+      frequency(0U),
+      smooth_refresh(NULL),
+      cpu_total_time(0ULL),
+      cpu_total_time_last(0ULL)
 {
     Glib::set_application_name(_("System Monitor"));
 }
