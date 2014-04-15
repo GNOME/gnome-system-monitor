@@ -205,7 +205,7 @@ create_single_procproperties_dialog (GtkTreeModel *model, GtkTreePath *path,
     GtkWidget *procpropdialog;
     GtkWidget *dialog_vbox, *vbox;
     GtkWidget *cmd_hbox;
-    GtkWidget *label;
+    gchar *label;
     GtkWidget *scrolled;
     GtkWidget *tree;
     ProcInfo *info;
@@ -216,10 +216,15 @@ create_single_procproperties_dialog (GtkTreeModel *model, GtkTreePath *path,
     if (!info)
         return;
 
-    procpropdialog = gtk_dialog_new_with_buttons (_("Process Properties"), NULL,
-                                                  GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                  _("_Close"), GTK_RESPONSE_CLOSE,
-                                                  NULL);
+    procpropdialog = GTK_WIDGET (g_object_new (GTK_TYPE_DIALOG, 
+                                               "use-header-bar", TRUE, NULL));
+
+    label = g_strdup_printf( _("%s (PID %u)"), info->name, info->pid);
+    gtk_window_set_title (GTK_WINDOW (procpropdialog), label);
+    g_free (label);
+
+    gtk_window_set_destroy_with_parent (GTK_WINDOW (procpropdialog), TRUE);
+
     gtk_window_set_resizable (GTK_WINDOW (procpropdialog), TRUE);
     gtk_window_set_default_size (GTK_WINDOW (procpropdialog), 575, 400);
     gtk_container_set_border_width (GTK_CONTAINER (procpropdialog), 5);
@@ -234,13 +239,6 @@ create_single_procproperties_dialog (GtkTreeModel *model, GtkTreePath *path,
 
     cmd_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
     gtk_box_pack_start (GTK_BOX (dialog_vbox), cmd_hbox, FALSE, FALSE, 0);
-
-    label = procman_make_label_for_mmaps_or_ofiles (
-        _("Properties of process \"%s\" (PID %u):"),
-        info->name,
-        info->pid);
-
-    gtk_box_pack_start (GTK_BOX (cmd_hbox),label, FALSE, FALSE, 0);
 
     scrolled = gtk_scrolled_window_new (NULL, NULL);
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
