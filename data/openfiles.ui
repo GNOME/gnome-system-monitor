@@ -4,6 +4,7 @@
   <object class="GtkDialog" id="openfiles_dialog">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
+    <property name="use_header_bar">1</property>
     <property name="title" translatable="yes">Open Files</property>
     <property name="default_width">575</property>
     <property name="default_height">400</property>
@@ -14,35 +15,6 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox" id="action_area">
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="close_button">
-                <property name="label" translatable="yes">_Close</property>
-                <property name="use_action_appearance">False</property>
-                <property name="use_underline">True</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
-                <property name="use_stock">False</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack_type">end</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
         <child>
           <object class="GtkGrid" id="content_grid">
             <property name="visible">True</property>
@@ -94,8 +66,5 @@
         </child>
       </object>
     </child>
-    <action-widgets>
-      <action-widget response="-7">close_button</action-widget>
-    </action-widgets>
   </object>
 </interface>
