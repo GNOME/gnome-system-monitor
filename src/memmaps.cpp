@@ -432,11 +432,12 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 
     mmdata = create_memmapsdata (app);
     mmdata->info = info;
+    
+    memmapsdialog = GTK_WIDGET (g_object_new (GTK_TYPE_DIALOG, 
+                                              "title", _("Memory Maps"), 
+                                              "use-header-bar", TRUE, 
+                                              "destroy-with-parent", TRUE, NULL));
 
-    memmapsdialog = gtk_dialog_new_with_buttons (_("Memory Maps"), GTK_WINDOW (app->main_window),
-                                                 GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                 _("_Close"), GTK_RESPONSE_CLOSE,
-                                                 NULL);
     gtk_window_set_resizable(GTK_WINDOW(memmapsdialog), TRUE);
     gtk_window_set_default_size(GTK_WINDOW(memmapsdialog), 620, 400);
     gtk_container_set_border_width(GTK_CONTAINER(memmapsdialog), 5);
