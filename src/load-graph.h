@@ -5,6 +5,8 @@
 #include <glib.h>
 #include <glibtop/cpu.h>
 
+#include "util.h"
+
 enum
 {
     LOAD_GRAPH_CPU,
@@ -31,6 +33,7 @@ struct LoadGraphLabels
 };
 
 struct LoadGraph
+  : private procman::NonCopyable
 {
     static const unsigned NUM_POINTS = 60 + 2;
     static const unsigned GRAPH_MIN_HEIGHT = 40;
