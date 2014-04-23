@@ -60,7 +60,13 @@ void SmoothRefresh::load_settings_value(const gchar *key)
 
 SmoothRefresh::SmoothRefresh(GSettings *a_settings)
     :
-    settings(a_settings)
+    settings(a_settings),
+    active(false),
+    connection(0),
+    interval(0),
+    last_pcpu(0),
+    last_total_time(0ULL),
+    last_cpu_time(0ULL)
 {
     this->connection = g_signal_connect(G_OBJECT(settings),
                                         "changed::smooth-refresh",
