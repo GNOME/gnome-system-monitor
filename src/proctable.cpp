@@ -934,11 +934,14 @@ update_info (GsmApplication *app, ProcInfo *info)
 }
 
 ProcInfo::ProcInfo(pid_t pid)
-    : tooltip(NULL),
+    : node(),
+      pixbuf(),
+      tooltip(NULL),
       name(NULL),
       arguments(NULL),
       security_context(NULL),
       pid(pid),
+      ppid(-1),
       uid(-1)
 {
     ProcInfo * const info = this;
