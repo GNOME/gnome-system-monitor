@@ -6,11 +6,14 @@
 #include <gio/gio.h>
 #include <string>
 
+#include "util.h"
+
 using std::string;
 
 
 
 class SmoothRefresh
+  : private procman::NonCopyable
 {
   public:
 
