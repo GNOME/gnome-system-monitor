@@ -127,6 +127,17 @@ namespace procman
 
     std::string format_network(guint64 rate, guint64 max_rate = 0);
     std::string format_network_rate(guint64 rate, guint64 max_rate = 0);
+
+    class NonCopyable
+    {
+    protected:
+        NonCopyable() {}  // = default
+        ~NonCopyable() {} // = default
+    private:
+        NonCopyable(const NonCopyable&)            /* = delete */;
+        NonCopyable& operator=(const NonCopyable&) /* = delete */;
+    };
+
 }
 
 #endif /* _GSM_UTIL_H_ */
