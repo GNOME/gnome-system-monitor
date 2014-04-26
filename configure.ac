@@ -45,7 +45,6 @@ PKG_CHECK_MODULES(GSM,
   glib-2.0 >= $GLIB_REQUIRED
   libgtop-2.0 >= $LIBGTOP_REQUIRED
   gtk+-3.0 >= $GTK_REQUIRED
-  gnome-icon-theme >= $GNOME_ICON_THEME_REQUIRED
   gtkmm-3.0 >= $GTKMM_REQUIRED
   libxml-2.0 >= $LIBXML_REQUIRED
   librsvg-2.0 >= $RSVG_REQUIRED
