@@ -5,11 +5,14 @@
 #include <gtkmm.h>
 #include <glibtop/cpu.h>
 
+#include <algorithm>
+
 struct ProcInfo;
 struct LoadGraph;
 
 #include "smooth_refresh.h"
 #include "prettytable.h"
+#include "util.h"
 
 static const unsigned MIN_UPDATE_INTERVAL =   1 * 1000;
 static const unsigned MAX_UPDATE_INTERVAL = 100 * 1000;
@@ -24,7 +27,26 @@ enum ProcmanTab
 
 
 struct ProcConfig
+  : private procman::NonCopyable
 {
+    ProcConfig()
+      : update_interval(0),
+	graph_update_interval(0),
+	disks_update_interval(0),
+	mem_color(),
+	swap_color(),
+	net_in_color(),
+	net_out_color(),
+	bg_color(),
+	frame_color(),
+	num_cpus(0),
+	solaris_mode(false),
+	draw_stacked(false),
+	network_in_bits(false)
+    {
+      std::fill(&this->cpu_color[0], &this->cpu_color[GLIBTOP_NCPU], GdkRGBA());
+    }
+
     int             update_interval;
     int             graph_update_interval;
     int             disks_update_interval;
@@ -44,10 +66,32 @@ struct ProcConfig
 
 
 struct MutableProcInfo
+  : private procman::NonCopyable
 {
+
 MutableProcInfo()
-: status(0)
-    { }
+  : user(),
+    vmsize(0UL),
+    memres(0UL),
+    memshared(0UL),
+    memwritable(0UL),
+    mem(0UL),
+#ifdef HAVE_WNCK
+    memxserver(0UL),
+#endif
+    start_time(0UL),
+    cpu_time(0ULL),
+    status(0U),
+    pcpu(0U),
+    nice(0),
+    cgroup_name(NULL),
+    unit(NULL),
+    session(NULL),
+    seat(NULL),
+    owner()
+    {
+      wchan[0] = '\0';
+    }
 
     std::string user;
 
@@ -139,7 +183,8 @@ class ProcInfo
 
 
 
-class GsmApplication : public Gtk::Application
+class GsmApplication : public Gtk::Application, private procman::NonCopyable
+
 {
 private:
     void load_settings();
