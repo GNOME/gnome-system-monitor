@@ -81,7 +81,7 @@ namespace
     };
 
 
-    struct GUI {
+    struct GUI : private procman::NonCopyable {
 
         GtkListStore *model;
         GtkEntry *entry;
@@ -92,6 +92,12 @@ namespace
 
 
         GUI()
+            : model(NULL),
+              entry(NULL),
+              window(NULL),
+              count(NULL),
+              app(NULL),
+              case_insensitive()
         {
             procman_debug("New Lsof GUI %p", this);
         }
