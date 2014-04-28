@@ -129,7 +129,11 @@ namespace
         mutable InodeDevices devices;
 
         MemMapsData(GtkWidget *a_tree)
-            : tree(a_tree)
+            : timer(),
+              tree(a_tree),
+              info(NULL),
+              format(),
+              devices()
         {
             gsm_tree_view_load_state (GSM_TREE_VIEW (this->tree));
         }
