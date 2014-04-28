@@ -10,6 +10,7 @@ namespace procman
 {
     OptionGroup::OptionGroup()
         : Glib::OptionGroup("", ""),
+          show_system_tab(false),
           show_processes_tab(false),
           show_resources_tab(false),
           show_file_systems_tab(false),

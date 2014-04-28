@@ -697,13 +697,18 @@ LoadGraph::LoadGraph(guint type)
       real_draw_height(0),
       graph_delx(0.0),
       graph_buffer_offset(0),
+      colors(),
+      data_block(),
       main_widget(NULL),
       disp(NULL),
       background(NULL),
       timer_index(0),
       draw(FALSE),
+      labels(),
       mem_color_picker(NULL),
-      swap_color_picker(NULL)
+      swap_color_picker(NULL),
+      cpu(),
+      net()
 {
     LoadGraph * const graph = this;
 
