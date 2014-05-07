@@ -235,7 +235,7 @@ GsmApplication::load_settings()
 GsmApplication::GsmApplication()
     : Gtk::Application("org.gnome.SystemMonitor", Gio::APPLICATION_HANDLES_COMMAND_LINE),
       tree(NULL),
-      proc_toolbar_revealer(NULL),
+      proc_actionbar_revealer(NULL),
       popup_menu(NULL),
       disk_list(NULL),
       stack(NULL),
