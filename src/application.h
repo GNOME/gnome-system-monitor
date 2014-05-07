@@ -157,7 +157,7 @@ public:
     void shutdown();
 
     GtkWidget        *tree;
-    GtkWidget        *proc_toolbar_revealer;
+    GtkWidget        *proc_actionbar_revealer;
     GtkWidget        *popup_menu;
     GtkWidget        *disk_list;
     GtkWidget        *stack;

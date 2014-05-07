@@ -75,7 +75,7 @@ create_proc_view(GsmApplication *app, GtkBuilder * builder)
 
     gtk_container_add (GTK_CONTAINER (scrolled), proctree);
 
-    app->proc_toolbar_revealer = GTK_WIDGET (gtk_builder_get_object (builder, "proc_toolbar_revealer"));
+    app->proc_actionbar_revealer = GTK_WIDGET (gtk_builder_get_object (builder, "proc_actionbar_revealer"));
 
     /* create popup_menu for the processes tab */
     GMenuModel *menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-popup-menu"));
@@ -761,6 +761,6 @@ update_sensitivity(GsmApplication *app)
                                      processes_sensitivity & selected_sensitivity);
     }
 
-    gtk_revealer_set_reveal_child (GTK_REVEALER (app->proc_toolbar_revealer),
+    gtk_revealer_set_reveal_child (GTK_REVEALER (app->proc_actionbar_revealer),
                                    selected_sensitivity);
 }

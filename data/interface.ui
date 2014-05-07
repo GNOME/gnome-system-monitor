@@ -123,51 +123,41 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkRevealer" id="proc_toolbar_revealer">
+                  <object class="GtkRevealer" id="proc_actionbar_revealer">
                     <property name="visible">True</property>
                     <property name="transition_type">slide-up</property>
                     <child>
-                      <object class="GtkFrame" id="proc_toolbar_frame">
+                      <object class="GtkActionBar" id="proc_actionbar">
                         <property name="visible">True</property>
-                        <style>
-                          <class name="gsm-proc-toolbar"/>
-                        </style>
                         <child>
-                          <object class="GtkBox" id="proc_toolbar_box">
+                          <object class="GtkButton" id="end_process_button">
+                            <property name="label" translatable="yes">End _Process</property>
                             <property name="visible">True</property>
-                            <property name="orientation">horizontal</property>
-                            <property name="margin">6</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="halign">start</property>
+                            <property name="use_underline">True</property>
+                            <property name="action_name">win.send-signal-end</property>
+                            <property name="action_target">@i 15</property>
+                            <accelerator key="Delete" signal="clicked"/>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="proc_properties_button">
+                            <property name="visible">True</property>
+                            <property name="tooltip_text" translatable="yes">Show process properties</property>
+                            <property name="action_name">win.process-properties</property>
                             <child>
-                              <object class="GtkButton" id="end_process_button">
-                                <property name="label" translatable="yes">End _Process</property>
+                              <object class="GtkImage" id="proc_properties_image">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="halign">start</property>
-                                <property name="use_underline">True</property>
-                                <property name="action_name">win.send-signal-end</property>
-                                <property name="action_target">@i 15</property>
-                                <accelerator key="Delete" signal="clicked"/>
+                                <property name="icon_size">1</property>
+                                <property name="icon_name">document-properties-symbolic</property>
                               </object>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="proc_properties_button">
-                                <property name="visible">True</property>
-                                <property name="tooltip_text" translatable="yes">Show process properties</property>
-                                <property name="action_name">win.process-properties</property>
-                                <child>
-                                  <object class="GtkImage" id="proc_properties_image">
-                                    <property name="visible">True</property>
-                                    <property name="icon_size">1</property>
-                                    <property name="icon_name">document-properties-symbolic</property>
-                                  </object>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="pack_type">end</property>
-                              </packing>
                             </child>
                           </object>
+                          <packing>
+                            <property name="pack_type">end</property>
+                          </packing>
                         </child>
                       </object>
                     </child>
