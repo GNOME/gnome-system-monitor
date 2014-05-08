@@ -30,8 +30,6 @@
 #include "selinux.h"
 #include "util.h"
 
-// FIXME
-#include "proctable.h"
 
 ProcInfo::UserMap ProcInfo::users;
 ProcInfo::List ProcInfo::all;
@@ -292,13 +290,5 @@ void
 ProcInfo::set_icon(Glib::RefPtr<Gdk::Pixbuf> icon)
 {
     this->pixbuf = icon;
-
-    GtkTreeModel *model;
-    model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
-            gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT(
-            gtk_tree_view_get_model (GTK_TREE_VIEW(GsmApplication::get()->tree))))));
-    gtk_tree_store_set(GTK_TREE_STORE(model), &this->node,
-                       COL_PIXBUF, (this->pixbuf ? this->pixbuf->gobj() : NULL),
-                       -1);
 }
 

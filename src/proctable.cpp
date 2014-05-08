@@ -165,6 +165,21 @@ cb_timeout (gpointer data)
     return G_SOURCE_CONTINUE;
 }
 
+
+static void
+treemodel_update_icon (GsmApplication *app, ProcInfo *info)
+{
+    GtkTreeModel *model;
+
+    model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
+            gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT(
+            gtk_tree_view_get_model (GTK_TREE_VIEW(app->tree))))));
+
+    gtk_tree_store_set(GTK_TREE_STORE(model), &info->node,
+                       COL_PIXBUF, (info->pixbuf ? info->pixbuf->gobj() : NULL),
+                       -1);
+}
+
 static void
 cb_refresh_icons (GtkIconTheme *theme, gpointer data)
 {
@@ -176,6 +191,7 @@ cb_refresh_icons (GtkIconTheme *theme, gpointer data)
 
     for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it) {
         app->pretty_table->set_icon(*(it->second));
+        treemodel_update_icon (app, it->second);
     }
 
     cb_timeout(app);
@@ -661,6 +677,7 @@ insert_info_to_tree (ProcInfo *info, GsmApplication *app, bool forced = false)
                         -1);
 
     app->pretty_table->set_icon(*info);
+    treemodel_update_icon (app, info);
 
     procman_debug("inserted %d%s", info->pid, (forced ? " (forced)" : ""));
 }
