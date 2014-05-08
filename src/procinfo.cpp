@@ -239,7 +239,8 @@ update_info (GsmApplication *app, ProcInfo *info)
 }
 
 ProcInfo::ProcInfo(pid_t pid)
-    : tooltip(NULL),
+    : status(0),
+      tooltip(NULL),
       name(NULL),
       arguments(NULL),
       security_context(NULL),

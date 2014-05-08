@@ -8,12 +8,9 @@
 
 #include <application.h>
 
-struct MutableProcInfo
+class ProcInfo
 {
-MutableProcInfo()
-: status(0)
-    { }
-
+ public:
     std::string user;
 
     gchar wchan[40];
@@ -45,20 +42,6 @@ MutableProcInfo()
     gchar *seat;
 
     std::string owner;
-};
-
-
-class ProcInfo
-: public MutableProcInfo
-{
-    /* undefined */ ProcInfo& operator=(const ProcInfo&);
-    /* undefined */ ProcInfo(const ProcInfo&);
-
-    typedef std::map<guint, std::string> UserMap;
-    /* cached username */
-    static UserMap users;
-
-  public:
 
     // TODO: use a set instead
     // sorted by pid. The map has a nice property : it is sorted
@@ -94,12 +77,17 @@ class ProcInfo
     guint           uid;
 
 // private:
+    typedef std::map<guint, std::string> UserMap;
+    /* cached username */
+    static UserMap users;
+
     // tracks cpu time per process keeps growing because if a
     // ProcInfo is deleted this does not mean that the process is
     // not going to be recreated on the next update.  For example,
     // if dependencies + (My or Active), the proclist is cleared
     // on each update.  This is a workaround
     static std::map<pid_t, guint64> cpu_times;
+
 };
 
 void update_info (GsmApplication *app, ProcInfo *info);
