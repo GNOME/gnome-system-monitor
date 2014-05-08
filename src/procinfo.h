@@ -63,6 +63,8 @@ class ProcInfo
     void set_icon(Glib::RefPtr<Gdk::Pixbuf> icon);
     void set_user(guint uid);
     std::string lookup_user(guint uid);
+    void update (GsmApplication *app);
+    void get_writable_memory ();
 
     GtkTreeIter     node;
     Glib::RefPtr<Gdk::Pixbuf> pixbuf;
@@ -75,22 +77,6 @@ class ProcInfo
     const guint     pid;
     guint           ppid;
     guint           uid;
-
-// private:
-    typedef std::map<guint, std::string> UserMap;
-    /* cached username */
-    static UserMap users;
-
-    // tracks cpu time per process keeps growing because if a
-    // ProcInfo is deleted this does not mean that the process is
-    // not going to be recreated on the next update.  For example,
-    // if dependencies + (My or Active), the proclist is cleared
-    // on each update.  This is a workaround
-    static std::map<pid_t, guint64> cpu_times;
-
 };
-
-void update_info (GsmApplication *app, ProcInfo *info);
-void get_process_memory_writable (ProcInfo *info);
 
 #endif /* _GSM_PROCINFO_H_ */

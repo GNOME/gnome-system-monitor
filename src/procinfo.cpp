@@ -30,10 +30,18 @@
 #include "selinux.h"
 #include "util.h"
 
+typedef std::map<guint, std::string> UserMap;
+/* cached username */
+static UserMap users;
 
-ProcInfo::UserMap ProcInfo::users;
+// tracks cpu time per process keeps growing because if a
+// ProcInfo is deleted this does not mean that the process is
+// not going to be recreated on the next update.  For example,
+// if dependencies + (My or Active), the proclist is cleared
+// on each update.  This is a workaround
+static std::map<pid_t, guint64> cpu_times;
+
 ProcInfo::List ProcInfo::all;
-std::map<pid_t, guint64> ProcInfo::cpu_times;
 
 ProcInfo* ProcInfo::find(pid_t pid)
 {
@@ -83,9 +91,9 @@ get_process_name (ProcInfo *info,
 std::string
 ProcInfo::lookup_user(guint uid)
 {
-    typedef std::pair<ProcInfo::UserMap::iterator, bool> Pair;
-    ProcInfo::UserMap::value_type hint(uid, "");
-    Pair p(ProcInfo::users.insert(hint));
+    typedef std::pair<UserMap::iterator, bool> Pair;
+    UserMap::value_type hint(uid, "");
+    Pair p(users.insert(hint));
 
     // procman_debug("User lookup for uid %u: %s", uid, (p.second ? "MISS" : "HIT"));
 
@@ -116,12 +124,12 @@ ProcInfo::set_user(guint uid)
 }
 
 void
-get_process_memory_writable (ProcInfo *info)
+ProcInfo::get_writable_memory ()
 {
     glibtop_proc_map buf;
     glibtop_map_entry *maps;
 
-    maps = glibtop_get_proc_map(&buf, info->pid);
+    maps = glibtop_get_proc_map(&buf, this->pid);
 
     gulong memwritable = 0;
     const unsigned number = buf.number;
@@ -135,7 +143,7 @@ get_process_memory_writable (ProcInfo *info)
 #endif
     }
 
-    info->memwritable = memwritable;
+    this->memwritable = memwritable;
 
     g_free(maps);
 }
@@ -197,45 +205,45 @@ get_process_systemd_info(ProcInfo *info)
 }
 
 void
-update_info (GsmApplication *app, ProcInfo *info)
+ProcInfo::update (GsmApplication *app)
 {
     glibtop_proc_state procstate;
     glibtop_proc_uid procuid;
     glibtop_proc_time proctime;
     glibtop_proc_kernel prockernel;
 
-    glibtop_get_proc_kernel(&prockernel, info->pid);
-    g_strlcpy(info->wchan, prockernel.wchan, sizeof info->wchan);
+    glibtop_get_proc_kernel(&prockernel, this->pid);
+    g_strlcpy(this->wchan, prockernel.wchan, sizeof this->wchan);
 
-    glibtop_get_proc_state (&procstate, info->pid);
-    info->status = procstate.state;
+    glibtop_get_proc_state (&procstate, this->pid);
+    this->status = procstate.state;
 
-    glibtop_get_proc_uid (&procuid, info->pid);
-    glibtop_get_proc_time (&proctime, info->pid);
+    glibtop_get_proc_uid (&procuid, this->pid);
+    glibtop_get_proc_time (&proctime, this->pid);
 
-    get_process_memory_info(info);
+    get_process_memory_info(this);
 
-    info->set_user(procstate.uid);
+    this->set_user(procstate.uid);
 
     // if the cpu time has increased reset the status to running
     // regardless of kernel state (#606579)
-    guint64 difference = proctime.rtime - info->cpu_time;
+    guint64 difference = proctime.rtime - this->cpu_time;
     if (difference > 0) 
-        info->status = GLIBTOP_PROCESS_RUNNING;
-    info->pcpu = difference * 100 / app->cpu_total_time;
-    info->pcpu = MIN(info->pcpu, 100);
+        this->status = GLIBTOP_PROCESS_RUNNING;
+    this->pcpu = difference * 100 / app->cpu_total_time;
+    this->pcpu = MIN(this->pcpu, 100);
 
     if (not app->config.solaris_mode)
-        info->pcpu *= app->config.num_cpus;
+        this->pcpu *= app->config.num_cpus;
 
-    ProcInfo::cpu_times[info->pid] = info->cpu_time = proctime.rtime;
-    info->nice = procuid.nice;
-    info->ppid = procuid.ppid;
+    cpu_times[this->pid] = this->cpu_time = proctime.rtime;
+    this->nice = procuid.nice;
+    this->ppid = procuid.ppid;
 
     /* get cgroup data */
-    get_process_cgroup_info(info);
+    get_process_cgroup_info(this);
 
-    get_process_systemd_info(info);
+    get_process_systemd_info(this);
 }
 
 ProcInfo::ProcInfo(pid_t pid)
@@ -270,8 +278,8 @@ ProcInfo::ProcInfo(pid_t pid)
     g_strfreev(arguments);
 
     guint64 cpu_time = proctime.rtime;
-    std::map<pid_t, guint64>::iterator it(ProcInfo::cpu_times.find(pid));
-    if (it != ProcInfo::cpu_times.end())
+    std::map<pid_t, guint64>::iterator it(cpu_times.find(pid));
+    if (it != cpu_times.end())
     {
         if (proctime.rtime >= it->second)
             cpu_time = it->second;
