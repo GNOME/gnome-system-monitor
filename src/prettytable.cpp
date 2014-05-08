@@ -22,6 +22,7 @@
 #include "prettytable.h"
 #include "defaulttable.h"
 #include "proctable.h"
+#include "procinfo.h"
 #include "util.h"
 
 

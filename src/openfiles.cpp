@@ -12,6 +12,7 @@
 
 #include "application.h"
 #include "openfiles.h"
+#include "procinfo.h"
 #include "proctable.h"
 #include "util.h"
 #include "settings-keys.h"

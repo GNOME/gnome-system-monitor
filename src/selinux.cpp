@@ -4,7 +4,7 @@
 #include <glib.h>
 
 #include "selinux.h"
-#include "application.h"
+#include "procinfo.h"
 #include "util.h"
 
 

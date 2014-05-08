@@ -15,6 +15,7 @@ gnome_system_monitor_cpp_files = \
 	argv.cpp \
 	interface.cpp \
 	load-graph.cpp \
+	procinfo.cpp \
 	proctable.cpp \
 	prettytable.cpp \
 	util.cpp \

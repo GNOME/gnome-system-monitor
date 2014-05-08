@@ -27,6 +27,7 @@
 #include <sys/resource.h>
 #include "procactions.h"
 #include "application.h"
+#include "procinfo.h"
 #include "proctable.h"
 #include "procdialogs.h"
 

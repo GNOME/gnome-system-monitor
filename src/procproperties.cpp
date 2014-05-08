@@ -32,6 +32,7 @@
 #endif
 
 #include "application.h"
+#include "procinfo.h"
 #include "procproperties.h"
 #include "proctable.h"
 #include "util.h"

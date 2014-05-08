@@ -6,7 +6,7 @@
 #include <cstring>
 
 #include "cgroups.h"
-#include "application.h"
+#include "procinfo.h"
 #include "util.h"
 
 gboolean
