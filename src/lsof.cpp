@@ -125,9 +125,9 @@ namespace
         {
             gchar *title;
             if (this->pattern().length() == 0) {
-                title = g_strdup_printf (_("%d open files"), count);
+                title = g_strdup_printf (ngettext("%d open file", "%d open files", count), count);
             } else {
-                title = g_strdup_printf (_("%d matching open files"), count);
+                title = g_strdup_printf (ngettext("%d matching open file", "%d matching open files", count), count);
             }
             gtk_window_set_title(this->window, title);
             g_free (title);
