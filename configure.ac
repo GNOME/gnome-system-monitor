@@ -56,7 +56,7 @@ PKG_CHECK_MODULES(GSM,
 AC_PATH_PROG(APPDATA_VALIDATE, appdata-validate)
 AC_PATH_PROG(DESKTOP_FILE_VALIDATE, desktop-file-validate)
 
-AC_ARG_ENABLE(wnck, AS_HELP_STRING([--enable-wnck], [enable wnck support]),enable_wnck=yes,enable_wnck=no)
+AC_ARG_ENABLE(wnck, AS_HELP_STRING([--enable-wnck], [enable wnck support]),enable_wnck="$enableval",enable_wnck=no)
 if test "x$enable_wnck" != "xno"; then
         PKG_CHECK_MODULES(WNCK, libwnck-3.0 >= $LIBWNCK_REQUIRED)
         AC_DEFINE(HAVE_WNCK, 1, [Define if libwnck is available])
