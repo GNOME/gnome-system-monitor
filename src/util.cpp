@@ -122,7 +122,8 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
     name = mnemonic_safe_process_name (process_name);
     title = g_strdup_printf(format, name, pid);
     label = gtk_label_new_with_mnemonic (title);
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0f, 0.5f);
+    gtk_widget_set_valign (label, GTK_ALIGN_CENTER);
+    gtk_widget_set_halign (label, GTK_ALIGN_START);
 
     g_free (title);
     g_free (name);

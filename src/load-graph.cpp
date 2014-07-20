@@ -724,10 +724,12 @@ LoadGraph::LoadGraph(guint type)
         case LOAD_GRAPH_MEM:
             n = 2;
             labels.memory = gtk_label_new(NULL);
-            gtk_misc_set_alignment (GTK_MISC (labels.memory), 0.0, 0.5);
+            gtk_widget_set_valign (labels.memory, GTK_ALIGN_CENTER);
+            gtk_widget_set_halign (labels.memory, GTK_ALIGN_START);
             gtk_widget_show (labels.memory);
             labels.swap = gtk_label_new(NULL);
-            gtk_misc_set_alignment (GTK_MISC (labels.swap), 0.0, 0.5);
+            gtk_widget_set_valign (labels.swap, GTK_ALIGN_CENTER);
+            gtk_widget_set_halign (labels.swap, GTK_ALIGN_START);
             gtk_widget_show (labels.swap);
             break;
 
@@ -737,21 +739,25 @@ LoadGraph::LoadGraph(guint type)
             net.max = 1;
             labels.net_in = gtk_label_new(NULL);
             gtk_label_set_width_chars(GTK_LABEL(labels.net_in), 10);
-            gtk_misc_set_alignment (GTK_MISC (labels.net_in), 1.0, 0.5);
+            gtk_widget_set_valign (labels.net_in, GTK_ALIGN_CENTER);
+            gtk_widget_set_halign (labels.net_in, GTK_ALIGN_END);
             gtk_widget_show (labels.net_in);
 
             labels.net_in_total = gtk_label_new(NULL);
-            gtk_misc_set_alignment (GTK_MISC (labels.net_in_total), 1.0, 0.5);
+            gtk_widget_set_valign (labels.net_in_total, GTK_ALIGN_CENTER);
+            gtk_widget_set_halign (labels.net_in_total, GTK_ALIGN_END);
             gtk_label_set_width_chars(GTK_LABEL(labels.net_in_total), 10);
             gtk_widget_show (labels.net_in_total);
 
             labels.net_out = gtk_label_new(NULL);
-            gtk_misc_set_alignment (GTK_MISC (labels.net_out), 1.0, 0.5);
+            gtk_widget_set_valign (labels.net_out, GTK_ALIGN_CENTER);
+            gtk_widget_set_halign (labels.net_out, GTK_ALIGN_END);
             gtk_label_set_width_chars(GTK_LABEL(labels.net_out), 10);
             gtk_widget_show (labels.net_out);
 
             labels.net_out_total = gtk_label_new(NULL);
-            gtk_misc_set_alignment (GTK_MISC (labels.net_out_total), 1.0, 0.5);
+            gtk_widget_set_valign (labels.net_out_total, GTK_ALIGN_CENTER);
+            gtk_widget_set_halign (labels.net_out, GTK_ALIGN_END);
             gtk_label_set_width_chars(GTK_LABEL(labels.net_out_total), 10);
             gtk_widget_show (labels.net_out_total);
 

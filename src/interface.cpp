@@ -231,7 +231,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
 
         cpu_label = gtk_label_new (NULL);
 
-        gtk_misc_set_alignment (GTK_MISC (cpu_label), 0.0, 0.5);
+        gtk_widget_set_valign (cpu_label, GTK_ALIGN_CENTER);
+        gtk_widget_set_halign (cpu_label, GTK_ALIGN_START);
         gtk_box_pack_start (GTK_BOX (temp_hbox), cpu_label, FALSE, FALSE, 0);
         gtk_widget_show (cpu_label);
         load_graph_get_labels(cpu_graph)->cpu[i] = cpu_label;
