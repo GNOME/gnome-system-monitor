@@ -468,6 +468,7 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
     g_signal_connect(G_OBJECT(memmapsdialog), "response",
                      G_CALLBACK(dialog_response), mmdata);
 
+    gtk_window_set_transient_for (GTK_WINDOW (memmapsdialog), GTK_WINDOW (GsmApplication::get()->main_window));
     gtk_widget_show_all (memmapsdialog);
     mmdata->timer = g_timeout_add_seconds (5, memmaps_timer, mmdata);
 

@@ -257,6 +257,7 @@ create_single_procproperties_dialog (GtkTreeModel *model, GtkTreePath *path,
     g_signal_connect (G_OBJECT (procpropdialog), "response",
                       G_CALLBACK (close_procprop_dialog), tree);
 
+    gtk_window_set_transient_for (GTK_WINDOW (procpropdialog), GTK_WINDOW (GsmApplication::get()->main_window));
     gtk_widget_show_all (procpropdialog);
 
     timer = g_timeout_add_seconds (5, procprop_timer, tree);

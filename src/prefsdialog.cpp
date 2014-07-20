@@ -287,6 +287,8 @@ create_preferences_dialog (GsmApplication *app)
 
     create_field_page (builder, app->disk_list, "disktreenew");
 
+    gtk_window_set_transient_for (GTK_WINDOW (prefs_dialog), GTK_WINDOW (GsmApplication::get()->main_window));
+
     gtk_widget_show_all (prefs_dialog);
     g_signal_connect (G_OBJECT (prefs_dialog), "response",
                       G_CALLBACK (prefs_dialog_button_pressed), app);

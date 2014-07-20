@@ -220,6 +220,7 @@ procdialog_create_renice_dialog (GsmApplication *app)
     g_signal_connect (G_OBJECT (renice_adj), "value_changed",
                       G_CALLBACK (renice_scale_changed), priority_label);
 
+    gtk_window_set_transient_for (GTK_WINDOW (renice_dialog), GTK_WINDOW (GsmApplication::get()->main_window));
     gtk_widget_show_all (renice_dialog);
 
     gtk_builder_connect_signals (builder, NULL);

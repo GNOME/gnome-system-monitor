@@ -278,12 +278,12 @@ void procman_lsof(GsmApplication *app)
 
     GtkWidget *dialog;
 
-    GtkBuilder *builder = gtk_builder_new();
+    GtkBuilder *builder = gtk_builder_new ();
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/lsof.ui", NULL);
 
     dialog = GTK_WIDGET (gtk_builder_get_object (builder, "lsof_dialog"));
 
-    gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(app->main_window));
+    gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->main_window));
 
     GtkWidget *entry =  GTK_WIDGET (gtk_builder_get_object (builder, "entry"));
 
@@ -310,6 +310,7 @@ void procman_lsof(GsmApplication *app)
 
     gtk_builder_connect_signals (builder, NULL);
 
+    gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (GsmApplication::get()->main_window));
     gtk_widget_show_all(dialog);
     gui->search ();
     

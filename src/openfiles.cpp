@@ -351,6 +351,7 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 
     gtk_builder_connect_signals (builder, NULL);
 
+    gtk_window_set_transient_for (GTK_WINDOW (openfilesdialog), GTK_WINDOW (GsmApplication::get()->main_window));
     gtk_widget_show_all (openfilesdialog);
 
     timer = g_timeout_add_seconds (5, openfiles_timer, tree);
