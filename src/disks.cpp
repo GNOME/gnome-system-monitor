@@ -396,7 +396,6 @@ create_disk_view(GsmApplication *app, GtkBuilder *builder)
     g_signal_connect(G_OBJECT(disk_tree), "row-activated", G_CALLBACK(open_dir), NULL);
     app->disk_list = disk_tree;
     gtk_container_add(GTK_CONTAINER(scrolled), disk_tree);
-    gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(disk_tree), TRUE);
     g_object_unref(G_OBJECT(model));
 
     /* icon + device */

@@ -223,8 +223,6 @@ void procman_lsof(GsmApplication *app)
 
     GtkWidget *tree = gtk_tree_view_new_with_model(GTK_TREE_MODEL(model));
     g_object_unref(model);
-    gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(tree), TRUE);
-
 
     GtkTreeViewColumn *column;
     GtkCellRenderer *renderer;

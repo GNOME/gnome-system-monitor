@@ -345,7 +345,6 @@ create_memmapsdata (GsmApplication *app)
 
     tree = gsm_tree_view_new (settings, FALSE);
     gtk_tree_view_set_model (GTK_TREE_VIEW (tree), GTK_TREE_MODEL (model));
-    gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree), TRUE);
     g_object_unref (G_OBJECT (model));
 
     gchar *font = get_monospace_system_font_name ();

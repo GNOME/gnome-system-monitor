@@ -393,7 +393,6 @@ proctable_new (GsmApplication * const app)
     gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (proctree),
                                       g_settings_get_boolean (app->settings, GSM_SETTING_SHOW_DEPENDENCIES));
     gtk_tree_view_set_enable_search (GTK_TREE_VIEW (proctree), FALSE);
-    gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (proctree), TRUE);
     g_object_unref (G_OBJECT (model));
 
     column = gtk_tree_view_column_new ();
