@@ -10,7 +10,7 @@ gboolean gsm_pkexec_create_root_password_dialog(const char *command)
     gboolean ret = FALSE;
     gint *exit_status = NULL;
     GError *error = NULL;
-    gchar *command_line = g_strdup_printf("pkexec %s/gsm-%s",
+    gchar *command_line = g_strdup_printf("pkexec --disable-internal-agent %s/gsm-%s",
                                           GSM_LIBEXEC_DIR, command);
     if (!g_spawn_command_line_sync(command_line, NULL, NULL, exit_status, &error)) {
         g_critical("Could not run pkexec(\"%s\") : %s\n",
@@ -19,7 +19,7 @@ gboolean gsm_pkexec_create_root_password_dialog(const char *command)
     }
     else
     {
-        g_message("pkexec did fine\n");
+        g_debug("pkexec did fine\n");
         ret = TRUE;
     }
 
