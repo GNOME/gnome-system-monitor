@@ -15,10 +15,6 @@ pixmap_files = \
 	pixmaps/download.svg \
 	pixmaps/upload.svg
 
-runnabledir = $(pkglibexecdir)
-runnable_SCRIPTS = scripts/gsm-renice \
-                   scripts/gsm-kill
-
 org.gnome.gnome-system-monitor.policy.in: org.gnome.gnome-system-monitor.policy.in.in Makefile
 	$(AM_V_GEN) sed -e "s|\@pkglibexecdir\@|$(pkglibexecdir)|" $< > $@
 
@@ -26,7 +22,6 @@ EXTRA_DIST = \
 	$(ui_files) \
 	$(appdata_in_files) \
 	$(pixmap_files) \
-	$(runnable_SCRIPTS) \
 	org.gnome.gnome-system-monitor.policy.in.in \
 	gnome-system-monitor.desktop.in \
 	gnome-system-monitor-kde.desktop.in \
