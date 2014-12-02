@@ -626,6 +626,8 @@ create_main_window (GsmApplication *app)
     GtkWidget *process_menu_button;
     GMenuModel *process_menu_model;
 
+    const char* session;
+
     int width, height, xpos, ypos;
 
     GtkBuilder *builder = gtk_builder_new();
@@ -636,6 +638,18 @@ create_main_window (GsmApplication *app)
     gtk_window_set_application (GTK_WINDOW (main_window), app->gobj());
     gtk_widget_set_name (main_window, "gnome-system-monitor");
     app->main_window = main_window;
+
+    session = g_getenv ("XDG_CURRENT_DESKTOP");
+    if (session && !strstr (session, "GNOME")){
+        GtkWidget *mainbox;
+        GtkWidget *headerbar;
+
+        mainbox = GTK_WIDGET (gtk_builder_get_object (builder, "main_box"));
+        headerbar = GTK_WIDGET (gtk_builder_get_object (builder, "header_bar"));
+        gtk_window_set_titlebar (GTK_WINDOW (main_window), NULL);
+        gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (headerbar), FALSE);
+        gtk_box_pack_start (GTK_BOX(mainbox), headerbar, FALSE, FALSE, 0);
+    }
 
     g_settings_get (app->settings, GSM_SETTING_WINDOW_STATE, "(iiii)",
                     &width, &height, &xpos, &ypos);
