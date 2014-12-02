@@ -646,6 +646,7 @@ create_main_window (GsmApplication *app)
 
         mainbox = GTK_WIDGET (gtk_builder_get_object (builder, "main_box"));
         headerbar = GTK_WIDGET (gtk_builder_get_object (builder, "header_bar"));
+        gtk_style_context_remove_class (gtk_widget_get_style_context (headerbar), "titlebar");
         gtk_window_set_titlebar (GTK_WINDOW (main_window), NULL);
         gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (headerbar), FALSE);
         gtk_box_pack_start (GTK_BOX(mainbox), headerbar, FALSE, FALSE, 0);
