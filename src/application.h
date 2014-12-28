@@ -124,8 +124,8 @@ class ProcInfo
 
     gchar           *security_context;
 
-    const guint     pid;
-    guint           ppid;
+    const pid_t     pid;
+    pid_t           ppid;
     guint           uid;
 
 // private:

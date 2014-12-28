@@ -917,7 +917,15 @@ update_info (GsmApplication *app, ProcInfo *info)
 
     ProcInfo::cpu_times[info->pid] = info->cpu_time = proctime.rtime;
     info->nice = procuid.nice;
-    info->ppid = procuid.ppid;
+
+    // set the ppid only if one can exist
+    // i.e. pid=0 can never have a parent
+    if (info->pid > 0) {
+        info->ppid = procuid.ppid;
+    }
+
+    g_assert(info->pid != info->ppid);
+    g_assert(info->ppid != -1 || info->pid == 0);
 
     /* get cgroup data */
     get_process_cgroup_info(info);
@@ -1049,6 +1057,8 @@ refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
 
 
                 // inserts the process in the treeview if :
+                // - it has no parent (ppid = -1),
+                //   ie it is for example the [kernel] on FreeBSD
                 // - it is init
                 // - its parent is already in tree
                 // - its parent is unreachable
@@ -1062,7 +1072,7 @@ refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
                 // see proctable_update (ProcData * const procdata)
 
 
-                if ((*it)->ppid == 0 or in_tree.find((*it)->ppid) != in_tree.end()) {
+                if ((*it)->ppid <= 0 or in_tree.find((*it)->ppid) != in_tree.end()) {
                     insert_info_to_tree(*it, app);
                     in_tree.insert((*it)->pid);
                     it = addition.erase(it);
@@ -1122,7 +1132,16 @@ proctable_update (GsmApplication *app)
     glibtop_get_cpu (&cpu);
     app->cpu_total_time = MAX(cpu.total - app->cpu_total_time_last, 1);
     app->cpu_total_time_last = cpu.total;
-    
+
+#if 1
+    proclist.number++;
+    pid_list = (pid_t*) g_realloc(pid_list, proclist.number * sizeof *pid_list);
+    pid_list[proclist.number - 1] = 0;
+#endif
+
+    // FIXME: not sure if glibtop always returns a sorted list of pid
+    // but it is important otherwise refresh_list won't find the parent
+    std::sort(pid_list, pid_list + proclist.number);
     refresh_list (app, pid_list, proclist.number);
 
     // juggling with tree scroll position to fix https://bugzilla.gnome.org/show_bug.cgi?id=92724
