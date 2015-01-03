@@ -1136,12 +1136,6 @@ proctable_update (GsmApplication *app)
     app->cpu_total_time = MAX(cpu.total - app->cpu_total_time_last, 1);
     app->cpu_total_time_last = cpu.total;
 
-#if 1
-    proclist.number++;
-    pid_list = (pid_t*) g_realloc(pid_list, proclist.number * sizeof *pid_list);
-    pid_list[proclist.number - 1] = 0;
-#endif
-
     // FIXME: not sure if glibtop always returns a sorted list of pid
     // but it is important otherwise refresh_list won't find the parent
     std::sort(pid_list, pid_list + proclist.number);
