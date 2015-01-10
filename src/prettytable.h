@@ -19,8 +19,6 @@ extern "C" {
 }
 #endif
 
-#include "iconthemewrapper.h"
-
 class ProcInfo;
 
 using std::string;
@@ -70,7 +68,6 @@ private:
     IconCache defaults;
     DesktopDirMonitors monitors;
     AppCache gio_apps;
-    procman::IconThemeWrapper theme;
 };
 
 

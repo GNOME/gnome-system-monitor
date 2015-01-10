@@ -77,7 +77,7 @@ PrettyTable::on_application_opened(WnckScreen* screen, WnckApplication* app, gpo
 
   Glib::RefPtr<Gdk::Pixbuf> icon;
 
-  icon = that->theme->load_icon(icon_name, APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN);
+  icon = Glib::wrap(gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), icon_name, APP_ICON_SIZE, GTK_ICON_LOOKUP_USE_BUILTIN, NULL));
 
   if (not icon) {
     icon = Glib::wrap(wnck_application_get_icon(app), /* take_copy */ true);
@@ -156,7 +156,7 @@ void PrettyTable::file_monitor_event(Glib::RefPtr<Gio::File>,
 Glib::RefPtr<Gdk::Pixbuf>
 PrettyTable::get_icon_from_theme(const ProcInfo &info)
 {
-  return this->theme->load_icon(info.name, APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN | Gtk::ICON_LOOKUP_FORCE_SIZE);
+  return Glib::wrap(gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), info.name, APP_ICON_SIZE, (GtkIconLookupFlags)(GTK_ICON_LOOKUP_USE_BUILTIN | GTK_ICON_LOOKUP_FORCE_SIZE), NULL));
 }
 
 
@@ -189,7 +189,7 @@ PrettyTable::get_icon_from_default(const ProcInfo &info)
     IconCache::iterator it(this->defaults.find(name));
 
     if (it == this->defaults.end()) {
-      pix = this->theme->load_icon(name, APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN | Gtk::ICON_LOOKUP_FORCE_SIZE);
+      pix = Glib::wrap(gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), name.c_str(), APP_ICON_SIZE, (GtkIconLookupFlags)(GTK_ICON_LOOKUP_USE_BUILTIN | GTK_ICON_LOOKUP_FORCE_SIZE), NULL));
       if (pix)
 	this->defaults[name] = pix;
     } else
@@ -209,12 +209,16 @@ PrettyTable::get_icon_from_gio(const ProcInfo &info)
   if (executable) {
     Glib::RefPtr<Gio::AppInfo> app = this->gio_apps[executable];
     Glib::RefPtr<Gio::Icon> gicon;
+    Gtk::IconInfo info;
 
     if (app)
       gicon = app->get_icon();
 
     if (gicon)
-      icon = this->theme->load_gicon(gicon, APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN | Gtk::ICON_LOOKUP_FORCE_SIZE);
+      info = Glib::wrap(gtk_icon_theme_lookup_by_gicon (gtk_icon_theme_get_default (), gicon->gobj(), APP_ICON_SIZE, (GtkIconLookupFlags)(GTK_ICON_LOOKUP_USE_BUILTIN | GTK_ICON_LOOKUP_FORCE_SIZE)));
+
+    if (info)
+      icon = Glib::wrap(gtk_icon_info_load_icon (info.gobj(), NULL));
   }
 
   g_strfreev(cmdline);
@@ -240,14 +244,14 @@ PrettyTable::get_icon_from_wnck(const ProcInfo &info)
 Glib::RefPtr<Gdk::Pixbuf>
 PrettyTable::get_icon_from_name(const ProcInfo &info)
 {
-  return this->theme->load_icon(info.name, APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN | Gtk::ICON_LOOKUP_FORCE_SIZE);
+return Glib::wrap(gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), info.name, APP_ICON_SIZE, (GtkIconLookupFlags)(GTK_ICON_LOOKUP_USE_BUILTIN | GTK_ICON_LOOKUP_FORCE_SIZE), NULL));
 }
 
 
 Glib::RefPtr<Gdk::Pixbuf>
 PrettyTable::get_icon_dummy(const ProcInfo &)
 {
-  return this->theme->load_icon("application-x-executable", APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN);
+    return Glib::wrap(gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), "application-x-executable", APP_ICON_SIZE, GTK_ICON_LOOKUP_USE_BUILTIN, NULL));
 }
 
 
@@ -273,7 +277,7 @@ Glib::RefPtr<Gdk::Pixbuf>
 PrettyTable::get_icon_for_kernel(const ProcInfo &info)
 {
   if (is_kthread(info))
-    return this->theme->load_icon("applications-system", APP_ICON_SIZE, Gtk::ICON_LOOKUP_USE_BUILTIN);
+    return Glib::wrap(gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), "applications-system", APP_ICON_SIZE, GTK_ICON_LOOKUP_USE_BUILTIN, NULL));
 
   return Glib::RefPtr<Gdk::Pixbuf>();
 }

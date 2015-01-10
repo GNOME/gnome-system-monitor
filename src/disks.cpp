@@ -1,8 +1,6 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #include <config.h>
 
-#include <giomm.h>
-#include <giomm/themedicon.h>
 #include <gtk/gtk.h>
 #include <glibtop/mountlist.h>
 #include <glibtop/fsusage.h>
@@ -11,7 +9,6 @@
 #include "disks.h"
 #include "application.h"
 #include "util.h"
-#include "iconthemewrapper.h"
 #include "settings-keys.h"
 #include "treeview.h"
 
@@ -65,49 +62,44 @@ fsusage_stats(const glibtop_fsusage *buf,
     }
 }
 
-
-namespace
+static const char* get_icon_for_path(const char* path)
 {
-    string get_icon_for_path(const std::string& path)
-    {
-        using namespace Glib;
-        using namespace Gio;
+    GVolumeMonitor *monitor;
+    GList *mounts;
+    uint i;
+    GMount *mount;
+    GIcon *icon;
+    const char* name = "";
 
-        // FIXME: I don't know whether i should use Volume or Mount or UnixMount
-        // all i need an icon name.
-        RefPtr<VolumeMonitor> monitor = VolumeMonitor::get();
+    monitor = g_volume_monitor_get ();
+    mounts = g_volume_monitor_get_mounts (monitor);
 
-        std::vector<RefPtr<Mount> > mounts = monitor->get_mounts();
+    for (i = 0; i < g_list_length (mounts); i++) {
+        mount = G_MOUNT (g_list_nth_data(mounts, i));
+        if (strcmp(g_mount_get_name(mount), path))
+            continue;
 
-        for (size_t i = 0; i != mounts.size(); ++i) {
-            if (mounts[i]->get_name() != path)
-                continue;
+        icon = g_mount_get_icon (mount);
 
-            RefPtr<Icon> icon = mounts[i]->get_icon();
-            RefPtr<ThemedIcon> themed_icon = RefPtr<ThemedIcon>::cast_dynamic(icon);
-
-            if (themed_icon) {
-                char* name = 0;
-                // FIXME: not wrapped yet
-                g_object_get(G_OBJECT(themed_icon->gobj()), "name", &name, NULL);
-                return make_string(name);
-            }
-        }
-
-        return "";
+        if (!icon)
+            continue;
+        name = g_icon_to_string (icon);
+        g_object_unref (icon);
     }
+
+    g_list_free_full (mounts, g_object_unref);
+    return name;
+
 }
 
-
-static Glib::RefPtr<Gdk::Pixbuf>
+static GdkPixbuf*
 get_icon_for_device(const char *mountpoint)
 {
-    procman::IconThemeWrapper icon_theme;
-    string icon_name = get_icon_for_path(mountpoint);
-    if (icon_name == "")
+    const char* icon_name = get_icon_for_path(mountpoint);
+    if (!strcmp(icon_name, ""))
         // FIXME: defaults to a safe value
         icon_name = "drive-harddisk"; // get_icon_for_path("/");
-    return icon_theme->load_icon(icon_name, 24, Gtk::ICON_LOOKUP_USE_BUILTIN);
+    return gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), icon_name, 24, GTK_ICON_LOOKUP_USE_BUILTIN, NULL);
 }
 
 
@@ -184,7 +176,7 @@ remove_old_disks(GtkTreeModel *model, const glibtop_mountentry *entries, guint n
 static void
 add_disk(GtkListStore *list, const glibtop_mountentry *entry, bool show_all_fs)
 {
-    Glib::RefPtr<Gdk::Pixbuf> pixbuf;
+    GdkPixbuf* pixbuf;
     GtkTreeIter iter;
     glibtop_fsusage usage;
     guint64 bused, bfree, bavail, btotal;
@@ -209,7 +201,7 @@ add_disk(GtkListStore *list, const glibtop_mountentry *entry, bool show_all_fs)
         gtk_list_store_append(list, &iter);
 
     gtk_list_store_set(list, &iter,
-                       DISK_ICON, pixbuf->gobj(),
+                       DISK_ICON, pixbuf,
                        DISK_DEVICE, entry->devname,
                        DISK_DIR, entry->mountdir,
                        DISK_TYPE, entry->type,

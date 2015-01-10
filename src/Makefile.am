@@ -31,7 +31,6 @@ gnome_system_monitor_cpp_files = \
 	gsm_gksu.cpp \
 	gsm_pkexec.cpp \
 	lsof.cpp \
-	iconthemewrapper.cpp \
 	prefsdialog.cpp \
 	application.cpp
 
