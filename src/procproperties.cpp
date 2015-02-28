@@ -24,12 +24,6 @@
 #include <glibtop/procmem.h>
 #include <glibtop/procmap.h>
 #include <glibtop/procstate.h>
-#if defined (__linux__)
-#include <asm/param.h>
-#elif defined(__OpenBSD__) || defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
-#include <sys/param.h>
-#include <sys/sysctl.h>
-#endif
 
 #include "application.h"
 #include "procproperties.h"
@@ -68,23 +62,6 @@ fill_proc_properties (GtkWidget *tree, ProcInfo *info)
 
     get_process_memory_writable (info);
 
-#if defined(__OpenBSD__) || defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
-    struct clockinfo cinf;
-    size_t size = sizeof (cinf);
-    int HZ;
-    int mib[] = { CTL_KERN, KERN_CLOCKRATE };
-
-    if (sysctl (mib, G_N_ELEMENTS (mib), &cinf, &size, NULL, 0) == -1)
-        HZ = 100;
-    else
-        HZ = (cinf.stathz ? cinf.stathz : cinf.hz);
-#endif
-#ifdef __GNU__
-    int HZ;
-    HZ = sysconf(_SC_CLK_TCK);
-    if (HZ < 0)
-        HZ = 100;
-#endif
     proc_arg proc_props[] = {
         { N_("Process Name"), g_strdup_printf("%s", info->name)},
         { N_("User"), g_strdup_printf("%s (%d)", info->user.c_str(), info->uid)},
@@ -98,7 +75,7 @@ fill_proc_properties (GtkWidget *tree, ProcInfo *info)
         { N_("X Server Memory"), format_memsize(info->memxserver)},
 #endif
         { N_("CPU"), g_strdup_printf("%d%%", info->pcpu)},
-        { N_("CPU Time"), g_strdup_printf(ngettext("%lld second", "%lld seconds", info->cpu_time/HZ), (unsigned long long)info->cpu_time/HZ) },
+        { N_("CPU Time"), procman::format_duration_for_display(100 * info->cpu_time / GsmApplication::get()->frequency) },
         { N_("Started"), g_strdup_printf("%s", ctime((const time_t*)(&info->start_time)))},
         { N_("Nice"), g_strdup_printf("%d", info->nice)},
         { N_("Priority"), g_strdup_printf("%s", procman::get_nice_level(info->nice)) },

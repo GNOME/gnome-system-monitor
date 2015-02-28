@@ -45,6 +45,8 @@ inline string make_string(char *c_str)
 
 namespace procman
 {
+    char* format_duration_for_display(unsigned centiseconds);
+
     void size_cell_data_func(GtkTreeViewColumn *col, GtkCellRenderer *renderer,
                              GtkTreeModel *model, GtkTreeIter *iter,
                              gpointer user_data);
