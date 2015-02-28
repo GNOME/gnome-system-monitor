@@ -26,6 +26,7 @@ gnome_system_monitor_cpp_files = \
 	smooth_refresh.cpp \
 	disks.cpp \
 	selinux.cpp \
+	systemd.cpp \
 	cgroups.cpp \
 	gsm_gnomesu.cpp \
 	gsm_gksu.cpp \

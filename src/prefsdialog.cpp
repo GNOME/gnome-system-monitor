@@ -11,6 +11,7 @@
 #include "proctable.h"
 #include "selinux.h"
 #include "settings-keys.h"
+#include "systemd.h"
 #include "util.h"
 
 static GtkWidget *prefs_dialog = NULL;
@@ -179,10 +180,8 @@ create_field_page(GtkBuilder* builder, GtkWidget *tree, const gchar *widgetname)
              column_id == COL_SESSION ||
              column_id == COL_SEAT ||
              column_id == COL_OWNER)
-#ifdef HAVE_SYSTEMD
-            && !LOGIND_RUNNING()
-#endif
-                )
+            && !procman::systemd_logind_running()
+            )
             continue;
 
         visible = gtk_tree_view_column_get_visible (column);

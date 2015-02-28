@@ -43,10 +43,6 @@
 #include <set>
 #include <list>
 
-#ifdef HAVE_SYSTEMD
-#include <systemd/sd-login.h>
-#endif
-
 #ifdef HAVE_WNCK
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
@@ -61,6 +57,7 @@
 #include "settings-keys.h"
 #include "cgroups.h"
 #include "treeview.h"
+#include "systemd.h"
 
 ProcInfo::UserMap ProcInfo::users;
 ProcInfo::List ProcInfo::all;
@@ -554,9 +551,7 @@ proctable_new (GsmApplication * const app)
     if (!cgroups_enabled ())
         gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_CGROUP);
 
-#ifdef HAVE_SYSTEMD
-    if (!LOGIND_RUNNING ())
-#endif
+    if (!procman::systemd_logind_running())
     {
         gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_UNIT);
         gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_SESSION);
@@ -853,35 +848,6 @@ remove_info_from_tree (GsmApplication *app, GtkTreeModel *model,
     procman::poison(current->node, 0x69);
 }
 
-static void
-get_process_systemd_info(ProcInfo *info)
-{
-#ifdef HAVE_SYSTEMD
-    uid_t uid;
-
-    if (!LOGIND_RUNNING())
-        return;
-
-    free(info->unit);
-    info->unit = NULL;
-    sd_pid_get_unit(info->pid, &info->unit);
-
-    free(info->session);
-    info->session = NULL;
-    sd_pid_get_session(info->pid, &info->session);
-
-    free(info->seat);
-    info->seat = NULL;
-
-    if (info->session != NULL)
-        sd_session_get_seat(info->session, &info->seat);
-
-    if (sd_pid_get_owner_uid(info->pid, &uid) >= 0)
-        info->owner = info->lookup_user(uid);
-    else
-        info->owner = "";
-#endif
-}
 
 static void
 update_info (GsmApplication *app, ProcInfo *info)
@@ -930,7 +896,7 @@ update_info (GsmApplication *app, ProcInfo *info)
     /* get cgroup data */
     get_process_cgroup_info(info);
 
-    get_process_systemd_info(info);
+    procman::get_process_systemd_info(info);
 }
 
 ProcInfo::ProcInfo(pid_t pid)
