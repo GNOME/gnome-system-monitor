@@ -681,16 +681,20 @@ get_process_memory_writable (ProcInfo *info)
 
     maps = glibtop_get_proc_map(&buf, info->pid);
 
+    const bool use_private_dirty = buf.flags & (1 << GLIBTOP_MAP_ENTRY_PRIVATE_DIRTY);
+
     gulong memwritable = 0;
     const unsigned number = buf.number;
 
     for (unsigned i = 0; i < number; ++i) {
-#ifdef __linux__
-        memwritable += maps[i].private_dirty;
-#else
-        if (maps[i].perm & GLIBTOP_MAP_PERM_WRITE)
+        if (use_private_dirty) {
+            // clang++ 3.4 is not smart enough to move this invariant out of the loop
+            // but who cares ?
+            memwritable += maps[i].private_dirty;
+        }
+        else if (maps[i].perm & GLIBTOP_MAP_PERM_WRITE) {
             memwritable += maps[i].size;
-#endif
+        }
     }
 
     info->memwritable = memwritable;
