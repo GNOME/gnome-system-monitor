@@ -7,7 +7,7 @@
 
 #include <algorithm>
 
-struct ProcInfo;
+class ProcInfo;
 struct LoadGraph;
 
 #include "smooth_refresh.h"
