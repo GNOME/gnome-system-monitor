@@ -89,6 +89,7 @@ namespace
         GtkLabel *count;
         GsmApplication *app;
         bool case_insensitive;
+        bool regex_error_displayed;
 
 
         GUI()
@@ -97,7 +98,8 @@ namespace
               window(NULL),
               count(NULL),
               app(NULL),
-              case_insensitive()
+              case_insensitive(),
+              regex_error_displayed(false)
         {
             procman_debug("New Lsof GUI %p", this);
         }
@@ -106,24 +108,6 @@ namespace
         ~GUI()
         {
             procman_debug("Destroying Lsof GUI %p", this);
-        }
-
-
-        void display_regex_error(const Glib::RegexError& error)
-        {
-            char * msg = g_strdup_printf ("<b>%s</b>\n%s\n%s",
-                                          _("Error"),
-                                          _("'%s' is not a valid Perl regular expression."),
-                                          "%s");
-            std::string message = make_string(g_strdup_printf(msg, this->pattern().c_str(), error.what().c_str()));
-            g_free(msg);
-
-            Gtk::MessageDialog dialog(message,
-                                      true, // use markup
-                                      Gtk::MESSAGE_ERROR,
-                                      Gtk::BUTTONS_OK,
-                                      true); // modal
-            dialog.run();
         }
 
 
@@ -150,6 +134,8 @@ namespace
         {
             typedef std::set<string> MatchSet;
             typedef MatchSet::const_iterator iterator;
+
+            bool regex_error = false;
 
             gtk_list_store_clear(this->model);
             try {
@@ -179,7 +165,16 @@ namespace
                 this->update_count(count);
             }
             catch (Glib::RegexError& error) {
-                this->display_regex_error(error);
+                regex_error = true;
+            }
+
+            if (regex_error && !this->regex_error_displayed) {
+                this->regex_error_displayed = true;
+                gtk_style_context_add_class(gtk_widget_get_style_context(GTK_WIDGET(entry)), "error");
+            }
+            else if (!regex_error && this->regex_error_displayed) {
+                this->regex_error_displayed = false;
+                gtk_style_context_remove_class(gtk_widget_get_style_context(GTK_WIDGET(entry)), "error");
             }
         }
 
