@@ -170,11 +170,11 @@ namespace
 
             if (regex_error && !this->regex_error_displayed) {
                 this->regex_error_displayed = true;
-                gtk_style_context_add_class(gtk_widget_get_style_context(GTK_WIDGET(entry)), "error");
+                gtk_style_context_add_class(gtk_widget_get_style_context(GTK_WIDGET(entry)), GTK_STYLE_CLASS_ERROR);
             }
             else if (!regex_error && this->regex_error_displayed) {
                 this->regex_error_displayed = false;
-                gtk_style_context_remove_class(gtk_widget_get_style_context(GTK_WIDGET(entry)), "error");
+                gtk_style_context_remove_class(gtk_widget_get_style_context(GTK_WIDGET(entry)), GTK_STYLE_CLASS_ERROR);
             }
         }
 
