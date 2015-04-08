@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-09-18 11:26+0000\n"
-"PO-Revision-Date: 2013-09-20 18:26+0300\n"
+"POT-Creation-Date: 2014-08-31 07:44+0000\n"
+"PO-Revision-Date: 2014-08-31 12:51+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
 "Language-Team: Estonian <>\n"
 "Language: et\n"
@@ -32,11 +32,18 @@ msgstr "Süsteemijälgija"
 msgid "View current processes and monitor system state"
 msgstr "Süsteemi oleku ja protsesside jälgimine"
 
-msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
-msgstr "Monitor;Süsteem;Protsess;Protsessor;CPU;Mälu;Võrk;Ajalugu;Kasutus;"
+msgid ""
+"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
+"Manager;"
+msgstr ""
+"Monitor;Süsteem;Protsess;Protsessor;CPU;Mälu;Võrk;Ajalugu;Kasutus;Jõudlus;"
+"Suutlikkus;Ülesanne;Programm;Haldur;Haldamine;"
 
 msgid "GNOME System Monitor"
 msgstr "GNOME süsteemijälgija"
+
+msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
+msgstr "Monitor;Süsteem;Protsess;Protsessor;CPU;Mälu;Võrk;Ajalugu;Kasutus;"
 
 msgid "View and manage system resources"
 msgstr "Süsteemi ressursside kuvamine ja haldus"
@@ -125,23 +132,11 @@ msgctxt "Window title for 'Search for Open Files' dialog"
 msgid "Search for Open Files"
 msgstr "Avatud failide otsing"
 
-msgid "_Name contains:"
-msgstr "_Nimi sisaldab:"
+msgid "Filter files by name"
+msgstr "Failide filtreerimine nime järgi"
 
-msgid "_Find"
-msgstr "_Otsi"
-
-msgid "Case insensitive matching"
-msgstr "Tõstutundetu otsing"
-
-msgid "C_lear"
-msgstr "_Puhasta"
-
-msgid "S_earch results:"
-msgstr "O_tsingutulemused:"
-
-msgid "_Close"
-msgstr "_Sulge"
+msgid "Case insensitive"
+msgstr "Tõstutundetu"
 
 msgctxt "Menu item to Open 'Search for Open Files' dialog"
 msgid "Search for Open Files"
@@ -222,9 +217,6 @@ msgstr "Avatud failid"
 
 msgid "System Monitor Preferences"
 msgstr "Süsteemijälgija eelistused"
-
-msgid "_Help"
-msgstr "A_bi"
 
 msgid "Behavior"
 msgstr "Käitumine"
@@ -402,6 +394,18 @@ msgstr "Viga"
 #, c-format
 msgid "'%s' is not a valid Perl regular expression."
 msgstr "'%s' pole korrektne Perli regulaaravaldis."
+
+#, c-format
+msgid "%d open file"
+msgid_plural "%d open files"
+msgstr[0] "%d avatud fail"
+msgstr[1] "%d avatud faili"
+
+#, c-format
+msgid "%d matching open file"
+msgid_plural "%d matching open files"
+msgstr[0] "%d sobiv avatud fail"
+msgstr[1] "%d sobivat avatud faili"
 
 msgid "Process"
 msgstr "Protsess"
@@ -931,12 +935,9 @@ msgstr "Ootekanal"
 msgid "Control Group"
 msgstr "Juhtgrupp"
 
-msgid "Process Properties"
-msgstr "Protsessi omadused"
-
 #, c-format
-msgid "Properties of process \"%s\" (PID %u):"
-msgstr "Protsessi \"%s\" omadused (PID %u):"
+msgid "%s (PID %u)"
+msgstr "%s (PID %u)"
 
 #, no-c-format
 msgid "% CPU"
@@ -1055,6 +1056,30 @@ msgstr "Väga madal prioriteet"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Name contains:"
+#~ msgstr "_Nimi sisaldab:"
+
+#~ msgid "_Find"
+#~ msgstr "_Otsi"
+
+#~ msgid "C_lear"
+#~ msgstr "_Puhasta"
+
+#~ msgid "S_earch results:"
+#~ msgstr "O_tsingutulemused:"
+
+#~ msgid "_Close"
+#~ msgstr "_Sulge"
+
+#~ msgid "_Help"
+#~ msgstr "A_bi"
+
+#~ msgid "Process Properties"
+#~ msgstr "Protsessi omadused"
+
+#~ msgid "Properties of process \"%s\" (PID %u):"
+#~ msgstr "Protsessi \"%s\" omadused (PID %u):"
 
 #~ msgid "Privileges are required to kill process"
 #~ msgstr "Protsessi kõrvaldamiseks on vajalikud vastavad õigused"
@@ -1176,9 +1201,6 @@ msgstr "%s/s"
 
 #~ msgid "Search for _Open Files"
 #~ msgstr "_Otsi avatud faile"
-
-#~ msgid "Search for open files"
-#~ msgstr "Avatud failide otsimine"
 
 #~ msgid "Quit the program"
 #~ msgstr "Programmist väljumine"
