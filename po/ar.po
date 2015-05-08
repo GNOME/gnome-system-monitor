@@ -7,7 +7,7 @@
 # Sayed Jaffer Al-Mosawi <mosawi@arabeyes.org>, 2002, 2004.
 # Abdulaziz Al-Arfaj <alarfaj0@yahoo.com>, 2004, 2005.
 # Djihed Afifi <djihed@gmail.com>, 2006.
-# Khaled Hosny <khaledhosny@eglug.org>, 2006, 2007, 2008, 2009, 2010, 2011, 2013.
+# Khaled Hosny <khaledhosny@eglug.org>, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015.
 # Anas Husseini <linux.anas@gmail.com>, 2007.
 # Anas Afif Emad <anas.e87@gmail.com, 2008, 2009.
 # Ibrahim Saed <ibraheem5000@gmail.com>, 2012.
@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-16 18:20+0200\n"
-"PO-Revision-Date: 2013-09-16 18:32+0200\n"
+"POT-Creation-Date: 2015-05-08 21:44+0200\n"
+"PO-Revision-Date: 2015-05-08 21:47+0200\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "Language: ar\n"
@@ -26,11 +26,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Virtaal 0.7.1-rc1\n"
+"X-Generator: Virtaal 0.7.1\n"
 "X-Project-Style: gnome\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/application.cpp:233 ../src/interface.cpp:363
+#: ../src/application.cpp:268 ../src/interface.cpp:363
 msgid "System Monitor"
 msgstr "مرقاب النّظام"
 
@@ -40,13 +40,43 @@ msgid "View current processes and monitor system state"
 msgstr "اعرض العمليات الحالية و راقب حالة النظام"
 
 #: ../gnome-system-monitor.desktop.in.in.h:3
+msgid ""
+"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
+"Manager;"
+msgstr "مراقب;مرقاب;نظام;عملية;معالج;ذاكرة;شبكة;تأريخ;تاريخ;استخدام;"
+
+#: ../gnome-system-monitor-kde.desktop.in.in.h:1
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:324
+msgid "GNOME System Monitor"
+msgstr "مراقب نظام جنوم"
+
 #: ../gnome-system-monitor-kde.desktop.in.in.h:3
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr "مراقب;مرقاب;نظام;عملية;معالج;ذاكرة;شبكة;تأريخ;تاريخ;استخدام;"
 
-#: ../gnome-system-monitor-kde.desktop.in.in.h:1 ../src/application.cpp:289
-msgid "GNOME System Monitor"
-msgstr "مراقب نظام جنوم"
+#: ../gnome-system-monitor.appdata.xml.in.h:2
+msgid "View and manage system resources"
+msgstr ""
+
+#: ../gnome-system-monitor.appdata.xml.in.h:3
+msgid ""
+"System Monitor is a process viewer and system monitor with an attractive, "
+"easy-to-use interface."
+msgstr ""
+
+#: ../gnome-system-monitor.appdata.xml.in.h:4
+msgid ""
+"System Monitor can help you find out what applications are using the "
+"processor or the memory of your computer, can manage the running "
+"applications, force stop processes not responding, and change the state or "
+"priority of existing processes."
+msgstr ""
+
+#: ../gnome-system-monitor.appdata.xml.in.h:5
+msgid ""
+"The resource graphs feature shows you a quick overview of what is going on "
+"with your computer displaying recent network, memory and processor usage."
+msgstr ""
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
 msgid "Kill process"
@@ -72,7 +102,7 @@ msgstr "أ_نه العملية"
 msgid "Show process properties"
 msgstr "أظهر خصائص العملية"
 
-#: ../data/interface.ui.h:4 ../data/preferences.ui.h:11
+#: ../data/interface.ui.h:4 ../data/preferences.ui.h:9
 msgid "Processes"
 msgstr "العمليّات"
 
@@ -85,7 +115,7 @@ msgid "Memory and Swap History"
 msgstr "تاريخ الذاكرة و الذاكرة البديلة"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:260
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:334
 msgid "Memory"
 msgstr "الذاكرة"
 
@@ -113,11 +143,11 @@ msgstr "المُرسَل"
 msgid "Total Sent"
 msgstr "المجموع المُرسَل"
 
-#: ../data/interface.ui.h:14 ../data/preferences.ui.h:15
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:13
 msgid "Resources"
 msgstr "الموارد"
 
-#: ../data/interface.ui.h:15 ../data/preferences.ui.h:18
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:16
 msgid "File Systems"
 msgstr "أنظمة الملفات"
 
@@ -127,29 +157,12 @@ msgid "Search for Open Files"
 msgstr "ابحث عن الملفات المفتوحة"
 
 #: ../data/lsof.ui.h:2
-msgid "_Name contains:"
-msgstr "الا_سم يحتوي:"
+msgid "Filter files by name"
+msgstr "رشِّح الملفات بالاسم"
 
 #: ../data/lsof.ui.h:3
-msgid "_Find"
-msgstr "ا_بحث"
-
-#: ../data/lsof.ui.h:4
-msgid "Case insensitive matching"
-msgstr "مُطابَقة غير حساسة للحالة"
-
-#: ../data/lsof.ui.h:5
-msgid "C_lear"
-msgstr "ا_مسح"
-
-#: ../data/lsof.ui.h:6
-msgid "S_earch results:"
-msgstr "نتائج ال_بحث:"
-
-#: ../data/lsof.ui.h:7 ../data/openfiles.ui.h:2 ../data/preferences.ui.h:3
-#: ../src/memmaps.cpp:438 ../src/procproperties.cpp:216
-msgid "_Close"
-msgstr "أ_غلق"
+msgid "Case insensitive"
+msgstr "غير حساس لحالة الأحرف"
 
 #: ../data/menus.ui.h:1
 msgctxt "Menu item to Open 'Search for Open Files' dialog"
@@ -212,23 +225,23 @@ msgstr "ا_قتل"
 msgid "_Change Priority"
 msgstr "_غيّر الأولوية"
 
-#: ../data/menus.ui.h:16 ../src/util.cpp:214
+#: ../data/menus.ui.h:16 ../src/util.cpp:215
 msgid "Very High"
 msgstr "مرتفعة جدًا"
 
-#: ../data/menus.ui.h:17 ../src/util.cpp:216
+#: ../data/menus.ui.h:17 ../src/util.cpp:217
 msgid "High"
 msgstr "مرتفعة"
 
-#: ../data/menus.ui.h:18 ../src/util.cpp:218
+#: ../data/menus.ui.h:18 ../src/util.cpp:219
 msgid "Normal"
 msgstr "طبيعية"
 
-#: ../data/menus.ui.h:19 ../src/util.cpp:220
+#: ../data/menus.ui.h:19 ../src/util.cpp:221
 msgid "Low"
 msgstr "منخفضة"
 
-#: ../data/menus.ui.h:20 ../src/util.cpp:222
+#: ../data/menus.ui.h:20 ../src/util.cpp:223
 msgid "Very Low"
 msgstr "منخفضة جدًا"
 
@@ -258,58 +271,54 @@ msgid "System Monitor Preferences"
 msgstr "تفضيلات مرقاب النّظام"
 
 #: ../data/preferences.ui.h:2
-msgid "_Help"
-msgstr "م_ساعدة"
-
-#: ../data/preferences.ui.h:4
 msgid "Behavior"
 msgstr "السلوك"
 
-#: ../data/preferences.ui.h:5
+#: ../data/preferences.ui.h:3
 msgid "_Update interval in seconds:"
 msgstr "ال_مدة بالثانية بين التحديثات الآلية:"
 
-#: ../data/preferences.ui.h:6
+#: ../data/preferences.ui.h:4
 msgid "Enable _smooth refresh"
 msgstr "_فعّل التحديث المرن"
 
-#: ../data/preferences.ui.h:7
+#: ../data/preferences.ui.h:5
 msgid "Alert before ending or _killing processes"
 msgstr "نبّه عند إنهاء أو _قتل العمليّات"
 
-#: ../data/preferences.ui.h:8
+#: ../data/preferences.ui.h:6
 msgid "_Divide CPU usage by CPU count"
 msgstr "_قسّم استخدام المعالج على عدد المعالجات"
 
-#: ../data/preferences.ui.h:9
+#: ../data/preferences.ui.h:7
 msgid "Information Fields"
 msgstr "حقول المعلومات"
 
-#: ../data/preferences.ui.h:10
+#: ../data/preferences.ui.h:8
 msgid "Process i_nformation shown in list:"
 msgstr "_معلومات العمليات المعروضة في القائمة:"
 
-#: ../data/preferences.ui.h:12
+#: ../data/preferences.ui.h:10
 msgid "Graphs"
 msgstr "رسوم بيانية"
 
-#: ../data/preferences.ui.h:13
+#: ../data/preferences.ui.h:11
 msgid "_Draw CPU chart as stacked area chart"
 msgstr "ار_سم رسم المعالج البياني على شكل مناطق متراصة"
 
-#: ../data/preferences.ui.h:14
+#: ../data/preferences.ui.h:12
 msgid "_Show network speed in bits"
 msgstr "ا_عرض سرعة الشبكة بالبتات"
 
-#: ../data/preferences.ui.h:16
+#: ../data/preferences.ui.h:14
 msgid "Show _all file systems"
 msgstr "أظهر _كل أنظمة الملفات"
 
-#: ../data/preferences.ui.h:17
+#: ../data/preferences.ui.h:15
 msgid "File system i_nformation shown in list:"
 msgstr "م_علومات نظام الملفات معروضة في قائمة:"
 
-#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:124
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:123
 msgid "_Cancel"
 msgstr "أ_لغِ"
 
@@ -329,51 +338,51 @@ msgstr ""
 "<small><i><b>ملاحظة:</b> أولوية العملية معطاة بقيمة nice. كلما انخفضت قيمت "
 "nice كلما أشارت لأولوية أكبر.</i></small>"
 
-#: ../src/application.cpp:275
+#: ../src/application.cpp:310
 msgid "A simple process and system monitor."
 msgstr "مرقاب مبسّط للنظام والعمليات."
 
-#: ../src/argv.cpp:21
+#: ../src/argv.cpp:22
 msgid "Show the Processes tab"
 msgstr "أظهر لسان العمليات"
 
-#: ../src/argv.cpp:26
+#: ../src/argv.cpp:27
 msgid "Show the Resources tab"
 msgstr "أظهر لسان الموارد"
 
-#: ../src/argv.cpp:31
+#: ../src/argv.cpp:32
 msgid "Show the File Systems tab"
 msgstr "أظهر لسان أنظمة الملفات"
 
-#: ../src/argv.cpp:35
+#: ../src/argv.cpp:36
 msgid "Show the application's version"
 msgstr "اعرض إصدار التطبيق"
 
-#: ../src/disks.cpp:369 ../src/memmaps.cpp:325
+#: ../src/disks.cpp:361 ../src/memmaps.cpp:329
 msgid "Device"
 msgstr "الجهاز"
 
-#: ../src/disks.cpp:370
+#: ../src/disks.cpp:362
 msgid "Directory"
 msgstr "الدليل"
 
-#: ../src/disks.cpp:371 ../src/gsm_color_button.c:166 ../src/openfiles.cpp:252
+#: ../src/disks.cpp:363 ../src/gsm_color_button.c:165 ../src/openfiles.cpp:252
 msgid "Type"
 msgstr "النوع"
 
-#: ../src/disks.cpp:372
+#: ../src/disks.cpp:364
 msgid "Total"
 msgstr "المجموع"
 
-#: ../src/disks.cpp:373
+#: ../src/disks.cpp:365
 msgid "Free"
 msgstr "الخالي"
 
-#: ../src/disks.cpp:374
+#: ../src/disks.cpp:366
 msgid "Available"
 msgstr "المتوفر"
 
-#: ../src/disks.cpp:375
+#: ../src/disks.cpp:367
 msgid "Used"
 msgstr "المُستخدَم"
 
@@ -402,58 +411,58 @@ msgstr "%Oe %b %Ol:%OM %p"
 msgid "%b %d %Y"
 msgstr "%Oe %b %Y"
 
-#: ../src/gsm_color_button.c:142
+#: ../src/gsm_color_button.c:141
 msgid "Fraction"
 msgstr "جزء"
 
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:144
+#: ../src/gsm_color_button.c:143
 msgid "Percentage full for pie color pickers"
 msgstr "النسبة كلية لمنتقيات اللون الدائرية"
 
-#: ../src/gsm_color_button.c:151
+#: ../src/gsm_color_button.c:150
 msgid "Title"
 msgstr "عنوان"
 
-#: ../src/gsm_color_button.c:152
+#: ../src/gsm_color_button.c:151
 msgid "The title of the color selection dialog"
 msgstr "عنوان حوار انتقاء الألوان"
 
-#: ../src/gsm_color_button.c:153 ../src/gsm_color_button.c:513
+#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:512
 msgid "Pick a Color"
 msgstr "اختر لونًا"
 
-#: ../src/gsm_color_button.c:159
+#: ../src/gsm_color_button.c:158
 msgid "Current Color"
 msgstr "اللون الحالي"
 
-#: ../src/gsm_color_button.c:160
+#: ../src/gsm_color_button.c:159
 msgid "The selected color"
 msgstr "اللون المُختار"
 
-#: ../src/gsm_color_button.c:167
+#: ../src/gsm_color_button.c:166
 msgid "Type of color picker"
 msgstr "نوع منتقي اللون"
 
-#: ../src/gsm_color_button.c:435
+#: ../src/gsm_color_button.c:434
 msgid "Received invalid color data\n"
 msgstr "تلقيت بيانات لون غير سليمة\n"
 
-#: ../src/gsm_color_button.c:536
+#: ../src/gsm_color_button.c:535
 msgid "Click to set graph colors"
 msgstr "انقر لضبط ألوان الرسم البياني"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:188
+#: ../src/interface.cpp:187
 #, c-format
 msgid "Pick a Color for '%s'"
 msgstr "اختر لونًا لـ '%s'"
 
-#: ../src/interface.cpp:221 ../src/procproperties.cpp:95
+#: ../src/interface.cpp:220 ../src/procproperties.cpp:77
 msgid "CPU"
 msgstr "المعالج"
 
-#: ../src/interface.cpp:223
+#: ../src/interface.cpp:222
 #, c-format
 msgid "CPU%d"
 msgstr "المعالج %Id"
@@ -469,7 +478,7 @@ msgstr ""
 "أنس عفيف عماد\t<anas.e87@gmail.com>\n"
 "إبراهيم سعيد\t<ibraheem5000@gmail.com>"
 
-#: ../src/load-graph.cpp:160
+#: ../src/load-graph.cpp:161
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
@@ -480,94 +489,107 @@ msgstr[3] "%Iu ثوان"
 msgstr[4] "%Iu ثانية"
 msgstr[5] "%Iu ثانية"
 
-#: ../src/load-graph.cpp:375
+#: ../src/load-graph.cpp:370
 msgid "not available"
 msgstr "غير متوفر"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:378
+#: ../src/load-graph.cpp:373
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) من %s"
 
-#: ../src/lsof.cpp:123
-msgid "Error"
-msgstr "خطأ"
-
-#: ../src/lsof.cpp:124
+#: ../src/lsof.cpp:118
 #, c-format
-msgid "'%s' is not a valid Perl regular expression."
-msgstr "'%s' ليس تعبير نمطي صالح في بِرل."
+msgid "%d open file"
+msgid_plural "%d open files"
+msgstr[0] "لا ملفّات مفتوحة"
+msgstr[1] "ملف واحد مفتوح"
+msgstr[2] "ملفّان مفتوحان"
+msgstr[3] "%d ملفّات مفتوحة"
+msgstr[4] "%d ملفًّا مفتوحًا"
+msgstr[5] "%d ملف مفتوح"
 
-#: ../src/lsof.cpp:270
+#: ../src/lsof.cpp:120
+#, c-format
+msgid "%d matching open file"
+msgid_plural "%d matching open files"
+msgstr[0] "لا ملفّات مفتوحة مطابقة"
+msgstr[1] "ملف واحد مفتوح مطابق"
+msgstr[2] "ملفّان مفتوحان مطابقان"
+msgstr[3] "%d ملفّات مفتوحة مطابقة"
+msgstr[4] "%d ملفًّا مفتوحًا مطابقًا"
+msgstr[5] "%d ملف مفتوح مطابق"
+
+#: ../src/lsof.cpp:247
 msgid "Process"
 msgstr "عمليّة"
 
-#: ../src/lsof.cpp:282
+#: ../src/lsof.cpp:259
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:292 ../src/memmaps.cpp:303
+#: ../src/lsof.cpp:269 ../src/memmaps.cpp:307
 msgid "Filename"
 msgstr "اسم الملف"
 
 #. xgettext: virtual memory start
-#: ../src/memmaps.cpp:305
+#: ../src/memmaps.cpp:309
 msgid "VM Start"
 msgstr "بداية الذاكرة الافتراضية"
 
 #. xgettext: virtual memory end
-#: ../src/memmaps.cpp:307
+#: ../src/memmaps.cpp:311
 msgid "VM End"
 msgstr "نهاية الذاكرة الافتراضية"
 
 #. xgettext: virtual memory syze
-#: ../src/memmaps.cpp:309
+#: ../src/memmaps.cpp:313
 msgid "VM Size"
 msgstr "حجم الذاكرة الافتراضية"
 
-#: ../src/memmaps.cpp:310
+#: ../src/memmaps.cpp:314
 msgid "Flags"
 msgstr "خيارات"
 
 #. xgettext: virtual memory offset
-#: ../src/memmaps.cpp:312
+#: ../src/memmaps.cpp:316
 msgid "VM Offset"
 msgstr "إزاحة الذاكرة الافتراضية"
 
 #. xgettext: memory that has not been modified since
 #. it has been allocated
-#: ../src/memmaps.cpp:315
+#: ../src/memmaps.cpp:319
 msgid "Private clean"
 msgstr "نظيفة خاصة"
 
 #. xgettext: memory that has been modified since it
 #. has been allocated
-#: ../src/memmaps.cpp:318
+#: ../src/memmaps.cpp:322
 msgid "Private dirty"
 msgstr "وسخة خاصة"
 
 #. xgettext: shared memory that has not been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:321
+#: ../src/memmaps.cpp:325
 msgid "Shared clean"
 msgstr "نظيفة مشتركة"
 
 #. xgettext: shared memory that has been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:324
+#: ../src/memmaps.cpp:328
 msgid "Shared dirty"
 msgstr "وسخة مشتركة"
 
-#: ../src/memmaps.cpp:326
+#: ../src/memmaps.cpp:330
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.cpp:436
+#: ../src/memmaps.cpp:440
 msgid "Memory Maps"
 msgstr "خرائط الذاكرة"
 
-#: ../src/memmaps.cpp:448
+#: ../src/memmaps.cpp:452
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "خرائط ال_ذاكرة للعملية «%s» ‏(PID %Iu):"
@@ -607,7 +629,7 @@ msgstr "و.م."
 msgid "Object"
 msgstr "كائن"
 
-#: ../src/openfiles.cpp:337
+#: ../src/openfiles.cpp:336
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "ال_ملفات المفتوحة بالعملية «%s» ‏(PID %Iu):"
@@ -1012,11 +1034,11 @@ msgstr "العمود المرتب في الملفات المفتوحة"
 msgid "Open files sort order"
 msgstr "اتجاه الترتيب في الملفات المفتوحة"
 
-#: ../src/prefsdialog.cpp:181
+#: ../src/prefsdialog.cpp:171
 msgid "Icon"
 msgstr "أيقونة"
 
-#: ../src/procactions.cpp:76
+#: ../src/procactions.cpp:75
 #, c-format
 msgid ""
 "Cannot change the priority of process with PID %d to %d.\n"
@@ -1025,7 +1047,7 @@ msgstr ""
 "لا يمكن تغيير أولوية العملية ذات PID %Id إلى %Id.\n"
 "%s"
 
-#: ../src/procactions.cpp:154
+#: ../src/procactions.cpp:153
 #, c-format
 msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
@@ -1035,19 +1057,19 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: ../src/procdialogs.cpp:76
+#: ../src/procdialogs.cpp:75
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr "أمتأكّد أنك تريد قتل العمليّة المُختارة “%s” ‏(PID: %u)؟"
 
 #. xgettext: primary alert message for ending single process
-#: ../src/procdialogs.cpp:81
+#: ../src/procdialogs.cpp:80
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr "أمتأكّد أنك تريد إنهاء العمليّة المُختارة “%s” ‏(PID: %u)؟"
 
 #. xgettext: primary alert message for killing multiple processes
-#: ../src/procdialogs.cpp:88
+#: ../src/procdialogs.cpp:87
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
@@ -1059,7 +1081,7 @@ msgstr[4] "أمتأكّد أنك تريد قتل %d عمليّة مُختارة�
 msgstr[5] "أمتأكّد أنك تريد قتل %d عمليّة مُختارة؟"
 
 #. xgettext: primary alert message for ending multiple processes
-#: ../src/procdialogs.cpp:92
+#: ../src/procdialogs.cpp:91
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
@@ -1071,7 +1093,7 @@ msgstr[4] "أمتأكّد أنك تريد إنهاء %d عمليّة مُختا�
 msgstr[5] "أمتأكّد أنك تريد إنهاء %d عمليّة مُختارة؟"
 
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:99 ../src/procdialogs.cpp:105
+#: ../src/procdialogs.cpp:98 ../src/procdialogs.cpp:104
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1079,7 +1101,7 @@ msgstr ""
 "قتل عملية قد يؤدي إلى تدمير البيانات أو إيقاف الجلسة أو تعريض النظام لخطر "
 "أمني. ينبغي قتل العمليات غير المستجيبة فقط."
 
-#: ../src/procdialogs.cpp:102
+#: ../src/procdialogs.cpp:101
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "ا_قتل العملية"
@@ -1089,7 +1111,7 @@ msgstr[3] "ا_قتل العمليات"
 msgstr[4] "ا_قتل العمليات"
 msgstr[5] "ا_قتل العمليات"
 
-#: ../src/procdialogs.cpp:108
+#: ../src/procdialogs.cpp:107
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "أ_نه العملية"
@@ -1099,12 +1121,12 @@ msgstr[3] "أ_نه العمليات"
 msgstr[4] "أ_نه العمليات"
 msgstr[5] "أ_نه العمليات"
 
-#: ../src/procdialogs.cpp:189
+#: ../src/procdialogs.cpp:188
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "غيّر أولوية العملية “%s” ‏(PID: %u)"
 
-#: ../src/procdialogs.cpp:192
+#: ../src/procdialogs.cpp:191
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
@@ -1115,11 +1137,11 @@ msgstr[3] "غيّر أولوية %d عمليات مختارة"
 msgstr[4] "غيّر أولوية %d عملية مختارة"
 msgstr[5] "غيّر أولوية %d عملية مختارة"
 
-#: ../src/procdialogs.cpp:211
+#: ../src/procdialogs.cpp:210
 msgid "Note:"
 msgstr "ملاحظة:"
 
-#: ../src/procdialogs.cpp:212
+#: ../src/procdialogs.cpp:211
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1127,119 +1149,105 @@ msgstr ""
 "أولوية العملية معطاة بقيمة nice. كلما انخفضت قيمت nice كلما أشارت لأولوية "
 "أكبر."
 
-#: ../src/procproperties.cpp:56 ../src/util.cpp:431
+#: ../src/procproperties.cpp:49 ../src/procproperties.cpp:83
+#: ../src/procproperties.cpp:86 ../src/util.cpp:432
 msgid "N/A"
 msgstr "غير متوفر"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:321
+#: ../src/procproperties.cpp:66 ../src/proctable.cpp:319
 msgid "Process Name"
 msgstr "اسم العملية"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:322
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:320
 msgid "User"
 msgstr "المستخدم"
 
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:323
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:321
 msgid "Status"
 msgstr "الحالة"
 
-#: ../src/procproperties.cpp:88 ../src/proctable.cpp:324
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:322
 msgid "Virtual Memory"
 msgstr "الذاكرة الافتراضية"
 
-#: ../src/procproperties.cpp:89 ../src/proctable.cpp:325
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:323
 msgid "Resident Memory"
 msgstr "الذاكرة المقيمة"
 
-#: ../src/procproperties.cpp:90 ../src/proctable.cpp:326
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:324
 msgid "Writable Memory"
 msgstr "الذّاكرة القابلة للكتابة"
 
-#: ../src/procproperties.cpp:91 ../src/proctable.cpp:327
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:325
 msgid "Shared Memory"
 msgstr "الذاكرة المشتركة"
 
-#: ../src/procproperties.cpp:93 ../src/proctable.cpp:328
+#: ../src/procproperties.cpp:75 ../src/proctable.cpp:326
 msgid "X Server Memory"
 msgstr "ذاكرة خادوم X"
 
-#: ../src/procproperties.cpp:96 ../src/proctable.cpp:330
+#: ../src/procproperties.cpp:78 ../src/proctable.cpp:328
 msgid "CPU Time"
 msgstr "وقت المعالجة"
 
-#: ../src/procproperties.cpp:96
-#, c-format
-msgid "%lld second"
-msgid_plural "%lld seconds"
-msgstr[0] "أقل من ثانية"
-msgstr[1] "ثانية واحدة"
-msgstr[2] "ثانيتان"
-msgstr[3] "%lld ثوان"
-msgstr[4] "%lld ثانية"
-msgstr[5] "%lld ثانية"
-
-#: ../src/procproperties.cpp:97 ../src/proctable.cpp:331
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:329
 msgid "Started"
 msgstr "وقت البداية"
 
-#: ../src/procproperties.cpp:98 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:330
 msgid "Nice"
 msgstr "الأولوية (Nice)"
 
-#: ../src/procproperties.cpp:99 ../src/proctable.cpp:346
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:344
 msgid "Priority"
 msgstr "الأولوية"
 
-#: ../src/procproperties.cpp:100 ../src/proctable.cpp:333
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:331
 msgid "ID"
 msgstr "الهوية"
 
-#: ../src/procproperties.cpp:101 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:332
 msgid "Security Context"
 msgstr "سياق الأمن"
 
-#: ../src/procproperties.cpp:102 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:333
 msgid "Command Line"
 msgstr "الأمر"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:103 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:336
 msgid "Waiting Channel"
 msgstr "قَناة الانتظار"
 
-#: ../src/procproperties.cpp:104 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:337
 msgid "Control Group"
 msgstr "مجموعة التحكم"
 
-#: ../src/procproperties.cpp:214
-msgid "Process Properties"
-msgstr "خصائص العمليّات"
-
-#: ../src/procproperties.cpp:234
+#: ../src/procproperties.cpp:198
 #, c-format
-msgid "Properties of process \"%s\" (PID %u):"
-msgstr "خصائص العملية «%s» ‏(PID %u):"
+msgid "%s (PID %u)"
+msgstr "%s (معرف السيرورة %u)"
 
-#: ../src/proctable.cpp:329
+#: ../src/proctable.cpp:327
 #, no-c-format
 msgid "% CPU"
 msgstr "% من المعالج"
 
-#: ../src/proctable.cpp:340
+#: ../src/proctable.cpp:338
 msgid "Unit"
 msgstr "الوحدة"
 
-#: ../src/proctable.cpp:341
+#: ../src/proctable.cpp:339
 msgid "Session"
 msgstr "الجلسة"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:344
+#: ../src/proctable.cpp:342
 msgid "Seat"
 msgstr "المقر"
 
-#: ../src/proctable.cpp:345
+#: ../src/proctable.cpp:343
 msgid "Owner"
 msgstr "المالك"
 
@@ -1287,47 +1295,47 @@ msgstr "%Iu:%02u:%02u"
 msgid "%u:%02u.%02u"
 msgstr "%Iu:%02u.%02u"
 
-#: ../src/util.cpp:163
+#: ../src/util.cpp:164
 #, c-format
 msgid "%.1f KiB"
 msgstr "%I.1f ك.بايت"
 
-#: ../src/util.cpp:164
+#: ../src/util.cpp:165
 #, c-format
 msgid "%.1f MiB"
 msgstr "%I.1f م.بايت"
 
-#: ../src/util.cpp:165
+#: ../src/util.cpp:166
 #, c-format
 msgid "%.1f GiB"
 msgstr "%I.1f ج.بايت"
 
-#: ../src/util.cpp:166
+#: ../src/util.cpp:167
 #, c-format
 msgid "%.1f TiB"
 msgstr "%I.1f ت.بايت"
 
-#: ../src/util.cpp:167
+#: ../src/util.cpp:168
 #, c-format
 msgid "%.3g kbit"
 msgstr "%.3g ك.بتة"
 
-#: ../src/util.cpp:168
+#: ../src/util.cpp:169
 #, c-format
 msgid "%.3g Mbit"
 msgstr "%.3g م.بتة"
 
-#: ../src/util.cpp:169
+#: ../src/util.cpp:170
 #, c-format
 msgid "%.3g Gbit"
 msgstr "%.3g ج.بتة"
 
-#: ../src/util.cpp:170
+#: ../src/util.cpp:171
 #, c-format
 msgid "%.3g Tbit"
 msgstr "%.3g ت.بتة"
 
-#: ../src/util.cpp:185
+#: ../src/util.cpp:186
 #, c-format
 msgid "%u bit"
 msgid_plural "%u bits"
@@ -1338,7 +1346,7 @@ msgstr[3] "%Iu بتات"
 msgstr[4] "%Iu بتة"
 msgstr[5] "%Iu بتة"
 
-#: ../src/util.cpp:186
+#: ../src/util.cpp:187
 #, c-format
 msgid "%u byte"
 msgid_plural "%u bytes"
@@ -1349,31 +1357,70 @@ msgstr[3] "%Iu بايتات"
 msgstr[4] "%Iu بايت"
 msgstr[5] "%Iu بايت"
 
-#: ../src/util.cpp:229
+#: ../src/util.cpp:230
 msgid "Very High Priority"
 msgstr "أولوية مرتفعة جدا"
 
-#: ../src/util.cpp:231
+#: ../src/util.cpp:232
 msgid "High Priority"
 msgstr "أولوية مرتفعة"
 
-#: ../src/util.cpp:233
+#: ../src/util.cpp:234
 msgid "Normal Priority"
 msgstr "أولوية عادية"
 
-#: ../src/util.cpp:235
+#: ../src/util.cpp:236
 msgid "Low Priority"
 msgstr "أولوية منخفضة"
 
-#: ../src/util.cpp:237
+#: ../src/util.cpp:238
 msgid "Very Low Priority"
 msgstr "أولوية منخفضة جدا"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:629
+#: ../src/util.cpp:630
 #, c-format
 msgid "%s/s"
 msgstr "%s/ثا"
+
+#~ msgid "_Name contains:"
+#~ msgstr "الا_سم يحتوي:"
+
+#~ msgid "_Find"
+#~ msgstr "ا_بحث"
+
+#~ msgid "C_lear"
+#~ msgstr "ا_مسح"
+
+#~ msgid "S_earch results:"
+#~ msgstr "نتائج ال_بحث:"
+
+#~ msgid "_Close"
+#~ msgstr "أ_غلق"
+
+#~ msgid "_Help"
+#~ msgstr "م_ساعدة"
+
+#~ msgid "Error"
+#~ msgstr "خطأ"
+
+#~ msgid "'%s' is not a valid Perl regular expression."
+#~ msgstr "'%s' ليس تعبير نمطي صالح في بِرل."
+
+#~ msgid "%lld second"
+#~ msgid_plural "%lld seconds"
+#~ msgstr[0] "أقل من ثانية"
+#~ msgstr[1] "ثانية واحدة"
+#~ msgstr[2] "ثانيتان"
+#~ msgstr[3] "%lld ثوان"
+#~ msgstr[4] "%lld ثانية"
+#~ msgstr[5] "%lld ثانية"
+
+#~ msgid "Process Properties"
+#~ msgstr "خصائص العمليّات"
+
+#~ msgid "Properties of process \"%s\" (PID %u):"
+#~ msgstr "خصائص العملية «%s» ‏(PID %u):"
 
 #~ msgid "System"
 #~ msgstr "النّظام"
@@ -1395,9 +1442,6 @@ msgstr "%s/ثا"
 
 #~ msgid "Search for _Open Files"
 #~ msgstr "ابحث عن ال_ملفات المفتوحة"
-
-#~ msgid "Search for open files"
-#~ msgstr "ابحث عن الملفات المفتوحة"
 
 #~ msgid "Quit the program"
 #~ msgstr "اخرج من البرنامج"
