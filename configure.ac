@@ -56,7 +56,8 @@ AC_PATH_PROG(DESKTOP_FILE_VALIDATE, desktop-file-validate)
 
 AC_ARG_ENABLE(wnck, AS_HELP_STRING([--enable-wnck], [enable wnck support]),enable_wnck="$enableval",enable_wnck=no)
 if test "x$enable_wnck" != "xno"; then
-        PKG_CHECK_MODULES(WNCK, libwnck-3.0 >= $LIBWNCK_REQUIRED)
+        PKG_CHECK_MODULES(WNCK, gdk-x11-3.0
+                                libwnck-3.0 >= $LIBWNCK_REQUIRED)
         AC_DEFINE(HAVE_WNCK, 1, [Define if libwnck is available])
 fi
 AM_CONDITIONAL(HAVE_WNCK, [test "enable_wnck" = "yes"])

@@ -43,9 +43,10 @@
 #include <set>
 #include <list>
 
-#ifdef HAVE_WNCK
+#if defined(HAVE_WNCK) && defined(GDK_WINDOWING_X11)
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
+#include <gdk/gdkx.h>
 #endif
 
 #include "application.h"
@@ -715,14 +716,19 @@ static void
 get_process_memory_info(ProcInfo *info)
 {
     glibtop_proc_mem procmem;
-#ifdef HAVE_WNCK
-    WnckResourceUsage xresources;
+    GdkDisplay *display = gdk_screen_get_display (gdk_screen_get_default ());
 
-    wnck_pid_read_resource_usage (gdk_screen_get_display (gdk_screen_get_default ()),
+#if defined(HAVE_WNCK) && defined(GDK_WINDOWING_X11)
+    if (GDK_IS_X11_DISPLAY (display)) {
+        WnckResourceUsage xresources;
+
+        wnck_pid_read_resource_usage (display,
                                   info->pid,
                                   &xresources);
 
-    info->memxserver = xresources.total_bytes_estimate;
+        info->memxserver = xresources.total_bytes_estimate;
+    }
+
 #endif
 
     glibtop_get_proc_mem(&procmem, info->pid);
@@ -732,7 +738,7 @@ get_process_memory_info(ProcInfo *info)
     info->memshared = procmem.share;
 
     info->mem = info->memres - info->memshared;
-#ifdef HAVE_WNCK
+#if defined(HAVE_WNCK) && defined(GDK_WINDOWING_X11)
     info->mem += info->memxserver;
 #endif
 }
