@@ -212,17 +212,26 @@ iter_matches_search_key (GtkTreeModel *model, GtkTreeIter *iter, const gchar *ke
 {
     char *name;
     char *user;
+    pid_t pid;
+    char *pids;
+    char *args;
     gboolean found;
 
     gtk_tree_model_get (model, iter,
                         COL_NAME, &name,
                         COL_USER, &user,
+                        COL_PID, &pid,
+                        COL_ARGS, &args,
                         -1);
 
-    found = (name && strcasestr (name, key)) || (user && strcasestr (user, key));
+    pids = g_strdup_printf ("%d", pid);
+    found = (name && strcasestr (name, key)) || (user && strcasestr (user, key))
+            || (pids && strcasestr (pids, key)) || (args && strcasestr (args, key));
 
     g_free (name);
     g_free (user);
+    g_free (args);
+    g_free (pids);
 
     return found;
 }
