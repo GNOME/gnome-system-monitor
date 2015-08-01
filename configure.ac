@@ -96,7 +96,7 @@ if test "$GCC" = "yes" -a "$set_more_warnings" != "no"; then
     -Wcast-align -Wsign-compare \
     -std=gnu89 \
     $CFLAGS"
-    CXXFLAGS="-Wall -std=c++98 $CXXFLAGS"
+    CXXFLAGS="-Wall -std=c++11 $CXXFLAGS"
 else
     AC_MSG_RESULT(no)
 fi
