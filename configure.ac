@@ -21,6 +21,7 @@ AC_PROG_CC
 AC_PROG_CXX
 AC_LANG([C++])
 AC_LANG_COMPILER_REQUIRE
+AX_CXX_COMPILE_STDCXX_11([],[mandatory])
 
 # Initialize libtool
 LT_PREREQ([2.2])
@@ -96,7 +97,7 @@ if test "$GCC" = "yes" -a "$set_more_warnings" != "no"; then
     -Wcast-align -Wsign-compare \
     -std=gnu89 \
     $CFLAGS"
-    CXXFLAGS="-Wall -std=c++11 $CXXFLAGS"
+    CXXFLAGS="-Wall $CXXFLAGS"
 else
     AC_MSG_RESULT(no)
 fi
