@@ -4,6 +4,8 @@
 #include <glib/gi18n.h>
 #include <glibtop.h>
 #include <glibtop/close.h>
+#include <glibtop/cpu.h>
+#include <glibtop/sysinfo.h>
 #include <signal.h>
 
 #include "application.h"
@@ -155,7 +157,6 @@ void
 GsmApplication::load_settings()
 {
     gchar *color;
-    gint i;
     glibtop_cpu cpu;
 
     settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
@@ -182,17 +183,10 @@ GsmApplication::load_settings()
     g_signal_connect (settings, "changed::" GSM_SETTING_DISKS_UPDATE_INTERVAL,
                       G_CALLBACK (cb_timeouts_changed), this);
 
-    /* Determine number of cpus since libgtop doesn't really tell you*/
-    config.num_cpus = 0;
     glibtop_get_cpu (&cpu);
     frequency = cpu.frequency;
-    i=0;
-    while (i < GLIBTOP_NCPU && cpu.xcpu_total[i] != 0) {
-        config.num_cpus ++;
-        i++;
-    }
-    if (config.num_cpus == 0)
-        config.num_cpus = 1;
+
+    config.num_cpus = glibtop_get_sysinfo()->ncpu; // or server->ncpu + 1
 
     apply_cpu_color_settings (settings, this);
     g_signal_connect (settings, "changed::" GSM_SETTING_CPU_COLORS,
