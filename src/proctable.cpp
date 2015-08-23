@@ -59,6 +59,10 @@
 #include "treeview.h"
 #include "systemd.h"
 
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+#endif
+
 ProcInfo::UserMap ProcInfo::users;
 ProcInfo::List ProcInfo::all;
 std::map<pid_t, guint64> ProcInfo::cpu_times;
@@ -715,14 +719,20 @@ static void
 get_process_memory_info(ProcInfo *info)
 {
     glibtop_proc_mem procmem;
+
 #ifdef HAVE_WNCK
-    WnckResourceUsage xresources;
+    info->memxserver = 0;
+#ifdef GDK_WINDOWING_X11
+    if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
+        WnckResourceUsage xresources;
 
-    wnck_pid_read_resource_usage (gdk_screen_get_display (gdk_screen_get_default ()),
-                                  info->pid,
-                                  &xresources);
+        wnck_pid_read_resource_usage (gdk_display_get_default (),
+                                      info->pid,
+                                      &xresources);
 
-    info->memxserver = xresources.total_bytes_estimate;
+        info->memxserver = xresources.total_bytes_estimate;
+    }
+#endif
 #endif
 
     glibtop_get_proc_mem(&procmem, info->pid);

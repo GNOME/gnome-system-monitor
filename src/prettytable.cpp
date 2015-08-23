@@ -24,6 +24,9 @@
 #include "proctable.h"
 #include "util.h"
 
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+#endif
 
 namespace
 {
@@ -34,11 +37,15 @@ namespace
 PrettyTable::PrettyTable()
 {
 #ifdef HAVE_WNCK
-  WnckScreen* screen = wnck_screen_get_default();
-  g_signal_connect(G_OBJECT(screen), "application_opened",
-		   G_CALLBACK(PrettyTable::on_application_opened), this);
-  g_signal_connect(G_OBJECT(screen), "application_closed",
-		   G_CALLBACK(PrettyTable::on_application_closed), this);
+#ifdef GDK_WINDOWING_X11
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
+      WnckScreen* screen = wnck_screen_get_default();
+      g_signal_connect(G_OBJECT(screen), "application_opened",
+		       G_CALLBACK(PrettyTable::on_application_opened), this);
+      g_signal_connect(G_OBJECT(screen), "application_closed",
+	               G_CALLBACK(PrettyTable::on_application_closed), this);
+  }
+#endif
 #endif
 
   // init GIO apps cache
