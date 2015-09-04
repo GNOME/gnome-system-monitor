@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-02-17 20:48+0000\n"
-"PO-Revision-Date: 2015-02-18 08:56+0100\n"
+"POT-Creation-Date: 2015-09-03 20:21+0000\n"
+"PO-Revision-Date: 2015-09-04 09:42+0200\n"
 "Last-Translator: Milo Casagrande <milo@milo.name>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -21,10 +21,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Launchpad-Export-Date: 2012-04-05 10:00+0000\n"
-"X-Generator: Poedit 1.7.4\n"
+"X-Generator: Poedit 1.8.4\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/application.cpp:268 ../src/interface.cpp:363
+#: ../src/application.cpp:262 ../src/interface.cpp:363
 msgid "System Monitor"
 msgstr "Monitor di sistema"
 
@@ -40,7 +40,7 @@ msgstr ""
 "Utilizzo;Uso;Prestazioni;Performance;Task;Lavori;Manager;Gestione;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:324
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:318
 msgid "GNOME System Monitor"
 msgstr "Monitor di sistema GNOME"
 
@@ -116,8 +116,8 @@ msgstr "Cronologia CPU"
 msgid "Memory and Swap History"
 msgstr "Cronologia memoria e swap"
 
-#: ../data/interface.ui.h:7 ../src/interface.cpp:260 ../src/procproperties.cpp:92
-#: ../src/proctable.cpp:337
+#: ../data/interface.ui.h:7 ../src/interface.cpp:260 ../src/procproperties.cpp:70
+#: ../src/proctable.cpp:347
 msgid "Memory"
 msgstr "Memoria"
 
@@ -156,7 +156,7 @@ msgid "File Systems"
 msgstr "File system"
 
 #: ../data/lsof.ui.h:1
-msgctxt "Window title for 'Search for Open Files' dialog"
+msgctxt "Window title for Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Cerca file aperti"
 
@@ -169,7 +169,7 @@ msgid "Case insensitive"
 msgstr "Nessuna distinzione tra maiuscole/minuscole"
 
 #: ../data/menus.ui.h:1
-msgctxt "Menu item to Open 'Search for Open Files' dialog"
+msgctxt "Menu item to Open Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Cerca file aperti"
 
@@ -343,7 +343,7 @@ msgstr ""
 "<small><i><b>Nota:</b> la priorità di un processo è data dal suo valore di nice. Un "
 "valore più basso corrisponde a una priorità più alta.</i></small>"
 
-#: ../src/application.cpp:310
+#: ../src/application.cpp:304
 msgid "A simple process and system monitor."
 msgstr "Un semplice monitor dei processi e del sistema."
 
@@ -468,7 +468,7 @@ msgstr "Fare clic per impostare i colori del grafico"
 msgid "Pick a Color for '%s'"
 msgstr "Scelta colore per «%s»"
 
-#: ../src/interface.cpp:220 ../src/procproperties.cpp:100
+#: ../src/interface.cpp:220 ../src/procproperties.cpp:78
 msgid "CPU"
 msgstr "CPU"
 
@@ -503,38 +503,29 @@ msgstr "non disponibile"
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) di %s"
 
-#: ../src/lsof.cpp:115
-msgid "Error"
-msgstr "Errore"
-
-#: ../src/lsof.cpp:116
-#, c-format
-msgid "'%s' is not a valid Perl regular expression."
-msgstr "«%s» non è un'espressione regolare valida in Perl."
-
-#: ../src/lsof.cpp:134
+#: ../src/lsof.cpp:118
 #, c-format
 msgid "%d open file"
 msgid_plural "%d open files"
 msgstr[0] "%d file aperto"
 msgstr[1] "%d file aperti"
 
-#: ../src/lsof.cpp:136
+#: ../src/lsof.cpp:120
 #, c-format
 msgid "%d matching open file"
 msgid_plural "%d matching open files"
 msgstr[0] "%d file corrispondente aperto"
 msgstr[1] "%d file corrispondenti aperti"
 
-#: ../src/lsof.cpp:252
+#: ../src/lsof.cpp:247
 msgid "Process"
 msgstr "Processi"
 
-#: ../src/lsof.cpp:264
+#: ../src/lsof.cpp:259
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:274 ../src/memmaps.cpp:307
+#: ../src/lsof.cpp:269 ../src/memmaps.cpp:307
 msgid "Filename"
 msgstr "Nome file"
 
@@ -1031,7 +1022,7 @@ msgstr "Colonna per ordinare i file aperti"
 msgid "Open files sort order"
 msgstr "Ordine dei file aperti"
 
-#: ../src/prefsdialog.cpp:170
+#: ../src/prefsdialog.cpp:171
 msgid "Icon"
 msgstr "Icona"
 
@@ -1133,115 +1124,108 @@ msgstr ""
 "la priorità di un processo è data dal suo valore di nice. Un valore più basso "
 "corrisponde a una priorità più alta."
 
-#: ../src/procproperties.cpp:55 ../src/procproperties.cpp:106
-#: ../src/procproperties.cpp:109 ../src/util.cpp:432
+#: ../src/procproperties.cpp:50 ../src/procproperties.cpp:84 ../src/procproperties.cpp:87
+#: ../src/util.cpp:432
 msgid "N/A"
 msgstr "N/D"
 
-#: ../src/procproperties.cpp:89 ../src/proctable.cpp:322
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:332
 msgid "Process Name"
 msgstr "Nome del processo"
 
-#: ../src/procproperties.cpp:90 ../src/proctable.cpp:323
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:333
 msgid "User"
 msgstr "Utente"
 
-#: ../src/procproperties.cpp:91 ../src/proctable.cpp:324
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:334
 msgid "Status"
 msgstr "Stato"
 
-#: ../src/procproperties.cpp:93 ../src/proctable.cpp:325
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:335
 msgid "Virtual Memory"
 msgstr "Memoria virtuale"
 
-#: ../src/procproperties.cpp:94 ../src/proctable.cpp:326
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:336
 msgid "Resident Memory"
 msgstr "Memoria residente"
 
-#: ../src/procproperties.cpp:95 ../src/proctable.cpp:327
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:337
 msgid "Writable Memory"
 msgstr "Memoria scrivibile"
 
-#: ../src/procproperties.cpp:96 ../src/proctable.cpp:328
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:338
 msgid "Shared Memory"
 msgstr "Memoria condivisa"
 
-#: ../src/procproperties.cpp:98 ../src/proctable.cpp:329
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:339
 msgid "X Server Memory"
 msgstr "Memoria server X"
 
-#: ../src/procproperties.cpp:101 ../src/proctable.cpp:331
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:341
 msgid "CPU Time"
 msgstr "Tempo CPU"
 
-#: ../src/procproperties.cpp:101
-#, c-format
-msgid "%lld second"
-msgid_plural "%lld seconds"
-msgstr[0] "%lld secondo"
-msgstr[1] "%lld secondi"
-
 # colonna di data e ora di avvio del processo
-#: ../src/procproperties.cpp:102 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:342
 msgid "Started"
 msgstr "Avviato"
 
-#: ../src/procproperties.cpp:103 ../src/proctable.cpp:333
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:343
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/procproperties.cpp:104 ../src/proctable.cpp:347
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:357
 msgid "Priority"
 msgstr "Priorità"
 
-#: ../src/procproperties.cpp:105 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:344
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:106 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:345
 msgid "Security Context"
 msgstr "Security Context"
 
-#: ../src/procproperties.cpp:107 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:346
 msgid "Command Line"
 msgstr "Riga di comando"
 
 # (ndt) non so come renderlo bene in italiano...
 # nel caso venga tradotto, va tradotto anche + sopra
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:108 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:349
 msgid "Waiting Channel"
 msgstr "WCHAN"
 
-#: ../src/procproperties.cpp:109 ../src/proctable.cpp:340
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:350
 msgid "Control Group"
 msgstr "Gruppo di controllo"
 
-#: ../src/procproperties.cpp:221
+#: ../src/procproperties.cpp:199
 #, c-format
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:330
+#: ../src/proctable.cpp:340
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:341
+#: ../src/proctable.cpp:351
 msgid "Unit"
 msgstr "Unità"
 
-#: ../src/proctable.cpp:342
+#: ../src/proctable.cpp:352
 msgid "Session"
 msgstr "Sessione"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:345
+#: ../src/proctable.cpp:355
 msgid "Seat"
 msgstr "Postazione"
 
-#: ../src/proctable.cpp:346
+#: ../src/proctable.cpp:356
 msgid "Owner"
 msgstr "Proprietario"
 
@@ -1368,6 +1352,21 @@ msgstr "Priorità molto bassa"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgctxt "Menu item to Open 'Search for Open Files' dialog"
+#~ msgid "Search for Open Files"
+#~ msgstr "Cerca file aperti"
+
+#~ msgid "Error"
+#~ msgstr "Errore"
+
+#~ msgid "'%s' is not a valid Perl regular expression."
+#~ msgstr "«%s» non è un'espressione regolare valida in Perl."
+
+#~ msgid "%lld second"
+#~ msgid_plural "%lld seconds"
+#~ msgstr[0] "%lld secondo"
+#~ msgstr[1] "%lld secondi"
 
 #~ msgid "_Name contains:"
 #~ msgstr "_Nome contiene:"
