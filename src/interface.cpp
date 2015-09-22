@@ -459,6 +459,7 @@ on_activate_search (GSimpleAction *action, GVariant *parameter, gpointer data)
     GVariant *state = g_action_get_state (G_ACTION (action));
     gboolean is_search_shortcut = g_variant_get_boolean (parameter);
     gboolean is_search_bar = gtk_search_bar_get_search_mode (GTK_SEARCH_BAR (app->search_bar));
+    gtk_widget_set_visible (app->search_bar, is_search_bar || is_search_shortcut);
     if (is_search_shortcut && is_search_bar) {
         gtk_widget_grab_focus (app->search_entry);
     } else {
