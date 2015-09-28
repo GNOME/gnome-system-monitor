@@ -1,17 +1,17 @@
 # Vietnamese translation for GNOME System Monitor.
-# Copyright © 2014 GNOME i18n Project for Vietnamese.
+# Copyright © 2015 GNOME i18n Project for Vietnamese.
 # This file is distributed under the same license as the gnome-system-monitor package.
 # Nguyễn Thái Ngọc Duy <pclouds@gmail.com>, 2002, 2012.
 # Clytie Siddall <clytie@riverland.net.au>, 2005-2009.
-# Trần Ngọc Quân <vnwildman@gmail.com>, 2014.
+# Trần Ngọc Quân <vnwildman@gmail.com>, 2014, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-11-27 20:37+0000\n"
-"PO-Revision-Date: 2014-12-06 08:08+0700\n"
+"POT-Creation-Date: 2015-09-27 20:48+0000\n"
+"PO-Revision-Date: 2015-09-28 08:55+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
 "Language: vi\n"
@@ -19,10 +19,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: LocFactoryEditor 1.8\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/application.cpp:268 ../src/interface.cpp:363
+#: ../src/application.cpp:262 ../src/interface.cpp:363
 msgid "System Monitor"
 msgstr "Theo dõi hệ thống"
 
@@ -42,7 +42,7 @@ msgstr ""
 "lý;quan;ly;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:324
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:318
 msgid "GNOME System Monitor"
 msgstr "Theo dõi hệ thống GNOME"
 
@@ -122,7 +122,7 @@ msgid "Memory and Swap History"
 msgstr "Lịch sử bộ nhớ và tráo đổi"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:260
-#: ../src/procproperties.cpp:92 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:347
 msgid "Memory"
 msgstr "Bộ nhớ"
 
@@ -159,7 +159,7 @@ msgid "File Systems"
 msgstr "Hệ thống tập tin"
 
 #: ../data/lsof.ui.h:1
-msgctxt "Window title for 'Search for Open Files' dialog"
+msgctxt "Window title for Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Tìm tập tin đang mở"
 
@@ -172,13 +172,13 @@ msgid "Case insensitive"
 msgstr "Không phân biệt HOA/thường"
 
 #: ../data/menus.ui.h:1
-msgctxt "Menu item to Open 'Search for Open Files' dialog"
+msgctxt "Menu item to Open Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Tìm tập tin đang mở"
 
 #: ../data/menus.ui.h:2
 msgid "Preferences"
-msgstr "Tuỳ thích"
+msgstr "Tùy thích"
 
 #: ../data/menus.ui.h:3
 msgid "Help"
@@ -242,7 +242,7 @@ msgstr "Cao"
 
 #: ../data/menus.ui.h:18 ../src/util.cpp:219
 msgid "Normal"
-msgstr "Bình thường"
+msgstr "Thường"
 
 #: ../data/menus.ui.h:19 ../src/util.cpp:221
 msgid "Low"
@@ -260,7 +260,7 @@ msgstr "Tự chọn"
 msgid "_Memory Maps"
 msgstr "Sơ đồ _bộ nhớ"
 
-#. Translators: this means 'Files that are open' (open is not a verb here)
+#. Translators: this means
 #: ../data/menus.ui.h:24
 msgid "Open _Files"
 msgstr "Mở _tập tin"
@@ -275,7 +275,7 @@ msgstr "Mở tập tin"
 
 #: ../data/preferences.ui.h:1
 msgid "System Monitor Preferences"
-msgstr "Tùy thích bộ theo dõi hệ thống"
+msgstr "Cài đặt bộ theo dõi hệ thống theo ý thích riêng"
 
 #: ../data/preferences.ui.h:2
 msgid "Behavior"
@@ -283,7 +283,7 @@ msgstr "Ứng xử"
 
 #: ../data/preferences.ui.h:3
 msgid "_Update interval in seconds:"
-msgstr "_Khoảng cập nhật, theo giây:"
+msgstr "_Thời gian cập nhật tính bằng giây:"
 
 #: ../data/preferences.ui.h:4
 msgid "Enable _smooth refresh"
@@ -295,7 +295,7 @@ msgstr "Cảnh giác trước khi buộc /_kết thúc tiến trình"
 
 #: ../data/preferences.ui.h:6
 msgid "_Divide CPU usage by CPU count"
-msgstr "_Chia sử dụng CPU theo số CPU"
+msgstr "_Chia tiêu dùng CPU theo số CPU"
 
 #: ../data/preferences.ui.h:7
 msgid "Information Fields"
@@ -346,53 +346,53 @@ msgstr ""
 "trị \"nice\" (dễ thương). Giá trị thấp hơn tương ứng với độ ưu tiên cao hơn."
 "</i></small>"
 
-#: ../src/application.cpp:310
+#: ../src/application.cpp:304
 msgid "A simple process and system monitor."
 msgstr "Một công cụ đơn giản để theo dõi hệ thống và các tiến trình đang chạy."
 
-#: ../src/argv.cpp:21
+#: ../src/argv.cpp:22
 msgid "Show the Processes tab"
 msgstr "Hiện thẻ “Tiến trình”"
 
-#: ../src/argv.cpp:26
+#: ../src/argv.cpp:27
 msgid "Show the Resources tab"
 msgstr "Hiện thẻ “Tài nguyên”"
 
-#: ../src/argv.cpp:31
+#: ../src/argv.cpp:32
 msgid "Show the File Systems tab"
 msgstr "Hiện thẻ “Hệ thống tập tin”"
 
-#: ../src/argv.cpp:35
+#: ../src/argv.cpp:36
 msgid "Show the application's version"
 msgstr "Hiện phiên bản của ứng dụng"
 
-#: ../src/disks.cpp:369 ../src/memmaps.cpp:325
+#: ../src/disks.cpp:361 ../src/memmaps.cpp:329
 msgid "Device"
 msgstr "Thiết bị"
 
-#: ../src/disks.cpp:370
+#: ../src/disks.cpp:362
 msgid "Directory"
 msgstr "Thư mục"
 
-#: ../src/disks.cpp:371 ../src/gsm_color_button.c:165 ../src/openfiles.cpp:252
+#: ../src/disks.cpp:363 ../src/gsm_color_button.c:165 ../src/openfiles.cpp:252
 msgid "Type"
 msgstr "Kiểu"
 
-#: ../src/disks.cpp:372
+#: ../src/disks.cpp:364
 msgid "Total"
 msgstr "Tổng"
 
-#: ../src/disks.cpp:373
+#: ../src/disks.cpp:365
 msgid "Free"
 msgstr "Trống"
 
-#: ../src/disks.cpp:374
+#: ../src/disks.cpp:366
 msgid "Available"
 msgstr "Sẵn dùng"
 
-#: ../src/disks.cpp:375
+#: ../src/disks.cpp:367
 msgid "Used"
-msgstr "Dùng"
+msgstr "Đã dùng"
 
 #. xgettext: ? stands for unknown
 #: ../src/e_date.c:156
@@ -466,7 +466,7 @@ msgstr "Nhấn vào để đặt màu sắc đồ thị"
 msgid "Pick a Color for '%s'"
 msgstr "Chọn màu cho “%s”"
 
-#: ../src/interface.cpp:220 ../src/procproperties.cpp:100
+#: ../src/interface.cpp:220 ../src/procproperties.cpp:78
 msgid "CPU"
 msgstr "CPU"
 
@@ -477,7 +477,7 @@ msgstr "CPU%d"
 
 #: ../src/interface.cpp:374
 msgid "translator-credits"
-msgstr "Nhóm Việt hóa GNOME (http://live.gnome.org/GnomeVi)"
+msgstr "Nhóm Việt hóa GNOME <gnome-vi-list@gnome.org>"
 
 #: ../src/load-graph.cpp:161
 #, c-format
@@ -495,96 +495,87 @@ msgstr "không sẵn sàng"
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) trên %s"
 
-#: ../src/lsof.cpp:109
-msgid "Error"
-msgstr "Lỗi"
-
-#: ../src/lsof.cpp:110
-#, c-format
-msgid "'%s' is not a valid Perl regular expression."
-msgstr "“%s” không phải là một biểu thức chính quy Perl hợp lệ."
-
-#: ../src/lsof.cpp:128
+#: ../src/lsof.cpp:118
 #, c-format
 msgid "%d open file"
 msgid_plural "%d open files"
 msgstr[0] "Mở %d tập tin"
 
-#: ../src/lsof.cpp:130
+#: ../src/lsof.cpp:120
 #, c-format
 msgid "%d matching open file"
 msgid_plural "%d matching open files"
 msgstr[0] "Tìm thấy %d tập tin đang mở khớp mẫu"
 
-#: ../src/lsof.cpp:246
+#: ../src/lsof.cpp:247
 msgid "Process"
 msgstr "Tiến trình"
 
-#: ../src/lsof.cpp:258
+#: ../src/lsof.cpp:259
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:268 ../src/memmaps.cpp:303
+#: ../src/lsof.cpp:269 ../src/memmaps.cpp:307
 msgid "Filename"
 msgstr "Tên tập tin"
 
 #. xgettext: virtual memory start
-#: ../src/memmaps.cpp:305
+#: ../src/memmaps.cpp:309
 msgid "VM Start"
 msgstr "Đầu bộ nhớ ảo"
 
 #. xgettext: virtual memory end
-#: ../src/memmaps.cpp:307
+#: ../src/memmaps.cpp:311
 msgid "VM End"
 msgstr "Cuối bộ nhớ ảo"
 
 #. xgettext: virtual memory syze
-#: ../src/memmaps.cpp:309
+#: ../src/memmaps.cpp:313
 msgid "VM Size"
 msgstr "Cỡ bộ nhớ ảo"
 
-#: ../src/memmaps.cpp:310
+#: ../src/memmaps.cpp:314
 msgid "Flags"
 msgstr "Cờ"
 
 #. xgettext: virtual memory offset
-#: ../src/memmaps.cpp:312
+#: ../src/memmaps.cpp:316
 msgid "VM Offset"
 msgstr "Offset bộ nhớ ảo"
 
 #. xgettext: memory that has not been modified since
 #. it has been allocated
-#: ../src/memmaps.cpp:315
+#: ../src/memmaps.cpp:319
 msgid "Private clean"
 msgstr "Riêng sạch"
 
 #. xgettext: memory that has been modified since it
 #. has been allocated
-#: ../src/memmaps.cpp:318
+#: ../src/memmaps.cpp:322
 msgid "Private dirty"
 msgstr "Riêng bẩn"
 
 #. xgettext: shared memory that has not been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:321
+#: ../src/memmaps.cpp:325
 msgid "Shared clean"
 msgstr "Chung sạch"
 
 #. xgettext: shared memory that has been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:324
+#: ../src/memmaps.cpp:328
 msgid "Shared dirty"
 msgstr "Chung bẩn"
 
-#: ../src/memmaps.cpp:326
+#: ../src/memmaps.cpp:330
 msgid "Inode"
 msgstr "Nút"
 
-#: ../src/memmaps.cpp:436
+#: ../src/memmaps.cpp:440
 msgid "Memory Maps"
 msgstr "Sơ đồ bộ nhớ"
 
-#: ../src/memmaps.cpp:448
+#: ../src/memmaps.cpp:452
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "Sơ đồ _bộ nhớ cho tiến trình “%s” (PID %u):"
@@ -1019,7 +1010,7 @@ msgstr "Cột sắp xếp mở tập tin"
 msgid "Open files sort order"
 msgstr "Thứ tự sắp xếp mở tập tin"
 
-#: ../src/prefsdialog.cpp:170
+#: ../src/prefsdialog.cpp:171
 msgid "Icon"
 msgstr "Biểu tượng"
 
@@ -1110,111 +1101,105 @@ msgstr ""
 "Độ ưu tiên của tiến trình được thể hiện bởi giá trị “nice”. Giá trị thấp hơn "
 "tương ứng với độ ưu tiên cao hơn."
 
-#: ../src/procproperties.cpp:55 ../src/procproperties.cpp:106
-#: ../src/procproperties.cpp:109 ../src/util.cpp:432
+#: ../src/procproperties.cpp:50 ../src/procproperties.cpp:84
+#: ../src/procproperties.cpp:87 ../src/util.cpp:432
 msgid "N/A"
 msgstr "N/A"
 
-#: ../src/procproperties.cpp:89 ../src/proctable.cpp:322
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:332
 msgid "Process Name"
 msgstr "Tên tiến trình"
 
-#: ../src/procproperties.cpp:90 ../src/proctable.cpp:323
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:333
 msgid "User"
 msgstr "Người dùng"
 
-#: ../src/procproperties.cpp:91 ../src/proctable.cpp:324
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:334
 msgid "Status"
 msgstr "Trạng thái"
 
-#: ../src/procproperties.cpp:93 ../src/proctable.cpp:325
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:335
 msgid "Virtual Memory"
 msgstr "Bộ nhớ ảo"
 
-#: ../src/procproperties.cpp:94 ../src/proctable.cpp:326
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:336
 msgid "Resident Memory"
 msgstr "Bộ nhớ thường trú"
 
-#: ../src/procproperties.cpp:95 ../src/proctable.cpp:327
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:337
 msgid "Writable Memory"
 msgstr "Bộ nhớ ghi được"
 
-#: ../src/procproperties.cpp:96 ../src/proctable.cpp:328
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:338
 msgid "Shared Memory"
 msgstr "Bộ nhớ chia sẻ"
 
-#: ../src/procproperties.cpp:98 ../src/proctable.cpp:329
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:339
 msgid "X Server Memory"
 msgstr "Bộ nhớ trình phục vụ X"
 
-#: ../src/procproperties.cpp:101 ../src/proctable.cpp:331
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:341
 msgid "CPU Time"
 msgstr "Thời gian CPU"
 
-#: ../src/procproperties.cpp:101
-#, c-format
-msgid "%lld second"
-msgid_plural "%lld seconds"
-msgstr[0] "%lld giây"
-
-#: ../src/procproperties.cpp:102 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:342
 msgid "Started"
 msgstr "Đã bắt đầu"
 
-#: ../src/procproperties.cpp:103 ../src/proctable.cpp:333
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:343
 msgid "Nice"
 msgstr "Ưu tiên"
 
-#: ../src/procproperties.cpp:104 ../src/proctable.cpp:347
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:357
 msgid "Priority"
 msgstr "Độ ưu tiên"
 
-#: ../src/procproperties.cpp:105 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:344
 msgid "ID"
-msgstr "ID"
+msgstr "MÃ SỐ"
 
-#: ../src/procproperties.cpp:106 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:345
 msgid "Security Context"
 msgstr "Ngữ cảnh bảo mật"
 
-#: ../src/procproperties.cpp:107 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:346
 msgid "Command Line"
 msgstr "Dòng lệnh"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:108 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:349
 msgid "Waiting Channel"
 msgstr "Kênh đợi"
 
-#: ../src/procproperties.cpp:109 ../src/proctable.cpp:340
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:350
 msgid "Control Group"
 msgstr "Nhóm điều khiển"
 
-#: ../src/procproperties.cpp:221
+#: ../src/procproperties.cpp:199
 #, c-format
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:330
+#: ../src/proctable.cpp:340
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:341
+#: ../src/proctable.cpp:351
 msgid "Unit"
 msgstr "Đơn vị"
 
-#: ../src/proctable.cpp:342
+#: ../src/proctable.cpp:352
 msgid "Session"
 msgstr "Phiên làm việc"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:345
+#: ../src/proctable.cpp:355
 msgid "Seat"
 msgstr "Ghế"
 
-#: ../src/proctable.cpp:346
+#: ../src/proctable.cpp:356
 msgid "Owner"
 msgstr "Chủ"
 
@@ -1340,6 +1325,20 @@ msgstr "Độ ưu tiên rất thấp"
 msgid "%s/s"
 msgstr "%s/g"
 
+#~ msgctxt "Menu item to Open 'Search for Open Files' dialog"
+#~ msgid "Search for Open Files"
+#~ msgstr "Tìm tập tin đang mở"
+
+#~ msgid "Error"
+#~ msgstr "Lỗi"
+
+#~ msgid "'%s' is not a valid Perl regular expression."
+#~ msgstr "“%s” không phải là một biểu thức chính quy Perl hợp lệ."
+
+#~ msgid "%lld second"
+#~ msgid_plural "%lld seconds"
+#~ msgstr[0] "%lld giây"
+
 #~ msgid "System"
 #~ msgstr "Hệ thống"
 
@@ -1353,7 +1352,7 @@ msgstr "%s/g"
 #~ msgstr "Tê_n chứa:"
 
 #~ msgid "C_lear"
-#~ msgstr "_Xoá"
+#~ msgstr "_Xóa"
 
 #~ msgid "S_earch results:"
 #~ msgstr "_Kết quả tìm:"
