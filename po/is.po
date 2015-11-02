@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-25 08:59+0000\n"
-"PO-Revision-Date: 2015-04-24 11:10+0000\n"
+"POT-Creation-Date: 2015-11-01 22:23+0000\n"
+"PO-Revision-Date: 2015-11-02 14:41+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Lokalize 1.5\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/application.cpp:268 ../src/interface.cpp:363
+#: ../src/application.cpp:262 ../src/interface.cpp:363
 msgid "System Monitor"
 msgstr "Kerfisvakt"
 
@@ -37,7 +37,7 @@ msgstr ""
 "Stjórnun;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:324
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:318
 msgid "GNOME System Monitor"
 msgstr "GNOME Kerfisvakt"
 
@@ -64,12 +64,17 @@ msgid ""
 "applications, force stop processes not responding, and change the state or "
 "priority of existing processes."
 msgstr ""
+"Kerfisvaktin getur hjálpað þér við að fylgjast með hvaða forrit eru að nota "
+"örgjörva eða minni tölvunnar, sýsla með forrit í keyrslu, þvinga ferli til að "
+"hætta ef þau svara ekki, og breyta stöðu og forgangi ferla í keyrslu."
 
 #: ../gnome-system-monitor.appdata.xml.in.h:5
 msgid ""
 "The resource graphs feature shows you a quick overview of what is going on "
 "with your computer displaying recent network, memory and processor usage."
 msgstr ""
+"Línuritin gefa þér fljótlegt yfirlit um hvað er í gangi í tölvunni, þar "
+"birtist nýleg virkni netkerfis, minnis og örgjörvanotkun."
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
 msgid "Kill process"
@@ -111,7 +116,7 @@ msgid "Memory and Swap History"
 msgstr "Vinnsluminni og diskminnisnotkun"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:260
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:347
 msgid "Memory"
 msgstr "Vinnsluminni"
 
@@ -148,7 +153,9 @@ msgid "File Systems"
 msgstr "Skráakerfi"
 
 #: ../data/lsof.ui.h:1
-msgctxt "Window title for 'Search for Open Files' dialog"
+#| msgctxt "Window title for 'Search for Open Files' dialog"
+#| msgid "Search for Open Files"
+msgctxt "Window title for Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Leita að opnum skrám"
 
@@ -161,7 +168,9 @@ msgid "Case insensitive"
 msgstr "Óháð há-/lágstöfum"
 
 #: ../data/menus.ui.h:1
-msgctxt "Menu item to Open 'Search for Open Files' dialog"
+#| msgctxt "Window title for 'Search for Open Files' dialog"
+#| msgid "Search for Open Files"
+msgctxt "Menu item to Open Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Leita að opnum skrám"
 
@@ -249,7 +258,7 @@ msgstr "Sérsniðið"
 msgid "_Memory Maps"
 msgstr "Úthlutun _minnis"
 
-#. Translators: this means 'Files that are open' (open is not a verb here)
+#. Translators: this means
 #: ../data/menus.ui.h:24
 msgid "Open _Files"
 msgstr "Opnar s_krár"
@@ -332,10 +341,9 @@ msgid ""
 "A lower nice value corresponds to a higher priority.</i></small>"
 msgstr ""
 "<small><i><b>Athugaðu:</b>Forgangur ferlis ræðst af því hve hátt „nice“ "
-"gildið er. Lágt nice-gildi "
-"samsvarar hærri forgangi.</i></small>"
+"gildið er. Lágt nice-gildi samsvarar hærri forgangi.</i></small>"
 
-#: ../src/application.cpp:310
+#: ../src/application.cpp:304
 msgid "A simple process and system monitor."
 msgstr "Einfalt forrit fyrir ferlis- og kerfisvakt."
 
@@ -455,7 +463,7 @@ msgstr "Ýttu til að velja lit"
 msgid "Pick a Color for '%s'"
 msgstr "Veldu lit fyrir '%s'"
 
-#: ../src/interface.cpp:220 ../src/procproperties.cpp:77
+#: ../src/interface.cpp:220 ../src/procproperties.cpp:78
 msgid "CPU"
 msgstr "Örgjörvi"
 
@@ -539,25 +547,25 @@ msgstr "Hliðrun sýndarminnis"
 #. it has been allocated
 #: ../src/memmaps.cpp:319
 msgid "Private clean"
-msgstr ""
+msgstr "Einka hreint"
 
 #. xgettext: memory that has been modified since it
 #. has been allocated
 #: ../src/memmaps.cpp:322
 msgid "Private dirty"
-msgstr ""
+msgstr "Einka óhreint"
 
 #. xgettext: shared memory that has not been modified
 #. since it has been allocated
 #: ../src/memmaps.cpp:325
 msgid "Shared clean"
-msgstr ""
+msgstr "Sameiginlegt hreint"
 
 #. xgettext: shared memory that has been modified
 #. since it has been allocated
 #: ../src/memmaps.cpp:328
 msgid "Shared dirty"
-msgstr ""
+msgstr "Sameiginlegt óhreint"
 
 #: ../src/memmaps.cpp:330
 msgid "Inode"
@@ -1099,105 +1107,105 @@ msgstr ""
 "Forgangur ferlis ræðst af því hve hátt „nice“ gildið er. Lágt nice-gildi "
 "samsvarar hærri forgangi."
 
-#: ../src/procproperties.cpp:49 ../src/procproperties.cpp:83
-#: ../src/procproperties.cpp:86 ../src/util.cpp:432
+#: ../src/procproperties.cpp:50 ../src/procproperties.cpp:84
+#: ../src/procproperties.cpp:87 ../src/util.cpp:432
 msgid "N/A"
 msgstr "Ekki tiltækt"
 
-#: ../src/procproperties.cpp:66 ../src/proctable.cpp:319
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:332
 msgid "Process Name"
 msgstr "Nafn ferlis"
 
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:320
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:333
 msgid "User"
 msgstr "Notandi"
 
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:321
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:334
 msgid "Status"
 msgstr "Staða"
 
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:322
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:335
 msgid "Virtual Memory"
 msgstr "Sýndarminni"
 
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:323
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:336
 msgid "Resident Memory"
 msgstr "Fastaminni"
 
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:324
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:337
 msgid "Writable Memory"
 msgstr "Skrifanlegt minni"
 
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:325
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:338
 msgid "Shared Memory"
 msgstr "Samnýtt minni"
 
-#: ../src/procproperties.cpp:75 ../src/proctable.cpp:326
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:339
 msgid "X Server Memory"
 msgstr "Minni X þjóns"
 
-#: ../src/procproperties.cpp:78 ../src/proctable.cpp:328
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:341
 msgid "CPU Time"
 msgstr "Örgjörvatími"
 
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:329
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:342
 msgid "Started"
 msgstr "Ræst"
 
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:330
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:343
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:344
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:357
 msgid "Priority"
 msgstr "Forgangur"
 
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:331
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:344
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:345
 msgid "Security Context"
 msgstr "Öryggissamhengi"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:333
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:346
 msgid "Command Line"
 msgstr "Skipun"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:349
 msgid "Waiting Channel"
 msgstr "Biðrás"
 
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:350
 msgid "Control Group"
 msgstr "Stýrihópur"
 
-#: ../src/procproperties.cpp:198
+#: ../src/procproperties.cpp:199
 #, c-format
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:327
+#: ../src/proctable.cpp:340
 #, no-c-format
 msgid "% CPU"
 msgstr "% örgjörva"
 
-#: ../src/proctable.cpp:338
+#: ../src/proctable.cpp:351
 msgid "Unit"
 msgstr "Eining"
 
-#: ../src/proctable.cpp:339
+#: ../src/proctable.cpp:352
 msgid "Session"
 msgstr "Seta"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:342
+#: ../src/proctable.cpp:355
 msgid "Seat"
 msgstr "Sæti"
 
-#: ../src/proctable.cpp:343
+#: ../src/proctable.cpp:356
 msgid "Owner"
 msgstr "Eigandi"
 
@@ -1325,4 +1333,6 @@ msgstr "Mjög lágur forgangur"
 msgid "%s/s"
 msgstr "%s/sek."
 
-
+#~ msgctxt "Menu item to Open 'Search for Open Files' dialog"
+#~ msgid "Search for Open Files"
+#~ msgstr "Leita að opnum skrám"
