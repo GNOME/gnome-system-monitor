@@ -283,8 +283,7 @@ GsmApplication::save_config ()
     int width, height, xpos, ypos;
     gboolean maximized;
 
-    width  = gdk_window_get_width (gtk_widget_get_window (main_window));
-    height = gdk_window_get_height (gtk_widget_get_window (main_window));
+    gtk_widget_get_size (main_window, &width, &height);
     gtk_window_get_position (GTK_WINDOW (main_window), &xpos, &ypos);
 
     maximized = gdk_window_get_state (gtk_widget_get_window (main_window)) & GDK_WINDOW_STATE_MAXIMIZED;
