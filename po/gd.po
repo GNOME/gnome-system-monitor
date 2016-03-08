@@ -3,16 +3,16 @@
 # This file is distributed under the same license as the gnome-system-monitor package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
 # Windows User <fios@foramnagaidhlig.net>, 2013.
-# GunChleoc <fios@foramnagaidhlig.net>, 2014.
+# GunChleoc <fios@foramnagaidhlig.net>, 2014, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product"
 "=system-monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-07-11 07:31+0000\n"
-"PO-Revision-Date: 2014-07-11 12:05+0100\n"
+"POT-Creation-Date: 2016-03-08 10:31+0000\n"
+"PO-Revision-Date: 2016-03-08 19:51+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
-"Language-Team: Fòram na Gàidhlig http://www.foramnagaidhlig.net\n"
+"Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,27 +24,26 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/application.cpp:268 ../src/interface.cpp:362
+#: ../src/application.cpp:262 ../src/interface.cpp:363
 msgid "System Monitor"
 msgstr "Monatair an t-siostaim"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2
-#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:363
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:364
 msgid "View current processes and monitor system state"
 msgstr "Seall na pròiseasan làithreach agus cum sùil air staid an t-siostaim"
 
 #: ../gnome-system-monitor.desktop.in.in.h:3
-#| msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgid ""
 "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
 "Manager;"
 msgstr ""
-"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;Man"
-"ager;Monatair;Siostam;Pròiseas;Cuimhne;Lìonra;Eachdraidh;Cleachdadh;Saothair"
-";Saothraichean;Manaidsear;"
+"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
+"Manager;Monatair;Siostam;Pròiseas;Cuimhne;Lìonra;Eachdraidh;Cleachdadh;"
+"Saothair;Saothraichean;Manaidsear;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:324
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:318
 msgid "GNOME System Monitor"
 msgstr "Monatair an t-siostaim GNOME"
 
@@ -126,12 +125,12 @@ msgstr "Eachdraidh a' CPU"
 msgid "Memory and Swap History"
 msgstr "Eachdraidh na cuimhne 's nan suaipean"
 
-#: ../data/interface.ui.h:7 ../src/interface.cpp:259
-#: ../src/procproperties.cpp:92 ../src/proctable.cpp:337
+#: ../data/interface.ui.h:7 ../src/interface.cpp:260
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:347
 msgid "Memory"
 msgstr "Cuimhne"
 
-#: ../data/interface.ui.h:8 ../src/interface.cpp:271
+#: ../data/interface.ui.h:8 ../src/interface.cpp:272
 msgid "Swap"
 msgstr "Suaip"
 
@@ -139,7 +138,7 @@ msgstr "Suaip"
 msgid "Network History"
 msgstr "Eachdraidh an lìonraidh"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:299
+#: ../data/interface.ui.h:10 ../src/interface.cpp:300
 msgid "Receiving"
 msgstr "Air fhaighinn"
 
@@ -147,7 +146,7 @@ msgstr "Air fhaighinn"
 msgid "Total Received"
 msgstr "Iomlan dhe na fhuaradh"
 
-#: ../data/interface.ui.h:12 ../src/interface.cpp:314
+#: ../data/interface.ui.h:12 ../src/interface.cpp:315
 msgid "Sending"
 msgstr "Cur"
 
@@ -164,7 +163,9 @@ msgid "File Systems"
 msgstr "Siostaman fhaidhlichean"
 
 #: ../data/lsof.ui.h:1
-msgctxt "Window title for 'Search for Open Files' dialog"
+#| msgctxt "Window title for 'Search for Open Files' dialog"
+#| msgid "Search for Open Files"
+msgctxt "Window title for Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Lorg faidhlichean fosgailte"
 
@@ -173,12 +174,13 @@ msgid "Filter files by name"
 msgstr "Criathraich faidhlichean le ainm"
 
 #: ../data/lsof.ui.h:3
-#| msgid "Case insensitive matching"
 msgid "Case insensitive"
 msgstr "Gun aire do litrichean mòra 's beaga"
 
 #: ../data/menus.ui.h:1
-msgctxt "Menu item to Open 'Search for Open Files' dialog"
+#| msgctxt "Window title for 'Search for Open Files' dialog"
+#| msgid "Search for Open Files"
+msgctxt "Menu item to Open Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Lorg faidhlichean fosgailte"
 
@@ -238,23 +240,23 @@ msgstr "_Marbh"
 msgid "_Change Priority"
 msgstr "Atharrai_ch am prìomhachas"
 
-#: ../data/menus.ui.h:16 ../src/util.cpp:214
+#: ../data/menus.ui.h:16 ../src/util.cpp:215
 msgid "Very High"
 msgstr "Glè mhòr"
 
-#: ../data/menus.ui.h:17 ../src/util.cpp:216
+#: ../data/menus.ui.h:17 ../src/util.cpp:217
 msgid "High"
 msgstr "Mòr"
 
-#: ../data/menus.ui.h:18 ../src/util.cpp:218
+#: ../data/menus.ui.h:18 ../src/util.cpp:219
 msgid "Normal"
 msgstr "Àbhaisteach"
 
-#: ../data/menus.ui.h:19 ../src/util.cpp:220
+#: ../data/menus.ui.h:19 ../src/util.cpp:221
 msgid "Low"
 msgstr "Beag"
 
-#: ../data/menus.ui.h:20 ../src/util.cpp:222
+#: ../data/menus.ui.h:20 ../src/util.cpp:223
 msgid "Very Low"
 msgstr "Glè bheag"
 
@@ -266,7 +268,7 @@ msgstr "Gnàthaichte"
 msgid "_Memory Maps"
 msgstr "_Mapaichean cuimhne"
 
-#. Translators: this means 'Files that are open' (open is not a verb here)
+#. Translators: this means
 #: ../data/menus.ui.h:24
 msgid "Open _Files"
 msgstr "_Faidhlichean fosgailte"
@@ -351,51 +353,51 @@ msgstr ""
 "<small><i><b>An aire:</b> Tha an nice value aig pròiseas a' suidheachadh a' "
 "phrìomhachais aige. Bheir luach nas lugha prìomhachas nas àirde.</i></small>"
 
-#: ../src/application.cpp:310
+#: ../src/application.cpp:304
 msgid "A simple process and system monitor."
 msgstr "Monatair phròiseasan is shiostaman simplidh"
 
-#: ../src/argv.cpp:21
+#: ../src/argv.cpp:22
 msgid "Show the Processes tab"
 msgstr "Seall taba nam pròiseasan"
 
-#: ../src/argv.cpp:26
+#: ../src/argv.cpp:27
 msgid "Show the Resources tab"
 msgstr "Seall taba nan goireasan"
 
-#: ../src/argv.cpp:31
+#: ../src/argv.cpp:32
 msgid "Show the File Systems tab"
 msgstr "Seall taba nan siostaman fhaidhlichean"
 
-#: ../src/argv.cpp:35
+#: ../src/argv.cpp:36
 msgid "Show the application's version"
 msgstr "Seall tionndadh na h-aplacaid"
 
-#: ../src/disks.cpp:369 ../src/memmaps.cpp:325
+#: ../src/disks.cpp:361 ../src/memmaps.cpp:329
 msgid "Device"
 msgstr "Uidheam"
 
-#: ../src/disks.cpp:370
+#: ../src/disks.cpp:362
 msgid "Directory"
 msgstr "Pasgan"
 
-#: ../src/disks.cpp:371 ../src/gsm_color_button.c:165 ../src/openfiles.cpp:252
+#: ../src/disks.cpp:363 ../src/gsm_color_button.c:165 ../src/openfiles.cpp:252
 msgid "Type"
 msgstr "Seòrsa"
 
-#: ../src/disks.cpp:372
+#: ../src/disks.cpp:364
 msgid "Total"
 msgstr "Iomlan"
 
-#: ../src/disks.cpp:373
+#: ../src/disks.cpp:365
 msgid "Free"
 msgstr "Saor"
 
-#: ../src/disks.cpp:374
+#: ../src/disks.cpp:366
 msgid "Available"
 msgstr "Ri làimh"
 
-#: ../src/disks.cpp:375
+#: ../src/disks.cpp:367
 msgid "Used"
 msgstr "Air a chleachdadh"
 
@@ -471,7 +473,7 @@ msgstr "Dèan briogadh gus dathan a' ghraif a shuidheachadh"
 msgid "Pick a Color for '%s'"
 msgstr "Tagh dath airson \"%s\""
 
-#: ../src/interface.cpp:220 ../src/procproperties.cpp:100
+#: ../src/interface.cpp:220 ../src/procproperties.cpp:78
 msgid "CPU"
 msgstr "CPU"
 
@@ -480,7 +482,7 @@ msgstr "CPU"
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:373
+#: ../src/interface.cpp:374
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
@@ -506,18 +508,8 @@ msgstr "chan eil seo ri fhaighinn"
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) à %s"
 
-#: ../src/lsof.cpp:109
-msgid "Error"
-msgstr "Mearachd"
-
-#: ../src/lsof.cpp:110
+#: ../src/lsof.cpp:118
 #, c-format
-msgid "'%s' is not a valid Perl regular expression."
-msgstr "Chan eil \"%s\" 'na regular expression Perl dligheach."
-
-#: ../src/lsof.cpp:128
-#, c-format
-#| msgid "Open Files"
 msgid "%d open file"
 msgid_plural "%d open files"
 msgstr[0] "%d fhaidhle fosgailte"
@@ -525,7 +517,7 @@ msgstr[1] "%d fhaidhle fosgailte"
 msgstr[2] "%d faidhlichean fosgailte"
 msgstr[3] "%d faidhle fosgailte"
 
-#: ../src/lsof.cpp:130
+#: ../src/lsof.cpp:120
 #, c-format
 msgid "%d matching open file"
 msgid_plural "%d matching open files"
@@ -534,75 +526,75 @@ msgstr[1] "%d fhaidhle fosgailte a cho-fhreagras"
 msgstr[2] "%d faidhlichean fosgailte a cho-fhreagras"
 msgstr[3] "%d faidhle fosgailte a cho-fhreagras"
 
-#: ../src/lsof.cpp:248
+#: ../src/lsof.cpp:247
 msgid "Process"
 msgstr "Pròiseas"
 
-#: ../src/lsof.cpp:260
+#: ../src/lsof.cpp:259
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:270 ../src/memmaps.cpp:303
+#: ../src/lsof.cpp:269 ../src/memmaps.cpp:307
 msgid "Filename"
 msgstr "Ainm an fhaidhle"
 
 #. xgettext: virtual memory start
-#: ../src/memmaps.cpp:305
+#: ../src/memmaps.cpp:309
 msgid "VM Start"
 msgstr "Toiseach a' VM"
 
 #. xgettext: virtual memory end
-#: ../src/memmaps.cpp:307
+#: ../src/memmaps.cpp:311
 msgid "VM End"
 msgstr "Deireadh a' VM"
 
 #. xgettext: virtual memory syze
-#: ../src/memmaps.cpp:309
+#: ../src/memmaps.cpp:313
 msgid "VM Size"
 msgstr "Meud a' VM"
 
-#: ../src/memmaps.cpp:310
+#: ../src/memmaps.cpp:314
 msgid "Flags"
 msgstr "Brataichean"
 
 #. xgettext: virtual memory offset
-#: ../src/memmaps.cpp:312
+#: ../src/memmaps.cpp:316
 msgid "VM Offset"
 msgstr "VM Offset"
 
 #. xgettext: memory that has not been modified since
 #. it has been allocated
-#: ../src/memmaps.cpp:315
+#: ../src/memmaps.cpp:319
 msgid "Private clean"
 msgstr "Prìobhaideach 's glan"
 
 #. xgettext: memory that has been modified since it
 #. has been allocated
-#: ../src/memmaps.cpp:318
+#: ../src/memmaps.cpp:322
 msgid "Private dirty"
 msgstr "Prìobhaideach 's salach"
 
 #. xgettext: shared memory that has not been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:321
+#: ../src/memmaps.cpp:325
 msgid "Shared clean"
 msgstr "Co-roinnte 's glan"
 
 #. xgettext: shared memory that has been modified
 #. since it has been allocated
-#: ../src/memmaps.cpp:324
+#: ../src/memmaps.cpp:328
 msgid "Shared dirty"
 msgstr "Co-roinnte 's salach"
 
-#: ../src/memmaps.cpp:326
+#: ../src/memmaps.cpp:330
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.cpp:437
+#: ../src/memmaps.cpp:440
 msgid "Memory Maps"
 msgstr "Mapa cuimhne"
 
-#: ../src/memmaps.cpp:449
+#: ../src/memmaps.cpp:452
 #, c-format
 msgid "_Memory maps for process \"%s\" (PID %u):"
 msgstr "_Mapaichean cuimhne airson a' phròiseis \"%s\" (PID %u):"
@@ -642,7 +634,7 @@ msgstr "FD"
 msgid "Object"
 msgstr "Oibseact"
 
-#: ../src/openfiles.cpp:337
+#: ../src/openfiles.cpp:336
 #, c-format
 msgid "_Files opened by process \"%s\" (PID %u):"
 msgstr "_Faidhlichean a chaidh fhosgladh leis a' phròiseas \"%s\" (PID %u):"
@@ -1098,7 +1090,7 @@ msgstr "Colbh an t-seòrsachaidh aig na faidhlichean fosgailte"
 msgid "Open files sort order"
 msgstr "Òrdugh an t-seòrsachaidh aig na faidhlichean fosgailte"
 
-#: ../src/prefsdialog.cpp:170
+#: ../src/prefsdialog.cpp:171
 msgid "Icon"
 msgstr "Ìomhaigheag"
 
@@ -1208,114 +1200,105 @@ msgstr ""
 "Tha an nice value aig pròiseas a' suidheachadh a' phrìomhachais aige. Bheir "
 "luach nas lugha prìomhachas nas àirde."
 
-#: ../src/procproperties.cpp:55 ../src/procproperties.cpp:106
-#: ../src/procproperties.cpp:109 ../src/util.cpp:431
+#: ../src/procproperties.cpp:50 ../src/procproperties.cpp:84
+#: ../src/procproperties.cpp:87 ../src/util.cpp:432
 msgid "N/A"
 msgstr "Chan eil seo iomchaidh"
 
-#: ../src/procproperties.cpp:89 ../src/proctable.cpp:322
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:332
 msgid "Process Name"
 msgstr "Ainm a' phròiseis"
 
-#: ../src/procproperties.cpp:90 ../src/proctable.cpp:323
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:333
 msgid "User"
 msgstr "Cleachdaiche"
 
-#: ../src/procproperties.cpp:91 ../src/proctable.cpp:324
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:334
 msgid "Status"
 msgstr "Staid"
 
-#: ../src/procproperties.cpp:93 ../src/proctable.cpp:325
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:335
 msgid "Virtual Memory"
 msgstr "Cuimhne bhiortail"
 
-#: ../src/procproperties.cpp:94 ../src/proctable.cpp:326
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:336
 msgid "Resident Memory"
 msgstr "Cuimhne còmhnaidh"
 
-#: ../src/procproperties.cpp:95 ../src/proctable.cpp:327
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:337
 msgid "Writable Memory"
 msgstr "Cuimhne sho-sgrìobhte"
 
-#: ../src/procproperties.cpp:96 ../src/proctable.cpp:328
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:338
 msgid "Shared Memory"
 msgstr "Cuimhne cho-roinnte"
 
-#: ../src/procproperties.cpp:98 ../src/proctable.cpp:329
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:339
 msgid "X Server Memory"
 msgstr "Cuimhne an fhrithealaiche x"
 
-#: ../src/procproperties.cpp:101 ../src/proctable.cpp:331
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:341
 msgid "CPU Time"
 msgstr "Àm a' CPU"
 
-#: ../src/procproperties.cpp:101
-#, c-format
-msgid "%lld second"
-msgid_plural "%lld seconds"
-msgstr[0] "%lld diog"
-msgstr[1] "%lld dhiog"
-msgstr[2] "%lld diogan"
-msgstr[3] "%lld diog"
-
-#: ../src/procproperties.cpp:102 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:342
 msgid "Started"
 msgstr "Air a thòiseachadh"
 
-#: ../src/procproperties.cpp:103 ../src/proctable.cpp:333
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:343
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/procproperties.cpp:104 ../src/proctable.cpp:347
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:357
 msgid "Priority"
 msgstr "Prìomhachas"
 
-#: ../src/procproperties.cpp:105 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:344
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:106 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:345
 msgid "Security Context"
 msgstr "Co-theacsa na tèarainteachd"
 
-#: ../src/procproperties.cpp:107 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:346
 msgid "Command Line"
 msgstr "Loidhne-àithne"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:108 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:349
 msgid "Waiting Channel"
 msgstr "An seanail fuirich"
 
-#: ../src/procproperties.cpp:109 ../src/proctable.cpp:340
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:350
 msgid "Control Group"
 msgstr "Am buidheann smachd"
 
-#: ../src/procproperties.cpp:222
+#: ../src/procproperties.cpp:199
 #, c-format
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:330
+#: ../src/proctable.cpp:340
 #, no-c-format
 msgid "% CPU"
 msgstr "% a' CPU"
 
-#: ../src/proctable.cpp:341
+#: ../src/proctable.cpp:351
 msgid "Unit"
 msgstr "Aonad"
 
-#: ../src/proctable.cpp:342
+#: ../src/proctable.cpp:352
 msgid "Session"
 msgstr "Seisean"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:345
+#: ../src/proctable.cpp:355
 msgid "Seat"
 msgstr "Seat"
 
-#: ../src/proctable.cpp:346
+#: ../src/proctable.cpp:356
 msgid "Owner"
 msgstr "Sealbhadair"
 
@@ -1363,47 +1346,47 @@ msgstr "%u:%02u:%02u"
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: ../src/util.cpp:163
+#: ../src/util.cpp:164
 #, c-format
 msgid "%.1f KiB"
 msgstr "%.1f KiB"
 
-#: ../src/util.cpp:164
+#: ../src/util.cpp:165
 #, c-format
 msgid "%.1f MiB"
 msgstr "%.1f MiB"
 
-#: ../src/util.cpp:165
+#: ../src/util.cpp:166
 #, c-format
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
 
-#: ../src/util.cpp:166
+#: ../src/util.cpp:167
 #, c-format
 msgid "%.1f TiB"
 msgstr "%.1f TiB"
 
-#: ../src/util.cpp:167
+#: ../src/util.cpp:168
 #, c-format
 msgid "%.3g kbit"
 msgstr "%.3g kbit"
 
-#: ../src/util.cpp:168
+#: ../src/util.cpp:169
 #, c-format
 msgid "%.3g Mbit"
 msgstr "%.3g Mbit"
 
-#: ../src/util.cpp:169
+#: ../src/util.cpp:170
 #, c-format
 msgid "%.3g Gbit"
 msgstr "%.3g Gbit"
 
-#: ../src/util.cpp:170
+#: ../src/util.cpp:171
 #, c-format
 msgid "%.3g Tbit"
 msgstr "%.3g Tbit"
 
-#: ../src/util.cpp:185
+#: ../src/util.cpp:186
 #, c-format
 msgid "%u bit"
 msgid_plural "%u bits"
@@ -1412,7 +1395,7 @@ msgstr[1] "%u bits"
 msgstr[2] "%u bits"
 msgstr[3] "%u bits"
 
-#: ../src/util.cpp:186
+#: ../src/util.cpp:187
 #, c-format
 msgid "%u byte"
 msgid_plural "%u bytes"
@@ -1421,31 +1404,48 @@ msgstr[1] "%u bytes"
 msgstr[2] "%u bytes"
 msgstr[3] "%u bytes"
 
-#: ../src/util.cpp:229
+#: ../src/util.cpp:230
 msgid "Very High Priority"
 msgstr "Prìomhachas glè mhòr"
 
-#: ../src/util.cpp:231
+#: ../src/util.cpp:232
 msgid "High Priority"
 msgstr "Prìomhachas mòr"
 
-#: ../src/util.cpp:233
+#: ../src/util.cpp:234
 msgid "Normal Priority"
 msgstr "Prìomhachas àbhaisteach"
 
-#: ../src/util.cpp:235
+#: ../src/util.cpp:236
 msgid "Low Priority"
 msgstr "Prìomhachas beag"
 
-#: ../src/util.cpp:237
+#: ../src/util.cpp:238
 msgid "Very Low Priority"
 msgstr "Prìomhachas glè bheag"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:629
+#: ../src/util.cpp:630
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgctxt "Menu item to Open 'Search for Open Files' dialog"
+#~ msgid "Search for Open Files"
+#~ msgstr "Lorg faidhlichean fosgailte"
+
+#~ msgid "Error"
+#~ msgstr "Mearachd"
+
+#~ msgid "'%s' is not a valid Perl regular expression."
+#~ msgstr "Chan eil \"%s\" 'na regular expression Perl dligheach."
+
+#~ msgid "%lld second"
+#~ msgid_plural "%lld seconds"
+#~ msgstr[0] "%lld diog"
+#~ msgstr[1] "%lld dhiog"
+#~ msgstr[2] "%lld diogan"
+#~ msgstr[3] "%lld diog"
 
 #~ msgid "_Name contains:"
 #~ msgstr "Tha _na leanas 'na ainm:"
