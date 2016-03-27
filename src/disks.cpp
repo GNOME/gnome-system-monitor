@@ -456,6 +456,7 @@ create_disk_view(GsmApplication *app, GtkBuilder *builder)
     gtk_tree_view_column_set_title(col, _(titles[DISK_USED]));
 
     cell = gtk_cell_renderer_progress_new();
+    gtk_cell_renderer_set_padding(cell, 4.0f, 4.0f);
     gtk_tree_view_column_pack_start(col, cell, TRUE);
     gtk_tree_view_column_set_attributes(col, cell, "value",
                                         DISK_USED_PERCENTAGE, NULL);
