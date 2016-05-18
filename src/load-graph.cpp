@@ -119,11 +119,7 @@ void draw_background(LoadGraph *graph) {
             caption = g_strdup(captionstr.c_str());
         } else {
             // operation orders matters so it's 0 if i == num_bars
-            guint max = 100;
-            if (graph->type == LOAD_GRAPH_CPU && !GsmApplication::get()->config.solaris_mode) {
-                max = 100 * graph->n;
-            }
-            caption = g_strdup_printf("%d %%", max - i * (max / num_bars));
+            caption = g_strdup_printf("%d %%", 100 - i * (100 / num_bars));
         }
         pango_layout_set_alignment (layout, PANGO_ALIGN_LEFT);
         pango_layout_set_text (layout, caption, -1);
