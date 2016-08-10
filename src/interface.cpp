@@ -403,10 +403,10 @@ on_activate_send_signal (GSimpleAction *, GVariant *parameter, gpointer data)
     /* no confirmation */
     gint32 signal = g_variant_get_int32(parameter);
     switch (signal) {
-        case SIGSTOP:
         case SIGCONT:
             kill_process (app, signal);
             break;
+        case SIGSTOP:
         case SIGTERM:
         case SIGKILL:
             kill_process_with_confirmation (app, signal);

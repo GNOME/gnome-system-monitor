@@ -70,43 +70,73 @@ procdialog_create_kill_dialog (GsmApplication *app, int signal)
         // get the last selected row
         gtk_tree_selection_selected_foreach (app->selection, get_last_selected,
                                          &selected_process);
-        if (signal == SIGKILL) {
-            /*xgettext: primary alert message for killing single process*/
-            primary = g_strdup_printf (_("Are you sure you want to kill the selected process “%s” (PID: %u)?"),
-                                       selected_process->name,
-                                       selected_process->pid);
-        } else {
-            /*xgettext: primary alert message for ending single process*/
-            primary = g_strdup_printf (_("Are you sure you want to end the selected process “%s” (PID: %u)?"),
-                                       selected_process->name,
-                                       selected_process->pid);
+        switch (signal) {
+            case SIGKILL:
+                /*xgettext: primary alert message for killing single process*/
+                primary = g_strdup_printf (_("Are you sure you want to kill the selected process “%s” (PID: %u)?"),
+                                           selected_process->name,
+                                           selected_process->pid);
+                break;
+            case SIGTERM:
+                /*xgettext: primary alert message for ending single process*/
+                primary = g_strdup_printf (_("Are you sure you want to end the selected process “%s” (PID: %u)?"),
+                                           selected_process->name,
+                                           selected_process->pid);
+                break;
+            default: // SIGSTOP
+                /*xgettext: primary alert message for stopping single process*/
+                primary = g_strdup_printf (_("Are you sure you want to stop the selected process “%s” (PID: %u)?"),
+                                           selected_process->name,
+                                           selected_process->pid);
+                break;
         }
     } else {
-        if (signal == SIGKILL) {
-            /*xgettext: primary alert message for killing multiple processes*/
-            primary = g_strdup_printf (ngettext("Are you sure you want to kill the selected process?", "Are you sure you want to kill the %d selected processes?", selected_count),
-                                       selected_count);
-        } else {
-            /*xgettext: primary alert message for ending multiple processes*/
-            primary = g_strdup_printf (ngettext("Are you sure you want to end the selected process?", "Are you sure you want to end the %d selected processes?", selected_count),
-                                       selected_count);
+        switch (signal) {
+            case SIGKILL:
+                /*xgettext: primary alert message for killing multiple processes*/
+                primary = g_strdup_printf (ngettext("Are you sure you want to kill the selected process?", 
+                                                    "Are you sure you want to kill the %d selected processes?", selected_count),
+                                           selected_count);
+            break;
+            case SIGTERM:
+                /*xgettext: primary alert message for ending multiple processes*/
+                primary = g_strdup_printf (ngettext("Are you sure you want to end the selected process?", 
+                                                    "Are you sure you want to end the %d selected processes?", selected_count),
+                                           selected_count);
+            break;
+            default: // SIGSTOP
+                /*xgettext: primary alert message for stopping multiple processes*/
+                primary = g_strdup_printf (ngettext("Are you sure you want to stop the selected process?", 
+                                                    "Are you sure you want to stop the %d selected processes?", selected_count),
+                                           selected_count);
+            break;
         }
     }
     
-    if ( signal == SIGKILL ) {
-        /*xgettext: secondary alert message*/
-        secondary = _("Killing a process may destroy data, break the "
-                      "session or introduce a security risk. "
-                      "Only unresponsive processes should be killed.");
-        button_text = ngettext("_Kill Process", "_Kill Processes", selected_count);
-    } else {
-        /*xgettext: secondary alert message*/
-        secondary = _("Killing a process may destroy data, break the "
-                      "session or introduce a security risk. "
-                      "Only unresponsive processes should be killed.");
-        button_text = ngettext("_End Process", "_End Processes", selected_count);
+    switch (signal) {
+        case SIGKILL:
+            /*xgettext: secondary alert message*/
+            secondary = _("Killing a process may destroy data, break the "
+                          "session or introduce a security risk. "
+                          "Only unresponsive processes should be killed.");
+            button_text = ngettext("_Kill Process", "_Kill Processes", selected_count);
+            break;
+        case SIGTERM:
+            /*xgettext: secondary alert message*/
+            secondary = _("Ending a process may destroy data, break the "
+                          "session or introduce a security risk. "
+                          "Only unresponsive processes should be ended.");
+            button_text = ngettext("_End Process", "_End Processes", selected_count);
+            break;
+        default: // SIGSTOP
+            /*xgettext: secondary alert message*/
+            secondary = _("Stopping a process may destroy data, break the "
+                          "session or introduce a security risk. "
+                          "Only unresponsive processes should be stopped.");
+            button_text = ngettext("_Stop Process", "_Stop Processes", selected_count);
+            break;
     }
-    
+
     kill_alert_dialog = gtk_message_dialog_new (GTK_WINDOW (app->main_window),
                                                 static_cast<GtkDialogFlags>(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
                                                 GTK_MESSAGE_WARNING,
