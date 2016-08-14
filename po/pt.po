@@ -5,22 +5,23 @@
 # António Lima <amrlima@gmail.com>, 2013.
 # Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
 # Sérgio Cardeira <cardeira dot sergio at gmail dot com>, 2016.
+# Tiago Santos <tiagofsantos81@sapo.pt>, 2014 - 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 3.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-02-20 10:31+0000\n"
-"PO-Revision-Date: 2016-02-20 19:59-0100\n"
-"Last-Translator: Sérgio Cardeira <cardeira dot sergio at gmail dot com>\n"
+"POT-Creation-Date: 2016-08-12 10:58+0000\n"
+"PO-Revision-Date: 2016-08-14 22:07+0100\n"
+"Last-Translator: Tiago Santos <tiagofsantos81@sapo.pt>\n"
 "Language-Team: Português <>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
 #: ../src/application.cpp:262 ../src/interface.cpp:363
@@ -81,6 +82,22 @@ msgstr ""
 "A funcionalidade de gráficos de recursos mostra uma rápida visão geral do "
 "que está a acontecer com o seu computador, bem como a utilização recente da "
 "rede, memória e processador."
+
+#: ../gnome-system-monitor.appdata.xml.in.h:6
+msgid "Process list view"
+msgstr "Vista de lista de processos"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:7
+msgid "Resources overview"
+msgstr "Visão geral de recursos"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:8
+msgid "File Systems view"
+msgstr "Visão de sistema de ficheiros"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:9
+msgid "The GNOME Project"
+msgstr "O Projeto GNOME"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
 msgid "Kill process"
@@ -211,20 +228,17 @@ msgid "_Dependencies"
 msgstr "_Dependências"
 
 #: ../data/menus.ui.h:11
-msgid "_Stop"
-msgstr "_Parar"
+msgid "_Properties"
+msgstr "_Propriedades"
 
 #: ../data/menus.ui.h:12
-msgid "_Continue"
-msgstr "_Continuar"
+msgid "_Memory Maps"
+msgstr "_Mapas de memória"
 
-#: ../data/menus.ui.h:13
-msgid "_End"
-msgstr "_Terminar"
-
+#. Translators: this means
 #: ../data/menus.ui.h:14
-msgid "_Kill"
-msgstr "_Matar"
+msgid "Open _Files"
+msgstr "_Ficheiros abertos"
 
 #: ../data/menus.ui.h:15
 msgid "_Change Priority"
@@ -255,17 +269,20 @@ msgid "Custom"
 msgstr "Personalizada"
 
 #: ../data/menus.ui.h:22
-msgid "_Memory Maps"
-msgstr "_Mapas de memória"
+msgid "_Stop"
+msgstr "_Parar"
 
-#. Translators: this means
+#: ../data/menus.ui.h:23
+msgid "_Continue"
+msgstr "_Continuar"
+
 #: ../data/menus.ui.h:24
-msgid "Open _Files"
-msgstr "_Ficheiros abertos"
+msgid "_End"
+msgstr "_Terminar"
 
 #: ../data/menus.ui.h:25
-msgid "_Properties"
-msgstr "_Propriedades"
+msgid "_Kill"
+msgstr "_Matar"
 
 #: ../data/openfiles.ui.h:1
 msgid "Open Files"
@@ -323,7 +340,7 @@ msgstr "Mostrar _todos os sistemas de ficheiros"
 msgid "File system i_nformation shown in list:"
 msgstr "I_nformação do sistema de ficheiros mostrada na lista:"
 
-#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:123
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:153
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -477,21 +494,22 @@ msgstr "CPU%d"
 msgid "translator-credits"
 msgstr ""
 "Duarte Loreto <happyguy_pt@hotmail.com>\n"
-"Pedro Albuquerque <palbuquerque73@gmail.com>"
+"Pedro Albuquerque <palbuquerque73@gmail.com>\n"
+"Tiago Santos <tiagofsantos81@sapo.pt>"
 
-#: ../src/load-graph.cpp:161
+#: ../src/load-graph.cpp:157
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u segundo"
 msgstr[1] "%u segundos"
 
-#: ../src/load-graph.cpp:370
+#: ../src/load-graph.cpp:366
 msgid "not available"
 msgstr "indisponível"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:373
+#: ../src/load-graph.cpp:369
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) de %s"
@@ -1040,20 +1058,27 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: ../src/procdialogs.cpp:75
+#: ../src/procdialogs.cpp:76
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr "Tem a certeza que deseja matar o processo selecionado “%s” (PID: %u)?"
 
 #. xgettext: primary alert message for ending single process
-#: ../src/procdialogs.cpp:80
+#: ../src/procdialogs.cpp:82
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr ""
 "Tem a certeza que deseja terminar o processo selecionado “%s” (PID: %u)?"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping single process
+#: ../src/procdialogs.cpp:88
+#, c-format
+msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
+msgstr "Tem a certeza que deseja parar o processo selecionado “%s” (PID: %u)?"
+
 #. xgettext: primary alert message for killing multiple processes
-#: ../src/procdialogs.cpp:87
+#: ../src/procdialogs.cpp:97
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
@@ -1061,15 +1086,24 @@ msgstr[0] "Tem a certeza que deseja matar o processo selecionado?"
 msgstr[1] "Tem a certeza que deseja matar os %d processos selecionados?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: ../src/procdialogs.cpp:91
+#: ../src/procdialogs.cpp:103
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
 msgstr[0] "Tem a certeza que deseja terminar o processo selecionado?"
 msgstr[1] "Tem a certeza que deseja terminar os %d processos selecionados?"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping multiple processes
+#: ../src/procdialogs.cpp:109
+#, c-format
+msgid "Are you sure you want to stop the selected process?"
+msgid_plural "Are you sure you want to stop the %d selected processes?"
+msgstr[0] "Tem a certeza que deseja parar o processo selecionado?"
+msgstr[1] "Tem a certeza que deseja parar os %d processos selecionados?"
+
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:98 ../src/procdialogs.cpp:104
+#: ../src/procdialogs.cpp:119
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1078,35 +1112,62 @@ msgstr ""
 "trabalho instável ou criar um risco de segurança. Só deverão ser mortos "
 "processos que não estejam a responder."
 
-#: ../src/procdialogs.cpp:101
+#: ../src/procdialogs.cpp:122
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "_Matar processo"
 msgstr[1] "_Matar processos"
 
-#: ../src/procdialogs.cpp:107
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:126
+msgid ""
+"Ending a process may destroy data, break the session or introduce a security "
+"risk. Only unresponsive processes should be ended."
+msgstr ""
+"Ao terminar um processo, poderá destruir os seus dados, tornar a sessão de "
+"trabalho instável ou criar um risco de segurança. Apenas deverão ser "
+"terminados processos que não estejam a responder."
+
+#: ../src/procdialogs.cpp:129
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "_Terminar processo"
 msgstr[1] "_Terminar processos"
 
-#: ../src/procdialogs.cpp:188
+#. SIGSTOP
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:133
+msgid ""
+"Stopping a process may destroy data, break the session or introduce a "
+"security risk. Only unresponsive processes should be stopped."
+msgstr ""
+"Ao terminar um processo, poderá destruir os seus dados, tornar a sessão de "
+"trabalho instável ou criar um risco de segurança. Apenas deverão ser "
+"terminados processos que não estejam a responder."
+
+#: ../src/procdialogs.cpp:136
+msgid "_Stop Process"
+msgid_plural "_Stop Processes"
+msgstr[0] "_Parar Processo"
+msgstr[1] "_Parar Processos"
+
+#: ../src/procdialogs.cpp:218
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Alterar a prioridade do processo “%s” (PID: %u)"
 
-#: ../src/procdialogs.cpp:191
+#: ../src/procdialogs.cpp:221
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
 msgstr[0] "Alterar prioridade do processo selecionado"
 msgstr[1] "Alterar prioridades dos %d processos selecionados"
 
-#: ../src/procdialogs.cpp:210
+#: ../src/procdialogs.cpp:240
 msgid "Note:"
 msgstr "Nota:"
 
-#: ../src/procdialogs.cpp:211
+#: ../src/procdialogs.cpp:241
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1391,9 +1452,6 @@ msgstr "%s/s"
 #~ msgid "_View"
 #~ msgstr "_Ver"
 
-#~ msgid "_Stop Process"
-#~ msgstr "_Parar Processo"
-
 #~ msgid "Stop process"
 #~ msgstr "Parar um processo"
 
@@ -1476,14 +1534,6 @@ msgstr "%s/s"
 #~ msgstr ""
 #~ "0 para a Informação de Sistema, 1 para a lista de processos, 2 para os "
 #~ "recursos e 3 para a lista de discos"
-
-#~ msgid ""
-#~ "Ending a process may destroy data, break the session or introduce a "
-#~ "security risk. Only unresponsive processes should be ended."
-#~ msgstr ""
-#~ "Ao terminar um processo, poderá destruir os seus dados, tornar a sessão "
-#~ "de trabalho instável ou criar um risco de segurança. Apenas deverão ser "
-#~ "terminados processos que não estejam a responder."
 
 #~ msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 #~ msgstr "Média de carga nos últimos 1, 5 e 15 minutos: %0.2f, %0.2f, %0.2f"
