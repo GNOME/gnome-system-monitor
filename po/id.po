@@ -12,15 +12,15 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-08-29 20:20+0000\n"
-"PO-Revision-Date: 2015-08-30 12:29+0700\n"
+"POT-Creation-Date: 2016-08-12 10:58+0000\n"
+"PO-Revision-Date: 2016-08-15 14:41+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.8.8\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
@@ -42,7 +42,7 @@ msgstr ""
 "Manajer;Monitor;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:318
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:317
 msgid "GNOME System Monitor"
 msgstr "GNOME Monitor Sistem"
 
@@ -83,6 +83,22 @@ msgstr ""
 "Fitur grafik sumber daya menampilkan ikhtisar apa yang sedang terjadi pada "
 "komputer Anda, antaranya penggunaan jaringan, memori, serta prosesor."
 
+#: ../gnome-system-monitor.appdata.xml.in.h:6
+msgid "Process list view"
+msgstr "Tilikan daftar proses"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:7
+msgid "Resources overview"
+msgstr "Ringkasan sumber daya"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:8
+msgid "File Systems view"
+msgstr "Tilikan Sistem Berkas"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:9
+msgid "The GNOME Project"
+msgstr "Projek GNOME"
+
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
 msgid "Kill process"
 msgstr "Matikan proses"
@@ -120,7 +136,7 @@ msgid "Memory and Swap History"
 msgstr "Riwayat Memori dan Swap"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:260
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:343
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:347
 msgid "Memory"
 msgstr "Memori"
 
@@ -211,20 +227,17 @@ msgid "_Dependencies"
 msgstr "_Ketergantungan"
 
 #: ../data/menus.ui.h:11
-msgid "_Stop"
-msgstr "_Berhenti"
+msgid "_Properties"
+msgstr "_Properti"
 
 #: ../data/menus.ui.h:12
-msgid "_Continue"
-msgstr "_Lanjutkan"
+msgid "_Memory Maps"
+msgstr "Peta _Memori"
 
-#: ../data/menus.ui.h:13
-msgid "_End"
-msgstr "_Akhiri"
-
+#. Translators: this means
 #: ../data/menus.ui.h:14
-msgid "_Kill"
-msgstr "_Bunuh"
+msgid "Open _Files"
+msgstr "Buka _Berkas"
 
 #: ../data/menus.ui.h:15
 msgid "_Change Priority"
@@ -255,17 +268,20 @@ msgid "Custom"
 msgstr "Gubahan"
 
 #: ../data/menus.ui.h:22
-msgid "_Memory Maps"
-msgstr "Peta _Memori"
+msgid "_Stop"
+msgstr "_Berhenti"
 
-#. Translators: this means 'Files that are open' (open is not a verb here)
+#: ../data/menus.ui.h:23
+msgid "_Continue"
+msgstr "_Lanjutkan"
+
 #: ../data/menus.ui.h:24
-msgid "Open _Files"
-msgstr "Buka _Berkas"
+msgid "_End"
+msgstr "_Akhiri"
 
 #: ../data/menus.ui.h:25
-msgid "_Properties"
-msgstr "_Properti"
+msgid "_Kill"
+msgstr "_Bunuh"
 
 #: ../data/openfiles.ui.h:1
 msgid "Open Files"
@@ -323,7 +339,7 @@ msgstr "Tampilkan semua sistem berkas"
 msgid "File system i_nformation shown in list:"
 msgstr "I_nformasi sistem berkas yang ditampilkan dalam daftar:"
 
-#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:123
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:153
 msgid "_Cancel"
 msgstr "_Batal"
 
@@ -344,7 +360,7 @@ msgstr ""
 "angkatan (nice). Semakin rendah nilai angkatannya, maka semakin tinggi "
 "prioritasnya.</i></small>"
 
-#: ../src/application.cpp:304
+#: ../src/application.cpp:303
 msgid "A simple process and system monitor."
 msgstr "Monitor sederhana untuk proses dan sistem."
 
@@ -481,18 +497,18 @@ msgstr ""
 "Dirgita <dirgita@gmail.com>, 2011, 2012, 2013\n"
 "Andika Triwidada <andika@gmail.com>, 2011, 2012, 2013."
 
-#: ../src/load-graph.cpp:161
+#: ../src/load-graph.cpp:157
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u detik"
 
-#: ../src/load-graph.cpp:370
+#: ../src/load-graph.cpp:366
 msgid "not available"
 msgstr "tak tersedia"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:373
+#: ../src/load-graph.cpp:369
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) dari %s"
@@ -1036,33 +1052,48 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: ../src/procdialogs.cpp:75
+#: ../src/procdialogs.cpp:76
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr "Anda yakin ingin mematikan proses \"%s\" yang dipilih (PID: %u)?"
 
 #. xgettext: primary alert message for ending single process
-#: ../src/procdialogs.cpp:80
+#: ../src/procdialogs.cpp:82
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr "Anda yakin ingin mengakhiri proses \"%s\" yang dipilih (PID: %u)?"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping single process
+#: ../src/procdialogs.cpp:88
+#, c-format
+msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
+msgstr "Anda yakin ingin menghentikan proses \"%s\" yang dipilih (PID: %u)?"
+
 #. xgettext: primary alert message for killing multiple processes
-#: ../src/procdialogs.cpp:87
+#: ../src/procdialogs.cpp:97
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
 msgstr[0] "Anda yakin ingin mematikan %d proses yang dipilih?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: ../src/procdialogs.cpp:91
+#: ../src/procdialogs.cpp:103
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
 msgstr[0] "Anda yakin ingin mengakhiri %d proses yang dipilih?"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping multiple processes
+#: ../src/procdialogs.cpp:109
+#, c-format
+msgid "Are you sure you want to stop the selected process?"
+msgid_plural "Are you sure you want to stop the %d selected processes?"
+msgstr[0] "Anda yakin ingin menghentikan %d proses yang dipilih?"
+
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:98 ../src/procdialogs.cpp:104
+#: ../src/procdialogs.cpp:119
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1070,32 +1101,56 @@ msgstr ""
 "Mematikan suatu proses dapat merusak data, memutus sesi, atau menimbulkan "
 "resiko keamanan. Hanya proses tak responsif yang seharusnya dimatikan."
 
-#: ../src/procdialogs.cpp:101
+#: ../src/procdialogs.cpp:122
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "Mati_kan Proses"
 
-#: ../src/procdialogs.cpp:107
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:126
+msgid ""
+"Ending a process may destroy data, break the session or introduce a security "
+"risk. Only unresponsive processes should be ended."
+msgstr ""
+"Mengakhiri suatu proses dapat merusak data, memutus sesi, atau menimbulkan "
+"resiko keamanan. Hanya proses tak responsif yang seharusnya diakhiri."
+
+#: ../src/procdialogs.cpp:129
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "Akhiri Pros_es"
 
-#: ../src/procdialogs.cpp:188
+#. SIGSTOP
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:133
+msgid ""
+"Stopping a process may destroy data, break the session or introduce a "
+"security risk. Only unresponsive processes should be stopped."
+msgstr ""
+"Menghentikan suatu proses dapat merusak data, memutus sesi, atau menimbulkan "
+"resiko keamanan. Hanya proses tak responsif yang seharusnya dihentikan."
+
+#: ../src/procdialogs.cpp:136
+msgid "_Stop Process"
+msgid_plural "_Stop Processes"
+msgstr[0] "Hentikan Pros_es"
+
+#: ../src/procdialogs.cpp:218
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Ubah Prioritas Proses \"%s\" (PID: %u)"
 
-#: ../src/procdialogs.cpp:191
+#: ../src/procdialogs.cpp:221
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
 msgstr[0] "Ubah Prioritas dari %d proses yang dipilih"
 
-#: ../src/procdialogs.cpp:210
+#: ../src/procdialogs.cpp:240
 msgid "Note:"
 msgstr "Catatan:"
 
-#: ../src/procdialogs.cpp:211
+#: ../src/procdialogs.cpp:241
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1108,72 +1163,72 @@ msgstr ""
 msgid "N/A"
 msgstr "N/A"
 
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:328
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:332
 msgid "Process Name"
 msgstr "Nama Proses"
 
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:329
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:333
 msgid "User"
 msgstr "Pengguna"
 
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:330
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:334
 msgid "Status"
 msgstr "Status"
 
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:331
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:335
 msgid "Virtual Memory"
 msgstr "Memori Virtual"
 
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:336
 msgid "Resident Memory"
 msgstr "Memori Bertetap"
 
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:333
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:337
 msgid "Writable Memory"
 msgstr "Memori Dapat Ditulis"
 
-#: ../src/procproperties.cpp:74 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:338
 msgid "Shared Memory"
 msgstr "Memori Berbagi"
 
-#: ../src/procproperties.cpp:76 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:339
 msgid "X Server Memory"
 msgstr "Memori Server X"
 
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:341
 msgid "CPU Time"
 msgstr "Waktu CPU"
 
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:342
 msgid "Started"
 msgstr "Dimulai"
 
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:343
 msgid "Nice"
 msgstr "Angkatan"
 
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:353
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:357
 msgid "Priority"
 msgstr "Prioritas"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:340
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:344
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:341
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:345
 msgid "Security Context"
 msgstr "Konteks Keamanan"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:342
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:346
 msgid "Command Line"
 msgstr "Baris Perintah"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:345
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:349
 msgid "Waiting Channel"
 msgstr "Kanal Tunggu"
 
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:346
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:350
 msgid "Control Group"
 msgstr "Control Group"
 
@@ -1182,26 +1237,26 @@ msgstr "Control Group"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:336
+#: ../src/proctable.cpp:340
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:347
+#: ../src/proctable.cpp:351
 msgid "Unit"
 msgstr "Unit"
 
-#: ../src/proctable.cpp:348
+#: ../src/proctable.cpp:352
 msgid "Session"
 msgstr "Sesi"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:351
+#: ../src/proctable.cpp:355
 msgid "Seat"
 msgstr "Seat"
 
-#: ../src/proctable.cpp:352
+#: ../src/proctable.cpp:356
 msgid "Owner"
 msgstr "Pemilik"
 
