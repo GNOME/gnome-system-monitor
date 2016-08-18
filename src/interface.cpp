@@ -616,6 +616,7 @@ cb_main_window_state_changed (GtkWidget *window, GdkEventWindowState *event, gpo
             disks_thaw (app);
         }
     }
+    g_free (current_page);
     return FALSE;
 }
 
