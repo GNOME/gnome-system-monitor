@@ -182,6 +182,8 @@ gsm_tree_view_load_state (GsmTreeView *tree_view)
             g_free (key);
         }
 
+        g_list_free (columns);
+
         gtk_widget_show_all (header_menu);
 
         g_settings_get (priv->settings, "columns-order", "ai", &var_iter);
