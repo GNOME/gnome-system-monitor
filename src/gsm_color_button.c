@@ -198,6 +198,7 @@ fill_image_buffer_from_resource (cairo_t *cr, const char *path)
 	      path, (error ? error->message : "unknown error"));
     if (error)
       g_error_free(error);
+    g_bytes_unref(bytes);
     return NULL;
   }
 
@@ -208,6 +209,7 @@ fill_image_buffer_from_resource (cairo_t *cr, const char *path)
   rsvg_handle_render_cairo (handle, tmp_cr);
   cairo_destroy (tmp_cr);
   g_object_unref (handle);
+  g_bytes_unref(bytes);
   return tmp_surface;
 }
 
@@ -237,6 +239,7 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
     gtk_style_context_get_color (context, GTK_STATE_FLAG_INSENSITIVE, color);
   }
   gdk_cairo_set_source_rgba (cr, color);
+  gdk_rgba_free(color);
   width  = gdk_window_get_width (gtk_widget_get_window (widget));
   height = gdk_window_get_height(gtk_widget_get_window (widget));
 
