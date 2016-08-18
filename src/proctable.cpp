@@ -247,8 +247,10 @@ process_visibility_func (GtkTreeModel *model, GtkTreeIter *iter, gpointer data)
     const gchar * search_text = app->search_entry == NULL ? "" : gtk_entry_get_text (GTK_ENTRY (app->search_entry));
     GtkTreePath *tree_path = gtk_tree_model_get_path (model, iter);
 
-    if (strcmp (search_text, "") == 0)
+    if (strcmp (search_text, "") == 0) {
+        gtk_tree_path_free (tree_path);
         return TRUE;
+    }
 
 	// in case we are in dependencies view, we show (and expand) rows not matching the text, but having a matching child
     gboolean match = false;
