@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-20 23:14+0100\n"
-"PO-Revision-Date: 2016-03-20 22:10+0100\n"
+"POT-Creation-Date: 2016-08-26 03:48+0200\n"
+"PO-Revision-Date: 2016-08-26 01:57+0200\n"
 "Last-Translator: Kenneth Nielsen <k.nielsen81@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -95,6 +95,25 @@ msgstr ""
 "der foregår på din computer ved at vise nylig netværks-, hukommelses- og "
 "processorforbrug."
 
+#: ../gnome-system-monitor.appdata.xml.in.h:6
+#, fuzzy
+msgid "Process list view"
+msgstr "Sorteringsrækkefølge for proceslisten"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:7
+#, fuzzy
+msgid "Resources overview"
+msgstr "Ressourcer"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:8
+#, fuzzy
+msgid "File Systems view"
+msgstr "Filsystemer"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:9
+msgid "The GNOME Project"
+msgstr ""
+
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
 msgid "Kill process"
 msgstr "Terminér proces"
@@ -135,7 +154,7 @@ msgid "Memory and Swap History"
 msgstr "Hukommelsesforbrug"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:260
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:347
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:349
 msgid "Memory"
 msgstr "Hukommelse"
 
@@ -227,20 +246,17 @@ msgid "_Dependencies"
 msgstr "_Afhængigheder"
 
 #: ../data/menus.ui.h:11
-msgid "_Stop"
-msgstr "_Stop"
+msgid "_Properties"
+msgstr "_Egenskaber"
 
 #: ../data/menus.ui.h:12
-msgid "_Continue"
-msgstr "_Fortsæt"
+msgid "_Memory Maps"
+msgstr "_Hukommelsesområder"
 
-#: ../data/menus.ui.h:13
-msgid "_End"
-msgstr "_Afslut"
-
+#. Translators: this means 'Files that are open' (open is not a verb here)
 #: ../data/menus.ui.h:14
-msgid "_Kill"
-msgstr "_Terminér"
+msgid "Open _Files"
+msgstr "Åbn _filer"
 
 #: ../data/menus.ui.h:15
 msgid "_Change Priority"
@@ -271,17 +287,20 @@ msgid "Custom"
 msgstr "Tilpasset"
 
 #: ../data/menus.ui.h:22
-msgid "_Memory Maps"
-msgstr "_Hukommelsesområder"
+msgid "_Stop"
+msgstr "_Stop"
 
-#. Translators: this means 'Files that are open' (open is not a verb here)
+#: ../data/menus.ui.h:23
+msgid "_Continue"
+msgstr "_Fortsæt"
+
 #: ../data/menus.ui.h:24
-msgid "Open _Files"
-msgstr "Åbn _filer"
+msgid "_End"
+msgstr "_Afslut"
 
 #: ../data/menus.ui.h:25
-msgid "_Properties"
-msgstr "_Egenskaber"
+msgid "_Kill"
+msgstr "_Terminér"
 
 # titel til et vindue med de åbne filer for en proces
 #: ../data/openfiles.ui.h:1
@@ -318,7 +337,7 @@ msgstr "Informationsfelter"
 
 #: ../data/preferences.ui.h:8
 msgid "Process i_nformation shown in list:"
-msgstr "Proces_oplysninger vist i listen:"
+msgstr "_Procesoplysninger vist i listen:"
 
 #: ../data/preferences.ui.h:10
 msgid "Graphs"
@@ -340,7 +359,7 @@ msgstr "Vis _alle filsystemer"
 msgid "File system i_nformation shown in list:"
 msgstr "Filsystemi_nformation vist i listen:"
 
-#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:123
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:153
 msgid "_Cancel"
 msgstr "_Annullér"
 
@@ -451,7 +470,7 @@ msgstr "Titel"
 msgid "The title of the color selection dialog"
 msgstr "Titlen på farvevælger-dialogen"
 
-#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:512
+#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:515
 msgid "Pick a Color"
 msgstr "Vælg en farve"
 
@@ -467,11 +486,11 @@ msgstr "Den valgte farve"
 msgid "Type of color picker"
 msgstr "Farvevælgerens type"
 
-#: ../src/gsm_color_button.c:434
+#: ../src/gsm_color_button.c:437
 msgid "Received invalid color data\n"
 msgstr "Modtog ugyldig farvedata\n"
 
-#: ../src/gsm_color_button.c:535
+#: ../src/gsm_color_button.c:538
 msgid "Click to set graph colors"
 msgstr "Klik for at indstille graf-farver"
 
@@ -502,19 +521,19 @@ msgstr ""
 "Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "Mere info: http://www.dansk-gruppen.dk"
 
-#: ../src/load-graph.cpp:161
+#: ../src/load-graph.cpp:157
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u sekund"
 msgstr[1] "%u sekunder"
 
-#: ../src/load-graph.cpp:370
+#: ../src/load-graph.cpp:366
 msgid "not available"
 msgstr "ikke tilgængelig"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:373
+#: ../src/load-graph.cpp:369
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) af %s"
@@ -1062,19 +1081,26 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: ../src/procdialogs.cpp:75
+#: ../src/procdialogs.cpp:76
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr "Er du sikker på at du vil terminere den valgte proces “%s” (PID: %u)?"
 
 #. xgettext: primary alert message for ending single process
-#: ../src/procdialogs.cpp:80
+#: ../src/procdialogs.cpp:82
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr "Er du sikker på at du vil afslutte den valgte proces “%s”« (PID: %u)?"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping single process
+#: ../src/procdialogs.cpp:88
+#, fuzzy, c-format
+msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
+msgstr "Er du sikker på at du vil afslutte den valgte proces “%s”« (PID: %u)?"
+
 #. xgettext: primary alert message for killing multiple processes
-#: ../src/procdialogs.cpp:87
+#: ../src/procdialogs.cpp:97
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
@@ -1082,15 +1108,24 @@ msgstr[0] "Er du sikker på at du vil terminere den valgte proces?"
 msgstr[1] "Er du sikker på at du vil terminere de %d valgte processer?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: ../src/procdialogs.cpp:91
+#: ../src/procdialogs.cpp:103
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
 msgstr[0] "Er du sikker på at du vil afslutte den valgte proces?"
 msgstr[1] "Er du sikker på at du vil afslutte de %d valgte processer?"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping multiple processes
+#: ../src/procdialogs.cpp:109
+#, fuzzy, c-format
+msgid "Are you sure you want to stop the selected process?"
+msgid_plural "Are you sure you want to stop the %d selected processes?"
+msgstr[0] "Er du sikker på at du vil afslutte den valgte proces?"
+msgstr[1] "Er du sikker på at du vil afslutte de %d valgte processer?"
+
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:98 ../src/procdialogs.cpp:104
+#: ../src/procdialogs.cpp:119
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1099,35 +1134,64 @@ msgstr ""
 "fungerende session eller skabe en sikkerhedsrisiko. Kun processer som ikke "
 "svarer bør termineres."
 
-#: ../src/procdialogs.cpp:101
+#: ../src/procdialogs.cpp:122
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "_Terminér proces"
 msgstr[1] "_Terminér processer"
 
-#: ../src/procdialogs.cpp:107
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:126
+msgid ""
+"Ending a process may destroy data, break the session or introduce a security "
+"risk. Only unresponsive processes should be ended."
+msgstr ""
+"Ved at afslutte en proces kan du ødelægge dine data, spolere en fungerende "
+"session eller skabe en sikkerhedsrisiko. Kun processer som ikke svarer bør "
+"afsluttes."
+
+#: ../src/procdialogs.cpp:129
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "_Afslut proces"
 msgstr[1] "_Afslut processer"
 
-#: ../src/procdialogs.cpp:188
+#. SIGSTOP
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:133
+#, fuzzy
+msgid ""
+"Stopping a process may destroy data, break the session or introduce a "
+"security risk. Only unresponsive processes should be stopped."
+msgstr ""
+"Ved at afslutte en proces kan du ødelægge dine data, spolere en fungerende "
+"session eller skabe en sikkerhedsrisiko. Kun processer som ikke svarer bør "
+"afsluttes."
+
+#: ../src/procdialogs.cpp:136
+#, fuzzy
+msgid "_Stop Process"
+msgid_plural "_Stop Processes"
+msgstr[0] "_Stop proces"
+msgstr[1] "_Stop proces"
+
+#: ../src/procdialogs.cpp:218
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Ændr prioritet for proces “%s” (PID: %u)"
 
-#: ../src/procdialogs.cpp:191
+#: ../src/procdialogs.cpp:221
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
 msgstr[0] "Ændr prioritet for den valgte proces"
 msgstr[1] "Ændr prioritet for de %d valgte processer"
 
-#: ../src/procdialogs.cpp:210
+#: ../src/procdialogs.cpp:240
 msgid "Note:"
 msgstr "Note:"
 
-#: ../src/procdialogs.cpp:211
+#: ../src/procdialogs.cpp:241
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1140,73 +1204,73 @@ msgstr ""
 msgid "N/A"
 msgstr "-"
 
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:334
 msgid "Process Name"
 msgstr "Procesnavn"
 
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:333
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:335
 msgid "User"
 msgstr "Bruger"
 
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:336
 msgid "Status"
 msgstr "Status"
 
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:337
 msgid "Virtual Memory"
 msgstr "Virtuel hukommelse"
 
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:338
 msgid "Resident Memory"
 msgstr "Resident huk."
 
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:339
 msgid "Writable Memory"
 msgstr "Skrivbar hukommelse"
 
-#: ../src/procproperties.cpp:74 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:340
 msgid "Shared Memory"
 msgstr "Delt huk."
 
-#: ../src/procproperties.cpp:76 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:341
 msgid "X Server Memory"
 msgstr "X-serverhuk."
 
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:341
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:343
 msgid "CPU Time"
 msgstr "CPU-tid"
 
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:342
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:344
 msgid "Started"
 msgstr "Startet"
 
 # prioritet er helt entydigt her
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:343
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:345
 msgid "Nice"
 msgstr "Prioritet"
 
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:357
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:359
 msgid "Priority"
 msgstr "Prioritet"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:344
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:346
 msgid "ID"
 msgstr "Id"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:345
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:347
 msgid "Security Context"
 msgstr "Sikkerhedskontekst"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:346
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:348
 msgid "Command Line"
 msgstr "Kommandolinje"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:349
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:351
 msgid "Waiting Channel"
 msgstr "Ventekanal"
 
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:350
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:352
 msgid "Control Group"
 msgstr "Kontrolgruppe"
 
@@ -1215,26 +1279,26 @@ msgstr "Kontrolgruppe"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:340
+#: ../src/proctable.cpp:342
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:351
+#: ../src/proctable.cpp:353
 msgid "Unit"
 msgstr "Enhed"
 
-#: ../src/proctable.cpp:352
+#: ../src/proctable.cpp:354
 msgid "Session"
 msgstr "Session"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:355
+#: ../src/proctable.cpp:357
 msgid "Seat"
 msgstr "Sæde"
 
-#: ../src/proctable.cpp:356
+#: ../src/proctable.cpp:358
 msgid "Owner"
 msgstr "Ejer"
 
@@ -1413,9 +1477,6 @@ msgstr "%s/s"
 #~ msgid "_View"
 #~ msgstr "_Vis"
 
-#~ msgid "_Stop Process"
-#~ msgstr "_Stop proces"
-
 #~ msgid "Stop process"
 #~ msgstr "Stop proces"
 
@@ -1499,14 +1560,6 @@ msgstr "%s/s"
 #~ msgstr ""
 #~ "0 for systeminformation, 1 for procesliste, 2 for ressourcer og 3 for "
 #~ "diskliste"
-
-#~ msgid ""
-#~ "Ending a process may destroy data, break the session or introduce a "
-#~ "security risk. Only unresponsive processes should be ended."
-#~ msgstr ""
-#~ "Ved at afslutte en proces kan du ødelægge dine data, spolere en "
-#~ "fungerende session eller skabe en sikkerhedsrisiko. Kun processer som "
-#~ "ikke svarer bør afsluttes."
 
 #~ msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 #~ msgstr ""
