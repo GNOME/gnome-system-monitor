@@ -31,6 +31,6 @@ HELP_FILES = \
 
 HELP_MEDIA =
 
-HELP_LINGUAS = cs de el es fr hu ko ro
+HELP_LINGUAS = cs de el es fr hu ko pt ro
 
 -include $(top_srcdir)/git.mk
