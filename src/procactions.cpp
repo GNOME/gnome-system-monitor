@@ -40,7 +40,7 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
     gint error;
     int saved_errno;
     gchar *error_msg;
-    GtkWidget *dialog;
+    GtkMessageDialog *dialog;
 
     gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 
@@ -76,15 +76,15 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
           "%s"),
         info->pid, args->arg_value, g_strerror(saved_errno));
 
-    dialog = gtk_message_dialog_new (
+    dialog = GTK_MESSAGE_DIALOG (gtk_message_dialog_new (
         NULL,
         GTK_DIALOG_DESTROY_WITH_PARENT,
         GTK_MESSAGE_ERROR,
         GTK_BUTTONS_OK,
-        "%s", error_msg);
+        "%s", error_msg));
 
     gtk_dialog_run (GTK_DIALOG (dialog));
-    gtk_widget_destroy (dialog);
+    gtk_widget_destroy (GTK_WIDGET (dialog));
     g_free (error_msg);
 }
 
@@ -119,7 +119,7 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
     ProcInfo *info;
     int error;
     int saved_errno;
-    GtkWidget *dialog;
+    GtkMessageDialog *dialog;
 
     gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 
@@ -154,15 +154,15 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
           "%s"),
         info->pid, args->arg_value, g_strerror(saved_errno));
 
-    dialog = gtk_message_dialog_new (
+    dialog = GTK_MESSAGE_DIALOG (gtk_message_dialog_new (
         NULL,
         GTK_DIALOG_DESTROY_WITH_PARENT,
         GTK_MESSAGE_ERROR,
         GTK_BUTTONS_OK,
-        "%s", error_msg);
+        "%s", error_msg));
 
     gtk_dialog_run (GTK_DIALOG (dialog));
-    gtk_widget_destroy (dialog);
+    gtk_widget_destroy (GTK_WIDGET (dialog));
     g_free (error_msg);
 }
 

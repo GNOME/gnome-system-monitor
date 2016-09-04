@@ -123,24 +123,24 @@ namespace
     {
     public:
         guint timer;
-        GtkWidget *tree;
+        GsmTreeView *tree;
         ProcInfo *info;
         OffsetFormater format;
         mutable InodeDevices devices;
 
-        MemMapsData(GtkWidget *a_tree)
+        MemMapsData(GsmTreeView *a_tree)
             : timer(),
               tree(a_tree),
               info(NULL),
               format(),
               devices()
         {
-            gsm_tree_view_load_state (GSM_TREE_VIEW (this->tree));
+            gsm_tree_view_load_state (this->tree);
         }
 
         ~MemMapsData()
         {
-            gsm_tree_view_save_state (GSM_TREE_VIEW (this->tree));
+            gsm_tree_view_save_state (this->tree);
         }
     };
 }
@@ -299,7 +299,7 @@ dialog_response (GtkDialog * dialog, gint response_id, gpointer data)
 static MemMapsData*
 create_memmapsdata (GsmApplication *app)
 {
-    GtkWidget *tree;
+    GsmTreeView *tree;
     GtkListStore *model;
     guint i;
 
@@ -422,10 +422,10 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 {
     GsmApplication *app = static_cast<GsmApplication *>(data);
     MemMapsData *mmdata;
-    GtkWidget *memmapsdialog;
-    GtkWidget *dialog_vbox;
-    GtkWidget *label;
-    GtkWidget *scrolled;
+    GtkDialog  *memmapsdialog;
+    GtkBox *dialog_box;
+    GtkLabel *label;
+    GtkScrolledWindow *scrolled;
     ProcInfo *info;
 
     gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
@@ -436,7 +436,7 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
     mmdata = create_memmapsdata (app);
     mmdata->info = info;
     
-    memmapsdialog = GTK_WIDGET (g_object_new (GTK_TYPE_DIALOG, 
+    memmapsdialog = GTK_DIALOG (g_object_new (GTK_TYPE_DIALOG, 
                                               "title", _("Memory Maps"), 
                                               "use-header-bar", TRUE, 
                                               "destroy-with-parent", TRUE, NULL));
@@ -445,34 +445,34 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
     gtk_window_set_default_size(GTK_WINDOW(memmapsdialog), 620, 400);
     gtk_container_set_border_width(GTK_CONTAINER(memmapsdialog), 5);
 
-    dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG(memmapsdialog));
-    gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 5);
+    dialog_box = GTK_BOX (gtk_dialog_get_content_area (memmapsdialog));
+    gtk_container_set_border_width (GTK_CONTAINER (dialog_box), 5);
 
     label = procman_make_label_for_mmaps_or_ofiles (
         _("_Memory maps for process \"%s\" (PID %u):"),
         info->name,
         info->pid);
 
-    gtk_box_pack_start (GTK_BOX (dialog_vbox), label, FALSE, TRUE, 0);
+    gtk_box_pack_start (dialog_box, GTK_WIDGET (label), FALSE, TRUE, 0);
 
 
-    scrolled = gtk_scrolled_window_new (NULL, NULL);
+    scrolled = GTK_SCROLLED_WINDOW (gtk_scrolled_window_new (NULL, NULL));
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                     GTK_POLICY_AUTOMATIC,
                                     GTK_POLICY_AUTOMATIC);
     gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
                                          GTK_SHADOW_IN);
 
-    gtk_container_add (GTK_CONTAINER (scrolled), mmdata->tree);
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label), mmdata->tree);
+    gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (mmdata->tree));
+    gtk_label_set_mnemonic_widget (label, GTK_WIDGET (mmdata->tree));
 
-    gtk_box_pack_start (GTK_BOX (dialog_vbox), scrolled, TRUE, TRUE, 0);
+    gtk_box_pack_start (dialog_box, GTK_WIDGET (scrolled), TRUE, TRUE, 0);
 
     g_signal_connect(G_OBJECT(memmapsdialog), "response",
                      G_CALLBACK(dialog_response), mmdata);
 
     gtk_window_set_transient_for (GTK_WINDOW (memmapsdialog), GTK_WINDOW (GsmApplication::get()->main_window));
-    gtk_widget_show_all (memmapsdialog);
+    gtk_widget_show_all (GTK_WIDGET (memmapsdialog));
     mmdata->timer = g_timeout_add_seconds (5, memmaps_timer, mmdata);
 
     update_memmaps_dialog (mmdata);

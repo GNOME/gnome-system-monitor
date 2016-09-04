@@ -5,6 +5,7 @@
 #include <glib.h>
 #include <glibtop/cpu.h>
 
+#include "gsm_color_button.h"
 #include "util.h"
 
 enum
@@ -23,13 +24,13 @@ enum
 
 struct LoadGraphLabels
 {
-    GtkWidget *cpu[GLIBTOP_NCPU];
-    GtkWidget *memory;
-    GtkWidget *swap;
-    GtkWidget *net_in;
-    GtkWidget *net_in_total;
-    GtkWidget *net_out;
-    GtkWidget *net_out_total;
+    GtkLabel *cpu[GLIBTOP_NCPU];
+    GtkLabel *memory;
+    GtkLabel *swap;
+    GtkLabel *net_in;
+    GtkLabel *net_in_total;
+    GtkLabel *net_out;
+    GtkLabel *net_out_total;
 };
 
 struct LoadGraph
@@ -64,8 +65,8 @@ struct LoadGraph
     std::vector<float> data_block;
     gfloat* data[NUM_POINTS];
 
-    GtkWidget *main_widget;
-    GtkWidget *disp;
+    GtkBox *main_widget;
+    GtkDrawingArea *disp;
 
     cairo_surface_t *background;
 
@@ -74,8 +75,8 @@ struct LoadGraph
     gboolean draw;
 
     LoadGraphLabels labels;
-    GtkWidget *mem_color_picker;
-    GtkWidget *swap_color_picker;
+    GsmColorButton *mem_color_picker;
+    GsmColorButton *swap_color_picker;
 
     /* union { */
     struct
@@ -121,13 +122,13 @@ load_graph_reset (LoadGraph *g);
 LoadGraphLabels*
 load_graph_get_labels (LoadGraph *g) G_GNUC_CONST;
 
-GtkWidget*
+GtkBox*
 load_graph_get_widget (LoadGraph *g) G_GNUC_CONST;
 
-GtkWidget*
+GsmColorButton*
 load_graph_get_mem_color_picker(LoadGraph *g) G_GNUC_CONST;
 
-GtkWidget*
+GsmColorButton*
 load_graph_get_swap_color_picker(LoadGraph *g) G_GNUC_CONST;
 
 #endif /* _GSM_LOAD_GRAPH_H_ */

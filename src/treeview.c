@@ -137,7 +137,7 @@ gsm_tree_view_load_state (GsmTreeView *tree_view)
                                           sort_type);
 
     if (priv->store_column_order) {
-        GtkWidget *header_menu = gtk_menu_new ();
+        GtkMenu *header_menu = GTK_MENU (gtk_menu_new ());
         GList *columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree_view));
         GList *iter;
         GVariantIter *var_iter;
@@ -147,8 +147,8 @@ gsm_tree_view_load_state (GsmTreeView *tree_view)
         for (iter = columns; iter != NULL; iter = iter->next) {
             const char *title;
             char *key;
-            GtkWidget *button;
-            GtkWidget *column_item;
+            GtkButton *button;
+            GtkCheckMenuItem *column_item;
 
             col = GTK_TREE_VIEW_COLUMN (iter->data);
             sort_id = gtk_tree_view_column_get_sort_column_id (col);
@@ -161,17 +161,17 @@ gsm_tree_view_load_state (GsmTreeView *tree_view)
 
             title = gtk_tree_view_column_get_title (col);
 
-            button = gtk_tree_view_column_get_button (col);
+            button = GTK_BUTTON (gtk_tree_view_column_get_button (col));
             g_signal_connect (button, "button-press-event",
                               G_CALLBACK (cb_column_header_clicked),
                               header_menu);
 
-            column_item = gtk_check_menu_item_new_with_label (title);
+            column_item = GTK_CHECK_MENU_ITEM (gtk_check_menu_item_new_with_label (title));
             g_object_bind_property (col, "visible",
                                     column_item, "active",
                                     G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
-            gtk_menu_shell_append (GTK_MENU_SHELL (header_menu), column_item);
+            gtk_menu_shell_append (GTK_MENU_SHELL (header_menu), GTK_WIDGET (column_item));
 
             key = g_strdup_printf ("col-%d-width", sort_id);
             gtk_tree_view_column_set_fixed_width (col, g_settings_get_int (priv->settings, key));
@@ -184,7 +184,7 @@ gsm_tree_view_load_state (GsmTreeView *tree_view)
 
         g_list_free (columns);
 
-        gtk_widget_show_all (header_menu);
+        gtk_widget_show_all (GTK_WIDGET (header_menu));
 
         g_settings_get (priv->settings, "columns-order", "ai", &var_iter);
         last = NULL;
@@ -272,7 +272,7 @@ gsm_tree_view_append_and_bind_column (GsmTreeView *tree_view, GtkTreeViewColumn 
 }
 
 
-GtkWidget *
+GsmTreeView *
 gsm_tree_view_new (GSettings *settings, gboolean store_column_order)
 {
     GsmTreeView *self = g_object_new (GSM_TYPE_TREE_VIEW, NULL);
@@ -281,5 +281,5 @@ gsm_tree_view_new (GSettings *settings, gboolean store_column_order)
     priv->settings = settings;
     priv->store_column_order = store_column_order;
 
-    return GTK_WIDGET (self);
+    return self;
 }

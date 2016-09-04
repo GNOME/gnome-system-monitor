@@ -167,7 +167,7 @@ compare_open_files(gconstpointer a, gconstpointer b)
 
 
 static void
-update_openfiles_dialog (GtkWidget *tree)
+update_openfiles_dialog (GsmTreeView *tree)
 {
     ProcInfo *info;
     GtkTreeModel *model;
@@ -221,10 +221,10 @@ update_openfiles_dialog (GtkWidget *tree)
 static void
 close_openfiles_dialog (GtkDialog *dialog, gint id, gpointer data)
 {
-    GtkWidget *tree = static_cast<GtkWidget*>(data);
+    GsmTreeView *tree = static_cast<GsmTreeView*>(data);
     guint timer;
 
-    gsm_tree_view_save_state (GSM_TREE_VIEW (tree));
+    gsm_tree_view_save_state (tree);
 
     timer = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (tree), "timer"));
     g_source_remove (timer);
@@ -235,10 +235,10 @@ close_openfiles_dialog (GtkDialog *dialog, gint id, gpointer data)
 }
 
 
-static GtkWidget *
+static GsmTreeView *
 create_openfiles_tree (GsmApplication *app)
 {
-    GtkWidget *tree;
+    GsmTreeView *tree;
     GtkListStore *model;
     GtkTreeViewColumn *column;
     GtkCellRenderer *cell;
@@ -294,7 +294,7 @@ create_openfiles_tree (GsmApplication *app)
 static gboolean
 openfiles_timer (gpointer data)
 {
-    GtkWidget *tree = static_cast<GtkWidget*>(data);
+    GsmTreeView* tree = static_cast<GsmTreeView*>(data);
     GtkTreeModel *model;
 
     model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
@@ -311,11 +311,11 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
                                 GtkTreeIter *iter, gpointer data)
 {
     GsmApplication *app = static_cast<GsmApplication *>(data);
-    GtkWidget *openfilesdialog;
-    GtkWidget *cmd_grid;
-    GtkWidget *label;
-    GtkWidget *scrolled;
-    GtkWidget *tree;
+    GtkDialog *openfilesdialog;
+    GtkGrid *cmd_grid;
+    GtkLabel *label;
+    GtkScrolledWindow *scrolled;
+    GsmTreeView *tree;
     ProcInfo *info;
     guint timer;
 
@@ -327,9 +327,9 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
     GtkBuilder *builder = gtk_builder_new();
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/openfiles.ui", NULL);
 
-    openfilesdialog = GTK_WIDGET (gtk_builder_get_object (builder, "openfiles_dialog"));
+    openfilesdialog = GTK_DIALOG (gtk_builder_get_object (builder, "openfiles_dialog"));
 
-    cmd_grid = GTK_WIDGET (gtk_builder_get_object (builder, "cmd_grid"));
+    cmd_grid = GTK_GRID (gtk_builder_get_object (builder, "cmd_grid"));
 
 
     label = procman_make_label_for_mmaps_or_ofiles (
@@ -337,12 +337,12 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
         info->name,
         info->pid);
 
-    gtk_container_add (GTK_CONTAINER (cmd_grid), label);
+    gtk_container_add (GTK_CONTAINER (cmd_grid), GTK_WIDGET (label));
 
-    scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "scrolled"));
+    scrolled = GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder, "scrolled"));
 
     tree = create_openfiles_tree (app);
-    gtk_container_add (GTK_CONTAINER (scrolled), tree);
+    gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (tree));
     g_object_set_data (G_OBJECT (tree), "selected_info", GUINT_TO_POINTER (info->pid));
 
     g_signal_connect (G_OBJECT (openfilesdialog), "response",
@@ -351,7 +351,7 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
     gtk_builder_connect_signals (builder, NULL);
 
     gtk_window_set_transient_for (GTK_WINDOW (openfilesdialog), GTK_WINDOW (GsmApplication::get()->main_window));
-    gtk_widget_show_all (openfilesdialog);
+    gtk_widget_show_all (GTK_WIDGET (openfilesdialog));
 
     timer = g_timeout_add_seconds (5, openfiles_timer, tree);
     g_object_set_data (G_OBJECT (tree), "timer", GUINT_TO_POINTER (timer));

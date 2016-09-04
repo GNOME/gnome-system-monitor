@@ -79,7 +79,7 @@ cb_save_tree_state(gpointer, gpointer data)
 {
     GsmApplication * const app = static_cast<GsmApplication *>(data);
 
-    gsm_tree_view_save_state (GSM_TREE_VIEW (app->tree));
+    gsm_tree_view_save_state (app->tree);
 }
 
 static void
@@ -320,10 +320,10 @@ cb_show_whose_processes_changed (GSettings *settings, const gchar *key, gpointer
     }
 }
 
-GtkWidget *
+GsmTreeView *
 proctable_new (GsmApplication * const app)
 {
-    GtkWidget *proctree;
+    GsmTreeView *proctree;
     GtkTreeStore *model;
     GtkTreeModelFilter *model_filter;
     GtkTreeModelSort *model_sort;
@@ -428,7 +428,7 @@ proctable_new (GsmApplication * const app)
     gtk_tree_view_column_set_min_width (column, 1);
     gtk_tree_view_column_set_reorderable(column, TRUE);
 
-    gsm_tree_view_append_and_bind_column (GSM_TREE_VIEW (proctree), column);
+    gsm_tree_view_append_and_bind_column (proctree, column);
     gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
 
     for (i = COL_USER; i <= COL_PRIORITY; i++) {
@@ -450,7 +450,7 @@ proctable_new (GsmApplication * const app)
         gtk_tree_view_column_set_resizable(col, TRUE);
         gtk_tree_view_column_set_sort_column_id(col, i);
         gtk_tree_view_column_set_reorderable(col, TRUE);
-        gsm_tree_view_append_and_bind_column (GSM_TREE_VIEW (proctree), col);
+        gsm_tree_view_append_and_bind_column (proctree, col);
 
         // type
         switch (i) {
@@ -564,20 +564,20 @@ proctable_new (GsmApplication * const app)
     app->last_vscroll_value = 0;
 
     if (!cgroups_enabled ())
-        gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_CGROUP);
+        gsm_tree_view_add_excluded_column (proctree, COL_CGROUP);
 
     if (!procman::systemd_logind_running())
     {
-        gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_UNIT);
-        gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_SESSION);
-        gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_SEAT);
-        gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_OWNER);
+        gsm_tree_view_add_excluded_column (proctree, COL_UNIT);
+        gsm_tree_view_add_excluded_column (proctree, COL_SESSION);
+        gsm_tree_view_add_excluded_column (proctree, COL_SEAT);
+        gsm_tree_view_add_excluded_column (proctree, COL_OWNER);
     }
 
     if (!can_show_security_context_column ())
-        gsm_tree_view_add_excluded_column (GSM_TREE_VIEW (proctree), COL_SECURITYCONTEXT);
+        gsm_tree_view_add_excluded_column (proctree, COL_SECURITYCONTEXT);
 
-    gsm_tree_view_load_state (GSM_TREE_VIEW (proctree));
+    gsm_tree_view_load_state (proctree);
 
     GtkIconTheme* theme = gtk_icon_theme_get_default();
     g_signal_connect(G_OBJECT (theme), "changed", G_CALLBACK (cb_refresh_icons), app);
@@ -609,7 +609,7 @@ proctable_new (GsmApplication * const app)
     g_signal_connect (app->settings, "changed::" GSM_SETTING_SHOW_WHOSE_PROCESSES,
                       G_CALLBACK (cb_show_whose_processes_changed), app);
 
-    gtk_widget_show (proctree);
+    gtk_widget_show (GTK_WIDGET (proctree));
 
     return proctree;
 }

@@ -62,7 +62,7 @@ struct _GsmColorButtonClass
 };
 
 GType       gsm_color_button_get_type      (void);
-GtkWidget * gsm_color_button_new           (const GdkRGBA * color, guint type);
+GsmColorButton * gsm_color_button_new      (const GdkRGBA * color, guint type);
 void        gsm_color_button_set_color     (GsmColorButton * color_button, const GdkRGBA * color);
 void        gsm_color_button_set_fraction  (GsmColorButton * color_button, const gdouble fraction);
 void        gsm_color_button_set_cbtype    (GsmColorButton * color_button, guint type);

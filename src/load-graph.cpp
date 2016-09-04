@@ -71,14 +71,14 @@ void draw_background(LoadGraph *graph) {
     graph->graph_delx = (graph->draw_width - 2.0 - graph->indent) / (LoadGraph::NUM_POINTS - 3);
     graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH ;
 
-    gtk_widget_get_allocation (graph->disp, &allocation);
-    surface = gdk_window_create_similar_surface (gtk_widget_get_window (graph->disp),
+    gtk_widget_get_allocation (GTK_WIDGET (graph->disp), &allocation);
+    surface = gdk_window_create_similar_surface (gtk_widget_get_window (GTK_WIDGET (graph->disp)),
                                                            CAIRO_CONTENT_COLOR_ALPHA,
                                                            allocation.width,
                                                            allocation.height);
     cr = cairo_create (surface);
 
-    GtkStyleContext *context = gtk_widget_get_style_context (GsmApplication::get()->stack);
+    GtkStyleContext *context = gtk_widget_get_style_context (GTK_WIDGET (GsmApplication::get()->stack));
     
     gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &fg);
 
@@ -178,7 +178,7 @@ void
 load_graph_queue_draw (LoadGraph *graph)
 {
     /* repaint */
-    gtk_widget_queue_draw (graph->disp);
+    gtk_widget_queue_draw (GTK_WIDGET (graph->disp));
 }
 
 static int load_graph_update (gpointer user_data); // predeclare load_graph_update so we can compile ;)
@@ -718,49 +718,49 @@ LoadGraph::LoadGraph(guint type)
             n = GsmApplication::get()->config.num_cpus;
 
             for(guint i = 0; i < G_N_ELEMENTS(labels.cpu); ++i)
-                labels.cpu[i] = gtk_label_new(NULL);
+                labels.cpu[i] = GTK_LABEL (gtk_label_new(NULL));
 
             break;
 
         case LOAD_GRAPH_MEM:
             n = 2;
-            labels.memory = gtk_label_new(NULL);
-            gtk_widget_set_valign (labels.memory, GTK_ALIGN_CENTER);
-            gtk_widget_set_halign (labels.memory, GTK_ALIGN_START);
-            gtk_widget_show (labels.memory);
-            labels.swap = gtk_label_new(NULL);
-            gtk_widget_set_valign (labels.swap, GTK_ALIGN_CENTER);
-            gtk_widget_set_halign (labels.swap, GTK_ALIGN_START);
-            gtk_widget_show (labels.swap);
+            labels.memory = GTK_LABEL (gtk_label_new(NULL));
+            gtk_widget_set_valign (GTK_WIDGET (labels.memory), GTK_ALIGN_CENTER);
+            gtk_widget_set_halign (GTK_WIDGET (labels.memory), GTK_ALIGN_START);
+            gtk_widget_show (GTK_WIDGET (labels.memory));
+            labels.swap = GTK_LABEL (gtk_label_new(NULL));
+            gtk_widget_set_valign (GTK_WIDGET (labels.swap), GTK_ALIGN_CENTER);
+            gtk_widget_set_halign (GTK_WIDGET (labels.swap), GTK_ALIGN_START);
+            gtk_widget_show (GTK_WIDGET (labels.swap));
             break;
 
         case LOAD_GRAPH_NET:
             memset(&net, 0, sizeof net);
             n = 2;
             net.max = 1;
-            labels.net_in = gtk_label_new(NULL);
-            gtk_label_set_width_chars(GTK_LABEL(labels.net_in), 10);
-            gtk_widget_set_valign (labels.net_in, GTK_ALIGN_CENTER);
-            gtk_widget_set_halign (labels.net_in, GTK_ALIGN_END);
-            gtk_widget_show (labels.net_in);
+            labels.net_in = GTK_LABEL (gtk_label_new(NULL));
+            gtk_label_set_width_chars(labels.net_in, 10);
+            gtk_widget_set_valign (GTK_WIDGET (labels.net_in), GTK_ALIGN_CENTER);
+            gtk_widget_set_halign (GTK_WIDGET (labels.net_in), GTK_ALIGN_END);
+            gtk_widget_show (GTK_WIDGET (labels.net_in));
 
-            labels.net_in_total = gtk_label_new(NULL);
-            gtk_widget_set_valign (labels.net_in_total, GTK_ALIGN_CENTER);
-            gtk_widget_set_halign (labels.net_in_total, GTK_ALIGN_END);
-            gtk_label_set_width_chars(GTK_LABEL(labels.net_in_total), 10);
-            gtk_widget_show (labels.net_in_total);
+            labels.net_in_total = GTK_LABEL (gtk_label_new(NULL));
+            gtk_widget_set_valign (GTK_WIDGET (labels.net_in_total), GTK_ALIGN_CENTER);
+            gtk_widget_set_halign (GTK_WIDGET (labels.net_in_total), GTK_ALIGN_END);
+            gtk_label_set_width_chars(labels.net_in_total, 10);
+            gtk_widget_show (GTK_WIDGET (labels.net_in_total));
 
-            labels.net_out = gtk_label_new(NULL);
-            gtk_widget_set_valign (labels.net_out, GTK_ALIGN_CENTER);
-            gtk_widget_set_halign (labels.net_out, GTK_ALIGN_END);
-            gtk_label_set_width_chars(GTK_LABEL(labels.net_out), 10);
-            gtk_widget_show (labels.net_out);
+            labels.net_out = GTK_LABEL (gtk_label_new(NULL));
+            gtk_widget_set_valign (GTK_WIDGET (labels.net_out), GTK_ALIGN_CENTER);
+            gtk_widget_set_halign (GTK_WIDGET (labels.net_out), GTK_ALIGN_END);
+            gtk_label_set_width_chars(labels.net_out, 10);
+            gtk_widget_show (GTK_WIDGET (labels.net_out));
 
-            labels.net_out_total = gtk_label_new(NULL);
-            gtk_widget_set_valign (labels.net_out_total, GTK_ALIGN_CENTER);
-            gtk_widget_set_halign (labels.net_out, GTK_ALIGN_END);
-            gtk_label_set_width_chars(GTK_LABEL(labels.net_out_total), 10);
-            gtk_widget_show (labels.net_out_total);
+            labels.net_out_total = GTK_LABEL (gtk_label_new(NULL));
+            gtk_widget_set_valign (GTK_WIDGET (labels.net_out_total), GTK_ALIGN_CENTER);
+            gtk_widget_set_halign (GTK_WIDGET (labels.net_out), GTK_ALIGN_END);
+            gtk_label_set_width_chars(labels.net_out_total, 10);
+            gtk_widget_show (GTK_WIDGET (labels.net_out_total));
 
             break;
     }
@@ -792,12 +792,12 @@ LoadGraph::LoadGraph(guint type)
     render_counter = (frames_per_unit - 1);
     draw = FALSE;
 
-    main_widget = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-    gtk_widget_set_size_request(main_widget, -1, LoadGraph::GRAPH_MIN_HEIGHT);
-    gtk_widget_show (main_widget);
+    main_widget = GTK_BOX (gtk_box_new (GTK_ORIENTATION_VERTICAL, 6));
+    gtk_widget_set_size_request(GTK_WIDGET (main_widget), -1, LoadGraph::GRAPH_MIN_HEIGHT);
+    gtk_widget_show (GTK_WIDGET (main_widget));
 
-    disp = gtk_drawing_area_new ();
-    gtk_widget_show (disp);
+    disp = GTK_DRAWING_AREA (gtk_drawing_area_new ());
+    gtk_widget_show (GTK_WIDGET (disp));
     g_signal_connect (G_OBJECT (disp), "draw",
                       G_CALLBACK (load_graph_draw), graph);
     g_signal_connect (G_OBJECT(disp), "configure_event",
@@ -807,9 +807,9 @@ LoadGraph::LoadGraph(guint type)
     g_signal_connect (G_OBJECT(disp), "state-flags-changed",
                       G_CALLBACK (load_graph_state_changed), graph);
 
-    gtk_widget_set_events (disp, GDK_EXPOSURE_MASK);
+    gtk_widget_set_events (GTK_WIDGET (disp), GDK_EXPOSURE_MASK);
 
-    gtk_box_pack_start (GTK_BOX (main_widget), disp, TRUE, TRUE, 0);
+    gtk_box_pack_start (main_widget, GTK_WIDGET (disp), TRUE, TRUE, 0);
 
 
     /* Allocate data in a contiguous block */
@@ -818,7 +818,7 @@ LoadGraph::LoadGraph(guint type)
     for (guint i = 0; i < LoadGraph::NUM_POINTS; ++i)
         data[i] = &data_block[0] + i * n;
 
-    gtk_widget_show_all (main_widget);
+    gtk_widget_show_all (GTK_WIDGET (main_widget));
 }
 
 void
@@ -869,19 +869,19 @@ load_graph_get_labels (LoadGraph *graph)
     return &graph->labels;
 }
 
-GtkWidget*
+GtkBox*
 load_graph_get_widget (LoadGraph *graph)
 {
     return graph->main_widget;
 }
 
-GtkWidget*
+GsmColorButton*
 load_graph_get_mem_color_picker(LoadGraph *graph)
 {
     return graph->mem_color_picker;
 }
 
-GtkWidget*
+GsmColorButton*
 load_graph_get_swap_color_picker(LoadGraph *graph)
 {
     return graph->swap_color_picker;

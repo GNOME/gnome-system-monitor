@@ -349,8 +349,8 @@ cb_show_all_fs_changed (GSettings *settings, const gchar *key, gpointer data)
 void
 create_disk_view(GsmApplication *app, GtkBuilder *builder)
 {
-    GtkWidget *scrolled;
-    GtkWidget *disk_tree;
+    GtkScrolledWindow *scrolled;
+    GsmTreeView *disk_tree;
     GtkListStore *model;
     GtkTreeViewColumn *col;
     GtkCellRenderer *cell;
@@ -369,7 +369,7 @@ create_disk_view(GsmApplication *app, GtkBuilder *builder)
 
     GSettings * settings = g_settings_get_child (app->settings, GSM_SETTINGS_CHILD_DISKS);
 
-    scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "disks_scrolled"));
+    scrolled = GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder, "disks_scrolled"));
 
     model = gtk_list_store_new(DISK_N_COLUMNS,      /* n columns */
                                G_TYPE_STRING,       /* DISK_DEVICE */
@@ -387,7 +387,7 @@ create_disk_view(GsmApplication *app, GtkBuilder *builder)
 
     g_signal_connect(G_OBJECT(disk_tree), "row-activated", G_CALLBACK(open_dir), NULL);
     app->disk_list = disk_tree;
-    gtk_container_add(GTK_CONTAINER(scrolled), disk_tree);
+    gtk_container_add(GTK_CONTAINER(scrolled), GTK_WIDGET (disk_tree));
     g_object_unref(G_OBJECT(model));
 
     /* icon + device */
@@ -481,5 +481,5 @@ create_disk_view(GsmApplication *app, GtkBuilder *builder)
     g_signal_connect (app->settings, "changed::" GSM_SETTING_SHOW_ALL_FS,
                       G_CALLBACK (cb_show_all_fs_changed), app);
 
-    gtk_widget_show (disk_tree);
+    gtk_widget_show (GTK_WIDGET (disk_tree));
 }

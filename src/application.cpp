@@ -286,7 +286,7 @@ GsmApplication::save_config ()
     gtk_window_get_size (GTK_WINDOW (main_window), &width, &height);
     gtk_window_get_position (GTK_WINDOW (main_window), &xpos, &ypos);
 
-    maximized = gdk_window_get_state (gtk_widget_get_window (main_window)) & GDK_WINDOW_STATE_MAXIMIZED;
+    maximized = gdk_window_get_state (gtk_widget_get_window (GTK_WIDGET (main_window))) & GDK_WINDOW_STATE_MAXIMIZED;
 
     g_settings_set (settings, GSM_SETTING_WINDOW_STATE, "(iiii)",
                     width, height, xpos, ypos);
@@ -431,6 +431,6 @@ void GsmApplication::on_startup()
     add_accelerator ("<Alt>3", "win.show-page", g_variant_new_string ("disks"));
     add_accelerator ("<Primary>r", "win.refresh", NULL);
 
-    gtk_widget_show (main_window);
+    gtk_widget_show (GTK_WIDGET (main_window));
 }
 

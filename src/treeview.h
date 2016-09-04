@@ -27,7 +27,7 @@ struct _GsmTreeViewClass
 };
 
 GType               gsm_tree_view_get_type               (void) G_GNUC_CONST;
-GtkWidget         * gsm_tree_view_new                    (GSettings *settings,
+GsmTreeView       * gsm_tree_view_new                    (GSettings *settings,
                                                           gboolean   store_column_order);
 void                gsm_tree_view_save_state             (GsmTreeView *tree_view);
 void                gsm_tree_view_load_state             (GsmTreeView *tree_view);

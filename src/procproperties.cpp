@@ -53,7 +53,7 @@ format_memsize(guint64 size)
 }
 
 static void
-fill_proc_properties (GtkWidget *tree, ProcInfo *info)
+fill_proc_properties (GtkTreeView *tree, ProcInfo *info)
 {
     guint i;
     GtkListStore *store;
@@ -88,7 +88,7 @@ fill_proc_properties (GtkWidget *tree, ProcInfo *info)
         { NULL, NULL}
     };
 
-    store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(tree)));
+    store = GTK_LIST_STORE(gtk_tree_view_get_model(tree));
     for (i = 0; proc_props[i].prop; i++) {
         GtkTreeIter iter;
 
@@ -103,7 +103,7 @@ fill_proc_properties (GtkWidget *tree, ProcInfo *info)
 }
 
 static void
-update_procproperties_dialog (GtkWidget *tree)
+update_procproperties_dialog (GtkTreeView *tree)
 {
     ProcInfo *info;
 
@@ -116,7 +116,7 @@ update_procproperties_dialog (GtkWidget *tree)
 static void
 close_procprop_dialog (GtkDialog *dialog, gint id, gpointer data)
 {
-    GtkWidget *tree = static_cast<GtkWidget*>(data);
+    GtkTreeView *tree = static_cast<GtkTreeView*>(data);
     guint timer;
 
     timer = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (tree), "timer"));
@@ -125,10 +125,10 @@ close_procprop_dialog (GtkDialog *dialog, gint id, gpointer data)
     gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
-static GtkWidget *
+static GtkTreeView *
 create_procproperties_tree (GsmApplication *app, ProcInfo *info)
 {
-    GtkWidget *tree;
+    GtkTreeView *tree;
     GtkListStore *model;
     GtkTreeViewColumn *column;
     GtkCellRenderer *cell;
@@ -139,7 +139,7 @@ create_procproperties_tree (GsmApplication *app, ProcInfo *info)
                                 G_TYPE_STRING	/* Value */
         );
 
-    tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (model));
+    tree = GTK_TREE_VIEW (gtk_tree_view_new_with_model (GTK_TREE_MODEL (model)));
     g_object_unref (G_OBJECT (model));
 
     for (i = 0; i < NUM_COLS; i++) {
@@ -150,10 +150,10 @@ create_procproperties_tree (GsmApplication *app, ProcInfo *info)
                                                            "text", i,
                                                            NULL);
         gtk_tree_view_column_set_resizable (column, TRUE);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
+        gtk_tree_view_append_column (tree, column);
     }
 
-    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW(tree), FALSE);
+    gtk_tree_view_set_headers_visible (tree, FALSE);
     fill_proc_properties(tree, info);
 
     return tree;
@@ -162,10 +162,10 @@ create_procproperties_tree (GsmApplication *app, ProcInfo *info)
 static gboolean
 procprop_timer (gpointer data)
 {
-    GtkWidget *tree = static_cast<GtkWidget*>(data);
+    GtkTreeView *tree = static_cast<GtkTreeView*>(data);
     GtkTreeModel *model;
 
-    model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
+    model = gtk_tree_view_get_model (tree);
     g_assert(model);
 
     update_procproperties_dialog (tree);
@@ -179,12 +179,12 @@ create_single_procproperties_dialog (GtkTreeModel *model, GtkTreePath *path,
 {
     GsmApplication *app = static_cast<GsmApplication *>(data);
 
-    GtkWidget *procpropdialog;
-    GtkWidget *dialog_vbox, *vbox;
-    GtkWidget *cmd_hbox;
+    GtkDialog *procpropdialog;
+    GtkBox *dialog_vbox, *vbox;
+    GtkBox *cmd_hbox;
     gchar *label;
-    GtkWidget *scrolled;
-    GtkWidget *tree;
+    GtkScrolledWindow *scrolled;
+    GtkTreeView *tree;
     ProcInfo *info;
     guint timer;
 
@@ -193,7 +193,7 @@ create_single_procproperties_dialog (GtkTreeModel *model, GtkTreePath *path,
     if (!info)
         return;
 
-    procpropdialog = GTK_WIDGET (g_object_new (GTK_TYPE_DIALOG, 
+    procpropdialog = GTK_DIALOG (g_object_new (GTK_TYPE_DIALOG, 
                                                "use-header-bar", TRUE, NULL));
 
     label = g_strdup_printf( _("%s (PID %u)"), info->name, info->pid);
@@ -206,36 +206,36 @@ create_single_procproperties_dialog (GtkTreeModel *model, GtkTreePath *path,
     gtk_window_set_default_size (GTK_WINDOW (procpropdialog), 575, 400);
     gtk_container_set_border_width (GTK_CONTAINER (procpropdialog), 5);
 
-    vbox = gtk_dialog_get_content_area (GTK_DIALOG (procpropdialog));
-    gtk_box_set_spacing (GTK_BOX (vbox), 2);
+    vbox = GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (procpropdialog)));
+    gtk_box_set_spacing (vbox, 2);
     gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
 
-    dialog_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+    dialog_vbox = GTK_BOX (gtk_box_new (GTK_ORIENTATION_VERTICAL, 6));
     gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 5);
-    gtk_box_pack_start (GTK_BOX (vbox), dialog_vbox, TRUE, TRUE, 0);
+    gtk_box_pack_start (vbox, GTK_WIDGET (dialog_vbox), TRUE, TRUE, 0);
 
-    cmd_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-    gtk_box_pack_start (GTK_BOX (dialog_vbox), cmd_hbox, FALSE, FALSE, 0);
+    cmd_hbox = GTK_BOX (gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12));
+    gtk_box_pack_start (dialog_vbox, GTK_WIDGET (cmd_hbox), FALSE, FALSE, 0);
 
-    scrolled = gtk_scrolled_window_new (NULL, NULL);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+    scrolled = GTK_SCROLLED_WINDOW (gtk_scrolled_window_new (NULL, NULL));
+    gtk_scrolled_window_set_policy (scrolled,
                                     GTK_POLICY_AUTOMATIC,
                                     GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
+    gtk_scrolled_window_set_shadow_type (scrolled,
                                          GTK_SHADOW_IN);
 
     tree = create_procproperties_tree (app, info);
-    gtk_container_add (GTK_CONTAINER (scrolled), tree);
+    gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (tree));
     g_object_set_data (G_OBJECT (tree), "selected_info", GUINT_TO_POINTER (info->pid));
 
-    gtk_box_pack_start (GTK_BOX (dialog_vbox), scrolled, TRUE, TRUE, 0);
-    gtk_widget_show_all (scrolled);
+    gtk_box_pack_start (dialog_vbox, GTK_WIDGET (scrolled), TRUE, TRUE, 0);
+    gtk_widget_show_all (GTK_WIDGET (scrolled));
 
     g_signal_connect (G_OBJECT (procpropdialog), "response",
                       G_CALLBACK (close_procprop_dialog), tree);
 
     gtk_window_set_transient_for (GTK_WINDOW (procpropdialog), GTK_WINDOW (GsmApplication::get()->main_window));
-    gtk_widget_show_all (procpropdialog);
+    gtk_widget_show_all (GTK_WIDGET (procpropdialog));
 
     timer = g_timeout_add_seconds (5, procprop_timer, tree);
     g_object_set_data (G_OBJECT (tree), "timer", GUINT_TO_POINTER (timer));

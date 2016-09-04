@@ -29,7 +29,7 @@
 
 typedef struct
 {
-  GtkWidget *cc_dialog;		/* Color chooser dialog */
+  GtkColorChooserDialog *cc_dialog;	/* Color chooser dialog */
 
   gchar *title;			/* Title for the color selection window */
 
@@ -545,7 +545,7 @@ gsm_color_button_finalize (GObject * object)
   GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
 
   if (priv->cc_dialog != NULL)
-    gtk_widget_destroy (priv->cc_dialog);
+    gtk_widget_destroy (GTK_WIDGET (priv->cc_dialog));
   priv->cc_dialog = NULL;
 
   g_free (priv->title);
@@ -557,7 +557,7 @@ gsm_color_button_finalize (GObject * object)
   G_OBJECT_CLASS (gsm_color_button_parent_class)->finalize (object);
 }
 
-GtkWidget *
+GsmColorButton *
 gsm_color_button_new (const GdkRGBA * color, guint type)
 {
   return g_object_new (GSM_TYPE_COLOR_BUTTON, "color", color, "type", type,
@@ -576,7 +576,7 @@ dialog_response (GtkWidget * widget, GtkResponseType response, gpointer data)
 
     gtk_color_chooser_get_rgba (color_chooser, &priv->color);
 
-    gtk_widget_hide (priv->cc_dialog);
+    gtk_widget_hide (GTK_WIDGET (priv->cc_dialog));
 
     gtk_widget_queue_draw (GTK_WIDGET (color_button));
 
@@ -587,7 +587,7 @@ dialog_response (GtkWidget * widget, GtkResponseType response, gpointer data)
     g_object_thaw_notify (G_OBJECT (color_button));
   }
   else  /* (response == GTK_RESPONSE_CANCEL) */
-    gtk_widget_hide (priv->cc_dialog);
+    gtk_widget_hide (GTK_WIDGET (priv->cc_dialog));
 }
 
 static gboolean
@@ -610,14 +610,14 @@ gsm_color_button_clicked (GtkWidget * widget, GdkEventButton * event)
   if (!priv->cc_dialog)
     {
       /* Create the dialog and connects its buttons */
-      GtkWidget *cc_dialog;
+      GtkColorChooserDialog *cc_dialog;
       GtkWidget *parent;
 
       parent = gtk_widget_get_toplevel (GTK_WIDGET (color_button));
       if (!gtk_widget_is_toplevel (parent))
         parent = NULL;
 
-      cc_dialog = gtk_color_chooser_dialog_new (priv->title, GTK_WINDOW (parent));
+      cc_dialog = GTK_COLOR_CHOOSER_DIALOG (gtk_color_chooser_dialog_new (priv->title, GTK_WINDOW (parent)));
 
       gtk_window_set_modal (GTK_WINDOW (cc_dialog), TRUE);
 

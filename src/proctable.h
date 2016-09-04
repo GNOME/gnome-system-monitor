@@ -23,6 +23,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 #include "application.h"
+#include "treeview.h"
 
 enum
 {
@@ -56,7 +57,7 @@ enum
 };
 
 
-GtkWidget*      proctable_new (GsmApplication *app);
+GsmTreeView*      proctable_new (GsmApplication *app);
 void            proctable_update (GsmApplication *app);
 void            proctable_free_table (GsmApplication *app);
 void            proctable_freeze (GsmApplication *app);

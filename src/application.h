@@ -12,6 +12,7 @@ struct LoadGraph;
 
 #include "smooth_refresh.h"
 #include "prettytable.h"
+#include "treeview.h"
 #include "util.h"
 
 static const unsigned MIN_UPDATE_INTERVAL =   1 * 1000;
@@ -201,17 +202,17 @@ public:
     void save_config();
     void shutdown();
 
-    GtkWidget        *tree;
-    GtkWidget        *proc_actionbar_revealer;
-    GtkWidget        *popup_menu;
-    GtkWidget        *disk_list;
-    GtkWidget        *stack;
-    GtkWidget        *refresh_button;
-    GtkWidget        *process_menu_button;
-    GtkWidget        *end_process_button;
-    GtkWidget        *search_button;
-    GtkWidget        *search_entry;
-    GtkWidget        *search_bar;
+    GsmTreeView      *tree;
+    GtkRevealer      *proc_actionbar_revealer;
+    GtkMenu          *popup_menu;
+    GsmTreeView      *disk_list;
+    GtkStack         *stack;
+    GtkButton        *refresh_button;
+    GtkMenuButton    *process_menu_button;
+    GtkButton        *end_process_button;
+    GtkButton        *search_button;
+    GtkSearchEntry   *search_entry;
+    GtkSearchBar     *search_bar;
     ProcConfig        config;
     LoadGraph        *cpu_graph;
     LoadGraph        *mem_graph;
@@ -229,7 +230,7 @@ public:
     PrettyTable      *pretty_table;
 
     GSettings        *settings;
-    GtkWidget        *main_window;
+    GtkApplicationWindow *main_window;
 
     unsigned         frequency;
 

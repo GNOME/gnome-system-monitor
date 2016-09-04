@@ -36,7 +36,7 @@
 #include "gsm_pkexec.h"
 #include "cgroups.h"
 
-static GtkWidget *renice_dialog = NULL;
+static GtkDialog *renice_dialog = NULL;
 static gint new_nice_value = 0;
 
 
@@ -56,7 +56,7 @@ kill_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
 void
 procdialog_create_kill_dialog (GsmApplication *app, int signal)
 {
-    GtkWidget *kill_alert_dialog;
+    GtkMessageDialog *kill_alert_dialog;
     gchar *primary, *secondary, *button_text;
     struct ProcActionArgs *kargs;
 
@@ -137,15 +137,15 @@ procdialog_create_kill_dialog (GsmApplication *app, int signal)
             break;
     }
 
-    kill_alert_dialog = gtk_message_dialog_new (GTK_WINDOW (app->main_window),
+    kill_alert_dialog = GTK_MESSAGE_DIALOG (gtk_message_dialog_new (GTK_WINDOW (app->main_window),
                                                 static_cast<GtkDialogFlags>(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
                                                 GTK_MESSAGE_WARNING,
                                                 GTK_BUTTONS_NONE,
                                                 "%s",
-                                                primary);
+                                                primary));
     g_free (primary);
 
-    gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (kill_alert_dialog),
+    gtk_message_dialog_format_secondary_text (kill_alert_dialog,
                                               "%s",
                                               secondary);
 
@@ -160,17 +160,17 @@ procdialog_create_kill_dialog (GsmApplication *app, int signal)
     g_signal_connect (G_OBJECT (kill_alert_dialog), "response",
                       G_CALLBACK (kill_dialog_button_pressed), kargs);
 
-    gtk_widget_show_all (kill_alert_dialog);
+    gtk_widget_show_all (GTK_WIDGET (kill_alert_dialog));
 }
 
 static void
 renice_scale_changed (GtkAdjustment *adj, gpointer data)
 {
-    GtkWidget *label = GTK_WIDGET (data);
+    GtkLabel *label = GTK_LABEL (data);
 
     new_nice_value = int(gtk_adjustment_get_value (adj));
     gchar* text = g_strdup(procman::get_nice_level_with_priority (new_nice_value));
-    gtk_label_set_text (GTK_LABEL (label), text);
+    gtk_label_set_text (label, text);
     g_free(text);
 
 }
@@ -194,8 +194,8 @@ procdialog_create_renice_dialog (GsmApplication *app)
 {
     ProcInfo *info;
     
-    GtkWidget *label;
-    GtkWidget *priority_label;
+    GtkLabel *label;
+    GtkLabel *priority_label;
     GtkAdjustment *renice_adj;
     GtkBuilder *builder;
     gchar     *text;
@@ -213,7 +213,7 @@ procdialog_create_renice_dialog (GsmApplication *app)
     builder = gtk_builder_new();
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/renice.ui", NULL);
 
-    renice_dialog = GTK_WIDGET (gtk_builder_get_object (builder, "renice_dialog"));
+    renice_dialog = GTK_DIALOG (gtk_builder_get_object (builder, "renice_dialog"));
     if ( selected_count == 1 ) {
         dialog_title = g_strdup_printf (_("Change Priority of Process “%s” (PID: %u)"),
                                         info->name, info->pid);
@@ -234,15 +234,15 @@ procdialog_create_renice_dialog (GsmApplication *app)
 
     new_nice_value = 0;
     
-    priority_label =  GTK_WIDGET (gtk_builder_get_object (builder, "priority_label"));
-    gtk_label_set_label (GTK_LABEL(priority_label), procman::get_nice_level_with_priority (info->nice));
+    priority_label =  GTK_LABEL (gtk_builder_get_object (builder, "priority_label"));
+    gtk_label_set_label (priority_label, procman::get_nice_level_with_priority (info->nice));
 
     text = g_strconcat("<small><i><b>", _("Note:"), "</b> ",
                        _("The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."),
                        "</i></small>", NULL);
-    label = GTK_WIDGET (gtk_builder_get_object (builder, "note_label"));
-    gtk_label_set_label (GTK_LABEL(label), _(text));
-    gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+    label = GTK_LABEL (gtk_builder_get_object (builder, "note_label"));
+    gtk_label_set_label (label, _(text));
+    gtk_label_set_line_wrap (label, TRUE);
     g_free (text);
 
     g_signal_connect (G_OBJECT (renice_dialog), "response",
@@ -251,7 +251,7 @@ procdialog_create_renice_dialog (GsmApplication *app)
                       G_CALLBACK (renice_scale_changed), priority_label);
 
     gtk_window_set_transient_for (GTK_WINDOW (renice_dialog), GTK_WINDOW (GsmApplication::get()->main_window));
-    gtk_widget_show_all (renice_dialog);
+    gtk_widget_show_all (GTK_WIDGET (renice_dialog));
 
     gtk_builder_connect_signals (builder, NULL);
 

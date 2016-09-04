@@ -84,7 +84,7 @@ namespace
     struct GUI : private procman::NonCopyable {
 
         GtkListStore *model;
-        GtkEntry *entry;
+        GtkSearchEntry *entry;
         GtkWindow *window;
         GtkLabel *count;
         GsmApplication *app;
@@ -126,7 +126,7 @@ namespace
 
         string pattern() const
         {
-            return gtk_entry_get_text(this->entry);
+            return gtk_entry_get_text(GTK_ENTRY (this->entry));
         }
 
 
@@ -222,7 +222,7 @@ void procman_lsof(GsmApplication *app)
                            G_TYPE_STRING    // PROCMAN_LSOF_COL_FILENAME
             );
 
-    GtkWidget *tree = gtk_tree_view_new_with_model(GTK_TREE_MODEL(model));
+    GtkTreeView *tree = GTK_TREE_VIEW (gtk_tree_view_new_with_model(GTK_TREE_MODEL(model)));
     g_object_unref(model);
 
     GtkTreeViewColumn *column;
@@ -275,29 +275,29 @@ void procman_lsof(GsmApplication *app)
     gtk_tree_view_append_column(GTK_TREE_VIEW(tree), column);
 
 
-    GtkWidget *dialog;
+    GtkWindow *dialog;
 
     GtkBuilder *builder = gtk_builder_new ();
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/lsof.ui", NULL);
 
-    dialog = GTK_WIDGET (gtk_builder_get_object (builder, "lsof_dialog"));
+    dialog = GTK_WINDOW (gtk_builder_get_object (builder, "lsof_dialog"));
 
     gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->main_window));
 
-    GtkWidget *entry =  GTK_WIDGET (gtk_builder_get_object (builder, "entry"));
+    GtkSearchEntry *entry =  GTK_SEARCH_ENTRY (gtk_builder_get_object (builder, "entry"));
 
-    GtkWidget *case_button =  GTK_WIDGET (gtk_builder_get_object (builder, "case_button"));
+    GtkCheckButton *case_button =  GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "case_button"));
 
     // Scrolled TreeView
-    GtkWidget *scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "scrolled"));
+    GtkScrolledWindow *scrolled = GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder, "scrolled"));
 
-    gtk_container_add(GTK_CONTAINER(scrolled), tree);
+    gtk_container_add(GTK_CONTAINER(scrolled), GTK_WIDGET (tree));
 
     GUI *gui = new GUI; // wil be deleted by the close button or delete-event
     gui->app = app;
     gui->model = model;
-    gui->window = GTK_WINDOW(dialog);
-    gui->entry = GTK_ENTRY(entry);
+    gui->window = dialog;
+    gui->entry = entry;
     gui->case_insensitive = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON (case_button));
 
     g_signal_connect(G_OBJECT(entry), "search-changed",
@@ -310,7 +310,7 @@ void procman_lsof(GsmApplication *app)
     gtk_builder_connect_signals (builder, NULL);
 
     gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (GsmApplication::get()->main_window));
-    gtk_widget_show_all(dialog);
+    gtk_widget_show_all(GTK_WIDGET (dialog));
     gui->search ();
     
     g_object_unref (G_OBJECT (builder));
