@@ -5,15 +5,15 @@
 # Justina Klingaitė <justina.klingaite@gmail.com>, 2005.
 # Gintautas Miliauskas <gintas@akl.lt>, 2006, 2008.
 # Algimantas Margevičius <margevicius.algimantas@gmail.com>, 2011.
-# Aurimas Černius <aurisc4@gmail.com>, 2013, 2014, 2015.
+# Aurimas Černius <aurisc4@gmail.com>, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-01-06 10:24+0000\n"
-"PO-Revision-Date: 2016-01-06 22:42+0200\n"
+"POT-Creation-Date: 2016-08-20 12:40+0000\n"
+"PO-Revision-Date: 2016-09-05 18:18+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
 "%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 "X-Project-Style: gnome\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
@@ -44,7 +44,7 @@ msgstr ""
 "Našumas;Užduotis;Tvarkytuvė;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:318
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:317
 msgid "GNOME System Monitor"
 msgstr "GNOME sistemos monitorius"
 
@@ -86,6 +86,25 @@ msgstr ""
 "Išteklių grafikai parodo greitą apžvalgą, kas vysta jūsų kompiuteryje, "
 "pateikdami paskutinį tinklo, atminties ir procesoriaus naudojimą."
 
+#: ../gnome-system-monitor.appdata.xml.in.h:6
+#| msgid "Process view sort order"
+msgid "Process list view"
+msgstr "Procesų sąrašo rodinys"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:7
+#| msgid "Resources"
+msgid "Resources overview"
+msgstr "Išteklių rodinys"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:8
+#| msgid "File Systems"
+msgid "File Systems view"
+msgstr "Failų sistemos rodinys"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:9
+msgid "The GNOME Project"
+msgstr "GNOME projektas"
+
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
 msgid "Kill process"
 msgstr "Nutraukti procesą"
@@ -123,7 +142,7 @@ msgid "Memory and Swap History"
 msgstr "Atminties ir mainų srities retrospektyva"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:260
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:347
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:349
 msgid "Memory"
 msgstr "Atmintis"
 
@@ -214,20 +233,17 @@ msgid "_Dependencies"
 msgstr "P_riklausomybės"
 
 #: ../data/menus.ui.h:11
-msgid "_Stop"
-msgstr "_Sustabdyti"
+msgid "_Properties"
+msgstr "_Savybės"
 
 #: ../data/menus.ui.h:12
-msgid "_Continue"
-msgstr "_Tęsti"
+msgid "_Memory Maps"
+msgstr "_Atminties sritys"
 
-#: ../data/menus.ui.h:13
-msgid "_End"
-msgstr "_Baigti"
-
+#. Translators: this means
 #: ../data/menus.ui.h:14
-msgid "_Kill"
-msgstr "_Nutraukti"
+msgid "Open _Files"
+msgstr "Atverti _failai"
 
 #: ../data/menus.ui.h:15
 msgid "_Change Priority"
@@ -258,17 +274,20 @@ msgid "Custom"
 msgstr "Pasirinktinis"
 
 #: ../data/menus.ui.h:22
-msgid "_Memory Maps"
-msgstr "_Atminties sritys"
+msgid "_Stop"
+msgstr "_Sustabdyti"
 
-#. Translators: this means
+#: ../data/menus.ui.h:23
+msgid "_Continue"
+msgstr "_Tęsti"
+
 #: ../data/menus.ui.h:24
-msgid "Open _Files"
-msgstr "Atverti _failai"
+msgid "_End"
+msgstr "_Baigti"
 
 #: ../data/menus.ui.h:25
-msgid "_Properties"
-msgstr "_Savybės"
+msgid "_Kill"
+msgstr "_Nutraukti"
 
 #: ../data/openfiles.ui.h:1
 msgid "Open Files"
@@ -326,7 +345,7 @@ msgstr "Rodyti _visas failų sistemas"
 msgid "File system i_nformation shown in list:"
 msgstr "Sąraše rodoma failų sistemos i_nformacija:"
 
-#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:123
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:153
 msgid "_Cancel"
 msgstr "_Atsisakyti"
 
@@ -346,7 +365,7 @@ msgstr ""
 "Proceso prioritetas yra nustatomas pagal jam suteiktą „nice“ vertę. Mažesnė "
 "„nice“ vertė – didesnis prioritetas."
 
-#: ../src/application.cpp:304
+#: ../src/application.cpp:303
 msgid "A simple process and system monitor."
 msgstr "Paprasta procesų ir sistemos stebyklė."
 
@@ -436,7 +455,7 @@ msgstr "Antraštė"
 msgid "The title of the color selection dialog"
 msgstr "Spalvų pasirinkimo dialogo antraštė"
 
-#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:512
+#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:515
 msgid "Pick a Color"
 msgstr "Pasirinkite spalvą"
 
@@ -452,11 +471,11 @@ msgstr "Pasirinkta spalva"
 msgid "Type of color picker"
 msgstr "Spalvų parinkiklio tipas"
 
-#: ../src/gsm_color_button.c:434
+#: ../src/gsm_color_button.c:437
 msgid "Received invalid color data\n"
 msgstr "Gauti netaisyklingi spalvų duomenys\n"
 
-#: ../src/gsm_color_button.c:535
+#: ../src/gsm_color_button.c:538
 msgid "Click to set graph colors"
 msgstr "Spauskite, jei norite pasirinkti grafiko spalvas"
 
@@ -483,7 +502,7 @@ msgstr ""
 "Gintautas Miliauskas <gintas@akl.l>\n"
 "Tomas Kuliavas <tokul@users.sf.net>"
 
-#: ../src/load-graph.cpp:161
+#: ../src/load-graph.cpp:157
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
@@ -491,12 +510,12 @@ msgstr[0] "%u sekundė"
 msgstr[1] "%u sekundės"
 msgstr[2] "%u sekundžių"
 
-#: ../src/load-graph.cpp:370
+#: ../src/load-graph.cpp:366
 msgid "not available"
 msgstr "neprieinama"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:373
+#: ../src/load-graph.cpp:369
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) iš %s"
@@ -1043,20 +1062,28 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: ../src/procdialogs.cpp:75
+#: ../src/procdialogs.cpp:76
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr ""
 "Ar tikrai norite nedelsiant nutraukti pasirinktą procesą „%s“ (PID: %u)?"
 
 #. xgettext: primary alert message for ending single process
-#: ../src/procdialogs.cpp:80
+#: ../src/procdialogs.cpp:82
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr "Baigti pasirinkto proceso „%s“ (PID: %u) darbą?"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping single process
+#: ../src/procdialogs.cpp:88
+#, c-format
+#| msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
+msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
+msgstr "Ar tikrai norite sustabdyti pasirinkto proceso „%s“ (PID: %u) darbą?"
+
 #. xgettext: primary alert message for killing multiple processes
-#: ../src/procdialogs.cpp:87
+#: ../src/procdialogs.cpp:97
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
@@ -1065,7 +1092,7 @@ msgstr[1] "Ar tikrai norite nedelsiant nutraukti %d pasirinktus procesus?"
 msgstr[2] "Ar tikrai norite nedelsiant nutraukti %d pasirinktų procesų?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: ../src/procdialogs.cpp:91
+#: ../src/procdialogs.cpp:103
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
@@ -1073,8 +1100,20 @@ msgstr[0] "Ar tikrai norite baigti %d pasirinktą procesą?"
 msgstr[1] "Ar tikrai norite baigti %d pasirinktus procesus?"
 msgstr[2] "Ar tikrai norite baigti %d pasirinktų procesų?"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping multiple processes
+#: ../src/procdialogs.cpp:109
+#, c-format
+#| msgid "Are you sure you want to end the selected process?"
+#| msgid_plural "Are you sure you want to end the %d selected processes?"
+msgid "Are you sure you want to stop the selected process?"
+msgid_plural "Are you sure you want to stop the %d selected processes?"
+msgstr[0] "Ar tikrai norite sustabdyti %d pasirinktą procesą?"
+msgstr[1] "Ar tikrai norite sustabdyti %d pasirinktus procesus?"
+msgstr[2] "Ar tikrai norite sustabdyti %d pasirinktų procesų?"
+
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:98 ../src/procdialogs.cpp:104
+#: ../src/procdialogs.cpp:119
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1083,26 +1122,62 @@ msgstr ""
 "seansą arba sukelti pavojų sistemos saugumui. Reikėtų nutraukti tik "
 "neatsakančius procesus."
 
-#: ../src/procdialogs.cpp:101
+#: ../src/procdialogs.cpp:122
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "_Nutraukti procesą"
 msgstr[1] "_Nutraukti procesus"
 msgstr[2] "_Nutraukti procesus"
 
-#: ../src/procdialogs.cpp:107
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:126
+#| msgid ""
+#| "Killing a process may destroy data, break the session or introduce a "
+#| "security risk. Only unresponsive processes should be killed."
+msgid ""
+"Ending a process may destroy data, break the session or introduce a security "
+"risk. Only unresponsive processes should be ended."
+msgstr ""
+"Nutraukiant procesą galite prarasti duomenų, sutrikdyti šiuo metu veikiantį "
+"seansą arba sukelti pavojų sistemos saugumui. Reikėtų nutraukti tik "
+"neatsakančius procesus."
+
+#: ../src/procdialogs.cpp:129
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "Baigti proc_eso darbą"
 msgstr[1] "Baigti proc_esų darbą"
 msgstr[2] "Baigti proc_esų darbą"
 
-#: ../src/procdialogs.cpp:188
+#. SIGSTOP
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:133
+#| msgid ""
+#| "Killing a process may destroy data, break the session or introduce a "
+#| "security risk. Only unresponsive processes should be killed."
+msgid ""
+"Stopping a process may destroy data, break the session or introduce a "
+"security risk. Only unresponsive processes should be stopped."
+msgstr ""
+"Sustabdydami procesą galite prarasti duomenų, sutrikdyti šiuo metu veikiantį "
+"seansą arba sukelti pavojų sistemos saugumui. Reikėtų sustabdyti tik "
+"neatsakančius procesus."
+
+#: ../src/procdialogs.cpp:136
+#| msgid "_End Process"
+#| msgid_plural "_End Processes"
+msgid "_Stop Process"
+msgid_plural "_Stop Processes"
+msgstr[0] "_Stabdyti procesą"
+msgstr[1] "_Stabdyti procesus"
+msgstr[2] "_Stabdyti procesus"
+
+#: ../src/procdialogs.cpp:218
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Keisti proceso „%s“ (PID: %u) prioritetą"
 
-#: ../src/procdialogs.cpp:191
+#: ../src/procdialogs.cpp:221
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
@@ -1110,11 +1185,11 @@ msgstr[0] "Keisti %d pasirinkto proceso prioritetą"
 msgstr[1] "Keisti %d pasirinktų procesų prioritetą"
 msgstr[2] "Keisti %d pasirinktų procesų prioritetą"
 
-#: ../src/procdialogs.cpp:210
+#: ../src/procdialogs.cpp:240
 msgid "Note:"
 msgstr "Pastaba:"
 
-#: ../src/procdialogs.cpp:211
+#: ../src/procdialogs.cpp:241
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1127,72 +1202,72 @@ msgstr ""
 msgid "N/A"
 msgstr "Nėra"
 
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:334
 msgid "Process Name"
 msgstr "Proceso pavadinimas"
 
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:333
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:335
 msgid "User"
 msgstr "Naudotojas"
 
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:336
 msgid "Status"
 msgstr "Būsena"
 
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:337
 msgid "Virtual Memory"
 msgstr "Virtualioji atmintis"
 
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:338
 msgid "Resident Memory"
 msgstr "Rezidentinė atmintis"
 
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:339
 msgid "Writable Memory"
 msgstr "Rašoma atmintis"
 
-#: ../src/procproperties.cpp:74 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:340
 msgid "Shared Memory"
 msgstr "Bendroji atmintis"
 
-#: ../src/procproperties.cpp:76 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:341
 msgid "X Server Memory"
 msgstr "X serverio atmintis"
 
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:341
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:343
 msgid "CPU Time"
 msgstr "CPU laikas"
 
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:342
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:344
 msgid "Started"
 msgstr "Paleista"
 
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:343
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:345
 msgid "Nice"
 msgstr "„Nice“"
 
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:357
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:359
 msgid "Priority"
 msgstr "Prioritetas"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:344
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:346
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:345
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:347
 msgid "Security Context"
 msgstr "Saugos kontekstas"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:346
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:348
 msgid "Command Line"
 msgstr "Komandų eilutė"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:349
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:351
 msgid "Waiting Channel"
 msgstr "Laukimo kanalas"
 
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:350
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:352
 msgid "Control Group"
 msgstr "Valdymo grupė"
 
@@ -1201,26 +1276,26 @@ msgstr "Valdymo grupė"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:340
+#: ../src/proctable.cpp:342
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:351
+#: ../src/proctable.cpp:353
 msgid "Unit"
 msgstr "Vienetas"
 
-#: ../src/proctable.cpp:352
+#: ../src/proctable.cpp:354
 msgid "Session"
 msgstr "Seansas"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:355
+#: ../src/proctable.cpp:357
 msgid "Seat"
 msgstr "Būsena"
 
-#: ../src/proctable.cpp:356
+#: ../src/proctable.cpp:358
 msgid "Owner"
 msgstr "Savininkas"
 
