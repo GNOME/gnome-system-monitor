@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-08-25 08:23+0000\n"
-"PO-Revision-Date: 2015-08-25 17:43+0300\n"
+"POT-Creation-Date: 2016-08-12 10:58+0000\n"
+"PO-Revision-Date: 2016-09-12 00:52+0300\n"
 "Last-Translator: Tom Tryfonidis <tomtryf@gmail.com>\n"
 "Language-Team: team@gnome.gr\n"
 "Language: el\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Project-Style: gnome\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
@@ -51,7 +51,7 @@ msgstr ""
 "Performance;Task;Manager;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:318
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:317
 msgid "GNOME System Monitor"
 msgstr "Παρακολούθηση συστήματος GNOME"
 
@@ -94,6 +94,22 @@ msgstr ""
 "Το γράφημα των πόρων σας εμφανίζει μια γρήγορη επισκόπηση για το τι "
 "συμβαίνει στο σύστημά σας, εμφανίζοντας την πρόσφατη χρήση του δικτύου, της "
 "μνήμης και του επεξεργαστή."
+
+#: ../gnome-system-monitor.appdata.xml.in.h:6
+msgid "Process list view"
+msgstr "Προβολή λίστας διεργασιών"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:7
+msgid "Resources overview"
+msgstr "Επισκόπηση πόρων"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:8
+msgid "File Systems view"
+msgstr "Προβολή συστημάτων αρχείων"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:9
+msgid "The GNOME Project"
+msgstr "Το έργο GNOME"
 
 #
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
@@ -138,7 +154,7 @@ msgid "Memory and Swap History"
 msgstr "Ιστορικό μνήμης και Swap"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:260
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:343
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:347
 msgid "Memory"
 msgstr "Μνήμη"
 
@@ -232,22 +248,20 @@ msgstr "Οι διεργασίες _μου"
 msgid "_Dependencies"
 msgstr "Εξα_ρτήσεις"
 
+#
 #: ../data/menus.ui.h:11
-msgid "_Stop"
-msgstr "_Διακοπή"
+msgid "_Properties"
+msgstr "_Ιδιότητες"
 
 #
 #: ../data/menus.ui.h:12
-msgid "_Continue"
-msgstr "_Συνέχεια"
+msgid "_Memory Maps"
+msgstr "_Χάρτες μνήμης"
 
-#: ../data/menus.ui.h:13
-msgid "_End"
-msgstr "_Τέλος"
-
+#. Translators: this means
 #: ../data/menus.ui.h:14
-msgid "_Kill"
-msgstr "_Βίαιος Τερματισμός"
+msgid "Open _Files"
+msgstr "Άνοιγμα αρ_χείων"
 
 # sysdeps/names/procuid.c:51
 #: ../data/menus.ui.h:15
@@ -278,20 +292,22 @@ msgstr "Πολύ χαμηλή"
 msgid "Custom"
 msgstr "Προσαρμοσμένο"
 
-#
 #: ../data/menus.ui.h:22
-msgid "_Memory Maps"
-msgstr "_Χάρτες μνήμης"
-
-#. Translators: this means 'Files that are open' (open is not a verb here)
-#: ../data/menus.ui.h:24
-msgid "Open _Files"
-msgstr "Άνοιγμα αρ_χείων"
+msgid "_Stop"
+msgstr "_Διακοπή"
 
 #
+#: ../data/menus.ui.h:23
+msgid "_Continue"
+msgstr "_Συνέχεια"
+
+#: ../data/menus.ui.h:24
+msgid "_End"
+msgstr "_Τέλος"
+
 #: ../data/menus.ui.h:25
-msgid "_Properties"
-msgstr "_Ιδιότητες"
+msgid "_Kill"
+msgstr "_Βίαιος Τερματισμός"
 
 #: ../data/openfiles.ui.h:1
 msgid "Open Files"
@@ -351,7 +367,7 @@ msgstr "Εμφάνιση όλ_ων των συστημάτων αρχείων"
 msgid "File system i_nformation shown in list:"
 msgstr "_Πληροφορίες συστήματος αρχείου που εμφανίζονται στη λίστα:"
 
-#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:123
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:153
 msgid "_Cancel"
 msgstr "_Aκύρωση"
 
@@ -372,7 +388,7 @@ msgstr ""
 "τιμή nice της διεργασίας. Μια χαμηλή τιμή nice αντιστοιχεί σε υψηλότερη "
 "προτεραιότητα.</i></small>"
 
-#: ../src/application.cpp:304
+#: ../src/application.cpp:303
 msgid "A simple process and system monitor."
 msgstr "Μια απλή εφαρμογή παρακολούθησης των διεργασιών και του συστήματος."
 
@@ -522,19 +538,19 @@ msgstr ""
 "Για περισσότερες πληροφορίες, επισκεφθείτε την σελίδα\n"
 "http://gnome.gr/"
 
-#: ../src/load-graph.cpp:161
+#: ../src/load-graph.cpp:157
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u δευτερόλεπτο"
 msgstr[1] "%u δευτερόλεπτα"
 
-#: ../src/load-graph.cpp:370
+#: ../src/load-graph.cpp:366
 msgid "not available"
 msgstr "μη διαθέσιμη"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:373
+#: ../src/load-graph.cpp:369
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) από %s"
@@ -1099,19 +1115,29 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: ../src/procdialogs.cpp:75
+#: ../src/procdialogs.cpp:76
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr "Βίαιος τερματισμός της επιλεγμένης διεργασίας “%s” (PID: %u);"
 
 #. xgettext: primary alert message for ending single process
-#: ../src/procdialogs.cpp:80
+#: ../src/procdialogs.cpp:82
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr "Τερματισμός της επιλεγμένης διεργασίας “%s” (PID: %u);"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping single process
+#: ../src/procdialogs.cpp:88
+#, c-format
+#| msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
+msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
+msgstr ""
+"Είστε σίγουροι ότι θέλετε να σταματήσετε την επιλεγμένη διεργασία “%s” (PID: "
+"%u)?"
+
 #. xgettext: primary alert message for killing multiple processes
-#: ../src/procdialogs.cpp:87
+#: ../src/procdialogs.cpp:97
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
@@ -1119,15 +1145,25 @@ msgstr[0] "Θέλετε να τερματίσετε βίαια την επιλε
 msgstr[1] "Θέλετε να τερματίσετε βίαια τις %d επιλεγμένες διεργασίες;"
 
 #. xgettext: primary alert message for ending multiple processes
-#: ../src/procdialogs.cpp:91
+#: ../src/procdialogs.cpp:103
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
 msgstr[0] "Θέλετε να τερματίσετε την επιλεγμένη διεργασία;"
 msgstr[1] "Θέλετε να τερματίσετε τις %d επιλεγμένες διεργασίες;"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping multiple processes
+#: ../src/procdialogs.cpp:109
+#, c-format
+msgid "Are you sure you want to stop the selected process?"
+msgid_plural "Are you sure you want to stop the %d selected processes?"
+msgstr[0] "Είστε σίγουροι ότι θέλετε να σταματήσετε την επιλεγμένη διεργασία;"
+msgstr[1] ""
+"Είστε σίγουροι ότι θέλετε να σταματήσετε τις %d επιλεγμένες διεργασίες;"
+
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:98 ../src/procdialogs.cpp:104
+#: ../src/procdialogs.cpp:119
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1137,35 +1173,62 @@ msgstr ""
 "τερματίζετε βίαια μόνο προβληματικές διεργασίες."
 
 #
-#: ../src/procdialogs.cpp:101
+#: ../src/procdialogs.cpp:122
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "_Βίαιος τερματισμός διεργασίας"
 msgstr[1] "_Βίαιος τερματισμός διεργασιών"
 
-#: ../src/procdialogs.cpp:107
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:126
+msgid ""
+"Ending a process may destroy data, break the session or introduce a security "
+"risk. Only unresponsive processes should be ended."
+msgstr ""
+"Ο τερματισμός μια διεργασίας, μπορεί να καταστρέψει τα δεδομένα και τη "
+"συνεδρία σας, ή να δημιουργήσει ένα κενό ασφαλείας. Θα πρέπει να τερματίζετε "
+"μόνο προβληματικές διεργασίες."
+
+#: ../src/procdialogs.cpp:129
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "_Τερματισμός διεργασίας"
 msgstr[1] "_Τερματισμός διεργασιών"
 
-#: ../src/procdialogs.cpp:188
+#. SIGSTOP
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:133
+msgid ""
+"Stopping a process may destroy data, break the session or introduce a "
+"security risk. Only unresponsive processes should be stopped."
+msgstr ""
+"Η διακοπή μια διεργασίας, μπορεί να καταστρέψει τα δεδομένα και τη συνεδρία "
+"σας, ή να δημιουργήσει ένα κενό ασφαλείας. Θα πρέπει να διακόπτετε μόνο "
+"προβληματικές διεργασίες."
+
+#: ../src/procdialogs.cpp:136
+msgid "_Stop Process"
+msgid_plural "_Stop Processes"
+msgstr[0] "_Τερματισμός διεργασίας"
+msgstr[1] "_Τερματισμός διεργασιών"
+
+#: ../src/procdialogs.cpp:218
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Αλλαγή προτεραιότητας της διεργασίας “%s” (PID: %u)"
 
-#: ../src/procdialogs.cpp:191
+#: ../src/procdialogs.cpp:221
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
 msgstr[0] "Αλλαγή της σειράς προτεραιότητας της επιλεγμένης διεργασίας"
 msgstr[1] "Αλλαγή της σειράς προτεραιότητας των επιλεγμένων διεργασιών %d"
 
-#: ../src/procdialogs.cpp:210
+#: ../src/procdialogs.cpp:240
 msgid "Note:"
 msgstr "Σημείωση:"
 
-#: ../src/procdialogs.cpp:211
+#: ../src/procdialogs.cpp:241
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1179,80 +1242,80 @@ msgid "N/A"
 msgstr "N/A"
 
 #
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:328
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:332
 msgid "Process Name"
 msgstr "Όνομα διεργασίας"
 
 # sysdeps/names/mem.c:49
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:329
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:333
 msgid "User"
 msgstr "Χρήστης"
 
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:330
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:334
 msgid "Status"
 msgstr "Κατάσταση"
 
 #
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:331
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:335
 msgid "Virtual Memory"
 msgstr "Εικονική μνήμη"
 
 #
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:336
 msgid "Resident Memory"
 msgstr "Παραμένουσα μνήμη"
 
 #
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:333
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:337
 msgid "Writable Memory"
 msgstr "Εγγράψιμη μνήμη"
 
 # sysdeps/names/mem.c:46
-#: ../src/procproperties.cpp:74 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:338
 msgid "Shared Memory"
 msgstr "Κοινόχρηστη μνήμη"
 
 # sysdeps/names/mem.c:46
-#: ../src/procproperties.cpp:76 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:339
 msgid "X Server Memory"
 msgstr "Μνήμη διακομιστή X"
 
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:341
 msgid "CPU Time"
 msgstr "Χρόνος CPU"
 
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:342
 msgid "Started"
 msgstr "Ξεκίνησε"
 
 # sysdeps/names/procuid.c:51
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:343
 msgid "Nice"
 msgstr "Nice"
 
 # sysdeps/names/procuid.c:51
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:353
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:357
 msgid "Priority"
 msgstr "Προτεραιότητα"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:340
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:344
 msgid "ID"
 msgstr "Αναγνωριστικό "
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:341
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:345
 msgid "Security Context"
 msgstr "Περιβάλλον ασφάλειας"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:342
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:346
 msgid "Command Line"
 msgstr "Γραμμή εντολών"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:345
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:349
 msgid "Waiting Channel"
 msgstr "Κανάλι αναμονής"
 
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:346
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:350
 msgid "Control Group"
 msgstr "Ομάδα ελέγχου"
 
@@ -1261,26 +1324,26 @@ msgstr "Ομάδα ελέγχου"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:336
+#: ../src/proctable.cpp:340
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:347
+#: ../src/proctable.cpp:351
 msgid "Unit"
 msgstr "Μονάδα"
 
-#: ../src/proctable.cpp:348
+#: ../src/proctable.cpp:352
 msgid "Session"
 msgstr "Συνεδρία"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:351
+#: ../src/proctable.cpp:355
 msgid "Seat"
 msgstr "Θέση συνεδρίας"
 
-#: ../src/proctable.cpp:352
+#: ../src/proctable.cpp:356
 msgid "Owner"
 msgstr "Ιδιοκτήτης"
 
