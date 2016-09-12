@@ -3,6 +3,7 @@
 #
 # Young-Ho, Cha <ganadist@chollian.net> 2002, 2006, 2007
 # Changwoo Ryu <cwryu@debian.org> 2003-2015.
+# Seong-ho Cho <shcho@gnome.org>, 2016.
 #
 # 새로 번역하시는 분은 아래 translator-credits에 추가하세요.
 #
@@ -11,15 +12,16 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-09-05 08:22+0000\n"
-"PO-Revision-Date: 2015-09-06 02:38+0900\n"
-"Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
+"POT-Creation-Date: 2016-08-20 12:40+0000\n"
+"PO-Revision-Date: 2016-09-12 05:18+0900\n"
+"Last-Translator: Seong-ho Cho <shcho@gnome.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.8.7\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
 #: ../src/application.cpp:262 ../src/interface.cpp:363
@@ -41,7 +43,7 @@ msgstr ""
 "관리;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:318
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:317
 msgid "GNOME System Monitor"
 msgstr "그놈 시스템 정보"
 
@@ -82,6 +84,22 @@ msgstr ""
 "자원 그래프 기능을 사용하면 컴퓨터에 무슨 일이 발생하고 있는지 빠르게 파악할 "
 "수 있습니다. 여기서 최근 네트워크, 메모리, 프로세서 사용량을 표시합니다."
 
+#: ../gnome-system-monitor.appdata.xml.in.h:6
+msgid "Process list view"
+msgstr "프로세스 목록 보기"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:7
+msgid "Resources overview"
+msgstr "자원 개요"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:8
+msgid "File Systems view"
+msgstr "파일 시스템 보기"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:9
+msgid "The GNOME Project"
+msgstr "그놈 프로젝트"
+
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
 msgid "Kill process"
 msgstr "프로세스 강제 중단"
@@ -119,7 +137,7 @@ msgid "Memory and Swap History"
 msgstr "메모리 및 스왑 사용 기록"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:260
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:347
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:349
 msgid "Memory"
 msgstr "메모리"
 
@@ -210,20 +228,17 @@ msgid "_Dependencies"
 msgstr "의존성(_D)"
 
 #: ../data/menus.ui.h:11
-msgid "_Stop"
-msgstr "중지(_S)"
+msgid "_Properties"
+msgstr "속성(_P)"
 
 #: ../data/menus.ui.h:12
-msgid "_Continue"
-msgstr "계속(_C)"
+msgid "_Memory Maps"
+msgstr "메모리 맵(_M)"
 
-#: ../data/menus.ui.h:13
-msgid "_End"
-msgstr "중단(_E)"
-
+#. Translators: this means
 #: ../data/menus.ui.h:14
-msgid "_Kill"
-msgstr "강제 중단(_K)"
+msgid "Open _Files"
+msgstr "연 파일(_F)"
 
 #: ../data/menus.ui.h:15
 msgid "_Change Priority"
@@ -254,17 +269,20 @@ msgid "Custom"
 msgstr "사용자 설정"
 
 #: ../data/menus.ui.h:22
-msgid "_Memory Maps"
-msgstr "메모리 맵(_M)"
+msgid "_Stop"
+msgstr "중지(_S)"
 
-#. Translators: this means 'Files that are open' (open is not a verb here)
+#: ../data/menus.ui.h:23
+msgid "_Continue"
+msgstr "계속(_C)"
+
 #: ../data/menus.ui.h:24
-msgid "Open _Files"
-msgstr "연 파일(_F)"
+msgid "_End"
+msgstr "중단(_E)"
 
 #: ../data/menus.ui.h:25
-msgid "_Properties"
-msgstr "속성(_P)"
+msgid "_Kill"
+msgstr "강제 중단(_K)"
 
 #: ../data/openfiles.ui.h:1
 msgid "Open Files"
@@ -322,7 +340,7 @@ msgstr "모든 파일 시스템 표시(_A)"
 msgid "File system i_nformation shown in list:"
 msgstr "목록에 표시할 파일 시스템 정보(_N):"
 
-#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:123
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:153
 msgid "_Cancel"
 msgstr "취소(_C)"
 
@@ -342,7 +360,7 @@ msgstr ""
 "<small><i><b>주의:</b> 프로세스의 우선순위는 그 nice 값에 따라 결정됩니다. "
 "nice 값이 낮을 수록 우선순위가 높습니다.</i></small>"
 
-#: ../src/application.cpp:304
+#: ../src/application.cpp:303
 msgid "A simple process and system monitor."
 msgstr "간단한 프로세스 및 시스템 정보."
 
@@ -436,7 +454,7 @@ msgstr "제목"
 msgid "The title of the color selection dialog"
 msgstr "색 선택 대화 창의 제목"
 
-#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:512
+#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:515
 msgid "Pick a Color"
 msgstr "색 선택"
 
@@ -452,11 +470,11 @@ msgstr "선택한 색"
 msgid "Type of color picker"
 msgstr "색 선택 창의 종류"
 
-#: ../src/gsm_color_button.c:434
+#: ../src/gsm_color_button.c:437
 msgid "Received invalid color data\n"
 msgstr "잘못된 색 데이터를 받았습니다\n"
 
-#: ../src/gsm_color_button.c:535
+#: ../src/gsm_color_button.c:538
 msgid "Click to set graph colors"
 msgstr "그래프 색을 설정하려면 누르십시오"
 
@@ -479,20 +497,21 @@ msgstr "CPU%d"
 msgid "translator-credits"
 msgstr ""
 "류창우 <cwryu@debian.org>\n"
-"차영호 <ganadist@gmail.com>"
+"차영호 <ganadist@gmail.com>\n"
+"조성호 <shcho@gnome.org>"
 
-#: ../src/load-graph.cpp:161
+#: ../src/load-graph.cpp:157
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u초"
 
-#: ../src/load-graph.cpp:370
+#: ../src/load-graph.cpp:366
 msgid "not available"
 msgstr "사용 불가능"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:373
+#: ../src/load-graph.cpp:369
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%), 전체 %s"
@@ -1032,33 +1051,48 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: ../src/procdialogs.cpp:75
+#: ../src/procdialogs.cpp:76
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr "정말로 선택한 프로세스를(“%s”, PID: %u) 강제로 중단하시겠습니까?"
 
 #. xgettext: primary alert message for ending single process
-#: ../src/procdialogs.cpp:80
+#: ../src/procdialogs.cpp:82
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr "정말로 선택한 프로세스를(“%s”, PID: %u) 중단하시겠습니까?"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping single process
+#: ../src/procdialogs.cpp:88
+#, c-format
+msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
+msgstr "정말로 선택한 \"%s\" 프로세스(PID: %u)를 중단하시겠습니까?"
+
 #. xgettext: primary alert message for killing multiple processes
-#: ../src/procdialogs.cpp:87
+#: ../src/procdialogs.cpp:97
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
 msgstr[0] "정말로 선택한 프로세스 %d개를 강제로 중단하시겠습니까?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: ../src/procdialogs.cpp:91
+#: ../src/procdialogs.cpp:103
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
 msgstr[0] "정말로 선택한 프로세스 %d개를 중단하시겠습니까?"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping multiple processes
+#: ../src/procdialogs.cpp:109
+#, c-format
+msgid "Are you sure you want to stop the selected process?"
+msgid_plural "Are you sure you want to stop the %d selected processes?"
+msgstr[0] "정말로 선택한 프로세스 %d개를 중단하시겠습니까?"
+
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:98 ../src/procdialogs.cpp:104
+#: ../src/procdialogs.cpp:119
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1067,32 +1101,56 @@ msgstr ""
 "안 결함을 만들 수 있습니다. 반응이 없는 잘못된 프로세스만 강제로 중단하도록 "
 "하십시오."
 
-#: ../src/procdialogs.cpp:101
+#: ../src/procdialogs.cpp:122
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "프로세스 강제 중단(_K)"
 
-#: ../src/procdialogs.cpp:107
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:126
+msgid ""
+"Ending a process may destroy data, break the session or introduce a security "
+"risk. Only unresponsive processes should be ended."
+msgstr ""
+"프로세스를 끝냅니다. 데이터가 파괴되거나, 실행하는 세션을 망치거나 보안 결함"
+"을 만들 수 있습니다. 반응이 없는 잘못된 프로세스만 끝내도록 하십시오."
+
+#: ../src/procdialogs.cpp:129
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "프로세스 중단(_E)"
 
-#: ../src/procdialogs.cpp:188
+#. SIGSTOP
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:133
+msgid ""
+"Stopping a process may destroy data, break the session or introduce a "
+"security risk. Only unresponsive processes should be stopped."
+msgstr ""
+"프로세스를 끝내면 데이터가 파괴되거나, 실행하는 세션을 망치거나, 보안 결함을 "
+"만들 수 있습니다. 반응이 없는 잘못된 프로세스만 끝내십시오."
+
+#: ../src/procdialogs.cpp:136
+msgid "_Stop Process"
+msgid_plural "_Stop Processes"
+msgstr[0] "프로세스 멈추기(_S)"
+
+#: ../src/procdialogs.cpp:218
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "프로세스(“%s”, PID: %u) 우선 순위 바꾸기"
 
-#: ../src/procdialogs.cpp:191
+#: ../src/procdialogs.cpp:221
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
 msgstr[0] "선택한 %d개 프로세스의 우선 순위를 바꿉니다"
 
-#: ../src/procdialogs.cpp:210
+#: ../src/procdialogs.cpp:240
 msgid "Note:"
 msgstr "주의:"
 
-#: ../src/procdialogs.cpp:211
+#: ../src/procdialogs.cpp:241
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1105,72 +1163,72 @@ msgstr ""
 msgid "N/A"
 msgstr "없음"
 
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:334
 msgid "Process Name"
 msgstr "프로세스 이름"
 
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:333
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:335
 msgid "User"
 msgstr "사용자"
 
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:336
 msgid "Status"
 msgstr "상태"
 
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:337
 msgid "Virtual Memory"
 msgstr "가상 메모리"
 
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:338
 msgid "Resident Memory"
 msgstr "상주 메모리"
 
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:339
 msgid "Writable Memory"
 msgstr "쓰기 가능한 메모리"
 
-#: ../src/procproperties.cpp:74 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:340
 msgid "Shared Memory"
 msgstr "공유 메모리"
 
-#: ../src/procproperties.cpp:76 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:341
 msgid "X Server Memory"
 msgstr "X 서버 메모리"
 
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:341
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:343
 msgid "CPU Time"
 msgstr "CPU 시간"
 
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:342
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:344
 msgid "Started"
 msgstr "시작됨"
 
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:343
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:345
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:357
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:359
 msgid "Priority"
 msgstr "우선 순위"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:344
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:346
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:345
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:347
 msgid "Security Context"
 msgstr "보안 컨텍스트"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:346
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:348
 msgid "Command Line"
 msgstr "명령행"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:349
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:351
 msgid "Waiting Channel"
 msgstr "대기 채널"
 
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:350
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:352
 msgid "Control Group"
 msgstr "컨트롤 그룹"
 
@@ -1179,26 +1237,26 @@ msgstr "컨트롤 그룹"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:340
+#: ../src/proctable.cpp:342
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:351
+#: ../src/proctable.cpp:353
 msgid "Unit"
 msgstr "단위"
 
-#: ../src/proctable.cpp:352
+#: ../src/proctable.cpp:354
 msgid "Session"
 msgstr "세션"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:355
+#: ../src/proctable.cpp:357
 msgid "Seat"
 msgstr "자리"
 
-#: ../src/proctable.cpp:356
+#: ../src/proctable.cpp:358
 msgid "Owner"
 msgstr "소유자"
 
@@ -1374,9 +1432,6 @@ msgstr "%s/초"
 #~ msgid "_View"
 #~ msgstr "보기(_V)"
 
-#~ msgid "_Stop Process"
-#~ msgstr "프로세스 멈추기(_S)"
-
 #~ msgid "Stop process"
 #~ msgstr "프로세스를 멈춥니다"
 
@@ -1453,13 +1508,6 @@ msgstr "%s/초"
 #~ "0 for the System Info, 1 for the processes list, 2 for the resources and "
 #~ "3 for the disks list"
 #~ msgstr "시스템정보는 0, 프로세스 목록은 1, 리소스는 2, 디스크 목록은 3"
-
-#~ msgid ""
-#~ "Ending a process may destroy data, break the session or introduce a "
-#~ "security risk. Only unresponsive processes should be ended."
-#~ msgstr ""
-#~ "프로세스를 끝냅니다. 데이터가 파괴되거나, 실행하는 세션을 망치거나 보안 결"
-#~ "함을 만들 수 있습니다. 반응이 없는 잘못된 프로세스만 끝내도록 하십시오."
 
 #~ msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 #~ msgstr "최근 1분, 5분, 15분 사이의 평균 부하: %0.2f, %0.2f, %0.2f"
