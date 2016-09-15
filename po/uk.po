@@ -7,9 +7,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-02 12:53+0200\n"
-"PO-Revision-Date: 2016-03-02 12:54+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
+"monitor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2016-08-20 12:40+0000\n"
+"PO-Revision-Date: 2016-09-15 21:48+0300\n"
 "Last-Translator: Daniel Korostil <ted.korostiled@gmail.com>\n"
 "Language-Team: linux.org.ua\n"
 "Language: uk\n"
@@ -78,6 +79,25 @@ msgstr ""
 "Графіки ресурсів показують швидкий огляд того, що відбувається на вашому "
 "комп'ютері, зокрема використання мережі, пам'яті, процесора."
 
+#: ../gnome-system-monitor.appdata.xml.in.h:6
+#| msgid "Process view sort order"
+msgid "Process list view"
+msgstr "Огляд переліку процесів"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:7
+#| msgid "Resources"
+msgid "Resources overview"
+msgstr "Огляд ресурсів"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:8
+#| msgid "File Systems"
+msgid "File Systems view"
+msgstr "Огляд файлової системи"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:9
+msgid "The GNOME Project"
+msgstr "Проект GNOME"
+
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
 msgid "Kill process"
 msgstr "Вбити процес"
@@ -115,7 +135,7 @@ msgid "Memory and Swap History"
 msgstr "Історія пам'яті та свопінгу"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:260
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:347
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:349
 msgid "Memory"
 msgstr "Пам'ять"
 
@@ -206,20 +226,17 @@ msgid "_Dependencies"
 msgstr "_Залежності"
 
 #: ../data/menus.ui.h:11
-msgid "_Stop"
-msgstr "З_упинити"
+msgid "_Properties"
+msgstr "В_ластивості"
 
 #: ../data/menus.ui.h:12
-msgid "_Continue"
-msgstr "Про_довжити"
+msgid "_Memory Maps"
+msgstr "Відбиття _пам'яті"
 
-#: ../data/menus.ui.h:13
-msgid "_End"
-msgstr "При_пинити"
-
+#. Translators: this means
 #: ../data/menus.ui.h:14
-msgid "_Kill"
-msgstr "_Знищити"
+msgid "Open _Files"
+msgstr "Відкриті _файли"
 
 #: ../data/menus.ui.h:15
 msgid "_Change Priority"
@@ -250,17 +267,20 @@ msgid "Custom"
 msgstr "Власний"
 
 #: ../data/menus.ui.h:22
-msgid "_Memory Maps"
-msgstr "Відбиття _пам'яті"
+msgid "_Stop"
+msgstr "З_упинити"
 
-#. Translators: this means
+#: ../data/menus.ui.h:23
+msgid "_Continue"
+msgstr "Про_довжити"
+
 #: ../data/menus.ui.h:24
-msgid "Open _Files"
-msgstr "Відкриті _файли"
+msgid "_End"
+msgstr "При_пинити"
 
 #: ../data/menus.ui.h:25
-msgid "_Properties"
-msgstr "В_ластивості"
+msgid "_Kill"
+msgstr "_Знищити"
 
 #: ../data/openfiles.ui.h:1
 msgid "Open Files"
@@ -318,7 +338,7 @@ msgstr "Показати _усі файлові системи"
 msgid "File system i_nformation shown in list:"
 msgstr "Ін_формація про файлову систему зі списку:"
 
-#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:123
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:153
 msgid "_Cancel"
 msgstr "_Скасувати"
 
@@ -429,7 +449,7 @@ msgstr "Заголовок"
 msgid "The title of the color selection dialog"
 msgstr "Заголовок вікна вибору кольору"
 
-#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:512
+#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:515
 msgid "Pick a Color"
 msgstr "Виберіть колір"
 
@@ -445,11 +465,11 @@ msgstr "Вибраний колір"
 msgid "Type of color picker"
 msgstr "Тип вибирання кольору"
 
-#: ../src/gsm_color_button.c:434
+#: ../src/gsm_color_button.c:437
 msgid "Received invalid color data\n"
 msgstr "Отримано некоректні дані кольору\n"
 
-#: ../src/gsm_color_button.c:535
+#: ../src/gsm_color_button.c:538
 msgid "Click to set graph colors"
 msgstr "Клацніть для зміни кольорів графіку"
 
@@ -476,7 +496,7 @@ msgstr ""
 "Максим Дзюманенко <dziumanenko@gmail.com>\n"
 "Daniel Korostil <ted.korostiled@gmail.com>"
 
-#: ../src/load-graph.cpp:161
+#: ../src/load-graph.cpp:157
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
@@ -484,12 +504,12 @@ msgstr[0] "%u секунда"
 msgstr[1] "%u секунди"
 msgstr[2] "%u секунд"
 
-#: ../src/load-graph.cpp:370
+#: ../src/load-graph.cpp:366
 msgid "not available"
 msgstr "недоступно"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:373
+#: ../src/load-graph.cpp:369
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) з %s"
@@ -1040,19 +1060,27 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: ../src/procdialogs.cpp:75
+#: ../src/procdialogs.cpp:76
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr "Знищити вибраний процес «%s» (PID: %u)?"
 
 #. xgettext: primary alert message for ending single process
-#: ../src/procdialogs.cpp:80
+#: ../src/procdialogs.cpp:82
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr "Припинити вибраний процес «%s» (PID: %u)?"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping single process
+#: ../src/procdialogs.cpp:88
+#, c-format
+#| msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
+msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
+msgstr "Зупинити вибраний процес «%s» (PID: %u)?"
+
 #. xgettext: primary alert message for killing multiple processes
-#: ../src/procdialogs.cpp:87
+#: ../src/procdialogs.cpp:97
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
@@ -1061,7 +1089,7 @@ msgstr[1] "Знищити %d вибраних процеси?"
 msgstr[2] "Знищити %d вибраних процесів?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: ../src/procdialogs.cpp:91
+#: ../src/procdialogs.cpp:103
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
@@ -1069,8 +1097,20 @@ msgstr[0] "Припинити %d вибраний процес?"
 msgstr[1] "Припинити %d вибраних процеси?"
 msgstr[2] "Припинити %d вибраних процесів?"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping multiple processes
+#: ../src/procdialogs.cpp:109
+#, c-format
+#| msgid "Are you sure you want to end the selected process?"
+#| msgid_plural "Are you sure you want to end the %d selected processes?"
+msgid "Are you sure you want to stop the selected process?"
+msgid_plural "Are you sure you want to stop the %d selected processes?"
+msgstr[0] "Зупинити %d вибраний процес?"
+msgstr[1] "Припинити %d вибраних процеси?"
+msgstr[2] "Припинити %d вибраних процесів?"
+
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:98 ../src/procdialogs.cpp:104
+#: ../src/procdialogs.cpp:119
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1079,26 +1119,58 @@ msgstr ""
 "створити загрозу безпеці. Вбивати треба лише процеси, які не відповідають на "
 "запити."
 
-#: ../src/procdialogs.cpp:101
+#: ../src/procdialogs.cpp:122
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "_Знищити процес"
 msgstr[1] "_Знищити процеси"
 msgstr[2] "_Знищити процеси"
 
-#: ../src/procdialogs.cpp:107
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:126
+msgid ""
+"Ending a process may destroy data, break the session or introduce a security "
+"risk. Only unresponsive processes should be ended."
+msgstr ""
+"Завершуючи процес, ви можете знищити ваші дані, перервати робочий сеанс або "
+"створити загрозу безпеці. Завершувати треба лише процеси, які не "
+"відповідають на запити."
+
+#: ../src/procdialogs.cpp:129
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "_Припинити процес"
 msgstr[1] "_Припинити процеси"
 msgstr[2] "_Припинити процеси"
 
-#: ../src/procdialogs.cpp:188
+#. SIGSTOP
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:133
+#| msgid ""
+#| "Ending a process may destroy data, break the session or introduce a "
+#| "security risk. Only unresponsive processes should be ended."
+msgid ""
+"Stopping a process may destroy data, break the session or introduce a "
+"security risk. Only unresponsive processes should be stopped."
+msgstr ""
+"Зупинення процесу, ви можете знищити ваші дані, перервати робочий сеанс або "
+"створити загрозу безпеці. Зупиняти треба лише процеси, які не відповідають "
+"на запити."
+
+#: ../src/procdialogs.cpp:136
+#| msgid "_Stop Process"
+msgid "_Stop Process"
+msgid_plural "_Stop Processes"
+msgstr[0] "З_упинити процес"
+msgstr[1] "З_упинити процес"
+msgstr[2] "З_упинити процес"
+
+#: ../src/procdialogs.cpp:218
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Змінити пріоритет процесу «%s» (PID: %u)"
 
-#: ../src/procdialogs.cpp:191
+#: ../src/procdialogs.cpp:221
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
@@ -1106,11 +1178,11 @@ msgstr[0] "Змінити пріоритет %d вибраного процес�
 msgstr[1] "Змінити пріоритет %d вибраних процесів"
 msgstr[2] "Змінити пріоритет %d вибраних процесів"
 
-#: ../src/procdialogs.cpp:210
+#: ../src/procdialogs.cpp:240
 msgid "Note:"
 msgstr "Примітка:"
 
-#: ../src/procdialogs.cpp:211
+#: ../src/procdialogs.cpp:241
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1123,72 +1195,72 @@ msgstr ""
 msgid "N/A"
 msgstr "Н/Д"
 
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:334
 msgid "Process Name"
 msgstr "Назва процесу"
 
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:333
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:335
 msgid "User"
 msgstr "Користувач"
 
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:336
 msgid "Status"
 msgstr "Стан"
 
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:337
 msgid "Virtual Memory"
 msgstr "Віртуальна пам'ять"
 
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:338
 msgid "Resident Memory"
 msgstr "Резидентна пам'ять"
 
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:339
 msgid "Writable Memory"
 msgstr "Записувана пам'ять"
 
-#: ../src/procproperties.cpp:74 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:340
 msgid "Shared Memory"
 msgstr "Спільна пам'ять"
 
-#: ../src/procproperties.cpp:76 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:341
 msgid "X Server Memory"
 msgstr "Пам'ять сервера X"
 
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:341
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:343
 msgid "CPU Time"
 msgstr "Час ЦП"
 
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:342
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:344
 msgid "Started"
 msgstr "Запущено"
 
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:343
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:345
 msgid "Nice"
 msgstr "Люб'язність"
 
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:357
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:359
 msgid "Priority"
 msgstr "Пріоритет"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:344
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:346
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:345
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:347
 msgid "Security Context"
 msgstr "Контекст безпеки"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:346
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:348
 msgid "Command Line"
 msgstr "Командний рядок:"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:349
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:351
 msgid "Waiting Channel"
 msgstr "Канал очікування"
 
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:350
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:352
 msgid "Control Group"
 msgstr "Групи контролю"
 
@@ -1197,26 +1269,26 @@ msgstr "Групи контролю"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:340
+#: ../src/proctable.cpp:342
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:351
+#: ../src/proctable.cpp:353
 msgid "Unit"
 msgstr "Одиниця"
 
-#: ../src/proctable.cpp:352
+#: ../src/proctable.cpp:354
 msgid "Session"
 msgstr "Сеанс"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:355
+#: ../src/proctable.cpp:357
 msgid "Seat"
 msgstr "Місце"
 
-#: ../src/proctable.cpp:356
+#: ../src/proctable.cpp:358
 msgid "Owner"
 msgstr "Власник"
 
@@ -1398,9 +1470,6 @@ msgstr "%s/s"
 #~ msgid "_View"
 #~ msgstr "П_ерегляд"
 
-#~ msgid "_Stop Process"
-#~ msgstr "З_упинити процес"
-
 #~ msgid "Stop process"
 #~ msgstr "Зупинити процес"
 
@@ -1479,14 +1548,6 @@ msgstr "%s/s"
 #~ "3 for the disks list"
 #~ msgstr ""
 #~ "0 — інформація про систему, 1 — список процесів, 2 — ресурсів, 3 — дисків"
-
-#~ msgid ""
-#~ "Ending a process may destroy data, break the session or introduce a "
-#~ "security risk. Only unresponsive processes should be ended."
-#~ msgstr ""
-#~ "Завершуючи процес, ви можете знищити ваші дані, перервати робочий сеанс "
-#~ "або створити загрозу безпеці. Завершувати треба лише процеси, які не "
-#~ "відповідають на запити."
 
 #~ msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 #~ msgstr ""
