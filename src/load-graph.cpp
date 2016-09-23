@@ -51,8 +51,8 @@ unsigned LoadGraph::num_bars() const
 }
 
 
+const int FRAME_WIDTH = 4;
 
-#define FRAME_WIDTH 4
 void draw_background(LoadGraph *graph) {
     GtkAllocation allocation;
     cairo_t *cr;
@@ -297,18 +297,16 @@ get_load (LoadGraph *graph)
 
     glibtop_get_cpu (&cpu);
 
-#undef NOW
-#undef LAST
-#define NOW  (graph->cpu.times[graph->cpu.now])
-#define LAST (graph->cpu.times[graph->cpu.now ^ 1])
+    auto NOW  = [&graph]() -> guint64 (&)[GLIBTOP_NCPU][N_CPU_STATES] { return graph->cpu.times[graph->cpu.now]; };
+    auto LAST = [&graph]() -> guint64 (&)[GLIBTOP_NCPU][N_CPU_STATES] { return graph->cpu.times[graph->cpu.now ^ 1]; };
 
     if (graph->n == 1) {
-        NOW[0][CPU_TOTAL] = cpu.total;
-        NOW[0][CPU_USED] = cpu.user + cpu.nice + cpu.sys;
+        NOW()[0][CPU_TOTAL] = cpu.total;
+        NOW()[0][CPU_USED] = cpu.user + cpu.nice + cpu.sys;
     } else {
         for (i = 0; i < graph->n; i++) {
-            NOW[i][CPU_TOTAL] = cpu.xcpu_total[i];
-            NOW[i][CPU_USED] = cpu.xcpu_user[i] + cpu.xcpu_nice[i]
+            NOW()[i][CPU_TOTAL] = cpu.xcpu_total[i];
+            NOW()[i][CPU_USED] = cpu.xcpu_user[i] + cpu.xcpu_nice[i]
                 + cpu.xcpu_sys[i];
         }
     }
@@ -325,8 +323,8 @@ get_load (LoadGraph *graph)
         float total, used;
         gchar *text;
 
-        total = NOW[i][CPU_TOTAL] - LAST[i][CPU_TOTAL];
-        used  = NOW[i][CPU_USED]  - LAST[i][CPU_USED];
+        total = NOW()[i][CPU_TOTAL] - LAST()[i][CPU_TOTAL];
+        used  = NOW()[i][CPU_USED]  - LAST()[i][CPU_USED];
 
         load = used / MAX(total, 1.0f);
         graph->data[0][i] = load;
@@ -344,9 +342,6 @@ get_load (LoadGraph *graph)
     }
 
     graph->cpu.now ^= 1;
-
-#undef NOW
-#undef LAST
 }
 
 
