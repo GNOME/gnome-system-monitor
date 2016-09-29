@@ -175,7 +175,6 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     GtkLabel *label,*cpu_label;
     GtkGrid *table;
     GsmColorButton *color_picker;
-    GtkAlignment *picker_alignment;
     LoadGraph *cpu_graph, *mem_graph, *net_graph;
 
     gint i;
@@ -300,8 +299,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     title_text = g_strdup_printf(title_template, _("Receiving"));
     gsm_color_button_set_title(color_picker, title_text);
     g_free(title_text);
-    picker_alignment = GTK_ALIGNMENT (gtk_builder_get_object (builder, "receiving_picker_alignment"));
-    gtk_container_add (GTK_CONTAINER (picker_alignment), GTK_WIDGET (color_picker));
+
+    gtk_grid_attach (table, GTK_WIDGET (color_picker), 0, 0, 1, 2);
 
     label = GTK_LABEL (gtk_builder_get_object(builder, "receiving_label"));
     gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(net_graph)->net_in), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
@@ -316,8 +315,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     gsm_color_button_set_title(color_picker, title_text);
     g_free(title_text);
 
-    picker_alignment = GTK_ALIGNMENT (gtk_builder_get_object (builder, "sending_picker_alignment"));
-    gtk_container_add (GTK_CONTAINER (picker_alignment), GTK_WIDGET (color_picker));
+    gtk_grid_attach (table, GTK_WIDGET (color_picker), 4, 0, 1, 2);
 
     label = GTK_LABEL (gtk_builder_get_object(builder, "sending_label"));
     gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(net_graph)->net_out), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
