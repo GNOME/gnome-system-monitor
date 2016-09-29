@@ -300,9 +300,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     gsm_color_button_set_title(color_picker, title_text);
     g_free(title_text);
 
-    gtk_grid_attach (table, GTK_WIDGET (color_picker), 0, 0, 1, 2);
-
     label = GTK_LABEL (gtk_builder_get_object(builder, "receiving_label"));
+    gtk_grid_attach_next_to (table, GTK_WIDGET (color_picker), GTK_WIDGET (label), GTK_POS_LEFT, 1, 2);
     gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(net_graph)->net_in), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
     label = GTK_LABEL (gtk_builder_get_object(builder, "total_received_label"));
     gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(net_graph)->net_in_total), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
@@ -315,9 +314,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     gsm_color_button_set_title(color_picker, title_text);
     g_free(title_text);
 
-    gtk_grid_attach (table, GTK_WIDGET (color_picker), 4, 0, 1, 2);
-
     label = GTK_LABEL (gtk_builder_get_object(builder, "sending_label"));
+    gtk_grid_attach_next_to (table, GTK_WIDGET (color_picker), GTK_WIDGET (label), GTK_POS_LEFT, 1, 2);
     gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(net_graph)->net_out), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
     label = GTK_LABEL (gtk_builder_get_object(builder, "total_sent_label"));
     gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(net_graph)->net_out_total), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
