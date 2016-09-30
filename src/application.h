@@ -229,7 +229,7 @@ public:
 
     PrettyTable      *pretty_table;
 
-    GSettings        *settings;
+    Glib::RefPtr<Gio::Settings> settings;
     GtkApplicationWindow *main_window;
 
     unsigned         frequency;

@@ -21,11 +21,9 @@
 #include "disks.h"
 
 static void
-cb_solaris_mode_changed (GSettings *settings, const gchar *key, gpointer data)
+cb_solaris_mode_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
 {
-    GsmApplication *app = static_cast<GsmApplication *>(data);
-
-    app->config.solaris_mode = g_settings_get_boolean(settings, key);
+    app->config.solaris_mode = settings.get_boolean(key);
     app->cpu_graph->clear_background();
     if (app->timeout) {
         proctable_update (app);
@@ -33,58 +31,49 @@ cb_solaris_mode_changed (GSettings *settings, const gchar *key, gpointer data)
 }
 
 static void
-cb_draw_stacked_changed (GSettings *settings, const gchar *key, gpointer data)
+cb_draw_stacked_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
 {
-    GsmApplication *app = static_cast<GsmApplication *>(data);
-
-    app->config.draw_stacked = g_settings_get_boolean(settings, key);
+    app->config.draw_stacked = settings.get_boolean(key);
     app->cpu_graph->clear_background();
     load_graph_reset(app->cpu_graph);
 }
 
-
 static void
-cb_network_in_bits_changed (GSettings *settings, const gchar *key, gpointer data)
+cb_network_in_bits_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
 {
-    GsmApplication *app = static_cast<GsmApplication *>(data);
-
-    app->config.network_in_bits = g_settings_get_boolean(settings, key);
+    app->config.network_in_bits = settings.get_boolean(key);
     // force scale to be redrawn
     app->net_graph->clear_background();
 }
 
 static void
-cb_timeouts_changed (GSettings *settings, const gchar *key, gpointer data)
+cb_timeouts_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
 {
-    GsmApplication *app = static_cast<GsmApplication *>(data);
-
-    if (strcmp (key, GSM_SETTING_PROCESS_UPDATE_INTERVAL) == 0) {
-        app->config.update_interval = g_settings_get_int (settings, key);
+    if (key == GSM_SETTING_PROCESS_UPDATE_INTERVAL) {
+        app->config.update_interval = settings.get_int (key);
 
         app->smooth_refresh->reset();
         if (app->timeout) {
             proctable_reset_timeout (app);
         }
-    } else if (strcmp (key, GSM_SETTING_GRAPH_UPDATE_INTERVAL) == 0) {
-        app->config.graph_update_interval = g_settings_get_int (settings, key);
+    } else if (key == GSM_SETTING_GRAPH_UPDATE_INTERVAL) {
+        app->config.graph_update_interval = settings.get_int (key);
         load_graph_change_speed(app->cpu_graph,
                                 app->config.graph_update_interval);
         load_graph_change_speed(app->mem_graph,
                                 app->config.graph_update_interval);
         load_graph_change_speed(app->net_graph,
                                 app->config.graph_update_interval);
-    } else if (strcmp (key, GSM_SETTING_DISKS_UPDATE_INTERVAL) == 0) {
-        app->config.disks_update_interval = g_settings_get_int (settings, key);
+    } else if (key == GSM_SETTING_DISKS_UPDATE_INTERVAL) {
+        app->config.disks_update_interval = settings.get_int (key);
         disks_reset_timeout (app);
     }
 }
 
 static void
-apply_cpu_color_settings(GSettings *settings, gpointer data)
+apply_cpu_color_settings(Gio::Settings& settings, GsmApplication* app)
 {
-    GsmApplication *app = static_cast<GsmApplication *>(data);
-
-    GVariant *cpu_colors_var = g_settings_get_value (settings, GSM_SETTING_CPU_COLORS);
+    GVariant *cpu_colors_var = g_settings_get_value (settings.gobj (), GSM_SETTING_CPU_COLORS);
     gsize n = g_variant_n_children(cpu_colors_var);
 
     gchar *color;
@@ -112,7 +101,7 @@ apply_cpu_color_settings(GSettings *settings, gpointer data)
     full = g_variant_builder_end(&builder);
     // if the user has more cores than colors stored in the gsettings, store the newly built gvariant in gsettings
     if (n < static_cast<guint>(app->config.num_cpus)) {
-        g_settings_set_value(settings, GSM_SETTING_CPU_COLORS, full);
+        g_settings_set_value(settings.gobj (), GSM_SETTING_CPU_COLORS, full);
     } else {
         g_variant_unref(full);
     }
@@ -121,11 +110,9 @@ apply_cpu_color_settings(GSettings *settings, gpointer data)
 }
 
 static void
-cb_color_changed (GSettings *settings, const gchar *key, gpointer data)
+cb_color_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
 {
-    GsmApplication *app = static_cast<GsmApplication *>(data);
-
-    if (strcmp (key, GSM_SETTING_CPU_COLORS) == 0) {
+    if (key == GSM_SETTING_CPU_COLORS) {
         apply_cpu_color_settings(settings, app);
         for (int i = 0; i < app->config.num_cpus; i++) {
             if(!gdk_rgba_equal(&app->cpu_graph->colors[i], &app->config.cpu_color[i])) {
@@ -136,93 +123,75 @@ cb_color_changed (GSettings *settings, const gchar *key, gpointer data)
         return;
     }
 
-    gchar *color = g_settings_get_string (settings, key);
-    if (strcmp (key, GSM_SETTING_MEM_COLOR) == 0) {
-        gdk_rgba_parse (&app->config.mem_color, color);
+    auto color = settings.get_string (key);
+    if (key == GSM_SETTING_MEM_COLOR) {
+        gdk_rgba_parse (&app->config.mem_color, color.c_str ());
         app->mem_graph->colors.at(0) = app->config.mem_color;
-    } else if (strcmp (key, GSM_SETTING_SWAP_COLOR) == 0) {
-        gdk_rgba_parse (&app->config.swap_color, color);
+    } else if (key == GSM_SETTING_SWAP_COLOR) {
+        gdk_rgba_parse (&app->config.swap_color, color.c_str ());
         app->mem_graph->colors.at(1) = app->config.swap_color;
-    } else if (strcmp (key, GSM_SETTING_NET_IN_COLOR) == 0) {
-        gdk_rgba_parse (&app->config.net_in_color, color);
+    } else if (key == GSM_SETTING_NET_IN_COLOR) {
+        gdk_rgba_parse (&app->config.net_in_color, color.c_str ());
         app->net_graph->colors.at(0) = app->config.net_in_color;
-    } else if (strcmp (key, GSM_SETTING_NET_OUT_COLOR) == 0) {
-        gdk_rgba_parse (&app->config.net_out_color, color);
+    } else if (key == GSM_SETTING_NET_OUT_COLOR) {
+        gdk_rgba_parse (&app->config.net_out_color, color.c_str ());
         app->net_graph->colors.at(1) = app->config.net_out_color;
     }
-    g_free (color);
 }
 
 void
 GsmApplication::load_settings()
 {
-    gchar *color;
     glibtop_cpu cpu;
 
-    settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
+    this->settings = Gio::Settings::create (GSM_GSETTINGS_SCHEMA);
 
-    config.solaris_mode = g_settings_get_boolean (settings, GSM_SETTING_SOLARIS_MODE);
-    g_signal_connect (settings, "changed::" GSM_SETTING_SOLARIS_MODE,
-                      G_CALLBACK (cb_solaris_mode_changed), this);
+    config.solaris_mode = this->settings->get_boolean (GSM_SETTING_SOLARIS_MODE);
+    this->settings->signal_changed(GSM_SETTING_SOLARIS_MODE).connect ([this](const Glib::ustring& key) {
+        cb_solaris_mode_changed (*this->settings.operator->(), key, this);
+    });
 
-    config.draw_stacked = g_settings_get_boolean (settings, GSM_SETTING_DRAW_STACKED);
-    g_signal_connect (settings, "changed::" GSM_SETTING_DRAW_STACKED,
-                      G_CALLBACK (cb_draw_stacked_changed), this);
+    config.draw_stacked = this->settings->get_boolean (GSM_SETTING_DRAW_STACKED);
+    this->settings->signal_changed(GSM_SETTING_DRAW_STACKED).connect ([this](const Glib::ustring& key) {
+        cb_draw_stacked_changed (*this->settings.operator->(), key, this);
+    });
 
-    config.network_in_bits = g_settings_get_boolean (settings, GSM_SETTING_NETWORK_IN_BITS);
-    g_signal_connect (settings, "changed::" GSM_SETTING_NETWORK_IN_BITS,
-                      G_CALLBACK (cb_network_in_bits_changed), this);
+    config.network_in_bits = this->settings->get_boolean (GSM_SETTING_NETWORK_IN_BITS);
+    this->settings->signal_changed (GSM_SETTING_NETWORK_IN_BITS).connect ([this](const Glib::ustring& key) {
+        cb_network_in_bits_changed (*this->settings.operator->(), key, this);
+    });
 
-    config.update_interval = g_settings_get_int (settings, GSM_SETTING_PROCESS_UPDATE_INTERVAL);
-    g_signal_connect (settings, "changed::" GSM_SETTING_PROCESS_UPDATE_INTERVAL,
-                      G_CALLBACK (cb_timeouts_changed), this);
-    config.graph_update_interval = g_settings_get_int (settings, GSM_SETTING_GRAPH_UPDATE_INTERVAL);
-    g_signal_connect (settings, "changed::" GSM_SETTING_GRAPH_UPDATE_INTERVAL,
-                      G_CALLBACK (cb_timeouts_changed), this);
-    config.disks_update_interval = g_settings_get_int (settings, GSM_SETTING_DISKS_UPDATE_INTERVAL);
-    g_signal_connect (settings, "changed::" GSM_SETTING_DISKS_UPDATE_INTERVAL,
-                      G_CALLBACK (cb_timeouts_changed), this);
+    auto cbtc = [this](const Glib::ustring& key) { cb_timeouts_changed(*this->settings.operator->(), key, this); };
+    config.update_interval = this->settings->get_int (GSM_SETTING_PROCESS_UPDATE_INTERVAL);
+    this->settings->signal_changed (GSM_SETTING_PROCESS_UPDATE_INTERVAL).connect (cbtc);
+    config.graph_update_interval = this->settings->get_int (GSM_SETTING_GRAPH_UPDATE_INTERVAL);
+    this->settings->signal_changed (GSM_SETTING_GRAPH_UPDATE_INTERVAL).connect (cbtc);
+    config.disks_update_interval = this->settings->get_int (GSM_SETTING_DISKS_UPDATE_INTERVAL);
+    this->settings->signal_changed (GSM_SETTING_DISKS_UPDATE_INTERVAL).connect (cbtc);
 
     glibtop_get_cpu (&cpu);
     frequency = cpu.frequency;
 
     config.num_cpus = glibtop_get_sysinfo()->ncpu; // or server->ncpu + 1
 
-    apply_cpu_color_settings (settings, this);
-    g_signal_connect (settings, "changed::" GSM_SETTING_CPU_COLORS,
-                      G_CALLBACK (cb_color_changed), this);
+    apply_cpu_color_settings (*this->settings.operator->(), this);
 
-    color = g_settings_get_string (settings, GSM_SETTING_MEM_COLOR);
-    if (!color)
-        color = g_strdup ("#000000ff0082");
-    g_signal_connect (settings, "changed::" GSM_SETTING_MEM_COLOR,
-                      G_CALLBACK (cb_color_changed), this);
-    gdk_rgba_parse (&config.mem_color, color);
-    g_free (color);
+    auto mem_color = this->settings->get_string (GSM_SETTING_MEM_COLOR);
+    gdk_rgba_parse (&config.mem_color, mem_color.empty () ? "#000000ff0082" : mem_color.c_str ());
 
-    color = g_settings_get_string (settings, GSM_SETTING_SWAP_COLOR);
-    if (!color)
-        color = g_strdup ("#00b6000000ff");
-    g_signal_connect (settings, "changed::" GSM_SETTING_SWAP_COLOR,
-                      G_CALLBACK (cb_color_changed), this);
-    gdk_rgba_parse (&config.swap_color, color);
-    g_free (color);
+    auto swap_color = this->settings->get_string (GSM_SETTING_SWAP_COLOR);
+    gdk_rgba_parse (&config.swap_color, swap_color.empty () ? "#00b6000000ff" : swap_color.c_str ());
 
-    color = g_settings_get_string (settings, GSM_SETTING_NET_IN_COLOR);
-    if (!color)
-        color = g_strdup ("#000000f200f2");
-    g_signal_connect (settings, "changed::" GSM_SETTING_NET_IN_COLOR,
-                      G_CALLBACK (cb_color_changed), this);
-    gdk_rgba_parse (&config.net_in_color, color);
-    g_free (color);
+    auto net_in_color = this->settings->get_string (GSM_SETTING_NET_IN_COLOR);
+    gdk_rgba_parse (&config.net_in_color, net_in_color.empty () ? "#000000f200f2" : net_in_color.c_str ());
 
-    color = g_settings_get_string (settings, GSM_SETTING_NET_OUT_COLOR);
-    if (!color)
-        color = g_strdup ("#00f2000000c1");
-    g_signal_connect (settings, "changed::" GSM_SETTING_NET_OUT_COLOR,
-                      G_CALLBACK (cb_color_changed), this);
-    gdk_rgba_parse (&config.net_out_color, color);
-    g_free (color);
+    auto net_out_color = this->settings->get_string (GSM_SETTING_NET_OUT_COLOR);
+    gdk_rgba_parse (&config.net_out_color, net_out_color.empty () ? "#00f2000000c1" : net_out_color.c_str ());
+
+    auto cbcc = [this](const Glib::ustring& key) { cb_color_changed(*this->settings.operator->(), key, this); };
+    for (auto k : {GSM_SETTING_CPU_COLORS, GSM_SETTING_MEM_COLOR, GSM_SETTING_SWAP_COLOR, GSM_SETTING_NET_IN_COLOR, GSM_SETTING_NET_OUT_COLOR}) {
+        this->settings->signal_changed (k).connect(cbcc);
+    }
 }
 
 
@@ -288,10 +257,10 @@ GsmApplication::save_config ()
 
     maximized = gdk_window_get_state (gtk_widget_get_window (GTK_WIDGET (main_window))) & GDK_WINDOW_STATE_MAXIMIZED;
 
-    g_settings_set (settings, GSM_SETTING_WINDOW_STATE, "(iiii)",
+    g_settings_set (settings->gobj (), GSM_SETTING_WINDOW_STATE, "(iiii)",
                     width, height, xpos, ypos);
 
-    g_settings_set_boolean (settings, GSM_SETTING_MAXIMIZED, maximized);
+    settings->set_boolean (GSM_SETTING_MAXIMIZED, maximized);
 }
 
 int GsmApplication::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>& command_line)
@@ -319,11 +288,11 @@ int GsmApplication::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLi
     }
 
     if (option_group.show_processes_tab)
-        g_settings_set_string (settings, GSM_SETTING_CURRENT_TAB, "processes");
+        this->settings->set_string (GSM_SETTING_CURRENT_TAB, "processes");
     else if (option_group.show_resources_tab)
-        g_settings_set_string (settings, GSM_SETTING_CURRENT_TAB, "resources");
+        this->settings->set_string (GSM_SETTING_CURRENT_TAB, "resources");
     else if (option_group.show_file_systems_tab)
-        g_settings_set_string (settings, GSM_SETTING_CURRENT_TAB, "disks");
+        this->settings->set_string (GSM_SETTING_CURRENT_TAB, "disks");
     else if (option_group.print_version)
 
     on_activate ();

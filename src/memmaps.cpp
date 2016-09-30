@@ -345,13 +345,13 @@ create_memmapsdata (GsmApplication *app)
                                 G_TYPE_UINT64 /* MMAP_COL_INODE      */
         );
 
-    GSettings *settings = g_settings_get_child (app->settings, GSM_SETTINGS_CHILD_MEMMAP);
+    auto settings = g_settings_get_child (app->settings->gobj (), GSM_SETTINGS_CHILD_MEMMAP);
 
     tree = gsm_tree_view_new (settings, FALSE);
     gtk_tree_view_set_model (GTK_TREE_VIEW (tree), GTK_TREE_MODEL (model));
     g_object_unref (G_OBJECT (model));
 
-    gchar *font = get_monospace_system_font_name ();
+    auto font = get_monospace_system_font_name ();
 
     for (i = 0; i < MMAP_COL_MAX; i++) {
         GtkCellRenderer *cell;
@@ -390,12 +390,10 @@ create_memmapsdata (GsmApplication *app)
             case MMAP_COL_VMEND:
             case MMAP_COL_FLAGS:
             case MMAP_COL_VMOFFSET:
-                g_object_set (cell, "font", font, NULL);
+                g_object_set (cell, "font", font.c_str (), NULL);
                 break;
         }
     }
-
-    g_free (font);
 
     return new MemMapsData(tree);
 }

@@ -98,10 +98,10 @@ void
 cb_cpu_color_changed (GsmColorButton *cp, gpointer data)
 {
     guint cpu_i = GPOINTER_TO_UINT (data);
-    GSettings *settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
+    auto settings = Gio::Settings::create (GSM_GSETTINGS_SCHEMA);
 
     /* Get current values */
-    GVariant *cpu_colors_var = g_settings_get_value (settings, GSM_SETTING_CPU_COLORS);
+    GVariant *cpu_colors_var = g_settings_get_value (settings->gobj(), GSM_SETTING_CPU_COLORS);
     gsize children_n = g_variant_n_children(cpu_colors_var);
 
     /* Create builder to contruct new setting with updated value for cpu i */
@@ -123,11 +123,10 @@ cb_cpu_color_changed (GsmColorButton *cp, gpointer data)
     }
 
     /* Just set the value and let the changed::cpu-colors signal callback do the rest. */
-    g_settings_set_value (settings, GSM_SETTING_CPU_COLORS,
-                          g_variant_builder_end(&builder));
+    settings->set_value (GSM_SETTING_CPU_COLORS, Glib::wrap (g_variant_builder_end(&builder)));
 }
 
-static void change_settings_color(GSettings *settings, const char *key,
+static void change_settings_color(Gio::Settings& settings, const char *key,
                                   GsmColorButton *cp)
 {
     GdkRGBA c;
@@ -135,7 +134,7 @@ static void change_settings_color(GSettings *settings, const char *key,
 
     gsm_color_button_get_color(cp, &c);
     color = gdk_rgba_to_string (&c);
-    g_settings_set_string (settings, key, color);
+    settings.set_string (key, color);
     g_free (color);
 }
 
@@ -143,7 +142,7 @@ static void
 cb_mem_color_changed (GsmColorButton *cp, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
-    change_settings_color (app->settings, GSM_SETTING_MEM_COLOR, cp);
+    change_settings_color (*app->settings.operator->(), GSM_SETTING_MEM_COLOR, cp);
 }
 
 
@@ -151,21 +150,21 @@ static void
 cb_swap_color_changed (GsmColorButton *cp, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
-    change_settings_color (app->settings, GSM_SETTING_SWAP_COLOR, cp);
+    change_settings_color (*app->settings.operator->(), GSM_SETTING_SWAP_COLOR, cp);
 }
 
 static void
 cb_net_in_color_changed (GsmColorButton *cp, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
-    change_settings_color (app->settings, GSM_SETTING_NET_IN_COLOR, cp);
+    change_settings_color (*app->settings.operator->(), GSM_SETTING_NET_IN_COLOR, cp);
 }
 
 static void
 cb_net_out_color_changed (GsmColorButton *cp, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
-    change_settings_color(app->settings, GSM_SETTING_NET_OUT_COLOR, cp);
+    change_settings_color(*app->settings.operator->(), GSM_SETTING_NET_OUT_COLOR, cp);
 }
 
 static void
@@ -383,7 +382,7 @@ on_activate_refresh (GSimpleAction *, GVariant *, gpointer data)
 
 static void
 kill_process_with_confirmation (GsmApplication *app, int signal) {
-    gboolean kill_dialog = g_settings_get_boolean (app->settings, GSM_SETTING_SHOW_KILL_DIALOG);
+    gboolean kill_dialog = app->settings->get_boolean(GSM_SETTING_SHOW_KILL_DIALOG);
 
     if (kill_dialog)
         procdialog_create_kill_dialog (app, signal);
@@ -469,8 +468,9 @@ change_show_page_state (GSimpleAction *action, GVariant *state, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
+    auto state_var = Glib::wrap(state, true);
     g_simple_action_set_state (action, state);
-    g_settings_set_value (app->settings, GSM_SETTING_CURRENT_TAB, state);
+    app->settings->set_value (GSM_SETTING_CURRENT_TAB, state_var);
 }
 
 static void
@@ -478,8 +478,9 @@ change_show_processes_state (GSimpleAction *action, GVariant *state, gpointer da
 {
     GsmApplication *app = (GsmApplication *) data;
 
+    auto state_var = Glib::wrap(state, true);
     g_simple_action_set_state (action, state);
-    g_settings_set_value (app->settings, GSM_SETTING_SHOW_WHOSE_PROCESSES, state);
+    app->settings->set_value (GSM_SETTING_SHOW_WHOSE_PROCESSES, state_var);
 }
 
 static void
@@ -487,8 +488,9 @@ change_show_dependencies_state (GSimpleAction *action, GVariant *state, gpointer
 {
     GsmApplication *app = (GsmApplication *) data;
 
+    auto state_var = Glib::wrap(state, true);
     g_simple_action_set_state (action, state);
-    g_settings_set_value (app->settings, GSM_SETTING_SHOW_DEPENDENCIES, state);
+    app->settings->set_value (GSM_SETTING_SHOW_DEPENDENCIES, state_var);
 }
 
 static void
@@ -585,34 +587,33 @@ static gboolean
 cb_main_window_state_changed (GtkWidget *window, GdkEventWindowState *event, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
-    gchar * current_page = g_settings_get_string (app->settings, GSM_SETTING_CURRENT_TAB);
+    auto current_page = app->settings->get_string (GSM_SETTING_CURRENT_TAB);
     if (event->new_window_state & GDK_WINDOW_STATE_BELOW ||
         event->new_window_state & GDK_WINDOW_STATE_ICONIFIED ||
         event->new_window_state & GDK_WINDOW_STATE_WITHDRAWN)
     {
-        if (strcmp (current_page, "processes") == 0) {
+        if (current_page == "processes") {
             proctable_freeze (app);
-        } else if (strcmp (current_page, "resources") == 0) {
+        } else if (current_page == "resources") {
             load_graph_stop (app->cpu_graph);
             load_graph_stop (app->mem_graph);
             load_graph_stop (app->net_graph);
-        } else if (strcmp (current_page, "disks") == 0) {
+        } else if (current_page == "disks") {
             disks_freeze (app);
         }
     } else  {
-        if (strcmp (current_page, "processes") == 0) {
+        if (current_page == "processes") {
             proctable_update (app);
             proctable_thaw (app);
-        } else if (strcmp (current_page, "resources") == 0) {
+        } else if (current_page == "resources") {
             load_graph_start (app->cpu_graph);
             load_graph_start (app->mem_graph);
             load_graph_start (app->net_graph);
-        } else if (strcmp (current_page, "disks") == 0) {
+        } else if (current_page == "disks") {
             disks_update (app);
             disks_thaw (app);
         }
     }
-    g_free (current_page);
     return FALSE;
 }
 
@@ -650,14 +651,14 @@ create_main_window (GsmApplication *app)
         gtk_box_pack_start (mainbox, GTK_WIDGET (headerbar), FALSE, FALSE, 0);
     }
 
-    g_settings_get (app->settings, GSM_SETTING_WINDOW_STATE, "(iiii)",
+    g_settings_get (app->settings->gobj(), GSM_SETTING_WINDOW_STATE, "(iiii)",
                     &width, &height, &xpos, &ypos);
     width = CLAMP (width, 50, gdk_screen_width ());
     height = CLAMP (height, 50, gdk_screen_height ());
 
     gtk_window_set_default_size (GTK_WINDOW (main_window), width, height);
     gtk_window_move (GTK_WINDOW (main_window), xpos, ypos);
-    if (g_settings_get_boolean (app->settings, GSM_SETTING_MAXIMIZED))
+    if (app->settings->get_boolean (GSM_SETTING_MAXIMIZED))
         gtk_window_maximize (GTK_WINDOW (main_window));
 
     app->process_menu_button = process_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "process_menu_button"));
@@ -706,7 +707,7 @@ create_main_window (GsmApplication *app)
     
     create_disk_view (app, builder);
 
-    g_settings_bind (app->settings, GSM_SETTING_CURRENT_TAB, stack, "visible-child-name", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind (app->settings->gobj (), GSM_SETTING_CURRENT_TAB, stack, "visible-child-name", G_SETTINGS_BIND_DEFAULT);
 
     g_signal_connect (G_OBJECT (stack), "notify::visible-child",
                       G_CALLBACK (cb_change_current_page), app);
@@ -722,13 +723,13 @@ create_main_window (GsmApplication *app)
     action = g_action_map_lookup_action (G_ACTION_MAP (main_window),
                                          "show-dependencies");
     g_action_change_state (action,
-                           g_settings_get_value (app->settings, GSM_SETTING_SHOW_DEPENDENCIES));
+                           g_settings_get_value (app->settings->gobj (), GSM_SETTING_SHOW_DEPENDENCIES));
 
 
     action = g_action_map_lookup_action (G_ACTION_MAP (main_window),
                                          "show-whose-processes");
     g_action_change_state (action,
-                           g_settings_get_value (app->settings, GSM_SETTING_SHOW_WHOSE_PROCESSES));
+                           g_settings_get_value (app->settings->gobj (), GSM_SETTING_SHOW_WHOSE_PROCESSES));
 
     gtk_widget_show (GTK_WIDGET (main_window));
     

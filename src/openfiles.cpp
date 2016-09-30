@@ -260,7 +260,7 @@ create_openfiles_tree (GsmApplication *app)
                                 G_TYPE_POINTER      /* open_files_entry */
         );
 
-    GSettings *settings = g_settings_get_child (app->settings, GSM_SETTINGS_CHILD_OPEN_FILES);
+    auto settings = g_settings_get_child (app->settings->gobj (), GSM_SETTINGS_CHILD_OPEN_FILES);
 
     tree = gsm_tree_view_new (settings, FALSE);
     gtk_tree_view_set_model (GTK_TREE_VIEW (tree), GTK_TREE_MODEL (model));

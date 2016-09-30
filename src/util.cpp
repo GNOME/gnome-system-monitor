@@ -649,14 +649,8 @@ namespace procman
 
 }
 
-gchar *
+Glib::ustring
 get_monospace_system_font_name ()
 {
-    GSettings *desktop_settings = g_settings_new ("org.gnome.desktop.interface");
-    char *font;
-
-    font = g_settings_get_string (desktop_settings, "monospace-font-name");
-    g_object_unref (desktop_settings);
-
-    return font;
+    return Gio::Settings::create ("org.gnome.desktop.interface")->get_string ("monospace-font-name");
 }

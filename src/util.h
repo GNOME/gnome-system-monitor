@@ -2,8 +2,7 @@
 #ifndef _GSM_UTIL_H_
 #define _GSM_UTIL_H_
 
-#include <glib.h>
-#include <gtk/gtk.h>
+#include <gtkmm.h>
 #include <string>
 
 using std::string;
@@ -25,7 +24,7 @@ procman_debug_real(const char *file, int line, const char *func,
 
 #define procman_debug(FMT, ...) procman_debug_real(__FILE__, __LINE__, __func__, FMT, ##__VA_ARGS__)
 
-gchar * get_monospace_system_font_name (void);
+Glib::ustring get_monospace_system_font_name (void);
 
 inline string make_string(char *c_str)
 {

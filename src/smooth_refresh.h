@@ -2,8 +2,8 @@
 #ifndef _GSM_SMOOTH_REFRESH_H
 #define _GSM_SMOOTH_REFRESH_H
 
-#include <glib.h>
-#include <gio/gio.h>
+#include <giomm.h>
+#include <glibmm.h>
 #include <string>
 
 #include "util.h"
@@ -25,7 +25,7 @@ class SmoothRefresh
 
       @return : initialized SmoothRefresh
     */
-    SmoothRefresh(GSettings *a_settings);
+    SmoothRefresh(Glib::RefPtr<Gio::Settings> a_settings);
 
     ~SmoothRefresh();
 
@@ -57,11 +57,7 @@ class SmoothRefresh
 
     unsigned get_own_cpu_usage();
 
-    static void status_changed(GSettings *settings,
-                               const gchar *key,
-                               gpointer user_data);
-
-    void load_settings_value(const gchar *key);
+    void load_settings_value(Glib::ustring key);
 
     /*
       fuzzy logic:
@@ -94,9 +90,9 @@ class SmoothRefresh
       -last_cpu_time: Save last cpu and process times to compute CPU%
     */
 
-    GSettings *settings;
+    Glib::RefPtr<Gio::Settings> settings;
     bool active;
-    guint connection;
+    sigc::connection connection;
     guint interval;
     unsigned  last_pcpu;
     guint64 last_total_time;

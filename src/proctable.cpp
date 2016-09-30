@@ -254,7 +254,7 @@ process_visibility_func (GtkTreeModel *model, GtkTreeIter *iter, gpointer data)
 
 	// in case we are in dependencies view, we show (and expand) rows not matching the text, but having a matching child
     gboolean match = false;
-    if (g_settings_get_boolean (app->settings, GSM_SETTING_SHOW_DEPENDENCIES)) {
+    if (app->settings->get_boolean (GSM_SETTING_SHOW_DEPENDENCIES)) {
         GtkTreeIter child;
         if (gtk_tree_model_iter_children (model, &child, iter)) {
             gboolean child_match = FALSE;
@@ -296,14 +296,12 @@ proctable_clear_tree (GsmApplication * const app)
 
     update_sensitivity(app);
 }
-                                                        
+
 static void
-cb_show_dependencies_changed (GSettings *settings, const gchar *key, gpointer data)
-{
-    GsmApplication *app = (GsmApplication *) data;
+cb_show_dependencies_changed(Gio::Settings& settings, Glib::ustring key, GsmApplication* app) {
     if (app->timeout) {
         gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (app->tree),
-                                      g_settings_get_boolean (settings, GSM_SETTING_SHOW_DEPENDENCIES));
+                                          settings.get_boolean (GSM_SETTING_SHOW_DEPENDENCIES));
 
         proctable_clear_tree (app);
         proctable_update (app);
@@ -311,9 +309,7 @@ cb_show_dependencies_changed (GSettings *settings, const gchar *key, gpointer da
 }
 
 static void
-cb_show_whose_processes_changed (GSettings *settings, const gchar *key, gpointer data)
-{
-    GsmApplication *app = (GsmApplication *) data;
+cb_show_whose_processes_changed(Gio::Settings& settings, Glib::ustring key, GsmApplication* app) {
     if (app->timeout) {
         proctable_clear_tree (app);
         proctable_update (app);
@@ -362,7 +358,7 @@ proctable_new (GsmApplication * const app)
     };
 
     gint i;
-    GSettings * settings = g_settings_get_child (app->settings, GSM_SETTINGS_CHILD_PROCESSES);
+    auto settings = g_settings_get_child (app->settings->gobj (), GSM_SETTINGS_CHILD_PROCESSES);
     model = gtk_tree_store_new (NUM_COLUMNS,
                                 G_TYPE_STRING,      /* Process Name */
                                 G_TYPE_STRING,      /* User         */
@@ -402,8 +398,7 @@ proctable_new (GsmApplication * const app)
     gtk_tree_view_set_model (GTK_TREE_VIEW (proctree), GTK_TREE_MODEL (model_sort));
 
     gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (proctree), COL_TOOLTIP);
-    gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (proctree),
-                                      g_settings_get_boolean (app->settings, GSM_SETTING_SHOW_DEPENDENCIES));
+    gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (proctree), app->settings->get_boolean (GSM_SETTING_SHOW_DEPENDENCIES));
     gtk_tree_view_set_enable_search (GTK_TREE_VIEW (proctree), FALSE);
     g_object_unref (G_OBJECT (model));
 
@@ -603,11 +598,13 @@ proctable_new (GsmApplication * const app)
     g_signal_connect (G_OBJECT (model_sort), "sort-column-changed",
                       G_CALLBACK (cb_save_tree_state), app);
 
-    g_signal_connect (app->settings, "changed::" GSM_SETTING_SHOW_DEPENDENCIES,
-                      G_CALLBACK (cb_show_dependencies_changed), app);
+    app->settings->signal_changed(GSM_SETTING_SHOW_DEPENDENCIES).connect([app](const Glib::ustring& key) {
+        cb_show_dependencies_changed(*app->settings.operator->(), key, app);
+    });
 
-    g_signal_connect (app->settings, "changed::" GSM_SETTING_SHOW_WHOSE_PROCESSES,
-                      G_CALLBACK (cb_show_whose_processes_changed), app);
+    app->settings->signal_changed(GSM_SETTING_SHOW_WHOSE_PROCESSES).connect([app](const Glib::ustring& key) {
+        cb_show_whose_processes_changed(*app->settings.operator->(), key, app);
+    });
 
     gtk_widget_show (GTK_WIDGET (proctree));
 
@@ -790,7 +787,7 @@ insert_info_to_tree (ProcInfo *info, GsmApplication *app, bool forced = false)
     filtered = gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT(sorted));
     model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (filtered));
     
-    if (g_settings_get_boolean (app->settings, GSM_SETTING_SHOW_DEPENDENCIES)) {
+    if (app->settings->get_boolean (GSM_SETTING_SHOW_DEPENDENCIES)) {
 
         ProcInfo *parent = 0;
 
@@ -1028,7 +1025,7 @@ refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
     // pid_list == ProcInfo::all + addition
 
 
-    if (g_settings_get_boolean (app->settings, GSM_SETTING_SHOW_DEPENDENCIES)) {
+    if (app->settings->get_boolean (GSM_SETTING_SHOW_DEPENDENCIES)) {
 
         // insert process in the tree. walk through the addition list
         // (new process + process that have a new parent). This loop
@@ -1106,18 +1103,17 @@ proctable_update (GsmApplication *app)
     glibtop_cpu cpu;
     int which = 0;
     int arg = 0;
-    char *whose_processes = g_settings_get_string (app->settings, GSM_SETTING_SHOW_WHOSE_PROCESSES);
-    if (strcmp (whose_processes, "all") == 0) {
+    auto whose_processes = app->settings->get_string(GSM_SETTING_SHOW_WHOSE_PROCESSES);
+    if (whose_processes == "all") {
         which = GLIBTOP_KERN_PROC_ALL;
         arg = 0;
-    } else if (strcmp (whose_processes, "active") == 0) {
+    } else if (whose_processes == "active") {
         which = GLIBTOP_KERN_PROC_ALL | GLIBTOP_EXCLUDE_IDLE;
         arg = 0;
-    } else if (strcmp (whose_processes, "user") == 0) {
+    } else if (whose_processes == "user") {
       which = GLIBTOP_KERN_PROC_UID;
       arg = getuid ();
     }
-    g_free (whose_processes);
 
     pid_list = glibtop_get_proclist (&proclist, which, arg);
 

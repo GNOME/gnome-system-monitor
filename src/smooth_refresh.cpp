@@ -40,41 +40,28 @@ unsigned SmoothRefresh::get_own_cpu_usage()
     return usage;
 }
 
-
-
-void SmoothRefresh::status_changed(GSettings *settings,
-                                   const gchar *key,
-                                   gpointer user_data)
+void SmoothRefresh::load_settings_value(Glib::ustring key)
 {
-    static_cast<SmoothRefresh*>(user_data)->load_settings_value(key);
-}
-
-void SmoothRefresh::load_settings_value(const gchar *key)
-{
-    this->active = g_settings_get_boolean(settings, key);
+    this->active = this->settings->get_boolean(key);
 
     if (this->active)
         procman_debug("smooth_refresh is enabled");
 }
 
 
-SmoothRefresh::SmoothRefresh(GSettings *a_settings)
+SmoothRefresh::SmoothRefresh(Glib::RefPtr<Gio::Settings> a_settings)
     :
     settings(a_settings),
     active(false),
-    connection(0),
     interval(0),
     last_pcpu(0),
     last_total_time(0ULL),
     last_cpu_time(0ULL)
 {
-    this->connection = g_signal_connect(G_OBJECT(settings),
-                                        "changed::smooth-refresh",
-                                        G_CALLBACK(status_changed),
-                                        this);
+    this->connection = a_settings->signal_changed("smooth_refresh").connect([this](const Glib::ustring& key) { this->load_settings_value(key); });
 
     this->reset();
-    this->load_settings_value(KEY.c_str());
+    this->load_settings_value(KEY);
 }
 
 
@@ -98,7 +85,7 @@ void SmoothRefresh::reset()
 SmoothRefresh::~SmoothRefresh()
 {
     if (this->connection)
-        g_signal_handler_disconnect(G_OBJECT(settings), this->connection);
+        this->connection.disconnect();
 }
 
 

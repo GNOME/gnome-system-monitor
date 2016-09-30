@@ -45,8 +45,7 @@ private:
     {
         int new_value = int(1000 * gtk_spin_button_get_value(spin));
 
-        g_settings_set_int(GsmApplication::get()->settings,
-                           this->key.c_str(), new_value);
+        GsmApplication::get()->settings->set_int(this->key, new_value);
 
         procman_debug("set %s to %d", this->key.c_str(), new_value);
     }
@@ -62,8 +61,7 @@ field_toggled (const gchar *gsettings_parent, gchar *path_str, gpointer data)
     GtkTreeIter iter;
     GtkTreeViewColumn *column;
     gboolean toggled;
-    GSettings *settings = g_settings_get_child (GsmApplication::get()->settings, gsettings_parent);
-    gchar *key;
+    auto settings = GsmApplication::get()->settings->get_child (gsettings_parent);
     int id;
 
     if (!path)
@@ -79,9 +77,8 @@ field_toggled (const gchar *gsettings_parent, gchar *path_str, gpointer data)
 
     id = gtk_tree_view_column_get_sort_column_id (column);
 
-    key = g_strdup_printf ("col-%d-visible", id);
-    g_settings_set_boolean (settings, key, !toggled);
-    g_free (key);
+    auto key = Glib::ustring::compose ("col-%1-visible", id);
+    settings->set_boolean (key, !toggled);
 
     gtk_tree_path_free (path);
 
@@ -236,20 +233,20 @@ create_preferences_dialog (GsmApplication *app)
                       G_CALLBACK (SBU::callback), &interval_updater);
 
     smooth_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "smooth_button"));
-    g_settings_bind(app->settings, SmoothRefresh::KEY.c_str(), smooth_button, "active", G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind(app->settings->gobj (), SmoothRefresh::KEY.c_str(), smooth_button, "active", G_SETTINGS_BIND_DEFAULT);
 
     check_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "check_button"));
-    g_settings_bind (app->settings, GSM_SETTING_SHOW_KILL_DIALOG,
+    g_settings_bind (app->settings->gobj (), GSM_SETTING_SHOW_KILL_DIALOG,
                      check_button, "active",
                      G_SETTINGS_BIND_DEFAULT);
 
     GtkCheckButton *solaris_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "solaris_button"));
-    g_settings_bind (app->settings, GSM_SETTING_SOLARIS_MODE,
+    g_settings_bind (app->settings->gobj (), GSM_SETTING_SOLARIS_MODE,
                      solaris_button, "active",
                      G_SETTINGS_BIND_DEFAULT);
 
     GtkCheckButton *draw_stacked_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "draw_stacked_button"));
-    g_settings_bind (app->settings, GSM_SETTING_DRAW_STACKED,
+    g_settings_bind (app->settings->gobj (), GSM_SETTING_DRAW_STACKED,
                      draw_stacked_button, "active",
                      G_SETTINGS_BIND_DEFAULT);
 
@@ -265,7 +262,7 @@ create_preferences_dialog (GsmApplication *app)
                       &graph_interval_updater);
 
     GtkCheckButton *bits_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "bits_button"));
-    g_settings_bind(app->settings, GSM_SETTING_NETWORK_IN_BITS,
+    g_settings_bind(app->settings->gobj (), GSM_SETTING_NETWORK_IN_BITS,
                     bits_button, "active",
                     G_SETTINGS_BIND_DEFAULT);
 
@@ -280,7 +277,7 @@ create_preferences_dialog (GsmApplication *app)
 
 
     check_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "all_devices_check"));
-    g_settings_bind (app->settings, GSM_SETTING_SHOW_ALL_FS,
+    g_settings_bind (app->settings->gobj (), GSM_SETTING_SHOW_ALL_FS,
                      check_button, "active",
                      G_SETTINGS_BIND_DEFAULT);
 
@@ -292,15 +289,13 @@ create_preferences_dialog (GsmApplication *app)
     g_signal_connect (G_OBJECT (prefs_dialog), "response",
                       G_CALLBACK (prefs_dialog_button_pressed), app);
 
-    char *current_tab = g_settings_get_string (app->settings, GSM_SETTING_CURRENT_TAB);
-    if (strcmp (current_tab, "processes") == 0)
+    auto current_tab = app->settings->get_string(GSM_SETTING_CURRENT_TAB);
+    if (current_tab == "processes")
         gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
-    else if (strcmp (current_tab, "resources") == 0)
+    else if (current_tab == "resources")
         gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 1);
-    else if (strcmp (current_tab, "disks") == 0)
+    else if (current_tab == "disks")
         gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 2);
-
-    g_free (current_tab);
 
     gtk_builder_connect_signals (builder, NULL);
     g_object_unref (G_OBJECT (builder));
