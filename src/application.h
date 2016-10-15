@@ -134,10 +134,6 @@ class ProcInfo
     /* undefined */ ProcInfo& operator=(const ProcInfo&);
     /* undefined */ ProcInfo(const ProcInfo&);
 
-    typedef std::map<guint, std::string> UserMap;
-    /* cached username */
-    static UserMap users;
-
   public:
 
     // TODO: use a set instead

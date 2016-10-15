@@ -63,7 +63,6 @@
 #include <gdk/gdkx.h>
 #endif
 
-ProcInfo::UserMap ProcInfo::users;
 ProcInfo::List ProcInfo::all;
 std::map<pid_t, guint64> ProcInfo::cpu_times;
 
@@ -651,9 +650,8 @@ get_process_name (ProcInfo *info,
 std::string
 ProcInfo::lookup_user(guint uid)
 {
-    typedef std::pair<ProcInfo::UserMap::iterator, bool> Pair;
-    ProcInfo::UserMap::value_type hint(uid, "");
-    Pair p(ProcInfo::users.insert(hint));
+    static std::map<guint, std::string> users;
+    auto p = users.insert({uid, ""});
 
     // procman_debug("User lookup for uid %u: %s", uid, (p.second ? "MISS" : "HIT"));
 
