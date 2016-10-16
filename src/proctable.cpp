@@ -914,7 +914,7 @@ update_info (GsmApplication *app, ProcInfo *info)
     g_assert(info->ppid != -1 || info->pid == 0);
 
     /* get cgroup data */
-    get_process_cgroup_info(info);
+    get_process_cgroup_info(*info);
 
     procman::get_process_systemd_info(info);
 }
@@ -964,7 +964,7 @@ ProcInfo::ProcInfo(pid_t pid)
 
     get_process_selinux_context (info);
     info->cgroup_name = NULL;
-    get_process_cgroup_info(info);
+    get_process_cgroup_info(*info);
 
     info->unit = info->session = info->seat = NULL;
     get_process_systemd_info(info);

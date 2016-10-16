@@ -2,11 +2,9 @@
 #ifndef _GSM_CGROUPS_H_
 #define _GSM_CGROUPS_H_
 
-#include <glib.h>
-
 #include "application.h"
 
-void get_process_cgroup_info (ProcInfo *info);
-gboolean cgroups_enabled (void);
+void get_process_cgroup_info (ProcInfo& info);
+bool cgroups_enabled ();
 
 #endif /* _GSM_CGROUPS_H_ */
