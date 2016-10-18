@@ -8,22 +8,23 @@
 # Mike Manilone <crtmike@gmail.com>, 2012.
 # YunQiang Su <wzssyqa@gmail.com>, 2012.
 # Jeff Bai <jeffbai@aosc.xyz>, 2015.
+# Boyuan Yang <073plan@gmail.com>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-11-08 10:29+0000\n"
-"PO-Revision-Date: 2015-11-08 14:20-0700\n"
-"Last-Translator: Jeff Bai <jeffbai@aosc.xyz>\n"
+"POT-Creation-Date: 2016-10-07 06:43+0000\n"
+"PO-Revision-Date: 2016-10-10 16:45+0800\n"
+"Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.8.5\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
 #: ../src/application.cpp:262 ../src/interface.cpp:363
@@ -44,7 +45,7 @@ msgstr ""
 "Manager;监视器;系统;进程;中央处理器;内存;网络;历史;用量;绩效;任务;管理员;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:318
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:317
 msgid "GNOME System Monitor"
 msgstr "GNOME 系统监视器"
 
@@ -81,6 +82,22 @@ msgid ""
 msgstr ""
 "资源图表功能为您展示了计算机当前运行状态的快速预览，包括近期网络、内存和处理"
 "器使用情况。"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:6
+msgid "Process list view"
+msgstr "进程列表视图"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:7
+msgid "Resources overview"
+msgstr "资源概览"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:8
+msgid "File Systems view"
+msgstr "文件系统视图"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:9
+msgid "The GNOME Project"
+msgstr "GNOME 项目"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
 msgid "Kill process"
@@ -119,7 +136,7 @@ msgid "Memory and Swap History"
 msgstr "内存和交换历史"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:260
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:347
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:349
 msgid "Memory"
 msgstr "内存"
 
@@ -210,20 +227,17 @@ msgid "_Dependencies"
 msgstr "依赖关系(_D)"
 
 #: ../data/menus.ui.h:11
-msgid "_Stop"
-msgstr "停止(_S)"
+msgid "_Properties"
+msgstr "属性(_P)"
 
 #: ../data/menus.ui.h:12
-msgid "_Continue"
-msgstr "继续进程(_C)"
+msgid "_Memory Maps"
+msgstr "内存映射(_M)"
 
-#: ../data/menus.ui.h:13
-msgid "_End"
-msgstr "结束(_E)"
-
+#. Translators: this means
 #: ../data/menus.ui.h:14
-msgid "_Kill"
-msgstr "杀死(_K)"
+msgid "Open _Files"
+msgstr "打开的文件(_F)"
 
 #: ../data/menus.ui.h:15
 msgid "_Change Priority"
@@ -254,17 +268,20 @@ msgid "Custom"
 msgstr "自定义"
 
 #: ../data/menus.ui.h:22
-msgid "_Memory Maps"
-msgstr "内存映射(_M)"
+msgid "_Stop"
+msgstr "停止(_S)"
 
-#. Translators: this means
+#: ../data/menus.ui.h:23
+msgid "_Continue"
+msgstr "继续进程(_C)"
+
 #: ../data/menus.ui.h:24
-msgid "Open _Files"
-msgstr "打开的文件(_F)"
+msgid "_End"
+msgstr "结束(_E)"
 
 #: ../data/menus.ui.h:25
-msgid "_Properties"
-msgstr "属性(_P)"
+msgid "_Kill"
+msgstr "杀死(_K)"
 
 #: ../data/openfiles.ui.h:1
 msgid "Open Files"
@@ -322,7 +339,7 @@ msgstr "显示全部文件系统(_A)"
 msgid "File system i_nformation shown in list:"
 msgstr "列表中显示的文件系统信息(_N)："
 
-#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:123
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:153
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -342,7 +359,7 @@ msgstr ""
 "<small><i><b>注：</b>进程的优先级由它的 nice 值指定。较低的 nice 值对应较高的"
 "优先级。</i></small>"
 
-#: ../src/application.cpp:304
+#: ../src/application.cpp:303
 msgid "A simple process and system monitor."
 msgstr "简单的进程和系统监视器。"
 
@@ -432,7 +449,7 @@ msgstr "标题"
 msgid "The title of the color selection dialog"
 msgstr "颜色选择对话框标题"
 
-#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:512
+#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:515
 msgid "Pick a Color"
 msgstr "拾取颜色"
 
@@ -448,11 +465,11 @@ msgstr "选中的颜色"
 msgid "Type of color picker"
 msgstr "颜色拾取器类型"
 
-#: ../src/gsm_color_button.c:434
+#: ../src/gsm_color_button.c:437
 msgid "Received invalid color data\n"
 msgstr "接收到非法颜色数据\n"
 
-#: ../src/gsm_color_button.c:535
+#: ../src/gsm_color_button.c:538
 msgid "Click to set graph colors"
 msgstr "点击以设置图形颜色"
 
@@ -485,18 +502,18 @@ msgstr ""
 "YunQiang Su <wzssyqa@gmail.com>, 2012\n"
 "tuhaihe <1132321739qq@gmail.com>, 2012, 2013"
 
-#: ../src/load-graph.cpp:161
+#: ../src/load-graph.cpp:157
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u 秒"
 
-#: ../src/load-graph.cpp:370
+#: ../src/load-graph.cpp:366
 msgid "not available"
 msgstr "不可用"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:373
+#: ../src/load-graph.cpp:369
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%)，共 %s"
@@ -1036,65 +1053,102 @@ msgstr ""
 "%3$s"
 
 #. xgettext: primary alert message for killing single process
-#: ../src/procdialogs.cpp:75
+#: ../src/procdialogs.cpp:76
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr "您确定要杀死选中的进程 “%s”(PID：%u) 吗？"
 
 #. xgettext: primary alert message for ending single process
-#: ../src/procdialogs.cpp:80
+#: ../src/procdialogs.cpp:82
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr "您确定要结束选中的进程 “%s”(PID：%u) 吗？"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping single process
+#: ../src/procdialogs.cpp:88
+#, c-format
+msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
+msgstr "您确定要停止选中的进程 “%s”(PID：%u) 吗？"
+
 #. xgettext: primary alert message for killing multiple processes
-#: ../src/procdialogs.cpp:87
+#: ../src/procdialogs.cpp:97
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
 msgstr[0] "您确定要杀死选中的 %d 个进程？"
 
 #. xgettext: primary alert message for ending multiple processes
-#: ../src/procdialogs.cpp:91
+#: ../src/procdialogs.cpp:103
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
 msgstr[0] "您确定要结束选中的 %d 个进程？"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping multiple processes
+#: ../src/procdialogs.cpp:109
+#, c-format
+msgid "Are you sure you want to stop the selected process?"
+msgid_plural "Are you sure you want to stop the %d selected processes?"
+msgstr[0] "您确定要停止选中的 %d 个进程？"
+
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:98 ../src/procdialogs.cpp:104
+#: ../src/procdialogs.cpp:119
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
 msgstr ""
-"杀死进程可能导致数据损坏，中断会话或带来安全风险。您应该只杀死无响应的进程。"
+"杀死进程可能导致数据损坏、中断会话或带来安全风险。您应该只杀死无响应的进程。"
 
-#: ../src/procdialogs.cpp:101
+#: ../src/procdialogs.cpp:122
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "杀死进程(_K)"
 
-#: ../src/procdialogs.cpp:107
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:126
+msgid ""
+"Ending a process may destroy data, break the session or introduce a security "
+"risk. Only unresponsive processes should be ended."
+msgstr ""
+"结束进程可能导致数据损坏、中断会话或带来安全风险。您应该只结束无响应的进程。"
+
+#: ../src/procdialogs.cpp:129
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "结束进程(_E)"
 
-#: ../src/procdialogs.cpp:188
+#. SIGSTOP
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:133
+msgid ""
+"Stopping a process may destroy data, break the session or introduce a "
+"security risk. Only unresponsive processes should be stopped."
+msgstr ""
+"停止进程可能导致数据损坏、中断会话或带来安全风险。您应该只停止无响应的进程。"
+
+#: ../src/procdialogs.cpp:136
+msgid "_Stop Process"
+msgid_plural "_Stop Processes"
+msgstr[0] "停止进程(_S)"
+
+#: ../src/procdialogs.cpp:218
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "更改进程“%s”(PID：%u)的优先级"
 
-#: ../src/procdialogs.cpp:191
+#: ../src/procdialogs.cpp:221
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
 msgstr[0] "更改所选 %d 个进程的优先级"
 
-#: ../src/procdialogs.cpp:210
+#: ../src/procdialogs.cpp:240
 msgid "Note:"
 msgstr "备忘："
 
-#: ../src/procdialogs.cpp:211
+#: ../src/procdialogs.cpp:241
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1105,72 +1159,72 @@ msgstr "进程的优先级由它的 nice 值指定。较低的 nice 值对应较
 msgid "N/A"
 msgstr "不适用"
 
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:334
 msgid "Process Name"
 msgstr "进程名"
 
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:333
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:335
 msgid "User"
 msgstr "用户"
 
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:336
 msgid "Status"
 msgstr "状态"
 
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:337
 msgid "Virtual Memory"
 msgstr "虚拟内存"
 
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:338
 msgid "Resident Memory"
 msgstr "驻留内存"
 
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:339
 msgid "Writable Memory"
 msgstr "可写内存"
 
-#: ../src/procproperties.cpp:74 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:340
 msgid "Shared Memory"
 msgstr "共享内存"
 
-#: ../src/procproperties.cpp:76 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:341
 msgid "X Server Memory"
 msgstr "X 服务器内存"
 
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:341
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:343
 msgid "CPU Time"
 msgstr "CPU 时间"
 
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:342
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:344
 msgid "Started"
 msgstr "开始于"
 
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:343
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:345
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:357
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:359
 msgid "Priority"
 msgstr "优先级"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:344
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:346
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:345
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:347
 msgid "Security Context"
 msgstr "安全环境"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:346
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:348
 msgid "Command Line"
 msgstr "命令行"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:349
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:351
 msgid "Waiting Channel"
 msgstr "等候频道"
 
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:350
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:352
 msgid "Control Group"
 msgstr "控制组"
 
@@ -1179,26 +1233,26 @@ msgstr "控制组"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:340
+#: ../src/proctable.cpp:342
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:351
+#: ../src/proctable.cpp:353
 msgid "Unit"
 msgstr "单元"
 
-#: ../src/proctable.cpp:352
+#: ../src/proctable.cpp:354
 msgid "Session"
 msgstr "会话"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:355
+#: ../src/proctable.cpp:357
 msgid "Seat"
 msgstr "席位"
 
-#: ../src/proctable.cpp:356
+#: ../src/proctable.cpp:358
 msgid "Owner"
 msgstr "拥有者"
 
@@ -1374,9 +1428,6 @@ msgstr "%s/秒"
 #~ msgid "_View"
 #~ msgstr "查看(_V)"
 
-#~ msgid "_Stop Process"
-#~ msgstr "停止进程(_S)"
-
 #~ msgid "Stop process"
 #~ msgstr "停止进程"
 
@@ -1452,13 +1503,6 @@ msgstr "%s/秒"
 #~ "0 for the System Info, 1 for the processes list, 2 for the resources and "
 #~ "3 for the disks list"
 #~ msgstr "0 代表系统信息，1 代表进程列表，2 代表资源，3 代表磁盘列表"
-
-#~ msgid ""
-#~ "Ending a process may destroy data, break the session or introduce a "
-#~ "security risk. Only unresponsive processes should be ended."
-#~ msgstr ""
-#~ "结束进程可能导致数据损坏，中断会话或带来安全风险。您应该只结束无响应的进"
-#~ "程。"
 
 #~ msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
 #~ msgstr "前一分钟、五分钟、十五分钟的平均负载：%0.2f，%0.2f，%0.2f"
