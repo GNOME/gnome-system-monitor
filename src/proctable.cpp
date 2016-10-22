@@ -114,9 +114,7 @@ cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event, gpointer data)
 
     gtk_tree_path_free (path);
 
-    gtk_menu_popup (GTK_MENU (app->popup_menu),
-                    NULL, NULL, NULL, NULL,
-                    event->button, event->time);
+    gtk_menu_popup_at_pointer (GTK_MENU (app->popup_menu), NULL);
     return TRUE;
 }
 
