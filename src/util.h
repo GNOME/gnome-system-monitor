@@ -136,6 +136,24 @@ namespace procman
         NonCopyable& operator=(const NonCopyable&) /* = delete */;
     };
 
+
+    // join the elements of c with sep
+    template<typename C, typename S>
+        auto join(const C& c, const S& sep) -> decltype(c[0] + sep)
+    {
+        decltype(c[0] + sep) r;
+        bool first = true;
+
+        for(const auto& e : c) {
+            if (!first) {
+                r += sep;
+            }
+            first = false;
+            r += e;
+        }
+
+        return r;
+    }
 }
 
 #endif /* _GSM_UTIL_H_ */
