@@ -91,22 +91,15 @@ get_process_cgroup_string(pid_t pid) {
 
         // name (cat1, cat2), ...
         // sorted by name, categories
-        std::string groups;
+        std::vector<std::string> groups;
 
         for (auto& i : names) {
-            std::string cats;
             std::sort(begin(i.second), end(i.second));
-
-            for (const auto & cat : i.second) {
-                if (!cats.empty()) { cats += ", "; }
-                cats += cat;
-            }
-
-            if (!groups.empty()) { groups += ", "; }
-            groups += i.first + " (" + cats + ')';
+            std::string cats = procman::join(i.second, ", ");
+            groups.push_back(i.first + " (" + cats + ')');
         }
 
-        it.first->second = std::move(groups);
+        it.first->second = procman::join(groups, ", ");
     }
 
     return it.first->second;
