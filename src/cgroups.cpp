@@ -61,7 +61,12 @@ get_process_cgroup_string(pid_t pid) {
     /* read out of /proc/pid/cgroup */
     auto path = "/proc/" + std::to_string(pid) + "/cgroup";
     std::string text;
-    try { text = Glib::file_get_contents(path); } catch (...) { return file_cache[""]; }
+
+    try {
+        text = Glib::file_get_contents(path);
+    } catch (...) {
+        return file_cache[""];
+    }
 
     auto it = file_cache.insert({ text, "" });
 
