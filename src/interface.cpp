@@ -182,7 +182,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     gchar *title_template;
 
     // Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-    title_template = g_strdup(_("Pick a Color for '%s'"));
+    title_template = g_strdup(_("Pick a Color for “%s”"));
 
     /* The CPU BOX */
     

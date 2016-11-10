@@ -33,7 +33,7 @@ namespace procman
 
         Glib::OptionEntry show_version;
         show_version.set_long_name("version");
-        show_version.set_description(_("Show the application's version"));
+        show_version.set_description(_("Show the application’s version"));
 
         this->add_entry(proc_tab, this->show_processes_tab);
         this->add_entry(res_tab, this->show_resources_tab);

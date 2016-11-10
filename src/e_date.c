@@ -160,7 +160,7 @@ filter_date (time_t date)
     if (then.tm_mday == now.tm_mday &&
         then.tm_mon == now.tm_mon &&
         then.tm_year == now.tm_year) {
-        e_utf8_strftime_fix_am_pm (buf, 26, _("Today %l:%M %p"), &then);
+        e_utf8_strftime_fix_am_pm (buf, 26, _("Today %l∶%M %p"), &then);
         done = TRUE;
     }
     if (!done) {
@@ -169,7 +169,7 @@ filter_date (time_t date)
         if (then.tm_mday == yesterday.tm_mday &&
             then.tm_mon == yesterday.tm_mon &&
             then.tm_year == yesterday.tm_year) {
-            e_utf8_strftime_fix_am_pm (buf, 26, _("Yesterday %l:%M %p"), &then);
+            e_utf8_strftime_fix_am_pm (buf, 26, _("Yesterday %l∶%M %p"), &then);
             done = TRUE;
         }
     }
@@ -181,7 +181,7 @@ filter_date (time_t date)
             if (then.tm_mday == yesterday.tm_mday &&
                 then.tm_mon == yesterday.tm_mon &&
                 then.tm_year == yesterday.tm_year) {
-                e_utf8_strftime_fix_am_pm (buf, 26, _("%a %l:%M %p"), &then);
+                e_utf8_strftime_fix_am_pm (buf, 26, _("%a %l∶%M %p"), &then);
                 done = TRUE;
                 break;
             }
@@ -189,7 +189,7 @@ filter_date (time_t date)
     }
     if (!done) {
         if (then.tm_year == now.tm_year) {
-            e_utf8_strftime_fix_am_pm (buf, 26, _("%b %d %l:%M %p"), &then);
+            e_utf8_strftime_fix_am_pm (buf, 26, _("%b %d %l∶%M %p"), &then);
         } else {
             e_utf8_strftime_fix_am_pm (buf, 26, _("%b %d %Y"), &then);
         }

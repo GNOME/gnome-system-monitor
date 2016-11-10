@@ -447,7 +447,7 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
     gtk_container_set_border_width (GTK_CONTAINER (dialog_box), 5);
 
     label = procman_make_label_for_mmaps_or_ofiles (
-        _("_Memory maps for process \"%s\" (PID %u):"),
+        _("_Memory maps for process “%s” (PID %u):"),
         info->name,
         info->pid);
 

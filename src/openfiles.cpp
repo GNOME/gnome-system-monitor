@@ -333,7 +333,7 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 
 
     label = procman_make_label_for_mmaps_or_ofiles (
-        _("_Files opened by process \"%s\" (PID %u):"),
+        _("_Files opened by process “%s” (PID %u):"),
         info->name,
         info->pid);
 
