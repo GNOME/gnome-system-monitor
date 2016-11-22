@@ -107,9 +107,7 @@ cb_column_header_clicked (GtkTreeViewColumn *column, GdkEventButton *event, gpoi
     GtkMenu *menu = GTK_MENU (data);
 
     if (event->button == GDK_BUTTON_SECONDARY) {
-        gtk_menu_popup (menu, NULL, NULL, NULL, NULL,
-                        event->button,
-                        event->time);
+        gtk_menu_popup_at_pointer (menu, (GdkEvent*)event);
         return TRUE;
     }
 

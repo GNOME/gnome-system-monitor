@@ -624,7 +624,9 @@ create_main_window (GsmApplication *app)
     GtkStack *stack;
     GtkMenuButton *process_menu_button;
     GMenuModel *process_menu_model;
-
+    GdkDisplay *display;
+    GdkMonitor *monitor;
+    GdkRectangle monitor_geometry;
     const char* session;
 
     int width, height, xpos, ypos;
@@ -653,8 +655,18 @@ create_main_window (GsmApplication *app)
 
     g_settings_get (app->settings->gobj(), GSM_SETTING_WINDOW_STATE, "(iiii)",
                     &width, &height, &xpos, &ypos);
-    width = CLAMP (width, 50, gdk_screen_width ());
-    height = CLAMP (height, 50, gdk_screen_height ());
+    
+    display = gdk_display_get_default ();
+    monitor = gdk_display_get_monitor_at_point (display, xpos, ypos);
+    if (monitor == NULL) {
+        monitor = gdk_display_get_monitor (display, 0);
+    }
+    gdk_monitor_get_geometry (monitor, &monitor_geometry);
+
+    width = CLAMP (width, 50, monitor_geometry.width);
+    height = CLAMP (height, 50, monitor_geometry.height);
+    xpos = CLAMP (xpos, 0, monitor_geometry.width - width);
+    ypos = CLAMP (ypos, 0, monitor_geometry.height - height);
 
     gtk_window_set_default_size (GTK_WINDOW (main_window), width, height);
     gtk_window_move (GTK_WINDOW (main_window), xpos, ypos);

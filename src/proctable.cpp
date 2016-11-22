@@ -122,9 +122,7 @@ cb_tree_popup_menu (GtkWidget *widget, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
-    gtk_menu_popup (GTK_MENU (app->popup_menu),
-                    NULL, NULL, NULL, NULL,
-                    0, gtk_get_current_event_time ());
+    gtk_menu_popup_at_pointer (GTK_MENU (app->popup_menu), NULL);
 
     return TRUE;
 }
