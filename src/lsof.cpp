@@ -133,7 +133,6 @@ namespace
         void search()
         {
             typedef std::set<string> MatchSet;
-            typedef MatchSet::const_iterator iterator;
 
             bool regex_error = false;
 
@@ -143,21 +142,20 @@ namespace
 
                 unsigned count = 0;
 
-                for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it) {
-                    const ProcInfo &info(*it->second);
-
+                for (const auto& v : ProcInfo::all) {
+                    const auto& info = *v.second;
                     MatchSet matches;
                     lsof.search(info, std::inserter(matches, matches.begin()));
                     count += matches.size();
 
-                    for (iterator it(matches.begin()), end(matches.end()); it != end; ++it) {
+                    for (const auto& match : matches) {
                         GtkTreeIter file;
                         gtk_list_store_append(this->model, &file);
                         gtk_list_store_set(this->model, &file,
                                            PROCMAN_LSOF_COL_PIXBUF, info.pixbuf->gobj(),
                                            PROCMAN_LSOF_COL_PROCESS, info.name,
                                            PROCMAN_LSOF_COL_PID, info.pid,
-                                           PROCMAN_LSOF_COL_FILENAME, it->c_str(),
+                                           PROCMAN_LSOF_COL_FILENAME, match.c_str(),
                                            -1);
                     }
                 }

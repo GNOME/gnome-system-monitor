@@ -143,13 +143,9 @@ class ProcInfo
     // by pid so this helps a lot when looking for the parent node
     // as ppid is nearly always < pid.
     typedef std::map<pid_t, ProcInfo*> List;
-    typedef List::iterator Iterator;
-
     static List all;
 
     static ProcInfo* find(pid_t pid);
-    static Iterator begin() { return ProcInfo::all.begin(); }
-    static Iterator end() { return ProcInfo::all.end(); }
 
 
     ProcInfo(pid_t pid);

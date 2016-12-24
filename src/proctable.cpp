@@ -69,8 +69,7 @@ std::map<pid_t, guint64> ProcInfo::cpu_times;
 
 ProcInfo* ProcInfo::find(pid_t pid)
 {
-    Iterator it(ProcInfo::all.find(pid));
-    return (it == ProcInfo::all.end() ? NULL : it->second);
+    try { return all.at(pid); } catch (const std::out_of_range& e) { return nullptr; }
 }
 
 static void
@@ -199,8 +198,8 @@ cb_refresh_icons (GtkIconTheme *theme, gpointer data)
         g_source_remove (app->timeout);
     }
 
-    for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it) {
-        app->pretty_table->set_icon(*(it->second));
+    for (auto& v : ProcInfo::all) {
+        app->pretty_table->set_icon(*v.second);
     }
 
     cb_timeout(app);
@@ -983,7 +982,8 @@ refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
 
         if (!info) {
             info = new ProcInfo(pid_list[i]);
-            ProcInfo::all[info->pid] = info;
+            ProcInfo::all.erase(info->pid);
+            ProcInfo::all.insert({info->pid, info});
             addition.push_back(info);
         }
 
@@ -997,23 +997,19 @@ refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
 
     const std::set<pid_t> pids(pid_list, pid_list + n);
 
-    ProcInfo::Iterator it(ProcInfo::begin());
-
-    while (it != ProcInfo::end()) {
-        ProcInfo * const info = it->second;
-        ProcInfo::Iterator next(it);
-        ++next;
-
+    ProcInfo::List new_set;
+    for (const auto& v : ProcInfo::all) {
+        auto& info = v.second;
         if (pids.find(info->pid) == pids.end()) {
             procman_debug("ripping %d", info->pid);
             remove_info_from_tree(app, model, info, addition);
             addition.remove(info);
-            ProcInfo::all.erase(it);
             delete info;
+        } else {
+            new_set.insert({info->pid, info});
         }
-
-        it = next;
     }
+    ProcInfo::all = new_set;
 
     // INVARIANT
     // pid_list == ProcInfo::all + addition
@@ -1080,13 +1076,11 @@ refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
     }
     else {
         // don't care of the tree
-        for (ProcList::iterator it(addition.begin()); it != addition.end(); ++it)
-            insert_info_to_tree(*it, app);
+        for (auto& v : addition) insert_info_to_tree(v, app);
     }
 
 
-    for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it)
-        update_info_mutable_cols(it->second);
+    for (auto& v : ProcInfo::all) update_info_mutable_cols(v.second);
 }
 
 void
@@ -1158,8 +1152,8 @@ proctable_update (GsmApplication *app)
 void
 proctable_free_table (GsmApplication * const app)
 {
-    for (ProcInfo::Iterator it(ProcInfo::begin()); it != ProcInfo::end(); ++it)
-        delete it->second;
+    for (auto& v : ProcInfo::all)
+        delete v.second;
 
     ProcInfo::all.clear();
 }
