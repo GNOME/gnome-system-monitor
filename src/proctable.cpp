@@ -67,9 +67,9 @@ ProcInfo::List ProcInfo::all;
 std::map<pid_t, guint64> ProcInfo::cpu_times;
 
 
-ProcInfo* ProcInfo::find(pid_t pid)
+ProcInfo& ProcInfo::find(pid_t pid)
 {
-    try { return all.at(pid); } catch (const std::out_of_range& e) { return nullptr; }
+    return all.at(pid);
 }
 
 static void
@@ -199,7 +199,7 @@ cb_refresh_icons (GtkIconTheme *theme, gpointer data)
     }
 
     for (auto& v : ProcInfo::all) {
-        app->pretty_table->set_icon(*v.second);
+        app->pretty_table->set_icon(v.second);
     }
 
     cb_timeout(app);
@@ -785,7 +785,7 @@ insert_info_to_tree (ProcInfo *info, GsmApplication *app, bool forced = false)
         ProcInfo *parent = 0;
 
         if (not forced)
-            parent = ProcInfo::find(info->ppid);
+            try { parent = &ProcInfo::find(info->ppid); } catch (const std::out_of_range&) { parent = nullptr; }
 
         if (parent) {
             GtkTreePath *parent_node = gtk_tree_model_get_path(model, &parent->node);
@@ -834,33 +834,33 @@ insert_info_to_tree (ProcInfo *info, GsmApplication *app, bool forced = false)
 template<typename List>
 static void
 remove_info_from_tree (GsmApplication *app, GtkTreeModel *model,
-                       ProcInfo *current, List &orphans, unsigned lvl = 0)
+                       ProcInfo& current, List &orphans, unsigned lvl = 0)
 {
     GtkTreeIter child_node;
 
-    if (std::find(orphans.begin(), orphans.end(), current) != orphans.end()) {
-        procman_debug("[%u] %d already removed from tree", lvl, int(current->pid));
+    if (std::find(orphans.begin(), orphans.end(), &current) != orphans.end()) {
+        procman_debug("[%u] %d already removed from tree", lvl, int(current.pid));
         return;
     }
 
-    procman_debug("[%u] pid %d, %d children", lvl, int(current->pid),
-                  gtk_tree_model_iter_n_children(model, &current->node));
+    procman_debug("[%u] pid %d, %d children", lvl, int(current.pid),
+                  gtk_tree_model_iter_n_children(model, &current.node));
 
     // it is not possible to iterate&erase over a treeview so instead we
     // just pop one child after another and recursively remove it and
     // its children
 
-    while (gtk_tree_model_iter_children(model, &child_node, &current->node)) {
+    while (gtk_tree_model_iter_children(model, &child_node, &current.node)) {
         ProcInfo *child = 0;
         gtk_tree_model_get(model, &child_node, COL_POINTER, &child, -1);
-        remove_info_from_tree(app, model, child, orphans, lvl + 1);
+        remove_info_from_tree(app, model, *child, orphans, lvl + 1);
     }
 
-    g_assert(not gtk_tree_model_iter_has_child(model, &current->node));
+    g_assert(not gtk_tree_model_iter_has_child(model, &current.node));
 
-    orphans.push_back(current);
-    gtk_tree_store_remove(GTK_TREE_STORE(model), &current->node);
-    procman::poison(current->node, 0x69);
+    orphans.push_back(&current);
+    gtk_tree_store_remove(GTK_TREE_STORE(model), &current.node);
+    procman::poison(current.node, 0x69);
 }
 
 
@@ -977,13 +977,12 @@ refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
     guint i;
 
     // Add or update processes in the process list
-    for(i = 0; i < n; ++i) {
-        ProcInfo *info = ProcInfo::find(pid_list[i]);
-
-        if (!info) {
-            info = new ProcInfo(pid_list[i]);
-            ProcInfo::all.erase(info->pid);
-            ProcInfo::all.insert({info->pid, info});
+    for (i = 0; i < n; ++i) {
+        ProcInfo* info;
+        try {
+            info = &ProcInfo::find(pid_list[i]);
+        } catch (const std::out_of_range&) {
+            info = &ProcInfo::all.emplace(pid_list[i], pid_list[i]).first->second;
             addition.push_back(info);
         }
 
@@ -997,19 +996,18 @@ refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
 
     const std::set<pid_t> pids(pid_list, pid_list + n);
 
-    ProcInfo::List new_set;
-    for (const auto& v : ProcInfo::all) {
-        auto& info = v.second;
-        if (pids.find(info->pid) == pids.end()) {
-            procman_debug("ripping %d", info->pid);
+    auto it = std::begin(ProcInfo::all);
+    while (it != std::end(ProcInfo::all)) {
+        auto& info = it->second;
+        if (pids.find(info.pid) == pids.end()) {
+            procman_debug("ripping %d", info.pid);
             remove_info_from_tree(app, model, info, addition);
-            addition.remove(info);
-            delete info;
+            addition.remove(&info);
+            it = ProcInfo::all.erase(it);
         } else {
-            new_set.insert({info->pid, info});
+            ++it;
         }
     }
-    ProcInfo::all = new_set;
 
     // INVARIANT
     // pid_list == ProcInfo::all + addition
@@ -1060,7 +1058,8 @@ refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
                     continue;
                 }
 
-                ProcInfo *parent = ProcInfo::find((*it)->ppid);
+                ProcInfo* parent;
+                try { parent = &ProcInfo::find((*it)->ppid); } catch (const std::out_of_range&) { parent = nullptr; }
                 // if the parent is unreachable
                 if (not parent) {
                     // or std::find(addition.begin(), addition.end(), parent) == addition.end()) {
@@ -1080,7 +1079,7 @@ refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
     }
 
 
-    for (auto& v : ProcInfo::all) update_info_mutable_cols(v.second);
+    for (auto& v : ProcInfo::all) update_info_mutable_cols(&v.second);
 }
 
 void
@@ -1152,9 +1151,6 @@ proctable_update (GsmApplication *app)
 void
 proctable_free_table (GsmApplication * const app)
 {
-    for (auto& v : ProcInfo::all)
-        delete v.second;
-
     ProcInfo::all.clear();
 }
 

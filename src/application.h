@@ -142,10 +142,10 @@ class ProcInfo
     // sorted by pid. The map has a nice property : it is sorted
     // by pid so this helps a lot when looking for the parent node
     // as ppid is nearly always < pid.
-    typedef std::map<pid_t, ProcInfo*> List;
+    typedef std::map<pid_t, ProcInfo> List;
     static List all;
 
-    static ProcInfo* find(pid_t pid);
+    static ProcInfo& find(pid_t pid);
 
 
     ProcInfo(pid_t pid);

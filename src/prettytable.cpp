@@ -104,13 +104,15 @@ PrettyTable::register_application(pid_t pid, Glib::RefPtr<Gdk::Pixbuf> icon)
 {
   /* If process already exists then set the icon. Otherwise put into hash
   ** table to be added later */
-  if (ProcInfo* info = ProcInfo::find(pid))
+  try {
+    auto& info = ProcInfo::find(pid);
     {
-      info->set_icon(icon);
+      info.set_icon(icon);
       // move the ref to the map
       this->apps[pid] = icon;
       procman_debug("WNCK OK for %u", unsigned(pid));
     }
+  } catch (const std::out_of_range& e) {}
 }
 
 
