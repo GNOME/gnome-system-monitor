@@ -136,16 +136,6 @@ class ProcInfo
   public:
     ProcInfo& operator=(const ProcInfo&) = delete;
     ProcInfo(const ProcInfo&) = delete;
-    // TODO: use a set instead
-    // sorted by pid. The map has a nice property : it is sorted
-    // by pid so this helps a lot when looking for the parent node
-    // as ppid is nearly always < pid.
-    typedef std::map<pid_t, ProcInfo> List;
-    static List all;
-
-    static ProcInfo& find(pid_t pid);
-
-
     ProcInfo(pid_t pid);
     ~ProcInfo();
     // adds one more ref to icon
@@ -164,17 +154,32 @@ class ProcInfo
     const pid_t     pid;
     pid_t           ppid;
     guint           uid;
-
-// private:
-    // tracks cpu time per process keeps growing because if a
-    // ProcInfo is deleted this does not mean that the process is
-    // not going to be recreated on the next update.  For example,
-    // if dependencies + (My or Active), the proclist is cleared
-    // on each update.  This is a workaround
-    static std::map<pid_t, guint64> cpu_times;
 };
 
+class ProcList {
+    // TODO: use a set instead
+    // sorted by pid. The map has a nice property : it is sorted
+    // by pid so this helps a lot when looking for the parent node
+    // as ppid is nearly always < pid.
+    typedef std::map<pid_t, ProcInfo> List;
+    List data;
+    std::mutex data_lock;
+public:
+    std::map<pid_t, unsigned long> cpu_times;
+    typedef List::iterator Iterator;
+    Iterator begin() { return std::begin(data); }
+    Iterator end() { return std::end(data); }
+    Iterator erase(List::iterator it) {
+        std::lock_guard<std::mutex> lg(data_lock);
+        return data.erase(it);
+    }
+    std::pair<Iterator, bool> emplace(pid_t pid);
+    void clear() { return data.clear(); }
 
+    ProcInfo& find(pid_t pid) {
+        return data.at(pid);
+    }
+};
 
 class GsmApplication : public Gtk::Application, private procman::NonCopyable
 
@@ -195,6 +200,7 @@ public:
     void save_config();
     void shutdown();
 
+    ProcList         processes;
     GsmTreeView      *tree;
     GtkRevealer      *proc_actionbar_revealer;
     GtkMenu          *popup_menu;

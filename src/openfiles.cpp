@@ -178,7 +178,7 @@ update_openfiles_dialog (GsmTreeView *tree)
 
     pid_t pid = GPOINTER_TO_UINT(static_cast<pid_t*>(g_object_get_data (G_OBJECT (tree), "selected_info")));
     try {
-        info = &ProcInfo::find(pid);
+        info = &GsmApplication::get()->processes.find(pid);
     } catch (const std::out_of_range&) { return; }
 
     model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));

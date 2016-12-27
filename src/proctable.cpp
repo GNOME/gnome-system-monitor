@@ -63,15 +63,6 @@
 #include <gdk/gdkx.h>
 #endif
 
-ProcInfo::List ProcInfo::all;
-std::map<pid_t, guint64> ProcInfo::cpu_times;
-
-
-ProcInfo& ProcInfo::find(pid_t pid)
-{
-    return all.at(pid);
-}
-
 static void
 cb_save_tree_state(gpointer, gpointer data)
 {
@@ -198,7 +189,7 @@ cb_refresh_icons (GtkIconTheme *theme, gpointer data)
         g_source_remove (app->timeout);
     }
 
-    for (auto& v : ProcInfo::all) {
+    for (auto& v : app->processes) {
         app->pretty_table->set_icon(v.second);
     }
 
@@ -640,8 +631,43 @@ get_process_name (ProcInfo *info,
             g_free(basename);
         }
     }
-
     info->name = g_strdup (cmd);
+}
+
+std::pair<ProcList::Iterator, bool> ProcList::emplace(pid_t pid) {
+    std::lock_guard<std::mutex> lg(data_lock);
+    auto res = data.emplace(pid, pid);
+    if (res.second) {
+        auto& entry = res.first->second;
+        glibtop_proc_state procstate;
+        glibtop_proc_args procargs;
+        gchar** arguments;
+        glibtop_get_proc_state (&procstate, pid);
+        arguments = glibtop_get_proc_argv (&procargs, pid, 0);
+        /* FIXME : wrong. name and arguments may change with exec* */
+        get_process_name (&entry, procstate.cmd, static_cast<const GStrv>(arguments));
+        std::string tooltip = make_string(g_strjoinv(" ", arguments));
+        if (tooltip.empty())
+            tooltip = procstate.cmd;
+        entry.tooltip = g_markup_escape_text(tooltip.c_str(), -1);
+        entry.arguments = g_strescape(tooltip.c_str(), "\\\"");
+        g_strfreev(arguments);
+        get_process_selinux_context (&entry);
+        get_process_cgroup_info(entry);
+        get_process_systemd_info(&entry);
+        glibtop_proc_time proctime;
+        glibtop_get_proc_time (&proctime, pid);
+        guint64 cpu_time = proctime.rtime;
+        auto it = cpu_times.find(pid);
+        if (it != std::end(cpu_times))
+        {
+            if (proctime.rtime >= it->second)
+                cpu_time = it->second;
+        }
+        entry.cpu_time = cpu_time;
+        entry.start_time = proctime.start_time;
+    }
+    return res;
 }
 
 std::string
@@ -785,7 +811,7 @@ insert_info_to_tree (ProcInfo *info, GsmApplication *app, bool forced = false)
         ProcInfo *parent = 0;
 
         if (not forced)
-            try { parent = &ProcInfo::find(info->ppid); } catch (const std::out_of_range&) { parent = nullptr; }
+            try { parent = &app->processes.find(info->ppid); } catch (const std::out_of_range&) { parent = nullptr; }
 
         if (parent) {
             GtkTreePath *parent_node = gtk_tree_model_get_path(model, &parent->node);
@@ -896,7 +922,7 @@ update_info (GsmApplication *app, ProcInfo *info)
     if (not app->config.solaris_mode)
         info->pcpu *= app->config.num_cpus;
 
-    ProcInfo::cpu_times[info->pid] = info->cpu_time = proctime.rtime;
+    app->processes.cpu_times[info->pid] = info->cpu_time = proctime.rtime;
     info->nice = procuid.nice;
 
     // set the ppid only if one can exist
@@ -925,44 +951,6 @@ ProcInfo::ProcInfo(pid_t pid)
       ppid(-1),
       uid(-1)
 {
-    ProcInfo * const info = this;
-    glibtop_proc_state procstate;
-    glibtop_proc_time proctime;
-    glibtop_proc_args procargs;
-    gchar** arguments;
-
-    glibtop_get_proc_state (&procstate, pid);
-    glibtop_get_proc_time (&proctime, pid);
-    arguments = glibtop_get_proc_argv (&procargs, pid, 0);
-
-    /* FIXME : wrong. name and arguments may change with exec* */
-    get_process_name (info, procstate.cmd, static_cast<const GStrv>(arguments));
-
-    std::string tooltip = make_string(g_strjoinv(" ", arguments));
-    if (tooltip.empty())
-        tooltip = procstate.cmd;
-
-    info->tooltip = g_markup_escape_text(tooltip.c_str(), -1);
-
-    info->arguments = g_strescape(tooltip.c_str(), "\\\"");
-    g_strfreev(arguments);
-
-    guint64 cpu_time = proctime.rtime;
-    std::map<pid_t, guint64>::iterator it(ProcInfo::cpu_times.find(pid));
-    if (it != ProcInfo::cpu_times.end())
-    {
-        if (proctime.rtime >= it->second)
-            cpu_time = it->second;
-    }
-    info->cpu_time = cpu_time;
-    info->start_time = proctime.start_time;
-
-    get_process_selinux_context (info);
-    info->cgroup_name = NULL;
-    get_process_cgroup_info(*info);
-
-    info->unit = info->session = info->seat = NULL;
-    get_process_systemd_info(info);
 }
 
 static void
@@ -980,9 +968,9 @@ refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
     for (i = 0; i < n; ++i) {
         ProcInfo* info;
         try {
-            info = &ProcInfo::find(pid_list[i]);
+            info = &app->processes.find(pid_list[i]);
         } catch (const std::out_of_range&) {
-            info = &ProcInfo::all.emplace(pid_list[i], pid_list[i]).first->second;
+            info = &app->processes.emplace(pid_list[i]).first->second;
             addition.push_back(info);
         }
 
@@ -996,14 +984,14 @@ refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
 
     const std::set<pid_t> pids(pid_list, pid_list + n);
 
-    auto it = std::begin(ProcInfo::all);
-    while (it != std::end(ProcInfo::all)) {
+    auto it = std::begin(app->processes);
+    while (it != std::end(app->processes)) {
         auto& info = it->second;
         if (pids.find(info.pid) == pids.end()) {
             procman_debug("ripping %d", info.pid);
             remove_info_from_tree(app, model, info, addition);
             addition.remove(&info);
-            it = ProcInfo::all.erase(it);
+            it = app->processes.erase(it);
         } else {
             ++it;
         }
@@ -1059,7 +1047,7 @@ refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
                 }
 
                 ProcInfo* parent;
-                try { parent = &ProcInfo::find((*it)->ppid); } catch (const std::out_of_range&) { parent = nullptr; }
+                try { parent = &app->processes.find((*it)->ppid); } catch (const std::out_of_range& e) { parent = nullptr; }
                 // if the parent is unreachable
                 if (not parent) {
                     // or std::find(addition.begin(), addition.end(), parent) == addition.end()) {
@@ -1079,7 +1067,7 @@ refresh_list (GsmApplication *app, const pid_t* pid_list, const guint n)
     }
 
 
-    for (auto& v : ProcInfo::all) update_info_mutable_cols(&v.second);
+    for (auto& v : app->processes) update_info_mutable_cols(&v.second);
 }
 
 void
@@ -1151,7 +1139,7 @@ proctable_update (GsmApplication *app)
 void
 proctable_free_table (GsmApplication * const app)
 {
-    ProcInfo::all.clear();
+    app->processes.clear();
 }
 
 void

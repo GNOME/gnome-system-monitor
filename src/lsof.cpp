@@ -142,7 +142,7 @@ namespace
 
                 unsigned count = 0;
 
-                for (const auto& v : ProcInfo::all) {
+                for (const auto& v : app->processes) {
                     const auto& info = v.second;
                     MatchSet matches;
                     lsof.search(info, std::inserter(matches, matches.begin()));
