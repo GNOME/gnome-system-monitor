@@ -133,11 +133,9 @@ MutableProcInfo()
 class ProcInfo
 : public MutableProcInfo
 {
-    /* undefined */ ProcInfo& operator=(const ProcInfo&);
-    /* undefined */ ProcInfo(const ProcInfo&);
-
   public:
-
+    ProcInfo& operator=(const ProcInfo&) = delete;
+    ProcInfo(const ProcInfo&) = delete;
     // TODO: use a set instead
     // sorted by pid. The map has a nice property : it is sorted
     // by pid so this helps a lot when looking for the parent node
