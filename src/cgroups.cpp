@@ -112,7 +112,6 @@ void get_process_cgroup_info(ProcInfo& info) {
         return;
 
     const auto& cgroup_string = get_process_cgroup_string(info.pid);
-    g_free(info.cgroup_name);
-    info.cgroup_name = g_strdup(cgroup_string.c_str());
+    info.cgroup_name = cgroup_string;
 }
 

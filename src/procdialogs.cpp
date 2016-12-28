@@ -74,19 +74,19 @@ procdialog_create_kill_dialog (GsmApplication *app, int signal)
             case SIGKILL:
                 /*xgettext: primary alert message for killing single process*/
                 primary = g_strdup_printf (_("Are you sure you want to kill the selected process “%s” (PID: %u)?"),
-                                           selected_process->name,
+                                           selected_process->name.c_str(),
                                            selected_process->pid);
                 break;
             case SIGTERM:
                 /*xgettext: primary alert message for ending single process*/
                 primary = g_strdup_printf (_("Are you sure you want to end the selected process “%s” (PID: %u)?"),
-                                           selected_process->name,
+                                           selected_process->name.c_str(),
                                            selected_process->pid);
                 break;
             default: // SIGSTOP
                 /*xgettext: primary alert message for stopping single process*/
                 primary = g_strdup_printf (_("Are you sure you want to stop the selected process “%s” (PID: %u)?"),
-                                           selected_process->name,
+                                           selected_process->name.c_str(),
                                            selected_process->pid);
                 break;
         }
@@ -216,7 +216,7 @@ procdialog_create_renice_dialog (GsmApplication *app)
     renice_dialog = GTK_DIALOG (gtk_builder_get_object (builder, "renice_dialog"));
     if ( selected_count == 1 ) {
         dialog_title = g_strdup_printf (_("Change Priority of Process “%s” (PID: %u)"),
-                                        info->name, info->pid);
+                                        info->name.c_str(), info->pid);
     } else {
         dialog_title = g_strdup_printf (ngettext("Change Priority of the selected process", "Change Priority of %d selected processes", selected_count),
                                         selected_count);

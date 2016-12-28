@@ -596,21 +596,6 @@ proctable_new (GsmApplication * const app)
     return proctree;
 }
 
-ProcInfo::~ProcInfo()
-{
-    g_free(this->name);
-    g_free(this->tooltip);
-    g_free(this->arguments);
-    g_free(this->security_context);
-    g_free(this->cgroup_name);
-    // The following are allocated inside of the sd_pid_get_*
-    // functions using malloc(). Free with free() instead of g_free()
-    // to insure proper clean up.
-    free(this->unit);
-    free(this->session);
-    free(this->seat);
-}
-
 static void
 get_process_name (ProcInfo *info,
                   const gchar *cmd, const GStrv args)
@@ -631,7 +616,7 @@ get_process_name (ProcInfo *info,
             g_free(basename);
         }
     }
-    info->name = g_strdup (cmd);
+    info->name = cmd;
 }
 
 std::pair<ProcList::Iterator, bool> ProcList::emplace(pid_t pid) {
@@ -788,11 +773,11 @@ update_info_mutable_cols(ProcInfo *info)
     tree_store_update(model, &info->node, COL_START_TIME, info->start_time);
     tree_store_update(model, &info->node, COL_NICE, info->nice);
     tree_store_update(model, &info->node, COL_MEM, info->mem);
-    tree_store_update(model, &info->node, COL_WCHAN, info->wchan);
-    tree_store_update(model, &info->node, COL_CGROUP, info->cgroup_name);
-    tree_store_update(model, &info->node, COL_UNIT, info->unit);
-    tree_store_update(model, &info->node, COL_SESSION, info->session);
-    tree_store_update(model, &info->node, COL_SEAT, info->seat);
+    tree_store_update(model, &info->node, COL_WCHAN, info->wchan.c_str());
+    tree_store_update(model, &info->node, COL_CGROUP, info->cgroup_name.c_str());
+    tree_store_update(model, &info->node, COL_UNIT, info->unit.c_str());
+    tree_store_update(model, &info->node, COL_SESSION, info->session.c_str());
+    tree_store_update(model, &info->node, COL_SEAT, info->seat.c_str());
     tree_store_update(model, &info->node, COL_OWNER, info->owner.c_str());
 }
 
@@ -842,11 +827,11 @@ insert_info_to_tree (ProcInfo *info, GsmApplication *app, bool forced = false)
 
     gtk_tree_store_set (GTK_TREE_STORE (model), &info->node,
                         COL_POINTER, info,
-                        COL_NAME, info->name,
-                        COL_ARGS, info->arguments,
-                        COL_TOOLTIP, info->tooltip,
+                        COL_NAME, info->name.c_str(),
+                        COL_ARGS, info->arguments.c_str(),
+                        COL_TOOLTIP, info->tooltip.c_str(),
                         COL_PID, info->pid,
-                        COL_SECURITYCONTEXT, info->security_context,
+                        COL_SECURITYCONTEXT, info->security_context.c_str(),
                         -1);
 
     app->pretty_table->set_icon(*info);
@@ -890,6 +875,14 @@ remove_info_from_tree (GsmApplication *app, GtkTreeModel *model,
 }
 
 
+static std::string
+get_proc_kernel_wchan(glibtop_proc_kernel& obj) {
+    char buf[40] = {0};
+    g_strlcpy(buf, obj.wchan, sizeof(buf));
+    buf[sizeof(buf)-1] = '\0';
+    return buf;
+}
+
 static void
 update_info (GsmApplication *app, ProcInfo *info)
 {
@@ -899,7 +892,7 @@ update_info (GsmApplication *app, ProcInfo *info)
     glibtop_proc_kernel prockernel;
 
     glibtop_get_proc_kernel(&prockernel, info->pid);
-    g_strlcpy(info->wchan, prockernel.wchan, sizeof info->wchan);
+    info->wchan = get_proc_kernel_wchan(prockernel);
 
     glibtop_get_proc_state (&procstate, info->pid);
     info->status = procstate.state;
@@ -943,10 +936,6 @@ update_info (GsmApplication *app, ProcInfo *info)
 ProcInfo::ProcInfo(pid_t pid)
     : node(),
       pixbuf(),
-      tooltip(NULL),
-      name(NULL),
-      arguments(NULL),
-      security_context(NULL),
       pid(pid),
       ppid(-1),
       uid(-1)

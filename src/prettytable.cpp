@@ -165,7 +165,7 @@ void PrettyTable::file_monitor_event(Glib::RefPtr<Gio::File>,
 Glib::RefPtr<Gdk::Pixbuf>
 PrettyTable::get_icon_from_theme(const ProcInfo &info)
 {
-  return Glib::wrap(gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), info.name, APP_ICON_SIZE, (GtkIconLookupFlags)(GTK_ICON_LOOKUP_USE_BUILTIN | GTK_ICON_LOOKUP_FORCE_SIZE), NULL));
+  return Glib::wrap(gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), info.name.c_str(), APP_ICON_SIZE, (GtkIconLookupFlags)(GTK_ICON_LOOKUP_USE_BUILTIN | GTK_ICON_LOOKUP_FORCE_SIZE), NULL));
 }
 
 
@@ -211,7 +211,7 @@ PrettyTable::get_icon_from_default(const ProcInfo &info)
 Glib::RefPtr<Gdk::Pixbuf>
 PrettyTable::get_icon_from_gio(const ProcInfo &info)
 {
-  gchar **cmdline = g_strsplit(info.name, " ", 2);
+  gchar **cmdline = g_strsplit(info.name.c_str(), " ", 2);
   const gchar *executable = cmdline[0];
   Glib::RefPtr<Gdk::Pixbuf> icon;
 
@@ -253,7 +253,7 @@ PrettyTable::get_icon_from_wnck(const ProcInfo &info)
 Glib::RefPtr<Gdk::Pixbuf>
 PrettyTable::get_icon_from_name(const ProcInfo &info)
 {
-return Glib::wrap(gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), info.name, APP_ICON_SIZE, (GtkIconLookupFlags)(GTK_ICON_LOOKUP_USE_BUILTIN | GTK_ICON_LOOKUP_FORCE_SIZE), NULL));
+return Glib::wrap(gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), info.name.c_str(), APP_ICON_SIZE, (GtkIconLookupFlags)(GTK_ICON_LOOKUP_USE_BUILTIN | GTK_ICON_LOOKUP_FORCE_SIZE), NULL));
 }
 
 
@@ -325,11 +325,11 @@ PrettyTable::set_icon(ProcInfo &info)
       icon = (this->*getters[i])(info);
     }
     catch (std::exception& e) {
-      g_warning("Failed to load icon for %s(%u) : %s", info.name, info.pid, e.what());
+      g_warning("Failed to load icon for %s(%u) : %s", info.name.c_str(), info.pid, e.what());
       continue;
     }
     catch (Glib::Exception& e) {
-      g_warning("Failed to load icon for %s(%u) : %s", info.name, info.pid, e.what().c_str());
+      g_warning("Failed to load icon for %s(%u) : %s", info.name.c_str(), info.pid, e.what().c_str());
       continue;
     }
   }

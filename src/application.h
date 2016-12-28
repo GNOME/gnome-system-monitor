@@ -7,7 +7,6 @@
 
 #include <algorithm>
 
-class ProcInfo;
 struct LoadGraph;
 
 #include "smooth_refresh.h"
@@ -73,8 +72,7 @@ struct MutableProcInfo
 {
 
 MutableProcInfo()
-  : user(),
-    vmsize(0UL),
+  : vmsize(0UL),
     memres(0UL),
     memshared(0UL),
     memwritable(0UL),
@@ -86,19 +84,13 @@ MutableProcInfo()
     cpu_time(0ULL),
     status(0U),
     pcpu(0U),
-    nice(0),
-    cgroup_name(NULL),
-    unit(NULL),
-    session(NULL),
-    seat(NULL),
-    owner()
+    nice(0)
     {
-      wchan[0] = '\0';
     }
 
     std::string user;
 
-    gchar wchan[40];
+    std::string wchan;
 
     // all these members are filled with libgtop which uses
     // guint64 (to have fixed size data) but we don't need more
@@ -120,11 +112,11 @@ MutableProcInfo()
     guint status;
     guint pcpu;
     gint nice;
-    gchar *cgroup_name;
+    std::string cgroup_name;
 
-    gchar *unit;
-    gchar *session;
-    gchar *seat;
+    std::string unit;
+    std::string session;
+    std::string seat;
 
     std::string owner;
 };
@@ -137,7 +129,6 @@ class ProcInfo
     ProcInfo& operator=(const ProcInfo&) = delete;
     ProcInfo(const ProcInfo&) = delete;
     ProcInfo(pid_t pid);
-    ~ProcInfo();
     // adds one more ref to icon
     void set_icon(Glib::RefPtr<Gdk::Pixbuf> icon);
     void set_user(guint uid);
@@ -145,11 +136,11 @@ class ProcInfo
 
     GtkTreeIter     node;
     Glib::RefPtr<Gdk::Pixbuf> pixbuf;
-    gchar           *tooltip;
-    gchar           *name;
-    gchar           *arguments;
+    std::string     tooltip;
+    std::string     name;
+    std::string     arguments;
 
-    gchar           *security_context;
+    std::string     security_context;
 
     const pid_t     pid;
     pid_t           ppid;

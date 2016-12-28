@@ -64,7 +64,7 @@ fill_proc_properties (GtkTreeView *tree, ProcInfo *info)
     get_process_memory_writable (info);
 
     proc_arg proc_props[] = {
-        { N_("Process Name"), g_strdup_printf("%s", info->name)},
+        { N_("Process Name"), g_strdup_printf("%s", info->name.c_str())},
         { N_("User"), g_strdup_printf("%s (%d)", info->user.c_str(), info->uid)},
         { N_("Status"), g_strdup(format_process_state(info->status))},
         { N_("Memory"), format_memsize(info->mem)},
@@ -81,10 +81,10 @@ fill_proc_properties (GtkTreeView *tree, ProcInfo *info)
         { N_("Nice"), g_strdup_printf("%d", info->nice)},
         { N_("Priority"), g_strdup_printf("%s", procman::get_nice_level(info->nice)) },
         { N_("ID"), g_strdup_printf("%d", info->pid)},
-        { N_("Security Context"), info->security_context?g_strdup_printf("%s", info->security_context):g_strdup(_("N/A"))},
-        { N_("Command Line"), g_strdup_printf("%s", info->arguments)},
-        { N_("Waiting Channel"), g_strdup_printf("%s", info->wchan)},
-        { N_("Control Group"), info->cgroup_name?g_strdup_printf("%s", info->cgroup_name):g_strdup(_("N/A"))},
+        { N_("Security Context"), not info->security_context.empty()?g_strdup_printf("%s", info->security_context.c_str()):g_strdup(_("N/A"))},
+        { N_("Command Line"), g_strdup_printf("%s", info->arguments.c_str())},
+        { N_("Waiting Channel"), g_strdup_printf("%s", info->wchan.c_str())},
+        { N_("Control Group"), not info->cgroup_name.empty()?g_strdup_printf("%s", info->cgroup_name.c_str()):g_strdup(_("N/A"))},
         { NULL, NULL}
     };
 
@@ -196,7 +196,7 @@ create_single_procproperties_dialog (GtkTreeModel *model, GtkTreePath *path,
     procpropdialog = GTK_DIALOG (g_object_new (GTK_TYPE_DIALOG, 
                                                "use-header-bar", TRUE, NULL));
 
-    label = g_strdup_printf( _("%s (PID %u)"), info->name, info->pid);
+    label = g_strdup_printf( _("%s (PID %u)"), info->name.c_str(), info->pid);
     gtk_window_set_title (GTK_WINDOW (procpropdialog), label);
     g_free (label);
 
