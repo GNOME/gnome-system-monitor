@@ -39,6 +39,14 @@ cb_draw_stacked_changed (Gio::Settings& settings, Glib::ustring key, GsmApplicat
 }
 
 static void
+cb_draw_smooth_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
+{
+    app->config.draw_smooth = settings.get_boolean(key);
+    app->cpu_graph->clear_background();
+    load_graph_reset(app->cpu_graph);
+}
+
+static void
 cb_network_in_bits_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
 {
     app->config.network_in_bits = settings.get_boolean(key);
@@ -154,6 +162,11 @@ GsmApplication::load_settings()
     config.draw_stacked = this->settings->get_boolean (GSM_SETTING_DRAW_STACKED);
     this->settings->signal_changed(GSM_SETTING_DRAW_STACKED).connect ([this](const Glib::ustring& key) {
         cb_draw_stacked_changed (*this->settings.operator->(), key, this);
+    });
+
+    config.draw_smooth = this->settings->get_boolean (GSM_SETTING_DRAW_SMOOTH);
+    this->settings->signal_changed(GSM_SETTING_DRAW_SMOOTH).connect ([this](const Glib::ustring& key) {
+        cb_draw_smooth_changed (*this->settings.operator->(), key, this);
     });
 
     config.network_in_bits = this->settings->get_boolean (GSM_SETTING_NETWORK_IN_BITS);

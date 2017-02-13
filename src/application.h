@@ -43,6 +43,7 @@ struct ProcConfig
 	num_cpus(0),
 	solaris_mode(false),
 	draw_stacked(false),
+	draw_smooth(true),
 	network_in_bits(false)
     {
       std::fill(&this->cpu_color[0], &this->cpu_color[GLIBTOP_NCPU], GdkRGBA());
@@ -61,6 +62,7 @@ struct ProcConfig
     gint            num_cpus;
     bool solaris_mode;
     bool draw_stacked;
+    bool draw_smooth;
     bool network_in_bits;
 };
 

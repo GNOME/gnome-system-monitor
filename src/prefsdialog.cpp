@@ -250,6 +250,11 @@ create_preferences_dialog (GsmApplication *app)
                      draw_stacked_button, "active",
                      G_SETTINGS_BIND_DEFAULT);
 
+    GtkCheckButton *draw_smooth_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "draw_smooth_button"));
+    g_settings_bind (app->settings->gobj (), GSM_SETTING_DRAW_SMOOTH,
+                     draw_smooth_button, "active",
+                     G_SETTINGS_BIND_DEFAULT);
+
     create_field_page (builder, GTK_TREE_VIEW (app->tree), "proctree");
 
     update = (gfloat) app->config.graph_update_interval;

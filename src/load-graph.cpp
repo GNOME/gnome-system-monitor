@@ -252,6 +252,7 @@ load_graph_draw (GtkWidget *widget,
     cairo_clip(cr);
 
     bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get()->config.draw_stacked;
+    bool drawSmooth = graph->type == LOAD_GRAPH_CPU && GsmApplication::get()->config.draw_smooth;
     for (j = graph->n-1; j >= 0; j--) {
         gdk_cairo_set_source_rgba (cr, &(graph->colors [j]));
         if (drawStacked) {
@@ -262,13 +263,19 @@ load_graph_draw (GtkWidget *widget,
         for (i = 1; i < LoadGraph::NUM_POINTS; ++i) {
             if (graph->data[i][j] == -1.0f)
                 continue;
-            cairo_curve_to (cr,
-                            x_offset - ((i - 0.5f) * graph->graph_delx),
-                            (1.0f - graph->data[i-1][j]) * graph->real_draw_height + 3.5f,
-                            x_offset - ((i - 0.5f) * graph->graph_delx),
-                            (1.0f - graph->data[i][j]) * graph->real_draw_height + 3.5f,
-                            x_offset - (i * graph->graph_delx),
-                            (1.0f - graph->data[i][j]) * graph->real_draw_height + 3.5f);
+            if (drawSmooth) {
+              cairo_curve_to (cr,
+                              x_offset - ((i - 0.5f) * graph->graph_delx),
+                              (1.0f - graph->data[i-1][j]) * graph->real_draw_height + 3.5f,
+                              x_offset - ((i - 0.5f) * graph->graph_delx),
+                              (1.0f - graph->data[i][j]) * graph->real_draw_height + 3.5f,
+                              x_offset - (i * graph->graph_delx),
+                              (1.0f - graph->data[i][j]) * graph->real_draw_height + 3.5f);
+            } else {
+              cairo_line_to (cr, x_offset - (i * graph->graph_delx),
+                              (1.0f - graph->data[i][j]) * graph->real_draw_height + 3.5f);
+            }
+
         }
         if (drawStacked) {
             cairo_rel_line_to (cr, 0, graph->real_draw_height + 3.5f);
