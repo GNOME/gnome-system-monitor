@@ -252,7 +252,7 @@ load_graph_draw (GtkWidget *widget,
     cairo_clip(cr);
 
     bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get()->config.draw_stacked;
-    bool drawSmooth = graph->type == LOAD_GRAPH_CPU && GsmApplication::get()->config.draw_smooth;
+    bool drawSmooth = graph->type != LOAD_GRAPH_CPU || GsmApplication::get()->config.draw_smooth;
     for (j = graph->n-1; j >= 0; j--) {
         gdk_cairo_set_source_rgba (cr, &(graph->colors [j]));
         if (drawStacked) {
