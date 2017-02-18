@@ -12,7 +12,7 @@ struct LoadGraph;
 
 #include "smooth_refresh.h"
 #include "prettytable.h"
-#include "treeview.h"
+#include "legacy/treeview.h"
 #include "util.h"
 
 static const unsigned MIN_UPDATE_INTERVAL =   1 * 1000;

@@ -15,7 +15,7 @@
 #include "proctable.h"
 #include "util.h"
 #include "settings-keys.h"
-#include "treeview.h"
+#include "legacy/treeview.h"
 
 #ifndef NI_IDN
 #define NI_IDN 0

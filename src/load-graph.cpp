@@ -13,7 +13,7 @@
 #include "application.h"
 #include "load-graph.h"
 #include "util.h"
-#include "gsm_color_button.h"
+#include "legacy/gsm_color_button.h"
 
 
 void LoadGraph::clear_background()

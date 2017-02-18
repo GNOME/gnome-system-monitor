@@ -10,7 +10,7 @@
 #include "application.h"
 #include "util.h"
 #include "settings-keys.h"
-#include "treeview.h"
+#include "legacy/treeview.h"
 
 enum DiskColumns
 {

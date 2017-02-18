@@ -19,7 +19,7 @@ using std::string;
 #include "memmaps.h"
 #include "proctable.h"
 #include "settings-keys.h"
-#include "treeview.h"
+#include "legacy/treeview.h"
 #include "util.h"
 
 

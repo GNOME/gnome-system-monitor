@@ -52,6 +52,15 @@ PKG_CHECK_MODULES(GSM,
   gmodule-2.0
 )
 
+PKG_CHECK_MODULES(GSM_LEGACY,
+  glib-2.0 >= $GLIB_REQUIRED
+  libgtop-2.0 >= $LIBGTOP_REQUIRED
+  gtk+-3.0 >= $GTK_REQUIRED
+  libxml-2.0 >= $LIBXML_REQUIRED
+  librsvg-2.0 >= $RSVG_REQUIRED
+  gmodule-2.0
+)
+
 AC_PATH_PROG(APPDATA_VALIDATE, appdata-validate)
 AC_PATH_PROG(DESKTOP_FILE_VALIDATE, desktop-file-validate)
 
@@ -121,6 +130,7 @@ AC_CONFIG_FILES([
 Makefile
 scripts/Makefile
 src/Makefile
+src/legacy/Makefile
 src/org.gnome.gnome-system-monitor.gschema.xml.in
 po/Makefile.in
 help/Makefile

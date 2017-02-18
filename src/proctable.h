@@ -23,7 +23,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 #include "application.h"
-#include "treeview.h"
+#include "legacy/treeview.h"
 
 enum
 {

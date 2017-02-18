@@ -56,7 +56,7 @@
 #include "selinux.h"
 #include "settings-keys.h"
 #include "cgroups.h"
-#include "treeview.h"
+#include "legacy/treeview.h"
 #include "systemd.h"
 
 #ifdef GDK_WINDOWING_X11

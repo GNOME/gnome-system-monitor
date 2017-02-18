@@ -5,7 +5,7 @@
 #include <glib.h>
 #include <glibtop/cpu.h>
 
-#include "gsm_color_button.h"
+#include "legacy/gsm_color_button.h"
 #include "util.h"
 
 enum

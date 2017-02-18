@@ -41,7 +41,7 @@
 #include "util.h"
 #include "disks.h"
 #include "settings-keys.h"
-#include "gsm_color_button.h"
+#include "legacy/gsm_color_button.h"
 
 
 static gboolean

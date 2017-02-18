@@ -29,7 +29,7 @@
 #include "procproperties.h"
 #include "proctable.h"
 #include "util.h"
-#include "e_date.h"
+#include "legacy/e_date.h"
 
 enum
 {
