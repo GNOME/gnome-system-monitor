@@ -5,6 +5,10 @@ AM_CPPFLAGS = \
 	$(SYSTEMD_CFLAGS) \
 	$(WNCK_CFLAGS)
 
+# Build the file here to have the proper CFLAGS but manually link the
+# file from above otherwise (and I don't understand why) the linker is
+# not able to load the objects.  even when referencing it, even
+# gsm_get_resource so it's also not getting the ELF section.
 BUILT_SOURCES = gsm-resources.c
 
 libgsmlegacy_c_files = \
@@ -23,7 +27,6 @@ libgsmlegacy_la_SOURCES = \
 
 gsm-resources.c: $(top_srcdir)/src/gsm.gresource.xml $(shell glib-compile-resources --sourcedir=$(top_srcdir) --generate-dependencies $(top_srcdir)/src/gsm.gresource.xml)
 	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(top_srcdir) --generate-source $(top_srcdir)/src/gsm.gresource.xml
-
 
 
 CLEANFILES = \

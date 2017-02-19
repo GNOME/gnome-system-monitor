@@ -44,10 +44,12 @@ gnome_system_monitor_SOURCES = \
 	$(gnome_system_monitor_cpp_files) \
 	main.cpp
 
+# See legacy/Makefile.am for explanation
 LDADD = \
 	$(GSM_LIBS) \
 	$(SYSTEMD_LIBS) \
 	$(WNCK_LIBS) \
+	legacy/gsm-resources.o \
 	legacy/libgsmlegacy.la
 
 
