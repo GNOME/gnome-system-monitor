@@ -13,15 +13,15 @@
 # Tommi Vainikainen <thv@iki.fi>, 2009-2011.
 # sampo555 https://launchpad.net/~sampo555 , 2012.
 # Juhani Numminen <juhaninumminen0@gmail.com>, 2014.
-# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2012, 2013, 2014, 2015, 2016.
+# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2012, 2013, 2014, 2015, 2016, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-08-20 12:40+0000\n"
-"PO-Revision-Date: 2016-08-21 12:53+0300\n"
+"POT-Creation-Date: 2017-02-13 22:00+0000\n"
+"PO-Revision-Date: 2017-02-21 15:53+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -32,12 +32,12 @@ msgstr ""
 "X-Generator: Gtranslator 2.91.7\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/application.cpp:262 ../src/interface.cpp:363
+#: ../src/application.cpp:244 ../src/interface.cpp:358
 msgid "System Monitor"
 msgstr "Järjestelmän valvonta"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2
-#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:364
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:359
 msgid "View current processes and monitor system state"
 msgstr "Katsele aktiivisia prosesseja ja valvo järjestelmän tilaa"
 
@@ -51,7 +51,7 @@ msgstr ""
 "Käyttö;Suorituskyky;Tehtävänhallinta;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:317
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:299
 msgid "GNOME System Monitor"
 msgstr "Gnomen järjestelmän valvonta"
 
@@ -93,17 +93,14 @@ msgstr ""
 "Resurssikäyrät näyttävät yhteenvedon verkon, muistin ja suorittimen käytöstä."
 
 #: ../gnome-system-monitor.appdata.xml.in.h:6
-#| msgid "Process view sort order"
 msgid "Process list view"
 msgstr "Näkymä prosessiluetteloon"
 
 #: ../gnome-system-monitor.appdata.xml.in.h:7
-#| msgid "Resources"
 msgid "Resources overview"
 msgstr "Näkymä resursseihin"
 
 #: ../gnome-system-monitor.appdata.xml.in.h:8
-#| msgid "File Systems"
 msgid "File Systems view"
 msgstr "Näkymä tiedostojärjestelmiin"
 
@@ -116,7 +113,8 @@ msgid "Kill process"
 msgstr "Tapa prosessi"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:2
-msgid "Privileges are required to control other users' processes"
+#| msgid "Privileges are required to control other users' processes"
+msgid "Privileges are required to control other users’ processes"
 msgstr "Muiden käyttäjien prosessien hallinta vaatii riittävät oikeudet"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:3
@@ -147,12 +145,12 @@ msgstr "Suorittimen käyttöaste"
 msgid "Memory and Swap History"
 msgstr "Muistin ja sivutuksen historia"
 
-#: ../data/interface.ui.h:7 ../src/interface.cpp:260
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:349
+#: ../data/interface.ui.h:7 ../src/interface.cpp:258
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:340
 msgid "Memory"
 msgstr "Muisti"
 
-#: ../data/interface.ui.h:8 ../src/interface.cpp:272
+#: ../data/interface.ui.h:8 ../src/interface.cpp:270
 msgid "Swap"
 msgstr "Swap"
 
@@ -160,7 +158,7 @@ msgstr "Swap"
 msgid "Network History"
 msgstr "Verkonkäytön historia"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:300
+#: ../data/interface.ui.h:10 ../src/interface.cpp:298
 msgid "Receiving"
 msgstr "Vastaanottaa"
 
@@ -168,7 +166,7 @@ msgstr "Vastaanottaa"
 msgid "Total Received"
 msgstr "Vastaanotettu kaikkiaan"
 
-#: ../data/interface.ui.h:12 ../src/interface.cpp:315
+#: ../data/interface.ui.h:12 ../src/interface.cpp:312
 msgid "Sending"
 msgstr "Lähettää"
 
@@ -176,11 +174,11 @@ msgstr "Lähettää"
 msgid "Total Sent"
 msgstr "Lähetetty kaikkiaan"
 
-#: ../data/interface.ui.h:14 ../data/preferences.ui.h:13
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:14
 msgid "Resources"
 msgstr "Resurssit"
 
-#: ../data/interface.ui.h:15 ../data/preferences.ui.h:16
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:17
 msgid "File Systems"
 msgstr "Tiedostojärjestelmät"
 
@@ -340,14 +338,19 @@ msgid "_Draw CPU chart as stacked area chart"
 msgstr "_Piirrä suoritinkäyrä pinomaisena aluekäyränä"
 
 #: ../data/preferences.ui.h:12
+#| msgid "_Draw CPU chart as stacked area chart"
+msgid "Draw CPU chart as s_mooth graph"
+msgstr "_Piirrä suoritinkäyrä sulavana Bezier-käyränä"
+
+#: ../data/preferences.ui.h:13
 msgid "_Show network speed in bits"
 msgstr "_Näytä verkkoliikenteen nopeus bitteinä"
 
-#: ../data/preferences.ui.h:14
+#: ../data/preferences.ui.h:15
 msgid "Show _all file systems"
 msgstr "Näytä kaikki tie_dostojärjestelmät"
 
-#: ../data/preferences.ui.h:15
+#: ../data/preferences.ui.h:16
 msgid "File system i_nformation shown in list:"
 msgstr "Luettelossa näytettävät tie_dostojärjestelmän tiedot:"
 
@@ -371,7 +374,7 @@ msgstr ""
 "<small><i><b>Huomautus:</b>Prosessin prioriteetin määrää sen nice-arvo. "
 "Matalampi nice-arvo vastaa korkeampaa suoritustärkeyttä.</i></small>"
 
-#: ../src/application.cpp:303
+#: ../src/application.cpp:285
 msgid "A simple process and system monitor."
 msgstr "Yksinkertainen prosessien ja järjestelmän tarkkailija."
 
@@ -388,34 +391,35 @@ msgid "Show the File Systems tab"
 msgstr "Näytä Tiedostojärjestelmät-välilehti"
 
 #: ../src/argv.cpp:36
-msgid "Show the application's version"
+#| msgid "Show the application's version"
+msgid "Show the application’s version"
 msgstr "Näytä sovelluksen versio"
 
-#: ../src/disks.cpp:361 ../src/memmaps.cpp:329
+#: ../src/disks.cpp:352 ../src/memmaps.cpp:329
 msgid "Device"
 msgstr "Laite"
 
-#: ../src/disks.cpp:362
+#: ../src/disks.cpp:353
 msgid "Directory"
 msgstr "Kansio"
 
-#: ../src/disks.cpp:363 ../src/gsm_color_button.c:165 ../src/openfiles.cpp:252
+#: ../src/disks.cpp:354 ../src/gsm_color_button.c:165 ../src/openfiles.cpp:252
 msgid "Type"
 msgstr "Tyyppi"
 
-#: ../src/disks.cpp:364
+#: ../src/disks.cpp:355
 msgid "Total"
 msgstr "Yhteensä"
 
-#: ../src/disks.cpp:365
+#: ../src/disks.cpp:356
 msgid "Free"
 msgstr "Vapaana"
 
-#: ../src/disks.cpp:366
+#: ../src/disks.cpp:357
 msgid "Available"
 msgstr "Käytettävissä"
 
-#: ../src/disks.cpp:367
+#: ../src/disks.cpp:358
 msgid "Used"
 msgstr "Käyttö"
 
@@ -425,19 +429,23 @@ msgid "?"
 msgstr "?"
 
 #: ../src/e_date.c:163
-msgid "Today %l:%M %p"
+#| msgid "Today %l:%M %p"
+msgid "Today %l∶%M %p"
 msgstr "Tänään %H:%M"
 
 #: ../src/e_date.c:172
-msgid "Yesterday %l:%M %p"
+#| msgid "Yesterday %l:%M %p"
+msgid "Yesterday %l∶%M %p"
 msgstr "Eilen %H:%M"
 
 #: ../src/e_date.c:184
-msgid "%a %l:%M %p"
+#| msgid "%a %l:%M %p"
+msgid "%a %l∶%M %p"
 msgstr "%a %H:%M"
 
 #: ../src/e_date.c:192
-msgid "%b %d %l:%M %p"
+#| msgid "%b %d %l:%M %p"
+msgid "%b %d %l∶%M %p"
 msgstr "%d.%m. %H:%M"
 
 #: ../src/e_date.c:194
@@ -486,24 +494,25 @@ msgid "Click to set graph colors"
 msgstr "Aseta käyrän väri napsauttamalla"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:187
+#: ../src/interface.cpp:185
 #, c-format
-msgid "Pick a Color for '%s'"
-msgstr "Valitse väri kohteelle ”%s”"
+#| msgid "Pick a Color for '%s'"
+msgid "Pick a Color for “%s”"
+msgstr "Valitse väri kohteelle “%s”"
 
-#: ../src/interface.cpp:220 ../src/procproperties.cpp:78
+#: ../src/interface.cpp:218 ../src/procproperties.cpp:78
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:222
+#: ../src/interface.cpp:220
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:374
+#: ../src/interface.cpp:369
 msgid "translator-credits"
 msgstr ""
-"Jiri Grönroos, 2012-2016\n"
+"Jiri Grönroos, 2012-2017\n"
 "Juhani Numminen, 2014\n"
 "Timo Jyrinki, 2008\n"
 "Ilkka Tuohela, 2005-2009\n"
@@ -529,12 +538,12 @@ msgid_plural "%u seconds"
 msgstr[0] "%u sekunti"
 msgstr[1] "%u sekuntia"
 
-#: ../src/load-graph.cpp:366
+#: ../src/load-graph.cpp:373
 msgid "not available"
 msgstr "ei saatavilla"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:369
+#: ../src/load-graph.cpp:376
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) / %s"
@@ -617,14 +626,15 @@ msgstr "Jaettu likainen"
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.cpp:440
+#: ../src/memmaps.cpp:438
 msgid "Memory Maps"
 msgstr "Muistikartat"
 
-#: ../src/memmaps.cpp:452
+#: ../src/memmaps.cpp:450
 #, c-format
-msgid "_Memory maps for process \"%s\" (PID %u):"
-msgstr "Prosessin ”%s” _muistikartat (PID %u):"
+#| msgid "_Memory maps for process \"%s\" (PID %u):"
+msgid "_Memory maps for process “%s” (PID %u):"
+msgstr "Prosessin “%s” _muistikartat (PID %u):"
 
 #: ../src/openfiles.cpp:40
 msgid "file"
@@ -663,8 +673,9 @@ msgstr "objekti"
 
 #: ../src/openfiles.cpp:336
 #, c-format
-msgid "_Files opened by process \"%s\" (PID %u):"
-msgstr "Prosessin ”%s” avaamat _tiedostot (PID %u):"
+#| msgid "_Files opened by process \"%s\" (PID %u):"
+msgid "_Files opened by process “%s” (PID %u):"
+msgstr "Prosessin “%s” avaamat _tiedostot (PID %u):"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:1
 msgid "Main window size and position in the form (width, height, xpos, ypos)"
@@ -683,12 +694,16 @@ msgid "Solaris mode for CPU percentage"
 msgstr "Käytä Solaris-tilaa suoritinprosenteille"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:5
+#| msgid ""
+#| "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU "
+#| "usage is divided by the total number of CPUs. Otherwise, it operates in "
+#| "'Irix mode'."
 msgid ""
-"If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
-"is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
-"mode'."
+"If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage "
+"is divided by the total number of CPUs. Otherwise, it operates in “Irix "
+"mode”."
 msgstr ""
-"Jos TOSI, järjestelmän valvonta toimii Solaris-tilassa, jossa prosessin "
+"Jos TOSI, järjestelmän valvonta toimii Solaris-tilassa, jossa tehtävän "
 "suoritinkäyttö on jaettu suorittimien määrällä. Muussa tapauksessa valvonta "
 "toimii Irix-tilassa."
 
@@ -705,358 +720,438 @@ msgstr ""
 "aluekäyränä viivan sijaan."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:8
+#| msgid "Show CPU chart as stacked area chart"
+msgid "Show CPU chart as smooth graph using Bezier curves"
+msgstr "Näytä suoritinkäyrä sulavana Bezier-käyränä"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
+#| msgid ""
+#| "If TRUE, system-monitor shows the CPU chart as a stacked area chart "
+#| "instead of a line chart."
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a smoothed graph, otherwise "
+"as a line chart."
+msgstr ""
+"Jos TOSI, järjestelmän valvonta näyttää suoritinkäyrän sulavana käyränä "
+"viivan sijaan."
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:10
 msgid "Enable/Disable smooth refresh"
 msgstr "Käytä tai älä käytä pehmeää päivitystä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:11
 msgid "Show warning dialog when killing processes"
 msgstr "Näytä varoitusikkuna ennen prosessin lopettamista väkisin"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:10
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:12
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Aika (ms) prosessinäkymän päivitysten välillä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:11
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:13
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Aika (ms) käyrien päivitysten välillä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:12
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:14
 msgid "Whether information about all file systems should be displayed"
 msgstr "Näytetäänkö tieto kaikista tiedostojärjestelmistä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:13
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
+#| msgid ""
+#| "Whether to display information about all file systems (including types "
+#| "like 'autofs' and 'procfs'). Useful for getting a list of all currently "
+#| "mounted file systems."
 msgid ""
 "Whether to display information about all file systems (including types like "
-"'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
+"“autofs” and “procfs”). Useful for getting a list of all currently mounted "
 "file systems."
 msgstr ""
 "Näytetäänkö tieto kaikista tiedostojärjestelmistä (mukaan lukien "
-"tiedostojärjestelmät kuten ”autofs” ja ”procfs”). Hyödyllinen, jos tarvitaan "
+"tiedostojärjestelmät kuten “autofs” ja “procfs”). Hyödyllinen, jos tarvitaan "
 "luettelo kaikista tällä hetkellä liitetyistä tiedostojärjestelmistä."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:16
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Aika (ms) laiteluettelon päivitysten välillä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:17
 msgid "Determines which processes to show."
 msgstr "Määrittää näytettävät prosessit."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:18
 msgid "Saves the currently viewed tab"
 msgstr "Tallentaa nyt katseltavan välilehden"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:19
 msgid "CPU colors"
 msgstr "Suorittimien värit"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:18
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:20
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr "Jokainen merkintä on muotoa (CPU-numero, heksadesimaalinen väriarvo)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:21
 msgid "Default graph memory color"
 msgstr "Oletusväri muistikaaviolle"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:20
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:22
 msgid "Default graph swap color"
 msgstr "Oletusarvoinen sivutuskäyrän väri"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:23
 msgid "Default graph incoming network traffic color"
 msgstr "Oletusarvoinen verkkokäyrän saapuvan liikenteen väri"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:24
 msgid "Default graph outgoing network traffic color"
 msgstr "Oletusarvoinen verkkokäyrän lähtevän liikenteen väri"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:25
 msgid "Show network traffic in bits"
 msgstr "Näytä verkkoliikenne bitteinä"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:24
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:26
 msgid "Process view sort column"
 msgstr "Prosessinäkymän lajittelusarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:25
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:27
 msgid "Process view columns order"
 msgstr "Prosessinäkymän sarakkeiden järjestys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:26
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:28
 msgid "Process view sort order"
 msgstr "Prosessinäkymän järjestys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:27
-msgid "Width of process 'Name' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:29
+#| msgid "Width of process 'Name' column"
+msgid "Width of process “Name” column"
 msgstr "Prosessinäkymän Nimi-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:28
-msgid "Show process 'Name' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:30
+#| msgid "Show process 'Name' column on startup"
+msgid "Show process “Name” column on startup"
 msgstr "Näytä prosessinäkymän Nimi-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:29
-msgid "Width of process 'User' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:31
+#| msgid "Width of process 'User' column"
+msgid "Width of process “User” column"
 msgstr "Prosessinäkymän Käyttäjä-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:30
-msgid "Show process 'User' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:32
+#| msgid "Show process 'User' column on startup"
+msgid "Show process “User” column on startup"
 msgstr "Näytä prosessinäkymän Käyttäjä-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:31
-msgid "Width of process 'Status' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:33
+#| msgid "Width of process 'Status' column"
+msgid "Width of process “Status” column"
 msgstr "Prosessinäkymän Tila-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:32
-msgid "Show process 'Status' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:34
+#| msgid "Show process 'Status' column on startup"
+msgid "Show process “Status” column on startup"
 msgstr "Näytä prosessinäkymän Tila-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:33
-msgid "Width of process 'Virtual Memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:35
+#| msgid "Width of process 'Virtual Memory' column"
+msgid "Width of process “Virtual Memory” column"
 msgstr "Prosessinäkymän Virtuaalimuisti-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:34
-msgid "Show process 'Virtual Memory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:36
+#| msgid "Show process 'Virtual Memory' column on startup"
+msgid "Show process “Virtual Memory” column on startup"
 msgstr "Näytä prosessinäkymän Virtuaalimuisti-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:35
-msgid "Width of process 'Resident Memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:37
+#| msgid "Width of process 'Resident Memory' column"
+msgid "Width of process “Resident Memory” column"
 msgstr "Prosessinäkymän Käytetty muisti -sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:36
-msgid "Show process 'Resident Memory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:38
+#| msgid "Show process 'Resident Memory' column on startup"
+msgid "Show process “Resident Memory” column on startup"
 msgstr "Näytä prosessinäkymän Käytetty muisti -sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:37
-msgid "Width of process 'Writable Memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:39
+#| msgid "Width of process 'Writable Memory' column"
+msgid "Width of process “Writable Memory” column"
 msgstr "Prosessinäkymän Kirjoitettava muisti -sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:38
-msgid "Show process 'Writable Memory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:40
+#| msgid "Show process 'Writable Memory' column on startup"
+msgid "Show process “Writable Memory” column on startup"
 msgstr "Näytä prosessinäkymän Kirjoitettava muisti -sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:39
-msgid "Width of process 'Shared Memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:41
+#| msgid "Width of process 'Shared Memory' column"
+msgid "Width of process “Shared Memory” column"
 msgstr "Prosessinäkymän Jaettu muisti -sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:40
-msgid "Show process 'Shared Memory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:42
+#| msgid "Show process 'Shared Memory' column on startup"
+msgid "Show process “Shared Memory” column on startup"
 msgstr "Näytä prosessinäkymän Jaettu muisti -sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:41
-msgid "Width of process 'X Server Memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:43
+#| msgid "Width of process 'X Server Memory' column"
+msgid "Width of process “X Server Memory” column"
 msgstr "Prosessinäkymän X-palvelimen muisti -sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:42
-msgid "Show process 'X Server Memory' column on startup"
-msgstr "Näytä prosessinäkymän X-palvelimen muisti -sarake"
-
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:44
-#, no-c-format
-msgid "Width of process 'CPU %' column"
-msgstr "Prosessinäkymän CPU % -sarakkeen leveys"
+#| msgid "Show process 'X Server Memory' column on startup"
+msgid "Show process “X Server Memory” column on startup"
+msgstr "Näytä prosessinäkymän X-palvelimen muisti -sarake"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:46
 #, no-c-format
-msgid "Show process 'CPU %' column on startup"
-msgstr "Näytä prosessinäkymän CPU % -sarake"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:47
-msgid "Width of process 'CPU Time' column"
-msgstr "Prosessinäkymän CPU-aika -sarakkeen leveys"
+#| msgid "Width of process 'CPU %' column"
+msgid "Width of process “CPU %” column"
+msgstr "Prosessinäkymän CPU % -sarakkeen leveys"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:48
-msgid "Show process 'CPU Time' column on startup"
-msgstr "Näytä prosessinäkymän CPU-aika -sarake"
+#, no-c-format
+#| msgid "Show process 'CPU %' column on startup"
+msgid "Show process “CPU %” column on startup"
+msgstr "Näytä prosessinäkymän CPU % -sarake"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:49
-msgid "Width of process 'Started' column"
-msgstr "Prosessinäkymän Aloitettu-sarakkeen leveys"
+#| msgid "Width of process 'CPU Time' column"
+msgid "Width of process “CPU Time” column"
+msgstr "Prosessinäkymän CPU-aika -sarakkeen leveys"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:50
-msgid "Show process 'Started' column on startup"
-msgstr "Näytä prosessinäkymän Aloitettu-sarake"
+#| msgid "Show process 'CPU Time' column on startup"
+msgid "Show process “CPU Time” column on startup"
+msgstr "Näytä prosessinäkymän CPU-aika-sarake"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:51
-msgid "Width of process 'Nice' column"
-msgstr "Prosessinäkymän Nice-sarakkeen leveys"
+#| msgid "Width of process 'Started' column"
+msgid "Width of process “Started” column"
+msgstr "Prosessinäkymän Aloitettu-sarakkeen leveys"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:52
-msgid "Show process 'Nice' column on startup"
-msgstr "Näytä prosessinäkymän Nice-sarake"
+#| msgid "Show process 'Started' column on startup"
+msgid "Show process “Started” column on startup"
+msgstr "Näytä prosessinäkymän Aloitettu-sarake"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:53
-msgid "Width of process 'PID' column"
-msgstr "Prosessinäkymän PID-sarakkeen leveys"
+#| msgid "Width of process 'Nice' column"
+msgid "Width of process “Nice” column"
+msgstr "Prosessinäkymän Nice-sarakkeen leveys"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:54
-msgid "Show process 'PID' column on startup"
-msgstr "Näytä prosessinäkymän PID-sarake"
+#| msgid "Show process 'Nice' column on startup"
+msgid "Show process “Nice” column on startup"
+msgstr "Näytä prosessinäkymän Nice-sarake"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:55
-msgid "Width of process 'SELinux Security Context' column"
-msgstr "Prosessinäkymän Turvakonteksti-sarakkeen leveys"
+#| msgid "Width of process 'PID' column"
+msgid "Width of process “PID” column"
+msgstr "Prosessinäkymän PID-sarakkeen leveys"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:56
-msgid "Show process 'SELinux Security Context' column on startup"
-msgstr "Näytä prosessinäkymän Turvakonteksti-sarake"
+#| msgid "Show process 'PID' column on startup"
+msgid "Show process “PID” column on startup"
+msgstr "Näytä prosessinäkymän PID-sarake"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:57
-msgid "Width of process 'Command Line' column"
-msgstr "Prosessinäkymän Komentorivi-sarakkeen leveys"
+#| msgid "Width of process 'SELinux Security Context' column"
+msgid "Width of process “SELinux Security Context” column"
+msgstr "Prosessinäkymän Turvakonteksti-sarakkeen leveys"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:58
-msgid "Show process 'Command Line' column on startup"
-msgstr "Näytä prosessinäkymän Komentorivi-sarake"
+#| msgid "Show process 'SELinux Security Context' column on startup"
+msgid "Show process “SELinux Security Context” column on startup"
+msgstr "Näytä prosessinäkymän Turvakonteksti-sarake"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:59
-msgid "Width of process 'Memory' column"
-msgstr "Prosessinäkymän Muisti-sarakkeen leveys"
+#| msgid "Width of process 'Command Line' column"
+msgid "Width of process “Command Line” column"
+msgstr "Prosessinäkymän Komentorivi-sarakkeen leveys"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:60
-msgid "Show process 'Memory' column on startup"
-msgstr "Näytä prosessinäkymän Muisti-sarake"
+#| msgid "Show process 'Command Line' column on startup"
+msgid "Show process “Command Line” column on startup"
+msgstr "Näytä prosessinäkymän Komentorivi-sarake"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:61
-msgid "Width of process 'Waiting Channel' column"
-msgstr "Prosessinäkymän Odottaa kanavaa -sarakkeen leveys"
+#| msgid "Width of process 'Memory' column"
+msgid "Width of process “Memory” column"
+msgstr "Prosessinäkymän Muisti-sarakkeen leveys"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:62
-msgid "Show process 'Waiting Channel' column on startup"
-msgstr "Näytä prosessinäkymän Odottaa kanavaa -sarake"
+#| msgid "Show process 'Memory' column on startup"
+msgid "Show process “Memory” column on startup"
+msgstr "Näytä prosessinäkymän Muisti-sarake"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:63
-msgid "Width of process 'Control Group' column"
-msgstr "Prosessinäkymän Hallintaryhmä-sarakkeen leveys"
+#| msgid "Width of process 'Waiting Channel' column"
+msgid "Width of process “Waiting Channel” column"
+msgstr "Prosessinäkymän Odottaa kanavaa -sarakkeen leveys"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:64
-msgid "Show process 'Control Group' column on startup"
-msgstr "Näytä prosessinäkymän Hallintaryhmä-sarake"
+#| msgid "Show process 'Waiting Channel' column on startup"
+msgid "Show process “Waiting Channel” column on startup"
+msgstr "Näytä prosessinäkymän Odottaa kanavaa -sarake"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:65
-msgid "Width of process 'Unit' column"
-msgstr "Prosessinäkymän Yksikkö-sarakkeen leveys"
+#| msgid "Width of process 'Control Group' column"
+msgid "Width of process “Control Group” column"
+msgstr "Prosessinäkymän Hallintaryhmä-sarakkeen leveys"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:66
-msgid "Show process 'Unit' column on startup"
-msgstr "Näytä prosessinäkymän Yksikkö-sarake"
+#| msgid "Show process 'Control Group' column on startup"
+msgid "Show process “Control Group” column on startup"
+msgstr "Näytä prosessinäkymän Hallintaryhmä-sarake"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:67
-msgid "Width of process 'Session' column"
-msgstr "Prosessinäkymän Istunto-sarakkeen leveys"
+#| msgid "Width of process 'Unit' column"
+msgid "Width of process “Unit” column"
+msgstr "Prosessinäkymän Yksikkö-sarakkeen leveys"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:68
-msgid "Show process 'Session' column on startup"
-msgstr "Näytä prosessinäkymän Istunto-sarake"
+#| msgid "Show process 'Unit' column on startup"
+msgid "Show process “Unit” column on startup"
+msgstr "Näytä prosessinäkymän Yksikkö-sarake"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:69
-msgid "Width of process 'Seat' column"
-msgstr "Prosessinäkymän Käyttöpaikka-sarakkeen leveys"
+#| msgid "Width of process 'Session' column"
+msgid "Width of process “Session” column"
+msgstr "Prosessinäkymän Istunto-sarakkeen leveys"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:70
-msgid "Show process 'Seat' column on startup"
-msgstr "Näytä prosessinäkymän Käyttöpaikka-sarake"
+#| msgid "Show process 'Session' column on startup"
+msgid "Show process “Session” column on startup"
+msgstr "Näytä prosessinäkymän Istunto-sarake"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:71
-msgid "Width of process 'Owner' column"
-msgstr "Prosessinäkymän Omistaja-sarakkeen leveys"
+#| msgid "Width of process 'Seat' column"
+msgid "Width of process “Seat” column"
+msgstr "Prosessinäkymän Käyttöpaikka-sarakkeen leveys"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:72
-msgid "Show process 'Owner' column on startup"
-msgstr "Näytä prosessinäkymän Omistaja-sarake"
+#| msgid "Show process 'Seat' column on startup"
+msgid "Show process “Seat” column on startup"
+msgstr "Näytä prosessinäkymän Käyttöpaikka-sarake"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:73
-msgid "Width of process 'Priority' column"
-msgstr "Prosessinäkymän Prioriteetti-sarakkeen leveys"
+#| msgid "Width of process 'Owner' column"
+msgid "Width of process “Owner” column"
+msgstr "Prosessinäkymän Omistaja-sarakkeen leveys"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:74
-msgid "Show process 'Priority' column on startup"
-msgstr "Näytä prosessinäkymän Prioriteetti-sarake"
+#| msgid "Show process 'Owner' column on startup"
+msgid "Show process “Owner” column on startup"
+msgstr "Näytä prosessinäkymän Omistaja-sarake"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:75
+#| msgid "Width of process 'Priority' column"
+msgid "Width of process “Priority” column"
+msgstr "Prosessinäkymän Prioriteetti-sarakkeen leveys"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
+#| msgid "Show process 'Priority' column on startup"
+msgid "Show process “Priority” column on startup"
+msgstr "Näytä prosessinäkymän Prioriteetti-sarake"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
 msgid "Disk view sort column"
 msgstr "Levynäkymän lajittelusarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
 msgid "Disk view sort order"
 msgstr "Levynäkymän järjestys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
 msgid "Disk view columns order"
 msgstr "Levynäkymän sarakkeiden järjestys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
-msgid "Width of disk view 'Device' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
+#| msgid "Width of disk view 'Device' column"
+msgid "Width of disk view “Device” column"
 msgstr "Levynäkymän Laite-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
-msgid "Show disk view 'Device' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
+#| msgid "Show disk view 'Device' column on startup"
+msgid "Show disk view “Device” column on startup"
 msgstr "Näytä levynäkymän Laite-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
-msgid "Width of disk view 'Directory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
+#| msgid "Width of disk view 'Directory' column"
+msgid "Width of disk view “Directory” column"
 msgstr "Levynäkymän Hakemisto-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
-msgid "Show disk view 'Directory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
+#| msgid "Show disk view 'Directory' column on startup"
+msgid "Show disk view “Directory” column on startup"
 msgstr "Näytä levynäkymän Hakemisto-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
-msgid "Width of disk view 'Type' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
+#| msgid "Width of disk view 'Type' column"
+msgid "Width of disk view “Type” column"
 msgstr "Levynäkymän Tyyppi-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
-msgid "Show disk view 'Type' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
+#| msgid "Show disk view 'Type' column on startup"
+msgid "Show disk view “Type” column on startup"
 msgstr "Näytä levynäkymän Tyyppi-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
-msgid "Width of disk view 'Total' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
+#| msgid "Width of disk view 'Total' column"
+msgid "Width of disk view “Total” column"
 msgstr "Levynäkymän Yhteensä-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
-msgid "Show disk view 'Total' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
+#| msgid "Show disk view 'Total' column on startup"
+msgid "Show disk view “Total” column on startup"
 msgstr "Näytä levynäkymän Yhteensä-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
-msgid "Width of disk view 'Free' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
+#| msgid "Width of disk view 'Free' column"
+msgid "Width of disk view “Free” column"
 msgstr "Levynäkymän Vapaana-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
-msgid "Show disk view 'Free' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
+#| msgid "Show disk view 'Free' column on startup"
+msgid "Show disk view “Free” column on startup"
 msgstr "Näytä levynäkymän Vapaana-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
-msgid "Width of disk view 'Available' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
+#| msgid "Width of disk view 'Available' column"
+msgid "Width of disk view “Available” column"
 msgstr "Levynäkymän Käytettävissä-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
-msgid "Show disk view 'Available' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
+#| msgid "Show disk view 'Available' column on startup"
+msgid "Show disk view “Available” column on startup"
 msgstr "Näytä levynäkymän Käytettävissä-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
-msgid "Width of disk view 'Used' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
+#| msgid "Width of disk view 'Used' column"
+msgid "Width of disk view “Used” column"
 msgstr "Levynäkymän Käytetty-sarakkeen leveys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
-msgid "Show disk view 'Used' column on startup"
-msgstr "Näytä levynäkymän Käyttäjä-sarake"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
+#| msgid "Show disk view 'Used' column on startup"
+msgid "Show disk view “Used” column on startup"
+msgstr "Näytä levynäkymän Käytetty-sarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
 msgid "Memory map sort column"
 msgstr "Muistikartan lajittelusarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
 msgid "Memory map sort order"
 msgstr "Muistikartan järjestys"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:96
 msgid "Open files sort column"
 msgstr "Avointen tiedostojen lajittelusarake"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:97
 msgid "Open files sort order"
 msgstr "Avointen tiedostojen järjestys"
 
-#: ../src/prefsdialog.cpp:171
+#: ../src/prefsdialog.cpp:168
 msgid "Icon"
 msgstr "Kuvake"
 
@@ -1094,7 +1189,6 @@ msgstr "Haluatko varmasti lopettaa valitun prosessin ”%s” (PID: %u)?"
 #. xgettext: primary alert message for stopping single process
 #: ../src/procdialogs.cpp:88
 #, c-format
-#| msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
 msgstr "Haluatko varmasti pysäyttää valitun prosessin ”%s” (PID: %u)?"
 
@@ -1118,8 +1212,6 @@ msgstr[1] "Haluatko varmasti lopettaa %d valittua prosessia?"
 #. xgettext: primary alert message for stopping multiple processes
 #: ../src/procdialogs.cpp:109
 #, c-format
-#| msgid "Are you sure you want to end the selected process?"
-#| msgid_plural "Are you sure you want to end the %d selected processes?"
 msgid "Are you sure you want to stop the selected process?"
 msgid_plural "Are you sure you want to stop the %d selected processes?"
 msgstr[0] "Haluatko varmasti pysäyttää valitun prosessin?"
@@ -1158,9 +1250,6 @@ msgstr[1] "_Lopeta prosessit"
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: ../src/procdialogs.cpp:133
-#| msgid ""
-#| "Ending a process may destroy data, break the session or introduce a "
-#| "security risk. Only unresponsive processes should be ended."
 msgid ""
 "Stopping a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be stopped."
@@ -1169,7 +1258,6 @@ msgstr ""
 "turvallisuusriskejä. Vain jumittuneet prosessit tulisi lopettaa."
 
 #: ../src/procdialogs.cpp:136
-#| msgid "_Stop Process"
 msgid "_Stop Process"
 msgid_plural "_Stop Processes"
 msgstr[0] "_Pysäytä prosessi"
@@ -1204,72 +1292,72 @@ msgstr ""
 msgid "N/A"
 msgstr "-"
 
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:325
 msgid "Process Name"
 msgstr "Prosessin nimi"
 
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:326
 msgid "User"
 msgstr "Käyttäjä"
 
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:327
 msgid "Status"
 msgstr "Tila"
 
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:328
 msgid "Virtual Memory"
 msgstr "Virtuaalimuisti"
 
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:329
 msgid "Resident Memory"
 msgstr "Käytetty muisti"
 
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:330
 msgid "Writable Memory"
 msgstr "Kirjoitettava muisti"
 
-#: ../src/procproperties.cpp:74 ../src/proctable.cpp:340
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:331
 msgid "Shared Memory"
 msgstr "Jaettu muisti"
 
-#: ../src/procproperties.cpp:76 ../src/proctable.cpp:341
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:332
 msgid "X Server Memory"
 msgstr "X-palvelimen muisti"
 
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:343
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:334
 msgid "CPU Time"
 msgstr "CPU-aika"
 
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:344
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:335
 msgid "Started"
 msgstr "Aloitettu"
 
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:345
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:336
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:359
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:350
 msgid "Priority"
 msgstr "Prioriteetti"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:346
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:337
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:347
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:338
 msgid "Security Context"
 msgstr "Turvakonteksti"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:348
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:339
 msgid "Command Line"
 msgstr "Komentorivi"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:351
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:342
 msgid "Waiting Channel"
 msgstr "Odottaa kanavaa"
 
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:352
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:343
 msgid "Control Group"
 msgstr "Kontrolliryhmä"
 
@@ -1278,26 +1366,26 @@ msgstr "Kontrolliryhmä"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:342
+#: ../src/proctable.cpp:333
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:353
+#: ../src/proctable.cpp:344
 msgid "Unit"
 msgstr "Yksikkö"
 
-#: ../src/proctable.cpp:354
+#: ../src/proctable.cpp:345
 msgid "Session"
 msgstr "Istunto"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:357
+#: ../src/proctable.cpp:348
 msgid "Seat"
 msgstr "Käyttöpaikka"
 
-#: ../src/proctable.cpp:358
+#: ../src/proctable.cpp:349
 msgid "Owner"
 msgstr "Omistaja"
 
