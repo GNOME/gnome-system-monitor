@@ -46,11 +46,11 @@ gnome_system_monitor_SOURCES = \
 
 # See legacy/Makefile.am for explanation
 LDADD = \
+	legacy/gsm-resources.o \
+	legacy/libgsmlegacy.la \
 	$(GSM_LIBS) \
 	$(SYSTEMD_LIBS) \
-	$(WNCK_LIBS) \
-	legacy/gsm-resources.o \
-	legacy/libgsmlegacy.la
+	$(WNCK_LIBS)
 
 
 # GSettings schemas, enum files and conversion file
