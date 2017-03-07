@@ -1,11 +1,12 @@
 # Danish translation of gnome-system-monitor.
-# Copyright (C) 2001-2016 Free Software Foundation, Inc.
+# Copyright (C) 2001-2017 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-system-monitor package.
 # Ole Laursen <olau@hardworking.dk>, 2001-2005.
 # Martin Willemoes Hansen <mwh@sysrq.dk>, 2004-2005.
 # Lasse Bang Mikkelsen <lbm@fatalerror.dk>, 2006.
 # Ask Hjorth Larsen <asklarsen@gmail.com>, 2007, 09, 16.
-# Kenneth Nielsen <k.nielsen81@gmail.com>, 2008, 2012-2013
+# Kenneth Nielsen <k.nielsen81@gmail.com>, 2008, 2012-2013.
+# Joe Hansen <joedalton2@yahoo.dk>, 2017.
 #
 # Konventioner:
 #
@@ -23,10 +24,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
-"Report-Msgid-Bugs-To: "
-"http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-11-16 11:27+0000\n"
-"PO-Revision-Date: 2016-09-12 02:00+0200\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=system-monitor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2017-02-24 17:38+0000\n"
+"PO-Revision-Date: 2017-03-05 02:00+0200\n"
 "Last-Translator: Kenneth Nielsen <k.nielsen81@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -36,7 +37,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/application.cpp:231 ../src/interface.cpp:358
+#: ../src/application.cpp:244 ../src/interface.cpp:358
 msgid "System Monitor"
 msgstr "Systemovervågning"
 
@@ -47,14 +48,14 @@ msgstr "Vis aktive processer og overvåg systemstatus"
 
 #: ../gnome-system-monitor.desktop.in.in.h:3
 msgid ""
-""
-"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;Manager;"
+"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
+"Manager;"
 msgstr ""
-""
-"Overvågning;System;Proces;CPU;Processor;Hukommelse;Netværk;Historik;Forbrug;Ydelse;Opgave;Håndtering;"
+"Overvågning;System;Proces;CPU;Processor;Hukommelse;Netværk;Historik;Forbrug;"
+"Ydelse;Opgave;Håndtering;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:286
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:299
 msgid "GNOME System Monitor"
 msgstr "GNOME-Systemovervågning"
 
@@ -152,7 +153,7 @@ msgid "Memory and Swap History"
 msgstr "Hukommelsesforbrug"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:258
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:342
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:340
 msgid "Memory"
 msgstr "Hukommelse"
 
@@ -181,11 +182,11 @@ msgstr "Sender"
 msgid "Total Sent"
 msgstr "Sendt i alt"
 
-#: ../data/interface.ui.h:14 ../data/preferences.ui.h:13
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:14
 msgid "Resources"
 msgstr "Ressourcer"
 
-#: ../data/interface.ui.h:15 ../data/preferences.ui.h:16
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:17
 msgid "File Systems"
 msgstr "Filsystemer"
 
@@ -346,14 +347,18 @@ msgid "_Draw CPU chart as stacked area chart"
 msgstr "_Tegn CPU-graf som stablet arealgraf"
 
 #: ../data/preferences.ui.h:12
+msgid "Draw CPU chart as s_mooth graph"
+msgstr "Tegn CPU-graf som _jævn graf"
+
+#: ../data/preferences.ui.h:13
 msgid "_Show network speed in bits"
 msgstr "_Vis netværkshastighed i bit"
 
-#: ../data/preferences.ui.h:14
+#: ../data/preferences.ui.h:15
 msgid "Show _all file systems"
 msgstr "Vis _alle filsystemer"
 
-#: ../data/preferences.ui.h:15
+#: ../data/preferences.ui.h:16
 msgid "File system i_nformation shown in list:"
 msgstr "Filsystemi_nformation vist i listen:"
 
@@ -374,11 +379,11 @@ msgid ""
 "<small><i><b>Note:</b> The priority of a process is given by its nice value. "
 "A lower nice value corresponds to a higher priority.</i></small>"
 msgstr ""
-"<small><i><b>Bemærk:</b> Prioriteten af en proces er givet ved dens "
-"nice-værdi. En lavere\n"
+"<small><i><b>Bemærk:</b> Prioriteten af en proces er givet ved dens nice-"
+"værdi. En lavere\n"
 "værdi svarer til en højere prioritet.</i></small>"
 
-#: ../src/application.cpp:272
+#: ../src/application.cpp:285
 msgid "A simple process and system monitor."
 msgstr "En simpel proces- og systemovervåger."
 
@@ -406,7 +411,8 @@ msgstr "Enhed"
 msgid "Directory"
 msgstr "Mappe"
 
-#: ../src/disks.cpp:354 ../src/gsm_color_button.c:165 ../src/openfiles.cpp:252
+#: ../src/disks.cpp:354 ../src/legacy/gsm_color_button.c:165
+#: ../src/openfiles.cpp:252
 msgid "Type"
 msgstr "Type"
 
@@ -425,80 +431,6 @@ msgstr "Tilgængelig"
 #: ../src/disks.cpp:358
 msgid "Used"
 msgstr "Benyttet"
-
-#. xgettext: ? stands for unknown
-#: ../src/e_date.c:156
-msgid "?"
-msgstr "?"
-
-#: ../src/e_date.c:163
-#, fuzzy
-#| msgid "Today %l:%M %p"
-msgid "Today %l∶%M %p"
-msgstr "I dag %l:%M %p"
-
-#: ../src/e_date.c:172
-#, fuzzy
-#| msgid "Yesterday %l:%M %p"
-msgid "Yesterday %l∶%M %p"
-msgstr "I går %l:%M %p"
-
-#: ../src/e_date.c:184
-#, fuzzy
-#| msgid "%a %l:%M %p"
-msgid "%a %l∶%M %p"
-msgstr "%a %l:%M %p"
-
-#: ../src/e_date.c:192
-#, fuzzy
-#| msgid "%b %d %l:%M %p"
-msgid "%b %d %l∶%M %p"
-msgstr "%b %d %l:%M %p"
-
-#: ../src/e_date.c:194
-msgid "%b %d %Y"
-msgstr "%b %d %Y"
-
-#: ../src/gsm_color_button.c:141
-msgid "Fraction"
-msgstr "Brøkdel"
-
-#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:143
-msgid "Percentage full for pie color pickers"
-msgstr "Procentdel fuld til lagkage-farvevælger"
-
-#: ../src/gsm_color_button.c:150
-msgid "Title"
-msgstr "Titel"
-
-#: ../src/gsm_color_button.c:151
-msgid "The title of the color selection dialog"
-msgstr "Titlen på farvevælger-dialogen"
-
-#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:515
-msgid "Pick a Color"
-msgstr "Vælg en farve"
-
-#: ../src/gsm_color_button.c:158
-msgid "Current Color"
-msgstr "Nuværende farve"
-
-#: ../src/gsm_color_button.c:159
-msgid "The selected color"
-msgstr "Den valgte farve"
-
-#: ../src/gsm_color_button.c:166
-msgid "Type of color picker"
-msgstr "Farvevælgerens type"
-
-#: ../src/gsm_color_button.c:437
-msgid "Received invalid color data\n"
-msgstr "Modtog ugyldig farvedata\n"
-
-#: ../src/gsm_color_button.c:538
-msgid "Click to set graph colors"
-msgstr "Klik for at indstille graf-farver"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
 #: ../src/interface.cpp:185
@@ -523,9 +455,76 @@ msgstr ""
 "Lasse Bang Mikkelsen\n"
 "Ask Hjorth Larsen\n"
 "Kenneth Nielsen\n"
+"Joe Hansen\n"
 "\n"
 "Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "Mere info: http://www.dansk-gruppen.dk"
+
+#. xgettext: ? stands for unknown
+#: ../src/legacy/e_date.c:156
+msgid "?"
+msgstr "?"
+
+#: ../src/legacy/e_date.c:163
+msgid "Today %l∶%M %p"
+msgstr "I dag %l∶%M %p"
+
+#: ../src/legacy/e_date.c:172
+msgid "Yesterday %l∶%M %p"
+msgstr "I går %l∶%M %p"
+
+#: ../src/legacy/e_date.c:184
+msgid "%a %l∶%M %p"
+msgstr "%a %l∶%M %p"
+
+#: ../src/legacy/e_date.c:192
+msgid "%b %d %l∶%M %p"
+msgstr "%b %d %l∶%M %p"
+
+#: ../src/legacy/e_date.c:194
+msgid "%b %d %Y"
+msgstr "%b %d %Y"
+
+#: ../src/legacy/gsm_color_button.c:141
+msgid "Fraction"
+msgstr "Brøkdel"
+
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+#: ../src/legacy/gsm_color_button.c:143
+msgid "Percentage full for pie color pickers"
+msgstr "Procentdel fuld til lagkage-farvevælger"
+
+#: ../src/legacy/gsm_color_button.c:150
+msgid "Title"
+msgstr "Titel"
+
+#: ../src/legacy/gsm_color_button.c:151
+msgid "The title of the color selection dialog"
+msgstr "Titlen på farvevælger-dialogen"
+
+#: ../src/legacy/gsm_color_button.c:152 ../src/legacy/gsm_color_button.c:515
+msgid "Pick a Color"
+msgstr "Vælg en farve"
+
+#: ../src/legacy/gsm_color_button.c:158
+msgid "Current Color"
+msgstr "Nuværende farve"
+
+#: ../src/legacy/gsm_color_button.c:159
+msgid "The selected color"
+msgstr "Den valgte farve"
+
+#: ../src/legacy/gsm_color_button.c:166
+msgid "Type of color picker"
+msgstr "Farvevælgerens type"
+
+#: ../src/legacy/gsm_color_button.c:437
+msgid "Received invalid color data\n"
+msgstr "Modtog ugyldig farvedata\n"
+
+#: ../src/legacy/gsm_color_button.c:538
+msgid "Click to set graph colors"
+msgstr "Klik for at indstille graf-farver"
 
 #: ../src/load-graph.cpp:157
 #, c-format
@@ -534,12 +533,12 @@ msgid_plural "%u seconds"
 msgstr[0] "%u sekund"
 msgstr[1] "%u sekunder"
 
-#: ../src/load-graph.cpp:366
+#: ../src/load-graph.cpp:373
 msgid "not available"
 msgstr "ikke tilgængelig"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:369
+#: ../src/load-graph.cpp:376
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) af %s"
@@ -712,26 +711,38 @@ msgstr ""
 "arealgraf i stedet for en linjegraf."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:8
+msgid "Show CPU chart as smooth graph using Bezier curves"
+msgstr "Vis CPU-graf som jævn graf, der bruger Bezierkurver"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a smoothed graph, otherwise "
+"as a line chart."
+msgstr ""
+"Hvis sat til sand vil system-monitor vise CPU-grafen som en jævn graf, "
+"ellers som en linjegraf."
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:10
 msgid "Enable/Disable smooth refresh"
 msgstr "Aktivér/deaktivér blød opdatering"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:11
 msgid "Show warning dialog when killing processes"
 msgstr "Vis advarselsdialog ved terminering af processer"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:10
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:12
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Tid i millisekunder mellem opdateringer af proceslisten"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:11
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:13
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Tid i millisekunder mellem opdateringer af graferne"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:12
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:14
 msgid "Whether information about all file systems should be displayed"
 msgstr "Om der skal vises information om alle filsystemer"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:13
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
 msgid ""
 "Whether to display information about all file systems (including types like "
 "“autofs” and “procfs”). Useful for getting a list of all currently mounted "
@@ -741,326 +752,326 @@ msgstr ""
 "filsystemer som \"autofs\" og \"procfs\"). Dette er nyttigt hvis der ønskes "
 "en liste over alle monterede filsystemer."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:16
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Tid i millisekunder mellem opdateringer af listen med enheder"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:17
 msgid "Determines which processes to show."
 msgstr "Afgør hvilke processer der skal vises."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:18
 msgid "Saves the currently viewed tab"
 msgstr "Gemmer det aktuelt viste faneblad"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:19
 msgid "CPU colors"
 msgstr "CPU-farver"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:18
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:20
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr "Hver indgang er på formatet (CPU#, heksadecimal farveværdi)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:21
 msgid "Default graph memory color"
 msgstr "Standard-farve for hukommelsesgraf"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:20
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:22
 msgid "Default graph swap color"
 msgstr "Standard-farve for swapgraf"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:23
 msgid "Default graph incoming network traffic color"
 msgstr "Standard-farve for indkommende trafik på netværksgraf"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:24
 msgid "Default graph outgoing network traffic color"
 msgstr "Standard-farve for udgående trafik på netværksgraf"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:25
 msgid "Show network traffic in bits"
 msgstr "Vis netværkstrafik i bit"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:24
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:26
 msgid "Process view sort column"
 msgstr "Sorteringskolonne for proceslisten"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:25
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:27
 msgid "Process view columns order"
 msgstr "Kolonnerækkefølge for proceslisten"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:26
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:28
 msgid "Process view sort order"
 msgstr "Sorteringsrækkefølge for proceslisten"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:27
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:29
 msgid "Width of process “Name” column"
 msgstr "Bredde af proceskolonnen \"Navn\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:28
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:30
 msgid "Show process “Name” column on startup"
 msgstr "Vis proceskolonnen \"Navn\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:29
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:31
 msgid "Width of process “User” column"
 msgstr "Bredde af proceskolonnen \"Bruger\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:30
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:32
 msgid "Show process “User” column on startup"
 msgstr "Vis proceskolonnen \"Bruger\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:31
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:33
 msgid "Width of process “Status” column"
 msgstr "Bredde af proceskolonnen \"Status\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:32
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:34
 msgid "Show process “Status” column on startup"
 msgstr "Vis proceskolonnen \"Status\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:33
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:35
 msgid "Width of process “Virtual Memory” column"
 msgstr "Bredde af proceskolonnen \"Virtuel hukommelse\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:34
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:36
 msgid "Show process “Virtual Memory” column on startup"
 msgstr "Vis proceskolonnen \"Virtuel hukommelse\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:35
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:37
 msgid "Width of process “Resident Memory” column"
 msgstr "Bredde af proceskolonnen \"Resident hukommelse\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:36
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:38
 msgid "Show process “Resident Memory” column on startup"
 msgstr "Vis proceskolonnen \"Resident hukommelse\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:37
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:39
 msgid "Width of process “Writable Memory” column"
 msgstr "Bredde af proceskolonnen \"Skrivbar hukommelse\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:38
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:40
 msgid "Show process “Writable Memory” column on startup"
 msgstr "Vis proceskolonnen \"Skrivbar hukommelse\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:39
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:41
 msgid "Width of process “Shared Memory” column"
 msgstr "Bredde af proceskolonnen \"Delt hukommelse\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:40
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:42
 msgid "Show process “Shared Memory” column on startup"
 msgstr "Vis proceskolonnen \"Delt hukommelse\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:41
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:43
 msgid "Width of process “X Server Memory” column"
 msgstr "Bredde af proceskolonnen \"X-serverhukommelse\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:42
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:44
 msgid "Show process “X Server Memory” column on startup"
 msgstr "Vis proceskolonnen \"X-serverhukommelse\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:44
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:46
 #, no-c-format
 msgid "Width of process “CPU %” column"
 msgstr "Bredde af proceskolonnen \"CPU %\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:46
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:48
 #, no-c-format
 msgid "Show process “CPU %” column on startup"
 msgstr "Vis proceskolonnen \"CPU %\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:47
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:49
 msgid "Width of process “CPU Time” column"
 msgstr "Bredde af proceskolonnen \"CPU-tid\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:48
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:50
 msgid "Show process “CPU Time” column on startup"
 msgstr "Vis proceskolonnen \"CPU-tid\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:49
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:51
 msgid "Width of process “Started” column"
 msgstr "Bredde af proceskolonnen \"Startet\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:50
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:52
 msgid "Show process “Started” column on startup"
 msgstr "Vis proceskolonnen \"Startet\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:51
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:53
 msgid "Width of process “Nice” column"
 msgstr "Bredde af proceskolonnen \"Procesprioritet\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:52
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:54
 msgid "Show process “Nice” column on startup"
 msgstr "Vis proceskolonnen prioritet ved start"
 
 # "Process PID" er dobbeltkonfekt
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:53
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:55
 msgid "Width of process “PID” column"
 msgstr "Bredde af proceskolonnen \"PID\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:54
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:56
 msgid "Show process “PID” column on startup"
 msgstr "Vis proceskolonnen \"PID\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:55
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:57
 msgid "Width of process “SELinux Security Context” column"
 msgstr "Bredde af proceskolonnen \"SELinux-sikkerhedskontekst\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:56
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:58
 msgid "Show process “SELinux Security Context” column on startup"
 msgstr "Vis proceskolonnen \"SELinux-sikkerhedskontekst\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:57
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:59
 msgid "Width of process “Command Line” column"
 msgstr "Bredde af proceskolonnen \"Kommandolinje\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:58
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:60
 msgid "Show process “Command Line” column on startup"
 msgstr "Vis proceskolonnen \"Kommandolinje\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:59
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:61
 msgid "Width of process “Memory” column"
 msgstr "Bredde af proceskolonnen \"Hukommelse\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:60
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:62
 msgid "Show process “Memory” column on startup"
 msgstr "Vis proceskolonnen \"Hukommelse\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:61
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:63
 msgid "Width of process “Waiting Channel” column"
 msgstr "Bredde af proceskolonnen \"Ventekanal\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:62
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:64
 msgid "Show process “Waiting Channel” column on startup"
 msgstr "Vis proceskolonnen \"Ventekanal\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:63
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:65
 msgid "Width of process “Control Group” column"
 msgstr "Bredde af proceskolonnen \"Kontrolgruppe\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:64
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:66
 msgid "Show process “Control Group” column on startup"
 msgstr "Vis proceskolonnen \"Kontrolgruppe\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:65
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:67
 msgid "Width of process “Unit” column"
 msgstr "Bredde af proceskolonnen \"Enhed\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:66
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:68
 msgid "Show process “Unit” column on startup"
 msgstr "Vis proceskolonnen \"Enhed\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:67
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:69
 msgid "Width of process “Session” column"
 msgstr "Bredde af proceskolonnen \"Session\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:68
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:70
 msgid "Show process “Session” column on startup"
 msgstr "Vis proceskolonnen \"Session\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:69
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:71
 msgid "Width of process “Seat” column"
 msgstr "Bredde af proceskolonnen \"Sæde\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:70
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:72
 msgid "Show process “Seat” column on startup"
 msgstr "Vis proceskolonnen \"Sæde\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:71
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:73
 msgid "Width of process “Owner” column"
 msgstr "Bredde af proceskolonnen \"Ejer\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:72
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:74
 msgid "Show process “Owner” column on startup"
 msgstr "Vis proceskolonnen \"Ejer\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:73
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:75
 msgid "Width of process “Priority” column"
 msgstr "Bredde af proceskolonnen \"Prioritet\""
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:74
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
 msgid "Show process “Priority” column on startup"
 msgstr "Vis proceskolonnen \"Prioritet\" ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:75
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
 msgid "Disk view sort column"
 msgstr "Disklistens sorteringskolonne"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
 msgid "Disk view sort order"
 msgstr "Disklistens kolonne-sorteringsrækkefølge"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
 msgid "Disk view columns order"
 msgstr "Disklistens kolonne-sorteringsrækkefølge"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
 msgid "Width of disk view “Device” column"
 msgstr "Bredde af diskvisningens \"enheds\"-kolonne"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
 msgid "Show disk view “Device” column on startup"
 msgstr "Vis diskvisningens \"Enheds\"-kolonne ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
 msgid "Width of disk view “Directory” column"
 msgstr "Bredde af diskvisningens \"Mappe\"-kolonne"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
 msgid "Show disk view “Directory” column on startup"
 msgstr "Vis diskvisningens \"Mappe\"-kolonne ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
 msgid "Width of disk view “Type” column"
 msgstr "Bredde af diskvisningens \"Type\"-kolonne"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
 msgid "Show disk view “Type” column on startup"
 msgstr "Vis diskvisningens \"Type\"-kolonne ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
 msgid "Width of disk view “Total” column"
 msgstr "Bredde af diskvisningens \"Total\"-kolonne"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
 msgid "Show disk view “Total” column on startup"
 msgstr "Vis diskvisningens \"Total\"-kolonne ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
 msgid "Width of disk view “Free” column"
 msgstr "Bredde af diskvisningens \"Fri\"-kolonne"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
 msgid "Show disk view “Free” column on startup"
 msgstr "Vis diskvisningens \"Fri\"-kolonne ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
 msgid "Width of disk view “Available” column"
 msgstr "Bredde af diskvisningens \"Tilgængelig\"-kolonne"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
 msgid "Show disk view “Available” column on startup"
 msgstr "Vis diskvisningens \"Tilgængelig\"-kolonne ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
 msgid "Width of disk view “Used” column"
 msgstr "Bredde af diskvisningens \"Brugt\"-kolonne"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
 msgid "Show disk view “Used” column on startup"
 msgstr "Vis diskvisningens \"Brugt\"-kolonne ved start"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
 msgid "Memory map sort column"
 msgstr "Sorteringskolonne for hukommelsesområde"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
 msgid "Memory map sort order"
 msgstr "Sorteringsrækkefølge for hukommelsesområde"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:96
 msgid "Open files sort column"
 msgstr "Sorteringskolonne for åbne filer"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:97
 msgid "Open files sort order"
 msgstr "Sorteringsrækkefølge for åbne filer"
 
@@ -1207,73 +1218,73 @@ msgstr ""
 msgid "N/A"
 msgstr "-"
 
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:327
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:325
 msgid "Process Name"
 msgstr "Procesnavn"
 
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:328
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:326
 msgid "User"
 msgstr "Bruger"
 
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:329
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:327
 msgid "Status"
 msgstr "Status"
 
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:330
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:328
 msgid "Virtual Memory"
 msgstr "Virtuel hukommelse"
 
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:331
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:329
 msgid "Resident Memory"
 msgstr "Resident huk."
 
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:330
 msgid "Writable Memory"
 msgstr "Skrivbar hukommelse"
 
-#: ../src/procproperties.cpp:74 ../src/proctable.cpp:333
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:331
 msgid "Shared Memory"
 msgstr "Delt huk."
 
-#: ../src/procproperties.cpp:76 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:332
 msgid "X Server Memory"
 msgstr "X-serverhuk."
 
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:334
 msgid "CPU Time"
 msgstr "CPU-tid"
 
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:335
 msgid "Started"
 msgstr "Startet"
 
 # prioritet er helt entydigt her
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:336
 msgid "Nice"
 msgstr "Prioritet"
 
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:352
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:350
 msgid "Priority"
 msgstr "Prioritet"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:337
 msgid "ID"
 msgstr "Id"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:340
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:338
 msgid "Security Context"
 msgstr "Sikkerhedskontekst"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:341
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:339
 msgid "Command Line"
 msgstr "Kommandolinje"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:344
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:342
 msgid "Waiting Channel"
 msgstr "Ventekanal"
 
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:345
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:343
 msgid "Control Group"
 msgstr "Kontrolgruppe"
 
@@ -1282,26 +1293,26 @@ msgstr "Kontrolgruppe"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:335
+#: ../src/proctable.cpp:333
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:346
+#: ../src/proctable.cpp:344
 msgid "Unit"
 msgstr "Enhed"
 
-#: ../src/proctable.cpp:347
+#: ../src/proctable.cpp:345
 msgid "Session"
 msgstr "Session"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:350
+#: ../src/proctable.cpp:348
 msgid "Seat"
 msgstr "Sæde"
 
-#: ../src/proctable.cpp:351
+#: ../src/proctable.cpp:349
 msgid "Owner"
 msgstr "Ejer"
 
@@ -1428,325 +1439,4 @@ msgstr "Meget lav prioritet"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
-
-#~ msgctxt "Menu item to Open 'Search for Open Files' dialog"
-#~ msgid "Search for Open Files"
-#~ msgstr "Søg efter åbne filer"
-
-#~ msgid "Error"
-#~ msgstr "Fejl"
-
-#~ msgid "'%s' is not a valid Perl regular expression."
-#~ msgstr "\"%s\" er ikke et gyldigt Perl-regulært udtryk."
-
-#~ msgid "%lld second"
-#~ msgid_plural "%lld seconds"
-#~ msgstr[0] "%lld sekund"
-#~ msgstr[1] "%lld sekunder"
-
-#~ msgid "_Name contains:"
-#~ msgstr "_Navnet indeholder:"
-
-#~ msgid "_Find"
-#~ msgstr "_Find"
-
-#~ msgid "C_lear"
-#~ msgstr "_Ryd"
-
-#~ msgid "S_earch results:"
-#~ msgstr "S_øgeresultater:"
-
-#~ msgid "_Close"
-#~ msgstr "_Luk"
-
-#~ msgid "_Help"
-#~ msgstr "_Hjælp"
-
-#~ msgid "Process Properties"
-#~ msgstr "Procesegenskaber"
-
-#~ msgid "Properties of process \"%s\" (PID %u):"
-#~ msgstr "Egenskaver for proces \"%s\" (PID %u):"
-
-#~ msgid "Privileges are required to kill process"
-#~ msgstr "Privilegier er påkrævet for at terminere proces"
-
-#~ msgid "View"
-#~ msgstr "Vis"
-
-#~ msgid "Sent"
-#~ msgstr "Sendt"
-
-#~ msgid "_View"
-#~ msgstr "_Vis"
-
-#~ msgid "Stop process"
-#~ msgstr "Stop proces"
-
-#~ msgid "Continue process if stopped"
-#~ msgstr "Fortsæt processen hvis stoppet"
-
-#~ msgid "Force process to finish normally"
-#~ msgstr "Tving proces til at slutte normalt"
-
-#~ msgid "Force process to finish immediately"
-#~ msgstr "Tving proces til at slutte med det samme"
-
-#~ msgid "Change the order of priority of process"
-#~ msgstr "Skift prioriteringsordenen for en proces"
-
-#~ msgid "Refresh the process list"
-#~ msgstr "Genopfrisk proceslisten"
-
-#~ msgid "Open the memory maps associated with a process"
-#~ msgstr "Vis de hukommelsesområder der er forbundet med en proces"
-
-#~ msgid "View the files opened by a process"
-#~ msgstr "Vis de filer der er åbnet af en proces"
-
-#~ msgid "View additional information about a process"
-#~ msgstr "Vis yderligere information om en proces"
-
-#~ # dækker vist nogenlunde
-#~ msgid "Show parent/child relationship between processes"
-#~ msgstr "Vis ophav/underproces-forhold mellem processer"
-
-#~ msgid "Show active processes"
-#~ msgstr "Vis aktive processer"
-
-#~ msgid "Show all processes"
-#~ msgstr "Vis alle processer"
-
-#~ msgid "Show only user-owned processes"
-#~ msgstr "Vis kun bruger-ejede processer"
-
-#~ msgid "Set process priority to very high"
-#~ msgstr "Sæt procesprioriteten til meget høj"
-
-#~ msgid "Set process priority to high"
-#~ msgstr "Sæt procesprioriteten til høj"
-
-#~ msgid "Set process priority to normal"
-#~ msgstr "Sæt procesprioriteten til normal"
-
-#~ msgid "Set process priority to low"
-#~ msgstr "Sæt procesprioriteten til lav"
-
-#~ msgid "Set process priority to very low"
-#~ msgstr "Sæt procesprioriteten til meget lav"
-
-#~ msgid "Set process priority manually"
-#~ msgstr "Sæt procesprioriteten manuelt"
-
-#~ msgid "Main Window width"
-#~ msgstr "Hovedvinduets bredde"
-
-#~ msgid "Main Window height"
-#~ msgstr "Hovedvinduets højde"
-
-#~ msgid "Main Window X position"
-#~ msgstr "Hovedvinduets X-position"
-
-#~ msgid "Main Window Y position"
-#~ msgstr "Hovedvinduets Y-position"
-
-#~ msgid ""
-#~ "Determines which processes to show by default. 0 is All, 1 is user, and 2 is "
-#~ "active"
-#~ msgstr ""
-#~ "Afgør hvilke processer der vises som standard, 0 er alle, 1 er bruger og 2 "
-#~ "er aktive"
-
-#~ msgid ""
-#~ "0 for the System Info, 1 for the processes list, 2 for the resources and 3 "
-#~ "for the disks list"
-#~ msgstr ""
-#~ "0 for systeminformation, 1 for procesliste, 2 for ressourcer og 3 for "
-#~ "diskliste"
-
-#~ msgid "Load averages for the last 1, 5, 15 minutes: %0.2f, %0.2f, %0.2f"
-#~ msgstr ""
-#~ "Gennemsnitsbelastning for de sidste 1, 5 og 15 minutter: %0.2f, %0.2f, %0.2f"
-
-#~ msgid "System"
-#~ msgstr "System"
-
-#~ msgid "Show the System tab"
-#~ msgstr "Vis systemfanebladet"
-
-#~ msgid "_Monitor"
-#~ msgstr "_Systemovervågning"
-
-#~ msgid "_Edit"
-#~ msgstr "_Redigér"
-
-#~ # titel til et vindue med de åbne filer for en proces
-#~ msgid "Search for _Open Files"
-#~ msgstr "Søg efter _åbne filer"
-
-#~ msgid "Quit the program"
-#~ msgstr "Afslut programmet"
-
-#~ msgid "_Contents"
-#~ msgstr "_Indhold"
-
-#~ msgid "Open the manual"
-#~ msgstr "Åbn manualen"
-
-#~ msgid "About this application"
-#~ msgstr "Om dette program"
-
-#~ msgid "(%s Priority)"
-#~ msgstr "(%s prioritet)"
-
-#~ msgid "Release %s %s"
-#~ msgstr "Udgave %s %s"
-
-#~ msgid "%d-bit"
-#~ msgstr "%d-bit"
-
-#~ msgid "Kernel %s"
-#~ msgstr "Kerne %s"
-
-#~ msgid "GNOME %s"
-#~ msgstr "GNOME %s"
-
-#~ msgid "Hardware"
-#~ msgstr "Hardware"
-
-#~ msgid "Memory:"
-#~ msgstr "Hukommelse:"
-
-#~ msgid "Processor:"
-#~ msgstr "Processor:"
-
-#~ msgid "System Status"
-#~ msgstr "Systemstatus"
-
-#~ msgid "Available disk space:"
-#~ msgstr "Tilgængelig diskplads:"
-
-#~ msgid "Unknown model"
-#~ msgstr "Ukendt model"
-
-#~ msgid "<i>N/A</i>"
-#~ msgstr "<i>N/A</i>"
-
-#~ msgid "_Change Priority..."
-#~ msgstr "_Skift prioritet …"
-
-#~ msgid "Default graph cpu color"
-#~ msgstr "Standard-farve for CPU-graf"
-
-#~ msgid "Show process 'arguments' column on startup"
-#~ msgstr "Vis kolonnen procesargumenter ved start"
-
-#~ msgid "Show process 'estimated memory usage' column on startup"
-#~ msgstr "Vis kolonnen estimeret hukommelsesforbrug ved start"
-
-#~ msgid "Width of process 'arguments' column"
-#~ msgstr "Bredde af kolonnen procesargumenter"
-
-#~ msgid "Width of process 'estimated memory usage' column"
-#~ msgstr "Bredde af kolonnen estimeret procesvis hukommelsesforbrug"
-
-#~ msgid "Solaris mode"
-#~ msgstr "Solaris-tilstand"
-
-#~ # Verb eller subst?
-#~ msgid "Release %s"
-#~ msgstr "Udgave %s"
-
-#~ msgid "Processor %d:"
-#~ msgstr "Processor %d:"
-
-#~ msgid "Default graph background color"
-#~ msgstr "Standard-baggrundsfarve for graf"
-
-#~ msgid "Default graph frame color"
-#~ msgstr "Standard-farve for graframme"
-
-#~ msgid "User memory:"
-#~ msgstr "Brugerhukommelse:"
-
-#~ msgid "of"
-#~ msgstr "af"
-
-#~ msgid "Used swap:"
-#~ msgstr "Benyttet swap:"
-
-#~ msgid "Total:"
-#~ msgstr "Total:"
-
-#~ msgid "_Background color:"
-#~ msgstr "_Baggrundsfarve:"
-
-#~ msgid "_Grid color:"
-#~ msgstr "_Gitterfarve:"
-
-#~ msgid "Column zero saved width"
-#~ msgstr "Gemt bredde af kolonne nul"
-
-#~ msgid "Default graph net out color"
-#~ msgstr "Standard-farve for udgående trafik på netværksgraf"
-
-#~ msgid "Show column zero on startup"
-#~ msgstr "Vis kolonne nul ved start"
-
-#~ msgid "Devices"
-#~ msgstr "Enheder"
-
-#~ msgid "No hidden processes"
-#~ msgstr "Ingen skjulte processer"
-
-#~ msgid ""
-#~ "There are no hidden processes in the list. To show all running processes, "
-#~ "select the \"All processes\" option in the main window."
-#~ msgstr ""
-#~ "Der er ingen skjulte processer i listen. Vælg \"Alle processer\" i "
-#~ "hovedvinduet for at vise alle kørende processer."
-
-#~ msgid "Hidden Processes"
-#~ msgstr "Skjulte processer"
-
-#~ msgid "Currently _hidden processes:"
-#~ msgstr "Aktuelt _skjulte processer:"
-
-#~ msgid "_Remove From List"
-#~ msgstr "_Fjern fra listen"
-
-#~ msgid ""
-#~ "These are the processes you have chosen to hide. You can reshow a process by "
-#~ "removing it from this list."
-#~ msgstr ""
-#~ "Dette er de processer som du har valgt at skjule. Du kan vise en proces igen "
-#~ "ved at fjerne den fra denne liste."
-
-#~ msgid "Show process threads"
-#~ msgstr "Vis procestråde"
-
-#~ msgid "Show warning dialog when hiding processes"
-#~ msgstr "Vis advarselsvindue ved skjul af processer"
-
-#~ msgid "_File"
-#~ msgstr "_Fil"
-
-#~ msgid "_Hidden Processes"
-#~ msgstr "_Skjulte processer"
-
-#~ msgid "Open the list of currently hidden processes"
-#~ msgstr "Åbn listen over aktuelt skjulte processer"
-
-#~ msgid ""
-#~ "Hidden processes are no longer visible in the process list. You can "
-#~ "re-enable them by selecting the \"Hidden Processes\" entry in the View menu."
-#~ msgstr ""
-#~ "Skjulte processer er ikke længere synlige i proceslisten. Du kan genaktivere "
-#~ "dem ved at vælge \"Skjulte processer\" i menuen \"Vis\"."
-
-#~ msgid "Alert before _hiding processes"
-#~ msgstr "Advar ved _skjul af processer"
-
-#~ msgid "Arguments"
-#~ msgstr "Parametre"
 
