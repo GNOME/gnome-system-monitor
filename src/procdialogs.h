@@ -27,11 +27,11 @@
    are scaled back to these limits. So show these limits in the slider
 */
 #ifdef __linux__
-#define RENICE_VAL_MIN -20
-#define RENICE_VAL_MAX 19
+const int RENICE_VAL_MIN = -20;
+const int RENICE_VAL_MAX = 19;
 #else /* ! linux */
-#define RENICE_VAL_MIN -20
-#define RENICE_VAL_MAX 20
+const int RENICE_VAL_MIN = -20;
+const int RENICE_VAL_MAX = 20;
 #endif
 
 
