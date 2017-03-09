@@ -10,26 +10,26 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
-"monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-08-12 10:58+0000\n"
-"PO-Revision-Date: 2016-08-15 14:41+0700\n"
-"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=system-monitor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2017-02-24 17:38+0000\n"
+"PO-Revision-Date: 2017-03-09 12:23+0700\n"
+"Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.11\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/application.cpp:262 ../src/interface.cpp:363
+#: ../src/application.cpp:244 ../src/interface.cpp:358
 msgid "System Monitor"
 msgstr "Monitor Sistem"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2
-#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:364
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:359
 msgid "View current processes and monitor system state"
 msgstr "Melihat proses yang sedang berjalan serta memantau keadaan sistem"
 
@@ -42,7 +42,7 @@ msgstr ""
 "Manajer;Monitor;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:317
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:299
 msgid "GNOME System Monitor"
 msgstr "GNOME Monitor Sistem"
 
@@ -104,7 +104,7 @@ msgid "Kill process"
 msgstr "Matikan proses"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:2
-msgid "Privileges are required to control other users' processes"
+msgid "Privileges are required to control other users’ processes"
 msgstr "Hak khusus diperlukan untuk mengendalikan proses milik pengguna lain"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:3
@@ -135,12 +135,12 @@ msgstr "Riwayat CPU"
 msgid "Memory and Swap History"
 msgstr "Riwayat Memori dan Swap"
 
-#: ../data/interface.ui.h:7 ../src/interface.cpp:260
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:347
+#: ../data/interface.ui.h:7 ../src/interface.cpp:258
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:340
 msgid "Memory"
 msgstr "Memori"
 
-#: ../data/interface.ui.h:8 ../src/interface.cpp:272
+#: ../data/interface.ui.h:8 ../src/interface.cpp:270
 msgid "Swap"
 msgstr "Swap"
 
@@ -148,7 +148,7 @@ msgstr "Swap"
 msgid "Network History"
 msgstr "Riwayat Jaringan"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:300
+#: ../data/interface.ui.h:10 ../src/interface.cpp:298
 msgid "Receiving"
 msgstr "Diterima"
 
@@ -156,7 +156,7 @@ msgstr "Diterima"
 msgid "Total Received"
 msgstr "Total Diterima"
 
-#: ../data/interface.ui.h:12 ../src/interface.cpp:315
+#: ../data/interface.ui.h:12 ../src/interface.cpp:312
 msgid "Sending"
 msgstr "Dikirim"
 
@@ -164,11 +164,11 @@ msgstr "Dikirim"
 msgid "Total Sent"
 msgstr "Total Dikirim"
 
-#: ../data/interface.ui.h:14 ../data/preferences.ui.h:13
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:14
 msgid "Resources"
 msgstr "Sumber Daya"
 
-#: ../data/interface.ui.h:15 ../data/preferences.ui.h:16
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:17
 msgid "File Systems"
 msgstr "Sistem Berkas"
 
@@ -328,14 +328,18 @@ msgid "_Draw CPU chart as stacked area chart"
 msgstr "Gambar _diagram CPU sebagai diagram wilayah bertumpuk"
 
 #: ../data/preferences.ui.h:12
+msgid "Draw CPU chart as s_mooth graph"
+msgstr "Ga_mbar grafik CPU sebagai grafik halus"
+
+#: ../data/preferences.ui.h:13
 msgid "_Show network speed in bits"
 msgstr "_Kecepatan jaringan dalam bita"
 
-#: ../data/preferences.ui.h:14
+#: ../data/preferences.ui.h:15
 msgid "Show _all file systems"
 msgstr "Tampilkan semua sistem berkas"
 
-#: ../data/preferences.ui.h:15
+#: ../data/preferences.ui.h:16
 msgid "File system i_nformation shown in list:"
 msgstr "I_nformasi sistem berkas yang ditampilkan dalam daftar:"
 
@@ -360,7 +364,7 @@ msgstr ""
 "angkatan (nice). Semakin rendah nilai angkatannya, maka semakin tinggi "
 "prioritasnya.</i></small>"
 
-#: ../src/application.cpp:303
+#: ../src/application.cpp:285
 msgid "A simple process and system monitor."
 msgstr "Monitor sederhana untuk proses dan sistem."
 
@@ -377,125 +381,127 @@ msgid "Show the File Systems tab"
 msgstr "Tampilkan tab Sistem Berkas"
 
 #: ../src/argv.cpp:36
-msgid "Show the application's version"
+msgid "Show the application’s version"
 msgstr "Tampilkan versi aplikasi"
 
-#: ../src/disks.cpp:361 ../src/memmaps.cpp:329
+#: ../src/disks.cpp:352 ../src/memmaps.cpp:329
 msgid "Device"
 msgstr "Perangkat"
 
-#: ../src/disks.cpp:362
+#: ../src/disks.cpp:353
 msgid "Directory"
 msgstr "Direktori"
 
-#: ../src/disks.cpp:363 ../src/gsm_color_button.c:165 ../src/openfiles.cpp:252
+#: ../src/disks.cpp:354 ../src/legacy/gsm_color_button.c:165
+#: ../src/openfiles.cpp:252
 msgid "Type"
 msgstr "Jenis"
 
-#: ../src/disks.cpp:364
+#: ../src/disks.cpp:355
 msgid "Total"
 msgstr "Total"
 
-#: ../src/disks.cpp:365
+#: ../src/disks.cpp:356
 msgid "Free"
 msgstr "Bebas"
 
-#: ../src/disks.cpp:366
+#: ../src/disks.cpp:357
 msgid "Available"
 msgstr "Tersedia"
 
-#: ../src/disks.cpp:367
+#: ../src/disks.cpp:358
 msgid "Used"
 msgstr "Dipakai"
 
-#. xgettext: ? stands for unknown
-#: ../src/e_date.c:156
-msgid "?"
-msgstr "?"
-
-#: ../src/e_date.c:163
-msgid "Today %l:%M %p"
-msgstr "Hari ini %l:%M %p"
-
-#: ../src/e_date.c:172
-msgid "Yesterday %l:%M %p"
-msgstr "Kemarin %l:%M %p"
-
-#: ../src/e_date.c:184
-msgid "%a %l:%M %p"
-msgstr "%a %l:%M %p"
-
-#: ../src/e_date.c:192
-msgid "%b %d %l:%M %p"
-msgstr "%b %d %l:%M %p"
-
-#: ../src/e_date.c:194
-msgid "%b %d %Y"
-msgstr "%b %d %Y"
-
-#: ../src/gsm_color_button.c:141
-msgid "Fraction"
-msgstr "Pembagian"
-
-#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:143
-msgid "Percentage full for pie color pickers"
-msgstr "Persentase penuh untuk penitik warna kue"
-
-#: ../src/gsm_color_button.c:150
-msgid "Title"
-msgstr "Judul"
-
-#: ../src/gsm_color_button.c:151
-msgid "The title of the color selection dialog"
-msgstr "Judul untuk dialog seleksi warna"
-
-#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:512
-msgid "Pick a Color"
-msgstr "Ambil Warna"
-
-#: ../src/gsm_color_button.c:158
-msgid "Current Color"
-msgstr "Warna Sekarang"
-
-#: ../src/gsm_color_button.c:159
-msgid "The selected color"
-msgstr "Warna yang dipilih"
-
-#: ../src/gsm_color_button.c:166
-msgid "Type of color picker"
-msgstr "Jenis penitik warna"
-
-#: ../src/gsm_color_button.c:434
-msgid "Received invalid color data\n"
-msgstr "Menerima data warna yang tidak sah\n"
-
-#: ../src/gsm_color_button.c:535
-msgid "Click to set graph colors"
-msgstr "Klik untuk menyetel warna grafik"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:187
+#: ../src/interface.cpp:185
 #, c-format
-msgid "Pick a Color for '%s'"
-msgstr "Pilih Warna untuk '%s'"
+msgid "Pick a Color for “%s”"
+msgstr "Pilih Warna untuk \"%s\""
 
-#: ../src/interface.cpp:220 ../src/procproperties.cpp:78
+#: ../src/interface.cpp:218 ../src/procproperties.cpp:78
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:222
+#: ../src/interface.cpp:220
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:374
+#: ../src/interface.cpp:369
 msgid "translator-credits"
 msgstr ""
 "Mohammad DAMT <mdamt@bisnisweb.com>, 2005\n"
 "Ahmad Riza H Nst  <ari@160c.afraid.org>, 2006\n"
 "Dirgita <dirgita@gmail.com>, 2011, 2012, 2013\n"
-"Andika Triwidada <andika@gmail.com>, 2011, 2012, 2013."
+"Andika Triwidada <andika@gmail.com>, 2011, 2012, 2013.\n"
+"Kukuh Syafaat <syafaatkukuh@gmail.com>, 2017."
+
+#. xgettext: ? stands for unknown
+#: ../src/legacy/e_date.c:156
+msgid "?"
+msgstr "?"
+
+#: ../src/legacy/e_date.c:163
+msgid "Today %l∶%M %p"
+msgstr "Hari ini %l∶%M %p"
+
+#: ../src/legacy/e_date.c:172
+msgid "Yesterday %l∶%M %p"
+msgstr "Kemarin %l∶%M %p"
+
+#: ../src/legacy/e_date.c:184
+msgid "%a %l∶%M %p"
+msgstr "%a %l∶%M %p"
+
+#: ../src/legacy/e_date.c:192
+msgid "%b %d %l∶%M %p"
+msgstr "%b %d %l∶%M %p"
+
+#: ../src/legacy/e_date.c:194
+msgid "%b %d %Y"
+msgstr "%b %d %Y"
+
+#: ../src/legacy/gsm_color_button.c:141
+msgid "Fraction"
+msgstr "Pembagian"
+
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+#: ../src/legacy/gsm_color_button.c:143
+msgid "Percentage full for pie color pickers"
+msgstr "Persentase penuh untuk penitik warna kue"
+
+#: ../src/legacy/gsm_color_button.c:150
+msgid "Title"
+msgstr "Judul"
+
+#: ../src/legacy/gsm_color_button.c:151
+msgid "The title of the color selection dialog"
+msgstr "Judul untuk dialog seleksi warna"
+
+#: ../src/legacy/gsm_color_button.c:152 ../src/legacy/gsm_color_button.c:515
+msgid "Pick a Color"
+msgstr "Ambil Warna"
+
+#: ../src/legacy/gsm_color_button.c:158
+msgid "Current Color"
+msgstr "Warna Sekarang"
+
+#: ../src/legacy/gsm_color_button.c:159
+msgid "The selected color"
+msgstr "Warna yang dipilih"
+
+#: ../src/legacy/gsm_color_button.c:166
+msgid "Type of color picker"
+msgstr "Jenis penitik warna"
+
+#: ../src/legacy/gsm_color_button.c:437
+msgid "Received invalid color data\n"
+msgstr "Menerima data warna yang tidak sah\n"
+
+#: ../src/legacy/gsm_color_button.c:538
+msgid "Click to set graph colors"
+msgstr "Klik untuk menyetel warna grafik"
 
 #: ../src/load-graph.cpp:157
 #, c-format
@@ -503,12 +509,12 @@ msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u detik"
 
-#: ../src/load-graph.cpp:366
+#: ../src/load-graph.cpp:373
 msgid "not available"
 msgstr "tak tersedia"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:369
+#: ../src/load-graph.cpp:376
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) dari %s"
@@ -589,13 +595,13 @@ msgstr "Kotoran kongsi"
 msgid "Inode"
 msgstr "Inoda"
 
-#: ../src/memmaps.cpp:440
+#: ../src/memmaps.cpp:438
 msgid "Memory Maps"
 msgstr "Peta Memori"
 
-#: ../src/memmaps.cpp:452
+#: ../src/memmaps.cpp:450
 #, c-format
-msgid "_Memory maps for process \"%s\" (PID %u):"
+msgid "_Memory maps for process “%s” (PID %u):"
 msgstr "Peta _memori untuk proses \"%s\" (PID %u):"
 
 #: ../src/openfiles.cpp:40
@@ -635,7 +641,7 @@ msgstr "Objek"
 
 #: ../src/openfiles.cpp:336
 #, c-format
-msgid "_Files opened by process \"%s\" (PID %u):"
+msgid "_Files opened by process “%s” (PID %u):"
 msgstr "_Berkas yang dibuka oleh proses \"%s\" (PID %u):"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:1
@@ -657,13 +663,13 @@ msgstr "Modus Solaris untuk persentase CPU"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:5
 msgid ""
-"If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
-"is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
-"mode'."
+"If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage "
+"is divided by the total number of CPUs. Otherwise, it operates in “Irix "
+"mode”."
 msgstr ""
-"Apabila TRUE, monitor-sistem akan beroperasi dalam 'modus Solaris', dimana "
+"Apabila TRUE, monitor-sistem akan beroperasi dalam \"mode Solaris\", dimana "
 "penggunaan CPU tugas yang dibagi dengan cacah total CPU. Selain itu, akan "
-"bekerja dalam 'modus Irix'."
+"bekerja dalam \"mode Irix\"."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:6
 msgid "Show CPU chart as stacked area chart"
@@ -678,358 +684,370 @@ msgstr ""
 "yang bertumpuk, bukan diagram garis."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:8
+msgid "Show CPU chart as smooth graph using Bezier curves"
+msgstr "Tampilkan CPU grafik sebagai grafik halus menggunakan kurva Bezier"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a smoothed graph, otherwise "
+"as a line chart."
+msgstr ""
+"Apabila TRUE, monitor-sistem menampilkan grafik CPU sebagai grafik yang "
+"dihaluskan, sebaliknya grafik garis."
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:10
 msgid "Enable/Disable smooth refresh"
 msgstr "Mengaktifkan/menonaktifkan penyegaran halus"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:11
 msgid "Show warning dialog when killing processes"
 msgstr "Tampilkan dialog peringatan saat menghentikan proses"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:10
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:12
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Jeda pembaharuan untuk proses yang ditampilkan dalam milidetik"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:11
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:13
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Jeda pembaharuan untuk grafik dalam milidetik"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:12
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:14
 msgid "Whether information about all file systems should be displayed"
 msgstr "Apakah informasi tentang semua sistem berkas harus ditampilkan"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:13
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
 msgid ""
 "Whether to display information about all file systems (including types like "
-"'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
+"“autofs” and “procfs”). Useful for getting a list of all currently mounted "
 "file systems."
 msgstr ""
 "Apakah menampilkan informasi tentang semua sistem berkas (termasuk yang "
-"berjenis 'autofs' dan 'procfs'). Sangat berguna untuk melihat semua sistem "
-"berkas yang dikaitkan."
+"berjenis \"autofs\" dan \"procfs\"). Sangat berguna untuk melihat semua "
+"sistem berkas yang dikaitkan."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:16
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Jeda pembaharuan untuk daftar perangkat dalam milidetik"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:17
 msgid "Determines which processes to show."
 msgstr "Menentukan proses mana yang ditampilkan."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:18
 msgid "Saves the currently viewed tab"
 msgstr "Simpan tab yang sekarang ditampilkan"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:19
 msgid "CPU colors"
 msgstr "Warna CPU"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:18
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:20
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr "Setiap entri dalam format (#CPU, nilai warna heksadesimal)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:21
 msgid "Default graph memory color"
 msgstr "Warna baku grafik memory"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:20
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:22
 msgid "Default graph swap color"
 msgstr "Warna utama grafik swap"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:23
 msgid "Default graph incoming network traffic color"
 msgstr "Warna utama grafik jaringan (diterima)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:24
 msgid "Default graph outgoing network traffic color"
 msgstr "Warna utama grafik jaringan (keluar)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:25
 msgid "Show network traffic in bits"
 msgstr "Menampilkan trafik jaringan dalam bit"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:24
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:26
 msgid "Process view sort column"
 msgstr "Urutan kolom proses yang ditampilkan"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:25
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:27
 msgid "Process view columns order"
 msgstr "Susunan kolom proses yang ditampilkan"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:26
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:28
 msgid "Process view sort order"
 msgstr "Susunan urut kolom proses yang ditampilkan"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:27
-msgid "Width of process 'Name' column"
-msgstr "Lebar kolom 'Nama' proses"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:28
-msgid "Show process 'Name' column on startup"
-msgstr "Tampilkan kolom 'Nama' proses pada saat mulai"
-
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:29
-msgid "Width of process 'User' column"
-msgstr "Lebar kolom 'Pengguna' proses"
+msgid "Width of process “Name” column"
+msgstr "Lebar kolom \"Nama\" proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:30
-msgid "Show process 'User' column on startup"
-msgstr "Tampilkan kolom 'Pengguna' proses pada saat mulai"
+msgid "Show process “Name” column on startup"
+msgstr "Tampilkan kolom \"Nama\" proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:31
-msgid "Width of process 'Status' column"
-msgstr "Lebar kolom 'Status' proses"
+msgid "Width of process “User” column"
+msgstr "Lebar kolom \"Pengguna\" proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:32
-msgid "Show process 'Status' column on startup"
-msgstr "Tampilkan kolom 'Status' proses pada saat mulai"
+msgid "Show process “User” column on startup"
+msgstr "Tampilkan kolom \"Pengguna\" proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:33
-msgid "Width of process 'Virtual Memory' column"
-msgstr "Lebar kolom 'Memori Virtual' proses"
+msgid "Width of process “Status” column"
+msgstr "Lebar kolom \"Status\" proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:34
-msgid "Show process 'Virtual Memory' column on startup"
-msgstr "Tampilkan kolom 'Memori Virtual' proses pada saat mulai"
+msgid "Show process “Status” column on startup"
+msgstr "Tampilkan kolom \"Status\" proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:35
-msgid "Width of process 'Resident Memory' column"
-msgstr "Lebar kolom 'Memori Menetap' proses"
+msgid "Width of process “Virtual Memory” column"
+msgstr "Lebar kolom \"Memori Virtual\" proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:36
-msgid "Show process 'Resident Memory' column on startup"
-msgstr "Tampilkan kolom 'Memori Menetap' proses pada saat mulai"
+msgid "Show process “Virtual Memory” column on startup"
+msgstr "Tampilkan kolom \"Memori Virtual\" proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:37
-msgid "Width of process 'Writable Memory' column"
-msgstr "Lebar kolom 'Memori Dapat Ditulis' proses"
+msgid "Width of process “Resident Memory” column"
+msgstr "Lebar kolom \"Memori Menetap\" proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:38
-msgid "Show process 'Writable Memory' column on startup"
-msgstr "Tampilkan kolom 'Memori Dapat Ditulis' proses pada saat mulai"
+msgid "Show process “Resident Memory” column on startup"
+msgstr "Tampilkan kolom \"Memori Menetap\" proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:39
-msgid "Width of process 'Shared Memory' column"
-msgstr "Lebar kolom 'Memori Bersama' proses"
+msgid "Width of process “Writable Memory” column"
+msgstr "Lebar kolom \"Memori Dapat Ditulis\" proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:40
-msgid "Show process 'Shared Memory' column on startup"
-msgstr "Tampilkan kolom 'Memori Bersama' proses pada saat mulai"
+msgid "Show process “Writable Memory” column on startup"
+msgstr "Tampilkan kolom \"Memori Dapat Ditulis\" proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:41
-msgid "Width of process 'X Server Memory' column"
-msgstr "Lebar kolom 'Memori Server X' proses"
+msgid "Width of process “Shared Memory” column"
+msgstr "Lebar kolom \"Memori Bersama\" proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:42
-msgid "Show process 'X Server Memory' column on startup"
-msgstr "Tampilkan kolom 'Memori Server X' proses pada saat mulai"
+msgid "Show process “Shared Memory” column on startup"
+msgstr "Tampilkan kolom \"Memori Bersama\" proses pada saat mulai"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:43
+msgid "Width of process “X Server Memory” column"
+msgstr "Lebar kolom \"Memori Server X\" proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:44
-#, no-c-format
-msgid "Width of process 'CPU %' column"
-msgstr "Lebar kolom '% CPU' proses"
+msgid "Show process “X Server Memory” column on startup"
+msgstr "Tampilkan kolom \"Memori Server X\" proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:46
 #, no-c-format
-msgid "Show process 'CPU %' column on startup"
-msgstr "Tampilkan kolom '% CPU' proses pada saat mulai"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:47
-msgid "Width of process 'CPU Time' column"
-msgstr "Lebar kolom 'Waktu CPU' proses"
+msgid "Width of process “CPU %” column"
+msgstr "Lebar kolom \"% CPU\" proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:48
-msgid "Show process 'CPU Time' column on startup"
-msgstr "Tampilkan kolom 'Waktu CPU' proses pada saat mulai"
+#, no-c-format
+msgid "Show process “CPU %” column on startup"
+msgstr "Tampilkan kolom \"% CPU\" proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:49
-msgid "Width of process 'Started' column"
-msgstr "Lebar kolom 'Dimulai' proses"
+msgid "Width of process “CPU Time” column"
+msgstr "Lebar kolom \"Waktu CPU\" proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:50
-msgid "Show process 'Started' column on startup"
-msgstr "Tampilkan kolom 'Dimulai' proses pada saat mulai"
+msgid "Show process “CPU Time” column on startup"
+msgstr "Tampilkan kolom \"Waktu CPU\" proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:51
-msgid "Width of process 'Nice' column"
-msgstr "Lebar kolom 'Nice' proses"
+msgid "Width of process “Started” column"
+msgstr "Lebar kolom ”Dimulai” proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:52
-msgid "Show process 'Nice' column on startup"
-msgstr "Tampilkan kolom 'Nice' proses pada saat mulai"
+msgid "Show process “Started” column on startup"
+msgstr "Tampilkan kolom ”Dimulai” proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:53
-msgid "Width of process 'PID' column"
-msgstr "Lebar kolom 'PID' proses"
+msgid "Width of process “Nice” column"
+msgstr "Lebar kolom ”Nice” proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:54
-msgid "Show process 'PID' column on startup"
-msgstr "Tampilkan kolom 'PID' proses pada saat mulai"
+msgid "Show process “Nice” column on startup"
+msgstr "Tampilkan kolom ”Nice” proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:55
-msgid "Width of process 'SELinux Security Context' column"
-msgstr "Lebar kolom 'Konteks Keamanan SELinux' proses"
+msgid "Width of process “PID” column"
+msgstr "Lebar kolom ”PID” proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:56
-msgid "Show process 'SELinux Security Context' column on startup"
-msgstr "Tampilkan kolom 'Konteks Keamanan SELinux' proses pada saat mulai"
+msgid "Show process “PID” column on startup"
+msgstr "Tampilkan kolom ”PID” proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:57
-msgid "Width of process 'Command Line' column"
-msgstr "Lebar kolom 'Baris Perintah' proses"
+msgid "Width of process “SELinux Security Context” column"
+msgstr "Lebar kolom ”Konteks Keamanan SELinux” proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:58
-msgid "Show process 'Command Line' column on startup"
-msgstr "Tampilkan kolom 'Baris Perintah' proses pada saat mulai"
+msgid "Show process “SELinux Security Context” column on startup"
+msgstr "Tampilkan kolom ”Konteks Keamanan SELinux” proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:59
-msgid "Width of process 'Memory' column"
-msgstr "Lebar kolom 'Memori' proses"
+msgid "Width of process “Command Line” column"
+msgstr "Lebar kolom ”Baris Perintah” proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:60
-msgid "Show process 'Memory' column on startup"
-msgstr "Tampilkan kolom 'Memori' proses pada saat mulai"
+msgid "Show process “Command Line” column on startup"
+msgstr "Tampilkan kolom ”Baris Perintah” proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:61
-msgid "Width of process 'Waiting Channel' column"
-msgstr "Lebar kolom proses 'Kanal Tunggu'"
+msgid "Width of process “Memory” column"
+msgstr "Lebar kolom ”Memori” proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:62
-msgid "Show process 'Waiting Channel' column on startup"
-msgstr "Tampilkan kolom proses 'Kanal Tunggu' pada saat mulai"
+msgid "Show process “Memory” column on startup"
+msgstr "Tampilkan kolom ”Memori” proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:63
-msgid "Width of process 'Control Group' column"
-msgstr "Lebar kolom 'Control Group' proses"
+msgid "Width of process “Waiting Channel” column"
+msgstr "Lebar kolom proses ”Kanal Tunggu”"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:64
-msgid "Show process 'Control Group' column on startup"
-msgstr "Tampilkan kolom 'Control Group' proses pada saat mulai"
+msgid "Show process “Waiting Channel” column on startup"
+msgstr "Tampilkan kolom proses ”Kanal Tunggu” pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:65
-msgid "Width of process 'Unit' column"
-msgstr "Lebar kolom 'Unit' proses"
+msgid "Width of process “Control Group” column"
+msgstr "Lebar kolom ”Grup Kontrol” proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:66
-msgid "Show process 'Unit' column on startup"
-msgstr "Tampilkan kolom 'Unit' proses pada saat mulai"
+msgid "Show process “Control Group” column on startup"
+msgstr "Tampilkan kolom ”Grup Kontrol” proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:67
-msgid "Width of process 'Session' column"
-msgstr "Lebar kolom 'Sesi' proses"
+msgid "Width of process “Unit” column"
+msgstr "Lebar kolom ”Unit” proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:68
-msgid "Show process 'Session' column on startup"
-msgstr "Tampilkan kolom 'Sesi' proses pada saat mulai"
+msgid "Show process “Unit” column on startup"
+msgstr "Tampilkan kolom ”Unit” proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:69
-msgid "Width of process 'Seat' column"
-msgstr "Lebar kolom 'Seat' proses"
+msgid "Width of process “Session” column"
+msgstr "Lebar kolom ”Sesi” proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:70
-msgid "Show process 'Seat' column on startup"
-msgstr "Tampilkan kolom 'Seat' proses pada saat mulai"
+msgid "Show process “Session” column on startup"
+msgstr "Tampilkan kolom ”Sesi” proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:71
-msgid "Width of process 'Owner' column"
-msgstr "Lebar kolom 'Pemilik' proses"
+msgid "Width of process “Seat” column"
+msgstr "Lebar kolom ”Seat” proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:72
-msgid "Show process 'Owner' column on startup"
-msgstr "Tampilkan kolom 'Pemilik' proses pada saat mulai"
+msgid "Show process “Seat” column on startup"
+msgstr "Tampilkan kolom ”Seat” proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:73
-msgid "Width of process 'Priority' column"
-msgstr "Lebar kolom 'Prioritas' proses"
+msgid "Width of process “Owner” column"
+msgstr "Lebar kolom ”Pemilik” proses"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:74
-msgid "Show process 'Priority' column on startup"
-msgstr "Tampilkan kolom 'Prioritas' proses pada saat mulai"
+msgid "Show process “Owner” column on startup"
+msgstr "Tampilkan kolom ”Pemilik” proses pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:75
+msgid "Width of process “Priority” column"
+msgstr "Lebar kolom ”Prioritas” proses"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
+msgid "Show process “Priority” column on startup"
+msgstr "Tampilkan kolom ”Prioritas” proses pada saat mulai"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
 msgid "Disk view sort column"
 msgstr "Kolom pengurutan tilikan disk"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
 msgid "Disk view sort order"
 msgstr "Urutan tilikan disk"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
 msgid "Disk view columns order"
 msgstr "Urutan kolom diska yang ditampilkan"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
-msgid "Width of disk view 'Device' column"
-msgstr "Lebar kolom 'Perangkat' tilikan diska"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
-msgid "Show disk view 'Device' column on startup"
-msgstr "Tampilkan kolom 'Perangkat' tilikan diska pada saat mulai"
-
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
-msgid "Width of disk view 'Directory' column"
-msgstr "Lebar kolom 'Direktori' tilikan diska"
+msgid "Width of disk view “Device” column"
+msgstr "Lebar kolom ”Perangkat” tilikan diska"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
-msgid "Show disk view 'Directory' column on startup"
-msgstr "Tampilkan kolom 'Direktori' tilikan diska pada saat mulai"
+msgid "Show disk view “Device” column on startup"
+msgstr "Tampilkan kolom ”Perangkat” tilikan diska pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
-msgid "Width of disk view 'Type' column"
-msgstr "Lebar kolom 'Tipe' tilikan diska"
+msgid "Width of disk view “Directory” column"
+msgstr "Lebar kolom ”Direktori” tilikan diska"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
-msgid "Show disk view 'Type' column on startup"
-msgstr "Tampilkan kolom 'Tipe' tilikan diska pada saat mulai"
+msgid "Show disk view “Directory” column on startup"
+msgstr "Tampilkan kolom ”Direktori” tilikan diska pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
-msgid "Width of disk view 'Total' column"
-msgstr "Lebar kolom 'Total' tilikan diska"
+msgid "Width of disk view “Type” column"
+msgstr "Lebar kolom ”Tipe” tilikan diska"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
-msgid "Show disk view 'Total' column on startup"
-msgstr "Tampilkan kolom 'Total' tilikan diska pada saat mulai"
+msgid "Show disk view “Type” column on startup"
+msgstr "Tampilkan kolom ”Tipe” tilikan diska pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
-msgid "Width of disk view 'Free' column"
-msgstr "Lebar kolom 'Bebas' tilikan diska"
+msgid "Width of disk view “Total” column"
+msgstr "Lebar kolom ”Total” tilikan diska"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
-msgid "Show disk view 'Free' column on startup"
-msgstr "Tampilkan kolom 'Bebas' tilikan diska pada saat mulai"
+msgid "Show disk view “Total” column on startup"
+msgstr "Tampilkan kolom ”Total” tilikan diska pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
-msgid "Width of disk view 'Available' column"
-msgstr "Lebar kolom 'Tersedia' tilikan diska"
+msgid "Width of disk view “Free” column"
+msgstr "Lebar kolom ”Bebas” tilikan diska"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
-msgid "Show disk view 'Available' column on startup"
-msgstr "Tampilkan kolom 'Tersedia' tilikan diska pada saat mulai"
+msgid "Show disk view “Free” column on startup"
+msgstr "Tampilkan kolom ”Bebas” tilikan diska pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
-msgid "Width of disk view 'Used' column"
-msgstr "Lebar kolom 'Terpakai' tilikan diska"
+msgid "Width of disk view “Available” column"
+msgstr "Lebar kolom ”Tersedia” tilikan diska"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
-msgid "Show disk view 'Used' column on startup"
-msgstr "Tampilkan kolom 'Terpakai' tilikan diska pada saat mulai"
+msgid "Show disk view “Available” column on startup"
+msgstr "Tampilkan kolom ”Tersedia” tilikan diska pada saat mulai"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
+msgid "Width of disk view “Used” column"
+msgstr "Lebar kolom ”Terpakai” tilikan diska"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
+msgid "Show disk view “Used” column on startup"
+msgstr "Tampilkan kolom ”Terpakai” tilikan diska pada saat mulai"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
 msgid "Memory map sort column"
 msgstr "Kolom pengurutan peta memori"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
 msgid "Memory map sort order"
 msgstr "Urutan peta memori"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:96
 msgid "Open files sort column"
 msgstr "Kolom pengurutan berkas terbuka"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:97
 msgid "Open files sort order"
 msgstr "Urutan berkas terbuka"
 
-#: ../src/prefsdialog.cpp:171
+#: ../src/prefsdialog.cpp:168
 msgid "Icon"
 msgstr "Ikon"
 
@@ -1163,100 +1181,100 @@ msgstr ""
 msgid "N/A"
 msgstr "N/A"
 
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:325
 msgid "Process Name"
 msgstr "Nama Proses"
 
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:333
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:326
 msgid "User"
 msgstr "Pengguna"
 
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:327
 msgid "Status"
 msgstr "Status"
 
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:328
 msgid "Virtual Memory"
 msgstr "Memori Virtual"
 
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:329
 msgid "Resident Memory"
 msgstr "Memori Bertetap"
 
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:330
 msgid "Writable Memory"
 msgstr "Memori Dapat Ditulis"
 
-#: ../src/procproperties.cpp:74 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:331
 msgid "Shared Memory"
 msgstr "Memori Berbagi"
 
-#: ../src/procproperties.cpp:76 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:332
 msgid "X Server Memory"
 msgstr "Memori Server X"
 
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:341
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:334
 msgid "CPU Time"
 msgstr "Waktu CPU"
 
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:342
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:335
 msgid "Started"
 msgstr "Dimulai"
 
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:343
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:336
 msgid "Nice"
 msgstr "Angkatan"
 
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:357
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:350
 msgid "Priority"
 msgstr "Prioritas"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:344
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:337
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:345
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:338
 msgid "Security Context"
 msgstr "Konteks Keamanan"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:346
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:339
 msgid "Command Line"
 msgstr "Baris Perintah"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:349
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:342
 msgid "Waiting Channel"
 msgstr "Kanal Tunggu"
 
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:350
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:343
 msgid "Control Group"
-msgstr "Control Group"
+msgstr "Grup Kontrol"
 
 #: ../src/procproperties.cpp:199
 #, c-format
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:340
+#: ../src/proctable.cpp:333
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:351
+#: ../src/proctable.cpp:344
 msgid "Unit"
 msgstr "Unit"
 
-#: ../src/proctable.cpp:352
+#: ../src/proctable.cpp:345
 msgid "Session"
 msgstr "Sesi"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:355
+#: ../src/proctable.cpp:348
 msgid "Seat"
 msgstr "Seat"
 
-#: ../src/proctable.cpp:356
+#: ../src/proctable.cpp:349
 msgid "Owner"
 msgstr "Pemilik"
 
