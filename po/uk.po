@@ -3,14 +3,13 @@
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2008
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011, 2012.
 # Re. <ted.korostiled@gmail.com>, 2012.
-# Daniel Korostil <ted.korostiled@gmail.com>, 2013, 2014, 2016.
+# Daniel Korostil <ted.korostiled@gmail.com>, 2013, 2014, 2016, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
-"monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-08-20 12:40+0000\n"
-"PO-Revision-Date: 2016-09-15 21:48+0300\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-20 11:35+0200\n"
+"PO-Revision-Date: 2017-03-20 11:42+0300\n"
 "Last-Translator: Daniel Korostil <ted.korostiled@gmail.com>\n"
 "Language-Team: linux.org.ua\n"
 "Language: uk\n"
@@ -23,12 +22,12 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/application.cpp:262 ../src/interface.cpp:363
+#: ../src/application.cpp:244 ../src/interface.cpp:358
 msgid "System Monitor"
 msgstr "Системний монітор"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2
-#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:364
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:359
 msgid "View current processes and monitor system state"
 msgstr "Перегляд поточних процесів та контроль стану системи"
 
@@ -41,7 +40,7 @@ msgstr ""
 "Менеджер;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:317
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:299
 msgid "GNOME System Monitor"
 msgstr "Системний монітор GNOME"
 
@@ -80,17 +79,14 @@ msgstr ""
 "комп'ютері, зокрема використання мережі, пам'яті, процесора."
 
 #: ../gnome-system-monitor.appdata.xml.in.h:6
-#| msgid "Process view sort order"
 msgid "Process list view"
 msgstr "Огляд переліку процесів"
 
 #: ../gnome-system-monitor.appdata.xml.in.h:7
-#| msgid "Resources"
 msgid "Resources overview"
 msgstr "Огляд ресурсів"
 
 #: ../gnome-system-monitor.appdata.xml.in.h:8
-#| msgid "File Systems"
 msgid "File Systems view"
 msgstr "Огляд файлової системи"
 
@@ -103,7 +99,7 @@ msgid "Kill process"
 msgstr "Вбити процес"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:2
-msgid "Privileges are required to control other users' processes"
+msgid "Privileges are required to control other users’ processes"
 msgstr "Потрібні права, щоб опанувати процеси інших користувачів"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:3
@@ -134,12 +130,12 @@ msgstr "Історія ЦП"
 msgid "Memory and Swap History"
 msgstr "Історія пам'яті та свопінгу"
 
-#: ../data/interface.ui.h:7 ../src/interface.cpp:260
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:349
+#: ../data/interface.ui.h:7 ../src/interface.cpp:258
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:340
 msgid "Memory"
 msgstr "Пам'ять"
 
-#: ../data/interface.ui.h:8 ../src/interface.cpp:272
+#: ../data/interface.ui.h:8 ../src/interface.cpp:270
 msgid "Swap"
 msgstr "Swap"
 
@@ -147,7 +143,7 @@ msgstr "Swap"
 msgid "Network History"
 msgstr "Історія мережі"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:300
+#: ../data/interface.ui.h:10 ../src/interface.cpp:298
 msgid "Receiving"
 msgstr "Отримання"
 
@@ -155,7 +151,7 @@ msgstr "Отримання"
 msgid "Total Received"
 msgstr "Всього отримано"
 
-#: ../data/interface.ui.h:12 ../src/interface.cpp:315
+#: ../data/interface.ui.h:12 ../src/interface.cpp:312
 msgid "Sending"
 msgstr "Надсилання"
 
@@ -163,11 +159,11 @@ msgstr "Надсилання"
 msgid "Total Sent"
 msgstr "Всього надіслано"
 
-#: ../data/interface.ui.h:14 ../data/preferences.ui.h:13
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:14
 msgid "Resources"
 msgstr "Ресурси"
 
-#: ../data/interface.ui.h:15 ../data/preferences.ui.h:16
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:17
 msgid "File Systems"
 msgstr "Файлові системи"
 
@@ -327,14 +323,18 @@ msgid "_Draw CPU chart as stacked area chart"
 msgstr "_Малювати діаграму процесора як багатоярусну діаграму"
 
 #: ../data/preferences.ui.h:12
+msgid "Draw CPU chart as s_mooth graph"
+msgstr "Малювати діаграму процесора як _багатоярусну діаграму"
+
+#: ../data/preferences.ui.h:13
 msgid "_Show network speed in bits"
 msgstr "_Показати швидкість мережі у бітах"
 
-#: ../data/preferences.ui.h:14
+#: ../data/preferences.ui.h:15
 msgid "Show _all file systems"
 msgstr "Показати _усі файлові системи"
 
-#: ../data/preferences.ui.h:15
+#: ../data/preferences.ui.h:16
 msgid "File system i_nformation shown in list:"
 msgstr "Ін_формація про файлову систему зі списку:"
 
@@ -359,7 +359,7 @@ msgstr ""
 "процесу. Менший рівень люб'язності відповідає за вищий рівень процесу.</i></"
 "small>"
 
-#: ../src/application.cpp:303
+#: ../src/application.cpp:285
 msgid "A simple process and system monitor."
 msgstr "Простий монітор процесів та системи."
 
@@ -376,125 +376,126 @@ msgid "Show the File Systems tab"
 msgstr "Показати вкладку «Файлові системи»"
 
 #: ../src/argv.cpp:36
-msgid "Show the application's version"
+msgid "Show the application’s version"
 msgstr "Показати версію програми"
 
-#: ../src/disks.cpp:361 ../src/memmaps.cpp:329
+#: ../src/disks.cpp:352 ../src/memmaps.cpp:329
 msgid "Device"
 msgstr "Пристрій"
 
-#: ../src/disks.cpp:362
+#: ../src/disks.cpp:353
 msgid "Directory"
 msgstr "Каталог"
 
-#: ../src/disks.cpp:363 ../src/gsm_color_button.c:165 ../src/openfiles.cpp:252
+#: ../src/disks.cpp:354 ../src/legacy/gsm_color_button.c:165
+#: ../src/openfiles.cpp:252
 msgid "Type"
 msgstr "Тип"
 
-#: ../src/disks.cpp:364
+#: ../src/disks.cpp:355
 msgid "Total"
 msgstr "Всього"
 
-#: ../src/disks.cpp:365
+#: ../src/disks.cpp:356
 msgid "Free"
 msgstr "Вільно"
 
-#: ../src/disks.cpp:366
+#: ../src/disks.cpp:357
 msgid "Available"
 msgstr "Доступно"
 
-#: ../src/disks.cpp:367
+#: ../src/disks.cpp:358
 msgid "Used"
 msgstr "Використано"
 
-#. xgettext: ? stands for unknown
-#: ../src/e_date.c:156
-msgid "?"
-msgstr "?"
-
-#: ../src/e_date.c:163
-msgid "Today %l:%M %p"
-msgstr "Сьогодні %H:%M"
-
-#: ../src/e_date.c:172
-msgid "Yesterday %l:%M %p"
-msgstr "Вчора %H:%M"
-
-#: ../src/e_date.c:184
-msgid "%a %l:%M %p"
-msgstr "%a %H:%M"
-
-#: ../src/e_date.c:192
-msgid "%b %d %l:%M %p"
-msgstr "%d %b %H:%M"
-
-#: ../src/e_date.c:194
-msgid "%b %d %Y"
-msgstr "%d %b %Y"
-
-#: ../src/gsm_color_button.c:141
-msgid "Fraction"
-msgstr "Частка"
-
-#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:143
-msgid "Percentage full for pie color pickers"
-msgstr "Відсоток повний для секторної кольорової діаграми"
-
-#: ../src/gsm_color_button.c:150
-msgid "Title"
-msgstr "Заголовок"
-
-#: ../src/gsm_color_button.c:151
-msgid "The title of the color selection dialog"
-msgstr "Заголовок вікна вибору кольору"
-
-#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:515
-msgid "Pick a Color"
-msgstr "Виберіть колір"
-
-#: ../src/gsm_color_button.c:158
-msgid "Current Color"
-msgstr "Поточний колір"
-
-#: ../src/gsm_color_button.c:159
-msgid "The selected color"
-msgstr "Вибраний колір"
-
-#: ../src/gsm_color_button.c:166
-msgid "Type of color picker"
-msgstr "Тип вибирання кольору"
-
-#: ../src/gsm_color_button.c:437
-msgid "Received invalid color data\n"
-msgstr "Отримано некоректні дані кольору\n"
-
-#: ../src/gsm_color_button.c:538
-msgid "Click to set graph colors"
-msgstr "Клацніть для зміни кольорів графіку"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:187
+#: ../src/interface.cpp:185
 #, c-format
-msgid "Pick a Color for '%s'"
+msgid "Pick a Color for “%s”"
 msgstr "Підібрати колір для «%s»"
 
-#: ../src/interface.cpp:220 ../src/procproperties.cpp:78
+#: ../src/interface.cpp:218 ../src/procproperties.cpp:78
 msgid "CPU"
 msgstr "Процесор"
 
-#: ../src/interface.cpp:222
+#: ../src/interface.cpp:220
 #, c-format
 msgid "CPU%d"
 msgstr "ЦП%d"
 
-#: ../src/interface.cpp:374
+#: ../src/interface.cpp:369
 msgid "translator-credits"
 msgstr ""
 "Юрій Сирота\n"
 "Кирило Полежаєв <polezhajev@ukr.net>\n"
 "Максим Дзюманенко <dziumanenko@gmail.com>\n"
 "Daniel Korostil <ted.korostiled@gmail.com>"
+
+#. xgettext: ? stands for unknown
+#: ../src/legacy/e_date.c:156
+msgid "?"
+msgstr "?"
+
+#: ../src/legacy/e_date.c:163
+msgid "Today %l∶%M %p"
+msgstr "Сьогодні %H:%M"
+
+#: ../src/legacy/e_date.c:172
+msgid "Yesterday %l∶%M %p"
+msgstr "Вчора %H:%M"
+
+#: ../src/legacy/e_date.c:184
+msgid "%a %l∶%M %p"
+msgstr "%a %H:%M"
+
+#: ../src/legacy/e_date.c:192
+msgid "%b %d %l∶%M %p"
+msgstr "%d %b %H:%M"
+
+#: ../src/legacy/e_date.c:194
+msgid "%b %d %Y"
+msgstr "%d %b %Y"
+
+#: ../src/legacy/gsm_color_button.c:141
+msgid "Fraction"
+msgstr "Частка"
+
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+#: ../src/legacy/gsm_color_button.c:143
+msgid "Percentage full for pie color pickers"
+msgstr "Відсоток повний для секторної кольорової діаграми"
+
+#: ../src/legacy/gsm_color_button.c:150
+msgid "Title"
+msgstr "Заголовок"
+
+#: ../src/legacy/gsm_color_button.c:151
+msgid "The title of the color selection dialog"
+msgstr "Заголовок вікна вибору кольору"
+
+#: ../src/legacy/gsm_color_button.c:152 ../src/legacy/gsm_color_button.c:515
+msgid "Pick a Color"
+msgstr "Виберіть колір"
+
+#: ../src/legacy/gsm_color_button.c:158
+msgid "Current Color"
+msgstr "Поточний колір"
+
+#: ../src/legacy/gsm_color_button.c:159
+msgid "The selected color"
+msgstr "Вибраний колір"
+
+#: ../src/legacy/gsm_color_button.c:166
+msgid "Type of color picker"
+msgstr "Тип вибирання кольору"
+
+#: ../src/legacy/gsm_color_button.c:437
+msgid "Received invalid color data\n"
+msgstr "Отримано некоректні дані кольору\n"
+
+#: ../src/legacy/gsm_color_button.c:538
+msgid "Click to set graph colors"
+msgstr "Клацніть для зміни кольорів графіку"
 
 #: ../src/load-graph.cpp:157
 #, c-format
@@ -504,12 +505,12 @@ msgstr[0] "%u секунда"
 msgstr[1] "%u секунди"
 msgstr[2] "%u секунд"
 
-#: ../src/load-graph.cpp:366
+#: ../src/load-graph.cpp:373
 msgid "not available"
 msgstr "недоступно"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:369
+#: ../src/load-graph.cpp:376
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) з %s"
@@ -594,14 +595,14 @@ msgstr "Спільна змінена"
 msgid "Inode"
 msgstr "Вузол I"
 
-#: ../src/memmaps.cpp:440
+#: ../src/memmaps.cpp:438
 msgid "Memory Maps"
 msgstr "Відбиття пам'яті"
 
-#: ../src/memmaps.cpp:452
+#: ../src/memmaps.cpp:450
 #, c-format
-msgid "_Memory maps for process \"%s\" (PID %u):"
-msgstr "Мап _пам'яті процесу \"%s\" (PID %u):"
+msgid "_Memory maps for process “%s” (PID %u):"
+msgstr "Відбиття _пам'яті процесу «%s» (PID %u):"
 
 #: ../src/openfiles.cpp:40
 msgid "file"
@@ -640,8 +641,8 @@ msgstr "Об'єкт"
 
 #: ../src/openfiles.cpp:336
 #, c-format
-msgid "_Files opened by process \"%s\" (PID %u):"
-msgstr "_Файли, що відкриті процесом \"%s\" (PID %u):"
+msgid "_Files opened by process “%s” (PID %u):"
+msgstr "_Файли, що відкриті процесом «%s» (PID %u):"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:1
 msgid "Main window size and position in the form (width, height, xpos, ypos)"
@@ -663,9 +664,9 @@ msgstr "Режим Solaris для показника використання п
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:5
 msgid ""
-"If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
-"is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
-"mode'."
+"If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage "
+"is divided by the total number of CPUs. Otherwise, it operates in “Irix "
+"mode”."
 msgstr ""
 "Якщо зазначено, системний монітор працює у режимі «Solaris», у якому "
 "використання процесору ділиться на загальну кількість процесорів. У іншому "
@@ -684,360 +685,371 @@ msgstr ""
 "замість лінійної."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:8
+msgid "Show CPU chart as smooth graph using Bezier curves"
+msgstr "Показати діаграму процесора як багатоярусну діаграму через криві Безьє"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a smoothed graph, otherwise "
+"as a line chart."
+msgstr ""
+"Якщо вказано, діаграму процесора буде показано як багатоярусну діаграму "
+"замість лінійної."
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:10
 msgid "Enable/Disable smooth refresh"
 msgstr "Увімкнути/вимкнути плавне оновлення"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:11
 msgid "Show warning dialog when killing processes"
 msgstr "Показувати вікно попередження при вбиванні процесів"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:10
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:12
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Період оновлення огляду процесів (у мілісекундах)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:11
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:13
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Період оновлення графіків (у мілісекундах)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:12
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:14
 msgid "Whether information about all file systems should be displayed"
 msgstr "Чи буде показуватись інформація про усі файлові системи"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:13
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
 msgid ""
 "Whether to display information about all file systems (including types like "
-"'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
+"“autofs” and “procfs”). Useful for getting a list of all currently mounted "
 "file systems."
 msgstr ""
 "Чи буде показана інформація про усі файлові системи (враховуючи такі типи "
 "файлових систем, як «autofs» та «procfs»). Може бути корисно для одержання "
 "списку усіх змонтованих файлових систем."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:16
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Період оновлення переліку пристроїв (у мілісекундах)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:17
 msgid "Determines which processes to show."
 msgstr "Визначає, які процеси показувати."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:18
 msgid "Saves the currently viewed tab"
 msgstr "Зберігає поточну активну вкладку"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:19
 msgid "CPU colors"
 msgstr "Кольори процесорів"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:18
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:20
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr "Кожен запис у форматі (CPU#, шістнадцяткове колірне значення)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:21
 msgid "Default graph memory color"
 msgstr "Типовий колір графіку пам'яті"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:20
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:22
 msgid "Default graph swap color"
 msgstr "Типовий колір графіку свопінгу"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:23
 msgid "Default graph incoming network traffic color"
 msgstr "Типовий колір графіку вхідного трафіку мережі"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:24
 msgid "Default graph outgoing network traffic color"
 msgstr "Типовий колір графіку вхідного трафіку мережі"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:25
 msgid "Show network traffic in bits"
 msgstr "Показати мережевий трафік у бітах"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:24
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:26
 msgid "Process view sort column"
 msgstr "Стовпчик впорядкування переліку процесів"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:25
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:27
 msgid "Process view columns order"
 msgstr "Порядок стовпчиків перегляду процесів"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:26
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:28
 msgid "Process view sort order"
 msgstr "Порядок впорядкування переліку процесів"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:27
-msgid "Width of process 'Name' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:29
+msgid "Width of process “Name” column"
 msgstr "Ширина стовпчика назви процесу"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:28
-msgid "Show process 'Name' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:30
+msgid "Show process “Name” column on startup"
 msgstr "Показувати під час запуску стовпчик назв процесів"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:29
-msgid "Width of process 'User' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:31
+msgid "Width of process “User” column"
 msgstr "Ширина стовпчика власника процесу"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:30
-msgid "Show process 'User' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:32
+msgid "Show process “User” column on startup"
 msgstr "Показувати під час запуску стовпчик власника процесів"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:31
-msgid "Width of process 'Status' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:33
+msgid "Width of process “Status” column"
 msgstr "Ширина стовпчика стану процесу"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:32
-msgid "Show process 'Status' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:34
+msgid "Show process “Status” column on startup"
 msgstr "Показувати під час запуску стовпчик стану процесу"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:33
-msgid "Width of process 'Virtual Memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:35
+msgid "Width of process “Virtual Memory” column"
 msgstr "Ширина стовпчика віртуальної пам'яті процесу"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:34
-msgid "Show process 'Virtual Memory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:36
+msgid "Show process “Virtual Memory” column on startup"
 msgstr "Показувати під час запуску стовпчик віртуальної пам'яті процесів"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:35
-msgid "Width of process 'Resident Memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:37
+msgid "Width of process “Resident Memory” column"
 msgstr "Ширина стовпчика резидентної пам'яті процесу"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:36
-msgid "Show process 'Resident Memory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:38
+msgid "Show process “Resident Memory” column on startup"
 msgstr "Показувати під час запуску стовпчик резидентної пам'яті"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:37
-msgid "Width of process 'Writable Memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:39
+msgid "Width of process “Writable Memory” column"
 msgstr "Ширина стовпчика доступної для запису пам'яті"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:38
-msgid "Show process 'Writable Memory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:40
+msgid "Show process “Writable Memory” column on startup"
 msgstr ""
 "Показувати під час запуску стовпчик пам'яті процесу доступної для запису"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:39
-msgid "Width of process 'Shared Memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:41
+msgid "Width of process “Shared Memory” column"
 msgstr "Ширина стовпчика спільної пам'яті процесу"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:40
-msgid "Show process 'Shared Memory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:42
+msgid "Show process “Shared Memory” column on startup"
 msgstr "Показувати під час запуску стовпчик спільної пам'яті процесів"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:41
-msgid "Width of process 'X Server Memory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:43
+msgid "Width of process “X Server Memory” column"
 msgstr "Ширина стовпчика процесу пам'яті сервера X"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:42
-msgid "Show process 'X Server Memory' column on startup"
-msgstr "Показувати під час запуску стовпчик використання пам'яті сервера X"
-
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:44
-#, no-c-format
-msgid "Width of process 'CPU %' column"
-msgstr "Ширина стовпчика завантаження ЦП"
+msgid "Show process “X Server Memory” column on startup"
+msgstr "Показувати під час запуску стовпчик використання пам'яті сервера X"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:46
 #, no-c-format
-msgid "Show process 'CPU %' column on startup"
-msgstr "Показувати під час запуску стовпчик використання процесору."
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:47
-msgid "Width of process 'CPU Time' column"
-msgstr "Ширина стовпчика часу зайнятості процесора процесом"
+msgid "Width of process “CPU %” column"
+msgstr "Ширина стовпчика завантаження ЦП"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:48
-msgid "Show process 'CPU Time' column on startup"
-msgstr "Показувати під час запуску стовпчик часу процесора"
+#, no-c-format
+msgid "Show process “CPU %” column on startup"
+msgstr "Показувати під час запуску стовпчик використання процесору."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:49
-msgid "Width of process 'Started' column"
-msgstr "Ширина стовпчика часу запуску процесу"
+msgid "Width of process “CPU Time” column"
+msgstr "Ширина стовпчика часу зайнятості процесора процесом"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:50
-msgid "Show process 'Started' column on startup"
-msgstr "Показувати під час запуску стовпчик часу запуску процесу"
+msgid "Show process “CPU Time” column on startup"
+msgstr "Показувати під час запуску стовпчик часу процесора"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:51
-msgid "Width of process 'Nice' column"
-msgstr "Ширина стовпчика люб'язності процесу"
+msgid "Width of process “Started” column"
+msgstr "Ширина стовпчика часу запуску процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:52
-msgid "Show process 'Nice' column on startup"
-msgstr "Показувати під час запуску стовпчик значення люб'язності до процесів"
+msgid "Show process “Started” column on startup"
+msgstr "Показувати під час запуску стовпчик часу запуску процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:53
-msgid "Width of process 'PID' column"
-msgstr "Ширина стовпчика процесу PID"
+msgid "Width of process “Nice” column"
+msgstr "Ширина стовпчика люб'язності процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:54
-msgid "Show process 'PID' column on startup"
-msgstr "Показувати під час запуску процесу PID"
+msgid "Show process “Nice” column on startup"
+msgstr "Показувати під час запуску стовпчик значення люб'язності до процесів"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:55
-msgid "Width of process 'SELinux Security Context' column"
-msgstr "Ширина стовпчика контексту процесу SELinux"
+msgid "Width of process “PID” column"
+msgstr "Ширина стовпчика процесу PID"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:56
-msgid "Show process 'SELinux Security Context' column on startup"
-msgstr ""
-"Показувати під час запуску стовпчик контекстів безпеки процесів SELinux"
+msgid "Show process “PID” column on startup"
+msgstr "Показувати під час запуску процесу PID"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:57
-msgid "Width of process 'Command Line' column"
-msgstr "Ширина стовпчика командної ліній процесу"
+msgid "Width of process “SELinux Security Context” column"
+msgstr "Ширина стовпчика контексту процесу SELinux"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:58
-msgid "Show process 'Command Line' column on startup"
-msgstr "Показувати під час запуску стовпчик командної лінії процесу"
+msgid "Show process “SELinux Security Context” column on startup"
+msgstr "Показувати під час запуску стовпчик контекстів безпеки процесів SELinux"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:59
-msgid "Width of process 'Memory' column"
-msgstr "Ширина стовпчика пам'яті процесу"
+msgid "Width of process “Command Line” column"
+msgstr "Ширина стовпчика командної ліній процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:60
-msgid "Show process 'Memory' column on startup"
-msgstr "Показувати під час запуску стовпчик пам'яті процесу"
+msgid "Show process “Command Line” column on startup"
+msgstr "Показувати під час запуску стовпчик командної лінії процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:61
-msgid "Width of process 'Waiting Channel' column"
-msgstr "Ширина стовпчика очікуваного каналу для процесу"
+msgid "Width of process “Memory” column"
+msgstr "Ширина стовпчика пам'яті процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:62
-msgid "Show process 'Waiting Channel' column on startup"
-msgstr "Показувати під час запуску стовпчик очікуваного каналу для процесу"
+msgid "Show process “Memory” column on startup"
+msgstr "Показувати під час запуску стовпчик пам'яті процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:63
-msgid "Width of process 'Control Group' column"
-msgstr "Ширина стовпчика групи контрою для процесу"
+msgid "Width of process “Waiting Channel” column"
+msgstr "Ширина стовпчика очікуваного каналу для процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:64
-msgid "Show process 'Control Group' column on startup"
-msgstr "Показувати під час запуску стовпчик групи контрою для процесу"
+msgid "Show process “Waiting Channel” column on startup"
+msgstr "Показувати під час запуску стовпчик очікуваного каналу для процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:65
-msgid "Width of process 'Unit' column"
-msgstr "Ширина стовпчика одиниці процесу"
+msgid "Width of process “Control Group” column"
+msgstr "Ширина стовпчика групи контрою для процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:66
-msgid "Show process 'Unit' column on startup"
-msgstr "Показувати під час запуску стовпчик одиниці процесу"
+msgid "Show process “Control Group” column on startup"
+msgstr "Показувати під час запуску стовпчик групи контрою для процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:67
-msgid "Width of process 'Session' column"
-msgstr "Ширина стовпчика сеансу процесу"
+msgid "Width of process “Unit” column"
+msgstr "Ширина стовпчика одиниці процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:68
-msgid "Show process 'Session' column on startup"
-msgstr "Показувати під час запуску стовпчик сеансу процесу"
+msgid "Show process “Unit” column on startup"
+msgstr "Показувати під час запуску стовпчик одиниці процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:69
-msgid "Width of process 'Seat' column"
-msgstr "Ширина стовпчика місце процесу"
+msgid "Width of process “Session” column"
+msgstr "Ширина стовпчика сеансу процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:70
-msgid "Show process 'Seat' column on startup"
-msgstr "Показувати під час запуску стовпчик місце процесу"
+msgid "Show process “Session” column on startup"
+msgstr "Показувати під час запуску стовпчик сеансу процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:71
-msgid "Width of process 'Owner' column"
-msgstr "Ширина стовпчика власника процесу"
+msgid "Width of process “Seat” column"
+msgstr "Ширина стовпчика місце процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:72
-msgid "Show process 'Owner' column on startup"
-msgstr "Показувати під час запуску стовпчик власника процесів"
+msgid "Show process “Seat” column on startup"
+msgstr "Показувати під час запуску стовпчик місце процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:73
-msgid "Width of process 'Priority' column"
-msgstr "Ширина стовпчика пріоритет процесу"
+msgid "Width of process “Owner” column"
+msgstr "Ширина стовпчика власника процесу"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:74
-msgid "Show process 'Priority' column on startup"
-msgstr "Показувати під час запуску стовпчик пріоритет процесів"
+msgid "Show process “Owner” column on startup"
+msgstr "Показувати під час запуску стовпчик власника процесів"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:75
+msgid "Width of process “Priority” column"
+msgstr "Ширина стовпчика пріоритет процесу"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
+msgid "Show process “Priority” column on startup"
+msgstr "Показувати під час запуску стовпчик пріоритет процесів"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
 msgid "Disk view sort column"
 msgstr "Стовпчик впорядкування переліку дисків"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
 msgid "Disk view sort order"
 msgstr "Порядок впорядкування переліку дисків"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
 msgid "Disk view columns order"
 msgstr "Порядок стовпчиків перегляду дисків"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
-msgid "Width of disk view 'Device' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
+msgid "Width of disk view “Device” column"
 msgstr "Ширина стовпчика «Пристрій»"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
-msgid "Show disk view 'Device' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
+msgid "Show disk view “Device” column on startup"
 msgstr "Показувати під час запуску стовпчик «Пристрій»"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
-msgid "Width of disk view 'Directory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
+msgid "Width of disk view “Directory” column"
 msgstr "Ширина стовпчика «Каталог»"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
-msgid "Show disk view 'Directory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
+msgid "Show disk view “Directory” column on startup"
 msgstr "Показувати під час запуску стовпчик «Каталог»"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
-msgid "Width of disk view 'Type' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
+msgid "Width of disk view “Type” column"
 msgstr "Ширина стовпчика «Тип»"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
-msgid "Show disk view 'Type' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
+msgid "Show disk view “Type” column on startup"
 msgstr "Показувати під час запуску стовпчик «Тип»"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
-msgid "Width of disk view 'Total' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
+msgid "Width of disk view “Total” column"
 msgstr "Ширина стовпчика «Всього»"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
-msgid "Show disk view 'Total' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
+msgid "Show disk view “Total” column on startup"
 msgstr "Показувати під час запуску стовпчик «Всього»"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
-msgid "Width of disk view 'Free' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
+msgid "Width of disk view “Free” column"
 msgstr "Ширина стовпчика «Вільно»"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
-msgid "Show disk view 'Free' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
+msgid "Show disk view “Free” column on startup"
 msgstr "Показувати під час запуску стовпчик «Вільно»"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
-msgid "Width of disk view 'Available' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
+msgid "Width of disk view “Available” column"
 msgstr "Ширина стовпчика «Доступно»"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
-msgid "Show disk view 'Available' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
+msgid "Show disk view “Available” column on startup"
 msgstr "Показувати під час запуску стовпчик «Доступно»"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
-msgid "Width of disk view 'Used' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
+msgid "Width of disk view “Used” column"
 msgstr "Ширина стовпчика «Використано»"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
-msgid "Show disk view 'Used' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
+msgid "Show disk view “Used” column on startup"
 msgstr "Показувати під час запуску стовпчик «Використано»"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
 msgid "Memory map sort column"
 msgstr "Стовпчик впорядкування карти пам'яті"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
 msgid "Memory map sort order"
 msgstr "Порядок впорядкування карти пам'яті"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:96
 msgid "Open files sort column"
 msgstr "Відкрити стовпчики впорядкування файлів"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:97
 msgid "Open files sort order"
 msgstr "Відкрити порядок впорядкування файлів"
 
-#: ../src/prefsdialog.cpp:171
+#: ../src/prefsdialog.cpp:168
 msgid "Icon"
 msgstr "Піктограма"
 
@@ -1075,7 +1087,6 @@ msgstr "Припинити вибраний процес «%s» (PID: %u)?"
 #. xgettext: primary alert message for stopping single process
 #: ../src/procdialogs.cpp:88
 #, c-format
-#| msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
 msgstr "Зупинити вибраний процес «%s» (PID: %u)?"
 
@@ -1101,8 +1112,6 @@ msgstr[2] "Припинити %d вибраних процесів?"
 #. xgettext: primary alert message for stopping multiple processes
 #: ../src/procdialogs.cpp:109
 #, c-format
-#| msgid "Are you sure you want to end the selected process?"
-#| msgid_plural "Are you sure you want to end the %d selected processes?"
 msgid "Are you sure you want to stop the selected process?"
 msgid_plural "Are you sure you want to stop the %d selected processes?"
 msgstr[0] "Зупинити %d вибраний процес?"
@@ -1146,9 +1155,6 @@ msgstr[2] "_Припинити процеси"
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: ../src/procdialogs.cpp:133
-#| msgid ""
-#| "Ending a process may destroy data, break the session or introduce a "
-#| "security risk. Only unresponsive processes should be ended."
 msgid ""
 "Stopping a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be stopped."
@@ -1158,7 +1164,6 @@ msgstr ""
 "на запити."
 
 #: ../src/procdialogs.cpp:136
-#| msgid "_Stop Process"
 msgid "_Stop Process"
 msgid_plural "_Stop Processes"
 msgstr[0] "З_упинити процес"
@@ -1195,72 +1200,72 @@ msgstr ""
 msgid "N/A"
 msgstr "Н/Д"
 
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:325
 msgid "Process Name"
 msgstr "Назва процесу"
 
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:326
 msgid "User"
 msgstr "Користувач"
 
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:327
 msgid "Status"
 msgstr "Стан"
 
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:328
 msgid "Virtual Memory"
 msgstr "Віртуальна пам'ять"
 
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:329
 msgid "Resident Memory"
 msgstr "Резидентна пам'ять"
 
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:330
 msgid "Writable Memory"
 msgstr "Записувана пам'ять"
 
-#: ../src/procproperties.cpp:74 ../src/proctable.cpp:340
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:331
 msgid "Shared Memory"
 msgstr "Спільна пам'ять"
 
-#: ../src/procproperties.cpp:76 ../src/proctable.cpp:341
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:332
 msgid "X Server Memory"
 msgstr "Пам'ять сервера X"
 
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:343
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:334
 msgid "CPU Time"
 msgstr "Час ЦП"
 
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:344
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:335
 msgid "Started"
 msgstr "Запущено"
 
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:345
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:336
 msgid "Nice"
 msgstr "Люб'язність"
 
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:359
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:350
 msgid "Priority"
 msgstr "Пріоритет"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:346
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:337
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:347
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:338
 msgid "Security Context"
 msgstr "Контекст безпеки"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:348
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:339
 msgid "Command Line"
 msgstr "Командний рядок:"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:351
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:342
 msgid "Waiting Channel"
 msgstr "Канал очікування"
 
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:352
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:343
 msgid "Control Group"
 msgstr "Групи контролю"
 
@@ -1269,26 +1274,26 @@ msgstr "Групи контролю"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:342
+#: ../src/proctable.cpp:333
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:353
+#: ../src/proctable.cpp:344
 msgid "Unit"
 msgstr "Одиниця"
 
-#: ../src/proctable.cpp:354
+#: ../src/proctable.cpp:345
 msgid "Session"
 msgstr "Сеанс"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:357
+#: ../src/proctable.cpp:348
 msgid "Seat"
 msgstr "Місце"
 
-#: ../src/proctable.cpp:358
+#: ../src/proctable.cpp:349
 msgid "Owner"
 msgstr "Власник"
 
