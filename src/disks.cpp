@@ -385,6 +385,7 @@ create_disk_view(GsmApplication *app, GtkBuilder *builder)
     cell = gtk_cell_renderer_pixbuf_new();
     
     gtk_tree_view_column_pack_start(col, cell, FALSE);
+    gtk_tree_view_column_set_min_width(col, 30);
     gtk_tree_view_column_set_attributes(col, cell, "pixbuf", DISK_ICON,
                                         NULL);
 
@@ -410,6 +411,7 @@ create_disk_view(GsmApplication *app, GtkBuilder *builder)
         gtk_tree_view_column_set_resizable(col, TRUE);
         gtk_tree_view_column_set_sort_column_id(col, i);
         gtk_tree_view_column_set_reorderable(col, TRUE);
+        gtk_tree_view_column_set_min_width(col, i == DISK_TYPE ? 40 : 72);
         gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
         gsm_tree_view_append_and_bind_column (GSM_TREE_VIEW (disk_tree), col);
         switch (i) {
@@ -436,6 +438,7 @@ create_disk_view(GsmApplication *app, GtkBuilder *builder)
     col = gtk_tree_view_column_new();
     cell = gtk_cell_renderer_text_new();
     g_object_set(cell, "xalign", 1.0f, NULL);
+    gtk_tree_view_column_set_min_width(col, 72);
     gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
     gtk_tree_view_column_pack_start(col, cell, FALSE);
     gtk_tree_view_column_set_cell_data_func(col, cell,
