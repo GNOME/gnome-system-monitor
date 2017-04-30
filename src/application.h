@@ -187,6 +187,7 @@ class GsmApplication : public Gtk::Application, private procman::NonCopyable
 {
 private:
     void load_settings();
+    void load_resources();
 
     void on_preferences_activate(const Glib::VariantBase&);
     void on_lsof_activate(const Glib::VariantBase&);
