@@ -3,6 +3,7 @@
 AM_CPPFLAGS = \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-DGSM_LIBEXEC_DIR=\""$(pkglibexecdir)"\" \
+	-DGSM_RESOURCE_FILE=\""$(gsmsharedir)/$(gsmshare_DATA)"\" \
 	$(GSM_CFLAGS) \
 	$(SYSTEMD_CFLAGS) \
 	$(WNCK_CFLAGS)
@@ -44,9 +45,7 @@ gnome_system_monitor_SOURCES = \
 	$(gnome_system_monitor_cpp_files) \
 	main.cpp
 
-# See legacy/Makefile.am for explanation
 LDADD = \
-	legacy/gsm-resources.o \
 	legacy/libgsmlegacy.la \
 	$(GSM_LIBS) \
 	$(SYSTEMD_LIBS) \
@@ -64,8 +63,13 @@ gsettings_SCHEMAS = $(gsettings_in_file:.xml.in=.xml)
 dist_noinst_DATA = \
 	$(gsettings_in_file)
 
-EXTRA_DIST = \
-	gsm.gresource.xml
+gsm.gresource: $(top_srcdir)/src/gsm.gresource.xml $(shell glib-compile-resources --sourcedir=$(top_srcdir) --generate-dependencies $(top_srcdir)/src/gsm.gresource.xml)
+	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(top_srcdir) $(top_srcdir)/src/gsm.gresource.xml
+
+
+gsmsharedir = $(datadir)/@PACKAGE@
+gsmshare_DATA = \
+	gsm.gresource
 
 CLEANFILES = \
 	$(gsettings_SCHEMAS)

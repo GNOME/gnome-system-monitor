@@ -364,6 +364,8 @@ void GsmApplication::on_startup()
 {
     Gtk::Application::on_startup();
 
+    load_resources ();
+
     Glib::RefPtr<Gio::SimpleAction> action;
 
     action = Gio::SimpleAction::create("quit");
@@ -414,5 +416,12 @@ void GsmApplication::on_startup()
     add_accelerator ("<Primary>r", "win.refresh", NULL);
 
     gtk_widget_show (GTK_WIDGET (main_window));
+}
+
+
+void GsmApplication::load_resources()
+{
+    auto res = Gio::Resource::create_from_file(GSM_RESOURCE_FILE);
+    res->register_global();
 }
 
