@@ -1,5 +1,5 @@
 # Hungarian translation for gnome-system-monitor.
-# Copyright (C) 2002-2016 Free Software Foundation, Inc.
+# Copyright (C) 2002-2017 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-system-monitor package.
 #
 # Robert Vanyi <robi at mora.u-szeged dot hu>, 2002.
@@ -7,21 +7,21 @@
 # Laszlo Dvornik <dvornik at gnome dot hu>, 2004.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
 # Mate ORY <orymate at gmail d0t com>, 2006.
-# Balázs Úr <urbalazs at gmail dot com>, 2013, 2014, 2015, 2016.
+# Balázs Úr <urbalazs at gmail dot com>, 2013, 2014, 2015, 2016, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
-"monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-02-13 22:00+0000\n"
-"PO-Revision-Date: 2017-02-21 13:54+0100\n"
-"Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=system-monitor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2017-04-07 11:36+0000\n"
+"PO-Revision-Date: 2017-05-14 21:17+0200\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Lokalize 1.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
@@ -35,12 +35,15 @@ msgid "View current processes and monitor system state"
 msgstr "A jelenlegi folyamatok megtekintése és a rendszerállapot figyelése"
 
 #: ../gnome-system-monitor.desktop.in.in.h:3
+#| msgid ""
+#| "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
+#| "Manager;"
 msgid ""
 "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
-"Manager;"
+"Manager;Activity;"
 msgstr ""
 "Figyelő;Rendszer;Folyamat;CPU;Memória;Hálózat;Előzmények;Használat;"
-"Teljesítmény;Feladat;Kezelő;"
+"Teljesítmény;Feladat;Kezelő;Tevékenység;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
 #: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:299
@@ -393,7 +396,8 @@ msgstr "Eszköz"
 msgid "Directory"
 msgstr "Könyvtár"
 
-#: ../src/disks.cpp:354 ../src/gsm_color_button.c:165 ../src/openfiles.cpp:252
+#: ../src/disks.cpp:354 ../src/legacy/gsm_color_button.c:165
+#: ../src/openfiles.cpp:252
 msgid "Type"
 msgstr "Típus"
 
@@ -412,72 +416,6 @@ msgstr "Elérhető"
 #: ../src/disks.cpp:358
 msgid "Used"
 msgstr "Használt"
-
-#. xgettext: ? stands for unknown
-#: ../src/e_date.c:156
-msgid "?"
-msgstr "?"
-
-#: ../src/e_date.c:163
-msgid "Today %l∶%M %p"
-msgstr "Ma %k:%M"
-
-#: ../src/e_date.c:172
-msgid "Yesterday %l∶%M %p"
-msgstr "Tegnap %k:%M"
-
-#: ../src/e_date.c:184
-msgid "%a %l∶%M %p"
-msgstr "%a., %k:%M"
-
-#: ../src/e_date.c:192
-msgid "%b %d %l∶%M %p"
-msgstr "%b. %e., %k:%M"
-
-#: ../src/e_date.c:194
-msgid "%b %d %Y"
-msgstr "%Y %b. %d"
-
-#: ../src/gsm_color_button.c:141
-msgid "Fraction"
-msgstr "Tört"
-
-#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:143
-msgid "Percentage full for pie color pickers"
-msgstr "Teljes százalékos arány a torta színválasztókhoz"
-
-#: ../src/gsm_color_button.c:150
-msgid "Title"
-msgstr "Cím"
-
-#: ../src/gsm_color_button.c:151
-msgid "The title of the color selection dialog"
-msgstr "A színválasztó párbeszédablak címe"
-
-#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:515
-msgid "Pick a Color"
-msgstr "Szín kiválasztása"
-
-#: ../src/gsm_color_button.c:158
-msgid "Current Color"
-msgstr "Jelenlegi szín"
-
-#: ../src/gsm_color_button.c:159
-msgid "The selected color"
-msgstr "A kiválasztott szín"
-
-#: ../src/gsm_color_button.c:166
-msgid "Type of color picker"
-msgstr "Színválasztó típusa"
-
-#: ../src/gsm_color_button.c:437
-msgid "Received invalid color data\n"
-msgstr "Érvénytelen színadat érkezett\n"
-
-#: ../src/gsm_color_button.c:538
-msgid "Click to set graph colors"
-msgstr "Kattintson a grafikon színeinek beállításához"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
 #: ../src/interface.cpp:185
@@ -502,6 +440,72 @@ msgstr ""
 "Tímár András <timar at gnome dot hu>\n"
 "Úr Balázs <urbalazs at gmail dot com>\n"
 "Ványi Róbert <robi at mora.u-szeged dot hu>"
+
+#. xgettext: ? stands for unknown
+#: ../src/legacy/e_date.c:156
+msgid "?"
+msgstr "?"
+
+#: ../src/legacy/e_date.c:163
+msgid "Today %l∶%M %p"
+msgstr "Ma %k:%M"
+
+#: ../src/legacy/e_date.c:172
+msgid "Yesterday %l∶%M %p"
+msgstr "Tegnap %k:%M"
+
+#: ../src/legacy/e_date.c:184
+msgid "%a %l∶%M %p"
+msgstr "%a., %k:%M"
+
+#: ../src/legacy/e_date.c:192
+msgid "%b %d %l∶%M %p"
+msgstr "%b. %e., %k:%M"
+
+#: ../src/legacy/e_date.c:194
+msgid "%b %d %Y"
+msgstr "%Y %b. %d"
+
+#: ../src/legacy/gsm_color_button.c:141
+msgid "Fraction"
+msgstr "Tört"
+
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+#: ../src/legacy/gsm_color_button.c:143
+msgid "Percentage full for pie color pickers"
+msgstr "Teljes százalékos arány a torta színválasztókhoz"
+
+#: ../src/legacy/gsm_color_button.c:150
+msgid "Title"
+msgstr "Cím"
+
+#: ../src/legacy/gsm_color_button.c:151
+msgid "The title of the color selection dialog"
+msgstr "A színválasztó párbeszédablak címe"
+
+#: ../src/legacy/gsm_color_button.c:152 ../src/legacy/gsm_color_button.c:515
+msgid "Pick a Color"
+msgstr "Szín kiválasztása"
+
+#: ../src/legacy/gsm_color_button.c:158
+msgid "Current Color"
+msgstr "Jelenlegi szín"
+
+#: ../src/legacy/gsm_color_button.c:159
+msgid "The selected color"
+msgstr "A kiválasztott szín"
+
+#: ../src/legacy/gsm_color_button.c:166
+msgid "Type of color picker"
+msgstr "Színválasztó típusa"
+
+#: ../src/legacy/gsm_color_button.c:437
+msgid "Received invalid color data\n"
+msgstr "Érvénytelen színadat érkezett\n"
+
+#: ../src/legacy/gsm_color_button.c:538
+msgid "Click to set graph colors"
+msgstr "Kattintson a grafikon színeinek beállításához"
 
 #: ../src/load-graph.cpp:157
 #, c-format
@@ -1418,3 +1422,4 @@ msgstr "Nagyon alacsony prioritás"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
