@@ -61,7 +61,8 @@ gsettings_SCHEMAS = $(gsettings_in_file:.xml.in=.xml)
 @GSETTINGS_RULES@
 
 dist_noinst_DATA = \
-	$(gsettings_in_file)
+	$(gsettings_in_file) \
+	$(top_srcdir)/src/gsm.gresource.xml
 
 gsm.gresource: $(top_srcdir)/src/gsm.gresource.xml $(shell glib-compile-resources --sourcedir=$(top_srcdir) --generate-dependencies $(top_srcdir)/src/gsm.gresource.xml)
 	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(top_srcdir) $(top_srcdir)/src/gsm.gresource.xml
@@ -72,7 +73,8 @@ gsmshare_DATA = \
 	gsm.gresource
 
 CLEANFILES = \
-	$(gsettings_SCHEMAS)
+	$(gsettings_SCHEMAS) \
+	$(gsmshare_DATA)
 
 MAINTAINERCLEANFILES = $(gsettings_SCHEMAS:.xml=.valid)
 
