@@ -40,20 +40,19 @@ procman::get_process_systemd_info(ProcInfo *info)
     if (!systemd_logind_running())
         return;
 
-    free(info->unit);
-    info->unit = NULL;
-    sd_pid_get_unit(info->pid, &info->unit);
+    char* unit = NULL;
+    sd_pid_get_unit(info->pid, &unit);
+    info->unit = make_string(unit);
 
-    free(info->session);
-    info->session = NULL;
-    sd_pid_get_session(info->pid, &info->session);
+    char* session = NULL;
+    sd_pid_get_session(info->pid, &session);
+    info->session = make_string(session);
 
-    free(info->seat);
-    info->seat = NULL;
-
-    if (info->session != NULL)
-        sd_session_get_seat(info->session, &info->seat);
-
+    if (!info->session.empty()) {
+      char* seat = NULL;
+      sd_session_get_seat(info->session.c_str(), &seat);
+      info->seat = make_string(seat);
+    }
     if (sd_pid_get_owner_uid(info->pid, &uid) >= 0)
         info->owner = info->lookup_user(uid);
     else
