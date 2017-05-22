@@ -189,6 +189,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     cpu_graph_box = GTK_BOX (gtk_builder_get_object (builder, "cpu_graph_box"));
 
     cpu_graph = new LoadGraph(LOAD_GRAPH_CPU);
+    gtk_widget_set_size_request (GTK_WIDGET(load_graph_get_widget(cpu_graph)), -1, 70);
     gtk_box_pack_start (cpu_graph_box,
                         GTK_WIDGET (load_graph_get_widget(cpu_graph)),
                         TRUE,
@@ -244,6 +245,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     mem_graph_box = GTK_BOX (gtk_builder_get_object (builder, "mem_graph_box"));
 
     mem_graph = new LoadGraph(LOAD_GRAPH_MEM);
+    gtk_widget_set_size_request (GTK_WIDGET(load_graph_get_widget(mem_graph)), -1, 70);
     gtk_box_pack_start (mem_graph_box,
                         GTK_WIDGET (load_graph_get_widget(mem_graph)),
                         TRUE,
@@ -283,6 +285,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     net_graph_box = GTK_BOX (gtk_builder_get_object (builder, "net_graph_box"));
 
     net_graph = new LoadGraph(LOAD_GRAPH_NET);
+    gtk_widget_set_size_request (GTK_WIDGET(load_graph_get_widget(net_graph)), -1, 70);
     gtk_box_pack_start (net_graph_box,
                         GTK_WIDGET (load_graph_get_widget(net_graph)),
                         TRUE,
@@ -293,6 +296,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
 
     color_picker = gsm_color_button_new (
         &net_graph->colors.at(0), GSMCP_TYPE_NETWORK_IN);
+    gtk_widget_set_valign (GTK_WIDGET(color_picker), GTK_ALIGN_CENTER);
     g_signal_connect (G_OBJECT (color_picker), "color-set",
                       G_CALLBACK (cb_net_in_color_changed), app);
     title_text = g_strdup_printf(title_template, _("Receiving"));
@@ -307,6 +311,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
 
     color_picker = gsm_color_button_new (
         &net_graph->colors.at(1), GSMCP_TYPE_NETWORK_OUT);
+    gtk_widget_set_valign (GTK_WIDGET(color_picker), GTK_ALIGN_CENTER);
     g_signal_connect (G_OBJECT (color_picker), "color-set",
                       G_CALLBACK (cb_net_out_color_changed), app);
     title_text = g_strdup_printf(title_template, _("Sending"));
