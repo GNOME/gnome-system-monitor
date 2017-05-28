@@ -85,7 +85,11 @@ fill_proc_properties (GtkTreeView *tree, ProcInfo *info)
         { N_("Command Line"), g_strdup_printf("%s", info->arguments.c_str())},
         { N_("Waiting Channel"), g_strdup_printf("%s", info->wchan.c_str())},
         { N_("Control Group"), not info->cgroup_name.empty()?g_strdup_printf("%s", info->cgroup_name.c_str()):g_strdup(_("N/A"))},
-        { NULL, NULL}
+        { NULL, NULL},
+        { N_("Network In"), g_strdup_printf("%ld", info->net->In->current)},
+        { N_("Network Out"), g_strdup_printf("%ld", info->net->Out->current)},
+        { N_("Disk Read"), g_strdup_printf("%ld", info->disk->Read->current)},
+        { N_("Disk Write"), g_strdup_printf("%ld", info->disk->Write->current)},
     };
 
     store = GTK_LIST_STORE(gtk_tree_view_get_model(tree));

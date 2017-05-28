@@ -318,20 +318,23 @@ get_relative_time(void)
     return (tv.tv_sec - start_time) + 1e-6 * tv.tv_usec;
 }
 
-static guint64
+static gint64
 get_size_from_column(GtkTreeModel* model, GtkTreeIter* first,
                              const guint index)
 {
     GValue value = { 0 };
     gtk_tree_model_get_value(model, first, index, &value);
 
-    guint64 size;
+    gint64 size;
     switch (G_VALUE_TYPE(&value)) {
         case G_TYPE_UINT:
             size = g_value_get_uint(&value);
             break;
         case G_TYPE_ULONG:
             size = g_value_get_ulong(&value);
+            break;
+        case G_TYPE_LONG:
+            size = g_value_get_long(&value);
             break;
         case G_TYPE_UINT64:
             size = g_value_get_uint64(&value);
@@ -362,8 +365,6 @@ procman_debug_real(const char *file, int line, const char *func,
 
     g_free(msg);
 }
-
-
 
 namespace procman
 {
@@ -397,7 +398,6 @@ namespace procman
         g_object_set(renderer, "text", str, NULL);
         g_free(str);
     }
-
 
     /*
       Same as above but handles size == 0 as not available
@@ -438,9 +438,50 @@ namespace procman
             g_object_set(renderer, "text", str, NULL);
             g_free(str);
         }
-
     }
-    
+
+    /*
+      Cell data function to format a IO bandwith per seconds (Disk R/W, Network I/O)
+    */
+    void size_io_cell_data_func(GtkTreeViewColumn *, GtkCellRenderer *renderer,
+                                GtkTreeModel *model, GtkTreeIter *iter,
+                                gpointer user_data)
+    {
+        const guint index = GPOINTER_TO_UINT(user_data);
+
+        char *bandwith;
+        glong tmpSize;
+        GValue value = { 0 };
+
+        gtk_tree_model_get_value(model, iter, index, &value);
+
+        switch (G_VALUE_TYPE(&value)) {
+            case G_TYPE_LONG:
+                tmpSize = g_value_get_long(&value);
+                break;
+
+            default:
+                g_assert_not_reached();
+        }
+
+        g_value_unset(&value);
+
+        if (tmpSize < 0){
+            bandwith = g_strdup_printf ("<i>%s</i>", _("N/A"));
+            g_object_set(renderer, "markup", bandwith, NULL);
+        }
+        else if (tmpSize == 0) {
+            bandwith = g_strdup_printf("0");
+            g_object_set(renderer, "text", bandwith, NULL);
+        }
+        else {
+            bandwith = strdup(format_rate(tmpSize).c_str());
+            g_object_set(renderer, "text", bandwith, NULL);
+        }
+
+        g_free(bandwith);
+    }
+
     /*
         Cell data function to format a size value with SI units (to be used only for disk size, see bugzilla 693630)
     */
@@ -598,7 +639,7 @@ namespace procman
     {
         const guint index = GPOINTER_TO_UINT(user_data);
 
-        guint64 size1, size2;
+        gint64 size1, size2;
         size1 = get_size_from_column(model, first, index);
         size2 = get_size_from_column(model, second, index);
 
