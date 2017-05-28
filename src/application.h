@@ -25,6 +25,23 @@ enum ProcmanTab
     PROCMAN_TAB_DISKS
 };
 
+struct IoStruct {
+    gulong total = 0;
+    glong current = -1;
+};
+
+
+struct Network {
+
+    IoStruct* In = new IoStruct();
+    IoStruct* Out = new IoStruct();
+};
+
+struct Disk {
+
+    IoStruct* Read = new IoStruct();
+    IoStruct* Write = new IoStruct();
+};
 
 struct ProcConfig
   : private procman::NonCopyable
@@ -119,6 +136,10 @@ MutableProcInfo()
     std::string seat;
 
     std::string owner;
+
+    Network* net = new Network();
+
+    Disk* disk = new Disk();
 };
 
 

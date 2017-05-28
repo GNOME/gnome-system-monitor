@@ -40,6 +40,10 @@
 #include <pwd.h>
 #include <time.h>
 
+#include <fstream>
+#include <vector>
+#include <sstream>
+
 #include <set>
 #include <list>
 
@@ -337,6 +341,10 @@ proctable_new (GsmApplication * const app)
 	for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration */
         N_("Seat"),
         N_("Owner"),
+        N_("Network In"),
+        N_("Network Out"),
+        N_("Disk Read"),
+        N_("Disk Write"),
         N_("Priority"),
         NULL,
         "POINTER"
@@ -367,6 +375,10 @@ proctable_new (GsmApplication * const app)
                                 G_TYPE_STRING,      /* Session      */
                                 G_TYPE_STRING,      /* Seat         */
                                 G_TYPE_STRING,      /* Owner        */
+                                G_TYPE_LONG,        /* Network Bytes In */
+                                G_TYPE_LONG,        /* Netwprk  Bytes Out */
+                                G_TYPE_LONG,        /* Disk Read */
+                                G_TYPE_LONG,        /* Disk Write */
                                 G_TYPE_STRING,      /* Priority     */
                                 GDK_TYPE_PIXBUF,    /* Icon         */
                                 G_TYPE_POINTER,     /* ProcInfo     */
@@ -411,7 +423,7 @@ proctable_new (GsmApplication * const app)
     gsm_tree_view_append_and_bind_column (proctree, column);
     gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
 
-    for (i = COL_USER; i <= COL_PRIORITY; i++) {
+    for (i = COL_USER; i < COL_PIXBUF; i++) {
         GtkTreeViewColumn *col;
         GtkCellRenderer *cell;
 
@@ -448,6 +460,16 @@ proctable_new (GsmApplication * const app)
             case COL_MEM:
                 gtk_tree_view_column_set_cell_data_func(col, cell,
                                                         &procman::size_na_cell_data_func,
+                                                        GUINT_TO_POINTER(i),
+                                                        NULL);
+                break;
+
+            case COL_DISKREAD:
+            case COL_DISKWRITE:
+            case COL_NETIN:
+            case COL_NETOUT:
+                gtk_tree_view_column_set_cell_data_func(col, cell,
+                                                        &procman::size_io_cell_data_func,
                                                         GUINT_TO_POINTER(i),
                                                         NULL);
                 break;
@@ -495,6 +517,10 @@ proctable_new (GsmApplication * const app)
             case COL_CPU:
             case COL_CPU_TIME:
             case COL_START_TIME:
+            case COL_DISKREAD:
+            case COL_DISKWRITE:
+            case COL_NETIN:
+            case COL_NETOUT:
                 gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model_sort), i,
                                                  procman::number_compare_func,
                                                  GUINT_TO_POINTER (i),
@@ -523,6 +549,10 @@ proctable_new (GsmApplication * const app)
             case COL_PID:
             case COL_CPU_TIME:
             case COL_MEM:
+            case COL_NETIN:
+            case COL_NETOUT:
+            case COL_DISKREAD:
+            case COL_DISKWRITE:
                 g_object_set(G_OBJECT(cell), "xalign", 1.0f, NULL);
                 break;
         }
@@ -751,6 +781,45 @@ get_process_memory_info(ProcInfo *info)
 }
 
 static void
+get_process_network_info(ProcInfo *info)
+{
+    //info->net->in = tokens.at(7);
+    //info->net->out = tokens.at(8);
+}
+
+static void
+get_process_disk_info(ProcInfo *info)
+{
+    std::ifstream inputFileStream("/proc/" + std::to_string(info->pid) + "/io", std::ifstream::in);
+
+    if (!inputFileStream.good()){
+        return;
+    }
+
+    std::vector<std::string> tokens;
+
+    for(std::string line; getline(inputFileStream, line);) {
+
+        std::stringstream ss(line);
+        std::string buf;
+
+        while (ss >> buf){
+            tokens.push_back(buf);
+        }
+    }
+
+    gulong coef = long(GsmApplication::get()->config.update_interval) / 1000;
+    gulong rTotal = std::stol(tokens.at(9));
+    gulong wTotal = std::stol(tokens.at(11)) - std::stol(tokens.at(13));
+
+    info->disk->Read->current = (rTotal - info->disk->Read->total) / coef;
+    info->disk->Write->current = (wTotal - info->disk->Write->total) / coef;
+
+    info->disk->Read->total = rTotal;
+    info->disk->Write->total = wTotal;
+}
+
+static void
 update_info_mutable_cols(ProcInfo *info)
 {
     GtkTreeModel *model;
@@ -779,6 +848,10 @@ update_info_mutable_cols(ProcInfo *info)
     tree_store_update(model, &info->node, COL_SESSION, info->session.c_str());
     tree_store_update(model, &info->node, COL_SEAT, info->seat.c_str());
     tree_store_update(model, &info->node, COL_OWNER, info->owner.c_str());
+    tree_store_update(model, &info->node, COL_NETIN, info->net->In->current);
+    tree_store_update(model, &info->node, COL_NETOUT, info->net->Out->current);
+    tree_store_update(model, &info->node, COL_DISKREAD, info->disk->Read->current);
+    tree_store_update(model, &info->node, COL_DISKWRITE, info->disk->Write->current);
 }
 
 static void
@@ -901,6 +974,9 @@ update_info (GsmApplication *app, ProcInfo *info)
     glibtop_get_proc_time (&proctime, info->pid);
 
     get_process_memory_info(info);
+
+    get_process_network_info(info);
+    get_process_disk_info(info);
 
     info->set_user(procstate.uid);
 
