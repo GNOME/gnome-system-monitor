@@ -108,7 +108,7 @@ update_procproperties_dialog (GtkTreeView *tree)
     ProcInfo *info;
 
     pid_t pid = GPOINTER_TO_UINT(static_cast<pid_t*>(g_object_get_data (G_OBJECT (tree), "selected_info")));
-    try { info = &GsmApplication::get()->processes.find(pid); } catch (const std::out_of_range&) { info = nullptr; }
+    info = GsmApplication::get()->processes.find(pid);
 
     fill_proc_properties(tree, info);
 }

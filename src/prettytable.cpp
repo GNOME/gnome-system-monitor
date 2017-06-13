@@ -104,8 +104,7 @@ PrettyTable::register_application(pid_t pid, Glib::RefPtr<Gdk::Pixbuf> icon)
 {
   /* If process already exists then set the icon. Otherwise put into hash
   ** table to be added later */
-  try {
-    auto& info = GsmApplication::get()->processes.find(pid);
+    if (ProcInfo* info = GsmApplication::get()->processes.find(pid))
     {
       info.set_icon(icon);
       // move the ref to the map

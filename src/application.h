@@ -160,16 +160,14 @@ public:
     typedef List::iterator Iterator;
     Iterator begin() { return std::begin(data); }
     Iterator end() { return std::end(data); }
-    Iterator erase(List::iterator it) {
+    Iterator erase(Iterator it) {
         std::lock_guard<std::mutex> lg(data_lock);
         return data.erase(it);
     }
-    std::pair<Iterator, bool> emplace(pid_t pid);
+    ProcInfo* add(pid_t pid) { return &data.emplace(pid, pid).first->second; }
     void clear() { return data.clear(); }
 
-    ProcInfo& find(pid_t pid) {
-        return data.at(pid);
-    }
+    ProcInfo* find(pid_t pid);
 };
 
 class GsmApplication : public Gtk::Application, private procman::NonCopyable
