@@ -927,9 +927,9 @@ ProcInfo::ProcInfo(pid_t pid)
     if (tooltip.empty())
         tooltip = procstate.cmd;
 
-    info->tooltip = g_markup_escape_text(tooltip.c_str(), -1);
+    info->tooltip = make_string(g_markup_escape_text(tooltip.c_str(), -1));
 
-    info->arguments = g_strescape(tooltip.c_str(), "\\\"");
+    info->arguments = make_string(g_strescape(tooltip.c_str(), "\\\""));
     g_strfreev(arguments);
 
     guint64 cpu_time = proctime.rtime;
