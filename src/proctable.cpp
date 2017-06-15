@@ -615,7 +615,7 @@ get_process_name (ProcInfo *info,
             basename = g_path_get_basename(args[i]);
 
             if (g_str_has_prefix(basename, cmd)) {
-                info->name = basename;
+                info->name = make_string(basename);
                 return;
             }
 
