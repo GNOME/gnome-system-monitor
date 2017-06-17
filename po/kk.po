@@ -6,10 +6,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
-"monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-02-13 22:00+0000\n"
-"PO-Revision-Date: 2017-02-16 13:34+0500\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=system-monitor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2017-04-07 11:36+0000\n"
+"PO-Revision-Date: 2017-06-17 16:54+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
 "Language: kk\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.2\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
 #: ../src/application.cpp:244 ../src/interface.cpp:358
@@ -32,11 +32,11 @@ msgstr "Ағымдағы үрдістерді қарау және жүйе қа�
 #: ../gnome-system-monitor.desktop.in.in.h:3
 msgid ""
 "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
-"Manager;"
+"Manager;Activity;"
 msgstr ""
 "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
-"Manager;Бақылау;Жүйе;Үрдіс;Процессор;Жады;Желі;Тарихы;Қолданылуы;Өнімділік;"
-"Тапсырма;Басқарушы;"
+"Manager;Activity;Бақылау;Жүйе;Үрдіс;Процессор;Жады;Желі;Тарихы;Қолданылуы;"
+"Өнімділік;Тапсырма;Басқарушы;Белсенділік;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
 #: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:299
@@ -389,7 +389,8 @@ msgstr "Құрылғы"
 msgid "Directory"
 msgstr "Бума"
 
-#: ../src/disks.cpp:354 ../src/gsm_color_button.c:165 ../src/openfiles.cpp:252
+#: ../src/disks.cpp:354 ../src/legacy/gsm_color_button.c:165
+#: ../src/openfiles.cpp:252
 msgid "Type"
 msgstr "Түрі"
 
@@ -409,72 +410,6 @@ msgstr "Қолжетерлік"
 msgid "Used"
 msgstr "Қолданылуда"
 
-#. xgettext: ? stands for unknown
-#: ../src/e_date.c:156
-msgid "?"
-msgstr "?"
-
-#: ../src/e_date.c:163
-msgid "Today %l∶%M %p"
-msgstr "Бүгін %l:%M %p"
-
-#: ../src/e_date.c:172
-msgid "Yesterday %l∶%M %p"
-msgstr "Кеше %l:%M %p"
-
-#: ../src/e_date.c:184
-msgid "%a %l∶%M %p"
-msgstr "%a %l:%M %p"
-
-#: ../src/e_date.c:192
-msgid "%b %d %l∶%M %p"
-msgstr "%b %d %l:%M %p"
-
-#: ../src/e_date.c:194
-msgid "%b %d %Y"
-msgstr "%b %d %Y"
-
-#: ../src/gsm_color_button.c:141
-msgid "Fraction"
-msgstr "Бөлшек"
-
-#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:143
-msgid "Percentage full for pie color pickers"
-msgstr "Шеңберлік түстер таңдаушысы үшін толық түс пайыз шамасы"
-
-#: ../src/gsm_color_button.c:150
-msgid "Title"
-msgstr "Атауы"
-
-#: ../src/gsm_color_button.c:151
-msgid "The title of the color selection dialog"
-msgstr "Түстерді таңдау сұхбатының атауы"
-
-#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:515
-msgid "Pick a Color"
-msgstr "Түсті таңдаңыз"
-
-#: ../src/gsm_color_button.c:158
-msgid "Current Color"
-msgstr "Ағымдағы түс"
-
-#: ../src/gsm_color_button.c:159
-msgid "The selected color"
-msgstr "Таңдалған түс"
-
-#: ../src/gsm_color_button.c:166
-msgid "Type of color picker"
-msgstr "Түстер таңдаушысының түрі"
-
-#: ../src/gsm_color_button.c:437
-msgid "Received invalid color data\n"
-msgstr "Алынған түс мәні қате\n"
-
-#: ../src/gsm_color_button.c:538
-msgid "Click to set graph colors"
-msgstr "График түстерін орнату үшін шертіңіз"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
 #: ../src/interface.cpp:185
 #, c-format
@@ -493,6 +428,72 @@ msgstr "Процессор%d"
 #: ../src/interface.cpp:369
 msgid "translator-credits"
 msgstr "Baurzhan Muftakhidinov <baurthefirst@gmail.com>"
+
+#. xgettext: ? stands for unknown
+#: ../src/legacy/e_date.c:156
+msgid "?"
+msgstr "?"
+
+#: ../src/legacy/e_date.c:163
+msgid "Today %l∶%M %p"
+msgstr "Бүгін %l:%M %p"
+
+#: ../src/legacy/e_date.c:172
+msgid "Yesterday %l∶%M %p"
+msgstr "Кеше %l:%M %p"
+
+#: ../src/legacy/e_date.c:184
+msgid "%a %l∶%M %p"
+msgstr "%a %l:%M %p"
+
+#: ../src/legacy/e_date.c:192
+msgid "%b %d %l∶%M %p"
+msgstr "%b %d %l:%M %p"
+
+#: ../src/legacy/e_date.c:194
+msgid "%b %d %Y"
+msgstr "%b %d %Y"
+
+#: ../src/legacy/gsm_color_button.c:141
+msgid "Fraction"
+msgstr "Бөлшек"
+
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+#: ../src/legacy/gsm_color_button.c:143
+msgid "Percentage full for pie color pickers"
+msgstr "Шеңберлік түстер таңдаушысы үшін толық түс пайыз шамасы"
+
+#: ../src/legacy/gsm_color_button.c:150
+msgid "Title"
+msgstr "Атауы"
+
+#: ../src/legacy/gsm_color_button.c:151
+msgid "The title of the color selection dialog"
+msgstr "Түстерді таңдау сұхбатының атауы"
+
+#: ../src/legacy/gsm_color_button.c:152 ../src/legacy/gsm_color_button.c:515
+msgid "Pick a Color"
+msgstr "Түсті таңдаңыз"
+
+#: ../src/legacy/gsm_color_button.c:158
+msgid "Current Color"
+msgstr "Ағымдағы түс"
+
+#: ../src/legacy/gsm_color_button.c:159
+msgid "The selected color"
+msgstr "Таңдалған түс"
+
+#: ../src/legacy/gsm_color_button.c:166
+msgid "Type of color picker"
+msgstr "Түстер таңдаушысының түрі"
+
+#: ../src/legacy/gsm_color_button.c:437
+msgid "Received invalid color data\n"
+msgstr "Алынған түс мәні қате\n"
+
+#: ../src/legacy/gsm_color_button.c:538
+msgid "Click to set graph colors"
+msgstr "График түстерін орнату үшін шертіңіз"
 
 #: ../src/load-graph.cpp:157
 #, c-format
