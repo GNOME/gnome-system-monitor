@@ -66,7 +66,7 @@
 ProcInfo* ProcList::find(pid_t pid)
 {
     auto it = data.find(pid);
-    return (it == data.end() ? nullptr : &it->second);
+    return (it == data.end() ? nullptr : it->second.get());
 }
 
 static void
