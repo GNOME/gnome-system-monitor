@@ -164,7 +164,7 @@ public:
         std::lock_guard<std::mutex> lg(data_lock);
         return data.erase(it);
     }
-    ProcInfo* add(pid_t pid) { return &data.emplace(pid, pid).first->second; }
+    ProcInfo* add(pid_t pid) { return &data.emplace(std::piecewise_construct, std::forward_as_tuple(pid), std::forward_as_tuple(pid)).first->second; }
     void clear() { return data.clear(); }
 
     ProcInfo* find(pid_t pid);
