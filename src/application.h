@@ -82,6 +82,10 @@ MutableProcInfo()
 #endif
     start_time(0UL),
     cpu_time(0ULL),
+    disk_write_bytes_current(0ULL),
+    disk_read_bytes_current(0ULL),
+    disk_write_bytes_total(0ULL),
+    disk_read_bytes_total(0ULL),
     status(0U),
     pcpu(0U),
     nice(0)
@@ -109,6 +113,10 @@ MutableProcInfo()
 
     gulong start_time;
     guint64 cpu_time;
+    guint64 disk_write_bytes_current;
+    guint64 disk_read_bytes_current;
+    guint64 disk_write_bytes_total;
+    guint64 disk_read_bytes_total;
     guint status;
     guint pcpu;
     gint nice;

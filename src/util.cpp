@@ -440,6 +440,43 @@ namespace procman
         }
 
     }
+
+    void io_rate_cell_data_func(GtkTreeViewColumn *, GtkCellRenderer *renderer,
+                                GtkTreeModel *model, GtkTreeIter *iter,
+                                gpointer user_data)
+    {
+        const guint index = GPOINTER_TO_UINT(user_data);
+
+        guint64 size;
+        GValue value = { 0 };
+
+        gtk_tree_model_get_value(model, iter, index, &value);
+
+        switch (G_VALUE_TYPE(&value)) {
+            case G_TYPE_ULONG:
+                size = g_value_get_ulong(&value);
+                break;
+
+            case G_TYPE_UINT64:
+                size = g_value_get_uint64(&value);
+                break;
+
+            default:
+                g_assert_not_reached();
+        }
+
+        g_value_unset(&value);
+
+        if (size == 0) {
+            char *str = g_strdup_printf ("<i>%s</i>", _("N/A"));
+            g_object_set(renderer, "markup", str, NULL);
+            g_free(str);
+        }
+        else {
+            g_object_set(renderer, "text", procman::format_rate(size, size, FALSE).c_str(), NULL);
+        }
+
+    }
     
     /*
         Cell data function to format a size value with SI units (to be used only for disk size, see bugzilla 693630)
