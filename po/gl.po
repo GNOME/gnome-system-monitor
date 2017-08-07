@@ -11,41 +11,43 @@
 # Fran Diéguez <frandieguez@gnome.org>, 2009, 2010, 2011, 2012.
 # Leandro Regueiro <leandro.regueiro@gmail.com>, 2012.
 # Fran Dieguez <frandieguez@gnome.org>, 2012, 2013, 2014, 2015, 2016, 2017.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor-master-po-gl\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
-"product=system-monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-02-24 17:38+0000\n"
-"PO-Revision-Date: 2017-03-11 01:25+0100\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product"
+"=system-monitor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2017-06-28 17:47+0000\n"
+"PO-Revision-Date: 2017-08-07 09:53+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
-"Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
+"Language-Team: Galician\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Virtaal 0.7.1\n"
 "X-Project-Style: gnome\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/application.cpp:244 ../src/interface.cpp:358
+#: ../src/application.cpp:244 ../src/interface.cpp:363
 msgid "System Monitor"
 msgstr "Monitor do sistema"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2
-#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:359
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:364
 msgid "View current processes and monitor system state"
 msgstr "Ver os procesos actuais e monitorizar o estado do sistema"
 
 #: ../gnome-system-monitor.desktop.in.in.h:3
+#| msgid ""
+#| "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
+#| "Manager;"
 msgid ""
 "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
-"Manager;"
+"Manager;Activity;"
 msgstr ""
-"Monitor;Sistema;Procesos;CPU;Memoria;Rede;Historial;Uso;Rendemento;Tarefas;"
-"Xestor;"
+"Monitor;Sistema;Procesos;CPU;Memoria;Rede;Historial;Uso;Rendemento;Tarefas;Xe"
+"stor;Actividade;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
 #: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:299
@@ -109,7 +111,6 @@ msgid "Kill process"
 msgstr "Matar proceso"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:2
-#| msgid "Privileges are required to control other users' processes"
 msgid "Privileges are required to control other users’ processes"
 msgstr "Requírense privilexios para controlar os procesos doutros usuarios"
 
@@ -141,12 +142,12 @@ msgstr "Historial da CPU"
 msgid "Memory and Swap History"
 msgstr "Historial da memoria e da swap"
 
-#: ../data/interface.ui.h:7 ../src/interface.cpp:258
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:340
+#: ../data/interface.ui.h:7 ../src/interface.cpp:260
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:336
 msgid "Memory"
 msgstr "Memoria"
 
-#: ../data/interface.ui.h:8 ../src/interface.cpp:270
+#: ../data/interface.ui.h:8 ../src/interface.cpp:272
 msgid "Swap"
 msgstr "Swap"
 
@@ -154,7 +155,7 @@ msgstr "Swap"
 msgid "Network History"
 msgstr "Historial da rede"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:298
+#: ../data/interface.ui.h:10 ../src/interface.cpp:302
 msgid "Receiving"
 msgstr "Recibindo"
 
@@ -162,7 +163,7 @@ msgstr "Recibindo"
 msgid "Total Received"
 msgstr "Total recibido"
 
-#: ../data/interface.ui.h:12 ../src/interface.cpp:312
+#: ../data/interface.ui.h:12 ../src/interface.cpp:317
 msgid "Sending"
 msgstr "Enviando"
 
@@ -334,7 +335,6 @@ msgid "_Draw CPU chart as stacked area chart"
 msgstr "_Debuxar a gráfica de CPU como unha gráfica de áreas apiladas"
 
 #: ../data/preferences.ui.h:12
-#| msgid "_Draw CPU chart as stacked area chart"
 msgid "Draw CPU chart as s_mooth graph"
 msgstr "_Debuxar a gráfica de CPU como unha gráfica de áreas apiladas"
 
@@ -387,7 +387,6 @@ msgid "Show the File Systems tab"
 msgstr "Mostrar a lapela «Sistemas de ficheiros»"
 
 #: ../src/argv.cpp:36
-#| msgid "Show the application's version"
 msgid "Show the application’s version"
 msgstr "Mostrar a versión do aplicativo"
 
@@ -400,7 +399,7 @@ msgid "Directory"
 msgstr "Directorio"
 
 #: ../src/disks.cpp:354 ../src/legacy/gsm_color_button.c:165
-#: ../src/openfiles.cpp:252
+#: ../src/openfiles.cpp:253
 msgid "Type"
 msgstr "Tipo"
 
@@ -423,20 +422,19 @@ msgstr "Usada"
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
 #: ../src/interface.cpp:185
 #, c-format
-#| msgid "Pick a Color for '%s'"
 msgid "Pick a Color for “%s”"
 msgstr "Seleccione unha cor para «%s»"
 
-#: ../src/interface.cpp:218 ../src/procproperties.cpp:78
+#: ../src/interface.cpp:219 ../src/procproperties.cpp:78
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:220
+#: ../src/interface.cpp:221
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:369
+#: ../src/interface.cpp:374
 msgid "translator-credits"
 msgstr ""
 "Fran Diéguez <frandieguez@gnome.org>, 2009-2013.\n"
@@ -454,24 +452,20 @@ msgid "?"
 msgstr "?"
 
 #: ../src/legacy/e_date.c:163
-#| msgid "Today %l:%M %p"
 msgid "Today %l∶%M %p"
 msgstr "Hoxe ás %l:%M %p"
 
 #: ../src/legacy/e_date.c:172
-#| msgid "Yesterday %l:%M %p"
 msgid "Yesterday %l∶%M %p"
 msgstr "Onte ás %l:%M %p"
 
 # (pofilter) variables: do not translate: %a, %l, %p
 #: ../src/legacy/e_date.c:184
-#| msgid "%a %l:%M %p"
 msgid "%a %l∶%M %p"
 msgstr "O %A ás %k:%M"
 
 # (pofilter) variables: do not translate: %b, %l, %p
 #: ../src/legacy/e_date.c:192
-#| msgid "%b %d %l:%M %p"
 msgid "%b %d %l∶%M %p"
 msgstr "O %d de %B ás %k:%M"
 
@@ -552,15 +546,15 @@ msgid_plural "%d matching open files"
 msgstr[0] "%d ficheiro aberto que coinciden"
 msgstr[1] "%d ficheiros abertos que coinciden"
 
-#: ../src/lsof.cpp:247
+#: ../src/lsof.cpp:245
 msgid "Process"
 msgstr "Proceso"
 
-#: ../src/lsof.cpp:259
+#: ../src/lsof.cpp:257
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:269 ../src/memmaps.cpp:307
+#: ../src/lsof.cpp:267 ../src/memmaps.cpp:307
 msgid "Filename"
 msgstr "Nome de ficheiro"
 
@@ -622,7 +616,6 @@ msgstr "Mapas de memoria"
 
 #: ../src/memmaps.cpp:450
 #, c-format
-#| msgid "_Memory maps for process \"%s\" (PID %u):"
 msgid "_Memory maps for process “%s” (PID %u):"
 msgstr "_Mapas de memoria para o proceso «%s» (PID %u):"
 
@@ -653,17 +646,16 @@ msgstr "tipo descoñecido"
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.cpp:251
+#: ../src/openfiles.cpp:252
 msgid "FD"
 msgstr "DF"
 
-#: ../src/openfiles.cpp:253
+#: ../src/openfiles.cpp:254
 msgid "Object"
 msgstr "Obxecto"
 
-#: ../src/openfiles.cpp:336
+#: ../src/openfiles.cpp:337
 #, c-format
-#| msgid "_Files opened by process \"%s\" (PID %u):"
 msgid "_Files opened by process “%s” (PID %u):"
 msgstr "_Ficheiros abertos polo proceso «%s» (PID %u):"
 
@@ -685,10 +677,6 @@ msgid "Solaris mode for CPU percentage"
 msgstr "Modo Solaris para a porcentaxe de CPU"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:5
-#| msgid ""
-#| "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU "
-#| "usage is divided by the total number of CPUs. Otherwise, it operates in "
-#| "'Irix mode'."
 msgid ""
 "If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage "
 "is divided by the total number of CPUs. Otherwise, it operates in “Irix "
@@ -711,14 +699,10 @@ msgstr ""
 "de áreas apiladas no lugar dunha gráfica de liña."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:8
-#| msgid "Show CPU chart as stacked area chart"
 msgid "Show CPU chart as smooth graph using Bezier curves"
 msgstr "Mostrar a gráfica de CPU como unha gráfica de áreas apiladas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
-#| msgid ""
-#| "If TRUE, system-monitor shows the CPU chart as a stacked area chart "
-#| "instead of a line chart."
 msgid ""
 "If TRUE, system-monitor shows the CPU chart as a smoothed graph, otherwise "
 "as a line chart."
@@ -749,10 +733,6 @@ msgstr ""
 "Indica se debe mostrar información sobre todos os sistemas de ficheiros"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
-#| msgid ""
-#| "Whether to display information about all file systems (including types "
-#| "like 'autofs' and 'procfs'). Useful for getting a list of all currently "
-#| "mounted file systems."
 msgid ""
 "Whether to display information about all file systems (including types like "
 "“autofs” and “procfs”). Useful for getting a list of all currently mounted "
@@ -816,235 +796,189 @@ msgid "Process view sort order"
 msgstr "Orde de clasificación da visualización dos procesos"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:29
-#| msgid "Width of process 'Name' column"
 msgid "Width of process “Name” column"
 msgstr "Ancho da columna «Nome» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:30
-#| msgid "Show process 'Name' column on startup"
 msgid "Show process “Name” column on startup"
 msgstr "Mostrar a columna \"Nome\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:31
-#| msgid "Width of process 'User' column"
 msgid "Width of process “User” column"
 msgstr "Ancho da columna «Usuario» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:32
-#| msgid "Show process 'User' column on startup"
 msgid "Show process “User” column on startup"
 msgstr "Mostrar a columna \"Usuario\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:33
-#| msgid "Width of process 'Status' column"
 msgid "Width of process “Status” column"
 msgstr "Ancho da columna «Estado» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:34
-#| msgid "Show process 'Status' column on startup"
 msgid "Show process “Status” column on startup"
 msgstr "Mostrar a columna \"Estado\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:35
-#| msgid "Width of process 'Virtual Memory' column"
 msgid "Width of process “Virtual Memory” column"
 msgstr "Ancho da columna «Memoria virtual» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:36
-#| msgid "Show process 'Virtual Memory' column on startup"
 msgid "Show process “Virtual Memory” column on startup"
 msgstr "Mostrar a columna \"Memoria virtual\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:37
-#| msgid "Width of process 'Resident Memory' column"
 msgid "Width of process “Resident Memory” column"
 msgstr "Ancho da columna «Memoria residente» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:38
-#| msgid "Show process 'Resident Memory' column on startup"
 msgid "Show process “Resident Memory” column on startup"
 msgstr "Mostrar a columna \"Memoria residente\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:39
-#| msgid "Width of process 'Writable Memory' column"
 msgid "Width of process “Writable Memory” column"
 msgstr "Ancho da columna «Memoria escribíbel» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:40
-#| msgid "Show process 'Writable Memory' column on startup"
 msgid "Show process “Writable Memory” column on startup"
 msgstr "Mostrar a columna \"Memoria escribíbel\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:41
-#| msgid "Width of process 'Shared Memory' column"
 msgid "Width of process “Shared Memory” column"
 msgstr "Ancho da columna «Memoria compartida» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:42
-#| msgid "Show process 'Shared Memory' column on startup"
 msgid "Show process “Shared Memory” column on startup"
 msgstr "Mostrar a columna \"Memoria compartida\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:43
-#| msgid "Width of process 'X Server Memory' column"
 msgid "Width of process “X Server Memory” column"
 msgstr "Ancho da columna «Memoria do servidor X» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:44
-#| msgid "Show process 'X Server Memory' column on startup"
 msgid "Show process “X Server Memory” column on startup"
 msgstr "Mostrar a columna \"Memoria do servidor X\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:46
 #, no-c-format
-#| msgid "Width of process 'CPU %' column"
 msgid "Width of process “CPU %” column"
 msgstr "Largura da columna «porcentaxe de CPU» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:48
 #, no-c-format
-#| msgid "Show process 'CPU %' column on startup"
 msgid "Show process “CPU %” column on startup"
 msgstr "Mostrar a columna \"porcentaxe de CPU\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:49
-#| msgid "Width of process 'CPU Time' column"
 msgid "Width of process “CPU Time” column"
 msgstr "Ancho da columna «Tempo de CPU» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:50
-#| msgid "Show process 'CPU Time' column on startup"
 msgid "Show process “CPU Time” column on startup"
 msgstr "Mostrar a columna \"Tempo de CPU\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:51
-#| msgid "Width of process 'Started' column"
 msgid "Width of process “Started” column"
 msgstr "Ancho da columna «Iniciado» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:52
-#| msgid "Show process 'Started' column on startup"
 msgid "Show process “Started” column on startup"
 msgstr "Mostrar a columna \"Tempo de inicio\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:53
-#| msgid "Width of process 'Nice' column"
 msgid "Width of process “Nice” column"
 msgstr "Ancho da columna «Nice» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:54
-#| msgid "Show process 'Nice' column on startup"
 msgid "Show process “Nice” column on startup"
 msgstr "Mostrar a columna \"Nice\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:55
-#| msgid "Width of process 'PID' column"
 msgid "Width of process “PID” column"
 msgstr "Largura da columna «PID» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:56
-#| msgid "Show process 'PID' column on startup"
 msgid "Show process “PID” column on startup"
 msgstr "Mostrar a columna \"PID\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:57
-#| msgid "Width of process 'SELinux Security Context' column"
 msgid "Width of process “SELinux Security Context” column"
 msgstr "Ancho da columna «Contexto de seguranza SELinux» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:58
-#| msgid "Show process 'SELinux Security Context' column on startup"
 msgid "Show process “SELinux Security Context” column on startup"
 msgstr ""
 "Mostrar a columna \"contexto de seguranza SELinux\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:59
-#| msgid "Width of process 'Command Line' column"
 msgid "Width of process “Command Line” column"
 msgstr "Ancho da columna «Nice» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:60
-#| msgid "Show process 'Command Line' column on startup"
 msgid "Show process “Command Line” column on startup"
 msgstr "Mostrar a columna «Liña de orde» do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:61
-#| msgid "Width of process 'Memory' column"
 msgid "Width of process “Memory” column"
 msgstr "Ancho da columna «Memoria» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:62
-#| msgid "Show process 'Memory' column on startup"
 msgid "Show process “Memory” column on startup"
 msgstr "Mostrar a columna \"Memoria\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:63
-#| msgid "Width of process 'Waiting Channel' column"
 msgid "Width of process “Waiting Channel” column"
 msgstr "Largura da columna «Agardando pola canle» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:64
-#| msgid "Show process 'Waiting Channel' column on startup"
 msgid "Show process “Waiting Channel” column on startup"
 msgstr "Mostrar a columna 'Agardando canle' do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:65
-#| msgid "Width of process 'Control Group' column"
 msgid "Width of process “Control Group” column"
 msgstr "Largura da columna «Grupo de control» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:66
-#| msgid "Show process 'Control Group' column on startup"
 msgid "Show process “Control Group” column on startup"
 msgstr "Mostrar a columna «Grupo de control» do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:67
-#| msgid "Width of process 'Unit' column"
 msgid "Width of process “Unit” column"
 msgstr "Ancho da columna «Unidade» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:68
-#| msgid "Show process 'Unit' column on startup"
 msgid "Show process “Unit” column on startup"
 msgstr "Mostrar a columna \"Unidade\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:69
-#| msgid "Width of process 'Session' column"
 msgid "Width of process “Session” column"
 msgstr "Ancho da columna «Sesión» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:70
-#| msgid "Show process 'Session' column on startup"
 msgid "Show process “Session” column on startup"
 msgstr "Mostrar a columna \"Sesión\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:71
-#| msgid "Width of process 'Seat' column"
 msgid "Width of process “Seat” column"
 msgstr "Ancho da columna «Estado» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:72
-#| msgid "Show process 'Seat' column on startup"
 msgid "Show process “Seat” column on startup"
 msgstr "Mostrar a columna «Estado» do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:73
-#| msgid "Width of process 'Owner' column"
 msgid "Width of process “Owner” column"
 msgstr "Ancho da columna «Propietario» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:74
-#| msgid "Show process 'Owner' column on startup"
 msgid "Show process “Owner” column on startup"
 msgstr "Mostrar a columna \"Propietario\" do proceso ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:75
-#| msgid "Width of process 'Priority' column"
 msgid "Width of process “Priority” column"
 msgstr "Ancho da columna «Prioridade» do proceso"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
-#| msgid "Show process 'Priority' column on startup"
 msgid "Show process “Priority” column on startup"
 msgstr "Mostrar a columna «Prioridade» do proceso ao inicio"
 
@@ -1061,72 +995,58 @@ msgid "Disk view columns order"
 msgstr "Orde das columnas da visualización de discos"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
-#| msgid "Width of disk view 'Device' column"
 msgid "Width of disk view “Device” column"
 msgstr "Ancho da columna «Dispositivo» da vista de disco"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
-#| msgid "Show disk view 'Device' column on startup"
 msgid "Show disk view “Device” column on startup"
 msgstr "Mostrar a columna \"Dispositivo\"  da vista de disco ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
-#| msgid "Width of disk view 'Directory' column"
 msgid "Width of disk view “Directory” column"
 msgstr "Ancho da columna «Directorio» da vista de disco"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
-#| msgid "Show disk view 'Directory' column on startup"
 msgid "Show disk view “Directory” column on startup"
 msgstr "Mostrar a columna \"Directorio\"  da vista de disco ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
-#| msgid "Width of disk view 'Type' column"
 msgid "Width of disk view “Type” column"
 msgstr "Ancho da columna «Tipo» da vista de disco"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
-#| msgid "Show disk view 'Type' column on startup"
 msgid "Show disk view “Type” column on startup"
 msgstr "Mostrar a columna \"Tipo\"  da vista de disco ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
-#| msgid "Width of disk view 'Total' column"
 msgid "Width of disk view “Total” column"
 msgstr "Ancho da columna «Total» da vista de disco"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
-#| msgid "Show disk view 'Total' column on startup"
 msgid "Show disk view “Total” column on startup"
 msgstr "Mostrar a columna \"Total\"  da vista de disco ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
-#| msgid "Width of disk view 'Free' column"
 msgid "Width of disk view “Free” column"
 msgstr "Ancho da columna «Libre» da vista de disco"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
-#| msgid "Show disk view 'Free' column on startup"
 msgid "Show disk view “Free” column on startup"
 msgstr "Mostrar a columna \"Libre\"  da vista de disco ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
-#| msgid "Width of disk view 'Available' column"
 msgid "Width of disk view “Available” column"
 msgstr "Ancho da columna «Dispoñíbel» da vista de disco"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
-#| msgid "Show disk view 'Available' column on startup"
 msgid "Show disk view “Available” column on startup"
 msgstr "Mostrar a columna \"Dispoñíbel\"  da vista de disco ao inicio"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
-#| msgid "Width of disk view 'Used' column"
 msgid "Width of disk view “Used” column"
 msgstr "Ancho da columna «Usado» da vista de disco"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
-#| msgid "Show disk view 'Used' column on startup"
 msgid "Show disk view “Used” column on startup"
 msgstr "Mostrar a columna \"Usado\"  da vista de disco ao inicio"
 
@@ -1289,72 +1209,72 @@ msgstr ""
 msgid "N/A"
 msgstr "N/D"
 
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:325
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:321
 msgid "Process Name"
 msgstr "Nome do proceso"
 
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:326
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:322
 msgid "User"
 msgstr "Usuario"
 
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:327
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:323
 msgid "Status"
 msgstr "Estado"
 
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:328
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:324
 msgid "Virtual Memory"
 msgstr "Memoria virtual"
 
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:329
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:325
 msgid "Resident Memory"
 msgstr "Memoria residente"
 
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:330
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:326
 msgid "Writable Memory"
 msgstr "Memoria escribíbel"
 
-#: ../src/procproperties.cpp:74 ../src/proctable.cpp:331
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:327
 msgid "Shared Memory"
 msgstr "Memoria compartida"
 
-#: ../src/procproperties.cpp:76 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:328
 msgid "X Server Memory"
 msgstr "Memoria do servidor X"
 
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:330
 msgid "CPU Time"
 msgstr "Tempo da CPU"
 
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:331
 msgid "Started"
 msgstr "Comezado"
 
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:332
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:350
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:346
 msgid "Priority"
 msgstr "Prioridade"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:333
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:334
 msgid "Security Context"
 msgstr "Contexto de seguranza"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:335
 msgid "Command Line"
 msgstr "Liña de ordes"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:342
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:338
 msgid "Waiting Channel"
 msgstr "Agardando pola canle"
 
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:343
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:339
 msgid "Control Group"
 msgstr "Grupo de control"
 
@@ -1363,26 +1283,26 @@ msgstr "Grupo de control"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:333
+#: ../src/proctable.cpp:329
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:344
+#: ../src/proctable.cpp:340
 msgid "Unit"
 msgstr "Unidade"
 
-#: ../src/proctable.cpp:345
+#: ../src/proctable.cpp:341
 msgid "Session"
 msgstr "Sesión"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:348
+#: ../src/proctable.cpp:344
 msgid "Seat"
 msgstr "Estado"
 
-#: ../src/proctable.cpp:349
+#: ../src/proctable.cpp:345
 msgid "Owner"
 msgstr "Propietario"
 
