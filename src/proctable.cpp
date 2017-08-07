@@ -28,6 +28,7 @@
 #include <glibtop.h>
 #include <glibtop/proclist.h>
 #include <glibtop/procstate.h>
+#include <glibtop/procio.h>
 #include <glibtop/procmem.h>
 #include <glibtop/procmap.h>
 #include <glibtop/proctime.h>
@@ -343,6 +344,10 @@ proctable_new (GsmApplication * const app)
 	for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration */
         N_("Seat"),
         N_("Owner"),
+        N_("Disk read total"),
+        N_("Disk write total"),
+        N_("Disk read"),
+        N_("Disk write"),
         N_("Priority"),
         NULL,
         "POINTER"
@@ -373,6 +378,10 @@ proctable_new (GsmApplication * const app)
                                 G_TYPE_STRING,      /* Session      */
                                 G_TYPE_STRING,      /* Seat         */
                                 G_TYPE_STRING,      /* Owner        */
+                                G_TYPE_UINT64,      /* Disk read total */
+                                G_TYPE_UINT64,      /* Disk write total*/
+                                G_TYPE_UINT64,      /* Disk read    */
+                                G_TYPE_UINT64,      /* Disk write   */
                                 G_TYPE_STRING,      /* Priority     */
                                 GDK_TYPE_PIXBUF,    /* Icon         */
                                 G_TYPE_POINTER,     /* ProcInfo     */
@@ -478,6 +487,21 @@ proctable_new (GsmApplication * const app)
                                                         GUINT_TO_POINTER(i),
                                                         NULL);
                 break;
+            case COL_DISK_READ_TOTAL:
+            case COL_DISK_WRITE_TOTAL:
+                gtk_tree_view_column_set_cell_data_func(col, cell,
+                                                        &procman::size_na_cell_data_func,
+                                                        GUINT_TO_POINTER(i),
+                                                        NULL);
+                break;
+            case COL_DISK_READ_CURRENT:
+            case COL_DISK_WRITE_CURRENT:
+                gtk_tree_view_column_set_cell_data_func(col, cell,
+                                                        &procman::io_rate_cell_data_func,
+                                                        GUINT_TO_POINTER(i),
+                                                        NULL);
+
+                break;
             case COL_PRIORITY:
                 gtk_tree_view_column_set_cell_data_func(col, cell,
                                                         &procman::priority_cell_data_func,
@@ -500,6 +524,10 @@ proctable_new (GsmApplication * const app)
             case COL_MEM:
             case COL_CPU:
             case COL_CPU_TIME:
+            case COL_DISK_READ_TOTAL:
+            case COL_DISK_WRITE_TOTAL:
+            case COL_DISK_READ_CURRENT:
+            case COL_DISK_WRITE_CURRENT:
             case COL_START_TIME:
                 gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (model_sort), i,
                                                  procman::number_compare_func,
@@ -527,6 +555,10 @@ proctable_new (GsmApplication * const app)
             case COL_CPU:
             case COL_NICE:
             case COL_PID:
+            case COL_DISK_READ_TOTAL:
+            case COL_DISK_WRITE_TOTAL:
+            case COL_DISK_READ_CURRENT:
+            case COL_DISK_WRITE_CURRENT:
             case COL_CPU_TIME:
             case COL_MEM:
                 g_object_set(G_OBJECT(cell), "xalign", 1.0f, NULL);
@@ -740,6 +772,10 @@ update_info_mutable_cols(ProcInfo *info)
 #endif
     tree_store_update(model, &info->node, COL_CPU, info->pcpu);
     tree_store_update(model, &info->node, COL_CPU_TIME, info->cpu_time);
+    tree_store_update(model, &info->node, COL_DISK_READ_TOTAL, info->disk_read_bytes_total);
+    tree_store_update(model, &info->node, COL_DISK_WRITE_TOTAL, info->disk_write_bytes_total);
+    tree_store_update(model, &info->node, COL_DISK_READ_CURRENT, info->disk_read_bytes_current);
+    tree_store_update(model, &info->node, COL_DISK_WRITE_CURRENT, info->disk_write_bytes_current);
     tree_store_update(model, &info->node, COL_START_TIME, info->start_time);
     tree_store_update(model, &info->node, COL_NICE, info->nice);
     tree_store_update(model, &info->node, COL_MEM, info->mem);
@@ -860,7 +896,8 @@ update_info (GsmApplication *app, ProcInfo *info)
     glibtop_proc_uid procuid;
     glibtop_proc_time proctime;
     glibtop_proc_kernel prockernel;
-
+    glibtop_proc_io procio;
+    gdouble update_interval_seconds = app->config.update_interval / 1000;
     glibtop_get_proc_kernel(&prockernel, info->pid);
     info->wchan = get_proc_kernel_wchan(prockernel);
 
@@ -869,6 +906,7 @@ update_info (GsmApplication *app, ProcInfo *info)
 
     glibtop_get_proc_uid (&procuid, info->pid);
     glibtop_get_proc_time (&proctime, info->pid);
+    glibtop_get_proc_io (&procio, info->pid);
 
     get_process_memory_info(info);
 
@@ -887,6 +925,12 @@ update_info (GsmApplication *app, ProcInfo *info)
 
     app->processes.cpu_times[info->pid] = info->cpu_time = proctime.rtime;
     info->nice = procuid.nice;
+    
+    info->disk_write_bytes_current = (procio.disk_wbytes - info->disk_write_bytes_total)/update_interval_seconds;
+    info->disk_read_bytes_current = (procio.disk_rbytes - info->disk_read_bytes_total)/update_interval_seconds;
+
+    info->disk_write_bytes_total = procio.disk_wbytes;
+    info->disk_read_bytes_total = procio.disk_rbytes;
 
     // set the ppid only if one can exist
     // i.e. pid=0 can never have a parent
