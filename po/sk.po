@@ -12,10 +12,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
-"monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-02-13 22:00+0000\n"
-"PO-Revision-Date: 2017-02-18 10:53+0100\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=system-monitor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2017-08-10 08:16+0000\n"
+"PO-Revision-Date: 2017-08-23 20:12+0200\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: slovenčina <>\n"
 "Language: sk\n"
@@ -23,17 +23,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.3\n"
 
 # desktop entry name
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/application.cpp:244 ../src/interface.cpp:358
+#: ../src/application.cpp:244 ../src/interface.cpp:363
 msgid "System Monitor"
 msgstr "Monitor systému"
 
 # desktop entry comment
 #: ../gnome-system-monitor.desktop.in.in.h:2
-#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:359
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:364
 msgid "View current processes and monitor system state"
 msgstr "Zobrazuje aktuálne procesy a monitoruje stav systému"
 
@@ -41,10 +41,10 @@ msgstr "Zobrazuje aktuálne procesy a monitoruje stav systému"
 #: ../gnome-system-monitor.desktop.in.in.h:3
 msgid ""
 "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
-"Manager;"
+"Manager;Activity;"
 msgstr ""
 "Monitor;Systém;Proces;Procesor;CPU;Pamäť;Sieť;História;Využitie;Výkon;Úloha;"
-"Správca;"
+"Správca;Aktivita;"
 
 # desktop entry name
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
@@ -158,13 +158,13 @@ msgid "Memory and Swap History"
 msgstr "História využitia pamäte a odkladacieho priestoru"
 
 # GtkLabel label
-#: ../data/interface.ui.h:7 ../src/interface.cpp:258
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:340
+#: ../data/interface.ui.h:7 ../src/interface.cpp:260
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:337
 msgid "Memory"
 msgstr "Pamäť"
 
 # GtkLabel label
-#: ../data/interface.ui.h:8 ../src/interface.cpp:270
+#: ../data/interface.ui.h:8 ../src/interface.cpp:272
 msgid "Swap"
 msgstr "Odkladací priestor"
 
@@ -174,24 +174,24 @@ msgid "Network History"
 msgstr "História využitia siete"
 
 # GtkLabel label
-#: ../data/interface.ui.h:10 ../src/interface.cpp:298
+#: ../data/interface.ui.h:10 ../src/interface.cpp:302
 msgid "Receiving"
 msgstr "Prijímanie"
 
 # GtkLabel label
 #: ../data/interface.ui.h:11
 msgid "Total Received"
-msgstr "Spolu prijatých"
+msgstr "Celkom prijatých"
 
 # Pick color for "Sending"
-#: ../data/interface.ui.h:12 ../src/interface.cpp:312
+#: ../data/interface.ui.h:12 ../src/interface.cpp:317
 msgid "Sending"
 msgstr "Odosielanie"
 
 # GtkLabel label
 #: ../data/interface.ui.h:13
 msgid "Total Sent"
-msgstr "Spolu odoslaných"
+msgstr "Celkom odoslaných"
 
 # tab GtkLabel label
 #: ../data/interface.ui.h:14 ../data/preferences.ui.h:14
@@ -467,7 +467,8 @@ msgid "Directory"
 msgstr "Adresár"
 
 # column title
-#: ../src/disks.cpp:354 ../src/gsm_color_button.c:165 ../src/openfiles.cpp:252
+#: ../src/disks.cpp:354 ../src/legacy/gsm_color_button.c:165
+#: ../src/openfiles.cpp:253
 msgid "Type"
 msgstr "Typ"
 
@@ -491,82 +492,6 @@ msgstr "Dostupné"
 msgid "Used"
 msgstr "Použité"
 
-#. xgettext: ? stands for unknown
-#: ../src/e_date.c:156
-msgid "?"
-msgstr "?"
-
-#: ../src/e_date.c:163
-msgid "Today %l∶%M %p"
-msgstr "Dnes %k:%M"
-
-#: ../src/e_date.c:172
-msgid "Yesterday %l∶%M %p"
-msgstr "Včera %k:%M"
-
-#: ../src/e_date.c:184
-msgid "%a %l∶%M %p"
-msgstr "%a %k:%M"
-
-#: ../src/e_date.c:192
-msgid "%b %d %l∶%M %p"
-msgstr "%d. %b %k:%M"
-
-#: ../src/e_date.c:194
-msgid "%b %d %Y"
-msgstr "%d. %b %Y"
-
-# PK: tu neviem kde to je
-# PM: je to názov vlastnosti widgetu
-# Property nick
-#: ../src/gsm_color_button.c:141
-msgid "Fraction"
-msgstr "Zlomok"
-
-# property blurb
-#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:143
-msgid "Percentage full for pie color pickers"
-msgstr "Plný percentuálny podiel pre výber farby"
-
-# Property nick
-#: ../src/gsm_color_button.c:150
-msgid "Title"
-msgstr "Titulok"
-
-# property blurb
-#: ../src/gsm_color_button.c:151
-msgid "The title of the color selection dialog"
-msgstr "Titulok dialógového okna na výber farby"
-
-# window title
-#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:515
-msgid "Pick a Color"
-msgstr "Výber farby"
-
-# Property nick
-#: ../src/gsm_color_button.c:158
-msgid "Current Color"
-msgstr "Aktuálna farba"
-
-# Property blurb
-#: ../src/gsm_color_button.c:159
-msgid "The selected color"
-msgstr "Vybraná farba"
-
-# Property blurb
-#: ../src/gsm_color_button.c:166
-msgid "Type of color picker"
-msgstr "Typ výberu farby"
-
-#: ../src/gsm_color_button.c:437
-msgid "Received invalid color data\n"
-msgstr "Prijaté neplatné dáta farieb\n"
-
-#: ../src/gsm_color_button.c:538
-msgid "Click to set graph colors"
-msgstr "Kliknutím nastavíte farby grafov"
-
 # dialog window title
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
 #: ../src/interface.cpp:185
@@ -575,16 +500,16 @@ msgid "Pick a Color for “%s”"
 msgstr "Výber farby pre „%s“"
 
 # zobrazuje sa, keď je len jeden; inak nasledujúci reťazec
-#: ../src/interface.cpp:218 ../src/procproperties.cpp:78
+#: ../src/interface.cpp:219 ../src/procproperties.cpp:78
 msgid "CPU"
 msgstr "Procesor"
 
-#: ../src/interface.cpp:220
+#: ../src/interface.cpp:221
 #, c-format
 msgid "CPU%d"
 msgstr "CPU č. %d"
 
-#: ../src/interface.cpp:369
+#: ../src/interface.cpp:374
 msgid "translator-credits"
 msgstr ""
 "Stanislav Višňovský\n"
@@ -592,6 +517,82 @@ msgstr ""
 "Marián Bača <majoobaca@gmail.com>\n"
 "Pavol Klačanský <pavol@klacansky.com>\n"
 "Dušan Kazik <prescott66@gmail.com>"
+
+#. xgettext: ? stands for unknown
+#: ../src/legacy/e_date.c:156
+msgid "?"
+msgstr "?"
+
+#: ../src/legacy/e_date.c:163
+msgid "Today %l∶%M %p"
+msgstr "Dnes %k:%M"
+
+#: ../src/legacy/e_date.c:172
+msgid "Yesterday %l∶%M %p"
+msgstr "Včera %k:%M"
+
+#: ../src/legacy/e_date.c:184
+msgid "%a %l∶%M %p"
+msgstr "%a %k:%M"
+
+#: ../src/legacy/e_date.c:192
+msgid "%b %d %l∶%M %p"
+msgstr "%d. %b %k:%M"
+
+#: ../src/legacy/e_date.c:194
+msgid "%b %d %Y"
+msgstr "%d. %b %Y"
+
+# PK: tu neviem kde to je
+# PM: je to názov vlastnosti widgetu
+# Property nick
+#: ../src/legacy/gsm_color_button.c:141
+msgid "Fraction"
+msgstr "Zlomok"
+
+# property blurb
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+#: ../src/legacy/gsm_color_button.c:143
+msgid "Percentage full for pie color pickers"
+msgstr "Plný percentuálny podiel pre výber farby"
+
+# Property nick
+#: ../src/legacy/gsm_color_button.c:150
+msgid "Title"
+msgstr "Titulok"
+
+# property blurb
+#: ../src/legacy/gsm_color_button.c:151
+msgid "The title of the color selection dialog"
+msgstr "Titulok dialógového okna na výber farby"
+
+# window title
+#: ../src/legacy/gsm_color_button.c:152 ../src/legacy/gsm_color_button.c:515
+msgid "Pick a Color"
+msgstr "Výber farby"
+
+# Property nick
+#: ../src/legacy/gsm_color_button.c:158
+msgid "Current Color"
+msgstr "Aktuálna farba"
+
+# Property blurb
+#: ../src/legacy/gsm_color_button.c:159
+msgid "The selected color"
+msgstr "Vybraná farba"
+
+# Property blurb
+#: ../src/legacy/gsm_color_button.c:166
+msgid "Type of color picker"
+msgstr "Typ výberu farby"
+
+#: ../src/legacy/gsm_color_button.c:437
+msgid "Received invalid color data\n"
+msgstr "Prijaté neplatné dáta farieb\n"
+
+#: ../src/legacy/gsm_color_button.c:538
+msgid "Click to set graph colors"
+msgstr "Kliknutím nastavíte farby grafov"
 
 #: ../src/load-graph.cpp:157
 #, c-format
@@ -628,17 +629,17 @@ msgstr[1] "%d zodpovedajúci otvorený súbor"
 msgstr[2] "%d zodpovedajúce otvorené súbory"
 
 # column title
-#: ../src/lsof.cpp:247
+#: ../src/lsof.cpp:245
 msgid "Process"
 msgstr "Proces"
 
 # column title
-#: ../src/lsof.cpp:259
+#: ../src/lsof.cpp:257
 msgid "PID"
 msgstr "PID"
 
 # column title
-#: ../src/lsof.cpp:269 ../src/memmaps.cpp:307
+#: ../src/lsof.cpp:267 ../src/memmaps.cpp:307
 msgid "Filename"
 msgstr "Názov súboru"
 
@@ -751,17 +752,17 @@ msgstr "neznámy typ"
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.cpp:251
+#: ../src/openfiles.cpp:252
 msgid "FD"
 msgstr "FD"
 
 # column title
-#: ../src/openfiles.cpp:253
+#: ../src/openfiles.cpp:254
 msgid "Object"
 msgstr "Objekt"
 
 # label
-#: ../src/openfiles.cpp:336
+#: ../src/openfiles.cpp:337
 #, c-format
 msgid "_Files opened by process “%s” (PID %u):"
 msgstr "_Súbory otvorené procesom „%s“ (PID %u):"
@@ -1153,118 +1154,158 @@ msgstr "Pri spustení zobraziť stĺpec „Vlastník“"
 
 # gsettings summary
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:75
+msgid "Width of process “Total disk write” column"
+msgstr "Šírka stĺpca „Celkový zápis na disk“"
+
+# gsettings summary
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
+msgid "Show process “Total disk write” column on startup"
+msgstr "Pri spustení zobraziť stĺpec „Celkový zápis na disk“"
+
+# gsettings summary
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
+msgid "Width of process “Total disk read” column"
+msgstr "Šírka stĺpca „Celkové čítanie z disku“"
+
+# gsettings summary
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
+msgid "Show process “Total disk read” column on startup"
+msgstr "Pri spustení zobraziť stĺpec „Celkové čítanie z disku“"
+
+# summary
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
+msgid "Width of process “Disk read” column"
+msgstr "Šírka stĺpca „Čítanie z disku“"
+
+# summary
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
+msgid "Show process “Disk read” column on startup"
+msgstr "Pri spustení zobraziť stĺpec „Čítanie z disku“"
+
+# gsettings summary
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
+msgid "Width of process “Disk write” column"
+msgstr "Šírka stĺpca „Zápis na disk“"
+
+# gsettings summary
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
+msgid "Show process “Disk write” column on startup"
+msgstr "Pri spustení zobraziť stĺpec „Zápis na disk“"
+
+# gsettings summary
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
 msgid "Width of process “Priority” column"
 msgstr "Šírka stĺpca „Priorita“"
 
 # gsettings summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
 msgid "Show process “Priority” column on startup"
 msgstr "Pri spustení zobraziť stĺpec „Priorita“"
 
 # gsettings summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
 msgid "Disk view sort column"
 msgstr "Stĺpec triedenia prehľadu diskov"
 
 # gsettings summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
 msgid "Disk view sort order"
 msgstr "Poradie triedenia prehľadu diskov"
 
 # gsettings summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
 msgid "Disk view columns order"
 msgstr "Poradie stĺpcov prehľadu diskov"
 
 # gsettings summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
 msgid "Width of disk view “Device” column"
 msgstr "Šírka stĺpca „Zariadenie“ v prehľade diskov"
 
 # gsettings summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
 msgid "Show disk view “Device” column on startup"
 msgstr "Pri spustení zobraziť stĺpec „Zariadenie“ v prehľade diskov"
 
 # MČ: predpokladá,, že by to mal byť „adresár“, či „priečinok“ kde je zariadenie pripojené. Nie je dohodnutý pojem „priečinok“?
 # PK: myslim ze tu viac sedi adresar, priecinok mi evokuje proste userspace ako nautilus
 # gsettings summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
 msgid "Width of disk view “Directory” column"
 msgstr "Šírka stĺpca „Adresár“ v prehľade diskov"
 
 # gsettings summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
 msgid "Show disk view “Directory” column on startup"
 msgstr "Pri spustení zobraziť stĺpec „Adresár“ v prehľade diskov"
 
 # summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
 msgid "Width of disk view “Type” column"
 msgstr "Šírka stĺpca „Typ“ v prehľade diskov"
 
 # summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
 msgid "Show disk view “Type” column on startup"
 msgstr "Pri spustení zobraziť stĺpec „Typ“ v prehľade diskov"
 
 # summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
 msgid "Width of disk view “Total” column"
 msgstr "Šírka stĺpca „Celkom“ v prehľade diskov"
 
 # summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
 msgid "Show disk view “Total” column on startup"
 msgstr "Pri spustení zobraziť stĺpec „Celkom“ v prehľade diskov"
 
 # summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:96
 msgid "Width of disk view “Free” column"
 msgstr "Šírka stĺpca „Voľné“ v prehľade diskov"
 
 # summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:97
 msgid "Show disk view “Free” column on startup"
 msgstr "Pri spustení zobraziť stĺpec „Voľné“ v prehľade diskov"
 
 # summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:98
 msgid "Width of disk view “Available” column"
 msgstr "Šírka stĺpca „Dostupné“ v prehľade diskov"
 
 # summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:99
 msgid "Show disk view “Available” column on startup"
 msgstr "Pri spustení zobraziť stĺpec „Dostupné“ v prehľade diskov"
 
 # summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:100
 msgid "Width of disk view “Used” column"
 msgstr "Šírka stĺpca „Použité“ v prehľade diskov"
 
 # summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:101
 msgid "Show disk view “Used” column on startup"
 msgstr "Pri spustení zobraziť stĺpec „Použité“ v prehľade diskov"
 
 # gsettings summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:102
 msgid "Memory map sort column"
 msgstr "Stĺpec triedenia mapy pamäti"
 
 # gsettings summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:103
 msgid "Memory map sort order"
 msgstr "Poradie triedenia mapy pamäti"
 
 # gsettings summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:96
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:104
 msgid "Open files sort column"
 msgstr "Stĺpec triedenia otvorených súborov"
 
 # gsettings summary
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:97
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:105
 msgid "Open files sort order"
 msgstr "Poradie triedenia otvorených súborov"
 
@@ -1420,93 +1461,93 @@ msgstr ""
 "znamená vyššiu prioritu."
 
 #: ../src/procproperties.cpp:50 ../src/procproperties.cpp:84
-#: ../src/procproperties.cpp:87 ../src/util.cpp:432
+#: ../src/procproperties.cpp:87 ../src/util.cpp:432 ../src/util.cpp:471
 msgid "N/A"
 msgstr "-"
 
 # column title
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:325
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:322
 msgid "Process Name"
 msgstr "Názov procesu"
 
 # column title
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:326
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:323
 msgid "User"
 msgstr "Používateľ"
 
 # column title
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:327
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:324
 msgid "Status"
 msgstr "Stav"
 
 # column title
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:328
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:325
 msgid "Virtual Memory"
 msgstr "Virtuálna pamäť"
 
 # column title
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:329
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:326
 msgid "Resident Memory"
 msgstr "Rezidentná pamäť"
 
 # column title
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:330
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:327
 msgid "Writable Memory"
 msgstr "Zapisovateľná pamäť"
 
 # column title
-#: ../src/procproperties.cpp:74 ../src/proctable.cpp:331
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:328
 msgid "Shared Memory"
 msgstr "Zdieľaná pamäť"
 
 # column title
-#: ../src/procproperties.cpp:76 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:329
 msgid "X Server Memory"
 msgstr "Pamäť X servera"
 
 # column title
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:331
 msgid "CPU Time"
 msgstr "Čas procesora"
 
 # column title
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:332
 msgid "Started"
 msgstr "Čas štartu"
 
 # column title
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:333
 msgid "Nice"
 msgstr "Ohľaduplnosť"
 
 # column title
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:350
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:351
 msgid "Priority"
 msgstr "Priorita"
 
 # column title
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:334
 msgid "ID"
 msgstr "Identifikátor"
 
 # column title
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:335
 msgid "Security Context"
 msgstr "Bezpečnostný kontext"
 
 # column title
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:336
 msgid "Command Line"
 msgstr "Príkazový riadok"
 
 # column title
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:342
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:339
 msgid "Waiting Channel"
 msgstr "Čakací kanál"
 
 # column title
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:343
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:340
 msgid "Control Group"
 msgstr "Kontrolná skupina"
 
@@ -1516,19 +1557,19 @@ msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
 # column title
-#: ../src/proctable.cpp:333
+#: ../src/proctable.cpp:330
 #, no-c-format
 msgid "% CPU"
 msgstr "% procesora"
 
 # PK: nie som si isty
 # column title
-#: ../src/proctable.cpp:344
+#: ../src/proctable.cpp:341
 msgid "Unit"
 msgstr "Jednotka"
 
 # column title
-#: ../src/proctable.cpp:345
+#: ../src/proctable.cpp:342
 msgid "Session"
 msgstr "Relácia"
 
@@ -1536,14 +1577,31 @@ msgstr "Relácia"
 # column title
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:348
+#: ../src/proctable.cpp:345
 msgid "Seat"
 msgstr "Sedenie"
 
 # column title
-#: ../src/proctable.cpp:349
+#: ../src/proctable.cpp:346
 msgid "Owner"
 msgstr "Vlastník"
+
+#: ../src/proctable.cpp:347
+msgid "Disk read total"
+msgstr "Celkové čítanie z disku"
+
+#: ../src/proctable.cpp:348
+msgid "Disk write total"
+msgstr "Celkový zápis na disk"
+
+#: ../src/proctable.cpp:349
+msgid "Disk read"
+msgstr "Čítanie z disku"
+
+# gsettings summary
+#: ../src/proctable.cpp:350
+msgid "Disk write"
+msgstr "Zápis na disk"
 
 # process state
 #: ../src/util.cpp:27
@@ -1676,7 +1734,7 @@ msgid "Very Low Priority"
 msgstr "Veľmi nízka priorita"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:630
+#: ../src/util.cpp:667
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
