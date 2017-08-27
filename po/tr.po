@@ -8,17 +8,17 @@
 # Baris Cicek <baris@teamforce.name.tr>, 2007, 2008, 2009.
 # Tunahan Uçar <tunahanucar@gmail.com>, 2011.
 # Osman Karagöz <osmank3@gmail.com>, 2014.
-# Muhammet Kara <muhammetk@gmail.com>, 2011, 2014, 2015.
+# Muhammet Kara <muhammetk@gmail.com>, 2011, 2014, 2015, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=system-"
-"monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-08-25 08:23+0000\n"
-"PO-Revision-Date: 2015-08-25 23:16+0300\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=system-monitor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2017-08-10 08:16+0000\n"
+"PO-Revision-Date: 2017-08-27 21:30+0300\n"
 "Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
-"Language-Team: Türkçe <gnome-turk@gnome.org>\n"
+"Language-Team: Turkish <gnometurk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,7 +27,7 @@ msgstr ""
 "X-Generator: Gtranslator 2.91.7\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/application.cpp:262 ../src/interface.cpp:363
+#: ../src/application.cpp:244 ../src/interface.cpp:363
 msgid "System Monitor"
 msgstr "Sistem Gözlemcisi"
 
@@ -37,15 +37,18 @@ msgid "View current processes and monitor system state"
 msgstr "Çalışan süreçleri ve sistem durumunu gösterir"
 
 #: ../gnome-system-monitor.desktop.in.in.h:3
+#| msgid ""
+#| "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
+#| "Manager;"
 msgid ""
 "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
-"Manager;"
+"Manager;Activity;"
 msgstr ""
 "İzleyici;Gözlemci;Sistem;Süreç;İşlem;MİB;CPU;Bellek;Ağ;Geçmiş;Kullanım;"
-"Performans;Başarım;Görev;Yönetici;"
+"Performans;Başarım;Görev;Yönetici;Etkinlik;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:318
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:299
 msgid "GNOME System Monitor"
 msgstr "GNOME Sistem Gözlemcisi"
 
@@ -86,12 +89,32 @@ msgstr ""
 "Kaynak grafiği size ağın, belleğin ve işlemcinin kullanımı hakkında ve "
 "sisteminizde ne olup bittiğine dair hızlı bir izlenim sunar."
 
+#: ../gnome-system-monitor.appdata.xml.in.h:6
+#| msgid "Process view sort order"
+msgid "Process list view"
+msgstr "Süreç listesi görünümü"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:7
+#| msgid "Resources"
+msgid "Resources overview"
+msgstr "Kaynaklar genel görünümü"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:8
+#| msgid "File Systems"
+msgid "File Systems view"
+msgstr "Dosya Sistemleri görünümü"
+
+#: ../gnome-system-monitor.appdata.xml.in.h:9
+msgid "The GNOME Project"
+msgstr "GNOME Projesi"
+
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:1
 msgid "Kill process"
 msgstr "Süreci öldür"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:2
-msgid "Privileges are required to control other users' processes"
+#| msgid "Privileges are required to control other users' processes"
+msgid "Privileges are required to control other users’ processes"
 msgstr "Diğer kullanıcıların süreçlerini yönetmek için ayrıcalıklar gerekir"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:3
@@ -123,7 +146,7 @@ msgid "Memory and Swap History"
 msgstr "Bellek ve Takas Kullanım Geçmişi"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:260
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:343
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:337
 msgid "Memory"
 msgstr "Bellek"
 
@@ -135,7 +158,7 @@ msgstr "Takas Alanı"
 msgid "Network History"
 msgstr "Ağ Geçmişi"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:300
+#: ../data/interface.ui.h:10 ../src/interface.cpp:302
 msgid "Receiving"
 msgstr "Alınıyor"
 
@@ -143,7 +166,7 @@ msgstr "Alınıyor"
 msgid "Total Received"
 msgstr "Toplam Alınan:"
 
-#: ../data/interface.ui.h:12 ../src/interface.cpp:315
+#: ../data/interface.ui.h:12 ../src/interface.cpp:317
 msgid "Sending"
 msgstr "Gönderiliyor"
 
@@ -151,17 +174,15 @@ msgstr "Gönderiliyor"
 msgid "Total Sent"
 msgstr "Toplam Gönderilen"
 
-#: ../data/interface.ui.h:14 ../data/preferences.ui.h:13
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:14
 msgid "Resources"
 msgstr "Kaynaklar"
 
-#: ../data/interface.ui.h:15 ../data/preferences.ui.h:16
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:17
 msgid "File Systems"
 msgstr "Dosya Sistemleri"
 
 #: ../data/lsof.ui.h:1
-#| msgctxt "Window title for 'Search for Open Files' dialog"
-#| msgid "Search for Open Files"
 msgctxt "Window title for Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Açık Dosyaları Ara"
@@ -175,8 +196,6 @@ msgid "Case insensitive"
 msgstr "BÜYÜK/küçük harfe duyarsız"
 
 #: ../data/menus.ui.h:1
-#| msgctxt "Window title for 'Search for Open Files' dialog"
-#| msgid "Search for Open Files"
 msgctxt "Menu item to Open Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Açık Dosyaları Ara"
@@ -218,20 +237,17 @@ msgid "_Dependencies"
 msgstr "_Bağımlılıklar"
 
 #: ../data/menus.ui.h:11
-msgid "_Stop"
-msgstr "_Durdur"
+msgid "_Properties"
+msgstr "Öze_llikler"
 
 #: ../data/menus.ui.h:12
-msgid "_Continue"
-msgstr "Devam _Ettir"
+msgid "_Memory Maps"
+msgstr "_Bellek Eşlemler"
 
-#: ../data/menus.ui.h:13
-msgid "_End"
-msgstr "_Sonlandır"
-
+#. Translators: this means
 #: ../data/menus.ui.h:14
-msgid "_Kill"
-msgstr "_Öldür"
+msgid "Open _Files"
+msgstr "_Dosyaları Aç"
 
 #: ../data/menus.ui.h:15
 msgid "_Change Priority"
@@ -262,17 +278,20 @@ msgid "Custom"
 msgstr "Özel"
 
 #: ../data/menus.ui.h:22
-msgid "_Memory Maps"
-msgstr "_Bellek Eşlemler"
+msgid "_Stop"
+msgstr "_Durdur"
 
-#. Translators: this means 'Files that are open' (open is not a verb here)
+#: ../data/menus.ui.h:23
+msgid "_Continue"
+msgstr "Devam _Ettir"
+
 #: ../data/menus.ui.h:24
-msgid "Open _Files"
-msgstr "_Dosyaları Aç"
+msgid "_End"
+msgstr "_Sonlandır"
 
 #: ../data/menus.ui.h:25
-msgid "_Properties"
-msgstr "Öze_llikler"
+msgid "_Kill"
+msgstr "_Öldür"
 
 #: ../data/openfiles.ui.h:1
 msgid "Open Files"
@@ -319,18 +338,23 @@ msgid "_Draw CPU chart as stacked area chart"
 msgstr "_MİB (CPU) grafiğini yığılmış alan grafiği olarak çiz"
 
 #: ../data/preferences.ui.h:12
+#| msgid "_Draw CPU chart as stacked area chart"
+msgid "Draw CPU chart as s_mooth graph"
+msgstr "_MİB (CPU) grafiğini yumuşak grafik olarak çiz"
+
+#: ../data/preferences.ui.h:13
 msgid "_Show network speed in bits"
 msgstr "Ağ hızını _bit olarak göster"
 
-#: ../data/preferences.ui.h:14
+#: ../data/preferences.ui.h:15
 msgid "Show _all file systems"
 msgstr "_Tüm dosya sistemlerini göster"
 
-#: ../data/preferences.ui.h:15
+#: ../data/preferences.ui.h:16
 msgid "File system i_nformation shown in list:"
 msgstr "Listede gösterilen dosya sistemi b_ilgisi:"
 
-#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:123
+#: ../data/renice.ui.h:1 ../src/procdialogs.cpp:153
 msgid "_Cancel"
 msgstr "_Vazgeç"
 
@@ -350,7 +374,7 @@ msgstr ""
 "<small><i><b>Not:</b> Öncelik değeri süreç öncelikleri ile ilgilidir. Düşük "
 "öncelik değeri daha yüksek bir önceliğe karşılık gelir.</i></small>"
 
-#: ../src/application.cpp:304
+#: ../src/application.cpp:285
 msgid "A simple process and system monitor."
 msgstr "Basit bir süreç ve sistem izleyici."
 
@@ -367,114 +391,51 @@ msgid "Show the File Systems tab"
 msgstr "Dosya Sistemleri sekmesini göster"
 
 #: ../src/argv.cpp:36
-msgid "Show the application's version"
+#| msgid "Show the application's version"
+msgid "Show the application’s version"
 msgstr "Uygulamanın sürümünü göster"
 
-#: ../src/disks.cpp:361 ../src/memmaps.cpp:329
+#: ../src/disks.cpp:352 ../src/memmaps.cpp:329
 msgid "Device"
 msgstr "Aygıt"
 
-#: ../src/disks.cpp:362
+#: ../src/disks.cpp:353
 msgid "Directory"
 msgstr "Konum"
 
-#: ../src/disks.cpp:363 ../src/gsm_color_button.c:165 ../src/openfiles.cpp:252
+#: ../src/disks.cpp:354 ../src/legacy/gsm_color_button.c:165
+#: ../src/openfiles.cpp:253
 msgid "Type"
 msgstr "Tür"
 
-#: ../src/disks.cpp:364
+#: ../src/disks.cpp:355
 msgid "Total"
 msgstr "Toplam"
 
-#: ../src/disks.cpp:365
+#: ../src/disks.cpp:356
 msgid "Free"
 msgstr "Boş"
 
-#: ../src/disks.cpp:366
+#: ../src/disks.cpp:357
 msgid "Available"
 msgstr "Ulaşılabilir"
 
-#: ../src/disks.cpp:367
+#: ../src/disks.cpp:358
 msgid "Used"
 msgstr "Kullanılan"
 
-#. xgettext: ? stands for unknown
-#: ../src/e_date.c:156
-msgid "?"
-msgstr "?"
-
-#: ../src/e_date.c:163
-msgid "Today %l:%M %p"
-msgstr "Bugün %k:%M"
-
-#: ../src/e_date.c:172
-msgid "Yesterday %l:%M %p"
-msgstr "Dün %k:%M"
-
-#: ../src/e_date.c:184
-msgid "%a %l:%M %p"
-msgstr "%a %k:%M"
-
-#: ../src/e_date.c:192
-msgid "%b %d %l:%M %p"
-msgstr "%b %d %k:%M "
-
-#: ../src/e_date.c:194
-msgid "%b %d %Y"
-msgstr "%b %d %Y"
-
-#: ../src/gsm_color_button.c:141
-msgid "Fraction"
-msgstr "Şimdiki Renk"
-
-#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:143
-msgid "Percentage full for pie color pickers"
-msgstr "Dairesel renk seçici için yüzde tam"
-
-#: ../src/gsm_color_button.c:150
-msgid "Title"
-msgstr "Başlık"
-
-#: ../src/gsm_color_button.c:151
-msgid "The title of the color selection dialog"
-msgstr "Renk seçme penceresinin başlığı"
-
-#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:512
-msgid "Pick a Color"
-msgstr "Bir Renk Seçin"
-
-#: ../src/gsm_color_button.c:158
-msgid "Current Color"
-msgstr "Şimdiki Renk"
-
-#: ../src/gsm_color_button.c:159
-msgid "The selected color"
-msgstr "Seçili renk"
-
-#: ../src/gsm_color_button.c:166
-msgid "Type of color picker"
-msgstr "Renk seçinin tipi"
-
-#: ../src/gsm_color_button.c:434
-msgid "Received invalid color data\n"
-msgstr "Geçersiz renk verisi alındı\n"
-
-#: ../src/gsm_color_button.c:535
-msgid "Click to set graph colors"
-msgstr "Grafik renklerini atamak için tıklayın"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:187
+#: ../src/interface.cpp:185
 #, c-format
-msgid "Pick a Color for '%s'"
-msgstr "'%s' için bir Renk Seçin"
+#| msgid "Pick a Color for '%s'"
+msgid "Pick a Color for “%s”"
+msgstr "“%s” İçin Bir Renk Seçin"
 
-#: ../src/interface.cpp:220 ../src/procproperties.cpp:78
+#: ../src/interface.cpp:219 ../src/procproperties.cpp:78
 msgid "CPU"
 msgstr "MİB"
 
-#: ../src/interface.cpp:222
+#: ../src/interface.cpp:221
 #, c-format
 msgid "CPU%d"
 msgstr "MİB%d"
@@ -485,21 +446,91 @@ msgstr ""
 "Deniz Koçak <deniz.kocak@linux.org.tr>\n"
 "Davut Topcan <davut@aysis.com.tr>\n"
 "Barış Çiçek <baris@teamforce.name.tr>\n"
-"Muhammet Kara <muhammet.k@gmail.com>\n"
+"Muhammet Kara <muhammetk@gmail.com>\n"
 "Osman Karagöz <osmank3@gmail.com>"
 
-#: ../src/load-graph.cpp:161
+#. xgettext: ? stands for unknown
+#: ../src/legacy/e_date.c:156
+msgid "?"
+msgstr "?"
+
+#: ../src/legacy/e_date.c:163
+#| msgid "Today %l:%M %p"
+msgid "Today %l∶%M %p"
+msgstr "Bugün %l∶%M %p"
+
+#: ../src/legacy/e_date.c:172
+#| msgid "Yesterday %l:%M %p"
+msgid "Yesterday %l∶%M %p"
+msgstr "Dün %l∶%M %p"
+
+#: ../src/legacy/e_date.c:184
+#| msgid "%a %l:%M %p"
+msgid "%a %l∶%M %p"
+msgstr "%a %l∶%M %p"
+
+#: ../src/legacy/e_date.c:192
+#| msgid "%b %d %l:%M %p"
+msgid "%b %d %l∶%M %p"
+msgstr "%b %d %l∶%M %p"
+
+#: ../src/legacy/e_date.c:194
+msgid "%b %d %Y"
+msgstr "%b %d %Y"
+
+#: ../src/legacy/gsm_color_button.c:141
+msgid "Fraction"
+msgstr "Şimdiki Renk"
+
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+#: ../src/legacy/gsm_color_button.c:143
+msgid "Percentage full for pie color pickers"
+msgstr "Dairesel renk seçici için yüzde tam"
+
+#: ../src/legacy/gsm_color_button.c:150
+msgid "Title"
+msgstr "Başlık"
+
+#: ../src/legacy/gsm_color_button.c:151
+msgid "The title of the color selection dialog"
+msgstr "Renk seçme penceresinin başlığı"
+
+#: ../src/legacy/gsm_color_button.c:152 ../src/legacy/gsm_color_button.c:515
+msgid "Pick a Color"
+msgstr "Bir Renk Seçin"
+
+#: ../src/legacy/gsm_color_button.c:158
+msgid "Current Color"
+msgstr "Şimdiki Renk"
+
+#: ../src/legacy/gsm_color_button.c:159
+msgid "The selected color"
+msgstr "Seçili renk"
+
+#: ../src/legacy/gsm_color_button.c:166
+msgid "Type of color picker"
+msgstr "Renk seçinin tipi"
+
+#: ../src/legacy/gsm_color_button.c:437
+msgid "Received invalid color data\n"
+msgstr "Geçersiz renk verisi alındı\n"
+
+#: ../src/legacy/gsm_color_button.c:538
+msgid "Click to set graph colors"
+msgstr "Grafik renklerini atamak için tıklayın"
+
+#: ../src/load-graph.cpp:157
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u saniye"
 
-#: ../src/load-graph.cpp:370
+#: ../src/load-graph.cpp:373
 msgid "not available"
 msgstr "kullanılabilir değil"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:373
+#: ../src/load-graph.cpp:376
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) / %s"
@@ -516,15 +547,15 @@ msgid "%d matching open file"
 msgid_plural "%d matching open files"
 msgstr[0] "eşleşen %d açık dosya"
 
-#: ../src/lsof.cpp:247
+#: ../src/lsof.cpp:245
 msgid "Process"
 msgstr "Süreç"
 
-#: ../src/lsof.cpp:259
+#: ../src/lsof.cpp:257
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:269 ../src/memmaps.cpp:307
+#: ../src/lsof.cpp:267 ../src/memmaps.cpp:307
 msgid "Filename"
 msgstr "Dosya adı"
 
@@ -580,14 +611,15 @@ msgstr "Değişmiş paylaşılan bellek"
 msgid "Inode"
 msgstr "Dosya indeksi"
 
-#: ../src/memmaps.cpp:440
+#: ../src/memmaps.cpp:438
 msgid "Memory Maps"
 msgstr "Bellek Eşlemler"
 
-#: ../src/memmaps.cpp:452
+#: ../src/memmaps.cpp:450
 #, c-format
-msgid "_Memory maps for process \"%s\" (PID %u):"
-msgstr "Süreç \"%s\" için bellek _eşlemleri (PID %u):"
+#| msgid "_Memory maps for process \"%s\" (PID %u):"
+msgid "_Memory maps for process “%s” (PID %u):"
+msgstr "Süreç “%s” için bellek _eşlemleri (PID %u):"
 
 #: ../src/openfiles.cpp:40
 msgid "file"
@@ -616,18 +648,19 @@ msgstr "bilinmeyen tür"
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.cpp:251
+#: ../src/openfiles.cpp:252
 msgid "FD"
 msgstr "DT"
 
-#: ../src/openfiles.cpp:253
+#: ../src/openfiles.cpp:254
 msgid "Object"
 msgstr "Nesne"
 
-#: ../src/openfiles.cpp:336
+#: ../src/openfiles.cpp:337
 #, c-format
-msgid "_Files opened by process \"%s\" (PID %u):"
-msgstr "Süreç \"%s\" tarafından açılan _dosyalar (PID %u):"
+#| msgid "_Files opened by process \"%s\" (PID %u):"
+msgid "_Files opened by process “%s” (PID %u):"
+msgstr "Süreç “%s” tarafından açılan _dosyalar (PID %u):"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:1
 msgid "Main window size and position in the form (width, height, xpos, ypos)"
@@ -648,10 +681,15 @@ msgid "Solaris mode for CPU percentage"
 msgstr "MİB yüzdesi için Solaris kipi"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:5
+#, fuzzy
+#| msgid ""
+#| "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU "
+#| "usage is divided by the total number of CPUs. Otherwise, it operates in "
+#| "'Irix mode'."
 msgid ""
-"If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
-"is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
-"mode'."
+"If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage "
+"is divided by the total number of CPUs. Otherwise, it operates in “Irix "
+"mode”."
 msgstr ""
 "Eğer TRUE yapılırsa sistem gözlemcisi bir görevin mib kullanımı toplam MİB "
 "sayısına bölündüğü 'Solaris kipinde' işlem yapar. Diğer şekilde 'Irix "
@@ -670,359 +708,482 @@ msgstr ""
 "yığılmış alan grafiği olarak gösterir."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:8
+#, fuzzy
+#| msgid "Show CPU chart as stacked area chart"
+msgid "Show CPU chart as smooth graph using Bezier curves"
+msgstr "MİB grafiğini yığılmış alan grafiği olarak göster"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
+#, fuzzy
+#| msgid ""
+#| "If TRUE, system-monitor shows the CPU chart as a stacked area chart "
+#| "instead of a line chart."
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a smoothed graph, otherwise "
+"as a line chart."
+msgstr ""
+"Eğer TRUE yapılırsa sistem gözlemcisi MİB grafiğini çizgi grafiği yerine "
+"yığılmış alan grafiği olarak gösterir."
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:10
 msgid "Enable/Disable smooth refresh"
 msgstr "Yumuşak tazelemeyi etkinleştir/kapat"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:11
 msgid "Show warning dialog when killing processes"
 msgstr "Süreçler öldürülürken uyarı mesajı göster"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:10
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:12
 msgid "Time in milliseconds between updates of the process view"
 msgstr ""
 "Milisaniye olarak süreç görüntüleme güncellemeleri arasında geçen zaman"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:11
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:13
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Milisaniye olarak grafiklerin güncellenmesi arasında geçen zaman"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:12
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:14
 msgid "Whether information about all file systems should be displayed"
 msgstr "Tüm dosya sistemleri hakkındaki bilgilerin gösterilmesi"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:13
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
+#, fuzzy
+#| msgid ""
+#| "Whether to display information about all file systems (including types "
+#| "like 'autofs' and 'procfs'). Useful for getting a list of all currently "
+#| "mounted file systems."
 msgid ""
 "Whether to display information about all file systems (including types like "
-"'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
+"“autofs” and “procfs”). Useful for getting a list of all currently mounted "
 "file systems."
 msgstr ""
 "Tüm dosya sistemleri hakkındaki bilgilerin gösterilip gösterilmeyeceği "
 "('autofs' ve 'procfs' gibi dosya sistemi tiplerini de içeren). Şu an bağlı "
 "olan tüm dosya sistemlerinin listesini almak için faydalıdır."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:16
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Milisaniye olarak aygıt listesi güncellemeleri arasında geçen zaman"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:17
 msgid "Determines which processes to show."
 msgstr "Hangi süreçlerin gösterileceğini belirler."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:18
 msgid "Saves the currently viewed tab"
 msgstr "Şu an gösterilen sekmeleri kaydet"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:19
 msgid "CPU colors"
 msgstr "MİB renkleri"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:18
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:20
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr "Her girdi (MİB No, Onaltılık renk değeri) biçimindedir"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:21
 msgid "Default graph memory color"
 msgstr "Bellek grafiği öntanımlı rengi"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:20
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:22
 msgid "Default graph swap color"
 msgstr "Öntanımlı takas grafik rengi"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:23
 msgid "Default graph incoming network traffic color"
 msgstr "Öntanımlı gelen ağ trafiği grafik rengi"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:24
 msgid "Default graph outgoing network traffic color"
 msgstr "Öntanımlı giden ağ trafiği grafik rengi"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:25
 msgid "Show network traffic in bits"
 msgstr "Ağ trafiğini bit cinsinden göster"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:24
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:26
 msgid "Process view sort column"
 msgstr "Süreç gösterim sıra sütunu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:25
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:27
 msgid "Process view columns order"
 msgstr "Süreç görüntüleme sütun sırası"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:26
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:28
 msgid "Process view sort order"
 msgstr "Süreç gösterim sıra düzeni"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:27
-msgid "Width of process 'Name' column"
-msgstr "Süreç 'İsim' sütununun genişliği"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:28
-msgid "Show process 'Name' column on startup"
-msgstr "Sürecin 'İsim' sütununu başlangıçta göster"
-
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:29
-msgid "Width of process 'User' column"
-msgstr "Süreç 'Kullanıcı' sütununun genişliği"
+#| msgid "Width of process 'Name' column"
+msgid "Width of process “Name” column"
+msgstr "Süreç “İsim” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:30
-msgid "Show process 'User' column on startup"
-msgstr "Sürecin 'Kullanıcı' sütununu başlangıçta göster"
+#| msgid "Show process 'Name' column on startup"
+msgid "Show process “Name” column on startup"
+msgstr "Sürecin “İsim” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:31
-msgid "Width of process 'Status' column"
-msgstr "Süreç 'Durum' sütununun genişliği"
+#| msgid "Width of process 'User' column"
+msgid "Width of process “User” column"
+msgstr "Süreç “Kullanıcı” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:32
-msgid "Show process 'Status' column on startup"
-msgstr "Sürecin 'Durum' sütununu başlangıçta göster"
+#| msgid "Show process 'User' column on startup"
+msgid "Show process “User” column on startup"
+msgstr "Sürecin “Kullanıcı” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:33
-msgid "Width of process 'Virtual Memory' column"
-msgstr "Süreç 'Sanal Bellek' sütununun genişliği"
+#| msgid "Width of process 'Status' column"
+msgid "Width of process “Status” column"
+msgstr "Süreç “Durum” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:34
-msgid "Show process 'Virtual Memory' column on startup"
-msgstr "Sürecin 'Sanal Bellek' sütununu başlangıçta göster"
+#| msgid "Show process 'Status' column on startup"
+msgid "Show process “Status” column on startup"
+msgstr "Sürecin “Durum” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:35
-msgid "Width of process 'Resident Memory' column"
-msgstr "Süreç 'Yerleşik Bellek' sütununun genişliği"
+#| msgid "Width of process 'Virtual Memory' column"
+msgid "Width of process “Virtual Memory” column"
+msgstr "Süreç “Sanal Bellek” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:36
-msgid "Show process 'Resident Memory' column on startup"
-msgstr "Sürecin 'Yerleşik Bellek' sütununu başlangıçta göster"
+#| msgid "Show process 'Virtual Memory' column on startup"
+msgid "Show process “Virtual Memory” column on startup"
+msgstr "Sürecin “Sanal Bellek” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:37
-msgid "Width of process 'Writable Memory' column"
-msgstr "Süreç 'Yazılabilir Bellek' sütununun genişliği"
+#| msgid "Width of process 'Resident Memory' column"
+msgid "Width of process “Resident Memory” column"
+msgstr "Süreç “Yerleşik Bellek” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:38
-msgid "Show process 'Writable Memory' column on startup"
-msgstr "Sürecin 'Yazılabilir Bellek' sütununu başlangıçta göster"
+#| msgid "Show process 'Resident Memory' column on startup"
+msgid "Show process “Resident Memory” column on startup"
+msgstr "Sürecin “Yerleşik Bellek” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:39
-msgid "Width of process 'Shared Memory' column"
-msgstr "Süreç 'Paylaşılan Bellek' sütununun genişliği"
+#| msgid "Width of process 'Writable Memory' column"
+msgid "Width of process “Writable Memory” column"
+msgstr "Süreç “Yazılabilir Bellek” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:40
-msgid "Show process 'Shared Memory' column on startup"
-msgstr "Sürecin 'Paylaşılan Bellek' sütununu başlangıçta göster"
+#| msgid "Show process 'Writable Memory' column on startup"
+msgid "Show process “Writable Memory” column on startup"
+msgstr "Sürecin “Yazılabilir Bellek” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:41
-msgid "Width of process 'X Server Memory' column"
-msgstr "Süreç 'X Sunucusu Belleği' sütununun genişliği"
+#| msgid "Width of process 'Shared Memory' column"
+msgid "Width of process “Shared Memory” column"
+msgstr "Süreç “Paylaşılan Bellek” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:42
-msgid "Show process 'X Server Memory' column on startup"
-msgstr "Sürecin 'X Sunucusu Belleği' sütununu başlangıçta göster"
+#| msgid "Show process 'Shared Memory' column on startup"
+msgid "Show process “Shared Memory” column on startup"
+msgstr "Sürecin “Paylaşılan Bellek” sütununu başlangıçta göster"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:43
+#| msgid "Width of process 'X Server Memory' column"
+msgid "Width of process “X Server Memory” column"
+msgstr "Süreç “X Sunucusu Belleği” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:44
-#, no-c-format
-msgid "Width of process 'CPU %' column"
-msgstr "Süreç 'MİB %' sütununun genişliği"
+#| msgid "Show process 'X Server Memory' column on startup"
+msgid "Show process “X Server Memory” column on startup"
+msgstr "Sürecin “X Sunucusu Belleği” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:46
 #, no-c-format
-msgid "Show process 'CPU %' column on startup"
-msgstr "Başlangıçta 'MİB %' süreç sütununu göster"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:47
-msgid "Width of process 'CPU Time' column"
-msgstr "Süreç 'İşlemci Zamanı' sütununun genişliği"
+#| msgid "Width of process 'CPU %' column"
+msgid "Width of process “CPU %” column"
+msgstr "Süreç “MİB %” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:48
-msgid "Show process 'CPU Time' column on startup"
-msgstr "Sürecin 'İşlemci Süresi' sütununu başlangıçta göster"
+#, no-c-format
+#| msgid "Show process 'CPU %' column on startup"
+msgid "Show process “CPU %” column on startup"
+msgstr "Başlangıçta “MİB %” süreç sütununu göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:49
-msgid "Width of process 'Started' column"
-msgstr "Süreç 'Başlatıldı' sütununun genişliği"
+#| msgid "Width of process 'CPU Time' column"
+msgid "Width of process “CPU Time” column"
+msgstr "Süreç “İşlemci Zamanı” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:50
-msgid "Show process 'Started' column on startup"
-msgstr "Sürecin 'Başlatıldı' sütununu başlangıçta göster"
+#| msgid "Show process 'CPU Time' column on startup"
+msgid "Show process “CPU Time” column on startup"
+msgstr "Sürecin “İşlemci Süresi” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:51
-msgid "Width of process 'Nice' column"
-msgstr "Süreç 'Öncelik' sütununun genişliği"
+#| msgid "Width of process 'Started' column"
+msgid "Width of process “Started” column"
+msgstr "Süreç “Başlatıldı” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:52
-msgid "Show process 'Nice' column on startup"
-msgstr "Sürecin 'Öncelik' sütununu başlangıçta göster"
+#| msgid "Show process 'Started' column on startup"
+msgid "Show process “Started” column on startup"
+msgstr "Sürecin “Başlatıldı” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:53
-msgid "Width of process 'PID' column"
-msgstr "Süreç 'PID' sütununun genişliği"
+#| msgid "Width of process 'Nice' column"
+msgid "Width of process “Nice” column"
+msgstr "Süreç “Öncelik” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:54
-msgid "Show process 'PID' column on startup"
-msgstr "Başlangıçta 'PID' süreç sütununu göster"
+#| msgid "Show process 'Nice' column on startup"
+msgid "Show process “Nice” column on startup"
+msgstr "Sürecin “Öncelik” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:55
-msgid "Width of process 'SELinux Security Context' column"
-msgstr "Süreç 'SELinux Güvenlik Bağlamı' sütununun genişliği"
+#| msgid "Width of process 'PID' column"
+msgid "Width of process “PID” column"
+msgstr "Süreç “PID” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:56
-msgid "Show process 'SELinux Security Context' column on startup"
-msgstr "Sürecin 'SELinux Güvenlik Bağlamı' sütununu başlangıçta göster"
+#| msgid "Show process 'PID' column on startup"
+msgid "Show process “PID” column on startup"
+msgstr "Başlangıçta “PID” süreç sütununu göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:57
-msgid "Width of process 'Command Line' column"
-msgstr "Süreç 'Komut Satırı' sütununun genişliği"
+#| msgid "Width of process 'SELinux Security Context' column"
+msgid "Width of process “SELinux Security Context” column"
+msgstr "Süreç “SELinux Güvenlik Bağlamı” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:58
-msgid "Show process 'Command Line' column on startup"
-msgstr "Sürecin 'Komut Satırı' sütununu başlangıçta göster"
+#| msgid "Show process 'SELinux Security Context' column on startup"
+msgid "Show process “SELinux Security Context” column on startup"
+msgstr "Sürecin “SELinux Güvenlik Bağlamı” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:59
-msgid "Width of process 'Memory' column"
-msgstr "Süreç 'Bellek' sütununun genişliği"
+#| msgid "Width of process 'Command Line' column"
+msgid "Width of process “Command Line” column"
+msgstr "Süreç “Komut Satırı” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:60
-msgid "Show process 'Memory' column on startup"
-msgstr "Sürecin 'Bellek' sütununu başlangıçta göster"
+#| msgid "Show process 'Command Line' column on startup"
+msgid "Show process “Command Line” column on startup"
+msgstr "Sürecin “Komut Satırı” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:61
-msgid "Width of process 'Waiting Channel' column"
-msgstr "Süreç 'Bekleyen Kanal' sütununun genişliği"
+#| msgid "Width of process 'Memory' column"
+msgid "Width of process “Memory” column"
+msgstr "Süreç “Bellek” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:62
-msgid "Show process 'Waiting Channel' column on startup"
-msgstr "Başlangıçta 'Bekleyen Kanal' süreç sütununu göster"
+#| msgid "Show process 'Memory' column on startup"
+msgid "Show process “Memory” column on startup"
+msgstr "Sürecin “Bellek” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:63
-msgid "Width of process 'Control Group' column"
-msgstr "Süreç 'Kontrol Grubu' sütununun genişliği"
+#| msgid "Width of process 'Waiting Channel' column"
+msgid "Width of process “Waiting Channel” column"
+msgstr "Süreç “Bekleyen Kanal” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:64
-msgid "Show process 'Control Group' column on startup"
-msgstr "Sürecin 'Kontrol Grubu' sütununu başlangıçta göster"
+#| msgid "Show process 'Waiting Channel' column on startup"
+msgid "Show process “Waiting Channel” column on startup"
+msgstr "Başlangıçta “Bekleyen Kanal” süreç sütununu göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:65
-msgid "Width of process 'Unit' column"
-msgstr "Süreç 'Birim' sütununun genişliği"
+#| msgid "Width of process 'Control Group' column"
+msgid "Width of process “Control Group” column"
+msgstr "Süreç “Kontrol Grubu” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:66
-msgid "Show process 'Unit' column on startup"
-msgstr "Sürecin 'Birim' sütununu başlangıçta göster"
+#| msgid "Show process 'Control Group' column on startup"
+msgid "Show process “Control Group” column on startup"
+msgstr "Sürecin “Kontrol Grubu” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:67
-msgid "Width of process 'Session' column"
-msgstr "Süreç 'Oturum' sütununun genişliği"
+#| msgid "Width of process 'Unit' column"
+msgid "Width of process “Unit” column"
+msgstr "Süreç “Birim” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:68
-msgid "Show process 'Session' column on startup"
-msgstr "Sürecin 'Oturum' sütununu başlangıçta göster"
+#| msgid "Show process 'Unit' column on startup"
+msgid "Show process “Unit” column on startup"
+msgstr "Sürecin “Birim” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:69
-msgid "Width of process 'Seat' column"
-msgstr "Süreç 'Yuva' sütununun genişliği"
+#| msgid "Width of process 'Session' column"
+msgid "Width of process “Session” column"
+msgstr "Süreç “Oturum” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:70
-msgid "Show process 'Seat' column on startup"
-msgstr "Sürecin 'Yuva' sütununu başlangıçta göster"
+#| msgid "Show process 'Session' column on startup"
+msgid "Show process “Session” column on startup"
+msgstr "Sürecin “Oturum” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:71
-msgid "Width of process 'Owner' column"
-msgstr "Süreç 'Sahip' sütununun genişliği"
+#| msgid "Width of process 'Seat' column"
+msgid "Width of process “Seat” column"
+msgstr "Süreç “Yuva” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:72
-msgid "Show process 'Owner' column on startup"
-msgstr "Sürecin 'Sahip' sütununu başlangıçta göster"
+#| msgid "Show process 'Seat' column on startup"
+msgid "Show process “Seat” column on startup"
+msgstr "Sürecin “Yuva” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:73
-msgid "Width of process 'Priority' column"
-msgstr "Süreç 'Öncelik' sütununun genişliği"
+#| msgid "Width of process 'Owner' column"
+msgid "Width of process “Owner” column"
+msgstr "Süreç “Sahip” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:74
-msgid "Show process 'Priority' column on startup"
-msgstr "Sürecin 'Öncelik' sütununu başlangıçta göster"
+#| msgid "Show process 'Owner' column on startup"
+msgid "Show process “Owner” column on startup"
+msgstr "Sürecin “Sahip” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:75
+#| msgid "Width of process 'Started' column"
+msgid "Width of process “Total disk write” column"
+msgstr "Süreç “Başlatıldı” sütununun genişliği"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
+#| msgid "Show process 'Started' column on startup"
+msgid "Show process “Total disk write” column on startup"
+msgstr "Sürecin “Başlatıldı” sütununu başlangıçta göster"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
+#| msgid "Width of process 'Started' column"
+msgid "Width of process “Total disk read” column"
+msgstr "Süreç “Başlatıldı” sütununun genişliği"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
+#| msgid "Show process 'Started' column on startup"
+msgid "Show process “Total disk read” column on startup"
+msgstr "Sürecin “Başlatıldı” sütununu başlangıçta göster"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
+#| msgid "Width of process 'User' column"
+msgid "Width of process “Disk read” column"
+msgstr "Süreç “Kullanıcı” sütununun genişliği"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
+#| msgid "Show process 'User' column on startup"
+msgid "Show process “Disk read” column on startup"
+msgstr "Sürecin “Kullanıcı” sütununu başlangıçta göster"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
+#| msgid "Width of process 'Priority' column"
+msgid "Width of process “Disk write” column"
+msgstr "Süreç “Öncelik” sütununun genişliği"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
+#| msgid "Show process 'Priority' column on startup"
+msgid "Show process “Disk write” column on startup"
+msgstr "Sürecin “Öncelik” sütununu başlangıçta göster"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
+#| msgid "Width of process 'Priority' column"
+msgid "Width of process “Priority” column"
+msgstr "Süreç “Öncelik” sütununun genişliği"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
+#| msgid "Show process 'Priority' column on startup"
+msgid "Show process “Priority” column on startup"
+msgstr "Sürecin “Öncelik” sütununu başlangıçta göster"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
 msgid "Disk view sort column"
 msgstr "Disk görünümü sıralama sütunu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
 msgid "Disk view sort order"
 msgstr "Disk gösterimi sıralama düzeni"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
 msgid "Disk view columns order"
 msgstr "Disk görüntüleme sütun sırası"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
-msgid "Width of disk view 'Device' column"
-msgstr "Disk görünümü 'Aygıt' sütununun genişliği"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
-msgid "Show disk view 'Device' column on startup"
-msgstr "Disk görünümü 'Aygıt' sütununu başlangıçta göster"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
-msgid "Width of disk view 'Directory' column"
-msgstr "Disk görünümü 'Dizin' sütununun genişliği"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
-msgid "Show disk view 'Directory' column on startup"
-msgstr "Disk görünümü 'Dizin' sütununu başlangıçta göster"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
-msgid "Width of disk view 'Type' column"
-msgstr "Disk görünümü 'Tür' sütununun genişliği"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
-msgid "Show disk view 'Type' column on startup"
-msgstr "Disk görünümü 'Tür' sütununu başlangıçta göster"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
-msgid "Width of disk view 'Total' column"
-msgstr "Disk görünümü 'Toplam' sütununun genişliği"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
-msgid "Show disk view 'Total' column on startup"
-msgstr "Disk görünümü 'Toplam' sütununu başlangıçta göster"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
-msgid "Width of disk view 'Free' column"
-msgstr "Disk görünümü 'Boşta' sütununun genişliği"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
-msgid "Show disk view 'Free' column on startup"
-msgstr "Disk görünümü 'Boşta' sütununu başlangıçta göster"
-
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
-msgid "Width of disk view 'Available' column"
-msgstr "Disk görünümü 'Kullanılabilir' sütununun genişliği"
+#| msgid "Width of disk view 'Device' column"
+msgid "Width of disk view “Device” column"
+msgstr "Disk görünümü “Aygıt” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
-msgid "Show disk view 'Available' column on startup"
-msgstr "Disk görünümü 'Kullanılabilir' sütununu başlangıçta göster"
+#| msgid "Show disk view 'Device' column on startup"
+msgid "Show disk view “Device” column on startup"
+msgstr "Disk görünümü “Aygıt” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
-msgid "Width of disk view 'Used' column"
-msgstr "Disk görünümü 'Kullanımda' sütununun genişliği"
+#| msgid "Width of disk view 'Directory' column"
+msgid "Width of disk view “Directory” column"
+msgstr "Disk görünümü “Dizin” sütununun genişliği"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
-msgid "Show disk view 'Used' column on startup"
-msgstr "Disk görünümü 'Kullanımda' sütununu başlangıçta göster"
+#| msgid "Show disk view 'Directory' column on startup"
+msgid "Show disk view “Directory” column on startup"
+msgstr "Disk görünümü “Dizin” sütununu başlangıçta göster"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
+#| msgid "Width of disk view 'Type' column"
+msgid "Width of disk view “Type” column"
+msgstr "Disk görünümü “Tür” sütununun genişliği"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
+#| msgid "Show disk view 'Type' column on startup"
+msgid "Show disk view “Type” column on startup"
+msgstr "Disk görünümü “Tür” sütununu başlangıçta göster"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
+#| msgid "Width of disk view 'Total' column"
+msgid "Width of disk view “Total” column"
+msgstr "Disk görünümü “Toplam” sütununun genişliği"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
+#| msgid "Show disk view 'Total' column on startup"
+msgid "Show disk view “Total” column on startup"
+msgstr "Disk görünümü “Toplam” sütununu başlangıçta göster"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:96
+#| msgid "Width of disk view 'Free' column"
+msgid "Width of disk view “Free” column"
+msgstr "Disk görünümü “Boşta” sütununun genişliği"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:97
+#| msgid "Show disk view 'Free' column on startup"
+msgid "Show disk view “Free” column on startup"
+msgstr "Disk görünümü “Boşta” sütununu başlangıçta göster"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:98
+#| msgid "Width of disk view 'Available' column"
+msgid "Width of disk view “Available” column"
+msgstr "Disk görünümü “Kullanılabilir” sütununun genişliği"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:99
+#| msgid "Show disk view 'Available' column on startup"
+msgid "Show disk view “Available” column on startup"
+msgstr "Disk görünümü “Kullanılabilir” sütununu başlangıçta göster"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:100
+#| msgid "Width of disk view 'Used' column"
+msgid "Width of disk view “Used” column"
+msgstr "Disk görünümü “Kullanımda” sütununun genişliği"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:101
+#| msgid "Show disk view 'Used' column on startup"
+msgid "Show disk view “Used” column on startup"
+msgstr "Disk görünümü “Kullanımda” sütununu başlangıçta göster"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:102
 msgid "Memory map sort column"
 msgstr "Bellek haritası sıralama sütunu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:103
 msgid "Memory map sort order"
 msgstr "Bellek haritası sıralama düzeni"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:104
 msgid "Open files sort column"
 msgstr "Dosya aç sıralama sütunu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:105
 msgid "Open files sort order"
 msgstr "Dosya aç sıralama düzeni"
 
-#: ../src/prefsdialog.cpp:171
+#: ../src/prefsdialog.cpp:168
 msgid "Icon"
 msgstr "Simge"
 
@@ -1045,34 +1206,52 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: ../src/procdialogs.cpp:75
+#: ../src/procdialogs.cpp:76
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr "Seçilen “%s” (PID: %u) sürecini öldürmek istediğinizden emin misiniz?"
 
 #. xgettext: primary alert message for ending single process
-#: ../src/procdialogs.cpp:80
+#: ../src/procdialogs.cpp:82
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr ""
 "Seçilen “%s” (PID: %u) sürecini sonlandırmak istediğinizden emin misiniz?"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping single process
+#: ../src/procdialogs.cpp:88
+#, c-format
+#| msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
+msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
+msgstr "Seçilen “%s” (PID: %u) sürecini durdurmak istediğinizden emin misiniz?"
+
 #. xgettext: primary alert message for killing multiple processes
-#: ../src/procdialogs.cpp:87
+#: ../src/procdialogs.cpp:97
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
 msgstr[0] "Seçili %d süreci öldürmek istediğinizden emin misiniz?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: ../src/procdialogs.cpp:91
+#: ../src/procdialogs.cpp:103
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
 msgstr[0] "Seçili %d süreci sonlandırmak istediğinizden emin misiniz?"
 
+#. SIGSTOP
+#. xgettext: primary alert message for stopping multiple processes
+#: ../src/procdialogs.cpp:109
+#, c-format
+#| msgid "Are you sure you want to end the selected process?"
+#| msgid_plural "Are you sure you want to end the %d selected processes?"
+msgid "Are you sure you want to stop the selected process?"
+msgid_plural "Are you sure you want to stop the %d selected processes?"
+msgstr[0] "Seçili %d süreci durdurmak istediğinizden emin misiniz?"
+
 #. xgettext: secondary alert message
-#: ../src/procdialogs.cpp:98 ../src/procdialogs.cpp:104
+#: ../src/procdialogs.cpp:119
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1081,32 +1260,66 @@ msgstr ""
 "güvenlik riski oluşturabilir. Sadece yanıt vermeyen süreçler "
 "sonlandırılmalıdır."
 
-#: ../src/procdialogs.cpp:101
+#: ../src/procdialogs.cpp:122
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "Süreçleri _Öldür"
 
-#: ../src/procdialogs.cpp:107
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:126
+#| msgid ""
+#| "Killing a process may destroy data, break the session or introduce a "
+#| "security risk. Only unresponsive processes should be killed."
+msgid ""
+"Ending a process may destroy data, break the session or introduce a security "
+"risk. Only unresponsive processes should be ended."
+msgstr ""
+"Bir süreci sonlandırmak veri kaybına sebep olabilir, oturumu kesebilir ya da "
+"bir güvenlik riski oluşturabilir. Sadece yanıt vermeyen süreçler "
+"sonlandırılmalıdır."
+
+#: ../src/procdialogs.cpp:129
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "Süreçleri _Sonlandır"
 
-#: ../src/procdialogs.cpp:188
+#. SIGSTOP
+#. xgettext: secondary alert message
+#: ../src/procdialogs.cpp:133
+#| msgid ""
+#| "Killing a process may destroy data, break the session or introduce a "
+#| "security risk. Only unresponsive processes should be killed."
+msgid ""
+"Stopping a process may destroy data, break the session or introduce a "
+"security risk. Only unresponsive processes should be stopped."
+msgstr ""
+"Bir süreci durdurmak veri kaybına sebep olabilir, oturumu kesebilir ya da "
+"bir güvenlik riski oluşturabilir. Sadece yanıt vermeyen süreçler "
+"durdurulmalıdır."
+
+#: ../src/procdialogs.cpp:136
+#| msgid "_End Process"
+#| msgid_plural "_End Processes"
+msgid "_Stop Process"
+msgid_plural "_Stop Processes"
+msgstr[0] "Süreçleri _Durdur"
+
+#: ../src/procdialogs.cpp:218
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Süreç \"%s\" (PID %u) için Önceliği Değiştir"
 
-#: ../src/procdialogs.cpp:191
+#: ../src/procdialogs.cpp:221
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
 msgstr[0] "Seçilen %d sürecin Önceliğini Değiştir"
 
-#: ../src/procdialogs.cpp:210
+#: ../src/procdialogs.cpp:240
 msgid "Note:"
 msgstr "Not:"
 
-#: ../src/procdialogs.cpp:211
+#: ../src/procdialogs.cpp:241
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1115,76 +1328,76 @@ msgstr ""
 "yüksek bir önceliğe karşılık gelir."
 
 #: ../src/procproperties.cpp:50 ../src/procproperties.cpp:84
-#: ../src/procproperties.cpp:87 ../src/util.cpp:432
+#: ../src/procproperties.cpp:87 ../src/util.cpp:432 ../src/util.cpp:471
 msgid "N/A"
 msgstr "-"
 
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:328
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:322
 msgid "Process Name"
 msgstr "Süreç İsmi"
 
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:329
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:323
 msgid "User"
 msgstr "Kullanıcı"
 
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:330
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:324
 msgid "Status"
 msgstr "Durum"
 
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:331
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:325
 msgid "Virtual Memory"
 msgstr "Sanal Bellek"
 
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:326
 msgid "Resident Memory"
 msgstr "Yerleşik Bellek"
 
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:333
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:327
 msgid "Writable Memory"
 msgstr "Yazılabilir Bellek"
 
-#: ../src/procproperties.cpp:74 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:328
 msgid "Shared Memory"
 msgstr "Paylaşılmış Bellek"
 
-#: ../src/procproperties.cpp:76 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:329
 msgid "X Server Memory"
 msgstr "X Sunucusu Belleği"
 
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:331
 msgid "CPU Time"
 msgstr "MİB zamanı"
 
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:332
 msgid "Started"
 msgstr "Başlamış"
 
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:333
 msgid "Nice"
 msgstr "Öncelik"
 
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:353
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:351
 msgid "Priority"
 msgstr "Öncelik"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:340
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:334
 msgid "ID"
 msgstr "No"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:341
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:335
 msgid "Security Context"
 msgstr "Güvenlik Bağlamı"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:342
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:336
 msgid "Command Line"
 msgstr "Komut Satırı"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:345
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:339
 msgid "Waiting Channel"
 msgstr "Bekleyen Kanal"
 
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:346
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:340
 msgid "Control Group"
 msgstr "Kontrol Grubu"
 
@@ -1193,28 +1406,45 @@ msgstr "Kontrol Grubu"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:336
+#: ../src/proctable.cpp:330
 #, no-c-format
 msgid "% CPU"
 msgstr "% MİB"
 
-#: ../src/proctable.cpp:347
+#: ../src/proctable.cpp:341
 msgid "Unit"
 msgstr "Birim"
 
-#: ../src/proctable.cpp:348
+#: ../src/proctable.cpp:342
 msgid "Session"
 msgstr "Oturum"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:351
+#: ../src/proctable.cpp:345
 msgid "Seat"
 msgstr "Yuva"
 
-#: ../src/proctable.cpp:352
+#: ../src/proctable.cpp:346
 msgid "Owner"
 msgstr "Sahip"
+
+#: ../src/proctable.cpp:347
+msgid "Disk read total"
+msgstr "Disk okuma toplamı"
+
+#: ../src/proctable.cpp:348
+msgid "Disk write total"
+msgstr "Disk yazma toplamı"
+
+#: ../src/proctable.cpp:349
+msgid "Disk read"
+msgstr "Disk okuma"
+
+#: ../src/proctable.cpp:350
+#| msgid "Disk view sort order"
+msgid "Disk write"
+msgstr "Disk yazma"
 
 #: ../src/util.cpp:27
 msgid "Running"
@@ -1333,7 +1563,7 @@ msgid "Very Low Priority"
 msgstr "Çok Düşük Öncelik"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:630
+#: ../src/util.cpp:667
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
