@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: lv\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=system-"
 "monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-02-24 17:38+0000\n"
-"PO-Revision-Date: 2017-03-17 19:32+0200\n"
+"POT-Creation-Date: 2017-08-10 08:16+0000\n"
+"PO-Revision-Date: 2017-08-28 11:43+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -22,22 +22,25 @@ msgstr ""
 "X-Generator: Lokalize 2.0\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/application.cpp:244 ../src/interface.cpp:358
+#: ../src/application.cpp:244 ../src/interface.cpp:363
 msgid "System Monitor"
 msgstr "Sistēmas pārraugs"
 
 #: ../gnome-system-monitor.desktop.in.in.h:2
-#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:359
+#: ../gnome-system-monitor-kde.desktop.in.in.h:2 ../src/interface.cpp:364
 msgid "View current processes and monitor system state"
 msgstr "Skatīt pašreizējos procesus un pārraudzīt sistēmas stāvokli"
 
 #: ../gnome-system-monitor.desktop.in.in.h:3
+#| msgid ""
+#| "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
+#| "Manager;"
 msgid ""
 "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
-"Manager;"
+"Manager;Activity;"
 msgstr ""
 "Pārraugs;Sistēma;Process;CPU;Procesors;Atmiņa;Tīkls;Vēsture;Lietojums;"
-"Veiktspēja;Uzdevums;Pārvaldnieks;"
+"Veiktspēja;Uzdevums;Pārvaldnieks;Aktivitāte;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
 #: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:299
@@ -100,7 +103,6 @@ msgid "Kill process"
 msgstr "Nobeigt procesu"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:2
-#| msgid "Privileges are required to control other users' processes"
 msgid "Privileges are required to control other users’ processes"
 msgstr "Vajadzīgas privilēģijas, lai vadītu citu lietotāju procesus"
 
@@ -132,12 +134,12 @@ msgstr "CPU noslodzes vēsture"
 msgid "Memory and Swap History"
 msgstr "Atmiņas un maiņvietas lietojuma vēsture"
 
-#: ../data/interface.ui.h:7 ../src/interface.cpp:258
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:340
+#: ../data/interface.ui.h:7 ../src/interface.cpp:260
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:337
 msgid "Memory"
 msgstr "Atmiņa"
 
-#: ../data/interface.ui.h:8 ../src/interface.cpp:270
+#: ../data/interface.ui.h:8 ../src/interface.cpp:272
 msgid "Swap"
 msgstr "Maiņvieta"
 
@@ -145,7 +147,7 @@ msgstr "Maiņvieta"
 msgid "Network History"
 msgstr "Tīkla noslodzes vēsture"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:298
+#: ../data/interface.ui.h:10 ../src/interface.cpp:302
 msgid "Receiving"
 msgstr "Saņem"
 
@@ -153,7 +155,7 @@ msgstr "Saņem"
 msgid "Total Received"
 msgstr "Kopā saņemts"
 
-#: ../data/interface.ui.h:12 ../src/interface.cpp:312
+#: ../data/interface.ui.h:12 ../src/interface.cpp:317
 msgid "Sending"
 msgstr "Nosūta"
 
@@ -325,7 +327,6 @@ msgid "_Draw CPU chart as stacked area chart"
 msgstr "Zīmēt CPU _diagrammu kā grēdotu laukuma diagrammu"
 
 #: ../data/preferences.ui.h:12
-#| msgid "_Draw CPU chart as stacked area chart"
 msgid "Draw CPU chart as s_mooth graph"
 msgstr "Zīmēt CPU diagrammu kā gludu grafu"
 
@@ -378,7 +379,6 @@ msgid "Show the File Systems tab"
 msgstr "Rādīt datņu sistēmu cilni"
 
 #: ../src/argv.cpp:36
-#| msgid "Show the application's version"
 msgid "Show the application’s version"
 msgstr "Rādīt lietotnes versiju"
 
@@ -391,7 +391,7 @@ msgid "Directory"
 msgstr "Direktorija"
 
 #: ../src/disks.cpp:354 ../src/legacy/gsm_color_button.c:165
-#: ../src/openfiles.cpp:252
+#: ../src/openfiles.cpp:253
 msgid "Type"
 msgstr "Tips"
 
@@ -414,20 +414,19 @@ msgstr "Izmantots"
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
 #: ../src/interface.cpp:185
 #, c-format
-#| msgid "Pick a Color for '%s'"
 msgid "Pick a Color for “%s”"
 msgstr "Izvēlieties “%s” krāsu"
 
-#: ../src/interface.cpp:218 ../src/procproperties.cpp:78
+#: ../src/interface.cpp:219 ../src/procproperties.cpp:78
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:220
+#: ../src/interface.cpp:221
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: ../src/interface.cpp:369
+#: ../src/interface.cpp:374
 msgid "translator-credits"
 msgstr ""
 "Raivis Dejus <orvils@gmail.com>\n"
@@ -441,22 +440,18 @@ msgid "?"
 msgstr "?"
 
 #: ../src/legacy/e_date.c:163
-#| msgid "Today %l:%M %p"
 msgid "Today %l∶%M %p"
 msgstr "Šodien %H.%M"
 
 #: ../src/legacy/e_date.c:172
-#| msgid "Yesterday %l:%M %p"
 msgid "Yesterday %l∶%M %p"
 msgstr "Vakar %H.%M"
 
 #: ../src/legacy/e_date.c:184
-#| msgid "%a %l:%M %p"
 msgid "%a %l∶%M %p"
 msgstr "%a %H.%M"
 
 #: ../src/legacy/e_date.c:192
-#| msgid "%b %d %l:%M %p"
 msgid "%b %d %l∶%M %p"
 msgstr "%d. %b, %H.%M"
 
@@ -539,15 +534,15 @@ msgstr[0] "%d atbilstoša atvērta datne"
 msgstr[1] "%d atbilstošas atvērtas datnes"
 msgstr[2] "%d atbilstošu atvērtu datņu"
 
-#: ../src/lsof.cpp:247
+#: ../src/lsof.cpp:245
 msgid "Process"
 msgstr "Process"
 
-#: ../src/lsof.cpp:259
+#: ../src/lsof.cpp:257
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:269 ../src/memmaps.cpp:307
+#: ../src/lsof.cpp:267 ../src/memmaps.cpp:307
 msgid "Filename"
 msgstr "Datnes nosaukums"
 
@@ -609,7 +604,6 @@ msgstr "Atmiņas kartes"
 
 #: ../src/memmaps.cpp:450
 #, c-format
-#| msgid "_Memory maps for process \"%s\" (PID %u):"
 msgid "_Memory maps for process “%s” (PID %u):"
 msgstr "At_miņas kartes procesam “%s” (PID %u):"
 
@@ -640,17 +634,16 @@ msgstr "nezināmais tips"
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.cpp:251
+#: ../src/openfiles.cpp:252
 msgid "FD"
 msgstr "FD"
 
-#: ../src/openfiles.cpp:253
+#: ../src/openfiles.cpp:254
 msgid "Object"
 msgstr "Objekts"
 
-#: ../src/openfiles.cpp:336
+#: ../src/openfiles.cpp:337
 #, c-format
-#| msgid "_Files opened by process \"%s\" (PID %u):"
 msgid "_Files opened by process “%s” (PID %u):"
 msgstr "Procesa “%s” atvērtās _datnes (PID %u):"
 
@@ -672,18 +665,14 @@ msgid "Solaris mode for CPU percentage"
 msgstr "Solaris režīms CPU noslogojumam"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:5
-#| msgid ""
-#| "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU "
-#| "usage is divided by the total number of CPUs. Otherwise, it operates in "
-#| "'Irix mode'."
 msgid ""
 "If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage "
 "is divided by the total number of CPUs. Otherwise, it operates in “Irix "
 "mode”."
 msgstr ""
 "Ja PATIESS, sistēmas pārraugs darbojas “Solaris režīmā”, kur uzdevuma CPU "
-"slodze tiek dalīta ar kopējo CPU skaitu. Pretējā gadījumā darbojas “Irix"
-" režīmā”."
+"slodze tiek dalīta ar kopējo CPU skaitu. Pretējā gadījumā darbojas “Irix "
+"režīmā”."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:6
 msgid "Show CPU chart as stacked area chart"
@@ -698,20 +687,16 @@ msgstr ""
 "diagrammu, nevis kā līniju diagrammu."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:8
-#| msgid "Show CPU chart as stacked area chart"
 msgid "Show CPU chart as smooth graph using Bezier curves"
 msgstr "Rādīt CPU diagrammu kā gludu grafu, izmantojot Bezjē līknes"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
-#| msgid ""
-#| "If TRUE, system-monitor shows the CPU chart as a stacked area chart "
-#| "instead of a line chart."
 msgid ""
 "If TRUE, system-monitor shows the CPU chart as a smoothed graph, otherwise "
 "as a line chart."
 msgstr ""
-"Ja patiess, sistēmas pārraugs rādīs CPU diagrammu kā gludu grafu, citādi kā"
-" līniju diagrammu."
+"Ja patiess, sistēmas pārraugs rādīs CPU diagrammu kā gludu grafu, citādi kā "
+"līniju diagrammu."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:10
 msgid "Enable/Disable smooth refresh"
@@ -734,10 +719,6 @@ msgid "Whether information about all file systems should be displayed"
 msgstr "Vai rādīt informāciju par visām datņu sistēmām"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
-#| msgid ""
-#| "Whether to display information about all file systems (including types "
-#| "like 'autofs' and 'procfs'). Useful for getting a list of all currently "
-#| "mounted file systems."
 msgid ""
 "Whether to display information about all file systems (including types like "
 "“autofs” and “procfs”). Useful for getting a list of all currently mounted "
@@ -799,332 +780,312 @@ msgid "Process view sort order"
 msgstr "Procesu skata kārtošanas secība"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:29
-#| msgid "Width of process 'Name' column"
 msgid "Width of process “Name” column"
 msgstr "Procesa “Nosaukuma” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:30
-#| msgid "Show process 'Name' column on startup"
 msgid "Show process “Name” column on startup"
 msgstr "Palaižot rādīt procesa “Nosaukuma” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:31
-#| msgid "Width of process 'User' column"
 msgid "Width of process “User” column"
 msgstr "Procesa “Lietotāja” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:32
-#| msgid "Show process 'User' column on startup"
 msgid "Show process “User” column on startup"
 msgstr "Palaižot rādīt procesa “Lietotāja” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:33
-#| msgid "Width of process 'Status' column"
 msgid "Width of process “Status” column"
 msgstr "Procesa “Statusa” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:34
-#| msgid "Show process 'Status' column on startup"
 msgid "Show process “Status” column on startup"
 msgstr "Palaižot rādīt procesa “Statusa” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:35
-#| msgid "Width of process 'Virtual Memory' column"
 msgid "Width of process “Virtual Memory” column"
 msgstr "Procesa “Virtuālās atmiņas” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:36
-#| msgid "Show process 'Virtual Memory' column on startup"
 msgid "Show process “Virtual Memory” column on startup"
 msgstr "Palaižot rādīt procesa “Virtuālās atmiņas” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:37
-#| msgid "Width of process 'Resident Memory' column"
 msgid "Width of process “Resident Memory” column"
 msgstr "Procesa “Aizņemtās atmiņas” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:38
-#| msgid "Show process 'Resident Memory' column on startup"
 msgid "Show process “Resident Memory” column on startup"
 msgstr "Palaižot rādīt procesa “Pastāvīgās atmiņas” izmantojuma kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:39
-#| msgid "Width of process 'Writable Memory' column"
 msgid "Width of process “Writable Memory” column"
 msgstr "Procesa “Rakstāmās atmiņas” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:40
-#| msgid "Show process 'Writable Memory' column on startup"
 msgid "Show process “Writable Memory” column on startup"
 msgstr "Palaižot rādīt procesa “Rakstāmās atmiņas” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:41
-#| msgid "Width of process 'Shared Memory' column"
 msgid "Width of process “Shared Memory” column"
 msgstr "Procesa “Koplietotās atmiņas” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:42
-#| msgid "Show process 'Shared Memory' column on startup"
 msgid "Show process “Shared Memory” column on startup"
 msgstr "Palaižot rādīt procesa “Koplietošanas atmiņas” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:43
-#| msgid "Width of process 'X Server Memory' column"
 msgid "Width of process “X Server Memory” column"
 msgstr "Procesa “X servera atmiņas” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:44
-#| msgid "Show process 'X Server Memory' column on startup"
 msgid "Show process “X Server Memory” column on startup"
 msgstr "Palaižot rādīt izmantotās “X servera atmiņas” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:46
 #, no-c-format
-#| msgid "Width of process 'CPU %' column"
 msgid "Width of process “CPU %” column"
 msgstr "“CPU %” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:48
 #, no-c-format
-#| msgid "Show process 'CPU %' column on startup"
 msgid "Show process “CPU %” column on startup"
 msgstr "Palaižot rādīt “CPU %” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:49
-#| msgid "Width of process 'CPU Time' column"
 msgid "Width of process “CPU Time” column"
 msgstr "“CPU laika” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:50
-#| msgid "Show process 'CPU Time' column on startup"
 msgid "Show process “CPU Time” column on startup"
 msgstr "Palaižot rādīt “CPU laika” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:51
-#| msgid "Width of process 'Started' column"
 msgid "Width of process “Started” column"
 msgstr "Procesa “Palaišanas laika” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:52
-#| msgid "Show process 'Started' column on startup"
 msgid "Show process “Started” column on startup"
 msgstr "Palaižot rādīt procesa “Palaišanas laika” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:53
-#| msgid "Width of process 'Nice' column"
 msgid "Width of process “Nice” column"
 msgstr "Procesa “Jaukuma” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:54
-#| msgid "Show process 'Nice' column on startup"
 msgid "Show process “Nice” column on startup"
 msgstr "Palaižot rādīt procesa “Jaukuma koeficienta” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:55
-#| msgid "Width of process 'PID' column"
 msgid "Width of process “PID” column"
 msgstr "Procesa “PID” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:56
-#| msgid "Show process 'PID' column on startup"
 msgid "Show process “PID” column on startup"
 msgstr "Palaižot rādīt procesa “PID” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:57
-#| msgid "Width of process 'SELinux Security Context' column"
 msgid "Width of process “SELinux Security Context” column"
 msgstr "Procesa “SELinux drošības konteksta” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:58
-#| msgid "Show process 'SELinux Security Context' column on startup"
 msgid "Show process “SELinux Security Context” column on startup"
 msgstr "Palaižot rādīt procesa “SELinux drošības konteksta” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:59
-#| msgid "Width of process 'Command Line' column"
 msgid "Width of process “Command Line” column"
 msgstr "Procesa “Komandrindas” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:60
-#| msgid "Show process 'Command Line' column on startup"
 msgid "Show process “Command Line” column on startup"
 msgstr "Palaižot rādīt procesa “Komandrindas” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:61
-#| msgid "Width of process 'Memory' column"
 msgid "Width of process “Memory” column"
 msgstr "Procesa “Atmiņas” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:62
-#| msgid "Show process 'Memory' column on startup"
 msgid "Show process “Memory” column on startup"
 msgstr "Palaižoties rādīt procesa “Atmiņas” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:63
-#| msgid "Width of process 'Waiting Channel' column"
 msgid "Width of process “Waiting Channel” column"
 msgstr "Procesa “Gaidīšanas kanāla” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:64
-#| msgid "Show process 'Waiting Channel' column on startup"
 msgid "Show process “Waiting Channel” column on startup"
 msgstr "Palaižot rādīt procesa “Gaidīšanas kanāla” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:65
-#| msgid "Width of process 'Control Group' column"
 msgid "Width of process “Control Group” column"
 msgstr "Procesa “Vadības grupas” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:66
-#| msgid "Show process 'Control Group' column on startup"
 msgid "Show process “Control Group” column on startup"
 msgstr "Palaižot rādīt procesa “Vadības grupas” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:67
-#| msgid "Width of process 'Unit' column"
 msgid "Width of process “Unit” column"
 msgstr "Procesa “Vienuma” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:68
-#| msgid "Show process 'Unit' column on startup"
 msgid "Show process “Unit” column on startup"
 msgstr "Palaižot rādīt procesa “Vienuma” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:69
-#| msgid "Width of process 'Session' column"
 msgid "Width of process “Session” column"
 msgstr "Procesa “Sesijas” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:70
-#| msgid "Show process 'Session' column on startup"
 msgid "Show process “Session” column on startup"
 msgstr "Palaižot rādīt procesa “Sesijas” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:71
-#| msgid "Width of process 'Seat' column"
 msgid "Width of process “Seat” column"
 msgstr "Procesa “Vietas” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:72
-#| msgid "Show process 'Seat' column on startup"
 msgid "Show process “Seat” column on startup"
 msgstr "Palaižot rādīt procesa “Vietas” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:73
-#| msgid "Width of process 'Owner' column"
 msgid "Width of process “Owner” column"
 msgstr "Procesa “Īpašnieka” kolonnas platums"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:74
-#| msgid "Show process 'Owner' column on startup"
 msgid "Show process “Owner” column on startup"
 msgstr "Palaižot rādīt procesa “Īpašnieka” kolonnu"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:75
-#| msgid "Width of process 'Priority' column"
+#| msgid "Width of process “Started” column"
+msgid "Width of process “Total disk write” column"
+msgstr "Procesa “Kopējā diska rakstīšana” kolonnas platums"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
+#| msgid "Show process “Started” column on startup"
+msgid "Show process “Total disk write” column on startup"
+msgstr "Palaižot rādīt procesa “Kopējā diska rakstīšana” kolonnu"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
+#| msgid "Width of process “Started” column"
+msgid "Width of process “Total disk read” column"
+msgstr "Procesa “Kopējā diska lasīšana” kolonnas platums"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
+#| msgid "Show process “Started” column on startup"
+msgid "Show process “Total disk read” column on startup"
+msgstr "Palaižot rādīt procesa “Kopējā diska lasīšana” kolonnu"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
+#| msgid "Width of process “User” column"
+msgid "Width of process “Disk read” column"
+msgstr "Procesa “Diska lasīšana” kolonnas platums"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
+#| msgid "Show process “User” column on startup"
+msgid "Show process “Disk read” column on startup"
+msgstr "Palaižot rādīt procesa “Diska lasīšana” kolonnu"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
+#| msgid "Width of process “Priority” column"
+msgid "Width of process “Disk write” column"
+msgstr "Procesa “Diska rakstīšana” kolonnas platums"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
+#| msgid "Show process “Priority” column on startup"
+msgid "Show process “Disk write” column on startup"
+msgstr "Palaižot rādīt procesa “Diska rakstīšana” kolonnu"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
 msgid "Width of process “Priority” column"
 msgstr "Procesa “Prioritātes” kolonnas platums"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
-#| msgid "Show process 'Priority' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
 msgid "Show process “Priority” column on startup"
 msgstr "Palaižot rādīt procesa “Prioritātes” kolonnu"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
 msgid "Disk view sort column"
 msgstr "Disku skata kārtošanas kolonna"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
 msgid "Disk view sort order"
 msgstr "Disku skata kārtošanas secība"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
 msgid "Disk view columns order"
 msgstr "Disku skata kolonnu secība"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
-#| msgid "Width of disk view 'Device' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
 msgid "Width of disk view “Device” column"
 msgstr "Platums diska skata kolonnai “Ierīce”"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
-#| msgid "Show disk view 'Device' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
 msgid "Show disk view “Device” column on startup"
 msgstr "Palaižot rādīt diska skata kolonnu “Ierīce”"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
-#| msgid "Width of disk view 'Directory' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
 msgid "Width of disk view “Directory” column"
 msgstr "Platums diska skata kolonnai “Direktorija”"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
-#| msgid "Show disk view 'Directory' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
 msgid "Show disk view “Directory” column on startup"
 msgstr "Palaižot rādīt diska skata kolonnu “Direktorija”"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
-#| msgid "Width of disk view 'Type' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
 msgid "Width of disk view “Type” column"
 msgstr "Platums diska skata kolonnai “Tips”"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
-#| msgid "Show disk view 'Type' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
 msgid "Show disk view “Type” column on startup"
 msgstr "Palaižot rādīt diska skata kolonnu “Tips”"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
-#| msgid "Width of disk view 'Total' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
 msgid "Width of disk view “Total” column"
 msgstr "Platums diska skata kolonnai “Kopā”"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
-#| msgid "Show disk view 'Total' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
 msgid "Show disk view “Total” column on startup"
 msgstr "Palaižot rādīt diska skata kolonnu “Kopā”"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
-#| msgid "Width of disk view 'Free' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:96
 msgid "Width of disk view “Free” column"
 msgstr "Platums diska skata kolonnai “Brīvs”"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
-#| msgid "Show disk view 'Free' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:97
 msgid "Show disk view “Free” column on startup"
 msgstr "Palaižot rādīt diska skata kolonnu “Brīvs”"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
-#| msgid "Width of disk view 'Available' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:98
 msgid "Width of disk view “Available” column"
 msgstr "Platums diska skata kolonnai “Pieejams”"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
-#| msgid "Show disk view 'Available' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:99
 msgid "Show disk view “Available” column on startup"
 msgstr "Palaižot rādīt diska skata kolonnu “Pieejams”"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
-#| msgid "Width of disk view 'Used' column"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:100
 msgid "Width of disk view “Used” column"
 msgstr "Platums diska skata kolonnai “Izmantots”"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
-#| msgid "Show disk view 'Used' column on startup"
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:101
 msgid "Show disk view “Used” column on startup"
 msgstr "Palaižot rādīt diska skata kolonnu “Izmantots”"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:102
 msgid "Memory map sort column"
 msgstr "Atmiņas kartes kārtošanas kolonna"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:103
 msgid "Memory map sort order"
 msgstr "Atmiņas kartes kārtošanas secība"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:96
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:104
 msgid "Open files sort column"
 msgstr "Atvērto datņu kārtošanas kolonna"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:97
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:105
 msgid "Open files sort order"
 msgstr "Atvērto datņu kārtošanas secība"
 
@@ -1272,76 +1233,76 @@ msgstr ""
 "jaukuma vērtība dod augstāku prioritāti."
 
 #: ../src/procproperties.cpp:50 ../src/procproperties.cpp:84
-#: ../src/procproperties.cpp:87 ../src/util.cpp:432
+#: ../src/procproperties.cpp:87 ../src/util.cpp:432 ../src/util.cpp:471
 msgid "N/A"
 msgstr "N/P"
 
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:325
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:322
 msgid "Process Name"
 msgstr "Procesa nosaukums"
 
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:326
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:323
 msgid "User"
 msgstr "Lietotājs"
 
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:327
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:324
 msgid "Status"
 msgstr "Statuss"
 
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:328
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:325
 msgid "Virtual Memory"
 msgstr "Virtuālā atmiņa"
 
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:329
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:326
 msgid "Resident Memory"
 msgstr "Pastāvīgā atmiņa"
 
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:330
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:327
 msgid "Writable Memory"
 msgstr "Rakstāmā atmiņa"
 
-#: ../src/procproperties.cpp:74 ../src/proctable.cpp:331
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:328
 msgid "Shared Memory"
 msgstr "Koplietotā atmiņa"
 
-#: ../src/procproperties.cpp:76 ../src/proctable.cpp:332
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:329
 msgid "X Server Memory"
 msgstr "X servera atmiņa"
 
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:331
 msgid "CPU Time"
 msgstr "CPU laiks"
 
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:332
 msgid "Started"
 msgstr "Palaists"
 
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:333
 msgid "Nice"
 msgstr "Jaukums"
 
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:350
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:351
 msgid "Priority"
 msgstr "Prioritāte"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:334
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:335
 msgid "Security Context"
 msgstr "Drošības konteksts"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:336
 msgid "Command Line"
 msgstr "Komandrinda"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:342
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:339
 msgid "Waiting Channel"
 msgstr "Gaidīšanas kanāls"
 
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:343
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:340
 msgid "Control Group"
 msgstr "Vadības grupa"
 
@@ -1350,28 +1311,45 @@ msgstr "Vadības grupa"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:333
+#: ../src/proctable.cpp:330
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: ../src/proctable.cpp:344
+#: ../src/proctable.cpp:341
 msgid "Unit"
 msgstr "Vienums"
 
-#: ../src/proctable.cpp:345
+#: ../src/proctable.cpp:342
 msgid "Session"
 msgstr "Sesija"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:348
+#: ../src/proctable.cpp:345
 msgid "Seat"
 msgstr "Vieta"
 
-#: ../src/proctable.cpp:349
+#: ../src/proctable.cpp:346
 msgid "Owner"
 msgstr "Īpašnieks"
+
+#: ../src/proctable.cpp:347
+msgid "Disk read total"
+msgstr "Diska kopējā lasīšana"
+
+#: ../src/proctable.cpp:348
+msgid "Disk write total"
+msgstr "Diska kopējā rakstīšana"
+
+#: ../src/proctable.cpp:349
+msgid "Disk read"
+msgstr "Diska lasīšana"
+
+#: ../src/proctable.cpp:350
+#| msgid "Disk view sort order"
+msgid "Disk write"
+msgstr "Diska rakstīšana"
 
 #: ../src/util.cpp:27
 msgid "Running"
@@ -1494,7 +1472,7 @@ msgid "Very Low Priority"
 msgstr "Ļoti zema prioritāte"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:630
+#: ../src/util.cpp:667
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
