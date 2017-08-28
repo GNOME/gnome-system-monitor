@@ -14,7 +14,6 @@ AM_INIT_AUTOMAKE([1.11.1 no-dist-gzip dist-xz foreign])
 AM_SILENT_RULES([yes])
 
 AM_MAINTAINER_MODE([enable])
-GNOME_MAINTAINER_MODE_DEFINES
 
 # Check For programs
 AC_PROG_CC
