@@ -25,15 +25,13 @@ EXTRA_DIST = \
 	org.gnome.gnome-system-monitor.policy.in.in \
 	gnome-system-monitor.desktop.in \
 	gnome-system-monitor-kde.desktop.in \
-	gnome-system-monitor.doap \
-	intltool-extract.in \
-	intltool-merge.in \
-	intltool-update.in
+	gnome-system-monitor.doap
 
-@INTLTOOL_POLICY_RULE@
 polkit_policydir = $(datadir)/polkit-1/actions
 polkit_policy_in_files = org.gnome.gnome-system-monitor.policy.in
 polkit_policy_DATA = $(polkit_policy_in_files:.policy.in=.policy)
+$(polkit_policy_DATA): %.policy: %.policy.in
+	$(AM_V_GEN)$(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
 
 Applicationsdir = $(datadir)/applications
 Applications_in_files = gnome-system-monitor.desktop.in gnome-system-monitor-kde.desktop.in
@@ -42,8 +40,8 @@ Applications_DATA = $(Applications_in_files:.desktop.in=.desktop)
 appdatadir = $(datadir)/appdata
 appdata_DATA = $(appdata_in_files:.xml.in=.xml)
 appdata_in_files = gnome-system-monitor.appdata.xml.in
-@INTLTOOL_DESKTOP_RULE@
-@INTLTOOL_XML_RULE@
+$(appdata_DATA): $(appdata_in_files)
+	$(AM_V_GEN)$(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
 
 distuninstallcheck_listfiles = find . -type f -print | grep -v 'scrollkeeper'
 
@@ -73,9 +71,6 @@ check-local: $(appdata_DATA) $(Applications_DATA) \
              $(DESKTOP_FILE_VALIDATE) $(Applications_DATA)
 
 DISTCLEANFILES = \
-	intltool-extract              \
-	intltool-merge                \
-	intltool-update               \
     $(appdata_DATA) \
 	gnome-system-monitor.desktop  \
 	gnome-system-monitor-kde.desktop  \
