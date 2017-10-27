@@ -917,11 +917,13 @@ update_info (GsmApplication *app, ProcInfo *info)
     guint64 difference = proctime.rtime - info->cpu_time;
     if (difference > 0) 
         info->status = GLIBTOP_PROCESS_RUNNING;
-    info->pcpu = difference * 100 / app->cpu_total_time;
-    info->pcpu = MIN(info->pcpu, 100);
 
+    guint cpu_scale = 100;
     if (not app->config.solaris_mode)
-        info->pcpu *= app->config.num_cpus;
+        cpu_scale *= app->config.num_cpus;
+
+    info->pcpu = difference * cpu_scale / app->cpu_total_time;
+    info->pcpu = MIN(info->pcpu, cpu_scale);
 
     app->processes.cpu_times[info->pid] = info->cpu_time = proctime.rtime;
     info->nice = procuid.nice;
