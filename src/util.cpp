@@ -147,67 +147,8 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
 gchar*
 procman::format_size(guint64 size, bool want_bits)
 {
-
-    enum {
-        K_INDEX,
-        M_INDEX,
-        G_INDEX,
-        T_INDEX
-    };
-
-    struct Format {
-        guint64 factor;
-        const char* string;
-    };
-
-    const Format all_formats[2][4] = {
-        { { G_GUINT64_CONSTANT(1) << 10,       N_("%.1f KiB")  },
-          { G_GUINT64_CONSTANT(1) << 20,       N_("%.1f MiB")  },
-          { G_GUINT64_CONSTANT(1) << 30,       N_("%.1f GiB")  },
-          { G_GUINT64_CONSTANT(1) << 40,       N_("%.1f TiB")  } },
-        { { G_GUINT64_CONSTANT(1000),          N_("%.3g kbit") },
-          { G_GUINT64_CONSTANT(1000000),       N_("%.3g Mbit") },
-          { G_GUINT64_CONSTANT(1000000000),    N_("%.3g Gbit") },
-          { G_GUINT64_CONSTANT(1000000000000), N_("%.3g Tbit") } }
-    };
-
-    const Format (&formats)[4] = all_formats[want_bits ? 1 : 0];
-
-    guint64 max_size = size;
-
-    if (want_bits) {
-        size *= 8;
-        max_size *= 8;
-    }
-
-    if (max_size == 0)
-        max_size = size;
-
-    if (max_size < formats[K_INDEX].factor) {
-        const char *format = (want_bits
-                              ? dngettext(GETTEXT_PACKAGE, "%u bit", "%u bits", (guint) size)
-                              : dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes",(guint) size));
-        return g_strdup_printf (format, (guint) size);
-    } else {
-        guint64 factor;
-        const char* format = NULL;
-
-        if (max_size < formats[M_INDEX].factor) {
-            factor = formats[K_INDEX].factor;
-            format = formats[K_INDEX].string;
-        } else if (max_size < formats[G_INDEX].factor) {
-            factor = formats[M_INDEX].factor;
-            format = formats[M_INDEX].string;
-        } else if (max_size < formats[T_INDEX].factor) {
-            factor = formats[G_INDEX].factor;
-            format = formats[G_INDEX].string;
-        } else {
-            factor = formats[T_INDEX].factor;
-            format = formats[T_INDEX].string;
-        }
-
-        return g_strdup_printf(_(format), size / (double)factor);
-    }
+    const GFormatSizeFlags flags = (want_bits ? G_FORMAT_SIZE_BITS : G_FORMAT_SIZE_IEC_UNITS);
+    return g_format_size_full(size, flags);
 }
 
 gchar *
