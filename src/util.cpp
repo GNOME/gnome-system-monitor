@@ -145,7 +145,7 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
  **/
 
 gchar*
-procman::format_size(guint64 size, guint64 max_size, bool want_bits)
+procman::format_size(guint64 size, bool want_bits)
 {
 
     enum {
@@ -172,6 +172,8 @@ procman::format_size(guint64 size, guint64 max_size, bool want_bits)
     };
 
     const Format (&formats)[4] = all_formats[want_bits ? 1 : 0];
+
+    guint64 max_size = size;
 
     if (want_bits) {
         size *= 8;
@@ -473,7 +475,7 @@ namespace procman
             g_free(str);
         }
         else {
-            g_object_set(renderer, "text", procman::format_rate(size, size, FALSE).c_str(), NULL);
+            g_object_set(renderer, "text", procman::format_rate(size, FALSE).c_str(), NULL);
         }
 
     }
@@ -660,9 +662,9 @@ namespace procman
     }
 
 
-    std::string format_rate(guint64 rate, guint64 max_rate, bool want_bits)
+    std::string format_rate(guint64 rate, bool want_bits)
     {
-        char* bytes = procman::format_size(rate, max_rate, want_bits);
+        char* bytes = procman::format_size(rate, want_bits);
         // xgettext: rate, 10MiB/s or 10Mbit/s
         std::string formatted_rate(make_string(g_strdup_printf(_("%s/s"), bytes)));
         g_free(bytes);
@@ -670,18 +672,18 @@ namespace procman
     }
 
 
-    std::string format_network(guint64 rate, guint64 max_rate)
+    std::string format_network(guint64 rate)
     {
-        char* bytes = procman::format_size(rate, max_rate, GsmApplication::get()->config.network_in_bits);
+        char* bytes = procman::format_size(rate, GsmApplication::get()->config.network_in_bits);
         std::string formatted(bytes);
         g_free(bytes);
         return formatted;
     }
 
 
-    std::string format_network_rate(guint64 rate, guint64 max_rate)
+    std::string format_network_rate(guint64 rate)
     {
-        return procman::format_rate(rate, max_rate, GsmApplication::get()->config.network_in_bits);
+        return procman::format_rate(rate, GsmApplication::get()->config.network_in_bits);
     }
 
 }

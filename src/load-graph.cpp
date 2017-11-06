@@ -115,7 +115,7 @@ void draw_background(LoadGraph *graph) {
         if (graph->type == LOAD_GRAPH_NET) {
             // operation orders matters so it's 0 if i == num_bars
             guint64 rate = graph->net.max - (i * graph->net.max / num_bars);
-            const std::string captionstr(procman::format_network_rate(rate, graph->net.max));
+            const std::string captionstr(procman::format_network_rate(rate));
             caption = g_strdup(captionstr.c_str());
         } else {
             // operation orders matters so it's 0 if i == num_bars
