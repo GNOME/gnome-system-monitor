@@ -266,14 +266,14 @@ load_graph_draw (GtkWidget *widget,
             if (drawSmooth) {
               cairo_curve_to (cr,
                               x_offset - ((i - 0.5f) * graph->graph_delx),
-                              (1.0f - graph->data[i-1][j]) * graph->real_draw_height + 3.5f,
+                              (1.0 - graph->data[i-1][j]) * graph->real_draw_height + 3.5,
                               x_offset - ((i - 0.5f) * graph->graph_delx),
-                              (1.0f - graph->data[i][j]) * graph->real_draw_height + 3.5f,
+                              (1.0 - graph->data[i][j]) * graph->real_draw_height + 3.5,
                               x_offset - (i * graph->graph_delx),
-                              (1.0f - graph->data[i][j]) * graph->real_draw_height + 3.5f);
+                              (1.0 - graph->data[i][j]) * graph->real_draw_height + 3.5);
             } else {
               cairo_line_to (cr, x_offset - (i * graph->graph_delx),
-                              (1.0f - graph->data[i][j]) * graph->real_draw_height + 3.5f);
+                              (1.0 - graph->data[i][j]) * graph->real_draw_height + 3.5);
             }
 
         }
@@ -293,7 +293,7 @@ load_graph_draw (GtkWidget *widget,
 void
 load_graph_reset (LoadGraph *graph)
 {
-    std::fill(graph->data_block.begin(), graph->data_block.end(), -1.0f);
+    std::fill(graph->data_block.begin(), graph->data_block.end(), -1.0);
 }
 
 static void
@@ -410,7 +410,7 @@ get_memory (LoadGraph *graph)
     gtk_widget_set_sensitive (GTK_WIDGET (graph->swap_color_picker), swap.total > 0);
     
     graph->data[0][0] = mempercent;
-    graph->data[0][1] = swap.total>0 ? swappercent : -1.0f;
+    graph->data[0][1] = swap.total>0 ? swappercent : -1.0;
 }
 
 /* Nice Numbers for Graph Labels after Paul Heckbert
@@ -820,7 +820,7 @@ LoadGraph::LoadGraph(guint type)
 
 
     /* Allocate data in a contiguous block */
-    data_block = std::vector<float>(n * LoadGraph::NUM_POINTS, -1.0f);
+    data_block = std::vector<double>(n * LoadGraph::NUM_POINTS, -1.0);
 
     for (guint i = 0; i < LoadGraph::NUM_POINTS; ++i)
         data[i] = &data_block[0] + i * n;

@@ -62,8 +62,8 @@ struct LoadGraph
 
     std::vector<GdkRGBA> colors;
 
-    std::vector<float> data_block;
-    gfloat* data[NUM_POINTS];
+    std::vector<double> data_block;
+    double* data[NUM_POINTS];
 
     GtkBox *main_widget;
     GtkDrawingArea *disp;
