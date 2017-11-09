@@ -204,7 +204,7 @@ cb_refresh_icons (GtkIconTheme *theme, gpointer data)
 }
 
 static gboolean
-iter_matches_search_key (GtkTreeModel *model, GtkTreeIter *iter, const gchar *key)
+iter_matches_search_key (GtkTreeModel *model, GtkTreeIter *iter, const gchar *search_text)
 {
     char *name;
     char *user;
@@ -212,6 +212,8 @@ iter_matches_search_key (GtkTreeModel *model, GtkTreeIter *iter, const gchar *ke
     char *pids;
     char *args;
     gboolean found;
+    char *search_pattern;
+    char **keys;
 
     gtk_tree_model_get (model, iter,
                         COL_NAME, &name,
@@ -221,9 +223,17 @@ iter_matches_search_key (GtkTreeModel *model, GtkTreeIter *iter, const gchar *ke
                         -1);
 
     pids = g_strdup_printf ("%d", pid);
-    found = (name && strcasestr (name, key)) || (user && strcasestr (user, key))
-            || (pids && strcasestr (pids, key)) || (args && strcasestr (args, key));
 
+    keys = g_strsplit_set(search_text, " |", -1);
+    search_pattern = g_strjoinv ("|", keys);
+
+    auto regex = Glib::Regex::create(search_pattern, Glib::REGEX_CASELESS);
+
+    found = (name && regex->match(name)) || (user && regex->match(user))
+            || (pids && regex->match(pids)) || (args && regex->match(args));
+
+    g_strfreev (keys);
+    g_free (search_pattern);
     g_free (name);
     g_free (user);
     g_free (args);
