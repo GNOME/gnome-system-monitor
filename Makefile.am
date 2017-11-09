@@ -37,7 +37,7 @@ Applicationsdir = $(datadir)/applications
 Applications_in_files = gnome-system-monitor.desktop.in gnome-system-monitor-kde.desktop.in
 Applications_DATA = $(Applications_in_files:.desktop.in=.desktop)
 
-appdatadir = $(datadir)/appdata
+appdatadir = $(datadir)/metainfo
 appdata_DATA = $(appdata_in_files:.xml.in=.xml)
 appdata_in_files = gnome-system-monitor.appdata.xml.in
 $(appdata_DATA): $(appdata_in_files)
