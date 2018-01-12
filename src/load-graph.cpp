@@ -64,6 +64,9 @@ void draw_background(LoadGraph *graph) {
     PangoRectangle extents;
     cairo_surface_t *surface;
     GdkRGBA fg;
+    GdkRGBA fg_grid;
+    double const border_alpha = 0.7;
+    double const grid_alpha = border_alpha / 2.0;
 
     num_bars = graph->num_bars();
     graph->graph_dely = (graph->draw_height - 15) / num_bars; /* round to int to avoid AA blur */
@@ -93,13 +96,35 @@ void draw_background(LoadGraph *graph) {
     cairo_translate (cr, FRAME_WIDTH, FRAME_WIDTH);
 
     /* Draw background rectangle */
-    cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
-    cairo_rectangle (cr, graph->indent, 0,
-                     graph->draw_width - graph->rmargin - graph->indent, graph->real_draw_height);
-    cairo_fill(cr);
+    /* When a user uses a dark theme, the hard-coded
+     * white background in GSM is a lone white on the
+     * display, which makes the user unhappy. To fix
+     * this, here we offer the user a chance to set
+     * his favorite background color. */
+    gtk_style_context_save (context);
+
+    /* Here we specify the name of the class. Now in
+     * the theme's CSS we can specify the own colors
+     * for this class. */
+    gtk_style_context_add_class (context, "loadgraph");
+
+    /* And in case the user does not care, we add
+     * classes that usually have a white background. */
+    gtk_style_context_add_class (context, GTK_STYLE_CLASS_PAPER);
+    gtk_style_context_add_class (context, GTK_STYLE_CLASS_ENTRY);
+
+    /* And, as a bonus, the user can choose the color of the grid. */
+    gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &fg_grid);
+
+    /* Why not use the new features of the
+     * GTK instead of cairo_rectangle ?! :) */
+    gtk_render_background (context, cr, graph->indent, 0.0,
+            graph->draw_width - graph->rmargin - graph->indent,
+            graph->real_draw_height);
+
+    gtk_style_context_restore (context);
 
     cairo_set_line_width (cr, 1.0);
-    cairo_set_source_rgb (cr, 0.89, 0.89, 0.89);
     
     for (i = 0; i <= num_bars; ++i) {
         double y;
@@ -130,9 +155,11 @@ void draw_background(LoadGraph *graph) {
         g_free(caption);
 
         if (i==0 || i==num_bars)
-          cairo_set_source_rgb (cr, 0.70, 0.71, 0.70);
-        else 
-          cairo_set_source_rgb (cr, 0.89, 0.89, 0.89);
+            fg_grid.alpha = border_alpha;
+        else
+            fg_grid.alpha = grid_alpha;
+
+        gdk_cairo_set_source_rgba (cr, &fg_grid);
         cairo_move_to (cr, graph->indent, i * graph->graph_dely + 0.5);
         cairo_line_to (cr, graph->draw_width - graph->rmargin + 0.5 + 4, i * graph->graph_dely + 0.5);
         cairo_stroke (cr);
@@ -143,11 +170,13 @@ void draw_background(LoadGraph *graph) {
 
     for (unsigned int i = 0; i < 7; i++) {
         double x = (i) * (graph->draw_width - graph->rmargin - graph->indent) / 6;
-        if (i==0 || i==6)
-          cairo_set_source_rgb (cr, 0.70, 0.71, 0.70);
-        else 
-          cairo_set_source_rgb (cr, 0.89, 0.89, 0.89);
 
+        if (i==0 || i==6)
+            fg_grid.alpha = border_alpha;
+        else
+            fg_grid.alpha = grid_alpha;
+
+        gdk_cairo_set_source_rgba (cr, &fg_grid);
         cairo_move_to (cr, (ceil(x) + 0.5) + graph->indent, 0.5);
         cairo_line_to (cr, (ceil(x) + 0.5) + graph->indent, graph->real_draw_height + 4.5);
         cairo_stroke(cr);
