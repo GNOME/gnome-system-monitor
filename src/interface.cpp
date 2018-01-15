@@ -755,6 +755,21 @@ create_main_window (GsmApplication *app)
     g_object_unref (G_OBJECT (builder));
 }
 
+gboolean
+scroll_to_selection (gpointer data)
+{
+    GsmApplication *app = (GsmApplication *) data;
+    GList* paths = gtk_tree_selection_get_selected_rows (app->selection, NULL);
+    guint length = g_list_length(paths);
+    if (length > 0) {
+        GtkTreePath* last_path = (GtkTreePath*) g_list_nth_data(paths, length - 1);
+        gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (app->tree), last_path, NULL, FALSE, 0.0, 0.0);
+    }
+
+    g_list_free_full (paths, (GDestroyNotify) gtk_tree_path_free);
+    return FALSE;
+}
+
 void
 update_sensitivity(GsmApplication *app)
 {
@@ -795,4 +810,9 @@ update_sensitivity(GsmApplication *app)
 
     gtk_revealer_set_reveal_child (GTK_REVEALER (app->proc_actionbar_revealer),
                                    selected_sensitivity);
+
+    // Scrolls the table to selected row. Useful when the last row is obstructed by the revealer
+    guint duration_ms = gtk_revealer_get_transition_duration (GTK_REVEALER (app->proc_actionbar_revealer));
+    g_timeout_add (duration_ms, scroll_to_selection, app);
 }
+
