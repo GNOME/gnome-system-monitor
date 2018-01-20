@@ -36,6 +36,8 @@ $(polkit_policy_DATA): %.policy: %.policy.in
 Applicationsdir = $(datadir)/applications
 Applications_in_files = gnome-system-monitor.desktop.in gnome-system-monitor-kde.desktop.in
 Applications_DATA = $(Applications_in_files:.desktop.in=.desktop)
+$(Applications_DATA): %.desktop: %.desktop.in
+	$(AM_V_GEN)$(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
 appdatadir = $(datadir)/metainfo
 appdata_DATA = $(appdata_in_files:.xml.in=.xml)
