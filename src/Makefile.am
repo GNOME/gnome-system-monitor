@@ -55,8 +55,7 @@ LDADD = \
 # GSettings schemas, enum files and conversion file
 gsettings_ENUM_NAMESPACE = org.gnome.gnome-system-monitor
 gsettings_ENUM_FILES = $(top_srcdir)/src/*.h $(top_srcdir)/src/legacy/*.h
-gsettings_in_file = org.gnome.gnome-system-monitor.gschema.xml.in
-gsettings_SCHEMAS = $(gsettings_in_file:.xml.in=.xml)
+gsettings_SCHEMAS = org.gnome.gnome-system-monitor.gschema.xml
 @GSETTINGS_RULES@
 
 dist_noinst_DATA = \

@@ -131,7 +131,7 @@ Makefile
 scripts/Makefile
 src/Makefile
 src/legacy/Makefile
-src/org.gnome.gnome-system-monitor.gschema.xml.in
+src/org.gnome.gnome-system-monitor.gschema.xml
 po/Makefile.in
 help/Makefile
 gnome-system-monitor.desktop.in
