@@ -326,6 +326,9 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     color_picker = gsm_color_button_new (
         &net_graph->colors.at(1), GSMCP_TYPE_NETWORK_OUT);
     gtk_widget_set_valign (GTK_WIDGET(color_picker), GTK_ALIGN_CENTER);
+    gtk_widget_set_hexpand (GTK_WIDGET(color_picker), true);
+    gtk_widget_set_halign (GTK_WIDGET(color_picker), GTK_ALIGN_END);
+
     g_signal_connect (G_OBJECT (color_picker), "color-set",
                       G_CALLBACK (cb_net_out_color_changed), app);
     title_text = g_strdup_printf(title_template, _("Sending"));
@@ -337,6 +340,12 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(net_graph)->net_out), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
     label = GTK_LABEL (gtk_builder_get_object(builder, "total_sent_label"));
     gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(net_graph)->net_out_total), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
+    gtk_widget_set_hexpand (GTK_WIDGET(load_graph_get_labels(net_graph)->net_out_total), true);
+    gtk_widget_set_halign (GTK_WIDGET(load_graph_get_labels(net_graph)->net_out_total), GTK_ALIGN_START);
+
+    gtk_widget_set_hexpand (GTK_WIDGET(load_graph_get_labels(net_graph)->net_out), true);
+    gtk_widget_set_halign (GTK_WIDGET(load_graph_get_labels(net_graph)->net_out), GTK_ALIGN_START);
+
 
     app->net_graph = net_graph;
     g_free (title_template);
