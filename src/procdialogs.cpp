@@ -57,6 +57,8 @@ void
 procdialog_create_kill_dialog (GsmApplication *app, int signal)
 {
     GtkMessageDialog *kill_alert_dialog;
+    GtkWidget *confirm_button;
+
     gchar *primary, *secondary, *button_text;
     struct ProcActionArgs *kargs;
 
@@ -149,10 +151,13 @@ procdialog_create_kill_dialog (GsmApplication *app, int signal)
                                               "%s",
                                               secondary);
 
-    gtk_dialog_add_buttons (GTK_DIALOG (kill_alert_dialog),
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            button_text, GTK_RESPONSE_OK,
-                            NULL);
+    gtk_dialog_add_button (GTK_DIALOG (kill_alert_dialog),
+                           _("_Cancel"), GTK_RESPONSE_CANCEL);
+
+    confirm_button = gtk_dialog_add_button (GTK_DIALOG (kill_alert_dialog),
+                                            button_text, GTK_RESPONSE_OK);
+    gtk_style_context_add_class (gtk_widget_get_style_context (confirm_button),
+                                 GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
 
     gtk_dialog_set_default_response (GTK_DIALOG (kill_alert_dialog),
                                      GTK_RESPONSE_CANCEL);
