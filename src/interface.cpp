@@ -43,6 +43,15 @@
 #include "settings-keys.h"
 #include "legacy/gsm_color_button.h"
 
+static const char* LOAD_GRAPH_CSS = "\
+.loadgraph {\
+    background: linear-gradient(to bottom,\
+                      @theme_bg_color,\
+                      @theme_base_color\
+                      );\
+    color: mix (@theme_fg_color, @theme_bg_color, 0.5);\
+}\
+";
 
 static gboolean
 cb_window_key_press_event (GtkWidget *widget, GdkEvent *event, gpointer user_data)
@@ -174,6 +183,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     GtkLabel *label,*cpu_label;
     GtkGrid *table;
     GsmColorButton *color_picker;
+    GtkCssProvider *provider;
+
     LoadGraph *cpu_graph, *mem_graph, *net_graph;
 
     gint i;
@@ -181,6 +192,9 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     gchar *label_text;
     gchar *title_template;
 
+    provider = gtk_css_provider_new ();
+    gtk_css_provider_load_from_data (provider, LOAD_GRAPH_CSS, -1, NULL);
+    gtk_style_context_add_provider_for_screen (gdk_screen_get_default (), GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     // Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
     title_template = g_strdup(_("Pick a Color for “%s”"));
 
