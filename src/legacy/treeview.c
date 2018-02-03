@@ -231,7 +231,7 @@ save_column_state (gpointer data)
     key = g_strdup_printf ("col-%d-visible", column_id);
     g_settings_set_boolean (settings, key, visible);
     g_free (key);
-
+    timeout_id = 0;
     return FALSE;
 }
 
@@ -242,10 +242,10 @@ cb_update_column_state (GObject *object, GParamSpec *pspec, gpointer data)
 
     current_column = column;
 
-    if (timeout_id)
+    if (timeout_id > 0)
         g_source_remove (timeout_id);
 
-    timeout_id = g_timeout_add (250, save_column_state, data);
+    timeout_id = g_timeout_add_seconds (1, save_column_state, data);
 }
 
 void
