@@ -173,6 +173,7 @@ gsm_tree_view_load_state (GsmTreeView *tree_view)
 
             key = g_strdup_printf ("col-%d-width", sort_id);
             gtk_tree_view_column_set_fixed_width (col, g_settings_get_int (priv->settings, key));
+            gtk_tree_view_column_set_min_width (col, 30);
             g_free (key);
 
             key = g_strdup_printf ("col-%d-visible", sort_id);
