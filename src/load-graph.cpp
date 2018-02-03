@@ -231,17 +231,27 @@ load_graph_configure (GtkWidget *widget,
     return TRUE;
 }
 
+static void force_refresh (LoadGraph * const graph)
+{
+    graph->clear_background();
+    load_graph_queue_draw (graph);
+}
+
+static void
+load_graph_style_updated (GtkWidget *widget,
+                          gpointer data_ptr)
+{
+    LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
+    force_refresh (graph);
+}
+
 static gboolean
 load_graph_state_changed (GtkWidget *widget,
                       GtkStateFlags *flags,
                       gpointer data_ptr)
 {
     LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
-
-    graph->clear_background();
-
-    load_graph_queue_draw (graph);
-
+    force_refresh (graph);
     return TRUE;
 }
 
@@ -842,6 +852,8 @@ LoadGraph::LoadGraph(guint type)
                       G_CALLBACK (load_graph_destroy), graph);
     g_signal_connect (G_OBJECT(disp), "state-flags-changed",
                       G_CALLBACK (load_graph_state_changed), graph);
+    g_signal_connect (G_OBJECT(disp), "style-updated",
+                      G_CALLBACK (load_graph_style_updated), graph);
 
     gtk_widget_set_events (GTK_WIDGET (disp), GDK_EXPOSURE_MASK);
 
