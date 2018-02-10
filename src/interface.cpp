@@ -29,6 +29,7 @@
 #include <signal.h>
 #include <gdk/gdkkeysyms.h>
 #include <math.h>
+#include <dazzle.h>
 
 #include "interface.h"
 #include "proctable.h"
@@ -50,6 +51,17 @@ static const char* LOAD_GRAPH_CSS = "\
                       @theme_base_color\
                       );\
     color: mix (@theme_fg_color, @theme_bg_color, 0.5);\
+}\
+dzlgraphview.view { \
+  background-color: @theme_bg_color; \
+  background-size:100% 100%; \
+  background: linear-gradient(180deg, alpha(@theme_fg_color,0.3) 1px, transparent 0%),\
+              linear-gradient(90deg, alpha(@theme_fg_color,0.3) 1px, transparent 0% ),\
+              linear-gradient(-90deg, alpha(@theme_fg_color,0.3) 1px, transparent 0% ),\
+              linear-gradient(0deg, alpha(@theme_fg_color,0.3) 1px, transparent 0% ),\
+              repeating-linear-gradient(0deg, alpha(@theme_fg_color,0.15), alpha(@theme_fg_color,0.15) 1px, transparent 1px, transparent 20%), \
+              repeating-linear-gradient(-90deg,  alpha(@theme_fg_color,0.15), alpha(@theme_fg_color,0.15) 1px, transparent 1px, transparent 20%), \
+              linear-gradient(to bottom, @theme_bg_color, @theme_base_color);\
 }\
 ";
 
@@ -185,7 +197,9 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     GsmColorButton *color_picker;
     GtkCssProvider *provider;
 
-    LoadGraph *cpu_graph, *mem_graph, *net_graph;
+    LoadGraph *mem_graph, *net_graph;
+    LoadGraph *cpu_graph;
+    GtkWidget *dzl_graph;
 
     gint i;
     gchar *title_text;
@@ -203,9 +217,12 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     cpu_graph_box = GTK_BOX (gtk_builder_get_object (builder, "cpu_graph_box"));
 
     cpu_graph = new LoadGraph(LOAD_GRAPH_CPU);
-    gtk_widget_set_size_request (GTK_WIDGET(load_graph_get_widget(cpu_graph)), -1, 70);
+    dzl_graph = GTK_WIDGET(g_object_new (DZL_TYPE_CPU_GRAPH, "timespan", G_TIME_SPAN_MINUTE, 
+                                                             "max-samples", 120, NULL));
+    gtk_widget_set_size_request (GTK_WIDGET(dzl_graph), -1, 70);
+    gtk_widget_show (dzl_graph);
     gtk_box_pack_start (cpu_graph_box,
-                        GTK_WIDGET (load_graph_get_widget(cpu_graph)),
+                        GTK_WIDGET (dzl_graph),
                         TRUE,
                         TRUE,
                         0);
