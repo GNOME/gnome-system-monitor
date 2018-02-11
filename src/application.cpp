@@ -24,26 +24,10 @@ static void
 cb_solaris_mode_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
 {
     app->config.solaris_mode = settings.get_boolean(key);
-    app->cpu_graph->clear_background();
+    // app->cpu_graph->clear_background();
     if (app->timeout) {
         proctable_update (app);
     }
-}
-
-static void
-cb_draw_stacked_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
-{
-    app->config.draw_stacked = settings.get_boolean(key);
-    app->cpu_graph->clear_background();
-    load_graph_reset(app->cpu_graph);
-}
-
-static void
-cb_draw_smooth_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
-{
-    app->config.draw_smooth = settings.get_boolean(key);
-    app->cpu_graph->clear_background();
-    load_graph_reset(app->cpu_graph);
 }
 
 static void
@@ -123,10 +107,10 @@ cb_color_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* ap
     if (key == GSM_SETTING_CPU_COLORS) {
         apply_cpu_color_settings(settings, app);
         for (int i = 0; i < app->config.num_cpus; i++) {
-            if(!gdk_rgba_equal(&app->cpu_graph->colors[i], &app->config.cpu_color[i])) {
-                app->cpu_graph->colors[i] = app->config.cpu_color[i];
-                break;
-            }
+//            if(!gdk_rgba_equal(&app->cpu_graph->colors[i], &app->config.cpu_color[i])) {
+                //app->cpu_graph->colors[i] = app->config.cpu_color[i];
+//                break;
+//            }
         }
         return;
     }
@@ -157,16 +141,6 @@ GsmApplication::load_settings()
     config.solaris_mode = this->settings->get_boolean (GSM_SETTING_SOLARIS_MODE);
     this->settings->signal_changed(GSM_SETTING_SOLARIS_MODE).connect ([this](const Glib::ustring& key) {
         cb_solaris_mode_changed (*this->settings.operator->(), key, this);
-    });
-
-    config.draw_stacked = this->settings->get_boolean (GSM_SETTING_DRAW_STACKED);
-    this->settings->signal_changed(GSM_SETTING_DRAW_STACKED).connect ([this](const Glib::ustring& key) {
-        cb_draw_stacked_changed (*this->settings.operator->(), key, this);
-    });
-
-    config.draw_smooth = this->settings->get_boolean (GSM_SETTING_DRAW_SMOOTH);
-    this->settings->signal_changed(GSM_SETTING_DRAW_SMOOTH).connect ([this](const Glib::ustring& key) {
-        cb_draw_smooth_changed (*this->settings.operator->(), key, this);
     });
 
     config.network_in_bits = this->settings->get_boolean (GSM_SETTING_NETWORK_IN_BITS);

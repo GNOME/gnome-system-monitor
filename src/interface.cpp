@@ -192,16 +192,16 @@ static void
 create_sys_view (GsmApplication *app, GtkBuilder * builder)
 {
     GtkBox *cpu_graph_box, *mem_graph_box, *net_graph_box;
-    GtkLabel *label,*cpu_label;
+    GtkLabel *label, *cpu_label;
     GtkGrid *table;
     GsmColorButton *color_picker;
     GtkCssProvider *provider;
 
     LoadGraph *mem_graph, *net_graph;
-    LoadGraph *cpu_graph;
+    //LoadGraph *cpu_graph;
     GtkWidget *dzl_graph;
 
-    gint i;
+    int i;
     gchar *title_text;
     gchar *label_text;
     gchar *title_template;
@@ -216,9 +216,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     
     cpu_graph_box = GTK_BOX (gtk_builder_get_object (builder, "cpu_graph_box"));
 
-    cpu_graph = new LoadGraph(LOAD_GRAPH_CPU);
-    dzl_graph = GTK_WIDGET(g_object_new (DZL_TYPE_CPU_GRAPH, "timespan", G_TIME_SPAN_MINUTE, 
-                                                             "max-samples", 120, NULL));
+    dzl_graph = GTK_WIDGET(g_object_new (DZL_TYPE_CPU_GRAPH, "timespan", G_TIME_SPAN_MINUTE,
+                                                             "max-samples", 60, NULL));
     gtk_widget_set_size_request (GTK_WIDGET(dzl_graph), -1, 70);
     gtk_widget_show (dzl_graph);
     gtk_box_pack_start (cpu_graph_box,
@@ -241,7 +240,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
             gtk_grid_insert_row(cpu_table, (i+1)/cols);
         }
         gtk_grid_attach(cpu_table, GTK_WIDGET (temp_hbox), i%cols, i/cols, 1, 1);
-        color_picker = gsm_color_button_new (&cpu_graph->colors.at(i), GSMCP_TYPE_CPU);
+        color_picker = gsm_color_button_new (&app->config.cpu_color[i], GSMCP_TYPE_CPU);
         g_signal_connect (G_OBJECT (color_picker), "color-set",
                           G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
         gtk_box_pack_start (temp_hbox, GTK_WIDGET (color_picker), FALSE, TRUE, 0);
@@ -265,14 +264,11 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
         gtk_widget_set_halign (GTK_WIDGET (cpu_label), GTK_ALIGN_START);
         gtk_box_pack_start (temp_hbox, GTK_WIDGET (cpu_label), FALSE, FALSE, 0);
         gtk_widget_show (GTK_WIDGET (cpu_label));
-        load_graph_get_labels(cpu_graph)->cpu[i] = cpu_label;
 
     }
 
-    app->cpu_graph = cpu_graph;
-
     /** The memory box */
-    
+
     mem_graph_box = GTK_BOX (gtk_builder_get_object (builder, "mem_graph_box"));
 
     mem_graph = new LoadGraph(LOAD_GRAPH_MEM);
@@ -595,11 +591,9 @@ update_page_activities (GsmApplication *app)
     }
 
     if (strcmp (current_page, "resources") == 0) {
-        load_graph_start (app->cpu_graph);
         load_graph_start (app->mem_graph);
         load_graph_start (app->net_graph);
     } else {
-        load_graph_stop (app->cpu_graph);
         load_graph_stop (app->mem_graph);
         load_graph_stop (app->net_graph);
     }
@@ -640,7 +634,6 @@ cb_main_window_state_changed (GtkWidget *window, GdkEventWindowState *event, gpo
         if (current_page == "processes") {
             proctable_freeze (app);
         } else if (current_page == "resources") {
-            load_graph_stop (app->cpu_graph);
             load_graph_stop (app->mem_graph);
             load_graph_stop (app->net_graph);
         } else if (current_page == "disks") {
@@ -651,7 +644,6 @@ cb_main_window_state_changed (GtkWidget *window, GdkEventWindowState *event, gpo
             proctable_update (app);
             proctable_thaw (app);
         } else if (current_page == "resources") {
-            load_graph_start (app->cpu_graph);
             load_graph_start (app->mem_graph);
             load_graph_start (app->net_graph);
         } else if (current_page == "disks") {
