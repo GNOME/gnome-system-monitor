@@ -112,11 +112,12 @@ configure_file(
 ################################################################################
 # Generate files
 
+desktop_files = []
 foreach file : [
     'gnome-system-monitor.desktop',
     'gnome-system-monitor-kde.desktop',
   ]
-  i18n.merge_file(
+  desktop_files += i18n.merge_file(
     input : configure_file(
       configuration: dataconf,
       input : file + '.in.in',
@@ -130,7 +131,7 @@ foreach file : [
   )
 endforeach
 
-i18n.merge_file(
+appdata_file = i18n.merge_file(
   input : 'gnome-system-monitor.appdata.xml.in',
   output: 'gnome-system-monitor.appdata.xml',
   po_dir: 'po',
@@ -151,9 +152,24 @@ i18n.merge_file(
 )
 
 
-# appdata_validate = find_program('appdata-validate')
-# desktop_validate = find_program('desktop-file-validate')
+appstream_util = find_program('appstream-util', required: false)
+if appstream_util.found()
+  test('validate_appdata',
+    appstream_util,
+    args: [ 'validate-relax', '--nonet', appdata_file ],
+  )
+endif
 
+desktop_validate = find_program('desktop-file-validate', required: false)
+if desktop_validate.found()
+  test('validate_desktop',
+    desktop_validate,
+    args: [ desktop_files ],
+  )
+endif
+
+################################################################################
+# Subdirectories
 
 rootInclude = include_directories('.')
 
@@ -161,6 +177,7 @@ subdir('po')
 subdir('scripts')
 subdir('src')
 subdir('help')
+
 
 message('\n'.join(['',
 'Configuration:',

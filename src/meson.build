@@ -76,7 +76,6 @@ gsm_schemas = configure_file(
 
 gsm_gsettings = gnome.mkenums('org.gnome.gnome-system-monitor.enums.xml',
   sources: system_monitor_headers,
-  # symbol_prefix: prefix to use for the symbols
   comments: '<!-- @comment@ -->',
   fhead:    '<schemalist>',
   vhead:    '  <@type@ id=\'org.gnome.gnome-system-monitor.@EnumName@\'>',
