@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the gnome-system-monitor package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
 # Windows User <fios@foramnagaidhlig.net>, 2013.
-# GunChleoc <fios@foramnagaidhlig.net>, 2014, 2015, 2016, 2017.
+# GunChleoc <fios@foramnagaidhlig.net>, 2014, 2015, 2016, 2017, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product"
 "=system-monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-10-07 06:43+0000\n"
-"PO-Revision-Date: 2017-03-07 09:32+0100\n"
+"POT-Creation-Date: 2017-11-01 18:43+0000\n"
+"PO-Revision-Date: 2018-03-02 11:08+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -24,7 +24,7 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: ../gnome-system-monitor.desktop.in.in.h:1 ../data/interface.ui.h:1
-#: ../src/application.cpp:262 ../src/interface.cpp:363
+#: ../src/application.cpp:244 ../src/interface.cpp:363
 msgid "System Monitor"
 msgstr "Monatair an t-siostaim"
 
@@ -34,16 +34,19 @@ msgid "View current processes and monitor system state"
 msgstr "Seall na pròiseasan làithreach agus cum sùil air staid an t-siostaim"
 
 #: ../gnome-system-monitor.desktop.in.in.h:3
+#| msgid ""
+#| "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
+#| "Manager;"
 msgid ""
 "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
-"Manager;"
+"Manager;Activity;"
 msgstr ""
-"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
-"Manager;Monatair;Siostam;Pròiseas;Cuimhne;Lìonra;Eachdraidh;Cleachdadh;"
-"Saothair;Saothraichean;Manaidsear;"
+"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;Man"
+"ager;Activity;Monatair;Siostam;Pròiseas;Cuimhne;Lìonra;Eachdraidh;Cleachdadh"
+";Saothair;Saothraichean;Manaidsear;Gnìomhachd;"
 
 #: ../gnome-system-monitor-kde.desktop.in.in.h:1
-#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:317
+#: ../gnome-system-monitor.appdata.xml.in.h:1 ../src/application.cpp:299
 msgid "GNOME System Monitor"
 msgstr "Monatair an t-siostaim GNOME"
 
@@ -62,8 +65,8 @@ msgid ""
 "System Monitor is a process viewer and system monitor with an attractive, "
 "easy-to-use interface."
 msgstr ""
-"'S e sealladair phròiseasan is monatair an t-siostam le eadar-aghaidh "
-"eireachdail is furasta cleachdadh a th' ann am Monatair an t-siostaim"
+"’S e sealladair phròiseasan is monatair an t-siostam le eadar-aghaidh "
+"eireachdail is furasta cleachdadh a th’ ann am Monatair an t-siostaim"
 
 #: ../gnome-system-monitor.appdata.xml.in.h:4
 msgid ""
@@ -72,9 +75,9 @@ msgid ""
 "applications, force stop processes not responding, and change the state or "
 "priority of existing processes."
 msgstr ""
-"'S urrainn do Mhonatair an t-siostaim taic a thoirt dhut gus faighinn a-mach "
-"dè na h-aplacaidean a bhios a' chleachdadh pròiseasar no cuimhne a' "
-"choimpiutair agad, 's urrainn dha na h-aplacaidean 'gan ruith a stiùireadh, "
+"’S urrainn do Mhonatair an t-siostaim taic a thoirt dhut gus faighinn a-mach "
+"dè na h-aplacaidean a bhios a’ chleachdadh pròiseasar no cuimhne a’ "
+"choimpiutair agad, ’s urrainn dha na h-aplacaidean ’gan ruith a stiùireadh, "
 "toirt air pròiseasan nach freagair gun stad iad is staid no prìomhachas aig "
 "na pròiseasan a tha ann atharrachadh."
 
@@ -84,21 +87,18 @@ msgid ""
 "with your computer displaying recent network, memory and processor usage."
 msgstr ""
 "Seallaidh gleus grafaichean nan goireasan dhut foir-shealladh luath dhe na "
-"tha a' tachairt air a' choimpiutair agad, a' sealltainn na chaidh a "
+"tha a’ tachairt air a’ choimpiutair agad, a’ sealltainn na chaidh a "
 "chleachdadh dhen lìonra, cuimhne is pròiseasar o chionn ghoirid."
 
 #: ../gnome-system-monitor.appdata.xml.in.h:6
-#| msgid "Process view sort order"
 msgid "Process list view"
 msgstr "Sealladh nam pròiseasan"
 
 #: ../gnome-system-monitor.appdata.xml.in.h:7
-#| msgid "Resources"
 msgid "Resources overview"
 msgstr "Sealladh nan goireasan"
 
 #: ../gnome-system-monitor.appdata.xml.in.h:8
-#| msgid "File Systems"
 msgid "File Systems view"
 msgstr "Sealladh nan siostaman fhaidhlichean"
 
@@ -111,7 +111,8 @@ msgid "Kill process"
 msgstr "Marbh am pròiseas"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:2
-msgid "Privileges are required to control other users' processes"
+#| msgid "Privileges are required to control other users' processes"
+msgid "Privileges are required to control other users’ processes"
 msgstr "Tha feum air pribhleidean mus faigh thu smachd air pròiseasan càch"
 
 #: ../org.gnome.gnome-system-monitor.policy.in.in.h:3
@@ -126,11 +127,11 @@ msgstr ""
 
 #: ../data/interface.ui.h:2
 msgid "End _Process"
-msgstr "Cuir crìoch air a' _phròiseas"
+msgstr "Cuir crìoch air a’ _phròiseas"
 
 #: ../data/interface.ui.h:3
 msgid "Show process properties"
-msgstr "Seall roghainnean a' phròiseis"
+msgstr "Seall roghainnean a’ phròiseis"
 
 #: ../data/interface.ui.h:4 ../data/preferences.ui.h:9
 msgid "Processes"
@@ -138,14 +139,14 @@ msgstr "Pròiseasan"
 
 #: ../data/interface.ui.h:5
 msgid "CPU History"
-msgstr "Eachdraidh a' CPU"
+msgstr "Eachdraidh a’ CPU"
 
 #: ../data/interface.ui.h:6
 msgid "Memory and Swap History"
-msgstr "Eachdraidh na cuimhne 's nan suaipean"
+msgstr "Eachdraidh na cuimhne ’s nan suaipean"
 
 #: ../data/interface.ui.h:7 ../src/interface.cpp:260
-#: ../src/procproperties.cpp:70 ../src/proctable.cpp:349
+#: ../src/procproperties.cpp:70 ../src/proctable.cpp:337
 msgid "Memory"
 msgstr "Cuimhne"
 
@@ -157,7 +158,7 @@ msgstr "Suaip"
 msgid "Network History"
 msgstr "Eachdraidh an lìonraidh"
 
-#: ../data/interface.ui.h:10 ../src/interface.cpp:300
+#: ../data/interface.ui.h:10 ../src/interface.cpp:302
 msgid "Receiving"
 msgstr "Air fhaighinn"
 
@@ -165,7 +166,7 @@ msgstr "Air fhaighinn"
 msgid "Total Received"
 msgstr "Iomlan dhe na fhuaradh"
 
-#: ../data/interface.ui.h:12 ../src/interface.cpp:315
+#: ../data/interface.ui.h:12 ../src/interface.cpp:317
 msgid "Sending"
 msgstr "Cur"
 
@@ -173,11 +174,11 @@ msgstr "Cur"
 msgid "Total Sent"
 msgstr "Iomlan dhe na chuireadh"
 
-#: ../data/interface.ui.h:14 ../data/preferences.ui.h:13
+#: ../data/interface.ui.h:14 ../data/preferences.ui.h:14
 msgid "Resources"
 msgstr "Goireasan"
 
-#: ../data/interface.ui.h:15 ../data/preferences.ui.h:16
+#: ../data/interface.ui.h:15 ../data/preferences.ui.h:17
 msgid "File Systems"
 msgstr "Siostaman fhaidhlichean"
 
@@ -192,7 +193,7 @@ msgstr "Criathraich faidhlichean le ainm"
 
 #: ../data/lsof.ui.h:3
 msgid "Case insensitive"
-msgstr "Gun aire do litrichean mòra 's beaga"
+msgstr "Gun aire do litrichean mòra ’s beaga"
 
 #: ../data/menus.ui.h:1
 msgctxt "Menu item to Open Search for Open Files dialog"
@@ -318,7 +319,7 @@ msgstr "Thoir rabhadh mus dig pròiseas gu crìoch no mus dèid a _mharbhadh"
 
 #: ../data/preferences.ui.h:6
 msgid "_Divide CPU usage by CPU count"
-msgstr "_Roinn cleachdadh a' CPU a-rèir cunntas nan CPU"
+msgstr "_Roinn cleachdadh a’ CPU a-rèir cunntas nan CPU"
 
 #: ../data/preferences.ui.h:7
 msgid "Information Fields"
@@ -334,17 +335,22 @@ msgstr "Grafaichean"
 
 #: ../data/preferences.ui.h:11
 msgid "_Draw CPU chart as stacked area chart"
-msgstr "_Tarraing cairt a' CPU mar chairt-raoin stacaichte"
+msgstr "_Tarraing cairt a’ CPU mar chairt-raoin stacaichte"
 
 #: ../data/preferences.ui.h:12
+#| msgid "_Draw CPU chart as stacked area chart"
+msgid "Draw CPU chart as s_mooth graph"
+msgstr "Tarraing cairt a’ CPU mar chairt-raoin stacaichte"
+
+#: ../data/preferences.ui.h:13
 msgid "_Show network speed in bits"
 msgstr "_Seall astar an lìonradh ann am bits"
 
-#: ../data/preferences.ui.h:14
+#: ../data/preferences.ui.h:15
 msgid "Show _all file systems"
 msgstr "Seall a _h-uile siostam fhaidhlichean"
 
-#: ../data/preferences.ui.h:15
+#: ../data/preferences.ui.h:16
 msgid "File system i_nformation shown in list:"
 msgstr "F_iosrachadh mun t-siostam-fhaidhlichean a chithear san liosta:"
 
@@ -365,10 +371,10 @@ msgid ""
 "<small><i><b>Note:</b> The priority of a process is given by its nice value. "
 "A lower nice value corresponds to a higher priority.</i></small>"
 msgstr ""
-"<small><i><b>An aire:</b> Tha an nice value aig pròiseas a' suidheachadh a' "
+"<small><i><b>An aire:</b> Tha an nice value aig pròiseas a’ suidheachadh a’ "
 "phrìomhachais aige. Bheir luach nas lugha prìomhachas nas àirde.</i></small>"
 
-#: ../src/application.cpp:303
+#: ../src/application.cpp:285
 msgid "A simple process and system monitor."
 msgstr "Monatair phròiseasan is shiostaman simplidh"
 
@@ -385,114 +391,51 @@ msgid "Show the File Systems tab"
 msgstr "Seall taba nan siostaman fhaidhlichean"
 
 #: ../src/argv.cpp:36
-msgid "Show the application's version"
+#| msgid "Show the application's version"
+msgid "Show the application’s version"
 msgstr "Seall tionndadh na h-aplacaid"
 
-#: ../src/disks.cpp:361 ../src/memmaps.cpp:329
+#: ../src/disks.cpp:352 ../src/memmaps.cpp:329
 msgid "Device"
 msgstr "Uidheam"
 
-#: ../src/disks.cpp:362
+#: ../src/disks.cpp:353
 msgid "Directory"
 msgstr "Pasgan"
 
-#: ../src/disks.cpp:363 ../src/gsm_color_button.c:165 ../src/openfiles.cpp:252
+#: ../src/disks.cpp:354 ../src/legacy/gsm_color_button.c:165
+#: ../src/openfiles.cpp:253
 msgid "Type"
 msgstr "Seòrsa"
 
-#: ../src/disks.cpp:364
+#: ../src/disks.cpp:355
 msgid "Total"
 msgstr "Iomlan"
 
-#: ../src/disks.cpp:365
+#: ../src/disks.cpp:356
 msgid "Free"
 msgstr "Saor"
 
-#: ../src/disks.cpp:366
+#: ../src/disks.cpp:357
 msgid "Available"
 msgstr "Ri làimh"
 
-#: ../src/disks.cpp:367
+#: ../src/disks.cpp:358
 msgid "Used"
 msgstr "Air a chleachdadh"
 
-#. xgettext: ? stands for unknown
-#: ../src/e_date.c:156
-msgid "?"
-msgstr "?"
-
-#: ../src/e_date.c:163
-msgid "Today %l:%M %p"
-msgstr "An-diugh %l:%M %p"
-
-#: ../src/e_date.c:172
-msgid "Yesterday %l:%M %p"
-msgstr "An-dè %l:%M %p"
-
-#: ../src/e_date.c:184
-msgid "%a %l:%M %p"
-msgstr "%a %l:%M %p"
-
-#: ../src/e_date.c:192
-msgid "%b %d %l:%M %p"
-msgstr "%d %b %l:%M %p"
-
-#: ../src/e_date.c:194
-msgid "%b %d %Y"
-msgstr "%d %b %Y"
-
-#: ../src/gsm_color_button.c:141
-msgid "Fraction"
-msgstr "Bloigh"
-
-#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: ../src/gsm_color_button.c:143
-msgid "Percentage full for pie color pickers"
-msgstr "Ceudad làn airson roghnaichearan dathan pàidh"
-
-#: ../src/gsm_color_button.c:150
-msgid "Title"
-msgstr "Tiotal"
-
-#: ../src/gsm_color_button.c:151
-msgid "The title of the color selection dialog"
-msgstr "Tiotal a' chòmhraidh airson taghadh an datha"
-
-#: ../src/gsm_color_button.c:152 ../src/gsm_color_button.c:515
-msgid "Pick a Color"
-msgstr "Tagh dath"
-
-#: ../src/gsm_color_button.c:158
-msgid "Current Color"
-msgstr "An dath làithreach"
-
-#: ../src/gsm_color_button.c:159
-msgid "The selected color"
-msgstr "An dath a thagh thu"
-
-#: ../src/gsm_color_button.c:166
-msgid "Type of color picker"
-msgstr "Seòrsa roghnaichear nan dathan"
-
-#: ../src/gsm_color_button.c:437
-msgid "Received invalid color data\n"
-msgstr "Fhuair sinn dàta dhathan mì-dhligheach\n"
-
-#: ../src/gsm_color_button.c:538
-msgid "Click to set graph colors"
-msgstr "Dèan briogadh gus dathan a' ghraif a shuidheachadh"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: ../src/interface.cpp:187
+#: ../src/interface.cpp:185
 #, c-format
-msgid "Pick a Color for '%s'"
-msgstr "Tagh dath airson \"%s\""
+#| msgid "Pick a Color for '%s'"
+msgid "Pick a Color for “%s”"
+msgstr "Tagh dath airson “%s”"
 
-#: ../src/interface.cpp:220 ../src/procproperties.cpp:78
+#: ../src/interface.cpp:219 ../src/procproperties.cpp:78
 msgid "CPU"
 msgstr "CPU"
 
-#: ../src/interface.cpp:222
+#: ../src/interface.cpp:221
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
@@ -504,6 +447,76 @@ msgstr ""
 "  Akerbeltz https://launchpad.net/~fios\n"
 "  alasdair caimbeul https://launchpad.net/~alexd-deactivatedaccount"
 
+#. xgettext: ? stands for unknown
+#: ../src/legacy/e_date.c:156
+msgid "?"
+msgstr "?"
+
+#: ../src/legacy/e_date.c:163
+#| msgid "Today %l:%M %p"
+msgid "Today %l∶%M %p"
+msgstr "An-diugh %l:%M%P"
+
+#: ../src/legacy/e_date.c:172
+#| msgid "Yesterday %l:%M %p"
+msgid "Yesterday %l∶%M %p"
+msgstr "An-dè %l:%M%P"
+
+#: ../src/legacy/e_date.c:184
+#| msgid "%a %l:%M %p"
+msgid "%a %l∶%M %p"
+msgstr "%a %l:%M%P"
+
+#: ../src/legacy/e_date.c:192
+#| msgid "%b %d %l:%M %p"
+msgid "%b %d %l∶%M %p"
+msgstr "%d %b %l:%M%P"
+
+#: ../src/legacy/e_date.c:194
+msgid "%b %d %Y"
+msgstr "%d %b %Y"
+
+#: ../src/legacy/gsm_color_button.c:141
+msgid "Fraction"
+msgstr "Bloigh"
+
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+#: ../src/legacy/gsm_color_button.c:143
+msgid "Percentage full for pie color pickers"
+msgstr "Ceudad làn airson roghnaichearan dathan pàidh"
+
+#: ../src/legacy/gsm_color_button.c:150
+msgid "Title"
+msgstr "Tiotal"
+
+#: ../src/legacy/gsm_color_button.c:151
+msgid "The title of the color selection dialog"
+msgstr "Tiotal a’ chòmhraidh airson taghadh an datha"
+
+#: ../src/legacy/gsm_color_button.c:152 ../src/legacy/gsm_color_button.c:515
+msgid "Pick a Color"
+msgstr "Tagh dath"
+
+#: ../src/legacy/gsm_color_button.c:158
+msgid "Current Color"
+msgstr "An dath làithreach"
+
+#: ../src/legacy/gsm_color_button.c:159
+msgid "The selected color"
+msgstr "An dath a thagh thu"
+
+#: ../src/legacy/gsm_color_button.c:166
+msgid "Type of color picker"
+msgstr "Seòrsa roghnaichear nan dathan"
+
+#: ../src/legacy/gsm_color_button.c:437
+msgid "Received invalid color data\n"
+msgstr "Fhuair sinn dàta dhathan mì-dhligheach\n"
+
+#: ../src/legacy/gsm_color_button.c:538
+msgid "Click to set graph colors"
+msgstr "Dèan briogadh gus dathan a’ ghrafa a shuidheachadh"
+
 #: ../src/load-graph.cpp:157
 #, c-format
 msgid "%u second"
@@ -513,12 +526,12 @@ msgstr[1] "%u dhiog"
 msgstr[2] "%u diogan"
 msgstr[3] "%u diog"
 
-#: ../src/load-graph.cpp:366
+#: ../src/load-graph.cpp:373
 msgid "not available"
 msgstr "chan eil seo ri fhaighinn"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: ../src/load-graph.cpp:369
+#: ../src/load-graph.cpp:376
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) à %s"
@@ -541,32 +554,32 @@ msgstr[1] "%d fhaidhle fosgailte a cho-fhreagras"
 msgstr[2] "%d faidhlichean fosgailte a cho-fhreagras"
 msgstr[3] "%d faidhle fosgailte a cho-fhreagras"
 
-#: ../src/lsof.cpp:247
+#: ../src/lsof.cpp:245
 msgid "Process"
 msgstr "Pròiseas"
 
-#: ../src/lsof.cpp:259
+#: ../src/lsof.cpp:257
 msgid "PID"
 msgstr "PID"
 
-#: ../src/lsof.cpp:269 ../src/memmaps.cpp:307
+#: ../src/lsof.cpp:267 ../src/memmaps.cpp:307
 msgid "Filename"
 msgstr "Ainm an fhaidhle"
 
 #. xgettext: virtual memory start
 #: ../src/memmaps.cpp:309
 msgid "VM Start"
-msgstr "Toiseach a' VM"
+msgstr "Toiseach a’ VM"
 
 #. xgettext: virtual memory end
 #: ../src/memmaps.cpp:311
 msgid "VM End"
-msgstr "Deireadh a' VM"
+msgstr "Deireadh a’ VM"
 
 #. xgettext: virtual memory syze
 #: ../src/memmaps.cpp:313
 msgid "VM Size"
-msgstr "Meud a' VM"
+msgstr "Meud a’ VM"
 
 #: ../src/memmaps.cpp:314
 msgid "Flags"
@@ -581,38 +594,39 @@ msgstr "VM Offset"
 #. it has been allocated
 #: ../src/memmaps.cpp:319
 msgid "Private clean"
-msgstr "Prìobhaideach 's glan"
+msgstr "Prìobhaideach ’s glan"
 
 #. xgettext: memory that has been modified since it
 #. has been allocated
 #: ../src/memmaps.cpp:322
 msgid "Private dirty"
-msgstr "Prìobhaideach 's salach"
+msgstr "Prìobhaideach ’s salach"
 
 #. xgettext: shared memory that has not been modified
 #. since it has been allocated
 #: ../src/memmaps.cpp:325
 msgid "Shared clean"
-msgstr "Co-roinnte 's glan"
+msgstr "Co-roinnte ’s glan"
 
 #. xgettext: shared memory that has been modified
 #. since it has been allocated
 #: ../src/memmaps.cpp:328
 msgid "Shared dirty"
-msgstr "Co-roinnte 's salach"
+msgstr "Co-roinnte ’s salach"
 
 #: ../src/memmaps.cpp:330
 msgid "Inode"
 msgstr "Inode"
 
-#: ../src/memmaps.cpp:440
+#: ../src/memmaps.cpp:438
 msgid "Memory Maps"
 msgstr "Mapa cuimhne"
 
-#: ../src/memmaps.cpp:452
+#: ../src/memmaps.cpp:450
 #, c-format
-msgid "_Memory maps for process \"%s\" (PID %u):"
-msgstr "_Mapaichean cuimhne airson a' phròiseis \"%s\" (PID %u):"
+#| msgid "_Memory maps for process \"%s\" (PID %u):"
+msgid "_Memory maps for process “%s” (PID %u):"
+msgstr "_Mapaichean cuimhne airson a’ phròiseis “%s” (PID %u):"
 
 #: ../src/openfiles.cpp:40
 msgid "file"
@@ -641,18 +655,19 @@ msgstr "seòrsa nach aithne dhuinn"
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: ../src/openfiles.cpp:251
+#: ../src/openfiles.cpp:252
 msgid "FD"
 msgstr "FD"
 
-#: ../src/openfiles.cpp:253
+#: ../src/openfiles.cpp:254
 msgid "Object"
 msgstr "Oibseact"
 
-#: ../src/openfiles.cpp:336
+#: ../src/openfiles.cpp:337
 #, c-format
-msgid "_Files opened by process \"%s\" (PID %u):"
-msgstr "_Faidhlichean a chaidh fhosgladh leis a' phròiseas \"%s\" (PID %u):"
+#| msgid "_Files opened by process \"%s\" (PID %u):"
+msgid "_Files opened by process “%s” (PID %u):"
+msgstr "_Faidhlichean a chaidh fhosgladh leis a’ phròiseas “%s” (PID %u):"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:1
 msgid "Main window size and position in the form (width, height, xpos, ypos)"
@@ -661,451 +676,518 @@ msgstr ""
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:2
 msgid "Main Window should open maximized"
-msgstr "Bu chòir dhan t-siostam a' phrìomh-uinneag fhosgladh 'na làn-mheud"
+msgstr "Bu chòir dhan t-siostam a’ phrìomh-uinneag fhosgladh ’na làn-mheud"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:3
 msgid "Show process dependencies in tree form"
-msgstr "Seall eisimeileachdan a' phròiseis an cruth craoibhe"
+msgstr "Seall eisimeileachdan a’ phròiseis an cruth craoibhe"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:4
 msgid "Solaris mode for CPU percentage"
-msgstr "Modh Solaris airson ceudad a' CPU"
+msgstr "Modh Solaris airson ceudad a’ CPU"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:5
+#| msgid ""
+#| "If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU "
+#| "usage is divided by the total number of CPUs. Otherwise, it operates in "
+#| "'Irix mode'."
 msgid ""
-"If TRUE, system-monitor operates in 'Solaris mode' where a task's CPU usage "
-"is divided by the total number of CPUs. Otherwise, it operates in 'Irix "
-"mode'."
+"If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage "
+"is divided by the total number of CPUs. Otherwise, it operates in “Irix "
+"mode”."
 msgstr ""
-"Ma thaghas tu TRUE, obraichidh system-monitor sa mhodh Solaris far a bheil "
-"cleachdadh a' CPU le saothair 'ga roinneadh le àireamh iomlan nan CPU. Air "
-"neo bidh e sa mhodh Irix."
+"Ma thaghas tu TRUE, obraichidh system-monitor sa mhodh “Solaris” far a bheil "
+"cleachdadh a’ CPU le saothair ’ga roinneadh le àireamh iomlan nan CPU. Air "
+"neo bidh e sa mhodh “Irix”."
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:6
 msgid "Show CPU chart as stacked area chart"
-msgstr "Seall cairt a' CPU mar chairt-raoin stacaichte"
+msgstr "Seall cairt a’ CPU mar chairt-raoin stacaichte"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:7
 msgid ""
 "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
 "of a line chart."
 msgstr ""
-"Ma thaghas tu TRUE, seallaidh system-monitor cairt a' CPU mar chairt-raoin "
+"Ma thaghas tu TRUE, seallaidh system-monitor cairt a’ CPU mar chairt-raoin "
 "stacaichte an àite cairt-loidhnichean,"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:8
+#| msgid "Show CPU chart as stacked area chart"
+msgid "Show CPU chart as smooth graph using Bezier curves"
+msgstr "Seall cairt a’ CPU ’na ghraf rèidh le lùban Bezier"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
+#| msgid ""
+#| "If TRUE, system-monitor shows the CPU chart as a stacked area chart "
+#| "instead of a line chart."
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a smoothed graph, otherwise "
+"as a line chart."
+msgstr ""
+"Ma thaghas tu TRUE, seallaidh system-monitor cairt a’ CPU mar chairt rèidh. "
+"Mura tagh, chì thu cairt-loidhnichean ’na àite."
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:10
 msgid "Enable/Disable smooth refresh"
 msgstr "Cuir an comas/à comas ath-nuadhachadh rèidh"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:9
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:11
 msgid "Show warning dialog when killing processes"
 msgstr "Seall còmhradh rabhaidh nuair a mharbhar pròiseas"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:10
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:12
 msgid "Time in milliseconds between updates of the process view"
 msgstr ""
 "An t-àm ann an mille-dhiogan eadar ùrachaidhean sealladh nam pròiseasan"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:11
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:13
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "An t-àm ann an mille-dhiogan eadar ùrachaidhean nan grafaichean"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:12
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:14
 msgid "Whether information about all file systems should be displayed"
 msgstr ""
 "Co-dhiù an seallar fiosrachadh mu shiostaman fhaidhlichean gus nach seall"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:13
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
+#| msgid ""
+#| "Whether to display information about all file systems (including types "
+#| "like 'autofs' and 'procfs'). Useful for getting a list of all currently "
+#| "mounted file systems."
 msgid ""
 "Whether to display information about all file systems (including types like "
-"'autofs' and 'procfs'). Useful for getting a list of all currently mounted "
+"“autofs” and “procfs”). Useful for getting a list of all currently mounted "
 "file systems."
 msgstr ""
 "Co-dhiù an seallar fiosrachadh air gach siostam fhaidhlichean gus nach seall "
-"(a' gabhail a-steach seòrsachan mar \"autofs\" agus \"procfs\"). Tha seo "
+"(a’ gabhail a-steach seòrsachan mar “autofs” agus “procfs”). Tha seo "
 "feumail ma tha liosta de gach siostam fhaidhlichean munntaichte a dhìth ort."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:14
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:16
 msgid "Time in milliseconds between updates of the devices list"
 msgstr ""
 "An t-àm ann an mille-dhiogan eadar ùrachaidhean de liosta nan uidheaman"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:15
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:17
 msgid "Determines which processes to show."
 msgstr "Rèitichidh seo dè na pròiseasan a thèid a shealltainn."
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:16
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:18
 msgid "Saves the currently viewed tab"
-msgstr "Sàbhailidh sep an taba a tha thu a' coimhead air an-dràsta"
+msgstr "Sàbhailidh sep an taba a tha thu a’ coimhead air an-dràsta"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:17
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:19
 msgid "CPU colors"
 msgstr "Dathan CPU"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:18
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:20
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
-msgstr ""
-"Tha gach innteart san fhòrmat (àireamh a' CPU, luach datha hexadecimal)"
+msgstr "Tha gach innteart san fhòrmat (àireamh a’ CPU, luach datha hexadecimal)"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:19
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:21
 msgid "Default graph memory color"
 msgstr "Dath na cuimhne air graf bunaiteach"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:20
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:22
 msgid "Default graph swap color"
 msgstr "Dath suaip air graf bunaiteach"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:21
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:23
 msgid "Default graph incoming network traffic color"
 msgstr "Dath na trafaig a thig a-steach air graf bunaiteach"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:22
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:24
 msgid "Default graph outgoing network traffic color"
 msgstr "Dath na trafaig a thèid a-mach air graf bunaiteach"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:23
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:25
 msgid "Show network traffic in bits"
 msgstr "Seall trafaig an lìonraidh ann bits"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:24
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:26
 msgid "Process view sort column"
 msgstr "Colbh an t-seòrsachaidh ann an sealladh nam pròiseasan"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:25
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:27
 msgid "Process view columns order"
 msgstr "Òrdugh nan colbhan ann an sealladh nam pròiseasan"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:26
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:28
 msgid "Process view sort order"
 msgstr "Òrdugh an t-seòrsachaidh ann an sealladh nam pròiseasan"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:27
-msgid "Width of process 'Name' column"
-msgstr "Leud colbh nan ainmean ann an sealladh nam pròiseasan"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:28
-msgid "Show process 'Name' column on startup"
-msgstr ""
-"Seall colbh nan ainmean ann an sealladh nam pròiseasan nuair a thòisicheas "
-"an siostam"
-
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:29
-msgid "Width of process 'User' column"
-msgstr "Leud colbh nan cleachdaichean ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'Name' column"
+msgid "Width of process “Name” column"
+msgstr "An leud air colbh “Ainm” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:30
-msgid "Show process 'User' column on startup"
-msgstr ""
-"Seall colbh nan cleachdaichean ann an sealladh nam pròiseasan nuair a "
-"thòisicheas an siostam"
+#| msgid "Show process 'Name' column on startup"
+msgid "Show process “Name” column on startup"
+msgstr "Seall colbh “Ainm” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:31
-msgid "Width of process 'Status' column"
-msgstr "Leud colbh na staide ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'User' column"
+msgid "Width of process “User” column"
+msgstr "An leud air colbh “Cleachdaiche” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:32
-msgid "Show process 'Status' column on startup"
-msgstr ""
-"Seall colbh na staide ann an sealladh nam pròiseasan nuair a thòisicheas an "
-"siostam"
+#| msgid "Show process 'User' column on startup"
+msgid "Show process “User” column on startup"
+msgstr "Seall colbh “Cleachdaiche” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:33
-msgid "Width of process 'Virtual Memory' column"
-msgstr "Leud colbh na cuimhne bhiortail ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'Status' column"
+msgid "Width of process “Status” column"
+msgstr "An leud air colbh “Staid” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:34
-msgid "Show process 'Virtual Memory' column on startup"
-msgstr ""
-"Seall colbh na cuimhne bhiortail ann an sealladh nam pròiseasan nuair a "
-"thòisicheas an siostam"
+#| msgid "Show process 'Status' column on startup"
+msgid "Show process “Status” column on startup"
+msgstr "Seall colbh “Staid” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:35
-msgid "Width of process 'Resident Memory' column"
-msgstr "Leud colbh na cuimhne còmhnaidh ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'Virtual Memory' column"
+msgid "Width of process “Virtual Memory” column"
+msgstr "An leud air colbh “Cuimhne bhiortail” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:36
-msgid "Show process 'Resident Memory' column on startup"
-msgstr ""
-"Seall colbh na cuimhne còmhnaidh ann an sealladh nam pròiseasan nuair a "
-"thòisicheas an siostam"
+#| msgid "Show process 'Virtual Memory' column on startup"
+msgid "Show process “Virtual Memory” column on startup"
+msgstr "Seall colbh “Cuimhne bhiortail” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:37
-msgid "Width of process 'Writable Memory' column"
-msgstr "Leud colbh na cuimhne sho-sgrìobhte ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'Resident Memory' column"
+msgid "Width of process “Resident Memory” column"
+msgstr "An leud air colbh “Cuimhne còmhnaidh” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:38
-msgid "Show process 'Writable Memory' column on startup"
-msgstr ""
-"Seall colbh na cuimhne sho-sgrìobhte ann an sealladh nam pròiseasan nuair a "
-"thòisicheas an siostam"
+#| msgid "Show process 'Resident Memory' column on startup"
+msgid "Show process “Resident Memory” column on startup"
+msgstr "Seall colbh “Cuimhne còmhnaidh” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:39
-msgid "Width of process 'Shared Memory' column"
-msgstr "Leud colbh na cuimhne cho-roinnte ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'Writable Memory' column"
+msgid "Width of process “Writable Memory” column"
+msgstr "An leud air colbh “Cuimhne sho-sgrìobhte” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:40
-msgid "Show process 'Shared Memory' column on startup"
-msgstr ""
-"Seall colbh na cuimhne cho-roinnte ann an sealladh nam pròiseasan nuair a "
-"thòisicheas an siostam"
+#| msgid "Show process 'Writable Memory' column on startup"
+msgid "Show process “Writable Memory” column on startup"
+msgstr "Seall colbh “Cuimhne sho-sgrìobhte” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:41
-msgid "Width of process 'X Server Memory' column"
-msgstr "Leud colbh cuimhne an fhrithealaiche x ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'Shared Memory' column"
+msgid "Width of process “Shared Memory” column"
+msgstr "An leud air colbh “Cuimhne cho-roinnte” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:42
-msgid "Show process 'X Server Memory' column on startup"
-msgstr ""
-"Seall colbh cuimhne an fhrithealaiche x ann an sealladh nam pròiseasan nuair "
-"a thòisicheas an siostam"
+#| msgid "Show process 'Shared Memory' column on startup"
+msgid "Show process “Shared Memory” column on startup"
+msgstr "Seall colbh “Cuimhne cho-roinnte” nam pròiseas o thùs"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:43
+#| msgid "Width of process 'X Server Memory' column"
+msgid "Width of process “X Server Memory” column"
+msgstr "An leud air colbh “Cuimhne an fhrithealaiche X” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:44
-#, no-c-format
-msgid "Width of process 'CPU %' column"
-msgstr "Leud colbh a' CPU ann an sealladh nam pròiseasan"
+#| msgid "Show process 'X Server Memory' column on startup"
+msgid "Show process “X Server Memory” column on startup"
+msgstr "Seall colbh “Cuimhne an fhrithealaiche X” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:46
 #, no-c-format
-msgid "Show process 'CPU %' column on startup"
-msgstr ""
-"Seall colbh a' CPU ann an sealladh nam pròiseasan nuair a thòisicheas an "
-"siostam"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:47
-msgid "Width of process 'CPU Time' column"
-msgstr "Leud colbh àm a' CPU ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'CPU %' column"
+msgid "Width of process “CPU %” column"
+msgstr "An leud air colbh “% dhen CPU” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:48
-msgid "Show process 'CPU Time' column on startup"
-msgstr ""
-"Seall colbh àm a' CPU ann an sealladh nam pròiseasan nuair a thòisicheas an "
-"siostam"
+#, no-c-format
+#| msgid "Show process 'CPU %' column on startup"
+msgid "Show process “CPU %” column on startup"
+msgstr "Seall colbh “% dhen CPU” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:49
-msgid "Width of process 'Started' column"
-msgstr "Leud colbh dhe na chaidh a thòiseachadh ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'CPU Time' column"
+msgid "Width of process “CPU Time” column"
+msgstr "An leud air colbh “Ùine a’ CPU” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:50
-msgid "Show process 'Started' column on startup"
-msgstr ""
-"Seall colbh dhe na chaidh a thòiseachadh ann an sealladh nam pròiseasan "
-"nuair a thòisicheas an siostam"
+#| msgid "Show process 'CPU Time' column on startup"
+msgid "Show process “CPU Time” column on startup"
+msgstr "Seall colbh “Ùine a’ CPU” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:51
-msgid "Width of process 'Nice' column"
-msgstr "Leud an colbh \"Nice\" ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'Started' column"
+msgid "Width of process “Started” column"
+msgstr "An leud air colbh “Air a thòiseachadh” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:52
-msgid "Show process 'Nice' column on startup"
-msgstr ""
-"Seall an colbh \"Nice\" ann an sealladh nam pròiseasan nuair a thòisicheas "
-"an siostam"
+#| msgid "Show process 'Started' column on startup"
+msgid "Show process “Started” column on startup"
+msgstr "Seall colbh “Air a thòiseachadh” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:53
-msgid "Width of process 'PID' column"
-msgstr "Leud an colbh PID ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'Nice' column"
+msgid "Width of process “Nice” column"
+msgstr "An leud air colbh “Nice” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:54
-msgid "Show process 'PID' column on startup"
-msgstr ""
-"Seall an colbh PID ann an sealladh nam pròiseasan nuair a thòisicheas an "
-"siostam"
+#| msgid "Show process 'Nice' column on startup"
+msgid "Show process “Nice” column on startup"
+msgstr "Seall colbh “Nice” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:55
-msgid "Width of process 'SELinux Security Context' column"
-msgstr "Leud colbh SELinux Security Context ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'PID' column"
+msgid "Width of process “PID” column"
+msgstr "An leud air colbh “PID” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:56
-msgid "Show process 'SELinux Security Context' column on startup"
-msgstr ""
-"Seall colbh SELinux Security Context ann an sealladh nam pròiseasan nuair a "
-"thòisicheas an siostam"
+#| msgid "Show process 'PID' column on startup"
+msgid "Show process “PID” column on startup"
+msgstr "Seall colbh “PID” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:57
-msgid "Width of process 'Command Line' column"
-msgstr "Leud colbh na loidhne-àithne ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'SELinux Security Context' column"
+msgid "Width of process “SELinux Security Context” column"
+msgstr "An leud air colbh “Co-theacs tèarainteachd SELinux” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:58
-msgid "Show process 'Command Line' column on startup"
-msgstr ""
-"Seall colbh na loidhne-àithne ann an sealladh nam pròiseasan nuair a "
-"thòisicheas an siostam"
+#| msgid "Show process 'SELinux Security Context' column on startup"
+msgid "Show process “SELinux Security Context” column on startup"
+msgstr "Seall colbh “Co-theacs tèarainteachd SELinux” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:59
-msgid "Width of process 'Memory' column"
-msgstr "Leud colbh na cuimhne ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'Command Line' column"
+msgid "Width of process “Command Line” column"
+msgstr "An leud air colbh “Loidhne-àithne” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:60
-msgid "Show process 'Memory' column on startup"
-msgstr ""
-"Seall colbh na cuimhne ann an sealladh nam pròiseasan nuair a thòisicheas an "
-"siostam"
+#| msgid "Show process 'Command Line' column on startup"
+msgid "Show process “Command Line” column on startup"
+msgstr "Seall colbh “Loidhne-àithne” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:61
-msgid "Width of process 'Waiting Channel' column"
-msgstr "Leud colbh an t-seanail fhuirich ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'Memory' column"
+msgid "Width of process “Memory” column"
+msgstr "An leud air colbh “Cuimhne” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:62
-msgid "Show process 'Waiting Channel' column on startup"
-msgstr ""
-"Seall colbh an t-seanail fhuirich ann an sealladh nam pròiseasan nuair a "
-"thòisicheas an siostam"
+#| msgid "Show process 'Memory' column on startup"
+msgid "Show process “Memory” column on startup"
+msgstr "Seall colbh “Cuimhne” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:63
-msgid "Width of process 'Control Group' column"
-msgstr "Leud colbh a' bhuidhinn smachd ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'Waiting Channel' column"
+msgid "Width of process “Waiting Channel” column"
+msgstr "An leud air colbh “Seanail fuirich” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:64
-msgid "Show process 'Control Group' column on startup"
-msgstr ""
-"Seall colbh a' bhuidhinnn smachd ann an sealladh nam pròiseasan nuair a "
-"thòisicheas an siostam"
+#| msgid "Show process 'Waiting Channel' column on startup"
+msgid "Show process “Waiting Channel” column on startup"
+msgstr "Seall colbh “Seanail fuirich” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:65
-msgid "Width of process 'Unit' column"
-msgstr "Leud colbh nan aonadan ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'Control Group' column"
+msgid "Width of process “Control Group” column"
+msgstr "An leud air colbh “Buidheann smachd” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:66
-msgid "Show process 'Unit' column on startup"
-msgstr ""
-"Seall colbh nan aonadan ann an sealladh nam pròiseasan nuair a thòisicheas "
-"an siostam"
+#| msgid "Show process 'Control Group' column on startup"
+msgid "Show process “Control Group” column on startup"
+msgstr "Seall colbh “Buidheann smachd” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:67
-msgid "Width of process 'Session' column"
-msgstr "Leud colbh nan seiseanan ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'Unit' column"
+msgid "Width of process “Unit” column"
+msgstr "An leud air colbh “Aonad” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:68
-msgid "Show process 'Session' column on startup"
-msgstr ""
-"Seall colbh nan seiseanan ann an sealladh nam pròiseasan nuair a thòisicheas "
-"an siostam"
+#| msgid "Show process 'Unit' column on startup"
+msgid "Show process “Unit” column on startup"
+msgstr "Seall colbh “Aonad” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:69
-msgid "Width of process 'Seat' column"
-msgstr "Leud a' chuilbh \"Seat\" ann an sealladh nam pròiseasan"
+#| msgid "Width of process 'Session' column"
+msgid "Width of process “Session” column"
+msgstr "An leud air colbh “Seisean” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:70
-msgid "Show process 'Seat' column on startup"
-msgstr ""
-"Seall an colbh \"Seat\" ann an sealladh nam pròiseasan nuair a thòisicheas "
-"an siostam"
+#| msgid "Show process 'Session' column on startup"
+msgid "Show process “Session” column on startup"
+msgstr "Seall colbh “Seisean” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:71
-msgid "Width of process 'Owner' column"
-msgstr "Leud colbh sealbhadair nam pròiseasan"
+#| msgid "Width of process 'Seat' column"
+msgid "Width of process “Seat” column"
+msgstr "Leud a’ chuilbh “Tèirmineal” ann an sealladh nam pròiseasan"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:72
-msgid "Show process 'Owner' column on startup"
-msgstr "Seall colbh seilbheadair nam pròiseasan nuair a thòisicheas an siostam"
+#| msgid "Show process 'Seat' column on startup"
+msgid "Show process “Seat” column on startup"
+msgstr "Seall colbh “Tèirmineal” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:73
-msgid "Width of process 'Priority' column"
-msgstr "Leud colbh prìomhachas nam pròiseasan"
+#| msgid "Width of process 'Owner' column"
+msgid "Width of process “Owner” column"
+msgstr "An leud air colbh “Sealbhadair” nam pròiseas"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:74
-msgid "Show process 'Priority' column on startup"
-msgstr "Seall colbh prìomhachas nam pròiseasan nuair a thòisicheas an siostam"
+#| msgid "Show process 'Owner' column on startup"
+msgid "Show process “Owner” column on startup"
+msgstr "Seall colbh “Sealbhadair” nam pròiseas o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:75
+#| msgid "Width of process 'Started' column"
+msgid "Width of process “Total disk write” column"
+msgstr "An leud air colbh “Sgrìobhadh diosga iomlan” nam pròiseas"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
+#| msgid "Show process 'Started' column on startup"
+msgid "Show process “Total disk write” column on startup"
+msgstr "Seall colbh “Sgrìobhadh diosga iomlan” nam pròiseas o thùs"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
+#| msgid "Width of process 'Started' column"
+msgid "Width of process “Total disk read” column"
+msgstr "An leud air colbh “Leughadh diosga iomlan” nam pròiseas"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
+#| msgid "Show process 'Started' column on startup"
+msgid "Show process “Total disk read” column on startup"
+msgstr "Seall colbh “Leughadh diosga iomlan” nam pròiseas o thùs"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
+#| msgid "Width of process 'User' column"
+msgid "Width of process “Disk read” column"
+msgstr "An leud air colbh “Leughadh diosga” nam pròiseas"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
+#| msgid "Show process 'User' column on startup"
+msgid "Show process “Disk read” column on startup"
+msgstr "Seall colbh “Leughadh diosga” nam pròiseas o thùs"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
+#| msgid "Width of process 'Priority' column"
+msgid "Width of process “Disk write” column"
+msgstr "An leud air colbh “Sgrìobhadh diosga” nam pròiseas"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
+#| msgid "Show process 'Priority' column on startup"
+msgid "Show process “Disk write” column on startup"
+msgstr "Seall colbh “Sgrìobhadh diosga” nam pròiseas o thùs"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
+#| msgid "Width of process 'Priority' column"
+msgid "Width of process “Priority” column"
+msgstr "An leud air colbh “Prìomhachas” nam pròiseas"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
+#| msgid "Show process 'Priority' column on startup"
+msgid "Show process “Priority” column on startup"
+msgstr "Seall colbh “Prìomhachas” nam pròiseas o thùs"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
 msgid "Disk view sort column"
 msgstr "Colbh an t-seòrsachaidh ann an sealladh nan diosga"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:76
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
 msgid "Disk view sort order"
 msgstr "Òrdugh an t-seòrsachaidh ann an sealladh nan diosga"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:77
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
 msgid "Disk view columns order"
 msgstr "Òrdugh nan colbhan ann an sealladh nan diosgan"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:78
-msgid "Width of disk view 'Device' column"
-msgstr "Leud colbh nan uidheaman ann an sealladh nan diosgan"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:79
-msgid "Show disk view 'Device' column on startup"
-msgstr ""
-"Seall colbh nan uidheaman ann an sealladh nan diosgan nuair a thòisicheas an "
-"siostam"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:80
-msgid "Width of disk view 'Directory' column"
-msgstr "Leud colbh nam pasgan ann an sealladh nan diosgan"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:81
-msgid "Show disk view 'Directory' column on startup"
-msgstr ""
-"Seall colbh nam pasganan ann an sealladh nan diosgan nuair a thòisicheas an "
-"siostam"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:82
-msgid "Width of disk view 'Type' column"
-msgstr "Leud colbh an t-seòrsa ann an sealladh nan diosgan"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:83
-msgid "Show disk view 'Type' column on startup"
-msgstr ""
-"Seall colbh an t-seòrsa ann an sealladh nan diosgan nuair a thòisicheas an "
-"siostam"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:84
-msgid "Width of disk view 'Total' column"
-msgstr "Leud colbh an iomlain ann an sealladh nan diosgan"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:85
-msgid "Show disk view 'Total' column on startup"
-msgstr ""
-"Seall colbh an iomlain ann an sealladh nan diosgan nuair a thòisicheas an "
-"siostam"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:86
-msgid "Width of disk view 'Free' column"
-msgstr "Leud colbh dhe na tha saor ann an sealladh nan diosgan"
-
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:87
-msgid "Show disk view 'Free' column on startup"
-msgstr ""
-"Seall colbh dhe na tha saor ann an sealladh nan diosgan nuair a thòisicheas "
-"an siostam"
-
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:88
-msgid "Width of disk view 'Available' column"
-msgstr "Leud colbh dhe na tha ri làimh ann an sealladh nan diosgan"
+#| msgid "Width of disk view 'Device' column"
+msgid "Width of disk view “Device” column"
+msgstr "An leud air colbh “Uidheam” nan diosgan"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:89
-msgid "Show disk view 'Available' column on startup"
-msgstr ""
-"Seall colbh dhe na tha ri làimh ann an sealladh nan diosgan nuair a "
-"thòisicheas an siostam"
+#| msgid "Show disk view 'Device' column on startup"
+msgid "Show disk view “Device” column on startup"
+msgstr "Seall colbh “Uidheam” nan diosgan o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:90
-msgid "Width of disk view 'Used' column"
-msgstr "Leud colbh dhe na chaidh a chleachdadh ann an sealladh nan diosgan"
+#| msgid "Width of disk view 'Directory' column"
+msgid "Width of disk view “Directory” column"
+msgstr "An leud air colbh “Pasgan” nan diosgan"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:91
-msgid "Show disk view 'Used' column on startup"
-msgstr ""
-"Seall colbh dhe na chaidh a chleachdadh ann an sealladh nan diosgan nuair a "
-"thòisicheas an siostam"
+#| msgid "Show disk view 'Directory' column on startup"
+msgid "Show disk view “Directory” column on startup"
+msgstr "Seall colbh “Pasgan” nan diosgan o thùs"
 
 #: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:92
+#| msgid "Width of disk view 'Type' column"
+msgid "Width of disk view “Type” column"
+msgstr "An leud air colbh “Seòrsa” nan diosgan"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
+#| msgid "Show disk view 'Type' column on startup"
+msgid "Show disk view “Type” column on startup"
+msgstr "Seall colbh “Seòrsa” nan diosgan o thùs"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
+#| msgid "Width of disk view 'Total' column"
+msgid "Width of disk view “Total” column"
+msgstr "An leud air colbh “Iomlan” nan diosgan"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
+#| msgid "Show disk view 'Total' column on startup"
+msgid "Show disk view “Total” column on startup"
+msgstr "Seall colbh “Iomlan” nan diosgan o thùs"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:96
+#| msgid "Width of disk view 'Free' column"
+msgid "Width of disk view “Free” column"
+msgstr "An leud air colbh “Saor” nan diosgan"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:97
+#| msgid "Show disk view 'Free' column on startup"
+msgid "Show disk view “Free” column on startup"
+msgstr "Seall colbh “Saor” nan diosgan o thùs"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:98
+#| msgid "Width of disk view 'Available' column"
+msgid "Width of disk view “Available” column"
+msgstr "An leud air colbh “Ri làimh” nan diosgan"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:99
+#| msgid "Show disk view 'Available' column on startup"
+msgid "Show disk view “Available” column on startup"
+msgstr "Seall colbh “Ri làimh” nan diosgan o thùs"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:100
+#| msgid "Width of disk view 'Used' column"
+msgid "Width of disk view “Used” column"
+msgstr "An leud air colbh “’Ga chleachdadh” nan diosgan"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:101
+#| msgid "Show disk view 'Used' column on startup"
+msgid "Show disk view “Used” column on startup"
+msgstr "Seall colbh “’Ga chleachdadh” nan diosgan o thùs"
+
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:102
 msgid "Memory map sort column"
 msgstr "Colbh an t-seòrsachaidh aig mapa na cuimhne"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:93
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:103
 msgid "Memory map sort order"
 msgstr "Òrdugh an t-seòrsachaidh aig mapa na cuimhne"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:94
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:104
 msgid "Open files sort column"
 msgstr "Colbh an t-seòrsachaidh aig na faidhlichean fosgailte"
 
-#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:95
+#: ../src/org.gnome.gnome-system-monitor.gschema.xml.in.in.h:105
 msgid "Open files sort order"
 msgstr "Òrdugh an t-seòrsachaidh aig na faidhlichean fosgailte"
 
-#: ../src/prefsdialog.cpp:171
+#: ../src/prefsdialog.cpp:168
 msgid "Icon"
 msgstr "Ìomhaigheag"
 
@@ -1115,7 +1197,7 @@ msgid ""
 "Cannot change the priority of process with PID %d to %d.\n"
 "%s"
 msgstr ""
-"Chan urrainn dhuinn %2d a shuidheachadh mar phrìomhachas a' phròiseis le "
+"Chan urrainn dhuinn %2d a shuidheachadh mar phrìomhachas a’ phròiseis le "
 "PID, seach %1d\n"
 "%s"
 
@@ -1125,32 +1207,30 @@ msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
 "%s"
 msgstr ""
-"Chan urrainn dhuinn am pròiseas a mharbhadh leis a' PID %d is leis an t-"
-"siognail %d.\n"
+"Chan urrainn dhuinn am pròiseas a mharbhadh leis a’ PID %d is leis an "
+"t-siognail %d.\n"
 "%s"
 
 #. xgettext: primary alert message for killing single process
 #: ../src/procdialogs.cpp:76
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
-msgstr ""
-"A bheil thu airson am pròiseas \"%s\" a thagh thu a mharbhadh (PID: %u)?"
+msgstr "A bheil thu airson am pròiseas “%s” a thagh thu a mharbhadh (PID: %u)?"
 
 #. xgettext: primary alert message for ending single process
 #: ../src/procdialogs.cpp:82
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr ""
-"A bheil thu airson am pròiseas \"%s\" a thagh thu a chrìochnachadh (PID: %u)?"
+"A bheil thu airson am pròiseas “%s” a thagh thu a chrìochnachadh (PID: %u)?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
 #: ../src/procdialogs.cpp:88
 #, c-format
-#| msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
 msgstr ""
-"A bheil thu airson stad a chur air a' phròiseas \"%s\" a thagh thu (PID: %u)?"
+"A bheil thu airson stad a chur air a’ phròiseas “%s” a thagh thu (PID: %u)?"
 
 #. xgettext: primary alert message for killing multiple processes
 #: ../src/procdialogs.cpp:97
@@ -1167,7 +1247,7 @@ msgstr[3] "A bheil thu airson %d pròiseas a thagh thu a mharbhadh?"
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
-msgstr[0] "A bheil thu airson crìoch a chur air a' phròiseas a thagh thu?"
+msgstr[0] "A bheil thu airson crìoch a chur air a’ phròiseas a thagh thu?"
 msgstr[1] "A bheil thu airson crìoch a chur air an %d phròiseas a thagh thu?"
 msgstr[2] "A bheil thu airson crìoch a chur air %d pròiseasan a thagh thu?"
 msgstr[3] "A bheil thu airson crìoch a chur air %d pròiseas a thagh thu?"
@@ -1176,11 +1256,9 @@ msgstr[3] "A bheil thu airson crìoch a chur air %d pròiseas a thagh thu?"
 #. xgettext: primary alert message for stopping multiple processes
 #: ../src/procdialogs.cpp:109
 #, c-format
-#| msgid "Are you sure you want to end the selected process?"
-#| msgid_plural "Are you sure you want to end the %d selected processes?"
 msgid "Are you sure you want to stop the selected process?"
 msgid_plural "Are you sure you want to stop the %d selected processes?"
-msgstr[0] "A bheil thu airson stad a chur air a' phròiseas a thagh thu?"
+msgstr[0] "A bheil thu airson stad a chur air a’ phròiseas a thagh thu?"
 msgstr[1] "A bheil thu airson stad a chur air an %d phròiseas a thagh thu?"
 msgstr[2] "A bheil thu airson stad a chur air %d pròiseasan a thagh thu?"
 msgstr[3] "A bheil thu airson stad a chur air %d pròiseas a thagh thu?"
@@ -1191,15 +1269,15 @@ msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
 msgstr ""
-"Ma mharbhas tu dàta, dh'fhaoidte gun sgrios thu dàta, gum bris thu an "
+"Ma mharbhas tu dàta, dh’fhaoidte gun sgrios thu dàta, gum bris thu an "
 "seisean no gun adhbharaich thu cunnart tèarainteachd. Cha bu chòir dhut a "
-"mharbhadh ach pròiseasan nach eil a' freagairt tuilleadh."
+"mharbhadh ach pròiseasan nach eil a’ freagairt tuilleadh."
 
 #: ../src/procdialogs.cpp:122
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "_Marbh am pròiseas"
-msgstr[1] "_ Marbh an dà pròiseas"
+msgstr[1] "_ Marbh na pròiseasan"
 msgstr[2] "_ Marbh na pròiseasan"
 msgstr[3] "_ Marbh na pròiseasan"
 
@@ -1209,37 +1287,33 @@ msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponsive processes should be ended."
 msgstr ""
-"Ma chrìochnaicheas tu dàta, dh'fhaoidte gun sgrios thu dàta, gum bris thu an "
+"Ma chrìochnaicheas tu dàta, dh’fhaoidte gun sgrios thu dàta, gum bris thu an "
 "seisean no gun adhbharaich thu cunnart tèarainteachd. Cha bu chòir dhut a "
-"chrìochnachadh ach pròiseasan nach eil a' freagairt tuilleadh."
+"chrìochnachadh ach pròiseasan nach eil a’ freagairt tuilleadh."
 
 #: ../src/procdialogs.cpp:129
 msgid "_End Process"
 msgid_plural "_End Processes"
-msgstr[0] "_Cuir crìoch air a' phròiseas"
-msgstr[1] "_Cuir crìoch air an dà phròiseas"
+msgstr[0] "_Cuir crìoch air a’ phròiseas"
+msgstr[1] "_Cuir crìoch air na pròiseasan"
 msgstr[2] "_Cuir crìoch air na pròiseasan"
 msgstr[3] "_Cuir crìoch air na pròiseasan"
 
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: ../src/procdialogs.cpp:133
-#| msgid ""
-#| "Ending a process may destroy data, break the session or introduce a "
-#| "security risk. Only unresponsive processes should be ended."
 msgid ""
 "Stopping a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be stopped."
 msgstr ""
-"Ma chuireas tu stad air pròiseas, dh'fhaoidte gun sgrios thu dàta, gum bris "
+"Ma chuireas tu stad air pròiseas, dh’fhaoidte gun sgrios thu dàta, gum bris "
 "thu an seisean no gun adhbharaich thu cunnart tèarainteachd. Cha bu chòir "
-"dhut stad a chur ach air pròiseasan nach eil a' freagairt tuilleadh."
+"dhut stad a chur ach air pròiseasan nach eil a’ freagairt tuilleadh."
 
 #: ../src/procdialogs.cpp:136
-#| msgid "_Stop Process"
 msgid "_Stop Process"
 msgid_plural "_Stop Processes"
-msgstr[0] "Cuir _stad air a' phròiseas"
+msgstr[0] "Cuir _stad air a’ phròiseas"
 msgstr[1] "Cuir _stad air na pròiseasan"
 msgstr[2] "Cuir _stad air na pròiseasan"
 msgstr[3] "Cuir _stad air na pròiseasan"
@@ -1247,13 +1321,13 @@ msgstr[3] "Cuir _stad air na pròiseasan"
 #: ../src/procdialogs.cpp:218
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
-msgstr "Atharraich prìomhachas a' phròiseis \"%s\" (PID: %u)"
+msgstr "Atharraich prìomhachas a’ phròiseis “%s” (PID: %u)"
 
 #: ../src/procdialogs.cpp:221
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
-msgstr[0] "Atharraich prìomhachas a' phròiseis a thagh thu"
+msgstr[0] "Atharraich prìomhachas a’ phròiseis a thagh thu"
 msgstr[1] "Atharraich prìomhachas an %d phròiseis a thagh thu"
 msgstr[2] "Atharraich am prìomhachas aig %d phròiseasan a thagh thu"
 msgstr[3] "Atharraich am prìomhachas aig %d phròiseasan a thagh thu"
@@ -1267,80 +1341,80 @@ msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
 msgstr ""
-"Tha an nice value aig pròiseas a' suidheachadh a' phrìomhachais aige. Bheir "
+"Tha an nice value aig pròiseas a’ suidheachadh a’ phrìomhachais aige. Bheir "
 "luach nas lugha prìomhachas nas àirde."
 
 #: ../src/procproperties.cpp:50 ../src/procproperties.cpp:84
-#: ../src/procproperties.cpp:87 ../src/util.cpp:432
+#: ../src/procproperties.cpp:87 ../src/util.cpp:432 ../src/util.cpp:471
 msgid "N/A"
 msgstr "Chan eil seo iomchaidh"
 
-#: ../src/procproperties.cpp:67 ../src/proctable.cpp:334
+#: ../src/procproperties.cpp:67 ../src/proctable.cpp:322
 msgid "Process Name"
-msgstr "Ainm a' phròiseis"
+msgstr "Ainm a’ phròiseis"
 
-#: ../src/procproperties.cpp:68 ../src/proctable.cpp:335
+#: ../src/procproperties.cpp:68 ../src/proctable.cpp:323
 msgid "User"
 msgstr "Cleachdaiche"
 
-#: ../src/procproperties.cpp:69 ../src/proctable.cpp:336
+#: ../src/procproperties.cpp:69 ../src/proctable.cpp:324
 msgid "Status"
 msgstr "Staid"
 
-#: ../src/procproperties.cpp:71 ../src/proctable.cpp:337
+#: ../src/procproperties.cpp:71 ../src/proctable.cpp:325
 msgid "Virtual Memory"
 msgstr "Cuimhne bhiortail"
 
-#: ../src/procproperties.cpp:72 ../src/proctable.cpp:338
+#: ../src/procproperties.cpp:72 ../src/proctable.cpp:326
 msgid "Resident Memory"
 msgstr "Cuimhne còmhnaidh"
 
-#: ../src/procproperties.cpp:73 ../src/proctable.cpp:339
+#: ../src/procproperties.cpp:73 ../src/proctable.cpp:327
 msgid "Writable Memory"
 msgstr "Cuimhne sho-sgrìobhte"
 
-#: ../src/procproperties.cpp:74 ../src/proctable.cpp:340
+#: ../src/procproperties.cpp:74 ../src/proctable.cpp:328
 msgid "Shared Memory"
 msgstr "Cuimhne cho-roinnte"
 
-#: ../src/procproperties.cpp:76 ../src/proctable.cpp:341
+#: ../src/procproperties.cpp:76 ../src/proctable.cpp:329
 msgid "X Server Memory"
 msgstr "Cuimhne an fhrithealaiche x"
 
-#: ../src/procproperties.cpp:79 ../src/proctable.cpp:343
+#: ../src/procproperties.cpp:79 ../src/proctable.cpp:331
 msgid "CPU Time"
-msgstr "Àm a' CPU"
+msgstr "Àm a’ CPU"
 
-#: ../src/procproperties.cpp:80 ../src/proctable.cpp:344
+#: ../src/procproperties.cpp:80 ../src/proctable.cpp:332
 msgid "Started"
 msgstr "Air a thòiseachadh"
 
-#: ../src/procproperties.cpp:81 ../src/proctable.cpp:345
+#: ../src/procproperties.cpp:81 ../src/proctable.cpp:333
 msgid "Nice"
 msgstr "Nice"
 
-#: ../src/procproperties.cpp:82 ../src/proctable.cpp:359
+#: ../src/procproperties.cpp:82 ../src/proctable.cpp:351
 msgid "Priority"
 msgstr "Prìomhachas"
 
-#: ../src/procproperties.cpp:83 ../src/proctable.cpp:346
+#: ../src/procproperties.cpp:83 ../src/proctable.cpp:334
 msgid "ID"
 msgstr "ID"
 
-#: ../src/procproperties.cpp:84 ../src/proctable.cpp:347
+#: ../src/procproperties.cpp:84 ../src/proctable.cpp:335
 msgid "Security Context"
 msgstr "Co-theacsa na tèarainteachd"
 
-#: ../src/procproperties.cpp:85 ../src/proctable.cpp:348
+#: ../src/procproperties.cpp:85 ../src/proctable.cpp:336
 msgid "Command Line"
 msgstr "Loidhne-àithne"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: ../src/procproperties.cpp:86 ../src/proctable.cpp:351
+#: ../src/procproperties.cpp:86 ../src/proctable.cpp:339
 msgid "Waiting Channel"
 msgstr "An seanail fuirich"
 
-#: ../src/procproperties.cpp:87 ../src/proctable.cpp:352
+#: ../src/procproperties.cpp:87 ../src/proctable.cpp:340
 msgid "Control Group"
 msgstr "Am buidheann smachd"
 
@@ -1349,32 +1423,49 @@ msgstr "Am buidheann smachd"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: ../src/proctable.cpp:342
+#: ../src/proctable.cpp:330
 #, no-c-format
 msgid "% CPU"
-msgstr "% a' CPU"
+msgstr "% a’ CPU"
 
-#: ../src/proctable.cpp:353
+#: ../src/proctable.cpp:341
 msgid "Unit"
 msgstr "Aonad"
 
-#: ../src/proctable.cpp:354
+#: ../src/proctable.cpp:342
 msgid "Session"
 msgstr "Seisean"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: ../src/proctable.cpp:357
+#: ../src/proctable.cpp:345
 msgid "Seat"
 msgstr "Seat"
 
-#: ../src/proctable.cpp:358
+#: ../src/proctable.cpp:346
 msgid "Owner"
 msgstr "Sealbhadair"
 
+#: ../src/proctable.cpp:347
+msgid "Disk read total"
+msgstr "Leughadh diosga iomlan"
+
+#: ../src/proctable.cpp:348
+msgid "Disk write total"
+msgstr "Sgrìobhadh diosga iomlan"
+
+#: ../src/proctable.cpp:349
+msgid "Disk read"
+msgstr "Leughadh diosga"
+
+#: ../src/proctable.cpp:350
+#| msgid "Disk view sort order"
+msgid "Disk write"
+msgstr "Sgrìobhadh diosga"
+
 #: ../src/util.cpp:27
 msgid "Running"
-msgstr "A' ruith"
+msgstr "A’ ruith"
 
 #: ../src/util.cpp:31
 msgid "Stopped"
@@ -1390,7 +1481,7 @@ msgstr "Do-bhriste"
 
 #: ../src/util.cpp:43
 msgid "Sleeping"
-msgstr "'Na chadal"
+msgstr "’Na chadal"
 
 #. xgettext: weeks, days
 #: ../src/util.cpp:98
@@ -1495,7 +1586,7 @@ msgid "Very Low Priority"
 msgstr "Prìomhachas glè bheag"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: ../src/util.cpp:630
+#: ../src/util.cpp:667
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
