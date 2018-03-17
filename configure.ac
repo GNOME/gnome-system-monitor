@@ -104,9 +104,9 @@ if test "$GCC" = "yes" -a "$set_more_warnings" != "no"; then
     -Winline \
     -Wchar-subscripts -Wmissing-declarations -Wmissing-prototypes \
     -Wnested-externs -Wpointer-arith \
-    -Wcast-align -Wsign-compare \
+    -Wcast-align -Wsign-compare -fpermissive\
     $CFLAGS"
-    CXXFLAGS="-Wall $CXXFLAGS"
+    CXXFLAGS="-Wall -fpermissive $CXXFLAGS"
 else
     AC_MSG_RESULT(no)
 fi
