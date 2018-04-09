@@ -59,6 +59,7 @@ PKG_CHECK_MODULES(GSM_LEGACY,
   gtk+-3.0 >= $GTK_REQUIRED
   libxml-2.0 >= $LIBXML_REQUIRED
   librsvg-2.0 >= $RSVG_REQUIRED
+  libdazzle-1.0 >= $DAZZLE_REQUIRED
   gmodule-2.0
 )
 
@@ -104,7 +105,7 @@ if test "$GCC" = "yes" -a "$set_more_warnings" != "no"; then
     -Winline \
     -Wchar-subscripts -Wmissing-declarations -Wmissing-prototypes \
     -Wnested-externs -Wpointer-arith \
-    -Wcast-align -Wsign-compare -fpermissive\
+    -Wcast-align -Wsign-compare \
     $CFLAGS"
     CXXFLAGS="-Wall -fpermissive $CXXFLAGS"
 else
