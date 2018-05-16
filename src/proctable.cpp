@@ -214,6 +214,7 @@ iter_matches_search_key (GtkTreeModel *model, GtkTreeIter *iter, const gchar *se
     gboolean found;
     char *search_pattern;
     char **keys;
+    Glib::RefPtr<Glib::Regex> regex;
 
     gtk_tree_model_get (model, iter,
                         COL_NAME, &name,
@@ -226,8 +227,11 @@ iter_matches_search_key (GtkTreeModel *model, GtkTreeIter *iter, const gchar *se
 
     keys = g_strsplit_set(search_text, " |", -1);
     search_pattern = g_strjoinv ("|", keys);
-
-    auto regex = Glib::Regex::create(search_pattern, Glib::REGEX_CASELESS);
+    try {
+        regex = Glib::Regex::create(search_pattern, Glib::REGEX_CASELESS);
+    } catch (const Glib::Error& ex) {
+        regex = Glib::Regex::create(Glib::Regex::escape_string(search_pattern), Glib::REGEX_CASELESS);
+    }
 
     found = (name && regex->match(name)) || (user && regex->match(user))
             || (pids && regex->match(pids)) || (args && regex->match(args));
