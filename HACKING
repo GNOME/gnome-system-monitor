@@ -1,34 +1,25 @@
-Coding style
-============
+# Meson
 
-The current codebase is not really consistent about coding
-style. However, for new code we should conform to what seems to be the
-most common habits:
+## configure
+meson build --prefix /home/benoit/gnome
 
-  * Use four-space indents.
+## build
+ninja -C build
 
-  * Put open curly braces on the same line of the associated
-    statement. Omit braces if *both* sides of the statement are on one
-    line. So for instance
+## clean
+ninja -C build -t clean
 
-        if (foo = 0) {
-            bar ();
-            baz ();
-        } else {
-            qux ();
-        }
+## start from scratch
+rm -rf build
 
-    and
 
-        if (foo = 0)
-            bar ();
-        else
-            qux ();
 
-  * Put one space between the function name and the open parenthesis, so
 
-        foo ();
+# Old
 
-    and not
+## configure
+./autogen.sh --prefix=/home/benoit/gnome
 
-        foo();
+## build
+make
+
