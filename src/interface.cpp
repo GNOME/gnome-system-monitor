@@ -103,7 +103,7 @@ create_proc_view(GsmApplication *app, GtkBuilder * builder)
     g_object_bind_property (app->search_bar, "search-mode-enabled", app->search_button, "active", (GBindingFlags)(G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE));
 }
 
-void
+static void
 cb_cpu_color_changed (GsmColorButton *cp, gpointer data)
 {
     guint cpu_i = GPOINTER_TO_UINT (data);
@@ -546,7 +546,7 @@ change_priority_state (GSimpleAction *action, GVariant *state, gpointer data)
     g_simple_action_set_state (action, state);
 }
 
-void
+static void
 update_page_activities (GsmApplication *app)
 {
     const char *current_page = gtk_stack_get_visible_child_name (app->stack);
@@ -778,7 +778,7 @@ create_main_window (GsmApplication *app)
     g_object_unref (G_OBJECT (builder));
 }
 
-gboolean
+static gboolean
 scroll_to_selection (gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;

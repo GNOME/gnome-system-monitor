@@ -53,7 +53,7 @@ unsigned LoadGraph::num_bars() const
 
 
 #define FRAME_WIDTH 4
-void draw_background(LoadGraph *graph) {
+static void draw_background(LoadGraph *graph) {
     GtkAllocation allocation;
     cairo_t *cr;
     guint i;

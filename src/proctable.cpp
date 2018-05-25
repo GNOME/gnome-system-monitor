@@ -133,7 +133,7 @@ get_last_selected (GtkTreeModel *model, GtkTreePath *path,
     gtk_tree_model_get (model, iter, COL_POINTER, info, -1);
 }
 
-void
+static void
 cb_row_selected (GtkTreeSelection *selection, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
