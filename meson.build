@@ -41,7 +41,7 @@ datadir = join_paths(prefix, get_option('datadir'))
 # Dependencies
 
 giomm   = dependency('giomm-2.4',   version: '>=2.46')
-glib    = dependency('glib-2.0',    version: '>=2.55.0')
+glib    = dependency('glib-2.0',    version: '>=2.56.0')
 glibmm  = dependency('glibmm-2.4',  version: '>=2.46')
 gmodule = dependency('gmodule-2.0')
 gtk3    = dependency('gtk+-3.0',    version: '>=3.22.0')
