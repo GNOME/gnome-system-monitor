@@ -1,4 +1,4 @@
-# http://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor
+# https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues
 project('gnome-system-monitor',
   'c', 'cpp',
   default_options : [
