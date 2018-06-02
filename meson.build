@@ -21,10 +21,10 @@ conf = configuration_data()
 conf.set_quoted('VERSION', meson.project_version())
 conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
 conf.set_quoted('GNOMELOCALEDIR',
-  join_paths(get_option('datadir'), 'locale')
+  join_paths(get_option('prefix'), get_option('localedir'))
 )
 conf.set_quoted('GSM_LIBEXEC_DIR',
-  join_paths(get_option('libexecdir'), meson.project_name())
+  join_paths(get_option('prefix'), get_option('libexecdir'), meson.project_name())
 )
 
 dataconf = configuration_data()
