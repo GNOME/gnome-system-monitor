@@ -72,23 +72,27 @@ procdialog_create_kill_dialog (GsmApplication *app, int signal)
         // get the last selected row
         gtk_tree_selection_selected_foreach (app->selection, get_last_selected,
                                          &selected_process);
+
+	std::string *process_name = &selected_process->name;
+	std::string short_process_name = process_name->substr(0, process_name->find(" "));
+
         switch (signal) {
             case SIGKILL:
                 /*xgettext: primary alert message for killing single process*/
                 primary = g_strdup_printf (_("Are you sure you want to kill the selected process “%s” (PID: %u)?"),
-                                           selected_process->name.c_str(),
+                                           short_process_name.c_str(),
                                            selected_process->pid);
                 break;
             case SIGTERM:
                 /*xgettext: primary alert message for ending single process*/
                 primary = g_strdup_printf (_("Are you sure you want to end the selected process “%s” (PID: %u)?"),
-                                           selected_process->name.c_str(),
+                                           short_process_name.c_str(),
                                            selected_process->pid);
                 break;
             default: // SIGSTOP
                 /*xgettext: primary alert message for stopping single process*/
                 primary = g_strdup_printf (_("Are you sure you want to stop the selected process “%s” (PID: %u)?"),
-                                           selected_process->name.c_str(),
+                                           short_process_name.c_str(),
                                            selected_process->pid);
                 break;
         }

@@ -147,6 +147,9 @@ procman_make_label_for_mmaps_or_ofiles(const char *format,
 gchar*
 procman::format_size(guint64 size, bool want_bits)
 {
+    if (want_bits)
+        size *= 8;
+
     const GFormatSizeFlags flags = (want_bits ? G_FORMAT_SIZE_BITS : G_FORMAT_SIZE_IEC_UNITS);
     return g_format_size_full(size, flags);
 }
