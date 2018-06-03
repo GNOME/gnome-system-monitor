@@ -76,7 +76,6 @@ extra_flags = [
   '-Wmissing-declarations',
   '-Wpointer-arith',
   '-Wsign-compare',
-  '-fpermissive',
 ]
 extra_cflags = [
   '-Wmissing-prototypes',
@@ -85,6 +84,7 @@ extra_cflags = [
 extra_cxxflags = [
   # '-fvisibility=hidden',
   # '-fvisibility-inlines-hidden',
+ '-fpermissive',
 ]
 
 add_project_arguments(cc.get_supported_arguments(extra_flags + extra_cflags),
