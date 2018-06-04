@@ -14,10 +14,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor trunk\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
-"product=system-monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-03-12 19:37+0000\n"
-"PO-Revision-Date: 2018-03-13 22:37+0300\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
+"issues\n"
+"POT-Creation-Date: 2018-06-02 18:50+0000\n"
+"PO-Revision-Date: 2018-06-04 19:36+0300\n"
 "Last-Translator: Stas Solovey <whats_up@tut.by>\n"
 "Language-Team: Русский <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.0.7\n"
 
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
 #: src/application.cpp:244 src/interface.cpp:386
@@ -148,7 +148,7 @@ msgid "Memory and Swap History"
 msgstr "Использование памяти и подкачки"
 
 #: data/interface.ui:302 src/interface.cpp:274 src/procproperties.cpp:70
-#: src/proctable.cpp:347
+#: src/proctable.cpp:351
 msgid "Memory"
 msgstr "Память"
 
@@ -212,11 +212,11 @@ msgstr "Справка"
 
 #: data/menus.ui:23
 msgid "About"
-msgstr "О программе"
+msgstr "О приложении"
 
 #: data/menus.ui:27
 msgid "Quit"
-msgstr "Выйти"
+msgstr "Завершить"
 
 #: data/menus.ui:36
 msgid "_Refresh"
@@ -255,23 +255,23 @@ msgstr "Открытые _файлы"
 msgid "_Change Priority"
 msgstr "И_зменить приоритет"
 
-#: data/menus.ui:91 src/util.cpp:158
+#: data/menus.ui:91 src/util.cpp:161
 msgid "Very High"
 msgstr "Очень высокий"
 
-#: data/menus.ui:96 src/util.cpp:160
+#: data/menus.ui:96 src/util.cpp:163
 msgid "High"
 msgstr "Высокий"
 
-#: data/menus.ui:101 src/util.cpp:162
+#: data/menus.ui:101 src/util.cpp:165
 msgid "Normal"
 msgstr "Обычный"
 
-#: data/menus.ui:106 src/util.cpp:164
+#: data/menus.ui:106 src/util.cpp:167
 msgid "Low"
 msgstr "Низкий"
 
-#: data/menus.ui:111 src/util.cpp:166
+#: data/menus.ui:111 src/util.cpp:169
 msgid "Very Low"
 msgstr "Очень низкий"
 
@@ -355,7 +355,7 @@ msgstr "Показывать _все файловые системы"
 msgid "File system i_nformation shown in list:"
 msgstr "_Информация о файловой системе, доступная в списке:"
 
-#: data/renice.ui:27 src/procdialogs.cpp:155
+#: data/renice.ui:27 src/procdialogs.cpp:159
 msgid "_Cancel"
 msgstr "_Отмена"
 
@@ -465,11 +465,11 @@ msgstr "%a %H:%M"
 
 #: src/legacy/e_date.c:192
 msgid "%b %d %l∶%M %p"
-msgstr "%d %b %H:%M"
+msgstr "%-d %B %H:%M"
 
 #: src/legacy/e_date.c:194
 msgid "%b %d %Y"
-msgstr "%d %b %Y"
+msgstr "%-d %B %Y"
 
 #: src/legacy/gsm_color_button.c:141
 msgid "Fraction"
@@ -1115,26 +1115,26 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:78
+#: src/procdialogs.cpp:82
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr "Действительно убить выбранный процесс «%s» (PID: %u)?"
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:84
+#: src/procdialogs.cpp:88
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr "Действительно завершить выбранный процесс «%s» (PID: %u)?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:90
+#: src/procdialogs.cpp:94
 #, c-format
 msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
 msgstr "Действительно остановить выбранный процесс «%s» (PID: %u)?"
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:99
+#: src/procdialogs.cpp:103
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
@@ -1143,7 +1143,7 @@ msgstr[1] "Действительно убить %d выбранных проц�
 msgstr[2] "Действительно убить %d выбранных процессов?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:105
+#: src/procdialogs.cpp:109
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
@@ -1153,7 +1153,7 @@ msgstr[2] "Действительно завершить %d выбранных �
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:111
+#: src/procdialogs.cpp:115
 #, c-format
 msgid "Are you sure you want to stop the selected process?"
 msgid_plural "Are you sure you want to stop the %d selected processes?"
@@ -1162,7 +1162,7 @@ msgstr[1] "Действительно остановить %d выбранных
 msgstr[2] "Действительно остановить %d выбранных процессов?"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:121
+#: src/procdialogs.cpp:125
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1171,7 +1171,7 @@ msgstr ""
 "а также может представлять угрозу для безопасности системы. Рекомендуется "
 "завершать только те процессы, которые не отвечают на действия пользователя."
 
-#: src/procdialogs.cpp:124
+#: src/procdialogs.cpp:128
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "_Убить процесс"
@@ -1179,7 +1179,7 @@ msgstr[1] "_Убить процессы"
 msgstr[2] "_Убить процессы"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:128
+#: src/procdialogs.cpp:132
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponsive processes should be ended."
@@ -1188,7 +1188,7 @@ msgstr ""
 "или представлять угрозу для безопасности системы. Только не отвечающие "
 "процессы должны быть завершены."
 
-#: src/procdialogs.cpp:131
+#: src/procdialogs.cpp:135
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "Завер_шить процесс"
@@ -1197,7 +1197,7 @@ msgstr[2] "Завер_шить процессы"
 
 #. SIGSTOP
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:135
+#: src/procdialogs.cpp:139
 msgid ""
 "Stopping a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be stopped."
@@ -1206,19 +1206,19 @@ msgstr ""
 "или представлять угрозу для безопасности системы. Только не отвечающие "
 "процессы должны быть остановлены."
 
-#: src/procdialogs.cpp:138
+#: src/procdialogs.cpp:142
 msgid "_Stop Process"
 msgid_plural "_Stop Processes"
 msgstr[0] "Ос_тановить процесс"
 msgstr[1] "Ос_тановить процессы"
 msgstr[2] "Ос_тановить процессы"
 
-#: src/procdialogs.cpp:223
+#: src/procdialogs.cpp:227
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Изменить приоритет для процесса «%s» (PID %u)"
 
-#: src/procdialogs.cpp:226
+#: src/procdialogs.cpp:230
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
@@ -1226,11 +1226,11 @@ msgstr[0] "Изменить приоритет %d выбранного проц�
 msgstr[1] "Изменить приоритет %d выбранных процессов"
 msgstr[2] "Изменить приоритет %d выбранных процессов"
 
-#: src/procdialogs.cpp:245
+#: src/procdialogs.cpp:249
 msgid "Note:"
 msgstr "Примечание:"
 
-#: src/procdialogs.cpp:246
+#: src/procdialogs.cpp:250
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1239,76 +1239,76 @@ msgstr ""
 "уступчивости, тем выше приоритет процесса."
 
 #: src/procproperties.cpp:50 src/procproperties.cpp:84
-#: src/procproperties.cpp:87 src/util.cpp:375 src/util.cpp:414
+#: src/procproperties.cpp:87 src/util.cpp:378 src/util.cpp:417
 msgid "N/A"
 msgstr "Н/Д"
 
-#: src/procproperties.cpp:67 src/proctable.cpp:332
+#: src/procproperties.cpp:67 src/proctable.cpp:336
 msgid "Process Name"
 msgstr "Имя процесса"
 
-#: src/procproperties.cpp:68 src/proctable.cpp:333
+#: src/procproperties.cpp:68 src/proctable.cpp:337
 msgid "User"
 msgstr "Пользователь"
 
-#: src/procproperties.cpp:69 src/proctable.cpp:334
+#: src/procproperties.cpp:69 src/proctable.cpp:338
 msgid "Status"
 msgstr "Состояние"
 
-#: src/procproperties.cpp:71 src/proctable.cpp:335
+#: src/procproperties.cpp:71 src/proctable.cpp:339
 msgid "Virtual Memory"
 msgstr "Виртуальная память"
 
-#: src/procproperties.cpp:72 src/proctable.cpp:336
+#: src/procproperties.cpp:72 src/proctable.cpp:340
 msgid "Resident Memory"
 msgstr "Резидентная память"
 
-#: src/procproperties.cpp:73 src/proctable.cpp:337
+#: src/procproperties.cpp:73 src/proctable.cpp:341
 msgid "Writable Memory"
 msgstr "Доступная для записи память"
 
-#: src/procproperties.cpp:74 src/proctable.cpp:338
+#: src/procproperties.cpp:74 src/proctable.cpp:342
 msgid "Shared Memory"
 msgstr "Разделяемая память"
 
-#: src/procproperties.cpp:76 src/proctable.cpp:339
+#: src/procproperties.cpp:76 src/proctable.cpp:343
 msgid "X Server Memory"
 msgstr "Память X-сервера"
 
-#: src/procproperties.cpp:79 src/proctable.cpp:341
+#: src/procproperties.cpp:79 src/proctable.cpp:345
 msgid "CPU Time"
 msgstr "Время ЦП"
 
-#: src/procproperties.cpp:80 src/proctable.cpp:342
+#: src/procproperties.cpp:80 src/proctable.cpp:346
 msgid "Started"
 msgstr "Запущено"
 
-#: src/procproperties.cpp:81 src/proctable.cpp:343
+#: src/procproperties.cpp:81 src/proctable.cpp:347
 msgid "Nice"
 msgstr "Приоритет"
 
-#: src/procproperties.cpp:82 src/proctable.cpp:361
+#: src/procproperties.cpp:82 src/proctable.cpp:365
 msgid "Priority"
 msgstr "Приоритет"
 
-#: src/procproperties.cpp:83 src/proctable.cpp:344
+#: src/procproperties.cpp:83 src/proctable.cpp:348
 msgid "ID"
 msgstr "ID"
 
-#: src/procproperties.cpp:84 src/proctable.cpp:345
+#: src/procproperties.cpp:84 src/proctable.cpp:349
 msgid "Security Context"
 msgstr "Контекст безопасности"
 
-#: src/procproperties.cpp:85 src/proctable.cpp:346
+#: src/procproperties.cpp:85 src/proctable.cpp:350
 msgid "Command Line"
 msgstr "Командная строка"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:86 src/proctable.cpp:349
+#: src/procproperties.cpp:86 src/proctable.cpp:353
 msgid "Waiting Channel"
 msgstr "Ожидание в ядре"
 
-#: src/procproperties.cpp:87 src/proctable.cpp:350
+#: src/procproperties.cpp:87 src/proctable.cpp:354
 msgid "Control Group"
 msgstr "Контрольная группа"
 
@@ -1317,42 +1317,42 @@ msgstr "Контрольная группа"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: src/proctable.cpp:340
+#: src/proctable.cpp:344
 #, no-c-format
 msgid "% CPU"
 msgstr "% ЦП"
 
-#: src/proctable.cpp:351
+#: src/proctable.cpp:355
 msgid "Unit"
 msgstr "Сервис"
 
-#: src/proctable.cpp:352
+#: src/proctable.cpp:356
 msgid "Session"
 msgstr "Сеанс"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:355
+#: src/proctable.cpp:359
 msgid "Seat"
 msgstr "Рабочее место"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:360
 msgid "Owner"
 msgstr "Владелец"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:361
 msgid "Disk read total"
 msgstr "Суммарное чтение с диска"
 
-#: src/proctable.cpp:358
+#: src/proctable.cpp:362
 msgid "Disk write total"
 msgstr "Суммарная запись на диск"
 
-#: src/proctable.cpp:359
+#: src/proctable.cpp:363
 msgid "Disk read"
 msgstr "Чтение диска"
 
-#: src/proctable.cpp:360
+#: src/proctable.cpp:364
 msgid "Disk write"
 msgstr "Запись диска"
 
@@ -1400,28 +1400,28 @@ msgstr "%u:%02u:%02u"
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: src/util.cpp:173
+#: src/util.cpp:176
 msgid "Very High Priority"
 msgstr "Очень высокий приоритет"
 
-#: src/util.cpp:175
+#: src/util.cpp:178
 msgid "High Priority"
 msgstr "Высокий приоритет"
 
-#: src/util.cpp:177
+#: src/util.cpp:180
 msgid "Normal Priority"
 msgstr "Обычный приоритет"
 
-#: src/util.cpp:179
+#: src/util.cpp:182
 msgid "Low Priority"
 msgstr "Низкий приоритет"
 
-#: src/util.cpp:181
+#: src/util.cpp:184
 msgid "Very Low Priority"
 msgstr "Очень низкий приоритет"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:610
+#: src/util.cpp:613
 #, c-format
 msgid "%s/s"
 msgstr "%s/с"
