@@ -34,6 +34,8 @@ dataconf.set('pkglibexecdir',
   join_paths(get_option('prefix'),get_option('libexecdir'),meson.project_name())
 )
 
+prefix = get_option('prefix')
+datadir = join_paths(prefix, get_option('datadir'))
 
 ################################################################################
 # Dependencies
@@ -173,6 +175,7 @@ endif
 
 rootInclude = include_directories('.')
 
+subdir('data')
 subdir('po')
 subdir('scripts')
 subdir('src')
