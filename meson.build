@@ -87,10 +87,14 @@ extra_cxxflags = [
   # '-fvisibility-inlines-hidden',
 ]
 
-add_project_arguments(cc.get_supported_arguments(extra_flags + extra_cflags),
+
+cflags   = extra_flags + extra_cflags
+cxxflags = extra_flags + extra_cxxflags
+
+add_project_arguments(cc.get_supported_arguments(cflags),
   language: 'c'
 )
-add_project_arguments(cx.get_supported_arguments(extra_flags + extra_cxxflags),
+add_project_arguments(cx.get_supported_arguments(cxxflags),
   language: 'cpp'
 )
 
@@ -186,10 +190,10 @@ message('\n'.join(['',
 'Configuration:',
 '',
 '        Source code location:   @0@'.format(meson.source_root()),
-'        C Compiler:             @0@'.format(cc.get_id()),
-'        C++ Compiler:           @0@'.format(cx.get_id()),
-'        CFLAGS:                 @0@'.format(get_option('c_args')),
-'        CXXFLAGS:               @0@'.format(get_option('cpp_args')),
+'        C Compiler:             @0@ @1@'.format(cc.get_id(), cc.version()),
+'        C++ Compiler:           @0@ @1@'.format(cx.get_id(), cx.version()),
+'        CFLAGS:                 @0@'.format(cflags),
+'        CXXFLAGS:               @0@'.format(cxxflags),
 '        systemd support:        @0@'.format(libsystemd.found()),
 '        wnck support:           @0@ @1@'.format(libwnck.found(),
       libwnck.found() ? '(this will likely make system-monitor segfault)' : ''),
