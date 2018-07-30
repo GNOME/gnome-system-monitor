@@ -198,3 +198,5 @@ message('\n'.join(['',
 '        wnck support:           @0@ @1@'.format(libwnck.found(),
       libwnck.found() ? '(this will likely make system-monitor segfault)' : ''),
 ]))
+
+meson.add_install_script('meson_post_install.py')
