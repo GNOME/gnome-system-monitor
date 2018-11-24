@@ -78,15 +78,14 @@ cb_timeouts_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication*
     }
 }
 
-static gchar* generate_random_cpu_color(guint cpuId)
+static gchar* 
+generate_random_cpu_color (guint cpuId)
 {
-    static const gchar* seed = "789ABCD"; // NOTE: Avoid the extreme ranges (very dark, very bright)
+    static const gchar* seed = "123456789ABCD"; // NOTE: Avoid the extreme ranges (very dark, very bright)
     gchar color[7];
     color[0] = '#';
     for (int i = 1; i < 7; i++)
-    {
-        color[i] = seed[(gint)rand() % (6 + 1 - 0)];
-    }
+        color[i] = seed[(gint)rand() % (12 + 1 - 0)];
 
     return g_strdup(color);
 }
@@ -107,14 +106,13 @@ apply_cpu_color_settings(Gio::Settings& settings, GsmApplication* app)
     g_variant_builder_init(&builder, G_VARIANT_TYPE_ARRAY);
 
     for (guint i = 0; i < static_cast<guint>(app->config.num_cpus); i++) {
-        color = generate_random_cpu_color(i);
-        if(i < n && n < 4) {
+        if (i < n) {
             child = g_variant_get_child_value ( cpu_colors_var, i );
             g_variant_get_child( child, 1, "s", &color);
             g_variant_builder_add_value ( &builder, child);
             g_variant_unref (child);
         } else {
-            //color = g_strdup ("#f25915e815e8");
+            color = generate_random_cpu_color(i);
             g_variant_builder_add(&builder, "(us)", i, color);
         }
         gdk_rgba_parse(&app->config.cpu_color[i], color);
