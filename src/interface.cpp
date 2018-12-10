@@ -560,6 +560,7 @@ update_page_activities (GsmApplication *app)
         gtk_widget_show (GTK_WIDGET (app->end_process_button));
         gtk_widget_show (GTK_WIDGET (app->search_button));
         gtk_widget_show (GTK_WIDGET (app->process_menu_button));
+        gtk_widget_hide (GTK_WIDGET (app->window_menu_button));
 
         update_sensitivity (app);
 
@@ -573,6 +574,7 @@ update_page_activities (GsmApplication *app)
         gtk_widget_hide (GTK_WIDGET (app->end_process_button));
         gtk_widget_hide (GTK_WIDGET (app->search_button));
         gtk_widget_hide (GTK_WIDGET (app->process_menu_button));
+        gtk_widget_show (GTK_WIDGET (app->window_menu_button));
 
         update_sensitivity (app);
     }
@@ -650,7 +652,7 @@ create_main_window (GsmApplication *app)
 {
     GtkApplicationWindow *main_window;
     GtkStack *stack;
-    GtkMenuButton *process_menu_button;
+    GMenuModel *window_menu_model;
     GMenuModel *process_menu_model;
     GdkDisplay *display;
     GdkMonitor *monitor;
@@ -701,9 +703,13 @@ create_main_window (GsmApplication *app)
     if (app->settings->get_boolean (GSM_SETTING_MAXIMIZED))
         gtk_window_maximize (GTK_WINDOW (main_window));
 
-    app->process_menu_button = process_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "process_menu_button"));
+    app->process_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "process_menu_button"));
     process_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-window-menu"));
-    gtk_menu_button_set_menu_model (process_menu_button, process_menu_model);
+    gtk_menu_button_set_menu_model (app->process_menu_button, process_menu_model);
+
+    app->window_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "window_menu_button"));
+    window_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "generic-window-menu"));
+    gtk_menu_button_set_menu_model (app->window_menu_button, window_menu_model);
 
     app->end_process_button = GTK_BUTTON (gtk_builder_get_object (builder, "end_process_button"));
 

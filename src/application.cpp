@@ -217,6 +217,7 @@ GsmApplication::GsmApplication()
       stack(NULL),
       refresh_button(NULL),
       process_menu_button(NULL),
+      window_menu_button(NULL),
       end_process_button(NULL),
       search_button(NULL),
       search_entry(NULL),
