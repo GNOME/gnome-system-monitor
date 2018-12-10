@@ -52,7 +52,7 @@ gsm_tree_view_save_state (GsmTreeView *tree_view)
     GtkSortType sort_type;
 
     model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree_view));
-
+    g_settings_delay (priv->settings);
     if (gtk_tree_sortable_get_sort_column_id (GTK_TREE_SORTABLE (model),
                                               &sort_col,
                                               &sort_type)) {
@@ -77,6 +77,8 @@ gsm_tree_view_save_state (GsmTreeView *tree_view)
 
         g_list_free (columns);
     }
+
+    g_settings_apply (priv->settings);
 }
 
 GtkTreeViewColumn *
@@ -223,6 +225,7 @@ save_column_state (gpointer data)
     gboolean visible = gtk_tree_view_column_get_visible (current_column);
 
     gchar *key;
+    g_settings_delay (settings);
 
     key = g_strdup_printf ("col-%d-width", column_id);
     g_settings_set_int (settings, key, width);
@@ -232,6 +235,8 @@ save_column_state (gpointer data)
     g_settings_set_boolean (settings, key, visible);
     g_free (key);
     timeout_id = 0;
+    g_settings_apply (settings);
+
     return FALSE;
 }
 
