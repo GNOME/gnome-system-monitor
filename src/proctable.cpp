@@ -192,15 +192,11 @@ cb_refresh_icons (GtkIconTheme *theme, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
-    if(app->timeout) {
-        g_source_remove (app->timeout);
-    }
-
     for (auto& v : app->processes) {
         app->pretty_table->set_icon(v.second);
     }
 
-    cb_timeout(app);
+    proctable_update (app);
 }
 
 static gboolean
