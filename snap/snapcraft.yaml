@@ -1,0 +1,98 @@
+name: gnome-system-monitor
+version: git
+summary: System Monitor
+description: |
+  GNOME System Monitor is a GNOME process viewer and system monitor with
+  an attractive, easy-to-use interface, It has features, such as a tree
+  view for process dependencies, icons for processes, the ability to hide
+  processes that you don't want to see, graphical time histories of
+  CPU/memory/swap usage, the ability to kill/renice processes needing root
+  access, as well as the standard features that you might expect from a
+  process viewer.
+
+grade: stable # must be 'stable' to release into candidate/stable channels
+confinement: strict
+
+plugs:
+  gnome-3-26-1604:
+    interface: content
+    target: $SNAP/gnome-platform
+    default-provider: gnome-3-26-1604
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes
+  icon-themes:
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes
+  sound-themes:
+    interface: content
+    target: $SNAP/data-dir/sounds
+    default-provider: gtk-common-themes
+
+slots:
+  # for GtkApplication registration
+  gnome-system-monitor:
+    interface: dbus
+    bus: session
+    name: org.gnome.SystemMonitor
+
+apps:
+  gnome-system-monitor:
+    command: desktop-launch gnome-system-monitor
+    plugs:
+      - desktop
+      - desktop-legacy
+      - gsettings
+      - unity7
+      - mount-observe
+      - network-observe
+      - hardware-observe
+      - system-observe
+      - process-control
+      - wayland
+    desktop: usr/share/applications/gnome-system-monitor.desktop
+    environment:
+      GSETTINGS_SCHEMA_DIR: $SNAP/share/glib-2.0/schemas
+      LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/lib/gnome-system-monitor
+
+parts:
+  gnome-system-monitor:
+    after: [desktop-gnome-platform]
+    source: .
+    source-type: git
+    plugin: meson
+    meson-parameters:
+      - --prefix=/snap/gnome-system-monitor/current/usr
+      - -Dsystemd=true
+    organize:
+      snap/gnome-system-monitor/current/usr: usr
+    override-build: |
+      snapcraftctl build
+      mkdir -p $SNAPCRAFT_PART_INSTALL/meta/gui/
+      cp snapbuild/gnome-system-monitor.desktop $SNAPCRAFT_PART_INSTALL/meta/gui/
+    build-attributes: ['no-system-libraries']
+    build-packages:
+      - gettext
+      - gsettings-desktop-schemas-dev
+      - itstool
+      - libglib2.0-dev
+      - libglibmm-2.4-dev
+      - libgtk-3-dev
+      - libgtkmm-3.0-dev
+      - libgtop2-dev
+      - librsvg2-dev
+      - libsystemd-dev
+      - libxml2-dev
+      - policykit-1
+  # workaround snapcraft trying to outsmart us by copying ldd listed libraries
+  libraries:
+    plugin: nil
+    stage-packages:
+      - libgtop-2.0-11
+      - libgtkmm-3.0-1v5
+    prime:
+      - "usr/lib/*/lib*mm*"
+      - "usr/lib/*/libgtop*"
+      - "usr/lib/*/libsigc-2.0.so.0*"
