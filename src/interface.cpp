@@ -390,7 +390,7 @@ on_activate_about (GSimpleAction *, GVariant *, gpointer data)
         "copyright",            "Copyright \xc2\xa9 2001-2004 Kevin Vandersloot\n"
                                 "Copyright \xc2\xa9 2005-2007 Benoît Dejean\n"
                                 "Copyright \xc2\xa9 2011 Chris Kühl",
-        "logo-icon-name",       "utilities-system-monitor",
+        "logo-icon-name",       "org.gnome.SystemMonitor",
         "authors",              authors,
         "artists",              artists,
         "documenters",          documenters,

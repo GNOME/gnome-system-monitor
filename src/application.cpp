@@ -400,7 +400,7 @@ void GsmApplication::on_startup()
     add_accelerator("<Alt>Return", "win.process-properties", NULL);
     add_accelerator("<Primary>f", "win.search", g_variant_new_boolean (TRUE));
 
-    Gtk::Window::set_default_icon_name ("utilities-system-monitor");
+    Gtk::Window::set_default_icon_name ("org.gnome.SystemMonitor");
 
     glibtop_init ();
 
