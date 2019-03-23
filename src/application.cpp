@@ -391,6 +391,7 @@ void GsmApplication::on_startup()
     set_app_menu (menu);
 
     add_accelerator("<Primary>d", "win.show-dependencies", NULL);
+    add_accelerator("<Primary>q", "app.quit", NULL);
     add_accelerator("<Primary>s", "win.send-signal-stop", g_variant_new_int32 (SIGSTOP));
     add_accelerator("<Primary>c", "win.send-signal-cont", g_variant_new_int32 (SIGCONT));
     add_accelerator("<Primary>e", "win.send-signal-end", g_variant_new_int32 (SIGTERM));
