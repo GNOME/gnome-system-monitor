@@ -82,7 +82,7 @@ static void draw_background(LoadGraph *graph) {
     cr = cairo_create (surface);
 
     GtkStyleContext *context = gtk_widget_get_style_context (GTK_WIDGET (GsmApplication::get()->stack));
-
+    
     gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &fg);
 
     cairo_paint_with_alpha (cr, 0.0);
@@ -125,7 +125,7 @@ static void draw_background(LoadGraph *graph) {
     gtk_style_context_restore (context);
 
     cairo_set_line_width (cr, 1.0);
-
+    
     for (i = 0; i <= num_bars; ++i) {
         double y;
 
@@ -164,7 +164,7 @@ static void draw_background(LoadGraph *graph) {
         cairo_line_to (cr, graph->draw_width - graph->rmargin + 0.5 + 4, i * graph->graph_dely + 0.5);
         cairo_stroke (cr);
     }
-
+    
 
     const unsigned total_seconds = graph->speed * (LoadGraph::NUM_POINTS - 2) / 1000;
 
@@ -451,9 +451,9 @@ get_memory (LoadGraph *graph)
     set_memory_label_and_picker(GTK_LABEL(graph->labels.swap),
                                 GSM_COLOR_BUTTON(graph->swap_color_picker),
                                 swap.used, 0, swap.total, swappercent);
-
+    
     gtk_widget_set_sensitive (GTK_WIDGET (graph->swap_color_picker), swap.total > 0);
-
+    
     graph->data[0][0] = mempercent;
     graph->data[0][1] = swap.total>0 ? swappercent : -1.0;
 }
