@@ -60,7 +60,7 @@ cb_window_key_press_event (GtkWidget *widget, GdkEvent *event, gpointer user_dat
 
     if (strcmp (current_page, "processes") == 0)
         return gtk_search_bar_handle_event (GTK_SEARCH_BAR (user_data), event);
-
+    
     return FALSE;
 }
 
@@ -73,7 +73,7 @@ search_text_changed (GtkEditable *entry, gpointer data)
                                     GTK_TREE_VIEW (app->tree))))));
 }
 
-static void
+static void 
 create_proc_view(GsmApplication *app, GtkBuilder * builder)
 {
     GsmTreeView *proctree;
@@ -90,14 +90,14 @@ create_proc_view(GsmApplication *app, GtkBuilder * builder)
     GMenuModel *menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-popup-menu"));
     app->popup_menu = GTK_MENU (gtk_menu_new_from_model (menu_model));
     gtk_menu_attach_to_widget (app->popup_menu, GTK_WIDGET (app->main_window), NULL);
-
+    
     app->search_bar = GTK_SEARCH_BAR (gtk_builder_get_object (builder, "proc_searchbar"));
     app->search_entry = GTK_SEARCH_ENTRY (gtk_builder_get_object (builder, "proc_searchentry"));
-
+    
     gtk_search_bar_connect_entry (app->search_bar, GTK_ENTRY (app->search_entry));
     g_signal_connect (app->main_window, "key-press-event",
                       G_CALLBACK (cb_window_key_press_event), app->search_bar);
-
+                  
     g_signal_connect (app->search_entry, "changed", G_CALLBACK (search_text_changed), app);
 
     g_object_bind_property (app->search_bar, "search-mode-enabled", app->search_button, "active", (GBindingFlags)(G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE));
@@ -199,7 +199,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     title_template = g_strdup(_("Pick a Color for “%s”"));
 
     /* The CPU BOX */
-
+    
     cpu_graph_box = GTK_BOX (gtk_builder_get_object (builder, "cpu_graph_box"));
 
     cpu_graph = new LoadGraph(LOAD_GRAPH_CPU);
@@ -255,7 +255,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     app->cpu_graph = cpu_graph;
 
     /** The memory box */
-
+    
     mem_graph_box = GTK_BOX (gtk_builder_get_object (builder, "mem_graph_box"));
 
     mem_graph = new LoadGraph(LOAD_GRAPH_MEM);
@@ -295,7 +295,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     app->mem_graph = mem_graph;
 
     /* The net box */
-
+    
     net_graph_box = GTK_BOX (gtk_builder_get_object (builder, "net_graph_box"));
 
     net_graph = new LoadGraph(LOAD_GRAPH_NET);
@@ -471,7 +471,7 @@ static void
 on_activate_toggle (GSimpleAction *action, GVariant *parameter, gpointer data)
 {
     GVariant *state = g_action_get_state (G_ACTION (action));
-    g_action_change_state (G_ACTION (action), g_variant_new_boolean (!g_variant_get_boolean (state)));
+    g_action_change_state (G_ACTION (action), g_variant_new_boolean (!g_variant_get_boolean (state)));    
     g_variant_unref (state);
 }
 
@@ -530,7 +530,7 @@ on_activate_priority (GSimpleAction *action, GVariant *parameter, gpointer data)
 
     const gint32 priority = g_variant_get_int32 (parameter);
     switch (priority) {
-        case 32:
+        case 32: 
             procdialog_create_renice_dialog (app);
             break;
         default:
@@ -685,7 +685,7 @@ create_main_window (GsmApplication *app)
 
     g_settings_get (app->settings->gobj(), GSM_SETTING_WINDOW_STATE, "(iiii)",
                     &width, &height, &xpos, &ypos);
-
+    
     display = gdk_display_get_default ();
     monitor = gdk_display_get_monitor_at_point (display, xpos, ypos);
     if (monitor == NULL) {
@@ -750,7 +750,7 @@ create_main_window (GsmApplication *app)
     create_proc_view(app, builder);
 
     create_sys_view (app, builder);
-
+    
     create_disk_view (app, builder);
 
     g_settings_bind (app->settings->gobj (), GSM_SETTING_CURRENT_TAB, stack, "visible-child-name", G_SETTINGS_BIND_DEFAULT);
@@ -778,7 +778,7 @@ create_main_window (GsmApplication *app)
                            g_settings_get_value (app->settings->gobj (), GSM_SETTING_SHOW_WHOSE_PROCESSES));
 
     gtk_widget_show (GTK_WIDGET (main_window));
-
+    
     update_page_activities (app);
 
     g_object_unref (G_OBJECT (builder));
@@ -844,3 +844,4 @@ update_sensitivity(GsmApplication *app)
     guint duration_ms = gtk_revealer_get_transition_duration (GTK_REVEALER (app->proc_actionbar_revealer));
     g_timeout_add (duration_ms, scroll_to_selection, app);
 }
+
