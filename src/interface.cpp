@@ -565,6 +565,7 @@ update_page_activities (GsmApplication *app)
         gtk_widget_show (GTK_WIDGET (app->search_button));
         gtk_widget_show (GTK_WIDGET (app->process_menu_button));
         gtk_widget_hide (GTK_WIDGET (app->window_menu_button));
+        gtk_widget_hide (GTK_WIDGET (app->res_menu_button));
 
         update_sensitivity (app);
 
@@ -572,6 +573,16 @@ update_page_activities (GsmApplication *app)
             gtk_widget_grab_focus (GTK_WIDGET (app->search_entry));
         else
             gtk_widget_grab_focus (GTK_WIDGET (app->tree));
+    } else if (strcmp (current_page, "resources") == 0) {
+        proctable_freeze (app);
+
+        gtk_widget_hide (GTK_WIDGET (app->end_process_button));
+        gtk_widget_hide (GTK_WIDGET (app->search_button));
+        gtk_widget_hide (GTK_WIDGET (app->process_menu_button));
+        gtk_widget_hide (GTK_WIDGET (app->window_menu_button));
+        gtk_widget_show (GTK_WIDGET (app->res_menu_button));
+
+        update_sensitivity (app);
     } else {
         proctable_freeze (app);
 
@@ -579,6 +590,7 @@ update_page_activities (GsmApplication *app)
         gtk_widget_hide (GTK_WIDGET (app->search_button));
         gtk_widget_hide (GTK_WIDGET (app->process_menu_button));
         gtk_widget_show (GTK_WIDGET (app->window_menu_button));
+        gtk_widget_hide (GTK_WIDGET (app->res_menu_button));
 
         update_sensitivity (app);
     }
@@ -658,6 +670,7 @@ create_main_window (GsmApplication *app)
     GtkStack *stack;
     GMenuModel *window_menu_model;
     GMenuModel *process_menu_model;
+    GMenuModel *res_menu_model;
     GdkDisplay *display;
     GdkMonitor *monitor;
     GdkRectangle monitor_geometry;
@@ -710,6 +723,11 @@ create_main_window (GsmApplication *app)
     app->process_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "process_menu_button"));
     process_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-window-menu"));
     gtk_menu_button_set_menu_model (app->process_menu_button, process_menu_model);
+
+    app->res_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "res_menu_button"));
+    res_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "res-window-menu"));
+    gtk_menu_button_set_menu_model (app->res_menu_button, res_menu_model);
+
 
     app->window_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "window_menu_button"));
     window_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "generic-window-menu"));
