@@ -659,6 +659,11 @@ create_main_window (GsmApplication *app)
     GdkRectangle monitor_geometry;
     const char* session;
 
+    GdkColor main_window_bg;
+    main_window_bg.red = 0xffff;
+    main_window_bg.green = 0xffff;
+    main_window_bg.blue = 0xffff;
+
     int width, height, xpos, ypos;
 
     GtkBuilder *builder = gtk_builder_new();
@@ -668,6 +673,7 @@ create_main_window (GsmApplication *app)
     main_window = GTK_APPLICATION_WINDOW (gtk_builder_get_object (builder, "main_window"));
     gtk_window_set_application (GTK_WINDOW (main_window), app->gobj());
     gtk_widget_set_name (GTK_WIDGET (main_window), "gnome-system-monitor");
+    gtk_widget_modify_bg(GTK_WIDGET (main_window), GTK_STATE_NORMAL, &main_window_bg); //make background color white
     app->main_window = main_window;
 
     session = g_getenv ("XDG_CURRENT_DESKTOP");
