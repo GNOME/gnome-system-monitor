@@ -4,8 +4,8 @@ project('gnome-system-monitor',
   default_options : [
     'c_std=c11', 'cpp_std=c++11'
   ],
-  version: '3.29.2',
-  meson_version: '>=0.40.0',
+  version: '3.32.0',
+  meson_version: '>=0.43.0',
 )
 
 
@@ -34,12 +34,14 @@ dataconf.set('pkglibexecdir',
   join_paths(get_option('prefix'),get_option('libexecdir'),meson.project_name())
 )
 
+prefix = get_option('prefix')
+datadir = join_paths(prefix, get_option('datadir'))
 
 ################################################################################
 # Dependencies
 
 giomm   = dependency('giomm-2.4',   version: '>=2.46')
-glib    = dependency('glib-2.0',    version: '>=2.55.0')
+glib    = dependency('glib-2.0',    version: '>=2.56.0')
 glibmm  = dependency('glibmm-2.4',  version: '>=2.46')
 gmodule = dependency('gmodule-2.0')
 gtk3    = dependency('gtk+-3.0',    version: '>=3.22.0')
@@ -87,10 +89,14 @@ extra_cxxflags = [
  '-fpermissive',
 ]
 
-add_project_arguments(cc.get_supported_arguments(extra_flags + extra_cflags),
+
+cflags   = extra_flags + extra_cflags
+cxxflags = extra_flags + extra_cxxflags
+
+add_project_arguments(cc.get_supported_arguments(cflags),
   language: 'c'
 )
-add_project_arguments(cx.get_supported_arguments(extra_flags + extra_cxxflags),
+add_project_arguments(cx.get_supported_arguments(cxxflags),
   language: 'cpp'
 )
 
@@ -175,6 +181,7 @@ endif
 
 rootInclude = include_directories('.')
 
+subdir('data')
 subdir('po')
 subdir('scripts')
 subdir('src')
@@ -185,11 +192,13 @@ message('\n'.join(['',
 'Configuration:',
 '',
 '        Source code location:   @0@'.format(meson.source_root()),
-'        C Compiler:             @0@'.format(cc.get_id()),
-'        C++ Compiler:           @0@'.format(cx.get_id()),
-'        CFLAGS:                 @0@'.format(get_option('c_args')),
-'        CXXFLAGS:               @0@'.format(get_option('cpp_args')),
+'        C Compiler:             @0@ @1@'.format(cc.get_id(), cc.version()),
+'        C++ Compiler:           @0@ @1@'.format(cx.get_id(), cx.version()),
+'        CFLAGS:                 @0@'.format(cflags),
+'        CXXFLAGS:               @0@'.format(cxxflags),
 '        systemd support:        @0@'.format(libsystemd.found()),
 '        wnck support:           @0@ @1@'.format(libwnck.found(),
       libwnck.found() ? '(this will likely make system-monitor segfault)' : ''),
 ]))
+
+meson.add_install_script('meson_post_install.py')

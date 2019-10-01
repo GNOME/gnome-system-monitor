@@ -115,7 +115,7 @@ create_proc_view(GsmApplication *app, GtkBuilder * builder)
     g_object_bind_property (app->search_bar, "search-mode-enabled", app->search_button, "active", (GBindingFlags)(G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE));
 }
 
-void
+static void
 cb_cpu_color_changed (GsmColorButton *cp, gpointer data)
 {
     guint cpu_i = GPOINTER_TO_UINT (data);
@@ -403,7 +403,7 @@ on_activate_about (GSimpleAction *, GVariant *, gpointer data)
         "copyright",            "Copyright \xc2\xa9 2001-2004 Kevin Vandersloot\n"
                                 "Copyright \xc2\xa9 2005-2007 Benoît Dejean\n"
                                 "Copyright \xc2\xa9 2011 Chris Kühl",
-        "logo-icon-name",       "utilities-system-monitor",
+        "logo-icon-name",       "org.gnome.SystemMonitor",
         "authors",              authors,
         "artists",              artists,
         "documenters",          documenters,
@@ -559,7 +559,7 @@ change_priority_state (GSimpleAction *action, GVariant *state, gpointer data)
     g_simple_action_set_state (action, state);
 }
 
-void
+static void
 update_page_activities (GsmApplication *app)
 {
     const char *current_page = gtk_stack_get_visible_child_name (app->stack);
@@ -573,6 +573,7 @@ update_page_activities (GsmApplication *app)
         gtk_widget_show (GTK_WIDGET (app->end_process_button));
         gtk_widget_show (GTK_WIDGET (app->search_button));
         gtk_widget_show (GTK_WIDGET (app->process_menu_button));
+        gtk_widget_hide (GTK_WIDGET (app->window_menu_button));
 
         update_sensitivity (app);
 
@@ -586,6 +587,7 @@ update_page_activities (GsmApplication *app)
         gtk_widget_hide (GTK_WIDGET (app->end_process_button));
         gtk_widget_hide (GTK_WIDGET (app->search_button));
         gtk_widget_hide (GTK_WIDGET (app->process_menu_button));
+        gtk_widget_show (GTK_WIDGET (app->window_menu_button));
 
         update_sensitivity (app);
     }
@@ -659,7 +661,7 @@ create_main_window (GsmApplication *app)
 {
     GtkApplicationWindow *main_window;
     GtkStack *stack;
-    GtkMenuButton *process_menu_button;
+    GMenuModel *window_menu_model;
     GMenuModel *process_menu_model;
     GdkDisplay *display;
     GdkMonitor *monitor;
@@ -710,9 +712,13 @@ create_main_window (GsmApplication *app)
     if (app->settings->get_boolean (GSM_SETTING_MAXIMIZED))
         gtk_window_maximize (GTK_WINDOW (main_window));
 
-    app->process_menu_button = process_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "process_menu_button"));
+    app->process_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "process_menu_button"));
     process_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-window-menu"));
-    gtk_menu_button_set_menu_model (process_menu_button, process_menu_model);
+    gtk_menu_button_set_menu_model (app->process_menu_button, process_menu_model);
+
+    app->window_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "window_menu_button"));
+    window_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "generic-window-menu"));
+    gtk_menu_button_set_menu_model (app->window_menu_button, window_menu_model);
 
     app->end_process_button = GTK_BUTTON (gtk_builder_get_object (builder, "end_process_button"));
 
@@ -787,7 +793,7 @@ create_main_window (GsmApplication *app)
     g_object_unref (G_OBJECT (builder));
 }
 
-gboolean
+static gboolean
 scroll_to_selection (gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;

@@ -133,7 +133,7 @@ get_last_selected (GtkTreeModel *model, GtkTreePath *path,
     gtk_tree_model_get (model, iter, COL_POINTER, info, -1);
 }
 
-void
+static void
 cb_row_selected (GtkTreeSelection *selection, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
@@ -192,15 +192,11 @@ cb_refresh_icons (GtkIconTheme *theme, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
-    if(app->timeout) {
-        g_source_remove (app->timeout);
-    }
-
     for (auto& v : app->processes) {
         app->pretty_table->set_icon(v.second);
     }
 
-    cb_timeout(app);
+    proctable_update (app);
 }
 
 static gboolean

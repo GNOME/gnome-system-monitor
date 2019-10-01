@@ -74,7 +74,7 @@ procdialog_create_kill_dialog (GsmApplication *app, int signal)
                                          &selected_process);
 
 	std::string *process_name = &selected_process->name;
-	std::string short_process_name = process_name->substr(0, process_name->find(" "));
+	std::string short_process_name = process_name->substr(0, process_name->find(" -"));
 
         switch (signal) {
             case SIGKILL:

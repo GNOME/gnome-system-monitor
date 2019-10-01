@@ -91,8 +91,24 @@
     </key>
 
     <key name="cpu-colors" type="a(us)">
-      <default>[(0,'#FF6E00'),(1,'#CB0C29'),(2,'#49A835'),(3,'#2D7DB3')]
-      </default>
+      <default>[
+                (0, '#e6194B'),
+                (1, '#f58231'),
+                (2, '#ffe119'),
+                (3, '#bfef45'),
+                (4, '#3cb44b'),
+                (5, '#42d4f4'),
+                (6, '#4363d8'),
+                (7, '#911eb4'),
+                (8, '#f032e6'),
+                (9, '#fabebe'),
+                (10,'#ffd8b1'),
+                (11,'#fffac8'),
+                (12,'#aaffc3'),
+                (13,'#469990'),
+                (14,'#000075'),
+                (15,'#e6beff')
+                ]</default>
       <summary>CPU colors
       </summary>
       <description>Each entry is in the format (CPU#, Hexadecimal color value)
@@ -133,6 +149,25 @@
       <summary>Show network traffic in bits
       </summary>
     </key>
+
+    <key name="cpu-stacked-area-chart" type="b">
+      <default>false
+      </default>
+      <summary>Show CPU chart as stacked area chart
+      </summary>
+      <description>If TRUE, system-monitor shows the CPU chart as a stacked area chart instead of a line chart.
+      </description>
+    </key>
+
+    <key name="cpu-smooth-graph" type="b">
+      <default>true
+      </default>
+      <summary>Show CPU chart as smooth graph using Bezier curves
+      </summary>
+      <description>If TRUE, system-monitor shows the CPU chart as a smoothed graph, otherwise as a line chart.
+      </description>
+    </key>
+
 
     <child name="proctree" schema="org.gnome.gnome-system-monitor.proctree" />
     <child name="disktreenew" schema="org.gnome.gnome-system-monitor.disktreenew" />

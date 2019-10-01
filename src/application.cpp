@@ -191,6 +191,7 @@ GsmApplication::GsmApplication()
       stack(NULL),
       refresh_button(NULL),
       process_menu_button(NULL),
+      window_menu_button(NULL),
       end_process_button(NULL),
       search_button(NULL),
       search_entry(NULL),
@@ -364,6 +365,7 @@ void GsmApplication::on_startup()
     set_app_menu (menu);
 
     add_accelerator("<Primary>d", "win.show-dependencies", NULL);
+    add_accelerator("<Primary>q", "app.quit", NULL);
     add_accelerator("<Primary>s", "win.send-signal-stop", g_variant_new_int32 (SIGSTOP));
     add_accelerator("<Primary>c", "win.send-signal-cont", g_variant_new_int32 (SIGCONT));
     add_accelerator("<Primary>e", "win.send-signal-end", g_variant_new_int32 (SIGTERM));
@@ -373,7 +375,7 @@ void GsmApplication::on_startup()
     add_accelerator("<Alt>Return", "win.process-properties", NULL);
     add_accelerator("<Primary>f", "win.search", g_variant_new_boolean (TRUE));
 
-    Gtk::Window::set_default_icon_name ("utilities-system-monitor");
+    Gtk::Window::set_default_icon_name ("org.gnome.SystemMonitor");
 
     glibtop_init ();
 

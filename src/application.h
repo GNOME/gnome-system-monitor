@@ -205,6 +205,7 @@ public:
     GtkStack         *stack;
     GtkButton        *refresh_button;
     GtkMenuButton    *process_menu_button;
+    GtkMenuButton    *window_menu_button;
     GtkButton        *end_process_button;
     GtkButton        *search_button;
     GtkSearchEntry   *search_entry;
