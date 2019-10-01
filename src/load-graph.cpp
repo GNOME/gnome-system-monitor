@@ -400,19 +400,25 @@ namespace
 {
 
     void set_memory_label_and_picker(GtkLabel* label, GsmColorButton* picker,
-                                     guint64 used, guint64 total, double percent)
+                                     guint64 used, guint64 cached, guint64 total, double percent)
     {
         char* used_text;
+        char* cached_text;
         char* total_text;
         char* text;
 
         used_text = g_format_size_full(used, G_FORMAT_SIZE_IEC_UNITS);
+        cached_text = g_format_size_full(cached, G_FORMAT_SIZE_IEC_UNITS);
         total_text = g_format_size_full(total, G_FORMAT_SIZE_IEC_UNITS);
         if (total == 0) {
             text = g_strdup(_("not available"));
         } else {
             // xgettext: 540MiB (53 %) of 1.0 GiB
-            text = g_strdup_printf(_("%s (%.1f%%) of %s"), used_text, 100.0 * percent, total_text);
+            if (cached == 0) {
+                text = g_strdup_printf(_("%s (%.1f%%) of %s"), used_text, 100.0 * percent, total_text);
+            } else {
+                text = g_strdup_printf(_("%s (%.1f%%) of %s\nCache: %s"), used_text, 100.0 * percent, total_text, cached_text);
+            }
         }
         gtk_label_set_text(label, text);
         g_free(used_text);
@@ -440,11 +446,11 @@ get_memory (LoadGraph *graph)
     mempercent  = (float)mem.user  / (float)mem.total;
     set_memory_label_and_picker(GTK_LABEL(graph->labels.memory),
                                 GSM_COLOR_BUTTON(graph->mem_color_picker),
-                                mem.user, mem.total, mempercent);
+                                mem.user, mem.cached, mem.total, mempercent);
 
     set_memory_label_and_picker(GTK_LABEL(graph->labels.swap),
                                 GSM_COLOR_BUTTON(graph->swap_color_picker),
-                                swap.used, swap.total, swappercent);
+                                swap.used, 0, swap.total, swappercent);
     
     gtk_widget_set_sensitive (GTK_WIDGET (graph->swap_color_picker), swap.total > 0);
     

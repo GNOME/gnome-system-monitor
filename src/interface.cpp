@@ -277,8 +277,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
 
     label = GTK_LABEL (gtk_builder_get_object(builder, "memory_label"));
 
-    gtk_grid_attach_next_to (table, GTK_WIDGET (color_picker), GTK_WIDGET (label), GTK_POS_LEFT, 1, 2);
-    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(mem_graph)->memory), GTK_WIDGET (label), GTK_POS_BOTTOM, 1, 1);
+    gtk_grid_attach_next_to (table, GTK_WIDGET (color_picker), GTK_WIDGET (label), GTK_POS_LEFT, 1, 3);
+    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(mem_graph)->memory), GTK_WIDGET (label), GTK_POS_BOTTOM, 1, 2);
 
     color_picker = load_graph_get_swap_color_picker(mem_graph);
     g_signal_connect (G_OBJECT (color_picker), "color-set",
@@ -289,8 +289,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
 
     label = GTK_LABEL (gtk_builder_get_object(builder, "swap_label"));
 
-    gtk_grid_attach_next_to (table, GTK_WIDGET (color_picker), GTK_WIDGET (label), GTK_POS_LEFT, 1, 2);
-    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(mem_graph)->swap), GTK_WIDGET (label), GTK_POS_BOTTOM, 1, 1);
+    gtk_grid_attach_next_to (table, GTK_WIDGET (color_picker), GTK_WIDGET (label), GTK_POS_LEFT, 1, 3);
+    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(mem_graph)->swap), GTK_WIDGET (label), GTK_POS_BOTTOM, 1, 2);
 
     app->mem_graph = mem_graph;
 
