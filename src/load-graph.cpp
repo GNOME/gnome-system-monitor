@@ -1,6 +1,6 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #include <config.h>
-
+#include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
 #include <glibtop.h>
@@ -9,12 +9,420 @@
 #include <glibtop/swap.h>
 #include <glibtop/netload.h>
 #include <glibtop/netlist.h>
+#include <glibtop/sysinfo.h>
 
 #include "application.h"
 #include "load-graph.h"
 #include "util.h"
 #include "legacy/gsm_color_button.h"
+#include <iostream>
+#include <stdlib.h>
 
+//static cairo_surface_t *surface = NULL;
+
+struct cr_surface{
+    cairo_surface_t *surface = NULL;
+};
+
+cr_surface core_surface_array[32];
+
+//function that obtains the dimensions of core graph, count number of core graph in x and y axis
+int
+get_cpu_core_matrix(int ncpu,int *matrix_dim){
+    double rough_x_count = sqrt(ncpu);
+    int est_x_matrix = (int)rough_x_count;
+    if(rough_x_count==est_x_matrix){
+        matrix_dim[0]=est_x_matrix;
+        matrix_dim[1]=est_x_matrix;
+        return 0;
+    }
+    int i;
+    for(i=est_x_matrix; i <= ncpu; i++)
+    {
+        if (ncpu%i == 0)
+        {
+            matrix_dim[0]=i;
+            matrix_dim[1]=ncpu/i;
+            break;
+        }
+    }
+    return 0;
+}
+
+
+//hack while glibtop does not have this information
+void 
+linux_cpu_info (struct LoadData *lData)
+{
+    char *buffer;
+    char line_buffer[200];
+    const glibtop_sysinfo * sysinfo = glibtop_get_sysinfo();
+    lData->ncpu = sysinfo->ncpu;
+    get_cpu_core_matrix(lData->ncpu,lData->ncpu_matrix);
+
+
+    FILE *cpuinfo = fopen("/proc/cpuinfo", "rb");
+
+    while (fgets(line_buffer, 200, cpuinfo) != NULL)
+    {
+        if (strstr(line_buffer, "model name") != NULL)
+        {
+            buffer = strchr(line_buffer, ':');
+            if (buffer != NULL)
+            {
+                buffer++; // we want to look at what's _after_ the ':' 
+            }
+            else
+            {
+                //nothing
+            }
+
+            break;
+        }
+    }
+
+    fclose(cpuinfo);
+
+    //sprintf(buffer,"%i",lData->ncpu_matrix[0]); //get total number of cpu number
+    gtk_label_set_text(GTK_LABEL(lData->cpu_model), buffer);
+
+}
+
+gfloat f (gfloat y)
+{
+    return -y;//return x*sin((y*x/M_PI)+M_PI);//y*50*sin ((x/M_PI)+M_PI);
+}
+    int bol_first_draw = 1;
+
+
+void draw_cpu_graph(struct LoadData *lData,int s){
+       //
+    int h;
+    int j;
+    int i;
+    GtkWidget *widget_core = GTK_WIDGET(lData->widget_surface_array[s].da);
+
+    cairo_t *cr_core = cairo_create(core_surface_array[s].surface);
+    cairo_set_source_rgba(cr_core, 1, 1, 1, 1);
+    cairo_paint(cr_core);
+
+    float width_core = gtk_widget_get_allocated_width(widget_core);
+    float height_core = gtk_widget_get_allocated_height(widget_core);
+
+    cairo_set_line_width(cr_core, 1);
+    //printf("width: %lf\n",width);
+    //cairo_set_line_cap(cr_core, CAIRO_LINE_CAP_ROUND);
+
+    cairo_save(cr_core);
+
+
+    //float box_dist = ((width_core - (lData->ncpu_matrix[0]*0.5) - ((lData->ncpu_matrix[0]-1)*5)) / lData->ncpu_matrix[0]);
+    float box_dist = ((width_core) / lData->ncpu_matrix[0]);
+    float box_lenght = ((width_core - ((lData->ncpu_matrix[0]-1)*5)) / lData->ncpu_matrix[0]);
+    //float box_height = height_core;
+    i = 0;
+    
+    //grid boxes for each cpu core
+    //start of - make this a background so this will not be redrawn each time
+    cairo_set_source_rgb(cr_core, 0.152941176, 0.545098039, 0.807843137);
+    cairo_set_line_width(cr_core, 1);
+    for (i = 0; i < 8; i++)
+    {
+        cairo_rectangle(cr_core, (box_dist * i), 0, box_lenght, height_core);
+    }
+    cairo_stroke(cr_core);
+    cairo_set_source_rgba(cr_core, 0.376470588, 0.749019608, 1, 0.5);
+    cairo_set_line_width(cr_core, 0.5);
+    for (i = 0; i < lData->ncpu_matrix[0]; i++)
+    {
+        for (j = 1; j <= 5; j++)
+        {
+            cairo_move_to(cr_core, ((box_lenght / 5) * j) + box_dist * i, 0);
+            cairo_line_to(cr_core, ((box_lenght / 5) * j) + box_dist * i, height_core);
+        }
+        for (j = 1; j <= 8; j++)
+        {
+            cairo_move_to(cr_core, 0.5 + box_dist * i, (10 * j) + 0.5);
+            cairo_line_to(cr_core, box_lenght + 0.5 + box_dist * i, (10 * j) + 0.5);
+        }
+    } 
+    cairo_stroke(cr_core);
+    //end of - make this a background so this will not be redrawn each time
+
+    cairo_set_source_rgb(cr_core, 0.176470588, 0.654901961, 0.97254902);
+
+    cairo_translate(cr_core, 0.5, height_core);
+    /* Link each data point */
+    i = 0;
+    for (i = 0; i < 62; i += 1)
+    {
+        cairo_line_to(cr_core, i * (box_lenght) / 62, f(lData->cpu_pulse[1+(s*lData->ncpu_matrix[0])][i] * (height_core - 0.5) / 100)); //i/exp(load/100)
+    }
+
+    /* Draw the curve */
+    cairo_stroke(cr_core);
+
+    //cairo_set_source_rgb(cr_core, 0.176470588, 0.654901961, 0.97254902);
+    for (h = 2; h <= 8; h++)
+    {
+        cairo_translate(cr_core, box_dist, 0);
+        i = 0;
+        for (i = 0; i < 62; i += 1)
+        {
+
+            cairo_line_to(cr_core, i * (box_lenght) / 62, f(lData->cpu_pulse[h+(s*lData->ncpu_matrix[0])][i] * (height_core - 0.5) / 100)); //i/exp(load/100)
+        }
+
+        /* Draw the curve */
+        cairo_stroke(cr_core);
+    }
+
+    //cairo_clip(cr_core);
+    cairo_destroy(cr_core);
+
+    gtk_widget_queue_draw(GTK_WIDGET(lData->widget_surface_array[s].da));
+}
+
+void
+draw_total_cpu_graph(struct LoadData *lData){
+    GtkWidget *widget = GTK_WIDGET(lData->da);
+    static int ang = 0;
+
+    cairo_t *cr = cairo_create(lData->cpu_total_surface );
+    cairo_set_source_rgba(cr, 1, 1, 1,1);
+    cairo_paint(cr);
+
+    int width = gtk_widget_get_allocated_width(widget);
+    int height = gtk_widget_get_allocated_height(widget);
+    int x = (int)(width / 2.0 * (cos(3.1416 / 180 * ang) + 1));
+    int y = (int)(height / 2.0 * (sin(3.1416 / 180 * ang) + 1));
+    ang = (ang + 2) % 360;
+
+    cairo_set_line_width(cr, 7.5);
+    cairo_translate(cr, (width / 2), (height / 2));
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+
+    double angle1 = 120 * (M_PI / 180.0);   // angles are specified
+    double angle2 = 60.0 * (M_PI / 180.0);  // in radians
+    double angle3 = (120.000001+(300*lData->load[0]/100))* (M_PI / 180.0); // in radians
+    
+    cairo_save(cr);
+    cairo_set_source_rgb(cr, 0.952941176, 0.952941176, 0.952941176);
+    cairo_arc(cr, 0, 0, 82.0, angle1, angle2);
+    cairo_stroke(cr);
+
+    cairo_set_source_rgb(cr, 0.176470588, 0.654901961, 0.97254902);
+    cairo_arc(cr, 0, 0, 82.0, angle1, angle3);
+    cairo_stroke(cr);
+
+    cairo_set_source_rgb(cr, 0.176470588, 0.654901961, 0.97254902);
+    cairo_translate(cr, 37-(width / 2), -10);
+    //cairo_scale (cr, ZOOM_X, -ZOOM_Y);
+
+    /* Determine the data points to calculate (ie. those in the clipping zone */
+    cairo_set_line_width (cr, 2);
+
+    /* Link each data point */
+    int i;
+
+    for (i = 0; i < 62; i += 1){
+        //ls = ;
+        cairo_line_to (cr, i*1.75, f (lData->cpu_pulse[0][i])); //i/exp(load/100)
+    }
+    /* Draw the curve */
+
+    cairo_stroke (cr);
+
+    cairo_destroy(cr);
+
+    gtk_widget_queue_draw(GTK_WIDGET(lData->da));
+}
+
+gboolean
+on_timeout(
+    struct LoadData *lData)
+{
+    draw_total_cpu_graph(lData);
+    /*if (stop_timeout)
+        return FALSE;*/
+    int i;
+    for(i=0;i<lData->ncpu_matrix[1];i++){
+        draw_cpu_graph(lData,i);
+    }
+
+    return TRUE;
+}
+
+gboolean update_load_data(struct LoadData *lData)
+{
+    glibtop_cpu cpu;
+
+    glibtop_get_cpu (&cpu);
+    char buffer[50];
+
+    //double load;
+    int prev;
+    if(lData->current - 1<0){
+        prev = 61;
+    }else{
+        prev = lData->current - 1;
+    }
+    int i;
+    for(i=0;i<62;i++)
+    {
+        lData->cpu_pulse[0][i]=   lData->cpu_pulse[0][i+1]; //move the data 1 step to the left
+    }
+    lData->n_cpu_total[0][lData->current] = cpu.total;
+    lData->n_cpu_usage[0][lData->current] = cpu.user + cpu.nice + cpu.sys;
+    lData->load[0] = 100*(lData->n_cpu_usage[0][lData->current] - lData->n_cpu_usage[0][prev])/(lData->n_cpu_total[0][lData->current] - lData->n_cpu_total[0][prev]);
+
+    double dm = ((lData->load[0]*lData->current)/M_PI)+M_PI;
+    lData->cpu_pulse[0][61] = 16*sqrt((lData->load[0]) / 80) * ((sin(2 * dm) + sin(3 * dm)));
+
+    //for core
+    int j;
+    for(i=1;i<=lData->ncpu;i++)
+    {
+        for(j=0;j<62;j++)
+        {
+           lData->cpu_pulse[i][j]=   lData->cpu_pulse[i][j+1]; //move the data 1 step to the left
+        }
+        lData->n_cpu_total[i][lData->current] = cpu.xcpu_total[i-1];
+        lData->n_cpu_usage[i][lData->current] = cpu.xcpu_user[i-1] + cpu.xcpu_nice[i-1] + cpu.xcpu_sys[i-1];
+        lData->load[i] = 100*(lData->n_cpu_usage[i][lData->current] - lData->n_cpu_usage[i][prev])/(lData->n_cpu_total[i][lData->current] - lData->n_cpu_total[i][prev]);
+        lData->cpu_pulse[i][61] = lData->load[i];
+    }
+
+    lData->current++;
+
+    sprintf(buffer, "%.1f", lData->load[0]);
+    gtk_misc_set_alignment(GTK_MISC(lData->cpu_total),1,0); 
+    gtk_label_set_text(GTK_LABEL(lData->cpu_total), strcat(buffer, "%"));
+
+    if(lData->current>61){
+        lData->current = 0;
+    }
+    on_timeout(lData);
+    return TRUE;
+}
+
+static gboolean
+total_cpu_configure_event(
+    GtkWidget *widget,
+    GdkEventConfigure *event,
+    struct LoadData *lData)
+{
+    static int save_w = 0, save_h = 0;
+
+    if (save_w == event->width && save_h == event->height)
+        return TRUE;
+
+    save_w = event->width;
+    save_h = event->height;
+
+    if (lData->cpu_total_surface )
+        cairo_surface_destroy(lData->cpu_total_surface );
+
+    lData->cpu_total_surface  = gdk_window_create_similar_surface(
+        gtk_widget_get_window(widget), CAIRO_CONTENT_COLOR,
+        save_w, save_h);
+
+    cairo_t *cr = cairo_create(lData->cpu_total_surface);
+    cairo_set_source_rgb(cr, 1, 1, 1);
+    cairo_paint(cr);
+    cairo_destroy(cr);
+    
+    return TRUE;
+}
+
+static gboolean
+total_cpu_draw(
+    GtkWidget *widget,
+    cairo_t *cr,
+    struct LoadData *lData)
+{
+    cairo_set_source_surface(cr, lData->cpu_total_surface, 0, 0);
+    cairo_paint(cr);
+    return TRUE;
+}
+
+//solvable create its own struct containing its surface and the widget
+static gboolean
+cpu_core_configure_event(
+    GtkWidget *widget,
+    GdkEventConfigure *event,
+    struct LoadData *lData)
+{
+    //cairo_surface_t *surface = userdat;
+    static int save_w = 0, save_h = 0;
+
+    if (save_w == event->width && save_h == event->height)
+        return TRUE;
+
+    save_w = event->width;
+    save_h = event->height;
+
+    if (core_surface_array[lData->surface_index].surface)
+        cairo_surface_destroy(core_surface_array[lData->surface_index].surface);
+
+    core_surface_array[lData->surface_index].surface  = gdk_window_create_similar_surface(
+        gtk_widget_get_window(widget), CAIRO_CONTENT_COLOR,
+        save_w, save_h);
+
+    cairo_t *cr = cairo_create(core_surface_array[lData->surface_index].surface);
+    cairo_set_source_rgb(cr, 1, 1, 1);
+    cairo_paint(cr);
+    cairo_destroy(cr);
+    
+    return TRUE;
+}
+
+static gboolean
+cpu_core_draw(
+    GtkWidget *widget,
+    cairo_t *cr,
+    struct LoadData *lData)
+{
+    //    cairo_surface_t *surface = userdat;
+    cairo_set_source_surface(cr, core_surface_array[lData->surface_index].surface, 0, 0);
+    cairo_paint(cr);
+    return TRUE;
+}
+
+void start_standard_resource (struct LoadData *lData)
+{
+
+    gtk_widget_set_size_request(lData->da, 179, 179);
+    //gtk_box_pack_start(GTK_BOX(box), da, TRUE, TRUE, 0);
+    //place after cpu info
+
+    g_signal_connect(lData->da, "draw",
+                     G_CALLBACK(total_cpu_draw), lData);
+    g_signal_connect(lData->da, "configure-event",
+                     G_CALLBACK(total_cpu_configure_event), lData);
+
+ 
+    lData->current = 0;
+
+    linux_cpu_info (lData);
+    lData->widget_surface_array = (widget_array *)malloc (lData->ncpu_matrix[1] * sizeof (widget_array));
+    int i;
+    for(i=0;i<lData->ncpu_matrix[1];i++){
+        lData->widget_surface_array[i].da = (GtkWidget *)malloc (sizeof (GtkWidget));
+        lData->widget_surface_array[i].da = GTK_WIDGET (GTK_DRAWING_AREA (gtk_drawing_area_new ()));
+        gtk_widget_show (lData->widget_surface_array[i].da);
+        //gtk_container_add(GTK_CONTAINER(lData->box_ncore),lData->widget_surface_array[0].da);
+        gtk_box_pack_start (lData->box_ncore, lData->widget_surface_array[i].da, TRUE, TRUE, 2);
+        //for cpu core graph
+        lData->surface_index = i;
+        g_signal_connect(lData->widget_surface_array[i].da, "draw",
+                        G_CALLBACK(cpu_core_draw), lData);
+        g_signal_connect(lData->widget_surface_array[i].da, "configure-event",
+                        G_CALLBACK(cpu_core_configure_event), lData);  
+    }
+    //add gtk surface programatically
+    g_timeout_add(1000, (GSourceFunc)update_load_data, lData);
+}
 
 void LoadGraph::clear_background()
 {
@@ -666,6 +1074,7 @@ get_net (LoadGraph *graph)
 static gboolean
 load_graph_update (gpointer user_data)
 {
+    return false;
     LoadGraph * const graph = static_cast<LoadGraph*>(user_data);
 
     if (graph->render_counter == graph->frames_per_unit - 1) {
