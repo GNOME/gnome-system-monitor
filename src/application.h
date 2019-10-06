@@ -205,7 +205,10 @@ public:
     GtkStack         *stack;
     GtkButton        *refresh_button;
     GtkMenuButton    *process_menu_button;
+<<<<<<< HEAD
     GtkMenuButton    *res_menu_button;
+=======
+>>>>>>> 52e0f83821067b2385d50bdd5097591aa72ac182
     GtkMenuButton    *window_menu_button;
     GtkButton        *end_process_button;
     GtkButton        *search_button;
