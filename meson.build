@@ -49,7 +49,6 @@ gtkmm   = dependency('gtkmm-3.0',   version: '>=3.3.18')
 libgtop = dependency('libgtop-2.0', version: '>=2.37.0')
 librsvg = dependency('librsvg-2.0', version: '>=2.35')
 libxml  = dependency('libxml-2.0',  version: '>=2.0')
-#libdazzle  = dependency('libdazzle-1.0',  version: '>=2.28.5')
 
 
 if get_option('wnck')
@@ -178,7 +177,11 @@ endif
 ################################################################################
 # Subdirectories
 
+<<<<<<< HEAD
 rootInclude = include_directories('.','/usr/include/libdazzle-1.0','/usr/include/libdazzle-1.0/graphing')
+=======
+rootInclude = include_directories('.')
+>>>>>>> 52e0f83821067b2385d50bdd5097591aa72ac182
 
 subdir('data')
 subdir('po')

@@ -14,7 +14,10 @@
 #define GSM_SETTING_CURRENT_TAB             "current-tab"
 #define GSM_SETTING_PROCESS_UPDATE_INTERVAL "update-interval"
 #define GSM_SETTING_SHOW_WHOSE_PROCESSES    "show-whose-processes"
+<<<<<<< HEAD
 #define GSM_SETTING_RES_STANDARD_CLASSIC    "res-standard-classic"
+=======
+>>>>>>> 52e0f83821067b2385d50bdd5097591aa72ac182
 #define GSM_SETTING_SHOW_DEPENDENCIES       "show-dependencies"
 #define GSM_SETTING_SHOW_KILL_DIALOG        "kill-dialog"
 #define GSM_SETTING_SOLARIS_MODE            "solaris-mode"
