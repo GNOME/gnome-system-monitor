@@ -1,0 +1,53 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="topic" style="task"
+      id="process-identify-file">
+  <info>
+    <revision version="0.2" pkgversion="3.11" date="2014-01-26" status="review"/>
+    <link type="guide" xref="index#processes-tasks" group="processes-tasks" />
+
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+
+    <credit type="author copyright">
+      <name>Phil Bull</name>
+      <email>philbull@gmail.com</email>
+      <years>2011</years>
+    </credit>
+
+    <credit type="author copyright">
+      <name>Michael Hill</name>
+      <email>mdhillca@gmail.com</email>
+      <years>2011, 2014</years>
+    </credit>
+
+    <desc>Search for a file that's open to display which process is using it.</desc>
+  </info>
+
+  <title>Find which program is using a specific file</title>
+
+  <comment>
+    <cite date="2011-06-18" href="mailto:philbull@gmail.com">Phil Bull</cite>
+    <p>Explain how you can search for a file (or part of a filename) and it will
+    show which processes are using it. Explain why this might be useful.</p>
+  </comment>
+
+  <p>Sometimes an error message will tell you a device (like the sound device or
+ the DVD ROM) is busy, or the file you want to edit is in use. To find the
+ process or processes responsible:</p>
+
+    <steps>
+      <item><p>Click
+        <guiseq><gui>System Monitor</gui><gui>Search for Open Files</gui></guiseq>.</p>
+      </item>
+      <item><p>Enter a filename or part of a filename. This could be
+        <file>/dev/snd</file> for the sound device or <file>/media/cdrom</file>
+        for the DVD ROM.</p>
+      </item>
+      <item><p>Click <gui>Find</gui>.</p>
+      </item>
+    </steps>
+
+  <p>This will display a list of running processes that are currently accessing
+ the file or files that match the search. Quitting the program should allow you
+ to access the device or edit the file.</p>
+
+</page>

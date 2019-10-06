@@ -1,0 +1,47 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="topic" style="task"
+      id="fs-info">
+  <info>
+    <revision version="0.1" date="2014-01-27" status="review"/>
+    <link type="guide" xref="index#filesystems" group="filesystems" />
+    <link type="seealso" xref="fs-device" />
+    <link type="seealso" xref="units" />
+    
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+
+    <credit type="author copyright">
+      <name>Phil Bull</name>
+      <email>philbull@gmail.com</email>
+      <years>2014</years>
+    </credit>
+
+    <desc>Explanations of all of the fields shown in the <gui>File System</gui> tab.</desc>
+  </info>
+
+  <title>Learn what the File Systems information means</title>
+  
+  <p>The File Systems tab lists which disks are attached to the computer, what they are named, and how much disk space is available on them.</p>
+  
+  <list>
+    <item>
+      <p><gui>Device</gui> lists the name that the operating system has assigned to the disk. Every bit of computer hardware that is attached to the computer is given an entry in the <file>/dev</file> directory that is used to identify it. For hard disks, it will usually look something like <file>/dev/sda</file>.</p>
+    </item>
+  
+    <item>
+      <p><gui>Directory</gui> tells you where the disk or partition is <em>mounted</em>. Mounting is the technical term for making a disk or partition available for use. A disk can be physically connected to the computer, but unless it is also mounted, the files on it cannot be accessed. When a disk is mounted, it will be linked to a folder that you can then go to in order to access the files on the disk. For example, if the <gui>Directory</gui> is listed as <file>/media/disk</file>, you can access the files by going to the <file>/media/disk</file> folder on your computer.</p>
+    </item>
+    
+    <item>
+      <p><gui>Type</gui> tells you the type of <em>filesystem</em> that is used on the disk or partition. A filesystem specifies how the computer should store files on the disk. Some operating systems can only understand some filesystem types and not others, so it can be useful to check which filesystem an external hard disk uses, for example.</p>
+    </item>
+    
+    <item>
+      <p><gui>Total</gui> shows the total capacity of the disk and <gui>Available</gui> shows how much of that capacity is available to use for files and programs. <gui>Used</gui> shows how much disk space is already being used.</p>
+    </item>
+    
+  </list>
+
+  <p>The sum of Used and Available will not necessarily add up to the Total. This is because some disk space might be reserved for use by the system. The important number to look at is the Available column, as this tells you how much disk space you can actually use.</p>
+  <p>You might also find that the Total doesn't match up with the advertised capacity of your hard disk. This is normal, and happens for a couple of reasons. One is that hard disk manufacturers use a slightly different way of counting disk capacity to everyone else. Another is that some disk space might be reserved for use by the operating system. If there is a big difference from the capacity you expect, it might be because your disk has been split up into multiple partitions.</p>
+
+</page>

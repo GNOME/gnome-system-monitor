@@ -1,0 +1,50 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="topic" style="task"
+      id="process-loadaverage">
+  <info>
+    <revision version="0.1" date="2011-08-19" status="stub"/>
+    <link type="guide" xref="index" group="processes-info" />
+
+    <credit type="author copyright">
+      <name>Phil Bull</name>
+      <email>philbull@gmail.com</email>
+      <years>2011</years>
+    </credit>
+
+    <credit type="author copyright">
+      <name>Michael Hill</name>
+      <email>mdhillca@gmail.com</email>
+      <years>2011</years>
+    </credit>
+
+    <desc>The <em>load average</em> tells you how much work your computer has
+ been doing over the past few minutes.</desc>
+  </info>
+
+  <title>What is the load average?</title>
+
+  <comment>
+    <cite date="2011-06-18" href="mailto:philbull@gmail.com">Phil Bull</cite>
+    <p>Explain how to interpret the load averages quoted on the Processes tab.</p>
+  </comment>
+
+  <p>The <gui>load average</gui> shows the load on the CPU over three different
+ time intervals, one minute, five minutes and fifteen minutes. These are displayed
+ on the <gui>Processes</gui> tab above the process list, and are an indicator of
+ system processing capacity.</p>
+
+  <p>The <em>load</em> is the number of processes currently running plus the
+ number of processes <em>queued</em> to run on the system's CPU(s). A load
+ showing a utilization of 100% would be roughly 1.0 times the number of CPUs or
+ <link xref="cpu-multicore">cores</link> in the system; load averages constantly
+ hitting this number would indicate that the system is fully-loaded with no
+ processes waiting for processor time. Lower numbers indicate that the system's
+ processing power is sufficient for the processes being run, while numbers that
+ are consistently higher might mean more processing power is needed.</p>
+
+  <p>Three intervals are shown so that spikes and trends in the numbers can be
+ taken into account: if the load average spikes higher in the one- or
+ five-minute intervals, but settles down below the 100% mark over the
+ fifteen-minute interval, system processing capacity is probably sufficient.</p>
+
+</page>

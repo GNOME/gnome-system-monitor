@@ -1,0 +1,62 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="topic" style="task"
+      id="process-identify-hog">
+  <info>
+    <revision version="0.2" pkgversion="3.11" date="2014-01-26" status="review"/>
+    <link type="guide" xref="index#processes-tasks" group="processes-tasks" />
+
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+
+    <credit type="author copyright">
+      <name>Phil Bull</name>
+      <email>philbull@gmail.com</email>
+      <years>2011</years>
+    </credit>
+
+    <credit type="author copyright">
+      <name>Michael Hill</name>
+      <email>mdhillca@gmail.com</email>
+      <years>2011, 2014</years>
+    </credit>
+
+    <desc>Sort the list of processes by <gui>% CPU</gui> to see which
+    application is using up the computer's resources.</desc>
+  </info>
+
+  <title>Which program is making the computer run slowly?</title>
+
+  <comment>
+    <cite date="2011-06-18" href="mailto:philbull@gmail.com">Phil Bull</cite>
+    <p>Explain how the System Monitor can be used to find
+    misbehaving/resource-hogging processes. (A lot of process use 100% CPU or
+    similar if they hang, for example.)</p>
+  </comment>
+
+  <p>A program that is using more than its share of the CPU may slow down the
+  whole computer. To find which process could be doing this:</p>
+
+  <steps>	
+    <item>
+      <p>Click the <gui>Processes</gui> tab.</p>
+    </item>
+    <item>
+      <p>Click the <gui>% CPU</gui> column header to sort the processes
+      according to CPU use.</p>
+      <note>
+	<p>The arrow in the column header shows the sort direction; click again
+        to reverse it. The arrow should point up.</p>
+      </note>
+   </item>
+  </steps>
+
+  <p>The processes at the top of the list are using the highest percentage CPU.
+  Once you identify which one might be using more resources than it should, you
+  can decide whether to close the program itself, or close other programs to
+  try to reduce the CPU load.</p>
+
+  <note style = "tip">
+    <p>A process that has hung or crashed might use 100% CPU. If this happens
+    you may need to <link xref="process-kill">kill</link> the process.</p>
+  </note>
+
+</page>

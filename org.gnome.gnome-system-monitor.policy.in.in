@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
+<policyconfig>
+  <vendor>The GNOME Project</vendor>
+  <vendor_url>http://www.gnome.org/</vendor_url>
+  <icon_name>org.gnome.SystemMonitor</icon_name>
+
+  <action id="org.gnome.gnome-system-monitor.kill">
+    <description>Kill process</description>
+    <message>Privileges are required to control other users’ processes</message>
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">@pkglibexecdir@/gsm-kill</annotate>
+  </action>
+
+  <action id="org.gnome.gnome-system-monitor.renice">
+    <description>Renice process</description>
+    <message>Privileges are required to change the priority of processes</message>
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">@pkglibexecdir@/gsm-renice</annotate>
+  </action>
+
+</policyconfig>

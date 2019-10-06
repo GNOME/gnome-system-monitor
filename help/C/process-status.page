@@ -1,0 +1,64 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="topic" style="task"
+      id="process-status">
+
+  <info>
+    <revision pkgversion="3.11" date="2014-01-28" status="complete"/>
+    <link type="guide" xref="index#processes-info" group="processes-info" />
+    <link type="seealso" xref="process-kill" />
+    <link type="seealso" xref="cpu-check" />
+    
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+    
+    <credit type="author copyright">
+      <name>Phil Bull</name>
+      <email>philbull@gmail.com</email>
+      <years>2014</years>
+    </credit>
+
+    <desc>The status of a process can be running, sleeping, stopped, or zombie.</desc>
+  </info>
+
+  <title>What do the process statuses mean?</title>
+
+  <p>The status of a process tells you whether it is currently doing something or not. There are four statuses that a process can have:</p>
+
+  <terms>
+    <item>
+      <title>Running</title>
+      <p>Processes that are currently doing something (for example, a web
+      browser loading a web page). Running processes are those that are
+      actively using the processor (CPU).</p>
+    </item>
+    <item>
+      <title>Sleeping</title>
+      <p>Processes that are not currently doing anything (for example, because
+      they are waiting for something to happen). They don't use any of the
+      processor's time, but still take up memory. If they need to do something,
+      they will "wake up" and change their status to <em>running</em>.</p>
+    </item>
+    <item>
+      <title>Stopped</title>
+      <p>A <em>stopped</em> process is one that has been put to sleep manually.
+      You might want to stop a process temporarily if it is using too much
+      processing time, for example.</p>
+      <p>To do this, click the process in the <gui>Processes</gui> tab, then
+      right-click it and select <gui>Stop</gui> from the menu that appears. You
+      can wake it up again by clicking <gui>Continue</gui> on the same
+      menu.</p>
+    </item>
+    <item>
+      <title>Zombie</title>
+      <p>A zombie process is one that has finished running and will never start
+      again, but is being kept in the list of processes for some reason. This
+      usually happens because it was started by another program that needs to
+      know if it finished successfully or not, but which has not checked on the
+      process yet.</p>
+      <p>Zombie processes do not use any memory or processing time, and will
+      eventually go away. You do not need to do anything to get rid of them.</p>
+    </item>
+  </terms>
+
+  <p>The majority of processes will either be running or sleeping.</p>
+
+</page>

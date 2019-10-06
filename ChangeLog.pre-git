@@ -1,0 +1,6241 @@
+See 'svn log' for change history.
+
+
+<2007-05-21  Benoît Dejean  <benoit@placenet.org>
+
+	* src/defaulttable.h:
+
+	More icons.
+
+2007-05-21  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.cpp (main):
+
+	Killed superfluous proctable_update_all.
+
+2007-05-19  Benoît Dejean  <benoit@placenet.org>
+
+	* src/defaulttable.h:
+	* src/prettytable.cpp:
+	* src/prettytable.h:
+	
+	Dropped dead code.
+	Every app now has a default icon.
+	Reworked the defaultable:
+		- uses regexes.
+		- uses generic icon name whenever possible.
+
+2007-05-19  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/proctable.cpp:
+
+	Bumped version.
+	Requires libgtop 2.19.3 (svn HEAD, not released yet).
+
+2007-05-19  Benoît Dejean  <benoit@placenet.org>
+
+	* src/sysinfo.cpp:
+
+	Simplified code with a nice regex.
+
+2007-05-13  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	
+	Released 2.19.2.
+
+2007-04-28  Benoît Dejean  <benoit@placenet.org>
+
+	* src/proctable.cpp:
+	* src/util.cpp:
+	
+	Simpler code to display size columns.
+
+2007-04-27  Benoît Dejean  <benoit@placenet.org>
+
+	* src/gnome-system-monitor.schemas.in:
+	
+	Better documentation about 'Solaris mode'.
+
+2007-04-27  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procdialogs.cpp:
+
+	Fixed case in "Solaris mode".
+
+2007-04-26  Benoît Dejean  <benoit@placenet.org>
+
+	* src/proctable.cpp:
+	
+	Try to fix dependencies when using active/my view.
+	I am not sure it's correct, at least it doesn't g_assert
+	on startup.
+
+2007-04-26  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/lsof.cpp:
+	
+	pcrecpp is back !
+
+2007-04-26  Benoît Dejean  <benoit@placenet.org>
+
+	* src/memmaps.cpp:
+	
+	Display device name instead of major/minor.
+	Reverted one string "MemoryMaps" to "Memory Maps".
+
+2007-04-25  Benoît Dejean  <benoit@placenet.org>
+
+	* src/memmaps.cpp:
+	
+	Implemented smaps.
+	Simplified implementation.
+	Uses a GtkWindow instead of a dialog because the treeview is now
+	much bigger.
+
+2007-04-24  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/gconf-keys.cpp:
+	* src/gconf-keys.h:
+	* src/gnome-system-monitor.schemas.in:
+	* src/procdialogs.cpp:
+	* src/procman.cpp:
+	* src/procman.h:
+	* src/proctable.cpp:
+
+	Added a configure switch for Irix/Solaris mode.
+	Closes #410795.
+
+2007-04-23  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	* ChangeLog:
+	* configure.in:
+	
+	Released 2.19.1.
+
+2007-04-23  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.h:
+	* src/proctable.cpp:
+	* src/proctable.h:
+	* src/util.h:
+	
+	Huge rewrite of the dependencies tree.
+	It needs a lot of testing but it is definitely sanier than the
+	previous code. I worked on it all the weekend and it is really
+	to have a working and moving dependency tree.
+
+2007-04-21  Benoît Dejean  <benoit@placenet.org>
+
+	* src/util.cpp:
+	* src/util.h:
+	
+	Better debug logging.
+
+2007-04-19  Benoît Dejean  <benoit@placenet.org>
+
+	* src/smooth_refresh.cpp:
+
+	Removed duplicate ;;.
+	1-byte patch by Bernard Leak  <bernard@brenda-arkle.demon.co.uk>.
+	Closes #431181.
+
+2007-04-19  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.h:
+	* src/proctable.cpp:
+
+	Splitted code about ProcInfo updates and treestore updates.
+
+	Avoid duplicated work in ProcInfo constructor : update_info
+	already does everything needed.
+
+	Added ProcInfo::ppid which will be soon used instead of
+	ProcInfo::parent.
+
+2007-04-13  Benoît Dejean  <benoit@placenet.org>
+
+	* src/lsof.cpp:
+	* src/prettytable.cpp:
+	* src/procman.cpp:
+	* src/procman.h:
+	* src/proctable.cpp:
+	* src/proctable.h:
+
+	Replaced a ProcData::info and ProcData::pids by ProcInfo::all.
+	This is currently a map. I'll turn it into a set soon.
+	This saves a lot of code and make things simpler.
+	The map has a nice property : it is sorted by pid so this helps a lot
+	when looking for the parent node as ppid is nearly always < pid.
+	May be this is just fortunate but it works.
+	But orphaned processed still may get adpoted by a wrong parent...
+	
+	Also replaced a GHashTable by a set in refresh_list. 
+
+2007-04-13  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.h (ProcInfo):
+	* src/proctable.cpp:
+	
+	Dropped useless ProcInfo::is_visible since the "Hide/Show
+	process" feature has been removed.
+
+2007-04-12  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.h (ProcInfo):
+
+	Removed unused member ProcInfo::path.
+
+2007-04-12  Benoît Dejean  <benoit@placenet.org>
+
+	* src/proctable.cpp (proctable_update_list):
+
+	Simplified ACTIVE_PROCESSES code.
+	No more ProcInfo::is_running. It's best to use libgtop
+	functionnality.
+
+2007-04-12  Benoît Dejean  <benoit@placenet.org>
+
+	* src/proctable.cpp:
+
+	Attach processes to init.
+	Closes #424850.
+
+2007-04-10  Benoît Dejean  <benoit@placenet.org>
+
+	* src/sysinfo.cpp:
+
+	Displays `uname -n` instead of FQDN.
+	Code about handling FQDN was getting bigger and bigger
+	because of broken /etc/hosts.
+	Closes #427796.
+
+2007-04-08  Benoît Dejean  <benoit@placenet.org>
+
+	* src/disks.cpp:
+
+	Replaced a lot of custom code with
+	gtk_tree_view_column_set_cell_data_func.
+	There's only one issue : i don't know how to change the default
+	sort order. This is a regression for #310804.
+
+	* configure.in:
+
+	Release number bumped to 2.20.1.
+
+==== 2.18.1 ====
+
+2007-04-05  Benoît Dejean  <benoit@placenet.org>
+
+	* src/prettytable.cpp:
+	* src/prettytable.h:
+	
+	Load icons only when needed.
+	This speeds up startup.
+
+2007-04-01  Benoît Dejean  <benoit@placenet.org>
+
+	* src/disks.cpp:
+
+	Simplified the treeview construction by reordering columns.
+
+2007-04-01  Benoît Dejean  <benoit@placenet.org>
+
+	* src/disks.cpp:
+	
+	More debug prints.
+
+2007-03-30  Benoît Dejean  <benoit@placenet.org>
+
+	* src/disks.cpp:
+
+	No need for FP code.
+
+2007-03-28  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/util.cpp:
+	* src/util.h:
+	
+	Changes needed by incoming cleanup/fixes.
+	
+	procman::size_cell_data_func: new function.
+	UnrefMapValues::operator(): added a check.
+
+2007-03-27  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/interface.cpp:
+
+	Little cleanup. Removed dozens of unnecessary gtk_widget_show.
+
+2007-03-12  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	
+	Released 2.18.0.
+
+2007-03-12  Benoît Dejean  <benoit@placenet.org>
+
+	* gnome-system-monitor.desktop.in.in:
+	
+	Dropped X-Red-Hat-Base.
+
+2007-03-11  Benoît Dejean  <benoit@placenet.org>
+
+	* gnome-system-monitor.desktop.in.in:
+	
+	Gnome Goal #3 : removed "Application" category from .desktop file.
+	
+	* src/callbacks.cpp:
+
+	Fixed copyright and Paolo name.
+
+2007-03-04  Benoît Dejean  <benoit@placenet.org>
+
+	* src/interface.cpp:
+	
+	Fixed CPU labels layout when there is a lot of CPU.
+	Closes bug #413919.
+
+2007-03-04  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/load-graph.cpp:
+	
+	Re-implemented the network autoscaling.
+	It's nicer but the displayed scale is still meaningless.
+
+2007-03-02  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/openfiles.cpp:
+	
+	Fixed cast.
+	Really fixed bug #412953.
+
+2007-02-28  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	
+	Released 2.17.95.
+
+2007-02-28  Benoît Dejean  <benoit@placenet.org>
+
+	* src/sysinfo.cpp:
+	
+	Get default system information with uname.
+	Patch by Joe Marcus Clarke <marcus@freebsd.org>.
+	See bug #412953.	
+
+2007-02-28  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/openfiles.cpp:
+	
+	Fixed build on FreeBSD.
+	Patch by Joe Marcus Clarke <marcus@freebsd.org>.
+	See bug #412953.
+
+2007-02-28  Mariano Suárez-Alvarez  <mariano@gnome.org>
+
+	* NEWS:
+	
+	Released 2.17.94.
+
+2007-02-28  Mariano Suárez-Alvarez  <mariano@gnome.org>
+
+	* help/C/gnome-system-monitor.xml: added a description, to make g-d-u
+	happy
+	* po/POTFILES.skip: add gnome-system-monitor.desktop.in to make distcheck 
+	happy
+	* gnome-doc-utils.make: removed from SVN, as this is a generated file
+
+2007-02-28  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	
+	Released 2.17.93.
+
+2007-02-28  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* help/C/gnome-system-monitor-C.omf:
+	* help/gnome-system-monitor.omf.in:
+
+	Added missing omf.in.
+	Dropped old and now useless .omf.
+
+2007-02-25  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	
+	Released 2.17.92.
+
+2007-02-19  Benoît Dejean  <benoit@placenet.org>
+
+	* src/sysinfo.cpp:
+
+	Ignore /media/* in disk space.
+	Closes #409427.
+	
+2007-02-12  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	
+	Released 2.17.91.
+
+2007-02-07  Benoît Dejean  <benoit@placenet.org>
+
+	* src/sysinfo.cpp:
+	
+	Try to get hostname in a smarter way.
+
+2007-02-05  Daniel Nylander <po@danielnylander.se>
+
+	* help/sv/sv.po: Added Swedish translation.
+	* help/figures/*: Added screenshot.
+	* help/Makefile.am: Added sv to DOC_LINGUAS.
+	* po/sv.po: Updated Swedish translation.
+
+2007-02-05  Benoît Dejean  <benoit@placenet.org>
+
+	* src/sysinfo.cpp:
+	
+	Solaris support.
+	Patch by <hua.zhang@sun.com>.
+	See #374090.
+
+2007-01-31  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/prettytable.cpp:
+	
+	Killed libgnome !
+
+2007-01-31  Benoît Dejean  <benoit@placenet.org>
+	
+	* help/bg/*:
+	
+	Dropped some generated files.
+	Added updated bg.po.
+
+2007-01-30  Benoît Dejean  <benoit@placenet.org>
+
+	* Makefile.am:
+	* configure.in:
+	* help/C/Makefile.am:
+	* help/C/gnome-system-monitor.xml:
+	* help/Makefile.am:
+	* help/bg/Makefile.am:
+
+	Converted to gnome-doc-utils.
+	Patch by <paroz@email.ch>.
+	See #352507.
+
+2007-01-30  Benoît Dejean  <benoit@placenet.org>
+
+	* src/proctable.cpp:
+	
+	Set a min width for the Command Line column.
+	Closes #328287.
+
+2007-01-29  Benoît Dejean  <benoit@placenet.org>
+
+	* src/callbacks.cpp:
+	
+	Fixed help display by using GnomeVFS.
+	Closes #402013.
+
+2007-01-25  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+
+	Bumped version number to match GNOME's version.
+
+2007-01-25  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/load-graph.cpp:
+	
+	Use Bézier curves in graphs.
+	Patch by Lucas Mazzardo Veloso  <lmveloso@din.uem.br>
+
+2007-01-22  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	
+	Released 2.17.6.
+
+2007-01-22  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.h:
+	* src/proctable.cpp:
+	
+	Turned ProcInfo into a real object.
+	Dropped the slice-allocator, not that important.
+
+2007-01-22  Benoît Dejean  <benoit@placenet.org>
+
+	reviewed by: <delete if not using a buddy>
+
+	* src/procman.h:
+	* src/proctable.cpp:
+
+2007-01-22  Benoît Dejean  <benoit@placenet.org>
+
+	* src/proctable.cpp:
+
+	Re-added the GNOME logo.
+	Patch by Luca Cavalli  <luca.cavalli@gmail.com>
+
+2007-01-22  Benoît Dejean  <benoit@placenet.org>
+
+	* src/interface.cpp:
+	
+	Little cleanup.
+
+2007-01-20  Benoît Dejean  <benoit@placenet.org>
+
+	* src/util.cpp (SI_gnome_vfs_format_file_size_for_display):
+	
+	Rewritten.
+	Overall CPU usage goes from 7.5% to 5.0%.
+
+2007-01-18  Dennis Cranston  <dennis_cranston@yahoo.com>
+
+	* src/sysinfo.cpp:  Use HIG capitalization
+
+2007-01-18  Benoît Dejean  <benoit@placenet.org>
+
+	* README:
+	
+	Documented optional dependencies.
+
+2007-01-18  Benoît Dejean  <benoit@placenet.org>
+
+	* src/sysinfo.cpp:
+
+	Killed the logo :/
+	Closes #377144.
+
+2007-01-18  Benoît Dejean  <benoit@placenet.org>
+
+	* src/Makefile.am:
+	* src/callbacks.cpp:
+	* src/callbacks.h:
+	* src/favorites.cpp:
+	* src/favorites.h:
+	* src/gnome-system-monitor.schemas.in:
+	* src/interface.cpp:
+	* src/procdialogs.cpp:
+	* src/procdialogs.h:
+	* src/procman.cpp:
+	* src/procman.h:
+	* src/proctable.cpp:
+
+	Dropped disabled or dead features.
+
+2007-01-18  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.h:
+	* src/proctable.cpp:
+
+	Stores CPU tick frequency as unsigned integer.
+
+2007-01-16  Benoît Dejean  <benoit@placenet.org>
+
+	* src/sysinfo.cpp:
+	
+	Only use local partitions for disk available count.
+	Closes #397405.
+
+2007-01-16  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/defaulttable.h:
+	* src/prettytable.cpp:
+	* src/prettytable.h:
+	* src/procman.cpp:
+
+	Dropped libgnomeui.
+	Bumped libgtop dependency to require 2.14;6 to avoid its nasty stack
+	smashing bug.
+	Bumped version number.
+
+2007-01-08  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	
+	Released 2.17.5.
+
+2007-01-07  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.h:
+	* src/proctable.cpp:
+	* src/util.cpp:
+
+	Various micro-optimizations based on profiling.
+	Changed the type of many ProcInfo members to 'unsigned long' to
+	avoid 64bit arithmetic on 32bit system.
+	Replaced on g_list_append with g_list_prepend.
+	Avoided double comparison in format_file_size_for_display.
+
+2007-01-07  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.cpp:
+	* src/smooth_refresh.cpp:
+	* src/smooth_refresh.h:
+
+	Fixed signedness issue with SmoothRefresh.
+	Simplified logic.
+
+2007-01-06  Benoît Dejean  <benoit@placenet.org>
+
+	* src/prettytable.cpp:
+	
+	Fixed icon lookup order : first wnck, then theme and default table.
+
+2007-01-06  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procdialogs.cpp:
+	* src/procman.h:
+
+	Merged some code about spin buttons in the preference dialog.
+	Fixed a bunch of warnings.
+	
+2007-01-06  Benoît Dejean  <benoit@placenet.org>
+
+	* src/interface.cpp:
+	
+	Fixed 2 little signedness issues.
+
+2007-01-05  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/callbacks.cpp:
+	* src/procdialogs.cpp:
+	* src/procman.cpp:
+	* src/procman.h:
+	* src/smooth_refresh.cpp:
+	* src/smooth_refresh.h:
+
+	Rewrote and cleaned a bunch of stuff.
+	Changed the smooth refresh behaviour :
+		- try to keep CPU ~20%
+		- adjust update_interval up to twice its initial value.
+
+2007-01-04  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/prettytable.cpp:
+	* src/prettytable.h:
+	* src/procman.cpp:
+	* src/procman.h:
+	* src/proctable.cpp:
+	* src/util.h:
+	
+	More C++ rewrite.
+	Easier and clearer.
+	Fixed many potential use-before-init bugs.
+
+2007-01-04  Benoît Dejean  <benoit@placenet.org>
+
+	* .cvsignore:
+	* debian/.cvsignore:
+	* help/.cvsignore:
+	* help/C/.cvsignore:
+	* help/bg/.cvsignore:
+	* omf-install/.cvsignore:
+	* pixmaps/.cvsignore:
+	* src/.cvsignore:
+	* po/.cvsignore:
+	
+	Dropped CVS admin files.
+	Updated svn:ignore properties.
+
+2006-12-19  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	* configure.in:
+	* src/interface.cpp:
+
+	Fixed build and released 2.17.4.2.
+
+2006-12-18  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* NEWS:
+
+	Released 2.17.4.1
+
+2006-12-17  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+
+	Released 2.17.4.
+
+2006-12-16  Benoît Dejean  <benoit@placenet.org>
+
+	* src/prettytable.cpp:
+
+	Converted a lot of things to C++ using strongly typed map.
+
+	* src/util.h:
+
+	New function to ease string() + g_free.
+	Converted some macros to template.
+
+2006-12-15  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.h:
+	* src/proctable.cpp:
+
+	Packed a bit more ProcInfo.
+
+2006-12-15  Benoît Dejean  <benoit@placenet.org>
+
+	* src/Makefile.am:
+	* src/callbacks.cpp:
+	* src/callbacks.h:
+	* src/disks.cpp:
+	* src/disks.h:
+	* src/favorites.c:
+	* src/favorites.cpp:
+	* src/interface.c:
+	* src/interface.cpp:
+	* src/interface.h:
+	* src/load-graph.c:
+	* src/load-graph.cpp:
+	* src/load-graph.h:
+	* src/lsof.cpp:
+	* src/lsof.h:
+	* src/memmaps.cpp:
+	* src/memmaps.h:
+	* src/openfiles.cpp:
+	* src/openfiles.h:
+	* src/prettytable.c:
+	* src/prettytable.cpp:
+	* src/procactions.c:
+	* src/procactions.cpp:
+	* src/procdialogs.c:
+	* src/procdialogs.cpp:
+	* src/procman.c:
+	* src/procman.cpp:
+	* src/procman.h:
+	* src/procman_gksu.c:
+	* src/procman_gksu.cpp:
+	* src/procman_gnomesu.c:
+	* src/procman_gnomesu.cpp:
+	* src/proctable.c:
+	* src/proctable.cpp:
+	* src/selinux.h:
+	* src/smooth_refresh.c:
+	* src/smooth_refresh.cpp:
+	* src/smooth_refresh.h:
+	* src/sysinfo.cpp:
+	* src/util.h:
+
+	More C++ :)
+
+2006-12-10  Benoît Dejean  <benoit@placenet.org>
+
+	* src/Makefile.am:
+	* src/disks.c:
+	* src/disks.cpp:
+	* src/disks.h:
+	* src/openfiles.c:
+	* src/openfiles.cpp:
+	* src/openfiles.h:
+
+	More C++.
+
+2006-12-10  Benoît Dejean  <benoit@placenet.org>
+
+	* src/Makefile.am:
+	* src/callbacks.c:
+	* src/callbacks.cpp:
+	* src/callbacks.h:
+	* src/util.c:
+	* src/util.cpp:
+
+	More C++.
+
+2006-12-10  Benoît Dejean  <benoit@placenet.org>
+
+	* src/Makefile.am:
+	* src/selinux.c:
+	* src/selinux.cpp:
+	* src/selinux.h:
+	* src/util.h:
+
+	More C++. What a shame that we are still using CVS that can't
+	track file moves.
+
+2006-12-10  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/lsof.cpp:
+
+	Stupid regular expression support.
+
+2006-12-07  Benoît Dejean  <benoit@placenet.org>
+
+	* src/sysinfo.cpp:
+
+	Added missing include.
+	Closes #383291.
+
+2006-12-04  Benoît Dejean  <benoit@placenet.org>
+
+	* help/C/gnome-system-monitor.xml:
+	* src/procdialogs.c: (create_proc_field_page),
+	(procdialog_create_preferences_dialog):
+
+	String change in process list preferences dialogue as suggested by
+	Adam Dingle.
+	Update to the help documentation.
+	Patch by Christian Kirbach  <christian.kirbach@siemens.com>.
+	Closes #377048.
+
+2006-12-04  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	
+	Bumped version number.
+
+2006-12-04  Benoît Dejean  <benoit@placenet.org>
+
+	* src/proctable.c: (create_proctree):
+
+	Disabled libsexy as it is currently buggy and unmaintained.
+	See and fix #354559,#355252 if you want it back.
+
+2006-12-04  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	
+	Released 2.17.3.
+
+2006-12-03  Benoît Dejean  <benoit@placenet.org>
+
+	* src/favorites.c: (is_process_blacklisted):
+	* src/interface.c: (update_sensitivity):
+
+	Disabled the process blacklist.
+	I don't think somebody really uses this broken feature.
+	If you do, please tell me.
+	Evil plan is too replace it with a regex based filter.
+
+2006-11-21  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+
+	Downgradaded pcre dependendy to 6.4.
+	See #367827.
+
+2006-11-20  Benoît Dejean  <benoit@placenet.org>
+
+	* src/sysinfo.cpp:
+
+	lsb_release -s is not consistent among distros so
+	we don't use it and instead parse the
+	"description: value" lines.
+	See #374090.
+
+2006-11-20  Benoît Dejean  <benoit@placenet.org>
+
+	* src/sysinfo.cpp:
+
+	Fixed computation of disk space.
+	Changed label.
+	Closes #??????.
+
+2006-11-19  Benoît Dejean  <benoit@placenet.org>
+
+	* src/memmaps.cpp:
+
+	A little more C++.
+	Added #if 0 code, attempt to rewrite tree save_state/get_state.
+
+2006-11-19  Benoît Dejean  <benoit@placenet.org>
+
+	* src/util.c (procman_debug):
+
+	Added relative time since startup in output.
+
+2006-11-18  Benoît Dejean  <benoit@placenet.org>
+
+	* src/interface.c:
+
+	Replaced libgnome by gtk+.
+
+2006-11-18  Benoît Dejean  <benoit@placenet.org>
+
+	* src/memmaps.cpp:
+
+	Reworked to use lsb_release where available.
+	Original patch by Deji Akingunola <dakingun@gmail.com>.
+	See #374090.
+
+2006-11-17  Benoît Dejean  <benoit@placenet.org>
+
+	* src/memmaps.cpp:
+
+	Reworked and simplified.
+	Made maps addition faster.
+
+2006-11-16  Benoît Dejean  <benoit@placenet.org>
+
+	* src/memmaps.cpp:
+
+	First attempt to rewrite some parts in C++.
+
+2006-11-16  Benoît Dejean  <benoit@placenet.org>
+
+	* renamed src/memmaps.c
+	  to src/memmaps.cpp
+	* patched src/Makefile.am
+	* patched src/memmaps.cpp
+	* patched src/memmaps.h:
+
+	Converted memmaps to C++.
+
+2006-11-14  Benoît Dejean  <benoit@placenet.org>
+
+	* src/sysinfo.cpp:
+
+	Added Fedora backend.
+	Patch by Deji Akingunola <dakingun@gmail.com>.
+	See bug #374090.
+
+2006-11-13  Benoît Dejean  <benoit@placenet.org>
+
+	* src/gnome-system-monitor.schemas.in:
+
+	Fixed schema.
+	Closes #163396.
+
+2006-11-12  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+
+	Bumped version number to 2.17.3.
+
+2006-11-12  Benoît Dejean  <benoit@placenet.org>
+
+	* src/proctable.c:
+
+	Renamed the Arguments column as "Command Line".
+	Closes #364902.
+
+2006-11-10  Benoît Dejean  <benoit@placenet.org>
+
+	* src/smooth_refresh.c:
+
+	Fixed debug output.
+
+2006-11-10  Benoît Dejean  <benoit@placenet.org>
+
+	* src/lsof.cpp:
+
+	Added activate signal for search entry.
+	It may be cool to switch to SexyEntry...
+
+2006-11-09  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* pixmaps/Makefile.am:
+
+	Fixed typo for missing file in tarball.
+	Released 2.17.2.1.
+
+2006-11-05  Benoît Dejean  <benoit@placenet.org>
+
+	* NEW:
+	* AUTHORS:
+
+	Released 2.17.2.
+
+2006-11-04  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procdialogs.c:
+
+	Fixed preferences dialog tab selection.
+
+2006-11-04  Benoît Dejean  <benoit@placenet.org>
+
+	* src/interface.c:
+
+	Fixed harmless typo.
+
+2006-11-04  Benoît Dejean  <benoit@placenet.org>
+
+	* src/util.c:
+	* src/util.h:
+	* src/openfiles.c:
+	* src/memmaps.c:
+
+	Dropped over-complicated code about i18n.
+
+2006-11-04  Benoît Dejean  <benoit@placenet.org>
+
+	* src/callbacks.c:
+	* src/interface.c:
+	* src/interface.h:
+	* src/proctable.c:
+
+	More work on sensitivity.
+	Fixed "Show Hidden processes" sensitivity.
+
+2006-11-04  Benoît Dejean  <benoit@placenet.org>
+
+	* src/callbacks.c:
+	* src/interface.c:
+
+	Fixed sensitivity of the view menu which has to be
+	totally disabled when current_tab is not Processes.
+
+2006-11-04  Benoît Dejean  <benoit@placenet.org>
+
+	* src/callbacks.c:
+	* src/gnome-system-monitor.schemas.in:
+	* src/procdialogs.c:
+	* src/procman.c:
+	* src/procman.h:
+
+	New enum type to handle tab number (current_tab).
+	Extended schema documentation and fixed default current_tab
+	which is Resources by request #324968.
+
+2006-11-04  Benoît Dejean  <benoit@placenet.org>
+
+	* src/lsof.cpp:
+	* src/lsof.h:
+
+	Moved enum declaration to lsof.cpp as it doesn't need to be
+	public.
+
+2006-11-04  Benoît Dejean  <benoit@placenet.org>
+
+	* src/gnome-system-monitor.schemas.in:
+
+	Fixed typo.
+	Closes #358365.
+
+2006-11-03  Benoît Dejean  <benoit@placenet.org>
+
+	* pixmaps/:
+	* Makefile.am:
+	* configure.in:
+	* src/Makefile.am:
+	* src/callbacks.c:
+	* src/interface.c:
+	* src/procdialogs.c:
+	* src/procman.c:
+	* src/sysinfo.cpp:
+	* src/sysinfo.h:
+
+	New system info tab. Initial work from OpenSuse.
+
+2006-11-01  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in: Temporarily requires older pcre 6.6.
+	See #367827.
+
+2006-11-01  Benoît Dejean  <benoit@placenet.org>
+
+	* src/proctable.c (format_duration_for_display): Improved time
+	display. Closes #364901.
+
+2006-10-31  Benoît Dejean  <benoit@placenet.org>
+
+	* po/POTFILES.in: Added missing file.
+
+2006-10-31  Benoît Dejean  <benoit@placenet.org>
+
+	* src/lsof.cpp: Reworked, more OO design.
+
+2006-10-25  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/callbacks.c: (cb_show_open_files), (cb_show_lsof):
+	* src/callbacks.h:
+	* src/interface.c:
+	* src/lsof.cpp:
+	* src/lsof.h:
+	
+	New lsof feature. WIP.
+	Depends on pcre for pattern matching. This could be made optional.
+	Switched to C++.
+
+2006-10-17  Benoît Dejean  <benoit@placenet.org>
+
+	* src/gnome-system-monitor.schemas.in:
+
+	Reverted last change. Reopened #358365.
+
+2006-10-16  Benoît Dejean  <benoit@placenet.org>
+
+	* src/gnome-system-monitor.schemas.in:
+
+	Fixed typo.
+	Closes #358365.
+
+2006-09-17  Benoît Dejean  <benoit@placenet.org>
+
+	* src/Makefile.am:
+	* src/procman.c: (main):
+	
+	Fixed locales dir initialization.
+
+2006-09-16  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	
+	Requires libgtop 2.14.4 to get memory maps right.
+	See #355290.
+
+2006-09-16  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.c: (procman_save_tree_state):
+	* src/procman_gksu.c: (procman_gksu_create_root_password_dialog):
+	
+	s/g_error/g_critical/.
+	Closes #356111.
+
+2006-09-11  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/memmaps.c: (get_memory_format), (vmoff_tostring):
+	
+	Fixed VM addresses display on 64bit kernel.
+	Closes #354979.
+
+2006-09-05  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	* configure.in:
+
+	Released 2.16.0.
+
+2006-08-31  Benoît Dejean  <benoit@placenet.org>
+
+	* src/gnome-system-monitor.schemas.in:
+
+	Fixed schema regression.
+	Re-closes #341026.
+
+2006-08-30  Benoît Dejean  <benoit@placenet.org>
+
+	* src/proctable.c: (search_equal_func):
+
+	Fixed a small memory leak.
+
+2006-08-21  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+
+	Release 2.15.92.
+
+2006-08-20  Benoît Dejean  <benoit@placenet.org>
+
+	* src/disks.c: (create_disk_view):
+
+	Right aligned size columns.
+
+2006-08-19  Benoît Dejean  <benoit@placenet.org>
+
+	* src/memmaps.c: (create_memmapsdata):
+	* src/openfiles.c: (create_openfiles_tree):
+
+	Better column alignment and font family.
+
+2006-08-19  Benoît Dejean  <benoit@placenet.org>
+
+	* src/util.c: (procman_debug):
+	
+	Fixed leak.
+
+2006-08-10  Benoît Dejean  <benoit@placenet.org>
+
+	* src/load-graph.c: (load_graph_draw):
+	
+	Fixed LoadGraph overlay.
+	Patch by Yang Hong <yanghong@ccoss.com.cn>.
+	Closes #350692.
+
+2006-08-07  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	
+	Released 2.15.91.
+
+2006-07-27  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/disks.c: (create_disk_view):
+	* src/interface.c: (create_main_window):
+	* src/procdialogs.c: (procdialog_create_preferences_dialog):
+
+	Devices -> File Systems.
+	Closes #345737.
+
+2006-07-26  Benoît Dejean  <benoit@placenet.org>
+
+	* Makefile.am:
+
+	Fixed dist.
+
+2006-07-26  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS: Released 2.15.90.
+
+2006-07-23  Benoît Dejean  <benoit@placenet.org>
+
+	* AUTHORS:
+	* HACKING:
+	* TODO:
+	* configure.in:
+	
+	Dropped dead files.
+	Updated my email.
+	Fixed configure.in and bumped version number.
+
+2006-07-22  Benoît Dejean  <benoit@placenet.org>
+
+	* src/selinux.c: (get_process_selinux_context),
+	(can_show_security_context_column):
+	
+	Fixed segfault if selinux was not found.
+	Closes #348311.
+
+2006-07-19  Benoît Dejean  <benoit@placenet.org>
+
+	* src/disks.c: (remove_old_disks), (cb_update_disks):
+
+	Oops, i forgot to remove old disks from the list.
+
+2006-07-13  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procdialogs.c:
+	* src/smooth_refresh.c:
+	* src/util.c:
+	* src/util.h:
+	
+	New function : procman_debug(fmt, ...).
+	Displays debug messages if GNOME_SYSTEM_MONITOR_DEBUG is defined.
+
+2006-07-10  Rodney Dawes  <dobey@novell.com>
+
+	* configure.in: Require pkg-config 0.19 and gnome-icon-theme 2.15.3
+	for the new icon naming spec icon names
+
+	* gnome-system-monitor.desktop.in.in:
+	* src/callbacks.c (cb_about):
+	* src/procmain.c (main):
+	Use utilities-system-monitor as the icon name, instead of gnome-monitor
+	to comply with the icon naming spec icon names
+
+	Fixes #346681
+
+2006-07-10  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/disks.c: (open_dir), (create_disk_view):
+	
+	Double-click on a mountpoint opens it.
+
+2006-07-09  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	* configure.in:
+	* src/load-graph.c: (load_graph_draw):
+	
+	Displays scales in graphs. Closes #308416.
+	Released 2.15.4.
+
+2006-07-08  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/procdialogs.c: (procdialog_create_root_password_dialog):
+	* src/procman_gksu.c: (load_gksu):
+	* src/procman_gksu.h:
+	* src/procman_gnomesu.c: (load_gnomesu),
+	(procman_gnomesu_create_root_password_dialog),
+	(procman_has_gnomesu):
+	* src/procman_gnomesu.h:
+	* src/proctable.c: (create_proctree):
+	* src/selinux.c: (load_selinux), (get_process_selinux_context),
+	(can_show_security_context_column):
+	* src/selinux.h:
+	* src/util.c: (load_symbols):
+	* src/util.h:
+	
+	Big rework of {gksu,gnomesu,selinux} dynamic loading.
+	Dropped all related auto* stuff.
+	Added load_symbols which makes module loading easier.
+
+2006-07-06  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.h:
+	* src/proctable.c: (create_proctree), (proctable_new),
+	(proctable_free_info), (insert_info_to_tree), (procinfo_new):
+	* src/proctable.h:
+	
+	Display escaped arguments in COL_ARGS.
+	The sexy tooltip still displays raw arguments.
+	Closes #341095.
+
+2006-07-06  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.c: (procman_get_tree_state):
+
+	If a column is visible, ensure it really is.
+
+2006-06-29  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	
+	Released 2.15.0.
+
+2006-06-29  Benoît Dejean  <benoit@placenet.org>
+
+	* src/callbacks.c: (cb_about):
+	* src/procman.c: (main):
+
+	Set application name.
+	Updated about dialog (http://live.gnome.org/GnomeGoals/AboutDialog).
+
+2006-06-28  Benoît Dejean  <benoit@placenet.org>
+
+	* src/proctable.c: (proctable_new):
+	
+	Use fixed width only for COL_NAME and COL_ARGS.
+
+2006-06-25  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/procdialogs.c: (procdialog_create_root_password_dialog):
+	* src/procman_gksu.c: (load_gksu),
+	(procman_gksu_create_root_password_dialog), (procman_has_gksu):
+	* src/procman_gksu.h:
+	
+	Now uses libgksu2 if available at runtime.
+
+2006-06-25  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procactions.c (renice): 
+	
+	Make sure the table is not updated during renice.
+
+2006-06-22  Benoît Dejean  <benoit@placenet.org>
+
+	* src/gnome-system-monitor.schemas.in:
+	* src/procman.h:
+	* src/proctable.c: (sort_ints), (proctable_new),
+	(get_process_memory_info), (update_info_mutable_cols):
+	* src/proctable.h:
+	
+	Added new memory column. Displays estimated memory usage.
+	See #341241.
+
+2006-06-21  Benoît Dejean  <benoit@placenet.org>
+
+	* src/proctable.c: (proctable_new):
+	
+	Don't auto-resize proctree columns.
+	Closes #328287.
+
+2006-06-21  Benoît Dejean  <benoit@placenet.org>
+
+	* src/disks.c: (get_icon_for_device), (find_disk_in_model),
+	(add_disk), (cb_update_disks):
+	
+	Try to be smart, don't clear the list on every refresh.
+	Closes #325090.
+
+2006-06-18  Benoît Dejean  <benoit@placenet.org>
+
+	* src/interface.c:
+
+	Change File menu name to Monitor.
+	Closes #342649.
+
+2006-06-18  Benoît Dejean  <benoit@placenet.org>
+
+	* src/proctable.c: (create_proctree), (proctable_new):
+
+	Displays process arguments as a tooltip if libsexy is found.
+
+2006-06-18  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/gnome-system-monitor.schemas.in:
+
+	Bumped version number to 2.15.0.
+	Updated schema.
+
+2006-06-03  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/load-graph.c:
+	
+	Dropped anonymous union to fix build with !gcc.
+
+2006-05-17  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	* configure.in:
+
+	Released 2.14.3.
+
+2006-05-17  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procman.c: (procman_free_data):
+
+	Free users at exit.
+
+2006-05-10  Benoît Dejean  <benoit@placenet.org>
+
+	* src/prettytable.c: (new_application), (pretty_table_new):
+
+	Fixed a couple of small leaks.
+
+2006-05-08  Benoît Dejean  <benoit@placenet.org>
+
+	* src/gnome-system-monitor.schemas.in:
+	
+	Display CPU% by default.
+	Closes #341026.
+
+2006-05-05  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	
+	Released 2.14.2.
+
+2006-05-05  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/proctable.c: (get_process_memory_writable):
+	
+	Writable memory is sum(private_dirty) on linux.
+	Other systems don't implement this.
+
+2006-04-29  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* po/LINGUAS:
+	
+	Use po/LINGUAS.
+	Closes #337963.
+
+2006-04-17  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* configure.in: Remove obsolete entry for no_NO
+	* po/no.po: And the translation.
+
+2006-04-10  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+
+	Released 2.14.1.
+	Fixed ChangeLog.
+
+2006-04-10  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/procdialogs.c: (procdialog_create_root_password_dialog):
+	* src/procman_gksu.c: (procman_gksu_create_root_password_dialog):
+
+	Updated gksu backend.
+
+2006-04-09  Benoît Dejean  <benoit@placenet.org>
+
+	* src/load-graph.c: (load_graph_new):
+	
+	Sets the minimum height of each graph to 30px.
+	Patch by Johannes H. Jensen  <joh@deworks.net>.
+	Bug #324257.
+
+2006-04-07  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/disks.c: (create_disk_view):
+	* src/load-graph.c: (load_graph_draw), (load_graph_alloc),
+	(load_graph_new):
+	* src/memmaps.c: (update_memmaps_dialog):
+	* src/openfiles.c: (update_openfiles_dialog):
+	* src/procman.h:
+	
+	Fixed a bunch of warnings and bumped version number.
+
+2006-03-26  Tommi Vainikainen  <thv@iki.fi>
+
+	* configure.in (ALL_LINGUAS): Added Dzongkha (dz).
+
+2006-03-22  Vladimer Sichinava  <vlsichinava@gmail.com>
+
+        * configure.in: Added "ka" (Georgian) to ALL_LINGUAS
+
+2006-03-13  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	* configure.in:
+
+	Released 2.14.0.
+
+2006-03-04  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	
+	2.13.93.
+	Fixed build of documentation #333295.
+
+2006-02-27  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+
+	Released 2.13.92.
+
+2006-01-29  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	* configure.in:
+	
+	Released 2.13.90.
+
+2006-01-25  Benoît Dejean  <benoit@placenet.org>
+
+	* gnome-system-monitor.desktop.in.in:
+	
+	Fixed.
+	Closes #328581.
+
+2006-01-21  Benoît Dejean  <benoit@placenet.org>
+
+	* gnome-system-monitor.desktop.in.in:
+	
+	Add GNOME and/or GTK categories of the .desktop file.
+	Closes #328020.
+
+2006-01-20  Benoît Dejean  <benoit@placenet.org>
+
+	* src/bacon-message-connection.c: (setup_connection),
+	(accept_new_connection), (server_cb), (try_server), (try_client),
+	(bacon_message_connection_free):
+	* src/bacon-message-connection.h:
+
+	Synced with libbacon.
+
+2006-01-16  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in: Bumped version number to 2.13.6.
+
+2006-01-16  Frank Arnold  <farnold@cvs.gnome.org>
+
+	* src/procdialogs.c: (procdialog_create_preferences_dialog):
+	Fixed I18N issue with "Update interval" labeling.
+	Changed packing of "Enable smooth refresh" checkbutton again.
+	Closes #327116
+
+2006-01-15  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS: Released 2.13.5.
+
+2006-01-12  Dennis Cranston  <dennis_cranston@yahoo.com>
+
+	* src/procdialogs.c: (procdialog_create_preferences_dialog):
+	Fix layout of the new "Enable smooth refresh" checkbutton.
+	* src/proctable.c: (proctable_new):  HIG captalization fix.
+
+2006-01-12  Benoît Dejean  <benoit@placenet.org>
+
+	* Makefile.am:
+	* gnome-system-monitor.spec:
+
+	Dropped RPM spec file.
+	Closes #162038.
+	Patch by Brian Pepple  <bdpepple@ameritech.net>
+
+2006-01-10  Benoît Dejean  <benoit@placenet.org>
+
+	* src/interface.c: (create_main_window), (cb_toggle_tree):
+	* src/procdialogs.c: (procdialog_create_preferences_dialog):
+	* src/procman.c: (procman_data_new):
+	* src/procman.h:
+	* src/proctable.c: (insert_info_to_tree), (procinfo_new):
+	
+	Dropped broken thread support.
+	Patch by Søren Sandmann <sandmann@daimi.au.dk>
+	
+	* configure.in:
+	
+	Bumped version to 2.13.5.
+
+2006-01-07  Chao-Hsiung Liao  <j_h_liau@yahoo.com.tw>
+
+	* configure.in: Add "zh_HK" to ALL_LINGUAS.
+
+2006-01-02  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+
+	Released 2.13.4.
+
+2006-01-02  Benoît Dejean  <benoit@placenet.org>
+
+	* src/load-graph.c: (load_graph_draw), (get_load), (get_memory),
+	(net_scale), (get_net), (shift_right), (load_graph_update),
+	(load_graph_unalloc), (load_graph_alloc), (load_graph_new),
+	(load_graph_change_speed):
+	* src/load-graph.h:
+	* src/procman.c: (color_changed_cb):
+	* src/procman.h:
+
+	Reworked LoadGraph.
+	Fuzy description of changes (as i was offline all the weekend, i
+	have been enable to commit anything. CVS is so bad).
+
+	Fixed background color.
+	Many drawing improvements.
+	Dropped color allocation code.
+	Moved a macro from procman.h to load-graph.h
+	Reworked CPU load graph : simpler and faster.
+	Changed LoadGraph->data allocation scheme.
+
+2006-01-02  Benoît Dejean  <benoit@placenet.org>
+
+	* src/gnome-system-monitor.schemas.in:
+
+	Made Resources tab default.
+	Closes #324968.
+
+2006-01-02  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procdialogs.c: (procdialog_create_preferences_dialog):
+
+	Set smooth refresh checkbox status according to gconf.
+
+2006-01-02  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+
+	Requires libgtop 2.13.0.
+
+	* src/proctable.c: (proctable_free_info),
+	, (update_info_mutable_cols),
+	(remove_info_from_list), (procinfo_new), (proctable_free_table):
+
+	Removed first unused argument of proctable_free_info(procinfo).
+
+	(get_process_memory_writable): Use libgtop 2.13.0 feature.
+
+2005-12-28  Dennis Cranston  <dennis_cranston@yahoo.com>
+
+	* src/disks.c: (cb_disk_columns_changed), (create_disk_view):
+	* src/gnome-system-monitor.schemas.in:
+	* src/procman.c: (procman_get_tree_state),
+	(procman_save_tree_state):  Allow user to sort the device 
+	list.  Fixes bug #311920
+
+2005-12-27  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procdialogs.c: (smooth_refresh_toggled),
+	(procdialog_create_preferences_dialog):
+	* src/smooth_refresh.c: (smooth_refresh_get):
+	* src/smooth_refresh.h:
+
+	Added smooth_refresh option to please Linus.
+
+2005-12-27  Benoît Dejean  <benoit@placenet.org>
+
+	* src/Makefile.am:
+	* src/e_date.c: (e_strftime), (e_strftime_fix_am_pm),
+	(e_utf8_strftime_fix_am_pm), (filter_date),
+	(procman_format_date_for_display):
+	* src/e_date.h:
+	* src/procman.h:
+	* src/proctable.c: (sort_ints), (proctable_new),
+	(update_info_mutable_cols), (procinfo_new):
+	* src/proctable.h:
+
+	Added "Started" column to display start time of each process.
+
+2005-12-27  Benoît Dejean  <benoit@placenet.org>
+
+	* src/gnome-system-monitor.schemas.in:
+
+	Fixed typo.
+
+2005-12-24  Benoît Dejean  <benoit@placenet.org>
+
+	* src/load-graph.c: (load_graph_new):
+
+	Start the graphs on startup so that they can acquire data even
+	if not shown.
+
+	Closes #324719.
+
+2005-12-19  Benoît Dejean  <benoit@placenet.org>
+
+	* src/bacon-message-connection.c: (is_owned_by_user_and_socket),
+	(find_file_with_pattern), (socket_filename):
+	
+	Synced.
+
+2005-12-14  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	
+	Post-release version bump to 2.13.4.
+	
+	* src/load-graph.c: (get_load):
+	* src/procman.h:
+	
+	Don't counts IOWAIT time as busy in the CPU graphs.
+	Closes #324043.
+
+2005-12-13  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+
+	Released 2.13.3.
+
+2005-12-12  James Henstridge  <james@jamesh.id.au>
+
+	* src/Makefile.am: disable gconf schema install if $DESTDIR is
+	set.
+
+	* Makefile.am: ignore scrollkeeper database in the
+	distuninstallcheck.  Remove intltool programs on distclean.
+
+	* configure.in: modernise a bit, and add AC_DEFINE() descriptions
+	so that things work without acconfig.h.
+
+	* acconfig.h: remove obsolete file.
+
+	* autogen.sh: require Automake 1.9.
+
+2005-12-06  Benoît Dejean  <benoit@placenet.org>
+
+	* src/bacon-message-connection.c:
+
+	Synced with libbacon.
+
+2005-12-06  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/procman.c: (procman_data_new):
+	* src/procman.h:
+	* src/proctable.c: (proctable_free_info), (procinfo_new):
+
+	Let's have fun with g_slice_*.
+
+2005-12-01  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/procactions.c: (renice_single_process),
+	(kill_single_process):
+	* src/procdialogs.c: (procman_action_to_command),
+	(procdialog_create_root_password_dialog):
+	* src/procdialogs.h:
+	* src/procman_gksu.c: (procman_gksu_create_root_password_dialog):
+	* src/procman_gksu.h:
+	* src/procman_gnomesu.c: (procman_gnomesu_get_exec),
+	(procman_gnomesu_create_root_password_dialog):
+	* src/procman_gnomesu.h:
+
+	Post release version bump to 2.13.3.
+
+	Added Gksu support.
+	Original patch by Sébastion Bacher <seb128@debian.org>
+	from Ubuntu packaged.
+
+	Splitted Gksu and Gnomesu implementations.
+
+	TODO: fix password prompt.
+
+2005-12-01  Benoît Dejean  <benoit@placenet.org>
+
+	* src/procactions.c: (renice):
+	* src/procactions.h:
+	* src/procdialogs.c: (renice_dialog_button_pressed):
+
+	Droped unused pid argument for renice().
+
+2005-11-30  Benoît Dejean  <benoit@placenet.org>
+
+	* src/README.hacking:
+
+	Dropped old file.
+
+2005-11-29  Benoît Dejean  <benoit@placenet.org>
+
+	* src/Makefile.am: Removed non-existant file.
+
+2005-11-22  Matthias Clasen  <mclasen@redhat.com>
+
+	* gnome-system-monitor.desktop.in.in: Add Monitor
+	and X-Red-Hat-Base to Categories.  (#322130)
+
+2005-11-13  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS: Released 2.13.2.
+
+2005-11-08  Benoît Dejean  <benoit@placenet.org>
+
+	* src/gnome-system-monitor.schemas.in:
+	* src/smooth_refresh.c: (status_changed), (smooth_refresh_new),
+	(smooth_refresh_destroy), (smooth_refresh_get):
+
+	Added /apps/procman/smooth_refresh to control behaviour.
+
+2005-11-08  Benoît Dejean  <benoit@placenet.org>
+
+	* src/disks.c: (fsusage_stats), (add_disk), (create_disk_view):
+
+	Added "available" column. Closes #320603.
+
+2005-11-04  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+	
+	2.13.2.
+	
+	* src/procman.h:
+	* src/proctable.c: (sort_ints), (proctable_new),
+	(get_process_memory_writable), (get_process_memory_info),
+	(update_info_mutable_cols):
+	* src/proctable.h:
+
+	Added "Writable memory" column. I know this is a bit cryptic.
+
+2005-10-29  Benoît Dejean  <benoit@placenet.org>
+
+	* src/favorites.c: (add_single_to_blacklist):
+	* src/interface.c: (menu_item_select_cb):
+	* src/load-graph.c: (load_graph_unalloc), (load_graph_alloc):
+	* src/memmaps.c: (compare_memmaps), (memmaps_timer),
+	(create_single_memmaps_dialog):
+	* src/openfiles.c: (update_openfiles_dialog), (openfiles_timer),
+	(create_single_openfiles_dialog):
+	* src/procactions.c: (renice_single_process),
+	(kill_single_process):
+	* src/procman.c: (color_changed_cb), (procman_get_tree_state),
+	(procman_save_tree_state), (procman_save_config), (main):
+	* src/proctable.c: (sort_ints), (proctable_free_info),
+	(remove_info_from_tree):
+	
+	Replaced many g_return* with g_assert.
+
+2005-10-27  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+
+	Oops, forgot to increase version.
+
+2005-10-27  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+
+	Released 2.13.1.
+
+2005-10-12  Adam Weinberger  <adamw@gnome.org>
+
+	* src/interface.c: Change "Receive" and "Send"
+	  labels to read "Received" and "Sent", to accurately
+	  portray what they're counting. Fixes bug #318714
+	  submitted by Christian Rose.
+	* src/gnome-system-monitor.schemas.in.h: Reword a
+	  confusing schema description, correcting a spelling
+	  error in the process. Fixes bug #318712, submitted by
+	  Christian Rose.
+
+2005-09-04  Benoît Dejean  <benoit@placenet.org>
+
+	* src/Makefile.am:
+	* src/callbacks.c: (cb_row_selected):
+	* src/gnome-system-monitor.schemas.in:
+	* src/infoview.c:
+	* src/infoview.h:
+	* src/interface.c: (create_proc_view), (update_sensitivity):
+	* src/procman.c: (procman_data_new), (procman_save_config):
+	* src/procman.h:
+	* src/proctable.c: (proctable_update_all):
+
+	Got rid of the infoview.
+
+2005-09-04  Benoît Dejean  <benoit@placenet.org>
+
+	* src/infoview.c: (infoview_update):
+	* src/procman.h:
+	* src/proctable.c: (sort_ints), (proctable_new),
+	(get_process_memory_info), (update_info_mutable_cols),
+	(procinfo_new):
+	* src/proctable.h:
+
+	Removed the "Memory" and "RSS memory" columns. There are pretty
+	useless or misleading. Now we have RES, Shared, Virtual and X.
+
+2005-09-03  Benoît Dejean  <benoit@placenet.org>
+
+	* AUTHORS:
+	* src/callbacks.c: (cb_about): Synced authors.
+
+2005-09-02  Paolo Borelli  <pborelli@katamail.com>
+
+	* src/load-graph.c: draw the graph with cairo (bug #315111).
+	* AUTHORS: add myself.
+
+2005-09-02  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+
+	Post release bump to 2.13.0
+	Requires gtk+ > 2.8.
+
+2005-08-22  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+
+	Released 2.11.92.
+
+2005-08-11  Benoît Dejean  <benoit@placenet.org>
+
+	* src/Makefile.am:
+	* src/callbacks.c:
+	* src/disks.c: (sort_bytes), (fsusage_stats),
+	(get_icon_for_device), (add_disk), (cb_update_disks),
+	(create_disk_view):
+	* src/disks.h:
+	* src/interface.c:
+
+	Reworked the disk view and moved everything related in
+	disks.[ch]. The new device list handling is much simpler and no
+	longer hides duplicate mount points. The sort should also be a bit
+	more stable.
+
+2005-08-11  Benoît Dejean  <benoit@placenet.org>
+
+	* src/prettytable.c: (pretty_table_get_icon):
+
+	#if 0 debug message.
+
+2005-08-09  Benoît Dejean  <benoit@placenet.org>
+
+	* configure.in:
+
+	Post release bymp
+
+	* src/callbacks.c: (cb_update_disks):
+
+	Fixed devices list. Now uses mountdir as key instead of devname.
+	With all_fs, many devices have the same devname (e.g. tmpfs).
+
+2005-08-08  Benoît Dejean  <benoit@placenet.org>
+
+	* NEWS:
+	
+	Released 2.11.91.
+
+2005-08-04  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* configure.in:
+
+	Post release version bump.
+
+	* src/util.h:
+
+	Fixed include guards.
+
+2005-08-04  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/proctable.c: (procinfo_new), (refresh_list):
+
+	get_info -> procinfo_new.
+
+2005-07-28  Abduxukur Abdurixit <abdurixit@gmail.com>
+
+        * configure.in: Added "ug" to ALL_LINGUAS.
+
+2005-07-25  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* NEWS:
+	* configure.in:
+	* src/callbacks.c: (cb_update_disks), (cb_timeout):
+	* src/load-graph.c: (load_graph_update):
+
+	Removed some debug messages.
+
+	Released 2.11.90.
+
+2005-07-22  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/defaulttable.h:
+	* src/prettytable.c: (new_application), (pretty_table_new),
+	(get_icon_from_theme), (get_icon_from_default),
+	(get_icon_from_wnck), (pretty_table_get_icon),
+	(create_scaled_icon):
+	* src/procman.h:
+	
+	Updated defaulttable.
+	Better icon lookup with GtkIconTheme.
+
+2005-07-22  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (cb_update_disks):
+	
+	Removed unused static var.
+
+2005-07-19  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/bacon-message-connection.c: (server_cb):
+	
+	Sync with CVS HEAD.
+
+2005-07-19  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (cb_update_disks):
+
+	Removed useless lock.
+
+2005-07-19  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/interface.c: (sort_bytes):
+	* src/memmaps.c: (sort_guint64):
+	* src/proctable.c: (sort_ints), (proctable_new):
+	* src/util.h:
+
+	Fixed column default sort order.
+	Closes #310804.
+
+2005-07-16  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/prettytable.c: (pretty_table_new):
+	* src/procman.c: (procman_data_new):
+	* src/proctable.c: (refresh_list), (proctable_free_table):
+
+	s/g_hash_table_new (g_direct_hash, g_direct_equal)
+	 /g_hash_table_new (NULL, NULL)/g.
+
+2005-07-13  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* configure.in: post release version bump.
+	
+	* src/proctable.c: (proctable_update_list): Fixed division by 0 that
+	may happen on fast CPU which raises SIGFPE on x86.
+
+2005-07-13  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* NEWS: Released 2.11.5.
+
+2005-07-13  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (cb_kill_sigstop), (cb_kill_sigcont):
+	* src/callbacks.h:
+	* src/interface.c: (update_sensitivity): 
+	
+	Provide controls to SIGSTOP and SIGCONT a process.
+	Closes #147010.
+
+2005-07-10  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (cb_app_delete), (cb_change_current_page),
+	(cb_timeout):
+	* src/load-graph.c: (load_graph_update), (load_graph_destroy),
+	(load_graph_new), (load_graph_start), (load_graph_change_speed):
+	* src/memmaps.c: (close_memmaps_dialog), (create_memmapsdata),
+	(create_single_memmaps_dialog):
+	* src/openfiles.c: (close_openfiles_dialog),
+	(create_single_openfiles_dialog):
+	* src/procactions.c: (kill_process):
+	* src/procman.c: (timeouts_changed_cb), (procman_data_new):
+	* src/procman.h:
+
+	gtk_timeout_add/gtk_timeout_remove -> g_timeout_add/g_source_remove.
+
+2005-07-09  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (cb_app_delete), (cb_change_current_page),
+	(cb_update_disks), (cb_timeout):
+	* src/interface.c: (create_disk_view), (create_sys_view):
+	* src/load-graph.c: (load_graph_draw), (get_load), (get_memory),
+	(get_net), (load_graph_update), (load_graph_unalloc),
+	(load_graph_alloc), (load_graph_destroy), (load_graph_new),
+	(load_graph_start), (load_graph_stop), (load_graph_change_speed),
+	(load_graph_get_colors), (load_graph_reset_colors),
+	(load_graph_get_labels), (load_graph_get_widget):
+	* src/load-graph.h:
+	* src/procman.c: (timeouts_changed_cb), (color_changed_cb):
+	* src/procman.h:
+
+	Big rework. Closes #309840.
+
+	LoadGraph definition is private.
+	Start timeouts only when needed (used to start every timeout on
+	startup).
+
+2005-07-09  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/load-graph.c: (load_graph_configure), (load_graph_destroy):
+	Little cleanup. Fixed callbacks' prototype. Removed never reached
+	statements.
+
+2005-07-09  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/ChangeLog: Merged into this ChangeLog.
+
+2005-07-08  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procactions.c: (kill_single_process):
+	* src/procdialogs.c: (kill_dialog_button_pressed),
+	(procdialog_create_kill_dialog), (procdialog_create_renice_dialog):
+	* src/procdialogs.h:
+	* src/procman.h: Fixed process kill.
+	Removed 1 global variable (kill_signal).
+
+2005-07-07  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* configure.in: bump version.
+	* src/proctable.c: (proctable_new): VM Size -> Virtual Memory.
+
+2005-07-01  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* NEWS: Released 2.11.4.
+
+2005-06-26  Dennis Cranston <dennis_cranston@yahoo.com>
+
+	* src/interface.c: (create_sys_view):  Fix vertical alignment 
+	of "CPU:" with "User memory", "Used swap", etc.
+	  
+2005-06-26  Dennis Cranston <dennis_cranston@yahoo.com>
+
+	* src/procdialog.c:  (procdialog_create_preferences_dialog):
+	Fix preference dialog's spacing to be HIG compliant. 
+	
+	* src/infoview.c: (expander_get_label)  Use sentence capitalization.
+	(infoview_create):  Indent contents of expander widget.
+	
+	* src/interface.c: Use header capitalization and add missing
+	mnemonics for new menu items.  (create_disk_view, create_sys_view):
+	Fix the tab border width.
+	
+2005-06-26  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procman.c: (get_startup_timestamp), (cb_server), (main):
+	Fixed startup notification. Closes #172407.
+	
+	Patch by Davyd Madeley and Paollo Borelli.
+
+2005-06-24  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procactions.c: (renice_single_process),
+	(kill_single_process): Fixed confusing error message when libgnomesu is
+	not found (used to display "Success").
+	
+	Original patch by Scott Reeve <sreeves@novell.com>.
+	
+	Closes #308822.
+
+2005-06-23  Scott Reeves  <sreeves@novell.com>
+
+	* src/procdialogs.c src/procdialogs.h 
+	Change priority slider max value to 19 to reflect what is
+	allowed by the renice command.
+	
+	Reviewed by Benoît Dejean  <TazForEver@dlfp.org>.
+
+2005-06-14  Martin Ejdestig  <mejde@dtek.chalmers.se>
+
+	* callbacks.c (cb_update_disks, update_disk, add_new_disks): 
+	* interface.c (create_disk_view): 
+	Convert device store from tree store to list store. This removes space
+	to the left of icons in device list. Closes #307683.
+
+	Reviewed by Benoît Dejean  <TazForEver@dlfp.org>.
+
+2005-06-13  Martin Ejdestig  <mejde@dtek.chalmers.se>
+
+	* procman.c (procman_data_new): 
+	* src/gnome-system-monitor.schemas.in:
+	Modified default colors to be a little brighter. Closes #305877.
+	
+	Reviewed by Benoît Dejean  <TazForEver@dlfp.org>.	
+
+2005-06-12  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (cb_timeout), (cb_radio_processes):
+	* src/callbacks.h:
+	* src/interface.c: (create_proc_view), (create_main_window):
+	Moved Show combo box functionality to View menu.
+	Closes #305874.
+
+2005-06-11  Martin Ejdestig  <mejde@dtek.chalmers.se>
+
+	* src/callbacks.c: (cb_app_delete), (cb_net_in_color_changed),
+	(cb_net_out_color_changed), (cb_change_current_page):
+	* src/callbacks.h:
+	* src/gnome-system-monitor.schemas.in:
+	* src/interface.c: (create_sys_view):
+	* src/load-graph.c: (net_scale), (get_net), (load_graph_update),
+	(load_graph_unalloc), (load_graph_alloc), (load_graph_new):
+	* src/load-graph.h:
+	* src/procman.c: (timeouts_changed_cb), (color_changed_cb),
+	(procman_data_new):
+	* src/procman.h:
+
+	Add network history graph. Closes #164115 and #120323.
+	Reviewed by Benoît Dejean  <TazForEver@dlfp.org>.
+
+2005-06-10  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/gnome-system-monitor.schemas.in:
+	* src/procman.c: (procman_get_tree_state),
+	(procman_save_tree_state):
+	* src/proctable.c: (cb_columns_changed),
+	(my_gtk_tree_view_get_column_with_sort_column_id),
+	(proctable_set_columns_order), (proctable_get_columns_order),
+	(proctable_new):
+	* src/proctable.h: Implemented save/store for the proctable columns
+	order.
+
+2005-06-10  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procdialogs.c: (create_proc_field_page):
+	* src/procman.c: (procman_get_tree_state),
+	(procman_save_tree_state): Should fix column selection. Also fixed
+	some leaks.
+
+2005-06-10  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procdialogs.c: (procdialog_create_preferences_dialog): Fixed spin
+	button value for update_interval.
+
+2005-06-08  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* configure.in: 2.11.4 post release version bump.
+
+2005-06-08  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* NEWS: Released 2.11.3.
+
+2005-06-08  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/prettytable.c: (new_application), (application_finished),
+	(pretty_table_get_icon), (load_icon_for_commands):
+	* src/proctable.c: (proctable_free_info): Fixed references mess that
+	often causes segfaults.
+	Special thanks to Rod Butcher who helped me.
+
+2005-06-07  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procman.h: Ooops, fixed enum values.
+
+2005-06-07  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procdialogs.c: (procdialog_create_preferences_dialog):
+	* src/procman.h:
+	* src/smooth_refresh.c: (smooth_refresh_get): Ensures 
+	MIN_UPDATE_INTERVAL <= update_interval <= MAX_UPDATE_INTERVAL.
+
+2005-06-05  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/smooth_refresh.c: (smooth_refresh_get): Less verbose debug message.
+
+2005-06-03  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/proctable.c: (remove_info_from_tree): Don't use a copy of info->node.
+
+2005-06-02  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/proctable.c: (update_info): Removed useless code. I forgot to
+	clean this when i fixed #305060.
+
+2005-06-01  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/proctable.c: (update_info): Fixed process sort.
+	Closes #305060. This has an impact on performance but we're safe with
+	the smooth refresh.
+
+2005-05-30  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/load-graph.c: (shift_right), (load_graph_update),
+	(load_graph_unalloc), (load_graph_alloc):
+	* src/procman.h: Removed LoadGraph::odata. Just shift
+	LoadGraph::data. See #164115. Thanks to Martin Ejdestig
+	mejde@dtek.chalmers.se.
+
+2005-05-30  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/gnome-system-monitor.schemas.in: Made 
+	/apps/procman/show_tree FALSE default. See #305883.
+
+2005-05-30  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/interface.c: (create_sys_view):
+	Use "CPU" instead of "CPU%d" is system has only one cpu.
+	Closes #305876.
+
+2005-05-29  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/load-graph.c: (load_graph_destroy), (load_graph_new): Removed
+	unused global (object_list).
+
+2005-05-25  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/proctable.c:
+	* src/selinux.c: (get_process_selinux_context),
+	(can_show_security_context_column):
+	* src/selinux.h: Moved all the SELinux code to src/selinux.[ch].
+	Better SELinux (auto-)detection in configure.in.
+
+2005-05-25  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procman.h:
+	* src/proctable.c: (proctable_free_info), (remove_info_from_list),
+	(get_info): ProcInfo::children is now GSList.
+
+2005-05-23  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/memmaps.c: (ghashtable_clear_callback), (ghashtable_clear),
+	(add_new_maps), (compare_memmaps), (update_memmaps_dialog),
+	(close_memmaps_dialog), (create_memmapsdata), (memmaps_timer),
+	(create_single_memmaps_dialog), (create_memmaps_dialog): Big rework.
+	
+	Moved all data to MemMapsData instead of storing(hiding) stuff in the
+	tree's gobject properties. So it's also now reentrant. Added some TODO.
+	I think it's cleaner like this. opendialogs.c should be reworked the
+	same way :/
+
+2005-05-20  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/memmaps.c: (add_new_maps): Little cleanup. Removed unneeded
+	MemmapsInfo type.
+	
+	* configure.in: Post release version bump.
+
+2005-05-18  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* NEWS:
+	* configure.in: Released 2.11.2.
+
+2005-05-13  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procdialogs.c: (procdialog_create_kill_dialog): Fixed strangely
+	formulated messages.
+	Patch by Benjamin LeMasurier <uidzer0@uidzer0.org>.
+	Closes #163395.
+
+2005-05-13  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procman.h: ProcConfig::update_inteval is now unsigned.
+
+2005-05-13  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c:
+	* src/callbacks.h:
+	* src/interface.c: (create_proc_view):
+	* src/procman.h:
+	* src/proctable.c: (search_equal_func), (proctable_new),
+	(proctable_update_all), (make_loadavg_string):
+	* src/proctable.h: Removed the search box in favor of the tree's
+	builtin search.
+	
+	Added system load averages on the process tab. 
+
+2005-05-13  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/smooth_refresh.h: Fixed G_GNUC_INTERNAL usage.
+
+2005-05-12  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procman.h:
+	* src/proctable.c: (get_process_user), (update_info_mutable_cols),
+	(insert_info_to_tree), (update_info), (get_info):
+	Added ProcInfo::uid.
+	Update ProcInfo::user whenever ProcInfo::uid changes. If ProcInfo::uid
+	doesn't match with any system username, displays direclty ProcInfo::uid.
+	
+	* src/proctable.c:(get_info): Used glibtop_get_proc_argv() instead of
+	glibtop_get_proc_args().
+
+2005-05-12  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/proctable.c: (insert_info_to_tree): Fixed a leak.
+
+2005-05-11  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/openfiles.c: (update_openfiles_dialog): Fixed a leak.
+	
+	* src/prettytable.c: (pretty_table_free): Don't forget to free all
+	hashtables.
+
+	* src/procman.c: (procman_free_data): Actually free the prettytable.
+	
+	* src/proctable.c: (get_process_name), (get_info): Fixed process name.
+
+2005-05-07  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/prettytable.c: (create_scaled_icon): Don't warn if icon is
+	missing. Closes #300315.
+
+2005-05-02  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (update_disk):
+	* src/infoview.c: (infoview_update):
+	* src/load-graph.c: (get_memory):
+	* src/memmaps.c: (add_new_maps):
+	* src/proctable.c: (update_info_mutable_cols):
+	* src/util.c: (procman_make_label_for_mmaps_or_ofiles),
+	(SI_gnome_vfs_format_file_size_for_display):
+	* src/util.h: Now displays SI units.
+	TODO: s/SI_gnome_vfs_format_file_size_for_display/gnome_vfs_format_file_size_for_display
+	when gnome-vfs 0K.
+
+2005-04-30  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (fsusage_stats), (cb_update_disks):
+	* src/gnome-system-monitor.schemas.in:
+	* src/procdialogs.c: (show_all_fs_toggled),
+	(procdialog_create_preferences_dialog):
+	* src/procman.c: (show_all_fs_changed_cb), (procman_data_new):
+	* src/procman.h: New option to show all devices.
+
+2005-04-30  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/bacon-message-connection.c: Synced with libbacon.
+
+2005-04-27  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (cb_update_disks),
+	(cb_volume_mounted_or_unmounted):
+	* src/callbacks.h:
+	* src/procman.c: (init_volume_monitor), (main): Refresh devices
+	list whenever a device is mounted or unmounted.
+	Closes #164292.
+
+2005-04-19  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/Makefile.am:
+	* src/callbacks.c: (cb_timeout):
+	* src/procman.c: (timeouts_changed_cb), (procman_data_new),
+	(procman_free_data):
+	* src/procman.h:
+	* src/smooth_refresh.c: (get_own_cpu_usage), (smooth_refresh_new),
+	(smooth_refresh_reset), (smooth_refresh_destroy),
+	(smooth_refresh_get):
+	* src/smooth_refresh.h: Implemented smooth refresh interval.
+	Closes #164296.
+
+2005-04-19  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procman.c: (procman_get_tree_state): Fixed typo.
+
+2005-04-06  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procman.c: (procman_get_tree_state),
+	(procman_save_tree_state):
+	* src/procman.h:
+	Fixed against bad gconf keys.
+	Marked const key args.
+
+2005-04-05  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (cb_about): One more const.
+
+2005-04-05  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/bacon-message-connection.c: Synced with libbacon HEAD.
+
+2005-04-05  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/load-graph.c: (get_memory): Fixed display if there's no swap.
+
+2005-03-31  Steve Murphy  <murf@e-tools.com>
+
+        * configure.in: Added "rw" to ALL_LINGUAS.
+
+2005-03-31  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* .cvsignore:
+	* configure.in:
+	* src/Makefile.am:
+	* src/bacon-message-connection.c: (test_is_socket),
+	(setup_connection), (server_cb), (socket_filename), (try_server),
+	(try_client), (bacon_message_connection_new),
+	(bacon_message_connection_free),
+	(bacon_message_connection_set_callback),
+	(bacon_message_connection_send),
+	(bacon_message_connection_get_is_server):
+	* src/bacon-message-connection.h: Imported libbacon.
+
+2005-03-31  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (cb_edit_preferences), (cb_renice),
+	(cb_end_process), (cb_kill_process), (cb_show_memory_maps),
+	(cb_show_open_files), (cb_show_hidden_processes),
+	(cb_hide_process), (cb_about), (cb_help_contents), (cb_app_exit),
+	(cb_change_current_page):
+	* src/callbacks.h:
+	* src/interface.c: (create_proc_view), (menu_item_select_cb),
+	(menu_item_deselect_cb), (connect_proxy_cb), (disconnect_proxy_cb),
+	(create_main_window), (update_sensitivity), (cb_toggle_tree),
+	(cb_toggle_threads):
+	* src/procman.h:
+	
+	Port to GtkUIManager by Paolo Borelli <pborelli@katamail.com>.
+
+2005-03-31  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* configure.in:
+	* src/procman.c: (cb_server), (main): Added dependency on libbacon.
+	Spawn only one instance of gnome-system-monitor.
+
+2005-03-31  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (cb_switch_page), (cb_change_current_page):
+	* src/callbacks.h:
+	* src/interface.c: (create_main_window): Fixed graph drawing when
+	starting on tab #2.
+
+2005-03-27  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/interface.c: (create_main_window):
+	* src/procman.c: (procman_data_new): Fixed current_tab save.
+	current_tab is {0, 1, 2}.
+
+2005-03-18  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (get_last_selected), (cb_row_selected):
+	Removed global variable.
+
+2005-03-18  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/favorites.c: (remove_all_of_same_name_from_tree),
+	(remove_from_blacklist), (is_process_blacklisted),
+	(insert_all_of_same_name_from_tree):
+	* src/procman.c: (warning_changed_cb), (timeouts_changed_cb),
+	(color_changed_cb):
+	* src/proctable.c: (get_info), (proctable_search_table):
+	* src/proctable.h: Replaced g_strcasecmp by g_ascii_strcasecmp.
+	GConf keys are now compared with g_str_equal instead of g_strcasecmp (????).
+	
+	(proctable_search_table): Marked argument const.
+
+2005-03-18  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/memmaps.c: (create_single_memmaps_dialog):
+	* src/openfiles.c: (create_single_openfiles_dialog): Fixed strings.
+
+2005-03-18  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/memmaps.c: (create_single_memmaps_dialog):
+	* src/openfiles.c: (create_single_openfiles_dialog):
+	* src/util.c: (_procman_array_gettext_init),
+	(mnemonic_safe_process_name),
+	(procman_make_label_for_mmaps_or_ofiles):
+	* src/util.h: Fixed process name with '_' so that it's not considered
+	as a mnemonic.
+
+2005-03-18  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (cb_switch_page): Fixed.
+
+2005-03-17  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (cb_row_selected):
+	* src/callbacks.h:
+	* src/infoview.c: (expander_get_label), (expander_callback),
+	(infoview_create), (infoview_update):
+	* src/infoview.h:
+	* src/interface.c: (create_proc_view), (create_main_window),
+	(do_popup_menu), (update_sensitivity):
+	* src/interface.h:
+	* src/procman.h:
+	* src/proctable.c: (proctable_new): GtkExpander love :)
+
+2005-03-17  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c:
+	* src/callbacks.h:
+	* src/favorites.c:
+	* src/favorites.h:
+	* src/infoview.h:
+	* src/interface.c:
+	* src/interface.h:
+	* src/load-graph.h:
+	* src/memmaps.c:
+	* src/memmaps.h:
+	* src/openfiles.c:
+	* src/openfiles.h:
+	* src/prettytable.c:
+	* src/procactions.c:
+	* src/procdialogs.c:
+	* src/proctable.c:
+	* src/util.c: Fixed #includes.
+
+2005-03-16  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/gnome-system-monitor.schemas.in:
+	* src/interface.c: (create_disk_view), (create_sys_view),
+	(create_main_window):
+	* src/interface.h:
+	* src/procdialogs.c: (procdialog_create_preferences_dialog):
+	* src/procman.c: (procman_data_new), (procman_save_config):
+	* src/procman.h: Moved the device list to a seperate tab.
+	Removed gconf key that saved the pane position.
+
+2005-03-15  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/proctable.c: (format_duration_for_display),
+	(update_info_mutable_cols): top-like time format.
+
+2005-03-15  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procman.c: (procman_data_new):
+	* src/procman.h:
+	* src/proctable.c: (sort_ints), (proctable_new),
+	(update_info_mutable_cols), (insert_info_to_tree), (update_info),
+	(get_info):
+	* src/proctable.h: Added a new col that displays cpu time.
+	Also merged duplicate functions.
+	glibtop_get_proc_time() is called only once per process on every update.
+
+2005-03-15  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procman.h: changed type of procdata->memxserver as libwnck's uses
+	an unsigned long not a guint64.
+
+2005-03-14  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/infoview.c: (infoview_create), (infoview_update):
+	* src/infoview.h:
+	* src/interface.c: (create_proc_view), (toggle_infoview),
+	(update_sensitivity):
+	* src/procman.c: (procman_data_new):
+	* src/procman.h: Moved a bunch of global variables from infoview.c
+	to procdata->infoview.*.
+
+2005-03-14  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/infoview.c:
+	* src/interface.c: (make_title_label):
+	* src/interface.h: Merged multiple make_title_label().
+	Fixed float constants.
+
+2005-03-14  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/infoview.c: (infoview_toggle_button_get_msg):
+	* src/infoview.h:
+	* src/interface.c: (create_proc_view), (toggle_infoview):
+	* src/procman.c: (main): Fixed More/Less info state.
+	Closes #170141.
+	
+	Merged some strings.
+
+2005-03-14  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/interface.c: (create_sys_view):
+	* src/openfiles.c: (compare_open_files): don't use C++-style comments.
+	Patch by jensgr@gmx.net (Jens Granseuer).
+
+2005-03-12  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procactions.c: (renice_single_process), (renice),
+	(kill_single_process), (kill_process):
+	* src/procdialogs.c: (procdialog_create_root_password_dialog):
+	* src/procdialogs.h:
+	* src/proctable.h: Started rework the renice/kill actions.
+	Removed 1 global variable.
+	Better error handling if renice/kill fails.
+
+2005-03-11  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procactions.c: (renice_single_process),
+	(kill_single_process):
+	* src/procdialogs.c: (procman_get_gnomesu_exec),
+	(procdialog_create_root_password_dialog):
+	* src/procdialogs.h: Look for libgnomesu only once. Removed unused
+	messages.
+
+2005-03-10  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (change_gconf_color), (cb_cpu_color_changed),
+	(cb_mem_color_changed), (cb_swap_color_changed),
+	(cb_bg_color_changed), (cb_frame_color_changed):
+	* src/callbacks.h:
+	* src/favorites.c:
+	* src/infoview.c:
+	* src/infoview.h:
+	* src/interface.c: (create_sys_view):
+	* src/interface.h:
+	* src/load-graph.c:
+	* src/memmaps.c:
+	* src/openfiles.c:
+	* src/prettytable.c:
+	* src/procactions.c: (renice_single_process),
+	(kill_single_process):
+	* src/procdialogs.c: (procdialog_create_preferences_dialog):
+	* src/procdialogs.h:
+	* src/procman.c: (main):
+	* src/procman.h:
+	* src/proctable.c: (proctable_search_table):
+	* src/util.c:
+	
+	- Big cleanup. Replaced gnome_color_picker_new() by gtk_color_button_new_with_color().
+	Original patch by Kristof Vansant <de_lupus@pandora.be>.
+	- Fixed a couple of warnings.
+
+2005-03-10  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/callbacks.c: (fsusage_stats):
+	* src/cellrenderer.c:
+	* src/cellrenderer.h:
+	* src/interface.c: (create_sys_view): Got rid of Procman cellrenderer
+	and replaced by GTK+ 2.6 GtkCellRendererProgress.
+	Closes #142540.
+
+2005-03-10  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (update_disk), (compare_disks), (add_new_disks):
+	Added update_disk() so that compare_disk() and add_new_disks() retrieve
+	disk info in the same way.
+
+2005-03-10  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.c: (get_icon_for_device), (add_new_disks):
+	Better icon theme support.
+
+2005-03-09  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procman.c: (procman_data_new):
+	* src/procman.h:
+	* src/proctable.c: (proctable_free_info), (remove_info_from_list),
+	(get_info), (proctable_free_table):
+	
+	Allocates ProcInfo::user with GStringChunk.
+	Allocates ProcInfo with GMemChunk.
+
+2005-03-09  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* configure.in: Post release version bump.
+
+2005-03-07  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* NEWS: oops, forgot to commit.
+
+2005-03-07  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* configure.in:
+	* NEWS: Released 2.10.0.
+
+2005-03-06  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* gnome-system-monitor.spec: Updated.
+
+2005-02-28  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* NEWS: Released 2.9.92.
+
+2005-02-25  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* configure.in: /me stupid. I've already post-bumped version.
+
+2005-02-24  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* configure.in: post release bump 2.9.93.
+
+2005-02-16  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/defaulttable.h:
+	* src/prettytable.c: (new_application), (application_finished),
+	(pretty_table_new), (pretty_table_get_icon), (pretty_table_free),
+	(create_scaled_icon), (load_icon_for_commands), (cb_g_free),
+	(cb_g_ptr_array_free), (load_default_table):
+	* src/prettytable.h:
+	* src/procman.h: Reworked so that icons loaded from the default table
+	share their pixbuf.
+	
+	* src/procdialogs.c: (procdialog_create_hide_dialog):
+	* src/procdialogs.h: Removed dead code.
+
+2005-02-08  Hongli Lai  <h.lai@chello.nl>
+
+	* configure.in, src/Makefile.am:
+	  Removed hard dependancy on libgnomesu.
+	* src/procdialogs.c (procdialog_create_root_password_dialog):
+	  Detect libgnomesu at runtime using GModule.
+
+2005-02-07  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* configure.in: 2.9.92.
+	
+	* configure.in:
+	* src/Makefile.am:
+	* src/procdialogs.c: (procdialog_create_root_password_dialog):
+	Conditionnaly enable libgnomesu support. Closes #164244
+
+2005-02-06  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* NEWS:
+	* configure.in: Released 2.9.91.
+
+2005-01-30  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* po/fr.po:
+	* src/openfiles.c: (create_single_openfiles_dialog): Better title.
+
+2005-01-24  Duarte Loreto <happyguy_pt@hotmail.com>
+
+	* src/gnome-system-monitor.schemas.in: Fixed a typo 
+	  (waring -> warning)
+
+2005-01-24  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* NEWS:
+	* configure.in: Released 2.9.90.
+
+2005-01-22  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* configure.in:
+	* src/openfiles.c: (add_new_files): Updated. Now displays localsock path.
+
+2005-01-17  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/openfiles.c: (friendlier_hostname): Returns "" instead of ":0".
+
+2005-01-17  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/callbacks.h:
+	* src/cellrenderer.h:
+	* src/favorites.h:
+	* src/infoview.h:
+	* src/interface.h:
+	* src/load-graph.h:
+	* src/memmaps.h:
+	* src/openfiles.h:
+	* src/prettytable.h:
+	* src/procactions.h:
+	* src/procdialogs.h:
+	* src/procman.h:
+	* src/proctable.h:
+	* src/util.h: G_GNUC_INTERNAL love.
+
+2005-01-17  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/interface.c: Fixed strings. Closes #164208.
+
+2005-01-14  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/openfiles.c: (friendlier_hostname), (add_new_files): Prints hostname
+	if available.
+	
+	(create_openfiles_tree): Fixed warning.
+
+2005-01-14  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procdialogs.c: (procdialog_create_hide_dialog): Closes #163959.
+	Again :P
+
+2005-01-14  Dennis Cranston <dennis_cranston@yahoo.com>
+
+	* interface.c: (update_sensitivity):  Toggle sensitivity of
+	the View->Memory Map and View->Open Files menu items.
+	
+	* openfile.c: (create_single_openfiles_dialog):  Set the shadow
+	type for the scrolled window and use correct HIG spacing.
+	
+	* memmaps.c: (create_single_memmaps_dialog): Use correct HIG
+	spacing.
+
+2005-01-13  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/openfiles.c: (create_openfiles_tree): Added comment. Closes #163957.
+
+2005-01-13  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/procdialogs.c: (procdialog_create_hide_dialog):
+	* src/proctable.c: (proctable_search_table): Fixed strings.
+	Closes #163959.
+
+2005-01-13  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/openfiles.c: (get_type_name): "internet connection" -> "network connection".
+
+2005-01-12  Martin Ejdestig  <mejde@dtek.chalmers.se>
+  
+ 	* load-graph.c (load_graph_draw): Fixed drawing of graph (was off by a
+	few pixels here and there).
+
+	Closes #163745.
+
+2005-01-11  Luca Ferretti  <elle.uca@libero.it>
+
+	* src/favorites.c: (create_tree), (create_blacklist_dialog):
+	* src/memmaps.c: (create_single_memmaps_dialog):
+	* src/procdialogs.c: (create_proc_field_page),
+	(procdialog_create_preferences_dialog):
+	* src/proctable.c: (proctable_search_table):
+	
+	* Use new GtkMessageDialog API and HIG compliant labels for
+	search-not-found alert.
+
+	* Fix spacing, labels and shadows in Memory Maps and Hidden Processes
+	dialogs
+
+	* Add header label (with mnemonic) for the fields list in Preferences
+	dialog.
+
+2005-01-10  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* configure.in: 2.9.5
+	* po/POTFILES.in: Added openfiles.c.
+	
+	* src/interface.c: UI fix.
+	
+	* src/openfiles.c: (create_openfiles_tree): Fixed i18n.
+
+2005-01-10  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* NEWS:
+	* configure.in: Released 2.9.4.
+
+2005-01-10  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/callbacks.c: (cb_show_open_files),
+	(popup_menu_show_open_files):
+	* src/callbacks.h:
+	* src/interface.c:
+	* src/openfiles.c: (get_type_name), (add_new_files),
+	(classify_openfiles), (compare_open_files),
+	(update_openfiles_dialog), (close_openfiles_dialog),
+	(create_openfiles_tree), (openfiles_timer),
+	(create_single_openfiles_dialog), (create_openfiles_dialog):
+	* src/openfiles.h:
+	
+	Patch from nick@reloco.com.ar.
+	Closes #147193.
+
+2005-01-09  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/gnome-system-monitor.schemas.in: Fixed. Closes #163391.
+
+2005-01-09  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* src/interface.c: Fixed typo. Closes #163393.
+	Closes #163394.
+
+2005-01-08  Benoît Dejean  <TazForEver@dlfp.org>
+
+	* configure.in:
+	* src/procdialogs.c: (procdialog_create_root_password_dialog):
+	* src/util.c: (_procman_array_gettext_init):
+	* src/util.h: Now uses libgnomesu.
+
+2005-01-08  Luca Ferretti <elle.uca@libero.it>
+
+	* src/favorites.c: (create_blacklist_dialog):
+	* src/interface.c: (create_proc_view), (create_main_window),
+	(update_sensitivity), (cb_toggle_tree), (cb_toggle_threads):
+	* src/procdialogs.c: (hide_dialog_button_pressed),
+	(procdialog_create_hide_dialog), (kill_dialog_button_pressed),
+	(procdialog_create_kill_dialog),
+	(procdialog_create_preferences_dialog):
+
+	* Kill, End, and Hide confirmation alert don't follow HIG (details: rework
+	primary/secondary labels, remove checkbox, use the latest
+	GtkMessageDialog API
+	and MODAL)
+
+	* Move items from Edit to View (details: HIG says that "Edit
+	contains menu items
+	relating to editing", while the "View menu contains only items
+	that affect the
+	user's view of the current document". So Hide Process and Hidden
+	Processes
+	entries should be placed in View menu; rework items position and
+	comments)
+
+	* Adjust preferences and hidden processes window titles
+
+	* Fix some labels in main window (details: make tab labels
+	shorter, change Vie_w
+	to Show because View is a standard menu, de-capitalize combobox
+	entries)
+
+	* Fix some spacing.
+
+2005-01-08  Sven Herzberg  <herzi@gnome-de.org>
+
+	reviewed by: seb128@debian.org
+
+	* po/POTFILES.in: added the .schemas.in file
+	* src/Makefile.am: added rules to add schemas i18n support
+	* src/gnome-system-monitor.schemas:
+	* src/gnome-system-monitor.schemas.in: moved .schemas to .schemas.in
+
+2004-12-30  Luca Ferretti  <elle.uca@infinito.it>
+
+	* gnome-system-monitor.desktop.in.in: Use gnome-monitor as
+	application icon. This icon is the one provided by gnome-icon-theme
+	* src/callbacks.c: (cb_about_activate) use gnome-monitor as
+	application logo an small tuning in about dialog: add documenters,
+	use the same comment of .desktop file, fix copyright string, fix
+	translator-credits string.
+	* src/procman.c: (main) use gnome-monitor as application default icon.
+	* src/Makefile.am: remove procman.png from build
+	
+	* Removed src/procman.png.
+	
+	Reviewed by Benoît Dejean.
+	
+2004-12-24  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/interface.c: (create_sys_view):
+	* src/load-graph.c: (get_memory): "Used Memory" -> "User Memory".
+	Closes #94219.
+
+	* src/procman.h: Removed unused enum.
+
+2004-12-20  Benoît Dejean  <tazforever@dlfp.org>
+
+	* NEWS:
+	* configure.in: Released 2.9.3.
+
+2004-12-17  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/proctable.c: (cb_exclude), (refresh_list): Fixed a nasty crash :
+	make sure a process is not added AND removed at the same time.
+	Closes #161350.
+
+2004-12-11  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in: Added "th" (Thai) to ALL_LINGUAS.
+
+2004-12-06  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/procman.c: (main): Added missing gnome-vfs init/shutdown.
+
+2004-12-06  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/callbacks.c: (get_icon_for_device), (add_new_disks): Doesn't crash if
+	gnome_vfs_volume_monitor_get_volume_for_path returns NULL.
+	Closes #160560.
+
+2004-11-30  Benoît Dejean  <tazforever@dlfp.org>
+
+	* configure.in: post-release bump to 2.9.1.
+
+2004-11-30  Benoît Dejean  <tazforever@dlfp.org>
+
+	* NEWS: released 2.9.0
+
+2004-11-30  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/interface.c: (create_main_window), (update_sensitivity):
+	* src/interface.h:
+	* src/prettytable.c: (pretty_table_new):
+	* src/prettytable.h:
+	* src/procman.c: (procman_data_new), (procman_save_config), (main):
+	* src/procman.h:
+	* src/proctable.c: (proctable_update_list): Big cleanup.
+	Removed SimpleView dead code.
+	Removed popt stuff.
+	Moved global src/procman.c::app to ProcData struct.
+
+2004-11-30  Benoît Dejean  <tazforever@dlfp.org>
+
+	* configure.in: Depends on libgtop-2.8.2.
+	
+	* src/procman.h:
+	* src/proctable.c: (remove_children_from_tree), (update_info),
+	(refresh_list): Removed que queue tag. Instead of tagging - then iterating
+	to find tagged ProcInfo, uses a removal_list and addition_list. This is
+	also a great speedup !
+	
+	ProcInfo is fully updated only when needed (is_visible and is displayed).
+	I think this is safe.
+		
+	gnome-system-monitor seems a bit faster : 2.6.0 eats 35% CPU with 200 processes
+	refresh every sec, where current uses about 27% CPU on my ibook 1GHZ.
+
+2004-11-28  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/interface.c: (sort_bytes):
+	* src/memmaps.c: (sort_guint64): Cleaned.
+	
+	* src/procman.h: Added a pid_t->ProcInfo hashtable. See comment. 
+	
+	* src/prettytable.c: (new_application):
+	* src/procman.c: (procman_data_new), (procman_free_data):
+	* src/proctable.c: (sort_ints), (get_process_selinux_context),
+	(proctable_new), (proctable_free_info), (get_process_name),
+	(get_process_memory_info), (proctable_find_process), (find_parent),
+	(remove_children_from_tree), (remove_info_from_list),
+	(update_info), (get_info), (refresh_list), (proctable_free_table):
+	* src/proctable.h: Big cleanup.
+	Use hashtable instead of list : N² -> N ! I believe this is major speedup.
+	I'm interested in any kind of feedback.
+	
+	(get_process_memory_info): shares the routine that retrieves memory
+	stats.
+
+2004-11-28  Benoît Dejean  <tazforever@dlfp.org>
+
+	* configure.in: Depends on gtk+-2.5.
+	* src/callbacks.c: (cb_about_activate): Create about dialog with
+	gtk_show_about_dialog. Closes #159392.
+
+2004-11-24  Dennis Cranston <dennis_cranston@yahoo.com>
+
+	* src/procman.c: (main): Set window icon with
+	gtk_window_set_default_icon_name () to user the theme icon.
+
+2004-11-27  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/callbacks.c: (cb_about_activate), (compare_disks),
+	(add_new_disks):
+	* src/interface.c: (sort_bytes), (create_sys_view):
+	* src/proctable.c:
+	* src/util.h: Added a free column in the device view. Patch from Paul
+	Goergler <fluf at dlfp dot org>.
+	Closes #151722.
+	Misc cleanups.
+	Removed some i18n strings.
+
+2004-11-27  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/procactions.c: (renice_single_process): Changed error message.
+	Closes #123268.
+
+2004-11-27  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/interface.c:
+	* src/callbacks.c: (kill_process_helper), (cb_renice),
+	(cb_end_process), (cb_kill_process),
+	(cb_end_process_button_pressed):
+	* src/callbacks.h: Removed duplicate callbacks.
+
+	* src/proctable.c: (set_proctree_reorderable), (proctable_new),
+	(proctable_search_table): Columns are now reorderable, though i still
+	don't know how to save/restore user-defined order. See #125857.
+	Right-align some columns (memory and CPU). See #122766.
+	
+	* src/util.c: (_procman_array_gettext_init):
+	* src/util.h: Added.
+
+2004-11-24  Christoffer Olsen  <co@deworks.net>
+
+	* Bug Buddy can now identify procman's version
+	automagically by the X-GNOME-Bugzilla-Version header.
+	* configure.in: Added *.desktop.in to AC_OUTPUT
+	* gnome-system-monitor.desktop.in: Moved to *.desktop.in.in
+	* gnome-system-monitor.desktop.in.in: Added 
+	X-GNOME-Bugzilla-Version header
+	* po/POTFILES.in: References *.desktop.in.in instead of *.desktop.in
+
+2004-11-24  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/interface.c: (toggle_infoview): Fixed (More|Less) labels.
+	
+	* src/procman.c: Added missing #include for old libgtop.
+
+2004-11-24  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/favorites.c: (add_single_to_blacklist):
+	* src/prettytable.c: (new_application):
+	* src/proctable.c: (proctable_free_info), (get_process_status),
+	(find_parent), (insert_info_to_tree), (remove_children_from_tree),
+	(remove_info_from_tree), (update_info), (get_info), (refresh_list),
+	(proctable_search_table):
+	* src/procman.h: ProcInfo is a bit smaller (on my ppc32 160B -> 128B).
+	Renamed some members and added bitfield.
+	Removed .parent_pid as we already have it though self->parent->pid.
+	The .status string is now shared (no need to allocate/free anymore).
+	
+	(let say we have 200 running process, we've saved 30B * 200 = 6KB, wow !)
+
+2004-11-22  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/proctable.c: (sort_ints): Fixed stupid typo. CPU and RES columns
+	are now correctly sorted.
+
+2004-11-21  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/gnome-system-monitor.schemas:
+	* src/procman.c: (color_changed_cb), (procman_data_new): Changed default
+	colors. Closes #129886.
+	+ 1-line cleanup.
+
+2004-11-20  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/proctable.c: (proctable_new):
+	* src/proctable.h: Re-ordered columns so that 'Arguments' is the last.
+	This is a little workaround as long as columns are not re-orderable.
+	See #125857.
+
+2004-11-13  Benoît Dejean  <tazforever@dlfp.org>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/procman.h:
+	* src/proctable.c: (can_show_security_context_column),
+	(get_selinux_context), (proctable_new), (proctable_free_info),
+	(insert_info_to_tree), (update_info), (get_info):
+	* src/proctable.h: Merged David Malcolm  <david@davemalcolm.demon.co.uk>
+	SELinux Security Context patch. Thanks :)
+	New configure option: --enable-selinux
+
+2004-11-13  Benoît Dejean  <tazforever@dlfp.org>
+
+	* configure.in: Bumped version.
+
+2004-11-12  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/util.c: (get_size_string):
+	* src/util.h: Removed and replace by gnome_vfs_file_size...
+	* src/callbacks.c: (compare_disks), (add_new_disks):
+	* src/infoview.c: (infoview_update):
+	* src/load-graph.c: (get_memory):
+	* src/memmaps.c: (add_new_maps):
+	
+	* src/proctable.c: (insert_info_to_tree), (update_info):
+	
+	* src/procman.h: More guint64. libgtop uses a lot of guint64, so don't
+	truncate to int. This should solve overflows on systems with >= 2GB of
+	physical memory.
+	
+	* src/load-graph.c: (get_memory): Fixed mem%. Is used physical memory %,
+	including cached + buffer.
+
+2004-10-29  Benoît Dejean  <tazforever@dlfp.org>
+
+	* * s/(MEM|CPU)_GRAPH/LOAD_GRAPH_$1/g
+
+	* src/load-graph.c: (get_load), (load_graph_update),
+	(load_graph_alloc), (load_graph_new): Replace a bunch of = with memcpy.
+	Tuned loops.
+	
+	* src/procman.h: cpu_time, cpu_last, cpu_time_last are guint64.
+	cpu -> guint8 pcpu
+	
+	* src/proctable.c: (sort_ints), (insert_info_to_tree),
+	(update_info), (get_info): Updated.
+	
+	libgtop struct have a lot of guint64 members. currently they are boxed
+	into gint which is obviously bad. More work has to be done to fix all of
+	this.
+	
+	* src/proctable.h: Stronger #ifdef.
+
+2004-10-28  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/memmaps.c: (vmoff_tostring): Renamed vmoff_strdup_printf.
+	
+	* src/memmaps.h: Moved some declarations to memmaps.c.
+	* src/memmaps.c: (add_new_maps), (update_memmaps_dialog), (sort_guint64),
+	(create_memmaps_tree): Renamed COL_* to MMAP_COL* to avoid conflict.
+	Use MMAP_COL_* wherever possible.
+	(sort_guint64): Don't truncate guint64 to gint anymore.
+	
+	* src/proctable.c: Removed useless #includes.
+
+2004-10-27  Benoît Dejean  <tazforever@dlfp.org>
+
+	* configure.in: Added new dependency on GNOME VFS 2.6.
+	* src/callbacks.c: (get_icon_for_device): Re-implemented using GNOME VFS.
+	The icon lookup is much better.	
+	
+	(cb_preferences_activate), (cb_renice),
+	(cb_end_process), (cb_kill_process), (cb_show_memory_maps),
+	(cb_show_hidden_processes), (cb_hide_process), (cb_about_activate),
+	(cb_close_simple_dialog), (cb_proc_combo_changed),
+	(popup_menu_renice), (popup_menu_show_memory_maps),
+	(popup_menu_hide_process), (popup_menu_end_process),
+	(popup_menu_kill_process), (popup_menu_about_process),
+	(cb_end_process_button_pressed), (cb_info_button_pressed),
+	(cb_search), (cb_mem_color_changed), (cb_swap_color_changed),
+	(cb_bg_color_changed), (cb_frame_color_changed), (cb_row_selected),
+	(cb_tree_row_activated), (cb_tree_button_pressed),
+	(cb_tree_popup_menu), (cb_switch_page), (compare_disks),
+	(get_icon_for_device), (add_new_disks), (cb_update_disks),
+	(cb_timeout): Paranoid cleanup.
+	
+	* src/defaulttable.h: Updated.
+
+2004-10-25  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/callbacks.c: (cb_preferences_activate), (cb_end_process),
+	(cb_kill_process), (cb_show_memory_maps),
+	(cb_show_hidden_processes), (cb_hide_process), (cb_about_activate),
+	(cb_app_exit), (cb_app_delete), (cb_close_simple_dialog),
+	(cb_proc_combo_changed), (popup_menu_renice),
+	(popup_menu_show_memory_maps), (popup_menu_hide_process),
+	(popup_menu_end_process), (popup_menu_kill_process),
+	(popup_menu_about_process), (cb_end_process_button_pressed),
+	(cb_info_button_pressed), (cb_search), (change_gconf_color),
+	(cb_cpu_color_changed), (cb_mem_color_changed),
+	(cb_swap_color_changed), (cb_bg_color_changed),
+	(cb_frame_color_changed), (get_last_selected), (cb_row_selected),
+	(cb_tree_row_activated), (cb_tree_button_pressed),
+	(cb_switch_page), (fsusage_stats), (compare_disks),
+	(get_icon_for_device), (add_new_disks), (cb_update_disks),
+	(cb_timeout):
+	* src/callbacks.h: Big cleanup.
+	(add_new_disks): possible leak. Added comment on libgtop behaviour.
+	(fsusage_stats): Added. Devices stats code is now shared.
+	(change_gconf_color): Added.
+	
+	* src/interface.c: Removed useless
+	global variables.
+	(create_proc_view), (toggle_infoview): Marked static.
+	
+	* src/procdialogs.c: (get_nice_level),
+	(procdialog_create_preferences_dialog): Moved bg_color_changed/frame_color_changed
+	to src/callbacks.c.
+
+2004-10-25  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/procman.c: static const popt.
+	* src/procman.h: Changed cpu_initialized type to gboolean.
+
+2004-10-24  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/proctable.c: (refresh_list): s/g_list_prepend/g_list_append/
+	0K, it does matter here :/
+
+2004-10-24  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/memmaps.c: (compare_memmaps):
+	* src/callbacks.c: (compare_disks):
+	* src/favorites.c: (add_to_blacklist), (add_single_to_blacklist),
+	(remove_item): s/g_list_append/g_list_prepend/ as order doesn't matter.
+	
+	* src/load-graph.c: (load_graph_configure), (load_graph_expose),
+	(load_graph_destroy), (load_graph_new): s/g_list_append/g_list_prepend/
+	as order doesn't matter. Little cleanup.
+	
+	* src/prettytable.h:
+	* src/procman.h:
+	* src/load-graph.h: Better ifdef.
+	
+	* src/prettytable.c: (new_application), (application_finished),
+	(pretty_table_new), (pretty_table_add_table),
+	(pretty_table_get_icon): Whitespace cleanup.
+	(load_table_from_file): Added (WIP). Currently excluded.
+	
+	* src/proctable.c: (proctable_new): Cleaned.
+	(proctable_free_info): prevent memory leak.
+	(get_process_name): Re-implemented using g_get_path_basename(). 
+	(remove_info_from_list): Big cleanup. Improved performances. Scales much
+	better.
+	(update_info): CLAMP cpu%.
+	(get_info): Re-added thread detection code. ThreadView works again.
+	(refresh_list): removal_list is now a g_ptr_array for performance.
+	(proctable_update_list),(proctable_update_all), (proctable_clear_tree),
+	(proctable_free_table): Cleanups.
+
+2004-10-24  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/proctable.c: (proctable_free_info), (insert_info_to_tree),
+	(remove_children_from_tree), (find_match_in_new_list),
+	(refresh_list): Cleaned.
+	(proctable_search_table): Removed unused static variable index.
+
+2004-10-24  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/proctable.c: (sort_ints), (proctable_new),
+	(get_process_status), (get_process_name), (proctable_find_process),
+	(find_parent), (insert_info_to_tree), (remove_children_from_tree),
+	(remove_info_from_tree), (remove_info_from_list), (update_info),
+	(get_info), (find_match_in_new_list), (refresh_list),
+	(proctable_update_list), (proctable_update_all),
+	(proctable_clear_tree), (proctable_free_table),
+	(proctable_search_table): c-set-style linux.
+
+2004-10-24  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/defaulttable.h: Updated.
+
+	* src/memmaps.c: (vmoff_strdup_printf): Added to handle 64/32bits hex
+	format.
+	(add_new_maps),
+	(compare_memmaps), (update_memmaps_dialog), (close_memmaps_dialog),
+	(sort_ints), (create_memmaps_tree), (memmaps_timer),
+	(create_single_memmaps_dialog), (create_memmaps_dialog): Big cleanup, 
+	including whitespaces.
+
+2004-10-23  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/defaulttable.h: Updated.
+
+2004-10-23  Benoît Dejean  <tazforever@dlfp.org>
+
+	* configure.in: Added --enable-more-warnings.
+
+2004-10-23  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/interface.c: (cpu_size_request): Cleaned.
+	(create_sys_view): Fixed display on SMP systems.
+	* src/load-graph.c: (get_load): Cleaned.
+
+2004-10-23  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/load-graph.c: (load_graph_draw), (get_load), (get_memory),
+	(load_graph_update), (load_graph_unalloc), (load_graph_alloc),
+	(load_graph_configure), (load_graph_expose), (load_graph_destroy),
+	(load_graph_new), (load_graph_start), (load_graph_stop): c-set-style linux
+
+2004-10-23  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/defaulttable.h: Updated.
+	
+	* src/prettytable.c: (new_application), (application_finished),
+	(pretty_table_new), (pretty_table_add_table),
+	(pretty_table_get_icon), :
+	* src/prettytable.h: pretty_table.app_hash now uses direct_hash/equal.
+	Updated icon lookup.
+	(free_entry), (free_value), (free_key) excluded.
+
+2004-10-23  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/callbacks.c: (compare_disks), (get_icon_for_device),
+	(add_new_disks), (cb_update_disks):
+	* src/callbacks.h:
+	* src/cellrenderer.c:
+	* src/favorites.c:
+	* src/infoview.c: (infoview_create), (infoview_update):
+	* src/interface.c:
+	* src/memmaps.c:
+	* src/prettytable.c:
+	* src/procactions.c:
+	* src/procdialogs.c:
+	* src/procdialogs.h:
+	* src/procman.c:
+	* src/proctable.c:
+	* src/util.c: Marked private global variables as static. Closes #147361.
+	Some cleanups (including whitespaces cleanups :)
+
+2004-10-23  Benoît Dejean  <tazforever@dlfp.org>
+
+	* po/POTFILES.in: Updated.
+
+	* src/cellrenderer.h:
+	* src/cellrenderer.c: (procman_cell_renderer_progress_init),
+	(procman_cell_renderer_progress_get_size),
+	(procman_cell_renderer_progress_render): UTF-8-ified. Removed unused
+	variables.
+	
+	* src/prettytable.c: (application_finished), (pretty_table_new),
+	(pretty_table_get_icon):
+	* src/procactions.c: (kill_single_process):
+	* src/procdialogs.c: (procdialog_create_hide_dialog):
+	* src/callbacks.c: (cb_about_activate):
+	* src/infoview.c: (infoview_update):
+	* src/memmaps.c: (create_memmaps_tree):
+	* src/procman.c: (main):
+	* src/proctable.c: (proctable_new):
+	* src/interface.c: (create_sys_view): Removed unused variables.
+	Used PROCMAN_GETTEXT_ARRAY_INIT.
+	
+	* src/memmaps.h:
+	* src/interface.h: 
+	* src/proctable.h:
+	* src/load-graph.h: Stronger ifndef.
+	Removed non-ANSI enum trailing comma.
+	
+	* src/util.h: Added PROCMAN_GETTEXT_ARRAY_INIT(array) macro to initialize
+	i18n strings arrays. Closes #134136.
+
+2004-10-22  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/callbacks.c: (cb_about_activate): New description. Closes #131801.
+	
+	* src/procman.h:
+	* src/interface.c: (create_sys_view):
+	* src/load-graph.c: (get_memory): Added memory and swap % in load-graph.
+	Original patch from Dennis Cranston <dennis_cranston at yahoo com>.
+	Closes #63523.
+	
+2004-10-22  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/procman.png: New icon. Closes #117790.
+
+2004-10-22  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/load-graph.c: (get_load): Ensure that cpu load is in [0.0f;100.0f].
+	Closes #134958.
+
+2004-10-22  Benoît Dejean  <tazforever@dlfp.org>
+
+	* .cvsignore:
+	* help/C/.cvsignore: Updated.
+	
+	* src/proctable.c: (get_process_status): Fixed glibtop_proc_state.state
+	usage. Closes #153600. Change prototype. This disables a dirty hack and
+	makes gsm procstate works everywhere.
+	(remove_info_from_tree),(update_info), (get_info): Small cleanups.
+
+2004-10-22  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/proctable.c: (get_process_name): Fixed empty process name. This is
+	because of a small change in libgtop. If cmdline is empty, libgtop now
+	returns "" instead of NULL (this was not documented at all).
+	Now : if procargs is NULL or "", the process name is given by procstate, else
+	procargs is parsed.
+
+2004-10-21  Benoît Dejean  <tazforever@dlfp.org>
+
+	* src/procactions.c: (renice_single_process),
+	(kill_single_process): Trim whitespaces. Closes #125380.
+
+2004-10-21  Benoît Dejean  <tazforever@dlfp.org>
+
+	* AUTHORS:
+	* src/callbacks.c: (cb_about_activate): Hello, i'm the new maintainer :)
+	
+	* src/procman.c: (procman_free_data), (main): Removed C99 comment.
+	Added missing glibtop_close().
+	
+	* src/util.c: (get_size_string): s/K/KB/ Closes #127510.
+	Fixed float constants.
+	
+	* src/interface.c: (create_main_window): Added a resize-grip.Thanks to
+	Ken Harris. Closes #144848.
+
+2004-10-17  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* configure.in: Post release bump.
+
+2004-10-17  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* configure.in: Bump version.
+	* src/infoview.c: Add missing header.
+	* src/interface.c: NULL vs. 0 fixes.
+	* src/procman.c: Add missing header.
+
+2004-08-28  Akagic Amila  <bono@linux.org.ba>
+
+        * configure.in: Added 'bs' to ALL_LINGUAS.
+
+2004-08-27  Iñaki Larrañaga  <dooteo@euskalgnu.org>
+
+	* configure.in: Added "eu" (Basque) to ALL_LINGUAS.
+
+2004-08-21  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* configure.in: Add «nb» to ALL_LINGUAS.
+
+2004-08-13  Vincent Noel  <vnoel@cox.net>
+
+	* src/procdialogs.c (create_proc_field_page): Set GTK_SHADOW_IN
+	for the "Process fields" in the preferences dialog. Fixes bug 150066.
+
+2004-07-19  Kevin Vandersloot <kfv101 psu edu>
+
+	* configure.in: release 2.7.0
+
+2004-06-21  Anders Carlsson  <andersca@gnome.org>
+
+	* cellrenderer.c: (procman_cell_renderer_progress_get_type),
+	(procman_cell_renderer_progress_init),
+	(procman_cell_renderer_progress_class_init),
+	(procman_cell_renderer_progress_get_property),
+	(procman_cell_renderer_progress_set_property),
+	(procman_cell_renderer_progress_get_size),
+	(procman_cell_renderer_progress_new),
+	(procman_cell_renderer_progress_render),
+	(procman_cell_renderer_progress_finalize):
+	* cellrenderer.h:
+	* interface.c: (create_sys_view):
+	Rename GtkCellRendererProgress to ProcmanCellRendererProgress,
+
+2004-05-29  Kevin Vandersloot <kfv101 psu edu>
+
+	* proctable.c: simplify to process table code a lot. Should allow for easier addition
+	of new features
+
+2004-04-10  Guntupalli Karunakar  <karunakar@freedomink.org>
+
+        * configure.in: Added "gu" (Gujarati) to ALL_LINGUAS.
+
+2004-03-24  Guntupalli Karunakar  <karunakar@freedomink.org>
+
+        * configure.in: Added "pa" (Punjabi) to ALL_LINGUAS.
+
+2004-03-21  Gareth Owen  <gowen72@yahoo.com>
+
+	* configure.in: Added en_GB to ALL_LINGUAS
+
+2004-03-21  Kevin Vandersloot <kfv101 psu edu>
+
+	* configure.in: release 2.6.0
+
+2004-03-20  Kevin Vandersloot <kfv101 psu edu>
+
+	* callbacks.c: take into account the block size to determine disk sizes.
+
+2004-03-20  Kevin Vandersloot <kfv101 psu edu>
+
+	* configure.in: require latest libgtop
+
+2004-03-14  Kevin Vandersloot <kfv101 psu edu>
+
+	* configure.in: release 2.5.4
+
+2004-02-22  Christian Rose  <menthos@menthos.com>
+
+	* configure.in: Added "en_CA" to ALL_LINGUAS.
+
+2004-02-19 Breda McColgan <breda.mccolgan@sun.com>
+
+	* help/C/gnome-system-monitor.xml: Updated based on peer review comments from Bill Day
+	* help/C/gnome-system-monitor-C.omf: Updated date.
+
+2004-02-15  Kevin Vandersloot
+
+	* configure.in: release 2.5.3
+	
+2004-02-11  Kevin Vandersloot
+
+	* callbacks.c: Fix bad free that may cause crashes. From
+	bug #134136. Thanks to Michael Wilson for pointing out
+	problem. Also fix freeing of gnome-icon-theme to not generate
+	errors
+
+2004-02-06 Breda McColgan <breda.mccolgan@sun.com>
+
+	* help/C/gnome-system-monitor.xml: Updated for GNOME 2.6, technical review draft	
+	* help/C/gnome-system-monitor-C.omf: Updated for GNOME 2.6
+
+2004-02-06 Breda McColgan <breda.mccolgan@sun.com>
+
+	* help/C/gnome-system-monitor.xml: Updated for GNOME 2.6, technical review draft	
+	* help/C/gnome-system-monitor-C.omf: Updated for GNOME 2.6
+	* help/C/l10n.txt: Added for GNOME 2.6
+	* help/C/figures/gnome-system-monitor_window.png: Added for GNOME 2.6
+
+2004-02-03  Paolo Borelli  <pborelli@katamail.com>
+
+	* callbacks.[ch] (cb_proc_combo_changed): new.
+	* interface.c (create_proc_view): port from optionmenu to combo.
+	* procman.h: update enum.
+	* proctable.c: update for the above.
+
+2004-01-24  Paolo Borelli  <pborelli@katamail.com>
+
+	* callbacks.[ch] (cb_tree_popup_menu): handle the popup_menu signal.
+	(cb_tree_row_activated): use the activate-row signal instead of 
+	manually checking for double click.
+	* interface.c (do_popup_menu): update for the above changes.
+	* proctable.c (proctable_new): connect the callbacks.
+
+2004-01-07  Glynn Foster  <glynn.foster@sun.com>
+
+	* interface.c: (create_main_window): remove _with_mnemonic when it's 
+	not being used for that purpose.
+	* procdialogs.c: (procdialog_create_preferences_dialog): remove 
+	_with_mnemonic when it's not being used for that purpose. Fixes #130666.
+
+2004-01-03  Robert Sedak  <robert.sedak@sk.htnet.hr>
+
+        * configure.in: Added "hr" in ALL_LINGUAS.
+
+2004-01-02  Christian Neumair  <chris@gnome-de.org>
+
+	* src/utils.c (get_size_string):
+	Use ngettext for plurals (#106704).
+
+2003-12-11  Kaushal Kumar  <kaushal.kumar@wipro.com>
+
+	* src/interface.c (create_sys_view):
+	Fix compilation (Bugzilla bug #129080).
+	
+2003-12-07  Kevin Vandersloot
+
+	* configure.in: release 2.5.2
+
+2003-12-02  Žygimantas Beručka  <uid0@tuxfamily.org>
+
+	* configure.in: Added "lt" to ALL_LINGUAS again because for
+	some reason it was gone.
+
+2003-11-26  Kevin Vandersloot 
+
+	* interface.c, load-graph.c, procman.c: Add support for smp
+	systems. Should fix bug #91363
+	
+	* proctable.c: allow the columns to be shrunk to any size regardless
+	of the colum label
+	
+2003-11-22  Kevin Vandersloot
+
+	* util.c, procdialogs.c: Fix hang when entering root password. Patch from
+	Kiran Kumar Immidi. Fixes bug #126923
+
+2003-11-19  Kevin Vandersloot
+
+	* load-graph.c: Fix the memory display to display the correct memory usage
+	given from libgtop.
+
+2003-11-16  Havoc Pennington  <hp@redhat.com>
+
+	* configure.in: require latest libwnck
+
+2003-11-16  Havoc Pennington  <hp@redhat.com>
+
+	* proctable.c: display X Server Memory column, and add it to 
+	the overall Memory column
+
+	* procman.h (struct _ProcInfo): add xserver_bytes field
+	(struct _ProcInfo): add memxserver field
+
+2003-11-14  Kaushal Kumar  <kaushal.kumar@wipro.com>
+
+	* src/callbacks.c (cb_cpu_color_changed), 
+	(cb_mem_color_changed), (cb_swap_color_changed):
+	Changed the format for r,g,b to print as 4 digits 
+	each, to ensure 'color' gets the correct code.
+	Fixes bug #126612.
+
+2003-11-08  Kevin Vandersloot
+
+	* load-graph.c: Fix the cpu graph showing initial values of zero. Fixes
+	bug #119107
+
+2003-11-08  Kevin Vandersloot
+
+	* Makefile.am: remove DISABL_DEPRECATED flags to fix build on
+	newer gtk's.
+
+2003-11-08  Kevin Vandersloot
+
+	* configure.in: release 2.5.1
+
+2003-10-20  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: release gnome-system-monitor 2.5.0
+
+2003-10-20  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: require libgtop 2.5.0
+
+2003-10-20  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: fix compilation, lt wasn't committed to CVS
+	
+2003-10-20  Bastien Nocera  <hadess@hadess.net>
+
+	* Makefile.am: fix distchecking
+
+2003-10-20  Bastien Nocera  <hadess@hadess.net>
+
+	* callbacks.c: (cb_tree_key_press), (cb_update_disks):
+	* memmaps.c: (add_new_maps), (update_memmaps_dialog):
+	* proctable.c: (is_graphical), (get_info), (proctable_update_list):
+	make it compile with libgtop HEAD
+
+2003-10-07  Žygimantas Beručka  <uid0@tuxfamily.org>
+
+	* configure.in: Added "lt" to ALL_LINGUAS.
+	
+2003-09-21  Dennis Cranston <dennis_cranston at yahoo com>
+	
+	* procdialogs.c: Apply HIG fixes for the Preferences, Change 
+	Priority, Hide, End, and Kill dialogs.  Fix compiler warnings.
+	
+	* favorites.c: Apply HIG fixes for the Manage Hidden Processes 
+	dialog.  Fix compiler warnings.
+	
+	* memmaps.c: Apply HIG fixes the Memory Maps dialog. Fix compiler 
+	warnings.
+	
+	* interface.c: Add missing mnemonics.  Fix compiler warnings.
+
+2003-09-17  Fatih Demir <kabalak@gtranslator.org>
+
+	* configure.in: Added "ta" (Tamil) to the languages' list.
+
+2003-09-08  Kevin Vandersloot
+
+	* configure.in: release 2.4.0
+
+2003-08-24  Kevin Vandersloot
+
+	* configure.in: release 2.3.1
+
+2003-07-24  Dafydd Harries  <daf@parnassus.ath.cx>
+
+	* configure.in: Added "cy" (Welsh) to ALL_LINGUAS.
+
+2003-07-13 John Fleck <jfleck@inkstain.net>
+
+	* autogen.sh
+	remove:
+	* xmldocs.make, omf.make
+	update to new docs build system. latest gnome-common
+	now required
+
+2003-07-02  Jordi Mallach  <jordi@sindominio.net>
+
+	* gnome-system-monitor.desktop.in: Add Encoding and X-GNOME-Bugzilla
+	entries, and fix Terminal.
+
+2003-06-11  Kenneth Rohde Christiansen  <kenneth@gnu.org>
+
+	* configure.in: Added "li" to ALL_LINGUAS.
+
+2003-05-29  Paul Duffy <dubhthach@frink.nuigalway.ie>
+
+         * configure.in: Added "ga" to ALL_LINGUAS.
+         
+2003-05-21  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: Fix crash if uid is not correct. Fixes bug #109134
+
+2003-05-06  Guntupalli Karunakar  <karunakar@freedomink.org>
+
+	* configure.in: Added "hi" to ALL_LINGUAS.
+
+2003-05-06  Danilo Šegan  <dsegan@gmx.net>
+
+	* configure.in: Added "sr" and "sr@Latn" to ALL_LINGUAS.
+
+2003-05-04  Taneem Ahmed  <taneem@eyetap.org>
+
+	* configure.in: Added "bn" in ALL_LINGUAS
+	
+2003-03-28  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c, procdialogs.c, infoview.c: some more HIGifications. Patch from
+	Laca Ferretti <elle.uca@libero.it>
+
+2003-03-27  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: fix crash if username is null
+
+2003-03-25  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in: release 2.3.0
+
+2003-03-21  Guntupalli Karunakar  <karunakar@freedomink.org>
+
+	* configure.in: Added "ml" to ALL_LINGUAS.
+
+2003-02-28  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: some more HIGifying. Add some space to some dialogs
+	
+	* favorties.c: HIG stuff. Remove the frame and provide some space and a mnemonic
+	for the tree
+	
+	* memmaps.c: some space
+
+2003-02-28  Kevin Vandersloot <kfv101@psu.edu>
+
+	* load-graph.c: do the configure event even if the graphs aren't displayed. Fixes bug #70101.
+	
+	* callbacks.c: force a graph redraw when tab switched to reduce the delay
+
+2003-02-28  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: Finish the prefs dialog
+
+2003-02-24  Roozbeh Pournader  <roozbeh@sharif.edu>
+
+	* configure.in: Added "fa" to ALL_LINGUAS.
+
+2003-02-24  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: HIGify. Some details left.
+
+2003-02-23  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: add to the view menu the ability to show dependencies and 
+	show threads. Fixes bug #71064
+	
+	* prettytable.c: reorganize and simplify the code. Hopefully fixes the oft dupped bug
+	95238
+	
+	* load-graph.c: some preliminary work to add multiple cpu support. Need to really
+	think this out since I don't have a SMP machine.
+	
+	* callbacks.c: free the icontheme
+	
+	* proctable.c: don't free the pixbuf since it is owned by the hash now
+
+2003-02-16  Kevin Vandersloot <kfv101@psu.edu>
+
+	* infoview.c: fix silly typo and get spacing right
+
+2003-02-16  Kevin Vandersloot <kfv101@psu.edu>
+	
+	* memmaps.c: get sorting of ints correct
+
+2003-02-15  Kevin Vandersloot <kfv101@psu.edu>
+
+	* memmaps.c: add new column displaying VM size. Patch by
+	Jason A. Pfeil <jason@jasonpfeil.com>. Fixes bug #92977
+
+	* callbacks.c: change Joergen's name to be in ascii and remove Eric
+	since very little code of his actually remains
+
+2003-02-12  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: don't update rows that arent' visible. Should be a slight
+	performance increase especially for displays with a lot of processes
+
+2003-02-12  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c, cellrenderer.c, callbacks.c: improved disks view tab from
+	Jörgen Scheibengruber <mfcn@gmx.de>. Some small attempts
+	to update the ui to hig standards.
+
+	* procman.c: save the disk list setup to a new keyname
+
+	* memmaps.c: don't allow reordering since the state is not saved
+
+	* infoview: remove some frame lines
+
+2003-02-10  Mohammad DAMT  <mdamt@bisnisweb.com>
+
+	* po/id.po: Added Indonesian translation
+	* configure.in: Added "id" to ALL_LINGUAS
+
+2003-01-23  Christian Rose  <menthos@menthos.com>
+
+	* help/C/Makefile.am: Reverted. Somehow my last commit
+	replaced its contents with a PNG file. No idea how that
+	happened. Sorry all.
+
+2003-01-22  Christian Rose  <menthos@menthos.com>
+
+	* configure.in: Added "mn" to ALL_LINGUAS.
+
+2003-01-12  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in: add startup notify support. Release 2.0.4
+
+2003-01-08  Pauli Virtanen  <pauli.virtanen@hut.fi>
+
+	* configure.in: added "fi" (Finnish) to ALL_LINGUAS.
+
+2002-11-25  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in, gnome-system-monitor.spec: release 2.0.3
+	
+2002-11-25  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: don't strdup the username if it's NULL. Should fix
+	bug #98471
+
+2002-11-22 John Fleck <jfleck@inkstain.net>
+
+	* help/C/gnome-system-monitor.xml
+	* help/C/figures/memoryMaps.png, moreInfo.png,
+	pocessListing.png, systemMonitor.png
+	checking in new help docs from Bill Day
+	(Thanks, Bill!)
+
+2002-11-09  Dmitry G. Mastrukov  <dmitry@taurussoft.org>
+
+	* configure.in: Added Belarusian to ALL_LINGUAS
+
+2002-09-26  Stanislav Brabec  <sbrabec@suse.cz>
+
+	* configure.in: Added cs to ALL_LINGUAS.
+
+2002-09-03  Marius Andreiana <mandreiana@yahoo.com>
+
+	* configure.in: added 'ro' to ALL_LINGUAS
+
+2002-08-26 Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in: release 2.0.2
+
+2002-08-17  Simos Xenitellis  <simos@hellug.gr>
+
+	* configure.in: Added Greek (el) to ALL_LINGUAS.
+
+2002-07-21  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in: release 2.0.1
+
+2002-06-24  Yanko Kaneti <yaneti@declera.com>
+
+	* configure.in: (ALL_LINGUAS) Added Bulgarian (bg).
+
+2002-06-10  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in, gsm.spec: release 2.0.0
+
+2002-06-07  Pablo Saratxaga  <pablo@mandrakesoft.com>
+
+	* configure.in: Added Catalan (ca) to ALL_LINGUAS
+
+2002-05-27  Chris Lyttle  <chris@wilddev.net>
+
+	* omf.make: Added for new scrollkeeper
+	* xmldocs.make: Changed for new scrollkeeper
+	* Makefile.am: added omf.make to EXTRA_DIST remove omf-install dir
+	* configure.in: remove omf-install dir
+	* help/C/Makefile.am: change figs to figdir
+	* help/C/gnome-system-monitor-C.omf: Updated to new OMF format
+
+2002-05-19  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in: bump libwnck requirement and version number
+	
+	* Release 1.1.7
+	
+2002-05-19  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: remove hack to catch bug that was a treeview bug
+
+2002-05-19  Shooby Ban <shooby@gnome.hu>
+
+	* configure.in: Added "hu", Hungarian to ALL_LINGUAS.
+
+2002-05-18  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* configure.in: Added "mk" Macedonian to ALL_LINGUAS.
+	
+2002-05-15  Pablo Saratxaga  <pablo@mandrakesoft.com>
+
+	* configure.in: Added Vietnamese (vi), Azeri (az) and Dutch (nl)
+	to ALL_LINGUAS
+	* src/proctable.c,src.interface.c: Added no-c-format tags to make
+	xgettext happy
+
+2002-05-15  Kevin Vandersloot <kfv101@psu.edu>
+
+	* callbacks.c: return TRUE for the app_delete callback. 
+	Should fix the crash on exit once and for all - bug #69493
+
+2002-05-14  Anders Carlsson  <andersca@gnu.org>
+
+	* configure.in:
+	Require libwnck 0.11
+
+2002-05-14  Anders Carlsson  <andersca@gnu.org>
+
+	* prettytable.c: (pretty_table_new):
+	Use the new multi-screen safe API.
+
+2002-05-06  Kevin Vandersloot <kfv101@psu.edu>
+
+	* Makefile.am, interface.c: get help working with patch by
+	John Fleck. Fixes bug #80639
+	
+2002-05-02 John Fleck <jfleck@inkstain.net>
+
+	* help/C/Makefile.am
+	* help/C/gnome-system-monitor-C.omf
+	enabling docs name change to gnome-system-monitor
+
+2002-05-02  Abel Cheung  <maddog@linux.org.hk>
+
+	* .cvsignore, help/.cvsignore, help/C/.cvsignore,
+	omf-install/.cvsignore, src/.cvsignore: Ignore more files.
+
+	* src/callbacks.c: Add translator credits.
+
+2002-04-30 John Fleck <jfleck@inkstain.net>
+
+	* help/C/procman-C.omf
+	update OMF file to match new dtd for SK > 0.3.8
+
+Mon Apr 29 11:44:14 2002  Owen Taylor  <otaylor@redhat.com>
+
+	* interface.c (file1_menu_uiinfo): GNOMEUIINFO_MENU_EXIT_ITEM
+	seems to have been recently deprecated; change to
+	QUIT_ITEM, the current name.
+
+2002-04-28 Dennis Cranston <dennis_cranston@yahoo.com>
+
+	* callbacks.c:  add procman.png as the logo for the about 
+	dialog.  change name to match the name in the application
+	menu.
+
+2002-04-03  Gustavo Maciel Dias Vieira  <gdvieira@zaz.com.br>
+
+	* configure.in (ALL_LINGUAS): Added pt_BR.
+
+2002-03-31 John Fleck <jfleck@inkstain.net>
+
+	* help/C/procman-C.omf
+	fixing omf file, per bug #77052
+	thanks to martin H. for catching this
+
+2002-03-23  Kevin Vandersloot <kfv101@psu.edu>
+
+	* Release 1.1.6
+
+2002-03-19  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.c: reflect change in binary name in gnome_init
+
+	* callbacks.c: delete_event returns a gboolean. May fix the
+	crash on exits
+
+	* proctable.c: add some debug spew to catch some of the crashses
+	reported
+
+2002-03-06  Zbigniew Chyla  <cyba@gnome.pl>
+
+	* proctable.c (proctable_new): Translate column names.
+
+2002-03-04  Wang Jian  <lark@linux.net.cn>
+
+	* configure.in: Added "zh_CN" to ALL_LINGUAS.
+
+2002-02-26  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: if the selected process is removed then
+	NULL it. Fixes bug #70520
+
+	* infoview.c: set the infoview tab unsensitive if
+	the selected process is NULL
+
+2002-02-24  Kevin Vandersloot <kfv101@psu.edu>
+
+	* prettytable.c: add the icon to the hash table always so the icons aren't
+	lost when the tree is recreated
+
+2002-02-24  Kevin Vandersloot <kfv101@psu.edu>
+	
+	* configure.in, gnome-system-monitor.spec: release 1.1.5
+
+2002-02-22  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* procman.c: Remove unsupported #ifdef ENABLE_NLS stuff.
+	
+2002-02-17  Kevin Vandersloot <kfv101@psu.edu>
+
+	* prettytable.c: don't set the icon on app creation if an icon
+	already exist since there was some funny business going on with
+	the panel and applets
+
+2002-02-12  Kevin Vandersloot <kfv101@psu.edu>
+
+	* prettytable.c: clean up the icon mess. Icons should now
+	get added properly.
+
+	* defaulttable.c: remove gnome-system-monitor from here
+	since I'm now able to pick it up properly
+
+	* proctable.c: gdk_pixbuf_unref->g_object_unref
+
+2002-02-11  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in: add ja to ALL_LINGUAS
+
+2002-02-11  Christophe Merlet  <redfox@eikonex.org>
+
+	* configure.in: Added fr to ALL_LINGUAS.
+
+2002-02-10  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in: bump version, disst smldocs.make
+
+	* Makefile.am: add omf-instal so it gets disted
+
+	* release 1.1.4
+
+2002-02-06 John Fleck <jfleck@inkstain.net>
+
+	* adding xmldocs.make to help reenable docs build
+
+2002-02-07  Changwoo Ryu  <cwryu@debian.org>
+
+	* configure.in: Added "ko" to ALL_LINGUAS.
+
+2002-02-06  Kevin Vandersloot <kfv101@psu.edu>
+
+	* Makefile.am, configure.in: remove help stuff temporarily
+	to fix the build
+
+2002-02-05 John Fleck <jfleck@inkstain.net>
+
+	adding documentation by Bill Day:
+	added:
+	* help/Makefile.am
+	* help/C/Makefile.am
+	* help/C/legal.xml
+	* help/C/procman-C.omf
+	* help/C/procman.xml
+	* help/C/addColumn.png, sortButton.png, viewMenu.png,
+	changePriority.png, memoryMaps.png, sortMenu2.png, colorPanel.png,
+	moreInfo.png, sortMenu.png, columnContextMenu.png,
+	processListing.png, systemMonitor.png
+	* omf-install/Makefile.am
+	changed:
+	* Makefile.am
+	* configure.in
+
+2002-01-30  Kevin Vandersloot <kfv101@psu.edu>
+
+	* defaulttable.h: change procman to gnome-system-monitor
+	so that it gets a nice icon :)
+
+2002-01-28  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in, gnome-system-monitor.spec: bump version to 1.1.3
+	and some small fixes for spec
+
+	* release 1.1.3
+
+2002-01-27  Seth Nickell  <snickell@stanford.edu>
+
+	* Makefile.am:
+	* gnome-system-monitor.desktop.in:
+	* gnome-system-monitor.spec:
+	* procman.desktop.in:
+	* procman.spec:
+
+	Renaming applications to match their menu entries.
+
+	System Monitor -> gnome-system-monitor.
+
+2002-01-27  Seth Nickell  <snickell@stanford.edu>
+
+	* Makefile.am:
+	* gnome-system-monitor.schemas:
+	* procman.schemas:
+
+	Rennaming application binaries to match their
+	name in the menus in order to reduce user confusion. 
+	
+2002-01-27  Seth Nickell  <snickell@stanford.edu>
+
+	* defaulttable.h:
+	* interface.c: (create_main_window):
+
+	Change name to "System Monitor" as per the menu entry.
+
+2002-01-26  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.c: add some sanity checks if gconf doesn't return any
+	default values and or the values are broken. Fixes bug
+	#69144. 
+
+	* interface.c: move settings preferences to edit/prefs and
+	hidden processes accordingly
+	
+2002-01-26  Kevin Vandersloot <kfv101@psu.edu>
+
+	* Makefile.am, procman.c, defaulttable.h: use procman.png
+	and just copy gnome-monitor.png
+	
+2002-01-26  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.desktop.in: use newly changed procman.png
+
+2002-01-23  Havoc Pennington  <hp@pobox.com>
+
+	* proctable.c (insert_info_to_tree): always set COL_POINTER first, 
+	so that the sort function will always get a valid pointer 
+	in this column.
+
+2002-01-21  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in: add bt_BR to translated files
+
+2002-01-19  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.spec: don't intall procman.png
+
+2002-01-19  Seth Nickell  <snickell@stanford.edu>
+
+	* procman.desktop.in:
+
+	Rename "System Monitor" and change the icon.
+
+2002-01-19  Kevin Vandersloot <kfv101@psu.edu>
+
+	* infoview.c: don't put command lable in event box
+
+2002-01-19  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.c: 
+	* defaulttable.h:
+	use gnome-monitor for the window icon
+
+	* Makefile.am: remove procman.png
+
+2002-01-15  Kevin Vandersloot <kfv101@psu.edu>
+
+	* Makefile.am: call gconftool-2 and remove unneded tab spaces
+
+2002-01-15  Hasbullah Bin Pit <sebol@ikhlas.com>
+
+	* configure.ini: Added Malay (ms)to ALL_LINGUAS.
+	* po/ms.po: Added Malay Malay Translation.
+
+2002-01-12  Kevin Vandersloot <kfv101@psu.edu>
+
+	* Makefile.am: small fix for the schemas file for making rpms
+
+2002-01-12  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.spec: Fix the spec file
+
+2002-01-11  Havoc Pennington  <hp@pobox.com>
+
+	* proctable.c (sort_ints): handle case where ints are equal, 
+	ensures that we maintain proper semantics for the sort function
+	(that if a > b, b < a; if a and b are equal, the return val 
+	can't depend on order the args are passed in)
+
+2002-01-11  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.spec: Update thanks to Havoc Pennington
+	<hp@redhat.com>
+
+2002-01-10  Kevin Vandersloot <kfv101@psu.edu>
+
+	* Makefile.am: dist the schemas file
+
+2002-01-08  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in: release 1.1.2. Bump requirements
+
+	* TODO: Pretty much complete :)
+
+2002-01-07  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: add options to show or not the warning dialogs
+	when hiding/killing processes in the prefs dialog. Also some
+	ui cleanups of the dialog
+
+2002-01-06  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.c: save the colors as hex values
+
+	* callbacks.c, procdialogs.c: same here
+
+	* procman.schemas: update to new gconf values. If udating
+	make sure to reinstall the schemas file or you are 
+	screwed ;)
+
+2002-01-02  Kevin Vandersloot <kfv101@psu.edu>
+
+	* favorites.c: when hiding or reshowing a processes make sure
+	to do that on all processes of the same name
+
+	* interface.c: let the devices treeview scroll in the horizontal
+	direction
+
+2001-12-30  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: don't remove items from tree that aren't
+	visible
+
+2001-12-30  Kevin Vandersloot <kfv101@psu.edu>
+
+	* finish up the gconf stuff
+
+	* procdialog.c: no longer connect to the focus out signal
+	for the spin buttons since that seems to be unrelliable. Use
+	a button instead
+
+2001-12-30  Kevin Vandersloot <kfv101@psu.edu>
+
+	* clean up gconfclient usage by including the client in
+	the procdata structure
+
+	* procman.c, interface.c: remove debug spewage about timings
+
+2001-12-27  Duarte Loreto <happyguy_pt@hotmail.com>
+
+        * configure.in: Added portuguese to ALL_LINGUAS
+
+2001-12-13  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.schemas: create gconf schemas file
+
+	* Makefile.am: install schemas file
+
+	* procman.c, proctable.c: get rid of my custom default handling now that
+	we have a schemas file.
+
+2001-12-13  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in: add gconf schema support
+
+2001-12-11  Kevin Vandersloot <kfv101@psu.edu>
+
+	* prettytable.c: get rid of deprecated gnome_datadir_file
+
+	* procdialogs.c: port the root dialog to gtk_dialog. Procman
+	is now 100% pure GNOME 2.0. Also indicate the nice level 
+	of the selected process initially in the renice dialog.
+
+	* Makefile.am: add GNOME_DISABLE_DEPRECATED
+
+2001-12-11  Kevin Vandersloot <kfv101@psu.edu>
+
+	* compile with GTK_DISABLE_DEPRECATED. Also remove all
+	gnome_dialogs except for the root stuff
+
+2001-12-11  Stanislav Visnovsky  <visnovsky@nenya.ms.mff.cuni.cz>
+
+	* configure.in: Added "sk" to ALL_LINGUAS.
+
+Sat Dec  8 13:09:28 2001  Owen Taylor  <otaylor@redhat.com>
+
+	* configure.in: Fix so $ACLOCAL_FLAGS is honoured
+	when aclocal is run for --enable-maintainer-mode
+
+2001-12-08  Gediminas Paulauskas <menesis@delfi.lt>
+
+	* configure.in, Makefile.am: use intltool instead of xml-i18n-tools;
+	define GETTEXT_PACKAGE
+	* acconfig.h: add template for GETTEXT_PACKAGE
+	* src/procan.c: get translated messages in UTF-8 codeset.
+	* src/Makefile.am: (INCLUDES): remove intl
+	(procman_LDADD): remove $(INTLLIBS)
+
+2001-12-07  Alexander Larsson  <alla@lysator.liu.se>
+
+	* src/interface.c:
+	Make window and upper part of system view not shrinkable.
+
+2001-12-03  Jesus Bravo Alvarez  <jba@pobox.com>
+
+	* configure.in: Added gl (Galician) to ALL_LINGUAS
+
+2001-11-25  Kevn Vandersloot <kfv101@psu.edu>
+
+	* configure.in: fix the check for gtk. That should
+	be gtk+-2.0 not gtk-2.0
+
+	* src/Makefile.am: remove LIBGTOP_LIBS and LIBGTOP_CFLAGS
+
+2001-11-25  Kevn Vandersloot <kfv101@psu.edu>
+
+	* configure.in: check for libgtop-2.0.pc. This makes procman
+	fully GNOME 2.0 dependant :) You have to get libgtop from a
+	as yet unknown branch. DO NOT get it from HEAD! I will make
+	a libgtop branch soon and it will be stable ported to 
+	GNOME 2.0
+
+2001-11-26  Abel Cheung  <maddog@linux.org.hk>
+
+	* configure.in: Add check for (upcoming) gtk 1.3.11. It won't
+	  even compile with gtk 1.3.10.
+
+2001-11-23  Kevin Vandersloot <kfv101@psu.edu>
+
+        * configure.in, Makefile.am: no longer need the intl/
+        and macros/ directory. Update for GNOME 2.0. Side effect
+        is that the libgtop macro is not picked up. For now 
+        you can copy the libgtop macro from /usr/share/macros/gnome-macros
+        to the gnome2-macros directory
+
+Sat Nov 24 15:00:31 2001  Kristian Rietveld  <kristian@planet.nl>
+
+	* src/callbacks.c (compare_disks): free old_name before we
+	return
+
+Fri Nov 23 14:44:26 2001  Owen Taylor  <otaylor@redhat.com>
+
+	* src/interface.c src/memmaps.c src/proctable.c: Adapt
+	to GtkTreeView changes.
+
+	* src/proctable.c: Pack icon cell renderer in the same column 
+	as the name.
+
+2001-11-18  Kevin Vandersloot <kfv101@psu.edu>
+
+	* prettytable.c: clean up some code, remove some hackery,
+	make things better. That accomplished, could I ever be
+	evil? Bring back hardcoded icons.
+	
+	* proctable.c: ditto. Make things better.
+
+2001-11-18  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: don't display "icon" for the icon column header.
+	Some minor cleanups also
+
+	* procdialogs.c: if treeview doesn't return a name for the
+	column then it's the icon column
+
+	* interface.c: remove underlines from optionmenu since they
+	don't seem to work
+
+2001-11-18  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: make insert_info_to_tree and remove_info_from_tree
+	external functions. New function to find a process given a name
+	or PID. 
+	(upddate_info): simplify this a lot 
+
+	* favorites.c: explictly hide or reshow processes instead of
+	queuing an update. Makes things simpler and faster :)
+
+	* callbacks.c, procdialogs.c: no need to queue an update when
+	hiding processes
+	
+	* Also bring back libwnck :)
+
+2001-11-17  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: add a new column showing command arguments.
+	Treeview needs to stop insisting on resizing columns :)
+
+	* infoview.c: show the name for the comanda
+
+	* proctable.c: remove the info->cmd since I won't be getting
+	process app names for the time being. A little less bloat
+	can't hurt eh?
+
+2001-11-16  Kevin Vandersloot <kfv101@psu.edu>
+
+	* callbacks.c: fix memory leak
+
+	* procman.c: make sure saved widths are > 0 before setting
+	widths
+
+	* load-graph.c: remove unused variable
+
+2001-11-16  Kevin Vandersloot <kfv101@psu.edu>
+
+	* favorites.c: make the treeview update instead of clearing the whole
+	list. Also when a process is hidden update the treeview
+
+	* procdialogs.c: some UI imporovements from stable
+
+2001-11-15  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: select the next process if the selected process
+	was removed
+
+2001-11-15  Kevin Vandersloot <kfv101@psu.edu>
+
+	* callbacks.c: get disk updating correct. Save the iters
+	that need to be removed
+
+	* memmaps.c: ditto
+
+	* interface.c: make the disk table update
+
+2001-11-14  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in: remove libwnck for now
+
+2001-11-14  Kevin Vandersloot <kfv101@psu.edu>
+
+	* Makefile.am: add defaulttable.h so that it gets added to a
+	dist
+
+	* release 1.1.0
+
+	* procman.c (procman_get_tree_state): change g_return_if to
+	g_return_val since it returns a gboolean now. Also don't
+	hardcode showing "all processes"
+
+	* callbacks.c, memmaps.c: turn of updating for now until
+	I get it right
+
+2001-11-14  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: make nice defaults for the columns
+
+	* procman.c (procman_get_tree_state): return FALSE if no config
+	so I can do defaults
+
+2001-11-14  Kevin Vandersloot <kfv101@psu.edu>
+
+	* prettytable.c: #ifdef out libwnck support for now so I can
+	do a release
+
+	* memmaps.c, callbacks.c: free the hash tables
+
+2001-11-13  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: make sure "(thread)" gets appended to 
+	the name
+
+2001-11-13  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.c: call gconf_value_free to plug mem leaks
+
+	* proctable.c: free GtkTreePaths
+
+	* prettytable.c: don't unref the pixbuf since we don't
+	want to do that until exit. Fixes crash on clearing tree
+
+2001-11-12  Kevin Vandersloot <kfv101@psu.edu>
+
+	* memmaps.c: make updating work here in the same fashion
+	as the disk list
+
+2001-11-12  Kevin Vandersloot <kfv101@psu.edu>
+
+	* callbacks.c: update the disks properly instead of just clearing
+	the table on every update. Bug when removing an item though.
+	I think it is a treeview bug
+
+	* interface.c: set the update timer for the disk list
+
+2001-11-12  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: fix bug correctly with respect to child
+	processes and whether or not a process is a thread
+
+2001-11-11  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: get " view active processes" working. Also
+	fix a bug where child processes would not be shown if
+	parents weren't
+
+	* Makefile.am: remove a haack needed earlier to compile
+
+	* procman.c: remove some unneeded stuff
+
+2001-11-11  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: make renice dialog conform to new button
+	ordering standards
+
+2001-11-11  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: add extra columns like nice value, more
+	memory values etc.
+
+	* procdialogs.c: add the ability to custumize the columns
+	in the prefs dialog
+
+	* procman.c: check to see if settings exist for tree state
+
+2001-11-10  Kevin Vandersloot <kfv101@psu.edu>
+
+	* callbacks.c: grab the focuse to the search entry when searching
+	so that the tree doesn't grab focus
+
+2001-11-10  Kevin Vandersloot <kfv101@psu.edu>
+
+	Merge from stable
+
+	2001-10-27  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: change the search to start anew if no more
+	strings are found. Fix bug #63132
+
+2001-11-10  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: some string changes from stable
+
+2001-11-10  Kevin Vandersloot <kfv101@psu.edu>
+
+	From stable:
+
+	2001-10-25  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: Pass the kill signal to the root password dialog
+	so the proper action is taken as root. Also many minor cosmetic
+	improvements.
+
+2001-11-10  Kevin Vandersloot <kfv101@psu.edu>
+
+	From stable:
+
+	2001-10-19  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.c: add the Ximian gtop icon as default window
+	icon
+
+2001-11-10  Kevin Vandersloot <kfv101@psu.edu>
+
+	* memmaps.c: refactor some code so that multiple dialogs
+	can be present at the same time, and selecting multiple
+	processes will show multiple dialogs
+
+	* callbacks.c: save the last clicked process as the selected 
+	process to show in the infoview
+
+2001-11-09  Kevin Vandersloot <kfv101@psu.edu>
+
+	More stable stuff, not quite finished:
+
+	2001-10-18  Kevin Vandersloot <kfv101@psu.edu>
+
+	Add ability to select multiple processes and do the corresponding
+	actions on all selected processes. 
+
+	* proctable.c: change selection mode to "multiple"
+
+	* favorites.c: hide all selected processes. Also update the
+	tree when a blacklisted processes is readded for good
+	feedback
+	
+	* procactions.c: when putting up root dialog specify the 
+	process name since there could be multiple processes that
+	need to be killed as root. Term/Kill all selected processes.
+
+	* procdialogs.c: make sure to hide all processes
+
+	* callbacks.c: call any new functions to perforam actions on all
+	processes
+
+2001-11-09  Kevin Vandersloot <kfv101@psu.edu>
+
+	Merge some stuff from stable
+
+	* interface.c: remove the free space column in the disk
+	list and make the mount directory column the second
+	column. Hopefully makes the list a little easier to digest.
+
+	* callbacks.c: change accordingly
+
+	* util.c: make the choice in decimal numbers smarter for
+	better display
+
+	2001-10-14  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: improve the layout of the memory/swap sizes
+	to make them more readable
+
+	* load-graph.c: update the labels accordingly
+
+2001-11-09  Kevin Vandersloot <kfv101@psu.edu>
+
+	* callbacks.c: get disk sizing right
+
+	* util.c (get_size_string): change to use gfloat since
+	there were issues passing in gints
+
+2001-11-08  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: handle removing processes properly
+
+2001-11-07  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: change renice dialog to conform to new
+	button ordering standard
+
+2001-11-07  Kevin Vandersloot <kfv101@psu.edu>
+
+	* prettytable.c: plug a memory leak
+
+	* favorites.c: allow the user to selection multiple process
+	to reshow
+
+2001-11-07  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c, interface.c, favorites.c: more mnemonics. Again
+	gtk 2.0 rocks.
+
+	* also mark strings for translation that got lost in the
+	porting
+
+2001-11-06  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c, procman.c: save the disk list state
+
+	* proctable.c: begin to properly handle when a parent node is
+	removed but the children arn't
+
+2001-11-06  Kevin Vandersloot <kfv101@psu.edu>
+
+	* favorties: port the hidden processes dialog to GtkDialog
+
+2001-11-06  Kevin Vandersloot <kfv101@psu.edu>
+
+	* memmaps.c: save and restore the memmaps tree state. Also
+	port the dialog to GtkDialog
+
+	* procman.c: rename get_gconf_int_with_default to 
+	gconf_client_get_int_with_default
+
+2001-11-06  Kevin Vandersloot <kfv101@psu.edu>
+
+	save and restore tree state
+
+	* procman.c: new functions to save and restore the tree state
+	using gconf
+
+	* proctable.c: call the new function
+
+2001-11-05  Kevin Vandersloot <kfv101@psu.edu>
+
+	bring back hidden processes
+
+	* callbacks.c: restore callbacks to hide processes
+
+	* favorites.c: bring back all this. port to gconf and
+	treeview. Remove any favorites stuff. I should change the name
+	of the file now
+
+	* interface.c: bring back menu items.
+
+	* procdialogs.c: port hide dialog to GtkDialog
+
+	* procman.c: save and get blacklist. Remove gconf notification
+	as I'm not using it at the moment.
+
+	* proctable.c: bring back the checking to see if a process has
+	been blacklisted etc 
+
+2001-11-05  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: fix bug to get root stuff back that I 
+	introduced
+
+2001-11-04  Kevin Vandersloot <kfv101@psu.edu>
+
+	* callbacks.c: bring back some keybindings
+
+	* proctable.c: same here
+
+2001-11-04  Kevin Vandersloot <kfv101@psu.edu>
+
+	* Makefile.am: no longer need to link to pthread stuff
+
+	* callbacks.c: double click toggles info tab
+
+	* prettytable.c: work with libwnck
+
+	* procactions.c: bring back root dialog stuff but doesn't seem
+	to work
+
+2001-10-31  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: some porting to GtkDialog
+
+2001-10-31  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: hook up the widgets with mnemonics. This
+	is so much easier in Gtk 2.0 :) Also get the sensitivity stuff
+	right
+
+	* callbacks.c: minor fixes
+
+2001-10-29  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: mkae renice actually work
+
+2001-10-29  Kevin Vandersloot <kfv101@psu.edu>
+
+	Too many changes to detail. Use libwnck to get icons. Return
+	memmaps, popup menu, get sorting right, bring back dialogs.
+
+2001-10-27  Yuriy Syrota  <rasta@renome.rovno.ua>
+
+	* configure.in: Added "uk" to ALL_LINGUAS.
+
+2001-10-22  Abel Cheung  <maddog@linux.org.hk
+
+	* configure.in: Added "zh_TW" to ALL_LINGUAS.
+
+2001-10-03  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: bring back the dialogs
+
+	* procactions.c: update to use the procdata->selected_process
+	instead of selected_node
+
+	* interface.c: bring back some menuitems
+
+	* callbacks.c: bring back killing processes and renice and 
+	prefs dialog
+
+2001-10-02  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.c: finish up gconf support. All config options
+	are now saved
+
+	* interface.c: get the gtk_widget_shows right as well as other
+	minor fixes
+
+2001-10-01  Kevin Vandersloot <kfv101@psu.edu>
+
+	Various minor fixes and add the beginnings of gconf support
+	for the configuration
+
+2001-10-01  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in: check for gconf-2 
+
+2001-09-30  Zbigniew Chyla  <cyba@gnome.pl>
+
+	* configure.in (ALL_LINGUAS): Added pl.
+
+2001-09-30  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: get sorting right and store the process info
+	for each row
+
+	* interface.c: bring back sensitivity changing
+
+	* infoview.c: bring back getting and displauing the info
+
+	* callbacks.c: save and restore the highlighted disk. Handle
+	row selections correctly now
+
+2001-09-30  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: bring back the disks list among other things
+
+	* callbacks.c: update the disk list.
+
+2001-09-30  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: bring back some more functionality
+
+	* callbacks.c, interface.c: ditto
+
+2001-09-29  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: add back icon support
+
+	* procman.c: for now only load the default icons
+
+	* util.c (get_size_string): return floats to one decimal
+	place
+
+2001-09-29  Kevin Vandersloot <kfv101@psu.edu>
+
+	* util.c (get_size_string): put this function here since I 
+	have it in about three different places already
+
+	* proctable.c: make the mem column a string and use 
+	get_size_string for nice display
+
+2001-09-29  Kevin Vandersloot <kfv101@psu.edu>
+
+	Initial port to GNOME 2.0 platform. Too much changes to detail
+
+	* proctable.c: port to GtkTreeview from e-tree
+
+2001-09-29  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in: update for GNOME 2.0. No longer require
+	Gal
+
+2001-09-25  Carlos Perelló Marín <carlos@gnome-db.org>
+
+	* debian/*: Updated.
+
+2001-09-25  Kevin Vandersloot <kfv101@psu.edu>
+
+	* release 0.10.3
+
+	* interface.c: comment out the "about process" item as it is
+	stupid right now. Maybe in the future when we get a good
+	help browser.
+
+2001-09-25  Kevin Vandersloot <kfv101@psu.edu>
+
+	* prettytable.c: change GDK_INTERP_NEAREST to HYPER for
+	better scaling of the icons.
+
+2001-09-25  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: make the minimum update interval for
+	the process viewer be 1 sec otherwise I see crashing on
+	startup (and it uses too much cpu otherwise)
+
+2001-09-22  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.c: don't load the desktop files twice
+
+	* interface.c: fix lines needing removal so this compiles
+
+2001-09-22  Kevin Vandersloot <kfv101@psu.edu>
+
+	* load-graph.c: check to see if load-graph is not NULL in
+	load-graph[start, stop]. Do this just so it's easy to not
+	show the sys tab for testing purposes
+
+2001-09-22  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: make the disks frame seperated from the graphs
+	by a vpaned
+	
+	* procman.[c,h]: save the paned pos
+
+2001-09-19  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* load-graph.c: Remove extra #include <config.h>
+	* prettytable.c: Move #include <config.h> to the top
+	to make i18n work. Please try now.
+ 	
+2001-09-19  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c (free_info): call gdk_pixbuf_unref to free the 
+	pixbuf and a memory leak.
+
+2001-09-19  Kevn Vandersloot <kfv101@psu.edu>
+
+	* callbacks.c (cb_simple_dialog_close): call gtk_main_quit
+	to close the app
+
+	* interface.c: some reshuffling of the UI code. don't call
+	gtk_widget_show on the main window untill all updating
+	has been done.
+	Improve the ctrl-alt-del dialog by giving a title
+
+	* prettytable.c: call gettext () on the string since
+	the app names arent getting translated. Still doesn't 
+	work.
+
+	* procdialogs.c: remove some debugging spew. Change a pref
+	tab label to match the main notebook tab label.
+
+	* procman.c: load the desktop files after the main window
+	has been created. This seems to reduce the amount of 
+	crashing due to the delay loading. Seems that the problem is
+	unthreadsafeness of some gnome functions.
+	Also let the simple dialog share the gtk main loop instead of
+	calling gnome_dialog_run. This makes it truly modeless
+
+	* proctable.c: remove some unneeded commented stuff.
+
+2001-09-16  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: improve the search. Use strstr to search for
+	any instance of the search string. Also find the next match
+	when the same search string is used. Also make sure that
+	that the matching process is actually displayed.
+
+2001-09-16  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.c: add new variable desktop_load_finish to monitor
+	the delay loading. Call pthrea_init here and do pthread_join
+	when the loading is done.
+
+	* prettytable.c: just load the .desktop files in the thread
+	function
+
+	* interface.c: change "end app..." to "close app..."
+
+2001-09-15  Yves Kurz <kurzy1@isbiel.ch>
+
+	* infoview.c: Changed the frame alignment to default.
+	* interface.c: ditto
+	* procdialogs.c: ditto
+
+2001-09-14  Kevin Vandersloot <kfv101@psu.edu>
+
+	Add a command line argument to run procman in a simple view.
+	This would be suitable for a ctrl-alt-delete dialog.
+
+	* procman.c: add new config option for the simple view. Don't save
+	settings if set. Also fix suitable defaults. Add command args
+	to show the dialog
+
+	* interface.c: do a gnome_dialog if in simple view.
+
+	* callbacks.c: New function to logout, but does nothing yet.
+	Check to see if timeouts exist before removing them at app
+	exit.
+
+	* proctable.c: load a different spec file if in simple view
+
+	* simple.etspec: new spec file. Headers are not shown so this doesn't
+	need to be translated.
+
+	* infovew.c: don't make the hbox uniform so the info frame can
+	expand a little
+
+2001-09-09  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c: fix misspelling of e_utf8 function
+
+	* release 0.10.2
+
+2001-09-08  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c:fix memory leaks when calling get_process_name
+	a second time. Also do the utf8 stuff when adding "thread" to the
+	name
+
+	* util.c: fix memory leaks
+
+2001-09-08  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: provide feedback when password is wrong. Just
+	put up a simple error message
+
+	* util.c (su_run_with_password): pass the return value from
+	exec_su
+	(exec_su): return -1 if password is wrong.
+
+	* interface.c: cosmetic improvements, put % in the graph
+	titles to make explicit that it is the % that is being
+	displayed
+
+2001-09-06  Kevin Vandersloot <kfv101@psu.edu>
+
+	* favorites.c: add a little padding around the "remove from
+	list" button label.
+
+	* interface.c: add 'end process' and 'kill process' to main menu.
+	Put the hidden process manager into the settings menu.
+
+	* callbacks.c (cb_[kill,end]_process): new callbacks for the new
+	menuitems.
+
+2001-09-06  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: make disk frame label center align to be
+	similar to the graph frame labels.
+
+	* procdialogs.c: Make minimum timeout for proc view be 0.5
+	as any lower uses too much cpu on my computer. Make the disk
+	timeout mimum be 1 sec and the adjust amount be 1 sec
+	intervals in the spin button
+
+2001-09-04  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.c: new config variables to save window geometry.
+	Save the window size on exit.
+
+	* interface.c: set the default size.
+
+	* memmaps.c: remove some debugging stuff and the connecting 
+	to the right click signal.
+
+2001-09-03  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in: added 'da'
+
+2001-09-03  Kevin Vandersloot <kfv101@psu.edu>
+
+	* load-graph.c: call load_graph_draw on the configure event. This
+	removes the slight delay in drawing when switching tabs.
+
+	* callbacks.c (cb_switch_page): remove the calls to load_graph_draw
+	here since they did not help and the graph was not visible at that
+	point so their effects were not noticable.
+
+	* procman.c: make the default grid color a light green. Hopefully
+	people dont' find it too ugly. Please someone provide me with a way
+	to make a nice looking graph. I need help here. Pleeeease.
+
+2001-09-03  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: cosmetic improvements to the prefs dialog
+	mainly making the two tabs have similar layouts.
+
+2001-09-03  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c (create_kill_dialog): pass in the signal now
+	so either SIGKILL or SIGTERM can use this dialog. Change the
+	button labels accordingly.
+
+	* callbacks.c: use the create_kill_dailog properly adding
+	the signal to the argument.
+
+	* interface.c: left align the disk name and mount point
+
+	* util.c: fix a memory leak
+
+2001-09-02  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: improve the renice dialog by adding a label
+	indicating whether the priority is high etc.
+
+	* infoview.c: sync the priority label with that of the renice
+	dialog
+
+2001-09-01  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c (create_root_password_dialog) pass a gchar here
+	as a argument for the dialog text. This way a seperate dialog
+	asking if the user wants to enter the password is not needed. 
+	Beautify the dialog a bit
+	(create_renice_dialog) change the button to read Change Priority
+	instead of renice.
+
+	* procactions.c: pass the root password text to 
+	create_root_passsword_dialog
+
+2001-08-31   Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: left justify the disk name and mount point
+	clist entries.
+	
+	* procactions.c: do the su stuff on renice. Slightly different
+	error message for when the user does not have permission or
+	when they have permission but try to lower the nice value.
+
+	* procactions.c (renice): pass procdata in here in order to 
+	pass it to the password dialog.
+
+	* procdialogs.c (renice_accept): pass procdata ro renice
+
+2001-08-31  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: add notebook tab for process viewer and
+	system monitor settings. Add settings for graph colors, and
+	graph/disk update intervals.
+
+	* callbacks.c: change gpointer to a procdata instead of the clist
+	so that you don't have to access the clist to use this function
+	anywhere in the code. The clist is now stored in procdata.
+
+	* interface.c: pass procdata to cb_update_disks
+
+	* load_graph.c: change back to 2 pixel line width
+
+	* prettytable.c: remove some debugging stuff. 
+	(prettytable_load_async) return if thread could not be created.
+
+	* procman.[c,h]: add config variable for disk update interval.
+	Add to ProcInfo structure booleans if process is thread and
+	if it has a .desktop file.
+
+	* proctable.c: some reordering of the code initiated by the fact that
+	(thread) was not being added anymore. A benefit is that we don't
+	call prettytable_get_icons more than needed.
+	(update_info): don't try to get icon or name if it has already
+	been checked (info->has_desktop_file is either 0 or 1). Be
+	sure to readd (thread) if the name has changed.
+	(get_info): check to see if process is a thread here and set
+	info->is_thread accordingly. 
+	Set has_desktop_file to 0 or 1 if the desktop files have been
+	scanned at this point.
+	(insert_info_to_tree): now add process to info->parent_node
+	if it has a parent. Don't show if info->is_thread = FALSE and
+	we are not supossed to show threads.
+
+2001-08-28  Kevin Vandersloot <kfv101@psu.edu>
+
+	* prettytable.c (pretty_table_add_table): fix memory leak.
+	gnome_datadir_file return string should be freed. Add
+	$prefix/applets to the search directories to get some icons
+	for the applets
+
+2001-08-28  Kevin Vandersloot <kfv101@psu.edu>
+
+	* load-graph.c: add line divisions to the graph. Make the data
+	lines wider (3 pixels - maybe too large).
+
+	* proctable.c: add hack to see if process is graphical. Check
+	the memory maps to see if it links to libX11. #ifdefed out
+	right now - not sure if it is too useful
+
+2001-08-27  Kevin Vandersloot <kfv101@psu.edu>
+
+	* infoview.c, callbacks.c, load-graph.c: mark the memory size
+	strings for translation. bug #59597
+
+2001-08-27  Kevin Vandersloot <kfv101@psu.edu>
+
+	* callbacks.c: mark the author strings for translation
+	Fixes bug #59595.
+
+2001-08-26  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.spec: Add the translations to the RPMS. Doh!
+
+2001-08-26  Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs.c: connect to "close" signal for renice dialog.
+	Don't popup a new dialog if another already exists.
+
+	* favorites.c: again connect to "close" signal, and only
+	do gnome_dialog_close if the close button is pressed.
+
+2001-08-25  Kevin Vandersloot <kfv101@psu.edu>
+
+	Fix bug #59548 by only showing utf8 names for the e-tree
+	* procman.h: add name_utf8 string to ProcInfo structure
+
+	* proctable.c (get_name): do the utf8 thing on the name for the
+	name_utf8 string and g_strdup the name for the info->name
+	(proctable_get_value): return info->name_utf8 here instead
+	of info->name.
+
+2001-08-25  Kevin Vandersloot <kfv101@psu.edu>
+
+	* memmaps.c: connect to the "close" signal since "destroy" was
+	causing corruption when save the e-tree state file. Try to
+	raise the dialog if it already exists. For the close button
+	just call gnome_dialog_close, don't call it in the "close" 
+	signal handler. Clear the memmaps data at close time
+
+2001-08-24  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: add a Kill Process item to right click
+	menu because there are times when it is needed.
+
+	* procactions.c (kill_process): add an extra argument to
+	determine the signal sent.
+
+	* callbacks.c: add popup_menu_end_process to send SIGTERM and
+	change popup_menu_kill_process to send SIGKILL and ignore the
+	warning dialog.
+
+	* procdialogs.c: call kill_process with SIGTERM.
+
+2001-08-24  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: Put disks updating on timeout. Move mount 
+	directory to the last column of the clist since it is the 
+	least interesting.
+
+	* procman.[c,h]: new config value for the graph updating
+	interval. Remove the g_free to the e-tree state save file
+	names since I think that may be why procman leaves behind
+	weird files.
+
+	* load-graph.c: use the new timeout config variable for the
+	graph timeout.
+
+	* callbacks.c (cb_update_disks): clear the clist and
+	repopulate.
+
+2001-08-24  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: fix bug #59466, a typo in wording. Also slightly
+	modify another string. Sorry translators :(
+
+2001-08-23  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: connect to the "delete_event" signal as that
+	is more right than "destroy" and gets rid of the bug where
+	widgets are destroyed before the "destroy" signal is emitted.
+
+	* callbacks.c: now cb_app_delete for the "delete_event" signal
+	and cb_exit for the exit menu item.
+
+2001-08-23  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: fill in the status bar message for the menuitems
+
+2001-08-23  Kevin Vandersloot <kfv101@psu.edu>
+
+	* load-graph.c: make the graph one pixel smaller than the frame
+	so it always shows up.
+	Initialize the data points to -1 and then don't display them.
+	
+2001-08-22  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: make the graphs above each other to display
+	more history.
+
+	* load-graph.c: move the frame back behind the data. Do a crude
+	hack to check if the data has any value and don't draw a line
+	if not so. Gets rid of the line having to do with the fact that
+	the data for time periods before the app started is zero. Bump
+	the number of points up since we now have more space.
+
+2001-08-22  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: add a new column to the disks showing used space.
+	center justify each element in the disk list.
+
+	* procman.c: add default colors
+
+2001-08-22  Kevin Vandersloot <kfv101@psu.edu>
+
+	Ability to save colors
+
+	* procman.h: the config variables for the colors are now
+	GdkColors
+
+2001-08-22  Kevin Vandersloot <kfv101@psu.edu>
+
+	Some UI to change the cpu/mem/swap colors. Still need to
+	save to disk though
+
+	* callbacks.c cb_[cpu,mem,swap]_color_changed: callback for
+	the gnome color pickers, change the current colors
+
+	* interface.c: add the color pickers. Add the swap used label
+	as a caption to the now Memory / Swap graph.
+
+	* load-graph.c: # of colors is now g->n + 2 ie one for each
+	graphed item, one for background and one for frame. Draw frame
+	after data so it is on top. calculate swap in get_memory
+
+	* procman.c: new config variable for the swap color.
+
+	* procman.h: move the LoadGraph structure here.
+
+2001-08-21  Kevin Vandersloot <kfv101@psu.edu>
+
+	Configurable colors for the graphs. Need to add UI in the
+	settings dialog still.
+	* procman.[c,h]: add config values for colors
+
+	* callbacks.c: add a FIXME about using gnome_url_show
+
+	* interface.c: update the calls to loag_graph_new
+	passing the colors
+
+	* load_graph.c: do the color dance
+
+2001-08-21  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: change the "" to NULL in the UIINFOs as that
+	seemed to cause problems
+
+2001-08-20  Kevin Vandersloot <kfv101@psu.edu>
+
+	* load-graph.c: fix the bug where the graph would initialize the data
+	on first view. Save the old data in the update not in the drawing.
+	Chnage the g_return_if_fail to a regular return since I know
+	why this routine is called after disp is NULL and it is harmless. 
+
+	* util.c: remove some ddebugging stuff
+
+	* procdialogs.c: make the entry default to focus, and the enter
+	button be default
+
+	* interface.c: make the frame labels for the cpu and mem graphs
+	be centered
+
+2001-08-19  Kevin Vandersloot <kfv101@psu.edu>
+
+	* util.c: get the root stuff working! No need to do an extra
+	fork. The problem was that exit was being called earlier on
+	the parent process. Now only call exit on the child. Release
+	coming soon.
+
+2001-08-19  Tige Chastain (tigechastain@home.com)
+
+	* favorites.c: Added checking to empty hidden processes window.
+
+2001-08-19  Kevin Vandersloot <kfv101@psu.edu>
+
+	* util.c: call fork before execlp so the procman doesn't quit
+	when you kill the process
+
+2001-08-19  Kevin Vandersloot <kfv101@psu.edu>
+
+	* util.c: new misc file. Contains the exec as root stuff for
+	now
+
+	* procactions.c: do the root dialog on kill if permission denied.
+	Update some strings
+
+	* procdialogs.c (create_root_password_dialog): new dialog to
+	get the root password
+
+2001-08-18  Tige Chastain <tigechastain@home.com>
+
+	* procactions.c: provide feedback when renice and kill don't
+	work.
+
+2001-08-18  Kevin Vandersloot <kfv101@psu.edu>
+
+	* load-graph.c (load_graph_draw): put a g_return_val_if_fail
+	on the main window to deal with a crash on exit.
+	Slow the update down for a better display. Need to not hardcode
+	these values.
+
+	* interface.c: some update of the labels.
+
+	* callbacks.c: end the timers on exit. The load_graph_draw
+	is still being called even after the window has been 
+	destroyed.
+
+2001-08-18  Kevin Vandersloot <kfv101@psu.edu>
+
+	* callbcaks.c: remove cb_progress_meter... Force a graph update
+	upon a tab switch.
+
+	* interface.c: update some of the labels for the cpu and mem
+	graphs. Also don't show a disk if it has zero size - seems to 
+	do the work of not showing /proc etc.
+
+	* load-graph.c (load_graph_draw): not static anymore so the 
+	graph can be drawn in callbacks.c. Set the graph width and height
+	here so we are always guarenteed the allocation->[height,width] are
+	correct. 
+	(get_memory): put in the memory values for the labels
+
+	* proctable.c: add a FIXME and remove the progress meter stuff.
+
+2001-08-17  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c (get_size_string): display the disk space sizes nicer.
+
+	* callbacks.c: remove some debugging stuff.
+
+	* load-graph.c: draw a coordinate axis
+
+2001-08-17  Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c: add a clist to show mounted disks. 
+
+	* load-graph.c (load_graph_[start,stop]): make it so data
+	is continually taken but don't do the drawing untill a call
+	to load_graph_start. Thus switching back and forth the data
+	will remain.
+
+2001-08-16  Kevin Vandersloot <kfv101@psu.edu>
+
+	Beginnings of graphical display of cpu history and mem usage.
+	Remove the cpu/mem/swap meters from the main window and add
+	back the app-bar. Now there are two notebook tabs for 
+	the process list and the sys monitor
+
+	* callbacks.c (cb_switch_page): new callback when the tab is
+	switched. Turn off the process updating or cpu/mem updating
+	when relevant.
+	
+	* interface.c: seperate the process tab UI from the sysmon. Add
+	them as seperate tabs.
+
+	* procman.[c,h]: add new gint config variable indicating the
+	current tab
+
+	* load-graph.[c,h]: code stolen and modified from the multiload
+	applet.
+
+2001-08-14  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c (proctable_search_table): put up an error message
+	if the search string was not found.
+
+2001-08-13  Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c (proctable_update_progress_bars): save the 
+	last % CPU and average it with the new pcpu to get a smoother
+	display.
+
+	* interface.c: make the cpu meter timeout be faster
+
+2001-08-13  Kevin Vandersloot <kfv101@psu.edu>
+
+	* infoview.c: chnage "nice value" to "priority" though still
+	display priority as "High ( Nice -10 )". Set the tooltip delay
+	to be shoter so as to be more noticable
+
+	* interface.c: again change Nice to priority. Add underscores to
+	all the menu items. Change window titile to be "Procman System
+	Monitor".
+
+	* procdialogs.c: Improve the renice dialog. Use an hscale, put
+	a frame around it. Pressing renice button closes the dialog so
+	a cancel button is more appropriate
+
+2001-08-10  Kevin Vandersloot <kfv101@psu.edu>
+
+	* configure.in Added 'ru'.
+
+2001-08-07 Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c : move the popup menu callbacks back to
+	callbacks.c. Add a new menuitem to get info about the
+	process. Just tries to man:process name.
+
+	* callbacks.c (popup_menu_about_process): call gnome_url_show
+	on the process command name. Perhaps there is a better way.
+
+	* proctable.c (get_process_name): change this to get the
+	process name and process command. Thus shortened command names
+	should no longer be in procman.
+
+2001-08-07 Kevin Vandersloot <kfv101@psu.edu>
+
+	* interface.c (create_main_window): hook up to the key press
+	signal for the e-tree. Also remove a duplicated 
+	gtk_signal_connect for the "right_click" signal.
+
+	* callbacks.c (cb_tree_key_press): toggle info tab if 
+	return/enter or space bar is pressed
+
+2001-08-07 Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c (get_process_nmae): strip the path from the
+	arguments string. Now process name show in their full glory.
+	(get_info): remove unneeded stuff
+	(update_info): update the name just as if icon needs updateing.
+
+	* procactions.c (kill_process): fix spelling of SIGTERM.
+
+	* prettytable.c (...get_name): return NULL if the process does
+	not have a .desktop file. 
+
+2001-08-06 Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c (get_process_name): new function to get the name.
+	Will try to get name from arguments string.
+
+	* interface.c (popup_menu...): declare them as static functions
+	because, well.., that's what they are.
+
+2001-08-06 Kevin Vandersloot <kfv101@psu.edu>
+
+	* Makefile.am: add procactions.c procactions.h
+
+	* procactions.[c,h]: new file to deal with process actions
+	like renice and kill
+
+	* callbacks.c (end_process_button...): use the kill function
+
+	* interface.c (popup...kill_process): use the kill function here
+	also. Do the warning also if needed.
+	
+	* procdialogs.c (create_kill_dialog): show the dialog here instead
+	of returnin the dialog GtkWidget
+
+	* procdialogs.c (cb_kill..._clicked): use the new kill function.
+	(renice_accepted): use the new renice function.
+	(create_renice_dialog): change cancel button the close
+
+2001-08-05 Kevin Vandersloot <kfv101@psu.edu>
+
+	Improve the popup menu from patch by Tige Chastain 
+	<tigechastain@home.com>
+
+	* interface.c (create_main_window): create the popup menu here
+	and save as a global variable. Make the menu nicer.
+	(do_popup_menu): rename to avoid conflict with said global
+	variable. Now just pop the menu up
+	(popup_menu*): place callbacks here and call gtk_popdown_menu
+	on the global GtkMenu.
+
+2001-08-05 Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.c: add new boolean config option to do the delay load
+	(procman_get_data): do the delay loading here and honor the
+	new config option. Add a timeout to determine if the icons are
+	loaded.
+	(icon_load_finished): timeout function. Update the table once
+	loading is finished.
+
+	* procman.h: renmae config variable show_icons to 
+	load_desktop_files to be more descriptive.
+
+	* proctable.c (update_info): check to see if process name
+	needs updating
+
+2001-08-05 Kevin Vandersloot <kfv101@psu.edu>
+
+	* e-clipped-lable.[c,h]: stolen from evolution. Displays
+	labels shortened with ...
+
+	* infoview.c: make the command label an e-clipped-label.
+	(infoview_update): display the command arguments for the 
+	command label instead of just the command itself.
+
+2001-08-04 Kevin Vandersloot <kfv101@psu.edu>
+
+	* procdialogs (create_pref_dialgo): comment out never_show_icons 
+	prefernece
+
+	* interface (create_main_window): make infobox above the buttons
+	at the bottom of window. Looks better to me 
+
+2001-08-04 Kevin Vandersloot <kfv101@psu.edu>
+
+	* callbacks.c (cb_end_process): changed SIGTERM to SIGKILL
+
+	* procdialogs.c: likewise.
+
+	* prettytable.c (prettytable_load_async): new function to get 
+	the icons using a seperate thread.
+	(thread_func): new function to actually load the icons within
+	the thread.
+
+	* interface.c (idle_func): call the new async functions to load
+	icons
+
+	* proctable.c (update_info): check to see if icon doesn't exist
+	and if so try to find one. Not ideal in that it means we 
+	constantly check for icons for processes that don't have them.
+
+	* prettytable.h: remove unneeded stuf
+
+	* procman.c (procman_data_new): change default "view as" to 
+	my processes.
+
+2001-08-04 Kevin Vandersloot <kfv101@psu.edu>
+
+	First crack at delay loading icons.
+
+	* interface.c (create_main_window): create an idle timer to delay 
+	load the icons
+	(idle_func): test the delay loading. Should probably create a
+	thread to load the icons to prevent blocking
+
+	* procman.c (procman_data_new): don't load icons here
+
+Sat Aug  4 00:35:55 2001  Jonathan Blandford  <jrb@redhat.com>
+
+	* interface.c (create_main_window): add an keyboard accelarators.
+
+2001-08-03 Kevin Vandersloot <kfv101@psu.edu>
+
+	* favorites.c (save_blacklist): fix memory leak
+	(fill_tree_with_info): new function to fill the tree.
+	(remove_item): remove the call to e_tree_memory_node_remove
+	as that caused a segfault in e-tree that won't be fixed for
+	Gal 1.0
+	(remove_button_clicked): call the e-tree ForEach function so
+	all selected processes are remove from the list. Then call
+	fill_tree_with_info to clear the tree and repopulate.
+
+	* memmaps.c (clear_memmaps): free the info->flags string to fix
+	a memory leak.
+
+	* procman.c (procman_free_data): free strings pointing to
+	.etspec files. Fixes memory leak.
+
+	* proctable.c (get_info): remove unused variable and some 
+	unneeded comments
+
+2001-08-03 Kevin Vandersloot <kfv101@psu.edu>
+
+	* procman.h: add new gchar to ProcInfo structure for the command
+	args
+
+	* proctable.c (get_info): get the command arguments
+
+	* infoview.c: new tooltip for the command label showing the
+	full arguments. Wrap the command label in an event box.
+	(infoview_update): update the tooltip but make sure that
+	the selected process has changed otherwise updating the
+	tooltip will make it go away.
+
+	* procman.h: add new gint for the progress meter timeouts
+	so they can be removed at app destruction
+
+	* callbacks.c (cb_app_destroy): remove the timeouts. I think
+	they were still being triggered even though the widgets were
+	destroyed.
+
+2001-08-02  Christian Meyer  <chrisime@gnome.org>
+
+	* configure.in: Added 'de'.
+
+2001-08-02 Tige Chastain <tigechastain@home.com>
+
+	* interface.c (create_main_window): hook up to the "right-click"
+	signal for popup menu.
+	(popup_menu): create and popup the menu
+
+	* callbacks.[c,h] (cb_right_click): handle the right click 
+	by calling popup_menu.
+
+2001-08-02 Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c, memmaps.c: do a stat for the .etspec file. Bail out
+	with error dialog if its not found
+
+	* interface.c, procman.c: bail out if the e-tree could not
+	be created
+
+2001-08-01 Kevin Vandersloot <kfv101@psu.edu>
+
+	* prettytable.[c,h]: add new hash table to search ,.desktop name
+	entry. Now nautilus gets its proper name.
+
+	* defaulttable.h: upper case gnome-session
+
+2001-08-01 Kevin Vandersloot <kfv101@psu.edu>
+
+	* prettytable.c (prettytable_load_path): return a g_strdown
+	since it is a key and will not be dislplayed
+
+2001-07-31  Carlos Perelló Marín <carlos@gnome-db.org>
+
+	* debian/changelog: Updated to 0.8 version.
+
+2001-07-31 Kevin Vandersloot <kfv101@psu.edu>
+
+        * procman.h: add boolean to ProcInfo indicating whether
+        the process is blacklisted.
+
+        * proctable.c (update_info): insert process and remove taking
+        into account whether it was formerly blacklisted or not. Fixes
+        a bug where a process was continusouly inserted leading
+        to (thread) being appended over and over
+
+        * procdialogs.c (creare_preferences_dialog): update comment
+        to be correct.
+
+        * infoview.c (create_infoview): cosmetic improvements
+
+        * prettytable.c (_load_path): remove g_strdowns so app names
+        will be upper case per Seth's suggestion. Nautilus doesn't
+        get an icon so I need to check into that.
+
+2001-07-31  Carlos Perelló Marín <carlos@gnome-db.org>
+
+	* proctable.c, favorites.c: Please, remember to add the
+	config.h include. Thanks ;-)
+	
+2001-07-30 Kevin Vandersloot <kfv101@psu.edu>
+
+	* proctable.c (proctable_search_table): new function to search
+	the process list for a given string
+
+	* interface.c: add search label and entry. Hook up to the activate
+	signal. Remove the unneded gtk_alignment
+
+	* callbacks.c (cb_search): new callback to call search_table.
+
+	* procman.c (procman_free_data): new function to free allocated
+	memory at exit.
+
+	* proctable.c (proctable_free_table): new function to free
+	the process list.
+
+2001-07-30 Kevin Vandersloot <kfv101@psu.edu>
+
+	*proctable.c (inset_info_to_tree): fix memory leak
+	with appending "thread" to name. Fixes bug #58136.
+
+	*favorites.c (get_blacklist): fix memory leaks
+
+2001-07-28  Christopher R. Gabriel  <cgabriel@cgabriel.org>
+
+	* configure.in (ALL_LINGUAS): Added 'it'.
+
+
+2001-07-21 Kevin Vandersloot <kfv101@psu.edu>
+
+	*procdialogs.c (update_update_interval, _create_preferences_dialog): fix 
+	conversions between ints to floats to fix the update interval preference
+	
+	*procdialogs.c (show_icons_toggled): if set to yes scan the .desktop files
+	in order to show icons. Thus no restart is needed for this preference to take
+	effect
+	
+	*proctable.c (get_info): don't show icons if pref is set. 
+	
+	*interface.c (cb_test): remove the useless function. Also #ifdef the favorites
+	menu as it is not used.
+
+2001-07-21 Kevin Vandersloot <kfv101@psu.edu>
+
+	*procdialogs.c: add show_threads config to config dialog
+
+2001-07-21 Kevin Vandersloot <kfv101@psu.edu>
+
+	*procdialogs.c: fix misspelling of preferences.
+
+2001-07-20 Kevin Vandersloot <kfv101@psu.edu>
+
+	*procman.[c,h]: new config option to show threads. Defaults to not showing
+	threads.
+	
+	*proctable.c (insert_info_to_tree): move a little code and don't insert
+	info process is a thread and the config option is FALSE.
+
+2001-07-20 Kevin Vandersloot <kfv101@psu.edu>
+
+	*favorites.c (create_tree): don't do g_list_copy.
+
+2001-07-20 Kevin Vandersloot <kfv101@psu.edu>
+
+	*proctable.c (get_info): convert the name to utf8 here and
+	don't duplicate the string twice to fix a memory leak
+
+2001-07-19 Kevin Vandersloot <kfv101@psu.edu>
+
+	*proctable.c (refresh_list): remove the call to g_list_copy
+	as it caused a crash. I need to understand GLists better.
+	Fixes bug #57782
+
+2001-07-19  Fatih Demir <kabalak@gtranslator.org>
+
+	* configure.in: Added "tr" to the languages list.
+
+2001-07-18 Kevin Vandersloot <kfv101@psu.edu>
+
+	*procdialogs.c: add preferences dialog.
+
+	*procdialogs.c (create_renice_dialog): cosmetic improvements.
+	I'm still not satisfied with this dialog.
+
+2001-07-18 Kevin Vandersloot <kfv101@psu.edu>
+
+	*proctable.c (proctable_get_value): use
+	e_utf8_from_locale_string for the process name to properly
+	display names in the tree. This generates a lot of warnings
+	so I hope there is a better solution.
+
+	*procman.h: add new config variable show_pretty_names
+	to show the .desktop names
+
+	*proctable.c (get_info): Get the pretty name if needed.
+
+	*favorites.c (get_blacklist): remove an unessecary g_print.
+
+2001-07-18 Kevin Vandersloot <kfv101@psu.edu>
+
+	Create a hide message dialog similar to the end process one.
+
+	*procdialogs.c: add the dialog in the same fashion as the end
+	process one.
+
+	*procman.[c,h]: add boolean to config show_hide_message.
+
+	*callbacks.c (cb_hide_process): show the dialog if needed.
+
+2001-07-16 Kevin Vandersloot <kfv101@psu.edu>
+
+	*interface.c: make the menu keyboard shortcuts use CTRL
+
+2001-07-16 Kevin Vandersloot <kfv101@psu.edu>
+
+	*interface.c (create_main_window): put cpu/mem/swap progress
+	meters on a faster timeout.
+
+	*callbacks.[c,h] (cb_progress_meter_timeout): new callback
+	for cpu/mem/swap timeout
+
+	*proctable.c (proctable_update_progress_meters): new function
+	to update the progress meters.
+
+2001-07-16 Kevin Vandersloot <kfv101@psu.edu>
+
+	*procman.h: add config option to not show icons. Speeds up
+	load time.
+
+	*procman.c (main): move a bunch of prettytable stuff into
+	prettytable.c where it belongs.
+
+	*prettytable.c (prettytable_get[icon,name]): check if the hash
+	table exists. If not then it means icons should not be shown.
+
+2001-07-16 Kevin Vandersloot <kfv101@psu.edu>
+
+	*favorites.c: add dialog to edit hidden processes.
+
+	*proctable.c (update_info): add a little logic to show
+	a process that was hidden but now needs to be shown.
+
+	*procman.h: add a gint to ProcData structure indicating the number
+	of blacklisted processes
+
+	*interface.c: add menuitem to edit blacklist
+
+	*callbacks.c (cb_show_hidden_processes): add callback to edit 
+	blacklist menu
+
+2001-07-15  Carlos Perelló Marín <carlos@gnome-db.org>
+
+	* debian/*: Added scripts to generate Debian
+	packages.
+	* NEWS: Added a comment to the Debian packages
+
+2001-07-14  Carlos Perelló Marín <carlos@gnome-db.org>
+
+	* src/memmaps.c: Added #include config.h to enable i18n
+	src/procdialogs.c: ditto.
+	
+2001-07-14  Carlos Perelló Marín <carlos@gnome-db.org>
+
+	* infoview.c: Added #include config.h to enable i18n
+	* interface.c: /s/lessinfolabel/_(lessinfolabel)/
+	/s/moreinfolabel/_(moreinfolabel)/ to get those labels translated.
+	* Changelog: Renamed to the standard name ChangeLog
+
+2001-07-12 Kevin Vandersloot <kfv101@psu.edu>
+
+	For now don't do the favorites. Instead make a blacklist
+	of processes the user don't want to see. I think this is
+	more useful than defining favorites.
+
+	*proctable.c: remove favorites for now since I'm not sure
+	if it is usefule. Instead there will be a blacklist of
+	processes that the user doesn't want to see.
+
+	*favorites.c: add stuff for blacklisting processes similar to
+	favorites stuff.
+
+	*interface.c: comment out the favorite menus. Add a hide option
+	to the edit menu.
+
+	*callbacks.[c,h] (cb_hide_process): new callback to hide a 
+	process.
+
+	*procman.c: initialize the blacklist, save it at end of session.
+
+	*procman.h: add the blacklist GList to ProcData structure.
+
+	*proctable.c (update_info): add some comments to this ever 
+	increasingly complicated function.
+
+2001-07-12 Kevin Vandersloot <kfv101@psu.edu>
+
+	*proctable.c (proctable_update_list): change the check
+	to a case statement for which processes to view to fix
+	a bug where only the user processes were shown.
+
+2001-07-12 Kevin Vandersloot <kfv101@psu.edu>
+
+	Added the beginnings of showing only favorite processes
+
+	*procman.h: add enum for favorites
+
+	*interface.c: added view: favorites menu item and add to
+	favorites menu item.
+
+	*callbacks.c (cb_add_to_favorites, cb_favorites_menu_clicked) :
+	respond to new menu items.
+
+	*procman.c (procman_data_new): initialize the favorites list.
+	(procman_save_config): save the favorites.
+
+	*proctable.c (insert_info_to_tree): check to see if process
+	is a favorite.
+	(proctable_update_list): add check to see if showing favorites
+	and show all processes if so.
+
+	*favorites.[c,h]: implement adding, saving, and checking for
+	favorites.
+
+	*Makefile.am: add favorites.[c,h]
+
+2001-07-11 Kevin Vandersloot <kfv101@psu.edu>
+
+	Added the ability to only view running processes.
+
+	*procman.h: add enum for running processes.
+
+	*proctable.c (get_process_status): added new boolean indicating
+	whether the process is running or not
+	(update_info): change this function to return an int. Return
+	-1 if process needs to be removed, 0 if nothing, and 1 if it
+	needs to be added.
+	(insert_info_to_tree): only add to tree if needed
+	(refresh_list): add or remove processes using return value
+	from update_info.
+	Also initialize info->node to be NULL since we can now maintain
+	a processes info yet not necessarily display it.
+
+	*interface.c (create_main_window): add a view: running_processes
+	menu.
+
+	*callbacks.c: add the necessary callbacks to the menus.
+
+2001-07-11 Kevin Vandersloot <kfv101@psu.edu>
+
+	*proctable.c, memmaps.c: hack around a bug in gal.
+	Some more cosmetic changes.
+
+2001-07-11 Kevin Vandersloot <kfv101@psu.edu>
+
+	*prettytable.c: remove some unneeded stuff
+
+	*proctable.c (update_info): free the string if it exists to
+	fix a memory leak.
+
+2001-07-10 Kevin Vandersloot <kfv101@psu.edu>
+
+	*proctable.c (proctable_new): check to see that the tree
+	is created from the spec file and bail out if not.
+
+	*memmaps.c (create_memmaps_tree): do the same here. Thus things
+	work properly now and procman is stable once more. Ahhh.
+
+	*proctable.etspec, memmaps.etspec: update initial default column
+	widths and add memmaps.etspec
+
+2001-07-10 Kevin Vandersloot <kfv101@psu.edu>
+
+	*memmaps.c: put in same conditionals to load memmaps.etspec.
+	It seems a bug in gal is causeing the crashes.
+
+	*Makefile.am: add memmaps.etspec.
+
+2001-07-09 Kevin Vandersloot <kfv101@psu.edu>
+
+	Beginning to move e-tree specs to different file. Thanks to 
+	Carlos Perello Marin <carlos@gnome-db.org> for
+	providing the initial patch.
+
+	*interface.c (create_main_window): more cosmetic changes.
+
+	*Makefile.am: add proctable.etspec. Beginning of attempt
+	to move the spec into a different file for 
+	internationalization purposes.
+
+	*proctable.c: put in if statement to open spec from a 
+	different file. Seems to crash and burn when I try though.
+	Change justification to center for most of the items.
+
+2001-07-09 Kevin Vandersloot <kfv101@psu.edu>
+
+	*interface.c (create_main_window): change signal for info
+	button to clicked instead of pressed so it works using the 
+	keyboard. 
+	Also make the More Info and Less Info labels saner
+	and make sure if the info is already shown at startup set the
+	label to Less Info.
+	Some cosmetic inprovements to the progress meters.
+
+2001-07-08  Carlos Perelló Marín <carlos@gnome-db.org>
+
+	* ABOUT-NLS: Removed
+	* .cvsignore: shhh
+	* Updated to use xml-i18n-tools
+
+2001-07-08  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* procman.desktop: Added Norwegian translation.
+	* configure.in: Added no to ALL_LINGUAS.
+
+2001-07-08 Kevin Vandersloot <kfv101@psu.edu>
+
+	*proctable.c: add process status column
+
+	*procman.c: change default to show tree_view
+
+2001-07-08 Kevin Vandersloot <kfv101@psu.edu>
+
+	*proctable.c (inset_info_to_tree): comment out the call
+	to not expand the parent node. I think this might be
+	causing a crash. Also add the term (thread) to any thread
+	processes.
+
+	*interface.c(create_main_window), infoview.c: instead of 
+	setting certain widgets insensitive at startup, just send 
+	an "unselect" signal.
+
+	*interface.c: add menu items for renice and memory maps.
+
+	*memmaps.c: changed cmd_label to command_label since I used
+	the same variable in the infoview.
+
+	*memmaps.c (create_memmaps_dialog): check to see if dialog
+	already exists. Don't show two dialogs.
+
+2001-07-07 Kevin Vandersloot <kfv101@psu.edu>
+
+	*infoview.c (infoview_create): much improved info viewer
+
+	*procman.h: removed infoview structure. Now the widgets are
+	accessed as global variables deffined in infoview.c
+
+	*procman.h: added new configuration variable to show the tree. 
+	No UI to change it but one can do that in the .gnome 
+	configuration file.
+
+	*proctable.c (insert_info_to_tree): Use the new configration
+	variable to show the tree. Also check to see if parent process
+	has same memory total as well as same name to deterimine if it
+	is a thread.
+
+2001-07-05 Kevin Vandersloot <kfv101@psu.edu>
+
+	*proctable.c (remove_children_from_tree): remove the 
+	e_tree_memory_node_remove call as it seems to cause some
+	infinite looping.
+
+	*also remove some c++ comments
+
+2001-07-05 Kevin Vandersloot <kfv101@psu.edu>
+
+	*prettytable.c (pretty_table_load_path): don't segfault if the
+	directory doesn't exist
+
+2001-07-04 Kevin Vandersloot <kfv101@psu.edu>
+
+	*proctable.c(remove_children_from_tree): new function to
+	remove all child info if a parent process is removed.
+
+	*proctable.c (remove_info_from_tree): new function to remove
+	a process.
+
+	*interface.c (create_main_window): change gtk_wdiget_show to
+	gtk_widget_show_all to fix a bug where the infoview state was
+	not persistent
+
+	*memmaps.c (get_memmaps_list): add e_tree_memory_freeze and thaw
+	to inprove table updating. Add g_free to fix a major
+	memory leak.
+
+	*memmaps.c (create_memmaps_dialog): change timeout to be 5 sec. This
+	should probably not be hard coded.
+
+	*procman.c (main): remove the push visual and colormap since
+	I don't know what use they are for.
+
+	*procman.h, proctable.c: change ETreePath *path to ETreePath path
+	since they should not be declared as pointers.
+
+	*proctable.c (proctable_new): make tree default to being expanded.
+
+2001-07-03 Kevin Vandersloot <kfv101@psu.edu>
+
+	*memmaps.[c,h]: create and handle the memmaps dialog. Lots
+	of code stolen from gtop
+
+	*callback.s (cb_table_selected): call update memmaps function
+
+	*infoview.c (memmaps_button_click): open the dialog
+
+	*procman.c (procman_data_new, procman_get_save_files): add config
+	file for the memmaps e-tree
+
+	*procman.h: added memmaps config file name to config structure
+
+	*proctable.c (update_all): call update memmaps function
+
+	*proctable.c: changed e-tree spec to "single" selection mode so
+	only one row can be selected
+
+	*infoview.c (infoview_update): don't duplicate strings for entry
+	widgets. This leaks memory.
+	
+2001-07-02  Christian Rose  <menthos@menthos.com>
+
+	* procman.desktop: Added Swedish entries.
+
+2001-07-02  Christian Rose  <menthos@menthos.com>
+
+	* configure.in: Added sv to ALL_LINGUAS.
+
+2001-06-30 Kevin Vandersloot <kfv101@psu.edu>
+
+	*proctable.c (insert_info_to_tree): check to see if parent has
+	same name. If so assume the child is a thread and don't expand
+	the row.
+
+	*proctable.c: renamed get_parent_node to get_parent and return
+	parent info in order to check the name
+
+	* some other code cleanups
+
+2001-06-30 Kevin Vandersloot <kfv101@psu.edu>
+
+	*interface.c (update_sensitivity): more movement of code
+	to interface.c.
+
+	*callbacks.c (cb_table_slected): use update_sensitivity. Move 
+	cb_update_selected_row into cb_table_selected.
+	
+	*proctable.c: remove some unused variables, fix up %cpu.
+
+2001-06-30 Kevin Vandersloot <kfv101@psu.edu>
+
+	* callbacks.c (cb_double_click): hook up to double click.
+	Now toggles infoview
+
+	* interface.c (toggle_infoview): toggles infoview. Beginning of 
+	pulling stuff out of callbacks.c to access gtk widgets as global
+	variables.
+
