@@ -51,8 +51,12 @@ static const char* LOAD_GRAPH_CSS = "\
                       );\
     color: mix (@theme_fg_color, @theme_bg_color, 0.5);\
 }\
+#gnome-system-monitor {\
+  background-color: white;\
+  background-image: none;\
+}\
 ";
-
+int active_s_res = 1;
 static gboolean
 cb_window_key_press_event (GtkWidget *widget, GdkEvent *event, gpointer user_data)
 {
@@ -512,6 +516,16 @@ change_show_processes_state (GSimpleAction *action, GVariant *state, gpointer da
 }
 
 static void
+change_res_standard_classic_state (GSimpleAction *action, GVariant *state, gpointer data)
+{
+    GsmApplication *app = (GsmApplication *) data;
+
+    auto state_var = Glib::wrap(state, true);
+    g_simple_action_set_state (action, state);
+    app->settings->set_value (GSM_SETTING_RES_STANDARD_CLASSIC, state_var);
+}
+
+static void
 change_show_dependencies_state (GSimpleAction *action, GVariant *state, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
@@ -561,6 +575,7 @@ update_page_activities (GsmApplication *app)
         gtk_widget_show (GTK_WIDGET (app->search_button));
         gtk_widget_show (GTK_WIDGET (app->process_menu_button));
         gtk_widget_hide (GTK_WIDGET (app->window_menu_button));
+        gtk_widget_hide (GTK_WIDGET (app->res_menu_button));
 
         update_sensitivity (app);
 
@@ -568,6 +583,16 @@ update_page_activities (GsmApplication *app)
             gtk_widget_grab_focus (GTK_WIDGET (app->search_entry));
         else
             gtk_widget_grab_focus (GTK_WIDGET (app->tree));
+    } else if (strcmp (current_page, "resources") == 0) {
+        proctable_freeze (app);
+
+        gtk_widget_hide (GTK_WIDGET (app->end_process_button));
+        gtk_widget_hide (GTK_WIDGET (app->search_button));
+        gtk_widget_hide (GTK_WIDGET (app->process_menu_button));
+        gtk_widget_hide (GTK_WIDGET (app->window_menu_button));
+        gtk_widget_show (GTK_WIDGET (app->res_menu_button));
+        res_sensitivity(app);
+        update_sensitivity (app);
     } else {
         proctable_freeze (app);
 
@@ -575,6 +600,7 @@ update_page_activities (GsmApplication *app)
         gtk_widget_hide (GTK_WIDGET (app->search_button));
         gtk_widget_hide (GTK_WIDGET (app->process_menu_button));
         gtk_widget_show (GTK_WIDGET (app->window_menu_button));
+        gtk_widget_hide (GTK_WIDGET (app->res_menu_button));
 
         update_sensitivity (app);
     }
@@ -654,17 +680,33 @@ create_main_window (GsmApplication *app)
     GtkStack *stack;
     GMenuModel *window_menu_model;
     GMenuModel *process_menu_model;
+    GMenuModel *res_menu_model;
     GdkDisplay *display;
     GdkMonitor *monitor;
     GdkRectangle monitor_geometry;
     const char* session;
 
-    int width, height, xpos, ypos;
+    LoadData *cpu_data = newLoadData(1);
+    //cpu_data->cpu_model = 
 
+    int width, height, xpos, ypos;
+    GtkWidget *g_id_cpu_name;
+    //GtkLabel *label_gWid;
     GtkBuilder *builder = gtk_builder_new();
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/interface.ui", NULL);
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/menus.ui", NULL);
+    cpu_data->cpu_model  = GTK_WIDGET(gtk_builder_get_object(builder, "cpu_name"));
+    cpu_data->cpu_total  = GTK_WIDGET(gtk_builder_get_object(builder, "total_cpu_usage"));
+    //cpu_data->da  = GTK_WIDGET(gtk_builder_get_object(builder, "total_cpu_usage"));
 
+    cpu_data->da = GTK_WIDGET(gtk_builder_get_object(builder, "dwmarea2"));
+    cpu_data->box_ncore = GTK_BOX(gtk_builder_get_object(builder, "box_ncore"));
+    gtk_widget_set_size_request(GTK_WIDGET (cpu_data->box_ncore), -1, 340);
+    //gtk_widget_show (GTK_WIDGET (main_widget));
+    //cpu_data->gWid = g_id_cpu_name;
+    //cpu_data->gW = GTK_WIDGET(gtk_builder_get_object(builder, "total_cpu_usage"));
+    start_standard_resource(cpu_data);
+    //linux_cpu_info(cpu_data);
     main_window = GTK_APPLICATION_WINDOW (gtk_builder_get_object (builder, "main_window"));
     gtk_window_set_application (GTK_WINDOW (main_window), app->gobj());
     gtk_widget_set_name (GTK_WIDGET (main_window), "gnome-system-monitor");
@@ -707,6 +749,10 @@ create_main_window (GsmApplication *app)
     process_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-window-menu"));
     gtk_menu_button_set_menu_model (app->process_menu_button, process_menu_model);
 
+    app->res_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "res_menu_button"));
+    res_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "res-window-menu"));
+    gtk_menu_button_set_menu_model (app->res_menu_button, res_menu_model);
+
     app->window_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "window_menu_button"));
     window_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "generic-window-menu"));
     gtk_menu_button_set_menu_model (app->window_menu_button, window_menu_model);
@@ -729,6 +775,7 @@ create_main_window (GsmApplication *app)
         { "refresh", on_activate_refresh, NULL, NULL, NULL },
         { "show-page", on_activate_radio, "s", "'resources'", change_show_page_state },
         { "show-whose-processes", on_activate_radio, "s", "'all'", change_show_processes_state },
+        { "res-standard-classic", on_activate_radio, "s", "'all'", change_res_standard_classic_state },
         { "show-dependencies", on_activate_toggle, NULL, "false", change_show_dependencies_state }
     };
 
@@ -776,6 +823,11 @@ create_main_window (GsmApplication *app)
                                          "show-whose-processes");
     g_action_change_state (action,
                            g_settings_get_value (app->settings->gobj (), GSM_SETTING_SHOW_WHOSE_PROCESSES));
+
+    action = g_action_map_lookup_action (G_ACTION_MAP (main_window),
+                                         "res-standard-classic");
+    g_action_change_state (action,
+                           g_settings_get_value (app->settings->gobj (), GSM_SETTING_RES_STANDARD_CLASSIC));
 
     gtk_widget_show (GTK_WIDGET (main_window));
     
@@ -839,6 +891,28 @@ update_sensitivity(GsmApplication *app)
 
     gtk_revealer_set_reveal_child (GTK_REVEALER (app->proc_actionbar_revealer),
                                    selected_sensitivity);
+
+    // Scrolls the table to selected row. Useful when the last row is obstructed by the revealer
+    guint duration_ms = gtk_revealer_get_transition_duration (GTK_REVEALER (app->proc_actionbar_revealer));
+    g_timeout_add (duration_ms, scroll_to_selection, app);
+}
+void
+res_sensitivity(GsmApplication *app)
+{
+    const char * const resources_actions[] = { "res-standard-classic"};
+
+    size_t i;
+    gboolean resources_sensitivity;
+    GAction *action;
+
+    resources_sensitivity = (strcmp (gtk_stack_get_visible_child_name (GTK_STACK (app->stack)), "resources") == 0);
+
+    for (i = 0; i != G_N_ELEMENTS (resources_actions); ++i) {
+        action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
+                                             resources_actions[i]);
+        g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                                     resources_sensitivity);
+    }
 
     // Scrolls the table to selected row. Useful when the last row is obstructed by the revealer
     guint duration_ms = gtk_revealer_get_transition_duration (GTK_REVEALER (app->proc_actionbar_revealer));

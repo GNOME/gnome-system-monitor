@@ -8,6 +8,45 @@
 #include "legacy/gsm_color_button.h"
 #include "util.h"
 
+struct widget_array{
+    GtkWidget *da;
+};
+
+struct LoadData {
+    static const unsigned NUM_POINTS = 60 + 2;
+
+    cairo_surface_t *cpu_total_surface = NULL;
+    widget_array *widget_surface_array;
+    int surface_index;
+    //cpu_drawing *cpu_drawing_array;
+    int first_time;
+    int current;
+    //0 contains the sum of all cpu cores
+    double n_cpu_total[1025][NUM_POINTS] = {0.0};
+    double n_cpu_usage[1025][NUM_POINTS] = {0.0};
+
+    double load[1025] = {0.0};
+    double cpu_pulse[1025][62] = {0.0};
+    int ncpu;
+    int ncpu_matrix[2];
+    //store core_x_axis coordinate of graph here so that
+    //it will not get recomputed everytime
+    double core_x_axis[62] = {0.0};
+    GtkWidget *cpu_model;
+    GtkWidget *cpu_total;
+    GtkWidget *da;
+    GtkWidget *dw_core_graph;
+    GtkBox *box_ncore;
+    size_t size;
+};
+
+struct LoadData *newLoadData (size_t sz);
+
+void delLoadData (struct LoadData *vector);
+
+void
+start_standard_resource (struct LoadData *lData);
+
 enum
 {
     LOAD_GRAPH_CPU,
