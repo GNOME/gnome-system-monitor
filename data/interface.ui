@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.22.0 -->
 <interface>
-  <requires lib="gtk+" version="3.0"/>
+  <requires lib="gtk+" version="3.12"/>
   <object class="GtkApplicationWindow" id="main_window">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">System Monitor</property>
@@ -211,7 +211,7 @@
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <child>
-                                                  <object class="GtkLabel" id="lbl_count">
+                                                  <object class="GtkLabel" id="total_cpu_usage">
                                                     <property name="width_request">70</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
@@ -591,6 +591,7 @@
                               <object class="GtkStack">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
+                                <property name="margin_left">5</property>
                                 <property name="hexpand">True</property>
                                 <child>
                                   <object class="GtkStack">
@@ -624,10 +625,11 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkLabel" id="id_cpu_name">
+                                              <object class="GtkLabel" id="cpu_name">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="halign">start</property>
+                                                <property name="margin_right">5</property>
                                                 <property name="margin_top">24</property>
                                                 <property name="hexpand">True</property>
                                                 <property name="label" translatable="yes">cpu name</property>
@@ -655,6 +657,7 @@
                                           <object class="GtkBox">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
+                                            <property name="margin_right">5</property>
                                             <property name="hexpand">True</property>
                                             <child>
                                               <object class="GtkFixed">
@@ -707,16 +710,17 @@
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkDrawingArea" id="dwmarea_cpu_cores">
-                                            <property name="width_request">50</property>
-                                            <property name="height_request">50</property>
+                                          <object class="GtkBox" id="box_ncore">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="hexpand">True</property>
-                                            <property name="vexpand">True</property>
+                                            <property name="margin_right">5</property>
+                                            <property name="orientation">vertical</property>
+                                            <child>
+                                              <placeholder/>
+                                            </child>
                                           </object>
                                           <packing>
-                                            <property name="expand">True</property>
+                                            <property name="expand">False</property>
                                             <property name="fill">True</property>
                                             <property name="position">2</property>
                                           </packing>
