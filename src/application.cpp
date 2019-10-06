@@ -20,6 +20,42 @@
 #include "lsof.h"
 #include "disks.h"
 
+struct LoadData *newLoadData (size_t sz) {
+    // Try to allocate vector structure.
+
+    struct LoadData *retVal;
+    retVal = (struct LoadData *)malloc (sizeof (*retVal));
+
+    if (retVal == NULL)
+        return NULL;
+
+    // Try to allocate vector data, free structure if fail.
+
+    retVal->cpu_model = (GtkWidget *)malloc (sz * sizeof (GtkWidget));
+    if (retVal->cpu_model == NULL) {
+        free (retVal);
+        return NULL;
+    }
+    
+    
+    // Set size and return.
+
+    retVal->size = sz;
+    return retVal;
+};
+
+void delLoadData (struct LoadData *vector) {
+    // Can safely assume vector is NULL or fully built.
+
+    if (vector != NULL) {
+        free (vector->cpu_model);
+        //free (vector->data);
+        free (vector);
+    }
+}
+
+
+
 static void
 cb_solaris_mode_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
 {
@@ -217,6 +253,10 @@ GsmApplication::GsmApplication()
       stack(NULL),
       refresh_button(NULL),
       process_menu_button(NULL),
+<<<<<<< HEAD
+      res_menu_button(NULL),
+=======
+>>>>>>> 52e0f83821067b2385d50bdd5097591aa72ac182
       window_menu_button(NULL),
       end_process_button(NULL),
       search_button(NULL),

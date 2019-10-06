@@ -177,7 +177,11 @@ endif
 ################################################################################
 # Subdirectories
 
+<<<<<<< HEAD
+rootInclude = include_directories('.','/usr/include/libdazzle-1.0','/usr/include/libdazzle-1.0/graphing')
+=======
 rootInclude = include_directories('.')
+>>>>>>> 52e0f83821067b2385d50bdd5097591aa72ac182
 
 subdir('data')
 subdir('po')
