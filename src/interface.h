@@ -26,5 +26,6 @@
 
 void            create_main_window (GsmApplication *app);
 void            update_sensitivity (GsmApplication *app);
+void            res_sensitivity (GsmApplication *app);
 
 #endif /* _GSM_INTERFACE_H_ */
