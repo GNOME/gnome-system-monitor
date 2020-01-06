@@ -288,6 +288,24 @@ procman_action_to_command(ProcmanActionType type,
 }
 
 
+gboolean
+multi_root_check (char *command)
+{
+    if (procman_has_pkexec ()) {
+        return gsm_pkexec_create_root_password_dialog (command);
+    } else {
+        if (procman_has_gksu ()) {
+            return gsm_gksu_create_root_password_dialog (command);
+        } else {
+            if (procman_has_gnomesu ()) {
+                return gsm_gnomesu_create_root_password_dialog (command);
+            }
+        }
+    }
+
+    return FALSE;
+}
+
 /*
  * type determines whether if dialog is for killing process or renice.
  * type == PROCMAN_ACTION_KILL,   extra_value -> signal to send

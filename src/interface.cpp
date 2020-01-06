@@ -34,6 +34,7 @@
 #include "proctable.h"
 #include "procactions.h"
 #include "procdialogs.h"
+#include "setaffinity.h"
 #include "memmaps.h"
 #include "openfiles.h"
 #include "procproperties.h"
@@ -440,6 +441,14 @@ on_activate_send_signal (GSimpleAction *, GVariant *parameter, gpointer data)
 }
 
 static void
+on_activate_set_affinity (GSimpleAction *, GVariant *, gpointer data)
+{
+    GsmApplication *app = (GsmApplication *) data;
+
+    create_set_affinity_dialog (app);
+}
+
+static void
 on_activate_memory_maps (GSimpleAction *, GVariant *, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
@@ -725,6 +734,7 @@ create_main_window (GsmApplication *app)
         { "send-signal-end", on_activate_send_signal, "i", NULL, NULL },
         { "send-signal-kill", on_activate_send_signal, "i", NULL, NULL },
         { "priority", on_activate_priority, "i", "@i 0", change_priority_state },
+        { "set-affinity", on_activate_set_affinity, NULL, NULL, NULL },
         { "memory-maps", on_activate_memory_maps, NULL, NULL, NULL },
         { "open-files", on_activate_open_files, NULL, NULL, NULL },
         { "process-properties", on_activate_process_properties, NULL, NULL, NULL },
@@ -809,6 +819,7 @@ update_sensitivity(GsmApplication *app)
                                               "send-signal-end",
                                               "send-signal-kill",
                                               "priority",
+                                              "set-affinity",
                                               "memory-maps",
                                               "open-files",
                                               "process-properties" };
