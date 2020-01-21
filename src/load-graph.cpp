@@ -404,6 +404,7 @@ namespace
     {
         char* used_text;
         char* cached_text;
+        char* cached_label;
         char* total_text;
         char* text;
 
@@ -414,14 +415,17 @@ namespace
             text = g_strdup(_("not available"));
         } else {
             // xgettext: 540MiB (53 %) of 1.0 GiB
-            if (cached == 0) {
-                text = g_strdup_printf(_("%s (%.1f%%) of %s"), used_text, 100.0 * percent, total_text);
-            } else {
-                text = g_strdup_printf(_("%s (%.1f%%) of %s\nCache: %s"), used_text, 100.0 * percent, total_text, cached_text);
+            text = g_strdup_printf(_("%s (%.1f%%) of %s"), used_text, 100.0 * percent, total_text);
+
+            if (cached != 0) {
+                cached_label = g_strdup_printf(_("Cache %s"), cached_text);
+                text = g_strdup_printf("%s\n%s", text, cached_label);
+                g_free (cached_label);
             }
         }
         gtk_label_set_text(label, text);
         g_free(used_text);
+        g_free(cached_text);
         g_free(total_text);
         g_free(text);
 
