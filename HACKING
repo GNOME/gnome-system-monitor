@@ -1,12 +1,15 @@
 # Meson
 
-## configure
+## configure creates the build directory
 meson build --prefix /home/benoit/gnome
 
-## build
+## build - compiles the source
 ninja -C build
 
-## clean
+## install - required to be able to run the application
+ninja -C build install
+
+## clean - removes built files to do a clean build
 ninja -C build -t clean
 
 ## start from scratch
