@@ -252,7 +252,6 @@ static double
 get_relative_time(void)
 {
     static unsigned long start_time;
-    GTimeVal tv;
 
     if (G_UNLIKELY(!start_time)) {
         glibtop_proc_time buf;
@@ -260,8 +259,7 @@ get_relative_time(void)
         start_time = buf.start_time;
     }
 
-    g_get_current_time(&tv);
-    return (tv.tv_sec - start_time) + 1e-6 * tv.tv_usec;
+    return 1e-6 * g_get_monotonic_time () - start_time;
 }
 
 static guint64
