@@ -24,6 +24,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <sched.h>
+#include <glibtop/procaffinity.h>
 #include <sys/stat.h>
 #include <glib/gi18n.h>
 
@@ -154,6 +155,8 @@ set_affinity (GtkToggleButton *button,
 {
     SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
 
+    glibtop_proc_affinity get_affinity;
+
     cpu_set_t   cpuset;
     guint32     i;
     gint        taskset_cpu = 0;
@@ -165,7 +168,7 @@ set_affinity (GtkToggleButton *button,
     cpu_list = g_new0 (gchar *, affinity->cpu_count);
 
     /* Check whether we can get process's current affinity */
-    if (sched_getaffinity (affinity->pid, sizeof (cpu_set_t), &cpuset) != -1) {
+    if (glibtop_get_proc_affinity (&get_affinity, affinity->pid) != NULL) {
         /* If so, run throguh all CPUs set for this process */
         for (i = 0; i < affinity->cpu_count; i++) {
             /* Check if CPU check box button is active */
@@ -230,10 +233,12 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
     GtkStyleContext *scrolled_style;
     GtkGrid         *cpulist_grid;
 
-    cpu_set_t        cpuset;
-    gint             i;
-    gint             button_n;
-    gchar           *button_text;
+    guint16               *affinity_cpus;
+    guint16                affinity_cpu;
+    glibtop_proc_affinity  affinity;
+    guint32                affinity_i;
+    gint                   button_n;
+    gchar                 *button_text;
 
     /* Get selected process information */
     gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
@@ -339,41 +344,25 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
     gtk_widget_set_hexpand (affinity_data->buttons[0], TRUE);
 
     /* Get process's current affinity */
-    sched_getaffinity (info->pid, sizeof (cpu_set_t), &cpuset);
+    affinity_cpus = glibtop_get_proc_affinity (&affinity, info->pid);
 
-    /* Check if any CPU's aren't set for this process */
-    for (i = 0; i < app->config.num_cpus; i++) {
-        if (!CPU_ISSET (i, &cpuset)) {
-            /* If so, set the check box inactive */
-            gtk_toggle_button_set_active (
-                GTK_TOGGLE_BUTTON (affinity_data->buttons[0]),
-                FALSE
-            );
-
-            break;
-        }
-    }
+    /* Set toggle all check box based on whether all CPUs are set for this process */
+    gtk_toggle_button_set_active (
+        GTK_TOGGLE_BUTTON (affinity_data->buttons[0]),
+        affinity.all
+    );
 
     /* Add toggle all check box to CPU grid */
     gtk_grid_attach (cpulist_grid, affinity_data->buttons[0], 0, 0, 1, 1);
 
     /* Run through all CPU buttons */
-    for (i = 0, button_n = 1; i < app->config.num_cpus; i++, button_n++) {
+    for (button_n = 1; button_n < app->config.num_cpus + 1; button_n++) {
         /* Set check box label value to CPU [1..2048] */
         button_text = g_strdup_printf (_("CPU %d"), button_n);
 
         /* Create check box button for current CPU */
         affinity_data->buttons[button_n] = gtk_check_button_new_with_label (button_text);
         gtk_widget_set_hexpand (affinity_data->buttons[button_n], TRUE);
-
-        /* Check if this CPU is set for this process */
-        if (CPU_ISSET (i, &cpuset)) {
-            /* If so, set the check box active */
-            gtk_toggle_button_set_active (
-                GTK_TOGGLE_BUTTON (affinity_data->buttons[button_n]),
-                TRUE
-            );
-        }
 
         /* Add check box to CPU grid */
         gtk_grid_attach (cpulist_grid, affinity_data->buttons[button_n], 0, button_n, 1, 1);
@@ -386,6 +375,18 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
 
         /* Free check box label value gchar */
         g_free (button_text);
+    }
+
+    /* Run throguh all CPUs set for this process */
+    for (affinity_i = 0; affinity_i < affinity.number; affinity_i++) {
+        /* Get CPU button index */
+        affinity_cpu = affinity_cpus[affinity_i] + 1;
+
+        /* Set CPU check box active */
+        gtk_toggle_button_set_active (
+            GTK_TOGGLE_BUTTON (affinity_data->buttons[affinity_cpu]),
+            TRUE
+        );
     }
 
     /* Add CPU grid to scrolled box */
