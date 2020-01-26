@@ -23,7 +23,6 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <sched.h>
 #include <glibtop/procaffinity.h>
 #include <sys/stat.h>
 #include <glib/gi18n.h>
@@ -156,6 +155,7 @@ set_affinity (GtkToggleButton *button,
     SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
 
     glibtop_proc_affinity get_affinity;
+    glibtop_proc_affinity set_affinity;
 
     cpu_set_t   cpuset;
     guint32     i;
@@ -190,7 +190,7 @@ set_affinity (GtkToggleButton *button,
         command = g_strdup_printf ("taskset -pc %s %d", pc, affinity->pid);
 
         /* Set process affinity; Show message dialog upon error */
-        if (sched_setaffinity (affinity->pid, sizeof (cpu_set_t), &cpuset) == -1) {
+        if (glibtop_set_proc_affinity (&set_affinity, cpuset, affinity->pid) == NULL) {
             /* If so, check whether an access error occurred */
             if (errno == EPERM or errno == EACCES) {
                 /* If so, attempt to run taskset as root, show error on failure */
