@@ -39,7 +39,7 @@ namespace
         public:
             GtkWidget  *dialog;
             pid_t       pid;
-            GtkWidget **cpus;
+            GtkWidget **buttons;
             gdouble     cpu_count;
             gboolean    toggle_single_blocked;
             gboolean    toggle_all_blocked;
@@ -54,7 +54,7 @@ all_toggled (SetAffinityData *affinity)
     /* Check if any CPU's aren't set for this process */
     for (i = 1; i <= affinity->cpu_count; i++) {
         /* If so, return FALSE */
-        if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (affinity->cpus[i]))) {
+        if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (affinity->buttons[i]))) {
             return FALSE;
         }
     }
@@ -83,7 +83,7 @@ affinity_toggler_single (GtkToggleButton *button,
     affinity->toggle_all_blocked = TRUE;
 
     /* Set toggle all check box state */
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (affinity->cpus[0]),
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (affinity->buttons[0]),
                                   toggle_all_state);
 
     /* Unblock toggle all signal */
@@ -113,7 +113,7 @@ affinity_toggle_all (GtkToggleButton *toggle_all_button,
     /* Set all CPU check boxes to specified state */
     for (i = 1; i <= affinity->cpu_count; i++) {
         gtk_toggle_button_set_active (
-            GTK_TOGGLE_BUTTON (affinity->cpus[i]),
+            GTK_TOGGLE_BUTTON (affinity->buttons[i]),
             state
         );
     }
@@ -166,15 +166,18 @@ set_affinity (GtkToggleButton *button,
 
     /* Check whether we can get process's current affinity */
     if (sched_getaffinity (affinity->pid, sizeof (cpu_set_t), &cpuset) != -1) {
-        /* If so, set affinity for all toggled CPU check boxes */
+        /* If so, run throguh all CPUs set for this process */
         for (i = 0; i < affinity->cpu_count; i++) {
-            if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (affinity->cpus[i + 1]))) {
+            /* Check if CPU check box button is active */
+            if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (affinity->buttons[i + 1]))) {
+                /* If so, add its CPU for process affinity */
                 CPU_SET (i, &cpuset);
 
-                /* Add CPU to taskset command in case root is need */
+                /* Store CPU for taskset command in case root is needed */
                 cpu_list[taskset_cpu] = g_strdup_printf ("%i", i);
                 taskset_cpu++;
             } else {
+                /* If not, remove its CPU from process affinity */
                 CPU_CLR (i, &cpuset);
             }
         }
@@ -185,15 +188,14 @@ set_affinity (GtkToggleButton *button,
 
         /* Set process affinity; Show message dialog upon error */
         if (sched_setaffinity (affinity->pid, sizeof (cpu_set_t), &cpuset) == -1) {
-            /* Check whether an access error occurred */
+            /* If so, check whether an access error occurred */
             if (errno == EPERM or errno == EACCES) {
-                /* If so, attempt to run taskset as root */
+                /* If so, attempt to run taskset as root, show error on failure */
                 if (!multi_root_check (command)) {
-                    /* Error on failure */
                     set_affinity_error ();
                 }
             } else {
-                /* If not, error normally */
+                /* If not, show error immediately */
                 set_affinity_error ();
             }
         }
@@ -230,7 +232,7 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
 
     cpu_set_t        cpuset;
     gint             i;
-    gint             cpu_number;
+    gint             button_n;
     gchar           *button_text;
 
     /* Get selected process information */
@@ -245,7 +247,7 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
     affinity_data = new SetAffinityData ();
 
     /* Set initial check box array */
-    affinity_data->cpus = g_new (GtkWidget *, app->config.num_cpus);
+    affinity_data->buttons = g_new (GtkWidget *, app->config.num_cpus);
 
     /* Create dialog window */
     affinity_data->dialog = GTK_WIDGET (g_object_new (GTK_TYPE_DIALOG,
@@ -332,9 +334,9 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
     gtk_grid_set_row_spacing (cpulist_grid, 10);
 
     /* Create toggle all check box */
-    affinity_data->cpus[0] = gtk_check_button_new_with_label ("Run on all CPUs");
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (affinity_data->cpus[0]), TRUE);
-    gtk_widget_set_hexpand (affinity_data->cpus[0], TRUE);
+    affinity_data->buttons[0] = gtk_check_button_new_with_label ("Run on all CPUs");
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (affinity_data->buttons[0]), TRUE);
+    gtk_widget_set_hexpand (affinity_data->buttons[0], TRUE);
 
     /* Get process's current affinity */
     sched_getaffinity (info->pid, sizeof (cpu_set_t), &cpuset);
@@ -344,7 +346,7 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
         if (!CPU_ISSET (i, &cpuset)) {
             /* If so, set the check box inactive */
             gtk_toggle_button_set_active (
-                GTK_TOGGLE_BUTTON (affinity_data->cpus[0]),
+                GTK_TOGGLE_BUTTON (affinity_data->buttons[0]),
                 FALSE
             );
 
@@ -353,31 +355,31 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
     }
 
     /* Add toggle all check box to CPU grid */
-    gtk_grid_attach (cpulist_grid, affinity_data->cpus[0], 0, 0, 1, 1);
+    gtk_grid_attach (cpulist_grid, affinity_data->buttons[0], 0, 0, 1, 1);
 
-    /* Create a check box for each CPU core */
-    for (i = 0, cpu_number = 1; i < app->config.num_cpus; i++, cpu_number++) {
+    /* Run through all CPU buttons */
+    for (i = 0, button_n = 1; i < app->config.num_cpus; i++, button_n++) {
         /* Set check box label value to CPU [1..2048] */
-        button_text = g_strdup_printf (_("CPU %d"), cpu_number);
+        button_text = g_strdup_printf (_("CPU %d"), button_n);
 
-        /* Create check box */
-        affinity_data->cpus[cpu_number] = gtk_check_button_new_with_label (button_text);
-        gtk_widget_set_hexpand (affinity_data->cpus[cpu_number], TRUE);
+        /* Create check box button for current CPU */
+        affinity_data->buttons[button_n] = gtk_check_button_new_with_label (button_text);
+        gtk_widget_set_hexpand (affinity_data->buttons[button_n], TRUE);
 
         /* Check if this CPU is set for this process */
         if (CPU_ISSET (i, &cpuset)) {
             /* If so, set the check box active */
             gtk_toggle_button_set_active (
-                GTK_TOGGLE_BUTTON (affinity_data->cpus[cpu_number]),
+                GTK_TOGGLE_BUTTON (affinity_data->buttons[button_n]),
                 TRUE
             );
         }
 
         /* Add check box to CPU grid */
-        gtk_grid_attach (cpulist_grid, affinity_data->cpus[cpu_number], 0, i + 1, 1, 1);
+        gtk_grid_attach (cpulist_grid, affinity_data->buttons[button_n], 0, button_n, 1, 1);
 
         /* Connect check box to toggler function */
-        g_signal_connect (affinity_data->cpus[cpu_number],
+        g_signal_connect (affinity_data->buttons[button_n],
                           "toggled",
                           G_CALLBACK (affinity_toggler_single),
                           affinity_data);
@@ -405,7 +407,7 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
                       affinity_data);
 
     /* Connect toggle all check box to (de)select all function */
-    g_signal_connect (affinity_data->cpus[0],
+    g_signal_connect (affinity_data->buttons[0],
                       "toggled",
                       G_CALLBACK (affinity_toggle_all),
                       affinity_data);
