@@ -40,7 +40,7 @@ namespace
             GtkWidget  *dialog;
             pid_t       pid;
             GtkWidget **buttons;
-            gdouble     cpu_count;
+            guint32     cpu_count;
             gboolean    toggle_single_blocked;
             gboolean    toggle_all_blocked;
     };
@@ -49,7 +49,7 @@ namespace
 static gboolean
 all_toggled (SetAffinityData *affinity)
 {
-    gint i;
+    guint32 i;
 
     /* Check if any CPU's aren't set for this process */
     for (i = 1; i <= affinity->cpu_count; i++) {
@@ -96,7 +96,7 @@ affinity_toggle_all (GtkToggleButton *toggle_all_button,
 {
     SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
 
-    gint     i;
+    guint32  i;
     gboolean state;
 
     /* Return void if toggle all is blocked */
@@ -155,7 +155,7 @@ set_affinity (GtkToggleButton *button,
     SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
 
     cpu_set_t   cpuset;
-    gint        i;
+    guint32     i;
     gint        taskset_cpu = 0;
     gchar     **cpu_list;
     gchar      *pc;
