@@ -9,15 +9,15 @@
 # Tunahan Uçar <tunahanucar@gmail.com>, 2011.
 # Osman Karagöz <osmank3@gmail.com>, 2014, 2017.
 # Muhammet Kara <muhammetk@gmail.com>, 2011, 2014, 2015, 2017.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2017-2019.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2017-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2019-02-11 12:14+0000\n"
-"PO-Revision-Date: 2019-02-12 17:42+0300\n"
+"POT-Creation-Date: 2020-01-21 10:31+0000\n"
+"PO-Revision-Date: 2020-01-27 19:47+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -38,12 +38,6 @@ msgstr "Sistem Gözlemcisi"
 msgid "View current processes and monitor system state"
 msgstr "Çalışan süreçleri ve sistem durumunu gösterir"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: gnome-system-monitor.desktop.in.in:8
-#| msgid "gnome-system-monitor"
-msgid "org.gnome.SystemMonitor"
-msgstr "org.gnome.SystemMonitor"
-
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: gnome-system-monitor.desktop.in.in:19
 msgid ""
@@ -57,11 +51,6 @@ msgstr ""
 #: gnome-system-monitor.appdata.xml.in:6 src/application.cpp:300
 msgid "GNOME System Monitor"
 msgstr "GNOME Sistem Gözlemcisi"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: gnome-system-monitor-kde.desktop.in.in:8
-msgid "utilities-system-monitor"
-msgstr "utilities-system-monitor"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: gnome-system-monitor-kde.desktop.in.in:19
@@ -154,7 +143,7 @@ msgid "Memory and Swap History"
 msgstr "Bellek ve Takas Kullanım Geçmişi"
 
 #: data/interface.ui:319 src/interface.cpp:274 src/procproperties.cpp:70
-#: src/proctable.cpp:351
+#: src/proctable.cpp:347
 msgid "Memory"
 msgstr "Bellek"
 
@@ -521,15 +510,20 @@ msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u saniye"
 
-#: src/load-graph.cpp:412
+#: src/load-graph.cpp:415
 msgid "not available"
 msgstr "kullanılabilir değil"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: src/load-graph.cpp:415
+#: src/load-graph.cpp:418
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%%%.1f) / %s"
+
+#: src/load-graph.cpp:421
+#, c-format
+msgid "Cache %s"
+msgstr "Önbellek %s"
 
 #: src/lsof.cpp:118
 #, c-format
@@ -614,7 +608,7 @@ msgstr "Bellek Eşlemler"
 #: src/memmaps.cpp:450
 #, c-format
 msgid "_Memory maps for process “%s” (PID %u):"
-msgstr "Süreç “%s” için bellek _eşlemleri (PID %u):"
+msgstr "“%s” süreci için bellek _eşlemleri (PID %u):"
 
 #: src/openfiles.cpp:40
 msgid "file"
@@ -727,39 +721,39 @@ msgstr "Hangi süreçlerin gösterileceğini belirler."
 msgid "Saves the currently viewed tab"
 msgstr "Şu an gösterilen sekmeleri kaydet"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:96
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:112
 msgid "CPU colors"
 msgstr "MİB renkleri"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:98
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:114
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr "Her girdi (MİB No, Onaltılık renk değeri) biçimindedir"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:105
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:121
 msgid "Default graph memory color"
 msgstr "Bellek grafiği öntanımlı rengi"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:112
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:128
 msgid "Default graph swap color"
 msgstr "Öntanımlı takas grafik rengi"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:119
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:135
 msgid "Default graph incoming network traffic color"
 msgstr "Öntanımlı gelen ağ trafiği grafik rengi"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:126
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:142
 msgid "Default graph outgoing network traffic color"
 msgstr "Öntanımlı giden ağ trafiği grafik rengi"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:133
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:149
 msgid "Show network traffic in bits"
 msgstr "Ağ trafiğini bit türünden göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:140
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:156
 msgid "Show CPU chart as stacked area chart"
 msgstr "MİB grafiğini yığılmış alan grafiği olarak göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:142
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:158
 msgid ""
 "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
 "of a line chart."
@@ -767,12 +761,12 @@ msgstr ""
 "Eğer TRUE yapılırsa sistem gözlemcisi MİB grafiğini çizgi grafiği yerine "
 "yığılmış alan grafiği olarak gösterir."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:149
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:165
 msgid "Show CPU chart as smooth graph using Bezier curves"
 msgstr ""
 "MİB grafiğini Bezier eğrilerini kullanarak pürüzsüz grafik olarak göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:151
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:167
 msgid ""
 "If TRUE, system-monitor shows the CPU chart as a smoothed graph, otherwise "
 "as a line chart."
@@ -780,315 +774,315 @@ msgstr ""
 "Eğer TRUE yapılırsa sistem gözlemcisi MİB grafiğini çizgi grafiği yerine "
 "pürüzsüz grafik olarak gösterir."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:166
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:182
 msgid "Process view sort column"
 msgstr "Süreç gösterim sıra sütunu"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:173
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:189
 msgid "Process view columns order"
 msgstr "Süreç görüntüleme sütun sırası"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:180
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:196
 msgid "Process view sort order"
 msgstr "Süreç gösterim sıra düzeni"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:187
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:203
 msgid "Width of process “Name” column"
 msgstr "Süreç “Ad” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:194
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:210
 msgid "Show process “Name” column on startup"
 msgstr "Sürecin “Ad” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:201
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:217
 msgid "Width of process “User” column"
 msgstr "Süreç “Kullanıcı” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:208
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:224
 msgid "Show process “User” column on startup"
 msgstr "Sürecin “Kullanıcı” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:215
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
 msgid "Width of process “Status” column"
 msgstr "Süreç “Durum” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:222
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
 msgid "Show process “Status” column on startup"
 msgstr "Sürecin “Durum” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:229
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:245
 msgid "Width of process “Virtual Memory” column"
 msgstr "Süreç “Sanal Bellek” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:236
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:252
 msgid "Show process “Virtual Memory” column on startup"
 msgstr "Sürecin “Sanal Bellek” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:243
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:259
 msgid "Width of process “Resident Memory” column"
 msgstr "Süreç “Yerleşik Bellek” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:250
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:266
 msgid "Show process “Resident Memory” column on startup"
 msgstr "Sürecin “Yerleşik Bellek” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:257
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:273
 msgid "Width of process “Writable Memory” column"
 msgstr "Süreç “Yazılabilir Bellek” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:264
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:280
 msgid "Show process “Writable Memory” column on startup"
 msgstr "Sürecin “Yazılabilir Bellek” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:271
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:287
 msgid "Width of process “Shared Memory” column"
 msgstr "Süreç “Paylaşılan Bellek” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:278
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:294
 msgid "Show process “Shared Memory” column on startup"
 msgstr "Sürecin “Paylaşılan Bellek” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:285
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:301
 msgid "Width of process “X Server Memory” column"
 msgstr "Süreç “X Sunucusu Belleği” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:292
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:308
 msgid "Show process “X Server Memory” column on startup"
 msgstr "Sürecin “X Sunucusu Belleği” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:299
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:315
 msgid "Width of process “CPU %” column"
 msgstr "Süreç “MİB %” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:306
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:322
 msgid "Show process “CPU %” column on startup"
 msgstr "Başlangıçta “MİB %” süreç sütununu göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:313
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:329
 msgid "Width of process “CPU Time” column"
 msgstr "Süreç “İşlemci Zamanı” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:320
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:336
 msgid "Show process “CPU Time” column on startup"
 msgstr "Sürecin “İşlemci Süresi” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:327
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:343
 msgid "Width of process “Started” column"
 msgstr "Süreç “Başlatıldı” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:334
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:350
 msgid "Show process “Started” column on startup"
 msgstr "Sürecin “Başlatıldı” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:341
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:357
 msgid "Width of process “Nice” column"
 msgstr "Süreç “Öncelik” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:348
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:364
 msgid "Show process “Nice” column on startup"
 msgstr "Sürecin “Öncelik” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:355
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
 msgid "Width of process “PID” column"
 msgstr "Süreç “PID” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:362
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
 msgid "Show process “PID” column on startup"
 msgstr "Başlangıçta “PID” süreç sütununu göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:369
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
 msgid "Width of process “SELinux Security Context” column"
 msgstr "Süreç “SELinux Güvenlik Bağlamı” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:375
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:391
 msgid "Show process “SELinux Security Context” column on startup"
 msgstr "Sürecin “SELinux Güvenlik Bağlamı” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:382
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:398
 msgid "Width of process “Command Line” column"
 msgstr "Süreç “Komut Satırı” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:389
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:405
 msgid "Show process “Command Line” column on startup"
 msgstr "Sürecin “Komut Satırı” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:396
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:412
 msgid "Width of process “Memory” column"
 msgstr "Süreç “Bellek” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:403
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:419
 msgid "Show process “Memory” column on startup"
 msgstr "Sürecin “Bellek” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:410
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:426
 msgid "Width of process “Waiting Channel” column"
 msgstr "Süreç “Bekleyen Kanal” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:417
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:433
 msgid "Show process “Waiting Channel” column on startup"
 msgstr "Başlangıçta “Bekleyen Kanal” süreç sütununu göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:424
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:440
 msgid "Width of process “Control Group” column"
 msgstr "Süreç “Denetim Kümesi” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:431
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:447
 msgid "Show process “Control Group” column on startup"
 msgstr "Sürecin “Denetim Kümesi” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:438
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:454
 msgid "Width of process “Unit” column"
 msgstr "Süreç “Birim” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:445
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:461
 msgid "Show process “Unit” column on startup"
 msgstr "Sürecin “Birim” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:452
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:468
 msgid "Width of process “Session” column"
 msgstr "Süreç “Oturum” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:459
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:475
 msgid "Show process “Session” column on startup"
 msgstr "Sürecin “Oturum” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:466
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:482
 msgid "Width of process “Seat” column"
 msgstr "Süreç “Yuva” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:473
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:489
 msgid "Show process “Seat” column on startup"
 msgstr "Sürecin “Yuva” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:480
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:496
 msgid "Width of process “Owner” column"
 msgstr "Süreç “Sahip” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:487
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:503
 msgid "Show process “Owner” column on startup"
 msgstr "Sürecin “Sahip” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:494
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:510
 msgid "Width of process “Total disk read” column"
 msgstr "Süreç “Toplam diskten okuma” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:501
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:517
 msgid "Show process “Total disk read” column on startup"
 msgstr "Sürecin “Toplam diskten okuma” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:508
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:524
 msgid "Width of process “Total disk write” column"
 msgstr "Süreç “Toplam diske yazma” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:515
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:531
 msgid "Show process “Total disk write” column on startup"
 msgstr "Sürecin “Toplam diske yazma” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:522
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:538
 msgid "Width of process “Disk read” column"
 msgstr "Süreç “Diskten okuma” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:529
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:545
 msgid "Show process “Disk read” column on startup"
 msgstr "Sürecin “Diskten okuma” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:536
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:552
 msgid "Width of process “Disk write” column"
 msgstr "Süreç “Diske yazma” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:543
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:559
 msgid "Show process “Disk write” column on startup"
 msgstr "Sürecin “Diske yazma” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:550
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:566
 msgid "Width of process “Priority” column"
 msgstr "Süreç “Öncelik” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:557
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:573
 msgid "Show process “Priority” column on startup"
 msgstr "Sürecin “Öncelik” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:568
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:584
 msgid "Disk view sort column"
 msgstr "Disk görünümü sıralama sütunu"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:575
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:591
 msgid "Disk view sort order"
 msgstr "Disk gösterimi sıralama düzeni"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:582
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:598
 msgid "Disk view columns order"
 msgstr "Disk görüntüleme sütun sırası"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:589
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:605
 msgid "Width of disk view “Device” column"
 msgstr "Disk görünümü “Aygıt” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:596
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:612
 msgid "Show disk view “Device” column on startup"
 msgstr "Disk görünümü “Aygıt” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:603
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:619
 msgid "Width of disk view “Directory” column"
 msgstr "Disk görünümü “Dizin” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:610
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:626
 msgid "Show disk view “Directory” column on startup"
 msgstr "Disk görünümü “Dizin” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:617
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:633
 msgid "Width of disk view “Type” column"
 msgstr "Disk görünümü “Tür” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:624
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:640
 msgid "Show disk view “Type” column on startup"
 msgstr "Disk görünümü “Tür” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:631
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:647
 msgid "Width of disk view “Total” column"
 msgstr "Disk görünümü “Toplam” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:638
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:654
 msgid "Show disk view “Total” column on startup"
 msgstr "Disk görünümü “Toplam” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:645
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:661
 msgid "Width of disk view “Free” column"
 msgstr "Disk görünümü “Boşta” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:652
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:668
 msgid "Show disk view “Free” column on startup"
 msgstr "Disk görünümü “Boşta” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:659
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:675
 msgid "Width of disk view “Available” column"
 msgstr "Disk görünümü “Kullanılabilir” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:666
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:682
 msgid "Show disk view “Available” column on startup"
 msgstr "Disk görünümü “Kullanılabilir” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:673
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:689
 msgid "Width of disk view “Used” column"
 msgstr "Disk görünümü “Kullanımda” sütununun genişliği"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:680
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:696
 msgid "Show disk view “Used” column on startup"
 msgstr "Disk görünümü “Kullanımda” sütununu başlangıçta göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:690
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:706
 msgid "Memory map sort column"
 msgstr "Bellek haritası sıralama sütunu"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:697
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:713
 msgid "Memory map sort order"
 msgstr "Bellek haritası sıralama düzeni"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:706
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:722
 msgid "Open files sort column"
 msgstr "Dosya aç sıralama sütunu"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:713
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:729
 msgid "Open files sort order"
 msgstr "Dosya aç sıralama düzeni"
 
@@ -1229,72 +1223,72 @@ msgstr ""
 msgid "N/A"
 msgstr "-"
 
-#: src/procproperties.cpp:67 src/proctable.cpp:336
+#: src/procproperties.cpp:67 src/proctable.cpp:332
 msgid "Process Name"
 msgstr "Süreç Adı"
 
-#: src/procproperties.cpp:68 src/proctable.cpp:337
+#: src/procproperties.cpp:68 src/proctable.cpp:333
 msgid "User"
 msgstr "Kullanıcı"
 
-#: src/procproperties.cpp:69 src/proctable.cpp:338
+#: src/procproperties.cpp:69 src/proctable.cpp:334
 msgid "Status"
 msgstr "Durum"
 
-#: src/procproperties.cpp:71 src/proctable.cpp:339
+#: src/procproperties.cpp:71 src/proctable.cpp:335
 msgid "Virtual Memory"
 msgstr "Sanal Bellek"
 
-#: src/procproperties.cpp:72 src/proctable.cpp:340
+#: src/procproperties.cpp:72 src/proctable.cpp:336
 msgid "Resident Memory"
 msgstr "Yerleşik Bellek"
 
-#: src/procproperties.cpp:73 src/proctable.cpp:341
+#: src/procproperties.cpp:73 src/proctable.cpp:337
 msgid "Writable Memory"
 msgstr "Yazılabilir Bellek"
 
-#: src/procproperties.cpp:74 src/proctable.cpp:342
+#: src/procproperties.cpp:74 src/proctable.cpp:338
 msgid "Shared Memory"
 msgstr "Paylaşılmış Bellek"
 
-#: src/procproperties.cpp:76 src/proctable.cpp:343
+#: src/procproperties.cpp:76 src/proctable.cpp:339
 msgid "X Server Memory"
 msgstr "X Sunucusu Belleği"
 
-#: src/procproperties.cpp:79 src/proctable.cpp:345
+#: src/procproperties.cpp:79 src/proctable.cpp:341
 msgid "CPU Time"
 msgstr "MİB zamanı"
 
-#: src/procproperties.cpp:80 src/proctable.cpp:346
+#: src/procproperties.cpp:80 src/proctable.cpp:342
 msgid "Started"
 msgstr "Başlamış"
 
-#: src/procproperties.cpp:81 src/proctable.cpp:347
+#: src/procproperties.cpp:81 src/proctable.cpp:343
 msgid "Nice"
 msgstr "Öncelik"
 
-#: src/procproperties.cpp:82 src/proctable.cpp:365
+#: src/procproperties.cpp:82 src/proctable.cpp:361
 msgid "Priority"
 msgstr "Öncelik"
 
-#: src/procproperties.cpp:83 src/proctable.cpp:348
+#: src/procproperties.cpp:83 src/proctable.cpp:344
 msgid "ID"
 msgstr "No"
 
-#: src/procproperties.cpp:84 src/proctable.cpp:349
+#: src/procproperties.cpp:84 src/proctable.cpp:345
 msgid "Security Context"
 msgstr "Güvenlik Bağlamı"
 
-#: src/procproperties.cpp:85 src/proctable.cpp:350
+#: src/procproperties.cpp:85 src/proctable.cpp:346
 msgid "Command Line"
 msgstr "Komut Satırı"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:86 src/proctable.cpp:353
+#: src/procproperties.cpp:86 src/proctable.cpp:349
 msgid "Waiting Channel"
 msgstr "Bekleyen Kanal"
 
-#: src/procproperties.cpp:87 src/proctable.cpp:354
+#: src/procproperties.cpp:87 src/proctable.cpp:350
 msgid "Control Group"
 msgstr "Denetim Kümesi"
 
@@ -1303,42 +1297,42 @@ msgstr "Denetim Kümesi"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: src/proctable.cpp:344
+#: src/proctable.cpp:340
 #, no-c-format
 msgid "% CPU"
 msgstr "% MİB"
 
-#: src/proctable.cpp:355
+#: src/proctable.cpp:351
 msgid "Unit"
 msgstr "Birim"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:352
 msgid "Session"
 msgstr "Oturum"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:359
+#: src/proctable.cpp:355
 msgid "Seat"
 msgstr "Yuva"
 
-#: src/proctable.cpp:360
+#: src/proctable.cpp:356
 msgid "Owner"
 msgstr "Sahip"
 
-#: src/proctable.cpp:361
+#: src/proctable.cpp:357
 msgid "Disk read total"
 msgstr "Toplam diskten okuma"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:358
 msgid "Disk write total"
 msgstr "Toplam diske yazma"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:359
 msgid "Disk read"
 msgstr "Diskten okuma"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:360
 msgid "Disk write"
 msgstr "Diske yazma"
 
@@ -1411,6 +1405,13 @@ msgstr "Çok Düşük Öncelik"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~| msgid "gnome-system-monitor"
+#~ msgid "org.gnome.SystemMonitor"
+#~ msgstr "org.gnome.SystemMonitor"
+
+#~ msgid "utilities-system-monitor"
+#~ msgstr "utilities-system-monitor"
 
 #~ msgid "About"
 #~ msgstr "Hakkında"
