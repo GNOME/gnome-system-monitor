@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: procman HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2019-11-13 19:35+0000\n"
-"PO-Revision-Date: 2019-12-21 04:08+0800\n"
+"POT-Creation-Date: 2020-01-21 10:31+0000\n"
+"PO-Revision-Date: 2020-01-27 18:06+0800\n"
 "Last-Translator: abuyop <abuyop@gmail.com>\n"
 "Language-Team: Pasukan Terjemahan GNOME Malaysia\n"
 "Language: ms\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 2.0.6\n"
 
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
@@ -423,10 +423,9 @@ msgstr "CPU%d"
 #: src/interface.cpp:397
 msgid "translator-credits"
 msgstr ""
-"Launchpad Contributions:\n"
-"  Ahmed Noor Kader Mustajir Md Eusoff https://launchpad.net/~sir.ade\n"
-"  Hasbullah Bin Pit https://launchpad.net/~sebol\n"
-"  abuyop https://launchpad.net/~abuyop"
+"abuyop\n"
+"Ahmed Noor Kader Mustajir Md Eusoff https://launchpad.net/~sir.ade\n"
+"Hasbullah Bin Pit https://launchpad.net/~sebol"
 
 #. xgettext: ? stands for unknown
 #: src/legacy/e_date.c:156
@@ -499,28 +498,36 @@ msgstr "Klik untuk tetapkan warna graf"
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u saat"
+msgstr[1] "%u saat"
 
-#: src/load-graph.cpp:412
+#: src/load-graph.cpp:415
 msgid "not available"
 msgstr "tidak tersedia"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: src/load-graph.cpp:415
+#: src/load-graph.cpp:418
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) dari %s"
+
+#: src/load-graph.cpp:421
+#, c-format
+msgid "Cache %s"
+msgstr "Cache %s"
 
 #: src/lsof.cpp:118
 #, c-format
 msgid "%d open file"
 msgid_plural "%d open files"
 msgstr[0] "%d fail terbuka"
+msgstr[1] "%d fail terbuka"
 
 #: src/lsof.cpp:120
 #, c-format
 msgid "%d matching open file"
 msgid_plural "%d matching open files"
 msgstr[0] "%d fail terbuka yang sepadan"
+msgstr[1] "%d fail terbuka yang sepadan"
 
 #: src/lsof.cpp:245
 msgid "Process"
@@ -562,7 +569,7 @@ msgstr "Ofset VM"
 #. it has been allocated
 #: src/memmaps.cpp:319
 msgid "Private clean"
-msgstr "Bersih persendirian\t"
+msgstr "Bersih persendirian"
 
 #. xgettext: memory that has been modified since it
 #. has been allocated
@@ -1114,14 +1121,16 @@ msgstr "Anda pasti mahu hentikan proses terpilih “%s” (PID: %u)?"
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
-msgstr[0] ""
+msgstr[0] "Anda pasti mahu membunuh proses terpilih?"
+msgstr[1] "Anda pasti mahu membunuh %d proses terpilih?"
 
 #. xgettext: primary alert message for ending multiple processes
 #: src/procdialogs.cpp:109
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
-msgstr[0] ""
+msgstr[0] "Anda pasti mahu menamatkan proses terpilih?"
+msgstr[1] "Anda pasti mahu menamatkan %d proses terpilih?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
@@ -1129,7 +1138,8 @@ msgstr[0] ""
 #, c-format
 msgid "Are you sure you want to stop the selected process?"
 msgid_plural "Are you sure you want to stop the %d selected processes?"
-msgstr[0] ""
+msgstr[0] "Anda pasti mahu hentikan proses terpilih?"
+msgstr[1] "Anda pasti mahu hentikan %d proses terpilih?"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:125
@@ -1145,6 +1155,7 @@ msgstr ""
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "_Matikan Proses"
+msgstr[1] ""
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:132
@@ -1160,6 +1171,7 @@ msgstr ""
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "_Tamatkan Proses"
+msgstr[1] ""
 
 #. SIGSTOP
 #. xgettext: secondary alert message
@@ -1175,6 +1187,7 @@ msgstr ""
 msgid "_Stop Process"
 msgid_plural "_Stop Processes"
 msgstr[0] "_Hentikan Proses"
+msgstr[1] ""
 
 #: src/procdialogs.cpp:227
 #, c-format
@@ -1185,7 +1198,8 @@ msgstr "Ubah Prioriti Proses \"%s\" (PID: %u)"
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
-msgstr[0] ""
+msgstr[0] "Ubah Prioriti bagi proses terpilih"
+msgstr[1] "Ubah Prioriti bagi %d proses terpilih"
 
 #: src/procdialogs.cpp:249
 msgid "Note:"
