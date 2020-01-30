@@ -140,6 +140,12 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
     GsmApplication *app = (GsmApplication *) data;
 
     ProcInfo *selected_process = NULL;
+    gint selected_count = gtk_tree_selection_count_selected_rows (selection);
+
+    app->selection = selection;
+
+    gchar *button_text = ngettext("_End Process", "_End Processes", selected_count);
+    gtk_button_set_label (GTK_BUTTON(app->end_process_button), button_text);
 
     /* get the most recent selected process and determine if there are
     ** no selected processes
@@ -611,8 +617,6 @@ proctable_new (GsmApplication * const app)
     g_signal_connect(G_OBJECT (theme), "changed", G_CALLBACK (cb_refresh_icons), app);
 
     selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
-
-    app->selection = selection;
 
     gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
     
