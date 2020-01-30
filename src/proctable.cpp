@@ -95,6 +95,7 @@ cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
     GtkTreePath *path;
+    GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (widget));
 
     if (!gdk_event_triggers_context_menu ((GdkEvent *) event))
         return FALSE;
@@ -102,10 +103,10 @@ cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event, gpointer data)
     if (!gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (app->tree), event->x, event->y, &path, NULL, NULL, NULL))
         return FALSE;
 
-    if (!gtk_tree_selection_path_is_selected (app->selection, path)) {
+    if (!gtk_tree_selection_path_is_selected (selection, path)) {
         if (!(event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)))
-            gtk_tree_selection_unselect_all (app->selection);
-        gtk_tree_selection_select_path (app->selection, path);
+            gtk_tree_selection_unselect_all (selection);
+        gtk_tree_selection_select_path (selection, path);
     }
 
     gtk_tree_path_free (path);
@@ -138,14 +139,12 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
-    app->selection = selection;
-
     ProcInfo *selected_process = NULL;
 
     /* get the most recent selected process and determine if there are
     ** no selected processes
     */
-    gtk_tree_selection_selected_foreach (app->selection, get_last_selected,
+    gtk_tree_selection_selected_foreach (selection, get_last_selected,
                                          &selected_process);
     if (selected_process) {
         GVariant *priority;
@@ -325,7 +324,8 @@ proctable_new (GsmApplication * const app)
     GtkTreeStore *model;
     GtkTreeModelFilter *model_filter;
     GtkTreeModelSort *model_sort;
-    
+    GtkTreeSelection *selection;
+
     GtkTreeViewColumn *column;
     GtkCellRenderer *cell_renderer;
     const gchar *titles[] = {
@@ -610,10 +610,13 @@ proctable_new (GsmApplication * const app)
     GtkIconTheme* theme = gtk_icon_theme_get_default();
     g_signal_connect(G_OBJECT (theme), "changed", G_CALLBACK (cb_refresh_icons), app);
 
-    app->selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
-    gtk_tree_selection_set_mode (app->selection, GTK_SELECTION_MULTIPLE);
+    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
+
+    app->selection = selection;
+
+    gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
     
-    g_signal_connect (G_OBJECT (app->selection),
+    g_signal_connect (G_OBJECT (selection),
                       "changed",
                       G_CALLBACK (cb_row_selected), app);
     g_signal_connect (G_OBJECT (proctree), "popup_menu",
