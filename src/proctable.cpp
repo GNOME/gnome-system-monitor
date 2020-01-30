@@ -272,12 +272,9 @@ process_visibility_func (GtkTreeModel *model, GtkTreeIter *iter, gpointer data)
         }
 
         match |= iter_matches_search_key (model, iter, search_text);
-        // TODO auto-expand items not matching the search string but having matching children
-        // complicated because of treestore nested in treemodelfilter nested in treemodelsort
-        // expand to path requires the path string in the treemodelsort, but tree_path is the path in the double nested treestore
-        //if (match && (strlen (search_text) > 0)) {
-        //    gtk_tree_view_expand_to_path (GTK_TREE_VIEW (app->tree), tree_path);
-        //}
+        if (match && (strlen (search_text) > 0)) {
+            gtk_tree_view_expand_to_path (GTK_TREE_VIEW (app->tree), tree_path);
+        }
 
     } else {
         match = iter_matches_search_key (model, iter, search_text);
@@ -617,6 +614,7 @@ proctable_new (GsmApplication * const app)
     g_signal_connect(G_OBJECT (theme), "changed", G_CALLBACK (cb_refresh_icons), app);
 
     selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
+    app->selection = selection;
 
     gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
     
