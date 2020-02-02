@@ -50,8 +50,6 @@ libgtop = dependency('libgtop-2.0', version: '>=2.37.0')
 librsvg = dependency('librsvg-2.0', version: '>=2.35')
 libxml  = dependency('libxml-2.0',  version: '>=2.0')
 
-polkit = dependency('polkit-gobject-1', version: '>=0.114')
-
 if get_option('wnck')
   libwnck = dependency('libwnck-3.0', version: '>=2.91.0')
 else
