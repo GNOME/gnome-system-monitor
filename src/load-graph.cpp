@@ -418,6 +418,7 @@ namespace
             text = g_strdup_printf(_("%s (%.1f%%) of %s"), used_text, 100.0 * percent, total_text);
 
             if (cached != 0) {
+                // xgettext: Used cache string, e.g.: "Cache: 2.4GiB"
                 cached_label = g_strdup_printf(_("Cache %s"), cached_text);
                 text = g_strdup_printf("%s\n%s", text, cached_label);
                 g_free (cached_label);
