@@ -395,8 +395,7 @@ on_activate_about (GSimpleAction *, GVariant *, gpointer data)
         "artists",              artists,
         "documenters",          documenters,
         "translator-credits",   _("translator-credits"),
-        "license",              "GPL 2+",
-        "wrap-license",         TRUE,
+		"license-type", 		GTK_LICENSE_GPL_2_0,
         NULL
         );
 }
