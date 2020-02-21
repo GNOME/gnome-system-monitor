@@ -646,7 +646,7 @@ get_net (LoadGraph *graph)
 
     if (in >= graph->net.last_in && out >= graph->net.last_out && graph->net.time != 0) {
         float dtime;
-        dtime = time - graph->net.time;
+        dtime = (time - graph->net.time) / G_USEC_PER_SEC;
         din   = static_cast<guint64>((in  - graph->net.last_in)  / dtime);
         dout  = static_cast<guint64>((out - graph->net.last_out) / dtime);
     } else {
