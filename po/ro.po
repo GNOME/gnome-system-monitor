@@ -11,10 +11,9 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2019-02-11 12:14+0000\n"
-"PO-Revision-Date: 2019-02-13 17:04+0100\n"
-"Last-Translator: Florentina Mușat <florentina.musat.28 [at] gmail [dot] "
-"com>\n"
+"POT-Creation-Date: 2020-01-30 21:03+0000\n"
+"PO-Revision-Date: 2020-03-18 08:57+0100\n"
+"Last-Translator: Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>\n"
 "Language-Team: Gnome Romanian Translation Team <gnomero-list@lists."
 "sourceforge.net>\n"
 "Language: ro\n"
@@ -23,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.3\n"
 "X-Project-Style: gnome\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -36,11 +35,6 @@ msgstr "Monitor de sistem"
 #: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:387
 msgid "View current processes and monitor system state"
 msgstr "Arată procesele curente și monitorizează starea sistemului"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: gnome-system-monitor.desktop.in.in:8
-msgid "org.gnome.SystemMonitor"
-msgstr "org.gnome.SystemMonitor"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: gnome-system-monitor.desktop.in.in:19
@@ -56,11 +50,6 @@ msgstr ""
 #: gnome-system-monitor.appdata.xml.in:6 src/application.cpp:300
 msgid "GNOME System Monitor"
 msgstr "Monitor de sistem GNOME"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: gnome-system-monitor-kde.desktop.in.in:8
-msgid "utilities-system-monitor"
-msgstr "utilities-system-monitor"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: gnome-system-monitor-kde.desktop.in.in:19
@@ -135,9 +124,12 @@ msgstr "Schimbă prioritatea procesului"
 msgid "Privileges are required to change the priority of processes"
 msgstr "Sunt necesare privilegii pentru a putea schimba prioritatea proceselor"
 
-#: data/interface.ui:150
-msgid "End _Process"
-msgstr "Termină _procesul"
+#: data/interface.ui:150 src/procdialogs.cpp:135 src/proctable.cpp:147
+msgid "_End Process"
+msgid_plural "_End Processes"
+msgstr[0] "Termină proc_esul"
+msgstr[1] "Termină proc_esele"
+msgstr[2] "Termină proc_esele"
 
 #: data/interface.ui:164
 msgid "Show process properties"
@@ -156,7 +148,7 @@ msgid "Memory and Swap History"
 msgstr "Istoric memorie și swap"
 
 #: data/interface.ui:319 src/interface.cpp:274 src/procproperties.cpp:70
-#: src/proctable.cpp:351
+#: src/proctable.cpp:353
 msgid "Memory"
 msgstr "Memorie"
 
@@ -207,97 +199,97 @@ msgstr "Filtrează fișierele după nume"
 msgid "Case insensitive"
 msgstr "Cu majuscule nesemnificative"
 
-#: data/menus.ui:6 data/menus.ui:60
+#: data/menus.ui:6 data/menus.ui:57
 msgctxt "Menu item to Open Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Căută fișiere deschise"
 
-#: data/menus.ui:12 data/menus.ui:66
+#: data/menus.ui:12 data/menus.ui:63
 msgid "Preferences"
 msgstr "Preferințe"
 
-#: data/menus.ui:16 data/menus.ui:70
+#: data/menus.ui:16 data/menus.ui:67
 msgid "Help"
 msgstr "Ajutor"
 
-#: data/menus.ui:21 data/menus.ui:75
+#: data/menus.ui:20 data/menus.ui:71
 msgid "About System Monitor"
 msgstr "Despre Monitor de sistem"
 
-#: data/menus.ui:29
+#: data/menus.ui:28
 msgid "_Refresh"
 msgstr "_Reîmprospătează"
 
-#: data/menus.ui:36
+#: data/menus.ui:34
 msgid "_Active Processes"
 msgstr "Procese _active"
 
-#: data/menus.ui:41
+#: data/menus.ui:39
 msgid "A_ll Processes"
 msgstr "T_oate procesele"
 
-#: data/menus.ui:46
+#: data/menus.ui:44
 msgid "M_y Processes"
 msgstr "Pro_cesele mele"
 
-#: data/menus.ui:53
+#: data/menus.ui:51
 msgid "Show _Dependencies"
 msgstr "Arată _dependențele"
 
-#: data/menus.ui:83
+#: data/menus.ui:79
 msgid "_Properties"
 msgstr "_Proprietăți"
 
-#: data/menus.ui:90
+#: data/menus.ui:85
 msgid "_Memory Maps"
 msgstr "_Hărți de memorie"
 
 #. Translators: this means 'Files that are open' (open is not a verb here)
-#: data/menus.ui:95
+#: data/menus.ui:89
 msgid "Open _Files"
 msgstr "_Fișiere deschise"
 
-#: data/menus.ui:102
+#: data/menus.ui:95
 msgid "_Change Priority"
 msgstr "S_chimbă prioritatea"
 
-#: data/menus.ui:105 src/util.cpp:161
+#: data/menus.ui:98 src/util.cpp:161
 msgid "Very High"
 msgstr "Foarte ridicată"
 
-#: data/menus.ui:110 src/util.cpp:163
+#: data/menus.ui:103 src/util.cpp:163
 msgid "High"
 msgstr "Ridicată"
 
-#: data/menus.ui:115 src/util.cpp:165
+#: data/menus.ui:108 src/util.cpp:165
 msgid "Normal"
 msgstr "Normală"
 
-#: data/menus.ui:120 src/util.cpp:167
+#: data/menus.ui:113 src/util.cpp:167
 msgid "Low"
 msgstr "Scăzută"
 
-#: data/menus.ui:125 src/util.cpp:169
+#: data/menus.ui:118 src/util.cpp:169
 msgid "Very Low"
 msgstr "Foarte scăzută"
 
-#: data/menus.ui:132
+#: data/menus.ui:125
 msgid "Custom"
 msgstr "Personalizată"
 
-#: data/menus.ui:141
+#: data/menus.ui:134
 msgid "_Stop"
 msgstr "_Oprește"
 
-#: data/menus.ui:147
+#: data/menus.ui:139
 msgid "_Continue"
 msgstr "_Continuă"
 
-#: data/menus.ui:153
+#: data/menus.ui:144
 msgid "_End"
 msgstr "_Sfârșit"
 
-#: data/menus.ui:159
+#: data/menus.ui:149
 msgid "_Kill"
 msgstr "_Omoară"
 
@@ -455,7 +447,7 @@ msgstr ""
 "Pascariu Dragoș\n"
 "Lucian Adrian Grijincu\n"
 "Florentina Mușat <florentina.musat.28 [at] gmail [dot] com>, 2019\n"
-"Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>, 2019"
+"Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>, 2019-2020"
 
 #. xgettext: ? stands for unknown
 #: src/legacy/e_date.c:156
@@ -531,15 +523,20 @@ msgstr[0] "o secundă"
 msgstr[1] "%u secunde"
 msgstr[2] "%u de secunde"
 
-#: src/load-graph.cpp:412
+#: src/load-graph.cpp:415
 msgid "not available"
 msgstr "indisponibil"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: src/load-graph.cpp:415
+#: src/load-graph.cpp:418
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) din %s"
+
+#: src/load-graph.cpp:421
+#, c-format
+msgid "Cache %s"
+msgstr "Cache %s"
 
 #: src/lsof.cpp:118
 #, c-format
@@ -740,39 +737,39 @@ msgstr "Determină ce proces să fie arătat."
 msgid "Saves the currently viewed tab"
 msgstr "Salvează tabul curent"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:96
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:112
 msgid "CPU colors"
 msgstr "Culori CPU"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:98
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:114
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr "Fiecare intrare este în formatul (CPU#, valoare culoare hexazecimală)"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:105
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:121
 msgid "Default graph memory color"
 msgstr "Culoarea implicită pentru graficul de memorie"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:112
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:128
 msgid "Default graph swap color"
 msgstr "Culoarea implicită pentru graficul de swap"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:119
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:135
 msgid "Default graph incoming network traffic color"
 msgstr "Culoarea implicită pentru traficul de rețea primit"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:126
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:142
 msgid "Default graph outgoing network traffic color"
 msgstr "Culoarea implicită pentru traficul de rețea trimis"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:133
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:149
 msgid "Show network traffic in bits"
 msgstr "Arată viteza rețelei în biți"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:140
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:156
 msgid "Show CPU chart as stacked area chart"
 msgstr "Arată graficul procesorului ca diagramă stivuită a zonei"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:142
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:158
 msgid ""
 "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
 "of a line chart."
@@ -780,11 +777,11 @@ msgstr ""
 "Dacă este activat, system-monitor arată graficul procesorului ca diagramă "
 "stivuită a zonei în locul unei diagrame liniare."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:149
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:165
 msgid "Show CPU chart as smooth graph using Bezier curves"
 msgstr "Arată graficul procesorului ca un grafic neted utilizând curbe Bezier"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:151
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:167
 msgid ""
 "If TRUE, system-monitor shows the CPU chart as a smoothed graph, otherwise "
 "as a line chart."
@@ -792,315 +789,315 @@ msgstr ""
 "Dacă este ADEVĂRAT, system-monitor arată graficul procesorului ca grafic "
 "neted, în caz contrar ca o diagramă liniară."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:166
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:182
 msgid "Process view sort column"
 msgstr "Coloană de ordonare a listei proceselor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:173
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:189
 msgid "Process view columns order"
 msgstr "Ordine de sortare a coloanelor proceselor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:180
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:196
 msgid "Process view sort order"
 msgstr "Ordine de sortare a listei proceselor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:187
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:203
 msgid "Width of process “Name” column"
 msgstr "Lățimea coloanei „Nume” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:194
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:210
 msgid "Show process “Name” column on startup"
 msgstr "Arată la pornire coloana „Nume” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:201
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:217
 msgid "Width of process “User” column"
 msgstr "Lățimea coloanei „Utilizator” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:208
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:224
 msgid "Show process “User” column on startup"
 msgstr "Arată la pornire coloana „Utilizator” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:215
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
 msgid "Width of process “Status” column"
 msgstr "Lățimea coloanei „Stare” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:222
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
 msgid "Show process “Status” column on startup"
 msgstr "Arată la pornire coloana de „Stare” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:229
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:245
 msgid "Width of process “Virtual Memory” column"
 msgstr "Lățimea coloanei „Memorie virtuală” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:236
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:252
 msgid "Show process “Virtual Memory” column on startup"
 msgstr "Arată la pornire coloana „Memorie virtuală” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:243
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:259
 msgid "Width of process “Resident Memory” column"
 msgstr "Lățimea coloanei „Memorie rezidentă” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:250
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:266
 msgid "Show process “Resident Memory” column on startup"
 msgstr "Arată la pornire coloana „Memorie rezidentă” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:257
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:273
 msgid "Width of process “Writable Memory” column"
 msgstr "Lățimea coloanei „Memorie inscripționabilă” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:264
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:280
 msgid "Show process “Writable Memory” column on startup"
 msgstr "Arată la pornire coloana „Memorie inscripționabilă” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:271
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:287
 msgid "Width of process “Shared Memory” column"
 msgstr "Lățimea coloanei „Memorie partajată” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:278
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:294
 msgid "Show process “Shared Memory” column on startup"
 msgstr "Arată la pornire coloana „Memorie partajată” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:285
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:301
 msgid "Width of process “X Server Memory” column"
 msgstr "Lățimea coloanei „Memorie Server X” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:292
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:308
 msgid "Show process “X Server Memory” column on startup"
 msgstr "Arată la pornire coloana „Memorie Server X” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:299
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:315
 msgid "Width of process “CPU %” column"
 msgstr "Lățimea coloanei cu „CPU %” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:306
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:322
 msgid "Show process “CPU %” column on startup"
 msgstr "Arată la pornire coloana „% CPU” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:313
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:329
 msgid "Width of process “CPU Time” column"
 msgstr "Lățimea coloanei „Timp CPU” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:320
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:336
 msgid "Show process “CPU Time” column on startup"
 msgstr "Arată la pornire coloana „Timp CPU” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:327
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:343
 msgid "Width of process “Started” column"
 msgstr "Lățimea coloanei „Pornit” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:334
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:350
 msgid "Show process “Started” column on startup"
 msgstr "Arată la pornire coloana „Pornit” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:341
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:357
 msgid "Width of process “Nice” column"
 msgstr "Lățimea coloanei „Nice” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:348
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:364
 msgid "Show process “Nice” column on startup"
 msgstr "Arată la pornire coloana „Nice” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:355
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
 msgid "Width of process “PID” column"
 msgstr "Lățimea coloanei „PID” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:362
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
 msgid "Show process “PID” column on startup"
 msgstr "Arată la pornire coloana „PID” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:369
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
 msgid "Width of process “SELinux Security Context” column"
 msgstr "Lățimea coloanei „Context de securitate SELinux” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:375
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:391
 msgid "Show process “SELinux Security Context” column on startup"
 msgstr "Arată la pornire coloana „Context de securitate SELinux” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:382
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:398
 msgid "Width of process “Command Line” column"
 msgstr "Lățimea coloanei „Linie de comandă” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:389
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:405
 msgid "Show process “Command Line” column on startup"
 msgstr "Arată la pornire coloana „Linie de comandă” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:396
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:412
 msgid "Width of process “Memory” column"
 msgstr "Lățimea coloanei „Memorie” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:403
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:419
 msgid "Show process “Memory” column on startup"
 msgstr "Arată la pornire coloana „Memorie” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:410
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:426
 msgid "Width of process “Waiting Channel” column"
 msgstr "Lățimea coloanei „Canal de așteptare” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:417
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:433
 msgid "Show process “Waiting Channel” column on startup"
 msgstr "Arată la pornire coloana „Canal de așteptare” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:424
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:440
 msgid "Width of process “Control Group” column"
 msgstr "Lățimea coloanei „Grup de control” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:431
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:447
 msgid "Show process “Control Group” column on startup"
 msgstr "Arată la pornire coloana „Grup de control” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:438
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:454
 msgid "Width of process “Unit” column"
 msgstr "Lățimea coloanei „Unitate” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:445
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:461
 msgid "Show process “Unit” column on startup"
 msgstr "Arată la pornire coloana „Unitate” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:452
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:468
 msgid "Width of process “Session” column"
 msgstr "Lățimea coloanei „Sesiune” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:459
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:475
 msgid "Show process “Session” column on startup"
 msgstr "Arată la pornire coloana de „Sesiune” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:466
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:482
 msgid "Width of process “Seat” column"
 msgstr "Lățimea coloanei „Loc” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:473
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:489
 msgid "Show process “Seat” column on startup"
 msgstr "Arată la pornire coloana de „Loc” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:480
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:496
 msgid "Width of process “Owner” column"
 msgstr "Lățimea coloanei „Proprietar” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:487
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:503
 msgid "Show process “Owner” column on startup"
 msgstr "Arată la pornire coloana „Proprietar” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:494
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:510
 msgid "Width of process “Total disk read” column"
 msgstr "Lățimea coloanei „Total citit de pe disc” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:501
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:517
 msgid "Show process “Total disk read” column on startup"
 msgstr "Arată la pornire coloana „Total citit de pe disc” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:508
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:524
 msgid "Width of process “Total disk write” column"
 msgstr "Lățimea coloanei „Total scris pe disc” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:515
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:531
 msgid "Show process “Total disk write” column on startup"
 msgstr "Arată la pornire coloana „Total scris pe disc” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:522
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:538
 msgid "Width of process “Disk read” column"
 msgstr "Lățimea coloanei „Citit de pe disc” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:529
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:545
 msgid "Show process “Disk read” column on startup"
 msgstr "Arată la pornire coloana „Citit de pe disc” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:536
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:552
 msgid "Width of process “Disk write” column"
 msgstr "Lățimea coloanei „Scris pe disc” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:543
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:559
 msgid "Show process “Disk write” column on startup"
 msgstr "Arată la pornire coloana „Scris pe disc” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:550
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:566
 msgid "Width of process “Priority” column"
 msgstr "Lățimea coloanei „Prioritate” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:557
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:573
 msgid "Show process “Priority” column on startup"
 msgstr "Arată la pornire coloana „Prioritate” a procesului"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:568
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:584
 msgid "Disk view sort column"
 msgstr "Coloană de ordonare a vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:575
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:591
 msgid "Disk view sort order"
 msgstr "Ordine de sortare a vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:582
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:598
 msgid "Disk view columns order"
 msgstr "Ordine de sortare a coloanelor vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:589
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:605
 msgid "Width of disk view “Device” column"
 msgstr "Lățimea coloanei „Dispozitiv” a vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:596
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:612
 msgid "Show disk view “Device” column on startup"
 msgstr "Arată la pornire coloana „Dispozitiv” a vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:603
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:619
 msgid "Width of disk view “Directory” column"
 msgstr "Lățimea coloanei „Director” a vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:610
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:626
 msgid "Show disk view “Directory” column on startup"
 msgstr "Arată la pornire coloana „Director” a vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:617
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:633
 msgid "Width of disk view “Type” column"
 msgstr "Lățimea coloanei „Tip” a vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:624
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:640
 msgid "Show disk view “Type” column on startup"
 msgstr "Arată la pornire coloana „Tip” a vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:631
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:647
 msgid "Width of disk view “Total” column"
 msgstr "Lățimea coloanei „Total” a vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:638
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:654
 msgid "Show disk view “Total” column on startup"
 msgstr "Arată la pornire coloana „Total” a vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:645
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:661
 msgid "Width of disk view “Free” column"
 msgstr "Lățimea coloanei „Liber” a vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:652
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:668
 msgid "Show disk view “Free” column on startup"
 msgstr "Arată la pornire coloana „Liber” a vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:659
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:675
 msgid "Width of disk view “Available” column"
 msgstr "Lățimea coloanei „Disponibil” a vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:666
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:682
 msgid "Show disk view “Available” column on startup"
 msgstr "Arată la pornire coloana „Disponibil” a vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:673
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:689
 msgid "Width of disk view “Used” column"
 msgstr "Lățimea coloanei „Utilizat” a vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:680
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:696
 msgid "Show disk view “Used” column on startup"
 msgstr "Arată la pornire coloana „Utilizat” a vizualizării discurilor"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:690
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:706
 msgid "Memory map sort column"
 msgstr "Coloană de ordonare hărții de memorie"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:697
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:713
 msgid "Memory map sort order"
 msgstr "Ordinea de sortare a hărții de memorie"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:706
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:722
 msgid "Open files sort column"
 msgstr "Coloană de ordonare fișierelor deschise"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:713
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:729
 msgid "Open files sort order"
 msgstr "Ordine de sortare a fișierelor deschise"
 
@@ -1200,13 +1197,6 @@ msgstr ""
 "deschiderea unei breșe de securitate. Doar procesele ce nu se mai comportă "
 "normal ar trebui terminate forțat."
 
-#: src/procdialogs.cpp:135
-msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "Termină proc_esul"
-msgstr[1] "Termină proc_esele"
-msgstr[2] "Termină proc_esele"
-
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:139
@@ -1251,76 +1241,76 @@ msgstr ""
 "„nice” scăzută corespunde unei priorități crescute."
 
 #: src/procproperties.cpp:50 src/procproperties.cpp:84
-#: src/procproperties.cpp:87 src/util.cpp:378 src/util.cpp:417
+#: src/procproperties.cpp:87 src/util.cpp:376 src/util.cpp:415
 msgid "N/A"
 msgstr "N/A"
 
-#: src/procproperties.cpp:67 src/proctable.cpp:336
+#: src/procproperties.cpp:67 src/proctable.cpp:338
 msgid "Process Name"
 msgstr "Nume de proces"
 
-#: src/procproperties.cpp:68 src/proctable.cpp:337
+#: src/procproperties.cpp:68 src/proctable.cpp:339
 msgid "User"
 msgstr "Utilizator"
 
-#: src/procproperties.cpp:69 src/proctable.cpp:338
+#: src/procproperties.cpp:69 src/proctable.cpp:340
 msgid "Status"
 msgstr "Stare"
 
-#: src/procproperties.cpp:71 src/proctable.cpp:339
+#: src/procproperties.cpp:71 src/proctable.cpp:341
 msgid "Virtual Memory"
 msgstr "Memorie virtuală"
 
-#: src/procproperties.cpp:72 src/proctable.cpp:340
+#: src/procproperties.cpp:72 src/proctable.cpp:342
 msgid "Resident Memory"
 msgstr "Memorie rezidentă"
 
-#: src/procproperties.cpp:73 src/proctable.cpp:341
+#: src/procproperties.cpp:73 src/proctable.cpp:343
 msgid "Writable Memory"
 msgstr "Memorie ce poate fi scrisă"
 
-#: src/procproperties.cpp:74 src/proctable.cpp:342
+#: src/procproperties.cpp:74 src/proctable.cpp:344
 msgid "Shared Memory"
 msgstr "Memorie partajată"
 
-#: src/procproperties.cpp:76 src/proctable.cpp:343
+#: src/procproperties.cpp:76 src/proctable.cpp:345
 msgid "X Server Memory"
 msgstr "Memorie Server X"
 
-#: src/procproperties.cpp:79 src/proctable.cpp:345
+#: src/procproperties.cpp:79 src/proctable.cpp:347
 msgid "CPU Time"
 msgstr "Timp CPU"
 
-#: src/procproperties.cpp:80 src/proctable.cpp:346
+#: src/procproperties.cpp:80 src/proctable.cpp:348
 msgid "Started"
 msgstr "Pornit"
 
-#: src/procproperties.cpp:81 src/proctable.cpp:347
+#: src/procproperties.cpp:81 src/proctable.cpp:349
 msgid "Nice"
 msgstr "Nice"
 
-#: src/procproperties.cpp:82 src/proctable.cpp:365
+#: src/procproperties.cpp:82 src/proctable.cpp:367
 msgid "Priority"
 msgstr "Prioritate"
 
-#: src/procproperties.cpp:83 src/proctable.cpp:348
+#: src/procproperties.cpp:83 src/proctable.cpp:350
 msgid "ID"
 msgstr "ID"
 
-#: src/procproperties.cpp:84 src/proctable.cpp:349
+#: src/procproperties.cpp:84 src/proctable.cpp:351
 msgid "Security Context"
 msgstr "Context de securitate"
 
-#: src/procproperties.cpp:85 src/proctable.cpp:350
+#: src/procproperties.cpp:85 src/proctable.cpp:352
 msgid "Command Line"
 msgstr "Linie de comandă"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:86 src/proctable.cpp:353
+#: src/procproperties.cpp:86 src/proctable.cpp:355
 msgid "Waiting Channel"
 msgstr "Canal de așteptare"
 
-#: src/procproperties.cpp:87 src/proctable.cpp:354
+#: src/procproperties.cpp:87 src/proctable.cpp:356
 msgid "Control Group"
 msgstr "Grup de control"
 
@@ -1329,42 +1319,42 @@ msgstr "Grup de control"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: src/proctable.cpp:344
+#: src/proctable.cpp:346
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: src/proctable.cpp:355
+#: src/proctable.cpp:357
 msgid "Unit"
 msgstr "Unitate"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:358
 msgid "Session"
 msgstr "Sesiune"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:359
+#: src/proctable.cpp:361
 msgid "Seat"
 msgstr "Loc"
 
-#: src/proctable.cpp:360
+#: src/proctable.cpp:362
 msgid "Owner"
 msgstr "Proprietar"
 
-#: src/proctable.cpp:361
+#: src/proctable.cpp:363
 msgid "Disk read total"
 msgstr "Total citit de pe disc"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:364
 msgid "Disk write total"
 msgstr "Total scris pe disc"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:365
 msgid "Disk read"
 msgstr "Citit de pe disc"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:366
 msgid "Disk write"
 msgstr "Scris pe disc"
 
@@ -1433,10 +1423,19 @@ msgid "Very Low Priority"
 msgstr "Prioritate foarte scăzută"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:613
+#: src/util.cpp:611
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "org.gnome.SystemMonitor"
+#~ msgstr "org.gnome.SystemMonitor"
+
+#~ msgid "utilities-system-monitor"
+#~ msgstr "utilities-system-monitor"
+
+#~ msgid "End _Process"
+#~ msgstr "Termină _procesul"
 
 #~ msgid "About"
 #~ msgstr "Despre"
