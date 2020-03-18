@@ -3,12 +3,6 @@
 
 #include <glib/gi18n.h>
 #include <glibtop/procopenfiles.h>
-#include <sys/stat.h>
-#include <netdb.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
 
 #include "application.h"
 #include "openfiles.h"
@@ -16,10 +10,6 @@
 #include "util.h"
 #include "settings-keys.h"
 #include "legacy/treeview.h"
-
-#ifndef NI_IDN
-#define NI_IDN 0
-#endif
 
 enum
 {
@@ -53,39 +43,6 @@ get_type_name(enum glibtop_file_type t)
 
 
 
-static char *
-friendlier_hostname(const char *addr_str, int port)
-{
-    struct addrinfo hints = { };
-    struct addrinfo *res = NULL;
-    char hostname[NI_MAXHOST];
-    char service[NI_MAXSERV];
-    char port_str[6];
-
-    if (!addr_str[0]) return g_strdup("");
-
-    snprintf(port_str, sizeof port_str, "%d", port);
-
-    hints.ai_family = AF_UNSPEC;
-    hints.ai_socktype = SOCK_STREAM;
-
-    if (getaddrinfo(addr_str, port_str, &hints, &res))
-        goto failsafe;
-
-    if (getnameinfo(res->ai_addr, res->ai_addrlen, hostname,
-                    sizeof hostname, service, sizeof service, NI_IDN))
-        goto failsafe;
-
-    if (res) freeaddrinfo(res);
-    return g_strdup_printf("%s, TCP port %d (%s)", hostname, port, service);
-
-  failsafe:
-    if (res) freeaddrinfo(res);
-    return g_strdup_printf("%s, TCP port %d", addr_str, port);
-}
-
-
-
 static void
 add_new_files (gpointer key, gpointer value, gpointer data)
 {
@@ -104,7 +61,7 @@ add_new_files (gpointer key, gpointer value, gpointer data)
 
         case GLIBTOP_FILE_TYPE_INET6SOCKET:
         case GLIBTOP_FILE_TYPE_INETSOCKET:
-            object = friendlier_hostname(openfiles->info.sock.dest_host,
+            object = g_strdup_printf("%s, port %d", openfiles->info.sock.dest_host,
                                          openfiles->info.sock.dest_port);
             break;
 
