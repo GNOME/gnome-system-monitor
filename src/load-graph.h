@@ -47,6 +47,7 @@ struct LoadGraph
 
     double fontsize;
     double rmargin;
+    /* left margin */
     double indent;
 
     guint n;

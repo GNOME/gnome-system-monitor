@@ -266,13 +266,13 @@ load_graph_draw (GtkWidget *widget,
     gint j;
     gdouble sample_width, x_offset;
 
-    /* Number of pixels wide for one graph point */
+    /* Number of pixels wide for one sample point */
     sample_width = (float)(graph->draw_width - graph->rmargin - graph->indent) / (float)LoadGraph::NUM_POINTS;
-    /* General offset */
-    x_offset = graph->draw_width - graph->rmargin;
-
-    /* Subframe offset */
-    x_offset += graph->rmargin - ((sample_width / graph->frames_per_unit) * graph->render_counter);
+    /* Lines start at the right edge of the drawing,
+     * a bit outside the clip rectangle. */
+    x_offset = graph->draw_width - graph->rmargin + sample_width + 2;
+    /* Adjustment for smooth movement between samples */
+    x_offset -= (sample_width / graph->frames_per_unit) * graph->render_counter;
 
     /* draw the graph */
 
