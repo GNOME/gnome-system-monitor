@@ -294,16 +294,15 @@ load_graph_draw (GtkWidget *widget,
     bool drawSmooth = graph->type != LOAD_GRAPH_CPU || GsmApplication::get()->config.draw_smooth;
     for (j = graph->n-1; j >= 0; j--) {
         gdk_cairo_set_source_rgba (cr, &(graph->colors [j]));
-        if (drawStacked) {
-            cairo_move_to (cr, x_offset, graph->real_draw_height + 3.5f);
-        } else {
-            cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height + 3.5f);
-        }
+        // Start drawing on the right at the correct height.
+        cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height + 3.5f);
+        // then draw the path of the line.
+        // Loop starts at 1 because the curve accesses the 0th data point.
         for (i = 1; i < LoadGraph::NUM_POINTS; ++i) {
             if (graph->data[i][j] == -1.0f)
                 continue;
             if (drawSmooth) {
-              cairo_curve_to (cr,
+                cairo_curve_to (cr,
                               x_offset - ((i - 0.5f) * graph->graph_delx),
                               (1.0 - graph->data[i-1][j]) * graph->real_draw_height + 3.5,
                               x_offset - ((i - 0.5f) * graph->graph_delx),
@@ -311,13 +310,18 @@ load_graph_draw (GtkWidget *widget,
                               x_offset - (i * graph->graph_delx),
                               (1.0 - graph->data[i][j]) * graph->real_draw_height + 3.5);
             } else {
-              cairo_line_to (cr, x_offset - (i * graph->graph_delx),
+                cairo_line_to (cr, x_offset - (i * graph->graph_delx),
                               (1.0 - graph->data[i][j]) * graph->real_draw_height + 3.5);
             }
 
         }
         if (drawStacked) {
-            cairo_rel_line_to (cr, 0, graph->real_draw_height + 3.5f);
+            // Draw the remaining outline of the area:
+            // Left bottom corner
+            cairo_rel_line_to (cr, 0, graph->real_draw_height + 1.5f);
+            // Right bottom corner
+            cairo_line_to (cr, x_offset, graph->real_draw_height + 1.5f);
+
             //cairo_stroke_preserve(cr);
             //cairo_close_path(cr);
             cairo_fill(cr);
@@ -672,31 +676,41 @@ get_net (LoadGraph *graph)
 }
 
 
+
+void
+load_graph_update_data (LoadGraph *graph)
+{
+    // Rotate data one element down.
+    std::rotate(&graph->data[0],
+                &graph->data[LoadGraph::NUM_POINTS - 1],
+                &graph->data[LoadGraph::NUM_POINTS]);
+
+    // Replace the 0th element
+    switch (graph->type) {
+        case LOAD_GRAPH_CPU:
+            get_load(graph);
+            break;
+        case LOAD_GRAPH_MEM:
+            get_memory(graph);
+            break;
+        case LOAD_GRAPH_NET:
+            get_net(graph);
+            break;
+        default:
+            g_assert_not_reached();
+    }
+}
+
+
+
 /* Updates the load graph when the timeout expires */
 static gboolean
 load_graph_update (gpointer user_data)
 {
     LoadGraph * const graph = static_cast<LoadGraph*>(user_data);
 
-    if (graph->render_counter == graph->frames_per_unit - 1) {
-        std::rotate(&graph->data[0],
-                    &graph->data[LoadGraph::NUM_POINTS - 1],
-                    &graph->data[LoadGraph::NUM_POINTS]);
-
-        switch (graph->type) {
-            case LOAD_GRAPH_CPU:
-                get_load(graph);
-                break;
-            case LOAD_GRAPH_MEM:
-                get_memory(graph);
-                break;
-            case LOAD_GRAPH_NET:
-                get_net(graph);
-                break;
-            default:
-                g_assert_not_reached();
-        }
-    }
+    if (graph->render_counter == graph->frames_per_unit - 1)
+        load_graph_update_data(graph);
 
     if (graph->draw)
         load_graph_queue_draw (graph);
@@ -882,8 +896,10 @@ LoadGraph::LoadGraph(guint type)
 void
 load_graph_start (LoadGraph *graph)
 {
-     if (!graph->timer_index) {
-
+    if (!graph->timer_index) {
+        // Update the data two times so the graph
+        // doesn't wait one cycle to start drawing.
+        load_graph_update_data(graph);
         load_graph_update(graph);
 
         graph->timer_index = g_timeout_add (graph->speed / graph->frames_per_unit,
