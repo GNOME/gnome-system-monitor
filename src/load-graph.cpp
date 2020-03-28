@@ -210,6 +210,7 @@ load_graph_queue_draw (LoadGraph *graph)
     gtk_widget_queue_draw (GTK_WIDGET (graph->disp));
 }
 
+void load_graph_update_data (LoadGraph *graph);
 static int load_graph_update (gpointer user_data); // predeclare load_graph_update so we can compile ;)
 
 static gboolean
@@ -267,12 +268,12 @@ load_graph_draw (GtkWidget *widget,
     gdouble sample_width, x_offset;
 
     /* Number of pixels wide for one sample point */
-    sample_width = (float)(graph->draw_width - graph->rmargin - graph->indent) / (float)LoadGraph::NUM_POINTS;
+    sample_width = (double)(graph->draw_width - graph->rmargin - graph->indent) / (double)LoadGraph::NUM_POINTS;
     /* Lines start at the right edge of the drawing,
      * a bit outside the clip rectangle. */
     x_offset = graph->draw_width - graph->rmargin + sample_width + 2;
     /* Adjustment for smooth movement between samples */
-    x_offset -= (sample_width / graph->frames_per_unit) * graph->render_counter;
+    x_offset -= sample_width * graph->render_counter / (double)graph->frames_per_unit;
 
     /* draw the graph */
 
@@ -318,12 +319,13 @@ load_graph_draw (GtkWidget *widget,
         if (drawStacked) {
             // Draw the remaining outline of the area:
             // Left bottom corner
-            cairo_rel_line_to (cr, 0, graph->real_draw_height + 1.5f);
-            // Right bottom corner
-            cairo_line_to (cr, x_offset, graph->real_draw_height + 1.5f);
+            cairo_rel_line_to (cr, 0, graph->real_draw_height + 3.5);
+            // Right bottom corner. It's drawn far outside the visible area
+            // to avoid a weird bug where it's not filling the area it should completely.
+            cairo_rel_line_to (cr, x_offset * 2, 0);
 
             //cairo_stroke_preserve(cr);
-            //cairo_close_path(cr);
+            cairo_close_path(cr);
             cairo_fill(cr);
         } else {
             cairo_stroke (cr);
