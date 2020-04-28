@@ -23,7 +23,7 @@ enum DiskColumns
     DISK_AVAIL,
     /* USED has to be the last column */
     DISK_USED,
-    // then unvisible columns
+    // then invisible columns
     /* PixBuf column */
     DISK_ICON,
     /* numeric columns */

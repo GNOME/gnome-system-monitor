@@ -113,7 +113,7 @@ cb_cpu_color_changed (GsmColorButton *cp, gpointer data)
     GVariant *cpu_colors_var = g_settings_get_value (settings->gobj(), GSM_SETTING_CPU_COLORS);
     gsize children_n = g_variant_n_children(cpu_colors_var);
 
-    /* Create builder to contruct new setting with updated value for cpu i */
+    /* Create builder to construct new setting with updated value for cpu i */
     GVariantBuilder builder;
     g_variant_builder_init(&builder, G_VARIANT_TYPE_ARRAY);
 
