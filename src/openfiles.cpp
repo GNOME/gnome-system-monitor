@@ -18,7 +18,7 @@
 #include "legacy/treeview.h"
 
 #ifndef NI_IDN
-#define NI_IDN 0
+const int NI_IDN = 0;
 #endif
 
 enum
