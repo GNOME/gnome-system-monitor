@@ -2,7 +2,7 @@
 project('gnome-system-monitor',
   'c', 'cpp',
   default_options : [
-    'c_std=c11', 'cpp_std=c++11'
+    'c_std=c11', 'cpp_std=c++11', 'warning_level=3'
   ],
   version: '3.37.90',
   meson_version: '>=0.50.0',
@@ -69,7 +69,6 @@ conf.set('HAVE_SYSTEMD', libsystemd.found())
 # Compiler flags
 
 extra_flags = [
-  '-Wall',
   '-Wcast-align',
   '-Wchar-subscripts',
   '-Winline',
