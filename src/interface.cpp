@@ -244,6 +244,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
 
         cpu_label = GTK_LABEL (gtk_label_new (NULL));
 
+        /* Reserve some space to avoid the layout changing with the values. */
+        gtk_label_set_width_chars(cpu_label, 6);
         gtk_widget_set_valign (GTK_WIDGET (cpu_label), GTK_ALIGN_CENTER);
         gtk_widget_set_halign (GTK_WIDGET (cpu_label), GTK_ALIGN_START);
         gtk_box_pack_start (temp_hbox, GTK_WIDGET (cpu_label), FALSE, FALSE, 0);
