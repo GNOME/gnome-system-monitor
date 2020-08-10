@@ -13,24 +13,24 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2020-01-21 11:19+0000\n"
-"PO-Revision-Date: 2020-01-22 15:04+0700\n"
+"POT-Creation-Date: 2020-08-07 06:32+0000\n"
+"PO-Revision-Date: 2020-08-10 21:03+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.4\n"
 "Plural-Forms: nplurals=2; plural= n!=1;\n"
 
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
-#: src/application.cpp:245 src/interface.cpp:386
+#: src/application.cpp:245 src/interface.cpp:388
 msgid "System Monitor"
 msgstr "Monitor Sistem"
 
 #: gnome-system-monitor.desktop.in.in:4
-#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:387
+#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:389
 msgid "View current processes and monitor system state"
 msgstr "Melihat proses yang sedang berjalan serta memantau keadaan sistem"
 
@@ -118,9 +118,11 @@ msgstr "Ubah nice proses"
 msgid "Privileges are required to change the priority of processes"
 msgstr "Hak khusus diperlukan untuk mengubah prioritas proses"
 
-#: data/interface.ui:150
-msgid "End _Process"
-msgstr "Akhiri _Proses"
+#: data/interface.ui:150 src/procdialogs.cpp:135 src/proctable.cpp:147
+msgid "_End Process"
+msgid_plural "_End Processes"
+msgstr[0] "Akhiri Pros_es"
+msgstr[1] "Akhiri Pros_es"
 
 #: data/interface.ui:164
 msgid "Show process properties"
@@ -138,12 +140,12 @@ msgstr "Riwayat CPU"
 msgid "Memory and Swap History"
 msgstr "Riwayat Memori dan Swap"
 
-#: data/interface.ui:319 src/interface.cpp:274 src/procproperties.cpp:70
-#: src/proctable.cpp:347
+#: data/interface.ui:319 src/interface.cpp:276 src/procproperties.cpp:70
+#: src/proctable.cpp:350
 msgid "Memory"
 msgstr "Memori"
 
-#: data/interface.ui:334 src/interface.cpp:286
+#: data/interface.ui:334 src/interface.cpp:288
 msgid "Swap"
 msgstr "Swap"
 
@@ -151,7 +153,7 @@ msgstr "Swap"
 msgid "Network History"
 msgstr "Riwayat Jaringan"
 
-#: data/interface.ui:407 src/interface.cpp:316
+#: data/interface.ui:407 src/interface.cpp:318
 msgid "Receiving"
 msgstr "Diterima"
 
@@ -159,7 +161,7 @@ msgstr "Diterima"
 msgid "Total Received"
 msgstr "Total Diterima"
 
-#: data/interface.ui:437 src/interface.cpp:334
+#: data/interface.ui:437 src/interface.cpp:336
 msgid "Sending"
 msgstr "Dikirim"
 
@@ -188,97 +190,97 @@ msgstr "Saring berkas menurut nama"
 msgid "Case insensitive"
 msgstr "Tak bedakan besar kecil huruf"
 
-#: data/menus.ui:6 data/menus.ui:60
+#: data/menus.ui:6 data/menus.ui:57
 msgctxt "Menu item to Open Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Cari Berkas Terbuka"
 
-#: data/menus.ui:12 data/menus.ui:66
+#: data/menus.ui:12 data/menus.ui:63
 msgid "Preferences"
 msgstr "Preferensi"
 
-#: data/menus.ui:16 data/menus.ui:70
+#: data/menus.ui:16 data/menus.ui:67
 msgid "Help"
 msgstr "Bantuan"
 
-#: data/menus.ui:21 data/menus.ui:75
+#: data/menus.ui:20 data/menus.ui:71
 msgid "About System Monitor"
 msgstr "Tentang Monitor Sistem"
 
-#: data/menus.ui:29
+#: data/menus.ui:28
 msgid "_Refresh"
 msgstr "Sega_rkan"
 
-#: data/menus.ui:36
+#: data/menus.ui:34
 msgid "_Active Processes"
 msgstr "Proses _Aktif"
 
-#: data/menus.ui:41
+#: data/menus.ui:39
 msgid "A_ll Processes"
 msgstr "S_emua Proses"
 
-#: data/menus.ui:46
+#: data/menus.ui:44
 msgid "M_y Processes"
 msgstr "Proses Sa_ya"
 
-#: data/menus.ui:53
+#: data/menus.ui:51
 msgid "Show _Dependencies"
 msgstr "Tampilkan _Ketergantungan"
 
-#: data/menus.ui:83
+#: data/menus.ui:79
 msgid "_Properties"
 msgstr "_Properti"
 
-#: data/menus.ui:90
+#: data/menus.ui:85
 msgid "_Memory Maps"
 msgstr "Peta _Memori"
 
 #. Translators: this means 'Files that are open' (open is not a verb here)
-#: data/menus.ui:95
+#: data/menus.ui:89
 msgid "Open _Files"
 msgstr "Buka _Berkas"
 
-#: data/menus.ui:102
+#: data/menus.ui:95
 msgid "_Change Priority"
 msgstr "_Ubah Prioritas"
 
-#: data/menus.ui:105 src/util.cpp:161
+#: data/menus.ui:98 src/util.cpp:161
 msgid "Very High"
 msgstr "Sangat Tinggi"
 
-#: data/menus.ui:110 src/util.cpp:163
+#: data/menus.ui:103 src/util.cpp:163
 msgid "High"
 msgstr "Tinggi"
 
-#: data/menus.ui:115 src/util.cpp:165
+#: data/menus.ui:108 src/util.cpp:165
 msgid "Normal"
 msgstr "Normal"
 
-#: data/menus.ui:120 src/util.cpp:167
+#: data/menus.ui:113 src/util.cpp:167
 msgid "Low"
 msgstr "Rendah"
 
-#: data/menus.ui:125 src/util.cpp:169
+#: data/menus.ui:118 src/util.cpp:169
 msgid "Very Low"
 msgstr "Sangat Rendah"
 
-#: data/menus.ui:132
+#: data/menus.ui:125
 msgid "Custom"
 msgstr "Gubahan"
 
-#: data/menus.ui:141
+#: data/menus.ui:134
 msgid "_Stop"
 msgstr "_Berhenti"
 
-#: data/menus.ui:147
+#: data/menus.ui:139
 msgid "_Continue"
 msgstr "_Lanjutkan"
 
-#: data/menus.ui:153
+#: data/menus.ui:144
 msgid "_End"
 msgstr "_Akhiri"
 
-#: data/menus.ui:159
+#: data/menus.ui:149
 msgid "_Kill"
 msgstr "_Bunuh"
 
@@ -426,7 +428,7 @@ msgstr "CPU"
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: src/interface.cpp:397
+#: src/interface.cpp:400
 msgid "translator-credits"
 msgstr ""
 "Mohammad DAMT <mdamt@bisnisweb.com>, 2005\n"
@@ -508,17 +510,18 @@ msgid_plural "%u seconds"
 msgstr[0] "%u detik"
 msgstr[1] "%u detik"
 
-#: src/load-graph.cpp:415
+#: src/load-graph.cpp:416
 msgid "not available"
 msgstr "tak tersedia"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: src/load-graph.cpp:418
+#: src/load-graph.cpp:419
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) dari %s"
 
-#: src/load-graph.cpp:421
+#. xgettext: Used cache string, e.g.: "Cache 2.4GiB"
+#: src/load-graph.cpp:423
 #, c-format
 msgid "Cache %s"
 msgstr "Singgahan %s"
@@ -880,12 +883,12 @@ msgid "Show process “Nice” column on startup"
 msgstr "Tampilkan kolom ”Nice” proses pada saat mulai"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
-msgid "Width of process “PID” column"
-msgstr "Lebar kolom ”PID” proses"
+msgid "Width of process “ID” column"
+msgstr "Lebar kolom ”ID” proses"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
-msgid "Show process “PID” column on startup"
-msgstr "Tampilkan kolom ”PID” proses pada saat mulai"
+msgid "Show process “ID” column on startup"
+msgstr "Tampilkan kolom ”ID” proses pada saat mulai"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
 msgid "Width of process “SELinux Security Context” column"
@@ -1173,12 +1176,6 @@ msgstr ""
 "Mengakhiri suatu proses dapat merusak data, memutus sesi, atau menimbulkan "
 "resiko keamanan. Hanya proses tak responsif yang seharusnya diakhiri."
 
-#: src/procdialogs.cpp:135
-msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "Akhiri Pros_es"
-msgstr[1] "Akhiri Pros_es"
-
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:139
@@ -1220,76 +1217,76 @@ msgstr ""
 "nilai angkatannya, maka semakin tinggi prioritasnya."
 
 #: src/procproperties.cpp:50 src/procproperties.cpp:84
-#: src/procproperties.cpp:87 src/util.cpp:378 src/util.cpp:417
+#: src/procproperties.cpp:87 src/util.cpp:376 src/util.cpp:415
 msgid "N/A"
 msgstr "N/A"
 
-#: src/procproperties.cpp:67 src/proctable.cpp:332
+#: src/procproperties.cpp:67 src/proctable.cpp:335
 msgid "Process Name"
 msgstr "Nama Proses"
 
-#: src/procproperties.cpp:68 src/proctable.cpp:333
+#: src/procproperties.cpp:68 src/proctable.cpp:336
 msgid "User"
 msgstr "Pengguna"
 
-#: src/procproperties.cpp:69 src/proctable.cpp:334
+#: src/procproperties.cpp:69 src/proctable.cpp:337
 msgid "Status"
 msgstr "Status"
 
-#: src/procproperties.cpp:71 src/proctable.cpp:335
+#: src/procproperties.cpp:71 src/proctable.cpp:338
 msgid "Virtual Memory"
 msgstr "Memori Virtual"
 
-#: src/procproperties.cpp:72 src/proctable.cpp:336
+#: src/procproperties.cpp:72 src/proctable.cpp:339
 msgid "Resident Memory"
 msgstr "Memori Bertetap"
 
-#: src/procproperties.cpp:73 src/proctable.cpp:337
+#: src/procproperties.cpp:73 src/proctable.cpp:340
 msgid "Writable Memory"
 msgstr "Memori Dapat Ditulis"
 
-#: src/procproperties.cpp:74 src/proctable.cpp:338
+#: src/procproperties.cpp:74 src/proctable.cpp:341
 msgid "Shared Memory"
 msgstr "Memori Bersama"
 
-#: src/procproperties.cpp:76 src/proctable.cpp:339
+#: src/procproperties.cpp:76 src/proctable.cpp:342
 msgid "X Server Memory"
 msgstr "Memori Server X"
 
-#: src/procproperties.cpp:79 src/proctable.cpp:341
+#: src/procproperties.cpp:79 src/proctable.cpp:344
 msgid "CPU Time"
 msgstr "Waktu CPU"
 
-#: src/procproperties.cpp:80 src/proctable.cpp:342
+#: src/procproperties.cpp:80 src/proctable.cpp:345
 msgid "Started"
 msgstr "Dimulai"
 
-#: src/procproperties.cpp:81 src/proctable.cpp:343
+#: src/procproperties.cpp:81 src/proctable.cpp:346
 msgid "Nice"
 msgstr "Angkatan"
 
-#: src/procproperties.cpp:82 src/proctable.cpp:361
+#: src/procproperties.cpp:82 src/proctable.cpp:364
 msgid "Priority"
 msgstr "Prioritas"
 
-#: src/procproperties.cpp:83 src/proctable.cpp:344
+#: src/procproperties.cpp:83 src/proctable.cpp:347
 msgid "ID"
 msgstr "ID"
 
-#: src/procproperties.cpp:84 src/proctable.cpp:345
+#: src/procproperties.cpp:84 src/proctable.cpp:348
 msgid "Security Context"
 msgstr "Konteks Keamanan"
 
-#: src/procproperties.cpp:85 src/proctable.cpp:346
+#: src/procproperties.cpp:85 src/proctable.cpp:349
 msgid "Command Line"
 msgstr "Baris Perintah"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:86 src/proctable.cpp:349
+#: src/procproperties.cpp:86 src/proctable.cpp:352
 msgid "Waiting Channel"
 msgstr "Kanal Tunggu"
 
-#: src/procproperties.cpp:87 src/proctable.cpp:350
+#: src/procproperties.cpp:87 src/proctable.cpp:353
 msgid "Control Group"
 msgstr "Grup Kontrol"
 
@@ -1298,42 +1295,42 @@ msgstr "Grup Kontrol"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: src/proctable.cpp:340
+#: src/proctable.cpp:343
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: src/proctable.cpp:351
+#: src/proctable.cpp:354
 msgid "Unit"
 msgstr "Unit"
 
-#: src/proctable.cpp:352
+#: src/proctable.cpp:355
 msgid "Session"
 msgstr "Sesi"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:355
+#: src/proctable.cpp:358
 msgid "Seat"
 msgstr "Seat"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:359
 msgid "Owner"
 msgstr "Pemilik"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:360
 msgid "Disk read total"
 msgstr "Total baca diska"
 
-#: src/proctable.cpp:358
+#: src/proctable.cpp:361
 msgid "Disk write total"
 msgstr "Total tulis diska"
 
-#: src/proctable.cpp:359
+#: src/proctable.cpp:362
 msgid "Disk read"
 msgstr "Baca diska"
 
-#: src/proctable.cpp:360
+#: src/proctable.cpp:363
 msgid "Disk write"
 msgstr "Tulis diska"
 
@@ -1402,10 +1399,13 @@ msgid "Very Low Priority"
 msgstr "Prioritas Sangat Rendah"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:613
+#: src/util.cpp:611
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "End _Process"
+#~ msgstr "Akhiri _Proses"
 
 #~ msgid ""
 #~ "%s (%.1f%%) of %s\n"
