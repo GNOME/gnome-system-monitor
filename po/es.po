@@ -15,24 +15,24 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2020-01-21 11:19+0000\n"
-"PO-Revision-Date: 2020-01-21 12:59+0100\n"
+"POT-Creation-Date: 2020-08-07 06:32+0000\n"
+"PO-Revision-Date: 2020-08-13 10:22+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 3.34.0\n"
+"X-Generator: Gtranslator 3.36.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
-#: src/application.cpp:245 src/interface.cpp:386
+#: src/application.cpp:245 src/interface.cpp:388
 msgid "System Monitor"
 msgstr "Monitor del sistema"
 
 #: gnome-system-monitor.desktop.in.in:4
-#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:387
+#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:389
 msgid "View current processes and monitor system state"
 msgstr "Vea los procesos actuales y monitorizar el estado del sistema"
 
@@ -120,9 +120,11 @@ msgstr "Cambiar la prioridad del proceso"
 msgid "Privileges are required to change the priority of processes"
 msgstr "Se necesitan privilegios para cambiar la prioridad de los procesos"
 
-#: data/interface.ui:150
-msgid "End _Process"
-msgstr "_Finalizar proceso"
+#: data/interface.ui:150 src/procdialogs.cpp:135 src/proctable.cpp:147
+msgid "_End Process"
+msgid_plural "_End Processes"
+msgstr[0] "_Finalizar proceso"
+msgstr[1] "_Finalizar procesos"
 
 #: data/interface.ui:164
 msgid "Show process properties"
@@ -140,12 +142,12 @@ msgstr "Histórico de la CPU"
 msgid "Memory and Swap History"
 msgstr "Histórico de memoria e intercambio"
 
-#: data/interface.ui:319 src/interface.cpp:274 src/procproperties.cpp:70
-#: src/proctable.cpp:347
+#: data/interface.ui:319 src/interface.cpp:276 src/procproperties.cpp:70
+#: src/proctable.cpp:350
 msgid "Memory"
 msgstr "Memoria"
 
-#: data/interface.ui:334 src/interface.cpp:286
+#: data/interface.ui:334 src/interface.cpp:288
 msgid "Swap"
 msgstr "Intercambio"
 
@@ -153,7 +155,7 @@ msgstr "Intercambio"
 msgid "Network History"
 msgstr "Histórico de la red"
 
-#: data/interface.ui:407 src/interface.cpp:316
+#: data/interface.ui:407 src/interface.cpp:318
 msgid "Receiving"
 msgstr "Recibiendo"
 
@@ -161,7 +163,7 @@ msgstr "Recibiendo"
 msgid "Total Received"
 msgstr "Total recibidos"
 
-#: data/interface.ui:437 src/interface.cpp:334
+#: data/interface.ui:437 src/interface.cpp:336
 msgid "Sending"
 msgstr "Enviando"
 
@@ -190,97 +192,97 @@ msgstr "Filtrar archivos por nombre"
 msgid "Case insensitive"
 msgstr "Insensible a capitalización"
 
-#: data/menus.ui:6 data/menus.ui:60
+#: data/menus.ui:6 data/menus.ui:57
 msgctxt "Menu item to Open Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Buscar archivos abiertos"
 
-#: data/menus.ui:12 data/menus.ui:66
+#: data/menus.ui:12 data/menus.ui:63
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: data/menus.ui:16 data/menus.ui:70
+#: data/menus.ui:16 data/menus.ui:67
 msgid "Help"
 msgstr "Ayuda"
 
-#: data/menus.ui:21 data/menus.ui:75
+#: data/menus.ui:20 data/menus.ui:71
 msgid "About System Monitor"
 msgstr "Acerca de Monitor del sistema"
 
-#: data/menus.ui:29
+#: data/menus.ui:28
 msgid "_Refresh"
 msgstr "_Refrescar"
 
-#: data/menus.ui:36
+#: data/menus.ui:34
 msgid "_Active Processes"
 msgstr "Procesos _activos"
 
-#: data/menus.ui:41
+#: data/menus.ui:39
 msgid "A_ll Processes"
 msgstr "_Todos los procesos"
 
-#: data/menus.ui:46
+#: data/menus.ui:44
 msgid "M_y Processes"
 msgstr "M_is procesos"
 
-#: data/menus.ui:53
+#: data/menus.ui:51
 msgid "Show _Dependencies"
 msgstr "Mostrar_dependencias"
 
-#: data/menus.ui:83
+#: data/menus.ui:79
 msgid "_Properties"
 msgstr "_Propiedades"
 
-#: data/menus.ui:90
+#: data/menus.ui:85
 msgid "_Memory Maps"
 msgstr "_Mapas de memoria"
 
 #. Translators: this means 'Files that are open' (open is not a verb here)
-#: data/menus.ui:95
+#: data/menus.ui:89
 msgid "Open _Files"
 msgstr "_Archivos abiertos"
 
-#: data/menus.ui:102
+#: data/menus.ui:95
 msgid "_Change Priority"
 msgstr "_Cambiar prioridad"
 
-#: data/menus.ui:105 src/util.cpp:161
+#: data/menus.ui:98 src/util.cpp:161
 msgid "Very High"
 msgstr "Muy alta"
 
-#: data/menus.ui:110 src/util.cpp:163
+#: data/menus.ui:103 src/util.cpp:163
 msgid "High"
 msgstr "Alta"
 
-#: data/menus.ui:115 src/util.cpp:165
+#: data/menus.ui:108 src/util.cpp:165
 msgid "Normal"
 msgstr "Normal"
 
-#: data/menus.ui:120 src/util.cpp:167
+#: data/menus.ui:113 src/util.cpp:167
 msgid "Low"
 msgstr "Baja"
 
-#: data/menus.ui:125 src/util.cpp:169
+#: data/menus.ui:118 src/util.cpp:169
 msgid "Very Low"
 msgstr "Muy baja"
 
-#: data/menus.ui:132
+#: data/menus.ui:125
 msgid "Custom"
 msgstr "Personalizada"
 
-#: data/menus.ui:141
+#: data/menus.ui:134
 msgid "_Stop"
 msgstr "_Detener"
 
-#: data/menus.ui:147
+#: data/menus.ui:139
 msgid "_Continue"
 msgstr "_Continuar"
 
-#: data/menus.ui:153
+#: data/menus.ui:144
 msgid "_End"
 msgstr "_Finalizar"
 
-#: data/menus.ui:159
+#: data/menus.ui:149
 msgid "_Kill"
 msgstr "_Matar"
 
@@ -427,7 +429,7 @@ msgstr "CPU"
 msgid "CPU%d"
 msgstr "CPU %d"
 
-#: src/interface.cpp:397
+#: src/interface.cpp:400
 msgid "translator-credits"
 msgstr ""
 "Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2016\n"
@@ -510,17 +512,18 @@ msgid_plural "%u seconds"
 msgstr[0] "%u segundo"
 msgstr[1] "%u segundos"
 
-#: src/load-graph.cpp:415
+#: src/load-graph.cpp:416
 msgid "not available"
 msgstr "no disponible"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: src/load-graph.cpp:418
+#: src/load-graph.cpp:419
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) de %s"
 
-#: src/load-graph.cpp:421
+#. xgettext: Used cache string, e.g.: "Cache 2.4GiB"
+#: src/load-graph.cpp:423
 #, c-format
 msgid "Cache %s"
 msgstr "Caché %s"
@@ -887,12 +890,14 @@ msgid "Show process “Nice” column on startup"
 msgstr "Mostrar la columna «Prioridad» del proceso al inicio"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
-msgid "Width of process “PID” column"
-msgstr "Anchura de la columna «PID» del proceso"
+#| msgid "Width of process “PID” column"
+msgid "Width of process “ID” column"
+msgstr "Anchura de la columna «ID» del proceso"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
-msgid "Show process “PID” column on startup"
-msgstr "Mostrar la columna «PID» del proceso al inicio"
+#| msgid "Show process “PID” column on startup"
+msgid "Show process “ID” column on startup"
+msgstr "Mostrar la columna «ID» del proceso al inicio"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
 msgid "Width of process “SELinux Security Context” column"
@@ -1184,12 +1189,6 @@ msgstr ""
 "crear un riesgo de seguridad. Sólo deberían finalizarse los procesos que no "
 "respondan."
 
-#: src/procdialogs.cpp:135
-msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "_Finalizar proceso"
-msgstr[1] "_Finalizar procesos"
-
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:139
@@ -1232,76 +1231,76 @@ msgstr ""
 "corresponde a una prioridad más alta."
 
 #: src/procproperties.cpp:50 src/procproperties.cpp:84
-#: src/procproperties.cpp:87 src/util.cpp:378 src/util.cpp:417
+#: src/procproperties.cpp:87 src/util.cpp:376 src/util.cpp:415
 msgid "N/A"
 msgstr "N/D"
 
-#: src/procproperties.cpp:67 src/proctable.cpp:332
+#: src/procproperties.cpp:67 src/proctable.cpp:335
 msgid "Process Name"
 msgstr "Nombre del proceso"
 
-#: src/procproperties.cpp:68 src/proctable.cpp:333
+#: src/procproperties.cpp:68 src/proctable.cpp:336
 msgid "User"
 msgstr "Usuario"
 
-#: src/procproperties.cpp:69 src/proctable.cpp:334
+#: src/procproperties.cpp:69 src/proctable.cpp:337
 msgid "Status"
 msgstr "Estado"
 
-#: src/procproperties.cpp:71 src/proctable.cpp:335
+#: src/procproperties.cpp:71 src/proctable.cpp:338
 msgid "Virtual Memory"
 msgstr "Memoria virtual"
 
-#: src/procproperties.cpp:72 src/proctable.cpp:336
+#: src/procproperties.cpp:72 src/proctable.cpp:339
 msgid "Resident Memory"
 msgstr "Memoria residente"
 
-#: src/procproperties.cpp:73 src/proctable.cpp:337
+#: src/procproperties.cpp:73 src/proctable.cpp:340
 msgid "Writable Memory"
 msgstr "Memoria escribible"
 
-#: src/procproperties.cpp:74 src/proctable.cpp:338
+#: src/procproperties.cpp:74 src/proctable.cpp:341
 msgid "Shared Memory"
 msgstr "Memoria compartida"
 
-#: src/procproperties.cpp:76 src/proctable.cpp:339
+#: src/procproperties.cpp:76 src/proctable.cpp:342
 msgid "X Server Memory"
 msgstr "Memoria del servidor X"
 
-#: src/procproperties.cpp:79 src/proctable.cpp:341
+#: src/procproperties.cpp:79 src/proctable.cpp:344
 msgid "CPU Time"
 msgstr "Tiempo de CPU"
 
-#: src/procproperties.cpp:80 src/proctable.cpp:342
+#: src/procproperties.cpp:80 src/proctable.cpp:345
 msgid "Started"
 msgstr "Iniciado"
 
-#: src/procproperties.cpp:81 src/proctable.cpp:343
+#: src/procproperties.cpp:81 src/proctable.cpp:346
 msgid "Nice"
 msgstr "Prioridad"
 
-#: src/procproperties.cpp:82 src/proctable.cpp:361
+#: src/procproperties.cpp:82 src/proctable.cpp:364
 msgid "Priority"
 msgstr "Prioridad"
 
-#: src/procproperties.cpp:83 src/proctable.cpp:344
+#: src/procproperties.cpp:83 src/proctable.cpp:347
 msgid "ID"
 msgstr "ID"
 
-#: src/procproperties.cpp:84 src/proctable.cpp:345
+#: src/procproperties.cpp:84 src/proctable.cpp:348
 msgid "Security Context"
 msgstr "Contexto de seguridad"
 
-#: src/procproperties.cpp:85 src/proctable.cpp:346
+#: src/procproperties.cpp:85 src/proctable.cpp:349
 msgid "Command Line"
 msgstr "Línea de comandos"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:86 src/proctable.cpp:349
+#: src/procproperties.cpp:86 src/proctable.cpp:352
 msgid "Waiting Channel"
 msgstr "Canal en espera"
 
-#: src/procproperties.cpp:87 src/proctable.cpp:350
+#: src/procproperties.cpp:87 src/proctable.cpp:353
 msgid "Control Group"
 msgstr "Grupo de control"
 
@@ -1310,42 +1309,42 @@ msgstr "Grupo de control"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: src/proctable.cpp:340
+#: src/proctable.cpp:343
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: src/proctable.cpp:351
+#: src/proctable.cpp:354
 msgid "Unit"
 msgstr "Unidad"
 
-#: src/proctable.cpp:352
+#: src/proctable.cpp:355
 msgid "Session"
 msgstr "Sesión"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:355
+#: src/proctable.cpp:358
 msgid "Seat"
 msgstr "Estado"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:359
 msgid "Owner"
 msgstr "Propietario"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:360
 msgid "Disk read total"
 msgstr "Lectura total de disco"
 
-#: src/proctable.cpp:358
+#: src/proctable.cpp:361
 msgid "Disk write total"
 msgstr "Escritura total en disco"
 
-#: src/proctable.cpp:359
+#: src/proctable.cpp:362
 msgid "Disk read"
 msgstr "Lectura de disco"
 
-#: src/proctable.cpp:360
+#: src/proctable.cpp:363
 msgid "Disk write"
 msgstr "Escritura en disco"
 
@@ -1414,10 +1413,13 @@ msgid "Very Low Priority"
 msgstr "Prioridad muy baja"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:613
+#: src/util.cpp:611
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "End _Process"
+#~ msgstr "_Finalizar proceso"
 
 #~| msgid "%s (%.1f%%) of %s"
 #~ msgid ""
