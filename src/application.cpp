@@ -7,6 +7,7 @@
 #include <glibtop/cpu.h>
 #include <glibtop/sysinfo.h>
 #include <signal.h>
+#include <stdlib.h>
 
 #include "application.h"
 #include "procdialogs.h"
@@ -100,7 +101,12 @@ apply_cpu_color_settings(Gio::Settings& settings, GsmApplication* app)
             g_variant_builder_add_value ( &builder, child);
             g_variant_unref (child);
         } else {
-            color = g_strdup ("#f25915e815e8");
+            // Choose bytes less than 0xff because light colors are hard to see.
+            unsigned int r = rand() % 0xdd + 1;
+            unsigned int g = rand() % 0xdd + 1;
+            unsigned int b = rand() % 0xdd + 1;
+
+            color = g_strdup_printf("#%02x%02x%02x", r, g, b);
             g_variant_builder_add(&builder, "(us)", i, color);
         }
         gdk_rgba_parse(&app->config.cpu_color[i], color);
