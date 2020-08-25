@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2020-01-30 21:03+0000\n"
-"PO-Revision-Date: 2020-02-08 14:50+0200\n"
+"POT-Creation-Date: 2020-08-07 06:32+0000\n"
+"PO-Revision-Date: 2020-08-25 22:51+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -22,16 +22,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
 "%100<10 || n%100>=20) ? 1 : 2)\n"
-"X-Generator: Gtranslator 3.34.0\n"
+"X-Generator: Gtranslator 3.36.0\n"
 "X-Project-Style: gnome\n"
 
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
-#: src/application.cpp:245 src/interface.cpp:386
+#: src/application.cpp:245 src/interface.cpp:388
 msgid "System Monitor"
 msgstr "Sistemos monitorius"
 
 #: gnome-system-monitor.desktop.in.in:4
-#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:387
+#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:389
 msgid "View current processes and monitor system state"
 msgstr "Rodo šiuo metu paleistus procesus ir sistemos būseną"
 
@@ -143,12 +143,12 @@ msgstr "Centrinio procesoriaus retrospektyva"
 msgid "Memory and Swap History"
 msgstr "Atminties ir mainų srities retrospektyva"
 
-#: data/interface.ui:319 src/interface.cpp:274 src/procproperties.cpp:70
-#: src/proctable.cpp:353
+#: data/interface.ui:319 src/interface.cpp:276 src/procproperties.cpp:70
+#: src/proctable.cpp:350
 msgid "Memory"
 msgstr "Atmintis"
 
-#: data/interface.ui:334 src/interface.cpp:286
+#: data/interface.ui:334 src/interface.cpp:288
 msgid "Swap"
 msgstr "Mainų sritis"
 
@@ -156,7 +156,7 @@ msgstr "Mainų sritis"
 msgid "Network History"
 msgstr "Tinklo retrospektyva"
 
-#: data/interface.ui:407 src/interface.cpp:316
+#: data/interface.ui:407 src/interface.cpp:318
 msgid "Receiving"
 msgstr "Gaunama"
 
@@ -164,7 +164,7 @@ msgstr "Gaunama"
 msgid "Total Received"
 msgstr "Iš viso gauta"
 
-#: data/interface.ui:437 src/interface.cpp:334
+#: data/interface.ui:437 src/interface.cpp:336
 msgid "Sending"
 msgstr "Siunčiama"
 
@@ -430,7 +430,7 @@ msgstr "CPU"
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: src/interface.cpp:397
+#: src/interface.cpp:400
 msgid "translator-credits"
 msgstr ""
 "Žygimantas Beručka <zygis@gnome.org>\n"
@@ -512,17 +512,18 @@ msgstr[0] "%u sekundė"
 msgstr[1] "%u sekundės"
 msgstr[2] "%u sekundžių"
 
-#: src/load-graph.cpp:415
+#: src/load-graph.cpp:416
 msgid "not available"
 msgstr "neprieinama"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: src/load-graph.cpp:418
+#: src/load-graph.cpp:419
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) iš %s"
 
-#: src/load-graph.cpp:421
+#. xgettext: Used cache string, e.g.: "Cache 2.4GiB"
+#: src/load-graph.cpp:423
 #, c-format
 msgid "Cache %s"
 msgstr "Podėlis %s"
@@ -885,11 +886,13 @@ msgid "Show process “Nice” column on startup"
 msgstr "Rodyti proceso „Nice“ stulpelį paleidus programą"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
-msgid "Width of process “PID” column"
+#| msgid "Width of process “PID” column"
+msgid "Width of process “ID” column"
 msgstr "Proceso „PID“ stulpelio plotis"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
-msgid "Show process “PID” column on startup"
+#| msgid "Show process “PID” column on startup"
+msgid "Show process “ID” column on startup"
 msgstr "Rodyti proceso „PID“ stulpelį paleidus programą"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
@@ -1233,72 +1236,72 @@ msgstr ""
 msgid "N/A"
 msgstr "Nėra"
 
-#: src/procproperties.cpp:67 src/proctable.cpp:338
+#: src/procproperties.cpp:67 src/proctable.cpp:335
 msgid "Process Name"
 msgstr "Proceso pavadinimas"
 
-#: src/procproperties.cpp:68 src/proctable.cpp:339
+#: src/procproperties.cpp:68 src/proctable.cpp:336
 msgid "User"
 msgstr "Naudotojas"
 
-#: src/procproperties.cpp:69 src/proctable.cpp:340
+#: src/procproperties.cpp:69 src/proctable.cpp:337
 msgid "Status"
 msgstr "Būsena"
 
-#: src/procproperties.cpp:71 src/proctable.cpp:341
+#: src/procproperties.cpp:71 src/proctable.cpp:338
 msgid "Virtual Memory"
 msgstr "Virtualioji atmintis"
 
-#: src/procproperties.cpp:72 src/proctable.cpp:342
+#: src/procproperties.cpp:72 src/proctable.cpp:339
 msgid "Resident Memory"
 msgstr "Rezidentinė atmintis"
 
-#: src/procproperties.cpp:73 src/proctable.cpp:343
+#: src/procproperties.cpp:73 src/proctable.cpp:340
 msgid "Writable Memory"
 msgstr "Rašoma atmintis"
 
-#: src/procproperties.cpp:74 src/proctable.cpp:344
+#: src/procproperties.cpp:74 src/proctable.cpp:341
 msgid "Shared Memory"
 msgstr "Bendroji atmintis"
 
-#: src/procproperties.cpp:76 src/proctable.cpp:345
+#: src/procproperties.cpp:76 src/proctable.cpp:342
 msgid "X Server Memory"
 msgstr "X serverio atmintis"
 
-#: src/procproperties.cpp:79 src/proctable.cpp:347
+#: src/procproperties.cpp:79 src/proctable.cpp:344
 msgid "CPU Time"
 msgstr "CPU laikas"
 
-#: src/procproperties.cpp:80 src/proctable.cpp:348
+#: src/procproperties.cpp:80 src/proctable.cpp:345
 msgid "Started"
 msgstr "Paleista"
 
-#: src/procproperties.cpp:81 src/proctable.cpp:349
+#: src/procproperties.cpp:81 src/proctable.cpp:346
 msgid "Nice"
 msgstr "„Nice“"
 
-#: src/procproperties.cpp:82 src/proctable.cpp:367
+#: src/procproperties.cpp:82 src/proctable.cpp:364
 msgid "Priority"
 msgstr "Prioritetas"
 
-#: src/procproperties.cpp:83 src/proctable.cpp:350
+#: src/procproperties.cpp:83 src/proctable.cpp:347
 msgid "ID"
 msgstr "ID"
 
-#: src/procproperties.cpp:84 src/proctable.cpp:351
+#: src/procproperties.cpp:84 src/proctable.cpp:348
 msgid "Security Context"
 msgstr "Saugos kontekstas"
 
-#: src/procproperties.cpp:85 src/proctable.cpp:352
+#: src/procproperties.cpp:85 src/proctable.cpp:349
 msgid "Command Line"
 msgstr "Komandų eilutė"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:86 src/proctable.cpp:355
+#: src/procproperties.cpp:86 src/proctable.cpp:352
 msgid "Waiting Channel"
 msgstr "Laukimo kanalas"
 
-#: src/procproperties.cpp:87 src/proctable.cpp:356
+#: src/procproperties.cpp:87 src/proctable.cpp:353
 msgid "Control Group"
 msgstr "Valdymo grupė"
 
@@ -1307,42 +1310,42 @@ msgstr "Valdymo grupė"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: src/proctable.cpp:346
+#: src/proctable.cpp:343
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:354
 msgid "Unit"
 msgstr "Vienetas"
 
-#: src/proctable.cpp:358
+#: src/proctable.cpp:355
 msgid "Session"
 msgstr "Seansas"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:361
+#: src/proctable.cpp:358
 msgid "Seat"
 msgstr "Vieta"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:359
 msgid "Owner"
 msgstr "Savininkas"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:360
 msgid "Disk read total"
 msgstr "Visas disko skaitymas"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:361
 msgid "Disk write total"
 msgstr "Visas disko rašymas"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:362
 msgid "Disk read"
 msgstr "Disko skaitymas"
 
-#: src/proctable.cpp:366
+#: src/proctable.cpp:363
 msgid "Disk write"
 msgstr "Disko rašymas"
 
