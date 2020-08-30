@@ -4,13 +4,13 @@
 #
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2004, 2006, 2007, 2008, 2009, 2010, 2011.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2012, 2013, 2014, 2015, 2017, 2018.
-# Asier Sarasua Garmendia <asier.sarasua@gmail.com>, 2019, 2020.
+# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2019, 2020.
 msgid ""
 msgstr "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
-"POT-Creation-Date: 2020-01-30 21:03+0000\n"
-"PO-Revision-Date: 2020-02-20 10:00+0100\n"
-"Last-Translator: Asier Sarasua Garmendia <asier.sarasua@gmail.com>\n"
+"POT-Creation-Date: 2020-08-07 06:32+0000\n"
+"PO-Revision-Date: 2020-08-30 10:00+0100\n"
+"Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
@@ -20,12 +20,12 @@ msgstr "Project-Id-Version: gnome-system-monitor master\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
-#: src/application.cpp:245 src/interface.cpp:386
+#: src/application.cpp:245 src/interface.cpp:388
 msgid "System Monitor"
 msgstr "Sistemaren monitorea"
 
 #: gnome-system-monitor.desktop.in.in:4
-#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:387
+#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:389
 msgid "View current processes and monitor system state"
 msgstr "Ikusi uneko prozesuak eta monitorizatu sistemaren egoera"
 
@@ -124,12 +124,12 @@ msgstr "PUZen historia"
 msgid "Memory and Swap History"
 msgstr "Memoriaren eta Swap-aren historia"
 
-#: data/interface.ui:319 src/interface.cpp:274 src/procproperties.cpp:70
-#: src/proctable.cpp:353
+#: data/interface.ui:319 src/interface.cpp:276 src/procproperties.cpp:70
+#: src/proctable.cpp:350
 msgid "Memory"
 msgstr "Memoria"
 
-#: data/interface.ui:334 src/interface.cpp:286
+#: data/interface.ui:334 src/interface.cpp:288
 msgid "Swap"
 msgstr "Trukatze-espazioa"
 
@@ -137,7 +137,7 @@ msgstr "Trukatze-espazioa"
 msgid "Network History"
 msgstr "Sareko historia"
 
-#: data/interface.ui:407 src/interface.cpp:316
+#: data/interface.ui:407 src/interface.cpp:318
 msgid "Receiving"
 msgstr "Jasotzen"
 
@@ -145,7 +145,7 @@ msgstr "Jasotzen"
 msgid "Total Received"
 msgstr "Jasotakoak guztira"
 
-#: data/interface.ui:437 src/interface.cpp:334
+#: data/interface.ui:437 src/interface.cpp:336
 msgid "Sending"
 msgstr "Bidaltzen"
 
@@ -409,7 +409,7 @@ msgstr "PUZa"
 msgid "CPU%d"
 msgstr "%d.PUZ"
 
-#: src/interface.cpp:397
+#: src/interface.cpp:400
 msgid "translator-credits"
 msgstr "translator-credits"
 
@@ -486,17 +486,18 @@ msgid_plural "%u seconds"
 msgstr[0] "segundo %u"
 msgstr[1] "%u segundo"
 
-#: src/load-graph.cpp:415
+#: src/load-graph.cpp:416
 msgid "not available"
 msgstr "ez dago erabilgarri"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: src/load-graph.cpp:418
+#: src/load-graph.cpp:419
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%%%.1f) / %s"
 
-#: src/load-graph.cpp:421
+#. xgettext: Used cache string, e.g.: "Cache 2.4GiB"
+#: src/load-graph.cpp:423
 #, c-format
 msgid "Cache %s"
 msgstr "%s cachea"
@@ -847,12 +848,12 @@ msgid "Show process “Nice” column on startup"
 msgstr "Erakutsi prozesuaren “Lehentasuna” zutabea abioan"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
-msgid "Width of process “PID” column"
-msgstr "Prozesuaren “PID“ zutabearen zabalera"
+msgid "Width of process “ID” column"
+msgstr "Prozesuaren “ID” zutabearen zabalera"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
-msgid "Show process “PID” column on startup"
-msgstr "Erakutsi prozesuaren “PID“ zutabea abioan"
+msgid "Show process “ID” column on startup"
+msgstr "Erakutsi prozesuaren “ID” zutabea abioan"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
 msgid "Width of process “SELinux Security Context” column"
@@ -1175,72 +1176,72 @@ msgstr "Prozesu baten lehentasuna bere 'nice' balioak ematen du. 'nice' balio ba
 msgid "N/A"
 msgstr "E/E"
 
-#: src/procproperties.cpp:67 src/proctable.cpp:338
+#: src/procproperties.cpp:67 src/proctable.cpp:335
 msgid "Process Name"
 msgstr "Prozesuaren izena"
 
-#: src/procproperties.cpp:68 src/proctable.cpp:339
+#: src/procproperties.cpp:68 src/proctable.cpp:336
 msgid "User"
 msgstr "Erabiltzailea"
 
-#: src/procproperties.cpp:69 src/proctable.cpp:340
+#: src/procproperties.cpp:69 src/proctable.cpp:337
 msgid "Status"
 msgstr "Egoera"
 
-#: src/procproperties.cpp:71 src/proctable.cpp:341
+#: src/procproperties.cpp:71 src/proctable.cpp:338
 msgid "Virtual Memory"
 msgstr "Memoria birtuala"
 
-#: src/procproperties.cpp:72 src/proctable.cpp:342
+#: src/procproperties.cpp:72 src/proctable.cpp:339
 msgid "Resident Memory"
 msgstr "Memoria egoiliarra"
 
-#: src/procproperties.cpp:73 src/proctable.cpp:343
+#: src/procproperties.cpp:73 src/proctable.cpp:340
 msgid "Writable Memory"
 msgstr "Memoria idazgarria"
 
-#: src/procproperties.cpp:74 src/proctable.cpp:344
+#: src/procproperties.cpp:74 src/proctable.cpp:341
 msgid "Shared Memory"
 msgstr "Memoria partekatua"
 
-#: src/procproperties.cpp:76 src/proctable.cpp:345
+#: src/procproperties.cpp:76 src/proctable.cpp:342
 msgid "X Server Memory"
 msgstr "X zerbitzariaren memoria"
 
-#: src/procproperties.cpp:79 src/proctable.cpp:347
+#: src/procproperties.cpp:79 src/proctable.cpp:344
 msgid "CPU Time"
 msgstr "PUZ denbora"
 
-#: src/procproperties.cpp:80 src/proctable.cpp:348
+#: src/procproperties.cpp:80 src/proctable.cpp:345
 msgid "Started"
 msgstr "Hasita"
 
-#: src/procproperties.cpp:81 src/proctable.cpp:349
+#: src/procproperties.cpp:81 src/proctable.cpp:346
 msgid "Nice"
 msgstr "Lehentasuna"
 
-#: src/procproperties.cpp:82 src/proctable.cpp:367
+#: src/procproperties.cpp:82 src/proctable.cpp:364
 msgid "Priority"
 msgstr "Lehentasuna"
 
-#: src/procproperties.cpp:83 src/proctable.cpp:350
+#: src/procproperties.cpp:83 src/proctable.cpp:347
 msgid "ID"
 msgstr "IDa"
 
-#: src/procproperties.cpp:84 src/proctable.cpp:351
+#: src/procproperties.cpp:84 src/proctable.cpp:348
 msgid "Security Context"
 msgstr "Segurtasun testuingurua"
 
-#: src/procproperties.cpp:85 src/proctable.cpp:352
+#: src/procproperties.cpp:85 src/proctable.cpp:349
 msgid "Command Line"
 msgstr "Komando-lerroa"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:86 src/proctable.cpp:355
+#: src/procproperties.cpp:86 src/proctable.cpp:352
 msgid "Waiting Channel"
 msgstr "Itxaron kanala"
 
-#: src/procproperties.cpp:87 src/proctable.cpp:356
+#: src/procproperties.cpp:87 src/proctable.cpp:353
 msgid "Control Group"
 msgstr "Kontrol taldea"
 
@@ -1249,42 +1250,42 @@ msgstr "Kontrol taldea"
 msgid "%s (PID %u)"
 msgstr "%s (PIDa: %u)"
 
-#: src/proctable.cpp:346
+#: src/proctable.cpp:343
 #, no-c-format
 msgid "% CPU"
 msgstr "% PUZ"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:354
 msgid "Unit"
 msgstr "Unitatea"
 
-#: src/proctable.cpp:358
+#: src/proctable.cpp:355
 msgid "Session"
 msgstr "Saioa"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:361
+#: src/proctable.cpp:358
 msgid "Seat"
 msgstr "Eserlekua"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:359
 msgid "Owner"
 msgstr "Jabea"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:360
 msgid "Disk read total"
 msgstr "Diskotik irakurrita guztira"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:361
 msgid "Disk write total"
 msgstr "Diskoan idatzita guztira"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:362
 msgid "Disk read"
 msgstr "Diskotik irakurrita"
 
-#: src/proctable.cpp:366
+#: src/proctable.cpp:363
 msgid "Disk write"
 msgstr "Diskoan idatzita"
 
