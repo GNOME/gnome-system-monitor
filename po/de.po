@@ -1,5 +1,6 @@
 # German GNOME System Monitor translation.
 # Copyright (C) 2001-2003 Free Software Foundation, Inc.
+#
 # Christian Meyer <chrisime@gnome.org>, 2001, 2002.
 # Christian Neumair <chris@gnome-de.org>, 2003, 2004.
 # Hendrik Richter <hendrikr@gnome.org>, 2005, 2006, 2007, 2008.
@@ -7,36 +8,35 @@
 # Andre Klapper <ak-47@gmx.net>, 2007.
 # Hendrik Brandt <heb@gnome-de.org>, 2008.
 # Christian Kirbach <Christian.Kirbach@googlemail.com>, 2009.
-# Mario Blättermann <mario.blaettermann@gmail.com>, 2011-2012, 2016-2018.
+# Mario Blättermann <mario.blaettermann@gmail.com>, 2011-2012, 2016-2018, 2020.
 # Tobias Endrigkeit <tobiasendrigkeit@googlemail.com>, 2012.
 # Benjamin Steinwender <b@stbe.at>, 2013.
 # Bernd Homuth <dev@hmt.im>, 2015.
 # Wolfgang Stöggl <c72578@yahoo.de>, 2017.
 # Tim Sabsch <tim@sabsch.com>, 2019.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
-"issues\n"
-"POT-Creation-Date: 2020-01-30 21:03+0000\n"
-"PO-Revision-Date: 2020-03-18 02:03+0100\n"
-"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issu"
+"es\n"
+"POT-Creation-Date: 2020-08-07 06:32+0000\n"
+"PO-Revision-Date: 2020-09-04 17:22+0200\n"
+"Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Lokalize 20.08.0\n"
 
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
-#: src/application.cpp:245 src/interface.cpp:386
+#: src/application.cpp:245 src/interface.cpp:388
 msgid "System Monitor"
 msgstr "Systemüberwachung"
 
 #: gnome-system-monitor.desktop.in.in:4
-#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:387
+#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:389
 msgid "View current processes and monitor system state"
 msgstr "Momentan laufende Prozesse betrachten und den Systemzustand überwachen"
 
@@ -147,12 +147,12 @@ msgstr "CPU-Chronik"
 msgid "Memory and Swap History"
 msgstr "Speicher- und Auslagerungschronik"
 
-#: data/interface.ui:319 src/interface.cpp:274 src/procproperties.cpp:70
-#: src/proctable.cpp:353
+#: data/interface.ui:319 src/interface.cpp:276 src/procproperties.cpp:70
+#: src/proctable.cpp:350
 msgid "Memory"
 msgstr "Speicher"
 
-#: data/interface.ui:334 src/interface.cpp:286
+#: data/interface.ui:334 src/interface.cpp:288
 msgid "Swap"
 msgstr "Swap"
 
@@ -160,7 +160,7 @@ msgstr "Swap"
 msgid "Network History"
 msgstr "Netzwerk-Chronik"
 
-#: data/interface.ui:407 src/interface.cpp:316
+#: data/interface.ui:407 src/interface.cpp:318
 msgid "Receiving"
 msgstr "Empfangen"
 
@@ -168,7 +168,7 @@ msgstr "Empfangen"
 msgid "Total Received"
 msgstr "Insgesamt empfangen"
 
-#: data/interface.ui:437 src/interface.cpp:334
+#: data/interface.ui:437 src/interface.cpp:336
 msgid "Sending"
 msgstr "Senden"
 
@@ -435,7 +435,7 @@ msgstr "CPU"
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: src/interface.cpp:397
+#: src/interface.cpp:400
 msgid "translator-credits"
 msgstr ""
 "Christian Meyer <chrisime@gnome.org>\n"
@@ -521,17 +521,18 @@ msgid_plural "%u seconds"
 msgstr[0] "%u Sekunde"
 msgstr[1] "%u Sekunden"
 
-#: src/load-graph.cpp:415
+#: src/load-graph.cpp:416
 msgid "not available"
 msgstr "Nicht verfügbar"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: src/load-graph.cpp:418
+#: src/load-graph.cpp:419
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) von %s"
 
-#: src/load-graph.cpp:421
+#. xgettext: Used cache string, e.g.: "Cache 2.4GiB"
+#: src/load-graph.cpp:423
 #, c-format
 msgid "Cache %s"
 msgstr "Zwischenspeicher %s"
@@ -898,12 +899,14 @@ msgid "Show process “Nice” column on startup"
 msgstr "Spalte »Nice-Wert« beim Start anzeigen"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
-msgid "Width of process “PID” column"
-msgstr "Breite der Spalte »Prozesskennung«"
+#| msgid "Width of process “PID” column"
+msgid "Width of process “ID” column"
+msgstr "Breite der Spalte »Kennung«"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
-msgid "Show process “PID” column on startup"
-msgstr "Spalte »Prozesskennung« beim Start anzeigen"
+#| msgid "Show process “PID” column on startup"
+msgid "Show process “ID” column on startup"
+msgstr "Spalte »Kennung« beim Start anzeigen"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
 msgid "Width of process “SELinux Security Context” column"
@@ -1249,72 +1252,72 @@ msgstr ""
 msgid "N/A"
 msgstr "N/V"
 
-#: src/procproperties.cpp:67 src/proctable.cpp:338
+#: src/procproperties.cpp:67 src/proctable.cpp:335
 msgid "Process Name"
 msgstr "Prozessname"
 
-#: src/procproperties.cpp:68 src/proctable.cpp:339
+#: src/procproperties.cpp:68 src/proctable.cpp:336
 msgid "User"
 msgstr "Benutzer"
 
-#: src/procproperties.cpp:69 src/proctable.cpp:340
+#: src/procproperties.cpp:69 src/proctable.cpp:337
 msgid "Status"
 msgstr "Status"
 
-#: src/procproperties.cpp:71 src/proctable.cpp:341
+#: src/procproperties.cpp:71 src/proctable.cpp:338
 msgid "Virtual Memory"
 msgstr "Virtueller Speicher"
 
-#: src/procproperties.cpp:72 src/proctable.cpp:342
+#: src/procproperties.cpp:72 src/proctable.cpp:339
 msgid "Resident Memory"
 msgstr "Nicht auslagerbarer Speicher"
 
-#: src/procproperties.cpp:73 src/proctable.cpp:343
+#: src/procproperties.cpp:73 src/proctable.cpp:340
 msgid "Writable Memory"
 msgstr "Schreibbarer Speicher"
 
-#: src/procproperties.cpp:74 src/proctable.cpp:344
+#: src/procproperties.cpp:74 src/proctable.cpp:341
 msgid "Shared Memory"
 msgstr "Gemeinsamer Speicher"
 
-#: src/procproperties.cpp:76 src/proctable.cpp:345
+#: src/procproperties.cpp:76 src/proctable.cpp:342
 msgid "X Server Memory"
 msgstr "X-Server-Speicher"
 
-#: src/procproperties.cpp:79 src/proctable.cpp:347
+#: src/procproperties.cpp:79 src/proctable.cpp:344
 msgid "CPU Time"
 msgstr "CPU-Zeit"
 
-#: src/procproperties.cpp:80 src/proctable.cpp:348
+#: src/procproperties.cpp:80 src/proctable.cpp:345
 msgid "Started"
 msgstr "Gestartet"
 
-#: src/procproperties.cpp:81 src/proctable.cpp:349
+#: src/procproperties.cpp:81 src/proctable.cpp:346
 msgid "Nice"
 msgstr "Nice-Wert"
 
-#: src/procproperties.cpp:82 src/proctable.cpp:367
+#: src/procproperties.cpp:82 src/proctable.cpp:364
 msgid "Priority"
 msgstr "Priorität"
 
-#: src/procproperties.cpp:83 src/proctable.cpp:350
+#: src/procproperties.cpp:83 src/proctable.cpp:347
 msgid "ID"
 msgstr "Kennung"
 
-#: src/procproperties.cpp:84 src/proctable.cpp:351
+#: src/procproperties.cpp:84 src/proctable.cpp:348
 msgid "Security Context"
 msgstr "Sicherheitskontext"
 
-#: src/procproperties.cpp:85 src/proctable.cpp:352
+#: src/procproperties.cpp:85 src/proctable.cpp:349
 msgid "Command Line"
 msgstr "Befehlszeile"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:86 src/proctable.cpp:355
+#: src/procproperties.cpp:86 src/proctable.cpp:352
 msgid "Waiting Channel"
 msgstr "Waiting Channel"
 
-#: src/procproperties.cpp:87 src/proctable.cpp:356
+#: src/procproperties.cpp:87 src/proctable.cpp:353
 msgid "Control Group"
 msgstr "Kontrollgruppe"
 
@@ -1323,42 +1326,42 @@ msgstr "Kontrollgruppe"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: src/proctable.cpp:346
+#: src/proctable.cpp:343
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:354
 msgid "Unit"
 msgstr "Einheit"
 
-#: src/proctable.cpp:358
+#: src/proctable.cpp:355
 msgid "Session"
 msgstr "Sitzung"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:361
+#: src/proctable.cpp:358
 msgid "Seat"
 msgstr "Sitz"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:359
 msgid "Owner"
 msgstr "Benutzer"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:360
 msgid "Disk read total"
 msgstr "Gerätelesevorgänge gesamt"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:361
 msgid "Disk write total"
 msgstr "Geräteschreibvorgänge gesamt"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:362
 msgid "Disk read"
 msgstr "Gerätelesevorgänge"
 
-#: src/proctable.cpp:366
+#: src/proctable.cpp:363
 msgid "Disk write"
 msgstr "Geräteschreibvorgänge"
 
