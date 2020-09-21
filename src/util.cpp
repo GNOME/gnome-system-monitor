@@ -373,13 +373,17 @@ namespace procman
         g_value_unset(&value);
 
         if (size == 0) {
-            char *str = g_strdup_printf ("<i>%s</i>", _("N/A"));
-            g_object_set(renderer, "markup", str, NULL);
-            g_free(str);
+            g_object_set (renderer,
+                          "text", _("N/A"),
+                          "style", PANGO_STYLE_ITALIC,
+                          NULL);
         }
         else {
             char *str = g_format_size_full(size, G_FORMAT_SIZE_IEC_UNITS);
-            g_object_set(renderer, "text", str, NULL);
+            g_object_set (renderer,
+                          "text", str,
+                          "style", PANGO_STYLE_NORMAL,
+                          NULL);
             g_free(str);
         }
 
@@ -412,12 +416,16 @@ namespace procman
         g_value_unset(&value);
 
         if (size == 0) {
-            char *str = g_strdup_printf ("<i>%s</i>", _("N/A"));
-            g_object_set(renderer, "markup", str, NULL);
-            g_free(str);
+            g_object_set (renderer,
+                          "text", _("N/A"),
+                          "style", PANGO_STYLE_ITALIC,
+                          NULL);
         }
         else {
-            g_object_set(renderer, "text", procman::format_rate(size, FALSE).c_str(), NULL);
+            g_object_set (renderer,
+                          "text", procman::format_rate(size, FALSE).c_str(),
+                          "style", PANGO_STYLE_NORMAL,
+                          NULL);
         }
 
     }
@@ -634,4 +642,30 @@ Glib::ustring
 get_monospace_system_font_name ()
 {
     return Gio::Settings::create ("org.gnome.desktop.interface")->get_string ("monospace-font-name");
+}
+
+
+GtkLabel *
+make_tnum_label (void)
+{
+    PangoAttrList *attrs = make_tnum_attr_list ();
+    GtkWidget *label = gtk_label_new (NULL);
+
+    gtk_label_set_attributes (GTK_LABEL (label), attrs);
+
+    g_clear_pointer (&attrs, pango_attr_list_unref);
+
+    return GTK_LABEL (label);
+}
+
+
+PangoAttrList *
+make_tnum_attr_list (void)
+{
+    PangoAttrList *attrs = NULL;
+
+    attrs = pango_attr_list_new ();
+    pango_attr_list_insert (attrs, pango_attr_font_features_new ("tnum=1"));
+
+    return attrs;
 }

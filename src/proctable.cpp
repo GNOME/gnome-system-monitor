@@ -442,6 +442,7 @@ proctable_new (GsmApplication * const app)
     for (i = COL_USER; i <= COL_PRIORITY; i++) {
         GtkTreeViewColumn *col;
         GtkCellRenderer *cell;
+        PangoAttrList *attrs = NULL;
 
 #ifndef HAVE_WNCK
         if (i == COL_MEMXSERVER)
@@ -523,6 +524,33 @@ proctable_new (GsmApplication * const app)
                 break;
             default:
                 gtk_tree_view_column_set_attributes(col, cell, "text", i, NULL);
+                break;
+        }
+
+        // Tabular Numbers
+        switch (i) {
+#ifdef HAVE_WNCK
+            case COL_MEMXSERVER:
+#endif
+            case COL_PID:
+            case COL_VMSIZE:
+            case COL_MEMRES:
+            case COL_MEMSHARED:
+            case COL_MEM:
+            case COL_CPU:
+            case COL_CPU_TIME:
+            case COL_DISK_READ_TOTAL:
+            case COL_DISK_WRITE_TOTAL:
+            case COL_DISK_READ_CURRENT:
+            case COL_DISK_WRITE_CURRENT:
+            case COL_START_TIME:
+            case COL_NICE:
+            case COL_WCHAN:
+                attrs = make_tnum_attr_list ();
+                g_object_set (cell, "attributes", attrs, NULL);
+                g_clear_pointer (&attrs, pango_attr_list_unref);
+                break;
+            default:
                 break;
         }
 

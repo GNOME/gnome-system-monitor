@@ -60,6 +60,7 @@ static void draw_background(LoadGraph *graph) {
     unsigned num_bars;
     char *caption;
     PangoLayout* layout;
+    PangoAttrList *attrs = NULL;
     PangoFontDescription* font_desc;
     PangoRectangle extents;
     cairo_surface_t *surface;
@@ -87,6 +88,11 @@ static void draw_background(LoadGraph *graph) {
 
     cairo_paint_with_alpha (cr, 0.0);
     layout = pango_cairo_create_layout (cr);
+
+    attrs = make_tnum_attr_list ();
+    pango_layout_set_attributes (layout, attrs);
+    g_clear_pointer (&attrs, pango_attr_list_unref);
+
     gtk_style_context_get (context, GTK_STATE_FLAG_NORMAL, GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
     pango_font_description_set_size (font_desc, 0.8 * graph->fontsize * PANGO_SCALE);
     pango_layout_set_font_description (layout, font_desc);
@@ -785,17 +791,17 @@ LoadGraph::LoadGraph(guint type)
             n = GsmApplication::get()->config.num_cpus;
 
             for(guint i = 0; i < G_N_ELEMENTS(labels.cpu); ++i)
-                labels.cpu[i] = GTK_LABEL (gtk_label_new(NULL));
+                labels.cpu[i] = make_tnum_label ();
 
             break;
 
         case LOAD_GRAPH_MEM:
             n = 2;
-            labels.memory = GTK_LABEL (gtk_label_new(NULL));
+            labels.memory = make_tnum_label ();
             gtk_widget_set_valign (GTK_WIDGET (labels.memory), GTK_ALIGN_CENTER);
             gtk_widget_set_halign (GTK_WIDGET (labels.memory), GTK_ALIGN_START);
             gtk_widget_show (GTK_WIDGET (labels.memory));
-            labels.swap = GTK_LABEL (gtk_label_new(NULL));
+            labels.swap = make_tnum_label ();
             gtk_widget_set_valign (GTK_WIDGET (labels.swap), GTK_ALIGN_CENTER);
             gtk_widget_set_halign (GTK_WIDGET (labels.swap), GTK_ALIGN_START);
             gtk_widget_show (GTK_WIDGET (labels.swap));
@@ -805,25 +811,25 @@ LoadGraph::LoadGraph(guint type)
             memset(&net, 0, sizeof net);
             n = 2;
             net.max = 1;
-            labels.net_in = GTK_LABEL (gtk_label_new(NULL));
+            labels.net_in = make_tnum_label ();
             gtk_label_set_width_chars(labels.net_in, 10);
             gtk_widget_set_valign (GTK_WIDGET (labels.net_in), GTK_ALIGN_CENTER);
             gtk_widget_set_halign (GTK_WIDGET (labels.net_in), GTK_ALIGN_END);
             gtk_widget_show (GTK_WIDGET (labels.net_in));
 
-            labels.net_in_total = GTK_LABEL (gtk_label_new(NULL));
+            labels.net_in_total = make_tnum_label ();
             gtk_widget_set_valign (GTK_WIDGET (labels.net_in_total), GTK_ALIGN_CENTER);
             gtk_widget_set_halign (GTK_WIDGET (labels.net_in_total), GTK_ALIGN_END);
             gtk_label_set_width_chars(labels.net_in_total, 10);
             gtk_widget_show (GTK_WIDGET (labels.net_in_total));
 
-            labels.net_out = GTK_LABEL (gtk_label_new(NULL));
+            labels.net_out = make_tnum_label ();
             gtk_widget_set_valign (GTK_WIDGET (labels.net_out), GTK_ALIGN_CENTER);
             gtk_widget_set_halign (GTK_WIDGET (labels.net_out), GTK_ALIGN_END);
             gtk_label_set_width_chars(labels.net_out, 10);
             gtk_widget_show (GTK_WIDGET (labels.net_out));
 
-            labels.net_out_total = GTK_LABEL (gtk_label_new(NULL));
+            labels.net_out_total = make_tnum_label ();
             gtk_widget_set_valign (GTK_WIDGET (labels.net_out_total), GTK_ALIGN_CENTER);
             gtk_widget_set_halign (GTK_WIDGET (labels.net_out), GTK_ALIGN_END);
             gtk_label_set_width_chars(labels.net_out_total, 10);

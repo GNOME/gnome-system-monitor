@@ -242,7 +242,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
         gtk_widget_show (GTK_WIDGET (label));
         g_free (label_text);
 
-        cpu_label = GTK_LABEL (gtk_label_new (NULL));
+        cpu_label = make_tnum_label ();
 
         /* Reserve some space to avoid the layout changing with the values. */
         gtk_label_set_width_chars(cpu_label, 6);
