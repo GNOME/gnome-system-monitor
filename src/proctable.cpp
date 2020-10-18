@@ -377,7 +377,7 @@ proctable_new (GsmApplication * const app)
                                 G_TYPE_ULONG,       /* Writable Memory */
                                 G_TYPE_ULONG,       /* Shared Memory */
                                 G_TYPE_ULONG,       /* X Server Memory */
-                                G_TYPE_UINT,        /* % CPU        */
+                                G_TYPE_DOUBLE,      /* % CPU        */
                                 G_TYPE_UINT64,      /* CPU time     */
                                 G_TYPE_ULONG,       /* Started      */
                                 G_TYPE_INT,         /* Nice         */
@@ -480,7 +480,12 @@ proctable_new (GsmApplication * const app)
                                                         GUINT_TO_POINTER(i),
                                                         NULL);
                 break;
-
+            case COL_CPU:
+                gtk_tree_view_column_set_cell_data_func(col, cell,
+                                                        &procman::percentage_cell_data_func,
+                                                        GUINT_TO_POINTER(i),
+                                                        NULL);
+                break;
             case COL_CPU_TIME:
                 gtk_tree_view_column_set_cell_data_func(col, cell,
                                                         &procman::duration_cell_data_func,
@@ -965,7 +970,7 @@ update_info (GsmApplication *app, ProcInfo *info)
     if (not app->config.solaris_mode)
         cpu_scale *= app->config.num_cpus;
 
-    info->pcpu = difference * cpu_scale / app->cpu_total_time;
+    info->pcpu = (gdouble)difference * cpu_scale / app->cpu_total_time;
     info->pcpu = MIN(info->pcpu, cpu_scale);
 
     app->processes.cpu_times[info->pid] = info->cpu_time = proctime.rtime;

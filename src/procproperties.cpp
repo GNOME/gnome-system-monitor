@@ -75,7 +75,7 @@ fill_proc_properties (GtkTreeView *tree, ProcInfo *info)
 #ifdef HAVE_WNCK
         { N_("X Server Memory"), format_memsize(info->memxserver)},
 #endif
-        { N_("CPU"), g_strdup_printf("%d%%", info->pcpu)},
+        { N_("CPU"), g_strdup_printf("%.2f%%", info->pcpu)},
         { N_("CPU Time"), procman::format_duration_for_display(100 * info->cpu_time / GsmApplication::get()->frequency) },
         { N_("Started"), procman_format_date_for_display(info->start_time) },
         { N_("Nice"), g_strdup_printf("%d", info->nice)},

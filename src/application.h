@@ -87,7 +87,7 @@ MutableProcInfo()
     disk_read_bytes_current(0ULL),
     disk_write_bytes_current(0ULL),
     status(0U),
-    pcpu(0U),
+    pcpu(0),
     nice(0)
     {
     }
@@ -118,7 +118,7 @@ MutableProcInfo()
     guint64 disk_read_bytes_current;
     guint64 disk_write_bytes_current;
     guint status;
-    guint pcpu;
+    gdouble pcpu;
     gint nice;
     std::string cgroup_name;
 

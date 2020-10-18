@@ -280,6 +280,9 @@ get_size_from_column(GtkTreeModel* model, GtkTreeIter* first,
         case G_TYPE_UINT64:
             size = g_value_get_uint64(&value);
             break;
+        case G_TYPE_DOUBLE:
+            size = g_value_get_double(&value);
+            break;
         default:
             g_assert_not_reached();
     }
@@ -338,6 +341,24 @@ namespace procman
         g_value_unset(&value);
 
         char *str = g_format_size_full(size, G_FORMAT_SIZE_IEC_UNITS);
+        g_object_set(renderer, "text", str, NULL);
+        g_free(str);
+    }
+
+    void percentage_cell_data_func(GtkTreeViewColumn *, GtkCellRenderer *renderer,
+                             GtkTreeModel *model, GtkTreeIter *iter,
+                             gpointer user_data)
+    {
+        const guint index = GPOINTER_TO_UINT(user_data);
+
+        gdouble size;
+        GValue value = { 0 };
+
+        gtk_tree_model_get_value(model, iter, index, &value);
+        size = g_value_get_double(&value);
+        g_value_unset(&value);
+
+        char *str = g_strdup_printf("%.2f", size);
         g_object_set(renderer, "text", str, NULL);
         g_free(str);
     }
