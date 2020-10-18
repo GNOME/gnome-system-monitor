@@ -262,14 +262,14 @@ get_relative_time(void)
     return 1e-6 * g_get_monotonic_time () - start_time;
 }
 
-static guint64
+static gdouble
 get_size_from_column(GtkTreeModel* model, GtkTreeIter* first,
                              const guint index)
 {
     GValue value = { 0 };
     gtk_tree_model_get_value(model, first, index, &value);
 
-    guint64 size;
+    gdouble size;
     switch (G_VALUE_TYPE(&value)) {
         case G_TYPE_UINT:
             size = g_value_get_uint(&value);
@@ -608,7 +608,7 @@ namespace procman
     {
         const guint index = GPOINTER_TO_UINT(user_data);
 
-        guint64 size1, size2;
+        gdouble size1, size2;
         size1 = get_size_from_column(model, first, index);
         size2 = get_size_from_column(model, second, index);
 
