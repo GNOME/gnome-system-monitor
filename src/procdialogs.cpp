@@ -50,6 +50,8 @@ kill_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
     if (id == GTK_RESPONSE_OK)
         kill_process (kargs->app, kargs->arg_value);
 
+    proctable_thaw (kargs->app);
+    proctable_update (kargs->app);
     g_free (kargs);
 }
 
@@ -62,6 +64,7 @@ procdialog_create_kill_dialog (GsmApplication *app, int signal)
     gchar *primary, *secondary, *button_text;
     struct ProcActionArgs *kargs;
 
+    proctable_freeze (app);
     kargs = g_new(ProcActionArgs, 1);
     kargs->app = app;
     kargs->arg_value = signal;
