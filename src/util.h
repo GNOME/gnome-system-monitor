@@ -4,6 +4,7 @@
 
 #include <gtkmm.h>
 #include <string>
+#include <vector>
 
 using std::string;
 
@@ -43,6 +44,9 @@ inline string make_string(char *c_str)
 
 namespace procman
 {
+    // create a list of n color strings
+    std::vector<std::string> generate_colors(unsigned n);
+
     char* format_duration_for_display(unsigned centiseconds);
 
     void size_cell_data_func(GtkTreeViewColumn *col, GtkCellRenderer *renderer,

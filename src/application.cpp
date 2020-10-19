@@ -94,6 +94,8 @@ apply_cpu_color_settings(Gio::Settings& settings, GsmApplication* app)
 
     g_variant_builder_init(&builder, G_VARIANT_TYPE_ARRAY);
 
+    std::vector<std::string> random_colors = procman::generate_colors(app->config.num_cpus);
+
     for (guint i = 0; i < static_cast<guint>(app->config.num_cpus); i++) {
         if(i < n) {
             child = g_variant_get_child_value ( cpu_colors_var, i );
@@ -101,12 +103,7 @@ apply_cpu_color_settings(Gio::Settings& settings, GsmApplication* app)
             g_variant_builder_add_value ( &builder, child);
             g_variant_unref (child);
         } else {
-            // Choose bytes less than 0xff because light colors are hard to see.
-            unsigned int r = rand() % 0xdd + 1;
-            unsigned int g = rand() % 0xdd + 1;
-            unsigned int b = rand() % 0xdd + 1;
-
-            color = g_strdup_printf("#%02x%02x%02x", r, g, b);
+            color = g_strdup (random_colors[i].c_str());
             g_variant_builder_add(&builder, "(us)", i, color);
         }
         gdk_rgba_parse(&app->config.cpu_color[i], color);
