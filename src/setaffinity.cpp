@@ -157,31 +157,34 @@ set_affinity (GtkToggleButton *button,
     glibtop_proc_affinity get_affinity;
     glibtop_proc_affinity set_affinity;
 
-    cpu_set_t   cpuset;
-    guint32     i;
-    gint        taskset_cpu = 0;
-    gchar     **cpu_list;
-    gchar      *pc;
-    gchar      *command;
+    gchar   **cpu_list;
+    GArray   *cpuset;
+    guint32   i;
+    gint      taskset_cpu = 0;
+    gchar    *pc;
+    gchar    *command;
 
-    /* Create emtpy struct type */
+    /* Create string array for taskset command CPU list */
     cpu_list = g_new0 (gchar *, affinity->cpu_count);
 
     /* Check whether we can get process's current affinity */
     if (glibtop_get_proc_affinity (&get_affinity, affinity->pid) != NULL) {
-        /* If so, run through all CPUs set for this process */
+        /* If so, create array for CPU numbers */
+        cpuset = g_array_new (FALSE, FALSE, sizeof (guint16));
+
+        /* Run through all CPUs set for this process */
         for (i = 0; i < affinity->cpu_count; i++) {
             /* Check if CPU check box button is active */
             if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (affinity->buttons[i + 1]))) {
-                /* If so, add its CPU for process affinity */
-                CPU_SET (i, &cpuset);
+                /* If so, get its CPU number as 16bit integer */
+                guint16 n = i;
 
-                /* Store CPU for taskset command in case root is needed */
+                /* Add its CPU for process affinity */
+                g_array_append_val (cpuset, n);
+
+                /* Store CPU number as string for taskset command CPU list */
                 cpu_list[taskset_cpu] = g_strdup_printf ("%i", i);
                 taskset_cpu++;
-            } else {
-                /* If not, remove its CPU from process affinity */
-                CPU_CLR (i, &cpuset);
             }
         }
 
