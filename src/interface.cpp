@@ -74,6 +74,19 @@ search_text_changed (GtkEditable *entry, gpointer data)
                                     GTK_TREE_VIEW (app->tree))))));
 }
 
+static void
+set_affinity_visiblity (GtkWidget *widget, gpointer user_data)
+{
+#ifndef __linux__
+    GtkMenuItem *item = GTK_MENU_ITEM (widget);
+    const gchar *name = gtk_menu_item_get_label (item);
+
+    if (strcmp (name, "Set _Affinity") == 0) {
+        gtk_widget_set_visible (widget, false);
+    }
+#endif
+}
+
 static void 
 create_proc_view(GsmApplication *app, GtkBuilder * builder)
 {
@@ -91,7 +104,9 @@ create_proc_view(GsmApplication *app, GtkBuilder * builder)
     GMenuModel *menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-popup-menu"));
     app->popup_menu = GTK_MENU (gtk_menu_new_from_model (menu_model));
     gtk_menu_attach_to_widget (app->popup_menu, GTK_WIDGET (app->main_window), NULL);
-    
+
+    gtk_container_foreach (GTK_CONTAINER (app->popup_menu), set_affinity_visiblity, NULL);
+
     app->search_bar = GTK_SEARCH_BAR (gtk_builder_get_object (builder, "proc_searchbar"));
     app->search_entry = GTK_SEARCH_ENTRY (gtk_builder_get_object (builder, "proc_searchentry"));
     

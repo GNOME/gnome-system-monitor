@@ -148,6 +148,53 @@ set_affinity_error (void)
                               dialog);
 }
 
+static guint16 *
+gsm_set_proc_affinity (glibtop_proc_affinity *buf, GArray *cpus, pid_t pid)
+{
+#ifdef __linux__
+    guint i;
+    cpu_set_t set;
+    guint16 cpu;
+
+    CPU_ZERO (&set);
+
+    for (i = 0; i < cpus->len; i++) {
+        cpu = g_array_index (cpus, guint16, i);
+        CPU_SET (cpu, &set);
+    }
+
+    if (sched_setaffinity (pid, sizeof (set), &set) != -1) {
+        return glibtop_get_proc_affinity (buf, pid);
+    }
+#endif
+
+    return NULL;
+}
+
+static void
+execute_taskset_command (gchar **cpu_list, pid_t pid)
+{
+#ifdef __linux__
+    gchar *pc;
+    gchar *command;
+
+    /* Join CPU number strings by commas for taskset command CPU list */
+    pc = g_strjoinv (",", cpu_list);
+
+    /* Construct taskset command */
+    command = g_strdup_printf ("taskset -pc %s %d", pc, pid);
+
+    /* Execute taskset command; show error on failure */
+    if (!multi_root_check (command)) {
+        set_affinity_error ();
+    }
+
+    /* Free memory for taskset command */
+    g_free (command);
+    g_free (pc);
+#endif
+}
+
 static void
 set_affinity (GtkToggleButton *button,
               gpointer         data)
@@ -161,8 +208,6 @@ set_affinity (GtkToggleButton *button,
     GArray   *cpuset;
     guint32   i;
     gint      taskset_cpu = 0;
-    gchar    *pc;
-    gchar    *command;
 
     /* Create string array for taskset command CPU list */
     cpu_list = g_new0 (gchar *, affinity->cpu_count);
@@ -188,18 +233,12 @@ set_affinity (GtkToggleButton *button,
             }
         }
 
-        /* Construct taskset command */
-        pc = g_strjoinv (",", cpu_list);
-        command = g_strdup_printf ("taskset -pc %s %d", pc, affinity->pid);
-
         /* Set process affinity; Show message dialog upon error */
-        if (glibtop_set_proc_affinity (&set_affinity, cpuset, affinity->pid) == NULL) {
+        if (gsm_set_proc_affinity (&set_affinity, cpuset, affinity->pid) == NULL) {
             /* If so, check whether an access error occurred */
             if (errno == EPERM or errno == EACCES) {
                 /* If so, attempt to run taskset as root, show error on failure */
-                if (!multi_root_check (command)) {
-                    set_affinity_error ();
-                }
+                execute_taskset_command (cpu_list, affinity->pid);
             } else {
                 /* If not, show error immediately */
                 set_affinity_error ();
@@ -211,9 +250,8 @@ set_affinity (GtkToggleButton *button,
              g_free (cpu_list[i]);
         }
 
-        /* Free memory for taskset command */
-        g_free (command);
-        g_free (pc);
+        /* Free CPU array memory */
+        g_array_free (cpuset, TRUE);
     } else {
         /* If not, show error message dialog */
         set_affinity_error ();
