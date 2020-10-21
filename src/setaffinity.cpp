@@ -206,6 +206,11 @@ set_affinity (GtkToggleButton *button,
             }
         }
 
+        /* Free memory for CPU strings */
+        for (i = 0; i < affinity->cpu_count; i++) {
+             g_free (cpu_list[i]);
+        }
+
         /* Free memory for taskset command */
         g_free (command);
         g_free (pc);
