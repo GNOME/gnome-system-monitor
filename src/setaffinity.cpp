@@ -169,7 +169,7 @@ set_affinity (GtkToggleButton *button,
 
     /* Check whether we can get process's current affinity */
     if (glibtop_get_proc_affinity (&get_affinity, affinity->pid) != NULL) {
-        /* If so, run throguh all CPUs set for this process */
+        /* If so, run through all CPUs set for this process */
         for (i = 0; i < affinity->cpu_count; i++) {
             /* Check if CPU check box button is active */
             if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (affinity->buttons[i + 1]))) {
@@ -377,7 +377,7 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
         g_free (button_text);
     }
 
-    /* Run throguh all CPUs set for this process */
+    /* Run through all CPUs set for this process */
     for (affinity_i = 0; affinity_i < affinity.number; affinity_i++) {
         /* Get CPU button index */
         affinity_cpu = affinity_cpus[affinity_i] + 1;
