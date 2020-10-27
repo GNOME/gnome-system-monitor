@@ -319,41 +319,40 @@ procman_debug_real(const char *file, int line, const char *func,
 }
 
 
-    // h is in [0.0; 1.0] (and not [0°; 360°] )
-    // s is in [0.0; 1.0]
-    // v is in [0.0; 1.0]
-    // https://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV
-    std::tuple<double, double, double> hsv_to_rgb(double h, double s, double v)
-    {
-        const double c = v * s;
-        const double hp = h * 6; // 360° / 60°
-        const double x = c * (1 - std::abs(std::fmod(hp, 2.0) - 1));
+// h is in [0.0; 1.0] (and not [0°; 360°] )
+// s is in [0.0; 1.0]
+// v is in [0.0; 1.0]
+// https://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV
+std::tuple<double, double, double> hsv_to_rgb(double h, double s, double v)
+{
+    const double c = v * s;
+    const double hp = h * 6; // 360° / 60°
+    const double x = c * (1 - std::abs(std::fmod(hp, 2.0) - 1));
 
-        double r1 = 0 , g1 = 0, b1 = 0;
+    double r1 = 0 , g1 = 0, b1 = 0;
 
-        switch (int(hp)) {
-        case 0: r1 = c; g1 = x; b1 = 0; break;
-        case 1: r1 = x; g1 = c; b1 = 0; break;
-        case 2: r1 = 0; g1 = c; b1 = x; break;
-        case 3: r1 = 0; g1 = x; b1 = c; break;
-        case 4: r1 = x; g1 = 0; b1 = c; break;
-        case 5: r1 = c; g1 = 0; b1 = x; break;
-        }
-
-        const double m = v - c;
-
-        return {r1 + m, g1 + m, b1 + m};
+    switch (int(hp)) {
+    case 0: r1 = c; g1 = x; b1 = 0; break;
+    case 1: r1 = x; g1 = c; b1 = 0; break;
+    case 2: r1 = 0; g1 = c; b1 = x; break;
+    case 3: r1 = 0; g1 = x; b1 = c; break;
+    case 4: r1 = x; g1 = 0; b1 = c; break;
+    case 5: r1 = c; g1 = 0; b1 = x; break;
     }
 
+    const double m = v - c;
 
-    std::string rgb_to_color_string(const std::tuple<double, double, double> &t)
-    {
-        char b[14];
-        auto c = [](double d) { return (unsigned short)(0xffff * d); };
-        std::snprintf(b, sizeof b, "#%04x%04x%04x", c(std::get<0>(t)), c(std::get<1>(t)), c(std::get<2>(t)));
-        return {b, 13};
-    }
+    return {r1 + m, g1 + m, b1 + m};
+}
 
+
+std::string rgb_to_color_string(const std::tuple<double, double, double> &t)
+{
+    char b[14];
+    auto c = [](double d) { return (unsigned short)(0xffff * d); };
+    std::snprintf(b, sizeof b, "#%04x%04x%04x", c(std::get<0>(t)), c(std::get<1>(t)), c(std::get<2>(t)));
+    return {b, 13};
+}
 
 
 namespace procman
