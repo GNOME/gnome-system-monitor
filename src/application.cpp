@@ -288,8 +288,12 @@ int GsmApplication::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLi
     Glib::OptionContext context;
     context.set_summary(_("A simple process and system monitor."));
     context.set_ignore_unknown_options(true);
+
+    Glib::OptionGroup gtkgroup(gtk_get_option_group(true));
     procman::OptionGroup option_group;
+
     context.set_main_group(option_group);
+    context.add_group (gtkgroup);
 
     try {
         context.parse(argc, argv);
