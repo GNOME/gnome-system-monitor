@@ -298,11 +298,11 @@ load_graph_draw (GtkWidget *widget,
     cairo_clip(cr);
 
     bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get()->config.draw_stacked;
-    bool drawSmooth = graph->type != LOAD_GRAPH_CPU || GsmApplication::get()->config.draw_smooth;
+    bool drawSmooth = GsmApplication::get()->config.draw_smooth;
     for (j = graph->n-1; j >= 0; j--) {
         gdk_cairo_set_source_rgba (cr, &(graph->colors [j]));
         // Start drawing on the right at the correct height.
-        cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height + 3.5f);
+        cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height + 3);
         // then draw the path of the line.
         // Loop starts at 1 because the curve accesses the 0th data point.
         for (i = 1; i < LoadGraph::NUM_POINTS; ++i) {
@@ -311,21 +311,21 @@ load_graph_draw (GtkWidget *widget,
             if (drawSmooth) {
                 cairo_curve_to (cr,
                               x_offset - ((i - 0.5f) * graph->graph_delx),
-                              (1.0 - graph->data[i-1][j]) * graph->real_draw_height + 3.5,
+                              (1.0 - graph->data[i-1][j]) * graph->real_draw_height + 3,
                               x_offset - ((i - 0.5f) * graph->graph_delx),
-                              (1.0 - graph->data[i][j]) * graph->real_draw_height + 3.5,
+                              (1.0 - graph->data[i][j]) * graph->real_draw_height + 3,
                               x_offset - (i * graph->graph_delx),
-                              (1.0 - graph->data[i][j]) * graph->real_draw_height + 3.5);
+                              (1.0 - graph->data[i][j]) * graph->real_draw_height + 3);
             } else {
                 cairo_line_to (cr, x_offset - (i * graph->graph_delx),
-                              (1.0 - graph->data[i][j]) * graph->real_draw_height + 3.5);
+                              (1.0 - graph->data[i][j]) * graph->real_draw_height + 3);
             }
 
         }
         if (drawStacked) {
             // Draw the remaining outline of the area:
             // Left bottom corner
-            cairo_rel_line_to (cr, 0, graph->real_draw_height + 3.5);
+            cairo_rel_line_to (cr, 0, graph->real_draw_height + 3);
             // Right bottom corner. It's drawn far outside the visible area
             // to avoid a weird bug where it's not filling the area it should completely.
             cairo_rel_line_to (cr, x_offset * 2, 0);
