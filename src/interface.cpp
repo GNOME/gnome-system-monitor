@@ -420,6 +420,13 @@ on_activate_about (GSimpleAction *, GVariant *, gpointer data)
 }
 
 static void
+on_activate_keyboard_shortcuts (GSimpleAction *, GVariant *, gpointer data)
+{
+    GsmApplication *app = (GsmApplication *) data;
+    gtk_widget_show (GTK_WIDGET (gtk_application_window_get_help_overlay (app->main_window)));
+}
+
+static void
 on_activate_refresh (GSimpleAction *, GVariant *, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
@@ -690,11 +697,15 @@ create_main_window (GsmApplication *app)
     GtkBuilder *builder = gtk_builder_new();
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/interface.ui", NULL);
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/menus.ui", NULL);
+    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/gtk/help-overlay.ui", NULL);
 
     main_window = GTK_APPLICATION_WINDOW (gtk_builder_get_object (builder, "main_window"));
     gtk_window_set_application (GTK_WINDOW (main_window), app->gobj());
     gtk_widget_set_name (GTK_WIDGET (main_window), "gnome-system-monitor");
     app->main_window = main_window;
+
+    gtk_application_window_set_help_overlay (app->main_window, 
+                                             GTK_SHORTCUTS_WINDOW (gtk_builder_get_object (builder, "help_overlay")));
 
     session = g_getenv ("XDG_CURRENT_DESKTOP");
     if (session && !strstr (session, "GNOME")){
@@ -743,6 +754,7 @@ create_main_window (GsmApplication *app)
 
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL },
+        { "show-help-overlay", on_activate_keyboard_shortcuts,  NULL, NULL, NULL},
         { "search", on_activate_search, "b", "false", NULL },
         { "send-signal-stop", on_activate_send_signal, "i", NULL, NULL },
         { "send-signal-cont", on_activate_send_signal, "i", NULL, NULL },
