@@ -26,6 +26,7 @@
 #define GSM_SETTING_DRAW_STACKED            "cpu-stacked-area-chart"
 #define GSM_SETTING_DRAW_SMOOTH             "cpu-smooth-graph"
 #define GSM_SETTING_NETWORK_IN_BITS         "network-in-bits"
+#define GSM_SETTING_GRAPH_DATA_POINTS       "graph-data-points"
 #define GSM_SETTING_SHOW_CPU                "show-cpu"
 #define GSM_SETTING_SHOW_MEM                "show-mem"
 #define GSM_SETTING_SHOW_NETWORK            "show-network"

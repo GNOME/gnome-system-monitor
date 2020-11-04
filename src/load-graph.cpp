@@ -72,8 +72,8 @@ static void draw_background(LoadGraph *graph) {
     num_bars = graph->num_bars();
     graph->graph_dely = (graph->draw_height - 15) / num_bars; /* round to int to avoid AA blur */
     graph->real_draw_height = graph->graph_dely * num_bars;
-    graph->graph_delx = (graph->draw_width - 2.0 - graph->indent) / (LoadGraph::NUM_POINTS - 3);
-    graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH ;
+    graph->graph_delx = (graph->draw_width - 2.0 - graph->indent) / (graph->num_points - 3);
+    graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH;
 
     gtk_widget_get_allocation (GTK_WIDGET (graph->disp), &allocation);
     surface = gdk_window_create_similar_surface (gtk_widget_get_window (GTK_WIDGET (graph->disp)),
@@ -172,7 +172,7 @@ static void draw_background(LoadGraph *graph) {
     }
     
 
-    const unsigned total_seconds = graph->speed * (LoadGraph::NUM_POINTS - 2) / 1000;
+    const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000;
 
     for (unsigned int i = 0; i < 7; i++) {
         double x = (i) * (graph->draw_width - graph->rmargin - graph->indent) / 6;
@@ -187,16 +187,57 @@ static void draw_background(LoadGraph *graph) {
         cairo_line_to (cr, (ceil(x) + 0.5) + graph->indent, graph->real_draw_height + 4.5);
         cairo_stroke(cr);
         unsigned seconds = total_seconds - i * total_seconds / 6;
-        const char* format;
-        if (i == 0)
-            format = dngettext(GETTEXT_PACKAGE, "%u second", "%u seconds", seconds);
-        else
-            format = "%u";
-        caption = g_strdup_printf(format, seconds);
+        unsigned minutes = seconds / 60;
+        unsigned hours = seconds / 3600;
+        caption = NULL;
+
+        if (hours != 0) {
+            if (minutes % 60 == 0) {
+                // If minutes mod 60 is 0 set it to 0, to prevent it from showing full hours in
+                // minutes in addition to hours.
+                minutes = 0;
+            } else {
+                // Round minutes as seconds wont get shown if neither hours nor minutes are 0.
+                minutes = int(rint(seconds / 60.0)) % 60;
+                if (minutes == 0) {
+                    // Increase hours if rounding minutes results in 0, because that would be
+                    // what it would be rounded to.
+                    hours++;
+                    // Set seconds to hours * 3600 to prevent seconds from being drawn.
+                    seconds = hours * 3600;
+                }
+            }
+
+            caption = g_strdup_printf(dngettext(GETTEXT_PACKAGE, "%u hr ", "%u hrs ", hours), hours);
+        }
+        if (minutes != 0) {
+            char* captionM = g_strdup_printf(dngettext(GETTEXT_PACKAGE, "%u min", "%u mins", minutes),
+                                             minutes);
+            if (caption == NULL) {
+                caption = captionM;
+            } else {
+                caption = strcat(caption, captionM);
+            }
+
+            // Add a whitespace if minutes and seconds are shown
+            if (hours == 0 && seconds % 60 != 0) {
+                caption = strcat(caption, " ");
+            }
+        }
+        if (caption == NULL || (seconds % 60 != 0 && (minutes == 0 || hours == 0))) {
+            char* captionS = g_strdup_printf(dngettext(GETTEXT_PACKAGE, "%u sec", "%u secs", seconds % 60),
+                                             seconds % 60);
+            if (caption == NULL) {
+                caption = captionS;
+            } else {
+                caption = strcat(caption, captionS);
+            }
+        }
+
         pango_layout_set_text (layout, caption, -1);
         pango_layout_get_extents (layout, NULL, &extents);
         cairo_move_to (cr,
-                       (ceil(x) + 0.5 + graph->indent) - (1.0 * extents.width / PANGO_SCALE / 2),
+                       (ceil(x) + 0.5 + graph->indent) - (1.0 * extents.width / PANGO_SCALE / 2) + 1.0,
                        graph->draw_height - 1.0 * extents.height / PANGO_SCALE);
         gdk_cairo_set_source_rgba (cr, &fg);
         pango_cairo_show_layout (cr, layout);
@@ -274,7 +315,7 @@ load_graph_draw (GtkWidget *widget,
     gdouble sample_width, x_offset;
 
     /* Number of pixels wide for one sample point */
-    sample_width = (double)(graph->draw_width - graph->rmargin - graph->indent) / (double)LoadGraph::NUM_POINTS;
+    sample_width = (double)(graph->draw_width - graph->rmargin - graph->indent) / (double)graph->num_points;
     /* Lines start at the right edge of the drawing,
      * a bit outside the clip rectangle. */
     x_offset = graph->draw_width - graph->rmargin + sample_width + 2;
@@ -305,7 +346,7 @@ load_graph_draw (GtkWidget *widget,
         cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height + 3);
         // then draw the path of the line.
         // Loop starts at 1 because the curve accesses the 0th data point.
-        for (i = 1; i < LoadGraph::NUM_POINTS; ++i) {
+        for (i = 1; i < graph->num_points; ++i) {
             if (graph->data[i][j] == -1.0f)
                 continue;
             if (drawSmooth) {
@@ -477,12 +518,12 @@ get_memory (LoadGraph *graph)
 static double
 nicenum (double x, int round)
 {
-    int expv;				/* exponent of x */
-    double f;				/* fractional part of x */
-    double nf;				/* nice, rounded fraction */
+    int expv;                /* exponent of x */
+    double f;                /* fractional part of x */
+    double nf;                /* nice, rounded fraction */
 
     expv = floor(log10(x));
-    f = x/pow(10.0, expv);		/* between 1 and 10 */
+    f = x/pow(10.0, expv);        /* between 1 and 10 */
     if (round) {
         if (f < 1.5)
             nf = 1.0;
@@ -512,8 +553,11 @@ net_scale (LoadGraph *graph, guint64 din, guint64 dout)
     graph->data[0][1] = 1.0f * dout / graph->net.max;
 
     guint64 dmax = std::max(din, dout);
-    graph->net.values[graph->net.cur] = dmax;
-    graph->net.cur = (graph->net.cur + 1) % LoadGraph::NUM_POINTS;
+    if (graph->latest == 0) {
+        graph->net.values[graph->num_points - 1] = dmax;
+    } else {
+        graph->net.values[graph->latest - 1] = dmax;
+    }
 
     guint64 new_max;
     // both way, new_max is the greatest value
@@ -521,7 +565,7 @@ net_scale (LoadGraph *graph, guint64 din, guint64 dout)
         new_max = dmax;
     else
         new_max = *std::max_element(&graph->net.values[0],
-                                    &graph->net.values[LoadGraph::NUM_POINTS]);
+                                    &graph->net.values[graph->num_points]);
 
     //
     // Round network maximum
@@ -590,7 +634,7 @@ net_scale (LoadGraph *graph, guint64 din, guint64 dout)
 
     const double scale = 1.0f * graph->net.max / new_max;
 
-    for (size_t i = 0; i < LoadGraph::NUM_POINTS; i++) {
+    for (size_t i = 0; i < graph->num_points; i++) {
         if (graph->data[i][0] >= 0.0f) {
             graph->data[i][0] *= scale;
             graph->data[i][1] *= scale;
@@ -685,8 +729,11 @@ load_graph_update_data (LoadGraph *graph)
 {
     // Rotate data one element down.
     std::rotate(&graph->data[0],
-                &graph->data[LoadGraph::NUM_POINTS - 1],
-                &graph->data[LoadGraph::NUM_POINTS]);
+                &graph->data[graph->num_points - 1],
+                &graph->data[graph->num_points]);
+
+    // Update rotation counter.
+    graph->latest = (graph->latest + 1) % graph->num_points;
 
     // Replace the 0th element
     switch (graph->type) {
@@ -758,6 +805,8 @@ LoadGraph::LoadGraph(guint type)
       n(0),
       type(type),
       speed(0),
+      num_points(0),
+      latest(0),
       draw_width(0),
       draw_height(0),
       render_counter(0),
@@ -768,6 +817,7 @@ LoadGraph::LoadGraph(guint type)
       graph_buffer_offset(0),
       colors(),
       data_block(),
+      data(),
       main_widget(NULL),
       disp(NULL),
       background(NULL),
@@ -838,7 +888,9 @@ LoadGraph::LoadGraph(guint type)
             break;
     }
 
-    speed  = GsmApplication::get()->config.graph_update_interval;
+    speed = GsmApplication::get()->config.graph_update_interval;
+
+    num_points = GsmApplication::get()->config.graph_data_points + 2;
 
     colors.resize(n);
 
@@ -856,6 +908,7 @@ LoadGraph::LoadGraph(guint type)
                                                          GSMCP_TYPE_PIE);
             break;
         case LOAD_GRAPH_NET:
+            net.values = std::vector<unsigned>(num_points);
             colors[0] = GsmApplication::get()->config.net_in_color;
             colors[1] = GsmApplication::get()->config.net_out_color;
             break;
@@ -886,11 +939,11 @@ LoadGraph::LoadGraph(guint type)
 
     gtk_box_pack_start (main_widget, GTK_WIDGET (disp), TRUE, TRUE, 0);
 
-
+    data = std::vector<double*>(num_points);
     /* Allocate data in a contiguous block */
-    data_block = std::vector<double>(n * LoadGraph::NUM_POINTS, -1.0);
+    data_block = std::vector<double>(n * num_points, -1.0);
 
-    for (guint i = 0; i < LoadGraph::NUM_POINTS; ++i)
+    for (guint i = 0; i < num_points; ++i)
         data[i] = &data_block[0] + i * n;
 
     gtk_widget_show_all (GTK_WIDGET (main_widget));
@@ -936,6 +989,47 @@ load_graph_change_speed (LoadGraph *graph,
                                             graph);
     }
 
+    graph->clear_background();
+}
+
+void
+load_graph_change_num_points(LoadGraph *graph,
+                             guint new_num_points)
+{
+    //Don't do anything if the value didn't change.
+    if (graph->num_points == new_num_points)
+        return;
+
+    // Sort the values in the data_block vector in the order they were accessed in by the pointers in data.
+    std::rotate(&graph->data_block[0],
+                &graph->data_block[(graph->num_points - graph->latest) * graph->n],
+                &graph->data_block[graph->num_points * graph->n]);
+
+    // Reset rotation counter.
+    graph->latest = 0;
+
+    // Resize the vectors to the new amount of data points.
+    graph->data.resize(new_num_points);
+    graph->data_block.resize(graph->n * new_num_points);
+    if (graph->type == LOAD_GRAPH_NET) {
+        graph->net.values.resize(new_num_points);
+    }
+
+    // Fill the new values with -1 instead of 0 if the vectors got bigger.
+    if (new_num_points > graph->num_points) {
+        std::fill(&graph->data_block[graph->n * graph->num_points],
+                  &graph->data_block[graph->n * new_num_points], -1.0);
+    }
+
+    // Replace the pointers in data, to match the new data_block values.
+    for (guint i = 0; i < new_num_points; ++i) {
+        graph->data[i] = &graph->data_block[0] + i * graph->n;
+    }
+
+    // Set the actual number of data points to be used by the graph.
+    graph->num_points = new_num_points;
+
+    // Force the scale to be redrawn.
     graph->clear_background();
 }
 

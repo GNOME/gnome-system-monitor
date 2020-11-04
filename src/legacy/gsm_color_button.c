@@ -852,6 +852,7 @@ gsm_color_button_get_property (GObject * object,
       break;
     case PROP_TYPE:
       g_value_set_uint (value, gsm_color_button_get_cbtype (color_button));
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
       break;

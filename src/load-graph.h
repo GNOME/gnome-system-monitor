@@ -36,7 +36,6 @@ struct LoadGraphLabels
 struct LoadGraph
   : private procman::NonCopyable
 {
-    static const unsigned NUM_POINTS = 60 + 2;
     static const unsigned GRAPH_MIN_HEIGHT = 40;
 
     LoadGraph(guint type);
@@ -53,6 +52,8 @@ struct LoadGraph
     guint n;
     gint type;
     guint speed;
+    guint num_points;
+    guint latest;
     guint draw_width, draw_height;
     guint render_counter;
     guint frames_per_unit;
@@ -64,7 +65,7 @@ struct LoadGraph
     std::vector<GdkRGBA> colors;
 
     std::vector<double> data_block;
-    double* data[NUM_POINTS];
+    std::vector<double*> data;
 
     GtkBox *main_widget;
     GtkDrawingArea *disp;
@@ -93,8 +94,7 @@ struct LoadGraph
         guint64 last_in, last_out;
         guint64 time;
         guint64 max;
-        unsigned values[NUM_POINTS];
-        size_t cur;
+        std::vector<unsigned> values;
     } net;
     /* }; */
 };
@@ -115,6 +115,11 @@ load_graph_stop (LoadGraph *g);
 void
 load_graph_change_speed (LoadGraph *g,
                          guint new_speed);
+
+/* Change load graph data points and restart it if it has been previously started */
+void
+load_graph_change_num_points(LoadGraph *g,
+                             guint new_num_points);
 
 /* Clear the history data. */
 void

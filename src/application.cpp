@@ -84,6 +84,15 @@ cb_timeouts_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication*
 }
 
 static void
+cb_data_points_changed(Gio::Settings& settings, Glib::ustring key, GsmApplication* app) {
+	app->config.graph_data_points = settings.get_int (key);
+	unsigned points = app->config.graph_data_points + 2;
+	load_graph_change_num_points(app->cpu_graph, points);
+	load_graph_change_num_points(app->mem_graph, points);
+	load_graph_change_num_points(app->net_graph, points);
+}
+
+static void
 apply_cpu_color_settings(Gio::Settings& settings, GsmApplication* app)
 {
     GVariant *cpu_colors_var = g_settings_get_value (settings.gobj (), GSM_SETTING_CPU_COLORS);
@@ -188,6 +197,11 @@ GsmApplication::load_settings()
     this->settings->signal_changed (GSM_SETTING_GRAPH_UPDATE_INTERVAL).connect (cbtc);
     config.disks_update_interval = this->settings->get_int (GSM_SETTING_DISKS_UPDATE_INTERVAL);
     this->settings->signal_changed (GSM_SETTING_DISKS_UPDATE_INTERVAL).connect (cbtc);
+
+    config.graph_data_points = this->settings->get_int (GSM_SETTING_GRAPH_DATA_POINTS);
+    this->settings->signal_changed (GSM_SETTING_GRAPH_DATA_POINTS).connect ([this](const Glib::ustring& key) {
+        cb_data_points_changed (*this->settings.operator->(), key, this);
+    });
 
     glibtop_get_cpu (&cpu);
     frequency = cpu.frequency;
