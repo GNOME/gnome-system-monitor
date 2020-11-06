@@ -260,6 +260,15 @@ load_graph_queue_draw (LoadGraph *graph)
 void load_graph_update_data (LoadGraph *graph);
 static int load_graph_update (gpointer user_data); // predeclare load_graph_update so we can compile ;)
 
+static void
+load_graph_rescale (LoadGraph *graph) {
+    ///org/gnome/desktop/interface/text-scaling-factor
+    graph->fontsize = 8 * graph->font_settings->get_double ("text-scaling-factor");
+    graph->clear_background();
+
+    load_graph_queue_draw (graph);
+}
+
 static gboolean
 load_graph_configure (GtkWidget *widget,
                       GdkEventConfigure *event,
@@ -267,6 +276,8 @@ load_graph_configure (GtkWidget *widget,
 {
     GtkAllocation allocation;
     LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
+
+    load_graph_rescale (graph);
 
     gtk_widget_get_allocation (widget, &allocation);
     graph->draw_width = allocation.width - 2 * FRAME_WIDTH;
@@ -827,11 +838,12 @@ LoadGraph::LoadGraph(guint type)
       labels(),
       mem_color_picker(NULL),
       swap_color_picker(NULL),
+      font_settings(Gio::Settings::create (FONT_SETTINGS_SCHEMA)),
       cpu(),
       net()
 {
     LoadGraph * const graph = this;
-
+    font_settings->signal_changed(FONT_SETTING_SCALING).connect([this](const Glib::ustring&) { load_graph_rescale (this); } );
     // FIXME:
     // on configure, graph->frames_per_unit = graph->draw_width/(LoadGraph::NUM_POINTS);
     // knock FRAMES down to 5 until cairo gets faster

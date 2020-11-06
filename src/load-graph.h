@@ -7,6 +7,7 @@
 
 #include "legacy/gsm_color_button.h"
 #include "util.h"
+#include "settings-keys.h"
 
 enum
 {
@@ -79,6 +80,8 @@ struct LoadGraph
     LoadGraphLabels labels;
     GsmColorButton *mem_color_picker;
     GsmColorButton *swap_color_picker;
+
+    Glib::RefPtr<Gio::Settings> font_settings;
 
     /* union { */
     struct

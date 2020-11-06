@@ -3,6 +3,9 @@
 #define _GSM_SETTINGS_KEYS_H_
 
 #define GSM_GSETTINGS_SCHEMA                "org.gnome.gnome-system-monitor"
+#define FONT_SETTINGS_SCHEMA                "org.gnome.desktop.interface"
+
+#define FONT_SETTING_SCALING                "text-scaling-factor"
 
 #define GSM_SETTINGS_CHILD_OPEN_FILES       "openfilestree"
 #define GSM_SETTINGS_CHILD_DISKS            "disktreenew"
