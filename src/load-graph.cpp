@@ -300,6 +300,7 @@ load_graph_state_changed (GtkWidget *widget,
 {
     LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
     force_refresh (graph);
+    graph->draw = gtk_widget_is_visible (widget);
     return TRUE;
 }
 
