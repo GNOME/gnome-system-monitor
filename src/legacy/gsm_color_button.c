@@ -235,8 +235,7 @@ gsm_color_button_draw (GtkWidget *widget, cairo_t * cr)
     color->green = MIN (1.0, color->green + highlight_factor);
   } else if (!sensitive) {
     GtkStyleContext *context = gtk_widget_get_style_context (widget);
-    
-    gtk_style_context_get_color (context, GTK_STATE_FLAG_INSENSITIVE, color);
+    gtk_style_context_get_color (context, gtk_widget_get_state_flags (widget), color);
   }
   gdk_cairo_set_source_rgba (cr, color);
   gdk_rgba_free(color);

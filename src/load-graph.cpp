@@ -84,7 +84,7 @@ static void draw_background(LoadGraph *graph) {
 
     GtkStyleContext *context = gtk_widget_get_style_context (GTK_WIDGET (GsmApplication::get()->stack));
     
-    gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &fg);
+    gtk_style_context_get_color (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get()->stack)), &fg);
 
     cairo_paint_with_alpha (cr, 0.0);
     layout = pango_cairo_create_layout (cr);
@@ -93,7 +93,7 @@ static void draw_background(LoadGraph *graph) {
     pango_layout_set_attributes (layout, attrs);
     g_clear_pointer (&attrs, pango_attr_list_unref);
 
-    gtk_style_context_get (context, GTK_STATE_FLAG_NORMAL, GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
+    gtk_style_context_get (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get()->stack)), GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
     pango_font_description_set_size (font_desc, 0.8 * graph->fontsize * PANGO_SCALE);
     pango_layout_set_font_description (layout, font_desc);
     pango_font_description_free (font_desc);
@@ -120,7 +120,7 @@ static void draw_background(LoadGraph *graph) {
     gtk_style_context_add_class (context, GTK_STYLE_CLASS_ENTRY);
 
     /* And, as a bonus, the user can choose the color of the grid. */
-    gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &fg_grid);
+    gtk_style_context_get_color (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get()->stack)), &fg_grid);
 
     /* Why not use the new features of the
      * GTK instead of cairo_rectangle ?! :) */

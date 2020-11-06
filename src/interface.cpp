@@ -196,6 +196,7 @@ static void
 create_sys_view (GsmApplication *app, GtkBuilder * builder)
 {
     GtkBox *cpu_graph_box, *mem_graph_box, *net_graph_box;
+    GtkExpander *cpu_expander, *mem_expander, *net_expander;
     GtkLabel *label,*cpu_label;
     GtkGrid *table;
     GsmColorButton *color_picker;
@@ -217,6 +218,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     /* The CPU BOX */
     
     cpu_graph_box = GTK_BOX (gtk_builder_get_object (builder, "cpu_graph_box"));
+    cpu_expander = GTK_EXPANDER (gtk_builder_get_object (builder, "cpu_expander"));
+    g_object_bind_property (cpu_expander, "expanded", cpu_expander, "vexpand", G_BINDING_DEFAULT);
 
     cpu_graph = new LoadGraph(LOAD_GRAPH_CPU);
     gtk_widget_set_size_request (GTK_WIDGET(load_graph_get_widget(cpu_graph)), -1, 70);
@@ -275,6 +278,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     /** The memory box */
     
     mem_graph_box = GTK_BOX (gtk_builder_get_object (builder, "mem_graph_box"));
+    mem_expander = GTK_EXPANDER (gtk_builder_get_object (builder, "mem_expander"));
+    g_object_bind_property (mem_expander, "expanded", mem_expander, "vexpand", G_BINDING_DEFAULT);
 
     mem_graph = new LoadGraph(LOAD_GRAPH_MEM);
     gtk_widget_set_size_request (GTK_WIDGET(load_graph_get_widget(mem_graph)), -1, 70);
@@ -315,6 +320,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     /* The net box */
     
     net_graph_box = GTK_BOX (gtk_builder_get_object (builder, "net_graph_box"));
+    net_expander = GTK_EXPANDER (gtk_builder_get_object (builder, "net_expander"));
+    g_object_bind_property (net_expander, "expanded", net_expander, "vexpand", G_BINDING_DEFAULT);
 
     net_graph = new LoadGraph(LOAD_GRAPH_NET);
     gtk_widget_set_size_request (GTK_WIDGET(load_graph_get_widget(net_graph)), -1, 70);
