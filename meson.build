@@ -2,10 +2,10 @@
 project('gnome-system-monitor',
   'c', 'cpp',
   default_options : [
-    'c_std=c11', 'cpp_std=c++11'
+    'c_std=c11', 'cpp_std=c++11', 'warning_level=3'
   ],
-  version: '3.32.0',
-  meson_version: '>=0.43.0',
+  version: '40.alpha',
+  meson_version: '>=0.50.0',
 )
 
 
@@ -51,7 +51,6 @@ librsvg = dependency('librsvg-2.0', version: '>=2.35')
 libxml  = dependency('libxml-2.0',  version: '>=2.0')
 libdazzle = dependency('libdazzle-1.0', version: '>=3.26.3')
 
-
 if get_option('wnck')
   libwnck = dependency('libwnck-3.0', version: '>=2.91.0')
 else
@@ -71,7 +70,6 @@ conf.set('HAVE_SYSTEMD', libsystemd.found())
 # Compiler flags
 
 extra_flags = [
-  '-Wall',
   '-Wcast-align',
   '-Wchar-subscripts',
   '-Winline',
@@ -155,6 +153,7 @@ i18n.merge_file(
   ),
   output: 'org.gnome.gnome-system-monitor.policy',
   po_dir: 'po',
+  data_dirs: 'po',
   install: true,
   install_dir: join_paths(get_option('datadir'), 'polkit-1', 'actions'),
 )

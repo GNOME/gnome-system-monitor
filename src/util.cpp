@@ -1,6 +1,14 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #include <config.h>
 
+#include <algorithm>
+#include <cmath>
+#include <cstdint>
+#include <cstdio>
+#include <random>
+#include <tuple>
+#include <vector>
+
 #include <glib/gi18n.h>
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -252,7 +260,6 @@ static double
 get_relative_time(void)
 {
     static unsigned long start_time;
-    GTimeVal tv;
 
     if (G_UNLIKELY(!start_time)) {
         glibtop_proc_time buf;
@@ -260,18 +267,17 @@ get_relative_time(void)
         start_time = buf.start_time;
     }
 
-    g_get_current_time(&tv);
-    return (tv.tv_sec - start_time) + 1e-6 * tv.tv_usec;
+    return 1e-6 * g_get_monotonic_time () - start_time;
 }
 
-static guint64
+static gdouble
 get_size_from_column(GtkTreeModel* model, GtkTreeIter* first,
                              const guint index)
 {
     GValue value = { 0 };
     gtk_tree_model_get_value(model, first, index, &value);
 
-    guint64 size;
+    gdouble size;
     switch (G_VALUE_TYPE(&value)) {
         case G_TYPE_UINT:
             size = g_value_get_uint(&value);
@@ -281,6 +287,9 @@ get_size_from_column(GtkTreeModel* model, GtkTreeIter* first,
             break;
         case G_TYPE_UINT64:
             size = g_value_get_uint64(&value);
+            break;
+        case G_TYPE_DOUBLE:
+            size = g_value_get_double(&value);
             break;
         default:
             g_assert_not_reached();
@@ -310,9 +319,67 @@ procman_debug_real(const char *file, int line, const char *func,
 }
 
 
+// h is in [0.0; 1.0] (and not [0°; 360°] )
+// s is in [0.0; 1.0]
+// v is in [0.0; 1.0]
+// https://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV
+std::tuple<double, double, double> hsv_to_rgb(double h, double s, double v)
+{
+    const double c = v * s;
+    const double hp = h * 6; // 360° / 60°
+    const double x = c * (1 - std::abs(std::fmod(hp, 2.0) - 1));
+
+    double r1 = 0 , g1 = 0, b1 = 0;
+
+    switch (int(hp)) {
+    case 0: r1 = c; g1 = x; b1 = 0; break;
+    case 1: r1 = x; g1 = c; b1 = 0; break;
+    case 2: r1 = 0; g1 = c; b1 = x; break;
+    case 3: r1 = 0; g1 = x; b1 = c; break;
+    case 4: r1 = x; g1 = 0; b1 = c; break;
+    case 5: r1 = c; g1 = 0; b1 = x; break;
+    }
+
+    const double m = v - c;
+
+    return {r1 + m, g1 + m, b1 + m};
+}
+
+
+std::string rgb_to_color_string(const std::tuple<double, double, double> &t)
+{
+    char b[14];
+    auto c = [](double d) { return (unsigned short)(0xffff * d); };
+    std::snprintf(b, sizeof b, "#%04x%04x%04x", c(std::get<0>(t)), c(std::get<1>(t)), c(std::get<2>(t)));
+    return {b, 13};
+}
+
 
 namespace procman
 {
+
+    // http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/
+    std::vector<std::string> generate_colors(unsigned n)
+    {
+        constexpr double golden_ration_conjugate = 0.618033988749894848204586834;
+
+        std::vector<std::string> values;
+
+        std::random_device re;
+        std::uniform_real_distribution<> dist(0.0, 1.0);
+
+        double h = dist(re);
+
+        for (unsigned i = 0; i < n; i++) {
+            h = CLAMP(h, 0.0, 1.0);
+            auto rgb = hsv_to_rgb(h, 0.5, 0.95);
+            values.push_back(rgb_to_color_string(rgb));
+            h = std::fmod(h + golden_ration_conjugate, 1.0);
+        }
+
+        return values;
+    }
+
     void size_cell_data_func(GtkTreeViewColumn *, GtkCellRenderer *renderer,
                              GtkTreeModel *model, GtkTreeIter *iter,
                              gpointer user_data)
@@ -340,6 +407,24 @@ namespace procman
         g_value_unset(&value);
 
         char *str = g_format_size_full(size, G_FORMAT_SIZE_IEC_UNITS);
+        g_object_set(renderer, "text", str, NULL);
+        g_free(str);
+    }
+
+    void percentage_cell_data_func(GtkTreeViewColumn *, GtkCellRenderer *renderer,
+                             GtkTreeModel *model, GtkTreeIter *iter,
+                             gpointer user_data)
+    {
+        const guint index = GPOINTER_TO_UINT(user_data);
+
+        gdouble size;
+        GValue value = { 0 };
+
+        gtk_tree_model_get_value(model, iter, index, &value);
+        size = g_value_get_double(&value);
+        g_value_unset(&value);
+
+        char *str = g_strdup_printf("%.2f", size);
         g_object_set(renderer, "text", str, NULL);
         g_free(str);
     }
@@ -375,13 +460,17 @@ namespace procman
         g_value_unset(&value);
 
         if (size == 0) {
-            char *str = g_strdup_printf ("<i>%s</i>", _("N/A"));
-            g_object_set(renderer, "markup", str, NULL);
-            g_free(str);
+            g_object_set (renderer,
+                          "text", _("N/A"),
+                          "style", PANGO_STYLE_ITALIC,
+                          NULL);
         }
         else {
             char *str = g_format_size_full(size, G_FORMAT_SIZE_IEC_UNITS);
-            g_object_set(renderer, "text", str, NULL);
+            g_object_set (renderer,
+                          "text", str,
+                          "style", PANGO_STYLE_NORMAL,
+                          NULL);
             g_free(str);
         }
 
@@ -414,12 +503,16 @@ namespace procman
         g_value_unset(&value);
 
         if (size == 0) {
-            char *str = g_strdup_printf ("<i>%s</i>", _("N/A"));
-            g_object_set(renderer, "markup", str, NULL);
-            g_free(str);
+            g_object_set (renderer,
+                          "text", _("N/A"),
+                          "style", PANGO_STYLE_ITALIC,
+                          NULL);
         }
         else {
-            g_object_set(renderer, "text", procman::format_rate(size, FALSE).c_str(), NULL);
+            g_object_set (renderer,
+                          "text", procman::format_rate(size, FALSE).c_str(),
+                          "style", PANGO_STYLE_NORMAL,
+                          NULL);
         }
 
     }
@@ -581,7 +674,7 @@ namespace procman
     {
         const guint index = GPOINTER_TO_UINT(user_data);
 
-        guint64 size1, size2;
+        gdouble size1, size2;
         size1 = get_size_from_column(model, first, index);
         size2 = get_size_from_column(model, second, index);
 
@@ -637,3 +730,30 @@ get_monospace_system_font_name ()
 {
     return Gio::Settings::create ("org.gnome.desktop.interface")->get_string ("monospace-font-name");
 }
+
+
+GtkLabel *
+make_tnum_label (void)
+{
+    PangoAttrList *attrs = make_tnum_attr_list ();
+    GtkWidget *label = gtk_label_new (NULL);
+
+    gtk_label_set_attributes (GTK_LABEL (label), attrs);
+
+    g_clear_pointer (&attrs, pango_attr_list_unref);
+
+    return GTK_LABEL (label);
+}
+
+
+PangoAttrList *
+make_tnum_attr_list (void)
+{
+    PangoAttrList *attrs = NULL;
+
+    attrs = pango_attr_list_new ();
+    pango_attr_list_insert (attrs, pango_attr_font_features_new ("tnum=1"));
+
+    return attrs;
+}
+

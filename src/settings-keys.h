@@ -3,6 +3,9 @@
 #define _GSM_SETTINGS_KEYS_H_
 
 #define GSM_GSETTINGS_SCHEMA                "org.gnome.gnome-system-monitor"
+#define FONT_SETTINGS_SCHEMA                "org.gnome.desktop.interface"
+
+#define FONT_SETTING_SCALING                "text-scaling-factor"
 
 #define GSM_SETTINGS_CHILD_OPEN_FILES       "openfilestree"
 #define GSM_SETTINGS_CHILD_DISKS            "disktreenew"
@@ -26,6 +29,7 @@
 #define GSM_SETTING_DRAW_STACKED            "cpu-stacked-area-chart"
 #define GSM_SETTING_DRAW_SMOOTH             "cpu-smooth-graph"
 #define GSM_SETTING_NETWORK_IN_BITS         "network-in-bits"
+#define GSM_SETTING_GRAPH_DATA_POINTS       "graph-data-points"
 #define GSM_SETTING_SHOW_CPU                "show-cpu"
 #define GSM_SETTING_SHOW_MEM                "show-mem"
 #define GSM_SETTING_SHOW_NETWORK            "show-network"

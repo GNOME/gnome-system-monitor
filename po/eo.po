@@ -4,24 +4,25 @@
 # Fabio SANTOS <fabiosantos.gyn@gmail.com>, 2010.
 # Michael MORONI < >, 2011.
 # Daniel PUENTES <blatberk@openmailbox.org>, 2015.
-# Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2010, 2011, 2012, 2015, 2018.
 # Carmen Bianca BAKKER <carmen@carmenbianca.eu>, 2018-2019.
+# Victor GROUSSET <victorATtuxayoD0Tnet>, 2020.
+# Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2010-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2019-03-23 09:01+0000\n"
-"PO-Revision-Date: 2019-04-24 17:27+0200\n"
-"Last-Translator: Carmen Bianca BAKKER <carmen@carmenbianca.eu>\n"
+"POT-Creation-Date: 2020-02-08 07:14+0000\n"
+"PO-Revision-Date: 2020-02-14 22:19+0100\n"
+"Last-Translator: Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>\n"
 "Language-Team: Esperanto <gnome-eo-list@gnome.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 3.32.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 3.34.0\n"
 "X-DamnedLies-Scope: partial\n"
 "X-Project-Style: gnome\n"
 
@@ -118,9 +119,11 @@ msgstr "Reasigni prioritaton de procezo"
 msgid "Privileges are required to change the priority of processes"
 msgstr "Necesas privilegioj, por ŝanĝi prioritaton de procezoj"
 
-#: data/interface.ui:150
-msgid "End _Process"
-msgstr "Fini _procezon"
+#: data/interface.ui:150 src/procdialogs.cpp:135 src/proctable.cpp:147
+msgid "_End Process"
+msgid_plural "_End Processes"
+msgstr[0] "_Fini procezon"
+msgstr[1] "_Fini procezojn"
 
 #: data/interface.ui:164
 msgid "Show process properties"
@@ -139,7 +142,7 @@ msgid "Memory and Swap History"
 msgstr "Memora kaj permutmemora historio"
 
 #: data/interface.ui:319 src/interface.cpp:274 src/procproperties.cpp:70
-#: src/proctable.cpp:347
+#: src/proctable.cpp:350
 msgid "Memory"
 msgstr "Memoro"
 
@@ -188,99 +191,97 @@ msgstr "Filtri dosierojn laŭ nomo"
 msgid "Case insensitive"
 msgstr "Usklecoblinda"
 
-#: data/menus.ui:6 data/menus.ui:60
+#: data/menus.ui:6 data/menus.ui:57
 msgctxt "Menu item to Open Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Serĉi malfermitajn dosierojn"
 
-#: data/menus.ui:12 data/menus.ui:66
+#: data/menus.ui:12 data/menus.ui:63
 msgid "Preferences"
 msgstr "Agordoj"
 
-#: data/menus.ui:16 data/menus.ui:70
+#: data/menus.ui:16 data/menus.ui:67
 msgid "Help"
 msgstr "Helpo"
 
-#: data/menus.ui:21 data/menus.ui:75
-#| msgid "System Monitor"
+#: data/menus.ui:20 data/menus.ui:71
 msgid "About System Monitor"
 msgstr "Pri Sistemmonitoro"
 
-#: data/menus.ui:29
+#: data/menus.ui:28
 msgid "_Refresh"
 msgstr "_Aktualigi"
 
-#: data/menus.ui:36
+#: data/menus.ui:34
 msgid "_Active Processes"
 msgstr "_Aktivaj procezoj"
 
-#: data/menus.ui:41
+#: data/menus.ui:39
 msgid "A_ll Processes"
 msgstr "Ĉ_iuj procezoj"
 
-#: data/menus.ui:46
+#: data/menus.ui:44
 msgid "M_y Processes"
 msgstr "M_iaj procezoj"
 
-#: data/menus.ui:53
-#| msgid "_Dependencies"
+#: data/menus.ui:51
 msgid "Show _Dependencies"
 msgstr "Montri _dependecojn"
 
-#: data/menus.ui:83
+#: data/menus.ui:79
 msgid "_Properties"
 msgstr "_Atributoj"
 
-#: data/menus.ui:90
+#: data/menus.ui:85
 msgid "_Memory Maps"
 msgstr "_Memormapoj"
 
 #. Translators: this means 'Files that are open' (open is not a verb here)
-#: data/menus.ui:95
+#: data/menus.ui:89
 msgid "Open _Files"
 msgstr "Malfermi _dosierojn"
 
-#: data/menus.ui:102
+#: data/menus.ui:95
 msgid "_Change Priority"
 msgstr "Ŝ_anĝi prioritaton"
 
-#: data/menus.ui:105 src/util.cpp:161
+#: data/menus.ui:98 src/util.cpp:161
 msgid "Very High"
 msgstr "Tre alta"
 
-#: data/menus.ui:110 src/util.cpp:163
+#: data/menus.ui:103 src/util.cpp:163
 msgid "High"
 msgstr "Alta"
 
-#: data/menus.ui:115 src/util.cpp:165
+#: data/menus.ui:108 src/util.cpp:165
 msgid "Normal"
 msgstr "Normala"
 
-#: data/menus.ui:120 src/util.cpp:167
+#: data/menus.ui:113 src/util.cpp:167
 msgid "Low"
 msgstr "Malalta"
 
-#: data/menus.ui:125 src/util.cpp:169
+#: data/menus.ui:118 src/util.cpp:169
 msgid "Very Low"
 msgstr "Tre malalta"
 
-#: data/menus.ui:132
+#: data/menus.ui:125
 msgid "Custom"
 msgstr "Personigita"
 
-#: data/menus.ui:141
+#: data/menus.ui:134
 msgid "_Stop"
 msgstr "_Haltigi"
 
-#: data/menus.ui:147
+#: data/menus.ui:139
 msgid "_Continue"
 msgstr "_Daŭrigi"
 
-#: data/menus.ui:153
+#: data/menus.ui:144
 msgid "_End"
 msgstr "_Fini"
 
-#: data/menus.ui:159
+#: data/menus.ui:149
 msgid "_Kill"
 msgstr "Ĉ_esigi"
 
@@ -435,7 +436,8 @@ msgstr ""
 "Kristjan SCHMIDT\n"
 "Michael MORONI\n"
 "Daniel PUENTES\n"
-"Carmen Bianca BAKKER <carmen@carmenbianca.eu>"
+"Carmen Bianca BAKKER <carmen@carmenbianca.eu>\n"
+"Victor Grousset/tuxayo <victor AT tuxayoPOINTnet>"
 
 #. xgettext: ? stands for unknown
 #: src/legacy/e_date.c:156
@@ -501,7 +503,7 @@ msgstr "Ricevis nevalidajn kolordatumojn\n"
 
 #: src/legacy/gsm_color_button.c:538
 msgid "Click to set graph colors"
-msgstr "Alklaki por agordi grafeokoloroj"
+msgstr "Alklaki por agordi grafeokolorojn"
 
 #: src/load-graph.cpp:186
 #, c-format
@@ -510,15 +512,21 @@ msgid_plural "%u seconds"
 msgstr[0] "%u sekundo"
 msgstr[1] "%u sekundoj"
 
-#: src/load-graph.cpp:412
+#: src/load-graph.cpp:415
 msgid "not available"
 msgstr "nedisponeble"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: src/load-graph.cpp:415
+#: src/load-graph.cpp:418
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) de %s"
+
+#. xgettext: Used cache string, e.g.: "Cache 2.4GiB"
+#: src/load-graph.cpp:422
+#, c-format
+msgid "Cache %s"
+msgstr "Kaŝmemoro %s"
 
 #: src/lsof.cpp:118
 #, c-format
@@ -716,365 +724,353 @@ msgstr "Agordas montrotajn procezojn."
 msgid "Saves the currently viewed tab"
 msgstr "Konservas la aktuale vidigatan langeton"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:96
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:112
 msgid "CPU colors"
 msgstr "Ĉefprocesoraj koloroj"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:98
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:114
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr ""
 "Ĉiuj elementoj devas esti, kiel la aranĝo (Ĉefprocesoro#, deksesuma "
 "kolorvaloro)"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:105
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:121
 msgid "Default graph memory color"
 msgstr "Defaŭlta koloro de la diagrama memoro"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:112
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:128
 msgid "Default graph swap color"
 msgstr "Defaŭlta diagrama virtualmemora koloro"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:119
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:135
 msgid "Default graph incoming network traffic color"
 msgstr "Defaŭlta diagrama koloro pri ricevanta reta trafiko"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:126
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:142
 msgid "Default graph outgoing network traffic color"
 msgstr "Defaŭlta diagrama koloro pri sendanta reta trafiko"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:133
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:149
 msgid "Show network traffic in bits"
 msgstr "Montri retan datumtrafikon bite"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:140
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:156
 msgid "Show CPU chart as stacked area chart"
 msgstr "Montri ĉefprocesoran diagramon kiel staplita area diagramo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:142
-msgid ""
-"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
-"of a line chart."
-msgstr ""
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:149
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:165
 msgid "Show CPU chart as smooth graph using Bezier curves"
 msgstr "Montri ĉefprocesoran diagramon kiel glata diagramo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:151
-msgid ""
-"If TRUE, system-monitor shows the CPU chart as a smoothed graph, otherwise "
-"as a line chart."
-msgstr ""
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:166
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:182
 msgid "Process view sort column"
 msgstr "Ordiga kolumno el procezvido"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:173
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:189
 msgid "Process view columns order"
 msgstr "Ordo de kolumnoj el procezvido"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:180
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:196
 msgid "Process view sort order"
 msgstr "Ordiga ordo el procezvido"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:187
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:203
 msgid "Width of process “Name” column"
 msgstr "Kolumnolarĝo de “Nomo”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:194
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:210
 msgid "Show process “Name” column on startup"
 msgstr "Montri kolumnon “Nomo” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:201
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:217
 msgid "Width of process “User” column"
 msgstr "Kolumnolarĝo de “Uzanto”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:208
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:224
 msgid "Show process “User” column on startup"
 msgstr "Montri kolumnon “Uzanto” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:215
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
 msgid "Width of process “Status” column"
 msgstr "Kolumnolarĝo de “Stato”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:222
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
 msgid "Show process “Status” column on startup"
 msgstr "Montri kolumnon “Stato” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:229
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:245
 msgid "Width of process “Virtual Memory” column"
 msgstr "Kolumnolarĝo de “Virtuala memoro”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:236
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:252
 msgid "Show process “Virtual Memory” column on startup"
 msgstr "Montri kolumnon “Virtuala memoro” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:243
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:259
 msgid "Width of process “Resident Memory” column"
 msgstr "Kolumnolarĝo de “Rezida memoro”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:250
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:266
 msgid "Show process “Resident Memory” column on startup"
 msgstr "Montri kolumnon “Rezida memoro” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:257
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:273
 msgid "Width of process “Writable Memory” column"
 msgstr "Kolumnolarĝo de “Skribebla memoro”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:264
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:280
 msgid "Show process “Writable Memory” column on startup"
 msgstr "Montri kolumnon “Skribebla memoro” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:271
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:287
 msgid "Width of process “Shared Memory” column"
 msgstr "Kolumnolarĝo de “Komuna memoro”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:278
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:294
 msgid "Show process “Shared Memory” column on startup"
 msgstr "Montri kolumnon “Komuna memoro” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:285
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:301
 msgid "Width of process “X Server Memory” column"
 msgstr "Kolumnolarĝo de “X-servila memoro”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:292
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:308
 msgid "Show process “X Server Memory” column on startup"
 msgstr "Montri kolumnon “X-servila memoro” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:299
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:315
 msgid "Width of process “CPU %” column"
 msgstr "Kolumnolarĝo de “Ĉefprocesora %”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:306
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:322
 msgid "Show process “CPU %” column on startup"
 msgstr "Montri kolumnon “Cefprocesora %” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:313
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:329
 msgid "Width of process “CPU Time” column"
 msgstr "Kolumnolarĝo de “Ĉefprocesora daŭro”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:320
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:336
 msgid "Show process “CPU Time” column on startup"
 msgstr "Montri kolumnon “Ĉefprocesora daŭro” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:327
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:343
 msgid "Width of process “Started” column"
 msgstr "Kolumnolarĝo de “Startigita”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:334
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:350
 msgid "Show process “Started” column on startup"
 msgstr "Montri kolumnon “Startigita” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:341
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:357
 msgid "Width of process “Nice” column"
 msgstr "Kolumnolarĝo de “Nice”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:348
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:364
 msgid "Show process “Nice” column on startup"
 msgstr "Montri kolumnon “Nice” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:355
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
 msgid "Width of process “PID” column"
 msgstr "Kolumnolarĝo de “PID”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:362
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
 msgid "Show process “PID” column on startup"
 msgstr "Montri kolumnon “PID” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:369
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
 msgid "Width of process “SELinux Security Context” column"
 msgstr "Kolumnolarĝo de “SELinux-sekura kunteksto”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:375
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:391
 msgid "Show process “SELinux Security Context” column on startup"
 msgstr "Montri kolumnon “SELinux-sekura kunteksto” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:382
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:398
 msgid "Width of process “Command Line” column"
 msgstr "Kolumnolarĝo de “Komandolinio”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:389
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:405
 msgid "Show process “Command Line” column on startup"
 msgstr "Montri kolumnon “Komandlinio” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:396
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:412
 msgid "Width of process “Memory” column"
 msgstr "Kolumnolarĝo de “Memoro”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:403
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:419
 msgid "Show process “Memory” column on startup"
 msgstr "Montri kolumnon “Memoro” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:410
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:426
 msgid "Width of process “Waiting Channel” column"
 msgstr "Kolumnolarĝo de “Atendanta kanalo”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:417
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:433
 msgid "Show process “Waiting Channel” column on startup"
 msgstr "Montri kolumnon “Atendante kanalo” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:424
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:440
 msgid "Width of process “Control Group” column"
 msgstr "Kolumnolarĝo de “Kontrolgrupo”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:431
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:447
 msgid "Show process “Control Group” column on startup"
 msgstr "Montri kolumnon “Kontrolgrupo” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:438
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:454
 msgid "Width of process “Unit” column"
 msgstr "Kolumnolarĝo de “Unuo”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:445
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:461
 msgid "Show process “Unit” column on startup"
 msgstr "Montri kolumnon “Unuo” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:452
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:468
 msgid "Width of process “Session” column"
 msgstr "Kolumnolarĝo de “Seanco”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:459
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:475
 msgid "Show process “Session” column on startup"
 msgstr "Montri kolumnon “Seanco” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:466
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:482
 msgid "Width of process “Seat” column"
 msgstr "Kolumnolarĝo de “Sidejo”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:473
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:489
 msgid "Show process “Seat” column on startup"
 msgstr "Montri kolumnon “Sidejo” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:480
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:496
 msgid "Width of process “Owner” column"
 msgstr "Kolumnolarĝo de “Posedanto”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:487
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:503
 msgid "Show process “Owner” column on startup"
 msgstr "Montri kolumnon “Posedanto” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:494
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:510
 msgid "Width of process “Total disk read” column"
 msgstr "Kolumnolarĝo de “Totala diskolego”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:501
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:517
 msgid "Show process “Total disk read” column on startup"
 msgstr "Montri kolumnon “Totala diskolego” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:508
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:524
 msgid "Width of process “Total disk write” column"
 msgstr "Kolumnolarĝo de “Totala diskoskribo”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:515
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:531
 msgid "Show process “Total disk write” column on startup"
 msgstr "Montri kolumnon “Totala diskoskribo” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:522
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:538
 msgid "Width of process “Disk read” column"
 msgstr "Kolumnolarĝo de “Diskolego”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:529
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:545
 msgid "Show process “Disk read” column on startup"
 msgstr "Montri kolumnon “Diskolego” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:536
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:552
 msgid "Width of process “Disk write” column"
 msgstr "Kolumnolarĝo de “Diskoskribo”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:543
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:559
 msgid "Show process “Disk write” column on startup"
 msgstr "Montri kolumnon de “Diskoskribo” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:550
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:566
 msgid "Width of process “Priority” column"
 msgstr "Kolumnolarĝo de “Prioritato”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:557
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:573
 msgid "Show process “Priority” column on startup"
 msgstr "Montri kolumnon de “Prioritato” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:568
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:584
 msgid "Disk view sort column"
 msgstr "Ordiga kolumno de diskvido"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:575
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:591
 msgid "Disk view sort order"
 msgstr "Ordo de kolumnoj de diskvido"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:582
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:598
 msgid "Disk view columns order"
 msgstr "Ordo de kolumnoj el diskvido"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:589
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:605
 msgid "Width of disk view “Device” column"
 msgstr "Kolumnolarĝo de “Aparator”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:596
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:612
 msgid "Show disk view “Device” column on startup"
 msgstr "Montri kolumnon “Aparato” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:603
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:619
 msgid "Width of disk view “Directory” column"
 msgstr "Kolumnolarĝo de “Dosierujo”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:610
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:626
 msgid "Show disk view “Directory” column on startup"
 msgstr "Montri kolumnon “Dosierujo” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:617
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:633
 msgid "Width of disk view “Type” column"
 msgstr "Kolumnolarĝo de “Speco”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:624
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:640
 msgid "Show disk view “Type” column on startup"
 msgstr "Montri kolumnon “Speco” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:631
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:647
 msgid "Width of disk view “Total” column"
 msgstr "Kolumnolarĝo de “Suma”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:638
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:654
 msgid "Show disk view “Total” column on startup"
 msgstr "Montri kolumnon “Suma” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:645
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:661
 msgid "Width of disk view “Free” column"
 msgstr "Kolumnolarĝo de “Libera”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:652
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:668
 msgid "Show disk view “Free” column on startup"
 msgstr "Montri kolumnon “Libera” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:659
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:675
 msgid "Width of disk view “Available” column"
 msgstr "Kolumnolarĝo de “Disponebla”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:666
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:682
 msgid "Show disk view “Available” column on startup"
 msgstr "Montri kolumnon “Disponebla” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:673
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:689
 msgid "Width of disk view “Used” column"
 msgstr "Kolumnolarĝo de “Uzata”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:680
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:696
 msgid "Show disk view “Used” column on startup"
 msgstr "Montri kolumnon “Uzata” dum startigo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:690
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:706
 msgid "Memory map sort column"
 msgstr "Ordiga kolumno de memormapo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:697
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:713
 msgid "Memory map sort order"
 msgstr "Ordiga ordo de memormapo"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:706
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:722
 msgid "Open files sort column"
 msgstr "Ordiga kolumno de malfermitaj dosieroj"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:713
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:729
 msgid "Open files sort order"
 msgstr "Ordiga ordo de malfermitaj dosieroj"
 
@@ -1168,12 +1164,6 @@ msgstr ""
 "Finante procezon, oni riskas forigi datumojn, fini la seancon aŭ krei "
 "sekurecajn problemojn. Nur nerespondeblaj procezoj finindas."
 
-#: src/procdialogs.cpp:135
-msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "_Fini procezon"
-msgstr[1] "_Fini procezojn"
-
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:139
@@ -1215,76 +1205,76 @@ msgstr ""
 "Ju malpli alta valoro, des pli alta prioritato."
 
 #: src/procproperties.cpp:50 src/procproperties.cpp:84
-#: src/procproperties.cpp:87 src/util.cpp:378 src/util.cpp:417
+#: src/procproperties.cpp:87 src/util.cpp:376 src/util.cpp:415
 msgid "N/A"
 msgstr "Ne aplikeblas"
 
-#: src/procproperties.cpp:67 src/proctable.cpp:332
+#: src/procproperties.cpp:67 src/proctable.cpp:335
 msgid "Process Name"
 msgstr "Procez-nomo"
 
-#: src/procproperties.cpp:68 src/proctable.cpp:333
+#: src/procproperties.cpp:68 src/proctable.cpp:336
 msgid "User"
 msgstr "Uzanto"
 
-#: src/procproperties.cpp:69 src/proctable.cpp:334
+#: src/procproperties.cpp:69 src/proctable.cpp:337
 msgid "Status"
 msgstr "Stato"
 
-#: src/procproperties.cpp:71 src/proctable.cpp:335
+#: src/procproperties.cpp:71 src/proctable.cpp:338
 msgid "Virtual Memory"
 msgstr "Virtuala memoro"
 
-#: src/procproperties.cpp:72 src/proctable.cpp:336
+#: src/procproperties.cpp:72 src/proctable.cpp:339
 msgid "Resident Memory"
 msgstr "Rezida memoro"
 
-#: src/procproperties.cpp:73 src/proctable.cpp:337
+#: src/procproperties.cpp:73 src/proctable.cpp:340
 msgid "Writable Memory"
 msgstr "Skribebla memoro"
 
-#: src/procproperties.cpp:74 src/proctable.cpp:338
+#: src/procproperties.cpp:74 src/proctable.cpp:341
 msgid "Shared Memory"
 msgstr "Kunhava memoro"
 
-#: src/procproperties.cpp:76 src/proctable.cpp:339
+#: src/procproperties.cpp:76 src/proctable.cpp:342
 msgid "X Server Memory"
 msgstr "X-servila memoro"
 
-#: src/procproperties.cpp:79 src/proctable.cpp:341
+#: src/procproperties.cpp:79 src/proctable.cpp:344
 msgid "CPU Time"
 msgstr "Ĉefprocesora daŭro"
 
-#: src/procproperties.cpp:80 src/proctable.cpp:342
+#: src/procproperties.cpp:80 src/proctable.cpp:345
 msgid "Started"
 msgstr "Startigita"
 
-#: src/procproperties.cpp:81 src/proctable.cpp:343
+#: src/procproperties.cpp:81 src/proctable.cpp:346
 msgid "Nice"
 msgstr "Nice"
 
-#: src/procproperties.cpp:82 src/proctable.cpp:361
+#: src/procproperties.cpp:82 src/proctable.cpp:364
 msgid "Priority"
 msgstr "Prioritato"
 
-#: src/procproperties.cpp:83 src/proctable.cpp:344
+#: src/procproperties.cpp:83 src/proctable.cpp:347
 msgid "ID"
 msgstr "ID"
 
-#: src/procproperties.cpp:84 src/proctable.cpp:345
+#: src/procproperties.cpp:84 src/proctable.cpp:348
 msgid "Security Context"
 msgstr "Sekureca kunteksto"
 
-#: src/procproperties.cpp:85 src/proctable.cpp:346
+#: src/procproperties.cpp:85 src/proctable.cpp:349
 msgid "Command Line"
 msgstr "Komandlinio"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:86 src/proctable.cpp:349
+#: src/procproperties.cpp:86 src/proctable.cpp:352
 msgid "Waiting Channel"
 msgstr "Atentanta kanalo"
 
-#: src/procproperties.cpp:87 src/proctable.cpp:350
+#: src/procproperties.cpp:87 src/proctable.cpp:353
 msgid "Control Group"
 msgstr "Kontrolgrupo"
 
@@ -1293,42 +1283,42 @@ msgstr "Kontrolgrupo"
 msgid "%s (PID %u)"
 msgstr "%s (Procezidentigilo %u)"
 
-#: src/proctable.cpp:340
+#: src/proctable.cpp:343
 #, no-c-format
 msgid "% CPU"
 msgstr "% ĉefprocesoro"
 
-#: src/proctable.cpp:351
+#: src/proctable.cpp:354
 msgid "Unit"
 msgstr "Unuo"
 
-#: src/proctable.cpp:352
+#: src/proctable.cpp:355
 msgid "Session"
 msgstr "Seanco"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:355
+#: src/proctable.cpp:358
 msgid "Seat"
 msgstr "Sidejo"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:359
 msgid "Owner"
 msgstr "Posedanto"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:360
 msgid "Disk read total"
 msgstr "Totala diskolego"
 
-#: src/proctable.cpp:358
+#: src/proctable.cpp:361
 msgid "Disk write total"
 msgstr "Totala diskoskribo"
 
-#: src/proctable.cpp:359
+#: src/proctable.cpp:362
 msgid "Disk read"
 msgstr "Diskolego"
 
-#: src/proctable.cpp:360
+#: src/proctable.cpp:363
 msgid "Disk write"
 msgstr "Diskoskribo"
 
@@ -1397,10 +1387,13 @@ msgid "Very Low Priority"
 msgstr "Malaltega prioritato"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:613
+#: src/util.cpp:611
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "End _Process"
+#~ msgstr "Fini _procezon"
 
 #~ msgid "gnome-system-monitor"
 #~ msgstr "gnome-system-monitor"

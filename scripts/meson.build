@@ -1,6 +1,7 @@
 commands = [
   'renice',
   'kill',
+  'taskset',
 ]
 
 foreach command : commands

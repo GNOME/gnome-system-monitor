@@ -4,6 +4,7 @@
 
 #include <gtkmm.h>
 #include <string>
+#include <vector>
 
 using std::string;
 
@@ -21,10 +22,14 @@ format_process_state(guint state);
 void
 procman_debug_real(const char *file, int line, const char *func,
                    const char *format, ...) G_GNUC_PRINTF(4, 5);
-
+                   
 #define procman_debug(FMT, ...) procman_debug_real(__FILE__, __LINE__, __func__, FMT, ##__VA_ARGS__)
 
 Glib::ustring get_monospace_system_font_name (void);
+GtkLabel *make_tnum_label (void);
+PangoAttrList *make_tnum_attr_list (void);
+std::tuple<double, double, double> hsv_to_rgb(double h, double s, double v);
+std::string rgb_to_color_string(const std::tuple<double, double, double> &t);
 
 inline string make_string(char *c_str)
 {
@@ -41,6 +46,9 @@ inline string make_string(char *c_str)
 
 namespace procman
 {
+    // create a list of n color strings
+    std::vector<std::string> generate_colors(unsigned n);
+
     char* format_duration_for_display(unsigned centiseconds);
 
     void size_cell_data_func(GtkTreeViewColumn *col, GtkCellRenderer *renderer,
@@ -65,6 +73,9 @@ namespace procman
                                  gpointer user_data);
 
     void time_cell_data_func(GtkTreeViewColumn *col, GtkCellRenderer *renderer,
+                             GtkTreeModel *model, GtkTreeIter *iter,
+                             gpointer user_data);
+    void percentage_cell_data_func(GtkTreeViewColumn *col, GtkCellRenderer *renderer,
                              GtkTreeModel *model, GtkTreeIter *iter,
                              gpointer user_data);
 

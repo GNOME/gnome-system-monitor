@@ -27,11 +27,11 @@
    are scaled back to these limits. So show these limits in the slider
 */
 #ifdef __linux__
-#define RENICE_VAL_MIN -20
-#define RENICE_VAL_MAX 19
+const int RENICE_VAL_MIN = -20;
+const int RENICE_VAL_MAX = 19;
 #else /* ! linux */
-#define RENICE_VAL_MIN -20
-#define RENICE_VAL_MAX 20
+const int RENICE_VAL_MIN = -20;
+const int RENICE_VAL_MAX = 20;
 #endif
 
 
@@ -44,6 +44,7 @@ typedef enum
 
 void                    procdialog_create_kill_dialog (GsmApplication *app, int signal);
 void                    procdialog_create_renice_dialog (GsmApplication *app);
+gboolean                multi_root_check (char *command);
 gboolean                procdialog_create_root_password_dialog (ProcmanActionType type,
                                                                 GsmApplication *app,
                                                                 gint pid, gint extra_value);

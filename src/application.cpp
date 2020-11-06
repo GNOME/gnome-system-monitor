@@ -7,6 +7,7 @@
 #include <glibtop/cpu.h>
 #include <glibtop/sysinfo.h>
 #include <signal.h>
+#include <stdlib.h>
 
 #include "application.h"
 #include "procdialogs.h"
@@ -28,6 +29,26 @@ cb_solaris_mode_changed (Gio::Settings& settings, Glib::ustring key, GsmApplicat
     if (app->timeout) {
         proctable_update (app);
     }
+}
+
+static void
+cb_draw_stacked_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
+{
+    app->config.draw_stacked = settings.get_boolean(key);
+    app->cpu_graph->clear_background();
+    load_graph_reset(app->cpu_graph);
+}
+
+static void
+cb_draw_smooth_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
+{
+    app->config.draw_smooth = settings.get_boolean(key);
+    app->cpu_graph->clear_background();
+    app->mem_graph->clear_background();
+    app->net_graph->clear_background();
+    load_graph_reset(app->cpu_graph);
+    load_graph_reset(app->mem_graph);
+    load_graph_reset(app->net_graph);
 }
 
 static void
@@ -63,6 +84,15 @@ cb_timeouts_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication*
 }
 
 static void
+cb_data_points_changed(Gio::Settings& settings, Glib::ustring key, GsmApplication* app) {
+	app->config.graph_data_points = settings.get_int (key);
+	unsigned points = app->config.graph_data_points + 2;
+	load_graph_change_num_points(app->cpu_graph, points);
+	load_graph_change_num_points(app->mem_graph, points);
+	load_graph_change_num_points(app->net_graph, points);
+}
+
+static void
 apply_cpu_color_settings(Gio::Settings& settings, GsmApplication* app)
 {
     GVariant *cpu_colors_var = g_settings_get_value (settings.gobj (), GSM_SETTING_CPU_COLORS);
@@ -77,6 +107,8 @@ apply_cpu_color_settings(Gio::Settings& settings, GsmApplication* app)
 
     g_variant_builder_init(&builder, G_VARIANT_TYPE_ARRAY);
 
+    std::vector<std::string> random_colors = procman::generate_colors(app->config.num_cpus);
+
     for (guint i = 0; i < static_cast<guint>(app->config.num_cpus); i++) {
         if(i < n) {
             child = g_variant_get_child_value ( cpu_colors_var, i );
@@ -84,7 +116,7 @@ apply_cpu_color_settings(Gio::Settings& settings, GsmApplication* app)
             g_variant_builder_add_value ( &builder, child);
             g_variant_unref (child);
         } else {
-            color = g_strdup ("#f25915e815e8");
+            color = g_strdup (random_colors[i].c_str());
             g_variant_builder_add(&builder, "(us)", i, color);
         }
         gdk_rgba_parse(&app->config.cpu_color[i], color);
@@ -155,6 +187,11 @@ GsmApplication::load_settings()
     this->settings->signal_changed (GSM_SETTING_GRAPH_UPDATE_INTERVAL).connect (cbtc);
     config.disks_update_interval = this->settings->get_int (GSM_SETTING_DISKS_UPDATE_INTERVAL);
     this->settings->signal_changed (GSM_SETTING_DISKS_UPDATE_INTERVAL).connect (cbtc);
+
+    config.graph_data_points = this->settings->get_int (GSM_SETTING_GRAPH_DATA_POINTS);
+    this->settings->signal_changed (GSM_SETTING_GRAPH_DATA_POINTS).connect ([this](const Glib::ustring& key) {
+        cb_data_points_changed (*this->settings.operator->(), key, this);
+    });
 
     glibtop_get_cpu (&cpu);
     frequency = cpu.frequency;
@@ -259,8 +296,12 @@ int GsmApplication::on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLi
     Glib::OptionContext context;
     context.set_summary(_("A simple process and system monitor."));
     context.set_ignore_unknown_options(true);
+
+    Glib::OptionGroup gtkgroup(gtk_get_option_group(true));
     procman::OptionGroup option_group;
+
     context.set_main_group(option_group);
+    context.add_group (gtkgroup);
 
     try {
         context.parse(argc, argv);
@@ -370,10 +411,12 @@ void GsmApplication::on_startup()
     add_accelerator("<Primary>c", "win.send-signal-cont", g_variant_new_int32 (SIGCONT));
     add_accelerator("<Primary>e", "win.send-signal-end", g_variant_new_int32 (SIGTERM));
     add_accelerator("<Primary>k", "win.send-signal-kill", g_variant_new_int32 (SIGKILL));
+    add_accelerator("<Alt>s", "win.set-affinity", NULL);
     add_accelerator("<Primary>m", "win.memory-maps", NULL);
     add_accelerator("<Primary>o", "win.open-files", NULL);
     add_accelerator("<Alt>Return", "win.process-properties", NULL);
     add_accelerator("<Primary>f", "win.search", g_variant_new_boolean (TRUE));
+    add_accelerator("F1", "app.help", NULL);
 
     Gtk::Window::set_default_icon_name ("org.gnome.SystemMonitor");
 

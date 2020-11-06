@@ -52,7 +52,7 @@ unsigned LoadGraph::num_bars() const
 
 
 
-#define FRAME_WIDTH 4
+const int FRAME_WIDTH = 4;
 static void draw_background(LoadGraph *graph) {
     GtkAllocation allocation;
     cairo_t *cr;
@@ -60,6 +60,7 @@ static void draw_background(LoadGraph *graph) {
     unsigned num_bars;
     char *caption;
     PangoLayout* layout;
+    PangoAttrList *attrs = NULL;
     PangoFontDescription* font_desc;
     PangoRectangle extents;
     cairo_surface_t *surface;
@@ -71,8 +72,8 @@ static void draw_background(LoadGraph *graph) {
     num_bars = graph->num_bars();
     graph->graph_dely = (graph->draw_height - 15) / num_bars; /* round to int to avoid AA blur */
     graph->real_draw_height = graph->graph_dely * num_bars;
-    graph->graph_delx = (graph->draw_width - 2.0 - graph->indent) / (LoadGraph::NUM_POINTS - 3);
-    graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH ;
+    graph->graph_delx = (graph->draw_width - 2.0 - graph->indent) / (graph->num_points - 3);
+    graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH;
 
     gtk_widget_get_allocation (GTK_WIDGET (graph->disp), &allocation);
     surface = gdk_window_create_similar_surface (gtk_widget_get_window (GTK_WIDGET (graph->disp)),
@@ -83,11 +84,16 @@ static void draw_background(LoadGraph *graph) {
 
     GtkStyleContext *context = gtk_widget_get_style_context (GTK_WIDGET (GsmApplication::get()->stack));
     
-    gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &fg);
+    gtk_style_context_get_color (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get()->stack)), &fg);
 
     cairo_paint_with_alpha (cr, 0.0);
     layout = pango_cairo_create_layout (cr);
-    gtk_style_context_get (context, GTK_STATE_FLAG_NORMAL, GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
+
+    attrs = make_tnum_attr_list ();
+    pango_layout_set_attributes (layout, attrs);
+    g_clear_pointer (&attrs, pango_attr_list_unref);
+
+    gtk_style_context_get (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get()->stack)), GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
     pango_font_description_set_size (font_desc, 0.8 * graph->fontsize * PANGO_SCALE);
     pango_layout_set_font_description (layout, font_desc);
     pango_font_description_free (font_desc);
@@ -114,7 +120,7 @@ static void draw_background(LoadGraph *graph) {
     gtk_style_context_add_class (context, GTK_STYLE_CLASS_ENTRY);
 
     /* And, as a bonus, the user can choose the color of the grid. */
-    gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &fg_grid);
+    gtk_style_context_get_color (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get()->stack)), &fg_grid);
 
     /* Why not use the new features of the
      * GTK instead of cairo_rectangle ?! :) */
@@ -166,7 +172,7 @@ static void draw_background(LoadGraph *graph) {
     }
     
 
-    const unsigned total_seconds = graph->speed * (LoadGraph::NUM_POINTS - 2) / 1000;
+    const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000;
 
     for (unsigned int i = 0; i < 7; i++) {
         double x = (i) * (graph->draw_width - graph->rmargin - graph->indent) / 6;
@@ -181,16 +187,57 @@ static void draw_background(LoadGraph *graph) {
         cairo_line_to (cr, (ceil(x) + 0.5) + graph->indent, graph->real_draw_height + 4.5);
         cairo_stroke(cr);
         unsigned seconds = total_seconds - i * total_seconds / 6;
-        const char* format;
-        if (i == 0)
-            format = dngettext(GETTEXT_PACKAGE, "%u second", "%u seconds", seconds);
-        else
-            format = "%u";
-        caption = g_strdup_printf(format, seconds);
+        unsigned minutes = seconds / 60;
+        unsigned hours = seconds / 3600;
+        caption = NULL;
+
+        if (hours != 0) {
+            if (minutes % 60 == 0) {
+                // If minutes mod 60 is 0 set it to 0, to prevent it from showing full hours in
+                // minutes in addition to hours.
+                minutes = 0;
+            } else {
+                // Round minutes as seconds wont get shown if neither hours nor minutes are 0.
+                minutes = int(rint(seconds / 60.0)) % 60;
+                if (minutes == 0) {
+                    // Increase hours if rounding minutes results in 0, because that would be
+                    // what it would be rounded to.
+                    hours++;
+                    // Set seconds to hours * 3600 to prevent seconds from being drawn.
+                    seconds = hours * 3600;
+                }
+            }
+
+            caption = g_strdup_printf(dngettext(GETTEXT_PACKAGE, "%u hr ", "%u hrs ", hours), hours);
+        }
+        if (minutes != 0) {
+            char* captionM = g_strdup_printf(dngettext(GETTEXT_PACKAGE, "%u min", "%u mins", minutes),
+                                             minutes);
+            if (caption == NULL) {
+                caption = captionM;
+            } else {
+                caption = strcat(caption, captionM);
+            }
+
+            // Add a whitespace if minutes and seconds are shown
+            if (hours == 0 && seconds % 60 != 0) {
+                caption = strcat(caption, " ");
+            }
+        }
+        if (caption == NULL || (seconds % 60 != 0 && (minutes == 0 || hours == 0))) {
+            char* captionS = g_strdup_printf(dngettext(GETTEXT_PACKAGE, "%u sec", "%u secs", seconds % 60),
+                                             seconds % 60);
+            if (caption == NULL) {
+                caption = captionS;
+            } else {
+                caption = strcat(caption, captionS);
+            }
+        }
+
         pango_layout_set_text (layout, caption, -1);
         pango_layout_get_extents (layout, NULL, &extents);
         cairo_move_to (cr,
-                       (ceil(x) + 0.5 + graph->indent) - (1.0 * extents.width / PANGO_SCALE / 2),
+                       (ceil(x) + 0.5 + graph->indent) - (1.0 * extents.width / PANGO_SCALE / 2) + 1.0,
                        graph->draw_height - 1.0 * extents.height / PANGO_SCALE);
         gdk_cairo_set_source_rgba (cr, &fg);
         pango_cairo_show_layout (cr, layout);
@@ -210,7 +257,17 @@ load_graph_queue_draw (LoadGraph *graph)
     gtk_widget_queue_draw (GTK_WIDGET (graph->disp));
 }
 
+void load_graph_update_data (LoadGraph *graph);
 static int load_graph_update (gpointer user_data); // predeclare load_graph_update so we can compile ;)
+
+static void
+load_graph_rescale (LoadGraph *graph) {
+    ///org/gnome/desktop/interface/text-scaling-factor
+    graph->fontsize = 8 * graph->font_settings->get_double ("text-scaling-factor");
+    graph->clear_background();
+
+    load_graph_queue_draw (graph);
+}
 
 static gboolean
 load_graph_configure (GtkWidget *widget,
@@ -219,6 +276,8 @@ load_graph_configure (GtkWidget *widget,
 {
     GtkAllocation allocation;
     LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
+
+    load_graph_rescale (graph);
 
     gtk_widget_get_allocation (widget, &allocation);
     graph->draw_width = allocation.width - 2 * FRAME_WIDTH;
@@ -252,6 +311,7 @@ load_graph_state_changed (GtkWidget *widget,
 {
     LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
     force_refresh (graph);
+    graph->draw = gtk_widget_is_visible (widget);
     return TRUE;
 }
 
@@ -266,13 +326,13 @@ load_graph_draw (GtkWidget *widget,
     gint j;
     gdouble sample_width, x_offset;
 
-    /* Number of pixels wide for one graph point */
-    sample_width = (float)(graph->draw_width - graph->rmargin - graph->indent) / (float)LoadGraph::NUM_POINTS;
-    /* General offset */
-    x_offset = graph->draw_width - graph->rmargin;
-
-    /* Subframe offset */
-    x_offset += graph->rmargin - ((sample_width / graph->frames_per_unit) * graph->render_counter);
+    /* Number of pixels wide for one sample point */
+    sample_width = (double)(graph->draw_width - graph->rmargin - graph->indent) / (double)graph->num_points;
+    /* Lines start at the right edge of the drawing,
+     * a bit outside the clip rectangle. */
+    x_offset = graph->draw_width - graph->rmargin + sample_width + 2;
+    /* Adjustment for smooth movement between samples */
+    x_offset -= sample_width * graph->render_counter / (double)graph->frames_per_unit;
 
     /* draw the graph */
 
@@ -291,35 +351,40 @@ load_graph_draw (GtkWidget *widget,
     cairo_clip(cr);
 
     bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get()->config.draw_stacked;
-    bool drawSmooth = graph->type != LOAD_GRAPH_CPU || GsmApplication::get()->config.draw_smooth;
+    bool drawSmooth = GsmApplication::get()->config.draw_smooth;
     for (j = graph->n-1; j >= 0; j--) {
         gdk_cairo_set_source_rgba (cr, &(graph->colors [j]));
-        if (drawStacked) {
-            cairo_move_to (cr, x_offset, graph->real_draw_height + 3.5f);
-        } else {
-            cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height + 3.5f);
-        }
-        for (i = 1; i < LoadGraph::NUM_POINTS; ++i) {
+        // Start drawing on the right at the correct height.
+        cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height + 3);
+        // then draw the path of the line.
+        // Loop starts at 1 because the curve accesses the 0th data point.
+        for (i = 1; i < graph->num_points; ++i) {
             if (graph->data[i][j] == -1.0f)
                 continue;
             if (drawSmooth) {
-              cairo_curve_to (cr,
+                cairo_curve_to (cr,
                               x_offset - ((i - 0.5f) * graph->graph_delx),
-                              (1.0 - graph->data[i-1][j]) * graph->real_draw_height + 3.5,
+                              (1.0 - graph->data[i-1][j]) * graph->real_draw_height + 3,
                               x_offset - ((i - 0.5f) * graph->graph_delx),
-                              (1.0 - graph->data[i][j]) * graph->real_draw_height + 3.5,
+                              (1.0 - graph->data[i][j]) * graph->real_draw_height + 3,
                               x_offset - (i * graph->graph_delx),
-                              (1.0 - graph->data[i][j]) * graph->real_draw_height + 3.5);
+                              (1.0 - graph->data[i][j]) * graph->real_draw_height + 3);
             } else {
-              cairo_line_to (cr, x_offset - (i * graph->graph_delx),
-                              (1.0 - graph->data[i][j]) * graph->real_draw_height + 3.5);
+                cairo_line_to (cr, x_offset - (i * graph->graph_delx),
+                              (1.0 - graph->data[i][j]) * graph->real_draw_height + 3);
             }
 
         }
         if (drawStacked) {
-            cairo_rel_line_to (cr, 0, graph->real_draw_height + 3.5f);
+            // Draw the remaining outline of the area:
+            // Left bottom corner
+            cairo_rel_line_to (cr, 0, graph->real_draw_height + 3);
+            // Right bottom corner. It's drawn far outside the visible area
+            // to avoid a weird bug where it's not filling the area it should completely.
+            cairo_rel_line_to (cr, x_offset * 2, 0);
+
             //cairo_stroke_preserve(cr);
-            //cairo_close_path(cr);
+            cairo_close_path(cr);
             cairo_fill(cr);
         } else {
             cairo_stroke (cr);
@@ -343,18 +408,16 @@ get_load (LoadGraph *graph)
 
     glibtop_get_cpu (&cpu);
 
-#undef NOW
-#undef LAST
-#define NOW  (graph->cpu.times[graph->cpu.now])
-#define LAST (graph->cpu.times[graph->cpu.now ^ 1])
+    auto NOW  = [&]() -> guint64 (&)[GLIBTOP_NCPU][N_CPU_STATES] { return graph->cpu.times[graph->cpu.now]; };
+    auto LAST = [&]() -> guint64 (&)[GLIBTOP_NCPU][N_CPU_STATES] { return graph->cpu.times[graph->cpu.now ^ 1]; };
 
     if (graph->n == 1) {
-        NOW[0][CPU_TOTAL] = cpu.total;
-        NOW[0][CPU_USED] = cpu.user + cpu.nice + cpu.sys;
+        NOW()[0][CPU_TOTAL] = cpu.total;
+        NOW()[0][CPU_USED] = cpu.user + cpu.nice + cpu.sys;
     } else {
         for (i = 0; i < graph->n; i++) {
-            NOW[i][CPU_TOTAL] = cpu.xcpu_total[i];
-            NOW[i][CPU_USED] = cpu.xcpu_user[i] + cpu.xcpu_nice[i]
+            NOW()[i][CPU_TOTAL] = cpu.xcpu_total[i];
+            NOW()[i][CPU_USED] = cpu.xcpu_user[i] + cpu.xcpu_nice[i]
                 + cpu.xcpu_sys[i];
         }
     }
@@ -371,8 +434,8 @@ get_load (LoadGraph *graph)
         float total, used;
         gchar *text;
 
-        total = NOW[i][CPU_TOTAL] - LAST[i][CPU_TOTAL];
-        used  = NOW[i][CPU_USED]  - LAST[i][CPU_USED];
+        total = NOW()[i][CPU_TOTAL] - LAST()[i][CPU_TOTAL];
+        used  = NOW()[i][CPU_USED]  - LAST()[i][CPU_USED];
 
         load = used / MAX(total, 1.0f);
         graph->data[0][i] = load;
@@ -390,9 +453,6 @@ get_load (LoadGraph *graph)
     }
 
     graph->cpu.now ^= 1;
-
-#undef NOW
-#undef LAST
 }
 
 
@@ -400,22 +460,33 @@ namespace
 {
 
     void set_memory_label_and_picker(GtkLabel* label, GsmColorButton* picker,
-                                     guint64 used, guint64 total, double percent)
+                                     guint64 used, guint64 cached, guint64 total, double percent)
     {
         char* used_text;
+        char* cached_text;
+        char* cached_label;
         char* total_text;
         char* text;
 
         used_text = g_format_size_full(used, G_FORMAT_SIZE_IEC_UNITS);
+        cached_text = g_format_size_full(cached, G_FORMAT_SIZE_IEC_UNITS);
         total_text = g_format_size_full(total, G_FORMAT_SIZE_IEC_UNITS);
         if (total == 0) {
             text = g_strdup(_("not available"));
         } else {
             // xgettext: 540MiB (53 %) of 1.0 GiB
             text = g_strdup_printf(_("%s (%.1f%%) of %s"), used_text, 100.0 * percent, total_text);
+
+            if (cached != 0) {
+                // xgettext: Used cache string, e.g.: "Cache 2.4GiB"
+                cached_label = g_strdup_printf(_("Cache %s"), cached_text);
+                text = g_strdup_printf("%s\n%s", text, cached_label);
+                g_free (cached_label);
+            }
         }
         gtk_label_set_text(label, text);
         g_free(used_text);
+        g_free(cached_text);
         g_free(total_text);
         g_free(text);
 
@@ -440,11 +511,11 @@ get_memory (LoadGraph *graph)
     mempercent  = (float)mem.user  / (float)mem.total;
     set_memory_label_and_picker(GTK_LABEL(graph->labels.memory),
                                 GSM_COLOR_BUTTON(graph->mem_color_picker),
-                                mem.user, mem.total, mempercent);
+                                mem.user, mem.cached, mem.total, mempercent);
 
     set_memory_label_and_picker(GTK_LABEL(graph->labels.swap),
                                 GSM_COLOR_BUTTON(graph->swap_color_picker),
-                                swap.used, swap.total, swappercent);
+                                swap.used, 0, swap.total, swappercent);
     
     gtk_widget_set_sensitive (GTK_WIDGET (graph->swap_color_picker), swap.total > 0);
     
@@ -459,12 +530,12 @@ get_memory (LoadGraph *graph)
 static double
 nicenum (double x, int round)
 {
-    int expv;				/* exponent of x */
-    double f;				/* fractional part of x */
-    double nf;				/* nice, rounded fraction */
+    int expv;                /* exponent of x */
+    double f;                /* fractional part of x */
+    double nf;                /* nice, rounded fraction */
 
     expv = floor(log10(x));
-    f = x/pow(10.0, expv);		/* between 1 and 10 */
+    f = x/pow(10.0, expv);        /* between 1 and 10 */
     if (round) {
         if (f < 1.5)
             nf = 1.0;
@@ -494,8 +565,11 @@ net_scale (LoadGraph *graph, guint64 din, guint64 dout)
     graph->data[0][1] = 1.0f * dout / graph->net.max;
 
     guint64 dmax = std::max(din, dout);
-    graph->net.values[graph->net.cur] = dmax;
-    graph->net.cur = (graph->net.cur + 1) % LoadGraph::NUM_POINTS;
+    if (graph->latest == 0) {
+        graph->net.values[graph->num_points - 1] = dmax;
+    } else {
+        graph->net.values[graph->latest - 1] = dmax;
+    }
 
     guint64 new_max;
     // both way, new_max is the greatest value
@@ -503,7 +577,7 @@ net_scale (LoadGraph *graph, guint64 din, guint64 dout)
         new_max = dmax;
     else
         new_max = *std::max_element(&graph->net.values[0],
-                                    &graph->net.values[LoadGraph::NUM_POINTS]);
+                                    &graph->net.values[graph->num_points]);
 
     //
     // Round network maximum
@@ -572,7 +646,7 @@ net_scale (LoadGraph *graph, guint64 din, guint64 dout)
 
     const double scale = 1.0f * graph->net.max / new_max;
 
-    for (size_t i = 0; i < LoadGraph::NUM_POINTS; i++) {
+    for (size_t i = 0; i < graph->num_points; i++) {
         if (graph->data[i][0] >= 0.0f) {
             graph->data[i][0] *= scale;
             graph->data[i][1] *= scale;
@@ -597,7 +671,7 @@ get_net (LoadGraph *graph)
     char **ifnames;
     guint32 i;
     guint64 in = 0, out = 0;
-    GTimeVal time;
+    guint64 time;
     guint64 din, dout;
     gboolean first = true;
     ifnames = glibtop_get_netlist(&netlist);
@@ -631,12 +705,11 @@ get_net (LoadGraph *graph)
 
     g_strfreev(ifnames);
 
-    g_get_current_time (&time);
+    time = g_get_monotonic_time ();
 
-    if (in >= graph->net.last_in && out >= graph->net.last_out && graph->net.time.tv_sec != 0) {
+    if (in >= graph->net.last_in && out >= graph->net.last_out && graph->net.time != 0) {
         float dtime;
-        dtime = time.tv_sec - graph->net.time.tv_sec +
-                (double) (time.tv_usec - graph->net.time.tv_usec) / G_USEC_PER_SEC;
+        dtime = ((double) (time - graph->net.time)) / G_USEC_PER_SEC;
         din   = static_cast<guint64>((in  - graph->net.last_in)  / dtime);
         dout  = static_cast<guint64>((out - graph->net.last_out) / dtime);
     } else {
@@ -646,7 +719,7 @@ get_net (LoadGraph *graph)
         dout = 0;
     }
 
-    first = first && (graph->net.time.tv_sec==0);
+    first = first && (graph->net.time==0);
     graph->net.last_in  = in;
     graph->net.last_out = out;
     graph->net.time     = time;
@@ -662,31 +735,44 @@ get_net (LoadGraph *graph)
 }
 
 
+
+void
+load_graph_update_data (LoadGraph *graph)
+{
+    // Rotate data one element down.
+    std::rotate(&graph->data[0],
+                &graph->data[graph->num_points - 1],
+                &graph->data[graph->num_points]);
+
+    // Update rotation counter.
+    graph->latest = (graph->latest + 1) % graph->num_points;
+
+    // Replace the 0th element
+    switch (graph->type) {
+        case LOAD_GRAPH_CPU:
+            get_load(graph);
+            break;
+        case LOAD_GRAPH_MEM:
+            get_memory(graph);
+            break;
+        case LOAD_GRAPH_NET:
+            get_net(graph);
+            break;
+        default:
+            g_assert_not_reached();
+    }
+}
+
+
+
 /* Updates the load graph when the timeout expires */
 static gboolean
 load_graph_update (gpointer user_data)
 {
     LoadGraph * const graph = static_cast<LoadGraph*>(user_data);
 
-    if (graph->render_counter == graph->frames_per_unit - 1) {
-        std::rotate(&graph->data[0],
-                    &graph->data[LoadGraph::NUM_POINTS - 1],
-                    &graph->data[LoadGraph::NUM_POINTS]);
-
-        switch (graph->type) {
-            case LOAD_GRAPH_CPU:
-                get_load(graph);
-                break;
-            case LOAD_GRAPH_MEM:
-                get_memory(graph);
-                break;
-            case LOAD_GRAPH_NET:
-                get_net(graph);
-                break;
-            default:
-                g_assert_not_reached();
-        }
-    }
+    if (graph->render_counter == graph->frames_per_unit - 1)
+        load_graph_update_data(graph);
 
     if (graph->draw)
         load_graph_queue_draw (graph);
@@ -726,11 +812,13 @@ load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
 
 LoadGraph::LoadGraph(guint type)
     : fontsize(8.0),
-      rmargin(7 * fontsize),
-      indent(24.0),
+      rmargin(6 * fontsize),
+      indent(18.0),
       n(0),
       type(type),
       speed(0),
+      num_points(0),
+      latest(0),
       draw_width(0),
       draw_height(0),
       render_counter(0),
@@ -741,6 +829,7 @@ LoadGraph::LoadGraph(guint type)
       graph_buffer_offset(0),
       colors(),
       data_block(),
+      data(),
       main_widget(NULL),
       disp(NULL),
       background(NULL),
@@ -749,11 +838,12 @@ LoadGraph::LoadGraph(guint type)
       labels(),
       mem_color_picker(NULL),
       swap_color_picker(NULL),
+      font_settings(Gio::Settings::create (FONT_SETTINGS_SCHEMA)),
       cpu(),
       net()
 {
     LoadGraph * const graph = this;
-
+    font_settings->signal_changed(FONT_SETTING_SCALING).connect([this](const Glib::ustring&) { load_graph_rescale (this); } );
     // FIXME:
     // on configure, graph->frames_per_unit = graph->draw_width/(LoadGraph::NUM_POINTS);
     // knock FRAMES down to 5 until cairo gets faster
@@ -764,17 +854,17 @@ LoadGraph::LoadGraph(guint type)
             n = GsmApplication::get()->config.num_cpus;
 
             for(guint i = 0; i < G_N_ELEMENTS(labels.cpu); ++i)
-                labels.cpu[i] = GTK_LABEL (gtk_label_new(NULL));
+                labels.cpu[i] = make_tnum_label ();
 
             break;
 
         case LOAD_GRAPH_MEM:
             n = 2;
-            labels.memory = GTK_LABEL (gtk_label_new(NULL));
+            labels.memory = make_tnum_label ();
             gtk_widget_set_valign (GTK_WIDGET (labels.memory), GTK_ALIGN_CENTER);
             gtk_widget_set_halign (GTK_WIDGET (labels.memory), GTK_ALIGN_START);
             gtk_widget_show (GTK_WIDGET (labels.memory));
-            labels.swap = GTK_LABEL (gtk_label_new(NULL));
+            labels.swap = make_tnum_label ();
             gtk_widget_set_valign (GTK_WIDGET (labels.swap), GTK_ALIGN_CENTER);
             gtk_widget_set_halign (GTK_WIDGET (labels.swap), GTK_ALIGN_START);
             gtk_widget_show (GTK_WIDGET (labels.swap));
@@ -784,25 +874,25 @@ LoadGraph::LoadGraph(guint type)
             memset(&net, 0, sizeof net);
             n = 2;
             net.max = 1;
-            labels.net_in = GTK_LABEL (gtk_label_new(NULL));
+            labels.net_in = make_tnum_label ();
             gtk_label_set_width_chars(labels.net_in, 10);
             gtk_widget_set_valign (GTK_WIDGET (labels.net_in), GTK_ALIGN_CENTER);
             gtk_widget_set_halign (GTK_WIDGET (labels.net_in), GTK_ALIGN_END);
             gtk_widget_show (GTK_WIDGET (labels.net_in));
 
-            labels.net_in_total = GTK_LABEL (gtk_label_new(NULL));
+            labels.net_in_total = make_tnum_label ();
             gtk_widget_set_valign (GTK_WIDGET (labels.net_in_total), GTK_ALIGN_CENTER);
             gtk_widget_set_halign (GTK_WIDGET (labels.net_in_total), GTK_ALIGN_END);
             gtk_label_set_width_chars(labels.net_in_total, 10);
             gtk_widget_show (GTK_WIDGET (labels.net_in_total));
 
-            labels.net_out = GTK_LABEL (gtk_label_new(NULL));
+            labels.net_out = make_tnum_label ();
             gtk_widget_set_valign (GTK_WIDGET (labels.net_out), GTK_ALIGN_CENTER);
             gtk_widget_set_halign (GTK_WIDGET (labels.net_out), GTK_ALIGN_END);
             gtk_label_set_width_chars(labels.net_out, 10);
             gtk_widget_show (GTK_WIDGET (labels.net_out));
 
-            labels.net_out_total = GTK_LABEL (gtk_label_new(NULL));
+            labels.net_out_total = make_tnum_label ();
             gtk_widget_set_valign (GTK_WIDGET (labels.net_out_total), GTK_ALIGN_CENTER);
             gtk_widget_set_halign (GTK_WIDGET (labels.net_out), GTK_ALIGN_END);
             gtk_label_set_width_chars(labels.net_out_total, 10);
@@ -811,7 +901,9 @@ LoadGraph::LoadGraph(guint type)
             break;
     }
 
-    speed  = GsmApplication::get()->config.graph_update_interval;
+    speed = GsmApplication::get()->config.graph_update_interval;
+
+    num_points = GsmApplication::get()->config.graph_data_points + 2;
 
     colors.resize(n);
 
@@ -829,6 +921,7 @@ LoadGraph::LoadGraph(guint type)
                                                          GSMCP_TYPE_PIE);
             break;
         case LOAD_GRAPH_NET:
+            net.values = std::vector<unsigned>(num_points);
             colors[0] = GsmApplication::get()->config.net_in_color;
             colors[1] = GsmApplication::get()->config.net_out_color;
             break;
@@ -859,11 +952,11 @@ LoadGraph::LoadGraph(guint type)
 
     gtk_box_pack_start (main_widget, GTK_WIDGET (disp), TRUE, TRUE, 0);
 
-
+    data = std::vector<double*>(num_points);
     /* Allocate data in a contiguous block */
-    data_block = std::vector<double>(n * LoadGraph::NUM_POINTS, -1.0);
+    data_block = std::vector<double>(n * num_points, -1.0);
 
-    for (guint i = 0; i < LoadGraph::NUM_POINTS; ++i)
+    for (guint i = 0; i < num_points; ++i)
         data[i] = &data_block[0] + i * n;
 
     gtk_widget_show_all (GTK_WIDGET (main_widget));
@@ -872,8 +965,10 @@ LoadGraph::LoadGraph(guint type)
 void
 load_graph_start (LoadGraph *graph)
 {
-     if (!graph->timer_index) {
-
+    if (!graph->timer_index) {
+        // Update the data two times so the graph
+        // doesn't wait one cycle to start drawing.
+        load_graph_update_data(graph);
         load_graph_update(graph);
 
         graph->timer_index = g_timeout_add (graph->speed / graph->frames_per_unit,
@@ -907,6 +1002,47 @@ load_graph_change_speed (LoadGraph *graph,
                                             graph);
     }
 
+    graph->clear_background();
+}
+
+void
+load_graph_change_num_points(LoadGraph *graph,
+                             guint new_num_points)
+{
+    //Don't do anything if the value didn't change.
+    if (graph->num_points == new_num_points)
+        return;
+
+    // Sort the values in the data_block vector in the order they were accessed in by the pointers in data.
+    std::rotate(&graph->data_block[0],
+                &graph->data_block[(graph->num_points - graph->latest) * graph->n],
+                &graph->data_block[graph->num_points * graph->n]);
+
+    // Reset rotation counter.
+    graph->latest = 0;
+
+    // Resize the vectors to the new amount of data points.
+    graph->data.resize(new_num_points);
+    graph->data_block.resize(graph->n * new_num_points);
+    if (graph->type == LOAD_GRAPH_NET) {
+        graph->net.values.resize(new_num_points);
+    }
+
+    // Fill the new values with -1 instead of 0 if the vectors got bigger.
+    if (new_num_points > graph->num_points) {
+        std::fill(&graph->data_block[graph->n * graph->num_points],
+                  &graph->data_block[graph->n * new_num_points], -1.0);
+    }
+
+    // Replace the pointers in data, to match the new data_block values.
+    for (guint i = 0; i < new_num_points; ++i) {
+        graph->data[i] = &graph->data_block[0] + i * graph->n;
+    }
+
+    // Set the actual number of data points to be used by the graph.
+    graph->num_points = new_num_points;
+
+    // Force the scale to be redrawn.
     graph->clear_background();
 }
 

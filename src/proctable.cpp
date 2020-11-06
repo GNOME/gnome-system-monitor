@@ -95,6 +95,7 @@ cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
     GtkTreePath *path;
+    GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (widget));
 
     if (!gdk_event_triggers_context_menu ((GdkEvent *) event))
         return FALSE;
@@ -102,10 +103,10 @@ cb_tree_button_pressed (GtkWidget *widget, GdkEventButton *event, gpointer data)
     if (!gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (app->tree), event->x, event->y, &path, NULL, NULL, NULL))
         return FALSE;
 
-    if (!gtk_tree_selection_path_is_selected (app->selection, path)) {
+    if (!gtk_tree_selection_path_is_selected (selection, path)) {
         if (!(event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)))
-            gtk_tree_selection_unselect_all (app->selection);
-        gtk_tree_selection_select_path (app->selection, path);
+            gtk_tree_selection_unselect_all (selection);
+        gtk_tree_selection_select_path (selection, path);
     }
 
     gtk_tree_path_free (path);
@@ -138,14 +139,18 @@ cb_row_selected (GtkTreeSelection *selection, gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
+    ProcInfo *selected_process = NULL;
+    gint selected_count = gtk_tree_selection_count_selected_rows (selection);
+
     app->selection = selection;
 
-    ProcInfo *selected_process = NULL;
+    gchar *button_text = ngettext("_End Process", "_End Processes", selected_count);
+    gtk_button_set_label (GTK_BUTTON(app->end_process_button), button_text);
 
     /* get the most recent selected process and determine if there are
     ** no selected processes
     */
-    gtk_tree_selection_selected_foreach (app->selection, get_last_selected,
+    gtk_tree_selection_selected_foreach (selection, get_last_selected,
                                          &selected_process);
     if (selected_process) {
         GVariant *priority;
@@ -267,12 +272,9 @@ process_visibility_func (GtkTreeModel *model, GtkTreeIter *iter, gpointer data)
         }
 
         match |= iter_matches_search_key (model, iter, search_text);
-        // TODO auto-expand items not matching the search string but having matching children
-        // complicated because of treestore nested in treemodelfilter nested in treemodelsort
-        // expand to path requires the path string in the treemodelsort, but tree_path is the path in the double nested treestore
-        //if (match && (strlen (search_text) > 0)) {
-        //    gtk_tree_view_expand_to_path (GTK_TREE_VIEW (app->tree), tree_path);
-        //}
+        if (match && (strlen (search_text) > 0)) {
+            gtk_tree_view_expand_to_path (GTK_TREE_VIEW (app->tree), tree_path);
+        }
 
     } else {
         match = iter_matches_search_key (model, iter, search_text);
@@ -325,7 +327,8 @@ proctable_new (GsmApplication * const app)
     GtkTreeStore *model;
     GtkTreeModelFilter *model_filter;
     GtkTreeModelSort *model_sort;
-    
+    GtkTreeSelection *selection;
+
     GtkTreeViewColumn *column;
     GtkCellRenderer *cell_renderer;
     const gchar *titles[] = {
@@ -374,7 +377,7 @@ proctable_new (GsmApplication * const app)
                                 G_TYPE_ULONG,       /* Writable Memory */
                                 G_TYPE_ULONG,       /* Shared Memory */
                                 G_TYPE_ULONG,       /* X Server Memory */
-                                G_TYPE_UINT,        /* % CPU        */
+                                G_TYPE_DOUBLE,      /* % CPU        */
                                 G_TYPE_UINT64,      /* CPU time     */
                                 G_TYPE_ULONG,       /* Started      */
                                 G_TYPE_INT,         /* Nice         */
@@ -439,6 +442,7 @@ proctable_new (GsmApplication * const app)
     for (i = COL_USER; i <= COL_PRIORITY; i++) {
         GtkTreeViewColumn *col;
         GtkCellRenderer *cell;
+        PangoAttrList *attrs = NULL;
 
 #ifndef HAVE_WNCK
         if (i == COL_MEMXSERVER)
@@ -476,7 +480,12 @@ proctable_new (GsmApplication * const app)
                                                         GUINT_TO_POINTER(i),
                                                         NULL);
                 break;
-
+            case COL_CPU:
+                gtk_tree_view_column_set_cell_data_func(col, cell,
+                                                        &procman::percentage_cell_data_func,
+                                                        GUINT_TO_POINTER(i),
+                                                        NULL);
+                break;
             case COL_CPU_TIME:
                 gtk_tree_view_column_set_cell_data_func(col, cell,
                                                         &procman::duration_cell_data_func,
@@ -520,6 +529,33 @@ proctable_new (GsmApplication * const app)
                 break;
             default:
                 gtk_tree_view_column_set_attributes(col, cell, "text", i, NULL);
+                break;
+        }
+
+        // Tabular Numbers
+        switch (i) {
+#ifdef HAVE_WNCK
+            case COL_MEMXSERVER:
+#endif
+            case COL_PID:
+            case COL_VMSIZE:
+            case COL_MEMRES:
+            case COL_MEMSHARED:
+            case COL_MEM:
+            case COL_CPU:
+            case COL_CPU_TIME:
+            case COL_DISK_READ_TOTAL:
+            case COL_DISK_WRITE_TOTAL:
+            case COL_DISK_READ_CURRENT:
+            case COL_DISK_WRITE_CURRENT:
+            case COL_START_TIME:
+            case COL_NICE:
+            case COL_WCHAN:
+                attrs = make_tnum_attr_list ();
+                g_object_set (cell, "attributes", attrs, NULL);
+                g_clear_pointer (&attrs, pango_attr_list_unref);
+                break;
+            default:
                 break;
         }
 
@@ -610,10 +646,12 @@ proctable_new (GsmApplication * const app)
     GtkIconTheme* theme = gtk_icon_theme_get_default();
     g_signal_connect(G_OBJECT (theme), "changed", G_CALLBACK (cb_refresh_icons), app);
 
-    app->selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
-    gtk_tree_selection_set_mode (app->selection, GTK_SELECTION_MULTIPLE);
+    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
+    app->selection = selection;
+
+    gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
     
-    g_signal_connect (G_OBJECT (app->selection),
+    g_signal_connect (G_OBJECT (selection),
                       "changed",
                       G_CALLBACK (cb_row_selected), app);
     g_signal_connect (G_OBJECT (proctree), "popup_menu",
@@ -932,7 +970,7 @@ update_info (GsmApplication *app, ProcInfo *info)
     if (not app->config.solaris_mode)
         cpu_scale *= app->config.num_cpus;
 
-    info->pcpu = difference * cpu_scale / app->cpu_total_time;
+    info->pcpu = (gdouble)difference * cpu_scale / app->cpu_total_time;
     info->pcpu = MIN(info->pcpu, cpu_scale);
 
     app->processes.cpu_times[info->pid] = info->cpu_time = proctime.rtime;

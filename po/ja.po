@@ -1,5 +1,5 @@
 # gnome-system-monitor (procman) ja.po.
-# Copyright (C) 2001-2019 Free Software Foundation, Inc.
+# Copyright (C) 2001-2015, 2019-2020 Free Software Foundation, Inc.
 # Takeshi Aihana <takeshi.aihana@gmail.com>, 2001-2009.
 # KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003.
 # Satoru SATOH <ss@gnome.gr.jp>, 2006.
@@ -7,15 +7,15 @@
 # Hideki Yamane <henrich@debian.org>, 2011.
 # Jiro Matsuzawa <jmatsuzawa@gnome.org>, 2011-2015.
 # Noriko Mizumoto <noriko@fedoraproject.org>, 2012.
-# sicklylife <translation@sicklylife.jp>, 2019.
+# sicklylife <translation@sicklylife.jp>, 2019-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2019-09-19 05:06+0000\n"
-"PO-Revision-Date: 2019-09-27 23:00+0900\n"
+"POT-Creation-Date: 2020-08-07 06:32+0000\n"
+"PO-Revision-Date: 2020-08-26 23:30+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -25,12 +25,12 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
-#: src/application.cpp:245 src/interface.cpp:386
+#: src/application.cpp:245 src/interface.cpp:388
 msgid "System Monitor"
 msgstr "システムモニター"
 
 #: gnome-system-monitor.desktop.in.in:4
-#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:387
+#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:389
 msgid "View current processes and monitor system state"
 msgstr "現在のプロセスを表示してシステムの状態を監視します"
 
@@ -40,9 +40,9 @@ msgid ""
 "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
 "Manager;Activity;"
 msgstr ""
-"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;モニ"
-"ター;システム;プロセス;メモリ;ネットワーク;履歴;使用量;パフォーマンス;性能;タ"
-"スク;アクティビティ;"
+"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
+"Manager;Activity;モニター;システム;プロセス;メモリ;ネットワーク;履歴;使用量;"
+"パフォーマンス;性能;タスク;アクティビティ;"
 
 #: gnome-system-monitor-kde.desktop.in.in:3
 #: gnome-system-monitor.appdata.xml.in:6 src/application.cpp:300
@@ -120,9 +120,10 @@ msgstr "プロセスの優先度の変更"
 msgid "Privileges are required to change the priority of processes"
 msgstr "プロセスの優先度を変更するには権限が必要です。"
 
-#: data/interface.ui:150
-msgid "End _Process"
-msgstr "プロセスを終了(_P)"
+#: data/interface.ui:150 src/procdialogs.cpp:135 src/proctable.cpp:147
+msgid "_End Process"
+msgid_plural "_End Processes"
+msgstr[0] "プロセスを終了(_E)"
 
 #: data/interface.ui:164
 msgid "Show process properties"
@@ -140,12 +141,12 @@ msgstr "CPU 使用率の履歴"
 msgid "Memory and Swap History"
 msgstr "メモリとスワップの履歴"
 
-#: data/interface.ui:319 src/interface.cpp:274 src/procproperties.cpp:70
-#: src/proctable.cpp:347
+#: data/interface.ui:319 src/interface.cpp:276 src/procproperties.cpp:70
+#: src/proctable.cpp:350
 msgid "Memory"
 msgstr "メモリ"
 
-#: data/interface.ui:334 src/interface.cpp:286
+#: data/interface.ui:334 src/interface.cpp:288
 msgid "Swap"
 msgstr "スワップ"
 
@@ -153,7 +154,7 @@ msgstr "スワップ"
 msgid "Network History"
 msgstr "ネットワークの履歴"
 
-#: data/interface.ui:407 src/interface.cpp:316
+#: data/interface.ui:407 src/interface.cpp:318
 msgid "Receiving"
 msgstr "受信:"
 
@@ -161,7 +162,7 @@ msgstr "受信:"
 msgid "Total Received"
 msgstr "受信の合計:"
 
-#: data/interface.ui:437 src/interface.cpp:334
+#: data/interface.ui:437 src/interface.cpp:336
 msgid "Sending"
 msgstr "送信:"
 
@@ -180,113 +181,113 @@ msgstr "ファイルシステム"
 #: data/lsof.ui:7
 msgctxt "Window title for Search for Open Files dialog"
 msgid "Search for Open Files"
-msgstr "オープンしているファイルの検索"
+msgstr "開いているファイルの検索"
 
 #: data/lsof.ui:31
 msgid "Filter files by name"
-msgstr "ファイル名を入力してフィルタリングしてください"
+msgstr "ファイル名を入力すると絞り込みます"
 
 #: data/lsof.ui:41
 msgid "Case insensitive"
 msgstr "大/小文字を区別しない"
 
-#: data/menus.ui:6 data/menus.ui:60
+#: data/menus.ui:6 data/menus.ui:57
 msgctxt "Menu item to Open Search for Open Files dialog"
 msgid "Search for Open Files"
-msgstr "オープンしているファイルの検索"
+msgstr "開いているファイルの検索"
 
-#: data/menus.ui:12 data/menus.ui:66
+#: data/menus.ui:12 data/menus.ui:63
 msgid "Preferences"
 msgstr "設定"
 
-#: data/menus.ui:16 data/menus.ui:70
+#: data/menus.ui:16 data/menus.ui:67
 msgid "Help"
 msgstr "ヘルプ"
 
-#: data/menus.ui:21 data/menus.ui:75
+#: data/menus.ui:20 data/menus.ui:71
 msgid "About System Monitor"
 msgstr "システムモニターについて"
 
-#: data/menus.ui:29
+#: data/menus.ui:28
 msgid "_Refresh"
 msgstr "更新(_R)"
 
-#: data/menus.ui:36
+#: data/menus.ui:34
 msgid "_Active Processes"
 msgstr "実行中のプロセス(_A)"
 
-#: data/menus.ui:41
+#: data/menus.ui:39
 msgid "A_ll Processes"
 msgstr "すべてのプロセス(_L)"
 
-#: data/menus.ui:46
+#: data/menus.ui:44
 msgid "M_y Processes"
 msgstr "ユーザーのプロセス(_Y)"
 
-#: data/menus.ui:53
+#: data/menus.ui:51
 msgid "Show _Dependencies"
 msgstr "依存関係を表示(_D)"
 
-#: data/menus.ui:83
+#: data/menus.ui:79
 msgid "_Properties"
 msgstr "プロパティ(_P)"
 
-#: data/menus.ui:90
+#: data/menus.ui:85
 msgid "_Memory Maps"
 msgstr "メモリマップ(_M)"
 
 #. Translators: this means 'Files that are open' (open is not a verb here)
-#: data/menus.ui:95
+#: data/menus.ui:89
 msgid "Open _Files"
-msgstr "オープンしたファイル(_F)"
+msgstr "開いたファイル(_F)"
 
-#: data/menus.ui:102
+#: data/menus.ui:95
 msgid "_Change Priority"
 msgstr "優先度の変更(_C)"
 
-#: data/menus.ui:105 src/util.cpp:161
+#: data/menus.ui:98 src/util.cpp:161
 msgid "Very High"
 msgstr "非常に高い"
 
-#: data/menus.ui:110 src/util.cpp:163
+#: data/menus.ui:103 src/util.cpp:163
 msgid "High"
 msgstr "高い"
 
-#: data/menus.ui:115 src/util.cpp:165
+#: data/menus.ui:108 src/util.cpp:165
 msgid "Normal"
 msgstr "普通"
 
-#: data/menus.ui:120 src/util.cpp:167
+#: data/menus.ui:113 src/util.cpp:167
 msgid "Low"
 msgstr "低い"
 
-#: data/menus.ui:125 src/util.cpp:169
+#: data/menus.ui:118 src/util.cpp:169
 msgid "Very Low"
 msgstr "非常に低い"
 
-#: data/menus.ui:132
+#: data/menus.ui:125
 msgid "Custom"
 msgstr "カスタム"
 
-#: data/menus.ui:141
+#: data/menus.ui:134
 msgid "_Stop"
 msgstr "停止(_S)"
 
-#: data/menus.ui:147
+#: data/menus.ui:139
 msgid "_Continue"
 msgstr "再開(_C)"
 
-#: data/menus.ui:153
+#: data/menus.ui:144
 msgid "_End"
 msgstr "終了(_E)"
 
-#: data/menus.ui:159
+#: data/menus.ui:149
 msgid "_Kill"
 msgstr "強制終了(_K)"
 
 #: data/openfiles.ui:8
 msgid "Open Files"
-msgstr "オープンしているファイル"
+msgstr "開いているファイル"
 
 #: data/preferences.ui:8
 msgid "System Monitor Preferences"
@@ -298,7 +299,7 @@ msgstr "動作"
 
 #: data/preferences.ui:83 data/preferences.ui:348 data/preferences.ui:520
 msgid "_Update interval in seconds:"
-msgstr "更新間隔(秒)(_U):"
+msgstr "更新間隔 (秒)(_U):"
 
 #: data/preferences.ui:119
 msgid "Enable _smooth refresh"
@@ -382,7 +383,7 @@ msgstr "起動時にファイルシステムのタブを表示する"
 
 #: src/argv.cpp:36
 msgid "Show the application’s version"
-msgstr "プログラムのバージョンを表示する"
+msgstr "アプリケーションのバージョンを表示する"
 
 #: src/disks.cpp:352 src/memmaps.cpp:329
 msgid "Device"
@@ -427,7 +428,7 @@ msgstr "CPU"
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: src/interface.cpp:397
+#: src/interface.cpp:400
 msgid "translator-credits"
 msgstr ""
 "相花 毅 <takeshi.aihana@gmail.com>\n"
@@ -512,27 +513,33 @@ msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u 秒"
 
-#: src/load-graph.cpp:412
+#: src/load-graph.cpp:416
 msgid "not available"
 msgstr "利用できません"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: src/load-graph.cpp:415
+#: src/load-graph.cpp:419
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) / %s"
+
+#. xgettext: Used cache string, e.g.: "Cache 2.4GiB"
+#: src/load-graph.cpp:423
+#, c-format
+msgid "Cache %s"
+msgstr "キャッシュ %s"
 
 #: src/lsof.cpp:118
 #, c-format
 msgid "%d open file"
 msgid_plural "%d open files"
-msgstr[0] "オープンしているファイル: %d 件"
+msgstr[0] "開いているファイル: %d 件"
 
 #: src/lsof.cpp:120
 #, c-format
 msgid "%d matching open file"
 msgid_plural "%d matching open files"
-msgstr[0] "オープンしているファイル: %d 件"
+msgstr[0] "開いているファイル: %d 件"
 
 #: src/lsof.cpp:245
 msgid "Process"
@@ -645,7 +652,7 @@ msgstr "オブジェクト"
 #: src/openfiles.cpp:337
 #, c-format
 msgid "_Files opened by process “%s” (PID %u):"
-msgstr "“%s” (PID: %u) がオープンしたファイルの一覧(_F):"
+msgstr "“%s” (PID: %u) が開いたファイルの一覧(_F):"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:5
 msgid "Main window size and position in the form (width, height, xpos, ypos)"
@@ -679,15 +686,15 @@ msgstr "更新をスムーズにするかどうか"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:41
 msgid "Show warning dialog when killing processes"
-msgstr "プロセスを強制終了する際に警告ダイアログを表示するか"
+msgstr "プロセスを強制終了するときに警告ダイアログを表示するか"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:48
 msgid "Time in milliseconds between updates of the process view"
-msgstr "プロセス一覧の更新間隔 (ミリ秒)"
+msgstr "プロセス一覧の更新間隔 (ミリ秒単位)"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:54
 msgid "Time in milliseconds between updates of the graphs"
-msgstr "グラフの更新間隔 (ミリ秒)"
+msgstr "グラフの更新間隔 (ミリ秒単位)"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:60
 msgid "Whether information about all file systems should be displayed"
@@ -701,11 +708,11 @@ msgid ""
 msgstr ""
 "すべてのファイルシステムの情報を表示するかどうかです (これ"
 "は“autofs”や“procfs”のような種類も含まれます)。現在マウントされているすべての"
-"ファイルシステムの一覧を取得する際に便利です。"
+"ファイルシステムの一覧を取得するのに便利です。"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:69
 msgid "Time in milliseconds between updates of the devices list"
-msgstr "デバイス一覧の更新間隔 (ミリ秒)"
+msgstr "デバイス一覧の更新間隔 (ミリ秒単位)"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:79
 msgid "Determines which processes to show."
@@ -721,7 +728,7 @@ msgstr "CPU の色"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:114
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
-msgstr "各エントリはこの形式になります (CPU#、16進数の色の値)"
+msgstr "各エントリーはこの形式になります (CPU#、16 進数の色の値)"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:121
 msgid "Default graph memory color"
@@ -874,12 +881,12 @@ msgid "Show process “Nice” column on startup"
 msgstr "起動時にプロセス一覧の項目“Nice 値”を表示"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
-msgid "Width of process “PID” column"
-msgstr "プロセス一覧の項目“PID”の幅"
+msgid "Width of process “ID” column"
+msgstr "プロセス一覧の項目“ID”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
-msgid "Show process “PID” column on startup"
-msgstr "起動時にプロセス一覧の項目“PID”を表示"
+msgid "Show process “ID” column on startup"
+msgstr "起動時にプロセス一覧の項目“ID”を表示"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
 msgid "Width of process “SELinux Security Context” column"
@@ -1071,11 +1078,11 @@ msgstr "メモリマップの並び順"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:722
 msgid "Open files sort column"
-msgstr "オープンしたファイルの項目の並べ方"
+msgstr "開いたファイルの項目の並べ方"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:729
 msgid "Open files sort order"
-msgstr "オープンしたファイルの並び順"
+msgstr "開いたファイルの並び順"
 
 #: src/prefsdialog.cpp:168
 msgid "Icon"
@@ -1147,13 +1154,13 @@ msgid ""
 "security risk. Only unresponsive processes should be killed."
 msgstr ""
 "プロセスを強制終了すると、データの破損、セッションの異常終了、あるいはセキュ"
-"リティ上の危険性の増加につながる恐れがあります。反応が無いプロセスのみを強制"
+"リティ上の危険性の増加につながる恐れがあります。反応がないプロセスのみを強制"
 "終了してください。"
 
 #: src/procdialogs.cpp:128
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
-msgstr[0] "プロセスの強制終了(_K)"
+msgstr[0] "プロセスを強制終了(_K)"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:132
@@ -1162,13 +1169,8 @@ msgid ""
 "risk. Only unresponsive processes should be ended."
 msgstr ""
 "プロセスを終了すると、データの破損、セッションの異常終了、あるいはセキュリ"
-"ティ上の危険性の増加につながる恐れがあります。反応が無いプロセスのみを終了し"
+"ティ上の危険性の増加につながる恐れがあります。反応がないプロセスのみを終了し"
 "てください。"
-
-#: src/procdialogs.cpp:135
-msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "プロセスを終了(_E)"
 
 #. SIGSTOP
 #. xgettext: secondary alert message
@@ -1178,7 +1180,7 @@ msgid ""
 "security risk. Only unresponsive processes should be stopped."
 msgstr ""
 "プロセスを停止すると、データの破損、セッションの異常終了、あるいはセキュリ"
-"ティ上の危険性の増加につながる恐れがあります。反応が無いプロセスのみを停止し"
+"ティ上の危険性の増加につながる恐れがあります。反応がないプロセスのみを停止し"
 "てください。"
 
 #: src/procdialogs.cpp:142
@@ -1210,76 +1212,76 @@ msgstr ""
 "ます。"
 
 #: src/procproperties.cpp:50 src/procproperties.cpp:84
-#: src/procproperties.cpp:87 src/util.cpp:378 src/util.cpp:417
+#: src/procproperties.cpp:87 src/util.cpp:376 src/util.cpp:415
 msgid "N/A"
 msgstr "N/A"
 
-#: src/procproperties.cpp:67 src/proctable.cpp:332
+#: src/procproperties.cpp:67 src/proctable.cpp:335
 msgid "Process Name"
 msgstr "プロセス名"
 
-#: src/procproperties.cpp:68 src/proctable.cpp:333
+#: src/procproperties.cpp:68 src/proctable.cpp:336
 msgid "User"
 msgstr "ユーザー"
 
-#: src/procproperties.cpp:69 src/proctable.cpp:334
+#: src/procproperties.cpp:69 src/proctable.cpp:337
 msgid "Status"
 msgstr "状態"
 
-#: src/procproperties.cpp:71 src/proctable.cpp:335
+#: src/procproperties.cpp:71 src/proctable.cpp:338
 msgid "Virtual Memory"
 msgstr "仮想メモリ"
 
-#: src/procproperties.cpp:72 src/proctable.cpp:336
+#: src/procproperties.cpp:72 src/proctable.cpp:339
 msgid "Resident Memory"
 msgstr "物理メモリ"
 
-#: src/procproperties.cpp:73 src/proctable.cpp:337
+#: src/procproperties.cpp:73 src/proctable.cpp:340
 msgid "Writable Memory"
 msgstr "書き込み可能メモリ"
 
-#: src/procproperties.cpp:74 src/proctable.cpp:338
+#: src/procproperties.cpp:74 src/proctable.cpp:341
 msgid "Shared Memory"
 msgstr "共有メモリ"
 
-#: src/procproperties.cpp:76 src/proctable.cpp:339
+#: src/procproperties.cpp:76 src/proctable.cpp:342
 msgid "X Server Memory"
 msgstr "X サーバーメモリ"
 
-#: src/procproperties.cpp:79 src/proctable.cpp:341
+#: src/procproperties.cpp:79 src/proctable.cpp:344
 msgid "CPU Time"
 msgstr "CPU 時間"
 
-#: src/procproperties.cpp:80 src/proctable.cpp:342
+#: src/procproperties.cpp:80 src/proctable.cpp:345
 msgid "Started"
 msgstr "起動日時"
 
-#: src/procproperties.cpp:81 src/proctable.cpp:343
+#: src/procproperties.cpp:81 src/proctable.cpp:346
 msgid "Nice"
 msgstr "Nice 値"
 
-#: src/procproperties.cpp:82 src/proctable.cpp:361
+#: src/procproperties.cpp:82 src/proctable.cpp:364
 msgid "Priority"
 msgstr "優先度"
 
-#: src/procproperties.cpp:83 src/proctable.cpp:344
+#: src/procproperties.cpp:83 src/proctable.cpp:347
 msgid "ID"
 msgstr "ID"
 
-#: src/procproperties.cpp:84 src/proctable.cpp:345
+#: src/procproperties.cpp:84 src/proctable.cpp:348
 msgid "Security Context"
 msgstr "セキュリティコンテキスト"
 
-#: src/procproperties.cpp:85 src/proctable.cpp:346
+#: src/procproperties.cpp:85 src/proctable.cpp:349
 msgid "Command Line"
 msgstr "コマンドライン"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:86 src/proctable.cpp:349
+#: src/procproperties.cpp:86 src/proctable.cpp:352
 msgid "Waiting Channel"
 msgstr "休止中の関数"
 
-#: src/procproperties.cpp:87 src/proctable.cpp:350
+#: src/procproperties.cpp:87 src/proctable.cpp:353
 msgid "Control Group"
 msgstr "Control Group"
 
@@ -1288,42 +1290,42 @@ msgstr "Control Group"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: src/proctable.cpp:340
+#: src/proctable.cpp:343
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: src/proctable.cpp:351
+#: src/proctable.cpp:354
 msgid "Unit"
 msgstr "単位"
 
-#: src/proctable.cpp:352
+#: src/proctable.cpp:355
 msgid "Session"
 msgstr "セッション"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:355
+#: src/proctable.cpp:358
 msgid "Seat"
 msgstr "シート"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:359
 msgid "Owner"
 msgstr "所有者"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:360
 msgid "Disk read total"
 msgstr "ディスクの総読込量"
 
-#: src/proctable.cpp:358
+#: src/proctable.cpp:361
 msgid "Disk write total"
 msgstr "ディスクの総書込量"
 
-#: src/proctable.cpp:359
+#: src/proctable.cpp:362
 msgid "Disk read"
 msgstr "ディスクの読み込み"
 
-#: src/proctable.cpp:360
+#: src/proctable.cpp:363
 msgid "Disk write"
 msgstr "ディスクの書き込み"
 
@@ -1392,83 +1394,13 @@ msgid "Very Low Priority"
 msgstr "非常に低い優先度"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:613
+#: src/util.cpp:611
 #, c-format
 msgid "%s/s"
 msgstr "%s/秒"
 
-#~ msgctxt "Menu item to Open 'Search for Open Files' dialog"
-#~ msgid "Search for Open Files"
-#~ msgstr "オープンしているファイルを検索"
-
-#~ msgid "About"
-#~ msgstr "このアプリケーションについて"
-
-#~ msgid "Quit"
-#~ msgstr "終了"
-
-#~ msgid "Error"
-#~ msgstr "エラー"
-
 #~ msgid "'%s' is not a valid Perl regular expression."
 #~ msgstr "'%s' は妥当な Perl 正規表現ではありません。"
 
-#~ msgid "%.1f KiB"
-#~ msgstr "%.1f KiB"
-
-#~ msgid "%.1f MiB"
-#~ msgstr "%.1f MiB"
-
-#~ msgid "%.1f GiB"
-#~ msgstr "%.1f GiB"
-
-#~ msgid "%.1f TiB"
-#~ msgstr "%.1f TiB"
-
-#~ msgid "%.3g kbit"
-#~ msgstr "%.3g kbit"
-
-#~ msgid "%.3g Mbit"
-#~ msgstr "%.3g Mbit"
-
-#~ msgid "%.3g Gbit"
-#~ msgstr "%.3g Gbit"
-
-#~ msgid "%.3g Tbit"
-#~ msgstr "%.3g Tbit"
-
-#~ msgid "%u bit"
-#~ msgid_plural "%u bits"
-#~ msgstr[0] "%u ビット"
-
-#~ msgid "%u byte"
-#~ msgid_plural "%u bytes"
-#~ msgstr[0] "%u バイト"
-
 #~ msgid "_Name contains:"
 #~ msgstr "ファイル名が次を含む(_N):"
-
-#~ msgid "_Find"
-#~ msgstr "検索(_F)"
-
-#~ msgid "C_lear"
-#~ msgstr "クリア(_L)"
-
-#~ msgid "S_earch results:"
-#~ msgstr "検索結果(_E):"
-
-#~ msgid "_Close"
-#~ msgstr "閉じる(_C)"
-
-#~ msgid "_Help"
-#~ msgstr "ヘルプ(_H)"
-
-#~ msgid "%lld second"
-#~ msgid_plural "%lld seconds"
-#~ msgstr[0] "%lld 秒"
-
-#~ msgid "Process Properties"
-#~ msgstr "プロセスのプロパティ"
-
-#~ msgid "Properties of process \"%s\" (PID %u):"
-#~ msgstr "プロセス \"%s\" (PID %u) のプロパティ:"

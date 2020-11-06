@@ -35,6 +35,7 @@
 #include "proctable.h"
 #include "procactions.h"
 #include "procdialogs.h"
+#include "setaffinity.h"
 #include "memmaps.h"
 #include "openfiles.h"
 #include "procproperties.h"
@@ -85,6 +86,19 @@ search_text_changed (GtkEditable *entry, gpointer data)
                                     GTK_TREE_VIEW (app->tree))))));
 }
 
+static void
+set_affinity_visiblity (GtkWidget *widget, gpointer user_data)
+{
+#ifndef __linux__
+    GtkMenuItem *item = GTK_MENU_ITEM (widget);
+    const gchar *name = gtk_menu_item_get_label (item);
+
+    if (strcmp (name, "Set _Affinity") == 0) {
+        gtk_widget_set_visible (widget, false);
+    }
+#endif
+}
+
 static void 
 create_proc_view(GsmApplication *app, GtkBuilder * builder)
 {
@@ -102,7 +116,9 @@ create_proc_view(GsmApplication *app, GtkBuilder * builder)
     GMenuModel *menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-popup-menu"));
     app->popup_menu = GTK_MENU (gtk_menu_new_from_model (menu_model));
     gtk_menu_attach_to_widget (app->popup_menu, GTK_WIDGET (app->main_window), NULL);
-    
+
+    gtk_container_foreach (GTK_CONTAINER (app->popup_menu), set_affinity_visiblity, NULL);
+
     app->search_bar = GTK_SEARCH_BAR (gtk_builder_get_object (builder, "proc_searchbar"));
     app->search_entry = GTK_SEARCH_ENTRY (gtk_builder_get_object (builder, "proc_searchentry"));
     
@@ -125,7 +141,7 @@ cb_cpu_color_changed (GsmColorButton *cp, gpointer data)
     GVariant *cpu_colors_var = g_settings_get_value (settings->gobj(), GSM_SETTING_CPU_COLORS);
     gsize children_n = g_variant_n_children(cpu_colors_var);
 
-    /* Create builder to contruct new setting with updated value for cpu i */
+    /* Create builder to construct new setting with updated value for cpu i */
     GVariantBuilder builder;
     g_variant_builder_init(&builder, G_VARIANT_TYPE_ARRAY);
 
@@ -192,7 +208,8 @@ static void
 create_sys_view (GsmApplication *app, GtkBuilder * builder)
 {
     GtkBox *cpu_graph_box, *mem_graph_box, *net_graph_box;
-    GtkLabel *label, *cpu_label;
+    GtkExpander *cpu_expander, *mem_expander, *net_expander;
+    GtkLabel *label,*cpu_label;
     GtkGrid *table;
     GsmColorButton *color_picker;
     GtkCssProvider *provider;
@@ -215,6 +232,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     /* The CPU BOX */
     
     cpu_graph_box = GTK_BOX (gtk_builder_get_object (builder, "cpu_graph_box"));
+    cpu_expander = GTK_EXPANDER (gtk_builder_get_object (builder, "cpu_expander"));
+    g_object_bind_property (cpu_expander, "expanded", cpu_expander, "vexpand", G_BINDING_DEFAULT);
 
     dzl_graph = GTK_WIDGET(g_object_new (DZL_TYPE_CPU_GRAPH, "timespan", G_TIME_SPAN_MINUTE,
                                                              "max-samples", 60, NULL));
@@ -258,8 +277,10 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
         gtk_widget_show (GTK_WIDGET (label));
         g_free (label_text);
 
-        cpu_label = GTK_LABEL (gtk_label_new (NULL));
+        cpu_label = make_tnum_label ();
 
+        /* Reserve some space to avoid the layout changing with the values. */
+        gtk_label_set_width_chars(cpu_label, 6);
         gtk_widget_set_valign (GTK_WIDGET (cpu_label), GTK_ALIGN_CENTER);
         gtk_widget_set_halign (GTK_WIDGET (cpu_label), GTK_ALIGN_START);
         gtk_box_pack_start (temp_hbox, GTK_WIDGET (cpu_label), FALSE, FALSE, 0);
@@ -270,6 +291,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     /** The memory box */
 
     mem_graph_box = GTK_BOX (gtk_builder_get_object (builder, "mem_graph_box"));
+    mem_expander = GTK_EXPANDER (gtk_builder_get_object (builder, "mem_expander"));
+    g_object_bind_property (mem_expander, "expanded", mem_expander, "vexpand", G_BINDING_DEFAULT);
 
     mem_graph = new LoadGraph(LOAD_GRAPH_MEM);
     gtk_widget_set_size_request (GTK_WIDGET(load_graph_get_widget(mem_graph)), -1, 70);
@@ -290,8 +313,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
 
     label = GTK_LABEL (gtk_builder_get_object(builder, "memory_label"));
 
-    gtk_grid_attach_next_to (table, GTK_WIDGET (color_picker), GTK_WIDGET (label), GTK_POS_LEFT, 1, 2);
-    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(mem_graph)->memory), GTK_WIDGET (label), GTK_POS_BOTTOM, 1, 1);
+    gtk_grid_attach_next_to (table, GTK_WIDGET (color_picker), GTK_WIDGET (label), GTK_POS_LEFT, 1, 3);
+    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(mem_graph)->memory), GTK_WIDGET (label), GTK_POS_BOTTOM, 1, 2);
 
     color_picker = load_graph_get_swap_color_picker(mem_graph);
     g_signal_connect (G_OBJECT (color_picker), "color-set",
@@ -302,14 +325,16 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
 
     label = GTK_LABEL (gtk_builder_get_object(builder, "swap_label"));
 
-    gtk_grid_attach_next_to (table, GTK_WIDGET (color_picker), GTK_WIDGET (label), GTK_POS_LEFT, 1, 2);
-    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(mem_graph)->swap), GTK_WIDGET (label), GTK_POS_BOTTOM, 1, 1);
+    gtk_grid_attach_next_to (table, GTK_WIDGET (color_picker), GTK_WIDGET (label), GTK_POS_LEFT, 1, 3);
+    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(mem_graph)->swap), GTK_WIDGET (label), GTK_POS_BOTTOM, 1, 2);
 
     app->mem_graph = mem_graph;
 
     /* The net box */
     
     net_graph_box = GTK_BOX (gtk_builder_get_object (builder, "net_graph_box"));
+    net_expander = GTK_EXPANDER (gtk_builder_get_object (builder, "net_expander"));
+    g_object_bind_property (net_expander, "expanded", net_expander, "vexpand", G_BINDING_DEFAULT);
 
     net_graph = new LoadGraph(LOAD_GRAPH_NET);
     gtk_widget_set_size_request (GTK_WIDGET(load_graph_get_widget(net_graph)), -1, 70);
@@ -400,6 +425,7 @@ on_activate_about (GSimpleAction *, GVariant *, gpointer data)
         "comments",             _("View current processes and monitor "
                                   "system state"),
         "version",              VERSION,
+        "website",              "https://wiki.gnome.org/Apps/SystemMonitor",
         "copyright",            "Copyright \xc2\xa9 2001-2004 Kevin Vandersloot\n"
                                 "Copyright \xc2\xa9 2005-2007 Benoît Dejean\n"
                                 "Copyright \xc2\xa9 2011 Chris Kühl",
@@ -408,10 +434,16 @@ on_activate_about (GSimpleAction *, GVariant *, gpointer data)
         "artists",              artists,
         "documenters",          documenters,
         "translator-credits",   _("translator-credits"),
-        "license",              "GPL 2+",
-        "wrap-license",         TRUE,
+		"license-type", 		GTK_LICENSE_GPL_2_0,
         NULL
         );
+}
+
+static void
+on_activate_keyboard_shortcuts (GSimpleAction *, GVariant *, gpointer data)
+{
+    GsmApplication *app = (GsmApplication *) data;
+    gtk_widget_show (GTK_WIDGET (gtk_application_window_get_help_overlay (app->main_window)));
 }
 
 static void
@@ -448,6 +480,14 @@ on_activate_send_signal (GSimpleAction *, GVariant *parameter, gpointer data)
             kill_process_with_confirmation (app, signal);
             break;
     }
+}
+
+static void
+on_activate_set_affinity (GSimpleAction *, GVariant *, gpointer data)
+{
+    GsmApplication *app = (GsmApplication *) data;
+
+    create_set_affinity_dialog (app);
 }
 
 static void
@@ -673,11 +713,15 @@ create_main_window (GsmApplication *app)
     GtkBuilder *builder = gtk_builder_new();
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/interface.ui", NULL);
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/menus.ui", NULL);
+    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/gtk/help-overlay.ui", NULL);
 
     main_window = GTK_APPLICATION_WINDOW (gtk_builder_get_object (builder, "main_window"));
     gtk_window_set_application (GTK_WINDOW (main_window), app->gobj());
     gtk_widget_set_name (GTK_WIDGET (main_window), "gnome-system-monitor");
     app->main_window = main_window;
+
+    gtk_application_window_set_help_overlay (app->main_window, 
+                                             GTK_SHORTCUTS_WINDOW (gtk_builder_get_object (builder, "help_overlay")));
 
     session = g_getenv ("XDG_CURRENT_DESKTOP");
     if (session && !strstr (session, "GNOME")){
@@ -726,12 +770,14 @@ create_main_window (GsmApplication *app)
 
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL },
+        { "show-help-overlay", on_activate_keyboard_shortcuts,  NULL, NULL, NULL},
         { "search", on_activate_search, "b", "false", NULL },
         { "send-signal-stop", on_activate_send_signal, "i", NULL, NULL },
         { "send-signal-cont", on_activate_send_signal, "i", NULL, NULL },
         { "send-signal-end", on_activate_send_signal, "i", NULL, NULL },
         { "send-signal-kill", on_activate_send_signal, "i", NULL, NULL },
         { "priority", on_activate_priority, "i", "@i 0", change_priority_state },
+        { "set-affinity", on_activate_set_affinity, NULL, NULL, NULL },
         { "memory-maps", on_activate_memory_maps, NULL, NULL, NULL },
         { "open-files", on_activate_open_files, NULL, NULL, NULL },
         { "process-properties", on_activate_process_properties, NULL, NULL, NULL },
@@ -816,6 +862,7 @@ update_sensitivity(GsmApplication *app)
                                               "send-signal-end",
                                               "send-signal-kill",
                                               "priority",
+                                              "set-affinity",
                                               "memory-maps",
                                               "open-files",
                                               "process-properties" };

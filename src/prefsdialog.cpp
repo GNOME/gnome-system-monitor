@@ -43,7 +43,7 @@ private:
 
     void update(GtkSpinButton* spin)
     {
-        int new_value = int(1000 * gtk_spin_button_get_value(spin));
+        int new_value = 1000 * gtk_spin_button_get_value(spin);
 
         GsmApplication::get()->settings->set_int(this->key, new_value);
 
@@ -51,6 +51,34 @@ private:
     }
 
     const string key;
+};
+
+class ScaleUpdater
+{
+public:
+	ScaleUpdater(const string& key)
+	    : key(key)
+	{ }
+
+	static gboolean callback(GtkRange *range, gpointer data)
+	{
+		ScaleUpdater* updater = static_cast<ScaleUpdater*>(data);
+		updater->update(range);
+		return FALSE;
+	}
+
+private:
+
+	void update(GtkRange* range)
+	{
+		int new_value = gtk_range_get_value(range);
+
+		GsmApplication::get()->settings->set_int(this->key, new_value);
+
+		procman_debug("set %s to %d", this->key.c_str(), new_value);
+	}
+
+	const string key;
 };
 
 static void
@@ -199,6 +227,7 @@ create_preferences_dialog (GsmApplication *app)
     static SBU interval_updater("update-interval");
     static SBU graph_interval_updater("graph-update-interval");
     static SBU disks_interval_updater("disks-interval");
+    static ScaleUpdater graph_points_updater("graph-data-points");
 
     GtkNotebook *notebook;
     GtkAdjustment *adjustment;
@@ -265,6 +294,15 @@ create_preferences_dialog (GsmApplication *app)
     g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
                       G_CALLBACK(SBU::callback),
                       &graph_interval_updater);
+
+    update = (gfloat) app->config.graph_data_points;
+    GtkRange* range = GTK_RANGE (gtk_builder_get_object (builder, "graph_data_points_scale"));
+    adjustment = gtk_range_get_adjustment (range);
+    gtk_adjustment_configure (adjustment, update, 30,
+    		                  600, 10, 50, 0);
+    g_signal_connect (G_OBJECT (range), "value-changed",
+    		          G_CALLBACK(ScaleUpdater::callback),
+					  &graph_points_updater);
 
     GtkCheckButton *bits_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "bits_button"));
     g_settings_bind(app->settings->gobj (), GSM_SETTING_NETWORK_IN_BITS,

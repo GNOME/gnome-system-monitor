@@ -33,6 +33,7 @@ struct ProcConfig
       : update_interval(0),
 	graph_update_interval(0),
 	disks_update_interval(0),
+	graph_data_points(0),
 	mem_color(),
 	swap_color(),
 	net_in_color(),
@@ -51,6 +52,7 @@ struct ProcConfig
     int             update_interval;
     int             graph_update_interval;
     int             disks_update_interval;
+    int             graph_data_points;
     GdkRGBA         cpu_color[GLIBTOP_NCPU];
     GdkRGBA         mem_color;
     GdkRGBA         swap_color;
@@ -87,7 +89,7 @@ MutableProcInfo()
     disk_read_bytes_current(0ULL),
     disk_write_bytes_current(0ULL),
     status(0U),
-    pcpu(0U),
+    pcpu(0),
     nice(0)
     {
     }
@@ -118,7 +120,7 @@ MutableProcInfo()
     guint64 disk_read_bytes_current;
     guint64 disk_write_bytes_current;
     guint status;
-    guint pcpu;
+    gdouble pcpu;
     gint nice;
     std::string cgroup_name;
 

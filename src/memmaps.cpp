@@ -356,6 +356,7 @@ create_memmapsdata (GsmApplication *app)
     for (i = 0; i < MMAP_COL_MAX; i++) {
         GtkCellRenderer *cell;
         GtkTreeViewColumn *col;
+        PangoAttrList *attrs;
 
         cell = gtk_cell_renderer_text_new();
         col = gtk_tree_view_column_new();
@@ -365,6 +366,10 @@ create_memmapsdata (GsmApplication *app)
         gtk_tree_view_column_set_sort_column_id(col, i);
         gtk_tree_view_column_set_reorderable(col, TRUE);
         gtk_tree_view_append_column(GTK_TREE_VIEW(tree), col);
+
+        attrs = make_tnum_attr_list ();
+        g_object_set (cell, "attributes", attrs, NULL);
+        g_clear_pointer (&attrs, pango_attr_list_unref);
 
         switch (i) {
             case MMAP_COL_PRIVATE_CLEAN:

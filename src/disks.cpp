@@ -23,7 +23,7 @@ enum DiskColumns
     DISK_AVAIL,
     /* USED has to be the last column */
     DISK_USED,
-    // then unvisible columns
+    // then invisible columns
     /* PixBuf column */
     DISK_ICON,
     /* numeric columns */
@@ -345,6 +345,7 @@ create_disk_view(GsmApplication *app, GtkBuilder *builder)
     GtkListStore *model;
     GtkTreeViewColumn *col;
     GtkCellRenderer *cell;
+    PangoAttrList *attrs = NULL;
     guint i;
 
     init_volume_monitor (app);
@@ -418,11 +419,18 @@ create_disk_view(GsmApplication *app, GtkBuilder *builder)
             case DISK_TOTAL:
             case DISK_FREE:
             case DISK_AVAIL:
-                g_object_set(cell, "xalign", 1.0f, NULL);
                 gtk_tree_view_column_set_cell_data_func(col, cell,
                                                         &procman::size_si_cell_data_func,
                                                         GUINT_TO_POINTER(i),
                                                         NULL);
+
+                attrs = make_tnum_attr_list ();
+                g_object_set (cell,
+                              "attributes", attrs,
+                              "xalign", 1.0f,
+                              NULL);
+                g_clear_pointer (&attrs, pango_attr_list_unref);
+
                 break;
 
             default:
@@ -437,7 +445,14 @@ create_disk_view(GsmApplication *app, GtkBuilder *builder)
 
     col = gtk_tree_view_column_new();
     cell = gtk_cell_renderer_text_new();
-    g_object_set(cell, "xalign", 1.0f, NULL);
+
+    attrs = make_tnum_attr_list ();
+    g_object_set (cell,
+                  "attributes", attrs,
+                  "xalign", 1.0f,
+                  NULL);
+    g_clear_pointer (&attrs, pango_attr_list_unref);
+
     gtk_tree_view_column_set_min_width(col, 72);
     gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
     gtk_tree_view_column_pack_start(col, cell, FALSE);

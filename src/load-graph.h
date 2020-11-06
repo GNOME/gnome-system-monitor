@@ -7,6 +7,7 @@
 
 #include "legacy/gsm_color_button.h"
 #include "util.h"
+#include "settings-keys.h"
 
 enum
 {
@@ -36,7 +37,6 @@ struct LoadGraphLabels
 struct LoadGraph
   : private procman::NonCopyable
 {
-    static const unsigned NUM_POINTS = 60 + 2;
     static const unsigned GRAPH_MIN_HEIGHT = 40;
 
     LoadGraph(guint type);
@@ -47,11 +47,14 @@ struct LoadGraph
 
     double fontsize;
     double rmargin;
+    /* left margin */
     double indent;
 
     guint n;
     gint type;
     guint speed;
+    guint num_points;
+    guint latest;
     guint draw_width, draw_height;
     guint render_counter;
     guint frames_per_unit;
@@ -63,7 +66,7 @@ struct LoadGraph
     std::vector<GdkRGBA> colors;
 
     std::vector<double> data_block;
-    double* data[NUM_POINTS];
+    std::vector<double*> data;
 
     GtkBox *main_widget;
     GtkDrawingArea *disp;
@@ -78,6 +81,8 @@ struct LoadGraph
     GsmColorButton *mem_color_picker;
     GsmColorButton *swap_color_picker;
 
+    Glib::RefPtr<Gio::Settings> font_settings;
+
     /* union { */
     struct
     {
@@ -90,10 +95,9 @@ struct LoadGraph
     struct
     {
         guint64 last_in, last_out;
-        GTimeVal time;
+        guint64 time;
         guint64 max;
-        unsigned values[NUM_POINTS];
-        size_t cur;
+        std::vector<unsigned> values;
     } net;
     /* }; */
 };
@@ -114,6 +118,11 @@ load_graph_stop (LoadGraph *g);
 void
 load_graph_change_speed (LoadGraph *g,
                          guint new_speed);
+
+/* Change load graph data points and restart it if it has been previously started */
+void
+load_graph_change_num_points(LoadGraph *g,
+                             guint new_num_points);
 
 /* Clear the history data. */
 void
