@@ -812,8 +812,8 @@ load_graph_destroy (GtkWidget *widget, gpointer data_ptr)
 
 LoadGraph::LoadGraph(guint type)
     : fontsize(8.0),
-      rmargin(7 * fontsize),
-      indent(24.0),
+      rmargin(6 * fontsize),
+      indent(18.0),
       n(0),
       type(type),
       speed(0),
