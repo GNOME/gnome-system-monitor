@@ -44,6 +44,7 @@
 #include "disks.h"
 #include "settings-keys.h"
 #include "legacy/gsm_color_button.h"
+#include "charts/gsm-cpu-graph.h"
 
 static const char* LOAD_GRAPH_CSS = "\
 .loadgraph {\
@@ -235,7 +236,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     cpu_expander = GTK_EXPANDER (gtk_builder_get_object (builder, "cpu_expander"));
     g_object_bind_property (cpu_expander, "expanded", cpu_expander, "vexpand", G_BINDING_DEFAULT);
 
-    dzl_graph = GTK_WIDGET(g_object_new (DZL_TYPE_CPU_GRAPH, "timespan", G_TIME_SPAN_MINUTE,
+    dzl_graph = GTK_WIDGET(g_object_new (GSM_TYPE_CPU_GRAPH, "timespan", G_TIME_SPAN_MINUTE,
                                                              "max-samples", app->config.graph_data_points + 2, NULL));
     app->cpu_graph = dzl_graph;
     gtk_widget_set_size_request (GTK_WIDGET(dzl_graph), -1, 70);

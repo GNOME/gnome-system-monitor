@@ -1,4 +1,5 @@
 subdir('legacy')
+subdir('charts')
 
 system_monitor_sources = [
   'application.cpp',
@@ -56,6 +57,8 @@ system_monitor_headers = [
   'legacy/treeview.h',
   'legacy/e_date.h',
   'legacy/gsm_color_button.h',
+  'charts/gsm-cpu-model.h',
+  'charts/gsm-cpu-graph.h',
 ]
 
 gsm_resource_dir = join_paths(get_option('datadir'), meson.project_name())
@@ -100,7 +103,7 @@ executable(meson.project_name(),
     libwnck,
     libdazzle,
   ],
-  link_with: libgsm_legacy,
+  link_with: [ libgsm_legacy, libgsm_charts ],
   cpp_args: [
     '-DGSM_RESOURCE_FILE="@0@"'.format(join_paths(
       get_option('prefix'), gsm_resource_dir, 'gsm.gresource')),
