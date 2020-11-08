@@ -57,6 +57,7 @@ static void draw_background(LoadGraph *graph) {
     GtkAllocation allocation;
     cairo_t *cr;
     guint i;
+    double label_x_offset_modifier, label_y_offset_modifier;
     unsigned num_bars;
     char *caption;
     PangoLayout* layout;
@@ -155,8 +156,12 @@ static void draw_background(LoadGraph *graph) {
         pango_layout_set_alignment (layout, PANGO_ALIGN_LEFT);
         pango_layout_set_text (layout, caption, -1);
         pango_layout_get_extents (layout, NULL, &extents);
+        label_y_offset_modifier = i == 0 ? 0.5
+                                : i == num_bars
+                                    ? 1.0
+                                    : 0.85;
         cairo_move_to (cr, graph->draw_width - graph->indent - 23,
-                       y - 1.0 * extents.height / PANGO_SCALE / 2);
+                       y - label_y_offset_modifier * extents.height / PANGO_SCALE);
         pango_cairo_show_layout (cr, layout);
         g_free(caption);
 
@@ -236,8 +241,12 @@ static void draw_background(LoadGraph *graph) {
 
         pango_layout_set_text (layout, caption, -1);
         pango_layout_get_extents (layout, NULL, &extents);
+        label_x_offset_modifier = i == 0 ? 0
+                                         : i == 6
+                                            ? 1.0
+                                            : 0.5;
         cairo_move_to (cr,
-                       (ceil(x) + 0.5 + graph->indent) - (1.0 * extents.width / PANGO_SCALE / 2) + 1.0,
+                       (ceil(x) + 0.5 + graph->indent) - label_x_offset_modifier * extents.width / PANGO_SCALE + 1.0,
                        graph->draw_height - 1.0 * extents.height / PANGO_SCALE);
         gdk_cairo_set_source_rgba (cr, &fg);
         pango_cairo_show_layout (cr, layout);
