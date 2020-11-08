@@ -309,6 +309,20 @@ create_preferences_dialog (GsmApplication *app)
                     bits_button, "active",
                     G_SETTINGS_BIND_DEFAULT);
 
+    GtkCheckButton *bits_unit_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "bits_unit_button"));
+    g_settings_bind(app->settings->gobj (), GSM_SETTING_NETWORK_TOTAL_UNIT,
+                    bits_unit_button, "active",
+                    G_SETTINGS_BIND_DEFAULT);
+    gtk_builder_add_callback_symbol (builder, "on_bits_unit_button_toggled",
+                    G_CALLBACK (on_bits_unit_button_toggled));
+
+    GtkCheckButton *bits_total_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "bits_total_button"));
+    g_settings_bind(app->settings->gobj (), GSM_SETTING_NETWORK_TOTAL_IN_BITS,
+                    bits_total_button, "active",
+                    G_SETTINGS_BIND_DEFAULT);
+
+    gtk_widget_set_sensitive((GtkWidget *)bits_total_button, gtk_toggle_button_get_active ((GtkToggleButton *)bits_unit_button));
+
     update = (gfloat) app->config.disks_update_interval;
     spin_button = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "devices_interval_spinner"));
     adjustment = gtk_spin_button_get_adjustment (spin_button);
@@ -344,3 +358,8 @@ create_preferences_dialog (GsmApplication *app)
     g_object_unref (G_OBJECT (builder));
 }
 
+void
+on_bits_unit_button_toggled (GtkToggleButton *togglebutton, gpointer bits_total_button)
+{
+    gtk_widget_set_sensitive((GtkWidget *)bits_total_button, gtk_toggle_button_get_active ((GtkToggleButton *)togglebutton));
+}
