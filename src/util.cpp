@@ -711,7 +711,7 @@ namespace procman
 
     std::string format_network(guint64 rate)
     {
-        char* bytes = procman::format_size(rate, GsmApplication::get()->config.network_in_bits);
+        char* bytes = procman::format_size(rate, GsmApplication::get()->config.network_total_in_bits);
         std::string formatted(bytes);
         g_free(bytes);
         return formatted;

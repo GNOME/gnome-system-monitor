@@ -55,6 +55,30 @@ static void
 cb_network_in_bits_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
 {
     app->config.network_in_bits = settings.get_boolean(key);
+    if (app->config.network_total_unit == FALSE) {
+        app->config.network_total_in_bits = app->config.network_in_bits;
+    }
+    // force scale to be redrawn
+    app->net_graph->clear_background();
+}
+
+static void
+cb_network_total_in_unit_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
+{
+    app->config.network_total_unit = settings.get_boolean(key);
+    if (app->config.network_total_unit == FALSE) {
+        app->config.network_total_in_bits = app->config.network_in_bits;
+    } else {
+        app->config.network_total_in_bits = app->settings->get_boolean (GSM_SETTING_NETWORK_TOTAL_IN_BITS);
+    }
+    // force scale to be redrawn
+    app->net_graph->clear_background();
+}
+
+static void
+cb_network_total_in_bits_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
+{
+    app->config.network_total_in_bits = settings.get_boolean(key);
     // force scale to be redrawn
     app->net_graph->clear_background();
 }
@@ -188,6 +212,21 @@ GsmApplication::load_settings()
     config.network_in_bits = this->settings->get_boolean (GSM_SETTING_NETWORK_IN_BITS);
     this->settings->signal_changed (GSM_SETTING_NETWORK_IN_BITS).connect ([this](const Glib::ustring& key) {
         cb_network_in_bits_changed (*this->settings.operator->(), key, this);
+    });
+
+    config.network_total_unit = this->settings->get_boolean (GSM_SETTING_NETWORK_TOTAL_UNIT);
+    this->settings->signal_changed (GSM_SETTING_NETWORK_TOTAL_UNIT).connect ([this](const Glib::ustring& key) {
+        cb_network_total_in_unit_changed (*this->settings.operator->(), key, this);
+    });
+
+    if (config.network_total_unit == FALSE) {
+        config.network_total_in_bits = config.network_in_bits;
+        this->settings->set_boolean (GSM_SETTING_NETWORK_TOTAL_IN_BITS, config.network_in_bits);
+    } else {
+        config.network_total_in_bits = this->settings->get_boolean (GSM_SETTING_NETWORK_TOTAL_IN_BITS);
+    }
+    this->settings->signal_changed (GSM_SETTING_NETWORK_TOTAL_IN_BITS).connect ([this](const Glib::ustring& key) {
+        cb_network_total_in_bits_changed (*this->settings.operator->(), key, this);
     });
 
     auto cbtc = [this](const Glib::ustring& key) { cb_timeouts_changed(*this->settings.operator->(), key, this); };
