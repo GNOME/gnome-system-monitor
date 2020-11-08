@@ -236,7 +236,8 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     g_object_bind_property (cpu_expander, "expanded", cpu_expander, "vexpand", G_BINDING_DEFAULT);
 
     dzl_graph = GTK_WIDGET(g_object_new (DZL_TYPE_CPU_GRAPH, "timespan", G_TIME_SPAN_MINUTE,
-                                                             "max-samples", 60, NULL));
+                                                             "max-samples", app->config.graph_data_points + 2, NULL));
+    app->cpu_graph = dzl_graph;
     gtk_widget_set_size_request (GTK_WIDGET(dzl_graph), -1, 70);
     gtk_widget_show (dzl_graph);
     gtk_box_pack_start (cpu_graph_box,

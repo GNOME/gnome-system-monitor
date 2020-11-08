@@ -35,18 +35,18 @@ static void
 cb_draw_stacked_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
 {
     app->config.draw_stacked = settings.get_boolean(key);
-    app->cpu_graph->clear_background();
-    load_graph_reset(app->cpu_graph);
+    // app->cpu_graph->clear_background();
+    // load_graph_reset(app->cpu_graph);
 }
 
 static void
 cb_draw_smooth_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
 {
     app->config.draw_smooth = settings.get_boolean(key);
-    app->cpu_graph->clear_background();
+//    app->cpu_graph->clear_background();
     app->mem_graph->clear_background();
     app->net_graph->clear_background();
-    load_graph_reset(app->cpu_graph);
+    //load_graph_reset(app->cpu_graph);
     load_graph_reset(app->mem_graph);
     load_graph_reset(app->net_graph);
 }
@@ -71,8 +71,8 @@ cb_timeouts_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication*
         }
     } else if (key == GSM_SETTING_GRAPH_UPDATE_INTERVAL) {
         app->config.graph_update_interval = settings.get_int (key);
-        load_graph_change_speed(app->cpu_graph,
-                                app->config.graph_update_interval);
+        //load_graph_change_speed(app->cpu_graph,
+        //                        app->config.graph_update_interval);
         load_graph_change_speed(app->mem_graph,
                                 app->config.graph_update_interval);
         load_graph_change_speed(app->net_graph,
@@ -87,7 +87,8 @@ static void
 cb_data_points_changed(Gio::Settings& settings, Glib::ustring key, GsmApplication* app) {
 	app->config.graph_data_points = settings.get_int (key);
 	unsigned points = app->config.graph_data_points + 2;
-	load_graph_change_num_points(app->cpu_graph, points);
+	// load_graph_change_num_points(app->cpu_graph, points);
+	g_object_set (G_OBJECT (app->cpu_graph), "max_samples", points, "timespan", G_TIME_SPAN_MINUTE, NULL);
 	load_graph_change_num_points(app->mem_graph, points);
 	load_graph_change_num_points(app->net_graph, points);
 }

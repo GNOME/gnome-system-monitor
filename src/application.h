@@ -213,7 +213,7 @@ public:
     GtkSearchEntry   *search_entry;
     GtkSearchBar     *search_bar;
     ProcConfig        config;
-    LoadGraph        *cpu_graph;
+    GtkWidget        *cpu_graph;
     LoadGraph        *mem_graph;
     LoadGraph        *net_graph;
     gint              cpu_label_fixed_width;
