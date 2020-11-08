@@ -61,7 +61,7 @@ dzlgraphview.view { \
               linear-gradient(-90deg, alpha(@theme_fg_color,0.3) 1px, transparent 0% ),\
               linear-gradient(0deg, alpha(@theme_fg_color,0.3) 1px, transparent 0% ),\
               repeating-linear-gradient(0deg, alpha(@theme_fg_color,0.15), alpha(@theme_fg_color,0.15) 1px, transparent 1px, transparent 20%), \
-              repeating-linear-gradient(-90deg,  alpha(@theme_fg_color,0.15), alpha(@theme_fg_color,0.15) 1px, transparent 1px, transparent 20%), \
+              repeating-linear-gradient(-90deg,  alpha(@theme_fg_color,0.15), alpha(@theme_fg_color,0.15) 1px, transparent 1px, transparent 16.66%), \
               linear-gradient(to bottom, @theme_bg_color, @theme_base_color);\
 }\
 ";
