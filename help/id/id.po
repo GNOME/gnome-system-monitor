@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor gnome-3-38\n"
-"POT-Creation-Date: 2020-11-08 22:36+0000\n"
-"PO-Revision-Date: 2020-11-08 18:29+0700\n"
+"POT-Creation-Date: 2020-11-09 07:37+0000\n"
+"PO-Revision-Date: 2020-11-09 15:41+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
@@ -26,27 +26,30 @@ msgstr "Andika Triwidada <andika@gmail.com>, 2020"
 #: C/commandline.page:11 C/cpu-check.page:15 C/cpu-mem-normal.page:11
 #: C/cpu-multicore.page:11 C/fs-device.page:13 C/fs-diskusage.page:13
 #: C/fs-info.page:13 C/fs-showall.page:11 C/index.page:13 C/mem-check.page:12
-#: C/mem-swap.page:12 C/memory-map-use.page:13 C/net-bits.page:11
-#: C/process-explain.page:11 C/process-files.page:11
+#: C/mem-swap.page:12 C/memory-map-use.page:13 C/memory-map-what.page:12
+#: C/net-bits.page:11 C/process-explain.page:11 C/process-files.page:11
 #: C/process-identify-file.page:11 C/process-identify-hog.page:11
 #: C/process-kill.page:12 C/process-many.page:11
-#: C/process-priority-change.page:14 C/process-status.page:14
-#: C/process-update-speed.page:11 C/solaris-mode.page:11 C/units.page:11
+#: C/process-priority-change.page:14 C/process-priority-what.page:11
+#: C/process-status.page:14 C/process-update-speed.page:11
+#: C/solaris-mode.page:11 C/units.page:11
 msgid "Phil Bull"
 msgstr "Phil Bull"
 
 #. (itstool) path: credit/years
 #: C/commandline.page:13 C/mem-check.page:14 C/mem-swap.page:14
-#: C/memory-map-use.page:15 C/net-bits.page:13 C/process-explain.page:13
-#: C/process-identify-file.page:13 C/process-identify-hog.page:13
+#: C/memory-map-use.page:15 C/memory-map-what.page:14 C/net-bits.page:13
+#: C/process-explain.page:13 C/process-identify-file.page:13
+#: C/process-identify-hog.page:13 C/process-priority-what.page:19
 #: C/process-update-speed.page:13 C/solaris-mode.page:13 C/units.page:13
 msgid "2011"
 msgstr "2011"
 
 #. (itstool) path: credit/name
 #: C/commandline.page:16 C/mem-check.page:18 C/mem-swap.page:18
-#: C/memory-map-use.page:19 C/net-bits.page:17 C/process-explain.page:17
-#: C/process-identify-file.page:17 C/process-identify-hog.page:17
+#: C/memory-map-use.page:19 C/memory-map-what.page:18 C/net-bits.page:17
+#: C/process-explain.page:17 C/process-identify-file.page:17
+#: C/process-identify-hog.page:17 C/process-priority-what.page:17
 #: C/process-update-speed.page:17 C/solaris-mode.page:17 C/units.page:17
 msgid "Michael Hill"
 msgstr "Michael Hill"
@@ -507,7 +510,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/fs-info.page:27
-#, fuzzy
 msgid ""
 "<gui>Device</gui> lists the name that the operating system has assigned to "
 "the disk. Every bit of computer hardware that is attached to the computer is "
@@ -516,10 +518,10 @@ msgid ""
 "file>."
 msgstr ""
 "<gui>Perangkat</gui> mencantumkan nama sistem operasi yang telah ditetapkan "
-"ke disk. Setiap sedikit perangkat keras komputer yang melekat pada komputer "
-"yang diberikan entri di direktori <file>/dev</file> yang digunakan untuk "
-"mengidentifikasi itu. Untuk hard disk, biasanya akan terlihat seperti <file>/"
-"dev/SDA</file>."
+"ke disk. Setiap bagian kecil perangkat keras komputer yang melekat pada "
+"komputer yang diberikan entri di direktori <file>/dev</file> yang digunakan "
+"untuk mengidentifikasi itu. Untuk hard disk, biasanya akan terlihat seperti "
+"<file>/dev/sda</file>."
 
 #. (itstool) path: item/p
 #: C/fs-info.page:31
@@ -745,8 +747,9 @@ msgstr "Karya ini dilisensikan di bawah <_:link-1/>."
 
 #. (itstool) path: credit/years
 #: C/mem-check.page:20 C/mem-swap.page:20 C/memory-map-use.page:21
-#: C/net-bits.page:19 C/process-explain.page:19 C/process-identify-file.page:19
-#: C/process-identify-hog.page:19 C/process-update-speed.page:19
+#: C/memory-map-what.page:20 C/net-bits.page:19 C/process-explain.page:19
+#: C/process-identify-file.page:19 C/process-identify-hog.page:19
+#: C/process-priority-what.page:13 C/process-update-speed.page:19
 #: C/solaris-mode.page:19 C/units.page:19
 msgid "2011, 2014"
 msgstr "2011, 2014"
@@ -878,21 +881,19 @@ msgstr "Apa itu memori \"swap\"?"
 
 #. (itstool) path: page/p
 #: C/mem-swap.page:35
-#, fuzzy
 msgid ""
 "Swap memory or <em>swap space</em> is the on-disk component of the virtual "
 "memory system. It is pre-configured as a <em>swap partition</em> or a "
 "<em>swap file</em> when Linux is first installed, but can also be added "
 "later."
 msgstr ""
-"Swap memori atau <em>ruang swap</em> adalah pada disk komponen sistem memori "
-"virtual. Ini adalah pra-dikonfigurasi sebagai <em>partisi swap</em> atau "
-"<em>file swap</em> ketika Linux pertama kali diinstal, tetapi juga dapat "
-"ditambahkan nanti."
+"Memori swap atau <em>ruang swap</em> adalah komponen dari sistem memori "
+"virtual yang diletakkan di disk. Ini di-prakonfigurasi sebagai <em>partisi "
+"swap</em> atau <em>berkas swap</em> ketika Linux pertama kali diinstal, "
+"tetapi juga dapat ditambahkan nanti."
 
 #. (itstool) path: note/p
 #: C/mem-swap.page:41
-#, fuzzy
 msgid ""
 "Disk access is <em>very</em> slow compared to memory access. The system runs "
 "more slowly if there is excessive swapping, or <em>thrashing</em>, when the "
@@ -900,9 +901,9 @@ msgid ""
 "solution is to add more RAM."
 msgstr ""
 "Akses disk <em>sangat</em> lambat dibandingkan dengan akses memori. Sistem "
-"berjalan lebih lambat jika ada swap berlebihan, atau <em>labrakan</em>, "
+"berjalan lebih lambat jika ada swapping berlebihan, atau <em>thrashing</em>, "
 "ketika sistem tidak dapat menemukan cukup memori bebas. Dalam situasi ini "
-"satu-satunya solusi adalah untuk menambahkan lebih RAM."
+"satu-satunya solusi adalah menambahkan RAM lebih banyak."
 
 #. (itstool) path: page/p
 #: C/mem-swap.page:47
@@ -933,7 +934,6 @@ msgstr "Menggunakan peta memori"
 
 #. (itstool) path: page/p
 #: C/memory-map-use.page:34
-#, fuzzy
 msgid ""
 "<gui>Virtual memory</gui> is a representation of the combined <gui>physical "
 "memory</gui> and <link xref=\"mem-swap\">swap space</link> in a system. It "
@@ -942,17 +942,16 @@ msgid ""
 "When the system needs more pages of memory than are available, some of the "
 "existing pages will be <em>paged out</em> or written to the swap space."
 msgstr ""
-"<gui>Memori virtual</gui> adalah representasi dari <gui>memori fisik</gui> "
-"gabungan dan <link xref=\"mem-swap\"> Ruang swap dalam sistem. Ini "
-"memungkinkan menjalankan proses untuk mengakses <em>lebih</em> dari memori "
-"fisik yang ada dengan <gui>memetakan</gui> lokasi di memori fisik ke berkas "
-"pada disk. Ketika sistem membutuhkan lebih banyak halaman memori daripada "
-"yang tersedia, beberapa halaman yang ada akan <em>paged keluar</em> atau "
-"ditulis ke Ruang swap."
+"<gui>Memori virtual</gui> adalah representasi dari gabungan <gui>memori "
+"fisik</gui> dan <link xref=\"mem-swap\">ruang swap</link> dalam sistem. Ini "
+"memungkinkan proses-proses yang sedang berjalan untuk mengakses <em>lebih "
+"banyak</em> memori fisik dari yang ada dengan <gui>memetakan</gui> lokasi di "
+"memori fisik ke berkas pada disk. Ketika sistem membutuhkan lebih banyak "
+"halaman memori daripada yang tersedia, beberapa halaman yang ada akan <em>di-"
+"page keluar</em> atau ditulis ke ruang swap."
 
 #. (itstool) path: page/p
 #: C/memory-map-use.page:42
-#, fuzzy
 msgid ""
 "The <gui>memory map</gui> displays the total virtual memory use of the "
 "process, and can be used to determine the memory cost of running a single or "
@@ -960,66 +959,60 @@ msgid ""
 "libraries, to see the results of adjusting various performance tuning "
 "parameters the program may have, or to diagnose issues such as memory leaks."
 msgstr ""
-"<gui>Peta memori</gui> menampilkan Total penggunaan memori virtual proses, "
+"<gui>Peta memori</gui> menampilkan total penggunaan memori virtual proses, "
 "dan dapat digunakan untuk menentukan biaya memori menjalankan satu atau "
 "beberapa contoh program, untuk memastikan penggunaan pustaka bersama yang "
 "benar, untuk melihat hasil menyesuaikan berbagai parameter tuning kinerja "
-"program mungkin memiliki, atau untuk mendiagnosis masalah seperti kebocoran "
-"memori."
+"yang program mungkin miliki, atau untuk mendiagnosis masalah seperti "
+"kebocoran memori."
 
 #. (itstool) path: page/p
 #: C/memory-map-use.page:49
-#, fuzzy
 msgid ""
 "To display the <link xref=\"memory-map-what\">memory map</link> of a process:"
 msgstr ""
-"Untuk menampilkan <link xref=\"memory-map-what\"> peta memori suatu proses:"
+"Untuk menampilkan <link xref=\"memory-map-what\">peta memori</link> suatu "
+"proses:"
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:54
-#, fuzzy
 msgid "Right click the desired process in the <gui>process list</gui>."
-msgstr "Klik kanan proses yang diinginkan dalam <gui>Daftar proses</gui>."
+msgstr "Klik kanan proses yang diinginkan dalam <gui>daftar proses</gui>."
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:55
-#, fuzzy
 msgid "Click <gui>Memory Maps</gui>."
-msgstr "Klik <gui>peta memori</gui>."
+msgstr "Klik <gui>Peta Memori</gui>."
 
 #. (itstool) path: section/title
 #: C/memory-map-use.page:59
-#, fuzzy
 msgid "Reading the memory map"
 msgstr "Membaca peta memori"
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:63
-#, fuzzy
 msgid "Addresses are displayed in hexadecimal (base 16)."
-msgstr "Alamat diplayed dalam heksadesimal (Base 16)."
+msgstr "Alamat ditampilkan dalam heksadesimal (basis 16)."
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:66
-#, fuzzy
 msgid "Sizes are displayed in <link xref=\"units\">IEC binary prefixes</link>."
-msgstr "Ukuran ditampilkan dalam <link xref=\"units\"> prefiks biner IEC."
+msgstr ""
+"Ukuran ditampilkan dalam <link xref=\"units\">prefiks biner IEC</link>."
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:70
-#, fuzzy
 msgid ""
 "At runtime the process can allocate more memory dynamically into an area "
 "called the <em>heap</em>, and store arguments and variables into another "
 "area called the <em>stack</em>."
 msgstr ""
 "Pada saat runtime proses dapat mengalokasikan lebih banyak memori dinamis ke "
-"daerah yang disebut <em>Heap</em>, dan menyimpan argumen dan variabel ke "
+"daerah yang disebut <em>heap</em>, dan menyimpan argumen dan variabel ke "
 "daerah lain yang disebut <em>stack</em>."
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:75
-#, fuzzy
 msgid ""
 "The program itself and each of the shared libraries has three entries each, "
 "one for the read-execute text segment, one for the read-write data segment "
@@ -1028,8 +1021,8 @@ msgid ""
 msgstr ""
 "Program itu sendiri dan masing-masing pustaka bersama memiliki tiga entri "
 "masing-masing, satu untuk segmen teks baca-eksekusi, satu untuk segmen data "
-"baca-tulis dan satu untuk segmen data baca-saja. Kedua segmen data harus di-"
-"paged pada waktu swap."
+"baca-tulis, dan satu untuk segmen data baca-saja. Kedua segmen data harus di-"
+"page keluar pada waktu swap."
 
 #. (itstool) path: table/title
 #: C/memory-map-use.page:83
@@ -1038,79 +1031,69 @@ msgstr "Properti"
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:85
-#, fuzzy
 msgid "Filename"
-msgstr "Namaberkas"
+msgstr "Nama berkas"
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:86
-#, fuzzy
 msgid ""
 "The location of a shared library that is currently used by the process. If "
 "this field is blank, the memory information in this row describes memory "
 "that is owned by the process whose name is displayed above the memory-map "
 "table."
 msgstr ""
-"Lokasi perpustakaan bersama yang sedang digunakan oleh proses. Jika kolom "
-"ini kosong, informasi memori di baris ini menjelaskan memori yang dimiliki "
-"oleh proses yang namanya ditampilkan di atas tabel peta memori."
+"Lokasi pustaka bersama yang sedang digunakan oleh proses. Jika kolom ini "
+"kosong, informasi memori di baris ini menjelaskan memori yang dimiliki oleh "
+"proses yang namanya ditampilkan di atas tabel peta memori."
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:92
-#, fuzzy
 msgid "VM Start"
-msgstr "MV Awal"
+msgstr "Awal VM"
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:93
-#, fuzzy
 msgid ""
 "The address at which the memory segment begins. VM Start, VM End and VM "
 "Offset together specify the location on disk to which the shared library is "
 "mapped."
 msgstr ""
-"Alamat di mana segmen memori dimulai. VM mulai, VM akhir dan VM offset "
-"bersama-sama menentukan lokasi pada disk yang dipetakan perpustakaan bersama."
+"Alamat di mana segmen memori dimulai. Awal VM, Akhir VM, dan Ofset VM "
+"bersama-sama menentukan lokasi pada disk dimana pustaka bersama dipetakan."
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:98
-#, fuzzy
 msgid "VM End"
-msgstr "MV Akhir"
+msgstr "Akhir VM"
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:99
-#, fuzzy
 msgid "The address at which the memory segment ends."
 msgstr "Alamat di mana segmen memori berakhir."
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:102
-#, fuzzy
 msgid "VM Size"
-msgstr "Ukuran MV"
+msgstr "Ukuran VM"
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:103
-#, fuzzy
 msgid "The size of the memory segment."
 msgstr "Ukuran segmen memori."
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:106
-#, fuzzy
 msgid "Flags"
-msgstr "Penanda"
+msgstr "Flag"
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:107
-#, fuzzy
 msgid ""
 "The following flags describe the different types of memory-segment access "
 "that the process can have:"
 msgstr ""
-"Bendera berikut menggambarkan berbagai jenis akses segmen memori yang "
-"prosesnya dapat memiliki:"
+"Flag berikut menggambarkan berbagai jenis akses segmen memori yang dapat "
+"dimiliki proses:"
 
 #. (itstool) path: item/title
 #: C/memory-map-use.page:111
@@ -1119,7 +1102,6 @@ msgstr "<gui>p</gui>"
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:112
-#, fuzzy
 msgid ""
 "The memory segment is private to the process, and is not accessible to other "
 "processes."
@@ -1134,7 +1116,6 @@ msgstr "<gui>r</gui>"
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:117
-#, fuzzy
 msgid "The process has permission to read from the memory segment."
 msgstr "Proses memiliki izin untuk membaca dari segmen memori."
 
@@ -1145,9 +1126,8 @@ msgstr "<gui>s</gui>"
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:121
-#, fuzzy
 msgid "The memory segment is shared with other processes."
-msgstr "Segmen memori dibagi dengan proses lainnya."
+msgstr "Segmen memori dipakai bersama dengan proses lainnya."
 
 #. (itstool) path: item/title
 #: C/memory-map-use.page:124
@@ -1156,7 +1136,6 @@ msgstr "<gui>w</gui>"
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:125
-#, fuzzy
 msgid "The process has permission to write into the memory segment."
 msgstr "Proses ini memiliki izin untuk menulis ke segmen memori."
 
@@ -1167,65 +1146,57 @@ msgstr "<gui>x</gui>"
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:129
-#, fuzzy
 msgid ""
 "The process has permission to execute instructions that are contained within "
 "the memory segment."
 msgstr ""
-"Proses memiliki izin untuk mengeksekusi petunjuk yang terkandung dalam "
+"Proses memiliki izin untuk mengeksekusi instruksi yang terkandung dalam "
 "segmen memori."
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:136
-#, fuzzy
 msgid "VM Offset"
-msgstr "Letak MV"
+msgstr "Ofset VM"
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:137
-#, fuzzy
 msgid ""
 "The location of the address within the memory segment, measured from VM "
 "Start."
-msgstr "Lokasi alamat dalam segmen memori, diukur dari VM mulai."
+msgstr "Lokasi alamat dalam segmen memori, diukur dari Awal VM."
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:141
-#, fuzzy
 msgid "Private, Shared, Clean, Dirty"
-msgstr "Pribadi, bersama, bersih, kotor"
+msgstr "Pribadi, Bersama, Bersih, Kotor"
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:148
-#, fuzzy
 msgid "<em>private</em> pages are accessed by one process"
 msgstr "Halaman <em>pribadi</em> diakses oleh satu proses"
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:150
-#, fuzzy
 msgid "<em>shared</em> pages can be accessed by more than one process"
 msgstr "Halaman <em>bersama</em> dapat diakses dengan lebih dari satu proses"
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:152
-#, fuzzy
 msgid ""
 "<em>clean</em> pages have not yet been modified while in memory and can be "
 "discarded when designated to be swapped out"
 msgstr ""
 "Halaman <em>bersih</em> belum dimodifikasi sementara di memori dan dapat "
-"dibuang ketika ditunjuk untuk bertukar keluar"
+"dibuang ketika ditunjuk untuk di-swap keluar"
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:155
-#, fuzzy
 msgid ""
 "<em>dirty</em> pages have been modified while in memory and must be written "
 "to disk when designated to be swapped out"
 msgstr ""
 "Halaman <em>kotor</em> telah dimodifikasi sementara di memori dan harus "
-"ditulis ke disk ketika ditunjuk untuk bertukar keluar"
+"ditulis ke disk ketika ditunjuk untuk di-swap keluar"
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:160
@@ -1234,12 +1205,11 @@ msgstr "Perangkat"
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:161
-#, fuzzy
 msgid ""
 "The major and minor numbers of the device on which the shared library "
 "filename is located. Together these specify a partition on the system."
 msgstr ""
-"Jumlah utama dan minor dari perangkat di mana nama file perpustakaan bersama "
+"Angka mayor dan minor dari perangkat di mana nama berkas pustaka bersama "
 "berada. Bersama-sama ini menentukan partisi pada sistem."
 
 #. (itstool) path: td/p
@@ -1249,15 +1219,116 @@ msgstr "Inode"
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:167
-#, fuzzy
 msgid ""
 "The inode on the device from which the shared library location is loaded "
 "into memory. An inode is the structure the filesystem uses to store a file, "
 "and the number assigned to it is unique."
 msgstr ""
-"Inode pada perangkat dari mana lokasi perpustakaan bersama dimuat ke memori. "
-"Inode adalah struktur yang digunakan filesystem untuk menyimpan file, dan "
-"nomor yang ditugaskan untuk itu adalah unik."
+"Inode pada perangkat dari mana lokasi pustaka bersama dimuat ke memori. "
+"Inode adalah struktur yang digunakan sistem berkas untuk menyimpan berkas, "
+"dan nomor yang ditugaskan untuk itu adalah unik."
+
+#. (itstool) path: info/desc
+#: C/memory-map-what.page:23
+msgid "The memory map of a process can help diagnose certain memory issues."
+msgstr ""
+"Peta memori proses dapat membantu mendiagnosis masalah memori tertentu."
+
+#. (itstool) path: page/title
+#: C/memory-map-what.page:27
+msgid "What is a memory map?"
+msgstr "Apa itu peta memori?"
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:40
+msgid ""
+"<gui>Virtual memory</gui> is a representation of the combined <gui>physical "
+"memory</gui> and <link xref=\"mem-swap\">swap space</link> in a system. It "
+"enables running processes to access <em>more</em> than the existing physical "
+"memory by <gui>mapping</gui> locations in physical memory to files on disk."
+msgstr ""
+"<gui>Memori virtual</gui> adalah representasi dari gabungan <gui>memori "
+"fisik</gui> dan <link xref=\"mem-swap\">ruang swap</link> dalam sistem. Ini "
+"memungkinkan proses-proses yang sedang berjalan untuk mengakses <em>lebih "
+"banyak</em> memori fisik dari yang ada dengan <gui>memetakan</gui> lokasi di "
+"memori fisik ke berkas pada disk. Ketika sistem membutuhkan lebih banyak "
+"halaman memori daripada yang tersedia, beberapa halaman yang ada akan <em>di-"
+"page keluar</em> atau ditulis ke ruang swap."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:46
+msgid ""
+"When a program is launched, the system assigns it a unique process ID (PID) "
+"and its <em>instructions</em> and <em>data</em> are loaded into memory in "
+"<em>pages</em>. The page table of each process maps the correspondence "
+"between its pages in virtual memory and their location in physical memory. "
+"The <gui>memory map</gui> displays the total virtual memory use of the "
+"process, and can be used to determine the memory cost of running a single or "
+"multiple instances of the program, to ensure the use of the correct shared "
+"libraries, to see the results of adjusting various performance tuning "
+"parameters the program may have, or to diagnose issues such as memory leaks."
+msgstr ""
+"Ketika program diluncurkan, sistem menetapkannya ID proses (PID) yang unik "
+"dan <em>instruksi</em> dan <em>datanya</em> dimuat ke dalam memori di "
+"<em>halaman</em>. Tabel halaman dari setiap proses memetakan korespondensi "
+"antara halamannya dalam memori virtual dan lokasinya dalam memori fisik. "
+"<gui>Peta memori</gui> menampilkan penggunaan memori virtual total proses, "
+"dan dapat digunakan untuk menentukan biaya memori menjalankan satu atau "
+"beberapa contoh program, untuk memastikan penggunaan library bersama yang "
+"benar, untuk melihat hasil dari menyesuaikan berbagai parameter penyetelan "
+"kinerja yang mungkin dilakukan program, atau untuk mendiagnosis masalah "
+"seperti kebocoran memori."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:57
+msgid ""
+"If multiple copies of a program are running, the instructions (or <em>text</"
+"em>) of the program only need to be loaded once into physical memory. Each "
+"time a new instance of the program is launched (as a unique process with its "
+"own virtual memory pages), its page table maps the location of the text in "
+"virtual memory to those instructions in the original real memory location. "
+"In addition, any dynamic shared libraries used by the process appear as "
+"distinct in virtual memory, but are shared references to a single copy of "
+"the library's text segment in real memory. When accounting for the total "
+"memory use of a process, it is important to note that the cost of shared "
+"libraries loaded into memory can be spread across all processes currently "
+"using them."
+msgstr ""
+"Jika beberapa salinan program berjalan, instruksi (atau <em>teks</em>) "
+"program hanya perlu dimuat sekali ke dalam memori fisik. Setiap kali contoh "
+"baru program diluncurkan (sebagai proses unik dengan halaman memori "
+"virtualnya sendiri), tabel halamannya memetakan lokasi teks dalam memori "
+"virtual ke instruksi tersebut di lokasi memori asli yang sebenarnya. Selain "
+"itu, setiap pustaka bersama dinamis yang digunakan oleh proses muncul "
+"sebagai berbeda dalam memori virtual, tetapi referensi bersama ke satu "
+"salinan segmen teks pustaka dalam memori nyata. Ketika memperhitungkan "
+"penggunaan memori total proses, penting untuk dicatat bahwa biaya pustaka "
+"bersama yang dimuat ke dalam memori dapat tersebar di semua proses yang saat "
+"ini menggunakannya."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:69
+msgid ""
+"When the system needs more pages of memory than are available, some of the "
+"existing pages will be <em>paged out</em> or written to the <gui>swap space</"
+"gui>. Text pages are flagged read-execute in memory and don't need to be "
+"written to swap since they can be re-loaded from their original location on "
+"disk. Data pages have read-write permissions, and if modified when in "
+"memory, they are labeled <em>dirty</em>, and when designated for swapping, "
+"must be paged out. When a page in swap space is required by a running "
+"process, it needs to be swapped back in before use, perhaps causing another "
+"page to be paged out."
+msgstr ""
+"Ketika sistem membutuhkan lebih banyak halaman memori daripada yang "
+"tersedia, beberapa halaman yang ada akan <em>di-page keluar</em> atau "
+"ditulis ke <gui>ruang swap</gui>. Halaman teks ditandai dengan read-execute "
+"dalam memori dan tidak perlu ditulis untuk bertukar karena dapat dimuat "
+"kembali dari lokasi aslinya di disk. Halaman data memiliki izin baca-tulis, "
+"dan jika dimodifikasi ketika dalam memori, halaman tersebut diberi label "
+"<em>kotor</em>, dan ketika ditunjuk untuk bertukar, harus di-page keluar. "
+"Ketika halaman di ruang swap diperlukan oleh proses yang sedang berjalan, "
+"itu perlu ditukar kembali sebelum digunakan, mungkin menyebabkan halaman "
+"lain di-page keluar."
 
 #. (itstool) path: info/desc
 #: C/net-bits.page:22
@@ -1271,7 +1342,6 @@ msgstr "Menampilkan kecepatan jaringan dalam bit dan bukan byte per detik"
 
 #. (itstool) path: page/p
 #: C/net-bits.page:32
-#, fuzzy
 msgid ""
 "Network speed is often shown in bits per second, rather than bytes per "
 "second. This is called the <em>bit rate</em>, or <em>data rate</em>."
@@ -1281,13 +1351,11 @@ msgstr ""
 
 #. (itstool) path: page/p
 #: C/net-bits.page:35
-#, fuzzy
 msgid "To display the network speed in bits:"
 msgstr "Untuk menampilkan kecepatan jaringan dalam bit:"
 
 #. (itstool) path: item/p
 #: C/net-bits.page:42
-#, fuzzy
 msgid "Select <gui>Show network speed in bits</gui>."
 msgstr "Pilih <gui>Tampilkan kecepatan jaringan dalam bit</gui>."
 
@@ -1303,7 +1371,6 @@ msgstr "Apa yang dimaksud dengan proses?"
 
 #. (itstool) path: page/p
 #: C/process-explain.page:34
-#, fuzzy
 msgid ""
 "A <gui>process</gui> is a program or application being executed by the "
 "system. When an application is launched, the system assigns a unique process "
@@ -1311,11 +1378,10 @@ msgid ""
 msgstr ""
 "Sebuah <gui>proses</gui> adalah program atau aplikasi yang dieksekusi oleh "
 "sistem. Ketika aplikasi diluncurkan, sistem menetapkan ID proses unik (PID), "
-"dan petunjuk dan data yang dimuat ke memori."
+"dan instruksi dan datanya dimuat ke memori."
 
 #. (itstool) path: page/p
 #: C/process-explain.page:38
-#, fuzzy
 msgid ""
 "The <gui>Processes</gui> tab displays information on processes, and allows "
 "you to <gui>Stop</gui>, <gui>Continue</gui>, <gui>End</gui>, <gui>Kill</"
@@ -1324,10 +1390,10 @@ msgid ""
 "which run in the background providing various services that keep a computer "
 "running."
 msgstr ""
-"Tab <gui>proses</gui> menampilkan informasi tentang proses, dan memungkinkan "
-"Anda untuk <gui>menghentikan</gui>, <gui>melanjutkan</gui>, <gui>mengakhiri</"
-"gui>, <gui>membunuh</gui>, atau mengubah prioritas proses. Jika Anda memilih "
-"untuk menampilkan <gui>semua proses</gui>, daftar proses akan mencakup "
+"Tab <gui>Proses</gui> menampilkan informasi tentang proses, dan memungkinkan "
+"Anda untuk <gui>Menghentikan</gui>, <gui>Melanjutkan</gui>, <gui>Mengakhiri</"
+"gui>, <gui>Membunuh</gui>, atau mengubah prioritas proses. Jika Anda memilih "
+"untuk menampilkan <gui>Semua Proses</gui>, daftar proses akan mencakup "
 "<em>proses sistem</em>, yang berjalan di latar belakang menyediakan berbagai "
 "layanan yang membuat komputer berjalan."
 
@@ -1343,21 +1409,19 @@ msgstr "Cantumkan berkas mana yang telah dibuka proses"
 
 #. (itstool) path: page/p
 #: C/process-files.page:21
-#, fuzzy
 msgid ""
 "Processes sometimes need to keep files open. They could be files that you "
 "are viewing or editing, or temporary or system files that the process needs "
 "to work properly."
 msgstr ""
-"Proses terkadang perlu menyimpan file terbuka. Mereka bisa file yang Anda "
-"melihat atau mengedit, atau sementara atau sistem file yang proses perlu "
-"bekerja dengan baik."
+"Proses terkadang perlu menyimpan berkas terbuka. Mereka bisa berkas yang "
+"Anda sedang lihat atau sunting, atau berkas sementara atau sistem yang "
+"proses perlukan agar bekerja dengan baik."
 
 #. (itstool) path: page/p
 #: C/process-files.page:23
-#, fuzzy
 msgid "To see which files a process has open:"
-msgstr "Untuk melihat file mana proses telah terbuka:"
+msgstr "Untuk melihat berkas mana proses telah terbuka:"
 
 #. (itstool) path: item/p
 #: C/process-files.page:25
@@ -1367,23 +1431,21 @@ msgstr "Cari proses di tab <gui>Proses</gui> dan klik sekali untuk memilihnya."
 
 #. (itstool) path: item/p
 #: C/process-files.page:26
-#, fuzzy
 msgid "Right-click the process and select <gui>Open Files</gui>."
-msgstr "Klik kanan proses dan pilih <gui>buka file</gui>."
+msgstr "Klik kanan proses dan pilih <gui>Buka Berkas</gui>."
 
 #. (itstool) path: page/p
 #: C/process-files.page:29
-#, fuzzy
 msgid ""
 "In the list of open files that appears, you might find some special files "
 "called <em>sockets</em>. These are actually a way for processes to "
 "communicate with one another, and are not normal files that you can view or "
 "edit."
 msgstr ""
-"Dalam daftar file yang terbuka yang muncul, Anda mungkin menemukan beberapa "
-"file khusus yang disebut <em>Socket</em>. Ini sebenarnya adalah cara untuk "
-"proses berkomunikasi satu sama lain, dan bukan file normal yang dapat Anda "
-"lihat atau edit."
+"Dalam daftar berkas yang terbuka yang muncul, Anda mungkin menemukan "
+"beberapa berkas khusus yang disebut <em>socket</em>. Ini sebenarnya adalah "
+"cara untuk proses berkomunikasi satu sama lain, dan bukan berkas normal yang "
+"dapat Anda lihat atau sunting."
 
 #. (itstool) path: info/desc
 #: C/process-identify-file.page:22
@@ -1397,58 +1459,54 @@ msgstr "Temukan program mana yang menggunakan berkas tertentu"
 
 #. (itstool) path: page/p
 #: C/process-identify-file.page:33
-#, fuzzy
 msgid ""
 "Sometimes an error message will tell you a device (like the sound device or "
 "the DVD ROM) is busy, or the file you want to edit is in use. To find the "
 "process or processes responsible:"
 msgstr ""
 "Terkadang pesan kesalahan akan memberi tahu Anda perangkat (seperti "
-"perangkat suara atau DVD ROM) sedang sibuk, atau file yang ingin Anda edit "
-"sedang digunakan. Untuk menemukan proses atau proses yang bertanggung jawab:"
+"perangkat suara atau DVD ROM) sedang sibuk, atau berkas yang ingin Anda "
+"sunting sedang digunakan. Untuk menemukan proses atau proses-proses yang "
+"bertanggung jawab:"
 
 #. (itstool) path: item/p
 #: C/process-identify-file.page:38
-#, fuzzy
 msgid ""
 "Click <guiseq><gui>System Monitor</gui><gui>Search for Open Files</gui></"
 "guiseq>."
 msgstr ""
-"Klik <guiseq> <gui>sistem monitor</gui><gui>pencarian untuk membuka berkas</"
-"gui></guiseq>."
+"Klik <guiseq><gui>Monitor Sistem</gui><gui>Cari Berkas Terbuka</gui></"
+"guiseq>."
 
 #. (itstool) path: item/p
 #: C/process-identify-file.page:41
-#, fuzzy
 msgid ""
 "Enter a filename or part of a filename. This could be <file>/dev/snd</file> "
 "for the sound device or <file>/media/cdrom</file> for the DVD ROM."
 msgstr ""
-"Masukkan nama file atau bagian dari nama file. Ini bisa berupa <file>/dev/"
-"snd</file> untuk perangkat suara atau <file>/media/CDROM</file> untuk DVD "
-"ROM."
+"Masukkan nama berkas atau bagian dari nama berkas. Ini bisa berupa <file>/"
+"dev/snd</file> untuk perangkat suara atau <file>/media/cdrom</file> untuk "
+"DVD ROM."
 
 #. (itstool) path: item/p
 #: C/process-identify-file.page:45
-#, fuzzy
 msgid "Click <gui>Find</gui>."
-msgstr "Klik <gui>temukan</gui>."
+msgstr "Klik <gui>Cari</gui>."
 
 #. (itstool) path: page/p
 #: C/process-identify-file.page:49
-#, fuzzy
 msgid ""
 "This will display a list of running processes that are currently accessing "
 "the file or files that match the search. Quitting the program should allow "
 "you to access the device or edit the file."
 msgstr ""
 "Ini akan menampilkan daftar proses yang sedang berjalan yang sedang "
-"mengakses file atau file yang cocok dengan pencarian. Berhenti program harus "
-"memungkinkan Anda untuk mengakses perangkat atau mengedit file."
+"mengakses berkas atau berkas-berkas yang cocok dengan pencarian. "
+"Menghentikan program harus memungkinkan Anda untuk mengakses perangkat atau "
+"menyunting berkas."
 
 #. (itstool) path: info/desc
 #: C/process-identify-hog.page:22
-#, fuzzy
 msgid ""
 "Sort the list of processes by <gui>% CPU</gui> to see which application is "
 "using up the computer's resources."
@@ -1463,17 +1521,15 @@ msgstr "Program mana yang membuat komputer berjalan lambat?"
 
 #. (itstool) path: page/p
 #: C/process-identify-hog.page:35
-#, fuzzy
 msgid ""
 "A program that is using more than its share of the CPU may slow down the "
 "whole computer. To find which process could be doing this:"
 msgstr ""
-"Sebuah program yang menggunakan lebih dari pangsa CPU dapat memperlambat "
-"seluruh komputer. Untuk menemukan proses yang dapat melakukan hal ini:"
+"Sebuah program yang menggunakan pangsa CPU yang berlebih dapat memperlambat "
+"seluruh komputer. Untuk menemukan proses yang mungkin melakukan hal ini:"
 
 #. (itstool) path: item/p
 #: C/process-identify-hog.page:43
-#, fuzzy
 msgid ""
 "Click the <gui>% CPU</gui> column header to sort the processes according to "
 "CPU use."
@@ -1483,17 +1539,15 @@ msgstr ""
 
 #. (itstool) path: note/p
 #: C/process-identify-hog.page:46
-#, fuzzy
 msgid ""
 "The arrow in the column header shows the sort direction; click again to "
 "reverse it. The arrow should point up."
 msgstr ""
-"Panah di header kolom menunjukkan arah Sortir; klik lagi untuk "
+"Panah di header kolom menunjukkan arah sortir; klik lagi untuk "
 "membalikkannya. Panah harus menunjuk ke atas."
 
 #. (itstool) path: page/p
 #: C/process-identify-hog.page:52
-#, fuzzy
 msgid ""
 "The processes at the top of the list are using the highest percentage CPU. "
 "Once you identify which one might be using more resources than it should, "
@@ -1507,14 +1561,13 @@ msgstr ""
 
 #. (itstool) path: note/p
 #: C/process-identify-hog.page:58
-#, fuzzy
 msgid ""
 "A process that has hung or crashed might use 100% CPU. If this happens you "
 "may need to <link xref=\"process-kill\">kill</link> the process."
 msgstr ""
-"Sebuah proses yang telah digantung atau jatuh mungkin menggunakan 100% CPU. "
-"Jika ini terjadi, Anda mungkin perlu untuk <link xref=\"process-kill\"> "
-"membunuh proses."
+"Sebuah proses yang menggantung atau runtuh mungkin menggunakan 100% CPU. "
+"Jika ini terjadi, Anda mungkin perlu untuk <link xref=\"process-kill"
+"\">membunuh</link> proses."
 
 #. (itstool) path: info/desc
 #: C/process-kill.page:17
@@ -1530,7 +1583,6 @@ msgstr "Mematika (menutup) sebuah program seketika"
 
 #. (itstool) path: page/p
 #: C/process-kill.page:23
-#, fuzzy
 msgid ""
 "If a program stops working or freezes, you can force it to close (\"kill\" "
 "it) using <app>System Monitor</app>. Go to the <gui>Processes</gui> tab and "
@@ -1538,34 +1590,32 @@ msgid ""
 "gui>."
 msgstr ""
 "Jika program berhenti bekerja atau membeku, Anda dapat memaksa untuk menutup "
-"(\"membunuh\" itu) menggunakan <app>monitor sistem</app>. Pergi ke tab "
-"<gui>proses</gui> dan klik untuk memilih proses yang ingin Anda bunuh. "
-"Kemudian, klik <gui>Akhiri proses</gui>."
+"(\"membunuh\" itu) menggunakan <app>Monitor Sistem</app>. Pergi ke tab "
+"<gui>Proses</gui> dan klik untuk memilih proses yang ingin Anda bunuh. "
+"Kemudian, klik <gui>Akhiri Proses</gui>."
 
 #. (itstool) path: page/p
 #: C/process-kill.page:25
-#, fuzzy
 msgid ""
 "If the process does not close after a few seconds, right-click it and select "
 "<gui>Kill</gui> from the menu that appears."
 msgstr ""
 "Jika proses tidak menutup setelah beberapa detik, klik kanan dan pilih "
-"<gui>Kill</gui> dari menu yang muncul."
+"<gui>Matikan</gui> dari menu yang muncul."
 
 #. (itstool) path: page/p
 #: C/process-kill.page:27
-#, fuzzy
 msgid ""
 "Using <gui>End Process</gui> tries to close the process properly, giving it "
 "time to save files and so on, whereas <gui>Kill</gui> forces it to close "
 "straight away. For some programs, this might mean that you lose unsaved "
 "files. You should always try <gui>End Process</gui> first."
 msgstr ""
-"Menggunakan <gui>proses akhir</gui> mencoba untuk menutup proses dengan "
-"benar, memberikan waktu untuk menyimpan file dan sebagainya, sedangkan "
-"<gui>membunuh</gui> memaksa untuk menutup langsung. Untuk beberapa program, "
-"ini mungkin berarti Anda kehilangan file yang belum disimpan. Anda harus "
-"selalu mencoba <gui>proses akhir</gui> terlebih dahulu."
+"Menggunakan <gui>Akhiri Proses</gui> mencoba untuk menutup proses dengan "
+"benar, memberikan waktu untuk menyimpan berkas dan sebagainya, sedangkan "
+"<gui>Membunuh</gui> memaksa untuk menutup langsung. Untuk beberapa program, "
+"ini mungkin berarti Anda kehilangan berkas yang belum disimpan. Anda harus "
+"selalu mencoba <gui>Akhiri Proses</gui> terlebih dahulu."
 
 #. (itstool) path: info/desc
 #: C/process-many.page:16
@@ -1579,7 +1629,6 @@ msgstr "Mengapa ada proses yang tercantum yang saya tidak mulai?"
 
 #. (itstool) path: page/p
 #: C/process-many.page:21
-#, fuzzy
 msgid ""
 "There are usually lots of processes listed under the <gui>Processes</gui> "
 "tab. Only a few of these will be programs that you started yourself. The "
@@ -1587,7 +1636,7 @@ msgid ""
 "the computer run correctly. These are started automatically when you log in, "
 "and typically run quietly in the background."
 msgstr ""
-"Biasanya ada banyak proses yang tercantum di bawah tab <gui>proses</gui> . "
+"Biasanya ada banyak proses yang tercantum di bawah tab <gui>Proses</gui>. "
 "Hanya beberapa dari ini akan menjadi program yang Anda mulai sendiri. Yang "
 "lain sebagian besar proses yang diperlukan oleh sistem operasi untuk membuat "
 "komputer berjalan dengan benar. Ini dimulai secara otomatis saat Anda masuk, "
@@ -1609,7 +1658,6 @@ msgstr "Mengubah prioritas proses"
 
 #. (itstool) path: page/p
 #: C/process-priority-change.page:24
-#, fuzzy
 msgid ""
 "You can tell the computer that certain processes should have a higher "
 "priority than others, and so should be given a bigger share of the available "
@@ -1626,27 +1674,24 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/process-priority-change.page:27
-#, fuzzy
 msgid ""
 "Go to the <gui>Processes</gui> tab and click on the process you want to have "
 "a different priority."
 msgstr ""
-"Pergi ke tab <gui>proses</gui> dan klik pada proses yang Anda ingin memiliki "
+"Pergi ke tab <gui>Proses</gui> dan klik pada proses yang Anda ingin memiliki "
 "prioritas yang berbeda."
 
 #. (itstool) path: item/p
 #: C/process-priority-change.page:28
-#, fuzzy
 msgid ""
 "Right-click the process, and use the <gui>Change Priority</gui> menu to "
 "assign the process a higher or lower priority."
 msgstr ""
-"Klik kanan proses, dan gunakan menu <gui>Ubah prioritas</gui> untuk "
+"Klik kanan proses, dan gunakan menu <gui>Ubah Prioritas</gui> untuk "
 "menetapkan proses prioritas yang lebih tinggi atau lebih rendah."
 
 #. (itstool) path: page/p
 #: C/process-priority-change.page:31
-#, fuzzy
 msgid ""
 "There is typically little need to change process priorities manually. The "
 "computer will usually do a good job of managing them itself. (The system for "
@@ -1656,18 +1701,16 @@ msgstr ""
 "Biasanya ada sedikit kebutuhan untuk mengubah prioritas proses secara "
 "manual. Komputer biasanya akan melakukan pekerjaan dengan baik untuk "
 "mengelolanya sendiri. (Sistem untuk mengelola prioritas proses disebut <link "
-"xref=\"process-priority-what\"> Nice.)"
+"xref=\"process-priority-what\">nice</link>.)"
 
 #. (itstool) path: section/title
 #: C/process-priority-change.page:35
-#, fuzzy
 msgid "Does higher priority make a process run faster?"
 msgstr ""
 "Apakah prioritas yang lebih tinggi membuat proses berjalan lebih cepat?"
 
 #. (itstool) path: section/p
 #: C/process-priority-change.page:37
-#, fuzzy
 msgid ""
 "The computer shares its processing time between all of the running "
 "processes. This is normally shared intelligently, so programs that are doing "
@@ -1680,12 +1723,11 @@ msgstr ""
 "biasanya dibagi secara cerdas, sehingga program yang melakukan lebih banyak "
 "pekerjaan secara otomatis mendapatkan bagian yang lebih besar dari sumber "
 "daya. Sebagian besar waktu, proses akan mendapatkan sebanyak waktu "
-"pemrosesan yang mereka butuhkan, dan begitu akan sudah berjalan secepat "
-"mungkin. Mengubah prioritas mereka tidak akan membuat perbedaan."
+"pemrosesan yang mereka butuhkan, dan akan sudah berjalan secepat mungkin. "
+"Mengubah prioritas mereka tidak akan membuat perbedaan."
 
 #. (itstool) path: section/p
 #: C/process-priority-change.page:39
-#, fuzzy
 msgid ""
 "If your computer is running several computationally-intensive programs at "
 "once, however, its processing time may be \"over-subscribed\" (that is, the "
@@ -1694,15 +1736,14 @@ msgid ""
 "there is not enough processing time to share between all of them."
 msgstr ""
 "Jika komputer Anda menjalankan beberapa program komputasi intensif "
-"sekaligus, namun, waktu pemrosesan mungkin \"over-berlangganan\" (yaitu, "
-"<link xref=\"process-identify-hog\"> kapasitas penuh prosesor akan "
+"sekaligus, namun, waktu pemrosesan mungkin \"berlangganan berlebih\" (yaitu, "
+"<link xref=\"process-identify-hog\">kapasitas penuh prosesor</link> akan "
 "digunakan). Anda mungkin memperhatikan bahwa program lain berjalan lebih "
 "lambat dari biasanya karena tidak ada cukup waktu pemrosesan untuk berbagi "
 "antara mereka semua."
 
 #. (itstool) path: section/p
 #: C/process-priority-change.page:41
-#, fuzzy
 msgid ""
 "In this case, changing the priority of processes can be helpful. You could "
 "lower the priority of one of the computationally-intensive processes to free "
@@ -1717,6 +1758,43 @@ msgstr ""
 "ingin berjalan lebih cepat."
 
 #. (itstool) path: info/desc
+#: C/process-priority-what.page:22
+msgid "The <em>nice</em> value of a process is used to adjust its priority."
+msgstr ""
+"Nilai <em>nice</em> dari sebuah proses digunakan untuk menyesuaikan "
+"prioritasnya."
+
+#. (itstool) path: page/title
+#: C/process-priority-what.page:25
+msgid "What is the <em>nice</em> value of a process?"
+msgstr "Apa itu nilai <em>nice</em> dari suatu proses?"
+
+#. (itstool) path: page/p
+#: C/process-priority-what.page:27
+msgid ""
+"The priority of a process determines the share of time the process is "
+"alotted on a system's one or more processors (CPUs or cores). A <em>nice</"
+"em> process, or one with a higher nice value, concedes priority to other "
+"processes. Adjusting the nice value will increase or decrease the scheduling "
+"priority."
+msgstr ""
+"Prioritas proses menentukan bagi waktu proses dialokasikan pada satu atau "
+"beberapa prosesor (CPU atau core) sistem. Proses <em>nice</em>, atau yang "
+"memiliki nilai nice yang lebih tinggi, mengalah ke proses lain. Menyesuaikan "
+"nilai nice akan meningkatkan atau mengurangi prioritas penjadwalan."
+
+#. (itstool) path: page/p
+#: C/process-priority-what.page:32
+msgid ""
+"The lower the nice value, the higher the priority of the process. The nice "
+"value ranges from -20 (low nice, higher priority) to 20 (lower priority). "
+"The default value of nice is usually 0."
+msgstr ""
+"Semakin rendah nilai nice, semakin tinggi prioritas proses. Nilai nice "
+"berkisar dari -20 (nice rendah, prioritas lebih tinggi) hingga 20 (prioritas "
+"lebih rendah). Nilai baku nice biasanya 0."
+
+#. (itstool) path: info/desc
 #: C/process-status.page:19
 msgid "The status of a process can be running, sleeping, stopped, or zombie."
 msgstr "Status proses dapat berjalan, tidur, berhenti, atau zombie."
@@ -1728,12 +1806,11 @@ msgstr "Apa arti status proses?"
 
 #. (itstool) path: page/p
 #: C/process-status.page:24
-#, fuzzy
 msgid ""
 "The status of a process tells you whether it is currently doing something or "
 "not. There are four statuses that a process can have:"
 msgstr ""
-"Status proses memberitahu Anda Apakah saat ini sedang melakukan sesuatu atau "
+"Status proses memberitahu Anda apakah saat ini sedang melakukan sesuatu atau "
 "tidak. Ada empat status yang dapat dimiliki sebuah proses:"
 
 #. (itstool) path: item/title
@@ -1743,15 +1820,14 @@ msgstr "Berjalan"
 
 #. (itstool) path: item/p
 #: C/process-status.page:29
-#, fuzzy
 msgid ""
 "Processes that are currently doing something (for example, a web browser "
 "loading a web page). Running processes are those that are actively using the "
 "processor (CPU)."
 msgstr ""
-"Proses yang saat ini melakukan sesuatu (misalnya, browser web yang memuat "
-"halaman web). Menjalankan proses adalah mereka yang secara aktif menggunakan "
-"prosesor (CPU)."
+"Proses yang saat ini melakukan sesuatu (misalnya, peramban web yang memuat "
+"halaman web). Proses yang sedang berjalan adalah mereka yang secara aktif "
+"menggunakan prosesor (CPU)."
 
 #. (itstool) path: item/title
 #: C/process-status.page:34
@@ -1760,7 +1836,6 @@ msgstr "Tidur"
 
 #. (itstool) path: item/p
 #: C/process-status.page:35
-#, fuzzy
 msgid ""
 "Processes that are not currently doing anything (for example, because they "
 "are waiting for something to happen). They don't use any of the processor's "
@@ -1770,7 +1845,7 @@ msgstr ""
 "Proses yang saat ini tidak melakukan apa-apa (misalnya, karena mereka sedang "
 "menunggu sesuatu terjadi). Mereka tidak menggunakan waktu prosesor, tapi "
 "masih mengambil memori. Jika mereka perlu melakukan sesuatu, mereka akan "
-"\"bangun\" dan mengubah status mereka untuk <em>berjalan</em>."
+"\"bangun\" dan mengubah status mereka menjadi <em>berjalan</em>."
 
 #. (itstool) path: item/title
 #: C/process-status.page:41
@@ -1779,7 +1854,6 @@ msgstr "Dihentikan"
 
 #. (itstool) path: item/p
 #: C/process-status.page:42
-#, fuzzy
 msgid ""
 "A <em>stopped</em> process is one that has been put to sleep manually. You "
 "might want to stop a process temporarily if it is using too much processing "
@@ -1791,14 +1865,13 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/process-status.page:45
-#, fuzzy
 msgid ""
 "To do this, click the process in the <gui>Processes</gui> tab, then right-"
 "click it and select <gui>Stop</gui> from the menu that appears. You can wake "
 "it up again by clicking <gui>Continue</gui> on the same menu."
 msgstr ""
-"Untuk melakukannya, klik proses di tab <gui>proses</gui> , kemudian klik "
-"kanan dan pilih <gui>berhenti</gui> dari menu yang muncul. Anda dapat "
+"Untuk melakukannya, klik proses di tab <gui>Proses</gui>, kemudian klik "
+"kanan dan pilih <gui>Berhenti</gui> dari menu yang muncul. Anda dapat "
 "membangunkannya lagi dengan mengklik <gui>Lanjutkan</gui> pada menu yang "
 "sama."
 
@@ -1809,7 +1882,6 @@ msgstr "Zombie"
 
 #. (itstool) path: item/p
 #: C/process-status.page:52
-#, fuzzy
 msgid ""
 "A zombie process is one that has finished running and will never start "
 "again, but is being kept in the list of processes for some reason. This "
@@ -1820,12 +1892,11 @@ msgstr ""
 "Sebuah proses zombie adalah salah satu yang telah selesai berjalan dan tidak "
 "akan pernah mulai lagi, tetapi sedang disimpan dalam daftar proses untuk "
 "beberapa alasan. Hal ini biasanya terjadi karena dimulai oleh program lain "
-"yang perlu tahu apakah itu selesai dengan sukses atau tidak, tetapi yang "
-"belum memeriksa pada proses belum."
+"yang perlu tahu apakah itu selesai dengan sukses atau tidak, tetapi belum "
+"memeriksa proses tersebut."
 
 #. (itstool) path: item/p
 #: C/process-status.page:57
-#, fuzzy
 msgid ""
 "Zombie processes do not use any memory or processing time, and will "
 "eventually go away. You do not need to do anything to get rid of them."
@@ -1835,7 +1906,6 @@ msgstr ""
 
 #. (itstool) path: page/p
 #: C/process-status.page:62
-#, fuzzy
 msgid "The majority of processes will either be running or sleeping."
 msgstr "Sebagian besar proses akan berjalan atau tidur."
 
@@ -1855,29 +1925,26 @@ msgstr "Membuat pembaruan informasi lebih cepat atau lebih lambat"
 
 #. (itstool) path: page/p
 #: C/process-update-speed.page:35
-#, fuzzy
 msgid "To change the information refresh speed:"
 msgstr "Untuk mengubah kecepatan penyegaran informasi:"
 
 #. (itstool) path: item/p
 #: C/process-update-speed.page:41
-#, fuzzy
 msgid ""
 "Click the desired tab (<gui>Processes</gui>, <gui>Resources</gui> or "
 "<gui>File Systems</gui>)."
 msgstr ""
-"Klik tab yang diinginkan (<gui>proses</gui>, <gui>sumber daya</gui> atau "
-"<gui>sistem berkas</gui>)."
+"Klik tab yang diinginkan (<gui>Proses</gui>, <gui>Sumber Daya</gui>, atau "
+"<gui>Sistem Berkas</gui>)."
 
 #. (itstool) path: note/p
 #: C/process-update-speed.page:48
-#, fuzzy
 msgid ""
 "Setting the <gui>Update interval</gui> to a lower value will cause "
 "<gui>System Monitor</gui> itself to use more of the CPU."
 msgstr ""
-"Mengatur <gui>interval pembaruan</gui> ke nilai yang lebih rendah akan "
-"menyebabkan <gui>sistem monitor</gui> sendiri untuk menggunakan lebih dari "
+"Mengatur <gui>Interval pembaruan</gui> ke nilai yang lebih rendah akan "
+"menyebabkan <gui>Monitor Sistem</gui> sendiri untuk menggunakan lebih banyak "
 "CPU."
 
 #. (itstool) path: info/desc
@@ -1892,7 +1959,6 @@ msgstr "Apa itu mode Solaris?"
 
 #. (itstool) path: page/p
 #: C/solaris-mode.page:33
-#, fuzzy
 msgid ""
 "In a system that has multiple CPUs or <link xref=\"cpu-multicore\">cores</"
 "link>, processes can use more than one at the same time. It is possible for "
@@ -1901,40 +1967,36 @@ msgid ""
 "CPU</gui> for each process by the number of CPUs in the system so that the "
 "total will be 100%."
 msgstr ""
-"Dalam sistem yang memiliki banyak CPU atau <link xref=\"cpu-multicore\"> "
-"inti, proses dapat menggunakan lebih dari satu pada saat yang sama. Hal ini "
-"dimungkinkan untuk kolom <gui>% CPU</gui> untuk menampilkan nilai yang total "
-"lebih besar dari 100% (yaitu 400% dalam sistem 4-CPU). <gui>Modus Solaris</"
-"gui> membagi <gui>CPU%</gui> untuk setiap proses dengan jumlah CPUs dalam "
-"sistem sehingga total akan 100%."
+"Dalam sistem yang memiliki banyak CPU atau <link xref=\"cpu-multicore"
+"\">core</link>, proses dapat menggunakan lebih dari satu pada saat yang "
+"sama. Dimungkinkan bagi kolom <gui>% CPU</gui> untuk menampilkan nilai yang "
+"total lebih besar dari 100% (yaitu 400% dalam sistem 4-CPU). <gui>Modus "
+"Solaris</gui> membagi <gui>CPU%</gui> untuk setiap proses dengan jumlah CPU "
+"dalam sistem sehingga total akan 100%."
 
 #. (itstool) path: page/p
 #: C/solaris-mode.page:40
-#, fuzzy
 msgid "To display the <gui>% CPU</gui> in <gui>Solaris mode</gui>:"
 msgstr "Untuk menampilkan <gui>% CPU</gui> dalam <gui>mode Solaris</gui>:"
 
 #. (itstool) path: item/p
 #: C/solaris-mode.page:43
-#, fuzzy
 msgid "Click <gui>Preferences</gui> in the app menu."
-msgstr "Klik <gui>preferensi</gui> di menu aplikasi."
+msgstr "Klik <gui>Preferensi</gui> di menu aplikasi."
 
 #. (itstool) path: item/p
 #: C/solaris-mode.page:45
-#, fuzzy
 msgid "Select <gui>Divide CPU Usage by CPU Count</gui>."
-msgstr "Pilih <gui>membagi penggunaan CPU dengan HITUNGAN CPU</gui>."
+msgstr "Pilih <gui>Membagi Penggunaan CPU dengan Cacah CPU</gui>."
 
 #. (itstool) path: note/p
 #: C/solaris-mode.page:48
-#, fuzzy
 msgid ""
 "The term <gui>Solaris mode</gui> derives from Sun's UNIX, compared to the "
 "Linux default of IRIX mode, named for SGI's UNIX."
 msgstr ""
-"Istilah <gui>mode Solaris</gui> berasal dari SUN'S Unix, dibandingkan dengan "
-"default Linux dari mode IRIX, DINAMAI dari Unix SGI."
+"Istilah <gui>mode Solaris</gui> berasal dari Sun Unix, dibandingkan dengan "
+"default Linux dari mode IRIX, dinamai dari Unix SGI."
 
 #. (itstool) path: info/desc
 #: C/units.page:22
@@ -1948,7 +2010,6 @@ msgstr "Apakah GiB sama dengan GB (gigabyte)?"
 
 #. (itstool) path: page/p
 #: C/units.page:32
-#, fuzzy
 msgid ""
 "The memory and disk space statistics are displayed using <em>IEC binary "
 "prefixes</em>, KiB, MiB, GiB, TiB (for kibi, mebi, gibi and tebi). These are "
@@ -1956,8 +2017,8 @@ msgid ""
 "(multiples of 1024) from decimal sizes (multiples of 1000) commonly used, "
 "for instance, in packaging of hard disks."
 msgstr ""
-"Memori dan ruang disk Statistik ditampilkan menggunakan <em>prefiks biner "
-"IEC</em>, KiB, MiB, Gib, Tib (untuk kibi, mebi, Gibi dan tebi). Ini "
+"Statistik memori dan ruang disk ditampilkan menggunakan <em>prefiks biner "
+"IEC</em>, KiB, MiB, GiB, TiB (untuk kibi, mebi, gibi, dan tebi). Ini "
 "dimaksudkan untuk membedakan pelaporan biner ukuran yang digunakan dalam "
 "sistem monitor (kelipatan dari 1024) dari ukuran desimal (kelipatan dari "
 "1000) yang umum digunakan, misalnya, dalam kemasan hard disk."
@@ -1984,10 +2045,9 @@ msgstr "1 GiB = 1073741842 byte"
 
 #. (itstool) path: page/p
 #: C/units.page:45
-#, fuzzy
 msgid ""
 "An external hard drive, advertised as 1.0 TB (terabytes), would display as "
 "0.909 TiB (tebibytes)."
 msgstr ""
 "Hard drive eksternal, diiklankan sebagai 1,0 TB (terabyte), akan menampilkan "
-"sebagai 0,909 TiB (tebibytes)."
+"sebagai 0,909 TiB (tebibyte)."
