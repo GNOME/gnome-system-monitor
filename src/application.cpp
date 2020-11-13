@@ -20,6 +20,8 @@
 #include "util.h"
 #include "lsof.h"
 #include "disks.h"
+#include "charts/gsm-cpu-graph.h"
+
 
 static void
 cb_solaris_mode_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
@@ -164,6 +166,10 @@ cb_color_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* ap
     if (key == GSM_SETTING_CPU_COLORS) {
         apply_cpu_color_settings(settings, app);
         for (int i = 0; i < app->config.num_cpus; i++) {
+            gchar* cpu = g_strdup_printf ("cpu%d", i);
+
+            gsm_cpu_graph_renderer_set_color (GSM_CPU_GRAPH (app->cpu_graph), cpu, &app->config.cpu_color[i]);
+            g_free (cpu);
 //            if(!gdk_rgba_equal(&app->cpu_graph->colors[i], &app->config.cpu_color[i])) {
                 //app->cpu_graph->colors[i] = app->config.cpu_color[i];
 //                break;

@@ -45,6 +45,7 @@
 #include "settings-keys.h"
 #include "legacy/gsm_color_button.h"
 #include "charts/gsm-cpu-graph.h"
+#include "charts/gsm-cpu-model.h"
 
 static const char* LOAD_GRAPH_CSS = "\
 .loadgraph {\
@@ -218,6 +219,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     LoadGraph *mem_graph, *net_graph;
     //LoadGraph *cpu_graph;
     GtkWidget *dzl_graph;
+    GsmCpuModel *cpu_model;
 
     int i;
     gchar *title_text;
@@ -236,8 +238,13 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     cpu_expander = GTK_EXPANDER (gtk_builder_get_object (builder, "cpu_expander"));
     g_object_bind_property (cpu_expander, "expanded", cpu_expander, "vexpand", G_BINDING_DEFAULT);
 
-    dzl_graph = GTK_WIDGET(g_object_new (GSM_TYPE_CPU_GRAPH, "timespan", G_TIME_SPAN_MINUTE,
-                                                             "max-samples", app->config.graph_data_points + 2, NULL));
+
+    cpu_model = g_object_new (GSM_TYPE_CPU_MODEL,
+                              "timespan", 3*G_TIME_SPAN_MINUTE,
+                              "max-samples", app->config.graph_data_points + 2,
+                              NULL);
+
+    dzl_graph = GTK_WIDGET(g_object_new (GSM_TYPE_CPU_GRAPH, "model", cpu_model, NULL));
     app->cpu_graph = dzl_graph;
     gtk_widget_set_size_request (GTK_WIDGET(dzl_graph), -1, 70);
     gtk_widget_show (dzl_graph);

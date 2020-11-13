@@ -20,6 +20,7 @@
 #define GSM_CPU_GRAPH_H
 
 #include <dazzle.h>
+#include "gsm-cpu-model.h"
 
 G_BEGIN_DECLS
 
@@ -27,8 +28,9 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (GsmCpuGraph, gsm_cpu_graph, GSM, CPU_GRAPH, DzlGraphView)
 
-GtkWidget *gsm_cpu_graph_new_full (gint64 timespan,
-                                   guint  max_samples);
+GtkWidget *gsm_cpu_graph_new_full (GsmCpuModel *cpu_model);
+
+void gsm_cpu_graph_renderer_set_color (GsmCpuGraph *cpu_graph, gchar* renderer_name, GdkRGBA *color);
 
 G_END_DECLS
 

@@ -25,17 +25,15 @@
 struct _GsmCpuGraph
 {
   DzlGraphView parent_instance;
-
-  gint64 timespan;
-  guint  max_samples;
+  GHashTable*  renderers;
+  GsmCpuModel* model;
 };
 
 G_DEFINE_TYPE (GsmCpuGraph, gsm_cpu_graph, DZL_TYPE_GRAPH_VIEW)
 
 enum {
   PROP_0,
-  PROP_MAX_SAMPLES,
-  PROP_TIMESPAN,
+  PROP_MODEL,
   LAST_PROP
 };
 
@@ -52,29 +50,32 @@ static const gchar *colors[] = {
   "#cc0000",
 };
 
+static void
+_gsm_cpu_graph_initialize_with_model(GsmCpuGraph *self);
+
 GtkWidget *
-gsm_cpu_graph_new_full (gint64 timespan,
-                        guint  max_samples)
+gsm_cpu_graph_new_full (GsmCpuModel *cpu_model)
 {
-  if (timespan <= 0)
-    timespan = 60L * G_USEC_PER_SEC;
-
-  if (max_samples < 1)
-    max_samples = 120;
-
   return g_object_new (GSM_TYPE_CPU_GRAPH,
-                       "max-samples", max_samples,
-                       "timespan", timespan,
+                       "model", cpu_model,
                        NULL);
+}
+
+void
+gsm_cpu_graph_renderer_set_color (GsmCpuGraph *cpu_graph, gchar* renderer_name, GdkRGBA *color)
+{
+  DzlGraphRenderer *renderer = DZL_GRAPH_RENDERER (g_hash_table_lookup (cpu_graph->renderers, renderer_name));
+  if (renderer == NULL) return;
+  g_object_set (renderer,
+                "stroke-color-rgba", color,
+                "line-width", 0.5,
+                NULL);
 }
 
 static void
 gsm_cpu_graph_constructed (GObject *object)
 {
-  static GsmCpuModel *model;
   GsmCpuGraph *self = (GsmCpuGraph *)object;
-  guint n_columns;
-  guint i;
 
   G_OBJECT_CLASS (gsm_cpu_graph_parent_class)->constructed (object);
 
@@ -82,34 +83,16 @@ gsm_cpu_graph_constructed (GObject *object)
    * Create a model, but allow it to be destroyed after the last
    * graph releases it. We will recreate it on demand.
    */
-  if (model == NULL)
+  if (self->model == NULL)
     {
-      model = g_object_new (GSM_TYPE_CPU_MODEL,
-                            "timespan", self->timespan,
-                            "max-samples", self->max_samples + 1,
+      self->model = g_object_new (GSM_TYPE_CPU_MODEL,
+                            "timespan", 3*G_TIME_SPAN_MINUTE,
+                            "max-samples", 180 + 1,
                             NULL);
-      g_object_add_weak_pointer (G_OBJECT (model), (gpointer *)&model);
-      dzl_graph_view_set_model (DZL_GRAPH_VIEW (self), DZL_GRAPH_MODEL (model));
-      g_object_unref (model);
-    }
-  else
-    {
-      dzl_graph_view_set_model (DZL_GRAPH_VIEW (self), DZL_GRAPH_MODEL (model));
     }
 
-  n_columns = dzl_graph_view_model_get_n_columns (DZL_GRAPH_MODEL (model));
-
-  for (i = 0; i < n_columns; i++)
-    {
-      DzlGraphRenderer *renderer;
-
-      renderer = g_object_new (DZL_TYPE_GRAPH_LINE_RENDERER,
-                               "column", i,
-                               "stroke-color", colors [i % G_N_ELEMENTS (colors)],
-                               NULL);
-      dzl_graph_view_add_renderer (DZL_GRAPH_VIEW (self), renderer);
-      g_clear_object (&renderer);
-    }
+  self->renderers = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
+  _gsm_cpu_graph_initialize_with_model(self);
 }
 
 static void
@@ -122,12 +105,8 @@ gsm_cpu_graph_get_property (GObject    *object,
 
   switch (prop_id)
     {
-    case PROP_MAX_SAMPLES:
-      g_value_set_uint (value, self->max_samples);
-      break;
-
-    case PROP_TIMESPAN:
-      g_value_set_int64 (value, self->timespan);
+    case PROP_MODEL:
+      g_value_set_object (value, self->model);
       break;
 
     default:
@@ -145,19 +124,16 @@ gsm_cpu_graph_set_property (GObject      *object,
 
   switch (prop_id)
     {
-    case PROP_MAX_SAMPLES:
-      self->max_samples = g_value_get_uint (value);
-      break;
-
-    case PROP_TIMESPAN:
-      if (!(self->timespan = g_value_get_int64 (value)))
-        self->timespan = 60L * G_USEC_PER_SEC;
+    case PROP_MODEL:
+      self->model = g_value_get_object (value);
+      _gsm_cpu_graph_initialize_with_model (self);
       break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
 }
+
 
 static void
 gsm_cpu_graph_class_init (GsmCpuGraphClass *klass)
@@ -168,21 +144,12 @@ gsm_cpu_graph_class_init (GsmCpuGraphClass *klass)
   object_class->get_property = gsm_cpu_graph_get_property;
   object_class->set_property = gsm_cpu_graph_set_property;
 
-  properties [PROP_TIMESPAN] =
-    g_param_spec_int64 ("timespan",
-                         "Timespan",
-                         "Timespan",
-                         0, G_MAXINT64,
-                         60L * G_USEC_PER_SEC,
+  properties [PROP_MODEL] =
+    g_param_spec_object ("model",
+                         "Model",
+                         "Model",
+                         GSM_TYPE_CPU_MODEL,
                          (G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-
-  properties [PROP_MAX_SAMPLES] =
-    g_param_spec_uint ("max-samples",
-                       "Max Samples",
-                       "Max Samples",
-                       0, G_MAXUINT,
-                       120,
-                       (G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_properties (object_class, LAST_PROP, properties);
 }
@@ -190,6 +157,25 @@ gsm_cpu_graph_class_init (GsmCpuGraphClass *klass)
 static void
 gsm_cpu_graph_init (GsmCpuGraph *self)
 {
-  self->max_samples = 120;
-  self->timespan = 60L * G_USEC_PER_SEC;
+}
+
+static void
+_gsm_cpu_graph_initialize_with_model(GsmCpuGraph *self)
+{
+  guint n_columns;
+  guint i;
+  dzl_graph_view_set_model (DZL_GRAPH_VIEW (self), DZL_GRAPH_MODEL (self->model));
+
+  n_columns = dzl_graph_view_model_get_n_columns (DZL_GRAPH_MODEL (self->model));
+  for (i = 0; i < n_columns; i++)
+    {
+      DzlGraphRenderer *renderer;
+
+      renderer = g_object_new (DZL_TYPE_GRAPH_LINE_RENDERER,
+                               "column", i,
+                               "stroke-color", colors [i % G_N_ELEMENTS (colors)],
+                               NULL);
+      dzl_graph_view_add_renderer (DZL_GRAPH_VIEW (self), renderer);
+      g_hash_table_insert (self->renderers, g_strdup_printf("cpu%d", i), renderer);
+    }
 }
