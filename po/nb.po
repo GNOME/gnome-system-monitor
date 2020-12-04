@@ -1,15 +1,15 @@
 # Norwegian bokmål translation of gnome-system-monitor.
 # Copyright (C) 2001-2004, 2005 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@gnome.org>, 2001-2017.
+# Kjartan Maraas <kmaraas@gnome.org>, 2001-2020.
 # Terance Edward Sola <terance@lyse.net>, 2005.
 # Torstein Adolf Winterseth <kvikende@fsfe.org>, 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-system-monitor 3.27.x\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=system-monitor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-11-09 16:46+0000\n"
-"PO-Revision-Date: 2017-11-11 19:39+0100\n"
+"Project-Id-Version: gnome-system-monitor 3.38.x\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
+"POT-Creation-Date: 2020-10-18 10:21+0000\n"
+"PO-Revision-Date: 2020-12-04 14:56+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -19,20 +19,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
-#: src/application.cpp:244 src/interface.cpp:363
+#: src/application.cpp:245 src/interface.cpp:388
 msgid "System Monitor"
 msgstr "Systemmonitor"
 
 #: gnome-system-monitor.desktop.in.in:4
-#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:364
+#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:389
 msgid "View current processes and monitor system state"
 msgstr "Vis aktive prosesser og overvåk systemets tilstand"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: gnome-system-monitor.desktop.in.in:8
-#: gnome-system-monitor-kde.desktop.in.in:8
-msgid "utilities-system-monitor"
-msgstr "utilities-system-monitor"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: gnome-system-monitor.desktop.in.in:19
@@ -44,7 +38,7 @@ msgstr ""
 "Behandler;Aktivitet;"
 
 #: gnome-system-monitor-kde.desktop.in.in:3
-#: gnome-system-monitor.appdata.xml.in:6 src/application.cpp:299
+#: gnome-system-monitor.appdata.xml.in:6 src/application.cpp:300
 msgid "GNOME System Monitor"
 msgstr "GNOME systemovervåking"
 
@@ -117,60 +111,62 @@ msgstr "Kjør renice på prosess"
 msgid "Privileges are required to change the priority of processes"
 msgstr "Rettigheter kreves for å endre prioritet på prosesser"
 
-#: data/interface.ui:132
-msgid "End _Process"
-msgstr "Avslutt _prosess"
+#: data/interface.ui:150 src/procdialogs.cpp:135 src/proctable.cpp:147
+msgid "_End Process"
+msgid_plural "_End Processes"
+msgstr[0] "_Avslutt prosess"
+msgstr[1] "_Avslutt prosesser"
 
-#: data/interface.ui:146
+#: data/interface.ui:164
 msgid "Show process properties"
 msgstr "Vis egenskaper for prosess"
 
-#: data/interface.ui:167 data/preferences.ui:288
+#: data/interface.ui:185 data/preferences.ui:288
 msgid "Processes"
 msgstr "Prosesser"
 
-#: data/interface.ui:184
+#: data/interface.ui:209
 msgid "CPU History"
 msgstr "Historikk for CPU-bruk"
 
-#: data/interface.ui:260
+#: data/interface.ui:285
 msgid "Memory and Swap History"
 msgstr "Historikk for minne- og swap-bruk"
 
-#: data/interface.ui:294 src/interface.cpp:260 src/procproperties.cpp:70
-#: src/proctable.cpp:337
+#: data/interface.ui:319 src/interface.cpp:276 src/procproperties.cpp:70
+#: src/proctable.cpp:350
 msgid "Memory"
 msgstr "Minne"
 
-#: data/interface.ui:309 src/interface.cpp:272
+#: data/interface.ui:334 src/interface.cpp:288
 msgid "Swap"
 msgstr "Swap"
 
-#: data/interface.ui:347
+#: data/interface.ui:372
 msgid "Network History"
 msgstr "Nettverkshistorikk"
 
-#: data/interface.ui:382 src/interface.cpp:302
+#: data/interface.ui:407 src/interface.cpp:318
 msgid "Receiving"
 msgstr "Mottar"
 
-#: data/interface.ui:397
+#: data/interface.ui:422
 msgid "Total Received"
 msgstr "Totalt mottatt"
 
-#: data/interface.ui:412 src/interface.cpp:317
+#: data/interface.ui:437 src/interface.cpp:336
 msgid "Sending"
 msgstr "Sender"
 
-#: data/interface.ui:427
+#: data/interface.ui:452
 msgid "Total Sent"
 msgstr "Totalt sendt"
 
-#: data/interface.ui:472 data/preferences.ui:461
+#: data/interface.ui:499 data/preferences.ui:461
 msgid "Resources"
 msgstr "Ressurser"
 
-#: data/interface.ui:500 data/preferences.ui:692
+#: data/interface.ui:527 data/preferences.ui:692
 msgid "File Systems"
 msgstr "Filsystemer"
 
@@ -187,101 +183,97 @@ msgstr "Filtrer filer etter navn"
 msgid "Case insensitive"
 msgstr "Skiller ikke mellom små og store bokstaver"
 
-#: data/menus.ui:6
+#: data/menus.ui:6 data/menus.ui:57
 msgctxt "Menu item to Open Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Søk etter åpne filer"
 
-#: data/menus.ui:12
+#: data/menus.ui:12 data/menus.ui:63
 msgid "Preferences"
 msgstr "Brukervalg"
 
-#: data/menus.ui:18
+#: data/menus.ui:16 data/menus.ui:67
 msgid "Help"
 msgstr "Hjelp"
 
-#: data/menus.ui:23
-msgid "About"
-msgstr "Om"
+#: data/menus.ui:20 data/menus.ui:71
+msgid "About System Monitor"
+msgstr "Om Systemmonitor"
 
-#: data/menus.ui:27
-msgid "Quit"
-msgstr "Avslutt"
-
-#: data/menus.ui:36
+#: data/menus.ui:28
 msgid "_Refresh"
 msgstr "Oppdate_r"
 
-#: data/menus.ui:43
+#: data/menus.ui:34
 msgid "_Active Processes"
 msgstr "_Aktive prosesser"
 
-#: data/menus.ui:48
+#: data/menus.ui:39
 msgid "A_ll Processes"
 msgstr "A_lle prosesser"
 
-#: data/menus.ui:53
+#: data/menus.ui:44
 msgid "M_y Processes"
 msgstr "M_ine prosesser"
 
-#: data/menus.ui:60
-msgid "_Dependencies"
-msgstr "Av_hengigheter"
+#: data/menus.ui:51
+msgid "Show _Dependencies"
+msgstr "Vis av_hengigheter"
 
-#: data/menus.ui:69
+#: data/menus.ui:79
 msgid "_Properties"
 msgstr "Egenska_per"
 
-#: data/menus.ui:76
+#: data/menus.ui:85
 msgid "_Memory Maps"
 msgstr "_Minnekart"
 
 #. Translators: this means 'Files that are open' (open is not a verb here)
-#: data/menus.ui:81
+#: data/menus.ui:89
 msgid "Open _Files"
 msgstr "Åpne _filer"
 
-#: data/menus.ui:88
+#: data/menus.ui:95
 msgid "_Change Priority"
 msgstr "En_dre prioritet"
 
-#: data/menus.ui:91 src/util.cpp:215
+#: data/menus.ui:98 src/util.cpp:161
 msgid "Very High"
 msgstr "Meget høy"
 
-#: data/menus.ui:96 src/util.cpp:217
+#: data/menus.ui:103 src/util.cpp:163
 msgid "High"
 msgstr "Høy"
 
-#: data/menus.ui:101 src/util.cpp:219
+#: data/menus.ui:108 src/util.cpp:165
 msgid "Normal"
 msgstr "Normal"
 
-#: data/menus.ui:106 src/util.cpp:221
+#: data/menus.ui:113 src/util.cpp:167
 msgid "Low"
 msgstr "Lav"
 
-#: data/menus.ui:111 src/util.cpp:223
+#: data/menus.ui:118 src/util.cpp:169
 msgid "Very Low"
 msgstr "Meget lav"
 
-#: data/menus.ui:118
+#: data/menus.ui:125
 msgid "Custom"
 msgstr "Egendefinert"
 
-#: data/menus.ui:127
+#: data/menus.ui:134
 msgid "_Stop"
 msgstr "_Stopp"
 
-#: data/menus.ui:133
+#: data/menus.ui:139
 msgid "_Continue"
 msgstr "_Fortsett"
 
-#: data/menus.ui:139
+#: data/menus.ui:144
 msgid "_End"
 msgstr "_Avslutt"
 
-#: data/menus.ui:145
+#: data/menus.ui:149
 msgid "_Kill"
 msgstr "_Terminer"
 
@@ -345,7 +337,7 @@ msgstr "Vis _alle filsystemer"
 msgid "File system i_nformation shown in list:"
 msgstr "Filsystemi_nformasjon som vises i lista:"
 
-#: data/renice.ui:27 src/procdialogs.cpp:153
+#: data/renice.ui:27 src/procdialogs.cpp:159
 msgid "_Cancel"
 msgstr "A_vbryt"
 
@@ -365,7 +357,7 @@ msgstr ""
 "<small><i><b>Merk:</b>Prioriteten for en prosess gis av dens «nice»-verdi. "
 "En lavere verdi betyr høyere prioritet.</i></small>"
 
-#: src/application.cpp:285
+#: src/application.cpp:286
 msgid "A simple process and system monitor."
 msgstr "Et enkelt program for overvåking av systemet og dets prosesser."
 
@@ -414,21 +406,21 @@ msgid "Used"
 msgstr "Brukt"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: src/interface.cpp:185
+#: src/interface.cpp:199
 #, c-format
 msgid "Pick a Color for “%s”"
 msgstr "Velg en farge for «%s»"
 
-#: src/interface.cpp:219 src/procproperties.cpp:78
+#: src/interface.cpp:233 src/procproperties.cpp:78
 msgid "CPU"
 msgstr "CPU"
 
-#: src/interface.cpp:221
+#: src/interface.cpp:235
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: src/interface.cpp:374
+#: src/interface.cpp:400
 msgid "translator-credits"
 msgstr ""
 "Kjartan Maraas <kmaraas@gnome.org>\n"
@@ -500,22 +492,28 @@ msgstr "Fargedata for ugyldig mottak\n"
 msgid "Click to set graph colors"
 msgstr "Klikk for å sette farger for grafen"
 
-#: src/load-graph.cpp:157
+#: src/load-graph.cpp:186
 #, c-format
 msgid "%u second"
 msgid_plural "%u seconds"
 msgstr[0] "%u sekund"
 msgstr[1] "%u sekunder"
 
-#: src/load-graph.cpp:373
+#: src/load-graph.cpp:416
 msgid "not available"
 msgstr "ikke tilgjengelig"
 
 #. xgettext: 540MiB (53 %) of 1.0 GiB
-#: src/load-graph.cpp:376
+#: src/load-graph.cpp:419
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) av %s"
+
+#. xgettext: Used cache string, e.g.: "Cache 2.4GiB"
+#: src/load-graph.cpp:423
+#, c-format
+msgid "Cache %s"
+msgstr "Buffer %s"
 
 #: src/lsof.cpp:118
 #, c-format
@@ -644,24 +642,24 @@ msgstr "Objekt"
 msgid "_Files opened by process “%s” (PID %u):"
 msgstr "_Filer som er åpnet av prosess «%s» (PID %u):"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:5
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:5
 msgid "Main window size and position in the form (width, height, xpos, ypos)"
 msgstr ""
 "Størrelse og posisjon på hovedvindu på formen (bredde, høyde, xpos, ypos)"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:11
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:11
 msgid "Main Window should open maximized"
 msgstr "Hovedvinduet åpnes maksimert"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:18
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:18
 msgid "Show process dependencies in tree form"
 msgstr "Vis prosessavhengigheter som et tre"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:25
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:25
 msgid "Solaris mode for CPU percentage"
 msgstr "Solaris-modus for CPU-prosent"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:27
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:27
 msgid ""
 "If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage "
 "is divided by the total number of CPUs. Otherwise, it operates in “Irix "
@@ -671,51 +669,27 @@ msgstr ""
 "hvor en oppgaves CPU-bruk deles på totalt antall CPUer. Ellers benyttes "
 "«Irix-modus»."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:34
-msgid "Show CPU chart as stacked area chart"
-msgstr "Vis CPU-graf som et stablet områdeplott"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:35
-msgid ""
-"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
-"of a line chart."
-msgstr ""
-"Systemovervåking viser CPU-grafen som et stablet områdeplott i stedet for "
-"som et linjeplott hvis denne er TRUE."
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:42
-msgid "Show CPU chart as smooth graph using Bezier curves"
-msgstr "Vis CPU-graf som en myk graf med Bezier-kurver"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:43
-msgid ""
-"If TRUE, system-monitor shows the CPU chart as a smoothed graph, otherwise "
-"as a line chart."
-msgstr ""
-"Systemovervåking viser CPU-grafen som en myk graf i stedet for som et "
-"linjeplott hvis denne er TRUE."
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:50
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:34
 msgid "Enable/Disable smooth refresh"
 msgstr "Aktiver/deaktiver myk oppfrisking"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:57
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:41
 msgid "Show warning dialog when killing processes"
 msgstr "Vis advarsel når prosesser termineres"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:64
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:48
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Tid mellom oppdatering av prosessvisning i millisekunder"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:70
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:54
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Tid mellom oppdatering av grafene i millisekunder"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:76
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:60
 msgid "Whether information about all file systems should be displayed"
 msgstr "Vis informasjon om alle filsystemene"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:78
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:62
 msgid ""
 "Whether to display information about all file systems (including types like "
 "“autofs” and “procfs”). Useful for getting a list of all currently mounted "
@@ -725,355 +699,379 @@ msgstr ""
 "filsystemer som «autofs» og «procfs». Det kan være hendig å få en liste over "
 "alle monterte filsystemer."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:85
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:69
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Tid mellom oppdatering av enhetslisten i millisekunder"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:95
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:79
 msgid "Determines which processes to show."
 msgstr "Bestemmer hvilke prosesser som skal vises."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:105
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:89
 msgid "Saves the currently viewed tab"
 msgstr "Lagrer fane som vises nå"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:112
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:112
 msgid "CPU colors"
 msgstr "Farger for CPU"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:114
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:114
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr "Hver oppføring er på formatet (CPU#, heksadesimal fargeverdi)"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:121
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:121
 msgid "Default graph memory color"
 msgstr "Forvalgt farge for minne-graf"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:128
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:128
 msgid "Default graph swap color"
 msgstr "Forvalgt farge for swap-graf"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:135
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:135
 msgid "Default graph incoming network traffic color"
 msgstr "Forvalgt farge på graf for innkommende nettverkstrafikk"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:142
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:142
 msgid "Default graph outgoing network traffic color"
 msgstr "Forvalgt farge på graf for utgående nettverkstrafikk"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:149
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:149
 msgid "Show network traffic in bits"
 msgstr "Vis nettverkstrafikk i bits"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:163
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:156
+msgid "Show CPU chart as stacked area chart"
+msgstr "Vis CPU-graf som et stablet områdeplott"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:158
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
+"of a line chart."
+msgstr ""
+"Systemovervåking viser CPU-grafen som et stablet områdeplott i stedet for "
+"som et linjeplott hvis denne er TRUE."
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:165
+msgid "Show CPU chart as smooth graph using Bezier curves"
+msgstr "Vis CPU-graf som en myk graf med Bezier-kurver"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:167
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a smoothed graph, otherwise "
+"as a line chart."
+msgstr ""
+"Systemovervåking viser CPU-grafen som en myk graf i stedet for som et "
+"linjeplott hvis denne er TRUE."
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:182
 msgid "Process view sort column"
 msgstr "Sorteringskolonne for prosessvisning"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:170
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:189
 msgid "Process view columns order"
 msgstr "Rekkefølge på kolonnene for prosessvisning"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:177
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:196
 msgid "Process view sort order"
 msgstr "Sorteringsrekkefølge for prosessvisning"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:184
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:203
 msgid "Width of process “Name” column"
 msgstr "Bredde på kolonne «Navn» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:191
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:210
 msgid "Show process “Name” column on startup"
 msgstr "Vis kolonne «Navn» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:198
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:217
 msgid "Width of process “User” column"
 msgstr "Bredde på kolonne «Bruker» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:205
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:224
 msgid "Show process “User” column on startup"
 msgstr "Vis kolonne «Bruker» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:212
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
 msgid "Width of process “Status” column"
 msgstr "Bredde på kolonne «Status» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:219
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
 msgid "Show process “Status” column on startup"
 msgstr "Vis kolonne «Status» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:226
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:245
 msgid "Width of process “Virtual Memory” column"
 msgstr "Bredde på kolonne «Virtuelt minne» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:233
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:252
 msgid "Show process “Virtual Memory” column on startup"
 msgstr "Vis kolonne «Virtuelt minne» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:240
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:259
 msgid "Width of process “Resident Memory” column"
 msgstr "Bredde på kolonne «Resident minne» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:247
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:266
 msgid "Show process “Resident Memory” column on startup"
 msgstr "Vis kolonne «Resident minne» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:254
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:273
 msgid "Width of process “Writable Memory” column"
 msgstr "Bredde på kolonne «Skrivbart minne» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:261
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:280
 msgid "Show process “Writable Memory” column on startup"
 msgstr "Vis kolonne «Skrivbart minne» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:268
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:287
 msgid "Width of process “Shared Memory” column"
 msgstr "Bredde på kolonne «Delt minne» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:275
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:294
 msgid "Show process “Shared Memory” column on startup"
 msgstr "Vis kolonne «Delt minne» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:282
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:301
 msgid "Width of process “X Server Memory” column"
 msgstr "Bredde på kolonne «X-tjener minne» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:289
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:308
 msgid "Show process “X Server Memory” column on startup"
 msgstr "Vis kolonne «Minneforbruk i X-tjener» ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:296
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:315
 msgid "Width of process “CPU %” column"
 msgstr "Bredde på kolonne «CPU %»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:303
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:322
 msgid "Show process “CPU %” column on startup"
 msgstr "Vis kolonne for CPU-bruk for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:310
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:329
 msgid "Width of process “CPU Time” column"
 msgstr "Bredde på kolonne «CPU-tid» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:317
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:336
 msgid "Show process “CPU Time” column on startup"
 msgstr "Vis kolonne «CPU-tid» per prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:324
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:343
 msgid "Width of process “Started” column"
 msgstr "Bredde på kolonne «Startet» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:331
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:350
 msgid "Show process “Started” column on startup"
 msgstr "Vis kolonne «Startet» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:338
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:357
 msgid "Width of process “Nice” column"
 msgstr "Bredde på «Nice»-kolonne for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:345
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:364
 msgid "Show process “Nice” column on startup"
 msgstr "Vis kolonne «Nice» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:352
-msgid "Width of process “PID” column"
-msgstr "Bredde på kolonne «PID»"
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
+msgid "Width of process “ID” column"
+msgstr "Bredde på kolonne for prosess-ID"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:359
-msgid "Show process “PID” column on startup"
-msgstr "Vis kolonne med PID for prosess ved oppstart"
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
+msgid "Show process “ID” column on startup"
+msgstr "Vis kolonne med prosess-ID ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:366
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
 msgid "Width of process “SELinux Security Context” column"
 msgstr "Bredde for kolonne «SELinux sikkerhetssammenheng» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:372
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:391
 msgid "Show process “SELinux Security Context” column on startup"
 msgstr "Vis kolonnen «SELinux sikkerhetssammenheng» ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:379
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:398
 msgid "Width of process “Command Line” column"
 msgstr "Bredde på «Nice»-kolonne for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:386
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:405
 msgid "Show process “Command Line” column on startup"
 msgstr "Vis kolonne for «Kommandolinje» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:393
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:412
 msgid "Width of process “Memory” column"
 msgstr "Bredde på «Minne»-kolonne for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:400
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:419
 msgid "Show process “Memory” column on startup"
 msgstr "Vis kolonne «Minne» per prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:407
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:426
 msgid "Width of process “Waiting Channel” column"
 msgstr "Bredde på kolonne med «Ventende kanal»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:414
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:433
 msgid "Show process “Waiting Channel” column on startup"
 msgstr "Vis kolonne «Ventende kanal» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:421
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:440
 msgid "Width of process “Control Group” column"
 msgstr "Bredde på kolonne «Kontrollgruppe» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:428
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:447
 msgid "Show process “Control Group” column on startup"
 msgstr "Vis kolonne «Kontrollgruppe» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:435
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:454
 msgid "Width of process “Unit” column"
 msgstr "Bredde på kolonne «Enhet» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:442
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:461
 msgid "Show process “Unit” column on startup"
 msgstr "Vis kolonne «Enhet» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:449
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:468
 msgid "Width of process “Session” column"
 msgstr "Bredde på kolonne «Økt» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:456
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:475
 msgid "Show process “Session” column on startup"
 msgstr "Vis kolonne «Økt» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:463
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:482
 msgid "Width of process “Seat” column"
 msgstr "Bredde på kolonne «Sete» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:470
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:489
 msgid "Show process “Seat” column on startup"
 msgstr "Vis kolonne «Sete» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:477
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:496
 msgid "Width of process “Owner” column"
 msgstr "Bredde på kolonne «Eier» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:484
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:503
 msgid "Show process “Owner” column on startup"
 msgstr "Vis kolonne «Eier» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:491
-msgid "Width of process “Total disk write” column"
-msgstr "Bredde på kolonne «Total skrevet til disk» for prosess"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:498
-msgid "Show process “Total disk write” column on startup"
-msgstr "Vis kolonne «Total skrevet til disk» for prosess ved oppstart"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:505
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:510
 msgid "Width of process “Total disk read” column"
 msgstr "Bredde på kolonne «Total skrevet til disk» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:512
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:517
 msgid "Show process “Total disk read” column on startup"
 msgstr "Vis kolonne «Total lest fra disk» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:519
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:524
+msgid "Width of process “Total disk write” column"
+msgstr "Bredde på kolonne «Total skrevet til disk» for prosess"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:531
+msgid "Show process “Total disk write” column on startup"
+msgstr "Vis kolonne «Total skrevet til disk» for prosess ved oppstart"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:538
 msgid "Width of process “Disk read” column"
 msgstr "Bredde på kolonne «Lest fra disk» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:526
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:545
 msgid "Show process “Disk read” column on startup"
 msgstr "Vis kolonne «Lest fra disk» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:533
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:552
 msgid "Width of process “Disk write” column"
 msgstr "Bredde på kolonn «Skrevet til disk» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:540
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:559
 msgid "Show process “Disk write” column on startup"
 msgstr "Vis kolonne «Skrevet til disk» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:547
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:566
 msgid "Width of process “Priority” column"
 msgstr "Bredde på «Prioritet»-kolonne for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:554
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:573
 msgid "Show process “Priority” column on startup"
 msgstr "Vis kolonne «Prioritet» for prosess ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:565
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:584
 msgid "Disk view sort column"
 msgstr "Sorteringskolonne for diskvisning"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:572
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:591
 msgid "Disk view sort order"
 msgstr "Sorteringsrekkefølge for diskvisning"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:579
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:598
 msgid "Disk view columns order"
 msgstr "Rekkefølge på kolonnene for diskvisning"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:586
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:605
 msgid "Width of disk view “Device” column"
 msgstr "Bredde på «Enhet»-kolonne for disk"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:593
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:612
 msgid "Show disk view “Device” column on startup"
 msgstr "Vis kolonne «Enhet» for disk ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:600
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:619
 msgid "Width of disk view “Directory” column"
 msgstr "Bredde på «Katalog»-kolonne for disk"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:607
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:626
 msgid "Show disk view “Directory” column on startup"
 msgstr "Vis kolonne «Katalog» for disk ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:614
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:633
 msgid "Width of disk view “Type” column"
 msgstr "Bredde på kolonne «Type» for disk"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:621
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:640
 msgid "Show disk view “Type” column on startup"
 msgstr "Vis kolonne «Type» for disk ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:628
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:647
 msgid "Width of disk view “Total” column"
 msgstr "Bredde på kolonne «Total» for disk"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:635
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:654
 msgid "Show disk view “Total” column on startup"
 msgstr "Vis kolonne «Total» for disk ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:642
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:661
 msgid "Width of disk view “Free” column"
 msgstr "Bredde på kolonne «Ledig» for disk"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:649
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:668
 msgid "Show disk view “Free” column on startup"
 msgstr "Vis kolonne «Ledig» for disk ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:656
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:675
 msgid "Width of disk view “Available” column"
 msgstr "Bredde på kolonne «Tilgjengelig» for disk"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:663
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:682
 msgid "Show disk view “Available” column on startup"
 msgstr "Vis kolonne «Tilgjengelig» for disk ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:670
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:689
 msgid "Width of disk view “Used” column"
 msgstr "Bredde på kolonne «Brukt» for prosess"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:677
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:696
 msgid "Show disk view “Used” column on startup"
 msgstr "Vis kolonne «Brukt» for disk ved oppstart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:687
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:706
 msgid "Memory map sort column"
 msgstr "Sorteringskolonne for minnekart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:694
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:713
 msgid "Memory map sort order"
 msgstr "Sorteringsrekkefølge for minnekart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:703
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:722
 msgid "Open files sort column"
 msgstr "Sorteringskolonne for åpne filer"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in.in:710
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:729
 msgid "Open files sort order"
 msgstr "Sorteringsrekkefølge for åpne filer"
 
@@ -1100,26 +1098,26 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:76
+#: src/procdialogs.cpp:82
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr "Er du sikker på at du vil terminere valgt prosess «%s» (PID: %u)?"
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:82
+#: src/procdialogs.cpp:88
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr "Er du sikker på at du vil avslutte valgt prosess «%s» (PID: %u)?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:88
+#: src/procdialogs.cpp:94
 #, c-format
 msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
 msgstr "Er du sikker på at du vil avslutte valgt prosess «%s» (PID: %u)?"
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:97
+#: src/procdialogs.cpp:103
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
@@ -1127,7 +1125,7 @@ msgstr[0] "Er du sikker på at du vil terminere valgt prosess?"
 msgstr[1] "Er du sikker på at du vil terminere de %d valgte prosessene?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:103
+#: src/procdialogs.cpp:109
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
@@ -1136,7 +1134,7 @@ msgstr[1] "Er du sikker på at du vil avslutte de %d valgte prosessene?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:109
+#: src/procdialogs.cpp:115
 #, c-format
 msgid "Are you sure you want to stop the selected process?"
 msgid_plural "Are you sure you want to stop the %d selected processes?"
@@ -1144,7 +1142,7 @@ msgstr[0] "Er du sikker på at du vil avslutte valgt prosess?"
 msgstr[1] "Er du sikker på at du vil avslutte de %d valgte prosessene?"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:119
+#: src/procdialogs.cpp:125
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1153,14 +1151,14 @@ msgstr ""
 "å fungere eller du kan skape en sikkerhetsrisiko. Kun prosesser som ikke "
 "responderer bør termineres."
 
-#: src/procdialogs.cpp:122
+#: src/procdialogs.cpp:128
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "_Terminer prosess"
 msgstr[1] "_Terminer prosesser"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:126
+#: src/procdialogs.cpp:132
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponsive processes should be ended."
@@ -1169,15 +1167,9 @@ msgstr ""
 "å fungere eller du kan skape en sikkerhetsrisiko. Kun prosesser som ikke "
 "responderer bør termineres."
 
-#: src/procdialogs.cpp:129
-msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "_Avslutt prosess"
-msgstr[1] "_Avslutt prosesser"
-
 #. SIGSTOP
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:133
+#: src/procdialogs.cpp:139
 msgid ""
 "Stopping a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be stopped."
@@ -1186,29 +1178,29 @@ msgstr ""
 "å fungere eller du kan skape en sikkerhetsrisiko. Kun prosesser som ikke "
 "responderer bør termineres."
 
-#: src/procdialogs.cpp:136
+#: src/procdialogs.cpp:142
 msgid "_Stop Process"
 msgid_plural "_Stop Processes"
 msgstr[0] "_Avslutt prosess"
 msgstr[1] "_Avslutt prosesser"
 
-#: src/procdialogs.cpp:218
+#: src/procdialogs.cpp:227
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Endre prioritet for prosess «%s» (PID %u)"
 
-#: src/procdialogs.cpp:221
+#: src/procdialogs.cpp:230
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
 msgstr[0] "Endre prioritet for valgt prosess"
 msgstr[1] "Endre prioritet for %d valgte prosesser"
 
-#: src/procdialogs.cpp:240
+#: src/procdialogs.cpp:249
 msgid "Note:"
 msgstr "Merk:"
 
-#: src/procdialogs.cpp:241
+#: src/procdialogs.cpp:250
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1217,76 +1209,76 @@ msgstr ""
 "høyere prioritet."
 
 #: src/procproperties.cpp:50 src/procproperties.cpp:84
-#: src/procproperties.cpp:87 src/util.cpp:432 src/util.cpp:471
+#: src/procproperties.cpp:87 src/util.cpp:376 src/util.cpp:415
 msgid "N/A"
 msgstr "I/T"
 
-#: src/procproperties.cpp:67 src/proctable.cpp:322
+#: src/procproperties.cpp:67 src/proctable.cpp:335
 msgid "Process Name"
 msgstr "Prosessnavn"
 
-#: src/procproperties.cpp:68 src/proctable.cpp:323
+#: src/procproperties.cpp:68 src/proctable.cpp:336
 msgid "User"
 msgstr "Bruker"
 
-#: src/procproperties.cpp:69 src/proctable.cpp:324
+#: src/procproperties.cpp:69 src/proctable.cpp:337
 msgid "Status"
 msgstr "Status"
 
-#: src/procproperties.cpp:71 src/proctable.cpp:325
+#: src/procproperties.cpp:71 src/proctable.cpp:338
 msgid "Virtual Memory"
 msgstr "Virtuelt minne"
 
-#: src/procproperties.cpp:72 src/proctable.cpp:326
+#: src/procproperties.cpp:72 src/proctable.cpp:339
 msgid "Resident Memory"
 msgstr "Resident minne"
 
-#: src/procproperties.cpp:73 src/proctable.cpp:327
+#: src/procproperties.cpp:73 src/proctable.cpp:340
 msgid "Writable Memory"
 msgstr "Skrivbart minne"
 
-#: src/procproperties.cpp:74 src/proctable.cpp:328
+#: src/procproperties.cpp:74 src/proctable.cpp:341
 msgid "Shared Memory"
 msgstr "Delt minne"
 
-#: src/procproperties.cpp:76 src/proctable.cpp:329
+#: src/procproperties.cpp:76 src/proctable.cpp:342
 msgid "X Server Memory"
 msgstr "Minne for X-tjener"
 
-#: src/procproperties.cpp:79 src/proctable.cpp:331
+#: src/procproperties.cpp:79 src/proctable.cpp:344
 msgid "CPU Time"
 msgstr "CPU-tid"
 
-#: src/procproperties.cpp:80 src/proctable.cpp:332
+#: src/procproperties.cpp:80 src/proctable.cpp:345
 msgid "Started"
 msgstr "Startet"
 
-#: src/procproperties.cpp:81 src/proctable.cpp:333
+#: src/procproperties.cpp:81 src/proctable.cpp:346
 msgid "Nice"
 msgstr "Nice"
 
-#: src/procproperties.cpp:82 src/proctable.cpp:351
+#: src/procproperties.cpp:82 src/proctable.cpp:364
 msgid "Priority"
 msgstr "Prioritet"
 
-#: src/procproperties.cpp:83 src/proctable.cpp:334
+#: src/procproperties.cpp:83 src/proctable.cpp:347
 msgid "ID"
 msgstr "ID"
 
-#: src/procproperties.cpp:84 src/proctable.cpp:335
+#: src/procproperties.cpp:84 src/proctable.cpp:348
 msgid "Security Context"
 msgstr "Sikkerhetskontekst"
 
-#: src/procproperties.cpp:85 src/proctable.cpp:336
+#: src/procproperties.cpp:85 src/proctable.cpp:349
 msgid "Command Line"
 msgstr "Kommandolinje"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:86 src/proctable.cpp:339
+#: src/procproperties.cpp:86 src/proctable.cpp:352
 msgid "Waiting Channel"
 msgstr "Ventende kanal"
 
-#: src/procproperties.cpp:87 src/proctable.cpp:340
+#: src/procproperties.cpp:87 src/proctable.cpp:353
 msgid "Control Group"
 msgstr "Kontrollgruppe"
 
@@ -1295,42 +1287,42 @@ msgstr "Kontrollgruppe"
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
 
-#: src/proctable.cpp:330
+#: src/proctable.cpp:343
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
 
-#: src/proctable.cpp:341
+#: src/proctable.cpp:354
 msgid "Unit"
 msgstr "Enhet"
 
-#: src/proctable.cpp:342
+#: src/proctable.cpp:355
 msgid "Session"
 msgstr "Økt"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:345
+#: src/proctable.cpp:358
 msgid "Seat"
 msgstr "Sete"
 
-#: src/proctable.cpp:346
+#: src/proctable.cpp:359
 msgid "Owner"
 msgstr "Eier"
 
-#: src/proctable.cpp:347
+#: src/proctable.cpp:360
 msgid "Disk read total"
 msgstr "Lesing fra disk totalt"
 
-#: src/proctable.cpp:348
+#: src/proctable.cpp:361
 msgid "Disk write total"
 msgstr "Skriving til disk totalt"
 
-#: src/proctable.cpp:349
+#: src/proctable.cpp:362
 msgid "Disk read"
 msgstr "Lesing fra disk"
 
-#: src/proctable.cpp:350
+#: src/proctable.cpp:363
 msgid "Disk write"
 msgstr "SKriving til disk"
 
@@ -1378,82 +1370,28 @@ msgstr "%u:%02u:%02u"
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: src/util.cpp:164
-#, c-format
-msgid "%.1f KiB"
-msgstr "%1.f KiB"
-
-#: src/util.cpp:165
-#, c-format
-msgid "%.1f MiB"
-msgstr "%.1f MiB"
-
-#: src/util.cpp:166
-#, c-format
-msgid "%.1f GiB"
-msgstr "%.1f GiB"
-
-#: src/util.cpp:167
-#, c-format
-msgid "%.1f TiB"
-msgstr "%1.f TiB"
-
-#: src/util.cpp:168
-#, c-format
-msgid "%.3g kbit"
-msgstr "%.3g kbit"
-
-#: src/util.cpp:169
-#, c-format
-msgid "%.3g Mbit"
-msgstr "%.3g Mbit"
-
-#: src/util.cpp:170
-#, c-format
-msgid "%.3g Gbit"
-msgstr "%.3g Gbit"
-
-#: src/util.cpp:171
-#, c-format
-msgid "%.3g Tbit"
-msgstr "%.3g Tbit"
-
-#: src/util.cpp:186
-#, c-format
-msgid "%u bit"
-msgid_plural "%u bits"
-msgstr[0] "%u bit"
-msgstr[1] "%u bits"
-
-#: src/util.cpp:187
-#, c-format
-msgid "%u byte"
-msgid_plural "%u bytes"
-msgstr[0] "%u byte"
-msgstr[1] "%u bytes"
-
-#: src/util.cpp:230
+#: src/util.cpp:176
 msgid "Very High Priority"
 msgstr "Meget høy prioritet"
 
-#: src/util.cpp:232
+#: src/util.cpp:178
 msgid "High Priority"
 msgstr "Høy prioritet"
 
-#: src/util.cpp:234
+#: src/util.cpp:180
 msgid "Normal Priority"
 msgstr "Normal prioritet"
 
-#: src/util.cpp:236
+#: src/util.cpp:182
 msgid "Low Priority"
 msgstr "Lav prioritet"
 
-#: src/util.cpp:238
+#: src/util.cpp:184
 msgid "Very Low Priority"
 msgstr "Meget lav prioritet"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:667
+#: src/util.cpp:611
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
