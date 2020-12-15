@@ -2,20 +2,21 @@
 # Copyright © 2016, 2020 gnome-system-monitor's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-system-monitor package.
 # Isak Östlund <translate@catnip.nu>, 2016, 2020.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
-"POT-Creation-Date: 2020-05-29 06:34+0000\n"
-"PO-Revision-Date: 2020-08-02 02:31+0200\n"
-"Last-Translator: Isak Östlund <translate@catnip.nu>\n"
+"POT-Creation-Date: 2020-10-18 07:36+0000\n"
+"PO-Revision-Date: 2020-12-08 22:55+0100\n"
+"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -29,27 +30,30 @@ msgstr ""
 #: C/commandline.page:11 C/cpu-check.page:15 C/cpu-mem-normal.page:11
 #: C/cpu-multicore.page:11 C/fs-device.page:13 C/fs-diskusage.page:13
 #: C/fs-info.page:13 C/fs-showall.page:11 C/index.page:13 C/mem-check.page:12
-#: C/mem-swap.page:12 C/memory-map-use.page:13 C/net-bits.page:11
-#: C/process-explain.page:11 C/process-files.page:11
+#: C/mem-swap.page:12 C/memory-map-use.page:13 C/memory-map-what.page:12
+#: C/net-bits.page:11 C/process-explain.page:11 C/process-files.page:11
 #: C/process-identify-file.page:11 C/process-identify-hog.page:11
 #: C/process-kill.page:12 C/process-many.page:11
-#: C/process-priority-change.page:14 C/process-status.page:14
-#: C/process-update-speed.page:11 C/solaris-mode.page:11 C/units.page:11
+#: C/process-priority-change.page:14 C/process-priority-what.page:11
+#: C/process-status.page:14 C/process-update-speed.page:11
+#: C/solaris-mode.page:11 C/units.page:11
 msgid "Phil Bull"
 msgstr "Phil Bull"
 
 #. (itstool) path: credit/years
 #: C/commandline.page:13 C/mem-check.page:14 C/mem-swap.page:14
-#: C/memory-map-use.page:15 C/net-bits.page:13 C/process-explain.page:13
-#: C/process-identify-file.page:13 C/process-identify-hog.page:13
+#: C/memory-map-use.page:15 C/memory-map-what.page:14 C/net-bits.page:13
+#: C/process-explain.page:13 C/process-identify-file.page:13
+#: C/process-identify-hog.page:13 C/process-priority-what.page:19
 #: C/process-update-speed.page:13 C/solaris-mode.page:13 C/units.page:13
 msgid "2011"
 msgstr "2011"
 
 #. (itstool) path: credit/name
 #: C/commandline.page:16 C/mem-check.page:18 C/mem-swap.page:18
-#: C/memory-map-use.page:19 C/net-bits.page:17 C/process-explain.page:17
-#: C/process-identify-file.page:17 C/process-identify-hog.page:17
+#: C/memory-map-use.page:19 C/memory-map-what.page:18 C/net-bits.page:17
+#: C/process-explain.page:17 C/process-identify-file.page:17
+#: C/process-identify-hog.page:17 C/process-priority-what.page:17
 #: C/process-update-speed.page:17 C/solaris-mode.page:17 C/units.page:17
 msgid "Michael Hill"
 msgstr "Michael Hill"
@@ -729,8 +733,9 @@ msgstr "Detta verk är licensierat under licensen <_:link-1/>."
 
 #. (itstool) path: credit/years
 #: C/mem-check.page:20 C/mem-swap.page:20 C/memory-map-use.page:21
-#: C/net-bits.page:19 C/process-explain.page:19 C/process-identify-file.page:19
-#: C/process-identify-hog.page:19 C/process-update-speed.page:19
+#: C/memory-map-what.page:20 C/net-bits.page:19 C/process-explain.page:19
+#: C/process-identify-file.page:19 C/process-identify-hog.page:19
+#: C/process-priority-what.page:13 C/process-update-speed.page:19
 #: C/solaris-mode.page:19 C/units.page:19
 msgid "2011, 2014"
 msgstr "2011, 2014"
@@ -1212,6 +1217,106 @@ msgstr ""
 "tilldelats är unik."
 
 #. (itstool) path: info/desc
+#: C/memory-map-what.page:23
+msgid "The memory map of a process can help diagnose certain memory issues."
+msgstr ""
+"Minneskartan för en process kan hjälpa till diagnostisera vissa "
+"minnesproblem."
+
+#. (itstool) path: page/title
+#: C/memory-map-what.page:27
+msgid "What is a memory map?"
+msgstr "Vad är en minneskarta?"
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:40
+msgid ""
+"<gui>Virtual memory</gui> is a representation of the combined <gui>physical "
+"memory</gui> and <link xref=\"mem-swap\">swap space</link> in a system. It "
+"enables running processes to access <em>more</em> than the existing physical "
+"memory by <gui>mapping</gui> locations in physical memory to files on disk."
+msgstr ""
+"<gui>Virtuellt minne</gui> är en representation av det <gui>fysiska minnet</"
+"gui> tillsammans med <link xref=\"mem-swap\">växlingsutrymmet</link> i ett "
+"system. Det ger processer som körs tillgång till <em>mer</em> än den "
+"tillgängliga mängden fysiskt minne genom <gui>mappning</gui> av platser i "
+"det fysiska minnet till filer på disk."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:46
+msgid ""
+"When a program is launched, the system assigns it a unique process ID (PID) "
+"and its <em>instructions</em> and <em>data</em> are loaded into memory in "
+"<em>pages</em>. The page table of each process maps the correspondence "
+"between its pages in virtual memory and their location in physical memory. "
+"The <gui>memory map</gui> displays the total virtual memory use of the "
+"process, and can be used to determine the memory cost of running a single or "
+"multiple instances of the program, to ensure the use of the correct shared "
+"libraries, to see the results of adjusting various performance tuning "
+"parameters the program may have, or to diagnose issues such as memory leaks."
+msgstr ""
+"När ett program startas tilldelar systemet det ett unikt process-ID (PID) "
+"och dess <em>instruktioner</em> och <em>data</em> läses in i minnet som "
+"<em>sidor</em>. Sidtabellen för varje process mappar samspelet mellan dess "
+"sidor i virtuellt minne och deras plats i fysiskt minne. <gui>Minneskartan</"
+"gui> visar den totala mängd minne som används av processen, och kan användas "
+"för att fastställa minnesförbrukningen av att köra en eller flera instanser "
+"av programmet, för att säkerställa användningen av korrekt delade bibliotek, "
+"för att se resultaten av justeringen på diverse prestandarelaterade "
+"parametrar som programmet kan ha, eller för att diagnostisera problem så som "
+"minnesläckor."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:57
+msgid ""
+"If multiple copies of a program are running, the instructions (or <em>text</"
+"em>) of the program only need to be loaded once into physical memory. Each "
+"time a new instance of the program is launched (as a unique process with its "
+"own virtual memory pages), its page table maps the location of the text in "
+"virtual memory to those instructions in the original real memory location. "
+"In addition, any dynamic shared libraries used by the process appear as "
+"distinct in virtual memory, but are shared references to a single copy of "
+"the library's text segment in real memory. When accounting for the total "
+"memory use of a process, it is important to note that the cost of shared "
+"libraries loaded into memory can be spread across all processes currently "
+"using them."
+msgstr ""
+"Om flera kopior av ett program körs kommer programmets instruktioner (eller "
+"<em>text</em>) bara behöva läsas in en gång i fysiskt minne. Varje gång en "
+"ny instans av programmet startas (som en unik process med sina egna "
+"virtuella minnessidor), kommer dess sidtabell att mappa platsen för text i "
+"virtuellt minne till de instruktionerna på den ursprungliga riktiga "
+"minnesplatsen. Dessutom kommer alla dynamiskt delade bibliotek som används "
+"av processen att visas som distinkta i virtuellt minne, men är delade "
+"referenser till en enda kopia av bibliotekets textsegment i riktigt minne. "
+"När man räknar med den totala minnesanvändningen för en process är det "
+"viktigt att observera att kostnaden av delade bibliotek som läses in i minne "
+"kan delas mellan alla processer som för närvarande använder dem."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:69
+msgid ""
+"When the system needs more pages of memory than are available, some of the "
+"existing pages will be <em>paged out</em> or written to the <gui>swap space</"
+"gui>. Text pages are flagged read-execute in memory and don't need to be "
+"written to swap since they can be re-loaded from their original location on "
+"disk. Data pages have read-write permissions, and if modified when in "
+"memory, they are labeled <em>dirty</em>, and when designated for swapping, "
+"must be paged out. When a page in swap space is required by a running "
+"process, it needs to be swapped back in before use, perhaps causing another "
+"page to be paged out."
+msgstr ""
+"När systemet behöver fler minnessidor än vad som är tillgängligt så kommer "
+"några sidor att <em>växlas ut</em> eller skrivas till <gui>växlingsutrymmet</"
+"gui>. Textsidor flaggas läsa-köra i minnet och behöver inte skrivas till "
+"växlingsutrymmet då de kan läsas in på nytt från sin ursprungliga plats på "
+"disk. Datasidor har rättigheterna läsa-skriva, och om de ändras när de är i "
+"minne så etiketteras de <em>smutsiga</em>, och måste växlas ut när de "
+"tilldelas för växling. När en sida i växlingsutrymmet krävs av en körande "
+"process behöver den växlas tillbaka in före användning, vilket kanske "
+"orsakar att en annan sida växlas ut."
+
+#. (itstool) path: info/desc
 #: C/net-bits.page:22
 msgid "Choose the units to display your network speed."
 msgstr "Välj vilken måttenhet din nätverkshastighet ska visas i."
@@ -1628,6 +1733,43 @@ msgstr ""
 "prioriteten för en av de beräkningsintensiva processerna för att frigöra mer "
 "processortid för andra program. Eller så kan du öka prioriteten för en "
 "process som är viktigare och som du vill ska köras snabbare."
+
+#. (itstool) path: info/desc
+#: C/process-priority-what.page:22
+msgid "The <em>nice</em> value of a process is used to adjust its priority."
+msgstr ""
+"<em>nice</em>-värdet för en process används för att justera dess prioritet."
+
+#. (itstool) path: page/title
+#: C/process-priority-what.page:25
+msgid "What is the <em>nice</em> value of a process?"
+msgstr "Vad är <em>nice</em>-värdet för en process?"
+
+#. (itstool) path: page/p
+#: C/process-priority-what.page:27
+msgid ""
+"The priority of a process determines the share of time the process is "
+"alotted on a system's one or more processors (CPUs or cores). A <em>nice</"
+"em> process, or one with a higher nice value, concedes priority to other "
+"processes. Adjusting the nice value will increase or decrease the scheduling "
+"priority."
+msgstr ""
+"Prioriteten för en process avgör tidsandelen som processen erhåller på ett "
+"systems processorer (CPU eller kärnor). En <em>nice</em> (trevlig) process, "
+"eller alltså en med ett högre nice-värde, ger upp prioritet till förmån för "
+"andra processer. Att justera nice-värdet kommer att öka eller minska "
+"schemaläggningsprioriteten."
+
+#. (itstool) path: page/p
+#: C/process-priority-what.page:32
+msgid ""
+"The lower the nice value, the higher the priority of the process. The nice "
+"value ranges from -20 (low nice, higher priority) to 20 (lower priority). "
+"The default value of nice is usually 0."
+msgstr ""
+"Ju lägre nice-värde, desto högre prioritet på processen. Intervallet för "
+"nice-värde är från -20 (låg nice, högre prioritet) till 20 (lägre "
+"prioritet). Standardvärdet för nice är vanligen 0."
 
 #. (itstool) path: info/desc
 #: C/process-status.page:19
