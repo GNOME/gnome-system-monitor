@@ -27,6 +27,7 @@
 #define GSM_SETTING_SWAP_COLOR              "swap-color"
 #define GSM_SETTING_NET_IN_COLOR            "net-in-color"
 #define GSM_SETTING_NET_OUT_COLOR           "net-out-color"
+#define GSM_SETTING_LOGARITHMIC_SCALE       "logarithmic-scale"
 #define GSM_SETTING_DRAW_STACKED            "cpu-stacked-area-chart"
 #define GSM_SETTING_DRAW_SMOOTH             "cpu-smooth-graph"
 #define GSM_SETTING_RESOURCES_MEMORY_IN_IEC "resources-memory-in-iec"

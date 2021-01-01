@@ -1,6 +1,8 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #include <config.h>
 
+#include <math.h>
+
 #include <glib/gi18n.h>
 
 #include <glibtop.h>
@@ -24,6 +26,11 @@ void LoadGraph::clear_background()
     }
 }
 
+bool LoadGraph::is_logarithmic_scale() const
+{
+    // logarithmic scale is used only for memory graph
+    return this->type == LOAD_GRAPH_MEM && GsmApplication::get()->config.logarithmic_scale;
+}
 
 unsigned LoadGraph::num_bars() const
 {
@@ -43,11 +50,59 @@ unsigned LoadGraph::num_bars() const
         case 4:
             n = 4;
             break;
+        case 5:
+            n = 5;
+            if (this->is_logarithmic_scale())
+                n = 4;
+            break;
         default:
             n = 5;
+            if (this->is_logarithmic_scale())
+                n = 6;
     }
 
     return n;
+}
+
+/*
+ Returns Y scale caption based on give index of the label.
+ Takes into account whether the scale should be logarithmic for memory graph.
+ */
+char* LoadGraph::get_caption(guint index)
+{
+    char *caption;
+    unsigned num_bars = this->num_bars();
+    guint64 max_value;
+    if (this->type == LOAD_GRAPH_NET)
+        max_value = this->net.max;
+    else
+        max_value = 100;
+
+    // operation orders matters so it's 0 if index == num_bars
+    float caption_percentage = (float)max_value - index * (float)max_value / num_bars;
+
+    if (this->is_logarithmic_scale()) {
+        float caption_value = caption_percentage == 0 ? 0 : pow(100, caption_percentage / max_value);
+        caption = g_strdup_printf("%.0f %%", caption_value);
+    } else if (this->type == LOAD_GRAPH_NET) {
+        const std::string captionstr(procman::format_network_rate((guint64)caption_percentage));
+        caption = g_strdup(captionstr.c_str());
+    } else {
+        caption = g_strdup_printf("%.0f %%", caption_percentage);
+    }
+
+    return caption;
+}
+
+/*
+ Translates y partial position to logarithmic position if set to logarithmic scale.
+*/
+float LoadGraph::translate_to_log_partial_if_needed(float position_partial)
+{
+    if (this->is_logarithmic_scale())
+        position_partial = position_partial == 0 ? 0 : log10(position_partial * 100) / 2;
+
+    return position_partial;
 }
 
 gchar* format_duration(unsigned seconds) {
@@ -88,9 +143,9 @@ gchar* format_duration(unsigned seconds) {
     g_free (captionH);
     g_free (captionM);
     g_free (captionS);
+
     return caption;
 }
-
 
 const int FRAME_WIDTH = 4;
 static void draw_background(LoadGraph *graph) {
@@ -124,7 +179,7 @@ static void draw_background(LoadGraph *graph) {
     cr = cairo_create (surface);
 
     GtkStyleContext *context = gtk_widget_get_style_context (GTK_WIDGET (GsmApplication::get()->stack));
-    
+
     gtk_style_context_get_color (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get()->stack)), &fg);
 
     cairo_paint_with_alpha (cr, 0.0);
@@ -172,7 +227,7 @@ static void draw_background(LoadGraph *graph) {
     gtk_style_context_restore (context);
 
     cairo_set_line_width (cr, 1.0);
-    
+
     for (i = 0; i <= num_bars; ++i) {
         double y;
 
@@ -184,15 +239,7 @@ static void draw_background(LoadGraph *graph) {
             y = i * graph->graph_dely + graph->fontsize / 2.0;
 
         gdk_cairo_set_source_rgba (cr, &fg);
-        if (graph->type == LOAD_GRAPH_NET) {
-            // operation orders matters so it's 0 if i == num_bars
-            guint64 rate = graph->net.max - (i * graph->net.max / num_bars);
-            const std::string captionstr(procman::format_network_rate(rate));
-            caption = g_strdup(captionstr.c_str());
-        } else {
-            // operation orders matters so it's 0 if i == num_bars
-            caption = g_strdup_printf("%d %%", 100 - i * (100 / num_bars));
-        }
+        caption = graph->get_caption(i);
         pango_layout_set_alignment (layout, PANGO_ALIGN_LEFT);
         pango_layout_set_text (layout, caption, -1);
         pango_layout_get_extents (layout, NULL, &extents);
@@ -215,7 +262,7 @@ static void draw_background(LoadGraph *graph) {
         cairo_line_to (cr, graph->draw_width - graph->rmargin + 0.5 + 4, i * graph->graph_dely + 0.5);
         cairo_stroke (cr);
     }
-    
+
 
     const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000;
 
@@ -520,11 +567,11 @@ get_memory (LoadGraph *graph)
     set_memory_label_and_picker(GTK_LABEL(graph->labels.swap),
                                 GSM_COLOR_BUTTON(graph->swap_color_picker),
                                 swap.used, 0, swap.total, swappercent);
-    
+
     gtk_widget_set_sensitive (GTK_WIDGET (graph->swap_color_picker), swap.total > 0);
-    
-    graph->data[0][0] = mempercent;
-    graph->data[0][1] = swap.total>0 ? swappercent : -1.0;
+
+    graph->data[0][0] = graph->translate_to_log_partial_if_needed(mempercent);
+    graph->data[0][1] = swap.total>0 ? graph->translate_to_log_partial_if_needed(swappercent) : -1.0;
 }
 
 /* Nice Numbers for Graph Labels after Paul Heckbert
