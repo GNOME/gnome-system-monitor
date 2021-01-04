@@ -279,7 +279,7 @@ process_visibility_func (GtkTreeModel *model, GtkTreeIter *iter, gpointer data)
     } else {
         match = iter_matches_search_key (model, iter, search_text);
     }
-        
+
     gtk_tree_path_free (tree_path);
 
     return match;
@@ -402,11 +402,11 @@ proctable_new (GsmApplication * const app)
         );
 
     model_filter = GTK_TREE_MODEL_FILTER (gtk_tree_model_filter_new (GTK_TREE_MODEL (model), NULL));
-        
+
     gtk_tree_model_filter_set_visible_func(model_filter, process_visibility_func, app, NULL);
-    
+
     model_sort = GTK_TREE_MODEL_SORT (gtk_tree_model_sort_new_with_model (GTK_TREE_MODEL (model_filter)));
-    
+
     proctree = gsm_tree_view_new (settings, TRUE);
     gtk_tree_view_set_model (GTK_TREE_VIEW (proctree), GTK_TREE_MODEL (model_sort));
 
@@ -438,6 +438,8 @@ proctable_new (GsmApplication * const app)
 
     gsm_tree_view_append_and_bind_column (proctree, column);
     gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
+
+    gtk_tree_view_column_set_expand (column, TRUE);
 
     for (i = COL_USER; i <= COL_PRIORITY; i++) {
         GtkTreeViewColumn *col;
@@ -621,6 +623,12 @@ proctable_new (GsmApplication * const app)
                 gtk_tree_view_column_set_min_width(column, 20);
                 break;
         }
+
+        if (i == COL_ARGS) {
+            gtk_tree_view_column_set_expand(col, TRUE);
+        } else {
+            gtk_tree_view_column_set_expand(col, FALSE);
+        }
     }
     app->tree = proctree;
     app->top_of_tree = NULL;
@@ -650,7 +658,7 @@ proctable_new (GsmApplication * const app)
     app->selection = selection;
 
     gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
-    
+
     g_signal_connect (G_OBJECT (selection),
                       "changed",
                       G_CALLBACK (cb_row_selected), app);
@@ -844,7 +852,7 @@ insert_info_to_tree (ProcInfo *info, GsmApplication *app, bool forced = false)
     sorted = gtk_tree_view_get_model (GTK_TREE_VIEW(app->tree));
     filtered = gtk_tree_model_sort_get_model(GTK_TREE_MODEL_SORT(sorted));
     model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (filtered));
-    
+
     if (app->settings->get_boolean (GSM_SETTING_SHOW_DEPENDENCIES)) {
 
         ProcInfo *parent = 0;
@@ -855,11 +863,11 @@ insert_info_to_tree (ProcInfo *info, GsmApplication *app, bool forced = false)
         if (parent) {
             GtkTreePath *parent_node = gtk_tree_model_get_path(model, &parent->node);
             gtk_tree_store_insert(GTK_TREE_STORE(model), &info->node, &parent->node, 0);
-            
+
             GtkTreePath *filtered_parent = gtk_tree_model_filter_convert_child_path_to_path (GTK_TREE_MODEL_FILTER (filtered), parent_node);
             if (filtered_parent != NULL) {
                 GtkTreePath *sorted_parent = gtk_tree_model_sort_convert_child_path_to_path (GTK_TREE_MODEL_SORT (sorted), filtered_parent);
-            
+
                 if (sorted_parent != NULL) {
                     if (!gtk_tree_view_row_expanded(GTK_TREE_VIEW(app->tree), sorted_parent)
 #ifdef __linux__
@@ -963,7 +971,7 @@ update_info (GsmApplication *app, ProcInfo *info)
     // if the cpu time has increased reset the status to running
     // regardless of kernel state (#606579)
     guint64 difference = proctime.rtime - info->cpu_time;
-    if (difference > 0) 
+    if (difference > 0)
         info->status = GLIBTOP_PROCESS_RUNNING;
 
     guint cpu_scale = 100;
@@ -975,7 +983,7 @@ update_info (GsmApplication *app, ProcInfo *info)
 
     app->processes.cpu_times[info->pid] = info->cpu_time = proctime.rtime;
     info->nice = procuid.nice;
-    
+
     info->disk_write_bytes_current = (procio.disk_wbytes - info->disk_write_bytes_total)/update_interval_seconds;
     info->disk_read_bytes_current = (procio.disk_rbytes - info->disk_read_bytes_total)/update_interval_seconds;
 
@@ -1199,7 +1207,7 @@ proctable_update (GsmApplication *app)
         gdouble current_value = gtk_adjustment_get_value(vadjustment);
 
         if (app->top_of_tree) {
-            // if the visible cell from the top of the tree is still the same, as last time 
+            // if the visible cell from the top of the tree is still the same, as last time
             if (gtk_tree_path_compare (app->top_of_tree, current_top) == 0) {
                 //but something from the scroll parameters has changed compared to the last values
                 if (app->last_vscroll_value == 0 && current_value != 0) {
