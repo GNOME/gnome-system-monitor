@@ -192,6 +192,13 @@ procman::get_nice_level_with_priority (gint nice)
         return _("Very Low Priority");
 }
 
+gchar*
+format_byte_size(guint64 size, bool want_iec_format)
+{
+    const GFormatSizeFlags flags = (want_iec_format ? G_FORMAT_SIZE_IEC_UNITS : G_FORMAT_SIZE_DEFAULT);
+    return g_format_size_full(size, flags);
+}
+
 gboolean
 load_symbols(const char *module, ...)
 {
@@ -466,7 +473,7 @@ namespace procman
                           NULL);
         }
         else {
-            char *str = g_format_size_full(size, G_FORMAT_SIZE_IEC_UNITS);
+            char *str = format_byte_size(size, GsmApplication::get()->config.process_memory_in_iec);
             g_object_set (renderer,
                           "text", str,
                           "style", PANGO_STYLE_NORMAL,

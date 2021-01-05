@@ -32,6 +32,16 @@ cb_solaris_mode_changed (Gio::Settings& settings, Glib::ustring key, GsmApplicat
 }
 
 static void
+cb_process_memory_in_iec_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
+{
+    app->config.process_memory_in_iec = settings.get_boolean(key);
+    app->cpu_graph->clear_background();
+    if (app->timeout) {
+        proctable_update (app);
+    }
+}
+
+static void
 cb_draw_stacked_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
 {
     app->config.draw_stacked = settings.get_boolean(key);
@@ -49,6 +59,16 @@ cb_draw_smooth_changed (Gio::Settings& settings, Glib::ustring key, GsmApplicati
     load_graph_reset(app->cpu_graph);
     load_graph_reset(app->mem_graph);
     load_graph_reset(app->net_graph);
+}
+
+static void
+cb_resources_memory_in_iec_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
+{
+    app->config.resources_memory_in_iec = settings.get_boolean(key);
+    app->cpu_graph->clear_background();
+    if (app->timeout) {
+        proctable_update (app);
+    }
 }
 
 static void
@@ -199,6 +219,11 @@ GsmApplication::load_settings()
         cb_solaris_mode_changed (*this->settings.operator->(), key, this);
     });
 
+    config.process_memory_in_iec = this->settings->get_boolean (GSM_SETTING_PROCESS_MEMORY_IN_IEC);
+    this->settings->signal_changed (GSM_SETTING_PROCESS_MEMORY_IN_IEC).connect ([this](const Glib::ustring& key) {
+        cb_process_memory_in_iec_changed (*this->settings.operator->(), key, this);
+    });
+
     config.draw_stacked = this->settings->get_boolean (GSM_SETTING_DRAW_STACKED);
     this->settings->signal_changed(GSM_SETTING_DRAW_STACKED).connect ([this](const Glib::ustring& key) {
         cb_draw_stacked_changed (*this->settings.operator->(), key, this);
@@ -207,6 +232,11 @@ GsmApplication::load_settings()
     config.draw_smooth = this->settings->get_boolean (GSM_SETTING_DRAW_SMOOTH);
     this->settings->signal_changed(GSM_SETTING_DRAW_SMOOTH).connect ([this](const Glib::ustring& key) {
         cb_draw_smooth_changed (*this->settings.operator->(), key, this);
+    });
+
+    config.resources_memory_in_iec = this->settings->get_boolean (GSM_SETTING_RESOURCES_MEMORY_IN_IEC);
+    this->settings->signal_changed (GSM_SETTING_RESOURCES_MEMORY_IN_IEC).connect ([this](const Glib::ustring& key) {
+        cb_resources_memory_in_iec_changed (*this->settings.operator->(), key, this);
     });
 
     config.network_in_bits = this->settings->get_boolean (GSM_SETTING_NETWORK_IN_BITS);

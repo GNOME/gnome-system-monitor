@@ -42,8 +42,10 @@ struct ProcConfig
 	frame_color(),
 	num_cpus(0),
 	solaris_mode(false),
+	process_memory_in_iec(true),
 	draw_stacked(false),
 	draw_smooth(true),
+	resources_memory_in_iec(true),
 	network_in_bits(false),
 	network_total_unit(false),
 	network_total_in_bits(false)
@@ -64,8 +66,10 @@ struct ProcConfig
     GdkRGBA         frame_color;
     gint            num_cpus;
     bool solaris_mode;
+    bool process_memory_in_iec;
     bool draw_stacked;
     bool draw_smooth;
+    bool resources_memory_in_iec;
     bool network_in_bits;
     bool network_total_unit;
     bool network_total_in_bits;

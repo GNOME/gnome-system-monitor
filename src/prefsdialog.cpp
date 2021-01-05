@@ -274,6 +274,11 @@ create_preferences_dialog (GsmApplication *app)
                      solaris_button, "active",
                      G_SETTINGS_BIND_DEFAULT);
 
+    GtkCheckButton *proc_mem_in_iec_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "proc_mem_in_iec_button"));
+    g_settings_bind(app->settings->gobj (), GSM_SETTING_PROCESS_MEMORY_IN_IEC,
+                    proc_mem_in_iec_button, "active",
+                    G_SETTINGS_BIND_DEFAULT);
+
     GtkCheckButton *draw_stacked_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "draw_stacked_button"));
     g_settings_bind (app->settings->gobj (), GSM_SETTING_DRAW_STACKED,
                      draw_stacked_button, "active",
@@ -283,6 +288,11 @@ create_preferences_dialog (GsmApplication *app)
     g_settings_bind (app->settings->gobj (), GSM_SETTING_DRAW_SMOOTH,
                      draw_smooth_button, "active",
                      G_SETTINGS_BIND_DEFAULT);
+
+    GtkCheckButton *res_mem_in_iec_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "res_mem_in_iec_button"));
+    g_settings_bind(app->settings->gobj (), GSM_SETTING_RESOURCES_MEMORY_IN_IEC,
+                    res_mem_in_iec_button, "active",
+                    G_SETTINGS_BIND_DEFAULT);
 
     create_field_page (builder, GTK_TREE_VIEW (app->tree), "proctree");
 

@@ -477,17 +477,17 @@ namespace
         char* total_text;
         char* text;
 
-        used_text = g_format_size_full(used, G_FORMAT_SIZE_IEC_UNITS);
-        cached_text = g_format_size_full(cached, G_FORMAT_SIZE_IEC_UNITS);
-        total_text = g_format_size_full(total, G_FORMAT_SIZE_IEC_UNITS);
+        used_text = format_byte_size(used, GsmApplication::get()->config.resources_memory_in_iec);
+        cached_text = format_byte_size(cached, GsmApplication::get()->config.resources_memory_in_iec);
+        total_text = format_byte_size(total, GsmApplication::get()->config.resources_memory_in_iec);
         if (total == 0) {
             text = g_strdup(_("not available"));
         } else {
-            // xgettext: 540MiB (53 %) of 1.0 GiB
+            // xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
             text = g_strdup_printf(_("%s (%.1f%%) of %s"), used_text, 100.0 * percent, total_text);
 
             if (cached != 0) {
-                // xgettext: Used cache string, e.g.: "Cache 2.4GiB"
+                // xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
                 cached_label = g_strdup_printf(_("Cache %s"), cached_text);
                 text = g_strdup_printf("%s\n%s", text, cached_label);
                 g_free (cached_label);

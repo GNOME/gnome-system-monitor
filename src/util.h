@@ -19,6 +19,9 @@ load_symbols(const char *module, ...) G_GNUC_NULL_TERMINATED;
 const char*
 format_process_state(guint state);
 
+gchar*
+format_byte_size(guint64 size, bool want_iec_format);
+
 void
 procman_debug_real(const char *file, int line, const char *func,
                    const char *format, ...) G_GNUC_PRINTF(4, 5);
