@@ -50,6 +50,46 @@ unsigned LoadGraph::num_bars() const
     return n;
 }
 
+gchar* format_duration(unsigned seconds) {
+    gchar* caption = NULL;
+
+    unsigned minutes = seconds / 60;
+    unsigned hours = seconds / 3600;
+
+    if (hours != 0) {
+        if (minutes % 60 == 0) {
+             // If minutes mod 60 is 0 set it to 0, to prevent it from showing full hours in
+             // minutes in addition to hours.
+             minutes = 0;
+        } else {
+             // Round minutes as seconds wont get shown if neither hours nor minutes are 0.
+             minutes = int(rint(seconds / 60.0)) % 60;
+             if (minutes == 0) {
+                  // Increase hours if rounding minutes results in 0, because that would be
+                  // what it would be rounded to.
+                  hours++;
+                  // Set seconds to hours * 3600 to prevent seconds from being drawn.
+                  seconds = hours * 3600;
+             }
+        }
+
+    }
+
+    gchar* captionH = g_strdup_printf(dngettext(GETTEXT_PACKAGE, "%u hr", "%u hrs", hours), hours);
+    gchar* captionM = g_strdup_printf(dngettext(GETTEXT_PACKAGE, "%u min", "%u mins", minutes),
+                                     minutes);
+    gchar* captionS = g_strdup_printf(dngettext(GETTEXT_PACKAGE, "%u sec", "%u secs", seconds % 60),
+                                     seconds % 60);
+
+    caption = g_strjoin (" ", hours > 0 ? captionH : "",
+                              minutes > 0 ? captionM : "",
+                              seconds % 60 > 0 ? captionS : "",
+                         NULL);
+    g_free (captionH);
+    g_free (captionM);
+    g_free (captionS);
+    return caption;
+}
 
 
 const int FRAME_WIDTH = 4;
@@ -59,7 +99,7 @@ static void draw_background(LoadGraph *graph) {
     guint i;
     double label_x_offset_modifier, label_y_offset_modifier;
     unsigned num_bars;
-    char *caption;
+    gchar *caption;
     PangoLayout* layout;
     PangoAttrList *attrs = NULL;
     PangoFontDescription* font_desc;
@@ -191,53 +231,8 @@ static void draw_background(LoadGraph *graph) {
         cairo_move_to (cr, (ceil(x) + 0.5) + graph->indent, 0.5);
         cairo_line_to (cr, (ceil(x) + 0.5) + graph->indent, graph->real_draw_height + 4.5);
         cairo_stroke(cr);
-        unsigned seconds = total_seconds - i * total_seconds / 6;
-        unsigned minutes = seconds / 60;
-        unsigned hours = seconds / 3600;
-        caption = NULL;
 
-        if (hours != 0) {
-            if (minutes % 60 == 0) {
-                // If minutes mod 60 is 0 set it to 0, to prevent it from showing full hours in
-                // minutes in addition to hours.
-                minutes = 0;
-            } else {
-                // Round minutes as seconds wont get shown if neither hours nor minutes are 0.
-                minutes = int(rint(seconds / 60.0)) % 60;
-                if (minutes == 0) {
-                    // Increase hours if rounding minutes results in 0, because that would be
-                    // what it would be rounded to.
-                    hours++;
-                    // Set seconds to hours * 3600 to prevent seconds from being drawn.
-                    seconds = hours * 3600;
-                }
-            }
-
-            caption = g_strdup_printf(dngettext(GETTEXT_PACKAGE, "%u hr ", "%u hrs ", hours), hours);
-        }
-        if (minutes != 0) {
-            char* captionM = g_strdup_printf(dngettext(GETTEXT_PACKAGE, "%u min", "%u mins", minutes),
-                                             minutes);
-            if (caption == NULL) {
-                caption = captionM;
-            } else {
-                caption = strcat(caption, captionM);
-            }
-
-            // Add a whitespace if minutes and seconds are shown
-            if (hours == 0 && seconds % 60 != 0) {
-                caption = strcat(caption, " ");
-            }
-        }
-        if (caption == NULL || (seconds % 60 != 0 && (minutes == 0 || hours == 0))) {
-            char* captionS = g_strdup_printf(dngettext(GETTEXT_PACKAGE, "%u sec", "%u secs", seconds % 60),
-                                             seconds % 60);
-            if (caption == NULL) {
-                caption = captionS;
-            } else {
-                caption = strcat(caption, captionS);
-            }
-        }
+        caption = format_duration(total_seconds - i * total_seconds / 6);
 
         pango_layout_set_text (layout, caption, -1);
         pango_layout_get_extents (layout, NULL, &extents);
