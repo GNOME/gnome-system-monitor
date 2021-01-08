@@ -95,6 +95,7 @@ executable(meson.project_name(),
   dependencies: [
     gmodule,
     gtkmm,
+    atkmm,
     libgtop,
     libsystemd,
     libwnck,
