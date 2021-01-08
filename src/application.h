@@ -43,7 +43,7 @@ struct ProcConfig
 	num_cpus(0),
 	solaris_mode(false),
 	process_memory_in_iec(true),
-    logarithmic_scale(false),
+	logarithmic_scale(false),
 	draw_stacked(false),
 	draw_smooth(true),
 	resources_memory_in_iec(true),

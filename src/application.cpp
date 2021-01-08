@@ -33,11 +33,11 @@ cb_solaris_mode_changed (Gio::Settings& settings, Glib::ustring key, GsmApplicat
 
 static void
 cb_process_memory_in_iec_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app) {
-	app->config.process_memory_in_iec = settings.get_boolean(key);
-	app->cpu_graph->clear_background();
-	if (app->timeout) {
-		proctable_update(app);
-	}
+    app->config.process_memory_in_iec = settings.get_boolean(key);
+    app->cpu_graph->clear_background();
+    if (app->timeout) {
+        proctable_update(app);
+    }
 }
 
 static void
@@ -136,11 +136,11 @@ cb_timeouts_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication*
 
 static void
 cb_data_points_changed(Gio::Settings& settings, Glib::ustring key, GsmApplication* app) {
-	app->config.graph_data_points = settings.get_int (key);
-	unsigned points = app->config.graph_data_points + 2;
-	load_graph_change_num_points(app->cpu_graph, points);
-	load_graph_change_num_points(app->mem_graph, points);
-	load_graph_change_num_points(app->net_graph, points);
+    app->config.graph_data_points = settings.get_int (key);
+    unsigned points = app->config.graph_data_points + 2;
+    load_graph_change_num_points(app->cpu_graph, points);
+    load_graph_change_num_points(app->mem_graph, points);
+    load_graph_change_num_points(app->net_graph, points);
 }
 
 static void
