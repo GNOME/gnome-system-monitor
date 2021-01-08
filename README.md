@@ -15,15 +15,23 @@ The steps described below show how to compile and install Gnome-System-Monitor f
 ### Install required dependencies
 To build the application, the following dependencies are required:
 
-Debian/Ubuntu: `sudo apt-get install meson gettext appstream-util itstool libglibmm-2.4-dev libgtkmm-3.0-dev libgtop2-dev librsvg2-dev libxml2-dev`
+#### apt-get (Debian/Ubuntu/derivatives - deb-based package management)
+Use the following command to install dependencies:
+`sudo apt-get install meson gettext appstream-util itstool libglibmm-2.4-dev libgtkmm-3.0-dev libgtop2-dev librsvg2-dev libxml2-dev`
 
-Optional dependencies:
-- libgksu2 - recommended
+#### dnf (Fedora/Centos/etc - rpm-based package management)
+Use the following command to install dependencies:
+`sudo dnf install meson gettext appstream itstool glibmm24-devel gtkmm30-devel libgtop2-devel librsvg2-devel libxml2-devel`
+
+#### Optional dependencies:
+- polkit - recommended
+- gksu2
 - libgnomesu
 - libselinux
 - lsb_release in PATH - recommended on linux
 - libsystemd-dev
 - libwnck
+
 
 ### Building and installing
 Before following the steps below, clone the repository and change to its working directory.
