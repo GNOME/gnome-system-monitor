@@ -975,7 +975,7 @@ load_graph_start (LoadGraph *graph)
         load_graph_update_data(graph);
         load_graph_update(graph);
 
-        graph->timer_index = g_timeout_add (graph->speed / graph->frames_per_unit,
+        graph->timer_index = g_timeout_add (graph->speed,
                                             load_graph_update,
                                             graph);
     }
@@ -1001,7 +1001,7 @@ load_graph_change_speed (LoadGraph *graph,
 
     if (graph->timer_index) {
         g_source_remove (graph->timer_index);
-        graph->timer_index = g_timeout_add (graph->speed / graph->frames_per_unit,
+        graph->timer_index = g_timeout_add (graph->speed,
                                             load_graph_update,
                                             graph);
     }

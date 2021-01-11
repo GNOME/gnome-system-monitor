@@ -299,8 +299,8 @@ create_preferences_dialog (GsmApplication *app)
     update = (gfloat) app->config.graph_update_interval;
     spin_button = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "resources_interval_spinner"));                                                 
     adjustment = gtk_spin_button_get_adjustment (spin_button);
-    gtk_adjustment_configure (adjustment, update / 1000.0, 0.25,
-                              100.0, 0.25, 1.0, 0);
+    gtk_adjustment_configure (adjustment, update / 1000.0, 0.05,
+                              10.0, 0.05, 0.5, 0);
     g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
                       G_CALLBACK(SBU::callback),
                       &graph_interval_updater);
@@ -309,10 +309,10 @@ create_preferences_dialog (GsmApplication *app)
     GtkRange* range = GTK_RANGE (gtk_builder_get_object (builder, "graph_data_points_scale"));
     adjustment = gtk_range_get_adjustment (range);
     gtk_adjustment_configure (adjustment, update, 30,
-    		                  600, 10, 50, 0);
+                              600, 10, 60, 0);
     g_signal_connect (G_OBJECT (range), "value-changed",
-    		          G_CALLBACK(ScaleUpdater::callback),
-					  &graph_points_updater);
+                      G_CALLBACK(ScaleUpdater::callback),
+                      &graph_points_updater);
 
     GtkCheckButton *bits_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "bits_button"));
     g_settings_bind(app->settings->gobj (), GSM_SETTING_NETWORK_IN_BITS,
