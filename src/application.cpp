@@ -32,13 +32,20 @@ cb_solaris_mode_changed (Gio::Settings& settings, Glib::ustring key, GsmApplicat
 }
 
 static void
-cb_process_memory_in_iec_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
-{
+cb_process_memory_in_iec_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app) {
     app->config.process_memory_in_iec = settings.get_boolean(key);
     app->cpu_graph->clear_background();
     if (app->timeout) {
-        proctable_update (app);
+        proctable_update(app);
     }
+}
+
+static void
+cb_logarithmic_scale_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication* app)
+{
+    app->config.logarithmic_scale = settings.get_boolean(key);
+    app->mem_graph->clear_background();
+    load_graph_reset(app->mem_graph);
 }
 
 static void
@@ -129,11 +136,11 @@ cb_timeouts_changed (Gio::Settings& settings, Glib::ustring key, GsmApplication*
 
 static void
 cb_data_points_changed(Gio::Settings& settings, Glib::ustring key, GsmApplication* app) {
-	app->config.graph_data_points = settings.get_int (key);
-	unsigned points = app->config.graph_data_points + 2;
-	load_graph_change_num_points(app->cpu_graph, points);
-	load_graph_change_num_points(app->mem_graph, points);
-	load_graph_change_num_points(app->net_graph, points);
+    app->config.graph_data_points = settings.get_int (key);
+    unsigned points = app->config.graph_data_points + 2;
+    load_graph_change_num_points(app->cpu_graph, points);
+    load_graph_change_num_points(app->mem_graph, points);
+    load_graph_change_num_points(app->net_graph, points);
 }
 
 static void
@@ -222,6 +229,11 @@ GsmApplication::load_settings()
     config.process_memory_in_iec = this->settings->get_boolean (GSM_SETTING_PROCESS_MEMORY_IN_IEC);
     this->settings->signal_changed (GSM_SETTING_PROCESS_MEMORY_IN_IEC).connect ([this](const Glib::ustring& key) {
         cb_process_memory_in_iec_changed (*this->settings.operator->(), key, this);
+	});
+
+    config.logarithmic_scale = this->settings->get_boolean (GSM_SETTING_LOGARITHMIC_SCALE);
+    this->settings->signal_changed(GSM_SETTING_LOGARITHMIC_SCALE).connect ([this](const Glib::ustring& key) {
+        cb_logarithmic_scale_changed (*this->settings.operator->(), key, this);
     });
 
     config.draw_stacked = this->settings->get_boolean (GSM_SETTING_DRAW_STACKED);

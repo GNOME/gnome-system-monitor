@@ -112,8 +112,8 @@ field_toggled (const gchar *gsettings_parent, gchar *path_str, gpointer data)
 
 }
 
-static void 
-field_row_activated ( GtkTreeView *tree, GtkTreePath *path, 
+static void
+field_row_activated ( GtkTreeView *tree, GtkTreePath *path,
                       GtkTreeViewColumn *column, gpointer data)
 {
     GtkTreeModel * model = gtk_tree_view_get_model (tree);
@@ -160,13 +160,13 @@ create_field_page(GtkBuilder* builder, GtkTreeView *tree, const gchar *widgetnam
     gtk_tree_view_column_set_attributes (column, cell,
                                          "active", 0,
                                          NULL);
-    if(!g_strcmp0(widgetname, "proctree")) 
+    if(!g_strcmp0(widgetname, "proctree"))
         g_signal_connect (G_OBJECT (cell), "toggled", G_CALLBACK (proc_field_toggled), model);
-    else if(!g_strcmp0(widgetname, "disktreenew")) 
+    else if(!g_strcmp0(widgetname, "disktreenew"))
         g_signal_connect (G_OBJECT (cell), "toggled", G_CALLBACK (disk_field_toggled), model);
-        
+
     g_signal_connect (G_OBJECT (GTK_TREE_VIEW (treeview)), "row-activated", G_CALLBACK (field_row_activated), (gpointer)widgetname);
-    
+
     gtk_tree_view_column_set_clickable (column, TRUE);
     gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
@@ -279,6 +279,11 @@ create_preferences_dialog (GsmApplication *app)
                     proc_mem_in_iec_button, "active",
                     G_SETTINGS_BIND_DEFAULT);
 
+    GtkCheckButton *logarithmic_scale_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "logarithmic_scale_button"));
+    g_settings_bind (app->settings->gobj (), GSM_SETTING_LOGARITHMIC_SCALE,
+                     logarithmic_scale_button, "active",
+                     G_SETTINGS_BIND_DEFAULT);
+
     GtkCheckButton *draw_stacked_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "draw_stacked_button"));
     g_settings_bind (app->settings->gobj (), GSM_SETTING_DRAW_STACKED,
                      draw_stacked_button, "active",
@@ -297,7 +302,7 @@ create_preferences_dialog (GsmApplication *app)
     create_field_page (builder, GTK_TREE_VIEW (app->tree), "proctree");
 
     update = (gfloat) app->config.graph_update_interval;
-    spin_button = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "resources_interval_spinner"));                                                 
+    spin_button = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "resources_interval_spinner"));
     adjustment = gtk_spin_button_get_adjustment (spin_button);
     gtk_adjustment_configure (adjustment, update / 1000.0, 0.05,
                               10.0, 0.05, 0.5, 0);
