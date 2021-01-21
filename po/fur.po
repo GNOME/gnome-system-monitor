@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2020-11-08 00:17+0000\n"
-"PO-Revision-Date: 2020-12-31 10:12+0100\n"
+"POT-Creation-Date: 2021-01-07 21:01+0000\n"
+"PO-Revision-Date: 2021-01-21 07:29+0100\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <f.t.public@gmail.com>\n"
 "Language: fur\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Poedit 2.4.2\n"
 
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
-#: src/application.cpp:305 src/interface.cpp:411
+#: src/application.cpp:335 src/interface.cpp:411
 msgid "System Monitor"
 msgstr "Monitor di sisteme"
 
@@ -39,7 +39,7 @@ msgstr ""
 "Utilizazion;Prestazions;Performance;Task;Lavôrs;Manager;Gjestion;Ativitât;"
 
 #: gnome-system-monitor-kde.desktop.in.in:3
-#: gnome-system-monitor.appdata.xml.in:6 src/application.cpp:364
+#: gnome-system-monitor.appdata.xml.in:6 src/application.cpp:394
 msgid "GNOME System Monitor"
 msgstr "Monitor di sisteme GNOME"
 
@@ -93,7 +93,7 @@ msgstr "Panoramiche risorsis"
 msgid "File Systems view"
 msgstr "Viodude file system"
 
-#: gnome-system-monitor.appdata.xml.in:45
+#: gnome-system-monitor.appdata.xml.in:44
 msgid "The GNOME Project"
 msgstr "Il progjet GNOME"
 
@@ -218,7 +218,7 @@ msgstr[1] "_Terminâ procès"
 msgid "Show process properties"
 msgstr "Mostre proprietâts dal procès"
 
-#: data/interface.ui:185 data/preferences.ui:288
+#: data/interface.ui:185 data/preferences.ui:304
 msgid "Processes"
 msgstr "Procès"
 
@@ -259,11 +259,11 @@ msgstr "Totâl inviâts"
 msgid "Network"
 msgstr "Rêt"
 
-#: data/interface.ui:523 data/preferences.ui:542
+#: data/interface.ui:523 data/preferences.ui:574
 msgid "Resources"
 msgstr "Risorsis"
 
-#: data/interface.ui:550 data/preferences.ui:773
+#: data/interface.ui:550 data/preferences.ui:805
 msgid "File Systems"
 msgstr "File system"
 
@@ -386,11 +386,11 @@ msgstr "_Cope"
 msgid "Open Files"
 msgstr "File vierts"
 
-#: data/preferences.ui:51 data/preferences.ui:569
+#: data/preferences.ui:51 data/preferences.ui:601
 msgid "Behavior"
 msgstr "Compuartament"
 
-#: data/preferences.ui:83 data/preferences.ui:348 data/preferences.ui:601
+#: data/preferences.ui:83 data/preferences.ui:364 data/preferences.ui:633
 msgid "_Update interval in seconds:"
 msgstr "Interval di in_zornament in seconts:"
 
@@ -406,47 +406,56 @@ msgstr "Vise prime di terminâ o _copâ i procès"
 msgid "_Divide CPU usage by CPU count"
 msgstr "_Dividi la utilizazion das CPU pal totâl di CPU"
 
-#: data/preferences.ui:200 data/preferences.ui:682
+#: data/preferences.ui:173 src/org.gnome.gnome-system-monitor.gschema.xml.in:34
+msgid "Show memory in IEC"
+msgstr "Mostre memorie in IEC"
+
+#: data/preferences.ui:216 data/preferences.ui:714
 msgid "Information Fields"
 msgstr "Cjamps di informazion"
 
-#: data/preferences.ui:229
+#: data/preferences.ui:245
 msgid "Process i_nformation shown in list:"
 msgstr "In_formazions sui procès di mostrâ te liste:"
 
-#: data/preferences.ui:315
+#: data/preferences.ui:331
 msgid "Graphs"
 msgstr "Grafics"
 
-#: data/preferences.ui:392
+#: data/preferences.ui:408
 msgid "_Chart data points:"
 msgstr "Ponts di dâts dal _grafic:"
 
-#: data/preferences.ui:428
+#: data/preferences.ui:444
 msgid "_Draw CPU chart as stacked area chart"
 msgstr "_Disegne il grafic pe CPU come areis intassadis"
 
-#: data/preferences.ui:446
+#: data/preferences.ui:462
 msgid "Draw charts as s_mooth graphs"
 msgstr "Disegne i grafics come grafic a liniis _morbidis"
 
-#: data/preferences.ui:464
+#: data/preferences.ui:480
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:201
+msgid "Show memory and swap in IEC"
+msgstr "Mostre memorie e swap in IEC"
+
+#: data/preferences.ui:496
 msgid "_Show network speed in bits"
 msgstr "_Mostre velocitât di rêt in bits"
 
-#: data/preferences.ui:482
+#: data/preferences.ui:514
 msgid "Set network totals _unit separately"
 msgstr "Stabilìs in maniere separade lis _unitâts dai totâi di rêt"
 
-#: data/preferences.ui:501
+#: data/preferences.ui:533
 msgid "Show network _totals in bits"
 msgstr "Mostre i totâi di rêt in bits"
 
-#: data/preferences.ui:637
+#: data/preferences.ui:669
 msgid "Show _all file systems"
 msgstr "Mostre ducj i file system"
 
-#: data/preferences.ui:711
+#: data/preferences.ui:743
 msgid "File system i_nformation shown in list:"
 msgstr "In_formazions sui file system di mostrâ te liste:"
 
@@ -470,7 +479,7 @@ msgstr ""
 "<small><i><b>Note:</b> La prioritât di un procès e je dade dal so valôr di "
 "nice. Un valôr plui bas al corispuint a une prioritât plui alte.</i></small>"
 
-#: src/application.cpp:346
+#: src/application.cpp:376
 msgid "A simple process and system monitor."
 msgstr "Un sempliç monitor dai procès e dal sisteme."
 
@@ -599,39 +608,39 @@ msgstr "Vûts dâts colôrs no valits\n"
 msgid "Click to set graph colors"
 msgstr "Fâ clic par stabilî i colôrs dal grafic"
 
-#: src/load-graph.cpp:211
+#: src/load-graph.cpp:78
 #, c-format
-msgid "%u hr "
-msgid_plural "%u hrs "
-msgstr[0] "%u ore "
-msgstr[1] "%u oris "
+msgid "%u hr"
+msgid_plural "%u hrs"
+msgstr[0] "%u ore"
+msgstr[1] "%u oris"
 
-#: src/load-graph.cpp:214
+#: src/load-graph.cpp:79
 #, c-format
 msgid "%u min"
 msgid_plural "%u mins"
 msgstr[0] "%u min"
 msgstr[1] "%u mins"
 
-#: src/load-graph.cpp:228
+#: src/load-graph.cpp:81
 #, c-format
 msgid "%u sec"
 msgid_plural "%u secs"
 msgstr[0] "%u sec"
 msgstr[1] "%u secs"
 
-#: src/load-graph.cpp:475
+#: src/load-graph.cpp:479
 msgid "not available"
 msgstr "no disponibil"
 
-#. xgettext: 540MiB (53 %) of 1.0 GiB
-#: src/load-graph.cpp:478
+#. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
+#: src/load-graph.cpp:482
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) di %s"
 
-#. xgettext: Used cache string, e.g.: "Cache 2.4GiB"
-#: src/load-graph.cpp:482
+#. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
+#: src/load-graph.cpp:486
 #, c-format
 msgid "Cache %s"
 msgstr "Cache %s"
@@ -791,27 +800,27 @@ msgstr ""
 "utilizazion di CPU di un task e je dividusw pal numar totâl di CPU. In câs "
 "diviers al opare in “modalitât Irix”."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:34
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:41
 msgid "Enable/Disable smooth refresh"
 msgstr "Abilite/Disabilite inzornament fluit"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:41
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:48
 msgid "Show warning dialog when killing processes"
 msgstr "Mostre un barcon di avertiment cuant che si copin i procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:48
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:55
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Timp in miliseconts framieç i inzornaments de viste dai procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:54
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:61
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Timp in miliseconts framieç i inzornaments dal grafic"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:60
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:67
 msgid "Whether information about all file systems should be displayed"
 msgstr "Indiche se si scugne mostrâ lis informazions su ducj i file system"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:62
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:69
 msgid ""
 "Whether to display information about all file systems (including types like "
 "“autofs” and “procfs”). Useful for getting a list of all currently mounted "
@@ -821,63 +830,63 @@ msgstr ""
 "(comprindût i gjenars come “autofs” e “procfs”). Util par vê une liste di "
 "ducj i file-system montâts sul moment."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:69
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:76
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "Timp in miliseconts framieç i inzornaments de liste dai dispositîfs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:75
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:82
 msgid "Time amount of data points in the resource graphs"
 msgstr "Cuantitât di timp dai ponts di dâts tai grafics des risorsis"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:85
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:92
 msgid "Determines which processes to show."
 msgstr "Indiche cuai procès mostrâ."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:95
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:102
 msgid "Saves the currently viewed tab"
 msgstr "Salve la schede atualmentri visualizade"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:118
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:125
 msgid "CPU colors"
 msgstr "Colôrs CPU"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:120
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:127
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr "Lis vôs a son tal formât (CPU#, Hexadecimal color value)"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:127
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:134
 msgid "Default graph memory color"
 msgstr "Colôr predefinît dal grafic de memorie"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:134
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:141
 msgid "Default graph swap color"
 msgstr "Colôr predefinît dal grafic swap"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:141
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:148
 msgid "Default graph incoming network traffic color"
 msgstr "Colôr predefinît dal grafic dal trafic di rêt in jentrade"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:148
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:155
 msgid "Default graph outgoing network traffic color"
 msgstr "Colôr predefinît dal grafic dal trafic di rêt in jessude"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:155
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:162
 msgid "Show network traffic in bits"
 msgstr "Mostre il trafic di rêt in bit"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:162
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:169
 msgid "Set network totals unit separately"
 msgstr "Stabilìs in maniere separade lis unitâts dai totâi di rêt"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:169
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:176
 msgid "Show network totals in bits"
 msgstr "Mostre i totâi di rêt in bits"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:176
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:183
 msgid "Show CPU chart as stacked area chart"
 msgstr "Mostre il grafic de CPU come un grafic ad areis intassadis"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:178
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:185
 msgid ""
 "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
 "of a line chart."
@@ -885,14 +894,14 @@ msgstr ""
 "Se metût VÊR, Monitor di sisteme al mostre il grafic de CPU come un grafic "
 "ad areis intassadis al puest di chel a liniis."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:185
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:192
 msgid ""
 "Show CPU, Memory, and Network charts as smooth graphs using Bezier curves"
 msgstr ""
 "Mostre i grafics di CPU, memorie e rêt come grafics a liniis morbidis "
 "doprant curvis di Bezier"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:187
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:194
 msgid ""
 "If TRUE, system-monitor shows the CPU, Memory, and Network charts as "
 "smoothed graphs, otherwise as line charts."
@@ -900,315 +909,315 @@ msgstr ""
 "Se metût TRUE (vêr), system-monitor al mostre i grafics di CPU, memorie e "
 "rêt come grafics a liniis morbidis, in câs contrari come grafic a liniis."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:202
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:215
 msgid "Process view sort column"
 msgstr "Colone par meti in ordin la viste dai procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:209
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:222
 msgid "Process view columns order"
 msgstr "Ordin des colonis de viste dai procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:216
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:229
 msgid "Process view sort order"
 msgstr "Ordin de viste dai procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:223
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:236
 msgid "Width of process “Name” column"
 msgstr "Largjece de colone “Non procès”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:230
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:243
 msgid "Show process “Name” column on startup"
 msgstr "Mostre la colone “Non” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:237
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:250
 msgid "Width of process “User” column"
 msgstr "Largjece de colone “Utent” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:244
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:257
 msgid "Show process “User” column on startup"
 msgstr "Mostre la colone “Utent” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:251
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:264
 msgid "Width of process “Status” column"
 msgstr "Largjece de colone “Stât” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:258
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:271
 msgid "Show process “Status” column on startup"
 msgstr "Mostre la colone “Stât” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:265
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:278
 msgid "Width of process “Virtual Memory” column"
 msgstr "Largjece de colone “Memorie virtuâl” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:272
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:285
 msgid "Show process “Virtual Memory” column on startup"
 msgstr "Mostre la colone “Memorie virtuâl” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:279
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:292
 msgid "Width of process “Resident Memory” column"
 msgstr "Largjece de colone “Memorie residente” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:286
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:299
 msgid "Show process “Resident Memory” column on startup"
 msgstr "Mostre la colone “Memorie residente” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:293
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:306
 msgid "Width of process “Writable Memory” column"
 msgstr "Largjece de colone “Memorie scrivibile” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:300
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:313
 msgid "Show process “Writable Memory” column on startup"
 msgstr "Mostre la colone “Memorie scrivibile” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:307
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:320
 msgid "Width of process “Shared Memory” column"
 msgstr "Largjece de colone “Memorie condividude” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:314
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:327
 msgid "Show process “Shared Memory” column on startup"
 msgstr "Mostre la colone “Memorie condividude” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:321
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:334
 msgid "Width of process “X Server Memory” column"
 msgstr "Largjece de colone “Memorie servidôr X”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:328
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:341
 msgid "Show process “X Server Memory” column on startup"
 msgstr "Mostre la colone “Memorie servidôr X” tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:335
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:348
 msgid "Width of process “CPU %” column"
 msgstr "Largjece de colone “% CPU” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:342
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:355
 msgid "Show process “CPU %” column on startup"
 msgstr "Mostre la colone “% CPU” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:349
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:362
 msgid "Width of process “CPU Time” column"
 msgstr "Largjece de colone “Timp CPU” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:356
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:369
 msgid "Show process “CPU Time” column on startup"
 msgstr "Mostre la colone “Timp CPU” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:363
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:376
 msgid "Width of process “Started” column"
 msgstr "Largjece de colone “Inviament” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:370
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:383
 msgid "Show process “Started” column on startup"
 msgstr "Mostre la colone “Inviament” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:377
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:390
 msgid "Width of process “Nice” column"
 msgstr "Largjece de colone “Nice” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:384
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:397
 msgid "Show process “Nice” column on startup"
 msgstr "Mostre la colone “Nice” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:391
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:404
 msgid "Width of process “ID” column"
 msgstr "Largjece de colone “ID” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:398
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:411
 msgid "Show process “ID” column on startup"
 msgstr "Mostre la colone “ID” dal procès al inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:405
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:418
 msgid "Width of process “SELinux Security Context” column"
 msgstr "Largjece de colone “Contest sigurece SELinux”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:411
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:424
 msgid "Show process “SELinux Security Context” column on startup"
 msgstr "Mostre la colone “Contest sigurece SELinux” tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:418
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:431
 msgid "Width of process “Command Line” column"
 msgstr "Largjece de colone “Rie di comant” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:425
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:438
 msgid "Show process “Command Line” column on startup"
 msgstr "Mostre la colone “Rie di comant” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:432
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:445
 msgid "Width of process “Memory” column"
 msgstr "Largjece de colone “Memorie” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:439
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:452
 msgid "Show process “Memory” column on startup"
 msgstr "Mostre la colone “Memorie” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:446
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:459
 msgid "Width of process “Waiting Channel” column"
 msgstr "Largjece de colone “Canâl di spiete wchan”"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:453
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:466
 msgid "Show process “Waiting Channel” column on startup"
 msgstr "Mostre la colone “Canâl di spiete wchan” tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:460
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:473
 msgid "Width of process “Control Group” column"
 msgstr "Largjece de colone “Grup di control” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:467
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:480
 msgid "Show process “Control Group” column on startup"
 msgstr "Mostre la colone “Grup di control” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:474
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:487
 msgid "Width of process “Unit” column"
 msgstr "Largjece de colone “Unitât” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:481
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:494
 msgid "Show process “Unit” column on startup"
 msgstr "Mostre la colone “Unitât” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:488
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:501
 msgid "Width of process “Session” column"
 msgstr "Largjece de colone “Session” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:495
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:508
 msgid "Show process “Session” column on startup"
 msgstr "Mostre la colone “Session” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:502
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:515
 msgid "Width of process “Seat” column"
 msgstr "Largjece de colone “Postazion” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:509
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:522
 msgid "Show process “Seat” column on startup"
 msgstr "Mostre la colone “Postazion” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:516
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:529
 msgid "Width of process “Owner” column"
 msgstr "Largjece de colone “Proprietari” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:523
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:536
 msgid "Show process “Owner” column on startup"
 msgstr "Mostre la colone “Proprietari” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:530
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:543
 msgid "Width of process “Total disk read” column"
 msgstr "Largjece de colone “Totâl leture disc” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:537
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:550
 msgid "Show process “Total disk read” column on startup"
 msgstr "Mostre la colone “Totâl leture disc” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:544
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:557
 msgid "Width of process “Total disk write” column"
 msgstr "Largjece de colone “Totâl scriture disc” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:551
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:564
 msgid "Show process “Total disk write” column on startup"
 msgstr "Mostre la colone “Totâl scriture disc” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:558
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:571
 msgid "Width of process “Disk read” column"
 msgstr "Largjece de colone “Leture disc” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:565
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:578
 msgid "Show process “Disk read” column on startup"
 msgstr "Mostre la colone “Leture disc” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:572
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:585
 msgid "Width of process “Disk write” column"
 msgstr "Largjece de colone “Scriture disc” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:579
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:592
 msgid "Show process “Disk write” column on startup"
 msgstr "Mostre la colone “Scriture disc” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:586
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:599
 msgid "Width of process “Priority” column"
 msgstr "Largjece de colone “Prioritât” dal procès"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:593
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:606
 msgid "Show process “Priority” column on startup"
 msgstr "Mostre la colone “Prioritât” dal procès tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:604
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:617
 msgid "Disk view sort column"
 msgstr "Colone par meti in ordin la viste discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:611
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:624
 msgid "Disk view sort order"
 msgstr "Ordin de viste discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:618
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:631
 msgid "Disk view columns order"
 msgstr "Ordin de colone de viste discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:625
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:638
 msgid "Width of disk view “Device” column"
 msgstr "Largjece de colone “Dispositîf” te viodude discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:632
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:645
 msgid "Show disk view “Device” column on startup"
 msgstr "Mostrâ la colone “Dispositîf” te viodude discs tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:639
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:652
 msgid "Width of disk view “Directory” column"
 msgstr "Largjece de colone “Cartele” te viodude discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:646
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:659
 msgid "Show disk view “Directory” column on startup"
 msgstr "Mostrâ la colone “Cartele” te viodude discs tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:653
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:666
 msgid "Width of disk view “Type” column"
 msgstr "Largjece de colone “Gjenar” te viodude discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:660
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:673
 msgid "Show disk view “Type” column on startup"
 msgstr "Mostrâ la colone “Gjenar” te viodude discs tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:667
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:680
 msgid "Width of disk view “Total” column"
 msgstr "Largjece de colone “Totâl” te viodude discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:674
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:687
 msgid "Show disk view “Total” column on startup"
 msgstr "Mostrâ la colone “Totâl” te viodude discs tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:681
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:694
 msgid "Width of disk view “Free” column"
 msgstr "Largjece de colone “Libar” te viodude discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:688
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:701
 msgid "Show disk view “Free” column on startup"
 msgstr "Mostrâ la colone “Libar” te viodude discs tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:695
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:708
 msgid "Width of disk view “Available” column"
 msgstr "Largjece de colone “Disponibil” te viodude discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:702
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:715
 msgid "Show disk view “Available” column on startup"
 msgstr "Mostrâ la colone “Disponibil” te viodude discs tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:709
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:722
 msgid "Width of disk view “Used” column"
 msgstr "Largjece de colone “Doprât” te viodude discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:716
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:729
 msgid "Show disk view “Used” column on startup"
 msgstr "Mostrâ la colone “Doprât” te viodude discs tal inviament"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:726
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:739
 msgid "Memory map sort column"
 msgstr "Colone par meti in ordin la mape de memorie"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:733
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:746
 msgid "Memory map sort order"
 msgstr "Ordin de mape de memorie"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:742
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:755
 msgid "Open files sort column"
 msgstr "Colone par meti in ordin i file vierts"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:749
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:762
 msgid "Open files sort order"
 msgstr "Ordin dai file vierts"
 
@@ -1345,7 +1354,7 @@ msgstr ""
 "al corispuint a une prioritât plui alte."
 
 #: src/procproperties.cpp:50 src/procproperties.cpp:84
-#: src/procproperties.cpp:87 src/util.cpp:464 src/util.cpp:507
+#: src/procproperties.cpp:87 src/util.cpp:471 src/util.cpp:514
 msgid "N/A"
 msgstr "N/D"
 
@@ -1546,7 +1555,7 @@ msgid "Very Low Priority"
 msgstr "Prioritât une vore basse"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:706
+#: src/util.cpp:713
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
