@@ -230,8 +230,8 @@ create_preferences_dialog (GsmApplication *app)
 
     GtkAdjustment *adjustment;
     GtkSpinButton *spin_button;
-    GtkCheckButton *check_button;
-    GtkCheckButton *smooth_button;
+    GtkSwitch *check_switch;
+    GtkSwitch *smooth_switch;
     GtkBuilder *builder;
     gfloat update;
 
@@ -257,42 +257,42 @@ create_preferences_dialog (GsmApplication *app)
     g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
                       G_CALLBACK (SBU::callback), &interval_updater);
 
-    smooth_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "smooth_button"));
-    g_settings_bind(app->settings->gobj (), SmoothRefresh::KEY.c_str(), smooth_button, "active", G_SETTINGS_BIND_DEFAULT);
+    smooth_switch = GTK_SWITCH (gtk_builder_get_object (builder, "smooth_switch"));
+    g_settings_bind(app->settings->gobj (), SmoothRefresh::KEY.c_str(), smooth_switch, "active", G_SETTINGS_BIND_DEFAULT);
 
-    check_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "check_button"));
+    check_switch = GTK_SWITCH (gtk_builder_get_object (builder, "check_switch"));
     g_settings_bind (app->settings->gobj (), GSM_SETTING_SHOW_KILL_DIALOG,
-                     check_button, "active",
+                     check_switch, "active",
                      G_SETTINGS_BIND_DEFAULT);
 
-    GtkCheckButton *solaris_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "solaris_button"));
+    GtkSwitch *solaris_switch = GTK_SWITCH (gtk_builder_get_object (builder, "solaris_switch"));
     g_settings_bind (app->settings->gobj (), GSM_SETTING_SOLARIS_MODE,
-                     solaris_button, "active",
+                     solaris_switch, "active",
                      G_SETTINGS_BIND_DEFAULT);
 
-    GtkCheckButton *proc_mem_in_iec_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "proc_mem_in_iec_button"));
+    GtkSwitch *proc_mem_in_iec_switch = GTK_SWITCH (gtk_builder_get_object (builder, "proc_mem_in_iec_switch"));
     g_settings_bind(app->settings->gobj (), GSM_SETTING_PROCESS_MEMORY_IN_IEC,
-                    proc_mem_in_iec_button, "active",
+                    proc_mem_in_iec_switch, "active",
                     G_SETTINGS_BIND_DEFAULT);
 
-    GtkCheckButton *logarithmic_scale_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "logarithmic_scale_button"));
+    GtkSwitch *logarithmic_scale_switch = GTK_SWITCH (gtk_builder_get_object (builder, "logarithmic_scale_switch"));
     g_settings_bind (app->settings->gobj (), GSM_SETTING_LOGARITHMIC_SCALE,
-                     logarithmic_scale_button, "active",
+                     logarithmic_scale_switch, "active",
                      G_SETTINGS_BIND_DEFAULT);
 
-    GtkCheckButton *draw_stacked_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "draw_stacked_button"));
+    GtkSwitch *draw_stacked_switch = GTK_SWITCH (gtk_builder_get_object (builder, "draw_stacked_switch"));
     g_settings_bind (app->settings->gobj (), GSM_SETTING_DRAW_STACKED,
-                     draw_stacked_button, "active",
+                     draw_stacked_switch, "active",
                      G_SETTINGS_BIND_DEFAULT);
 
-    GtkCheckButton *draw_smooth_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "draw_smooth_button"));
+    GtkSwitch *draw_smooth_switch = GTK_SWITCH (gtk_builder_get_object (builder, "draw_smooth_switch"));
     g_settings_bind (app->settings->gobj (), GSM_SETTING_DRAW_SMOOTH,
-                     draw_smooth_button, "active",
+                     draw_smooth_switch, "active",
                      G_SETTINGS_BIND_DEFAULT);
 
-    GtkCheckButton *res_mem_in_iec_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "res_mem_in_iec_button"));
+    GtkSwitch *res_mem_in_iec_switch = GTK_SWITCH (gtk_builder_get_object (builder, "res_mem_in_iec_switch"));
     g_settings_bind(app->settings->gobj (), GSM_SETTING_RESOURCES_MEMORY_IN_IEC,
-                    res_mem_in_iec_button, "active",
+                    res_mem_in_iec_switch, "active",
                     G_SETTINGS_BIND_DEFAULT);
 
     create_field_page (builder, GTK_TREE_VIEW (app->tree), "proctree");
@@ -315,19 +315,19 @@ create_preferences_dialog (GsmApplication *app)
                       G_CALLBACK(ScaleUpdater::callback),
                       &graph_points_updater);
 
-    GtkCheckButton *bits_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "bits_button"));
+    GtkSwitch *bits_switch = GTK_SWITCH (gtk_builder_get_object (builder, "bits_switch"));
     g_settings_bind(app->settings->gobj (), GSM_SETTING_NETWORK_IN_BITS,
-                    bits_button, "active",
+                    bits_switch, "active",
                     G_SETTINGS_BIND_DEFAULT);
 
-    GtkCheckButton *bits_unit_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "bits_unit_button"));
+    GtkSwitch *bits_unit_switch = GTK_SWITCH (gtk_builder_get_object (builder, "bits_unit_switch"));
     g_settings_bind(app->settings->gobj (), GSM_SETTING_NETWORK_TOTAL_UNIT,
-                    bits_unit_button, "active",
+                    bits_unit_switch, "active",
                     G_SETTINGS_BIND_DEFAULT);
 
-    GtkCheckButton *bits_total_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "bits_total_button"));
+    GtkSwitch *bits_total_switch = GTK_SWITCH (gtk_builder_get_object (builder, "bits_total_switch"));
     g_settings_bind(app->settings->gobj (), GSM_SETTING_NETWORK_TOTAL_IN_BITS,
-                    bits_total_button, "active",
+                    bits_total_switch, "active",
                     G_SETTINGS_BIND_DEFAULT);
 
     update = (gfloat) app->config.disks_update_interval;
@@ -340,9 +340,9 @@ create_preferences_dialog (GsmApplication *app)
                       &disks_interval_updater);
 
 
-    check_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "all_devices_check"));
+    check_switch = GTK_SWITCH (gtk_builder_get_object (builder, "all_devices_check"));
     g_settings_bind (app->settings->gobj (), GSM_SETTING_SHOW_ALL_FS,
-                     check_button, "active",
+                     check_switch, "active",
                      G_SETTINGS_BIND_DEFAULT);
 
     create_field_page (builder, GTK_TREE_VIEW (app->disk_list), "disktreenew");
