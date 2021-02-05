@@ -14,15 +14,14 @@
 #include "systemd.h"
 #include "util.h"
 
-static GtkDialog *prefs_dialog = NULL;
+static HdyPreferencesWindow *prefs_dialog = NULL;
 
-static void
-prefs_dialog_button_pressed (GtkDialog *dialog, gint id, gpointer data)
+static gboolean
+prefs_dialog_delete_event (GtkWidget *widget, GdkEvent *event, gpointer data)
 {
-    gtk_widget_destroy (GTK_WIDGET (dialog));
     prefs_dialog = NULL;
+    return FALSE;
 }
-
 
 class SpinButtonUpdater
 {
@@ -229,7 +228,6 @@ create_preferences_dialog (GsmApplication *app)
     static SBU disks_interval_updater("disks-interval");
     static ScaleUpdater graph_points_updater("graph-data-points");
 
-    GtkNotebook *notebook;
     GtkAdjustment *adjustment;
     GtkSpinButton *spin_button;
     GtkCheckButton *check_button;
@@ -243,9 +241,7 @@ create_preferences_dialog (GsmApplication *app)
     builder = gtk_builder_new();
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/preferences.ui", NULL);
 
-    prefs_dialog = GTK_DIALOG (gtk_builder_get_object (builder, "preferences_dialog"));
-
-    notebook = GTK_NOTEBOOK (gtk_builder_get_object (builder, "notebook"));
+    prefs_dialog = HDY_PREFERENCES_WINDOW (gtk_builder_get_object (builder, "preferences_dialog"));
 
     spin_button = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "processes_interval_spinner"));
 
@@ -328,15 +324,11 @@ create_preferences_dialog (GsmApplication *app)
     g_settings_bind(app->settings->gobj (), GSM_SETTING_NETWORK_TOTAL_UNIT,
                     bits_unit_button, "active",
                     G_SETTINGS_BIND_DEFAULT);
-    gtk_builder_add_callback_symbol (builder, "on_bits_unit_button_toggled",
-                    G_CALLBACK (on_bits_unit_button_toggled));
 
     GtkCheckButton *bits_total_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "bits_total_button"));
     g_settings_bind(app->settings->gobj (), GSM_SETTING_NETWORK_TOTAL_IN_BITS,
                     bits_total_button, "active",
                     G_SETTINGS_BIND_DEFAULT);
-
-    gtk_widget_set_sensitive((GtkWidget *)bits_total_button, gtk_toggle_button_get_active ((GtkToggleButton *)bits_unit_button));
 
     update = (gfloat) app->config.disks_update_interval;
     spin_button = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "devices_interval_spinner"));
@@ -356,25 +348,14 @@ create_preferences_dialog (GsmApplication *app)
     create_field_page (builder, GTK_TREE_VIEW (app->disk_list), "disktreenew");
 
     gtk_window_set_transient_for (GTK_WINDOW (prefs_dialog), GTK_WINDOW (GsmApplication::get()->main_window));
+    gtk_window_set_modal (GTK_WINDOW (prefs_dialog), TRUE);
 
     gtk_widget_show_all (GTK_WIDGET (prefs_dialog));
-    g_signal_connect (G_OBJECT (prefs_dialog), "response",
-                      G_CALLBACK (prefs_dialog_button_pressed), app);
+    g_signal_connect (G_OBJECT (prefs_dialog), "delete-event",
+                      G_CALLBACK (prefs_dialog_delete_event), NULL);
 
-    auto current_tab = app->settings->get_string(GSM_SETTING_CURRENT_TAB);
-    if (current_tab == "processes")
-        gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
-    else if (current_tab == "resources")
-        gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 1);
-    else if (current_tab == "disks")
-        gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 2);
+    gtk_window_present (GTK_WINDOW (prefs_dialog));
 
     gtk_builder_connect_signals (builder, NULL);
     g_object_unref (G_OBJECT (builder));
-}
-
-void
-on_bits_unit_button_toggled (GtkToggleButton *togglebutton, gpointer bits_total_button)
-{
-    gtk_widget_set_sensitive((GtkWidget *)bits_total_button, gtk_toggle_button_get_active ((GtkToggleButton *)togglebutton));
 }
