@@ -6,6 +6,7 @@
 #include <glibtop/close.h>
 #include <glibtop/cpu.h>
 #include <glibtop/sysinfo.h>
+#include <libhandy-1/handy.h>
 #include <signal.h>
 #include <stdlib.h>
 
@@ -470,6 +471,8 @@ GsmApplication::shutdown()
 void GsmApplication::on_startup()
 {
     Gtk::Application::on_startup();
+
+    hdy_init();
 
     load_resources ();
 

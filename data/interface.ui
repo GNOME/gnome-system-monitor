@@ -1,84 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.12 -->
-  <object class="GtkApplicationWindow" id="main_window">
+  <object class="HdyApplicationWindow" id="main_window">
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">System Monitor</property>
     <property name="default-width">440</property>
     <property name="default-height">495</property>
     <property name="icon-name">org.gnome.SystemMonitor</property>
-    <child type="titlebar">
-      <object class="GtkHeaderBar" id="header_bar">
-        <property name="visible">True</property>
-        <property name="show-close-button">True</property>
-        <style>
-          <class name="titlebar"/>
-        </style>
-        <child type="title">
-          <object class="GtkStackSwitcher" id="stack_switcher">
-            <property name="visible">True</property>
-            <property name="stack">stack</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkMenuButton" id="process_menu_button">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="use-popover">True</property>
-            <property name="valign">center</property>
-            <property name="halign">end</property>
-            <property name="direction">none</property>
-            <accelerator key="F10" signal="clicked"/>
-            <style>
-              <class name="title-button"/>
-            </style>
-          </object>
-          <packing>
-            <property name="pack-type">end</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkMenuButton" id="window_menu_button">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="use-popover">True</property>
-            <property name="valign">center</property>
-            <property name="halign">end</property>
-            <property name="direction">none</property>
-            <accelerator key="F10" signal="clicked"/>
-            <style>
-              <class name="title-button"/>
-            </style>
-          </object>
-          <packing>
-            <property name="pack-type">end</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkToggleButton" id="search_button">
-            <property name="visible">True</property>
-            <property name="active">False</property>
-            <property name="valign">center</property>
-            <property name="margin-start">6</property>
-            <property name="action-name">win.search</property>
-            <property name="action-target">@b false</property>
-            <style>
-              <class name="title-button"/>
-            </style>
-            <child>
-              <object class="GtkImage" id="search_image">
-                <property name="visible">True</property>
-                <property name="icon-size">1</property>
-                <property name="icon-name">edit-find-symbolic</property>
-              </object>
-            </child>
-          </object>
-          <packing>
-            <property name="pack-type">end</property>
-          </packing>
-        </child>
-      </object>
-    </child>
     <child>
       <object class="GtkBox" id="main_box">
         <property name="visible">True</property>
@@ -86,6 +14,78 @@
         <property name="orientation">vertical</property>
         <property name="width-request">620</property>
         <property name="height-request">480</property>
+        <child>
+          <object class="HdyHeaderBar" id="header_bar">
+            <property name="visible">True</property>
+            <property name="show-close-button">True</property>
+            <style>
+              <class name="titlebar"/>
+            </style>
+            <child type="title">
+              <object class="GtkStackSwitcher" id="stack_switcher">
+                <property name="visible">True</property>
+                <property name="stack">stack</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuButton" id="process_menu_button">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="use-popover">True</property>
+                <property name="valign">center</property>
+                <property name="halign">end</property>
+                <property name="direction">none</property>
+                <accelerator key="F10" signal="clicked"/>
+                <style>
+                  <class name="title-button"/>
+                </style>
+              </object>
+              <packing>
+                <property name="pack-type">end</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkMenuButton" id="window_menu_button">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="use-popover">True</property>
+                <property name="valign">center</property>
+                <property name="halign">end</property>
+                <property name="direction">none</property>
+                <accelerator key="F10" signal="clicked"/>
+                <style>
+                  <class name="title-button"/>
+                </style>
+              </object>
+              <packing>
+                <property name="pack-type">end</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToggleButton" id="search_button">
+                <property name="visible">True</property>
+                <property name="active">False</property>
+                <property name="valign">center</property>
+                <property name="margin-start">6</property>
+                <property name="action-name">win.search</property>
+                <property name="action-target">@b false</property>
+                <style>
+                  <class name="title-button"/>
+                </style>
+                <child>
+                  <object class="GtkImage" id="search_image">
+                    <property name="visible">True</property>
+                    <property name="icon-size">1</property>
+                    <property name="icon-name">edit-find-symbolic</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="pack-type">end</property>
+              </packing>
+            </child>
+          </object>
+        </child>
         <child>
           <object class="GtkStack" id="stack">
             <property name="visible">True</property>

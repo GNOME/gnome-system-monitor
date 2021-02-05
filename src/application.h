@@ -4,6 +4,7 @@
 
 #include <gtkmm.h>
 #include <glibtop/cpu.h>
+#include <libhandy-1/handy.h>
 
 #include <algorithm>
 
@@ -239,7 +240,7 @@ public:
     PrettyTable      *pretty_table;
 
     Glib::RefPtr<Gio::Settings> settings;
-    GtkApplicationWindow *main_window;
+    HdyApplicationWindow *main_window;
 
     unsigned         frequency;
 
