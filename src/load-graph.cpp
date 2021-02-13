@@ -628,7 +628,7 @@ net_scale (LoadGraph *graph, guint64 din, guint64 dout)
         new_max = dmax;
     else
         new_max = *std::max_element(&graph->net.values[0],
-                                    &graph->net.values[graph->num_points]);
+                                    &graph->net.values[graph->num_points - 1]);
 
     //
     // Round network maximum
@@ -792,8 +792,8 @@ load_graph_update_data (LoadGraph *graph)
 {
     // Rotate data one element down.
     std::rotate(&graph->data[0],
-                &graph->data[graph->num_points - 1],
-                &graph->data[graph->num_points]);
+                &graph->data[graph->num_points - 2],
+                &graph->data[graph->num_points - 1]);
 
     // Update rotation counter.
     graph->latest = (graph->latest + 1) % graph->num_points;
