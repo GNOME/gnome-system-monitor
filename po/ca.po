@@ -18,9 +18,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: procman 2.11.92\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
-"issues\n"
-"POT-Creation-Date: 2020-11-08 00:17+0000\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
+"POT-Creation-Date: 2021-02-10 19:36+0000\n"
 "PO-Revision-Date: 2017-08-22 09:19+0200\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -32,12 +31,12 @@ msgstr ""
 "X-Generator: Poedit 2.0.1\n"
 
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
-#: src/application.cpp:305 src/interface.cpp:411
+#: src/application.cpp:348 src/interface.cpp:412
 msgid "System Monitor"
 msgstr "Monitor del sistema"
 
 #: gnome-system-monitor.desktop.in.in:4
-#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:412
+#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:413
 msgid "View current processes and monitor system state"
 msgstr "Visualitza els processos actuals i supervisa l'estat del sistema"
 
@@ -45,14 +44,12 @@ msgstr "Visualitza els processos actuals i supervisa l'estat del sistema"
 #. localize the semicolons! The list MUST also end with a semicolon!
 #: gnome-system-monitor.desktop.in.in:19
 msgid ""
-"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
-"Manager;Activity;"
+"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;Manager;Activity;"
 msgstr ""
-"Monitor;Sistema;Procés;CPU;Memòria;Xarxa;Història;Ús;Rendiment;Tasca;Gestor;"
-"Activitat;"
+"Monitor;Sistema;Procés;CPU;Memòria;Xarxa;Història;Ús;Rendiment;Tasca;Gestor;Activitat;"
 
 #: gnome-system-monitor-kde.desktop.in.in:3
-#: gnome-system-monitor.appdata.xml.in:6 src/application.cpp:364
+#: gnome-system-monitor.appdata.xml.in:6 src/application.cpp:407
 msgid "GNOME System Monitor"
 msgstr "Monitor del sistema del GNOME"
 
@@ -107,7 +104,7 @@ msgstr "Visió general dels recursos"
 msgid "File Systems view"
 msgstr "Vista dels sistemes de fitxers"
 
-#: gnome-system-monitor.appdata.xml.in:45
+#: gnome-system-monitor.appdata.xml.in:44
 msgid "The GNOME Project"
 msgstr "El projecte GNOME"
 
@@ -233,52 +230,52 @@ msgstr[1] "_Finalitza els processos"
 msgid "Show process properties"
 msgstr "Mostra les propietats del procés"
 
-#: data/interface.ui:185 data/preferences.ui:288
+#: data/interface.ui:185 data/preferences.ui:14
 msgid "Processes"
 msgstr "Processos"
 
-#: data/interface.ui:249 src/interface.cpp:252 src/procproperties.cpp:78
+#: data/interface.ui:250 src/interface.cpp:253 src/procproperties.cpp:78
 msgid "CPU"
 msgstr "CPU"
 
-#: data/interface.ui:300 src/interface.cpp:297 src/procproperties.cpp:70
+#: data/interface.ui:301 src/interface.cpp:298 src/procproperties.cpp:70
 #: src/proctable.cpp:350
 msgid "Memory"
 msgstr "Memòria"
 
-#: data/interface.ui:315 src/interface.cpp:309
+#: data/interface.ui:316 src/interface.cpp:310
 msgid "Swap"
 msgstr "Espai d'intercanvi"
 
-#: data/interface.ui:353
+#: data/interface.ui:354
 msgid "Memory and Swap"
 msgstr "Memòria i espai d'intercanvi"
 
-#: data/interface.ui:405 src/interface.cpp:341
+#: data/interface.ui:406 src/interface.cpp:342
 msgid "Receiving"
 msgstr "Es rep"
 
-#: data/interface.ui:420
+#: data/interface.ui:421
 msgid "Total Received"
 msgstr "Total rebut"
 
-#: data/interface.ui:435 src/interface.cpp:359
+#: data/interface.ui:436 src/interface.cpp:360
 msgid "Sending"
 msgstr "S'envia"
 
-#: data/interface.ui:450
+#: data/interface.ui:451
 msgid "Total Sent"
 msgstr "Total enviat"
 
-#: data/interface.ui:497
+#: data/interface.ui:498
 msgid "Network"
 msgstr "Xarxa"
 
-#: data/interface.ui:523 data/preferences.ui:542
+#: data/interface.ui:524 data/preferences.ui:132
 msgid "Resources"
 msgstr "Recursos"
 
-#: data/interface.ui:550 data/preferences.ui:773
+#: data/interface.ui:552 data/preferences.ui:293
 msgid "File Systems"
 msgstr "Sistemes de fitxers"
 
@@ -300,7 +297,7 @@ msgctxt "Menu item to Open Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Cerca de fitxers oberts"
 
-#: data/menus.ui:12 data/menus.ui:67 data/preferences.ui:8
+#: data/menus.ui:12 data/menus.ui:67 data/preferences.ui:7
 msgid "Preferences"
 msgstr "Preferències"
 
@@ -401,68 +398,84 @@ msgstr "_Mata"
 msgid "Open Files"
 msgstr "Fitxers oberts"
 
-#: data/preferences.ui:51 data/preferences.ui:569
+#: data/preferences.ui:19 data/preferences.ui:298
 msgid "Behavior"
 msgstr "Comportament"
 
-#: data/preferences.ui:83 data/preferences.ui:348 data/preferences.ui:601
-msgid "_Update interval in seconds:"
-msgstr "Interval d'_actualitzacions, en segons:"
+#: data/preferences.ui:24 data/preferences.ui:303
+msgid "_Update Interval in Seconds"
+msgstr "Interval d'_actualitzacions en segons:"
 
-#: data/preferences.ui:119
-msgid "Enable _smooth refresh"
+#: data/preferences.ui:42
+msgid "Enable _Smooth Refresh"
 msgstr "Habilita l'actualització _suau"
 
-#: data/preferences.ui:137
-msgid "Alert before ending or _killing processes"
-msgstr "Mostra un diàleg d'advertència abans de finalitzar o _matar processos"
+#: data/preferences.ui:58
+msgid "Alert Before Ending or _Killing Processes"
+msgstr "Alerta abans de finalitzar o _matar processos"
 
-#: data/preferences.ui:155
-msgid "_Divide CPU usage by CPU count"
+#: data/preferences.ui:74
+msgid "_Divide CPU Usage by CPU Count"
 msgstr "_Divideix l'ús de la CPU pel nombre de CPU"
 
-#: data/preferences.ui:200 data/preferences.ui:682
+#: data/preferences.ui:90
+msgid "Show Memory in IEC"
+msgstr "Mostrar la memòria en IEC"
+
+#: data/preferences.ui:107 data/preferences.ui:338
 msgid "Information Fields"
 msgstr "Camps d'informació"
 
-#: data/preferences.ui:229
-msgid "Process i_nformation shown in list:"
+#: data/preferences.ui:108
+msgid "Process information shown in list:"
 msgstr "Processa la _informació que es mostra a la llista:"
 
-#: data/preferences.ui:315
+#: data/preferences.ui:137
 msgid "Graphs"
 msgstr "Gràfics"
 
-#: data/preferences.ui:392
-msgid "_Chart data points:"
-msgstr "_Punts de dades:"
+#: data/preferences.ui:142
+msgid "_Update Interval in Seconds:"
+msgstr "Interval d'_actualitzacions en segons:"
 
-#: data/preferences.ui:428
-msgid "_Draw CPU chart as stacked area chart"
+#: data/preferences.ui:160
+msgid "_Chart Data Points:"
+msgstr "_Punts de dades del diagrama:"
+
+#: data/preferences.ui:177
+msgid "_Draw CPU Chart as Stacked Area Chart"
 msgstr "_Dibuixa el gràfic de la CPU com a gràfic d'àrea apilat"
 
-#: data/preferences.ui:446
-msgid "Draw charts as s_mooth graphs"
+#: data/preferences.ui:193
+msgid "Draw Charts as S_mooth Graphs"
 msgstr "_Dibuixa els gràfics com a gràfics suaus"
 
-#: data/preferences.ui:464
-msgid "_Show network speed in bits"
-msgstr "_Mostra el trànsit de la xarxa en bits"
+#: data/preferences.ui:209
+msgid "Show Memory and Swap in IEC"
+msgstr "Memòria i espai d'intercanvi en IEC"
 
-#: data/preferences.ui:482
-msgid "Set network totals _unit separately"
+#: data/preferences.ui:225
+msgid "Show Memory in Logarithmic Scale"
+msgstr "Mostra la memòria en l'escala logarítmica"
+
+#: data/preferences.ui:241
+msgid "_Show Network Speed in Bits"
+msgstr "_Mostra la velocitat de la xarxa en bits"
+
+#: data/preferences.ui:257
+msgid "Set Network Totals _Unit Separately"
 msgstr "_Estableix la unitat de totals de xarxa per separat"
 
-#: data/preferences.ui:501
-msgid "Show network _totals in bits"
+#: data/preferences.ui:273
+msgid "Show Network _Totals in Bits"
 msgstr "_Mostra el trànsit total de la xarxa en bits"
 
-#: data/preferences.ui:637
-msgid "Show _all file systems"
-msgstr "Mostra _tots els processos"
+#: data/preferences.ui:321
+msgid "Show _All File Systems"
+msgstr "Mostra _tots els sistemes de fitxers"
 
-#: data/preferences.ui:711
-msgid "File system i_nformation shown in list:"
+#: data/preferences.ui:339
+msgid "File system information shown in list:"
 msgstr "_Informació sobre el sistema de fitxers que es mostra a la llista:"
 
 #: data/renice.ui:27 src/procdialogs.cpp:162 src/setaffinity.cpp:312
@@ -479,14 +492,14 @@ msgstr "Valor de la _prioritat:"
 
 #: data/renice.ui:142
 msgid ""
-"<small><i><b>Note:</b> The priority of a process is given by its nice value. "
-"A lower nice value corresponds to a higher priority.</i></small>"
+"<small><i><b>Note:</b> The priority of a process is given by its nice value."
+" A lower nice value corresponds to a higher priority.</i></small>"
 msgstr ""
-"<small><i><b>Nota:</b> la prioritat d'un procés es defineix pel seu valor de "
-"prioritat «nice». Un valor de prioritat més baix es correspon amb una "
+"<small><i><b>Nota:</b> la prioritat d'un procés es defineix pel seu valor de"
+" prioritat «nice». Un valor de prioritat més baix es correspon amb una "
 "prioritat més alta.</i></small>"
 
-#: src/application.cpp:346
+#: src/application.cpp:389
 msgid "A simple process and system monitor."
 msgstr "Un monitor del sistema i de processos simple."
 
@@ -536,17 +549,17 @@ msgstr "Utilitzat"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving,
 #. Sending
-#: src/interface.cpp:216
+#: src/interface.cpp:217
 #, c-format
 msgid "Pick a Color for “%s”"
 msgstr "Seleccioneu un color per «%s»"
 
-#: src/interface.cpp:254
+#: src/interface.cpp:255
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: src/interface.cpp:423
+#: src/interface.cpp:424
 msgid "translator-credits"
 msgstr ""
 "Jesús Moreno <jmmolas@wanadoo.es>\n"
@@ -620,39 +633,39 @@ msgstr "S'ha rebut dades de color no vàlides\n"
 msgid "Click to set graph colors"
 msgstr "Feu clic per a establir els colors de la gràfica"
 
-#: src/load-graph.cpp:211
+#: src/load-graph.cpp:133
 #, c-format
-msgid "%u hr "
-msgid_plural "%u hrs "
-msgstr[0] "%u hora "
-msgstr[1] "%u hores "
+msgid "%u hr"
+msgid_plural "%u hrs"
+msgstr[0] "%u hora"
+msgstr[1] "%u hores"
 
-#: src/load-graph.cpp:214
+#: src/load-graph.cpp:134
 #, c-format
 msgid "%u min"
 msgid_plural "%u mins"
 msgstr[0] "%u minut"
 msgstr[1] "%u minuts"
 
-#: src/load-graph.cpp:228
+#: src/load-graph.cpp:136
 #, c-format
 msgid "%u sec"
 msgid_plural "%u secs"
 msgstr[0] "%u segon"
 msgstr[1] "%u segons"
 
-#: src/load-graph.cpp:475
+#: src/load-graph.cpp:526
 msgid "not available"
 msgstr "no disponible"
 
-#. xgettext: 540MiB (53 %) of 1.0 GiB
-#: src/load-graph.cpp:478
+#. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
+#: src/load-graph.cpp:529
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) de %s"
 
-#. xgettext: Used cache string, e.g.: "Cache 2.4GiB"
-#: src/load-graph.cpp:482
+#. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
+#: src/load-graph.cpp:533
 #, c-format
 msgid "Cache %s"
 msgstr "Memòria cau %s"
@@ -787,8 +800,8 @@ msgstr "_Fitxers oberts pel procés «%s» (PID %u):"
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:5
 msgid "Main window size and position in the form (width, height, xpos, ypos)"
 msgstr ""
-"La mida i la posició de la finestra principal en el format (amplada, alçada, "
-"posició X, posició Y)"
+"La mida i la posició de la finestra principal en el format (amplada, alçada,"
+" posició X, posició Y)"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:11
 msgid "Main Window should open maximized"
@@ -808,31 +821,35 @@ msgid ""
 "is divided by the total number of CPUs. Otherwise, it operates in “Irix "
 "mode”."
 msgstr ""
-"Si és «TRUE» (cert), el monitor del sistema funcionarà en «mode Solaris», en "
-"què la utilització de la CPU de les tasques es divideix pel nombre total de "
-"CPU. Si no, funcionarà en «mode Irix»."
+"Si és «TRUE» (cert), el monitor del sistema funcionarà en «mode Solaris», en"
+" què la utilització de la CPU de les tasques es divideix pel nombre total de"
+" CPU. Si no, funcionarà en «mode Irix»."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:34
+msgid "Show memory in IEC"
+msgstr "Mostra la memòria en IEC"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:41
 msgid "Enable/Disable smooth refresh"
 msgstr "Habilita/inhabilita l'actualització suau"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:41
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:48
 msgid "Show warning dialog when killing processes"
 msgstr "Mostra un diàleg d'advertència en matar els processos"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:48
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:55
 msgid "Time in milliseconds between updates of the process view"
 msgstr "Temps en mil·lisegons entre actualitzacions de la vista de processos"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:54
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:61
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Temps en mil·lisegons entre actualitzacions de les gràfiques"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:60
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:67
 msgid "Whether information about all file systems should be displayed"
 msgstr "Si s'ha de mostrar informació sobre tots els sistemes de fitxers"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:62
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:69
 msgid ""
 "Whether to display information about all file systems (including types like "
 "“autofs” and “procfs”). Useful for getting a list of all currently mounted "
@@ -842,400 +859,411 @@ msgstr ""
 "hi els tipus com ara «autofs» i «procfs». Útil per a obtenir una llista de "
 "tots els sistemes de fitxers muntats actualment."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:69
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:76
 msgid "Time in milliseconds between updates of the devices list"
 msgstr ""
 "Temps en mil·lisegons entre actualitzacions de la llista de dispositius"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:75
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:82
 msgid "Time amount of data points in the resource graphs"
 msgstr "Quantitat del temps dels punts de dades en els gràfics de recursos"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:85
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:92
 msgid "Determines which processes to show."
 msgstr "Determina quins processos es mostren."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:95
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:102
 msgid "Saves the currently viewed tab"
 msgstr "Desa la pestanya visualitzada actualment"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:118
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:125
 msgid "CPU colors"
 msgstr "Colors de les CPU"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:120
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:127
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr "Cada entrada és del format (núm. de CPU, valor hexadecimal del color)"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:127
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:134
 msgid "Default graph memory color"
 msgstr "Color per defecte de la memòria a la gràfica"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:134
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:141
 msgid "Default graph swap color"
 msgstr "Color predeterminat de l'espai d'intercanvi a la gràfica"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:141
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:148
 msgid "Default graph incoming network traffic color"
 msgstr "Color predeterminat del trànsit d'entrada de la xarxa a la gràfica"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:148
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:155
 msgid "Default graph outgoing network traffic color"
 msgstr "Color predeterminat del trànsit de sortida de la xarxa a la gràfica"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:155
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:162
 msgid "Show network traffic in bits"
 msgstr "Mostra el trànsit de la xarxa en bits"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:162
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:169
 msgid "Set network totals unit separately"
 msgstr "Estableix la unitat total de xarxa per separat"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:169
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:176
 msgid "Show network totals in bits"
 msgstr "Mostra els totals de la xarxa en bits"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:176
-msgid "Show CPU chart as stacked area chart"
-msgstr "Mostra el gràfic de la CPU com a gràfic d'àrea apilat"
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:183
+msgid "Show memory in logarithmic scale"
+msgstr "Mostra la memòria en l'escala logarítmica"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:178
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:185
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:194
 msgid ""
 "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
 "of a line chart."
 msgstr ""
-"Si és «TRUE» (cert), el monitor del sistema mostrarà el gràfic de la CPU com "
-"un gràfic d'àrea apilat en comptes d'un gràfic de línia."
+"Si és «TRUE» (cert), el monitor del sistema mostrarà el gràfic de la CPU com"
+" un gràfic d'àrea apilat en comptes d'un gràfic de línia."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:185
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:192
+msgid "Show CPU chart as stacked area chart"
+msgstr "Mostra el gràfic de la CPU com a gràfic d'àrea apilat"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:201
 msgid ""
 "Show CPU, Memory, and Network charts as smooth graphs using Bezier curves"
 msgstr ""
 "Mostra els diagrames de CPU, memòria i xarxa com a gràfics suaus utilitzant "
 "corbes de Bézier"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:187
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:203
 msgid ""
 "If TRUE, system-monitor shows the CPU, Memory, and Network charts as "
 "smoothed graphs, otherwise as line charts."
 msgstr ""
 "Si és «TRUE» (cert), el monitor del sistema mostrarà el gràfic de la CPU, "
-"memòria i xarxa com gràfics d'àrea suavitzats en comptes de gràfics de línia."
+"memòria i xarxa com gràfics d'àrea suavitzats en comptes de gràfics de "
+"línia."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:202
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:210
+msgid "Show memory and swap in IEC"
+msgstr "Memòria i espai d'intercanvi en IEC"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:224
 msgid "Process view sort column"
 msgstr "Columna ordenada a la llista de processos"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:209
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
 msgid "Process view columns order"
 msgstr "Ordre de les columnes de la vista de processos"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:216
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
 msgid "Process view sort order"
 msgstr "Ordre de la vista de processos"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:223
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:245
 msgid "Width of process “Name” column"
 msgstr "Amplada de la columna «nom»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:230
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:252
 msgid "Show process “Name” column on startup"
 msgstr "A l'inici, mostra la columna «nom»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:237
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:259
 msgid "Width of process “User” column"
 msgstr "Amplada de la columna «usuari»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:244
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:266
 msgid "Show process “User” column on startup"
 msgstr "A l'inici, mostra la columna «usuari»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:251
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:273
 msgid "Width of process “Status” column"
 msgstr "Amplada de la columna «estat»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:258
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:280
 msgid "Show process “Status” column on startup"
 msgstr "A l'inici, mostra la columna «estat»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:265
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:287
 msgid "Width of process “Virtual Memory” column"
 msgstr "Amplada de la columna «memòria virtual»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:272
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:294
 msgid "Show process “Virtual Memory” column on startup"
 msgstr "A l'inici, mostra la columna «memòria virtual»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:279
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:301
 msgid "Width of process “Resident Memory” column"
 msgstr "Amplada de la columna «memòria resident»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:286
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:308
 msgid "Show process “Resident Memory” column on startup"
 msgstr "A l'inici, mostra la columna «memòria resident»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:293
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:315
 msgid "Width of process “Writable Memory” column"
 msgstr "Amplada de la columna «memòria d'escriptura»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:300
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:322
 msgid "Show process “Writable Memory” column on startup"
 msgstr "A l'inici, mostra la columna «memòria d'escriptura»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:307
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:329
 msgid "Width of process “Shared Memory” column"
 msgstr "Amplada de la columna «memòria compartida»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:314
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:336
 msgid "Show process “Shared Memory” column on startup"
 msgstr "A l'inici, mostra la columna «memòria compartida»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:321
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:343
 msgid "Width of process “X Server Memory” column"
 msgstr "Amplada de la columna «memòria del servidor X»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:328
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:350
 msgid "Show process “X Server Memory” column on startup"
 msgstr "A l'inici, mostra la columna «memòria del servidor X»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:335
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:357
 msgid "Width of process “CPU %” column"
 msgstr "Amplada de la columna «% de CPU»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:342
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:364
 msgid "Show process “CPU %” column on startup"
 msgstr "A l'inici, mostra la columna «% de CPU»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:349
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
 msgid "Width of process “CPU Time” column"
 msgstr "Amplada de la columna «temps de CPU»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:356
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
 msgid "Show process “CPU Time” column on startup"
-msgstr "A l'inici, mostra la columna «temps de CPU» en el llistat de processos"
+msgstr ""
+"A l'inici, mostra la columna «temps de CPU» en el llistat de processos"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:363
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
 msgid "Width of process “Started” column"
 msgstr "Amplada de la columna «iniciat»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:370
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:392
 msgid "Show process “Started” column on startup"
 msgstr "A l'inici, mostra la columna «iniciat»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:377
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:399
 msgid "Width of process “Nice” column"
 msgstr "Amplada de la columna «nivell de prioritat»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:384
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:406
 msgid "Show process “Nice” column on startup"
 msgstr "A l'inici, mostra la columna «nivell de prioritat»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:391
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:413
 msgid "Width of process “ID” column"
 msgstr "Amplada de la columna «ID»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:398
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:420
 msgid "Show process “ID” column on startup"
 msgstr "A l'inici, mostra la columna «ID»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:405
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:427
 msgid "Width of process “SELinux Security Context” column"
 msgstr "Amplada de la columna «context de seguretat SELinux»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:411
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:433
 msgid "Show process “SELinux Security Context” column on startup"
 msgstr "A l'inici, mostra la columna «context de seguretat SELinux»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:418
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:440
 msgid "Width of process “Command Line” column"
 msgstr "Amplada de la columna «línia d'ordres»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:425
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:447
 msgid "Show process “Command Line” column on startup"
 msgstr "A l'inici, mostra la columna «línia d'ordres»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:432
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:454
 msgid "Width of process “Memory” column"
 msgstr "Amplada de la columna «memòria»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:439
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:461
 msgid "Show process “Memory” column on startup"
 msgstr "A l'inici, mostra la columna «memòria»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:446
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:468
 msgid "Width of process “Waiting Channel” column"
 msgstr "Amplada de la columna «canal d'espera»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:453
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:475
 msgid "Show process “Waiting Channel” column on startup"
 msgstr "A l'inici, mostra la columna «canal d'espera»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:460
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:482
 msgid "Width of process “Control Group” column"
 msgstr "Amplada de la columna «grup de control»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:467
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:489
 msgid "Show process “Control Group” column on startup"
 msgstr "A l'inici, mostra la columna «grup de control»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:474
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:496
 msgid "Width of process “Unit” column"
 msgstr "Amplada de la columna «unitat»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:481
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:503
 msgid "Show process “Unit” column on startup"
 msgstr "A l'inici, mostra la columna «unitat»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:488
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:510
 msgid "Width of process “Session” column"
 msgstr "Amplada de la columna «sessió»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:495
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:517
 msgid "Show process “Session” column on startup"
 msgstr "A l'inici, mostra la columna «sessió»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:502
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:524
 msgid "Width of process “Seat” column"
 msgstr "Amplada de la columna «seient»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:509
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:531
 msgid "Show process “Seat” column on startup"
 msgstr "A l'inici, mostra la columna «seient»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:516
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:538
 msgid "Width of process “Owner” column"
 msgstr "Amplada de la columna «propietari» del procés"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:523
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:545
 msgid "Show process “Owner” column on startup"
 msgstr "A l'inici, mostra la columna «propietari» del procés"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:530
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:552
 msgid "Width of process “Total disk read” column"
 msgstr "Amplada de la columna «Lectures totals de disc» del procés"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:537
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:559
 msgid "Show process “Total disk read” column on startup"
 msgstr "A l'inici, mostra la columna del procés «Lectures totals de disc»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:544
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:566
 msgid "Width of process “Total disk write” column"
 msgstr "Amplada de la columna «Escriptures totals de disc» del procés"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:551
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:573
 msgid "Show process “Total disk write” column on startup"
 msgstr "A l'inici, mostra la columna «Escriptures totals de disc» del procés"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:558
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:580
 msgid "Width of process “Disk read” column"
 msgstr "Amplada de la columna «Lectures de disc» del procés"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:565
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:587
 msgid "Show process “Disk read” column on startup"
 msgstr "A l'inici, mostra la columna «Lectures de disc» del procés"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:572
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:594
 msgid "Width of process “Disk write” column"
 msgstr "Amplada de la columna «Escriptures de disc» del procés"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:579
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:601
 msgid "Show process “Disk write” column on startup"
 msgstr "A l'inici, mostra la columna «Escriptures de disc» del procés"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:586
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:608
 msgid "Width of process “Priority” column"
 msgstr "Amplada de la columna «prioritat»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:593
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:615
 msgid "Show process “Priority” column on startup"
 msgstr "A l'inici, mostra la columna «prioritat»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:604
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:626
 msgid "Disk view sort column"
 msgstr "Columna d'ordenació de la vista de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:611
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:633
 msgid "Disk view sort order"
 msgstr "Ordre de la vista de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:618
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:640
 msgid "Disk view columns order"
 msgstr "Ordre de les columnes de la vista de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:625
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:647
 msgid "Width of disk view “Device” column"
 msgstr "Amplada de la columna «Dispositiu» en la vista de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:632
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:654
 msgid "Show disk view “Device” column on startup"
 msgstr "A l'inici, mostra la columna «Dispositiu» en la vista de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:639
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:661
 msgid "Width of disk view “Directory” column"
 msgstr "Amplada de la columna «Directori» en la vista de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:646
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:668
 msgid "Show disk view “Directory” column on startup"
 msgstr "A l'inici, mostra la columna «Directori» en la vista de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:653
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:675
 msgid "Width of disk view “Type” column"
 msgstr "Amplada de la columna «Tipus» en la vista de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:660
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:682
 msgid "Show disk view “Type” column on startup"
 msgstr "A l'inici, mostra la columna «Tipus» en la vista de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:667
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:689
 msgid "Width of disk view “Total” column"
 msgstr "Amplada de la columna «Total» en la vista de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:674
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:696
 msgid "Show disk view “Total” column on startup"
 msgstr "A l'inici, mostra la columna «Total» en la vista de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:681
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:703
 msgid "Width of disk view “Free” column"
 msgstr "Amplada de la columna «Lliure» en la vista de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:688
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:710
 msgid "Show disk view “Free” column on startup"
 msgstr "A l'inici, mostra la columna «Lliure» en la vista de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:695
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:717
 msgid "Width of disk view “Available” column"
 msgstr "Amplada de la columna «Disponible» en la vista de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:702
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:724
 msgid "Show disk view “Available” column on startup"
 msgstr "A l'inici, mostra la columna «Disponible» en la vista de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:709
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:731
 msgid "Width of disk view “Used” column"
 msgstr "Amplada de la columna «Utilitzat» en la vista de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:716
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:738
 msgid "Show disk view “Used” column on startup"
 msgstr ""
 "A l'inici, mostra la columna «Utilitzat» en la vista de sistemes de discs"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:726
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:748
 msgid "Memory map sort column"
 msgstr "Columna d'ordenació del mapa de memòria"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:733
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:755
 msgid "Memory map sort order"
 msgstr "Ordre del mapa de memòria"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:742
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:764
 msgid "Open files sort column"
 msgstr "Columna d'ordenació dels fitxers oberts"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:749
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:771
 msgid "Open files sort order"
 msgstr "Ordre dels fitxers oberts"
 
-#: src/prefsdialog.cpp:196
+#: src/prefsdialog.cpp:195
 msgid "Icon"
 msgstr "Icona"
 
@@ -1320,12 +1348,12 @@ msgstr[1] "_Mata els processos"
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:135
 msgid ""
-"Ending a process may destroy data, break the session or introduce a security "
-"risk. Only unresponsive processes should be ended."
+"Ending a process may destroy data, break the session or introduce a security"
+" risk. Only unresponsive processes should be ended."
 msgstr ""
 "Si finalitzeu un procés, podeu destruir dades, corrompre la sessió o crear "
-"un problema de seguretat. Només s'haurien de finalitzar els processos que no "
-"responguin."
+"un problema de seguretat. Només s'haurien de finalitzar els processos que no"
+" responguin."
 
 #. SIGSTOP
 #. xgettext: secondary alert message
@@ -1369,7 +1397,7 @@ msgstr ""
 "valor de prioritat més baix es correspon amb una prioritat més alta."
 
 #: src/procproperties.cpp:50 src/procproperties.cpp:84
-#: src/procproperties.cpp:87 src/util.cpp:464 src/util.cpp:507
+#: src/procproperties.cpp:87 src/util.cpp:471 src/util.cpp:514
 msgid "N/A"
 msgstr "N/D"
 
@@ -1573,7 +1601,7 @@ msgid "Very Low Priority"
 msgstr "Prioritat molt baixa"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:706
+#: src/util.cpp:713
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
