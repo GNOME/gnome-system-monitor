@@ -264,7 +264,7 @@ static void draw_background(LoadGraph *graph) {
     }
 
 
-    const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000;
+    const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * graph->frames_per_unit;
 
     for (unsigned int i = 0; i < 7; i++) {
         double x = (i) * (graph->draw_width - graph->rmargin - graph->indent) / 6;
