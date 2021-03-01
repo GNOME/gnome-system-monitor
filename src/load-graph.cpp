@@ -17,6 +17,7 @@
 #include "util.h"
 #include "legacy/gsm_color_button.h"
 
+gchar* format_duration(unsigned seconds);
 
 void LoadGraph::clear_background()
 {
@@ -901,7 +902,7 @@ LoadGraph::LoadGraph(guint type)
 
     switch (type) {
         case LOAD_GRAPH_CPU:
-            memset(&cpu, 0, sizeof cpu);
+            cpu = CPU {};
             n = GsmApplication::get()->config.num_cpus;
 
             for(guint i = 0; i < G_N_ELEMENTS(labels.cpu); ++i)
@@ -922,7 +923,7 @@ LoadGraph::LoadGraph(guint type)
             break;
 
         case LOAD_GRAPH_NET:
-            memset(&net, 0, sizeof net);
+            net = NET {};
             n = 2;
             net.max = 1;
             labels.net_in = make_tnum_label ();

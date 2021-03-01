@@ -87,7 +87,7 @@ struct LoadGraph
     Glib::RefPtr<Gio::Settings> font_settings;
 
     /* union { */
-    struct
+    struct CPU
     {
         guint now; /* 0 -> current, 1 -> last
                       now ^ 1 each time */
@@ -95,7 +95,7 @@ struct LoadGraph
         guint64 times[2][GLIBTOP_NCPU][N_CPU_STATES];
     } cpu;
 
-    struct
+    struct NET
     {
         guint64 last_in, last_out;
         guint64 time;
