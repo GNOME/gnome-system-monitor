@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2020-08-07 06:32+0000\n"
-"PO-Revision-Date: 2020-09-08 00:15+0300\n"
+"POT-Creation-Date: 2021-02-10 19:36+0000\n"
+"PO-Revision-Date: 2021-03-05 23:31+0200\n"
 "Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
 "Language-Team: team@gnome.gr\n"
 "Language: el\n"
@@ -31,12 +31,12 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
-#: src/application.cpp:245 src/interface.cpp:388
+#: src/application.cpp:348 src/interface.cpp:412
 msgid "System Monitor"
 msgstr "Παρακολούθηση συστήματος"
 
 #: gnome-system-monitor.desktop.in.in:4
-#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:389
+#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:413
 msgid "View current processes and monitor system state"
 msgstr "Προβολή τρεχουσών διεργασιών και παρακολούθηση κατάστασης συστήματος"
 
@@ -51,7 +51,7 @@ msgstr ""
 "History;Usage;Performance;Task;Manager;Activity;"
 
 #: gnome-system-monitor-kde.desktop.in.in:3
-#: gnome-system-monitor.appdata.xml.in:6 src/application.cpp:300
+#: gnome-system-monitor.appdata.xml.in:6 src/application.cpp:407
 msgid "GNOME System Monitor"
 msgstr "Παρακολούθηση συστήματος GNOME"
 
@@ -108,7 +108,7 @@ msgstr "Επισκόπηση πόρων"
 msgid "File Systems view"
 msgstr "Προβολή συστημάτων αρχείων"
 
-#: gnome-system-monitor.appdata.xml.in:45
+#: gnome-system-monitor.appdata.xml.in:44
 msgid "The GNOME Project"
 msgstr "Το έργο GNOME"
 
@@ -130,7 +130,106 @@ msgstr "Νέα προτεραιότητα διεργασίας"
 msgid "Privileges are required to change the priority of processes"
 msgstr "Απαιτούνται δικαιώματα για την αλλαγή προτεραιότητας διεργασιών"
 
-#: data/interface.ui:150 src/procdialogs.cpp:135 src/proctable.cpp:147
+#: data/help-overlay.ui:13
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Γενικά"
+
+#: data/help-overlay.ui:18
+msgctxt "shortcut window"
+msgid "Show help"
+msgstr "Εμφάνιση βοήθειας"
+
+#: data/help-overlay.ui:25
+msgctxt "shortcut window"
+msgid "Open menu"
+msgstr "Άνοιγμα μενού"
+
+#: data/help-overlay.ui:32
+msgctxt "shortcut window"
+msgid "Keyboard shortcuts"
+msgstr "Συντομεύσεις πληκτρολογίου"
+
+#: data/help-overlay.ui:39
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Έξοδος"
+
+#: data/help-overlay.ui:46
+msgctxt "shortcut window"
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#
+#: data/help-overlay.ui:53
+msgctxt "shortcut window"
+msgid "Show Processes"
+msgstr "Εμφάνιση διεργασιών"
+
+#: data/help-overlay.ui:60
+msgctxt "shortcut window"
+msgid "Show Resources"
+msgstr "Εμφάνιση πόρων"
+
+#: data/help-overlay.ui:67
+msgctxt "shortcut window"
+msgid "Show File Systems"
+msgstr "Εμφάνιση συστήματος αρχείων"
+
+#: data/help-overlay.ui:74
+msgctxt "shortcut window"
+msgid "Refresh"
+msgstr "Ανανέωση"
+
+#
+#: data/help-overlay.ui:82
+msgctxt "shortcut window"
+msgid "Processes"
+msgstr "Διεργασίες"
+
+#: data/help-overlay.ui:87
+msgctxt "shortcut window"
+msgid "Show dependencies"
+msgstr "Εμφάνιση εξαρτήσεων"
+
+#
+#: data/help-overlay.ui:94
+msgctxt "shortcut window"
+msgid "Show process properties"
+msgstr "Εμφάνιση ιδιοτήτων διεργασιών"
+
+#
+#: data/help-overlay.ui:101
+msgctxt "shortcut window"
+msgid "Memory maps"
+msgstr "Χάρτες μνήμης"
+
+#: data/help-overlay.ui:108
+msgctxt "shortcut window"
+msgid "Open files"
+msgstr "Άνοιγμα αρχείων"
+
+#: data/help-overlay.ui:115
+msgctxt "shortcut window"
+msgid "Send stop signal"
+msgstr "Αποστολή σήματος παύσης"
+
+#: data/help-overlay.ui:122
+msgctxt "shortcut window"
+msgid "Send continue signal"
+msgstr "Αποστολή σήματος συνέχισης"
+
+#: data/help-overlay.ui:129
+msgctxt "shortcut window"
+msgid "Send End signal"
+msgstr "Αποστολή σήματος τέλους"
+
+#: data/help-overlay.ui:136
+msgctxt "shortcut window"
+msgid "Send Kill signal"
+msgstr "Αποστολή σήματος βίαιου τερματισμού"
+
+#: data/interface.ui:150 src/procdialogs.cpp:138 src/proctable.cpp:147
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "_Τερματισμός διεργασίας"
@@ -142,55 +241,55 @@ msgid "Show process properties"
 msgstr "Εμφάνιση ιδιοτήτων διεργασιών"
 
 #
-#: data/interface.ui:185 data/preferences.ui:288
+#: data/interface.ui:185 data/preferences.ui:14
 msgid "Processes"
 msgstr "Διεργασίες"
 
 # sysdeps/names/sysdeps.c:55 sysdeps/names/sysdeps.c:84
-#: data/interface.ui:209
-msgid "CPU History"
-msgstr "Ιστορικό CPU"
+#: data/interface.ui:250 src/interface.cpp:253 src/procproperties.cpp:78
+msgid "CPU"
+msgstr "CPU"
 
-#
-#: data/interface.ui:285
-msgid "Memory and Swap History"
-msgstr "Ιστορικό μνήμης και Swap"
-
-#: data/interface.ui:319 src/interface.cpp:276 src/procproperties.cpp:70
+#: data/interface.ui:301 src/interface.cpp:298 src/procproperties.cpp:70
 #: src/proctable.cpp:350
 msgid "Memory"
 msgstr "Μνήμη"
 
-#: data/interface.ui:334 src/interface.cpp:288
+#: data/interface.ui:316 src/interface.cpp:310
 msgid "Swap"
 msgstr "Swap"
 
-# sysdeps/names/sysdeps.c:55 sysdeps/names/sysdeps.c:84
-#: data/interface.ui:372
-msgid "Network History"
-msgstr "Ιστορικό δικτύου"
+#
+#: data/interface.ui:354
+msgid "Memory and Swap"
+msgstr "Μνήμης και Swap"
 
-#: data/interface.ui:407 src/interface.cpp:318
+#: data/interface.ui:406 src/interface.cpp:342
 msgid "Receiving"
 msgstr "Λήψη"
 
-#: data/interface.ui:422
+#: data/interface.ui:421
 msgid "Total Received"
 msgstr "Σύνολο ληφθέντων"
 
-#: data/interface.ui:437 src/interface.cpp:336
+#: data/interface.ui:436 src/interface.cpp:360
 msgid "Sending"
 msgstr "Αποστολή"
 
-#: data/interface.ui:452
+#: data/interface.ui:451
 msgid "Total Sent"
 msgstr "Σύνολο απεσταλμένων"
 
-#: data/interface.ui:499 data/preferences.ui:461
+# sysdeps/names/sysdeps.c:55 sysdeps/names/sysdeps.c:84
+#: data/interface.ui:498
+msgid "Network"
+msgstr "Δίκτυο"
+
+#: data/interface.ui:524 data/preferences.ui:132
 msgid "Resources"
 msgstr "Πόροι"
 
-#: data/interface.ui:527 data/preferences.ui:692
+#: data/interface.ui:552 data/preferences.ui:293
 msgid "File Systems"
 msgstr "Συστήματα αρχείων"
 
@@ -207,104 +306,112 @@ msgstr "Φιλτράρισμα αρχείων με βάση το όνομα"
 msgid "Case insensitive"
 msgstr "Χωρίς διάκριση πεζών/κεφαλαίων"
 
-#: data/menus.ui:6 data/menus.ui:57
+#: data/menus.ui:6 data/menus.ui:61
 msgctxt "Menu item to Open Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Αναζήτηση για ανοικτά αρχεία"
 
-#: data/menus.ui:12 data/menus.ui:63
+#: data/menus.ui:12 data/menus.ui:67 data/preferences.ui:7
 msgid "Preferences"
 msgstr "Προτιμήσεις"
 
-#: data/menus.ui:16 data/menus.ui:67
+#: data/menus.ui:16 data/menus.ui:71
 msgid "Help"
 msgstr "Βοήθεια"
 
-#: data/menus.ui:20 data/menus.ui:71
+#: data/menus.ui:20 data/menus.ui:75
+msgid "Keyboard Shortcuts"
+msgstr "Συντομεύσεις Πληκτρολογίου"
+
+#: data/menus.ui:24 data/menus.ui:79
 msgid "About System Monitor"
 msgstr "Περί του Παρακολούθηση συστήματος"
 
-#: data/menus.ui:28
+#: data/menus.ui:32
 msgid "_Refresh"
 msgstr "Α_νανέωση"
 
 #
-#: data/menus.ui:34
+#: data/menus.ui:38
 msgid "_Active Processes"
 msgstr "Ενε_ργές διεργασίες"
 
 #
-#: data/menus.ui:39
+#: data/menus.ui:43
 msgid "A_ll Processes"
 msgstr "Ό_λες οι διεργασίες"
 
 #
-#: data/menus.ui:44
+#: data/menus.ui:48
 msgid "M_y Processes"
 msgstr "Οι διεργασίες _μου"
 
-#: data/menus.ui:51
+#: data/menus.ui:55
 msgid "Show _Dependencies"
 msgstr "Εμφάνιση _εξαρτήσεων"
 
 #
-#: data/menus.ui:79
+#: data/menus.ui:87
 msgid "_Properties"
 msgstr "_Ιδιότητες"
 
 #
-#: data/menus.ui:85
+#: data/menus.ui:93
 msgid "_Memory Maps"
 msgstr "_Χάρτες μνήμης"
 
 #. Translators: this means 'Files that are open' (open is not a verb here)
-#: data/menus.ui:89
+#: data/menus.ui:97
 msgid "Open _Files"
 msgstr "Άνοιγμα αρ_χείων"
 
 # sysdeps/names/procuid.c:51
-#: data/menus.ui:95
+#: data/menus.ui:103
 msgid "_Change Priority"
 msgstr "Αλλα_γή προτεραιότητας"
 
-#: data/menus.ui:98 src/util.cpp:161
+#: data/menus.ui:106 src/util.cpp:169
 msgid "Very High"
 msgstr "Πολύ υψηλή"
 
-#: data/menus.ui:103 src/util.cpp:163
+#: data/menus.ui:111 src/util.cpp:171
 msgid "High"
 msgstr "Υψηλή"
 
-#: data/menus.ui:108 src/util.cpp:165
+#: data/menus.ui:116 src/util.cpp:173
 msgid "Normal"
 msgstr "Κανονική"
 
-#: data/menus.ui:113 src/util.cpp:167
+#: data/menus.ui:121 src/util.cpp:175
 msgid "Low"
 msgstr "Χαμηλή"
 
-#: data/menus.ui:118 src/util.cpp:169
+#: data/menus.ui:126 src/util.cpp:177
 msgid "Very Low"
 msgstr "Πολύ χαμηλή"
 
-#: data/menus.ui:125
+#: data/menus.ui:133
 msgid "Custom"
 msgstr "Προσαρμοσμένο"
 
-#: data/menus.ui:134
+#: data/menus.ui:140
+msgid "Set _Affinity"
+msgstr ""
+
+#: data/menus.ui:146
 msgid "_Stop"
 msgstr "_Διακοπή"
 
 #
-#: data/menus.ui:139
+#: data/menus.ui:151
 msgid "_Continue"
 msgstr "_Συνέχεια"
 
-#: data/menus.ui:144
+#: data/menus.ui:156
 msgid "_End"
 msgstr "_Τέλος"
 
-#: data/menus.ui:149
+#: data/menus.ui:161
 msgid "_Kill"
 msgstr "_Βίαιος τερματισμός"
 
@@ -312,63 +419,112 @@ msgstr "_Βίαιος τερματισμός"
 msgid "Open Files"
 msgstr "Άνοιγμα αρχείων"
 
-#: data/preferences.ui:8
-msgid "System Monitor Preferences"
-msgstr "Προτιμήσεις παρακολούθησης συστήματος"
-
-#: data/preferences.ui:51 data/preferences.ui:488
+#: data/preferences.ui:19 data/preferences.ui:298
 msgid "Behavior"
 msgstr "Συμπεριφορά"
 
-#: data/preferences.ui:83 data/preferences.ui:348 data/preferences.ui:520
-msgid "_Update interval in seconds:"
+#: data/preferences.ui:24 data/preferences.ui:303
+#, fuzzy
+#| msgid "_Update interval in seconds:"
+msgid "_Update Interval in Seconds"
 msgstr "Διάστημα ανανέ_ωσης σε δευτερόλεπτα:"
 
-#: data/preferences.ui:119
-msgid "Enable _smooth refresh"
+#: data/preferences.ui:42
+#, fuzzy
+#| msgid "Enable _smooth refresh"
+msgid "Enable _Smooth Refresh"
 msgstr "Ενεργοποίηση ο_μαλής ανανέωσης"
 
-#: data/preferences.ui:137
-msgid "Alert before ending or _killing processes"
+#: data/preferences.ui:58
+#, fuzzy
+#| msgid "Alert before ending or _killing processes"
+msgid "Alert Before Ending or _Killing Processes"
 msgstr "Προειδοποίηση πριν τον τερματισμό ή _βίαιο τερματισμό διεργασιών"
 
-#: data/preferences.ui:155
-msgid "_Divide CPU usage by CPU count"
+#: data/preferences.ui:74
+#, fuzzy
+#| msgid "_Divide CPU usage by CPU count"
+msgid "_Divide CPU Usage by CPU Count"
 msgstr "_Διαίρεση χρήσης CPU με τον αριθμό CPU"
 
-#: data/preferences.ui:200 data/preferences.ui:601
+#: data/preferences.ui:90
+msgid "Show Memory in IEC"
+msgstr ""
+
+#: data/preferences.ui:107 data/preferences.ui:338
 msgid "Information Fields"
 msgstr "Πεδία πληροφορίας"
 
-#: data/preferences.ui:229
-msgid "Process i_nformation shown in list:"
-msgstr "_Πληροφορίες διεργασίας που εμφανίζονται στη λίστα:"
+#: data/preferences.ui:108
+msgid "Process information shown in list:"
+msgstr "Πληροφορίες διεργασίας που εμφανίζονται στη λίστα:"
 
-#: data/preferences.ui:315
+#: data/preferences.ui:137
 msgid "Graphs"
 msgstr "Γραφήματα"
 
-#: data/preferences.ui:384
-msgid "_Draw CPU chart as stacked area chart"
+#: data/preferences.ui:142
+#, fuzzy
+#| msgid "_Update interval in seconds:"
+msgid "_Update Interval in Seconds:"
+msgstr "Διάστημα ανανέ_ωσης σε δευτερόλεπτα:"
+
+#: data/preferences.ui:160
+msgid "_Chart Data Points:"
+msgstr ""
+
+#: data/preferences.ui:177
+#, fuzzy
+#| msgid "_Draw CPU chart as stacked area chart"
+msgid "_Draw CPU Chart as Stacked Area Chart"
 msgstr "_Σχεδίαση γραφήματος CPU ως γραφήματος στοιβαγμένης περιοχής"
 
-#: data/preferences.ui:402
-msgid "Draw CPU chart as s_mooth graph"
+#: data/preferences.ui:193
+#, fuzzy
+#| msgid "Draw CPU chart as s_mooth graph"
+msgid "Draw Charts as S_mooth Graphs"
 msgstr "Σχεδίαση γραφήματος CPU ως ομαλού γραφήματος"
 
-#: data/preferences.ui:420
-msgid "_Show network speed in bits"
+#
+#: data/preferences.ui:209
+#, fuzzy
+#| msgid "Memory and Swap History"
+msgid "Show Memory and Swap in IEC"
+msgstr "Ιστορικό μνήμης και Swap"
+
+#: data/preferences.ui:225
+msgid "Show Memory in Logarithmic Scale"
+msgstr ""
+
+#: data/preferences.ui:241
+#, fuzzy
+#| msgid "_Show network speed in bits"
+msgid "_Show Network Speed in Bits"
 msgstr "_Εμφάνιση ταχύτητας δικτύου σε bits"
 
-#: data/preferences.ui:556
-msgid "Show _all file systems"
+#: data/preferences.ui:257
+msgid "Set Network Totals _Unit Separately"
+msgstr ""
+
+#: data/preferences.ui:273
+#, fuzzy
+#| msgid "Show network traffic in bits"
+msgid "Show Network _Totals in Bits"
+msgstr "Εμφάνιση της κίνησης του δικτύου σε bits"
+
+#: data/preferences.ui:321
+#, fuzzy
+#| msgid "Show _all file systems"
+msgid "Show _All File Systems"
 msgstr "Εμφάνιση όλ_ων των συστημάτων αρχείων"
 
-#: data/preferences.ui:630
-msgid "File system i_nformation shown in list:"
+#: data/preferences.ui:339
+#, fuzzy
+#| msgid "File system i_nformation shown in list:"
+msgid "File system information shown in list:"
 msgstr "_Πληροφορίες συστήματος αρχείου που εμφανίζονται στη λίστα:"
 
-#: data/renice.ui:27 src/procdialogs.cpp:159
+#: data/renice.ui:27 src/procdialogs.cpp:162 src/setaffinity.cpp:312
 msgid "_Cancel"
 msgstr "_Aκύρωση"
 
@@ -389,7 +545,7 @@ msgstr ""
 "τιμή nice της διεργασίας. Χαμηλότερη τιμή nice αντιστοιχεί σε υψηλότερη "
 "προτεραιότητα.</i></small>"
 
-#: src/application.cpp:286
+#: src/application.cpp:389
 msgid "A simple process and system monitor."
 msgstr "Απλή παρακολούθηση διεργασιών και συστήματος."
 
@@ -411,54 +567,49 @@ msgid "Show the application’s version"
 msgstr "Εμφάνιση έκδοσης της εφαρμογής"
 
 #
-#: src/disks.cpp:352 src/memmaps.cpp:329
+#: src/disks.cpp:353 src/memmaps.cpp:329
 msgid "Device"
 msgstr "Συσκευή"
 
-#: src/disks.cpp:353
+#: src/disks.cpp:354
 msgid "Directory"
 msgstr "Κατάλογος"
 
-#: src/disks.cpp:354 src/legacy/gsm_color_button.c:165 src/openfiles.cpp:253
+#: src/disks.cpp:355 src/legacy/gsm_color_button.c:165 src/openfiles.cpp:253
 msgid "Type"
 msgstr "Τύπος"
 
-#: src/disks.cpp:355
+#: src/disks.cpp:356
 msgid "Total"
 msgstr "Σύνολο"
 
-#: src/disks.cpp:356
+#: src/disks.cpp:357
 msgid "Free"
 msgstr "Ελεύθερα"
 
-#: src/disks.cpp:357
+#: src/disks.cpp:358
 msgid "Available"
 msgstr "Διαθέσιμα"
 
 # sysdeps/names/mem.c:49
-#: src/disks.cpp:358
+#: src/disks.cpp:359
 msgid "Used"
 msgstr "Σε χρήση"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: src/interface.cpp:199
+#: src/interface.cpp:217
 #, c-format
 msgid "Pick a Color for “%s”"
 msgstr "Επιλέξτε ένα χρώμα για «%s»"
 
 # sysdeps/names/sysdeps.c:55 sysdeps/names/sysdeps.c:84
-#: src/interface.cpp:233 src/procproperties.cpp:78
-msgid "CPU"
-msgstr "CPU"
-
-# sysdeps/names/sysdeps.c:55 sysdeps/names/sysdeps.c:84
-#: src/interface.cpp:235
+#: src/interface.cpp:255
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
 #
-#: src/interface.cpp:400
+#: src/interface.cpp:424
 msgid "translator-credits"
 msgstr ""
 "Ελληνική μεταφραστική ομάδα GNOME\n"
@@ -516,7 +667,7 @@ msgstr "Τίτλος"
 msgid "The title of the color selection dialog"
 msgstr "Ο τίτλος του διαλόγου επιλογής χρώματος"
 
-#: src/legacy/gsm_color_button.c:152 src/legacy/gsm_color_button.c:515
+#: src/legacy/gsm_color_button.c:152 src/legacy/gsm_color_button.c:514
 msgid "Pick a Color"
 msgstr "Επιλέξτε ένα χρώμα"
 
@@ -532,33 +683,49 @@ msgstr "Το επιλεγμένο χρώμα"
 msgid "Type of color picker"
 msgstr "Τύπος επιλογέα χρώματος"
 
-#: src/legacy/gsm_color_button.c:437
+#: src/legacy/gsm_color_button.c:436
 msgid "Received invalid color data\n"
 msgstr "Ελήφθησαν μη έγκυρα δεδομένα χρώματος\n"
 
-#: src/legacy/gsm_color_button.c:538
+#: src/legacy/gsm_color_button.c:537
 msgid "Click to set graph colors"
 msgstr "Κάντε κλικ για να ορίσετε τα χρώματα των γραφημάτων"
 
-#: src/load-graph.cpp:186
+#: src/load-graph.cpp:133
 #, c-format
-msgid "%u second"
-msgid_plural "%u seconds"
+msgid "%u hr"
+msgid_plural "%u hrs"
+msgstr[0] "%u ώρα"
+msgstr[1] "%u ώρες"
+
+#: src/load-graph.cpp:134
+#, c-format
+msgid "%u min"
+msgid_plural "%u mins"
+msgstr[0] "%u λεπτό"
+msgstr[1] "%u λεπτά"
+
+#: src/load-graph.cpp:136
+#, fuzzy, c-format
+#| msgid "%u second"
+#| msgid_plural "%u seconds"
+msgid "%u sec"
+msgid_plural "%u secs"
 msgstr[0] "%u δευτερόλεπτο"
 msgstr[1] "%u δευτερόλεπτα"
 
-#: src/load-graph.cpp:416
+#: src/load-graph.cpp:526
 msgid "not available"
 msgstr "μη διαθέσιμη"
 
-#. xgettext: 540MiB (53 %) of 1.0 GiB
-#: src/load-graph.cpp:419
+#. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
+#: src/load-graph.cpp:529
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) από %s"
 
-#. xgettext: Used cache string, e.g.: "Cache 2.4GiB"
-#: src/load-graph.cpp:423
+#. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
+#: src/load-graph.cpp:533
 #, c-format
 msgid "Cache %s"
 msgstr "Λανθάνουσα μνήμη %s"
@@ -650,11 +817,11 @@ msgid "Inode"
 msgstr "Inode"
 
 #
-#: src/memmaps.cpp:438
+#: src/memmaps.cpp:443
 msgid "Memory Maps"
 msgstr "Χάρτες μνήμης"
 
-#: src/memmaps.cpp:450
+#: src/memmaps.cpp:455
 #, c-format
 msgid "_Memory maps for process “%s” (PID %u):"
 msgstr "Χάρτες _μνήμης για διεργασία «%s» (PID %u):"
@@ -727,28 +894,32 @@ msgstr ""
 "συστήματος. Διαφορετικά, λειτουργεί σε «κατάσταση Irix»."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:34
+msgid "Show memory in IEC"
+msgstr ""
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:41
 msgid "Enable/Disable smooth refresh"
 msgstr "Ενεργοποίηση/Απενεργοποίηση ομαλής ανανέωσης"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:41
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:48
 msgid "Show warning dialog when killing processes"
 msgstr "Εμφάνιση διαλόγου προειδοποίησης κατά τoν βίαιο τερματισμό διεργασιών"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:48
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:55
 msgid "Time in milliseconds between updates of the process view"
 msgstr ""
 "Χρόνος σε χιλιοστά δευτερολέπτου ανάμεσα στις ενημερώσεις της προβολής "
 "διεργασιών"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:54
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:61
 msgid "Time in milliseconds between updates of the graphs"
 msgstr "Χρόνος σε χιλιοστά δευτερολέπτου ανάμεσα στις ενημερώσεις γραφημάτων"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:60
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:67
 msgid "Whether information about all file systems should be displayed"
 msgstr "Αν θα προβάλλονται πληροφορίες για όλα τα συστήματα αρχείων"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:62
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:69
 msgid ""
 "Whether to display information about all file systems (including types like "
 "“autofs” and “procfs”). Useful for getting a list of all currently mounted "
@@ -758,53 +929,68 @@ msgstr ""
 "περιλαμβάνει τύπους συστημάτων αρχείων όπως «autofs» και «procfs»). Είναι "
 "χρήσιμο για τη λήψη όλων των τρεχόντων προσαρτημένων συστημάτων αρχείων."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:69
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:76
 msgid "Time in milliseconds between updates of the devices list"
 msgstr ""
 "Χρόνος σε χιλιοστά δευτερολέπτου ανάμεσα στις ενημερώσεις λίστας συσκευών"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:79
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:82
+msgid "Time amount of data points in the resource graphs"
+msgstr ""
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:92
 msgid "Determines which processes to show."
 msgstr "Καθορίζει ποιες διεργασίες να εμφανίζονται."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:89
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:102
 msgid "Saves the currently viewed tab"
 msgstr "Αποθηκεύει την τρέχουσα προβαλλόμενη καρτέλα"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:112
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:125
 msgid "CPU colors"
 msgstr "Χρώματα CPU"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:114
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:127
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
 msgstr ""
 "Κάθε καταχώρηση είναι μορφοποιημένη κατά (CPU#, Δεκαεξαδική τιμή χρώματος)"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:121
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:134
 msgid "Default graph memory color"
 msgstr "Προεπιλεγμένο χρώμα γραφήματος μνήμης"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:128
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:141
 msgid "Default graph swap color"
 msgstr "Προεπιλεγμένο χρώμα γραφήματος swap"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:135
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:148
 msgid "Default graph incoming network traffic color"
 msgstr "Προεπιλεγμένο χρώμα γραφήματος εισερχομένων δικτύου"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:142
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:155
 msgid "Default graph outgoing network traffic color"
 msgstr "Προεπιλεγμένο χρώμα γραφήματος εξερχομένων δικτύου"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:149
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:162
 msgid "Show network traffic in bits"
 msgstr "Εμφάνιση της κίνησης του δικτύου σε bits"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:156
-msgid "Show CPU chart as stacked area chart"
-msgstr "Εμφάνιση γραφήματος CPU ως γραφήματος στοιβαγμένης περιοχής"
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:169
+msgid "Set network totals unit separately"
+msgstr ""
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:158
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:176
+#, fuzzy
+#| msgid "Show network traffic in bits"
+msgid "Show network totals in bits"
+msgstr "Εμφάνιση της κίνησης του δικτύου σε bits"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:183
+msgid "Show memory in logarithmic scale"
+msgstr ""
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:185
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:194
 msgid ""
 "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
 "of a line chart."
@@ -812,337 +998,355 @@ msgstr ""
 "Αν αληθές, η παρακολούθηση του συστήματος εμφανίζει το γράφημα CPU ως "
 "γράφημα στοιβαγμένης επιφάνειας αντί για γραμμικό γράφημα."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:165
-msgid "Show CPU chart as smooth graph using Bezier curves"
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:192
+msgid "Show CPU chart as stacked area chart"
+msgstr "Εμφάνιση γραφήματος CPU ως γραφήματος στοιβαγμένης περιοχής"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:201
+#, fuzzy
+#| msgid "Show CPU chart as smooth graph using Bezier curves"
+msgid ""
+"Show CPU, Memory, and Network charts as smooth graphs using Bezier curves"
 msgstr ""
 "Εμφάνιση γραφήματος CPU ως ομαλού γραφήματος χρησιμοποιώντας καμπύλες Bezier"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:167
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:203
+#, fuzzy
+#| msgid ""
+#| "If TRUE, system-monitor shows the CPU chart as a smoothed graph, "
+#| "otherwise as a line chart."
 msgid ""
-"If TRUE, system-monitor shows the CPU chart as a smoothed graph, otherwise "
-"as a line chart."
+"If TRUE, system-monitor shows the CPU, Memory, and Network charts as "
+"smoothed graphs, otherwise as line charts."
 msgstr ""
 "Αν αληθές, η παρακολούθηση συστήματος εμφανίζει το γράφημα CPU ως "
 "ομαλοποιημένο γράφημα, διαφορετικά ως γραμμικό γράφημα."
 
 #
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:182
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:210
+#, fuzzy
+#| msgid "Memory and Swap History"
+msgid "Show memory and swap in IEC"
+msgstr "Ιστορικό μνήμης και Swap"
+
+#
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:224
 msgid "Process view sort column"
 msgstr "Στήλη ταξινόμησης προβολής διεργασιών"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:189
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
 msgid "Process view columns order"
 msgstr "Σειρά στηλών προβολής διεργασιών"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:196
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
 msgid "Process view sort order"
 msgstr "Σειρά ταξινόμησης προβολής διεργασιών"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:203
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:245
 msgid "Width of process “Name” column"
 msgstr "Πλάτος στήλης «Όνομα»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:210
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:252
 msgid "Show process “Name” column on startup"
 msgstr "Εμφάνιση της στήλης «Όνομα» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:217
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:259
 msgid "Width of process “User” column"
 msgstr "Πλάτος στήλης «Χρήστης»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:224
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:266
 msgid "Show process “User” column on startup"
 msgstr "Εμφάνιση στήλης «Χρήστης» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:273
 msgid "Width of process “Status” column"
 msgstr "Πλάτος στήλης «Κατάσταση»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:280
 msgid "Show process “Status” column on startup"
 msgstr "Εμφάνιση στήλης «Κατάσταση» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:245
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:287
 msgid "Width of process “Virtual Memory” column"
 msgstr "Πλάτος στήλης «Εικονική μνήμη»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:252
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:294
 msgid "Show process “Virtual Memory” column on startup"
 msgstr "Εμφάνιση στήλης «Εικονική μνήμη» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:259
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:301
 msgid "Width of process “Resident Memory” column"
 msgstr "Πλάτος στήλης «Παραμένουσα μνήμη»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:266
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:308
 msgid "Show process “Resident Memory” column on startup"
 msgstr "Εμφάνιση στήλης «Παραμένουσα μνήμη» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:273
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:315
 msgid "Width of process “Writable Memory” column"
 msgstr "Πλάτος στήλης «Εγγράψιμη μνήμη»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:280
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:322
 msgid "Show process “Writable Memory” column on startup"
 msgstr "Εμφάνιση στήλης «Εγγράψιμη μνήμη» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:287
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:329
 msgid "Width of process “Shared Memory” column"
 msgstr "Πλάτος στήλης «Κοινόχρηστη μνήμη»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:294
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:336
 msgid "Show process “Shared Memory” column on startup"
 msgstr "Εμφάνιση στήλης «Κοινόχρηστη μνήμη» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:301
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:343
 msgid "Width of process “X Server Memory” column"
 msgstr "Πλάτος στήλης «Μνήμη διακομιστή X»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:308
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:350
 msgid "Show process “X Server Memory” column on startup"
 msgstr "Εμφάνιση στήλης «Μνήμη διακομιστή X» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:315
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:357
 msgid "Width of process “CPU %” column"
 msgstr "Πλάτος στήλης «CPU %»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:322
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:364
 msgid "Show process “CPU %” column on startup"
 msgstr "Εμφάνιση στήλης «CPU %» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:329
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
 msgid "Width of process “CPU Time” column"
 msgstr "Πλάτος στήλης «Χρόνος CPU»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:336
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
 msgid "Show process “CPU Time” column on startup"
 msgstr "Εμφάνιση στήλης «Χρόνος CPU» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:343
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
 msgid "Width of process “Started” column"
 msgstr "Πλάτος στήλης «Έναρξη»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:350
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:392
 msgid "Show process “Started” column on startup"
 msgstr "Εμφάνιση στήλης «Έναρξη» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:357
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:399
 msgid "Width of process “Nice” column"
 msgstr "Πλάτος διεργασίας στήλης «Nice»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:364
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:406
 msgid "Show process “Nice” column on startup"
 msgstr "Εμφάνιση στήλης διεργασίας «Nice» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:413
 msgid "Width of process “ID” column"
 msgstr "Πλάτος στήλης «ID»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:420
 msgid "Show process “ID” column on startup"
 msgstr "Εμφάνιση στήλης «ID» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:427
 msgid "Width of process “SELinux Security Context” column"
 msgstr "Πλάτος στήλης «Περιβάλλον ασφάλειας SELinux»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:391
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:433
 msgid "Show process “SELinux Security Context” column on startup"
 msgstr "Εμφάνιση στήλης «Περιβάλλον ασφάλειας SELinux» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:398
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:440
 msgid "Width of process “Command Line” column"
 msgstr "Πλάτος στήλης «Γραμμή εντολών»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:405
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:447
 msgid "Show process “Command Line” column on startup"
 msgstr "Εμφάνιση στήλης «Γραμμή εντολών» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:412
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:454
 msgid "Width of process “Memory” column"
 msgstr "Πλάτος στήλης «Μνήμη»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:419
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:461
 msgid "Show process “Memory” column on startup"
 msgstr "Εμφάνιση στήλης «Μνήμη» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:426
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:468
 msgid "Width of process “Waiting Channel” column"
 msgstr "Πλάτος στήλης «Κανάλι αναμονής»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:433
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:475
 msgid "Show process “Waiting Channel” column on startup"
 msgstr "Εμφάνιση στήλης «Κανάλι αναμονής» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:440
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:482
 msgid "Width of process “Control Group” column"
 msgstr "Πλάτος στήλης «Ομάδα ελέγχου»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:447
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:489
 msgid "Show process “Control Group” column on startup"
 msgstr "Εμφάνιση στήλης «Ομάδα ελέγχου» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:454
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:496
 msgid "Width of process “Unit” column"
 msgstr "Πλάτος στήλης «Μονάδα»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:461
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:503
 msgid "Show process “Unit” column on startup"
 msgstr "Εμφάνιση στήλης «Μονάδα» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:468
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:510
 msgid "Width of process “Session” column"
 msgstr "Πλάτος στήλης «Συνεδρία»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:475
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:517
 msgid "Show process “Session” column on startup"
 msgstr "Εμφάνιση στήλης «Συνεδρία» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:482
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:524
 msgid "Width of process “Seat” column"
 msgstr "Πλάτος στήλης «Θέση»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:489
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:531
 msgid "Show process “Seat” column on startup"
 msgstr "Εμφάνιση στήλης «Θέση» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:496
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:538
 msgid "Width of process “Owner” column"
 msgstr "Πλάτος στήλης «Ιδιοκτήτης»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:503
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:545
 msgid "Show process “Owner” column on startup"
 msgstr "Εμφάνιση στήλης «Ιδιοκτήτης» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:510
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:552
 msgid "Width of process “Total disk read” column"
 msgstr "Πλάτος στήλης «Σύνολο ανάγνωσης δίσκου»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:517
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:559
 msgid "Show process “Total disk read” column on startup"
 msgstr "Εμφάνιση στήλης «Σύνολο ανάγνωσης δίσκου» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:524
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:566
 msgid "Width of process “Total disk write” column"
 msgstr "Πλάτος στήλης «Σύνολο εγγραφής δίσκου»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:531
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:573
 msgid "Show process “Total disk write” column on startup"
 msgstr "Εμφάνιση στήλης «Σύνολο εγγραφής δίσκου» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:538
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:580
 msgid "Width of process “Disk read” column"
 msgstr "Πλάτος στήλης «Ανάγνωση δίσκου»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:545
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:587
 msgid "Show process “Disk read” column on startup"
 msgstr "Εμφάνιση στήλης «Ανάγνωση δίσκου» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:552
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:594
 msgid "Width of process “Disk write” column"
 msgstr "Πλάτος στήλης «Εγγραφή δίσκου»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:559
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:601
 msgid "Show process “Disk write” column on startup"
 msgstr "Εμφάνιση στήλης «Εγγραφή δίσκου» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:566
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:608
 msgid "Width of process “Priority” column"
 msgstr "Πλάτος στήλης «Προτεραιότητα»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:573
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:615
 msgid "Show process “Priority” column on startup"
 msgstr "Εμφάνιση στήλης «Προτεραιότητα» κατά την εκκίνηση"
 
 #
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:584
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:626
 msgid "Disk view sort column"
 msgstr "Στήλη ταξινόμησης προβολής δίσκου"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:591
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:633
 msgid "Disk view sort order"
 msgstr "Σειρά ταξινόμησης προβολής δίσκου"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:598
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:640
 msgid "Disk view columns order"
 msgstr "Σειρά στηλών της προβολής δίσκου"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:605
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:647
 msgid "Width of disk view “Device” column"
 msgstr "Πλάτος της προβολής δίσκου της στήλης «συσκευή»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:612
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:654
 msgid "Show disk view “Device” column on startup"
 msgstr "Εμφάνιση της προβολής δίσκου της στήλης «συσκευή» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:619
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:661
 msgid "Width of disk view “Directory” column"
 msgstr "Πλάτος της προβολής δίσκου της στήλης «κατάλογος»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:626
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:668
 msgid "Show disk view “Directory” column on startup"
 msgstr "Εμφάνιση της προβολής δίσκου της στήλης «κατάλογος» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:633
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:675
 msgid "Width of disk view “Type” column"
 msgstr "Πλάτος της προβολής δίσκου της στήλης «τύπος»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:640
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:682
 msgid "Show disk view “Type” column on startup"
 msgstr "Εμφάνιση της προβολής δίσκου της στήλης «τύπος» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:647
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:689
 msgid "Width of disk view “Total” column"
 msgstr "Πλάτος της προβολής δίσκου της στήλης «σύνολο»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:654
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:696
 msgid "Show disk view “Total” column on startup"
 msgstr "Εμφάνιση της προβολής δίσκου της στήλης «σύνολο» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:661
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:703
 msgid "Width of disk view “Free” column"
 msgstr "Πλάτος της προβολής δίσκου της στήλης «ελεύθερα»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:668
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:710
 msgid "Show disk view “Free” column on startup"
 msgstr "Εμφάνιση της προβολής δίσκου της στήλης «ελεύθερα» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:675
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:717
 msgid "Width of disk view “Available” column"
 msgstr "Πλάτος της προβολής δίσκου της στήλης «διαθέσιμα»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:682
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:724
 msgid "Show disk view “Available” column on startup"
 msgstr "Εμφάνιση της προβολής δίσκου της στήλης «διαθέσιμα» κατά την εκκίνηση"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:689
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:731
 msgid "Width of disk view “Used” column"
 msgstr "Πλάτος της προβολής δίσκου της στήλης «σε χρήση»"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:696
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:738
 msgid "Show disk view “Used” column on startup"
 msgstr "Εμφάνιση της προβολής δίσκου της στήλης «σε χρήση» κατά την εκκίνηση"
 
 #
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:706
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:748
 msgid "Memory map sort column"
 msgstr "Στήλη ταξινόμησης χάρτη μνήμης"
 
 #
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:713
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:755
 msgid "Memory map sort order"
 msgstr "Σειρά ταξινόμησης χάρτη μνήμης"
 
 #
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:722
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:764
 msgid "Open files sort column"
 msgstr "Άνοιγμα αρχείων ταξινομημένα κατά στήλη"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:729
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:771
 msgid "Open files sort order"
 msgstr "Άνοιγμα αρχείων ταξινομημένα κατά σειρά"
 
-#: src/prefsdialog.cpp:168
+#: src/prefsdialog.cpp:195
 msgid "Icon"
 msgstr "Εικονίδιο"
 
@@ -1165,20 +1369,20 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:82
+#: src/procdialogs.cpp:85
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr "Βίαιος τερματισμός της επιλεγμένης διεργασίας «%s» (PID: %u);"
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:88
+#: src/procdialogs.cpp:91
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr "Τερματισμός της επιλεγμένης διεργασίας «%s» (PID: %u);"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:94
+#: src/procdialogs.cpp:97
 #, c-format
 msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
 msgstr ""
@@ -1186,7 +1390,7 @@ msgstr ""
 "%u)?"
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:103
+#: src/procdialogs.cpp:106
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
@@ -1194,7 +1398,7 @@ msgstr[0] "Θέλετε να τερματίσετε βίαια την επιλε
 msgstr[1] "Θέλετε να τερματίσετε βίαια τις %d επιλεγμένες διεργασίες;"
 
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:109
+#: src/procdialogs.cpp:112
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
@@ -1203,7 +1407,7 @@ msgstr[1] "Θέλετε να τερματίσετε τις %d επιλεγμέν
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:115
+#: src/procdialogs.cpp:118
 #, c-format
 msgid "Are you sure you want to stop the selected process?"
 msgid_plural "Are you sure you want to stop the %d selected processes?"
@@ -1212,7 +1416,7 @@ msgstr[1] ""
 "Είστε σίγουροι ότι θέλετε να σταματήσετε τις %d επιλεγμένες διεργασίες;"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:125
+#: src/procdialogs.cpp:128
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1222,14 +1426,14 @@ msgstr ""
 "τερματίζετε βίαια μόνο διεργασίες που δεν ανταποκρίνονται."
 
 #
-#: src/procdialogs.cpp:128
+#: src/procdialogs.cpp:131
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "_Βίαιος τερματισμός διεργασίας"
 msgstr[1] "_Βίαιος τερματισμός διεργασιών"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:132
+#: src/procdialogs.cpp:135
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponsive processes should be ended."
@@ -1240,7 +1444,7 @@ msgstr ""
 
 #. SIGSTOP
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:139
+#: src/procdialogs.cpp:142
 msgid ""
 "Stopping a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be stopped."
@@ -1249,29 +1453,29 @@ msgstr ""
 "σας, ή να δημιουργήσει ένα κενό ασφαλείας. Θα πρέπει να διακόπτετε μόνο "
 "προβληματικές διεργασίες."
 
-#: src/procdialogs.cpp:142
+#: src/procdialogs.cpp:145
 msgid "_Stop Process"
 msgid_plural "_Stop Processes"
 msgstr[0] "_Σταμάτημα διεργασίας"
 msgstr[1] "_Τερματισμός διεργασιών"
 
-#: src/procdialogs.cpp:227
+#: src/procdialogs.cpp:230
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Αλλαγή προτεραιότητας της διεργασίας «%s» (PID: %u)"
 
-#: src/procdialogs.cpp:230
+#: src/procdialogs.cpp:233
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
 msgstr[0] "Αλλαγή της σειράς προτεραιότητας της επιλεγμένης διεργασίας"
 msgstr[1] "Αλλαγή της σειράς προτεραιότητας των επιλεγμένων διεργασιών %d"
 
-#: src/procdialogs.cpp:249
+#: src/procdialogs.cpp:252
 msgid "Note:"
 msgstr "Σημείωση:"
 
-#: src/procdialogs.cpp:250
+#: src/procdialogs.cpp:253
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
@@ -1280,7 +1484,7 @@ msgstr ""
 "Μια χαμηλή τιμή nice αντιστοιχεί σε υψηλότερη προτεραιότητα."
 
 #: src/procproperties.cpp:50 src/procproperties.cpp:84
-#: src/procproperties.cpp:87 src/util.cpp:376 src/util.cpp:415
+#: src/procproperties.cpp:87 src/util.cpp:471 src/util.cpp:514
 msgid "N/A"
 msgstr "N/A"
 
@@ -1406,78 +1610,104 @@ msgstr "Ανάγνωση δίσκου"
 msgid "Disk write"
 msgstr "Εγγραφή δίσκου"
 
-#: src/util.cpp:27
+#: src/setaffinity.cpp:305
+msgid "Set Affinity"
+msgstr ""
+
+#: src/setaffinity.cpp:317
+msgid "_Apply"
+msgstr "_Εφαρμογή"
+
+#: src/setaffinity.cpp:354
+#, c-format
+msgid "Select CPUs \"%s\" (PID %u) is allowed to run on:"
+msgstr ""
+
+#. Set check box label value to CPU [1..2048]
+#: src/setaffinity.cpp:407
+#, c-format
+msgid "CPU %d"
+msgstr "CPU %d"
+
+#: src/util.cpp:35
 msgid "Running"
 msgstr "Σε εκτέλεση"
 
-#: src/util.cpp:31
+#: src/util.cpp:39
 msgid "Stopped"
 msgstr "Σταματημένη"
 
-#: src/util.cpp:35
+#: src/util.cpp:43
 msgid "Zombie"
 msgstr "Ζόμπι"
 
-#: src/util.cpp:39
+#: src/util.cpp:47
 msgid "Uninterruptible"
 msgstr "Αδιάλειπτη"
 
-#: src/util.cpp:43
+#: src/util.cpp:51
 msgid "Sleeping"
 msgstr "Κοιμάται"
 
 #. xgettext: weeks, days
-#: src/util.cpp:98
+#: src/util.cpp:106
 #, c-format
 msgid "%uw%ud"
 msgstr "%uw%ud"
 
 #. xgettext: days, hours (0 -> 23)
-#: src/util.cpp:102
+#: src/util.cpp:110
 #, c-format
 msgid "%ud%02uh"
 msgstr "%ud%02uh"
 
 #. xgettext: hours (0 -> 23), minutes, seconds
-#: src/util.cpp:106
+#: src/util.cpp:114
 #, c-format
 msgid "%u:%02u:%02u"
 msgstr "%u:%02u:%02u"
 
 #. xgettext: minutes, seconds, centiseconds
-#: src/util.cpp:109
+#: src/util.cpp:117
 #, c-format
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: src/util.cpp:176
+#: src/util.cpp:184
 msgid "Very High Priority"
 msgstr "Πολύ υψηλή προτεραιότητα"
 
 # sysdeps/names/procuid.c:51
-#: src/util.cpp:178
+#: src/util.cpp:186
 msgid "High Priority"
 msgstr "Υψηλή προτεραιότητα"
 
 # sysdeps/names/procuid.c:51
-#: src/util.cpp:180
+#: src/util.cpp:188
 msgid "Normal Priority"
 msgstr "Κανονική προτεραιότητα"
 
 # sysdeps/names/procuid.c:51
-#: src/util.cpp:182
+#: src/util.cpp:190
 msgid "Low Priority"
 msgstr "Χαμηλή προτεραιότητα"
 
-#: src/util.cpp:184
+#: src/util.cpp:192
 msgid "Very Low Priority"
 msgstr "Πολύ χαμηλή προτεραιότητα"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:611
+#: src/util.cpp:713
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+# sysdeps/names/sysdeps.c:55 sysdeps/names/sysdeps.c:84
+#~ msgid "CPU History"
+#~ msgstr "Ιστορικό CPU"
+
+#~ msgid "System Monitor Preferences"
+#~ msgstr "Προτιμήσεις παρακολούθησης συστήματος"
 
 #~| msgid "gnome-system-monitor"
 #~ msgid "org.gnome.SystemMonitor"
@@ -1491,9 +1721,6 @@ msgstr "%s/s"
 
 #~ msgid "About"
 #~ msgstr "Περί"
-
-#~ msgid "Quit"
-#~ msgstr "Έξοδος"
 
 #~ msgid "%.1f KiB"
 #~ msgstr "%.1f KiB"
