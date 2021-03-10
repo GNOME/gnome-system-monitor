@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2021-02-10 19:36+0000\n"
-"PO-Revision-Date: 2021-03-04 01:04+0000\n"
+"POT-Creation-Date: 2021-03-04 01:06+0000\n"
+"PO-Revision-Date: 2021-03-10 15:15+0000\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian\n"
 "Language: fa\n"
@@ -627,39 +627,39 @@ msgstr "دریافت داده‌ٔ رنگ نامعتبر\n"
 msgid "Click to set graph colors"
 msgstr "کلیک برای تنظیم رنگ‌های نمودار"
 
-#: src/load-graph.cpp:133
+#: src/load-graph.cpp:134
 #, c-format
 msgid "%u hr"
 msgid_plural "%u hrs"
 msgstr[0] "%Iu س"
 msgstr[1] "%Iu س"
 
-#: src/load-graph.cpp:134
+#: src/load-graph.cpp:135
 #, c-format
 msgid "%u min"
 msgid_plural "%u mins"
 msgstr[0] "%Iu د"
 msgstr[1] "%Iu د"
 
-#: src/load-graph.cpp:136
+#: src/load-graph.cpp:137
 #, c-format
 msgid "%u sec"
 msgid_plural "%u secs"
 msgstr[0] "%Iu ثانیه"
 msgstr[1] "%Iu ثانیه"
 
-#: src/load-graph.cpp:526
+#: src/load-graph.cpp:527
 msgid "not available"
 msgstr "موجود نیست"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:529
+#: src/load-graph.cpp:530
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (٪%I.1f) %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:533
+#: src/load-graph.cpp:534
 #, c-format
 msgid "Cache %s"
 msgstr "انباره %s"
@@ -816,6 +816,10 @@ msgstr ""
 "پردازندهٔ یک تکلیف، بر تعداد کل پردازنده‌ها تقسیم می‌شود. در غیر این‌صورت در «حالت "
 "ایریکس» عمل می‌کند."
 
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:34
+msgid "Show memory in IEC"
+msgstr "نمایش حافظه در IEC"
+
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:41
 msgid "Enable/Disable smooth refresh"
 msgstr "به/از کار انداختن تازه‌سازی نرم"
@@ -848,6 +852,10 @@ msgstr ""
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:76
 msgid "Time in milliseconds between updates of the devices list"
 msgstr "زمان بین به‌روزرسانی‌های فهرست افزاره‌ها بر حسب میلی‌ثانیه"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:82
+msgid "Time amount of data points in the resource graphs"
+msgstr "مقدار زمانی نقطه‌های داده در نمودارهای منبع"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:92
 msgid "Determines which processes to show."
@@ -885,9 +893,17 @@ msgstr "رنگ پیش‌گزیدهٔ نمودار ترافیک شبکهٔ خرو
 msgid "Show network traffic in bits"
 msgstr "نمایش ترافیک شبکه بر حسب بیت"
 
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:169
+msgid "Set network totals unit separately"
+msgstr "تنظیم واحد مجموع شبکه به صورت جداگانه"
+
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:176
 msgid "Show network totals in bits"
 msgstr "نمایش مجموع شبکه بر حسب بیت"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:183
+msgid "Show memory in logarithmic scale"
+msgstr "نمایش حافظه در مقیاس لگاریتمی"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:185
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:194
@@ -1070,11 +1086,11 @@ msgstr "نمایش ستون «کانال انتظار» فرایند در شرو
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:482
 msgid "Width of process “Control Group” column"
-msgstr "پهنای ستون «گروه واپایش» فرایند"
+msgstr "پهنای ستون «گروه واپایشی» فرایند"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:489
 msgid "Show process “Control Group” column on startup"
-msgstr "نمایش ستون «گروه واپایش» فرایند هنگام شروع"
+msgstr "نمایش ستون «گروه واپایشی» فرایند هنگام شروع"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:496
 msgid "Width of process “Unit” column"
@@ -1434,7 +1450,7 @@ msgstr "کانال انتظار"
 
 #: src/procproperties.cpp:87 src/proctable.cpp:353
 msgid "Control Group"
-msgstr "گروه واپایش"
+msgstr "گروه واپایشی"
 
 #: src/procproperties.cpp:199
 #, c-format
@@ -1491,7 +1507,7 @@ msgstr "_اعمال"
 #: src/setaffinity.cpp:354
 #, c-format
 msgid "Select CPUs \"%s\" (PID %u) is allowed to run on:"
-msgstr ""
+msgstr "گزینش پردازندهایی «%s» که (شناسهٔ فرایند %Iu) اجازهٔ اجرا رویشان را دارد:"
 
 #. Set check box label value to CPU [1..2048]
 #: src/setaffinity.cpp:407
