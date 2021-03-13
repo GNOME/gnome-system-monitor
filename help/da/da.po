@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
-"POT-Creation-Date: 2020-05-31 05:37+0000\n"
-"PO-Revision-Date: 2020-09-08 00:00+0200\n"
+"POT-Creation-Date: 2020-11-09 08:42+0000\n"
+"PO-Revision-Date: 2020-11-10 00:00+0200\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -27,27 +27,30 @@ msgstr "scootergrisen <>, 2020"
 #: C/commandline.page:11 C/cpu-check.page:15 C/cpu-mem-normal.page:11
 #: C/cpu-multicore.page:11 C/fs-device.page:13 C/fs-diskusage.page:13
 #: C/fs-info.page:13 C/fs-showall.page:11 C/index.page:13 C/mem-check.page:12
-#: C/mem-swap.page:12 C/memory-map-use.page:13 C/net-bits.page:11
-#: C/process-explain.page:11 C/process-files.page:11
+#: C/mem-swap.page:12 C/memory-map-use.page:13 C/memory-map-what.page:12
+#: C/net-bits.page:11 C/process-explain.page:11 C/process-files.page:11
 #: C/process-identify-file.page:11 C/process-identify-hog.page:11
 #: C/process-kill.page:12 C/process-many.page:11
-#: C/process-priority-change.page:14 C/process-status.page:14
-#: C/process-update-speed.page:11 C/solaris-mode.page:11 C/units.page:11
+#: C/process-priority-change.page:14 C/process-priority-what.page:11
+#: C/process-status.page:14 C/process-update-speed.page:11
+#: C/solaris-mode.page:11 C/units.page:11
 msgid "Phil Bull"
 msgstr "Phil Bull"
 
 #. (itstool) path: credit/years
 #: C/commandline.page:13 C/mem-check.page:14 C/mem-swap.page:14
-#: C/memory-map-use.page:15 C/net-bits.page:13 C/process-explain.page:13
-#: C/process-identify-file.page:13 C/process-identify-hog.page:13
+#: C/memory-map-use.page:15 C/memory-map-what.page:14 C/net-bits.page:13
+#: C/process-explain.page:13 C/process-identify-file.page:13
+#: C/process-identify-hog.page:13 C/process-priority-what.page:19
 #: C/process-update-speed.page:13 C/solaris-mode.page:13 C/units.page:13
 msgid "2011"
 msgstr "2011"
 
 #. (itstool) path: credit/name
 #: C/commandline.page:16 C/mem-check.page:18 C/mem-swap.page:18
-#: C/memory-map-use.page:19 C/net-bits.page:17 C/process-explain.page:17
-#: C/process-identify-file.page:17 C/process-identify-hog.page:17
+#: C/memory-map-use.page:19 C/memory-map-what.page:18 C/net-bits.page:17
+#: C/process-explain.page:17 C/process-identify-file.page:17
+#: C/process-identify-hog.page:17 C/process-priority-what.page:17
 #: C/process-update-speed.page:17 C/solaris-mode.page:17 C/units.page:17
 msgid "Michael Hill"
 msgstr "Michael Hill"
@@ -144,7 +147,7 @@ msgstr "<cmd>pmap</cmd>"
 #. (itstool) path: td/p
 #: C/commandline.page:67
 msgid "displays the memory map of a process."
-msgstr "viser hukommelsesområdet for en proces."
+msgstr "viser hukommelsesområdet af en proces."
 
 #. (itstool) path: info/desc
 #: C/cpu-check.page:20
@@ -152,8 +155,8 @@ msgid ""
 "The amount of CPU being used tells you how much work the computer is trying "
 "to do."
 msgstr ""
-"Mængden af CPU der bruges fortæller dig hvor meget arbejde, computeren prøver "
-"at udføre."
+"Mængden af CPU der bruges fortæller dig hvor meget arbejde, computeren "
+"prøver at udføre."
 
 #. (itstool) path: page/title
 #: C/cpu-check.page:23
@@ -389,7 +392,7 @@ msgid ""
 "hard disk."
 msgstr ""
 "<gui>Filsystemer</gui>-fanebladet viser hvor meget plads der bruges på hver "
-"hardisk."
+"harddisk."
 
 #. (itstool) path: page/title
 #: C/fs-diskusage.page:21
@@ -463,7 +466,7 @@ msgid ""
 "You can also try uninstalling some unwanted applications. Use your usual "
 "software manager to do this."
 msgstr ""
-"Du kan også prøve og afinstallere uønskede programmer. Brug din sædvandlige "
+"Du kan også prøve og afinstallere uønskede programmer. Brug din sædvanlige "
 "softwarehåndtering til at gøre det."
 
 #. (itstool) path: section/p
@@ -580,9 +583,9 @@ msgid ""
 "difference from the capacity you expect, it might be because your disk has "
 "been split up into multiple partitions."
 msgstr ""
-"Du opdager måske at Samlet ikke passer med den annonceret kapacitet på din "
-"harddisk. Det er normalt og der er flere årsager til det. En af dem er at "
-"harddiskproducenterne bruger en lidt anderledes måde til at tælle "
+"Du opdager måske at Samlet ikke passer med den kapacitet der er angivet på "
+"din harddisk. Det er normalt, og der er flere årsager til det. En af dem er, "
+"at harddiskproducenterne bruger en lidt anderledes måde til at tælle "
 "diskkapaciteten end de andre. En anden er at noget af diskpladsen kan være "
 "reserveret til brug af styresystemet. Hvis der er en stor forskel i forhold "
 "til den kapacitet du forventer, så kan det være fordi din disk er blevet "
@@ -631,9 +634,9 @@ msgid ""
 msgstr ""
 "De fleste poster i listen er “virtuelle” filsystemer. De er ikke virkelige "
 "diske eller partitioner. Styresystemet bruger dem i stedet som et bekvemt "
-"abstraktionslag til flere formål såsom håndtering af hardwareenheder "
-"og lagring af midlertidige filer. Systemet håndterer dem automatisk, så der er "
-"sjældent brug for, at du kigger på dem."
+"abstraktionslag til forskellige formål såsom håndtering af hardwareenheder "
+"og lagring af midlertidige filer. Systemet håndterer dem automatisk, så der "
+"er sjældent brug for, at du kigger på dem."
 
 #. (itstool) path: info/title
 #: C/index.page:7
@@ -728,8 +731,9 @@ msgstr "Værket er licenseret under en <_:link-1/>."
 
 #. (itstool) path: credit/years
 #: C/mem-check.page:20 C/mem-swap.page:20 C/memory-map-use.page:21
-#: C/net-bits.page:19 C/process-explain.page:19 C/process-identify-file.page:19
-#: C/process-identify-hog.page:19 C/process-update-speed.page:19
+#: C/memory-map-what.page:20 C/net-bits.page:19 C/process-explain.page:19
+#: C/process-identify-file.page:19 C/process-identify-hog.page:19
+#: C/process-priority-what.page:13 C/process-update-speed.page:19
 #: C/solaris-mode.page:19 C/units.page:19
 msgid "2011, 2014"
 msgstr "2011, 2014"
@@ -764,6 +768,7 @@ msgstr "Tjek det nuværende hukommelsesforbrug på din computer:"
 msgid "Click the <gui>Resources</gui> tab."
 msgstr "Klik på <gui>Ressourcer</gui>-fanebladet."
 
+# scootergrisen: fra gennemlæsning: Foreslår Graferne afhænger af tid med nuværende tid til højre
 #. (itstool) path: page/p
 #: C/mem-check.page:49
 msgid ""
@@ -772,7 +777,7 @@ msgid ""
 "time, with the current time at the right."
 msgstr ""
 "<gui>Hukommelsesforbrug</gui> viser en kørende linjegraf for hukommelse og "
-"swap som en procentdel af det samlet tilgængelige. De plottes mod tid, med "
+"swap som en procentdel af den samlede tilgængelige. De plottes mod tid, med "
 "den nuværende tid til højre."
 
 #. (itstool) path: note/p
@@ -791,7 +796,7 @@ msgid ""
 "\">GiB</link> and as a percentage of the total available."
 msgstr ""
 "<gui>Hukommelse</gui>-cirkeldiagrammet viser hukommelsesforbrug i <link xref="
-"\"units\">GiB</link> og som en procentdel af det samlede tilgængelige."
+"\"units\">GiB</link> og som en procentdel af den samlede tilgængelige."
 
 #. (itstool) path: page/p
 #: C/mem-check.page:61
@@ -904,7 +909,7 @@ msgstr ""
 #. (itstool) path: info/desc
 #: C/memory-map-use.page:24
 msgid "View the memory map of a process."
-msgstr "Vis hukommelsesområdet for en proces."
+msgstr "Vis hukommelsesområdet af en proces."
 
 #. (itstool) path: page/title
 #: C/memory-map-use.page:27
@@ -923,11 +928,11 @@ msgid ""
 msgstr ""
 "<gui>Virtuel hukommelse</gui> repræsenterer den samlede <gui>fysiske "
 "hukommelse</gui> og <link xref=\"mem-swap\">swapplads</link> i et system. "
-"Det gør det muligt for kørende processer at tilgå <em>mere</em> end hvad der "
-"findes af fysiske hukommelse, ved at <gui>kortlægge</gui> placeringer i den "
-"fysiske hukommelse til filer på disken. Når systemet har brug for flere "
-"sider med hukommelse end der er tilgængelig, så vil nogen af de eksisterende "
-"sider blive <em>“paged out”</em> eller skrevet til swappladsen."
+"Den gør det muligt for kørende processer at tilgå <em>mere</em> end den "
+"fysiske hukommelse, ved at <gui>kortlægge</gui> placeringer i den fysiske "
+"hukommelse til filer på disken. Når systemet har brug for flere sider med "
+"hukommelse end der er tilgængelig, så vil nogle af de eksisterende sider "
+"blive <em>“paged out”</em> eller skrevet til swappladsen."
 
 #. (itstool) path: page/p
 #: C/memory-map-use.page:42
@@ -938,19 +943,19 @@ msgid ""
 "libraries, to see the results of adjusting various performance tuning "
 "parameters the program may have, or to diagnose issues such as memory leaks."
 msgstr ""
-"<gui>Hukommelsesområdet</gui> viser processens samlet forbrug af virtuel "
+"<gui>Hukommelsesområdet</gui> viser processens samlede forbrug af virtuel "
 "hukommelse og kan bruges til at fastslå hvor meget hukommelse det koster at "
 "køre en enkelt eller flere instanser af programmet, for at sikre brugen af "
 "de korrekte delte biblioteker, for at se resultaterne efter justering af "
 "diverse parametre som programmet har til at tune ydelsen, eller til at "
-"diagnosticere problemer såsom hukommelseslækager."
+"diagnosticere problemer såsom hukommelseslæk."
 
 #. (itstool) path: page/p
 #: C/memory-map-use.page:49
 msgid ""
 "To display the <link xref=\"memory-map-what\">memory map</link> of a process:"
 msgstr ""
-"Vis <link xref=\"memory-map-what\">hukommelsesområdet</link> for en proces:"
+"Vis <link xref=\"memory-map-what\">hukommelsesområdet</link> af en proces:"
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:54
@@ -969,7 +974,6 @@ msgstr "Læsning af hukommelsesområdet"
 
 #. (itstool) path: item/p
 #: C/memory-map-use.page:63
-#| msgid "Addresses are diplayed in hexadecimal (base 16)."
 msgid "Addresses are displayed in hexadecimal (base 16)."
 msgstr "Adresserne vises i heksadecimal (16-talsystem)."
 
@@ -997,7 +1001,7 @@ msgid ""
 "and one for a read-only data segment. Both data segments need to be paged "
 "out at swap time."
 msgstr ""
-"Selve programmet og hver af de delte biblioteker har tre poster hver, en til "
+"Selve programmet og alle de delte biblioteker har tre poster hver, en til "
 "skrive-køre-tekstsegmentet, en til læse-skrive-datasegmentet og en til et "
 "skrivebeskyttet datasegment. Begge datasegmenter skal “paged out” ved "
 "swaptid."
@@ -1020,9 +1024,9 @@ msgid ""
 "that is owned by the process whose name is displayed above the memory-map "
 "table."
 msgstr ""
-"Et delt biblioteks placering som i øjeblikket bruges af processen. "
-"Hvis feltet er tomt, så beskriver hukommelsesinformationen i denne række "
-"hukommelse som ejes af processen med det navn som vises over "
+"Et delt biblioteks placering som i øjeblikket bruges af processen. Hvis "
+"feltet er tomt, så beskriver hukommelsesinformationen i denne række "
+"hukommelse som ejes af processen med det navn, som vises over "
 "hukommelsesområdetabellen."
 
 #. (itstool) path: td/p
@@ -1030,6 +1034,7 @@ msgstr ""
 msgid "VM Start"
 msgstr "V. huk. start"
 
+# scootergrisen: fra gennemlæsning: evt. ..., som det delte bibliotek er tildelt.
 #. (itstool) path: td/p
 #: C/memory-map-use.page:93
 msgid ""
@@ -1130,7 +1135,7 @@ msgid ""
 "The process has permission to execute instructions that are contained within "
 "the memory segment."
 msgstr ""
-"Processen har tilladelse til at udføre instruktioner som er i "
+"Processen har tilladelse til at køre instruktioner som er i "
 "hukommelsessegmentet."
 
 #. (itstool) path: td/p
@@ -1143,8 +1148,7 @@ msgstr "V. huk.-afsæt"
 msgid ""
 "The location of the address within the memory segment, measured from VM "
 "Start."
-msgstr ""
-"Adressens placering i hukommelsessegmentet, målt fra V. huk. start."
+msgstr "Adressens placering i hukommelsessegmentet, målt fra V. huk. start."
 
 #. (itstool) path: td/p
 #: C/memory-map-use.page:141
@@ -1210,6 +1214,102 @@ msgstr ""
 "fil og tallet som tildeles til den er unikt."
 
 #. (itstool) path: info/desc
+#: C/memory-map-what.page:23
+msgid "The memory map of a process can help diagnose certain memory issues."
+msgstr "Hukommelseskortet af en proces kan hjælpe med at diagnosticere visse hukommelsesproblemer."
+
+#. (itstool) path: page/title
+#: C/memory-map-what.page:27
+msgid "What is a memory map?"
+msgstr "Hvad er et hukommelsesområde?"
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:40
+msgid ""
+"<gui>Virtual memory</gui> is a representation of the combined <gui>physical "
+"memory</gui> and <link xref=\"mem-swap\">swap space</link> in a system. It "
+"enables running processes to access <em>more</em> than the existing physical "
+"memory by <gui>mapping</gui> locations in physical memory to files on disk."
+msgstr ""
+"<gui>Virtuel hukommelse</gui> repræsenterer den samlede <gui>fysiske "
+"hukommelse</gui> og <link xref=\"mem-swap\">swapplads</link> i et system. "
+"Den gør det muligt for kørende processer at tilgå <em>mere</em> end den "
+"fysiske hukommelse, ved at <gui>kortlægge</gui> placeringer i den fysiske "
+"hukommelse til filer på disken."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:46
+msgid ""
+"When a program is launched, the system assigns it a unique process ID (PID) "
+"and its <em>instructions</em> and <em>data</em> are loaded into memory in "
+"<em>pages</em>. The page table of each process maps the correspondence "
+"between its pages in virtual memory and their location in physical memory. "
+"The <gui>memory map</gui> displays the total virtual memory use of the "
+"process, and can be used to determine the memory cost of running a single or "
+"multiple instances of the program, to ensure the use of the correct shared "
+"libraries, to see the results of adjusting various performance tuning "
+"parameters the program may have, or to diagnose issues such as memory leaks."
+msgstr ""
+"Når et program startes, så tildeler systemet det et unikt proces-id (PID) "
+"og dens <em>instruktioner</em> og <em>data</em> indlæses i hukommelse i "
+"<em>sider</em>. Sidetabellen på hver proces kortlægger korrespondancen mellem dens "
+"sider i virtuel hukommelse og deres placering i fysisk hukommelse. "
+"<gui>Hukommelsesområdet</gui> viser processens samlede forbrug af virtuel "
+"hukommelse og kan bruges til at fastslå hvor meget hukommelse det koster at "
+"køre en enkelt eller flere instanser af programmet, for at sikre brugen af "
+"de korrekte delte biblioteker, for at se resultaterne efter justering af "
+"diverse parametre som programmet har til at tune ydelsen, eller til at "
+"diagnosticere problemer såsom hukommelseslæk."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:57
+msgid ""
+"If multiple copies of a program are running, the instructions (or <em>text</"
+"em>) of the program only need to be loaded once into physical memory. Each "
+"time a new instance of the program is launched (as a unique process with its "
+"own virtual memory pages), its page table maps the location of the text in "
+"virtual memory to those instructions in the original real memory location. "
+"In addition, any dynamic shared libraries used by the process appear as "
+"distinct in virtual memory, but are shared references to a single copy of "
+"the library's text segment in real memory. When accounting for the total "
+"memory use of a process, it is important to note that the cost of shared "
+"libraries loaded into memory can be spread across all processes currently "
+"using them."
+msgstr ""
+"Hvis flere kopier af et program kører, så skal programmets instruktioner (eller <em>tekst</"
+"em>) kun indlæses én gang i fysisk hukommelse. Hver "
+"gang der startes en ny instans af programmet (som en unik proces med sine egne virtuel hukommelse-sider"
+"), så kortlægger dets sidetabel placeringen af teksten i virtuel hukommelse til de instruktioner i den "
+"oprindelige placering i rigtig hukommelse. Derudover vises dynamisk delte biblioteker som bruges af "
+"processen som særskilte i virtuel hukommelse, men er delte referencer til en enkelt kopi af "
+"bibliotekets tekstsegment i rigtig hukommelse. Når der redegøres for den samlede brug af hukommelse "
+"af en proces, så er det vigtigt at bemærke at prisen for delte biblioteker "
+"som er indlæst i hukommelse kan spredes over alle processer som bruger dem i øjeblikket."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:69
+msgid ""
+"When the system needs more pages of memory than are available, some of the "
+"existing pages will be <em>paged out</em> or written to the <gui>swap space</"
+"gui>. Text pages are flagged read-execute in memory and don't need to be "
+"written to swap since they can be re-loaded from their original location on "
+"disk. Data pages have read-write permissions, and if modified when in "
+"memory, they are labeled <em>dirty</em>, and when designated for swapping, "
+"must be paged out. When a page in swap space is required by a running "
+"process, it needs to be swapped back in before use, perhaps causing another "
+"page to be paged out."
+msgstr ""
+"Når systemet har brug for flere sider med "
+"hukommelse end der er tilgængelig, så vil nogle af de eksisterende sider "
+"blive <em>“paged out”</em> eller skrevet til <gui>swappladsen</gui>. Tekstsider får flaget "
+"skrive-køre i hukommelse og har behøver ikke at blive skrevet til swap eftersom de "
+"kan genindlæses fra deres oprindelige placering på disk. Datasider har læse-/skrivetilladelser og "
+"hvis de er blevet ændret mens de var i hukommelse, så får de etiketten <em>snavset</em>, og skal byttes ud "
+"når det er blevet besluttet. Når en side i swapplads kræves af en kørende "
+"proces, så skal den byttes tilbage inden brug, hvilket måske forårsager at en anden side bliver "
+"“paged out”."
+
+#. (itstool) path: info/desc
 #: C/net-bits.page:22
 msgid "Choose the units to display your network speed."
 msgstr "Vælg de enheder som skal bruges til at vise din netværkshastighed."
@@ -1269,10 +1369,10 @@ msgid ""
 "which run in the background providing various services that keep a computer "
 "running."
 msgstr ""
-"<gui>Processer</gui>-fanebladet viser information om processerne og giver "
-"dig mulighed for at bruge <gui>Stop</gui>, <gui>Fortsæt</gui>, <gui>Afslut</"
-"gui>, <gui>Terminér</gui> eller ændre prioriteten på en proces. Hvis du vælger "
-"at vise <gui>Alle processer</gui>, så inkluderer proceslisten "
+"<gui>Processer</gui>-fanebladet viser information om processer og giver dig "
+"mulighed for at bruge <gui>Stop</gui>, <gui>Fortsæt</gui>, <gui>Afslut</"
+"gui>, <gui>Terminér</gui> eller ændre prioriteten af en proces. Hvis du "
+"vælger at vise <gui>Alle processer</gui>, så inkluderer proceslisten "
 "<em>systemprocesser</em>, som kører i baggrunden og giver diverse tjenester "
 "som holder en computer kørende."
 
@@ -1389,8 +1489,8 @@ msgid ""
 "Sort the list of processes by <gui>% CPU</gui> to see which application is "
 "using up the computer's resources."
 msgstr ""
-"Sortér listen over processer efter <gui>% CPU</gui> for at se hvilke programmer, "
-"der bruger computerens ressourcer."
+"Sortér listen over processer efter <gui>% CPU</gui> for at se hvilke "
+"programmer, der bruger computerens ressourcer."
 
 #. (itstool) path: page/title
 #: C/process-identify-hog.page:26
@@ -1435,7 +1535,7 @@ msgstr ""
 "Processerne øverst i listen bruger den højeste procentdel CPU. Når du har "
 "identificeret hvilken en der måske bruger flere ressourcer end den burde, så "
 "kan du beslutte om du vil lukke selve programmet eller lukke andre "
-"programmer for at prøve og reducere CPU-belastningen."
+"programmer for at prøve at reducere CPU-belastningen."
 
 #. (itstool) path: note/p
 #: C/process-identify-hog.page:58
@@ -1489,10 +1589,10 @@ msgid ""
 "straight away. For some programs, this might mean that you lose unsaved "
 "files. You should always try <gui>End Process</gui> first."
 msgstr ""
-"Når <gui>Afslut proces</gui> bruges så prøves der at lukke processen "
-"ordentligt, hvorved det får tid til at gemme filer osv., hvor <gui>Terminér</"
-"gui> tvinger det til at lukke straks. For nogle programmer betyder det måske "
-"at du lukker filer som ikke er blevet gemt. Prøv altid først <gui>Afslut "
+"Brug af <gui>Afslut proces</gui> forsøger at lukke processen ordentligt, "
+"hvorved den får tid til at gemme filer osv., mens <gui>Terminér</gui> "
+"tvinger den til at lukke straks. For nogle programmer betyder det måske, at "
+"du lukker filer som ikke er blevet gemt. Prøv altid først <gui>Afslut "
 "proces</gui>."
 
 #. (itstool) path: info/desc
@@ -1515,10 +1615,10 @@ msgid ""
 "and typically run quietly in the background."
 msgstr ""
 "Der vises normalt mange processer under <gui>Processer</gui>-fanebladet. Det "
-"vil kun være få af programmerne som du selv har startet. De andre er "
-"hovedsageligt processer som styresystemet har brug for få computeren til at "
-"køre korrekt. De startes automatisk når du logge ind, og kører typisk stille "
-"i baggrunden."
+"vil kun være få af programmerne, som du selv har startet. De andre er "
+"hovedsageligt processer, som styresystemet selv behøver så computeren "
+"fungerer korrekt. De startes automatisk når du logger ind og kører typisk "
+"stille i baggrunden."
 
 #. (itstool) path: info/desc
 #: C/process-priority-change.page:19
@@ -1531,7 +1631,7 @@ msgstr ""
 #. (itstool) path: page/title
 #: C/process-priority-change.page:22
 msgid "Change the priority of a process"
-msgstr "Skift prioriteten for en proces"
+msgstr "Skift prioriteten af en proces"
 
 #. (itstool) path: page/p
 #: C/process-priority-change.page:24
@@ -1543,10 +1643,10 @@ msgid ""
 "taking up too much processing power."
 msgstr ""
 "Du kan sige til computeren at bestemte processer skal have en højere "
-"prioritet end andre og så skal gives en større andel af den tilgængelige "
+"prioritet end andre og dermed skal gives en større andel af den tilgængelige "
 "beregningstid. Det kan få dem til at køre hurtigere, men kun i særlige "
 "tilfælde. Du kan også give en proces en <em>lavere</em> prioritet hvis du "
-"tror den bruger for meget processorkraft."
+"tror, den bruger for meget processorkraft."
 
 #. (itstool) path: item/p
 #: C/process-priority-change.page:27
@@ -1594,7 +1694,7 @@ msgid ""
 "already be running as fast as possible. Changing their priority won't make a "
 "difference."
 msgstr ""
-"Computeren deler sine processortider mellem alle de kørende processer. Det "
+"Computeren deler sin processortid mellem alle de kørende processer. Den "
 "deles normal intelligent, så programmer der udfører mere arbejde automatisk "
 "får en større andel af ressourcerne. For det meste får processerne så meget "
 "processortid som de har brug for og vil så allerede køre så hurtigt som "
@@ -1610,10 +1710,10 @@ msgid ""
 "there is not enough processing time to share between all of them."
 msgstr ""
 "Hvis din computer kører flere programmer med intensive udregninger "
-"samtidigt, så vil dens processortid dog være “over-subscribed” (dvs. <link "
-"xref=\"process-identify-hog\">processorens fulde kapacitet</link> er i "
-"brug). Du lægger måske mærke til at andre programmer kører langsommere end "
-"normalt fordi der ikke er nok processortid at dele mellem dem alle."
+"samtidigt, så vil dens processortid dog være overbooket (dvs. <link xref="
+"\"process-identify-hog\">processorens fulde kapacitet</link> er i brug). Du "
+"lægger måske mærke til, at andre programmer kører langsommere end normalt "
+"fordi der ikke er nok processortid, at dele mellem dem."
 
 #. (itstool) path: section/p
 #: C/process-priority-change.page:41
@@ -1627,13 +1727,49 @@ msgstr ""
 "I dette fælde kan det være nyttigt at ændre processernes prioritet. Du bør "
 "sænke prioritet på en af de processer med intensive udregninger for at "
 "frigøre mere processortid til andre programmer. Ellers kan du øge "
-"prioriteten på en proces som er mere vigtig for dig, og som du vil have til "
+"prioriteten af en proces som er mere vigtig for dig, og som du vil have til "
 "at køre hurtigere."
+
+#. (itstool) path: info/desc
+#: C/process-priority-what.page:22
+msgid "The <em>nice</em> value of a process is used to adjust its priority."
+msgstr "<em>Nice</em>-værdien af en proces bruges til at justere dens prioritet."
+
+#. (itstool) path: page/title
+#: C/process-priority-what.page:25
+msgid "What is the <em>nice</em> value of a process?"
+msgstr "Hvad er <em>nice</em>-værdien af en proces?"
+
+# scootergrisen: tjek oversættelsen af "concedes"
+#. (itstool) path: page/p
+#: C/process-priority-what.page:27
+msgid ""
+"The priority of a process determines the share of time the process is "
+"alotted on a system's one or more processors (CPUs or cores). A <em>nice</"
+"em> process, or one with a higher nice value, concedes priority to other "
+"processes. Adjusting the nice value will increase or decrease the scheduling "
+"priority."
+msgstr ""
+"Prioriteten af en proces bestemmer andelen af tid som processen tildeles på "
+"en eller flere af systemets processorer (CPU'er eller kerner). En <em>nice</em>-proces "
+"eller en med en højere nice-værdi erkender prioritet til andre processer. "
+"Justering af nice-værdien øger eller sænker den planlagte prioritet."
+
+#. (itstool) path: page/p
+#: C/process-priority-what.page:32
+msgid ""
+"The lower the nice value, the higher the priority of the process. The nice "
+"value ranges from -20 (low nice, higher priority) to 20 (lower priority). "
+"The default value of nice is usually 0."
+msgstr ""
+"Jo lavere nice-værdien er, jo højere prioritet har processen. Nice-værdien "
+"er fra -20 (lav nice, højere prioritet) til 20 (lavere prioritet). "
+"Standardværdien på nice er typisk 0."
 
 #. (itstool) path: info/desc
 #: C/process-status.page:19
 msgid "The status of a process can be running, sleeping, stopped, or zombie."
-msgstr "Statussen på en proces kan være kører, sover, stoppet eller zombie."
+msgstr "Statussen af en proces kan være kører, sover, stoppet eller zombie."
 
 #. (itstool) path: page/title
 #: C/process-status.page:22
@@ -1646,8 +1782,8 @@ msgid ""
 "The status of a process tells you whether it is currently doing something or "
 "not. There are four statuses that a process can have:"
 msgstr ""
-"Statussen af en proces fortæller dig, om den udfører noget i øjeblikket eller "
-"ej. Der er fire statusser som en proces kan have:"
+"Statussen af en proces fortæller dig, om den udfører noget i øjeblikket "
+"eller ej. Der er fire statusser som en proces kan have:"
 
 #. (itstool) path: item/title
 #: C/process-status.page:28
@@ -1705,7 +1841,7 @@ msgid ""
 "it up again by clicking <gui>Continue</gui> on the same menu."
 msgstr ""
 "Gør det ved at klikke på processen i <gui>Processer</gui>-fanebladet og så "
-"højreklik på den og vælge <gui>Stop</gui> i menuen som vises. Du kan vække "
+"højreklikke på den og vælge <gui>Stop</gui> i menuen som vises. Du kan vække "
 "den op igen ved at klikke på <gui>Fortsæt</gui> i samme menu."
 
 #. (itstool) path: item/title
@@ -1722,11 +1858,11 @@ msgid ""
 "if it finished successfully or not, but which has not checked on the process "
 "yet."
 msgstr ""
-"En zombie-proces er en som er færdig med at køre og aldrig vil starte igen, "
-"men som, af en eller anden grund, holdes i listen over processerne. Det sker "
-"typisk fordi den blev startet af et andet program som har brug for at vide "
-"om det lykkedes at blive færdig eller ej, men som endnu ikke har tjekket "
-"processen."
+"En zombie-proces er en proces som er færdig med at køre og aldrig vil starte "
+"igen, men som, af en eller anden grund, holdes i listen over processer. Det "
+"sker typisk fordi den blev startet af et andet program, som har brug for at "
+"vide om det lykkedes at blive færdig eller ej, men som endnu ikke har "
+"tjekket processen."
 
 #. (itstool) path: item/p
 #: C/process-status.page:57
@@ -1880,5 +2016,5 @@ msgid ""
 "An external hard drive, advertised as 1.0 TB (terabytes), would display as "
 "0.909 TiB (tebibytes)."
 msgstr ""
-"En ekstern harddisk der annonceres som 1,0 TB (terabyte) vil vise 0,909 TiB "
+"En ekstern harddisk der angives som 1,0 TB (terabyte) vil vise 0,909 TiB "
 "(tebibyte)."
