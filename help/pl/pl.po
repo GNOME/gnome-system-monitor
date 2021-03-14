@@ -1,14 +1,14 @@
 # Polish translation for gnome-system-monitor help.
-# Copyright © 2017 the gnome-system-monitor authors.
+# Copyright © 2017-2021 the gnome-system-monitor authors.
 # This file is distributed under the same license as the gnome-system-monitor help.
-# Piotr Drąg <piotrdrag@gmail.com>, 2017.
-# Aviary.pl <community-poland@mozilla.org>, 2017.
+# Piotr Drąg <piotrdrag@gmail.com>, 2017-2021.
+# Aviary.pl <community-poland@mozilla.org>, 2017-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor-help\n"
-"POT-Creation-Date: 2020-05-29 06:34+0000\n"
-"PO-Revision-Date: 2017-07-27 20:20+0200\n"
+"POT-Creation-Date: 2020-10-18 07:36+0000\n"
+"PO-Revision-Date: 2021-03-14 18:40+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -22,34 +22,37 @@ msgstr ""
 msgctxt "_"
 msgid "translator-credits"
 msgstr ""
-"Piotr Drąg <piotrdrag@gmail.com>, 2017\n"
-"Aviary.pl <community-poland@mozilla.org>, 2017"
+"Piotr Drąg <piotrdrag@gmail.com>, 2017-2021\n"
+"Aviary.pl <community-poland@mozilla.org>, 2017-2021"
 
 #. (itstool) path: credit/name
 #: C/commandline.page:11 C/cpu-check.page:15 C/cpu-mem-normal.page:11
 #: C/cpu-multicore.page:11 C/fs-device.page:13 C/fs-diskusage.page:13
 #: C/fs-info.page:13 C/fs-showall.page:11 C/index.page:13 C/mem-check.page:12
-#: C/mem-swap.page:12 C/memory-map-use.page:13 C/net-bits.page:11
-#: C/process-explain.page:11 C/process-files.page:11
+#: C/mem-swap.page:12 C/memory-map-use.page:13 C/memory-map-what.page:12
+#: C/net-bits.page:11 C/process-explain.page:11 C/process-files.page:11
 #: C/process-identify-file.page:11 C/process-identify-hog.page:11
 #: C/process-kill.page:12 C/process-many.page:11
-#: C/process-priority-change.page:14 C/process-status.page:14
-#: C/process-update-speed.page:11 C/solaris-mode.page:11 C/units.page:11
+#: C/process-priority-change.page:14 C/process-priority-what.page:11
+#: C/process-status.page:14 C/process-update-speed.page:11
+#: C/solaris-mode.page:11 C/units.page:11
 msgid "Phil Bull"
 msgstr "Phil Bull"
 
 #. (itstool) path: credit/years
 #: C/commandline.page:13 C/mem-check.page:14 C/mem-swap.page:14
-#: C/memory-map-use.page:15 C/net-bits.page:13 C/process-explain.page:13
-#: C/process-identify-file.page:13 C/process-identify-hog.page:13
+#: C/memory-map-use.page:15 C/memory-map-what.page:14 C/net-bits.page:13
+#: C/process-explain.page:13 C/process-identify-file.page:13
+#: C/process-identify-hog.page:13 C/process-priority-what.page:19
 #: C/process-update-speed.page:13 C/solaris-mode.page:13 C/units.page:13
 msgid "2011"
 msgstr "2011"
 
 #. (itstool) path: credit/name
 #: C/commandline.page:16 C/mem-check.page:18 C/mem-swap.page:18
-#: C/memory-map-use.page:19 C/net-bits.page:17 C/process-explain.page:17
-#: C/process-identify-file.page:17 C/process-identify-hog.page:17
+#: C/memory-map-use.page:19 C/memory-map-what.page:18 C/net-bits.page:17
+#: C/process-explain.page:17 C/process-identify-file.page:17
+#: C/process-identify-hog.page:17 C/process-priority-what.page:17
 #: C/process-update-speed.page:17 C/solaris-mode.page:17 C/units.page:17
 msgid "Michael Hill"
 msgstr "Michael Hill"
@@ -723,8 +726,9 @@ msgstr "Na warunkach licencji <_:link-1/>."
 
 #. (itstool) path: credit/years
 #: C/mem-check.page:20 C/mem-swap.page:20 C/memory-map-use.page:21
-#: C/net-bits.page:19 C/process-explain.page:19 C/process-identify-file.page:19
-#: C/process-identify-hog.page:19 C/process-update-speed.page:19
+#: C/memory-map-what.page:20 C/net-bits.page:19 C/process-explain.page:19
+#: C/process-identify-file.page:19 C/process-identify-hog.page:19
+#: C/process-priority-what.page:13 C/process-update-speed.page:19
 #: C/solaris-mode.page:19 C/units.page:19
 msgid "2011, 2014"
 msgstr "2011, 2014"
@@ -1210,6 +1214,84 @@ msgstr ""
 "przechowywania pliku, a przydzielony do niego numer jest unikalny."
 
 #. (itstool) path: info/desc
+#: C/memory-map-what.page:23
+msgid "The memory map of a process can help diagnose certain memory issues."
+msgstr "Mapa pamięci procesu może pomóc diagnozować pewne problemy z pamięcią."
+
+#. (itstool) path: page/title
+#: C/memory-map-what.page:27
+msgid "What is a memory map?"
+msgstr "Czym jest mapa pamięci?"
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:40
+msgid ""
+"<gui>Virtual memory</gui> is a representation of the combined <gui>physical "
+"memory</gui> and <link xref=\"mem-swap\">swap space</link> in a system. It "
+"enables running processes to access <em>more</em> than the existing physical "
+"memory by <gui>mapping</gui> locations in physical memory to files on disk."
+msgstr ""
+"<gui>Pamięć wirtualna</gui> jest reprezentacją połączonej <gui>pamięci "
+"fizycznej</gui> i <link xref=\"mem-swap\">przestrzeni wymiany</link> na "
+"komputerze. Umożliwia ona działającym procesom na korzystanie z <em>więcej</"
+"em> niż istniejącej pamięci fizycznej przez <gui>mapowanie</gui> położeń "
+"w pamięci fizycznej do plików na dysku."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:46
+msgid ""
+"When a program is launched, the system assigns it a unique process ID (PID) "
+"and its <em>instructions</em> and <em>data</em> are loaded into memory in "
+"<em>pages</em>. The page table of each process maps the correspondence "
+"between its pages in virtual memory and their location in physical memory. "
+"The <gui>memory map</gui> displays the total virtual memory use of the "
+"process, and can be used to determine the memory cost of running a single or "
+"multiple instances of the program, to ensure the use of the correct shared "
+"libraries, to see the results of adjusting various performance tuning "
+"parameters the program may have, or to diagnose issues such as memory leaks."
+msgstr ""
+"Po uruchomieniu programu system przydziela mu unikalny identyfikator procesu "
+"(PID), a jego <em>instrukcje</em> i <em>dane</em> są wczytywane do pamięci "
+"w postaci <em>stron</em>. Tablica stron każdego procesu mapuje związek "
+"między jego stronami w pamięci wirtualnej a ich położeniem w pamięci "
+"fizycznej. <gui>Mapa pamięci</gui> wyświetla całkowitą pamięć wirtualną "
+"użytą przez proces, i może być używana do ustalania kosztu pamięci działania "
+"jednego lub wielu wystąpień programu, do zapewniania użycia właściwych "
+"bibliotek współdzielonych, do wyświetlania wyników dostosowania różnych "
+"parametrów wydajności, jakie może mieć program, albo do diagnozowania "
+"problemów, takich jak wycieki pamięci."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:57
+msgid ""
+"If multiple copies of a program are running, the instructions (or <em>text</"
+"em>) of the program only need to be loaded once into physical memory. Each "
+"time a new instance of the program is launched (as a unique process with its "
+"own virtual memory pages), its page table maps the location of the text in "
+"virtual memory to those instructions in the original real memory location. "
+"In addition, any dynamic shared libraries used by the process appear as "
+"distinct in virtual memory, but are shared references to a single copy of "
+"the library's text segment in real memory. When accounting for the total "
+"memory use of a process, it is important to note that the cost of shared "
+"libraries loaded into memory can be spread across all processes currently "
+"using them."
+msgstr ""
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:69
+msgid ""
+"When the system needs more pages of memory than are available, some of the "
+"existing pages will be <em>paged out</em> or written to the <gui>swap space</"
+"gui>. Text pages are flagged read-execute in memory and don't need to be "
+"written to swap since they can be re-loaded from their original location on "
+"disk. Data pages have read-write permissions, and if modified when in "
+"memory, they are labeled <em>dirty</em>, and when designated for swapping, "
+"must be paged out. When a page in swap space is required by a running "
+"process, it needs to be swapped back in before use, perhaps causing another "
+"page to be paged out."
+msgstr ""
+
+#. (itstool) path: info/desc
 #: C/net-bits.page:22
 msgid "Choose the units to display your network speed."
 msgstr "Wybór jednostek do wyświetlania prędkości sieci."
@@ -1625,6 +1707,35 @@ msgstr ""
 "priorytet jednego z programów mocno wykorzystujących procesor, aby zwolnić "
 "moc procesora dla pozostałych. Można też zwiększyć priorytet procesu ważnego "
 "dla użytkownika, aby działał on szybciej."
+
+#. (itstool) path: info/desc
+#: C/process-priority-what.page:22
+msgid "The <em>nice</em> value of a process is used to adjust its priority."
+msgstr ""
+"Wartość <em>nice</em> procesu jest używana do dostosowania jego priorytetu."
+
+#. (itstool) path: page/title
+#: C/process-priority-what.page:25
+msgid "What is the <em>nice</em> value of a process?"
+msgstr "Czym jest wartość <em>nice</em> procesu?"
+
+#. (itstool) path: page/p
+#: C/process-priority-what.page:27
+msgid ""
+"The priority of a process determines the share of time the process is "
+"alotted on a system's one or more processors (CPUs or cores). A <em>nice</"
+"em> process, or one with a higher nice value, concedes priority to other "
+"processes. Adjusting the nice value will increase or decrease the scheduling "
+"priority."
+msgstr ""
+
+#. (itstool) path: page/p
+#: C/process-priority-what.page:32
+msgid ""
+"The lower the nice value, the higher the priority of the process. The nice "
+"value ranges from -20 (low nice, higher priority) to 20 (lower priority). "
+"The default value of nice is usually 0."
+msgstr ""
 
 #. (itstool) path: info/desc
 #: C/process-status.page:19
