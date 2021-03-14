@@ -29,6 +29,6 @@ gnome.yelp(meson.project_name(),
     'units.page',
   ],
   media: [
-    'figures/monitorlogo.png',
+    'figures/org.gnome.SystemMonitor.svg',
   ],
 )
