@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor-help\n"
-"POT-Creation-Date: 2020-10-18 07:36+0000\n"
-"PO-Revision-Date: 2021-03-14 18:40+0100\n"
+"POT-Creation-Date: 2021-03-14 17:56+0000\n"
+"PO-Revision-Date: 2021-03-21 11:57+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1276,6 +1276,18 @@ msgid ""
 "libraries loaded into memory can be spread across all processes currently "
 "using them."
 msgstr ""
+"Jeśli uruchomionych jest wiele kopii programu, instrukcje (lub <em>tekst</"
+"em>) programu musi być wczytany do pamięci fizycznej tylko raz. Za każdym "
+"razem, gdy nowe wystąpienie programu jest uruchamiane (jako unikalny proces "
+"ze swoimi własnymi stronami pamięci wirtualnej, jego tablica stron mapuje "
+"położenie tekstu w pamięci wirtualnej do tych instrukcji w oryginalnej "
+"prawdziwej pamięci. Dodatkowo wszelkie biblioteki dynamicznie współdzielone "
+"używane przez proces pojawiają się jako odrębne w pamięci wirtualnej, ale są "
+"współdzielonymi odniesieniami do jednej kopii segmentu tekstu biblioteki "
+"w prawdziwej pamięci. Podczas sprawdzania całkowitego użycia pamięci przez "
+"proces warto pamiętać, że koszt bibliotek współdzielonych wczytanych do "
+"pamięci może być rozłożony między wszystkimi obecnie używającymi ich "
+"procesami."
 
 #. (itstool) path: page/p
 #: C/memory-map-what.page:69
@@ -1290,6 +1302,16 @@ msgid ""
 "process, it needs to be swapped back in before use, perhaps causing another "
 "page to be paged out."
 msgstr ""
+"Kiedy komputer potrzebuje więcej stron pamięci niż jest dostępnych, to część "
+"istniejących stron zostaje usunięta lub zapisana w <gui>przestrzeni wymiany</"
+"gui>. Strony tekstu są oznaczane jako do odczytu i wykonania w pamięci i nie "
+"muszą być zapisywane w przestrzeni wymiany, ponieważ mogą być ponownie "
+"wczytywane z ich oryginalnych położeń na dysku. Strony danych mają "
+"uprawnienia do odczytu i zapisu, i jeśli zostały zmodyfikowane w pamięci, to "
+"są oznaczane jako <em>brudne</em> i po wyznaczeniu do wymiany muszą zostać "
+"usunięte. Kiedy strona w przestrzeni wymiany jest wymagana przez działający "
+"proces, to musi zostać ponownie wymieniona przed użyciem, być może powodując "
+"usunięcie innej strony."
 
 #. (itstool) path: info/desc
 #: C/net-bits.page:22
@@ -1728,6 +1750,10 @@ msgid ""
 "processes. Adjusting the nice value will increase or decrease the scheduling "
 "priority."
 msgstr ""
+"Priorytet procesu określa część czasu, jaki proces ma przydzielony przez "
+"procesory (lub rdzenie) komputera. Proces z wyższą wartością <em>nice</em> "
+"oddaje priorytet na rzecz pozostałych procesów. Dostosowanie wartości "
+"<em>nice</em> zwiększy lub zmniejszy priorytet planowania."
 
 #. (itstool) path: page/p
 #: C/process-priority-what.page:32
@@ -1736,6 +1762,10 @@ msgid ""
 "value ranges from -20 (low nice, higher priority) to 20 (lower priority). "
 "The default value of nice is usually 0."
 msgstr ""
+"Im niższa wartość <em>nice</em>, tym wyższy priorytet procesu. Wartość "
+"<em>nice</em> ma zakres od -20 (niska wartość <em>nice</em>, wyższy "
+"priorytet) do 20 (niższy priorytet). Domyślna wartość <em>nice</em> to "
+"zwykle 0."
 
 #. (itstool) path: info/desc
 #: C/process-status.page:19
