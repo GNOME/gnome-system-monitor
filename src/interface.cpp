@@ -698,7 +698,6 @@ create_main_window (GsmApplication *app)
     GdkDisplay *display;
     GdkMonitor *monitor;
     GdkRectangle monitor_geometry;
-    const char* session;
 
     int width, height, xpos, ypos;
 
@@ -714,19 +713,6 @@ create_main_window (GsmApplication *app)
 
     gtk_application_window_set_help_overlay (GTK_APPLICATION_WINDOW (app->main_window),
                                              GTK_SHORTCUTS_WINDOW (gtk_builder_get_object (builder, "help_overlay")));
-
-    session = g_getenv ("XDG_CURRENT_DESKTOP");
-    if (session && !strstr (session, "GNOME")){
-        GtkBox *mainbox;
-        HdyHeaderBar *headerbar;
-
-        mainbox = GTK_BOX (gtk_builder_get_object (builder, "main_box"));
-        headerbar = HDY_HEADER_BAR (gtk_builder_get_object (builder, "header_bar"));
-        gtk_style_context_remove_class (gtk_widget_get_style_context (GTK_WIDGET (headerbar)), "titlebar");
-        gtk_window_set_titlebar (GTK_WINDOW (main_window), NULL);
-        hdy_header_bar_set_show_close_button (headerbar, FALSE);
-        gtk_box_pack_start (mainbox, GTK_WIDGET (headerbar), FALSE, FALSE, 0);
-    }
 
     g_settings_get (app->settings->gobj(), GSM_SETTING_WINDOW_STATE, "(iiii)",
                     &width, &height, &xpos, &ypos);
