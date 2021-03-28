@@ -28,56 +28,68 @@
               </object>
             </child>
             <child>
-              <object class="GtkMenuButton" id="process_menu_button">
+              <object class="GtkBox" id="button_box">
                 <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="use-popover">True</property>
-                <property name="valign">center</property>
-                <property name="halign">end</property>
-                <property name="direction">none</property>
-                <accelerator key="F10" signal="clicked"/>
-                <style>
-                  <class name="title-button"/>
-                </style>
-              </object>
-              <packing>
-                <property name="pack-type">end</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkMenuButton" id="window_menu_button">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="use-popover">True</property>
-                <property name="valign">center</property>
-                <property name="halign">end</property>
-                <property name="direction">none</property>
-                <accelerator key="F10" signal="clicked"/>
-                <style>
-                  <class name="title-button"/>
-                </style>
-              </object>
-              <packing>
-                <property name="pack-type">end</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToggleButton" id="search_button">
-                <property name="visible">True</property>
-                <property name="active">False</property>
-                <property name="valign">center</property>
-                <property name="margin-start">6</property>
-                <property name="action-name">win.search</property>
-                <property name="action-target">@b false</property>
-                <style>
-                  <class name="title-button"/>
-                </style>
+                <property name="can-focus">False</property>
+                <property name="orientation">horizontal</property>
+                <property name="width-request">90</property>
+                <property name="spacing">6</property>
                 <child>
-                  <object class="GtkImage" id="search_image">
+                  <object class="GtkMenuButton" id="process_menu_button">
                     <property name="visible">True</property>
-                    <property name="icon-size">1</property>
-                    <property name="icon-name">edit-find-symbolic</property>
+                    <property name="can-focus">True</property>
+                    <property name="use-popover">True</property>
+                    <property name="valign">center</property>
+                    <property name="halign">end</property>
+                    <property name="direction">none</property>
+                    <accelerator key="F10" signal="clicked"/>
+                    <style>
+                      <class name="title-button"/>
+                    </style>
                   </object>
+                  <packing>
+                    <property name="pack-type">end</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkMenuButton" id="window_menu_button">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="use-popover">True</property>
+                    <property name="valign">center</property>
+                    <property name="halign">end</property>
+                    <property name="direction">none</property>
+                    <accelerator key="F10" signal="clicked"/>
+                    <style>
+                      <class name="title-button"/>
+                    </style>
+                  </object>
+                  <packing>
+                    <property name="pack-type">end</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="search_button">
+                    <property name="visible">True</property>
+                    <property name="active">False</property>
+                    <property name="valign">center</property>
+                    <property name="margin-start">6</property>
+                    <property name="action-name">win.search</property>
+                    <property name="action-target">@b false</property>
+                    <style>
+                      <class name="title-button"/>
+                    </style>
+                    <child>
+                      <object class="GtkImage" id="search_image">
+                        <property name="visible">True</property>
+                        <property name="icon-size">1</property>
+                        <property name="icon-name">edit-find-symbolic</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="pack-type">end</property>
+                  </packing>
                 </child>
               </object>
               <packing>
