@@ -84,12 +84,14 @@ char* LoadGraph::get_caption(guint index)
 
     if (this->is_logarithmic_scale()) {
         float caption_value = caption_percentage == 0 ? 0 : pow(100, caption_percentage / max_value);
-        caption = g_strdup_printf("%.0f %%", caption_value);
+        // Translators: loadgraphs y axis percentage labels: 0 %, 50%, 100%
+        caption = g_strdup_printf(_("%.0f %%"), caption_value);
     } else if (this->type == LOAD_GRAPH_NET) {
         const std::string captionstr(procman::format_network_rate((guint64)caption_percentage));
         caption = g_strdup(captionstr.c_str());
     } else {
-        caption = g_strdup_printf("%.0f %%", caption_percentage);
+        // Translators: loadgraphs y axis percentage labels: 0 %, 50%, 100%
+        caption = g_strdup_printf(_("%.0f %%"), caption_percentage);
     }
 
     return caption;
@@ -499,7 +501,8 @@ get_load (LoadGraph *graph)
         }
 
         /* Update label */
-        text = g_strdup_printf("%.1f%%", load * 100.0f);
+        // Translators: CPU usage percentage label: 95.7%
+        text = g_strdup_printf(_("%.1f%%"), load * 100.0f);
         gtk_label_set_text(GTK_LABEL(graph->labels.cpu[i]), text);
         g_free(text);
     }
