@@ -795,9 +795,9 @@ void
 load_graph_update_data (LoadGraph *graph)
 {
     // Rotate data one element down.
-    std::rotate(&graph->data[0],
-                &graph->data[graph->num_points - 2],
-                &graph->data[graph->num_points - 1]);
+    std::rotate(graph->data.begin(),
+                graph->data.end() - 1,
+                graph->data.end());
 
     // Update rotation counter.
     graph->latest = (graph->latest + 1) % graph->num_points;
@@ -1064,29 +1064,24 @@ void
 load_graph_change_num_points(LoadGraph *graph,
                              guint new_num_points)
 {
-    //Don't do anything if the value didn't change.
+    // Don't do anything if the value didn't change.
     if (graph->num_points == new_num_points)
         return;
 
     // Sort the values in the data_block vector in the order they were accessed in by the pointers in data.
-    std::rotate(&graph->data_block[0],
-                &graph->data_block[(graph->num_points - graph->latest) * graph->n],
-                &graph->data_block[graph->num_points * graph->n]);
+    std::rotate(graph->data_block.begin(),
+                graph->data_block.begin() + (graph->num_points - graph->latest) * graph->n,
+                graph->data_block.end());
 
     // Reset rotation counter.
     graph->latest = 0;
 
     // Resize the vectors to the new amount of data points.
+    // Fill the new values with -1.
     graph->data.resize(new_num_points);
-    graph->data_block.resize(graph->n * new_num_points);
+    graph->data_block.resize(graph->n * new_num_points, -1.0);
     if (graph->type == LOAD_GRAPH_NET) {
         graph->net.values.resize(new_num_points);
-    }
-
-    // Fill the new values with -1 instead of 0 if the vectors got bigger.
-    if (new_num_points > graph->num_points) {
-        std::fill(&graph->data_block[graph->n * graph->num_points],
-                  &graph->data_block[graph->n * new_num_points], -1.0);
     }
 
     // Replace the pointers in data, to match the new data_block values.
