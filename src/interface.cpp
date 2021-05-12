@@ -205,17 +205,31 @@ cb_net_out_color_changed (GsmColorButton *cp,
 }
 
 static void
+cb_disk_read_color_changed (GsmColorButton *cp, gpointer data)
+{
+  GsmApplication *app = (GsmApplication *) data;
+  change_settings_color (*app->settings.operator->(), GSM_SETTING_DISK_READ_COLOR, cp);
+}
+
+static void
+cb_disk_write_color_changed (GsmColorButton *cp, gpointer data)
+{
+  GsmApplication *app = (GsmApplication *) data;
+  change_settings_color (*app->settings.operator->(), GSM_SETTING_DISK_WRITE_COLOR, cp);
+}
+
+static void
 create_sys_view (GsmApplication *app,
                  GtkBuilder     *builder)
 {
-  GtkBox *cpu_graph_box, *mem_graph_box, *net_graph_box;
-  GtkExpander *cpu_expander, *mem_expander, *net_expander;
+  GtkBox *cpu_graph_box, *mem_graph_box, *net_graph_box, *disk_graph_box;
+  GtkExpander *cpu_expander, *mem_expander, *net_expander, *disk_expander;
   GtkLabel *label, *cpu_label;
   GtkGrid *table;
   GsmColorButton *color_picker;
   GtkCssProvider *provider;
 
-  LoadGraph *cpu_graph, *mem_graph, *net_graph;
+  LoadGraph *cpu_graph, *mem_graph, *net_graph, *disk_graph;
 
   gint i;
   gchar *title_text;
@@ -376,6 +390,58 @@ create_sys_view (GsmApplication *app,
 
   app->net_graph = net_graph;
 
+  /* The disk box */
+
+  disk_graph_box = GTK_BOX (gtk_builder_get_object (builder, "disk_graph_box"));
+  disk_expander = GTK_EXPANDER (gtk_builder_get_object (builder, "disk_expander"));
+  g_object_bind_property (disk_expander, "expanded", disk_expander, "vexpand", G_BINDING_DEFAULT);
+
+  disk_graph = new LoadGraph (LOAD_GRAPH_DISK);
+  gtk_widget_set_size_request (GTK_WIDGET (load_graph_get_widget (disk_graph)), -1, 70);
+  gtk_box_prepend (disk_graph_box,
+                   GTK_WIDGET (load_graph_get_widget (disk_graph)));
+
+  table = GTK_GRID (gtk_builder_get_object (builder, "disk_table"));
+
+  color_picker = gsm_color_button_new (
+    &disk_graph->colors.at (0), GSMCP_TYPE_DISK_READ);
+  gtk_widget_set_valign (GTK_WIDGET (color_picker), GTK_ALIGN_CENTER);
+  g_signal_connect (G_OBJECT (color_picker), "color-set",
+                    G_CALLBACK (cb_disk_read_color_changed), app);
+  title_text = g_strdup_printf (title_template, _("Reading"));
+  gsm_color_button_set_title (color_picker, title_text);
+  g_free (title_text);
+
+  label = GTK_LABEL (gtk_builder_get_object (builder, "reading_label"));
+  gtk_grid_attach_next_to (table, GTK_WIDGET (color_picker), GTK_WIDGET (label), GTK_POS_LEFT, 1, 2);
+  gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels (disk_graph)->disk_read), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
+  label = GTK_LABEL (gtk_builder_get_object (builder, "total_read_label"));
+  gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels (disk_graph)->disk_read_total), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
+
+  color_picker = gsm_color_button_new (
+    &disk_graph->colors.at (1), GSMCP_TYPE_DISK_WRITE);
+  gtk_widget_set_valign (GTK_WIDGET (color_picker), GTK_ALIGN_CENTER);
+  gtk_widget_set_hexpand (GTK_WIDGET (color_picker), true);
+  gtk_widget_set_halign (GTK_WIDGET (color_picker), GTK_ALIGN_END);
+
+  g_signal_connect (G_OBJECT (color_picker), "color-set",
+                    G_CALLBACK (cb_disk_write_color_changed), app);
+  title_text = g_strdup_printf (title_template, _("Writing"));
+  gsm_color_button_set_title (color_picker, title_text);
+  g_free (title_text);
+
+  label = GTK_LABEL (gtk_builder_get_object (builder, "writing_label"));
+  gtk_grid_attach_next_to (table, GTK_WIDGET (color_picker), GTK_WIDGET (label), GTK_POS_LEFT, 1, 2);
+  gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels (disk_graph)->disk_write), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
+  label = GTK_LABEL (gtk_builder_get_object (builder, "total_written_label"));
+  gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels (disk_graph)->disk_write_total), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
+  gtk_widget_set_hexpand (GTK_WIDGET (load_graph_get_labels (disk_graph)->disk_write_total), true);
+  gtk_widget_set_halign (GTK_WIDGET (load_graph_get_labels (disk_graph)->disk_write_total), GTK_ALIGN_START);
+
+  gtk_widget_set_hexpand (GTK_WIDGET (load_graph_get_labels (disk_graph)->disk_write), true);
+  gtk_widget_set_halign (GTK_WIDGET (load_graph_get_labels (disk_graph)->disk_write), GTK_ALIGN_START);
+
+  app->disk_graph = disk_graph;
   g_free (title_template);
 }
 
@@ -680,12 +746,14 @@ update_page_activities (GsmApplication *app)
       load_graph_start (app->cpu_graph);
       load_graph_start (app->mem_graph);
       load_graph_start (app->net_graph);
+      load_graph_start (app->disk_graph);
     }
   else
     {
       load_graph_stop (app->cpu_graph);
       load_graph_stop (app->mem_graph);
       load_graph_stop (app->net_graph);
+      load_graph_stop (app->disk_graph);
     }
 
   if (strcmp (current_page, "disks") == 0)
@@ -736,6 +804,7 @@ cb_main_window_suspended (GtkWindow      *surface,
           load_graph_stop (app->cpu_graph);
           load_graph_stop (app->mem_graph);
           load_graph_stop (app->net_graph);
+          load_graph_stop (app->disk_graph);
         }
       else if (current_page == "disks")
         {
@@ -754,6 +823,7 @@ cb_main_window_suspended (GtkWindow      *surface,
           load_graph_start (app->cpu_graph);
           load_graph_start (app->mem_graph);
           load_graph_start (app->net_graph);
+          load_graph_start (app->disk_graph);
         }
       else if (current_page == "disks")
         {

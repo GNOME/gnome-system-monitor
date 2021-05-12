@@ -40,6 +40,8 @@ struct ProcConfig
     swap_color (),
     net_in_color (),
     net_out_color (),
+    disk_read_color (),
+    disk_write_color (),
     bg_color (),
     frame_color (),
     num_cpus (0),
@@ -65,6 +67,8 @@ struct ProcConfig
   GdkRGBA swap_color;
   GdkRGBA net_in_color;
   GdkRGBA net_out_color;
+  GdkRGBA disk_read_color;
+  GdkRGBA disk_write_color;
   GdkRGBA bg_color;
   GdkRGBA frame_color;
   gint num_cpus;
@@ -257,6 +261,7 @@ unsigned frequency;
 LoadGraph        *cpu_graph;
 LoadGraph        *mem_graph;
 LoadGraph        *net_graph;
+LoadGraph        *disk_graph;
 
 GsmTreeView      *disk_list;
 

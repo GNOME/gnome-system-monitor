@@ -72,6 +72,7 @@ cb_draw_smooth_changed (Gio::Settings& settings,
   app->cpu_graph->clear_background ();
   app->mem_graph->clear_background ();
   app->net_graph->clear_background ();
+  app->disk_graph->clear_background ();
 }
 
 static void
@@ -127,6 +128,8 @@ cb_timeouts_changed (Gio::Settings& settings,
                                app->config.graph_update_interval);
       load_graph_change_speed (app->net_graph,
                                app->config.graph_update_interval);
+      load_graph_change_speed (app->disk_graph,
+                               app->config.graph_update_interval);
     }
   else if (key == GSM_SETTING_DISKS_UPDATE_INTERVAL)
     {
@@ -146,6 +149,7 @@ cb_data_points_changed (Gio::Settings& settings,
   load_graph_change_num_points (app->cpu_graph, points);
   load_graph_change_num_points (app->mem_graph, points);
   load_graph_change_num_points (app->net_graph, points);
+  load_graph_change_num_points (app->disk_graph, points);
 }
 
 static void
@@ -231,6 +235,16 @@ cb_color_changed (Gio::Settings& settings,
     {
       gdk_rgba_parse (&app->config.net_out_color, color.c_str ());
       app->net_graph->colors.at (1) = app->config.net_out_color;
+    }
+  else if (key == GSM_SETTING_DISK_READ_COLOR)
+    {
+      gdk_rgba_parse (&app->config.disk_read_color, color.c_str ());
+      app->disk_graph->colors.at (0) = app->config.disk_read_color;
+    }
+  else if (key == GSM_SETTING_DISK_WRITE_COLOR)
+    {
+      gdk_rgba_parse (&app->config.disk_write_color, color.c_str ());
+      app->disk_graph->colors.at (1) = app->config.disk_write_color;
     }
 }
 
@@ -322,11 +336,20 @@ GsmApplication::load_settings ()
 
   gdk_rgba_parse (&config.net_out_color, net_out_color.empty () ? "#00f2000000c1" : net_out_color.c_str ());
 
+  auto disk_read_color = this->settings->get_string (GSM_SETTING_DISK_READ_COLOR);
+
+  gdk_rgba_parse (&config.disk_read_color, disk_read_color.empty () ? "#000000f200f2" : disk_read_color.c_str ());
+
+  auto disk_write_color = this->settings->get_string (GSM_SETTING_DISK_WRITE_COLOR);
+
+  gdk_rgba_parse (&config.disk_write_color, disk_write_color.empty () ? "#00f2000000c1" : disk_write_color.c_str ());
+
+
   auto cbcc = [this](const Glib::ustring&key) {
                 cb_color_changed (*this->settings.operator-> (), key, this);
               };
 
-  for (auto k : { GSM_SETTING_CPU_COLORS, GSM_SETTING_MEM_COLOR, GSM_SETTING_SWAP_COLOR, GSM_SETTING_NET_IN_COLOR, GSM_SETTING_NET_OUT_COLOR })
+  for (auto k : { GSM_SETTING_CPU_COLORS, GSM_SETTING_MEM_COLOR, GSM_SETTING_SWAP_COLOR, GSM_SETTING_NET_IN_COLOR, GSM_SETTING_NET_OUT_COLOR, GSM_SETTING_DISK_READ_COLOR, GSM_SETTING_DISK_WRITE_COLOR })
     this->settings->signal_changed (k).connect (cbcc);
 }
 
@@ -348,6 +371,7 @@ GsmApplication::GsmApplication()
   cpu_graph (NULL),
   mem_graph (NULL),
   net_graph (NULL),
+  disk_graph (NULL),
   selection (NULL),
   timeout (0U),
   disk_timeout (0U),

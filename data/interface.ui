@@ -309,6 +309,84 @@
                             </child>
                           </object>
                         </child>
+                        <child>
+                          <object class="GtkExpander" id="disk_expander">
+                            <property name="vexpand">True</property>
+                            <property name="expanded">True</property>
+                            <child>
+                              <object class="GtkBox" id="disk_graph_box">
+                                <property name="hexpand">True</property>
+                                <property name="vexpand">True</property>
+                                <property name="orientation">vertical</property>
+                                <property name="margin-top">6</property>
+                                <property name="spacing">6</property>
+                                <child>
+                                  <object class="GtkGrid" id="disk_table">
+                                    <property name="margin-start">54</property>
+                                    <property name="margin-end">12</property>
+                                    <property name="hexpand">True</property>
+                                    <property name="column-spacing">6</property>
+                                    <property name="row-homogeneous">True</property>
+                                    <child>
+                                      <object class="GtkLabel" id="reading_label">
+                                        <property name="halign">start</property>
+                                        <property name="label" translatable="yes">Reading</property>
+                                        <layout>
+                                          <property name="column">1</property>
+                                          <property name="row">0</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="total_read_label">
+                                        <property name="halign">start</property>
+                                        <property name="label" translatable="yes">Total Read</property>
+                                        <layout>
+                                          <property name="column">1</property>
+                                          <property name="row">1</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="writing_label">
+                                        <property name="halign">start</property>
+                                        <property name="label" translatable="yes">Writing</property>
+                                        <layout>
+                                          <property name="column">5</property>
+                                          <property name="row">0</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="total_written_label">
+                                        <property name="halign">start</property>
+                                        <property name="label" translatable="yes">Total Written</property>
+                                        <layout>
+                                          <property name="column">5</property>
+                                          <property name="row">1</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child type="label">
+                              <object class="GtkBox" id="disk_header">
+                                <property name="margin-start">6</property>
+                                <child>
+                                  <object class="GtkLabel" id="disk_label">
+                                    <property name="halign">start</property>
+                                    <property name="label" translatable="yes">Disk</property>
+                                    <attributes>
+                                      <attribute name="weight" value="bold"/>
+                                    </attributes>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
                       </object>
                     </property>
                   </object>

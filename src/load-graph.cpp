@@ -6,6 +6,7 @@
 
 #include <glibtop.h>
 #include <glibtop/cpu.h>
+#include <glibtop/disk.h>
 #include <glibtop/mem.h>
 #include <glibtop/swap.h>
 #include <glibtop/netload.h>
@@ -87,6 +88,8 @@ LoadGraph::get_caption (guint index)
 
   if (this->type == LOAD_GRAPH_NET)
     max_value = this->net.max;
+  else if (this->type == LOAD_GRAPH_DISK)
+    max_value = this->disk.max;
   else
     max_value = 100;
 
@@ -102,6 +105,11 @@ LoadGraph::get_caption (guint index)
   else if (this->type == LOAD_GRAPH_NET)
     {
       const std::string captionstr (procman::format_network_rate ((guint64)caption_percentage));
+      caption = g_strdup (captionstr.c_str ());
+    }
+  else if (this->type == LOAD_GRAPH_DISK)
+    {
+      const std::string captionstr (procman::format_rate ((guint64)caption_percentage));
       caption = g_strdup (captionstr.c_str ());
     }
   else
@@ -884,6 +892,167 @@ get_net (LoadGraph *graph)
 }
 
 static void
+disk_scale (LoadGraph *graph, guint64 din, guint64 dout)
+{
+  graph->data[0][0] = 1.0f * din / graph->disk.max;
+  graph->data[0][1] = 1.0f * dout / graph->disk.max;
+
+  guint64 dmax = std::max (din, dout);
+  if (graph->latest == 0)
+    {
+      graph->disk.values[graph->num_points - 1] = dmax;
+    }
+  else
+    {
+      graph->disk.values[graph->latest - 1] = dmax;
+    }
+
+  guint64 new_max;
+  // both way, new_max is the greatest value
+  if (dmax >= graph->disk.max)
+    new_max = dmax;
+  else
+    new_max = *std::max_element (&graph->disk.values[0],
+                                 &graph->disk.values[graph->num_points - 1]);
+
+  //
+  // Round disk maximum
+  //
+
+  const guint64 bak_max (new_max);
+
+  if (GsmApplication::get ()->config.network_in_bits)
+    {
+      // nice number is for the ticks
+      unsigned ticks = graph->num_bars ();
+
+      // gets messy at low values due to division by 8
+      guint64 bit_max = std::max (new_max * 8, G_GUINT64_CONSTANT (10000));
+
+      // our tick size leads to max
+      double d = nicenum (bit_max / ticks, 0);
+      bit_max = ticks * d;
+      new_max = bit_max / 8;
+
+      procman_debug ("bak*8 %" G_GUINT64_FORMAT ", ticks %d, d %f"
+                     ", bit_max %" G_GUINT64_FORMAT ", new_max %" G_GUINT64_FORMAT,
+                     bak_max*8, ticks, d, bit_max, new_max );
+    }
+  else
+    {
+      // round up to get some extra space
+      // yes, it can overflow
+      new_max = 1.1 * new_max;
+      // make sure max is not 0 to avoid / 0
+      // default to 1 KiB
+      new_max = std::max (new_max, G_GUINT64_CONSTANT (1024));
+
+      // decompose new_max = coef10 * 2**(base10 * 10)
+      // where coef10 and base10 are integers and coef10 < 2**10
+      //
+      // e.g: ceil(100.5 KiB) = 101 KiB = 101 * 2**(1 * 10)
+      //      where base10 = 1, coef10 = 101, pow2 = 16
+
+      guint64 pow2 = std::floor (log2 (new_max));
+      guint64 base10 = pow2 / 10.0;
+      guint64 coef10 = std::ceil (new_max / double (G_GUINT64_CONSTANT (1) << (base10 * 10)));
+      g_assert (new_max <= (coef10 * (G_GUINT64_CONSTANT (1) << (base10 * 10))));
+
+      // then decompose coef10 = x * 10**factor10
+      // where factor10 is integer and x < 10
+      // so we new_max has only 1 significant digit
+
+      guint64 factor10 = std::pow( 10.0, std::floor (std::log10 (coef10)));
+      coef10 = std::ceil (coef10 / double (factor10)) * factor10;
+
+      new_max = coef10 * (G_GUINT64_CONSTANT (1) << guint64 (base10 * 10));
+      procman_debug ("bak %" G_GUINT64_FORMAT " new_max %" G_GUINT64_FORMAT
+                     "pow2 %" G_GUINT64_FORMAT " coef10 %" G_GUINT64_FORMAT,
+                     bak_max, new_max, pow2, coef10);
+    }
+
+  if (bak_max > new_max)
+    {
+      procman_debug ("overflow detected: bak=%" G_GUINT64_FORMAT
+                     " new=%" G_GUINT64_FORMAT,
+                     bak_max, new_max);
+      new_max = bak_max;
+    }
+
+  // if max is the same or has decreased but not so much, don't
+  // do anything to avoid rescaling
+  if ((0.8 * graph->disk.max) < new_max && new_max <= graph->disk.max)
+    return;
+
+  const double scale = 1.0f * graph->disk.max / new_max;
+
+  for (size_t i = 0; i < graph->num_points; i++)
+    {
+      if (graph->data[i][0] >= 0.0f)
+        {
+          graph->data[i][0] *= scale;
+          graph->data[i][1] *= scale;
+        }
+    }
+
+  procman_debug ("rescale dmax = %" G_GUINT64_FORMAT
+                 " max = %" G_GUINT64_FORMAT
+                 " new_max = %" G_GUINT64_FORMAT,
+                 dmax, graph->net.max, new_max);
+
+  graph->disk.max = new_max;
+
+  // force the graph background to be redrawn now that scale has changed
+  graph->clear_background ();
+}
+
+static void
+get_disk (LoadGraph *graph)
+{
+  glibtop_disk disk;
+  gint32 i;
+  guint64 read = 0, write = 0;
+  guint64 time;
+  guint64 din, dout;
+  glibtop_get_disk (&disk);
+
+  for (i = 0; i < glibtop_global_server->ndisk; i++)
+    {
+      read += disk.xdisk_sectors_read[i];
+      write += disk.xdisk_sectors_write[i];
+    }// FIXME find some way to convert this to bytes
+
+  time = g_get_monotonic_time ();
+
+  if (read >= graph->disk.last_read && write >= graph->disk.last_write && graph->disk.time != 0)
+    {
+      float dtime;
+      dtime = ((double) (time - graph->disk.time)) / G_USEC_PER_SEC;
+      din   = static_cast<guint64>((read  - graph->disk.last_read)  / dtime);
+      dout  = static_cast<guint64>((write - graph->disk.last_write) / dtime);
+    }
+  else
+    {
+      /* Don't calc anything if new data is less than old (interface
+         removed, counters reset, ...) or if it is the first time */
+      din  = 0;
+      dout = 0;
+    }
+
+  graph->disk.last_read  = read;
+  graph->disk.last_write = write;
+  graph->disk.time       = time;
+
+  disk_scale (graph, din, dout);
+
+  gtk_label_set_text (GTK_LABEL (graph->labels.disk_read), procman::format_network_rate (din).c_str ());
+  gtk_label_set_text (GTK_LABEL (graph->labels.disk_read_total), procman::format_network (read).c_str ());
+
+  gtk_label_set_text (GTK_LABEL (graph->labels.disk_write), procman::format_network_rate (dout).c_str ());
+  gtk_label_set_text (GTK_LABEL (graph->labels.disk_write_total), procman::format_network (write).c_str ());
+}
+
+void
 load_graph_update_data (LoadGraph *graph)
 {
   // Rotate data one element down.
@@ -907,6 +1076,10 @@ load_graph_update_data (LoadGraph *graph)
 
       case LOAD_GRAPH_NET:
         get_net (graph);
+        break;
+
+      case LOAD_GRAPH_DISK:
+        get_disk (graph);
         break;
 
       default:
@@ -972,7 +1145,8 @@ LoadGraph::LoadGraph(guint type)
   swap_color_picker (NULL),
   font_settings (Gio::Settings::create (FONT_SETTINGS_SCHEMA)),
   cpu (),
-  net ()
+  net (),
+  disk ()
 {
   font_settings->signal_changed (FONT_SETTING_SCALING).connect ([this](const Glib::ustring&) {
     load_graph_rescale (this);
@@ -1027,6 +1201,36 @@ LoadGraph::LoadGraph(guint type)
         gtk_label_set_width_chars (labels.net_out_total, 10);
 
         break;
+
+      case LOAD_GRAPH_DISK:
+        disk = DISK {};
+        n = 2;
+        disk.max = 1;
+        labels.disk_read = make_tnum_label ();
+        gtk_label_set_width_chars (labels.disk_read, 10);
+        gtk_widget_set_valign (GTK_WIDGET (labels.disk_read), GTK_ALIGN_CENTER);
+        gtk_widget_set_halign (GTK_WIDGET (labels.disk_read), GTK_ALIGN_END);
+        gtk_widget_show (GTK_WIDGET (labels.disk_read));
+
+        labels.disk_read_total = make_tnum_label ();
+        gtk_widget_set_valign (GTK_WIDGET (labels.disk_read_total), GTK_ALIGN_CENTER);
+        gtk_widget_set_halign (GTK_WIDGET (labels.disk_read_total), GTK_ALIGN_END);
+        gtk_label_set_width_chars (labels.disk_read_total, 10);
+        gtk_widget_show (GTK_WIDGET (labels.disk_read_total));
+
+        labels.disk_write = make_tnum_label ();
+        gtk_widget_set_valign (GTK_WIDGET (labels.disk_write), GTK_ALIGN_CENTER);
+        gtk_widget_set_halign (GTK_WIDGET (labels.disk_write), GTK_ALIGN_END);
+        gtk_label_set_width_chars (labels.disk_write, 10);
+        gtk_widget_show (GTK_WIDGET (labels.disk_write));
+
+        labels.disk_write_total = make_tnum_label ();
+        gtk_widget_set_valign (GTK_WIDGET (labels.disk_write_total), GTK_ALIGN_CENTER);
+        gtk_widget_set_halign (GTK_WIDGET (labels.disk_write), GTK_ALIGN_END);
+        gtk_label_set_width_chars (labels.disk_write_total, 10);
+        gtk_widget_show (GTK_WIDGET (labels.disk_write_total));
+
+        break;
     }
 
   colors.resize (n);
@@ -1051,6 +1255,12 @@ LoadGraph::LoadGraph(guint type)
         net.values = std::vector<unsigned>(num_points);
         colors[0] = GsmApplication::get ()->config.net_in_color;
         colors[1] = GsmApplication::get ()->config.net_out_color;
+        break;
+
+      case LOAD_GRAPH_DISK:
+        disk.values = std::vector<unsigned>(num_points);
+        colors[0] = GsmApplication::get ()->config.disk_read_color;
+        colors[1] = GsmApplication::get ()->config.disk_write_color;
         break;
     }
 
@@ -1169,6 +1379,8 @@ load_graph_change_num_points (LoadGraph *graph,
   graph->data_block.resize (graph->n * new_num_points, -1.0);
   if (graph->type == LOAD_GRAPH_NET)
     graph->net.values.resize (new_num_points);
+  else if (graph->type == LOAD_GRAPH_DISK)
+    graph->disk.values.resize (new_num_points);
 
   // Replace the pointers in data, to match the new data_block values.
   for (guint i = 0; i < new_num_points; ++i)

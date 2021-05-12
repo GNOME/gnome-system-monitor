@@ -587,7 +587,7 @@ gsm_color_button_class_init (GsmColorButtonClass *klass)
                                    PROP_TYPE,
                                    g_param_spec_uint ("type", _("Type"),
                                                       _("Type of color picker"),
-                                                      0, 4, 0,
+                                                      0, 6, 0,
                                                       G_PARAM_READWRITE));
 
   color_button_signals[COLOR_SET] = g_signal_new ("color-set",

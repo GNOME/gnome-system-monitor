@@ -13,7 +13,8 @@ enum
 {
   LOAD_GRAPH_CPU,
   LOAD_GRAPH_MEM,
-  LOAD_GRAPH_NET
+  LOAD_GRAPH_NET,
+  LOAD_GRAPH_DISK
 };
 
 enum
@@ -32,6 +33,10 @@ struct LoadGraphLabels
   GtkLabel *net_in_total;
   GtkLabel *net_out;
   GtkLabel *net_out_total;
+  GtkLabel *disk_read;
+  GtkLabel *disk_read_total;
+  GtkLabel *disk_write;
+  GtkLabel *disk_write_total;
 };
 
 struct LoadGraph
@@ -101,6 +106,14 @@ struct LoadGraph
     guint64 max;
     std::vector<unsigned> values;
   } net;
+
+  struct DISK
+  {
+    guint64 last_read, last_write;
+    guint64 time;
+    guint64 max;
+    std::vector<unsigned> values;
+  } disk;
   /* }; */
 };
 
