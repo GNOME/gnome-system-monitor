@@ -760,7 +760,7 @@ net_scale (LoadGraph *graph,
 
       guint64 pow2 = std::floor (log2 (new_max));
       guint64 base10 = pow2 / 10.0;
-      guint64 coef10 = std::ceil (new_max / double(G_GUINT64_CONSTANT (1) << (base10 * 10)));
+      guint64 coef10 = std::ceil (new_max / double (G_GUINT64_CONSTANT (1) << (base10 * 10)));
       g_assert (new_max <= (coef10 * (G_GUINT64_CONSTANT (1) << (base10 * 10))));
 
       // then decompose coef10 = x * 10**factor10
@@ -921,55 +921,35 @@ disk_scale (LoadGraph *graph, guint64 din, guint64 dout)
 
   const guint64 bak_max (new_max);
 
-  if (GsmApplication::get ()->config.network_in_bits)
-    {
-      // nice number is for the ticks
-      unsigned ticks = graph->num_bars ();
+  // round up to get some extra space
+  // yes, it can overflow
+  new_max = 1.1 * new_max;
+  // make sure max is not 0 to avoid / 0
+  // default to 1 KiB
+  new_max = std::max (new_max, G_GUINT64_CONSTANT (1024));
 
-      // gets messy at low values due to division by 8
-      guint64 bit_max = std::max (new_max * 8, G_GUINT64_CONSTANT (10000));
+  // decompose new_max = coef10 * 2**(base10 * 10)
+  // where coef10 and base10 are integers and coef10 < 2**10
+  //
+  // e.g: ceil(100.5 KiB) = 101 KiB = 101 * 2**(1 * 10)
+  //      where base10 = 1, coef10 = 101, pow2 = 16
 
-      // our tick size leads to max
-      double d = nicenum (bit_max / ticks, 0);
-      bit_max = ticks * d;
-      new_max = bit_max / 8;
+  guint64 pow2 = std::floor (log2 (new_max));
+  guint64 base10 = pow2 / 10.0;
+  guint64 coef10 = std::ceil (new_max / double (G_GUINT64_CONSTANT (1) << (base10 * 10)));
+  g_assert (new_max <= (coef10 * (G_GUINT64_CONSTANT (1) << (base10 * 10))));
 
-      procman_debug ("bak*8 %" G_GUINT64_FORMAT ", ticks %d, d %f"
-                     ", bit_max %" G_GUINT64_FORMAT ", new_max %" G_GUINT64_FORMAT,
-                     bak_max*8, ticks, d, bit_max, new_max );
-    }
-  else
-    {
-      // round up to get some extra space
-      // yes, it can overflow
-      new_max = 1.1 * new_max;
-      // make sure max is not 0 to avoid / 0
-      // default to 1 KiB
-      new_max = std::max (new_max, G_GUINT64_CONSTANT (1024));
+  // then decompose coef10 = x * 10**factor10
+  // where factor10 is integer and x < 10
+  // so we new_max has only 1 significant digit
 
-      // decompose new_max = coef10 * 2**(base10 * 10)
-      // where coef10 and base10 are integers and coef10 < 2**10
-      //
-      // e.g: ceil(100.5 KiB) = 101 KiB = 101 * 2**(1 * 10)
-      //      where base10 = 1, coef10 = 101, pow2 = 16
+  guint64 factor10 = std::pow (10.0, std::floor (std::log10 (coef10)));
+  coef10 = std::ceil (coef10 / double (factor10)) * factor10;
 
-      guint64 pow2 = std::floor (log2 (new_max));
-      guint64 base10 = pow2 / 10.0;
-      guint64 coef10 = std::ceil (new_max / double (G_GUINT64_CONSTANT (1) << (base10 * 10)));
-      g_assert (new_max <= (coef10 * (G_GUINT64_CONSTANT (1) << (base10 * 10))));
-
-      // then decompose coef10 = x * 10**factor10
-      // where factor10 is integer and x < 10
-      // so we new_max has only 1 significant digit
-
-      guint64 factor10 = std::pow( 10.0, std::floor (std::log10 (coef10)));
-      coef10 = std::ceil (coef10 / double (factor10)) * factor10;
-
-      new_max = coef10 * (G_GUINT64_CONSTANT (1) << guint64 (base10 * 10));
-      procman_debug ("bak %" G_GUINT64_FORMAT " new_max %" G_GUINT64_FORMAT
-                     "pow2 %" G_GUINT64_FORMAT " coef10 %" G_GUINT64_FORMAT,
-                     bak_max, new_max, pow2, coef10);
-    }
+  new_max = coef10 * (G_GUINT64_CONSTANT (1) << guint64 (base10 * 10));
+  procman_debug ("bak %" G_GUINT64_FORMAT " new_max %" G_GUINT64_FORMAT
+		         "pow2 %" G_GUINT64_FORMAT " coef10 %" G_GUINT64_FORMAT,
+                 bak_max, new_max, pow2, coef10);
 
   if (bak_max > new_max)
     {
@@ -1018,9 +998,13 @@ get_disk (LoadGraph *graph)
 
   for (i = 0; i < glibtop_global_server->ndisk; i++)
     {
+      // These sectors are standard unix 512 byte sectors, not the actual disk sectors.
       read += disk.xdisk_sectors_read[i];
       write += disk.xdisk_sectors_write[i];
-    }// FIXME find some way to convert this to bytes
+    }
+
+  read *= 512 / 2;
+  write *= 512 / 2;
 
   time = g_get_monotonic_time ();
 
@@ -1045,10 +1029,10 @@ get_disk (LoadGraph *graph)
 
   disk_scale (graph, din, dout);
 
-  gtk_label_set_text (GTK_LABEL (graph->labels.disk_read), procman::format_network_rate (din).c_str ());
+  gtk_label_set_text (GTK_LABEL (graph->labels.disk_read), procman::format_rate (din, false).c_str ());
   gtk_label_set_text (GTK_LABEL (graph->labels.disk_read_total), procman::format_network (read).c_str ());
 
-  gtk_label_set_text (GTK_LABEL (graph->labels.disk_write), procman::format_network_rate (dout).c_str ());
+  gtk_label_set_text (GTK_LABEL (graph->labels.disk_write), procman::format_rate (dout, false).c_str ());
   gtk_label_set_text (GTK_LABEL (graph->labels.disk_write_total), procman::format_network (write).c_str ());
 }
 
