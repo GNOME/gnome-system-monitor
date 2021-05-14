@@ -790,7 +790,7 @@ net_scale (LoadGraph *graph,
         graph->data[i][1] *= scale;
       }
 
-  procman_debug ("rescale dmax = %" G_GUINT64_FORMAT
+  procman_debug ("rescale net dmax = %" G_GUINT64_FORMAT
                  " max = %" G_GUINT64_FORMAT
                  " new_max = %" G_GUINT64_FORMAT,
                  dmax, graph->net.max, new_max);
@@ -975,10 +975,10 @@ disk_scale (LoadGraph *graph, guint64 din, guint64 dout)
         }
     }
 
-  procman_debug ("rescale dmax = %" G_GUINT64_FORMAT
+  procman_debug ("rescale disk dmax = %" G_GUINT64_FORMAT
                  " max = %" G_GUINT64_FORMAT
                  " new_max = %" G_GUINT64_FORMAT,
-                 dmax, graph->net.max, new_max);
+                 dmax, graph->disk.max, new_max);
 
   graph->disk.max = new_max;
 
@@ -998,11 +998,12 @@ get_disk (LoadGraph *graph)
 
   for (i = 0; i < glibtop_global_server->ndisk; i++)
     {
-      // These sectors are standard unix 512 byte sectors, not the actual disk sectors.
       read += disk.xdisk_sectors_read[i];
       write += disk.xdisk_sectors_write[i];
     }
 
+  /* These sectors are standard unix 512 byte sectors, not the actual disk sectors.
+     Also all disk Read/Write seems to be counted twice, once for the disk and once for the partition. */
   read *= 512 / 2;
   write *= 512 / 2;
 
@@ -1191,7 +1192,7 @@ LoadGraph::LoadGraph(guint type)
         n = 2;
         disk.max = 1;
         labels.disk_read = make_tnum_label ();
-        gtk_label_set_width_chars (labels.disk_read, 10);
+        gtk_label_set_width_chars (labels.disk_read, 16);
         gtk_widget_set_valign (GTK_WIDGET (labels.disk_read), GTK_ALIGN_CENTER);
         gtk_widget_set_halign (GTK_WIDGET (labels.disk_read), GTK_ALIGN_END);
         gtk_widget_show (GTK_WIDGET (labels.disk_read));
@@ -1199,7 +1200,7 @@ LoadGraph::LoadGraph(guint type)
         labels.disk_read_total = make_tnum_label ();
         gtk_widget_set_valign (GTK_WIDGET (labels.disk_read_total), GTK_ALIGN_CENTER);
         gtk_widget_set_halign (GTK_WIDGET (labels.disk_read_total), GTK_ALIGN_END);
-        gtk_label_set_width_chars (labels.disk_read_total, 10);
+        gtk_label_set_width_chars (labels.disk_read_total, 16);
         gtk_widget_show (GTK_WIDGET (labels.disk_read_total));
 
         labels.disk_write = make_tnum_label ();

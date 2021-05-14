@@ -318,6 +318,70 @@ gsm_color_button_snapshot (GtkWidget   *widget,
         cairo_paint (cr);
 
         break;
+
+      case GSMCP_TYPE_DISK_READ:
+        if (priv->image_buffer == NULL)
+          priv->image_buffer =
+        fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/download.svg");
+        gtk_widget_set_size_request (widget, 32, 32);
+        cairo_move_to (cr, 8.5, 1.5);
+        cairo_line_to (cr, 23.5, 1.5);
+        cairo_line_to (cr, 23.5, 11.5);
+        cairo_line_to (cr, 29.5, 11.5);
+        cairo_line_to (cr, 16.5, 27.5);
+        cairo_line_to (cr, 15.5, 27.5);
+        cairo_line_to (cr, 2.5, 11.5);
+        cairo_line_to (cr, 8.5, 11.5);
+        cairo_line_to (cr, 8.5, 1.5);
+        cairo_close_path (cr);
+        path = cairo_copy_path (cr);
+        cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
+        cairo_set_line_join (cr, CAIRO_LINE_JOIN_MITER);
+        cairo_set_line_width (cr, 1);
+        cairo_fill_preserve (cr);
+        cairo_set_miter_limit (cr, 5.0);
+        cairo_stroke (cr);
+        cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
+        cairo_append_path (cr, path);
+        cairo_path_destroy (path);
+        cairo_stroke (cr);
+        cairo_set_source_surface (cr, priv->image_buffer, 0.0,
+                                  0.0);
+        cairo_paint (cr);
+
+        break;
+
+      case GSMCP_TYPE_DISK_WRITE:
+        if (priv->image_buffer == NULL)
+          priv->image_buffer =
+        fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/upload.svg");
+        gtk_widget_set_size_request (widget, 32, 32);
+        cairo_move_to (cr, 16.5, 1.5);
+        cairo_line_to (cr, 29.5, 17.5);
+        cairo_line_to (cr, 23.5, 17.5);
+        cairo_line_to (cr, 23.5, 27.5);
+        cairo_line_to (cr, 8.5, 27.5);
+        cairo_line_to (cr, 8.5, 17.5);
+        cairo_line_to (cr, 2.5, 17.5);
+        cairo_line_to (cr, 15.5, 1.5);
+        cairo_line_to (cr, 16.5, 1.5);
+        cairo_close_path (cr);
+        path = cairo_copy_path (cr);
+        cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
+        cairo_set_line_join (cr, CAIRO_LINE_JOIN_MITER);
+        cairo_set_line_width (cr, 1);
+        cairo_fill_preserve (cr);
+        cairo_set_miter_limit (cr, 5.0);
+        cairo_stroke (cr);
+        cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
+        cairo_append_path (cr, path);
+        cairo_path_destroy (path);
+        cairo_stroke (cr);
+        cairo_set_source_surface (cr, priv->image_buffer, 0.0,
+                                  0.0);
+        cairo_paint (cr);
+
+        break;
     }
 }
 
