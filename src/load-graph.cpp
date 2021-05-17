@@ -824,15 +824,66 @@ get_hash64 (const gchar*c_str)
 }
 
 static void
+handle_dynamic_max_value (LoadGraph             *graph,
+                          std::vector<unsigned> *values,
+                          guint64               *max,
+                          guint64               *last_in,
+                          guint64               *last_out,
+                          guint64                in,
+                          guint64                out,
+                          guint64               *graph_time,
+                          guint64                hash,
+                          guint64               *graph_hash,
+                          gboolean               in_bits,
+                          gboolean               totals_in_bits,
+                          GtkLabel              *label_in,
+                          GtkLabel              *label_out,
+                          GtkLabel              *label_in_total,
+                          GtkLabel              *label_out_total)
+{
+  guint64 time = g_get_monotonic_time ();
+  guint64 din, dout;
+
+  if (in >= *last_in && out >= *last_out &&
+       (graph_hash == NULL || hash == *graph_hash) &&
+       *graph_time != 0)
+    {
+      float dtime = ((double) (time - *graph_time)) / G_USEC_PER_SEC;
+      din = static_cast<guint64>((in - *last_in)  / dtime);
+      dout = static_cast<guint64>((out - *last_out) / dtime);
+    }
+  else
+    {
+      /* Don't calc anything if new data is less than old (interface
+         removed, counters reset, ...) or if it is the first time */
+      din  = 0;
+      dout = 0;
+    }
+
+  *last_in = in;
+  *last_out = out;
+  *graph_time = time;
+  *graph_hash = hash;
+
+  dynamic_scale (graph, values, max, din, dout, in_bits);
+
+  gtk_label_set_text (GTK_LABEL (label_in), procman::format_rate (din, in_bits).c_str ());
+  gtk_label_set_text (GTK_LABEL (label_in_total), procman::format_volume (in, totals_in_bits).c_str ());
+
+  gtk_label_set_text (GTK_LABEL (label_out), procman::format_rate (dout, in_bits).c_str ());
+  gtk_label_set_text (GTK_LABEL (label_out_total), procman::format_volume (out, totals_in_bits).c_str ());
+}
+
+static void
 get_net (LoadGraph *graph)
 {
   glibtop_netlist netlist;
-  char **ifnames;
   guint32 i;
   guint64 in = 0, out = 0;
   guint64 hash = 1;
   guint64 time;
   guint64 din, dout;
+  char **ifnames = glibtop_get_netlist (&netlist);
 
   ifnames = glibtop_get_netlist (&netlist);
 
@@ -851,8 +902,8 @@ get_net (LoadGraph *graph)
          for example) we don't get a sudden peak.  Once we're
          able to get this, ignoring down interfaces will be
          possible too.  */
-      if (not (netload.flags & (1 << GLIBTOP_NETLOAD_ADDRESS6)
-               and netload.scope6 != GLIBTOP_IF_IN6_SCOPE_LINK)
+      if (not ((netload.flags & (1 << GLIBTOP_NETLOAD_ADDRESS6))
+                and netload.scope6 != GLIBTOP_IF_IN6_SCOPE_LINK)
           and not (netload.flags & (1 << GLIBTOP_NETLOAD_ADDRESS)))
         continue;
 
@@ -866,37 +917,13 @@ get_net (LoadGraph *graph)
 
   g_strfreev (ifnames);
 
-  time = g_get_monotonic_time ();
-
-  if (in >= graph->net.last_in && out >= graph->net.last_out &&
-      hash == graph->net.last_hash && graph->net.time != 0)
-    {
-      float dtime;
-      dtime = ((double) (time - graph->net.time)) / G_USEC_PER_SEC;
-      din = static_cast<guint64>((in - graph->net.last_in) / dtime);
-      dout = static_cast<guint64>((out - graph->net.last_out) / dtime);
-    }
-  else
-    {
-      /* Don't calc anything if new data is less than old (interface
-         removed, counters reset, ...) or if it is the first time */
-      din = 0;
-      dout = 0;
-    }
-
-  graph->net.last_in = in;
-  graph->net.last_out = out;
-  graph->net.last_hash = hash;
-  graph->net.time = time;
-
-  dynamic_scale (graph, &graph->net.values, &graph->net.max, din, dout,
-                 GsmApplication::get()->config.network_in_bits);
-
-  gtk_label_set_text (GTK_LABEL (graph->labels.net_in), procman::format_network_rate (din).c_str ());
-  gtk_label_set_text (GTK_LABEL (graph->labels.net_in_total), procman::format_network (in).c_str ());
-
-  gtk_label_set_text (GTK_LABEL (graph->labels.net_out), procman::format_network_rate (dout).c_str ());
-  gtk_label_set_text (GTK_LABEL (graph->labels.net_out_total), procman::format_network (out).c_str ());
+  handle_dynamic_max_value (graph, &graph->net.values, &graph->net.max, &graph->net.last_in,
+                            &graph->net.last_out, in, out, &graph->net.time,
+                            hash, &graph->net.last_hash,
+                            GsmApplication::get ()->config.network_in_bits,
+                            GsmApplication::get ()->config.network_total_in_bits,
+                            graph->labels.net_in, graph->labels.net_out,
+                            graph->labels.net_in_total, graph->labels.net_out_total);
 }
 
 static void
@@ -905,8 +932,6 @@ get_disk (LoadGraph *graph)
   glibtop_disk disk;
   gint32 i;
   guint64 read = 0, write = 0;
-  guint64 time;
-  guint64 din, dout;
   glibtop_get_disk (&disk);
 
   for (i = 0; i < glibtop_global_server->ndisk; i++)
@@ -920,34 +945,10 @@ get_disk (LoadGraph *graph)
   read *= 512 / 2;
   write *= 512 / 2;
 
-  time = g_get_monotonic_time ();
-
-  if (read >= graph->disk.last_read && write >= graph->disk.last_write && graph->disk.time != 0)
-    {
-      float dtime;
-      dtime = ((double) (time - graph->disk.time)) / G_USEC_PER_SEC;
-      din   = static_cast<guint64>((read  - graph->disk.last_read)  / dtime);
-      dout  = static_cast<guint64>((write - graph->disk.last_write) / dtime);
-    }
-  else
-    {
-      /* Don't calc anything if new data is less than old (interface
-         removed, counters reset, ...) or if it is the first time */
-      din  = 0;
-      dout = 0;
-    }
-
-  graph->disk.last_read  = read;
-  graph->disk.last_write = write;
-  graph->disk.time       = time;
-
-  dynamic_scale (graph, &graph->disk.values, &graph->disk.max, din, dout, FALSE);
-
-  gtk_label_set_text (GTK_LABEL (graph->labels.disk_read), procman::format_rate (din, false).c_str ());
-  gtk_label_set_text (GTK_LABEL (graph->labels.disk_read_total), procman::format_network (read).c_str ());
-
-  gtk_label_set_text (GTK_LABEL (graph->labels.disk_write), procman::format_rate (dout, false).c_str ());
-  gtk_label_set_text (GTK_LABEL (graph->labels.disk_write_total), procman::format_network (write).c_str ());
+  handle_dynamic_max_value (graph, &graph->disk.values, &graph->disk.max, &graph->disk.last_read,
+                            &graph->disk.last_write, read, write, &graph->disk.time, 0, NULL,
+                            FALSE, FALSE, graph->labels.disk_read, graph->labels.disk_write,
+                            graph->labels.disk_read_total, graph->labels.disk_write_total);
 }
 
 void

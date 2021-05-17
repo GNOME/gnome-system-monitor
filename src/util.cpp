@@ -812,6 +812,17 @@ tree_store_update<const char>(GtkTreeModel*model,
 
 
 std::string
+format_volume (guint64 size,
+               bool    want_bits)
+{
+  char* bytes = procman::format_size (size, want_bits);
+  std::string formatted (bytes);
+  g_free (bytes);
+  return formatted;
+}
+
+
+std::string
 format_rate (guint64 rate,
              bool    want_bits)
 {
@@ -825,13 +836,9 @@ format_rate (guint64 rate,
 
 
 std::string
-format_network (guint64 rate)
+format_network (guint64 size)
 {
-  char*bytes = procman::format_size (rate, GsmApplication::get ()->config.network_total_in_bits);
-  std::string formatted (bytes);
-
-  g_free (bytes);
-  return formatted;
+  return format_volume (size, GsmApplication::get ()->config.network_total_in_bits);
 }
 
 
