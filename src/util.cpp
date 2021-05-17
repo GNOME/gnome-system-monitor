@@ -850,6 +850,20 @@ get_monospace_system_font_name ()
 
 
 GtkLabel *
+init_tnum_label (gint     char_width,
+                 GtkAlign halign)
+{
+  GtkLabel *label = make_tnum_label ();
+
+  gtk_label_set_width_chars (label, char_width);
+  gtk_widget_set_valign (GTK_WIDGET (label), GTK_ALIGN_CENTER);
+  gtk_widget_set_halign (GTK_WIDGET (label), halign);
+
+  return label;
+}
+
+
+GtkLabel *
 make_tnum_label (void)
 {
   PangoAttrList *attrs = make_tnum_attr_list ();

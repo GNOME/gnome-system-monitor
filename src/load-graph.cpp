@@ -941,7 +941,7 @@ get_disk (LoadGraph *graph)
   graph->disk.last_write = write;
   graph->disk.time       = time;
 
-  dynamic_scale (graph, &graph->disk.values, &graph->disk.max, din, dout, 0);
+  dynamic_scale (graph, &graph->disk.values, &graph->disk.max, din, dout, FALSE);
 
   gtk_label_set_text (GTK_LABEL (graph->labels.disk_read), procman::format_rate (din, false).c_str ());
   gtk_label_set_text (GTK_LABEL (graph->labels.disk_read_total), procman::format_network (read).c_str ());
@@ -1066,68 +1066,28 @@ LoadGraph::LoadGraph(guint type)
 
       case LOAD_GRAPH_MEM:
         n = 2;
-        labels.memory = make_tnum_label ();
-        gtk_widget_set_valign (GTK_WIDGET (labels.memory), GTK_ALIGN_CENTER);
-        gtk_widget_set_halign (GTK_WIDGET (labels.memory), GTK_ALIGN_START);
-        labels.swap = make_tnum_label ();
-        gtk_widget_set_valign (GTK_WIDGET (labels.swap), GTK_ALIGN_CENTER);
-        gtk_widget_set_halign (GTK_WIDGET (labels.swap), GTK_ALIGN_START);
+        labels.memory = init_tnum_label (10, GTK_ALIGN_START);
+        labels.swap = init_tnum_label (10, GTK_ALIGN_START);
         break;
 
       case LOAD_GRAPH_NET:
         net = NET {};
         n = 2;
         net.max = 1;
-        labels.net_in = make_tnum_label ();
-        gtk_label_set_width_chars (labels.net_in, 10);
-        gtk_widget_set_valign (GTK_WIDGET (labels.net_in), GTK_ALIGN_CENTER);
-        gtk_widget_set_halign (GTK_WIDGET (labels.net_in), GTK_ALIGN_END);
-
-        labels.net_in_total = make_tnum_label ();
-        gtk_widget_set_valign (GTK_WIDGET (labels.net_in_total), GTK_ALIGN_CENTER);
-        gtk_widget_set_halign (GTK_WIDGET (labels.net_in_total), GTK_ALIGN_END);
-        gtk_label_set_width_chars (labels.net_in_total, 10);
-
-        labels.net_out = make_tnum_label ();
-        gtk_widget_set_valign (GTK_WIDGET (labels.net_out), GTK_ALIGN_CENTER);
-        gtk_widget_set_halign (GTK_WIDGET (labels.net_out), GTK_ALIGN_END);
-        gtk_label_set_width_chars (labels.net_out, 10);
-
-        labels.net_out_total = make_tnum_label ();
-        gtk_widget_set_valign (GTK_WIDGET (labels.net_out_total), GTK_ALIGN_CENTER);
-        gtk_widget_set_halign (GTK_WIDGET (labels.net_out), GTK_ALIGN_END);
-        gtk_label_set_width_chars (labels.net_out_total, 10);
-
+        labels.net_in = init_tnum_label (10, GTK_ALIGN_END);
+        labels.net_in_total = init_tnum_label (10, GTK_ALIGN_END);
+        labels.net_out = init_tnum_label (10, GTK_ALIGN_END);
+        labels.net_out_total = init_tnum_label (10, GTK_ALIGN_END);
         break;
 
       case LOAD_GRAPH_DISK:
         disk = DISK {};
         n = 2;
         disk.max = 1;
-        labels.disk_read = make_tnum_label ();
-        gtk_label_set_width_chars (labels.disk_read, 16);
-        gtk_widget_set_valign (GTK_WIDGET (labels.disk_read), GTK_ALIGN_CENTER);
-        gtk_widget_set_halign (GTK_WIDGET (labels.disk_read), GTK_ALIGN_END);
-        gtk_widget_show (GTK_WIDGET (labels.disk_read));
-
-        labels.disk_read_total = make_tnum_label ();
-        gtk_widget_set_valign (GTK_WIDGET (labels.disk_read_total), GTK_ALIGN_CENTER);
-        gtk_widget_set_halign (GTK_WIDGET (labels.disk_read_total), GTK_ALIGN_END);
-        gtk_label_set_width_chars (labels.disk_read_total, 16);
-        gtk_widget_show (GTK_WIDGET (labels.disk_read_total));
-
-        labels.disk_write = make_tnum_label ();
-        gtk_widget_set_valign (GTK_WIDGET (labels.disk_write), GTK_ALIGN_CENTER);
-        gtk_widget_set_halign (GTK_WIDGET (labels.disk_write), GTK_ALIGN_END);
-        gtk_label_set_width_chars (labels.disk_write, 10);
-        gtk_widget_show (GTK_WIDGET (labels.disk_write));
-
-        labels.disk_write_total = make_tnum_label ();
-        gtk_widget_set_valign (GTK_WIDGET (labels.disk_write_total), GTK_ALIGN_CENTER);
-        gtk_widget_set_halign (GTK_WIDGET (labels.disk_write), GTK_ALIGN_END);
-        gtk_label_set_width_chars (labels.disk_write_total, 10);
-        gtk_widget_show (GTK_WIDGET (labels.disk_write_total));
-
+        labels.disk_read = init_tnum_label (16, GTK_ALIGN_END);
+        labels.disk_read_total = init_tnum_label (16, GTK_ALIGN_END);
+        labels.disk_write = init_tnum_label (10, GTK_ALIGN_END);
+        labels.disk_write_total = init_tnum_label (10, GTK_ALIGN_END);
         break;
     }
 
