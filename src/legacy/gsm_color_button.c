@@ -132,9 +132,9 @@ gsm_color_button_draw_arrow_outline (cairo_t * cr, gboolean down)
 
   if (down)
     {
-      cairo_translate(cr, 16, 16);
-      cairo_rotate(cr, G_PI);
-      cairo_translate(cr, -16, -13);
+      cairo_translate (cr, 16, 16);
+      cairo_rotate (cr, G_PI);
+      cairo_translate (cr, -16, -13);
     }
 
   cairo_move_to (cr, 16.5, 1.5);
@@ -157,14 +157,14 @@ gsm_color_button_draw_arrow_outline (cairo_t * cr, gboolean down)
   cairo_stroke (cr);
   cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
   cairo_append_path (cr, path);
-  cairo_path_destroy(path);
+  cairo_path_destroy (path);
   cairo_stroke (cr);
 
   if (down)
     {
-      cairo_translate(cr, 16, 13);
-      cairo_rotate(cr, -G_PI);
-      cairo_translate(cr, -16, -16);
+      cairo_translate (cr, 16, 13);
+      cairo_rotate (cr, -G_PI);
+      cairo_translate (cr, -16, -16);
     }
 }
 

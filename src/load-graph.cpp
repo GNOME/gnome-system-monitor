@@ -695,35 +695,42 @@ nicenum (double x,
 }
 
 static void
-net_scale (LoadGraph *graph,
-           guint64    din,
-           guint64    dout)
+dynamic_scale (LoadGraph             *graph,
+               std::vector<unsigned> *values,
+               guint64               *max,
+               guint64                din,
+               guint64                dout,
+               gboolean               in_bits)
 {
-  graph->data[0][0] = 1.0f * din / graph->net.max;
-  graph->data[0][1] = 1.0f * dout / graph->net.max;
+  graph->data[0][0] = 1.0f * din / *max;
+  graph->data[0][1] = 1.0f * dout / *max;
 
   guint64 dmax = std::max (din, dout);
 
   if (graph->latest == 0)
-    graph->net.values[graph->num_points - 1] = dmax;
+    {
+      (*values)[graph->num_points - 1] = dmax;
+    }
   else
-    graph->net.values[graph->latest - 1] = dmax;
+    {
+      (*values)[graph->latest - 1] = dmax;
+    }
 
   guint64 new_max;
   // both way, new_max is the greatest value
-  if (dmax >= graph->net.max)
+  if (dmax >= *max)
     new_max = dmax;
   else
-    new_max = *std::max_element (&graph->net.values[0],
-                                 &graph->net.values[graph->num_points - 1]);
+    new_max = *std::max_element (&(*values)[0],
+                                 &(*values)[graph->num_points - 1]);
 
   //
-  // Round network maximum
+  // Round maximum
   //
 
   const guint64 bak_max (new_max);
 
-  if (GsmApplication::get ()->config.network_in_bits)
+  if (in_bits)
     {
       // nice number is for the ticks
       unsigned ticks = graph->num_bars;
@@ -768,7 +775,7 @@ net_scale (LoadGraph *graph,
       // so we new_max has only 1 significant digit
 
       guint64 factor10 = std::pow (10.0, std::floor (std::log10 (coef10)));
-      coef10 = std::ceil (coef10 / double(factor10)) * factor10;
+      coef10 = std::ceil (coef10 / double (factor10)) * factor10;
 
       new_max = coef10 * (G_GUINT64_CONSTANT (1) << guint64 (base10 * 10));
       procman_debug ("bak %" G_GUINT64_FORMAT " new_max %" G_GUINT64_FORMAT
@@ -781,7 +788,7 @@ net_scale (LoadGraph *graph,
   if ((0.8 * graph->net.max) < new_max && new_max <= graph->net.max)
     return;
 
-  const double scale = 1.0f * graph->net.max / new_max;
+  const double scale = 1.0f * *max / new_max;
 
   for (size_t i = 0; i < graph->num_points; i++)
     if (graph->data[i][0] >= 0.0f)
@@ -790,12 +797,12 @@ net_scale (LoadGraph *graph,
         graph->data[i][1] *= scale;
       }
 
-  procman_debug ("rescale net dmax = %" G_GUINT64_FORMAT
+  procman_debug ("rescale dmax = %" G_GUINT64_FORMAT
                  " max = %" G_GUINT64_FORMAT
                  " new_max = %" G_GUINT64_FORMAT,
-                 dmax, graph->net.max, new_max);
+                 dmax, *max, new_max);
 
-  graph->net.max = new_max;
+  *max = new_max;
 
   // force the graph background to be redrawn now that scale has changed
   graph->clear_background ();
@@ -882,108 +889,14 @@ get_net (LoadGraph *graph)
   graph->net.last_hash = hash;
   graph->net.time = time;
 
-  net_scale (graph, din, dout);
+  dynamic_scale (graph, &graph->net.values, &graph->net.max, din, dout,
+                 GsmApplication::get()->config.network_in_bits);
 
   gtk_label_set_text (GTK_LABEL (graph->labels.net_in), procman::format_network_rate (din).c_str ());
   gtk_label_set_text (GTK_LABEL (graph->labels.net_in_total), procman::format_network (in).c_str ());
 
   gtk_label_set_text (GTK_LABEL (graph->labels.net_out), procman::format_network_rate (dout).c_str ());
   gtk_label_set_text (GTK_LABEL (graph->labels.net_out_total), procman::format_network (out).c_str ());
-}
-
-static void
-disk_scale (LoadGraph *graph, guint64 din, guint64 dout)
-{
-  graph->data[0][0] = 1.0f * din / graph->disk.max;
-  graph->data[0][1] = 1.0f * dout / graph->disk.max;
-
-  guint64 dmax = std::max (din, dout);
-  if (graph->latest == 0)
-    {
-      graph->disk.values[graph->num_points - 1] = dmax;
-    }
-  else
-    {
-      graph->disk.values[graph->latest - 1] = dmax;
-    }
-
-  guint64 new_max;
-  // both way, new_max is the greatest value
-  if (dmax >= graph->disk.max)
-    new_max = dmax;
-  else
-    new_max = *std::max_element (&graph->disk.values[0],
-                                 &graph->disk.values[graph->num_points - 1]);
-
-  //
-  // Round disk maximum
-  //
-
-  const guint64 bak_max (new_max);
-
-  // round up to get some extra space
-  // yes, it can overflow
-  new_max = 1.1 * new_max;
-  // make sure max is not 0 to avoid / 0
-  // default to 1 KiB
-  new_max = std::max (new_max, G_GUINT64_CONSTANT (1024));
-
-  // decompose new_max = coef10 * 2**(base10 * 10)
-  // where coef10 and base10 are integers and coef10 < 2**10
-  //
-  // e.g: ceil(100.5 KiB) = 101 KiB = 101 * 2**(1 * 10)
-  //      where base10 = 1, coef10 = 101, pow2 = 16
-
-  guint64 pow2 = std::floor (log2 (new_max));
-  guint64 base10 = pow2 / 10.0;
-  guint64 coef10 = std::ceil (new_max / double (G_GUINT64_CONSTANT (1) << (base10 * 10)));
-  g_assert (new_max <= (coef10 * (G_GUINT64_CONSTANT (1) << (base10 * 10))));
-
-  // then decompose coef10 = x * 10**factor10
-  // where factor10 is integer and x < 10
-  // so we new_max has only 1 significant digit
-
-  guint64 factor10 = std::pow (10.0, std::floor (std::log10 (coef10)));
-  coef10 = std::ceil (coef10 / double (factor10)) * factor10;
-
-  new_max = coef10 * (G_GUINT64_CONSTANT (1) << guint64 (base10 * 10));
-  procman_debug ("bak %" G_GUINT64_FORMAT " new_max %" G_GUINT64_FORMAT
-		         "pow2 %" G_GUINT64_FORMAT " coef10 %" G_GUINT64_FORMAT,
-                 bak_max, new_max, pow2, coef10);
-
-  if (bak_max > new_max)
-    {
-      procman_debug ("overflow detected: bak=%" G_GUINT64_FORMAT
-                     " new=%" G_GUINT64_FORMAT,
-                     bak_max, new_max);
-      new_max = bak_max;
-    }
-
-  // if max is the same or has decreased but not so much, don't
-  // do anything to avoid rescaling
-  if ((0.8 * graph->disk.max) < new_max && new_max <= graph->disk.max)
-    return;
-
-  const double scale = 1.0f * graph->disk.max / new_max;
-
-  for (size_t i = 0; i < graph->num_points; i++)
-    {
-      if (graph->data[i][0] >= 0.0f)
-        {
-          graph->data[i][0] *= scale;
-          graph->data[i][1] *= scale;
-        }
-    }
-
-  procman_debug ("rescale disk dmax = %" G_GUINT64_FORMAT
-                 " max = %" G_GUINT64_FORMAT
-                 " new_max = %" G_GUINT64_FORMAT,
-                 dmax, graph->disk.max, new_max);
-
-  graph->disk.max = new_max;
-
-  // force the graph background to be redrawn now that scale has changed
-  graph->clear_background ();
 }
 
 static void
@@ -1028,7 +941,7 @@ get_disk (LoadGraph *graph)
   graph->disk.last_write = write;
   graph->disk.time       = time;
 
-  disk_scale (graph, din, dout);
+  dynamic_scale (graph, &graph->disk.values, &graph->disk.max, din, dout, 0);
 
   gtk_label_set_text (GTK_LABEL (graph->labels.disk_read), procman::format_rate (din, false).c_str ());
   gtk_label_set_text (GTK_LABEL (graph->labels.disk_read_total), procman::format_network (read).c_str ());
