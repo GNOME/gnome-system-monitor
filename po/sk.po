@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2021-04-30 13:57+0000\n"
-"PO-Revision-Date: 2021-06-15 21:34+0200\n"
+"POT-Creation-Date: 2021-06-15 19:36+0000\n"
+"PO-Revision-Date: 2021-06-15 21:36+0200\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: slovenčina <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -459,7 +459,7 @@ msgid "Behavior"
 msgstr "Správanie"
 
 # GtkLabel label
-#: data/preferences.ui:24 data/preferences.ui:303
+#: data/preferences.ui:24 data/preferences.ui:142 data/preferences.ui:303
 msgid "_Update Interval in Seconds"
 msgstr "_Interval aktualizácie v sekundách"
 
@@ -498,14 +498,9 @@ msgstr "I_nformácie o procesoch zobrazené v zozname:"
 msgid "Graphs"
 msgstr "Grafy"
 
-# GtkLabel label
-#: data/preferences.ui:142
-msgid "_Update Interval in Seconds:"
-msgstr "_Interval aktualizácie v sekundách:"
-
 #: data/preferences.ui:160
-msgid "_Chart Data Points:"
-msgstr "Body údajov _grafu:"
+msgid "_Chart Data Points"
+msgstr "Body údajov _grafu"
 
 # GtkCheckButton label
 #: data/preferences.ui:177
@@ -547,8 +542,8 @@ msgstr "Zobraziť _všetky súborové systémy"
 
 # GtkLabel label
 #: data/preferences.ui:339
-msgid "File system information shown in list:"
-msgstr "I_nformácie o súborových systémoch zobrazené v zozname:"
+msgid "File system information shown in list"
+msgstr "Informácie o súborových systémoch zobrazené v zozname"
 
 #: data/renice.ui:27 src/procdialogs.cpp:162 src/setaffinity.cpp:312
 msgid "_Cancel"
@@ -730,7 +725,13 @@ msgstr "Prijaté neplatné dáta farieb\n"
 msgid "Click to set graph colors"
 msgstr "Kliknutím nastavíte farby grafov"
 
-#: src/load-graph.cpp:134
+#. Translators: loadgraphs y axis percentage labels: 0 %, 50%, 100%
+#: src/load-graph.cpp:88 src/load-graph.cpp:94
+#, c-format
+msgid "%.0f %%"
+msgstr "%.0f %%"
+
+#: src/load-graph.cpp:136
 #, c-format
 msgid "%u hr"
 msgid_plural "%u hrs"
@@ -738,7 +739,7 @@ msgstr[0] "%u hodín"
 msgstr[1] "%u hodina"
 msgstr[2] "%u hodiny"
 
-#: src/load-graph.cpp:135
+#: src/load-graph.cpp:137
 #, c-format
 msgid "%u min"
 msgid_plural "%u mins"
@@ -746,7 +747,7 @@ msgstr[0] "%u minút"
 msgstr[1] "%u minúta"
 msgstr[2] "%u minúty"
 
-#: src/load-graph.cpp:137
+#: src/load-graph.cpp:139
 #, c-format
 msgid "%u sec"
 msgid_plural "%u secs"
@@ -754,18 +755,25 @@ msgstr[0] "%u sekúnd"
 msgstr[1] "%u sekunda"
 msgstr[2] "%u sekundy"
 
-#: src/load-graph.cpp:527
+#. Update label
+#. Translators: CPU usage percentage label: 95.7%
+#: src/load-graph.cpp:505
+#, c-format
+msgid "%.1f%%"
+msgstr "%.1f%%"
+
+#: src/load-graph.cpp:530
 msgid "not available"
 msgstr "nedostupné"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:530
+#: src/load-graph.cpp:533
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) z %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:534
+#: src/load-graph.cpp:537
 #, c-format
 msgid "Cache %s"
 msgstr "Vyrovnávacia pamäť %s"
@@ -1878,6 +1886,10 @@ msgstr "Veľmi nízka priorita"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+# GtkLabel label
+#~ msgid "_Update Interval in Seconds:"
+#~ msgstr "_Interval aktualizácie v sekundách:"
 
 # GtkCheckButton label
 #~ msgid "Show _all file systems"
