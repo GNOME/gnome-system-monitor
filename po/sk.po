@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2021-01-21 07:59+0000\n"
-"PO-Revision-Date: 2021-02-02 19:05+0100\n"
+"POT-Creation-Date: 2021-04-30 13:57+0000\n"
+"PO-Revision-Date: 2021-06-15 21:34+0200\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: slovenčina <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -23,17 +23,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 3.0\n"
 
 # desktop entry name
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
-#: src/application.cpp:347 src/interface.cpp:411
+#: src/application.cpp:348 src/interface.cpp:412
 msgid "System Monitor"
 msgstr "Monitor systému"
 
 # desktop entry comment
 #: gnome-system-monitor.desktop.in.in:4
-#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:412
+#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:413
 msgid "View current processes and monitor system state"
 msgstr "Zobrazuje aktuálne procesy a monitoruje stav systému"
 
@@ -49,7 +49,7 @@ msgstr ""
 
 # desktop entry name
 #: gnome-system-monitor-kde.desktop.in.in:3
-#: gnome-system-monitor.appdata.xml.in:6 src/application.cpp:406
+#: gnome-system-monitor.appdata.xml.in:6 src/application.cpp:407
 msgid "GNOME System Monitor"
 msgstr "GNOME monitor systému"
 
@@ -240,7 +240,7 @@ msgid "Send Kill signal"
 msgstr "Odoslanie signálu na zabitie"
 
 # action menu entry
-#: data/interface.ui:150 src/procdialogs.cpp:138 src/proctable.cpp:147
+#: data/interface.ui:162 src/procdialogs.cpp:138 src/proctable.cpp:147
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "_Ukončiť procesy"
@@ -248,68 +248,68 @@ msgstr[1] "_Ukončiť proces"
 msgstr[2] "_Ukončiť procesy"
 
 # tooltip
-#: data/interface.ui:164
+#: data/interface.ui:176
 msgid "Show process properties"
 msgstr "Zobrazí vlastnosti procesu"
 
 # tab GtkLabel label
-#: data/interface.ui:185 data/preferences.ui:304
+#: data/interface.ui:197 data/preferences.ui:14
 msgid "Processes"
 msgstr "Procesy"
 
 # zobrazuje sa, keď je len jeden; inak nasledujúci reťazec
-#: data/interface.ui:249 src/interface.cpp:252 src/procproperties.cpp:78
+#: data/interface.ui:262 src/interface.cpp:253 src/procproperties.cpp:78
 msgid "CPU"
 msgstr "Procesor"
 
 # GtkLabel label
-#: data/interface.ui:300 src/interface.cpp:297 src/procproperties.cpp:70
+#: data/interface.ui:313 src/interface.cpp:298 src/procproperties.cpp:70
 #: src/proctable.cpp:350
 msgid "Memory"
 msgstr "Pamäť"
 
 # GtkLabel label
-#: data/interface.ui:315 src/interface.cpp:309
+#: data/interface.ui:328 src/interface.cpp:310
 msgid "Swap"
 msgstr "Odkladací priestor"
 
 # GtkLabel label
-#: data/interface.ui:353
+#: data/interface.ui:366
 msgid "Memory and Swap"
 msgstr "Pamäť a odkladací priestor"
 
 # GtkLabel label
-#: data/interface.ui:405 src/interface.cpp:341
+#: data/interface.ui:418 src/interface.cpp:342
 msgid "Receiving"
 msgstr "Prijímanie"
 
 # GtkLabel label
-#: data/interface.ui:420
+#: data/interface.ui:433
 msgid "Total Received"
 msgstr "Celkom prijatých"
 
 # Pick color for "Sending"
-#: data/interface.ui:435 src/interface.cpp:359
+#: data/interface.ui:448 src/interface.cpp:360
 msgid "Sending"
 msgstr "Odosielanie"
 
 # GtkLabel label
-#: data/interface.ui:450
+#: data/interface.ui:463
 msgid "Total Sent"
 msgstr "Celkom odoslaných"
 
 # GtkLabel label
-#: data/interface.ui:497
+#: data/interface.ui:510
 msgid "Network"
 msgstr "Sieť"
 
 # tab GtkLabel label
-#: data/interface.ui:523 data/preferences.ui:592
+#: data/interface.ui:536 data/preferences.ui:132
 msgid "Resources"
 msgstr "Prostriedky"
 
 # tab GtkLabel label
-#: data/interface.ui:550 data/preferences.ui:823
+#: data/interface.ui:564 data/preferences.ui:293
 msgid "File Systems"
 msgstr "Súborové systémy"
 
@@ -335,7 +335,7 @@ msgctxt "Menu item to Open Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Hľadať otvorené súbory"
 
-#: data/menus.ui:12 data/menus.ui:67 data/preferences.ui:8
+#: data/menus.ui:12 data/menus.ui:67 data/preferences.ui:7
 msgid "Preferences"
 msgstr "Nastavenia"
 
@@ -430,7 +430,7 @@ msgstr "Vlastná"
 
 #: data/menus.ui:140
 msgid "Set _Affinity"
-msgstr ""
+msgstr "Priradiť k _procesoru"
 
 #: data/menus.ui:146
 msgid "_Stop"
@@ -454,98 +454,100 @@ msgid "Open Files"
 msgstr "Otvorenie súborov"
 
 # GtkLabel label
-#: data/preferences.ui:51 data/preferences.ui:619
+#: data/preferences.ui:19 data/preferences.ui:298
 msgid "Behavior"
 msgstr "Správanie"
 
 # GtkLabel label
-#: data/preferences.ui:83 data/preferences.ui:364 data/preferences.ui:651
-msgid "_Update interval in seconds:"
-msgstr "_Interval aktualizácie v sekundách:"
+#: data/preferences.ui:24 data/preferences.ui:303
+msgid "_Update Interval in Seconds"
+msgstr "_Interval aktualizácie v sekundách"
 
 # GtkCheckButton label
-#: data/preferences.ui:119
-msgid "Enable _smooth refresh"
+#: data/preferences.ui:42
+msgid "Enable _Smooth Refresh"
 msgstr "Povoliť _vyhladené obnovovanie"
 
 # GtkCheckButton label
-#: data/preferences.ui:137
-msgid "Alert before ending or _killing processes"
+#: data/preferences.ui:58
+msgid "Alert Before Ending or _Killing Processes"
 msgstr "Varovať pred ukončením alebo za_bitím procesov"
 
 # GtkCheckButton label
-#: data/preferences.ui:155
-msgid "_Divide CPU usage by CPU count"
+#: data/preferences.ui:74
+msgid "_Divide CPU Usage by CPU Count"
 msgstr "_Rozdeliť využitie procesora počtom jadier procesora"
 
-#: data/preferences.ui:173 src/org.gnome.gnome-system-monitor.gschema.xml.in:34
-msgid "Show memory in IEC"
-msgstr ""
+# GtkLabel label
+#: data/preferences.ui:90
+msgid "Show Memory in IEC"
+msgstr "Zobraziť pamäť v binárnych jednotkách"
 
 # GtkLabel label
-#: data/preferences.ui:216 data/preferences.ui:732
+#: data/preferences.ui:107 data/preferences.ui:338
 msgid "Information Fields"
 msgstr "Polia s informáciami"
 
 # GtkLabel label
-#: data/preferences.ui:245
-msgid "Process i_nformation shown in list:"
+#: data/preferences.ui:108
+msgid "Process information shown in list:"
 msgstr "I_nformácie o procesoch zobrazené v zozname:"
 
 # GtkLabel label
-#: data/preferences.ui:331
+#: data/preferences.ui:137
 msgid "Graphs"
 msgstr "Grafy"
 
-#: data/preferences.ui:408
-msgid "_Chart data points:"
+# GtkLabel label
+#: data/preferences.ui:142
+msgid "_Update Interval in Seconds:"
+msgstr "_Interval aktualizácie v sekundách:"
+
+#: data/preferences.ui:160
+msgid "_Chart Data Points:"
 msgstr "Body údajov _grafu:"
 
 # GtkCheckButton label
-#: data/preferences.ui:444
-msgid "_Draw CPU chart as stacked area chart"
+#: data/preferences.ui:177
+msgid "_Draw CPU Chart as Stacked Area Chart"
 msgstr "_Vykresliť graf procesora ako zoskupený"
 
 # GtkCheckButton label
-#: data/preferences.ui:462
-msgid "Draw charts as s_mooth graphs"
+#: data/preferences.ui:193
+msgid "Draw Charts as S_mooth Graphs"
 msgstr "_Vykresliť hladké grafy"
 
 # GtkLabel label
-#: data/preferences.ui:480
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:210
-#, fuzzy
-#| msgid "Memory and Swap History"
-msgid "Show memory and swap in IEC"
-msgstr "História využitia pamäte a odkladacieho priestoru"
+#: data/preferences.ui:209
+msgid "Show Memory and Swap in IEC"
+msgstr "Zobraziť pamäť a odkladací priestor v binárnych jednotkách"
 
-#: data/preferences.ui:496
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:183
-msgid "Show memory in logarithmic scale"
-msgstr ""
+#: data/preferences.ui:225
+msgid "Show Memory in Logarithmic Scale"
+msgstr "Zobraziť pamäť v logaritmickej mierke"
 
 # GtkLabel label
-#: data/preferences.ui:514
-msgid "_Show network speed in bits"
-msgstr "_Zobraziť rýchlosť siete v bitoch"
+#: data/preferences.ui:241
+msgid "_Show Network Speed in Bits"
+msgstr "_Zobraziť rýchlosť siete v Bitoch"
 
-#: data/preferences.ui:532
-msgid "Set network totals _unit separately"
-msgstr ""
+#: data/preferences.ui:257
+msgid "Set Network Totals _Unit Separately"
+msgstr "Nastaviť celkovú _jednotku siete oddelene"
 
 # summary
-#: data/preferences.ui:551
-msgid "Show network _totals in bits"
-msgstr "Zobraziť _sumáre siete v bitoch"
+#: data/preferences.ui:273
+msgid "Show Network _Totals in Bits"
+msgstr "Zobraziť _sumáre siete v Bitoch"
 
-# GtkCheckButton label
-#: data/preferences.ui:687
-msgid "Show _all file systems"
+# tab GtkLabel label
+#: data/preferences.ui:321
+msgid "Show _All File Systems"
 msgstr "Zobraziť _všetky súborové systémy"
 
 # GtkLabel label
-#: data/preferences.ui:761
-msgid "File system i_nformation shown in list:"
+#: data/preferences.ui:339
+msgid "File system information shown in list:"
 msgstr "I_nformácie o súborových systémoch zobrazené v zozname:"
 
 #: data/renice.ui:27 src/procdialogs.cpp:162 src/setaffinity.cpp:312
@@ -572,7 +574,7 @@ msgstr ""
 "ohľaduplnosti. Nižšia hodnota znamená vyššiu prioritu.</i></small>"
 
 # cmd context
-#: src/application.cpp:388
+#: src/application.cpp:389
 msgid "A simple process and system monitor."
 msgstr "Jednoduchý monitor procesov a systému."
 
@@ -633,17 +635,17 @@ msgstr "Použité"
 
 # dialog window title
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: src/interface.cpp:216
+#: src/interface.cpp:217
 #, c-format
 msgid "Pick a Color for “%s”"
 msgstr "Výber farby pre „%s“"
 
-#: src/interface.cpp:254
+#: src/interface.cpp:255
 #, c-format
 msgid "CPU%d"
 msgstr "%d. procesor"
 
-#: src/interface.cpp:423
+#: src/interface.cpp:424
 msgid "translator-credits"
 msgstr ""
 "Stanislav Višňovský\n"
@@ -728,7 +730,7 @@ msgstr "Prijaté neplatné dáta farieb\n"
 msgid "Click to set graph colors"
 msgstr "Kliknutím nastavíte farby grafov"
 
-#: src/load-graph.cpp:133
+#: src/load-graph.cpp:134
 #, c-format
 msgid "%u hr"
 msgid_plural "%u hrs"
@@ -736,7 +738,7 @@ msgstr[0] "%u hodín"
 msgstr[1] "%u hodina"
 msgstr[2] "%u hodiny"
 
-#: src/load-graph.cpp:134
+#: src/load-graph.cpp:135
 #, c-format
 msgid "%u min"
 msgid_plural "%u mins"
@@ -744,28 +746,26 @@ msgstr[0] "%u minút"
 msgstr[1] "%u minúta"
 msgstr[2] "%u minúty"
 
-#: src/load-graph.cpp:136
+#: src/load-graph.cpp:137
 #, c-format
-#| msgid "%u second"
-#| msgid_plural "%u seconds"
 msgid "%u sec"
 msgid_plural "%u secs"
 msgstr[0] "%u sekúnd"
 msgstr[1] "%u sekunda"
 msgstr[2] "%u sekundy"
 
-#: src/load-graph.cpp:526
+#: src/load-graph.cpp:527
 msgid "not available"
 msgstr "nedostupné"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:529
+#: src/load-graph.cpp:530
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) z %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:533
+#: src/load-graph.cpp:534
 #, c-format
 msgid "Cache %s"
 msgstr "Vyrovnávacia pamäť %s"
@@ -957,6 +957,10 @@ msgstr ""
 "je využite procesora pre každý proces rozdelené podľa celkového počtu jadier "
 "procesora. Inak predvolene pracuje v režime „Irix“."
 
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:34
+msgid "Show memory in IEC"
+msgstr "Zobraziť pamäť v binárnych jednotkách"
+
 # gsettings summary
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:41
 msgid "Enable/Disable smooth refresh"
@@ -1000,7 +1004,7 @@ msgstr "Čas v milisekundách medzi aktualizáciami zoznamu zariadení"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:82
 msgid "Time amount of data points in the resource graphs"
-msgstr ""
+msgstr "Množstvo času bodov údajov v grafe prostriedkov"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:92
 msgid "Determines which processes to show."
@@ -1050,12 +1054,16 @@ msgstr "Zobraziť sieťovú prevádzku v bitoch"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:169
 msgid "Set network totals unit separately"
-msgstr ""
+msgstr "Nastaviť celkovú jednotku siete oddelene"
 
 # summary
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:176
 msgid "Show network totals in bits"
 msgstr "Zobraziť sumár siete v bitoch"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:183
+msgid "Show memory in logarithmic scale"
+msgstr "Zobraziť pamäť v logaritmickej mierke"
 
 # gsettings description
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:185
@@ -1074,24 +1082,24 @@ msgstr "Zobrazí graf procesora ako zoskupený"
 
 # gsettings summary
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:201
-#, fuzzy
-#| msgid "Show CPU chart as smooth graph using Bezier curves"
 msgid ""
 "Show CPU, Memory, and Network charts as smooth graphs using Bezier curves"
-msgstr "Zobraziť hladký graf procesora použitím Bezierovych kriviek"
+msgstr ""
+"Zobraziť hladké grafy procesora, pamäte a siete použitím Bezierovych kriviek"
 
 # gsettings description
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:203
-#, fuzzy
-#| msgid ""
-#| "If TRUE, system-monitor shows the CPU chart as a smoothed graph, "
-#| "otherwise as a line chart."
 msgid ""
 "If TRUE, system-monitor shows the CPU, Memory, and Network charts as "
 "smoothed graphs, otherwise as line charts."
 msgstr ""
-"Pri nastavení na true, monitor systému zobrazí graf procesora ako hladký "
-"namiesto čiarového."
+"Pri nastavení na true, monitor systému zobrazí grafy procesora, pamäte a "
+"siete ako hladké namiesto čiarových."
+
+# GtkLabel label
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:210
+msgid "Show memory and swap in IEC"
+msgstr "Zobraziť pamäť a odkladací priestor v binárnych jednotkách"
 
 # summary
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:224
@@ -1487,7 +1495,7 @@ msgid "Open files sort order"
 msgstr "Poradie triedenia otvorených súborov"
 
 # column title
-#: src/prefsdialog.cpp:196
+#: src/prefsdialog.cpp:195
 msgid "Icon"
 msgstr "Ikona"
 
@@ -1774,7 +1782,7 @@ msgstr "Zápis na disk"
 
 #: src/setaffinity.cpp:305
 msgid "Set Affinity"
-msgstr ""
+msgstr "Priradenie k procesoru"
 
 #: src/setaffinity.cpp:317
 msgid "_Apply"
@@ -1783,7 +1791,7 @@ msgstr "_Použiť"
 #: src/setaffinity.cpp:354
 #, c-format
 msgid "Select CPUs \"%s\" (PID %u) is allowed to run on:"
-msgstr ""
+msgstr "Vyberte procesory, na ktorých je možné spustiť proces „%s“ (PID %u):"
 
 #. Set check box label value to CPU [1..2048]
 #: src/setaffinity.cpp:407
@@ -1870,6 +1878,10 @@ msgstr "Veľmi nízka priorita"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+# GtkCheckButton label
+#~ msgid "Show _all file systems"
+#~ msgstr "Zobraziť _všetky súborové systémy"
 
 # GtkLabel label
 #~ msgid "CPU History"
