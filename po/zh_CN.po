@@ -18,9 +18,9 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2021-03-01 08:22+0000\n"
-"PO-Revision-Date: 2021-03-14 22:17-0400\n"
-"Last-Translator: mars <gzhqyz@gmail.com>\n"
+"POT-Creation-Date: 2021-05-17 06:40+0000\n"
+"PO-Revision-Date: 2021-06-29 15:07-0400\n"
+"Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -217,61 +217,61 @@ msgctxt "shortcut window"
 msgid "Send Kill signal"
 msgstr "发送杀死信号"
 
-#: data/interface.ui:150 src/procdialogs.cpp:138 src/proctable.cpp:147
+#: data/interface.ui:162 src/procdialogs.cpp:138 src/proctable.cpp:147
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "结束进程(_E)"
 
-#: data/interface.ui:164
+#: data/interface.ui:176
 msgid "Show process properties"
 msgstr "显示进程属性"
 
-#: data/interface.ui:185 data/preferences.ui:14
+#: data/interface.ui:197 data/preferences.ui:14
 msgid "Processes"
 msgstr "进程"
 
-#: data/interface.ui:250 src/interface.cpp:253 src/procproperties.cpp:78
+#: data/interface.ui:262 src/interface.cpp:253 src/procproperties.cpp:78
 msgid "CPU"
 msgstr "CPU"
 
-#: data/interface.ui:301 src/interface.cpp:298 src/procproperties.cpp:70
+#: data/interface.ui:313 src/interface.cpp:298 src/procproperties.cpp:70
 #: src/proctable.cpp:350
 msgid "Memory"
 msgstr "内存"
 
-#: data/interface.ui:316 src/interface.cpp:310
+#: data/interface.ui:328 src/interface.cpp:310
 msgid "Swap"
 msgstr "交换空间"
 
-#: data/interface.ui:354
+#: data/interface.ui:366
 msgid "Memory and Swap"
 msgstr "内存和交换空间"
 
-#: data/interface.ui:406 src/interface.cpp:342
+#: data/interface.ui:418 src/interface.cpp:342
 msgid "Receiving"
 msgstr "正在接收"
 
-#: data/interface.ui:421
+#: data/interface.ui:433
 msgid "Total Received"
 msgstr "总计已接收"
 
-#: data/interface.ui:436 src/interface.cpp:360
+#: data/interface.ui:448 src/interface.cpp:360
 msgid "Sending"
 msgstr "正在发送"
 
-#: data/interface.ui:451
+#: data/interface.ui:463
 msgid "Total Sent"
 msgstr "总计已发送"
 
-#: data/interface.ui:498
+#: data/interface.ui:510
 msgid "Network"
 msgstr "网络"
 
-#: data/interface.ui:524 data/preferences.ui:132
+#: data/interface.ui:536 data/preferences.ui:132
 msgid "Resources"
 msgstr "资源"
 
-#: data/interface.ui:552 data/preferences.ui:293
+#: data/interface.ui:564 data/preferences.ui:293
 msgid "File Systems"
 msgstr "文件系统"
 
@@ -398,9 +398,9 @@ msgstr "打开文件"
 msgid "Behavior"
 msgstr "行为"
 
-#: data/preferences.ui:24 data/preferences.ui:303
+#: data/preferences.ui:24 data/preferences.ui:142 data/preferences.ui:303
 msgid "_Update Interval in Seconds"
-msgstr "更新间隔（秒）(_U)"
+msgstr "更新间隔秒数(_U)"
 
 #: data/preferences.ui:42
 msgid "Enable _Smooth Refresh"
@@ -430,13 +430,9 @@ msgstr "此列表中显示的进程信息："
 msgid "Graphs"
 msgstr "图形"
 
-#: data/preferences.ui:142
-msgid "_Update Interval in Seconds:"
-msgstr "更新间隔（秒）(_U)："
-
 #: data/preferences.ui:160
-msgid "_Chart Data Points:"
-msgstr "图标数据点(_C)："
+msgid "_Chart Data Points"
+msgstr "图表数据点数(_C)"
 
 #: data/preferences.ui:177
 msgid "_Draw CPU Chart as Stacked Area Chart"
@@ -471,8 +467,8 @@ msgid "Show _All File Systems"
 msgstr "显示所有文件系统(_A)"
 
 #: data/preferences.ui:339
-msgid "File system information shown in list:"
-msgstr "列表中显示的文件系统信息："
+msgid "File system information shown in list"
+msgstr "列表中显示的文件系统信息"
 
 #: data/renice.ui:27 src/procdialogs.cpp:162 src/setaffinity.cpp:312
 msgid "_Cancel"
@@ -636,36 +632,49 @@ msgstr "接收到非法颜色数据\n"
 msgid "Click to set graph colors"
 msgstr "点击以设置图形颜色"
 
-#: src/load-graph.cpp:134
+#. Translators: loadgraphs y axis percentage labels: 0 %, 50%, 100%
+#: src/load-graph.cpp:88 src/load-graph.cpp:94
+#, c-format
+msgid "%.0f %%"
+msgstr ""
+
+#: src/load-graph.cpp:136
 #, c-format
 msgid "%u hr"
 msgid_plural "%u hrs"
 msgstr[0] "%u 时"
 
-#: src/load-graph.cpp:135
+#: src/load-graph.cpp:137
 #, c-format
 msgid "%u min"
 msgid_plural "%u mins"
 msgstr[0] "%u 分"
 
-#: src/load-graph.cpp:137
+#: src/load-graph.cpp:139
 #, c-format
 msgid "%u sec"
 msgid_plural "%u secs"
 msgstr[0] "%u 秒"
 
-#: src/load-graph.cpp:527
+#. Update label
+#. Translators: CPU usage percentage label: 95.7%
+#: src/load-graph.cpp:505
+#, c-format
+msgid "%.1f%%"
+msgstr ""
+
+#: src/load-graph.cpp:530
 msgid "not available"
 msgstr "不可用"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:530
+#: src/load-graph.cpp:533
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%)，共 %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:534
+#: src/load-graph.cpp:537
 #, c-format
 msgid "Cache %s"
 msgstr "缓存 %s"
@@ -1575,6 +1584,9 @@ msgstr "非常低优先级"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Update Interval in Seconds:"
+#~ msgstr "更新间隔（秒）(_U)："
 
 #~ msgid "Show _all file systems"
 #~ msgstr "显示全部文件系统(_A)"
