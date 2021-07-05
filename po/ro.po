@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2021-02-10 19:36+0000\n"
-"PO-Revision-Date: 2021-02-11 11:07+0100\n"
+"POT-Creation-Date: 2021-05-17 06:40+0000\n"
+"PO-Revision-Date: 2021-07-05 22:52+0300\n"
 "Last-Translator: Florentina Mușat <florentina.musat.28@gmail.com>\n"
 "Language-Team: Gnome Romanian Translation Team <gnomero-list@lists."
 "sourceforge.net>\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n==0 || (n!=1 && n%100>=1 && n"
 "%100<=19) ? 1 : 2);\n"
 "20)) ? 1: 2);\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0\n"
 "X-Project-Style: gnome\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -220,65 +220,65 @@ msgctxt "shortcut window"
 msgid "Send Kill signal"
 msgstr "Trimite semnal de terminare"
 
-#: data/interface.ui:150 src/procdialogs.cpp:138 src/proctable.cpp:147
+#: data/interface.ui:162 src/procdialogs.cpp:138 src/proctable.cpp:147
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "Termină proc_esul"
 msgstr[1] "Termină proc_esele"
 msgstr[2] "Termină proc_esele"
 
-#: data/interface.ui:164
+#: data/interface.ui:176
 msgid "Show process properties"
 msgstr "Arată proprietățile proceselor"
 
-#: data/interface.ui:185 data/preferences.ui:14
+#: data/interface.ui:197 data/preferences.ui:14
 msgid "Processes"
 msgstr "Procese"
 
-#: data/interface.ui:250 src/interface.cpp:253 src/procproperties.cpp:78
+#: data/interface.ui:262 src/interface.cpp:253 src/procproperties.cpp:78
 msgid "CPU"
 msgstr "CPU"
 
-#: data/interface.ui:301 src/interface.cpp:298 src/procproperties.cpp:70
+#: data/interface.ui:313 src/interface.cpp:298 src/procproperties.cpp:70
 #: src/proctable.cpp:350
 msgid "Memory"
 msgstr "Memorie"
 
-#: data/interface.ui:316 src/interface.cpp:310
+#: data/interface.ui:328 src/interface.cpp:310
 msgid "Swap"
 msgstr "Swap"
 
-#: data/interface.ui:354
+#: data/interface.ui:366
 msgid "Memory and Swap"
 msgstr "Memorie și swap"
 
 # LAG: e o etichetă pe un grafic care listează viteza cu care se primesc date de pe rețea
-#: data/interface.ui:406 src/interface.cpp:342
+#: data/interface.ui:418 src/interface.cpp:342
 msgid "Receiving"
 msgstr "Primire"
 
-#: data/interface.ui:421
+#: data/interface.ui:433
 msgid "Total Received"
 msgstr "Primite în total"
 
 # LAG: e o etichetă pe un grafic care listează viteza cu care se trimit date pe rețea
-#: data/interface.ui:436 src/interface.cpp:360
+#: data/interface.ui:448 src/interface.cpp:360
 msgid "Sending"
 msgstr "Trimitere"
 
-#: data/interface.ui:451
+#: data/interface.ui:463
 msgid "Total Sent"
 msgstr "Trimise în total"
 
-#: data/interface.ui:498
+#: data/interface.ui:510
 msgid "Network"
 msgstr "Rețea"
 
-#: data/interface.ui:524 data/preferences.ui:132
+#: data/interface.ui:536 data/preferences.ui:132
 msgid "Resources"
 msgstr "Resurse"
 
-#: data/interface.ui:552 data/preferences.ui:293
+#: data/interface.ui:564 data/preferences.ui:293
 msgid "File Systems"
 msgstr "Sisteme de fișiere"
 
@@ -405,7 +405,7 @@ msgstr "Fișiere deschise"
 msgid "Behavior"
 msgstr "Comportament"
 
-#: data/preferences.ui:24 data/preferences.ui:303
+#: data/preferences.ui:24 data/preferences.ui:142 data/preferences.ui:303
 msgid "_Update Interval in Seconds"
 msgstr "Intervalul de act_ualizare în secunde"
 
@@ -437,13 +437,9 @@ msgstr "Informațiile despre proces afișate în listă:"
 msgid "Graphs"
 msgstr "Grafice"
 
-#: data/preferences.ui:142
-msgid "_Update Interval in Seconds:"
-msgstr "Intervalul de act_ualizare în secunde:"
-
 #: data/preferences.ui:160
-msgid "_Chart Data Points:"
-msgstr "Puncte de date s_chemă:"
+msgid "_Chart Data Points"
+msgstr "Puncte de date ale s_chemei"
 
 #: data/preferences.ui:177
 msgid "_Draw CPU Chart as Stacked Area Chart"
@@ -478,8 +474,8 @@ msgid "Show _All File Systems"
 msgstr "_Arată toate sistemele de fișiere"
 
 #: data/preferences.ui:339
-msgid "File system information shown in list:"
-msgstr "I_nformații ale sistemelor de fișiere afișate în listă:"
+msgid "File system information shown in list"
+msgstr "Informații despre sistemul de fișiere afișate în listă"
 
 #: data/renice.ui:27 src/procdialogs.cpp:162 src/setaffinity.cpp:312
 msgid "_Cancel"
@@ -640,7 +636,13 @@ msgstr "S-au primit date nevalide de culoare\n"
 msgid "Click to set graph colors"
 msgstr "Alegeți prin clicuri culorile graficului"
 
-#: src/load-graph.cpp:133
+#. Translators: loadgraphs y axis percentage labels: 0 %, 50%, 100%
+#: src/load-graph.cpp:88 src/load-graph.cpp:94
+#, c-format
+msgid "%.0f %%"
+msgstr "%.0f %%"
+
+#: src/load-graph.cpp:136
 #, c-format
 msgid "%u hr"
 msgid_plural "%u hrs"
@@ -648,7 +650,7 @@ msgstr[0] "%u oră"
 msgstr[1] "%u ore"
 msgstr[2] "%u de ore"
 
-#: src/load-graph.cpp:134
+#: src/load-graph.cpp:137
 #, c-format
 msgid "%u min"
 msgid_plural "%u mins"
@@ -656,7 +658,7 @@ msgstr[0] "%u min"
 msgstr[1] "%u min"
 msgstr[2] "%u de min"
 
-#: src/load-graph.cpp:136
+#: src/load-graph.cpp:139
 #, c-format
 msgid "%u sec"
 msgid_plural "%u secs"
@@ -664,18 +666,25 @@ msgstr[0] "%u sec"
 msgstr[1] "%u sec"
 msgstr[2] "%u de sec"
 
-#: src/load-graph.cpp:526
+#. Update label
+#. Translators: CPU usage percentage label: 95.7%
+#: src/load-graph.cpp:505
+#, c-format
+msgid "%.1f%%"
+msgstr "%.1f%%"
+
+#: src/load-graph.cpp:530
 msgid "not available"
 msgstr "indisponibil"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:529
+#: src/load-graph.cpp:533
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) din %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:533
+#: src/load-graph.cpp:537
 #, c-format
 msgid "Cache %s"
 msgstr "Cache %s"
@@ -1616,6 +1625,9 @@ msgstr "Prioritate foarte scăzută"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Update Interval in Seconds:"
+#~ msgstr "Intervalul de act_ualizare în secunde:"
 
 #~ msgid "Show _all file systems"
 #~ msgstr "Arată t_oate sistemele de fișiere"
