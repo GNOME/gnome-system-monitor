@@ -19,24 +19,24 @@
 # Enrico Nicoletto <liverig@gmail.com>, 2012, 2013, 2014, 2015, 2018.
 # Gustavo Marques <gutodisse@gmail.com>, 2016.
 # Bruno Lopes da Silva <brunolopesdsilv@gmail.com>, 2018, 2020.
-# Rafael Fontenelle <rafaelff@gnome.org>, 2013-2021.
 # Ricardo Silva Veloso <ricvelozo@gmail.com>, 2021.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2013-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2021-04-30 13:57+0000\n"
-"PO-Revision-Date: 2021-07-07 02:11-0300\n"
-"Last-Translator: Ricardo Silva Veloso <ricvelozo@gmail.com>\n"
+"POT-Creation-Date: 2021-07-07 12:36+0000\n"
+"PO-Revision-Date: 2021-07-10 16:05-0300\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Generator: Gtranslator 40.0\n"
 "X-Project-Style: gnome\n"
 
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
@@ -412,7 +412,7 @@ msgstr "Arquivos abertos"
 msgid "Behavior"
 msgstr "Comportamento"
 
-#: data/preferences.ui:24 data/preferences.ui:303
+#: data/preferences.ui:24 data/preferences.ui:142 data/preferences.ui:303
 msgid "_Update Interval in Seconds"
 msgstr "_Intervalo de atualização em segundos"
 
@@ -444,13 +444,10 @@ msgstr "Informações dos processos mostrados em lista:"
 msgid "Graphs"
 msgstr "Gráficos"
 
-#: data/preferences.ui:142
-msgid "_Update Interval in Seconds:"
-msgstr "_Intervalo de atualização em segundos:"
-
 #: data/preferences.ui:160
-msgid "_Chart Data Points:"
-msgstr "Pontos de dados do gráfi_co:"
+#| msgid "_Chart Data Points:"
+msgid "_Chart Data Points"
+msgstr "Pontos de dados do gráfi_co"
 
 #: data/preferences.ui:177
 msgid "_Draw CPU Chart as Stacked Area Chart"
@@ -485,8 +482,9 @@ msgid "Show _All File Systems"
 msgstr "Mostra todos os sistemas de arquivos"
 
 #: data/preferences.ui:339
-msgid "File system information shown in list:"
-msgstr "Informações do sistema de arquivos mostradas em lista:"
+#| msgid "File system information shown in list:"
+msgid "File system information shown in list"
+msgstr "Informações do sistema de arquivos mostradas em lista"
 
 #: data/renice.ui:27 src/procdialogs.cpp:162 src/setaffinity.cpp:312
 msgid "_Cancel"
@@ -651,39 +649,52 @@ msgstr "Recebidos dados de cor inválidos\n"
 msgid "Click to set graph colors"
 msgstr "Clique para definir as cores do gráfico"
 
-#: src/load-graph.cpp:134
+#. Translators: loadgraphs y axis percentage labels: 0 %, 50%, 100%
+#: src/load-graph.cpp:88 src/load-graph.cpp:94
+#, c-format
+msgid "%.0f %%"
+msgstr "%.0f %%"
+
+#: src/load-graph.cpp:136
 #, c-format
 msgid "%u hr"
 msgid_plural "%u hrs"
 msgstr[0] "%u hr"
 msgstr[1] "%u hrs"
 
-#: src/load-graph.cpp:135
+#: src/load-graph.cpp:137
 #, c-format
 msgid "%u min"
 msgid_plural "%u mins"
 msgstr[0] "%u min"
 msgstr[1] "%u mins"
 
-#: src/load-graph.cpp:137
+#: src/load-graph.cpp:139
 #, c-format
 msgid "%u sec"
 msgid_plural "%u secs"
 msgstr[0] "%u s"
 msgstr[1] "%u s"
 
-#: src/load-graph.cpp:527
+#. Update label
+#. Translators: CPU usage percentage label: 95.7%
+#: src/load-graph.cpp:505
+#, c-format
+msgid "%.1f%%"
+msgstr "%.1f%%"
+
+#: src/load-graph.cpp:530
 msgid "not available"
 msgstr "não disponível"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:530
+#: src/load-graph.cpp:533
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) de %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:534
+#: src/load-graph.cpp:537
 #, c-format
 msgid "Cache %s"
 msgstr "Cache %s"
@@ -1619,6 +1630,9 @@ msgstr "Prioridade muito baixa"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Update Interval in Seconds:"
+#~ msgstr "_Intervalo de atualização em segundos:"
 
 #~ msgid "Show _all file systems"
 #~ msgstr "Mostrar _todos os sistemas de arquivos"
