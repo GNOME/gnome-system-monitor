@@ -1,3 +1,4 @@
+find_program('itstool', required: true)
 gnome.yelp(meson.project_name(),
   sources: [
     'commandline.page',
