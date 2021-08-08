@@ -29,7 +29,6 @@ Use the following command to install dependencies:
 - libgnomesu
 - libselinux
 - lsb_release in PATH - recommended on linux
-- libsystemd-dev
 - libwnck
 
 
