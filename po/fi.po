@@ -20,8 +20,8 @@ msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2021-02-10 19:36+0000\n"
-"PO-Revision-Date: 2021-02-22 11:11+0200\n"
+"POT-Creation-Date: 2021-08-14 10:00+0000\n"
+"PO-Revision-Date: 2021-08-26 11:58+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -29,7 +29,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0\n"
 
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
 #: src/application.cpp:348 src/interface.cpp:412
@@ -221,62 +221,62 @@ msgctxt "shortcut window"
 msgid "Send Kill signal"
 msgstr "Lähetä Tapa-signaali"
 
-#: data/interface.ui:150 src/procdialogs.cpp:138 src/proctable.cpp:147
+#: data/interface.ui:162 src/procdialogs.cpp:138 src/proctable.cpp:147
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "_Lopeta prosessi"
 msgstr[1] "_Lopeta prosessit"
 
-#: data/interface.ui:164
+#: data/interface.ui:176
 msgid "Show process properties"
 msgstr "Näytä prosessin ominaisuudet"
 
-#: data/interface.ui:185 data/preferences.ui:14
+#: data/interface.ui:197 data/preferences.ui:14
 msgid "Processes"
 msgstr "Prosessit"
 
-#: data/interface.ui:250 src/interface.cpp:253 src/procproperties.cpp:78
+#: data/interface.ui:262 src/interface.cpp:253 src/procproperties.cpp:78
 msgid "CPU"
 msgstr "CPU"
 
-#: data/interface.ui:301 src/interface.cpp:298 src/procproperties.cpp:70
+#: data/interface.ui:313 src/interface.cpp:298 src/procproperties.cpp:70
 #: src/proctable.cpp:350
 msgid "Memory"
 msgstr "Muisti"
 
-#: data/interface.ui:316 src/interface.cpp:310
+#: data/interface.ui:328 src/interface.cpp:310
 msgid "Swap"
 msgstr "Swap"
 
-#: data/interface.ui:354
+#: data/interface.ui:366
 msgid "Memory and Swap"
 msgstr "Muistin ja sivutus"
 
-#: data/interface.ui:406 src/interface.cpp:342
+#: data/interface.ui:418 src/interface.cpp:342
 msgid "Receiving"
 msgstr "Vastaanottaa"
 
-#: data/interface.ui:421
+#: data/interface.ui:433
 msgid "Total Received"
 msgstr "Vastaanotettu kaikkiaan"
 
-#: data/interface.ui:436 src/interface.cpp:360
+#: data/interface.ui:448 src/interface.cpp:360
 msgid "Sending"
 msgstr "Lähettää"
 
-#: data/interface.ui:451
+#: data/interface.ui:463
 msgid "Total Sent"
 msgstr "Lähetetty kaikkiaan"
 
-#: data/interface.ui:498
+#: data/interface.ui:510
 msgid "Network"
 msgstr "Verkko"
 
-#: data/interface.ui:524 data/preferences.ui:132
+#: data/interface.ui:536 data/preferences.ui:132
 msgid "Resources"
 msgstr "Resurssit"
 
-#: data/interface.ui:552 data/preferences.ui:293
+#: data/interface.ui:564 data/preferences.ui:293
 msgid "File Systems"
 msgstr "Tiedostojärjestelmät"
 
@@ -403,7 +403,7 @@ msgstr "Avoimet tiedostot"
 msgid "Behavior"
 msgstr "Toiminta"
 
-#: data/preferences.ui:24 data/preferences.ui:303
+#: data/preferences.ui:24 data/preferences.ui:142 data/preferences.ui:303
 msgid "_Update Interval in Seconds"
 msgstr "_Päivitysväli sekunneissa"
 
@@ -435,13 +435,9 @@ msgstr "Luettelossa näytettävät prosessitiedot:"
 msgid "Graphs"
 msgstr "Käyrät"
 
-#: data/preferences.ui:142
-msgid "_Update Interval in Seconds:"
-msgstr "_Päivitysväli sekunneissa:"
-
 #: data/preferences.ui:160
-msgid "_Chart Data Points:"
-msgstr "_Käyrien tietopisteet:"
+msgid "_Chart Data Points"
+msgstr "_Käyrien tietopisteet"
 
 #: data/preferences.ui:177
 msgid "_Draw CPU Chart as Stacked Area Chart"
@@ -476,8 +472,8 @@ msgid "Show _All File Systems"
 msgstr "Näytä kaikki tie_dostojärjestelmät"
 
 #: data/preferences.ui:339
-msgid "File system information shown in list:"
-msgstr "Luettelossa näytettävät tiedostojärjestelmän tiedot:"
+msgid "File system information shown in list"
+msgstr "Luettelossa näytettävät tiedostojärjestelmän tiedot"
 
 #: data/renice.ui:27 src/procdialogs.cpp:162 src/setaffinity.cpp:312
 msgid "_Cancel"
@@ -646,39 +642,52 @@ msgstr "Saatiin virheellisiä väritietoja\n"
 msgid "Click to set graph colors"
 msgstr "Aseta käyrän väri napsauttamalla"
 
-#: src/load-graph.cpp:133
+#. Translators: loadgraphs y axis percentage labels: 0 %, 50%, 100%
+#: src/load-graph.cpp:88 src/load-graph.cpp:94
+#, c-format
+msgid "%.0f %%"
+msgstr "%.0f %%"
+
+#: src/load-graph.cpp:136
 #, c-format
 msgid "%u hr"
 msgid_plural "%u hrs"
 msgstr[0] "%u h"
 msgstr[1] "%u h"
 
-#: src/load-graph.cpp:134
+#: src/load-graph.cpp:137
 #, c-format
 msgid "%u min"
 msgid_plural "%u mins"
 msgstr[0] "%u min"
 msgstr[1] "%u min"
 
-#: src/load-graph.cpp:136
+#: src/load-graph.cpp:139
 #, c-format
 msgid "%u sec"
 msgid_plural "%u secs"
 msgstr[0] "%u s"
 msgstr[1] "%u s"
 
-#: src/load-graph.cpp:526
+#. Update label
+#. Translators: CPU usage percentage label: 95.7%
+#: src/load-graph.cpp:505
+#, c-format
+msgid "%.1f%%"
+msgstr "%.1f%%"
+
+#: src/load-graph.cpp:530
 msgid "not available"
 msgstr "ei saatavilla"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:529
+#: src/load-graph.cpp:533
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) / %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:533
+#: src/load-graph.cpp:537
 #, c-format
 msgid "Cache %s"
 msgstr "Välimuisti %s"
@@ -1604,6 +1613,9 @@ msgstr "Erittäin matala prioriteetti"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Update Interval in Seconds:"
+#~ msgstr "_Päivitysväli sekunneissa:"
 
 #~ msgid "CPU History"
 #~ msgstr "Suorittimen käyttöaste"
