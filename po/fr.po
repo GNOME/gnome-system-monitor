@@ -1,5 +1,5 @@
 # French translation of gnome-system-monitor.
-# Copyright (C) 2002-2019 Free Software Foundation, Inc.
+# Copyright (C) 2002-2021 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-system-monitor package.
 #
 # Mathieu Gauthier-Pilote <mathieu.g.p@videotron.ca>, 2002.
@@ -20,16 +20,15 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2021-03-02 22:03+0000\n"
-"PO-Revision-Date: 2021-03-04 19:23+0100\n"
+"POT-Creation-Date: 2021-08-14 10:00+0000\n"
+"PO-Revision-Date: 2021-08-26 08:15+0200\n"
 "Last-Translator: Guillaume Bernard <associations@guillaume-bernard.fr>\n"
-"Language-Team: français <gnomefr@traduc.org>\n"
+"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.4.2\n"
 
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
 #: src/application.cpp:348 src/interface.cpp:412
@@ -225,62 +224,62 @@ msgctxt "shortcut window"
 msgid "Send Kill signal"
 msgstr "Envoyer un signal pour tuer"
 
-#: data/interface.ui:150 src/procdialogs.cpp:138 src/proctable.cpp:147
+#: data/interface.ui:162 src/procdialogs.cpp:138 src/proctable.cpp:147
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "_Arrêter le processus"
 msgstr[1] "_Arrêter les processus"
 
-#: data/interface.ui:164
+#: data/interface.ui:176
 msgid "Show process properties"
 msgstr "Affiche les propriétés du processus"
 
-#: data/interface.ui:185 data/preferences.ui:14
+#: data/interface.ui:197 data/preferences.ui:14
 msgid "Processes"
 msgstr "Processus"
 
-#: data/interface.ui:250 src/interface.cpp:253 src/procproperties.cpp:78
+#: data/interface.ui:262 src/interface.cpp:253 src/procproperties.cpp:78
 msgid "CPU"
 msgstr "CPU"
 
-#: data/interface.ui:301 src/interface.cpp:298 src/procproperties.cpp:70
+#: data/interface.ui:313 src/interface.cpp:298 src/procproperties.cpp:70
 #: src/proctable.cpp:350
 msgid "Memory"
 msgstr "Mémoire"
 
-#: data/interface.ui:316 src/interface.cpp:310
+#: data/interface.ui:328 src/interface.cpp:310
 msgid "Swap"
 msgstr "Espace d’échange"
 
-#: data/interface.ui:354
+#: data/interface.ui:366
 msgid "Memory and Swap"
 msgstr "Mémoire et espace d’échange"
 
-#: data/interface.ui:406 src/interface.cpp:342
+#: data/interface.ui:418 src/interface.cpp:342
 msgid "Receiving"
 msgstr "Réception"
 
-#: data/interface.ui:421
+#: data/interface.ui:433
 msgid "Total Received"
 msgstr "Total reçu"
 
-#: data/interface.ui:436 src/interface.cpp:360
+#: data/interface.ui:448 src/interface.cpp:360
 msgid "Sending"
 msgstr "Envoi"
 
-#: data/interface.ui:451
+#: data/interface.ui:463
 msgid "Total Sent"
 msgstr "Total envoyé"
 
-#: data/interface.ui:498
+#: data/interface.ui:510
 msgid "Network"
 msgstr "Réseau"
 
-#: data/interface.ui:524 data/preferences.ui:132
+#: data/interface.ui:536 data/preferences.ui:132
 msgid "Resources"
 msgstr "Ressources"
 
-#: data/interface.ui:552 data/preferences.ui:293
+#: data/interface.ui:564 data/preferences.ui:293
 msgid "File Systems"
 msgstr "Systèmes de fichiers"
 
@@ -407,7 +406,7 @@ msgstr "Fichiers ouverts"
 msgid "Behavior"
 msgstr "Comportement"
 
-#: data/preferences.ui:24 data/preferences.ui:303
+#: data/preferences.ui:24 data/preferences.ui:142 data/preferences.ui:303
 msgid "_Update Interval in Seconds"
 msgstr "_Fréquence de mise à jour en secondes"
 
@@ -439,13 +438,9 @@ msgstr "Informations sur les processus affichés dans la liste :"
 msgid "Graphs"
 msgstr "Graphiques"
 
-#: data/preferences.ui:142
-msgid "_Update Interval in Seconds:"
-msgstr "_Fréquence de mise à jour en secondes :"
-
 #: data/preferences.ui:160
-msgid "_Chart Data Points:"
-msgstr "Points de données du _graphique :"
+msgid "_Chart Data Points"
+msgstr "Points de données du _graphique"
 
 #: data/preferences.ui:177
 msgid "_Draw CPU Chart as Stacked Area Chart"
@@ -480,8 +475,8 @@ msgid "Show _All File Systems"
 msgstr "_Afficher tous les systèmes de fichiers"
 
 #: data/preferences.ui:339
-msgid "File system information shown in list:"
-msgstr "Informations sur le système de fichiers affichés dans la liste :"
+msgid "File system information shown in list"
+msgstr "Informations sur le système de fichiers affichés dans la liste"
 
 #: data/renice.ui:27 src/procdialogs.cpp:162 src/setaffinity.cpp:312
 msgid "_Cancel"
@@ -640,39 +635,52 @@ msgstr "Donnée de couleur reçue non valide\n"
 msgid "Click to set graph colors"
 msgstr "Cliquez pour définir les couleurs du graphique"
 
-#: src/load-graph.cpp:134
+#. Translators: loadgraphs y axis percentage labels: 0 %, 50%, 100%
+#: src/load-graph.cpp:88 src/load-graph.cpp:94
+#, c-format
+msgid "%.0f %%"
+msgstr "%.0f %%"
+
+#: src/load-graph.cpp:136
 #, c-format
 msgid "%u hr"
 msgid_plural "%u hrs"
 msgstr[0] "%u h"
 msgstr[1] "%u h"
 
-#: src/load-graph.cpp:135
+#: src/load-graph.cpp:137
 #, c-format
 msgid "%u min"
 msgid_plural "%u mins"
 msgstr[0] "%u min"
 msgstr[1] "%u min"
 
-#: src/load-graph.cpp:137
+#: src/load-graph.cpp:139
 #, c-format
 msgid "%u sec"
 msgid_plural "%u secs"
 msgstr[0] "%u s"
 msgstr[1] "%u s"
 
-#: src/load-graph.cpp:527
+#. Update label
+#. Translators: CPU usage percentage label: 95.7%
+#: src/load-graph.cpp:505
+#, c-format
+msgid "%.1f%%"
+msgstr "%.1f %%"
+
+#: src/load-graph.cpp:530
 msgid "not available"
 msgstr "non disponible"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:530
+#: src/load-graph.cpp:533
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) sur %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:534
+#: src/load-graph.cpp:537
 #, c-format
 msgid "Cache %s"
 msgstr "Cache %s"
@@ -1627,6 +1635,9 @@ msgstr "Priorité très basse"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Update Interval in Seconds:"
+#~ msgstr "_Fréquence de mise à jour en secondes :"
 
 #~ msgid "CPU History"
 #~ msgstr "Historique d’utilisation du CPU"
