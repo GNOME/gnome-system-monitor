@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2021-02-10 19:36+0000\n"
-"PO-Revision-Date: 2021-03-06 11:13+0900\n"
+"POT-Creation-Date: 2021-08-14 10:00+0000\n"
+"PO-Revision-Date: 2021-08-30 18:03+0900\n"
 "Last-Translator: Seong-ho Cho <shcho@gnome.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -215,61 +215,61 @@ msgctxt "shortcut window"
 msgid "Send Kill signal"
 msgstr "강제 종료 시그널 보내기"
 
-#: data/interface.ui:150 src/procdialogs.cpp:138 src/proctable.cpp:147
+#: data/interface.ui:162 src/procdialogs.cpp:138 src/proctable.cpp:147
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "프로세스 중단(_E)"
 
-#: data/interface.ui:164
+#: data/interface.ui:176
 msgid "Show process properties"
 msgstr "프로세스 속성 표시"
 
-#: data/interface.ui:185 data/preferences.ui:14
+#: data/interface.ui:197 data/preferences.ui:14
 msgid "Processes"
 msgstr "프로세스"
 
-#: data/interface.ui:250 src/interface.cpp:253 src/procproperties.cpp:78
+#: data/interface.ui:262 src/interface.cpp:253 src/procproperties.cpp:78
 msgid "CPU"
 msgstr "CPU"
 
-#: data/interface.ui:301 src/interface.cpp:298 src/procproperties.cpp:70
+#: data/interface.ui:313 src/interface.cpp:298 src/procproperties.cpp:70
 #: src/proctable.cpp:350
 msgid "Memory"
 msgstr "메모리"
 
-#: data/interface.ui:316 src/interface.cpp:310
+#: data/interface.ui:328 src/interface.cpp:310
 msgid "Swap"
 msgstr "스왑"
 
-#: data/interface.ui:354
+#: data/interface.ui:366
 msgid "Memory and Swap"
 msgstr "메모리 및 스왑"
 
-#: data/interface.ui:406 src/interface.cpp:342
+#: data/interface.ui:418 src/interface.cpp:342
 msgid "Receiving"
 msgstr "받기"
 
-#: data/interface.ui:421
+#: data/interface.ui:433
 msgid "Total Received"
 msgstr "전체 받음"
 
-#: data/interface.ui:436 src/interface.cpp:360
+#: data/interface.ui:448 src/interface.cpp:360
 msgid "Sending"
 msgstr "보내기"
 
-#: data/interface.ui:451
+#: data/interface.ui:463
 msgid "Total Sent"
 msgstr "전체 보냄"
 
-#: data/interface.ui:498
+#: data/interface.ui:510
 msgid "Network"
 msgstr "네트워크"
 
-#: data/interface.ui:524 data/preferences.ui:132
+#: data/interface.ui:536 data/preferences.ui:132
 msgid "Resources"
 msgstr "자원"
 
-#: data/interface.ui:552 data/preferences.ui:293
+#: data/interface.ui:564 data/preferences.ui:293
 msgid "File Systems"
 msgstr "파일시스템"
 
@@ -396,7 +396,7 @@ msgstr "연 파일"
 msgid "Behavior"
 msgstr "동작"
 
-#: data/preferences.ui:24 data/preferences.ui:303
+#: data/preferences.ui:24 data/preferences.ui:142 data/preferences.ui:303
 msgid "_Update Interval in Seconds"
 msgstr "초 단위 업데이트 주기(_U)"
 
@@ -428,13 +428,9 @@ msgstr "목록에 표시할 프로세스 정보:"
 msgid "Graphs"
 msgstr "그래프"
 
-#: data/preferences.ui:142
-msgid "_Update Interval in Seconds:"
-msgstr "초 단위 업데이트 주기(_U):"
-
 #: data/preferences.ui:160
-msgid "_Chart Data Points:"
-msgstr "데이터 포인트 차트(_C):"
+msgid "_Chart Data Points"
+msgstr "데이터 포인트 차트(_C)"
 
 #: data/preferences.ui:177
 msgid "_Draw CPU Chart as Stacked Area Chart"
@@ -469,8 +465,8 @@ msgid "Show _All File Systems"
 msgstr "모든 파일 시스템 표시(_A)"
 
 #: data/preferences.ui:339
-msgid "File system information shown in list:"
-msgstr "목록에 표시할 파일 시스템 정보:"
+msgid "File system information shown in list"
+msgstr "파일 시스템 정보 목록"
 
 #: data/renice.ui:27 src/procdialogs.cpp:162 src/setaffinity.cpp:312
 msgid "_Cancel"
@@ -630,36 +626,49 @@ msgstr "잘못된 색 데이터를 받았습니다\n"
 msgid "Click to set graph colors"
 msgstr "그래프 색을 설정하려면 누르십시오"
 
-#: src/load-graph.cpp:133
+#. Translators: loadgraphs y axis percentage labels: 0 %, 50%, 100%
+#: src/load-graph.cpp:88 src/load-graph.cpp:94
+#, c-format
+msgid "%.0f %%"
+msgstr "%.0f %%"
+
+#: src/load-graph.cpp:136
 #, c-format
 msgid "%u hr"
 msgid_plural "%u hrs"
 msgstr[0] "%u시간"
 
-#: src/load-graph.cpp:134
+#: src/load-graph.cpp:137
 #, c-format
 msgid "%u min"
 msgid_plural "%u mins"
 msgstr[0] "%u분"
 
-#: src/load-graph.cpp:136
+#: src/load-graph.cpp:139
 #, c-format
 msgid "%u sec"
 msgid_plural "%u secs"
 msgstr[0] "%u초"
 
-#: src/load-graph.cpp:526
+#. Update label
+#. Translators: CPU usage percentage label: 95.7%
+#: src/load-graph.cpp:505
+#, c-format
+msgid "%.1f%%"
+msgstr "%.1f%%"
+
+#: src/load-graph.cpp:530
 msgid "not available"
 msgstr "사용 불가능"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:529
+#: src/load-graph.cpp:533
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%), 전체 %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:533
+#: src/load-graph.cpp:537
 #, c-format
 msgid "Cache %s"
 msgstr "캐시 %s"
@@ -1575,6 +1584,9 @@ msgstr "매우 낮은 우선 순위"
 #, c-format
 msgid "%s/s"
 msgstr "%s/초"
+
+#~ msgid "_Update Interval in Seconds:"
+#~ msgstr "초 단위 업데이트 주기(_U):"
 
 #~ msgid "CPU History"
 #~ msgstr "CPU 사용 기록"
