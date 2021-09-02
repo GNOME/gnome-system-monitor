@@ -13,15 +13,15 @@
 # Erwin Poeze <donnut@outlook.com>, 2014.
 # Hannie Dumoleyn <hannie@ubuntu-nl.org>, 2014, 2015.
 # Justin van Steijn <jvs@fsfe.org>, 2016.
-# Nathan Follens <nthn@unseen.is, 2017-2021.
+# Nathan Follens <nfollens@gnome.org>, 2017-2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2021-03-28 18:15+0000\n"
-"PO-Revision-Date: 2021-04-01 23:14+0200\n"
-"Last-Translator: Nathan Follens <nthn@unseen.is>\n"
+"POT-Creation-Date: 2021-08-14 10:00+0000\n"
+"PO-Revision-Date: 2021-09-02 16:01+0200\n"
+"Last-Translator: Nathan Follens <nfollens@gnome.org>\n"
 "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2013-03-03 22:20+0000\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0\n"
 
 # meervoud is beter (tino)
 #: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
@@ -442,7 +442,7 @@ msgstr "Open bestanden"
 msgid "Behavior"
 msgstr "Gedrag"
 
-#: data/preferences.ui:24 data/preferences.ui:303
+#: data/preferences.ui:24 data/preferences.ui:142 data/preferences.ui:303
 msgid "_Update Interval in Seconds"
 msgstr "_Vernieuwinterval in seconden"
 
@@ -474,13 +474,9 @@ msgstr "Procesinformatie die in de lijst getoond wordt:"
 msgid "Graphs"
 msgstr "Grafieken"
 
-#: data/preferences.ui:142
-msgid "_Update Interval in Seconds:"
-msgstr "_Vernieuwinterval in seconden:"
-
 #: data/preferences.ui:160
-msgid "_Chart Data Points:"
-msgstr "_Gegevenspunten in grafiek weergeven:"
+msgid "_Chart Data Points"
+msgstr "_Gegevenspunten in grafiek weergeven"
 
 #: data/preferences.ui:177
 msgid "_Draw CPU Chart as Stacked Area Chart"
@@ -515,8 +511,8 @@ msgid "Show _All File Systems"
 msgstr "_Alle bestandssystemen weergeven"
 
 #: data/preferences.ui:339
-msgid "File system information shown in list:"
-msgstr "Bestandssysteeminformatie die in de lijst getoond wordt:"
+msgid "File system information shown in list"
+msgstr "Bestandssysteeminformatie die in de lijst getoond wordt"
 
 #: data/renice.ui:27 src/procdialogs.cpp:162 src/setaffinity.cpp:312
 msgid "_Cancel"
@@ -697,39 +693,52 @@ msgstr "Ongeldige kleurdata ontvangen\n"
 msgid "Click to set graph colors"
 msgstr "Klik om grafiekkleuren in te stellen"
 
-#: src/load-graph.cpp:134
+#. Translators: loadgraphs y axis percentage labels: 0 %, 50%, 100%
+#: src/load-graph.cpp:88 src/load-graph.cpp:94
+#, c-format
+msgid "%.0f %%"
+msgstr "%.0f %%"
+
+#: src/load-graph.cpp:136
 #, c-format
 msgid "%u hr"
 msgid_plural "%u hrs"
 msgstr[0] "%u u"
 msgstr[1] "%u u"
 
-#: src/load-graph.cpp:135
+#: src/load-graph.cpp:137
 #, c-format
 msgid "%u min"
 msgid_plural "%u mins"
 msgstr[0] "%u min"
 msgstr[1] "%u min"
 
-#: src/load-graph.cpp:137
+#: src/load-graph.cpp:139
 #, c-format
 msgid "%u sec"
 msgid_plural "%u secs"
 msgstr[0] "%u sec"
 msgstr[1] "%u sec"
 
-#: src/load-graph.cpp:527
+#. Update label
+#. Translators: CPU usage percentage label: 95.7%
+#: src/load-graph.cpp:505
+#, c-format
+msgid "%.1f%%"
+msgstr "%.1f%%"
+
+#: src/load-graph.cpp:530
 msgid "not available"
 msgstr "niet beschikbaar"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:530
+#: src/load-graph.cpp:533
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) van %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:534
+#: src/load-graph.cpp:537
 #, c-format
 msgid "Cache %s"
 msgstr "Cache %s"
@@ -1685,6 +1694,9 @@ msgstr "Zeer lage prioriteit"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Update Interval in Seconds:"
+#~ msgstr "_Vernieuwinterval in seconden:"
 
 # was eerst processorgebruik, gebruik weggehaald
 # is meer consistent met de andere items en niet
