@@ -21,6 +21,7 @@ variables:
     glibmm24-devel
     gtkmm30-devel
     itstool
+    libhandy1-devel
     librsvg2-devel
     libxml2-devel
     meson
@@ -42,7 +43,7 @@ build-fedora:
     - make
     - make install
     - cd ../.. # build gnome-system-monitor
-    - meson _build
+    - meson _build -Dsystemd=false
     - meson compile -C _build
     - meson install -C _build
     - meson test -C _build
