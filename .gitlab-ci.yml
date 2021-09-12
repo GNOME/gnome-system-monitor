@@ -1,0 +1,48 @@
+# Test whether building gnome-system-monitor works on fedora and ubuntu.
+# Tests against the latest libtop master version.
+
+stages:
+  - build
+
+variables:
+  FEDORA_LIBGTOP_DEPENDENCIES: # packages required to build libgtop on fedora
+    gawk
+    gettext-devel
+    glib2-devel
+    gobject-introspection-devel
+    gtk-doc
+    perl
+    texinfo
+    texinfo-tex
+  FEDORA_DEPENDENCIES: # packages required on fedora
+    appstream
+    gettext
+    git
+    glibmm24-devel
+    gtkmm30-devel
+    itstool
+    librsvg2-devel
+    libxml2-devel
+    meson
+
+build-fedora:
+  image: fedora:latest
+  stage: build
+  except:
+    - tags
+  before_script:
+    - dnf update -y --nogpgcheck
+    - dnf install -y --nogpgcheck $FEDORA_LIBGTOP_DEPENDENCIES $FEDORA_DEPENDENCIES
+  script:
+    - git clone https://gitlab.gnome.org/gnome/libgtop.git/ # build and install libgtop
+    - cd libgtop
+    - mkdir _build
+    - cd _build
+    - ../autogen.sh --disable-dependency-tracking
+    - make
+    - make install
+    - cd .. # build gnome-system-monitor
+    - meson _build
+    - meson compile -C _build
+    - meson install -C _build
+    - meson test -C _build
