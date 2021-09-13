@@ -80,7 +80,7 @@ build-ubuntu:
     - cd ../.. # build and install libhandy because the version in the ubuntu package repository is too outdated.
     - git clone https://gitlab.gnome.org/gnome/libhandy.git/
     - cd libhandy
-    - apt-get build-dep .
+    - apt-get build-dep -y .
     - meson _build
     - ninja -C _build
     - ninja -C _build install
