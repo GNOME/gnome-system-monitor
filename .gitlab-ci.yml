@@ -13,6 +13,7 @@ variables:
   FEDORA_DEPENDENCIES: # packages required to build the system monitor on fedora.
     appstream
     git
+    gettext
     glibmm24-devel
     gtkmm30-devel
     itstool
@@ -58,8 +59,8 @@ build-fedora:
     - make install
     - cd ../.. # build and install gnome-system-monitor
     - meson _build -Dsystemd=false
-    - meson compile -C _build
-    - meson install -C _build
+    - ninja -C _build
+    - ninja -C _build install
 
 build-ubuntu:
   image: ubuntu:latest
