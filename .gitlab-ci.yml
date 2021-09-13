@@ -5,18 +5,13 @@ stages:
   - build
 
 variables:
-  FEDORA_LIBGTOP_DEPENDENCIES: # packages required to build libgtop on fedora
-    gawk
+  FEDORA_LIBGTOP_DEPENDENCIES: # packages required to build libgtop on fedora.
     gettext-devel
-    glib2-devel
     gobject-introspection-devel
     gtk-doc
-    perl
-    texinfo
     texinfo-tex
-  FEDORA_DEPENDENCIES: # packages required on fedora
+  FEDORA_DEPENDENCIES: # packages required to build the system monitor on fedora.
     appstream
-    gettext
     git
     glibmm24-devel
     gtkmm30-devel
@@ -24,6 +19,25 @@ variables:
     libhandy1-devel
     librsvg2-devel
     libxml2-devel
+    meson
+  UBUNTU_LIBGTOP_DEPENDENCIES: # packages required to build libgtop on ubuntu.
+    automake
+    autopoint
+    gettext
+    gtk-doc-tools
+    libgirepository1.0-dev
+    libtool
+    make
+    texinfo
+    texlive
+  UBUNTU_DEPENDENCIES: # packages required to build the system monitor on ubuntu.
+    appstream-util
+    git
+    itstool
+    libglibmm-2.4-dev
+    librsvg2-dev
+    libgtkmm-3.0-dev
+    libxml2-dev
     meson
 
 build-fedora:
@@ -42,8 +56,35 @@ build-fedora:
     - ../autogen.sh --disable-dependency-tracking --prefix=/usr --libdir=/usr/lib64
     - make
     - make install
-    - cd ../.. # build gnome-system-monitor
+    - cd ../.. # build and install gnome-system-monitor
     - meson _build -Dsystemd=false
     - meson compile -C _build
     - meson install -C _build
-    - meson test -C _build
+
+build-ubuntu:
+  image: ubuntu:latest
+  stage: build
+  except:
+    - tags
+  before_script:
+    - apt-get update
+    - DEBIAN_FRONTEND=noninteractive apt-get install -y $UBUNTU_LIBGTOP_DEPENDENCIES $UBUNTU_DEPENDENCIES
+  script:
+    - git clone https://gitlab.gnome.org/gnome/libgtop.git/ # build and install libgtop
+    - cd libgtop
+    - mkdir _build
+    - cd _build
+    - ../autogen.sh
+    - make
+    - make install
+    - cd ../.. # build and install libhandy because the version in the ubuntu package repository is too outdated.
+    - git clone https://gitlab.gnome.org/gnome/libhandy.git/
+    - cd libhandy
+    - apt-get build-dep .
+    - meson _build
+    - ninja -C _build
+    - ninja -C _build install
+    - cd .. # build and install gnome-system-monitor
+    - meson _build
+    - ninja -C _build
+    - ninja -C _build install
