@@ -940,10 +940,9 @@ get_disk (LoadGraph *graph)
       write += disk.xdisk_sectors_write[i];
     }
 
-  /* These sectors are standard unix 512 byte sectors, not the actual disk sectors.
-     Also all disk Read/Write seems to be counted twice, once for the disk and once for the partition. */
-  read *= 512 / 2;
-  write *= 512 / 2;
+  // These sectors are standard unix 512 byte sectors, not the actual disk sectors.
+  read *= 512;
+  write *= 512;
 
   handle_dynamic_max_value (graph, &graph->disk.values, &graph->disk.max, &graph->disk.last_read,
                             &graph->disk.last_write, read, write, &graph->disk.time, 0, NULL,
