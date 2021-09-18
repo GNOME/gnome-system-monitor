@@ -4,7 +4,7 @@ project('gnome-system-monitor',
   default_options : [
     'c_std=c11', 'cpp_std=c++11', 'warning_level=3'
   ],
-  version: '41.rc',
+  version: '41.0',
   meson_version: '>=0.50.0',
 )
 
