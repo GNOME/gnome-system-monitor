@@ -393,6 +393,7 @@ on_activate_about (GSimpleAction *, GVariant *, gpointer data)
         "Chris Kühl",
         "Robert Roth",
         "Stefano Facchini",
+        "Jacob Barkdull",
         NULL
     };
 
