@@ -256,6 +256,10 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
         }
         title_text = g_strdup_printf(title_template, label_text);
         label = GTK_LABEL (gtk_label_new (label_text));
+        gtk_label_set_xalign(label, 0.0);
+        if(app->config.num_cpus >=10) {
+            gtk_label_set_width_chars(label, log10(app->config.num_cpus)+1+4);
+        }
         gsm_color_button_set_title(color_picker, title_text);
         g_free(title_text);
         gtk_box_pack_start (temp_hbox, GTK_WIDGET (label), FALSE, FALSE, 6);
@@ -266,6 +270,7 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
 
         /* Reserve some space to avoid the layout changing with the values. */
         gtk_label_set_width_chars(cpu_label, 6);
+        gtk_label_set_xalign(cpu_label, 1.0);
         gtk_widget_set_valign (GTK_WIDGET (cpu_label), GTK_ALIGN_CENTER);
         gtk_widget_set_halign (GTK_WIDGET (cpu_label), GTK_ALIGN_START);
         gtk_box_pack_start (temp_hbox, GTK_WIDGET (cpu_label), FALSE, FALSE, 0);
