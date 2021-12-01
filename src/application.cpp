@@ -470,11 +470,16 @@ GsmApplication::shutdown()
 
 void GsmApplication::on_startup()
 {
+    HdyStyleManager *style_manager;
+
     Gtk::Application::on_startup();
 
     hdy_init();
 
     load_resources ();
+
+    style_manager = hdy_style_manager_get_default ();
+    hdy_style_manager_set_color_scheme (style_manager, HDY_COLOR_SCHEME_PREFER_LIGHT);
 
     Glib::RefPtr<Gio::SimpleAction> action;
 
