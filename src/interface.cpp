@@ -22,7 +22,7 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <libhandy-1/handy.h>
+#include <handy.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>

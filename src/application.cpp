@@ -6,7 +6,7 @@
 #include <glibtop/close.h>
 #include <glibtop/cpu.h>
 #include <glibtop/sysinfo.h>
-#include <libhandy-1/handy.h>
+#include <handy.h>
 #include <signal.h>
 #include <stdlib.h>
 

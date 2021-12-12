@@ -4,7 +4,7 @@
 
 #include <gtkmm.h>
 #include <glibtop/cpu.h>
-#include <libhandy-1/handy.h>
+#include <handy.h>
 
 #include <algorithm>
 
