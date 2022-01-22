@@ -51,7 +51,6 @@ class SmoothRefresh
 
 
     static const string KEY;
-    static const bool KEY_DEFAULT_VALUE;
 
   private:
 
