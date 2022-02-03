@@ -1,5 +1,5 @@
 # gnome-system-monitor (procman) ja.po.
-# Copyright (C) 2001-2015, 2019-2021 Free Software Foundation, Inc.
+# Copyright (C) 2001-2015, 2019-2022 Free Software Foundation, Inc.
 # Takeshi Aihana <takeshi.aihana@gmail.com>, 2001-2009.
 # KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003.
 # Satoru SATOH <ss@gnome.gr.jp>, 2006.
@@ -7,7 +7,7 @@
 # Hideki Yamane <henrich@debian.org>, 2011.
 # Jiro Matsuzawa <jmatsuzawa@gnome.org>, 2011-2015.
 # Noriko Mizumoto <noriko@fedoraproject.org>, 2012.
-# sicklylife <translation@sicklylife.jp>, 2019-2020.
+# sicklylife <translation@sicklylife.jp>, 2019-2020, 2022.
 # Peniel Vargas <penieru@gmail.com>, 2021.
 #
 msgid ""
@@ -16,8 +16,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
 "POT-Creation-Date: 2020-08-07 06:32+0000\n"
-"PO-Revision-Date: 2021-12-20 13:14-0400\n"
-"Last-Translator: Peniel Vargas <penieru@gmail.com>\n"
+"PO-Revision-Date: 2022-01-03 20:35+0900\n"
+"Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -139,17 +139,17 @@ msgstr "メニューを開く"
 #: data/help-overlay.ui:32
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
-msgstr "キーボードショートカット"
+msgstr "キーボードショートカットを表示する"
 
 #: data/help-overlay.ui:39
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr "終了"
+msgstr "終了する"
 
 #: data/help-overlay.ui:46
 msgctxt "shortcut window"
 msgid "Search"
-msgstr "検索"
+msgstr "検索する"
 
 #: data/help-overlay.ui:53
 msgctxt "shortcut window"
@@ -169,7 +169,7 @@ msgstr "ファイルシステムを表示する"
 #: data/help-overlay.ui:74
 msgctxt "shortcut window"
 msgid "Refresh"
-msgstr "更新"
+msgstr "更新する"
 
 #: data/help-overlay.ui:82
 msgctxt "shortcut window"
@@ -189,12 +189,12 @@ msgstr "プロセスのプロパティを表示する"
 #: data/help-overlay.ui:101
 msgctxt "shortcut window"
 msgid "Memory maps"
-msgstr "メモリマップ"
+msgstr "メモリマップを表示する"
 
 #: data/help-overlay.ui:108
 msgctxt "shortcut window"
 msgid "Open files"
-msgstr "開いているファイル"
+msgstr "開いているファイルを表示する"
 
 #: data/help-overlay.ui:115
 msgctxt "shortcut window"
@@ -248,7 +248,7 @@ msgstr "スワップ"
 
 #: data/interface.ui:366
 msgid "Memory and Swap"
-msgstr "メモリとスワップの履歴"
+msgstr "メモリとスワップ"
 
 #: data/interface.ui:372
 msgid "Network History"
@@ -272,7 +272,7 @@ msgstr "送信の合計:"
 
 #: data/interface.ui:510
 msgid "Network"
-msgstr "ネットワークの履歴"
+msgstr "ネットワーク"
 
 #: data/interface.ui:499 data/preferences.ui:461
 msgid "Resources"
@@ -379,7 +379,7 @@ msgstr "カスタム"
 
 #: data/menus.ui:140
 msgid "Set _Affinity"
-msgstr "所属の設定(_A)"
+msgstr "関係を設定(_A)"
 
 #: data/menus.ui:134
 msgid "_Stop"
@@ -443,7 +443,7 @@ msgstr "グラフ"
 
 #: data/preferences.ui:160
 msgid "_Chart Data Points"
-msgstr "グラフのデータポイント(_C)"
+msgstr "グラフの描画期間 (秒単位)(_C)"
 
 #: data/preferences.ui:384
 msgid "_Draw CPU Chart as Stacked Area Chart"
@@ -451,7 +451,7 @@ msgstr "CPU グラフを積み上げ面グラフで描画する(_D)"
 
 #: data/preferences.ui:402
 msgid "Draw Charts as S_mooth Graphs"
-msgstr "全グラフを滑らかなグラフとして描画する(_M)"
+msgstr "グラフを滑らかな折れ線グラフで描画する(_D)"
 
 #: data/preferences.ui:209
 msgid "Show Memory and Swap in IEC"
@@ -459,7 +459,7 @@ msgstr "メモリとスワップを IEC 単位で表示する"
 
 #: data/preferences.ui:225
 msgid "Show Memory in Logarithmic Scale"
-msgstr "メモリを対数目盛りで表示する"
+msgstr "メモリを対数目盛で表示する"
 
 #: data/preferences.ui:420
 msgid "_Show Network Speed in Bits"
@@ -467,7 +467,7 @@ msgstr "ネットワークの速度をビット単位で表示する(_S)"
 
 #: data/preferences.ui:257
 msgid "Set Network Totals _Unit Separately"
-msgstr "ネットワーク合計単位を個別に設定する(_U)"
+msgstr "ネットワークの送信/受信の合計の単位を個別に設定する(_U)"
 
 #: data/preferences.ui:273
 msgid "Show Network _Totals in Bits"
@@ -654,7 +654,7 @@ msgstr "%.0f %%"
 #, c-format
 msgid "%u hr"
 msgid_plural "%u hrs"
-msgstr[0] "%u 時"
+msgstr[0] "%u 時間"
 
 #: src/load-graph.cpp:137
 #, c-format
@@ -828,11 +828,11 @@ msgstr "フォーム内メインウィンドウのサイズと位置 (幅、高�
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:11
 msgid "Main Window should open maximized"
-msgstr "メインウィンドウを最大化して開くか"
+msgstr "メインウィンドウを最大化して開くかどうか"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:18
 msgid "Show process dependencies in tree form"
-msgstr "ツリー表示でプロセスの依存関係を表示するか"
+msgstr "ツリー表示でプロセスの依存関係を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:25
 msgid "Solaris mode for CPU percentage"
@@ -858,7 +858,7 @@ msgstr "更新をスムーズにするかどうか"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:41
 msgid "Show warning dialog when killing processes"
-msgstr "プロセスを強制終了するときに警告ダイアログを表示するか"
+msgstr "プロセスを強制終了するときに警告ダイアログを表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:48
 msgid "Time in milliseconds between updates of the process view"
@@ -888,7 +888,7 @@ msgstr "デバイス一覧の更新間隔 (ミリ秒単位)"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:82
 msgid "Time amount of data points in the resource graphs"
-msgstr "リソースグラフ内のデータポイントの時間"
+msgstr "リソースグラフを描画する期間"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:79
 msgid "Determines which processes to show."
@@ -928,34 +928,34 @@ msgstr "ネットワークのトラフィックをビット単位で表示する
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:169
 msgid "Set network totals unit separately"
-msgstr "ネットワーク合計単位を個別に設定"
+msgstr "ネットワークの送信/受信の合計の単位を個別に設定する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:176
 msgid "Show network totals in bits"
-msgstr "ネットワークの合計をビット単位で表示"
+msgstr "ネットワークの合計をビット単位で表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:183
 msgid "Show memory in logarithmic scale"
-msgstr "メモリを対数目盛りで表示"
+msgstr "メモリを対数目盛で表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:156
 msgid "Show CPU chart as stacked area chart"
-msgstr "CPU を積み上げ面グラフで表示"
+msgstr "CPU を積み上げ面グラフで表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:201
 msgid ""
 "Show CPU, Memory, and Network charts as smooth graphs using Bezier curves"
 msgstr ""
-"ベジェ曲線を使用して CPU 、メモリとネットワークのグラフを滑らかなグラフとして"
-"表示"
+"ベジェ曲線を使用して CPU、メモリ、ネットワークのグラフを折れ線グラフで表示"
+"する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:203
 msgid ""
 "If TRUE, system-monitor shows the CPU, Memory, and Network charts as "
 "smoothed graphs, otherwise as line charts."
 msgstr ""
-"true にすると、 CPU 、メモリとネットワークのグラフを滑らかなグラフとして表示"
-"する、でなければ折れ線グラフとして表示する。"
+"true にすると、CPU、メモリ、ネットワークのグラフを滑らかに表示し、そうでな"
+"い場合は通常の折れ線グラフで表示します。"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:158
 msgid ""
@@ -967,7 +967,7 @@ msgstr ""
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:210
 msgid "Show memory and swap in IEC"
-msgstr "メモリとスワップを IEC 単位で表示"
+msgstr "メモリとスワップを IEC 単位で表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:182
 msgid "Process view sort column"
@@ -987,7 +987,7 @@ msgstr "プロセス一覧の項目“プロセス名”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:210
 msgid "Show process “Name” column on startup"
-msgstr "起動時にプロセス一覧の項目“プロセス名”を表示"
+msgstr "起動時にプロセス一覧の項目“プロセス名”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:217
 msgid "Width of process “User” column"
@@ -995,7 +995,7 @@ msgstr "プロセス一覧の項目“ユーザー”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:224
 msgid "Show process “User” column on startup"
-msgstr "起動時にプロセス一覧の項目“ユーザー”を表示"
+msgstr "起動時にプロセス一覧の項目“ユーザー”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
 msgid "Width of process “Status” column"
@@ -1003,7 +1003,7 @@ msgstr "プロセス一覧の項目“状態”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
 msgid "Show process “Status” column on startup"
-msgstr "起動時にプロセス一覧の項目“状態”を表示"
+msgstr "起動時にプロセス一覧の項目“状態”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:245
 msgid "Width of process “Virtual Memory” column"
@@ -1011,7 +1011,7 @@ msgstr "プロセス一覧の項目“仮想メモリ”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:252
 msgid "Show process “Virtual Memory” column on startup"
-msgstr "起動時にプロセス一覧の項目“仮想メモリ”を表示"
+msgstr "起動時にプロセス一覧の項目“仮想メモリ”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:259
 msgid "Width of process “Resident Memory” column"
@@ -1019,7 +1019,7 @@ msgstr "プロセス一覧の項目“物理メモリ”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:266
 msgid "Show process “Resident Memory” column on startup"
-msgstr "起動時にプロセス一覧の項目“物理メモリ”を表示"
+msgstr "起動時にプロセス一覧の項目“物理メモリ”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:273
 msgid "Width of process “Writable Memory” column"
@@ -1027,7 +1027,7 @@ msgstr "プロセス一覧の項目“書き込み可能メモリ”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:280
 msgid "Show process “Writable Memory” column on startup"
-msgstr "起動時にプロセス一覧の項目“書き込み可能メモリ”を表示"
+msgstr "起動時にプロセス一覧の項目“書き込み可能メモリ”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:287
 msgid "Width of process “Shared Memory” column"
@@ -1035,7 +1035,7 @@ msgstr "プロセス一覧の項目“共有メモリ”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:294
 msgid "Show process “Shared Memory” column on startup"
-msgstr "起動時にプロセス一覧の項目“共有メモリ”を表示"
+msgstr "起動時にプロセス一覧の項目“共有メモリ”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:301
 msgid "Width of process “X Server Memory” column"
@@ -1043,7 +1043,7 @@ msgstr "プロセス一覧の項目“X サーバーメモリ”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:308
 msgid "Show process “X Server Memory” column on startup"
-msgstr "起動時にプロセス一覧の項目“X サーバーメモリ”を表示"
+msgstr "起動時にプロセス一覧の項目“X サーバーメモリ”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:315
 msgid "Width of process “CPU %” column"
@@ -1051,7 +1051,7 @@ msgstr "プロセス一覧の項目“CPU 使用率”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:322
 msgid "Show process “CPU %” column on startup"
-msgstr "起動時にプロセス一覧の項目“CPU 使用率”を表示"
+msgstr "起動時にプロセス一覧の項目“CPU 使用率”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:329
 msgid "Width of process “CPU Time” column"
@@ -1059,7 +1059,7 @@ msgstr "プロセス一覧の項目“CPU 時間”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:336
 msgid "Show process “CPU Time” column on startup"
-msgstr "起動時にプロセス一覧の項目“CPU 時間”を表示"
+msgstr "起動時にプロセス一覧の項目“CPU 時間”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:343
 msgid "Width of process “Started” column"
@@ -1067,7 +1067,7 @@ msgstr "プロセス一覧の項目“起動日時”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:350
 msgid "Show process “Started” column on startup"
-msgstr "起動時にプロセス一覧の項目“起動日時”を表示"
+msgstr "起動時にプロセス一覧の項目“起動日時”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:357
 msgid "Width of process “Nice” column"
@@ -1075,7 +1075,7 @@ msgstr "プロセス一覧の項目“Nice 値”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:364
 msgid "Show process “Nice” column on startup"
-msgstr "起動時にプロセス一覧の項目“Nice 値”を表示"
+msgstr "起動時にプロセス一覧の項目“Nice 値”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
 msgid "Width of process “ID” column"
@@ -1083,7 +1083,7 @@ msgstr "プロセス一覧の項目“ID”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
 msgid "Show process “ID” column on startup"
-msgstr "起動時にプロセス一覧の項目“ID”を表示"
+msgstr "起動時にプロセス一覧の項目“ID”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
 msgid "Width of process “SELinux Security Context” column"
@@ -1091,7 +1091,8 @@ msgstr "プロセス一覧の項目“SELinux のセキュリティコンテキ�
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:391
 msgid "Show process “SELinux Security Context” column on startup"
-msgstr "起動時にプロセス一覧の項目“SELinux のセキュリティコンテキスト”を表示"
+msgstr ""
+"起動時にプロセス一覧の項目“SELinux のセキュリティコンテキスト”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:398
 msgid "Width of process “Command Line” column"
@@ -1099,7 +1100,7 @@ msgstr "プロセス一覧の項目“コマンドライン”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:405
 msgid "Show process “Command Line” column on startup"
-msgstr "起動時にプロセス一覧の項目“コマンドライン”を表示"
+msgstr "起動時にプロセス一覧の項目“コマンドライン”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:412
 msgid "Width of process “Memory” column"
@@ -1107,7 +1108,7 @@ msgstr "プロセス一覧の項目“メモリ”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:419
 msgid "Show process “Memory” column on startup"
-msgstr "起動時にプロセス一覧の項目“メモリ”を表示"
+msgstr "起動時にプロセス一覧の項目“メモリ”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:426
 msgid "Width of process “Waiting Channel” column"
@@ -1115,7 +1116,7 @@ msgstr "プロセス一覧の項目“休止中の関数”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:433
 msgid "Show process “Waiting Channel” column on startup"
-msgstr "起動時にプロセス一覧の項目“休止中の関数”を表示"
+msgstr "起動時にプロセス一覧の項目“休止中の関数”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:440
 msgid "Width of process “Control Group” column"
@@ -1123,7 +1124,7 @@ msgstr "プロセス一覧の項目“Control Group”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:447
 msgid "Show process “Control Group” column on startup"
-msgstr "起動時にプロセス一覧の項目“Control Group”を表示"
+msgstr "起動時にプロセス一覧の項目“Control Group”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:454
 msgid "Width of process “Unit” column"
@@ -1131,7 +1132,7 @@ msgstr "プロセス一覧の項目“単位”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:461
 msgid "Show process “Unit” column on startup"
-msgstr "起動時にプロセス一覧の項目“単位”を表示"
+msgstr "起動時にプロセス一覧の項目“単位”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:468
 msgid "Width of process “Session” column"
@@ -1139,7 +1140,7 @@ msgstr "プロセス一覧の項目“セッション”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:475
 msgid "Show process “Session” column on startup"
-msgstr "起動時にプロセス一覧の項目“セッション”を表示"
+msgstr "起動時にプロセス一覧の項目“セッション”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:482
 msgid "Width of process “Seat” column"
@@ -1147,7 +1148,7 @@ msgstr "プロセス一覧の項目“シート”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:489
 msgid "Show process “Seat” column on startup"
-msgstr "起動時にプロセス一覧の項目“シート”を表示"
+msgstr "起動時にプロセス一覧の項目“シート”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:496
 msgid "Width of process “Owner” column"
@@ -1155,7 +1156,7 @@ msgstr "プロセス一覧の項目“所有者”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:503
 msgid "Show process “Owner” column on startup"
-msgstr "起動時にプロセス一覧の項目“所有者”を表示"
+msgstr "起動時にプロセス一覧の項目“所有者”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:510
 msgid "Width of process “Total disk read” column"
@@ -1163,7 +1164,7 @@ msgstr "プロセス一覧の項目“ディスクの総読込量”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:517
 msgid "Show process “Total disk read” column on startup"
-msgstr "起動時にプロセス一覧の項目“ディスクの総読込量”を表示"
+msgstr "起動時にプロセス一覧の項目“ディスクの総読込量”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:524
 msgid "Width of process “Total disk write” column"
@@ -1171,7 +1172,7 @@ msgstr "プロセス一覧の項目“ディスクの総書込量”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:531
 msgid "Show process “Total disk write” column on startup"
-msgstr "起動時にプロセス一覧の項目“ディスクの総書込量”を表示"
+msgstr "起動時にプロセス一覧の項目“ディスクの総書込量”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:538
 msgid "Width of process “Disk read” column"
@@ -1179,7 +1180,7 @@ msgstr "プロセス一覧の項目“ディスクの読み込み”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:545
 msgid "Show process “Disk read” column on startup"
-msgstr "起動時にプロセス一覧の項目“ディスクの読み込み”を表示"
+msgstr "起動時にプロセス一覧の項目“ディスクの読み込み”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:552
 msgid "Width of process “Disk write” column"
@@ -1187,7 +1188,7 @@ msgstr "プロセス一覧の項目“ディスクの書き込み”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:559
 msgid "Show process “Disk write” column on startup"
-msgstr "起動時にプロセス一覧の項目“ディスクの書き込み”を表示"
+msgstr "起動時にプロセス一覧の項目“ディスクの書き込み”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:566
 msgid "Width of process “Priority” column"
@@ -1195,7 +1196,7 @@ msgstr "プロセス一覧の項目“優先度”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:573
 msgid "Show process “Priority” column on startup"
-msgstr "起動時にプロセス一覧の項目“優先度”を表示"
+msgstr "起動時にプロセス一覧の項目“優先度”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:584
 msgid "Disk view sort column"
@@ -1215,7 +1216,7 @@ msgstr "ディスク一覧の項目“デバイス”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:612
 msgid "Show disk view “Device” column on startup"
-msgstr "起動時にディスク一覧の項目“デバイス”を表示"
+msgstr "起動時にディスク一覧の項目“デバイス”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:619
 msgid "Width of disk view “Directory” column"
@@ -1223,7 +1224,7 @@ msgstr "ディスク一覧の項目“フォルダー”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:626
 msgid "Show disk view “Directory” column on startup"
-msgstr "起動時にディスク一覧の項目“フォルダー”を表示"
+msgstr "起動時にディスク一覧の項目“フォルダー”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:633
 msgid "Width of disk view “Type” column"
@@ -1231,7 +1232,7 @@ msgstr "ディスク一覧の項目“種類”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:640
 msgid "Show disk view “Type” column on startup"
-msgstr "起動時にディスク一覧の項目“種類”を表示"
+msgstr "起動時にディスク一覧の項目“種類”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:647
 msgid "Width of disk view “Total” column"
@@ -1239,7 +1240,7 @@ msgstr "ディスク一覧の項目“合計”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:654
 msgid "Show disk view “Total” column on startup"
-msgstr "起動時にディスク一覧の項目“合計”を表示"
+msgstr "起動時にディスク一覧の項目“合計”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:661
 msgid "Width of disk view “Free” column"
@@ -1247,7 +1248,7 @@ msgstr "ディスク一覧の項目“空き”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:668
 msgid "Show disk view “Free” column on startup"
-msgstr "起動時にディスク一覧の項目“空き”を表示"
+msgstr "起動時にディスク一覧の項目“空き”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:675
 msgid "Width of disk view “Available” column"
@@ -1255,7 +1256,7 @@ msgstr "ディスク一覧の項目“利用可能”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:682
 msgid "Show disk view “Available” column on startup"
-msgstr "起動時にディスク一覧の項目“利用可能”を表示"
+msgstr "起動時にディスク一覧の項目“利用可能”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:689
 msgid "Width of disk view “Used” column"
@@ -1263,7 +1264,7 @@ msgstr "ディスク一覧の項目“使用済み”の幅"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:696
 msgid "Show disk view “Used” column on startup"
-msgstr "起動時にディスク一覧の項目“使用済み”を表示"
+msgstr "起動時にディスク一覧の項目“使用済み”を表示する"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:706
 msgid "Memory map sort column"
@@ -1528,7 +1529,7 @@ msgstr "ディスクの書き込み"
 
 #: src/setaffinity.cpp:305
 msgid "Set Affinity"
-msgstr "所属の設定"
+msgstr "関係を設定"
 
 #: src/setaffinity.cpp:317
 msgid "_Apply"
@@ -1537,7 +1538,7 @@ msgstr "適用(_A)"
 #: src/setaffinity.cpp:354
 #, c-format
 msgid "Select CPUs \"%s\" (PID %u) is allowed to run on:"
-msgstr "\"%s\" (PID %u) はどの CPU で実行できるか選択してください:"
+msgstr "\"%s\" (PID %u) の実行を許可する CPU を選択してください:"
 
 #. Set check box label value to CPU [1..2048]
 #: src/setaffinity.cpp:407
