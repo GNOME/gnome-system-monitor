@@ -728,7 +728,6 @@ get_net (LoadGraph *graph)
     guint64 in = 0, out = 0;
     guint64 time;
     guint64 din, dout;
-    gboolean first = true;
     ifnames = glibtop_get_netlist(&netlist);
 
     for (i = 0; i < netlist.number; ++i)
@@ -743,7 +742,7 @@ get_net (LoadGraph *graph)
            those with only a LINK ipv6 addr) However we need to
            be able to exclude these while still keeping the
            value so when they get online (with NetworkManager
-           for example) we don't get a suddent peak.  Once we're
+           for example) we don't get a sudden peak.  Once we're
            able to get this, ignoring down interfaces will be
            possible too.  */
         if (not (netload.flags & (1 << GLIBTOP_NETLOAD_ADDRESS6)
@@ -774,13 +773,11 @@ get_net (LoadGraph *graph)
         dout = 0;
     }
 
-    first = first && (graph->net.time==0);
     graph->net.last_in  = in;
     graph->net.last_out = out;
     graph->net.time     = time;
 
-    if (!first)
-        net_scale(graph, din, dout);
+    net_scale(graph, din, dout);
 
     gtk_label_set_text (GTK_LABEL (graph->labels.net_in), procman::format_network_rate(din).c_str());
     gtk_label_set_text (GTK_LABEL (graph->labels.net_in_total), procman::format_network(in).c_str());
