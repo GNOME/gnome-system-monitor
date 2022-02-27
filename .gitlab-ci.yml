@@ -31,6 +31,9 @@ variables:
     make
     texinfo
     texlive
+  UBUNTU_LIBHANDY_DEPENDENCIES:
+    libgladeui-2-6
+    valac
   UBUNTU_DEPENDENCIES: # packages required to build the system monitor on ubuntu.
     appstream-util
     git
@@ -69,7 +72,7 @@ build-ubuntu:
     - tags
   before_script:
     - apt-get update
-    - DEBIAN_FRONTEND=noninteractive apt-get install -y $UBUNTU_LIBGTOP_DEPENDENCIES $UBUNTU_DEPENDENCIES
+    - DEBIAN_FRONTEND=noninteractive apt-get install -y $UBUNTU_LIBGTOP_DEPENDENCIES $UBUNTU_LIBHANDY_DEPENDENCIES $UBUNTU_DEPENDENCIES
   script:
     - git clone https://gitlab.gnome.org/gnome/libgtop.git/ # build and install libgtop
     - cd libgtop
