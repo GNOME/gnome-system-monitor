@@ -10,7 +10,7 @@ project('gnome-system-monitor',
     'libhandy:tests=false',
   ],
   version: '42.beta',
-  meson_version: '>=0.50.0',
+  meson_version: '>=0.57.0',
 )
 
 
@@ -205,4 +205,8 @@ message('\n'.join(['',
       libwnck.found() ? '(this will likely make system-monitor segfault)' : ''),
 ]))
 
-meson.add_install_script('meson_post_install.py')
+# Extra scripts
+gnome.post_install(
+  glib_compile_schemas: true,
+  gtk_update_icon_cache: true,
+)
