@@ -12,14 +12,14 @@
 #include "systemd.h"
 #include "util.h"
 
-static HdyPreferencesWindow *prefs_dialog = NULL;
+static AdwPreferencesWindow *prefs_window = NULL;
 
 static gboolean
-prefs_dialog_delete_event (GtkWidget *widget,
+prefs_window_delete_event (GtkWidget *widget,
                            GdkEvent  *event,
                            gpointer   data)
 {
-    prefs_dialog = NULL;
+    prefs_window = NULL;
     return FALSE;
 }
 
@@ -247,13 +247,13 @@ create_preferences_dialog (GsmApplication *app)
     GtkBuilder *builder;
     gfloat update;
 
-    if (prefs_dialog)
+    if (prefs_window)
         return;
 
     builder = gtk_builder_new ();
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/preferences.ui", NULL);
 
-    prefs_dialog = HDY_PREFERENCES_WINDOW (gtk_builder_get_object (builder, "preferences_dialog"));
+    prefs_window = ADW_PREFERENCES_WINDOW (gtk_builder_get_object (builder, "preferences_dialog"));
 
     spin_button = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "processes_interval_spinner"));
 
@@ -359,15 +359,14 @@ create_preferences_dialog (GsmApplication *app)
 
     create_field_page (builder, GTK_TREE_VIEW (app->disk_list), "disktreenew");
 
-    gtk_window_set_transient_for (GTK_WINDOW (prefs_dialog), GTK_WINDOW (GsmApplication::get ()->main_window));
-    gtk_window_set_modal (GTK_WINDOW (prefs_dialog), TRUE);
+    gtk_window_set_transient_for (GTK_WINDOW (prefs_window), GTK_WINDOW (GsmApplication::get ()->main_window));
+    gtk_window_set_modal (GTK_WINDOW (prefs_window), TRUE);
 
-    gtk_widget_show_all (GTK_WIDGET (prefs_dialog));
-    g_signal_connect (G_OBJECT (prefs_dialog), "delete-event",
-                      G_CALLBACK (prefs_dialog_delete_event), NULL);
+    gtk_widget_show (GTK_WIDGET (prefs_window));
+    g_signal_connect (G_OBJECT (prefs_window), "delete-event",
+                      G_CALLBACK (prefs_window_delete_event), NULL);
 
-    gtk_window_present (GTK_WINDOW (prefs_dialog));
+    gtk_window_present (GTK_WINDOW (prefs_window));
 
-    gtk_builder_connect_signals (builder, NULL);
     g_object_unref (G_OBJECT (builder));
 }

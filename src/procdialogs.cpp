@@ -46,7 +46,7 @@ kill_dialog_button_pressed (GtkDialog *dialog,
 {
     struct ProcActionArgs *kargs = static_cast<ProcActionArgs*>(data);
 
-    gtk_widget_destroy (GTK_WIDGET (dialog));
+    gtk_window_destroy (GTK_WINDOW (dialog));
 
     if (id == GTK_RESPONSE_OK)
         kill_process (kargs->app, kargs->arg_value);
@@ -171,8 +171,8 @@ procdialog_create_kill_dialog (GsmApplication *app,
 
     confirm_button = gtk_dialog_add_button (GTK_DIALOG (kill_alert_dialog),
                                             button_text, GTK_RESPONSE_OK);
-    gtk_style_context_add_class (gtk_widget_get_style_context (confirm_button),
-                                 GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
+    // gtk_style_context_add_class (gtk_widget_get_style_context (confirm_button),
+    //                              GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
 
     gtk_dialog_set_default_response (GTK_DIALOG (kill_alert_dialog),
                                      GTK_RESPONSE_CANCEL);
@@ -180,7 +180,7 @@ procdialog_create_kill_dialog (GsmApplication *app,
     g_signal_connect (G_OBJECT (kill_alert_dialog), "response",
                       G_CALLBACK (kill_dialog_button_pressed), kargs);
 
-    gtk_widget_show_all (GTK_WIDGET (kill_alert_dialog));
+    gtk_widget_show (GTK_WIDGET (kill_alert_dialog));
 }
 
 static void
@@ -207,7 +207,7 @@ renice_dialog_button_pressed (GtkDialog *dialog,
         renice (app, new_nice_value);
     }
 
-    gtk_widget_destroy (GTK_WIDGET (dialog));
+    gtk_window_destroy (GTK_WINDOW (dialog));
     renice_dialog = NULL;
 }
 
@@ -264,7 +264,7 @@ procdialog_create_renice_dialog (GsmApplication *app)
                         "</i></small>", NULL);
     label = GTK_LABEL (gtk_builder_get_object (builder, "note_label"));
     gtk_label_set_label (label, _(text));
-    gtk_label_set_line_wrap (label, TRUE);
+    gtk_label_set_wrap (label, TRUE);
     g_free (text);
 
     g_signal_connect (G_OBJECT (renice_dialog), "response",
@@ -273,9 +273,7 @@ procdialog_create_renice_dialog (GsmApplication *app)
                       G_CALLBACK (renice_scale_changed), priority_label);
 
     gtk_window_set_transient_for (GTK_WINDOW (renice_dialog), GTK_WINDOW (GsmApplication::get ()->main_window));
-    gtk_widget_show_all (GTK_WIDGET (renice_dialog));
-
-    gtk_builder_connect_signals (builder, NULL);
+    gtk_widget_show (GTK_WIDGET (renice_dialog));
 
     g_object_unref (G_OBJECT (builder));
 }

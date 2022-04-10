@@ -6,7 +6,9 @@ typedef struct
 {
     GSettings  *settings;
     gboolean store_column_order;
+
     GHashTable *excluded_columns;
+    GMenu      *column_menu;
 } GsmTreeViewPrivate;
 
 G_DEFINE_TYPE_WITH_PRIVATE (GsmTreeView, gsm_tree_view, GTK_TYPE_TREE_VIEW)
@@ -18,6 +20,14 @@ gsm_tree_view_finalize (GObject *object)
 
     g_hash_table_destroy (priv->excluded_columns);
     priv->excluded_columns = NULL;
+
+    /*
+    gint menu_n_items = g_menu_model_get_n_items (GMenuModel *model)
+    for (gint i = 0; i < menu_n_items; i++) {
+        g_menu_model_get_item_
+    }*/
+    g_menu_remove_all (priv->column_menu);
+    priv->column_menu = NULL;
 
     G_OBJECT_CLASS (gsm_tree_view_parent_class)->finalize (object);
 }
@@ -36,6 +46,7 @@ gsm_tree_view_init (GsmTreeView *self)
     GsmTreeViewPrivate *priv = gsm_tree_view_get_instance_private (self);
 
     priv->excluded_columns = g_hash_table_new (g_direct_hash, g_direct_equal);
+    priv->column_menu = g_menu_new ();
 }
 
 void
@@ -103,19 +114,21 @@ gsm_tree_view_get_column_from_id (GsmTreeView *tree_view,
     return col;
 }
 
-static gboolean
-cb_column_header_clicked (GtkTreeViewColumn *column,
-                          GdkEventButton    *event,
-                          gpointer           data)
+static void
+cb_column_header_clicked (GtkGestureClick *gesture_click,
+                          gint             n_press,
+                          gdouble          x,
+                          gdouble          y,
+                          gpointer         data)
 {
-    GtkMenu *menu = GTK_MENU (data);
+    GtkPopover *popover = GTK_POPOVER (data);
 
-    if (event->button == GDK_BUTTON_SECONDARY) {
-        gtk_menu_popup_at_pointer (menu, (GdkEvent*)event);
-        return TRUE;
-    }
+    GdkRectangle rectangle = {
+        x, y, 1, 1
+    };
 
-    return FALSE;
+    gtk_popover_set_pointing_to (popover, &rectangle);
+    gtk_popover_present (popover);
 }
 
 void
@@ -138,11 +151,13 @@ gsm_tree_view_load_state (GsmTreeView *tree_view)
                                           sort_col,
                                           sort_type);
 
+    g_menu_freeze (priv->column_menu);
+
     if (priv->store_column_order) {
-        GtkMenu *header_menu = GTK_MENU (gtk_menu_new ());
         GList *columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree_view));
         GList *iter;
         GVariantIter *var_iter;
+        GtkPopoverMenu *header_menu = GTK_POPOVER_MENU (gtk_popover_menu_new_from_model (G_MENU_MODEL (priv->column_menu)));
         GtkTreeViewColumn *col, *last;
         gint sort_id;
 
@@ -150,7 +165,7 @@ gsm_tree_view_load_state (GsmTreeView *tree_view)
             const char *title;
             char *key;
             GtkButton *button;
-            GtkCheckMenuItem *column_item;
+            GtkGesture *gesture_click;
 
             col = GTK_TREE_VIEW_COLUMN (iter->data);
             sort_id = gtk_tree_view_column_get_sort_column_id (col);
@@ -163,17 +178,15 @@ gsm_tree_view_load_state (GsmTreeView *tree_view)
 
             title = gtk_tree_view_column_get_title (col);
 
-            button = GTK_BUTTON (gtk_tree_view_column_get_button (col));
-            g_signal_connect (button, "button-press-event",
+            gesture_click = gtk_gesture_click_new ();
+            gtk_gesture_single_set_button (GTK_GESTURE_SINGLE (gesture_click), GDK_BUTTON_SECONDARY);
+            g_signal_connect (gesture_click,
+                              "pressed",
                               G_CALLBACK (cb_column_header_clicked),
                               header_menu);
 
-            column_item = GTK_CHECK_MENU_ITEM (gtk_check_menu_item_new_with_label (title));
-            g_object_bind_property (col, "visible",
-                                    column_item, "active",
-                                    G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
-
-            gtk_menu_shell_append (GTK_MENU_SHELL (header_menu), GTK_WIDGET (column_item));
+            button = GTK_BUTTON (gtk_tree_view_column_get_button (col));
+            gtk_widget_add_controller (GTK_WIDGET (button), GTK_EVENT_CONTROLLER (gesture_click));
 
             key = g_strdup_printf ("col-%d-width", sort_id);
             gtk_tree_view_column_set_fixed_width (col, g_settings_get_int (priv->settings, key));
@@ -186,8 +199,6 @@ gsm_tree_view_load_state (GsmTreeView *tree_view)
         }
 
         g_list_free (columns);
-
-        gtk_widget_show_all (GTK_WIDGET (header_menu));
 
         g_settings_get (priv->settings, "columns-order", "ai", &var_iter);
         last = NULL;
@@ -263,6 +274,7 @@ gsm_tree_view_append_and_bind_column (GsmTreeView       *tree_view,
                                       GtkTreeViewColumn *column)
 {
     GsmTreeViewPrivate *priv;
+    GMenuItem *item;
 
     g_return_if_fail (GSM_IS_TREE_VIEW (tree_view));
     g_return_if_fail (GTK_IS_TREE_VIEW_COLUMN (column));
@@ -271,6 +283,15 @@ gsm_tree_view_append_and_bind_column (GsmTreeView       *tree_view,
 
     gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view),
                                  column);
+
+    gchar *action_name = g_strdup_printf ("treeview.show-%d", gtk_tree_view_column_get_sort_column_id (column));
+    item = g_menu_item_new (gtk_tree_view_column_get_title (column), action_name);
+
+    g_menu_append_item (priv->column_menu, item);
+
+    /*g_object_bind_property (column, "visible",
+                            //item, "active",
+                            G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);*/
 
     g_signal_connect (column, "notify::fixed-width",
                       G_CALLBACK (cb_update_column_state),

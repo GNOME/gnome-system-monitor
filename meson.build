@@ -2,12 +2,9 @@
 project('gnome-system-monitor',
   'c', 'cpp',
   default_options : [
-    'c_std=c11',
-    'cpp_std=c++11',
+    'c_std=gnu2x',
+    'cpp_std=gnu++2a',
     'warning_level=3',
-    'libhandy:vapi=false',
-    'libhandy:introspection=disabled',
-    'libhandy:tests=false',
   ],
   version: '42.0',
   meson_version: '>=0.57.0',
@@ -45,17 +42,17 @@ datadir = join_paths(prefix, get_option('datadir'))
 ################################################################################
 # Dependencies
 
-giomm   = dependency('giomm-2.4',   version: '>=2.46')
-glib    = dependency('glib-2.0',    version: '>=2.56.0')
-glibmm  = dependency('glibmm-2.4',  version: '>=2.46')
-gmodule = dependency('gmodule-2.0')
-gtk3    = dependency('gtk+-3.0',    version: '>=3.22.0')
-gtkmm   = dependency('gtkmm-3.0',   version: '>=3.3.18')
-atkmm   = dependency('atkmm-1.6',   version: '>=2.28')
-libgtop = dependency('libgtop-2.0', version: '>=2.37.0')
-libhandy = dependency('libhandy-1', version: '>= 1.5.0', fallback: ['libhandy', 'libhandy_dep'])
-librsvg = dependency('librsvg-2.0', version: '>=2.35')
-libxml  = dependency('libxml-2.0',  version: '>=2.0')
+giomm      = dependency('giomm-2.68',   version: '>=2.68')
+glib       = dependency('glib-2.0',    version: '>=2.56.0')
+glibmm     = dependency('glibmm-2.68',  version: '>=2.68')
+gmodule    = dependency('gmodule-2.0')
+gtk        = dependency('gtk4',        version: '>=4.6.0')
+gtkmm      = dependency('gtkmm-4.0',   version: '>=4.0.0')
+atkmm      = dependency('atkmm-2.36',  version: '>=2.36')
+libgtop    = dependency('libgtop-2.0', version: '>=2.37.0')
+libadwaita = dependency('libadwaita-1',version: '>= 1.0.0')
+librsvg    = dependency('librsvg-2.0', version: '>=2.35')
+libxml     = dependency('libxml-2.0',  version: '>=2.0')
 
 if get_option('wnck')
   libwnck = dependency('libwnck-3.0', version: '>=2.91.0')

@@ -10,7 +10,7 @@ libgsm_legacy = static_library('gsm_legacy',
   include_directories: rootInclude,
   dependencies: [
     glib,
-    gtk3,
+    gtk,
     librsvg,
   ],
 )

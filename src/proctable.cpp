@@ -59,10 +59,6 @@
 #include "legacy/treeview.h"
 #include "systemd.h"
 
-#ifdef GDK_WINDOWING_X11
-#include <gdk/gdkx.h>
-#endif
-
 ProcInfo* ProcList::find (pid_t pid)
 {
     auto it = data.find (pid);
@@ -92,42 +88,45 @@ cb_proctree_destroying (GtkTreeView *self,
 }
 
 static gboolean
-cb_tree_button_pressed (GtkWidget      *widget,
-                        GdkEventButton *event,
-                        gpointer        data)
+cb_tree_button_pressed (GtkGestureClick *controller,
+                        gint             n_press,
+                        gdouble          x,
+                        gdouble          y,
+                        GsmApplication  *app)
 {
-    GsmApplication *app = (GsmApplication *) data;
     GtkTreePath *path;
-    GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (widget));
+    GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (app->tree));
 
-    if (!gdk_event_triggers_context_menu ((GdkEvent *) event))
-        return FALSE;
-
-    if (!gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (app->tree), event->x, event->y, &path, NULL, NULL, NULL))
+    if (!gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (app->tree), x, y, &path, NULL, NULL, NULL))
         return FALSE;
 
     if (!gtk_tree_selection_path_is_selected (selection, path)) {
-        if (!(event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)))
-            gtk_tree_selection_unselect_all (selection);
+        // TODO: How to handle?
+        // if (!(event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)))
+        //     gtk_tree_selection_unselect_all (selection);
         gtk_tree_selection_select_path (selection, path);
     }
 
     gtk_tree_path_free (path);
 
-    gtk_menu_popup_at_pointer (GTK_MENU (app->popup_menu), NULL);
+    GdkRectangle rect = { (int) x, (int) y, 1, 1 };
+    gtk_popover_set_pointing_to (GTK_POPOVER (app->popover_menu), &rect);
+    gtk_popover_popup (GTK_POPOVER (app->popover_menu));
+
     return TRUE;
 }
 
-static gboolean
+
+/*static gboolean
 cb_tree_popup_menu (GtkWidget *widget,
                     gpointer   data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
-    gtk_menu_popup_at_pointer (GTK_MENU (app->popup_menu), NULL);
+    gtk_popover_menu_at_pointer (GTK_MENU (app->popup_menu), NULL);
 
     return TRUE;
-}
+}*/
 
 void
 get_last_selected (GtkTreeModel *model,
@@ -239,9 +238,9 @@ iter_matches_search_key (GtkTreeModel *model,
     keys = g_strsplit_set (search_text, " |", -1);
     search_pattern = g_strjoinv ("|", keys);
     try {
-        regex = Glib::Regex::create (search_pattern, Glib::REGEX_CASELESS);
+        regex = Glib::Regex::create (search_pattern, Glib::Regex::CompileFlags::CASELESS);
     } catch (const Glib::Error&ex) {
-        regex = Glib::Regex::create (Glib::Regex::escape_string (search_pattern), Glib::REGEX_CASELESS);
+        regex = Glib::Regex::create (Glib::Regex::escape_string (search_pattern), Glib::Regex::CompileFlags::CASELESS);
     }
 
     found = (name && regex->match (name)) || (user && regex->match (user))
@@ -263,7 +262,7 @@ process_visibility_func (GtkTreeModel *model,
                          gpointer      data)
 {
     GsmApplication * const app = static_cast<GsmApplication *>(data);
-    const gchar *search_text = app->search_entry == NULL ? "" : gtk_entry_get_text (GTK_ENTRY (app->search_entry));
+    const gchar *search_text = app->search_entry == NULL ? "" : gtk_editable_get_text (GTK_EDITABLE (app->search_entry));
     GtkTreePath *tree_path = gtk_tree_model_get_path (model, iter);
 
     if (strcmp (search_text, "") == 0) {
@@ -345,7 +344,7 @@ proctable_new (GsmApplication * const app)
     GtkTreeModelFilter *model_filter;
     GtkTreeModelSort *model_sort;
     GtkTreeSelection *selection;
-    GtkGesture *multi_press_controller;
+    GtkGesture *click_controller;
 
     GtkTreeViewColumn *column;
     GtkCellRenderer *cell_renderer;
@@ -414,7 +413,7 @@ proctable_new (GsmApplication * const app)
                                 G_TYPE_UINT64,      /* Disk read    */
                                 G_TYPE_UINT64,      /* Disk write   */
                                 G_TYPE_STRING,      /* Priority     */
-                                GDK_TYPE_PIXBUF,    /* Icon         */
+                                GDK_TYPE_TEXTURE,   /* Icon         */
                                 G_TYPE_POINTER,     /* ProcInfo     */
                                 G_TYPE_STRING       /* Sexy tooltip */
                                 );
@@ -438,7 +437,7 @@ proctable_new (GsmApplication * const app)
     cell_renderer = gtk_cell_renderer_pixbuf_new ();
     gtk_tree_view_column_pack_start (column, cell_renderer, FALSE);
     gtk_tree_view_column_set_attributes (column, cell_renderer,
-                                         "pixbuf", COL_PIXBUF,
+                                         "texture", COL_TEXTURE,
                                          NULL);
 
     cell_renderer = gtk_cell_renderer_text_new ();
@@ -678,7 +677,7 @@ proctable_new (GsmApplication * const app)
 
     gsm_tree_view_load_state (proctree);
 
-    GtkIconTheme*theme = gtk_icon_theme_get_default ();
+    GtkIconTheme*theme = gtk_icon_theme_get_for_display (gdk_display_get_default ());
     g_signal_connect (G_OBJECT (theme), "changed", G_CALLBACK (cb_refresh_icons), app);
 
     selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
@@ -686,17 +685,22 @@ proctable_new (GsmApplication * const app)
 
     gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
 
+    click_controller = gtk_gesture_click_new ();
+    gtk_gesture_single_set_button (GTK_GESTURE_SINGLE (click_controller), GDK_BUTTON_SECONDARY);
+    gtk_widget_add_controller (GTK_WIDGET (proctree), GTK_EVENT_CONTROLLER (click_controller));
+
+    g_signal_connect (G_OBJECT (click_controller), "pressed",
+                      G_CALLBACK (cb_tree_button_pressed), app);
+
     g_signal_connect (G_OBJECT (selection),
                       "changed",
                       G_CALLBACK (cb_row_selected), app);
-    g_signal_connect (G_OBJECT (proctree), "popup_menu",
-                      G_CALLBACK (cb_tree_popup_menu), app);
-    g_signal_connect (G_OBJECT (proctree), "button_press_event",
-                      G_CALLBACK (cb_tree_button_pressed), app);
+
+    // g_signal_connect (G_OBJECT (proctree), "popup_menu",
+    //                   G_CALLBACK (cb_tree_popup_menu), app);
 
     g_signal_connect (G_OBJECT (proctree), "destroy",
-                      G_CALLBACK (cb_proctree_destroying),
-                      app);
+                      G_CALLBACK (cb_proctree_destroying), app);
 
     g_signal_connect (G_OBJECT (proctree), "columns-changed",
                       G_CALLBACK (cb_save_tree_state), app);
@@ -810,17 +814,6 @@ get_process_memory_info (ProcInfo *info)
 
 #ifdef HAVE_WNCK
     info->memxserver = 0;
-#ifdef GDK_WINDOWING_X11
-    if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
-        WnckResourceUsage xresources;
-
-        wnck_pid_read_resource_usage (gdk_display_get_default (),
-                                      info->pid,
-                                      &xresources);
-
-        info->memxserver = xresources.total_bytes_estimate;
-    }
-#endif
 #endif
 
     glibtop_get_proc_mem (&procmem, info->pid);
@@ -1039,7 +1032,7 @@ update_info (GsmApplication *app,
 
 ProcInfo::ProcInfo(pid_t pid)
     : node (),
-    pixbuf (),
+    texture (),
     pid (pid),
     ppid (-1),
     uid (-1)
@@ -1275,16 +1268,16 @@ proctable_free_table (GsmApplication * const app)
 }
 
 void
-ProcInfo::set_icon (Glib::RefPtr<Gdk::Pixbuf> icon)
+ProcInfo::set_icon (Glib::RefPtr<Gdk::Texture> icon)
 {
-    this->pixbuf = icon;
+    this->texture = icon;
 
     GtkTreeModel *model;
     model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
                                                  gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (
                                                                                     gtk_tree_view_get_model (GTK_TREE_VIEW (GsmApplication::get ()->tree))))));
     gtk_tree_store_set (GTK_TREE_STORE (model), &this->node,
-                        COL_PIXBUF, (this->pixbuf ? this->pixbuf->gobj () : NULL),
+                        COL_TEXTURE, (this->texture ? this->texture->gobj () : NULL),
                         -1);
 }
 

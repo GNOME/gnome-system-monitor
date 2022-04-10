@@ -14,7 +14,7 @@ cgroups_enabled (void)
 
     if (not initialized) {
         initialized = true;
-        has_cgroups = Glib::file_test ("/proc/cgroups", Glib::FileTest::FILE_TEST_EXISTS);
+        has_cgroups = Glib::file_test ("/proc/cgroups", Glib::FileTest::EXISTS);
     }
 
     return has_cgroups;

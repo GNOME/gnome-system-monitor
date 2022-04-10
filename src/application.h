@@ -3,7 +3,7 @@
 
 #include <gtkmm.h>
 #include <glibtop/cpu.h>
-#include <handy.h>
+#include <adwaita.h>
 
 #include <algorithm>
 #include <mutex>
@@ -148,13 +148,14 @@ public:
     ProcInfo& operator=(const ProcInfo&) = delete;
     ProcInfo(const ProcInfo&) = delete;
     ProcInfo(pid_t pid);
-// adds one more ref to icon
-    void set_icon(Glib::RefPtr<Gdk::Pixbuf> icon);
+
+    // adds one more ref to icon
+    void set_icon(Glib::RefPtr<Gdk::Texture> icon);
     void set_user(guint uid);
     std::string lookup_user(guint uid);
 
     GtkTreeIter node;
-    Glib::RefPtr<Gdk::Pixbuf> pixbuf;
+    Glib::RefPtr<Gdk::Texture> texture;
     std::string tooltip;
     std::string name;
     std::string arguments;
@@ -224,9 +225,9 @@ public:
     ProcList processes;
     GsmTreeView      *tree;
     GtkRevealer      *proc_actionbar_revealer;
-    GtkMenu          *popup_menu;
+    GtkPopover       *popover_menu;
     GsmTreeView      *disk_list;
-    GtkStack         *stack;
+    AdwViewStack     *stack;
     GtkButton        *refresh_button;
     GtkMenuButton    *process_menu_button;
     GtkMenuButton    *window_menu_button;
@@ -251,7 +252,7 @@ public:
     PrettyTable      *pretty_table;
 
     Glib::RefPtr<Gio::Settings> settings;
-    HdyApplicationWindow *main_window;
+    AdwApplicationWindow *main_window;
 
     unsigned frequency;
 

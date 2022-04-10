@@ -152,6 +152,7 @@ const int FRAME_WIDTH = 4;
 static void draw_background (LoadGraph *graph)
 {
     GtkAllocation allocation;
+    GtkNative *native;
     cairo_t *cr;
     guint i;
     double label_x_offset_modifier, label_y_offset_modifier;
@@ -174,15 +175,16 @@ static void draw_background (LoadGraph *graph)
     graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH;
 
     gtk_widget_get_allocation (GTK_WIDGET (graph->disp), &allocation);
-    surface = gdk_window_create_similar_surface (gtk_widget_get_window (GTK_WIDGET (graph->disp)),
-                                                 CAIRO_CONTENT_COLOR_ALPHA,
-                                                 allocation.width,
-                                                 allocation.height);
+    native = gtk_widget_get_native (GTK_WIDGET (graph->disp));
+    surface = gdk_surface_create_similar_surface (gtk_native_get_surface (native),
+                                                  CAIRO_CONTENT_COLOR_ALPHA,
+                                                  allocation.width,
+                                                  allocation.height);
     cr = cairo_create (surface);
 
     GtkStyleContext *context = gtk_widget_get_style_context (GTK_WIDGET (GsmApplication::get ()->stack));
 
-    gtk_style_context_get_color (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get ()->stack)), &fg);
+    gtk_style_context_get_color (context, &fg);
 
     cairo_paint_with_alpha (cr, 0.0);
     layout = pango_cairo_create_layout (cr);
@@ -191,10 +193,11 @@ static void draw_background (LoadGraph *graph)
     pango_layout_set_attributes (layout, attrs);
     g_clear_pointer (&attrs, pango_attr_list_unref);
 
-    gtk_style_context_get (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get ()->stack)), GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
+    // TODO: Handle font size properly
+    /*gtk_style_context_get (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get()->stack)), GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
     pango_font_description_set_size (font_desc, 0.8 * graph->fontsize * PANGO_SCALE);
     pango_layout_set_font_description (layout, font_desc);
-    pango_font_description_free (font_desc);
+    pango_font_description_free (font_desc);*/
 
     /* draw frame */
     cairo_translate (cr, FRAME_WIDTH, FRAME_WIDTH);
@@ -214,11 +217,11 @@ static void draw_background (LoadGraph *graph)
 
     /* And in case the user does not care, we add
      * classes that usually have a white background. */
-    gtk_style_context_add_class (context, GTK_STYLE_CLASS_PAPER);
-    gtk_style_context_add_class (context, GTK_STYLE_CLASS_ENTRY);
+    // gtk_style_context_add_class (context, GTK_STYLE_CLASS_PAPER);
+    // gtk_style_context_add_class (context, GTK_STYLE_CLASS_ENTRY);
 
     /* And, as a bonus, the user can choose the color of the grid. */
-    gtk_style_context_get_color (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get ()->stack)), &fg_grid);
+    gtk_style_context_get_color (context, &fg_grid);
 
     /* Why not use the new features of the
      * GTK instead of cairo_rectangle ?! :) */
@@ -323,10 +326,10 @@ load_graph_rescale (LoadGraph *graph)
     load_graph_queue_draw (graph);
 }
 
-static gboolean
-load_graph_configure (GtkWidget         *widget,
-                      GdkEventConfigure *event,
-                      gpointer           data_ptr)
+/*static gboolean
+load_graph_configure (GtkWidget *widget,
+                      GdkConfigure *event,
+                      gpointer data_ptr)
 {
     GtkAllocation allocation;
     LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
@@ -342,7 +345,7 @@ load_graph_configure (GtkWidget         *widget,
     load_graph_queue_draw (graph);
 
     return TRUE;
-}
+}*/
 
 static void force_refresh (LoadGraph * const graph)
 {
@@ -369,10 +372,12 @@ load_graph_state_changed (GtkWidget     *widget,
     return TRUE;
 }
 
-static gboolean
-load_graph_draw (GtkWidget *widget,
-                 cairo_t   *cr,
-                 gpointer   data_ptr)
+static void
+load_graph_draw (GtkDrawingArea *drawing_area,
+                 cairo_t        *cr,
+                 int             width,
+                 int             height,
+                 gpointer        data_ptr)
 {
     LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
 
@@ -443,8 +448,6 @@ load_graph_draw (GtkWidget *widget,
             cairo_stroke (cr);
         }
     }
-
-    return TRUE;
 }
 
 void
@@ -1005,11 +1008,12 @@ LoadGraph::LoadGraph(guint type)
     gtk_widget_show (GTK_WIDGET (main_widget));
 
     disp = GTK_DRAWING_AREA (gtk_drawing_area_new ());
-    gtk_widget_show (GTK_WIDGET (disp));
-    g_signal_connect (G_OBJECT (disp), "draw",
-                      G_CALLBACK (load_graph_draw), graph);
-    g_signal_connect (G_OBJECT (disp), "configure_event",
-                      G_CALLBACK (load_graph_configure), graph);
+    gtk_drawing_area_set_draw_func (disp,
+                                    load_graph_draw,
+                                    graph,
+                                    NULL);
+    // g_signal_connect (G_OBJECT(disp), "configure_event",
+    //                   G_CALLBACK (load_graph_configure), graph);
     g_signal_connect (G_OBJECT (disp), "destroy",
                       G_CALLBACK (load_graph_destroy), graph);
     g_signal_connect (G_OBJECT (disp), "state-flags-changed",
@@ -1017,9 +1021,9 @@ LoadGraph::LoadGraph(guint type)
     g_signal_connect (G_OBJECT (disp), "style-updated",
                       G_CALLBACK (load_graph_style_updated), graph);
 
-    gtk_widget_set_events (GTK_WIDGET (disp), GDK_EXPOSURE_MASK);
+    // gtk_widget_set_events (GTK_WIDGET (disp), GDK_EXPOSURE_MASK);
 
-    gtk_box_pack_start (main_widget, GTK_WIDGET (disp), TRUE, TRUE, 0);
+    gtk_box_prepend (main_widget, GTK_WIDGET (disp));
 
     data = std::vector<double*>(num_points);
     /* Allocate data in a contiguous block */
@@ -1028,8 +1032,6 @@ LoadGraph::LoadGraph(guint type)
     for (guint i = 0; i < num_points; ++i) {
         data[i] = &data_block[0] + i * n;
     }
-
-    gtk_widget_show_all (GTK_WIDGET (main_widget));
 }
 
 void

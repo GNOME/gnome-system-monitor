@@ -238,7 +238,7 @@ close_openfiles_dialog (GtkDialog *dialog,
     timer = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (tree), "timer"));
     g_source_remove (timer);
 
-    gtk_widget_destroy (GTK_WIDGET (dialog));
+    gtk_window_destroy (GTK_WINDOW (dialog));
 
     return;
 }
@@ -324,7 +324,7 @@ create_single_openfiles_dialog (GtkTreeModel *model,
     GtkDialog *openfilesdialog;
     GtkGrid *cmd_grid;
     GtkLabel *label;
-    GtkScrolledWindow *scrolled;
+    GtkWidget *scrolled;
     GsmTreeView *tree;
     ProcInfo *info;
     guint timer;
@@ -341,7 +341,6 @@ create_single_openfiles_dialog (GtkTreeModel *model,
 
     cmd_grid = GTK_GRID (gtk_builder_get_object (builder, "cmd_grid"));
 
-
     label = procman_make_label_for_mmaps_or_ofiles (
         _("_Files opened by process “%s” (PID %u):"),
         info->name.c_str (),
@@ -349,19 +348,17 @@ create_single_openfiles_dialog (GtkTreeModel *model,
 
     gtk_grid_attach (cmd_grid, GTK_WIDGET (label), 0, 0, 1, 1);
 
-    scrolled = GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder, "scrolled"));
+    scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "scrolled"));
 
     tree = create_openfiles_tree (app);
-    gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (tree));
+    gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (tree));
     g_object_set_data (G_OBJECT (tree), "selected_info", GUINT_TO_POINTER (info->pid));
 
     g_signal_connect (G_OBJECT (openfilesdialog), "response",
                       G_CALLBACK (close_openfiles_dialog), tree);
 
-    gtk_builder_connect_signals (builder, NULL);
-
     gtk_window_set_transient_for (GTK_WINDOW (openfilesdialog), GTK_WINDOW (GsmApplication::get ()->main_window));
-    gtk_widget_show_all (GTK_WIDGET (openfilesdialog));
+    gtk_widget_show (GTK_WIDGET (openfilesdialog));
 
     timer = g_timeout_add_seconds (5, openfiles_timer, tree);
     g_object_set_data (G_OBJECT (tree), "timer", GUINT_TO_POINTER (timer));

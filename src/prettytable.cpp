@@ -9,7 +9,6 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <string.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <glibtop/procstate.h>
 #include <giomm/error.h>
 #include <giomm/file.h>
@@ -23,10 +22,6 @@
 #include "proctable.h"
 #include "util.h"
 
-#ifdef GDK_WINDOWING_X11
-#include <gdk/gdkx.h>
-#endif
-
 namespace
 {
 const unsigned APP_ICON_SIZE = 16;
@@ -35,18 +30,6 @@ const unsigned APP_ICON_SIZE = 16;
 
 PrettyTable::PrettyTable()
 {
-#ifdef HAVE_WNCK
-#ifdef GDK_WINDOWING_X11
-    if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
-        WnckScreen*screen = wnck_screen_get_default ();
-        g_signal_connect (G_OBJECT (screen), "application_opened",
-                          G_CALLBACK (PrettyTable::on_application_opened), this);
-        g_signal_connect (G_OBJECT (screen), "application_closed",
-                          G_CALLBACK (PrettyTable::on_application_closed), this);
-    }
-#endif
-#endif
-
     // init GIO apps cache
     std::vector<std::string> dirs = Glib::get_system_data_dirs ();
     for (std::vector<std::string>::iterator it = dirs.begin (); it != dirs.end (); ++it) {
@@ -55,7 +38,8 @@ PrettyTable::PrettyTable()
         Glib::RefPtr<Gio::FileMonitor> monitor = file->monitor_directory ();
         monitor->set_rate_limit (1000); // 1 second
 
-        monitor->signal_changed ().connect (sigc::mem_fun (this, &PrettyTable::file_monitor_event));
+        // TODO: Properly handle signal change
+        // monitor->signal_changed ().connect (sigc::mem_fun (this, &PrettyTable::file_monitor_event));
         monitors[path] = monitor;
     }
 
@@ -82,10 +66,20 @@ PrettyTable::on_application_opened (WnckScreen     *screen,
 
     const char*icon_name = wnck_application_get_icon_name (app);
 
+    Glib::RefPtr<Gtk::IconTheme> icon_theme;
+    Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
+    Glib::RefPtr<Gdk::Texture> icon;
 
-    Glib::RefPtr<Gdk::Pixbuf> icon;
+    icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
 
-    icon = Glib::wrap (gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), icon_name, APP_ICON_SIZE, GTK_ICON_LOOKUP_USE_BUILTIN, NULL));
+    icon_paintable = Gtk::IconTheme::lookup_icon (
+        icon_name.c_str (),
+        APP_ICON_SIZE,
+        1,
+        Gtk::TextDirection::NONE,
+        Gtk::IconLookupFlags::PRELOAD);
+
+    icon = Gdk::Texture::create_from_file (icon_paintable.get_file ());
 
     if (not icon) {
         icon = Glib::wrap (wnck_application_get_icon (app), /* take_copy */ true);
@@ -145,8 +139,8 @@ void PrettyTable::init_gio_app_cache ()
 {
     this->gio_apps.clear ();
 
-    Glib::ListHandle<Glib::RefPtr<Gio::AppInfo> > apps = Gio::AppInfo::get_all ();
-    for (Glib::ListHandle<Glib::RefPtr<Gio::AppInfo> >::const_iterator it = apps.begin ();
+    std::vector<Glib::RefPtr<Gio::AppInfo> > apps = Gio::AppInfo::get_all ();
+    for (std::vector<Glib::RefPtr<Gio::AppInfo> >::const_iterator it = apps.begin ();
          it != apps.end (); ++it) {
         Glib::RefPtr<Gio::AppInfo> app = *it;
         std::string executable = app->get_executable ();
@@ -158,15 +152,27 @@ void PrettyTable::init_gio_app_cache ()
 
 void PrettyTable::file_monitor_event (Glib::RefPtr<Gio::File>,
                                       Glib::RefPtr<Gio::File>,
-                                      Gio::FileMonitorEvent)
+                                      Gio::FileMonitor::Event)
 {
     this->init_gio_app_cache ();
 }
 
-Glib::RefPtr<Gdk::Pixbuf>
+Glib::RefPtr<Gdk::Texture>
 PrettyTable::get_icon_from_theme (const ProcInfo &info)
 {
-    return Glib::wrap (gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), info.name.c_str (), APP_ICON_SIZE, (GtkIconLookupFlags)(GTK_ICON_LOOKUP_USE_BUILTIN | GTK_ICON_LOOKUP_FORCE_SIZE), NULL));
+    Glib::RefPtr<Gtk::IconTheme> icon_theme;
+    Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
+
+    icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
+
+    icon_paintable = icon_theme->lookup_icon (
+        info.name.c_str (),
+        APP_ICON_SIZE,
+        1,
+        Gtk::TextDirection::NONE,
+        Gtk::IconLookupFlags::PRELOAD);
+
+    return Gdk::Texture::create_from_file (icon_paintable->get_file ());
 }
 
 
@@ -174,7 +180,7 @@ bool PrettyTable::get_default_icon_name (const string &cmd,
                                          string &      name)
 {
     for (size_t i = 0; i != G_N_ELEMENTS (default_table); ++i) {
-        if (default_table[i].command->match (cmd)) {
+        if (default_table[i].command->match (cmd.c_str ())) {
             name = default_table[i].icon;
             return true;
         }
@@ -190,46 +196,68 @@ bool PrettyTable::get_default_icon_name (const string &cmd,
   so we don't have to lookup again.
 */
 
-Glib::RefPtr<Gdk::Pixbuf>
+Glib::RefPtr<Gdk::Texture>
 PrettyTable::get_icon_from_default (const ProcInfo &info)
 {
-    Glib::RefPtr<Gdk::Pixbuf> pix;
+    Glib::RefPtr<Gtk::IconTheme> icon_theme;
+    Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
+    Glib::RefPtr<Gdk::Texture> texture;
     string name;
 
     if (this->get_default_icon_name (info.name, name)) {
         IconCache::iterator it (this->defaults.find (name));
 
         if (it == this->defaults.end ()) {
-            pix = Glib::wrap (gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), name.c_str (), APP_ICON_SIZE, (GtkIconLookupFlags)(GTK_ICON_LOOKUP_USE_BUILTIN | GTK_ICON_LOOKUP_FORCE_SIZE), NULL));
-            if (pix)
-                this->defaults[name] = pix;
-        } else
-            pix = it->second;
+            icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
+
+            icon_paintable = icon_theme->lookup_icon (
+                name.c_str (),
+                APP_ICON_SIZE,
+                1,
+                Gtk::TextDirection::NONE,
+                Gtk::IconLookupFlags::PRELOAD);
+
+            texture = Gdk::Texture::create_from_file (icon_paintable->get_file ());
+
+            if (texture)
+                this->defaults[name] = texture;
+        } else {
+            texture = it->second;
+        }
     }
 
-    return pix;
+    return texture;
 }
 
-Glib::RefPtr<Gdk::Pixbuf>
+Glib::RefPtr<Gdk::Texture>
 PrettyTable::get_icon_from_gio (const ProcInfo &info)
 {
     gchar **cmdline = g_strsplit (info.name.c_str (), " ", 2);
     const gchar *executable = cmdline[0];
-    Glib::RefPtr<Gdk::Pixbuf> icon;
+    Glib::RefPtr<Gtk::IconTheme> icon_theme;
+    Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
+    Glib::RefPtr<Gdk::Texture> icon;
 
     if (executable) {
         Glib::RefPtr<Gio::AppInfo> app = this->gio_apps[executable];
         Glib::RefPtr<Gio::Icon> gicon;
-        Gtk::IconInfo info;
+        Glib::RefPtr<Gtk::IconPaintable> info;
 
         if (app)
             gicon = app->get_icon ();
 
+        icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
+
         if (gicon)
-            info = Glib::wrap (gtk_icon_theme_lookup_by_gicon (gtk_icon_theme_get_default (), gicon->gobj (), APP_ICON_SIZE, (GtkIconLookupFlags)(GTK_ICON_LOOKUP_USE_BUILTIN | GTK_ICON_LOOKUP_FORCE_SIZE)));
+            icon_paintable = icon_theme->lookup_icon (
+                gicon,
+                APP_ICON_SIZE,
+                1,
+                Gtk::TextDirection::NONE,
+                Gtk::IconLookupFlags::PRELOAD);
 
         if (info)
-            icon = Glib::wrap (gtk_icon_info_load_icon (info.gobj (), NULL));
+            icon = Gdk::Texture::create_from_file (info->get_file ());
     }
 
     g_strfreev (cmdline);
@@ -237,10 +265,10 @@ PrettyTable::get_icon_from_gio (const ProcInfo &info)
 }
 
 #ifdef HAVE_WNCK
-Glib::RefPtr<Gdk::Pixbuf>
+Glib::RefPtr<Gdk::Texture>
 PrettyTable::get_icon_from_wnck (const ProcInfo &info)
 {
-    Glib::RefPtr<Gdk::Pixbuf> icon;
+    Glib::RefPtr<Gdk::Texture> icon;
 
     IconsForPID::iterator it (this->apps.find (info.pid));
 
@@ -252,17 +280,41 @@ PrettyTable::get_icon_from_wnck (const ProcInfo &info)
 #endif
 
 
-Glib::RefPtr<Gdk::Pixbuf>
+Glib::RefPtr<Gdk::Texture>
 PrettyTable::get_icon_from_name (const ProcInfo &info)
 {
-    return Glib::wrap (gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), info.name.c_str (), APP_ICON_SIZE, (GtkIconLookupFlags)(GTK_ICON_LOOKUP_USE_BUILTIN | GTK_ICON_LOOKUP_FORCE_SIZE), NULL));
+    Glib::RefPtr<Gtk::IconTheme> icon_theme;
+    Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
+
+    icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
+
+    icon_paintable = icon_theme->lookup_icon (
+        info.name.c_str (),
+        APP_ICON_SIZE,
+        1,
+        Gtk::TextDirection::NONE,
+        Gtk::IconLookupFlags::PRELOAD);
+
+    return Gdk::Texture::create_from_file (icon_paintable->get_file ());
 }
 
 
-Glib::RefPtr<Gdk::Pixbuf>
+Glib::RefPtr<Gdk::Texture>
 PrettyTable::get_icon_dummy (const ProcInfo &)
 {
-    return Glib::wrap (gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), "application-x-executable", APP_ICON_SIZE, GTK_ICON_LOOKUP_USE_BUILTIN, NULL));
+    Glib::RefPtr<Gtk::IconTheme> icon_theme;
+    Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
+
+    icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
+
+    icon_paintable = icon_theme->lookup_icon (
+        "application-x-executable",
+        APP_ICON_SIZE,
+        1,
+        Gtk::TextDirection::NONE,
+        Gtk::IconLookupFlags::PRELOAD);
+
+    return Gdk::Texture::create_from_file (icon_paintable->get_file ());
 }
 
 
@@ -284,22 +336,33 @@ bool is_kthread (const ProcInfo &info)
 }
 
 
-Glib::RefPtr<Gdk::Pixbuf>
+Glib::RefPtr<Gdk::Texture>
 PrettyTable::get_icon_for_kernel (const ProcInfo &info)
 {
-    if (is_kthread (info))
-        return Glib::wrap (gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), "applications-system", APP_ICON_SIZE, GTK_ICON_LOOKUP_USE_BUILTIN, NULL));
+    if (is_kthread (info)) {
+        Glib::RefPtr<Gtk::IconTheme> icon_theme;
+        Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
 
-    return Glib::RefPtr<Gdk::Pixbuf>();
+        icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
+
+        icon_paintable = icon_theme->lookup_icon (
+            "application-x-executable",
+            APP_ICON_SIZE,
+            1,
+            Gtk::TextDirection::NONE,
+            Gtk::IconLookupFlags::PRELOAD);
+
+        return Gdk::Texture::create_from_file (icon_paintable->get_file ());
+    }
+
+    return Glib::RefPtr<Gdk::Texture> ();
 }
-
 
 
 void
 PrettyTable::set_icon (ProcInfo &info)
 {
-    typedef Glib::RefPtr<Gdk::Pixbuf>
-    (PrettyTable::*Getter) (const ProcInfo &);
+    typedef Glib::RefPtr<Gdk::Texture> (PrettyTable::*Getter) (const ProcInfo &);
 
     static std::vector<Getter> getters;
 
@@ -318,7 +381,7 @@ PrettyTable::set_icon (ProcInfo &info)
         getters.push_back (&PrettyTable::get_icon_dummy);
     }
 
-    Glib::RefPtr<Gdk::Pixbuf> icon;
+    Glib::RefPtr<Gdk::Texture> icon;
 
     for (size_t i = 0; not icon and i < getters.size (); ++i) {
         try {
@@ -326,10 +389,6 @@ PrettyTable::set_icon (ProcInfo &info)
         }
         catch (std::exception&e) {
             g_warning ("Failed to load icon for %s(%u) : %s", info.name.c_str (), info.pid, e.what ());
-            continue;
-        }
-        catch (Glib::Exception&e) {
-            g_warning ("Failed to load icon for %s(%u) : %s", info.name.c_str (), info.pid, e.what ().c_str ());
             continue;
         }
     }

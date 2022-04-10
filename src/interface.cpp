@@ -21,7 +21,7 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <handy.h>
+#include <adwaita.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -55,14 +55,16 @@ static const char*LOAD_GRAPH_CSS = "\
 ";
 
 static gboolean
-cb_window_key_press_event (GtkWidget *widget,
-                           GdkEvent  *event,
-                           gpointer   user_data)
+cb_window_key_press_event (GtkEventControllerKey*controller,
+                           guint                 keyval,
+                           guint                 keycode,
+                           GdkModifierType       state,
+                           GtkSearchBar         *search_bar)
 {
-    const char *current_page = gtk_stack_get_visible_child_name (GTK_STACK (GsmApplication::get ()->stack));
+    const char *current_page = adw_view_stack_get_visible_child_name (GsmApplication::get ()->stack);
 
     if (strcmp (current_page, "processes") == 0)
-        return gtk_search_bar_handle_event (GTK_SEARCH_BAR (user_data), event);
+        return gtk_event_controller_key_forward (controller, GTK_WIDGET (search_bar));
 
     return FALSE;
 }
@@ -77,6 +79,7 @@ search_text_changed (GtkEditable *entry,
                                                                                         GTK_TREE_VIEW (app->tree))))));
 }
 
+/*
 static void
 set_affinity_visiblity (GtkWidget *widget,
                         gpointer   user_data)
@@ -89,35 +92,36 @@ set_affinity_visiblity (GtkWidget *widget,
         gtk_widget_set_visible (widget, false);
     }
 #endif
-}
+}*/
 
 static void
 create_proc_view (GsmApplication *app,
                   GtkBuilder     *builder)
 {
     GsmTreeView *proctree;
-    GtkScrolledWindow *scrolled;
+    GtkWidget *scrolled;
+    GtkEventController *event_controller_key = gtk_event_controller_key_new ();
 
     proctree = proctable_new (app);
-    scrolled = GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder, "processes_scrolled"));
+    scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "processes_scrolled"));
 
-    gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (proctree));
+    gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (proctree));
 
     app->proc_actionbar_revealer = GTK_REVEALER (gtk_builder_get_object (builder, "proc_actionbar_revealer"));
 
-    /* create popup_menu for the processes tab */
+    /* create popover_menu for the processes tab */
+    // Either use MenuButton or just use a model
     GMenuModel *menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-popup-menu"));
-    app->popup_menu = GTK_MENU (gtk_menu_new_from_model (menu_model));
-    gtk_menu_attach_to_widget (app->popup_menu, GTK_WIDGET (app->main_window), NULL);
-
-    gtk_container_foreach (GTK_CONTAINER (app->popup_menu), set_affinity_visiblity, NULL);
+    // gtk_application_set_menubar (GTK_APPLICATION (app->main_window), menu_model);
 
     app->search_bar = GTK_SEARCH_BAR (gtk_builder_get_object (builder, "proc_searchbar"));
     app->search_entry = GTK_SEARCH_ENTRY (gtk_builder_get_object (builder, "proc_searchentry"));
 
-    gtk_search_bar_connect_entry (app->search_bar, GTK_ENTRY (app->search_entry));
-    g_signal_connect (app->main_window, "key-press-event",
+    g_signal_connect (event_controller_key, "key-pressed",
                       G_CALLBACK (cb_window_key_press_event), app->search_bar);
+    gtk_widget_add_controller (GTK_WIDGET (app->main_window), event_controller_key);
+
+    gtk_search_bar_connect_entry (app->search_bar, GTK_EDITABLE (app->search_entry));
 
     g_signal_connect (app->search_entry, "changed", G_CALLBACK (search_text_changed), app);
 
@@ -222,8 +226,8 @@ create_sys_view (GsmApplication *app,
     gchar *title_template;
 
     provider = gtk_css_provider_new ();
-    gtk_css_provider_load_from_data (provider, LOAD_GRAPH_CSS, -1, NULL);
-    gtk_style_context_add_provider_for_screen (gdk_screen_get_default (), GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    gtk_css_provider_load_from_data (provider, LOAD_GRAPH_CSS, -1);
+    gtk_style_context_add_provider_for_display (gdk_display_get_default (), GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     // Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
     title_template = g_strdup (_("Pick a Color for “%s”"));
 
@@ -235,11 +239,8 @@ create_sys_view (GsmApplication *app,
 
     cpu_graph = new LoadGraph (LOAD_GRAPH_CPU);
     gtk_widget_set_size_request (GTK_WIDGET (load_graph_get_widget (cpu_graph)), -1, 70);
-    gtk_box_pack_start (cpu_graph_box,
-                        GTK_WIDGET (load_graph_get_widget (cpu_graph)),
-                        TRUE,
-                        TRUE,
-                        0);
+    gtk_box_prepend (cpu_graph_box,
+                     GTK_WIDGET (load_graph_get_widget (cpu_graph)));
 
     GtkGrid*cpu_table = GTK_GRID (gtk_builder_get_object (builder, "cpu_table"));
     gint cols = 4;
@@ -258,7 +259,7 @@ create_sys_view (GsmApplication *app,
         color_picker = gsm_color_button_new (&cpu_graph->colors.at (i), GSMCP_TYPE_CPU);
         g_signal_connect (G_OBJECT (color_picker), "color-set",
                           G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
-        gtk_box_pack_start (temp_hbox, GTK_WIDGET (color_picker), FALSE, TRUE, 0);
+        gtk_box_prepend (temp_hbox, GTK_WIDGET (color_picker));
         gtk_widget_set_size_request (GTK_WIDGET (color_picker), 32, -1);
         if (app->config.num_cpus == 1) {
             label_text = g_strdup (_("CPU"));
@@ -273,8 +274,7 @@ create_sys_view (GsmApplication *app,
         }
         gsm_color_button_set_title (color_picker, title_text);
         g_free (title_text);
-        gtk_box_pack_start (temp_hbox, GTK_WIDGET (label), FALSE, FALSE, 6);
-        gtk_widget_show (GTK_WIDGET (label));
+        gtk_box_prepend (temp_hbox, GTK_WIDGET (label));
         g_free (label_text);
 
         cpu_label = make_tnum_label ();
@@ -284,7 +284,7 @@ create_sys_view (GsmApplication *app,
         gtk_label_set_xalign (cpu_label, 1.0);
         gtk_widget_set_valign (GTK_WIDGET (cpu_label), GTK_ALIGN_CENTER);
         gtk_widget_set_halign (GTK_WIDGET (cpu_label), GTK_ALIGN_START);
-        gtk_box_pack_start (temp_hbox, GTK_WIDGET (cpu_label), FALSE, FALSE, 0);
+        gtk_box_prepend (temp_hbox, GTK_WIDGET (cpu_label));
         gtk_widget_show (GTK_WIDGET (cpu_label));
         load_graph_get_labels (cpu_graph)->cpu[i] = cpu_label;
     }
@@ -299,11 +299,8 @@ create_sys_view (GsmApplication *app,
 
     mem_graph = new LoadGraph (LOAD_GRAPH_MEM);
     gtk_widget_set_size_request (GTK_WIDGET (load_graph_get_widget (mem_graph)), -1, 70);
-    gtk_box_pack_start (mem_graph_box,
-                        GTK_WIDGET (load_graph_get_widget (mem_graph)),
-                        TRUE,
-                        TRUE,
-                        0);
+    gtk_box_prepend (mem_graph_box,
+                     GTK_WIDGET (load_graph_get_widget (mem_graph)));
 
     table = GTK_GRID (gtk_builder_get_object (builder, "mem_table"));
 
@@ -341,11 +338,8 @@ create_sys_view (GsmApplication *app,
 
     net_graph = new LoadGraph (LOAD_GRAPH_NET);
     gtk_widget_set_size_request (GTK_WIDGET (load_graph_get_widget (net_graph)), -1, 70);
-    gtk_box_pack_start (net_graph_box,
-                        GTK_WIDGET (load_graph_get_widget (net_graph)),
-                        TRUE,
-                        TRUE,
-                        0);
+    gtk_box_prepend (net_graph_box,
+                     GTK_WIDGET (load_graph_get_widget (net_graph)));
 
     table = GTK_GRID (gtk_builder_get_object (builder, "net_table"));
 
@@ -639,7 +633,7 @@ change_priority_state (GSimpleAction *action,
 static void
 update_page_activities (GsmApplication *app)
 {
-    const char *current_page = gtk_stack_get_visible_child_name (app->stack);
+    const char *current_page = adw_view_stack_get_visible_child_name (app->stack);
 
     if (strcmp (current_page, "processes") == 0) {
         GAction *search_action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
@@ -688,16 +682,15 @@ update_page_activities (GsmApplication *app)
 }
 
 static void
-cb_change_current_page (GtkStack   *stack,
-                        GParamSpec *pspec,
-                        gpointer    data)
+cb_change_current_page (AdwViewStack *stack,
+                        GParamSpec   *pspec,
+                        gpointer      data)
 {
     update_page_activities ((GsmApplication *)data);
 }
 
 static gboolean
-cb_main_window_delete (GtkWidget *window,
-                       GdkEvent  *event,
+cb_main_window_delete (GtkWindow *window,
                        gpointer   data)
 {
     GsmApplication *app = (GsmApplication *) data;
@@ -708,15 +701,13 @@ cb_main_window_delete (GtkWidget *window,
 }
 
 static gboolean
-cb_main_window_state_changed (GtkWidget           *window,
-                              GdkEventWindowState *event,
-                              gpointer             data)
+cb_main_window_state_changed (GdkToplevel      *surface,
+                              GdkToplevelState *state,
+                              GsmApplication   *app)
 {
-    GsmApplication *app = (GsmApplication *) data;
     auto current_page = app->settings->get_string (GSM_SETTING_CURRENT_TAB);
-    if (event->new_window_state & GDK_WINDOW_STATE_BELOW ||
-        event->new_window_state & GDK_WINDOW_STATE_ICONIFIED ||
-        event->new_window_state & GDK_WINDOW_STATE_WITHDRAWN) {
+    if (*state & GDK_TOPLEVEL_STATE_BELOW ||
+        *state & GDK_TOPLEVEL_STATE_MINIMIZED) {
         if (current_page == "processes") {
             proctable_freeze (app);
         } else if (current_page == "resources") {
@@ -745,22 +736,24 @@ cb_main_window_state_changed (GtkWidget           *window,
 void
 create_main_window (GsmApplication *app)
 {
-    HdyApplicationWindow *main_window;
-    GtkStack *stack;
+    AdwApplicationWindow *main_window;
+    AdwViewStack *stack;
     GMenuModel *window_menu_model;
     GMenuModel *process_menu_model;
     GdkDisplay *display;
     GdkMonitor *monitor;
     GdkRectangle monitor_geometry;
+    GdkSurface *surface;
+    GtkNative *native;
 
-    int width, height, xpos, ypos;
+    int width, height; // xpos, ypos;
 
     GtkBuilder *builder = gtk_builder_new ();
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/interface.ui", NULL);
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/menus.ui", NULL);
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/gtk/help-overlay.ui", NULL);
 
-    main_window = HDY_APPLICATION_WINDOW (gtk_builder_get_object (builder, "main_window"));
+    main_window = ADW_APPLICATION_WINDOW (gtk_builder_get_object (builder, "main_window"));
     gtk_window_set_application (GTK_WINDOW (main_window), app->gobj ());
     gtk_widget_set_name (GTK_WIDGET (main_window), "gnome-system-monitor");
     app->main_window = main_window;
@@ -768,37 +761,28 @@ create_main_window (GsmApplication *app)
     gtk_application_window_set_help_overlay (GTK_APPLICATION_WINDOW (app->main_window),
                                              GTK_SHORTCUTS_WINDOW (gtk_builder_get_object (builder, "help_overlay")));
 
-    g_settings_get (app->settings->gobj (), GSM_SETTING_WINDOW_STATE, "(iiii)",
-                    &width, &height, &xpos, &ypos);
+    /* create the main stack */
+    stack = ADW_VIEW_STACK (gtk_builder_get_object (builder, "stack"));
 
-    display = gdk_display_get_default ();
-    monitor = gdk_display_get_monitor_at_point (display, xpos, ypos);
-    if (monitor == NULL) {
-        monitor = gdk_display_get_monitor (display, 0);
-    }
-    gdk_monitor_get_geometry (monitor, &monitor_geometry);
-
-    width = CLAMP (width, 50, monitor_geometry.width);
-    height = CLAMP (height, 50, monitor_geometry.height);
-    xpos = CLAMP (xpos, 0, monitor_geometry.width - width);
-    ypos = CLAMP (ypos, 0, monitor_geometry.height - height);
-
-    gtk_window_set_default_size (GTK_WINDOW (main_window), width, height);
-    gtk_window_move (GTK_WINDOW (main_window), xpos, ypos);
-    if (app->settings->get_boolean (GSM_SETTING_MAXIMIZED))
-        gtk_window_maximize (GTK_WINDOW (main_window));
+    app->stack = stack;
 
     app->process_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "process_menu_button"));
     process_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-window-menu"));
-    gtk_menu_button_set_menu_model (app->process_menu_button, process_menu_model);
+    // gtk_menu_button_set_menu_model (app->process_menu_button, process_menu_model);
 
     app->window_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "window_menu_button"));
     window_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "generic-window-menu"));
-    gtk_menu_button_set_menu_model (app->window_menu_button, window_menu_model);
+    // gtk_menu_button_set_menu_model (app->window_menu_button, window_menu_model);
 
     app->end_process_button = GTK_BUTTON (gtk_builder_get_object (builder, "end_process_button"));
 
     app->search_button = GTK_BUTTON (gtk_builder_get_object (builder, "search_button"));
+
+    create_proc_view (app, builder);
+
+    create_sys_view (app, builder);
+
+    create_disk_view (app, builder);
 
     GActionEntry win_action_entries[] = {
         { "about", on_activate_about, NULL, NULL, NULL },
@@ -824,32 +808,14 @@ create_main_window (GsmApplication *app)
                                      G_N_ELEMENTS (win_action_entries),
                                      app);
 
-    GdkScreen*screen = gtk_widget_get_screen (GTK_WIDGET (main_window));
-    GdkVisual*visual = gdk_screen_get_rgba_visual (screen);
-
-    /* use visual, if available */
-    if (visual)
-        gtk_widget_set_visual (GTK_WIDGET (main_window), visual);
-
-    /* create the main stack */
-    app->stack = stack = GTK_STACK (gtk_builder_get_object (builder, "stack"));
-
-    create_proc_view (app, builder);
-
-    create_sys_view (app, builder);
-
-    create_disk_view (app, builder);
-
-    g_settings_bind (app->settings->gobj (), GSM_SETTING_CURRENT_TAB, stack, "visible-child-name", G_SETTINGS_BIND_DEFAULT);
-
-    g_signal_connect (G_OBJECT (stack), "notify::visible-child",
-                      G_CALLBACK (cb_change_current_page), app);
-
-    g_signal_connect (G_OBJECT (main_window), "delete_event",
-                      G_CALLBACK (cb_main_window_delete),
-                      app);
-    g_signal_connect (G_OBJECT (main_window), "window-state-event",
-                      G_CALLBACK (cb_main_window_state_changed),
+    g_settings_bind (app->settings->gobj (),
+                     GSM_SETTING_CURRENT_TAB,
+                     G_OBJECT (stack),
+                     "visible-child-name",
+                     G_SETTINGS_BIND_DEFAULT);
+    g_signal_connect (G_OBJECT (stack),
+                      "notify::visible-child",
+                      G_CALLBACK (cb_change_current_page),
                       app);
 
     GAction *action;
@@ -864,7 +830,29 @@ create_main_window (GsmApplication *app)
     g_action_change_state (action,
                            g_settings_get_value (app->settings->gobj (), GSM_SETTING_SHOW_WHOSE_PROCESSES));
 
+    if (app->settings->get_boolean (GSM_SETTING_MAXIMIZED))
+        gtk_window_maximize (GTK_WINDOW (main_window));
+
+    g_settings_get (app->settings->gobj (), GSM_SETTING_WINDOW_STATE, "(ii)",
+                    &width, &height);
+
+    // Surface is available only after a widget has been shown
     gtk_widget_show (GTK_WIDGET (main_window));
+
+    native = gtk_widget_get_native (GTK_WIDGET (main_window)); // Can return NULL but not for the main window
+    surface = gtk_native_get_surface (native);
+    display = gdk_surface_get_display (surface);
+    monitor = gdk_display_get_monitor_at_surface (display, surface);
+    gdk_monitor_get_geometry (monitor, &monitor_geometry);
+
+    width = CLAMP (width, 50, monitor_geometry.width);
+    height = CLAMP (height, 50, monitor_geometry.height);
+
+    gtk_window_set_default_size (GTK_WINDOW (main_window), width, height);
+
+    /* g_signal_connect (G_OBJECT (surface), "notify::state",
+                      G_CALLBACK (cb_main_window_state_changed),
+                      app);*/
 
     update_page_activities (app);
 
@@ -908,7 +896,7 @@ update_sensitivity (GsmApplication *app)
     gboolean processes_sensitivity, selected_sensitivity;
     GAction *action;
 
-    processes_sensitivity = (strcmp (gtk_stack_get_visible_child_name (GTK_STACK (app->stack)), "processes") == 0);
+    processes_sensitivity = (strcmp (adw_view_stack_get_visible_child_name (app->stack), "processes") == 0);
     selected_sensitivity = gtk_tree_selection_count_selected_rows (app->selection) > 0;
 
     for (i = 0; i != G_N_ELEMENTS (processes_actions); ++i) {
