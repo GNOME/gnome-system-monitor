@@ -5,7 +5,7 @@
 #include <glibtop/close.h>
 #include <glibtop/cpu.h>
 #include <glibtop/sysinfo.h>
-#include <handy.h>
+#include <adwaita.h>
 #include <signal.h>
 #include <stdlib.h>
 
@@ -361,10 +361,10 @@ GsmApplication::load_settings ()
 
 
 GsmApplication::GsmApplication()
-  : Gtk::Application ("org.gnome.SystemMonitor", Gio::APPLICATION_HANDLES_COMMAND_LINE),
+  : Gtk::Application ("org.gnome.SystemMonitor", Gio::Application::Flags::HANDLES_COMMAND_LINE),
   tree (NULL),
   proc_actionbar_revealer (NULL),
-  popup_menu (NULL),
+  proc_popover_menu (NULL),
   disk_list (NULL),
   stack (NULL),
   refresh_button (NULL),
@@ -414,16 +414,15 @@ GsmApplication::on_activate ()
 void
 GsmApplication::save_config ()
 {
-  int width, height, xpos, ypos;
+  int width, height;
   gboolean maximized;
 
-  gtk_window_get_size (GTK_WINDOW (main_window), &width, &height);
-  gtk_window_get_position (GTK_WINDOW (main_window), &xpos, &ypos);
+  gtk_window_get_default_size (GTK_WINDOW (main_window), &width, &height);
 
-  maximized = gdk_window_get_state (gtk_widget_get_window (GTK_WIDGET (main_window))) & GDK_WINDOW_STATE_MAXIMIZED;
+  maximized = gtk_window_is_maximized (GTK_WINDOW (main_window));
 
-  g_settings_set (settings->gobj (), GSM_SETTING_WINDOW_STATE, "(iiii)",
-                  width, height, xpos, ypos);
+  g_settings_set (settings->gobj (), GSM_SETTING_WINDOW_STATE, "(ii)",
+                  width, height);
 
   settings->set_boolean (GSM_SETTING_MAXIMIZED, maximized);
 }
@@ -432,23 +431,21 @@ int
 GsmApplication::on_command_line (const Glib::RefPtr<Gio::ApplicationCommandLine>&command_line)
 {
   int argc = 0;
-  char**argv = command_line->get_arguments (argc);
+  char **argv = command_line->get_arguments (argc);
 
   Glib::OptionContext context;
 
   context.set_summary (_("A simple process and system monitor."));
   context.set_ignore_unknown_options (true);
 
-  Glib::OptionGroup gtkgroup (gtk_get_option_group (true));
   procman::OptionGroup option_group;
 
   context.set_main_group (option_group);
-  context.add_group (gtkgroup);
 
   try {
       context.parse (argc, argv);
     } catch (const Glib::Error&ex) {
-      g_error ("Arguments parse error : %s", ex.what ().c_str ());
+      g_error ("Arguments parse error : %s", ex.what ());
     }
 
   g_strfreev (argv);
@@ -459,7 +456,7 @@ GsmApplication::on_command_line (const Glib::RefPtr<Gio::ApplicationCommandLine>
       exit (EXIT_SUCCESS);
     }
 
-  const char* tab = NULL;
+  const char*tab = NULL;
   if (option_group.show_processes_tab)
     tab = "processes";
   else if (option_group.show_resources_tab)
@@ -467,7 +464,7 @@ GsmApplication::on_command_line (const Glib::RefPtr<Gio::ApplicationCommandLine>
   else if (option_group.show_file_systems_tab)
     tab = "disks";
   if (tab)
-    gtk_stack_set_visible_child_name (this->stack, tab);
+    adw_view_stack_set_visible_child_name (this->stack, tab);
 
   on_activate ();
 
@@ -526,16 +523,19 @@ GsmApplication::shutdown ()
 void
 GsmApplication::on_startup ()
 {
-  HdyStyleManager *style_manager;
+  AdwStyleManager *style_manager;
 
   Gtk::Application::on_startup ();
 
-  hdy_init ();
+  glibtop_init ();
 
   load_resources ();
+  load_settings ();
 
-  style_manager = hdy_style_manager_get_default ();
-  hdy_style_manager_set_color_scheme (style_manager, HDY_COLOR_SCHEME_PREFER_LIGHT);
+  style_manager = adw_style_manager_get_default ();
+  adw_style_manager_set_color_scheme (style_manager, ADW_COLOR_SCHEME_PREFER_LIGHT);
+
+  Gtk::Window::set_default_icon_name ("org.gnome.SystemMonitor");
 
   Glib::RefPtr<Gio::SimpleAction> action;
 
@@ -557,28 +557,30 @@ GsmApplication::on_startup ()
 
   Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_resource ("/org/gnome/gnome-system-monitor/data/menus.ui");
 
-  Glib::RefPtr<Gio::Menu> menu = Glib::RefPtr<Gio::Menu>::cast_static (builder->get_object ("app-menu"));
+  Glib::RefPtr<Gio::Menu> menu = builder->get_object<Gio::Menu> ("app-menu");
 
-  set_app_menu (menu);
+  set_menubar (menu);
 
-  add_accelerator ("<Primary>d", "win.show-dependencies", NULL);
-  add_accelerator ("<Primary>q", "app.quit", NULL);
-  add_accelerator ("<Primary>s", "win.send-signal-stop", g_variant_new_int32 (SIGSTOP));
-  add_accelerator ("<Primary>c", "win.send-signal-cont", g_variant_new_int32 (SIGCONT));
-  add_accelerator ("<Primary>t", "win.send-signal-term", g_variant_new_int32 (SIGTERM));
-  add_accelerator ("<Primary>k", "win.send-signal-kill", g_variant_new_int32 (SIGKILL));
-  add_accelerator ("<Alt>s", "win.set-affinity", NULL);
-  add_accelerator ("<Primary>m", "win.memory-maps", NULL);
-  add_accelerator ("<Primary>o", "win.open-files", NULL);
-  add_accelerator ("<Alt>Return", "win.process-properties", NULL);
-  add_accelerator ("<Primary>f", "win.search", g_variant_new_boolean (TRUE));
-  add_accelerator ("F1", "app.help", NULL);
-  add_accelerator ("<Primary>question", "win.show-help-overlay", NULL);
-  add_accelerator ("<Primary>comma", "app.preferences", NULL);
 
-  Gtk::Window::set_default_icon_name ("org.gnome.SystemMonitor");
+  set_accel_for_action ("win.show-dependencies", "<Primary>d");
+  set_accel_for_action ("app.quit", "<Primary>q");
+  set_accel_for_action ("win.send-signal-stop", "<Primary>s");
+  set_accel_for_action ("win.send-signal-cont", "<Primary>c");
+  set_accel_for_action ("win.send-signal-end", "<Primary>e");
+  set_accel_for_action ("win.send-signal-kill", "<Primary>k");
+  set_accel_for_action ("win.set-affinity", "<Alt>s");
+  set_accel_for_action ("win.memory-maps", "<Primary>m");
+  set_accel_for_action ("win.open-files", "<Primary>o");
+  set_accel_for_action ("win.process-properties", "<Alt>Return");
+  set_accel_for_action ("win.search(true)", "<Primary>f");
+  set_accel_for_action ("app.help", "F1");
+  set_accel_for_action ("win.show-help-overlay", "<Primary>question");
+  set_accel_for_action ("app.preferences", "<Primary>comma");
 
-  glibtop_init ();
+  set_accel_for_action ("win.show-page('processes')", "<Alt>1");
+  set_accel_for_action ("win.show-page('resources')", "<Alt>2");
+  set_accel_for_action ("win.show-page('disks')", "<Alt>3");
+  set_accel_for_action ("win.refresh", "<Primary>r");
 
   load_settings ();
 
@@ -586,13 +588,6 @@ GsmApplication::on_startup ()
   smooth_refresh = new SmoothRefresh (settings);
 
   create_main_window (this);
-
-  add_accelerator ("<Alt>1", "win.show-page", g_variant_new_string ("processes"));
-  add_accelerator ("<Alt>2", "win.show-page", g_variant_new_string ("resources"));
-  add_accelerator ("<Alt>3", "win.show-page", g_variant_new_string ("disks"));
-  add_accelerator ("<Primary>r", "win.refresh", NULL);
-
-  gtk_widget_show (GTK_WIDGET (main_window));
 }
 
 

@@ -18,6 +18,7 @@
 
 #include <config.h>
 
+#include <adwaita.h>
 #include <locale.h>
 #include <glib/gi18n.h>
 
@@ -32,6 +33,8 @@ main (int   argc,
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   textdomain (GETTEXT_PACKAGE);
   setlocale (LC_ALL, "");
+
+  adw_init ();
 
   Glib::RefPtr<GsmApplication> application = GsmApplication::get ();
 

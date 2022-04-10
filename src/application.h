@@ -3,7 +3,7 @@
 
 #include <gtkmm.h>
 #include <glibtop/cpu.h>
-#include <handy.h>
+#include <adwaita.h>
 
 #include <algorithm>
 #include <mutex>
@@ -30,7 +30,7 @@ enum ProcmanTab
 struct ProcConfig
   : private procman::NonCopyable
 {
-  ProcConfig()
+  ProcConfig ()
     : current_tab (),
     update_interval (0),
     graph_update_interval (0),
@@ -85,7 +85,7 @@ struct ProcConfig
 struct MutableProcInfo
   : private procman::NonCopyable
 {
-  MutableProcInfo()
+  MutableProcInfo ()
     : vmsize (0UL),
     memres (0UL),
     memshared (0UL),
@@ -151,13 +151,14 @@ public:
 ProcInfo& operator= (const ProcInfo&) = delete;
 ProcInfo(const ProcInfo&) = delete;
 ProcInfo(pid_t pid);
+
 // adds one more ref to icon
-void              set_icon (Glib::RefPtr<Gdk::Pixbuf> icon);
-void              set_user (guint uid);
-std::string       lookup_user (guint uid);
+void        set_icon (Glib::RefPtr<Gdk::Texture> icon);
+void        set_user (guint uid);
+std::string lookup_user (guint uid);
 
 GtkTreeIter node;
-Glib::RefPtr<Gdk::Pixbuf> pixbuf;
+Glib::RefPtr<Gdk::Texture> texture;
 std::string tooltip;
 std::string name;
 std::string arguments;
@@ -234,14 +235,14 @@ void                                shutdown ();
 ProcList processes;
 GsmTreeView      *tree;
 GtkRevealer      *proc_actionbar_revealer;
-GtkMenu          *popup_menu;
 GsmTreeView      *disk_list;
-GtkStack         *stack;
+AdwViewStack     *stack;
+GtkPopover       *proc_popover_menu;
 GtkButton        *refresh_button;
 GtkMenuButton    *process_menu_button;
 GtkMenuButton    *window_menu_button;
 GtkButton        *end_process_button;
-GtkButton        *search_button;
+GtkToggleButton  *search_button;
 GtkSearchEntry   *search_entry;
 GtkSearchBar     *search_bar;
 ProcConfig config;
@@ -261,7 +262,7 @@ gdouble last_vscroll_value;
 PrettyTable      *pretty_table;
 
 Glib::RefPtr<Gio::Settings> settings;
-HdyApplicationWindow *main_window;
+AdwApplicationWindow *main_window;
 
 unsigned frequency;
 

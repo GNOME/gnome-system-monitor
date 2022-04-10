@@ -80,9 +80,11 @@ renice_single_process (GtkTreeModel *model,
       "%s"),
     info->pid, args->arg_value, g_strerror (saved_errno));
 
+  GtkDialogFlags flags = GtkDialogFlags (GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_MODAL);
+
   dialog = GTK_MESSAGE_DIALOG (gtk_message_dialog_new (
                                  NULL,
-                                 GTK_DIALOG_DESTROY_WITH_PARENT,
+                                 flags,
                                  GTK_MESSAGE_ERROR,
                                  GTK_BUTTONS_OK,
                                  "%s", error_msg));
@@ -90,7 +92,7 @@ renice_single_process (GtkTreeModel *model,
   g_free (error_msg);
 
   g_signal_connect (dialog, "response",
-                    G_CALLBACK (gtk_widget_destroy), NULL);
+                    G_CALLBACK (gtk_window_destroy), NULL);
 
   gtk_widget_show (GTK_WIDGET (dialog));
 }
@@ -167,9 +169,11 @@ kill_single_process (GtkTreeModel *model,
       "%s"),
     info->pid, args->arg_value, g_strerror (saved_errno));
 
+  GtkDialogFlags flags = GtkDialogFlags (GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_MODAL);
+
   dialog = GTK_MESSAGE_DIALOG (gtk_message_dialog_new (
                                  NULL,
-                                 GTK_DIALOG_DESTROY_WITH_PARENT,
+                                 flags,
                                  GTK_MESSAGE_ERROR,
                                  GTK_BUTTONS_OK,
                                  "%s", error_msg));
@@ -177,7 +181,7 @@ kill_single_process (GtkTreeModel *model,
   g_free (error_msg);
 
   g_signal_connect (dialog, "response",
-                    G_CALLBACK (gtk_widget_destroy), NULL);
+                    G_CALLBACK (gtk_window_destroy), NULL);
 
   gtk_widget_show (GTK_WIDGET (dialog));
 }

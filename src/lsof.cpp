@@ -29,20 +29,20 @@ Glib::RefPtr<Glib::Regex> re;
 bool
 matches (const string &filename) const
 {
-  return this->re->match (filename);
+  return this->re->match (filename.c_str ());
 }
 
 public:
-
 Lsof(const string &pattern,
      bool          caseless)
 {
-  Glib::RegexCompileFlags flags = static_cast<Glib::RegexCompileFlags>(0);
+  Glib::Regex::CompileFlags compile_flags = static_cast<Glib::Regex::CompileFlags>(0);
+  Glib::Regex::MatchFlags match_flags = static_cast<Glib::Regex::MatchFlags>(0);
 
   if (caseless)
-    flags |= Glib::REGEX_CASELESS;
+    compile_flags |= Glib::Regex::CompileFlags::CASELESS;
 
-  this->re = Glib::Regex::create (pattern, flags);
+  this->re = Glib::Regex::create (pattern.c_str (), compile_flags, match_flags);
 }
 
 
@@ -68,14 +68,9 @@ search (const ProcInfo &info,
 }
 };
 
-
-
-// GUI Stuff
-
-
 enum ProcmanLsof
 {
-  PROCMAN_LSOF_COL_PIXBUF,
+  PROCMAN_LSOF_COL_TEXTURE,
   PROCMAN_LSOF_COL_PROCESS,
   PROCMAN_LSOF_COL_PID,
   PROCMAN_LSOF_COL_FILENAME,
@@ -87,7 +82,7 @@ struct GUI: private procman::NonCopyable
 {
   GtkListStore *model;
   GtkSearchEntry *entry;
-  GtkWindow *window;
+  GtkDialog *dialog;
   GtkLabel *count;
   GsmApplication *app;
   bool case_insensitive;
@@ -126,11 +121,10 @@ struct GUI: private procman::NonCopyable
     g_free (title);
   }
 
-
   string
   pattern () const
   {
-    return gtk_entry_get_text (GTK_ENTRY (this->entry));
+    return gtk_editable_get_text (GTK_EDITABLE (this->entry));
   }
 
 
@@ -159,7 +153,7 @@ struct GUI: private procman::NonCopyable
                 GtkTreeIter file;
                 gtk_list_store_append (this->model, &file);
                 gtk_list_store_set (this->model, &file,
-                                    PROCMAN_LSOF_COL_PIXBUF, info.pixbuf->gobj (),
+                                    PROCMAN_LSOF_COL_TEXTURE, info.texture->gobj (),
                                     PROCMAN_LSOF_COL_PROCESS, info.name.c_str (),
                                     PROCMAN_LSOF_COL_PID, info.pid,
                                     PROCMAN_LSOF_COL_FILENAME, match.c_str (),
@@ -169,20 +163,16 @@ struct GUI: private procman::NonCopyable
 
         this->update_count (count);
       }
-    catch (Glib::RegexError&error) {
+    catch (Glib::RegexError &error) {
         regex_error = true;
       }
 
     if (regex_error && !this->regex_error_displayed)
-      {
-        this->regex_error_displayed = true;
-        gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (entry)), GTK_STYLE_CLASS_ERROR);
-      }
+      this->regex_error_displayed = true;
+    // gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (entry)), GTK_STYLE_CLASS_ERROR);
     else if (!regex_error && this->regex_error_displayed)
-      {
-        this->regex_error_displayed = false;
-        gtk_style_context_remove_class (gtk_widget_get_style_context (GTK_WIDGET (entry)), GTK_STYLE_CLASS_ERROR);
-      }
+      this->regex_error_displayed = false;
+    // gtk_style_context_remove_class (gtk_widget_get_style_context (GTK_WIDGET (entry)), GTK_STYLE_CLASS_ERROR);
   }
 
 
@@ -200,7 +190,7 @@ struct GUI: private procman::NonCopyable
   {
     GUI *gui = static_cast<GUI*>(data);
 
-    gtk_widget_destroy (GTK_WIDGET (gui->window));
+    gtk_window_destroy (gui->window);
     delete gui;
   }
 
@@ -226,15 +216,12 @@ struct GUI: private procman::NonCopyable
 };
 }
 
-
-
-
 void
 procman_lsof (GsmApplication *app)
 {
   GtkListStore *model = \
     gtk_list_store_new (PROCMAN_LSOF_NCOLS,
-                        GDK_TYPE_PIXBUF,    // PROCMAN_LSOF_COL_PIXBUF
+                        GDK_TYPE_TEXTURE,   // PROCMAN_LSOF_COL_TEXTURE
                         G_TYPE_STRING,      // PROCMAN_LSOF_COL_PROCESS
                         G_TYPE_UINT,        // PROCMAN_LSOF_COL_PID
                         G_TYPE_STRING       // PROCMAN_LSOF_COL_FILENAME
@@ -244,17 +231,14 @@ procman_lsof (GsmApplication *app)
 
   g_object_unref (model);
 
-  GtkTreeViewColumn *column;
-  GtkCellRenderer *renderer;
+  // TEXTURE / PROCESS
 
-  // PIXBUF / PROCESS
+  GtkTreeViewColumn *column = gtk_tree_view_column_new ();
+  GtkCellRenderer *renderer = gtk_cell_renderer_pixbuf_new ();
 
-  column = gtk_tree_view_column_new ();
-
-  renderer = gtk_cell_renderer_pixbuf_new ();
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column, renderer,
-                                       "pixbuf", PROCMAN_LSOF_COL_PIXBUF,
+                                       "texture", PROCMAN_LSOF_COL_TEXTURE,
                                        NULL);
 
   renderer = gtk_cell_renderer_text_new ();
@@ -300,24 +284,23 @@ procman_lsof (GsmApplication *app)
 
   gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/lsof.ui", NULL);
 
-  dialog = GTK_WINDOW (gtk_builder_get_object (builder, "lsof_dialog"));
-
+  GtkDialog *dialog = GTK_DIALOG (gtk_builder_get_object (builder, "lsof_dialog"));
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->main_window));
 
   GtkSearchEntry *entry = GTK_SEARCH_ENTRY (gtk_builder_get_object (builder, "entry"));
 
   GtkCheckButton *case_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "case_button"));
 
-// Scrolled TreeView
-  GtkScrolledWindow *scrolled = GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder, "scrolled"));
+  // Scrolled TreeView
+  GtkWidget *scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "scrolled"));
 
-  gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (tree));
+  gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (tree));
 
   GUI *gui = new GUI;   // wil be deleted by the close button or delete-event
 
   gui->app = app;
   gui->model = model;
-  gui->window = dialog;
+  gui->dialog = dialog;
   gui->entry = entry;
   gui->case_insensitive = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (case_button));
 
@@ -328,10 +311,9 @@ procman_lsof (GsmApplication *app)
   g_signal_connect (G_OBJECT (dialog), "delete-event",
                     G_CALLBACK (GUI::window_delete_event), gui);
 
-  gtk_builder_connect_signals (builder, NULL);
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (GsmApplication::get ()->main_window));
-  gtk_widget_show_all (GTK_WIDGET (dialog));
+  gtk_widget_show (GTK_WIDGET (dialog));
   gui->search ();
 
   g_object_unref (G_OBJECT (builder));

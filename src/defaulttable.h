@@ -12,9 +12,9 @@ struct PrettyTableItem
   Glib::RefPtr<Glib::Regex> command;
   std::string icon;
 
-  PrettyTableItem(const std::string&a_command,
-                  const std::string&a_icon)
-    : command (Glib::Regex::create ("^(" + a_command + ")$")),
+  PrettyTableItem (const std::string &a_command,
+                   const std::string &a_icon)
+    : command (Glib::Regex::create (("^(" + a_command + ")$").c_str ())),
     icon (a_icon)
   {
   }

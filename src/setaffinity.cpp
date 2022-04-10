@@ -135,7 +135,7 @@ set_affinity_error (void)
   /* Connect response signal to GTK widget destroy function */
   g_signal_connect_swapped (dialog,
                             "response",
-                            G_CALLBACK (gtk_widget_destroy),
+                            G_CALLBACK (gtk_window_destroy),
                             dialog);
 }
 
@@ -253,7 +253,7 @@ set_affinity (GtkToggleButton *button,
     }
 
   /* Destroy dialog window */
-  gtk_widget_destroy (affinity->dialog);
+  gtk_window_destroy (GTK_WINDOW (affinity->dialog));
 }
 
 static void
@@ -324,7 +324,7 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   /* Get dialog content area VBox */
   dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG (affinity_data->dialog));
 
-   /* Set dialog VBox margin */
+  /* Set dialog VBox margin */
   gtk_widget_set_margin_top (GTK_WIDGET (dialog_vbox), 15);
   gtk_widget_set_margin_bottom (GTK_WIDGET (dialog_vbox), 15);
   gtk_widget_set_margin_start (GTK_WIDGET (dialog_vbox), 15);
@@ -350,10 +350,10 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
                         info->pid));
 
   /* Add label to dialog VBox */
-  gtk_box_pack_start (GTK_BOX (dialog_vbox), label, FALSE, TRUE, 0);
+  gtk_box_prepend (GTK_BOX (dialog_vbox), label);
 
   /* Create scrolled box ("window") */
-  scrolled = gtk_scrolled_window_new (NULL, NULL);
+  scrolled = gtk_scrolled_window_new ();
 
   /* Add view class to scrolled box style */
   scrolled_style = gtk_widget_get_style_context (scrolled);
@@ -363,10 +363,6 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-
-  /* Set scrolled box shadow */
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
-                                       GTK_SHADOW_IN);
 
   /* Create grid for CPU list */
   cpulist_grid = GTK_GRID (gtk_grid_new ());
@@ -432,15 +428,15 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
     }
 
   /* Add CPU grid to scrolled box */
-  gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (cpulist_grid));
+  gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (cpulist_grid));
 
   /* Add scrolled box to dialog VBox */
-  gtk_box_pack_start (GTK_BOX (dialog_vbox), scrolled, TRUE, TRUE, 0);
+  gtk_box_prepend (GTK_BOX (dialog_vbox), scrolled);
 
   /* Swap click signal on "Cancel" button */
   g_signal_connect_swapped (cancel_button,
                             "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
+                            G_CALLBACK (gtk_window_destroy),
                             affinity_data->dialog);
 
   /* Connect click signal on "Apply" button */
@@ -456,7 +452,7 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
                     affinity_data);
 
   /* Show dialog window */
-  gtk_widget_show_all (affinity_data->dialog);
+  gtk_widget_show (affinity_data->dialog);
 }
 
 void

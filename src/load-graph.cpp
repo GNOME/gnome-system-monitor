@@ -129,7 +129,7 @@ LoadGraph::translate_to_log_partial_if_needed (float position_partial)
 static gchar*
 format_duration (unsigned seconds)
 {
-  gchar*caption = NULL;
+  gchar *caption = NULL;
 
   unsigned minutes = seconds / 60;
   unsigned hours = seconds / 3600;
@@ -177,15 +177,16 @@ format_duration (unsigned seconds)
 static void
 force_refresh (LoadGraph * const graph)
 {
-    graph->clear_background ();
-    load_graph_queue_draw (graph);
+  graph->clear_background ();
+  load_graph_queue_draw (graph);
 }
 
 static void
-load_graph_rescale (LoadGraph *graph) {
-    ///org/gnome/desktop/interface/text-scaling-factor
-    graph->fontsize = 8 * graph->font_settings->get_double ("text-scaling-factor");
-    force_refresh (graph);
+load_graph_rescale (LoadGraph *graph)
+{
+  ///org/gnome/desktop/interface/text-scaling-factor
+  graph->fontsize = 8 * graph->font_settings->get_double ("text-scaling-factor");
+  force_refresh (graph);
 }
 
 static void
@@ -193,16 +194,17 @@ load_graph_state_changed (GtkWidget     *widget,
                           GtkStateFlags *flags,
                           gpointer       data_ptr)
 {
-    LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
+  LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
 
-    force_refresh (graph);
-    graph->draw = gtk_widget_is_visible (widget);
+  force_refresh (graph);
+  graph->draw = gtk_widget_is_visible (widget);
 }
 
 static cairo_surface_t*
 create_background (LoadGraph *graph)
 {
   GtkAllocation allocation;
+  GtkNative *native;
   cairo_t *cr;
   unsigned num_bars;
   PangoFontDescription *font_desc;
@@ -222,22 +224,24 @@ create_background (LoadGraph *graph)
   graph->real_draw_height = graph->graph_dely * num_bars;
 
   gtk_widget_get_allocation (GTK_WIDGET (graph->disp), &allocation);
-  surface = gdk_window_create_similar_surface (gtk_widget_get_window (GTK_WIDGET (graph->disp)),
-                                               CAIRO_CONTENT_COLOR_ALPHA,
-                                               allocation.width,
-                                               allocation.height);
+  native = gtk_widget_get_native (GTK_WIDGET (graph->disp));
+  surface = gdk_surface_create_similar_surface (gtk_native_get_surface (native),
+                                                CAIRO_CONTENT_COLOR_ALPHA,
+                                                allocation.width,
+                                                allocation.height);
   cr = cairo_create (surface);
 
   GtkStyleContext *context = gtk_widget_get_style_context (GTK_WIDGET (GsmApplication::get ()->stack));
 
-  gtk_style_context_get_color (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get ()->stack)), &fg);
+  gtk_style_context_get_color (context, &fg);
 
   layout = pango_cairo_create_layout (cr);
 
-  gtk_style_context_get (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get ()->stack)), GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
+  // TODO: Handle font size properly
+  /*gtk_style_context_get (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get()->stack)), GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
   pango_font_description_set_size (font_desc, 0.8 * graph->fontsize * PANGO_SCALE);
   pango_layout_set_font_description (layout, font_desc);
-  pango_font_description_free (font_desc);
+  pango_font_description_free (font_desc);*/
 
   /* draw frame */
   cairo_translate (cr, FRAME_WIDTH, FRAME_WIDTH);
@@ -257,11 +261,11 @@ create_background (LoadGraph *graph)
 
   /* And in case the user does not care, we add
    * classes that usually have a white background. */
-  gtk_style_context_add_class (context, GTK_STYLE_CLASS_PAPER);
-  gtk_style_context_add_class (context, GTK_STYLE_CLASS_ENTRY);
+  // gtk_style_context_add_class (context, GTK_STYLE_CLASS_PAPER);
+  // gtk_style_context_add_class (context, GTK_STYLE_CLASS_ENTRY);
 
   /* And, as a bonus, the user can choose the color of the grid. */
-  gtk_style_context_get_color (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get ()->stack)), &fg_grid);
+  gtk_style_context_get_color (context, &fg_grid);
 
   /* Why not use the new features of the
    * GTK instead of cairo_rectangle ?! :) */
@@ -346,10 +350,10 @@ create_background (LoadGraph *graph)
   return surface;
 }
 
-static gboolean
-load_graph_configure (GtkWidget         *widget,
-                      GdkEventConfigure *event,
-                      gpointer           data_ptr)
+/*static gboolean
+load_graph_configure (GtkWidget *widget,
+                      GdkConfigure *event,
+                      gpointer data_ptr)
 {
   GtkAllocation allocation;
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
@@ -365,7 +369,7 @@ load_graph_configure (GtkWidget         *widget,
   load_graph_queue_draw (graph);
 
   return TRUE;
-}
+}*/
 
 static void
 load_graph_style_updated (GtkWidget *widget,
@@ -376,10 +380,12 @@ load_graph_style_updated (GtkWidget *widget,
   force_refresh (graph);
 }
 
-static gboolean
-load_graph_draw (GtkWidget *widget,
-                 cairo_t   *cr,
-                 gpointer   data_ptr)
+static void
+load_graph_draw (GtkDrawingArea *drawing_area,
+                 cairo_t        *cr,
+                 int             width,
+                 int             height,
+                 gpointer        data_ptr)
 {
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
 
@@ -388,6 +394,7 @@ load_graph_draw (GtkWidget *widget,
   /* Lines start at the right edge of the drawing,
    * a bit outside the clip rectangle. */
   gdouble x_offset = graph->draw_width - graph->rmargin + sample_width;
+
   /* Adjustment for smooth movement between samples */
   x_offset -= sample_width * graph->render_counter / (double)graph->frames_per_unit;
 
@@ -452,8 +459,6 @@ load_graph_draw (GtkWidget *widget,
           cairo_stroke (cr);
         }
     }
-
-  return TRUE;
 }
 
 void
@@ -561,6 +566,7 @@ set_memory_label_and_picker (GtkLabel      *label,
           g_free (cached_label);
         }
     }
+
   gtk_label_set_text (label, text);
   g_free (used_text);
   g_free (cached_text);
@@ -752,14 +758,16 @@ net_scale (LoadGraph *graph,
 }
 
 static guint64
-get_hash64 (const gchar* c_str)
+get_hash64 (const gchar*c_str)
 {
   // Fowler–Noll–Vo FNV-1 64-bit hash:
 
   guint64 hash = 0xcbf29ce484222325L;
 
   while (gchar c = *c_str++)
-    hash = (hash * 0x00000100000001B3L) ^ c;
+    {
+      hash = (hash * 0x00000100000001B3L) ^ c;
+    }
 
   return hash;
 }
@@ -870,8 +878,6 @@ load_graph_update_data (LoadGraph *graph)
     }
 }
 
-
-
 /* Updates the load graph when the timeout expires */
 static gboolean
 load_graph_update (gpointer user_data)
@@ -956,11 +962,9 @@ LoadGraph::LoadGraph(guint type)
         labels.memory = make_tnum_label ();
         gtk_widget_set_valign (GTK_WIDGET (labels.memory), GTK_ALIGN_CENTER);
         gtk_widget_set_halign (GTK_WIDGET (labels.memory), GTK_ALIGN_START);
-        gtk_widget_show (GTK_WIDGET (labels.memory));
         labels.swap = make_tnum_label ();
         gtk_widget_set_valign (GTK_WIDGET (labels.swap), GTK_ALIGN_CENTER);
         gtk_widget_set_halign (GTK_WIDGET (labels.swap), GTK_ALIGN_START);
-        gtk_widget_show (GTK_WIDGET (labels.swap));
         break;
 
       case LOAD_GRAPH_NET:
@@ -971,25 +975,21 @@ LoadGraph::LoadGraph(guint type)
         gtk_label_set_width_chars (labels.net_in, 10);
         gtk_widget_set_valign (GTK_WIDGET (labels.net_in), GTK_ALIGN_CENTER);
         gtk_widget_set_halign (GTK_WIDGET (labels.net_in), GTK_ALIGN_END);
-        gtk_widget_show (GTK_WIDGET (labels.net_in));
 
         labels.net_in_total = make_tnum_label ();
         gtk_widget_set_valign (GTK_WIDGET (labels.net_in_total), GTK_ALIGN_CENTER);
         gtk_widget_set_halign (GTK_WIDGET (labels.net_in_total), GTK_ALIGN_END);
         gtk_label_set_width_chars (labels.net_in_total, 10);
-        gtk_widget_show (GTK_WIDGET (labels.net_in_total));
 
         labels.net_out = make_tnum_label ();
         gtk_widget_set_valign (GTK_WIDGET (labels.net_out), GTK_ALIGN_CENTER);
         gtk_widget_set_halign (GTK_WIDGET (labels.net_out), GTK_ALIGN_END);
         gtk_label_set_width_chars (labels.net_out, 10);
-        gtk_widget_show (GTK_WIDGET (labels.net_out));
 
         labels.net_out_total = make_tnum_label ();
         gtk_widget_set_valign (GTK_WIDGET (labels.net_out_total), GTK_ALIGN_CENTER);
         gtk_widget_set_halign (GTK_WIDGET (labels.net_out), GTK_ALIGN_END);
         gtk_label_set_width_chars (labels.net_out_total, 10);
-        gtk_widget_show (GTK_WIDGET (labels.net_out_total));
 
         break;
     }
@@ -1026,11 +1026,12 @@ LoadGraph::LoadGraph(guint type)
   gtk_widget_show (GTK_WIDGET (main_widget));
 
   disp = GTK_DRAWING_AREA (gtk_drawing_area_new ());
-  gtk_widget_show (GTK_WIDGET (disp));
-  g_signal_connect (G_OBJECT (disp), "draw",
-                    G_CALLBACK (load_graph_draw), this);
-  g_signal_connect (G_OBJECT (disp), "configure_event",
-                    G_CALLBACK (load_graph_configure), this);
+  gtk_drawing_area_set_draw_func (disp,
+                                  load_graph_draw,
+                                  this,
+                                  NULL);
+  // g_signal_connect (G_OBJECT(disp), "configure_event",
+  //                   G_CALLBACK (load_graph_configure), graph);
   g_signal_connect (G_OBJECT (disp), "destroy",
                     G_CALLBACK (load_graph_destroy), this);
   g_signal_connect (G_OBJECT (disp), "state-flags-changed",
@@ -1038,9 +1039,9 @@ LoadGraph::LoadGraph(guint type)
   g_signal_connect (G_OBJECT (disp), "style-updated",
                     G_CALLBACK (load_graph_style_updated), this);
 
-  gtk_widget_set_events (GTK_WIDGET (disp), GDK_EXPOSURE_MASK);
+  // gtk_widget_set_events (GTK_WIDGET (disp), GDK_EXPOSURE_MASK);
 
-  gtk_box_pack_start (main_widget, GTK_WIDGET (disp), TRUE, TRUE, 0);
+  gtk_box_prepend (main_widget, GTK_WIDGET (disp));
 
   data = std::vector<double*>(num_points);
   /* Allocate data in a contiguous block */
@@ -1048,8 +1049,6 @@ LoadGraph::LoadGraph(guint type)
 
   for (guint i = 0; i < num_points; ++i)
     data[i] = &data_block[0] + i * n;
-
-  gtk_widget_show_all (GTK_WIDGET (main_widget));
 }
 
 LoadGraph::~LoadGraph()
@@ -1066,8 +1065,8 @@ LoadGraph::~LoadGraph()
 void
 load_graph_queue_draw (LoadGraph *graph)
 {
-    /* repaint */
-    gtk_widget_queue_draw (GTK_WIDGET (graph->disp));
+  /* repaint */
+  gtk_widget_queue_draw (GTK_WIDGET (graph->disp));
 }
 
 void
@@ -1148,7 +1147,6 @@ load_graph_change_num_points (LoadGraph *graph,
   // Force the scale to be redrawn.
   graph->clear_background ();
 }
-
 
 LoadGraphLabels*
 load_graph_get_labels (LoadGraph *graph)

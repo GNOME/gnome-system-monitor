@@ -99,15 +99,23 @@ get_icon_for_path (const char*path)
   return name;
 }
 
-static GdkPixbuf*
+static GdkTexture *
 get_icon_for_device (const char *mountpoint)
 {
+  GFile *icon_file;
+  GtkIconPaintable *icon;
+  GtkIconTheme *icon_theme;
+
+  icon_theme = gtk_icon_theme_get_for_display (gdk_display_get_default ());
+
   const char*icon_name = get_icon_for_path (mountpoint);
 
   if (!strcmp (icon_name, ""))
     // FIXME: defaults to a safe value
     icon_name = "drive-harddisk";     // get_icon_for_path("/");
-  return gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), icon_name, 24, GTK_ICON_LOOKUP_USE_BUILTIN, NULL);
+  icon = gtk_icon_theme_lookup_icon (icon_theme, icon_name, NULL, 24, 1, GTK_TEXT_DIR_NONE, GTK_ICON_LOOKUP_PRELOAD);
+  icon_file = gtk_icon_paintable_get_file (icon);
+  return gdk_texture_new_from_file (icon_file, NULL);
 }
 
 
@@ -193,7 +201,7 @@ add_disk (GtkListStore             *list,
           const glibtop_mountentry *entry,
           bool                      show_all_fs)
 {
-  GdkPixbuf*pixbuf;
+  GdkTexture*texture;
   GtkTreeIter iter;
   glibtop_fsusage usage;
   guint64 bused, bfree, bavail, btotal;
@@ -209,7 +217,7 @@ add_disk (GtkListStore             *list,
     }
 
   fsusage_stats (&usage, &bused, &bfree, &bavail, &btotal, &percentage);
-  pixbuf = get_icon_for_device (entry->mountdir);
+  texture = get_icon_for_device (entry->mountdir);
 
   /* if we can find a row with the same mountpoint, we get it but we
      still need to update all the fields.
@@ -219,7 +227,7 @@ add_disk (GtkListStore             *list,
     gtk_list_store_append (list, &iter);
 
   gtk_list_store_set (list, &iter,
-                      DISK_ICON, pixbuf,
+                      DISK_ICON, texture,
                       DISK_DEVICE, entry->devname,
                       DISK_DIR, entry->mountdir,
                       DISK_TYPE, entry->type,
@@ -369,7 +377,7 @@ void
 create_disk_view (GsmApplication *app,
                   GtkBuilder     *builder)
 {
-  GtkScrolledWindow *scrolled;
+  GtkWidget *scrolled;
   GsmTreeView *disk_tree;
   GtkListStore *model;
   GtkTreeViewColumn *col;
@@ -388,8 +396,6 @@ create_disk_view (GsmApplication *app,
     N_("Used")
   };
 
-  scrolled = GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder, "disks_scrolled"));
-
   model = gtk_list_store_new (DISK_N_COLUMNS,       /* n columns */
                               G_TYPE_STRING,        /* DISK_DEVICE */
                               G_TYPE_STRING,        /* DISK_DIR */
@@ -398,7 +404,7 @@ create_disk_view (GsmApplication *app,
                               G_TYPE_UINT64,        /* DISK_FREE */
                               G_TYPE_UINT64,        /* DISK_AVAIL */
                               G_TYPE_UINT64,        /* DISK_USED */
-                              GDK_TYPE_PIXBUF,      /* DISK_ICON */
+                              GDK_TYPE_TEXTURE,     /* DISK_ICON */
                               G_TYPE_INT            /* DISK_USED_PERCENTAGE */
                               );
   disk_tree = gsm_tree_view_new (g_settings_get_child (app->settings->gobj (), GSM_SETTINGS_CHILD_DISKS), TRUE);
@@ -406,7 +412,9 @@ create_disk_view (GsmApplication *app,
 
   g_signal_connect (G_OBJECT (disk_tree), "row-activated", G_CALLBACK (open_dir), NULL);
   app->disk_list = disk_tree;
-  gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (disk_tree));
+
+  scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "disks_scrolled"));
+  gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (disk_tree));
   g_object_unref (G_OBJECT (model));
 
   /* icon + device */
@@ -416,7 +424,7 @@ create_disk_view (GsmApplication *app,
 
   gtk_tree_view_column_pack_start (col, cell, FALSE);
   gtk_tree_view_column_set_min_width (col, 30);
-  gtk_tree_view_column_set_attributes (col, cell, "pixbuf", DISK_ICON,
+  gtk_tree_view_column_set_attributes (col, cell, "texture", DISK_ICON,
                                        NULL);
 
   cell = gtk_cell_renderer_text_new ();

@@ -318,7 +318,7 @@ dialog_response (GtkDialog *dialog,
   g_source_remove (mmdata->timer);
 
   delete mmdata;
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_window_destroy (GTK_WINDOW (dialog));
 }
 
 
@@ -459,7 +459,7 @@ create_single_memmaps_dialog (GtkTreeModel *model,
   GtkDialog  *memmapsdialog;
   GtkBox *dialog_box;
   GtkLabel *label;
-  GtkScrolledWindow *scrolled;
+  GtkWidget *scrolled;
   ProcInfo *info;
 
   gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
@@ -489,29 +489,27 @@ create_single_memmaps_dialog (GtkTreeModel *model,
     info->name.c_str (),
     info->pid);
 
-  gtk_box_pack_start (dialog_box, GTK_WIDGET (label), FALSE, TRUE, 0);
+  gtk_box_prepend (dialog_box, GTK_WIDGET (label));
 
-
-  scrolled = GTK_SCROLLED_WINDOW (gtk_scrolled_window_new (NULL, NULL));
+  scrolled = gtk_scrolled_window_new ();
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
-                                       GTK_SHADOW_IN);
 
-  gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (mmdata->tree));
+  gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (mmdata->tree));
   gtk_label_set_mnemonic_widget (label, GTK_WIDGET (mmdata->tree));
 
-  gtk_box_pack_start (dialog_box, GTK_WIDGET (scrolled), TRUE, TRUE, 0);
+  gtk_box_append (dialog_box, GTK_WIDGET (scrolled));
+
+  gtk_window_set_transient_for (GTK_WINDOW (memmapsdialog), GTK_WINDOW (GsmApplication::get ()->main_window));
 
   g_signal_connect (G_OBJECT (memmapsdialog), "response",
                     G_CALLBACK (dialog_response), mmdata);
 
-  gtk_window_set_transient_for (GTK_WINDOW (memmapsdialog), GTK_WINDOW (GsmApplication::get ()->main_window));
-  gtk_widget_show_all (GTK_WIDGET (memmapsdialog));
   mmdata->timer = g_timeout_add_seconds (5, memmaps_timer, mmdata);
-
   update_memmaps_dialog (mmdata);
+
+  gtk_widget_show (GTK_WIDGET (memmapsdialog));
 }
 
 

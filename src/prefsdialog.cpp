@@ -12,14 +12,14 @@
 #include "systemd.h"
 #include "util.h"
 
-static HdyPreferencesWindow *prefs_dialog = NULL;
+static AdwPreferencesWindow *prefs_window = NULL;
 
 static gboolean
-prefs_dialog_delete_event (GtkWidget *widget,
+prefs_window_delete_event (GtkWidget *widget,
                            GdkEvent  *event,
                            gpointer   data)
 {
-  prefs_dialog = NULL;
+  prefs_window = NULL;
   return FALSE;
 }
 
@@ -31,17 +31,15 @@ SpinButtonUpdater(const string&key)
 {
 }
 
-static gboolean
-callback (GtkWidget     *widget,
-          GdkEventFocus *event,
-          gpointer       data)
-{
-  SpinButtonUpdater*updater = static_cast<SpinButtonUpdater*>(data);
-
-  gtk_spin_button_update (GTK_SPIN_BUTTON (widget));
-  updater->update (GTK_SPIN_BUTTON (widget));
-  return FALSE;
-}
+/*static gboolean callback (GtkWidget     *widget,
+                              GdkEventFocus *event,
+                              gpointer       data)
+    {
+        SpinButtonUpdater*updater = static_cast<SpinButtonUpdater*>(data);
+        gtk_spin_button_update (GTK_SPIN_BUTTON (widget));
+        updater->update (GTK_SPIN_BUTTON (widget));
+        return FALSE;
+    }*/
 
 private:
 
@@ -228,7 +226,7 @@ create_preferences_dialog (GsmApplication *app)
   gfloat update;
   GError* err = NULL;
 
-  if (prefs_dialog)
+  if (prefs_window)
     return;
 
   builder = gtk_builder_new ();
@@ -238,10 +236,9 @@ create_preferences_dialog (GsmApplication *app)
     g_error_free (err);
   }
 
-  prefs_dialog = HDY_PREFERENCES_WINDOW (gtk_builder_get_object (builder, "preferences_dialog"));
+  prefs_window = ADW_PREFERENCES_WINDOW (gtk_builder_get_object (builder, "preferences_dialog"));
 
   spin_button = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "processes_interval_spinner"));
-
   update = (gfloat) app->config.update_interval;
   adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spin_button));
   gtk_adjustment_configure (adjustment,
@@ -251,8 +248,8 @@ create_preferences_dialog (GsmApplication *app)
                             0.25,
                             1.0,
                             0);
-  g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-                    G_CALLBACK (SpinButtonUpdater::callback), &interval_updater);
+  /*g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
+                    G_CALLBACK (SpinButtonUpdater::callback), &interval_updater);*/
 
   smooth_switch = GTK_SWITCH (gtk_builder_get_object (builder, "smooth_switch"));
   g_settings_bind (app->settings->gobj (), SmoothRefresh::KEY.c_str (), smooth_switch, "active", G_SETTINGS_BIND_DEFAULT);
@@ -305,9 +302,10 @@ create_preferences_dialog (GsmApplication *app)
   adjustment = gtk_spin_button_get_adjustment (spin_button);
   gtk_adjustment_configure (adjustment, update / 1000.0, 0.05,
                             10.0, 0.05, 0.5, 0);
-  g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
+
+  /*g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
                     G_CALLBACK (SpinButtonUpdater::callback),
-                    &graph_interval_updater);
+                    &graph_interval_updater);*/
 
   update = (gfloat) app->config.graph_data_points;
   GtkRange*range = GTK_RANGE (gtk_builder_get_object (builder, "graph_data_points_scale"));
@@ -342,10 +340,10 @@ create_preferences_dialog (GsmApplication *app)
   adjustment = gtk_spin_button_get_adjustment (spin_button);
   gtk_adjustment_configure (adjustment, update / 1000.0, 1.0,
                             100.0, 1.0, 1.0, 0);
-  g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-                    G_CALLBACK (SpinButtonUpdater::callback),
-                    &disks_interval_updater);
 
+  /*g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
+                    G_CALLBACK (SpinButtonUpdater::callback),
+                    &disks_interval_updater);*/
 
   check_switch = GTK_SWITCH (gtk_builder_get_object (builder, "all_devices_check"));
   g_settings_bind (app->settings->gobj (), GSM_SETTING_SHOW_ALL_FS,
@@ -354,15 +352,14 @@ create_preferences_dialog (GsmApplication *app)
 
   create_field_page (builder, GTK_TREE_VIEW (app->disk_list), GSM_SETTINGS_CHILD_DISKS);
 
-  gtk_window_set_transient_for (GTK_WINDOW (prefs_dialog), GTK_WINDOW (GsmApplication::get ()->main_window));
-  gtk_window_set_modal (GTK_WINDOW (prefs_dialog), TRUE);
+  gtk_window_set_transient_for (GTK_WINDOW (prefs_window), GTK_WINDOW (GsmApplication::get ()->main_window));
+  gtk_window_set_modal (GTK_WINDOW (prefs_window), TRUE);
 
-  gtk_widget_show_all (GTK_WIDGET (prefs_dialog));
-  g_signal_connect (G_OBJECT (prefs_dialog), "delete-event",
-                    G_CALLBACK (prefs_dialog_delete_event), NULL);
+  gtk_widget_show (GTK_WIDGET (prefs_window));
+  g_signal_connect (G_OBJECT (prefs_window), "delete-event",
+                    G_CALLBACK (prefs_window_delete_event), NULL);
 
-  gtk_window_present (GTK_WINDOW (prefs_dialog));
+  gtk_window_present (GTK_WINDOW (prefs_window));
 
-  gtk_builder_connect_signals (builder, NULL);
   g_object_unref (G_OBJECT (builder));
 }

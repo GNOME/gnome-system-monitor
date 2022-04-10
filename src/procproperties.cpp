@@ -132,7 +132,7 @@ close_procprop_dialog (GtkDialog *dialog,
   timer = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (tree), "timer"));
   g_source_remove (timer);
 
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_window_destroy (GTK_WINDOW (dialog));
 }
 
 static GtkTreeView *
@@ -197,7 +197,7 @@ create_single_procproperties_dialog (GtkTreeModel *model,
   GtkBox *dialog_vbox, *vbox;
   GtkBox *cmd_hbox;
   gchar *label;
-  GtkScrolledWindow *scrolled;
+  GtkWidget *scrolled;
   GtkTreeView *tree;
   ProcInfo *info;
   guint timer;
@@ -231,30 +231,27 @@ create_single_procproperties_dialog (GtkTreeModel *model,
   gtk_widget_set_margin_bottom (GTK_WIDGET (dialog_vbox), 5);
   gtk_widget_set_margin_start (GTK_WIDGET (dialog_vbox), 5);
   gtk_widget_set_margin_end (GTK_WIDGET (dialog_vbox), 5);
-  gtk_box_pack_start (vbox, GTK_WIDGET (dialog_vbox), TRUE, TRUE, 0);
+  gtk_box_prepend (vbox, GTK_WIDGET (dialog_vbox));
 
   cmd_hbox = GTK_BOX (gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12));
-  gtk_box_pack_start (dialog_vbox, GTK_WIDGET (cmd_hbox), FALSE, FALSE, 0);
+  gtk_box_prepend (dialog_vbox, GTK_WIDGET (cmd_hbox));
 
-  scrolled = GTK_SCROLLED_WINDOW (gtk_scrolled_window_new (NULL, NULL));
-  gtk_scrolled_window_set_policy (scrolled,
+  scrolled = gtk_scrolled_window_new ();
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_scrolled_window_set_shadow_type (scrolled,
-                                       GTK_SHADOW_IN);
 
   tree = create_procproperties_tree (app, info);
-  gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (tree));
+  gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (tree));
   g_object_set_data (G_OBJECT (tree), "selected_info", GUINT_TO_POINTER (info->pid));
 
-  gtk_box_pack_start (dialog_vbox, GTK_WIDGET (scrolled), TRUE, TRUE, 0);
-  gtk_widget_show_all (GTK_WIDGET (scrolled));
+  gtk_box_prepend (dialog_vbox, GTK_WIDGET (scrolled));
 
   g_signal_connect (G_OBJECT (procpropdialog), "response",
                     G_CALLBACK (close_procprop_dialog), tree);
 
   gtk_window_set_transient_for (GTK_WINDOW (procpropdialog), GTK_WINDOW (GsmApplication::get ()->main_window));
-  gtk_widget_show_all (GTK_WIDGET (procpropdialog));
+  gtk_widget_show (GTK_WIDGET (procpropdialog));
 
   timer = g_timeout_add_seconds (5, procprop_timer, tree);
   g_object_set_data (G_OBJECT (tree), "timer", GUINT_TO_POINTER (timer));
