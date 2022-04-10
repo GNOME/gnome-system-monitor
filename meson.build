@@ -86,6 +86,13 @@ extra_flags = [
 extra_cflags = [
   '-Wmissing-prototypes',
   '-Wnested-externs',
+  '-DGDK_DISABLE_DEPRECATED',
+  '-DGTK_DISABLE_DEPRECATED',
+  '-DGTKMM_DISABLE_DEPRECATED',
+  '-DGDKMM_DISABLE_DEPRECATED',
+  '-DGLIBMM_DISABLE_DEPRECATED',
+  '-DGIO_DISABLE_DEPRECATED',
+  '-Ddebug',
 ]
 extra_cxxflags = [
   # '-fvisibility=hidden',
