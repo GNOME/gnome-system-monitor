@@ -195,7 +195,7 @@ subdir('help')
 message('\n'.join(['',
 'Configuration:',
 '',
-'        Source code location:   @0@'.format(meson.source_root()),
+'        Source code location:   @0@'.format(meson.project_source_root()),
 '        C Compiler:             @0@ @1@'.format(cc.get_id(), cc.version()),
 '        C++ Compiler:           @0@ @1@'.format(cx.get_id(), cx.version()),
 '        CFLAGS:                 @0@'.format(cflags),

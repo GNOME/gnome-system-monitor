@@ -63,7 +63,7 @@ gsm_resource = gnome.compile_resources(
   'gsm',
   'gsm.gresource.xml',
   gresource_bundle: true,
-  source_dir: meson.source_root(),
+  source_dir: meson.project_source_root(),
   install: true,
   install_dir: gsm_resource_dir,
 )
