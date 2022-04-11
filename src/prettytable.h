@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #ifndef _GSM_PRETTY_TABLE_H_
 #define _GSM_PRETTY_TABLE_H_
 
@@ -36,10 +35,15 @@ public:
 private:
 
 #ifdef HAVE_WNCK
-    static void on_application_opened(WnckScreen* screen, WnckApplication* app, gpointer data);
-    static void on_application_closed(WnckScreen* screen, WnckApplication* app, gpointer data);
+    static void on_application_opened(WnckScreen     *screen,
+                                      WnckApplication*app,
+                                      gpointer        data);
+    static void on_application_closed(WnckScreen     *screen,
+                                      WnckApplication*app,
+                                      gpointer        data);
 
-    void register_application(pid_t pid, Glib::RefPtr<Gdk::Pixbuf> icon);
+    void register_application(pid_t                     pid,
+                              Glib::RefPtr<Gdk::Pixbuf> icon);
     void unregister_application(pid_t pid);
 #endif
 
@@ -53,7 +57,8 @@ private:
     Glib::RefPtr<Gdk::Pixbuf> get_icon_for_kernel(const ProcInfo &);
     Glib::RefPtr<Gdk::Pixbuf> get_icon_dummy(const ProcInfo &);
 
-    bool get_default_icon_name(const string &cmd, string &name);
+    bool get_default_icon_name(const string &cmd,
+                               string &      name);
     void file_monitor_event (Glib::RefPtr<Gio::File>,
                              Glib::RefPtr<Gio::File>,
                              Gio::FileMonitorEvent);

@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #ifndef _GSM_SMOOTH_REFRESH_H
 #define _GSM_SMOOTH_REFRESH_H
 
@@ -13,11 +12,11 @@ using std::string;
 
 
 class SmoothRefresh
-  : private procman::NonCopyable
+    : private procman::NonCopyable
 {
-  public:
+public:
 
-    /*
+/*
       smooth_refresh_new
 
       @config_interval : pointer to config_interval so we can observe
@@ -29,14 +28,14 @@ class SmoothRefresh
 
     ~SmoothRefresh();
 
-    /*
+/*
       smooth_refresh_reset
 
       Resets state and re-read config_interval
     */
     void reset();
 
-    /*
+/*
       smooth_refresh_get
 
       Computes the new refresh_interval so that CPU usage is lower than
@@ -52,13 +51,13 @@ class SmoothRefresh
 
     static const string KEY;
 
-  private:
+private:
 
     unsigned get_own_cpu_usage();
 
     void load_settings_value(Glib::ustring key);
 
-    /*
+/*
       fuzzy logic:
       - decrease refresh interval only if current CPU% and last CPU%
       are higher than PCPU_LO
@@ -67,13 +66,12 @@ class SmoothRefresh
 
     */
 
-    enum
-    {
+    enum {
         PCPU_HI = 22,
         PCPU_LO = 18
     };
 
-    /*
+/*
       -self : procman's PID (so we call getpid() only once)
 
       -interval : current refresh interval
@@ -93,7 +91,7 @@ class SmoothRefresh
     bool active;
     sigc::connection connection;
     guint interval;
-    unsigned  last_pcpu;
+    unsigned last_pcpu;
     guint64 last_total_time;
     guint64 last_cpu_time;
 };

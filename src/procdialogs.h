@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* Procman - dialogs
  * Copyright (C) 2001 Kevin Vandersloot
  *
@@ -35,19 +34,20 @@ const int RENICE_VAL_MAX = 20;
 #endif
 
 
-typedef enum
-{
+typedef enum {
     PROCMAN_ACTION_RENICE,
     PROCMAN_ACTION_KILL
 } ProcmanActionType;
 
 
-void                    procdialog_create_kill_dialog (GsmApplication *app, int signal);
+void                    procdialog_create_kill_dialog (GsmApplication *app,
+                                                       int             signal);
 void                    procdialog_create_renice_dialog (GsmApplication *app);
 gboolean                multi_root_check (char *command);
 gboolean                procdialog_create_root_password_dialog (ProcmanActionType type,
-                                                                GsmApplication *app,
-                                                                gint pid, gint extra_value);
+                                                                GsmApplication   *app,
+                                                                gint              pid,
+                                                                gint              extra_value);
 void                    procdialog_create_memmaps_dialog (GsmApplication *app);
 
 #endif /* _GSM_PROCDIALOGS_H_ */

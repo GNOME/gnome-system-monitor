@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #include <config.h>
 
 #include "treeview.h"
@@ -6,7 +5,7 @@
 typedef struct
 {
     GSettings  *settings;
-    gboolean    store_column_order;
+    gboolean store_column_order;
     GHashTable *excluded_columns;
 } GsmTreeViewPrivate;
 
@@ -82,7 +81,8 @@ gsm_tree_view_save_state (GsmTreeView *tree_view)
 }
 
 GtkTreeViewColumn *
-gsm_tree_view_get_column_from_id (GsmTreeView *tree_view, gint sort_id)
+gsm_tree_view_get_column_from_id (GsmTreeView *tree_view,
+                                  gint         sort_id)
 {
     GList *columns;
     GList *iter;
@@ -104,7 +104,9 @@ gsm_tree_view_get_column_from_id (GsmTreeView *tree_view, gint sort_id)
 }
 
 static gboolean
-cb_column_header_clicked (GtkTreeViewColumn *column, GdkEventButton *event, gpointer data)
+cb_column_header_clicked (GtkTreeViewColumn *column,
+                          GdkEventButton    *event,
+                          gpointer           data)
 {
     GtkMenu *menu = GTK_MENU (data);
 
@@ -203,7 +205,8 @@ gsm_tree_view_load_state (GsmTreeView *tree_view)
 }
 
 void
-gsm_tree_view_add_excluded_column (GsmTreeView *tree_view, gint column_id)
+gsm_tree_view_add_excluded_column (GsmTreeView *tree_view,
+                                   gint         column_id)
 {
     GsmTreeViewPrivate *priv;
 
@@ -241,7 +244,9 @@ save_column_state (gpointer data)
 }
 
 static void
-cb_update_column_state (GObject *object, GParamSpec *pspec, gpointer data)
+cb_update_column_state (GObject    *object,
+                        GParamSpec *pspec,
+                        gpointer    data)
 {
     GtkTreeViewColumn *column = GTK_TREE_VIEW_COLUMN (object);
 
@@ -254,7 +259,8 @@ cb_update_column_state (GObject *object, GParamSpec *pspec, gpointer data)
 }
 
 void
-gsm_tree_view_append_and_bind_column (GsmTreeView *tree_view, GtkTreeViewColumn *column)
+gsm_tree_view_append_and_bind_column (GsmTreeView       *tree_view,
+                                      GtkTreeViewColumn *column)
 {
     GsmTreeViewPrivate *priv;
 
@@ -277,7 +283,8 @@ gsm_tree_view_append_and_bind_column (GsmTreeView *tree_view, GtkTreeViewColumn 
 
 
 GsmTreeView *
-gsm_tree_view_new (GSettings *settings, gboolean store_column_order)
+gsm_tree_view_new (GSettings *settings,
+                   gboolean   store_column_order)
 {
     GsmTreeView *self = g_object_new (GSM_TYPE_TREE_VIEW, NULL);
     GsmTreeViewPrivate *priv = gsm_tree_view_get_instance_private (self);

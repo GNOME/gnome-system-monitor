@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #include <config.h>
 
 #include <glib.h>
@@ -15,29 +14,32 @@
 */
 
 
-static size_t e_strftime(char *s, size_t max, const char *fmt, const struct tm *tm)
+static size_t e_strftime (char            *s,
+                          size_t           max,
+                          const char      *fmt,
+                          const struct tm *tm)
 {
 #ifdef HAVE_LKSTRFTIME
-    return strftime(s, max, fmt, tm);
+    return strftime (s, max, fmt, tm);
 #else
     char *c, *ffmt, *ff;
     size_t ret;
 
-    ffmt = g_strdup(fmt);
+    ffmt = g_strdup (fmt);
     ff = ffmt;
-    while ((c = strstr(ff, "%l")) != NULL) {
+    while ((c = strstr (ff, "%l")) != NULL) {
         c[1] = 'I';
         ff = c;
     }
 
     ff = ffmt;
-    while ((c = strstr(ff, "%k")) != NULL) {
+    while ((c = strstr (ff, "%k")) != NULL) {
         c[1] = 'H';
         ff = c;
     }
 
-    ret = strftime(s, max, ffmt, tm);
-    g_free(ffmt);
+    ret = strftime (s, max, ffmt, tm);
+    g_free (ffmt);
     return ret;
 #endif
 }
@@ -61,16 +63,19 @@ static size_t e_strftime(char *s, size_t max, const char *fmt, const struct tm *
  * there isn't a stray space.
  **/
 
-static size_t e_strftime_fix_am_pm(char *s, size_t max, const char *fmt, const struct tm *tm)
+static size_t e_strftime_fix_am_pm (char            *s,
+                                    size_t           max,
+                                    const char      *fmt,
+                                    const struct tm *tm)
 {
     char buf[10];
     char *sp;
     char *ffmt;
     size_t ret;
 
-    if (strstr(fmt, "%p")==NULL && strstr(fmt, "%P")==NULL) {
+    if (strstr (fmt, "%p") == NULL && strstr (fmt, "%P") == NULL) {
         /* No AM/PM involved - can use the fmt string directly */
-        ret=e_strftime(s, max, fmt, tm);
+        ret = e_strftime (s, max, fmt, tm);
     } else {
         /* Get the AM/PM symbol from the locale */
         e_strftime (buf, 10, "%p", tm);
@@ -80,47 +85,50 @@ static size_t e_strftime_fix_am_pm(char *s, size_t max, const char *fmt, const s
              * AM/PM have been defined in the locale
              * so we can use the fmt string directly
              **/
-            ret=e_strftime(s, max, fmt, tm);
+            ret = e_strftime (s, max, fmt, tm);
         } else {
             /**
              * No AM/PM defined by locale
              * must change to 24 hour clock
              **/
-            ffmt=g_strdup(fmt);
-            for (sp=ffmt; (sp=strstr(sp, "%l")); sp++) {
+            ffmt = g_strdup (fmt);
+            for (sp = ffmt; (sp = strstr (sp, "%l")); sp++) {
                 /**
                  * Maybe this should be 'k', but I have never
                  * seen a 24 clock actually use that format
                  **/
-                sp[1]='H';
+                sp[1] = 'H';
             }
-            for (sp=ffmt; (sp=strstr(sp, "%I")); sp++) {
-                sp[1]='H';
+            for (sp = ffmt; (sp = strstr (sp, "%I")); sp++) {
+                sp[1] = 'H';
             }
-            ret=e_strftime(s, max, ffmt, tm);
-            g_free(ffmt);
+            ret = e_strftime (s, max, ffmt, tm);
+            g_free (ffmt);
         }
     }
     return(ret);
 }
 
 static size_t
-e_utf8_strftime_fix_am_pm(char *s, size_t max, const char *fmt, const struct tm *tm)
+e_utf8_strftime_fix_am_pm (char            *s,
+                           size_t           max,
+                           const char      *fmt,
+                           const struct tm *tm)
 {
     size_t sz, ret;
     char *locale_fmt, *buf;
 
-    locale_fmt = g_locale_from_utf8(fmt, -1, NULL, &sz, NULL);
+    locale_fmt = g_locale_from_utf8 (fmt, -1, NULL, &sz, NULL);
     if (!locale_fmt)
         return 0;
 
-    ret = e_strftime_fix_am_pm(s, max, locale_fmt, tm);
+    ret = e_strftime_fix_am_pm (s, max, locale_fmt, tm);
     if (!ret) {
         g_free (locale_fmt);
         return 0;
     }
 
-    buf = g_locale_to_utf8(s, ret, NULL, &sz, NULL);
+    buf = g_locale_to_utf8 (s, ret, NULL, &sz, NULL);
     if (!buf) {
         g_free (locale_fmt);
         return 0;
@@ -128,16 +136,16 @@ e_utf8_strftime_fix_am_pm(char *s, size_t max, const char *fmt, const struct tm 
 
     if (sz >= max) {
         char *tmp = buf + max - 1;
-        tmp = g_utf8_find_prev_char(buf, tmp);
+        tmp = g_utf8_find_prev_char (buf, tmp);
         if (tmp)
             sz = tmp - buf;
         else
             sz = 0;
     }
-    memcpy(s, buf, sz);
+    memcpy (s, buf, sz);
     s[sz] = '\0';
-    g_free(locale_fmt);
-    g_free(buf);
+    g_free (locale_fmt);
+    g_free (buf);
     return sz;
 }
 
@@ -145,7 +153,7 @@ e_utf8_strftime_fix_am_pm(char *s, size_t max, const char *fmt, const struct tm 
 static char *
 filter_date (time_t date)
 {
-    time_t nowdate = time(NULL);
+    time_t nowdate = time (NULL);
     time_t yesdate;
     struct tm then, now, yesterday;
     char buf[26];
@@ -209,7 +217,7 @@ filter_date (time_t date)
 
 
 char *
-procman_format_date_for_display(time_t d)
+procman_format_date_for_display (time_t d)
 {
-    return filter_date(d);
+    return filter_date (d);
 }

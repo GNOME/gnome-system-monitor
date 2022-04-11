@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* Procman - main window
  * Copyright (C) 2001 Kevin Vandersloot
  *
@@ -45,7 +44,7 @@
 #include "settings-keys.h"
 #include "legacy/gsm_color_button.h"
 
-static const char* LOAD_GRAPH_CSS = "\
+static const char*LOAD_GRAPH_CSS = "\
 .loadgraph {\
     background: linear-gradient(to bottom,\
                       @theme_bg_color,\
@@ -56,27 +55,31 @@ static const char* LOAD_GRAPH_CSS = "\
 ";
 
 static gboolean
-cb_window_key_press_event (GtkWidget *widget, GdkEvent *event, gpointer user_data)
+cb_window_key_press_event (GtkWidget *widget,
+                           GdkEvent  *event,
+                           gpointer   user_data)
 {
-    const char *current_page = gtk_stack_get_visible_child_name (GTK_STACK (GsmApplication::get()->stack));
+    const char *current_page = gtk_stack_get_visible_child_name (GTK_STACK (GsmApplication::get ()->stack));
 
     if (strcmp (current_page, "processes") == 0)
         return gtk_search_bar_handle_event (GTK_SEARCH_BAR (user_data), event);
-    
+
     return FALSE;
 }
 
 static void
-search_text_changed (GtkEditable *entry, gpointer data)
+search_text_changed (GtkEditable *entry,
+                     gpointer     data)
 {
     GsmApplication * const app = static_cast<GsmApplication *>(data);
     gtk_tree_model_filter_refilter (GTK_TREE_MODEL_FILTER (gtk_tree_model_sort_get_model (
-                                    GTK_TREE_MODEL_SORT (gtk_tree_view_get_model(
-                                    GTK_TREE_VIEW (app->tree))))));
+                                                               GTK_TREE_MODEL_SORT (gtk_tree_view_get_model (
+                                                                                        GTK_TREE_VIEW (app->tree))))));
 }
 
 static void
-set_affinity_visiblity (GtkWidget *widget, gpointer user_data)
+set_affinity_visiblity (GtkWidget *widget,
+                        gpointer   user_data)
 {
 #ifndef __linux__
     GtkMenuItem *item = GTK_MENU_ITEM (widget);
@@ -88,8 +91,9 @@ set_affinity_visiblity (GtkWidget *widget, gpointer user_data)
 #endif
 }
 
-static void 
-create_proc_view(GsmApplication *app, GtkBuilder * builder)
+static void
+create_proc_view (GsmApplication *app,
+                  GtkBuilder     *builder)
 {
     GsmTreeView *proctree;
     GtkScrolledWindow *scrolled;
@@ -110,91 +114,98 @@ create_proc_view(GsmApplication *app, GtkBuilder * builder)
 
     app->search_bar = GTK_SEARCH_BAR (gtk_builder_get_object (builder, "proc_searchbar"));
     app->search_entry = GTK_SEARCH_ENTRY (gtk_builder_get_object (builder, "proc_searchentry"));
-    
+
     gtk_search_bar_connect_entry (app->search_bar, GTK_ENTRY (app->search_entry));
     g_signal_connect (app->main_window, "key-press-event",
                       G_CALLBACK (cb_window_key_press_event), app->search_bar);
-                  
+
     g_signal_connect (app->search_entry, "changed", G_CALLBACK (search_text_changed), app);
 
     g_object_bind_property (app->search_bar, "search-mode-enabled", app->search_button, "active", (GBindingFlags)(G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE));
 }
 
 static void
-cb_cpu_color_changed (GsmColorButton *cp, gpointer data)
+cb_cpu_color_changed (GsmColorButton *cp,
+                      gpointer        data)
 {
     guint cpu_i = GPOINTER_TO_UINT (data);
     auto settings = Gio::Settings::create (GSM_GSETTINGS_SCHEMA);
 
     /* Get current values */
-    GVariant *cpu_colors_var = g_settings_get_value (settings->gobj(), GSM_SETTING_CPU_COLORS);
-    gsize children_n = g_variant_n_children(cpu_colors_var);
+    GVariant *cpu_colors_var = g_settings_get_value (settings->gobj (), GSM_SETTING_CPU_COLORS);
+    gsize children_n = g_variant_n_children (cpu_colors_var);
 
     /* Create builder to construct new setting with updated value for cpu i */
     GVariantBuilder builder;
-    g_variant_builder_init(&builder, G_VARIANT_TYPE_ARRAY);
+    g_variant_builder_init (&builder, G_VARIANT_TYPE_ARRAY);
 
     for (guint i = 0; i < children_n; i++) {
-        if(cpu_i == i) {
+        if (cpu_i == i) {
             gchar *color;
             GdkRGBA button_color;
-            gsm_color_button_get_color(cp, &button_color);
+            gsm_color_button_get_color (cp, &button_color);
             color = gdk_rgba_to_string (&button_color);
-            g_variant_builder_add(&builder, "(us)", i, color);
+            g_variant_builder_add (&builder, "(us)", i, color);
             g_free (color);
         } else {
-            g_variant_builder_add_value(&builder,
-                                        g_variant_get_child_value(cpu_colors_var, i));
+            g_variant_builder_add_value (&builder,
+                                         g_variant_get_child_value (cpu_colors_var, i));
         }
     }
 
     /* Just set the value and let the changed::cpu-colors signal callback do the rest. */
-    settings->set_value (GSM_SETTING_CPU_COLORS, Glib::wrap (g_variant_builder_end(&builder)));
+    settings->set_value (GSM_SETTING_CPU_COLORS, Glib::wrap (g_variant_builder_end (&builder)));
 }
 
-static void change_settings_color(Gio::Settings& settings, const char *key,
-                                  GsmColorButton *cp)
+static void change_settings_color (Gio::Settings&  settings,
+                                   const char     *key,
+                                   GsmColorButton *cp)
 {
     GdkRGBA c;
     char *color;
 
-    gsm_color_button_get_color(cp, &c);
+    gsm_color_button_get_color (cp, &c);
     color = gdk_rgba_to_string (&c);
     settings.set_string (key, color);
     g_free (color);
 }
 
 static void
-cb_mem_color_changed (GsmColorButton *cp, gpointer data)
+cb_mem_color_changed (GsmColorButton *cp,
+                      gpointer        data)
 {
     GsmApplication *app = (GsmApplication *) data;
-    change_settings_color (*app->settings.operator->(), GSM_SETTING_MEM_COLOR, cp);
+    change_settings_color (*app->settings.operator-> (), GSM_SETTING_MEM_COLOR, cp);
 }
 
 
 static void
-cb_swap_color_changed (GsmColorButton *cp, gpointer data)
+cb_swap_color_changed (GsmColorButton *cp,
+                       gpointer        data)
 {
     GsmApplication *app = (GsmApplication *) data;
-    change_settings_color (*app->settings.operator->(), GSM_SETTING_SWAP_COLOR, cp);
+    change_settings_color (*app->settings.operator-> (), GSM_SETTING_SWAP_COLOR, cp);
 }
 
 static void
-cb_net_in_color_changed (GsmColorButton *cp, gpointer data)
+cb_net_in_color_changed (GsmColorButton *cp,
+                         gpointer        data)
 {
     GsmApplication *app = (GsmApplication *) data;
-    change_settings_color (*app->settings.operator->(), GSM_SETTING_NET_IN_COLOR, cp);
+    change_settings_color (*app->settings.operator-> (), GSM_SETTING_NET_IN_COLOR, cp);
 }
 
 static void
-cb_net_out_color_changed (GsmColorButton *cp, gpointer data)
+cb_net_out_color_changed (GsmColorButton *cp,
+                          gpointer        data)
 {
     GsmApplication *app = (GsmApplication *) data;
-    change_settings_color(*app->settings.operator->(), GSM_SETTING_NET_OUT_COLOR, cp);
+    change_settings_color (*app->settings.operator-> (), GSM_SETTING_NET_OUT_COLOR, cp);
 }
 
 static void
-create_sys_view (GsmApplication *app, GtkBuilder * builder)
+create_sys_view (GsmApplication *app,
+                 GtkBuilder     *builder)
 {
     GtkBox *cpu_graph_box, *mem_graph_box, *net_graph_box;
     GtkExpander *cpu_expander, *mem_expander, *net_expander;
@@ -214,54 +225,54 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     gtk_css_provider_load_from_data (provider, LOAD_GRAPH_CSS, -1, NULL);
     gtk_style_context_add_provider_for_screen (gdk_screen_get_default (), GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     // Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-    title_template = g_strdup(_("Pick a Color for “%s”"));
+    title_template = g_strdup (_("Pick a Color for “%s”"));
 
     /* The CPU BOX */
-    
+
     cpu_graph_box = GTK_BOX (gtk_builder_get_object (builder, "cpu_graph_box"));
     cpu_expander = GTK_EXPANDER (gtk_builder_get_object (builder, "cpu_expander"));
     g_object_bind_property (cpu_expander, "expanded", cpu_expander, "vexpand", G_BINDING_DEFAULT);
 
-    cpu_graph = new LoadGraph(LOAD_GRAPH_CPU);
-    gtk_widget_set_size_request (GTK_WIDGET(load_graph_get_widget(cpu_graph)), -1, 70);
+    cpu_graph = new LoadGraph (LOAD_GRAPH_CPU);
+    gtk_widget_set_size_request (GTK_WIDGET (load_graph_get_widget (cpu_graph)), -1, 70);
     gtk_box_pack_start (cpu_graph_box,
-                        GTK_WIDGET (load_graph_get_widget(cpu_graph)),
+                        GTK_WIDGET (load_graph_get_widget (cpu_graph)),
                         TRUE,
                         TRUE,
                         0);
 
-    GtkGrid* cpu_table = GTK_GRID (gtk_builder_get_object (builder, "cpu_table"));
+    GtkGrid*cpu_table = GTK_GRID (gtk_builder_get_object (builder, "cpu_table"));
     gint cols = 4;
-    for (i=0;i<app->config.num_cpus; i++) {
+    for (i = 0;i < app->config.num_cpus; i++) {
         GtkBox *temp_hbox;
 
         temp_hbox = GTK_BOX (gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0));
         gtk_widget_show (GTK_WIDGET (temp_hbox));
         if (i < cols) {
-            gtk_grid_insert_column(cpu_table, i%cols);
+            gtk_grid_insert_column (cpu_table, i % cols);
         }
-        if ((i+1)%cols ==cols) {
-            gtk_grid_insert_row(cpu_table, (i+1)/cols);
+        if ((i + 1) % cols == cols) {
+            gtk_grid_insert_row (cpu_table, (i + 1) / cols);
         }
-        gtk_grid_attach(cpu_table, GTK_WIDGET (temp_hbox), i%cols, i/cols, 1, 1);
-        color_picker = gsm_color_button_new (&cpu_graph->colors.at(i), GSMCP_TYPE_CPU);
+        gtk_grid_attach (cpu_table, GTK_WIDGET (temp_hbox), i % cols, i / cols, 1, 1);
+        color_picker = gsm_color_button_new (&cpu_graph->colors.at (i), GSMCP_TYPE_CPU);
         g_signal_connect (G_OBJECT (color_picker), "color-set",
                           G_CALLBACK (cb_cpu_color_changed), GINT_TO_POINTER (i));
         gtk_box_pack_start (temp_hbox, GTK_WIDGET (color_picker), FALSE, TRUE, 0);
-        gtk_widget_set_size_request(GTK_WIDGET(color_picker), 32, -1);
-        if(app->config.num_cpus == 1) {
+        gtk_widget_set_size_request (GTK_WIDGET (color_picker), 32, -1);
+        if (app->config.num_cpus == 1) {
             label_text = g_strdup (_("CPU"));
         } else {
-            label_text = g_strdup_printf (_("CPU%d"), i+1);
+            label_text = g_strdup_printf (_("CPU%d"), i + 1);
         }
-        title_text = g_strdup_printf(title_template, label_text);
+        title_text = g_strdup_printf (title_template, label_text);
         label = GTK_LABEL (gtk_label_new (label_text));
-        gtk_label_set_xalign(label, 0.0);
-        if(app->config.num_cpus >=10) {
-            gtk_label_set_width_chars(label, log10(app->config.num_cpus)+1+4);
+        gtk_label_set_xalign (label, 0.0);
+        if (app->config.num_cpus >= 10) {
+            gtk_label_set_width_chars (label, log10 (app->config.num_cpus) + 1 + 4);
         }
-        gsm_color_button_set_title(color_picker, title_text);
-        g_free(title_text);
+        gsm_color_button_set_title (color_picker, title_text);
+        g_free (title_text);
         gtk_box_pack_start (temp_hbox, GTK_WIDGET (label), FALSE, FALSE, 6);
         gtk_widget_show (GTK_WIDGET (label));
         g_free (label_text);
@@ -269,70 +280,69 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
         cpu_label = make_tnum_label ();
 
         /* Reserve some space to avoid the layout changing with the values. */
-        gtk_label_set_width_chars(cpu_label, 6);
-        gtk_label_set_xalign(cpu_label, 1.0);
+        gtk_label_set_width_chars (cpu_label, 6);
+        gtk_label_set_xalign (cpu_label, 1.0);
         gtk_widget_set_valign (GTK_WIDGET (cpu_label), GTK_ALIGN_CENTER);
         gtk_widget_set_halign (GTK_WIDGET (cpu_label), GTK_ALIGN_START);
         gtk_box_pack_start (temp_hbox, GTK_WIDGET (cpu_label), FALSE, FALSE, 0);
         gtk_widget_show (GTK_WIDGET (cpu_label));
-        load_graph_get_labels(cpu_graph)->cpu[i] = cpu_label;
-
+        load_graph_get_labels (cpu_graph)->cpu[i] = cpu_label;
     }
 
     app->cpu_graph = cpu_graph;
 
     /** The memory box */
-    
+
     mem_graph_box = GTK_BOX (gtk_builder_get_object (builder, "mem_graph_box"));
     mem_expander = GTK_EXPANDER (gtk_builder_get_object (builder, "mem_expander"));
     g_object_bind_property (mem_expander, "expanded", mem_expander, "vexpand", G_BINDING_DEFAULT);
 
-    mem_graph = new LoadGraph(LOAD_GRAPH_MEM);
-    gtk_widget_set_size_request (GTK_WIDGET(load_graph_get_widget(mem_graph)), -1, 70);
+    mem_graph = new LoadGraph (LOAD_GRAPH_MEM);
+    gtk_widget_set_size_request (GTK_WIDGET (load_graph_get_widget (mem_graph)), -1, 70);
     gtk_box_pack_start (mem_graph_box,
-                        GTK_WIDGET (load_graph_get_widget(mem_graph)),
+                        GTK_WIDGET (load_graph_get_widget (mem_graph)),
                         TRUE,
                         TRUE,
                         0);
 
     table = GTK_GRID (gtk_builder_get_object (builder, "mem_table"));
 
-    color_picker = load_graph_get_mem_color_picker(mem_graph);
+    color_picker = load_graph_get_mem_color_picker (mem_graph);
     g_signal_connect (G_OBJECT (color_picker), "color-set",
                       G_CALLBACK (cb_mem_color_changed), app);
-    title_text = g_strdup_printf(title_template, _("Memory"));
-    gsm_color_button_set_title(color_picker, title_text);
-    g_free(title_text);
+    title_text = g_strdup_printf (title_template, _("Memory"));
+    gsm_color_button_set_title (color_picker, title_text);
+    g_free (title_text);
 
-    label = GTK_LABEL (gtk_builder_get_object(builder, "memory_label"));
+    label = GTK_LABEL (gtk_builder_get_object (builder, "memory_label"));
 
     gtk_grid_attach_next_to (table, GTK_WIDGET (color_picker), GTK_WIDGET (label), GTK_POS_LEFT, 1, 3);
-    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(mem_graph)->memory), GTK_WIDGET (label), GTK_POS_BOTTOM, 1, 2);
+    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels (mem_graph)->memory), GTK_WIDGET (label), GTK_POS_BOTTOM, 1, 2);
 
-    color_picker = load_graph_get_swap_color_picker(mem_graph);
+    color_picker = load_graph_get_swap_color_picker (mem_graph);
     g_signal_connect (G_OBJECT (color_picker), "color-set",
                       G_CALLBACK (cb_swap_color_changed), app);
-    title_text = g_strdup_printf(title_template, _("Swap"));
-    gsm_color_button_set_title(GSM_COLOR_BUTTON(color_picker), title_text);
-    g_free(title_text);
+    title_text = g_strdup_printf (title_template, _("Swap"));
+    gsm_color_button_set_title (GSM_COLOR_BUTTON (color_picker), title_text);
+    g_free (title_text);
 
-    label = GTK_LABEL (gtk_builder_get_object(builder, "swap_label"));
+    label = GTK_LABEL (gtk_builder_get_object (builder, "swap_label"));
 
     gtk_grid_attach_next_to (table, GTK_WIDGET (color_picker), GTK_WIDGET (label), GTK_POS_LEFT, 1, 3);
-    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(mem_graph)->swap), GTK_WIDGET (label), GTK_POS_BOTTOM, 1, 2);
+    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels (mem_graph)->swap), GTK_WIDGET (label), GTK_POS_BOTTOM, 1, 2);
 
     app->mem_graph = mem_graph;
 
     /* The net box */
-    
+
     net_graph_box = GTK_BOX (gtk_builder_get_object (builder, "net_graph_box"));
     net_expander = GTK_EXPANDER (gtk_builder_get_object (builder, "net_expander"));
     g_object_bind_property (net_expander, "expanded", net_expander, "vexpand", G_BINDING_DEFAULT);
 
-    net_graph = new LoadGraph(LOAD_GRAPH_NET);
-    gtk_widget_set_size_request (GTK_WIDGET(load_graph_get_widget(net_graph)), -1, 70);
+    net_graph = new LoadGraph (LOAD_GRAPH_NET);
+    gtk_widget_set_size_request (GTK_WIDGET (load_graph_get_widget (net_graph)), -1, 70);
     gtk_box_pack_start (net_graph_box,
-                        GTK_WIDGET (load_graph_get_widget(net_graph)),
+                        GTK_WIDGET (load_graph_get_widget (net_graph)),
                         TRUE,
                         TRUE,
                         0);
@@ -340,51 +350,52 @@ create_sys_view (GsmApplication *app, GtkBuilder * builder)
     table = GTK_GRID (gtk_builder_get_object (builder, "net_table"));
 
     color_picker = gsm_color_button_new (
-        &net_graph->colors.at(0), GSMCP_TYPE_NETWORK_IN);
-    gtk_widget_set_valign (GTK_WIDGET(color_picker), GTK_ALIGN_CENTER);
+        &net_graph->colors.at (0), GSMCP_TYPE_NETWORK_IN);
+    gtk_widget_set_valign (GTK_WIDGET (color_picker), GTK_ALIGN_CENTER);
     g_signal_connect (G_OBJECT (color_picker), "color-set",
                       G_CALLBACK (cb_net_in_color_changed), app);
-    title_text = g_strdup_printf(title_template, _("Receiving"));
-    gsm_color_button_set_title(color_picker, title_text);
-    g_free(title_text);
+    title_text = g_strdup_printf (title_template, _("Receiving"));
+    gsm_color_button_set_title (color_picker, title_text);
+    g_free (title_text);
 
-    label = GTK_LABEL (gtk_builder_get_object(builder, "receiving_label"));
+    label = GTK_LABEL (gtk_builder_get_object (builder, "receiving_label"));
     gtk_grid_attach_next_to (table, GTK_WIDGET (color_picker), GTK_WIDGET (label), GTK_POS_LEFT, 1, 2);
-    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(net_graph)->net_in), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
-    label = GTK_LABEL (gtk_builder_get_object(builder, "total_received_label"));
-    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(net_graph)->net_in_total), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
+    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels (net_graph)->net_in), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
+    label = GTK_LABEL (gtk_builder_get_object (builder, "total_received_label"));
+    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels (net_graph)->net_in_total), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
 
     color_picker = gsm_color_button_new (
-        &net_graph->colors.at(1), GSMCP_TYPE_NETWORK_OUT);
-    gtk_widget_set_valign (GTK_WIDGET(color_picker), GTK_ALIGN_CENTER);
-    gtk_widget_set_hexpand (GTK_WIDGET(color_picker), true);
-    gtk_widget_set_halign (GTK_WIDGET(color_picker), GTK_ALIGN_END);
+        &net_graph->colors.at (1), GSMCP_TYPE_NETWORK_OUT);
+    gtk_widget_set_valign (GTK_WIDGET (color_picker), GTK_ALIGN_CENTER);
+    gtk_widget_set_hexpand (GTK_WIDGET (color_picker), true);
+    gtk_widget_set_halign (GTK_WIDGET (color_picker), GTK_ALIGN_END);
 
     g_signal_connect (G_OBJECT (color_picker), "color-set",
                       G_CALLBACK (cb_net_out_color_changed), app);
-    title_text = g_strdup_printf(title_template, _("Sending"));
-    gsm_color_button_set_title(color_picker, title_text);
-    g_free(title_text);
+    title_text = g_strdup_printf (title_template, _("Sending"));
+    gsm_color_button_set_title (color_picker, title_text);
+    g_free (title_text);
 
-    label = GTK_LABEL (gtk_builder_get_object(builder, "sending_label"));
+    label = GTK_LABEL (gtk_builder_get_object (builder, "sending_label"));
     gtk_grid_attach_next_to (table, GTK_WIDGET (color_picker), GTK_WIDGET (label), GTK_POS_LEFT, 1, 2);
-    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(net_graph)->net_out), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
-    label = GTK_LABEL (gtk_builder_get_object(builder, "total_sent_label"));
-    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels(net_graph)->net_out_total), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
-    gtk_widget_set_hexpand (GTK_WIDGET(load_graph_get_labels(net_graph)->net_out_total), true);
-    gtk_widget_set_halign (GTK_WIDGET(load_graph_get_labels(net_graph)->net_out_total), GTK_ALIGN_START);
+    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels (net_graph)->net_out), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
+    label = GTK_LABEL (gtk_builder_get_object (builder, "total_sent_label"));
+    gtk_grid_attach_next_to (table, GTK_WIDGET (load_graph_get_labels (net_graph)->net_out_total), GTK_WIDGET (label), GTK_POS_RIGHT, 1, 1);
+    gtk_widget_set_hexpand (GTK_WIDGET (load_graph_get_labels (net_graph)->net_out_total), true);
+    gtk_widget_set_halign (GTK_WIDGET (load_graph_get_labels (net_graph)->net_out_total), GTK_ALIGN_START);
 
-    gtk_widget_set_hexpand (GTK_WIDGET(load_graph_get_labels(net_graph)->net_out), true);
-    gtk_widget_set_halign (GTK_WIDGET(load_graph_get_labels(net_graph)->net_out), GTK_ALIGN_START);
+    gtk_widget_set_hexpand (GTK_WIDGET (load_graph_get_labels (net_graph)->net_out), true);
+    gtk_widget_set_halign (GTK_WIDGET (load_graph_get_labels (net_graph)->net_out), GTK_ALIGN_START);
 
 
     app->net_graph = net_graph;
     g_free (title_template);
-
 }
 
 static void
-on_activate_about (GSimpleAction *, GVariant *, gpointer data)
+on_activate_about (GSimpleAction *,
+                   GVariant *,
+                   gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
@@ -421,35 +432,40 @@ on_activate_about (GSimpleAction *, GVariant *, gpointer data)
         "version",              VERSION,
         "website",              "https://wiki.gnome.org/Apps/SystemMonitor",
         "copyright",            "Copyright \xc2\xa9 2001-2004 Kevin Vandersloot\n"
-                                "Copyright \xc2\xa9 2005-2007 Benoît Dejean\n"
-                                "Copyright \xc2\xa9 2011 Chris Kühl",
+        "Copyright \xc2\xa9 2005-2007 Benoît Dejean\n"
+        "Copyright \xc2\xa9 2011 Chris Kühl",
         "logo-icon-name",       "org.gnome.SystemMonitor",
         "authors",              authors,
         "artists",              artists,
         "documenters",          documenters,
         "translator-credits",   _("translator-credits"),
-		"license-type", 		GTK_LICENSE_GPL_2_0,
-        NULL
-        );
+        "license-type",                 GTK_LICENSE_GPL_2_0,
+        NULL);
 }
 
 static void
-on_activate_keyboard_shortcuts (GSimpleAction *, GVariant *, gpointer data)
+on_activate_keyboard_shortcuts (GSimpleAction *,
+                                GVariant *,
+                                gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
     gtk_widget_show (GTK_WIDGET (gtk_application_window_get_help_overlay (GTK_APPLICATION_WINDOW (app->main_window))));
 }
 
 static void
-on_activate_refresh (GSimpleAction *, GVariant *, gpointer data)
+on_activate_refresh (GSimpleAction *,
+                     GVariant *,
+                     gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
     proctable_update (app);
 }
 
 static void
-kill_process_with_confirmation (GsmApplication *app, int signal) {
-    gboolean kill_dialog = app->settings->get_boolean(GSM_SETTING_SHOW_KILL_DIALOG);
+kill_process_with_confirmation (GsmApplication *app,
+                                int             signal)
+{
+    gboolean kill_dialog = app->settings->get_boolean (GSM_SETTING_SHOW_KILL_DIALOG);
 
     if (kill_dialog)
         procdialog_create_kill_dialog (app, signal);
@@ -458,26 +474,31 @@ kill_process_with_confirmation (GsmApplication *app, int signal) {
 }
 
 static void
-on_activate_send_signal (GSimpleAction *, GVariant *parameter, gpointer data)
+on_activate_send_signal (GSimpleAction *,
+                         GVariant *parameter,
+                         gpointer  data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
     /* no confirmation */
-    gint32 signal = g_variant_get_int32(parameter);
+    gint32 signal = g_variant_get_int32 (parameter);
     switch (signal) {
-        case SIGCONT:
-            kill_process (app, signal);
-            break;
-        case SIGSTOP:
-        case SIGTERM:
-        case SIGKILL:
-            kill_process_with_confirmation (app, signal);
-            break;
+    case SIGCONT:
+        kill_process (app, signal);
+        break;
+
+    case SIGSTOP:
+    case SIGTERM:
+    case SIGKILL:
+        kill_process_with_confirmation (app, signal);
+        break;
     }
 }
 
 static void
-on_activate_set_affinity (GSimpleAction *, GVariant *, gpointer data)
+on_activate_set_affinity (GSimpleAction *,
+                          GVariant *,
+                          gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
@@ -485,7 +506,9 @@ on_activate_set_affinity (GSimpleAction *, GVariant *, gpointer data)
 }
 
 static void
-on_activate_memory_maps (GSimpleAction *, GVariant *, gpointer data)
+on_activate_memory_maps (GSimpleAction *,
+                         GVariant *,
+                         gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
@@ -493,7 +516,9 @@ on_activate_memory_maps (GSimpleAction *, GVariant *, gpointer data)
 }
 
 static void
-on_activate_open_files (GSimpleAction *, GVariant *, gpointer data)
+on_activate_open_files (GSimpleAction *,
+                        GVariant *,
+                        gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
@@ -501,7 +526,9 @@ on_activate_open_files (GSimpleAction *, GVariant *, gpointer data)
 }
 
 static void
-on_activate_process_properties (GSimpleAction *, GVariant *, gpointer data)
+on_activate_process_properties (GSimpleAction *,
+                                GVariant *,
+                                gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
@@ -509,21 +536,27 @@ on_activate_process_properties (GSimpleAction *, GVariant *, gpointer data)
 }
 
 static void
-on_activate_radio (GSimpleAction *action, GVariant *parameter, gpointer data)
+on_activate_radio (GSimpleAction *action,
+                   GVariant      *parameter,
+                   gpointer       data)
 {
     g_action_change_state (G_ACTION (action), parameter);
 }
 
 static void
-on_activate_toggle (GSimpleAction *action, GVariant *parameter, gpointer data)
+on_activate_toggle (GSimpleAction *action,
+                    GVariant      *parameter,
+                    gpointer       data)
 {
     GVariant *state = g_action_get_state (G_ACTION (action));
-    g_action_change_state (G_ACTION (action), g_variant_new_boolean (!g_variant_get_boolean (state)));    
+    g_action_change_state (G_ACTION (action), g_variant_new_boolean (!g_variant_get_boolean (state)));
     g_variant_unref (state);
 }
 
 static void
-on_activate_search (GSimpleAction *action, GVariant *parameter, gpointer data)
+on_activate_search (GSimpleAction *action,
+                    GVariant      *parameter,
+                    gpointer       data)
 {
     GsmApplication *app = (GsmApplication *) data;
     GVariant *state = g_action_get_state (G_ACTION (action));
@@ -539,37 +572,45 @@ on_activate_search (GSimpleAction *action, GVariant *parameter, gpointer data)
 }
 
 static void
-change_show_page_state (GSimpleAction *action, GVariant *state, gpointer data)
+change_show_page_state (GSimpleAction *action,
+                        GVariant      *state,
+                        gpointer       data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
-    auto state_var = Glib::wrap(state, true);
+    auto state_var = Glib::wrap (state, true);
     g_simple_action_set_state (action, state);
     app->settings->set_value (GSM_SETTING_CURRENT_TAB, state_var);
 }
 
 static void
-change_show_processes_state (GSimpleAction *action, GVariant *state, gpointer data)
+change_show_processes_state (GSimpleAction *action,
+                             GVariant      *state,
+                             gpointer       data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
-    auto state_var = Glib::wrap(state, true);
+    auto state_var = Glib::wrap (state, true);
     g_simple_action_set_state (action, state);
     app->settings->set_value (GSM_SETTING_SHOW_WHOSE_PROCESSES, state_var);
 }
 
 static void
-change_show_dependencies_state (GSimpleAction *action, GVariant *state, gpointer data)
+change_show_dependencies_state (GSimpleAction *action,
+                                GVariant      *state,
+                                gpointer       data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
-    auto state_var = Glib::wrap(state, true);
+    auto state_var = Glib::wrap (state, true);
     g_simple_action_set_state (action, state);
     app->settings->set_value (GSM_SETTING_SHOW_DEPENDENCIES, state_var);
 }
 
 static void
-on_activate_priority (GSimpleAction *action, GVariant *parameter, gpointer data)
+on_activate_priority (GSimpleAction *action,
+                      GVariant      *parameter,
+                      gpointer       data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
@@ -577,18 +618,20 @@ on_activate_priority (GSimpleAction *action, GVariant *parameter, gpointer data)
 
     const gint32 priority = g_variant_get_int32 (parameter);
     switch (priority) {
-        case 32: 
-            procdialog_create_renice_dialog (app);
-            break;
-        default:
-            renice (app, priority);
-            break;
-    }
+    case 32:
+        procdialog_create_renice_dialog (app);
+        break;
 
+    default:
+        renice (app, priority);
+        break;
+    }
 }
 
 static void
-change_priority_state (GSimpleAction *action, GVariant *state, gpointer data)
+change_priority_state (GSimpleAction *action,
+                       GVariant      *state,
+                       gpointer       data)
 {
     g_simple_action_set_state (action, state);
 }
@@ -645,13 +688,17 @@ update_page_activities (GsmApplication *app)
 }
 
 static void
-cb_change_current_page (GtkStack *stack, GParamSpec *pspec, gpointer data)
+cb_change_current_page (GtkStack   *stack,
+                        GParamSpec *pspec,
+                        gpointer    data)
 {
     update_page_activities ((GsmApplication *)data);
 }
 
 static gboolean
-cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data)
+cb_main_window_delete (GtkWidget *window,
+                       GdkEvent  *event,
+                       gpointer   data)
 {
     GsmApplication *app = (GsmApplication *) data;
 
@@ -661,14 +708,15 @@ cb_main_window_delete (GtkWidget *window, GdkEvent *event, gpointer data)
 }
 
 static gboolean
-cb_main_window_state_changed (GtkWidget *window, GdkEventWindowState *event, gpointer data)
+cb_main_window_state_changed (GtkWidget           *window,
+                              GdkEventWindowState *event,
+                              gpointer             data)
 {
     GsmApplication *app = (GsmApplication *) data;
     auto current_page = app->settings->get_string (GSM_SETTING_CURRENT_TAB);
     if (event->new_window_state & GDK_WINDOW_STATE_BELOW ||
         event->new_window_state & GDK_WINDOW_STATE_ICONIFIED ||
-        event->new_window_state & GDK_WINDOW_STATE_WITHDRAWN)
-    {
+        event->new_window_state & GDK_WINDOW_STATE_WITHDRAWN) {
         if (current_page == "processes") {
             proctable_freeze (app);
         } else if (current_page == "resources") {
@@ -678,7 +726,7 @@ cb_main_window_state_changed (GtkWidget *window, GdkEventWindowState *event, gpo
         } else if (current_page == "disks") {
             disks_freeze (app);
         }
-    } else  {
+    } else {
         if (current_page == "processes") {
             proctable_update (app);
             proctable_thaw (app);
@@ -707,22 +755,22 @@ create_main_window (GsmApplication *app)
 
     int width, height, xpos, ypos;
 
-    GtkBuilder *builder = gtk_builder_new();
+    GtkBuilder *builder = gtk_builder_new ();
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/interface.ui", NULL);
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/menus.ui", NULL);
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/gtk/help-overlay.ui", NULL);
 
     main_window = HDY_APPLICATION_WINDOW (gtk_builder_get_object (builder, "main_window"));
-    gtk_window_set_application (GTK_WINDOW (main_window), app->gobj());
+    gtk_window_set_application (GTK_WINDOW (main_window), app->gobj ());
     gtk_widget_set_name (GTK_WIDGET (main_window), "gnome-system-monitor");
     app->main_window = main_window;
 
     gtk_application_window_set_help_overlay (GTK_APPLICATION_WINDOW (app->main_window),
                                              GTK_SHORTCUTS_WINDOW (gtk_builder_get_object (builder, "help_overlay")));
 
-    g_settings_get (app->settings->gobj(), GSM_SETTING_WINDOW_STATE, "(iiii)",
+    g_settings_get (app->settings->gobj (), GSM_SETTING_WINDOW_STATE, "(iiii)",
                     &width, &height, &xpos, &ypos);
-    
+
     display = gdk_display_get_default ();
     monitor = gdk_display_get_monitor_at_point (display, xpos, ypos);
     if (monitor == NULL) {
@@ -776,20 +824,20 @@ create_main_window (GsmApplication *app)
                                      G_N_ELEMENTS (win_action_entries),
                                      app);
 
-    GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET (main_window));
-    GdkVisual* visual = gdk_screen_get_rgba_visual(screen);
+    GdkScreen*screen = gtk_widget_get_screen (GTK_WIDGET (main_window));
+    GdkVisual*visual = gdk_screen_get_rgba_visual (screen);
 
     /* use visual, if available */
     if (visual)
-        gtk_widget_set_visual(GTK_WIDGET (main_window), visual);
+        gtk_widget_set_visual (GTK_WIDGET (main_window), visual);
 
     /* create the main stack */
     app->stack = stack = GTK_STACK (gtk_builder_get_object (builder, "stack"));
 
-    create_proc_view(app, builder);
+    create_proc_view (app, builder);
 
     create_sys_view (app, builder);
-    
+
     create_disk_view (app, builder);
 
     g_settings_bind (app->settings->gobj (), GSM_SETTING_CURRENT_TAB, stack, "visible-child-name", G_SETTINGS_BIND_DEFAULT);
@@ -817,7 +865,7 @@ create_main_window (GsmApplication *app)
                            g_settings_get_value (app->settings->gobj (), GSM_SETTING_SHOW_WHOSE_PROCESSES));
 
     gtk_widget_show (GTK_WIDGET (main_window));
-    
+
     update_page_activities (app);
 
     g_object_unref (G_OBJECT (builder));
@@ -827,10 +875,10 @@ static gboolean
 scroll_to_selection (gpointer data)
 {
     GsmApplication *app = (GsmApplication *) data;
-    GList* paths = gtk_tree_selection_get_selected_rows (app->selection, NULL);
-    guint length = g_list_length(paths);
+    GList*paths = gtk_tree_selection_get_selected_rows (app->selection, NULL);
+    guint length = g_list_length (paths);
     if (length > 0) {
-        GtkTreePath* last_path = (GtkTreePath*) g_list_nth_data(paths, length - 1);
+        GtkTreePath*last_path = (GtkTreePath*) g_list_nth_data (paths, length - 1);
         gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (app->tree), last_path, NULL, FALSE, 0.0, 0.0);
     }
 
@@ -839,7 +887,7 @@ scroll_to_selection (gpointer data)
 }
 
 void
-update_sensitivity(GsmApplication *app)
+update_sensitivity (GsmApplication *app)
 {
     const char * const selected_actions[] = { "send-signal-stop",
                                               "send-signal-cont",
@@ -884,4 +932,3 @@ update_sensitivity(GsmApplication *app)
     guint duration_ms = gtk_revealer_get_transition_duration (GTK_REVEALER (app->proc_actionbar_revealer));
     g_timeout_add (duration_ms, scroll_to_selection, app);
 }
-

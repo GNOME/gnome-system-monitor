@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
  * Gnome system monitor colour pickers
  * Copyright (C) 2007 Karl Lattimer <karl@qdh.org.uk>
@@ -38,8 +37,8 @@ G_BEGIN_DECLS
 #define GSM_IS_COLOR_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GSM_TYPE_COLOR_BUTTON))
 #define GSM_COLOR_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GSM_TYPE_COLOR_BUTTON, GsmColorButtonClass))
 
-typedef struct _GsmColorButton           GsmColorButton;
-typedef struct _GsmColorButtonClass      GsmColorButtonClass;
+typedef struct _GsmColorButton GsmColorButton;
+typedef struct _GsmColorButtonClass GsmColorButtonClass;
 
 struct _GsmColorButton
 {
@@ -47,8 +46,7 @@ struct _GsmColorButton
 };
 
 /* Widget types */
-enum
-{
+enum {
     GSMCP_TYPE_CPU,
     GSMCP_TYPE_PIE,
     GSMCP_TYPE_NETWORK_IN,
@@ -62,15 +60,21 @@ struct _GsmColorButtonClass
 };
 
 GType       gsm_color_button_get_type      (void);
-GsmColorButton * gsm_color_button_new      (const GdkRGBA * color, guint type);
-void        gsm_color_button_set_color     (GsmColorButton * color_button, const GdkRGBA * color);
-void        gsm_color_button_set_fraction  (GsmColorButton * color_button, const gdouble fraction);
-void        gsm_color_button_set_cbtype    (GsmColorButton * color_button, guint type);
-void        gsm_color_button_get_color     (GsmColorButton * color_button, GdkRGBA * color);
-gdouble     gsm_color_button_get_fraction  (GsmColorButton * color_button);
-guint       gsm_color_button_get_cbtype    (GsmColorButton * color_button);
-void        gsm_color_button_set_title     (GsmColorButton * color_button, const gchar * title);
-gchar     * gsm_color_button_get_title     (GsmColorButton * color_button);
+GsmColorButton * gsm_color_button_new      (const GdkRGBA *color,
+                                            guint          type);
+void        gsm_color_button_set_color     (GsmColorButton *color_button,
+                                            const GdkRGBA  *color);
+void        gsm_color_button_set_fraction  (GsmColorButton *color_button,
+                                            const gdouble   fraction);
+void        gsm_color_button_set_cbtype    (GsmColorButton *color_button,
+                                            guint           type);
+void        gsm_color_button_get_color     (GsmColorButton *color_button,
+                                            GdkRGBA        *color);
+gdouble     gsm_color_button_get_fraction  (GsmColorButton *color_button);
+guint       gsm_color_button_get_cbtype    (GsmColorButton *color_button);
+void        gsm_color_button_set_title     (GsmColorButton *color_button,
+                                            const gchar    *title);
+gchar * gsm_color_button_get_title     (GsmColorButton *color_button);
 
 G_END_DECLS
 

@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #ifndef _GSM_MEMMAPS_H_
 #define _GSM_MEMMAPS_H_
 

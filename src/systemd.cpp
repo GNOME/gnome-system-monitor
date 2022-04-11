@@ -10,51 +10,51 @@
 
 
 bool
-procman::systemd_logind_running()
+procman::systemd_logind_running ()
 {
 #ifdef HAVE_SYSTEMD
-  static bool init;
-  static bool is_running;
+    static bool init;
+    static bool is_running;
 
-  if (!init) {
-    /* check if logind is running */
-    if (access("/run/systemd/seats/", F_OK) >= 0) {
-      is_running = true;
+    if (!init) {
+        /* check if logind is running */
+        if (access ("/run/systemd/seats/", F_OK) >= 0) {
+            is_running = true;
+        }
+        init = true;
     }
-    init = true;
-  }
 
-  return is_running;
+    return is_running;
 
 #else
-  return false;
+    return false;
 #endif
 }
 
 void
-procman::get_process_systemd_info(ProcInfo *info)
+procman::get_process_systemd_info (ProcInfo *info)
 {
 #ifdef HAVE_SYSTEMD
     uid_t uid;
 
-    if (!systemd_logind_running())
+    if (!systemd_logind_running ())
         return;
 
-    char* unit = NULL;
-    sd_pid_get_unit(info->pid, &unit);
-    info->unit = make_string(unit);
+    char*unit = NULL;
+    sd_pid_get_unit (info->pid, &unit);
+    info->unit = make_string (unit);
 
-    char* session = NULL;
-    sd_pid_get_session(info->pid, &session);
-    info->session = make_string(session);
+    char*session = NULL;
+    sd_pid_get_session (info->pid, &session);
+    info->session = make_string (session);
 
-    if (!info->session.empty()) {
-      char* seat = NULL;
-      sd_session_get_seat(info->session.c_str(), &seat);
-      info->seat = make_string(seat);
+    if (!info->session.empty ()) {
+        char*seat = NULL;
+        sd_session_get_seat (info->session.c_str (), &seat);
+        info->seat = make_string (seat);
     }
-    if (sd_pid_get_owner_uid(info->pid, &uid) >= 0)
-        info->owner = info->lookup_user(uid);
+    if (sd_pid_get_owner_uid (info->pid, &uid) >= 0)
+        info->owner = info->lookup_user (uid);
     else
         info->owner = "";
 #endif

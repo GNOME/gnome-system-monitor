@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* Procman process actions
  * Copyright (C) 2001 Kevin Vandersloot
  *
@@ -32,7 +31,10 @@
 
 
 static void
-renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
+renice_single_process (GtkTreeModel *model,
+                       GtkTreePath  *path,
+                       GtkTreeIter  *iter,
+                       gpointer      data)
 {
     const struct ProcActionArgs * const args = static_cast<ProcActionArgs*>(data);
 
@@ -51,21 +53,21 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
     error = setpriority (PRIO_PROCESS, info->pid, args->arg_value);
 
     /* success */
-    if(error != -1) return;
+    if (error != -1) return;
 
     saved_errno = errno;
 
     /* need to be root */
-    if(errno == EPERM || errno == EACCES) {
+    if (errno == EPERM || errno == EACCES) {
         gboolean success;
 
         success = procdialog_create_root_password_dialog (
             PROCMAN_ACTION_RENICE, args->app, info->pid,
             args->arg_value);
 
-        if(success) return;
+        if (success) return;
 
-        if(errno) {
+        if (errno) {
             saved_errno = errno;
         }
     }
@@ -74,14 +76,14 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
     error_msg = g_strdup_printf (
         _("Cannot change the priority of process with PID %d to %d.\n"
           "%s"),
-        info->pid, args->arg_value, g_strerror(saved_errno));
+        info->pid, args->arg_value, g_strerror (saved_errno));
 
     dialog = GTK_MESSAGE_DIALOG (gtk_message_dialog_new (
-        NULL,
-        GTK_DIALOG_DESTROY_WITH_PARENT,
-        GTK_MESSAGE_ERROR,
-        GTK_BUTTONS_OK,
-        "%s", error_msg));
+                                     NULL,
+                                     GTK_DIALOG_DESTROY_WITH_PARENT,
+                                     GTK_MESSAGE_ERROR,
+                                     GTK_BUTTONS_OK,
+                                     "%s", error_msg));
 
     gtk_dialog_run (GTK_DIALOG (dialog));
     gtk_widget_destroy (GTK_WIDGET (dialog));
@@ -90,7 +92,8 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
 
 
 void
-renice (GsmApplication *app, int nice)
+renice (GsmApplication *app,
+        int             nice)
 {
     struct ProcActionArgs args = { app, nice };
 
@@ -100,8 +103,8 @@ renice (GsmApplication *app, int nice)
     */
     proctable_freeze (app);
 
-    gtk_tree_selection_selected_foreach(app->selection, renice_single_process,
-                                        &args);
+    gtk_tree_selection_selected_foreach (app->selection, renice_single_process,
+                                         &args);
 
     proctable_thaw (app);
 
@@ -112,7 +115,10 @@ renice (GsmApplication *app, int nice)
 
 
 static void
-kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
+kill_single_process (GtkTreeModel *model,
+                     GtkTreePath  *path,
+                     GtkTreeIter  *iter,
+                     gpointer      data)
 {
     const struct ProcActionArgs * const args = static_cast<ProcActionArgs*>(data);
     char *error_msg;
@@ -129,21 +135,21 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
     error = kill (info->pid, args->arg_value);
 
     /* success */
-    if(error != -1) return;
+    if (error != -1) return;
 
     saved_errno = errno;
 
     /* need to be root */
-    if(errno == EPERM) {
+    if (errno == EPERM) {
         gboolean success;
 
         success = procdialog_create_root_password_dialog (
             PROCMAN_ACTION_KILL, args->app, info->pid,
             args->arg_value);
 
-        if(success) return;
+        if (success) return;
 
-        if(errno) {
+        if (errno) {
             saved_errno = errno;
         }
     }
@@ -152,14 +158,14 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
     error_msg = g_strdup_printf (
         _("Cannot kill process with PID %d with signal %d.\n"
           "%s"),
-        info->pid, args->arg_value, g_strerror(saved_errno));
+        info->pid, args->arg_value, g_strerror (saved_errno));
 
     dialog = GTK_MESSAGE_DIALOG (gtk_message_dialog_new (
-        NULL,
-        GTK_DIALOG_DESTROY_WITH_PARENT,
-        GTK_MESSAGE_ERROR,
-        GTK_BUTTONS_OK,
-        "%s", error_msg));
+                                     NULL,
+                                     GTK_DIALOG_DESTROY_WITH_PARENT,
+                                     GTK_MESSAGE_ERROR,
+                                     GTK_BUTTONS_OK,
+                                     "%s", error_msg));
 
     gtk_dialog_run (GTK_DIALOG (dialog));
     gtk_widget_destroy (GTK_WIDGET (dialog));
@@ -168,7 +174,8 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
 
 
 void
-kill_process (GsmApplication *app, int sig)
+kill_process (GsmApplication *app,
+              int             sig)
 {
     struct ProcActionArgs args = { app, sig };
 

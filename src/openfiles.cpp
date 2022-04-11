@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #include <config.h>
 
 #include <glib/gi18n.h>
@@ -21,8 +20,7 @@
 const int NI_IDN = 0;
 #endif
 
-enum
-{
+enum {
     COL_FD,
     COL_TYPE,
     COL_OBJECT,
@@ -32,29 +30,34 @@ enum
 
 
 static const char*
-get_type_name(enum glibtop_file_type t)
+get_type_name (enum glibtop_file_type t)
 {
-    switch(t)
-    {
-        case GLIBTOP_FILE_TYPE_FILE:
-            return _("file");
-        case GLIBTOP_FILE_TYPE_PIPE:
-            return _("pipe");
-        case GLIBTOP_FILE_TYPE_INET6SOCKET:
-            return _("IPv6 network connection");
-        case GLIBTOP_FILE_TYPE_INETSOCKET:
-            return _("IPv4 network connection");
-        case GLIBTOP_FILE_TYPE_LOCALSOCKET:
-            return _("local socket");
-        default:
-            return _("unknown type");
+    switch (t) {
+    case GLIBTOP_FILE_TYPE_FILE:
+        return _("file");
+
+    case GLIBTOP_FILE_TYPE_PIPE:
+        return _("pipe");
+
+    case GLIBTOP_FILE_TYPE_INET6SOCKET:
+        return _("IPv6 network connection");
+
+    case GLIBTOP_FILE_TYPE_INETSOCKET:
+        return _("IPv4 network connection");
+
+    case GLIBTOP_FILE_TYPE_LOCALSOCKET:
+        return _("local socket");
+
+    default:
+        return _("unknown type");
     }
 }
 
 
 
 static char *
-friendlier_hostname(const char *addr_str, int port)
+friendlier_hostname (const char *addr_str,
+                     int         port)
 {
     struct addrinfo hints = { };
     struct addrinfo *res = NULL;
@@ -62,32 +65,34 @@ friendlier_hostname(const char *addr_str, int port)
     char service[NI_MAXSERV];
     char port_str[6];
 
-    if (!addr_str[0]) return g_strdup("");
+    if (!addr_str[0]) return g_strdup ("");
 
-    snprintf(port_str, sizeof port_str, "%d", port);
+    snprintf (port_str, sizeof port_str, "%d", port);
 
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
 
-    if (getaddrinfo(addr_str, port_str, &hints, &res))
+    if (getaddrinfo (addr_str, port_str, &hints, &res))
         goto failsafe;
 
-    if (getnameinfo(res->ai_addr, res->ai_addrlen, hostname,
-                    sizeof hostname, service, sizeof service, NI_IDN))
+    if (getnameinfo (res->ai_addr, res->ai_addrlen, hostname,
+                     sizeof hostname, service, sizeof service, NI_IDN))
         goto failsafe;
 
-    if (res) freeaddrinfo(res);
-    return g_strdup_printf("%s, TCP port %d (%s)", hostname, port, service);
+    if (res) freeaddrinfo (res);
+    return g_strdup_printf ("%s, TCP port %d (%s)", hostname, port, service);
 
-  failsafe:
-    if (res) freeaddrinfo(res);
-    return g_strdup_printf("%s, TCP port %d", addr_str, port);
+failsafe:
+    if (res) freeaddrinfo (res);
+    return g_strdup_printf ("%s, TCP port %d", addr_str, port);
 }
 
 
 
 static void
-add_new_files (gpointer key, gpointer value, gpointer data)
+add_new_files (gpointer key,
+               gpointer value,
+               gpointer data)
 {
     glibtop_open_files_entry *openfiles = static_cast<glibtop_open_files_entry*>(value);
 
@@ -96,41 +101,43 @@ add_new_files (gpointer key, gpointer value, gpointer data)
 
     char *object;
 
-    switch(openfiles->type)
-    {
-        case GLIBTOP_FILE_TYPE_FILE:
-            object = g_strdup(openfiles->info.file.name);
-            break;
+    switch (openfiles->type) {
+    case GLIBTOP_FILE_TYPE_FILE:
+        object = g_strdup (openfiles->info.file.name);
+        break;
 
-        case GLIBTOP_FILE_TYPE_INET6SOCKET:
-        case GLIBTOP_FILE_TYPE_INETSOCKET:
-            object = friendlier_hostname(openfiles->info.sock.dest_host,
-                                         openfiles->info.sock.dest_port);
-            break;
+    case GLIBTOP_FILE_TYPE_INET6SOCKET:
+    case GLIBTOP_FILE_TYPE_INETSOCKET:
+        object = friendlier_hostname (openfiles->info.sock.dest_host,
+                                      openfiles->info.sock.dest_port);
+        break;
 
-        case GLIBTOP_FILE_TYPE_LOCALSOCKET:
-            object = g_strdup(openfiles->info.localsock.name);
-            break;
+    case GLIBTOP_FILE_TYPE_LOCALSOCKET:
+        object = g_strdup (openfiles->info.localsock.name);
+        break;
 
-        default:
-            object = g_strdup("");
+    default:
+        object = g_strdup ("");
     }
 
     gtk_list_store_insert (GTK_LIST_STORE (model), &row, 0);
     gtk_list_store_set (GTK_LIST_STORE (model), &row,
                         COL_FD, openfiles->fd,
-                        COL_TYPE, get_type_name(static_cast<glibtop_file_type>(openfiles->type)),
+                        COL_TYPE, get_type_name (static_cast<glibtop_file_type>(openfiles->type)),
                         COL_OBJECT, object,
                         COL_OPENFILE_STRUCT, g_memdup2 (openfiles, sizeof (*openfiles)),
                         -1);
 
-    g_free(object);
+    g_free (object);
 }
 
 static GList *old_maps = NULL;
 
 static gboolean
-classify_openfiles (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
+classify_openfiles (GtkTreeModel *model,
+                    GtkTreePath  *path,
+                    GtkTreeIter  *iter,
+                    gpointer      data)
 {
     GHashTable *new_maps = static_cast<GHashTable*>(data);
     GtkTreeIter *old_iter;
@@ -144,19 +151,18 @@ classify_openfiles (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, g
         g_hash_table_remove (new_maps, old_name);
         g_free (old_name);
         return FALSE;
-
     }
 
     old_iter = gtk_tree_iter_copy (iter);
     old_maps = g_list_append (old_maps, old_iter);
     g_free (old_name);
     return FALSE;
-
 }
 
 
 static gboolean
-compare_open_files(gconstpointer a, gconstpointer b)
+compare_open_files (gconstpointer a,
+                    gconstpointer b)
 {
     const glibtop_open_files_entry *o1 = static_cast<const glibtop_open_files_entry *>(a);
     const glibtop_open_files_entry *o2 = static_cast<const glibtop_open_files_entry *>(b);
@@ -176,8 +182,8 @@ update_openfiles_dialog (GsmTreeView *tree)
     GHashTable *new_maps;
     guint i;
 
-    pid_t pid = GPOINTER_TO_UINT(static_cast<pid_t*>(g_object_get_data (G_OBJECT (tree), "selected_info")));
-    info = GsmApplication::get()->processes.find(pid);
+    pid_t pid = GPOINTER_TO_UINT (static_cast<pid_t*>(g_object_get_data (G_OBJECT (tree), "selected_info")));
+    info = GsmApplication::get ()->processes.find (pid);
 
 
     if (!info)
@@ -192,8 +198,9 @@ update_openfiles_dialog (GsmTreeView *tree)
 
     new_maps = static_cast<GHashTable *>(g_hash_table_new_full (g_str_hash, compare_open_files,
                                                                 NULL, NULL));
-    for (i=0; i < procmap.number; i++)
+    for (i = 0; i < procmap.number; i++) {
         g_hash_table_insert (new_maps, openfiles + i, openfiles + i);
+    }
 
     gtk_tree_model_foreach (model, classify_openfiles, new_maps);
 
@@ -212,7 +219,6 @@ update_openfiles_dialog (GsmTreeView *tree)
         g_free (openfiles);
 
         old_maps = g_list_next (old_maps);
-
     }
 
     g_hash_table_destroy (new_maps);
@@ -220,7 +226,9 @@ update_openfiles_dialog (GsmTreeView *tree)
 }
 
 static void
-close_openfiles_dialog (GtkDialog *dialog, gint id, gpointer data)
+close_openfiles_dialog (GtkDialog *dialog,
+                        gint       id,
+                        gpointer   data)
 {
     GsmTreeView *tree = static_cast<GsmTreeView*>(data);
     guint timer;
@@ -232,7 +240,7 @@ close_openfiles_dialog (GtkDialog *dialog, gint id, gpointer data)
 
     gtk_widget_destroy (GTK_WIDGET (dialog));
 
-    return ;
+    return;
 }
 
 
@@ -259,7 +267,7 @@ create_openfiles_tree (GsmApplication *app)
                                 G_TYPE_STRING,      /* Type */
                                 G_TYPE_STRING,      /* Object */
                                 G_TYPE_POINTER      /* open_files_entry */
-        );
+                                );
 
     auto settings = g_settings_get_child (app->settings->gobj (), GSM_SETTINGS_CHILD_OPEN_FILES);
 
@@ -267,13 +275,13 @@ create_openfiles_tree (GsmApplication *app)
     gtk_tree_view_set_model (GTK_TREE_VIEW (tree), GTK_TREE_MODEL (model));
     g_object_unref (G_OBJECT (model));
 
-    for (i = 0; i < NUM_OPENFILES_COL-1; i++) {
+    for (i = 0; i < NUM_OPENFILES_COL - 1; i++) {
         cell = gtk_cell_renderer_text_new ();
 
         switch (i) {
-            case COL_FD:
-                g_object_set(cell, "xalign", 1.0f, NULL);
-                break;
+        case COL_FD:
+            g_object_set (cell, "xalign", 1.0f, NULL);
+            break;
         }
 
         column = gtk_tree_view_column_new_with_attributes (_(titles[i]),
@@ -288,18 +296,17 @@ create_openfiles_tree (GsmApplication *app)
     gsm_tree_view_load_state (GSM_TREE_VIEW (tree));
 
     return tree;
-
 }
 
 
 static gboolean
 openfiles_timer (gpointer data)
 {
-    GsmTreeView* tree = static_cast<GsmTreeView*>(data);
+    GsmTreeView*tree = static_cast<GsmTreeView*>(data);
     GtkTreeModel *model;
 
     model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
-    g_assert(model);
+    g_assert (model);
 
     update_openfiles_dialog (tree);
 
@@ -308,8 +315,10 @@ openfiles_timer (gpointer data)
 
 
 static void
-create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
-                                GtkTreeIter *iter, gpointer data)
+create_single_openfiles_dialog (GtkTreeModel *model,
+                                GtkTreePath  *path,
+                                GtkTreeIter  *iter,
+                                gpointer      data)
 {
     GsmApplication *app = static_cast<GsmApplication *>(data);
     GtkDialog *openfilesdialog;
@@ -325,7 +334,7 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
     if (!info)
         return;
 
-    GtkBuilder *builder = gtk_builder_new();
+    GtkBuilder *builder = gtk_builder_new ();
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/openfiles.ui", NULL);
 
     openfilesdialog = GTK_DIALOG (gtk_builder_get_object (builder, "openfiles_dialog"));
@@ -335,7 +344,7 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 
     label = procman_make_label_for_mmaps_or_ofiles (
         _("_Files opened by process “%s” (PID %u):"),
-        info->name.c_str(),
+        info->name.c_str (),
         info->pid);
 
     gtk_container_add (GTK_CONTAINER (cmd_grid), GTK_WIDGET (label));
@@ -351,7 +360,7 @@ create_single_openfiles_dialog (GtkTreeModel *model, GtkTreePath *path,
 
     gtk_builder_connect_signals (builder, NULL);
 
-    gtk_window_set_transient_for (GTK_WINDOW (openfilesdialog), GTK_WINDOW (GsmApplication::get()->main_window));
+    gtk_window_set_transient_for (GTK_WINDOW (openfilesdialog), GTK_WINDOW (GsmApplication::get ()->main_window));
     gtk_widget_show_all (GTK_WIDGET (openfilesdialog));
 
     timer = g_timeout_add_seconds (5, openfiles_timer, tree);

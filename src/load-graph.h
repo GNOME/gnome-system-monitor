@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #ifndef _GSM_LOAD_GRAPH_H_
 #define _GSM_LOAD_GRAPH_H_
 
@@ -9,15 +8,13 @@
 #include "util.h"
 #include "settings-keys.h"
 
-enum
-{
+enum {
     LOAD_GRAPH_CPU,
     LOAD_GRAPH_MEM,
     LOAD_GRAPH_NET
 };
 
-enum
-{
+enum {
     CPU_TOTAL,
     CPU_USED,
     N_CPU_STATES
@@ -35,17 +32,17 @@ struct LoadGraphLabels
 };
 
 struct LoadGraph
-  : private procman::NonCopyable
+    : private procman::NonCopyable
 {
     static const unsigned GRAPH_MIN_HEIGHT = 40;
 
-    LoadGraph(guint type);
+    LoadGraph (guint type);
     ~LoadGraph();
 
     unsigned num_bars() const;
     void clear_background();
     bool is_logarithmic_scale() const;
-    char* get_caption(guint index);
+    char * get_caption(guint index);
     float translate_to_log_partial_if_needed(float position_partial);
 
     double fontsize;
@@ -120,12 +117,12 @@ load_graph_stop (LoadGraph *g);
 /* Change load graph speed and restart it if it has been previously started */
 void
 load_graph_change_speed (LoadGraph *g,
-                         guint new_speed);
+                         guint      new_speed);
 
 /* Change load graph data points and restart it if it has been previously started */
 void
 load_graph_change_num_points(LoadGraph *g,
-                             guint new_num_points);
+                             guint      new_num_points);
 
 /* Clear the history data. */
 void

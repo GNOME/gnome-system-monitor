@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* Procman
  * Copyright (C) 2001 Kevin Vandersloot
  *
@@ -26,14 +25,14 @@
 
 
 int
-main (int argc, char *argv[])
+main (int   argc,
+      char *argv[])
 {
     bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
     bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
     textdomain (GETTEXT_PACKAGE);
     setlocale (LC_ALL, "");
 
-    Glib::RefPtr<GsmApplication> application = GsmApplication::get();
+    Glib::RefPtr<GsmApplication> application = GsmApplication::get ();
     return application->run (argc, argv);
 }
-

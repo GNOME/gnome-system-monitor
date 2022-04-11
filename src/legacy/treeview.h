@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #ifndef _GSM_TREE_VIEW_H_
 #define _GSM_TREE_VIEW_H_
 
@@ -13,7 +12,7 @@ G_BEGIN_DECLS
 #define GSM_IS_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GSM_TYPE_TREE_VIEW))
 #define GSM_TREE_VIEW_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSM_TYPE_TREE_VIEW, GsmTreeViewClass))
 
-typedef struct _GsmTreeView      GsmTreeView;
+typedef struct _GsmTreeView GsmTreeView;
 typedef struct _GsmTreeViewClass GsmTreeViewClass;
 
 struct _GsmTreeView
@@ -27,8 +26,8 @@ struct _GsmTreeViewClass
 };
 
 GType               gsm_tree_view_get_type               (void) G_GNUC_CONST;
-GsmTreeView       * gsm_tree_view_new                    (GSettings *settings,
-                                                          gboolean   store_column_order);
+GsmTreeView * gsm_tree_view_new                    (GSettings *settings,
+                                                    gboolean   store_column_order);
 void                gsm_tree_view_save_state             (GsmTreeView *tree_view);
 void                gsm_tree_view_load_state             (GsmTreeView *tree_view);
 GtkTreeViewColumn * gsm_tree_view_get_column_from_id     (GsmTreeView *tree_view,

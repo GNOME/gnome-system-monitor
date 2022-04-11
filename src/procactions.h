@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* Procman process actions
  * Copyright (C) 2001 Kevin Vandersloot
  *
@@ -21,8 +20,10 @@
 
 #include "application.h"
 
-void            renice (GsmApplication *app, int nice);
-void            kill_process (GsmApplication *app, int sig);
+void            renice (GsmApplication *app,
+                        int             nice);
+void            kill_process (GsmApplication *app,
+                              int             sig);
 
 struct ProcActionArgs
 {

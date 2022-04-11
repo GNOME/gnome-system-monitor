@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* Procman - tree view
  * Copyright (C) 2001 Kevin Vandersloot
  *
@@ -25,8 +24,7 @@
 #include "application.h"
 #include "legacy/treeview.h"
 
-enum
-{
+enum {
     COL_NAME = 0,
     COL_USER,
     COL_STATUS,
@@ -61,7 +59,7 @@ enum
 };
 
 
-GsmTreeView*      proctable_new (GsmApplication *app);
+GsmTreeView * proctable_new (GsmApplication *app);
 void            proctable_update (GsmApplication *app);
 void            proctable_free_table (GsmApplication *app);
 void            proctable_freeze (GsmApplication *app);
@@ -69,7 +67,9 @@ void            proctable_thaw (GsmApplication *app);
 void            proctable_reset_timeout (GsmApplication *app);
 
 void            get_process_memory_writable (ProcInfo *info);
-void            get_last_selected (GtkTreeModel *model, GtkTreePath *path,
-                                   GtkTreeIter *iter, gpointer data);
+void            get_last_selected (GtkTreeModel *model,
+                                   GtkTreePath  *path,
+                                   GtkTreeIter  *iter,
+                                   gpointer      data);
 
 #endif /* _GSM_PROCTABLE_H_ */
