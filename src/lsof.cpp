@@ -101,13 +101,13 @@ namespace
               case_insensitive(),
               regex_error_displayed(false)
         {
-            procman_debug("New Lsof GUI %p", this);
+            procman_debug("New Lsof GUI %p", (void *) this);
         }
 
 
         ~GUI()
         {
-            procman_debug("Destroying Lsof GUI %p", this);
+            procman_debug("Destroying Lsof GUI %p", (void *) this);
         }
 
 
