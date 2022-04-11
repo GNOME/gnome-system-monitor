@@ -88,9 +88,12 @@ renice_single_process (GtkTreeModel *model,
                                  GTK_BUTTONS_OK,
                                  "%s", error_msg));
 
-  gtk_dialog_run (GTK_DIALOG (dialog));
-  gtk_widget_destroy (GTK_WIDGET (dialog));
   g_free (error_msg);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (gtk_widget_destroy), NULL);
+
+  gtk_widget_show (GTK_WIDGET (dialog));
 }
 
 
@@ -172,9 +175,12 @@ kill_single_process (GtkTreeModel *model,
                                  GTK_BUTTONS_OK,
                                  "%s", error_msg));
 
-  gtk_dialog_run (GTK_DIALOG (dialog));
-  gtk_widget_destroy (GTK_WIDGET (dialog));
   g_free (error_msg);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (gtk_widget_destroy), NULL);
+
+  gtk_widget_show (GTK_WIDGET (dialog));
 }
 
 

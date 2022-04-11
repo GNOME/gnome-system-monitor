@@ -359,7 +359,7 @@ create_single_openfiles_dialog (GtkTreeModel *model,
     info->name.c_str (),
     info->pid);
 
-  gtk_container_add (GTK_CONTAINER (cmd_grid), GTK_WIDGET (label));
+  gtk_grid_attach (cmd_grid, GTK_WIDGET (label), 0, 0, 1, 1);
 
   scrolled = GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder, "scrolled"));
 
