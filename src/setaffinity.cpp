@@ -327,14 +327,14 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
     /* Set default dialog window size */
     gtk_widget_set_size_request (affinity_data->dialog, 600, 430);
 
-    /* Set dialog box padding ("border") */
-    gtk_container_set_border_width (GTK_CONTAINER (affinity_data->dialog), 5);
-
     /* Get dialog content area VBox */
     dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG (affinity_data->dialog));
 
-    /* Set dialog VBox padding ("border") */
-    gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 10);
+    /* Set dialog VBox margin */
+    gtk_widget_set_margin_top (GTK_WIDGET (dialog_vbox), 10);
+    gtk_widget_set_margin_bottom (GTK_WIDGET (dialog_vbox), 10);
+    gtk_widget_set_margin_start (GTK_WIDGET (dialog_vbox), 10);
+    gtk_widget_set_margin_end (GTK_WIDGET (dialog_vbox), 10);
 
     /* Set dialog VBox spacing */
     gtk_box_set_spacing (GTK_BOX (dialog_vbox), 10);
@@ -378,8 +378,11 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
     /* Create grid for CPU list */
     cpulist_grid = GTK_GRID (gtk_grid_new ());
 
-    /* Set CPU list grid padding ("border") */
-    gtk_container_set_border_width (GTK_CONTAINER (cpulist_grid), 10);
+    /* Set CPU list grid margin */
+    gtk_widget_set_margin_top (GTK_WIDGET (cpulist_grid), 10);
+    gtk_widget_set_margin_bottom (GTK_WIDGET (cpulist_grid), 10);
+    gtk_widget_set_margin_start (GTK_WIDGET (cpulist_grid), 10);
+    gtk_widget_set_margin_end (GTK_WIDGET (cpulist_grid), 10);
 
     /* Set grid row spacing */
     gtk_grid_set_row_spacing (cpulist_grid, 10);

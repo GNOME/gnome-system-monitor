@@ -70,22 +70,19 @@ renice_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter
         }
     }
 
-    /* failed */
-    error_msg = g_strdup_printf (
-        _("Cannot change the priority of process with PID %d to %d.\n"
-          "%s"),
-        info->pid, args->arg_value, g_strerror(saved_errno));
-
     dialog = GTK_MESSAGE_DIALOG (gtk_message_dialog_new (
         NULL,
-        GTK_DIALOG_DESTROY_WITH_PARENT,
+        GtkDialogFlags (GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_MODAL),
         GTK_MESSAGE_ERROR,
         GTK_BUTTONS_OK,
-        "%s", error_msg));
+        _("Cannot change the priority of process with PID %d to %d.\n"
+          "%s"),
+        info->pid, args->arg_value, g_strerror (saved_errno)));
 
-    gtk_dialog_run (GTK_DIALOG (dialog));
-    gtk_widget_destroy (GTK_WIDGET (dialog));
-    g_free (error_msg);
+    g_signal_connect (dialog, "response",
+                      G_CALLBACK (gtk_widget_destroy), NULL);
+
+    gtk_widget_show (GTK_WIDGET (dialog));
 }
 
 
@@ -148,22 +145,19 @@ kill_single_process (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, 
         }
     }
 
-    /* failed */
-    error_msg = g_strdup_printf (
-        _("Cannot kill process with PID %d with signal %d.\n"
-          "%s"),
-        info->pid, args->arg_value, g_strerror(saved_errno));
-
     dialog = GTK_MESSAGE_DIALOG (gtk_message_dialog_new (
         NULL,
-        GTK_DIALOG_DESTROY_WITH_PARENT,
+        GtkDialogFlags (GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_MODAL),
         GTK_MESSAGE_ERROR,
         GTK_BUTTONS_OK,
-        "%s", error_msg));
+        _("Cannot kill process with PID %d with signal %d.\n"
+          "%s"),
+        info->pid, args->arg_value, g_strerror (saved_errno)));
 
-    gtk_dialog_run (GTK_DIALOG (dialog));
-    gtk_widget_destroy (GTK_WIDGET (dialog));
-    g_free (error_msg);
+    g_signal_connect (dialog, "response",
+                      G_CALLBACK (gtk_widget_destroy), NULL);
+
+    gtk_widget_show (GTK_WIDGET (dialog));
 }
 
 

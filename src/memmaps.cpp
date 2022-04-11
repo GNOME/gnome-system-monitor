@@ -446,10 +446,12 @@ create_single_memmaps_dialog (GtkTreeModel *model, GtkTreePath *path,
 
     gtk_window_set_resizable(GTK_WINDOW(memmapsdialog), TRUE);
     gtk_window_set_default_size(GTK_WINDOW(memmapsdialog), 620, 400);
-    gtk_container_set_border_width(GTK_CONTAINER(memmapsdialog), 5);
 
     dialog_box = GTK_BOX (gtk_dialog_get_content_area (memmapsdialog));
-    gtk_container_set_border_width (GTK_CONTAINER (dialog_box), 5);
+    gtk_widget_set_margin_top (GTK_WIDGET (dialog_box), 10);
+    gtk_widget_set_margin_bottom (GTK_WIDGET (dialog_box), 10);
+    gtk_widget_set_margin_start (GTK_WIDGET (dialog_box), 10);
+    gtk_widget_set_margin_end (GTK_WIDGET (dialog_box), 10);
 
     label = procman_make_label_for_mmaps_or_ofiles (
         _("_Memory maps for process “%s” (PID %u):"),
