@@ -345,8 +345,11 @@ create_single_openfiles_dialog (GtkTreeModel *model,
     return;
 
   GtkBuilder *builder = gtk_builder_new ();
+  GError *err = NULL;
 
-  gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/openfiles.ui", NULL);
+  gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/openfiles.ui", &err);
+  if (err != NULL)
+    g_error ("%s", err->message);
 
   openfilesdialog = GTK_DIALOG (gtk_builder_get_object (builder, "openfiles_dialog"));
 

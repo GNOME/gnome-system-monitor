@@ -281,8 +281,11 @@ procman_lsof (GsmApplication *app)
   GtkWindow *dialog;
 
   GtkBuilder *builder = gtk_builder_new ();
+  GError *err = NULL;
 
-  gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/lsof.ui", NULL);
+  gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/lsof.ui", &err);
+  if (err != NULL)
+    g_error ("%s", err->message);
 
   GtkDialog *dialog = GTK_DIALOG (gtk_builder_get_object (builder, "lsof_dialog"));
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->main_window));

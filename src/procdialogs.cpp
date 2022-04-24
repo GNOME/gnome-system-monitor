@@ -243,7 +243,11 @@ procdialog_create_renice_dialog (GsmApplication *app)
     return;
 
   builder = gtk_builder_new ();
-  gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/renice.ui", NULL);
+  GError *err = NULL;
+
+  gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/renice.ui", &err);
+  if (err != NULL)
+    g_error ("%s", err->message);
 
   renice_dialog = GTK_DIALOG (gtk_builder_get_object (builder, "renice_dialog"));
   if (selected_count == 1)
