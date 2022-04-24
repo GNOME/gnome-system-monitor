@@ -645,8 +645,8 @@ update_page_activities (GsmApplication *app)
 
         gtk_widget_show (GTK_WIDGET (app->end_process_button));
         gtk_widget_show (GTK_WIDGET (app->search_button));
-        gtk_widget_show (GTK_WIDGET (app->process_menu_button));
-        gtk_widget_hide (GTK_WIDGET (app->window_menu_button));
+
+        gtk_menu_button_set_menu_model (app->app_menu_button, app->process_window_menu_model);
 
         update_sensitivity (app);
 
@@ -659,8 +659,8 @@ update_page_activities (GsmApplication *app)
 
         gtk_widget_hide (GTK_WIDGET (app->end_process_button));
         gtk_widget_hide (GTK_WIDGET (app->search_button));
-        gtk_widget_hide (GTK_WIDGET (app->process_menu_button));
-        gtk_widget_show (GTK_WIDGET (app->window_menu_button));
+
+        gtk_menu_button_set_menu_model (app->app_menu_button, app->generic_window_menu_model);
 
         update_sensitivity (app);
     }
@@ -740,8 +740,6 @@ create_main_window (GsmApplication *app)
 {
     AdwApplicationWindow *main_window;
     AdwViewStack *stack;
-    GMenuModel *window_menu_model;
-    GMenuModel *process_menu_model;
     GdkDisplay *display;
     GdkMonitor *monitor;
     GdkRectangle monitor_geometry;

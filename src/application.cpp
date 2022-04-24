@@ -349,8 +349,7 @@ GsmApplication::GsmApplication()
     disk_list (NULL),
     stack (NULL),
     refresh_button (NULL),
-    process_menu_button (NULL),
-    window_menu_button (NULL),
+    app_menu_button (NULL),
     end_process_button (NULL),
     search_button (NULL),
     search_entry (NULL),
@@ -533,9 +532,6 @@ void GsmApplication::on_startup ()
     add_action (action);
 
     Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_resource ("/org/gnome/gnome-system-monitor/data/menus.ui");
-
-    Glib::RefPtr<Gio::Menu> menu = builder->get_object<Gio::Menu> ("app-menu");
-    set_menubar (menu);
 
     set_accel_for_action ("win.show-dependencies", "<Primary>d");
     set_accel_for_action ("app.quit", "<Primary>q");
