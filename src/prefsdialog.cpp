@@ -251,7 +251,10 @@ create_preferences_dialog (GsmApplication *app)
         return;
 
     builder = gtk_builder_new ();
-    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/preferences.ui", NULL);
+    GError *err = NULL;
+    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/preferences.ui", &err);
+    if (err != NULL)
+      g_error("%s", err->message);
 
     prefs_window = ADW_PREFERENCES_WINDOW (gtk_builder_get_object (builder, "preferences_dialog"));
 

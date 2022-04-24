@@ -751,9 +751,16 @@ create_main_window (GsmApplication *app)
     int width, height; // xpos, ypos;
 
     GtkBuilder *builder = gtk_builder_new ();
-    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/interface.ui", NULL);
-    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/menus.ui", NULL);
-    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/gtk/help-overlay.ui", NULL);
+    GError *err = NULL;
+    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/interface.ui", &err);
+    if (err != NULL)
+        g_error ("%s", err->message);
+    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/menus.ui", &err);
+    if (err != NULL)
+        g_error ("%s", err->message);
+    gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/gtk/help-overlay.ui", &err);
+    if (err != NULL)
+        g_error ("%s", err->message);
 
     main_window = ADW_APPLICATION_WINDOW (gtk_builder_get_object (builder, "main_window"));
     gtk_window_set_application (GTK_WINDOW (main_window), app->gobj ());
