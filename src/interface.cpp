@@ -51,7 +51,7 @@ static const char* LOAD_GRAPH_CSS = "\
                       @theme_bg_color,\
                       @theme_base_color\
                       );\
-    color: mix (@theme_fg_color, @theme_bg_color, 0.5);\
+    color: mix(@theme_fg_color, @theme_bg_color, 0.5);\
 }\
 ";
 
