@@ -216,55 +216,55 @@ private:
     void on_quit_activate(const Glib::VariantBase&);
 protected:
     GsmApplication();
+
+    virtual void on_activate();
+    virtual int on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>&command_line);
+    virtual void on_startup();
 public:
     static Glib::RefPtr<GsmApplication> get ();
 
     void save_config();
     void shutdown();
 
+    Glib::RefPtr<Gio::Settings> settings;
+    AdwApplicationWindow *main_window;
+    AdwViewStack     *stack;
+    GtkMenuButton    *app_menu_button;
+
+    GMenuModel *generic_window_menu_model;
+    GMenuModel *process_window_menu_model;
+
     ProcList processes;
+    ProcConfig config;
+    PrettyTable      *pretty_table;
     GsmTreeView      *tree;
     GtkRevealer      *proc_actionbar_revealer;
-    GtkPopover       *popover_menu;
-    GsmTreeView      *disk_list;
-    AdwViewStack     *stack;
+    GtkPopover       *proc_popover_menu;
     GtkButton        *refresh_button;
-    GtkMenuButton    *process_menu_button;
-    GtkMenuButton    *window_menu_button;
     GtkButton        *end_process_button;
     GtkButton        *search_button;
     GtkSearchEntry   *search_entry;
     GtkSearchBar     *search_bar;
-    ProcConfig config;
+    GtkTreePath      *top_of_tree;
+
+    gdouble last_vscroll_max;
+    gdouble last_vscroll_value;
+    guint timeout;
+    guint64 cpu_total_time;
+    guint64 cpu_total_time_last;
+    unsigned frequency;
+
     LoadGraph        *cpu_graph;
     LoadGraph        *mem_graph;
     LoadGraph        *net_graph;
-    gint cpu_label_fixed_width;
-    gint net_label_fixed_width;
-    GtkTreeSelection *selection;
-    guint timeout;
+
+    GsmTreeView      *disk_list;
+
     guint disk_timeout;
 
-    GtkTreePath      *top_of_tree;
-    gdouble last_vscroll_max;
-    gdouble last_vscroll_value;
-
-    PrettyTable      *pretty_table;
-
-    Glib::RefPtr<Gio::Settings> settings;
-    AdwApplicationWindow *main_window;
-
-    unsigned frequency;
+    GtkTreeSelection *selection;
 
     SmoothRefresh    *smooth_refresh;
-
-    guint64 cpu_total_time;
-    guint64 cpu_total_time_last;
-
-protected:
-    virtual void on_activate();
-    virtual int on_command_line(const Glib::RefPtr<Gio::ApplicationCommandLine>&command_line);
-    virtual void on_startup();
 };
 
 #endif /* _GSM_APPLICATION_H_ */

@@ -107,13 +107,13 @@ create_proc_view (GsmApplication *app,
 
     gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (proctree));
 
-    app->proc_actionbar_revealer = GTK_REVEALER (gtk_builder_get_object (builder, "proc_actionbar_revealer"));
-
     /* create popover_menu for the processes tab */
-    // Either use MenuButton or just use a model
     GMenuModel *menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-popup-menu"));
-    // gtk_application_set_menubar (GTK_APPLICATION (app->main_window), menu_model);
+    app->proc_popover_menu = GTK_POPOVER (gtk_popover_menu_new_from_model (menu_model));
 
+    app->proc_actionbar_revealer = GTK_REVEALER (gtk_builder_get_object (builder, "proc_actionbar_revealer"));
+    app->end_process_button = GTK_BUTTON (gtk_builder_get_object (builder, "end_process_button"));
+    app->search_button = GTK_BUTTON (gtk_builder_get_object (builder, "search_button"));
     app->search_bar = GTK_SEARCH_BAR (gtk_builder_get_object (builder, "proc_searchbar"));
     app->search_entry = GTK_SEARCH_ENTRY (gtk_builder_get_object (builder, "proc_searchentry"));
 
@@ -553,6 +553,7 @@ on_activate_search (GSimpleAction *action,
                     gpointer       data)
 {
     GsmApplication *app = (GsmApplication *) data;
+
     GVariant *state = g_action_get_state (G_ACTION (action));
     gboolean is_search_shortcut = g_variant_get_boolean (parameter);
     gboolean is_search_bar = gtk_search_bar_get_search_mode (app->search_bar);
@@ -562,6 +563,7 @@ on_activate_search (GSimpleAction *action,
     } else {
         g_action_change_state (G_ACTION (action), g_variant_new_boolean (!g_variant_get_boolean (state)));
     }
+
     g_variant_unref (state);
 }
 
@@ -762,21 +764,17 @@ create_main_window (GsmApplication *app)
                                              GTK_SHORTCUTS_WINDOW (gtk_builder_get_object (builder, "help_overlay")));
 
     /* create the main stack */
-    stack = ADW_VIEW_STACK (gtk_builder_get_object (builder, "stack"));
+    app->stack = ADW_VIEW_STACK (gtk_builder_get_object (builder, "stack"));
 
-    app->stack = stack;
+    app->app_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "app_menu_button"));
+    app->generic_window_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "generic-window-menu"));
+    app->process_window_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-window-menu"));
 
-    app->process_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "process_menu_button"));
-    process_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-window-menu"));
-    // gtk_menu_button_set_menu_model (app->process_menu_button, process_menu_model);
+    // GtkMenuButton owns its models and thus an additional reference needs to be held
+    g_object_ref (G_OBJECT (app->generic_window_menu_model));
+    g_object_ref (G_OBJECT (app->process_window_menu_model));
 
-    app->window_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "window_menu_button"));
-    window_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "generic-window-menu"));
-    // gtk_menu_button_set_menu_model (app->window_menu_button, window_menu_model);
-
-    app->end_process_button = GTK_BUTTON (gtk_builder_get_object (builder, "end_process_button"));
-
-    app->search_button = GTK_BUTTON (gtk_builder_get_object (builder, "search_button"));
+    gtk_menu_button_set_menu_model (app->app_menu_button, app->generic_window_menu_model);
 
     create_proc_view (app, builder);
 
@@ -810,10 +808,10 @@ create_main_window (GsmApplication *app)
 
     g_settings_bind (app->settings->gobj (),
                      GSM_SETTING_CURRENT_TAB,
-                     G_OBJECT (stack),
+                     G_OBJECT (app->stack),
                      "visible-child-name",
                      G_SETTINGS_BIND_DEFAULT);
-    g_signal_connect (G_OBJECT (stack),
+    g_signal_connect (G_OBJECT (app->stack),
                       "notify::visible-child",
                       G_CALLBACK (cb_change_current_page),
                       app);
