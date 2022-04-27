@@ -54,21 +54,6 @@ static const char*LOAD_GRAPH_CSS = "\
 }\
 ";
 
-static gboolean
-cb_window_key_press_event (GtkEventControllerKey*controller,
-                           guint                 keyval,
-                           guint                 keycode,
-                           GdkModifierType       state,
-                           GtkSearchBar         *search_bar)
-{
-  const char *current_page = adw_view_stack_get_visible_child_name (GsmApplication::get ()->stack);
-
-  if (strcmp (current_page, "processes") == 0)
-    return gtk_event_controller_key_forward (controller, GTK_WIDGET (search_bar));
-
-  return FALSE;
-}
-
 static void
 search_text_changed (GtkEditable *entry,
                      gpointer     data)
@@ -100,7 +85,6 @@ create_proc_view (GsmApplication *app,
 {
   GsmTreeView *proctree;
   GtkWidget *scrolled;
-  GtkEventController *event_controller_key = gtk_event_controller_key_new ();
 
   proctree = proctable_new (app);
   scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "processes_scrolled"));
@@ -115,23 +99,18 @@ create_proc_view (GsmApplication *app,
   app->proc_popover_menu = GTK_POPOVER (gtk_popover_menu_new_from_model (menu_model));
 
   app->end_process_button = GTK_BUTTON (gtk_builder_get_object (builder, "end_process_button"));
-  app->search_bar = GTK_SEARCH_BAR (gtk_builder_get_object (builder, "proc_searchbar"));
   app->search_button = GTK_TOGGLE_BUTTON (gtk_builder_get_object (builder, "search_button"));
+  app->search_bar = GTK_SEARCH_BAR (gtk_builder_get_object (builder, "proc_searchbar"));
   app->search_entry = GTK_SEARCH_ENTRY (gtk_builder_get_object (builder, "proc_searchentry"));
 
-  g_signal_connect (event_controller_key,
-                    "key-pressed",
-                    G_CALLBACK (cb_window_key_press_event),
-                    app);
-  gtk_widget_add_controller (GTK_WIDGET (app->main_window), event_controller_key);
+  gtk_search_bar_set_key_capture_widget (app->search_bar, GTK_WIDGET (app->main_window));
 
-  gtk_search_bar_connect_entry (app->search_bar, GTK_EDITABLE (app->search_entry));
   g_signal_connect (app->search_entry,
                     "changed",
                     G_CALLBACK (search_text_changed),
                     app);
 
-  g_object_bind_property (app->search_bar, "search-mode-enabled", app->search_button, "active", (GBindingFlags)(G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE));
+  g_object_bind_property (app->search_bar, "search-mode-enabled", app->search_button, "active", (GBindingFlags)(G_BINDING_BIDIRECTIONAL));
 }
 
 static void
@@ -569,17 +548,8 @@ on_activate_search (GSimpleAction *action,
                     gpointer       data)
 {
   GsmApplication *app = (GsmApplication *) data;
-  GVariant *state = g_action_get_state (G_ACTION (action));
-  gboolean is_search_shortcut = g_variant_get_boolean (parameter);
-  gboolean is_search_bar = gtk_search_bar_get_search_mode (app->search_bar);
 
-  gtk_widget_set_visible (GTK_WIDGET (app->search_bar), is_search_bar || is_search_shortcut);
-  if (is_search_shortcut && is_search_bar)
-    gtk_widget_grab_focus (GTK_WIDGET (app->search_entry));
-  else
-    g_action_change_state (G_ACTION (action), g_variant_new_boolean (!g_variant_get_boolean (state)));
-
-  g_variant_unref (state);
+  gtk_search_bar_set_search_mode (app->search_bar, TRUE);
 }
 
 static void
@@ -674,10 +644,11 @@ update_page_activities (GsmApplication *app)
       gtk_widget_show (GTK_WIDGET (app->search_button));
 
       gtk_menu_button_set_menu_model (app->app_menu_button, app->process_window_menu_model);
+      gtk_search_bar_set_key_capture_widget (app->search_bar, GTK_WIDGET (app->main_window));
 
       update_sensitivity (app);
 
-      if (g_variant_get_boolean (g_action_get_state (search_action)))
+      if (gtk_search_bar_get_search_mode (app->search_bar))
         gtk_widget_grab_focus (GTK_WIDGET (app->search_entry));
       else
         gtk_widget_grab_focus (GTK_WIDGET (app->tree));
@@ -690,6 +661,7 @@ update_page_activities (GsmApplication *app)
       gtk_widget_hide (GTK_WIDGET (app->search_button));
 
       gtk_menu_button_set_menu_model (app->app_menu_button, app->generic_window_menu_model);
+      gtk_search_bar_set_key_capture_widget (app->search_bar, NULL);
 
       update_sensitivity (app);
     }
@@ -830,7 +802,7 @@ create_main_window (GsmApplication *app)
   GActionEntry win_action_entries[] = {
     { "about", on_activate_about, NULL, NULL, NULL },
     { "show-help-overlay", on_activate_keyboard_shortcuts, NULL, NULL, NULL },
-    { "search", on_activate_search, "b", "false", NULL },
+    { "search", on_activate_search, NULL, NULL, NULL },
     { "send-signal-stop", on_activate_send_signal, "i", NULL, NULL },
     { "send-signal-cont", on_activate_send_signal, "i", NULL, NULL },
     { "send-signal-term", on_activate_send_signal, "i", NULL, NULL },

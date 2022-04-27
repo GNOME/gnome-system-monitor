@@ -566,7 +566,7 @@ GsmApplication::on_startup ()
   set_accel_for_action ("win.memory-maps", "<Control>m");
   set_accel_for_action ("win.open-files", "<Control>o");
   set_accel_for_action ("win.process-properties", "<Alt>Return");
-  set_accel_for_action ("win.search(true)", "<Control>f");
+  set_accel_for_action ("win.search", "<Control>f");
   set_accel_for_action ("app.help", "F1");
   set_accel_for_action ("win.show-help-overlay", "<Control>question");
   set_accel_for_action ("app.preferences", "<Primary>comma");
