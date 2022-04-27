@@ -96,39 +96,26 @@ cb_tree_button_pressed (GtkGestureClick *controller,
                         gdouble          y,
                         GsmApplication  *app)
 {
-  GtkTreePath *path;
+  GtkTreePath *path = NULL;
   GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (app->tree));
+  int bwx, bwy;
 
-  if (!gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (app->tree), x, y, &path, NULL, NULL, NULL))
+  gtk_tree_view_convert_widget_to_bin_window_coords (GTK_TREE_VIEW (app->tree), x, y, &bwx, &bwy);
+
+  if (!gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (app->tree), bwx, bwy, &path, NULL, NULL, NULL))
     return FALSE;
 
   if (!gtk_tree_selection_path_is_selected (selection, path))
-    // TODO: How to handle?
-    // if (!(event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)))
-    //     gtk_tree_selection_unselect_all (selection);
     gtk_tree_selection_select_path (selection, path);
-
   gtk_tree_path_free (path);
 
-  GdkRectangle rect = { (int) x, (int) y, 1, 1 };
+  GdkRectangle rect = { x, y, 1, 1 };
+
   gtk_popover_set_pointing_to (GTK_POPOVER (app->proc_popover_menu), &rect);
   gtk_popover_popup (GTK_POPOVER (app->proc_popover_menu));
 
   return TRUE;
 }
-
-
-/*static gboolean
-cb_tree_popup_menu (GtkWidget *widget,
-                    gpointer   data)
-{
-  GsmApplication *app = (GsmApplication *) data;
-
-  gtk_popover_menu_at_pointer (GTK_MENU (app->popup_menu), NULL);
-
-  return TRUE;
-}
-}*/
 
 void
 get_last_selected (GtkTreeModel *model,
@@ -713,9 +700,6 @@ proctable_new (GsmApplication * const app)
   g_signal_connect (G_OBJECT (selection),
                     "changed",
                     G_CALLBACK (cb_row_selected), app);
-
-  // g_signal_connect (G_OBJECT (proctree), "popup_menu",
-  //                   G_CALLBACK (cb_tree_popup_menu), app);
 
   g_signal_connect (G_OBJECT (proctree), "destroy",
                     G_CALLBACK (cb_proctree_destroying), app);
