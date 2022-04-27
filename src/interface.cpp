@@ -128,7 +128,6 @@ create_proc_view (GsmApplication *app,
                       app);
     gtk_widget_add_controller (GTK_WIDGET (app->main_window), event_controller_key);
 
-    g_object_bind_property (app->search_bar, "search-mode-enabled", app->search_button, "active", (GBindingFlags)(G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE));
     g_signal_connect (app->search_entry,
                       "search-changed",
                       G_CALLBACK (search_text_changed),
