@@ -55,16 +55,18 @@ static const char*LOAD_GRAPH_CSS = "\
 ";
 
 static gboolean
-cb_window_key_press_event (GtkEventControllerKey*controller,
-                           guint                 keyval,
-                           guint                 keycode,
-                           GdkModifierType       state,
-                           GtkSearchBar         *search_bar)
+cb_window_key_press_event (GtkEventControllerKey *controller,
+                           guint keyval,
+                           guint keycode,
+                           GdkModifierType state,
+                           GsmApplication *app)
 {
-    const char *current_page = adw_view_stack_get_visible_child_name (GsmApplication::get ()->stack);
+    const char *current_page = adw_view_stack_get_visible_child_name (app->stack);
 
-    if (strcmp (current_page, "processes") == 0)
-        return gtk_event_controller_key_forward (controller, GTK_WIDGET (search_bar));
+    if (strcmp (current_page, "processes") == 0) {
+        gtk_search_bar_set_search_mode (app->search_bar, TRUE);
+        return gtk_event_controller_key_forward (controller, GTK_WIDGET (app->search_entry));
+    }
 
     return FALSE;
 }
@@ -100,10 +102,11 @@ create_proc_view (GsmApplication *app,
 {
     GsmTreeView *proctree;
     GtkWidget *scrolled;
-    GtkEventController *event_controller_key = gtk_event_controller_key_new ();
+    GtkEventController *event_controller_key;
 
     proctree = proctable_new (app);
     scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "processes_scrolled"));
+    event_controller_key = gtk_event_controller_key_new ();
 
     gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (proctree));
 
@@ -117,15 +120,21 @@ create_proc_view (GsmApplication *app,
     app->search_bar = GTK_SEARCH_BAR (gtk_builder_get_object (builder, "proc_searchbar"));
     app->search_entry = GTK_SEARCH_ENTRY (gtk_builder_get_object (builder, "proc_searchentry"));
 
-    g_signal_connect (event_controller_key, "key-pressed",
-                      G_CALLBACK (cb_window_key_press_event), app->search_bar);
-    gtk_widget_add_controller (GTK_WIDGET (app->main_window), event_controller_key);
 
     gtk_search_bar_connect_entry (app->search_bar, GTK_EDITABLE (app->search_entry));
 
     g_signal_connect (app->search_entry, "changed", G_CALLBACK (search_text_changed), app);
+    g_signal_connect (event_controller_key,
+                      "key-pressed",
+                      G_CALLBACK (cb_window_key_press_event),
+                      app);
+    gtk_widget_add_controller (GTK_WIDGET (app->main_window), event_controller_key);
 
     g_object_bind_property (app->search_bar, "search-mode-enabled", app->search_button, "active", (GBindingFlags)(G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE));
+    g_signal_connect (app->search_entry,
+                      "search-changed",
+                      G_CALLBACK (search_text_changed),
+                      app);
 }
 
 static void
@@ -557,7 +566,9 @@ on_activate_search (GSimpleAction *action,
     GVariant *state = g_action_get_state (G_ACTION (action));
     gboolean is_search_shortcut = g_variant_get_boolean (parameter);
     gboolean is_search_bar = gtk_search_bar_get_search_mode (app->search_bar);
-    gtk_widget_set_visible (GTK_WIDGET (app->search_bar), is_search_bar || is_search_shortcut);
+
+    gtk_search_bar_set_search_mode (app->search_bar, is_search_bar || is_search_shortcut);
+
     if (is_search_shortcut && is_search_bar) {
         gtk_widget_grab_focus (GTK_WIDGET (app->search_entry));
     } else {
