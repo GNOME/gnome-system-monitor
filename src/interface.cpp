@@ -113,6 +113,9 @@ create_proc_view (GsmApplication *app,
     /* create popover_menu for the processes tab */
     GMenuModel *menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-popup-menu"));
     app->proc_popover_menu = GTK_POPOVER (gtk_popover_menu_new_from_model (menu_model));
+    gtk_popover_set_has_arrow (app->proc_popover_menu, FALSE);
+    gtk_popover_set_default_widget (app->proc_popover_menu, GTK_WIDGET (scrolled));
+    gtk_widget_set_parent (GTK_WIDGET (app->proc_popover_menu), GTK_WIDGET (scrolled));
 
     app->proc_actionbar_revealer = GTK_REVEALER (gtk_builder_get_object (builder, "proc_actionbar_revealer"));
     app->end_process_button = GTK_BUTTON (gtk_builder_get_object (builder, "end_process_button"));
