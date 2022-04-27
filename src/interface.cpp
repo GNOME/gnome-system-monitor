@@ -122,8 +122,6 @@ create_proc_view (GsmApplication *app,
 
 
     gtk_search_bar_connect_entry (app->search_bar, GTK_EDITABLE (app->search_entry));
-
-    g_signal_connect (app->search_entry, "changed", G_CALLBACK (search_text_changed), app);
     g_signal_connect (event_controller_key,
                       "key-pressed",
                       G_CALLBACK (cb_window_key_press_event),
