@@ -40,16 +40,18 @@ static gint new_nice_value = 0;
 
 
 static void
-kill_dialog_button_pressed (GtkDialog *dialog,
-                            gint       id,
-                            gpointer   data)
+kill_dialog_choose (GObject      *dialog,
+                    GAsyncResult *res,
+                    gpointer      data)
 {
   struct ProcActionArgs *kargs = static_cast<ProcActionArgs*>(data);
 
-  gtk_window_destroy (GTK_WINDOW (dialog));
+  const gchar *res_id = adw_message_dialog_choose_finish (ADW_MESSAGE_DIALOG (dialog), res);
 
-  if (id == GTK_RESPONSE_OK)
-    kill_process (kargs->app, kargs->arg_value);
+  if (g_str_equal (res_id, adw_message_dialog_get_close_response (ADW_MESSAGE_DIALOG (dialog))))
+    return;
+
+  kill_process (kargs->app, kargs->arg_value);
 
   proctable_thaw (kargs->app);
   proctable_update (kargs->app);
@@ -60,11 +62,9 @@ void
 procdialog_create_kill_dialog (GsmApplication *app,
                                int             signal)
 {
-  GtkMessageDialog *kill_alert_dialog;
-  GtkWidget *confirm_button;
-
-  gchar *primary, *secondary, *button_text;
+  AdwMessageDialog *kill_alert_dialog;
   struct ProcActionArgs *kargs;
+  gchar *primary, *secondary, *button_text;
 
   proctable_freeze (app);
   kargs = g_new (ProcActionArgs, 1);
@@ -160,33 +160,21 @@ procdialog_create_kill_dialog (GsmApplication *app,
         break;
     }
 
-  kill_alert_dialog = GTK_MESSAGE_DIALOG (gtk_message_dialog_new (GTK_WINDOW (app->main_window),
-                                                                  static_cast<GtkDialogFlags>(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
-                                                                  GTK_MESSAGE_WARNING,
-                                                                  GTK_BUTTONS_NONE,
-                                                                  "%s",
-                                                                  primary));
+  kill_alert_dialog = ADW_MESSAGE_DIALOG (adw_message_dialog_new (GTK_WINDOW (app->main_window), primary, secondary));
   g_free (primary);
 
-  gtk_message_dialog_format_secondary_text (kill_alert_dialog,
-                                            "%s",
-                                            secondary);
+  adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (kill_alert_dialog),
+                                    "cancel",  _("_Cancel"),
+                                    "apply", button_text,
+                                    NULL);
+  adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (kill_alert_dialog), "cancel");
+  adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (kill_alert_dialog), "cancel");
+  adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (kill_alert_dialog), "apply", ADW_RESPONSE_DESTRUCTIVE);
 
-  gtk_dialog_add_button (GTK_DIALOG (kill_alert_dialog),
-                         _("_Cancel"), GTK_RESPONSE_CANCEL);
-
-  confirm_button = gtk_dialog_add_button (GTK_DIALOG (kill_alert_dialog),
-                                          button_text, GTK_RESPONSE_OK);
-  // gtk_style_context_add_class (gtk_widget_get_style_context (confirm_button),
-  //                              GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
-
-  gtk_dialog_set_default_response (GTK_DIALOG (kill_alert_dialog),
-                                   GTK_RESPONSE_CANCEL);
-
-  g_signal_connect (G_OBJECT (kill_alert_dialog), "response",
-                    G_CALLBACK (kill_dialog_button_pressed), kargs);
-
-  gtk_widget_show (GTK_WIDGET (kill_alert_dialog));
+  adw_message_dialog_choose (ADW_MESSAGE_DIALOG (kill_alert_dialog),
+                             NULL,
+                             kill_dialog_choose,
+                             kargs);
 }
 
 static void
