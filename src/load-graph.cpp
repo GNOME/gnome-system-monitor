@@ -217,6 +217,7 @@ create_background (LoadGraph *graph, int width, int height)
   GdkRGBA fg_grid;
   GtkAllocation allocation;
   GtkNative *native;
+  PangoContext *pango_context;
   PangoFontDescription *font_desc;
   PangoLayout *layout;
   cairo_t *cr;
@@ -246,11 +247,10 @@ create_background (LoadGraph *graph, int width, int height)
 
   layout = pango_cairo_create_layout (cr);
 
-  // TODO: Handle font size properly
-  /*gtk_style_context_get (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get()->stack)), GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
+  pango_context = gtk_widget_get_pango_context (GTK_WIDGET (GsmApplication::get ()->stack));
+  font_desc = pango_context_get_font_description (pango_context);
   pango_font_description_set_size (font_desc, 0.8 * graph->fontsize * PANGO_SCALE);
   pango_layout_set_font_description (layout, font_desc);
-  pango_font_description_free (font_desc);*/
 
   /* draw frame */
   cairo_translate (cr, FRAME_WIDTH, FRAME_WIDTH);
