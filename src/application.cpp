@@ -533,24 +533,24 @@ void GsmApplication::on_startup ()
 
     Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_resource ("/org/gnome/gnome-system-monitor/data/menus.ui");
 
-    set_accel_for_action ("win.show-dependencies", "<Primary>d");
-    set_accel_for_action ("app.quit", "<Primary>q");
-    set_accel_for_action ("win.send-signal-stop", "<Primary>s");
-    set_accel_for_action ("win.send-signal-cont", "<Primary>c");
-    set_accel_for_action ("win.send-signal-end", "<Primary>e");
-    set_accel_for_action ("win.send-signal-kill", "<Primary>k");
+    set_accel_for_action ("win.show-dependencies", "<Control>d");
+    set_accel_for_action ("app.quit", "<Control>q");
+    set_accel_for_action ("win.send-signal-stop", "<Control>s");
+    set_accel_for_action ("win.send-signal-cont", "<Control>c");
+    set_accel_for_action ("win.send-signal-end", "<Control>e");
+    set_accel_for_action ("win.send-signal-kill", "<Control>k");
     set_accel_for_action ("win.set-affinity", "<Alt>s");
-    set_accel_for_action ("win.memory-maps", "<Primary>m");
-    set_accel_for_action ("win.open-files", "<Primary>o");
+    set_accel_for_action ("win.memory-maps", "<Control>m");
+    set_accel_for_action ("win.open-files", "<Control>o");
     set_accel_for_action ("win.process-properties", "<Alt>Return");
-    set_accel_for_action ("win.search(true)", "<Primary>f");
+    set_accel_for_action ("win.search(true)", "<Control>f");
     set_accel_for_action ("app.help", "F1");
-    set_accel_for_action ("win.show-help-overlay", "<Primary>question");
+    set_accel_for_action ("win.show-help-overlay", "<Control>question");
 
     set_accel_for_action ("win.show-page('processes')", "<Alt>1");
     set_accel_for_action ("win.show-page('resources')", "<Alt>2");
     set_accel_for_action ("win.show-page('disks')", "<Alt>3");
-    set_accel_for_action ("win.refresh", "<Primary>r");
+    set_accel_for_action ("win.refresh", "<Control>r");
 
     pretty_table = new PrettyTable ();
     smooth_refresh = new SmoothRefresh (settings);
