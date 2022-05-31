@@ -718,8 +718,6 @@ proctable_new (GsmApplication * const app)
     cb_show_whose_processes_changed (*app->settings.operator-> (), key, app);
   });
 
-  gtk_widget_show (GTK_WIDGET (proctree));
-
   return proctree;
 }
 
