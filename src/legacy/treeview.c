@@ -313,5 +313,8 @@ gsm_tree_view_new (GSettings *settings,
     priv->settings = settings;
     priv->store_column_order = store_column_order;
 
+    // TODO: Probably not here, right?
+    gtk_widget_set_vexpand (GTK_WIDGET (self), TRUE);
+
     return self;
 }

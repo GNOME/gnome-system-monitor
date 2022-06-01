@@ -147,6 +147,7 @@ create_procproperties_tree (GsmApplication *app,
                                 );
 
     tree = GTK_TREE_VIEW (gtk_tree_view_new_with_model (GTK_TREE_MODEL (model)));
+    gtk_widget_set_vexpand (GTK_WIDGET (tree), TRUE);
     g_object_unref (G_OBJECT (model));
 
     for (i = 0; i < NUM_COLS; i++) {
