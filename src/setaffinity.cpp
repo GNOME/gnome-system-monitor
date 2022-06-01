@@ -52,15 +52,15 @@ all_toggled (SetAffinityData *affinity)
   /* Check if any CPU's aren't set for this process */
   for (i = 1; i <= affinity->cpu_count; i++)
     /* If so, return FALSE */
-    if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (affinity->buttons[i])))
+    if (!gtk_check_button_get_active (GTK_CHECK_BUTTON (affinity->buttons[i])))
       return FALSE;
 
   return TRUE;
 }
 
 static void
-affinity_toggler_single (GtkToggleButton *button,
-                         gpointer         data)
+affinity_toggler_single (GtkCheckButton *button,
+                         gpointer        data)
 {
   SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
   gboolean toggle_all_state = FALSE;
@@ -70,23 +70,23 @@ affinity_toggler_single (GtkToggleButton *button,
     return;
 
   /* Set toggle all state based on whether all are toggled */
-  if (gtk_toggle_button_get_active (button))
+  if (gtk_check_button_get_active (button))
     toggle_all_state = all_toggled (affinity);
 
   /* Block toggle all signal */
   affinity->toggle_all_blocked = TRUE;
 
   /* Set toggle all check box state */
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (affinity->buttons[0]),
-                                toggle_all_state);
+  gtk_check_button_set_active (GTK_CHECK_BUTTON (affinity->buttons[0]),
+                               toggle_all_state);
 
   /* Unblock toggle all signal */
   affinity->toggle_all_blocked = FALSE;
 }
 
 static void
-affinity_toggle_all (GtkToggleButton *toggle_all_button,
-                     gpointer         data)
+affinity_toggle_all (GtkCheckButton *check_all_button,
+                     gpointer        data)
 {
   SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
 
@@ -98,15 +98,15 @@ affinity_toggle_all (GtkToggleButton *toggle_all_button,
     return;
 
   /* Set individual CPU toggles based on toggle all state */
-  state = gtk_toggle_button_get_active (toggle_all_button);
+  state = gtk_check_button_get_active (check_all_button);
 
   /* Block toggle single signal */
   affinity->toggle_single_blocked = TRUE;
 
   /* Set all CPU check boxes to specified state */
   for (i = 1; i <= affinity->cpu_count; i++)
-    gtk_toggle_button_set_active (
-      GTK_TOGGLE_BUTTON (affinity->buttons[i]),
+    gtk_check_button_set_active (
+      GTK_CHECK_BUTTON (affinity->buttons[i]),
       state);
 
   /* Unblock toggle single signal */
@@ -189,8 +189,8 @@ execute_taskset_command (gchar **cpu_list,
 }
 
 static void
-set_affinity (GtkToggleButton *button,
-              gpointer         data)
+set_affinity (GtkCheckButton *button,
+              gpointer        data)
 {
   SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
 
@@ -214,7 +214,7 @@ set_affinity (GtkToggleButton *button,
       /* Run through all CPUs set for this process */
       for (i = 0; i < affinity->cpu_count; i++)
         /* Check if CPU check box button is active */
-        if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (affinity->buttons[i + 1])))
+        if (gtk_check_button_get_active (GTK_CHECK_BUTTON (affinity->buttons[i + 1])))
           {
             /* If so, get its CPU number as 16bit integer */
             guint16 n = i;
@@ -355,6 +355,9 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   /* Create scrolled box ("window") */
   scrolled = gtk_scrolled_window_new ();
 
+  gtk_widget_set_hexpand (GTK_WIDGET (scrolled), TRUE);
+  gtk_widget_set_vexpand (GTK_WIDGET (scrolled), TRUE);
+
   /* Add view class to scrolled box style */
   scrolled_style = gtk_widget_get_style_context (scrolled);
   gtk_style_context_add_class (scrolled_style, "view");
@@ -378,15 +381,15 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
 
   /* Create toggle all check box */
   affinity_data->buttons[0] = gtk_check_button_new_with_label (_("Run on all CPUs"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (affinity_data->buttons[0]), TRUE);
+  gtk_check_button_set_active (GTK_CHECK_BUTTON (affinity_data->buttons[0]), TRUE);
   gtk_widget_set_hexpand (affinity_data->buttons[0], TRUE);
 
   /* Get process's current affinity */
   affinity_cpus = glibtop_get_proc_affinity (&affinity, info->pid);
 
   /* Set toggle all check box based on whether all CPUs are set for this process */
-  gtk_toggle_button_set_active (
-    GTK_TOGGLE_BUTTON (affinity_data->buttons[0]),
+  gtk_check_button_set_active (
+    GTK_CHECK_BUTTON (affinity_data->buttons[0]),
     affinity.all);
 
   /* Add toggle all check box to CPU grid */
@@ -422,8 +425,8 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
       affinity_cpu = affinity_cpus[affinity_i] + 1;
 
       /* Set CPU check box active */
-      gtk_toggle_button_set_active (
-        GTK_TOGGLE_BUTTON (affinity_data->buttons[affinity_cpu]),
+      gtk_check_button_set_active (
+        GTK_CHECK_BUTTON (affinity_data->buttons[affinity_cpu]),
         TRUE);
     }
 
@@ -431,7 +434,7 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (cpulist_grid));
 
   /* Add scrolled box to dialog VBox */
-  gtk_box_prepend (GTK_BOX (dialog_vbox), scrolled);
+  gtk_box_append (GTK_BOX (dialog_vbox), scrolled);
 
   /* Swap click signal on "Cancel" button */
   g_signal_connect_swapped (cancel_button,
