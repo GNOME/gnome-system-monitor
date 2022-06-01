@@ -466,7 +466,6 @@ create_single_memmaps_dialog (GtkTreeModel *model,
 
     gtk_box_prepend (dialog_box, GTK_WIDGET (label));
 
-
     scrolled = gtk_scrolled_window_new ();
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                     GTK_POLICY_AUTOMATIC,
@@ -477,14 +476,15 @@ create_single_memmaps_dialog (GtkTreeModel *model,
 
     gtk_box_append (dialog_box, GTK_WIDGET (scrolled));
 
+    gtk_window_set_transient_for (GTK_WINDOW (memmapsdialog), GTK_WINDOW (GsmApplication::get ()->main_window));
+
     g_signal_connect (G_OBJECT (memmapsdialog), "response",
                       G_CALLBACK (dialog_response), mmdata);
 
-    gtk_window_set_transient_for (GTK_WINDOW (memmapsdialog), GTK_WINDOW (GsmApplication::get ()->main_window));
-    gtk_widget_show (GTK_WIDGET (memmapsdialog));
     mmdata->timer = g_timeout_add_seconds (5, memmaps_timer, mmdata);
-
     update_memmaps_dialog (mmdata);
+
+    gtk_widget_show (GTK_WIDGET (memmapsdialog));
 }
 
 
