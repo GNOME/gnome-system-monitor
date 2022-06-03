@@ -193,8 +193,8 @@ load_graph_state_changed (GtkWidget     *widget,
     graph->draw = gtk_widget_is_visible (widget);
 }
 
-static void
-draw_background (LoadGraph *graph, int width, int height) {
+static cairo_surface_t*
+create_background (LoadGraph *graph, int width, int height) {
     GdkRGBA fg;
     GdkRGBA fg_grid;
     GtkAllocation allocation;
@@ -341,7 +341,8 @@ draw_background (LoadGraph *graph, int width, int height) {
     g_object_unref (layout);
     cairo_stroke (cr);
     cairo_destroy (cr);
-    graph->background = surface;
+
+    return surface;
 }
 
 static void
@@ -360,6 +361,10 @@ load_graph_draw (GtkDrawingArea *drawing_area,
     width -= 2 * FRAME_WIDTH;
     height -= 2 * FRAME_WIDTH;
 
+    if (graph->background == NULL) {
+        graph->background = create_background (graph, width, height);
+    }
+
     /* Number of pixels wide for one sample point */
     sample_width = (double)(width - graph->rmargin - graph->indent) / (double)graph->num_points;
     /* Lines start at the right edge of the drawing,
@@ -370,9 +375,6 @@ load_graph_draw (GtkDrawingArea *drawing_area,
 
     /* draw the graph */
 
-    if (graph->background == NULL) {
-        draw_background (graph, width, height);
-    }
     cairo_set_source_surface (cr, graph->background, 0, 0);
     cairo_paint (cr);
 
