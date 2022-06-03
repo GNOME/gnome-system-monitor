@@ -217,11 +217,9 @@ create_field_page (GtkBuilder  *builder,
 void
 create_preferences_dialog (GsmApplication *app)
 {
-  typedef SpinButtonUpdater SBU;
-
-  static SBU interval_updater ("update-interval");
-  static SBU graph_interval_updater ("graph-update-interval");
-  static SBU disks_interval_updater ("disks-interval");
+  static SpinButtonUpdater interval_updater ("update-interval");
+  static SpinButtonUpdater graph_interval_updater ("graph-update-interval");
+  static SpinButtonUpdater disks_interval_updater ("disks-interval");
   static ScaleUpdater graph_points_updater ("graph-data-points");
 
   GtkAdjustment *adjustment;
@@ -251,7 +249,7 @@ create_preferences_dialog (GsmApplication *app)
                             1.0,
                             0);
   g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-                    G_CALLBACK (SBU::callback), &interval_updater);
+                    G_CALLBACK (SpinButtonUpdater::callback), &interval_updater);
 
   smooth_switch = GTK_SWITCH (gtk_builder_get_object (builder, "smooth_switch"));
   g_settings_bind (app->settings->gobj (), SmoothRefresh::KEY.c_str (), smooth_switch, "active", G_SETTINGS_BIND_DEFAULT);
@@ -305,7 +303,7 @@ create_preferences_dialog (GsmApplication *app)
   gtk_adjustment_configure (adjustment, update / 1000.0, 0.05,
                             10.0, 0.05, 0.5, 0);
   g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-                    G_CALLBACK (SBU::callback),
+                    G_CALLBACK (SpinButtonUpdater::callback),
                     &graph_interval_updater);
 
   update = (gfloat) app->config.graph_data_points;
@@ -342,7 +340,7 @@ create_preferences_dialog (GsmApplication *app)
   gtk_adjustment_configure (adjustment, update / 1000.0, 1.0,
                             100.0, 1.0, 1.0, 0);
   g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-                    G_CALLBACK (SBU::callback),
+                    G_CALLBACK (SpinButtonUpdater::callback),
                     &disks_interval_updater);
 
 
