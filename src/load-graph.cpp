@@ -545,9 +545,6 @@ get_load (LoadGraph *graph)
   graph->cpu.now ^= 1;
 }
 
-
-namespace
-{
 void
 set_memory_label_and_picker (GtkLabel      *label,
                              GsmColorButton*picker,
@@ -590,7 +587,6 @@ set_memory_label_and_picker (GtkLabel      *label,
 
   if (picker)
     gsm_color_button_set_fraction (picker, percent);
-}
 }
 
 static void
