@@ -233,11 +233,9 @@ create_field_page (GtkBuilder  *builder,
 void
 create_preferences_dialog (GsmApplication *app)
 {
-    typedef SpinButtonUpdater SBU;
-
-    static SBU interval_updater ("update-interval");
-    static SBU graph_interval_updater ("graph-update-interval");
-    static SBU disks_interval_updater ("disks-interval");
+    static SpinButtonUpdater interval_updater ("update-interval");
+    static SpinButtonUpdater graph_interval_updater ("graph-update-interval");
+    static SpinButtonUpdater disks_interval_updater ("disks-interval");
     static ScaleUpdater graph_points_updater ("graph-data-points");
 
     GtkAdjustment *adjustment;
