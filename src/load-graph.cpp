@@ -200,8 +200,8 @@ load_graph_state_changed (GtkWidget     *widget,
     graph->draw = gtk_widget_is_visible (widget);
 }
 
-static void
-draw_background (LoadGraph *graph)
+static cairo_surface_t*
+create_background (LoadGraph *graph)
 {
   GtkAllocation allocation;
   cairo_t *cr;
@@ -345,7 +345,8 @@ draw_background (LoadGraph *graph)
   g_object_unref (layout);
   cairo_stroke (cr);
   cairo_destroy (cr);
-  graph->background = surface;
+
+  return surface;
 }
 
 static gboolean
@@ -400,7 +401,7 @@ load_graph_draw (GtkWidget *widget,
   /* draw the graph */
 
   if (graph->background == NULL)
-    draw_background (graph);
+    graph->background = create_background (graph);
   cairo_set_source_surface (cr, graph->background, 0, 0);
   cairo_paint (cr);
 
