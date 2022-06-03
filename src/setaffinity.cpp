@@ -276,7 +276,6 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
     GtkWidget       *dialog_vbox;
     GtkWidget       *label;
     GtkWidget       *scrolled;
-    GtkStyleContext *scrolled_style;
     GtkGrid         *cpulist_grid;
 
     guint16               *affinity_cpus;
@@ -362,8 +361,7 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
     scrolled = gtk_scrolled_window_new ();
 
     /* Add view class to scrolled box style */
-    scrolled_style = gtk_widget_get_style_context (scrolled);
-    gtk_style_context_add_class (scrolled_style, "view");
+    gtk_widget_add_css_class (GTK_WIDGET (scrolled), "view");
 
     /* Set scrolled box vertical and horizontal policies */
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
