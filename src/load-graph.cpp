@@ -107,7 +107,7 @@ float LoadGraph::translate_to_log_partial_if_needed (float position_partial)
 
 gchar * format_duration (unsigned seconds)
 {
-    gchar*caption = NULL;
+    gchar *caption = NULL;
 
     unsigned minutes = seconds / 60;
     unsigned hours = seconds / 3600;
@@ -148,7 +148,9 @@ gchar * format_duration (unsigned seconds)
 }
 
 const int FRAME_WIDTH = 4;
-static void draw_background (LoadGraph *graph, int width, int height) {
+
+static void
+draw_background (LoadGraph *graph, int width, int height) {
     GtkAllocation allocation;
     GtkNative *native;
     cairo_t *cr;
@@ -226,13 +228,13 @@ static void draw_background (LoadGraph *graph, int width, int height) {
 
     for (i = 0; i <= graph->num_bars; ++i) {
         double y;
-
-        if (i == 0)
+        if (i == 0) {
             y = 0.5 + graph->fontsize / 2.0;
-        else if (i == graph->num_bars)
+        } else if (i == graph->num_bars) {
             y = i * graph->graph_dely + 0.5;
-        else
+        } else {
             y = i * graph->graph_dely + graph->fontsize / 2.0;
+        }
 
         gdk_cairo_set_source_rgba (cr, &fg);
         caption = graph->get_caption (i);
@@ -248,10 +250,11 @@ static void draw_background (LoadGraph *graph, int width, int height) {
         pango_cairo_show_layout (cr, layout);
         g_free (caption);
 
-        if (i == 0 || i == graph->num_bars)
+        if (i == 0 || i == graph->num_bars) {
             fg_grid.alpha = border_alpha;
-        else
+        } else {
             fg_grid.alpha = grid_alpha;
+        }
 
         gdk_cairo_set_source_rgba (cr, &fg_grid);
         cairo_move_to (cr, graph->indent, i * graph->graph_dely + 0.5);
@@ -265,10 +268,11 @@ static void draw_background (LoadGraph *graph, int width, int height) {
     for (unsigned int i = 0; i < 7; i++) {
         double x = (i) * (width - graph->rmargin - graph->indent) / 6;
 
-        if (i == 0 || i == 6)
+        if (i == 0 || i == 6) {
             fg_grid.alpha = border_alpha;
-        else
+        } else {
             fg_grid.alpha = grid_alpha;
+        }
 
         gdk_cairo_set_source_rgba (cr, &fg_grid);
         cairo_move_to (cr, (ceil (x) + 0.5) + graph->indent, 0.5);
@@ -398,6 +402,7 @@ load_graph_draw (GtkDrawingArea *drawing_area,
                                (1.0 - graph->data[i][j]) * graph->real_draw_height + 3);
             }
         }
+
         if (drawStacked) {
             // Draw the remaining outline of the area:
             // Left bottom corner
@@ -509,14 +514,16 @@ void set_memory_label_and_picker (GtkLabel      *label,
             g_free (cached_label);
         }
     }
+
     gtk_label_set_text (label, text);
     g_free (used_text);
     g_free (cached_text);
     g_free (total_text);
     g_free (text);
 
-    if (picker)
+    if (picker) {
         gsm_color_button_set_fraction (picker, percent);
+    }
 }
 
 static void
@@ -757,8 +764,6 @@ get_net (LoadGraph *graph)
     gtk_label_set_text (GTK_LABEL (graph->labels.net_out_total), procman::format_network (out).c_str ());
 }
 
-
-
 void
 load_graph_update_data (LoadGraph *graph)
 {
@@ -789,8 +794,6 @@ load_graph_update_data (LoadGraph *graph)
     }
 }
 
-
-
 /* Updates the load graph when the timeout expires */
 static gboolean
 load_graph_update (gpointer user_data)
@@ -811,8 +814,6 @@ load_graph_update (gpointer user_data)
     return TRUE;
 }
 
-
-
 LoadGraph::~LoadGraph()
 {
     load_graph_stop (this);
@@ -822,8 +823,6 @@ LoadGraph::~LoadGraph()
 
     clear_background ();
 }
-
-
 
 static gboolean
 load_graph_destroy (GtkWidget *widget,
@@ -835,7 +834,6 @@ load_graph_destroy (GtkWidget *widget,
 
     return FALSE;
 }
-
 
 LoadGraph::LoadGraph(guint type)
     : fontsize (8.0),
@@ -1066,7 +1064,6 @@ load_graph_change_num_points (LoadGraph *graph,
     // Force the scale to be redrawn.
     graph->clear_background ();
 }
-
 
 LoadGraphLabels*
 load_graph_get_labels (LoadGraph *graph)
