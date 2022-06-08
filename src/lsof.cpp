@@ -83,7 +83,7 @@ struct GUI: private procman::NonCopyable
 {
     GtkListStore *model;
     GtkSearchEntry *entry;
-    GtkWindow *window;
+    GtkDialog *dialog;
     GtkLabel *count;
     GsmApplication *app;
     bool case_insensitive;
@@ -93,7 +93,7 @@ struct GUI: private procman::NonCopyable
     GUI()
         : model (NULL),
         entry (NULL),
-        window (NULL),
+        dialog (NULL),
         count (NULL),
         app (NULL),
         case_insensitive (),
@@ -117,7 +117,7 @@ struct GUI: private procman::NonCopyable
         } else {
             title = g_strdup_printf (ngettext ("%d matching open file", "%d matching open files", count), count);
         }
-        gtk_window_set_title (this->window, title);
+        gtk_window_set_title (GTK_WINDOW (this->dialog), title);
         g_free (title);
     }
 
@@ -176,27 +176,21 @@ struct GUI: private procman::NonCopyable
         static_cast<GUI*>(data)->search ();
     }
 
-    static void close_button_clicked (GtkButton *,
-                                      gpointer data)
+    static void response_received (GtkDialog *self,
+                                   gint response_id,
+                                   gpointer data)
     {
         GUI *gui = static_cast<GUI*>(data);
-        gtk_window_destroy (gui->window);
+
+        gtk_window_destroy (GTK_WINDOW (gui->dialog));
         delete gui;
     }
 
-    static void case_button_toggled (GtkToggleButton *button,
+    static void case_button_checked (GtkCheckButton  *button,
                                      gpointer         data)
     {
-        bool state = gtk_toggle_button_get_active (button);
+        bool state = gtk_check_button_get_active (button);
         static_cast<GUI*>(data)->case_insensitive = state;
-    }
-
-    static gboolean window_delete_event (GtkWidget *,
-                                         GdkEvent *,
-                                         gpointer data)
-    {
-        delete static_cast<GUI*>(data);
-        return FALSE;
     }
 };
 }
@@ -266,17 +260,16 @@ void procman_lsof (GsmApplication *app)
     gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
     gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
 
-
-    GtkWindow *dialog;
+    GtkDialog *dialog;
 
     GtkBuilder *builder = gtk_builder_new ();
     GError *err = NULL;
     gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/lsof.ui", &err);
-    if (err != NULL)
+    if (err != NULL) {
       g_error("%s", err->message);
+    }
 
-    dialog = GTK_WINDOW (gtk_builder_get_object (builder, "lsof_dialog"));
-
+    dialog = GTK_DIALOG (gtk_builder_get_object (builder, "lsof_dialog"));
     gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->main_window));
 
     GtkSearchEntry *entry = GTK_SEARCH_ENTRY (gtk_builder_get_object (builder, "entry"));
@@ -290,19 +283,17 @@ void procman_lsof (GsmApplication *app)
     GUI *gui = new GUI; // wil be deleted by the close button or delete-event
     gui->app = app;
     gui->model = model;
-    gui->window = dialog;
+    gui->dialog = dialog;
     gui->entry = entry;
-    gui->case_insensitive = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (case_button));
+    gui->case_insensitive = gtk_check_button_get_active (case_button);
 
     g_signal_connect (G_OBJECT (entry), "search-changed",
                       G_CALLBACK (GUI::search_changed), gui);
     g_signal_connect (G_OBJECT (case_button), "toggled",
-                      G_CALLBACK (GUI::case_button_toggled), gui);
-    g_signal_connect (G_OBJECT (dialog), "delete-event",
-                      G_CALLBACK (GUI::window_delete_event), gui);
+                      G_CALLBACK (GUI::case_button_checked), gui);
+    g_signal_connect (G_OBJECT (dialog), "response",
+                      G_CALLBACK (GUI::response_received), gui);
 
-
-    gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (GsmApplication::get ()->main_window));
     gtk_widget_show (GTK_WIDGET (dialog));
     gui->search ();
 
