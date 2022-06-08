@@ -13,37 +13,25 @@
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
-          <object class="GtkGrid" id="content_grid">
-            <property name="row-spacing">6</property>
-            <property name="column-spacing">6</property>
-            <property name="vexpand">1</property>
+          <object class="GtkScrolledWindow" id="scrolled">
             <property name="visible">0</property>
-            <child>
-              <object class="GtkScrolledWindow" id="scrolled">
-                <property name="visible">0</property>
-                <property name="focusable">1</property>
-                <property name="vexpand">1</property>
-                <property name="focusable">True</property>
-                <property name="vexpand">True</property>
-                <layout>
-                  <property name="column">0</property>
-                  <property name="row">0</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="GtkGrid" id="cmd_grid">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="hexpand">True</property>
-                <property name="row-spacing">12</property>
-                <property name="column-spacing">12</property>
-                <layout>
-                  <property name="column">0</property>
-                  <property name="row">1</property>
-                </layout>
-              </object>
-            </child>
+            <property name="focusable">1</property>
+            <property name="vexpand">1</property>
+            <property name="focusable">True</property>
+            <property name="vexpand">True</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkGrid" id="cmd_grid">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="hexpand">True</property>
+            <property name="row-spacing">12</property>
+            <property name="column-spacing">12</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">1</property>
+            </layout>
           </object>
         </child>
       </object>
