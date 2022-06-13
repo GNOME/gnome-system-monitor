@@ -1,33 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
-  <object class="HdyPreferencesWindow" id="preferences_dialog">
-    <property name="can-focus">False</property>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="libadwaita" version="1.0"/>
+  <object class="AdwPreferencesWindow" id="preferences_dialog">
     <property name="title" translatable="yes">Preferences</property>
     <property name="default-width">700</property>
     <property name="default-height">700</property>
     <property name="destroy-with-parent">True</property>
     <child>
-      <object class="HdyPreferencesPage">
-        <property name="visible">True</property>
+      <object class="AdwPreferencesPage">
         <property name="title" translatable="yes">Processes</property>
         <property name="icon-name">view-list-symbolic</property>
         <child>
-          <object class="HdyPreferencesGroup">
-            <property name="visible">True</property>
+          <object class="AdwPreferencesGroup">
             <property name="title" translatable="yes">Behavior</property>
             <child>
-              <object class="HdyActionRow">
-                <property name="visible">True</property>
+              <object class="AdwActionRow">
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">_Update Interval in Seconds</property>
                 <property name="activatable-widget">processes_interval_spinner</property>
                 <child>
                   <object class="GtkSpinButton" id="processes_interval_spinner">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
                     <property name="valign">center</property>
-                    <property name="invisible-char">•</property>
                     <property name="climb-rate">1</property>
                     <property name="digits">2</property>
                   </object>
@@ -35,15 +29,12 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
-                <property name="visible">True</property>
+              <object class="AdwActionRow">
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Enable _Smooth Refresh</property>
                 <property name="activatable-widget">smooth_switch</property>
                 <child>
                   <object class="GtkSwitch" id="smooth_switch">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="receives-default">False</property>
                     <property name="valign">center</property>
                   </object>
@@ -51,15 +42,12 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
-                <property name="visible">True</property>
+              <object class="AdwActionRow">
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Alert Before Ending or _Killing Processes</property>
                 <property name="activatable-widget">check_switch</property>
                 <child>
                   <object class="GtkSwitch" id="check_switch">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="receives-default">False</property>
                     <property name="valign">center</property>
                   </object>
@@ -67,15 +55,12 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
-                <property name="visible">True</property>
+              <object class="AdwActionRow">
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">_Divide CPU Usage by CPU Count</property>
                 <property name="activatable-widget">solaris_switch</property>
                 <child>
                   <object class="GtkSwitch" id="solaris_switch">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="receives-default">False</property>
                     <property name="valign">center</property>
                   </object>
@@ -83,15 +68,12 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
-                <property name="visible">True</property>
+              <object class="AdwActionRow">
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Show Memory in IEC</property>
                 <property name="activatable-widget">proc_mem_in_iec_switch</property>
                 <child>
                   <object class="GtkSwitch" id="proc_mem_in_iec_switch">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="receives-default">False</property>
                     <property name="valign">center</property>
                   </object>
@@ -101,17 +83,13 @@
           </object>
         </child>
         <child>
-          <object class="HdyPreferencesGroup">
-            <property name="visible">True</property>
+          <object class="AdwPreferencesGroup">
             <property name="title" translatable="yes">Information Fields</property>
             <property name="description" translatable="yes">Process information shown in list:</property>
             <child>
               <object class="GtkFrame">
-                <property name="visible">True</property>
                 <child>
                   <object class="GtkTreeView" id="proctree_columns">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
                     <property name="headers-visible">False</property>
                     <property name="activate-on-single-click">True</property>
                     <property name="enable-search">False</property>
@@ -127,26 +105,20 @@
       </object>
     </child>
     <child>
-      <object class="HdyPreferencesPage">
-        <property name="visible">True</property>
+      <object class="AdwPreferencesPage">
         <property name="title" translatable="yes">Resources</property>
         <property name="icon-name">speedometer-symbolic</property>
         <child>
-          <object class="HdyPreferencesGroup">
-            <property name="visible">True</property>
+          <object class="AdwPreferencesGroup">
             <property name="title" translatable="yes">Behavior</property>
             <child>
-              <object class="HdyActionRow">
-                <property name="visible">True</property>
+              <object class="AdwActionRow">
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">_Update Interval in Seconds</property>
                 <property name="activatable-widget">resources_interval_spinner</property>
                 <child>
                   <object class="GtkSpinButton" id="resources_interval_spinner">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
                     <property name="valign">center</property>
-                    <property name="invisible-char">•</property>
                     <property name="climb-rate">1</property>
                     <property name="digits">2</property>
                   </object>
@@ -154,15 +126,13 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
-                <property name="visible">True</property>
+              <object class="AdwActionRow">
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">_Chart Data Points</property>
                 <child>
                   <object class="GtkScale" id="graph_data_points_scale">
                     <property name="hexpand">True</property>
                     <property name="orientation">horizontal</property>
-                    <property name="visible">True</property>
                     <property name="draw-value">True</property>
                     <property name="value-pos">right</property>
                     <property name="digits">0</property>
@@ -171,15 +141,12 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
-                <property name="visible">True</property>
+              <object class="AdwActionRow">
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Draw Charts as S_mooth Graphs</property>
                 <property name="activatable-widget">draw_smooth_switch</property>
                 <child>
                   <object class="GtkSwitch" id="draw_smooth_switch">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="receives-default">False</property>
                     <property name="valign">center</property>
                   </object>
@@ -189,11 +156,11 @@
           </object>
         </child>
         <child>
-          <object class="HdyPreferencesGroup">
+          <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="title" translatable="yes">CPU</property>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">_Draw CPU Chart as Stacked Area Chart</property>
@@ -211,19 +178,16 @@
           </object>
         </child>
         <child>
-          <object class="HdyPreferencesGroup">
+          <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="title" translatable="yes">Memory and Swap</property>
             <child>
-              <object class="HdyActionRow">
-                <property name="visible">True</property>
+              <object class="AdwActionRow">
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Show Memory and Swap in IEC</property>
                 <property name="activatable-widget">res_mem_in_iec_switch</property>
                 <child>
                   <object class="GtkSwitch" id="res_mem_in_iec_switch">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="receives-default">False</property>
                     <property name="valign">center</property>
                   </object>
@@ -231,15 +195,12 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
-                <property name="visible">True</property>
+              <object class="AdwActionRow">
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Show Memory in Logarithmic Scale</property>
                 <property name="activatable-widget">logarithmic_scale_switch</property>
                 <child>
                   <object class="GtkSwitch" id="logarithmic_scale_switch">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="receives-default">False</property>
                     <property name="valign">center</property>
                   </object>
@@ -249,19 +210,16 @@
           </object>
         </child>
         <child>
-          <object class="HdyPreferencesGroup">
+          <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="title" translatable="yes">Network</property>
             <child>
-              <object class="HdyActionRow">
-                <property name="visible">True</property>
+              <object class="AdwActionRow">
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">_Show Network Speed in Bits</property>
                 <property name="activatable-widget">bits_switch</property>
                 <child>
                   <object class="GtkSwitch" id="bits_switch">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="receives-default">False</property>
                     <property name="valign">center</property>
                   </object>
@@ -269,15 +227,12 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
-                <property name="visible">True</property>
+              <object class="AdwActionRow">
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Set Network Totals _Unit Separately</property>
                 <property name="activatable-widget">bits_unit_switch</property>
                 <child>
                   <object class="GtkSwitch" id="bits_unit_switch">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="receives-default">False</property>
                     <property name="valign">center</property>
                   </object>
@@ -285,16 +240,13 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
-                <property name="visible">True</property>
+              <object class="AdwActionRow">
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Show Network _Totals in Bits</property>
                 <property name="activatable-widget">bits_total_switch</property>
                 <property name="sensitive" bind-source="bits_unit_switch" bind-property="active" bind-flags="sync-create"/>
                 <child>
                   <object class="GtkSwitch" id="bits_total_switch">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="receives-default">False</property>
                     <property name="valign">center</property>
                   </object>
@@ -306,26 +258,20 @@
       </object>
     </child>
     <child>
-      <object class="HdyPreferencesPage">
-        <property name="visible">True</property>
+      <object class="AdwPreferencesPage">
         <property name="title" translatable="yes">File Systems</property>
         <property name="icon-name">drive-harddisk-symbolic</property>
         <child>
-          <object class="HdyPreferencesGroup">
-            <property name="visible">True</property>
+          <object class="AdwPreferencesGroup">
             <property name="title" translatable="yes">Behavior</property>
             <child>
-              <object class="HdyActionRow">
-                <property name="visible">True</property>
+              <object class="AdwActionRow">
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">_Update Interval in Seconds</property>
                 <property name="activatable-widget">devices_interval_spinner</property>
                 <child>
                   <object class="GtkSpinButton" id="devices_interval_spinner">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
                     <property name="valign">center</property>
-                    <property name="invisible-char">•</property>
                     <property name="climb-rate">1</property>
                     <property name="digits">2</property>
                   </object>
@@ -333,15 +279,12 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
-                <property name="visible">True</property>
+              <object class="AdwActionRow">
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Show _All File Systems</property>
                 <property name="activatable-widget">all_devices_check</property>
                 <child>
                   <object class="GtkSwitch" id="all_devices_check">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="receives-default">False</property>
                     <property name="valign">center</property>
                   </object>
@@ -351,17 +294,13 @@
           </object>
         </child>
         <child>
-          <object class="HdyPreferencesGroup">
-            <property name="visible">True</property>
+          <object class="AdwPreferencesGroup">
             <property name="title" translatable="yes">Information Fields</property>
             <property name="description" translatable="yes">File system information shown in list</property>
             <child>
               <object class="GtkFrame">
-                <property name="visible">True</property>
                 <child>
                   <object class="GtkTreeView" id="disktreenew_columns">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
                     <property name="headers-visible">False</property>
                     <property name="activate-on-single-click">True</property>
                     <property name="enable-search">False</property>
@@ -378,5 +317,4 @@
     </child>
   </object>
 </interface>
-
 
