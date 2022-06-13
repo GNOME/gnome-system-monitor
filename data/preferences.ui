@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
-  <object class="HdyPreferencesWindow" id="preferences_dialog">
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="libadwaita" version="1.0"/>
+  <object class="AdwPreferencesWindow" id="preferences_dialog">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
     <property name="title" translatable="yes">Preferences</property>
     <property name="default_width">700</property>
     <property name="default_height">700</property>
     <property name="destroy_with_parent">True</property>
     <child>
-      <object class="HdyPreferencesPage">
+      <object class="AdwPreferencesPage">
         <property name="visible">True</property>
         <property name="title" translatable="yes">Processes</property>
         <property name="icon-name">view-list-symbolic</property>
         <child>
-          <object class="HdyPreferencesGroup">
+          <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="title" translatable="yes">Behavior</property>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">_Update Interval in Seconds</property>
@@ -28,7 +28,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="valign">center</property>
-                    <property name="invisible_char">•</property>
                     <property name="climb_rate">1</property>
                     <property name="digits">2</property>
                   </object>
@@ -36,7 +35,7 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Enable _Smooth Refresh</property>
@@ -52,7 +51,7 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Alert Before Ending or _Killing Processes</property>
@@ -68,7 +67,7 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">_Divide CPU Usage by CPU Count</property>
@@ -84,7 +83,7 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Show Memory in IEC</property>
@@ -102,7 +101,7 @@
           </object>
         </child>
         <child>
-          <object class="HdyPreferencesGroup">
+          <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="title" translatable="yes">Information Fields</property>
             <property name="description" translatable="yes">Process information shown in list:</property>
@@ -127,16 +126,16 @@
       </object>
     </child>
     <child>
-      <object class="HdyPreferencesPage">
+      <object class="AdwPreferencesPage">
         <property name="visible">True</property>
         <property name="title" translatable="yes">Resources</property>
         <property name="icon-name">speedometer-symbolic</property>
         <child>
-          <object class="HdyPreferencesGroup">
+          <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="title" translatable="yes">Graphs</property>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">_Update Interval in Seconds</property>
@@ -146,7 +145,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="valign">center</property>
-                    <property name="invisible_char">•</property>
                     <property name="climb_rate">1</property>
                     <property name="digits">2</property>
                   </object>
@@ -154,7 +152,7 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">_Chart Data Points</property>
@@ -171,7 +169,7 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">_Draw CPU Chart as Stacked Area Chart</property>
@@ -187,7 +185,7 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Draw Charts as S_mooth Graphs</property>
@@ -203,7 +201,7 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Show Memory and Swap in IEC</property>
@@ -219,7 +217,7 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Show Memory in Logarithmic Scale</property>
@@ -235,7 +233,7 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">_Show Network Speed in Bits</property>
@@ -251,7 +249,7 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Set Network Totals _Unit Separately</property>
@@ -267,7 +265,7 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Show Network _Totals in Bits</property>
@@ -288,16 +286,16 @@
       </object>
     </child>
     <child>
-      <object class="HdyPreferencesPage">
+      <object class="AdwPreferencesPage">
         <property name="visible">True</property>
         <property name="title" translatable="yes">File Systems</property>
         <property name="icon-name">drive-harddisk-symbolic</property>
         <child>
-          <object class="HdyPreferencesGroup">
+          <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="title" translatable="yes">Behavior</property>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">_Update Interval in Seconds</property>
@@ -307,7 +305,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="valign">center</property>
-                    <property name="invisible_char">•</property>
                     <property name="climb_rate">1</property>
                     <property name="digits">2</property>
                   </object>
@@ -315,7 +312,7 @@
               </object>
             </child>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">Show _All File Systems</property>
@@ -333,7 +330,7 @@
           </object>
         </child>
         <child>
-          <object class="HdyPreferencesGroup">
+          <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="title" translatable="yes">Information Fields</property>
             <property name="description" translatable="yes">File system information shown in list</property>
