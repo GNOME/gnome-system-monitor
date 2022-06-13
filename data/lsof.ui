@@ -1,84 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
-  <object class="GtkWindow" id="lsof_dialog">
-    <property name="can-focus">False</property>
-    <property name="border-width">0</property>
-    <property name="title" translatable="yes" context="Window title for Search for Open Files dialog">Search for Open Files</property>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="libadwaita" version="1.0"/>
+  <object class="AdwWindow" id="lsof_dialog">
+    <property name="title" translatable="1" context="Window title for Search for Open Files dialog">Search for Open Files</property>
     <property name="default-width">575</property>
     <property name="default-height">400</property>
-    <property name="destroy-with-parent">True</property>
-    <child >
+    <property name="destroy-with-parent">1</property>
+    <property name="child">
       <object class="GtkBox" id="mainbox">
-        <property name="visible">True</property>
-        <property name="border-width">0</property>
         <property name="can-focus">False</property>
         <property name="spacing">0</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkBox" id="search_box">
-            <property name="visible">True</property>
-            <property name="border-width">6</property>
             <property name="can-focus">False</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkSearchEntry" id="entry">
-                <property name="visible">True</property>
                 <property name="width-request">300</property>
-                <property name="can-focus">True</property>
-                <property name="hexpand">True</property>
-                <property name="invisible-char">•</property>
-                <property name="placeholder-text" translatable="yes">Filter files by name</property>
+                <property name="placeholder-text" translatable="1">Filter files by name</property>
+                <property name="focusable">1</property>
+                <property name="hexpand">1</property>
               </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkCheckButton" id="case_button">
-                <property name="label" translatable="yes">Case insensitive</property>
-                <property name="use-action-appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">False</property>
-                <property name="use-action-appearance">False</property>
+                <property name="focusable">1</property>
                 <property name="halign">start</property>
-                <property name="draw-indicator">True</property>
+                <property name="label" translatable="yes">Case insensitive</property>
+                <property name="valign">center</property>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
             </child>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkScrolledWindow" id="scrolled">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="hexpand">True</property>
-            <property name="vexpand">True</property>
-            <property name="shadow-type">in</property>
+            <property name="focusable">1</property>
+            <property name="hexpand">1</property>
+            <property name="vexpand">1</property>
             <child>
               <placeholder/>
             </child>
           </object>
-          <packing>
-            <property name="padding">0</property>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">3</property>
-          </packing>
         </child>
       </object>
-    </child>
+    </property>
   </object>
 </interface>
