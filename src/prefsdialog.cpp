@@ -31,7 +31,7 @@ public:
     {
     }
 
-    static gboolean callback (GtkWidget     *widget,
+    /*static gboolean callback (GtkWidget     *widget,
                               GdkEventFocus *event,
                               gpointer       data)
     {
@@ -39,7 +39,7 @@ public:
         gtk_spin_button_update (GTK_SPIN_BUTTON (widget));
         updater->update (GTK_SPIN_BUTTON (widget));
         return FALSE;
-    }
+    }*/
 
 private:
 
@@ -269,8 +269,8 @@ create_preferences_dialog (GsmApplication *app)
                               0.25,
                               1.0,
                               0);
-    g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-                      G_CALLBACK (SBU::callback), &interval_updater);
+    /*g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
+                      G_CALLBACK (SBU::callback), &interval_updater);*/
 
     smooth_switch = GTK_SWITCH (gtk_builder_get_object (builder, "smooth_switch"));
     g_settings_bind (app->settings->gobj (), SmoothRefresh::KEY.c_str (), smooth_switch, "active", G_SETTINGS_BIND_DEFAULT);
@@ -317,9 +317,9 @@ create_preferences_dialog (GsmApplication *app)
     adjustment = gtk_spin_button_get_adjustment (spin_button);
     gtk_adjustment_configure (adjustment, update / 1000.0, 0.05,
                               10.0, 0.05, 0.5, 0);
-    g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
+    /*g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
                       G_CALLBACK (SBU::callback),
-                      &graph_interval_updater);
+                      &graph_interval_updater);*/
 
     update = (gfloat) app->config.graph_data_points;
     GtkRange*range = GTK_RANGE (gtk_builder_get_object (builder, "graph_data_points_scale"));
@@ -350,9 +350,9 @@ create_preferences_dialog (GsmApplication *app)
     adjustment = gtk_spin_button_get_adjustment (spin_button);
     gtk_adjustment_configure (adjustment, update / 1000.0, 1.0,
                               100.0, 1.0, 1.0, 0);
-    g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
+    /*g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
                       G_CALLBACK (SBU::callback),
-                      &disks_interval_updater);
+                      &disks_interval_updater);*/
 
 
     check_switch = GTK_SWITCH (gtk_builder_get_object (builder, "all_devices_check"));
