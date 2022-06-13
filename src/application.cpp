@@ -358,8 +358,6 @@ GsmApplication::GsmApplication()
     cpu_graph (NULL),
     mem_graph (NULL),
     net_graph (NULL),
-    cpu_label_fixed_width (0),
-    net_label_fixed_width (0),
     selection (NULL),
     timeout (0U),
     disk_timeout (0U),
