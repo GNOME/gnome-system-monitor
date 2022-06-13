@@ -204,20 +204,15 @@ create_single_procproperties_dialog (GtkTreeModel *model, GtkTreePath *path,
 
     gtk_window_set_resizable (GTK_WINDOW (procpropdialog), TRUE);
     gtk_window_set_default_size (GTK_WINDOW (procpropdialog), 575, 400);
+    gtk_container_set_border_width (GTK_CONTAINER (procpropdialog), 5);
 
     vbox = GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (procpropdialog)));
     gtk_box_set_spacing (vbox, 2);
-    gtk_widget_set_margin_top (GTK_WIDGET (vbox), 5);
-    gtk_widget_set_margin_bottom (GTK_WIDGET (vbox), 5);
-    gtk_widget_set_margin_start (GTK_WIDGET (vbox), 5);
-    gtk_widget_set_margin_end (GTK_WIDGET (vbox), 5);
-    gtk_box_pack_start (vbox, GTK_WIDGET (dialog_vbox), TRUE, TRUE, 0);
+    gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
 
     dialog_vbox = GTK_BOX (gtk_box_new (GTK_ORIENTATION_VERTICAL, 6));
-    gtk_widget_set_margin_top (GTK_WIDGET (dialog_vbox), 5);
-    gtk_widget_set_margin_bottom (GTK_WIDGET (dialog_vbox), 5);
-    gtk_widget_set_margin_start (GTK_WIDGET (dialog_vbox), 5);
-    gtk_widget_set_margin_end (GTK_WIDGET (dialog_vbox), 5);
+    gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 5);
+    gtk_box_pack_start (vbox, GTK_WIDGET (dialog_vbox), TRUE, TRUE, 0);
 
     cmd_hbox = GTK_BOX (gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12));
     gtk_box_pack_start (dialog_vbox, GTK_WIDGET (cmd_hbox), FALSE, FALSE, 0);
