@@ -852,7 +852,7 @@ LoadGraph::LoadGraph(guint type)
     frames_per_unit (10),  // this will be changed but needs initialising
     num_bars (0),
     graph_dely (0),
-    graph_delx (0.0),
+    graph_delx (0),
     real_draw_height (0),
     graph_buffer_offset (0),
     colors (),
