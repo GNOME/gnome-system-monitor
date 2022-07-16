@@ -16,6 +16,10 @@
 #include "util.h"
 #include "legacy/gsm_color_button.h"
 
+constexpr double BORDER_ALPHA = 0.7;
+constexpr double GRID_ALPHA = BORDER_ALPHA / 2.0;
+constexpr int FRAME_WIDTH = 4;
+constexpr unsigned GRAPH_MIN_HEIGHT = 40;
 
 void LoadGraph::clear_background ()
 {
@@ -146,8 +150,6 @@ static gchar* format_duration (unsigned seconds)
     return caption;
 }
 
-const int FRAME_WIDTH = 4;
-
 /* Redraws the backing buffer for the load graph and updates the window */
 void
 load_graph_queue_draw (LoadGraph *graph)
@@ -207,8 +209,6 @@ draw_background (LoadGraph *graph, int width, int height) {
     PangoFontDescription *font_desc;
     cairo_t *cr;
     cairo_surface_t *surface;
-    double const border_alpha = 0.7;
-    double const grid_alpha = border_alpha / 2.0;
 
     graph->num_bars = graph->get_num_bars (height);
     graph->graph_dely = (height - 15) / graph->num_bars; /* round to int to avoid AA blur */
@@ -295,9 +295,9 @@ draw_background (LoadGraph *graph, int width, int height) {
         g_free (caption);
 
         if (i == 0 || i == graph->num_bars) {
-            fg_grid.alpha = border_alpha;
+            fg_grid.alpha = BORDER_ALPHA;
         } else {
-            fg_grid.alpha = grid_alpha;
+            fg_grid.alpha = GRID_ALPHA;
         }
 
         gdk_cairo_set_source_rgba (cr, &fg_grid);
@@ -313,9 +313,9 @@ draw_background (LoadGraph *graph, int width, int height) {
         double x = (i) * (width - graph->rmargin - graph->indent) / 6;
 
         if (i == 0 || i == 6) {
-            fg_grid.alpha = border_alpha;
+            fg_grid.alpha = BORDER_ALPHA;
         } else {
-            fg_grid.alpha = grid_alpha;
+            fg_grid.alpha = GRID_ALPHA;
         }
 
         gdk_cairo_set_source_rgba (cr, &fg_grid);
@@ -957,7 +957,7 @@ LoadGraph::LoadGraph(guint type)
 
     render_counter = (frames_per_unit - 1);
     main_widget = GTK_BOX (gtk_box_new (GTK_ORIENTATION_VERTICAL, 6));
-    gtk_widget_set_size_request (GTK_WIDGET (main_widget), -1, LoadGraph::GRAPH_MIN_HEIGHT);
+    gtk_widget_set_size_request (GTK_WIDGET (main_widget), -1, GRAPH_MIN_HEIGHT);
 
     disp = GTK_DRAWING_AREA (gtk_drawing_area_new ());
     gtk_widget_set_vexpand (GTK_WIDGET (disp), TRUE);

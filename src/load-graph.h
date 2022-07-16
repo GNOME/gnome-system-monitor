@@ -34,8 +34,6 @@ struct LoadGraphLabels
 struct LoadGraph
     : private procman::NonCopyable
 {
-    static const unsigned GRAPH_MIN_HEIGHT = 40;
-
     LoadGraph (guint type);
     ~LoadGraph();
 
