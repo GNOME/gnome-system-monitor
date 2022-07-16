@@ -824,15 +824,13 @@ LoadGraph::~LoadGraph()
     clear_background ();
 }
 
-static gboolean
+static void
 load_graph_destroy (GtkWidget *widget,
                     gpointer   data_ptr)
 {
     LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
 
     delete graph;
-
-    return FALSE;
 }
 
 LoadGraph::LoadGraph(guint type)
