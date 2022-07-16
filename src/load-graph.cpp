@@ -200,12 +200,7 @@ create_background (LoadGraph *graph, int width, int height) {
     GtkAllocation allocation;
     GtkNative *native;
     GtkWidget *stack;
-    guint i;
-    double label_x_offset_modifier, label_y_offset_modifier;
-    gchar *caption;
-    PangoLayout*layout;
     PangoContext *pango_context;
-    PangoRectangle extents;
     PangoFontDescription *font_desc;
     cairo_t *cr;
     cairo_surface_t *surface;
@@ -229,7 +224,7 @@ create_background (LoadGraph *graph, int width, int height) {
 
     gtk_style_context_get_color (context, &fg);
 
-    layout = pango_cairo_create_layout (cr);
+    PangoLayout *layout = pango_cairo_create_layout (cr);
 
     pango_context = gtk_widget_get_pango_context (GTK_WIDGET (GsmApplication::get()->stack));
     font_desc = pango_context_get_font_description (pango_context);
@@ -270,7 +265,9 @@ create_background (LoadGraph *graph, int width, int height) {
 
     cairo_set_line_width (cr, 1.0);
 
-    for (i = 0; i <= graph->num_bars; ++i) {
+    for (guint i = 0; i <= graph->num_bars; i++) {
+        PangoRectangle extents;
+
         double y;
         if (i == 0) {
             y = 0.5 + graph->fontsize / 2.0;
@@ -281,11 +278,11 @@ create_background (LoadGraph *graph, int width, int height) {
         }
 
         gdk_cairo_set_source_rgba (cr, &fg);
-        caption = graph->get_caption (i);
         pango_layout_set_alignment (layout, PANGO_ALIGN_LEFT);
+        gchar *caption = graph->get_caption (i);
         pango_layout_set_text (layout, caption, -1);
         pango_layout_get_extents (layout, NULL, &extents);
-        label_y_offset_modifier = i == 0 ? 0.5
+        double label_y_offset_modifier = i == 0 ? 0.5
                                 : i == graph->num_bars
                                     ? 1.0
                                     : 0.85;
@@ -310,6 +307,8 @@ create_background (LoadGraph *graph, int width, int height) {
     const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * graph->frames_per_unit;
 
     for (unsigned int i = 0; i < 7; i++) {
+        PangoRectangle extents;
+
         double x = (i) * (width - graph->rmargin - graph->indent) / 6;
 
         if (i == 0 || i == 6) {
@@ -323,11 +322,10 @@ create_background (LoadGraph *graph, int width, int height) {
         cairo_line_to (cr, (ceil (x) + 0.5) + graph->indent, graph->real_draw_height + 4.5);
         cairo_stroke (cr);
 
-        caption = format_duration (total_seconds - i * total_seconds / 6);
-
+        gchar *caption = format_duration (total_seconds - i * total_seconds / 6);
         pango_layout_set_text (layout, caption, -1);
         pango_layout_get_extents (layout, NULL, &extents);
-        label_x_offset_modifier = i == 0 ? 0
+        double label_x_offset_modifier = i == 0 ? 0
                                          : i == 6
                                             ? 1.0
                                             : 0.5;
@@ -354,10 +352,6 @@ load_graph_draw (GtkDrawingArea *drawing_area,
 {
     LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
 
-    guint i;
-    gint j;
-    gdouble sample_width, x_offset;
-
     width -= 2 * FRAME_WIDTH;
     height -= 2 * FRAME_WIDTH;
 
@@ -366,10 +360,10 @@ load_graph_draw (GtkDrawingArea *drawing_area,
     }
 
     /* Number of pixels wide for one sample point */
-    sample_width = (double)(width - graph->rmargin - graph->indent) / (double)graph->num_points;
+    gdouble sample_width = (double) (width - graph->rmargin - graph->indent) / (double) (graph->num_points);
     /* Lines start at the right edge of the drawing,
      * a bit outside the clip rectangle. */
-    x_offset = width - graph->rmargin + sample_width + 2;
+    gdouble x_offset = width - graph->rmargin + sample_width + 2;
     /* Adjustment for smooth movement between samples */
     x_offset -= sample_width * graph->render_counter / (double)graph->frames_per_unit;
 
@@ -388,14 +382,14 @@ load_graph_draw (GtkDrawingArea *drawing_area,
 
     bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get ()->config.draw_stacked;
     bool drawSmooth = GsmApplication::get ()->config.draw_smooth;
-    for (j = graph->n - 1; j >= 0; j--) {
+    for (gint j = graph->n - 1; j >= 0; j--) {
         gdk_cairo_set_source_rgba (cr, &(graph->colors [j]));
         // Start drawing on the right at the correct height.
         cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height + 3);
-        // then draw the path of the line.
-        // Loop starts at 1 because the curve accesses the 0th data point.
-        for (i = 1; i < graph->num_points; ++i) {
             if (graph->data[i][j] == -1.0f)
+        /* Draw the path of the line
+           Loop starts at 1 because the curve accesses the 0th data point */
+        for (gint i = 1; i < graph->num_points; i++) {
                 continue;
             if (drawSmooth) {
                 cairo_curve_to (cr,
