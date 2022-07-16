@@ -17,6 +17,11 @@
 #include "util.h"
 #include "legacy/gsm_color_button.h"
 
+constexpr double BORDER_ALPHA = 0.7;
+constexpr double GRID_ALPHA = BORDER_ALPHA / 2.0;
+constexpr int FRAME_WIDTH = 4;
+constexpr unsigned GRAPH_MIN_HEIGHT = 40;
+
 void
 LoadGraph::clear_background ()
 {
@@ -170,8 +175,6 @@ format_duration (unsigned seconds)
   return caption;
 }
 
-const int FRAME_WIDTH = 4;
-
 static void
 force_refresh (LoadGraph * const graph)
 {
@@ -212,8 +215,6 @@ draw_background (LoadGraph *graph)
   cairo_surface_t *surface;
   GdkRGBA fg;
   GdkRGBA fg_grid;
-  double const border_alpha = 0.7;
-  double const grid_alpha = border_alpha / 2.0;
 
   num_bars = graph->num_bars ();
   graph->graph_dely = (graph->draw_height - 15) / num_bars;   /* round to int to avoid AA blur */
@@ -299,9 +300,9 @@ draw_background (LoadGraph *graph)
       g_free (caption);
 
       if (i == 0 || i == num_bars)
-        fg_grid.alpha = border_alpha;
+        fg_grid.alpha = BORDER_ALPHA;
       else
-        fg_grid.alpha = grid_alpha;
+        fg_grid.alpha = GRID_ALPHA;
 
       gdk_cairo_set_source_rgba (cr, &fg_grid);
       cairo_move_to (cr, graph->indent, i * graph->graph_dely + 0.5);
@@ -317,9 +318,9 @@ draw_background (LoadGraph *graph)
       double x = (i) * (graph->draw_width - graph->rmargin - graph->indent) / 6;
 
       if (i == 0 || i == 6)
-        fg_grid.alpha = border_alpha;
+        fg_grid.alpha = BORDER_ALPHA;
       else
-        fg_grid.alpha = grid_alpha;
+        fg_grid.alpha = GRID_ALPHA;
 
       gdk_cairo_set_source_rgba (cr, &fg_grid);
       cairo_move_to (cr, (ceil (x) + 0.5) + graph->indent, 0.5);
@@ -1024,7 +1025,7 @@ LoadGraph::LoadGraph(guint type)
   render_counter = (frames_per_unit - 1);
 
   main_widget = GTK_BOX (gtk_box_new (GTK_ORIENTATION_VERTICAL, 6));
-  gtk_widget_set_size_request (GTK_WIDGET (main_widget), -1, LoadGraph::GRAPH_MIN_HEIGHT);
+  gtk_widget_set_size_request (GTK_WIDGET (main_widget), -1, GRAPH_MIN_HEIGHT);
   gtk_widget_show (GTK_WIDGET (main_widget));
 
   disp = GTK_DRAWING_AREA (gtk_drawing_area_new ());
