@@ -218,7 +218,7 @@ draw_background (LoadGraph *graph)
   num_bars = graph->num_bars ();
   graph->graph_dely = (graph->draw_height - 15) / num_bars;   /* round to int to avoid AA blur */
   graph->real_draw_height = graph->graph_dely * num_bars;
-  graph->graph_delx = (graph->draw_width - 2.0 - graph->indent) / (graph->num_points - 3);
+  graph->graph_delx = (graph->draw_width - 2 - graph->indent) / (graph->num_points - 3);
   graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH;
 
   gtk_widget_get_allocation (GTK_WIDGET (graph->disp), &allocation);
@@ -918,7 +918,7 @@ LoadGraph::LoadGraph(guint type)
   frames_per_unit (10),    // this will be changed but needs initialising
   graph_dely (0),
   real_draw_height (0),
-  graph_delx (0.0),
+  graph_delx (0),
   graph_buffer_offset (0),
   colors (),
   data_block (),
