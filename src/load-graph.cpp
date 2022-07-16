@@ -183,7 +183,6 @@ draw_background (LoadGraph *graph)
   unsigned num_bars;
   gchar *caption;
   PangoLayout*layout;
-  PangoAttrList *attrs = NULL;
   PangoFontDescription*font_desc;
   PangoRectangle extents;
   cairo_surface_t *surface;
@@ -209,12 +208,7 @@ draw_background (LoadGraph *graph)
 
   gtk_style_context_get_color (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get ()->stack)), &fg);
 
-  cairo_paint_with_alpha (cr, 0.0);
   layout = pango_cairo_create_layout (cr);
-
-  attrs = make_tnum_attr_list ();
-  pango_layout_set_attributes (layout, attrs);
-  g_clear_pointer (&attrs, pango_attr_list_unref);
 
   gtk_style_context_get (context, gtk_widget_get_state_flags (GTK_WIDGET (GsmApplication::get ()->stack)), GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
   pango_font_description_set_size (font_desc, 0.8 * graph->fontsize * PANGO_SCALE);
@@ -468,7 +462,6 @@ load_graph_draw (GtkWidget *widget,
           // to avoid a weird bug where it's not filling the area it should completely.
           cairo_rel_line_to (cr, x_offset * 2, 0);
 
-          //cairo_stroke_preserve(cr);
           cairo_close_path (cr);
           cairo_fill (cr);
         }
