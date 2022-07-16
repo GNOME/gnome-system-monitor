@@ -183,18 +183,18 @@ load_graph_state_changed (GtkWidget     *widget,
 
 static void
 draw_background (LoadGraph *graph, int width, int height) {
+    GdkRGBA fg;
+    GdkRGBA fg_grid;
     GtkAllocation allocation;
     GtkNative *native;
-    cairo_t *cr;
     guint i;
     double label_x_offset_modifier, label_y_offset_modifier;
     gchar *caption;
     PangoLayout*layout;
-    PangoFontDescription*font_desc;
     PangoRectangle extents;
+    PangoFontDescription *font_desc;
+    cairo_t *cr;
     cairo_surface_t *surface;
-    GdkRGBA fg;
-    GdkRGBA fg_grid;
     double const border_alpha = 0.7;
     double const grid_alpha = border_alpha / 2.0;
 
@@ -840,8 +840,8 @@ LoadGraph::LoadGraph(guint type)
     frames_per_unit (10),  // this will be changed but needs initialising
     num_bars (0),
     graph_dely (0),
-    real_draw_height (0),
     graph_delx (0.0),
+    real_draw_height (0),
     graph_buffer_offset (0),
     colors (),
     data_block (),

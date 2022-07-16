@@ -58,10 +58,10 @@ struct LoadGraph
     guint render_counter;
     guint frames_per_unit;
     guint graph_dely;
-    guint num_bars;
-    guint real_draw_height;
     double graph_delx;
     guint graph_buffer_offset;
+    guint num_bars;
+    guint real_draw_height;
 
     std::vector<GdkRGBA> colors;
 
