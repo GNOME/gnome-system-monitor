@@ -212,11 +212,15 @@ create_background (LoadGraph *graph)
   GdkRGBA fg;
   GdkRGBA fg_grid;
 
+  /* Graph length */
+  const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * graph->frames_per_unit;
+
+  /* Initialize graph dimensions */
   num_bars = graph->num_bars ();
   graph->graph_dely = (graph->draw_height - 15) / num_bars;   /* round to int to avoid AA blur */
-  graph->real_draw_height = graph->graph_dely * num_bars;
   graph->graph_delx = (graph->draw_width - 2 - graph->indent) / (graph->num_points - 3);
   graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH;
+  graph->real_draw_height = graph->graph_dely * num_bars;
 
   gtk_widget_get_allocation (GTK_WIDGET (graph->disp), &allocation);
   surface = gdk_window_create_similar_surface (gtk_widget_get_window (GTK_WIDGET (graph->disp)),
@@ -305,9 +309,6 @@ create_background (LoadGraph *graph)
       cairo_line_to (cr, graph->draw_width - graph->rmargin + 0.5 + 4, i * graph->graph_dely + 0.5);
       cairo_stroke (cr);
     }
-
-
-  const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * graph->frames_per_unit;
 
   for (unsigned int i = 0; i < 7; i++)
     {
