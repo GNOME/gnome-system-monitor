@@ -866,7 +866,6 @@ LoadGraph::LoadGraph(guint type)
     cpu (),
     net ()
 {
-    LoadGraph * const graph = this;
     font_settings->signal_changed (FONT_SETTING_SCALING).connect ([this](const Glib::ustring&) {
         load_graph_rescale (this);
     });
@@ -961,13 +960,12 @@ LoadGraph::LoadGraph(guint type)
     gtk_widget_set_hexpand (GTK_WIDGET (disp), TRUE);
     gtk_drawing_area_set_draw_func (disp,
                                     load_graph_draw,
-                                    graph,
+                                    this,
                                     NULL);
     g_signal_connect (G_OBJECT (disp), "destroy",
-                      G_CALLBACK (load_graph_destroy), graph);
+                      G_CALLBACK (load_graph_destroy), this);
     g_signal_connect (G_OBJECT (disp), "state-flags-changed",
-                      G_CALLBACK (load_graph_state_changed), graph);
-
+                      G_CALLBACK (load_graph_state_changed), this);
     gtk_box_prepend (main_widget, GTK_WIDGET (disp));
 
     data = std::vector<double*>(num_points);
@@ -982,7 +980,7 @@ LoadGraph::LoadGraph(guint type)
 void
 load_graph_start (LoadGraph *graph)
 {
-    if (!graph->timer_index) {
+    if (graph->timer_index == 0) {
         // Update the data two times so the graph
         // doesn't wait one cycle to start drawing.
         load_graph_update_data (graph);
