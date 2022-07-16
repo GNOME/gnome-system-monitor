@@ -937,7 +937,6 @@ load_graph_destroy (GtkWidget *widget,
   return FALSE;
 }
 
-
 LoadGraph::LoadGraph(guint type)
   : fontsize (8.0),
   rmargin (6 * fontsize),
@@ -970,8 +969,6 @@ LoadGraph::LoadGraph(guint type)
   cpu (),
   net ()
 {
-  LoadGraph * const graph = this;
-
   font_settings->signal_changed (FONT_SETTING_SCALING).connect ([this](const Glib::ustring&) {
     load_graph_rescale (this);
   });
@@ -1067,15 +1064,15 @@ LoadGraph::LoadGraph(guint type)
   disp = GTK_DRAWING_AREA (gtk_drawing_area_new ());
   gtk_widget_show (GTK_WIDGET (disp));
   g_signal_connect (G_OBJECT (disp), "draw",
-                    G_CALLBACK (load_graph_draw), graph);
+                    G_CALLBACK (load_graph_draw), this);
   g_signal_connect (G_OBJECT (disp), "configure_event",
-                    G_CALLBACK (load_graph_configure), graph);
+                    G_CALLBACK (load_graph_configure), this);
   g_signal_connect (G_OBJECT (disp), "destroy",
-                    G_CALLBACK (load_graph_destroy), graph);
+                    G_CALLBACK (load_graph_destroy), this);
   g_signal_connect (G_OBJECT (disp), "state-flags-changed",
-                    G_CALLBACK (load_graph_state_changed), graph);
+                    G_CALLBACK (load_graph_state_changed), this);
   g_signal_connect (G_OBJECT (disp), "style-updated",
-                    G_CALLBACK (load_graph_style_updated), graph);
+                    G_CALLBACK (load_graph_style_updated), this);
 
   gtk_widget_set_events (GTK_WIDGET (disp), GDK_EXPOSURE_MASK);
 
