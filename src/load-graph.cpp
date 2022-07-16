@@ -944,8 +944,8 @@ LoadGraph::LoadGraph(guint type)
   indent (18.0),
   n (0),
   type (type),
-  speed (0),
-  num_points (0),
+  speed (GsmApplication::get ()->config.graph_update_interval),
+  num_points (GsmApplication::get ()->config.graph_data_points + 2),
   latest (0),
   draw_width (0),
   draw_height (0),
@@ -1033,10 +1033,6 @@ LoadGraph::LoadGraph(guint type)
         break;
     }
 
-  speed = GsmApplication::get ()->config.graph_update_interval;
-
-  num_points = GsmApplication::get ()->config.graph_data_points + 2;
-
   colors.resize (n);
 
   switch (type)
@@ -1062,9 +1058,7 @@ LoadGraph::LoadGraph(guint type)
         break;
     }
 
-  timer_index = 0;
   render_counter = (frames_per_unit - 1);
-  draw = FALSE;
 
   main_widget = GTK_BOX (gtk_box_new (GTK_ORIENTATION_VERTICAL, 6));
   gtk_widget_set_size_request (GTK_WIDGET (main_widget), -1, LoadGraph::GRAPH_MIN_HEIGHT);
