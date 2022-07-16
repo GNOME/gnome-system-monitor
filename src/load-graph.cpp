@@ -205,11 +205,15 @@ create_background (LoadGraph *graph, int width, int height) {
     cairo_t *cr;
     cairo_surface_t *surface;
 
+    /* Graph length */
+    const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * graph->frames_per_unit;
+
+    /* Initialize graph dimensions */
     graph->num_bars = graph->get_num_bars (height);
     graph->graph_dely = (height - 15) / graph->num_bars; /* round to int to avoid AA blur */
-    graph->real_draw_height = graph->graph_dely * graph->num_bars;
     graph->graph_delx = (width - 2.0 - graph->indent) / (graph->num_points - 3);
     graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH;
+    graph->real_draw_height = graph->graph_dely * graph->num_bars;
 
     gtk_widget_get_allocation (GTK_WIDGET (graph->disp), &allocation);
     native = gtk_widget_get_native (GTK_WIDGET (graph->disp));
@@ -304,7 +308,6 @@ create_background (LoadGraph *graph, int width, int height) {
     }
 
 
-    const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * graph->frames_per_unit;
 
     for (unsigned int i = 0; i < 7; i++) {
         PangoRectangle extents;
