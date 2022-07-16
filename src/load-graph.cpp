@@ -202,14 +202,14 @@ load_graph_state_changed (GtkWidget     *widget,
 static cairo_surface_t*
 create_background (LoadGraph *graph, int width, int height)
 {
-  GtkAllocation allocation;
-  GtkNative *native;
-  cairo_t *cr;
-  PangoFontDescription *font_desc;
-  PangoLayout *layout;
-  cairo_surface_t *surface;
   GdkRGBA fg;
   GdkRGBA fg_grid;
+  GtkAllocation allocation;
+  GtkNative *native;
+  PangoFontDescription *font_desc;
+  PangoLayout *layout;
+  cairo_t *cr;
+  cairo_surface_t *surface;
 
   /* Graph length */
   const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * graph->frames_per_unit;
@@ -883,8 +883,8 @@ LoadGraph::LoadGraph(guint type)
   frames_per_unit (10),    // this will be changed but needs initialising
   num_bars (0),
   graph_dely (0),
-  real_draw_height (0),
   graph_delx (0),
+  real_draw_height (0),
   graph_buffer_offset (0),
   colors (),
   data_block (),
