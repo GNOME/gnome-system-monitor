@@ -213,8 +213,8 @@ load_graph_state_changed (GtkWidget     *widget,
 static cairo_surface_t*
 create_background (LoadGraph *graph, int width, int height)
 {
-  GdkRGBA fg;
-  GdkRGBA fg_grid;
+  GdkRGBA fg_color;
+  GdkRGBA grid_color;
   GtkAllocation allocation;
   GtkNative *native;
   PangoContext *pango_context;
@@ -241,10 +241,6 @@ create_background (LoadGraph *graph, int width, int height)
                                                 allocation.height);
   cr = cairo_create (surface);
 
-  GtkStyleContext *context = gtk_widget_get_style_context (GTK_WIDGET (GsmApplication::get ()->stack));
-
-  gtk_style_context_get_color (context, &fg);
-
   layout = pango_cairo_create_layout (cr);
 
   pango_context = gtk_widget_get_pango_context (GTK_WIDGET (GsmApplication::get ()->stack));
@@ -261,6 +257,8 @@ create_background (LoadGraph *graph, int width, int height)
    * display, which makes the user unhappy. To fix
    * this, here we offer the user a chance to set
    * his favorite background color. */
+  GtkStyleContext *context = gtk_widget_get_style_context (GTK_WIDGET (graph->disp));
+
   gtk_style_context_save (context);
 
   /* Here we specify the name of the class. Now in
@@ -268,13 +266,11 @@ create_background (LoadGraph *graph, int width, int height)
    * for this class. */
   gtk_style_context_add_class (context, "loadgraph");
 
-  /* And in case the user does not care, we add
-   * classes that usually have a white background. */
-  // gtk_style_context_add_class (context, GTK_STYLE_CLASS_PAPER);
-  // gtk_style_context_add_class (context, GTK_STYLE_CLASS_ENTRY);
-
-  /* And, as a bonus, the user can choose the color of the grid. */
-  gtk_style_context_get_color (context, &fg_grid);
+  /* Get foreground color */
+  gtk_style_context_get_color (context, &fg_color);
+  /* The grid color is the same as the foreground color but has sometimes
+   * different alpha. Keep it separate. */
+  grid_color = *(gdk_rgba_copy (&fg_color));
 
   /* Why not use the new features of the
    * GTK instead of cairo_rectangle ?! :) */
@@ -298,8 +294,9 @@ create_background (LoadGraph *graph, int width, int height)
       else
         y = i * graph->graph_dely + graph->fontsize / 2.0;
 
-      gdk_cairo_set_source_rgba (cr, &fg);
-      gchar *caption = graph->get_caption (i);
+      gdk_cairo_set_source_rgba (cr, &fg_color);
+      gchar caption = graph->get_caption (i);
+      pango_layout_set_alignment (layout, PANGO_ALIGN_LEFT);
       pango_layout_set_text (layout, caption, -1);
       pango_layout_get_extents (layout, NULL, &extents);
       double label_y_offset_modifier = i == 0 ? 0.5
@@ -312,11 +309,11 @@ create_background (LoadGraph *graph, int width, int height)
       g_free (caption);
 
       if (i == 0 || i == graph->num_bars)
-        fg_grid.alpha = BORDER_ALPHA;
+        grid_color.alpha = BORDER_ALPHA;
       else
-        fg_grid.alpha = GRID_ALPHA;
+        grid_color.alpha = GRID_ALPHA;
 
-      gdk_cairo_set_source_rgba (cr, &fg_grid);
+      gdk_cairo_set_source_rgba (cr, &grid_color);
       cairo_move_to (cr, graph->indent, i * graph->graph_dely);
       cairo_line_to (cr, width - graph->rmargin + 4, i * graph->graph_dely);
       cairo_stroke (cr);
@@ -329,11 +326,11 @@ create_background (LoadGraph *graph, int width, int height)
       double x = ceil (i * (width - graph->rmargin - graph->indent) / 6);
 
       if (i == 0 || i == 6)
-        fg_grid.alpha = BORDER_ALPHA;
+        grid_color.alpha = BORDER_ALPHA;
       else
-        fg_grid.alpha = GRID_ALPHA;
+        grid_color.alpha = GRID_ALPHA;
 
-      gdk_cairo_set_source_rgba (cr, &fg_grid);
+      gdk_cairo_set_source_rgba (cr, &grid_color);
       cairo_move_to (cr, x + graph->indent, 0);
       cairo_line_to (cr, x + graph->indent, graph->real_draw_height + 4);
       cairo_stroke (cr);
@@ -348,7 +345,7 @@ create_background (LoadGraph *graph, int width, int height)
       cairo_move_to (cr,
                      x + graph->indent - label_x_offset_modifier * extents.width / PANGO_SCALE + 1.0,
                      height - 1.0 * extents.height / PANGO_SCALE);
-      gdk_cairo_set_source_rgba (cr, &fg);
+      gdk_cairo_set_source_rgba (cr, &fg_color);
       pango_cairo_show_layout (cr, layout);
       g_free (caption);
     }

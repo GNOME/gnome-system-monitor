@@ -47,10 +47,9 @@
 static const char*LOAD_GRAPH_CSS = "\
 .loadgraph {\
     background: linear-gradient(to bottom,\
-                      @theme_bg_color,\
-                      @theme_base_color\
-                      );\
-    color: mix(@theme_fg_color, @theme_bg_color, 0.5);\
+                  @window_bg_color,\
+                  @view_bg_color);\
+    color: mix(@window_fg_color, @window_bg_color, 0.5);\
 }\
 ";
 
