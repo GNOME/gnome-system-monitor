@@ -314,7 +314,7 @@ create_background (LoadGraph *graph)
     {
       PangoRectangle extents;
 
-      double x = (i) * (graph->draw_width - graph->rmargin - graph->indent) / 6;
+      double x = ceil (i * (graph->draw_width - graph->rmargin - graph->indent) / 6);
 
       if (i == 0 || i == 6)
         fg_grid.alpha = BORDER_ALPHA;
@@ -322,8 +322,8 @@ create_background (LoadGraph *graph)
         fg_grid.alpha = GRID_ALPHA;
 
       gdk_cairo_set_source_rgba (cr, &fg_grid);
-      cairo_move_to (cr, (ceil (x) + 0.5) + graph->indent, 0.5);
-      cairo_line_to (cr, (ceil (x) + 0.5) + graph->indent, graph->real_draw_height + 4.5);
+      cairo_move_to (cr, x + 0.5 + graph->indent, 0.5);
+      cairo_line_to (cr, x + 0.5 + graph->indent, graph->real_draw_height + 4.5);
       cairo_stroke (cr);
 
       gchar *caption = format_duration (total_seconds - i * total_seconds / 6);
@@ -334,7 +334,7 @@ create_background (LoadGraph *graph)
                                             ? 1.0
                                             : 0.5;
       cairo_move_to (cr,
-                     (ceil (x) + 0.5 + graph->indent) - label_x_offset_modifier * extents.width / PANGO_SCALE + 1.0,
+                     x + 0.5 + graph->indent - label_x_offset_modifier * extents.width / PANGO_SCALE + 1.0,
                      graph->draw_height - 1.0 * extents.height / PANGO_SCALE);
       gdk_cairo_set_source_rgba (cr, &fg);
       pango_cairo_show_layout (cr, layout);
