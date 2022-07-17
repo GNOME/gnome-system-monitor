@@ -223,13 +223,10 @@ create_background (LoadGraph *graph, int width, int height) {
                                                   allocation.height);
     cr = cairo_create (surface);
 
-    stack = GTK_WIDGET (GsmApplication::get ()->stack);
-    GtkStyleContext *context = gtk_widget_get_style_context (stack);
-
-    gtk_style_context_get_color (context, &fg);
-
+    /* Create grid label layout */
     PangoLayout *layout = pango_cairo_create_layout (cr);
 
+    /* Set font for graph labels */
     pango_context = gtk_widget_get_pango_context (GTK_WIDGET (GsmApplication::get()->stack));
     font_desc = pango_context_get_font_description (pango_context);
     pango_font_description_set_size (font_desc, 0.8 * graph->fontsize * PANGO_SCALE);
@@ -237,6 +234,11 @@ create_background (LoadGraph *graph, int width, int height) {
 
     /* draw frame */
     cairo_translate (cr, FRAME_WIDTH, FRAME_WIDTH);
+
+    /* Get foreground color */
+    stack = GTK_WIDGET (GsmApplication::get ()->stack);
+    GtkStyleContext *context = gtk_widget_get_style_context (stack);
+    gtk_style_context_get_color (context, &fg);
 
     /* Draw background rectangle */
     /* When a user uses a dark theme, the hard-coded
@@ -269,78 +271,120 @@ create_background (LoadGraph *graph, int width, int height) {
 
     cairo_set_line_width (cr, 1.0);
 
+    /* Horizontal grid lines */
     for (guint i = 0; i <= graph->num_bars; i++) {
         PangoRectangle extents;
 
+        /* Label alignment */
         double y;
         if (i == 0) {
+            /* Below the line */
             y = 0.5 + graph->fontsize / 2.0;
         } else if (i == graph->num_bars) {
+            /* Above the line */
             y = i * graph->graph_dely + 0.5;
         } else {
+            /* Next to the line */
             y = i * graph->graph_dely + graph->fontsize / 2.0;
         }
 
-        gdk_cairo_set_source_rgba (cr, &fg);
-        pango_layout_set_alignment (layout, PANGO_ALIGN_LEFT);
+        /* Draw the label */
+        /* Prepare the text */
         gchar *caption = graph->get_caption (i);
         pango_layout_set_text (layout, caption, -1);
+        pango_layout_set_alignment (layout, PANGO_ALIGN_LEFT);
         pango_layout_get_extents (layout, NULL, &extents);
+
+        /* Create y axis position modifier */
         double label_y_offset_modifier = i == 0 ? 0.5
                                 : i == graph->num_bars
                                     ? 1.0
                                     : 0.85;
-        cairo_move_to (cr, width - graph->indent - 23,
+
+        /* Set the label position */
+        cairo_move_to (cr,
+                       width - graph->indent - 23,
                        y - label_y_offset_modifier * extents.height / PANGO_SCALE);
+
+        /* Set the color */
+        gdk_cairo_set_source_rgba (cr, &fg);
+
+        /* Paint the grid label */
         pango_cairo_show_layout (cr, layout);
         g_free (caption);
 
+        /* Set the grid line alpha */
         if (i == 0 || i == graph->num_bars) {
             fg_grid.alpha = BORDER_ALPHA;
         } else {
             fg_grid.alpha = GRID_ALPHA;
         }
 
+        /* Draw the line */
+        /* Set the color */
         gdk_cairo_set_source_rgba (cr, &fg_grid);
+        /* Set the grid line path */
         cairo_move_to (cr, graph->indent, i * graph->graph_dely + 0.5);
-        cairo_line_to (cr, width - graph->rmargin + 0.5 + 4, i * graph->graph_dely + 0.5);
-        cairo_stroke (cr);
+        cairo_line_to (cr,
+                       width - graph->rmargin + 0.5 + 4,
+                       i * graph->graph_dely + 0.5);
     }
 
-
-
+    /* Vertical grid lines */
     for (unsigned int i = 0; i < 7; i++) {
         PangoRectangle extents;
 
-        double x = (i) * (width - graph->rmargin - graph->indent) / 6;
+        /* Prepare the x position */
+        double x = (i) * (width - graph->rmargin - graph->indent) / 6);
 
+        /* Draw the label */
+        /* Prepare the text */
+        gchar *caption = format_duration (total_seconds - i * total_seconds / 6);
+        pango_layout_set_text (layout, caption, -1);
+        pango_layout_get_extents (layout, NULL, &extents);
+
+        /* Create x axis position modifier */
+        double label_x_offset_modifier = i == 0 ? 0
+                                         : i == 6
+                                            ? 1.0
+                                            : 0.5;
+
+        /* Set the label position */
+        cairo_move_to (cr,
+                       (ceil (x) + 0.5 + graph->indent) - label_x_offset_modifier * extents.width / PANGO_SCALE + 1.0,
+                       height - 1.0 * extents.height / PANGO_SCALE);
+
+        /* Set the color */
+        gdk_cairo_set_source_rgba (cr, &fg);
+
+        /* Paint the grid label */
+        pango_cairo_show_layout (cr, layout);
+        g_free (caption);
+
+        /* Set the grid line alpha */
         if (i == 0 || i == 6) {
             fg_grid.alpha = BORDER_ALPHA;
         } else {
             fg_grid.alpha = GRID_ALPHA;
         }
 
+        /* Draw the line */
+        /* Set the color */
         gdk_cairo_set_source_rgba (cr, &fg_grid);
-        cairo_move_to (cr, (ceil (x) + 0.5) + graph->indent, 0.5);
-        cairo_line_to (cr, (ceil (x) + 0.5) + graph->indent, graph->real_draw_height + 4.5);
-        cairo_stroke (cr);
 
-        gchar *caption = format_duration (total_seconds - i * total_seconds / 6);
-        pango_layout_set_text (layout, caption, -1);
-        pango_layout_get_extents (layout, NULL, &extents);
-        double label_x_offset_modifier = i == 0 ? 0
-                                         : i == 6
-                                            ? 1.0
-                                            : 0.5;
+        /* Set the grid line path */
         cairo_move_to (cr,
-                       (ceil (x) + 0.5 + graph->indent) - label_x_offset_modifier * extents.width / PANGO_SCALE + 1.0,
-                       height - 1.0 * extents.height / PANGO_SCALE);
-        gdk_cairo_set_source_rgba (cr, &fg);
-        pango_cairo_show_layout (cr, layout);
-        g_free (caption);
+                       (ceil (x) + 0.5) + graph->indent,
+                       0.5);
+        cairo_line_to (cr,
+                       (ceil (x) + 0.5) + graph->indent,
+                       graph->real_draw_height + 4.5);
     }
-    g_object_unref (layout);
+
+    /* Paint */
     cairo_stroke (cr);
+
+    g_object_unref (layout);
     cairo_destroy (cr);
 
     return surface;
@@ -370,30 +414,43 @@ load_graph_draw (GtkDrawingArea *drawing_area,
     /* Adjustment for smooth movement between samples */
     x_offset -= sample_width * graph->render_counter / (double)graph->frames_per_unit;
 
-    /* draw the graph */
-
+    /* Draw background */
     cairo_set_source_surface (cr, graph->background, 0, 0);
     cairo_paint (cr);
 
+    /* Set the drawing style */
     cairo_set_line_width (cr, 1);
     cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
     cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
-    cairo_rectangle (cr, graph->indent + FRAME_WIDTH + 1, FRAME_WIDTH - 1,
+
+    /* Clip the drawing area to the inside of the drawn background */
+    cairo_rectangle (cr,
+                     graph->indent + FRAME_WIDTH + 1,
+                     FRAME_WIDTH - 1,
                      width - graph->rmargin - graph->indent - 1,
                      graph->real_draw_height + FRAME_WIDTH - 1);
     cairo_clip (cr);
 
     bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get ()->config.draw_stacked;
     bool drawSmooth = GsmApplication::get ()->config.draw_smooth;
+
+    /* Draw every graph */
     for (gint j = graph->n - 1; j >= 0; j--) {
+        /* Set the color of the currently drawn graph */
         gdk_cairo_set_source_rgba (cr, &(graph->colors [j]));
-        // Start drawing on the right at the correct height.
-        cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height + 3);
-            if (graph->data[i][j] == -1.0f)
+
+        /* Start drawing on the right at the correct height */
+        cairo_move_to (cr,
+                       x_offset,
+                       (1.0f - graph->data[0][j]) * draw_height + 3);
+
         /* Draw the path of the line
            Loop starts at 1 because the curve accesses the 0th data point */
         for (gint i = 1; i < graph->num_points; i++) {
+            if (graph->data[i][j] == -1.0f) {
                 continue;
+            }
+
             if (drawSmooth) {
                 cairo_curve_to (cr,
                                 x_offset - ((i - 0.5f) * graph->graph_delx),
@@ -403,17 +460,19 @@ load_graph_draw (GtkDrawingArea *drawing_area,
                                 x_offset - (i * graph->graph_delx),
                                 (1.0 - graph->data[i][j]) * graph->real_draw_height + 3);
             } else {
-                cairo_line_to (cr, x_offset - (i * graph->graph_delx),
+                cairo_line_to (cr,
+                               x_offset - (i * graph->graph_delx),
                                (1.0 - graph->data[i][j]) * graph->real_draw_height + 3);
             }
         }
 
         if (drawStacked) {
-            // Draw the remaining outline of the area:
-            // Left bottom corner
             cairo_rel_line_to (cr, 0, graph->real_draw_height + 3);
-            // Right bottom corner. It's drawn far outside the visible area
-            // to avoid a weird bug where it's not filling the area it should completely.
+            /* Draw the remaining outline of the area */
+            /* Left bottom corner */
+            /* Right bottom corner.
+               It's drawn far outside the visible area to avoid a weird bug
+               where it's not filling the area it should completely */
             cairo_rel_line_to (cr, x_offset * 2, 0);
 
             cairo_close_path (cr);
