@@ -171,6 +171,16 @@ load_graph_rescale (LoadGraph *graph) {
 }
 
 static void
+load_graph_resize (GtkDrawingArea *disp,
+                   gint            width,
+                   gint            height,
+                   gpointer        data_ptr) {
+    LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
+
+    force_refresh (graph);
+}
+
+static void
 load_graph_state_changed (GtkWidget     *widget,
                           GtkStateFlags *flags,
                           gpointer       data_ptr)
@@ -958,6 +968,8 @@ LoadGraph::LoadGraph(guint type)
                       G_CALLBACK (load_graph_destroy), this);
     g_signal_connect (G_OBJECT (disp), "state-flags-changed",
                       G_CALLBACK (load_graph_state_changed), this);
+    g_signal_connect (G_OBJECT (disp), "resize",
+                      G_CALLBACK (load_graph_resize), this);
     gtk_box_prepend (main_widget, GTK_WIDGET (disp));
 
     data = std::vector<double*>(num_points);
