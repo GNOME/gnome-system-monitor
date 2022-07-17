@@ -305,8 +305,8 @@ create_background (LoadGraph *graph)
         fg_grid.alpha = GRID_ALPHA;
 
       gdk_cairo_set_source_rgba (cr, &fg_grid);
-      cairo_move_to (cr, graph->indent, i * graph->graph_dely + 0.5);
-      cairo_line_to (cr, graph->draw_width - graph->rmargin + 0.5 + 4, i * graph->graph_dely + 0.5);
+      cairo_move_to (cr, graph->indent, i * graph->graph_dely);
+      cairo_line_to (cr, graph->draw_width - graph->rmargin + 4, i * graph->graph_dely);
       cairo_stroke (cr);
     }
 
@@ -322,8 +322,8 @@ create_background (LoadGraph *graph)
         fg_grid.alpha = GRID_ALPHA;
 
       gdk_cairo_set_source_rgba (cr, &fg_grid);
-      cairo_move_to (cr, x + 0.5 + graph->indent, 0.5);
-      cairo_line_to (cr, x + 0.5 + graph->indent, graph->real_draw_height + 4.5);
+      cairo_move_to (cr, x + graph->indent, 0);
+      cairo_line_to (cr, x + graph->indent, graph->real_draw_height + 4);
       cairo_stroke (cr);
 
       gchar *caption = format_duration (total_seconds - i * total_seconds / 6);
@@ -334,7 +334,7 @@ create_background (LoadGraph *graph)
                                             ? 1.0
                                             : 0.5;
       cairo_move_to (cr,
-                     x + 0.5 + graph->indent - label_x_offset_modifier * extents.width / PANGO_SCALE + 1.0,
+                     x + graph->indent - label_x_offset_modifier * extents.width / PANGO_SCALE + 1.0,
                      graph->draw_height - 1.0 * extents.height / PANGO_SCALE);
       gdk_cairo_set_source_rgba (cr, &fg);
       pango_cairo_show_layout (cr, layout);
@@ -388,7 +388,7 @@ load_graph_draw (GtkWidget *widget,
   gdouble sample_width = (double)(graph->draw_width - graph->rmargin - graph->indent) / (double)graph->num_points;
   /* Lines start at the right edge of the drawing,
    * a bit outside the clip rectangle. */
-  gdouble x_offset = graph->draw_width - graph->rmargin + sample_width + 2;
+  gdouble x_offset = graph->draw_width - graph->rmargin + sample_width;
   /* Adjustment for smooth movement between samples */
   x_offset -= sample_width * graph->render_counter / (double)graph->frames_per_unit;
 
@@ -402,10 +402,13 @@ load_graph_draw (GtkWidget *widget,
   cairo_set_line_width (cr, 1);
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
   cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
-  cairo_rectangle (cr, graph->indent + FRAME_WIDTH + 1, FRAME_WIDTH - 1,
-                   graph->draw_width - graph->rmargin - graph->indent - 1,
-                   graph->real_draw_height + FRAME_WIDTH - 1);
+  cairo_rectangle (cr, graph->indent + FRAME_WIDTH, FRAME_WIDTH,
+                   graph->draw_width - graph->rmargin - graph->indent,
+                   graph->real_draw_height);
   cairo_clip (cr);
+
+  /* The clipped region does not start from y == 0 but from FRAME_WIDTH */
+  gint draw_height = graph->real_draw_height + FRAME_WIDTH;
 
   bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get ()->config.draw_stacked;
   bool drawSmooth = GsmApplication::get ()->config.draw_smooth;
@@ -414,7 +417,7 @@ load_graph_draw (GtkWidget *widget,
     {
       gdk_cairo_set_source_rgba (cr, &(graph->colors [j]));
       // Start drawing on the right at the correct height.
-      cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * graph->real_draw_height + 3);
+      cairo_move_to (cr, x_offset, (1.0f - graph->data[0][j]) * draw_height);
       /* Draw the path of the line
          Loop starts at 1 because the curve accesses the 0th data point */
       for (gint i = 1; i < graph->num_points; i++)
@@ -424,20 +427,20 @@ load_graph_draw (GtkWidget *widget,
           if (drawSmooth)
             cairo_curve_to (cr,
                             x_offset - ((i - 0.5f) * graph->graph_delx),
-                            (1.0 - graph->data[i - 1][j]) * graph->real_draw_height + 3,
+                            (1.0 - graph->data[i - 1][j]) * draw_height,
                             x_offset - ((i - 0.5f) * graph->graph_delx),
-                            (1.0 - graph->data[i][j]) * graph->real_draw_height + 3,
+                            (1.0 - graph->data[i][j]) * draw_height,
                             x_offset - (i * graph->graph_delx),
-                            (1.0 - graph->data[i][j]) * graph->real_draw_height + 3);
+                            (1.0 - graph->data[i][j]) * draw_height);
           else
             cairo_line_to (cr, x_offset - (i * graph->graph_delx),
-                           (1.0 - graph->data[i][j]) * graph->real_draw_height + 3);
+                           (1.0 - graph->data[i][j]) * draw_height);
         }
       if (drawStacked)
         {
           // Draw the remaining outline of the area:
           // Left bottom corner
-          cairo_rel_line_to (cr, 0, graph->real_draw_height + 3);
+          cairo_rel_line_to (cr, 0, draw_height);
           // Right bottom corner. It's drawn far outside the visible area
           // to avoid a weird bug where it's not filling the area it should completely.
           cairo_rel_line_to (cr, x_offset * 2, 0);
