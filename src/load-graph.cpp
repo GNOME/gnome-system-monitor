@@ -335,7 +335,7 @@ create_background (LoadGraph *graph, int width, int height) {
         PangoRectangle extents;
 
         /* Prepare the x position */
-        double x = (i) * (width - graph->rmargin - graph->indent) / 6);
+        double x = ceil (i * (width - graph->rmargin - graph->indent) / 6);
 
         /* Draw the label */
         /* Prepare the text */
@@ -351,7 +351,7 @@ create_background (LoadGraph *graph, int width, int height) {
 
         /* Set the label position */
         cairo_move_to (cr,
-                       (ceil (x) + 0.5 + graph->indent) - label_x_offset_modifier * extents.width / PANGO_SCALE + 1.0,
+                       x + 0.5 + graph->indent - label_x_offset_modifier * extents.width / PANGO_SCALE + 1.0,
                        height - 1.0 * extents.height / PANGO_SCALE);
 
         /* Set the color */
@@ -374,10 +374,10 @@ create_background (LoadGraph *graph, int width, int height) {
 
         /* Set the grid line path */
         cairo_move_to (cr,
-                       (ceil (x) + 0.5) + graph->indent,
+                       x + 0.5 + graph->indent,
                        0.5);
         cairo_line_to (cr,
-                       (ceil (x) + 0.5) + graph->indent,
+                       x + 0.5 + graph->indent,
                        graph->real_draw_height + 4.5);
     }
 
