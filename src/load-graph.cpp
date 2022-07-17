@@ -197,6 +197,7 @@ draw_background (LoadGraph *graph, int width, int height) {
     GdkRGBA fg_grid;
     GtkAllocation allocation;
     GtkNative *native;
+    GtkWidget *stack;
     guint i;
     double label_x_offset_modifier, label_y_offset_modifier;
     gchar *caption;
@@ -223,7 +224,8 @@ draw_background (LoadGraph *graph, int width, int height) {
                                                   allocation.height);
     cr = cairo_create (surface);
 
-    GtkStyleContext *context = gtk_widget_get_style_context (GTK_WIDGET (GsmApplication::get ()->stack));
+    stack = GTK_WIDGET (GsmApplication::get ()->stack);
+    GtkStyleContext *context = gtk_widget_get_style_context (stack);
 
     gtk_style_context_get_color (context, &fg);
 
@@ -248,12 +250,12 @@ draw_background (LoadGraph *graph, int width, int height) {
     /* Here we specify the name of the class. Now in
      * the theme's CSS we can specify the own colors
      * for this class. */
-    gtk_style_context_add_class (context, "loadgraph");
+    gtk_widget_add_css_class (stack, "loadgraph");
 
     /* And in case the user does not care, we add
      * classes that usually have a white background. */
-    // gtk_style_context_add_class (context, GTK_STYLE_CLASS_PAPER);
-    // gtk_style_context_add_class (context, GTK_STYLE_CLASS_ENTRY);
+    gtk_widget_add_css_class (stack, "paper");
+    gtk_widget_add_css_class (stack, "entry");
 
     /* And, as a bonus, the user can choose the color of the grid. */
     gtk_style_context_get_color (context, &fg_grid);
