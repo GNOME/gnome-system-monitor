@@ -1004,7 +1004,6 @@ LoadGraph::LoadGraph(guint type)
 
     main_widget = GTK_BOX (gtk_box_new (GTK_ORIENTATION_VERTICAL, 6));
     gtk_widget_set_size_request (GTK_WIDGET (main_widget), -1, LoadGraph::GRAPH_MIN_HEIGHT);
-    gtk_widget_show (GTK_WIDGET (main_widget));
 
     disp = GTK_DRAWING_AREA (gtk_drawing_area_new ());
     gtk_widget_set_vexpand (GTK_WIDGET (disp), TRUE);
