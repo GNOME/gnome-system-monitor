@@ -412,10 +412,10 @@ load_graph_draw (GtkDrawingArea *drawing_area,
   height -= 2 * FRAME_WIDTH;
 
   /* Number of pixels wide for one sample point */
-  gdouble sample_width = (double)(width - graph->rmargin - graph->indent) / (double)graph->num_points;
+  gdouble sample_width = (double)(width - graph->rmargin - graph->indent) / (double)(graph->num_points);
   /* Lines start at the right edge of the drawing,
    * a bit outside the clip rectangle. */
-  gdouble x_offset = width - graph->rmargin + sample_width + 2;
+  gdouble x_offset = width - graph->rmargin + sample_width;
   /* Adjustment for smooth movement between samples */
   x_offset -= sample_width * graph->render_counter / (double)graph->frames_per_unit;
 
