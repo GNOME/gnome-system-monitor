@@ -104,7 +104,7 @@ float LoadGraph::translate_to_log_partial_if_needed (float position_partial)
     return position_partial;
 }
 
-gchar * format_duration (unsigned seconds)
+static gchar* format_duration (unsigned seconds)
 {
     gchar *caption = NULL;
 
