@@ -39,7 +39,7 @@ struct LoadGraph
     LoadGraph (guint type);
     ~LoadGraph();
 
-    unsigned num_bars() const;
+    unsigned get_num_bars(int height) const;
     void clear_background();
     bool is_logarithmic_scale() const;
     char * get_caption(guint index);
@@ -55,10 +55,10 @@ struct LoadGraph
     guint speed;
     guint num_points;
     guint latest;
-    guint draw_width, draw_height;
     guint render_counter;
     guint frames_per_unit;
     guint graph_dely;
+    guint num_bars;
     guint real_draw_height;
     double graph_delx;
     guint graph_buffer_offset;
