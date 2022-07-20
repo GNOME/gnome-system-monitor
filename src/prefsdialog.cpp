@@ -15,9 +15,8 @@
 static AdwPreferencesWindow *prefs_window = NULL;
 
 static gboolean
-prefs_window_delete_event (GtkWidget *widget,
-                           GdkEvent  *event,
-                           gpointer   data)
+prefs_window_close_request (GtkWindow *self,
+                            gpointer   data)
 {
   prefs_window = NULL;
   return FALSE;
@@ -355,9 +354,10 @@ create_preferences_dialog (GsmApplication *app)
   gtk_window_set_transient_for (GTK_WINDOW (prefs_window), GTK_WINDOW (GsmApplication::get ()->main_window));
   gtk_window_set_modal (GTK_WINDOW (prefs_window), TRUE);
 
+  g_signal_connect (G_OBJECT (prefs_window), "close-request",
+                    G_CALLBACK (prefs_window_close_request), NULL);
+
   gtk_widget_show (GTK_WIDGET (prefs_window));
-  g_signal_connect (G_OBJECT (prefs_window), "delete-event",
-                    G_CALLBACK (prefs_window_delete_event), NULL);
 
   g_object_unref (G_OBJECT (builder));
 }
