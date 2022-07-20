@@ -22,71 +22,29 @@ prefs_window_close_request (GtkWindow *self,
   return FALSE;
 }
 
-class SpinButtonUpdater
+static void
+spin_button_value_changed (GtkSpinButton *self,
+                           gpointer       data)
 {
-public:
-SpinButtonUpdater(const string&key)
-  : key (key)
-{
+  GString *key = (GString *) data;
+  int new_value = 1000 * gtk_spin_button_get_value (self);
+
+  GsmApplication::get ()->settings->set_int (key->str, new_value);
+
+  procman_debug ("set %s to %d", key->str, new_value);
 }
 
-/*static gboolean callback (GtkWidget     *widget,
-                              GdkEventFocus *event,
-                              gpointer       data)
-    {
-        SpinButtonUpdater*updater = static_cast<SpinButtonUpdater*>(data);
-        gtk_spin_button_update (GTK_SPIN_BUTTON (widget));
-        updater->update (GTK_SPIN_BUTTON (widget));
-        return FALSE;
-    }*/
-
-private:
-
-void
-update (GtkSpinButton*spin)
+static void
+range_value_changed (GtkRange *self,
+                     gpointer  data)
 {
-  int new_value = 1000 * gtk_spin_button_get_value (spin);
+  GString *key = (GString *) data;
+  int new_value = gtk_range_get_value (self);
 
-  GsmApplication::get ()->settings->set_int (this->key, new_value);
+  GsmApplication::get ()->settings->set_int (key->str, new_value);
 
-  procman_debug ("set %s to %d", this->key.c_str (), new_value);
+  procman_debug ("set %s to %d", key->str, new_value);
 }
-
-const string key;
-};
-
-class ScaleUpdater
-{
-public:
-ScaleUpdater(const string&key)
-  : key (key)
-{
-}
-
-static gboolean
-callback (GtkRange *range,
-          gpointer  data)
-{
-  ScaleUpdater*updater = static_cast<ScaleUpdater*>(data);
-
-  updater->update (range);
-  return FALSE;
-}
-
-private:
-
-void
-update (GtkRange*range)
-{
-  int new_value = gtk_range_get_value (range);
-
-  GsmApplication::get ()->settings->set_int (this->key, new_value);
-
-  procman_debug ("set %s to %d", this->key.c_str (), new_value);
-}
-
-const string key;
-};
 
 static void
 field_toggled (const gchar *gsettings_parent,
@@ -212,11 +170,6 @@ create_field_page (GtkBuilder  *builder,
 void
 create_preferences_dialog (GsmApplication *app)
 {
-  static SpinButtonUpdater interval_updater ("update-interval");
-  static SpinButtonUpdater graph_interval_updater ("graph-update-interval");
-  static SpinButtonUpdater disks_interval_updater ("disks-interval");
-  static ScaleUpdater graph_points_updater ("graph-data-points");
-
   GtkAdjustment *adjustment;
   GtkSpinButton *spin_button;
   GtkSwitch *check_switch;
@@ -247,8 +200,8 @@ create_preferences_dialog (GsmApplication *app)
                             0.25,
                             1.0,
                             0);
-  /*g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-                    G_CALLBACK (SpinButtonUpdater::callback), &interval_updater);*/
+  g_signal_connect (G_OBJECT (spin_button), "value-changed",
+                    G_CALLBACK (spin_button_value_changed), g_string_new ("update-interval"));
 
   smooth_switch = GTK_SWITCH (gtk_builder_get_object (builder, "smooth_switch"));
   g_settings_bind (app->settings->gobj (), SmoothRefresh::KEY.c_str (), smooth_switch, "active", G_SETTINGS_BIND_DEFAULT);
@@ -302,9 +255,8 @@ create_preferences_dialog (GsmApplication *app)
   gtk_adjustment_configure (adjustment, update / 1000.0, 0.05,
                             10.0, 0.05, 0.5, 0);
 
-  /*g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-                    G_CALLBACK (SpinButtonUpdater::callback),
-                    &graph_interval_updater);*/
+  g_signal_connect (G_OBJECT (spin_button), "value-changed",
+                    G_CALLBACK (spin_button_value_changed), g_string_new ("graph-update-interval"));
 
   update = (gfloat) app->config.graph_data_points;
   GtkRange*range = GTK_RANGE (gtk_builder_get_object (builder, "graph_data_points_scale"));
@@ -313,8 +265,7 @@ create_preferences_dialog (GsmApplication *app)
   gtk_adjustment_configure (adjustment, update, 30,
                             600, 10, 60, 0);
   g_signal_connect (G_OBJECT (range), "value-changed",
-                    G_CALLBACK (ScaleUpdater::callback),
-                    &graph_points_updater);
+                    G_CALLBACK (range_value_changed), g_string_new ("graph-data-points"));
 
   GtkSwitch *bits_switch = GTK_SWITCH (gtk_builder_get_object (builder, "bits_switch"));
 
@@ -339,10 +290,8 @@ create_preferences_dialog (GsmApplication *app)
   adjustment = gtk_spin_button_get_adjustment (spin_button);
   gtk_adjustment_configure (adjustment, update / 1000.0, 1.0,
                             100.0, 1.0, 1.0, 0);
-
-  /*g_signal_connect (G_OBJECT (spin_button), "focus_out_event",
-                    G_CALLBACK (SpinButtonUpdater::callback),
-                    &disks_interval_updater);*/
+  g_signal_connect (G_OBJECT (spin_button), "value-changed",
+                    G_CALLBACK (spin_button_value_changed), g_string_new ("disks-interval"));
 
   check_switch = GTK_SWITCH (gtk_builder_get_object (builder, "all_devices_check"));
   g_settings_bind (app->settings->gobj (), GSM_SETTING_SHOW_ALL_FS,
