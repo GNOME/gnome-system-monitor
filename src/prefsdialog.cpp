@@ -367,7 +367,6 @@ create_preferences_dialog (GsmApplication *app)
     g_signal_connect (G_OBJECT (prefs_window), "delete-event",
                       G_CALLBACK (prefs_window_delete_event), NULL);
 
-    gtk_window_present (GTK_WINDOW (prefs_window));
 
     g_object_unref (G_OBJECT (builder));
 }
