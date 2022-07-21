@@ -67,18 +67,21 @@ gsm_tree_view_save_state (GsmTreeView *tree_view)
       GList *iter;
       GVariantBuilder builder;
 
-      g_variant_builder_init (&builder, G_VARIANT_TYPE_ARRAY);
-
-      for (iter = columns; iter != NULL; iter = iter->next)
+      if (columns != NULL)
         {
-          gint id = gtk_tree_view_column_get_sort_column_id (GTK_TREE_VIEW_COLUMN (iter->data));
-          g_variant_builder_add (&builder, "i", id);
+          g_variant_builder_init (&builder, G_VARIANT_TYPE_ARRAY);
+
+          for (iter = columns; iter != NULL; iter = iter->next)
+            {
+              gint id = gtk_tree_view_column_get_sort_column_id (GTK_TREE_VIEW_COLUMN (iter->data));
+              g_variant_builder_add (&builder, "i", id);
+            }
+
+          g_settings_set_value (priv->settings, "columns-order",
+                                g_variant_builder_end (&builder));
+
+          g_list_free (columns);
         }
-
-      g_settings_set_value (priv->settings, "columns-order",
-                            g_variant_builder_end (&builder));
-
-      g_list_free (columns);
     }
 
   g_settings_apply (priv->settings);
