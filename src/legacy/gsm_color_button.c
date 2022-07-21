@@ -482,17 +482,6 @@ gsm_color_button_drag_data_drop (GtkDropTargetAsync *drop_target,
 */
 
 /*
-static void
-gsm_color_button_drag_begin (GtkDragSource *drag_source,
-                             GdkDrag       *drag,
-                             gpointer       data)
-{
-    GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (GSM_COLOR_BUTTON (data));
-    set_color_icon (drag_source, &priv->color);
-}
-*/
-
-/*
 static gboolean
 gsm_color_button_drag_data_drop (GtkDropTargetAsync *drop_target,
                                  GdkDrop            *drop,
@@ -510,6 +499,27 @@ gsm_color_button_drag_data_drop (GtkDropTargetAsync *drop_target,
 
     return TRUE;
 }*/
+
+static void
+gsm_color_button_drag_begin (GtkDragSource  *drag_source,
+                             GdkDrag        *drag,
+                             GsmColorButton *color_button)
+{
+    GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
+
+    set_color_icon (drag_source, &priv->color);
+}
+
+static GdkContentProvider *
+gsm_color_button_prepare (GtkDragSource  *drag_source,
+                          gdouble         x,
+                          gdouble         y,
+                          GsmColorButton *color_button)
+{
+    GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
+
+    return gdk_content_provider_new_typed (GDK_TYPE_RGBA, &priv->color);
+}
 
 static void
 gsm_color_button_set_property (GObject      *object,
@@ -649,7 +659,6 @@ static void
 gsm_color_button_init (GsmColorButton *color_button)
 {
     GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
-    GtkDragSource *drag_source = gtk_drag_source_new ();
     GtkDropTargetAsync *drop_target = gtk_drop_target_async_new (gdk_content_formats_new (drop_types, drop_types_n),
                                                                  GDK_ACTION_COPY);
 
@@ -666,9 +675,12 @@ gsm_color_button_init (GsmColorButton *color_button)
                       G_CALLBACK (gsm_color_button_released), color_button);
     gtk_widget_add_controller (GTK_WIDGET (color_button), GTK_EVENT_CONTROLLER (click_controller));
 
-    /*g_object_bind_property (color_button, "color",
-                            drag_source, "content",
-                            G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);*/
+    GtkDragSource *drag_source = gtk_drag_source_new ();
+    g_signal_connect (drag_source, "drag-begin",
+                      G_CALLBACK (gsm_color_button_drag_begin), color_button);
+    g_signal_connect (drag_source, "prepare",
+                      G_CALLBACK (gsm_color_button_prepare), color_button);
+    gtk_widget_add_controller (GTK_WIDGET (color_button), GTK_EVENT_CONTROLLER (drag_source));
 
     // g_signal_connect (drag_source, "drag-begin",
     //                   G_CALLBACK (gsm_color_button_drag_begin), color_button);
@@ -676,7 +688,6 @@ gsm_color_button_init (GsmColorButton *color_button)
     // g_signal_connect (drop_target, "drop",
     //                   G_CALLBACK (gsm_color_button_drag_data_drop), color_button);
 
-    gtk_widget_add_controller (GTK_WIDGET (color_button), GTK_EVENT_CONTROLLER (drag_source));
     gtk_widget_add_controller (GTK_WIDGET (color_button), GTK_EVENT_CONTROLLER (drop_target));
 
     gtk_widget_set_tooltip_text (GTK_WIDGET (color_button), _("Click to set graph colors"));
