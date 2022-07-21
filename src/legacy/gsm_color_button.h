@@ -42,7 +42,7 @@ typedef struct _GsmColorButtonClass GsmColorButtonClass;
 
 struct _GsmColorButton
 {
-  GtkDrawingArea parent_instance;
+  GtkWidget parent_instance;
 };
 
 /* Widget types */
@@ -57,7 +57,7 @@ enum
 
 struct _GsmColorButtonClass
 {
-  GtkDrawingAreaClass parent_class;
+  GtkWidgetClass parent_class;
 };
 
 GType            gsm_color_button_get_type (void);

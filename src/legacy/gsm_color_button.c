@@ -42,7 +42,7 @@ typedef struct
   gboolean in_button;
 } GsmColorButtonPrivate;
 
-G_DEFINE_TYPE_WITH_PRIVATE (GsmColorButton, gsm_color_button, GTK_TYPE_DRAWING_AREA)
+G_DEFINE_TYPE_WITH_PRIVATE (GsmColorButton, gsm_color_button, GTK_TYPE_WIDGET)
 
 /* Properties */
 enum
