@@ -349,9 +349,12 @@ cb_disk_list_destroying (GtkWidget *self,
 {
     g_signal_handlers_disconnect_by_func (self, (gpointer) cb_disk_columns_changed, data);
 
-    g_signal_handlers_disconnect_by_func (gtk_tree_view_get_model (GTK_TREE_VIEW (self)),
-                                          (gpointer) cb_sort_changed,
-                                          data);
+    GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (self));
+    if (model != NULL) {
+        g_signal_handlers_disconnect_by_func (gtk_tree_view_get_model (GTK_TREE_VIEW (self)),
+                                              (gpointer) cb_sort_changed,
+                                              data);
+    }
 }
 
 
