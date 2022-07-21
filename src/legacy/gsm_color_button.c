@@ -314,38 +314,14 @@ gsm_color_button_measure (GtkWidget     *widget,
                           int           *minimum_baseline,
                           int           *natural_baseline)
 {
-    if (minimum)
+    if (orientation & GTK_ORIENTATION_HORIZONTAL) {
         *minimum = GSMCP_MIN_WIDTH;
-    if (natural)
         *natural = GSMCP_MIN_WIDTH;
-/*
-  if (minimum)
-    *minimum = GSMCP_MIN_HEIGHT;
-  if (natural)
-    *natural = GSMCP_MIN_HEIGHT;
-*/
-}
-
-static void
-gsm_color_button_get_preferred_width (GtkWidget *widget,
-                                      gint      *minimum,
-                                      gint      *natural)
-{
-    if (minimum)
-        *minimum = GSMCP_MIN_WIDTH;
-    if (natural)
-        *natural = GSMCP_MIN_WIDTH;
-}
-
-static void
-gsm_color_button_get_preferred_height (GtkWidget *widget,
-                                       gint      *minimum,
-                                       gint      *natural)
-{
-    if (minimum)
+    }
+    if (orientation & GTK_ORIENTATION_VERTICAL) {
         *minimum = GSMCP_MIN_HEIGHT;
-    if (natural)
         *natural = GSMCP_MIN_HEIGHT;
+    }
 }
 
 static void
