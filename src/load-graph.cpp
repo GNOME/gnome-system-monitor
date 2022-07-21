@@ -911,7 +911,7 @@ LoadGraph::LoadGraph(guint type)
     latest (0),
     render_counter (0),
     frames_per_unit (10),  // this will be changed but needs initialising
-    num_bars (0),
+    num_bars (1),
     graph_dely (0),
     graph_delx (0),
     real_draw_height (0),
