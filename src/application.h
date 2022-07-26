@@ -6,6 +6,7 @@
 #include <handy.h>
 
 #include <algorithm>
+#include <mutex>
 
 struct LoadGraph;
 
