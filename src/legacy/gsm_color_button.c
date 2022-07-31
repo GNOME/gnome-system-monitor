@@ -709,10 +709,7 @@ gsm_color_button_get_color (GsmColorButton *color_button,
 
   priv = gsm_color_button_get_instance_private (color_button);
 
-  color->red = priv->color.red;
-  color->green = priv->color.green;
-  color->blue = priv->color.blue;
-  color->alpha = priv->color.alpha;
+  *color = priv->color;
 }
 
 void
@@ -726,13 +723,11 @@ gsm_color_button_set_color (GsmColorButton *color_button,
 
   priv = gsm_color_button_get_instance_private (color_button);
 
-  priv->color.red = color->red;
-  priv->color.green = color->green;
-  priv->color.blue = color->blue;
-  priv->color.alpha = color->alpha;
+  priv->color = *color;
 
   gtk_widget_queue_draw (GTK_WIDGET (color_button));
 
+  g_signal_emit (color_button, color_button_signals[COLOR_SET], 0);
   g_object_notify (G_OBJECT (color_button), "color");
 }
 
