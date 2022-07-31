@@ -372,12 +372,12 @@ dialog_response (GtkDialog      *self,
 }
 
 static void
-dialog_close (GtkWidget      *widget,
-              GsmColorButton *color_button)
+dialog_destroy (GtkWidget      *widget,
+                GsmColorButton *color_button)
 {
   GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
 
-  gtk_widget_hide (GTK_WIDGET (priv->cc_dialog));
+  priv->cc_dialog = NULL;
 }
 
 static void
@@ -405,8 +405,8 @@ gsm_color_button_released (GtkGestureClick *controller,
       g_signal_connect (cc_dialog, "response",
                         G_CALLBACK (dialog_response), color_button);
 
-      g_signal_connect (cc_dialog, "close",
-                        G_CALLBACK (dialog_close), color_button);
+      g_signal_connect (cc_dialog, "destroy",
+                        G_CALLBACK (dialog_destroy), color_button);
 
       priv->cc_dialog = cc_dialog;
     }
