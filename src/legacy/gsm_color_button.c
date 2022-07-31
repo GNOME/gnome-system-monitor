@@ -686,10 +686,7 @@ gsm_color_button_set_color (GsmColorButton *color_button,
 
     priv = gsm_color_button_get_instance_private (color_button);
 
-    priv->color.red = color->red;
-    priv->color.green = color->green;
-    priv->color.blue = color->blue;
-    priv->color.alpha = color->alpha;
+    priv->color = *color;
 
     gtk_widget_queue_draw (GTK_WIDGET (color_button));
 
