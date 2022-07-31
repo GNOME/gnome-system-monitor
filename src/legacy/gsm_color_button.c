@@ -358,18 +358,12 @@ dialog_response (GtkDialog      *self,
   if (response == GTK_RESPONSE_OK)
     {
       GtkColorChooser *color_chooser = GTK_COLOR_CHOOSER (priv->cc_dialog);
+      GdkRGBA *color;
 
-      gtk_color_chooser_get_rgba (color_chooser, &priv->color);
+      gtk_color_chooser_get_rgba (color_chooser, &color);
+      gsm_color_button_set_color (color_button, &color);
 
       gtk_widget_hide (GTK_WIDGET (priv->cc_dialog));
-
-      gtk_widget_queue_draw (GTK_WIDGET (color_button));
-
-      g_signal_emit (color_button, color_button_signals[COLOR_SET], 0);
-
-      g_object_freeze_notify (G_OBJECT (color_button));
-      g_object_notify (G_OBJECT (color_button), "color");
-      g_object_thaw_notify (G_OBJECT (color_button));
     }
   else
     {
