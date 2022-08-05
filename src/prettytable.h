@@ -28,46 +28,52 @@ using std::string;
 class PrettyTable
 {
 public:
-    PrettyTable();
-    ~PrettyTable();
+PrettyTable();
+~PrettyTable();
 
-    void set_icon(ProcInfo &);
+void set_icon (ProcInfo &);
 
 private:
 
 #ifdef HAVE_WNCK
-    static void on_application_opened(WnckScreen* screen, WnckApplication* app, gpointer data);
-    static void on_application_closed(WnckScreen* screen, WnckApplication* app, gpointer data);
+static void               on_application_opened (WnckScreen     *screen,
+                                                 WnckApplication*app,
+                                                 gpointer        data);
+static void               on_application_closed (WnckScreen     *screen,
+                                                 WnckApplication*app,
+                                                 gpointer        data);
 
-    void register_application(pid_t pid, Glib::RefPtr<Gdk::Pixbuf> icon);
-    void unregister_application(pid_t pid);
+void                      register_application (pid_t                     pid,
+                                                Glib::RefPtr<Gdk::Pixbuf> icon);
+void                      unregister_application (pid_t pid);
 #endif
 
-    Glib::RefPtr<Gdk::Pixbuf> get_icon_from_theme(const ProcInfo &);
-    Glib::RefPtr<Gdk::Pixbuf> get_icon_from_default(const ProcInfo &);
-    Glib::RefPtr<Gdk::Pixbuf> get_icon_from_gio(const ProcInfo &);
+Glib::RefPtr<Gdk::Pixbuf> get_icon_from_theme (const ProcInfo &);
+Glib::RefPtr<Gdk::Pixbuf> get_icon_from_default (const ProcInfo &);
+Glib::RefPtr<Gdk::Pixbuf> get_icon_from_gio (const ProcInfo &);
 #ifdef HAVE_WNCK
-    Glib::RefPtr<Gdk::Pixbuf> get_icon_from_wnck(const ProcInfo &);
+Glib::RefPtr<Gdk::Pixbuf> get_icon_from_wnck (const ProcInfo &);
 #endif
-    Glib::RefPtr<Gdk::Pixbuf> get_icon_from_name(const ProcInfo &);
-    Glib::RefPtr<Gdk::Pixbuf> get_icon_for_kernel(const ProcInfo &);
-    Glib::RefPtr<Gdk::Pixbuf> get_icon_dummy(const ProcInfo &);
+Glib::RefPtr<Gdk::Pixbuf> get_icon_from_name (const ProcInfo &);
+Glib::RefPtr<Gdk::Pixbuf> get_icon_for_kernel (const ProcInfo &);
+Glib::RefPtr<Gdk::Pixbuf> get_icon_dummy (const ProcInfo &);
 
-    bool get_default_icon_name(const string &cmd, string &name);
-    void file_monitor_event (Glib::RefPtr<Gio::File>,
-                             Glib::RefPtr<Gio::File>,
-                             Gio::FileMonitorEvent);
-    void init_gio_app_cache ();
+bool                      get_default_icon_name (const string &cmd,
+                                                 string &      name);
+void                      file_monitor_event (Glib::RefPtr<Gio::File>,
+                                              Glib::RefPtr<Gio::File>,
+                                              Gio::FileMonitorEvent);
+void                      init_gio_app_cache ();
 
-    typedef std::map<string, Glib::RefPtr<Gdk::Pixbuf> > IconCache;
-    typedef std::map<pid_t, Glib::RefPtr<Gdk::Pixbuf> > IconsForPID;
-    typedef std::map<string, Glib::RefPtr<Gio::AppInfo> > AppCache;
-    typedef std::map<string, Glib::RefPtr<Gio::FileMonitor> > DesktopDirMonitors;
+typedef std::map<string, Glib::RefPtr<Gdk::Pixbuf> > IconCache;
+typedef std::map<pid_t, Glib::RefPtr<Gdk::Pixbuf> > IconsForPID;
+typedef std::map<string, Glib::RefPtr<Gio::AppInfo> > AppCache;
+typedef std::map<string, Glib::RefPtr<Gio::FileMonitor> > DesktopDirMonitors;
 
-    IconsForPID apps;
-    IconCache defaults;
-    DesktopDirMonitors monitors;
-    AppCache gio_apps;
+IconsForPID apps;
+IconCache defaults;
+DesktopDirMonitors monitors;
+AppCache gio_apps;
 };
 
 

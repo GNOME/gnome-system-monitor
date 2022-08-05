@@ -4,7 +4,8 @@
 
 #include "application.h"
 
-void create_disk_view(GsmApplication *app, GtkBuilder *builder);
+void create_disk_view (GsmApplication *app,
+                       GtkBuilder     *builder);
 
 void disks_update (GsmApplication *app);
 void disks_freeze (GsmApplication *app);

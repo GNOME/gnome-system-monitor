@@ -11,98 +11,98 @@
 
 enum
 {
-    LOAD_GRAPH_CPU,
-    LOAD_GRAPH_MEM,
-    LOAD_GRAPH_NET
+  LOAD_GRAPH_CPU,
+  LOAD_GRAPH_MEM,
+  LOAD_GRAPH_NET
 };
 
 enum
 {
-    CPU_TOTAL,
-    CPU_USED,
-    N_CPU_STATES
+  CPU_TOTAL,
+  CPU_USED,
+  N_CPU_STATES
 };
 
 struct LoadGraphLabels
 {
-    GtkLabel *cpu[GLIBTOP_NCPU];
-    GtkLabel *memory;
-    GtkLabel *swap;
-    GtkLabel *net_in;
-    GtkLabel *net_in_total;
-    GtkLabel *net_out;
-    GtkLabel *net_out_total;
+  GtkLabel *cpu[GLIBTOP_NCPU];
+  GtkLabel *memory;
+  GtkLabel *swap;
+  GtkLabel *net_in;
+  GtkLabel *net_in_total;
+  GtkLabel *net_out;
+  GtkLabel *net_out_total;
 };
 
 struct LoadGraph
   : private procman::NonCopyable
 {
-    static const unsigned GRAPH_MIN_HEIGHT = 40;
+  static const unsigned GRAPH_MIN_HEIGHT = 40;
 
-    LoadGraph(guint type);
-    ~LoadGraph();
+  LoadGraph(guint type);
+  ~LoadGraph();
 
-    unsigned num_bars() const;
-    void clear_background();
-    bool is_logarithmic_scale() const;
-    char* get_caption(guint index);
-    float translate_to_log_partial_if_needed(float position_partial);
+  unsigned num_bars () const;
+  void     clear_background ();
+  bool     is_logarithmic_scale () const;
+  char *   get_caption (guint index);
+  float    translate_to_log_partial_if_needed (float position_partial);
 
-    double fontsize;
-    double rmargin;
-    /* left margin */
-    double indent;
+  double fontsize;
+  double rmargin;
+  /* left margin */
+  double indent;
 
-    guint n;
-    gint type;
-    guint speed;
-    guint num_points;
-    guint latest;
-    guint draw_width, draw_height;
-    guint render_counter;
-    guint frames_per_unit;
-    guint graph_dely;
-    guint real_draw_height;
-    double graph_delx;
-    guint graph_buffer_offset;
+  guint n;
+  gint type;
+  guint speed;
+  guint num_points;
+  guint latest;
+  guint draw_width, draw_height;
+  guint render_counter;
+  guint frames_per_unit;
+  guint graph_dely;
+  guint real_draw_height;
+  double graph_delx;
+  guint graph_buffer_offset;
 
-    std::vector<GdkRGBA> colors;
+  std::vector<GdkRGBA> colors;
 
-    std::vector<double> data_block;
-    std::vector<double*> data;
+  std::vector<double> data_block;
+  std::vector<double*> data;
 
-    GtkBox *main_widget;
-    GtkDrawingArea *disp;
+  GtkBox *main_widget;
+  GtkDrawingArea *disp;
 
-    cairo_surface_t *background;
+  cairo_surface_t *background;
 
-    guint timer_index;
+  guint timer_index;
 
-    gboolean draw;
+  gboolean draw;
 
-    LoadGraphLabels labels;
-    GsmColorButton *mem_color_picker;
-    GsmColorButton *swap_color_picker;
+  LoadGraphLabels labels;
+  GsmColorButton *mem_color_picker;
+  GsmColorButton *swap_color_picker;
 
-    Glib::RefPtr<Gio::Settings> font_settings;
+  Glib::RefPtr<Gio::Settings> font_settings;
 
-    /* union { */
-    struct CPU
-    {
-        guint now; /* 0 -> current, 1 -> last
+  /* union { */
+  struct CPU
+  {
+    guint now;     /* 0 -> current, 1 -> last
                       now ^ 1 each time */
-        /* times[now], times[now ^ 1] is last */
-        guint64 times[2][GLIBTOP_NCPU][N_CPU_STATES];
-    } cpu;
+    /* times[now], times[now ^ 1] is last */
+    guint64 times[2][GLIBTOP_NCPU][N_CPU_STATES];
+  } cpu;
 
-    struct NET
-    {
-        guint64 last_in, last_out;
-        guint64 time;
-        guint64 max;
-        std::vector<unsigned> values;
-    } net;
-    /* }; */
+  struct NET
+  {
+    guint64 last_in, last_out;
+    guint64 time;
+    guint64 max;
+    std::vector<unsigned> values;
+  } net;
+  /* }; */
 };
 
 /* Force a drawing update */
@@ -120,12 +120,12 @@ load_graph_stop (LoadGraph *g);
 /* Change load graph speed and restart it if it has been previously started */
 void
 load_graph_change_speed (LoadGraph *g,
-                         guint new_speed);
+                         guint      new_speed);
 
 /* Change load graph data points and restart it if it has been previously started */
 void
-load_graph_change_num_points(LoadGraph *g,
-                             guint new_num_points);
+load_graph_change_num_points (LoadGraph *g,
+                              guint      new_num_points);
 
 /* Clear the history data. */
 void
@@ -138,9 +138,9 @@ GtkBox*
 load_graph_get_widget (LoadGraph *g) G_GNUC_CONST;
 
 GsmColorButton*
-load_graph_get_mem_color_picker(LoadGraph *g) G_GNUC_CONST;
+load_graph_get_mem_color_picker (LoadGraph *g) G_GNUC_CONST;
 
 GsmColorButton*
-load_graph_get_swap_color_picker(LoadGraph *g) G_GNUC_CONST;
+load_graph_get_swap_color_picker (LoadGraph *g) G_GNUC_CONST;
 
 #endif /* _GSM_LOAD_GRAPH_H_ */

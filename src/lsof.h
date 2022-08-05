@@ -5,6 +5,6 @@
 #include <glib.h>
 #include "application.h"
 
-void procman_lsof(GsmApplication *app);
+void procman_lsof (GsmApplication *app);
 
 #endif /* _GSM_LSOF_H_ */

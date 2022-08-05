@@ -5,8 +5,8 @@
 
 namespace procman
 {
-  bool systemd_logind_running();
-  void get_process_systemd_info(ProcInfo *info);
+bool systemd_logind_running ();
+void get_process_systemd_info (ProcInfo *info);
 }
 
 #endif
