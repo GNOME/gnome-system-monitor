@@ -181,6 +181,28 @@ if desktop_validate.found()
 endif
 
 ################################################################################
+# Tests
+
+python3 = find_program('python3', required: false)
+git = find_program('git', required: false)
+patch = find_program('patch', required: false)
+uncrustify = find_program('uncrustify', required: false)
+
+check_style_file = files('check-style.py')
+check_style_prog = find_program(check_style_file)
+
+if python3.found() and git.found() and patch.found() and uncrustify.found()
+  test('code formatting',
+    check_style_prog,
+    args: ['--all', '--dry-run'],
+    suite: 'formatting',
+  )
+else
+  message('Code formatting test requires: python3, git, patch, uncrustify')
+endif
+
+
+################################################################################
 # Subdirectories
 
 rootInclude = include_directories('.')

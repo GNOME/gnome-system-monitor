@@ -2,6 +2,7 @@
 # Tests against the latest libtop master version.
 
 stages:
+  - check
   - build
 
 variables:
@@ -44,6 +45,23 @@ variables:
     libsystemd-dev
     libxml2-dev
     meson
+
+# Based on https://gitlab.gnome.org/GNOME/mutter/-/blob/main/.gitlab-ci.yml
+check-code-style:
+  image: fedora:latest
+  stage: check
+  allow_failure: true
+  before_script:
+    - dnf install -y python3 git patch uncrustify
+  script:
+    - if [[ x"$CI_MERGE_REQUEST_TARGET_BRANCH_NAME" != "x" ]]; then
+        git remote add target $CI_MERGE_REQUEST_PROJECT_URL.git;
+        git fetch target $CI_MERGE_REQUEST_TARGET_BRANCH_NAME;
+        export common_parent_sha=$(diff --old-line-format='' --new-line-format='' <(git rev-list --first-parent "target/$CI_MERGE_REQUEST_TARGET_BRANCH_NAME") <(git rev-list --first-parent HEAD) | head -1);
+        ./check-style.py --dry-run --sha $common_parent_sha;
+      else
+        echo "Not a merge request";
+      fi
 
 build-fedora:
   image: fedora:latest
