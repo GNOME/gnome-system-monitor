@@ -129,11 +129,7 @@ foreach file : [
     'gnome-system-monitor-kde.desktop',
   ]
   desktop_files += i18n.merge_file(
-    input : configure_file(
-      configuration: dataconf,
-      input : file + '.in.in',
-      output: file + '.in'
-    ),
+    input : file + '.in',
     output: file,
     po_dir: 'po',
     type: 'desktop',
