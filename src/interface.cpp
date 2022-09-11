@@ -110,10 +110,8 @@ create_proc_view (GsmApplication *app,
   app->proc_actionbar_revealer = GTK_REVEALER (gtk_builder_get_object (builder, "proc_actionbar_revealer"));
 
   /* create popover_menu for the processes tab */
-  // Either use MenuButton or just use a model
   GMenuModel *menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-popup-menu"));
 
-  // gtk_application_set_menubar (GTK_APPLICATION (app->main_window), menu_model);
   app->proc_popover_menu = GTK_POPOVER (gtk_popover_menu_new_from_model (menu_model));
 
   app->end_process_button = GTK_BUTTON (gtk_builder_get_object (builder, "end_process_button"));
@@ -674,8 +672,8 @@ update_page_activities (GsmApplication *app)
 
       gtk_widget_show (GTK_WIDGET (app->end_process_button));
       gtk_widget_show (GTK_WIDGET (app->search_button));
-      gtk_widget_show (GTK_WIDGET (app->process_menu_button));
-      gtk_widget_hide (GTK_WIDGET (app->window_menu_button));
+
+      gtk_menu_button_set_menu_model (app->app_menu_button, app->process_window_menu_model);
 
       update_sensitivity (app);
 
@@ -690,8 +688,8 @@ update_page_activities (GsmApplication *app)
 
       gtk_widget_hide (GTK_WIDGET (app->end_process_button));
       gtk_widget_hide (GTK_WIDGET (app->search_button));
-      gtk_widget_hide (GTK_WIDGET (app->process_menu_button));
-      gtk_widget_show (GTK_WIDGET (app->window_menu_button));
+
+      gtk_menu_button_set_menu_model (app->app_menu_button, app->generic_window_menu_model);
 
       update_sensitivity (app);
     }
@@ -789,8 +787,6 @@ cb_main_window_state_changed (GdkToplevel      *surface,
 void
 create_main_window (GsmApplication *app)
 {
-  GMenuModel *window_menu_model;
-  GMenuModel *process_menu_model;
   GdkDisplay *display;
   GdkMonitor *monitor;
   GdkRectangle monitor_geometry;
@@ -823,13 +819,15 @@ create_main_window (GsmApplication *app)
   create_sys_view (app, builder);
   create_disk_view (app, builder);
 
-  app->process_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "process_menu_button"));
-  process_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-window-menu"));
-  // gtk_menu_button_set_menu_model (app->process_menu_button, process_menu_model);
+  app->app_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "app_menu_button"));
+  app->generic_window_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "generic-window-menu"));
+  app->process_window_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-window-menu"));
 
-  app->window_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "window_menu_button"));
-  window_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "generic-window-menu"));
-  // gtk_menu_button_set_menu_model (app->window_menu_button, window_menu_model);
+  // GtkMenuButton owns its models and thus an additional reference needs to be held
+  g_object_ref (G_OBJECT (app->generic_window_menu_model));
+  g_object_ref (G_OBJECT (app->process_window_menu_model));
+
+  gtk_menu_button_set_menu_model (app->app_menu_button, app->generic_window_menu_model);
 
   GActionEntry win_action_entries[] = {
     { "about", on_activate_about, NULL, NULL, NULL },

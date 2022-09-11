@@ -20,38 +20,22 @@
                 <property name="stack">stack</property>
               </object>
             </child>
-            <child>
+            <child type="end">
               <object class="GtkBox" id="button_box">
                 <property name="orientation">horizontal</property>
-                <property name="width-request">90</property>
                 <property name="spacing">6</property>
                 <child>
-                  <object class="GtkMenuButton" id="process_menu_button">
-                    <property name="use-popover">True</property>
-                    <property name="valign">center</property>
-                    <property name="halign">end</property>
-                    <property name="direction">none</property>
-                    <style>
-                      <class name="title-button"/>
-                    </style>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkMenuButton" id="window_menu_button">
-                    <property name="use-popover">True</property>
-                    <property name="valign">center</property>
-                    <property name="halign">end</property>
-                    <property name="direction">none</property>
-                  </object>
-                </child>
-                <child>
                   <object class="GtkToggleButton" id="search_button">
-                    <property name="active">False</property>
                     <property name="valign">center</property>
                     <property name="margin-start">6</property>
                     <property name="icon-name">edit-find-symbolic</property>
-                    <property name="action-name">win.search</property>
-                    <property name="action-target">@b false</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkMenuButton" id="app_menu_button">
+                    <property name="valign">center</property>
+                    <property name="halign">end</property>
+                    <property name="direction">none</property>
                   </object>
                 </child>
               </object>

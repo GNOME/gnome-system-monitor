@@ -368,8 +368,7 @@ GsmApplication::GsmApplication()
   disk_list (NULL),
   stack (NULL),
   refresh_button (NULL),
-  process_menu_button (NULL),
-  window_menu_button (NULL),
+  app_menu_button (NULL),
   end_process_button (NULL),
   search_button (NULL),
   search_entry (NULL),
@@ -557,16 +556,12 @@ GsmApplication::on_startup ()
 
   Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_resource ("/org/gnome/gnome-system-monitor/data/menus.ui");
 
-  Glib::RefPtr<Gio::Menu> menu = builder->get_object<Gio::Menu> ("app-menu");
-
-  set_menubar (menu);
-
-  set_accel_for_action ("win.show-dependencies", "<Control>d");
-  set_accel_for_action ("app.quit", "<Control>q");
-  set_accel_for_action ("win.send-signal-stop", "<Control>s");
-  set_accel_for_action ("win.send-signal-cont", "<Control>c");
-  set_accel_for_action ("win.send-signal-end", "<Control>e");
-  set_accel_for_action ("win.send-signal-kill", "<Control>k");
+  set_accel_for_action ("win.show-dependencies", "<Primary>d");
+  set_accel_for_action ("app.quit", "<Primary>q");
+  set_accel_for_action ("win.send-signal-stop", "<Primary>s");
+  set_accel_for_action ("win.send-signal-cont", "<Primary>c");
+  set_accel_for_action ("win.send-signal-end", "<Primary>e");
+  set_accel_for_action ("win.send-signal-kill", "<Primary>k");
   set_accel_for_action ("win.set-affinity", "<Alt>s");
   set_accel_for_action ("win.memory-maps", "<Control>m");
   set_accel_for_action ("win.open-files", "<Control>o");
