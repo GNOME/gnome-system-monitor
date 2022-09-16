@@ -3,14 +3,12 @@
   <requires lib="gtk" version="4.0"/>
   <requires lib="libadwaita" version="1.0"/>
   <object class="AdwApplicationWindow" id="main_window">
-    <property name="can-focus">False</property>
     <property name="title" translatable="yes">System Monitor</property>
     <property name="default-width">440</property>
     <property name="default-height">495</property>
     <property name="icon-name">org.gnome.SystemMonitor</property>
     <child>
       <object class="GtkBox" id="main_box">
-        <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <property name="width-request">620</property>
         <property name="height-request">480</property>
@@ -24,13 +22,11 @@
             </child>
             <child>
               <object class="GtkBox" id="button_box">
-                <property name="can-focus">False</property>
                 <property name="orientation">horizontal</property>
                 <property name="width-request">90</property>
                 <property name="spacing">6</property>
                 <child>
                   <object class="GtkMenuButton" id="process_menu_button">
-                    <property name="can-focus">True</property>
                     <property name="use-popover">True</property>
                     <property name="valign">center</property>
                     <property name="halign">end</property>
@@ -42,7 +38,6 @@
                 </child>
                 <child>
                   <object class="GtkMenuButton" id="window_menu_button">
-                    <property name="can-focus">True</property>
                     <property name="use-popover">True</property>
                     <property name="valign">center</property>
                     <property name="halign">end</property>
@@ -65,7 +60,6 @@
         </child>
         <child>
           <object class="AdwViewStack" id="stack">
-            <property name="can-focus">False</property>
             <property name="hexpand">True</property>
             <property name="vexpand">True</property>
             <child>
@@ -83,7 +77,6 @@
                         <property name="vexpand-set">True</property>
                         <property name="child">
                           <object class="GtkSearchEntry" id="proc_searchentry">
-                            <property name="focusable">True</property>
                             <property name="hexpand">False</property>
                             <property name="vexpand">True</property>
                             <property name="width-request">300</property>
@@ -105,7 +98,6 @@
                             <child>
                               <object class="GtkButton" id="end_process_button">
                                 <property name="label" translatable="yes">_End Process</property>
-                                <property name="focusable">True</property>
                                 <property name="receives-default">True</property>
                                 <property name="halign">start</property>
                                 <property name="use-underline">True</property>
@@ -140,7 +132,6 @@
                 <property name="icon-name">speedometer-symbolic</property>
                 <property name="child">
                   <object class="GtkScrolledWindow" id="res_scrolled">
-                    <property name="focusable">True</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <property name="child">
@@ -152,7 +143,6 @@
                         <property name="spacing">10</property>
                         <child>
                           <object class="GtkExpander" id="cpu_expander">
-                            <property name="focusable">True</property>
                             <property name="vexpand">True</property>
                             <property name="expanded">True</property>
                             <child>
@@ -192,7 +182,6 @@
                         </child>
                         <child>
                           <object class="GtkExpander" id="mem_expander">
-                            <property name="focusable">True</property>
                             <property name="vexpand">True</property>
                             <property name="expanded">True</property>
                             <child>
@@ -252,7 +241,6 @@
                         </child>
                         <child>
                           <object class="GtkExpander" id="net_expander">
-                            <property name="focusable">True</property>
                             <property name="vexpand">True</property>
                             <property name="expanded">True</property>
                             <child>
@@ -345,7 +333,6 @@
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkScrolledWindow" id="disks_scrolled">
-                        <property name="focusable">True</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
                       </object>
