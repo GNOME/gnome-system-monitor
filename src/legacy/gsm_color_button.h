@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
  * Gnome system monitor colour pickers
  * Copyright (C) 2007 Karl Lattimer <karl@qdh.org.uk>

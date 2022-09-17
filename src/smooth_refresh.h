@@ -1,4 +1,3 @@
-/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 #ifndef _GSM_SMOOTH_REFRESH_H
 #define _GSM_SMOOTH_REFRESH_H
 
