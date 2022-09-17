@@ -105,7 +105,6 @@ executable(meson.project_name(),
     libgtop,
     libadwaita,
     libsystemd,
-    libwnck,
   ],
   link_with: libgsm_legacy,
   cpp_args: [

@@ -43,11 +43,6 @@
 #include <set>
 #include <list>
 
-#ifdef HAVE_WNCK
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE
-#include <libwnck/libwnck.h>
-#endif
-
 #include "application.h"
 #include "proctable.h"
 #include "prettytable.h"
@@ -464,11 +459,6 @@ proctable_new (GsmApplication * const app)
       GtkCellRenderer *cell;
       PangoAttrList *attrs = NULL;
 
-#ifndef HAVE_WNCK
-      if (i == COL_MEMXSERVER)
-        continue;
-#endif
-
       if (i == COL_MEMWRITABLE)
         continue;
 
@@ -484,14 +474,6 @@ proctable_new (GsmApplication * const app)
       // type
       switch (i)
         {
-#ifdef HAVE_WNCK
-          case COL_MEMXSERVER:
-            gtk_tree_view_column_set_cell_data_func (col, cell,
-                                                     &procman::size_cell_data_func,
-                                                     GUINT_TO_POINTER (i),
-                                                     NULL);
-            break;
-#endif
           case COL_VMSIZE:
           case COL_MEMRES:
           case COL_MEMSHARED:
@@ -562,9 +544,6 @@ proctable_new (GsmApplication * const app)
       // Tabular Numbers
       switch (i)
         {
-#ifdef HAVE_WNCK
-          case COL_MEMXSERVER:
-#endif
           case COL_PID:
           case COL_VMSIZE:
           case COL_MEMRES:
@@ -591,9 +570,6 @@ proctable_new (GsmApplication * const app)
       // sorting
       switch (i)
         {
-#ifdef HAVE_WNCK
-          case COL_MEMXSERVER:
-#endif
           case COL_VMSIZE:
           case COL_MEMRES:
           case COL_MEMSHARED:
@@ -627,9 +603,6 @@ proctable_new (GsmApplication * const app)
           case COL_VMSIZE:
           case COL_MEMRES:
           case COL_MEMSHARED:
-#ifdef HAVE_WNCK
-          case COL_MEMXSERVER:
-#endif
           case COL_CPU:
           case COL_NICE:
           case COL_PID:
@@ -819,10 +792,6 @@ get_process_memory_info (ProcInfo *info)
 {
   glibtop_proc_mem procmem;
 
-#ifdef HAVE_WNCK
-  info->memxserver = 0;
-#endif
-
   glibtop_get_proc_mem (&procmem, info->pid);
 
   info->vmsize = procmem.vsize;
@@ -830,9 +799,6 @@ get_process_memory_info (ProcInfo *info)
   info->memshared = procmem.share;
 
   info->mem = info->memres - info->memshared;
-#ifdef HAVE_WNCK
-  info->mem += info->memxserver;
-#endif
 }
 
 static void
@@ -851,9 +817,6 @@ update_info_mutable_cols (ProcInfo *info)
   tree_store_update (model, &info->node, COL_VMSIZE, info->vmsize);
   tree_store_update (model, &info->node, COL_MEMRES, info->memres);
   tree_store_update (model, &info->node, COL_MEMSHARED, info->memshared);
-#ifdef HAVE_WNCK
-  tree_store_update (model, &info->node, COL_MEMXSERVER, info->memxserver);
-#endif
   tree_store_update (model, &info->node, COL_CPU, info->pcpu);
   tree_store_update (model, &info->node, COL_CPU_TIME, info->cpu_time);
   tree_store_update (model, &info->node, COL_DISK_READ_TOTAL, info->disk_read_bytes_total);

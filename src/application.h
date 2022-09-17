@@ -91,9 +91,6 @@ struct MutableProcInfo
     memshared (0UL),
     memwritable (0UL),
     mem (0UL),
-#ifdef HAVE_WNCK
-    memxserver (0UL),
-#endif
     start_time (0UL),
     cpu_time (0ULL),
     disk_read_bytes_total (0ULL),
@@ -119,11 +116,6 @@ struct MutableProcInfo
   gulong memshared;
   gulong memwritable;
   gulong mem;
-
-#ifdef HAVE_WNCK
-  // wnck gives an unsigned long
-  gulong memxserver;
-#endif
 
   gulong start_time;
   guint64 cpu_time;

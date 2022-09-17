@@ -1,10 +1,5 @@
 #include <config.h>
 
-#ifdef HAVE_WNCK
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE
-#include <libwnck/libwnck.h>
-#endif
-
 #include <dirent.h>
 #include <sys/stat.h>
 #include <stdio.h>
@@ -52,92 +47,6 @@ PrettyTable::PrettyTable()
 PrettyTable::~PrettyTable()
 {
 }
-
-#ifdef HAVE_WNCK
-void
-PrettyTable::on_application_opened (WnckScreen     *screen,
-                                    WnckApplication*app,
-                                    gpointer        data)
-{
-  PrettyTable * const that = static_cast<PrettyTable*>(data);
-
-  pid_t pid = wnck_application_get_pid (app);
-
-  if (pid == 0)
-    return;
-
-  const char*icon_name = wnck_application_get_icon_name (app);
-
-  Glib::RefPtr<Gtk::IconTheme> icon_theme;
-  Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
-  Glib::RefPtr<Gdk::Texture> icon;
-
-  icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
-
-  icon_paintable = Gtk::IconTheme::lookup_icon (
-    icon_name.c_str (),
-    APP_ICON_SIZE,
-    1,
-    Gtk::TextDirection::NONE,
-    Gtk::IconLookupFlags::PRELOAD);
-
-  icon = Gdk::Texture::create_from_file (icon_paintable.get_file ());
-
-  if (not icon)
-    {
-      icon = Glib::wrap (wnck_application_get_icon (app), /* take_copy */ true);
-      icon = icon->scale_simple (APP_ICON_SIZE, APP_ICON_SIZE, Gdk::INTERP_HYPER);
-    }
-
-  if (not icon)
-    return;
-
-  that->register_application (pid, icon);
-}
-
-
-
-void
-PrettyTable::register_application (pid_t                     pid,
-                                   Glib::RefPtr<Gdk::Pixbuf> icon)
-{
-  /* If process already exists then set the icon. Otherwise put into hash
-  ** table to be added later */
-  if (ProcInfo*info = GsmApplication::get ()->processes.find (pid))
-    {
-      info->set_icon (icon);
-      // move the ref to the map
-      this->apps[pid] = icon;
-      procman_debug ("WNCK OK for %u", unsigned(pid));
-    }
-}
-
-
-
-void
-PrettyTable::on_application_closed (WnckScreen     *screen,
-                                    WnckApplication*app,
-                                    gpointer        data)
-{
-  pid_t pid = wnck_application_get_pid (app);
-
-  if (pid == 0)
-    return;
-
-  static_cast<PrettyTable*>(data)->unregister_application (pid);
-}
-
-
-
-void
-PrettyTable::unregister_application (pid_t pid)
-{
-  IconsForPID::iterator it (this->apps.find (pid));
-
-  if (it != this->apps.end ())
-    this->apps.erase (it);
-}
-#endif // HAVE_WNCK
 
 void
 PrettyTable::init_gio_app_cache ()
@@ -395,9 +304,6 @@ PrettyTable::set_icon (ProcInfo &info)
   if (getters.empty ())
     {
       getters.push_back (&PrettyTable::get_icon_from_gio);
-#ifdef HAVE_WNCK
-      getters.push_back (&PrettyTable::get_icon_from_wnck);
-#endif
       getters.push_back (&PrettyTable::get_icon_from_theme);
       getters.push_back (&PrettyTable::get_icon_from_default);
       getters.push_back (&PrettyTable::get_icon_from_name);

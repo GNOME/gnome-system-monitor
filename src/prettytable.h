@@ -11,13 +11,6 @@
 #include <map>
 #include <string>
 
-#ifdef HAVE_WNCK
-extern "C" {
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE
-#include <libwnck/libwnck.h>
-}
-#endif
-
 class ProcInfo;
 
 using std::string;
@@ -33,26 +26,9 @@ PrettyTable();
 void set_icon (ProcInfo &);
 
 private:
-
-#ifdef HAVE_WNCK
-static void                on_application_opened (WnckScreen     *screen,
-                                                  WnckApplication*app,
-                                                  gpointer        data);
-static void                on_application_closed (WnckScreen     *screen,
-                                                  WnckApplication*app,
-                                                  gpointer        data);
-
-void                       register_application   (pid_t                      pid,
-                                                   Glib::RefPtr<Gdk::Texture> icon);
-void                       unregister_application (pid_t pid);
-#endif
-
 Glib::RefPtr<Gdk::Texture> get_icon_from_theme (const ProcInfo &);
 Glib::RefPtr<Gdk::Texture> get_icon_from_default (const ProcInfo &);
 Glib::RefPtr<Gdk::Texture> get_icon_from_gio (const ProcInfo &);
-#ifdef HAVE_WNCK
-Glib::RefPtr<Gdk::Texture> get_icon_from_wnck (const ProcInfo &);
-#endif
 Glib::RefPtr<Gdk::Texture> get_icon_from_name (const ProcInfo &);
 Glib::RefPtr<Gdk::Texture> get_icon_for_kernel (const ProcInfo &);
 Glib::RefPtr<Gdk::Texture> get_icon_dummy (const ProcInfo &);

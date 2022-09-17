@@ -73,11 +73,6 @@ fill_proc_properties (GtkTreeView *tree,
     { N_("Resident Memory"), format_memsize (info->memres) },
     { N_("Writable Memory"), format_memsize (info->memwritable) },
     { N_("Shared Memory"), format_memsize (info->memshared) },
-#ifdef HAVE_WNCK
-    {
-      N_("X Server Memory"), format_memsize (info->memxserver)
-    },
-#endif
     {
       N_("CPU"), g_strdup_printf ("%.2f%%", info->pcpu)
     },

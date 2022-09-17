@@ -53,13 +53,6 @@ libadwaita = dependency('libadwaita-1',version: '>= 1.0.0')
 librsvg    = dependency('librsvg-2.0', version: '>=2.35')
 libxml     = dependency('libxml-2.0',  version: '>=2.0')
 
-if get_option('wnck')
-  libwnck = dependency('libwnck-3.0', version: '>=2.91.0')
-else
-  libwnck = dependency('', required: false)
-endif
-conf.set('HAVE_WNCK', libwnck.found())
-
 if get_option('systemd')
   libsystemd = dependency('libsystemd', version: '>=44')
 else
@@ -205,8 +198,6 @@ message('\n'.join(['',
 '        CFLAGS:                 @0@'.format(cflags),
 '        CXXFLAGS:               @0@'.format(cxxflags),
 '        systemd support:        @0@'.format(libsystemd.found()),
-'        wnck support:           @0@ @1@'.format(libwnck.found(),
-      libwnck.found() ? '(this will likely make system-monitor segfault)' : ''),
 ]))
 
 # Extra scripts
