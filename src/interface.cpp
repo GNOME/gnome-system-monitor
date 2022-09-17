@@ -396,6 +396,7 @@ on_activate_about (GSimpleAction *,
     "Robert Roth",
     "Stefano Facchini",
     "Jacob Barkdull",
+    "Ondřej Míchal",
     NULL
   };
 
