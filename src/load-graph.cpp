@@ -709,11 +709,11 @@ dynamic_scale (LoadGraph             *graph,
 
   if (graph->latest == 0)
     {
-      (*values)[graph->num_points - 1] = dmax;
+      values->at (graph->num_points - 1) = dmax;
     }
   else
     {
-      (*values)[graph->latest - 1] = dmax;
+      values->at (graph->latest - 1) = dmax;
     }
 
   guint64 new_max;
@@ -721,8 +721,8 @@ dynamic_scale (LoadGraph             *graph,
   if (dmax >= *max)
     new_max = dmax;
   else
-    new_max = *std::max_element (&(*values)[0],
-                                 &(*values)[graph->num_points - 1]);
+    new_max = *std::max_element (&values->at (0),
+                                 &values->at (graph->num_points - 1));
 
   //
   // Round maximum
