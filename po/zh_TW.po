@@ -7,31 +7,33 @@
 # Wei-Lun Chao <chaoweilun@gmail.com>, 2010.
 # Pin-hsien Li <pspeter9931@gmail.com>, 2011.
 # pan93412 <pan93412@gmail.com>, 2019.
+# Freddy Cheng <freddy4212@gmail.com>, 2022.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor 3.3.4\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2020-08-07 06:32+0000\n"
-"PO-Revision-Date: 2020-10-12 22:13+0800\n"
-"Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
-"Language-Team: Chinese <zh-l10n@linux.org.tw>\n"
+"POT-Creation-Date: 2022-06-13 14:29+0000\n"
+"PO-Revision-Date: 2022-08-28 23:52+0800\n"
+"Last-Translator: Freddy Cheng <freddy4212@gmail.com>\n"
+"Language-Team: Chinese - Taiwan <chinese-l10n@googlegroups.com>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.4.1\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"X-Generator: Gtranslator 41.0\n"
 
-#: gnome-system-monitor.desktop.in.in:3 data/interface.ui:6
-#: src/application.cpp:245 src/interface.cpp:388
+#: gnome-system-monitor.desktop.in.in:3 gnome-system-monitor.appdata.xml.in:6
+#: data/interface.ui:6 src/application.cpp:346 src/interface.cpp:418
 msgid "System Monitor"
 msgstr "系統監控"
 
 #: gnome-system-monitor.desktop.in.in:4
-#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:389
+#: gnome-system-monitor-kde.desktop.in.in:4 src/interface.cpp:419
 msgid "View current processes and monitor system state"
-msgstr "顯示目前的程序並監控系統的狀態"
+msgstr "檢視執行中的程序與監控系統運作狀況"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: gnome-system-monitor.desktop.in.in:19
@@ -43,17 +45,16 @@ msgstr ""
 "Manager;Activity;監視器;系統;處理器;記憶體;網路;紀錄;使用量;效能;工作;管理員;"
 "活動;"
 
-#: gnome-system-monitor-kde.desktop.in.in:3
-#: gnome-system-monitor.appdata.xml.in:6 src/application.cpp:300
+#: gnome-system-monitor-kde.desktop.in.in:3 src/application.cpp:405
 msgid "GNOME System Monitor"
-msgstr "GNOME 系統監控程式"
+msgstr "GNOME 系統監控"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: gnome-system-monitor-kde.desktop.in.in:19
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr ""
 "Monitor;System;Process;CPU;Memory;Network;History;Usage;監視器;系統;處理器;記"
-"憶體;網路;紀錄;使用量;"
+"憶體;網路;紀錄;使用量;工作管理;"
 
 #: gnome-system-monitor.appdata.xml.in:7
 msgid "View and manage system resources"
@@ -63,7 +64,7 @@ msgstr "檢視與管理系統資源"
 msgid ""
 "System Monitor is a process viewer and system monitor with an attractive, "
 "easy-to-use interface."
-msgstr "系統監控是程序檢視器與系統監視器，具有吸引人、易於使用的介面。"
+msgstr "《系統監控》為程序檢視器與系統監視器，具有優雅且易於使用的介面。"
 
 #: gnome-system-monitor.appdata.xml.in:13
 msgid ""
@@ -72,16 +73,15 @@ msgid ""
 "applications, force stop processes not responding, and change the state or "
 "priority of existing processes."
 msgstr ""
-"系統監控可以協助您找出哪個應用程式正在使用電腦上的處理器或記憶體，可以管理執"
-"行中的應用程式，強制沒有回應的程序停止，以及改變現有程序的狀態或優先等級。"
+"《系統監控》能協助您找出哪個應用程式正在使用電腦上的處理器或記憶體，並能管理"
+"執行中的應用程式、強制停止沒有回應的程序、更改現有程序的狀態或優先等級。"
 
 #: gnome-system-monitor.appdata.xml.in:19
 msgid ""
 "The resource graphs feature shows you a quick overview of what is going on "
 "with your computer displaying recent network, memory and processor usage."
 msgstr ""
-"資源圖表功能顯示出您的電腦目前情況的快速概覽，包含目前網路、記憶體與處理器的"
-"使用量。"
+"資源圖表功能為電腦運作情況的快速概覽，能顯示網路、記憶體與處理器的即時用量。"
 
 #: gnome-system-monitor.appdata.xml.in:27
 msgid "Process list view"
@@ -89,13 +89,13 @@ msgstr "程序列表檢視"
 
 #: gnome-system-monitor.appdata.xml.in:31
 msgid "Resources overview"
-msgstr "資源概覽"
+msgstr "資源概覽檢視"
 
 #: gnome-system-monitor.appdata.xml.in:35
 msgid "File Systems view"
 msgstr "檔案系統檢視"
 
-#: gnome-system-monitor.appdata.xml.in:45
+#: gnome-system-monitor.appdata.xml.in:44
 msgid "The GNOME Project"
 msgstr "GNOME 專案"
 
@@ -105,249 +105,372 @@ msgstr "強行終止程序"
 
 #: org.gnome.gnome-system-monitor.policy.in.in:12
 msgid "Privileges are required to control other users’ processes"
-msgstr "控制其他使用者的程序需要管理權限"
+msgstr "需要管理權限才能控制其他使用者的程序"
 
 #: org.gnome.gnome-system-monitor.policy.in.in:22
 msgid "Renice process"
-msgstr "重設程序 nice 值"
+msgstr "重設程序的 Nice 值"
 
 #: org.gnome.gnome-system-monitor.policy.in.in:23
 msgid "Privileges are required to change the priority of processes"
-msgstr "改變程序的優先等級需要管理權限"
+msgstr "需要管理權限才能更改程序優先等級"
 
-#: data/interface.ui:150 src/procdialogs.cpp:135 src/proctable.cpp:147
+#: data/help-overlay.ui:13
+msgctxt "shortcut window"
+msgid "General"
+msgstr "一般"
+
+#: data/help-overlay.ui:18
+msgctxt "shortcut window"
+msgid "Show help"
+msgstr "顯示求助"
+
+#: data/help-overlay.ui:25
+msgctxt "shortcut window"
+msgid "Open menu"
+msgstr "開啟選單"
+
+#: data/help-overlay.ui:32
+msgctxt "shortcut window"
+msgid "Keyboard shortcuts"
+msgstr "鍵盤捷徑鍵"
+
+#: data/help-overlay.ui:39
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "退出"
+
+#: data/help-overlay.ui:46
+msgctxt "shortcut window"
+msgid "Search"
+msgstr "搜尋"
+
+#: data/help-overlay.ui:53
+msgctxt "shortcut window"
+msgid "Show Processes"
+msgstr "顯示程序列表"
+
+#: data/help-overlay.ui:60
+msgctxt "shortcut window"
+msgid "Show Resources"
+msgstr "顯示資源概覽"
+
+#: data/help-overlay.ui:67
+msgctxt "shortcut window"
+msgid "Show File Systems"
+msgstr "顯示檔案系統"
+
+#: data/help-overlay.ui:74
+msgctxt "shortcut window"
+msgid "Refresh"
+msgstr "重新整理"
+
+#: data/help-overlay.ui:82
+msgctxt "shortcut window"
+msgid "Processes"
+msgstr "程序"
+
+#: data/help-overlay.ui:87
+msgctxt "shortcut window"
+msgid "Show dependencies"
+msgstr "顯示依賴關係"
+
+#: data/help-overlay.ui:94
+msgctxt "shortcut window"
+msgid "Show process properties"
+msgstr "顯示程序屬性"
+
+#: data/help-overlay.ui:101
+msgctxt "shortcut window"
+msgid "Memory maps"
+msgstr "記憶體對映"
+
+#: data/help-overlay.ui:108
+msgctxt "shortcut window"
+msgid "Open files"
+msgstr "開啟的檔案"
+
+#: data/help-overlay.ui:115
+msgctxt "shortcut window"
+msgid "Send stop signal"
+msgstr "傳送停止訊號"
+
+#: data/help-overlay.ui:122
+msgctxt "shortcut window"
+msgid "Send continue signal"
+msgstr "傳送繼續訊號"
+
+#: data/help-overlay.ui:129
+msgctxt "shortcut window"
+msgid "Send End signal"
+msgstr "傳送結束訊號"
+
+#: data/help-overlay.ui:136
+msgctxt "shortcut window"
+msgid "Send Kill signal"
+msgstr "傳送終止訊號"
+
+#: data/interface.ui:162 src/procdialogs.cpp:138 src/proctable.cpp:147
 msgid "_End Process"
 msgid_plural "_End Processes"
 msgstr[0] "結束程序(_E)"
 
-#: data/interface.ui:164
+#: data/interface.ui:176
 msgid "Show process properties"
 msgstr "顯示程序屬性"
 
-#: data/interface.ui:185 data/preferences.ui:288
+#: data/interface.ui:197 data/preferences.ui:14
 msgid "Processes"
 msgstr "程序"
 
-#: data/interface.ui:209
-msgid "CPU History"
-msgstr "CPU 使用量記錄"
+#: data/interface.ui:262 src/interface.cpp:253 src/procproperties.cpp:78
+msgid "CPU"
+msgstr "CPU"
 
-#: data/interface.ui:285
-msgid "Memory and Swap History"
-msgstr "記憶體/交換記憶使用量記錄"
-
-#: data/interface.ui:319 src/interface.cpp:276 src/procproperties.cpp:70
+#: data/interface.ui:313 src/interface.cpp:303 src/procproperties.cpp:70
 #: src/proctable.cpp:350
 msgid "Memory"
 msgstr "記憶體"
 
-#: data/interface.ui:334 src/interface.cpp:288
+#: data/interface.ui:328 src/interface.cpp:315
 msgid "Swap"
-msgstr "置換"
+msgstr "交換空間"
 
-#: data/interface.ui:372
-msgid "Network History"
-msgstr "網路記錄"
+#: data/interface.ui:366
+msgid "Memory and Swap"
+msgstr "記憶體與交換空間"
 
-#: data/interface.ui:407 src/interface.cpp:318
+#: data/interface.ui:418 src/interface.cpp:347
 msgid "Receiving"
 msgstr "接收中"
 
-#: data/interface.ui:422
+#: data/interface.ui:433
 msgid "Total Received"
-msgstr "總共接收"
+msgstr "已接收"
 
-#: data/interface.ui:437 src/interface.cpp:336
+#: data/interface.ui:448 src/interface.cpp:365
 msgid "Sending"
 msgstr "傳送中"
 
-#: data/interface.ui:452
+#: data/interface.ui:463
 msgid "Total Sent"
-msgstr "總共傳送"
+msgstr "已傳送"
 
-#: data/interface.ui:499 data/preferences.ui:461
+#: data/interface.ui:510
+msgid "Network"
+msgstr "網路"
+
+#: data/interface.ui:536 data/preferences.ui:132
 msgid "Resources"
 msgstr "資源"
 
-#: data/interface.ui:527 data/preferences.ui:692
+#: data/interface.ui:564 data/preferences.ui:293
 msgid "File Systems"
 msgstr "檔案系統"
 
 #: data/lsof.ui:7
 msgctxt "Window title for Search for Open Files dialog"
 msgid "Search for Open Files"
-msgstr "搜尋開啟檔案"
+msgstr "搜尋開啟的檔案"
 
 #: data/lsof.ui:31
 msgid "Filter files by name"
-msgstr "依名稱過濾隱藏檔案"
+msgstr "依名稱過濾檔案"
 
 #: data/lsof.ui:41
 msgid "Case insensitive"
 msgstr "區分大小寫"
 
-#: data/menus.ui:6 data/menus.ui:57
+#: data/menus.ui:6 data/menus.ui:61
 msgctxt "Menu item to Open Search for Open Files dialog"
 msgid "Search for Open Files"
-msgstr "搜尋開啟檔案"
+msgstr "搜尋開啟的檔案"
 
-#: data/menus.ui:12 data/menus.ui:63
+#: data/menus.ui:12 data/menus.ui:67 data/preferences.ui:7
 msgid "Preferences"
 msgstr "偏好設定"
 
-#: data/menus.ui:16 data/menus.ui:67
+#: data/menus.ui:16 data/menus.ui:71
 msgid "Help"
 msgstr "求助"
 
-#: data/menus.ui:20 data/menus.ui:71
+#: data/menus.ui:20 data/menus.ui:75
+msgid "Keyboard Shortcuts"
+msgstr "鍵盤捷徑鍵"
+
+#: data/menus.ui:24 data/menus.ui:79
 msgid "About System Monitor"
 msgstr "關於系統監控"
 
-#: data/menus.ui:28
+#: data/menus.ui:32
 msgid "_Refresh"
 msgstr "重新整理(_R)"
 
-#: data/menus.ui:34
+#: data/menus.ui:38
 msgid "_Active Processes"
-msgstr "運行中的程序(_A)"
+msgstr "執行中的程序(_A)"
 
-#: data/menus.ui:39
+#: data/menus.ui:43
 msgid "A_ll Processes"
 msgstr "所有程序(_L)"
 
-#: data/menus.ui:44
+#: data/menus.ui:48
 msgid "M_y Processes"
 msgstr "我的程序(_Y)"
 
-#: data/menus.ui:51
+#: data/menus.ui:55
 msgid "Show _Dependencies"
 msgstr "顯示依賴關係(_D)"
 
-#: data/menus.ui:79
+#: data/menus.ui:87
 msgid "_Properties"
 msgstr "屬性(_P)"
 
-#: data/menus.ui:85
+#: data/menus.ui:93
 msgid "_Memory Maps"
-msgstr "記憶對映(_M)"
+msgstr "記憶體對映(_M)"
 
 # (Abel) 指一個 process 開啟了哪些檔案
 #. Translators: this means 'Files that are open' (open is not a verb here)
-#: data/menus.ui:89
+#: data/menus.ui:97
 msgid "Open _Files"
-msgstr "已開啟的檔案(_F)"
+msgstr "開啟的檔案(_F)"
 
-#: data/menus.ui:95
+#: data/menus.ui:103
 msgid "_Change Priority"
-msgstr "變更優先等級(_C)"
+msgstr "更改優先等級(_C)"
 
-#: data/menus.ui:98 src/util.cpp:161
+#: data/menus.ui:106 src/util.cpp:169
 msgid "Very High"
 msgstr "非常高"
 
-#: data/menus.ui:103 src/util.cpp:163
+#: data/menus.ui:111 src/util.cpp:171
 msgid "High"
 msgstr "高"
 
-#: data/menus.ui:108 src/util.cpp:165
+#: data/menus.ui:116 src/util.cpp:173
 msgid "Normal"
 msgstr "一般"
 
-#: data/menus.ui:113 src/util.cpp:167
+#: data/menus.ui:121 src/util.cpp:175
 msgid "Low"
 msgstr "低"
 
-#: data/menus.ui:118 src/util.cpp:169
+#: data/menus.ui:126 src/util.cpp:177
 msgid "Very Low"
 msgstr "非常低"
 
-#: data/menus.ui:125
+#: data/menus.ui:133
 msgid "Custom"
 msgstr "自訂"
 
-#: data/menus.ui:134
+#: data/menus.ui:140
+msgid "Set _Affinity"
+msgstr "設定親和性(_A)"
+
+#: data/menus.ui:146
 msgid "_Stop"
 msgstr "停止(_S)"
 
-#: data/menus.ui:139
+#: data/menus.ui:151
 msgid "_Continue"
 msgstr "繼續(_C)"
 
-#: data/menus.ui:144
+#: data/menus.ui:156
 msgid "_End"
 msgstr "結束(_E)"
 
-#: data/menus.ui:149
+#: data/menus.ui:161
 msgid "_Kill"
-msgstr "終止(_K)"
+msgstr "強行終止(_K)"
 
 #: data/openfiles.ui:8
 msgid "Open Files"
-msgstr "開啟檔案"
+msgstr "開啟的檔案"
 
-#: data/preferences.ui:8
-msgid "System Monitor Preferences"
-msgstr "系統監控程式偏好設定"
-
-#: data/preferences.ui:51 data/preferences.ui:488
+#: data/preferences.ui:19 data/preferences.ui:298
 msgid "Behavior"
 msgstr "行為"
 
-#: data/preferences.ui:83 data/preferences.ui:348 data/preferences.ui:520
-msgid "_Update interval in seconds:"
-msgstr "更新間隔 [秒](_U)："
+#: data/preferences.ui:24 data/preferences.ui:142 data/preferences.ui:303
+msgid "_Update Interval in Seconds"
+msgstr "更新間隔秒數(_U)"
 
-#: data/preferences.ui:119
-msgid "Enable _smooth refresh"
+#: data/preferences.ui:42
+msgid "Enable _Smooth Refresh"
 msgstr "啟用平滑更新(_S)"
 
-#: data/preferences.ui:137
-msgid "Alert before ending or _killing processes"
+#: data/preferences.ui:58
+msgid "Alert Before Ending or _Killing Processes"
 msgstr "當程序結束或被強行終止前發出警告(_K)"
 
-#: data/preferences.ui:155
-msgid "_Divide CPU usage by CPU count"
-msgstr "依 CPU 數量分別計算 CPU 用量(_D)"
+#: data/preferences.ui:74
+msgid "_Divide CPU Usage by CPU Count"
+msgstr "將 CPU 使用量除以 CPU 數量均分(_D)"
 
-#: data/preferences.ui:200 data/preferences.ui:601
+#: data/preferences.ui:90
+msgid "Show Memory in IEC"
+msgstr "以 IEC 單位顯示記憶體"
+
+#: data/preferences.ui:107 data/preferences.ui:338
 msgid "Information Fields"
-msgstr "資訊欄"
+msgstr "資訊欄位"
 
-#: data/preferences.ui:229
-msgid "Process i_nformation shown in list:"
-msgstr "列表中顯示的程序資訊(_N)："
+#: data/preferences.ui:108
+msgid "Process information shown in list:"
+msgstr "列表中顯示的程序資訊"
 
-#: data/preferences.ui:315
+#: data/preferences.ui:137
 msgid "Graphs"
 msgstr "圖表"
 
-#: data/preferences.ui:384
-msgid "_Draw CPU chart as stacked area chart"
-msgstr "將 CPU 圖表繪製為堆疊區域圖表(_D)"
+#: data/preferences.ui:160
+msgid "_Chart Data Points"
+msgstr "圖表資料點大小(_C)"
 
-#: data/preferences.ui:402
-msgid "Draw CPU chart as s_mooth graph"
-msgstr "將 CPU 圖表繪製為平滑圖表(_M)"
+#: data/preferences.ui:177
+msgid "_Draw CPU Chart as Stacked Area Chart"
+msgstr "將 CPU 圖表繪製為堆疊區域圖(_D)"
 
-#: data/preferences.ui:420
-msgid "_Show network speed in bits"
-msgstr "以位元顯示網路速度(_S)"
+#: data/preferences.ui:193
+msgid "Draw Charts as S_mooth Graphs"
+msgstr "將圖表繪製為平滑圖表(_M)"
 
-#: data/preferences.ui:556
-msgid "Show _all file systems"
+#: data/preferences.ui:209
+msgid "Show Memory and Swap in IEC"
+msgstr "以 IEC 單位顯示記憶體與交換空間"
+
+#: data/preferences.ui:225
+msgid "Show Memory in Logarithmic Scale"
+msgstr "以對數尺度顯示記憶體"
+
+#: data/preferences.ui:241
+msgid "_Show Network Speed in Bits"
+msgstr "以位元單位顯示網路速度(_S)"
+
+#: data/preferences.ui:257
+msgid "Set Network Totals _Unit Separately"
+msgstr "單獨設定總網路流量的單位(_U)"
+
+#: data/preferences.ui:273
+msgid "Show Network _Totals in Bits"
+msgstr "以位元單位顯示總網路流量(_T)"
+
+#: data/preferences.ui:321
+msgid "Show _All File Systems"
 msgstr "顯示所有的檔案系統(_A)"
 
-#: data/preferences.ui:630
-msgid "File system i_nformation shown in list:"
-msgstr "列表中顯示的檔案系統資訊(_N)："
+#: data/preferences.ui:339
+msgid "File system information shown in list"
+msgstr "列表中顯示的檔案系統資訊"
 
-#: data/renice.ui:27 src/procdialogs.cpp:159
+#: data/renice.ui:27 src/procdialogs.cpp:162 src/setaffinity.cpp:312
 msgid "_Cancel"
 msgstr "取消(_C)"
 
 #: data/renice.ui:43
 msgid "Change _Priority"
-msgstr "變更優先等級(_P)"
+msgstr "更改優先等級(_P)"
 
 #: data/renice.ui:87
 msgid "_Nice value:"
@@ -358,20 +481,20 @@ msgid ""
 "<small><i><b>Note:</b> The priority of a process is given by its nice value. "
 "A lower nice value corresponds to a higher priority.</i></small>"
 msgstr ""
-"<small><i><b>注意：</b> 程序是否優先執行可由它的 nice 值得出。較低的 nice 值"
-"表示較優先執行。</i></small>"
+"<small><i><b>注意：</b> 程序的優先等級是由 Nice 值決定的。較低的 Nice 值代表"
+"擁更高的優先等級。</i></small>"
 
-#: src/application.cpp:286
+#: src/application.cpp:387
 msgid "A simple process and system monitor."
-msgstr "簡易的程序和系統監視器。"
+msgstr "簡易的程序總覽與系統概況監視器。"
 
 #: src/argv.cpp:22
 msgid "Show the Processes tab"
-msgstr "顯示程序分頁"
+msgstr "顯示程序列表分頁"
 
 #: src/argv.cpp:27
 msgid "Show the Resources tab"
-msgstr "顯示資源分頁"
+msgstr "顯示資源概覽分頁"
 
 #: src/argv.cpp:32
 msgid "Show the File Systems tab"
@@ -379,52 +502,48 @@ msgstr "顯示檔案系統分頁"
 
 #: src/argv.cpp:36
 msgid "Show the application’s version"
-msgstr "顯示應用程式的版本"
+msgstr "顯示應用程式版本"
 
-#: src/disks.cpp:352 src/memmaps.cpp:329
+#: src/disks.cpp:353 src/memmaps.cpp:329
 msgid "Device"
 msgstr "裝置"
 
-#: src/disks.cpp:353
+#: src/disks.cpp:354
 msgid "Directory"
 msgstr "目錄"
 
-#: src/disks.cpp:354 src/legacy/gsm_color_button.c:165 src/openfiles.cpp:253
+#: src/disks.cpp:355 src/legacy/gsm_color_button.c:165 src/openfiles.cpp:253
 msgid "Type"
 msgstr "類型"
 
-#: src/disks.cpp:355
-msgid "Total"
-msgstr "總數"
-
 #: src/disks.cpp:356
+msgid "Total"
+msgstr "總計"
+
+#: src/disks.cpp:357
 msgid "Free"
 msgstr "剩餘"
 
-#: src/disks.cpp:357
-msgid "Available"
-msgstr "可用空間"
-
 #: src/disks.cpp:358
+msgid "Available"
+msgstr "可用"
+
+#: src/disks.cpp:359
 msgid "Used"
-msgstr "已使用"
+msgstr "已用"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: src/interface.cpp:199
+#: src/interface.cpp:217
 #, c-format
 msgid "Pick a Color for “%s”"
-msgstr "挑選「%s」的顏色"
+msgstr "選擇「%s」的顏色"
 
-#: src/interface.cpp:233 src/procproperties.cpp:78
-msgid "CPU"
-msgstr "CPU"
-
-#: src/interface.cpp:235
+#: src/interface.cpp:255
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: src/interface.cpp:400
+#: src/interface.cpp:430
 msgid "translator-credits"
 msgstr ""
 "如對翻譯有任何意見，請送一封電子郵件給\n"
@@ -432,28 +551,29 @@ msgstr ""
 "zh-l10n@lists.linux.org.tw\n"
 "\n"
 "Woodman Tuen <wmtuen@gmail.com>, 2005-07\n"
-"Abel Cheung <abel@oaka.org>, 2001-03, 05"
+"Abel Cheung <abel@oaka.org>, 2001-03, 05\n"
+"Freddy Cheng <freddy4212@gmail.com>, 2022."
 
 #. xgettext: ? stands for unknown
 #: src/legacy/e_date.c:156
 msgid "?"
-msgstr "?"
+msgstr "？"
 
 #: src/legacy/e_date.c:163
 msgid "Today %l∶%M %p"
-msgstr "今天 %p %l:%M"
+msgstr "今天 %p %I:%M"
 
 #: src/legacy/e_date.c:172
 msgid "Yesterday %l∶%M %p"
-msgstr "昨天 %p %l:%M"
+msgstr "昨天 %p %I:%M"
 
 #: src/legacy/e_date.c:184
 msgid "%a %l∶%M %p"
-msgstr "%A %p %l:%M"
+msgstr "%A %p %I:%M"
 
 #: src/legacy/e_date.c:192
 msgid "%b %d %l∶%M %p"
-msgstr "%m月%d日%p %l:%M"
+msgstr "%-m月%d日 %p %I:%M"
 
 #: src/legacy/e_date.c:194
 msgid "%b %d %Y"
@@ -466,7 +586,7 @@ msgstr "分數"
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
 #: src/legacy/gsm_color_button.c:143
 msgid "Percentage full for pie color pickers"
-msgstr "餅狀色彩挑選器的完整百分比"
+msgstr "圓形顏色選擇器的完整百分比"
 
 #: src/legacy/gsm_color_button.c:150
 msgid "Title"
@@ -474,9 +594,9 @@ msgstr "標題"
 
 #: src/legacy/gsm_color_button.c:151
 msgid "The title of the color selection dialog"
-msgstr "顏色選擇對話盒的標題"
+msgstr "顏色選擇對話框的標題"
 
-#: src/legacy/gsm_color_button.c:152 src/legacy/gsm_color_button.c:515
+#: src/legacy/gsm_color_button.c:152 src/legacy/gsm_color_button.c:514
 msgid "Pick a Color"
 msgstr "選取顏色"
 
@@ -490,71 +610,96 @@ msgstr "選取的顏色"
 
 #: src/legacy/gsm_color_button.c:166
 msgid "Type of color picker"
-msgstr "色彩選擇類型"
+msgstr "顏色選擇器類型"
 
-#: src/legacy/gsm_color_button.c:437
+#: src/legacy/gsm_color_button.c:436
 msgid "Received invalid color data\n"
-msgstr "收到了無效的顏色資料\n"
+msgstr "接收到無效的顏色資料\n"
 
-#: src/legacy/gsm_color_button.c:538
+#: src/legacy/gsm_color_button.c:537
 msgid "Click to set graph colors"
-msgstr "按下這裡可以設定圖表顏色"
+msgstr "點一下即可設定圖表顏色"
 
-#: src/load-graph.cpp:186
+#. Translators: loadgraphs y axis percentage labels: 0 %, 50%, 100%
+#: src/load-graph.cpp:88 src/load-graph.cpp:94
 #, c-format
-msgid "%u second"
-msgid_plural "%u seconds"
+msgid "%.0f %%"
+msgstr "%.0f %%"
+
+#: src/load-graph.cpp:136
+#, c-format
+msgid "%u hr"
+msgid_plural "%u hrs"
+msgstr[0] "%u 小時"
+
+#: src/load-graph.cpp:137
+#, c-format
+msgid "%u min"
+msgid_plural "%u mins"
+msgstr[0] "%u 分鐘"
+
+#: src/load-graph.cpp:139
+#, c-format
+msgid "%u sec"
+msgid_plural "%u secs"
 msgstr[0] "%u 秒"
 
-#: src/load-graph.cpp:416
+#. Update label
+#. Translators: CPU usage percentage label: 95.7%
+#: src/load-graph.cpp:505
+#, c-format
+msgid "%.1f%%"
+msgstr "%.1f%%"
+
+#: src/load-graph.cpp:530
 msgid "not available"
 msgstr "無法使用"
 
-#. xgettext: 540MiB (53 %) of 1.0 GiB
-#: src/load-graph.cpp:419
+#. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
+#: src/load-graph.cpp:533
 #, c-format
 msgid "%s (%.1f%%) of %s"
-msgstr "%s (%.1f%%) of %s"
+msgstr "%s (%.1f%%) / %s"
 
-#. xgettext: Used cache string, e.g.: "Cache 2.4GiB"
-#: src/load-graph.cpp:423
+#. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
+#: src/load-graph.cpp:537
 #, c-format
 msgid "Cache %s"
 msgstr "快取 %s"
 
-#: src/lsof.cpp:118
+#: src/lsof.cpp:117
 #, c-format
 msgid "%d open file"
 msgid_plural "%d open files"
-msgstr[0] "%d 個開啟的檔案"
+msgstr[0] "%d 個已開啟的檔案"
 
-#: src/lsof.cpp:120
+#: src/lsof.cpp:119
 #, c-format
 msgid "%d matching open file"
 msgid_plural "%d matching open files"
-msgstr[0] "%d 個符合開啟的檔案"
+msgstr[0] "%d 個已開啟的檔案符合條件"
 
-#: src/lsof.cpp:245
+#: src/lsof.cpp:244
 msgid "Process"
 msgstr "程序"
 
-#: src/lsof.cpp:257
+#: src/lsof.cpp:256
 msgid "PID"
 msgstr "PID"
 
-#: src/lsof.cpp:267 src/memmaps.cpp:307
+#: src/lsof.cpp:266 src/memmaps.cpp:307
 msgid "Filename"
 msgstr "檔案名稱"
 
 #. xgettext: virtual memory start
 #: src/memmaps.cpp:309
 msgid "VM Start"
-msgstr "VM 開始"
+msgstr "VM 起始位址"
 
 #. xgettext: virtual memory end
 #: src/memmaps.cpp:311
 msgid "VM End"
-msgstr "VM 終結"
+msgstr "VM 結束位址"
 
 #. xgettext: virtual memory syze
 #: src/memmaps.cpp:313
@@ -568,44 +713,44 @@ msgstr "旗標"
 #. xgettext: virtual memory offset
 #: src/memmaps.cpp:316
 msgid "VM Offset"
-msgstr "VM Offset"
+msgstr "VM 平移量"
 
 #. xgettext: memory that has not been modified since
 #. it has been allocated
 #: src/memmaps.cpp:319
 msgid "Private clean"
-msgstr "記憶體內容未被修改"
+msgstr "未被修改的私有記憶體"
 
 #. xgettext: memory that has been modified since it
 #. has been allocated
 #: src/memmaps.cpp:322
 msgid "Private dirty"
-msgstr "記憶體內容已被修改"
+msgstr "已被修改的私有記憶體"
 
 #. xgettext: shared memory that has not been modified
 #. since it has been allocated
 #: src/memmaps.cpp:325
 msgid "Shared clean"
-msgstr "分享記憶體未被修改"
+msgstr "未被修改的共享記憶體"
 
 #. xgettext: shared memory that has been modified
 #. since it has been allocated
 #: src/memmaps.cpp:328
 msgid "Shared dirty"
-msgstr "分享記憶體已被修改"
+msgstr "已被修改的共享記憶體"
 
 #: src/memmaps.cpp:330
 msgid "Inode"
 msgstr "Inode"
 
-#: src/memmaps.cpp:438
+#: src/memmaps.cpp:443
 msgid "Memory Maps"
-msgstr "記憶對映"
+msgstr "記憶體對映"
 
-#: src/memmaps.cpp:450
+#: src/memmaps.cpp:455
 #, c-format
 msgid "_Memory maps for process “%s” (PID %u):"
-msgstr "程序「%s」(PID %u) 的記憶配置(_M)："
+msgstr "程序「%s」(PID %u) 的記憶體對映(_M)："
 
 #: src/openfiles.cpp:40
 msgid "file"
@@ -613,7 +758,7 @@ msgstr "檔案"
 
 #: src/openfiles.cpp:42
 msgid "pipe"
-msgstr "管道"
+msgstr "管線"
 
 #: src/openfiles.cpp:44
 msgid "IPv6 network connection"
@@ -625,11 +770,11 @@ msgstr "IPv4 網路連線"
 
 #: src/openfiles.cpp:48
 msgid "local socket"
-msgstr "本機 socket"
+msgstr "本機插座"
 
 #: src/openfiles.cpp:50
 msgid "unknown type"
-msgstr "類型不詳"
+msgstr "不明類型"
 
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
@@ -649,19 +794,19 @@ msgstr "程序「%s」(PID %u) 所開啟的檔案(_F)："
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:5
 msgid "Main window size and position in the form (width, height, xpos, ypos)"
-msgstr "表單中主要視窗的大小與位置 (寬度, 高度, xpos, ypos)"
+msgstr "主視窗的大小與位置 (寬度, 高度, xpos, ypos)"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:11
 msgid "Main Window should open maximized"
-msgstr "主視窗應否成為最大化的狀態"
+msgstr "主視窗是否以最大化狀態開啟"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:18
 msgid "Show process dependencies in tree form"
-msgstr "以樹狀方式顯示程序間的相依性"
+msgstr "以樹狀結構顯示程序的依賴關係"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:25
 msgid "Solaris mode for CPU percentage"
-msgstr "CPU 百分比使用 Solaris 模式"
+msgstr "使用 Solaris 模式顯示 CPU 百分比"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:27
 msgid ""
@@ -669,413 +814,441 @@ msgid ""
 "is divided by the total number of CPUs. Otherwise, it operates in “Irix "
 "mode”."
 msgstr ""
-"如設為 TRUE，system-monitor 會以「Solaris 模式」運行，即每個工作的 CPU 使用量"
-"會除以總 CPU 數來均分。否則它會以「Irix 模式」運行。"
+"若設為「True」，《system-monitor》會以「Solaris 模式」運作，即每個工作的 CPU "
+"使用量會除以 CPU 數量來均分。否則會以「Irix 模式」運作。"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:34
+msgid "Show memory in IEC"
+msgstr "以 IEC 單位顯示記憶體"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:41
 msgid "Enable/Disable smooth refresh"
 msgstr "啟用/停用平滑更新"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:41
-msgid "Show warning dialog when killing processes"
-msgstr "準備強行終止程序時顯示警告訊息對話方塊"
-
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:48
+msgid "Show warning dialog when killing processes"
+msgstr "欲強行終止程序時顯示警告訊息對話框"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:55
 msgid "Time in milliseconds between updates of the process view"
-msgstr "程序列表每次更新的時間，以毫秒表示"
+msgstr "程序頁面列表更新時間間隔（毫秒）"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:54
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:61
 msgid "Time in milliseconds between updates of the graphs"
-msgstr "資源圖表每次更新的時間，以毫秒表示"
+msgstr "資源頁面圖表更新時間間隔（毫秒）"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:60
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:67
 msgid "Whether information about all file systems should be displayed"
-msgstr "是否要顯示關於所有檔案系統的資訊"
+msgstr "是否要顯示所有檔案系統的相關資訊"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:62
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:69
 msgid ""
 "Whether to display information about all file systems (including types like "
 "“autofs” and “procfs”). Useful for getting a list of all currently mounted "
 "file systems."
 msgstr ""
-"是否要顯示關於所有檔案系統的資訊 (這裡包括了像「autofs」和「procfs」這種檔案"
-"類型)。在取得目前所有掛載的檔案系統列表時會很有用。"
+"是否要顯示所有檔案系統的相關資訊（包括『Autofs』和『Procfs』這類檔案系統）。"
+"啟用該選項可以檢視所有已掛載的檔案系統。"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:69
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:76
 msgid "Time in milliseconds between updates of the devices list"
-msgstr "儲存裝置列表每次更新的時間，以毫秒表示"
+msgstr "檔案系統頁面列表更新時間間隔（毫秒）"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:79
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:82
+msgid "Time amount of data points in the resource graphs"
+msgstr "資源圖表的資料點時間間隔"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:92
 msgid "Determines which processes to show."
-msgstr "決定要顯示哪個程序。"
+msgstr "設定要顯示的程序有哪些。"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:89
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:102
 msgid "Saves the currently viewed tab"
-msgstr "本數值表示程式下次啟動時顯示的分頁"
+msgstr "紀錄目前停留的分頁以供下次啟動時顯示"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:112
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:125
 msgid "CPU colors"
 msgstr "CPU 顏色"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:114
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:127
 msgid "Each entry is in the format (CPU#, Hexadecimal color value)"
-msgstr "輸入項目的格式為 (CPU#, 十六進位顏色值)"
+msgstr "個別條目的輸入格式均為 (CPU#, 十六進位制顏色值)"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:121
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:134
 msgid "Default graph memory color"
-msgstr "圖表預設表示記憶體的顏色"
+msgstr "記憶體圖表的預設顏色"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:128
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:141
 msgid "Default graph swap color"
-msgstr "圖表預設表示交換記憶的顏色"
+msgstr "交換空間圖表的預設顏色"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:135
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:148
 msgid "Default graph incoming network traffic color"
-msgstr "預設網路圖表（流入）的顏色"
+msgstr "網路圖表的預設顏色（接收中）"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:142
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:155
 msgid "Default graph outgoing network traffic color"
-msgstr "預設網路圖表（流出）的顏色"
+msgstr "網路圖表的預設顏色（傳送中）"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:149
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:162
 msgid "Show network traffic in bits"
-msgstr "以位元顯示網路速度"
+msgstr "以位元單位顯示網路流量"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:156
-msgid "Show CPU chart as stacked area chart"
-msgstr "將 CPU 圖表顯示為堆疊區域圖表"
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:169
+msgid "Set network totals unit separately"
+msgstr "單獨設定總網路流量的單位"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:158
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:176
+msgid "Show network totals in bits"
+msgstr "以位元單位顯示總網路流量"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:183
+msgid "Show memory in logarithmic scale"
+msgstr "以對數尺度顯示記憶體"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:185
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:194
 msgid ""
 "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
 "of a line chart."
 msgstr ""
-"如果設定為 TRUE，system-monitor 會將 CPU 圖表顯示為堆疊區域圖表而非長條圖。"
+"若設為「True」，《系統監控》會將 CPU 圖表顯示為堆疊區域圖表而非折線圖。"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:165
-msgid "Show CPU chart as smooth graph using Bezier curves"
-msgstr "將 CPU 圖表使用貝茲曲線顯示為平滑圖表"
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:192
+msgid "Show CPU chart as stacked area chart"
+msgstr "將 CPU 圖表顯示為堆疊區域圖"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:167
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:201
 msgid ""
-"If TRUE, system-monitor shows the CPU chart as a smoothed graph, otherwise "
-"as a line chart."
-msgstr ""
-"如果設定為 TRUE，system-monitor 會將 CPU 圖表顯示為平滑圖表而非長條圖。"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:182
-msgid "Process view sort column"
-msgstr "程序根據哪一欄排序"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:189
-msgid "Process view columns order"
-msgstr "程序顯示欄的順序"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:196
-msgid "Process view sort order"
-msgstr "排列程序的次序"
+"Show CPU, Memory, and Network charts as smooth graphs using Bezier curves"
+msgstr "將 CPU、記憶體及網路圖表透過貝茲曲線顯示為平滑圖表"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:203
-msgid "Width of process “Name” column"
-msgstr "程序欄中「名稱」的寬度"
+msgid ""
+"If TRUE, system-monitor shows the CPU, Memory, and Network charts as "
+"smoothed graphs, otherwise as line charts."
+msgstr ""
+"若設為「True」，《系統監控》會將 CPU、記憶體及網路圖表顯示為平滑圖表而非折線"
+"圖。"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:210
-msgid "Show process “Name” column on startup"
-msgstr "啟動時在程序欄位中顯示「名稱」"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:217
-msgid "Width of process “User” column"
-msgstr "程序欄中「使用者」的寬度"
+msgid "Show memory and swap in IEC"
+msgstr "以 IEC 單位顯示記憶體與交換空間"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:224
-msgid "Show process “User” column on startup"
-msgstr "啟動時在程序欄位中顯示「使用者」"
+msgid "Process view sort column"
+msgstr "程序列表的欄位排序依據"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
-msgid "Width of process “Status” column"
-msgstr "程序欄中「狀態」的寬度"
+msgid "Process view columns order"
+msgstr "程序列表的欄位排列順序"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
-msgid "Show process “Status” column on startup"
-msgstr "啟動時在程序欄位中顯示「狀態」"
+msgid "Process view sort order"
+msgstr "程序列表的欄位排序方向（遞增或遞減）"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:245
-msgid "Width of process “Virtual Memory” column"
-msgstr "程序欄中「虛擬記憶體」的寬度"
+msgid "Width of process “Name” column"
+msgstr "程序列表的「名稱」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:252
-msgid "Show process “Virtual Memory” column on startup"
-msgstr "啟動時在程序欄位中顯示「虛擬記憶體」"
+msgid "Show process “Name” column on startup"
+msgstr "在程序列表中顯示「名稱」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:259
-msgid "Width of process “Resident Memory” column"
-msgstr "程序欄中「常駐記憶體」的寬度"
+msgid "Width of process “User” column"
+msgstr "程序列表的「使用者」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:266
-msgid "Show process “Resident Memory” column on startup"
-msgstr "啟動時在程序欄位中顯示「常駐記憶體」"
+msgid "Show process “User” column on startup"
+msgstr "在程序列表中顯示「使用者」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:273
-msgid "Width of process “Writable Memory” column"
-msgstr "程序欄中「可寫記憶體」的寬度"
+msgid "Width of process “Status” column"
+msgstr "程序列表的「狀態」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:280
-msgid "Show process “Writable Memory” column on startup"
-msgstr "啟動時在程序欄位中顯示「可寫記憶體」"
+msgid "Show process “Status” column on startup"
+msgstr "在程序列表中顯示「狀態」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:287
-msgid "Width of process “Shared Memory” column"
-msgstr "程序欄中「分享記憶體」的寬度"
+msgid "Width of process “Virtual Memory” column"
+msgstr "程序列表的「虛擬記憶體」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:294
-msgid "Show process “Shared Memory” column on startup"
-msgstr "啟動時在程序欄位中顯示「分享記憶體」"
+msgid "Show process “Virtual Memory” column on startup"
+msgstr "在程序列表中顯示「虛擬記憶體」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:301
-msgid "Width of process “X Server Memory” column"
-msgstr "程序欄中「X 伺服器記憶體」的寬度"
+msgid "Width of process “Resident Memory” column"
+msgstr "程序列表的「常駐記憶體」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:308
-msgid "Show process “X Server Memory” column on startup"
-msgstr "啟動時在程序欄位中顯示「X 伺服器記憶體」"
+msgid "Show process “Resident Memory” column on startup"
+msgstr "在程序列表中顯示「常駐記憶體」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:315
-msgid "Width of process “CPU %” column"
-msgstr "程序欄中「CPU %」的寬度"
+msgid "Width of process “Writable Memory” column"
+msgstr "程序列表的「可寫記憶體」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:322
-msgid "Show process “CPU %” column on startup"
-msgstr "啟動時在程序欄位中顯示「CPU %」"
+msgid "Show process “Writable Memory” column on startup"
+msgstr "在程序列表中顯示「可寫記憶體」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:329
-msgid "Width of process “CPU Time” column"
-msgstr "程序欄中「CPU 運行時間」的寬度"
+msgid "Width of process “Shared Memory” column"
+msgstr "程序列表的「共享記憶體」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:336
-msgid "Show process “CPU Time” column on startup"
-msgstr "啟動時在程序欄位中顯示「CPU 運行時間」"
+msgid "Show process “Shared Memory” column on startup"
+msgstr "在程序列表中顯示「共享記憶體」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:343
-msgid "Width of process “Started” column"
-msgstr "程序欄中「已啟動」的寬度"
+msgid "Width of process “X Server Memory” column"
+msgstr "程序列表的「X 伺服器記憶體」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:350
-msgid "Show process “Started” column on startup"
-msgstr "啟動時在程序欄位中顯示「已啟動」"
+msgid "Show process “X Server Memory” column on startup"
+msgstr "在程序列表中顯示「X 伺服器記憶體」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:357
-msgid "Width of process “Nice” column"
-msgstr "程序欄中「Nice」的寬度"
+msgid "Width of process “CPU %” column"
+msgstr "程序列表的「CPU %」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:364
-msgid "Show process “Nice” column on startup"
-msgstr "啟動時在程序欄位中顯示「Nice」"
+msgid "Show process “CPU %” column on startup"
+msgstr "在程序列表中顯示「CPU %」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
-msgid "Width of process “ID” column"
-msgstr "程序欄中「ID」的寬度"
+msgid "Width of process “CPU Time” column"
+msgstr "程序列表的「CPU 時間」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
-msgid "Show process “ID” column on startup"
-msgstr "啟動時在程序欄位中顯示「ID」"
+msgid "Show process “CPU Time” column on startup"
+msgstr "在程序列表中顯示「CPU 時間」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
+msgid "Width of process “Started” column"
+msgstr "程序列表的「開始時間」欄位寬度"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:392
+msgid "Show process “Started” column on startup"
+msgstr "在程序列表中顯示「開始時間」欄位"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:399
+msgid "Width of process “Nice” column"
+msgstr "程序列表的「Nice 值」欄位寬度"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:406
+msgid "Show process “Nice” column on startup"
+msgstr "在程序列表中顯示「Nice 值」欄位"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:413
+msgid "Width of process “ID” column"
+msgstr "程序列表的「ID」欄位寬度"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:420
+msgid "Show process “ID” column on startup"
+msgstr "在程序列表中顯示「ID」欄位"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:427
 msgid "Width of process “SELinux Security Context” column"
-msgstr "程序欄中「SELinux 安全性關聯」的寬度"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:391
-msgid "Show process “SELinux Security Context” column on startup"
-msgstr "啟動時在程序欄位中顯示「SELinux 安全性關聯」"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:398
-msgid "Width of process “Command Line” column"
-msgstr "程序欄中「命令列」的寬度"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:405
-msgid "Show process “Command Line” column on startup"
-msgstr "啟動時在程序欄位中顯示「命令列」"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:412
-msgid "Width of process “Memory” column"
-msgstr "程序欄中「記憶體」的寬度"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:419
-msgid "Show process “Memory” column on startup"
-msgstr "啟動時在程序欄位中顯示「記憶體」"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:426
-msgid "Width of process “Waiting Channel” column"
-msgstr "程序欄中「等待頻道」的寬度"
+msgstr "程序列表的「安全本文」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:433
-msgid "Show process “Waiting Channel” column on startup"
-msgstr "啟動時在程序欄位中顯示「等待頻道」"
+msgid "Show process “SELinux Security Context” column on startup"
+msgstr "在程序列表中顯示「安全本文」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:440
-msgid "Width of process “Control Group” column"
-msgstr "程序欄中「控制群組」的寬度"
+msgid "Width of process “Command Line” column"
+msgstr "程序列表的「命令列」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:447
-msgid "Show process “Control Group” column on startup"
-msgstr "啟動時在程序欄位中顯示「控制群組」"
+msgid "Show process “Command Line” column on startup"
+msgstr "在程序列表中顯示「命令列」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:454
-msgid "Width of process “Unit” column"
-msgstr "程序欄中「單位」的寬度"
+msgid "Width of process “Memory” column"
+msgstr "程序列表的「記憶體」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:461
-msgid "Show process “Unit” column on startup"
-msgstr "啟動時在程序欄位中顯示「單位」"
+msgid "Show process “Memory” column on startup"
+msgstr "在程序列表中顯示「記憶體」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:468
-msgid "Width of process “Session” column"
-msgstr "程序欄中「工作階段」的寬度"
+msgid "Width of process “Waiting Channel” column"
+msgstr "程序列表的「WCHAN」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:475
-msgid "Show process “Session” column on startup"
-msgstr "啟動時在程序欄位中顯示「工作階段」"
+msgid "Show process “Waiting Channel” column on startup"
+msgstr "在程序列表中顯示「WCHAN」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:482
-msgid "Width of process “Seat” column"
-msgstr "程序欄中「臺座」的寬度"
+msgid "Width of process “Control Group” column"
+msgstr "程序列表的「控制群組」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:489
-msgid "Show process “Seat” column on startup"
-msgstr "啟動時在程序欄位中顯示「臺座」"
+msgid "Show process “Control Group” column on startup"
+msgstr "在程序列表中顯示「控制群組」欄位"
 
+# (Freddy Cheng) Systemd Unit
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:496
-msgid "Width of process “Owner” column"
-msgstr "程序欄中「擁有者」的寬度"
+msgid "Width of process “Unit” column"
+msgstr "程序列表的「單元」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:503
-msgid "Show process “Owner” column on startup"
-msgstr "啟動時在程序欄位中顯示「擁有者」"
+msgid "Show process “Unit” column on startup"
+msgstr "在程序列表中顯示「單元」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:510
-msgid "Width of process “Total disk read” column"
-msgstr "程序欄中「總磁碟讀取」的寬度"
+msgid "Width of process “Session” column"
+msgstr "程序列表的「工作階段」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:517
-msgid "Show process “Total disk read” column on startup"
-msgstr "啟動時在程序欄位中顯示「總磁碟讀取」"
+msgid "Show process “Session” column on startup"
+msgstr "在程序列表中顯示「工作階段」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:524
-msgid "Width of process “Total disk write” column"
-msgstr "程序欄中「總磁碟寫入」的寬度"
+msgid "Width of process “Seat” column"
+msgstr "程序列表的「座位」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:531
-msgid "Show process “Total disk write” column on startup"
-msgstr "啟動時在程序欄位中顯示「總磁碟寫入」"
+msgid "Show process “Seat” column on startup"
+msgstr "在程序列表中顯示「座位」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:538
-msgid "Width of process “Disk read” column"
-msgstr "程序欄中「磁碟讀取」的寬度"
+msgid "Width of process “Owner” column"
+msgstr "程序列表的「擁有者」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:545
-msgid "Show process “Disk read” column on startup"
-msgstr "啟動時在程序欄位中顯示「磁碟讀取」"
+msgid "Show process “Owner” column on startup"
+msgstr "在程序列表中顯示「擁有者」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:552
-msgid "Width of process “Disk write” column"
-msgstr "程序欄中「磁碟寫入」的寬度"
+msgid "Width of process “Total disk read” column"
+msgstr "程序列表的「總磁碟讀取」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:559
-msgid "Show process “Disk write” column on startup"
-msgstr "啟動時在程序欄位中顯示「磁碟寫入」"
+msgid "Show process “Total disk read” column on startup"
+msgstr "在程序列表中顯示「總磁碟讀取」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:566
-msgid "Width of process “Priority” column"
-msgstr "程序欄中「優先等級」的寬度"
+msgid "Width of process “Total disk write” column"
+msgstr "程序列表的「總磁碟寫入」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:573
+msgid "Show process “Total disk write” column on startup"
+msgstr "在程序列表中顯示「總磁碟寫入」欄位"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:580
+msgid "Width of process “Disk read” column"
+msgstr "程序列表的「磁碟讀取」欄位寬度"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:587
+msgid "Show process “Disk read” column on startup"
+msgstr "在程序列表中顯示「磁碟讀取」欄位"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:594
+msgid "Width of process “Disk write” column"
+msgstr "程序列表的「磁碟寫入」欄位寬度"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:601
+msgid "Show process “Disk write” column on startup"
+msgstr "在程序列表中顯示「磁碟寫入」欄位"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:608
+msgid "Width of process “Priority” column"
+msgstr "程序列表的「優先等級」欄位寬度"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:615
 msgid "Show process “Priority” column on startup"
-msgstr "啟動時在程序欄位中顯示「優先等級」"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:584
-msgid "Disk view sort column"
-msgstr "磁碟檢視排序欄"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:591
-msgid "Disk view sort order"
-msgstr "排列磁碟檢視的次序"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:598
-msgid "Disk view columns order"
-msgstr "磁碟顯示欄位次序"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:605
-msgid "Width of disk view “Device” column"
-msgstr "磁碟檢視中「裝置」欄的寬度"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:612
-msgid "Show disk view “Device” column on startup"
-msgstr "啟動時在磁碟檢視中顯示「裝置」欄"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:619
-msgid "Width of disk view “Directory” column"
-msgstr "磁碟檢視中「目錄」欄的寬度"
+msgstr "在程序列表中顯示「優先等級」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:626
-msgid "Show disk view “Directory” column on startup"
-msgstr "啟動時在磁碟檢視中顯示「目錄」欄"
+msgid "Disk view sort column"
+msgstr "磁碟列表的欄位排序依據"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:633
-msgid "Width of disk view “Type” column"
-msgstr "磁碟檢視中「類型」欄的寬度"
+msgid "Disk view sort order"
+msgstr "磁碟列表的欄位排序方向（遞增或遞減）"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:640
-msgid "Show disk view “Type” column on startup"
-msgstr "啟動時在磁碟檢視中顯示「類型」欄"
+msgid "Disk view columns order"
+msgstr "磁碟列表的欄位排列順序"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:647
-msgid "Width of disk view “Total” column"
-msgstr "磁碟檢視中「總計」欄的寬度"
+msgid "Width of disk view “Device” column"
+msgstr "磁碟列表的「裝置」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:654
-msgid "Show disk view “Total” column on startup"
-msgstr "啟動時在磁碟檢視中顯示「總計」欄"
+msgid "Show disk view “Device” column on startup"
+msgstr "在磁碟列表中顯示「裝置」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:661
-msgid "Width of disk view “Free” column"
-msgstr "磁碟檢視中「剩餘」欄的寬度"
+msgid "Width of disk view “Directory” column"
+msgstr "磁碟列表的「目錄」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:668
-msgid "Show disk view “Free” column on startup"
-msgstr "啟動時在磁碟檢視中顯示「剩餘」欄"
+msgid "Show disk view “Directory” column on startup"
+msgstr "在磁碟列表中顯示「目錄」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:675
-msgid "Width of disk view “Available” column"
-msgstr "磁碟檢視中「可用」欄的寬度"
+msgid "Width of disk view “Type” column"
+msgstr "磁碟列表的「類型」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:682
-msgid "Show disk view “Available” column on startup"
-msgstr "啟動時在磁碟檢視中顯示「可用」欄"
+msgid "Show disk view “Type” column on startup"
+msgstr "在磁碟列表中顯示「類型」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:689
-msgid "Width of disk view “Used” column"
-msgstr "磁碟檢視中「已使用」欄的寬度"
+msgid "Width of disk view “Total” column"
+msgstr "磁碟列表的「總計」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:696
+msgid "Show disk view “Total” column on startup"
+msgstr "在磁碟列表中顯示「總計」欄位"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:703
+msgid "Width of disk view “Free” column"
+msgstr "磁碟列表的「剩餘」欄位寬度"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:710
+msgid "Show disk view “Free” column on startup"
+msgstr "在磁碟列表中顯示「剩餘」欄位"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:717
+msgid "Width of disk view “Available” column"
+msgstr "磁碟列表的「可用」欄位寬度"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:724
+msgid "Show disk view “Available” column on startup"
+msgstr "在磁碟列表中顯示「可用」欄位"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:731
+msgid "Width of disk view “Used” column"
+msgstr "磁碟列表的「已用」欄位寬度"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:738
 msgid "Show disk view “Used” column on startup"
-msgstr "啟動時在磁碟檢視中顯示「已使用」欄"
+msgstr "在磁碟列表中顯示「已用」欄位"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:706
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:748
 msgid "Memory map sort column"
-msgstr "記憶體映射排序欄"
+msgstr "記憶體對映表的欄位排序依據"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:713
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:755
 msgid "Memory map sort order"
-msgstr "排列記憶體映射的次序"
+msgstr "記憶體對映表的欄位排序方向（遞增或遞減）"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:722
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:764
 msgid "Open files sort column"
-msgstr "開啟檔案排序欄"
+msgstr "檔案列表的欄位排序依據"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:729
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:771
 msgid "Open files sort order"
-msgstr "排列開啟檔案的次序"
+msgstr "檔案列表的欄位排序方向（遞增或遞減）"
 
-#: src/prefsdialog.cpp:168
+#: src/prefsdialog.cpp:195
 msgid "Icon"
 msgstr "圖示"
 
@@ -1085,7 +1258,7 @@ msgid ""
 "Cannot change the priority of process with PID %d to %d.\n"
 "%s"
 msgstr ""
-"無法將 PID 為 %d 的程序之優先等級變更為 %d。\n"
+"無法將 PID %d 程序的優先等級更改為 %d。\n"
 "%s"
 
 #: src/procactions.cpp:153
@@ -1094,113 +1267,113 @@ msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
 "%s"
 msgstr ""
-"不能用 signal %2$d 來強行終止 PID 為 %1$d 的程序。\n"
+"無法以「%2$d」訊號強行終止 PID %1$d 的程序。\n"
 "%3$s"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:82
+#: src/procdialogs.cpp:85
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
-msgstr "您確定要強行終止選取的程序「%s」(PID: %u)？"
+msgstr "確定要強行終止所選的程序「%s」(PID: %u) 嗎？"
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:88
+#: src/procdialogs.cpp:91
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
-msgstr "您確定要結束選取的程序「%s」(PID: %u)？"
+msgstr "確定要結束所選的程序「%s」(PID: %u) 嗎？"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:94
+#: src/procdialogs.cpp:97
 #, c-format
 msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
-msgstr "您確定要結束選取的程序「%s」(PID: %u)？"
+msgstr "確定要結束所選的程序「%s」(PID: %u) 嗎？"
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:103
+#: src/procdialogs.cpp:106
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
-msgstr[0] "您確定要強行終止 %d 個選取的程序？"
+msgstr[0] "確定要強行終止 %d 個所選的程序嗎？"
 
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:109
+#: src/procdialogs.cpp:112
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
-msgstr[0] "您確定要結束 %d 個選取的程序？"
+msgstr[0] "確定要結束 %d 個所選的程序嗎？"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:115
+#: src/procdialogs.cpp:118
 #, c-format
 msgid "Are you sure you want to stop the selected process?"
 msgid_plural "Are you sure you want to stop the %d selected processes?"
-msgstr[0] "您確定要結束 %d 個選取的程序？"
+msgstr[0] "確定要結束 %d 個所選的程序嗎？"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:125
+#: src/procdialogs.cpp:128
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
 msgstr ""
-"強行終止程序可能導致損失資料，中斷工作階段，甚至可以造成安全性漏洞。請只強行"
-"終止無回應的程序。"
+"強行終止程序恐導致資料損失、工作階段中斷，甚至造成安全風險。當程序沒有回應時"
+"才需將其強行終止。"
 
-#: src/procdialogs.cpp:128
+#: src/procdialogs.cpp:131
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
-msgstr[0] "終止程序(_K)"
+msgstr[0] "強行終止程序(_K)"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:132
+#: src/procdialogs.cpp:135
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponsive processes should be ended."
 msgstr ""
-"結束程序可能導致損失資料，中斷工作階段，甚至可以造成安全性漏洞。請只結束無回"
-"應的程序。"
+"結束程序恐導致資料損失、工作階段中斷，甚至造成安全風險。當程序沒有回應時才需"
+"將其結束。"
 
 #. SIGSTOP
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:139
+#: src/procdialogs.cpp:142
 msgid ""
 "Stopping a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be stopped."
 msgstr ""
-"結束程序可能導致損失資料，中斷工作階段，甚至可以造成安全性漏洞。請只結束無回"
-"應的程序。"
+"停止程序恐導致資料損失、工作階段中斷，甚至造成安全風險。當程序沒有回應時才需"
+"將其停止。"
 
-#: src/procdialogs.cpp:142
+#: src/procdialogs.cpp:145
 msgid "_Stop Process"
 msgid_plural "_Stop Processes"
 msgstr[0] "停止程序(_S)"
 
-#: src/procdialogs.cpp:227
+#: src/procdialogs.cpp:230
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
-msgstr "改變程序「%s」的優先等級 (PID: %u)"
+msgstr "更改程序「%s」(PID: %u) 的優先等級"
 
-#: src/procdialogs.cpp:230
+#: src/procdialogs.cpp:233
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
-msgstr[0] "變更 %d 個選取程序的優先等級"
+msgstr[0] "更改 %d 個所選程序的優先等級"
 
-#: src/procdialogs.cpp:249
+#: src/procdialogs.cpp:252
 msgid "Note:"
-msgstr "記錄："
+msgstr "注意："
 
-#: src/procdialogs.cpp:250
+#: src/procdialogs.cpp:253
 msgid ""
 "The priority of a process is given by its nice value. A lower nice value "
 "corresponds to a higher priority."
-msgstr "程序是否優先執行可由它的 nice 值得出。較低的 nice 值表示較優先執行。"
+msgstr "程序的優先等級由它的 Nice 值決定。較低的 Nice 值代表擁更高的優先等級。"
 
 #: src/procproperties.cpp:50 src/procproperties.cpp:84
-#: src/procproperties.cpp:87 src/util.cpp:376 src/util.cpp:415
+#: src/procproperties.cpp:87 src/util.cpp:471 src/util.cpp:514
 msgid "N/A"
-msgstr "N/A"
+msgstr "不適用"
 
 #: src/procproperties.cpp:67 src/proctable.cpp:335
 msgid "Process Name"
@@ -1228,7 +1401,7 @@ msgstr "可寫記憶體"
 
 #: src/procproperties.cpp:74 src/proctable.cpp:341
 msgid "Shared Memory"
-msgstr "分享記憶體"
+msgstr "共享記憶體"
 
 #: src/procproperties.cpp:76 src/proctable.cpp:342
 msgid "X Server Memory"
@@ -1236,15 +1409,15 @@ msgstr "X 伺服器記憶體"
 
 #: src/procproperties.cpp:79 src/proctable.cpp:344
 msgid "CPU Time"
-msgstr "CPU 運行時間"
+msgstr "CPU 時間"
 
 #: src/procproperties.cpp:80 src/proctable.cpp:345
 msgid "Started"
-msgstr "已開始"
+msgstr "開始時間"
 
 #: src/procproperties.cpp:81 src/proctable.cpp:346
 msgid "Nice"
-msgstr "Nice"
+msgstr "Nice 值"
 
 #: src/procproperties.cpp:82 src/proctable.cpp:364
 msgid "Priority"
@@ -1257,7 +1430,7 @@ msgstr "ID"
 # (Abel) 和 selinux 有關?
 #: src/procproperties.cpp:84 src/proctable.cpp:348
 msgid "Security Context"
-msgstr "安全性內容"
+msgstr "安全本文"
 
 #: src/procproperties.cpp:85 src/proctable.cpp:349
 msgid "Command Line"
@@ -1266,7 +1439,7 @@ msgstr "命令列"
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
 #: src/procproperties.cpp:86 src/proctable.cpp:352
 msgid "Waiting Channel"
-msgstr "等待頻道"
+msgstr "WCHAN"
 
 #: src/procproperties.cpp:87 src/proctable.cpp:353
 msgid "Control Group"
@@ -1284,7 +1457,7 @@ msgstr "% CPU"
 
 #: src/proctable.cpp:354
 msgid "Unit"
-msgstr "單位"
+msgstr "單元"
 
 #: src/proctable.cpp:355
 msgid "Session"
@@ -1294,7 +1467,7 @@ msgstr "工作階段"
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
 #: src/proctable.cpp:358
 msgid "Seat"
-msgstr "臺座"
+msgstr "座位"
 
 #: src/proctable.cpp:359
 msgid "Owner"
@@ -1316,76 +1489,101 @@ msgstr "磁碟讀取"
 msgid "Disk write"
 msgstr "磁碟寫入"
 
-#: src/util.cpp:27
+#: src/setaffinity.cpp:305
+msgid "Set Affinity"
+msgstr "設定親和性"
+
+#: src/setaffinity.cpp:317
+msgid "_Apply"
+msgstr "套用(_A)"
+
+#: src/setaffinity.cpp:354
+#, c-format
+msgid "Select CPUs \"%s\" (PID %u) is allowed to run on:"
+msgstr "選擇「%s」(PID %u) 允許執行的 CPU："
+
+#. Set check box label value to CPU [1..2048]
+#: src/setaffinity.cpp:407
+#, c-format
+msgid "CPU %d"
+msgstr "CPU %d"
+
+#: src/util.cpp:35
 msgid "Running"
 msgstr "執行中"
 
-#: src/util.cpp:31
+#: src/util.cpp:39
 msgid "Stopped"
 msgstr "已停止"
 
 # (Abel) 不譯會比較容易明白
-#: src/util.cpp:35
+#: src/util.cpp:43
 msgid "Zombie"
-msgstr "Zombie"
+msgstr "殭屍程序"
 
-#: src/util.cpp:39
+#: src/util.cpp:47
 msgid "Uninterruptible"
 msgstr "無法中斷"
 
-#: src/util.cpp:43
+#: src/util.cpp:51
 msgid "Sleeping"
 msgstr "睡眠中"
 
 #. xgettext: weeks, days
-#: src/util.cpp:98
+#: src/util.cpp:106
 #, c-format
 msgid "%uw%ud"
-msgstr "%uw%ud"
+msgstr "%uw 週 %ud 天"
 
 #. xgettext: days, hours (0 -> 23)
-#: src/util.cpp:102
+#: src/util.cpp:110
 #, c-format
 msgid "%ud%02uh"
-msgstr "%ud%02uh"
+msgstr "%ud 天 %02uh 小時"
 
 #. xgettext: hours (0 -> 23), minutes, seconds
-#: src/util.cpp:106
+#: src/util.cpp:114
 #, c-format
 msgid "%u:%02u:%02u"
 msgstr "%u:%02u:%02u"
 
 #. xgettext: minutes, seconds, centiseconds
-#: src/util.cpp:109
+#: src/util.cpp:117
 #, c-format
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: src/util.cpp:176
-msgid "Very High Priority"
-msgstr "非常高優先等級"
-
-#: src/util.cpp:178
-msgid "High Priority"
-msgstr "高優先等級"
-
-#: src/util.cpp:180
-msgid "Normal Priority"
-msgstr "普通優先等級"
-
-#: src/util.cpp:182
-msgid "Low Priority"
-msgstr "低優先等級"
-
 #: src/util.cpp:184
+msgid "Very High Priority"
+msgstr "優先等級非常高"
+
+#: src/util.cpp:186
+msgid "High Priority"
+msgstr "優先等級高"
+
+#: src/util.cpp:188
+msgid "Normal Priority"
+msgstr "優先等級一般"
+
+#: src/util.cpp:190
+msgid "Low Priority"
+msgstr "優先等級低"
+
+#: src/util.cpp:192
 msgid "Very Low Priority"
-msgstr "非常低優先等級"
+msgstr "優先等級非常低"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:611
+#: src/util.cpp:713
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "CPU History"
+#~ msgstr "CPU 使用量記錄"
+
+#~ msgid "System Monitor Preferences"
+#~ msgstr "系統監控程式偏好設定"
 
 #~ msgid "End _Process"
 #~ msgstr "終止程序(_P)"
@@ -1407,9 +1605,6 @@ msgstr "%s/s"
 
 #~ msgid "About"
 #~ msgstr "關於"
-
-#~ msgid "Quit"
-#~ msgstr "退出"
 
 #~ msgid "%.1f KiB"
 #~ msgstr "%.1f KiB"
@@ -1496,9 +1691,6 @@ msgstr "%s/s"
 #~ msgid "Show processor usage graph"
 #~ msgstr "顯示處理器使用率圖表"
 
-#~ msgid "Show memory and swap usage graph"
-#~ msgstr "顯示記憶體與置換區使用率圖表"
-
 #~| msgid "Show network traffic in bits"
 #~ msgid "Show network traffic graph"
 #~ msgstr "顯示網路流量圖表"
@@ -1547,9 +1739,6 @@ msgstr "%s/s"
 
 #~ msgid "Show active processes"
 #~ msgstr "顯示運行中的程序"
-
-#~ msgid "Show all processes"
-#~ msgstr "顯示所有程序"
 
 #~ msgid "Show only user-owned processes"
 #~ msgstr "顯示使用者擁有的程序"
@@ -1619,9 +1808,6 @@ msgstr "%s/s"
 
 #~ msgid "_Contents"
 #~ msgstr "內容(_C)"
-
-#~ msgid "Open the manual"
-#~ msgstr "開啟使用手冊"
 
 #~ msgid "About this application"
 #~ msgstr "關於此程式"
