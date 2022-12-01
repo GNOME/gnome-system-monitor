@@ -73,9 +73,6 @@ cb_draw_smooth_changed (Gio::Settings& settings,
   app->cpu_graph->clear_background ();
   app->mem_graph->clear_background ();
   app->net_graph->clear_background ();
-  load_graph_reset (app->cpu_graph);
-  load_graph_reset (app->mem_graph);
-  load_graph_reset (app->net_graph);
 }
 
 static void
