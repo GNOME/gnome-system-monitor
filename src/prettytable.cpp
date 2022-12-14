@@ -158,8 +158,10 @@ PrettyTable::init_gio_app_cache ()
     {
       Glib::RefPtr<Gio::AppInfo> app = *it;
       std::string executable = app->get_executable ();
+      bool visible = app->should_show();
       if (executable != "sh" &&
-          executable != "env")
+          executable != "env" &&
+          visible == true)
         this->gio_apps[executable] = app;
     }
 }
