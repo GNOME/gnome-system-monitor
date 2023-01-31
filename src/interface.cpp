@@ -823,8 +823,8 @@ create_main_window (GsmApplication *app)
 
   width = CLAMP (width, 50, monitor_geometry.width);
   height = CLAMP (height, 50, monitor_geometry.height);
-  xpos = CLAMP (xpos, 0, monitor_geometry.width - width);
-  ypos = CLAMP (ypos, 0, monitor_geometry.height - height);
+  xpos = CLAMP (xpos, monitor_geometry.x, monitor_geometry.x + monitor_geometry.width - width);
+  ypos = CLAMP (ypos, monitor_geometry.y, monitor_geometry.y + monitor_geometry.height - height);
 
   gtk_window_set_default_size (GTK_WINDOW (main_window), width, height);
   gtk_window_move (GTK_WINDOW (main_window), xpos, ypos);
