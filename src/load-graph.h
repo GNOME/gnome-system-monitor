@@ -4,6 +4,7 @@
 #include <glib.h>
 #include <glibtop/cpu.h>
 
+#include "gsm-graph.h"
 #include "legacy/gsm_color_button.h"
 #include "util.h"
 #include "settings-keys.h"
@@ -69,7 +70,7 @@ struct LoadGraph
   std::vector<double*> data;
 
   GtkBox *main_widget;
-  GtkDrawingArea *disp;
+  GsmGraph *disp;
 
   cairo_surface_t *background;
 

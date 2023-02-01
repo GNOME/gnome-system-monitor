@@ -210,6 +210,15 @@ load_graph_state_changed (GtkWidget     *widget,
   graph->draw = gtk_widget_is_visible (widget);
 }
 
+static void
+load_graph_color_scheme_changed (GsmGraph *graph,
+                                 gpointer  data_ptr)
+{
+  LoadGraph * const load_graph = static_cast<LoadGraph*>(data_ptr);
+
+  force_refresh (load_graph);
+}
+
 static cairo_surface_t*
 create_background (LoadGraph *graph, int width, int height)
 {
@@ -1050,10 +1059,10 @@ LoadGraph::LoadGraph(guint type)
   main_widget = GTK_BOX (gtk_box_new (GTK_ORIENTATION_VERTICAL, 6));
   gtk_widget_set_size_request (GTK_WIDGET (main_widget), -1, GRAPH_MIN_HEIGHT);
 
-  disp = GTK_DRAWING_AREA (gtk_drawing_area_new ());
+  disp = GSM_GRAPH (gsm_graph_new ());
   gtk_widget_set_vexpand (GTK_WIDGET (disp), TRUE);
   gtk_widget_set_hexpand (GTK_WIDGET (disp), TRUE);
-  gtk_drawing_area_set_draw_func (disp,
+  gtk_drawing_area_set_draw_func (GTK_DRAWING_AREA (disp),
                                   load_graph_draw,
                                   this,
                                   NULL);
@@ -1063,6 +1072,8 @@ LoadGraph::LoadGraph(guint type)
                     G_CALLBACK (load_graph_state_changed), this);
   g_signal_connect (G_OBJECT (disp), "resize",
                     G_CALLBACK (load_graph_resize), this);
+  g_signal_connect (G_OBJECT (disp), "css-changed",
+                    G_CALLBACK (load_graph_color_scheme_changed), this);
   gtk_box_prepend (main_widget, GTK_WIDGET (disp));
 
   data = std::vector<double*>(num_points);
