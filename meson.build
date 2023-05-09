@@ -105,16 +105,6 @@ add_project_arguments(cx.get_supported_arguments(cxxflags),
 
 conf.set('HAVE_LKSTRFTIME', cc.has_function('strftime'))
 
-conf.set('CTIME_R_THREE_ARGS', cc.compiles('''
-#include <time.h>
-int main() {
-  char *buf;
-  time_t date;
-  ctime_r (&date, buf, 100);
-}
-'''))
-
-
 configure_file(
   output: 'config.h',
   configuration: conf,
