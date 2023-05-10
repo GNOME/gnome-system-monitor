@@ -571,6 +571,7 @@ GsmApplication::on_startup ()
   add_accelerator ("<Primary>f", "win.search", g_variant_new_boolean (TRUE));
   add_accelerator ("F1", "app.help", NULL);
   add_accelerator ("<Primary>question", "win.show-help-overlay", NULL);
+  add_accelerator ("<Primary>comma", "app.preferences", NULL);
 
   Gtk::Window::set_default_icon_name ("org.gnome.SystemMonitor");
 
