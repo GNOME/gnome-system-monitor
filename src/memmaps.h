@@ -5,6 +5,6 @@
 #include <glib.h>
 #include "application.h"
 
-void create_memmaps_dialog (GsmApplication *app);
+void            create_memmaps_dialog (GsmApplication *app);
 
 #endif /* _GSM_MEMMAPS_H_ */

@@ -34,159 +34,164 @@
 
 namespace
 {
-class SetAffinityData
-{
-public:
-GtkWidget  *dialog;
-pid_t pid;
-GtkWidget **buttons;
-guint32 cpu_count;
-gboolean toggle_single_blocked;
-gboolean toggle_all_blocked;
-};
+    class SetAffinityData
+    {
+        public:
+            GtkWidget  *dialog;
+            pid_t       pid;
+            GtkWidget **buttons;
+            guint32     cpu_count;
+            gboolean    toggle_single_blocked;
+            gboolean    toggle_all_blocked;
+    };
 }
 
 static gboolean
 all_toggled (SetAffinityData *affinity)
 {
-  guint32 i;
+    guint32 i;
 
-  /* Check if any CPU's aren't set for this process */
-  for (i = 1; i <= affinity->cpu_count; i++)
-    /* If so, return FALSE */
-    if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (affinity->buttons[i])))
-      return FALSE;
+    /* Check if any CPU's aren't set for this process */
+    for (i = 1; i <= affinity->cpu_count; i++) {
+        /* If so, return FALSE */
+        if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (affinity->buttons[i]))) {
+            return FALSE;
+        }
+    }
 
-  return TRUE;
+    return TRUE;
 }
 
 static void
 affinity_toggler_single (GtkToggleButton *button,
                          gpointer         data)
 {
-  SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
-  gboolean toggle_all_state = FALSE;
+    SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
+    gboolean         toggle_all_state = FALSE;
 
-  /* Return void if toggle single is blocked */
-  if (affinity->toggle_single_blocked == TRUE)
-    return;
+    /* Return void if toggle single is blocked */
+    if (affinity->toggle_single_blocked == TRUE) {
+        return;
+    }
 
-  /* Set toggle all state based on whether all are toggled */
-  if (gtk_toggle_button_get_active (button))
-    toggle_all_state = all_toggled (affinity);
+    /* Set toggle all state based on whether all are toggled */
+    if (gtk_toggle_button_get_active (button)) {
+        toggle_all_state = all_toggled (affinity);
+    }
 
-  /* Block toggle all signal */
-  affinity->toggle_all_blocked = TRUE;
+    /* Block toggle all signal */
+    affinity->toggle_all_blocked = TRUE;
 
-  /* Set toggle all check box state */
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (affinity->buttons[0]),
-                                toggle_all_state);
+    /* Set toggle all check box state */
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (affinity->buttons[0]),
+                                  toggle_all_state);
 
-  /* Unblock toggle all signal */
-  affinity->toggle_all_blocked = FALSE;
+    /* Unblock toggle all signal */
+    affinity->toggle_all_blocked = FALSE;
 }
 
 static void
 affinity_toggle_all (GtkToggleButton *toggle_all_button,
                      gpointer         data)
 {
-  SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
+    SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
 
-  guint32 i;
-  gboolean state;
+    guint32  i;
+    gboolean state;
 
-  /* Return void if toggle all is blocked */
-  if (affinity->toggle_all_blocked == TRUE)
-    return;
+    /* Return void if toggle all is blocked */
+    if (affinity->toggle_all_blocked == TRUE) {
+        return;
+    }
 
-  /* Set individual CPU toggles based on toggle all state */
-  state = gtk_toggle_button_get_active (toggle_all_button);
+    /* Set individual CPU toggles based on toggle all state */
+    state = gtk_toggle_button_get_active (toggle_all_button);
 
-  /* Block toggle single signal */
-  affinity->toggle_single_blocked = TRUE;
+    /* Block toggle single signal */
+    affinity->toggle_single_blocked = TRUE;
 
-  /* Set all CPU check boxes to specified state */
-  for (i = 1; i <= affinity->cpu_count; i++)
-    gtk_toggle_button_set_active (
-      GTK_TOGGLE_BUTTON (affinity->buttons[i]),
-      state);
+    /* Set all CPU check boxes to specified state */
+    for (i = 1; i <= affinity->cpu_count; i++) {
+        gtk_toggle_button_set_active (
+            GTK_TOGGLE_BUTTON (affinity->buttons[i]),
+            state
+        );
+    }
 
-  /* Unblock toggle single signal */
-  affinity->toggle_single_blocked = FALSE;
+    /* Unblock toggle single signal */
+    affinity->toggle_single_blocked = FALSE;
 }
 
 static void
 set_affinity_error (void)
 {
-  GtkWidget *dialog;
+    GtkWidget *dialog;
 
-  /* Create error message dialog */
-  dialog = gtk_message_dialog_new (GTK_WINDOW (GsmApplication::get ()->main_window),
-                                   GTK_DIALOG_DESTROY_WITH_PARENT,
-                                   GTK_MESSAGE_ERROR,
-                                   GTK_BUTTONS_CLOSE,
-                                   "GNU CPU Affinity error: %s",
-                                   g_strerror (errno));
+    /* Create error message dialog */
+    dialog = gtk_message_dialog_new (GTK_WINDOW (GsmApplication::get()->main_window),
+                                     GTK_DIALOG_DESTROY_WITH_PARENT,
+                                     GTK_MESSAGE_ERROR,
+                                     GTK_BUTTONS_CLOSE,
+                                     "GNU CPU Affinity error: %s",
+                                     g_strerror (errno));
 
-  /* Set dialog as modal */
-  gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
+    /* Set dialog as modal */
+    gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
 
-  /* Show the dialog */
-  gtk_widget_show (dialog);
+    /* Show the dialog */
+    gtk_widget_show (dialog);
 
-  /* Connect response signal to GTK widget destroy function */
-  g_signal_connect_swapped (dialog,
-                            "response",
-                            G_CALLBACK (gtk_widget_destroy),
-                            dialog);
+    /* Connect response signal to GTK widget destroy function */
+    g_signal_connect_swapped (dialog,
+                              "response",
+                              G_CALLBACK (gtk_widget_destroy),
+                              dialog);
 }
 
 static guint16 *
-gsm_set_proc_affinity (glibtop_proc_affinity *buf,
-                       GArray                *cpus,
-                       pid_t                  pid)
+gsm_set_proc_affinity (glibtop_proc_affinity *buf, GArray *cpus, pid_t pid)
 {
 #ifdef __linux__
-  guint i;
-  cpu_set_t set;
-  guint16 cpu;
+    guint i;
+    cpu_set_t set;
+    guint16 cpu;
 
-  CPU_ZERO (&set);
+    CPU_ZERO (&set);
 
-  for (i = 0; i < cpus->len; i++)
-    {
-      cpu = g_array_index (cpus, guint16, i);
-      CPU_SET (cpu, &set);
+    for (i = 0; i < cpus->len; i++) {
+        cpu = g_array_index (cpus, guint16, i);
+        CPU_SET (cpu, &set);
     }
 
-  if (sched_setaffinity (pid, sizeof (set), &set) != -1)
-    return glibtop_get_proc_affinity (buf, pid);
+    if (sched_setaffinity (pid, sizeof (set), &set) != -1) {
+        return glibtop_get_proc_affinity (buf, pid);
+    }
 #endif
 
-  return NULL;
+    return NULL;
 }
 
 static void
-execute_taskset_command (gchar **cpu_list,
-                         pid_t   pid)
+execute_taskset_command (gchar **cpu_list, pid_t pid)
 {
 #ifdef __linux__
-  gchar *pc;
-  gchar *command;
+    gchar *pc;
+    gchar *command;
 
-  /* Join CPU number strings by commas for taskset command CPU list */
-  pc = g_strjoinv (",", cpu_list);
+    /* Join CPU number strings by commas for taskset command CPU list */
+    pc = g_strjoinv (",", cpu_list);
 
-  /* Construct taskset command */
-  command = g_strdup_printf ("taskset -pc %s %d", pc, pid);
+    /* Construct taskset command */
+    command = g_strdup_printf ("taskset -pc %s %d", pc, pid);
 
-  /* Execute taskset command; show error on failure */
-  if (!multi_root_check (command))
-    set_affinity_error ();
+    /* Execute taskset command; show error on failure */
+    if (!multi_root_check (command)) {
+        set_affinity_error ();
+    }
 
-  /* Free memory for taskset command */
-  g_free (command);
-  g_free (pc);
+    /* Free memory for taskset command */
+    g_free (command);
+    g_free (pc);
 #endif
 }
 
@@ -194,68 +199,66 @@ static void
 set_affinity (GtkToggleButton *button,
               gpointer         data)
 {
-  SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
+    SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
 
-  glibtop_proc_affinity get_affinity;
-  glibtop_proc_affinity set_affinity;
+    glibtop_proc_affinity get_affinity;
+    glibtop_proc_affinity set_affinity;
 
-  gchar   **cpu_list;
-  GArray   *cpuset;
-  guint32 i;
-  gint taskset_cpu = 0;
+    gchar   **cpu_list;
+    GArray   *cpuset;
+    guint32   i;
+    gint      taskset_cpu = 0;
 
-  /* Create string array for taskset command CPU list */
-  cpu_list = g_new0 (gchar *, affinity->cpu_count);
+    /* Create string array for taskset command CPU list */
+    cpu_list = g_new0 (gchar *, affinity->cpu_count);
 
-  /* Check whether we can get process's current affinity */
-  if (glibtop_get_proc_affinity (&get_affinity, affinity->pid) != NULL)
-    {
-      /* If so, create array for CPU numbers */
-      cpuset = g_array_new (FALSE, FALSE, sizeof (guint16));
+    /* Check whether we can get process's current affinity */
+    if (glibtop_get_proc_affinity (&get_affinity, affinity->pid) != NULL) {
+        /* If so, create array for CPU numbers */
+        cpuset = g_array_new (FALSE, FALSE, sizeof (guint16));
 
-      /* Run through all CPUs set for this process */
-      for (i = 0; i < affinity->cpu_count; i++)
-        /* Check if CPU check box button is active */
-        if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (affinity->buttons[i + 1])))
-          {
-            /* If so, get its CPU number as 16bit integer */
-            guint16 n = i;
+        /* Run through all CPUs set for this process */
+        for (i = 0; i < affinity->cpu_count; i++) {
+            /* Check if CPU check box button is active */
+            if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (affinity->buttons[i + 1]))) {
+                /* If so, get its CPU number as 16bit integer */
+                guint16 n = i;
 
-            /* Add its CPU for process affinity */
-            g_array_append_val (cpuset, n);
+                /* Add its CPU for process affinity */
+                g_array_append_val (cpuset, n);
 
-            /* Store CPU number as string for taskset command CPU list */
-            cpu_list[taskset_cpu] = g_strdup_printf ("%i", i);
-            taskset_cpu++;
-          }
-
-      /* Set process affinity; Show message dialog upon error */
-      if (gsm_set_proc_affinity (&set_affinity, cpuset, affinity->pid) == NULL)
-        {
-          /* If so, check whether an access error occurred */
-          if (errno == EPERM or errno == EACCES)
-            /* If so, attempt to run taskset as root, show error on failure */
-            execute_taskset_command (cpu_list, affinity->pid);
-          else
-            /* If not, show error immediately */
-            set_affinity_error ();
+                /* Store CPU number as string for taskset command CPU list */
+                cpu_list[taskset_cpu] = g_strdup_printf ("%i", i);
+                taskset_cpu++;
+            }
         }
 
-      /* Free memory for CPU strings */
-      for (i = 0; i < affinity->cpu_count; i++)
-        g_free (cpu_list[i]);
+        /* Set process affinity; Show message dialog upon error */
+        if (gsm_set_proc_affinity (&set_affinity, cpuset, affinity->pid) == NULL) {
+            /* If so, check whether an access error occurred */
+            if (errno == EPERM or errno == EACCES) {
+                /* If so, attempt to run taskset as root, show error on failure */
+                execute_taskset_command (cpu_list, affinity->pid);
+            } else {
+                /* If not, show error immediately */
+                set_affinity_error ();
+            }
+        }
 
-      /* Free CPU array memory */
-      g_array_free (cpuset, TRUE);
-    }
-  else
-    {
-      /* If not, show error message dialog */
-      set_affinity_error ();
+        /* Free memory for CPU strings */
+        for (i = 0; i < affinity->cpu_count; i++) {
+             g_free (cpu_list[i]);
+        }
+
+        /* Free CPU array memory */
+        g_array_free (cpuset, TRUE);
+    } else {
+        /* If not, show error message dialog */
+        set_affinity_error ();
     }
 
-  /* Destroy dialog window */
-  gtk_widget_destroy (affinity->dialog);
+    /* Destroy dialog window */
+    gtk_widget_destroy (affinity->dialog);
 }
 
 static void
@@ -264,205 +267,207 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
                                    GtkTreeIter  *iter,
                                    gpointer      data)
 {
-  GsmApplication *app = static_cast<GsmApplication *>(data);
+    GsmApplication *app = static_cast<GsmApplication *>(data);
 
-  ProcInfo        *info;
-  SetAffinityData *affinity_data;
-  GtkWidget       *cancel_button;
-  GtkWidget       *apply_button;
-  GtkWidget       *dialog_vbox;
-  GtkWidget       *label;
-  GtkWidget       *scrolled;
-  GtkStyleContext *scrolled_style;
-  GtkGrid         *cpulist_grid;
+    ProcInfo        *info;
+    SetAffinityData *affinity_data;
+    GtkWidget       *cancel_button;
+    GtkWidget       *apply_button;
+    GtkWidget       *dialog_vbox;
+    GtkWidget       *label;
+    GtkWidget       *scrolled;
+    GtkStyleContext *scrolled_style;
+    GtkGrid         *cpulist_grid;
 
-  guint16               *affinity_cpus;
-  guint16 affinity_cpu;
-  glibtop_proc_affinity affinity;
-  guint32 affinity_i;
-  gint button_n;
-  gchar                 *button_text;
+    guint16               *affinity_cpus;
+    guint16                affinity_cpu;
+    glibtop_proc_affinity  affinity;
+    guint32                affinity_i;
+    gint                   button_n;
+    gchar                 *button_text;
 
-  /* Get selected process information */
-  gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
+    /* Get selected process information */
+    gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 
-  /* Return void if process information comes back not true */
-  if (!info)
-    return;
-
-  /* Create affinity data object */
-  affinity_data = new SetAffinityData ();
-
-  /* Set initial check box array */
-  affinity_data->buttons = g_new (GtkWidget *, app->config.num_cpus);
-
-  /* Create dialog window */
-  affinity_data->dialog = GTK_WIDGET (g_object_new (GTK_TYPE_DIALOG,
-                                                    "title", _("Set Affinity"),
-                                                    "use-header-bar", TRUE,
-                                                    "destroy-with-parent", TRUE,
-                                                    NULL));
-
-  /* Add cancel button to header bar */
-  cancel_button = gtk_dialog_add_button (GTK_DIALOG (affinity_data->dialog),
-                                         _("_Cancel"),
-                                         GTK_RESPONSE_CANCEL);
-
-  /* Add apply button to header bar */
-  apply_button = gtk_dialog_add_button (GTK_DIALOG (affinity_data->dialog),
-                                        _("_Apply"),
-                                        GTK_RESPONSE_APPLY);
-
-  /* Set dialog window "transient for" */
-  gtk_window_set_transient_for (GTK_WINDOW (affinity_data->dialog),
-                                GTK_WINDOW (GsmApplication::get ()->main_window));
-
-  /* Set dialog window to be resizable */
-  gtk_window_set_resizable (GTK_WINDOW (affinity_data->dialog), TRUE);
-
-  /* Set default dialog window size */
-  gtk_widget_set_size_request (affinity_data->dialog, 600, 430);
-
-  /* Set dialog box padding ("border") */
-  gtk_container_set_border_width (GTK_CONTAINER (affinity_data->dialog), 5);
-
-  /* Get dialog content area VBox */
-  dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG (affinity_data->dialog));
-
-  /* Set dialog VBox padding ("border") */
-  gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 10);
-
-  /* Set dialog VBox spacing */
-  gtk_box_set_spacing (GTK_BOX (dialog_vbox), 10);
-
-  /* Add selected process pid to affinity data */
-  affinity_data->pid = info->pid;
-
-  /* Add CPU count to affinity data */
-  affinity_data->cpu_count = app->config.num_cpus;
-
-  /* Set default toggle signal block states */
-  affinity_data->toggle_single_blocked = FALSE;
-  affinity_data->toggle_all_blocked = FALSE;
-
-  /* Create a label describing the dialog windows intent */
-  label = GTK_WIDGET (procman_make_label_for_mmaps_or_ofiles (
-                        _("Select CPUs \"%s\" (PID %u) is allowed to run on:"),
-                        info->name.c_str (),
-                        info->pid));
-
-  /* Add label to dialog VBox */
-  gtk_box_pack_start (GTK_BOX (dialog_vbox), label, FALSE, TRUE, 0);
-
-  /* Create scrolled box ("window") */
-  scrolled = gtk_scrolled_window_new (NULL, NULL);
-
-  /* Add view class to scrolled box style */
-  scrolled_style = gtk_widget_get_style_context (scrolled);
-  gtk_style_context_add_class (scrolled_style, "view");
-
-  /* Set scrolled box vertical and horizontal policies */
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
-                                  GTK_POLICY_AUTOMATIC,
-                                  GTK_POLICY_AUTOMATIC);
-
-  /* Set scrolled box shadow */
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
-                                       GTK_SHADOW_IN);
-
-  /* Create grid for CPU list */
-  cpulist_grid = GTK_GRID (gtk_grid_new ());
-
-  /* Set CPU list grid padding ("border") */
-  gtk_container_set_border_width (GTK_CONTAINER (cpulist_grid), 10);
-
-  /* Set grid row spacing */
-  gtk_grid_set_row_spacing (cpulist_grid, 10);
-
-  /* Create toggle all check box */
-  affinity_data->buttons[0] = gtk_check_button_new_with_label ("Run on all CPUs");
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (affinity_data->buttons[0]), TRUE);
-  gtk_widget_set_hexpand (affinity_data->buttons[0], TRUE);
-
-  /* Get process's current affinity */
-  affinity_cpus = glibtop_get_proc_affinity (&affinity, info->pid);
-
-  /* Set toggle all check box based on whether all CPUs are set for this process */
-  gtk_toggle_button_set_active (
-    GTK_TOGGLE_BUTTON (affinity_data->buttons[0]),
-    affinity.all);
-
-  /* Add toggle all check box to CPU grid */
-  gtk_grid_attach (cpulist_grid, affinity_data->buttons[0], 0, 0, 1, 1);
-
-  /* Run through all CPU buttons */
-  for (button_n = 1; button_n < app->config.num_cpus + 1; button_n++)
-    {
-      /* Set check box label value to CPU [1..2048] */
-      button_text = g_strdup_printf (_("CPU %d"), button_n);
-
-      /* Create check box button for current CPU */
-      affinity_data->buttons[button_n] = gtk_check_button_new_with_label (button_text);
-      gtk_widget_set_hexpand (affinity_data->buttons[button_n], TRUE);
-
-      /* Add check box to CPU grid */
-      gtk_grid_attach (cpulist_grid, affinity_data->buttons[button_n], 0, button_n, 1, 1);
-
-      /* Connect check box to toggler function */
-      g_signal_connect (affinity_data->buttons[button_n],
-                        "toggled",
-                        G_CALLBACK (affinity_toggler_single),
-                        affinity_data);
-
-      /* Free check box label value gchar */
-      g_free (button_text);
+    /* Return void if process information comes back not true */
+    if (!info) {
+        return;
     }
 
-  /* Run through all CPUs set for this process */
-  for (affinity_i = 0; affinity_i < affinity.number; affinity_i++)
-    {
-      /* Get CPU button index */
-      affinity_cpu = affinity_cpus[affinity_i] + 1;
+    /* Create affinity data object */
+    affinity_data = new SetAffinityData ();
 
-      /* Set CPU check box active */
-      gtk_toggle_button_set_active (
-        GTK_TOGGLE_BUTTON (affinity_data->buttons[affinity_cpu]),
-        TRUE);
+    /* Set initial check box array */
+    affinity_data->buttons = g_new (GtkWidget *, app->config.num_cpus);
+
+    /* Create dialog window */
+    affinity_data->dialog = GTK_WIDGET (g_object_new (GTK_TYPE_DIALOG,
+                                                      "title", _("Set Affinity"),
+                                                      "use-header-bar", TRUE,
+                                                      "destroy-with-parent", TRUE,
+                                                      NULL));
+
+    /* Add cancel button to header bar */
+    cancel_button = gtk_dialog_add_button (GTK_DIALOG (affinity_data->dialog),
+                                           _("_Cancel"),
+                                           GTK_RESPONSE_CANCEL);
+
+    /* Add apply button to header bar */
+    apply_button = gtk_dialog_add_button (GTK_DIALOG (affinity_data->dialog),
+                                          _("_Apply"),
+                                          GTK_RESPONSE_APPLY);
+
+    /* Set dialog window "transient for" */
+    gtk_window_set_transient_for (GTK_WINDOW (affinity_data->dialog),
+                                  GTK_WINDOW (GsmApplication::get()->main_window));
+
+    /* Set dialog window to be resizable */
+    gtk_window_set_resizable (GTK_WINDOW (affinity_data->dialog), TRUE);
+
+    /* Set default dialog window size */
+    gtk_widget_set_size_request (affinity_data->dialog, 600, 430);
+
+    /* Set dialog box padding ("border") */
+    gtk_container_set_border_width (GTK_CONTAINER (affinity_data->dialog), 5);
+
+    /* Get dialog content area VBox */
+    dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG (affinity_data->dialog));
+
+    /* Set dialog VBox padding ("border") */
+    gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 10);
+
+    /* Set dialog VBox spacing */
+    gtk_box_set_spacing (GTK_BOX (dialog_vbox), 10);
+
+    /* Add selected process pid to affinity data */
+    affinity_data->pid = info->pid;
+
+    /* Add CPU count to affinity data */
+    affinity_data->cpu_count = app->config.num_cpus;
+
+    /* Set default toggle signal block states */
+    affinity_data->toggle_single_blocked = FALSE;
+    affinity_data->toggle_all_blocked = FALSE;
+
+    /* Create a label describing the dialog windows intent */
+    label = GTK_WIDGET (procman_make_label_for_mmaps_or_ofiles (
+        _("Select CPUs \"%s\" (PID %u) is allowed to run on:"),
+        info->name.c_str(),
+        info->pid
+    ));
+
+    /* Add label to dialog VBox */
+    gtk_box_pack_start (GTK_BOX (dialog_vbox), label, FALSE, TRUE, 0);
+
+    /* Create scrolled box ("window") */
+    scrolled = gtk_scrolled_window_new (NULL, NULL);
+
+    /* Add view class to scrolled box style */
+    scrolled_style = gtk_widget_get_style_context (scrolled);
+    gtk_style_context_add_class (scrolled_style, "view");
+
+    /* Set scrolled box vertical and horizontal policies */
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+                                    GTK_POLICY_AUTOMATIC,
+                                    GTK_POLICY_AUTOMATIC);
+
+    /* Set scrolled box shadow */
+    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
+                                         GTK_SHADOW_IN);
+
+    /* Create grid for CPU list */
+    cpulist_grid = GTK_GRID (gtk_grid_new ());
+
+    /* Set CPU list grid padding ("border") */
+    gtk_container_set_border_width (GTK_CONTAINER (cpulist_grid), 10);
+
+    /* Set grid row spacing */
+    gtk_grid_set_row_spacing (cpulist_grid, 10);
+
+    /* Create toggle all check box */
+    affinity_data->buttons[0] = gtk_check_button_new_with_label ("Run on all CPUs");
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (affinity_data->buttons[0]), TRUE);
+    gtk_widget_set_hexpand (affinity_data->buttons[0], TRUE);
+
+    /* Get process's current affinity */
+    affinity_cpus = glibtop_get_proc_affinity (&affinity, info->pid);
+
+    /* Set toggle all check box based on whether all CPUs are set for this process */
+    gtk_toggle_button_set_active (
+        GTK_TOGGLE_BUTTON (affinity_data->buttons[0]),
+        affinity.all
+    );
+
+    /* Add toggle all check box to CPU grid */
+    gtk_grid_attach (cpulist_grid, affinity_data->buttons[0], 0, 0, 1, 1);
+
+    /* Run through all CPU buttons */
+    for (button_n = 1; button_n < app->config.num_cpus + 1; button_n++) {
+        /* Set check box label value to CPU [1..2048] */
+        button_text = g_strdup_printf (_("CPU %d"), button_n);
+
+        /* Create check box button for current CPU */
+        affinity_data->buttons[button_n] = gtk_check_button_new_with_label (button_text);
+        gtk_widget_set_hexpand (affinity_data->buttons[button_n], TRUE);
+
+        /* Add check box to CPU grid */
+        gtk_grid_attach (cpulist_grid, affinity_data->buttons[button_n], 0, button_n, 1, 1);
+
+        /* Connect check box to toggler function */
+        g_signal_connect (affinity_data->buttons[button_n],
+                          "toggled",
+                          G_CALLBACK (affinity_toggler_single),
+                          affinity_data);
+
+        /* Free check box label value gchar */
+        g_free (button_text);
     }
 
-  /* Add CPU grid to scrolled box */
-  gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (cpulist_grid));
+    /* Run through all CPUs set for this process */
+    for (affinity_i = 0; affinity_i < affinity.number; affinity_i++) {
+        /* Get CPU button index */
+        affinity_cpu = affinity_cpus[affinity_i] + 1;
 
-  /* Add scrolled box to dialog VBox */
-  gtk_box_pack_start (GTK_BOX (dialog_vbox), scrolled, TRUE, TRUE, 0);
+        /* Set CPU check box active */
+        gtk_toggle_button_set_active (
+            GTK_TOGGLE_BUTTON (affinity_data->buttons[affinity_cpu]),
+            TRUE
+        );
+    }
 
-  /* Swap click signal on "Cancel" button */
-  g_signal_connect_swapped (cancel_button,
-                            "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
-                            affinity_data->dialog);
+    /* Add CPU grid to scrolled box */
+    gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (cpulist_grid));
 
-  /* Connect click signal on "Apply" button */
-  g_signal_connect (apply_button,
-                    "clicked",
-                    G_CALLBACK (set_affinity),
-                    affinity_data);
+    /* Add scrolled box to dialog VBox */
+    gtk_box_pack_start (GTK_BOX (dialog_vbox), scrolled, TRUE, TRUE, 0);
 
-  /* Connect toggle all check box to (de)select all function */
-  g_signal_connect (affinity_data->buttons[0],
-                    "toggled",
-                    G_CALLBACK (affinity_toggle_all),
-                    affinity_data);
+    /* Swap click signal on "Cancel" button */
+    g_signal_connect_swapped (cancel_button,
+                              "clicked",
+                              G_CALLBACK (gtk_widget_destroy),
+                              affinity_data->dialog);
 
-  /* Show dialog window */
-  gtk_widget_show_all (affinity_data->dialog);
+    /* Connect click signal on "Apply" button */
+    g_signal_connect (apply_button,
+                      "clicked",
+                      G_CALLBACK (set_affinity),
+                      affinity_data);
+
+    /* Connect toggle all check box to (de)select all function */
+    g_signal_connect (affinity_data->buttons[0],
+                      "toggled",
+                      G_CALLBACK (affinity_toggle_all),
+                      affinity_data);
+
+    /* Show dialog window */
+    gtk_widget_show_all (affinity_data->dialog);
 }
 
 void
 create_set_affinity_dialog (GsmApplication *app)
 {
-  /* Create a dialog window for each selected process */
-  gtk_tree_selection_selected_foreach (app->selection,
-                                       create_single_set_affinity_dialog,
-                                       app);
+    /* Create a dialog window for each selected process */
+    gtk_tree_selection_selected_foreach (app->selection,
+                                         create_single_set_affinity_dialog,
+                                         app);
 }

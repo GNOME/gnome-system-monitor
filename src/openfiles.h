@@ -6,6 +6,6 @@
 
 #include "application.h"
 
-void create_openfiles_dialog (GsmApplication *app);
+void            create_openfiles_dialog (GsmApplication *app);
 
 #endif /* _GSM_OPENFILES_H_ */

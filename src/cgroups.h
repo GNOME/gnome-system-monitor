@@ -4,7 +4,7 @@
 
 #include "application.h"
 
-void get_process_cgroup_info (ProcInfo&info);
+void get_process_cgroup_info (ProcInfo& info);
 bool cgroups_enabled ();
 
 #endif /* _GSM_CGROUPS_H_ */

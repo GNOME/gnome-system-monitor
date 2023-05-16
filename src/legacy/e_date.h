@@ -8,7 +8,7 @@
 G_BEGIN_DECLS
 
 char *
-procman_format_date_for_display (time_t d);
+procman_format_date_for_display(time_t d);
 
 G_END_DECLS
 

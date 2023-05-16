@@ -15,9 +15,9 @@ using std::string;
 class SmoothRefresh
   : private procman::NonCopyable
 {
-public:
+  public:
 
-/*
+    /*
       smooth_refresh_new
 
       @config_interval : pointer to config_interval so we can observe
@@ -25,18 +25,18 @@ public:
 
       @return : initialized SmoothRefresh
     */
-SmoothRefresh(Glib::RefPtr<Gio::Settings> a_settings);
+    SmoothRefresh(Glib::RefPtr<Gio::Settings> a_settings);
 
-~SmoothRefresh();
+    ~SmoothRefresh();
 
-/*
+    /*
       smooth_refresh_reset
 
       Resets state and re-read config_interval
     */
-void reset ();
+    void reset();
 
-/*
+    /*
       smooth_refresh_get
 
       Computes the new refresh_interval so that CPU usage is lower than
@@ -47,18 +47,18 @@ void reset ();
       @return : TRUE is refresh_interval has changed. The new refresh_interval
       is stored in @new_interval. Else FALSE;
     */
-bool get (guint &new_interval);
+    bool get(guint &new_interval);
 
 
-static const string KEY;
+    static const string KEY;
 
-private:
+  private:
 
-unsigned get_own_cpu_usage ();
+    unsigned get_own_cpu_usage();
 
-void     load_settings_value (Glib::ustring key);
+    void load_settings_value(Glib::ustring key);
 
-/*
+    /*
       fuzzy logic:
       - decrease refresh interval only if current CPU% and last CPU%
       are higher than PCPU_LO
@@ -67,13 +67,13 @@ void     load_settings_value (Glib::ustring key);
 
     */
 
-enum
-{
-  PCPU_HI = 22,
-  PCPU_LO = 18
-};
+    enum
+    {
+        PCPU_HI = 22,
+        PCPU_LO = 18
+    };
 
-/*
+    /*
       -self : procman's PID (so we call getpid() only once)
 
       -interval : current refresh interval
@@ -89,13 +89,13 @@ enum
       -last_cpu_time: Save last cpu and process times to compute CPU%
     */
 
-Glib::RefPtr<Gio::Settings> settings;
-bool active;
-sigc::connection connection;
-guint interval;
-unsigned last_pcpu;
-guint64 last_total_time;
-guint64 last_cpu_time;
+    Glib::RefPtr<Gio::Settings> settings;
+    bool active;
+    sigc::connection connection;
+    guint interval;
+    unsigned  last_pcpu;
+    guint64 last_total_time;
+    guint64 last_cpu_time;
 };
 
 
