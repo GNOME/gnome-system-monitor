@@ -901,10 +901,6 @@ create_main_window (GsmApplication *app)
 
   gtk_window_set_default_size (GTK_WINDOW (app->main_window), width, height);
 
-  /* g_signal_connect (G_OBJECT (surface), "notify::state",
-                       G_CALLBACK (cb_main_window_state_changed),
-                      app);*/
-
   update_page_activities (app);
 
   g_object_unref (G_OBJECT (builder));
