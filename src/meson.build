@@ -76,6 +76,8 @@ gsm_schemas = configure_file(
   install_dir: get_option('datadir') / 'glib-2.0' / 'schemas',
 )
 
+gnome.compile_schemas(depend_files: gsm_schemas)
+
 gsm_gsettings = gnome.mkenums('org.gnome.gnome-system-monitor.enums.xml',
   sources: system_monitor_headers,
   comments: '<!-- @comment@ -->',
@@ -110,4 +112,8 @@ executable(meson.project_name(),
       get_option('prefix'), gsm_resource_dir, 'gsm.gresource')),
   ],
   install: true,
+)
+
+gnome.post_install(
+  glib_compile_schemas: true,
 )
