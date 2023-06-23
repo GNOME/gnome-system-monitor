@@ -40,8 +40,7 @@ PrettyTable::PrettyTable()
       Glib::RefPtr<Gio::FileMonitor> monitor = file->monitor_directory ();
       monitor->set_rate_limit (1000); // 1 second
 
-      // TODO: Properly handle signal change
-      // monitor->signal_changed ().connect (sigc::mem_fun (this, &PrettyTable::file_monitor_event));
+      monitor->signal_changed ().connect (sigc::mem_fun (*this, &PrettyTable::file_monitor_event));
       monitors[path] = monitor;
     }
 
