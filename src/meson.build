@@ -73,7 +73,7 @@ gsm_schemas = configure_file(
   output: 'org.gnome.gnome-system-monitor.gschema.xml',
   configuration: dataconf,
   install: true,
-  install_dir: join_paths(get_option('datadir'), 'glib-2.0', 'schemas'),
+  install_dir: get_option('datadir') / 'glib-2.0' / 'schemas',
 )
 
 gsm_gsettings = gnome.mkenums('org.gnome.gnome-system-monitor.enums.xml',
