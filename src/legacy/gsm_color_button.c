@@ -320,7 +320,7 @@ gsm_color_button_measure (GtkWidget     *widget,
 }
 
 static void
-gsm_color_button_state_flags_changed (GtkWidget *self) {
+gsm_color_button_state_flags_changed (GtkWidget *self, GtkStateFlags flags) {
     gtk_widget_queue_draw (self);
 }
 
