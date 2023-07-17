@@ -811,7 +811,7 @@ create_main_window (GsmApplication *app)
 
   gtk_application_window_set_help_overlay (GTK_APPLICATION_WINDOW (app->main_window),
                                            GTK_SHORTCUTS_WINDOW (gtk_builder_get_object (builder, "help_overlay")));
-
+  g_settings_delay (app->settings->gobj ());
   g_settings_get (app->settings->gobj (), GSM_SETTING_WINDOW_STATE, "(iiii)",
                   &width, &height, &xpos, &ypos);
 
