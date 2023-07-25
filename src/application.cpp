@@ -562,7 +562,7 @@ GsmApplication::on_startup ()
   add_accelerator ("<Primary>q", "app.quit", NULL);
   add_accelerator ("<Primary>s", "win.send-signal-stop", g_variant_new_int32 (SIGSTOP));
   add_accelerator ("<Primary>c", "win.send-signal-cont", g_variant_new_int32 (SIGCONT));
-  add_accelerator ("<Primary>e", "win.send-signal-end", g_variant_new_int32 (SIGTERM));
+  add_accelerator ("<Primary>t", "win.send-signal-term", g_variant_new_int32 (SIGTERM));
   add_accelerator ("<Primary>k", "win.send-signal-kill", g_variant_new_int32 (SIGKILL));
   add_accelerator ("<Alt>s", "win.set-affinity", NULL);
   add_accelerator ("<Primary>m", "win.memory-maps", NULL);

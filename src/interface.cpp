@@ -849,7 +849,7 @@ create_main_window (GsmApplication *app)
     { "search", on_activate_search, "b", "false", NULL },
     { "send-signal-stop", on_activate_send_signal, "i", NULL, NULL },
     { "send-signal-cont", on_activate_send_signal, "i", NULL, NULL },
-    { "send-signal-end", on_activate_send_signal, "i", NULL, NULL },
+    { "send-signal-term", on_activate_send_signal, "i", NULL, NULL },
     { "send-signal-kill", on_activate_send_signal, "i", NULL, NULL },
     { "priority", on_activate_priority, "i", "@i 0", change_priority_state },
     { "set-affinity", on_activate_set_affinity, NULL, NULL, NULL },
@@ -937,7 +937,7 @@ update_sensitivity (GsmApplication *app)
 {
   const char * const selected_actions[] = { "send-signal-stop",
                                             "send-signal-cont",
-                                            "send-signal-end",
+                                            "send-signal-term",
                                             "send-signal-kill",
                                             "priority",
                                             "set-affinity",
