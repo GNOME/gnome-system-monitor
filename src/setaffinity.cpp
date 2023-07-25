@@ -380,7 +380,7 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   gtk_grid_set_row_spacing (cpulist_grid, 10);
 
   /* Create toggle all check box */
-  affinity_data->buttons[0] = gtk_check_button_new_with_label ("Run on all CPUs");
+  affinity_data->buttons[0] = gtk_check_button_new_with_label (_("Run on all CPUs"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (affinity_data->buttons[0]), TRUE);
   gtk_widget_set_hexpand (affinity_data->buttons[0], TRUE);
 
