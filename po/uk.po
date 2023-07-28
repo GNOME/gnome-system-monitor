@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/iss"
 "ues\n"
-"POT-Creation-Date: 2023-05-09 18:39+0000\n"
-"PO-Revision-Date: 2023-05-09 21:51+0300\n"
+"POT-Creation-Date: 2023-07-25 22:39+0000\n"
+"PO-Revision-Date: 2023-07-28 21:13+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -130,81 +130,89 @@ msgid "Open menu"
 msgstr "Відкрити меню"
 
 #: data/help-overlay.ui:32
+#| msgid "Preferences"
+msgctxt "shortcut window"
+msgid "Show preferences"
+msgstr "Показати налаштування"
+
+#: data/help-overlay.ui:39
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "Клавіатурні скорочення"
 
-#: data/help-overlay.ui:39
+#: data/help-overlay.ui:46
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Вийти"
 
-#: data/help-overlay.ui:46
+#: data/help-overlay.ui:53
 msgctxt "shortcut window"
 msgid "Search"
 msgstr "Пошук"
 
-#: data/help-overlay.ui:53
+#: data/help-overlay.ui:60
 msgctxt "shortcut window"
 msgid "Show Processes"
 msgstr "Показати процеси"
 
-#: data/help-overlay.ui:60
+#: data/help-overlay.ui:67
 msgctxt "shortcut window"
 msgid "Show Resources"
 msgstr "Показати ресурси"
 
-#: data/help-overlay.ui:67
+#: data/help-overlay.ui:74
 msgctxt "shortcut window"
 msgid "Show File Systems"
 msgstr "Показати файлові системи"
 
-#: data/help-overlay.ui:74
+#: data/help-overlay.ui:81
 msgctxt "shortcut window"
 msgid "Refresh"
 msgstr "Оновити"
 
-#: data/help-overlay.ui:82
+#: data/help-overlay.ui:89
 msgctxt "shortcut window"
 msgid "Processes"
 msgstr "Процеси"
 
-#: data/help-overlay.ui:87
+#: data/help-overlay.ui:94
 msgctxt "shortcut window"
 msgid "Show dependencies"
 msgstr "Показати залежності"
 
-#: data/help-overlay.ui:94
+#: data/help-overlay.ui:101
 msgctxt "shortcut window"
 msgid "Show process properties"
 msgstr "Показати властивості процесу"
 
-#: data/help-overlay.ui:101
+#: data/help-overlay.ui:108
 msgctxt "shortcut window"
 msgid "Memory maps"
 msgstr "Прив'язки пам'яті"
 
-#: data/help-overlay.ui:108
+#: data/help-overlay.ui:115
 msgctxt "shortcut window"
 msgid "Open files"
 msgstr "Відкрити файли"
 
-#: data/help-overlay.ui:115
+#: data/help-overlay.ui:122
 msgctxt "shortcut window"
 msgid "Send stop signal"
 msgstr "Надіслати сигнал зупинення"
 
-#: data/help-overlay.ui:122
+#: data/help-overlay.ui:129
 msgctxt "shortcut window"
 msgid "Send continue signal"
 msgstr "Надіслати сигнал продовження"
 
-#: data/help-overlay.ui:129
-msgctxt "shortcut window"
-msgid "Send End signal"
-msgstr "Надіслати сигнал завершення"
-
 #: data/help-overlay.ui:136
+#| msgctxt "shortcut window"
+#| msgid "Send continue signal"
+msgctxt "shortcut window"
+msgid "Send Terminate signal"
+msgstr "Надіслати сигнал переривання"
+
+#: data/help-overlay.ui:143
 msgctxt "shortcut window"
 msgid "Send Kill signal"
 msgstr "Надіслати сигнал «Вбити»"
@@ -213,12 +221,11 @@ msgstr "Надіслати сигнал «Вбити»"
 msgid "Search processes and users"
 msgstr "Пошук за процесами і користувачами"
 
-#: data/interface.ui:163 src/procdialogs.cpp:152 src/proctable.cpp:158
-msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "_Припинити процес"
-msgstr[1] "_Припинити процеси"
-msgstr[2] "_Припинити процеси"
+#: data/interface.ui:163
+#| msgid "_End Process"
+#| msgid_plural "_End Processes"
+msgid "_Terminate Process"
+msgstr "П_ерервати процес"
 
 #: data/interface.ui:177
 msgid "Show process properties"
@@ -381,8 +388,8 @@ msgid "_Continue"
 msgstr "Про_довжити"
 
 #: data/menus.ui:156
-msgid "_End"
-msgstr "При_пинити"
+msgid "_Terminate"
+msgstr "П_ерервати"
 
 #: data/menus.ui:161
 msgid "_Kill"
@@ -1146,19 +1153,23 @@ msgid "Show process “Owner” column on startup"
 msgstr "Показувати під час запуску стовпчик власника процесів"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:552
-msgid "Width of process “Total disk read” column"
+#| msgid "Width of process “Disk read” column"
+msgid "Width of process “Disk read total” column"
 msgstr "Ширина стовпчика «Читання з диска (загалом)»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:559
-msgid "Show process “Total disk read” column on startup"
+#| msgid "Show process “Disk read” column on startup"
+msgid "Show process “Disk read total” column on startup"
 msgstr "Показувати під час запуску стовпчик «Читання з диска (загалом)»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:566
-msgid "Width of process “Total disk write” column"
+#| msgid "Width of process “Disk write” column"
+msgid "Width of process “Disk write total” column"
 msgstr "Ширина стовпчика «Запис на диск (загалом)»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:573
-msgid "Show process “Total disk write” column on startup"
+#| msgid "Show process “Disk write” column on startup"
+msgid "Show process “Disk write total” column on startup"
 msgstr "Показувати під час запуску стовпчик «Запис на диск (загалом)»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:580
@@ -1365,6 +1376,13 @@ msgstr ""
 "створити загрозу безпеці. Завершувати треба лише процеси, які не "
 "відповідають на запити."
 
+#: src/procdialogs.cpp:152 src/proctable.cpp:158
+msgid "_End Process"
+msgid_plural "_End Processes"
+msgstr[0] "_Припинити процес"
+msgstr[1] "_Припинити процеси"
+msgstr[2] "_Припинити процеси"
+
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:157
@@ -1539,6 +1557,11 @@ msgstr "З_астосувати"
 msgid "Select CPUs \"%s\" (PID %u) is allowed to run on:"
 msgstr "Вибрати процесори, на яких можна запускати «%s» (PID %u):"
 
+#. Create toggle all check box
+#: src/setaffinity.cpp:383
+msgid "Run on all CPUs"
+msgstr "Запустити на усіх процесорах"
+
 #. Set check box label value to CPU [1..2048]
 #: src/setaffinity.cpp:402
 #, c-format
@@ -1614,6 +1637,25 @@ msgstr "Дуже низький пріоритет"
 #, c-format
 msgid "%s/s"
 msgstr "%s/с"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Send End signal"
+#~ msgstr "Надіслати сигнал завершення"
+
+#~ msgid "_End"
+#~ msgstr "При_пинити"
+
+#~ msgid "Width of process “Total disk read” column"
+#~ msgstr "Ширина стовпчика «Читання з диска (загалом)»"
+
+#~ msgid "Show process “Total disk read” column on startup"
+#~ msgstr "Показувати під час запуску стовпчик «Читання з диска (загалом)»"
+
+#~ msgid "Width of process “Total disk write” column"
+#~ msgstr "Ширина стовпчика «Запис на диск (загалом)»"
+
+#~ msgid "Show process “Total disk write” column on startup"
+#~ msgstr "Показувати під час запуску стовпчик «Запис на диск (загалом)»"
 
 #~| msgid "_Update interval in seconds:"
 #~ msgid "_Update Interval in Seconds:"
