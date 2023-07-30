@@ -1,79 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0"/>
-  <object class="GtkAdjustment" id="renice_adj">
+  <requires lib="libadwaita" version="1.0"/>
+  <object class="GtkAdjustment" id="renice_adjustment">
     <property name="lower">-20</property>
     <property name="upper">20</property>
     <property name="step-increment">1</property>
     <property name="page-increment">10</property>
   </object>
-  <object class="GtkDialog" id="renice_dialog">
-    <property name="resizable">0</property>
-    <property name="destroy-with-parent">1</property>
-    <child internal-child="content_area">
-      <object class="GtkBox" id="dialog-vbox4">
+  <object class="AdwMessageDialog" id="renice_dialog">
+    <property name="default-response">change</property>
+    <property name="close-response">cancel</property>
+    <responses>
+      <response id="cancel" translatable="1">_Cancel</response>
+      <response id="change" translatable="1" appearance="destructive">Change _Priority</response>
+    </responses>
+    <child>
+      <object class="GtkBox">
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
-          <object class="GtkGrid" id="dialog_content_grid">
+          <object class="GtkBox">
             <property name="vexpand">1</property>
+            <property name="hexpand">1</property>
             <property name="orientation">vertical</property>
+            <property name="spacing">8</property>
+            <property name="margin-bottom">16</property>
+            <property name="margin-start">16</property>
+            <property name="margin-end">16</property>
             <child>
-              <object class="GtkGrid" id="renice_grid">
+              <object class="GtkBox">
                 <property name="hexpand">1</property>
                 <property name="vexpand">1</property>
+                <property name="spacing">4</property>"
                 <child>
-                  <object class="GtkLabel" id="nice_value_label">
+                  <object class="GtkLabel">
                     <property name="halign">start</property>
-                    <property name="valign">end</property>
                     <property name="label" translatable="1">_Nice value:</property>
                     <property name="use-underline">1</property>
                     <property name="mnemonic-widget">nice_value_scale</property>
-                    <layout>
-                      <property name="column">0</property>
-                      <property name="row">0</property>
-                    </layout>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkScale" id="nice_value_scale">
-                    <property name="draw-value">1</property>
-                    <property name="hexpand">1</property>
-                    <property name="adjustment">renice_adj</property>
-                    <property name="round-digits">0</property>
-                    <property name="digits">0</property>
-                    <layout>
-                      <property name="column">1</property>
-                      <property name="row">0</property>
-                    </layout>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="priority_label">
-                    <layout>
-                      <property name="column">1</property>
-                      <property name="row">1</property>
-                    </layout>
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkScale" id="nice_value_scale">
+                        <property name="draw-value">1</property>
+                        <property name="hexpand">1</property>
+                        <property name="adjustment">renice_adjustment</property>
+                        <property name="round-digits">0</property>
+                        <property name="digits">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="priority_label"/>
+                    </child>
                   </object>
                 </child>
                 <child>
                   <placeholder/>
                 </child>
-                <layout>
-                  <property name="column">0</property>
-                  <property name="row">0</property>
-                </layout>
               </object>
             </child>
             <child>
-              <object class="GtkLabel" id="note_label">
+              <object class="GtkLabel">
                 <property name="halign">start</property>
                 <property name="label" translatable="1">&lt;small&gt;&lt;i&gt;&lt;b&gt;Note:&lt;/b&gt; The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority.&lt;/i&gt;&lt;/small&gt;</property>
                 <property name="use-markup">1</property>
-                <layout>
-                  <property name="column">0</property>
-                  <property name="row">1</property>
-                </layout>
+                <property name="wrap">0</property>
               </object>
             </child>
           </object>
