@@ -122,7 +122,7 @@ LoadGraph::translate_to_log_partial_if_needed (float position_partial)
   return position_partial;
 }
 
-gchar*
+static gchar*
 format_duration (unsigned seconds)
 {
   gchar*caption = NULL;
@@ -529,7 +529,7 @@ get_load (LoadGraph *graph)
   graph->cpu.now ^= 1;
 }
 
-void
+static void
 set_memory_label_and_picker (GtkLabel      *label,
                              GsmColorButton*picker,
                              guint64        used,
@@ -841,9 +841,7 @@ get_net (LoadGraph *graph)
   gtk_label_set_text (GTK_LABEL (graph->labels.net_out_total), procman::format_network (out).c_str ());
 }
 
-
-
-void
+static void
 load_graph_update_data (LoadGraph *graph)
 {
   // Rotate data one element down.
