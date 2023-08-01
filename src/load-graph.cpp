@@ -17,8 +17,6 @@
 #include "util.h"
 #include "legacy/gsm_color_button.h"
 
-gchar * format_duration (unsigned seconds);
-
 void
 LoadGraph::clear_background ()
 {
@@ -173,6 +171,32 @@ format_duration (unsigned seconds)
 }
 
 const int FRAME_WIDTH = 4;
+
+static void
+force_refresh (LoadGraph * const graph)
+{
+    graph->clear_background ();
+    load_graph_queue_draw (graph);
+}
+
+static void
+load_graph_rescale (LoadGraph *graph) {
+    ///org/gnome/desktop/interface/text-scaling-factor
+    graph->fontsize = 8 * graph->font_settings->get_double ("text-scaling-factor");
+    force_refresh (graph);
+}
+
+static void
+load_graph_state_changed (GtkWidget     *widget,
+                          GtkStateFlags *flags,
+                          gpointer       data_ptr)
+{
+    LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
+
+    force_refresh (graph);
+    graph->draw = gtk_widget_is_visible (widget);
+}
+
 static void
 draw_background (LoadGraph *graph)
 {
@@ -323,27 +347,6 @@ draw_background (LoadGraph *graph)
   graph->background = surface;
 }
 
-/* Redraws the backing buffer for the load graph and updates the window */
-void
-load_graph_queue_draw (LoadGraph *graph)
-{
-  /* repaint */
-  gtk_widget_queue_draw (GTK_WIDGET (graph->disp));
-}
-
-void       load_graph_update_data (LoadGraph *graph);
-static int load_graph_update (gpointer user_data); // predeclare load_graph_update so we can compile ;)
-
-static void
-load_graph_rescale (LoadGraph *graph)
-{
-  ///org/gnome/desktop/interface/text-scaling-factor
-  graph->fontsize = 8 * graph->font_settings->get_double ("text-scaling-factor");
-  graph->clear_background ();
-
-  load_graph_queue_draw (graph);
-}
-
 static gboolean
 load_graph_configure (GtkWidget         *widget,
                       GdkEventConfigure *event,
@@ -366,31 +369,12 @@ load_graph_configure (GtkWidget         *widget,
 }
 
 static void
-force_refresh (LoadGraph * const graph)
-{
-  graph->clear_background ();
-  load_graph_queue_draw (graph);
-}
-
-static void
 load_graph_style_updated (GtkWidget *widget,
                           gpointer   data_ptr)
 {
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
 
   force_refresh (graph);
-}
-
-static gboolean
-load_graph_state_changed (GtkWidget     *widget,
-                          GtkStateFlags *flags,
-                          gpointer       data_ptr)
-{
-  LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
-
-  force_refresh (graph);
-  graph->draw = gtk_widget_is_visible (widget);
-  return TRUE;
 }
 
 static gboolean
@@ -912,18 +896,6 @@ load_graph_update (gpointer user_data)
   return TRUE;
 }
 
-
-
-LoadGraph::~LoadGraph()
-{
-  load_graph_stop (this);
-
-  if (timer_index)
-    g_source_remove (timer_index);
-
-  clear_background ();
-}
-
 static void
 load_graph_destroy (GtkWidget *widget,
                     gpointer   data_ptr)
@@ -1082,6 +1054,24 @@ LoadGraph::LoadGraph(guint type)
     data[i] = &data_block[0] + i * n;
 
   gtk_widget_show_all (GTK_WIDGET (main_widget));
+}
+
+LoadGraph::~LoadGraph()
+{
+  load_graph_stop (this);
+
+  if (timer_index)
+    g_source_remove (timer_index);
+
+  clear_background ();
+}
+
+/* Redraws the backing buffer for the load graph and updates the window */
+void
+load_graph_queue_draw (LoadGraph *graph)
+{
+    /* repaint */
+    gtk_widget_queue_draw (GTK_WIDGET (graph->disp));
 }
 
 void
