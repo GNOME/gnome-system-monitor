@@ -472,7 +472,7 @@ load_graph_draw (GtkDrawingArea *drawing_area,
 
       /* Draw the path of the line
          Loop starts at 1 because the curve accesses the 0th data point */
-      for (gint i = 1; i < graph->num_points; i++)
+      for (guint i = 1; i < graph->num_points; i++)
         {
           if (graph->data[i][j] == -1.0f)
             continue;
@@ -863,7 +863,10 @@ handle_dynamic_max_value (LoadGraph             *graph,
   *last_in = in;
   *last_out = out;
   *graph_time = time;
-  *graph_hash = hash;
+  if (graph_hash != NULL)
+    {
+      *graph_hash = hash;
+    }
 
   dynamic_scale (graph, values, max, din, dout, in_bits);
 
@@ -881,9 +884,7 @@ get_net (LoadGraph *graph)
   guint32 i;
   guint64 in = 0, out = 0;
   guint64 hash = 1;
-  guint64 time;
-  guint64 din, dout;
-  char **ifnames = glibtop_get_netlist (&netlist);
+  char **ifnames;
 
   ifnames = glibtop_get_netlist (&netlist);
 
