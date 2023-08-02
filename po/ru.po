@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor trunk\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2022-09-11 12:58+0000\n"
-"PO-Revision-Date: 2022-11-30 12:52+0300\n"
+"POT-Creation-Date: 2023-07-25 22:39+0000\n"
+"PO-Revision-Date: 2023-07-27 12:00+0300\n"
 "Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
 "Language-Team: Русский <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -29,7 +29,7 @@ msgstr ""
 "X-Generator: Poedit 3.2.1\n"
 
 #: gnome-system-monitor.desktop.in:3 gnome-system-monitor.appdata.xml.in:6
-#: data/interface.ui:6 src/application.cpp:397 src/interface.cpp:439
+#: data/interface.ui:6 src/application.cpp:394 src/interface.cpp:439
 msgid "System Monitor"
 msgstr "Системный монитор"
 
@@ -39,7 +39,7 @@ msgid "View current processes and monitor system state"
 msgstr "Просмотр текущих процессов и мониторинг состояния системы"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: gnome-system-monitor.desktop.in:15
+#: gnome-system-monitor.desktop.in:16
 msgid ""
 "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
 "Manager;Activity;"
@@ -47,12 +47,12 @@ msgstr ""
 "Монитор;Система;Процесс;ЦП;Процессор;Память;Сеть;История;Использование;"
 "Производительность;Задача;Менеджер;Диспетчер;"
 
-#: gnome-system-monitor-kde.desktop.in:3 src/application.cpp:460
+#: gnome-system-monitor-kde.desktop.in:3 src/application.cpp:457
 msgid "GNOME System Monitor"
 msgstr "Системный монитор среды GNOME"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: gnome-system-monitor-kde.desktop.in:15
+#: gnome-system-monitor-kde.desktop.in:16
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr "Монитор;Система;Процесс;Процессор;Память;Сеть;История;Использование;"
 
@@ -136,141 +136,147 @@ msgstr "Открыть меню"
 
 #: data/help-overlay.ui:32
 msgctxt "shortcut window"
+msgid "Show preferences"
+msgstr "Показать параметры"
+
+#: data/help-overlay.ui:39
+msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "Комбинации клавиш"
 
-#: data/help-overlay.ui:39
+#: data/help-overlay.ui:46
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Закрыть"
 
-#: data/help-overlay.ui:46
+#: data/help-overlay.ui:53
 msgctxt "shortcut window"
 msgid "Search"
 msgstr "Поиск"
 
-#: data/help-overlay.ui:53
+#: data/help-overlay.ui:60
 msgctxt "shortcut window"
 msgid "Show Processes"
 msgstr "Показать процессы"
 
-#: data/help-overlay.ui:60
+#: data/help-overlay.ui:67
 msgctxt "shortcut window"
 msgid "Show Resources"
 msgstr "Показать ресурсы"
 
-#: data/help-overlay.ui:67
+#: data/help-overlay.ui:74
 msgctxt "shortcut window"
 msgid "Show File Systems"
 msgstr "Показать файловые системы"
 
-#: data/help-overlay.ui:74
+#: data/help-overlay.ui:81
 msgctxt "shortcut window"
 msgid "Refresh"
 msgstr "Обновить"
 
-#: data/help-overlay.ui:82
+#: data/help-overlay.ui:89
 msgctxt "shortcut window"
 msgid "Processes"
 msgstr "Процессы"
 
-#: data/help-overlay.ui:87
+#: data/help-overlay.ui:94
 msgctxt "shortcut window"
 msgid "Show dependencies"
 msgstr "Показать зависимости"
 
-#: data/help-overlay.ui:94
+#: data/help-overlay.ui:101
 msgctxt "shortcut window"
 msgid "Show process properties"
 msgstr "Показать свойства процесса"
 
-#: data/help-overlay.ui:101
+#: data/help-overlay.ui:108
 msgctxt "shortcut window"
 msgid "Memory maps"
 msgstr "Карты памяти"
 
-#: data/help-overlay.ui:108
+#: data/help-overlay.ui:115
 msgctxt "shortcut window"
 msgid "Open files"
 msgstr "Открытые файлы"
 
-#: data/help-overlay.ui:115
+#: data/help-overlay.ui:122
 msgctxt "shortcut window"
 msgid "Send stop signal"
 msgstr "Послать сигнал остановки"
 
-#: data/help-overlay.ui:122
+#: data/help-overlay.ui:129
 msgctxt "shortcut window"
 msgid "Send continue signal"
 msgstr "Послать сигнал продолжения"
 
-#: data/help-overlay.ui:129
-msgctxt "shortcut window"
-msgid "Send End signal"
-msgstr "Послать сигнал «Завершить»"
-
 #: data/help-overlay.ui:136
+msgctxt "shortcut window"
+msgid "Send Terminate signal"
+msgstr "Послать сигнал «Прекратить»"
+
+#: data/help-overlay.ui:143
 msgctxt "shortcut window"
 msgid "Send Kill signal"
 msgstr "Послать сигнал «Прервать»"
 
-#: data/interface.ui:162 src/procdialogs.cpp:152 src/proctable.cpp:158
-msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "Завер_шить процесс"
-msgstr[1] "Завер_шить процессы"
-msgstr[2] "Завер_шить процессы"
+#: data/interface.ui:122
+msgid "Search processes and users"
+msgstr "Поиск процессов и пользователей"
 
-#: data/interface.ui:176
+#: data/interface.ui:163
+msgid "_Terminate Process"
+msgstr "_Прекратить процесс"
+
+#: data/interface.ui:177
 msgid "Show process properties"
 msgstr "Показать свойства процесса"
 
-#: data/interface.ui:197 data/preferences.ui:14
+#: data/interface.ui:198 data/preferences.ui:14
 msgid "Processes"
 msgstr "Процессы"
 
-#: data/interface.ui:262 src/interface.cpp:276 src/procproperties.cpp:83
+#: data/interface.ui:263 src/interface.cpp:276 src/procproperties.cpp:83
 msgid "CPU"
 msgstr "ЦП"
 
-#: data/interface.ui:313 src/interface.cpp:323 src/procproperties.cpp:72
+#: data/interface.ui:314 src/interface.cpp:323 src/procproperties.cpp:72
 #: src/proctable.cpp:381
 msgid "Memory"
 msgstr "Память"
 
-#: data/interface.ui:328 src/interface.cpp:335
+#: data/interface.ui:329 src/interface.cpp:335
 msgid "Swap"
 msgstr "Подкачка"
 
-#: data/interface.ui:366
+#: data/interface.ui:367
 msgid "Memory and Swap"
 msgstr "Память и подкачка"
 
-#: data/interface.ui:418 src/interface.cpp:367
+#: data/interface.ui:419 src/interface.cpp:367
 msgid "Receiving"
 msgstr "Приём"
 
-#: data/interface.ui:433
+#: data/interface.ui:434
 msgid "Total Received"
 msgstr "Всего принято"
 
-#: data/interface.ui:448 src/interface.cpp:385
+#: data/interface.ui:449 src/interface.cpp:385
 msgid "Sending"
 msgstr "Отправка"
 
-#: data/interface.ui:463
+#: data/interface.ui:464
 msgid "Total Sent"
 msgstr "Всего отправлено"
 
-#: data/interface.ui:510
+#: data/interface.ui:511
 msgid "Network"
 msgstr "Сеть"
 
-#: data/interface.ui:536 data/preferences.ui:132
+#: data/interface.ui:537 data/preferences.ui:132
 msgid "Resources"
 msgstr "Ресурсы"
 
-#: data/interface.ui:564 data/preferences.ui:293
+#: data/interface.ui:565 data/preferences.ui:293
 msgid "File Systems"
 msgstr "Файловые системы"
 
@@ -382,8 +388,8 @@ msgid "_Continue"
 msgstr "_Продолжить"
 
 #: data/menus.ui:156
-msgid "_End"
-msgstr "Завер_шить"
+msgid "_Terminate"
+msgstr "_Прекратить"
 
 #: data/menus.ui:161
 msgid "_Kill"
@@ -490,7 +496,7 @@ msgstr ""
 "уступчивости (nice). Меньшее значение «nice» соответствует более высокому "
 "приоритету.</i></small>"
 
-#: src/application.cpp:441
+#: src/application.cpp:438
 msgid "A simple process and system monitor."
 msgstr "Простой диспетчер процессов и системы."
 
@@ -1118,67 +1124,67 @@ msgstr "Показать при запуске столбец единицы и�
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:510
 msgid "Width of process “Session” column"
-msgstr "Ширина столбца сеанса процесса"
+msgstr "Ширина столбца процесса «Сеанс»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:517
 msgid "Show process “Session” column on startup"
-msgstr "Показать при запуске столбец сеанса процесса"
+msgstr "Показать при запуске столбец процесса «Сеанс»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:524
 msgid "Width of process “Seat” column"
-msgstr "Ширина столбца рабочего места процесса"
+msgstr "Ширина столбца процесса «Рабочее место»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:531
 msgid "Show process “Seat” column on startup"
-msgstr "Показать при запуске столбец рабочего места процесса"
+msgstr "Показать при запуске столбец процесса «Рабочее место»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:538
 msgid "Width of process “Owner” column"
-msgstr "Ширина столбца владельца процесса"
+msgstr "Ширина столбца процесса «Владелец»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:545
 msgid "Show process “Owner” column on startup"
-msgstr "Показать при запуске столбец владельца процесса"
+msgstr "Показать при запуске столбец процесса «Владелец»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:552
-msgid "Width of process “Total disk read” column"
-msgstr "Ширина столбца суммарного чтения диска"
+msgid "Width of process “Disk read total” column"
+msgstr "Ширина столбца процесса «Суммарное чтение с диска»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:559
-msgid "Show process “Total disk read” column on startup"
-msgstr "Показать при запуске столбец суммарного чтения диска"
+msgid "Show process “Disk read total” column on startup"
+msgstr "Показать при запуске столбец процесса «Суммарное чтение с диска»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:566
-msgid "Width of process “Total disk write” column"
-msgstr "Ширина столбца процесса суммарного чтения диска"
+msgid "Width of process “Disk write total” column"
+msgstr "Ширина столбца процесса «Суммарная запись на диск»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:573
-msgid "Show process “Total disk write” column on startup"
-msgstr "Показать при запуске столбец процесса суммарного чтения диска"
+msgid "Show process “Disk write total” column on startup"
+msgstr "Показать при запуске столбец процесса «Суммарная запись на диск»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:580
 msgid "Width of process “Disk read” column"
-msgstr "Ширина столбца процесса чтения диска"
+msgstr "Ширина столбца процесса «Чтение диска»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:587
 msgid "Show process “Disk read” column on startup"
-msgstr "Показать при запуске столбец процесса чтения диска"
+msgstr "Показать при запуске столбец процесса «Чтение диска»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:594
 msgid "Width of process “Disk write” column"
-msgstr "Ширина столбца процесса записи диска"
+msgstr "Ширина столбца процесса «Запись диска»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:601
 msgid "Show process “Disk write” column on startup"
-msgstr "Показать при запуске столбец процесса записи диска"
+msgstr "Показать при запуске столбец процесса «Запись диска»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:608
 msgid "Width of process “Priority” column"
-msgstr "Ширина столбца приоритета"
+msgstr "Ширина столбца «Приоритет»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:615
 msgid "Show process “Priority” column on startup"
-msgstr "Показать при запуске столбец приоритета"
+msgstr "Показать при запуске столбец «Приоритет»"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:626
 msgid "Disk view sort column"
@@ -1360,6 +1366,13 @@ msgstr ""
 "или представлять угрозу для безопасности системы. Только не отвечающие "
 "процессы должны быть завершены."
 
+#: src/procdialogs.cpp:152 src/proctable.cpp:158
+msgid "_End Process"
+msgid_plural "_End Processes"
+msgstr[0] "Завер_шить процесс"
+msgstr[1] "Завер_шить процессы"
+msgstr[2] "Завер_шить процессы"
+
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:157
@@ -1534,6 +1547,11 @@ msgstr "_Применить"
 msgid "Select CPUs \"%s\" (PID %u) is allowed to run on:"
 msgstr "Выберите ЦП «%s» (PID %u), на которых разрешено работать:"
 
+#. Create toggle all check box
+#: src/setaffinity.cpp:383
+msgid "Run on all CPUs"
+msgstr "Запуск на всех ЦП"
+
 #. Set check box label value to CPU [1..2048]
 #: src/setaffinity.cpp:402
 #, c-format
@@ -1609,6 +1627,25 @@ msgstr "Очень низкий приоритет"
 #, c-format
 msgid "%s/s"
 msgstr "%s/с"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Send End signal"
+#~ msgstr "Послать сигнал «Завершить»"
+
+#~ msgid "_End"
+#~ msgstr "Завер_шить"
+
+#~ msgid "Width of process “Total disk read” column"
+#~ msgstr "Ширина столбца суммарного чтения диска"
+
+#~ msgid "Show process “Total disk read” column on startup"
+#~ msgstr "Показать при запуске столбец суммарного чтения диска"
+
+#~ msgid "Width of process “Total disk write” column"
+#~ msgstr "Ширина столбца процесса суммарного чтения диска"
+
+#~ msgid "Show process “Total disk write” column on startup"
+#~ msgstr "Показать при запуске столбец процесса суммарного чтения диска"
 
 #~ msgid "org.gnome.SystemMonitor"
 #~ msgstr "org.gnome.SystemMonitor"
