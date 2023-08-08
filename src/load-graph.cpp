@@ -780,6 +780,19 @@ net_scale (LoadGraph *graph,
   graph->clear_background ();
 }
 
+static guint64
+get_hash64 (const gchar* c_str)
+{
+  // Fowler–Noll–Vo FNV-1 64-bit hash:
+
+  guint64 hash = 0xcbf29ce484222325L;
+
+  while (gchar c = *c_str++)
+    hash = (hash * 0x00000100000001B3L) ^ c;
+
+  return hash;
+}
+
 static void
 get_net (LoadGraph *graph)
 {
@@ -787,6 +800,7 @@ get_net (LoadGraph *graph)
   char **ifnames;
   guint32 i;
   guint64 in = 0, out = 0;
+  guint64 hash = 1;
   guint64 time;
   guint64 din, dout;
 
@@ -817,13 +831,15 @@ get_net (LoadGraph *graph)
 
       in += netload.bytes_in;
       out += netload.bytes_out;
+      hash += get_hash64 (ifnames[i]);
     }
 
   g_strfreev (ifnames);
 
   time = g_get_monotonic_time ();
 
-  if (in >= graph->net.last_in && out >= graph->net.last_out && graph->net.time != 0)
+  if (in >= graph->net.last_in && out >= graph->net.last_out &&
+      hash == graph->net.last_hash && graph->net.time != 0)
     {
       float dtime;
       dtime = ((double) (time - graph->net.time)) / G_USEC_PER_SEC;
@@ -840,6 +856,7 @@ get_net (LoadGraph *graph)
 
   graph->net.last_in = in;
   graph->net.last_out = out;
+  graph->net.last_hash = hash;
   graph->net.time = time;
 
   net_scale (graph, din, dout);

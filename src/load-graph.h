@@ -98,6 +98,7 @@ struct LoadGraph
   struct NET
   {
     guint64 last_in, last_out;
+    guint64 last_hash;
     guint64 time;
     guint64 max;
     std::vector<unsigned> values;
