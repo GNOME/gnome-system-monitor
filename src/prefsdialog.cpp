@@ -103,25 +103,23 @@ field_toggled (const gchar *gsettings_parent,
   GtkTreeIter iter;
   GtkTreeViewColumn *column;
   gboolean toggled;
-  auto settings = GsmApplication::get ()->settings->get_child (gsettings_parent);
-  int id;
 
   if (!path)
     return;
 
   gtk_tree_model_get_iter (model, &iter, path);
-
   gtk_tree_model_get (model, &iter, 2, &column, -1);
-
   gtk_tree_model_get (model, &iter, 0, &toggled, -1);
-  gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, !toggled, -1);
-  gtk_tree_view_column_set_visible (column, !toggled);
 
-  id = gtk_tree_view_column_get_sort_column_id (column);
+  toggled = !toggled;
 
+  gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, toggled, -1);
+  gtk_tree_view_column_set_visible (column, toggled);
+
+  auto id = gtk_tree_view_column_get_sort_column_id (column);
   auto key = Glib::ustring::compose ("col-%1-visible", id);
-
-  settings->set_boolean (key, !toggled);
+  auto settings = GsmApplication::get ()->settings->get_child (gsettings_parent);
+  settings->set_boolean (key, toggled);
 
   gtk_tree_path_free (path);
 }
@@ -137,22 +135,6 @@ field_row_activated (GtkTreeView       *tree,
 
   field_toggled ((gchar*)data, path_str, model);
   g_free (path_str);
-}
-
-static void
-proc_field_toggled (GtkCellRendererToggle *cell,
-                    gchar                 *path_str,
-                    gpointer               data)
-{
-  field_toggled ("proctree", path_str, data);
-}
-
-static void
-disk_field_toggled (GtkCellRendererToggle *cell,
-                    gchar                 *path_str,
-                    gpointer               data)
-{
-  field_toggled ("disktreenew", path_str, data);
 }
 
 static void
@@ -177,32 +159,23 @@ create_field_page (GtkBuilder  *builder,
   g_object_unref (G_OBJECT (model));
 
   column = gtk_tree_view_column_new ();
-
   cell = gtk_cell_renderer_toggle_new ();
   gtk_tree_view_column_pack_start (column, cell, FALSE);
   gtk_tree_view_column_set_attributes (column, cell,
                                        "active", 0,
                                        NULL);
-  if (!g_strcmp0 (widgetname, "proctree"))
-    g_signal_connect (G_OBJECT (cell), "toggled", G_CALLBACK (proc_field_toggled), model);
-  else if (!g_strcmp0 (widgetname, "disktreenew"))
-    g_signal_connect (G_OBJECT (cell), "toggled", G_CALLBACK (disk_field_toggled), model);
-
-  g_signal_connect (G_OBJECT (GTK_TREE_VIEW (treeview)), "row-activated", G_CALLBACK (field_row_activated), (gpointer)widgetname);
-
-  gtk_tree_view_column_set_clickable (column, TRUE);
   gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
   column = gtk_tree_view_column_new ();
-
   cell = gtk_cell_renderer_text_new ();
   gtk_tree_view_column_pack_start (column, cell, FALSE);
   gtk_tree_view_column_set_attributes (column, cell,
                                        "text", 1,
                                        NULL);
-
-  gtk_tree_view_column_set_title (column, "Not Shown");
   gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+
+  g_signal_connect (G_OBJECT (GTK_TREE_VIEW (treeview)), "row-activated",
+                    G_CALLBACK (field_row_activated), (gpointer)widgetname);
 
   columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree));
 
@@ -324,7 +297,7 @@ create_preferences_dialog (GsmApplication *app)
                    res_mem_in_iec_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  create_field_page (builder, GTK_TREE_VIEW (app->tree), "proctree");
+  create_field_page (builder, GTK_TREE_VIEW (app->tree), GSM_SETTINGS_CHILD_PROCESSES);
 
   update = (gfloat) app->config.graph_update_interval;
   spin_button = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "resources_interval_spinner"));
@@ -378,7 +351,7 @@ create_preferences_dialog (GsmApplication *app)
                    check_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  create_field_page (builder, GTK_TREE_VIEW (app->disk_list), "disktreenew");
+  create_field_page (builder, GTK_TREE_VIEW (app->disk_list), GSM_SETTINGS_CHILD_DISKS);
 
   gtk_window_set_transient_for (GTK_WINDOW (prefs_dialog), GTK_WINDOW (GsmApplication::get ()->main_window));
   gtk_window_set_modal (GTK_WINDOW (prefs_dialog), TRUE);
