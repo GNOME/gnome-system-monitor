@@ -260,6 +260,7 @@ GsmApplication::load_settings ()
 
   config.current_tab = this->settings->get_string (GSM_SETTING_CURRENT_TAB);
 
+  config.solaris_mode = this->settings->get_boolean (GSM_SETTING_SOLARIS_MODE);
   this->settings->signal_changed (GSM_SETTING_SOLARIS_MODE).connect ([this](const Glib::ustring&key) {
     cb_solaris_mode_changed (*this->settings.operator-> (), key, this);
   });
