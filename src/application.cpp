@@ -258,7 +258,8 @@ GsmApplication::load_settings ()
 
   this->settings = Gio::Settings::create (GSM_GSETTINGS_SCHEMA);
 
-  config.solaris_mode = this->settings->get_boolean (GSM_SETTING_SOLARIS_MODE);
+  config.current_tab = this->settings->get_string (GSM_SETTING_CURRENT_TAB);
+
   this->settings->signal_changed (GSM_SETTING_SOLARIS_MODE).connect ([this](const Glib::ustring&key) {
     cb_solaris_mode_changed (*this->settings.operator-> (), key, this);
   });
@@ -458,15 +459,17 @@ GsmApplication::on_command_line (const Glib::RefPtr<Gio::ApplicationCommandLine>
       exit (EXIT_SUCCESS);
     }
 
+  const char* tab = NULL;
   if (option_group.show_processes_tab)
-    this->settings->set_string (GSM_SETTING_CURRENT_TAB, "processes");
+    tab = "processes";
   else if (option_group.show_resources_tab)
-    this->settings->set_string (GSM_SETTING_CURRENT_TAB, "resources");
+    tab = "resources";
   else if (option_group.show_file_systems_tab)
-    this->settings->set_string (GSM_SETTING_CURRENT_TAB, "disks");
-  else if (option_group.print_version)
+    tab = "disks";
+  if (tab)
+    gtk_stack_set_visible_child_name (this->stack, tab);
 
-    on_activate ();
+  on_activate ();
 
   return 0;
 }

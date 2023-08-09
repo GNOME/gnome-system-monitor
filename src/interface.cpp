@@ -593,10 +593,10 @@ change_show_page_state (GSimpleAction *action,
 {
   GsmApplication *app = (GsmApplication *) data;
 
-  auto state_var = Glib::wrap (state, true);
-
   g_simple_action_set_state (action, state);
-  app->settings->set_value (GSM_SETTING_CURRENT_TAB, state_var);
+  auto tab = g_variant_get_string (state, NULL);
+  app->settings->set_string (GSM_SETTING_CURRENT_TAB, tab);
+  app->config.current_tab = tab;
 }
 
 static void
@@ -659,7 +659,12 @@ change_priority_state (GSimpleAction *action,
 static void
 update_page_activities (GsmApplication *app)
 {
-  const char *current_page = gtk_stack_get_visible_child_name (app->stack);
+  const gchar *current_page = gtk_stack_get_visible_child_name (app->stack);
+  if (app->config.current_tab != current_page)
+    {
+      app->settings->set_string (GSM_SETTING_CURRENT_TAB, current_page);
+      app->config.current_tab = current_page;
+    }
 
   if (strcmp (current_page, "processes") == 0)
     {
@@ -742,7 +747,7 @@ cb_main_window_state_changed (GtkWidget           *window,
                               gpointer             data)
 {
   GsmApplication *app = (GsmApplication *) data;
-  auto current_page = app->settings->get_string (GSM_SETTING_CURRENT_TAB);
+  auto current_page = app->config.current_tab;
 
   if (event->new_window_state & GDK_WINDOW_STATE_BELOW ||
       event->new_window_state & GDK_WINDOW_STATE_ICONIFIED ||
@@ -883,7 +888,11 @@ create_main_window (GsmApplication *app)
 
   create_disk_view (app, builder);
 
-  g_settings_bind (app->settings->gobj (), GSM_SETTING_CURRENT_TAB, stack, "visible-child-name", G_SETTINGS_BIND_DEFAULT);
+  // Binding to GSM_SETTING_CURRENT_TAB precludes switching tabs when dconf fails
+  // to commit changes. Current tab is recorded in cb_change_current_page instead.
+  //g_settings_bind (app->settings->gobj (), GSM_SETTING_CURRENT_TAB, stack, "visible-child-name", G_SETTINGS_BIND_DEFAULT);
+
+  gtk_stack_set_visible_child_name(GTK_STACK (stack), app->config.current_tab.c_str ());
 
   g_signal_connect (G_OBJECT (stack), "notify::visible-child",
                     G_CALLBACK (cb_change_current_page), app);

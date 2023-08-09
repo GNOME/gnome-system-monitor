@@ -31,7 +31,8 @@ struct ProcConfig
   : private procman::NonCopyable
 {
   ProcConfig()
-    : update_interval (0),
+    : current_tab (),
+    update_interval (0),
     graph_update_interval (0),
     disks_update_interval (0),
     graph_data_points (0),
@@ -55,6 +56,7 @@ struct ProcConfig
     std::fill (&this->cpu_color[0], &this->cpu_color[GLIBTOP_NCPU], GdkRGBA ());
   }
 
+  Glib::ustring current_tab;
   int update_interval;
   int graph_update_interval;
   int disks_update_interval;
