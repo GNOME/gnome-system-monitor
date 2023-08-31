@@ -228,12 +228,17 @@ create_preferences_dialog (GsmApplication *app)
   GtkSwitch *smooth_switch;
   GtkBuilder *builder;
   gfloat update;
+  GError* err = NULL;
 
   if (prefs_dialog)
     return;
 
   builder = gtk_builder_new ();
-  gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/preferences.ui", NULL);
+  gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/preferences.ui", &err);
+  if (err != NULL) {
+    procman_debug ("problem loading preferences ui %s", err->message);
+    g_error_free (err);
+  }
 
   prefs_dialog = HDY_PREFERENCES_WINDOW (gtk_builder_get_object (builder, "preferences_dialog"));
 
