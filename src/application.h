@@ -158,7 +158,7 @@ void        set_user (guint uid);
 std::string lookup_user (guint uid);
 
 GtkTreeIter node;
-Glib::RefPtr<Gdk::Texture> texture;
+Glib::RefPtr<Gdk::Texture> icon;
 std::string tooltip;
 std::string name;
 std::string arguments;

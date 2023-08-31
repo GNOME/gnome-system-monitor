@@ -42,8 +42,8 @@ static void                on_application_closed (WnckScreen     *screen,
                                                   WnckApplication*app,
                                                   gpointer        data);
 
-void                       register_application (pid_t                      pid,
-                                                 Glib::RefPtr<Gdk::Texture> icon);
+void                       register_application   (pid_t                      pid,
+                                                   Glib::RefPtr<Gdk::Texture> icon);
 void                       unregister_application (pid_t pid);
 #endif
 

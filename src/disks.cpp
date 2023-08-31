@@ -1,5 +1,6 @@
 #include <config.h>
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gtk/gtk.h>
 #include <glibtop/mountlist.h>
 #include <glibtop/fsusage.h>
@@ -23,7 +24,7 @@ enum DiskColumns
   /* USED has to be the last column */
   DISK_USED,
   // then invisible columns
-  /* PixBuf column */
+  /* icon column */
   DISK_ICON,
   /* numeric columns */
   DISK_USED_PERCENTAGE,
@@ -103,19 +104,20 @@ static GdkTexture *
 get_icon_for_device (const char *mountpoint)
 {
   GFile *icon_file;
-  GtkIconPaintable *icon;
+  GdkTexture *icon;
+  GtkIconPaintable *icon_paintable;
   GtkIconTheme *icon_theme;
+  const char *icon_name = get_icon_for_path (mountpoint);
+
+  // FIXME: defaults to a safe value
+  if (!strcmp (icon_name, ""))
+    icon_name = "drive-harddisk";     // get_icon_for_path("/");
 
   icon_theme = gtk_icon_theme_get_for_display (gdk_display_get_default ());
+  icon_paintable = gtk_icon_theme_lookup_icon (icon_theme, icon_name, NULL, 24, 1, GTK_TEXT_DIR_NONE, GTK_ICON_LOOKUP_PRELOAD);
+  icon = gdk_texture_new_for_pixbuf (gdk_pixbuf_new_from_file_at_size (g_file_get_path (gtk_icon_paintable_get_file (icon_paintable)), 24, 24, NULL));
 
-  const char*icon_name = get_icon_for_path (mountpoint);
-
-  if (!strcmp (icon_name, ""))
-    // FIXME: defaults to a safe value
-    icon_name = "drive-harddisk";     // get_icon_for_path("/");
-  icon = gtk_icon_theme_lookup_icon (icon_theme, icon_name, NULL, 24, 1, GTK_TEXT_DIR_NONE, GTK_ICON_LOOKUP_PRELOAD);
-  icon_file = gtk_icon_paintable_get_file (icon);
-  return gdk_texture_new_from_file (icon_file, NULL);
+  return icon;
 }
 
 
@@ -201,7 +203,7 @@ add_disk (GtkListStore             *list,
           const glibtop_mountentry *entry,
           bool                      show_all_fs)
 {
-  GdkTexture*texture;
+  GdkTexture *icon;
   GtkTreeIter iter;
   glibtop_fsusage usage;
   guint64 bused, bfree, bavail, btotal;
@@ -217,7 +219,7 @@ add_disk (GtkListStore             *list,
     }
 
   fsusage_stats (&usage, &bused, &bfree, &bavail, &btotal, &percentage);
-  texture = get_icon_for_device (entry->mountdir);
+  icon = get_icon_for_device (entry->mountdir);
 
   /* if we can find a row with the same mountpoint, we get it but we
      still need to update all the fields.
@@ -227,7 +229,7 @@ add_disk (GtkListStore             *list,
     gtk_list_store_append (list, &iter);
 
   gtk_list_store_set (list, &iter,
-                      DISK_ICON, texture,
+                      DISK_ICON, icon,
                       DISK_DEVICE, entry->devname,
                       DISK_DIR, entry->mountdir,
                       DISK_TYPE, entry->type,

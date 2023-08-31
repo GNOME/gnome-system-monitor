@@ -10,11 +10,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <glibtop/procstate.h>
+#include <gdkmm/pixbuf.h>
 #include <giomm/error.h>
 #include <giomm/file.h>
 #include <glibmm/miscutils.h>
-#include <iostream>
 
+#include <iostream>
 #include <vector>
 
 #include "prettytable.h"
@@ -170,20 +171,31 @@ Glib::RefPtr<Gdk::Texture>
 PrettyTable::get_icon_from_theme (const ProcInfo &info)
 {
   Glib::RefPtr<Gtk::IconTheme> icon_theme;
-  Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
+  Glib::RefPtr<Gdk::Texture> icon;
 
   icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
 
-  icon_paintable = icon_theme->lookup_icon (
-    info.name.c_str (),
-    APP_ICON_SIZE,
-    1,
-    Gtk::TextDirection::NONE,
-    Gtk::IconLookupFlags::PRELOAD);
+  if (icon_theme->has_icon (info.name))
+    {
+      Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
 
-  return Gdk::Texture::create_from_file (icon_paintable->get_file ());
+      // Because g-s-m still uses GtkCellView which does not support GdkPaintable
+      // the easiest way to get GdkPixbuf or GdkTexture is to get the icon, get
+      // the file behind it, make it into a sized GdkPixbuf and turn it into
+      // GdkTexture.
+      // Once g-s-m uses GtkColumnView, GdkPaintable could be used instead.
+      icon_paintable = icon_theme->lookup_icon (
+        info.name,
+        APP_ICON_SIZE,
+        1,
+        Gtk::TextDirection::NONE,
+        Gtk::IconLookupFlags::PRELOAD);
+
+      icon = Gdk::Texture::create_for_pixbuf (Gdk::Pixbuf::create_from_file (icon_paintable->get_file ()->get_path (), APP_ICON_SIZE, APP_ICON_SIZE));
+    }
+
+  return icon;
 }
-
 
 bool
 PrettyTable::get_default_icon_name (const string &cmd,
@@ -205,77 +217,86 @@ PrettyTable::get_default_icon_name (const string &cmd,
   If there is no default for a command, store NULL in defaults
   so we don't have to lookup again.
 */
-
 Glib::RefPtr<Gdk::Texture>
 PrettyTable::get_icon_from_default (const ProcInfo &info)
 {
   Glib::RefPtr<Gtk::IconTheme> icon_theme;
-  Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
-  Glib::RefPtr<Gdk::Texture> texture;
+  Glib::RefPtr<Gdk::Texture> icon;
   string name;
 
-  if (this->get_default_icon_name (info.name, name))
+  if (!this->get_default_icon_name (info.name, name))
+    return icon;
+
+  IconCache::iterator it (this->defaults.find (name));
+  if (it == this->defaults.end ())
     {
-      IconCache::iterator it (this->defaults.find (name));
+      Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
 
-      if (it == this->defaults.end ())
-        {
-          icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
+      icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
 
-          icon_paintable = icon_theme->lookup_icon (
-            name.c_str (),
-            APP_ICON_SIZE,
-            1,
-            Gtk::TextDirection::NONE,
-            Gtk::IconLookupFlags::PRELOAD);
+      if (!icon_theme->has_icon (name))
+        return icon;
 
-          texture = Gdk::Texture::create_from_file (icon_paintable->get_file ());
+      // Because g-s-m still uses GtkCellView which does not support GdkPaintable
+      // the easiest way to get GdkPixbuf or GdkTexture is to get the icon, get
+      // the file behind it, make it into a sized GdkPixbuf and turn it into
+      // GdkTexture.
+      // Once g-s-m uses GtkColumnView, GdkPaintable could be used instead.
+      icon_paintable = icon_theme->lookup_icon (
+        name,
+        APP_ICON_SIZE,
+        1,
+        Gtk::TextDirection::NONE,
+        Gtk::IconLookupFlags::PRELOAD);
 
-          if (texture)
-            this->defaults[name] = texture;
-        }
-      else
-        {
-          texture = it->second;
-        }
+      icon = Gdk::Texture::create_for_pixbuf (Gdk::Pixbuf::create_from_file (icon_paintable->get_file ()->get_path (), APP_ICON_SIZE, APP_ICON_SIZE));
+
+      this->defaults[name] = icon;
+    }
+  else
+    {
+      icon = it->second;
     }
 
-  return texture;
+  return icon;
 }
 
 Glib::RefPtr<Gdk::Texture>
 PrettyTable::get_icon_from_gio (const ProcInfo &info)
 {
-  gchar **cmdline = g_strsplit (info.name.c_str (), " ", 2);
-  const gchar *executable = cmdline[0];
+  Glib::RefPtr<Gdk::Texture> icon;
+  Glib::RefPtr<Gio::Icon> gicon;
   Glib::RefPtr<Gtk::IconTheme> icon_theme;
   Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
-  Glib::RefPtr<Gdk::Texture> icon;
+  const gchar *executable = nullptr;
+  {
+    size_t pos = info.name.find (" ");
+    executable = info.name.substr (0, pos).c_str ();
+  }
 
-  if (executable)
-    {
-      Glib::RefPtr<Gio::AppInfo> app = this->gio_apps[executable];
-      Glib::RefPtr<Gio::Icon> gicon;
-      Glib::RefPtr<Gtk::IconPaintable> info;
+  if (!executable)
+    return icon;
 
-      if (app)
-        gicon = app->get_icon ();
+  Glib::RefPtr<Gio::AppInfo> app = this->gio_apps[executable];
+  if (!app)
+    return icon;
 
-      icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
+  gicon = app->get_icon ();
+  if (!gicon)
+    return icon;
 
-      if (gicon)
-        icon_paintable = icon_theme->lookup_icon (
-          gicon,
-          APP_ICON_SIZE,
-          1,
-          Gtk::TextDirection::NONE,
-          Gtk::IconLookupFlags::PRELOAD);
+  icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
 
-      if (info)
-        icon = Gdk::Texture::create_from_file (info->get_file ());
-    }
+  icon_paintable = icon_theme->lookup_icon (
+    gicon,
+    APP_ICON_SIZE,
+    1,
+    Gtk::TextDirection::NONE,
+    Gtk::IconLookupFlags::PRELOAD);
 
-  g_strfreev (cmdline);
+  std::string path = icon_paintable->get_file ()->get_path ();
+  icon = Gdk::Texture::create_for_pixbuf (Gdk::Pixbuf::create_from_file (path, APP_ICON_SIZE, APP_ICON_SIZE));
+
   return icon;
 }
 
@@ -284,17 +305,22 @@ PrettyTable::get_icon_from_name (const ProcInfo &info)
 {
   Glib::RefPtr<Gtk::IconTheme> icon_theme;
   Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
+  Glib::RefPtr<Gdk::Texture> icon;
 
   icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
 
+  if (!icon_theme->has_icon (info.name))
+    return icon;
+
   icon_paintable = icon_theme->lookup_icon (
-    info.name.c_str (),
+    info.name,
     APP_ICON_SIZE,
     1,
     Gtk::TextDirection::NONE,
     Gtk::IconLookupFlags::PRELOAD);
+  icon = Gdk::Texture::create_for_pixbuf (Gdk::Pixbuf::create_from_file (icon_paintable->get_file ()->get_path (), APP_ICON_SIZE, APP_ICON_SIZE));
 
-  return Gdk::Texture::create_from_file (icon_paintable->get_file ());
+  return icon;
 }
 
 
@@ -303,19 +329,19 @@ PrettyTable::get_icon_dummy (const ProcInfo &)
 {
   Glib::RefPtr<Gtk::IconTheme> icon_theme;
   Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
+  Glib::RefPtr<Gdk::Texture> icon;
 
   icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
-
   icon_paintable = icon_theme->lookup_icon (
     "application-x-executable",
     APP_ICON_SIZE,
     1,
     Gtk::TextDirection::NONE,
     Gtk::IconLookupFlags::PRELOAD);
+  icon = Gdk::Texture::create_for_pixbuf (Gdk::Pixbuf::create_from_file (icon_paintable->get_file ()->get_path (), APP_ICON_SIZE, APP_ICON_SIZE));
 
-  return Gdk::Texture::create_from_file (icon_paintable->get_file ());
+  return icon;
 }
-
 
 namespace
 {
@@ -337,30 +363,27 @@ is_kthread (const ProcInfo &info)
 }
 }
 
-
 Glib::RefPtr<Gdk::Texture>
 PrettyTable::get_icon_for_kernel (const ProcInfo &info)
 {
-  if (is_kthread (info))
-    {
-      Glib::RefPtr<Gtk::IconTheme> icon_theme;
-      Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
+  Glib::RefPtr<Gdk::Texture> icon;
+  Glib::RefPtr<Gtk::IconTheme> icon_theme;
+  Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
 
-      icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
+  if (!is_kthread (info))
+    return icon;
 
-      icon_paintable = icon_theme->lookup_icon (
-        "application-x-executable",
-        APP_ICON_SIZE,
-        1,
-        Gtk::TextDirection::NONE,
-        Gtk::IconLookupFlags::PRELOAD);
+  icon_theme = Gtk::IconTheme::get_for_display (Gdk::Display::get_default ());
+  icon_paintable = icon_theme->lookup_icon (
+    "application-x-executable",
+    APP_ICON_SIZE,
+    1,
+    Gtk::TextDirection::NONE,
+    Gtk::IconLookupFlags::PRELOAD);
+  icon = Gdk::Texture::create_for_pixbuf (Gdk::Pixbuf::create_from_file (icon_paintable->get_file ()->get_path (), APP_ICON_SIZE, APP_ICON_SIZE));
 
-      return Gdk::Texture::create_from_file (icon_paintable->get_file ());
-    }
-
-  return Glib::RefPtr<Gdk::Texture> ();
+  return icon;
 }
-
 
 void
 PrettyTable::set_icon (ProcInfo &info)

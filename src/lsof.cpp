@@ -152,7 +152,7 @@ struct GUI: private procman::NonCopyable
                 GtkTreeIter file;
                 gtk_list_store_append (this->model, &file);
                 gtk_list_store_set (this->model, &file,
-                                    PROCMAN_LSOF_COL_TEXTURE, info.texture->gobj (),
+                                    PROCMAN_LSOF_COL_TEXTURE, info.icon->gobj (),
                                     PROCMAN_LSOF_COL_PROCESS, info.name.c_str (),
                                     PROCMAN_LSOF_COL_PID, info.pid,
                                     PROCMAN_LSOF_COL_FILENAME, match.c_str (),
