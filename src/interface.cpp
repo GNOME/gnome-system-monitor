@@ -738,14 +738,13 @@ cb_main_window_delete (GtkWindow *window,
 }
 
 static gboolean
-cb_main_window_state_changed (GdkToplevel      *surface,
-                              GdkToplevelState *state,
-                              GsmApplication   *app)
+cb_main_window_suspended (GtkWindow      *surface,
+                          gboolean        suspended,
+                          GsmApplication *app)
 {
   auto current_page = app->config.current_tab;
 
-  if (*state & GDK_TOPLEVEL_STATE_BELOW ||
-      *state & GDK_TOPLEVEL_STATE_MINIMIZED)
+  if (suspended)
     {
       if (current_page == "processes")
         {
@@ -781,7 +780,6 @@ cb_main_window_state_changed (GdkToplevel      *surface,
           disks_thaw (app);
         }
     }
-  return FALSE;
 }
 
 void
@@ -858,9 +856,10 @@ create_main_window (GsmApplication *app)
                     "notify::visible-child",
                     G_CALLBACK (cb_change_current_page),
                     app);
+  g_signal_connect (G_OBJECT (app->main_window),
+                    "notify::suspended",
+                    G_CALLBACK (cb_main_window_suspended),
                     app);
-  g_signal_connect (G_OBJECT (main_window), "window-state-event",
-                    G_CALLBACK (cb_main_window_state_changed),
   g_signal_connect (G_OBJECT (app->main_window),
                     "destroy",
                     G_CALLBACK (cb_main_window_delete),
