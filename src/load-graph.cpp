@@ -235,13 +235,6 @@ create_background (LoadGraph *graph, int width, int height)
   /* Graph length */
   const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * graph->frames_per_unit;
 
-  /* Initialize graph dimensions */
-  graph->num_bars = graph->get_num_bars (height);
-  graph->graph_dely = (height - 15) / graph->num_bars;   /* round to int to avoid AA blur */
-  graph->graph_delx = (width - 2 - graph->indent) / (graph->num_points - 3);
-  graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH;
-  graph->real_draw_height = graph->graph_dely * graph->num_bars;
-
   gtk_widget_get_allocation (GTK_WIDGET (graph->disp), &allocation);
   native = gtk_widget_get_native (GTK_WIDGET (graph->disp));
   surface = gdk_surface_create_similar_surface (gtk_native_get_surface (native),
@@ -417,8 +410,14 @@ load_graph_draw (GtkDrawingArea *drawing_area,
 {
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
 
+  /* Initialize graph dimensions */
   width -= 2 * FRAME_WIDTH;
   height -= 2 * FRAME_WIDTH;
+  graph->num_bars = graph->get_num_bars (height);
+  graph->graph_dely = (height - 15) / graph->num_bars;   /* round to int to avoid AA blur */
+  graph->graph_delx = (width - 2 - graph->indent) / (graph->num_points - 3);
+  graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH;
+  graph->real_draw_height = graph->graph_dely * graph->num_bars;
 
   /* Number of pixels wide for one sample point */
   gdouble sample_width = (double)(width - graph->rmargin - graph->indent) / (double)(graph->num_points);
