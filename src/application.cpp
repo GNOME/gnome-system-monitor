@@ -583,7 +583,6 @@ GsmApplication::on_startup ()
   create_main_window (this);
 }
 
-
 void
 GsmApplication::load_resources ()
 {

@@ -19,7 +19,6 @@
 
 #include <config.h>
 
-
 #include <string.h>
 #include <math.h>
 #include <glib/gi18n.h>
@@ -339,7 +338,6 @@ proctable_new (GsmApplication * const app)
   GtkTreeModelSort *model_sort;
   GtkTreeSelection *selection;
   GtkGesture *click_controller;
-
   GtkTreeViewColumn *column;
   GtkCellRenderer *cell_renderer;
   const gchar *titles[] = {
@@ -376,7 +374,6 @@ proctable_new (GsmApplication * const app)
     NULL,
     "POINTER"
   };
-
   gint i;
   auto settings = g_settings_get_child (app->settings->gobj (), GSM_SETTINGS_CHILD_PROCESSES);
 
@@ -414,14 +411,12 @@ proctable_new (GsmApplication * const app)
                               );
 
   model_filter = GTK_TREE_MODEL_FILTER (gtk_tree_model_filter_new (GTK_TREE_MODEL (model), NULL));
-
   gtk_tree_model_filter_set_visible_func (model_filter, process_visibility_func, app, NULL);
 
   model_sort = GTK_TREE_MODEL_SORT (gtk_tree_model_sort_new_with_model (GTK_TREE_MODEL (model_filter)));
 
   proctree = gsm_tree_view_new (settings, TRUE);
   gtk_tree_view_set_model (GTK_TREE_VIEW (proctree), GTK_TREE_MODEL (model_sort));
-
   gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (proctree), COL_TOOLTIP);
   gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (proctree), app->settings->get_boolean (GSM_SETTING_SHOW_DEPENDENCIES));
   gtk_tree_view_set_enable_search (GTK_TREE_VIEW (proctree), FALSE);
@@ -659,9 +654,8 @@ proctable_new (GsmApplication * const app)
   g_signal_connect (G_OBJECT (theme), "changed", G_CALLBACK (cb_refresh_icons), app);
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
-  app->selection = selection;
-
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
+  app->selection = selection;
 
   click_controller = gtk_gesture_click_new ();
   gtk_gesture_single_set_button (GTK_GESTURE_SINGLE (click_controller), GDK_BUTTON_SECONDARY);

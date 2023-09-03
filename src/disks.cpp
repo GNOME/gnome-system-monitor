@@ -152,8 +152,6 @@ find_disk_in_model (GtkTreeModel *model,
   return found;
 }
 
-
-
 static void
 remove_old_disks (GtkTreeModel             *model,
                   const glibtop_mountentry *entries,

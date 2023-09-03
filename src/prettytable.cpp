@@ -18,11 +18,7 @@
 #include "proctable.h"
 #include "util.h"
 
-namespace
-{
 const unsigned APP_ICON_SIZE = 16;
-}
-
 
 PrettyTable::PrettyTable()
 {
@@ -34,6 +30,7 @@ PrettyTable::PrettyTable()
       std::string path = (*it).append ("/applications");
       Glib::RefPtr<Gio::File> file = Gio::File::create_for_path (path);
       Glib::RefPtr<Gio::FileMonitor> monitor = file->monitor_directory ();
+
       monitor->set_rate_limit (1000); // 1 second
 
       monitor->signal_changed ().connect (sigc::mem_fun (*this, &PrettyTable::file_monitor_event));

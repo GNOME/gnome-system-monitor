@@ -373,8 +373,8 @@ create_sys_view (GsmApplication *app,
   gtk_widget_set_hexpand (GTK_WIDGET (load_graph_get_labels (net_graph)->net_out), true);
   gtk_widget_set_halign (GTK_WIDGET (load_graph_get_labels (net_graph)->net_out), GTK_ALIGN_START);
 
-
   app->net_graph = net_graph;
+
   g_free (title_template);
 }
 

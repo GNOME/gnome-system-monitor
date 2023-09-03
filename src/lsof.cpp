@@ -135,7 +135,9 @@ struct GUI: private procman::NonCopyable
     bool regex_error = false;
 
     gtk_list_store_clear (this->model);
-    try {
+
+    try
+      {
         Lsof lsof (this->pattern (), this->case_insensitive);
 
         unsigned count = 0;
@@ -162,7 +164,8 @@ struct GUI: private procman::NonCopyable
 
         this->update_count (count);
       }
-    catch (Glib::RegexError &error) {
+    catch (Glib::RegexError &error)
+      {
         regex_error = true;
       }
 
@@ -171,7 +174,6 @@ struct GUI: private procman::NonCopyable
     else if (!regex_error && this->regex_error_displayed)
       this->regex_error_displayed = false;
   }
-
 
   static void
   search_changed (GtkSearchEntry *,
@@ -231,7 +233,6 @@ procman_lsof (GsmApplication *app)
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model), PROCMAN_LSOF_COL_PROCESS,
                                         GTK_SORT_ASCENDING);
 
-
   // PID
   renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("PID"), renderer,
@@ -240,7 +241,6 @@ procman_lsof (GsmApplication *app)
   gtk_tree_view_column_set_sort_column_id (column, PROCMAN_LSOF_COL_PID);
   gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_GROW_ONLY);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
-
 
   // FILENAME
   renderer = gtk_cell_renderer_text_new ();
@@ -251,7 +251,6 @@ procman_lsof (GsmApplication *app)
   gtk_tree_view_column_set_resizable (column, TRUE);
   gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
-
 
   GtkBuilder *builder = gtk_builder_new ();
   GError *err = NULL;

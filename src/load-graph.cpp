@@ -482,6 +482,7 @@ load_graph_draw (GtkDrawingArea *drawing_area,
                            x_offset - (i * graph->graph_delx),
                            (1.0 - graph->data[i][j]) * draw_height);
         }
+
       if (drawStacked)
         {
           /* Draw the remaining outline of the area */
@@ -1203,3 +1204,4 @@ load_graph_get_swap_color_picker (LoadGraph *graph)
 {
   return graph->swap_color_picker;
 }
+

@@ -15,8 +15,6 @@ class ProcInfo;
 
 using std::string;
 
-
-
 class PrettyTable
 {
 public:
@@ -50,6 +48,5 @@ IconCache defaults;
 DesktopDirMonitors monitors;
 AppCache gio_apps;
 };
-
 
 #endif /* _GSM_PRETTY_TABLE_H_ */
