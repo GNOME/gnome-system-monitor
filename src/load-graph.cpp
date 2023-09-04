@@ -39,12 +39,12 @@ LoadGraph::is_logarithmic_scale () const
 }
 
 unsigned
-LoadGraph::num_bars () const
+LoadGraph::get_num_bars (int height) const
 {
   unsigned n;
 
   // keep 100 % num_bars == 0
-  switch (static_cast<int>(draw_height / (fontsize + 14)))
+  switch (static_cast<int>(height / (fontsize + 14)))
     {
       case 0:
       case 1:
@@ -83,7 +83,6 @@ char*
 LoadGraph::get_caption (guint index)
 {
   char *caption;
-  unsigned num_bars = this->num_bars ();
   guint64 max_value;
 
   if (this->type == LOAD_GRAPH_NET)
@@ -92,7 +91,7 @@ LoadGraph::get_caption (guint index)
     max_value = 100;
 
   // operation orders matters so it's 0 if index == num_bars
-  float caption_percentage = (float)max_value - index * (float)max_value / num_bars;
+  float caption_percentage = (float)max_value - index * (float)max_value / this->num_bars;
 
   if (this->is_logarithmic_scale ())
     {
@@ -201,12 +200,11 @@ load_graph_state_changed (GtkWidget     *widget,
 }
 
 static cairo_surface_t*
-create_background (LoadGraph *graph)
+create_background (LoadGraph *graph, int width, int height)
 {
   GtkAllocation allocation;
   GtkNative *native;
   cairo_t *cr;
-  unsigned num_bars;
   PangoFontDescription *font_desc;
   PangoLayout *layout;
   cairo_surface_t *surface;
@@ -217,11 +215,11 @@ create_background (LoadGraph *graph)
   const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * graph->frames_per_unit;
 
   /* Initialize graph dimensions */
-  num_bars = graph->num_bars ();
-  graph->graph_dely = (graph->draw_height - 15) / num_bars;   /* round to int to avoid AA blur */
-  graph->graph_delx = (graph->draw_width - 2 - graph->indent) / (graph->num_points - 3);
+  graph->num_bars = graph->get_num_bars (height);
+  graph->graph_dely = (height - 15) / graph->num_bars;   /* round to int to avoid AA blur */
+  graph->graph_delx = (width - 2 - graph->indent) / (graph->num_points - 3);
   graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH;
-  graph->real_draw_height = graph->graph_dely * num_bars;
+  graph->real_draw_height = graph->graph_dely * graph->num_bars;
 
   gtk_widget_get_allocation (GTK_WIDGET (graph->disp), &allocation);
   native = gtk_widget_get_native (GTK_WIDGET (graph->disp));
@@ -270,21 +268,21 @@ create_background (LoadGraph *graph)
   /* Why not use the new features of the
    * GTK instead of cairo_rectangle ?! :) */
   gtk_render_background (context, cr, graph->indent, 0.0,
-                         graph->draw_width - graph->rmargin - graph->indent,
+                         width - graph->rmargin - graph->indent,
                          graph->real_draw_height);
 
   gtk_style_context_restore (context);
 
   cairo_set_line_width (cr, 1.0);
 
-  for (guint i = 0; i <= num_bars; i++)
+  for (guint i = 0; i <= graph->num_bars; i++)
     {
       PangoRectangle extents;
 
       double y;
       if (i == 0)
         y = 0.5 + graph->fontsize / 2.0;
-      else if (i == num_bars)
+      else if (i == graph->num_bars)
         y = i * graph->graph_dely + 0.5;
       else
         y = i * graph->graph_dely + graph->fontsize / 2.0;
@@ -294,22 +292,22 @@ create_background (LoadGraph *graph)
       pango_layout_set_text (layout, caption, -1);
       pango_layout_get_extents (layout, NULL, &extents);
       double label_y_offset_modifier = i == 0 ? 0.5
-                                : i == num_bars
+                                : i == graph->num_bars
                                     ? 1.0
                                     : 0.85;
-      cairo_move_to (cr, graph->draw_width - graph->indent - 23,
+      cairo_move_to (cr, width - graph->indent - 23,
                      y - label_y_offset_modifier * extents.height / PANGO_SCALE);
       pango_cairo_show_layout (cr, layout);
       g_free (caption);
 
-      if (i == 0 || i == num_bars)
+      if (i == 0 || i == graph->num_bars)
         fg_grid.alpha = BORDER_ALPHA;
       else
         fg_grid.alpha = GRID_ALPHA;
 
       gdk_cairo_set_source_rgba (cr, &fg_grid);
       cairo_move_to (cr, graph->indent, i * graph->graph_dely);
-      cairo_line_to (cr, graph->draw_width - graph->rmargin + 4, i * graph->graph_dely);
+      cairo_line_to (cr, width - graph->rmargin + 4, i * graph->graph_dely);
       cairo_stroke (cr);
     }
 
@@ -317,7 +315,7 @@ create_background (LoadGraph *graph)
     {
       PangoRectangle extents;
 
-      double x = ceil (i * (graph->draw_width - graph->rmargin - graph->indent) / 6);
+      double x = ceil (i * (width - graph->rmargin - graph->indent) / 6);
 
       if (i == 0 || i == 6)
         fg_grid.alpha = BORDER_ALPHA;
@@ -338,7 +336,7 @@ create_background (LoadGraph *graph)
                                             : 0.5;
       cairo_move_to (cr,
                      x + graph->indent - label_x_offset_modifier * extents.width / PANGO_SCALE + 1.0,
-                     graph->draw_height - 1.0 * extents.height / PANGO_SCALE);
+                     height - 1.0 * extents.height / PANGO_SCALE);
       gdk_cairo_set_source_rgba (cr, &fg);
       pango_cairo_show_layout (cr, layout);
       g_free (caption);
@@ -389,19 +387,20 @@ load_graph_draw (GtkDrawingArea *drawing_area,
 {
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
 
+  width -= 2 * FRAME_WIDTH;
+  height -= 2 * FRAME_WIDTH;
+
   /* Number of pixels wide for one sample point */
-  gdouble sample_width = (double)(graph->draw_width - graph->rmargin - graph->indent) / (double)graph->num_points;
+  gdouble sample_width = (double)(width - graph->rmargin - graph->indent) / (double)graph->num_points;
   /* Lines start at the right edge of the drawing,
    * a bit outside the clip rectangle. */
-  gdouble x_offset = graph->draw_width - graph->rmargin + sample_width;
-
+  gdouble x_offset = width - graph->rmargin + sample_width + 2;
   /* Adjustment for smooth movement between samples */
   x_offset -= sample_width * graph->render_counter / (double)graph->frames_per_unit;
 
   /* draw the graph */
-
   if (graph->background == NULL)
-    graph->background = create_background (graph);
+    graph->background = create_background (graph, width, height);
   cairo_set_source_surface (cr, graph->background, 0, 0);
   cairo_paint (cr);
 
@@ -409,7 +408,7 @@ load_graph_draw (GtkDrawingArea *drawing_area,
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
   cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
   cairo_rectangle (cr, graph->indent + FRAME_WIDTH, FRAME_WIDTH,
-                   graph->draw_width - graph->rmargin - graph->indent,
+                   width - graph->rmargin - graph->indent,
                    graph->real_draw_height);
   cairo_clip (cr);
 
@@ -660,7 +659,6 @@ net_scale (LoadGraph *graph,
     graph->net.values[graph->latest - 1] = dmax;
 
   guint64 new_max;
-
   // both way, new_max is the greatest value
   if (dmax >= graph->net.max)
     new_max = dmax;
@@ -677,7 +675,7 @@ net_scale (LoadGraph *graph,
   if (GsmApplication::get ()->config.network_in_bits)
     {
       // nice number is for the ticks
-      unsigned ticks = graph->num_bars ();
+      unsigned ticks = graph->num_bars;
 
       // gets messy at low values due to division by 8
       guint64 bit_max = std::max (new_max * 8, G_GUINT64_CONSTANT (10000));
@@ -722,14 +720,6 @@ net_scale (LoadGraph *graph,
       procman_debug ("bak %" G_GUINT64_FORMAT " new_max %" G_GUINT64_FORMAT
                      "pow2 %" G_GUINT64_FORMAT " coef10 %" G_GUINT64_FORMAT,
                      bak_max, new_max, pow2, coef10);
-    }
-
-  if (bak_max > new_max)
-    {
-      procman_debug ("overflow detected: bak=%" G_GUINT64_FORMAT
-                     " new=%" G_GUINT64_FORMAT,
-                     bak_max, new_max);
-      new_max = bak_max;
     }
 
   // if max is the same or has decreased but not so much, don't
@@ -916,10 +906,9 @@ LoadGraph::LoadGraph(guint type)
   speed (GsmApplication::get ()->config.graph_update_interval),
   num_points (GsmApplication::get ()->config.graph_data_points + 2),
   latest (0),
-  draw_width (0),
-  draw_height (0),
   render_counter (0),
   frames_per_unit (10),    // this will be changed but needs initialising
+  num_bars (0),
   graph_dely (0),
   real_draw_height (0),
   graph_delx (0),
@@ -1026,6 +1015,8 @@ LoadGraph::LoadGraph(guint type)
   gtk_widget_show (GTK_WIDGET (main_widget));
 
   disp = GTK_DRAWING_AREA (gtk_drawing_area_new ());
+  gtk_widget_set_vexpand (GTK_WIDGET (disp), TRUE);
+  gtk_widget_set_hexpand (GTK_WIDGET (disp), TRUE);
   gtk_drawing_area_set_draw_func (disp,
                                   load_graph_draw,
                                   this,
