@@ -1028,7 +1028,7 @@ load_graph_queue_draw (LoadGraph *graph)
 void
 load_graph_start (LoadGraph *graph)
 {
-  if (!graph->timer_index)
+  if (graph->timer_index == 0)
     {
       // Update the data two times so the graph
       // doesn't wait one cycle to start drawing.
