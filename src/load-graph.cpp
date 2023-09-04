@@ -348,36 +348,6 @@ create_background (LoadGraph *graph, int width, int height)
   return surface;
 }
 
-/*static gboolean
-load_graph_configure (GtkWidget *widget,
-                      GdkConfigure *event,
-                      gpointer data_ptr)
-{
-  GtkAllocation allocation;
-  LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
-
-  load_graph_rescale (graph);
-
-  gtk_widget_get_allocation (widget, &allocation);
-  graph->draw_width = allocation.width - 2 * FRAME_WIDTH;
-  graph->draw_height = allocation.height - 2 * FRAME_WIDTH;
-
-  graph->clear_background ();
-
-  load_graph_queue_draw (graph);
-
-  return TRUE;
-}*/
-
-static void
-load_graph_style_updated (GtkWidget *widget,
-                          gpointer   data_ptr)
-{
-  LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
-
-  force_refresh (graph);
-}
-
 static void
 load_graph_draw (GtkDrawingArea *drawing_area,
                  cairo_t        *cr,
@@ -1023,17 +993,10 @@ LoadGraph::LoadGraph(guint type)
                                   load_graph_draw,
                                   this,
                                   NULL);
-  // g_signal_connect (G_OBJECT(disp), "configure_event",
-  //                   G_CALLBACK (load_graph_configure), graph);
   g_signal_connect (G_OBJECT (disp), "destroy",
                     G_CALLBACK (load_graph_destroy), this);
   g_signal_connect (G_OBJECT (disp), "state-flags-changed",
                     G_CALLBACK (load_graph_state_changed), this);
-  g_signal_connect (G_OBJECT (disp), "style-updated",
-                    G_CALLBACK (load_graph_style_updated), this);
-
-  // gtk_widget_set_events (GTK_WIDGET (disp), GDK_EXPOSURE_MASK);
-
   gtk_box_prepend (main_widget, GTK_WIDGET (disp));
 
   data = std::vector<double*>(num_points);
