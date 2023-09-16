@@ -9,7 +9,7 @@ project('gnome-system-monitor',
     'libhandy:introspection=disabled',
     'libhandy:tests=false',
   ],
-  version: '45.0.1',
+  version: '45.0.2',
   meson_version: '>=0.57.0',
 )
 
