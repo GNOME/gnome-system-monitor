@@ -677,6 +677,9 @@ net_scale (LoadGraph *graph,
       // nice number is for the ticks
       unsigned ticks = graph->num_bars;
 
+      if (graph->num_bars == 0)
+        return;
+
       // gets messy at low values due to division by 8
       guint64 bit_max = std::max (new_max * 8, G_GUINT64_CONSTANT (10000));
 
