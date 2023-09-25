@@ -566,6 +566,7 @@ change_show_page_state (GSimpleAction *action,
   auto tab = g_variant_get_string (state, NULL);
   app->settings->set_string (GSM_SETTING_CURRENT_TAB, tab);
   app->config.current_tab = tab;
+  adw_view_stack_set_visible_child_name (app->stack, tab);
 }
 
 static void
