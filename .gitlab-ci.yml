@@ -33,9 +33,6 @@ variables:
     make
     texinfo
     texlive
-  UBUNTU_LIBHANDY_DEPENDENCIES: # packages required to build libhandy on ubuntu.
-    libgladeui-2-13
-    valac
   UBUNTU_DEPENDENCIES: # packages required to build the system monitor on ubuntu.
     appstream-util
     git
@@ -44,6 +41,7 @@ variables:
     libgtkmm-4.0-dev
     libadwaita-1-dev
     librsvg2-dev
+    libhandy-1-dev
     libsystemd-dev
     libxml2-dev
     meson
@@ -102,13 +100,8 @@ build-ubuntu:
     - ../autogen.sh
     - make
     - make install
-    - cd ../.. # build and install libhandy because the version in the ubuntu package repository is too outdated.
-    - git clone https://gitlab.gnome.org/gnome/libhandy.git/
-    - cd libhandy
-    - meson _build
-    - ninja -C _build
-    - ninja -C _build install
-    - cd .. # build and install gnome-system-monitor
+    - cd ../..  # build and install gnome-system-monitor
+    - cd ..
     - meson _build
     - ninja -C _build
     - ninja -C _build install
