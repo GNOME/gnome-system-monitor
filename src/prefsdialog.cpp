@@ -172,8 +172,8 @@ create_preferences_dialog (GsmApplication *app)
 {
   GtkAdjustment *adjustment;
   AdwSpinRow *spin_button;
-  GtkSwitch *check_switch;
-  GtkSwitch *smooth_switch;
+  AdwSwitchRow *check_switch;
+  AdwSwitchRow *smooth_switch;
   GtkBuilder *builder;
   gfloat update;
   GError* err = NULL;
@@ -203,45 +203,45 @@ create_preferences_dialog (GsmApplication *app)
   g_signal_connect (G_OBJECT (spin_button), "changed",
                     G_CALLBACK (spin_button_value_changed), g_string_new ("update-interval"));
 
-  smooth_switch = GTK_SWITCH (gtk_builder_get_object (builder, "smooth_switch"));
+  smooth_switch = ADW_SWITCH_ROW (gtk_builder_get_object (builder, "smooth_switch"));
   g_settings_bind (app->settings->gobj (), SmoothRefresh::KEY.c_str (), smooth_switch, "active", G_SETTINGS_BIND_DEFAULT);
 
-  check_switch = GTK_SWITCH (gtk_builder_get_object (builder, "check_switch"));
+  check_switch = ADW_SWITCH_ROW (gtk_builder_get_object (builder, "check_switch"));
   g_settings_bind (app->settings->gobj (), GSM_SETTING_SHOW_KILL_DIALOG,
                    check_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  GtkSwitch *solaris_switch = GTK_SWITCH (gtk_builder_get_object (builder, "solaris_switch"));
+  AdwSwitchRow *solaris_switch = ADW_SWITCH_ROW (gtk_builder_get_object (builder, "solaris_switch"));
 
   g_settings_bind (app->settings->gobj (), GSM_SETTING_SOLARIS_MODE,
                    solaris_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  GtkSwitch *proc_mem_in_iec_switch = GTK_SWITCH (gtk_builder_get_object (builder, "proc_mem_in_iec_switch"));
+  AdwSwitchRow *proc_mem_in_iec_switch = ADW_SWITCH_ROW (gtk_builder_get_object (builder, "proc_mem_in_iec_switch"));
 
   g_settings_bind (app->settings->gobj (), GSM_SETTING_PROCESS_MEMORY_IN_IEC,
                    proc_mem_in_iec_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  GtkSwitch *logarithmic_scale_switch = GTK_SWITCH (gtk_builder_get_object (builder, "logarithmic_scale_switch"));
+  AdwSwitchRow *logarithmic_scale_switch = ADW_SWITCH_ROW (gtk_builder_get_object (builder, "logarithmic_scale_switch"));
 
   g_settings_bind (app->settings->gobj (), GSM_SETTING_LOGARITHMIC_SCALE,
                    logarithmic_scale_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  GtkSwitch *draw_stacked_switch = GTK_SWITCH (gtk_builder_get_object (builder, "draw_stacked_switch"));
+  AdwSwitchRow *draw_stacked_switch = ADW_SWITCH_ROW (gtk_builder_get_object (builder, "draw_stacked_switch"));
 
   g_settings_bind (app->settings->gobj (), GSM_SETTING_DRAW_STACKED,
                    draw_stacked_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  GtkSwitch *draw_smooth_switch = GTK_SWITCH (gtk_builder_get_object (builder, "draw_smooth_switch"));
+  AdwSwitchRow *draw_smooth_switch = ADW_SWITCH_ROW (gtk_builder_get_object (builder, "draw_smooth_switch"));
 
   g_settings_bind (app->settings->gobj (), GSM_SETTING_DRAW_SMOOTH,
                    draw_smooth_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  GtkSwitch *res_mem_in_iec_switch = GTK_SWITCH (gtk_builder_get_object (builder, "res_mem_in_iec_switch"));
+  AdwSwitchRow *res_mem_in_iec_switch = ADW_SWITCH_ROW (gtk_builder_get_object (builder, "res_mem_in_iec_switch"));
 
   g_settings_bind (app->settings->gobj (), GSM_SETTING_RESOURCES_MEMORY_IN_IEC,
                    res_mem_in_iec_switch, "active",
@@ -267,19 +267,19 @@ create_preferences_dialog (GsmApplication *app)
   g_signal_connect (G_OBJECT (range), "value-changed",
                     G_CALLBACK (range_value_changed), g_string_new ("graph-data-points"));
 
-  GtkSwitch *bits_switch = GTK_SWITCH (gtk_builder_get_object (builder, "bits_switch"));
+  AdwSwitchRow *bits_switch = ADW_SWITCH_ROW (gtk_builder_get_object (builder, "bits_switch"));
 
   g_settings_bind (app->settings->gobj (), GSM_SETTING_NETWORK_IN_BITS,
                    bits_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  GtkSwitch *bits_unit_switch = GTK_SWITCH (gtk_builder_get_object (builder, "bits_unit_switch"));
+  AdwSwitchRow *bits_unit_switch = ADW_SWITCH_ROW (gtk_builder_get_object (builder, "bits_unit_switch"));
 
   g_settings_bind (app->settings->gobj (), GSM_SETTING_NETWORK_TOTAL_UNIT,
                    bits_unit_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  GtkSwitch *bits_total_switch = GTK_SWITCH (gtk_builder_get_object (builder, "bits_total_switch"));
+  AdwSwitchRow *bits_total_switch = ADW_SWITCH_ROW (gtk_builder_get_object (builder, "bits_total_switch"));
 
   g_settings_bind (app->settings->gobj (), GSM_SETTING_NETWORK_TOTAL_IN_BITS,
                    bits_total_switch, "active",
@@ -293,7 +293,7 @@ create_preferences_dialog (GsmApplication *app)
   g_signal_connect (G_OBJECT (spin_button), "changed",
                     G_CALLBACK (spin_button_value_changed), g_string_new ("disks-interval"));
 
-  check_switch = GTK_SWITCH (gtk_builder_get_object (builder, "all_devices_check"));
+  check_switch = ADW_SWITCH_ROW (gtk_builder_get_object (builder, "all_devices_check"));
   g_settings_bind (app->settings->gobj (), GSM_SETTING_SHOW_ALL_FS,
                    check_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
