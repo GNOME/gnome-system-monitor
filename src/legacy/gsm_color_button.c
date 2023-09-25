@@ -358,7 +358,7 @@ dialog_response (GtkDialog      *self,
   if (response == GTK_RESPONSE_OK)
     {
       GtkColorChooser *color_chooser = GTK_COLOR_CHOOSER (priv->cc_dialog);
-      GdkRGBA *color;
+      GdkRGBA color;
 
       gtk_color_chooser_get_rgba (color_chooser, &color);
       gsm_color_button_set_color (color_button, &color);
