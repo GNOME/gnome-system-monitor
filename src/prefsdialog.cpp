@@ -23,11 +23,11 @@ prefs_window_close_request (GtkWindow *self,
 }
 
 static void
-spin_button_value_changed (GtkSpinButton *self,
-                           gpointer       data)
+spin_button_value_changed (AdwSpinRow *self,
+                           gpointer    data)
 {
   GString *key = (GString *) data;
-  int new_value = 1000 * gtk_spin_button_get_value (self);
+  int new_value = 1000 * adw_spin_row_get_value (self);
 
   GsmApplication::get ()->settings->set_int (key->str, new_value);
 
@@ -171,7 +171,7 @@ void
 create_preferences_dialog (GsmApplication *app)
 {
   GtkAdjustment *adjustment;
-  GtkSpinButton *spin_button;
+  AdwSpinRow *spin_button;
   GtkSwitch *check_switch;
   GtkSwitch *smooth_switch;
   GtkBuilder *builder;
@@ -190,9 +190,9 @@ create_preferences_dialog (GsmApplication *app)
 
   prefs_window = ADW_PREFERENCES_WINDOW (gtk_builder_get_object (builder, "preferences_dialog"));
 
-  spin_button = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "processes_interval_spinner"));
+  spin_button = ADW_SPIN_ROW (gtk_builder_get_object (builder, "processes_interval_spinner"));
   update = (gfloat) app->config.update_interval;
-  adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spin_button));
+  adjustment = adw_spin_row_get_adjustment (ADW_SPIN_ROW (spin_button));
   gtk_adjustment_configure (adjustment,
                             update / 1000.0,
                             MIN_UPDATE_INTERVAL / 1000,
@@ -200,7 +200,7 @@ create_preferences_dialog (GsmApplication *app)
                             0.25,
                             1.0,
                             0);
-  g_signal_connect (G_OBJECT (spin_button), "value-changed",
+  g_signal_connect (G_OBJECT (spin_button), "changed",
                     G_CALLBACK (spin_button_value_changed), g_string_new ("update-interval"));
 
   smooth_switch = GTK_SWITCH (gtk_builder_get_object (builder, "smooth_switch"));
@@ -250,12 +250,12 @@ create_preferences_dialog (GsmApplication *app)
   create_field_page (builder, GTK_TREE_VIEW (app->tree), GSM_SETTINGS_CHILD_PROCESSES);
 
   update = (gfloat) app->config.graph_update_interval;
-  spin_button = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "resources_interval_spinner"));
-  adjustment = gtk_spin_button_get_adjustment (spin_button);
+  spin_button = ADW_SPIN_ROW (gtk_builder_get_object (builder, "resources_interval_spinner"));
+  adjustment = adw_spin_row_get_adjustment (spin_button);
   gtk_adjustment_configure (adjustment, update / 1000.0, 0.05,
                             10.0, 0.05, 0.5, 0);
 
-  g_signal_connect (G_OBJECT (spin_button), "value-changed",
+  g_signal_connect (G_OBJECT (spin_button), "changed",
                     G_CALLBACK (spin_button_value_changed), g_string_new ("graph-update-interval"));
 
   update = (gfloat) app->config.graph_data_points;
@@ -286,11 +286,11 @@ create_preferences_dialog (GsmApplication *app)
                    G_SETTINGS_BIND_DEFAULT);
 
   update = (gfloat) app->config.disks_update_interval;
-  spin_button = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "devices_interval_spinner"));
-  adjustment = gtk_spin_button_get_adjustment (spin_button);
+  spin_button = ADW_SPIN_ROW (gtk_builder_get_object (builder, "devices_interval_spinner"));
+  adjustment = adw_spin_row_get_adjustment (spin_button);
   gtk_adjustment_configure (adjustment, update / 1000.0, 1.0,
                             100.0, 1.0, 1.0, 0);
-  g_signal_connect (G_OBJECT (spin_button), "value-changed",
+  g_signal_connect (G_OBJECT (spin_button), "changed",
                     G_CALLBACK (spin_button_value_changed), g_string_new ("disks-interval"));
 
   check_switch = GTK_SWITCH (gtk_builder_get_object (builder, "all_devices_check"));
