@@ -174,14 +174,7 @@ PrettyTable::get_icon_from_gio (const ProcInfo &info)
   Glib::RefPtr<Gio::Icon> gicon;
   Glib::RefPtr<Gtk::IconTheme> icon_theme;
   Glib::RefPtr<Gtk::IconPaintable> icon_paintable;
-  const gchar *executable = nullptr;
-  {
-    size_t pos = info.name.find (" ");
-    executable = info.name.substr (0, pos).c_str ();
-  }
-
-  if (!executable)
-    return icon;
+  const auto executable = info.name.substr (0, info.name.find (' '));
 
   Glib::RefPtr<Gio::AppInfo> app = this->gio_apps[executable];
   if (!app)
