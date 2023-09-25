@@ -411,9 +411,9 @@ on_activate_about (GSimpleAction *,
     NULL
   };
 
-  gtk_show_about_dialog (
+  adw_show_about_window (
     GTK_WINDOW (app->main_window),
-    "name", _("System Monitor"),
+    "application-name", _("System Monitor"),
     "comments", _("View current processes and monitor "
                   "system state"),
     "version", VERSION,
@@ -421,12 +421,16 @@ on_activate_about (GSimpleAction *,
     "copyright", "Copyright \xc2\xa9 2001-2004 Kevin Vandersloot\n"
     "Copyright \xc2\xa9 2005-2007 Benoît Dejean\n"
     "Copyright \xc2\xa9 2011 Chris Kühl",
-    "logo-icon-name", "org.gnome.SystemMonitor",
-    "authors", authors,
+    "application-icon", "org.gnome.SystemMonitor",
+    "developer-name", _("The GNOME Project"),
+    "developers", authors,
     "artists", artists,
     "documenters", documenters,
     "translator-credits", _("translator-credits"),
     "license-type", GTK_LICENSE_GPL_2_0,
+    "website", "https://wiki.gnome.org/Apps/SystemMonitor",
+    "support-url", "https://help.gnome.org/users/gnome-system-monitor/stable/",
+    "issue-url", "https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues",
     NULL);
 }
 
