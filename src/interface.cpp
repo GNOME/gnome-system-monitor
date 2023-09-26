@@ -49,7 +49,7 @@ static const char*LOAD_GRAPH_CSS = "\
     background: linear-gradient(to bottom,\
                   @window_bg_color,\
                   @view_bg_color);\
-    color: mix(@window_fg_color, @window_bg_color, 0.5);\
+    color: @window_fg_color;\
 }\
 ";
 

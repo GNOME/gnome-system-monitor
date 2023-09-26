@@ -284,7 +284,7 @@ create_background (LoadGraph *graph, int width, int height)
 
   gtk_style_context_restore (context);
 
-  cairo_set_line_width (cr, 1.0);
+  cairo_set_line_width (cr, 0.25);
 
   /* Horizontal grid lines */
   for (guint i = 0; i <= graph->num_bars; i++)
