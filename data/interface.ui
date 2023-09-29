@@ -8,11 +8,10 @@
     <property name="default-height">495</property>
     <property name="icon-name">org.gnome.SystemMonitor</property>
     <child>
-      <object class="GtkBox" id="main_box">
-        <property name="orientation">vertical</property>
+      <object class="AdwToolbarView" id="main_box">
         <property name="width-request">620</property>
         <property name="height-request">480</property>
-        <child>
+        <child type="top">
           <object class="AdwHeaderBar" id="header_bar">
             <child type="title">
               <object class="AdwViewSwitcher" id="view_switcher">
@@ -47,7 +46,7 @@
             </child>
           </object>
         </child>
-        <child>
+        <property name="content">
           <object class="AdwViewStack" id="stack">
             <property name="hexpand">True</property>
             <property name="vexpand">True</property>
@@ -332,7 +331,7 @@
               </object>
             </child>
           </object>
-        </child>
+        </property>
       </object>
     </child>
   </object>
