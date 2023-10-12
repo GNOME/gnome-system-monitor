@@ -75,6 +75,7 @@ fill_image_buffer_from_resource (cairo_t    *cr,
   gsize len;
   GError *error = NULL;
   RsvgHandle *handle;
+  RsvgRectangle viewport = {0, 0, 32, 32};
   cairo_surface_t *tmp_surface;
   cairo_t *tmp_cr;
 
@@ -82,7 +83,6 @@ fill_image_buffer_from_resource (cairo_t    *cr,
   data = g_bytes_get_data (bytes, &len);
 
   handle = rsvg_handle_new_from_data (data, len, &error);
-
   if (handle == NULL)
     {
       g_warning ("rsvg_handle_new_from_data(\"%s\") failed: %s",
@@ -97,7 +97,16 @@ fill_image_buffer_from_resource (cairo_t    *cr,
                                               CAIRO_CONTENT_COLOR_ALPHA,
                                               32, 32);
   tmp_cr = cairo_create (tmp_surface);
-  rsvg_handle_render_cairo (handle, tmp_cr);
+  if (!rsvg_handle_render_document (handle, tmp_cr, &viewport, &error))
+    {
+      g_warning ("rsvg_handle_render_document(\"%s\") failed: %s",
+                 path, (error ? error->message : "unknown error"));
+      if (error)
+        g_error_free (error);
+      g_bytes_unref (bytes);
+      return NULL;
+    }
+
   cairo_destroy (tmp_cr);
   g_object_unref (handle);
   g_bytes_unref (bytes);
