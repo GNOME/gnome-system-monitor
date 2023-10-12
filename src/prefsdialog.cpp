@@ -273,12 +273,6 @@ create_preferences_dialog (GsmApplication *app)
                    bits_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  AdwSwitchRow *bits_unit_switch = ADW_SWITCH_ROW (gtk_builder_get_object (builder, "bits_unit_switch"));
-
-  g_settings_bind (app->settings->gobj (), GSM_SETTING_NETWORK_TOTAL_UNIT,
-                   bits_unit_switch, "active",
-                   G_SETTINGS_BIND_DEFAULT);
-
   AdwSwitchRow *bits_total_switch = ADW_SWITCH_ROW (gtk_builder_get_object (builder, "bits_total_switch"));
 
   g_settings_bind (app->settings->gobj (), GSM_SETTING_NETWORK_TOTAL_IN_BITS,

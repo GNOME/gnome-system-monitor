@@ -32,7 +32,6 @@
 #define GSM_SETTING_RESOURCES_MEMORY_IN_IEC "resources-memory-in-iec"
 #define GSM_SETTING_NETWORK_IN_BITS         "network-in-bits"
 #define GSM_SETTING_GRAPH_DATA_POINTS       "graph-data-points"
-#define GSM_SETTING_NETWORK_TOTAL_UNIT      "network-total-unit"
 #define GSM_SETTING_NETWORK_TOTAL_IN_BITS   "network-total-in-bits"
 #define GSM_SETTING_SHOW_CPU                "show-cpu"
 #define GSM_SETTING_SHOW_MEM                "show-mem"
