@@ -241,6 +241,7 @@ create_sys_view (GsmApplication *app,
 
   GtkGrid*cpu_table = GTK_GRID (gtk_builder_get_object (builder, "cpu_table"));
   gint cols = 4;
+  gint rows = ( app->config.num_cpus + cols - 1 ) / cols;
 
   for (i = 0; i < app->config.num_cpus; i++)
     {
@@ -252,7 +253,7 @@ create_sys_view (GsmApplication *app,
         gtk_grid_insert_column (cpu_table, i % cols);
       if ((i + 1) % cols == cols)
         gtk_grid_insert_row (cpu_table, (i + 1) / cols);
-      gtk_grid_attach (cpu_table, GTK_WIDGET (temp_hbox), i % cols, i / cols, 1, 1);
+      gtk_grid_attach (cpu_table, GTK_WIDGET (temp_hbox), i / rows, i % rows, 1, 1);
 
       color_picker = gsm_color_button_new (&cpu_graph->colors.at (i), GSMCP_TYPE_CPU);
       g_signal_connect (G_OBJECT (color_picker), "color-set",
