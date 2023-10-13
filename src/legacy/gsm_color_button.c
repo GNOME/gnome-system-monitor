@@ -37,6 +37,7 @@ typedef struct
   gdouble fraction;             /* Only used by GSMCP_TYPE_PIE */
   guint type;
   cairo_surface_t *image_buffer;
+  cairo_surface_t *mask_buffer;
   gdouble highlight;
 } GsmColorButtonPrivate;
 
@@ -135,41 +136,26 @@ set_color_icon (GtkDragSource *drag_source,
   g_object_unref (pixbuf);
 }
 
-gsm_color_button_draw_arrow_outline (cairo_t * cr, gboolean down)
+static void
+gsm_color_button_draw_colored_icon (cairo_t         *cr,
+                                    cairo_surface_t *image_buffer,
+                                    cairo_surface_t *mask_buffer,
+                                    gboolean         upside_down)
 {
-  cairo_path_t *path = NULL;
-
-  if (down)
+  if (upside_down)
     {
       cairo_translate (cr, 16, 16);
       cairo_rotate (cr, G_PI);
       cairo_translate (cr, -16, -13);
     }
 
-  cairo_move_to (cr, 16.5, 1.5);
-  cairo_line_to (cr, 29.5, 17.5);
-  cairo_line_to (cr, 23.5, 17.5);
-  cairo_line_to (cr, 23.5, 27.5);
-  cairo_line_to (cr, 8.5, 27.5);
-  cairo_line_to (cr, 8.5, 17.5);
-  cairo_line_to (cr, 2.5, 17.5);
-  cairo_line_to (cr, 15.5, 1.5);
-  cairo_line_to (cr, 16.5, 1.5);
-  cairo_close_path (cr);
-
-  path = cairo_copy_path (cr);
-  cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
-  cairo_set_line_join (cr, CAIRO_LINE_JOIN_MITER);
-  cairo_set_line_width (cr, 1);
-  cairo_fill_preserve (cr);
-  cairo_set_miter_limit (cr, 5.0);
-  cairo_stroke (cr);
-  cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
-  cairo_append_path (cr, path);
-  cairo_path_destroy (path);
+  cairo_mask_surface (cr, mask_buffer, 0.0, 0.0);
   cairo_stroke (cr);
 
-  if (down)
+  cairo_set_source_surface (cr, image_buffer, 0.0, 0.0);
+  cairo_paint (cr);
+
+  if (upside_down)
     {
       cairo_translate (cr, 16, 13);
       cairo_rotate (cr, -G_PI);
@@ -308,48 +294,52 @@ gsm_color_button_snapshot (GtkWidget   *widget,
       case GSMCP_TYPE_NETWORK_IN:
         if (priv->image_buffer == NULL)
           priv->image_buffer =
-            fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/arrow_down.svg");
+            fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/arrow_overlay.svg");
+        if (priv->mask_buffer == NULL)
+          priv->mask_buffer =
+            fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/arrow_mask.svg");
+
         gtk_widget_set_size_request (widget, 32, 32);
-        gsm_color_button_draw_arrow_outline (cr, TRUE);
-        cairo_set_source_surface (cr, priv->image_buffer, 0.0,
-                                  0.0);
-        cairo_paint (cr);
+        gsm_color_button_draw_colored_icon (cr, priv->image_buffer, priv->mask_buffer, TRUE);
 
         break;
 
       case GSMCP_TYPE_NETWORK_OUT:
         if (priv->image_buffer == NULL)
           priv->image_buffer =
-            fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/arrow_up.svg");
+            fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/arrow_overlay.svg");
+        if (priv->mask_buffer == NULL)
+          priv->mask_buffer =
+            fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/arrow_mask.svg");
+
         gtk_widget_set_size_request (widget, 32, 32);
-        gsm_color_button_draw_arrow_outline (cr, FALSE);
-        cairo_set_source_surface (cr, priv->image_buffer, 0.0,
-                                  0.0);
-        cairo_paint (cr);
+        gsm_color_button_draw_colored_icon (cr, priv->image_buffer, priv->mask_buffer, FALSE);
 
         break;
 
       case GSMCP_TYPE_DISK_READ:
         if (priv->image_buffer == NULL)
           priv->image_buffer =
-            fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/arrow_up.svg");
+            fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/arrow_overlay.svg");
+        if (priv->mask_buffer == NULL)
+          priv->mask_buffer =
+            fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/arrow_mask.svg");
+
         gtk_widget_set_size_request (widget, 32, 32);
-        gsm_color_button_draw_arrow_outline (cr, FALSE);
-        cairo_set_source_surface (cr, priv->image_buffer, 0.0,
-                                  0.0);
-        cairo_paint (cr);
+        gsm_color_button_draw_colored_icon (cr, priv->image_buffer, priv->mask_buffer, FALSE);
 
         break;
 
       case GSMCP_TYPE_DISK_WRITE:
         if (priv->image_buffer == NULL)
           priv->image_buffer =
-            fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/arrow_down.svg");
+            fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/arrow_overlay.svg");
+        if (priv->mask_buffer == NULL)
+          priv->mask_buffer =
+            fill_image_buffer_from_resource (cr, "/org/gnome/gnome-system-monitor/pixmaps/arrow_mask.svg");
+
         gtk_widget_set_size_request (widget, 32, 32);
-        gsm_color_button_draw_arrow_outline (cr, TRUE);
-        cairo_set_source_surface (cr, priv->image_buffer, 0.0,
-                                  0.0);
-        cairo_paint (cr);
+        gsm_color_button_draw_colored_icon (cr, priv->image_buffer, priv->mask_buffer, TRUE);
 
         break;
     }
