@@ -185,7 +185,6 @@ gsm_color_button_snapshot (GtkWidget   *widget,
   GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
   GdkRGBA *color = gdk_rgba_copy (&priv->color);
   GtkStateFlags state_flags = gtk_widget_get_state_flags (widget);
-  cairo_path_t *path = NULL;
   gint width, height;
   gdouble radius, arc_start, arc_end;
   gdouble highlight_factor;
@@ -398,11 +397,11 @@ dialog_response (GtkDialog      *self,
       gtk_color_chooser_get_rgba (color_chooser, &color);
       gsm_color_button_set_color (color_button, &color);
 
-      gtk_widget_hide (GTK_WIDGET (priv->cc_dialog));
+      gtk_widget_set_visible (GTK_WIDGET (priv->cc_dialog), FALSE);
     }
   else
     {
-      gtk_widget_hide (GTK_WIDGET (priv->cc_dialog));
+      gtk_widget_set_visible (GTK_WIDGET (priv->cc_dialog), FALSE);
     }
 }
 
@@ -449,7 +448,7 @@ gsm_color_button_released (GtkGestureClick *controller,
   gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER (priv->cc_dialog),
                               &priv->color);
 
-  gtk_widget_show (GTK_WIDGET (priv->cc_dialog));
+  gtk_widget_set_visible (GTK_WIDGET (priv->cc_dialog), TRUE);
 }
 
 static gboolean
