@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2023-07-25 22:39+0000\n"
-"PO-Revision-Date: 2023-07-29 18:23+0300\n"
+"POT-Creation-Date: 2023-09-25 16:10+0000\n"
+"PO-Revision-Date: 2023-10-14 11:22+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -27,11 +27,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: gnome-system-monitor.desktop.in:3 gnome-system-monitor.appdata.xml.in:6
-#: data/interface.ui:6 src/application.cpp:394 src/interface.cpp:439
+#: data/interface.ui:6 src/application.cpp:396 src/interface.cpp:439
 msgid "System Monitor"
 msgstr "Sistem Gözlemcisi"
 
@@ -49,7 +49,7 @@ msgstr ""
 "İzleyici;Gözlemci;Sistem;Süreç;İşlem;MİB;CPU;Bellek;Ağ;Geçmiş;Kullanım;"
 "Performans;Başarım;Görev;Yönetici;Etkinlik;"
 
-#: gnome-system-monitor-kde.desktop.in:3 src/application.cpp:457
+#: gnome-system-monitor-kde.desktop.in:3 src/application.cpp:459
 msgid "GNOME System Monitor"
 msgstr "GNOME Sistem Gözlemcisi"
 
@@ -239,7 +239,8 @@ msgstr "Süreç özelliklerini göster"
 msgid "Processes"
 msgstr "Süreçler"
 
-#: data/interface.ui:263 src/interface.cpp:276 src/procproperties.cpp:83
+#: data/interface.ui:263 data/preferences.ui:195 src/interface.cpp:276
+#: src/procproperties.cpp:83
 msgid "CPU"
 msgstr "MİB"
 
@@ -252,7 +253,7 @@ msgstr "Bellek"
 msgid "Swap"
 msgstr "Takas Alanı"
 
-#: data/interface.ui:367
+#: data/interface.ui:367 data/preferences.ui:217
 msgid "Memory and Swap"
 msgstr "Bellek ve Takas Alanı"
 
@@ -272,15 +273,15 @@ msgstr "Gönderiliyor"
 msgid "Total Sent"
 msgstr "Toplam Gönderilen"
 
-#: data/interface.ui:511
+#: data/interface.ui:511 data/preferences.ui:255
 msgid "Network"
 msgstr "Ağ"
 
-#: data/interface.ui:537 data/preferences.ui:132
+#: data/interface.ui:537 data/preferences.ui:133
 msgid "Resources"
 msgstr "Kaynaklar"
 
-#: data/interface.ui:565 data/preferences.ui:293
+#: data/interface.ui:565 data/preferences.ui:312
 msgid "File Systems"
 msgstr "Dosya Sistemleri"
 
@@ -403,11 +404,11 @@ msgstr "_Öldür"
 msgid "Open Files"
 msgstr "Açık Dosyalar"
 
-#: data/preferences.ui:19 data/preferences.ui:298
+#: data/preferences.ui:19 data/preferences.ui:138 data/preferences.ui:317
 msgid "Behavior"
 msgstr "Davranış"
 
-#: data/preferences.ui:24 data/preferences.ui:142 data/preferences.ui:303
+#: data/preferences.ui:24 data/preferences.ui:143 data/preferences.ui:322
 msgid "_Update Interval in Seconds"
 msgstr "Saniye Türünde _Güncelleme Aralığı"
 
@@ -427,7 +428,7 @@ msgstr "MİB Kullanımını MİB Sayısına _Böl"
 msgid "Show Memory in IEC"
 msgstr "Belleği IEC Biçiminde Göster"
 
-#: data/preferences.ui:107 data/preferences.ui:338
+#: data/preferences.ui:107 data/preferences.ui:357
 msgid "Information Fields"
 msgstr "Bilgi Alanları"
 
@@ -435,53 +436,49 @@ msgstr "Bilgi Alanları"
 msgid "Process information shown in list:"
 msgstr "Listede gösterilen süreç bilgisi:"
 
-#: data/preferences.ui:137
-msgid "Graphs"
-msgstr "Grafikler"
-
-#: data/preferences.ui:160
+#: data/preferences.ui:161
 msgid "_Chart Data Points"
 msgstr "_Grafik Veri Noktaları"
 
-#: data/preferences.ui:177
-msgid "_Draw CPU Chart as Stacked Area Chart"
-msgstr "_MİB Grafiğini Yığılmış Alan Grafiği Olarak Çiz"
-
-#: data/preferences.ui:193
+#: data/preferences.ui:178
 msgid "Draw Charts as S_mooth Graphs"
 msgstr "Grafikleri Y_umuşak Grafik Olarak Çiz"
 
-#: data/preferences.ui:209
+#: data/preferences.ui:200
+msgid "_Draw CPU Chart as Stacked Area Chart"
+msgstr "_MİB Grafiğini Yığılmış Alan Grafiği Olarak Çiz"
+
+#: data/preferences.ui:222
 msgid "Show Memory and Swap in IEC"
 msgstr "Bellek ve Takas Alanını IEC Biçiminde Göster"
 
-#: data/preferences.ui:225
+#: data/preferences.ui:238
 msgid "Show Memory in Logarithmic Scale"
 msgstr "Belleği Logaritmik Ölçekte Göster"
 
-#: data/preferences.ui:241
+#: data/preferences.ui:260
 msgid "_Show Network Speed in Bits"
 msgstr "Ağ Hızını _Bit Türünde Göster"
 
-#: data/preferences.ui:257
+#: data/preferences.ui:276
 msgid "Set Network Totals _Unit Separately"
 msgstr "Ağ Toplamları _Birimini Ayrı Ayrı Belirle"
 
-#: data/preferences.ui:273
+#: data/preferences.ui:292
 msgid "Show Network _Totals in Bits"
 msgstr "Ağ _Toplamlarını Bit Türünde Göster"
 
-#: data/preferences.ui:321
+#: data/preferences.ui:340
 msgid "Show _All File Systems"
 msgstr "_Tüm Dosya Sistemlerini Göster"
 
-#: data/preferences.ui:339
+#: data/preferences.ui:358
 msgid "File system information shown in list"
 msgstr "Listede gösterilen dosya sistemi bilgisi"
 
 #: data/renice.ui:27 src/procdialogs.cpp:177 src/setaffinity.cpp:308
 msgid "_Cancel"
-msgstr "_Vazgeç"
+msgstr "İ_ptal"
 
 #: data/renice.ui:43
 msgid "Change _Priority"
@@ -499,7 +496,7 @@ msgstr ""
 "<small><i><b>Not:</b> Öncelik değeri süreç öncelikleri ile ilgilidir. Düşük "
 "öncelik değeri daha yüksek önceliğe karşılık gelir.</i></small>"
 
-#: src/application.cpp:438
+#: src/application.cpp:440
 msgid "A simple process and system monitor."
 msgstr "Basit bir süreç ve sistem izleyici."
 
@@ -1269,7 +1266,7 @@ msgstr "Açık dosyalar sıralama sütunu"
 msgid "Open files sort order"
 msgstr "Açık dosyalar sıralama düzeni"
 
-#: src/prefsdialog.cpp:219
+#: src/prefsdialog.cpp:192
 msgid "Icon"
 msgstr "Simge"
 
@@ -1612,3 +1609,6 @@ msgstr "Çok Düşük Öncelik"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "Graphs"
+#~ msgstr "Grafikler"
