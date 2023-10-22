@@ -831,6 +831,7 @@ cb_main_window_suspended (GtkWindow      *surface,
           disks_thaw (app);
         }
     }
+    return FALSE;
 }
 
 void
