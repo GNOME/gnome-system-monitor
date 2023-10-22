@@ -623,7 +623,7 @@ on_activate_search (GSimpleAction*,
 {
   GsmApplication *app = (GsmApplication *) data;
 
-  gtk_search_bar_set_search_mode (app->search_bar, TRUE);
+  gtk_search_bar_set_search_mode (app->search_bar, !gtk_search_bar_get_search_mode(app->search_bar));
 }
 
 static void
