@@ -15,8 +15,8 @@
 static AdwPreferencesWindow *prefs_window = NULL;
 
 static gboolean
-prefs_window_close_request (GtkWindow *self,
-                            gpointer   data)
+prefs_window_close_request (GtkWindow*,
+                            gpointer)
 {
   prefs_window = NULL;
   return FALSE;
@@ -80,7 +80,7 @@ field_toggled (const gchar *gsettings_parent,
 static void
 field_row_activated (GtkTreeView       *tree,
                      GtkTreePath       *path,
-                     GtkTreeViewColumn *column,
+                     GtkTreeViewColumn*,
                      gpointer           data)
 {
   GtkTreeModel *model = gtk_tree_view_get_model (tree);
@@ -300,7 +300,7 @@ create_preferences_dialog (GsmApplication *app)
   g_signal_connect (G_OBJECT (prefs_window), "close-request",
                     G_CALLBACK (prefs_window_close_request), NULL);
 
-  gtk_widget_show (GTK_WIDGET (prefs_window));
+  gtk_window_present (GTK_WINDOW (prefs_window));
 
   g_object_unref (G_OBJECT (builder));
 }
