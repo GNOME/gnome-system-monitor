@@ -356,35 +356,42 @@ GsmApplication::load_settings ()
 
 GsmApplication::GsmApplication()
   : Gtk::Application ("org.gnome.SystemMonitor", Gio::Application::Flags::HANDLES_COMMAND_LINE),
+  settings (NULL),
+  main_window (NULL),
+  stack (NULL),
+  app_menu_button (NULL),
+
+  config (),
+  pretty_table (NULL),
   tree (NULL),
   proc_actionbar_revealer (NULL),
   proc_popover_menu (NULL),
-  disk_list (NULL),
-  stack (NULL),
   refresh_button (NULL),
-  app_menu_button (NULL),
   end_process_button (NULL),
   search_button (NULL),
   search_entry (NULL),
   search_bar (NULL),
-  config (),
+  top_of_tree (NULL),
+
+  last_vscroll_max (0.0),
+  last_vscroll_value (0.0),
+  timeout (0U),
+  cpu_total_time (0ULL),
+  cpu_total_time_last (0ULL),
+  frequency (0U),
+
   cpu_graph (NULL),
   mem_graph (NULL),
   net_graph (NULL),
   disk_graph (NULL),
-  selection (NULL),
-  timeout (0U),
+
+  disk_list (NULL),
+
   disk_timeout (0U),
-  top_of_tree (NULL),
-  last_vscroll_max (0.0),
-  last_vscroll_value (0.0),
-  pretty_table (NULL),
-  settings (NULL),
-  main_window (NULL),
-  frequency (0U),
-  smooth_refresh (NULL),
-  cpu_total_time (0ULL),
-  cpu_total_time_last (0ULL)
+
+  selection (NULL),
+
+  smooth_refresh (NULL)
 {
   Glib::set_application_name (_("System Monitor"));
 }
