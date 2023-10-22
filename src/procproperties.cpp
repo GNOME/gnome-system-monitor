@@ -118,7 +118,7 @@ update_procproperties_dialog (GtkTreeView *tree)
 
 static void
 close_procprop_dialog (GtkDialog *dialog,
-                       gint       id,
+                       gint,
                        gpointer   data)
 {
   GtkTreeView *tree = static_cast<GtkTreeView*>(data);
@@ -131,7 +131,7 @@ close_procprop_dialog (GtkDialog *dialog,
 }
 
 static GtkTreeView *
-create_procproperties_tree (GsmApplication *app,
+create_procproperties_tree (GsmApplication*,
                             ProcInfo       *info)
 {
   GtkTreeView *tree;
@@ -183,7 +183,7 @@ procprop_timer (gpointer data)
 
 static void
 create_single_procproperties_dialog (GtkTreeModel *model,
-                                     GtkTreePath  *path,
+                                     GtkTreePath*,
                                      GtkTreeIter  *iter,
                                      gpointer      data)
 {
@@ -247,7 +247,7 @@ create_single_procproperties_dialog (GtkTreeModel *model,
                     G_CALLBACK (close_procprop_dialog), tree);
 
   gtk_window_set_transient_for (GTK_WINDOW (procpropdialog), GTK_WINDOW (GsmApplication::get ()->main_window));
-  gtk_widget_show (GTK_WIDGET (procpropdialog));
+  gtk_window_present (GTK_WINDOW (procpropdialog));
 
   timer = g_timeout_add_seconds (5, procprop_timer, tree);
   g_object_set_data (G_OBJECT (tree), "timer", GUINT_TO_POINTER (timer));
