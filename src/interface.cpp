@@ -44,7 +44,7 @@
 #include "settings-keys.h"
 #include "legacy/gsm_color_button.h"
 
-static const char*LOAD_GRAPH_CSS = "\
+static const char* LOAD_GRAPH_CSS = "\
 .loadgraph {\
     background: linear-gradient(to bottom,\
                   @window_bg_color,\
@@ -54,7 +54,7 @@ static const char*LOAD_GRAPH_CSS = "\
 ";
 
 static void
-search_text_changed (GtkEditable *entry,
+search_text_changed (GtkEditable*,
                      gpointer     data)
 {
   GsmApplication * const app = static_cast<GsmApplication *>(data);
@@ -237,7 +237,7 @@ create_sys_view (GsmApplication *app,
   gchar *title_template;
 
   provider = gtk_css_provider_new ();
-  gtk_css_provider_load_from_data (provider, LOAD_GRAPH_CSS, -1);
+  gtk_css_provider_load_from_string (provider, LOAD_GRAPH_CSS);
   gtk_style_context_add_provider_for_display (gdk_display_get_default (), GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
   // Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
   title_template = g_strdup (_("Pick a Color for “%s”"));
@@ -508,7 +508,7 @@ on_activate_keyboard_shortcuts (GSimpleAction *,
 {
   GsmApplication *app = (GsmApplication *) data;
 
-  gtk_widget_show (GTK_WIDGET (gtk_application_window_get_help_overlay (GTK_APPLICATION_WINDOW (app->main_window))));
+  gtk_widget_set_visible (GTK_WIDGET (gtk_application_window_get_help_overlay (GTK_APPLICATION_WINDOW (app->main_window))), TRUE);
 }
 
 static void
@@ -600,15 +600,15 @@ on_activate_process_properties (GSimpleAction *,
 static void
 on_activate_radio (GSimpleAction *action,
                    GVariant      *parameter,
-                   gpointer       data)
+                   gpointer)
 {
   g_action_change_state (G_ACTION (action), parameter);
 }
 
 static void
 on_activate_toggle (GSimpleAction *action,
-                    GVariant      *parameter,
-                    gpointer       data)
+                    GVariant*,
+                    gpointer)
 {
   GVariant *state = g_action_get_state (G_ACTION (action));
 
@@ -617,8 +617,8 @@ on_activate_toggle (GSimpleAction *action,
 }
 
 static void
-on_activate_search (GSimpleAction *action,
-                    GVariant      *parameter,
+on_activate_search (GSimpleAction*,
+                    GVariant*,
                     gpointer       data)
 {
   GsmApplication *app = (GsmApplication *) data;
@@ -692,7 +692,7 @@ on_activate_priority (GSimpleAction *action,
 static void
 change_priority_state (GSimpleAction *action,
                        GVariant      *state,
-                       gpointer       data)
+                       gpointer)
 {
   g_simple_action_set_state (action, state);
 }
@@ -710,13 +710,11 @@ update_page_activities (GsmApplication *app)
 
   if (strcmp (current_page, "processes") == 0)
     {
-      GAction *search_action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
-                                                           "search");
       proctable_update (app);
       proctable_thaw (app);
 
-      gtk_widget_show (GTK_WIDGET (app->end_process_button));
-      gtk_widget_show (GTK_WIDGET (app->search_button));
+      gtk_widget_set_visible (GTK_WIDGET (app->end_process_button), TRUE);
+      gtk_widget_set_visible (GTK_WIDGET (app->search_button), TRUE);
 
       gtk_menu_button_set_menu_model (app->app_menu_button, app->process_window_menu_model);
       gtk_search_bar_set_key_capture_widget (app->search_bar, GTK_WIDGET (app->main_window));
@@ -732,8 +730,8 @@ update_page_activities (GsmApplication *app)
     {
       proctable_freeze (app);
 
-      gtk_widget_hide (GTK_WIDGET (app->end_process_button));
-      gtk_widget_hide (GTK_WIDGET (app->search_button));
+      gtk_widget_set_visible (GTK_WIDGET (app->end_process_button), FALSE);
+      gtk_widget_set_visible (GTK_WIDGET (app->search_button), FALSE);
 
       gtk_menu_button_set_menu_model (app->app_menu_button, app->generic_window_menu_model);
       gtk_search_bar_set_key_capture_widget (app->search_bar, NULL);
@@ -768,15 +766,15 @@ update_page_activities (GsmApplication *app)
 }
 
 static void
-cb_change_current_page (AdwViewStack *stack,
-                        GParamSpec   *pspec,
+cb_change_current_page (AdwViewStack*,
+                        GParamSpec*,
                         gpointer      data)
 {
   update_page_activities ((GsmApplication *)data);
 }
 
 static gboolean
-cb_main_window_delete (GtkWindow *window,
+cb_main_window_delete (GtkWindow*,
                        gpointer   data)
 {
   GsmApplication *app = (GsmApplication *) data;
@@ -787,7 +785,7 @@ cb_main_window_delete (GtkWindow *window,
 }
 
 static gboolean
-cb_main_window_suspended (GtkWindow      *surface,
+cb_main_window_suspended (GtkWindow*,
                           gboolean        suspended,
                           GsmApplication *app)
 {
@@ -880,22 +878,22 @@ create_main_window (GsmApplication *app)
   gtk_menu_button_set_menu_model (app->app_menu_button, app->generic_window_menu_model);
 
   GActionEntry win_action_entries[] = {
-    { "about", on_activate_about, NULL, NULL, NULL },
-    { "show-help-overlay", on_activate_keyboard_shortcuts, NULL, NULL, NULL },
-    { "search", on_activate_search, NULL, NULL, NULL },
-    { "send-signal-stop", on_activate_send_signal, "i", NULL, NULL },
-    { "send-signal-cont", on_activate_send_signal, "i", NULL, NULL },
-    { "send-signal-term", on_activate_send_signal, "i", NULL, NULL },
-    { "send-signal-kill", on_activate_send_signal, "i", NULL, NULL },
-    { "priority", on_activate_priority, "i", "@i 0", change_priority_state },
-    { "set-affinity", on_activate_set_affinity, NULL, NULL, NULL },
-    { "memory-maps", on_activate_memory_maps, NULL, NULL, NULL },
-    { "open-files", on_activate_open_files, NULL, NULL, NULL },
-    { "process-properties", on_activate_process_properties, NULL, NULL, NULL },
-    { "refresh", on_activate_refresh, NULL, NULL, NULL },
-    { "show-page", on_activate_radio, "s", "'resources'", change_show_page_state },
-    { "show-whose-processes", on_activate_radio, "s", "'all'", change_show_processes_state },
-    { "show-dependencies", on_activate_toggle, NULL, "false", change_show_dependencies_state }
+    { "about", on_activate_about, NULL, NULL, NULL, {0,0,0} },
+    { "show-help-overlay", on_activate_keyboard_shortcuts, NULL, NULL, NULL, {0,0,0} },
+    { "search", on_activate_search, NULL, NULL, NULL, {0,0,0} },
+    { "send-signal-stop", on_activate_send_signal, "i", NULL, NULL, {0,0,0} },
+    { "send-signal-cont", on_activate_send_signal, "i", NULL, NULL, {0,0,0} },
+    { "send-signal-term", on_activate_send_signal, "i", NULL, NULL, {0,0,0} },
+    { "send-signal-kill", on_activate_send_signal, "i", NULL, NULL, {0,0,0} },
+    { "priority", on_activate_priority, "i", "@i 0", change_priority_state, {0,0,0} },
+    { "set-affinity", on_activate_set_affinity, NULL, NULL, NULL, {0,0,0} },
+    { "memory-maps", on_activate_memory_maps, NULL, NULL, NULL, {0,0,0} },
+    { "open-files", on_activate_open_files, NULL, NULL, NULL, {0,0,0} },
+    { "process-properties", on_activate_process_properties, NULL, NULL, NULL, {0,0,0} },
+    { "refresh", on_activate_refresh, NULL, NULL, NULL, {0,0,0} },
+    { "show-page", on_activate_radio, "s", "'resources'", change_show_page_state, {0,0,0} },
+    { "show-whose-processes", on_activate_radio, "s", "'all'", change_show_processes_state, {0,0,0} },
+    { "show-dependencies", on_activate_toggle, NULL, "false", change_show_dependencies_state, {0,0,0} }
   };
   g_action_map_add_action_entries (G_ACTION_MAP (app->main_window),
                                    win_action_entries,
@@ -937,7 +935,7 @@ create_main_window (GsmApplication *app)
                   &width, &height);
 
   // Surface is available only after a widget has been shown
-  gtk_widget_show (GTK_WIDGET (app->main_window));
+  gtk_widget_set_visible (GTK_WIDGET (app->main_window), true);
 
   native = gtk_widget_get_native (GTK_WIDGET (app->main_window));   // Can return NULL but not for the main window
   surface = gtk_native_get_surface (native);
