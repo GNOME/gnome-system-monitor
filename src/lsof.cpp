@@ -261,6 +261,7 @@ procman_lsof (GsmApplication *app)
 
   GtkWindow *dialog = GTK_WINDOW (gtk_builder_get_object (builder, "lsof_dialog"));
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->main_window));
+  gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
 
   GtkSearchBar *search_bar = GTK_SEARCH_BAR (gtk_builder_get_object (builder, "search_bar"));
   GtkSearchEntry *search_entry = GTK_SEARCH_ENTRY (gtk_builder_get_object (builder, "search_entry"));
