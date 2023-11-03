@@ -214,6 +214,7 @@ create_single_procproperties_dialog (GtkTreeModel *model,
 
   gtk_window_set_resizable (GTK_WINDOW (procpropdialog), TRUE);
   gtk_window_set_default_size (GTK_WINDOW (procpropdialog), 575, 400);
+  gtk_window_set_modal (GTK_WINDOW (procpropdialog), TRUE);
 
   vbox = GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (procpropdialog)));
   gtk_box_set_spacing (vbox, 2);
