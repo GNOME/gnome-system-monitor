@@ -320,6 +320,9 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   /* Set default dialog window size */
   gtk_widget_set_size_request (affinity_data->dialog, 600, 430);
 
+  /* Set dialog as modal */
+  gtk_window_set_modal (GTK_WINDOW (affinity_data->dialog), TRUE);
+
   /* Get dialog content area VBox */
   dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG (affinity_data->dialog));
 
