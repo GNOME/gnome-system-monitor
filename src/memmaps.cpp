@@ -477,6 +477,7 @@ create_single_memmaps_dialog (GtkTreeModel *model,
 
   gtk_window_set_resizable (GTK_WINDOW (memmapsdialog), TRUE);
   gtk_window_set_default_size (GTK_WINDOW (memmapsdialog), 620, 400);
+  gtk_window_set_modal (GTK_WINDOW (memmapsdialog), TRUE);
 
   dialog_box = GTK_BOX (gtk_dialog_get_content_area (memmapsdialog));
   gtk_widget_set_margin_top (GTK_WIDGET (dialog_box), 10);
