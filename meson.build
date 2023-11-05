@@ -104,7 +104,7 @@ configure_file(
 
 desktop_files = []
 foreach file : [
-    'gnome-system-monitor.desktop',
+    'org.gnome.SystemMonitor.desktop',
     'gnome-system-monitor-kde.desktop',
   ]
   desktop_files += i18n.merge_file(
