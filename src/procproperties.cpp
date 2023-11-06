@@ -117,8 +117,7 @@ update_procproperties_dialog (GtkTreeView *tree)
 }
 
 static void
-close_procprop_dialog (GtkDialog *dialog,
-                       gint,
+close_procprop_dialog (AdwWindow *dialog,
                        gpointer   data)
 {
   GtkTreeView *tree = static_cast<GtkTreeView*>(data);
@@ -189,7 +188,9 @@ create_single_procproperties_dialog (GtkTreeModel *model,
 {
   GsmApplication *app = static_cast<GsmApplication *>(data);
 
-  GtkDialog *procpropdialog;
+  AdwWindow *procpropdialog;
+  AdwToolbarView  *toolbar_view;
+  AdwHeaderBar    *header_bar;
   GtkBox *dialog_vbox, *vbox;
   GtkBox *cmd_hbox;
   gchar *label;
@@ -203,8 +204,8 @@ create_single_procproperties_dialog (GtkTreeModel *model,
   if (!info)
     return;
 
-  procpropdialog = GTK_DIALOG (g_object_new (GTK_TYPE_DIALOG,
-                                             "use-header-bar", TRUE, NULL));
+  procpropdialog = ADW_WINDOW (g_object_new (ADW_TYPE_WINDOW,
+                                             NULL));
 
   label = g_strdup_printf (_("%s (PID %u)"), info->name.c_str (), info->pid);
   gtk_window_set_title (GTK_WINDOW (procpropdialog), label);
@@ -216,8 +217,11 @@ create_single_procproperties_dialog (GtkTreeModel *model,
   gtk_window_set_default_size (GTK_WINDOW (procpropdialog), 575, 400);
   gtk_window_set_modal (GTK_WINDOW (procpropdialog), TRUE);
 
-  vbox = GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (procpropdialog)));
-  gtk_box_set_spacing (vbox, 2);
+  toolbar_view = ADW_TOOLBAR_VIEW (adw_toolbar_view_new ());
+  header_bar = ADW_HEADER_BAR (adw_header_bar_new ());
+  adw_toolbar_view_add_top_bar (toolbar_view, GTK_WIDGET (header_bar));
+
+  vbox = GTK_BOX (gtk_box_new (GTK_ORIENTATION_VERTICAL, 2));
   gtk_widget_set_margin_top (GTK_WIDGET (vbox), 10);
   gtk_widget_set_margin_bottom (GTK_WIDGET (vbox), 10);
   gtk_widget_set_margin_start (GTK_WIDGET (vbox), 10);
@@ -244,7 +248,10 @@ create_single_procproperties_dialog (GtkTreeModel *model,
 
   gtk_box_prepend (dialog_vbox, GTK_WIDGET (scrolled));
 
-  g_signal_connect (G_OBJECT (procpropdialog), "response",
+  adw_toolbar_view_set_content (toolbar_view, GTK_WIDGET (vbox));
+  adw_window_set_content(ADW_WINDOW (procpropdialog), GTK_WIDGET (toolbar_view));
+
+  g_signal_connect (G_OBJECT (procpropdialog), "close-request",
                     G_CALLBACK (close_procprop_dialog), tree);
 
   gtk_window_set_transient_for (GTK_WINDOW (procpropdialog), GTK_WINDOW (GsmApplication::get ()->main_window));
