@@ -309,8 +309,7 @@ update_memmaps_dialog (MemMapsData *mmdata)
 
 
 static void
-dialog_response (GtkDialog *dialog,
-                 gint       response_id,
+dialog_response (AdwWindow *dialog,
                  gpointer   data)
 {
   MemMapsData * const mmdata = static_cast<MemMapsData*>(data);
@@ -456,7 +455,9 @@ create_single_memmaps_dialog (GtkTreeModel *model,
 {
   GsmApplication *app = static_cast<GsmApplication *>(data);
   MemMapsData *mmdata;
-  GtkDialog  *memmapsdialog;
+  AdwWindow  *memmapsdialog;
+  AdwToolbarView *toolbar_view;
+  AdwHeaderBar *header_bar;
   GtkBox *dialog_box;
   GtkLabel *label;
   GtkWidget *scrolled;
@@ -470,16 +471,19 @@ create_single_memmaps_dialog (GtkTreeModel *model,
   mmdata = create_memmapsdata (app);
   mmdata->info = info;
 
-  memmapsdialog = GTK_DIALOG (g_object_new (GTK_TYPE_DIALOG,
+  memmapsdialog = ADW_WINDOW (g_object_new (ADW_TYPE_WINDOW,
                                             "title", _("Memory Maps"),
-                                            "use-header-bar", TRUE,
                                             "destroy-with-parent", TRUE, NULL));
 
   gtk_window_set_resizable (GTK_WINDOW (memmapsdialog), TRUE);
   gtk_window_set_default_size (GTK_WINDOW (memmapsdialog), 620, 400);
   gtk_window_set_modal (GTK_WINDOW (memmapsdialog), TRUE);
 
-  dialog_box = GTK_BOX (gtk_dialog_get_content_area (memmapsdialog));
+  toolbar_view = ADW_TOOLBAR_VIEW (adw_toolbar_view_new ());
+  header_bar = ADW_HEADER_BAR (adw_header_bar_new ());
+  adw_toolbar_view_add_top_bar (toolbar_view, GTK_WIDGET (header_bar));
+
+  dialog_box = GTK_BOX (gtk_box_new (GTK_ORIENTATION_VERTICAL, 0));
   gtk_widget_set_margin_top (GTK_WIDGET (dialog_box), 10);
   gtk_widget_set_margin_bottom (GTK_WIDGET (dialog_box), 10);
   gtk_widget_set_margin_start (GTK_WIDGET (dialog_box), 10);
@@ -502,15 +506,18 @@ create_single_memmaps_dialog (GtkTreeModel *model,
 
   gtk_box_append (dialog_box, GTK_WIDGET (scrolled));
 
+  adw_toolbar_view_set_content (toolbar_view, GTK_WIDGET (dialog_box));
+  adw_window_set_content(memmapsdialog, GTK_WIDGET (toolbar_view));
+
   gtk_window_set_transient_for (GTK_WINDOW (memmapsdialog), GTK_WINDOW (GsmApplication::get ()->main_window));
 
-  g_signal_connect (G_OBJECT (memmapsdialog), "response",
+  g_signal_connect (G_OBJECT (memmapsdialog), "close-request",
                     G_CALLBACK (dialog_response), mmdata);
 
   mmdata->timer = g_timeout_add_seconds (5, memmaps_timer, mmdata);
   update_memmaps_dialog (mmdata);
 
-  gtk_widget_show (GTK_WIDGET (memmapsdialog));
+  gtk_window_present (GTK_WINDOW (memmapsdialog));
 }
 
 
