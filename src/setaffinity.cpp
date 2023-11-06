@@ -266,6 +266,8 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
 
   ProcInfo        *info;
   SetAffinityData *affinity_data;
+  AdwToolbarView  *toolbar_view;
+  AdwHeaderBar    *header_bar;
   GtkWidget       *cancel_button;
   GtkWidget       *apply_button;
   GtkWidget       *dialog_vbox;
@@ -294,21 +296,24 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   affinity_data->buttons = g_new (GtkWidget *, app->config.num_cpus);
 
   /* Create dialog window */
-  affinity_data->dialog = GTK_WIDGET (g_object_new (GTK_TYPE_DIALOG,
+  affinity_data->dialog = GTK_WIDGET (g_object_new (ADW_TYPE_WINDOW,
                                                     "title", _("Set Affinity"),
-                                                    "use-header-bar", TRUE,
                                                     "destroy-with-parent", TRUE,
                                                     NULL));
 
+  toolbar_view = ADW_TOOLBAR_VIEW (adw_toolbar_view_new ());
+  header_bar = ADW_HEADER_BAR (adw_header_bar_new ());
+  adw_header_bar_set_show_start_title_buttons (header_bar, FALSE);
+  adw_header_bar_set_show_end_title_buttons (header_bar, FALSE);
+  adw_toolbar_view_add_top_bar (toolbar_view, GTK_WIDGET (header_bar));
+
   /* Add cancel button to header bar */
-  cancel_button = gtk_dialog_add_button (GTK_DIALOG (affinity_data->dialog),
-                                         _("_Cancel"),
-                                         GTK_RESPONSE_CANCEL);
+  cancel_button = gtk_button_new_with_mnemonic(_("_Cancel"));
+  adw_header_bar_pack_start (header_bar, cancel_button);
 
   /* Add apply button to header bar */
-  apply_button = gtk_dialog_add_button (GTK_DIALOG (affinity_data->dialog),
-                                        _("_Apply"),
-                                        GTK_RESPONSE_APPLY);
+  apply_button = gtk_button_new_with_mnemonic(_("_Apply"));
+  adw_header_bar_pack_end (header_bar, apply_button);
 
   /* Set dialog window "transient for" */
   gtk_window_set_transient_for (GTK_WINDOW (affinity_data->dialog),
@@ -323,17 +328,14 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   /* Set dialog as modal */
   gtk_window_set_modal (GTK_WINDOW (affinity_data->dialog), TRUE);
 
-  /* Get dialog content area VBox */
-  dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG (affinity_data->dialog));
+  /* Create VBox */
+  dialog_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 10);
 
   /* Set dialog VBox margin */
   gtk_widget_set_margin_top (GTK_WIDGET (dialog_vbox), 15);
   gtk_widget_set_margin_bottom (GTK_WIDGET (dialog_vbox), 15);
   gtk_widget_set_margin_start (GTK_WIDGET (dialog_vbox), 15);
   gtk_widget_set_margin_end (GTK_WIDGET (dialog_vbox), 15);
-
-  /* Set dialog VBox spacing */
-  gtk_box_set_spacing (GTK_BOX (dialog_vbox), 10);
 
   /* Add selected process pid to affinity data */
   affinity_data->pid = info->pid;
@@ -437,6 +439,9 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   /* Add scrolled box to dialog VBox */
   gtk_box_append (GTK_BOX (dialog_vbox), scrolled);
 
+  adw_toolbar_view_set_content (toolbar_view, GTK_WIDGET (dialog_vbox));
+  adw_window_set_content(ADW_WINDOW (affinity_data->dialog), GTK_WIDGET (toolbar_view));
+
   /* Swap click signal on "Cancel" button */
   g_signal_connect_swapped (cancel_button,
                             "clicked",
@@ -456,7 +461,7 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
                     affinity_data);
 
   /* Show dialog window */
-  gtk_widget_show (affinity_data->dialog);
+  gtk_window_present (GTK_WINDOW (affinity_data->dialog));
 }
 
 void
