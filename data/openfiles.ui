@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk" version="4.0"/>
-  <object class="GtkDialog" id="openfiles_dialog">
-    <property name="use-header-bar">1</property>
+  <object class="AdwWindow" id="openfiles_dialog">
     <property name="title" translatable="1">Open Files</property>
     <property name="default-width">575</property>
     <property name="default-height">400</property>
     <property name="destroy-with-parent">1</property>
     <property name="modal">True</property>
-    <child>
-      <object class="GtkBox" id="dialog_content">
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child>
-          <object class="GtkScrolledWindow" id="scrolled">
-            <property name="vexpand">1</property>
-            <property name="vexpand">True</property>
-          </object>
+    <property name="content">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar"/>
         </child>
-        <child>
-          <object class="GtkGrid" id="cmd_grid">
-            <property name="hexpand">True</property>
-            <property name="row-spacing">12</property>
-            <property name="column-spacing">12</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">1</property>
-            </layout>
+        <property name="content">
+          <object class="GtkBox" id="dialog_content">
+            <property name="orientation">vertical</property>
+            <property name="spacing">2</property>
+            <child>
+              <object class="GtkScrolledWindow" id="scrolled">
+                <property name="vexpand">1</property>
+                <property name="vexpand">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkGrid" id="cmd_grid">
+                <property name="hexpand">True</property>
+                <property name="row-spacing">12</property>
+                <property name="column-spacing">12</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">1</property>
+                </layout>
+              </object>
+            </child>
           </object>
-        </child>
+        </property>
       </object>
-    </child>
+    </property>
   </object>
 </interface>

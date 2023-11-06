@@ -234,8 +234,7 @@ update_openfiles_dialog (GsmTreeView *tree)
 }
 
 static void
-close_openfiles_dialog (GtkDialog *dialog,
-                        gint       id,
+close_openfiles_dialog (AdwWindow *dialog,
                         gpointer   data)
 {
   GsmTreeView *tree = static_cast<GsmTreeView*>(data);
@@ -331,7 +330,7 @@ create_single_openfiles_dialog (GtkTreeModel *model,
                                 gpointer      data)
 {
   GsmApplication *app = static_cast<GsmApplication *>(data);
-  GtkDialog *openfilesdialog;
+  AdwWindow *openfilesdialog;
   GtkGrid *cmd_grid;
   GtkLabel *label;
   GtkWidget *scrolled;
@@ -351,7 +350,7 @@ create_single_openfiles_dialog (GtkTreeModel *model,
   if (err != NULL)
     g_error ("%s", err->message);
 
-  openfilesdialog = GTK_DIALOG (gtk_builder_get_object (builder, "openfiles_dialog"));
+  openfilesdialog = ADW_WINDOW (gtk_builder_get_object (builder, "openfiles_dialog"));
 
   cmd_grid = GTK_GRID (gtk_builder_get_object (builder, "cmd_grid"));
 
@@ -368,11 +367,11 @@ create_single_openfiles_dialog (GtkTreeModel *model,
   gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (tree));
   g_object_set_data (G_OBJECT (tree), "selected_info", GUINT_TO_POINTER (info->pid));
 
-  g_signal_connect (G_OBJECT (openfilesdialog), "response",
+  g_signal_connect (G_OBJECT (openfilesdialog), "close-request",
                     G_CALLBACK (close_openfiles_dialog), tree);
 
   gtk_window_set_transient_for (GTK_WINDOW (openfilesdialog), GTK_WINDOW (GsmApplication::get ()->main_window));
-  gtk_widget_show (GTK_WIDGET (openfilesdialog));
+  gtk_window_present (GTK_WINDOW (openfilesdialog));
 
   timer = g_timeout_add_seconds (5, openfiles_timer, tree);
   g_object_set_data (G_OBJECT (tree), "timer", GUINT_TO_POINTER (timer));
