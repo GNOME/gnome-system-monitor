@@ -119,18 +119,22 @@ set_affinity_error (void)
   GtkWidget *dialog;
 
   /* Create error message dialog */
-  dialog = gtk_message_dialog_new (GTK_WINDOW (GsmApplication::get ()->main_window),
-                                   GTK_DIALOG_DESTROY_WITH_PARENT,
-                                   GTK_MESSAGE_ERROR,
-                                   GTK_BUTTONS_CLOSE,
-                                   "GNU CPU Affinity error: %s",
-                                   g_strerror (errno));
+  dialog = adw_message_dialog_new (GTK_WINDOW (GsmApplication::get ()->main_window),
+                                   _("GNU CPU Affinity error"),
+                                   NULL);
+
+  adw_message_dialog_format_body (ADW_MESSAGE_DIALOG (dialog), "%s", g_strerror (errno));
+
+  adw_message_dialog_add_response (ADW_MESSAGE_DIALOG (dialog), "close", _("_Close"));
+
+  /* Destroy dialog with parent */
+  gtk_window_set_destroy_with_parent(GTK_WINDOW (dialog), TRUE);
 
   /* Set dialog as modal */
   gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
 
   /* Show the dialog */
-  gtk_widget_show (dialog);
+  gtk_window_present (GTK_WINDOW (dialog));
 
   /* Connect response signal to GTK widget destroy function */
   g_signal_connect_swapped (dialog,
