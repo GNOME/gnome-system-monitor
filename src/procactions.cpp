@@ -81,7 +81,7 @@ renice_single_process (GtkTreeModel *model,
     info->pid, args->arg_value, g_strerror (saved_errno));
 
   dialog = ADW_MESSAGE_DIALOG (adw_message_dialog_new (
-                                 NULL,
+                                 GTK_WINDOW (GsmApplication::get ()->main_window),
                                  NULL,
                                  NULL));
 
@@ -173,7 +173,7 @@ kill_single_process (GtkTreeModel *model,
     info->pid, args->arg_value, g_strerror (saved_errno));
 
   dialog = ADW_MESSAGE_DIALOG (adw_message_dialog_new (
-                                 NULL,
+                                 GTK_WINDOW (GsmApplication::get ()->main_window),
                                  NULL,
                                  NULL));
 
