@@ -532,5 +532,5 @@ create_disk_view (GsmApplication *app,
     disks_reset_timeout (app);
   });
 
-  gtk_widget_show (GTK_WIDGET (disk_tree));
+  gtk_widget_set_visible (GTK_WIDGET (disk_tree), TRUE);
 }
