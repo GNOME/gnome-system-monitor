@@ -784,7 +784,7 @@ cb_main_window_delete (GtkWindow*,
   return TRUE;
 }
 
-static gboolean
+static void
 cb_main_window_suspended (GtkWindow*,
                           gboolean        suspended,
                           GsmApplication *app)
@@ -829,7 +829,6 @@ cb_main_window_suspended (GtkWindow*,
           disks_thaw (app);
         }
     }
-    return FALSE;
 }
 
 void
