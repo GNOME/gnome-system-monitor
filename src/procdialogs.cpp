@@ -265,7 +265,7 @@ procdialog_create_renice_dialog (GsmApplication *app)
 
   g_object_unref (G_OBJECT (builder));
 
-  gtk_widget_show (GTK_WIDGET (renice_dialog));
+  gtk_widget_set_visible (GTK_WIDGET (renice_dialog), TRUE);
 }
 
 static char *
