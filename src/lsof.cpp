@@ -284,7 +284,7 @@ procman_lsof (GsmApplication *app)
   g_signal_connect (G_OBJECT (case_button), "toggled",
                     G_CALLBACK (GUI::case_button_checked), gui);
 
-  gtk_widget_show (GTK_WIDGET (dialog));
+  gtk_widget_set_visible (GTK_WIDGET (dialog), TRUE);
   gui->search ();
 
   g_object_unref (G_OBJECT (builder));
