@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="AdwWindow" id="setaffinity_dialog">
+    <property name="default-width">600</property>
+    <property name="default-height">430</property>
+    <property name="destroy-with-parent">True</property>
+    <property name="modal">True</property>
+    <property name="title" translatable="yes">Set Affinity</property>
+    <property name="content">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="show-start-title-buttons">False</property>
+            <property name="show-end-title-buttons">False</property>
+            <child type="start">
+              <object class="GtkButton" id="cancel_button">
+                <property name="label" translatable="yes">_Cancel</property>
+                <property name="use-underline">True</property>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkButton" id="apply_button">
+                <property name="label" translatable="yes">_Apply</property>
+                <property name="use-underline">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <property name="content">
+          <object class="GtkBox" id="dialog_vbox">
+            <property name="margin-top">12</property>
+            <property name="margin-bottom">12</property>
+            <property name="margin-start">12</property>
+            <property name="margin-end">12</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkScrolledWindow" id="scrolled">
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
+                <child>
+                  <object class="GtkGrid" id="cpulist_grid">
+                    <property name="margin-top">12</property>
+                    <property name="margin-bottom">12</property>
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
+                    <property name="row-spacing">12</property>
+                    <child>
+                      <object class="GtkCheckButton" id="allcpus_button">
+                        <property name="active">True</property>
+                        <property name="hexpand">True</property>
+                        <property name="label" translatable="yes">Run on all CPUs</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <style>
+                  <class name="view"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </property>
+  </object>
+</interface>

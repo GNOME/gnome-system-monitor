@@ -270,13 +270,10 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
 
   ProcInfo        *info;
   SetAffinityData *affinity_data;
-  AdwToolbarView  *toolbar_view;
-  AdwHeaderBar    *header_bar;
   GtkWidget       *cancel_button;
   GtkWidget       *apply_button;
   GtkWidget       *dialog_vbox;
   GtkWidget       *label;
-  GtkWidget       *scrolled;
   GtkGrid         *cpulist_grid;
 
   guint16               *affinity_cpus;
@@ -299,47 +296,23 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   /* Set initial check box array */
   affinity_data->buttons = g_new (GtkWidget *, app->config.num_cpus);
 
-  /* Create dialog window */
-  affinity_data->dialog = GTK_WIDGET (g_object_new (ADW_TYPE_WINDOW,
-                                                    "title", _("Set Affinity"),
-                                                    "destroy-with-parent", TRUE,
-                                                    NULL));
+  GtkBuilder *builder = gtk_builder_new ();
+  GError *err = NULL;
 
-  toolbar_view = ADW_TOOLBAR_VIEW (adw_toolbar_view_new ());
-  header_bar = ADW_HEADER_BAR (adw_header_bar_new ());
-  adw_header_bar_set_show_start_title_buttons (header_bar, FALSE);
-  adw_header_bar_set_show_end_title_buttons (header_bar, FALSE);
-  adw_toolbar_view_add_top_bar (toolbar_view, GTK_WIDGET (header_bar));
+  gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/setaffinity.ui", &err);
+  if (err != NULL)
+    g_error ("%s", err->message);
 
-  /* Add cancel button to header bar */
-  cancel_button = gtk_button_new_with_mnemonic(_("_Cancel"));
-  adw_header_bar_pack_start (header_bar, cancel_button);
-
-  /* Add apply button to header bar */
-  apply_button = gtk_button_new_with_mnemonic(_("_Apply"));
-  adw_header_bar_pack_end (header_bar, apply_button);
+  affinity_data->dialog = GTK_WIDGET (gtk_builder_get_object (builder, "setaffinity_dialog"));
+  dialog_vbox = GTK_WIDGET (gtk_builder_get_object (builder, "dialog_vbox"));
+  cpulist_grid = GTK_GRID (gtk_builder_get_object (builder, "cpulist_grid"));
+  affinity_data->buttons[0] = GTK_WIDGET (gtk_builder_get_object (builder, "allcpus_button"));
+  cancel_button = GTK_WIDGET (gtk_builder_get_object (builder, "cancel_button"));
+  apply_button = GTK_WIDGET (gtk_builder_get_object (builder, "apply_button"));
 
   /* Set dialog window "transient for" */
   gtk_window_set_transient_for (GTK_WINDOW (affinity_data->dialog),
                                 GTK_WINDOW (GsmApplication::get ()->main_window));
-
-  /* Set dialog window to be resizable */
-  gtk_window_set_resizable (GTK_WINDOW (affinity_data->dialog), TRUE);
-
-  /* Set default dialog window size */
-  gtk_widget_set_size_request (affinity_data->dialog, 600, 430);
-
-  /* Set dialog as modal */
-  gtk_window_set_modal (GTK_WINDOW (affinity_data->dialog), TRUE);
-
-  /* Create VBox */
-  dialog_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 10);
-
-  /* Set dialog VBox margin */
-  gtk_widget_set_margin_top (GTK_WIDGET (dialog_vbox), 15);
-  gtk_widget_set_margin_bottom (GTK_WIDGET (dialog_vbox), 15);
-  gtk_widget_set_margin_start (GTK_WIDGET (dialog_vbox), 15);
-  gtk_widget_set_margin_end (GTK_WIDGET (dialog_vbox), 15);
 
   /* Add selected process pid to affinity data */
   affinity_data->pid = info->pid;
@@ -360,37 +333,6 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   /* Add label to dialog VBox */
   gtk_box_prepend (GTK_BOX (dialog_vbox), label);
 
-  /* Create scrolled box ("window") */
-  scrolled = gtk_scrolled_window_new ();
-
-  gtk_widget_set_hexpand (GTK_WIDGET (scrolled), TRUE);
-  gtk_widget_set_vexpand (GTK_WIDGET (scrolled), TRUE);
-
-  /* Add view class to scrolled box style */
-  gtk_widget_add_css_class (scrolled, "view");
-
-  /* Set scrolled box vertical and horizontal policies */
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
-                                  GTK_POLICY_AUTOMATIC,
-                                  GTK_POLICY_AUTOMATIC);
-
-  /* Create grid for CPU list */
-  cpulist_grid = GTK_GRID (gtk_grid_new ());
-
-  /* Set CPU list grid margin */
-  gtk_widget_set_margin_top (GTK_WIDGET (cpulist_grid), 10);
-  gtk_widget_set_margin_bottom (GTK_WIDGET (cpulist_grid), 10);
-  gtk_widget_set_margin_start (GTK_WIDGET (cpulist_grid), 10);
-  gtk_widget_set_margin_end (GTK_WIDGET (cpulist_grid), 10);
-
-  /* Set grid row spacing */
-  gtk_grid_set_row_spacing (cpulist_grid, 10);
-
-  /* Create toggle all check box */
-  affinity_data->buttons[0] = gtk_check_button_new_with_label (_("Run on all CPUs"));
-  gtk_check_button_set_active (GTK_CHECK_BUTTON (affinity_data->buttons[0]), TRUE);
-  gtk_widget_set_hexpand (affinity_data->buttons[0], TRUE);
-
   /* Get process's current affinity */
   affinity_cpus = glibtop_get_proc_affinity (&affinity, info->pid);
 
@@ -398,9 +340,6 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   gtk_check_button_set_active (
     GTK_CHECK_BUTTON (affinity_data->buttons[0]),
     affinity.all);
-
-  /* Add toggle all check box to CPU grid */
-  gtk_grid_attach (cpulist_grid, affinity_data->buttons[0], 0, 0, 1, 1);
 
   /* Run through all CPU buttons */
   for (button_n = 1; button_n < app->config.num_cpus + 1; button_n++)
@@ -437,15 +376,6 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
         TRUE);
     }
 
-  /* Add CPU grid to scrolled box */
-  gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (cpulist_grid));
-
-  /* Add scrolled box to dialog VBox */
-  gtk_box_append (GTK_BOX (dialog_vbox), scrolled);
-
-  adw_toolbar_view_set_content (toolbar_view, GTK_WIDGET (dialog_vbox));
-  adw_window_set_content(ADW_WINDOW (affinity_data->dialog), GTK_WIDGET (toolbar_view));
-
   /* Swap click signal on "Cancel" button */
   g_signal_connect_swapped (cancel_button,
                             "clicked",
@@ -466,6 +396,8 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
 
   /* Show dialog window */
   gtk_window_present (GTK_WINDOW (affinity_data->dialog));
+
+  g_object_unref (G_OBJECT (builder));
 }
 
 void
