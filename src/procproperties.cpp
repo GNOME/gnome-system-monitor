@@ -188,13 +188,7 @@ create_single_procproperties_dialog (GtkTreeModel *model,
 {
   GsmApplication *app = static_cast<GsmApplication *>(data);
 
-  AdwWindow *procpropdialog;
-  AdwToolbarView  *toolbar_view;
-  AdwHeaderBar    *header_bar;
-  GtkBox *dialog_vbox, *vbox;
-  GtkBox *cmd_hbox;
   gchar *label;
-  GtkWidget *scrolled;
   GtkTreeView *tree;
   ProcInfo *info;
   guint timer;
@@ -204,52 +198,23 @@ create_single_procproperties_dialog (GtkTreeModel *model,
   if (!info)
     return;
 
-  procpropdialog = ADW_WINDOW (g_object_new (ADW_TYPE_WINDOW,
-                                             NULL));
+  GtkBuilder *builder = gtk_builder_new ();
+  GError *err = NULL;
+
+  gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/procproperties.ui", &err);
+  if (err != NULL)
+    g_error ("%s", err->message);
+
+  GtkWindow *procpropdialog = GTK_WINDOW (gtk_builder_get_object (builder, "procprop_dialog"));
+  GtkWidget *scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "scrolled"));
 
   label = g_strdup_printf (_("%s (PID %u)"), info->name.c_str (), info->pid);
   gtk_window_set_title (GTK_WINDOW (procpropdialog), label);
   g_free (label);
 
-  gtk_window_set_destroy_with_parent (GTK_WINDOW (procpropdialog), TRUE);
-
-  gtk_window_set_resizable (GTK_WINDOW (procpropdialog), TRUE);
-  gtk_window_set_default_size (GTK_WINDOW (procpropdialog), 575, 400);
-  gtk_window_set_modal (GTK_WINDOW (procpropdialog), TRUE);
-
-  toolbar_view = ADW_TOOLBAR_VIEW (adw_toolbar_view_new ());
-  header_bar = ADW_HEADER_BAR (adw_header_bar_new ());
-  adw_toolbar_view_add_top_bar (toolbar_view, GTK_WIDGET (header_bar));
-
-  vbox = GTK_BOX (gtk_box_new (GTK_ORIENTATION_VERTICAL, 2));
-  gtk_widget_set_margin_top (GTK_WIDGET (vbox), 10);
-  gtk_widget_set_margin_bottom (GTK_WIDGET (vbox), 10);
-  gtk_widget_set_margin_start (GTK_WIDGET (vbox), 10);
-  gtk_widget_set_margin_end (GTK_WIDGET (vbox), 10);
-
-  dialog_vbox = GTK_BOX (gtk_box_new (GTK_ORIENTATION_VERTICAL, 6));
-  gtk_widget_set_margin_top (GTK_WIDGET (dialog_vbox), 5);
-  gtk_widget_set_margin_bottom (GTK_WIDGET (dialog_vbox), 5);
-  gtk_widget_set_margin_start (GTK_WIDGET (dialog_vbox), 5);
-  gtk_widget_set_margin_end (GTK_WIDGET (dialog_vbox), 5);
-  gtk_box_prepend (vbox, GTK_WIDGET (dialog_vbox));
-
-  cmd_hbox = GTK_BOX (gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12));
-  gtk_box_prepend (dialog_vbox, GTK_WIDGET (cmd_hbox));
-
-  scrolled = gtk_scrolled_window_new ();
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
-                                  GTK_POLICY_AUTOMATIC,
-                                  GTK_POLICY_AUTOMATIC);
-
   tree = create_procproperties_tree (app, info);
   gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (tree));
   g_object_set_data (G_OBJECT (tree), "selected_info", GUINT_TO_POINTER (info->pid));
-
-  gtk_box_prepend (dialog_vbox, GTK_WIDGET (scrolled));
-
-  adw_toolbar_view_set_content (toolbar_view, GTK_WIDGET (vbox));
-  adw_window_set_content(ADW_WINDOW (procpropdialog), GTK_WIDGET (toolbar_view));
 
   g_signal_connect (G_OBJECT (procpropdialog), "close-request",
                     G_CALLBACK (close_procprop_dialog), tree);
@@ -261,6 +226,8 @@ create_single_procproperties_dialog (GtkTreeModel *model,
   g_object_set_data (G_OBJECT (tree), "timer", GUINT_TO_POINTER (timer));
 
   update_procproperties_dialog (tree);
+
+  g_object_unref (G_OBJECT (builder));
 }
 
 void
