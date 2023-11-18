@@ -456,8 +456,6 @@ create_single_memmaps_dialog (GtkTreeModel *model,
   GsmApplication *app = static_cast<GsmApplication *>(data);
   MemMapsData *mmdata;
   AdwWindow  *memmapsdialog;
-  AdwToolbarView *toolbar_view;
-  AdwHeaderBar *header_bar;
   GtkBox *dialog_box;
   GtkLabel *label;
   GtkWidget *scrolled;
@@ -471,23 +469,16 @@ create_single_memmaps_dialog (GtkTreeModel *model,
   mmdata = create_memmapsdata (app);
   mmdata->info = info;
 
-  memmapsdialog = ADW_WINDOW (g_object_new (ADW_TYPE_WINDOW,
-                                            "title", _("Memory Maps"),
-                                            "destroy-with-parent", TRUE, NULL));
+  GtkBuilder *builder = gtk_builder_new ();
+  GError *err = NULL;
 
-  gtk_window_set_resizable (GTK_WINDOW (memmapsdialog), TRUE);
-  gtk_window_set_default_size (GTK_WINDOW (memmapsdialog), 620, 400);
-  gtk_window_set_modal (GTK_WINDOW (memmapsdialog), TRUE);
+  gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/memmaps.ui", &err);
+  if (err != NULL)
+    g_error ("%s", err->message);
 
-  toolbar_view = ADW_TOOLBAR_VIEW (adw_toolbar_view_new ());
-  header_bar = ADW_HEADER_BAR (adw_header_bar_new ());
-  adw_toolbar_view_add_top_bar (toolbar_view, GTK_WIDGET (header_bar));
-
-  dialog_box = GTK_BOX (gtk_box_new (GTK_ORIENTATION_VERTICAL, 0));
-  gtk_widget_set_margin_top (GTK_WIDGET (dialog_box), 10);
-  gtk_widget_set_margin_bottom (GTK_WIDGET (dialog_box), 10);
-  gtk_widget_set_margin_start (GTK_WIDGET (dialog_box), 10);
-  gtk_widget_set_margin_end (GTK_WIDGET (dialog_box), 10);
+  memmapsdialog = ADW_WINDOW (gtk_builder_get_object (builder, "memmaps_dialog"));
+  dialog_box = GTK_BOX (gtk_builder_get_object (builder, "dialog_box"));
+  scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "scrolled"));
 
   label = procman_make_label_for_mmaps_or_ofiles (
     _("_Memory maps for process “%s” (PID %u):"),
@@ -496,18 +487,8 @@ create_single_memmaps_dialog (GtkTreeModel *model,
 
   gtk_box_prepend (dialog_box, GTK_WIDGET (label));
 
-  scrolled = gtk_scrolled_window_new ();
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
-                                  GTK_POLICY_AUTOMATIC,
-                                  GTK_POLICY_AUTOMATIC);
-
   gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (mmdata->tree));
   gtk_label_set_mnemonic_widget (label, GTK_WIDGET (mmdata->tree));
-
-  gtk_box_append (dialog_box, GTK_WIDGET (scrolled));
-
-  adw_toolbar_view_set_content (toolbar_view, GTK_WIDGET (dialog_box));
-  adw_window_set_content(memmapsdialog, GTK_WIDGET (toolbar_view));
 
   gtk_window_set_transient_for (GTK_WINDOW (memmapsdialog), GTK_WINDOW (GsmApplication::get ()->main_window));
 
@@ -518,6 +499,8 @@ create_single_memmaps_dialog (GtkTreeModel *model,
   update_memmaps_dialog (mmdata);
 
   gtk_window_present (GTK_WINDOW (memmapsdialog));
+
+  g_object_unref (G_OBJECT (builder));
 }
 
 

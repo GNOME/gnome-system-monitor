@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="AdwWindow" id="memmaps_dialog">
+    <property name="default-width">620</property>
+    <property name="default-height">400</property>
+    <property name="destroy-with-parent">True</property>
+    <property name="modal">True</property>
+    <property name="title" translatable="yes">Memory Maps</property>
+    <property name="content">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar"/>
+        </child>
+        <property name="content">
+          <object class="GtkBox" id="dialog_box">
+            <property name="margin-top">12</property>
+            <property name="margin-bottom">12</property>
+            <property name="margin-start">12</property>
+            <property name="margin-end">12</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkScrolledWindow" id="scrolled"/>
+            </child>
+          </object>
+        </property>
+      </object>
+    </property>
+  </object>
+</interface>
