@@ -2,8 +2,8 @@
 project('gnome-system-monitor',
   'c', 'cpp',
   default_options : [
-    'c_std=gnu17',
-    'cpp_std=gnu++17',
+    'c_std=gnu2x',
+    'cpp_std=gnu++20',
     'warning_level=3',
   ],
   version: '46.alpha',
