@@ -95,7 +95,7 @@ failsafe:
 
 
 static void
-add_new_files (gpointer key,
+add_new_files (gpointer,
                gpointer value,
                gpointer data)
 {
@@ -141,7 +141,7 @@ static GList *old_maps = NULL;
 
 static gboolean
 classify_openfiles (GtkTreeModel *model,
-                    GtkTreePath  *path,
+                    GtkTreePath*,
                     GtkTreeIter  *iter,
                     gpointer      data)
 {
@@ -325,7 +325,7 @@ openfiles_timer (gpointer data)
 
 static void
 create_single_openfiles_dialog (GtkTreeModel *model,
-                                GtkTreePath  *path,
+                                GtkTreePath*,
                                 GtkTreeIter  *iter,
                                 gpointer      data)
 {

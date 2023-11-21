@@ -84,8 +84,8 @@ cb_proctree_destroying (GtkTreeView *self,
 }
 
 static gboolean
-cb_tree_button_pressed (GtkGestureClick *controller,
-                        gint             n_press,
+cb_tree_button_pressed (GtkGestureClick*,
+                        gint,
                         gdouble          x,
                         gdouble          y,
                         GsmApplication  *app)
@@ -113,7 +113,7 @@ cb_tree_button_pressed (GtkGestureClick *controller,
 
 void
 get_last_selected (GtkTreeModel *model,
-                   GtkTreePath  *path,
+                   GtkTreePath*,
                    GtkTreeIter  *iter,
                    gpointer      data)
 {
@@ -185,7 +185,7 @@ cb_timeout (gpointer data)
 }
 
 static void
-cb_refresh_icons (GtkIconTheme *theme,
+cb_refresh_icons (GtkIconTheme*,
                   gpointer      data)
 {
   GsmApplication *app = (GsmApplication *) data;
@@ -304,7 +304,7 @@ proctable_clear_tree (GsmApplication * const app)
 
 static void
 cb_show_dependencies_changed (Gio::Settings& settings,
-                              Glib::ustring  key,
+                              Glib::ustring,
                               GsmApplication*app)
 {
   if (app->timeout)
@@ -318,9 +318,9 @@ cb_show_dependencies_changed (Gio::Settings& settings,
 }
 
 static void
-cb_show_whose_processes_changed (Gio::Settings& settings,
-                                 Glib::ustring  key,
-                                 GsmApplication*app)
+cb_show_whose_processes_changed (Gio::Settings&,
+                                 Glib::ustring,
+                                 GsmApplication *app)
 {
   if (app->timeout)
     {

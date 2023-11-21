@@ -191,7 +191,7 @@ renice_adjustment_value_changed (GtkAdjustment *adjustment,
 }
 
 static void
-renice_dialog_response (AdwMessageDialog *dialog,
+renice_dialog_response (AdwMessageDialog*,
                         gchar            *response,
                         gpointer          data)
 {
@@ -209,12 +209,8 @@ procdialog_create_renice_dialog (GsmApplication *app)
 {
   GtkAdjustment *renice_adjustment;
   GtkBuilder *builder;
-  GtkButton *cancel_button;
-  GtkButton *change_priority_button;
-  GtkLabel *label;
   GtkLabel *priority_label;
   ProcInfo *info;
-  gchar     *text;
   gchar     *dialog_title;
 
   if (renice_dialog)
@@ -309,7 +305,7 @@ multi_root_check (char *command)
  */
 gboolean
 procdialog_create_root_password_dialog (ProcmanActionType type,
-                                        GsmApplication   *app,
+                                        GsmApplication*,
                                         gint              pid,
                                         gint              extra_value)
 {

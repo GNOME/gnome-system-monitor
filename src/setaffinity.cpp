@@ -193,7 +193,7 @@ execute_taskset_command (gchar **cpu_list,
 }
 
 static void
-set_affinity (GtkCheckButton *button,
+set_affinity (GtkCheckButton*,
               gpointer        data)
 {
   SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
@@ -262,7 +262,7 @@ set_affinity (GtkCheckButton *button,
 
 static void
 create_single_set_affinity_dialog (GtkTreeModel *model,
-                                   GtkTreePath  *path,
+                                   GtkTreePath*,
                                    GtkTreeIter  *iter,
                                    gpointer      data)
 {

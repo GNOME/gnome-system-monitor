@@ -122,8 +122,8 @@ gsm_tree_view_get_column_from_id (GsmTreeView *tree_view,
 }
 
 static void
-cb_column_header_clicked (GtkGestureClick *gesture_click,
-                          gint             n_press,
+cb_column_header_clicked (GtkGestureClick*,
+                          gint,
                           gdouble          x,
                           gdouble          y,
                           gpointer         data)
@@ -267,7 +267,7 @@ save_column_state (gpointer data)
 
 static void
 cb_update_column_state (GObject    *object,
-                        GParamSpec *pspec,
+                        GParamSpec*,
                         gpointer    data)
 {
   GtkTreeViewColumn *column = GTK_TREE_VIEW_COLUMN (object);

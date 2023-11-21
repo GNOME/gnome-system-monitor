@@ -197,9 +197,9 @@ load_graph_rescale (LoadGraph *graph)
 }
 
 static void
-load_graph_resize (GtkDrawingArea *disp,
-                   gint            width,
-                   gint            height,
+load_graph_resize (GtkDrawingArea*,
+                   gint,
+                   gint,
                    gpointer        data_ptr)
 {
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
@@ -209,7 +209,7 @@ load_graph_resize (GtkDrawingArea *disp,
 
 static void
 load_graph_state_changed (GtkWidget     *widget,
-                          GtkStateFlags *flags,
+                          GtkStateFlags*,
                           gpointer       data_ptr)
 {
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
@@ -219,7 +219,7 @@ load_graph_state_changed (GtkWidget     *widget,
 }
 
 static void
-load_graph_color_scheme_changed (GsmGraph *graph,
+load_graph_color_scheme_changed (GsmGraph*,
                                  gpointer  data_ptr)
 {
   LoadGraph * const load_graph = static_cast<LoadGraph*>(data_ptr);
@@ -410,7 +410,7 @@ create_background (LoadGraph *graph, int width, int height)
 }
 
 static void
-load_graph_draw (GtkDrawingArea *drawing_area,
+load_graph_draw (GtkDrawingArea*,
                  cairo_t        *cr,
                  int             width,
                  int             height,
@@ -1007,7 +1007,7 @@ load_graph_update (gpointer user_data)
 }
 
 static void
-load_graph_destroy (GtkWidget *widget,
+load_graph_destroy (GtkWidget*,
                     gpointer   data_ptr)
 {
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
@@ -1026,11 +1026,11 @@ LoadGraph::LoadGraph(guint type)
   latest (0),
   render_counter (0),
   frames_per_unit (10),    // this will be changed but needs initialising
-  num_bars (0),
   graph_dely (0),
   graph_delx (0),
-  real_draw_height (0),
   graph_buffer_offset (0),
+  num_bars (0),
+  real_draw_height (0),
   colors (),
   data_block (),
   data (),

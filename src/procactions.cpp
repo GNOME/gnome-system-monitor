@@ -32,7 +32,7 @@
 
 static void
 renice_single_process (GtkTreeModel *model,
-                       GtkTreePath  *path,
+                       GtkTreePath*,
                        GtkTreeIter  *iter,
                        gpointer      data)
 {
@@ -126,7 +126,7 @@ renice (GsmApplication *app,
 
 static void
 kill_single_process (GtkTreeModel *model,
-                     GtkTreePath  *path,
+                     GtkTreePath*,
                      GtkTreeIter  *iter,
                      gpointer      data)
 {

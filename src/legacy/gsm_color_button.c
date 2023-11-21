@@ -346,13 +346,13 @@ gsm_color_button_snapshot (GtkWidget   *widget,
 }
 
 static void
-gsm_color_button_measure (GtkWidget     *widget,
+gsm_color_button_measure (GtkWidget*,
                           GtkOrientation orientation,
-                          int            for_size,
+                          int,
                           int           *minimum,
                           int           *natural,
-                          int           *minimum_baseline,
-                          int           *natural_baseline)
+                          int*,
+                          int*)
 {
   if (orientation & GTK_ORIENTATION_HORIZONTAL)
     {
@@ -373,7 +373,7 @@ gsm_color_button_state_flags_changed (GtkWidget *self)
 }
 
 static void
-dialog_response (GtkDialog      *self,
+dialog_response (GtkDialog*,
                  gint            response,
                  GsmColorButton *color_button)
 {
@@ -396,7 +396,7 @@ dialog_response (GtkDialog      *self,
 }
 
 static void
-dialog_destroy (GtkWidget      *widget,
+dialog_destroy (GtkWidget*,
                 GsmColorButton *color_button)
 {
   GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
@@ -405,10 +405,10 @@ dialog_destroy (GtkWidget      *widget,
 }
 
 static void
-gsm_color_button_released (GtkGestureClick *controller,
-                           gint             n_press,
-                           gdouble          x,
-                           gdouble          y,
+gsm_color_button_released (GtkGestureClick*,
+                           gint,
+                           gdouble,
+                           gdouble,
                            GsmColorButton  *color_button)
 {
   GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
@@ -442,14 +442,12 @@ gsm_color_button_released (GtkGestureClick *controller,
 }
 
 static gboolean
-gsm_color_button_drag_data_drop (GtkDropTarget  *drop_target,
+gsm_color_button_drag_data_drop (GtkDropTarget*,
                                  const GValue   *value,
-                                 gdouble         x,
-                                 gdouble         y,
+                                 gdouble,
+                                 gdouble,
                                  GsmColorButton *color_button)
 {
-  GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
-
   if (G_VALUE_HOLDS (value, GDK_TYPE_RGBA))
     gsm_color_button_set_color (color_button, g_value_get_boxed (value));
   else
@@ -460,7 +458,7 @@ gsm_color_button_drag_data_drop (GtkDropTarget  *drop_target,
 
 static void
 gsm_color_button_drag_begin (GtkDragSource  *drag_source,
-                             GdkDrag        *drag,
+                             GdkDrag*,
                              GsmColorButton *color_button)
 {
   GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
@@ -469,9 +467,9 @@ gsm_color_button_drag_begin (GtkDragSource  *drag_source,
 }
 
 static GdkContentProvider *
-gsm_color_button_prepare (GtkDragSource  *drag_source,
-                          gdouble         x,
-                          gdouble         y,
+gsm_color_button_prepare (GtkDragSource*,
+                          gdouble,
+                          gdouble,
                           GsmColorButton *color_button)
 {
   GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
@@ -636,7 +634,7 @@ gsm_color_button_init (GsmColorButton *color_button)
   priv->image_buffer = NULL;
   priv->title = g_strdup (_("Pick a Color"));   /* default title */
 
-  GtkGestureClick *click_controller = gtk_gesture_click_new ();
+  GtkGesture *click_controller = gtk_gesture_click_new ();
 
   g_signal_connect (click_controller, "released",
                     G_CALLBACK (gsm_color_button_released), color_button);

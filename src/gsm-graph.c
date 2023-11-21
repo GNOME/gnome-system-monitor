@@ -64,7 +64,7 @@ gsm_graph_class_init (GsmGraphClass *klass)
 }
 
 static void
-gsm_graph_init (GsmGraph *self)
+gsm_graph_init (GsmGraph*)
 {
 }
 

@@ -449,7 +449,7 @@ memmaps_timer (gpointer data)
 
 static void
 create_single_memmaps_dialog (GtkTreeModel *model,
-                              GtkTreePath  *path,
+                              GtkTreePath*,
                               GtkTreeIter  *iter,
                               gpointer      data)
 {

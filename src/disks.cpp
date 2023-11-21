@@ -32,7 +32,7 @@ enum DiskColumns
 };
 
 static void
-cb_sort_changed (GtkTreeSortable *model,
+cb_sort_changed (GtkTreeSortable*,
                  gpointer         data)
 {
   GsmApplication *app = (GsmApplication *) data;
@@ -103,7 +103,6 @@ get_icon_for_path (const char*path)
 static GdkTexture *
 get_icon_for_device (const char *mountpoint)
 {
-  GFile *icon_file;
   GdkTexture *icon;
   GtkIconPaintable *icon_paintable;
   GtkIconTheme *icon_theme;
@@ -240,8 +239,8 @@ add_disk (GtkListStore             *list,
 }
 
 static void
-mount_changed (GVolumeMonitor *monitor,
-               GMount         *mount,
+mount_changed (GVolumeMonitor*,
+               GMount*,
                GsmApplication *app)
 {
   disks_update (app);
@@ -318,7 +317,7 @@ disks_reset_timeout (GsmApplication *app)
 
 static void
 cb_disk_columns_changed (GtkTreeView *treeview,
-                         gpointer     data)
+                         gpointer)
 {
   gsm_tree_view_save_state (GSM_TREE_VIEW (treeview));
 }
@@ -327,8 +326,8 @@ cb_disk_columns_changed (GtkTreeView *treeview,
 static void
 open_dir (GtkTreeView       *tree_view,
           GtkTreePath       *path,
-          GtkTreeViewColumn *column,
-          gpointer           user_data)
+          GtkTreeViewColumn*,
+          gpointer)
 {
   GtkTreeIter iter;
   GtkTreeModel *model;
