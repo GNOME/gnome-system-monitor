@@ -208,6 +208,8 @@ procman_lsof (GsmApplication *app)
 
   g_object_unref (model);
 
+  gtk_tree_view_set_enable_search(tree, FALSE);
+
   // TEXTURE / PROCESS
 
   GtkTreeViewColumn *column = gtk_tree_view_column_new ();
@@ -269,6 +271,7 @@ procman_lsof (GsmApplication *app)
   GtkWidget *scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "scrolled"));
 
   gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (tree));
+  gtk_search_bar_connect_entry(search_bar, GTK_EDITABLE (search_entry));
   gtk_search_bar_set_key_capture_widget (search_bar, GTK_WIDGET (dialog));
 
   GUI *gui = new GUI;   // wil be deleted by the close button or delete-event
