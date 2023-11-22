@@ -331,7 +331,7 @@ create_single_openfiles_dialog (GtkTreeModel *model,
 {
   GsmApplication *app = static_cast<GsmApplication *>(data);
   AdwWindow *openfilesdialog;
-  GtkGrid *cmd_grid;
+  GtkBox *dialog_content;
   GtkLabel *label;
   GtkWidget *scrolled;
   GsmTreeView *tree;
@@ -351,15 +351,14 @@ create_single_openfiles_dialog (GtkTreeModel *model,
     g_error ("%s", err->message);
 
   openfilesdialog = ADW_WINDOW (gtk_builder_get_object (builder, "openfiles_dialog"));
-
-  cmd_grid = GTK_GRID (gtk_builder_get_object (builder, "cmd_grid"));
+  dialog_content = GTK_BOX (gtk_builder_get_object (builder, "dialog_content"));
 
   label = procman_make_label_for_mmaps_or_ofiles (
     _("_Files opened by process “%s” (PID %u):"),
     info->name.c_str (),
     info->pid);
 
-  gtk_grid_attach (cmd_grid, GTK_WIDGET (label), 0, 0, 1, 1);
+  gtk_box_prepend (dialog_content, GTK_WIDGET (label));
 
   scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "scrolled"));
 
