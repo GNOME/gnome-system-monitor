@@ -39,12 +39,13 @@ dataconf.set('pkglibexecdir',
 prefix = get_option('prefix')
 datadir = join_paths(prefix, get_option('datadir'))
 
+
 ################################################################################
 # Dependencies
 
-giomm      = dependency('giomm-2.68',   version: '>=2.68')
+giomm      = dependency('giomm-2.68',  version: '>=2.68')
 glib       = dependency('glib-2.0',    version: '>=2.56.0')
-glibmm     = dependency('glibmm-2.68',  version: '>=2.68')
+glibmm     = dependency('glibmm-2.68', version: '>=2.68')
 gmodule    = dependency('gmodule-2.0')
 gtk        = dependency('gtk4',        version: '>=4.12.0')
 gtkmm      = dependency('gtkmm-4.0',   version: '>=4.0.0')
@@ -99,6 +100,7 @@ configure_file(
   configuration: conf,
 )
 
+
 ################################################################################
 # Generate files
 
@@ -139,6 +141,9 @@ i18n.merge_file(
 )
 
 
+################################################################################
+# Tests
+
 appstream_util = find_program('appstream-util', required: false)
 if appstream_util.found()
   test('validate_appdata',
@@ -154,9 +159,6 @@ if desktop_validate.found()
     args: [ desktop_files ],
   )
 endif
-
-################################################################################
-# Tests
 
 python3 = find_program('python3', required: false)
 git = find_program('git', required: false)
@@ -200,8 +202,10 @@ message('\n'.join(['',
 '        systemd support:        @0@'.format(libsystemd.found()),
 ]))
 
+
 # Extra scripts
 gnome.post_install(
   glib_compile_schemas: true,
   gtk_update_icon_cache: true,
 )
+
