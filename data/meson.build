@@ -41,11 +41,11 @@ i18n.merge_file(
 ################################################################################
 # Tests
 
-appstream_util = find_program('appstream-util', required: false)
-if appstream_util.found()
+appstreamcli = find_program('appstreamcli', required: false)
+if appstreamcli.found()
   test('validate_appdata',
-    appstream_util,
-    args: [ 'validate-relax', '--nonet', appdata_file ],
+    appstreamcli,
+    args: [ 'validate', '--no-net', '--explain', appdata_file ],
   )
 endif
 
