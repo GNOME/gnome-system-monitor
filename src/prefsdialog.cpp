@@ -167,6 +167,18 @@ create_field_page (GtkBuilder  *builder,
   g_list_free (columns);
 }
 
+static void
+switch_preferences_page (GtkBuilder   *builder,
+                         AdwViewStack *stack)
+{
+  const gchar *stack_name = adw_view_stack_get_visible_child_name (stack);
+
+  AdwPreferencesPage *page = ADW_PREFERENCES_PAGE (gtk_builder_get_object (builder, stack_name));
+
+  if (page != NULL)
+    adw_preferences_window_set_visible_page (prefs_window, page);
+}
+
 void
 create_preferences_dialog (GsmApplication *app)
 {
@@ -299,6 +311,8 @@ create_preferences_dialog (GsmApplication *app)
 
   g_signal_connect (G_OBJECT (prefs_window), "close-request",
                     G_CALLBACK (prefs_window_close_request), NULL);
+
+  switch_preferences_page (builder, app->stack);
 
   gtk_window_present (GTK_WINDOW (prefs_window));
 
