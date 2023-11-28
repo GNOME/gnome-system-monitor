@@ -7,7 +7,11 @@ foreach file : [
     'gnome-system-monitor-kde.desktop',
   ]
   desktop_files += i18n.merge_file(
-    input : file + '.in',
+    input : configure_file(
+    configuration: dataconf,
+    input : file + '.in.in',
+    output: file + '.in'
+    ),
     output: file,
     po_dir: '../po',
     type: 'desktop',
@@ -17,7 +21,11 @@ foreach file : [
 endforeach
 
 appdata_file = i18n.merge_file(
-  input : 'gnome-system-monitor.appdata.xml.in',
+  input : configure_file(
+  configuration: dataconf,
+  input : 'gnome-system-monitor.appdata.xml.in.in',
+  output: 'gnome-system-monitor.appdata.xml.in'
+  ),
   output: 'gnome-system-monitor.appdata.xml',
   po_dir: '../po',
   install: true,

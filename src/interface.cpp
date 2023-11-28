@@ -488,7 +488,7 @@ on_activate_about (GSimpleAction *,
     "copyright", "Copyright \xc2\xa9 2001-2004 Kevin Vandersloot\n"
     "Copyright \xc2\xa9 2005-2007 Benoît Dejean\n"
     "Copyright \xc2\xa9 2011 Chris Kühl",
-    "application-icon", "org.gnome.SystemMonitor",
+    "application-icon", APP_ID,
     "developer-name", _("The GNOME Project"),
     "developers", authors,
     "artists", artists,

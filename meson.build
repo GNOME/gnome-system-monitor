@@ -17,9 +17,16 @@ i18n  = import('i18n')
 cc = meson.get_compiler('c')
 cx = meson.get_compiler('cpp')
 
+if get_option('development')
+  app_id = 'org.gnome.SystemMonitor.Devel'
+else
+  app_id = 'org.gnome.SystemMonitor'
+endif
+
 gettext_package = meson.project_name()
 
 conf = configuration_data()
+conf.set_quoted('APP_ID', app_id)
 conf.set_quoted('VERSION', meson.project_version())
 conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
 conf.set_quoted('GNOMELOCALEDIR',
@@ -30,6 +37,7 @@ conf.set_quoted('GSM_LIBEXEC_DIR',
 )
 
 dataconf = configuration_data()
+dataconf.set('APP_ID', app_id)
 dataconf.set('VERSION', meson.project_version())
 dataconf.set('GETTEXT_PACKAGE', gettext_package)
 dataconf.set('pkglibexecdir',
