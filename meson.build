@@ -140,6 +140,7 @@ subdir('data')
 subdir('po')
 subdir('scripts')
 subdir('src')
+subdir('src-ng')
 subdir('help')
 
 
