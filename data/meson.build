@@ -21,11 +21,7 @@ foreach file : [
 endforeach
 
 appdata_file = i18n.merge_file(
-  input : configure_file(
-  configuration: dataconf,
-  input : 'gnome-system-monitor.appdata.xml.in.in',
-  output: 'gnome-system-monitor.appdata.xml.in'
-  ),
+  input : 'gnome-system-monitor.appdata.xml.in',
   output: 'gnome-system-monitor.appdata.xml',
   po_dir: '../po',
   install: true,
