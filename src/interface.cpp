@@ -534,27 +534,22 @@ kill_process_with_confirmation (GsmApplication *app,
 }
 
 static void
-on_activate_send_signal (GSimpleAction *,
-                         GVariant *parameter,
+on_activate_send_signal (GSimpleAction *action,
+                         GVariant *,
                          gpointer  data)
 {
   GsmApplication *app = (GsmApplication *) data;
 
-  /* no confirmation */
-  gint32 signal = g_variant_get_int32 (parameter);
+  const gchar *action_name = g_action_get_name (G_ACTION (action));
 
-  switch (signal)
-    {
-      case SIGCONT:
-        kill_process (app, signal);
-        break;
-
-      case SIGSTOP:
-      case SIGTERM:
-      case SIGKILL:
-        kill_process_with_confirmation (app, signal);
-        break;
-    }
+  if (g_strcmp0 (action_name, "send-signal-cont") == 0)
+    kill_process (app, SIGCONT);
+  else if (g_strcmp0 (action_name, "send-signal-stop") == 0)
+    kill_process_with_confirmation (app, SIGSTOP);
+  else if (g_strcmp0 (action_name, "send-signal-term") == 0)
+    kill_process_with_confirmation (app, SIGTERM);
+  else if (g_strcmp0 (action_name, "send-signal-kill") == 0)
+    kill_process_with_confirmation (app, SIGKILL);
 }
 
 static void
@@ -880,10 +875,10 @@ create_main_window (GsmApplication *app)
     { "about", on_activate_about, NULL, NULL, NULL, {0,0,0} },
     { "show-help-overlay", on_activate_keyboard_shortcuts, NULL, NULL, NULL, {0,0,0} },
     { "search", on_activate_search, NULL, NULL, NULL, {0,0,0} },
-    { "send-signal-stop", on_activate_send_signal, "i", NULL, NULL, {0,0,0} },
-    { "send-signal-cont", on_activate_send_signal, "i", NULL, NULL, {0,0,0} },
-    { "send-signal-term", on_activate_send_signal, "i", NULL, NULL, {0,0,0} },
-    { "send-signal-kill", on_activate_send_signal, "i", NULL, NULL, {0,0,0} },
+    { "send-signal-stop", on_activate_send_signal, NULL, NULL, NULL, {0,0,0} },
+    { "send-signal-cont", on_activate_send_signal, NULL, NULL, NULL, {0,0,0} },
+    { "send-signal-term", on_activate_send_signal, NULL, NULL, NULL, {0,0,0} },
+    { "send-signal-kill", on_activate_send_signal, NULL, NULL, NULL, {0,0,0} },
     { "priority", on_activate_priority, "i", "@i 0", change_priority_state, {0,0,0} },
     { "set-affinity", on_activate_set_affinity, NULL, NULL, NULL, {0,0,0} },
     { "memory-maps", on_activate_memory_maps, NULL, NULL, NULL, {0,0,0} },
