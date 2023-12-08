@@ -1,0 +1,187 @@
+{
+    "app-id": "org.gnome.SystemMonitor.Devel",
+    "runtime": "org.gnome.Platform",
+    "runtime-version": "master",
+    "sdk": "org.gnome.Sdk",
+    "command": "gnome-system-monitor",
+    "finish-args": [
+        "--device=dri",
+        "--share=ipc",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--share=network",
+        "--filesystem=host",
+        "--talk-name=org.gtk.vfs.*",
+        "--filesystem=xdg-run/gvfsd",
+        "--filesystem=xdg-run/dconf",
+        "--filesystem=~/.config/dconf:ro",
+        "--talk-name=ca.desrt.dconf",
+        "--env=DCONF_USER_CONFIG_DIR=.config/dconf",
+        "--add-policy=Tracker3.dbus:org.freedesktop.Tracker3.Miner.Files=tracker:FileSystem"
+    ],
+    "cleanup": [
+        "/include",
+        "/lib/pkgconfig",
+        "/man",
+        "/share/doc",
+        "/share/gtk-doc",
+        "/share/man",
+        "/share/pkgconfig",
+        "*.la",
+        "*.a"
+    ],
+    "modules": [
+        {
+            "name": "mm-common",
+            "buildsystem": "meson",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.gnome.org/sources/mm-common/1.0/mm-common-1.0.5.tar.xz",
+                    "sha256": "705c6d29f4116a29bde4e36cfc1b046c92b6ef8c6dae4eaec85018747e6da5aa"
+                }
+            ]
+        },
+        {
+            "name": "sigc++-3.0",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Dbuild-examples=false",
+                "-Dbuild-documentation=false",
+                "-Dbuild-tests=false"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/libsigcplusplus/libsigcplusplus.git"
+                }
+            ]
+        },
+        {
+            "name": "cairomm",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Dbuild-documentation=false",
+                "-Dbuild-examples=false",
+                "-Dbuild-tests=false"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.freedesktop.org/cairo/cairomm.git"
+                }
+            ]
+        },
+        {
+            "name": "glibmm",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Dbuild-documentation=false",
+                "-Dbuild-examples=false"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/glibmm.git"
+                }
+            ]
+        },
+        {
+            "name": "pangomm",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Dbuild-documentation=false"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/pangomm.git"
+                }
+            ]
+        },
+        {
+            "name": "libsass",
+            "buildsystem": "meson",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/lazka/libsass.git",
+                    "branch": "meson"
+                }
+            ]
+        },
+        {
+          "name": "sassc",
+          "buildsystem": "meson",
+          "sources": [
+            {
+              "type": "git",
+              "url": "https://github.com/lazka/sassc.git",
+              "branch": "meson"
+            }
+          ]
+        },
+        {
+            "name": "gtk4",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Ddocumentation=false",
+                "-Dbuild-demos=false",
+                "-Dbuild-examples=false",
+                "-Dbuild-tests=false"
+            ],
+            "build-options": {
+                "cxxflags": "-O2 -g -std=c++20"
+            },
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/gtk.git",
+                    "branch": "main"
+                }
+            ]
+        },
+        {
+            "name": "gtkmm",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Dbuild-documentation=false",
+                "-Dbuild-demos=false",
+                "-Dbuild-tests=false"
+            ],
+            "build-options": {
+                "cxxflags": "-O2 -g -std=c++20"
+            },
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/gtkmm.git"
+                }
+            ]
+        },
+        {
+            "name": "libgtop-2.0",
+            "buildsystem" : "autotools",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/libgtop.git"
+                }
+            ]
+        },
+        {
+            "name": "gnome-system-monitor",
+            "builddir": true,
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Ddevelopment=true"
+            ],
+            "sources": [
+                {
+                    "type": "dir",
+                    "path": "../../"
+                }
+            ]
+        }
+    ]
+}

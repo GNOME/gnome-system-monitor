@@ -355,7 +355,7 @@ GsmApplication::load_settings ()
 
 
 GsmApplication::GsmApplication()
-  : Gtk::Application ("org.gnome.SystemMonitor", Gio::Application::Flags::HANDLES_COMMAND_LINE),
+  : Gtk::Application (APP_ID, Gio::Application::Flags::HANDLES_COMMAND_LINE),
   settings (NULL),
   main_window (NULL),
   stack (NULL),
@@ -536,7 +536,7 @@ GsmApplication::on_startup ()
   style_manager = adw_style_manager_get_default ();
   adw_style_manager_set_color_scheme (style_manager, ADW_COLOR_SCHEME_PREFER_LIGHT);
 
-  Gtk::Window::set_default_icon_name ("org.gnome.SystemMonitor");
+  Gtk::Window::set_default_icon_name (APP_ID);
 
   Glib::RefPtr<Gio::SimpleAction> action;
 
