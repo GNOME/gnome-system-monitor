@@ -2,26 +2,39 @@
 # Generate files
 
 desktop_files = []
-foreach file : [
-    'org.gnome.SystemMonitor.desktop',
-    'gnome-system-monitor-kde.desktop',
-  ]
-  desktop_files += i18n.merge_file(
-    input : configure_file(
-    configuration: dataconf,
-    input : file + '.in.in',
-    output: file + '.in'
-    ),
-    output: file,
-    po_dir: '../po',
-    type: 'desktop',
-    install: true,
-    install_dir: join_paths(get_option('datadir'), 'applications'),
-  )
-endforeach
+
+desktop_files += i18n.merge_file(
+        input: configure_file(
+                  input: 'org.gnome.SystemMonitor.desktop.in.in',
+                 output: '@0@.desktop.in'.format(app_id),
+          configuration: dataconf,
+        ),
+       output: '@0@.desktop'.format(app_id),
+         type: 'desktop',
+       po_dir: '../po',
+      install: true,
+  install_dir: join_paths(get_option('datadir'), 'applications')
+)
+
+desktop_files += i18n.merge_file(
+        input: configure_file(
+                  input: 'gnome-system-monitor-kde.desktop.in.in',
+                 output: 'gnome-system-monitor-kde.desktop.in',
+          configuration: dataconf,
+        ),
+       output: 'gnome-system-monitor-kde.desktop',
+         type: 'desktop',
+       po_dir: '../po',
+      install: true,
+  install_dir: join_paths(get_option('datadir'), 'applications')
+)
 
 appdata_file = i18n.merge_file(
-  input : 'gnome-system-monitor.appdata.xml.in',
+  input : configure_file(
+  configuration: dataconf,
+  input : 'gnome-system-monitor.appdata.xml.in.in',
+  output: 'gnome-system-monitor.appdata.xml.in'
+  ),
   output: 'gnome-system-monitor.appdata.xml',
   po_dir: '../po',
   install: true,
