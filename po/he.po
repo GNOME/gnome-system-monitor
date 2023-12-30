@@ -11,31 +11,31 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2023-07-25 22:39+0000\n"
-"PO-Revision-Date: 2023-07-28 10:03+0300\n"
+"POT-Creation-Date: 2023-11-26 11:54+0000\n"
+"PO-Revision-Date: 2023-12-30 20:22+0200\n"
 "Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
-"Language-Team: Hebrew <yoseforb@gmail.com>\n"
+"Language-Team: Hebrew\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 42.0\n"
+"X-Generator: Gtranslator 45.3\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? "
 "2 : 3)\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: gnome-system-monitor.desktop.in:3 gnome-system-monitor.appdata.xml.in:6
-#: data/interface.ui:6 src/application.cpp:394 src/interface.cpp:439
+#: org.gnome.SystemMonitor.desktop.in:3 gnome-system-monitor.appdata.xml.in:6
+#: data/interface.ui:6 src/application.cpp:396 src/interface.cpp:483
 msgid "System Monitor"
 msgstr "צג המערכת"
 
-#: gnome-system-monitor.desktop.in:4 gnome-system-monitor-kde.desktop.in:4
-#: src/interface.cpp:440
+#: org.gnome.SystemMonitor.desktop.in:4 gnome-system-monitor-kde.desktop.in:4
+#: src/interface.cpp:484
 msgid "View current processes and monitor system state"
 msgstr "הצגת התהליכים הנוכחיים ומעקב אחר מצב המערכת"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: gnome-system-monitor.desktop.in:16
+#: org.gnome.SystemMonitor.desktop.in:16
 msgid ""
 "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
 "Manager;Activity;"
@@ -43,7 +43,7 @@ msgstr ""
 "צג;מוניטור;מעקב;מערכת;תהליך;מעבד;זיכרון;זכרון;רשת;היסטוריה;שימוש;ניצולת;"
 "ניצול;בצוע;ביצוע;משימה;משימות;מנהל;פעילות;"
 
-#: gnome-system-monitor-kde.desktop.in:3 src/application.cpp:457
+#: gnome-system-monitor-kde.desktop.in:3 src/application.cpp:456
 msgid "GNOME System Monitor"
 msgstr "צג המערכת מבית GNOME"
 
@@ -96,7 +96,7 @@ msgstr "סקירת משאבים"
 msgid "File Systems view"
 msgstr "תצוגת מערכת קבצים"
 
-#: gnome-system-monitor.appdata.xml.in:44
+#: gnome-system-monitor.appdata.xml.in:44 src/interface.cpp:492
 msgid "The GNOME Project"
 msgstr "מיזם GNOME"
 
@@ -116,376 +116,419 @@ msgstr "ביצוע Renice לתהליך"
 msgid "Privileges are required to change the priority of processes"
 msgstr "נדרשות הרשאות כדי לשנות את עדיפות התהליכים"
 
-#: data/help-overlay.ui:13
+#: data/help-overlay.ui:12
 msgctxt "shortcut window"
 msgid "General"
 msgstr "כללי"
 
-#: data/help-overlay.ui:18
+#: data/help-overlay.ui:17
 msgctxt "shortcut window"
 msgid "Show help"
 msgstr "הצגת עזרה"
 
-#: data/help-overlay.ui:25
+#: data/help-overlay.ui:23
 msgctxt "shortcut window"
 msgid "Open menu"
 msgstr "פתיחת תפריט"
 
-#: data/help-overlay.ui:32
+#: data/help-overlay.ui:29
 msgctxt "shortcut window"
 msgid "Show preferences"
 msgstr "הצגת העדפות"
 
-#: data/help-overlay.ui:39
+#: data/help-overlay.ui:37
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "צירופי מקשים"
 
-#: data/help-overlay.ui:46
+#: data/help-overlay.ui:44
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "יציאה"
 
-#: data/help-overlay.ui:53
+#: data/help-overlay.ui:50
 msgctxt "shortcut window"
 msgid "Search"
 msgstr "חיפוש"
 
-#: data/help-overlay.ui:60
+#: data/help-overlay.ui:56
 msgctxt "shortcut window"
 msgid "Show Processes"
 msgstr "הצגת תהליכים"
 
-#: data/help-overlay.ui:67
+#: data/help-overlay.ui:62
 msgctxt "shortcut window"
 msgid "Show Resources"
 msgstr "הצגת משאבים"
 
-#: data/help-overlay.ui:74
+#: data/help-overlay.ui:68
 msgctxt "shortcut window"
 msgid "Show File Systems"
 msgstr "הצגת מערכות קבצים"
 
-#: data/help-overlay.ui:81
+#: data/help-overlay.ui:75
 msgctxt "shortcut window"
 msgid "Refresh"
 msgstr "רענון"
 
-#: data/help-overlay.ui:89
+#: data/help-overlay.ui:82
 msgctxt "shortcut window"
 msgid "Processes"
 msgstr "תהליכים"
 
-#: data/help-overlay.ui:94
+#: data/help-overlay.ui:87
 msgctxt "shortcut window"
 msgid "Show dependencies"
 msgstr "הצגת יחסי תלות"
 
-#: data/help-overlay.ui:101
+#: data/help-overlay.ui:94
 msgctxt "shortcut window"
 msgid "Show process properties"
 msgstr "הצגת מאפייני תהליך"
 
-#: data/help-overlay.ui:108
+#: data/help-overlay.ui:101
 msgctxt "shortcut window"
 msgid "Memory maps"
 msgstr "מפות זיכרון"
 
-#: data/help-overlay.ui:115
+#: data/help-overlay.ui:108
 msgctxt "shortcut window"
 msgid "Open files"
 msgstr "קבצים פתוחים"
 
-#: data/help-overlay.ui:122
+#: data/help-overlay.ui:114
 msgctxt "shortcut window"
 msgid "Send stop signal"
 msgstr "שליחת אות עצירה"
 
-#: data/help-overlay.ui:129
+#: data/help-overlay.ui:120
 msgctxt "shortcut window"
 msgid "Send continue signal"
 msgstr "שליחת אות המשך"
 
-#: data/help-overlay.ui:136
 # msgctxt "shortcut window"
+#: data/help-overlay.ui:126
 msgctxt "shortcut window"
 msgid "Send Terminate signal"
 msgstr "שליחת אות סיום"
 
-#: data/help-overlay.ui:143
+#: data/help-overlay.ui:132
 msgctxt "shortcut window"
 msgid "Send Kill signal"
 msgstr "שליחת אות חיסול"
 
-#: data/interface.ui:122
+#: data/interface.ui:28
+# msgctxt "shortcut window"
+msgid "Search"
+msgstr "חיפוש"
+
+#: data/interface.ui:38
+msgid "Main Menu"
+msgstr "תפריט ראשי"
+
+#: data/interface.ui:57
+msgid "_Processes"
+msgstr "_תהליכים"
+
+#: data/interface.ui:69
 msgid "Search processes and users"
 msgstr "חיפוש תהליכים ומשתמשים"
 
-#: data/interface.ui:163
-msgid "_Terminate Process"
-msgstr "_סיום תהליך"
+#: data/interface.ui:90 src/procdialogs.cpp:150 src/proctable.cpp:136
+msgid "_End Process"
+msgid_plural "_End Processes"
+msgstr[0] "_סיום התהליך"
+msgstr[1] "_סיום התהליכים"
+msgstr[2] "_סיום התהליכים"
+msgstr[3] "_סיום התהליכים"
 
-#: data/interface.ui:177
-msgid "Show process properties"
-msgstr "הצגת מאפייני תהליך"
+#: data/interface.ui:100
+msgid "Process Properties"
+msgstr "מאפייני תהליך"
 
-#: data/interface.ui:198 data/preferences.ui:14
-msgid "Processes"
-msgstr "תהליכים"
+#: data/interface.ui:122
+msgid "_Resources"
+msgstr "_משאבים"
 
-#: data/interface.ui:263 src/interface.cpp:276 src/procproperties.cpp:83
+#: data/interface.ui:167 data/preferences.ui:114 src/interface.cpp:279
+#: src/procproperties.cpp:77
 msgid "CPU"
 msgstr "מעבד"
 
-#: data/interface.ui:314 src/interface.cpp:323 src/procproperties.cpp:72
-#: src/proctable.cpp:381
+#: data/interface.ui:198 src/interface.cpp:317 src/procproperties.cpp:71
+#: src/proctable.cpp:359
 msgid "Memory"
 msgstr "זיכרון"
 
-#: data/interface.ui:329 src/interface.cpp:335
+#: data/interface.ui:209 src/interface.cpp:329
 msgid "Swap"
 msgstr "תחלופה"
 
-#: data/interface.ui:367
+#: data/interface.ui:226 data/preferences.ui:125
 msgid "Memory and Swap"
 msgstr "זיכרון ותחלופה"
 
-#: data/interface.ui:419 src/interface.cpp:367
+#: data/interface.ui:257 src/interface.cpp:358
 msgid "Receiving"
 msgstr "מתקבל"
 
-#: data/interface.ui:434
+#: data/interface.ui:267
 msgid "Total Received"
 msgstr "סה״כ שהתקבלו"
 
-#: data/interface.ui:449 src/interface.cpp:385
+#: data/interface.ui:277 src/interface.cpp:376
 msgid "Sending"
 msgstr "נשלח"
 
-#: data/interface.ui:464
+#: data/interface.ui:287
 msgid "Total Sent"
 msgstr "סה״כ שנשלח"
 
-#: data/interface.ui:511
+#: data/interface.ui:304 data/preferences.ui:142
 msgid "Network"
 msgstr "רשת"
 
-#: data/interface.ui:537 data/preferences.ui:132
-msgid "Resources"
-msgstr "משאבים"
+#: data/interface.ui:335 src/interface.cpp:411
+msgid "Reading"
+msgstr "נקרא"
 
-#: data/interface.ui:565 data/preferences.ui:293
-msgid "File Systems"
-msgstr "מערכות קבצים"
+#: data/interface.ui:345
+msgid "Total Read"
+msgstr "סה״כ שנקרא"
 
-#: data/lsof.ui:7
+#: data/interface.ui:355 src/interface.cpp:429
+msgid "Writing"
+msgstr "נכתב"
+
+#: data/interface.ui:365
+msgid "Total Written"
+msgstr "סה״כ שנכתב"
+
+#: data/interface.ui:382
+msgid "Disk"
+msgstr "כונן"
+
+#: data/interface.ui:402
+msgid "_File Systems"
+msgstr "מערכות _קבצים"
+
+#: data/lsof.ui:6
 msgctxt "Window title for Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "חיפוש קבצים פתוחים"
 
-#: data/lsof.ui:31
+#: data/lsof.ui:36
 msgid "Filter files by name"
 msgstr "סינון קבצים לפי שם"
 
-#: data/lsof.ui:41
+#: data/lsof.ui:42
 msgid "Case insensitive"
 msgstr "ללא התאמת רשיות"
 
-#: data/menus.ui:6 data/menus.ui:61
-msgctxt "Menu item to Open Search for Open Files dialog"
-msgid "Search for Open Files"
-msgstr "חיפוש קבצים פתוחים"
+#: data/memmaps.ui:8
+msgid "Memory Maps"
+msgstr "מפות זיכרון"
 
-#: data/menus.ui:12 data/menus.ui:67 data/preferences.ui:7
+#: data/menus.ui:7 data/menus.ui:62
+# msgctxt "Menu item to Open Search for Open Files dialog"
+msgctxt "Menu item to Open Search for Open Files dialog"
+msgid "Search for Open Files…"
+msgstr "חיפוש קבצים פתוחים…"
+
+#: data/menus.ui:13 data/menus.ui:68 data/preferences.ui:6
 msgid "Preferences"
 msgstr "העדפות"
 
-#: data/menus.ui:16 data/menus.ui:71
+#: data/menus.ui:17 data/menus.ui:72
 msgid "Help"
 msgstr "עזרה"
 
-#: data/menus.ui:20 data/menus.ui:75
+#: data/menus.ui:21 data/menus.ui:76
 msgid "Keyboard Shortcuts"
 msgstr "צירופי מקשים"
 
-#: data/menus.ui:24 data/menus.ui:79
+#: data/menus.ui:25 data/menus.ui:80
 msgid "About System Monitor"
 msgstr "על אודות צג המערכת"
 
-#: data/menus.ui:32
+#: data/menus.ui:33
 msgid "_Refresh"
 msgstr "_רענון"
 
-#: data/menus.ui:38
+#: data/menus.ui:39
 msgid "_Active Processes"
 msgstr "תהליכים _פעילים"
 
-#: data/menus.ui:43
+#: data/menus.ui:44
 msgid "A_ll Processes"
 msgstr "_כל התהליכים"
 
-#: data/menus.ui:48
+#: data/menus.ui:49
 msgid "M_y Processes"
 msgstr "התהליכים _שלי"
 
-#: data/menus.ui:55
+#: data/menus.ui:56
 msgid "Show _Dependencies"
 msgstr "הצגת יחסי _תלות"
 
-#: data/menus.ui:87
+#: data/menus.ui:88
 msgid "_Properties"
 msgstr "מ_אפיינים"
 
-#: data/menus.ui:93
+#: data/menus.ui:94
 msgid "_Memory Maps"
 msgstr "מפות _זיכרון"
 
 #. Translators: this means 'Files that are open' (open is not a verb here)
-#: data/menus.ui:97
+#: data/menus.ui:98
 msgid "Open _Files"
 msgstr "_קבצים פתוחים"
 
-#: data/menus.ui:103
+#: data/menus.ui:104
 msgid "_Change Priority"
 msgstr "שינוי ה_עדיפות"
 
-#: data/menus.ui:106 src/util.cpp:174
+#: data/menus.ui:107 src/util.cpp:173
 msgid "Very High"
 msgstr "גבוהה מאוד"
 
-#: data/menus.ui:111 src/util.cpp:176
+#: data/menus.ui:112 src/util.cpp:175
 msgid "High"
 msgstr "גבוהה"
 
-#: data/menus.ui:116 src/util.cpp:178
+#: data/menus.ui:117 src/util.cpp:177
 msgid "Normal"
 msgstr "רגילה"
 
-#: data/menus.ui:121 src/util.cpp:180
+#: data/menus.ui:122 src/util.cpp:179
 msgid "Low"
 msgstr "נמוכה"
 
-#: data/menus.ui:126 src/util.cpp:182
+#: data/menus.ui:127 src/util.cpp:181
 msgid "Very Low"
 msgstr "נמוכה מאוד"
 
-#: data/menus.ui:133
+#: data/menus.ui:134
 msgid "Custom"
 msgstr "מותאמת אישית"
 
-#: data/menus.ui:140
-msgid "Set _Affinity"
-msgstr "הגדרת _שייכות"
+#: data/menus.ui:141
+msgid "Set _Affinity…"
+msgstr "הגדרת _שייכות…"
 
-#: data/menus.ui:146
-msgid "_Stop"
-msgstr "ע_צירה"
+#: data/menus.ui:147
+msgid "_Stop…"
+msgstr "ע_צירה…"
 
-#: data/menus.ui:151
+#: data/menus.ui:152
 msgid "_Continue"
 msgstr "המ_שך"
 
-#: data/menus.ui:156
-msgid "_Terminate"
-msgstr "_סיום"
+#: data/menus.ui:157
+msgid "_Terminate…"
+msgstr "_סיום…"
 
-#: data/menus.ui:161
-msgid "_Kill"
-msgstr "_חיסול"
+#: data/menus.ui:162
+msgid "_Kill…"
+msgstr "_חיסול…"
 
-#: data/openfiles.ui:8
+#: data/openfiles.ui:4
 msgid "Open Files"
 msgstr "קבצים פתוחים"
 
-#: data/preferences.ui:19 data/preferences.ui:298
+#: data/preferences.ui:13
+msgid "Processes"
+msgstr "תהליכים"
+
+#: data/preferences.ui:17 data/preferences.ui:80 data/preferences.ui:165
 msgid "Behavior"
 msgstr "התנהגות"
 
-#: data/preferences.ui:24 data/preferences.ui:142 data/preferences.ui:303
+#: data/preferences.ui:21 data/preferences.ui:84 data/preferences.ui:169
 msgid "_Update Interval in Seconds"
 msgstr "מרווח _עדכון בשניות"
 
-#: data/preferences.ui:42
+#: data/preferences.ui:29
 msgid "Enable _Smooth Refresh"
 msgstr "לאפשר _רענון חלק"
 
-#: data/preferences.ui:58
+#: data/preferences.ui:35
 msgid "Alert Before Ending or _Killing Processes"
 msgstr "התרעה לפני סיום או _חיסול תהליכים"
 
-#: data/preferences.ui:74
+#: data/preferences.ui:41
 msgid "_Divide CPU Usage by CPU Count"
 msgstr "_פיצול השימוש במעבד לפי מספר המעבדים"
 
-#: data/preferences.ui:90
+#: data/preferences.ui:47
 msgid "Show Memory in IEC"
 msgstr "הצגת זיכרון ב־IEC"
 
-#: data/preferences.ui:107 data/preferences.ui:338
+#: data/preferences.ui:54 data/preferences.ui:184
 msgid "Information Fields"
 msgstr "שדות מידע"
 
-#: data/preferences.ui:108
+#: data/preferences.ui:55
 msgid "Process information shown in list:"
 msgstr "מידע על תהליכים שיוצג ברשימה:"
 
-#: data/preferences.ui:137
-msgid "Graphs"
-msgstr "תרשימים"
+#: data/preferences.ui:76
+msgid "Resources"
+msgstr "משאבים"
 
-#: data/preferences.ui:160
+#: data/preferences.ui:92
 msgid "_Chart Data Points"
 msgstr "_נקודות נתונים בתרשים"
 
-#: data/preferences.ui:177
-msgid "_Draw CPU Chart as Stacked Area Chart"
-msgstr "_ציור תרשים מעבד כערימת תרשימי שטח"
-
-#: data/preferences.ui:193
+#: data/preferences.ui:107
 msgid "Draw Charts as S_mooth Graphs"
 msgstr "ציור תרשים כגרף _חלק"
 
-#: data/preferences.ui:209
+#: data/preferences.ui:118
+msgid "_Draw CPU Chart as Stacked Area Chart"
+msgstr "_ציור תרשים מעבד כערימת תרשימי שטח"
+
+#: data/preferences.ui:129
 msgid "Show Memory and Swap in IEC"
 msgstr "הצגת היסטוריית זיכרון ותחלופה ב־IEC"
 
-#: data/preferences.ui:225
+#: data/preferences.ui:135
 msgid "Show Memory in Logarithmic Scale"
 msgstr "הצגת זיכרון בסולם לוגריתמי"
 
-#: data/preferences.ui:241
+#: data/preferences.ui:146
 msgid "_Show Network Speed in Bits"
 msgstr "_הצגת מהירות הרשת בסיביות"
 
-#: data/preferences.ui:257
-msgid "Set Network Totals _Unit Separately"
-msgstr "הגדרת יחידות סך תעבורת הרשת ב_נפרד"
-
-#: data/preferences.ui:273
+#: data/preferences.ui:152
 msgid "Show Network _Totals in Bits"
 msgstr "הצגת _סך תעבורת הרשת בסיביות"
 
-#: data/preferences.ui:321
+#: data/preferences.ui:161
+msgid "File Systems"
+msgstr "מערכות קבצים"
+
+#: data/preferences.ui:177
 msgid "Show _All File Systems"
 msgstr "הצגת _כל מערכות הקבצים"
 
-#: data/preferences.ui:339
+#: data/preferences.ui:185
 msgid "File system information shown in list"
 msgstr "מידע על מערכות קבצים שיוצג ברשימה"
 
-#: data/renice.ui:27 src/procdialogs.cpp:177 src/setaffinity.cpp:308
+#: data/renice.ui:15 data/setaffinity.ui:17 src/procdialogs.cpp:166
 msgid "_Cancel"
 msgstr "_ביטול"
 
-#: data/renice.ui:43
+#: data/renice.ui:16
 msgid "Change _Priority"
 msgstr "שינוי ה_עדיפות"
 
-#: data/renice.ui:87
+#: data/renice.ui:39
 msgid "_Nice value:"
 msgstr "ע_דיפות:"
 
-#: data/renice.ui:142
+#: data/renice.ui:69
 msgid ""
 "<small><i><b>Note:</b> The priority of a process is given by its nice value. "
 "A lower nice value corresponds to a higher priority.</i></small>"
@@ -493,148 +536,155 @@ msgstr ""
 "<small><b>לתשומת לבך:</b> העדיפות של התהליך נקבעת על פי ערך הייפוי שלו. ערך "
 "ייפוי נמוך גורר עדיפות גבוהה יותר.</small>"
 
-#: src/application.cpp:438
+#: data/setaffinity.ui:8
+msgid "Set Affinity"
+msgstr "הגדרת שייכות"
+
+#: data/setaffinity.ui:23
+msgid "_Apply"
+msgstr "ה_חלה"
+
+#: data/setaffinity.ui:52
+msgid "Run on all CPUs"
+msgstr "ריצה על גבי כל המעבדים"
+
+#: src/application.cpp:439
 msgid "A simple process and system monitor."
 msgstr "A simple process and system monitor."
 
-#: src/argv.cpp:23
+#: src/argv.cpp:22
 msgid "Show the Processes tab"
 msgstr "Show the Processes tab"
 
-#: src/argv.cpp:29
+#: src/argv.cpp:28
 msgid "Show the Resources tab"
 msgstr "Show the Resources tab"
 
-#: src/argv.cpp:35
+#: src/argv.cpp:34
 msgid "Show the File Systems tab"
 msgstr "Show the File Systems tab"
 
-#: src/argv.cpp:40
+#: src/argv.cpp:39
 msgid "Show the application’s version"
 msgstr "Show the application’s version"
 
-#: src/disks.cpp:383 src/memmaps.cpp:356
+#: src/disks.cpp:392 src/memmaps.cpp:354
 msgid "Device"
 msgstr "התקן"
 
-#: src/disks.cpp:384
+#: src/disks.cpp:393
 msgid "Directory"
 msgstr "תיקייה"
 
-#: src/disks.cpp:385 src/legacy/gsm_color_button.c:171 src/openfiles.cpp:270
+#: src/disks.cpp:394 src/legacy/gsm_color_button.c:610 src/openfiles.cpp:268
 msgid "Type"
 msgstr "סוג"
 
-#: src/disks.cpp:386
+#: src/disks.cpp:395
 msgid "Total"
 msgstr "סה״כ"
 
-#: src/disks.cpp:387
+#: src/disks.cpp:396
 msgid "Free"
 msgstr "פנוי"
 
-#: src/disks.cpp:388
+#: src/disks.cpp:397
 msgid "Available"
 msgstr "זמין"
 
-#: src/disks.cpp:389
+#: src/disks.cpp:398
 msgid "Used"
 msgstr "מנוצל"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: src/interface.cpp:240
+#: src/interface.cpp:243
 #, c-format
 msgid "Pick a Color for “%s”"
 msgstr "בחירת צבע עבור „%s”"
 
-#: src/interface.cpp:278
+#: src/interface.cpp:281
 #, c-format
 msgid "CPU%d"
 msgstr "מעבד־%d"
 
-#: src/interface.cpp:451
+#: src/interface.cpp:496
 msgid "translator-credits"
 msgstr ""
 "גיל אשר <dolfin@rpg.org.il>\n"
 "יאיר הרשקוביץ <yairhr@gmail.com>\n"
 "Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "יוסף אור בוצ׳קו <yoseforb@gmail.com>\n"
-"\n"
-"<a href=\"https://l10n.gnome.org/teams/he/\">מיזם תרגום GNOME לעברית</a>"
+"מיזם תרגום GNOME לעברית https://l10n.gnome.org/teams/he/"
 
 #. xgettext: ? stands for unknown
-#: src/legacy/e_date.c:176
+#: src/legacy/e_date.c:175
 msgid "?"
 msgstr "?"
 
-#: src/legacy/e_date.c:184
+#: src/legacy/e_date.c:183
 msgid "Today %l∶%M %p"
 msgstr "היום, %p ‎%l∶%M"
 
-#: src/legacy/e_date.c:195
+#: src/legacy/e_date.c:194
 msgid "Yesterday %l∶%M %p"
 msgstr "אתמול, %p ‎%l∶%M"
 
-#: src/legacy/e_date.c:210
+#: src/legacy/e_date.c:209
 msgid "%a %l∶%M %p"
 msgstr "‏%a, %p ‎%l∶%M"
 
-#: src/legacy/e_date.c:219
+#: src/legacy/e_date.c:218
 msgid "%b %d %l∶%M %p"
 msgstr "‏%d ב%b, ‎‎%I:%M"
 
-#: src/legacy/e_date.c:221
+#: src/legacy/e_date.c:220
 msgid "%b %d %Y"
 msgstr "%d ב%b %Y"
 
-#: src/legacy/gsm_color_button.c:147
+#: src/legacy/gsm_color_button.c:586
 msgid "Fraction"
 msgstr "שבר"
 
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: src/legacy/gsm_color_button.c:149
+#: src/legacy/gsm_color_button.c:588
 msgid "Percentage full for pie color pickers"
 msgstr "אחוז מלא עבור בוחר הצבע לתרשימי העוגה"
 
-#: src/legacy/gsm_color_button.c:156
+#: src/legacy/gsm_color_button.c:595
 msgid "Title"
 msgstr "כותרת"
 
-#: src/legacy/gsm_color_button.c:157
+#: src/legacy/gsm_color_button.c:596
 msgid "The title of the color selection dialog"
 msgstr "הכותרת של חלון בחירת הצבע"
 
-#: src/legacy/gsm_color_button.c:158 src/legacy/gsm_color_button.c:543
+#: src/legacy/gsm_color_button.c:597 src/legacy/gsm_color_button.c:635
 msgid "Pick a Color"
 msgstr "בחירת צבע"
 
-#: src/legacy/gsm_color_button.c:164
+#: src/legacy/gsm_color_button.c:603
 msgid "Current Color"
 msgstr "הצבע הנוכחי"
 
-#: src/legacy/gsm_color_button.c:165
+#: src/legacy/gsm_color_button.c:604
 msgid "The selected color"
 msgstr "הצבע הנבחר"
 
-#: src/legacy/gsm_color_button.c:172
+#: src/legacy/gsm_color_button.c:611
 msgid "Type of color picker"
 msgstr "סוג בוחר הצבע"
 
-#: src/legacy/gsm_color_button.c:461
-msgid "Received invalid color data\n"
-msgstr "התקבלו נתוני צבע בלתי תקינים\n"
-
-#: src/legacy/gsm_color_button.c:566
+#: src/legacy/gsm_color_button.c:658
 msgid "Click to set graph colors"
 msgstr "יש ללחוץ כדי להגדיר את צבעי התרשים"
 
 #. Translators: loadgraphs y axis percentage labels: 0 %, 50%, 100%
-#: src/load-graph.cpp:99 src/load-graph.cpp:109
+#: src/load-graph.cpp:103 src/load-graph.cpp:118
 #, c-format
 msgid "%.0f %%"
 msgstr "%.0f %%"
 
-#: src/load-graph.cpp:158
+#: src/load-graph.cpp:167
 #, c-format
 msgid "%u hr"
 msgid_plural "%u hrs"
@@ -643,7 +693,7 @@ msgstr[1] "שעתיים"
 msgstr[2] "‫%u שע׳"
 msgstr[3] "‫%u שע׳"
 
-#: src/load-graph.cpp:159
+#: src/load-graph.cpp:168
 #, c-format
 msgid "%u min"
 msgid_plural "%u mins"
@@ -652,7 +702,7 @@ msgstr[1] "‫%u דק׳"
 msgstr[2] "‫%u דק׳"
 msgstr[3] "‫%u דק׳"
 
-#: src/load-graph.cpp:161
+#: src/load-graph.cpp:170
 #, c-format
 msgid "%u sec"
 msgid_plural "%u secs"
@@ -663,28 +713,28 @@ msgstr[3] "‫%u שנ׳"
 
 #. Update label
 #. Translators: CPU usage percentage label: 95.7%
-#: src/load-graph.cpp:547
+#: src/load-graph.cpp:577
 #, c-format
 msgid "%.1f%%"
 msgstr "%.1f%%"
 
-#: src/load-graph.cpp:577
+#: src/load-graph.cpp:604
 msgid "not available"
 msgstr "לא זמין"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:582
+#: src/load-graph.cpp:609
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "‏%s (‏‎%.1f%%) מתוך %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:587
+#: src/load-graph.cpp:614
 #, c-format
 msgid "Cache %s"
 msgstr "‏%s מטמון"
 
-#: src/lsof.cpp:123
+#: src/lsof.cpp:116
 #, c-format
 msgid "%d open file"
 msgid_plural "%d open files"
@@ -693,7 +743,7 @@ msgstr[1] "‫%d קבצים פתוחים"
 msgstr[2] "‫%d קבצים פתוחים"
 msgstr[3] "‫%d קבצים פתוחים"
 
-#: src/lsof.cpp:125
+#: src/lsof.cpp:118
 #, c-format
 msgid "%d matching open file"
 msgid_plural "%d matching open files"
@@ -702,122 +752,118 @@ msgstr[1] "‫%d קבצים פתוחים מתאימים"
 msgstr[2] "‫%d קבצים פתוחים מתאימים"
 msgstr[3] "‫%d קבצים פתוחים מתאימים"
 
-#: src/lsof.cpp:267
+#: src/lsof.cpp:229
 msgid "Process"
 msgstr "תהליך"
 
-#: src/lsof.cpp:279
+#: src/lsof.cpp:240
 msgid "PID"
 msgstr "מזהה תהליך"
 
-#: src/lsof.cpp:289 src/memmaps.cpp:334
+#: src/lsof.cpp:249 src/memmaps.cpp:332
 msgid "Filename"
 msgstr "שם קובץ"
 
 #. xgettext: virtual memory start
-#: src/memmaps.cpp:336
+#: src/memmaps.cpp:334
 msgid "VM Start"
 msgstr "תחילת הזיכרון הווירטואלי"
 
 #. xgettext: virtual memory end
-#: src/memmaps.cpp:338
+#: src/memmaps.cpp:336
 msgid "VM End"
 msgstr "סוף הזיכרון הווירטואלי"
 
 #. xgettext: virtual memory syze
-#: src/memmaps.cpp:340
+#: src/memmaps.cpp:338
 msgid "VM Size"
 msgstr "גודל הזיכרון הווירטואלי"
 
-#: src/memmaps.cpp:341
+#: src/memmaps.cpp:339
 msgid "Flags"
 msgstr "דגלים"
 
 #. xgettext: virtual memory offset
-#: src/memmaps.cpp:343
+#: src/memmaps.cpp:341
 msgid "VM Offset"
 msgstr "היסט הזיכרון הווירטואלי"
 
 #. xgettext: memory that has not been modified since
 #. it has been allocated
-#: src/memmaps.cpp:346
+#: src/memmaps.cpp:344
 msgid "Private clean"
 msgstr "זיכרון פרטי נקי"
 
 #. xgettext: memory that has been modified since it
 #. has been allocated
-#: src/memmaps.cpp:349
+#: src/memmaps.cpp:347
 msgid "Private dirty"
 msgstr "זיכרון פרטי מלוכלך"
 
 #. xgettext: shared memory that has not been modified
 #. since it has been allocated
-#: src/memmaps.cpp:352
+#: src/memmaps.cpp:350
 msgid "Shared clean"
 msgstr "זיכרון משותף נקי"
 
 #. xgettext: shared memory that has been modified
 #. since it has been allocated
-#: src/memmaps.cpp:355
+#: src/memmaps.cpp:353
 msgid "Shared dirty"
 msgstr "זיכרון משותף מלוכלך"
 
-#: src/memmaps.cpp:357
+#: src/memmaps.cpp:355
 msgid "Inode"
 msgstr "Inode"
 
-#: src/memmaps.cpp:475
-msgid "Memory Maps"
-msgstr "מפות זיכרון"
-
-#: src/memmaps.cpp:487
+#: src/memmaps.cpp:484
 #, c-format
 msgid "_Memory maps for process “%s” (PID %u):"
 msgstr "_מפות זיכרון עבור התהליך „%s” (מזהה תהליך %u):"
 
-#: src/openfiles.cpp:40
+#: src/openfiles.cpp:39
 msgid "file"
 msgstr "קובץ"
 
-#: src/openfiles.cpp:43
+#: src/openfiles.cpp:42
 msgid "pipe"
 msgstr "שרשור"
 
-#: src/openfiles.cpp:46
+#: src/openfiles.cpp:45
 msgid "IPv6 network connection"
 msgstr "חיבור רשת IPv6"
 
-#: src/openfiles.cpp:49
+#: src/openfiles.cpp:48
 msgid "IPv4 network connection"
 msgstr "חיבור רשת IPv4"
 
-#: src/openfiles.cpp:52
+#: src/openfiles.cpp:51
 msgid "local socket"
 msgstr "שקע מקומי"
 
-#: src/openfiles.cpp:55
+#: src/openfiles.cpp:54
 msgid "unknown type"
 msgstr "סוג לא ידוע"
 
 #. Translators: "FD" here means "File Descriptor". Please use
 #. a very short translation if possible, and at most
 #. 2-3 characters for it to be able to fit in the UI.
-#: src/openfiles.cpp:269
+#: src/openfiles.cpp:267
 msgid "FD"
 msgstr "מזהה"
 
-#: src/openfiles.cpp:271
+#: src/openfiles.cpp:269
 msgid "Object"
 msgstr "פריט"
 
-#: src/openfiles.cpp:358
+#: src/openfiles.cpp:357
 #, c-format
 msgid "_Files opened by process “%s” (PID %u):"
 msgstr "_קבצים שנפתחו על ידי התהליך „%s” (מזהה תהליך %u):"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:5
-msgid "Main window size and position in the form (width, height, xpos, ypos)"
-msgstr "Main window size and position in the form (width, height, xpos, ypos)"
+msgid "Main window size in the form (width, height)"
+msgstr "Main window size in the form (width, height)"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:11
 msgid "Main Window should open maximized"
@@ -916,23 +962,27 @@ msgid "Default graph outgoing network traffic color"
 msgstr "Default graph outgoing network traffic color"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:162
+msgid "Default graph disk read color"
+msgstr "Default graph disk read color"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:169
+msgid "Default graph disk write color"
+msgstr "Default graph disk write color"
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:176
 msgid "Show network traffic in bits"
 msgstr "הצגת תעבורת הרשת בסיביות"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:169
-msgid "Set network totals unit separately"
-msgstr "Set network totals unit separately"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:176
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:183
 msgid "Show network totals in bits"
 msgstr "Show network totals in bits"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:183
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:190
 msgid "Show memory in logarithmic scale"
 msgstr "Show memory in logarithmic scale"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:185
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:194
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:192
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:201
 msgid ""
 "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
 "of a line chart."
@@ -940,345 +990,347 @@ msgstr ""
 "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
 "of a line chart."
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:192
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:199
 msgid "Show CPU chart as stacked area chart"
 msgstr "Show CPU chart as stacked area chart"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:201
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:208
 msgid ""
-"Show CPU, Memory, and Network charts as smooth graphs using Bezier curves"
+"Show CPU, Memory, Network, and Disk charts as smooth graphs using Bezier "
+"curves"
 msgstr ""
-"Show CPU, Memory, and Network charts as smooth graphs using Bezier curves"
-
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:203
-msgid ""
-"If TRUE, system-monitor shows the CPU, Memory, and Network charts as "
-"smoothed graphs, otherwise as line charts."
-msgstr ""
-"If TRUE, system-monitor shows the CPU, Memory, and Network charts as "
-"smoothed graphs, otherwise as line charts."
+"Show CPU, Memory, Network, and Disk charts as smooth graphs using Bezier "
+"curves"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:210
+msgid ""
+"If TRUE, system-monitor shows the CPU, Memory, Network, and Disk charts as "
+"smoothed graphs, otherwise as line charts."
+msgstr ""
+"If TRUE, system-monitor shows the CPU, Memory, Network, and Disk charts as "
+"smoothed graphs, otherwise as line charts."
+
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:217
 msgid "Show memory and swap in IEC"
 msgstr "Show memory and swap in IEC"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:224
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
 msgid "Process view sort column"
 msgstr "Process view sort column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
 msgid "Process view columns order"
 msgstr "Process view columns order"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:245
 msgid "Process view sort order"
 msgstr "Process view sort order"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:245
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:252
 msgid "Width of process “Name” column"
 msgstr "Width of process “Name” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:252
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:259
 msgid "Show process “Name” column on startup"
 msgstr "Show process “Name” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:259
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:266
 msgid "Width of process “User” column"
 msgstr "Width of process “User” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:266
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:273
 msgid "Show process “User” column on startup"
 msgstr "Show process “User” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:273
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:280
 msgid "Width of process “Status” column"
 msgstr "Width of process “Status” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:280
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:287
 msgid "Show process “Status” column on startup"
 msgstr "Show process “Status” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:287
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:294
 msgid "Width of process “Virtual Memory” column"
 msgstr "Width of process “Virtual Memory” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:294
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:301
 msgid "Show process “Virtual Memory” column on startup"
 msgstr "Show process “Virtual Memory” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:301
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:308
 msgid "Width of process “Resident Memory” column"
 msgstr "Width of process “Resident Memory” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:308
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:315
 msgid "Show process “Resident Memory” column on startup"
 msgstr "Show process “Resident Memory” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:315
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:322
 msgid "Width of process “Writable Memory” column"
 msgstr "Width of process “Writable Memory” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:322
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:329
 msgid "Show process “Writable Memory” column on startup"
 msgstr "Show process “Writable Memory” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:329
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:336
 msgid "Width of process “Shared Memory” column"
 msgstr "Width of process “Shared Memory” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:336
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:343
 msgid "Show process “Shared Memory” column on startup"
 msgstr "Show process “Shared Memory” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:343
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:350
 msgid "Width of process “X Server Memory” column"
 msgstr "Width of process “X Server Memory” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:350
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:357
 msgid "Show process “X Server Memory” column on startup"
 msgstr "Show process “X Server Memory” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:357
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:364
 msgid "Width of process “CPU %” column"
 msgstr "Width of process “CPU %” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:364
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
 msgid "Show process “CPU %” column on startup"
 msgstr "Show process “CPU %” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:371
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
 msgid "Width of process “CPU Time” column"
 msgstr "Width of process “CPU Time” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:378
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
 msgid "Show process “CPU Time” column on startup"
 msgstr "Show process “CPU Time” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:385
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:392
 msgid "Width of process “Started” column"
 msgstr "Width of process “Started” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:392
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:399
 msgid "Show process “Started” column on startup"
 msgstr "Show process “Started” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:399
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:406
 msgid "Width of process “Nice” column"
 msgstr "Width of process “Nice” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:406
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:413
 msgid "Show process “Nice” column on startup"
 msgstr "Show process “Nice” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:413
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:420
 msgid "Width of process “ID” column"
 msgstr "Width of process “ID” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:420
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:427
 msgid "Show process “ID” column on startup"
 msgstr "Show process “ID” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:427
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:434
 msgid "Width of process “SELinux Security Context” column"
 msgstr "Width of process “SELinux Security Context” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:433
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:440
 msgid "Show process “SELinux Security Context” column on startup"
 msgstr "Show process “SELinux Security Context” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:440
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:447
 msgid "Width of process “Command Line” column"
 msgstr "Width of process “Command Line” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:447
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:454
 msgid "Show process “Command Line” column on startup"
 msgstr "Show process “Command Line” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:454
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:461
 msgid "Width of process “Memory” column"
 msgstr "Width of process “Memory” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:461
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:468
 msgid "Show process “Memory” column on startup"
 msgstr "Show process “Memory” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:468
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:475
 msgid "Width of process “Waiting Channel” column"
 msgstr "Width of process “Waiting Channel” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:475
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:482
 msgid "Show process “Waiting Channel” column on startup"
 msgstr "Show process “Waiting Channel” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:482
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:489
 msgid "Width of process “Control Group” column"
 msgstr "Width of process “Control Group” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:489
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:496
 msgid "Show process “Control Group” column on startup"
 msgstr "Show process “Control Group” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:496
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:503
 msgid "Width of process “Unit” column"
 msgstr "Width of process “Unit” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:503
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:510
 msgid "Show process “Unit” column on startup"
 msgstr "Show process “Unit” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:510
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:517
 msgid "Width of process “Session” column"
 msgstr "Width of process “Session” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:517
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:524
 msgid "Show process “Session” column on startup"
 msgstr "Show process “Session” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:524
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:531
 msgid "Width of process “Seat” column"
 msgstr "Width of process “Seat” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:531
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:538
 msgid "Show process “Seat” column on startup"
 msgstr "Show process “Seat” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:538
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:545
 msgid "Width of process “Owner” column"
 msgstr "Width of process “Owner” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:545
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:552
 msgid "Show process “Owner” column on startup"
 msgstr "Show process “Owner” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:552
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:559
 msgid "Width of process “Disk read total” column"
 msgstr "Width of process “Disk read total” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:559
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:566
 msgid "Show process “Disk read total” column on startup"
 msgstr "Show process “Disk read total” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:566
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:573
 msgid "Width of process “Disk write total” column"
 msgstr "Width of process “Disk write total” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:573
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:580
 msgid "Show process “Disk write total” column on startup"
 msgstr "Show process “Disk write total” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:580
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:587
 msgid "Width of process “Disk read” column"
 msgstr "Width of process “Disk read” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:587
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:594
 msgid "Show process “Disk read” column on startup"
 msgstr "Show process “Disk read” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:594
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:601
 msgid "Width of process “Disk write” column"
 msgstr "Width of process “Disk write” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:601
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:608
 msgid "Show process “Disk write” column on startup"
 msgstr "Show process “Disk write” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:608
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:615
 msgid "Width of process “Priority” column"
 msgstr "Width of process “Priority” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:615
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:622
 msgid "Show process “Priority” column on startup"
 msgstr "Show process “Priority” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:626
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:633
 msgid "Disk view sort column"
 msgstr "Disk view sort column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:633
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:640
 msgid "Disk view sort order"
 msgstr "Disk view sort order"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:640
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:647
 msgid "Disk view columns order"
 msgstr "Disk view columns order"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:647
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:654
 msgid "Width of disk view “Device” column"
 msgstr "Width of disk view “Device” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:654
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:661
 msgid "Show disk view “Device” column on startup"
 msgstr "Show disk view “Device” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:661
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:668
 msgid "Width of disk view “Directory” column"
 msgstr "Width of disk view “Directory” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:668
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:675
 msgid "Show disk view “Directory” column on startup"
 msgstr "Show disk view “Directory” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:675
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:682
 msgid "Width of disk view “Type” column"
 msgstr "Width of disk view “Type” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:682
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:689
 msgid "Show disk view “Type” column on startup"
 msgstr "Show disk view “Type” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:689
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:696
 msgid "Width of disk view “Total” column"
 msgstr "Width of disk view “Total” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:696
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:703
 msgid "Show disk view “Total” column on startup"
 msgstr "Show disk view “Total” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:703
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:710
 msgid "Width of disk view “Free” column"
 msgstr "Width of disk view “Free” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:710
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:717
 msgid "Show disk view “Free” column on startup"
 msgstr "Show disk view “Free” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:717
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:724
 msgid "Width of disk view “Available” column"
 msgstr "Width of disk view “Available” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:724
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:731
 msgid "Show disk view “Available” column on startup"
 msgstr "Show disk view “Available” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:731
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:738
 msgid "Width of disk view “Used” column"
 msgstr "Width of disk view “Used” column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:738
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:745
 msgid "Show disk view “Used” column on startup"
 msgstr "Show disk view “Used” column on startup"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:748
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:755
 msgid "Memory map sort column"
 msgstr "Memory map sort column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:755
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:762
 msgid "Memory map sort order"
 msgstr "Memory map sort order"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:764
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:771
 msgid "Open files sort column"
 msgstr "Open files sort column"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:771
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:778
 msgid "Open files sort order"
 msgstr "Open files sort order"
 
-#: src/prefsdialog.cpp:219
+#: src/prefsdialog.cpp:145
 msgid "Icon"
 msgstr "סמל"
 
-#: src/procactions.cpp:80
+#: src/procactions.cpp:79
 #, c-format
 msgid ""
 "Cannot change the priority of process with PID %d to %d.\n"
@@ -1287,7 +1339,11 @@ msgstr ""
 "לא ניתן לשנות את העדיפות לתהליך בעל מזהה התהליך %d ל־%d.\n"
 "%s"
 
-#: src/procactions.cpp:164
+#: src/procactions.cpp:90 src/procactions.cpp:182
+msgid "_OK"
+msgstr "_אישור"
+
+#: src/procactions.cpp:171
 #, c-format
 msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
@@ -1297,26 +1353,26 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:90
+#: src/procdialogs.cpp:88
 #, c-format
 msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 msgstr "האם לחסל את התהליך הנבחר „%s“ (מזהה תהליך: %u)?"
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:97
+#: src/procdialogs.cpp:95
 #, c-format
 msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 msgstr "האם לסיים את התהליך הנבחר „%s“ (מזהה תהליך: %u)?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:104
+#: src/procdialogs.cpp:102
 #, c-format
 msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
 msgstr "האם אכן ברצונך לעצור את התהליך הנבחר „%s” (מזהה תהליך: %u)?"
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:116
+#: src/procdialogs.cpp:114
 #, c-format
 msgid "Are you sure you want to kill the selected process?"
 msgid_plural "Are you sure you want to kill the %d selected processes?"
@@ -1326,7 +1382,7 @@ msgstr[2] "לחסל את %d התהליכים הנבחרים?"
 msgstr[3] "לחסל את %d התהליכים הנבחרים?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:123
+#: src/procdialogs.cpp:121
 #, c-format
 msgid "Are you sure you want to end the selected process?"
 msgid_plural "Are you sure you want to end the %d selected processes?"
@@ -1337,7 +1393,7 @@ msgstr[3] "לסיים את %d התהליכים הנבחרים?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:130
+#: src/procdialogs.cpp:128
 #, c-format
 msgid "Are you sure you want to stop the selected process?"
 msgid_plural "Are you sure you want to stop the %d selected processes?"
@@ -1347,7 +1403,7 @@ msgstr[2] "לעצור את %d התהליכים הנבחרים?"
 msgstr[3] "לעצור את %d התהליכים הנבחרים?"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:141
+#: src/procdialogs.cpp:139
 msgid ""
 "Killing a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be killed."
@@ -1355,7 +1411,7 @@ msgstr ""
 "חיסול תהליך עלול לגרום לאיבוד מידע, לשיבוש ההפעלה ולפגיעה באבטחה. יש לחסל "
 "תהליך רק אם אינו מגיב."
 
-#: src/procdialogs.cpp:144
+#: src/procdialogs.cpp:142
 msgid "_Kill Process"
 msgid_plural "_Kill Processes"
 msgstr[0] "_חיסול התהליך"
@@ -1364,7 +1420,7 @@ msgstr[2] "_חיסול התהליכים"
 msgstr[3] "_חיסול התהליכים"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:149
+#: src/procdialogs.cpp:147
 msgid ""
 "Ending a process may destroy data, break the session or introduce a security "
 "risk. Only unresponsive processes should be ended."
@@ -1372,17 +1428,9 @@ msgstr ""
 "סיום תהליך עלול לגרום לאיבוד מידע, לשיבוש ההפעלה ולפגיעה באבטחה. יש לסיים "
 "תהליך רק אם אינו מגיב."
 
-#: src/procdialogs.cpp:152 src/proctable.cpp:158
-msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "_סיום התהליך"
-msgstr[1] "_סיום התהליכים"
-msgstr[2] "_סיום התהליכים"
-msgstr[3] "_סיום התהליכים"
-
 #. SIGSTOP
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:157
+#: src/procdialogs.cpp:155
 msgid ""
 "Stopping a process may destroy data, break the session or introduce a "
 "security risk. Only unresponsive processes should be stopped."
@@ -1390,7 +1438,7 @@ msgstr ""
 "עצירת תהליך עלולה לגרום לאיבוד מידע, לשיבוש ההפעלה ולפגיעה באבטחה. יש לעצור "
 "תהליך רק אם אינו מגיב."
 
-#: src/procdialogs.cpp:160
+#: src/procdialogs.cpp:158
 msgid "_Stop Process"
 msgid_plural "_Stop Processes"
 msgstr[0] "_עצירת התהליך"
@@ -1398,12 +1446,12 @@ msgstr[1] "_עצירת התהליכים"
 msgstr[2] "_עצירת התהליכים"
 msgstr[3] "_עצירת התהליכים"
 
-#: src/procdialogs.cpp:251
+#: src/procdialogs.cpp:249
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "שינוי עדיפות התהליך „%s“ (מזהה תהליך: %u)"
 
-#: src/procdialogs.cpp:254
+#: src/procdialogs.cpp:252
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
@@ -1412,227 +1460,238 @@ msgstr[1] "שינוי העדיפות של %d התהליכים הנבחרים"
 msgstr[2] "שינוי העדיפות של %d התהליכים הנבחרים"
 msgstr[3] "שינוי העדיפות של %d התהליכים הנבחרים"
 
-#: src/procdialogs.cpp:272
-msgid "Note:"
-msgstr "הערה:"
-
-#: src/procdialogs.cpp:273
-msgid ""
-"The priority of a process is given by its nice value. A lower nice value "
-"corresponds to a higher priority."
-msgstr "העדיפות של התהליך. ערך נמוך שווה ערך לעדיפות גבוהה."
-
-#: src/procproperties.cpp:51 src/procproperties.cpp:90
-#: src/procproperties.cpp:93 src/util.cpp:541 src/util.cpp:588
+#: src/procproperties.cpp:50 src/procproperties.cpp:84
+#: src/procproperties.cpp:87 src/util.cpp:540 src/util.cpp:587
 msgid "N/A"
 msgstr "לא זמין"
 
-#: src/procproperties.cpp:69 src/proctable.cpp:366
+#: src/procproperties.cpp:68 src/proctable.cpp:344
 msgid "Process Name"
 msgstr "שם התהליך"
 
-#: src/procproperties.cpp:70 src/proctable.cpp:367
+#: src/procproperties.cpp:69 src/proctable.cpp:345
 msgid "User"
 msgstr "משתמש"
 
-#: src/procproperties.cpp:71 src/proctable.cpp:368
+#: src/procproperties.cpp:70 src/proctable.cpp:346
 msgid "Status"
 msgstr "מצב"
 
-#: src/procproperties.cpp:73 src/proctable.cpp:369
+#: src/procproperties.cpp:72 src/proctable.cpp:347
 msgid "Virtual Memory"
 msgstr "זיכרון וירטואלי"
 
-#: src/procproperties.cpp:74 src/proctable.cpp:370
+#: src/procproperties.cpp:73 src/proctable.cpp:348
 msgid "Resident Memory"
 msgstr "זיכרון מקומי"
 
-#: src/procproperties.cpp:75 src/proctable.cpp:371
+#: src/procproperties.cpp:74 src/proctable.cpp:349
 msgid "Writable Memory"
 msgstr "זיכרון ניתן לכתיבה"
 
-#: src/procproperties.cpp:76 src/proctable.cpp:372
+#: src/procproperties.cpp:75 src/proctable.cpp:350
 msgid "Shared Memory"
 msgstr "זיכרון משותף"
 
-#: src/procproperties.cpp:79 src/proctable.cpp:373
-msgid "X Server Memory"
-msgstr "זיכרון שרת X"
-
-#: src/procproperties.cpp:85 src/proctable.cpp:375
+#: src/procproperties.cpp:79 src/proctable.cpp:353
 msgid "CPU Time"
 msgstr "זמן מעבד"
 
-#: src/procproperties.cpp:86 src/proctable.cpp:376
+#: src/procproperties.cpp:80 src/proctable.cpp:354
 msgid "Started"
 msgstr "הופעל"
 
-#: src/procproperties.cpp:87 src/proctable.cpp:377
+#: src/procproperties.cpp:81 src/proctable.cpp:355
 msgid "Nice"
 msgstr "עדיפות"
 
-#: src/procproperties.cpp:88 src/proctable.cpp:395
+#: src/procproperties.cpp:82 src/proctable.cpp:373
 msgid "Priority"
 msgstr "עדיפות"
 
-#: src/procproperties.cpp:89 src/proctable.cpp:378
+#: src/procproperties.cpp:83 src/proctable.cpp:356
 msgid "ID"
 msgstr "מזהה"
 
-#: src/procproperties.cpp:90 src/proctable.cpp:379
+#: src/procproperties.cpp:84 src/proctable.cpp:357
 msgid "Security Context"
 msgstr "הקשר אבטחה"
 
-#: src/procproperties.cpp:91 src/proctable.cpp:380
+#: src/procproperties.cpp:85 src/proctable.cpp:358
 msgid "Command Line"
 msgstr "פקודה"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:92 src/proctable.cpp:383
+#: src/procproperties.cpp:86 src/proctable.cpp:361
 msgid "Waiting Channel"
 msgstr "ערוץ המתנה"
 
-#: src/procproperties.cpp:93 src/proctable.cpp:384
+#: src/procproperties.cpp:87 src/proctable.cpp:362
 msgid "Control Group"
 msgstr "קבוצת הבקרה"
 
-#: src/procproperties.cpp:214
+#: src/procproperties.cpp:211
 #, c-format
 msgid "%s (PID %u)"
 msgstr "‏%s ‏(PID %u)"
 
-#: src/proctable.cpp:374
+#: src/proctable.cpp:351
+msgid "X Server Memory"
+msgstr "זיכרון שרת X"
+
+#: src/proctable.cpp:352
 #, no-c-format
 msgid "% CPU"
 msgstr "% מהמעבד"
 
-#: src/proctable.cpp:385
+#: src/proctable.cpp:363
 msgid "Unit"
 msgstr "יחידה"
 
-#: src/proctable.cpp:386
+#: src/proctable.cpp:364
 msgid "Session"
 msgstr "הפעלה"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:389
+#: src/proctable.cpp:367
 msgid "Seat"
 msgstr "תושבת"
 
-#: src/proctable.cpp:390
+#: src/proctable.cpp:368
 msgid "Owner"
 msgstr "בעלים"
 
-#: src/proctable.cpp:391
+#: src/proctable.cpp:369
 msgid "Disk read total"
 msgstr "סך הקריאה מהכונן"
 
-#: src/proctable.cpp:392
+#: src/proctable.cpp:370
 msgid "Disk write total"
 msgstr "סך הכתיבה לכונן"
 
-#: src/proctable.cpp:393
+#: src/proctable.cpp:371
 msgid "Disk read"
 msgstr "קריאה מהכונן"
 
-#: src/proctable.cpp:394
+#: src/proctable.cpp:372
 msgid "Disk write"
 msgstr "כתיבה לכונן"
 
-#: src/setaffinity.cpp:301
-msgid "Set Affinity"
-msgstr "הגדרת שייכות"
+#: src/setaffinity.cpp:123
+msgid "GNU CPU Affinity error"
+msgstr "שגיאת GNU CPU Affinity"
 
-#: src/setaffinity.cpp:313
-msgid "_Apply"
-msgstr "ה_חלה"
+#: src/setaffinity.cpp:128
+msgid "_Close"
+msgstr "_סגירה"
 
-#: src/setaffinity.cpp:350
+#: src/setaffinity.cpp:329
 #, c-format
 msgid "Select CPUs \"%s\" (PID %u) is allowed to run on:"
 msgstr "בחירת המעבדים עליהם יוכל לפעול „%s” ‏‏‎‏(PID ‎%u):"
 
-#. Create toggle all check box
-#: src/setaffinity.cpp:383
-msgid "Run on all CPUs"
-msgstr "ריצה על גבי כל המעבדים"
-
 #. Set check box label value to CPU [1..2048]
-#: src/setaffinity.cpp:402
+#: src/setaffinity.cpp:348
 #, c-format
 msgid "CPU %d"
 msgstr "‏מעבד %d"
 
-#: src/util.cpp:35
+#: src/util.cpp:34
 msgid "Running"
 msgstr "מופעל"
 
-#: src/util.cpp:39
+#: src/util.cpp:38
 msgid "Stopped"
 msgstr "מופסק"
 
-#: src/util.cpp:43
+#: src/util.cpp:42
 msgid "Zombie"
 msgstr "זומבי"
 
-#: src/util.cpp:47
+#: src/util.cpp:46
 msgid "Uninterruptible"
 msgstr "לא ניתן להפרעה"
 
-#: src/util.cpp:51
+#: src/util.cpp:50
 msgid "Sleeping"
 msgstr "ישן"
 
 #. xgettext: weeks, days
-#: src/util.cpp:109
+#: src/util.cpp:108
 #, c-format
 msgid "%uw%ud"
 msgstr "%uw%ud"
 
 #. xgettext: days, hours (0 -> 23)
-#: src/util.cpp:113
+#: src/util.cpp:112
 #, c-format
 msgid "%ud%02uh"
 msgstr "%ud%02uh"
 
 #. xgettext: hours (0 -> 23), minutes, seconds
-#: src/util.cpp:117
+#: src/util.cpp:116
 #, c-format
 msgid "%u:%02u:%02u"
 msgstr "%u:%02u:%02u"
 
 #. xgettext: minutes, seconds, centiseconds
-#: src/util.cpp:120
+#: src/util.cpp:119
 #, c-format
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: src/util.cpp:189
+#: src/util.cpp:188
 msgid "Very High Priority"
 msgstr "עדיפות גבוהה מאוד"
 
-#: src/util.cpp:191
+#: src/util.cpp:190
 msgid "High Priority"
 msgstr "עדיפות גבוהה"
 
-#: src/util.cpp:193
+#: src/util.cpp:192
 msgid "Normal Priority"
 msgstr "עדיפות רגילה"
 
-#: src/util.cpp:195
+#: src/util.cpp:194
 msgid "Low Priority"
 msgstr "עדיפות נמוכה"
 
-#: src/util.cpp:197
+#: src/util.cpp:196
 msgid "Very Low Priority"
 msgstr "עדיפות נמוכה מאוד"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:821
+#: src/util.cpp:831
 #, c-format
 msgid "%s/s"
 msgstr "‫%s לשנייה"
+
+#~ msgid "_Terminate Process"
+#~ msgstr "_סיום תהליך"
+
+#~ msgid "Show process properties"
+#~ msgstr "הצגת מאפייני תהליך"
+
+#~ msgid "Graphs"
+#~ msgstr "תרשימים"
+
+#~ msgid "Set Network Totals _Unit Separately"
+#~ msgstr "הגדרת יחידות סך תעבורת הרשת ב_נפרד"
+
+#~ msgid "Received invalid color data\n"
+#~ msgstr "התקבלו נתוני צבע בלתי תקינים\n"
+
+#~ msgid "Set network totals unit separately"
+#~ msgstr "Set network totals unit separately"
+
+#~ msgid "Note:"
+#~ msgstr "הערה:"
+
+#~ msgid ""
+#~ "The priority of a process is given by its nice value. A lower nice value "
+#~ "corresponds to a higher priority."
+#~ msgstr "העדיפות של התהליך. ערך נמוך שווה ערך לעדיפות גבוהה."
 
 #~ msgctxt "shortcut window"
 #~ msgid "Send End signal"
@@ -1730,14 +1789,8 @@ msgstr "‫%s לשנייה"
 #~ msgid "S_earch results:"
 #~ msgstr "_תוצאות חיפוש:"
 
-#~ msgid "_Close"
-#~ msgstr "_סגירה"
-
 #~ msgid "_Help"
 #~ msgstr "ע_זרה"
-
-#~ msgid "Process Properties"
-#~ msgstr "מאפייני תהליך"
 
 #~ msgid "Properties of process \"%s\" (PID %u):"
 #~ msgstr "מאפייני התהליך „%s“ (המזהה %u):"
