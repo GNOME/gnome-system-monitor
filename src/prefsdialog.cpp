@@ -78,10 +78,10 @@ field_toggled (const gchar *gsettings_parent,
 }
 
 static void
-field_row_activated (GtkTreeView       *tree,
-                     GtkTreePath       *path,
+field_row_activated (GtkTreeView *tree,
+                     GtkTreePath *path,
                      GtkTreeViewColumn*,
-                     gpointer           data)
+                     gpointer     data)
 {
   GtkTreeModel *model = gtk_tree_view_get_model (tree);
   gchar *path_str = gtk_tree_path_to_string (path);
@@ -188,17 +188,18 @@ create_preferences_dialog (GsmApplication *app)
   AdwSwitchRow *smooth_switch;
   GtkBuilder *builder;
   gfloat update;
-  GError* err = NULL;
+  GError*err = NULL;
 
   if (prefs_window)
     return;
 
   builder = gtk_builder_new ();
   gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/preferences.ui", &err);
-  if (err != NULL) {
-    procman_debug ("problem loading preferences ui %s", err->message);
-    g_error_free (err);
-  }
+  if (err != NULL)
+    {
+      procman_debug ("problem loading preferences ui %s", err->message);
+      g_error_free (err);
+    }
 
   prefs_window = ADW_PREFERENCES_WINDOW (gtk_builder_get_object (builder, "preferences_dialog"));
 

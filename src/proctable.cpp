@@ -86,9 +86,9 @@ cb_proctree_destroying (GtkTreeView *self,
 static gboolean
 cb_tree_button_pressed (GtkGestureClick*,
                         gint,
-                        gdouble          x,
-                        gdouble          y,
-                        GsmApplication  *app)
+                        gdouble         x,
+                        gdouble         y,
+                        GsmApplication *app)
 {
   GtkTreePath *path = NULL;
   GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (app->tree));
@@ -186,7 +186,7 @@ cb_timeout (gpointer data)
 
 static void
 cb_refresh_icons (GtkIconTheme*,
-                  gpointer      data)
+                  gpointer data)
 {
   GsmApplication *app = (GsmApplication *) data;
 

@@ -35,7 +35,7 @@
 #include "gsm_pkexec.h"
 #include "cgroups.h"
 
-static AdwMessageDialog* renice_dialog = NULL;
+static AdwMessageDialog*renice_dialog = NULL;
 static gint new_nice_value = 0;
 
 static void
@@ -163,7 +163,7 @@ procdialog_create_kill_dialog (GsmApplication *app,
   g_free (primary);
 
   adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (kill_alert_dialog),
-                                    "cancel",  _("_Cancel"),
+                                    "cancel", _("_Cancel"),
                                     "apply", button_text,
                                     NULL);
   adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (kill_alert_dialog), "cancel");
@@ -192,8 +192,8 @@ renice_adjustment_value_changed (GtkAdjustment *adjustment,
 
 static void
 renice_dialog_response (AdwMessageDialog*,
-                        gchar            *response,
-                        gpointer          data)
+                        gchar   *response,
+                        gpointer data)
 {
   GsmApplication *app = static_cast<GsmApplication *>(data);
 

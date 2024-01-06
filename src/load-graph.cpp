@@ -200,7 +200,7 @@ static void
 load_graph_resize (GtkDrawingArea*,
                    gint,
                    gint,
-                   gpointer        data_ptr)
+                   gpointer data_ptr)
 {
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
 
@@ -208,9 +208,9 @@ load_graph_resize (GtkDrawingArea*,
 }
 
 static void
-load_graph_state_changed (GtkWidget     *widget,
+load_graph_state_changed (GtkWidget *widget,
                           GtkStateFlags*,
-                          gpointer       data_ptr)
+                          gpointer   data_ptr)
 {
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
 
@@ -220,7 +220,7 @@ load_graph_state_changed (GtkWidget     *widget,
 
 static void
 load_graph_color_scheme_changed (GsmGraph*,
-                                 gpointer  data_ptr)
+                                 gpointer data_ptr)
 {
   LoadGraph * const load_graph = static_cast<LoadGraph*>(data_ptr);
 
@@ -228,7 +228,9 @@ load_graph_color_scheme_changed (GsmGraph*,
 }
 
 static cairo_surface_t*
-create_background (LoadGraph *graph, int width, int height)
+create_background (LoadGraph *graph,
+                   int        width,
+                   int        height)
 {
   GdkRGBA fg_color;
   GdkRGBA grid_color;
@@ -411,10 +413,10 @@ create_background (LoadGraph *graph, int width, int height)
 
 static void
 load_graph_draw (GtkDrawingArea*,
-                 cairo_t        *cr,
-                 int             width,
-                 int             height,
-                 gpointer        data_ptr)
+                 cairo_t *cr,
+                 int      width,
+                 int      height,
+                 gpointer data_ptr)
 {
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
 
@@ -708,13 +710,9 @@ dynamic_scale (LoadGraph             *graph,
   guint64 dmax = std::max (din, dout);
 
   if (graph->latest == 0)
-    {
-      values->at (graph->num_points - 1) = dmax;
-    }
+    values->at (graph->num_points - 1) = dmax;
   else
-    {
-      values->at (graph->latest - 1) = dmax;
-    }
+    values->at (graph->latest - 1) = dmax;
 
   guint64 new_max;
   // both way, new_max is the greatest value
@@ -845,18 +843,18 @@ handle_dynamic_max_value (LoadGraph             *graph,
   guint64 din, dout;
 
   if (in >= *last_in && out >= *last_out &&
-       (graph_hash == NULL || hash == *graph_hash) &&
-       *graph_time != 0)
+      (graph_hash == NULL || hash == *graph_hash) &&
+      *graph_time != 0)
     {
       float dtime = ((double) (time - *graph_time)) / G_USEC_PER_SEC;
-      din = static_cast<guint64>((in - *last_in)  / dtime);
+      din = static_cast<guint64>((in - *last_in) / dtime);
       dout = static_cast<guint64>((out - *last_out) / dtime);
     }
   else
     {
       /* Don't calc anything if new data is less than old (interface
          removed, counters reset, ...) or if it is the first time */
-      din  = 0;
+      din = 0;
       dout = 0;
     }
 
@@ -864,9 +862,7 @@ handle_dynamic_max_value (LoadGraph             *graph,
   *last_out = out;
   *graph_time = time;
   if (graph_hash != NULL)
-    {
-      *graph_hash = hash;
-    }
+    *graph_hash = hash;
 
   dynamic_scale (graph, values, max, din, dout, in_bits);
 
@@ -904,7 +900,7 @@ get_net (LoadGraph *graph)
          able to get this, ignoring down interfaces will be
          possible too.  */
       if (not ((netload.flags & (1 << GLIBTOP_NETLOAD_ADDRESS6))
-                and netload.scope6 != GLIBTOP_IF_IN6_SCOPE_LINK)
+               and netload.scope6 != GLIBTOP_IF_IN6_SCOPE_LINK)
           and not (netload.flags & (1 << GLIBTOP_NETLOAD_ADDRESS)))
         continue;
 
@@ -933,6 +929,7 @@ get_disk (LoadGraph *graph)
   glibtop_disk disk;
   gint32 i;
   guint64 read = 0, write = 0;
+
   glibtop_get_disk (&disk);
 
   for (i = 0; i < glibtop_global_server->ndisk; i++)
@@ -1008,7 +1005,7 @@ load_graph_update (gpointer user_data)
 
 static void
 load_graph_destroy (GtkWidget*,
-                    gpointer   data_ptr)
+                    gpointer data_ptr)
 {
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
 
@@ -1275,4 +1272,3 @@ load_graph_get_swap_color_picker (LoadGraph *graph)
 {
   return graph->swap_color_picker;
 }
-

@@ -177,6 +177,7 @@ PrettyTable::get_icon_from_gio (const ProcInfo &info)
   const auto executable = info.name.substr (0, info.name.find (' '));
 
   Glib::RefPtr<Gio::AppInfo> app = this->gio_apps[executable];
+
   if (!app)
     return icon;
 

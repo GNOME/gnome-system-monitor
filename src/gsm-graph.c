@@ -35,7 +35,7 @@ static guint signals[NUM_SIGNALS] = {
 G_DEFINE_TYPE (GsmGraph, gsm_graph, GTK_TYPE_DRAWING_AREA)
 
 static void
-gsm_graph_css_changed (GtkWidget         *widget,
+gsm_graph_css_changed (GtkWidget *widget,
                        GtkCssStyleChange*)
 {
   g_signal_emit (G_OBJECT (widget), signals[CSS_CHANGED], 0);

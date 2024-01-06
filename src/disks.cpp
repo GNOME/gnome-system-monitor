@@ -33,7 +33,7 @@ enum DiskColumns
 
 static void
 cb_sort_changed (GtkTreeSortable*,
-                 gpointer         data)
+                 gpointer data)
 {
   GsmApplication *app = (GsmApplication *) data;
 
@@ -324,8 +324,8 @@ cb_disk_columns_changed (GtkTreeView *treeview,
 
 
 static void
-open_dir (GtkTreeView       *tree_view,
-          GtkTreePath       *path,
+open_dir (GtkTreeView *tree_view,
+          GtkTreePath *path,
           GtkTreeViewColumn*,
           gpointer)
 {

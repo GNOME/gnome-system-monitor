@@ -76,7 +76,9 @@ fill_image_buffer_from_resource (cairo_t    *cr,
   gsize len;
   GError *error = NULL;
   RsvgHandle *handle;
-  RsvgRectangle viewport = {0, 0, 32, 32};
+  RsvgRectangle viewport = {
+    0, 0, 32, 32
+  };
   cairo_surface_t *tmp_surface;
   cairo_t *tmp_cr;
 
@@ -409,7 +411,7 @@ gsm_color_button_released (GtkGestureClick*,
                            gint,
                            gdouble,
                            gdouble,
-                           GsmColorButton  *color_button)
+                           GsmColorButton *color_button)
 {
   GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
 
@@ -443,7 +445,7 @@ gsm_color_button_released (GtkGestureClick*,
 
 static gboolean
 gsm_color_button_drag_data_drop (GtkDropTarget*,
-                                 const GValue   *value,
+                                 const GValue *value,
                                  gdouble,
                                  gdouble,
                                  GsmColorButton *color_button)

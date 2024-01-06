@@ -128,7 +128,7 @@ set_affinity_error (void)
   adw_message_dialog_add_response (ADW_MESSAGE_DIALOG (dialog), "close", _("_Close"));
 
   /* Destroy dialog with parent */
-  gtk_window_set_destroy_with_parent(GTK_WINDOW (dialog), TRUE);
+  gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
 
   /* Set dialog as modal */
   gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
@@ -194,7 +194,7 @@ execute_taskset_command (gchar **cpu_list,
 
 static void
 set_affinity (GtkCheckButton*,
-              gpointer        data)
+              gpointer data)
 {
   SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
 

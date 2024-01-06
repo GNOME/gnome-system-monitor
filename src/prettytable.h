@@ -21,7 +21,7 @@ public:
 PrettyTable();
 ~PrettyTable();
 
-void set_icon (ProcInfo &);
+void                       set_icon (ProcInfo &);
 
 private:
 Glib::RefPtr<Gdk::Texture> get_icon_from_theme (const ProcInfo &);

@@ -42,7 +42,7 @@ struct LoadGraphLabels
 struct LoadGraph
   : private procman::NonCopyable
 {
-  LoadGraph(guint type);
+  LoadGraph (guint type);
   ~LoadGraph();
 
   unsigned get_num_bars (int height) const;

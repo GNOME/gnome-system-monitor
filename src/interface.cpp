@@ -44,7 +44,7 @@
 #include "settings-keys.h"
 #include "legacy/gsm_color_button.h"
 
-static const char* LOAD_GRAPH_CSS = "\
+static const char*LOAD_GRAPH_CSS = "\
 .loadgraph {\
     background: linear-gradient(to bottom,\
                   @window_bg_color,\
@@ -55,7 +55,7 @@ static const char* LOAD_GRAPH_CSS = "\
 
 static void
 search_text_changed (GtkEditable*,
-                     gpointer     data)
+                     gpointer data)
 {
   GsmApplication * const app = static_cast<GsmApplication *>(data);
 
@@ -205,17 +205,21 @@ cb_net_out_color_changed (GsmColorButton *cp,
 }
 
 static void
-cb_disk_read_color_changed (GsmColorButton *cp, gpointer data)
+cb_disk_read_color_changed (GsmColorButton *cp,
+                            gpointer        data)
 {
   GsmApplication *app = (GsmApplication *) data;
-  change_settings_color (*app->settings.operator->(), GSM_SETTING_DISK_READ_COLOR, cp);
+
+  change_settings_color (*app->settings.operator-> (), GSM_SETTING_DISK_READ_COLOR, cp);
 }
 
 static void
-cb_disk_write_color_changed (GsmColorButton *cp, gpointer data)
+cb_disk_write_color_changed (GsmColorButton *cp,
+                             gpointer        data)
 {
   GsmApplication *app = (GsmApplication *) data;
-  change_settings_color (*app->settings.operator->(), GSM_SETTING_DISK_WRITE_COLOR, cp);
+
+  change_settings_color (*app->settings.operator-> (), GSM_SETTING_DISK_WRITE_COLOR, cp);
 }
 
 static void
@@ -255,7 +259,7 @@ create_sys_view (GsmApplication *app,
 
   GtkGrid*cpu_table = GTK_GRID (gtk_builder_get_object (builder, "cpu_table"));
   gint cols = 4;
-  gint rows = ( app->config.num_cpus + cols - 1 ) / cols;
+  gint rows = (app->config.num_cpus + cols - 1) / cols;
 
   for (i = 0; i < app->config.num_cpus; i++)
     {
@@ -536,7 +540,7 @@ kill_process_with_confirmation (GsmApplication *app,
 static void
 on_activate_send_signal (GSimpleAction *action,
                          GVariant *,
-                         gpointer  data)
+                         gpointer       data)
 {
   GsmApplication *app = (GsmApplication *) data;
 
@@ -614,11 +618,11 @@ on_activate_toggle (GSimpleAction *action,
 static void
 on_activate_search (GSimpleAction*,
                     GVariant*,
-                    gpointer       data)
+                    gpointer data)
 {
   GsmApplication *app = (GsmApplication *) data;
 
-  gtk_search_bar_set_search_mode (app->search_bar, !gtk_search_bar_get_search_mode(app->search_bar));
+  gtk_search_bar_set_search_mode (app->search_bar, !gtk_search_bar_get_search_mode (app->search_bar));
 }
 
 static void
@@ -763,14 +767,14 @@ update_page_activities (GsmApplication *app)
 static void
 cb_change_current_page (AdwViewStack*,
                         GParamSpec*,
-                        gpointer      data)
+                        gpointer data)
 {
   update_page_activities ((GsmApplication *)data);
 }
 
 static gboolean
 cb_main_window_delete (GtkWindow*,
-                       gpointer   data)
+                       gpointer data)
 {
   GsmApplication *app = (GsmApplication *) data;
 
@@ -872,22 +876,22 @@ create_main_window (GsmApplication *app)
   gtk_menu_button_set_menu_model (app->app_menu_button, app->generic_window_menu_model);
 
   GActionEntry win_action_entries[] = {
-    { "about", on_activate_about, NULL, NULL, NULL, {0,0,0} },
-    { "show-help-overlay", on_activate_keyboard_shortcuts, NULL, NULL, NULL, {0,0,0} },
-    { "search", on_activate_search, NULL, NULL, NULL, {0,0,0} },
-    { "send-signal-stop", on_activate_send_signal, NULL, NULL, NULL, {0,0,0} },
-    { "send-signal-cont", on_activate_send_signal, NULL, NULL, NULL, {0,0,0} },
-    { "send-signal-term", on_activate_send_signal, NULL, NULL, NULL, {0,0,0} },
-    { "send-signal-kill", on_activate_send_signal, NULL, NULL, NULL, {0,0,0} },
-    { "priority", on_activate_priority, "i", "@i 0", change_priority_state, {0,0,0} },
-    { "set-affinity", on_activate_set_affinity, NULL, NULL, NULL, {0,0,0} },
-    { "memory-maps", on_activate_memory_maps, NULL, NULL, NULL, {0,0,0} },
-    { "open-files", on_activate_open_files, NULL, NULL, NULL, {0,0,0} },
-    { "process-properties", on_activate_process_properties, NULL, NULL, NULL, {0,0,0} },
-    { "refresh", on_activate_refresh, NULL, NULL, NULL, {0,0,0} },
-    { "show-page", on_activate_radio, "s", "'resources'", change_show_page_state, {0,0,0} },
-    { "show-whose-processes", on_activate_radio, "s", "'all'", change_show_processes_state, {0,0,0} },
-    { "show-dependencies", on_activate_toggle, NULL, "false", change_show_dependencies_state, {0,0,0} }
+    { "about", on_activate_about, NULL, NULL, NULL, { 0, 0, 0 } },
+    { "show-help-overlay", on_activate_keyboard_shortcuts, NULL, NULL, NULL, { 0, 0, 0 } },
+    { "search", on_activate_search, NULL, NULL, NULL, { 0, 0, 0 } },
+    { "send-signal-stop", on_activate_send_signal, NULL, NULL, NULL, { 0, 0, 0 } },
+    { "send-signal-cont", on_activate_send_signal, NULL, NULL, NULL, { 0, 0, 0 } },
+    { "send-signal-term", on_activate_send_signal, NULL, NULL, NULL, { 0, 0, 0 } },
+    { "send-signal-kill", on_activate_send_signal, NULL, NULL, NULL, { 0, 0, 0 } },
+    { "priority", on_activate_priority, "i", "@i 0", change_priority_state, { 0, 0, 0 } },
+    { "set-affinity", on_activate_set_affinity, NULL, NULL, NULL, { 0, 0, 0 } },
+    { "memory-maps", on_activate_memory_maps, NULL, NULL, NULL, { 0, 0, 0 } },
+    { "open-files", on_activate_open_files, NULL, NULL, NULL, { 0, 0, 0 } },
+    { "process-properties", on_activate_process_properties, NULL, NULL, NULL, { 0, 0, 0 } },
+    { "refresh", on_activate_refresh, NULL, NULL, NULL, { 0, 0, 0 } },
+    { "show-page", on_activate_radio, "s", "'resources'", change_show_page_state, { 0, 0, 0 } },
+    { "show-whose-processes", on_activate_radio, "s", "'all'", change_show_processes_state, { 0, 0, 0 } },
+    { "show-dependencies", on_activate_toggle, NULL, "false", change_show_dependencies_state, { 0, 0, 0 } }
   };
   g_action_map_add_action_entries (G_ACTION_MAP (app->main_window),
                                    win_action_entries,
@@ -1013,4 +1017,3 @@ update_sensitivity (GsmApplication *app)
 
   g_timeout_add (duration_ms, scroll_to_selection, app);
 }
-

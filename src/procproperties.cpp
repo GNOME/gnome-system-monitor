@@ -131,7 +131,7 @@ close_procprop_dialog (AdwWindow *dialog,
 
 static GtkTreeView *
 create_procproperties_tree (GsmApplication*,
-                            ProcInfo       *info)
+                            ProcInfo *info)
 {
   GtkTreeView *tree;
   GtkListStore *model;

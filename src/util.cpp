@@ -815,8 +815,9 @@ std::string
 format_volume (guint64 size,
                bool    want_bits)
 {
-  char* bytes = procman::format_size (size, want_bits);
+  char*bytes = procman::format_size (size, want_bits);
   std::string formatted (make_string (g_strdup (bytes)));
+
   g_free (bytes);
   return formatted;
 }
