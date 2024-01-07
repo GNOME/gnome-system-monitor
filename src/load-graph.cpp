@@ -284,7 +284,7 @@ create_background (LoadGraph *graph,
   gtk_style_context_get_color (context, &fg_color);
   /* The grid color is the same as the foreground color but has sometimes
    * different alpha. Keep it separate. */
-  grid_color = *(gdk_rgba_copy (&fg_color));
+  grid_color = fg_color;
 
   /* Why not use the new features of the
    * GTK instead of cairo_rectangle ?! :) */
