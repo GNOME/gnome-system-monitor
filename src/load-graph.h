@@ -64,7 +64,6 @@ struct LoadGraph
   guint render_counter;
   guint frames_per_unit;
   guint graph_dely;
-  guint graph_delx;
   guint num_bars;
   guint real_draw_height;
 
