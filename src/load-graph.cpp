@@ -426,7 +426,6 @@ load_graph_draw (GtkDrawingArea*,
   graph->num_bars = graph->get_num_bars (height);
   graph->graph_dely = (height - 15) / graph->num_bars;   /* round to int to avoid AA blur */
   graph->graph_delx = (width - 2 - graph->indent) / (graph->num_points - 3);
-  graph->graph_buffer_offset = (int) (1.5 * graph->graph_delx) + FRAME_WIDTH;
   graph->real_draw_height = graph->graph_dely * graph->num_bars;
 
   /* Number of pixels wide for one sample point */
@@ -1025,7 +1024,6 @@ LoadGraph::LoadGraph(guint type)
   frames_per_unit (10),    // this will be changed but needs initialising
   graph_dely (0),
   graph_delx (0),
-  graph_buffer_offset (0),
   num_bars (0),
   real_draw_height (0),
   colors (),
