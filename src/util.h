@@ -197,18 +197,11 @@ std::string format_rate (guint64 rate,
 std::string format_network (guint64 size);
 std::string format_network_rate (guint64 rate);
 
-class NonCopyable
+struct NonCopyable
 {
-protected:
-NonCopyable()
-{
-}                         // = default
-~NonCopyable()
-{
-}                         // = default
-private:
-NonCopyable(const NonCopyable&) /* = delete */;
-NonCopyable& operator= (const NonCopyable&) /* = delete */;
+  NonCopyable() = default;
+  NonCopyable(const NonCopyable&) = delete;
+  NonCopyable& operator=(const NonCopyable&) = delete;
 };
 
 
