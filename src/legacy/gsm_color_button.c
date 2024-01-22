@@ -369,7 +369,8 @@ gsm_color_button_measure (GtkWidget*,
 }
 
 static void
-gsm_color_button_state_flags_changed (GtkWidget *self)
+gsm_color_button_state_flags_changed (GtkWidget *self,
+                                      GtkStateFlags)
 {
   gtk_widget_queue_draw (self);
 }
@@ -422,7 +423,7 @@ gsm_color_button_released (GtkGestureClick*,
       GtkColorChooserDialog *cc_dialog;
       GtkWidget *parent;
 
-      parent = gtk_widget_get_root (GTK_WIDGET (color_button));
+      parent = GTK_WIDGET (gtk_widget_get_root (GTK_WIDGET (color_button)));
 
       cc_dialog = GTK_COLOR_CHOOSER_DIALOG (gtk_color_chooser_dialog_new (priv->title, GTK_WINDOW (parent)));
 
