@@ -32,7 +32,7 @@ static guint signals[NUM_SIGNALS] = {
   0
 };
 
-G_DEFINE_TYPE (GsmGraph, gsm_graph, GTK_TYPE_DRAWING_AREA)
+G_DEFINE_TYPE_WITH_CODE (GsmGraph, gsm_graph, GTK_TYPE_DRAWING_AREA, G_ADD_PRIVATE(GsmGraph))
 
 static void
 gsm_graph_css_changed (GtkWidget *widget,
@@ -68,8 +68,28 @@ gsm_graph_init (GsmGraph*)
 {
 }
 
+gboolean
+gsm_graph_is_drawing (GsmGraph *self)
+{
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  g_return_val_if_fail (GSM_IS_GRAPH (self), FALSE);
+  return priv->draw;
+}
+
+void
+gsm_graph_set_drawing (GsmGraph *self, gboolean draw)
+{
+  g_return_if_fail (GSM_IS_GRAPH (self));
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  if (priv->draw != draw)
+    priv->draw = draw;
+}
+
 GsmGraph *
 gsm_graph_new (void)
 {
   return g_object_new (GSM_TYPE_GRAPH, NULL);
 }
+

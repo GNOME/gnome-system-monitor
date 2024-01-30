@@ -79,8 +79,6 @@ struct LoadGraph
 
   guint timer_index;
 
-  gboolean draw;
-
   LoadGraphLabels labels;
   GsmColorButton *mem_color_picker;
   GsmColorButton *swap_color_picker;

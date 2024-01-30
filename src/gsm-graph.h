@@ -26,13 +26,20 @@ G_BEGIN_DECLS
 
 #define GSM_TYPE_GRAPH  (gsm_graph_get_type ())
 #define GSM_GRAPH(obj)  (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSM_TYPE_GRAPH, GsmGraph))
+#define GSM_IS_GRAPH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSM_TYPE_GRAPH))
 
 typedef struct _GsmGraph GsmGraph;
 typedef struct _GsmGraphClass GsmGraphClass;
+typedef struct _GsmGraphPrivate GsmGraphPrivate;
 
 struct _GsmGraph
 {
   GtkDrawingArea parent_instance;
+};
+
+struct _GsmGraphPrivate
+{
+  gboolean draw;
 };
 
 struct _GsmGraphClass
@@ -44,5 +51,9 @@ struct _GsmGraphClass
 
 GType      gsm_graph_get_type (void);
 GsmGraph * gsm_graph_new (void);
+
+gboolean   gsm_graph_is_drawing (GsmGraph*);
+void       gsm_graph_set_drawing (GsmGraph*, gboolean);
+
 
 G_END_DECLS
