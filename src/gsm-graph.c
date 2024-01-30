@@ -69,7 +69,7 @@ gsm_graph_init (GsmGraph*)
 }
 
 gboolean
-gsm_graph_is_drawing (GsmGraph *self)
+gsm_graph_is_started (GsmGraph *self)
 {
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
 
@@ -77,14 +77,25 @@ gsm_graph_is_drawing (GsmGraph *self)
   return priv->draw;
 }
 
-void
-gsm_graph_set_drawing (GsmGraph *self, gboolean draw)
+void _gsm_graph_set_draw (GsmGraph *self, gboolean draw)
 {
   g_return_if_fail (GSM_IS_GRAPH (self));
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
 
   if (priv->draw != draw)
     priv->draw = draw;
+}
+
+void
+gsm_graph_start (GsmGraph *self)
+{
+  _gsm_graph_set_draw (self, TRUE);
+}
+
+void
+gsm_graph_stop (GsmGraph *self)
+{
+  _gsm_graph_set_draw (self, TRUE);
 }
 
 GsmGraph *

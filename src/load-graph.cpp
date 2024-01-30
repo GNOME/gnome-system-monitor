@@ -215,7 +215,10 @@ load_graph_state_changed (GtkWidget *widget,
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
 
   force_refresh (graph);
-  gsm_graph_set_drawing (GSM_GRAPH (graph->disp), gtk_widget_is_visible (widget));
+  if (gtk_widget_is_visible (widget))
+    gsm_graph_start (GSM_GRAPH (graph->disp));
+  else
+    gsm_graph_stop (GSM_GRAPH (graph->disp));
 }
 
 static void
@@ -990,7 +993,7 @@ load_graph_update (gpointer user_data)
   if (graph->render_counter == graph->frames_per_unit - 1)
     load_graph_update_data (graph);
 
-  if (gsm_graph_is_drawing (GSM_GRAPH (graph->disp)))
+  if (gsm_graph_is_started (GSM_GRAPH (graph->disp)))
     load_graph_queue_draw (graph);
 
   graph->render_counter++;
@@ -1178,14 +1181,14 @@ load_graph_start (LoadGraph *graph)
                                           graph);
     }
 
-  gsm_graph_set_drawing (GSM_GRAPH (graph->disp), TRUE);
+  gsm_graph_start (GSM_GRAPH (graph->disp));
 }
 
 void
 load_graph_stop (LoadGraph *graph)
 {
   /* don't draw anymore, but continue to poll */
-  gsm_graph_set_drawing (GSM_GRAPH (graph->disp), FALSE);
+  gsm_graph_stop (GSM_GRAPH (graph->disp));
 }
 
 void

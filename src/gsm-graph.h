@@ -52,8 +52,9 @@ struct _GsmGraphClass
 GType      gsm_graph_get_type (void);
 GsmGraph * gsm_graph_new (void);
 
-gboolean   gsm_graph_is_drawing (GsmGraph*);
-void       gsm_graph_set_drawing (GsmGraph*, gboolean);
+void       gsm_graph_start (GsmGraph*);
+gboolean   gsm_graph_is_started (GsmGraph*);
+void       gsm_graph_stop (GsmGraph*);
 
 
 G_END_DECLS
