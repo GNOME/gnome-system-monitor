@@ -49,6 +49,9 @@ gsm_graph_class_init (GsmGraphClass *klass)
 
   widget_class->css_changed = gsm_graph_css_changed;
 
+  object_class->dispose = gsm_graph_dispose;
+  object_class->finalize = gsm_graph_finalize;
+
   /**
    * GsmGraph::css-changed:
    * @self:
@@ -63,9 +66,27 @@ gsm_graph_class_init (GsmGraphClass *klass)
                                        0);
 }
 
-static void
-gsm_graph_init (GsmGraph*)
+void
+gsm_graph_dispose (GsmGraph *self)
 {
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (GSM_GRAPH (self));
+
+  G_OBJECT_CLASS (gsm_graph_parent_class)->dispose (self);
+}
+
+void
+gsm_graph_finalize (GsmGraph *self)
+{
+  // GsmGraphPrivate *priv = gsm_graph_get_instance_private (GSM_GRAPH (self));
+
+  G_OBJECT_CLASS (gsm_graph_parent_class)->finalize (self);
+}
+
+static void
+gsm_graph_init (GsmGraph *self)
+{
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+  priv->draw = FALSE;
 }
 
 gboolean
