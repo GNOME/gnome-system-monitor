@@ -193,15 +193,15 @@ create_background (LoadGraph *graph,
   GdkRGBA fg_color;
   GdkRGBA grid_color;
   GtkAllocation allocation;
-  GtkNative *native;
   PangoContext *pango_context;
   PangoFontDescription *font_desc;
   PangoLayout *layout;
   cairo_t *cr;
   cairo_surface_t *surface;
+  guint frames_per_unit = gsm_graph_get_frames_per_unit (graph->disp);
 
   /* Graph length */
-  const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * graph->frames_per_unit;
+  const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * frames_per_unit;
 
   gtk_widget_get_allocation (GTK_WIDGET (graph->disp), &allocation);
 //  native = gtk_widget_get_native (GTK_WIDGET (graph->disp));
@@ -369,7 +369,7 @@ create_background (LoadGraph *graph,
 }
 
 static void
-load_graph_draw (GtkDrawingArea*,
+load_graph_draw (GtkDrawingArea* area,
                  cairo_t *cr,
                  int      width,
                  int      height,
@@ -377,6 +377,8 @@ load_graph_draw (GtkDrawingArea*,
 {
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
   cairo_surface_t * background;
+  guint frames_per_unit = gsm_graph_get_frames_per_unit (GSM_GRAPH (area));
+  guint render_counter = gsm_graph_get_render_counter (GSM_GRAPH (area));
 
   /* Initialize graph dimensions */
   width -= 2 * FRAME_WIDTH;
@@ -385,6 +387,7 @@ load_graph_draw (GtkDrawingArea*,
   graph->graph_dely = (height - 15) / graph->num_bars;   /* round to int to avoid AA blur */
   graph->real_draw_height = graph->graph_dely * graph->num_bars;
 
+//<<<<<<< HEAD
   const double x_step = double(width - graph->rmargin - graph->indent) / (graph->num_points - 2);
 
   /* Lines start on the rightmost vertical gridline */
@@ -392,7 +395,16 @@ load_graph_draw (GtkDrawingArea*,
 
   /* Shift the x position of the most recent (shown rightmost) value outside of the clip area in order
      to be able to simulate continuous, smooth movement without the line being cut off at its ends */
-  x_offset += x_step * (1 - graph->render_counter / double(graph->frames_per_unit));
+  x_offset += x_step * (1 - render_counter / double(frames_per_unit));
+//=======
+  /* Number of pixels wide for one sample point */
+//  gdouble sample_width = (double)(width - graph->rmargin - graph->indent) / (double)(graph->num_points);
+  /* Lines start at the right edge of the drawing,
+   * a bit outside the clip rectangle. */
+//  gdouble x_offset = width - graph->rmargin + sample_width;
+  /* Adjustment for smooth movement between samples */
+//  x_offset -= sample_width * render_counter / (double)frames_per_unit;
+//>>>>>>> f759e59d (Moved main refresh logic to gsm_graph)
 
   /* Draw background */
   if (!gsm_graph_is_background_set (GSM_GRAPH (graph->disp))) {
@@ -908,7 +920,7 @@ get_disk (LoadGraph *graph)
                             graph->labels.disk_read_total, graph->labels.disk_write_total);
 }
 
-void
+int
 load_graph_update_data (LoadGraph *graph)
 {
   // Rotate data one element down.
@@ -941,26 +953,7 @@ load_graph_update_data (LoadGraph *graph)
       default:
         g_assert_not_reached ();
     }
-}
-
-/* Updates the load graph when the timeout expires */
-static gboolean
-load_graph_update (gpointer user_data)
-{
-  LoadGraph * const graph = static_cast<LoadGraph*>(user_data);
-
-  if (graph->render_counter == graph->frames_per_unit - 1)
-    load_graph_update_data (graph);
-
-  if (gsm_graph_is_started (GSM_GRAPH (graph->disp)))
-    gtk_widget_queue_draw (GTK_WIDGET (graph->disp));
-
-  graph->render_counter++;
-
-  if (graph->render_counter >= graph->frames_per_unit)
-    graph->render_counter = 0;
-
-  return TRUE;
+  return 0;
 }
 
 static void
@@ -981,8 +974,6 @@ LoadGraph::LoadGraph(guint type)
   speed (GsmApplication::get ()->config.graph_update_interval),
   num_points (GsmApplication::get ()->config.graph_data_points + 2),
   latest (0),
-  render_counter (0),
-  frames_per_unit (10),    // this will be changed but needs initialising
   graph_dely (0),
   num_bars (0),
   real_draw_height (0),
@@ -991,7 +982,6 @@ LoadGraph::LoadGraph(guint type)
   data (),
   main_widget (NULL),
   disp (NULL),
-  timer_index (0),
   labels (),
   mem_color_picker (NULL),
   swap_color_picker (NULL),
@@ -1003,9 +993,6 @@ LoadGraph::LoadGraph(guint type)
   font_settings->signal_changed (FONT_SETTING_SCALING).connect ([this](const Glib::ustring&) {
     load_graph_rescale (this);
   });
-  // FIXME:
-  // on configure, graph->frames_per_unit = graph->draw_width/(LoadGraph::NUM_POINTS);
-  // knock FRAMES down to 5 until cairo gets faster
 
   switch (type)
     {
@@ -1076,12 +1063,12 @@ LoadGraph::LoadGraph(guint type)
         break;
     }
 
-  render_counter = (frames_per_unit - 1);
-
   main_widget = GTK_BOX (gtk_box_new (GTK_ORIENTATION_VERTICAL, 6));
   gtk_widget_set_size_request (GTK_WIDGET (main_widget), -1, GRAPH_MIN_HEIGHT);
 
   disp = GSM_GRAPH (gsm_graph_new ());
+  gsm_graph_set_speed (disp, speed);
+
   gtk_widget_set_vexpand (GTK_WIDGET (disp), TRUE);
   gtk_widget_set_hexpand (GTK_WIDGET (disp), TRUE);
   gtk_drawing_area_set_draw_func (GTK_DRAWING_AREA (disp),
@@ -1103,26 +1090,12 @@ LoadGraph::LoadGraph(guint type)
 LoadGraph::~LoadGraph()
 {
   load_graph_stop (this);
-
-  if (timer_index)
-    g_source_remove (timer_index);
 }
 
 void
 load_graph_start (LoadGraph *graph)
 {
-  if (graph->timer_index == 0)
-    {
-      // Update the data two times so the graph
-      // doesn't wait one cycle to start drawing.
-      load_graph_update_data (graph);
-      load_graph_update (graph);
-
-      graph->timer_index = g_timeout_add (graph->speed,
-                                          load_graph_update,
-                                          graph);
-    }
-
+  gsm_graph_set_data_function (graph->disp, (GSourceFunc)load_graph_update_data, graph);
   gsm_graph_start (GSM_GRAPH (graph->disp));
 }
 
@@ -1137,20 +1110,7 @@ void
 load_graph_change_speed (LoadGraph *graph,
                          guint      new_speed)
 {
-  if (graph->speed == new_speed)
-    return;
-
-  graph->speed = new_speed;
-
-  if (graph->timer_index)
-    {
-      g_source_remove (graph->timer_index);
-      graph->timer_index = g_timeout_add (graph->speed,
-                                          load_graph_update,
-                                          graph);
-    }
-
-  graph->clear_background ();
+  gsm_graph_set_speed (GSM_GRAPH (graph->disp), new_speed);
 }
 
 void

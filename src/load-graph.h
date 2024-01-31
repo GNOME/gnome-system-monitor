@@ -61,8 +61,6 @@ struct LoadGraph
   guint speed;
   guint num_points;
   guint latest;
-  guint render_counter;
-  guint frames_per_unit;
   guint graph_dely;
   guint num_bars;
   guint real_draw_height;
@@ -74,8 +72,6 @@ struct LoadGraph
 
   GtkBox *main_widget;
   GsmGraph *disp;
-
-  guint timer_index;
 
   LoadGraphLabels labels;
   GsmColorButton *mem_color_picker;

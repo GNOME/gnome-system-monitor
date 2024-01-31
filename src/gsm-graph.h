@@ -44,6 +44,14 @@ struct _GsmGraphPrivate
   gboolean draw;
   gboolean logarithmic_scale;
   cairo_surface_t *background;
+  
+  guint render_counter;
+  guint frames_per_unit;
+  guint redraw_timeout;
+  guint speed;
+  
+  GSourceFunc data_function;
+  gpointer update_data;
 };
 
 struct _GsmGraphClass
@@ -66,11 +74,18 @@ void                gsm_graph_force_refresh (GsmGraph*);
 void                gsm_graph_clear_background (GsmGraph*);
 void                gsm_graph_set_background (GsmGraph*, cairo_surface_t*);
 void                gsm_graph_set_logarithmic_scale (GsmGraph*, gboolean);
+void                gsm_graph_set_speed (GsmGraph*, guint);
+
+void                gsm_graph_set_data_function (GsmGraph*, GSourceFunc, gpointer);
 
 gboolean            gsm_graph_is_logarithmic_scale (GsmGraph*);
 gboolean            gsm_graph_is_started (GsmGraph*);
 gboolean            gsm_graph_is_background_set (GsmGraph*);
 cairo_surface_t *   gsm_graph_get_background (GsmGraph*);
+
+guint               gsm_graph_get_speed (GsmGraph*);
+guint               gsm_graph_get_frames_per_unit (GsmGraph*);
+guint               gsm_graph_get_render_counter (GsmGraph*);
 
 G_END_DECLS
 
