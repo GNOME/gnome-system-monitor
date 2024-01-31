@@ -153,6 +153,20 @@ gsm_graph_finalize (GsmGraph *self)
 }
 
 static void
+_gsm_graph_state_flags_changed (GtkWidget *widget,
+                                GtkStateFlags*,
+                                gpointer   self)
+{
+  GsmGraph *graph = GSM_GRAPH (self);
+
+  gsm_graph_force_refresh (graph);
+  if (gtk_widget_is_visible (widget))
+    gsm_graph_start (graph);
+  else
+    gsm_graph_stop (graph);
+}
+
+static void
 gsm_graph_init (GsmGraph *self)
 {
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
@@ -162,6 +176,10 @@ gsm_graph_init (GsmGraph *self)
   
   g_signal_connect (G_OBJECT (self), "resize",
                     G_CALLBACK (gsm_graph_force_refresh), self);
+  g_signal_connect (G_OBJECT (self), "css-changed",
+                    G_CALLBACK (gsm_graph_force_refresh), self);
+  g_signal_connect (G_OBJECT (self), "state-flags-changed",
+                    G_CALLBACK (_gsm_graph_state_flags_changed), self);
 }
 
 GsmGraph *
