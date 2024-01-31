@@ -25,11 +25,7 @@ constexpr unsigned GRAPH_MIN_HEIGHT = 40;
 void
 LoadGraph::clear_background ()
 {
-  if (background)
-    {
-      cairo_surface_destroy (background);
-      background = NULL;
-    }
+  gsm_graph_clear_background (GSM_GRAPH (disp));
 }
 
 bool
@@ -422,6 +418,7 @@ load_graph_draw (GtkDrawingArea*,
                  gpointer data_ptr)
 {
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
+  cairo_surface_t * background;
 
   /* Initialize graph dimensions */
   width -= 2 * FRAME_WIDTH;
@@ -440,10 +437,14 @@ load_graph_draw (GtkDrawingArea*,
   x_offset += x_step * (1 - graph->render_counter / double(graph->frames_per_unit));
 
   /* Draw background */
-  if (graph->background == NULL)
-    graph->background = create_background (graph, width, height);
+  if (!gsm_graph_is_background_set (GSM_GRAPH (graph->disp))) {
+    background = create_background (graph, width, height);
+    gsm_graph_set_background (GSM_GRAPH (graph->disp), background);
+  } else {
+    background = gsm_graph_get_background (GSM_GRAPH (graph->disp));
+  }
 
-  cairo_set_source_surface (cr, graph->background, 0, 0);
+  cairo_set_source_surface (cr, background, 0, 0);
   cairo_paint (cr);
 
   /* Set the drawing style */
@@ -1032,7 +1033,6 @@ LoadGraph::LoadGraph(guint type)
   data (),
   main_widget (NULL),
   disp (NULL),
-  background (NULL),
   timer_index (0),
   labels (),
   mem_color_picker (NULL),
@@ -1154,8 +1154,6 @@ LoadGraph::~LoadGraph()
 
   if (timer_index)
     g_source_remove (timer_index);
-
-  clear_background ();
 }
 
 /* Redraws the backing buffer for the load graph and updates the window */

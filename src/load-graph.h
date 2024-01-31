@@ -75,8 +75,6 @@ struct LoadGraph
   GtkBox *main_widget;
   GsmGraph *disp;
 
-  cairo_surface_t *background;
-
   guint timer_index;
 
   LoadGraphLabels labels;

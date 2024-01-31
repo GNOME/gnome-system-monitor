@@ -1,3 +1,5 @@
+#ifndef _GSM_GRAPH_H_
+#define _GSM_GRAPH_H_
 /*
  * GNOME System Monitor graph
  * Copyright (C) 2022 Ondřej Míchal <harrymichal@seznam.cz>
@@ -40,6 +42,7 @@ struct _GsmGraph
 struct _GsmGraphPrivate
 {
   gboolean draw;
+  cairo_surface_t *background;
 };
 
 struct _GsmGraphClass
@@ -49,15 +52,21 @@ struct _GsmGraphClass
   void (* css_changed) (GsmGraph *graph);
 };
 
-GType      gsm_graph_get_type (void);
-GsmGraph * gsm_graph_new (void);
+GType               gsm_graph_get_type (void);
+GsmGraph *          gsm_graph_new (void);
 
-void       gsm_graph_dispose (GsmGraph*);
-void       gsm_graph_finalize (GsmGraph*);
+void                gsm_graph_dispose (GsmGraph*);
+void                gsm_graph_finalize (GsmGraph*);
 
-void       gsm_graph_start (GsmGraph*);
-gboolean   gsm_graph_is_started (GsmGraph*);
-void       gsm_graph_stop (GsmGraph*);
+void                gsm_graph_start (GsmGraph*);
+void                gsm_graph_clear_background (GsmGraph*);
+void                gsm_graph_set_background (GsmGraph*, cairo_surface_t*);
+void                gsm_graph_stop (GsmGraph*);
 
+gboolean            gsm_graph_is_started (GsmGraph*);
+gboolean            gsm_graph_is_background_set (GsmGraph*);
+cairo_surface_t *   gsm_graph_get_background (GsmGraph*);
 
 G_END_DECLS
+
+#endif /* _GSM_GRAPH_H_ */

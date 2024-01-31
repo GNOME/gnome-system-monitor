@@ -71,14 +71,17 @@ gsm_graph_dispose (GsmGraph *self)
 {
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (GSM_GRAPH (self));
 
+  if (priv->background)
+    cairo_surface_destroy (priv->background);
   G_OBJECT_CLASS (gsm_graph_parent_class)->dispose (self);
 }
 
 void
 gsm_graph_finalize (GsmGraph *self)
 {
-  // GsmGraphPrivate *priv = gsm_graph_get_instance_private (GSM_GRAPH (self));
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (GSM_GRAPH (self));
 
+  priv->background = NULL;
   G_OBJECT_CLASS (gsm_graph_parent_class)->finalize (self);
 }
 
@@ -89,13 +92,10 @@ gsm_graph_init (GsmGraph *self)
   priv->draw = FALSE;
 }
 
-gboolean
-gsm_graph_is_started (GsmGraph *self)
+GsmGraph *
+gsm_graph_new (void)
 {
-  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
-
-  g_return_val_if_fail (GSM_IS_GRAPH (self), FALSE);
-  return priv->draw;
+  return g_object_new (GSM_TYPE_GRAPH, NULL);
 }
 
 void _gsm_graph_set_draw (GsmGraph *self, gboolean draw)
@@ -114,14 +114,58 @@ gsm_graph_start (GsmGraph *self)
 }
 
 void
+gsm_graph_clear_background (GsmGraph *self)
+{
+  g_return_if_fail (GSM_IS_GRAPH (self));
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+  if (priv->background) {
+    cairo_surface_destroy (priv->background);
+    priv->background = NULL;
+  }
+}
+
+void
+gsm_graph_set_background (GsmGraph *self, cairo_surface_t *background)
+{
+  g_return_if_fail (GSM_IS_GRAPH (self));
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+  if (priv->background != background) {
+    if (priv->background != NULL) {
+      cairo_surface_destroy (priv->background);
+    }
+    priv->background = background;
+  }
+}
+
+void
 gsm_graph_stop (GsmGraph *self)
 {
   _gsm_graph_set_draw (self, TRUE);
 }
 
-GsmGraph *
-gsm_graph_new (void)
+gboolean
+gsm_graph_is_background_set (GsmGraph *self)
 {
-  return g_object_new (GSM_TYPE_GRAPH, NULL);
+  g_return_val_if_fail (GSM_IS_GRAPH (self), FALSE);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  return priv->background != NULL;
 }
 
+gboolean
+gsm_graph_is_started (GsmGraph *self)
+{   
+  g_return_val_if_fail (GSM_IS_GRAPH (self), FALSE);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  return priv->draw;
+}
+
+cairo_surface_t*
+gsm_graph_get_background (GsmGraph *self)
+{   
+  g_return_val_if_fail (GSM_IS_GRAPH (self), NULL);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  return priv->background;
+}
