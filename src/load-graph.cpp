@@ -255,7 +255,7 @@ create_background (LoadGraph *graph,
   layout = pango_cairo_create_layout (cr);
 
   /* Set font for graph labels */
-  pango_context = gtk_widget_get_pango_context (GTK_WIDGET (GsmApplication::get ()->stack));
+  pango_context = gtk_widget_get_pango_context (GTK_WIDGET (graph->disp));
   font_desc = pango_context_get_font_description (pango_context);
   pango_font_description_set_size (font_desc, 0.8 * graph->fontsize * PANGO_SCALE);
   pango_layout_set_font_description (layout, font_desc);
