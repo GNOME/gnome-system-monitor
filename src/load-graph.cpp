@@ -953,7 +953,7 @@ load_graph_update (gpointer user_data)
     load_graph_update_data (graph);
 
   if (gsm_graph_is_started (GSM_GRAPH (graph->disp)))
-    load_graph_queue_draw (graph);
+    gtk_widget_queue_draw (GTK_WIDGET (graph->disp));
 
   graph->render_counter++;
 
@@ -1106,14 +1106,6 @@ LoadGraph::~LoadGraph()
 
   if (timer_index)
     g_source_remove (timer_index);
-}
-
-/* Redraws the backing buffer for the load graph and updates the window */
-void
-load_graph_queue_draw (LoadGraph *graph)
-{
-  /* repaint */
-  gtk_widget_queue_draw (GTK_WIDGET (graph->disp));
 }
 
 void
