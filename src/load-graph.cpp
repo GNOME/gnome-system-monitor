@@ -178,29 +178,11 @@ format_duration (unsigned seconds)
 }
 
 static void
-force_refresh (LoadGraph * const graph)
-{
-  graph->clear_background ();
-  load_graph_queue_draw (graph);
-}
-
-static void
 load_graph_rescale (LoadGraph *graph)
 {
   ///org/gnome/desktop/interface/text-scaling-factor
   graph->fontsize = 8 * graph->font_settings->get_double ("text-scaling-factor");
-  force_refresh (graph);
-}
-
-static void
-load_graph_resize (GtkDrawingArea*,
-                   gint,
-                   gint,
-                   gpointer data_ptr)
-{
-  LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
-
-  force_refresh (graph);
+  gsm_graph_force_refresh (GSM_GRAPH (graph->disp));
 }
 
 static void
@@ -210,7 +192,7 @@ load_graph_state_changed (GtkWidget *widget,
 {
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
 
-  force_refresh (graph);
+  gsm_graph_force_refresh (GSM_GRAPH (graph->disp));
   if (gtk_widget_is_visible (widget))
     gsm_graph_start (GSM_GRAPH (graph->disp));
   else
@@ -223,7 +205,7 @@ load_graph_color_scheme_changed (GsmGraph*,
 {
   LoadGraph * const load_graph = static_cast<LoadGraph*>(data_ptr);
 
-  force_refresh (load_graph);
+  gsm_graph_force_refresh (GSM_GRAPH (load_graph->disp));
 }
 
 static cairo_surface_t*
@@ -1133,8 +1115,6 @@ LoadGraph::LoadGraph(guint type)
                     G_CALLBACK (load_graph_destroy), this);
   g_signal_connect (G_OBJECT (disp), "state-flags-changed",
                     G_CALLBACK (load_graph_state_changed), this);
-  g_signal_connect (G_OBJECT (disp), "resize",
-                    G_CALLBACK (load_graph_resize), this);
   g_signal_connect (G_OBJECT (disp), "css-changed",
                     G_CALLBACK (load_graph_color_scheme_changed), this);
   gtk_box_prepend (main_widget, GTK_WIDGET (disp));

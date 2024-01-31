@@ -42,6 +42,7 @@ struct _GsmGraph
 struct _GsmGraphPrivate
 {
   gboolean draw;
+  gboolean logarithmic_scale;
   cairo_surface_t *background;
 };
 
@@ -59,10 +60,14 @@ void                gsm_graph_dispose (GsmGraph*);
 void                gsm_graph_finalize (GsmGraph*);
 
 void                gsm_graph_start (GsmGraph*);
+void                gsm_graph_stop (GsmGraph*);
+void                gsm_graph_force_refresh (GsmGraph*);
+
 void                gsm_graph_clear_background (GsmGraph*);
 void                gsm_graph_set_background (GsmGraph*, cairo_surface_t*);
-void                gsm_graph_stop (GsmGraph*);
+void                gsm_graph_set_logarithmic_scale (GsmGraph*, gboolean);
 
+gboolean            gsm_graph_is_logarithmic_scale (GsmGraph*);
 gboolean            gsm_graph_is_started (GsmGraph*);
 gboolean            gsm_graph_is_background_set (GsmGraph*);
 cairo_surface_t *   gsm_graph_get_background (GsmGraph*);

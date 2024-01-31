@@ -28,8 +28,19 @@ enum
   NUM_SIGNALS
 };
 
+enum
+{
+  PROP_LOGARITHMIC_SCALE = 1,
+  PROP_BACKGROUND,
+  NUM_PROPS
+};
+
 static guint signals[NUM_SIGNALS] = {
   0
+};
+
+static GParamSpec* obj_properties[NUM_PROPS] = {
+  NULL,
 };
 
 G_DEFINE_TYPE_WITH_CODE (GsmGraph, gsm_graph, GTK_TYPE_DRAWING_AREA, G_ADD_PRIVATE(GsmGraph))
@@ -42,12 +53,59 @@ gsm_graph_css_changed (GtkWidget *widget,
 }
 
 static void
+gsm_graph_set_property (GObject      *object,
+                        guint         property_id,
+                        const GValue *value,
+                        GParamSpec   *pspec)
+{
+  GsmGraph *self = GSM_GRAPH (object);
+
+  switch (property_id)
+    {
+    case PROP_LOGARITHMIC_SCALE:
+      gsm_graph_set_logarithmic_scale (self, g_value_get_boolean (value));
+      break;
+    case PROP_BACKGROUND:
+      gsm_graph_set_background (self, g_value_get_pointer (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gsm_graph_get_property (GObject    *object,
+                        guint       property_id,
+                        GValue     *value,
+                        GParamSpec *pspec)
+{
+  GsmGraph *self = GSM_GRAPH (object);
+
+  switch (property_id)
+    {
+    case PROP_LOGARITHMIC_SCALE:
+      g_value_set_boolean (value, gsm_graph_is_logarithmic_scale (self));
+      break;
+    case PROP_BACKGROUND:
+      g_value_set_pointer (value, gsm_graph_get_background (self));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
 gsm_graph_class_init (GsmGraphClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   widget_class->css_changed = gsm_graph_css_changed;
+
+  object_class->set_property = gsm_graph_set_property;
+  object_class->get_property = gsm_graph_get_property;
 
   object_class->dispose = gsm_graph_dispose;
   object_class->finalize = gsm_graph_finalize;
@@ -64,6 +122,15 @@ gsm_graph_class_init (GsmGraphClass *klass)
                                        NULL,
                                        G_TYPE_NONE,
                                        0);
+  obj_properties[PROP_LOGARITHMIC_SCALE] =
+                        g_param_spec_boolean ("logarithmic-scale", NULL, NULL, FALSE, G_PARAM_READWRITE);
+  obj_properties[PROP_BACKGROUND] =
+                        g_param_spec_pointer ("background", NULL, NULL, G_PARAM_READWRITE);
+
+  g_object_class_install_properties (object_class,
+                                     G_N_ELEMENTS (obj_properties),
+                                     obj_properties);
+
 }
 
 void
@@ -90,6 +157,11 @@ gsm_graph_init (GsmGraph *self)
 {
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
   priv->draw = FALSE;
+  priv->background = NULL;
+  priv->logarithmic_scale = FALSE;
+  
+  g_signal_connect (G_OBJECT (self), "resize",
+                    G_CALLBACK (gsm_graph_force_refresh), self);
 }
 
 GsmGraph *
@@ -114,6 +186,13 @@ gsm_graph_start (GsmGraph *self)
 }
 
 void
+gsm_graph_force_refresh (GsmGraph *self)
+{
+  gsm_graph_clear_background (self);
+  gtk_widget_queue_draw (GTK_WIDGET (self));
+}
+
+void
 gsm_graph_clear_background (GsmGraph *self)
 {
   g_return_if_fail (GSM_IS_GRAPH (self));
@@ -134,6 +213,16 @@ gsm_graph_set_background (GsmGraph *self, cairo_surface_t *background)
       cairo_surface_destroy (priv->background);
     }
     priv->background = background;
+  }
+}
+
+void
+gsm_graph_set_logarithmic_scale (GsmGraph *self, gboolean logarithmic)
+{
+  g_return_if_fail (GSM_IS_GRAPH (self));
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+  if (priv->logarithmic_scale != logarithmic) {
+    priv->logarithmic_scale = logarithmic;
   }
 }
 
@@ -168,4 +257,13 @@ gsm_graph_get_background (GsmGraph *self)
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
 
   return priv->background;
+}
+
+gboolean
+gsm_graph_is_logarithmic_scale (GsmGraph *self)
+{
+  g_return_val_if_fail (GSM_IS_GRAPH (self), FALSE);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  return priv->logarithmic_scale;
 }
