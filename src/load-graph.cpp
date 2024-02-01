@@ -168,7 +168,6 @@ create_background (LoadGraph *graph,
   const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * frames_per_unit;
 
   gtk_widget_get_allocation (GTK_WIDGET (graph->disp), &allocation);
-//  native = gtk_widget_get_native (GTK_WIDGET (graph->disp));
   surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
                                         allocation.width,
                                         allocation.height);
