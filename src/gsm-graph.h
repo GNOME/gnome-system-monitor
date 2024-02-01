@@ -50,6 +50,9 @@ struct _GsmGraphPrivate
   guint redraw_timeout;
   guint speed;
   
+  double fontsize;
+  double rmargin;
+
   GSourceFunc data_function;
   gpointer update_data;
 };
@@ -71,21 +74,29 @@ void                gsm_graph_start (GsmGraph*);
 void                gsm_graph_stop (GsmGraph*);
 void                gsm_graph_force_refresh (GsmGraph*);
 
-void                gsm_graph_clear_background (GsmGraph*);
-void                gsm_graph_set_background (GsmGraph*, cairo_surface_t*);
+// setter methods
 void                gsm_graph_set_logarithmic_scale (GsmGraph*, gboolean);
 void                gsm_graph_set_speed (GsmGraph*, guint);
-
 void                gsm_graph_set_data_function (GsmGraph*, GSourceFunc, gpointer);
+void                gsm_graph_set_font_size (GsmGraph*, double);
 
+// temporary exported setter methods
+void                gsm_graph_clear_background (GsmGraph*);
+void                gsm_graph_set_background (GsmGraph*, cairo_surface_t*);
+
+// getter methods
 gboolean            gsm_graph_is_logarithmic_scale (GsmGraph*);
+guint               gsm_graph_get_speed (GsmGraph*);
+double              gsm_graph_get_font_size (GsmGraph*);
 gboolean            gsm_graph_is_started (GsmGraph*);
+
+// temporary exported methods for the migration
 gboolean            gsm_graph_is_background_set (GsmGraph*);
 cairo_surface_t *   gsm_graph_get_background (GsmGraph*);
-
-guint               gsm_graph_get_speed (GsmGraph*);
 guint               gsm_graph_get_frames_per_unit (GsmGraph*);
 guint               gsm_graph_get_render_counter (GsmGraph*);
+double              gsm_graph_get_right_margin (GsmGraph*);
+guint               gsm_graph_get_num_bars (GsmGraph*, gint);
 
 G_END_DECLS
 

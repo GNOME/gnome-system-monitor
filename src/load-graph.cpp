@@ -35,43 +35,6 @@ LoadGraph::is_logarithmic_scale () const
   return this->type == LOAD_GRAPH_MEM && GsmApplication::get ()->config.logarithmic_scale;
 }
 
-unsigned
-LoadGraph::get_num_bars (int height) const
-{
-  unsigned n;
-
-  // keep 100 % num_bars == 0
-  switch (static_cast<int>(height / (fontsize + 14)))
-    {
-      case 0:
-      case 1:
-        n = 1;
-        break;
-
-      case 2:
-      case 3:
-        n = 2;
-        break;
-
-      case 4:
-        n = 4;
-        break;
-
-      case 5:
-        n = 5;
-        if (this->is_logarithmic_scale ())
-          n = 4;
-        break;
-
-      default:
-        n = 5;
-        if (this->is_logarithmic_scale ())
-          n = 6;
-    }
-
-  return n;
-}
-
 /*
  Returns Y scale caption based on give index of the label.
  Takes into account whether the scale should be logarithmic for memory graph.
@@ -181,8 +144,7 @@ static void
 load_graph_rescale (LoadGraph *graph)
 {
   ///org/gnome/desktop/interface/text-scaling-factor
-  graph->fontsize = 8 * graph->font_settings->get_double ("text-scaling-factor");
-  gsm_graph_force_refresh (GSM_GRAPH (graph->disp));
+  gsm_graph_set_font_size (GSM_GRAPH (graph->disp), 8 * graph->font_settings->get_double ("text-scaling-factor"));
 }
 
 static cairo_surface_t*
@@ -199,6 +161,8 @@ create_background (LoadGraph *graph,
   cairo_t *cr;
   cairo_surface_t *surface;
   guint frames_per_unit = gsm_graph_get_frames_per_unit (graph->disp);
+  double fontsize = gsm_graph_get_font_size (graph->disp);
+  double rmargin = gsm_graph_get_right_margin (graph->disp);
 
   /* Graph length */
   const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * frames_per_unit;
@@ -216,7 +180,7 @@ create_background (LoadGraph *graph,
   /* Set font for graph labels */
   pango_context = gtk_widget_get_pango_context (GTK_WIDGET (graph->disp));
   font_desc = pango_context_get_font_description (pango_context);
-  pango_font_description_set_size (font_desc, 0.8 * graph->fontsize * PANGO_SCALE);
+  pango_font_description_set_size (font_desc, 0.8 * fontsize * PANGO_SCALE);
   pango_layout_set_font_description (layout, font_desc);
 
   /* draw frame */
@@ -246,7 +210,7 @@ create_background (LoadGraph *graph,
   /* Why not use the new features of the
    * GTK instead of cairo_rectangle ?! :) */
   gtk_render_background (context, cr, graph->indent, 0.0,
-                         width - graph->rmargin - graph->indent,
+                         width - rmargin - graph->indent,
                          graph->real_draw_height);
 
   gtk_style_context_restore (context);
@@ -262,13 +226,13 @@ create_background (LoadGraph *graph,
       double y;
       if (i == 0)
         /* Below the line */
-        y = 0.5 + graph->fontsize / 2.0;
+        y = 0.5 + fontsize / 2.0;
       else if (i == graph->num_bars)
         /* Above the line */
         y = i * graph->graph_dely + 0.5;
       else
         /* Next to the line */
-        y = i * graph->graph_dely + graph->fontsize / 2.0;
+        y = i * graph->graph_dely + fontsize / 2.0;
 
       /* Draw the label */
       /* Prepare the text */
@@ -308,7 +272,7 @@ create_background (LoadGraph *graph,
       /* Set the grid line path */
       cairo_move_to (cr, graph->indent, i * graph->graph_dely);
       cairo_line_to (cr,
-                     width - graph->rmargin + 4,
+                     width - rmargin + 4,
                      i * graph->graph_dely);
     }
 
@@ -318,7 +282,7 @@ create_background (LoadGraph *graph,
       PangoRectangle extents;
 
       /* Prepare the x position */
-      double x = ceil (i * (width - graph->rmargin - graph->indent) / 6);
+      double x = ceil (i * (width - rmargin - graph->indent) / 6);
 
       /* Draw the label */
       /* Prepare the text */
@@ -379,15 +343,15 @@ load_graph_draw (GtkDrawingArea* area,
   cairo_surface_t * background;
   guint frames_per_unit = gsm_graph_get_frames_per_unit (GSM_GRAPH (area));
   guint render_counter = gsm_graph_get_render_counter (GSM_GRAPH (area));
+  double rmargin = gsm_graph_get_right_margin (GSM_GRAPH (area));
 
   /* Initialize graph dimensions */
   width -= 2 * FRAME_WIDTH;
   height -= 2 * FRAME_WIDTH;
-  graph->num_bars = graph->get_num_bars (height);
+  graph->num_bars = gsm_graph_get_num_bars (GSM_GRAPH (area), height);
   graph->graph_dely = (height - 15) / graph->num_bars;   /* round to int to avoid AA blur */
   graph->real_draw_height = graph->graph_dely * graph->num_bars;
 
-//<<<<<<< HEAD
   const double x_step = double(width - graph->rmargin - graph->indent) / (graph->num_points - 2);
 
   /* Lines start on the rightmost vertical gridline */
@@ -396,15 +360,17 @@ load_graph_draw (GtkDrawingArea* area,
   /* Shift the x position of the most recent (shown rightmost) value outside of the clip area in order
      to be able to simulate continuous, smooth movement without the line being cut off at its ends */
   x_offset += x_step * (1 - render_counter / double(frames_per_unit));
-//=======
   /* Number of pixels wide for one sample point */
 //  gdouble sample_width = (double)(width - graph->rmargin - graph->indent) / (double)(graph->num_points);
   /* Lines start at the right edge of the drawing,
    * a bit outside the clip rectangle. */
 //  gdouble x_offset = width - graph->rmargin + sample_width;
+//  gdouble sample_width = (double)(width - rmargin - graph->indent) / (double)(graph->num_points);
+  /* Lines start at the right edge of the drawing,
+   * a bit outside the clip rectangle. */
+//  gdouble x_offset = width - rmargin + sample_width;
   /* Adjustment for smooth movement between samples */
 //  x_offset -= sample_width * render_counter / (double)frames_per_unit;
-//>>>>>>> f759e59d (Moved main refresh logic to gsm_graph)
 
   /* Draw background */
   if (!gsm_graph_is_background_set (GSM_GRAPH (graph->disp))) {
@@ -426,7 +392,7 @@ load_graph_draw (GtkDrawingArea* area,
   cairo_rectangle (cr,
                    graph->indent + FRAME_WIDTH,
                    FRAME_WIDTH,
-                   width - graph->rmargin - graph->indent,
+                   width - rmargin - graph->indent,
                    graph->real_draw_height);
   cairo_clip (cr);
 
@@ -966,8 +932,7 @@ load_graph_destroy (GtkWidget*,
 }
 
 LoadGraph::LoadGraph(guint type)
-  : fontsize (8.0),
-  rmargin (6 * fontsize),
+  :
   indent (18.0),
   n (0),
   type (type),

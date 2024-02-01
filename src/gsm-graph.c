@@ -32,6 +32,7 @@ enum
 {
   PROP_LOGARITHMIC_SCALE = 1,
   PROP_BACKGROUND,
+  PROP_FONTSIZE,
   NUM_PROPS
 };
 
@@ -68,6 +69,9 @@ gsm_graph_set_property (GObject      *object,
     case PROP_BACKGROUND:
       gsm_graph_set_background (self, g_value_get_pointer (value));
       break;
+    case PROP_FONTSIZE:
+      gsm_graph_set_font_size (self, g_value_get_double (value));
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -89,6 +93,9 @@ gsm_graph_get_property (GObject    *object,
       break;
     case PROP_BACKGROUND:
       g_value_set_pointer (value, gsm_graph_get_background (self));
+      break;
+    case PROP_FONTSIZE:
+      g_value_set_double (value, gsm_graph_get_font_size (self));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -126,6 +133,8 @@ gsm_graph_class_init (GsmGraphClass *klass)
                         g_param_spec_boolean ("logarithmic-scale", NULL, NULL, FALSE, G_PARAM_READWRITE);
   obj_properties[PROP_BACKGROUND] =
                         g_param_spec_pointer ("background", NULL, NULL, G_PARAM_READWRITE);
+  obj_properties[PROP_FONTSIZE] =
+                        g_param_spec_double ("fontsize", NULL, NULL, 8.0, 48.0, 8.0, G_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class,
                                      G_N_ELEMENTS (obj_properties),
@@ -201,7 +210,9 @@ gsm_graph_init (GsmGraph *self)
   // knock FRAMES down to 10 until cairo gets faster
   priv->frames_per_unit = 10;
   priv->render_counter = priv->frames_per_unit - 1;
-  
+  priv->fontsize = 8.0;
+  priv->rmargin = 6 * priv->fontsize;
+
   g_signal_connect (G_OBJECT (self), "resize",
                     G_CALLBACK (gsm_graph_force_refresh), self);
   g_signal_connect (G_OBJECT (self), "css-changed",
@@ -224,6 +235,20 @@ void _gsm_graph_set_draw (GsmGraph *self, gboolean draw)
   if (priv->draw != draw)
     priv->draw = draw;
 }
+
+void gsm_graph_set_font_size (GsmGraph *self, double fontsize)
+{
+  g_return_if_fail (GSM_IS_GRAPH (self));
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  if (priv->fontsize != fontsize)
+  {
+    priv->fontsize = fontsize;
+    priv->rmargin = 6 * fontsize;
+    gsm_graph_force_refresh (self);
+  }
+}
+
 
 void gsm_graph_set_speed (GsmGraph *self, guint speed)
 {
@@ -380,6 +405,24 @@ gsm_graph_get_render_counter (GsmGraph *self)
   return priv->render_counter;
 }
 
+double
+gsm_graph_get_font_size (GsmGraph *self)
+{
+  g_return_val_if_fail (GSM_IS_GRAPH (self), 0);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  return priv->fontsize;
+}
+
+double
+gsm_graph_get_right_margin (GsmGraph *self)
+{
+  g_return_val_if_fail (GSM_IS_GRAPH (self), 0);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  return priv->rmargin;
+}
+
 gboolean
 gsm_graph_is_logarithmic_scale (GsmGraph *self)
 {
@@ -387,4 +430,44 @@ gsm_graph_is_logarithmic_scale (GsmGraph *self)
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
 
   return priv->logarithmic_scale;
+}
+
+guint
+gsm_graph_get_num_bars (GsmGraph *self, int height)
+{
+  guint n;
+
+  g_return_val_if_fail (GSM_IS_GRAPH (self), 0);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  // keep 100 % num_bars == 0
+  switch ((int)(height / (priv->fontsize + 14)))
+    {
+      case 0:
+      case 1:
+        n = 1;
+        break;
+
+      case 2:
+      case 3:
+        n = 2;
+        break;
+
+      case 4:
+        n = 4;
+        break;
+
+      case 5:
+        n = 5;
+        if (priv->logarithmic_scale)
+          n = 4;
+        break;
+
+      default:
+        n = 5;
+        if (priv->logarithmic_scale)
+          n = 6;
+    }
+
+  return n;
 }

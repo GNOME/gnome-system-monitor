@@ -51,9 +51,6 @@ struct LoadGraph
   char *   get_caption (guint index);
   float    translate_to_log_partial_if_needed (float position_partial);
 
-  double fontsize;
-  double rmargin;
-  /* left margin */
   double indent;
 
   guint n;
