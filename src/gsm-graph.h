@@ -59,6 +59,10 @@ struct _GsmGraphPrivate
   gboolean logarithmic_scale;
   // number of chart data points
   guint num_points;
+  // draw stacked chart
+  gboolean stacked;
+  // draw smooth chart
+  gboolean smooth;
 
   // used for displaying, internal
 
@@ -93,6 +97,8 @@ void                gsm_graph_force_refresh (GsmGraph*);
 
 // public setter methods
 void                gsm_graph_set_logarithmic_scale (GsmGraph*, gboolean);
+void                gsm_graph_set_smooth_chart (GsmGraph*, gboolean);
+void                gsm_graph_set_stacked_chart (GsmGraph*, gboolean);
 void                gsm_graph_set_speed (GsmGraph*, guint);
 void                gsm_graph_set_data_function (GsmGraph*, GSourceFunc, gpointer);
 void                gsm_graph_set_font_size (GsmGraph*, double);
@@ -107,6 +113,8 @@ gboolean            gsm_graph_is_logarithmic_scale (GsmGraph*);
 guint               gsm_graph_get_speed (GsmGraph*);
 double              gsm_graph_get_font_size (GsmGraph*);
 gboolean            gsm_graph_is_started (GsmGraph*);
+gboolean            gsm_graph_is_smooth_chart (GsmGraph*);
+gboolean            gsm_graph_is_stacked_chart (GsmGraph*);
 guint               gsm_graph_get_num_points (GsmGraph*);
 
 // temporary exported methods for the migration

@@ -404,6 +404,9 @@ load_graph_draw (GtkDrawingArea* area,
 
   bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get ()->config.draw_stacked;
   bool drawSmooth = GsmApplication::get ()->config.draw_smooth;
+  gsm_graph_set_smooth_chart (GSM_GRAPH (area), drawSmooth);
+  gsm_graph_set_stacked_chart (GSM_GRAPH (area), drawStacked);
+  
 
   const double y_base = FRAME_WIDTH;
 

@@ -34,6 +34,8 @@ enum
   PROP_BACKGROUND,
   PROP_FONT_SIZE,
   PROP_NUM_POINTS,
+  PROP_SMOOTH_CHART,
+  PROP_STACKED_CHART,
   NUM_PROPS
 };
 
@@ -67,6 +69,12 @@ gsm_graph_set_property (GObject      *object,
     case PROP_LOGARITHMIC_SCALE:
       gsm_graph_set_logarithmic_scale (self, g_value_get_boolean (value));
       break;
+    case PROP_SMOOTH_CHART:
+      gsm_graph_set_smooth_chart (self, g_value_get_boolean (value));
+      break;
+    case PROP_STACKED_CHART:
+      gsm_graph_set_stacked_chart (self, g_value_get_boolean (value));
+      break;
     case PROP_BACKGROUND:
       gsm_graph_set_background (self, g_value_get_pointer (value));
       break;
@@ -94,6 +102,12 @@ gsm_graph_get_property (GObject    *object,
     {
     case PROP_LOGARITHMIC_SCALE:
       g_value_set_boolean (value, gsm_graph_is_logarithmic_scale (self));
+      break;
+    case PROP_SMOOTH_CHART:
+      g_value_set_boolean (value, gsm_graph_is_smooth_chart (self));
+      break;
+    case PROP_STACKED_CHART:
+      g_value_set_boolean (value, gsm_graph_is_stacked_chart (self));
       break;
     case PROP_BACKGROUND:
       g_value_set_pointer (value, gsm_graph_get_background (self));
@@ -144,6 +158,10 @@ gsm_graph_class_init (GsmGraphClass *klass)
                         g_param_spec_double ("font-size", NULL, NULL, 8.0, 48.0, 8.0, G_PARAM_READWRITE);
   obj_properties[PROP_NUM_POINTS] =
                         g_param_spec_uint ("num-points", NULL, NULL, 10, 600, 60, G_PARAM_READWRITE);
+  obj_properties[PROP_SMOOTH_CHART] =
+                        g_param_spec_boolean ("smooth-chart", NULL, NULL, TRUE, G_PARAM_READWRITE);
+  obj_properties[PROP_STACKED_CHART] =
+                        g_param_spec_boolean ("stacked-chart", NULL, NULL, FALSE, G_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class,
                                      G_N_ELEMENTS (obj_properties),
@@ -223,6 +241,8 @@ gsm_graph_init (GsmGraph *self)
   priv->num_points = 60;
   priv->indent = 18;
   priv->rmargin = 6 * priv->fontsize;
+  priv->smooth = TRUE;
+  priv->stacked = FALSE;
 
   g_signal_connect (G_OBJECT (self), "resize",
                     G_CALLBACK (gsm_graph_force_refresh), self);
@@ -370,6 +390,27 @@ gsm_graph_set_logarithmic_scale (GsmGraph *self, gboolean logarithmic)
 }
 
 void
+gsm_graph_set_smooth_chart (GsmGraph *self, gboolean smooth)
+{
+  g_return_if_fail (GSM_IS_GRAPH (self));
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+  if (priv->smooth != smooth) {
+    priv->smooth = smooth;
+  }
+}
+
+void
+gsm_graph_set_stacked_chart (GsmGraph *self, gboolean stacked)
+{
+  g_return_if_fail (GSM_IS_GRAPH (self));
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+  if (priv->stacked != stacked) {
+    priv->stacked = stacked;
+  }
+}
+
+
+void
 gsm_graph_stop (GsmGraph *self)
 {
   _gsm_graph_set_draw (self, TRUE);
@@ -472,6 +513,24 @@ gsm_graph_is_logarithmic_scale (GsmGraph *self)
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
 
   return priv->logarithmic_scale;
+}
+
+gboolean
+gsm_graph_is_smooth_chart (GsmGraph *self)
+{
+  g_return_val_if_fail (GSM_IS_GRAPH (self), FALSE);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  return priv->smooth;
+}
+
+gboolean
+gsm_graph_is_stacked_chart (GsmGraph *self)
+{
+  g_return_val_if_fail (GSM_IS_GRAPH (self), FALSE);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  return priv->stacked;
 }
 
 guint
