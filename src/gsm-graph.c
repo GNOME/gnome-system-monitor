@@ -221,6 +221,7 @@ gsm_graph_init (GsmGraph *self)
   priv->render_counter = priv->frames_per_unit - 1;
   priv->fontsize = 8.0;
   priv->num_points = 60;
+  priv->indent = 18;
   priv->rmargin = 6 * priv->fontsize;
 
   g_signal_connect (G_OBJECT (self), "resize",
@@ -444,6 +445,15 @@ gsm_graph_get_num_points (GsmGraph *self)
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
 
   return priv->num_points;
+}
+
+guint
+gsm_graph_get_indent (GsmGraph *self)
+{
+  g_return_val_if_fail (GSM_IS_GRAPH (self), 0);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  return priv->indent;
 }
 
 double

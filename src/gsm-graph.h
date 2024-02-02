@@ -50,6 +50,7 @@ struct _GsmGraphPrivate
   guint redraw_timeout;
 
   // used for displaying, configurable
+
   // font size for labels
   double fontsize;
   // refresh timeout
@@ -60,9 +61,12 @@ struct _GsmGraphPrivate
   guint num_points;
 
   // used for displaying, internal
+
+  // right margin
   double rmargin;
   // cached background surface
   cairo_surface_t *background;
+  guint indent;
   
   // function to calculate the latest set of data to display
   GSourceFunc data_function;
@@ -110,6 +114,7 @@ gboolean            gsm_graph_is_background_set (GsmGraph*);
 cairo_surface_t *   gsm_graph_get_background (GsmGraph*);
 guint               gsm_graph_get_frames_per_unit (GsmGraph*);
 guint               gsm_graph_get_render_counter (GsmGraph*);
+guint               gsm_graph_get_indent (GsmGraph*);
 double              gsm_graph_get_right_margin (GsmGraph*);
 guint               gsm_graph_get_num_bars (GsmGraph*, gint);
 

@@ -164,6 +164,9 @@ create_background (LoadGraph *graph,
   double fontsize = gsm_graph_get_font_size (graph->disp);
   double rmargin = gsm_graph_get_right_margin (graph->disp);
   guint num_bars = gsm_graph_get_num_bars (graph->disp, height);
+  const guint num_sections = 7;
+
+  guint indent = gsm_graph_get_indent (graph->disp);
 
   /* Graph length */
   const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * frames_per_unit;
@@ -209,8 +212,8 @@ create_background (LoadGraph *graph,
 
   /* Why not use the new features of the
    * GTK instead of cairo_rectangle ?! :) */
-  gtk_render_background (context, cr, graph->indent, 0.0,
-                         width - rmargin - graph->indent,
+  gtk_render_background (context, cr, indent, 0.0,
+                         width - rmargin - indent,
                          graph->real_draw_height);
 
   gtk_style_context_restore (context);
@@ -249,7 +252,7 @@ create_background (LoadGraph *graph,
 
       /* Set the label position */
       cairo_move_to (cr,
-                     width - graph->indent - 23,
+                     width - indent - 23,
                      y - label_y_offset_modifier * extents.height / PANGO_SCALE);
 
       /* Set the color */
@@ -270,35 +273,35 @@ create_background (LoadGraph *graph,
       gdk_cairo_set_source_rgba (cr, &grid_color);
 
       /* Set the grid line path */
-      cairo_move_to (cr, graph->indent, i * graph->graph_dely);
+      cairo_move_to (cr, indent, i * graph->graph_dely);
       cairo_line_to (cr,
                      width - rmargin + 4,
                      i * graph->graph_dely);
     }
 
   /* Vertical grid lines */
-  for (unsigned int i = 0; i < 7; i++)
+  for (unsigned int i = 0; i < num_sections; i++)
     {
       PangoRectangle extents;
 
       /* Prepare the x position */
-      double x = ceil (i * (width - rmargin - graph->indent) / 6);
+      double x = ceil (i * (width - rmargin - indent) / (num_sections - 1));
 
       /* Draw the label */
       /* Prepare the text */
-      gchar *caption = format_duration (total_seconds - i * total_seconds / 6);
+      gchar *caption = format_duration (total_seconds - i * total_seconds / (num_sections - 1));
       pango_layout_set_text (layout, caption, -1);
       pango_layout_get_extents (layout, NULL, &extents);
 
       /* Create x axis position modifier */
       double label_x_offset_modifier = i == 0 ? 0
-                                         : i == 6
+                                         : i == (num_sections - 1)
                                             ? 1.0
                                             : 0.5;
 
       /* Set the label position */
       cairo_move_to (cr,
-                     x + graph->indent - label_x_offset_modifier * extents.width / PANGO_SCALE + 1.0,
+                     x + indent - label_x_offset_modifier * extents.width / PANGO_SCALE + 1.0,
                      height - 1.0 * extents.height / PANGO_SCALE);
 
       /* Set the color */
@@ -309,7 +312,7 @@ create_background (LoadGraph *graph,
       g_free (caption);
 
       /* Set the grid line alpha */
-      if (i == 0 || i == 6)
+      if (i == 0 || i == (num_sections - 1))
         grid_color.alpha = BORDER_ALPHA;
       else
         grid_color.alpha = GRID_ALPHA;
@@ -319,8 +322,8 @@ create_background (LoadGraph *graph,
       gdk_cairo_set_source_rgba (cr, &grid_color);
 
       /* Set the grid line path */
-      cairo_move_to (cr, x + graph->indent, 0);
-      cairo_line_to (cr, x + graph->indent, graph->real_draw_height + 4);
+      cairo_move_to (cr, x + indent, 0);
+      cairo_line_to (cr, x + indent, graph->real_draw_height + 4);
     }
 
   /* Paint */
@@ -345,6 +348,7 @@ load_graph_draw (GtkDrawingArea* area,
   guint render_counter = gsm_graph_get_render_counter (GSM_GRAPH (area));
   double rmargin = gsm_graph_get_right_margin (GSM_GRAPH (area));
   guint num_points = gsm_graph_get_num_points (GSM_GRAPH (area));
+  guint indent = gsm_graph_get_indent (GSM_GRAPH (area));
   graph->num_bars = gsm_graph_get_num_bars (GSM_GRAPH (area), height);
 
   /* Initialize graph dimensions */
@@ -363,7 +367,7 @@ load_graph_draw (GtkDrawingArea* area,
      to be able to simulate continuous, smooth movement without the line being cut off at its ends */
   x_offset += x_step * (1 - render_counter / double(frames_per_unit));
   /* Number of pixels wide for one sample point */
-//  gdouble sample_width = (double)(width - rmargin - graph->indent) / (double)(num_points);
+//  gdouble sample_width = (double)(width - rmargin - indent) / (double)(num_points);
   /* Lines start at the right edge of the drawing,
    * a bit outside the clip rectangle. */
 //  gdouble x_offset = width - graph->rmargin + sample_width;
@@ -392,9 +396,9 @@ load_graph_draw (GtkDrawingArea* area,
 
   /* Clip the drawing area to the inside of the drawn background */
   cairo_rectangle (cr,
-                   graph->indent + FRAME_WIDTH,
+                   indent + FRAME_WIDTH,
                    FRAME_WIDTH,
-                   width - rmargin - graph->indent,
+                   width - rmargin - indent,
                    graph->real_draw_height);
   cairo_clip (cr);
 
