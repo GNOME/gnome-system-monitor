@@ -163,6 +163,7 @@ create_background (LoadGraph *graph,
   guint frames_per_unit = gsm_graph_get_frames_per_unit (graph->disp);
   double fontsize = gsm_graph_get_font_size (graph->disp);
   double rmargin = gsm_graph_get_right_margin (graph->disp);
+  guint num_bars = gsm_graph_get_num_bars (graph->disp, height);
 
   /* Graph length */
   const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * frames_per_unit;
@@ -217,7 +218,7 @@ create_background (LoadGraph *graph,
   cairo_set_line_width (cr, 0.25);
 
   /* Horizontal grid lines */
-  for (guint i = 0; i <= graph->num_bars; i++)
+  for (guint i = 0; i <= num_bars; i++)
     {
       PangoRectangle extents;
 
@@ -226,7 +227,7 @@ create_background (LoadGraph *graph,
       if (i == 0)
         /* Below the line */
         y = 0.5 + fontsize / 2.0;
-      else if (i == graph->num_bars)
+      else if (i == num_bars)
         /* Above the line */
         y = i * graph->graph_dely + 0.5;
       else
@@ -242,7 +243,7 @@ create_background (LoadGraph *graph,
 
       /* Create y axis position modifier */
       double label_y_offset_modifier = i == 0 ? 0.5
-                                : i == graph->num_bars
+                                : i == num_bars
                                     ? 1.0
                                     : 0.85;
 
@@ -259,7 +260,7 @@ create_background (LoadGraph *graph,
       g_free (caption);
 
       /* Set the grid line alpha */
-      if (i == 0 || i == graph->num_bars)
+      if (i == 0 || i == num_bars)
         grid_color.alpha = BORDER_ALPHA;
       else
         grid_color.alpha = GRID_ALPHA;
@@ -343,11 +344,13 @@ load_graph_draw (GtkDrawingArea* area,
   guint frames_per_unit = gsm_graph_get_frames_per_unit (GSM_GRAPH (area));
   guint render_counter = gsm_graph_get_render_counter (GSM_GRAPH (area));
   double rmargin = gsm_graph_get_right_margin (GSM_GRAPH (area));
+  guint num_points = gsm_graph_get_num_points (GSM_GRAPH (area));
+  graph->num_bars = gsm_graph_get_num_bars (GSM_GRAPH (area), height);
 
   /* Initialize graph dimensions */
   width -= 2 * FRAME_WIDTH;
   height -= 2 * FRAME_WIDTH;
-  graph->num_bars = gsm_graph_get_num_bars (GSM_GRAPH (area), height);
+
   graph->graph_dely = (height - 15) / graph->num_bars;   /* round to int to avoid AA blur */
   graph->real_draw_height = graph->graph_dely * graph->num_bars;
 
@@ -360,7 +363,7 @@ load_graph_draw (GtkDrawingArea* area,
      to be able to simulate continuous, smooth movement without the line being cut off at its ends */
   x_offset += x_step * (1 - render_counter / double(frames_per_unit));
   /* Number of pixels wide for one sample point */
-//  gdouble sample_width = (double)(width - graph->rmargin - graph->indent) / (double)(graph->num_points);
+//  gdouble sample_width = (double)(width - rmargin - graph->indent) / (double)(num_points);
   /* Lines start at the right edge of the drawing,
    * a bit outside the clip rectangle. */
 //  gdouble x_offset = width - graph->rmargin + sample_width;
@@ -411,7 +414,7 @@ load_graph_draw (GtkDrawingArea* area,
 
       /* Draw the path of the line
          Loop starts at 1 because the curve accesses the 0th data point */
-      for (guint i = 1; i < graph->num_points; i++)
+      for (guint i = 1; i < num_points; i++)
         {
           if (graph->data[i][j] == -1.0f)
             continue;
@@ -1032,6 +1035,7 @@ LoadGraph::LoadGraph(guint type)
 
   disp = GSM_GRAPH (gsm_graph_new ());
   gsm_graph_set_speed (disp, speed);
+  gsm_graph_set_data_function (disp, (GSourceFunc)load_graph_update_data, this);
 
   gtk_widget_set_vexpand (GTK_WIDGET (disp), TRUE);
   gtk_widget_set_hexpand (GTK_WIDGET (disp), TRUE);
@@ -1059,7 +1063,6 @@ LoadGraph::~LoadGraph()
 void
 load_graph_start (LoadGraph *graph)
 {
-  gsm_graph_set_data_function (graph->disp, (GSourceFunc)load_graph_update_data, graph);
   gsm_graph_start (GSM_GRAPH (graph->disp));
 }
 
@@ -1108,6 +1111,7 @@ load_graph_change_num_points (LoadGraph *graph,
 
   // Set the actual number of data points to be used by the graph.
   graph->num_points = new_num_points;
+  gsm_graph_set_num_points (graph->disp, new_num_points);
 
   // Force the scale to be redrawn.
   graph->clear_background ();

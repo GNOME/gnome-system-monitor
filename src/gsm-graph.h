@@ -42,18 +42,31 @@ struct _GsmGraph
 struct _GsmGraphPrivate
 {
   gboolean draw;
-  gboolean logarithmic_scale;
-  cairo_surface_t *background;
+  
+  // internal usage for animations
   
   guint render_counter;
   guint frames_per_unit;
   guint redraw_timeout;
-  guint speed;
-  
-  double fontsize;
-  double rmargin;
 
+  // used for displaying, configurable
+  // font size for labels
+  double fontsize;
+  // refresh timeout
+  guint speed;
+  // draw y axis with logarithmic scale instead of default linear
+  gboolean logarithmic_scale;
+  // number of chart data points
+  guint num_points;
+
+  // used for displaying, internal
+  double rmargin;
+  // cached background surface
+  cairo_surface_t *background;
+  
+  // function to calculate the latest set of data to display
   GSourceFunc data_function;
+  // the data to be passed to the data_function
   gpointer update_data;
 };
 
@@ -74,21 +87,23 @@ void                gsm_graph_start (GsmGraph*);
 void                gsm_graph_stop (GsmGraph*);
 void                gsm_graph_force_refresh (GsmGraph*);
 
-// setter methods
+// public setter methods
 void                gsm_graph_set_logarithmic_scale (GsmGraph*, gboolean);
 void                gsm_graph_set_speed (GsmGraph*, guint);
 void                gsm_graph_set_data_function (GsmGraph*, GSourceFunc, gpointer);
 void                gsm_graph_set_font_size (GsmGraph*, double);
+void                gsm_graph_set_num_points (GsmGraph*, guint);
 
 // temporary exported setter methods
 void                gsm_graph_clear_background (GsmGraph*);
 void                gsm_graph_set_background (GsmGraph*, cairo_surface_t*);
 
-// getter methods
+// public getter methods
 gboolean            gsm_graph_is_logarithmic_scale (GsmGraph*);
 guint               gsm_graph_get_speed (GsmGraph*);
 double              gsm_graph_get_font_size (GsmGraph*);
 gboolean            gsm_graph_is_started (GsmGraph*);
+guint               gsm_graph_get_num_points (GsmGraph*);
 
 // temporary exported methods for the migration
 gboolean            gsm_graph_is_background_set (GsmGraph*);
@@ -97,6 +112,7 @@ guint               gsm_graph_get_frames_per_unit (GsmGraph*);
 guint               gsm_graph_get_render_counter (GsmGraph*);
 double              gsm_graph_get_right_margin (GsmGraph*);
 guint               gsm_graph_get_num_bars (GsmGraph*, gint);
+
 
 G_END_DECLS
 

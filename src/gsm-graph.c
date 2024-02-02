@@ -32,7 +32,8 @@ enum
 {
   PROP_LOGARITHMIC_SCALE = 1,
   PROP_BACKGROUND,
-  PROP_FONTSIZE,
+  PROP_FONT_SIZE,
+  PROP_NUM_POINTS,
   NUM_PROPS
 };
 
@@ -69,8 +70,11 @@ gsm_graph_set_property (GObject      *object,
     case PROP_BACKGROUND:
       gsm_graph_set_background (self, g_value_get_pointer (value));
       break;
-    case PROP_FONTSIZE:
+    case PROP_FONT_SIZE:
       gsm_graph_set_font_size (self, g_value_get_double (value));
+      break;
+    case PROP_NUM_POINTS:
+      gsm_graph_set_num_points (self, g_value_get_uint (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -94,7 +98,10 @@ gsm_graph_get_property (GObject    *object,
     case PROP_BACKGROUND:
       g_value_set_pointer (value, gsm_graph_get_background (self));
       break;
-    case PROP_FONTSIZE:
+    case PROP_FONT_SIZE:
+      g_value_set_double (value, gsm_graph_get_font_size (self));
+      break;
+    case PROP_NUM_POINTS:
       g_value_set_double (value, gsm_graph_get_font_size (self));
       break;
     default:
@@ -133,8 +140,10 @@ gsm_graph_class_init (GsmGraphClass *klass)
                         g_param_spec_boolean ("logarithmic-scale", NULL, NULL, FALSE, G_PARAM_READWRITE);
   obj_properties[PROP_BACKGROUND] =
                         g_param_spec_pointer ("background", NULL, NULL, G_PARAM_READWRITE);
-  obj_properties[PROP_FONTSIZE] =
-                        g_param_spec_double ("fontsize", NULL, NULL, 8.0, 48.0, 8.0, G_PARAM_READWRITE);
+  obj_properties[PROP_FONT_SIZE] =
+                        g_param_spec_double ("font-size", NULL, NULL, 8.0, 48.0, 8.0, G_PARAM_READWRITE);
+  obj_properties[PROP_NUM_POINTS] =
+                        g_param_spec_uint ("num-points", NULL, NULL, 10, 600, 60, G_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class,
                                      G_N_ELEMENTS (obj_properties),
@@ -211,6 +220,7 @@ gsm_graph_init (GsmGraph *self)
   priv->frames_per_unit = 10;
   priv->render_counter = priv->frames_per_unit - 1;
   priv->fontsize = 8.0;
+  priv->num_points = 60;
   priv->rmargin = 6 * priv->fontsize;
 
   g_signal_connect (G_OBJECT (self), "resize",
@@ -249,6 +259,17 @@ void gsm_graph_set_font_size (GsmGraph *self, double fontsize)
   }
 }
 
+void gsm_graph_set_num_points (GsmGraph *self, guint num_points)
+{
+  g_return_if_fail (GSM_IS_GRAPH (self));
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  if (priv->num_points != num_points)
+  {
+    priv->num_points = num_points;
+    gsm_graph_force_refresh (self);
+  }
+}
 
 void gsm_graph_set_speed (GsmGraph *self, guint speed)
 {
@@ -291,6 +312,8 @@ gsm_graph_start (GsmGraph *self)
 {
   _gsm_graph_set_draw (self, TRUE);
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+  g_return_if_fail ( priv->data_function != NULL);
+
   if (priv->redraw_timeout == 0)
     {
       // Update the data two times so the graph
@@ -412,6 +435,15 @@ gsm_graph_get_font_size (GsmGraph *self)
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
 
   return priv->fontsize;
+}
+
+guint
+gsm_graph_get_num_points (GsmGraph *self)
+{
+  g_return_val_if_fail (GSM_IS_GRAPH (self), 0);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  return priv->num_points;
 }
 
 double
