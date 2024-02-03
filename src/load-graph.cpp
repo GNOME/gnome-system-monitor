@@ -358,25 +358,17 @@ load_graph_draw (GtkDrawingArea* area,
   graph->graph_dely = (height - 15) / graph->num_bars;   /* round to int to avoid AA blur */
   graph->real_draw_height = graph->graph_dely * graph->num_bars;
 
-  const double x_step = double(width - graph->rmargin - graph->indent) / (graph->num_points - 2);
+  /* Number of pixels wide for one sample point */
+  const double x_step = double(width - rmargin - graph->indent) / (graph->num_points - 2);
 
-  /* Lines start on the rightmost vertical gridline */
-  double x_offset = width - graph->rmargin + FRAME_WIDTH;
+  /* Lines start at the right edge of the drawing,
+   * a bit outside the clip rectangle. */
+  /* Adjustment for smooth movement between samples */
+  double x_offset = width - rmargin + FRAME_WIDTH;
 
   /* Shift the x position of the most recent (shown rightmost) value outside of the clip area in order
      to be able to simulate continuous, smooth movement without the line being cut off at its ends */
   x_offset += x_step * (1 - render_counter / double(frames_per_unit));
-  /* Number of pixels wide for one sample point */
-//  gdouble sample_width = (double)(width - rmargin - indent) / (double)(num_points);
-  /* Lines start at the right edge of the drawing,
-   * a bit outside the clip rectangle. */
-//  gdouble x_offset = width - graph->rmargin + sample_width;
-//  gdouble sample_width = (double)(width - rmargin - graph->indent) / (double)(graph->num_points);
-  /* Lines start at the right edge of the drawing,
-   * a bit outside the clip rectangle. */
-//  gdouble x_offset = width - rmargin + sample_width;
-  /* Adjustment for smooth movement between samples */
-//  x_offset -= sample_width * render_counter / (double)frames_per_unit;
 
   /* Draw background */
   if (!gsm_graph_is_background_set (GSM_GRAPH (graph->disp))) {
