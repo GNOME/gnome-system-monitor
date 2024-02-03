@@ -369,7 +369,7 @@ gsm_color_button_measure (GtkWidget*,
 }
 
 static void
-gsm_color_button_state_flags_changed (GtkWidget *self)
+gsm_color_button_state_flags_changed (GtkWidget *self, GtkStateFlags flags)
 {
   gtk_widget_queue_draw (self);
 }
@@ -420,7 +420,7 @@ gsm_color_button_released (GtkGestureClick*,
     {
       /* Create the dialog and connects its buttons */
       GtkColorChooserDialog *cc_dialog;
-      GtkWidget *parent;
+      GtkRoot *parent;
 
       parent = gtk_widget_get_root (GTK_WIDGET (color_button));
 
