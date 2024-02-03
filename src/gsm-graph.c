@@ -179,7 +179,7 @@ gsm_graph_class_init (GsmGraphClass *klass)
 }
 
 void
-gsm_graph_dispose (GsmGraph *self)
+gsm_graph_dispose (GObject *self)
 {
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (GSM_GRAPH (self));
 
@@ -189,16 +189,16 @@ gsm_graph_dispose (GsmGraph *self)
   if (priv->redraw_timeout)
     g_source_remove (priv->redraw_timeout);
 
-  G_OBJECT_CLASS (gsm_graph_parent_class)->dispose (self);
+  G_OBJECT_CLASS (gsm_graph_parent_class)->dispose (G_OBJECT (self));
 }
 
 void
-gsm_graph_finalize (GsmGraph *self)
+gsm_graph_finalize (GObject *self)
 {
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (GSM_GRAPH (self));
 
   priv->background = NULL;
-  G_OBJECT_CLASS (gsm_graph_parent_class)->finalize (self);
+  G_OBJECT_CLASS (gsm_graph_parent_class)->finalize (G_OBJECT (self));
 }
 
 static void
@@ -215,7 +215,7 @@ _gsm_graph_state_flags_changed (GtkWidget *widget,
     gsm_graph_stop (graph);
 }
 
-static void
+static gboolean
 _gsm_graph_update (GsmGraph *self)
 {
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
@@ -324,7 +324,7 @@ void gsm_graph_set_speed (GsmGraph *self, guint speed)
     if (priv->redraw_timeout) {
       g_source_remove (priv->redraw_timeout);
       priv->redraw_timeout = g_timeout_add (priv->speed,
-                                            _gsm_graph_update,
+                                            (GSourceFunc)_gsm_graph_update,
                                             self);
       gsm_graph_clear_background (self);
     }
@@ -345,7 +345,7 @@ void gsm_graph_set_data_function (GsmGraph *self, GSourceFunc function, gpointer
   
   if (gsm_graph_is_started (self)) {
       priv->redraw_timeout = g_timeout_add (priv->speed,
-                                            _gsm_graph_update,
+                                            (GSourceFunc)_gsm_graph_update,
                                             self);
   }
 }
@@ -365,7 +365,7 @@ gsm_graph_start (GsmGraph *self)
       _gsm_graph_update (self);
 
       priv->redraw_timeout = g_timeout_add (priv->speed,
-                                            _gsm_graph_update,
+                                            (GSourceFunc)_gsm_graph_update,
                                             self);
   }
 }

@@ -90,8 +90,8 @@ struct _GsmGraphClass
 GType               gsm_graph_get_type (void);
 GsmGraph *          gsm_graph_new (void);
 
-void                gsm_graph_dispose (GsmGraph*);
-void                gsm_graph_finalize (GsmGraph*);
+void                gsm_graph_dispose (GObject*);
+void                gsm_graph_finalize (GObject*);
 
 void                gsm_graph_start (GsmGraph*);
 void                gsm_graph_stop (GsmGraph*);

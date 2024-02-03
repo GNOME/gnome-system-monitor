@@ -1003,6 +1003,7 @@ LoadGraph::LoadGraph(guint type)
   disp = GSM_GRAPH (gsm_graph_new ());
   gsm_graph_set_speed (disp, speed);
   gsm_graph_set_data_function (disp, (GSourceFunc)load_graph_update_data, this);
+  gsm_graph_set_num_points (disp, num_points);
 
   switch (type)
     {
@@ -1056,6 +1057,7 @@ LoadGraph::LoadGraph(guint type)
 
   for (guint i = 0; i < num_points; ++i)
     data[i] = &data_block[0] + i * n;
+
 }
 
 LoadGraph::~LoadGraph()
