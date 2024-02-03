@@ -63,6 +63,8 @@ struct _GsmGraphPrivate
   gboolean stacked;
   // draw smooth chart
   gboolean smooth;
+  // maximum value for y axis
+  guint64 max_value;
 
   // used for displaying, internal
 
@@ -103,6 +105,7 @@ void                gsm_graph_set_speed (GsmGraph*, guint);
 void                gsm_graph_set_data_function (GsmGraph*, GSourceFunc, gpointer);
 void                gsm_graph_set_font_size (GsmGraph*, double);
 void                gsm_graph_set_num_points (GsmGraph*, guint);
+void                gsm_graph_set_max_value (GsmGraph*, guint64);
 
 // temporary exported setter methods
 void                gsm_graph_clear_background (GsmGraph*);
@@ -116,6 +119,7 @@ gboolean            gsm_graph_is_started (GsmGraph*);
 gboolean            gsm_graph_is_smooth_chart (GsmGraph*);
 gboolean            gsm_graph_is_stacked_chart (GsmGraph*);
 guint               gsm_graph_get_num_points (GsmGraph*);
+guint64             gsm_graph_get_max_value (GsmGraph*);
 
 // temporary exported methods for the migration
 gboolean            gsm_graph_is_background_set (GsmGraph*);

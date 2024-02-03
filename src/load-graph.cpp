@@ -1008,11 +1008,16 @@ LoadGraph::LoadGraph(guint type)
 
   colors.resize (n);
 
+  disp = GSM_GRAPH (gsm_graph_new ());
+  gsm_graph_set_speed (disp, speed);
+  gsm_graph_set_data_function (disp, (GSourceFunc)load_graph_update_data, this);
+
   switch (type)
     {
       case LOAD_GRAPH_CPU:
         memcpy (&colors[0], GsmApplication::get ()->config.cpu_color,
                 n * sizeof colors[0]);
+        gsm_graph_set_max_value (disp, 100);
         break;
 
       case LOAD_GRAPH_MEM:
@@ -1022,27 +1027,26 @@ LoadGraph::LoadGraph(guint type)
                                                  GSMCP_TYPE_PIE);
         swap_color_picker = gsm_color_button_new (&colors[1],
                                                   GSMCP_TYPE_PIE);
+        gsm_graph_set_max_value (disp, 100);
         break;
 
       case LOAD_GRAPH_NET:
         net.values = std::vector<unsigned>(num_points);
         colors[0] = GsmApplication::get ()->config.net_in_color;
         colors[1] = GsmApplication::get ()->config.net_out_color;
+        gsm_graph_set_max_value (disp, this->net.max);
         break;
 
       case LOAD_GRAPH_DISK:
         disk.values = std::vector<unsigned>(num_points);
         colors[0] = GsmApplication::get ()->config.disk_read_color;
         colors[1] = GsmApplication::get ()->config.disk_write_color;
+        gsm_graph_set_max_value (disp, this->disk.max);
         break;
     }
 
   main_widget = GTK_BOX (gtk_box_new (GTK_ORIENTATION_VERTICAL, 6));
   gtk_widget_set_size_request (GTK_WIDGET (main_widget), -1, GRAPH_MIN_HEIGHT);
-
-  disp = GSM_GRAPH (gsm_graph_new ());
-  gsm_graph_set_speed (disp, speed);
-  gsm_graph_set_data_function (disp, (GSourceFunc)load_graph_update_data, this);
 
   gtk_widget_set_vexpand (GTK_WIDGET (disp), TRUE);
   gtk_widget_set_hexpand (GTK_WIDGET (disp), TRUE);

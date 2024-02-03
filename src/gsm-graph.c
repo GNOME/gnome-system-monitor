@@ -36,6 +36,7 @@ enum
   PROP_NUM_POINTS,
   PROP_SMOOTH_CHART,
   PROP_STACKED_CHART,
+  PROP_MAX_VALUE,
   NUM_PROPS
 };
 
@@ -84,6 +85,9 @@ gsm_graph_set_property (GObject      *object,
     case PROP_NUM_POINTS:
       gsm_graph_set_num_points (self, g_value_get_uint (value));
       break;
+    case PROP_MAX_VALUE:
+      gsm_graph_set_max_value (self, g_value_get_uint64 (value));
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -117,6 +121,9 @@ gsm_graph_get_property (GObject    *object,
       break;
     case PROP_NUM_POINTS:
       g_value_set_double (value, gsm_graph_get_font_size (self));
+      break;
+    case PROP_MAX_VALUE:
+      g_value_set_uint64 (value, gsm_graph_get_max_value (self));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -162,6 +169,8 @@ gsm_graph_class_init (GsmGraphClass *klass)
                         g_param_spec_boolean ("smooth-chart", NULL, NULL, TRUE, G_PARAM_READWRITE);
   obj_properties[PROP_STACKED_CHART] =
                         g_param_spec_boolean ("stacked-chart", NULL, NULL, FALSE, G_PARAM_READWRITE);
+  obj_properties[PROP_MAX_VALUE] =
+                        g_param_spec_uint64 ("max-value", NULL, NULL, 0, G_MAXUINT64, 100, G_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class,
                                      G_N_ELEMENTS (obj_properties),
@@ -243,6 +252,7 @@ gsm_graph_init (GsmGraph *self)
   priv->rmargin = 6 * priv->fontsize;
   priv->smooth = TRUE;
   priv->stacked = FALSE;
+  priv->max_value = 100;
 
   g_signal_connect (G_OBJECT (self), "resize",
                     G_CALLBACK (gsm_graph_force_refresh), self);
@@ -288,6 +298,18 @@ void gsm_graph_set_num_points (GsmGraph *self, guint num_points)
   if (priv->num_points != num_points)
   {
     priv->num_points = num_points;
+    gsm_graph_force_refresh (self);
+  }
+}
+
+void gsm_graph_set_max_value (GsmGraph *self, guint64 max_value)
+{
+  g_return_if_fail (GSM_IS_GRAPH (self));
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  if (priv->max_value != max_value)
+  {
+    priv->max_value = max_value;
     gsm_graph_force_refresh (self);
   }
 }
@@ -486,6 +508,15 @@ gsm_graph_get_num_points (GsmGraph *self)
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
 
   return priv->num_points;
+}
+
+guint64
+gsm_graph_get_max_value (GsmGraph *self)
+{
+  g_return_val_if_fail (GSM_IS_GRAPH (self), 0);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  return priv->max_value;
 }
 
 guint
