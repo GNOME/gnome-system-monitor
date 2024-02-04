@@ -165,11 +165,12 @@ create_background (LoadGraph *graph,
   double rmargin = gsm_graph_get_right_margin (graph->disp);
   guint num_bars = gsm_graph_get_num_bars (graph->disp, height);
   const guint num_sections = 7;
+  guint speed = gsm_graph_get_speed (graph->disp);
 
   guint indent = gsm_graph_get_indent (graph->disp);
 
   /* Graph length */
-  const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * frames_per_unit;
+  const unsigned total_seconds = speed * (graph->num_points - 2) / 1000 * frames_per_unit;
 
   gtk_widget_get_allocation (GTK_WIDGET (graph->disp), &allocation);
   surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
@@ -937,7 +938,6 @@ LoadGraph::LoadGraph(guint type)
   indent (18.0),
   n (0),
   type (type),
-  speed (GsmApplication::get ()->config.graph_update_interval),
   num_points (GsmApplication::get ()->config.graph_data_points + 2),
   latest (0),
   graph_dely (0),
@@ -1001,9 +1001,9 @@ LoadGraph::LoadGraph(guint type)
   colors.resize (n);
 
   disp = GSM_GRAPH (gsm_graph_new ());
-  gsm_graph_set_speed (disp, speed);
   gsm_graph_set_data_function (disp, (GSourceFunc)load_graph_update_data, this);
   gsm_graph_set_num_points (disp, num_points);
+  gsm_graph_set_speed (disp, GsmApplication::get ()->config.graph_update_interval);
 
   switch (type)
     {

@@ -55,7 +55,6 @@ struct LoadGraph
 
   guint n;
   gint type;
-  guint speed;
   guint num_points;
   guint latest;
   guint graph_dely;
