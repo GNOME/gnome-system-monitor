@@ -73,6 +73,8 @@ struct _GsmGraphPrivate
   // cached background surface
   cairo_surface_t *background;
   guint indent;
+  guint dely;
+  guint real_draw_height;
   
   // function to calculate the latest set of data to display
   GSourceFunc data_function;
@@ -110,6 +112,8 @@ void                gsm_graph_set_max_value (GsmGraph*, guint64);
 // temporary exported setter methods
 void                gsm_graph_clear_background (GsmGraph*);
 void                gsm_graph_set_background (GsmGraph*, cairo_surface_t*);
+void                gsm_graph_set_dely (GsmGraph*, guint);
+void                gsm_graph_set_real_draw_height (GsmGraph*, guint);
 
 // public getter methods
 gboolean            gsm_graph_is_logarithmic_scale (GsmGraph*);
@@ -128,6 +132,8 @@ guint               gsm_graph_get_frames_per_unit (GsmGraph*);
 guint               gsm_graph_get_render_counter (GsmGraph*);
 guint               gsm_graph_get_indent (GsmGraph*);
 double              gsm_graph_get_right_margin (GsmGraph*);
+guint               gsm_graph_get_dely (GsmGraph*);
+guint               gsm_graph_get_real_draw_height (GsmGraph*);
 guint               gsm_graph_get_num_bars (GsmGraph*, gint);
 
 

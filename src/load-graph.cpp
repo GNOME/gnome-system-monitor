@@ -166,8 +166,9 @@ create_background (LoadGraph *graph,
   guint num_bars = gsm_graph_get_num_bars (graph->disp, height);
   const guint num_sections = 7;
   guint speed = gsm_graph_get_speed (graph->disp);
-
+  guint dely = gsm_graph_get_dely (graph->disp);
   guint indent = gsm_graph_get_indent (graph->disp);
+  guint real_draw_height = gsm_graph_get_real_draw_height (graph->disp);
 
   /* Graph length */
   const unsigned total_seconds = speed * (graph->num_points - 2) / 1000 * frames_per_unit;
@@ -215,7 +216,7 @@ create_background (LoadGraph *graph,
    * GTK instead of cairo_rectangle ?! :) */
   gtk_render_background (context, cr, indent, 0.0,
                          width - rmargin - indent,
-                         graph->real_draw_height);
+                         real_draw_height);
 
   gtk_style_context_restore (context);
 
@@ -233,10 +234,10 @@ create_background (LoadGraph *graph,
         y = 0.5 + fontsize / 2.0;
       else if (i == num_bars)
         /* Above the line */
-        y = i * graph->graph_dely + 0.5;
+        y = i * dely + 0.5;
       else
         /* Next to the line */
-        y = i * graph->graph_dely + fontsize / 2.0;
+        y = i * dely + fontsize / 2.0;
 
       /* Draw the label */
       /* Prepare the text */
@@ -274,10 +275,10 @@ create_background (LoadGraph *graph,
       gdk_cairo_set_source_rgba (cr, &grid_color);
 
       /* Set the grid line path */
-      cairo_move_to (cr, indent, i * graph->graph_dely);
+      cairo_move_to (cr, indent, i * dely);
       cairo_line_to (cr,
                      width - rmargin + 4,
-                     i * graph->graph_dely);
+                     i * dely);
     }
 
   /* Vertical grid lines */
@@ -324,7 +325,7 @@ create_background (LoadGraph *graph,
 
       /* Set the grid line path */
       cairo_move_to (cr, x + indent, 0);
-      cairo_line_to (cr, x + indent, graph->real_draw_height + 4);
+      cairo_line_to (cr, x + indent, real_draw_height + 4);
     }
 
   /* Paint */
@@ -351,16 +352,18 @@ load_graph_draw (GtkDrawingArea* area,
   guint num_points = gsm_graph_get_num_points (GSM_GRAPH (area));
   guint indent = gsm_graph_get_indent (GSM_GRAPH (area));
   graph->num_bars = gsm_graph_get_num_bars (GSM_GRAPH (area), height);
+  guint dely = (height - 15) / graph->num_bars;   /* round to int to avoid AA blur */
+  guint real_draw_height = dely * graph->num_bars;
 
   /* Initialize graph dimensions */
   width -= 2 * FRAME_WIDTH;
   height -= 2 * FRAME_WIDTH;
 
-  graph->graph_dely = (height - 15) / graph->num_bars;   /* round to int to avoid AA blur */
-  graph->real_draw_height = graph->graph_dely * graph->num_bars;
+  gsm_graph_set_dely (GSM_GRAPH (area), dely);
+  gsm_graph_set_real_draw_height (GSM_GRAPH (area), real_draw_height);
 
   /* Number of pixels wide for one sample point */
-  const double x_step = double(width - rmargin - graph->indent) / (graph->num_points - 2);
+  const double x_step = double(width - rmargin - indent) / (num_points - 2);
 
   /* Lines start at the right edge of the drawing,
    * a bit outside the clip rectangle. */
@@ -392,7 +395,7 @@ load_graph_draw (GtkDrawingArea* area,
                    indent + FRAME_WIDTH,
                    FRAME_WIDTH,
                    width - rmargin - indent,
-                   graph->real_draw_height);
+                   real_draw_height);
   cairo_clip (cr);
 
   bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get ()->config.draw_stacked;
@@ -410,7 +413,7 @@ load_graph_draw (GtkDrawingArea* area,
       gdk_cairo_set_source_rgba (cr, &(graph->colors [j]));
 
       /* Start drawing on the right at the correct height */
-      cairo_move_to (cr, x_offset, y_base + (1.0f - graph->data[0][j]) * graph->real_draw_height);
+      cairo_move_to (cr, x_offset, y_base + (1.0f - graph->data[0][j]) * real_draw_height);
 
       /* Draw the path of the line
          Loop starts at 1 because the curve accesses the 0th data point */
@@ -422,22 +425,22 @@ load_graph_draw (GtkDrawingArea* area,
           if (drawSmooth)
             cairo_curve_to (cr,
                             x_offset - ((i - 0.5f) * x_step),
-                            y_base + (1.0 - graph->data[i - 1][j]) * graph->real_draw_height,
+                            y_base + (1.0 - graph->data[i - 1][j]) * real_draw_height,
                             x_offset - ((i - 0.5f) * x_step),
-                            y_base + (1.0 - graph->data[i][j]) * graph->real_draw_height,
+                            y_base + (1.0 - graph->data[i][j]) * real_draw_height,
                             x_offset - (i * x_step),
-                            y_base + (1.0 - graph->data[i][j]) * graph->real_draw_height);
+                            y_base + (1.0 - graph->data[i][j]) * real_draw_height);
           else
             cairo_line_to (cr,
                            x_offset - (i * x_step),
-                           y_base + (1.0 - graph->data[i][j]) * graph->real_draw_height);
+                           y_base + (1.0 - graph->data[i][j]) * real_draw_height);
         }
 
       if (drawStacked)
         {
           /* Draw the remaining outline of the area */
           /* Left bottom corner */
-          cairo_rel_line_to (cr, 0, y_base + graph->real_draw_height);
+          cairo_rel_line_to (cr, 0, y_base + real_draw_height);
           /* Right bottom corner.
              It's drawn far outside the visible area to avoid a weird bug
              where it's not filling the area it should completely */
@@ -940,9 +943,7 @@ LoadGraph::LoadGraph(guint type)
   type (type),
   num_points (GsmApplication::get ()->config.graph_data_points + 2),
   latest (0),
-  graph_dely (0),
   num_bars (0),
-  real_draw_height (0),
   colors (),
   data_block (),
   data (),

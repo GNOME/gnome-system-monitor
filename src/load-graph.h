@@ -57,9 +57,7 @@ struct LoadGraph
   gint type;
   guint num_points;
   guint latest;
-  guint graph_dely;
   guint num_bars;
-  guint real_draw_height;
 
   std::vector<GdkRGBA> colors;
 

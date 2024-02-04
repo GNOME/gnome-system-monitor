@@ -431,6 +431,25 @@ gsm_graph_set_stacked_chart (GsmGraph *self, gboolean stacked)
   }
 }
 
+void gsm_graph_set_dely (GsmGraph *self, guint dely)
+{
+  g_return_if_fail (GSM_IS_GRAPH (self));
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  if (priv->dely != dely) {
+    priv->dely = dely;
+  }
+}
+
+void gsm_graph_set_real_draw_height (GsmGraph *self, guint real_draw_height)
+{
+  g_return_if_fail (GSM_IS_GRAPH (self));
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  if (priv->real_draw_height != real_draw_height) {
+    priv->real_draw_height = real_draw_height;
+  }
+}
 
 void
 gsm_graph_stop (GsmGraph *self)
@@ -526,6 +545,24 @@ gsm_graph_get_indent (GsmGraph *self)
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
 
   return priv->indent;
+}
+
+guint
+gsm_graph_get_dely (GsmGraph *self)
+{
+  g_return_val_if_fail (GSM_IS_GRAPH (self), 0);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  return priv->dely;
+}
+
+guint
+gsm_graph_get_real_draw_height (GsmGraph *self)
+{
+  g_return_val_if_fail (GSM_IS_GRAPH (self), 0);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  return priv->real_draw_height;
 }
 
 double
