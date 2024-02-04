@@ -926,25 +926,20 @@ create_main_window (GsmApplication *app)
   g_action_change_state (action,
                          g_settings_get_value (app->settings->gobj (), GSM_SETTING_SHOW_WHOSE_PROCESSES));
 
-  if (app->settings->get_boolean (GSM_SETTING_MAXIMIZED))
-    gtk_window_maximize (GTK_WINDOW (app->main_window));
-
-  g_settings_get (app->settings->gobj (), GSM_SETTING_WINDOW_STATE, "(ii)",
-                  &width, &height);
-
   // Surface is available only after a widget has been shown
   gtk_widget_set_visible (GTK_WIDGET (app->main_window), true);
 
-  native = gtk_widget_get_native (GTK_WIDGET (app->main_window));   // Can return NULL but not for the main window
-  surface = gtk_native_get_surface (native);
-  display = gdk_surface_get_display (surface);
-  monitor = gdk_display_get_monitor_at_surface (display, surface);
-  gdk_monitor_get_geometry (monitor, &monitor_geometry);
+  g_settings_bind (app->settings->gobj (), GSM_SETTING_WINDOW_WIDTH,
+                   app->main_window, "default-width",
+                   G_SETTINGS_BIND_DEFAULT);
 
-  width = CLAMP (width, 50, monitor_geometry.width);
-  height = CLAMP (height, 50, monitor_geometry.height);
+  g_settings_bind (app->settings->gobj (), GSM_SETTING_WINDOW_HEIGHT,
+                   app->main_window, "default-height",
+                   G_SETTINGS_BIND_DEFAULT);
 
-  gtk_window_set_default_size (GTK_WINDOW (app->main_window), width, height);
+  g_settings_bind (app->settings->gobj (), GSM_SETTING_MAXIMIZED,
+                   app->main_window, "maximized",
+                   G_SETTINGS_BIND_DEFAULT);
 
   update_page_activities (app);
 

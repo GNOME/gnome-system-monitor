@@ -11,7 +11,8 @@
 #define GSM_SETTINGS_CHILD_PROCESSES        "proctree"
 #define GSM_SETTINGS_CHILD_MEMMAP           "memmapstree"
 
-#define GSM_SETTING_WINDOW_STATE            "window-state"
+#define GSM_SETTING_WINDOW_WIDTH            "window-width"
+#define GSM_SETTING_WINDOW_HEIGHT           "window-height"
 #define GSM_SETTING_MAXIMIZED               "maximized"
 #define GSM_SETTING_CURRENT_TAB             "current-tab"
 #define GSM_SETTING_PROCESS_UPDATE_INTERVAL "update-interval"

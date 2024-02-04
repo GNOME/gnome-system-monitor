@@ -412,22 +412,6 @@ GsmApplication::on_activate ()
   gtk_window_present (GTK_WINDOW (main_window));
 }
 
-void
-GsmApplication::save_config ()
-{
-  int width, height;
-  gboolean maximized;
-
-  gtk_window_get_default_size (GTK_WINDOW (main_window), &width, &height);
-
-  maximized = gtk_window_is_maximized (GTK_WINDOW (main_window));
-
-  g_settings_set (settings->gobj (), GSM_SETTING_WINDOW_STATE, "(ii)",
-                  width, height);
-
-  settings->set_boolean (GSM_SETTING_MAXIMIZED, maximized);
-}
-
 int
 GsmApplication::on_command_line (const Glib::RefPtr<Gio::ApplicationCommandLine>&command_line)
 {
@@ -505,8 +489,6 @@ GsmApplication::on_quit_activate (const Glib::VariantBase&)
 void
 GsmApplication::shutdown ()
 {
-  save_config ();
-
   if (timeout)
     g_source_remove (timeout);
   if (disk_timeout)
