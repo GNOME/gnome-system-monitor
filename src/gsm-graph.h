@@ -119,7 +119,8 @@ void                gsm_graph_set_max_value (GsmGraph*, guint64);
 
 // temporary exported setter methods
 void                gsm_graph_clear_background (GsmGraph*);
-void                gsm_graph_set_background (GsmGraph*, cairo_surface_t*);
+void                gsm_graph_create_background (GsmGraph*, guint width, guint height);
+void                gsm_graph_set_background (GsmGraph*, cairo_surface_t * background);
 void                gsm_graph_set_dely (GsmGraph*, guint);
 void                gsm_graph_set_real_draw_height (GsmGraph*, guint);
 

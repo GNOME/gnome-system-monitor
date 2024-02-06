@@ -31,7 +31,6 @@ enum
 enum
 {
   PROP_LOGARITHMIC_SCALE = 1,
-  PROP_BACKGROUND,
   PROP_FONT_SIZE,
   PROP_NUM_POINTS,
   PROP_SMOOTH_CHART,
@@ -41,6 +40,10 @@ enum
   PROP_Y_LABELS_FUNCTION,
   NUM_PROPS
 };
+
+const double BORDER_ALPHA = 0.7;
+const double GRID_ALPHA = BORDER_ALPHA / 2.0;
+const int FRAME_WIDTH = 4;
 
 static guint signals[NUM_SIGNALS] = {
   0
@@ -77,9 +80,6 @@ gsm_graph_set_property (GObject      *object,
       break;
     case PROP_STACKED_CHART:
       gsm_graph_set_stacked_chart (self, g_value_get_boolean (value));
-      break;
-    case PROP_BACKGROUND:
-      gsm_graph_set_background (self, g_value_get_pointer (value));
       break;
     case PROP_FONT_SIZE:
       gsm_graph_set_font_size (self, g_value_get_double (value));
@@ -120,9 +120,6 @@ gsm_graph_get_property (GObject    *object,
       break;
     case PROP_STACKED_CHART:
       g_value_set_boolean (value, gsm_graph_is_stacked_chart (self));
-      break;
-    case PROP_BACKGROUND:
-      g_value_set_pointer (value, gsm_graph_get_background (self));
       break;
     case PROP_FONT_SIZE:
       g_value_set_double (value, gsm_graph_get_font_size (self));
@@ -173,8 +170,6 @@ gsm_graph_class_init (GsmGraphClass *klass)
                                        0);
   obj_properties[PROP_LOGARITHMIC_SCALE] =
                         g_param_spec_boolean ("logarithmic-scale", NULL, NULL, FALSE, G_PARAM_READWRITE);
-  obj_properties[PROP_BACKGROUND] =
-                        g_param_spec_pointer ("background", NULL, NULL, G_PARAM_READWRITE);
   obj_properties[PROP_FONT_SIZE] =
                         g_param_spec_double ("font-size", NULL, NULL, 8.0, 48.0, 8.0, G_PARAM_READWRITE);
   obj_properties[PROP_NUM_POINTS] =
@@ -407,16 +402,211 @@ gsm_graph_clear_background (GsmGraph *self)
 }
 
 void
-gsm_graph_set_background (GsmGraph *self, cairo_surface_t *background)
+gsm_graph_set_background (GsmGraph *self, cairo_surface_t * background)
 {
   g_return_if_fail (GSM_IS_GRAPH (self));
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
   if (priv->background != background) {
-    if (priv->background != NULL) {
+    if (priv->background != NULL)
       cairo_surface_destroy (priv->background);
-    }
     priv->background = background;
   }
+}
+
+void
+gsm_graph_create_background (GsmGraph *self, guint width, guint height)
+{
+  g_return_if_fail (GSM_IS_GRAPH (self));
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+  if (priv->background != NULL) {
+    cairo_surface_destroy (priv->background);
+  }
+  
+  GdkRGBA fg_color;
+  GdkRGBA grid_color;
+  PangoContext *pango_context;
+  PangoFontDescription *font_desc;
+  PangoLayout *layout;
+  cairo_t *cr;
+  cairo_surface_t *surface;
+  graphene_rect_t * bounds;
+  const guint num_sections = 7;
+  guint num_bars = gsm_graph_get_num_bars (self);
+
+  /* Graph length */
+  const unsigned total_seconds = priv->speed * (priv->num_points - 2) / 1000 * priv->frames_per_unit;
+
+  bounds = graphene_rect_alloc ();
+  g_return_val_if_fail (gtk_widget_compute_bounds (GTK_WIDGET (self), gtk_widget_get_parent (GTK_WIDGET (self)), bounds), NULL);
+  surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
+                                        graphene_rect_get_width (bounds),
+                                        graphene_rect_get_height(bounds));
+  graphene_rect_free (bounds);
+  cr = cairo_create (surface);
+
+  /* Create grid label layout */
+  layout = pango_cairo_create_layout (cr);
+
+  /* Set font for graph labels */
+  pango_context = gtk_widget_get_pango_context (GTK_WIDGET (self));
+  font_desc = pango_context_get_font_description (pango_context);
+  pango_font_description_set_size (font_desc, 0.8 * priv->fontsize * PANGO_SCALE);
+  pango_layout_set_font_description (layout, font_desc);
+
+  /* draw frame */
+  cairo_translate (cr, FRAME_WIDTH, FRAME_WIDTH);
+
+  /* Draw background rectangle */
+  /* When a user uses a dark theme, the hard-coded
+   * white background in GSM is a lone white on the
+   * display, which makes the user unhappy. To fix
+   * this, here we offer the user a chance to set
+   * his favorite background color. */
+  GtkStyleContext *context = gtk_widget_get_style_context (GTK_WIDGET (self));
+
+  gtk_style_context_save (context);
+
+  /* Here we specify the name of the class. Now in
+   * the theme's CSS we can specify the own colors
+   * for this class. */
+  gtk_style_context_add_class (context, "loadgraph");
+
+  /* Get foreground color */
+  gtk_style_context_get_color (context, &fg_color);
+  /* The grid color is the same as the foreground color but has sometimes
+   * different alpha. Keep it separate. */
+  grid_color = fg_color;
+
+  /* Why not use the new features of the
+   * GTK instead of cairo_rectangle ?! :) */
+  gtk_render_background (context, cr, priv->indent, 0.0,
+                         width - priv->rmargin - priv->indent,
+                         priv->real_draw_height);
+
+  gtk_style_context_restore (context);
+
+  cairo_set_line_width (cr, 0.25);
+
+  /* Horizontal grid lines */
+  for (guint i = 0; i <= num_bars; i++)
+    {
+      PangoRectangle extents;
+
+      /* Label alignment */
+      double y;
+      if (i == 0)
+        /* Below the line */
+        y = 0.5 + priv->fontsize / 2.0;
+      else if (i == num_bars)
+        /* Above the line */
+        y = i * priv->dely + 0.5;
+      else
+        /* Next to the line */
+        y = i * priv->dely + priv->fontsize / 2.0;
+
+      if (priv->y_labels_function != NULL)
+      {
+        /* Draw the label */
+        /* Prepare the text */
+        float caption_value = gsm_graph_get_y_label_value (self, i);
+        gchar *caption = priv->y_labels_function ((guint64)caption_value);
+
+        pango_layout_set_text (layout, caption, -1);
+        pango_layout_set_alignment (layout, PANGO_ALIGN_LEFT);
+        pango_layout_get_extents (layout, NULL, &extents);
+
+        /* Create y axis position modifier */
+        double label_y_offset_modifier = i == 0 ? 0.5
+                                : i == num_bars
+                                    ? 1.0
+                                    : 0.85;
+
+        /* Set the label position */
+        cairo_move_to (cr,
+                       width - priv->indent - 23,
+                       y - label_y_offset_modifier * extents.height / PANGO_SCALE);
+
+        /* Set the color */
+        gdk_cairo_set_source_rgba (cr, &fg_color);
+
+        /* Paint the grid label */
+        pango_cairo_show_layout (cr, layout);
+        g_free (caption);
+      }
+
+      /* Set the grid line alpha */
+      if (i == 0 || i == num_bars)
+        grid_color.alpha = BORDER_ALPHA;
+      else
+        grid_color.alpha = GRID_ALPHA;
+
+      /* Draw the line */
+      /* Set the color */
+      gdk_cairo_set_source_rgba (cr, &grid_color);
+
+      /* Set the grid line path */
+      cairo_move_to (cr, priv->indent, i * priv->dely);
+      cairo_line_to (cr,
+                     width - priv->rmargin + 4,
+                     i * priv->dely);
+    }
+
+  /* Vertical grid lines */
+  for (unsigned int i = 0; i < num_sections; i++)
+    {
+      PangoRectangle extents;
+
+      /* Prepare the x position */
+      double x = ceil (i * (width - priv->rmargin - priv->indent) / (num_sections - 1));
+
+      if (priv->x_labels_function != NULL)
+      {
+        /* Draw the label */
+        /* Prepare the text */
+        gchar *caption = priv->x_labels_function (total_seconds - i * total_seconds / (num_sections - 1));
+        pango_layout_set_text (layout, caption, -1);
+        pango_layout_get_extents (layout, NULL, &extents);
+
+        /* Create x axis position modifier */
+        double label_x_offset_modifier = i == 0 ? 0
+                                           : i == (num_sections - 1)
+                                              ? 1.0
+                                              : 0.5;
+
+        /* Set the label position */
+        cairo_move_to (cr,
+                       x + priv->indent - label_x_offset_modifier * extents.width / PANGO_SCALE + 1.0,
+                       height - 1.0 * extents.height / PANGO_SCALE + 5);
+
+        /* Set the color */
+        gdk_cairo_set_source_rgba (cr, &fg_color);
+
+        /* Paint the grid label */
+        pango_cairo_show_layout (cr, layout);
+        g_free (caption);
+      }
+      /* Set the grid line alpha */
+      if (i == 0 || i == (num_sections - 1))
+        grid_color.alpha = BORDER_ALPHA;
+      else
+        grid_color.alpha = GRID_ALPHA;
+
+      /* Draw the line */
+      /* Set the color */
+      gdk_cairo_set_source_rgba (cr, &grid_color);
+
+      /* Set the grid line path */
+      cairo_move_to (cr, x + priv->indent, 0);
+      cairo_line_to (cr, x + priv->indent, priv->real_draw_height + 4);
+    }
+
+  /* Paint */
+  cairo_stroke (cr);
+
+  g_object_unref (layout);
+  cairo_destroy (cr);
+
+  priv->background = surface;
 }
 
 void
