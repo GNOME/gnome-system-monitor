@@ -658,12 +658,14 @@ gsm_graph_is_stacked_chart (GsmGraph *self)
 }
 
 guint
-gsm_graph_get_num_bars (GsmGraph *self, int height)
+gsm_graph_get_num_bars (GsmGraph *self)
 {
+  
   guint n;
-
   g_return_val_if_fail (GSM_IS_GRAPH (self), 0);
+
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+  guint height = gtk_widget_get_height (GTK_WIDGET (self));
 
   // keep 100 % num_bars == 0
   switch ((int)(height / (priv->fontsize + 14)))
@@ -695,4 +697,19 @@ gsm_graph_get_num_bars (GsmGraph *self, int height)
     }
 
   return n;
+}
+
+float
+gsm_graph_get_y_label_value (GsmGraph *self, guint index)
+{
+  g_return_val_if_fail (GSM_IS_GRAPH (self), 0);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+  
+  guint num_bars = gsm_graph_get_num_bars (self);
+  // operation orders matters so it's 0 if index == num_bars
+  float caption_percentage = (float)priv->max_value - index * (float)priv->max_value / num_bars;
+
+  if (priv->logarithmic_scale)
+    return caption_percentage == 0 ? 0 : pow (100, caption_percentage / priv->max_value);
+  return caption_percentage;
 }

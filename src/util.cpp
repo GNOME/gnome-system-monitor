@@ -837,6 +837,61 @@ format_network_rate (guint64 rate)
 }
 }
 
+gchar*
+procman::format_duration (guint64 seconds)
+{
+  gchar *caption = NULL;
+
+  guint minutes = seconds / 60;
+  guint hours = seconds / 3600;
+
+  if (hours != 0)
+    {
+      if (minutes % 60 == 0)
+        {
+          // If minutes mod 60 is 0 set it to 0, to prevent it from showing full hours in
+          // minutes in addition to hours.
+          minutes = 0;
+        }
+      else
+        {
+          // Round minutes as seconds wont get shown if neither hours nor minutes are 0.
+          minutes = int(rint (seconds / 60.0)) % 60;
+          if (minutes == 0)
+            {
+              // Increase hours if rounding minutes results in 0, because that would be
+              // what it would be rounded to.
+              hours++;
+              // Set seconds to hours * 3600 to prevent seconds from being drawn.
+              seconds = hours * 3600;
+            }
+        }
+    }
+
+  gchar*captionH = g_strdup_printf (dngettext (GETTEXT_PACKAGE, "%u hr", "%u hrs", hours), hours);
+  gchar*captionM = g_strdup_printf (dngettext (GETTEXT_PACKAGE, "%u min", "%u mins", minutes),
+                                    minutes);
+  gchar*captionS = g_strdup_printf (dngettext (GETTEXT_PACKAGE, "%u sec", "%u secs", seconds % 60),
+                                    seconds % 60);
+
+  caption = g_strjoin (" ", hours > 0 ? captionH : "",
+                       minutes > 0 ? captionM : "",
+                       seconds % 60 > 0 ? captionS : "",
+                       NULL);
+  g_free (captionH);
+  g_free (captionM);
+  g_free (captionS);
+
+  return caption;
+}
+
+gchar*
+procman::format_percentage (guint64 percentage)
+{
+  return g_strdup_printf (_("%ld %%"), percentage);
+}
+
+
 Glib::ustring
 get_monospace_system_font_name ()
 {

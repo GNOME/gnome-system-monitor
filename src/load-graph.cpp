@@ -36,53 +36,6 @@ LoadGraph::is_logarithmic_scale () const
 }
 
 /*
- Returns Y scale caption based on give index of the label.
- Takes into account whether the scale should be logarithmic for memory graph.
- */
-float
-LoadGraph::get_y_value (unsigned int index)
-{
-  guint64 max_value;
-  if (this->type == LOAD_GRAPH_NET)
-    max_value = this->net.max;
-  else if (this->type == LOAD_GRAPH_DISK)
-    max_value = this->disk.max;
-  else
-    max_value = 100;
-
-  // operation orders matters so it's 0 if index == num_bars
-  float caption_percentage = (float)max_value - index * (float)max_value / this->num_bars;
-
-  if (this->is_logarithmic_scale())
-    return caption_percentage == 0 ? 0 : pow (100, caption_percentage / max_value);
-  return caption_percentage;
-}
-
-char*
-LoadGraph::get_caption (unsigned int index)
-{
-  char *caption;
-
-  float caption_value = this->get_y_value (index);
-
-  if (this->type == LOAD_GRAPH_NET)
-    {
-      caption = procman::format_network_rate ((guint64)caption_value);
-    }
-  else if (this->type == LOAD_GRAPH_DISK)
-    {
-      caption = procman::format_rate ((guint64)caption_value);
-    }
-  else
-    {
-      // Translators: loadgraphs y axis percentage labels: 0 %, 50%, 100%
-      caption = g_strdup_printf (_("%.0f %%"), caption_value);
-    }
-
-  return caption;
-}
-
-/*
  Translates y partial position to logarithmic position if set to logarithmic scale.
 */
 float
@@ -92,54 +45,6 @@ LoadGraph::translate_to_log_partial_if_needed (float position_partial)
     position_partial = position_partial == 0 ? 0 : log10 (position_partial * 100) / 2;
 
   return position_partial;
-}
-
-static gchar*
-format_duration (guint seconds)
-{
-  gchar *caption = NULL;
-
-  unsigned minutes = seconds / 60;
-  unsigned hours = seconds / 3600;
-
-  if (hours != 0)
-    {
-      if (minutes % 60 == 0)
-        {
-          // If minutes mod 60 is 0 set it to 0, to prevent it from showing full hours in
-          // minutes in addition to hours.
-          minutes = 0;
-        }
-      else
-        {
-          // Round minutes as seconds wont get shown if neither hours nor minutes are 0.
-          minutes = int(rint (seconds / 60.0)) % 60;
-          if (minutes == 0)
-            {
-              // Increase hours if rounding minutes results in 0, because that would be
-              // what it would be rounded to.
-              hours++;
-              // Set seconds to hours * 3600 to prevent seconds from being drawn.
-              seconds = hours * 3600;
-            }
-        }
-    }
-
-  gchar*captionH = g_strdup_printf (dngettext (GETTEXT_PACKAGE, "%u hr", "%u hrs", hours), hours);
-  gchar*captionM = g_strdup_printf (dngettext (GETTEXT_PACKAGE, "%u min", "%u mins", minutes),
-                                    minutes);
-  gchar*captionS = g_strdup_printf (dngettext (GETTEXT_PACKAGE, "%u sec", "%u secs", seconds % 60),
-                                    seconds % 60);
-
-  caption = g_strjoin (" ", hours > 0 ? captionH : "",
-                       minutes > 0 ? captionM : "",
-                       seconds % 60 > 0 ? captionS : "",
-                       NULL);
-  g_free (captionH);
-  g_free (captionM);
-  g_free (captionS);
-
-  return caption;
 }
 
 static void
@@ -165,14 +70,14 @@ create_background (LoadGraph *graph,
   guint frames_per_unit = gsm_graph_get_frames_per_unit (graph->disp);
   double fontsize = gsm_graph_get_font_size (graph->disp);
   double rmargin = gsm_graph_get_right_margin (graph->disp);
-  guint num_bars = gsm_graph_get_num_bars (graph->disp, height);
+  guint num_bars = gsm_graph_get_num_bars (graph->disp);
   const guint num_sections = 7;
   guint speed = gsm_graph_get_speed (graph->disp);
   guint dely = gsm_graph_get_dely (graph->disp);
   guint indent = gsm_graph_get_indent (graph->disp);
   guint real_draw_height = gsm_graph_get_real_draw_height (graph->disp);
   GsmLabelFunction x_label_function = gsm_graph_get_x_labels_function (graph->disp);
-  // GsmLabelFunction y_label_function = &LoadGraph::get_caption;
+  GsmLabelFunction y_label_function = gsm_graph_get_y_labels_function (graph->disp);
 
   /* Graph length */
   const unsigned total_seconds = speed * (graph->num_points - 2) / 1000 * frames_per_unit;
@@ -245,30 +150,35 @@ create_background (LoadGraph *graph,
         /* Next to the line */
         y = i * dely + fontsize / 2.0;
 
-      /* Draw the label */
-      /* Prepare the text */
-      gchar *caption = graph->get_caption (i);
-      pango_layout_set_text (layout, caption, -1);
-      pango_layout_set_alignment (layout, PANGO_ALIGN_LEFT);
-      pango_layout_get_extents (layout, NULL, &extents);
+      if (y_label_function != NULL)
+      {
+        /* Draw the label */
+        /* Prepare the text */
+        float caption_value = gsm_graph_get_y_label_value (graph->disp, i);
+        gchar *caption = y_label_function ((guint64)caption_value);
 
-      /* Create y axis position modifier */
-      double label_y_offset_modifier = i == 0 ? 0.5
+        pango_layout_set_text (layout, caption, -1);
+        pango_layout_set_alignment (layout, PANGO_ALIGN_LEFT);
+        pango_layout_get_extents (layout, NULL, &extents);
+
+        /* Create y axis position modifier */
+        double label_y_offset_modifier = i == 0 ? 0.5
                                 : i == num_bars
                                     ? 1.0
                                     : 0.85;
 
-      /* Set the label position */
-      cairo_move_to (cr,
-                     width - indent - 23,
-                     y - label_y_offset_modifier * extents.height / PANGO_SCALE);
+        /* Set the label position */
+        cairo_move_to (cr,
+                       width - indent - 23,
+                       y - label_y_offset_modifier * extents.height / PANGO_SCALE);
 
-      /* Set the color */
-      gdk_cairo_set_source_rgba (cr, &fg_color);
+        /* Set the color */
+        gdk_cairo_set_source_rgba (cr, &fg_color);
 
-      /* Paint the grid label */
-      pango_cairo_show_layout (cr, layout);
-      g_free (caption);
+        /* Paint the grid label */
+        pango_cairo_show_layout (cr, layout);
+        g_free (caption);
+      }
 
       /* Set the grid line alpha */
       if (i == 0 || i == num_bars)
@@ -359,7 +269,7 @@ load_graph_draw (GtkDrawingArea* area,
   double rmargin = gsm_graph_get_right_margin (GSM_GRAPH (area));
   guint num_points = gsm_graph_get_num_points (GSM_GRAPH (area));
   guint indent = gsm_graph_get_indent (GSM_GRAPH (area));
-  graph->num_bars = gsm_graph_get_num_bars (GSM_GRAPH (area), height);
+  graph->num_bars = gsm_graph_get_num_bars (GSM_GRAPH (graph->disp));
   guint dely = (height - 15) / graph->num_bars;   /* round to int to avoid AA blur */
   guint real_draw_height = dely * graph->num_bars;
 
@@ -752,6 +662,7 @@ dynamic_scale (LoadGraph             *graph,
                  dmax, *max, new_max);
 
   *max = new_max;
+  gsm_graph_set_max_value (graph->disp, new_max);
 
   // force the graph background to be redrawn now that scale has changed
   graph->clear_background ();
@@ -1013,14 +924,16 @@ LoadGraph::LoadGraph(guint type)
   gsm_graph_set_data_function (disp, (GSourceFunc)load_graph_update_data, this);
   gsm_graph_set_num_points (disp, num_points);
   gsm_graph_set_speed (disp, GsmApplication::get ()->config.graph_update_interval);
-  gsm_graph_set_x_labels_function (disp, format_duration);
-
+  gsm_graph_set_x_labels_function (disp, procman::format_duration);
+  
+  
   switch (type)
     {
       case LOAD_GRAPH_CPU:
         memcpy (&colors[0], GsmApplication::get ()->config.cpu_color,
                 n * sizeof colors[0]);
         gsm_graph_set_max_value (disp, 100);
+        gsm_graph_set_y_labels_function (disp, procman::format_percentage);
         break;
 
       case LOAD_GRAPH_MEM:
@@ -1031,6 +944,7 @@ LoadGraph::LoadGraph(guint type)
         swap_color_picker = gsm_color_button_new (&colors[1],
                                                   GSMCP_TYPE_PIE);
         gsm_graph_set_max_value (disp, 100);
+        gsm_graph_set_y_labels_function (disp, procman::format_percentage);
         break;
 
       case LOAD_GRAPH_NET:
@@ -1038,6 +952,7 @@ LoadGraph::LoadGraph(guint type)
         colors[0] = GsmApplication::get ()->config.net_in_color;
         colors[1] = GsmApplication::get ()->config.net_out_color;
         gsm_graph_set_max_value (disp, this->net.max);
+        gsm_graph_set_y_labels_function (disp, procman::format_network_rate);
         break;
 
       case LOAD_GRAPH_DISK:
@@ -1045,6 +960,7 @@ LoadGraph::LoadGraph(guint type)
         colors[0] = GsmApplication::get ()->config.disk_read_color;
         colors[1] = GsmApplication::get ()->config.disk_write_color;
         gsm_graph_set_max_value (disp, this->disk.max);
+        gsm_graph_set_y_labels_function (disp, (GsmLabelFunction)procman::format_rate);
         break;
     }
 

@@ -191,10 +191,14 @@ gchar *     get_nice_level_with_priority (gint nice);
 
 gchar *     format_volume (guint64 size,
                            bool    want_bits = false);
+
 gchar *     format_rate (guint64 rate,
                          bool    want_bits = false);
 
 gchar *     format_network_rate (guint64 rate);
+
+gchar *     format_duration (guint64 seconds);
+gchar *     format_percentage (guint64 percentage);
 
 struct NonCopyable
 {

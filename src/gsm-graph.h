@@ -34,7 +34,7 @@ typedef struct _GsmGraph GsmGraph;
 typedef struct _GsmGraphClass GsmGraphClass;
 typedef struct _GsmGraphPrivate GsmGraphPrivate;
 
-typedef gchar* (*GsmLabelFunction) (guint);
+typedef gchar* (*GsmLabelFunction) (guint64);
 
 struct _GsmGraph
 {
@@ -126,8 +126,8 @@ void                gsm_graph_set_real_draw_height (GsmGraph*, guint);
 // public getter methods
 gboolean            gsm_graph_is_logarithmic_scale (GsmGraph*);
 guint               gsm_graph_get_speed (GsmGraph*);
-GsmLabelFunction   gsm_graph_get_x_labels_function (GsmGraph*);
-GsmLabelFunction   gsm_graph_get_y_labels_function (GsmGraph*);
+GsmLabelFunction    gsm_graph_get_x_labels_function (GsmGraph*);
+GsmLabelFunction    gsm_graph_get_y_labels_function (GsmGraph*);
 double              gsm_graph_get_font_size (GsmGraph*);
 gboolean            gsm_graph_is_started (GsmGraph*);
 gboolean            gsm_graph_is_smooth_chart (GsmGraph*);
@@ -144,8 +144,8 @@ guint               gsm_graph_get_indent (GsmGraph*);
 double              gsm_graph_get_right_margin (GsmGraph*);
 guint               gsm_graph_get_dely (GsmGraph*);
 guint               gsm_graph_get_real_draw_height (GsmGraph*);
-guint               gsm_graph_get_num_bars (GsmGraph*, gint);
-
+guint               gsm_graph_get_num_bars (GsmGraph*);
+float               gsm_graph_get_y_label_value (GsmGraph*, guint);
 
 G_END_DECLS
 

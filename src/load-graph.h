@@ -49,7 +49,7 @@ struct LoadGraph
   void     clear_background ();
   bool     is_logarithmic_scale () const;
   char *   get_caption (guint index);
-  float    get_y_value (guint index);
+  float    get_y_value (GsmGraph * self, guint index);
   float    translate_to_log_partial_if_needed (float position_partial);
 
   double indent;
