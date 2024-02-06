@@ -189,13 +189,12 @@ gchar *     get_nice_level (gint nice);
 
 gchar *     get_nice_level_with_priority (gint nice);
 
-std::string format_volume (guint64 size,
+gchar *     format_volume (guint64 size,
                            bool    want_bits = false);
-std::string format_rate (guint64 rate,
+gchar *     format_rate (guint64 rate,
                          bool    want_bits = false);
 
-std::string format_network (guint64 size);
-std::string format_network_rate (guint64 rate);
+gchar *     format_network_rate (guint64 rate);
 
 struct NonCopyable
 {

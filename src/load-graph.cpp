@@ -39,12 +39,10 @@ LoadGraph::is_logarithmic_scale () const
  Returns Y scale caption based on give index of the label.
  Takes into account whether the scale should be logarithmic for memory graph.
  */
-char*
-LoadGraph::get_caption (guint index)
+float
+LoadGraph::get_y_value (unsigned int index)
 {
-  char *caption;
   guint64 max_value;
-
   if (this->type == LOAD_GRAPH_NET)
     max_value = this->net.max;
   else if (this->type == LOAD_GRAPH_DISK)
@@ -55,26 +53,30 @@ LoadGraph::get_caption (guint index)
   // operation orders matters so it's 0 if index == num_bars
   float caption_percentage = (float)max_value - index * (float)max_value / this->num_bars;
 
-  if (this->is_logarithmic_scale ())
+  if (this->is_logarithmic_scale())
+    return caption_percentage == 0 ? 0 : pow (100, caption_percentage / max_value);
+  return caption_percentage;
+}
+
+char*
+LoadGraph::get_caption (unsigned int index)
+{
+  char *caption;
+
+  float caption_value = this->get_y_value (index);
+
+  if (this->type == LOAD_GRAPH_NET)
     {
-      float caption_value = caption_percentage == 0 ? 0 : pow (100, caption_percentage / max_value);
-      // Translators: loadgraphs y axis percentage labels: 0 %, 50%, 100%
-      caption = g_strdup_printf (_("%.0f %%"), caption_value);
-    }
-  else if (this->type == LOAD_GRAPH_NET)
-    {
-      const std::string captionstr (procman::format_network_rate ((guint64)caption_percentage));
-      caption = g_strdup (captionstr.c_str ());
+      caption = procman::format_network_rate ((guint64)caption_value);
     }
   else if (this->type == LOAD_GRAPH_DISK)
     {
-      const std::string captionstr (procman::format_rate ((guint64)caption_percentage));
-      caption = g_strdup (captionstr.c_str ());
+      caption = procman::format_rate ((guint64)caption_value);
     }
   else
     {
       // Translators: loadgraphs y axis percentage labels: 0 %, 50%, 100%
-      caption = g_strdup_printf (_("%.0f %%"), caption_percentage);
+      caption = g_strdup_printf (_("%.0f %%"), caption_value);
     }
 
   return caption;
@@ -93,7 +95,7 @@ LoadGraph::translate_to_log_partial_if_needed (float position_partial)
 }
 
 static gchar*
-format_duration (unsigned seconds)
+format_duration (guint seconds)
 {
   gchar *caption = NULL;
 
@@ -154,12 +156,12 @@ create_background (LoadGraph *graph,
 {
   GdkRGBA fg_color;
   GdkRGBA grid_color;
-  GtkAllocation allocation;
   PangoContext *pango_context;
   PangoFontDescription *font_desc;
   PangoLayout *layout;
   cairo_t *cr;
   cairo_surface_t *surface;
+  graphene_rect_t * bounds;
   guint frames_per_unit = gsm_graph_get_frames_per_unit (graph->disp);
   double fontsize = gsm_graph_get_font_size (graph->disp);
   double rmargin = gsm_graph_get_right_margin (graph->disp);
@@ -169,14 +171,18 @@ create_background (LoadGraph *graph,
   guint dely = gsm_graph_get_dely (graph->disp);
   guint indent = gsm_graph_get_indent (graph->disp);
   guint real_draw_height = gsm_graph_get_real_draw_height (graph->disp);
+  GsmLabelFunction x_label_function = gsm_graph_get_x_labels_function (graph->disp);
+  // GsmLabelFunction y_label_function = &LoadGraph::get_caption;
 
   /* Graph length */
   const unsigned total_seconds = speed * (graph->num_points - 2) / 1000 * frames_per_unit;
 
-  gtk_widget_get_allocation (GTK_WIDGET (graph->disp), &allocation);
+  bounds = graphene_rect_alloc ();
+  g_return_val_if_fail (gtk_widget_compute_bounds (GTK_WIDGET (graph->disp), gtk_widget_get_parent (GTK_WIDGET (graph->disp)), bounds), NULL);
   surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
-                                        allocation.width,
-                                        allocation.height);
+                                        graphene_rect_get_width (bounds),
+                                        graphene_rect_get_height(bounds));
+  graphene_rect_free (bounds);
   cr = cairo_create (surface);
 
   /* Create grid label layout */
@@ -289,30 +295,32 @@ create_background (LoadGraph *graph,
       /* Prepare the x position */
       double x = ceil (i * (width - rmargin - indent) / (num_sections - 1));
 
-      /* Draw the label */
-      /* Prepare the text */
-      gchar *caption = format_duration (total_seconds - i * total_seconds / (num_sections - 1));
-      pango_layout_set_text (layout, caption, -1);
-      pango_layout_get_extents (layout, NULL, &extents);
+      if (x_label_function != NULL)
+      {
+        /* Draw the label */
+        /* Prepare the text */
+        gchar *caption = x_label_function (total_seconds - i * total_seconds / (num_sections - 1));
+        pango_layout_set_text (layout, caption, -1);
+        pango_layout_get_extents (layout, NULL, &extents);
 
-      /* Create x axis position modifier */
-      double label_x_offset_modifier = i == 0 ? 0
-                                         : i == (num_sections - 1)
-                                            ? 1.0
-                                            : 0.5;
+        /* Create x axis position modifier */
+        double label_x_offset_modifier = i == 0 ? 0
+                                           : i == (num_sections - 1)
+                                              ? 1.0
+                                              : 0.5;
 
-      /* Set the label position */
-      cairo_move_to (cr,
-                     x + indent - label_x_offset_modifier * extents.width / PANGO_SCALE + 1.0,
-                     height - 1.0 * extents.height / PANGO_SCALE);
+        /* Set the label position */
+        cairo_move_to (cr,
+                       x + indent - label_x_offset_modifier * extents.width / PANGO_SCALE + 1.0,
+                       height - 1.0 * extents.height / PANGO_SCALE + 5);
 
-      /* Set the color */
-      gdk_cairo_set_source_rgba (cr, &fg_color);
+        /* Set the color */
+        gdk_cairo_set_source_rgba (cr, &fg_color);
 
-      /* Paint the grid label */
-      pango_cairo_show_layout (cr, layout);
-      g_free (caption);
-
+        /* Paint the grid label */
+        pango_cairo_show_layout (cr, layout);
+        g_free (caption);
+      }
       /* Set the grid line alpha */
       if (i == 0 || i == (num_sections - 1))
         grid_color.alpha = BORDER_ALPHA;
@@ -809,11 +817,11 @@ handle_dynamic_max_value (LoadGraph             *graph,
 
   dynamic_scale (graph, values, max, din, dout, in_bits);
 
-  gtk_label_set_text (GTK_LABEL (label_in), procman::format_rate (din, in_bits).c_str ());
-  gtk_label_set_text (GTK_LABEL (label_in_total), procman::format_volume (in, totals_in_bits).c_str ());
+  gtk_label_set_text (GTK_LABEL (label_in), procman::format_rate (din, in_bits));
+  gtk_label_set_text (GTK_LABEL (label_in_total), procman::format_volume (in, totals_in_bits));
 
-  gtk_label_set_text (GTK_LABEL (label_out), procman::format_rate (dout, in_bits).c_str ());
-  gtk_label_set_text (GTK_LABEL (label_out_total), procman::format_volume (out, totals_in_bits).c_str ());
+  gtk_label_set_text (GTK_LABEL (label_out), procman::format_rate (dout, in_bits));
+  gtk_label_set_text (GTK_LABEL (label_out_total), procman::format_volume (out, totals_in_bits));
 }
 
 static void
@@ -1005,6 +1013,7 @@ LoadGraph::LoadGraph(guint type)
   gsm_graph_set_data_function (disp, (GSourceFunc)load_graph_update_data, this);
   gsm_graph_set_num_points (disp, num_points);
   gsm_graph_set_speed (disp, GsmApplication::get ()->config.graph_update_interval);
+  gsm_graph_set_x_labels_function (disp, format_duration);
 
   switch (type)
     {
@@ -1119,8 +1128,6 @@ load_graph_change_num_points (LoadGraph *graph,
   graph->num_points = new_num_points;
   gsm_graph_set_num_points (graph->disp, new_num_points);
 
-  // Force the scale to be redrawn.
-  graph->clear_background ();
 }
 
 LoadGraphLabels*

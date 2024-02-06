@@ -37,6 +37,8 @@ enum
   PROP_SMOOTH_CHART,
   PROP_STACKED_CHART,
   PROP_MAX_VALUE,
+  PROP_X_LABELS_FUNCTION,
+  PROP_Y_LABELS_FUNCTION,
   NUM_PROPS
 };
 
@@ -88,6 +90,12 @@ gsm_graph_set_property (GObject      *object,
     case PROP_MAX_VALUE:
       gsm_graph_set_max_value (self, g_value_get_uint64 (value));
       break;
+    case PROP_X_LABELS_FUNCTION:
+      gsm_graph_set_x_labels_function (self, g_value_get_pointer (value));
+      break;
+    case PROP_Y_LABELS_FUNCTION:
+      gsm_graph_set_y_labels_function (self, g_value_get_pointer (value));
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -124,6 +132,12 @@ gsm_graph_get_property (GObject    *object,
       break;
     case PROP_MAX_VALUE:
       g_value_set_uint64 (value, gsm_graph_get_max_value (self));
+      break;
+    case PROP_X_LABELS_FUNCTION:
+      g_value_set_pointer (value, gsm_graph_get_x_labels_function (self));
+      break;
+    case PROP_Y_LABELS_FUNCTION:
+      g_value_set_pointer (value, gsm_graph_get_y_labels_function (self));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -171,6 +185,10 @@ gsm_graph_class_init (GsmGraphClass *klass)
                         g_param_spec_boolean ("stacked-chart", NULL, NULL, FALSE, G_PARAM_READWRITE);
   obj_properties[PROP_MAX_VALUE] =
                         g_param_spec_uint64 ("max-value", NULL, NULL, 0, G_MAXUINT64, 100, G_PARAM_READWRITE);
+  obj_properties[PROP_X_LABELS_FUNCTION] =
+                        g_param_spec_pointer ("x-labels-function", NULL, NULL, G_PARAM_READWRITE);
+  obj_properties[PROP_Y_LABELS_FUNCTION] =
+                        g_param_spec_pointer ("y-labels-function", NULL, NULL, G_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class,
                                      G_N_ELEMENTS (obj_properties),
@@ -441,6 +459,26 @@ void gsm_graph_set_dely (GsmGraph *self, guint dely)
   }
 }
 
+void gsm_graph_set_x_labels_function (GsmGraph *self, GsmLabelFunction x_labels_function)
+{
+  g_return_if_fail (GSM_IS_GRAPH (self));
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  if (priv->x_labels_function != x_labels_function) {
+    priv->x_labels_function = x_labels_function;
+  }
+}
+
+void gsm_graph_set_y_labels_function (GsmGraph *self, GsmLabelFunction y_labels_function)
+{
+  g_return_if_fail (GSM_IS_GRAPH (self));
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  if (priv->y_labels_function != y_labels_function) {
+    priv->y_labels_function = y_labels_function;
+  }
+}
+
 void gsm_graph_set_real_draw_height (GsmGraph *self, guint real_draw_height)
 {
   g_return_if_fail (GSM_IS_GRAPH (self));
@@ -572,6 +610,24 @@ gsm_graph_get_right_margin (GsmGraph *self)
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
 
   return priv->rmargin;
+}
+
+GsmLabelFunction
+gsm_graph_get_x_labels_function (GsmGraph *self)
+{
+  g_return_val_if_fail (GSM_IS_GRAPH (self), NULL);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  return priv->x_labels_function;
+}
+
+GsmLabelFunction
+gsm_graph_get_y_labels_function (GsmGraph *self)
+{
+  g_return_val_if_fail (GSM_IS_GRAPH (self), NULL);
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+
+  return priv->y_labels_function;
 }
 
 gboolean
