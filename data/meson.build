@@ -32,10 +32,10 @@ desktop_files += i18n.merge_file(
 appdata_file = i18n.merge_file(
   input : configure_file(
   configuration: dataconf,
-  input : 'gnome-system-monitor.appdata.xml.in.in',
-  output: 'gnome-system-monitor.appdata.xml.in'
+  input : 'org.gnome.SystemMonitor.appdata.xml.in.in',
+  output: '@0@.appdata.xml.in'.format(app_id),
   ),
-  output: 'gnome-system-monitor.appdata.xml',
+  output: '@0@.appdata.xml'.format(app_id),
   po_dir: '../po',
   install: true,
   install_dir: join_paths(get_option('datadir'), 'metainfo'),
