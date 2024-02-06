@@ -17,8 +17,6 @@
 #include "util.h"
 #include "legacy/gsm_color_button.h"
 
-constexpr double BORDER_ALPHA = 0.7;
-constexpr double GRID_ALPHA = BORDER_ALPHA / 2.0;
 constexpr int FRAME_WIDTH = 4;
 constexpr unsigned GRAPH_MIN_HEIGHT = 40;
 

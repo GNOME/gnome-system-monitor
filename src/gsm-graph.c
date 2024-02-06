@@ -402,18 +402,6 @@ gsm_graph_clear_background (GsmGraph *self)
 }
 
 void
-gsm_graph_set_background (GsmGraph *self, cairo_surface_t * background)
-{
-  g_return_if_fail (GSM_IS_GRAPH (self));
-  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
-  if (priv->background != background) {
-    if (priv->background != NULL)
-      cairo_surface_destroy (priv->background);
-    priv->background = background;
-  }
-}
-
-void
 gsm_graph_create_background (GsmGraph *self, guint width, guint height)
 {
   g_return_if_fail (GSM_IS_GRAPH (self));
