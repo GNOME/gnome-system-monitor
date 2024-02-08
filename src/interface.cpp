@@ -482,8 +482,8 @@ on_activate_about (GSimpleAction *,
     NULL
   };
 
-  adw_show_about_window (
-    GTK_WINDOW (app->main_window),
+  adw_show_about_dialog (
+    GTK_WIDGET (app->main_window),
     "application-name", _("System Monitor"),
     "comments", _("View current processes and monitor "
                   "system state"),
