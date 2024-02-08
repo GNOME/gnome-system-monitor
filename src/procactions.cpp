@@ -42,7 +42,7 @@ renice_single_process (GtkTreeModel *model,
   gint error;
   int saved_errno;
   gchar *error_msg;
-  AdwMessageDialog *dialog;
+  AdwAlertDialog *dialog;
 
   gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 
@@ -80,24 +80,17 @@ renice_single_process (GtkTreeModel *model,
       "%s"),
     info->pid, args->arg_value, g_strerror (saved_errno));
 
-  dialog = ADW_MESSAGE_DIALOG (adw_message_dialog_new (
-                                 GTK_WINDOW (GsmApplication::get ()->main_window),
-                                 NULL,
-                                 NULL));
+  dialog = ADW_ALERT_DIALOG (adw_alert_dialog_new (
+                               NULL,
+                               NULL));
 
-  adw_message_dialog_format_body (dialog, "%s", error_msg);
+  adw_alert_dialog_format_body (dialog, "%s", error_msg);
 
-  adw_message_dialog_add_response (dialog, "ok", _("_OK"));
-
-  gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
-  gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
+  adw_alert_dialog_add_response (dialog, "ok", _("_OK"));
 
   g_free (error_msg);
 
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (gtk_window_destroy), NULL);
-
-  gtk_window_present (GTK_WINDOW (dialog));
+  adw_dialog_present (ADW_DIALOG (dialog), GTK_WIDGET (GsmApplication::get ()->main_window));
 }
 
 
@@ -135,7 +128,7 @@ kill_single_process (GtkTreeModel *model,
   ProcInfo *info;
   int error;
   int saved_errno;
-  AdwMessageDialog *dialog;
+  AdwAlertDialog *dialog;
 
   gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 
@@ -172,24 +165,17 @@ kill_single_process (GtkTreeModel *model,
       "%s"),
     info->pid, args->arg_value, g_strerror (saved_errno));
 
-  dialog = ADW_MESSAGE_DIALOG (adw_message_dialog_new (
-                                 GTK_WINDOW (GsmApplication::get ()->main_window),
-                                 NULL,
-                                 NULL));
+  dialog = ADW_ALERT_DIALOG (adw_alert_dialog_new (
+                               NULL,
+                               NULL));
 
-  adw_message_dialog_format_body (dialog, "%s", error_msg);
+  adw_alert_dialog_format_body (dialog, "%s", error_msg);
 
-  adw_message_dialog_add_response (dialog, "ok", _("_OK"));
-
-  gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
-  gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
+  adw_alert_dialog_add_response (dialog, "ok", _("_OK"));
 
   g_free (error_msg);
 
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (gtk_window_destroy), NULL);
-
-  gtk_window_present (GTK_WINDOW (dialog));
+  adw_dialog_present (ADW_DIALOG (dialog), GTK_WIDGET (GsmApplication::get ()->main_window));
 }
 
 
