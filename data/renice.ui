@@ -8,14 +8,14 @@
     <property name="step-increment">1</property>
     <property name="page-increment">10</property>
   </object>
-  <object class="AdwMessageDialog" id="renice_dialog">
+  <object class="AdwAlertDialog" id="renice_dialog">
     <property name="default-response">change</property>
     <property name="close-response">cancel</property>
     <responses>
       <response id="cancel" translatable="1">_Cancel</response>
       <response id="change" translatable="1" appearance="destructive">Change _Priority</response>
     </responses>
-    <child>
+    <property name="extra-child">
       <object class="GtkBox">
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
@@ -74,7 +74,7 @@
           </object>
         </child>
       </object>
-    </child>
+    </property>
   </object>
 </interface>
 

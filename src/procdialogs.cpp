@@ -35,7 +35,7 @@
 #include "gsm_pkexec.h"
 #include "cgroups.h"
 
-static AdwMessageDialog*renice_dialog = NULL;
+static AdwAlertDialog *renice_dialog = NULL;
 static gint new_nice_value = 0;
 
 static void
@@ -45,9 +45,9 @@ kill_dialog_choose (GObject      *dialog,
 {
   struct ProcActionArgs *kargs = static_cast<ProcActionArgs*>(data);
 
-  const gchar *res_id = adw_message_dialog_choose_finish (ADW_MESSAGE_DIALOG (dialog), res);
+  const gchar *res_id = adw_alert_dialog_choose_finish (ADW_ALERT_DIALOG (dialog), res);
 
-  if (g_str_equal (res_id, adw_message_dialog_get_close_response (ADW_MESSAGE_DIALOG (dialog))))
+  if (g_str_equal (res_id, adw_alert_dialog_get_close_response (ADW_ALERT_DIALOG (dialog))))
     return;
 
   kill_process (kargs->app, kargs->arg_value);
@@ -61,9 +61,10 @@ void
 procdialog_create_kill_dialog (GsmApplication *app,
                                int             signal)
 {
-  AdwMessageDialog *kill_alert_dialog;
+  AdwAlertDialog *kill_alert_dialog;
   struct ProcActionArgs *kargs;
   gchar *primary, *secondary, *button_text;
+  GCancellable *cancellable;
 
   proctable_freeze (app);
   kargs = g_new (ProcActionArgs, 1);
@@ -159,21 +160,24 @@ procdialog_create_kill_dialog (GsmApplication *app,
         break;
     }
 
-  kill_alert_dialog = ADW_MESSAGE_DIALOG (adw_message_dialog_new (GTK_WINDOW (app->main_window), primary, secondary));
+  kill_alert_dialog = ADW_ALERT_DIALOG (adw_alert_dialog_new (primary, secondary));
   g_free (primary);
 
-  adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (kill_alert_dialog),
-                                    "cancel", _("_Cancel"),
-                                    "apply", button_text,
-                                    NULL);
-  adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (kill_alert_dialog), "cancel");
-  adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (kill_alert_dialog), "cancel");
-  adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (kill_alert_dialog), "apply", ADW_RESPONSE_DESTRUCTIVE);
+  adw_alert_dialog_add_responses (ADW_ALERT_DIALOG (kill_alert_dialog),
+                                  "cancel", _("_Cancel"),
+                                  "apply", button_text,
+                                  NULL);
+  adw_alert_dialog_set_default_response (ADW_ALERT_DIALOG (kill_alert_dialog), "cancel");
+  adw_alert_dialog_set_close_response (ADW_ALERT_DIALOG (kill_alert_dialog), "cancel");
+  adw_alert_dialog_set_response_appearance (ADW_ALERT_DIALOG (kill_alert_dialog), "apply", ADW_RESPONSE_DESTRUCTIVE);
 
-  adw_message_dialog_choose (ADW_MESSAGE_DIALOG (kill_alert_dialog),
-                             NULL,
-                             kill_dialog_choose,
-                             kargs);
+  cancellable = g_cancellable_new ();
+
+  adw_alert_dialog_choose (ADW_ALERT_DIALOG (kill_alert_dialog),
+                           GTK_WIDGET (app->main_window),
+                           cancellable,
+                           kill_dialog_choose,
+                           kargs);
 }
 
 static void
@@ -191,7 +195,7 @@ renice_adjustment_value_changed (GtkAdjustment *adjustment,
 }
 
 static void
-renice_dialog_response (AdwMessageDialog*,
+renice_dialog_response (AdwAlertDialog*,
                         gchar   *response,
                         gpointer data)
 {
@@ -200,7 +204,6 @@ renice_dialog_response (AdwMessageDialog*,
   if (g_str_equal (response, "change"))
     renice (app, new_nice_value);
 
-  gtk_window_destroy (GTK_WINDOW (renice_dialog));
   renice_dialog = NULL;
 }
 
@@ -242,8 +245,7 @@ procdialog_create_renice_dialog (GsmApplication *app)
                     G_CALLBACK (renice_adjustment_value_changed),
                     priority_label);
 
-  renice_dialog = ADW_MESSAGE_DIALOG (gtk_builder_get_object (builder, "renice_dialog"));
-  gtk_window_set_transient_for (GTK_WINDOW (renice_dialog), GTK_WINDOW (app->main_window));
+  renice_dialog = ADW_ALERT_DIALOG (gtk_builder_get_object (builder, "renice_dialog"));
 
   if (selected_count == 1)
     dialog_title = g_strdup_printf (_("Change Priority of Process “%s” (PID: %u)"),
@@ -251,7 +253,7 @@ procdialog_create_renice_dialog (GsmApplication *app)
   else
     dialog_title = g_strdup_printf (ngettext ("Change Priority of the selected process", "Change Priority of %d selected processes", selected_count),
                                     selected_count);
-  adw_message_dialog_set_heading (ADW_MESSAGE_DIALOG (renice_dialog), dialog_title);
+  adw_alert_dialog_set_heading (renice_dialog, dialog_title);
   g_free (dialog_title);
 
   g_signal_connect (G_OBJECT (renice_dialog),
@@ -259,9 +261,9 @@ procdialog_create_renice_dialog (GsmApplication *app)
                     G_CALLBACK (renice_dialog_response),
                     app);
 
-  g_object_unref (G_OBJECT (builder));
+  adw_dialog_present (ADW_DIALOG (renice_dialog), GTK_WIDGET (app->main_window));
 
-  gtk_widget_set_visible (GTK_WIDGET (renice_dialog), TRUE);
+  g_object_unref (G_OBJECT (builder));
 }
 
 static char *
