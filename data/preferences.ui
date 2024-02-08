@@ -2,12 +2,11 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="libadwaita" version="1.0"/>
-  <object class="AdwPreferencesWindow" id="preferences_dialog">
+  <object class="AdwPreferencesDialog" id="preferences_dialog">
     <property name="title" translatable="yes">Preferences</property>
-    <property name="default-width">700</property>
-    <property name="default-height">700</property>
-    <property name="destroy-with-parent">True</property>
-    <property name="modal">True</property>
+    <property name="content-width">700</property>
+    <property name="content-height">700</property>
+    <property name="search-enabled">True</property>
     <child>
       <object class="AdwPreferencesPage" id="processes">
         <property name="title" translatable="yes">Processes</property>

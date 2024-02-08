@@ -12,13 +12,13 @@
 #include "systemd.h"
 #include "util.h"
 
-static AdwPreferencesWindow *prefs_window = NULL;
+static AdwPreferencesDialog *prefs_dialog = NULL;
 
 static gboolean
-prefs_window_close_request (GtkWindow*,
+prefs_dialog_close_request (AdwDialog*,
                             gpointer)
 {
-  prefs_window = NULL;
+  prefs_dialog = NULL;
   return FALSE;
 }
 
@@ -176,7 +176,7 @@ switch_preferences_page (GtkBuilder   *builder,
   AdwPreferencesPage *page = ADW_PREFERENCES_PAGE (gtk_builder_get_object (builder, stack_name));
 
   if (page != NULL)
-    adw_preferences_window_set_visible_page (prefs_window, page);
+    adw_preferences_dialog_set_visible_page (prefs_dialog, page);
 }
 
 void
@@ -190,7 +190,7 @@ create_preferences_dialog (GsmApplication *app)
   gfloat update;
   GError*err = NULL;
 
-  if (prefs_window)
+  if (prefs_dialog)
     return;
 
   builder = gtk_builder_new ();
@@ -201,7 +201,7 @@ create_preferences_dialog (GsmApplication *app)
       g_error_free (err);
     }
 
-  prefs_window = ADW_PREFERENCES_WINDOW (gtk_builder_get_object (builder, "preferences_dialog"));
+  prefs_dialog = ADW_PREFERENCES_DIALOG (gtk_builder_get_object (builder, "preferences_dialog"));
 
   spin_button = ADW_SPIN_ROW (gtk_builder_get_object (builder, "processes_interval_spinner"));
   update = (gfloat) app->config.update_interval;
@@ -307,15 +307,12 @@ create_preferences_dialog (GsmApplication *app)
 
   create_field_page (builder, GTK_TREE_VIEW (app->disk_list), GSM_SETTINGS_CHILD_DISKS);
 
-  gtk_window_set_transient_for (GTK_WINDOW (prefs_window), GTK_WINDOW (GsmApplication::get ()->main_window));
-  gtk_window_set_modal (GTK_WINDOW (prefs_window), TRUE);
-
-  g_signal_connect (G_OBJECT (prefs_window), "close-request",
-                    G_CALLBACK (prefs_window_close_request), NULL);
+  g_signal_connect (G_OBJECT (prefs_dialog), "closed",
+                    G_CALLBACK (prefs_dialog_close_request), NULL);
 
   switch_preferences_page (builder, app->stack);
 
-  gtk_window_present (GTK_WINDOW (prefs_window));
+  adw_dialog_present (ADW_DIALOG (prefs_dialog), GTK_WIDGET (GsmApplication::get ()->main_window));
 
   g_object_unref (G_OBJECT (builder));
 }
