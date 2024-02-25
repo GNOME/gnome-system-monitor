@@ -203,6 +203,7 @@ set_affinity (GtkCheckButton*,
 
   gchar   **cpu_list;
   GArray   *cpuset;
+  guint16  *cpus;
   guint32 i;
   gint taskset_cpu = 0;
 
@@ -210,8 +211,11 @@ set_affinity (GtkCheckButton*,
   cpu_list = g_new0 (gchar *, affinity->cpu_count);
 
   /* Check whether we can get process's current affinity */
-  if (glibtop_get_proc_affinity (&get_affinity, affinity->pid) != NULL)
+  cpus = glibtop_get_proc_affinity (&get_affinity, affinity->pid);
+  if (cpus != NULL)
     {
+      g_free (cpus);
+
       /* If so, create array for CPU numbers */
       cpuset = g_array_new (FALSE, FALSE, sizeof (guint16));
 
@@ -232,8 +236,10 @@ set_affinity (GtkCheckButton*,
           }
 
       /* Set process affinity; Show message dialog upon error */
-      if (gsm_set_proc_affinity (&set_affinity, cpuset, affinity->pid) == NULL)
+      cpus = gsm_set_proc_affinity (&set_affinity, cpuset, affinity->pid);
+      if (cpus == NULL)
         {
+
           /* If so, check whether an access error occurred */
           if (errno == EPERM or errno == EACCES)
             /* If so, attempt to run taskset as root, show error on failure */
@@ -242,6 +248,7 @@ set_affinity (GtkCheckButton*,
             /* If not, show error immediately */
             set_affinity_error ();
         }
+      g_free (cpus);
 
       /* Free memory for CPU strings */
       for (i = 0; i < affinity->cpu_count; i++)
@@ -398,6 +405,8 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   gtk_window_present (GTK_WINDOW (affinity_data->dialog));
 
   g_object_unref (G_OBJECT (builder));
+
+  g_free (affinity_cpus);
 }
 
 void
