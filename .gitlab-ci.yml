@@ -19,7 +19,6 @@ variables:
     gtkmm4.0-devel
     libadwaita-devel
     itstool
-    libhandy1-devel
     librsvg2-devel
     libxml2-devel
     meson
@@ -41,7 +40,6 @@ variables:
     libgtkmm-4.0-dev
     libadwaita-1-dev
     librsvg2-dev
-    libhandy-1-dev
     libsystemd-dev
     libxml2-dev
     meson
@@ -85,13 +83,13 @@ build-fedora:
     - ninja -C _build install
 
 build-ubuntu:
-  image: ubuntu:mantic
+  image: ubuntu:noble
   stage: build
   except:
     - tags
   before_script:
     - apt-get update
-    - DEBIAN_FRONTEND=noninteractive apt-get install -y $UBUNTU_LIBGTOP_DEPENDENCIES $UBUNTU_LIBHANDY_DEPENDENCIES $UBUNTU_DEPENDENCIES
+    - DEBIAN_FRONTEND=noninteractive apt-get install -y $UBUNTU_LIBGTOP_DEPENDENCIES $UBUNTU_DEPENDENCIES
   script:
     - git clone https://gitlab.gnome.org/gnome/libgtop.git/ # build and install libgtop
     - cd libgtop
