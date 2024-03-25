@@ -56,11 +56,16 @@ PrettyTable::init_gio_app_cache ()
        it != apps.end (); ++it)
     {
       Glib::RefPtr<Gio::AppInfo> app = *it;
+      Glib::RefPtr<Gio::DesktopAppInfo> desktop = std::dynamic_pointer_cast<Gio::DesktopAppInfo>(app);
       std::string executable = app->get_executable ();
+      std::string flatpak = desktop->get_string ("X-Flatpak");
       bool visible = app->should_show ();
-      if (executable != "sh" &&
-          executable != "env" &&
-          visible == true)
+
+      if (!flatpak.empty ())
+        this->gio_apps[flatpak] = app;
+      else if (executable != "sh" &&
+               executable != "env" &&
+               visible)
         this->gio_apps[executable] = app;
     }
 }
@@ -179,7 +184,22 @@ PrettyTable::get_icon_from_gio (const ProcInfo &info)
   Glib::RefPtr<Gio::AppInfo> app = this->gio_apps[executable];
 
   if (!app)
-    return icon;
+    {
+      std::string flatpak;
+      size_t last_dash, second_last_dash;
+
+      // Extract flatpak id from cgroup_name
+      flatpak = info.cgroup_name.c_str ();
+      flatpak = flatpak.substr (flatpak.find_last_of ('/') + 1);
+      last_dash = flatpak.find_last_of ('-');
+      second_last_dash = flatpak.find_last_of ('-', flatpak.find_last_of ('-') - 1);
+      flatpak = flatpak.substr (second_last_dash + 1, last_dash - second_last_dash - 1);
+
+      app = this->gio_apps[flatpak];
+
+      if (!app)
+        return icon;
+    }
 
   gicon = app->get_icon ();
   if (!gicon)
