@@ -24,6 +24,7 @@
 #include <glibtop/procaffinity.h>
 #include <sys/stat.h>
 #include <glib/gi18n.h>
+#include <dirent.h>
 
 #include "proctable.h"
 #include "procdialogs.h"
@@ -38,6 +39,7 @@ public:
 GtkWidget  *dialog;
 pid_t pid;
 GtkWidget **buttons;
+GtkWidget *all_threads_button;
 guint32 cpu_count;
 gboolean toggle_single_blocked;
 gboolean toggle_all_blocked;
@@ -143,10 +145,63 @@ set_affinity_error (void)
                             dialog);
 }
 
+static DIR*
+gsm_iterate_tasks_init (pid_t pid)
+{
+  gchar *path;
+
+  path = g_strdup_printf ("/proc/%d/task", pid);
+  DIR *dir = opendir (path);
+
+  g_free( path );
+  return dir;
+}
+
+// returns 0 if the end is reached
+static pid_t
+gsm_iterate_tasks_step (DIR* it)
+{
+  struct dirent* entry;
+
+  if (!it)
+  {
+    return 0;
+  }
+
+  while (true)
+  {
+    entry = readdir (it);
+
+    // no new entry
+    if (!entry)
+    {
+      return 0;
+    }
+
+    // not a directory
+    if (entry->d_type != DT_DIR)
+    {
+      continue;
+    }
+    pid_t next_task = g_ascii_strtoll (entry->d_name, nullptr, 10);
+    if (next_task)
+    {
+      return next_task;
+    }
+  }
+}
+
+static void
+gsm_iterate_tasks_free (DIR* it)
+{
+  closedir (it);
+}
+
 static guint16 *
 gsm_set_proc_affinity (glibtop_proc_affinity *buf,
                        GArray                *cpus,
-                       pid_t                  pid)
+                       pid_t                  pid,
+                       gboolean               child_threads)
 {
 #ifdef __linux__
   guint i;
@@ -162,15 +217,29 @@ gsm_set_proc_affinity (glibtop_proc_affinity *buf,
     }
 
   if (sched_setaffinity (pid, sizeof (set), &set) != -1)
+  {
+    // set child threads if required
+    if (child_threads)
+    {
+      DIR* it = gsm_iterate_tasks_init (pid);
+      while(pid_t tid = gsm_iterate_tasks_step (it)) {
+        sched_setaffinity (tid, sizeof (set), &set); // fail silently
+      }
+
+      gsm_iterate_tasks_free (it);
+    }
+
     return glibtop_get_proc_affinity (buf, pid);
+  }
 #endif
 
   return NULL;
 }
 
 static void
-execute_taskset_command (gchar **cpu_list,
-                         pid_t   pid)
+execute_taskset_command (gchar  **cpu_list,
+                         pid_t    pid,
+                         gboolean child_threads)
 {
 #ifdef __linux__
   gchar *pc;
@@ -180,7 +249,7 @@ execute_taskset_command (gchar **cpu_list,
   pc = g_strjoinv (",", cpu_list);
 
   /* Construct taskset command */
-  command = g_strdup_printf ("taskset -pc %s %d", pc, pid);
+  command = g_strdup_printf ("taskset -pc%c %s %d", child_threads ? 'a' : ' ', pc, pid);
 
   /* Execute taskset command; show error on failure */
   if (!multi_root_check (command))
@@ -206,6 +275,7 @@ set_affinity (GtkCheckButton*,
   guint16  *cpus;
   guint32 i;
   gint taskset_cpu = 0;
+  gboolean all_threads;
 
   /* Create string array for taskset command CPU list */
   cpu_list = g_new0 (gchar *, affinity->cpu_count);
@@ -235,15 +305,17 @@ set_affinity (GtkCheckButton*,
             taskset_cpu++;
           }
 
+      all_threads = gtk_check_button_get_active (GTK_CHECK_BUTTON (affinity->all_threads_button));
+
       /* Set process affinity; Show message dialog upon error */
-      cpus = gsm_set_proc_affinity (&set_affinity, cpuset, affinity->pid);
+      cpus = gsm_set_proc_affinity (&set_affinity, cpuset, affinity->pid, all_threads);
       if (cpus == NULL)
         {
 
           /* If so, check whether an access error occurred */
           if (errno == EPERM or errno == EACCES)
             /* If so, attempt to run taskset as root, show error on failure */
-            execute_taskset_command (cpu_list, affinity->pid);
+            execute_taskset_command (cpu_list, affinity->pid, all_threads);
           else
             /* If not, show error immediately */
             set_affinity_error ();
@@ -316,6 +388,7 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   affinity_data->buttons[0] = GTK_WIDGET (gtk_builder_get_object (builder, "allcpus_button"));
   cancel_button = GTK_WIDGET (gtk_builder_get_object (builder, "cancel_button"));
   apply_button = GTK_WIDGET (gtk_builder_get_object (builder, "apply_button"));
+  affinity_data->all_threads_button = GTK_WIDGET (gtk_builder_get_object (builder, "all_threads_button"));
 
   /* Set dialog window "transient for" */
   gtk_window_set_transient_for (GTK_WINDOW (affinity_data->dialog),
