@@ -425,7 +425,7 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   for (button_n = 1; button_n < app->config.num_cpus + 1; button_n++)
     {
       /* Set check box label value to CPU [1..2048] */
-      button_text = g_strdup_printf (_("CPU %d"), button_n);
+      button_text = g_strdup_printf (_("CPU%d"), button_n);
 
       /* Create check box button for current CPU */
       affinity_data->buttons[button_n] = gtk_check_button_new_with_label (button_text);
