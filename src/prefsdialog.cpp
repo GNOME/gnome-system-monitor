@@ -47,98 +47,23 @@ range_value_changed (GtkRange *self,
 }
 
 static void
-field_toggled (const gchar *gsettings_parent,
-               gchar       *path_str,
-               gpointer     data)
-{
-  GtkTreeModel *model = static_cast<GtkTreeModel*>(data);
-  GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
-  GtkTreeIter iter;
-  GtkTreeViewColumn *column;
-  gboolean toggled;
-
-  if (!path)
-    return;
-
-  gtk_tree_model_get_iter (model, &iter, path);
-  gtk_tree_model_get (model, &iter, 2, &column, -1);
-  gtk_tree_model_get (model, &iter, 0, &toggled, -1);
-
-  toggled = !toggled;
-
-  gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, toggled, -1);
-  gtk_tree_view_column_set_visible (column, toggled);
-
-  auto id = gtk_tree_view_column_get_sort_column_id (column);
-  auto key = Glib::ustring::compose ("col-%1-visible", id);
-  auto settings = GsmApplication::get ()->settings->get_child (gsettings_parent);
-  settings->set_boolean (key, toggled);
-
-  gtk_tree_path_free (path);
-}
-
-static void
-field_row_activated (GtkTreeView *tree,
-                     GtkTreePath *path,
-                     GtkTreeViewColumn*,
-                     gpointer     data)
-{
-  GtkTreeModel *model = gtk_tree_view_get_model (tree);
-  gchar *path_str = gtk_tree_path_to_string (path);
-
-  field_toggled ((gchar*)data, path_str, model);
-  g_free (path_str);
-}
-
-static void
 create_field_page (GtkBuilder  *builder,
                    GtkTreeView *tree,
                    const gchar *widgetname)
 {
-  GtkTreeView *treeview;
   GList *it, *columns;
-  GtkListStore *model;
-  GtkTreeViewColumn *column;
-  GtkCellRenderer *cell;
-  gchar *full_widgetname;
+  AdwPreferencesGroup *group;
 
-  full_widgetname = g_strdup_printf ("%s_columns", widgetname);
-  treeview = GTK_TREE_VIEW (gtk_builder_get_object (builder, full_widgetname));
-  g_free (full_widgetname);
-
-  model = gtk_list_store_new (3, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_POINTER);
-
-  gtk_tree_view_set_model (GTK_TREE_VIEW (treeview), GTK_TREE_MODEL (model));
-  g_object_unref (G_OBJECT (model));
-
-  column = gtk_tree_view_column_new ();
-  cell = gtk_cell_renderer_toggle_new ();
-  gtk_tree_view_column_pack_start (column, cell, FALSE);
-  gtk_tree_view_column_set_attributes (column, cell,
-                                       "active", 0,
-                                       NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
-
-  column = gtk_tree_view_column_new ();
-  cell = gtk_cell_renderer_text_new ();
-  gtk_tree_view_column_pack_start (column, cell, FALSE);
-  gtk_tree_view_column_set_attributes (column, cell,
-                                       "text", 1,
-                                       NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
-
-  g_signal_connect (G_OBJECT (GTK_TREE_VIEW (treeview)), "row-activated",
-                    G_CALLBACK (field_row_activated), (gpointer)widgetname);
+  group = ADW_PREFERENCES_GROUP (gtk_builder_get_object (builder, widgetname));
 
   columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree));
 
   for (it = columns; it; it = it->next)
     {
       GtkTreeViewColumn *column = static_cast<GtkTreeViewColumn*>(it->data);
-      GtkTreeIter iter;
       const gchar *title;
-      gboolean visible;
       gint column_id;
+      GtkWidget *row;
 
       title = gtk_tree_view_column_get_title (column);
       if (!title)
@@ -158,10 +83,16 @@ create_field_page (GtkBuilder  *builder,
           )
         continue;
 
-      visible = gtk_tree_view_column_get_visible (column);
+      row = adw_switch_row_new ();
+      adw_preferences_row_set_title (ADW_PREFERENCES_ROW (row), title);
 
-      gtk_list_store_append (model, &iter);
-      gtk_list_store_set (model, &iter, 0, visible, 1, title, 2, column, -1);
+      auto settings = GsmApplication::get ()->settings->get_child (widgetname);
+      auto key = Glib::ustring::compose ("col-%1-visible", column_id);
+
+      g_settings_bind (settings->gobj (), key.c_str (), G_OBJECT (column), "visible", G_SETTINGS_BIND_DEFAULT);
+      g_settings_bind (settings->gobj (), key.c_str (), G_OBJECT (row), "active", G_SETTINGS_BIND_DEFAULT);
+
+      adw_preferences_group_add (group, GTK_WIDGET (row));
     }
 
   g_list_free (columns);
