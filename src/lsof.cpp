@@ -14,6 +14,7 @@
 
 #include "application.h"
 #include "lsof.h"
+#include "lsof-data.h"
 #include "util.h"
 
 
@@ -68,19 +69,10 @@ search (const ProcInfo &info,
 }
 };
 
-enum ProcmanLsof
-{
-  PROCMAN_LSOF_COL_TEXTURE,
-  PROCMAN_LSOF_COL_PROCESS,
-  PROCMAN_LSOF_COL_PID,
-  PROCMAN_LSOF_COL_FILENAME,
-  PROCMAN_LSOF_NCOLS
-};
-
 
 struct GUI: private procman::NonCopyable
 {
-  GtkListStore *model;
+  GListStore *model;
   GtkSearchEntry *entry;
   GtkWindow *dialog;
   GtkLabel *count;
@@ -134,7 +126,7 @@ struct GUI: private procman::NonCopyable
 
     bool regex_error = false;
 
-    gtk_list_store_clear (this->model);
+    g_list_store_remove_all (this->model);
 
     try
       {
@@ -151,14 +143,13 @@ struct GUI: private procman::NonCopyable
 
             for (const auto&match : matches)
               {
-                GtkTreeIter file;
-                gtk_list_store_append (this->model, &file);
-                gtk_list_store_set (this->model, &file,
-                                    PROCMAN_LSOF_COL_TEXTURE, info.icon->gobj (),
-                                    PROCMAN_LSOF_COL_PROCESS, info.name.c_str (),
-                                    PROCMAN_LSOF_COL_PID, info.pid,
-                                    PROCMAN_LSOF_COL_FILENAME, match.c_str (),
-                                    -1);
+                LsofData *data;
+
+                data = lsof_data_new (GDK_PAINTABLE (info.icon->gobj ()), info.name.c_str(), info.pid, match.c_str());
+
+                g_list_store_append (this->model, data);
+
+                g_object_unref (data);
               }
           }
 
@@ -196,64 +187,6 @@ struct GUI: private procman::NonCopyable
 void
 procman_lsof (GsmApplication *app)
 {
-  GtkListStore *model = \
-    gtk_list_store_new (PROCMAN_LSOF_NCOLS,
-                        GDK_TYPE_TEXTURE,   // PROCMAN_LSOF_COL_TEXTURE
-                        G_TYPE_STRING,      // PROCMAN_LSOF_COL_PROCESS
-                        G_TYPE_UINT,        // PROCMAN_LSOF_COL_PID
-                        G_TYPE_STRING       // PROCMAN_LSOF_COL_FILENAME
-                        );
-
-  GtkTreeView *tree = GTK_TREE_VIEW (gtk_tree_view_new_with_model (GTK_TREE_MODEL (model)));
-
-  g_object_unref (model);
-
-  gtk_tree_view_set_enable_search (tree, FALSE);
-
-  // TEXTURE / PROCESS
-
-  GtkTreeViewColumn *column = gtk_tree_view_column_new ();
-  GtkCellRenderer *renderer = gtk_cell_renderer_pixbuf_new ();
-
-  gtk_tree_view_column_pack_start (column, renderer, FALSE);
-  gtk_tree_view_column_set_attributes (column, renderer,
-                                       "texture", PROCMAN_LSOF_COL_TEXTURE,
-                                       NULL);
-
-  renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_column_pack_start (column, renderer, FALSE);
-  gtk_tree_view_column_set_attributes (column, renderer,
-                                       "text", PROCMAN_LSOF_COL_PROCESS,
-                                       NULL);
-
-  gtk_tree_view_column_set_title (column, _("Process"));
-  gtk_tree_view_column_set_sort_column_id (column, PROCMAN_LSOF_COL_PROCESS);
-  gtk_tree_view_column_set_resizable (column, TRUE);
-  gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_GROW_ONLY);
-  gtk_tree_view_column_set_min_width (column, 10);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
-  gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model), PROCMAN_LSOF_COL_PROCESS,
-                                        GTK_SORT_ASCENDING);
-
-  // PID
-  renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("PID"), renderer,
-                                                     "text", PROCMAN_LSOF_COL_PID,
-                                                     NULL);
-  gtk_tree_view_column_set_sort_column_id (column, PROCMAN_LSOF_COL_PID);
-  gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_GROW_ONLY);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
-
-  // FILENAME
-  renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Filename"), renderer,
-                                                     "text", PROCMAN_LSOF_COL_FILENAME,
-                                                     NULL);
-  gtk_tree_view_column_set_sort_column_id (column, PROCMAN_LSOF_COL_FILENAME);
-  gtk_tree_view_column_set_resizable (column, TRUE);
-  gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
-
   GtkBuilder *builder = gtk_builder_new ();
   GError *err = NULL;
 
@@ -268,9 +201,8 @@ procman_lsof (GsmApplication *app)
   GtkSearchBar *search_bar = GTK_SEARCH_BAR (gtk_builder_get_object (builder, "search_bar"));
   GtkSearchEntry *search_entry = GTK_SEARCH_ENTRY (gtk_builder_get_object (builder, "search_entry"));
   GtkCheckButton *case_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "case_button"));
-  GtkWidget *scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "scrolled"));
+  GListStore *model = G_LIST_STORE (gtk_builder_get_object (builder, "lsof_store"));
 
-  gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (tree));
   gtk_search_bar_connect_entry (search_bar, GTK_EDITABLE (search_entry));
   gtk_search_bar_set_key_capture_widget (search_bar, GTK_WIDGET (dialog));
 

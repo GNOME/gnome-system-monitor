@@ -52,7 +52,129 @@
                 <property name="hexpand">1</property>
                 <property name="vexpand">1</property>
                 <child>
-                  <placeholder/>
+                  <object class="GtkColumnView" id="lsof_view">
+                    <property name="model">
+                      <object class="GtkNoSelection">
+                        <property name="model">lsof_model</property>
+                      </object>
+                    </property>
+                    <child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes">Process</property>
+                        <property name="expand">True</property>
+                        <property name="sorter">
+                          <object class="GtkStringSorter">
+                            <property name="expression">
+                              <lookup name="process" type="LsofData"/>
+                            </property>
+                          </object>
+                        </property>
+                        <property name="factory">
+                          <object class="GtkBuilderListItemFactory">
+                            <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkBox">
+    <property name="orientation">horizontal</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkImage">
+        <binding name="paintable">
+          <lookup name="paintable" type="LsofData">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <binding name="label">
+          <lookup name="process" type="LsofData">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+      </object>
+  </child>
+  </object>
+</property>
+</template>
+</interface>
+                         ]]></property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes">PID</property>
+                        <property name="expand">True</property>
+                        <property name="sorter">
+                          <object class="GtkNumericSorter">
+                            <property name="expression">
+                              <lookup name="pid" type="LsofData"/>
+                            </property>
+                          </object>
+                        </property>
+                        <property name="factory">
+                          <object class="GtkBuilderListItemFactory">
+                            <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="pid" type="LsofData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                         ]]></property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes">Filename</property>
+                        <property name="expand">True</property>
+                        <property name="sorter">
+                          <object class="GtkStringSorter">
+                            <property name="expression">
+                              <lookup name="filename" type="LsofData"/>
+                            </property>
+                          </object>
+                        </property>
+                        <property name="factory">
+                          <object class="GtkBuilderListItemFactory">
+                            <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="filename" type="LsofData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                         ]]></property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
                 </child>
               </object>
             </child>
@@ -72,4 +194,12 @@
       </object>
     </child>
   </object>
+  <object class="GtkSortListModel" id="lsof_model">
+    <property name="model">lsof_store</property>
+    <property name="incremental">True</property>
+    <binding name="sorter">
+      <lookup name="sorter">lsof_view</lookup>
+    </binding>
+  </object>
+  <object class="GListStore" id="lsof_store"/>
 </interface>
