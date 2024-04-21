@@ -30,13 +30,6 @@
 #include "util.h"
 #include "legacy/e_date.h"
 
-enum
-{
-  COL_PROP = 0,
-  COL_VAL,
-  NUM_COLS,
-};
-
 typedef struct _proc_arg
 {
   const gchar *prop;
@@ -53,129 +46,113 @@ format_memsize (guint64 size)
 }
 
 static void
-fill_proc_properties (GtkTreeView *tree,
-                      ProcInfo    *info)
+fill_proc_properties (GtkBuilder *builder,
+                      ProcInfo   *info)
 {
-  guint i;
-  GtkListStore *store;
-
   if (!info)
     return;
 
   get_process_memory_writable (info);
 
-  proc_arg proc_props[] = {
-    { N_("Process Name"), g_strdup_printf ("%s", info->name.c_str ()) },
-    { N_("User"), g_strdup_printf ("%s (%d)", info->user.c_str (), info->uid) },
-    { N_("Status"), g_strdup (format_process_state (info->status)) },
-    { N_("Memory"), format_memsize (info->mem) },
-    { N_("Virtual Memory"), format_memsize (info->vmsize) },
-    { N_("Resident Memory"), format_memsize (info->memres) },
-    { N_("Writable Memory"), format_memsize (info->memwritable) },
-    { N_("Shared Memory"), format_memsize (info->memshared) },
-    {
-      N_("CPU"), g_strdup_printf ("%.2f%%", info->pcpu)
-    },
-    { N_("CPU Time"), procman::format_duration_for_display (100 * info->cpu_time / GsmApplication::get ()->frequency) },
-    { N_("Started"), procman_format_date_for_display (info->start_time) },
-    { N_("Nice"), g_strdup_printf ("%d", info->nice) },
-    { N_("Priority"), g_strdup_printf ("%s", procman::get_nice_level (info->nice)) },
-    { N_("ID"), g_strdup_printf ("%d", info->pid) },
-    { N_("Security Context"), not info->security_context.empty ()?g_strdup_printf ("%s", info->security_context.c_str ()):g_strdup (_("N/A")) },
-    { N_("Command Line"), g_strdup_printf ("%s", info->arguments.c_str ()) },
-    { N_("Waiting Channel"), g_strdup_printf ("%s", info->wchan.c_str ()) },
-    { N_("Control Group"), not info->cgroup_name.empty ()?g_strdup_printf ("%s", info->cgroup_name.c_str ()):g_strdup (_("N/A")) },
-    { NULL, NULL }
-  };
+  GtkLabel *label;
+  AdwActionRow *row;
 
-  store = GTK_LIST_STORE (gtk_tree_view_get_model (tree));
-  for (i = 0; proc_props[i].prop; i++)
-    {
-      GtkTreeIter iter;
+  label = GTK_LABEL (gtk_builder_get_object (builder, "pid_label"));
+  gtk_label_set_label (label, g_strdup_printf ("%d", info->pid));
 
-      if (!gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (store), &iter, NULL, i))
-        {
-          gtk_list_store_append (store, &iter);
-          gtk_list_store_set (store, &iter, COL_PROP, gettext (proc_props[i].prop), -1);
-        }
+  label = GTK_LABEL (gtk_builder_get_object (builder, "user_label"));
+  gtk_label_set_label (label, g_strdup_printf ("%s (%d)", info->user.c_str (), info->uid));
 
-      gtk_list_store_set (store, &iter, COL_VAL, g_strstrip (proc_props[i].val), -1);
-      g_free (proc_props[i].val);
-    }
+  label = GTK_LABEL (gtk_builder_get_object (builder, "started_label"));
+  gtk_label_set_label (label, procman_format_date_for_display (info->start_time));
+
+  label = GTK_LABEL (gtk_builder_get_object (builder, "priority_label"));
+  gtk_label_set_label (label, g_strdup_printf ("%s (%d)", procman::get_nice_level (info->nice), info->nice));
+
+  label = GTK_LABEL (gtk_builder_get_object (builder, "status_label"));
+  gtk_label_set_label (label, g_strdup (format_process_state (info->status)));
+
+  label = GTK_LABEL (gtk_builder_get_object (builder, "cpu_label"));
+  gtk_label_set_label (label, g_strdup_printf ("%.2f%%", info->pcpu));
+
+  label = GTK_LABEL (gtk_builder_get_object (builder, "memory_label"));
+  gtk_label_set_label (label, format_memsize (info->mem));
+
+  label = GTK_LABEL (gtk_builder_get_object (builder, "cputime_label"));
+  gtk_label_set_label (label, procman::format_duration_for_display (100 * info->cpu_time / GsmApplication::get ()->frequency));
+
+  label = GTK_LABEL (gtk_builder_get_object (builder, "vmemory_label"));
+  gtk_label_set_label (label, format_memsize (info->vmsize));
+
+  label = GTK_LABEL (gtk_builder_get_object (builder, "rmemory_label"));
+  gtk_label_set_label (label, format_memsize (info->memres));
+
+  label = GTK_LABEL (gtk_builder_get_object (builder, "wmemory_label"));
+  gtk_label_set_label (label, format_memsize (info->memwritable));
+
+  label = GTK_LABEL (gtk_builder_get_object (builder, "smemory_label"));
+  gtk_label_set_label (label, format_memsize (info->memshared));
+
+  row = ADW_ACTION_ROW (gtk_builder_get_object (builder, "securitycontext_row"));
+  adw_action_row_set_subtitle (row, not info->security_context.empty ()?g_strdup_printf ("%s", info->security_context.c_str ()):g_strdup (_("N/A")));
+
+  row = ADW_ACTION_ROW (gtk_builder_get_object (builder, "commandline_row"));
+  adw_action_row_set_subtitle (row, g_strdup_printf ("%s", info->arguments.c_str ()));
+
+  row = ADW_ACTION_ROW (gtk_builder_get_object (builder, "waitingchannel_row"));
+  adw_action_row_set_subtitle (row, g_strdup_printf ("%s", info->wchan.c_str ()));
+
+  row = ADW_ACTION_ROW (gtk_builder_get_object (builder, "controlgroup_row"));
+  adw_action_row_set_subtitle (row, not info->cgroup_name.empty ()?g_strdup_printf ("%s", info->cgroup_name.c_str ()):g_strdup (_("N/A")));
 }
 
 static void
-update_procproperties_dialog (GtkTreeView *tree)
+update_procproperties_dialog (GtkBuilder *builder)
 {
   ProcInfo *info;
+  GtkWidget *widget;
 
-  pid_t pid = GPOINTER_TO_UINT (static_cast<pid_t*>(g_object_get_data (G_OBJECT (tree), "selected_info")));
+  widget = GTK_WIDGET (gtk_builder_get_object (builder, "procprop_dialog"));
+
+  pid_t pid = GPOINTER_TO_UINT (static_cast<pid_t*>(g_object_get_data (G_OBJECT (widget), "selected_info")));
 
   info = GsmApplication::get ()->processes.find (pid);
 
-  fill_proc_properties (tree, info);
+  fill_proc_properties (builder, info);
 }
 
 static void
-close_procprop_dialog (AdwWindow *dialog,
-                       gpointer   data)
+close_dialog_action (GSimpleAction*,
+                     GVariant*,
+                     GtkWindow *dialog)
 {
-  GtkTreeView *tree = static_cast<GtkTreeView*>(data);
   guint timer;
 
-  timer = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (tree), "timer"));
+  timer = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (dialog), "timer"));
   g_source_remove (timer);
 
-  gtk_window_destroy (GTK_WINDOW (dialog));
+  gtk_window_destroy (dialog);
 }
 
-static GtkTreeView *
-create_procproperties_tree (GsmApplication*,
-                            ProcInfo *info)
+static void
+close_procprop_dialog (GObject*,
+                       gpointer data)
 {
-  GtkTreeView *tree;
-  GtkListStore *model;
-  GtkTreeViewColumn *column;
-  GtkCellRenderer *cell;
-  gint i;
+  GtkWindow *window = static_cast<GtkWindow*>(data);
+  guint timer;
 
-  model = gtk_list_store_new (NUM_COLS,
-                              G_TYPE_STRING,    /* Property */
-                              G_TYPE_STRING     /* Value */
-                              );
+  timer = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (window), "timer"));
+  g_source_remove (timer);
 
-  tree = GTK_TREE_VIEW (gtk_tree_view_new_with_model (GTK_TREE_MODEL (model)));
-  gtk_widget_set_vexpand (GTK_WIDGET (tree), TRUE);
-  g_object_unref (G_OBJECT (model));
-
-  for (i = 0; i < NUM_COLS; i++)
-    {
-      cell = gtk_cell_renderer_text_new ();
-
-      column = gtk_tree_view_column_new_with_attributes (NULL,
-                                                         cell,
-                                                         "text", i,
-                                                         NULL);
-      gtk_tree_view_column_set_resizable (column, TRUE);
-      gtk_tree_view_append_column (tree, column);
-    }
-
-  gtk_tree_view_set_headers_visible (tree, FALSE);
-  fill_proc_properties (tree, info);
-
-  return tree;
+  gtk_window_destroy (window);
 }
 
 static gboolean
 procprop_timer (gpointer data)
 {
-  GtkTreeView *tree = static_cast<GtkTreeView*>(data);
-  GtkTreeModel *model;
+  GtkBuilder *builder = static_cast<GtkBuilder*>(data);
 
-  model = gtk_tree_view_get_model (tree);
-  g_assert (model);
-
-  update_procproperties_dialog (tree);
+  update_procproperties_dialog (builder);
 
   return TRUE;
 }
@@ -188,10 +165,10 @@ create_single_procproperties_dialog (GtkTreeModel *model,
 {
   GsmApplication *app = static_cast<GsmApplication *>(data);
 
-  gchar *label;
-  GtkTreeView *tree;
   ProcInfo *info;
   guint timer;
+  GAction *action;
+  GSimpleActionGroup *action_group;
 
   gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 
@@ -206,28 +183,45 @@ create_single_procproperties_dialog (GtkTreeModel *model,
     g_error ("%s", err->message);
 
   GtkWindow *procpropdialog = GTK_WINDOW (gtk_builder_get_object (builder, "procprop_dialog"));
-  GtkWidget *scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "scrolled"));
 
-  label = g_strdup_printf (_("%s (PID %u)"), info->name.c_str (), info->pid);
-  gtk_window_set_title (GTK_WINDOW (procpropdialog), label);
-  g_free (label);
+  gtk_window_set_title (GTK_WINDOW (procpropdialog), info->name.c_str ());
 
-  tree = create_procproperties_tree (app, info);
-  gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (tree));
-  g_object_set_data (G_OBJECT (tree), "selected_info", GUINT_TO_POINTER (info->pid));
+  fill_proc_properties (builder, info);
+  g_object_set_data (G_OBJECT (procpropdialog), "selected_info", GUINT_TO_POINTER (info->pid));
 
-  g_signal_connect (G_OBJECT (procpropdialog), "close-request",
-                    G_CALLBACK (close_procprop_dialog), tree);
+  action_group = g_simple_action_group_new ();
 
-  gtk_window_set_transient_for (GTK_WINDOW (procpropdialog), GTK_WINDOW (GsmApplication::get ()->main_window));
+  action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
+                                       "send-signal-stop");
+  g_action_map_add_action (G_ACTION_MAP (action_group), action);
+
+  action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
+                                       "send-signal-cont");
+  g_action_map_add_action (G_ACTION_MAP (action_group), action);
+
+  action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
+                                       "send-signal-term");
+  g_action_map_add_action (G_ACTION_MAP (action_group), action);
+
+  action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
+                                       "send-signal-kill");
+  g_action_map_add_action (G_ACTION_MAP (action_group), action);
+
+  GSimpleAction *close_action = g_simple_action_new ("close", NULL);
+  g_signal_connect (close_action, "activate", G_CALLBACK (close_dialog_action), procpropdialog);
+  g_action_map_add_action (G_ACTION_MAP (action_group), G_ACTION (close_action));
+
+  gtk_widget_insert_action_group (GTK_WIDGET (procpropdialog), "procprop", G_ACTION_GROUP (action_group));
+
+  g_signal_connect (procpropdialog, "close-request",
+                    G_CALLBACK (close_procprop_dialog), procpropdialog);
+
   gtk_window_present (GTK_WINDOW (procpropdialog));
 
-  timer = g_timeout_add_seconds (5, procprop_timer, tree);
-  g_object_set_data (G_OBJECT (tree), "timer", GUINT_TO_POINTER (timer));
+  timer = g_timeout_add_seconds (5, procprop_timer, builder);
+  g_object_set_data (G_OBJECT (procpropdialog), "timer", GUINT_TO_POINTER (timer));
 
-  update_procproperties_dialog (tree);
-
-  g_object_unref (G_OBJECT (builder));
+  update_procproperties_dialog (builder);
 }
 
 void

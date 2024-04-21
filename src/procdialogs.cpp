@@ -38,6 +38,25 @@
 static AdwAlertDialog *renice_dialog = NULL;
 static gint new_nice_value = 0;
 
+GtkWindow*
+get_active_window ()
+{
+  GListModel *toplevels = gtk_window_get_toplevels ();
+
+  guint n_toplevels = g_list_model_get_n_items (toplevels);
+  for (guint i = 0; i < n_toplevels; i++)
+    {
+      GtkWindow *window = GTK_WINDOW (g_list_model_get_item (toplevels, i));
+
+      if (gtk_window_is_active (window))
+        return window;
+    }
+
+  g_object_unref(toplevels);
+
+  return NULL;
+}
+
 static void
 kill_dialog_choose (GObject      *dialog,
                     GAsyncResult *res,
@@ -174,7 +193,7 @@ procdialog_create_kill_dialog (GsmApplication *app,
   cancellable = g_cancellable_new ();
 
   adw_alert_dialog_choose (ADW_ALERT_DIALOG (kill_alert_dialog),
-                           GTK_WIDGET (app->main_window),
+                           GTK_WIDGET (get_active_window ()),
                            cancellable,
                            kill_dialog_choose,
                            kargs);
