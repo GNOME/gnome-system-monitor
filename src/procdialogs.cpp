@@ -105,23 +105,20 @@ procdialog_create_kill_dialog (GsmApplication *app,
         {
           case SIGKILL:
             /*xgettext: primary alert message for killing single process*/
-            primary = g_strdup_printf (_("Are you sure you want to kill the selected process “%s” (PID: %u)?"),
-                                       short_process_name.c_str (),
-                                       selected_process->pid);
+            primary = g_strdup_printf (_("Force Stop %s?"),
+                                       short_process_name.c_str ());
             break;
 
           case SIGTERM:
             /*xgettext: primary alert message for ending single process*/
-            primary = g_strdup_printf (_("Are you sure you want to end the selected process “%s” (PID: %u)?"),
-                                       short_process_name.c_str (),
-                                       selected_process->pid);
+            primary = g_strdup_printf (_("End %s?"),
+                                       short_process_name.c_str ());
             break;
 
           default:   // SIGSTOP
             /*xgettext: primary alert message for stopping single process*/
-            primary = g_strdup_printf (_("Are you sure you want to stop the selected process “%s” (PID: %u)?"),
-                                       short_process_name.c_str (),
-                                       selected_process->pid);
+            primary = g_strdup_printf (_("Stop %s?"),
+                                       short_process_name.c_str ());
             break;
         }
     }
@@ -131,22 +128,22 @@ procdialog_create_kill_dialog (GsmApplication *app,
         {
           case SIGKILL:
             /*xgettext: primary alert message for killing multiple processes*/
-            primary = g_strdup_printf (ngettext ("Are you sure you want to kill the selected process?",
-                                                 "Are you sure you want to kill the %d selected processes?", selected_count),
+            primary = g_strdup_printf (ngettext ("Force Stop Selected Process?",
+                                                 "Force Stop %d Selected Processes?", selected_count),
                                        selected_count);
             break;
 
           case SIGTERM:
             /*xgettext: primary alert message for ending multiple processes*/
-            primary = g_strdup_printf (ngettext ("Are you sure you want to end the selected process?",
-                                                 "Are you sure you want to end the %d selected processes?", selected_count),
+            primary = g_strdup_printf (ngettext ("End Selected Process?",
+                                                 "End %d Selected Processes?", selected_count),
                                        selected_count);
             break;
 
           default:   // SIGSTOP
             /*xgettext: primary alert message for stopping multiple processes*/
-            primary = g_strdup_printf (ngettext ("Are you sure you want to stop the selected process?",
-                                                 "Are you sure you want to stop the %d selected processes?", selected_count),
+            primary = g_strdup_printf (ngettext ("Stop Selected Process?",
+                                                 "Stop %d Selected Processes?", selected_count),
                                        selected_count);
             break;
         }
@@ -156,26 +153,23 @@ procdialog_create_kill_dialog (GsmApplication *app,
     {
       case SIGKILL:
         /*xgettext: secondary alert message*/
-        secondary = _("Killing a process may destroy data, break the "
-                      "session or introduce a security risk. "
-                      "Only unresponsive processes should be killed.");
-        button_text = ngettext ("_Kill Process", "_Kill Processes", selected_count);
+        secondary = _("Force stopping processes can result in data "
+                      "loss, crashes, and system failures");
+        button_text = _("_Force Stop");
         break;
 
       case SIGTERM:
         /*xgettext: secondary alert message*/
-        secondary = _("Ending a process may destroy data, break the "
-                      "session or introduce a security risk. "
-                      "Only unresponsive processes should be ended.");
-        button_text = ngettext ("_End Process", "_End Processes", selected_count);
+        secondary = _("Ending processes can result in data loss, "
+                      "crashes, and system failures");
+        button_text = _("_End");
         break;
 
       default:   // SIGSTOP
         /*xgettext: secondary alert message*/
-        secondary = _("Stopping a process may destroy data, break the "
-                      "session or introduce a security risk. "
-                      "Only unresponsive processes should be stopped.");
-        button_text = ngettext ("_Stop Process", "_Stop Processes", selected_count);
+        secondary = _("Stopping processes can result in data loss, "
+                      "crashes, and system failures");
+        button_text = _("_Stop");
         break;
     }
 
