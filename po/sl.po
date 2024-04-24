@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2024-04-07 20:06+0000\n"
-"PO-Revision-Date: 2024-04-10 15:36+0200\n"
+"POT-Creation-Date: 2024-04-23 04:52+0000\n"
+"PO-Revision-Date: 2024-04-24 16:39+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -206,13 +206,10 @@ msgstr "_Opravila"
 msgid "Search processes and users"
 msgstr "Iskanje opravil in uporabnikov"
 
-#: data/interface.ui:88 src/procdialogs.cpp:151 src/proctable.cpp:136
+#: data/interface.ui:88
+msgctxt "interface"
 msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "_Končaj opravila"
-msgstr[1] "_Končaj opravilo"
-msgstr[2] "_Končaj opravili"
-msgstr[3] "_Končaj opravila"
+msgstr "_Končaj opravilo"
 
 #: data/interface.ui:108
 msgid "Process Properties"
@@ -222,12 +219,12 @@ msgstr "Lastnosti opravila"
 msgid "_Resources"
 msgstr "_Viri"
 
-#: data/interface.ui:175 data/preferences.ui:113 src/interface.cpp:283
-#: src/procproperties.cpp:77
+#: data/interface.ui:175 data/preferences.ui:99 data/procproperties.ui:86
+#: src/interface.cpp:283
 msgid "CPU"
 msgstr "Obremenite CPE"
 
-#: data/interface.ui:206 src/interface.cpp:321 src/procproperties.cpp:71
+#: data/interface.ui:206 data/procproperties.ui:97 src/interface.cpp:321
 #: src/proctable.cpp:359
 msgid "Memory"
 msgstr "Pomnilnik"
@@ -236,7 +233,7 @@ msgstr "Pomnilnik"
 msgid "Swap"
 msgstr "Izmenjevalni razdelek"
 
-#: data/interface.ui:234 data/preferences.ui:124
+#: data/interface.ui:234 data/preferences.ui:110
 msgid "Memory and Swap"
 msgstr "Pomnilnik in izmenjevalni prostor"
 
@@ -256,7 +253,7 @@ msgstr "Pošiljanje"
 msgid "Total Sent"
 msgstr "Skupaj poslano"
 
-#: data/interface.ui:312 data/preferences.ui:141
+#: data/interface.ui:312 data/preferences.ui:127
 msgid "Network"
 msgstr "Omrežje"
 
@@ -296,6 +293,18 @@ msgstr "Razvrščanje zadetkov po imenu"
 #: data/lsof.ui:42
 msgid "Case insensitive"
 msgstr "Ne upoštevaj velikosti črk"
+
+#: data/lsof.ui:63
+msgid "Process"
+msgstr "Opravilo"
+
+#: data/lsof.ui:111
+msgid "PID"
+msgstr "PID"
+
+#: data/lsof.ui:145 src/memmaps.cpp:332
+msgid "Filename"
+msgstr "Ime datoteke"
 
 #: data/memmaps.ui:8
 msgid "Memory Maps"
@@ -387,21 +396,21 @@ msgstr "Po meri"
 msgid "Set _Affinity…"
 msgstr "Nastavi _raven pripenjanja …"
 
-#: data/menus.ui:147
+#: data/menus.ui:147 data/procproperties.ui:217
 msgid "_Stop…"
 msgstr "_Zaustavi …"
 
-#: data/menus.ui:151
-msgid "_Continue"
-msgstr "N_adaljuj"
+#: data/menus.ui:151 data/procproperties.ui:265
+msgid "_Resume"
+msgstr "Na_daljuj"
 
-#: data/menus.ui:155
+#: data/menus.ui:155 data/procproperties.ui:261
 msgid "_Terminate…"
 msgstr "_Končaj opravilo …"
 
-#: data/menus.ui:159
-msgid "_Kill…"
-msgstr "_Uniči opravilo …"
+#: data/menus.ui:159 data/procproperties.ui:224
+msgid "_Force Stop…"
+msgstr "Vsili _zaustavitev …"
 
 #: data/openfiles.ui:4
 msgid "Open Files"
@@ -437,11 +446,11 @@ msgstr ""
 msgid "Processes"
 msgstr "Opravila"
 
-#: data/preferences.ui:16 data/preferences.ui:79 data/preferences.ui:164
+#: data/preferences.ui:16 data/preferences.ui:65 data/preferences.ui:150
 msgid "Behavior"
 msgstr "Obnašanje"
 
-#: data/preferences.ui:20 data/preferences.ui:83 data/preferences.ui:168
+#: data/preferences.ui:20 data/preferences.ui:69 data/preferences.ui:154
 msgid "_Update Interval in Seconds"
 msgstr "_Časovni razmik posodabljanja v sekundah"
 
@@ -450,8 +459,8 @@ msgid "Enable _Smooth Refresh"
 msgstr "Omogoči _mehko osveževanje"
 
 #: data/preferences.ui:34
-msgid "Alert Before Ending or _Killing Processes"
-msgstr "Opozori pred končanjem ali _uničevanjem opravila"
+msgid "Alert Before Ending or _Force Stopping Processes"
+msgstr "Opozori pred končanjem ali _vsiljeno zaustavitvijo opravila"
 
 #: data/preferences.ui:40
 msgid "_Divide CPU Usage by CPU Count"
@@ -461,7 +470,7 @@ msgstr "_Razdeli uporabo CPE na število enot"
 msgid "Show Memory in IEC"
 msgstr "Pokaži podatke pomnilnika v IEC"
 
-#: data/preferences.ui:53 data/preferences.ui:183
+#: data/preferences.ui:53 data/preferences.ui:169
 msgid "Information Fields"
 msgstr "Polja podrobnosti"
 
@@ -469,51 +478,120 @@ msgstr "Polja podrobnosti"
 msgid "Process information shown in list:"
 msgstr "Podatki o opravilih, prikazani v seznamu:"
 
-#: data/preferences.ui:75
+#: data/preferences.ui:61
 msgid "Resources"
 msgstr "Viri"
 
-#: data/preferences.ui:91
+#: data/preferences.ui:77
 msgid "_Chart Data Points"
 msgstr "_Podatkovne točke diagrama"
 
-#: data/preferences.ui:106
+#: data/preferences.ui:92
 msgid "Draw Charts as S_mooth Graphs"
 msgstr "_Izriši diagram delovanja kot krivulje"
 
-#: data/preferences.ui:117
+#: data/preferences.ui:103
 msgid "_Draw CPU Chart as Stacked Area Chart"
 msgstr "_Izriši diagram delovanja CPE kot naložen diagram"
 
-#: data/preferences.ui:128
+#: data/preferences.ui:114
 msgid "Show Memory and Swap in IEC"
 msgstr "Pokaži pomnilnik in izmenjevalni prostor v IEC"
 
-#: data/preferences.ui:134
+#: data/preferences.ui:120
 msgid "Show Memory in Logarithmic Scale"
 msgstr "Pokaži podatke pomnilnika v logaritemskem sistemu"
 
-#: data/preferences.ui:145
+#: data/preferences.ui:131
 msgid "_Show Network Speed in Bits"
 msgstr "Pokaži _hitrost omrežne povezave v bitih"
 
-#: data/preferences.ui:151
+#: data/preferences.ui:137
 msgid "Show Network _Totals in Bits"
 msgstr "Pokaži _promet omrežne povezave v bitih"
 
-#: data/preferences.ui:160
+#: data/preferences.ui:146
 msgid "File Systems"
 msgstr "Datotečni sistemi"
 
-#: data/preferences.ui:176
+#: data/preferences.ui:162
 msgid "Show _All File Systems"
 msgstr "Pokaži _vse datotečne sisteme"
 
-#: data/preferences.ui:184
+#: data/preferences.ui:170
 msgid "File system information shown in list"
 msgstr "Podatki o datotečnem sistemu prikazani v seznamu"
 
-#: data/renice.ui:15 data/setaffinity.ui:17 src/procdialogs.cpp:167
+#: data/procproperties.ui:18
+msgid "Details"
+msgstr "Podrobnosti"
+
+#: data/procproperties.ui:21
+msgid "Process ID"
+msgstr "ID opravila"
+
+#: data/procproperties.ui:32 src/proctable.cpp:345
+msgid "User"
+msgstr "Uporabnik"
+
+#: data/procproperties.ui:45 data/procproperties.ui:70 src/proctable.cpp:346
+msgid "Status"
+msgstr "Stanje"
+
+#: data/procproperties.ui:48 src/proctable.cpp:354
+msgid "Started"
+msgstr "Začeto"
+
+#: data/procproperties.ui:59 src/proctable.cpp:373
+msgid "Priority"
+msgstr "Prednost"
+
+#: data/procproperties.ui:83
+msgid "Usage"
+msgstr "Raba"
+
+#: data/procproperties.ui:108 src/proctable.cpp:353
+msgid "CPU Time"
+msgstr "Procesorski čas"
+
+#: data/procproperties.ui:119 src/proctable.cpp:347
+msgid "Virtual Memory"
+msgstr "Navidezni pomnilnik"
+
+#: data/procproperties.ui:130 src/proctable.cpp:348
+msgid "Resident Memory"
+msgstr "Stalni pomnilnik"
+
+#: data/procproperties.ui:141 src/proctable.cpp:349
+msgid "Writable Memory"
+msgstr "Zapisljiv pomnilnik"
+
+#: data/procproperties.ui:152 src/proctable.cpp:350
+msgid "Shared Memory"
+msgstr "Skupni pomnilnik"
+
+#: data/procproperties.ui:167 src/proctable.cpp:357
+msgid "Security Context"
+msgstr "Vsebinska varnost"
+
+#: data/procproperties.ui:175 src/proctable.cpp:358
+msgid "Command Line"
+msgstr "Ukazna vrstica"
+
+#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
+#: data/procproperties.ui:183 src/proctable.cpp:361
+msgid "Waiting Channel"
+msgstr "Kanal čakanja"
+
+#: data/procproperties.ui:191 src/proctable.cpp:362
+msgid "Control Group"
+msgstr "Primerjalna skupina"
+
+#: data/procproperties.ui:236
+msgid "More Actions"
+msgstr "Več dejanj"
+
+#: data/renice.ui:15 data/setaffinity.ui:17 src/procdialogs.cpp:180
 msgid "_Cancel"
 msgstr "_Prekliči"
 
@@ -735,7 +813,7 @@ msgstr "%s (%.1f%%) od %s"
 msgid "Cache %s"
 msgstr "Predpomnilnik %s"
 
-#: src/lsof.cpp:116
+#: src/lsof.cpp:108
 #, c-format
 msgid "%d open file"
 msgid_plural "%d open files"
@@ -744,7 +822,7 @@ msgstr[1] "%d odprta datoteka"
 msgstr[2] "%d odprti datoteki"
 msgstr[3] "%d odprte datoteke"
 
-#: src/lsof.cpp:118
+#: src/lsof.cpp:110
 #, c-format
 msgid "%d matching open file"
 msgid_plural "%d matching open files"
@@ -752,18 +830,6 @@ msgstr[0] "%d skladnih odprtih datotek"
 msgstr[1] "%d skladna odprta datoteka"
 msgstr[2] "%d skladni odprti datoteki"
 msgstr[3] "%d skladne odprte datoteke"
-
-#: src/lsof.cpp:229
-msgid "Process"
-msgstr "Opravilo"
-
-#: src/lsof.cpp:240
-msgid "PID"
-msgstr "PID"
-
-#: src/lsof.cpp:249 src/memmaps.cpp:332
-msgid "Filename"
-msgstr "Ime datoteke"
 
 #. xgettext: virtual memory start
 #: src/memmaps.cpp:334
@@ -1330,7 +1396,7 @@ msgstr "Stolpec razvrščanja odprtih datotek"
 msgid "Open files sort order"
 msgstr "Način razvrščanja odprtih datotek"
 
-#: src/prefsdialog.cpp:145
+#: src/prefsdialog.cpp:70
 msgid "Icon"
 msgstr "Ikona"
 
@@ -1357,109 +1423,98 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:89
+#: src/procdialogs.cpp:108
 #, c-format
-msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
-msgstr "Ali ste prepričani, da želite uničiti izbrano opravilo »%s« (PID: %u)?"
+msgid "Force Stop %s?"
+msgstr "Ali želite prisilno ustaviti %s?"
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:96
+#: src/procdialogs.cpp:114
 #, c-format
-msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
-msgstr "Ali ste prepričani, da želite končati izbrano opravilo »%s« (PID: %u)?"
+msgid "End %s?"
+msgstr "Ali želite končati %s?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:103
+#: src/procdialogs.cpp:120
 #, c-format
-msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
-msgstr ""
-"Ali ste prepričani, da želite zaustaviti izbrano opravilo »%s« (PID: %u)?"
+msgid "Stop %s?"
+msgstr "Ali želite zaustaviti %s?"
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:115
+#: src/procdialogs.cpp:131
 #, c-format
-msgid "Are you sure you want to kill the selected process?"
-msgid_plural "Are you sure you want to kill the %d selected processes?"
-msgstr[0] "Ali ste prepričani, da želite uničiti %d izbranih opravil?"
-msgstr[1] "Ali ste prepričani, da želite uničiti %d izbrano opravilo?"
-msgstr[2] "Ali ste prepričani, da želite uničiti %d izbrani opravili?"
-msgstr[3] "Ali ste prepričani, da želite uničiti %d izbrana opravila?"
+msgid "Force Stop Selected Process?"
+msgid_plural "Force Stop %d Selected Processes?"
+msgstr[0] "Ali želite vsiliti ustavitev %d izbranih procesov?"
+msgstr[1] "Ali želite vsiliti ustavitev %d izbranega procesa?"
+msgstr[2] "Ali želite vsiliti ustavitev %d izbranih procesov?"
+msgstr[3] "Ali želite vsiliti ustavitev %d izbranih procesov?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:122
+#: src/procdialogs.cpp:138
 #, c-format
-msgid "Are you sure you want to end the selected process?"
-msgid_plural "Are you sure you want to end the %d selected processes?"
-msgstr[0] "Ali ste prepričani, da želite končati %d izbranih opravil?"
-msgstr[1] "Ali ste prepričani, da želite končati %d izbrano opravilo?"
-msgstr[2] "Ali ste prepričani, da želite končati %d izbrani opravili?"
-msgstr[3] "Ali ste prepričani, da želite končati %d izbrana opravila?"
+msgid "End Selected Process?"
+msgid_plural "End %d Selected Processes?"
+msgstr[0] "Ali želite končati %d izbranih opravil?"
+msgstr[1] "Ali želite končati %d izbrano opravilo?"
+msgstr[2] "Ali želite končati %d izbrani opravili?"
+msgstr[3] "Ali želite končati %d izbrana opravila?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:129
+#: src/procdialogs.cpp:145
 #, c-format
-msgid "Are you sure you want to stop the selected process?"
-msgid_plural "Are you sure you want to stop the %d selected processes?"
-msgstr[0] "Ali ste prepričani, da želite zaustaviti %d izbranih opravil?"
-msgstr[1] "Ali ste prepričani, da želite zaustaviti %d izbrano opravilo?"
-msgstr[2] "Ali ste prepričani, da želite zaustaviti %d izbrani opravili?"
-msgstr[3] "Ali ste prepričani, da želite zaustaviti %d izbrana opravila?"
+msgid "Stop Selected Process?"
+msgid_plural "Stop %d Selected Processes?"
+msgstr[0] "Ali želite zaustaviti %d izbranih opravil?"
+msgstr[1] "Ali želite zaustaviti %d izbrano opravilo?"
+msgstr[2] "Ali želite zaustaviti %d izbrani opravili?"
+msgstr[3] "Ali želite zaustaviti %d izbrana opravila?"
 
-#. xgettext: secondary alert message
-#: src/procdialogs.cpp:140
-msgid ""
-"Killing a process may destroy data, break the session or introduce a "
-"security risk. Only unresponsive processes should be killed."
-msgstr ""
-"Uničenjemopravila lahko vpliva na izgubo podatkov, lahko se sesuje celotna "
-"seja, dejanje lahko predstavlja varnostno tveganje. Razumljivo je le "
-"uničevanje opravil, ki niso odzivna."
-
-#: src/procdialogs.cpp:143
-msgid "_Kill Process"
-msgid_plural "_Kill Processes"
-msgstr[0] "_Uniči opravila"
-msgstr[1] "_Uniči opravilo"
-msgstr[2] "_Uniči opravili"
-msgstr[3] "_Uniči opravila"
-
-#. xgettext: secondary alert message
-#: src/procdialogs.cpp:148
-msgid ""
-"Ending a process may destroy data, break the session or introduce a security "
-"risk. Only unresponsive processes should be ended."
-msgstr ""
-"Z vsiljenim končanjem opravila se podatki lahko izgubijo, sesuje se lahko "
-"seja, dejanje lahko predstavlja tudi varnostno tveganje. Vsiljeno končati je "
-"razumljivo le opravila, ki niso odzivna."
-
-#. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:156
 msgid ""
-"Stopping a process may destroy data, break the session or introduce a "
-"security risk. Only unresponsive processes should be stopped."
+"Force stopping processes can result in data loss, crashes, and system "
+"failures"
 msgstr ""
-"Zaustavitev opravil lahko uniči podatke, okvari sejo, dejanje lahko "
-"predstavlja tudi varnostno tveganje. Zaustavljanje je razumljivo le za "
-"neodzivna opravila."
+"Prisilno ustavljanje procesov lahko povzroči izgubo podatkov, zrušitve in "
+"okvare sistema"
 
-#: src/procdialogs.cpp:159
-msgid "_Stop Process"
-msgid_plural "_Stop Processes"
-msgstr[0] "_Zaustavi opravila"
-msgstr[1] "_Zaustavi opravilo"
-msgstr[2] "_Zaustavi opravili"
-msgstr[3] "_Zaustavi opravila"
+#: src/procdialogs.cpp:158
+msgid "_Force Stop"
+msgstr "Vsili _zaustavitev"
 
-#: src/procdialogs.cpp:251
+#. xgettext: secondary alert message
+#: src/procdialogs.cpp:163
+msgid "Ending processes can result in data loss, crashes, and system failures"
+msgstr ""
+"Končanje procesov lahko povzroči izgubo podatkov, zrušitve in sistemske "
+"napake"
+
+#: src/procdialogs.cpp:165
+msgid "_End"
+msgstr "_Končaj"
+
+#. SIGSTOP
+#. xgettext: secondary alert message
+#: src/procdialogs.cpp:170
+msgid ""
+"Stopping processes can result in data loss, crashes, and system failures"
+msgstr ""
+"Zaustavitev procesov lahko povzroči izgubo podatkov, zrušitve in sistemske "
+"napake"
+
+#: src/procdialogs.cpp:172
+msgid "_Stop"
+msgstr "_Zaustavi"
+
+#: src/procdialogs.cpp:264
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Spremeni prednost opravila »%s« (PID %u)"
 
-#: src/procdialogs.cpp:254
+#: src/procdialogs.cpp:267
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
@@ -1468,80 +1523,22 @@ msgstr[1] "Spremeni vrstni red prednosti %d opravila"
 msgstr[2] "Spremeni vrstni red prednosti %d opravil"
 msgstr[3] "Spremeni vrstni red prednosti %d opravil"
 
-#: src/procproperties.cpp:50 src/procproperties.cpp:84
-#: src/procproperties.cpp:87 src/util.cpp:540 src/util.cpp:587
+#: src/procproperties.cpp:43 src/procproperties.cpp:97
+#: src/procproperties.cpp:106 src/util.cpp:540 src/util.cpp:587
 msgid "N/A"
 msgstr "N/A"
 
-#: src/procproperties.cpp:68 src/proctable.cpp:344
+#: src/proctable.cpp:136
+msgid "_End Process"
+msgid_plural "_End Processes"
+msgstr[0] "_Končaj opravila"
+msgstr[1] "_Končaj opravilo"
+msgstr[2] "_Končaj opravili"
+msgstr[3] "_Končaj opravila"
+
+#: src/proctable.cpp:344
 msgid "Process Name"
 msgstr "Ime opravila"
-
-#: src/procproperties.cpp:69 src/proctable.cpp:345
-msgid "User"
-msgstr "Uporabnik"
-
-#: src/procproperties.cpp:70 src/proctable.cpp:346
-msgid "Status"
-msgstr "Stanje"
-
-#: src/procproperties.cpp:72 src/proctable.cpp:347
-msgid "Virtual Memory"
-msgstr "Navidezni pomnilnik"
-
-#: src/procproperties.cpp:73 src/proctable.cpp:348
-msgid "Resident Memory"
-msgstr "Stalni pomnilnik"
-
-#: src/procproperties.cpp:74 src/proctable.cpp:349
-msgid "Writable Memory"
-msgstr "Zapisljiv pomnilnik"
-
-#: src/procproperties.cpp:75 src/proctable.cpp:350
-msgid "Shared Memory"
-msgstr "Skupni pomnilnik"
-
-#: src/procproperties.cpp:79 src/proctable.cpp:353
-msgid "CPU Time"
-msgstr "Procesorski čas"
-
-#: src/procproperties.cpp:80 src/proctable.cpp:354
-msgid "Started"
-msgstr "Začeto"
-
-#: src/procproperties.cpp:81 src/proctable.cpp:355
-msgid "Nice"
-msgstr "Ocena prednostni delovanja"
-
-#: src/procproperties.cpp:82 src/proctable.cpp:373
-msgid "Priority"
-msgstr "Prednost"
-
-#: src/procproperties.cpp:83 src/proctable.cpp:356
-msgid "ID"
-msgstr "ID"
-
-#: src/procproperties.cpp:84 src/proctable.cpp:357
-msgid "Security Context"
-msgstr "Vsebinska varnost"
-
-#: src/procproperties.cpp:85 src/proctable.cpp:358
-msgid "Command Line"
-msgstr "Ukazna vrstica"
-
-#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:86 src/proctable.cpp:361
-msgid "Waiting Channel"
-msgstr "Kanal čakanja"
-
-#: src/procproperties.cpp:87 src/proctable.cpp:362
-msgid "Control Group"
-msgstr "Primerjalna skupina"
-
-#: src/procproperties.cpp:211
-#, c-format
-msgid "%s (PID %u)"
-msgstr "%s (PID %u)"
 
 #: src/proctable.cpp:351
 msgid "X Server Memory"
@@ -1551,6 +1548,14 @@ msgstr "Pomnilnik strežnika X"
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPE"
+
+#: src/proctable.cpp:355
+msgid "Nice"
+msgstr "Ocena prednostni delovanja"
+
+#: src/proctable.cpp:356
+msgid "ID"
+msgstr "ID"
 
 #: src/proctable.cpp:363
 msgid "Unit"
