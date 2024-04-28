@@ -11,24 +11,14 @@
 
 #include "application.h"
 #include "openfiles.h"
+#include "openfiles-data.h"
 #include "proctable.h"
 #include "util.h"
 #include "settings-keys.h"
-#include "legacy/treeview.h"
 
 #ifndef NI_IDN
 const int NI_IDN = 0;
 #endif
-
-enum
-{
-  COL_FD,
-  COL_TYPE,
-  COL_OBJECT,
-  COL_OPENFILE_STRUCT,
-  NUM_OPENFILES_COL
-};
-
 
 static const char*
 get_type_name (enum glibtop_file_type t)
@@ -54,8 +44,6 @@ get_type_name (enum glibtop_file_type t)
         return _("unknown type");
     }
 }
-
-
 
 static char *
 friendlier_hostname (const char *addr_str,
@@ -92,19 +80,17 @@ failsafe:
   return g_strdup_printf ("%s, TCP port %d", addr_str, port);
 }
 
-
-
 static void
 add_new_files (gpointer,
                gpointer value,
                gpointer data)
 {
-  glibtop_open_files_entry *openfiles = static_cast<glibtop_open_files_entry*>(value);
-
-  GtkTreeModel *model = static_cast<GtkTreeModel*>(data);
-  GtkTreeIter row;
-
+  glibtop_open_files_entry *openfiles;
+  GListStore *store;
   char *object;
+
+  openfiles = static_cast<glibtop_open_files_entry*>(value);
+  store = static_cast<GListStore*>(data);
 
   switch (openfiles->type)
     {
@@ -126,46 +112,40 @@ add_new_files (gpointer,
         object = g_strdup ("");
     }
 
-  gtk_list_store_insert (GTK_LIST_STORE (model), &row, 0);
-  gtk_list_store_set (GTK_LIST_STORE (model), &row,
-                      COL_FD, openfiles->fd,
-                      COL_TYPE, get_type_name (static_cast<glibtop_file_type>(openfiles->type)),
-                      COL_OBJECT, object,
-                      COL_OPENFILE_STRUCT, g_memdup2 (openfiles, sizeof (*openfiles)),
-                      -1);
+  OpenFilesData *openfiles_data;
+
+  openfiles_data = openfiles_data_new (openfiles->fd,
+                                       get_type_name (static_cast<glibtop_file_type>(openfiles->type)),
+                                       object,
+                                       g_memdup2 (openfiles, sizeof (*openfiles)));
+
+  g_list_store_insert (store, 0, openfiles_data);
 
   g_free (object);
 }
 
 static GList *old_maps = NULL;
 
-static gboolean
-classify_openfiles (GtkTreeModel *model,
-                    GtkTreePath*,
-                    GtkTreeIter  *iter,
-                    gpointer      data)
+static void
+classify_openfiles (GListStore *store,
+                    guint       position,
+                    GHashTable *new_maps)
 {
-  GHashTable *new_maps = static_cast<GHashTable*>(data);
-  GtkTreeIter *old_iter;
+  OpenFilesData *data;
   glibtop_open_files_entry *openfiles;
   gchar *old_name;
 
-  gtk_tree_model_get (model, iter, 1, &old_name, -1);
+  data = OPENFILES_DATA (g_list_model_get_object (G_LIST_MODEL (store), position));
+  g_object_get (data, "object", &old_name, NULL);
 
   openfiles = static_cast<glibtop_open_files_entry*>(g_hash_table_lookup (new_maps, old_name));
+
   if (openfiles)
-    {
-      g_hash_table_remove (new_maps, old_name);
-      g_free (old_name);
-      return FALSE;
-    }
+    g_hash_table_remove (new_maps, old_name);
 
-  old_iter = gtk_tree_iter_copy (iter);
-  old_maps = g_list_append (old_maps, old_iter);
+  old_maps = g_list_append (old_maps, data);
   g_free (old_name);
-  return FALSE;
 }
-
 
 static gboolean
 compare_open_files (gconstpointer a,
@@ -178,26 +158,21 @@ compare_open_files (gconstpointer a,
   return (o1->fd == o2->fd) && (o1->type == o2->type);   /* XXX! */
 }
 
-
 static void
-update_openfiles_dialog (GsmTreeView *tree)
+update_openfiles_dialog (GListStore *store)
 {
   ProcInfo *info;
-  GtkTreeModel *model;
   glibtop_open_files_entry *openfiles;
   glibtop_proc_open_files procmap;
   GHashTable *new_maps;
   guint i;
 
-  pid_t pid = GPOINTER_TO_UINT (static_cast<pid_t*>(g_object_get_data (G_OBJECT (tree), "selected_info")));
+  pid_t pid = GPOINTER_TO_UINT (static_cast<pid_t*>(g_object_get_data (G_OBJECT (store), "selected_info")));
 
   info = GsmApplication::get ()->processes.find (pid);
 
-
   if (!info)
     return;
-
-  model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
 
   openfiles = glibtop_get_proc_open_files (&procmap, info->pid);
 
@@ -209,133 +184,80 @@ update_openfiles_dialog (GsmTreeView *tree)
   for (i = 0; i < procmap.number; i++)
     g_hash_table_insert (new_maps, openfiles + i, openfiles + i);
 
-  gtk_tree_model_foreach (model, classify_openfiles, new_maps);
+  for (i = 0; i < g_list_model_get_n_items (G_LIST_MODEL (store)); i++)
+    classify_openfiles (store, i, new_maps);
 
-  g_hash_table_foreach (new_maps, add_new_files, model);
+  g_hash_table_foreach (new_maps, add_new_files, store);
 
   while (old_maps)
     {
-      GtkTreeIter *iter = static_cast<GtkTreeIter*>(old_maps->data);
-      glibtop_open_files_entry *openfiles = NULL;
+      OpenFilesData *data;
+      guint position;
 
-      gtk_tree_model_get (model, iter,
-                          COL_OPENFILE_STRUCT, &openfiles,
-                          -1);
+      data = static_cast<OpenFilesData*>(old_maps->data);
+      openfiles = NULL;
 
-      gtk_list_store_remove (GTK_LIST_STORE (model), iter);
-      gtk_tree_iter_free (iter);
+      g_object_get (data, "pointer", &openfiles, NULL);
+
+      if (g_list_store_find (store, data, &position))
+        g_list_store_remove (store, position);
       g_free (openfiles);
 
       old_maps = g_list_next (old_maps);
     }
 
   g_hash_table_destroy (new_maps);
-  g_free (openfiles);
 }
 
 static void
-close_openfiles_dialog (AdwWindow *dialog,
-                        gpointer   data)
+close_dialog_action (GSimpleAction*,
+                     GVariant*,
+                     GtkWindow *dialog)
 {
-  GsmTreeView *tree = static_cast<GsmTreeView*>(data);
   guint timer;
 
-  gsm_tree_view_save_state (tree);
-
-  timer = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (tree), "timer"));
+  timer = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (dialog), "timer"));
   g_source_remove (timer);
 
-  gtk_window_destroy (GTK_WINDOW (dialog));
-
-  return;
+  gtk_window_destroy (dialog);
 }
 
-
-static GsmTreeView *
-create_openfiles_tree (GsmApplication *app)
+static void
+close_openfiles_dialog (GtkWindow *dialog,
+                        gpointer)
 {
-  GsmTreeView *tree;
-  GtkListStore *model;
-  GtkTreeViewColumn *column;
-  GtkCellRenderer *cell;
-  gint i;
+  guint timer;
 
-  const gchar * const titles[] = {
-    /* Translators: "FD" here means "File Descriptor". Please use
-       a very short translation if possible, and at most
-       2-3 characters for it to be able to fit in the UI. */
-    N_("FD"),
-    N_("Type"),
-    N_("Object")
-  };
+  timer = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (dialog), "timer"));
+  g_source_remove (timer);
 
-  model = gtk_list_store_new (NUM_OPENFILES_COL,
-                              G_TYPE_INT,           /* FD */
-                              G_TYPE_STRING,        /* Type */
-                              G_TYPE_STRING,        /* Object */
-                              G_TYPE_POINTER        /* open_files_entry */
-                              );
-
-  auto settings = g_settings_get_child (app->settings->gobj (), GSM_SETTINGS_CHILD_OPEN_FILES);
-
-  tree = gsm_tree_view_new (settings, FALSE);
-  gtk_tree_view_set_model (GTK_TREE_VIEW (tree), GTK_TREE_MODEL (model));
-  g_object_unref (G_OBJECT (model));
-
-  for (i = 0; i < NUM_OPENFILES_COL - 1; i++)
-    {
-      cell = gtk_cell_renderer_text_new ();
-
-      switch (i)
-        {
-          case COL_FD:
-            g_object_set (cell, "xalign", 1.0f, NULL);
-            break;
-        }
-
-      column = gtk_tree_view_column_new_with_attributes (_(titles[i]),
-                                                         cell,
-                                                         "text", i,
-                                                         NULL);
-      gtk_tree_view_column_set_sort_column_id (column, i);
-      gtk_tree_view_column_set_resizable (column, TRUE);
-      gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
-    }
-
-  gsm_tree_view_load_state (GSM_TREE_VIEW (tree));
-
-  return tree;
+  gtk_window_destroy (dialog);
 }
-
 
 static gboolean
 openfiles_timer (gpointer data)
 {
-  GsmTreeView*tree = static_cast<GsmTreeView*>(data);
-  GtkTreeModel *model;
+  GListStore *store = static_cast<GListStore *>(data);
 
-  model = gtk_tree_view_get_model (GTK_TREE_VIEW (tree));
-  g_assert (model);
+  g_assert (store);
 
-  update_openfiles_dialog (tree);
+  update_openfiles_dialog (store);
 
   return TRUE;
 }
-
 
 static void
 create_single_openfiles_dialog (GtkTreeModel *model,
                                 GtkTreePath*,
                                 GtkTreeIter  *iter,
-                                gpointer      data)
+                                gpointer)
 {
-  GsmApplication *app = static_cast<GsmApplication *>(data);
   AdwWindow *openfilesdialog;
-  GtkBox *dialog_content;
-  GtkLabel *label;
-  GtkWidget *scrolled;
-  GsmTreeView *tree;
+  AdwWindowTitle *window_title;
+  GtkColumnView *column_view;
+  GListStore *store;
   ProcInfo *info;
+  GSimpleActionGroup *action_group;
   guint timer;
 
   gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
@@ -351,35 +273,34 @@ create_single_openfiles_dialog (GtkTreeModel *model,
     g_error ("%s", err->message);
 
   openfilesdialog = ADW_WINDOW (gtk_builder_get_object (builder, "openfiles_dialog"));
-  dialog_content = GTK_BOX (gtk_builder_get_object (builder, "dialog_content"));
+  window_title = ADW_WINDOW_TITLE (gtk_builder_get_object (builder, "window_title"));
+  column_view = GTK_COLUMN_VIEW (gtk_builder_get_object (builder, "openfiles_view"));
+  store = G_LIST_STORE (gtk_builder_get_object (builder, "openfiles_store"));
 
-  label = procman_make_label_for_mmaps_or_ofiles (
-    _("_Files opened by process “%s” (PID %u):"),
-    info->name.c_str (),
-    info->pid);
+  adw_window_title_set_subtitle (window_title, g_strdup_printf ("%s (PID %u)", info->name.c_str (), info->pid));
 
-  gtk_box_prepend (dialog_content, GTK_WIDGET (label));
+  g_object_set_data (G_OBJECT (store), "selected_info", GUINT_TO_POINTER (info->pid));
 
-  scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "scrolled"));
+  action_group = g_simple_action_group_new ();
 
-  tree = create_openfiles_tree (app);
-  gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (tree));
-  g_object_set_data (G_OBJECT (tree), "selected_info", GUINT_TO_POINTER (info->pid));
+  GSimpleAction *close_action = g_simple_action_new ("close", NULL);
+  g_signal_connect (close_action, "activate", G_CALLBACK (close_dialog_action), openfilesdialog);
+  g_action_map_add_action (G_ACTION_MAP (action_group), G_ACTION (close_action));
+
+  gtk_widget_insert_action_group (GTK_WIDGET (openfilesdialog), "openfiles", G_ACTION_GROUP (action_group));
 
   g_signal_connect (G_OBJECT (openfilesdialog), "close-request",
-                    G_CALLBACK (close_openfiles_dialog), tree);
+                    G_CALLBACK (close_openfiles_dialog), column_view);
 
-  gtk_window_set_transient_for (GTK_WINDOW (openfilesdialog), GTK_WINDOW (GsmApplication::get ()->main_window));
   gtk_window_present (GTK_WINDOW (openfilesdialog));
 
-  timer = g_timeout_add_seconds (5, openfiles_timer, tree);
-  g_object_set_data (G_OBJECT (tree), "timer", GUINT_TO_POINTER (timer));
+  timer = g_timeout_add_seconds (5, openfiles_timer, store);
+  g_object_set_data (G_OBJECT (openfilesdialog), "timer", GUINT_TO_POINTER (timer));
 
-  update_openfiles_dialog (tree);
+  update_openfiles_dialog (store);
 
   g_object_unref (G_OBJECT (builder));
 }
-
 
 void
 create_openfiles_dialog (GsmApplication *app)
