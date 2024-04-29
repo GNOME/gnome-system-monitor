@@ -29,7 +29,7 @@
 
 typedef struct
 {
-  GtkColorChooserDialog *cc_dialog;     /* Color chooser dialog */
+  GtkColorDialog *cc_dialog;     /* Color dialog */
 
   gchar *title;                 /* Title for the color selection window */
 
@@ -39,6 +39,7 @@ typedef struct
   cairo_surface_t *image_buffer;
   cairo_surface_t *mask_buffer;
   gdouble highlight;
+  GCancellable *cancellable;
 } GsmColorButtonPrivate;
 
 G_DEFINE_TYPE_WITH_PRIVATE (GsmColorButton, gsm_color_button, GTK_TYPE_WIDGET)
@@ -198,8 +199,7 @@ gsm_color_button_snapshot (GtkWidget   *widget,
     }
   else if (!sensitive)
     {
-      GtkStyleContext *context = gtk_widget_get_style_context (widget);
-      gtk_style_context_get_color (context, color);
+      gtk_widget_get_color (widget, color);
     }
   gdk_cairo_set_source_rgba (cr, color);
   gdk_rgba_free (color);
@@ -369,41 +369,28 @@ gsm_color_button_measure (GtkWidget*,
 }
 
 static void
-gsm_color_button_state_flags_changed (GtkWidget *self, GtkStateFlags flags)
+gsm_color_button_state_flags_changed (GtkWidget *self,
+                                      GtkStateFlags)
 {
   gtk_widget_queue_draw (self);
 }
 
 static void
-dialog_response (GtkDialog*,
-                 gint            response,
-                 GsmColorButton *color_button)
+dialog_response (GObject      *source,
+                 GAsyncResult *result,
+                 gpointer      data)
 {
-  GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
+  GtkColorDialog *dialog = GTK_COLOR_DIALOG (source);
+  GsmColorButton *color_button = data;
+  GdkRGBA *color;
 
-  if (response == GTK_RESPONSE_OK)
+  color = gtk_color_dialog_choose_rgba_finish (dialog, result, NULL);
+
+  if (color)
     {
-      GtkColorChooser *color_chooser = GTK_COLOR_CHOOSER (priv->cc_dialog);
-      GdkRGBA color;
-
-      gtk_color_chooser_get_rgba (color_chooser, &color);
-      gsm_color_button_set_color (color_button, &color);
-
-      gtk_widget_set_visible (GTK_WIDGET (priv->cc_dialog), FALSE);
+      gsm_color_button_set_color (color_button, color);
+      gdk_rgba_free (color);
     }
-  else
-    {
-      gtk_widget_set_visible (GTK_WIDGET (priv->cc_dialog), FALSE);
-    }
-}
-
-static void
-dialog_destroy (GtkWidget*,
-                GsmColorButton *color_button)
-{
-  GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
-
-  priv->cc_dialog = NULL;
 }
 
 static void
@@ -414,33 +401,33 @@ gsm_color_button_released (GtkGestureClick*,
                            GsmColorButton *color_button)
 {
   GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
+  GtkRoot *parent;
+
+  parent = gtk_widget_get_root (GTK_WIDGET (color_button));
 
   /* if dialog already exists, make sure it's shown and raised */
   if (!priv->cc_dialog)
     {
       /* Create the dialog and connects its buttons */
-      GtkColorChooserDialog *cc_dialog;
-      GtkRoot *parent;
+      GtkColorDialog *cc_dialog;
 
-      parent = gtk_widget_get_root (GTK_WIDGET (color_button));
+      cc_dialog = gtk_color_dialog_new ();
 
-      cc_dialog = GTK_COLOR_CHOOSER_DIALOG (gtk_color_chooser_dialog_new (priv->title, GTK_WINDOW (parent)));
-
-      gtk_window_set_modal (GTK_WINDOW (cc_dialog), TRUE);
-
-      g_signal_connect (cc_dialog, "response",
-                        G_CALLBACK (dialog_response), color_button);
-
-      g_signal_connect (cc_dialog, "destroy",
-                        G_CALLBACK (dialog_destroy), color_button);
+      gtk_color_dialog_set_title (cc_dialog, priv->title);
+      gtk_color_dialog_set_modal (cc_dialog, TRUE);
 
       priv->cc_dialog = cc_dialog;
     }
 
-  gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER (priv->cc_dialog),
-                              &priv->color);
+  g_cancellable_cancel (priv->cancellable);
+  priv->cancellable = g_cancellable_new ();
 
-  gtk_widget_set_visible (GTK_WIDGET (priv->cc_dialog), TRUE);
+  gtk_color_dialog_choose_rgba (priv->cc_dialog,
+                                GTK_WINDOW (parent),
+                                &priv->color,
+                                priv->cancellable,
+                                dialog_response,
+                                color_button);
 }
 
 static gboolean
@@ -554,7 +541,7 @@ gsm_color_button_finalize (GObject *object)
   GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
 
   if (priv->cc_dialog != NULL)
-    gtk_window_destroy (GTK_WINDOW (priv->cc_dialog));
+    g_object_unref (G_OBJECT (priv->cc_dialog));
   priv->cc_dialog = NULL;
 
   g_free (priv->title);
@@ -771,8 +758,8 @@ gsm_color_button_set_title (GsmColorButton *color_button,
   g_free (old_title);
 
   if (priv->cc_dialog)
-    gtk_window_set_title (GTK_WINDOW (priv->cc_dialog),
-                          priv->title);
+    gtk_color_dialog_set_title (priv->cc_dialog,
+                                priv->title);
 
   g_object_notify (G_OBJECT (color_button), "title");
 }
