@@ -7,7 +7,7 @@
 #define FONT_SETTING_SCALING                "text-scaling-factor"
 
 #define GSM_SETTINGS_CHILD_OPEN_FILES       "openfilestree"
-#define GSM_SETTINGS_CHILD_DISKS            "disktreenew"
+#define GSM_SETTINGS_CHILD_DISKS            "disksview"
 #define GSM_SETTINGS_CHILD_PROCESSES        "proctree"
 #define GSM_SETTINGS_CHILD_MEMMAP           "memmapstree"
 

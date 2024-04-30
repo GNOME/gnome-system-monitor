@@ -263,7 +263,7 @@ LoadGraph        *mem_graph;
 LoadGraph        *net_graph;
 LoadGraph        *disk_graph;
 
-GsmTreeView      *disk_list;
+GtkColumnView    *disk_list;
 
 guint disk_timeout;
 

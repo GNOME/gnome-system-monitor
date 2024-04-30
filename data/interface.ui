@@ -410,12 +410,304 @@
                 <property name="title" translatable="yes">_File Systems</property>
                 <property name="icon-name">drive-harddisk-symbolic</property>
                 <property name="child">
-                  <object class="GtkBox" id="fs_box">
+                  <object class="GtkBox">
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkScrolledWindow" id="disks_scrolled">
+                      <object class="GtkScrolledWindow">
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
+                        <child>
+                          <object class="GtkColumnView" id="disks_view">
+                            <property name="single-click-activate">True</property>
+                            <property name="model">
+                              <object class="GtkSingleSelection" id="selection">
+                                <property name="model">disks_model</property>
+                              </object>
+                            </property>
+                            <child>
+                              <object class="GtkColumnViewColumn">
+                                <property name="id">device</property>
+                                <property name="title" translatable="yes">Device</property>
+                                <property name="resizable">True</property>
+                                <property name="sorter">
+                                  <object class="GtkStringSorter">
+                                    <property name="expression">
+                                      <lookup name="device" type="DisksData"/>
+                                    </property>
+                                  </object>
+                                </property>
+                                <property name="factory">
+                                  <object class="GtkBuilderListItemFactory">
+                                    <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkBox">
+    <property name="orientation">horizontal</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkImage">
+        <property name="icon-size">large</property>
+        <binding name="paintable">
+          <lookup name="paintable" type="DisksData">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+        <style>
+          <class name="icon-dropshadow"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <binding name="label">
+          <lookup name="device" type="DisksData">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+      </object>
+    </child>
+  </object>
+</property>
+</template>
+</interface>
+                                 ]]></property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkColumnViewColumn">
+                                <property name="id">directory</property>
+                                <property name="title" translatable="yes">Directory</property>
+                                <property name="resizable">True</property>
+                                <property name="sorter">
+                                  <object class="GtkStringSorter">
+                                    <property name="expression">
+                                      <lookup name="directory" type="DisksData"/>
+                                    </property>
+                                  </object>
+                                </property>
+                                <property name="factory">
+                                  <object class="GtkBuilderListItemFactory">
+                                    <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="directory" type="DisksData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                 ]]></property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkColumnViewColumn">
+                                <property name="id">type</property>
+                                <property name="title" translatable="yes">Type</property>
+                                <property name="resizable">True</property>
+                                <property name="sorter">
+                                  <object class="GtkStringSorter">
+                                    <property name="expression">
+                                      <lookup name="type" type="DisksData"/>
+                                    </property>
+                                  </object>
+                                </property>
+                                <property name="factory">
+                                  <object class="GtkBuilderListItemFactory">
+                                    <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="type" type="DisksData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                 ]]></property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkColumnViewColumn">
+                                <property name="id">total</property>
+                                <property name="title" translatable="yes">Total</property>
+                                <property name="resizable">True</property>
+                                <property name="sorter">
+                                  <object class="GtkStringSorter">
+                                    <property name="expression">
+                                      <lookup name="total" type="DisksData"/>
+                                    </property>
+                                  </object>
+                                </property>
+                                <property name="factory">
+                                  <object class="GtkBuilderListItemFactory">
+                                    <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="total" type="DisksData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                 ]]></property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkColumnViewColumn">
+                                <property name="id">free</property>
+                                <property name="title" translatable="yes">Free</property>
+                                <property name="resizable">True</property>
+                                <property name="sorter">
+                                  <object class="GtkStringSorter">
+                                    <property name="expression">
+                                      <lookup name="free" type="DisksData"/>
+                                    </property>
+                                  </object>
+                                </property>
+                                <property name="factory">
+                                  <object class="GtkBuilderListItemFactory">
+                                    <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="free" type="DisksData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                 ]]></property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkColumnViewColumn">
+                                <property name="id">available</property>
+                                <property name="title" translatable="yes">Available</property>
+                                <property name="resizable">True</property>
+                                <property name="sorter">
+                                  <object class="GtkStringSorter">
+                                    <property name="expression">
+                                      <lookup name="available" type="DisksData"/>
+                                    </property>
+                                  </object>
+                                </property>
+                                <property name="factory">
+                                  <object class="GtkBuilderListItemFactory">
+                                    <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="available" type="DisksData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                 ]]></property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkColumnViewColumn">
+                                <property name="id">used</property>
+                                <property name="title" translatable="yes">Used</property>
+                                <property name="expand">True</property>
+                                <property name="resizable">True</property>
+                                <property name="sorter">
+                                  <object class="GtkStringSorter">
+                                    <property name="expression">
+                                      <lookup name="used" type="DisksData"/>
+                                    </property>
+                                  </object>
+                                </property>
+                                <property name="factory">
+                                  <object class="GtkBuilderListItemFactory">
+                                    <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkBox">
+    <property name="orientation">horizontal</property>
+    <property name="spacing">12</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="xalign">0</property>
+        <binding name="label">
+          <lookup name="used" type="DisksData">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLevelBar">
+        <property name="hexpand">True</property>
+        <property name="min-value">0</property>
+        <property name="max-value">100</property>
+        <binding name="value">
+          <lookup name="percentage" type="DisksData">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+      </object>
+    </child>
+  </object>
+</property>
+</template>
+</interface>
+                                 ]]></property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>
@@ -430,4 +722,12 @@
       <class name="view" />
     </style>
   </object>
+  <object class="GtkSortListModel" id="disks_model">
+    <property name="model">disks_store</property>
+    <property name="incremental">True</property>
+    <binding name="sorter">
+      <lookup name="sorter">disks_view</lookup>
+    </binding>
+  </object>
+  <object class="GListStore" id="disks_store"/>
 </interface>

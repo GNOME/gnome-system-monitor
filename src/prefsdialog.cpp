@@ -47,29 +47,29 @@ range_value_changed (GtkRange *self,
 }
 
 static void
-create_field_page (GtkBuilder  *builder,
-                   GtkTreeView *tree,
-                   const gchar *widgetname)
+create_field_page (GtkBuilder    *builder,
+                   GtkColumnView *column_view,
+                   const gchar   *widgetname)
 {
-  GList *it, *columns;
+  GListModel *columns;
   AdwPreferencesGroup *group;
 
   group = ADW_PREFERENCES_GROUP (gtk_builder_get_object (builder, widgetname));
 
-  columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree));
+  columns = gtk_column_view_get_columns (column_view);
 
-  for (it = columns; it; it = it->next)
+  for (guint i = 0; i < g_list_model_get_n_items (columns); i++)
     {
-      GtkTreeViewColumn *column = static_cast<GtkTreeViewColumn*>(it->data);
+      GtkColumnViewColumn *column = GTK_COLUMN_VIEW_COLUMN (g_list_model_get_object (columns, i));
       const gchar *title;
-      gint column_id;
+      const gchar *column_id;
       GtkWidget *row;
 
-      title = gtk_tree_view_column_get_title (column);
+      title = gtk_column_view_column_get_title (column);
       if (!title)
         title = _("Icon");
 
-      column_id = gtk_tree_view_column_get_sort_column_id (column);
+      column_id = gtk_column_view_column_get_id (column);/*
       if ((column_id == COL_CGROUP) && (!cgroups_enabled ()))
         continue;
       if ((column_id == COL_SECURITYCONTEXT) && (!can_show_security_context_column ()))
@@ -82,7 +82,7 @@ create_field_page (GtkBuilder  *builder,
           && !procman::systemd_logind_running ()
           )
         continue;
-
+*/
       row = adw_switch_row_new ();
       adw_preferences_row_set_title (ADW_PREFERENCES_ROW (row), title);
 
@@ -94,8 +94,6 @@ create_field_page (GtkBuilder  *builder,
 
       adw_preferences_group_add (group, GTK_WIDGET (row));
     }
-
-  g_list_free (columns);
 }
 
 static void
@@ -191,7 +189,7 @@ create_preferences_dialog (GsmApplication *app)
                    res_mem_in_iec_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  create_field_page (builder, GTK_TREE_VIEW (app->tree), GSM_SETTINGS_CHILD_PROCESSES);
+  // create_field_page (builder, GTK_TREE_VIEW (app->tree), GSM_SETTINGS_CHILD_PROCESSES);
 
   update = (gfloat) app->config.graph_update_interval;
   spin_button = ADW_SPIN_ROW (gtk_builder_get_object (builder, "resources_interval_spinner"));
@@ -236,7 +234,7 @@ create_preferences_dialog (GsmApplication *app)
                    check_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  create_field_page (builder, GTK_TREE_VIEW (app->disk_list), GSM_SETTINGS_CHILD_DISKS);
+  create_field_page (builder, app->disk_list, GSM_SETTINGS_CHILD_DISKS);
 
   g_signal_connect (G_OBJECT (prefs_dialog), "closed",
                     G_CALLBACK (prefs_dialog_close_request), NULL);
