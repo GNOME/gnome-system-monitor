@@ -131,11 +131,6 @@ cb_timeouts_changed (Gio::Settings& settings,
       load_graph_change_speed (app->disk_graph,
                                app->config.graph_update_interval);
     }
-  else if (key == GSM_SETTING_DISKS_UPDATE_INTERVAL)
-    {
-      app->config.disks_update_interval = settings.get_int (key);
-      disks_reset_timeout (app);
-    }
 }
 
 static void
@@ -305,8 +300,6 @@ GsmApplication::load_settings ()
   this->settings->signal_changed (GSM_SETTING_PROCESS_UPDATE_INTERVAL).connect (cbtc);
   config.graph_update_interval = this->settings->get_int (GSM_SETTING_GRAPH_UPDATE_INTERVAL);
   this->settings->signal_changed (GSM_SETTING_GRAPH_UPDATE_INTERVAL).connect (cbtc);
-  config.disks_update_interval = this->settings->get_int (GSM_SETTING_DISKS_UPDATE_INTERVAL);
-  this->settings->signal_changed (GSM_SETTING_DISKS_UPDATE_INTERVAL).connect (cbtc);
 
   config.graph_data_points = this->settings->get_int (GSM_SETTING_GRAPH_DATA_POINTS);
   this->settings->signal_changed (GSM_SETTING_GRAPH_DATA_POINTS).connect ([this](const Glib::ustring&key) {
@@ -386,8 +379,6 @@ GsmApplication::GsmApplication()
   disk_graph (NULL),
 
   disk_list (NULL),
-
-  disk_timeout (0U),
 
   selection (NULL),
 
@@ -491,8 +482,11 @@ GsmApplication::shutdown ()
 {
   if (timeout)
     g_source_remove (timeout);
-  if (disk_timeout)
-    g_source_remove (disk_timeout);
+
+  guint disks_timeout = gsm_disks_view_get_timeout (disk_list);
+
+  if (disks_timeout)
+    g_source_remove (disks_timeout);
 
   proctable_free_table (this);
   delete smooth_refresh;

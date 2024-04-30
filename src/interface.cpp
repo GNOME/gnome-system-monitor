@@ -723,12 +723,12 @@ update_page_activities (GsmApplication *app)
 
   if (strcmp (current_page, "disks") == 0)
     {
-      disks_update (app);
-      disks_thaw (app);
+      disks_update (app->disk_list);
+      disks_thaw (app->disk_list);
     }
   else
     {
-      disks_freeze (app);
+      disks_freeze (app->disk_list);
     }
 }
 
@@ -773,7 +773,7 @@ cb_main_window_suspended (GtkWindow*,
         }
       else if (current_page == "disks")
         {
-          disks_freeze (app);
+          disks_freeze (app->disk_list);
         }
     }
   else
@@ -792,8 +792,8 @@ cb_main_window_suspended (GtkWindow*,
         }
       else if (current_page == "disks")
         {
-          disks_update (app);
-          disks_thaw (app);
+          disks_update (app->disk_list);
+          disks_thaw (app->disk_list);
         }
     }
 }
@@ -831,7 +831,7 @@ create_main_window (GsmApplication *app)
   app->stack = ADW_VIEW_STACK (gtk_builder_get_object (builder, "stack"));
   create_proc_view (app, builder);
   create_sys_view (app, builder);
-  create_disk_view (app, builder);
+  app->disk_list = GSM_DISKS_VIEW (gtk_builder_get_object (builder, "disks_view"));
 
   app->app_menu_button = GTK_MENU_BUTTON (gtk_builder_get_object (builder, "app_menu_button"));
   app->generic_window_menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "generic-window-menu"));

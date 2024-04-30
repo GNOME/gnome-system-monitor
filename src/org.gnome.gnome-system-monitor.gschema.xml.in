@@ -224,7 +224,7 @@
     </key>
 
     <child name="proctree" schema="org.gnome.gnome-system-monitor.proctree" />
-    <child name="disktreenew" schema="org.gnome.gnome-system-monitor.disktreenew" />
+    <child name="disksview" schema="org.gnome.gnome-system-monitor.disksview" />
     <child name="memmapstree" schema="org.gnome.gnome-system-monitor.memmapstree" />
     <child name="openfilestree" schema="org.gnome.gnome-system-monitor.openfilestree" />
   </schema>
@@ -631,9 +631,9 @@
 
   </schema>
 
-  <schema id="org.gnome.gnome-system-monitor.disktreenew" path="/org/gnome/gnome-system-monitor/disktreenew/">
-    <key name="sort-col" type="i">
-      <default>1
+  <schema id="org.gnome.gnome-system-monitor.disksview" path="/org/gnome/gnome-system-monitor/disksview/">
+    <key name="sort-col" type="s">
+      <default>'directory'
       </default>
       <summary>Disk view sort column
       </summary>
@@ -646,105 +646,105 @@
       </summary>
     </key>
 
-    <key name="columns-order" type="ai">
-      <default>[ 0 ]
+    <key name="columns-order" type="as">
+      <default>[ 'device', 'directory', 'type', 'total', 'free', 'available', 'used' ]
       </default>
       <summary>Disk view columns order
       </summary>
     </key>
 
-    <key name="col-0-width" type="i">
+    <key name="col-device-width" type="i">
       <default>100
       </default>
       <summary>Width of disk view “Device” column
       </summary>
     </key>
 
-    <key name="col-0-visible" type="b">
+    <key name="col-device-visible" type="b">
       <default>true
       </default>
       <summary>Show disk view “Device” column on startup
       </summary>
     </key>
 
-    <key name="col-1-width" type="i">
+    <key name="col-directory-width" type="i">
       <default>100
       </default>
       <summary>Width of disk view “Directory” column
       </summary>
     </key>
 
-    <key name="col-1-visible" type="b">
+    <key name="col-directory-visible" type="b">
       <default>true
       </default>
       <summary>Show disk view “Directory” column on startup
       </summary>
     </key>
 
-    <key name="col-2-width" type="i">
+    <key name="col-type-width" type="i">
       <default>50
       </default>
       <summary>Width of disk view “Type” column
       </summary>
     </key>
 
-    <key name="col-2-visible" type="b">
+    <key name="col-type-visible" type="b">
       <default>true
       </default>
       <summary>Show disk view “Type” column on startup
       </summary>
     </key>
 
-    <key name="col-3-width" type="i">
+    <key name="col-total-width" type="i">
       <default>80
       </default>
       <summary>Width of disk view “Total” column
       </summary>
     </key>
 
-    <key name="col-3-visible" type="b">
+    <key name="col-total-visible" type="b">
       <default>true
       </default>
       <summary>Show disk view “Total” column on startup
       </summary>
     </key>
 
-    <key name="col-4-width" type="i">
+    <key name="col-free-width" type="i">
       <default>80
       </default>
       <summary>Width of disk view “Free” column
       </summary>
     </key>
 
-    <key name="col-4-visible" type="b">
+    <key name="col-free-visible" type="b">
       <default>false
       </default>
       <summary>Show disk view “Free” column on startup
       </summary>
     </key>
 
-    <key name="col-5-width" type="i">
+    <key name="col-available-width" type="i">
       <default>80
       </default>
       <summary>Width of disk view “Available” column
       </summary>
     </key>
 
-    <key name="col-5-visible" type="b">
+    <key name="col-available-visible" type="b">
       <default>true
       </default>
       <summary>Show disk view “Available” column on startup
       </summary>
     </key>
 
-    <key name="col-6-width" type="i">
+    <key name="col-used-width" type="i">
       <default>300
       </default>
       <summary>Width of disk view “Used” column
       </summary>
     </key>
 
-    <key name="col-6-visible" type="b">
+    <key name="col-used-visible" type="b">
       <default>true
       </default>
       <summary>Show disk view “Used” column on startup

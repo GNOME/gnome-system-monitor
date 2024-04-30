@@ -7,37 +7,116 @@
 #include <glib/gi18n.h>
 
 #include "disks.h"
+#include "disks-data.h"
 #include "application.h"
 #include "util.h"
 #include "settings-keys.h"
-#include "legacy/treeview.h"
 
-enum DiskColumns
+struct _GsmDisksView
 {
-  /* string columns* */
-  DISK_DEVICE,
-  DISK_DIR,
-  DISK_TYPE,
-  DISK_TOTAL,
-  DISK_FREE,
-  DISK_AVAIL,
-  /* USED has to be the last column */
-  DISK_USED,
-  // then invisible columns
-  /* icon column */
-  DISK_ICON,
-  /* numeric columns */
-  DISK_USED_PERCENTAGE,
-  DISK_N_COLUMNS
+  GtkWidget parent_instance;
+
+  GtkColumnView *column_view;
+  GtkSingleSelection *selection;
+  GListStore *list_store;
+
+  int update_interval;
+  gboolean show_all_fs;
+  guint timeout;
 };
 
+G_DEFINE_TYPE (GsmDisksView, gsm_disks_view, GTK_TYPE_WIDGET)
+
+enum {
+  PROP_0,
+  PROP_UPDATE_INTERVAL,
+  PROP_SHOW_ALL_FS,
+  PROP_TIMEOUT,
+  N_PROPS
+};
+
+static GParamSpec *properties [N_PROPS];
+
+GsmDisksView *
+gsm_disks_view_new (void)
+{
+  return GSM_DISKS_VIEW (g_object_new (GSM_TYPE_DISKS_VIEW, NULL));
+}
+
 static void
-cb_sort_changed (GtkTreeSortable*,
+gsm_disks_view_finalize (GObject *object)
+{
+  G_OBJECT_CLASS (gsm_disks_view_parent_class)->finalize (object);
+}
+
+static void
+gsm_disks_view_get_property (GObject    *object,
+                             guint       prop_id,
+                             GValue     *value,
+                             GParamSpec *pspec)
+{
+  GsmDisksView *self = GSM_DISKS_VIEW (object);
+
+  switch (prop_id)
+    {
+    case PROP_UPDATE_INTERVAL:
+      g_value_set_int (value, self->update_interval);
+      break;
+    case PROP_SHOW_ALL_FS:
+      g_value_set_boolean (value, self->show_all_fs);
+      break;
+    case PROP_TIMEOUT:
+      g_value_set_uint (value, self->timeout);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+    }
+}
+
+static void
+gsm_disks_view_set_property (GObject      *object,
+                             guint         prop_id,
+                             const GValue *value,
+                             GParamSpec   *pspec)
+{
+  GsmDisksView *self = GSM_DISKS_VIEW (object);
+
+  switch (prop_id)
+    {
+    case PROP_UPDATE_INTERVAL:
+      self->update_interval = g_value_get_int (value);
+      break;
+    case PROP_SHOW_ALL_FS:
+      self->show_all_fs = g_value_get_boolean (value);
+      break;
+    case PROP_TIMEOUT:
+      self->timeout = g_value_get_uint (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+    }
+}
+
+guint
+gsm_disks_view_get_timeout (GsmDisksView *self)
+{
+  return self->timeout;
+}
+
+GtkColumnView *
+gsm_disks_view_get_column_view (GsmDisksView *self)
+{
+  return self->column_view;
+}
+
+static void
+cb_sort_changed (GtkSorter *,
+                 GtkSorterChange,
                  gpointer data)
 {
-  GsmApplication *app = (GsmApplication *) data;
+  GtkColumnView *column_view = static_cast<GtkColumnView *>(data);
 
-  gsm_tree_view_save_state (GSM_TREE_VIEW (app->disk_list));
+  save_sort_state (column_view, GSM_SETTINGS_CHILD_DISKS);
 }
 
 static void
@@ -113,63 +192,58 @@ get_icon_for_device (const char *mountpoint)
     icon_name = "drive-harddisk";     // get_icon_for_path("/");
 
   icon_theme = gtk_icon_theme_get_for_display (gdk_display_get_default ());
-  icon_paintable = gtk_icon_theme_lookup_icon (icon_theme, icon_name, NULL, 24, 1, GTK_TEXT_DIR_NONE, GTK_ICON_LOOKUP_PRELOAD);
-  icon = gdk_texture_new_for_pixbuf (gdk_pixbuf_new_from_file_at_size (g_file_get_path (gtk_icon_paintable_get_file (icon_paintable)), 24, 24, NULL));
+  icon_paintable = gtk_icon_theme_lookup_icon (icon_theme, icon_name, NULL, 32, 1, GTK_TEXT_DIR_NONE, GTK_ICON_LOOKUP_PRELOAD);
+  icon = gdk_texture_new_for_pixbuf (gdk_pixbuf_new_from_file_at_size (g_file_get_path (gtk_icon_paintable_get_file (icon_paintable)), 32, 32, NULL));
 
   return icon;
 }
 
 
 static gboolean
-find_disk_in_model (GtkTreeModel *model,
-                    const char   *mountpoint,
-                    GtkTreeIter  *result)
+find_disk_in_model (GListModel *model,
+                    const char *mountpoint,
+                    guint      *position)
 {
-  GtkTreeIter iter;
+  guint pos = *position;
   gboolean found = FALSE;
 
-  if (gtk_tree_model_get_iter_first (model, &iter))
+  while (!found && pos < g_list_model_get_n_items (model))
     {
-      do
-        {
-          char *dir;
+      DisksData *data;
+      gchar *dir;
 
-          gtk_tree_model_get (model, &iter,
-                              DISK_DIR, &dir,
-                              -1);
+      data = DISKS_DATA (g_list_model_get_object (model, pos));
+      g_object_get (data, "directory", &dir, NULL);
 
-          if (dir && !strcmp (dir, mountpoint))
-            {
-              *result = iter;
-              found = TRUE;
-            }
+      if (dir && !strcmp (dir, mountpoint))
+          found = TRUE;
+      else
+          pos++;
 
-          g_free (dir);
-        } while (!found && gtk_tree_model_iter_next (model, &iter));
+      g_free (dir);
     }
+
+  *position = pos;
 
   return found;
 }
 
 static void
-remove_old_disks (GtkTreeModel             *model,
+remove_old_disks (GListModel               *model,
                   const glibtop_mountentry *entries,
                   guint                     n)
 {
-  GtkTreeIter iter;
+  guint position = 0;
 
-  if (!gtk_tree_model_get_iter_first (model, &iter))
-    return;
-
-  while (true)
+  while (position < g_list_model_get_n_items (model))
     {
+      DisksData *data;
       char *dir;
       guint i;
       gboolean found = FALSE;
 
-      gtk_tree_model_get (model, &iter,
-                          DISK_DIR, &dir,
-                          -1);
+      data = DISKS_DATA (g_list_model_get_object (model, position));
+      g_object_get (data, "directory", &dir, NULL);
 
       for (i = 0; i != n; ++i)
         if (!strcmp (dir, entries[i].mountdir))
@@ -182,173 +256,202 @@ remove_old_disks (GtkTreeModel             *model,
 
       if (!found)
         {
-          if (!gtk_list_store_remove (GTK_LIST_STORE (model), &iter))
-            break;
+          if (g_list_store_find (G_LIST_STORE (model), G_OBJECT (data), &position))
+            g_list_store_remove (G_LIST_STORE (model), position);
           else
-            continue;
+            break;
         }
 
-      if (!gtk_tree_model_iter_next (model, &iter))
-        break;
+      position++;
     }
 }
 
 
 
 static void
-add_disk (GtkListStore             *list,
+add_disk (GListModel               *model,
           const glibtop_mountentry *entry,
           bool                      show_all_fs)
 {
   GdkTexture *icon;
-  GtkTreeIter iter;
   glibtop_fsusage usage;
   guint64 bused, bfree, bavail, btotal;
   gint percentage;
+  guint position = 0;
 
   glibtop_get_fsusage (&usage, entry->mountdir);
 
   if (not show_all_fs and usage.blocks == 0)
     {
-      if (find_disk_in_model (GTK_TREE_MODEL (list), entry->mountdir, &iter))
-        gtk_list_store_remove (list, &iter);
+      if (find_disk_in_model (model, entry->mountdir, &position))
+        g_list_store_remove (G_LIST_STORE (model), position);
       return;
     }
 
   fsusage_stats (&usage, &bused, &bfree, &bavail, &btotal, &percentage);
   icon = get_icon_for_device (entry->mountdir);
 
+  DisksData *data;
+
   /* if we can find a row with the same mountpoint, we get it but we
      still need to update all the fields.
      This makes selection persistent.
   */
-  if (!find_disk_in_model (GTK_TREE_MODEL (list), entry->mountdir, &iter))
-    gtk_list_store_append (list, &iter);
+  if (!find_disk_in_model (model, entry->mountdir, &position))
+    {
+      data = disks_data_new (GDK_PAINTABLE (icon),
+                             entry->devname,
+                             entry->mountdir,
+                             entry->type,
+                             btotal,
+                             bfree,
+                             bavail,
+                             bused,
+                             percentage);
 
-  gtk_list_store_set (list, &iter,
-                      DISK_ICON, icon,
-                      DISK_DEVICE, entry->devname,
-                      DISK_DIR, entry->mountdir,
-                      DISK_TYPE, entry->type,
-                      DISK_USED_PERCENTAGE, percentage,
-                      DISK_TOTAL, btotal,
-                      DISK_FREE, bfree,
-                      DISK_AVAIL, bavail,
-                      DISK_USED, bused,
-                      -1);
+      g_list_store_insert (G_LIST_STORE (model), position, data);
+    }
+  else
+    {
+      data = DISKS_DATA (g_list_model_get_object (model, position));
+
+      g_object_set (data,
+                    "paintable", GDK_PAINTABLE (icon),
+                    "device", entry->devname,
+                    "directory", entry->mountdir,
+                    "type", entry->type,
+                    "total", btotal,
+                    "free", bfree,
+                    "available", bavail,
+                    "used", bused,
+                    "percentage", percentage,
+                    NULL);
+    }
 }
 
 static void
 mount_changed (GVolumeMonitor*,
                GMount*,
-               GsmApplication *app)
+               gpointer data)
 {
-  disks_update (app);
+  GsmDisksView *self = (GsmDisksView *) data;
+
+  disks_update (self);
 }
 
 static gboolean
 cb_timeout (gpointer data)
 {
-  GsmApplication *app = (GsmApplication *) data;
+  GsmDisksView *self = (GsmDisksView *) data;
 
-  disks_update (app);
+  disks_update (self);
 
   return G_SOURCE_CONTINUE;
 }
 
 void
-disks_update (GsmApplication *app)
+disks_update (GsmDisksView *self)
 {
-  GtkListStore *list;
   glibtop_mountentry *entries;
   glibtop_mountlist mountlist;
   guint i;
-  gboolean show_all_fs;
 
-  list = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (app->disk_list)));
-  show_all_fs = app->settings->get_boolean (GSM_SETTING_SHOW_ALL_FS);
-  entries = glibtop_get_mountlist (&mountlist, show_all_fs);
+  entries = glibtop_get_mountlist (&mountlist, self->show_all_fs);
 
-  remove_old_disks (GTK_TREE_MODEL (list), entries, mountlist.number);
+  remove_old_disks (G_LIST_MODEL (self->list_store), entries, mountlist.number);
 
   for (i = 0; i < mountlist.number; i++)
-    add_disk (list, &entries[i], show_all_fs);
+    add_disk (G_LIST_MODEL (self->list_store), &entries[i], self->show_all_fs);
 
   g_free (entries);
 }
 
 static void
-init_volume_monitor (GsmApplication *app)
+init_volume_monitor (GsmDisksView *self)
 {
   GVolumeMonitor *monitor = g_volume_monitor_get ();
 
-  g_signal_connect (monitor, "mount-added", G_CALLBACK (mount_changed), app);
-  g_signal_connect (monitor, "mount-changed", G_CALLBACK (mount_changed), app);
-  g_signal_connect (monitor, "mount-removed", G_CALLBACK (mount_changed), app);
+  g_signal_connect (monitor, "mount-added", G_CALLBACK (mount_changed), self);
+  g_signal_connect (monitor, "mount-changed", G_CALLBACK (mount_changed), self);
+  g_signal_connect (monitor, "mount-removed", G_CALLBACK (mount_changed), self);
 }
 
 void
-disks_freeze (GsmApplication *app)
+disks_freeze (GsmDisksView *self)
 {
-  if (app->disk_timeout)
+  if (self->timeout)
     {
-      g_source_remove (app->disk_timeout);
-      app->disk_timeout = 0;
+      g_source_remove (self->timeout);
+      self->timeout = 0;
     }
 }
 
 void
-disks_thaw (GsmApplication *app)
+disks_thaw (GsmDisksView *self)
 {
-  if (app->disk_timeout)
+  if (self->timeout)
     return;
 
-  app->disk_timeout = g_timeout_add (app->config.disks_update_interval,
-                                     cb_timeout,
-                                     app);
+  self->timeout = g_timeout_add (self->update_interval,
+                                 cb_timeout,
+                                 self);
 }
 
 void
-disks_reset_timeout (GsmApplication *app)
+disks_reset_timeout (GsmDisksView *self)
 {
-  disks_freeze (app);
-  disks_thaw (app);
+  disks_freeze (self);
+  disks_thaw (self);
 }
 
 static void
-cb_disk_columns_changed (GtkTreeView *treeview,
-                         gpointer)
+cb_disk_columns_changed (GListModel *,
+                         guint,
+                         guint,
+                         guint,
+                         gpointer data)
 {
-  gsm_tree_view_save_state (GSM_TREE_VIEW (treeview));
+  GtkColumnView *column_view = static_cast<GtkColumnView *>(data);
+
+  save_columns_state (column_view, GSM_SETTINGS_CHILD_DISKS);
 }
 
+static void
+cb_show_all_fs (GSettings *,
+                gchar     *,
+                gpointer   data)
+{
+  GsmDisksView *self = (GsmDisksView *) data;
+
+  disks_update (self);
+  disks_reset_timeout (self);
+}
 
 static void
-open_dir (GtkTreeView *tree_view,
-          GtkTreePath *path,
-          GtkTreeViewColumn*,
-          gpointer)
+cb_timeout_changed (GSettings *,
+                    gchar     *,
+                    gpointer   data)
 {
-  GtkTreeIter iter;
-  GtkTreeModel *model;
-  char *dir, *url;
+  GsmDisksView *self = (GsmDisksView *) data;
 
-  model = gtk_tree_view_get_model (tree_view);
+  disks_reset_timeout (self);
+}
 
-  if (!gtk_tree_model_get_iter (model, &iter, path))
-    {
-      char *p;
-      p = gtk_tree_path_to_string (path);
-      g_warning ("Cannot get iter for path '%s'\n", p);
-      g_free (p);
-      return;
-    }
+static void
+open_dir (GtkColumnView *,
+          guint position,
+          gpointer data)
+{
+  GListModel *selection = static_cast<GListModel *>(data);
+  DisksData *disksdata;
+  gchar *dir, *url;
 
-  gtk_tree_model_get (model, &iter, DISK_DIR, &dir, -1);
+  disksdata = DISKS_DATA (g_list_model_get_object (selection, position));
+  g_object_get (disksdata, "directory", &dir, NULL);
 
   url = g_strdup_printf ("file://%s", dir);
 
-  GError*error = 0;
+  GError *error = 0;
 
   if (!g_app_info_launch_default_for_uri (url, NULL, &error))
     {
@@ -360,176 +463,103 @@ open_dir (GtkTreeView *tree_view,
   g_free (dir);
 }
 
-static void
-cb_disk_list_destroying (GtkWidget *self,
-                         gpointer   data)
+static char *
+format_size (gpointer,
+             guint64 size)
 {
-  g_signal_handlers_disconnect_by_func (self, (gpointer) cb_disk_columns_changed, data);
-
-  GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (self));
-
-  if (model != NULL)
-    g_signal_handlers_disconnect_by_func (gtk_tree_view_get_model (GTK_TREE_VIEW (self)),
-                                          (gpointer) cb_sort_changed,
-                                          data);
+  return g_format_size (size);
 }
 
-
-void
-create_disk_view (GsmApplication *app,
-                  GtkBuilder     *builder)
+static char*
+format_percentage (gpointer,
+                   gint percentage)
 {
-  GtkWidget *scrolled;
-  GsmTreeView *disk_tree;
-  GtkListStore *model;
-  GtkTreeViewColumn *col;
-  GtkCellRenderer *cell;
-  PangoAttrList *attrs = NULL;
-  guint i;
+  return g_strdup_printf ("%i%%", percentage);
+}
 
-  init_volume_monitor (app);
-  const gchar * const titles[] = {
-    N_("Device"),
-    N_("Directory"),
-    N_("Type"),
-    N_("Total"),
-    N_("Free"),
-    N_("Available"),
-    N_("Used")
-  };
+static void
+gsm_disks_view_class_init (GsmDisksViewClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  model = gtk_list_store_new (DISK_N_COLUMNS,       /* n columns */
-                              G_TYPE_STRING,        /* DISK_DEVICE */
-                              G_TYPE_STRING,        /* DISK_DIR */
-                              G_TYPE_STRING,        /* DISK_TYPE */
-                              G_TYPE_UINT64,        /* DISK_TOTAL */
-                              G_TYPE_UINT64,        /* DISK_FREE */
-                              G_TYPE_UINT64,        /* DISK_AVAIL */
-                              G_TYPE_UINT64,        /* DISK_USED */
-                              GDK_TYPE_TEXTURE,     /* DISK_ICON */
-                              G_TYPE_INT            /* DISK_USED_PERCENTAGE */
-                              );
-  disk_tree = gsm_tree_view_new (g_settings_get_child (app->settings->gobj (), GSM_SETTINGS_CHILD_DISKS), TRUE);
-  gtk_tree_view_set_model (GTK_TREE_VIEW (disk_tree), GTK_TREE_MODEL (model));
+  object_class->finalize = gsm_disks_view_finalize;
+  object_class->get_property = gsm_disks_view_get_property;
+  object_class->set_property = gsm_disks_view_set_property;
 
-  g_signal_connect (G_OBJECT (disk_tree), "row-activated", G_CALLBACK (open_dir), NULL);
-  app->disk_list = disk_tree;
+  properties [PROP_UPDATE_INTERVAL] =
+    g_param_spec_int ("update-interval",
+                      "Update interval",
+                      "Update interval",
+                      0, G_MAXINT32, 0,
+                      G_PARAM_READWRITE);
 
-  scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "disks_scrolled"));
-  gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (disk_tree));
-  g_object_unref (G_OBJECT (model));
+  properties [PROP_SHOW_ALL_FS] =
+    g_param_spec_boolean ("show-all-fs",
+                          "Show all fs",
+                          "Show all fs",
+                           FALSE,
+                           G_PARAM_READWRITE);
 
-  /* icon + device */
+  properties [PROP_TIMEOUT] =
+    g_param_spec_uint ("timeout",
+                       "Timeout",
+                       "Timeout",
+                       0, G_MAXUINT, 0,
+                       G_PARAM_READWRITE);
 
-  col = gtk_tree_view_column_new ();
-  cell = gtk_cell_renderer_pixbuf_new ();
+  g_object_class_install_properties (object_class, N_PROPS, properties);
 
-  gtk_tree_view_column_pack_start (col, cell, FALSE);
-  gtk_tree_view_column_set_min_width (col, 30);
-  gtk_tree_view_column_set_attributes (col, cell, "texture", DISK_ICON,
-                                       NULL);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  cell = gtk_cell_renderer_text_new ();
-  gtk_tree_view_column_pack_start (col, cell, FALSE);
-  gtk_tree_view_column_set_attributes (col, cell, "text", DISK_DEVICE,
-                                       NULL);
-  gtk_tree_view_column_set_title (col, _(titles[DISK_DEVICE]));
-  gtk_tree_view_column_set_sort_column_id (col, DISK_DEVICE);
-  gtk_tree_view_column_set_reorderable (col, TRUE);
-  gtk_tree_view_column_set_resizable (col, TRUE);
-  gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
-  gsm_tree_view_append_and_bind_column (GSM_TREE_VIEW (disk_tree), col);
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/gnome-system-monitor/data/disks.ui");
 
+  gtk_widget_class_bind_template_child (widget_class, GsmDisksView, column_view);
+  gtk_widget_class_bind_template_child (widget_class, GsmDisksView, selection);
+  gtk_widget_class_bind_template_child (widget_class, GsmDisksView, list_store);
 
-  /* sizes - used */
+  gtk_widget_class_bind_template_callback (widget_class, format_size);
+  gtk_widget_class_bind_template_callback (widget_class, format_percentage);
 
-  for (i = DISK_DIR; i <= DISK_AVAIL; i++)
-    {
-      cell = gtk_cell_renderer_text_new ();
-      col = gtk_tree_view_column_new ();
-      gtk_tree_view_column_pack_start (col, cell, TRUE);
-      gtk_tree_view_column_set_title (col, _(titles[i]));
-      gtk_tree_view_column_set_resizable (col, TRUE);
-      gtk_tree_view_column_set_sort_column_id (col, i);
-      gtk_tree_view_column_set_reorderable (col, TRUE);
-      gtk_tree_view_column_set_min_width (col, i == DISK_TYPE ? 40 : 72);
-      gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
-      gsm_tree_view_append_and_bind_column (GSM_TREE_VIEW (disk_tree), col);
-      switch (i)
-        {
-          case DISK_TOTAL:
-          case DISK_FREE:
-          case DISK_AVAIL:
-            gtk_tree_view_column_set_cell_data_func (col, cell,
-                                                     &procman::size_si_cell_data_func,
-                                                     GUINT_TO_POINTER (i),
-                                                     NULL);
+  gtk_widget_class_set_layout_manager_type (widget_class, GTK_TYPE_BIN_LAYOUT);
+}
 
-            attrs = make_tnum_attr_list ();
-            g_object_set (cell,
-                          "attributes", attrs,
-                          "xalign", 1.0f,
-                          NULL);
-            g_clear_pointer (&attrs, pango_attr_list_unref);
+static void
+gsm_disks_view_init (GsmDisksView *self)
+{
+  GSettings *settings;
+  GListModel *columns;
+  GtkSorter *sorter;
 
-            break;
+  gtk_widget_init_template (GTK_WIDGET (self));
 
-          default:
-            gtk_tree_view_column_set_attributes (col, cell,
-                                                 "text", i,
-                                                 NULL);
-            break;
-        }
-    }
+  settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
+  columns = gtk_column_view_get_columns (self->column_view);
+  sorter = gtk_column_view_get_sorter (self->column_view);
 
-  /* used + percentage */
+  init_volume_monitor (self);
 
-  col = gtk_tree_view_column_new ();
-  cell = gtk_cell_renderer_text_new ();
+  load_state (GTK_COLUMN_VIEW (self->column_view), GSM_SETTINGS_CHILD_DISKS);
 
-  attrs = make_tnum_attr_list ();
-  g_object_set (cell,
-                "attributes", attrs,
-                "xalign", 1.0f,
-                NULL);
-  g_clear_pointer (&attrs, pango_attr_list_unref);
+  g_settings_bind (settings, GSM_SETTING_DISKS_UPDATE_INTERVAL,
+                   G_OBJECT (self), "update-interval", G_SETTINGS_BIND_DEFAULT);
 
-  gtk_tree_view_column_set_min_width (col, 72);
-  gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
-  gtk_tree_view_column_pack_start (col, cell, FALSE);
-  gtk_tree_view_column_set_cell_data_func (col, cell,
-                                           &procman::size_si_cell_data_func,
-                                           GUINT_TO_POINTER (DISK_USED),
-                                           NULL);
-  gtk_tree_view_column_set_title (col, _(titles[DISK_USED]));
+  g_settings_bind (settings, GSM_SETTING_SHOW_ALL_FS,
+                   G_OBJECT (self), GSM_SETTING_SHOW_ALL_FS, G_SETTINGS_BIND_DEFAULT);
 
-  cell = gtk_cell_renderer_progress_new ();
-  gtk_cell_renderer_set_padding (cell, 4.0f, 4.0f);
-  gtk_tree_view_column_pack_start (col, cell, TRUE);
-  gtk_tree_view_column_set_attributes (col, cell, "value",
-                                       DISK_USED_PERCENTAGE, NULL);
-  gtk_tree_view_column_set_resizable (col, TRUE);
-  gtk_tree_view_column_set_sort_column_id (col, DISK_USED);
-  gtk_tree_view_column_set_reorderable (col, TRUE);
-  gsm_tree_view_append_and_bind_column (GSM_TREE_VIEW (disk_tree), col);
+  g_signal_connect (G_OBJECT (settings), g_strdup_printf ("changed::%s", GSM_SETTING_DISKS_UPDATE_INTERVAL),
+                    G_CALLBACK (cb_timeout_changed), self);
 
-  /* numeric sort */
+  g_signal_connect (G_OBJECT (settings), g_strdup_printf ("changed::%s", GSM_SETTING_SHOW_ALL_FS),
+                    G_CALLBACK (cb_show_all_fs), self);
 
-  gsm_tree_view_load_state (GSM_TREE_VIEW (disk_tree));
-  g_signal_connect (G_OBJECT (disk_tree), "destroy",
-                    G_CALLBACK (cb_disk_list_destroying),
-                    app);
+  g_object_unref (settings);
 
-  g_signal_connect (G_OBJECT (disk_tree), "columns-changed",
-                    G_CALLBACK (cb_disk_columns_changed), app);
+  g_signal_connect (G_OBJECT (self->column_view), "activate",
+                    G_CALLBACK (open_dir), self->selection);
 
-  g_signal_connect (G_OBJECT (model), "sort-column-changed",
-                    G_CALLBACK (cb_sort_changed), app);
+  g_signal_connect (G_OBJECT (columns), "items-changed",
+                    G_CALLBACK (cb_disk_columns_changed), self->column_view);
 
-  app->settings->signal_changed (GSM_SETTING_SHOW_ALL_FS).connect ([app](const Glib::ustring&) {
-    disks_update (app);
-    disks_reset_timeout (app);
-  });
-
-  gtk_widget_set_visible (GTK_WIDGET (disk_tree), TRUE);
+  g_signal_connect (G_OBJECT (sorter), "changed",
+                    G_CALLBACK (cb_sort_changed), self->column_view);
 }

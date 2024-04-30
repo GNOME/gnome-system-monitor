@@ -1,14 +1,32 @@
-#ifndef _GSM_DISKS_H_
-#define _GSM_DISKS_H_
+#pragma once
 
-#include "application.h"
+#include <gtk/gtk.h>
 
-void create_disk_view (GsmApplication *app,
-                       GtkBuilder     *builder);
+G_BEGIN_DECLS
 
-void disks_update (GsmApplication *app);
-void disks_freeze (GsmApplication *app);
-void disks_thaw (GsmApplication *app);
-void disks_reset_timeout (GsmApplication *app);
+#define GSM_TYPE_DISKS_VIEW (gsm_disks_view_get_type ())
 
-#endif /* _GSM_DISKS_H_ */
+G_DECLARE_FINAL_TYPE (GsmDisksView, gsm_disks_view, GSM, DISKS_VIEW, GtkWidget)
+
+GsmDisksView *
+gsm_disks_view_new (void);
+
+guint
+gsm_disks_view_get_timeout (GsmDisksView *self);
+
+GtkColumnView *
+gsm_disks_view_get_column_view (GsmDisksView *self);
+
+void
+disks_update (GsmDisksView *self);
+
+void
+disks_freeze (GsmDisksView *self);
+
+void
+disks_thaw (GsmDisksView *self);
+
+void
+disks_reset_timeout (GsmDisksView *self);
+
+G_END_DECLS

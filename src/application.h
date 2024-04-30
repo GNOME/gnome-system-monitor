@@ -10,6 +10,7 @@
 
 struct LoadGraph;
 
+#include "disks.h"
 #include "smooth_refresh.h"
 #include "prettytable.h"
 #include "legacy/treeview.h"
@@ -34,7 +35,6 @@ struct ProcConfig
     : current_tab (),
     update_interval (0),
     graph_update_interval (0),
-    disks_update_interval (0),
     graph_data_points (0),
     mem_color (),
     swap_color (),
@@ -60,7 +60,6 @@ struct ProcConfig
   Glib::ustring current_tab;
   int update_interval;
   int graph_update_interval;
-  int disks_update_interval;
   int graph_data_points;
   GdkRGBA cpu_color[GLIBTOP_NCPU];
   GdkRGBA mem_color;
@@ -263,9 +262,7 @@ LoadGraph        *mem_graph;
 LoadGraph        *net_graph;
 LoadGraph        *disk_graph;
 
-GsmTreeView      *disk_list;
-
-guint disk_timeout;
+GsmDisksView     *disk_list;
 
 GtkTreeSelection *selection;
 

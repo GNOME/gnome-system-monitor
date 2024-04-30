@@ -99,6 +99,42 @@ create_field_page (GtkBuilder  *builder,
 }
 
 static void
+create_field_page (GtkBuilder    *builder,
+                   GtkColumnView *column_view,
+                   const gchar   *widgetname)
+{
+  GListModel *columns;
+  AdwPreferencesGroup *group;
+
+  columns = gtk_column_view_get_columns (column_view);
+  group = ADW_PREFERENCES_GROUP (gtk_builder_get_object (builder, widgetname));
+  auto settings = GsmApplication::get ()->settings->get_child (widgetname);
+
+  for (guint i = 0; i < g_list_model_get_n_items (columns); i++)
+    {
+      GtkColumnViewColumn *column = GTK_COLUMN_VIEW_COLUMN (g_list_model_get_object (columns, i));
+      const gchar *title;
+      const gchar *column_id;
+      GtkWidget *row;
+
+      title = gtk_column_view_column_get_title (column);
+      if (!title)
+        title = _("Icon");
+
+      column_id = gtk_column_view_column_get_id (column);
+      row = adw_switch_row_new ();
+      adw_preferences_row_set_title (ADW_PREFERENCES_ROW (row), title);
+
+      auto key = Glib::ustring::compose ("col-%1-visible", column_id);
+
+      g_settings_bind (settings->gobj (), key.c_str (), G_OBJECT (column), "visible", G_SETTINGS_BIND_DEFAULT);
+      g_settings_bind (settings->gobj (), key.c_str (), G_OBJECT (row), "active", G_SETTINGS_BIND_DEFAULT);
+
+      adw_preferences_group_add (group, GTK_WIDGET (row));
+    }
+}
+
+static void
 switch_preferences_page (GtkBuilder   *builder,
                          AdwViewStack *stack)
 {
@@ -223,7 +259,7 @@ create_preferences_dialog (GsmApplication *app)
                    bits_total_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  update = (gfloat) app->config.disks_update_interval;
+  update = (gfloat) g_settings_get_int (app->settings->gobj (), GSM_SETTING_DISKS_UPDATE_INTERVAL);
   spin_button = ADW_SPIN_ROW (gtk_builder_get_object (builder, "devices_interval_spinner"));
   adjustment = adw_spin_row_get_adjustment (spin_button);
   gtk_adjustment_configure (adjustment, update / 1000.0, 1.0,
@@ -236,7 +272,8 @@ create_preferences_dialog (GsmApplication *app)
                    check_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  create_field_page (builder, GTK_TREE_VIEW (app->disk_list), GSM_SETTINGS_CHILD_DISKS);
+  create_field_page (builder, gsm_disks_view_get_column_view (app->disk_list),
+                     GSM_SETTINGS_CHILD_DISKS);
 
   g_signal_connect (G_OBJECT (prefs_dialog), "closed",
                     G_CALLBACK (prefs_dialog_close_request), NULL);
