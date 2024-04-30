@@ -850,12 +850,6 @@ format_network_rate (guint64 rate)
 }
 }
 
-Glib::ustring
-get_monospace_system_font_name ()
-{
-  return Gio::Settings::create ("org.gnome.desktop.interface")->get_string ("monospace-font-name");
-}
-
 
 GtkLabel *
 init_tnum_label (gint     char_width,

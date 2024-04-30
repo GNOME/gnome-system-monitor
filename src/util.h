@@ -32,7 +32,6 @@ procman_debug_real (const char *file,
 
 #define procman_debug(FMT, ...) procman_debug_real (__FILE__, __LINE__, __func__, FMT, ## __VA_ARGS__)
 
-Glib::ustring                      get_monospace_system_font_name (void);
 GtkLabel *                         init_tnum_label (gint     char_width,
                                                     GtkAlign halign);
 GtkLabel *                         make_tnum_label (void);

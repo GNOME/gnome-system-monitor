@@ -1,26 +1,493 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
+  <object class="MemMapsInfo" type-func="memmaps_info_get_type"/>
   <object class="AdwWindow" id="memmaps_dialog">
+    <property name="width-request">360</property>
+    <property name="height-request">294</property>
     <property name="default-width">620</property>
     <property name="default-height">400</property>
     <property name="destroy-with-parent">True</property>
-    <property name="modal">True</property>
-    <property name="title" translatable="yes">Memory Maps</property>
     <property name="content">
       <object class="AdwToolbarView">
         <child type="top">
-          <object class="AdwHeaderBar"/>
+          <object class="AdwHeaderBar">
+            <property name="title-widget">
+              <object class="AdwWindowTitle" id="window_title">
+                <property name="title" translatable="yes">Memory Maps</property>
+              </object>
+            </property>
+          </object>
         </child>
         <property name="content">
-          <object class="GtkBox" id="dialog_box">
-            <property name="margin-top">12</property>
-            <property name="margin-bottom">12</property>
-            <property name="margin-start">12</property>
-            <property name="margin-end">12</property>
+          <object class="GtkBox">
             <property name="orientation">vertical</property>
-            <property name="spacing">6</property>
             <child>
-              <object class="GtkScrolledWindow" id="scrolled"/>
+              <object class="GtkScrolledWindow">
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
+                <child>
+                  <object class="GtkColumnView" id="memmaps_view">
+                    <property name="model">
+                      <object class="GtkNoSelection">
+                        <property name="model">memmaps_model</property>
+                      </object>
+                    </property>
+                    <child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes">Filename</property>
+                        <property name="expand">True</property>
+                        <property name="resizable">True</property>
+                        <property name="sorter">
+                          <object class="GtkStringSorter">
+                            <property name="expression">
+                              <lookup name="filename" type="MemMapsInfo"/>
+                            </property>
+                          </object>
+                        </property>
+                        <property name="factory">
+                          <object class="GtkBuilderListItemFactory">
+                            <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <attributes>
+      <attribute name="font-features" value="tnum=1"/>
+    </attributes>
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="filename" type="MemMapsInfo">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                         ]]></property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes" comments="virtual memory start">VM Start</property>
+                        <property name="expand">True</property>
+                        <property name="resizable">True</property>
+                        <property name="sorter">
+                          <object class="GtkStringSorter">
+                            <property name="expression">
+                              <lookup name="vmstart" type="MemMapsInfo"/>
+                            </property>
+                          </object>
+                        </property>
+                        <property name="factory">
+                          <object class="GtkBuilderListItemFactory">
+                            <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <attributes>
+      <attribute name="font-features" value="tnum=1"/>
+    </attributes>
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="vmstart" type="MemMapsInfo">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+    <style>
+      <class name="monospace"/>
+    </style>
+  </object>
+</property>
+</template>
+</interface>
+                         ]]></property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes" comments="virtual memory end">VM End</property>
+                        <property name="expand">True</property>
+                        <property name="resizable">True</property>
+                        <property name="sorter">
+                          <object class="GtkStringSorter">
+                            <property name="expression">
+                              <lookup name="vmend" type="MemMapsInfo"/>
+                            </property>
+                          </object>
+                        </property>
+                        <property name="factory">
+                          <object class="GtkBuilderListItemFactory">
+                            <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <attributes>
+      <attribute name="font-features" value="tnum=1"/>
+    </attributes>
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="vmend" type="MemMapsInfo">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+    <style>
+      <class name="monospace"/>
+    </style>
+  </object>
+</property>
+</template>
+</interface>
+                         ]]></property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes" comments="virtual memory syze">VM Size</property>
+                        <property name="expand">True</property>
+                        <property name="resizable">True</property>
+                        <property name="sorter">
+                          <object class="GtkStringSorter">
+                            <property name="expression">
+                              <lookup name="vmsize" type="MemMapsInfo"/>
+                            </property>
+                          </object>
+                        </property>
+                        <property name="factory">
+                          <object class="GtkBuilderListItemFactory">
+                            <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">1</property>
+    <binding name="label">
+      <lookup name="vmsize" type="MemMapsInfo">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                         ]]></property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes">Flags</property>
+                        <property name="expand">True</property>
+                        <property name="resizable">True</property>
+                        <property name="sorter">
+                          <object class="GtkStringSorter">
+                            <property name="expression">
+                              <lookup name="flags" type="MemMapsInfo"/>
+                            </property>
+                          </object>
+                        </property>
+                        <property name="factory">
+                          <object class="GtkBuilderListItemFactory">
+                            <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <attributes>
+      <attribute name="font-features" value="tnum=1"/>
+    </attributes>
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="flags" type="MemMapsInfo">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+    <style>
+      <class name="monospace"/>
+    </style>
+  </object>
+</property>
+</template>
+</interface>
+                         ]]></property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes" comments="virtual memory offset">VM Offset</property>
+                        <property name="expand">True</property>
+                        <property name="resizable">True</property>
+                        <property name="sorter">
+                          <object class="GtkStringSorter">
+                            <property name="expression">
+                              <lookup name="vmoffset" type="MemMapsInfo"/>
+                            </property>
+                          </object>
+                        </property>
+                        <property name="factory">
+                          <object class="GtkBuilderListItemFactory">
+                            <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <attributes>
+      <attribute name="font-features" value="tnum=1"/>
+    </attributes>
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="vmoffset" type="MemMapsInfo">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+    <style>
+      <class name="monospace"/>
+    </style>
+  </object>
+</property>
+</template>
+</interface>
+                         ]]></property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes" comments="memory that has not been modified since it has been allocated">Private Clean</property>
+                        <property name="expand">True</property>
+                        <property name="resizable">True</property>
+                        <property name="sorter">
+                          <object class="GtkStringSorter">
+                            <property name="expression">
+                              <lookup name="privateclean" type="MemMapsInfo"/>
+                            </property>
+                          </object>
+                        </property>
+                        <property name="factory">
+                          <object class="GtkBuilderListItemFactory">
+                            <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">1</property>
+    <binding name="label">
+      <lookup name="privateclean" type="MemMapsInfo">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                         ]]></property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes" comments="memory that has been modified since it has been allocated">Private Dirty</property>
+                        <property name="expand">True</property>
+                        <property name="resizable">True</property>
+                        <property name="sorter">
+                          <object class="GtkStringSorter">
+                            <property name="expression">
+                              <lookup name="privatedirty" type="MemMapsInfo"/>
+                            </property>
+                          </object>
+                        </property>
+                        <property name="factory">
+                          <object class="GtkBuilderListItemFactory">
+                            <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">1</property>
+    <binding name="label">
+      <lookup name="privatedirty" type="MemMapsInfo">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                         ]]></property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes" comments="shared memory that has not been modified since it has been allocated">Shared Clean</property>
+                        <property name="expand">True</property>
+                        <property name="resizable">True</property>
+                        <property name="sorter">
+                          <object class="GtkStringSorter">
+                            <property name="expression">
+                              <lookup name="sharedclean" type="MemMapsInfo"/>
+                            </property>
+                          </object>
+                        </property>
+                        <property name="factory">
+                          <object class="GtkBuilderListItemFactory">
+                            <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">1</property>
+    <binding name="label">
+      <lookup name="sharedclean" type="MemMapsInfo">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                         ]]></property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes" comments="shared memory that has been modified since it has been allocated">Shared Dirty</property>
+                        <property name="expand">True</property>
+                        <property name="resizable">True</property>
+                        <property name="sorter">
+                          <object class="GtkStringSorter">
+                            <property name="expression">
+                              <lookup name="shareddirty" type="MemMapsInfo"/>
+                            </property>
+                          </object>
+                        </property>
+                        <property name="factory">
+                          <object class="GtkBuilderListItemFactory">
+                            <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">1</property>
+    <binding name="label">
+      <lookup name="shareddirty" type="MemMapsInfo">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                         ]]></property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes">Device</property>
+                        <property name="expand">True</property>
+                        <property name="resizable">True</property>
+                        <property name="sorter">
+                          <object class="GtkStringSorter">
+                            <property name="expression">
+                              <lookup name="device" type="MemMapsInfo"/>
+                            </property>
+                          </object>
+                        </property>
+                        <property name="factory">
+                          <object class="GtkBuilderListItemFactory">
+                            <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <attributes>
+      <attribute name="font-features" value="tnum=1"/>
+    </attributes>
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="device" type="MemMapsInfo">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                         ]]></property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes">Inode</property>
+                        <property name="expand">True</property>
+                        <property name="resizable">True</property>
+                        <property name="sorter">
+                          <object class="GtkNumericSorter">
+                            <property name="expression">
+                              <lookup name="inode" type="MemMapsInfo"/>
+                            </property>
+                          </object>
+                        </property>
+                        <property name="factory">
+                          <object class="GtkBuilderListItemFactory">
+                            <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <attributes>
+      <attribute name="font-features" value="tnum=1"/>
+    </attributes>
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="inode" type="MemMapsInfo">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                         ]]></property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
             </child>
           </object>
         </property>
@@ -32,10 +499,18 @@
         <child>
           <object class="GtkShortcut" id="shortcut">
             <property name="trigger">Escape</property>
-            <property name="action">action(window.close)</property>
+            <property name="action">action(memmaps.close)</property>
           </object>
         </child>
       </object>
     </child>
   </object>
+  <object class="GtkSortListModel" id="memmaps_model">
+    <property name="model">memmaps_store</property>
+    <property name="incremental">True</property>
+    <binding name="sorter">
+      <lookup name="sorter">memmaps_view</lookup>
+    </binding>
+  </object>
+  <object class="GListStore" id="memmaps_store"/>
 </interface>
