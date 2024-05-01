@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2024-04-29 06:09+0000\n"
-"PO-Revision-Date: 2024-04-29 15:25+0200\n"
+"POT-Creation-Date: 2024-04-30 21:22+0000\n"
+"PO-Revision-Date: 2024-05-01 11:07+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -302,13 +302,65 @@ msgstr "Opravilo"
 msgid "PID"
 msgstr "PID"
 
-#: data/lsof.ui:145 src/memmaps.cpp:332
+#: data/lsof.ui:145 data/memmaps.ui:37
 msgid "Filename"
 msgstr "Ime datoteke"
 
-#: data/memmaps.ui:8
+#: data/memmaps.ui:16
 msgid "Memory Maps"
 msgstr "Zemljevidi pomnilnika"
+
+#. virtual memory start
+#: data/memmaps.ui:75
+msgid "VM Start"
+msgstr "Začetek navideznega pomnilnika"
+
+#. virtual memory end
+#: data/memmaps.ui:116
+msgid "VM End"
+msgstr "Konec navideznega pomnilnika"
+
+#. virtual memory syze
+#: data/memmaps.ui:157
+msgid "VM Size"
+msgstr "Velikost navideznega pomnilnika"
+
+#: data/memmaps.ui:192
+msgid "Flags"
+msgstr "Zastavice"
+
+#. virtual memory offset
+#: data/memmaps.ui:233
+msgid "VM Offset"
+msgstr "Odmik navideznega pomnilnika"
+
+#. memory that has not been modified since it has been allocated
+#: data/memmaps.ui:274
+msgid "Private Clean"
+msgstr "Nespremenjen pomnilnik"
+
+#. memory that has been modified since it has been allocated
+#: data/memmaps.ui:309
+msgid "Private Dirty"
+msgstr "Spremenjen pomnilnik"
+
+#. shared memory that has not been modified since it has been allocated
+#: data/memmaps.ui:344
+msgid "Shared Clean"
+msgstr "Spremenjen skupni pomnilnik"
+
+#. shared memory that has been modified since it has been allocated
+#: data/memmaps.ui:379
+msgid "Shared Dirty"
+msgstr "Nespremenjen skupni pomnilnik"
+
+#: data/memmaps.ui:414 src/disks.cpp:392
+msgid "Device"
+msgstr "Naprava"
+
+#: data/memmaps.ui:452
+msgid "Inode"
+msgstr "Inode"
 
 #: data/menus.ui:7 data/menus.ui:62
 msgctxt "Menu item to Open Search for Open Files dialog"
@@ -662,10 +714,6 @@ msgstr "Pokaži zavihek datotečnih sistemov"
 msgid "Show the application’s version"
 msgstr "Pokaži različico programa"
 
-#: src/disks.cpp:392 src/memmaps.cpp:354
-msgid "Device"
-msgstr "Naprava"
-
 #: src/disks.cpp:393
 msgid "Directory"
 msgstr "Mapa"
@@ -841,63 +889,6 @@ msgstr[0] "%d skladnih odprtih datotek"
 msgstr[1] "%d skladna odprta datoteka"
 msgstr[2] "%d skladni odprti datoteki"
 msgstr[3] "%d skladne odprte datoteke"
-
-#. xgettext: virtual memory start
-#: src/memmaps.cpp:334
-msgid "VM Start"
-msgstr "Začetek navideznega pomnilnika"
-
-#. xgettext: virtual memory end
-#: src/memmaps.cpp:336
-msgid "VM End"
-msgstr "Konec navideznega pomnilnika"
-
-#. xgettext: virtual memory syze
-#: src/memmaps.cpp:338
-msgid "VM Size"
-msgstr "Velikost navideznega pomnilnika"
-
-#: src/memmaps.cpp:339
-msgid "Flags"
-msgstr "Zastavice"
-
-#. xgettext: virtual memory offset
-#: src/memmaps.cpp:341
-msgid "VM Offset"
-msgstr "Odmik navideznega pomnilnika"
-
-#. xgettext: memory that has not been modified since
-#. it has been allocated
-#: src/memmaps.cpp:344
-msgid "Private clean"
-msgstr "Nespremenjen pomnilnik"
-
-#. xgettext: memory that has been modified since it
-#. has been allocated
-#: src/memmaps.cpp:347
-msgid "Private dirty"
-msgstr "Spremenjen pomnilnik"
-
-#. xgettext: shared memory that has not been modified
-#. since it has been allocated
-#: src/memmaps.cpp:350
-msgid "Shared clean"
-msgstr "Spremenjen skupni pomnilnik"
-
-#. xgettext: shared memory that has been modified
-#. since it has been allocated
-#: src/memmaps.cpp:353
-msgid "Shared dirty"
-msgstr "nespremenjen skupni pomnilnik"
-
-#: src/memmaps.cpp:355
-msgid "Inode"
-msgstr "Inode"
-
-#: src/memmaps.cpp:484
-#, c-format
-msgid "_Memory maps for process “%s” (PID %u):"
-msgstr "_Karte pomnilnika za opravilo »%s« (PID %u):"
 
 #: src/openfiles.cpp:29
 msgid "file"
@@ -1669,6 +1660,3 @@ msgstr "Zelo nizka prednost"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
-
-#~ msgid "_Files opened by process “%s” (PID %u):"
-#~ msgstr "_Datoteke, odprte zaradi opravila »%s« (PID %u):"
