@@ -242,7 +242,6 @@ ProcList processes;
 ProcConfig config;
 PrettyTable      *pretty_table;
 GsmTreeView      *tree;
-GtkRevealer      *proc_actionbar_revealer;
 GtkPopover       *proc_popover_menu;
 GtkButton        *refresh_button;
 GtkButton        *end_process_button;

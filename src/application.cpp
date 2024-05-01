@@ -364,7 +364,6 @@ GsmApplication::GsmApplication()
   config (),
   pretty_table (NULL),
   tree (NULL),
-  proc_actionbar_revealer (NULL),
   proc_popover_menu (NULL),
   refresh_button (NULL),
   end_process_button (NULL),

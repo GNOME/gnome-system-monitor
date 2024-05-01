@@ -133,7 +133,7 @@ cb_row_selected (GtkTreeSelection *selection,
 
   app->selection = selection;
 
-  gchar *button_text = ngettext ("_End Process", "_End Processes", selected_count);
+  gchar *button_text = ngettext ("_End Process…", "_End Processes…", selected_count);
 
   gtk_button_set_label (GTK_BUTTON (app->end_process_button), button_text);
 

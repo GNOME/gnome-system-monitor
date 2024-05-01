@@ -90,8 +90,6 @@ create_proc_view (GsmApplication *app,
 
   gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (proctree));
 
-  app->proc_actionbar_revealer = GTK_REVEALER (gtk_builder_get_object (builder, "proc_actionbar_revealer"));
-
   /* create popover_menu for the processes tab */
   GMenuModel *menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-popup-menu"));
 
@@ -801,14 +799,8 @@ cb_main_window_suspended (GtkWindow*,
 void
 create_main_window (GsmApplication *app)
 {
-  GdkDisplay *display;
-  GdkMonitor *monitor;
-  GdkRectangle monitor_geometry;
-  GdkSurface *surface;
   GtkBuilder *builder = gtk_builder_new ();
-  GtkNative *native;
   GError *err = NULL;
-  int width, height;
 
   gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/interface.ui", &err);
   if (err != NULL)
@@ -972,11 +964,8 @@ update_sensitivity (GsmApplication *app)
                                    processes_sensitivity & selected_sensitivity);
     }
 
-  gtk_revealer_set_reveal_child (GTK_REVEALER (app->proc_actionbar_revealer),
-                                 selected_sensitivity);
+  gtk_widget_set_visible (GTK_WIDGET (app->end_process_button),
+                          selected_sensitivity);
 
-  // Scrolls the table to selected row. Useful when the last row is obstructed by the revealer
-  guint duration_ms = gtk_revealer_get_transition_duration (GTK_REVEALER (app->proc_actionbar_revealer));
-
-  g_timeout_add (duration_ms, scroll_to_selection, app);
+  scroll_to_selection (app);
 }

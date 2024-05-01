@@ -73,50 +73,39 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkScrolledWindow" id="processes_scrolled">
-                        <property name="hexpand">True</property>
-                        <property name="vexpand">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkRevealer" id="proc_actionbar_revealer">
-                        <property name="transition-type">slide-up</property>
-                        <property name="child">
-                          <object class="GtkActionBar" id="proc_actionbar">
-                            <child>
-                              <object class="GtkButton" id="end_process_button">
-                                <property name="label" translatable="yes" context="interface">_End Process</property>
-                                <property name="receives-default">True</property>
-                                <property name="halign">start</property>
-                                <property name="use-underline">True</property>
-                                <property name="action-name">win.send-signal-term</property>
-                                <child>
-                                  <object class="GtkShortcutController">
-                                    <property name="scope">managed</property>
-                                    <child>
-                                      <object class="GtkShortcut">
-                                        <property name="trigger">Delete</property>
-                                        <property name="action">activate</property>
-                                      </object>
-                                    </child>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-                            <child type="end">
-                              <object class="GtkButton" id="proc_properties_button">
-                                <property name="tooltip-text" translatable="yes">Process Properties</property>
-                                <property name="action-name">win.process-properties</property>
-                                <child>
-                                  <object class="GtkImage" id="proc_properties_image">
-                                    <property name="icon-size">normal</property>
-                                    <property name="icon-name">document-properties-symbolic</property>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
+                      <object class="GtkOverlay">
+                        <child>
+                          <object class="GtkScrolledWindow" id="processes_scrolled">
+                            <property name="hexpand">True</property>
+                            <property name="vexpand">True</property>
                           </object>
-                        </property>
+                        </child>
+                        <child type="overlay">
+                          <object class="GtkButton" id="end_process_button">
+                            <property name="label" translatable="yes" context="interface">_End Process…</property>
+                            <property name="receives-default">True</property>
+                            <property name="use-underline">True</property>
+                            <property name="halign">center</property>
+                            <property name="valign">end</property>
+                            <property name="action-name">win.send-signal-term</property>
+                            <property name="margin-bottom">12</property>
+                            <child>
+                              <object class="GtkShortcutController">
+                                <property name="scope">managed</property>
+                                <child>
+                                  <object class="GtkShortcut">
+                                    <property name="trigger">Delete</property>
+                                    <property name="action">activate</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="pill"/>
+                              <class name="destructive-action"/>
+                            </style>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>
