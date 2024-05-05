@@ -16,9 +16,9 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2024-02-07 14:29+0000\n"
-"PO-Revision-Date: 2024-02-13 11:15+0100\n"
-"Last-Translator: Marek Černocký <marek@manet.cz>\n"
+"POT-Creation-Date: 2024-04-30 21:22+0000\n"
+"PO-Revision-Date: 2024-05-06 00:44+0200\n"
+"Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -212,82 +212,83 @@ msgstr "_Procesy"
 
 #: data/interface.ui:67
 msgid "Search processes and users"
-msgstr "Hledat procesy a uživatele"
+msgstr "hledat procesy a uživatele"
 
-#: data/interface.ui:88 src/procdialogs.cpp:150 src/proctable.cpp:136
+#: data/interface.ui:88
+#, fuzzy
+#| msgid "_End Process"
+#| msgid_plural "_End Processes"
+msgctxt "interface"
 msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "U_končit proces"
-msgstr[1] "U_končit procesy"
-msgstr[2] "U_končit procesy"
+msgstr "U_končit proces"
 
-#: data/interface.ui:97
+#: data/interface.ui:108
 msgid "Process Properties"
 msgstr "Vlastnosti procesu"
 
-#: data/interface.ui:119
+#: data/interface.ui:130
 msgid "_Resources"
 msgstr "P_rostředky"
 
-#: data/interface.ui:164 data/preferences.ui:114 src/interface.cpp:283
-#: src/procproperties.cpp:77
+#: data/interface.ui:175 data/preferences.ui:99 data/procproperties.ui:86
+#: src/interface.cpp:283
 msgid "CPU"
 msgstr "CPU"
 
-#: data/interface.ui:195 src/interface.cpp:321 src/procproperties.cpp:71
+#: data/interface.ui:206 data/procproperties.ui:97 src/interface.cpp:321
 #: src/proctable.cpp:359
 msgid "Memory"
 msgstr "Paměť"
 
-#: data/interface.ui:206 src/interface.cpp:333
+#: data/interface.ui:217 src/interface.cpp:333
 msgid "Swap"
 msgstr "Odkládací prostor"
 
-#: data/interface.ui:223 data/preferences.ui:125
+#: data/interface.ui:234 data/preferences.ui:110
 msgid "Memory and Swap"
 msgstr "Paměť a odkládací prostor"
 
-#: data/interface.ui:254 src/interface.cpp:362
+#: data/interface.ui:265 src/interface.cpp:362
 msgid "Receiving"
 msgstr "Příjem"
 
-#: data/interface.ui:264
+#: data/interface.ui:275
 msgid "Total Received"
 msgstr "Celkem přijato"
 
-#: data/interface.ui:274 src/interface.cpp:380
+#: data/interface.ui:285 src/interface.cpp:380
 msgid "Sending"
 msgstr "Odesílání"
 
-#: data/interface.ui:284
+#: data/interface.ui:295
 msgid "Total Sent"
 msgstr "Celkem odesláno"
 
-#: data/interface.ui:301 data/preferences.ui:142
+#: data/interface.ui:312 data/preferences.ui:127
 msgid "Network"
 msgstr "Síť"
 
-#: data/interface.ui:332 src/interface.cpp:415
+#: data/interface.ui:343 src/interface.cpp:415
 msgid "Reading"
 msgstr "Čtení"
 
-#: data/interface.ui:342
+#: data/interface.ui:353
 msgid "Total Read"
 msgstr "Celkem přečteno"
 
-#: data/interface.ui:352 src/interface.cpp:433
+#: data/interface.ui:363 src/interface.cpp:433
 msgid "Writing"
 msgstr "Zápis"
 
-#: data/interface.ui:362
+#: data/interface.ui:373
 msgid "Total Written"
 msgstr "Celkem zapsáno"
 
-#: data/interface.ui:379
+#: data/interface.ui:390
 msgid "Disk"
 msgstr "Disk"
 
-#: data/interface.ui:399
+#: data/interface.ui:410
 msgid "_File Systems"
 msgstr "_Souborové systémy"
 
@@ -304,9 +305,81 @@ msgstr "Filtrovat soubory podle názvu"
 msgid "Case insensitive"
 msgstr "Rozlišovat velikosti písmen"
 
-#: data/memmaps.ui:8
+#: data/lsof.ui:63
+msgid "Process"
+msgstr "Proces"
+
+#: data/lsof.ui:111
+msgid "PID"
+msgstr "PID"
+
+#: data/lsof.ui:145 data/memmaps.ui:37
+msgid "Filename"
+msgstr "Název souboru"
+
+#: data/memmaps.ui:16
 msgid "Memory Maps"
 msgstr "Mapy paměti"
+
+#. virtual memory start
+#: data/memmaps.ui:75
+msgid "VM Start"
+msgstr "Začátek VP"
+
+#. virtual memory end
+#: data/memmaps.ui:116
+msgid "VM End"
+msgstr "Konec VP"
+
+#. virtual memory syze
+#: data/memmaps.ui:157
+msgid "VM Size"
+msgstr "Velikost VP"
+
+#: data/memmaps.ui:192
+msgid "Flags"
+msgstr "Příznaky"
+
+#. virtual memory offset
+#: data/memmaps.ui:233
+msgid "VM Offset"
+msgstr "Posun VM"
+
+#. memory that has not been modified since it has been allocated
+#: data/memmaps.ui:274
+#, fuzzy
+#| msgid "Private clean"
+msgid "Private Clean"
+msgstr "Soukromá čistá paměť"
+
+#. memory that has been modified since it has been allocated
+#: data/memmaps.ui:309
+#, fuzzy
+#| msgid "Private dirty"
+msgid "Private Dirty"
+msgstr "Soukromá špinavá paměť"
+
+#. shared memory that has not been modified since it has been allocated
+#: data/memmaps.ui:344
+#, fuzzy
+#| msgid "Shared clean"
+msgid "Shared Clean"
+msgstr "Sdílená čistá paměť"
+
+#. shared memory that has been modified since it has been allocated
+#: data/memmaps.ui:379
+#, fuzzy
+#| msgid "Shared dirty"
+msgid "Shared Dirty"
+msgstr "Sdílená špinavá paměť"
+
+#: data/memmaps.ui:414 src/disks.cpp:392
+msgid "Device"
+msgstr "Zařízení"
+
+#: data/memmaps.ui:452
+msgid "Inode"
+msgstr "Inode"
 
 #: data/menus.ui:7 data/menus.ui:62
 msgctxt "Menu item to Open Search for Open Files dialog"
@@ -394,25 +467,46 @@ msgstr "Volitelná"
 msgid "Set _Affinity…"
 msgstr "Připnout k _CPU…"
 
-#: data/menus.ui:147
+#: data/menus.ui:147 data/procproperties.ui:217
 msgid "_Stop…"
 msgstr "Za_stavit…"
 
-#: data/menus.ui:151
-msgid "_Continue"
-msgstr "_Pokračovat"
+#: data/menus.ui:151 data/procproperties.ui:265
+#, fuzzy
+#| msgid "_Resources"
+msgid "_Resume"
+msgstr "P_rostředky"
 
-#: data/menus.ui:155
+#: data/menus.ui:155 data/procproperties.ui:261
 msgid "_Terminate…"
 msgstr "U_končit…"
 
-#: data/menus.ui:159
-msgid "_Kill…"
-msgstr "Za_bít…"
+#: data/menus.ui:159 data/procproperties.ui:224
+#, fuzzy
+#| msgid "_Stop…"
+msgid "_Force Stop…"
+msgstr "Za_stavit…"
 
-#: data/openfiles.ui:4
+#: data/openfiles.ui:16
 msgid "Open Files"
 msgstr "Otevřené soubory"
+
+#: data/openfiles.ui:37
+#, fuzzy
+#| msgid "FD"
+msgctxt ""
+"FD here means File Descriptor. Use a short translation if possible, and at "
+"most 2-3 characters"
+msgid "FD"
+msgstr "FD"
+
+#: data/openfiles.ui:71 src/disks.cpp:394 src/legacy/gsm_color_button.c:612
+msgid "Type"
+msgstr "Typ"
+
+#: data/openfiles.ui:105
+msgid "Object"
+msgstr "Objekt"
 
 #: data/org.gnome.gnome-system-monitor.policy.in.in:11
 msgid "Kill process"
@@ -439,87 +533,162 @@ msgstr ""
 "sledování;systém;proces;CPU;procesor;paměť;RAM;síť;historie;využití;zátěž;"
 "výkon;úloha;úlohy;správa;aktivita;činnost;"
 
-#: data/preferences.ui:13
+#: data/preferences.ui:12
 msgid "Processes"
 msgstr "Procesy"
 
-#: data/preferences.ui:17 data/preferences.ui:80 data/preferences.ui:165
+#: data/preferences.ui:16 data/preferences.ui:65 data/preferences.ui:150
 msgid "Behavior"
 msgstr "Chování"
 
-#: data/preferences.ui:21 data/preferences.ui:84 data/preferences.ui:169
+#: data/preferences.ui:20 data/preferences.ui:69 data/preferences.ui:154
 msgid "_Update Interval in Seconds"
 msgstr "Interval akt_ualizace v sekundách"
 
-#: data/preferences.ui:29
+#: data/preferences.ui:28
 msgid "Enable _Smooth Refresh"
 msgstr "Povolit _plynulé aktualizování"
 
-#: data/preferences.ui:35
-msgid "Alert Before Ending or _Killing Processes"
+#: data/preferences.ui:34
+#, fuzzy
+#| msgid "Alert Before Ending or _Killing Processes"
+msgid "Alert Before Ending or _Force Stopping Processes"
 msgstr "Varovat před u_končením nebo zabitím procesů"
 
-#: data/preferences.ui:41
+#: data/preferences.ui:40
 msgid "_Divide CPU Usage by CPU Count"
 msgstr "_Dělit vytížení procesoru počtem procesorů"
 
-#: data/preferences.ui:47
+#: data/preferences.ui:46
 msgid "Show Memory in IEC"
 msgstr "Zobrazovat paměť pomocí binárních předpon"
 
-#: data/preferences.ui:54 data/preferences.ui:184
+#: data/preferences.ui:53 data/preferences.ui:169
 msgid "Information Fields"
 msgstr "Informační pole"
 
-#: data/preferences.ui:55
+#: data/preferences.ui:54
 msgid "Process information shown in list:"
 msgstr "Informace o procesech zobrazené v seznamu:"
 
-#: data/preferences.ui:76
+#: data/preferences.ui:61
 msgid "Resources"
 msgstr "Prostředky"
 
-#: data/preferences.ui:92
+#: data/preferences.ui:77
 msgid "_Chart Data Points"
 msgstr "Datové body _grafu"
 
-#: data/preferences.ui:107
+#: data/preferences.ui:92
 msgid "Draw Charts as S_mooth Graphs"
 msgstr "Vykreslovat graf jako _hladkou křivku"
 
-#: data/preferences.ui:118
+#: data/preferences.ui:103
 msgid "_Draw CPU Chart as Stacked Area Chart"
 msgstr "_Vykreslovat graf CPU jako skládaný plošný graf"
 
-#: data/preferences.ui:129
+#: data/preferences.ui:114
 msgid "Show Memory and Swap in IEC"
 msgstr "Zobrazovat paměť a odkládací prostor pomocí binárních předpon"
 
-#: data/preferences.ui:135
+#: data/preferences.ui:120
 msgid "Show Memory in Logarithmic Scale"
 msgstr "Zobrazovat paměť na logaritmické stupnici"
 
-#: data/preferences.ui:146
+#: data/preferences.ui:131
 msgid "_Show Network Speed in Bits"
 msgstr "Zobrazovat rychlo_st sítě v bitech"
 
-#: data/preferences.ui:152
+#: data/preferences.ui:137
 msgid "Show Network _Totals in Bits"
 msgstr "Zobrazovat _celkový síťový provoz v bitech"
 
-#: data/preferences.ui:161
+#: data/preferences.ui:146
 msgid "File Systems"
 msgstr "Souborové systémy"
 
-#: data/preferences.ui:177
+#: data/preferences.ui:162
 msgid "Show _All File Systems"
 msgstr "Zobrazov_at všechny souborové systémy"
 
-#: data/preferences.ui:185
+#: data/preferences.ui:170
 msgid "File system information shown in list"
 msgstr "Informace o souborových systémech zobrazené v seznamu"
 
-#: data/renice.ui:15 data/setaffinity.ui:17 src/procdialogs.cpp:166
+#: data/procproperties.ui:18
+msgid "Details"
+msgstr ""
+
+#: data/procproperties.ui:21
+#, fuzzy
+#| msgid "Process"
+msgid "Process ID"
+msgstr "Proces"
+
+#: data/procproperties.ui:32 src/proctable.cpp:345
+msgid "User"
+msgstr "Uživatel"
+
+#: data/procproperties.ui:45 data/procproperties.ui:70 src/proctable.cpp:346
+msgid "Status"
+msgstr "Stav"
+
+#: data/procproperties.ui:48 src/proctable.cpp:354
+msgid "Started"
+msgstr "Spuštěn"
+
+#: data/procproperties.ui:59 src/proctable.cpp:373
+msgid "Priority"
+msgstr "Priorita"
+
+#: data/procproperties.ui:83
+msgid "Usage"
+msgstr ""
+
+#: data/procproperties.ui:108 src/proctable.cpp:353
+msgid "CPU Time"
+msgstr "Čas CPU"
+
+#: data/procproperties.ui:119 src/proctable.cpp:347
+msgid "Virtual Memory"
+msgstr "Virtuální paměť"
+
+#: data/procproperties.ui:130 src/proctable.cpp:348
+msgid "Resident Memory"
+msgstr "Rezidentní paměť"
+
+#: data/procproperties.ui:141 src/proctable.cpp:349
+msgid "Writable Memory"
+msgstr "Zapisovatelná paměť"
+
+#: data/procproperties.ui:152 src/proctable.cpp:350
+msgid "Shared Memory"
+msgstr "Sdílená paměť"
+
+#: data/procproperties.ui:167 src/proctable.cpp:357
+msgid "Security Context"
+msgstr "Kontext zabezpečení"
+
+#: data/procproperties.ui:175 src/proctable.cpp:358
+msgid "Command Line"
+msgstr "Příkazový řádek"
+
+#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
+#: data/procproperties.ui:183 src/proctable.cpp:361
+msgid "Waiting Channel"
+msgstr "Kanál čekání"
+
+#: data/procproperties.ui:191 src/proctable.cpp:362
+msgid "Control Group"
+msgstr "Řídící skupina"
+
+#: data/procproperties.ui:236
+#, fuzzy
+#| msgid "Fraction"
+msgid "More Actions"
+msgstr "Podíl"
+
+#: data/renice.ui:15 data/setaffinity.ui:17 src/procdialogs.cpp:180
 msgid "_Cancel"
 msgstr "_Zrušit"
 
@@ -547,7 +716,11 @@ msgstr "Připnutí k CPU"
 msgid "_Apply"
 msgstr "_Použít"
 
-#: data/setaffinity.ui:52
+#: data/setaffinity.ui:40
+msgid "Apply to child threads"
+msgstr ""
+
+#: data/setaffinity.ui:58
 msgid "Run on all CPUs"
 msgstr "Běh na všech CPU"
 
@@ -571,17 +744,9 @@ msgstr "Zobrazit kartu Souborové systémy"
 msgid "Show the application’s version"
 msgstr "Zobrazit verzi aplikace"
 
-#: src/disks.cpp:392 src/memmaps.cpp:354
-msgid "Device"
-msgstr "Zařízení"
-
 #: src/disks.cpp:393
 msgid "Directory"
 msgstr "Složka"
-
-#: src/disks.cpp:394 src/legacy/gsm_color_button.c:612 src/openfiles.cpp:268
-msgid "Type"
-msgstr "Typ"
 
 #: src/disks.cpp:395
 msgid "Total"
@@ -605,7 +770,8 @@ msgstr "Použito"
 msgid "Pick a Color for “%s”"
 msgstr "Vybrat barvu pro „%s“"
 
-#: src/interface.cpp:285
+#. Set check box label value to CPU [1..2048]
+#: src/interface.cpp:285 src/setaffinity.cpp:428
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
@@ -735,7 +901,7 @@ msgstr "%s (%.1f %%) z %s"
 msgid "Cache %s"
 msgstr "Mezipaměť %s"
 
-#: src/lsof.cpp:116
+#: src/lsof.cpp:108
 #, c-format
 msgid "%d open file"
 msgid_plural "%d open files"
@@ -743,7 +909,7 @@ msgstr[0] "%d otevřený soubor"
 msgstr[1] "%d otevřené soubory"
 msgstr[2] "%d otevřených souborů"
 
-#: src/lsof.cpp:118
+#: src/lsof.cpp:110
 #, c-format
 msgid "%d matching open file"
 msgid_plural "%d matching open files"
@@ -751,114 +917,29 @@ msgstr[0] "%d odpovídající otevřený soubor"
 msgstr[1] "%d odpovídající otevřené soubory"
 msgstr[2] "%d odpovídajících otevřených souborů"
 
-#: src/lsof.cpp:229
-msgid "Process"
-msgstr "Proces"
-
-#: src/lsof.cpp:240
-msgid "PID"
-msgstr "PID"
-
-#: src/lsof.cpp:249 src/memmaps.cpp:332
-msgid "Filename"
-msgstr "Název souboru"
-
-#. xgettext: virtual memory start
-#: src/memmaps.cpp:334
-msgid "VM Start"
-msgstr "Začátek VP"
-
-#. xgettext: virtual memory end
-#: src/memmaps.cpp:336
-msgid "VM End"
-msgstr "Konec VP"
-
-#. xgettext: virtual memory syze
-#: src/memmaps.cpp:338
-msgid "VM Size"
-msgstr "Velikost VP"
-
-#: src/memmaps.cpp:339
-msgid "Flags"
-msgstr "Příznaky"
-
-#. xgettext: virtual memory offset
-#: src/memmaps.cpp:341
-msgid "VM Offset"
-msgstr "Posun VM"
-
-#. xgettext: memory that has not been modified since
-#. it has been allocated
-#: src/memmaps.cpp:344
-msgid "Private clean"
-msgstr "Soukromá čistá paměť"
-
-#. xgettext: memory that has been modified since it
-#. has been allocated
-#: src/memmaps.cpp:347
-msgid "Private dirty"
-msgstr "Soukromá špinavá paměť"
-
-#. xgettext: shared memory that has not been modified
-#. since it has been allocated
-#: src/memmaps.cpp:350
-msgid "Shared clean"
-msgstr "Sdílená čistá paměť"
-
-#. xgettext: shared memory that has been modified
-#. since it has been allocated
-#: src/memmaps.cpp:353
-msgid "Shared dirty"
-msgstr "Sdílená špinavá paměť"
-
-#: src/memmaps.cpp:355
-msgid "Inode"
-msgstr "Inode"
-
-#: src/memmaps.cpp:484
-#, c-format
-msgid "_Memory maps for process “%s” (PID %u):"
-msgstr "_Mapy paměti procesu „%s“ (PID %u):"
-
-#: src/openfiles.cpp:39
+#: src/openfiles.cpp:29
 msgid "file"
 msgstr "soubor"
 
-#: src/openfiles.cpp:42
+#: src/openfiles.cpp:32
 msgid "pipe"
 msgstr "roura"
 
-#: src/openfiles.cpp:45
+#: src/openfiles.cpp:35
 msgid "IPv6 network connection"
 msgstr "Připojení k síti IPv6"
 
-#: src/openfiles.cpp:48
+#: src/openfiles.cpp:38
 msgid "IPv4 network connection"
 msgstr "Připojení k síti IPv4"
 
-#: src/openfiles.cpp:51
+#: src/openfiles.cpp:41
 msgid "local socket"
 msgstr "místní socket"
 
-#: src/openfiles.cpp:54
+#: src/openfiles.cpp:44
 msgid "unknown type"
 msgstr "neznámý typ"
-
-#. Translators: "FD" here means "File Descriptor". Please use
-#. a very short translation if possible, and at most
-#. 2-3 characters for it to be able to fit in the UI.
-#: src/openfiles.cpp:267
-msgid "FD"
-msgstr "FD"
-
-#: src/openfiles.cpp:269
-msgid "Object"
-msgstr "Objekt"
-
-#: src/openfiles.cpp:357
-#, c-format
-msgid "_Files opened by process “%s” (PID %u):"
-msgstr "_Soubory otevřené procesem „%s“ (PID %u):"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:5
 msgid "Main window width"
@@ -1327,7 +1408,7 @@ msgstr "Sloupec řazení otevřených souborů"
 msgid "Open files sort order"
 msgstr "Pořadí řazení otevřených souborů"
 
-#: src/prefsdialog.cpp:145
+#: src/prefsdialog.cpp:70
 msgid "Icon"
 msgstr "Ikona"
 
@@ -1340,11 +1421,11 @@ msgstr ""
 "Nelze změnit prioritu procesu s pid %d na %d.\n"
 "%s"
 
-#: src/procactions.cpp:90 src/procactions.cpp:182
+#: src/procactions.cpp:89 src/procactions.cpp:174
 msgid "_OK"
 msgstr "_Budiž"
 
-#: src/procactions.cpp:171
+#: src/procactions.cpp:164
 #, c-format
 msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
@@ -1354,100 +1435,95 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:88
+#: src/procdialogs.cpp:108
 #, c-format
-msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
-msgstr "Opravdu chcete zabít vybraný proces „%s“ (PID: %u)?"
+msgid "Force Stop %s?"
+msgstr ""
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:95
+#: src/procdialogs.cpp:114
 #, c-format
-msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
-msgstr "Opravdu chcete ukončit vybraný proces „%s“ (PID: %u)?"
+msgid "End %s?"
+msgstr ""
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:102
+#: src/procdialogs.cpp:120
 #, c-format
-msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
-msgstr "Opravdu chcete zastavit vybraný proces „%s“ (PID: %u)?"
+msgid "Stop %s?"
+msgstr ""
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:114
+#: src/procdialogs.cpp:131
 #, c-format
-msgid "Are you sure you want to kill the selected process?"
-msgid_plural "Are you sure you want to kill the %d selected processes?"
-msgstr[0] "Opravdu chcete zabít vybraný proces?"
-msgstr[1] "Opravdu chcete zabít %d vybrané procesy?"
-msgstr[2] "Opravdu chcete zabít %d vybraných procesů?"
+msgid "Force Stop Selected Process?"
+msgid_plural "Force Stop %d Selected Processes?"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:121
-#, c-format
-msgid "Are you sure you want to end the selected process?"
-msgid_plural "Are you sure you want to end the %d selected processes?"
-msgstr[0] "Opravdu chcete ukončit vybraný proces?"
-msgstr[1] "Opravdu chcete ukončit %d vybrané procesy?"
-msgstr[2] "Opravdu chcete ukončit %d vybraných procesů?"
+#: src/procdialogs.cpp:138
+#, fuzzy, c-format
+#| msgid "_End Process"
+#| msgid_plural "_End Processes"
+msgid "End Selected Process?"
+msgid_plural "End %d Selected Processes?"
+msgstr[0] "U_končit proces"
+msgstr[1] "U_končit procesy"
+msgstr[2] "U_končit procesy"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:128
-#, c-format
-msgid "Are you sure you want to stop the selected process?"
-msgid_plural "Are you sure you want to stop the %d selected processes?"
-msgstr[0] "Opravdu chcete zastavit vybraný proces?"
-msgstr[1] "Opravdu chcete zastavit %d vybrané procesy?"
-msgstr[2] "Opravdu chcete zastavit %d vybraných procesů?"
-
-#. xgettext: secondary alert message
-#: src/procdialogs.cpp:139
-msgid ""
-"Killing a process may destroy data, break the session or introduce a "
-"security risk. Only unresponsive processes should be killed."
-msgstr ""
-"Zabití procesu může zničit data, přerušit sezení, nebo způsobit bezpečnostní "
-"riziko. Zabíjet by se měly jen procesy, které nereagují."
-
-#: src/procdialogs.cpp:142
-msgid "_Kill Process"
-msgid_plural "_Kill Processes"
-msgstr[0] "_Zabít proces"
-msgstr[1] "_Zabít procesy"
-msgstr[2] "_Zabít procesy"
-
-#. xgettext: secondary alert message
-#: src/procdialogs.cpp:147
-msgid ""
-"Ending a process may destroy data, break the session or introduce a security "
-"risk. Only unresponsive processes should be ended."
-msgstr ""
-"Ukončení procesu může zničit data, přerušit sezení, nebo způsobit "
-"bezpečnostní riziko. Ukončovat by se měly jen procesy, které nereagují."
-
-#. SIGSTOP
-#. xgettext: secondary alert message
-#: src/procdialogs.cpp:155
-msgid ""
-"Stopping a process may destroy data, break the session or introduce a "
-"security risk. Only unresponsive processes should be stopped."
-msgstr ""
-"Zastavení procesu může zničit data, přerušit sezení, nebo způsobit "
-"bezpečnostní riziko. Zastavovat by se měly jen procesy, které nereagují."
-
-#: src/procdialogs.cpp:158
-msgid "_Stop Process"
-msgid_plural "_Stop Processes"
+#: src/procdialogs.cpp:145
+#, fuzzy, c-format
+#| msgid "_Stop Process"
+#| msgid_plural "_Stop Processes"
+msgid "Stop Selected Process?"
+msgid_plural "Stop %d Selected Processes?"
 msgstr[0] "Za_stavit proces"
 msgstr[1] "Za_stavit procesy"
 msgstr[2] "Za_stavit procesy"
 
-#: src/procdialogs.cpp:249
+#. xgettext: secondary alert message
+#: src/procdialogs.cpp:156
+msgid ""
+"Force stopping processes can result in data loss, crashes, and system "
+"failures"
+msgstr ""
+
+#: src/procdialogs.cpp:158
+msgid "_Force Stop"
+msgstr ""
+
+#. xgettext: secondary alert message
+#: src/procdialogs.cpp:163
+msgid "Ending processes can result in data loss, crashes, and system failures"
+msgstr ""
+
+#: src/procdialogs.cpp:165
+msgid "_End"
+msgstr "U_končit"
+
+#. SIGSTOP
+#. xgettext: secondary alert message
+#: src/procdialogs.cpp:170
+msgid ""
+"Stopping processes can result in data loss, crashes, and system failures"
+msgstr ""
+
+#: src/procdialogs.cpp:172
+#, fuzzy
+#| msgid "_Stop…"
+msgid "_Stop"
+msgstr "Za_stavit…"
+
+#: src/procdialogs.cpp:264
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Změnit prioritu procesu „%s“ (PID: %u)"
 
-#: src/procdialogs.cpp:252
+#: src/procdialogs.cpp:267
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
@@ -1455,80 +1531,21 @@ msgstr[0] "Změnit prioritu vybraného procesu"
 msgstr[1] "Změnit prioritu %d vybraných procesů"
 msgstr[2] "Změnit prioritu %d vybraných procesů"
 
-#: src/procproperties.cpp:50 src/procproperties.cpp:84
-#: src/procproperties.cpp:87 src/util.cpp:540 src/util.cpp:587
+#: src/procproperties.cpp:43 src/procproperties.cpp:97
+#: src/procproperties.cpp:106 src/util.cpp:540 src/util.cpp:587
 msgid "N/A"
 msgstr "---"
 
-#: src/procproperties.cpp:68 src/proctable.cpp:344
+#: src/proctable.cpp:136
+msgid "_End Process"
+msgid_plural "_End Processes"
+msgstr[0] "U_končit proces"
+msgstr[1] "U_končit procesy"
+msgstr[2] "U_končit procesy"
+
+#: src/proctable.cpp:344
 msgid "Process Name"
 msgstr "Název procesu"
-
-#: src/procproperties.cpp:69 src/proctable.cpp:345
-msgid "User"
-msgstr "Uživatel"
-
-#: src/procproperties.cpp:70 src/proctable.cpp:346
-msgid "Status"
-msgstr "Stav"
-
-#: src/procproperties.cpp:72 src/proctable.cpp:347
-msgid "Virtual Memory"
-msgstr "Virtuální paměť"
-
-#: src/procproperties.cpp:73 src/proctable.cpp:348
-msgid "Resident Memory"
-msgstr "Rezidentní paměť"
-
-#: src/procproperties.cpp:74 src/proctable.cpp:349
-msgid "Writable Memory"
-msgstr "Zapisovatelná paměť"
-
-#: src/procproperties.cpp:75 src/proctable.cpp:350
-msgid "Shared Memory"
-msgstr "Sdílená paměť"
-
-#: src/procproperties.cpp:79 src/proctable.cpp:353
-msgid "CPU Time"
-msgstr "Čas CPU"
-
-#: src/procproperties.cpp:80 src/proctable.cpp:354
-msgid "Started"
-msgstr "Spuštěn"
-
-#: src/procproperties.cpp:81 src/proctable.cpp:355
-msgid "Nice"
-msgstr "Nice"
-
-#: src/procproperties.cpp:82 src/proctable.cpp:373
-msgid "Priority"
-msgstr "Priorita"
-
-#: src/procproperties.cpp:83 src/proctable.cpp:356
-msgid "ID"
-msgstr "ID"
-
-#: src/procproperties.cpp:84 src/proctable.cpp:357
-msgid "Security Context"
-msgstr "Kontext zabezpečení"
-
-#: src/procproperties.cpp:85 src/proctable.cpp:358
-msgid "Command Line"
-msgstr "Příkazový řádek"
-
-#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:86 src/proctable.cpp:361
-msgid "Waiting Channel"
-msgstr "Kanál čekání"
-
-#: src/procproperties.cpp:87 src/proctable.cpp:362
-msgid "Control Group"
-msgstr "Řídící skupina"
-
-#: src/procproperties.cpp:211
-#, c-format
-msgid "%s (PID %u)"
-msgstr "%s (PID %u)"
 
 #: src/proctable.cpp:351
 msgid "X Server Memory"
@@ -1538,6 +1555,14 @@ msgstr "Paměť serveru X"
 #, no-c-format
 msgid "% CPU"
 msgstr "% CPU"
+
+#: src/proctable.cpp:355
+msgid "Nice"
+msgstr "Nice"
+
+#: src/proctable.cpp:356
+msgid "ID"
+msgstr "ID"
 
 #: src/proctable.cpp:363
 msgid "Unit"
@@ -1573,24 +1598,18 @@ msgstr "Diskové čtení"
 msgid "Disk write"
 msgstr "Diskový zápis"
 
-#: src/setaffinity.cpp:123
+#: src/setaffinity.cpp:125
 msgid "GNU CPU Affinity error"
 msgstr "Chyba GNU CPU Affinity"
 
-#: src/setaffinity.cpp:128
+#: src/setaffinity.cpp:130
 msgid "_Close"
 msgstr "_Zavřít"
 
-#: src/setaffinity.cpp:329
+#: src/setaffinity.cpp:409
 #, c-format
 msgid "Select CPUs \"%s\" (PID %u) is allowed to run on:"
 msgstr "Vyberte CPU, na nichž má proces „%s“ (PID %u) dovoleno běžet:"
-
-#. Set check box label value to CPU [1..2048]
-#: src/setaffinity.cpp:348
-#, c-format
-msgid "CPU %d"
-msgstr "CPU %d"
 
 #: src/util.cpp:34
 msgid "Running"
@@ -1662,6 +1681,88 @@ msgstr "Velmi nízká priorita"
 msgid "%s/s"
 msgstr "%s/s"
 
+#~ msgid "_Continue"
+#~ msgstr "_Pokračovat"
+
+#~ msgid "_Kill…"
+#~ msgstr "Za_bít…"
+
+#, c-format
+#~ msgid "_Memory maps for process “%s” (PID %u):"
+#~ msgstr "_Mapy paměti procesu „%s“ (PID %u):"
+
+#, c-format
+#~ msgid "_Files opened by process “%s” (PID %u):"
+#~ msgstr "_Soubory otevřené procesem „%s“ (PID %u):"
+
+#, c-format
+#~ msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
+#~ msgstr "Opravdu chcete zabít vybraný proces „%s“ (PID: %u)?"
+
+#, c-format
+#~ msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
+#~ msgstr "Opravdu chcete ukončit vybraný proces „%s“ (PID: %u)?"
+
+#, c-format
+#~ msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
+#~ msgstr "Opravdu chcete zastavit vybraný proces „%s“ (PID: %u)?"
+
+#, c-format
+#~ msgid "Are you sure you want to kill the selected process?"
+#~ msgid_plural "Are you sure you want to kill the %d selected processes?"
+#~ msgstr[0] "Opravdu chcete zabít vybraný proces?"
+#~ msgstr[1] "Opravdu chcete zabít %d vybrané procesy?"
+#~ msgstr[2] "Opravdu chcete zabít %d vybraných procesů?"
+
+#, c-format
+#~ msgid "Are you sure you want to end the selected process?"
+#~ msgid_plural "Are you sure you want to end the %d selected processes?"
+#~ msgstr[0] "Opravdu chcete ukončit vybraný proces?"
+#~ msgstr[1] "Opravdu chcete ukončit %d vybrané procesy?"
+#~ msgstr[2] "Opravdu chcete ukončit %d vybraných procesů?"
+
+#, c-format
+#~ msgid "Are you sure you want to stop the selected process?"
+#~ msgid_plural "Are you sure you want to stop the %d selected processes?"
+#~ msgstr[0] "Opravdu chcete zastavit vybraný proces?"
+#~ msgstr[1] "Opravdu chcete zastavit %d vybrané procesy?"
+#~ msgstr[2] "Opravdu chcete zastavit %d vybraných procesů?"
+
+#~ msgid ""
+#~ "Killing a process may destroy data, break the session or introduce a "
+#~ "security risk. Only unresponsive processes should be killed."
+#~ msgstr ""
+#~ "Zabití procesu může zničit data, přerušit sezení, nebo způsobit "
+#~ "bezpečnostní riziko. Zabíjet by se měly jen procesy, které nereagují."
+
+#~ msgid "_Kill Process"
+#~ msgid_plural "_Kill Processes"
+#~ msgstr[0] "_Zabít proces"
+#~ msgstr[1] "_Zabít procesy"
+#~ msgstr[2] "_Zabít procesy"
+
+#~ msgid ""
+#~ "Ending a process may destroy data, break the session or introduce a "
+#~ "security risk. Only unresponsive processes should be ended."
+#~ msgstr ""
+#~ "Ukončení procesu může zničit data, přerušit sezení, nebo způsobit "
+#~ "bezpečnostní riziko. Ukončovat by se měly jen procesy, které nereagují."
+
+#~ msgid ""
+#~ "Stopping a process may destroy data, break the session or introduce a "
+#~ "security risk. Only unresponsive processes should be stopped."
+#~ msgstr ""
+#~ "Zastavení procesu může zničit data, přerušit sezení, nebo způsobit "
+#~ "bezpečnostní riziko. Zastavovat by se měly jen procesy, které nereagují."
+
+#, c-format
+#~ msgid "%s (PID %u)"
+#~ msgstr "%s (PID %u)"
+
+#, c-format
+#~ msgid "CPU %d"
+#~ msgstr "CPU %d"
+
 #~ msgid "Main window size in the form (width, height)"
 #~ msgstr "Velikost hlavního okna v podobě (šířka, výška)"
 
@@ -1690,9 +1791,6 @@ msgstr "%s/s"
 #~ msgctxt "shortcut window"
 #~ msgid "Send End signal"
 #~ msgstr "Poslat signál „ukončit“"
-
-#~ msgid "_End"
-#~ msgstr "U_končit"
 
 #~ msgid "Graphs"
 #~ msgstr "Grafy"
