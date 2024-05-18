@@ -53,7 +53,7 @@
                 <property name="name">processes</property>
                 <property name="use-underline">True</property>
                 <property name="title" translatable="yes">_Processes</property>
-                <property name="icon-name">view-list-symbolic</property>
+                <property name="icon-name">processes-symbolic</property>
                 <property name="child">
                   <object class="GtkBox" id="proc_box">
                     <property name="hexpand">True</property>
@@ -75,9 +75,994 @@
                     <child>
                       <object class="GtkOverlay">
                         <child>
-                          <object class="GtkScrolledWindow" id="processes_scrolled">
+                          <object class="GtkScrolledWindow">
                             <property name="hexpand">True</property>
                             <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkColumnView" id="proctable_view">
+                                <property name="model">
+                                  <object class="GtkMultiSelection">
+                                    <property name="model">proctable_model</property>
+                                  </object>
+                                </property>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">name</property>
+                                    <property name="title" translatable="yes">Name</property>
+                                    <property name="expand">True</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="name" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkBox">
+    <property name="orientation">horizontal</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkImage">
+        <property name="icon-size">large</property>
+        <binding name="paintable">
+          <lookup name="icon" type="ProctableData">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+        <style>
+          <class name="icon-dropshadow"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <binding name="label">
+          <lookup name="name" type="ProctableData">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+      </object>
+    </child>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">user</property>
+                                    <property name="title" translatable="yes">User</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="user" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="user" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                   ]]></property>
+                                    </object>
+                                  </property>
+                                </object>
+                              </child>
+                              <child>
+                                <object class="GtkColumnViewColumn">
+                                  <property name="id">status</property>
+                                  <property name="title" translatable="yes">Status</property>
+                                  <property name="resizable">True</property>
+                                  <property name="sorter">
+                                    <object class="GtkStringSorter">
+                                      <property name="expression">
+                                        <lookup name="status" type="ProctableData"/>
+                                      </property>
+                                    </object>
+                                  </property>
+                                  <property name="factory">
+                                    <object class="GtkBuilderListItemFactory">
+                                      <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="status" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">vmsize</property>
+                                    <property name="title" translatable="yes">Virtual Memory</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="vmsize" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="vmsize" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">resident-memory</property>
+                                    <property name="title" translatable="yes">Resident Memory</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="resident-memory" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="resident-memory" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">writable-memory</property>
+                                    <property name="title" translatable="yes">Writable Memory</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkNumericSorter">
+                                        <property name="expression">
+                                          <lookup name="writable-memory" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="writable-memory" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">shared-memory</property>
+                                    <property name="title" translatable="yes">Shared Memory</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="shared-memory" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="shared-memory" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">x-server-memory</property>
+                                    <property name="title" translatable="yes">X Server Memory</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkNumericSorter">
+                                        <property name="expression">
+                                          <lookup name="x-server-memory" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <binding name="label">
+      <lookup name="x-server-memory" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">cpu</property>
+                                    <property name="title" translatable="yes">CPU</property>
+                                    <property name="expand">True</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="cpu" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="cpu" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">cpu-time</property>
+                                    <property name="title" translatable="yes">CPU Time</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="cpu-time" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="cpu-time" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+    <style>
+      <class name="numeric"/>
+    </style>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">started</property>
+                                    <property name="title" translatable="yes">Started</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="started" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="started" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">nice</property>
+                                    <property name="title" translatable="yes">Nice</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkNumericSorter">
+                                        <property name="expression">
+                                          <lookup name="nice" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="nice" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+    <style>
+      <class name="numeric"/>
+    </style>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">id</property>
+                                    <property name="title" translatable="yes">ID</property>
+                                    <property name="expand">True</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkNumericSorter">
+                                        <property name="expression">
+                                          <lookup name="id" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="id" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+    <style>
+      <class name="numeric"/>
+    </style>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">security-context</property>
+                                    <property name="title" translatable="yes">Security Context</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="security-context" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="security-context" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">args</property>
+                                    <property name="title" translatable="yes">Command Line</property>
+                                    <property name="expand">True</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="args" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <binding name="label">
+      <lookup name="args" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">memory</property>
+                                    <property name="title" translatable="yes">Memory</property>
+                                    <property name="expand">True</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="memory" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="memory" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">waiting-channel</property>
+                                    <property name="title" translatable="yes" comments="combined noun, the function the process is waiting in, see wchan ps(1)">Waiting Channel</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="waiting-channel" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="waiting-channel" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">control-group</property>
+                                    <property name="title" translatable="yes">Control Group</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="control-group" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="control-group" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">unit</property>
+                                    <property name="title" translatable="yes">Unit</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="unit" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="unit" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">session</property>
+                                    <property name="title" translatable="yes">Session</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="session" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="session" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">seat</property>
+                                    <property name="title" translatable="yes" comments="i.e. the physical seat the session of the process belongs to, only for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration">Seat</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="seat" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="seat" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">owner</property>
+                                    <property name="title" translatable="yes">Owner</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="owner" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <binding name="label">
+      <lookup name="owner" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">disk-read-total</property>
+                                    <property name="title" translatable="yes">Disk Read Total</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="disk-read-total" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="disk-read-total" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">disk-write-total</property>
+                                    <property name="title" translatable="yes">Disk Write Total</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="disk-write-total" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="disk-write-total" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">disk-read</property>
+                                    <property name="title" translatable="yes">Disk Read</property>
+                                    <property name="expand">True</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="disk-read" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="disk-read" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">disk-write</property>
+                                    <property name="title" translatable="yes">Disk Write</property>
+                                    <property name="expand">True</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="disk-write" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="disk-write" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn">
+                                    <property name="id">priority</property>
+                                    <property name="title" translatable="yes">Priority</property>
+                                    <property name="resizable">True</property>
+                                    <property name="sorter">
+                                      <object class="GtkStringSorter">
+                                        <property name="expression">
+                                          <lookup name="priority" type="ProctableData"/>
+                                        </property>
+                                      </object>
+                                    </property>
+                                    <property name="factory">
+                                      <object class="GtkBuilderListItemFactory">
+                                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+<template class="GtkListItem">
+<property name="child">
+  <object class="GtkLabel">
+    <property name="xalign">0</property>
+    <binding name="label">
+      <lookup name="priority" type="ProctableData">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
+</property>
+</template>
+</interface>
+                                     ]]></property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
                           </object>
                         </child>
                         <child type="overlay">
@@ -711,6 +1696,14 @@
       <class name="view" />
     </style>
   </object>
+  <object class="GtkSortListModel" id="proctable_model">
+    <property name="model">proctable_store</property>
+    <property name="incremental">True</property>
+    <binding name="sorter">
+      <lookup name="sorter">proctable_view</lookup>
+    </binding>
+  </object>
+  <object class="GListStore" id="proctable_store"/>
   <object class="GtkSortListModel" id="disks_model">
     <property name="model">disks_store</property>
     <property name="incremental">True</property>

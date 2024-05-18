@@ -18,7 +18,7 @@
 #include "proctable.h"
 #include "util.h"
 
-const unsigned APP_ICON_SIZE = 16;
+const unsigned APP_ICON_SIZE = 32;
 
 PrettyTable::PrettyTable()
 {

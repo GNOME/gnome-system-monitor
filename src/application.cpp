@@ -363,14 +363,14 @@ GsmApplication::GsmApplication()
 
   config (),
   pretty_table (NULL),
-  tree (NULL),
+  column_view (NULL),
   proc_popover_menu (NULL),
   refresh_button (NULL),
   end_process_button (NULL),
   search_button (NULL),
   search_entry (NULL),
   search_bar (NULL),
-  top_of_tree (NULL),
+  tree_list_row (NULL),
 
   last_vscroll_max (0.0),
   last_vscroll_value (0.0),

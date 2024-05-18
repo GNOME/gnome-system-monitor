@@ -28,6 +28,7 @@
 #include "procactions.h"
 #include "procproperties.h"
 #include "proctable.h"
+#include "proctable-data.h"
 #include "util.h"
 #include "legacy/e_date.h"
 
@@ -41,7 +42,7 @@ static gchar*
 format_memsize (guint64 size)
 {
   if (size == 0)
-    return g_strdup (_("N/A"));
+    return g_strdup ("—");
   else
     return g_format_size_full (size, G_FORMAT_SIZE_IEC_UNITS);
 }
@@ -95,7 +96,7 @@ fill_proc_properties (GtkBuilder *builder,
   gtk_label_set_label (label, format_memsize (info->memshared));
 
   row = ADW_ACTION_ROW (gtk_builder_get_object (builder, "securitycontext_row"));
-  adw_action_row_set_subtitle (row, not info->security_context.empty ()?g_strdup_printf ("%s", info->security_context.c_str ()):g_strdup (_("N/A")));
+  adw_action_row_set_subtitle (row, not info->security_context.empty () ? g_strdup_printf ("%s", info->security_context.c_str ()):g_strdup ("—"));
 
   row = ADW_ACTION_ROW (gtk_builder_get_object (builder, "commandline_row"));
   adw_action_row_set_subtitle (row, g_strdup_printf ("%s", info->arguments.c_str ()));
@@ -104,7 +105,7 @@ fill_proc_properties (GtkBuilder *builder,
   adw_action_row_set_subtitle (row, g_strdup_printf ("%s", info->wchan.c_str ()));
 
   row = ADW_ACTION_ROW (gtk_builder_get_object (builder, "controlgroup_row"));
-  adw_action_row_set_subtitle (row, not info->cgroup_name.empty ()?g_strdup_printf ("%s", info->cgroup_name.c_str ()):g_strdup (_("N/A")));
+  adw_action_row_set_subtitle (row, not info->cgroup_name.empty () ? g_strdup_printf ("%s", info->cgroup_name.c_str ()):g_strdup ("—"));
 }
 
 static void
@@ -159,20 +160,21 @@ procprop_timer (gpointer data)
 }
 
 static void
-create_single_procproperties_dialog (GtkTreeModel *model,
-                                     GtkTreePath*,
-                                     GtkTreeIter  *iter,
-                                     gpointer      data)
+create_single_procproperties_dialog (GListModel *model,
+                                     guint       position,
+                                     gpointer    data)
 {
   GsmApplication *app = static_cast<GsmApplication *>(data);
 
+  ProctableData *proctable_data;
   ProcInfo *info;
   guint timer;
   GAction *action;
   GSimpleActionGroup *action_group;
   GMenuItem *item;
 
-  gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
+  proctable_data = PROCTABLE_DATA (g_list_model_get_object (model, position));
+  g_object_get (proctable_data, "pointer", &info, NULL);
 
   if (!info)
     return;
@@ -238,6 +240,19 @@ create_single_procproperties_dialog (GtkTreeModel *model,
 void
 create_procproperties_dialog (GsmApplication *app)
 {
-  gtk_tree_selection_selected_foreach (app->selection, create_single_procproperties_dialog,
-                                       app);
+  GListModel *model;
+  GtkBitsetIter iter;
+  GtkBitset *selection;
+  guint position;
+
+  selection = gtk_selection_model_get_selection (gtk_column_view_get_model (app->column_view));
+
+  model = gtk_sort_list_model_get_model (GTK_SORT_LIST_MODEL (
+                                           gtk_multi_selection_get_model (GTK_MULTI_SELECTION (
+                                                                            gtk_column_view_get_model (app->column_view)))));
+
+  for (gtk_bitset_iter_init_first (&iter, selection, &position);
+       gtk_bitset_iter_is_valid (&iter);
+       gtk_bitset_iter_next (&iter, &position))
+    create_single_procproperties_dialog (model, position, app);
 }

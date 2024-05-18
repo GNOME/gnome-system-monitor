@@ -69,20 +69,20 @@ create_field_page (GtkBuilder    *builder,
       if (!title)
         title = _("Icon");
 
-      column_id = gtk_column_view_column_get_id (column);/*
-      if ((column_id == COL_CGROUP) && (!cgroups_enabled ()))
+      column_id = gtk_column_view_column_get_id (column);
+      if (strcmp (column_id, "control-group") == 0 && (!cgroups_enabled ()))
         continue;
-      if ((column_id == COL_SECURITYCONTEXT) && (!can_show_security_context_column ()))
+      if (strcmp (column_id, "security-context") == 0 && (!can_show_security_context_column ()))
         continue;
 
-      if ((column_id == COL_UNIT ||
-           column_id == COL_SESSION ||
-           column_id == COL_SEAT ||
-           column_id == COL_OWNER)
+      if ((strcmp (column_id, "unit") == 0 ||
+           strcmp (column_id, "session") == 0 ||
+           strcmp (column_id, "seat") == 0 ||
+           strcmp (column_id, "owner") == 0)
           && !procman::systemd_logind_running ()
           )
         continue;
-*/
+
       row = adw_switch_row_new ();
       adw_preferences_row_set_title (ADW_PREFERENCES_ROW (row), title);
 
@@ -189,7 +189,7 @@ create_preferences_dialog (GsmApplication *app)
                    res_mem_in_iec_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  // create_field_page (builder, GTK_TREE_VIEW (app->tree), GSM_SETTINGS_CHILD_PROCESSES);
+  create_field_page (builder, app->column_view, GSM_SETTINGS_CHILD_PROCESSES);
 
   update = (gfloat) app->config.graph_update_interval;
   spin_button = ADW_SPIN_ROW (gtk_builder_get_object (builder, "resources_interval_spinner"));

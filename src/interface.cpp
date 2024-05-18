@@ -52,7 +52,7 @@ static const char*LOAD_GRAPH_CSS = "\
     color: @window_fg_color;\
 }\
 ";
-
+/*
 static void
 search_text_changed (GtkEditable*,
                      gpointer data)
@@ -63,7 +63,7 @@ search_text_changed (GtkEditable*,
                                                            GTK_TREE_MODEL_SORT (gtk_tree_view_get_model (
                                                                                   GTK_TREE_VIEW (app->tree))))));
 }
-
+*/
 /*
 static void
 set_affinity_visiblity (GtkWidget *widget,
@@ -82,21 +82,18 @@ static void
 create_proc_view (GsmApplication *app,
                   GtkBuilder     *builder)
 {
-  GsmTreeView *proctree;
-  GtkWidget *scrolled;
+  GtkColumnView *proctable;
 
-  proctree = proctable_new (app);
-  scrolled = GTK_WIDGET (gtk_builder_get_object (builder, "processes_scrolled"));
-
-  gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), GTK_WIDGET (proctree));
+  proctable = GTK_COLUMN_VIEW (gtk_builder_get_object (builder, "proctable_view"));
+  proctable_new (app, proctable);
 
   /* create popover_menu for the processes tab */
   GMenuModel *menu_model = G_MENU_MODEL (gtk_builder_get_object (builder, "process-popup-menu"));
 
   app->proc_popover_menu = GTK_POPOVER (gtk_popover_menu_new_from_model (menu_model));
   gtk_popover_set_has_arrow (app->proc_popover_menu, FALSE);
-  gtk_popover_set_default_widget (app->proc_popover_menu, GTK_WIDGET (scrolled));
-  gtk_widget_set_parent (GTK_WIDGET (app->proc_popover_menu), GTK_WIDGET (scrolled));
+  gtk_popover_set_default_widget (app->proc_popover_menu, GTK_WIDGET (proctable));
+  gtk_widget_set_parent (GTK_WIDGET (app->proc_popover_menu), GTK_WIDGET (proctable));
 
   app->end_process_button = GTK_BUTTON (gtk_builder_get_object (builder, "end_process_button"));
   app->search_button = GTK_TOGGLE_BUTTON (gtk_builder_get_object (builder, "search_button"));
@@ -104,12 +101,12 @@ create_proc_view (GsmApplication *app,
   app->search_entry = GTK_SEARCH_ENTRY (gtk_builder_get_object (builder, "proc_searchentry"));
 
   gtk_search_bar_set_key_capture_widget (app->search_bar, GTK_WIDGET (app->main_window));
-
+/*
   g_signal_connect (app->search_entry,
                     "changed",
                     G_CALLBACK (search_text_changed),
                     app);
-
+*/
   g_object_bind_property (app->search_bar, "search-mode-enabled", app->search_button, "active", (GBindingFlags)(G_BINDING_BIDIRECTIONAL));
 }
 
@@ -689,7 +686,7 @@ update_page_activities (GsmApplication *app)
       if (gtk_search_bar_get_search_mode (app->search_bar))
         gtk_widget_grab_focus (GTK_WIDGET (app->search_entry));
       else
-        gtk_widget_grab_focus (GTK_WIDGET (app->tree));
+        gtk_widget_grab_focus (GTK_WIDGET (app->column_view));
     }
   else
     {
@@ -910,16 +907,14 @@ static gboolean
 scroll_to_selection (gpointer data)
 {
   GsmApplication *app = (GsmApplication *) data;
-  GList*paths = gtk_tree_selection_get_selected_rows (app->selection, NULL);
-  guint length = g_list_length (paths);
+  guint64 length = gtk_bitset_get_size (app->selection);
 
   if (length > 0)
     {
-      GtkTreePath*last_path = (GtkTreePath*) g_list_nth_data (paths, length - 1);
-      gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (app->tree), last_path, NULL, FALSE, 0.0, 0.0);
+      guint last_path = gtk_bitset_get_nth (app->selection, length - 1);
+      gtk_column_view_scroll_to (app->column_view, last_path, NULL, GTK_LIST_SCROLL_NONE, NULL);
     }
 
-  g_list_free_full (paths, (GDestroyNotify) gtk_tree_path_free);
   return FALSE;
 }
 
@@ -946,7 +941,7 @@ update_sensitivity (GsmApplication *app)
   GAction *action;
 
   processes_sensitivity = (strcmp (adw_view_stack_get_visible_child_name (app->stack), "processes") == 0);
-  selected_sensitivity = gtk_tree_selection_count_selected_rows (app->selection) > 0;
+  selected_sensitivity = gtk_bitset_get_size (app->selection) > 0;
 
   for (i = 0; i != G_N_ELEMENTS (processes_actions); ++i)
     {

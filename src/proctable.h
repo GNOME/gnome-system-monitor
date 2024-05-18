@@ -22,55 +22,17 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 #include "application.h"
-#include "legacy/treeview.h"
 
-enum
-{
-  COL_NAME = 0,
-  COL_USER,
-  COL_STATUS,
-  COL_VMSIZE,
-  COL_MEMRES,
-  COL_MEMWRITABLE,
-  COL_MEMSHARED,
-  COL_MEMXSERVER,
-  COL_CPU,
-  COL_CPU_TIME,
-  COL_START_TIME,
-  COL_NICE,
-  COL_PID,
-  COL_SECURITYCONTEXT,
-  COL_ARGS,
-  COL_MEM,
-  COL_WCHAN,
-  COL_CGROUP,
-  COL_UNIT,
-  COL_SESSION,
-  COL_SEAT,
-  COL_OWNER,
-  COL_DISK_READ_TOTAL,
-  COL_DISK_WRITE_TOTAL,
-  COL_DISK_READ_CURRENT,
-  COL_DISK_WRITE_CURRENT,
-  COL_PRIORITY,
-  COL_ICON,
-  COL_POINTER,
-  COL_TOOLTIP,
-  NUM_COLUMNS
-};
+void proctable_new (GsmApplication *app, GtkColumnView *proctable);
+void proctable_update (GsmApplication *app);
+void proctable_free_table (GsmApplication *app);
+void proctable_freeze (GsmApplication *app);
+void proctable_thaw (GsmApplication *app);
+void proctable_reset_timeout (GsmApplication *app);
 
-
-GsmTreeView * proctable_new (GsmApplication *app);
-void          proctable_update (GsmApplication *app);
-void          proctable_free_table (GsmApplication *app);
-void          proctable_freeze (GsmApplication *app);
-void          proctable_thaw (GsmApplication *app);
-void          proctable_reset_timeout (GsmApplication *app);
-
-void          get_process_memory_writable (ProcInfo *info);
-void          get_last_selected (GtkTreeModel *model,
-                                 GtkTreePath  *path,
-                                 GtkTreeIter  *iter,
-                                 gpointer      data);
+void get_process_memory_writable (ProcInfo *info);
+void get_last_selected (GListModel *model,
+                        guint       position,
+                        gpointer    data);
 
 #endif /* _GSM_PROCTABLE_H_ */

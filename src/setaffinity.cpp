@@ -27,6 +27,7 @@
 #include <dirent.h>
 
 #include "proctable.h"
+#include "proctable-data.h"
 #include "procdialogs.h"
 #include "util.h"
 #include "setaffinity.h"
@@ -340,13 +341,13 @@ set_affinity (GtkCheckButton*,
 }
 
 static void
-create_single_set_affinity_dialog (GtkTreeModel *model,
-                                   GtkTreePath*,
-                                   GtkTreeIter  *iter,
-                                   gpointer      data)
+create_single_set_affinity_dialog (GListModel *model,
+                                   guint       position,
+                                   gpointer    data)
 {
   GsmApplication *app = static_cast<GsmApplication *>(data);
 
+  ProctableData   *proctable_data;
   ProcInfo        *info;
   SetAffinityData *affinity_data;
   GtkWidget       *cancel_button;
@@ -363,7 +364,8 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   gchar                 *button_text;
 
   /* Get selected process information */
-  gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
+  proctable_data = PROCTABLE_DATA (g_list_model_get_object (model, position));
+  g_object_get (proctable_data, "pointer", &info, NULL);
 
   /* Return void if process information comes back not true */
   if (!info)
@@ -485,8 +487,20 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
 void
 create_set_affinity_dialog (GsmApplication *app)
 {
+  GListModel *model;
+  GtkBitsetIter iter;
+  GtkBitset *selection;
+  guint position;
+
+  selection = gtk_selection_model_get_selection (gtk_column_view_get_model (app->column_view));
+
+  model = gtk_sort_list_model_get_model (GTK_SORT_LIST_MODEL (
+                                           gtk_multi_selection_get_model (GTK_MULTI_SELECTION (
+                                                                            gtk_column_view_get_model (app->column_view)))));
+
   /* Create a dialog window for each selected process */
-  gtk_tree_selection_selected_foreach (app->selection,
-                                       create_single_set_affinity_dialog,
-                                       app);
+  for (gtk_bitset_iter_init_first (&iter, selection, &position);
+       gtk_bitset_iter_is_valid (&iter);
+       gtk_bitset_iter_next (&iter, &position))
+    create_single_set_affinity_dialog (model, position, app);
 }

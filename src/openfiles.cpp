@@ -13,6 +13,7 @@
 #include "openfiles.h"
 #include "openfiles-data.h"
 #include "proctable.h"
+#include "proctable-data.h"
 #include "util.h"
 #include "settings-keys.h"
 
@@ -247,11 +248,11 @@ openfiles_timer (gpointer data)
 }
 
 static void
-create_single_openfiles_dialog (GtkTreeModel *model,
-                                GtkTreePath*,
-                                GtkTreeIter  *iter,
+create_single_openfiles_dialog (GListModel *model,
+                                guint       position,
                                 gpointer)
 {
+  ProctableData *data;
   AdwWindow *openfilesdialog;
   AdwWindowTitle *window_title;
   GtkColumnView *column_view;
@@ -260,7 +261,8 @@ create_single_openfiles_dialog (GtkTreeModel *model,
   GSimpleActionGroup *action_group;
   guint timer;
 
-  gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
+  data = PROCTABLE_DATA (g_list_model_get_object (model, position));
+  g_object_get (data, "pointer", &info, NULL);
 
   if (!info)
     return;
@@ -305,6 +307,19 @@ create_single_openfiles_dialog (GtkTreeModel *model,
 void
 create_openfiles_dialog (GsmApplication *app)
 {
-  gtk_tree_selection_selected_foreach (app->selection, create_single_openfiles_dialog,
-                                       app);
+  GListModel *model;
+  GtkBitsetIter iter;
+  GtkBitset *selection;
+  guint position;
+
+  selection = gtk_selection_model_get_selection (gtk_column_view_get_model (app->column_view));
+
+  model = gtk_sort_list_model_get_model (GTK_SORT_LIST_MODEL (
+                                           gtk_multi_selection_get_model (GTK_MULTI_SELECTION (
+                                                                            gtk_column_view_get_model (app->column_view)))));
+
+  for (gtk_bitset_iter_init_first (&iter, selection, &position);
+       gtk_bitset_iter_is_valid (&iter);
+       gtk_bitset_iter_next (&iter, &position))
+    create_single_openfiles_dialog (model, position, app);
 }

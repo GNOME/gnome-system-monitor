@@ -442,257 +442,35 @@ generate_colors (unsigned n)
   return values;
 }
 
-void
-size_cell_data_func (GtkTreeViewColumn *,
-                     GtkCellRenderer *renderer,
-                     GtkTreeModel    *model,
-                     GtkTreeIter     *iter,
-                     gpointer         user_data)
-{
-  const guint index = GPOINTER_TO_UINT (user_data);
-
-  guint64 size;
-  GValue value = { 0 };
-
-  gtk_tree_model_get_value (model, iter, index, &value);
-
-  switch (G_VALUE_TYPE (&value))
-    {
-      case G_TYPE_ULONG:
-        size = g_value_get_ulong (&value);
-        break;
-
-      case G_TYPE_UINT64:
-        size = g_value_get_uint64 (&value);
-        break;
-
-      default:
-        g_assert_not_reached ();
-    }
-
-  g_value_unset (&value);
-
-  char *str = g_format_size_full (size, G_FORMAT_SIZE_IEC_UNITS);
-
-  g_object_set (renderer, "text", str, NULL);
-  g_free (str);
-}
-
-void
-percentage_cell_data_func (GtkTreeViewColumn *,
-                           GtkCellRenderer *renderer,
-                           GtkTreeModel    *model,
-                           GtkTreeIter     *iter,
-                           gpointer         user_data)
-{
-  const guint index = GPOINTER_TO_UINT (user_data);
-
-  gdouble size;
-  GValue value = { 0 };
-
-  gtk_tree_model_get_value (model, iter, index, &value);
-  size = g_value_get_double (&value);
-  g_value_unset (&value);
-
-  char *str = g_strdup_printf ("%.2f", size);
-
-  g_object_set (renderer, "text", str, NULL);
-  g_free (str);
-}
-
-
 /*
       Same as above but handles size == 0 as not available
     */
-void
-size_na_cell_data_func (GtkTreeViewColumn *,
-                        GtkCellRenderer *renderer,
-                        GtkTreeModel    *model,
-                        GtkTreeIter     *iter,
-                        gpointer         user_data)
+char *
+size_na_cell_data_func (guint64 size)
 {
-  const guint index = GPOINTER_TO_UINT (user_data);
-
-  guint64 size;
-  GValue value = { 0 };
-
-  gtk_tree_model_get_value (model, iter, index, &value);
-
-  switch (G_VALUE_TYPE (&value))
-    {
-      case G_TYPE_ULONG:
-        size = g_value_get_ulong (&value);
-        break;
-
-      case G_TYPE_UINT64:
-        size = g_value_get_uint64 (&value);
-        break;
-
-      default:
-        g_assert_not_reached ();
-    }
-
-  g_value_unset (&value);
-
   if (size == 0)
-    {
-      g_object_set (renderer,
-                    "text", _("N/A"),
-                    "style", PANGO_STYLE_ITALIC,
-                    NULL);
-    }
+    return "—";
   else
-    {
-      char *str = format_byte_size (size, GsmApplication::get ()->config.process_memory_in_iec);
-      g_object_set (renderer,
-                    "text", str,
-                    "style", PANGO_STYLE_NORMAL,
-                    NULL);
-      g_free (str);
-    }
+    return format_byte_size (size, GsmApplication::get ()->config.process_memory_in_iec);
 }
 
-void
-io_rate_cell_data_func (GtkTreeViewColumn *,
-                        GtkCellRenderer *renderer,
-                        GtkTreeModel    *model,
-                        GtkTreeIter     *iter,
-                        gpointer         user_data)
+char *
+io_rate_cell_data_func (guint64 size)
 {
-  const guint index = GPOINTER_TO_UINT (user_data);
-
-  guint64 size;
-  GValue value = { 0 };
-
-  gtk_tree_model_get_value (model, iter, index, &value);
-
-  switch (G_VALUE_TYPE (&value))
-    {
-      case G_TYPE_ULONG:
-        size = g_value_get_ulong (&value);
-        break;
-
-      case G_TYPE_UINT64:
-        size = g_value_get_uint64 (&value);
-        break;
-
-      default:
-        g_assert_not_reached ();
-    }
-
-  g_value_unset (&value);
-
   if (size == 0)
-    g_object_set (renderer,
-                  "text", _("N/A"),
-                  "style", PANGO_STYLE_ITALIC,
-                  NULL);
+    return "—";
   else
-    g_object_set (renderer,
-                  "text", procman::format_rate (size, FALSE).c_str (),
-                  "style", PANGO_STYLE_NORMAL,
-                  NULL);
+    return g_strdup (format_rate (size, FALSE).c_str ());
 }
 
-void
-duration_cell_data_func (GtkTreeViewColumn *,
-                         GtkCellRenderer *renderer,
-                         GtkTreeModel    *model,
-                         GtkTreeIter     *iter,
-                         gpointer         user_data)
+char *
+duration_cell_data_func (guint64 duration)
 {
-  const guint index = GPOINTER_TO_UINT (user_data);
-
   unsigned time;
-  GValue value = { 0 };
 
-  gtk_tree_model_get_value (model, iter, index, &value);
+  time = 100 * duration / GsmApplication::get ()->frequency;
 
-  switch (G_VALUE_TYPE (&value))
-    {
-      case G_TYPE_ULONG:
-        time = g_value_get_ulong (&value);
-        break;
-
-      case G_TYPE_UINT64:
-        time = g_value_get_uint64 (&value);
-        break;
-
-      default:
-        g_assert_not_reached ();
-    }
-
-  g_value_unset (&value);
-
-  time = 100 * time / GsmApplication::get ()->frequency;
-  char *str = format_duration_for_display (time);
-
-  g_object_set (renderer, "text", str, NULL);
-  g_free (str);
-}
-
-
-void
-time_cell_data_func (GtkTreeViewColumn *,
-                     GtkCellRenderer *renderer,
-                     GtkTreeModel    *model,
-                     GtkTreeIter     *iter,
-                     gpointer         user_data)
-{
-  const guint index = GPOINTER_TO_UINT (user_data);
-
-  time_t time;
-  GValue value = { 0 };
-
-  gtk_tree_model_get_value (model, iter, index, &value);
-
-  switch (G_VALUE_TYPE (&value))
-    {
-      case G_TYPE_ULONG:
-        time = g_value_get_ulong (&value);
-        break;
-
-      default:
-        g_assert_not_reached ();
-    }
-
-  g_value_unset (&value);
-
-  char *str = procman_format_date_for_display (time);
-
-  g_object_set (renderer, "text", str, NULL);
-  g_free (str);
-}
-
-void
-status_cell_data_func (GtkTreeViewColumn *,
-                       GtkCellRenderer *renderer,
-                       GtkTreeModel    *model,
-                       GtkTreeIter     *iter,
-                       gpointer         user_data)
-{
-  const guint index = GPOINTER_TO_UINT (user_data);
-
-  guint state;
-  GValue value = { 0 };
-
-  gtk_tree_model_get_value (model, iter, index, &value);
-
-  switch (G_VALUE_TYPE (&value))
-    {
-      case G_TYPE_UINT:
-        state = g_value_get_uint (&value);
-        break;
-
-      default:
-        g_assert_not_reached ();
-    }
-
-  g_value_unset (&value);
-
-  const char *str = format_process_state (state);
-
-  g_object_set (renderer, "text", str, NULL);
+  return format_duration_for_display (time);
 }
 
 void
@@ -756,17 +534,19 @@ number_compare_func (GtkTreeModel*model,
 
 template<>
 void
-tree_store_update<const char>(GtkTreeModel*model,
-                              GtkTreeIter *iter,
-                              int          column,
+list_store_update<const char>(GListModel  *model,
+                              guint        position,
+                              const char  *column,
                               const char  *new_value)
 {
-  char*current_value;
+  GObject *object;
+  char *current_value;
 
-  gtk_tree_model_get (model, iter, column, &current_value, -1);
+  object = g_list_model_get_object (model, position);
+  g_object_get (object, column, &current_value, NULL);
 
   if (g_strcmp0 (current_value, new_value) != 0)
-    gtk_tree_store_set (GTK_TREE_STORE (model), iter, column, new_value, -1);
+    g_object_set (object, column, new_value, NULL);
 
   g_free (current_value);
 }
@@ -829,7 +609,7 @@ init_tnum_label (gint     char_width,
 GtkLabel *
 make_tnum_label (void)
 {
-  PangoAttrList *attrs = make_tnum_attr_list ();
+  PangoAttrList *attrs = NULL;
   GtkWidget *label = gtk_label_new (NULL);
 
   gtk_label_set_attributes (GTK_LABEL (label), attrs);
@@ -837,16 +617,4 @@ make_tnum_label (void)
   g_clear_pointer (&attrs, pango_attr_list_unref);
 
   return GTK_LABEL (label);
-}
-
-
-PangoAttrList *
-make_tnum_attr_list (void)
-{
-  PangoAttrList *attrs = NULL;
-
-  attrs = pango_attr_list_new ();
-  pango_attr_list_insert (attrs, pango_attr_font_features_new ("tnum=1"));
-
-  return attrs;
 }

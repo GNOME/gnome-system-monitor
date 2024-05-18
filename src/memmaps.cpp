@@ -18,6 +18,7 @@ using std::string;
 #include "memmaps.h"
 #include "memmaps-info.h"
 #include "proctable.h"
+#include "proctable-data.h"
 #include "settings-keys.h"
 #include "util.h"
 
@@ -345,11 +346,11 @@ memmaps_timer (gpointer data)
 
 
 static void
-create_single_memmaps_dialog (GtkTreeModel *model,
-                              GtkTreePath*,
-                              GtkTreeIter  *iter,
+create_single_memmaps_dialog (GListModel *model,
+                              guint       position,
                               gpointer)
 {
+  ProctableData *data;
   MemMapsData *mmdata;
   AdwWindow  *memmapsdialog;
   AdwWindowTitle *window_title;
@@ -358,7 +359,8 @@ create_single_memmaps_dialog (GtkTreeModel *model,
   GListStore *store;
   GSimpleActionGroup *action_group;
 
-  gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
+  data = PROCTABLE_DATA (g_list_model_get_object (model, position));
+  g_object_get (data, "pointer", &info, NULL);
 
   if (!info)
     return;
@@ -406,7 +408,20 @@ create_single_memmaps_dialog (GtkTreeModel *model,
 void
 create_memmaps_dialog (GsmApplication *app)
 {
+  GListModel *model;
+  GtkBitsetIter iter;
+  GtkBitset *selection;
+  guint position;
+
+  selection = gtk_selection_model_get_selection (gtk_column_view_get_model (app->column_view));
+
+  model = gtk_sort_list_model_get_model (GTK_SORT_LIST_MODEL (
+                                           gtk_multi_selection_get_model (GTK_MULTI_SELECTION (
+                                                                            gtk_column_view_get_model (app->column_view)))));
+
   /* TODO: do we really want to open multiple dialogs ? */
-  gtk_tree_selection_selected_foreach (app->selection, create_single_memmaps_dialog,
-                                       app);
+  for (gtk_bitset_iter_init_first (&iter, selection, &position);
+       gtk_bitset_iter_is_valid (&iter);
+       gtk_bitset_iter_next (&iter, &position))
+    create_single_memmaps_dialog (model, position, app);
 }

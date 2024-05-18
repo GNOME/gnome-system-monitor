@@ -12,7 +12,6 @@ struct LoadGraph;
 
 #include "smooth_refresh.h"
 #include "prettytable.h"
-#include "legacy/treeview.h"
 #include "util.h"
 
 static const unsigned MIN_UPDATE_INTERVAL = 1 * 1000;
@@ -151,7 +150,7 @@ void        set_icon (Glib::RefPtr<Gdk::Texture> icon);
 void        set_user (guint uid);
 std::string lookup_user (guint uid);
 
-GtkTreeIter node;
+guint node;
 Glib::RefPtr<Gdk::Texture> icon;
 std::string tooltip;
 std::string name;
@@ -241,14 +240,14 @@ GMenuModel *process_window_menu_model;
 ProcList processes;
 ProcConfig config;
 PrettyTable      *pretty_table;
-GsmTreeView      *tree;
+GtkColumnView    *column_view;
 GtkPopover       *proc_popover_menu;
 GtkButton        *refresh_button;
 GtkButton        *end_process_button;
 GtkToggleButton  *search_button;
 GtkSearchEntry   *search_entry;
 GtkSearchBar     *search_bar;
-GtkTreePath      *top_of_tree;
+GtkTreeListRow   *tree_list_row;
 
 gdouble last_vscroll_max;
 gdouble last_vscroll_value;
@@ -266,7 +265,7 @@ GtkColumnView    *disk_list;
 
 guint disk_timeout;
 
-GtkTreeSelection *selection;
+GtkBitset        *selection;
 
 SmoothRefresh    *smooth_refresh;
 };

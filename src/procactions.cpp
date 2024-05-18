@@ -27,25 +27,26 @@
 #include "procactions.h"
 #include "application.h"
 #include "proctable.h"
+#include "proctable-data.h"
 #include "procdialogs.h"
 #include "settings-keys.h"
 
 
 static void
-renice_single_process (GtkTreeModel *model,
-                       GtkTreePath*,
-                       GtkTreeIter  *iter,
-                       gpointer      data)
+renice_single_process (GListModel *model,
+                       guint       position,
+                       gpointer    data)
 {
+  ProctableData *proctable_data;
   const struct ProcActionArgs * const args = static_cast<ProcActionArgs*>(data);
-
   ProcInfo *info = NULL;
   gint error;
   int saved_errno;
   gchar *error_msg;
   AdwAlertDialog *dialog;
 
-  gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
+  proctable_data = PROCTABLE_DATA (g_list_model_get_object (model, position));
+  g_object_get (proctable_data, "pointer", &info, NULL);
 
   if (!info)
     return;
@@ -100,6 +101,10 @@ renice (GsmApplication *app,
         int             nice)
 {
   struct ProcActionArgs args = { app, nice };
+  GListModel *model;
+  GtkBitset *selection;
+  GtkBitsetIter iter;
+  guint position;
 
   /* EEEK - ugly hack - make sure the table is not updated as a crash
   ** occurs if you first kill a process and the tree node is removed while
@@ -107,8 +112,16 @@ renice (GsmApplication *app,
   */
   proctable_freeze (app);
 
-  gtk_tree_selection_selected_foreach (app->selection, renice_single_process,
-                                       &args);
+  selection = gtk_selection_model_get_selection (gtk_column_view_get_model (app->column_view));
+
+  model = gtk_sort_list_model_get_model (GTK_SORT_LIST_MODEL (
+                                           gtk_multi_selection_get_model (GTK_MULTI_SELECTION (
+                                                                            gtk_column_view_get_model (app->column_view)))));
+
+  for (gtk_bitset_iter_init_first (&iter, selection, &position);
+       gtk_bitset_iter_is_valid (&iter);
+       gtk_bitset_iter_next (&iter, &position))
+    renice_single_process (model, position, &args);
 
   proctable_thaw (app);
 
@@ -171,15 +184,16 @@ kill_process_action (ProcInfo                    *info,
 }
 
 static void
-kill_single_process (GtkTreeModel *model,
-                     GtkTreePath*,
-                     GtkTreeIter  *iter,
-                     gpointer      data)
+kill_single_process (GListModel *model,
+                     guint       position,
+                     gpointer    data)
 {
   const struct ProcActionArgs * const args = static_cast<ProcActionArgs*>(data);
   ProcInfo *info;
+  ProctableData *proctable_data;
 
-  gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
+  proctable_data = PROCTABLE_DATA (g_list_model_get_object (model, position));
+  g_object_get (proctable_data, "pointer", &info, NULL);
 
   kill_process_action (info, args);
 }
@@ -235,8 +249,21 @@ kill_process (GsmApplication *app,
 
   if (proc == -1)
     {
-      gtk_tree_selection_selected_foreach (app->selection, kill_single_process,
-                                           &args);
+      GListModel *model;
+      GtkBitset *selection;
+      GtkBitsetIter iter;
+      guint position;
+
+      selection = gtk_selection_model_get_selection (gtk_column_view_get_model (app->column_view));
+
+      model = gtk_sort_list_model_get_model (GTK_SORT_LIST_MODEL (
+                                               gtk_multi_selection_get_model (GTK_MULTI_SELECTION (
+                                                                                gtk_column_view_get_model (app->column_view)))));
+
+      for (gtk_bitset_iter_init_first (&iter, selection, &position);
+           gtk_bitset_iter_is_valid (&iter);
+           gtk_bitset_iter_next (&iter, &position))
+        kill_single_process (model, position, &args);
     }
   else
     {

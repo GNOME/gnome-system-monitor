@@ -35,7 +35,6 @@ procman_debug_real (const char *file,
 GtkLabel *                         init_tnum_label (gint     char_width,
                                                     GtkAlign halign);
 GtkLabel *                         make_tnum_label (void);
-PangoAttrList *                    make_tnum_attr_list (void);
 std::tuple<double, double, double> hsv_to_rgb (double h,
                                                double s,
                                                double v);
@@ -64,55 +63,23 @@ std::vector<std::string> generate_colors (unsigned n);
 
 char *                   format_duration_for_display (unsigned centiseconds);
 
-void                     size_cell_data_func (GtkTreeViewColumn *col,
-                                              GtkCellRenderer   *renderer,
-                                              GtkTreeModel      *model,
-                                              GtkTreeIter       *iter,
-                                              gpointer           user_data);
+char * io_rate_cell_data_func (guint64 size);
 
-void io_rate_cell_data_func (GtkTreeViewColumn *col,
-                             GtkCellRenderer   *renderer,
-                             GtkTreeModel      *model,
-                             GtkTreeIter       *iter,
-                             gpointer           user_data);
+char * size_na_cell_data_func (guint64 size);
 
-void size_na_cell_data_func (GtkTreeViewColumn *col,
-                             GtkCellRenderer   *renderer,
-                             GtkTreeModel      *model,
-                             GtkTreeIter       *iter,
-                             gpointer           user_data);
+char * duration_cell_data_func (guint64 duration);
 
-void duration_cell_data_func (GtkTreeViewColumn *col,
-                              GtkCellRenderer   *renderer,
-                              GtkTreeModel      *model,
-                              GtkTreeIter       *iter,
-                              gpointer           user_data);
-
-void time_cell_data_func (GtkTreeViewColumn *col,
-                          GtkCellRenderer   *renderer,
-                          GtkTreeModel      *model,
-                          GtkTreeIter       *iter,
-                          gpointer           user_data);
-void percentage_cell_data_func (GtkTreeViewColumn *col,
-                                GtkCellRenderer   *renderer,
-                                GtkTreeModel      *model,
-                                GtkTreeIter       *iter,
-                                gpointer           user_data);
-
-void status_cell_data_func (GtkTreeViewColumn *col,
-                            GtkCellRenderer   *renderer,
-                            GtkTreeModel      *model,
-                            GtkTreeIter       *iter,
-                            gpointer           user_data);
 void priority_cell_data_func (GtkTreeViewColumn *col,
                               GtkCellRenderer   *renderer,
                               GtkTreeModel      *model,
                               GtkTreeIter       *iter,
                               gpointer           user_data);
+
 gint priority_compare_func (GtkTreeModel*model,
                             GtkTreeIter *first,
                             GtkTreeIter *second,
                             gpointer     user_data);
+
 gint number_compare_func (GtkTreeModel*model,
                           GtkTreeIter *first,
                           GtkTreeIter *second,
@@ -135,43 +102,45 @@ poison (T &  t,
 
 template<typename T>
 void
-tree_store_update (GtkTreeModel*model,
-                   GtkTreeIter *iter,
-                   int          column,
+list_store_update (GListModel  *model,
+                   guint        position,
+                   const char  *column,
                    const T&     new_value)
 {
   T current_value;
+  GObject *object;
 
-  gtk_tree_model_get (model, iter, column, &current_value, -1);
+  object = g_list_model_get_object (model, position);
+  g_object_get (object, column, &current_value, NULL);
 
   if (current_value != new_value)
-    gtk_tree_store_set (GTK_TREE_STORE (model), iter, column, new_value, -1);
+    g_object_set (object, column, new_value, NULL);
 }
 
 // undefined
 // catch every thing about pointers
 // just to make sure i'm not doing anything wrong
 template<typename T>
-void tree_store_update (GtkTreeModel*model,
-                        GtkTreeIter *iter,
-                        int          column,
-                        T           *new_value);
+void list_store_update (GListModel *model,
+                        guint       position,
+                        const char *column,
+                        T          *new_value);
 
 // specialized versions for strings
 template<>
-void tree_store_update<const char>(GtkTreeModel*model,
-                                   GtkTreeIter *iter,
-                                   int          column,
-                                   const char  *new_value);
+void list_store_update<const char>(GListModel *model,
+                                   guint       position,
+                                   const char *column,
+                                   const char *new_value);
 
 template<>
 inline void
-tree_store_update<char>(GtkTreeModel*model,
-                        GtkTreeIter *iter,
-                        int          column,
-                        char        *new_value)
+list_store_update<char>(GListModel *model,
+                        guint       position,
+                        const char *column,
+                        char       *new_value)
 {
-  tree_store_update<const char>(model, iter, column, new_value);
+  list_store_update<const char>(model, position, column, new_value);
 }
 
 gchar *     format_size (guint64 size,

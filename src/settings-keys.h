@@ -8,7 +8,7 @@
 
 #define GSM_SETTINGS_CHILD_OPEN_FILES       "openfilestree"
 #define GSM_SETTINGS_CHILD_DISKS            "disksview"
-#define GSM_SETTINGS_CHILD_PROCESSES        "proctree"
+#define GSM_SETTINGS_CHILD_PROCESSES        "procview"
 #define GSM_SETTINGS_CHILD_MEMMAP           "memmapstree"
 
 #define GSM_SETTING_WINDOW_WIDTH            "window-width"

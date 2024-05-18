@@ -1,4 +1,4 @@
-/* Procman tree view and process updating
+/* Procman column view and process updating
  * Copyright (C) 2001 Kevin Vandersloot
  *
  * This program is free software; you can redistribute it and/or
@@ -44,14 +44,15 @@
 
 #include "application.h"
 #include "proctable.h"
+#include "proctable-data.h"
 #include "prettytable.h"
 #include "util.h"
 #include "interface.h"
 #include "selinux.h"
 #include "settings-keys.h"
 #include "cgroups.h"
-#include "legacy/treeview.h"
 #include "systemd.h"
+#include "legacy/e_date.h"
 
 ProcInfo*
 ProcList::find (pid_t pid)
@@ -60,31 +61,9 @@ ProcList::find (pid_t pid)
 
   return (it == data.end () ? nullptr : &it->second);
 }
-
-static void
-cb_save_tree_state (gpointer,
-                    gpointer data)
-{
-  GsmApplication * const app = static_cast<GsmApplication *>(data);
-
-  gsm_tree_view_save_state (app->tree);
-}
-
-static void
-cb_proctree_destroying (GtkTreeView *self,
-                        gpointer     data)
-{
-  g_signal_handlers_disconnect_by_func (self,
-                                        (gpointer) cb_save_tree_state,
-                                        data);
-
-  g_signal_handlers_disconnect_by_func (gtk_tree_view_get_model (self),
-                                        (gpointer) cb_save_tree_state,
-                                        data);
-}
-
+/*
 static gboolean
-cb_tree_button_pressed (GtkGestureClick*,
+cb_view_button_pressed (GtkGestureClick*,
                         gint,
                         gdouble         x,
                         gdouble         y,
@@ -110,26 +89,36 @@ cb_tree_button_pressed (GtkGestureClick*,
 
   return TRUE;
 }
-
+*/
 void
-get_last_selected (GtkTreeModel *model,
-                   GtkTreePath*,
-                   GtkTreeIter  *iter,
-                   gpointer      data)
+get_last_selected (GListModel *model,
+                   guint       position,
+                   gpointer    data)
 {
+  ProctableData *proctable_data;
   ProcInfo **info = (ProcInfo**) data;
 
-  gtk_tree_model_get (model, iter, COL_POINTER, info, -1);
+  proctable_data = PROCTABLE_DATA (g_list_model_get_object (model, position));
+  g_object_get (proctable_data, "pointer", &info, NULL);
 }
 
 static void
-cb_row_selected (GtkTreeSelection *selection,
-                 gpointer          data)
+cb_row_selected (GtkSelectionModel *selection_model,
+                 gpointer           data)
 {
   GsmApplication *app = (GsmApplication *) data;
-
+  GtkBitset *selection;
+  guint64 selected_count;
+  GListModel *model;
+  GtkBitsetIter iter;
+  guint position;
   ProcInfo *selected_process = NULL;
-  gint selected_count = gtk_tree_selection_count_selected_rows (selection);
+
+  selection = gtk_selection_model_get_selection (selection_model);
+  selected_count = gtk_bitset_get_size (selection);
+
+  model = gtk_sort_list_model_get_model (GTK_SORT_LIST_MODEL (
+            gtk_multi_selection_get_model (GTK_MULTI_SELECTION (selection_model))));
 
   app->selection = selection;
 
@@ -140,8 +129,11 @@ cb_row_selected (GtkTreeSelection *selection,
   /* get the most recent selected process and determine if there are
   ** no selected processes
   */
-  gtk_tree_selection_selected_foreach (selection, get_last_selected,
-                                       &selected_process);
+  for (gtk_bitset_iter_init_first (&iter, selection, &position);
+       gtk_bitset_iter_is_valid (&iter);
+       gtk_bitset_iter_next (&iter, &position))
+    get_last_selected (model, position, &selected_process);
+
   if (selected_process)
     {
       GVariant *priority;
@@ -162,6 +154,7 @@ cb_row_selected (GtkTreeSelection *selection,
 
       g_action_change_state (action, priority);
     }
+
   update_sensitivity (app);
 }
 
@@ -197,10 +190,11 @@ cb_refresh_icons (GtkIconTheme*,
 }
 
 static gboolean
-iter_matches_search_key (GtkTreeModel *model,
-                         GtkTreeIter  *iter,
-                         const gchar  *search_text)
+iter_matches_search_key (GListModel  *model,
+                         guint        position,
+                         const gchar *search_text)
 {
+  ProctableData *data;
   char *name;
   char *user;
   pid_t pid;
@@ -211,12 +205,14 @@ iter_matches_search_key (GtkTreeModel *model,
   char **keys;
   Glib::RefPtr<Glib::Regex> regex;
 
-  gtk_tree_model_get (model, iter,
-                      COL_NAME, &name,
-                      COL_USER, &user,
-                      COL_PID, &pid,
-                      COL_ARGS, &args,
-                      -1);
+  data = PROCTABLE_DATA (g_list_model_get_object (model, position));
+
+  g_object_get (data,
+                "name", &name,
+                "user", &user,
+                "id", &pid,
+                "args", &args,
+                NULL);
 
   pids = g_strdup_printf ("%d", pid);
 
@@ -242,23 +238,23 @@ iter_matches_search_key (GtkTreeModel *model,
 }
 
 static gboolean
-process_visibility_func (GtkTreeModel *model,
-                         GtkTreeIter  *iter,
-                         gpointer      data)
+process_visibility_func (GListModel *model,
+                         guint       position,
+                         gpointer    data)
 {
   GsmApplication * const app = static_cast<GsmApplication *>(data);
   const gchar *search_text = app->search_entry == NULL ? "" : gtk_editable_get_text (GTK_EDITABLE (app->search_entry));
-  GtkTreePath *tree_path = gtk_tree_model_get_path (model, iter);
+  // GtkTreePath *tree_path = gtk_tree_model_get_path (model, iter);
 
   if (strcmp (search_text, "") == 0)
-    {
-      gtk_tree_path_free (tree_path);
+    {/*
+      gtk_tree_path_free (tree_path);*/
       return TRUE;
     }
 
   // in case we are in dependencies view, we show (and expand) rows not matching the text, but having a matching child
   gboolean match = false;
-
+/*
   if (app->settings->get_boolean (GSM_SETTING_SHOW_DEPENDENCIES))
     {
       GtkTreeIter child;
@@ -272,30 +268,30 @@ process_visibility_func (GtkTreeModel *model,
           match = child_match;
         }
 
-      match |= iter_matches_search_key (model, iter, search_text);
+      match |= iter_matches_search_key (model, position, search_text);
       if (match && (strlen (search_text) > 0))
         gtk_tree_view_expand_to_path (GTK_TREE_VIEW (app->tree), tree_path);
     }
   else
-    {
-      match = iter_matches_search_key (model, iter, search_text);
+    {*/
+      match = iter_matches_search_key (model, position, search_text);/*
     }
 
-  gtk_tree_path_free (tree_path);
+  gtk_tree_path_free (tree_path);*/
 
   return match;
 }
 
 static void
-proctable_clear_tree (GsmApplication * const app)
+proctable_clear_view (GsmApplication * const app)
 {
-  GtkTreeModel *model;
+  GListModel *model;
 
-  model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
-                                             gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (
-                                                                              gtk_tree_view_get_model (GTK_TREE_VIEW (app->tree))))));
+  model = gtk_sort_list_model_get_model (GTK_SORT_LIST_MODEL (
+            gtk_multi_selection_get_model (GTK_MULTI_SELECTION (
+              gtk_column_view_get_model (app->column_view)))));
 
-  gtk_tree_store_clear (GTK_TREE_STORE (model));
+  g_list_store_remove_all (G_LIST_STORE (model));
 
   proctable_free_table (app);
 
@@ -305,14 +301,15 @@ proctable_clear_tree (GsmApplication * const app)
 static void
 cb_show_dependencies_changed (Gio::Settings& settings,
                               Glib::ustring,
-                              GsmApplication*app)
+                              GsmApplication *app)
 {
   if (app->timeout)
-    {
+    {/*
       gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (app->tree),
                                         settings.get_boolean (GSM_SETTING_SHOW_DEPENDENCIES));
 
-      proctable_clear_tree (app);
+*/
+      proctable_clear_view (app);
       proctable_update (app);
     }
 }
@@ -324,126 +321,36 @@ cb_show_whose_processes_changed (Gio::Settings&,
 {
   if (app->timeout)
     {
-      proctable_clear_tree (app);
+      proctable_clear_view (app);
       proctable_update (app);
     }
 }
 
-GsmTreeView *
-proctable_new (GsmApplication * const app)
+void
+proctable_new (GsmApplication *const app,
+               GtkColumnView  *proctable)
 {
-  GsmTreeView *proctree;
-  GtkTreeStore *model;
+  GListModel *model;
+  GListModel *columns;
   GtkTreeModelFilter *model_filter;
   GtkTreeModelSort *model_sort;
-  GtkTreeSelection *selection;
+  GtkSelectionModel *selection_model;
+  GtkBitset *selection;
   GtkGesture *click_controller;
-  GtkTreeViewColumn *column;
-  GtkCellRenderer *cell_renderer;
-  const gchar *titles[] = {
-    N_("Process Name"),
-    N_("User"),
-    N_("Status"),
-    N_("Virtual Memory"),
-    N_("Resident Memory"),
-    N_("Writable Memory"),
-    N_("Shared Memory"),
-    N_("X Server Memory"),
-    /* xgettext:no-c-format */ N_("% CPU"),
-    N_("CPU Time"),
-    N_("Started"),
-    N_("Nice"),
-    N_("ID"),
-    N_("Security Context"),
-    N_("Command Line"),
-    N_("Memory"),
-    /* xgettext: combined noun, the function the process is waiting in, see wchan ps(1) */
-    N_("Waiting Channel"),
-    N_("Control Group"),
-    N_("Unit"),
-    N_("Session"),
-    /* TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
-    for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration */
-    N_("Seat"),
-    N_("Owner"),
-    N_("Disk read total"),
-    N_("Disk write total"),
-    N_("Disk read"),
-    N_("Disk write"),
-    N_("Priority"),
-    NULL,
-    "POINTER"
-  };
-  gint i;
+  GtkColumnViewColumn *column;
   auto settings = g_settings_get_child (app->settings->gobj (), GSM_SETTINGS_CHILD_PROCESSES);
 
-  model = gtk_tree_store_new (NUM_COLUMNS,
-                              G_TYPE_STRING,        /* Process Name */
-                              G_TYPE_STRING,        /* User         */
-                              G_TYPE_UINT,          /* Status       */
-                              G_TYPE_ULONG,         /* VM Size      */
-                              G_TYPE_ULONG,         /* Resident Memory */
-                              G_TYPE_ULONG,         /* Writable Memory */
-                              G_TYPE_ULONG,         /* Shared Memory */
-                              G_TYPE_ULONG,         /* X Server Memory */
-                              G_TYPE_DOUBLE,        /* % CPU        */
-                              G_TYPE_UINT64,        /* CPU time     */
-                              G_TYPE_ULONG,         /* Started      */
-                              G_TYPE_INT,           /* Nice         */
-                              G_TYPE_UINT,          /* ID           */
-                              G_TYPE_STRING,        /* Security Context */
-                              G_TYPE_STRING,        /* Arguments    */
-                              G_TYPE_ULONG,         /* Memory       */
-                              G_TYPE_STRING,        /* wchan        */
-                              G_TYPE_STRING,        /* Cgroup       */
-                              G_TYPE_STRING,        /* Unit         */
-                              G_TYPE_STRING,        /* Session      */
-                              G_TYPE_STRING,        /* Seat         */
-                              G_TYPE_STRING,        /* Owner        */
-                              G_TYPE_UINT64,        /* Disk read total */
-                              G_TYPE_UINT64,        /* Disk write total*/
-                              G_TYPE_UINT64,        /* Disk read    */
-                              G_TYPE_UINT64,        /* Disk write   */
-                              G_TYPE_STRING,        /* Priority     */
-                              GDK_TYPE_TEXTURE,     /* Icon         */
-                              G_TYPE_POINTER,       /* ProcInfo     */
-                              G_TYPE_STRING         /* Sexy tooltip */
-                              );
+  model = gtk_sort_list_model_get_model (GTK_SORT_LIST_MODEL (
+                                           gtk_multi_selection_get_model (GTK_MULTI_SELECTION (
+                                                                            gtk_column_view_get_model (proctable)))));
 
+  process_visibility_func (model, 0, app);
+/*
   model_filter = GTK_TREE_MODEL_FILTER (gtk_tree_model_filter_new (GTK_TREE_MODEL (model), NULL));
   gtk_tree_model_filter_set_visible_func (model_filter, process_visibility_func, app, NULL);
 
   model_sort = GTK_TREE_MODEL_SORT (gtk_tree_model_sort_new_with_model (GTK_TREE_MODEL (model_filter)));
 
-  proctree = gsm_tree_view_new (settings, TRUE);
-  gtk_tree_view_set_model (GTK_TREE_VIEW (proctree), GTK_TREE_MODEL (model_sort));
-  gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (proctree), COL_TOOLTIP);
-  gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (proctree), app->settings->get_boolean (GSM_SETTING_SHOW_DEPENDENCIES));
-  gtk_tree_view_set_enable_search (GTK_TREE_VIEW (proctree), FALSE);
-  g_object_unref (G_OBJECT (model));
-
-  column = gtk_tree_view_column_new ();
-
-  cell_renderer = gtk_cell_renderer_pixbuf_new ();
-  gtk_tree_view_column_pack_start (column, cell_renderer, FALSE);
-  gtk_tree_view_column_set_attributes (column, cell_renderer,
-                                       "texture", COL_ICON,
-                                       NULL);
-
-  cell_renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_column_pack_start (column, cell_renderer, FALSE);
-  gtk_tree_view_column_set_attributes (column, cell_renderer,
-                                       "text", COL_NAME,
-                                       NULL);
-  gtk_tree_view_column_set_title (column, _(titles[0]));
-
-  gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
-  gtk_tree_view_column_set_resizable (column, TRUE);
-  gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
-  gtk_tree_view_column_set_min_width (column, 1);
-  gtk_tree_view_column_set_reorderable (column, TRUE);
-
-  gsm_tree_view_append_and_bind_column (proctree, column);
   gtk_tree_view_set_expander_column (GTK_TREE_VIEW (proctree), column);
 
   gtk_tree_view_column_set_expand (column, TRUE);
@@ -457,73 +364,9 @@ proctable_new (GsmApplication * const app)
       if (i == COL_MEMWRITABLE)
         continue;
 
-      cell = gtk_cell_renderer_text_new ();
-      col = gtk_tree_view_column_new ();
-      gtk_tree_view_column_pack_start (col, cell, TRUE);
-      gtk_tree_view_column_set_title (col, _(titles[i]));
-      gtk_tree_view_column_set_resizable (col, TRUE);
-      gtk_tree_view_column_set_sort_column_id (col, i);
-      gtk_tree_view_column_set_reorderable (col, TRUE);
-      gsm_tree_view_append_and_bind_column (proctree, col);
-
       // type
       switch (i)
         {
-          case COL_VMSIZE:
-          case COL_MEMRES:
-          case COL_MEMSHARED:
-          case COL_MEM:
-            gtk_tree_view_column_set_cell_data_func (col, cell,
-                                                     &procman::size_na_cell_data_func,
-                                                     GUINT_TO_POINTER (i),
-                                                     NULL);
-            break;
-
-          case COL_CPU:
-            gtk_tree_view_column_set_cell_data_func (col, cell,
-                                                     &procman::percentage_cell_data_func,
-                                                     GUINT_TO_POINTER (i),
-                                                     NULL);
-            break;
-
-          case COL_CPU_TIME:
-            gtk_tree_view_column_set_cell_data_func (col, cell,
-                                                     &procman::duration_cell_data_func,
-                                                     GUINT_TO_POINTER (i),
-                                                     NULL);
-            break;
-
-          case COL_START_TIME:
-            gtk_tree_view_column_set_cell_data_func (col, cell,
-                                                     &procman::time_cell_data_func,
-                                                     GUINT_TO_POINTER (i),
-                                                     NULL);
-            break;
-
-          case COL_STATUS:
-            gtk_tree_view_column_set_cell_data_func (col, cell,
-                                                     &procman::status_cell_data_func,
-                                                     GUINT_TO_POINTER (i),
-                                                     NULL);
-            break;
-
-          case COL_DISK_READ_TOTAL:
-          case COL_DISK_WRITE_TOTAL:
-            gtk_tree_view_column_set_cell_data_func (col, cell,
-                                                     &procman::size_na_cell_data_func,
-                                                     GUINT_TO_POINTER (i),
-                                                     NULL);
-            break;
-
-          case COL_DISK_READ_CURRENT:
-          case COL_DISK_WRITE_CURRENT:
-            gtk_tree_view_column_set_cell_data_func (col, cell,
-                                                     &procman::io_rate_cell_data_func,
-                                                     GUINT_TO_POINTER (i),
-                                                     NULL);
-
-            break;
-
           case COL_PRIORITY:
             gtk_tree_view_column_set_cell_data_func (col, cell,
                                                      &procman::priority_cell_data_func,
@@ -533,32 +376,6 @@ proctable_new (GsmApplication * const app)
 
           default:
             gtk_tree_view_column_set_attributes (col, cell, "text", i, NULL);
-            break;
-        }
-
-      // Tabular Numbers
-      switch (i)
-        {
-          case COL_PID:
-          case COL_VMSIZE:
-          case COL_MEMRES:
-          case COL_MEMSHARED:
-          case COL_MEM:
-          case COL_CPU:
-          case COL_CPU_TIME:
-          case COL_DISK_READ_TOTAL:
-          case COL_DISK_WRITE_TOTAL:
-          case COL_DISK_READ_CURRENT:
-          case COL_DISK_WRITE_CURRENT:
-          case COL_START_TIME:
-          case COL_NICE:
-          case COL_WCHAN:
-            attrs = make_tnum_attr_list ();
-            g_object_set (cell, "attributes", attrs, NULL);
-            g_clear_pointer (&attrs, pango_attr_list_unref);
-            break;
-
-          default:
             break;
         }
 
@@ -591,91 +408,45 @@ proctable_new (GsmApplication * const app)
           default:
             break;
         }
-
-      // xalign
-      switch (i)
-        {
-          case COL_VMSIZE:
-          case COL_MEMRES:
-          case COL_MEMSHARED:
-          case COL_CPU:
-          case COL_NICE:
-          case COL_PID:
-          case COL_DISK_READ_TOTAL:
-          case COL_DISK_WRITE_TOTAL:
-          case COL_DISK_READ_CURRENT:
-          case COL_DISK_WRITE_CURRENT:
-          case COL_CPU_TIME:
-          case COL_MEM:
-            g_object_set (G_OBJECT (cell), "xalign", 1.0f, NULL);
-            break;
-        }
-
-      gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
-      // sizing
-      switch (i)
-        {
-          case COL_ARGS:
-            gtk_tree_view_column_set_min_width (col, 150);
-            break;
-
-          default:
-            gtk_tree_view_column_set_min_width (column, 20);
-            break;
-        }
-
-      if (i == COL_ARGS)
-        gtk_tree_view_column_set_expand (col, TRUE);
-      else
-        gtk_tree_view_column_set_expand (col, FALSE);
     }
-  app->tree = proctree;
-  app->top_of_tree = NULL;
+*/
+  app->column_view = proctable;
+  app->tree_list_row = NULL;
   app->last_vscroll_max = 0;
   app->last_vscroll_value = 0;
 
-  if (!cgroups_enabled ())
-    gsm_tree_view_add_excluded_column (proctree, COL_CGROUP);
+  columns = gtk_column_view_get_columns (proctable);
 
-  if (!procman::systemd_logind_running ())
+  for (guint i = 0; i < g_list_model_get_n_items (columns); i++)
     {
-      gsm_tree_view_add_excluded_column (proctree, COL_UNIT);
-      gsm_tree_view_add_excluded_column (proctree, COL_SESSION);
-      gsm_tree_view_add_excluded_column (proctree, COL_SEAT);
-      gsm_tree_view_add_excluded_column (proctree, COL_OWNER);
+      column = GTK_COLUMN_VIEW_COLUMN (g_list_model_get_object (columns, i));
+      const char* column_id = gtk_column_view_column_get_id (column);
+
+      if ((strcmp (column_id, "control-group") == 0 && !cgroups_enabled ()) ||
+          ((strcmp (column_id, "unit") == 0 || strcmp (column_id, "session") == 0
+          || strcmp (column_id, "seat") == 0 || strcmp (column_id, "owner") == 0)
+          && !procman::systemd_logind_running ()) ||
+          (strcmp (column_id, "security-context") == 0 && !can_show_security_context_column ()))
+        gtk_column_view_remove_column (proctable, column);
     }
 
-  if (!can_show_security_context_column ())
-    gsm_tree_view_add_excluded_column (proctree, COL_SECURITYCONTEXT);
-
-  gsm_tree_view_load_state (proctree);
-
-  GtkIconTheme*theme = gtk_icon_theme_get_for_display (gdk_display_get_default ());
+  GtkIconTheme *theme = gtk_icon_theme_get_for_display (gdk_display_get_default ());
   g_signal_connect (G_OBJECT (theme), "changed", G_CALLBACK (cb_refresh_icons), app);
 
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (proctree));
-  gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
+  selection_model = gtk_column_view_get_model (proctable);
+  selection = gtk_selection_model_get_selection (selection_model);
   app->selection = selection;
 
   click_controller = gtk_gesture_click_new ();
   gtk_gesture_single_set_button (GTK_GESTURE_SINGLE (click_controller), GDK_BUTTON_SECONDARY);
-  gtk_widget_add_controller (GTK_WIDGET (proctree), GTK_EVENT_CONTROLLER (click_controller));
-
+  gtk_widget_add_controller (GTK_WIDGET (proctable), GTK_EVENT_CONTROLLER (click_controller));
+/*
   g_signal_connect (G_OBJECT (click_controller), "pressed",
-                    G_CALLBACK (cb_tree_button_pressed), app);
-
-  g_signal_connect (G_OBJECT (selection),
-                    "changed",
+                    G_CALLBACK (cb_view_button_pressed), app);
+*/
+  g_signal_connect (G_OBJECT (selection_model),
+                    "selection-changed",
                     G_CALLBACK (cb_row_selected), app);
-
-  g_signal_connect (G_OBJECT (proctree), "destroy",
-                    G_CALLBACK (cb_proctree_destroying), app);
-
-  g_signal_connect (G_OBJECT (proctree), "columns-changed",
-                    G_CALLBACK (cb_save_tree_state), app);
-
-  g_signal_connect (G_OBJECT (model_sort), "sort-column-changed",
-                    G_CALLBACK (cb_save_tree_state), app);
 
   app->settings->signal_changed (GSM_SETTING_SHOW_DEPENDENCIES).connect ([app](const Glib::ustring&key) {
     cb_show_dependencies_changed (*app->settings.operator-> (), key, app);
@@ -684,8 +455,6 @@ proctable_new (GsmApplication * const app)
   app->settings->signal_changed (GSM_SETTING_SHOW_WHOSE_PROCESSES).connect ([app](const Glib::ustring&key) {
     cb_show_whose_processes_changed (*app->settings.operator-> (), key, app);
   });
-
-  return proctree;
 }
 
 static void
@@ -798,49 +567,54 @@ get_process_memory_info (ProcInfo *info)
 static void
 update_info_mutable_cols (ProcInfo *info)
 {
-  GtkTreeModel *model;
+  GListModel *model;
 
-  model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
-                                             gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (
-                                                                              gtk_tree_view_get_model (GTK_TREE_VIEW (GsmApplication::get ()->tree))))));
+  model = gtk_sort_list_model_get_model (GTK_SORT_LIST_MODEL (
+            gtk_multi_selection_get_model (GTK_MULTI_SELECTION (
+              gtk_column_view_get_model (GsmApplication::get ()->column_view)))));
 
-  using procman::tree_store_update;
+  using procman::list_store_update;
 
-  tree_store_update (model, &info->node, COL_STATUS, info->status);
-  tree_store_update (model, &info->node, COL_USER, info->user.c_str ());
-  tree_store_update (model, &info->node, COL_VMSIZE, info->vmsize);
-  tree_store_update (model, &info->node, COL_MEMRES, info->memres);
-  tree_store_update (model, &info->node, COL_MEMSHARED, info->memshared);
-  tree_store_update (model, &info->node, COL_CPU, info->pcpu);
-  tree_store_update (model, &info->node, COL_CPU_TIME, info->cpu_time);
-  tree_store_update (model, &info->node, COL_DISK_READ_TOTAL, info->disk_read_bytes_total);
-  tree_store_update (model, &info->node, COL_DISK_WRITE_TOTAL, info->disk_write_bytes_total);
-  tree_store_update (model, &info->node, COL_DISK_READ_CURRENT, info->disk_read_bytes_current);
-  tree_store_update (model, &info->node, COL_DISK_WRITE_CURRENT, info->disk_write_bytes_current);
-  tree_store_update (model, &info->node, COL_START_TIME, info->start_time);
-  tree_store_update (model, &info->node, COL_NICE, info->nice);
-  tree_store_update (model, &info->node, COL_MEM, info->mem);
-  tree_store_update (model, &info->node, COL_WCHAN, info->wchan.c_str ());
-  tree_store_update (model, &info->node, COL_CGROUP, info->cgroup_name.c_str ());
-  tree_store_update (model, &info->node, COL_UNIT, info->unit.c_str ());
-  tree_store_update (model, &info->node, COL_SESSION, info->session.c_str ());
-  tree_store_update (model, &info->node, COL_SEAT, info->seat.c_str ());
-  tree_store_update (model, &info->node, COL_OWNER, info->owner.c_str ());
+  list_store_update (model, info->node, "status", format_process_state (info->status));
+  list_store_update (model, info->node, "user", info->user.c_str ());
+  list_store_update (model, info->node, "vmsize", procman::size_na_cell_data_func (info->vmsize));
+  list_store_update (model, info->node, "resident-memory", procman::size_na_cell_data_func (info->memres));
+  list_store_update (model, info->node, "shared-memory", procman::size_na_cell_data_func (info->memshared));
+  list_store_update (model, info->node, "cpu", g_strdup_printf ("%.1f %%", info->pcpu));
+  list_store_update (model, info->node, "cpu-time", procman::duration_cell_data_func (info->cpu_time));
+  list_store_update (model, info->node, "disk-read-total", procman::size_na_cell_data_func (info->disk_read_bytes_total));
+  list_store_update (model, info->node, "disk-write-total", procman::size_na_cell_data_func (info->disk_write_bytes_total));
+  list_store_update (model, info->node, "disk-read", procman::io_rate_cell_data_func (info->disk_read_bytes_current));
+  list_store_update (model, info->node, "disk-write", procman::io_rate_cell_data_func (info->disk_write_bytes_current));
+  list_store_update (model, info->node, "started", procman_format_date_for_display (info->start_time));
+  list_store_update (model, info->node, "nice", info->nice);
+  list_store_update (model, info->node, "memory", procman::size_na_cell_data_func (info->mem));
+  list_store_update (model, info->node, "waiting-channel", info->wchan.c_str ());
+  list_store_update (model, info->node, "control-group", info->cgroup_name.c_str ());
+  list_store_update (model, info->node, "unit", info->unit.c_str ());
+  list_store_update (model, info->node, "session", info->session.c_str ());
+  list_store_update (model, info->node, "seat", info->seat.c_str ());
+  list_store_update (model, info->node, "owner", info->owner.c_str ());
 }
 
 static void
-insert_info_to_tree (ProcInfo       *info,
+insert_info_to_view (ProcInfo       *info,
                      GsmApplication *app,
                      bool            forced = false)
 {
-  GtkTreeModel *model;
+  GListModel *model;/*
   GtkTreeModel *filtered;
   GtkTreeModel *sorted;
 
   sorted = gtk_tree_view_get_model (GTK_TREE_VIEW (app->tree));
   filtered = gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (sorted));
   model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (filtered));
+*/
+  model = gtk_sort_list_model_get_model (GTK_SORT_LIST_MODEL (
+            gtk_multi_selection_get_model (GTK_MULTI_SELECTION (
+              gtk_column_view_get_model (app->column_view)))));
 
+/*
   if (app->settings->get_boolean (GSM_SETTING_SHOW_DEPENDENCIES))
     {
       ProcInfo *parent = 0;
@@ -880,17 +654,21 @@ insert_info_to_tree (ProcInfo       *info,
     }
   else
     {
-      gtk_tree_store_insert (GTK_TREE_STORE (model), &info->node, NULL, 0);
+      gtk_tree_store_insert (GTK_TREE_STORE (model), &info->node, NULL, 0);/*
     }
+*/
+  ProctableData *data;
 
-  gtk_tree_store_set (GTK_TREE_STORE (model), &info->node,
-                      COL_POINTER, info,
-                      COL_NAME, info->name.c_str (),
-                      COL_ARGS, info->arguments.c_str (),
-                      COL_TOOLTIP, info->tooltip.c_str (),
-                      COL_PID, info->pid,
-                      COL_SECURITYCONTEXT, info->security_context.c_str (),
-                      -1);
+  data = PROCTABLE_DATA (g_object_new (PROCTABLE_TYPE_DATA,
+                                       "name", info->name.c_str (),
+                                       "id", info->pid,
+                                       "security-context", info->security_context.c_str (),
+                                       "args", info->arguments.c_str (),
+                                       "tooltip", info->tooltip.c_str (),
+                                       "pointer", info,
+                                       NULL));
+
+  g_list_store_insert (G_LIST_STORE (model), 0, data);
 
   app->pretty_table->set_icon (*info);
 
@@ -902,17 +680,17 @@ insert_info_to_tree (ProcInfo       *info,
 */
 template<typename List>
 static void
-remove_info_from_tree (GsmApplication *app,
-                       GtkTreeModel   *model,
+remove_info_from_view (GsmApplication *app,
+                       GListModel     *model,
                        ProcInfo&       current,
                        List &          orphans,
                        unsigned        lvl = 0)
-{
+{/*
   GtkTreeIter child_node;
 
   if (std::find (orphans.begin (), orphans.end (), &current) != orphans.end ())
     {
-      procman_debug ("[%u] %d already removed from tree", lvl, int(current.pid));
+      procman_debug ("[%u] %d already removed from view", lvl, int(current.pid));
       return;
     }
 
@@ -927,14 +705,14 @@ remove_info_from_tree (GsmApplication *app,
     {
       ProcInfo *child = 0;
       gtk_tree_model_get (model, &child_node, COL_POINTER, &child, -1);
-      remove_info_from_tree (app, model, *child, orphans, lvl + 1);
+      remove_info_from_view (app, model, *child, orphans, lvl + 1);
     }
 
   g_assert (not gtk_tree_model_iter_has_child (model, &current.node));
 
   orphans.push_back (&current);
   gtk_tree_store_remove (GTK_TREE_STORE (model), &current.node);
-  procman::poison (current.node, 0x69);
+  procman::poison (current.node, 0x69);*/
 }
 
 
@@ -1064,14 +842,14 @@ refresh_list (GsmApplication *app,
 {
   typedef std::list<ProcInfo*> ProcList;
   ProcList addition;
+  GListModel *model;
 
-  GtkTreeModel    *model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
-                                                              gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (
-                                                                                               gtk_tree_view_get_model (GTK_TREE_VIEW (app->tree))))));
-  guint i;
+  model = gtk_sort_list_model_get_model (GTK_SORT_LIST_MODEL (
+            gtk_multi_selection_get_model (GTK_MULTI_SELECTION (
+              gtk_column_view_get_model (app->column_view)))));
 
   // Add or update processes in the process list
-  for (i = 0; i < n; ++i)
+  for (guint i = 0; i < n; ++i)
     {
       ProcInfo *info = app->processes.find (pid_list[i]);
 
@@ -1086,8 +864,8 @@ refresh_list (GsmApplication *app,
 
 
   // Remove dead processes from the process list and from the
-  // tree. children are queued to be readded at the right place
-  // in the tree.
+  // view.children are queued to be readded at the right place
+  // in the view.
 
   const std::set<pid_t> pids (pid_list, pid_list + n);
 
@@ -1099,7 +877,7 @@ refresh_list (GsmApplication *app,
       if (pids.find (info.pid) == pids.end ())
         {
           procman_debug ("ripping %d", info.pid);
-          remove_info_from_tree (app, model, info, addition);
+          remove_info_from_view (app, model, info, addition);
           addition.remove (&info);
           it = app->processes.erase (it);
         }
@@ -1112,19 +890,18 @@ refresh_list (GsmApplication *app,
   // INVARIANT
   // pid_list == ProcInfo::all + addition
 
-
+/*
   if (app->settings->get_boolean (GSM_SETTING_SHOW_DEPENDENCIES))
     {
-      // insert process in the tree. walk through the addition list
+      // insert process in the view walk through the addition list
       // (new process + process that have a new parent). This loop
       // handles the dependencies because we cannot insert a process
-      // until its parent is in the tree.
+      // until its parent is in the view.
 
-      std::set<pid_t> in_tree (pids);
+      std::set<pid_t> in_view (pids);
 
       for (ProcList::iterator it (addition.begin ()); it != addition.end (); ++it)
-        in_tree.erase ((*it)->pid);
-
+        in_view.erase ((*it)->pid);
 
       while (not addition.empty ())
         {
@@ -1137,11 +914,11 @@ refresh_list (GsmApplication *app,
                              int((*it)->pid), int((*it)->ppid));
 
 
-              // inserts the process in the treeview if :
+              // inserts the process in the columnview if :
               // - it has no parent (ppid = -1),
               //   ie it is for example the [kernel] on FreeBSD
               // - it is init
-              // - its parent is already in tree
+              // - its parent is already in view
               // - its parent is unreachable
               //
               // rounds == 2 means that addition contains processes with
@@ -1149,14 +926,14 @@ refresh_list (GsmApplication *app,
               //
               // FIXME: this is broken if the unreachable parent becomes active
               // i.e. it gets active or changes ower
-              // so we just clear the tree on __each__ update
+              // so we just clear the view on __each__ update
               // see proctable_update (ProcData * const procdata)
 
 
-              if ((*it)->ppid <= 0 or in_tree.find ((*it)->ppid) != in_tree.end ())
+              if ((*it)->ppid <= 0 or in_view.find ((*it)->ppid) != in_view.end ())
                 {
-                  insert_info_to_tree (*it, app);
-                  in_tree.insert ((*it)->pid);
+                  insert_info_to_view (*it, app);
+                  in_view.insert ((*it)->pid);
                   it = addition.erase (it);
                   continue;
                 }
@@ -1166,8 +943,8 @@ refresh_list (GsmApplication *app,
               if (not parent)
                 {
                   // or std::find(addition.begin(), addition.end(), parent) == addition.end()) {
-                  insert_info_to_tree (*it, app, true);
-                  in_tree.insert ((*it)->pid);
+                  insert_info_to_view (*it, app, true);
+                  in_view.insert ((*it)->pid);
                   it = addition.erase (it);
                   continue;
                 }
@@ -1177,11 +954,11 @@ refresh_list (GsmApplication *app,
         }
     }
   else
-    {
-      // don't care of the tree
+    {*/
+      // don't care of the view
       for (auto&v : addition)
-        insert_info_to_tree (v, app);
-    }
+        insert_info_to_view (v, app);/*
+    }*/
 
 
   for (auto&v : app->processes)
@@ -1226,7 +1003,7 @@ proctable_update (GsmApplication *app)
   // but it is important otherwise refresh_list won't find the parent
   std::sort (pid_list, pid_list + proclist.number);
   refresh_list (app, pid_list, proclist.number);
-
+/*
   // juggling with tree scroll position to fix https://bugzilla.gnome.org/show_bug.cgi?id=92724
   GtkTreePath*current_top;
 
@@ -1257,7 +1034,7 @@ proctable_update (GsmApplication *app)
       app->last_vscroll_value = current_value;
       app->last_vscroll_max = current_max;
     }
-
+*/
   g_free (pid_list);
 
   /* proclist.number == g_list_length(procdata->info) == g_hash_table_size(procdata->pids) */
@@ -1274,14 +1051,15 @@ ProcInfo::set_icon (Glib::RefPtr<Gdk::Texture> icon)
 {
   this->icon = icon;
 
-  GtkTreeModel *model;
+  GListModel *model;
+  ProctableData *data;
 
-  model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
-                                             gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (
-                                                                              gtk_tree_view_get_model (GTK_TREE_VIEW (GsmApplication::get ()->tree))))));
-  gtk_tree_store_set (GTK_TREE_STORE (model), &this->node,
-                      COL_ICON, (this->icon ? this->icon->gobj () : NULL),
-                      -1);
+  model = gtk_sort_list_model_get_model (GTK_SORT_LIST_MODEL (
+                                           gtk_multi_selection_get_model (GTK_MULTI_SELECTION (
+                                                                            gtk_column_view_get_model (GsmApplication::get ()->column_view)))));
+
+  data = PROCTABLE_DATA (g_list_model_get_object (model, this->node));
+  g_object_set (G_OBJECT (data), "icon", this->icon ? this->icon->gobj () : NULL, NULL);
 }
 
 void

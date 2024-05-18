@@ -90,7 +90,7 @@ procdialog_create_kill_dialog (GsmApplication *app,
   kargs = g_new (ProcActionArgs, 1);
   kargs->app = app;
   kargs->arg_value = signal;
-  gint selected_count = gtk_tree_selection_count_selected_rows (app->selection);
+  guint64 selected_count = gtk_bitset_get_size (app->selection);
 
   if (selected_count == 1 || proc != -1)
     {
@@ -98,9 +98,21 @@ procdialog_create_kill_dialog (GsmApplication *app,
 
       if (proc == -1)
         {
+          GtkBitsetIter iter;
+          guint position;
+
+          GtkBitset *selection = gtk_selection_model_get_selection (
+                                   gtk_column_view_get_model (app->column_view));
+
+          GListModel *model = gtk_sort_list_model_get_model (GTK_SORT_LIST_MODEL (
+                                               gtk_multi_selection_get_model (GTK_MULTI_SELECTION (
+                                                                                gtk_column_view_get_model (app->column_view)))));
+
           // get the last selected row
-          gtk_tree_selection_selected_foreach (app->selection, get_last_selected,
-                                               &selected_process);
+          for (gtk_bitset_iter_init_first (&iter, selection, &position);
+               gtk_bitset_iter_is_valid (&iter);
+               gtk_bitset_iter_next (&iter, &position))
+            get_last_selected (model, position, &selected_process);
         }
       else
         {
@@ -138,21 +150,21 @@ procdialog_create_kill_dialog (GsmApplication *app,
           case SIGKILL:
             /*xgettext: primary alert message for killing multiple processes*/
             primary = g_strdup_printf (ngettext ("Force Stop Selected Process?",
-                                                 "Force Stop %d Selected Processes?", selected_count),
+                                                 "Force Stop %ld Selected Processes?", selected_count),
                                        selected_count);
             break;
 
           case SIGTERM:
             /*xgettext: primary alert message for ending multiple processes*/
             primary = g_strdup_printf (ngettext ("End Selected Process?",
-                                                 "End %d Selected Processes?", selected_count),
+                                                 "End %ld Selected Processes?", selected_count),
                                        selected_count);
             break;
 
           default:   // SIGSTOP
             /*xgettext: primary alert message for stopping multiple processes*/
             primary = g_strdup_printf (ngettext ("Stop Selected Process?",
-                                                 "Stop %d Selected Processes?", selected_count),
+                                                 "Stop %ld Selected Processes?", selected_count),
                                        selected_count);
             break;
         }
@@ -235,15 +247,27 @@ procdialog_create_renice_dialog (GsmApplication *app)
   GtkAdjustment *renice_adjustment;
   GtkBuilder *builder;
   GtkLabel *priority_label;
+  GListModel *model;
+  GtkBitset *selection;
+  GtkBitsetIter iter;
+  guint position;
   ProcInfo *info;
   gchar     *dialog_title;
 
   if (renice_dialog)
     return;
 
-  gtk_tree_selection_selected_foreach (app->selection, get_last_selected,
-                                       &info);
-  gint selected_count = gtk_tree_selection_count_selected_rows (app->selection);
+  selection = gtk_selection_model_get_selection (gtk_column_view_get_model (app->column_view));
+
+  model = gtk_sort_list_model_get_model (GTK_SORT_LIST_MODEL (
+                                           gtk_multi_selection_get_model (GTK_MULTI_SELECTION (
+                                                                            gtk_column_view_get_model (app->column_view)))));
+
+  for (gtk_bitset_iter_init_first (&iter, selection, &position);
+       gtk_bitset_iter_is_valid (&iter);
+       gtk_bitset_iter_next (&iter, &position))
+    get_last_selected (model, position, &info);
+  gint64 selected_count = gtk_bitset_get_size (app->selection);
 
   if (!info)
     return;
@@ -273,7 +297,7 @@ procdialog_create_renice_dialog (GsmApplication *app)
     dialog_title = g_strdup_printf (_("Change Priority of Process “%s” (PID: %u)"),
                                     info->name.c_str (), info->pid);
   else
-    dialog_title = g_strdup_printf (ngettext ("Change Priority of the selected process", "Change Priority of %d selected processes", selected_count),
+    dialog_title = g_strdup_printf (ngettext ("Change Priority of the selected process", "Change Priority of %ld selected processes", selected_count),
                                     selected_count);
   adw_alert_dialog_set_heading (renice_dialog, dialog_title);
   g_free (dialog_title);
