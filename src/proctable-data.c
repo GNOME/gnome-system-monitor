@@ -455,8 +455,8 @@ proctable_data_class_init (ProctableDataClass *klass)
   properties [PROP_NICE] =
     g_param_spec_int ("nice",
                       "Nice",
-                      "Process Nice",
-                      0, G_MAXINT, 0,
+                      "Process Priority",
+                      -20, 20, 0,
                       G_PARAM_READWRITE);
 
   properties [PROP_ID] =
