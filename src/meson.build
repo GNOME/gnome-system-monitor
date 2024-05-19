@@ -65,7 +65,6 @@ system_monitor_headers = [
   'gsm_pkexec.h',
   'defaulttable.h',
   'gsm-graph.h',
-  'legacy/treeview.h',
   'legacy/e_date.h',
   'legacy/gsm_color_button.h',
 ]
