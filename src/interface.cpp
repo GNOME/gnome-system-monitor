@@ -258,7 +258,7 @@ create_sys_view (GsmApplication *app,
                    GTK_WIDGET (load_graph_get_widget (cpu_graph)));
 
   GtkGrid*cpu_table = GTK_GRID (gtk_builder_get_object (builder, "cpu_table"));
-  gint cols = 4;
+  gint cols = 4 + app->config.num_cpus / 32;
   gint rows = (app->config.num_cpus + cols - 1) / cols;
 
   for (i = 0; i < app->config.num_cpus; i++)
