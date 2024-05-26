@@ -15,6 +15,7 @@ struct LoadGraph;
 #include "prettytable.h"
 #include "legacy/treeview.h"
 #include "util.h"
+#include "argv.h"
 
 static const unsigned MIN_UPDATE_INTERVAL = 1 * 1000;
 static const unsigned MAX_UPDATE_INTERVAL = 100 * 1000;
@@ -212,11 +213,13 @@ class GsmApplication: public Gtk::Application, private procman::NonCopyable
 private:
 void                                load_settings ();
 void                                load_resources ();
+void                                load_command_line_options();
 
 void                                on_preferences_activate (const Glib::VariantBase&);
 void                                on_lsof_activate (const Glib::VariantBase&);
 void                                on_help_activate (const Glib::VariantBase&);
 void                                on_quit_activate (const Glib::VariantBase&);
+int                                 handle_local_options (const Glib::RefPtr<Glib::VariantDict> &);
 protected:
 GsmApplication();
 
@@ -267,6 +270,7 @@ GsmDisksView     *disk_list;
 GtkTreeSelection *selection;
 
 SmoothRefresh    *smooth_refresh;
+procman::OptionGroup option_group;
 };
 
 #endif /* _GSM_APPLICATION_H_ */

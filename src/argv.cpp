@@ -15,32 +15,40 @@ OptionGroup::OptionGroup()
   show_file_systems_tab (false),
   print_version (false)
 {
-  Glib::OptionEntry proc_tab;
+  processes_tab_option.set_long_name ("show-processes-tab");
+  processes_tab_option.set_short_name ('p');
+  processes_tab_option.set_description (_("Show the Processes tab"));
 
-  proc_tab.set_long_name ("show-processes-tab");
-  proc_tab.set_short_name ('p');
-  proc_tab.set_description (_("Show the Processes tab"));
+  resources_tab_option.set_long_name ("show-resources-tab");
+  resources_tab_option.set_short_name ('r');
+  resources_tab_option.set_description (_("Show the Resources tab"));
 
-  Glib::OptionEntry res_tab;
+  fs_tab_option.set_long_name ("show-file-systems-tab");
+  fs_tab_option.set_short_name ('f');
+  fs_tab_option.set_description (_("Show the File Systems tab"));
 
-  res_tab.set_long_name ("show-resources-tab");
-  res_tab.set_short_name ('r');
-  res_tab.set_description (_("Show the Resources tab"));
+  show_version_option.set_long_name ("version");
+  show_version_option.set_description (_("Show the application’s version"));
 
-  Glib::OptionEntry fs_tab;
+  this->add_entry (processes_tab_option, this->show_processes_tab);
+  this->add_entry (resources_tab_option, this->show_resources_tab);
+  this->add_entry (fs_tab_option, this->show_file_systems_tab);
+  this->add_entry (show_version_option, this->print_version);
+}
 
-  fs_tab.set_long_name ("show-file-systems-tab");
-  fs_tab.set_short_name ('f');
-  fs_tab.set_description (_("Show the File Systems tab"));
+std::vector<Glib::OptionEntry> OptionGroup::entries() const {
+  return std::vector<Glib::OptionEntry> {
+    processes_tab_option,
+    resources_tab_option,
+    fs_tab_option,
+    show_version_option
+  };
+}
 
-  Glib::OptionEntry show_version;
-
-  show_version.set_long_name ("version");
-  show_version.set_description (_("Show the application’s version"));
-
-  this->add_entry (proc_tab, this->show_processes_tab);
-  this->add_entry (res_tab, this->show_resources_tab);
-  this->add_entry (fs_tab, this->show_file_systems_tab);
-  this->add_entry (show_version, this->print_version);
+void OptionGroup::load(const Glib::RefPtr<Glib::VariantDict> &args) {
+  show_processes_tab = args->contains (processes_tab_option.get_long_name () );
+  show_resources_tab = args->contains (resources_tab_option.get_long_name () );
+  show_file_systems_tab = args->contains (fs_tab_option.get_long_name () );
+  print_version = args->contains (show_version_option.get_long_name () );
 }
 }

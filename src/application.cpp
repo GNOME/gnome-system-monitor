@@ -8,6 +8,8 @@
 #include <adwaita.h>
 #include <signal.h>
 #include <stdlib.h>
+#include <glib.h>
+#include <sigc++/functors/functors.h>
 
 #include "application.h"
 #include "procdialogs.h"
@@ -346,6 +348,21 @@ GsmApplication::load_settings ()
     this->settings->signal_changed (k).connect (cbcc);
 }
 
+void GsmApplication::load_command_line_options ()
+{
+  for ( auto entry : option_group.entries() ) 
+  {
+    this->add_main_option_entry (
+      OptionType::BOOL, 
+      entry.get_long_name(),
+      entry.get_short_name(),
+      entry.get_description(),
+      entry.get_arg_description(),
+      entry.get_flags()
+    );
+  }
+}
+
 
 GsmApplication::GsmApplication()
   : Gtk::Application (APP_ID, Gio::Application::Flags::HANDLES_COMMAND_LINE),
@@ -385,6 +402,9 @@ GsmApplication::GsmApplication()
   smooth_refresh (NULL)
 {
   Glib::set_application_name (_("System Monitor"));
+  this->set_option_context_summary (_("A simple process and system monitor."));
+  this->signal_handle_local_options().connect(sigc::mem_fun(*this, &GsmApplication::handle_local_options), false);
+  load_command_line_options ();
 }
 
 Glib::RefPtr<GsmApplication>
@@ -404,33 +424,23 @@ GsmApplication::on_activate ()
 }
 
 int
-GsmApplication::on_command_line (const Glib::RefPtr<Gio::ApplicationCommandLine>&command_line)
+GsmApplication::handle_local_options (const Glib::RefPtr<Glib::VariantDict> &content)
 {
-  int argc = 0;
-  char **argv = command_line->get_arguments (argc);
-
-  Glib::OptionContext context;
-
-  context.set_summary (_("A simple process and system monitor."));
-  context.set_ignore_unknown_options (true);
-
-  procman::OptionGroup option_group;
-
-  context.set_main_group (option_group);
-
-  try {
-      context.parse (argc, argv);
-    } catch (const Glib::Error&ex) {
-      g_error ("Arguments parse error : %s", ex.what ());
-    }
-
-  g_strfreev (argv);
+  option_group.load ( content );
 
   if (option_group.print_version)
-    {
-      g_print ("%s %s\n", _("GNOME System Monitor"), VERSION);
-      exit (EXIT_SUCCESS);
-    }
+  {
+    g_print ("%s %s\n", _("GNOME System Monitor"), VERSION);
+    return 0;
+  }
+
+  return -1;
+}
+
+int
+GsmApplication::on_command_line (const Glib::RefPtr<Gio::ApplicationCommandLine>&command_line)
+{
+  option_group.load ( command_line->get_options_dict () );
 
   const char*tab = NULL;
   if (option_group.show_processes_tab)
@@ -557,7 +567,7 @@ GsmApplication::on_startup ()
 
   pretty_table = new PrettyTable ();
   smooth_refresh = new SmoothRefresh (settings);
-
+  
   create_main_window (this);
 }
 
