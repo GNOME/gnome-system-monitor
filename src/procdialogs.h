@@ -42,7 +42,8 @@ typedef enum
 
 
 void     procdialog_create_kill_dialog (GsmApplication *app,
-                                        int             signal);
+                                        int             signal,
+                                        gint32          proc);
 void     procdialog_create_renice_dialog (GsmApplication *app);
 gboolean multi_root_check (char *command);
 gboolean procdialog_create_root_password_dialog (ProcmanActionType type,

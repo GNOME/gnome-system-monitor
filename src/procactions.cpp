@@ -28,6 +28,7 @@
 #include "application.h"
 #include "proctable.h"
 #include "procdialogs.h"
+#include "settings-keys.h"
 
 
 static void
@@ -114,23 +115,14 @@ renice (GsmApplication *app,
   proctable_update (app);
 }
 
-
-
-
 static void
-kill_single_process (GtkTreeModel *model,
-                     GtkTreePath*,
-                     GtkTreeIter  *iter,
-                     gpointer      data)
+kill_process_action (ProcInfo                    *info,
+                     const struct ProcActionArgs *const args)
 {
-  const struct ProcActionArgs * const args = static_cast<ProcActionArgs*>(data);
-  char *error_msg;
-  ProcInfo *info;
   int error;
   int saved_errno;
+  char *error_msg;
   AdwAlertDialog *dialog;
-
-  gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 
   if (!info)
     return;
@@ -178,10 +170,60 @@ kill_single_process (GtkTreeModel *model,
   adw_dialog_present (ADW_DIALOG (dialog), GTK_WIDGET (GsmApplication::get ()->main_window));
 }
 
+static void
+kill_single_process (GtkTreeModel *model,
+                     GtkTreePath*,
+                     GtkTreeIter  *iter,
+                     gpointer      data)
+{
+  const struct ProcActionArgs * const args = static_cast<ProcActionArgs*>(data);
+  ProcInfo *info;
+
+  gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
+
+  kill_process_action (info, args);
+}
+
+void
+on_activate_send_signal (GSimpleAction *action,
+                         GVariant      *value,
+                         gpointer       data)
+{
+  GsmApplication *app = (GsmApplication *) data;
+
+  const gchar *action_name = g_action_get_name (G_ACTION (action));
+  gint32 proc = -1;
+
+  if (value)
+    proc = g_variant_get_int32 (value);
+
+  if (g_strcmp0 (action_name, "send-signal-cont") == 0)
+    kill_process (app, SIGCONT, proc);
+  else if (g_strcmp0 (action_name, "send-signal-stop") == 0)
+    kill_process_with_confirmation (app, SIGSTOP, proc);
+  else if (g_strcmp0 (action_name, "send-signal-term") == 0)
+    kill_process_with_confirmation (app, SIGTERM, proc);
+  else if (g_strcmp0 (action_name, "send-signal-kill") == 0)
+    kill_process_with_confirmation (app, SIGKILL, proc);
+}
+
+void
+kill_process_with_confirmation (GsmApplication *app,
+                                int             signal,
+                                gint32          proc)
+{
+  gboolean kill_dialog = app->settings->get_boolean (GSM_SETTING_SHOW_KILL_DIALOG);
+
+  if (kill_dialog)
+    procdialog_create_kill_dialog (app, signal, proc);
+  else
+    kill_process (app, signal, proc);
+}
 
 void
 kill_process (GsmApplication *app,
-              int             sig)
+              int             sig,
+              gint32          proc)
 {
   struct ProcActionArgs args = { app, sig };
 
@@ -191,8 +233,17 @@ kill_process (GsmApplication *app,
   */
   proctable_freeze (app);
 
-  gtk_tree_selection_selected_foreach (app->selection, kill_single_process,
-                                       &args);
+  if (proc == -1)
+    {
+      gtk_tree_selection_selected_foreach (app->selection, kill_single_process,
+                                           &args);
+    }
+  else
+    {
+      ProcInfo *info = app->processes.find (proc);
+
+      kill_process_action (info, &args);
+    }
 
   proctable_thaw (app);
 

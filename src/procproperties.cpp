@@ -25,6 +25,7 @@
 #include <glibtop/procstate.h>
 
 #include "application.h"
+#include "procactions.h"
 #include "procproperties.h"
 #include "proctable.h"
 #include "util.h"
@@ -169,6 +170,7 @@ create_single_procproperties_dialog (GtkTreeModel *model,
   guint timer;
   GAction *action;
   GSimpleActionGroup *action_group;
+  GMenuItem *item;
 
   gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 
@@ -183,6 +185,9 @@ create_single_procproperties_dialog (GtkTreeModel *model,
     g_error ("%s", err->message);
 
   GtkWindow *procpropdialog = GTK_WINDOW (gtk_builder_get_object (builder, "procprop_dialog"));
+  GtkButton *stop_button = GTK_BUTTON (gtk_builder_get_object (builder, "stop_button"));
+  GtkButton *force_stop_button = GTK_BUTTON (gtk_builder_get_object (builder, "force_stop_button"));
+  GMenu *menu = G_MENU (gtk_builder_get_object (builder, "menu"));
 
   gtk_window_set_title (GTK_WINDOW (procpropdialog), info->name.c_str ());
 
@@ -191,21 +196,27 @@ create_single_procproperties_dialog (GtkTreeModel *model,
 
   action_group = g_simple_action_group_new ();
 
-  action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
-                                       "send-signal-stop");
-  g_action_map_add_action (G_ACTION_MAP (action_group), action);
+  GActionEntry win_action_entries[] = {
+    { "send-signal-stop", on_activate_send_signal, "i", NULL, NULL, { 0, 0, 0 } },
+    { "send-signal-cont", on_activate_send_signal, "i", NULL, NULL, { 0, 0, 0 } },
+    { "send-signal-term", on_activate_send_signal, "i", NULL, NULL, { 0, 0, 0 } },
+    { "send-signal-kill", on_activate_send_signal, "i", NULL, NULL, { 0, 0, 0 } },
+  };
 
-  action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
-                                       "send-signal-cont");
-  g_action_map_add_action (G_ACTION_MAP (action_group), action);
+  gtk_actionable_set_action_target_value (GTK_ACTIONABLE (stop_button), g_variant_new_int32 (info->pid));
+  gtk_actionable_set_action_target_value (GTK_ACTIONABLE (force_stop_button), g_variant_new_int32 (info->pid));
 
-  action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
-                                       "send-signal-term");
-  g_action_map_add_action (G_ACTION_MAP (action_group), action);
+  item = g_menu_item_new (_("_Terminate…"), "procprop.send-signal-term");
+  g_menu_item_set_attribute_value (item, G_MENU_ATTRIBUTE_TARGET, g_variant_new_int32 (info->pid));
+  g_menu_append_item (menu, item);
+  item = g_menu_item_new (_("_Resume"), "procprop.send-signal-cont");
+  g_menu_item_set_attribute_value (item, G_MENU_ATTRIBUTE_TARGET, g_variant_new_int32 (info->pid));
+  g_menu_append_item (menu, item);
 
-  action = g_action_map_lookup_action (G_ACTION_MAP (app->main_window),
-                                       "send-signal-kill");
-  g_action_map_add_action (G_ACTION_MAP (action_group), action);
+  g_action_map_add_action_entries (G_ACTION_MAP (action_group),
+                                   win_action_entries,
+                                   G_N_ELEMENTS (win_action_entries),
+                                   app);
 
   GSimpleAction *close_action = g_simple_action_new ("close", NULL);
   g_signal_connect (close_action, "activate", G_CALLBACK (close_dialog_action), procpropdialog);

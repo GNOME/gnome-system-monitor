@@ -213,14 +213,14 @@
                 <property name="orientation">horizontal</property>
                 <property name="spacing">12</property>
                 <child>
-                  <object class="GtkButton">
+                  <object class="GtkButton" id="stop_button">
                     <property name="label" translatable="yes">_Stop…</property>
                     <property name="action-name">procprop.send-signal-stop</property>
                     <property name="use-underline">True</property>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkButton">
+                  <object class="GtkButton" id="force_stop_button">
                     <property name="label" translatable="yes">_Force Stop…</property>
                     <property name="action-name">procprop.send-signal-kill</property>
                     <property name="use-underline">True</property>
@@ -255,16 +255,5 @@
       </object>
     </child>
   </object>
-  <menu id="menu">
-    <section>
-      <item>
-        <attribute name="label" translatable="true">_Terminate…</attribute>
-        <attribute name="action">procprop.send-signal-term</attribute>
-      </item>
-      <item>
-        <attribute name="label" translatable="true">_Resume</attribute>
-        <attribute name="action">procprop.send-signal-cont</attribute>
-      </item>
-    </section>
-  </menu>
+  <menu id="menu"/>
 </interface>

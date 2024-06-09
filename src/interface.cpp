@@ -525,37 +525,6 @@ on_activate_refresh (GSimpleAction *,
 }
 
 static void
-kill_process_with_confirmation (GsmApplication *app,
-                                int             signal)
-{
-  gboolean kill_dialog = app->settings->get_boolean (GSM_SETTING_SHOW_KILL_DIALOG);
-
-  if (kill_dialog)
-    procdialog_create_kill_dialog (app, signal);
-  else
-    kill_process (app, signal);
-}
-
-static void
-on_activate_send_signal (GSimpleAction *action,
-                         GVariant *,
-                         gpointer       data)
-{
-  GsmApplication *app = (GsmApplication *) data;
-
-  const gchar *action_name = g_action_get_name (G_ACTION (action));
-
-  if (g_strcmp0 (action_name, "send-signal-cont") == 0)
-    kill_process (app, SIGCONT);
-  else if (g_strcmp0 (action_name, "send-signal-stop") == 0)
-    kill_process_with_confirmation (app, SIGSTOP);
-  else if (g_strcmp0 (action_name, "send-signal-term") == 0)
-    kill_process_with_confirmation (app, SIGTERM);
-  else if (g_strcmp0 (action_name, "send-signal-kill") == 0)
-    kill_process_with_confirmation (app, SIGKILL);
-}
-
-static void
 on_activate_set_affinity (GSimpleAction *,
                           GVariant *,
                           gpointer data)

@@ -22,8 +22,17 @@
 
 void renice (GsmApplication *app,
              int             nice);
+void
+on_activate_send_signal (GSimpleAction *action,
+                         GVariant      *value,
+                         gpointer       data);
+void
+kill_process_with_confirmation (GsmApplication *app,
+                                int             signal,
+                                gint32          proc);
 void kill_process (GsmApplication *app,
-                   int             sig);
+                   int             sig,
+                   gint32          proc);
 
 struct ProcActionArgs
 {

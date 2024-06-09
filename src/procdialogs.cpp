@@ -69,7 +69,7 @@ kill_dialog_choose (GObject      *dialog,
   if (g_str_equal (res_id, adw_alert_dialog_get_close_response (ADW_ALERT_DIALOG (dialog))))
     return;
 
-  kill_process (kargs->app, kargs->arg_value);
+  kill_process (kargs->app, kargs->arg_value, -1);
 
   proctable_thaw (kargs->app);
   proctable_update (kargs->app);
@@ -78,7 +78,8 @@ kill_dialog_choose (GObject      *dialog,
 
 void
 procdialog_create_kill_dialog (GsmApplication *app,
-                               int             signal)
+                               int             signal,
+                               gint32          proc)
 {
   AdwAlertDialog *kill_alert_dialog;
   struct ProcActionArgs *kargs;
@@ -91,12 +92,20 @@ procdialog_create_kill_dialog (GsmApplication *app,
   kargs->arg_value = signal;
   gint selected_count = gtk_tree_selection_count_selected_rows (app->selection);
 
-  if (selected_count == 1)
+  if (selected_count == 1 || proc != -1)
     {
       ProcInfo *selected_process = NULL;
-      // get the last selected row
-      gtk_tree_selection_selected_foreach (app->selection, get_last_selected,
-                                           &selected_process);
+
+      if (proc == -1)
+        {
+          // get the last selected row
+          gtk_tree_selection_selected_foreach (app->selection, get_last_selected,
+                                               &selected_process);
+        }
+      else
+        {
+          selected_process = app->processes.find (proc);
+        }
 
       std::string *process_name = &selected_process->name;
       std::string short_process_name = process_name->substr (0, process_name->find (" -"));
