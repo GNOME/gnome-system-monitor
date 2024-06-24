@@ -30,6 +30,18 @@ procman_debug_real (const char *file,
                     const char *format,
                     ...) G_GNUC_PRINTF (4, 5);
 
+void
+load_state (GtkColumnView *column_view,
+            const gchar   *widgetname);
+
+void
+save_columns_state (GtkColumnView *column_view,
+                    const gchar   *widgetname);
+
+void
+save_sort_state (GtkColumnView *column_view,
+                 const gchar   *widgetname);
+
 #define procman_debug(FMT, ...) procman_debug_real (__FILE__, __LINE__, __func__, FMT, ## __VA_ARGS__)
 
 GtkLabel *                         init_tnum_label (gint     char_width,
