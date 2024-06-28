@@ -366,10 +366,10 @@ proctable_new (GsmApplication * const app)
     for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration */
     N_("Seat"),
     N_("Owner"),
-    N_("Disk read total"),
-    N_("Disk write total"),
-    N_("Disk read"),
-    N_("Disk write"),
+    N_("Disk Read Total"),
+    N_("Disk Write Total"),
+    N_("Disk Read"),
+    N_("Disk Write"),
     N_("Priority"),
     NULL,
     "POINTER"
