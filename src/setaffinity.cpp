@@ -118,31 +118,18 @@ affinity_toggle_all (GtkCheckButton *check_all_button,
 static void
 set_affinity_error (void)
 {
-  GtkWidget *dialog;
+  AdwDialog *dialog;
 
-  /* Create error message dialog */
-  dialog = adw_message_dialog_new (GTK_WINDOW (GsmApplication::get ()->main_window),
-                                   _("GNU CPU Affinity error"),
+  /* Create error alert dialog */
+  dialog = adw_alert_dialog_new (_("GNU CPU Affinity error"),
                                    NULL);
 
-  adw_message_dialog_format_body (ADW_MESSAGE_DIALOG (dialog), "%s", g_strerror (errno));
+  adw_alert_dialog_format_body (ADW_ALERT_DIALOG (dialog), "%s", g_strerror (errno));
 
-  adw_message_dialog_add_response (ADW_MESSAGE_DIALOG (dialog), "close", _("_Close"));
-
-  /* Destroy dialog with parent */
-  gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
-
-  /* Set dialog as modal */
-  gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
+  adw_alert_dialog_add_response (ADW_ALERT_DIALOG (dialog), "close", _("_Close"));
 
   /* Show the dialog */
-  gtk_window_present (GTK_WINDOW (dialog));
-
-  /* Connect response signal to GTK widget destroy function */
-  g_signal_connect_swapped (dialog,
-                            "response",
-                            G_CALLBACK (gtk_window_destroy),
-                            dialog);
+  adw_dialog_present (dialog, GTK_WIDGET (GsmApplication::get ()->main_window));
 }
 
 static DIR*
