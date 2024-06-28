@@ -8,55 +8,6 @@
     <property name="content-height">700</property>
     <property name="search-enabled">True</property>
     <child>
-      <object class="AdwPreferencesPage" id="processes">
-        <property name="title" translatable="yes">Processes</property>
-        <property name="icon-name">view-list-symbolic</property>
-        <child>
-          <object class="AdwPreferencesGroup">
-            <property name="title" translatable="yes">Behavior</property>
-            <child>
-              <object class="AdwSpinRow" id="processes_interval_spinner">
-                <property name="use-underline">True</property>
-                <property name="title" translatable="yes">_Update Interval in Seconds</property>
-                <property name="climb-rate">1</property>
-                <property name="digits">2</property>
-              </object>
-            </child>
-            <child>
-              <object class="AdwSwitchRow" id="smooth_switch">
-                <property name="use-underline">True</property>
-                <property name="title" translatable="yes">Enable _Smooth Refresh</property>
-              </object>
-            </child>
-            <child>
-              <object class="AdwSwitchRow" id="check_switch">
-                <property name="use-underline">True</property>
-                <property name="title" translatable="yes">Alert Before Ending or _Force Stopping Processes</property>
-              </object>
-            </child>
-            <child>
-              <object class="AdwSwitchRow" id="solaris_switch">
-                <property name="use-underline">True</property>
-                <property name="title" translatable="yes">_Divide CPU Usage by CPU Count</property>
-              </object>
-            </child>
-            <child>
-              <object class="AdwSwitchRow" id="proc_mem_in_iec_switch">
-                <property name="use-underline">True</property>
-                <property name="title" translatable="yes">Show Memory in IEC</property>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="AdwPreferencesGroup" id="proctree">
-            <property name="title" translatable="yes">Information Fields</property>
-            <property name="description" translatable="yes">Process information shown in list:</property>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
       <object class="AdwPreferencesPage" id="resources">
         <property name="title" translatable="yes">Resources</property>
         <property name="icon-name">speedometer-symbolic</property>
@@ -137,6 +88,55 @@
                 <property name="title" translatable="yes">Show Network _Totals in Bits</property>
               </object>
             </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwPreferencesPage" id="processes">
+        <property name="title" translatable="yes">Processes</property>
+        <property name="icon-name">view-list-symbolic</property>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title" translatable="yes">Behavior</property>
+            <child>
+              <object class="AdwSpinRow" id="processes_interval_spinner">
+                <property name="use-underline">True</property>
+                <property name="title" translatable="yes">_Update Interval in Seconds</property>
+                <property name="climb-rate">1</property>
+                <property name="digits">2</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSwitchRow" id="smooth_switch">
+                <property name="use-underline">True</property>
+                <property name="title" translatable="yes">Enable _Smooth Refresh</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSwitchRow" id="check_switch">
+                <property name="use-underline">True</property>
+                <property name="title" translatable="yes">Alert Before Ending or _Force Stopping Processes</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSwitchRow" id="solaris_switch">
+                <property name="use-underline">True</property>
+                <property name="title" translatable="yes">_Divide CPU Usage by CPU Count</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSwitchRow" id="proc_mem_in_iec_switch">
+                <property name="use-underline">True</property>
+                <property name="title" translatable="yes">Show Memory in IEC</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup" id="proctree">
+            <property name="title" translatable="yes">Information Fields</property>
+            <property name="description" translatable="yes">Process information shown in list:</property>
           </object>
         </child>
       </object>

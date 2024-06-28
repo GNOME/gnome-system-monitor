@@ -548,8 +548,8 @@ GsmApplication::on_startup ()
   set_accel_for_action ("app.help", "F1");
   set_accel_for_action ("win.show-help-overlay", "<Control>question");
   set_accel_for_action ("app.preferences", "<Primary>comma");
-  set_accel_for_action ("win.show-page('processes')", "<Alt>1");
-  set_accel_for_action ("win.show-page('resources')", "<Alt>2");
+  set_accel_for_action ("win.show-page('resources')", "<Alt>1");
+  set_accel_for_action ("win.show-page('processes')", "<Alt>2");
   set_accel_for_action ("win.show-page('disks')", "<Alt>3");
   set_accel_for_action ("win.refresh", "<Control>r");
 
