@@ -349,7 +349,7 @@ proctable_new (GsmApplication * const app)
     N_("Writable Memory"),
     N_("Shared Memory"),
     N_("X Server Memory"),
-    /* xgettext:no-c-format */ N_("% CPU"),
+    /* xgettext:no-c-format */ N_("CPU"),
     N_("CPU Time"),
     N_("Started"),
     N_("Nice"),
