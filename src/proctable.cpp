@@ -341,7 +341,7 @@ proctable_new (GsmApplication * const app)
   GtkTreeViewColumn *column;
   GtkCellRenderer *cell_renderer;
   const gchar *titles[] = {
-    N_("Process Name"),
+    N_("Name"),
     N_("User"),
     N_("Status"),
     N_("Virtual Memory"),
