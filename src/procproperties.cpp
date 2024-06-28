@@ -41,7 +41,7 @@ static gchar*
 format_memsize (guint64 size)
 {
   if (size == 0)
-    return g_strdup (_("N/A"));
+    return g_strdup ("—");
   else
     return g_format_size_full (size, G_FORMAT_SIZE_IEC_UNITS);
 }
@@ -95,7 +95,9 @@ fill_proc_properties (GtkBuilder *builder,
   gtk_label_set_label (label, format_memsize (info->memshared));
 
   row = ADW_ACTION_ROW (gtk_builder_get_object (builder, "securitycontext_row"));
-  adw_action_row_set_subtitle (row, not info->security_context.empty ()?g_strdup_printf ("%s", info->security_context.c_str ()):g_strdup (_("N/A")));
+  adw_action_row_set_subtitle (row, not info->security_context.empty ()
+                                      ? g_strdup_printf ("%s", info->security_context.c_str ())
+                                      : g_strdup ("—"));
 
   row = ADW_ACTION_ROW (gtk_builder_get_object (builder, "commandline_row"));
   adw_action_row_set_subtitle (row, g_strdup_printf ("%s", info->arguments.c_str ()));
@@ -104,7 +106,9 @@ fill_proc_properties (GtkBuilder *builder,
   adw_action_row_set_subtitle (row, g_strdup_printf ("%s", info->wchan.c_str ()));
 
   row = ADW_ACTION_ROW (gtk_builder_get_object (builder, "controlgroup_row"));
-  adw_action_row_set_subtitle (row, not info->cgroup_name.empty ()?g_strdup_printf ("%s", info->cgroup_name.c_str ()):g_strdup (_("N/A")));
+  adw_action_row_set_subtitle (row, not info->cgroup_name.empty ()
+                                      ? g_strdup_printf ("%s", info->cgroup_name.c_str ())
+                                      : g_strdup ("—"));
 }
 
 static void

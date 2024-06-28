@@ -537,8 +537,7 @@ size_na_cell_data_func (GtkTreeViewColumn *,
   if (size == 0)
     {
       g_object_set (renderer,
-                    "text", _("N/A"),
-                    "style", PANGO_STYLE_ITALIC,
+                    "text", "—",
                     NULL);
     }
   else
@@ -546,7 +545,6 @@ size_na_cell_data_func (GtkTreeViewColumn *,
       char *str = format_byte_size (size, GsmApplication::get ()->config.process_memory_in_iec);
       g_object_set (renderer,
                     "text", str,
-                    "style", PANGO_STYLE_NORMAL,
                     NULL);
       g_free (str);
     }
@@ -584,13 +582,11 @@ io_rate_cell_data_func (GtkTreeViewColumn *,
 
   if (size == 0)
     g_object_set (renderer,
-                  "text", _("N/A"),
-                  "style", PANGO_STYLE_ITALIC,
+                  "text", "—",
                   NULL);
   else
     g_object_set (renderer,
                   "text", procman::format_rate (size, FALSE).c_str (),
-                  "style", PANGO_STYLE_NORMAL,
                   NULL);
 }
 
