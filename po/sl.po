@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2024-04-30 21:22+0000\n"
-"PO-Revision-Date: 2024-05-01 11:07+0200\n"
+"POT-Creation-Date: 2024-06-29 05:29+0000\n"
+"PO-Revision-Date: 2024-06-30 12:15+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -25,7 +25,7 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 
 #: data/org.gnome.SystemMonitor.appdata.xml.in.in:7 data/interface.ui:6
-#: data/org.gnome.SystemMonitor.desktop.in.in:3 src/application.cpp:396
+#: data/org.gnome.SystemMonitor.desktop.in.in:3 src/application.cpp:387
 #: src/interface.cpp:487
 msgid "System Monitor"
 msgstr "Nadzornik sistema"
@@ -76,7 +76,7 @@ msgstr "Pogled sistemskih datotek"
 msgid "The GNOME Project"
 msgstr "Projekt GNOME"
 
-#: data/gnome-system-monitor-kde.desktop.in.in:3 src/application.cpp:440
+#: data/gnome-system-monitor-kde.desktop.in.in:3 src/application.cpp:431
 msgid "GNOME System Monitor"
 msgstr "Sistemski nadzornik za GNOME"
 
@@ -127,13 +127,13 @@ msgstr "Omogoči iskanje"
 
 #: data/help-overlay.ui:56
 msgctxt "shortcut window"
-msgid "Show Processes"
-msgstr "Pokaže opravila"
+msgid "Show Resources"
+msgstr "Pokaže vire"
 
 #: data/help-overlay.ui:62
 msgctxt "shortcut window"
-msgid "Show Resources"
-msgstr "Pokaže vire"
+msgid "Show Processes"
+msgstr "Pokaže opravila"
 
 #: data/help-overlay.ui:68
 msgctxt "shortcut window"
@@ -199,85 +199,86 @@ msgid "Main Menu"
 msgstr "Glavni meni"
 
 #: data/interface.ui:55
-msgid "_Processes"
-msgstr "_Opravila"
-
-#: data/interface.ui:67
-msgid "Search processes and users"
-msgstr "Iskanje opravil in uporabnikov"
-
-#: data/interface.ui:88
-msgctxt "interface"
-msgid "_End Process"
-msgstr "_Končaj opravilo"
-
-#: data/interface.ui:108
-msgid "Process Properties"
-msgstr "Lastnosti opravila"
-
-#: data/interface.ui:130
 msgid "_Resources"
 msgstr "_Viri"
 
-#: data/interface.ui:175 data/preferences.ui:99 data/procproperties.ui:86
-#: src/interface.cpp:283
+#: data/interface.ui:100 data/preferences.ui:50 data/procproperties.ui:86
+#: src/interface.cpp:283 src/proctable.cpp:352
+#, no-c-format
 msgid "CPU"
 msgstr "Obremenite CPE"
 
-#: data/interface.ui:206 data/procproperties.ui:97 src/interface.cpp:321
+#: data/interface.ui:131 data/procproperties.ui:97 src/interface.cpp:321
 #: src/proctable.cpp:359
 msgid "Memory"
 msgstr "Pomnilnik"
 
-#: data/interface.ui:217 src/interface.cpp:333
+#: data/interface.ui:142 src/interface.cpp:333
 msgid "Swap"
 msgstr "Izmenjevalni razdelek"
 
-#: data/interface.ui:234 data/preferences.ui:110
+#: data/interface.ui:159 data/preferences.ui:61
 msgid "Memory and Swap"
 msgstr "Pomnilnik in izmenjevalni prostor"
 
-#: data/interface.ui:265 src/interface.cpp:362
+#: data/interface.ui:190 src/interface.cpp:362
 msgid "Receiving"
 msgstr "Prejemanje"
 
-#: data/interface.ui:275
+#: data/interface.ui:200
 msgid "Total Received"
 msgstr "Skupaj prejeto"
 
-#: data/interface.ui:285 src/interface.cpp:380
+#: data/interface.ui:210 src/interface.cpp:380
 msgid "Sending"
 msgstr "Pošiljanje"
 
-#: data/interface.ui:295
+#: data/interface.ui:220
 msgid "Total Sent"
 msgstr "Skupaj poslano"
 
-#: data/interface.ui:312 data/preferences.ui:127
+#: data/interface.ui:237 data/preferences.ui:78
 msgid "Network"
 msgstr "Omrežje"
 
-#: data/interface.ui:343 src/interface.cpp:415
+#: data/interface.ui:268 src/interface.cpp:415
 msgid "Reading"
 msgstr "Poteka branje ..."
 
-#: data/interface.ui:353
+#: data/interface.ui:278
 msgid "Total Read"
 msgstr "Skupaj prebrano"
 
-#: data/interface.ui:363 src/interface.cpp:433
+#: data/interface.ui:288 src/interface.cpp:433
 msgid "Writing"
 msgstr "Poteka zapisovanje …"
 
-#: data/interface.ui:373
+#: data/interface.ui:298
 msgid "Total Written"
 msgstr "Skupaj zapisano"
 
-#: data/interface.ui:390
+#: data/interface.ui:315
 msgid "Disk"
 msgstr "Disk"
 
-#: data/interface.ui:410
+#: data/interface.ui:335
+msgid "_Processes"
+msgstr "_Opravila"
+
+#: data/interface.ui:347
+msgid "Search processes and users"
+msgstr "Iskanje opravil in uporabnikov"
+
+#: data/interface.ui:368
+msgctxt "interface"
+msgid "_End Process"
+msgstr "_Končaj opravilo"
+
+#: data/interface.ui:391
+msgid "Process Properties"
+msgstr "Lastnosti opravila"
+
+#: data/interface.ui:413
 msgid "_File Systems"
 msgstr "_Datotečni sistemi"
 
@@ -354,7 +355,7 @@ msgstr "Spremenjen skupni pomnilnik"
 msgid "Shared Dirty"
 msgstr "Nespremenjen skupni pomnilnik"
 
-#: data/memmaps.ui:414 src/disks.cpp:392
+#: data/memmaps.ui:414
 msgid "Device"
 msgstr "Naprava"
 
@@ -452,11 +453,11 @@ msgstr "Nastavi _raven pripenjanja …"
 msgid "_Stop…"
 msgstr "_Zaustavi …"
 
-#: data/menus.ui:151 data/procproperties.ui:265
+#: data/menus.ui:151 src/procproperties.cpp:216
 msgid "_Resume"
 msgstr "Na_daljuj"
 
-#: data/menus.ui:155 data/procproperties.ui:261
+#: data/menus.ui:155 src/procproperties.cpp:213
 msgid "_Terminate…"
 msgstr "_Končaj opravilo …"
 
@@ -475,7 +476,7 @@ msgctxt ""
 msgid "FD"
 msgstr "FD"
 
-#: data/openfiles.ui:71 src/disks.cpp:394 src/legacy/gsm_color_button.c:612
+#: data/openfiles.ui:71 src/legacy/gsm_color_button.c:599
 msgid "Type"
 msgstr "Vrsta"
 
@@ -510,72 +511,72 @@ msgstr ""
 "spomin;performanca;"
 
 #: data/preferences.ui:12
-msgid "Processes"
-msgstr "Opravila"
+msgid "Resources"
+msgstr "Viri"
 
-#: data/preferences.ui:16 data/preferences.ui:65 data/preferences.ui:150
+#: data/preferences.ui:16 data/preferences.ui:101 data/preferences.ui:150
 msgid "Behavior"
 msgstr "Obnašanje"
 
-#: data/preferences.ui:20 data/preferences.ui:69 data/preferences.ui:154
+#: data/preferences.ui:20 data/preferences.ui:105 data/preferences.ui:154
 msgid "_Update Interval in Seconds"
 msgstr "_Časovni razmik posodabljanja v sekundah"
 
 #: data/preferences.ui:28
-msgid "Enable _Smooth Refresh"
-msgstr "Omogoči _mehko osveževanje"
-
-#: data/preferences.ui:34
-msgid "Alert Before Ending or _Force Stopping Processes"
-msgstr "Opozori pred končanjem ali _vsiljeno zaustavitvijo opravila"
-
-#: data/preferences.ui:40
-msgid "_Divide CPU Usage by CPU Count"
-msgstr "_Razdeli uporabo CPE na število enot"
-
-#: data/preferences.ui:46
-msgid "Show Memory in IEC"
-msgstr "Pokaži podatke pomnilnika v IEC"
-
-#: data/preferences.ui:53 data/preferences.ui:169
-msgid "Information Fields"
-msgstr "Polja podrobnosti"
-
-#: data/preferences.ui:54
-msgid "Process information shown in list:"
-msgstr "Podatki o opravilih, prikazani v seznamu:"
-
-#: data/preferences.ui:61
-msgid "Resources"
-msgstr "Viri"
-
-#: data/preferences.ui:77
 msgid "_Chart Data Points"
 msgstr "_Podatkovne točke diagrama"
 
-#: data/preferences.ui:92
+#: data/preferences.ui:43
 msgid "Draw Charts as S_mooth Graphs"
 msgstr "_Izriši diagram delovanja kot krivulje"
 
-#: data/preferences.ui:103
+#: data/preferences.ui:54
 msgid "_Draw CPU Chart as Stacked Area Chart"
 msgstr "_Izriši diagram delovanja CPE kot naložen diagram"
 
-#: data/preferences.ui:114
+#: data/preferences.ui:65
 msgid "Show Memory and Swap in IEC"
 msgstr "Pokaži pomnilnik in izmenjevalni prostor v IEC"
 
-#: data/preferences.ui:120
+#: data/preferences.ui:71
 msgid "Show Memory in Logarithmic Scale"
 msgstr "Pokaži podatke pomnilnika v logaritemskem sistemu"
 
-#: data/preferences.ui:131
+#: data/preferences.ui:82
 msgid "_Show Network Speed in Bits"
 msgstr "Pokaži _hitrost omrežne povezave v bitih"
 
-#: data/preferences.ui:137
+#: data/preferences.ui:88
 msgid "Show Network _Totals in Bits"
 msgstr "Pokaži _promet omrežne povezave v bitih"
+
+#: data/preferences.ui:97
+msgid "Processes"
+msgstr "Opravila"
+
+#: data/preferences.ui:113
+msgid "Enable _Smooth Refresh"
+msgstr "Omogoči _mehko osveževanje"
+
+#: data/preferences.ui:119
+msgid "Alert Before Ending or _Force Stopping Processes"
+msgstr "Opozori pred končanjem ali _vsiljeno zaustavitvijo opravila"
+
+#: data/preferences.ui:125
+msgid "_Divide CPU Usage by CPU Count"
+msgstr "_Razdeli uporabo CPE na število enot"
+
+#: data/preferences.ui:131
+msgid "Show Memory in IEC"
+msgstr "Pokaži podatke pomnilnika v IEC"
+
+#: data/preferences.ui:138 data/preferences.ui:169
+msgid "Information Fields"
+msgstr "Polja podrobnosti"
+
+#: data/preferences.ui:139
+msgid "Process information shown in list:"
+msgstr "Podatki o opravilih, prikazani v seznamu:"
 
 #: data/preferences.ui:146
 msgid "File Systems"
@@ -658,7 +659,7 @@ msgstr "Primerjalna skupina"
 msgid "More Actions"
 msgstr "Več dejanj"
 
-#: data/renice.ui:15 data/setaffinity.ui:17 src/procdialogs.cpp:180
+#: data/renice.ui:15 data/setaffinity.ui:17 src/procdialogs.cpp:189
 msgid "_Cancel"
 msgstr "_Prekliči"
 
@@ -694,7 +695,7 @@ msgstr "Uveljavi v podrejenih nitih"
 msgid "Run on all CPUs"
 msgstr "Izvajaj z uporabo vseh CPE"
 
-#: src/application.cpp:423
+#: src/application.cpp:414
 msgid "A simple process and system monitor."
 msgstr "Enostaven nadzornik sistema in dejavnih opravil"
 
@@ -714,26 +715,6 @@ msgstr "Pokaži zavihek datotečnih sistemov"
 msgid "Show the application’s version"
 msgstr "Pokaži različico programa"
 
-#: src/disks.cpp:393
-msgid "Directory"
-msgstr "Mapa"
-
-#: src/disks.cpp:395
-msgid "Total"
-msgstr "Skupni prostor"
-
-#: src/disks.cpp:396
-msgid "Free"
-msgstr "Nezaseden prostor"
-
-#: src/disks.cpp:397
-msgid "Available"
-msgstr "Razpoložljiv prostor"
-
-#: src/disks.cpp:398
-msgid "Used"
-msgstr "Uporabljen prostor"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
 #: src/interface.cpp:247
 #, c-format
@@ -741,7 +722,7 @@ msgid "Pick a Color for “%s”"
 msgstr "Izbor barve za »%s«"
 
 #. Set check box label value to CPU [1..2048]
-#: src/interface.cpp:285 src/setaffinity.cpp:428
+#: src/interface.cpp:285 src/setaffinity.cpp:415
 #, c-format
 msgid "CPU%d"
 msgstr "CPE%d"
@@ -779,40 +760,40 @@ msgstr "%b %d %l∶%M %p"
 msgid "%b %d %Y"
 msgstr "%d. %b %Y"
 
-#: src/legacy/gsm_color_button.c:588
+#: src/legacy/gsm_color_button.c:575
 msgid "Fraction"
 msgstr "Delež"
 
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: src/legacy/gsm_color_button.c:590
+#: src/legacy/gsm_color_button.c:577
 msgid "Percentage full for pie color pickers"
 msgstr "Odstotek za izbirnike barv v tortnem prikazu"
 
-#: src/legacy/gsm_color_button.c:597
+#: src/legacy/gsm_color_button.c:584
 msgid "Title"
 msgstr "Naslov"
 
-#: src/legacy/gsm_color_button.c:598
+#: src/legacy/gsm_color_button.c:585
 msgid "The title of the color selection dialog"
 msgstr "Naziv pogovornega okna izbire barv"
 
-#: src/legacy/gsm_color_button.c:599 src/legacy/gsm_color_button.c:637
+#: src/legacy/gsm_color_button.c:586 src/legacy/gsm_color_button.c:624
 msgid "Pick a Color"
 msgstr "Izbor barve"
 
-#: src/legacy/gsm_color_button.c:605
+#: src/legacy/gsm_color_button.c:592
 msgid "Current Color"
 msgstr "Trenutna barva"
 
-#: src/legacy/gsm_color_button.c:606
+#: src/legacy/gsm_color_button.c:593
 msgid "The selected color"
 msgstr "Izbrana barva"
 
-#: src/legacy/gsm_color_button.c:613
+#: src/legacy/gsm_color_button.c:600
 msgid "Type of color picker"
 msgstr "Vrsta izbirnika barv"
 
-#: src/legacy/gsm_color_button.c:660
+#: src/legacy/gsm_color_button.c:647
 msgid "Click to set graph colors"
 msgstr "Kliknite za nastavitev barv grafa"
 
@@ -1382,11 +1363,11 @@ msgstr "Stolpec razvrščanja odprtih datotek"
 msgid "Open files sort order"
 msgstr "Način razvrščanja odprtih datotek"
 
-#: src/prefsdialog.cpp:70
+#: src/prefsdialog.cpp:70 src/prefsdialog.cpp:122
 msgid "Icon"
 msgstr "Ikona"
 
-#: src/procactions.cpp:79
+#: src/procactions.cpp:80
 #, c-format
 msgid ""
 "Cannot change the priority of process with PID %d to %d.\n"
@@ -1395,11 +1376,11 @@ msgstr ""
 "Ni mogoče spremeniti prednosti opravila s PID %d na %d.\n"
 "%s"
 
-#: src/procactions.cpp:89 src/procactions.cpp:174
+#: src/procactions.cpp:90 src/procactions.cpp:166
 msgid "_OK"
 msgstr "_V redu"
 
-#: src/procactions.cpp:164
+#: src/procactions.cpp:156
 #, c-format
 msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
@@ -1409,26 +1390,26 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:108
+#: src/procdialogs.cpp:117
 #, c-format
 msgid "Force Stop %s?"
 msgstr "Ali želite prisilno ustaviti %s?"
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:114
+#: src/procdialogs.cpp:123
 #, c-format
 msgid "End %s?"
 msgstr "Ali želite končati %s?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:120
+#: src/procdialogs.cpp:129
 #, c-format
 msgid "Stop %s?"
 msgstr "Ali želite zaustaviti %s?"
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:131
+#: src/procdialogs.cpp:140
 #, c-format
 msgid "Force Stop Selected Process?"
 msgid_plural "Force Stop %d Selected Processes?"
@@ -1438,7 +1419,7 @@ msgstr[2] "Ali želite vsiliti ustavitev %d izbranih procesov?"
 msgstr[3] "Ali želite vsiliti ustavitev %d izbranih procesov?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:138
+#: src/procdialogs.cpp:147
 #, c-format
 msgid "End Selected Process?"
 msgid_plural "End %d Selected Processes?"
@@ -1449,7 +1430,7 @@ msgstr[3] "Ali želite končati %d izbrana opravila?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:145
+#: src/procdialogs.cpp:154
 #, c-format
 msgid "Stop Selected Process?"
 msgid_plural "Stop %d Selected Processes?"
@@ -1459,7 +1440,7 @@ msgstr[2] "Ali želite zaustaviti %d izbrani opravili?"
 msgstr[3] "Ali želite zaustaviti %d izbrana opravila?"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:156
+#: src/procdialogs.cpp:165
 msgid ""
 "Force stopping processes can result in data loss, crashes, and system "
 "failures"
@@ -1467,40 +1448,40 @@ msgstr ""
 "Prisilno ustavljanje procesov lahko povzroči izgubo podatkov, zrušitve in "
 "okvare sistema"
 
-#: src/procdialogs.cpp:158
+#: src/procdialogs.cpp:167
 msgid "_Force Stop"
 msgstr "Vsili _zaustavitev"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:163
+#: src/procdialogs.cpp:172
 msgid "Ending processes can result in data loss, crashes, and system failures"
 msgstr ""
 "Končanje procesov lahko povzroči izgubo podatkov, zrušitve in sistemske "
 "napake"
 
-#: src/procdialogs.cpp:165
+#: src/procdialogs.cpp:174
 msgid "_End"
 msgstr "_Končaj"
 
 #. SIGSTOP
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:170
+#: src/procdialogs.cpp:179
 msgid ""
 "Stopping processes can result in data loss, crashes, and system failures"
 msgstr ""
 "Zaustavitev procesov lahko povzroči izgubo podatkov, zrušitve in sistemske "
 "napake"
 
-#: src/procdialogs.cpp:172
+#: src/procdialogs.cpp:181
 msgid "_Stop"
 msgstr "_Zaustavi"
 
-#: src/procdialogs.cpp:264
+#: src/procdialogs.cpp:273
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Spremeni prednost opravila »%s« (PID %u)"
 
-#: src/procdialogs.cpp:267
+#: src/procdialogs.cpp:276
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
@@ -1509,31 +1490,21 @@ msgstr[1] "Spremeni vrstni red prednosti %d opravila"
 msgstr[2] "Spremeni vrstni red prednosti %d opravil"
 msgstr[3] "Spremeni vrstni red prednosti %d opravil"
 
-#: src/procproperties.cpp:43 src/procproperties.cpp:97
-#: src/procproperties.cpp:106 src/util.cpp:540 src/util.cpp:587
-msgid "N/A"
-msgstr "N/A"
-
 #: src/proctable.cpp:136
-msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "_Končaj opravila"
-msgstr[1] "_Končaj opravilo"
-msgstr[2] "_Končaj opravili"
-msgstr[3] "_Končaj opravila"
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "_Končaj opravila …"
+msgstr[1] "_Končaj opravilo …"
+msgstr[2] "_Končaj opravili …"
+msgstr[3] "_Končaj opravila …"
 
 #: src/proctable.cpp:344
-msgid "Process Name"
-msgstr "Ime opravila"
+msgid "Name"
+msgstr "Ime"
 
 #: src/proctable.cpp:351
 msgid "X Server Memory"
 msgstr "Pomnilnik strežnika X"
-
-#: src/proctable.cpp:352
-#, no-c-format
-msgid "% CPU"
-msgstr "% CPE"
 
 #: src/proctable.cpp:355
 msgid "Nice"
@@ -1563,30 +1534,31 @@ msgid "Owner"
 msgstr "Lastnik"
 
 #: src/proctable.cpp:369
-msgid "Disk read total"
-msgstr "Skupno branje z diska"
+msgid "Disk Read Total"
+msgstr "Skupno prebrano z diska"
 
 #: src/proctable.cpp:370
-msgid "Disk write total"
-msgstr "Skupno zapisovanje na disk"
+msgid "Disk Write Total"
+msgstr "Skupno zapisano na disk"
 
 #: src/proctable.cpp:371
-msgid "Disk read"
+msgid "Disk Read"
 msgstr "Branje z diska"
 
 #: src/proctable.cpp:372
-msgid "Disk write"
+msgid "Disk Write"
 msgstr "Zapisovanje na disk"
 
-#: src/setaffinity.cpp:125
+#. Create error alert dialog
+#: src/setaffinity.cpp:124
 msgid "GNU CPU Affinity error"
 msgstr "Napaka pripenjanja GNU CPU"
 
-#: src/setaffinity.cpp:130
+#: src/setaffinity.cpp:129
 msgid "_Close"
 msgstr "_Zapri"
 
-#: src/setaffinity.cpp:409
+#: src/setaffinity.cpp:396
 #, c-format
 msgid "Select CPUs \"%s\" (PID %u) is allowed to run on:"
 msgstr "Izbor enot CPE »%s« (PID %u), na katerih je odobreno delovanje:"
@@ -1656,7 +1628,7 @@ msgid "Very Low Priority"
 msgstr "Zelo nizka prednost"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:832
+#: src/util.cpp:789
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
