@@ -277,7 +277,8 @@ create_single_openfiles_dialog (GtkTreeModel *model,
   column_view = GTK_COLUMN_VIEW (gtk_builder_get_object (builder, "openfiles_view"));
   store = G_LIST_STORE (gtk_builder_get_object (builder, "openfiles_store"));
 
-  adw_window_title_set_subtitle (window_title, g_strdup_printf ("%s (PID %u)", info->name.c_str (), info->pid));
+  // Translators: process name and id
+  adw_window_title_set_subtitle (window_title, g_strdup_printf (_("%s (PID %u)"), info->name.c_str (), info->pid));
 
   g_object_set_data (G_OBJECT (store), "selected_info", GUINT_TO_POINTER (info->pid));
 
