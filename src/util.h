@@ -7,11 +7,6 @@
 
 using std::string;
 
-GtkLabel*
-procman_make_label_for_mmaps_or_ofiles (const char *format,
-                                        const char *process_name,
-                                        unsigned    pid);
-
 gboolean
 load_symbols (const char *module,
               ...) G_GNUC_NULL_TERMINATED;

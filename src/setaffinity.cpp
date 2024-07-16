@@ -39,7 +39,7 @@ public:
 GtkWidget  *dialog;
 pid_t pid;
 GtkWidget **buttons;
-GtkWidget *all_threads_button;
+GtkWidget *all_threads_row;
 guint32 cpu_count;
 gboolean toggle_single_blocked;
 gboolean toggle_all_blocked;
@@ -54,15 +54,16 @@ all_toggled (SetAffinityData *affinity)
   /* Check if any CPU's aren't set for this process */
   for (i = 1; i <= affinity->cpu_count; i++)
     /* If so, return FALSE */
-    if (!gtk_check_button_get_active (GTK_CHECK_BUTTON (affinity->buttons[i])))
+    if (!adw_switch_row_get_active (ADW_SWITCH_ROW (affinity->buttons[i])))
       return FALSE;
 
   return TRUE;
 }
 
 static void
-affinity_toggler_single (GtkCheckButton *button,
-                         gpointer        data)
+affinity_toggler_single (GObject    *self,
+                         GParamSpec *,
+                         gpointer    data)
 {
   SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
   gboolean toggle_all_state = FALSE;
@@ -72,23 +73,24 @@ affinity_toggler_single (GtkCheckButton *button,
     return;
 
   /* Set toggle all state based on whether all are toggled */
-  if (gtk_check_button_get_active (button))
+  if (adw_switch_row_get_active (ADW_SWITCH_ROW (self)))
     toggle_all_state = all_toggled (affinity);
 
   /* Block toggle all signal */
   affinity->toggle_all_blocked = TRUE;
 
   /* Set toggle all check box state */
-  gtk_check_button_set_active (GTK_CHECK_BUTTON (affinity->buttons[0]),
-                               toggle_all_state);
+  adw_switch_row_set_active (ADW_SWITCH_ROW (affinity->buttons[0]),
+                             toggle_all_state);
 
   /* Unblock toggle all signal */
   affinity->toggle_all_blocked = FALSE;
 }
 
 static void
-affinity_toggle_all (GtkCheckButton *check_all_button,
-                     gpointer        data)
+affinity_toggle_all (GObject    *self,
+                     GParamSpec *,
+                     gpointer    data)
 {
   SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
 
@@ -100,15 +102,15 @@ affinity_toggle_all (GtkCheckButton *check_all_button,
     return;
 
   /* Set individual CPU toggles based on toggle all state */
-  state = gtk_check_button_get_active (check_all_button);
+  state = adw_switch_row_get_active (ADW_SWITCH_ROW (self));
 
   /* Block toggle single signal */
   affinity->toggle_single_blocked = TRUE;
 
   /* Set all CPU check boxes to specified state */
   for (i = 1; i <= affinity->cpu_count; i++)
-    gtk_check_button_set_active (
-      GTK_CHECK_BUTTON (affinity->buttons[i]),
+    adw_switch_row_set_active (
+      ADW_SWITCH_ROW (affinity->buttons[i]),
       state);
 
   /* Unblock toggle single signal */
@@ -279,7 +281,7 @@ set_affinity (GtkCheckButton*,
       /* Run through all CPUs set for this process */
       for (i = 0; i < affinity->cpu_count; i++)
         /* Check if CPU check box button is active */
-        if (gtk_check_button_get_active (GTK_CHECK_BUTTON (affinity->buttons[i + 1])))
+        if (adw_switch_row_get_active (ADW_SWITCH_ROW (affinity->buttons[i + 1])))
           {
             /* If so, get its CPU number as 16bit integer */
             guint16 n = i;
@@ -292,7 +294,7 @@ set_affinity (GtkCheckButton*,
             taskset_cpu++;
           }
 
-      all_threads = gtk_check_button_get_active (GTK_CHECK_BUTTON (affinity->all_threads_button));
+      all_threads = adw_switch_row_get_active (ADW_SWITCH_ROW (affinity->all_threads_row));
 
       /* Set process affinity; Show message dialog upon error */
       cpus = gsm_set_proc_affinity (&set_affinity, cpuset, affinity->pid, all_threads);
@@ -336,11 +338,10 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
 
   ProcInfo        *info;
   SetAffinityData *affinity_data;
+  AdwWindowTitle  *window_title;
   GtkWidget       *cancel_button;
   GtkWidget       *apply_button;
-  GtkWidget       *dialog_vbox;
-  GtkWidget       *label;
-  GtkGrid         *cpulist_grid;
+  GtkListBox      *cpulist_box;
 
   guint16               *affinity_cpus;
   guint16 affinity_cpu;
@@ -370,12 +371,15 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
     g_error ("%s", err->message);
 
   affinity_data->dialog = GTK_WIDGET (gtk_builder_get_object (builder, "setaffinity_dialog"));
-  dialog_vbox = GTK_WIDGET (gtk_builder_get_object (builder, "dialog_vbox"));
-  cpulist_grid = GTK_GRID (gtk_builder_get_object (builder, "cpulist_grid"));
-  affinity_data->buttons[0] = GTK_WIDGET (gtk_builder_get_object (builder, "allcpus_button"));
+  window_title = ADW_WINDOW_TITLE (gtk_builder_get_object (builder, "window_title"));
+  cpulist_box = GTK_LIST_BOX (gtk_builder_get_object (builder, "cpulist_box"));
+  affinity_data->buttons[0] = GTK_WIDGET (gtk_builder_get_object (builder, "allcpus_row"));
   cancel_button = GTK_WIDGET (gtk_builder_get_object (builder, "cancel_button"));
   apply_button = GTK_WIDGET (gtk_builder_get_object (builder, "apply_button"));
-  affinity_data->all_threads_button = GTK_WIDGET (gtk_builder_get_object (builder, "all_threads_button"));
+  affinity_data->all_threads_row = GTK_WIDGET (gtk_builder_get_object (builder, "all_threads_row"));
+
+  // Translators: process name and id
+  adw_window_title_set_subtitle (window_title, g_strdup_printf (_("%s (PID %u)"), info->name.c_str (), info->pid));
 
   /* Add selected process pid to affinity data */
   affinity_data->pid = info->pid;
@@ -387,21 +391,12 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   affinity_data->toggle_single_blocked = FALSE;
   affinity_data->toggle_all_blocked = FALSE;
 
-  /* Create a label describing the dialog windows intent */
-  label = GTK_WIDGET (procman_make_label_for_mmaps_or_ofiles (
-                        _("Select CPUs \"%s\" (PID %u) is allowed to run on:"),
-                        info->name.c_str (),
-                        info->pid));
-
-  /* Add label to dialog VBox */
-  gtk_box_prepend (GTK_BOX (dialog_vbox), label);
-
   /* Get process's current affinity */
   affinity_cpus = glibtop_get_proc_affinity (&affinity, info->pid);
 
   /* Set toggle all check box based on whether all CPUs are set for this process */
-  gtk_check_button_set_active (
-    GTK_CHECK_BUTTON (affinity_data->buttons[0]),
+  adw_switch_row_set_active (
+    ADW_SWITCH_ROW (affinity_data->buttons[0]),
     affinity.all);
 
   /* Run through all CPU buttons */
@@ -411,15 +406,15 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
       button_text = g_strdup_printf (_("CPU%d"), button_n);
 
       /* Create check box button for current CPU */
-      affinity_data->buttons[button_n] = gtk_check_button_new_with_label (button_text);
-      gtk_widget_set_hexpand (affinity_data->buttons[button_n], TRUE);
+      affinity_data->buttons[button_n] = adw_switch_row_new ();
+      adw_preferences_row_set_title (ADW_PREFERENCES_ROW (affinity_data->buttons[button_n]), button_text);
 
-      /* Add check box to CPU grid */
-      gtk_grid_attach (cpulist_grid, affinity_data->buttons[button_n], 0, button_n, 1, 1);
+      /* Add check box to CPU list */
+      gtk_list_box_insert (cpulist_box, affinity_data->buttons[button_n], button_n);
 
       /* Connect check box to toggler function */
       g_signal_connect (affinity_data->buttons[button_n],
-                        "toggled",
+                        "notify::active",
                         G_CALLBACK (affinity_toggler_single),
                         affinity_data);
 
@@ -434,8 +429,8 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
       affinity_cpu = affinity_cpus[affinity_i] + 1;
 
       /* Set CPU check box active */
-      gtk_check_button_set_active (
-        GTK_CHECK_BUTTON (affinity_data->buttons[affinity_cpu]),
+      adw_switch_row_set_active (
+        ADW_SWITCH_ROW (affinity_data->buttons[affinity_cpu]),
         TRUE);
     }
 
@@ -453,7 +448,7 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
 
   /* Connect toggle all check box to (de)select all function */
   g_signal_connect (affinity_data->buttons[0],
-                    "toggled",
+                    "notify::active",
                     G_CALLBACK (affinity_toggle_all),
                     affinity_data);
 

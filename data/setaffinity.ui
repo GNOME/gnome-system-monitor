@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <object class="AdwWindow" id="setaffinity_dialog">
-    <property name="default-width">600</property>
-    <property name="default-height">430</property>
+    <property name="default-width">500</property>
+    <property name="default-height">500</property>
     <property name="destroy-with-parent">True</property>
-    <property name="title" translatable="yes">Set Affinity</property>
     <property name="content">
       <object class="AdwToolbarView">
         <child type="top">
           <object class="AdwHeaderBar">
             <property name="show-start-title-buttons">False</property>
             <property name="show-end-title-buttons">False</property>
+            <property name="title-widget">
+              <object class="AdwWindowTitle" id="window_title">
+                <property name="title" translatable="yes">Set Affinity</property>
+              </object>
+            </property>
             <child type="start">
               <object class="GtkButton" id="cancel_button">
                 <property name="label" translatable="yes">_Cancel</property>
@@ -27,49 +31,49 @@
         </child>
         <property name="content">
           <object class="GtkBox" id="dialog_vbox">
-            <property name="margin-top">12</property>
-            <property name="margin-bottom">12</property>
-            <property name="margin-start">12</property>
-            <property name="margin-end">12</property>
             <property name="orientation">vertical</property>
-            <property name="spacing">6</property>
             <child>
-              <object class="GtkCheckButton" id="all_threads_button">
-                <property name="active">True</property>
-                <property name="label" translatable="yes">Apply to child threads</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkScrolledWindow" id="scrolled">
-                <property name="hexpand">True</property>
-                <property name="vexpand">True</property>
+              <object class="AdwPreferencesPage">
                 <child>
-                  <object class="GtkGrid" id="cpulist_grid">
-                    <property name="margin-top">12</property>
-                    <property name="margin-bottom">12</property>
-                    <property name="margin-start">12</property>
-                    <property name="margin-end">12</property>
-                    <property name="row-spacing">12</property>
+                  <object class="AdwPreferencesGroup">
+                    <property name="description" translatable="yes">Select CPUs allowed to run on</property>
                     <child>
-                      <object class="GtkCheckButton" id="allcpus_button">
-                        <property name="active">True</property>
-                        <property name="hexpand">True</property>
-                        <property name="label" translatable="yes">Run on all CPUs</property>
-                        <layout>
-                          <property name="column">0</property>
-                          <property name="row">0</property>
-                        </layout>
+                      <object class="GtkListBox" id="cpulist_box">
+                        <property name="selection-mode">none</property>
+                        <child>
+                          <object class="AdwSwitchRow" id="allcpus_row">
+                            <property name="active">True</property>
+                            <property name="title" translatable="yes">_Run on all CPUs</property>
+                            <property name="use-underline">True</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="boxed-list"/>
+                        </style>
                       </object>
                     </child>
                   </object>
                 </child>
-                <style>
-                  <class name="view"/>
-                </style>
               </object>
             </child>
           </object>
         </property>
+        <child type="bottom">
+          <object class="GtkListBox">
+            <property name="selection-mode">none</property>
+            <child>
+              <object class="AdwSwitchRow" id="all_threads_row">
+                <property name="active">True</property>
+                <property name="hexpand">true</property>
+                <property name="title" translatable="yes">Apply to Child _Threads</property>
+                <property name="use-underline">True</property>
+              </object>
+            </child>
+            <style>
+              <class name="background"/>
+            </style>
+          </object>
+        </child>
       </object>
     </property>
     <child>
