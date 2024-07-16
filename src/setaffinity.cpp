@@ -377,10 +377,6 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   apply_button = GTK_WIDGET (gtk_builder_get_object (builder, "apply_button"));
   affinity_data->all_threads_button = GTK_WIDGET (gtk_builder_get_object (builder, "all_threads_button"));
 
-  /* Set dialog window "transient for" */
-  gtk_window_set_transient_for (GTK_WINDOW (affinity_data->dialog),
-                                GTK_WINDOW (GsmApplication::get ()->main_window));
-
   /* Add selected process pid to affinity data */
   affinity_data->pid = info->pid;
 
