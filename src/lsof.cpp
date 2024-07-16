@@ -105,9 +105,9 @@ struct GUI: private procman::NonCopyable
     gchar *title;
 
     if (this->pattern ().length () == 0)
-      title = g_strdup_printf (ngettext ("%d open file", "%d open files", count), count);
+      title = g_strdup_printf (ngettext ("%d Open File", "%d Open Files", count), count);
     else
-      title = g_strdup_printf (ngettext ("%d matching open file", "%d matching open files", count), count);
+      title = g_strdup_printf (ngettext ("%d Matching Open File", "%d Matching Open Files", count), count);
     gtk_window_set_title (GTK_WINDOW (this->dialog), title);
     g_free (title);
   }

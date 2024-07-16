@@ -273,7 +273,7 @@ procdialog_create_renice_dialog (GsmApplication *app)
     dialog_title = g_strdup_printf (_("Change Priority of Process “%s” (PID: %u)"),
                                     info->name.c_str (), info->pid);
   else
-    dialog_title = g_strdup_printf (ngettext ("Change Priority of the selected process", "Change Priority of %d selected processes", selected_count),
+    dialog_title = g_strdup_printf (ngettext ("Change Priority of the Selected Process", "Change Priority of %d Selected Processes", selected_count),
                                     selected_count);
   adw_alert_dialog_set_heading (renice_dialog, dialog_title);
   g_free (dialog_title);
