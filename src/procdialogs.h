@@ -50,6 +50,5 @@ gboolean procdialog_create_root_password_dialog (ProcmanActionType type,
                                                  GsmApplication   *app,
                                                  gint              pid,
                                                  gint              extra_value);
-void     procdialog_create_memmaps_dialog (GsmApplication *app);
 
 #endif /* _GSM_PROCDIALOGS_H_ */
