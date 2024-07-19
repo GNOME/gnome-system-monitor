@@ -527,13 +527,31 @@ on_activate_set_affinity (GSimpleAction *,
 }
 
 static void
+create_single_memmaps_dialog (GtkTreeModel *model,
+                              GtkTreePath*,
+                              GtkTreeIter  *iter,
+                              gpointer)
+{
+  ProcInfo *info;
+  GsmMemMapsView *memmaps_view;
+
+  gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
+
+  memmaps_view = gsm_memmaps_view_new (info);
+
+  gtk_window_present (GTK_WINDOW (memmaps_view));
+}
+
+static void
 on_activate_memory_maps (GSimpleAction *,
                          GVariant *,
                          gpointer data)
 {
   GsmApplication *app = (GsmApplication *) data;
 
-  create_memmaps_dialog (app);
+  /* TODO: do we really want to open multiple dialogs ? */
+  gtk_tree_selection_selected_foreach (app->selection, create_single_memmaps_dialog,
+                                       NULL);
 }
 
 static void

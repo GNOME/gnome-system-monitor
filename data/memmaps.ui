@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <object class="MemMapsInfo" type-func="memmaps_info_get_type"/>
-  <object class="AdwWindow" id="memmaps_dialog">
+  <template class="GsmMemMapsView" parent="AdwWindow">
     <property name="width-request">360</property>
     <property name="height-request">294</property>
     <property name="default-width">620</property>
@@ -26,10 +25,20 @@
                 <property name="hexpand">True</property>
                 <property name="vexpand">True</property>
                 <child>
-                  <object class="GtkColumnView" id="memmaps_view">
+                  <object class="GtkColumnView" id="column_view">
                     <property name="model">
                       <object class="GtkNoSelection">
-                        <property name="model">memmaps_model</property>
+                        <property name="model">
+                          <object class="GtkSortListModel" id="sort_list_model">
+                            <property name="incremental">True</property>
+                            <property name="model">
+                              <object class="GListStore" id="list_store"/>
+                            </property>
+                            <binding name="sorter">
+                              <lookup name="sorter">column_view</lookup>
+                            </binding>
+                          </object>
+                        </property>
                       </object>
                     </property>
                     <child>
@@ -40,7 +49,7 @@
                         <property name="sorter">
                           <object class="GtkStringSorter">
                             <property name="expression">
-                              <lookup name="filename" type="MemMapsInfo"/>
+                              <lookup name="filename" type="MemMapsData"/>
                             </property>
                           </object>
                         </property>
@@ -49,21 +58,21 @@
                             <property name="bytes"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-<template class="GtkListItem">
-<property name="child">
-  <object class="GtkLabel">
-    <attributes>
-      <attribute name="font-features" value="tnum=1"/>
-    </attributes>
-    <property name="xalign">0</property>
-    <binding name="label">
-      <lookup name="filename" type="MemMapsInfo">
-        <lookup name="item">GtkListItem</lookup>
-      </lookup>
-    </binding>
-  </object>
-</property>
-</template>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="xalign">0</property>
+        <binding name="label">
+          <lookup name="filename" type="MemMapsData">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+        <style>
+          <class name="numeric"/>
+        </style>
+      </object>
+    </property>
+  </template>
 </interface>
                          ]]></property>
                           </object>
@@ -78,7 +87,7 @@
                         <property name="sorter">
                           <object class="GtkStringSorter">
                             <property name="expression">
-                              <lookup name="vmstart" type="MemMapsInfo"/>
+                              <lookup name="vmstart" type="MemMapsData"/>
                             </property>
                           </object>
                         </property>
@@ -87,24 +96,22 @@
                             <property name="bytes"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-<template class="GtkListItem">
-<property name="child">
-  <object class="GtkLabel">
-    <attributes>
-      <attribute name="font-features" value="tnum=1"/>
-    </attributes>
-    <property name="xalign">0</property>
-    <binding name="label">
-      <lookup name="vmstart" type="MemMapsInfo">
-        <lookup name="item">GtkListItem</lookup>
-      </lookup>
-    </binding>
-    <style>
-      <class name="monospace"/>
-    </style>
-  </object>
-</property>
-</template>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="xalign">0</property>
+        <binding name="label">
+          <lookup name="vmstart" type="MemMapsData">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+        <style>
+          <class name="monospace"/>
+          <class name="numeric"/>
+        </style>
+      </object>
+    </property>
+  </template>
 </interface>
                          ]]></property>
                           </object>
@@ -119,7 +126,7 @@
                         <property name="sorter">
                           <object class="GtkStringSorter">
                             <property name="expression">
-                              <lookup name="vmend" type="MemMapsInfo"/>
+                              <lookup name="vmend" type="MemMapsData"/>
                             </property>
                           </object>
                         </property>
@@ -128,24 +135,22 @@
                             <property name="bytes"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-<template class="GtkListItem">
-<property name="child">
-  <object class="GtkLabel">
-    <attributes>
-      <attribute name="font-features" value="tnum=1"/>
-    </attributes>
-    <property name="xalign">0</property>
-    <binding name="label">
-      <lookup name="vmend" type="MemMapsInfo">
-        <lookup name="item">GtkListItem</lookup>
-      </lookup>
-    </binding>
-    <style>
-      <class name="monospace"/>
-    </style>
-  </object>
-</property>
-</template>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="xalign">0</property>
+        <binding name="label">
+          <lookup name="vmend" type="MemMapsData">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+        <style>
+          <class name="monospace"/>
+          <class name="numeric"/>
+        </style>
+      </object>
+    </property>
+  </template>
 </interface>
                          ]]></property>
                           </object>
@@ -158,9 +163,9 @@
                         <property name="expand">True</property>
                         <property name="resizable">True</property>
                         <property name="sorter">
-                          <object class="GtkStringSorter">
+                          <object class="GtkNumericSorter">
                             <property name="expression">
-                              <lookup name="vmsize" type="MemMapsInfo"/>
+                              <lookup name="vmsize" type="MemMapsData"/>
                             </property>
                           </object>
                         </property>
@@ -169,18 +174,20 @@
                             <property name="bytes"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-<template class="GtkListItem">
-<property name="child">
-  <object class="GtkLabel">
-    <property name="xalign">1</property>
-    <binding name="label">
-      <lookup name="vmsize" type="MemMapsInfo">
-        <lookup name="item">GtkListItem</lookup>
-      </lookup>
-    </binding>
-  </object>
-</property>
-</template>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="xalign">1</property>
+        <binding name="label">
+          <closure type="gchararray" function="format_size">
+            <lookup name="vmsize" type="MemMapsData">
+              <lookup name="item">GtkListItem</lookup>
+            </lookup>
+          </closure>
+        </binding>
+      </object>
+    </property>
+  </template>
 </interface>
                          ]]></property>
                           </object>
@@ -195,7 +202,7 @@
                         <property name="sorter">
                           <object class="GtkStringSorter">
                             <property name="expression">
-                              <lookup name="flags" type="MemMapsInfo"/>
+                              <lookup name="flags" type="MemMapsData"/>
                             </property>
                           </object>
                         </property>
@@ -204,24 +211,22 @@
                             <property name="bytes"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-<template class="GtkListItem">
-<property name="child">
-  <object class="GtkLabel">
-    <attributes>
-      <attribute name="font-features" value="tnum=1"/>
-    </attributes>
-    <property name="xalign">0</property>
-    <binding name="label">
-      <lookup name="flags" type="MemMapsInfo">
-        <lookup name="item">GtkListItem</lookup>
-      </lookup>
-    </binding>
-    <style>
-      <class name="monospace"/>
-    </style>
-  </object>
-</property>
-</template>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="xalign">0</property>
+        <binding name="label">
+          <lookup name="flags" type="MemMapsData">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+        <style>
+          <class name="monospace"/>
+          <class name="numeric"/>
+        </style>
+      </object>
+    </property>
+  </template>
 </interface>
                          ]]></property>
                           </object>
@@ -236,7 +241,7 @@
                         <property name="sorter">
                           <object class="GtkStringSorter">
                             <property name="expression">
-                              <lookup name="vmoffset" type="MemMapsInfo"/>
+                              <lookup name="vmoffset" type="MemMapsData"/>
                             </property>
                           </object>
                         </property>
@@ -245,24 +250,22 @@
                             <property name="bytes"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-<template class="GtkListItem">
-<property name="child">
-  <object class="GtkLabel">
-    <attributes>
-      <attribute name="font-features" value="tnum=1"/>
-    </attributes>
-    <property name="xalign">0</property>
-    <binding name="label">
-      <lookup name="vmoffset" type="MemMapsInfo">
-        <lookup name="item">GtkListItem</lookup>
-      </lookup>
-    </binding>
-    <style>
-      <class name="monospace"/>
-    </style>
-  </object>
-</property>
-</template>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="xalign">0</property>
+        <binding name="label">
+          <lookup name="vmoffset" type="MemMapsData">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+        <style>
+          <class name="monospace"/>
+          <class name="numeric"/>
+        </style>
+      </object>
+    </property>
+  </template>
 </interface>
                          ]]></property>
                           </object>
@@ -275,9 +278,9 @@
                         <property name="expand">True</property>
                         <property name="resizable">True</property>
                         <property name="sorter">
-                          <object class="GtkStringSorter">
+                          <object class="GtkNumericSorter">
                             <property name="expression">
-                              <lookup name="privateclean" type="MemMapsInfo"/>
+                              <lookup name="privateclean" type="MemMapsData"/>
                             </property>
                           </object>
                         </property>
@@ -286,18 +289,20 @@
                             <property name="bytes"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-<template class="GtkListItem">
-<property name="child">
-  <object class="GtkLabel">
-    <property name="xalign">1</property>
-    <binding name="label">
-      <lookup name="privateclean" type="MemMapsInfo">
-        <lookup name="item">GtkListItem</lookup>
-      </lookup>
-    </binding>
-  </object>
-</property>
-</template>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="xalign">1</property>
+        <binding name="label">
+          <closure type="gchararray" function="format_size">
+            <lookup name="privateclean" type="MemMapsData">
+              <lookup name="item">GtkListItem</lookup>
+            </lookup>
+          </closure>
+        </binding>
+      </object>
+    </property>
+  </template>
 </interface>
                          ]]></property>
                           </object>
@@ -310,9 +315,9 @@
                         <property name="expand">True</property>
                         <property name="resizable">True</property>
                         <property name="sorter">
-                          <object class="GtkStringSorter">
+                          <object class="GtkNumericSorter">
                             <property name="expression">
-                              <lookup name="privatedirty" type="MemMapsInfo"/>
+                              <lookup name="privatedirty" type="MemMapsData"/>
                             </property>
                           </object>
                         </property>
@@ -321,18 +326,20 @@
                             <property name="bytes"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-<template class="GtkListItem">
-<property name="child">
-  <object class="GtkLabel">
-    <property name="xalign">1</property>
-    <binding name="label">
-      <lookup name="privatedirty" type="MemMapsInfo">
-        <lookup name="item">GtkListItem</lookup>
-      </lookup>
-    </binding>
-  </object>
-</property>
-</template>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="xalign">1</property>
+        <binding name="label">
+          <closure type="gchararray" function="format_size">
+            <lookup name="privatedirty" type="MemMapsData">
+              <lookup name="item">GtkListItem</lookup>
+            </lookup>
+          </closure>
+        </binding>
+      </object>
+    </property>
+  </template>
 </interface>
                          ]]></property>
                           </object>
@@ -345,9 +352,9 @@
                         <property name="expand">True</property>
                         <property name="resizable">True</property>
                         <property name="sorter">
-                          <object class="GtkStringSorter">
+                          <object class="GtkNumericSorter">
                             <property name="expression">
-                              <lookup name="sharedclean" type="MemMapsInfo"/>
+                              <lookup name="sharedclean" type="MemMapsData"/>
                             </property>
                           </object>
                         </property>
@@ -356,18 +363,20 @@
                             <property name="bytes"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-<template class="GtkListItem">
-<property name="child">
-  <object class="GtkLabel">
-    <property name="xalign">1</property>
-    <binding name="label">
-      <lookup name="sharedclean" type="MemMapsInfo">
-        <lookup name="item">GtkListItem</lookup>
-      </lookup>
-    </binding>
-  </object>
-</property>
-</template>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="xalign">1</property>
+        <binding name="label">
+          <closure type="gchararray" function="format_size">
+            <lookup name="sharedclean" type="MemMapsData">
+              <lookup name="item">GtkListItem</lookup>
+            </lookup>
+          </closure>
+        </binding>
+      </object>
+    </property>
+  </template>
 </interface>
                          ]]></property>
                           </object>
@@ -380,9 +389,9 @@
                         <property name="expand">True</property>
                         <property name="resizable">True</property>
                         <property name="sorter">
-                          <object class="GtkStringSorter">
+                          <object class="GtkNumericSorter">
                             <property name="expression">
-                              <lookup name="shareddirty" type="MemMapsInfo"/>
+                              <lookup name="shareddirty" type="MemMapsData"/>
                             </property>
                           </object>
                         </property>
@@ -391,18 +400,20 @@
                             <property name="bytes"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-<template class="GtkListItem">
-<property name="child">
-  <object class="GtkLabel">
-    <property name="xalign">1</property>
-    <binding name="label">
-      <lookup name="shareddirty" type="MemMapsInfo">
-        <lookup name="item">GtkListItem</lookup>
-      </lookup>
-    </binding>
-  </object>
-</property>
-</template>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="xalign">1</property>
+        <binding name="label">
+          <closure type="gchararray" function="format_size">
+            <lookup name="shareddirty" type="MemMapsData">
+              <lookup name="item">GtkListItem</lookup>
+            </lookup>
+          </closure>
+        </binding>
+      </object>
+    </property>
+  </template>
 </interface>
                          ]]></property>
                           </object>
@@ -417,7 +428,7 @@
                         <property name="sorter">
                           <object class="GtkStringSorter">
                             <property name="expression">
-                              <lookup name="device" type="MemMapsInfo"/>
+                              <lookup name="device" type="MemMapsData"/>
                             </property>
                           </object>
                         </property>
@@ -426,21 +437,21 @@
                             <property name="bytes"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-<template class="GtkListItem">
-<property name="child">
-  <object class="GtkLabel">
-    <attributes>
-      <attribute name="font-features" value="tnum=1"/>
-    </attributes>
-    <property name="xalign">0</property>
-    <binding name="label">
-      <lookup name="device" type="MemMapsInfo">
-        <lookup name="item">GtkListItem</lookup>
-      </lookup>
-    </binding>
-  </object>
-</property>
-</template>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="xalign">0</property>
+        <binding name="label">
+          <lookup name="device" type="MemMapsData">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+        <style>
+          <class name="numeric"/>
+        </style>
+      </object>
+    </property>
+  </template>
 </interface>
                          ]]></property>
                           </object>
@@ -455,7 +466,7 @@
                         <property name="sorter">
                           <object class="GtkNumericSorter">
                             <property name="expression">
-                              <lookup name="inode" type="MemMapsInfo"/>
+                              <lookup name="inode" type="MemMapsData"/>
                             </property>
                           </object>
                         </property>
@@ -464,21 +475,21 @@
                             <property name="bytes"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-<template class="GtkListItem">
-<property name="child">
-  <object class="GtkLabel">
-    <attributes>
-      <attribute name="font-features" value="tnum=1"/>
-    </attributes>
-    <property name="xalign">0</property>
-    <binding name="label">
-      <lookup name="inode" type="MemMapsInfo">
-        <lookup name="item">GtkListItem</lookup>
-      </lookup>
-    </binding>
-  </object>
-</property>
-</template>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="xalign">0</property>
+        <binding name="label">
+          <lookup name="inode" type="MemMapsData">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+        <style>
+          <class name="numeric"/>
+        </style>
+      </object>
+    </property>
+  </template>
 </interface>
                          ]]></property>
                           </object>
@@ -497,7 +508,7 @@
       <object class="GtkShortcutController">
         <property name="scope">managed</property>
         <child>
-          <object class="GtkShortcut" id="shortcut">
+          <object class="GtkShortcut">
             <property name="trigger">Escape</property>
             <property name="action">action(memmaps.close)</property>
           </object>
@@ -507,13 +518,5 @@
     <style>
       <class name="view"/>
     </style>
-  </object>
-  <object class="GtkSortListModel" id="memmaps_model">
-    <property name="model">memmaps_store</property>
-    <property name="incremental">True</property>
-    <binding name="sorter">
-      <lookup name="sorter">memmaps_view</lookup>
-    </binding>
-  </object>
-  <object class="GListStore" id="memmaps_store"/>
+  </template>
 </interface>

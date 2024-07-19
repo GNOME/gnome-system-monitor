@@ -16,7 +16,7 @@ using std::string;
 
 #include "application.h"
 #include "memmaps.h"
-#include "memmaps-info.h"
+#include "memmaps-data.h"
 #include "proctable.h"
 #include "settings-keys.h"
 #include "util.h"
@@ -105,30 +105,89 @@ get (guint64 dev64)
   return out.str ();
 }
 };
-
-
-class MemMapsData
-{
-public:
-guint timer;
-GtkColumnView *column_view;
-ProcInfo *info;
-OffsetFormater format;
-mutable InodeDevices devices;
-GListStore *store;
-
-MemMapsData(GtkColumnView *a_column_view)
-  : timer (),
-  column_view (a_column_view),
-  info (NULL),
-  format (),
-  devices (),
-  store ()
-{
 }
+
+struct _GsmMemMapsView
+{
+  AdwWindow parent_instance;
+
+  GtkColumnView *column_view;
+  AdwWindowTitle *window_title;
+  GListStore *list_store;
+
+  ProcInfo *info;
+  OffsetFormater format;
+  mutable InodeDevices devices;
+
+  guint timer;
 };
+
+G_DEFINE_TYPE (GsmMemMapsView, gsm_memmaps_view, ADW_TYPE_WINDOW)
+
+enum {
+  PROP_0,
+  PROP_INFO,
+  PROP_TIMER,
+  N_PROPS
+};
+
+static GParamSpec *properties [N_PROPS];
+
+GsmMemMapsView *
+gsm_memmaps_view_new (ProcInfo *info)
+{
+  return GSM_MEMMAPS_VIEW (g_object_new (GSM_TYPE_MEMMAPS_VIEW,
+                                         "info", info,
+                                         NULL));
 }
 
+static void
+gsm_memmaps_view_finalize (GObject *object)
+{
+  G_OBJECT_CLASS (gsm_memmaps_view_parent_class)->finalize (object);
+}
+
+static void
+gsm_memmaps_view_get_property (GObject    *object,
+                               guint       prop_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
+{
+  GsmMemMapsView *self = GSM_MEMMAPS_VIEW (object);
+
+  switch (prop_id)
+    {
+    case PROP_INFO:
+      g_value_set_pointer (value, self->info);
+      break;
+    case PROP_TIMER:
+      g_value_set_uint (value, self->timer);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+    }
+}
+
+static void
+gsm_memmaps_view_set_property (GObject      *object,
+                               guint         prop_id,
+                               const GValue *value,
+                               GParamSpec   *pspec)
+{
+  GsmMemMapsView *self = GSM_MEMMAPS_VIEW (object);
+
+  switch (prop_id)
+    {
+    case PROP_INFO:
+      self->info = (ProcInfo *) g_value_get_pointer (value);
+      break;
+    case PROP_TIMER:
+      self->timer = g_value_get_uint (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+    }
+}
 
 struct glibtop_map_entry_cmp
 {
@@ -149,9 +208,9 @@ struct glibtop_map_entry_cmp
 
 
 static void
-update_row (guint                    position,
+update_row (GsmMemMapsView          *self,
+            guint                    position,
             gboolean                 newrow,
-            const MemMapsData &      mm,
             const glibtop_map_entry *memmaps)
 {
   guint64 size;
@@ -175,45 +234,45 @@ update_row (guint                    position,
   if (memmaps->flags & (1 << GLIBTOP_MAP_ENTRY_FILENAME))
     filename = memmaps->filename;
 
-  vmstart = mm.format (memmaps->start);
-  vmend = mm.format (memmaps->end);
-  vmoffset = mm.format (memmaps->offset);
-  device = mm.devices.get (memmaps->device);
+  vmstart = self->format (memmaps->start);
+  vmend = self->format (memmaps->end);
+  vmoffset = self->format (memmaps->offset);
+  device = self->devices.get (memmaps->device);
 
-  MemMapsInfo *memmaps_info;
+  MemMapsData *memmaps_data;
 
   if (!newrow)
     {
-      memmaps_info = memmaps_info_new (filename.c_str (),
+      memmaps_data = memmaps_data_new (filename.c_str (),
                                        vmstart.c_str (),
                                        vmend.c_str (),
-                                       g_format_size_full (size, G_FORMAT_SIZE_IEC_UNITS),
+                                       size,
                                        flags,
                                        vmoffset.c_str (),
-                                       g_format_size_full (memmaps->private_clean, G_FORMAT_SIZE_IEC_UNITS),
-                                       g_format_size_full (memmaps->private_dirty, G_FORMAT_SIZE_IEC_UNITS),
-                                       g_format_size_full (memmaps->shared_clean, G_FORMAT_SIZE_IEC_UNITS),
-                                       g_format_size_full (memmaps->shared_dirty, G_FORMAT_SIZE_IEC_UNITS),
+                                       memmaps->private_clean,
+                                       memmaps->private_dirty,
+                                       memmaps->shared_clean,
+                                       memmaps->shared_dirty,
                                        device.c_str (),
                                        memmaps->inode);
 
-      g_list_store_insert (mm.store, position, memmaps_info);
+      g_list_store_insert (self->list_store, position, memmaps_data);
     }
   else
     {
-      memmaps_info = MEMMAPS_INFO (g_list_model_get_object (G_LIST_MODEL (mm.store), position));
+      memmaps_data = MEMMAPS_DATA (g_list_model_get_object (G_LIST_MODEL (self->list_store), position));
 
-      g_object_set (memmaps_info,
+      g_object_set (memmaps_data,
                     "filename", filename.c_str (),
                     "vmstart", vmstart.c_str (),
                     "vmend", vmend.c_str (),
-                    "vmsize", g_format_size_full (size, G_FORMAT_SIZE_IEC_UNITS),
+                    "vmsize", size,
                     "flags", flags,
                     "vmoffset", vmoffset.c_str (),
-                    "privateclean", g_format_size_full (memmaps->private_clean, G_FORMAT_SIZE_IEC_UNITS),
-                    "privatedirty", g_format_size_full (memmaps->private_dirty, G_FORMAT_SIZE_IEC_UNITS),
-                    "sharedclean", g_format_size_full (memmaps->shared_clean, G_FORMAT_SIZE_IEC_UNITS),
-                    "shareddirty", g_format_size_full (memmaps->shared_dirty, G_FORMAT_SIZE_IEC_UNITS),
+                    "privateclean", memmaps->private_clean,
+                    "privatedirty", memmaps->private_dirty,
+                    "sharedclean", memmaps->shared_clean,
+                    "shareddirty", memmaps->shared_dirty,
                     "device", device.c_str (),
                     "inode", memmaps->inode,
                     NULL);
@@ -222,17 +281,17 @@ update_row (guint                    position,
 
 
 static void
-update_memmaps_dialog (MemMapsData *mmdata)
+update_memmaps_dialog (GsmMemMapsView *self)
 {
   glibtop_map_entry *memmaps;
   glibtop_proc_map procmap;
 
-  memmaps = glibtop_get_proc_map (&procmap, mmdata->info->pid);
+  memmaps = glibtop_get_proc_map (&procmap, self->info->pid);
   /* process has disappeared */
   if (!memmaps or procmap.number == 0)
     return;
 
-  mmdata->format.set (memmaps[procmap.number - 1]);
+  self->format.set (memmaps[procmap.number - 1]);
 
   guint position = 0;
 
@@ -245,14 +304,14 @@ update_memmaps_dialog (MemMapsData *mmdata)
     up add
   */
 
-  while (position < g_list_model_get_n_items (G_LIST_MODEL (mmdata->store)))
+  while (position < g_list_model_get_n_items (G_LIST_MODEL (self->list_store)))
     {
       char *vmstart;
       guint64 start;
-      MemMapsInfo *memmaps_info;
+      MemMapsData *memmaps_data;
 
-      memmaps_info = MEMMAPS_INFO (g_list_model_get_object (G_LIST_MODEL (mmdata->store), position));
-      g_object_get (memmaps_info, "vmstart", &vmstart, NULL);
+      memmaps_data = MEMMAPS_DATA (g_list_model_get_object (G_LIST_MODEL (self->list_store), position));
+      g_object_get (memmaps_data, "vmstart", &vmstart, NULL);
 
       try {
           std::istringstream (vmstart) >> std::hex >> start;
@@ -271,13 +330,13 @@ update_memmaps_dialog (MemMapsData *mmdata)
           iter_cache[start] = position;
           position++;
         }
-      else if (g_list_store_find (mmdata->store, memmaps_info, &position))
-        g_list_store_remove (mmdata->store, position);
+      else if (g_list_store_find (self->list_store, memmaps_data, &position))
+        g_list_store_remove (self->list_store, position);
       else
         break;
     }
 
-  mmdata->devices.update ();
+  self->devices.update ();
 
   /*
     add the new maps
@@ -290,10 +349,10 @@ update_memmaps_dialog (MemMapsData *mmdata)
       if (it != iter_cache.end ())
         {
           position = it->second;
-          update_row (position, TRUE, *mmdata, &memmaps[i]);
+          update_row (self, position, TRUE, &memmaps[i]);
         }
       else
-        update_row (position, FALSE, *mmdata, &memmaps[i]);
+        update_row (self, position, FALSE, &memmaps[i]);
     }
 
   g_free (memmaps);
@@ -303,111 +362,111 @@ update_memmaps_dialog (MemMapsData *mmdata)
 static void
 dialog_action (GSimpleAction*,
                GVariant*,
-               GtkWindow* dialog)
+               GsmMemMapsView* self)
 {
-  MemMapsData *mmdata;
-  guint timer;
+  g_source_remove (self->timer);
 
-  mmdata = static_cast<MemMapsData *>(g_object_get_data (G_OBJECT (dialog), "mmdata"));
-
-  timer = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (dialog), "timer"));
-  g_source_remove (timer);
-
-  delete mmdata;
-  gtk_window_destroy (dialog);
+  gtk_window_destroy (GTK_WINDOW (self));
 }
 
 
 static void
-dialog_response (AdwWindow *dialog,
-                 gpointer   data)
+dialog_response (GsmMemMapsView *self,
+                 gpointer)
 {
-  MemMapsData * const mmdata = static_cast<MemMapsData*>(data);
+  g_source_remove (self->timer);
 
-  g_source_remove (mmdata->timer);
-
-  delete mmdata;
-  gtk_window_destroy (GTK_WINDOW (dialog));
+  gtk_window_destroy (GTK_WINDOW (self));
 }
 
 
 static gboolean
 memmaps_timer (gpointer data)
 {
-  MemMapsData * const mmdata = static_cast<MemMapsData*>(data);
+  GsmMemMapsView *self = GSM_MEMMAPS_VIEW (data);
 
-  g_assert (mmdata->store);
+  g_assert (self->list_store);
 
-  update_memmaps_dialog (mmdata);
+  update_memmaps_dialog (self);
 
   return TRUE;
 }
 
+static char *
+format_size (gpointer,
+             guint64 size)
+{
+  return g_format_size_full (size, G_FORMAT_SIZE_IEC_UNITS);
+}
 
 static void
-create_single_memmaps_dialog (GtkTreeModel *model,
-                              GtkTreePath*,
-                              GtkTreeIter  *iter,
-                              gpointer)
+gsm_memmaps_view_constructed (GObject *object)
 {
-  MemMapsData *mmdata;
-  AdwWindow  *memmapsdialog;
-  AdwWindowTitle *window_title;
-  GtkColumnView *column_view;
-  ProcInfo *info;
-  GListStore *store;
-  GSimpleActionGroup *action_group;
-
-  gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
-
-  if (!info)
-    return;
-
-  GtkBuilder *builder = gtk_builder_new ();
-  GError *err = NULL;
-
-  gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/memmaps.ui", &err);
-  if (err != NULL)
-    g_error ("%s", err->message);
-
-  memmapsdialog = ADW_WINDOW (gtk_builder_get_object (builder, "memmaps_dialog"));
-  window_title = ADW_WINDOW_TITLE (gtk_builder_get_object (builder, "window_title"));
-  column_view = GTK_COLUMN_VIEW (gtk_builder_get_object (builder, "openfiles_view"));
-  store = G_LIST_STORE (gtk_builder_get_object (builder, "memmaps_store"));
+  GsmMemMapsView *self = GSM_MEMMAPS_VIEW (object);
 
   // Translators: process name and id
-  adw_window_title_set_subtitle (window_title, g_strdup_printf (_("%s (PID %u)"), info->name.c_str (), info->pid));
+  adw_window_title_set_subtitle (self->window_title, g_strdup_printf (_("%s (PID %u)"),
+                                   self->info->name.c_str (), self->info->pid));
 
-  mmdata = new MemMapsData (column_view);
-  mmdata->info = info;
-  mmdata->store = store;
+  self->timer = g_timeout_add_seconds (5, memmaps_timer, self);
+  update_memmaps_dialog (self);
+
+  G_OBJECT_CLASS (gsm_memmaps_view_parent_class)->constructed (object);
+}
+
+static void
+gsm_memmaps_view_class_init (GsmMemMapsViewClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->finalize = gsm_memmaps_view_finalize;
+  object_class->get_property = gsm_memmaps_view_get_property;
+  object_class->set_property = gsm_memmaps_view_set_property;
+  object_class->constructed = gsm_memmaps_view_constructed;
+
+  properties [PROP_INFO] =
+    g_param_spec_pointer ("info",
+                          "Info",
+                          "Info",
+                          (GParamFlags) (G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+
+  properties [PROP_TIMER] =
+    g_param_spec_uint ("timer",
+                       "Timer",
+                       "Timer",
+                       0, G_MAXUINT, 0,
+                       G_PARAM_READWRITE);
+
+  g_object_class_install_properties (object_class, N_PROPS, properties);
+
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/gnome-system-monitor/data/memmaps.ui");
+
+  gtk_widget_class_bind_template_child (widget_class, GsmMemMapsView, column_view);
+  gtk_widget_class_bind_template_child (widget_class, GsmMemMapsView, window_title);
+  gtk_widget_class_bind_template_child (widget_class, GsmMemMapsView, list_store);
+
+  gtk_widget_class_bind_template_callback (widget_class, format_size);
+}
+
+static void
+gsm_memmaps_view_init (GsmMemMapsView *self)
+{
+  GSimpleActionGroup *action_group;
+
+  g_type_ensure (MEMMAPS_TYPE_DATA);
+
+  gtk_widget_init_template (GTK_WIDGET (self));
 
   action_group = g_simple_action_group_new ();
 
   GSimpleAction *close_action = g_simple_action_new ("close", NULL);
-  g_signal_connect (close_action, "activate", G_CALLBACK (dialog_action), memmapsdialog);
+  g_signal_connect (close_action, "activate", G_CALLBACK (dialog_action), self);
   g_action_map_add_action (G_ACTION_MAP (action_group), G_ACTION (close_action));
 
-  gtk_widget_insert_action_group (GTK_WIDGET (memmapsdialog), "memmaps", G_ACTION_GROUP (action_group));
+  gtk_widget_insert_action_group (GTK_WIDGET (self), "memmaps", G_ACTION_GROUP (action_group));
 
-  g_signal_connect (G_OBJECT (memmapsdialog), "close-request",
-                    G_CALLBACK (dialog_response), mmdata);
-
-  mmdata->timer = g_timeout_add_seconds (5, memmaps_timer, mmdata);
-  g_object_set_data (G_OBJECT (memmapsdialog), "mmdata", mmdata);
-  g_object_set_data (G_OBJECT (memmapsdialog), "timer", GUINT_TO_POINTER (mmdata->timer));
-  update_memmaps_dialog (mmdata);
-
-  gtk_window_present (GTK_WINDOW (memmapsdialog));
-
-  g_object_unref (G_OBJECT (builder));
-}
-
-
-void
-create_memmaps_dialog (GsmApplication *app)
-{
-  /* TODO: do we really want to open multiple dialogs ? */
-  gtk_tree_selection_selected_foreach (app->selection, create_single_memmaps_dialog,
-                                       app);
+  g_signal_connect (G_OBJECT (self), "close-request",
+                    G_CALLBACK (dialog_response), NULL);
 }

@@ -1,26 +1,26 @@
 #include <glib/gi18n.h>
 
-#include "memmaps-info.h"
+#include "memmaps-data.h"
 
-struct _MemMapsInfo
+struct _MemMapsData
 {
   GObject parent_instance;
 
   gchar   *filename;
   gchar   *vmstart;
   gchar   *vmend;
-  gchar   *vmsize;
+  guint64  vmsize;
   gchar   *flags;
   gchar   *vmoffset;
-  gchar   *privateclean;
-  gchar   *privatedirty;
-  gchar   *sharedclean;
-  gchar   *shareddirty;
+  guint64  privateclean;
+  guint64  privatedirty;
+  guint64  sharedclean;
+  guint64  shareddirty;
   gchar   *device;
   guint64  inode;
 };
 
-G_DEFINE_TYPE (MemMapsInfo, memmaps_info, G_TYPE_OBJECT)
+G_DEFINE_TYPE (MemMapsData, memmaps_data, G_TYPE_OBJECT)
 
 enum {
   PROP_0,
@@ -41,21 +41,21 @@ enum {
 
 static GParamSpec *properties [N_PROPS];
 
-MemMapsInfo *
-memmaps_info_new (const gchar *filename,
+MemMapsData *
+memmaps_data_new (const gchar *filename,
                   const gchar *vmstart,
                   const gchar *vmend,
-                  const gchar *vmsize,
+                  guint64      vmsize,
                   const gchar *flags,
                   const gchar *vmoffset,
-                  const gchar *privateclean,
-                  const gchar *privatedirty,
-                  const gchar *sharedclean,
-                  const gchar *shareddirty,
+                  guint64      privateclean,
+                  guint64      privatedirty,
+                  guint64      sharedclean,
+                  guint64      shareddirty,
                   const gchar *device,
                   guint64      inode)
 {
-  return g_object_new (MEMMAPS_TYPE_INFO,
+  return g_object_new (MEMMAPS_TYPE_DATA,
                        "filename", filename,
                        "vmstart", vmstart,
                        "vmend", vmend,
@@ -72,18 +72,18 @@ memmaps_info_new (const gchar *filename,
 }
 
 static void
-memmaps_info_finalize (GObject *object)
+memmaps_data_finalize (GObject *object)
 {
-  G_OBJECT_CLASS (memmaps_info_parent_class)->finalize (object);
+  G_OBJECT_CLASS (memmaps_data_parent_class)->finalize (object);
 }
 
 static void
-memmaps_info_get_property (GObject    *object,
+memmaps_data_get_property (GObject    *object,
                            guint       pid,
                            GValue     *value,
                            GParamSpec *pspec)
 {
-  MemMapsInfo *self = MEMMAPS_INFO(object);
+  MemMapsData *self = MEMMAPS_DATA (object);
 
   switch (pid)
     {
@@ -97,7 +97,7 @@ memmaps_info_get_property (GObject    *object,
       g_value_set_string (value, self->vmend);
       break;
     case PROP_VMSIZE:
-      g_value_set_string (value, self->vmsize);
+      g_value_set_uint64 (value, self->vmsize);
       break;
     case PROP_FLAGS:
       g_value_set_string (value, self->flags);
@@ -106,16 +106,16 @@ memmaps_info_get_property (GObject    *object,
       g_value_set_string (value, self->vmoffset);
       break;
     case PROP_PRIVATECLEAN:
-      g_value_set_string (value, self->privateclean);
+      g_value_set_uint64 (value, self->privateclean);
       break;
     case PROP_PRIVATEDIRTY:
-      g_value_set_string (value, self->privatedirty);
+      g_value_set_uint64 (value, self->privatedirty);
       break;
     case PROP_SHAREDCLEAN:
-      g_value_set_string (value, self->sharedclean);
+      g_value_set_uint64 (value, self->sharedclean);
       break;
     case PROP_SHAREDDIRTY:
-      g_value_set_string (value, self->shareddirty);
+      g_value_set_uint64 (value, self->shareddirty);
       break;
     case PROP_DEVICE:
       g_value_set_string (value, self->device);
@@ -129,12 +129,12 @@ memmaps_info_get_property (GObject    *object,
 }
 
 static void
-memmaps_info_set_property (GObject      *object,
+memmaps_data_set_property (GObject      *object,
                            guint         pid,
                            const GValue *value,
                            GParamSpec   *pspec)
 {
-  MemMapsInfo *self = MEMMAPS_INFO(object);
+  MemMapsData *self = MEMMAPS_DATA (object);
 
   switch (pid)
     {
@@ -148,7 +148,7 @@ memmaps_info_set_property (GObject      *object,
       self->vmend = g_value_dup_string (value);
       break;
     case PROP_VMSIZE:
-      self->vmsize = g_value_dup_string (value);
+      self->vmsize = g_value_get_uint64 (value);
       break;
     case PROP_FLAGS:
       self->flags = g_value_dup_string (value);
@@ -157,16 +157,16 @@ memmaps_info_set_property (GObject      *object,
       self->vmoffset = g_value_dup_string (value);
       break;
     case PROP_PRIVATECLEAN:
-      self->privateclean = g_value_dup_string (value);
+      self->privateclean = g_value_get_uint64 (value);
       break;
     case PROP_PRIVATEDIRTY:
-      self->privatedirty = g_value_dup_string (value);
+      self->privatedirty = g_value_get_uint64 (value);
       break;
     case PROP_SHAREDCLEAN:
-      self->sharedclean = g_value_dup_string (value);
+      self->sharedclean = g_value_get_uint64 (value);
       break;
     case PROP_SHAREDDIRTY:
-      self->shareddirty = g_value_dup_string (value);
+      self->shareddirty = g_value_get_uint64 (value);
       break;
     case PROP_DEVICE:
       self->device = g_value_dup_string (value);
@@ -180,13 +180,13 @@ memmaps_info_set_property (GObject      *object,
 }
 
 static void
-memmaps_info_class_init (MemMapsInfoClass *klass)
+memmaps_data_class_init (MemMapsDataClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = memmaps_info_finalize;
-  object_class->get_property = memmaps_info_get_property;
-  object_class->set_property = memmaps_info_set_property;
+  object_class->finalize = memmaps_data_finalize;
+  object_class->get_property = memmaps_data_get_property;
+  object_class->set_property = memmaps_data_set_property;
 
   properties [PROP_FILENAME] =
     g_param_spec_string ("filename",
@@ -210,10 +210,10 @@ memmaps_info_class_init (MemMapsInfoClass *klass)
                          G_PARAM_READWRITE);
 
   properties [PROP_VMSIZE] =
-    g_param_spec_string ("vmsize",
+    g_param_spec_uint64 ("vmsize",
                          "Vmsize",
                          "VMSize",
-                         NULL,
+                         0, G_MAXUINT64, 0,
                          G_PARAM_READWRITE);
 
   properties [PROP_FLAGS] =
@@ -231,31 +231,31 @@ memmaps_info_class_init (MemMapsInfoClass *klass)
                          G_PARAM_READWRITE);
 
   properties [PROP_PRIVATECLEAN] =
-    g_param_spec_string ("privateclean",
+    g_param_spec_uint64 ("privateclean",
                          "Privateclean",
                          "PrivateClean",
-                         NULL,
+                         0, G_MAXUINT64, 0,
                          G_PARAM_READWRITE);
 
   properties [PROP_PRIVATEDIRTY] =
-    g_param_spec_string ("privatedirty",
+    g_param_spec_uint64 ("privatedirty",
                          "Privatedirty",
                          "PrivateDirty",
-                         NULL,
+                         0, G_MAXUINT64, 0,
                          G_PARAM_READWRITE);
 
   properties [PROP_SHAREDCLEAN] =
-    g_param_spec_string ("sharedclean",
+    g_param_spec_uint64 ("sharedclean",
                          "Sharedclean",
                          "SharedClean",
-                         NULL,
+                         0, G_MAXUINT64, 0,
                          G_PARAM_READWRITE);
 
   properties [PROP_SHAREDDIRTY] =
-    g_param_spec_string ("shareddirty",
+    g_param_spec_uint64 ("shareddirty",
                          "Shareddirty",
                          "SharedDirty",
-                         NULL,
+                         0, G_MAXUINT64, 0,
                          G_PARAM_READWRITE);
 
   properties [PROP_DEVICE] =
@@ -276,6 +276,6 @@ memmaps_info_class_init (MemMapsInfoClass *klass)
 }
 
 static void
-memmaps_info_init (MemMapsInfo *)
+memmaps_data_init (MemMapsData *)
 {
 }

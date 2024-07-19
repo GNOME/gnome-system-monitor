@@ -1,9 +1,14 @@
-#ifndef _GSM_MEMMAPS_H_
-#define _GSM_MEMMAPS_H_
+#pragma once
 
-#include <glib.h>
-#include "application.h"
+#include <adwaita.h>
 
-void create_memmaps_dialog (GsmApplication *app);
+G_BEGIN_DECLS
 
-#endif /* _GSM_MEMMAPS_H_ */
+#define GSM_TYPE_MEMMAPS_VIEW (gsm_memmaps_view_get_type ())
+
+G_DECLARE_FINAL_TYPE (GsmMemMapsView, gsm_memmaps_view, GSM, MEMMAPS_VIEW, AdwWindow)
+
+GsmMemMapsView *
+gsm_memmaps_view_new (ProcInfo *info);
+
+G_END_DECLS
