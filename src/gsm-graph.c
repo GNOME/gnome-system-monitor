@@ -19,6 +19,7 @@
  */
 
 #include "gsm-graph.h"
+#include "glib.h"
 
 #include <glib/gi18n.h>
 
@@ -362,6 +363,12 @@ void gsm_graph_set_data_function (GsmGraph *self, GSourceFunc function, gpointer
   }
 }
 
+static void
+_gsm_graph_run_data_function (GsmGraphPrivate *priv) {
+  g_return_if_fail ( priv != NULL && priv->data_function != NULL );
+  priv->data_function(priv->update_data);
+}
+
 void
 gsm_graph_start (GsmGraph *self)
 {
@@ -371,11 +378,17 @@ gsm_graph_start (GsmGraph *self)
   g_return_if_fail ( priv->data_function != NULL);
 
   if (priv->redraw_timeout == 0)
-  {
-    // Update the data two times so the graph
-    // doesn't wait one cycle to start drawing.
-    priv->data_function (priv->update_data);
-    _gsm_graph_update (self);
+    {
+      // space 2 calls with a small time interval so there's a delta for the CPU load graph
+      g_timeout_add_once(300,
+                         (GSourceOnceFunc)_gsm_graph_run_data_function,
+                         self
+                         );
+                         
+      priv->data_function(priv->update_data);
+      priv->redraw_timeout = g_timeout_add (priv->speed,
+                                            (GSourceFunc)_gsm_graph_update,
+                                            self);
   }
   if (priv->redraw_timeout) {
     g_source_remove (priv->redraw_timeout);

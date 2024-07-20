@@ -58,6 +58,7 @@ struct LoadGraph
   guint speed;
   guint num_points;
   guint latest;
+  gulong iteration;
   guint graph_dely;
   guint num_bars;
   guint real_draw_height;
