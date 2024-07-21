@@ -111,8 +111,6 @@ create_proc_view (GsmApplication *app,
                     "changed",
                     G_CALLBACK (search_text_changed),
                     app);
-
-  g_object_bind_property (app->search_bar, "search-mode-enabled", app->search_button, "active", (GBindingFlags)(G_BINDING_BIDIRECTIONAL));
 }
 
 static void
