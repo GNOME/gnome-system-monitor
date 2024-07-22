@@ -495,31 +495,33 @@ get_load (LoadGraph *graph)
   // immediately
   bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get ()->config.draw_stacked;
 
-  for (i = 0; i < graph->n; i++)
-    {
-      float load;
-      float total, used;
-      gchar *text;
+  if(graph->latest != 1) {
+    for (i = 0; i < graph->n; i++)
+      {
+        float load;
+        float total, used;
+        gchar *text;
 
-      total = NOW ()[i][CPU_TOTAL] - LAST ()[i][CPU_TOTAL];
-      used = NOW ()[i][CPU_USED] - LAST ()[i][CPU_USED];
+        total = NOW ()[i][CPU_TOTAL] - LAST ()[i][CPU_TOTAL];
+        used = NOW ()[i][CPU_USED] - LAST ()[i][CPU_USED];
 
-      load = used / MAX (total, 1.0f);
-      graph->data[0][i] = load;
-      if (drawStacked)
-        {
-          graph->data[0][i] /= graph->n;
-          if (i > 0)
-            graph->data[0][i] += graph->data[0][i - 1];
-        }
+        load = used / MAX (total, 1.0f);
+        graph->data[0][i] = load;
+        if (drawStacked)
+          {
+            graph->data[0][i] /= graph->n;
+            if (i > 0)
+              graph->data[0][i] += graph->data[0][i - 1];
+          }
 
-      /* Update label */
-      // Translators: CPU usage percentage label: 95.7%
-      text = g_strdup_printf (_("%.1f%%"), load * 100.0f);
-      gtk_label_set_text (GTK_LABEL (graph->labels.cpu[i]), text);
-      g_free (text);
-    }
-
+        /* Update label */
+        // Translators: CPU usage percentage label: 95.7%
+        text = g_strdup_printf (_("%.1f%%"), load * 100.0f);
+        gtk_label_set_text (GTK_LABEL (graph->labels.cpu[i]), text);
+        g_free (text);
+      }
+  }
+  
   graph->cpu.now ^= 1;
 }
 
@@ -592,8 +594,10 @@ get_memory (LoadGraph *graph)
 
   gtk_widget_set_sensitive (GTK_WIDGET (graph->swap_color_picker), swap.total > 0);
 
-  graph->data[0][0] = graph->translate_to_log_partial_if_needed (mempercent);
-  graph->data[0][1] = swap.total > 0 ? graph->translate_to_log_partial_if_needed (swappercent) : -1.0;
+  if(graph->latest != 1) {
+    graph->data[0][0] = graph->translate_to_log_partial_if_needed (mempercent);
+    graph->data[0][1] = swap.total > 0 ? graph->translate_to_log_partial_if_needed (swappercent) : -1.0;
+  }
 }
 
 /* Nice Numbers for Graph Labels after Paul Heckbert
@@ -853,13 +857,15 @@ get_net (LoadGraph *graph)
 
   g_strfreev (ifnames);
 
-  handle_dynamic_max_value (graph, &graph->net.values, &graph->net.max, &graph->net.last_in,
+  if(graph->latest != 1) {
+    handle_dynamic_max_value (graph, &graph->net.values, &graph->net.max, &graph->net.last_in,
                             &graph->net.last_out, in, out, &graph->net.time,
                             hash, &graph->net.last_hash,
                             GsmApplication::get ()->config.network_in_bits,
                             GsmApplication::get ()->config.network_total_in_bits,
                             graph->labels.net_in, graph->labels.net_out,
                             graph->labels.net_in_total, graph->labels.net_out_total);
+  }
 }
 
 static void
@@ -881,10 +887,12 @@ get_disk (LoadGraph *graph)
   read *= 512;
   write *= 512;
 
-  handle_dynamic_max_value (graph, &graph->disk.values, &graph->disk.max, &graph->disk.last_read,
+  if(graph->latest != 1) {
+    handle_dynamic_max_value (graph, &graph->disk.values, &graph->disk.max, &graph->disk.last_read,
                             &graph->disk.last_write, read, write, &graph->disk.time, 0, NULL,
                             FALSE, FALSE, graph->labels.disk_read, graph->labels.disk_write,
                             graph->labels.disk_read_total, graph->labels.disk_write_total);
+  }
 }
 
 int
