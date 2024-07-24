@@ -68,10 +68,20 @@ system_monitor_headers = [
   'legacy/gsm_color_button.h',
 ]
 
+gresourceconf = configuration_data()
+gresourceconf.set('appdata_file', '@0@.appdata.xml'.format(app_id))
+
+gresource_file = configure_file(
+  input: 'gsm.gresource.xml.in',
+  output: 'gsm.gresource.xml',
+  configuration: gresourceconf,
+)
+
 gsm_resource_dir = join_paths(get_option('datadir'), meson.project_name())
 gsm_resource = gnome.compile_resources(
   'gsm',
-  'gsm.gresource.xml',
+  gresource_file,
+  dependencies: appdata_file,
   gresource_bundle: true,
   source_dir: meson.project_source_root(),
   install: true,

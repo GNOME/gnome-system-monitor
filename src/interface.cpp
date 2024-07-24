@@ -453,8 +453,9 @@ on_activate_about (GSimpleAction *,
                    gpointer data)
 {
   GsmApplication *app = (GsmApplication *) data;
+  AdwDialog *about_dialog;
 
-  const gchar * const authors[] = {
+  const gchar *authors[] = {
     "Kevin Vandersloot",
     "Erik Johnsson",
     "Jorgen Scheibengruber",
@@ -469,37 +470,30 @@ on_activate_about (GSimpleAction *,
     NULL
   };
 
-  const gchar * const documenters[] = {
+  const gchar *documenters[] = {
     "Bill Day",
     "Sun Microsystems",
     NULL
   };
 
-  const gchar * const artists[] = {
+  const gchar *artists[] = {
     "Baptiste Mille-Mathias",
     NULL
   };
 
-  adw_show_about_dialog (
-    GTK_WIDGET (app->main_window),
-    "application-name", _("System Monitor"),
-    "comments", _("View current processes and monitor "
-                  "system state"),
-    "version", VERSION,
-    "website", "https://apps.gnome.org/SystemMonitor/",
-    "copyright", "Copyright \xc2\xa9 2001-2004 Kevin Vandersloot\n"
-    "Copyright \xc2\xa9 2005-2007 Benoît Dejean\n"
-    "Copyright \xc2\xa9 2011 Chris Kühl",
-    "application-icon", APP_ID,
-    "developer-name", _("The GNOME Project"),
-    "developers", authors,
-    "artists", artists,
-    "documenters", documenters,
-    "translator-credits", _("translator-credits"),
-    "license-type", GTK_LICENSE_GPL_2_0,
-    "support-url", "https://help.gnome.org/users/gnome-system-monitor/stable/",
-    "issue-url", "https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues",
-    NULL);
+  about_dialog = adw_about_dialog_new_from_appdata ("/org/gnome/gnome-system-monitor/appdata.xml",
+                                                    VERSION);
+
+  adw_about_dialog_set_copyright (ADW_ABOUT_DIALOG (about_dialog),
+                                  "Copyright \xc2\xa9 2001-2004 Kevin Vandersloot\n"
+                                  "Copyright \xc2\xa9 2005-2007 Benoît Dejean\n"
+                                  "Copyright \xc2\xa9 2011 Chris Kühl");
+  adw_about_dialog_set_developers (ADW_ABOUT_DIALOG (about_dialog), authors);
+  adw_about_dialog_set_artists (ADW_ABOUT_DIALOG (about_dialog), artists);
+  adw_about_dialog_set_documenters (ADW_ABOUT_DIALOG (about_dialog), documenters);
+  adw_about_dialog_set_translator_credits (ADW_ABOUT_DIALOG (about_dialog), _("translator-credits"));
+
+  adw_dialog_present (about_dialog, GTK_WIDGET (app->main_window));
 }
 
 static void
