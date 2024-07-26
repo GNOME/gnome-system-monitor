@@ -13,7 +13,17 @@
                 <property name="single-click-activate">True</property>
                 <property name="model">
                   <object class="GtkSingleSelection" id="selection">
-                    <property name="model">sort_list_model</property>
+                    <property name="model">
+                      <object class="GtkSortListModel" id="sort_list_model">
+                        <property name="incremental">True</property>
+                        <property name="model">
+                          <object class="GListStore" id="list_store"/>
+                        </property>
+                        <binding name="sorter">
+                          <lookup name="sorter">column_view</lookup>
+                        </binding>
+                      </object>
+                    </property>
                   </object>
                 </property>
                 <child>
@@ -160,7 +170,7 @@
   <template class="GtkListItem">
     <property name="child">
       <object class="GtkLabel">
-        <property name="xalign">0</property>
+        <property name="xalign">1</property>
         <binding name="label">
           <closure type="gchararray" function="format_size">
             <lookup name="total" type="DisksData">
@@ -197,7 +207,7 @@
   <template class="GtkListItem">
     <property name="child">
       <object class="GtkLabel">
-        <property name="xalign">0</property>
+        <property name="xalign">1</property>
         <binding name="label">
           <closure type="gchararray" function="format_size">
             <lookup name="free" type="DisksData">
@@ -234,7 +244,7 @@
   <template class="GtkListItem">
     <property name="child">
       <object class="GtkLabel">
-        <property name="xalign">0</property>
+        <property name="xalign">1</property>
         <binding name="label">
           <closure type="gchararray" function="format_size">
             <lookup name="available" type="DisksData">
@@ -275,7 +285,7 @@
         <property name="spacing">12</property>
         <child>
           <object class="GtkLabel">
-            <property name="xalign">0</property>
+            <property name="xalign">1</property>
             <binding name="label">
               <closure type="gchararray" function="format_size">
                 <lookup name="used" type="DisksData">
@@ -333,12 +343,4 @@
       </object>
     </child>
   </template>
-  <object class="GtkSortListModel" id="sort_list_model">
-    <property name="model">list_store</property>
-    <property name="incremental">True</property>
-    <binding name="sorter">
-      <lookup name="sorter">column_view</lookup>
-    </binding>
-  </object>
-  <object class="GListStore" id="list_store"/>
 </interface>
