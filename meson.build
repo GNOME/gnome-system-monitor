@@ -58,7 +58,7 @@ gmodule    = dependency('gmodule-2.0')
 gtk        = dependency('gtk4',        version: '>=4.12.0')
 gtkmm      = dependency('gtkmm-4.0',   version: '>=4.0.0')
 libgtop    = dependency('libgtop-2.0', version: '>=2.41.2')
-libadwaita = dependency('libadwaita-1',version: '>=1.5.beta')
+libadwaita = dependency('libadwaita-1',version: '>=1.6.alpha')
 librsvg    = dependency('librsvg-2.0', version: '>=2.46')
 libxml     = dependency('libxml-2.0',  version: '>=2.0')
 
