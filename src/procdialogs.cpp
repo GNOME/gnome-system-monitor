@@ -38,7 +38,7 @@
 static AdwAlertDialog *renice_dialog = NULL;
 static gint new_nice_value = 0;
 
-GtkWindow*
+static GtkWindow *
 get_active_window ()
 {
   GListModel *toplevels = gtk_window_get_toplevels ();
@@ -52,7 +52,7 @@ get_active_window ()
         return window;
     }
 
-  g_object_unref(toplevels);
+  g_object_unref (toplevels);
 
   return NULL;
 }

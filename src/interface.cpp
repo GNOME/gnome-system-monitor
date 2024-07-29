@@ -793,14 +793,8 @@ cb_main_window_suspended (GtkWindow*,
 void
 create_main_window (GsmApplication *app)
 {
-  GdkDisplay *display;
-  GdkMonitor *monitor;
-  GdkRectangle monitor_geometry;
-  GdkSurface *surface;
   GtkBuilder *builder = gtk_builder_new ();
-  GtkNative *native;
   GError *err = NULL;
-  int width, height;
 
   gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/interface.ui", &err);
   if (err != NULL)
