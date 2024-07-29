@@ -179,11 +179,10 @@ get_icon_for_path (const char*path)
   return name;
 }
 
-static GdkTexture *
+static GdkPaintable *
 get_icon_for_device (const char *mountpoint)
 {
-  GdkTexture *icon;
-  GtkIconPaintable *icon_paintable;
+  GdkPaintable *icon;
   GtkIconTheme *icon_theme;
   const char *icon_name = get_icon_for_path (mountpoint);
 
@@ -192,8 +191,7 @@ get_icon_for_device (const char *mountpoint)
     icon_name = "drive-harddisk";     // get_icon_for_path("/");
 
   icon_theme = gtk_icon_theme_get_for_display (gdk_display_get_default ());
-  icon_paintable = gtk_icon_theme_lookup_icon (icon_theme, icon_name, NULL, 32, 1, GTK_TEXT_DIR_NONE, GTK_ICON_LOOKUP_PRELOAD);
-  icon = gdk_texture_new_for_pixbuf (gdk_pixbuf_new_from_file_at_size (g_file_get_path (gtk_icon_paintable_get_file (icon_paintable)), 32, 32, NULL));
+  icon = GDK_PAINTABLE (gtk_icon_theme_lookup_icon (icon_theme, icon_name, NULL, 32, 1, GTK_TEXT_DIR_NONE, GTK_ICON_LOOKUP_PRELOAD));
 
   return icon;
 }
@@ -273,7 +271,7 @@ add_disk (GListModel               *model,
           const glibtop_mountentry *entry,
           bool                      show_all_fs)
 {
-  GdkTexture *icon;
+  GdkPaintable *icon;
   glibtop_fsusage usage;
   guint64 bused, bfree, bavail, btotal;
   gint percentage;
@@ -299,7 +297,7 @@ add_disk (GListModel               *model,
   */
   if (!find_disk_in_model (model, entry->mountdir, &position))
     {
-      data = disks_data_new (GDK_PAINTABLE (icon),
+      data = disks_data_new (icon,
                              entry->devname,
                              entry->mountdir,
                              entry->type,
@@ -316,7 +314,7 @@ add_disk (GListModel               *model,
       data = DISKS_DATA (g_list_model_get_object (model, position));
 
       g_object_set (data,
-                    "paintable", GDK_PAINTABLE (icon),
+                    "paintable", icon,
                     "device", entry->devname,
                     "directory", entry->mountdir,
                     "type", entry->type,
