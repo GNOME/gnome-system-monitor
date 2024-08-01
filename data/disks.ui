@@ -283,32 +283,43 @@
         <property name="orientation">horizontal</property>
         <property name="spacing">12</property>
         <child>
-          <object class="GtkLabel">
-            <property name="xalign">1</property>
-            <binding name="label">
-              <closure type="gchararray" function="format_size">
-                <lookup name="used" type="DisksData">
-                  <lookup name="item">GtkListItem</lookup>
-                </lookup>
-              </closure>
-            </binding>
-          </object>
-        </child>
-        <child>
           <object class="GtkBox">
             <property name="orientation">vertical</property>
             <property name="spacing">6</property>
             <child>
-              <object class="GtkLabel">
-                <property name="halign">center</property>
-                <property name="xalign">0</property>
-                <binding name="label">
-                  <closure type="gchararray" function="format_percentage">
-                    <lookup name="percentage" type="DisksData">
-                      <lookup name="item">GtkListItem</lookup>
-                    </lookup>
-                  </closure>
-                </binding>
+              <object class="GtkBox">
+                <property name="hexpand">True</property>
+                <property name="orientation">horizontal</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="hexpand">True</property>
+                    <property name="halign">start</property>
+                    <property name="width-chars">15</property>
+                    <property name="xalign">0</property>
+                    <binding name="label">
+                      <closure type="gchararray" function="format_size">
+                        <lookup name="used" type="DisksData">
+                          <lookup name="item">GtkListItem</lookup>
+                        </lookup>
+                      </closure>
+                    </binding>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="halign">end</property>
+                    <property name="hexpand">True</property>
+                    <property name="width-chars">5</property>
+                    <property name="xalign">1</property>
+                    <binding name="label">
+                      <closure type="gchararray" function="format_percentage">
+                        <lookup name="percentage" type="DisksData">
+                          <lookup name="item">GtkListItem</lookup>
+                        </lookup>
+                      </closure>
+                    </binding>
+                  </object>
+                </child>
               </object>
             </child>
             <child>
