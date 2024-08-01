@@ -29,7 +29,16 @@
                   <object class="GtkColumnView" id="openfiles_view">
                     <property name="model">
                       <object class="GtkNoSelection">
-                        <property name="model">openfiles_model</property>
+                        <property name="model">
+                          <object class="GtkSortListModel">
+                            <property name="model">
+                              <object class="GListStore" id="openfiles_store"/>
+                            </property>
+                            <binding name="sorter">
+                              <lookup name="sorter">openfiles_view</lookup>
+                            </binding>
+                          </object>
+                        </property>
                       </object>
                     </property>
                     <child>
@@ -158,12 +167,4 @@
       <class name="view"/>
     </style>
   </object>
-  <object class="GtkSortListModel" id="openfiles_model">
-    <property name="model">openfiles_store</property>
-    <property name="incremental">True</property>
-    <binding name="sorter">
-      <lookup name="sorter">openfiles_view</lookup>
-    </binding>
-  </object>
-  <object class="GListStore" id="openfiles_store"/>
 </interface>
