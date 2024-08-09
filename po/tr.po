@@ -1,6 +1,6 @@
 # Turkish translation for gnome-system-monitor
 # Copyright (C) 2001, 2004, 2005, 2007 Free Software Foundation, Inc.
-# Copyright (C) 2008-2023 gnome-system-monitor's COPYRIGHT HOLDER
+# Copyright (C) 2008-2024 gnome-system-monitor's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-system-monitor package.
 #
 # Nilgün Belma Bugüner <nilgun@fide.org>, 2001.
@@ -10,31 +10,477 @@
 # Tunahan Uçar <tunahanucar@gmail.com>, 2011.
 # Osman Karagöz <osmank3@gmail.com>, 2014, 2017.
 # Muhammet Kara <muhammetk@gmail.com>, 2011, 2014, 2015, 2017.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2017-2021, 2023.
-# Sabri Ünal <libreajans@gmail.com>, 2023.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2017-2021, 2023, 2024.
+# Sabri Ünal <yakushabb@gmail.com>, 2023, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2024-04-07 20:06+0000\n"
-"PO-Revision-Date: 2024-04-09 02:24+0300\n"
+"POT-Creation-Date: 2024-08-02 10:54+0000\n"
+"PO-Revision-Date: 2024-08-04 00:47+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
-"Language-Team: Türkçe <gnome-turk@gnome.org>\n"
+"Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.3\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:7 data/interface.ui:6
-#: data/org.gnome.SystemMonitor.desktop.in.in:3 src/application.cpp:396
-#: src/interface.cpp:487
+#: data/disks.ui:31 data/memmaps.ui:424
+msgid "Device"
+msgstr "Aygıt"
+
+#: data/disks.ui:85
+msgid "Directory"
+msgstr "Konum"
+
+#: data/disks.ui:120 data/openfiles.ui:80 src/legacy/gsm_color_button.c:599
+msgid "Type"
+msgstr "Tür"
+
+#: data/disks.ui:155
+msgid "Total"
+msgstr "Toplam"
+
+#: data/disks.ui:192
+msgid "Free"
+msgstr "Boş"
+
+#: data/disks.ui:229
+msgid "Available"
+msgstr "Kullanılabilir"
+
+#: data/disks.ui:266
+msgid "Used"
+msgstr "Kullanılan"
+
+#: data/gnome-system-monitor-kde.desktop.in.in:3 src/application.cpp:433
+msgid "GNOME System Monitor"
+msgstr "GNOME Sistem Gözlemcisi"
+
+#: data/gnome-system-monitor-kde.desktop.in.in:4
+#: data/org.gnome.SystemMonitor.desktop.in.in:4
+msgid "View current processes and monitor system state"
+msgstr "Çalışan süreçleri ve sistem durumunu gösterir"
+
+# https://gitlab.gnome.org/GNOME/glib/-/issues/443 hatası sebebiyle uygulama adı dahil ingilizce hallerini de koruyalım.
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/gnome-system-monitor-kde.desktop.in.in:16
+msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
+msgstr ""
+"System Monitor;Monitor;System;Process;CPU;Memory;Network;History;Usage;"
+"İzleyici;Gözlemci;Sistem;Süreç;İşlem;MİB;CPU;Bellek;Ağ;Geçmiş;Kullanım;"
+
+#: data/help-overlay.ui:12
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Genel"
+
+#: data/help-overlay.ui:17
+msgctxt "shortcut window"
+msgid "Show help"
+msgstr "Yardımı göster"
+
+#: data/help-overlay.ui:23
+msgctxt "shortcut window"
+msgid "Open menu"
+msgstr "Menüyü aç"
+
+#: data/help-overlay.ui:29
+msgctxt "shortcut window"
+msgid "Show preferences"
+msgstr "Tercihleri göster"
+
+#: data/help-overlay.ui:37
+msgctxt "shortcut window"
+msgid "Keyboard shortcuts"
+msgstr "Klavye kısayolları"
+
+#: data/help-overlay.ui:44
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Çık"
+
+#: data/help-overlay.ui:50
+msgctxt "shortcut window"
+msgid "Search"
+msgstr "Ara"
+
+#: data/help-overlay.ui:56
+msgctxt "shortcut window"
+msgid "Show Resources"
+msgstr "Kaynakları göster"
+
+#: data/help-overlay.ui:62
+msgctxt "shortcut window"
+msgid "Show Processes"
+msgstr "Süreçleri göster"
+
+#: data/help-overlay.ui:68
+msgctxt "shortcut window"
+msgid "Show File Systems"
+msgstr "Dosya Sistemlerini göster"
+
+#: data/help-overlay.ui:75
+msgctxt "shortcut window"
+msgid "Refresh"
+msgstr "Yenile"
+
+#: data/help-overlay.ui:82
+msgctxt "shortcut window"
+msgid "Processes"
+msgstr "Süreçler"
+
+#: data/help-overlay.ui:87
+msgctxt "shortcut window"
+msgid "Show dependencies"
+msgstr "Bağımlılıkları göster"
+
+#: data/help-overlay.ui:94
+msgctxt "shortcut window"
+msgid "Show process properties"
+msgstr "Süreç özelliklerini göster"
+
+#: data/help-overlay.ui:101
+msgctxt "shortcut window"
+msgid "Memory maps"
+msgstr "Bellek eşlemler"
+
+#: data/help-overlay.ui:108
+msgctxt "shortcut window"
+msgid "Open files"
+msgstr "Açık dosyalar"
+
+#: data/help-overlay.ui:114
+msgctxt "shortcut window"
+msgid "Send stop signal"
+msgstr "Durdur sinyali gönder"
+
+#: data/help-overlay.ui:120
+msgctxt "shortcut window"
+msgid "Send continue signal"
+msgstr "Sürdür sinyali gönder"
+
+#: data/help-overlay.ui:126
+msgctxt "shortcut window"
+msgid "Send Terminate signal"
+msgstr "Sonlandır sinyali gönder"
+
+#: data/help-overlay.ui:132
+msgctxt "shortcut window"
+msgid "Send Kill signal"
+msgstr "Öldür sinyali gönder"
+
+#: data/interface.ui:6 data/org.gnome.SystemMonitor.appdata.xml.in.in:7
+#: data/org.gnome.SystemMonitor.desktop.in.in:3 src/application.cpp:404
 msgid "System Monitor"
 msgstr "Sistem Gözlemcisi"
+
+#: data/interface.ui:22
+msgid "Search"
+msgstr "Ara"
+
+#: data/interface.ui:29
+msgid "Main Menu"
+msgstr "Ana Menü"
+
+#: data/interface.ui:44
+msgid "Search processes and users"
+msgstr "Süreç ve kullanıcı ara"
+
+#: data/interface.ui:58
+msgid "_Resources"
+msgstr "_Kaynaklar"
+
+#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:86
+#: src/interface.cpp:281 src/proctable.cpp:352
+#, no-c-format
+msgid "CPU"
+msgstr "MİB"
+
+#: data/interface.ui:134 data/procproperties.ui:97 src/interface.cpp:319
+#: src/proctable.cpp:359
+msgid "Memory"
+msgstr "Bellek"
+
+#: data/interface.ui:145 src/interface.cpp:331
+msgid "Swap"
+msgstr "Takas Alanı"
+
+#: data/interface.ui:162 data/preferences.ui:61
+msgid "Memory and Swap"
+msgstr "Bellek ve Takas Alanı"
+
+#: data/interface.ui:193 src/interface.cpp:360
+msgid "Receiving"
+msgstr "Alınıyor"
+
+#: data/interface.ui:203
+msgid "Total Received"
+msgstr "Toplam Alınan"
+
+#: data/interface.ui:213 src/interface.cpp:378
+msgid "Sending"
+msgstr "Gönderiliyor"
+
+#: data/interface.ui:223
+msgid "Total Sent"
+msgstr "Toplam Gönderilen"
+
+#: data/interface.ui:240 data/preferences.ui:78
+msgid "Network"
+msgstr "Ağ"
+
+#: data/interface.ui:271 src/interface.cpp:413
+msgid "Reading"
+msgstr "Okuma"
+
+#: data/interface.ui:281
+msgid "Total Read"
+msgstr "Toplam Okuma"
+
+#: data/interface.ui:291 src/interface.cpp:431
+msgid "Writing"
+msgstr "Yazma"
+
+#: data/interface.ui:301
+msgid "Total Written"
+msgstr "Toplam Yazılan"
+
+#: data/interface.ui:318
+msgid "Disk"
+msgstr "Disk"
+
+#: data/interface.ui:338
+msgid "_Processes"
+msgstr "_Süreçler"
+
+#: data/interface.ui:356
+msgctxt "interface"
+msgid "_End Process…"
+msgstr "Süreci _Sonlandır…"
+
+#: data/interface.ui:379
+msgid "Process Properties"
+msgstr "Süreç Özellikleri"
+
+#: data/interface.ui:396
+msgid "_File Systems"
+msgstr "_Dosya Sistemleri"
+
+#: data/lsof.ui:4
+msgctxt "Window title for Search for Open Files dialog"
+msgid "Search for Open Files"
+msgstr "Açık Dosyaları Ara"
+
+#: data/lsof.ui:30
+msgid "Filter files by name"
+msgstr "Dosyaları ada göre süz"
+
+#: data/lsof.ui:36
+msgid "Case Insensitive"
+msgstr "BÜYÜK/küçük Harfe Duyarsız"
+
+#: data/lsof.ui:67
+msgid "Process"
+msgstr "Süreç"
+
+#: data/lsof.ui:115
+msgid "PID"
+msgstr "PID"
+
+#: data/lsof.ui:149 data/memmaps.ui:45
+msgid "Filename"
+msgstr "Dosya adı"
+
+#: data/memmaps.ui:15
+msgid "Memory Maps"
+msgstr "Bellek Eşlemler"
+
+#. virtual memory start
+#: data/memmaps.ui:83
+msgid "VM Start"
+msgstr "SB Başlangıç"
+
+#. virtual memory end
+#: data/memmaps.ui:122
+msgid "VM End"
+msgstr "SB Bitiş"
+
+#. virtual memory syze
+#: data/memmaps.ui:161
+msgid "VM Size"
+msgstr "SB Boyutu"
+
+#: data/memmaps.ui:198
+msgid "Flags"
+msgstr "İmler"
+
+#. virtual memory offset
+#: data/memmaps.ui:237
+msgid "VM Offset"
+msgstr "SB Ofseti"
+
+#. memory that has not been modified since it has been allocated
+#: data/memmaps.ui:276
+msgid "Private Clean"
+msgstr "Değişmemiş Özel Bellek"
+
+#. memory that has been modified since it has been allocated
+#: data/memmaps.ui:313
+msgid "Private Dirty"
+msgstr "Değişmiş Özel Bellek"
+
+#. shared memory that has not been modified since it has been allocated
+#: data/memmaps.ui:350
+msgid "Shared Clean"
+msgstr "Değişmemiş Paylaşılan Bellek"
+
+#. shared memory that has been modified since it has been allocated
+#: data/memmaps.ui:387
+msgid "Shared Dirty"
+msgstr "Değişmiş Paylaşılan Bellek"
+
+#: data/memmaps.ui:462
+msgid "Inode"
+msgstr "Dosya indeksi"
+
+#: data/menus.ui:7 data/menus.ui:62
+msgctxt "Menu item to Open Search for Open Files dialog"
+msgid "_Search for Open Files…"
+msgstr "Açık Dosyaları _Ara…"
+
+#: data/menus.ui:13 data/menus.ui:68
+msgid "_Preferences"
+msgstr "_Tercihler"
+
+#: data/menus.ui:17 data/menus.ui:72
+msgid "_Help"
+msgstr "_Yardım"
+
+#: data/menus.ui:21 data/menus.ui:76
+msgid "_Keyboard Shortcuts"
+msgstr "_Klavye Kısayolları"
+
+#: data/menus.ui:25 data/menus.ui:80
+msgid "_About System Monitor"
+msgstr "Sistem Gözlemcisi _Hakkında"
+
+#: data/menus.ui:33
+msgid "_Refresh"
+msgstr "_Yenile"
+
+#: data/menus.ui:39
+msgid "Ac_tive Processes"
+msgstr "_Etkin Süreçler"
+
+#: data/menus.ui:44
+msgid "All Pro_cesses"
+msgstr "_Tüm Süreçler"
+
+#: data/menus.ui:49
+msgid "_My Processes"
+msgstr "Süreçleri_m"
+
+#: data/menus.ui:56
+msgid "Show _Dependencies"
+msgstr "_Bağımlılıkları Göster"
+
+#: data/menus.ui:88
+msgid "_Properties"
+msgstr "Öze_llikler"
+
+#: data/menus.ui:94
+msgid "_Memory Maps"
+msgstr "_Bellek Eşlemler"
+
+#. Translators: this means 'Files that are open' (open is not a verb here)
+#: data/menus.ui:98
+msgid "_Open Files"
+msgstr "_Açık Dosyalar"
+
+#: data/menus.ui:104
+msgid "_Change Priority"
+msgstr "Önceliği _Değiştir"
+
+#: data/menus.ui:107
+msgid "_Very High"
+msgstr "Ç_ok Yüksek"
+
+#: data/menus.ui:112
+msgid "_High"
+msgstr "_Yüksek"
+
+#: data/menus.ui:117
+msgid "_Normal"
+msgstr "_Normal"
+
+#: data/menus.ui:122
+msgid "_Low"
+msgstr "_Düşük"
+
+#: data/menus.ui:127
+msgid "Ve_ry Low"
+msgstr "Çok _Düşük"
+
+#: data/menus.ui:134
+msgid "Cus_tom"
+msgstr "Ö_zel"
+
+#: data/menus.ui:141
+msgid "Set _Affinity…"
+msgstr "_Benzeşim Belirle…"
+
+#: data/menus.ui:147 data/procproperties.ui:217
+msgid "_Stop…"
+msgstr "_Durdur…"
+
+#: data/menus.ui:151 src/procproperties.cpp:216
+msgid "_Resume"
+msgstr "_Sürdür"
+
+#: data/menus.ui:155 src/procproperties.cpp:213
+msgid "_Terminate…"
+msgstr "_Sonlandır…"
+
+#: data/menus.ui:159 data/procproperties.ui:224
+msgid "_Force Stop…"
+msgstr "_Durmaya Zorla…"
+
+#: data/openfiles.ui:16
+msgid "Open Files"
+msgstr "Açık Dosyalar"
+
+#: data/openfiles.ui:46
+msgctxt ""
+"FD here means File Descriptor. Use a short translation if possible, and at "
+"most 2-3 characters"
+msgid "FD"
+msgstr "DT"
+
+#: data/openfiles.ui:114
+msgid "Object"
+msgstr "Nesne"
+
+#: data/org.gnome.gnome-system-monitor.policy.in.in:11
+msgid "Kill process"
+msgstr "Süreci öldür"
+
+#: data/org.gnome.gnome-system-monitor.policy.in.in:12
+msgid "Privileges are required to control other users’ processes"
+msgstr "Diğer kullanıcıların süreçlerini yönetirken ayrıcalıklar gerekir"
+
+#: data/org.gnome.gnome-system-monitor.policy.in.in:22
+msgid "Renice process"
+msgstr "Süreci yeniden önceliklendir"
+
+#: data/org.gnome.gnome-system-monitor.policy.in.in:23
+msgid "Privileges are required to change the priority of processes"
+msgstr "Sürecin öncelik sırasını değiştirirken ayrıcalıklar gerekir"
 
 #: data/org.gnome.SystemMonitor.appdata.xml.in.in:8
 msgid "View and manage system resources"
@@ -80,542 +526,242 @@ msgstr "Kaynaklar genel görünümü"
 msgid "File Systems view"
 msgstr "Dosya Sistemleri görünümü"
 
-#. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:46 src/interface.cpp:496
-msgid "The GNOME Project"
-msgstr "GNOME Projesi"
-
-#: data/gnome-system-monitor-kde.desktop.in.in:3 src/application.cpp:440
-msgid "GNOME System Monitor"
-msgstr "GNOME Sistem Gözlemcisi"
-
-#: data/gnome-system-monitor-kde.desktop.in.in:4
-#: data/org.gnome.SystemMonitor.desktop.in.in:4 src/interface.cpp:488
-msgid "View current processes and monitor system state"
-msgstr "Çalışan süreçleri ve sistem durumunu gösterir"
-
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/gnome-system-monitor-kde.desktop.in.in:16
-msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
-msgstr ""
-"İzleyici;Gözlemci;Sistem;Süreç;İşlem;MİB;CPU;Bellek;Ağ;Geçmiş;Kullanım;"
-
-#: data/help-overlay.ui:12
-msgctxt "shortcut window"
-msgid "General"
-msgstr "Genel"
-
-#: data/help-overlay.ui:17
-msgctxt "shortcut window"
-msgid "Show help"
-msgstr "Yardımı göster"
-
-#: data/help-overlay.ui:23
-msgctxt "shortcut window"
-msgid "Open menu"
-msgstr "Menüyü aç"
-
-#: data/help-overlay.ui:29
-msgctxt "shortcut window"
-msgid "Show preferences"
-msgstr "Tercihleri göster"
-
-#: data/help-overlay.ui:37
-msgctxt "shortcut window"
-msgid "Keyboard shortcuts"
-msgstr "Klavye kısayolları"
-
-#: data/help-overlay.ui:44
-msgctxt "shortcut window"
-msgid "Quit"
-msgstr "Çık"
-
-#: data/help-overlay.ui:50
-msgctxt "shortcut window"
-msgid "Search"
-msgstr "Ara"
-
-#: data/help-overlay.ui:56
-msgctxt "shortcut window"
-msgid "Show Processes"
-msgstr "Süreçleri göster"
-
-#: data/help-overlay.ui:62
-msgctxt "shortcut window"
-msgid "Show Resources"
-msgstr "Kaynakları göster"
-
-#: data/help-overlay.ui:68
-msgctxt "shortcut window"
-msgid "Show File Systems"
-msgstr "Dosya Sistemlerini göster"
-
-#: data/help-overlay.ui:75
-msgctxt "shortcut window"
-msgid "Refresh"
-msgstr "Yenile"
-
-#: data/help-overlay.ui:82
-msgctxt "shortcut window"
-msgid "Processes"
-msgstr "Süreçler"
-
-#: data/help-overlay.ui:87
-msgctxt "shortcut window"
-msgid "Show dependencies"
-msgstr "Bağımlılıkları göster"
-
-#: data/help-overlay.ui:94
-msgctxt "shortcut window"
-msgid "Show process properties"
-msgstr "Süreç özelliklerini göster"
-
-#: data/help-overlay.ui:101
-msgctxt "shortcut window"
-msgid "Memory maps"
-msgstr "Bellek eşlemler"
-
-#: data/help-overlay.ui:108
-msgctxt "shortcut window"
-msgid "Open files"
-msgstr "Açık dosyalar"
-
-#: data/help-overlay.ui:114
-msgctxt "shortcut window"
-msgid "Send stop signal"
-msgstr "Durdurma sinyali gönder"
-
-#: data/help-overlay.ui:120
-msgctxt "shortcut window"
-msgid "Send continue signal"
-msgstr "Sürdürme sinyali gönder"
-
-#: data/help-overlay.ui:126
-msgctxt "shortcut window"
-msgid "Send Terminate signal"
-msgstr "Sonlandır sinyali gönder"
-
-#: data/help-overlay.ui:132
-msgctxt "shortcut window"
-msgid "Send Kill signal"
-msgstr "Öldür sinyali gönder"
-
-#: data/interface.ui:26
-msgid "Search"
-msgstr "Ara"
-
-#: data/interface.ui:36
-msgid "Main Menu"
-msgstr "Ana Menü"
-
-#: data/interface.ui:55
-msgid "_Processes"
-msgstr "_Süreçler"
-
-#: data/interface.ui:67
-msgid "Search processes and users"
-msgstr "Süreç ve kullanıcı ara"
-
-#: data/interface.ui:88 src/procdialogs.cpp:151 src/proctable.cpp:136
-msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "Süreçleri _Sonlandır"
-
-#: data/interface.ui:108
-msgid "Process Properties"
-msgstr "Süreç Özellikleri"
-
-#: data/interface.ui:130
-msgid "_Resources"
-msgstr "_Kaynaklar"
-
-#: data/interface.ui:175 data/preferences.ui:113 src/interface.cpp:283
-#: src/procproperties.cpp:77
-msgid "CPU"
-msgstr "MİB"
-
-#: data/interface.ui:206 src/interface.cpp:321 src/procproperties.cpp:71
-#: src/proctable.cpp:359
-msgid "Memory"
-msgstr "Bellek"
-
-#: data/interface.ui:217 src/interface.cpp:333
-msgid "Swap"
-msgstr "Takas Alanı"
-
-#: data/interface.ui:234 data/preferences.ui:124
-msgid "Memory and Swap"
-msgstr "Bellek ve Takas Alanı"
-
-#: data/interface.ui:265 src/interface.cpp:362
-msgid "Receiving"
-msgstr "Alınıyor"
-
-#: data/interface.ui:275
-msgid "Total Received"
-msgstr "Toplam Alınan"
-
-#: data/interface.ui:285 src/interface.cpp:380
-msgid "Sending"
-msgstr "Gönderiliyor"
-
-#: data/interface.ui:295
-msgid "Total Sent"
-msgstr "Toplam Gönderilen"
-
-#: data/interface.ui:312 data/preferences.ui:141
-msgid "Network"
-msgstr "Ağ"
-
-#: data/interface.ui:343 src/interface.cpp:415
-msgid "Reading"
-msgstr "Okuma"
-
-#: data/interface.ui:353
-msgid "Total Read"
-msgstr "Toplam Okuma"
-
-#: data/interface.ui:363 src/interface.cpp:433
-msgid "Writing"
-msgstr "Yazma"
-
-#: data/interface.ui:373
-msgid "Total Written"
-msgstr "Toplam Yazılan"
-
-#: data/interface.ui:390
-msgid "Disk"
-msgstr "Disk"
-
-#: data/interface.ui:410
-msgid "_File Systems"
-msgstr "_Dosya Sistemleri"
-
-#: data/lsof.ui:6
-msgctxt "Window title for Search for Open Files dialog"
-msgid "Search for Open Files"
-msgstr "Açık Dosyaları Ara"
-
-#: data/lsof.ui:36
-msgid "Filter files by name"
-msgstr "Dosyaları ada göre süz"
-
-#: data/lsof.ui:42
-msgid "Case insensitive"
-msgstr "BÜYÜK/küçük harfe duyarsız"
-
-#: data/memmaps.ui:8
-msgid "Memory Maps"
-msgstr "Bellek Eşlemler"
-
-#: data/menus.ui:7 data/menus.ui:62
-msgctxt "Menu item to Open Search for Open Files dialog"
-msgid "Search for Open Files…"
-msgstr "Açık Dosyaları Ara…"
-
-#: data/menus.ui:13 data/menus.ui:68 data/preferences.ui:6
-msgid "Preferences"
-msgstr "Tercihler"
-
-#: data/menus.ui:17 data/menus.ui:72
-msgid "Help"
-msgstr "Yardım"
-
-#: data/menus.ui:21 data/menus.ui:76
-msgid "Keyboard Shortcuts"
-msgstr "Klavye Kısayolları"
-
-#: data/menus.ui:25 data/menus.ui:80
-msgid "About System Monitor"
-msgstr "Sistem Gözlemcisi Hakkında"
-
-#: data/menus.ui:33
-msgid "_Refresh"
-msgstr "_Yenile"
-
-#: data/menus.ui:39
-msgid "_Active Processes"
-msgstr "_Etkin Süreçler"
-
-#: data/menus.ui:44
-msgid "A_ll Processes"
-msgstr "_Tüm Süreçler"
-
-#: data/menus.ui:49
-msgid "M_y Processes"
-msgstr "Süreçleri_m"
-
-#: data/menus.ui:56
-msgid "Show _Dependencies"
-msgstr "_Bağımlılıkları Göster"
-
-#: data/menus.ui:88
-msgid "_Properties"
-msgstr "Öze_llikler"
-
-#: data/menus.ui:94
-msgid "_Memory Maps"
-msgstr "_Bellek Eşlemler"
-
-#. Translators: this means 'Files that are open' (open is not a verb here)
-#: data/menus.ui:98
-msgid "Open _Files"
-msgstr "Açık _Dosyalar"
-
-#: data/menus.ui:104
-msgid "_Change Priority"
-msgstr "Önceliği _Değiştir"
-
-#: data/menus.ui:107 src/util.cpp:173
-msgid "Very High"
-msgstr "Çok Yüksek"
-
-#: data/menus.ui:112 src/util.cpp:175
-msgid "High"
-msgstr "Yüksek"
-
-#: data/menus.ui:117 src/util.cpp:177
-msgid "Normal"
-msgstr "Normal"
-
-#: data/menus.ui:122 src/util.cpp:179
-msgid "Low"
-msgstr "Düşük"
-
-#: data/menus.ui:127 src/util.cpp:181
-msgid "Very Low"
-msgstr "Çok Düşük"
-
-#: data/menus.ui:134
-msgid "Custom"
-msgstr "Özel"
-
-#: data/menus.ui:141
-msgid "Set _Affinity…"
-msgstr "_Benzeşim Belirle…"
-
-#: data/menus.ui:147
-msgid "_Stop…"
-msgstr "_Durdur…"
-
-#: data/menus.ui:151
-msgid "_Continue"
-msgstr "_Sürdür"
-
-#: data/menus.ui:155
-msgid "_Terminate…"
-msgstr "_Sonlandır…"
-
-#: data/menus.ui:159
-msgid "_Kill…"
-msgstr "_Öldür…"
-
-#: data/openfiles.ui:4
-msgid "Open Files"
-msgstr "Açık Dosyalar"
-
-#: data/org.gnome.gnome-system-monitor.policy.in.in:11
-msgid "Kill process"
-msgstr "Süreci öldür"
-
-#: data/org.gnome.gnome-system-monitor.policy.in.in:12
-msgid "Privileges are required to control other users’ processes"
-msgstr "Diğer kullanıcıların süreçlerini yönetirken ayrıcalıklar gerekir"
-
-#: data/org.gnome.gnome-system-monitor.policy.in.in:22
-msgid "Renice process"
-msgstr "Süreci yeniden önceliklendir"
-
-#: data/org.gnome.gnome-system-monitor.policy.in.in:23
-msgid "Privileges are required to change the priority of processes"
-msgstr "Sürecin öncelik sırasını değiştirirken ayrıcalıklar gerekir"
-
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
 msgid ""
 "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
 "Manager;Activity;"
 msgstr ""
-"İzleyici;Gözlemci;Sistem;Süreç;İşlem;MİB;CPU;Bellek;Ağ;Geçmiş;Kullanım;"
-"Performans;Başarım;Görev;Yönetici;Etkinlik;"
+"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
+"Manager;Activity;İzleyici;Gözlemci;Sistem;Süreç;İşlem;MİB;CPU;Bellek;Ağ;"
+"Geçmiş;Kullanım;Performans;Başarım;Görev;Yönetici;Etkinlik;"
+
+#: data/preferences.ui:6
+msgid "Preferences"
+msgstr "Tercihler"
 
 #: data/preferences.ui:12
-msgid "Processes"
-msgstr "Süreçler"
+msgid "Resources"
+msgstr "Kaynaklar"
 
-#: data/preferences.ui:16 data/preferences.ui:79 data/preferences.ui:164
+#: data/preferences.ui:16 data/preferences.ui:101 data/preferences.ui:150
 msgid "Behavior"
 msgstr "Davranış"
 
-#: data/preferences.ui:20 data/preferences.ui:83 data/preferences.ui:168
+#: data/preferences.ui:20 data/preferences.ui:105 data/preferences.ui:154
 msgid "_Update Interval in Seconds"
 msgstr "Saniye Türünde _Güncelleme Aralığı"
 
 #: data/preferences.ui:28
-msgid "Enable _Smooth Refresh"
-msgstr "_Yumuşak Yenilemeyi Etkinleştir"
-
-#: data/preferences.ui:34
-msgid "Alert Before Ending or _Killing Processes"
-msgstr "Süreçler _Sonlandırılmadan ya da Öldürülmeden Önce Uyar"
-
-#: data/preferences.ui:40
-msgid "_Divide CPU Usage by CPU Count"
-msgstr "MİB Kullanımını MİB Sayısına _Böl"
-
-#: data/preferences.ui:46
-msgid "Show Memory in IEC"
-msgstr "Belleği IEC Biçiminde Göster"
-
-#: data/preferences.ui:53 data/preferences.ui:183
-msgid "Information Fields"
-msgstr "Bilgi Alanları"
-
-#: data/preferences.ui:54
-msgid "Process information shown in list:"
-msgstr "Listede gösterilen süreç bilgisi:"
-
-#: data/preferences.ui:75
-msgid "Resources"
-msgstr "Kaynaklar"
-
-#: data/preferences.ui:91
 msgid "_Chart Data Points"
 msgstr "_Grafik Veri Noktaları"
 
-#: data/preferences.ui:106
+#: data/preferences.ui:43
 msgid "Draw Charts as S_mooth Graphs"
 msgstr "Grafikleri Y_umuşak Grafik Olarak Çiz"
 
-#: data/preferences.ui:117
+#: data/preferences.ui:54
 msgid "_Draw CPU Chart as Stacked Area Chart"
 msgstr "_MİB Grafiğini Yığılmış Alan Grafiği Olarak Çiz"
 
-#: data/preferences.ui:128
+#: data/preferences.ui:65
 msgid "Show Memory and Swap in IEC"
 msgstr "Bellek ve Takas Alanını IEC Biçiminde Göster"
 
-#: data/preferences.ui:134
+#: data/preferences.ui:71
 msgid "Show Memory in Logarithmic Scale"
 msgstr "Belleği Logaritmik Ölçekte Göster"
 
-#: data/preferences.ui:145
+#: data/preferences.ui:82
 msgid "_Show Network Speed in Bits"
 msgstr "Ağ Hızını _Bit Türünde Göster"
 
-#: data/preferences.ui:151
+#: data/preferences.ui:88
 msgid "Show Network _Totals in Bits"
 msgstr "Ağ _Toplamlarını Bit Türünde Göster"
 
-#: data/preferences.ui:160
+#: data/preferences.ui:97
+msgid "Processes"
+msgstr "Süreçler"
+
+#: data/preferences.ui:113
+msgid "Enable _Smooth Refresh"
+msgstr "_Yumuşak Yenilemeyi Etkinleştir"
+
+#: data/preferences.ui:119
+msgid "Alert Before Ending or _Force Stopping Processes"
+msgstr "Süreçleri Sonlandırmadan Ya Da Durmaya _Zorlamadan Önce Uyar"
+
+#: data/preferences.ui:125
+msgid "_Divide CPU Usage by CPU Count"
+msgstr "MİB Kullanımını MİB Sayısına _Böl"
+
+#: data/preferences.ui:131
+msgid "Show Memory in IEC"
+msgstr "Belleği IEC Biçiminde Göster"
+
+#: data/preferences.ui:138 data/preferences.ui:169
+msgid "Information Fields"
+msgstr "Bilgi Alanları"
+
+#: data/preferences.ui:139
+msgid "Process information shown in list"
+msgstr "Listede gösterilen süreç bilgisi"
+
+#: data/preferences.ui:146
 msgid "File Systems"
 msgstr "Dosya Sistemleri"
 
-#: data/preferences.ui:176
+#: data/preferences.ui:162
 msgid "Show _All File Systems"
 msgstr "_Tüm Dosya Sistemlerini Göster"
 
-#: data/preferences.ui:184
+#: data/preferences.ui:170
 msgid "File system information shown in list"
 msgstr "Listede gösterilen dosya sistemi bilgisi"
 
-#: data/renice.ui:15 data/setaffinity.ui:17 src/procdialogs.cpp:167
+#: data/procproperties.ui:18
+msgid "Details"
+msgstr "Ayrıntılar"
+
+#: data/procproperties.ui:21
+msgid "Process ID"
+msgstr "Süreç Kimliği"
+
+#: data/procproperties.ui:32 src/proctable.cpp:345
+msgid "User"
+msgstr "Kullanıcı"
+
+#: data/procproperties.ui:45 data/procproperties.ui:70 src/proctable.cpp:346
+msgid "Status"
+msgstr "Durum"
+
+#: data/procproperties.ui:48 src/proctable.cpp:354
+msgid "Started"
+msgstr "Başlamış"
+
+#: data/procproperties.ui:59 src/proctable.cpp:373
+msgid "Priority"
+msgstr "Öncelik"
+
+#: data/procproperties.ui:83
+msgid "Usage"
+msgstr "Kullanım"
+
+#: data/procproperties.ui:108 src/proctable.cpp:353
+msgid "CPU Time"
+msgstr "MİB Zamanı"
+
+#: data/procproperties.ui:119 src/proctable.cpp:347
+msgid "Virtual Memory"
+msgstr "Sanal Bellek"
+
+#: data/procproperties.ui:130 src/proctable.cpp:348
+msgid "Resident Memory"
+msgstr "Yerleşik Bellek"
+
+#: data/procproperties.ui:141 src/proctable.cpp:349
+msgid "Writable Memory"
+msgstr "Yazılabilir Bellek"
+
+#: data/procproperties.ui:152 src/proctable.cpp:350
+msgid "Shared Memory"
+msgstr "Paylaşılan Bellek"
+
+#: data/procproperties.ui:167 src/proctable.cpp:357
+msgid "Security Context"
+msgstr "Güvenlik Bağlamı"
+
+#: data/procproperties.ui:175 src/proctable.cpp:358
+msgid "Command Line"
+msgstr "Komut Satırı"
+
+#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
+#: data/procproperties.ui:183 src/proctable.cpp:361
+msgid "Waiting Channel"
+msgstr "Bekleyen Kanal"
+
+#: data/procproperties.ui:191 src/proctable.cpp:362
+msgid "Control Group"
+msgstr "Denetim Kümesi"
+
+#: data/procproperties.ui:236
+msgid "More Actions"
+msgstr "Daha Çok İşlem"
+
+#: data/renice.ui:4
+msgid ""
+"The priority of a process is given by its nice value. A lower nice value "
+"corresponds to a higher priority."
+msgstr ""
+"Öncelik değeri süreç öncelikleri ile ilgilidir. Düşük öncelik değeri daha "
+"yüksek önceliğe karşılık gelir."
+
+#: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:189
 msgid "_Cancel"
 msgstr "İ_ptal"
 
-#: data/renice.ui:16
+#: data/renice.ui:10
 msgid "Change _Priority"
 msgstr "Ön_celiği Değiştir"
 
-#: data/renice.ui:39
-msgid "_Nice value:"
-msgstr "_Öncelik değeri:"
+#: data/renice.ui:17
+msgid "_Nice Value:"
+msgstr "_Öncelik Değeri:"
 
-#: data/renice.ui:69
-msgid ""
-"<small><i><b>Note:</b> The priority of a process is given by its nice value. "
-"A lower nice value corresponds to a higher priority.</i></small>"
-msgstr ""
-"<small><i><b>Not:</b> Öncelik değeri süreç öncelikleri ile ilgilidir. Düşük "
-"öncelik değeri daha yüksek önceliğe karşılık gelir.</i></small>"
-
-#: data/setaffinity.ui:8
+#: data/setaffinity.ui:15
 msgid "Set Affinity"
 msgstr "Benzeşim Belirle"
 
-#: data/setaffinity.ui:23
+#: data/setaffinity.ui:26
 msgid "_Apply"
 msgstr "_Uygula"
 
-#: data/setaffinity.ui:40
-msgid "Apply to child threads"
-msgstr "Alt süreçlere uygula"
+#: data/setaffinity.ui:39
+msgid "Select CPUs allowed to run on"
+msgstr "Çalıştırabilecek MİBleri seç"
 
-#: data/setaffinity.ui:58
-msgid "Run on all CPUs"
-msgstr "Tüm MİBler üstünde çalıştır"
+#: data/setaffinity.ui:46
+msgid "_Run on all CPUs"
+msgstr "Tüm MİBler üstünde ç_alıştır"
 
-#: src/application.cpp:423
+#: data/setaffinity.ui:68
+msgid "Apply to Child _Threads"
+msgstr "Alt _Süreçlere Uygula"
+
+#: src/application.cpp:405
 msgid "A simple process and system monitor."
 msgstr "Basit bir süreç ve sistem izleyici."
 
-#: src/argv.cpp:22
+#: src/argv.cpp:20
 msgid "Show the Processes tab"
 msgstr "Süreçler sekmesini göster"
 
-#: src/argv.cpp:28
+#: src/argv.cpp:24
 msgid "Show the Resources tab"
 msgstr "Kaynaklar sekmesini göster"
 
-#: src/argv.cpp:34
+#: src/argv.cpp:28
 msgid "Show the File Systems tab"
 msgstr "Dosya Sistemleri sekmesini göster"
 
-#: src/argv.cpp:39
+#: src/argv.cpp:31
 msgid "Show the application’s version"
 msgstr "Uygulamanın sürümünü göster"
 
-#: src/disks.cpp:392 src/memmaps.cpp:354
-msgid "Device"
-msgstr "Aygıt"
-
-#: src/disks.cpp:393
-msgid "Directory"
-msgstr "Konum"
-
-#: src/disks.cpp:394 src/legacy/gsm_color_button.c:612 src/openfiles.cpp:268
-msgid "Type"
-msgstr "Tür"
-
-#: src/disks.cpp:395
-msgid "Total"
-msgstr "Toplam"
-
-#: src/disks.cpp:396
-msgid "Free"
-msgstr "Boş"
-
-#: src/disks.cpp:397
-msgid "Available"
-msgstr "Kullanılabilir"
-
-#: src/disks.cpp:398
-msgid "Used"
-msgstr "Kullanılan"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: src/interface.cpp:247
+#: src/interface.cpp:245
 #, c-format
 msgid "Pick a Color for “%s”"
 msgstr "“%s” İçin Renk Seç"
 
 #. Set check box label value to CPU [1..2048]
-#: src/interface.cpp:285 src/setaffinity.cpp:428
+#: src/interface.cpp:283 src/setaffinity.cpp:406
 #, c-format
 msgid "CPU%d"
 msgstr "MİB%d"
 
-#: src/interface.cpp:500
+#: src/interface.cpp:494
 msgid "translator-credits"
 msgstr ""
 "Deniz Koçak <deniz.kocak@linux.org.tr>\n"
@@ -650,40 +796,40 @@ msgstr "%b %d %l∶%M %p"
 msgid "%b %d %Y"
 msgstr "%b %d %Y"
 
-#: src/legacy/gsm_color_button.c:588
+#: src/legacy/gsm_color_button.c:575
 msgid "Fraction"
 msgstr "Şimdiki Renk"
 
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: src/legacy/gsm_color_button.c:590
+#: src/legacy/gsm_color_button.c:577
 msgid "Percentage full for pie color pickers"
 msgstr "Dairesel renk seçici için yüzde tam"
 
-#: src/legacy/gsm_color_button.c:597
+#: src/legacy/gsm_color_button.c:584
 msgid "Title"
 msgstr "Başlık"
 
-#: src/legacy/gsm_color_button.c:598
+#: src/legacy/gsm_color_button.c:585
 msgid "The title of the color selection dialog"
 msgstr "Renk seçme penceresinin başlığı"
 
-#: src/legacy/gsm_color_button.c:599 src/legacy/gsm_color_button.c:637
+#: src/legacy/gsm_color_button.c:586 src/legacy/gsm_color_button.c:624
 msgid "Pick a Color"
 msgstr "Renk Seçin"
 
-#: src/legacy/gsm_color_button.c:605
+#: src/legacy/gsm_color_button.c:592
 msgid "Current Color"
 msgstr "Şimdiki Renk"
 
-#: src/legacy/gsm_color_button.c:606
+#: src/legacy/gsm_color_button.c:593
 msgid "The selected color"
 msgstr "Seçili renk"
 
-#: src/legacy/gsm_color_button.c:613
+#: src/legacy/gsm_color_button.c:600
 msgid "Type of color picker"
 msgstr "Renk seçicinin tipi"
 
-#: src/legacy/gsm_color_button.c:660
+#: src/legacy/gsm_color_button.c:647
 msgid "Click to set graph colors"
 msgstr "Grafik renklerini atamak için tıkla"
 
@@ -713,147 +859,68 @@ msgstr[0] "%u sn."
 
 #. Update label
 #. Translators: CPU usage percentage label: 95.7%
-#: src/load-graph.cpp:518
+#: src/load-graph.cpp:519
 #, c-format
 msgid "%.1f%%"
 msgstr "%%%.1f"
 
-#: src/load-graph.cpp:545
+#: src/load-graph.cpp:547
 msgid "not available"
 msgstr "kullanılabilir değil"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:550
+#: src/load-graph.cpp:552
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%%%.1f) / %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:555
+#: src/load-graph.cpp:557
 #, c-format
 msgid "Cache %s"
 msgstr "Önbellek %s"
 
-#: src/lsof.cpp:116
+#: src/lsof.cpp:108
 #, c-format
-msgid "%d open file"
-msgid_plural "%d open files"
-msgstr[0] "%d açık dosya"
+msgid "%d Open File"
+msgid_plural "%d Open Files"
+msgstr[0] "%d Açık Dosya"
 
-#: src/lsof.cpp:118
+#: src/lsof.cpp:110
 #, c-format
-msgid "%d matching open file"
-msgid_plural "%d matching open files"
-msgstr[0] "eşleşen %d açık dosya"
+msgid "%d Matching Open File"
+msgid_plural "%d Matching Open Files"
+msgstr[0] "Eşleşen %d Açık Dosya"
 
-#: src/lsof.cpp:229
-msgid "Process"
-msgstr "Süreç"
-
-#: src/lsof.cpp:240
-msgid "PID"
-msgstr "PID"
-
-#: src/lsof.cpp:249 src/memmaps.cpp:332
-msgid "Filename"
-msgstr "Dosya adı"
-
-#. xgettext: virtual memory start
-#: src/memmaps.cpp:334
-msgid "VM Start"
-msgstr "SB Başlangıç"
-
-#. xgettext: virtual memory end
-#: src/memmaps.cpp:336
-msgid "VM End"
-msgstr "SB Bitiş"
-
-#. xgettext: virtual memory syze
-#: src/memmaps.cpp:338
-msgid "VM Size"
-msgstr "SB Boyutu"
-
-#: src/memmaps.cpp:339
-msgid "Flags"
-msgstr "İmler"
-
-#. xgettext: virtual memory offset
-#: src/memmaps.cpp:341
-msgid "VM Offset"
-msgstr "SB Ofseti"
-
-#. xgettext: memory that has not been modified since
-#. it has been allocated
-#: src/memmaps.cpp:344
-msgid "Private clean"
-msgstr "Değişmemiş özel bellek"
-
-#. xgettext: memory that has been modified since it
-#. has been allocated
-#: src/memmaps.cpp:347
-msgid "Private dirty"
-msgstr "Değişmiş özel bellek"
-
-#. xgettext: shared memory that has not been modified
-#. since it has been allocated
-#: src/memmaps.cpp:350
-msgid "Shared clean"
-msgstr "Değişmemiş paylaşılan bellek"
-
-#. xgettext: shared memory that has been modified
-#. since it has been allocated
-#: src/memmaps.cpp:353
-msgid "Shared dirty"
-msgstr "Değişmiş paylaşılan bellek"
-
-#: src/memmaps.cpp:355
-msgid "Inode"
-msgstr "Dosya indeksi"
-
-#: src/memmaps.cpp:484
+#. Translators: process name and id
+#: src/memmaps.cpp:408 src/openfiles.cpp:281 src/setaffinity.cpp:382
 #, c-format
-msgid "_Memory maps for process “%s” (PID %u):"
-msgstr "“%s” süreci için bellek _eşlemleri (PID %u):"
+msgid "%s (PID %u)"
+msgstr "%s (PID %u)"
 
-#: src/openfiles.cpp:39
+#: src/openfiles.cpp:29
 msgid "file"
 msgstr "dosya"
 
-#: src/openfiles.cpp:42
+#: src/openfiles.cpp:32
 msgid "pipe"
 msgstr "boru"
 
-#: src/openfiles.cpp:45
+#: src/openfiles.cpp:35
 msgid "IPv6 network connection"
 msgstr "IPv6 ağ bağlantısı"
 
-#: src/openfiles.cpp:48
+#: src/openfiles.cpp:38
 msgid "IPv4 network connection"
 msgstr "IPv4 ağ bağlantısı"
 
-#: src/openfiles.cpp:51
+#: src/openfiles.cpp:41
 msgid "local socket"
 msgstr "yerel yuva"
 
-#: src/openfiles.cpp:54
+#: src/openfiles.cpp:44
 msgid "unknown type"
 msgstr "bilinmeyen tür"
-
-#. Translators: "FD" here means "File Descriptor". Please use
-#. a very short translation if possible, and at most
-#. 2-3 characters for it to be able to fit in the UI.
-#: src/openfiles.cpp:267
-msgid "FD"
-msgstr "DT"
-
-#: src/openfiles.cpp:269
-msgid "Object"
-msgstr "Nesne"
-
-#: src/openfiles.cpp:357
-#, c-format
-msgid "_Files opened by process “%s” (PID %u):"
-msgstr "“%s” (PID %u) sürecince açılan _dosyalar:"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:5
 msgid "Main window width"
@@ -1325,11 +1392,11 @@ msgstr "Açık dosyalar sıralama sütunu"
 msgid "Open files sort order"
 msgstr "Açık dosyalar sıralama düzeni"
 
-#: src/prefsdialog.cpp:145
+#: src/prefsdialog.cpp:70 src/prefsdialog.cpp:122
 msgid "Icon"
 msgstr "Simge"
 
-#: src/procactions.cpp:79
+#: src/procactions.cpp:80
 #, c-format
 msgid ""
 "Cannot change the priority of process with PID %d to %d.\n"
@@ -1338,11 +1405,11 @@ msgstr ""
 "PID %d sürecinin önceliği %d olarak değiştirilemiyor.\n"
 "%s"
 
-#: src/procactions.cpp:89 src/procactions.cpp:174
+#: src/procactions.cpp:90 src/procactions.cpp:166
 msgid "_OK"
 msgstr "_Tamam"
 
-#: src/procactions.cpp:164
+#: src/procactions.cpp:156
 #, c-format
 msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
@@ -1352,181 +1419,114 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:89
+#: src/procdialogs.cpp:117
 #, c-format
-msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
-msgstr "Seçilen “%s” (PID: %u) sürecini öldürmek istediğinizden emin misiniz?"
+msgid "Force Stop %s?"
+msgstr "%s Durmaya Zorlansın Mı?"
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:96
+#: src/procdialogs.cpp:123
 #, c-format
-msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
-msgstr ""
-"Seçilen “%s” (PID: %u) sürecini sonlandırmak istediğinizden emin misiniz?"
+msgid "End %s?"
+msgstr "%s Sonlandırılsın Mı?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:103
+#: src/procdialogs.cpp:129
 #, c-format
-msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
-msgstr "Seçilen “%s” (PID: %u) sürecini durdurmak istediğinizden emin misiniz?"
+msgid "Stop %s?"
+msgstr "%s Durdurulsun Mu?"
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:115
+#: src/procdialogs.cpp:140
 #, c-format
-msgid "Are you sure you want to kill the selected process?"
-msgid_plural "Are you sure you want to kill the %d selected processes?"
-msgstr[0] "Seçili %d süreci öldürmek istediğinizden emin misiniz?"
+msgid "Force Stop Selected Process?"
+msgid_plural "Force Stop %d Selected Processes?"
+msgstr[0] "Seçili %d Süreç Durmaya Zorlansın Mı?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:122
+#: src/procdialogs.cpp:147
 #, c-format
-msgid "Are you sure you want to end the selected process?"
-msgid_plural "Are you sure you want to end the %d selected processes?"
-msgstr[0] "Seçili %d süreci sonlandırmak istediğinizden emin misiniz?"
+msgid "End Selected Process?"
+msgid_plural "End %d Selected Processes?"
+msgstr[0] "%d Süreç Sonlandırılsın Mı?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:129
+#: src/procdialogs.cpp:154
 #, c-format
-msgid "Are you sure you want to stop the selected process?"
-msgid_plural "Are you sure you want to stop the %d selected processes?"
-msgstr[0] "Seçili %d süreci durdurmak istediğinizden emin misiniz?"
+msgid "Stop Selected Process?"
+msgid_plural "Stop %d Selected Processes?"
+msgstr[0] "Seçili %d Süreç Durdurulsun Mu?"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:140
+#: src/procdialogs.cpp:165
 msgid ""
-"Killing a process may destroy data, break the session or introduce a "
-"security risk. Only unresponsive processes should be killed."
+"Force stopping processes can result in data loss, crashes, and system "
+"failures"
 msgstr ""
-"Süreci öldürmek veri yitimine neden olabilir, oturumu bozabilir ya da "
-"güvenlik açığı oluşturabilir. Yalnızca yanıtlamayan süreçler "
-"sonlandırılmalıdır."
+"Süreçleri durmaya zorlamak veri yitimine, çökmeye ve sistem hatalarına "
+"neden olabilir"
 
-#: src/procdialogs.cpp:143
-msgid "_Kill Process"
-msgid_plural "_Kill Processes"
-msgstr[0] "Süreçleri _Öldür"
+#: src/procdialogs.cpp:167
+msgid "_Force Stop"
+msgstr "_Durmaya Zorla"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:148
-msgid ""
-"Ending a process may destroy data, break the session or introduce a security "
-"risk. Only unresponsive processes should be ended."
+#: src/procdialogs.cpp:172
+msgid "Ending processes can result in data loss, crashes, and system failures"
 msgstr ""
-"Süreci sonlandırmak veri yitimine neden olabilir, oturumu bozabilir ya da "
-"güvenlik açığı oluşturabilir. Yalnızca yanıtlamayan süreçler "
-"sonlandırılmalıdır."
+"Süreçlerin sonlandırılması veri yitimine, çökmeye ve sistem hatalarına "
+"neden olabilir"
+
+#: src/procdialogs.cpp:174
+msgid "_End"
+msgstr "_Sonlandır"
 
 #. SIGSTOP
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:156
+#: src/procdialogs.cpp:179
 msgid ""
-"Stopping a process may destroy data, break the session or introduce a "
-"security risk. Only unresponsive processes should be stopped."
+"Stopping processes can result in data loss, crashes, and system failures"
 msgstr ""
-"Süreci durdurmak veri yitimine neden olabilir, oturumu bozabilir ya da "
-"güvenlik açığı oluşturabilir. Yalnızca yanıtlamayan süreçler durdurulmalıdır."
+"Süreçlerin durdurulması veri yitimine, çökmeye ve sistem hatalarına neden "
+"olabilir"
 
-#: src/procdialogs.cpp:159
-msgid "_Stop Process"
-msgid_plural "_Stop Processes"
-msgstr[0] "Süreçleri _Durdur"
+#: src/procdialogs.cpp:181
+msgid "_Stop"
+msgstr "_Durdur"
 
-#: src/procdialogs.cpp:251
+#: src/procdialogs.cpp:273
 #, c-format
-msgid "Change Priority of Process “%s” (PID: %u)"
-msgstr "“%s” (PID: %u) sürecinin Önceliği değiştir"
+msgid "Change Priority of %s (PID %u)"
+msgstr " %s (PID %u) Sürecinin Önceliği Değiştir"
 
-#: src/procdialogs.cpp:254
+#: src/procdialogs.cpp:276
 #, c-format
-msgid "Change Priority of the selected process"
-msgid_plural "Change Priority of %d selected processes"
-msgstr[0] "Seçilen %d sürecin Önceliğini değiştir"
+msgid "Change Priority of the Selected Process"
+msgid_plural "Change Priority of %d Selected Processes"
+msgstr[0] "Seçilen %d Sürecin Önceliğini Değiştir"
 
-#: src/procproperties.cpp:50 src/procproperties.cpp:84
-#: src/procproperties.cpp:87 src/util.cpp:540 src/util.cpp:587
-msgid "N/A"
-msgstr "-"
+#: src/proctable.cpp:136
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "Süreç(leri) _Sonlandır…"
 
-#: src/procproperties.cpp:68 src/proctable.cpp:344
-msgid "Process Name"
-msgstr "Süreç Adı"
-
-#: src/procproperties.cpp:69 src/proctable.cpp:345
-msgid "User"
-msgstr "Kullanıcı"
-
-#: src/procproperties.cpp:70 src/proctable.cpp:346
-msgid "Status"
-msgstr "Durum"
-
-#: src/procproperties.cpp:72 src/proctable.cpp:347
-msgid "Virtual Memory"
-msgstr "Sanal Bellek"
-
-#: src/procproperties.cpp:73 src/proctable.cpp:348
-msgid "Resident Memory"
-msgstr "Yerleşik Bellek"
-
-#: src/procproperties.cpp:74 src/proctable.cpp:349
-msgid "Writable Memory"
-msgstr "Yazılabilir Bellek"
-
-#: src/procproperties.cpp:75 src/proctable.cpp:350
-msgid "Shared Memory"
-msgstr "Paylaşılan Bellek"
-
-#: src/procproperties.cpp:79 src/proctable.cpp:353
-msgid "CPU Time"
-msgstr "MİB Zamanı"
-
-#: src/procproperties.cpp:80 src/proctable.cpp:354
-msgid "Started"
-msgstr "Başlamış"
-
-#: src/procproperties.cpp:81 src/proctable.cpp:355
-msgid "Nice"
-msgstr "Öncelik"
-
-#: src/procproperties.cpp:82 src/proctable.cpp:373
-msgid "Priority"
-msgstr "Öncelik"
-
-#: src/procproperties.cpp:83 src/proctable.cpp:356
-msgid "ID"
-msgstr "Kimlik"
-
-#: src/procproperties.cpp:84 src/proctable.cpp:357
-msgid "Security Context"
-msgstr "Güvenlik Bağlamı"
-
-#: src/procproperties.cpp:85 src/proctable.cpp:358
-msgid "Command Line"
-msgstr "Komut Satırı"
-
-#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:86 src/proctable.cpp:361
-msgid "Waiting Channel"
-msgstr "Bekleyen Kanal"
-
-#: src/procproperties.cpp:87 src/proctable.cpp:362
-msgid "Control Group"
-msgstr "Denetim Kümesi"
-
-#: src/procproperties.cpp:211
-#, c-format
-msgid "%s (PID %u)"
-msgstr "%s (PID %u)"
+#: src/proctable.cpp:344
+msgid "Name"
+msgstr "Ad"
 
 #: src/proctable.cpp:351
 msgid "X Server Memory"
 msgstr "X Sunucusu Belleği"
 
-#: src/proctable.cpp:352
-#, no-c-format
-msgid "% CPU"
-msgstr "% MİB"
+#: src/proctable.cpp:355
+msgid "Nice"
+msgstr "Öncelik"
+
+#: src/proctable.cpp:356
+msgid "ID"
+msgstr "Kimlik"
 
 #: src/proctable.cpp:363
 msgid "Unit"
@@ -1547,34 +1547,30 @@ msgid "Owner"
 msgstr "Sahip"
 
 #: src/proctable.cpp:369
-msgid "Disk read total"
-msgstr "Toplam diskten okuma"
+msgid "Disk Read Total"
+msgstr "Toplam Diskten Okuma"
 
 #: src/proctable.cpp:370
-msgid "Disk write total"
-msgstr "Toplam diske yazma"
+msgid "Disk Write Total"
+msgstr "Toplam Diske Yazma"
 
 #: src/proctable.cpp:371
-msgid "Disk read"
-msgstr "Diskten okuma"
+msgid "Disk Read"
+msgstr "Diskten Okuma"
 
 #: src/proctable.cpp:372
-msgid "Disk write"
-msgstr "Diske yazma"
+msgid "Disk Write"
+msgstr "Diske Yazma"
 
 # GNU CPU Affinity bir GNU kütüphanesi. Çevirmeyin.
-#: src/setaffinity.cpp:125
+#. Create error alert dialog
+#: src/setaffinity.cpp:126
 msgid "GNU CPU Affinity error"
 msgstr "GNU CPU Affinity hatası"
 
-#: src/setaffinity.cpp:130
+#: src/setaffinity.cpp:131
 msgid "_Close"
 msgstr "_Kapat"
-
-#: src/setaffinity.cpp:409
-#, c-format
-msgid "Select CPUs \"%s\" (PID %u) is allowed to run on:"
-msgstr "\"%s\" (PID %u) çalıştırabilecek MİBleri seç:"
 
 #: src/util.cpp:34
 msgid "Running"
@@ -1620,34 +1616,48 @@ msgstr "%u:%02u:%02u"
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: src/util.cpp:188
+#: src/util.cpp:149
+msgid "Very High"
+msgstr "Çok Yüksek"
+
+#: src/util.cpp:151
+msgid "High"
+msgstr "Yüksek"
+
+#: src/util.cpp:153
+msgid "Normal"
+msgstr "Normal"
+
+#: src/util.cpp:155
+msgid "Low"
+msgstr "Düşük"
+
+#: src/util.cpp:157
+msgid "Very Low"
+msgstr "Çok Düşük"
+
+#: src/util.cpp:164
 msgid "Very High Priority"
 msgstr "Çok Yüksek Öncelik"
 
-#: src/util.cpp:190
+#: src/util.cpp:166
 msgid "High Priority"
 msgstr "Yüksek Öncelik"
 
-#: src/util.cpp:192
+#: src/util.cpp:168
 msgid "Normal Priority"
 msgstr "Normal Öncelik"
 
-#: src/util.cpp:194
+#: src/util.cpp:170
 msgid "Low Priority"
 msgstr "Düşük Öncelik"
 
-#: src/util.cpp:196
+#: src/util.cpp:172
 msgid "Very Low Priority"
 msgstr "Çok Düşük Öncelik"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:832
+#: src/util.cpp:765
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
-
-#~ msgid "CPU %d"
-#~ msgstr "%d. MİB"
-
-#~ msgid "Main window size in the form (width, height)"
-#~ msgstr "Formdaki ana pencere boyutu (genişlik, yükseklik)"
