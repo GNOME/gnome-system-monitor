@@ -546,6 +546,7 @@ GsmApplication::on_startup ()
 
   set_accel_for_action ("win.show-dependencies", "<Primary>d");
   set_accel_for_action ("app.quit", "<Primary>q");
+  set_accel_for_action ("window.close", "<Primary>w");
   set_accel_for_action ("win.send-signal-stop", "<Primary>s");
   set_accel_for_action ("win.send-signal-cont", "<Primary>c");
   set_accel_for_action ("win.send-signal-term", "<Primary>t");
