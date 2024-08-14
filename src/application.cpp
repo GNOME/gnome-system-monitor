@@ -511,6 +511,7 @@ void
 GsmApplication::on_startup ()
 {
   AdwStyleManager *style_manager;
+  GtkCssProvider *css_provider;
 
   Gtk::Application::on_startup ();
 
@@ -521,6 +522,12 @@ GsmApplication::on_startup ()
 
   style_manager = adw_style_manager_get_default ();
   adw_style_manager_set_color_scheme (style_manager, ADW_COLOR_SCHEME_PREFER_LIGHT);
+
+  css_provider = gtk_css_provider_new ();
+  gtk_css_provider_load_from_resource (css_provider, "/org/gnome/gnome-system-monitor/style.css");
+  gtk_style_context_add_provider_for_display (gdk_display_get_default (),
+                                              GTK_STYLE_PROVIDER (css_provider),
+                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
   Gtk::Window::set_default_icon_name (APP_ID);
 

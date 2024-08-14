@@ -44,15 +44,6 @@
 #include "settings-keys.h"
 #include "legacy/gsm_color_button.h"
 
-static const char*LOAD_GRAPH_CSS = "\
-.loadgraph {\
-    background: linear-gradient(to bottom,\
-                  @window_bg_color,\
-                  @view_bg_color);\
-    color: @window_fg_color;\
-}\
-";
-
 static void
 search_text_changed (GtkEditable*,
                      gpointer data)
@@ -229,7 +220,6 @@ create_sys_view (GsmApplication *app,
   GtkLabel *label, *cpu_label;
   GtkGrid *table;
   GsmColorButton *color_picker;
-  GtkCssProvider *provider;
 
   LoadGraph *cpu_graph, *mem_graph, *net_graph, *disk_graph;
 
@@ -238,9 +228,6 @@ create_sys_view (GsmApplication *app,
   gchar *label_text;
   gchar *title_template;
 
-  provider = gtk_css_provider_new ();
-  gtk_css_provider_load_from_string (provider, LOAD_GRAPH_CSS);
-  gtk_style_context_add_provider_for_display (gdk_display_get_default (), GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
   // Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
   title_template = g_strdup (_("Pick a Color for “%s”"));
 
