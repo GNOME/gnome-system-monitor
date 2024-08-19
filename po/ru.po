@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor trunk\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2024-06-29 05:29+0000\n"
-"PO-Revision-Date: 2024-07-03 14:14+0300\n"
+"POT-Creation-Date: 2024-07-29 17:44+0000\n"
+"PO-Revision-Date: 2024-07-30 12:12+0300\n"
 "Last-Translator: Artur So <arturios2005@mail.ru>\n"
 "Language-Team: Русский <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -28,66 +28,40 @@ msgstr ""
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 3.4.4\n"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:7 data/interface.ui:6
-#: data/org.gnome.SystemMonitor.desktop.in.in:3 src/application.cpp:387
-#: src/interface.cpp:487
-msgid "System Monitor"
-msgstr "Системный монитор"
+#: data/disks.ui:32 data/memmaps.ui:414
+msgid "Device"
+msgstr "Устройство"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:8
-msgid "View and manage system resources"
-msgstr "Просмотр и управление ресурсами системы"
+#: data/disks.ui:86
+msgid "Directory"
+msgstr "Каталог"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:10
-msgid ""
-"System Monitor is a process viewer and system monitor with an attractive, "
-"easy-to-use interface."
-msgstr ""
-"Системный монитор — простой инструмент для просмотра и управления процессами."
+#: data/disks.ui:121 data/openfiles.ui:71 src/legacy/gsm_color_button.c:599
+msgid "Type"
+msgstr "Тип"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:14
-msgid ""
-"System Monitor can help you find out what applications are using the "
-"processor or the memory of your computer, can manage the running "
-"applications, force stop processes not responding, and change the state or "
-"priority of existing processes."
-msgstr ""
-"Системный монитор поможет определить, какие приложения используют процессор "
-"или память компьютера, может управлять запущенными приложениями, "
-"останавливать зависшие процессы и изменять состояние или приоритет "
-"выполняющихся процессов."
+#: data/disks.ui:156
+msgid "Total"
+msgstr "Всего"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:20
-msgid ""
-"The resource graphs feature shows you a quick overview of what is going on "
-"with your computer displaying recent network, memory and processor usage."
-msgstr ""
-"Функция отображения графика ресурсов предоставляет краткий обзор того, что "
-"происходит с компьютером, показывая использования сети, памяти и процессора."
+#: data/disks.ui:193
+msgid "Free"
+msgstr "Свободно"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:28
-msgid "Process list view"
-msgstr "Вид списка процессов"
+#: data/disks.ui:230
+msgid "Available"
+msgstr "Доступно"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:32
-msgid "Resources overview"
-msgstr "Обзор ресурсов"
+#: data/disks.ui:267
+msgid "Used"
+msgstr "Использовано"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:36
-msgid "File Systems view"
-msgstr "Обзор файловых систем"
-
-#. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:46 src/interface.cpp:496
-msgid "The GNOME Project"
-msgstr "Проект GNOME"
-
-#: data/gnome-system-monitor-kde.desktop.in.in:3 src/application.cpp:431
+#: data/gnome-system-monitor-kde.desktop.in.in:3 src/application.cpp:433
 msgid "GNOME System Monitor"
 msgstr "Системный монитор среды GNOME"
 
 #: data/gnome-system-monitor-kde.desktop.in.in:4
-#: data/org.gnome.SystemMonitor.desktop.in.in:4 src/interface.cpp:488
+#: data/org.gnome.SystemMonitor.desktop.in.in:4
 msgid "View current processes and monitor system state"
 msgstr "Просмотр текущих процессов и мониторинг состояния системы"
 
@@ -196,120 +170,125 @@ msgctxt "shortcut window"
 msgid "Send Kill signal"
 msgstr "Послать сигнал «Прервать»"
 
-#: data/interface.ui:26
+#: data/interface.ui:6 data/org.gnome.SystemMonitor.appdata.xml.in.in:7
+#: data/org.gnome.SystemMonitor.desktop.in.in:3 src/application.cpp:404
+msgid "System Monitor"
+msgstr "Системный монитор"
+
+#: data/interface.ui:22
 msgid "Search"
 msgstr "Поиск"
 
-#: data/interface.ui:36
+#: data/interface.ui:29
 msgid "Main Menu"
 msgstr "Главное меню"
 
-#: data/interface.ui:55
+#: data/interface.ui:44
+msgid "Search processes and users"
+msgstr "Поиск процессов и пользователей"
+
+#: data/interface.ui:58
 msgid "_Resources"
 msgstr "_Ресурсы"
 
-#: data/interface.ui:100 data/preferences.ui:50 data/procproperties.ui:86
-#: src/interface.cpp:283 src/proctable.cpp:352
+#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:86
+#: src/interface.cpp:281 src/proctable.cpp:352
 #, no-c-format
 msgid "CPU"
 msgstr "ЦП"
 
-#: data/interface.ui:131 data/procproperties.ui:97 src/interface.cpp:321
+#: data/interface.ui:134 data/procproperties.ui:97 src/interface.cpp:319
 #: src/proctable.cpp:359
 msgid "Memory"
 msgstr "Память"
 
-#: data/interface.ui:142 src/interface.cpp:333
+#: data/interface.ui:145 src/interface.cpp:331
 msgid "Swap"
 msgstr "Подкачка"
 
-#: data/interface.ui:159 data/preferences.ui:61
+#: data/interface.ui:162 data/preferences.ui:61
 msgid "Memory and Swap"
 msgstr "Память и подкачка"
 
-#: data/interface.ui:190 src/interface.cpp:362
+#: data/interface.ui:193 src/interface.cpp:360
 msgid "Receiving"
 msgstr "Приём"
 
-#: data/interface.ui:200
+#: data/interface.ui:203
 msgid "Total Received"
 msgstr "Всего принято"
 
-#: data/interface.ui:210 src/interface.cpp:380
+#: data/interface.ui:213 src/interface.cpp:378
 msgid "Sending"
 msgstr "Отправка"
 
-#: data/interface.ui:220
+#: data/interface.ui:223
 msgid "Total Sent"
 msgstr "Всего отправлено"
 
-#: data/interface.ui:237 data/preferences.ui:78
+#: data/interface.ui:240 data/preferences.ui:78
 msgid "Network"
 msgstr "Сеть"
 
-#: data/interface.ui:268 src/interface.cpp:415
+#: data/interface.ui:271 src/interface.cpp:413
 msgid "Reading"
 msgstr "Чтение"
 
-#: data/interface.ui:278
+#: data/interface.ui:281
 msgid "Total Read"
 msgstr "Всего прочитано"
 
-#: data/interface.ui:288 src/interface.cpp:433
+#: data/interface.ui:291 src/interface.cpp:431
 msgid "Writing"
 msgstr "Запись"
 
-#: data/interface.ui:298
+#: data/interface.ui:301
 msgid "Total Written"
 msgstr "Всего записано"
 
-#: data/interface.ui:315
+#: data/interface.ui:318
 msgid "Disk"
 msgstr "Диск"
 
-#: data/interface.ui:335
+#: data/interface.ui:338
 msgid "_Processes"
 msgstr "_Процессы"
 
-#: data/interface.ui:347
-msgid "Search processes and users"
-msgstr "Поиск процессов и пользователей"
-
-#: data/interface.ui:368
+#: data/interface.ui:356
 msgctxt "interface"
-msgid "_End Process"
-msgstr "Завер_шить процесс"
+msgid "_End Process…"
+msgstr "Завер_шить процесс…"
 
-#: data/interface.ui:391
+#: data/interface.ui:379
 msgid "Process Properties"
 msgstr "Свойства процесса"
 
-#: data/interface.ui:413
+#: data/interface.ui:396
 msgid "_File Systems"
 msgstr "_Файловые системы"
 
-#: data/lsof.ui:6
+#: data/lsof.ui:4
 msgctxt "Window title for Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Поиск открытых файлов"
 
-#: data/lsof.ui:36
+#: data/lsof.ui:30
 msgid "Filter files by name"
 msgstr "Фильтровать файлы по имени"
 
-#: data/lsof.ui:42
-msgid "Case insensitive"
+#: data/lsof.ui:36
+msgid "Case Insensitive"
 msgstr "Не учитывать регистр"
 
-#: data/lsof.ui:63
+#: data/lsof.ui:68
 msgid "Process"
 msgstr "Процесс"
 
-#: data/lsof.ui:111
+#: data/lsof.ui:116
 msgid "PID"
 msgstr "PID"
 
-#: data/lsof.ui:145 data/memmaps.ui:37
+#: data/lsof.ui:150 data/memmaps.ui:37
 msgid "Filename"
 msgstr "Имя файла"
 
@@ -361,54 +340,50 @@ msgstr "Разделяемая, чистая"
 msgid "Shared Dirty"
 msgstr "Разделяемая, использованная"
 
-#: data/memmaps.ui:414
-msgid "Device"
-msgstr "Устройство"
-
 #: data/memmaps.ui:452
 msgid "Inode"
 msgstr "Inode"
 
 #: data/menus.ui:7 data/menus.ui:62
 msgctxt "Menu item to Open Search for Open Files dialog"
-msgid "Search for Open Files…"
-msgstr "Поиск открытых файлов…"
+msgid "_Search for Open Files…"
+msgstr "_Поиск открытых файлов…"
 
-#: data/menus.ui:13 data/menus.ui:68 data/preferences.ui:6
-msgid "Preferences"
-msgstr "Параметры"
+#: data/menus.ui:13 data/menus.ui:68
+msgid "_Preferences"
+msgstr "П_араметры"
 
 #: data/menus.ui:17 data/menus.ui:72
-msgid "Help"
-msgstr "Справка"
+msgid "_Help"
+msgstr "_Справка"
 
 #: data/menus.ui:21 data/menus.ui:76
-msgid "Keyboard Shortcuts"
-msgstr "Комбинации клавиш"
+msgid "_Keyboard Shortcuts"
+msgstr "_Комбинации клавиш"
 
 #: data/menus.ui:25 data/menus.ui:80
-msgid "About System Monitor"
-msgstr "О приложении"
+msgid "_About System Monitor"
+msgstr "_О приложении"
 
 #: data/menus.ui:33
 msgid "_Refresh"
-msgstr "_Обновить"
+msgstr "О_бновить"
 
 #: data/menus.ui:39
-msgid "_Active Processes"
-msgstr "_Активные процессы"
+msgid "Ac_tive Processes"
+msgstr "Ак_тивные процессы"
 
 #: data/menus.ui:44
-msgid "A_ll Processes"
-msgstr "В_се процессы"
+msgid "All Pro_cesses"
+msgstr "Все про_цессы"
 
 #: data/menus.ui:49
-msgid "M_y Processes"
+msgid "_My Processes"
 msgstr "_Мои процессы"
 
 #: data/menus.ui:56
 msgid "Show _Dependencies"
-msgstr "_Показать зависимости"
+msgstr "Показать _зависимости"
 
 #: data/menus.ui:88
 msgid "_Properties"
@@ -420,36 +395,36 @@ msgstr "_Карты памяти"
 
 #. Translators: this means 'Files that are open' (open is not a verb here)
 #: data/menus.ui:98
-msgid "Open _Files"
-msgstr "Открытые _файлы"
+msgid "_Open Files"
+msgstr "_Открытые файлы"
 
 #: data/menus.ui:104
 msgid "_Change Priority"
-msgstr "И_зменить приоритет"
+msgstr "_Изменить приоритет"
 
-#: data/menus.ui:107 src/util.cpp:173
-msgid "Very High"
-msgstr "Очень высокий"
+#: data/menus.ui:107
+msgid "_Very High"
+msgstr "О_чень высокий"
 
-#: data/menus.ui:112 src/util.cpp:175
-msgid "High"
-msgstr "Высокий"
+#: data/menus.ui:112
+msgid "_High"
+msgstr "_Высокий"
 
-#: data/menus.ui:117 src/util.cpp:177
-msgid "Normal"
-msgstr "Обычный"
+#: data/menus.ui:117
+msgid "_Normal"
+msgstr "Об_ычный"
 
-#: data/menus.ui:122 src/util.cpp:179
-msgid "Low"
-msgstr "Низкий"
+#: data/menus.ui:122
+msgid "_Low"
+msgstr "_Низкий"
 
-#: data/menus.ui:127 src/util.cpp:181
-msgid "Very Low"
-msgstr "Очень низкий"
+#: data/menus.ui:127
+msgid "Ve_ry Low"
+msgstr "Оч_ень низкий"
 
 #: data/menus.ui:134
-msgid "Custom"
-msgstr "Другой"
+msgid "Cus_tom"
+msgstr "По_льзовательский"
 
 #: data/menus.ui:141
 msgid "Set _Affinity…"
@@ -482,10 +457,6 @@ msgctxt ""
 msgid "FD"
 msgstr "FD"
 
-#: data/openfiles.ui:71 src/legacy/gsm_color_button.c:599
-msgid "Type"
-msgstr "Тип"
-
 #: data/openfiles.ui:105
 msgid "Object"
 msgstr "Объект"
@@ -506,6 +477,49 @@ msgstr "Изменить уступчивость процесса"
 msgid "Privileges are required to change the priority of processes"
 msgstr "Привилегии, необходимые для изменения приоритета процессов"
 
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:8
+msgid "View and manage system resources"
+msgstr "Просмотр и управление ресурсами системы"
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:10
+msgid ""
+"System Monitor is a process viewer and system monitor with an attractive, "
+"easy-to-use interface."
+msgstr ""
+"Системный монитор — простой инструмент для просмотра и управления процессами."
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:14
+msgid ""
+"System Monitor can help you find out what applications are using the "
+"processor or the memory of your computer, can manage the running "
+"applications, force stop processes not responding, and change the state or "
+"priority of existing processes."
+msgstr ""
+"Системный монитор поможет определить, какие приложения используют процессор "
+"или память компьютера, может управлять запущенными приложениями, "
+"останавливать зависшие процессы и изменять состояние или приоритет "
+"выполняющихся процессов."
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:20
+msgid ""
+"The resource graphs feature shows you a quick overview of what is going on "
+"with your computer displaying recent network, memory and processor usage."
+msgstr ""
+"Функция отображения графика ресурсов предоставляет краткий обзор того, что "
+"происходит с компьютером, показывая использования сети, памяти и процессора."
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:28
+msgid "Process list view"
+msgstr "Вид списка процессов"
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:32
+msgid "Resources overview"
+msgstr "Обзор ресурсов"
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:36
+msgid "File Systems view"
+msgstr "Обзор файловых систем"
+
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
 msgid ""
@@ -514,6 +528,10 @@ msgid ""
 msgstr ""
 "Монитор;Система;Процесс;ЦП;Процессор;Память;Сеть;История;Использование;"
 "Производительность;Задача;Менеджер;Диспетчер;"
+
+#: data/preferences.ui:6
+msgid "Preferences"
+msgstr "Параметры"
 
 #: data/preferences.ui:12
 msgid "Resources"
@@ -581,8 +599,8 @@ msgid "Information Fields"
 msgstr "Информационные поля"
 
 #: data/preferences.ui:139
-msgid "Process information shown in list:"
-msgstr "Информация о процессе отображается в списке:"
+msgid "Process information shown in list"
+msgstr "Информация о процессе отображается в списке"
 
 #: data/preferences.ui:146
 msgid "File Systems"
@@ -665,76 +683,79 @@ msgstr "Контрольная группа"
 msgid "More Actions"
 msgstr "Больше действий"
 
-#: data/renice.ui:15 data/setaffinity.ui:17 src/procdialogs.cpp:189
+#: data/renice.ui:4
+msgid ""
+"The priority of a process is given by its nice value. A lower nice value "
+"corresponds to a higher priority."
+msgstr ""
+"Приоритет процесса задаётся фактором уступчивости (nice). Чем меньше фактор "
+"уступчивости, тем выше приоритет процесса."
+
+#: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:189
 msgid "_Cancel"
 msgstr "_Отменить"
 
-#: data/renice.ui:16
+#: data/renice.ui:10
 msgid "Change _Priority"
 msgstr "_Изменить приоритет"
 
-#: data/renice.ui:39
-msgid "_Nice value:"
+#: data/renice.ui:17
+msgid "_Nice Value:"
 msgstr "_Фактор уступчивости (nice):"
 
-#: data/renice.ui:69
-msgid ""
-"<small><i><b>Note:</b> The priority of a process is given by its nice value. "
-"A lower nice value corresponds to a higher priority.</i></small>"
-msgstr ""
-"<small><i><b>Примечание:</b> приоритет процесса задаётся фактором "
-"уступчивости (nice). Меньшее значение «nice» соответствует более высокому "
-"приоритету.</i></small>"
-
-#: data/setaffinity.ui:8
+#: data/setaffinity.ui:15
 msgid "Set Affinity"
 msgstr "Установить Сходство"
 
-#: data/setaffinity.ui:23
+#: data/setaffinity.ui:26
 msgid "_Apply"
 msgstr "_Применить"
 
-#: data/setaffinity.ui:40
-msgid "Apply to child threads"
-msgstr "Применить к дочерним потокам"
+#: data/setaffinity.ui:39
+msgid "Select CPUs allowed to run on"
+msgstr "Выберите процессоры, на которых разрешено работать"
 
-#: data/setaffinity.ui:58
-msgid "Run on all CPUs"
-msgstr "Запуск на всех ЦП"
+#: data/setaffinity.ui:46
+msgid "_Run on all CPUs"
+msgstr "_Запуск на всех ЦП"
 
-#: src/application.cpp:414
+#: data/setaffinity.ui:68
+msgid "Apply to Child _Threads"
+msgstr "Применить к дочерним _потокам"
+
+#: src/application.cpp:405
 msgid "A simple process and system monitor."
 msgstr "Простой диспетчер процессов и системы."
 
-#: src/argv.cpp:22
+#: src/argv.cpp:20
 msgid "Show the Processes tab"
 msgstr "Показать вкладку «Процессы»"
 
-#: src/argv.cpp:28
+#: src/argv.cpp:24
 msgid "Show the Resources tab"
 msgstr "Показать вкладку «Ресурсы»"
 
-#: src/argv.cpp:34
+#: src/argv.cpp:28
 msgid "Show the File Systems tab"
 msgstr "Показать вкладку «Файловые системы»"
 
-#: src/argv.cpp:39
+#: src/argv.cpp:31
 msgid "Show the application’s version"
 msgstr "Показать версию приложения"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: src/interface.cpp:247
+#: src/interface.cpp:245
 #, c-format
 msgid "Pick a Color for “%s”"
 msgstr "Выбрать цвет для «%s»"
 
 #. Set check box label value to CPU [1..2048]
-#: src/interface.cpp:285 src/setaffinity.cpp:415
+#: src/interface.cpp:283 src/setaffinity.cpp:406
 #, c-format
 msgid "CPU%d"
 msgstr "ЦП%d"
 
-#: src/interface.cpp:500
+#: src/interface.cpp:494
 msgid "translator-credits"
 msgstr ""
 "Stas Solovey <whats_up@tut.by>, 2011-2019.\n"
@@ -835,42 +856,48 @@ msgstr[2] "%u сек"
 
 #. Update label
 #. Translators: CPU usage percentage label: 95.7%
-#: src/load-graph.cpp:518
+#: src/load-graph.cpp:519
 #, c-format
 msgid "%.1f%%"
 msgstr "%.1f%%"
 
-#: src/load-graph.cpp:545
+#: src/load-graph.cpp:547
 msgid "not available"
 msgstr "недоступно"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:550
+#: src/load-graph.cpp:552
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) из %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:555
+#: src/load-graph.cpp:557
 #, c-format
 msgid "Cache %s"
 msgstr "Кэш %s"
 
 #: src/lsof.cpp:108
 #, c-format
-msgid "%d open file"
-msgid_plural "%d open files"
+msgid "%d Open File"
+msgid_plural "%d Open Files"
 msgstr[0] "%d открытый файл"
 msgstr[1] "%d открытых файла"
 msgstr[2] "%d открытых файлов"
 
 #: src/lsof.cpp:110
 #, c-format
-msgid "%d matching open file"
-msgid_plural "%d matching open files"
+msgid "%d Matching Open File"
+msgid_plural "%d Matching Open Files"
 msgstr[0] "%d совпадающий открытый файл"
 msgstr[1] "%d совпадающих открытых файла"
 msgstr[2] "%d совпадающих открытых файлов"
+
+#. Translators: process name and id
+#: src/memmaps.cpp:379 src/openfiles.cpp:281 src/setaffinity.cpp:382
+#, c-format
+msgid "%s (PID %u)"
+msgstr "%s (PID %u)"
 
 #: src/openfiles.cpp:29
 msgid "file"
@@ -1475,13 +1502,13 @@ msgstr "Ос_тановить"
 
 #: src/procdialogs.cpp:273
 #, c-format
-msgid "Change Priority of Process “%s” (PID: %u)"
-msgstr "Изменить приоритет для процесса «%s» (PID %u)"
+msgid "Change Priority of %s (PID %u)"
+msgstr "Изменить приоритет %s (PID %u)"
 
 #: src/procdialogs.cpp:276
 #, c-format
-msgid "Change Priority of the selected process"
-msgid_plural "Change Priority of %d selected processes"
+msgid "Change Priority of the Selected Process"
+msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "Изменить приоритет %d выбранного процесса"
 msgstr[1] "Изменить приоритет %d выбранных процессов"
 msgstr[2] "Изменить приоритет %d выбранных процессов"
@@ -1544,18 +1571,13 @@ msgid "Disk Write"
 msgstr "Запись на диск"
 
 #. Create error alert dialog
-#: src/setaffinity.cpp:124
+#: src/setaffinity.cpp:126
 msgid "GNU CPU Affinity error"
 msgstr "Ошибка GNU CPU Affinity"
 
-#: src/setaffinity.cpp:129
+#: src/setaffinity.cpp:131
 msgid "_Close"
 msgstr "_Закрыть"
-
-#: src/setaffinity.cpp:396
-#, c-format
-msgid "Select CPUs \"%s\" (PID %u) is allowed to run on:"
-msgstr "Выберите ЦП «%s» (PID %u), на которых разрешено работать:"
 
 #: src/util.cpp:34
 msgid "Running"
@@ -1601,52 +1623,78 @@ msgstr "%u:%02u:%02u"
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: src/util.cpp:188
+#: src/util.cpp:149
+msgid "Very High"
+msgstr "Очень высокий"
+
+#: src/util.cpp:151
+msgid "High"
+msgstr "Высокий"
+
+#: src/util.cpp:153
+msgid "Normal"
+msgstr "Обычный"
+
+#: src/util.cpp:155
+msgid "Low"
+msgstr "Низкий"
+
+#: src/util.cpp:157
+msgid "Very Low"
+msgstr "Очень низкий"
+
+#: src/util.cpp:164
 msgid "Very High Priority"
 msgstr "Очень высокий приоритет"
 
-#: src/util.cpp:190
+#: src/util.cpp:166
 msgid "High Priority"
 msgstr "Высокий приоритет"
 
-#: src/util.cpp:192
+#: src/util.cpp:168
 msgid "Normal Priority"
 msgstr "Обычный приоритет"
 
-#: src/util.cpp:194
+#: src/util.cpp:170
 msgid "Low Priority"
 msgstr "Низкий приоритет"
 
-#: src/util.cpp:196
+#: src/util.cpp:172
 msgid "Very Low Priority"
 msgstr "Очень низкий приоритет"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:789
+#: src/util.cpp:765
 #, c-format
 msgid "%s/s"
 msgstr "%s/с"
+
+#~ msgid "Open _Files"
+#~ msgstr "Открытые _файлы"
+
+#~ msgid "Custom"
+#~ msgstr "Другой"
+
+#~ msgid "The GNOME Project"
+#~ msgstr "Проект GNOME"
+
+#~ msgid ""
+#~ "<small><i><b>Note:</b> The priority of a process is given by its nice "
+#~ "value. A lower nice value corresponds to a higher priority.</i></small>"
+#~ msgstr ""
+#~ "<small><i><b>Примечание:</b> приоритет процесса задаётся фактором "
+#~ "уступчивости (nice). Меньшее значение «nice» соответствует более высокому "
+#~ "приоритету.</i></small>"
+
+#~ msgctxt "interface"
+#~ msgid "_End Process"
+#~ msgstr "Завер_шить процесс"
 
 #~ msgid "_Continue"
 #~ msgstr "_Продолжить"
 
 #~ msgid "_Kill…"
 #~ msgstr "Пр_ервать…"
-
-#~ msgid "Directory"
-#~ msgstr "Каталог"
-
-#~ msgid "Total"
-#~ msgstr "Всего"
-
-#~ msgid "Free"
-#~ msgstr "Свободно"
-
-#~ msgid "Available"
-#~ msgstr "Доступно"
-
-#~ msgid "Used"
-#~ msgstr "Использовано"
 
 #, c-format
 #~ msgid "_Memory maps for process “%s” (PID %u):"
@@ -1726,10 +1774,6 @@ msgstr "%s/с"
 #~ msgid "Process Name"
 #~ msgstr "Имя процесса"
 
-#, c-format
-#~ msgid "%s (PID %u)"
-#~ msgstr "%s (PID %u)"
-
 #, no-c-format
 #~ msgid "% CPU"
 #~ msgstr "% ЦП"
@@ -1758,13 +1802,6 @@ msgstr "%s/с"
 
 #~ msgid "Note:"
 #~ msgstr "Примечание:"
-
-#~ msgid ""
-#~ "The priority of a process is given by its nice value. A lower nice value "
-#~ "corresponds to a higher priority."
-#~ msgstr ""
-#~ "Приоритет процесса задаётся фактором уступчивости (nice). Чем меньше "
-#~ "фактор уступчивости, тем выше приоритет процесса."
 
 #~ msgctxt "shortcut window"
 #~ msgid "Send End signal"
