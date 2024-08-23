@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2024-02-05 06:07+0000\n"
-"PO-Revision-Date: 2024-02-19 22:21+0300\n"
+"POT-Creation-Date: 2024-08-06 10:14+0000\n"
+"PO-Revision-Date: 2024-08-23 23:59+0300\n"
 "Last-Translator: Yuras Shumovich <shumovichy@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
 "Language: be\n"
@@ -17,69 +17,42 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
-#: data/gnome-system-monitor.appdata.xml.in.in:7 data/interface.ui:6
-#: data/org.gnome.SystemMonitor.desktop.in.in:3 src/application.cpp:396
-#: src/interface.cpp:487
-msgid "System Monitor"
-msgstr "Сістэмны манітор"
+#: data/disks.ui:31 data/memmaps.ui:424
+msgid "Device"
+msgstr "Прылада"
 
-#: data/gnome-system-monitor.appdata.xml.in.in:8
-msgid "View and manage system resources"
-msgstr "Прагляд і кіраванне сістэмнымі рэсурсамі"
+#: data/disks.ui:85
+msgid "Directory"
+msgstr "Каталог"
 
-#: data/gnome-system-monitor.appdata.xml.in.in:10
-msgid ""
-"System Monitor is a process viewer and system monitor with an attractive, "
-"easy-to-use interface."
-msgstr ""
-"Сістэмны манітор — гэта праглядальнік працэсаў і сістэмны манітор з простым "
-"прыязным інтэрфейсам."
+#: data/disks.ui:120 data/openfiles.ui:80 src/legacy/gsm_color_button.c:599
+msgid "Type"
+msgstr "Тып"
 
-#: data/gnome-system-monitor.appdata.xml.in.in:14
-msgid ""
-"System Monitor can help you find out what applications are using the "
-"processor or the memory of your computer, can manage the running "
-"applications, force stop processes not responding, and change the state or "
-"priority of existing processes."
-msgstr ""
-"Сістэмны манітор памагае выявіць, якія праграмы выкарыстоўваюць працэсар або "
-"памяць камп'ютара, можа кіраваць запушчанымі праграмамі, прымусова спыняць "
-"працэсы, якія не адказваюць на запыты сістэмы, а таксама змяняць стан або "
-"прыярытэт наяўных працэсаў."
+#: data/disks.ui:155
+msgid "Total"
+msgstr "Агулам"
 
-#: data/gnome-system-monitor.appdata.xml.in.in:20
-msgid ""
-"The resource graphs feature shows you a quick overview of what is going on "
-"with your computer displaying recent network, memory and processor usage."
-msgstr ""
-"Графікі выкарыстання рэсурсаў дазваляюць хутка паглядзець, што адбываецца з "
-"камп'ютарам, выводзіцца стан выкарыстання сеткі, памяці і працэсара."
+#: data/disks.ui:192
+msgid "Free"
+msgstr "Свабодна"
 
-#: data/gnome-system-monitor.appdata.xml.in.in:28
-msgid "Process list view"
-msgstr "Агляд спіса працэсаў"
+#: data/disks.ui:229
+msgid "Available"
+msgstr "Даступна"
 
-#: data/gnome-system-monitor.appdata.xml.in.in:32
-msgid "Resources overview"
-msgstr "Агляд рэсурсаў"
+#: data/disks.ui:266
+msgid "Used"
+msgstr "Выкарыстана"
 
-#: data/gnome-system-monitor.appdata.xml.in.in:36
-msgid "File Systems view"
-msgstr "Агляд файлавых сістэм"
-
-#. developer_name tag deprecated with Appstream 1.0
-#: data/gnome-system-monitor.appdata.xml.in.in:46 src/interface.cpp:496
-msgid "The GNOME Project"
-msgstr "Праект GNOME"
-
-#: data/gnome-system-monitor-kde.desktop.in.in:3 src/application.cpp:440
+#: data/gnome-system-monitor-kde.desktop.in.in:3 src/application.cpp:433
 msgid "GNOME System Monitor"
 msgstr "Сістэмны манітор GNOME"
 
 #: data/gnome-system-monitor-kde.desktop.in.in:4
-#: data/org.gnome.SystemMonitor.desktop.in.in:4 src/interface.cpp:488
+#: data/org.gnome.SystemMonitor.desktop.in.in:4
 msgid "View current processes and monitor system state"
 msgstr "Прагляд актыўных працэсаў і назіранне за станам сістэмы"
 
@@ -127,13 +100,13 @@ msgstr "Пошук"
 
 #: data/help-overlay.ui:56
 msgctxt "shortcut window"
-msgid "Show Processes"
-msgstr "Паказаць працэсы"
+msgid "Show Resources"
+msgstr "Паказаць рэсурсы"
 
 #: data/help-overlay.ui:62
 msgctxt "shortcut window"
-msgid "Show Resources"
-msgstr "Паказаць рэсурсы"
+msgid "Show Processes"
+msgstr "Паказаць працэсы"
 
 #: data/help-overlay.ui:68
 msgctxt "shortcut window"
@@ -190,151 +163,215 @@ msgctxt "shortcut window"
 msgid "Send Kill signal"
 msgstr "Адправіць сігнал «забіць»"
 
-#: data/interface.ui:26
+#: data/interface.ui:6 data/org.gnome.SystemMonitor.appdata.xml.in.in:7
+#: data/org.gnome.SystemMonitor.desktop.in.in:3 src/application.cpp:404
+msgid "System Monitor"
+msgstr "Сістэмны манітор"
+
+#: data/interface.ui:22
 msgid "Search"
 msgstr "Пошук"
 
-#: data/interface.ui:36
+#: data/interface.ui:29
 msgid "Main Menu"
 msgstr "Галоўнае меню"
 
-#: data/interface.ui:55
-msgid "_Processes"
-msgstr "_Працэсы"
-
-#: data/interface.ui:67
+#: data/interface.ui:44
 msgid "Search processes and users"
 msgstr "Пошук працэсаў і карыстальнікаў"
 
-#: data/interface.ui:88 src/procdialogs.cpp:150 src/proctable.cpp:136
-msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "_Закончыць працу працэсу"
-msgstr[1] "_Закончыць працу працэсаў"
-msgstr[2] "_Закончыць працу працэсаў"
-
-#: data/interface.ui:97
-msgid "Process Properties"
-msgstr "Уласцівасці працэсу"
-
-#: data/interface.ui:119
+#: data/interface.ui:58
 msgid "_Resources"
 msgstr "_Рэсурсы"
 
-#: data/interface.ui:164 data/preferences.ui:114 src/interface.cpp:283
-#: src/procproperties.cpp:77
+#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:86
+#: src/interface.cpp:281 src/proctable.cpp:352
+#, no-c-format
 msgid "CPU"
 msgstr "Працэсар"
 
-#: data/interface.ui:195 src/interface.cpp:321 src/procproperties.cpp:71
+#: data/interface.ui:134 data/procproperties.ui:97 src/interface.cpp:319
 #: src/proctable.cpp:359
 msgid "Memory"
 msgstr "Памяць"
 
-#: data/interface.ui:206 src/interface.cpp:333
+#: data/interface.ui:145 src/interface.cpp:331
 msgid "Swap"
 msgstr "Своп"
 
-#: data/interface.ui:223 data/preferences.ui:125
+#: data/interface.ui:162 data/preferences.ui:61
 msgid "Memory and Swap"
 msgstr "Памяць і своп"
 
-#: data/interface.ui:254 src/interface.cpp:362
+#: data/interface.ui:193 src/interface.cpp:360
 msgid "Receiving"
 msgstr "Атрыманне"
 
-#: data/interface.ui:264
+#: data/interface.ui:203
 msgid "Total Received"
 msgstr "Атрымана агулам"
 
-#: data/interface.ui:274 src/interface.cpp:380
+#: data/interface.ui:213 src/interface.cpp:378
 msgid "Sending"
 msgstr "Адпраўленне"
 
-#: data/interface.ui:284
+#: data/interface.ui:223
 msgid "Total Sent"
 msgstr "Адпраўлена агулам"
 
-#: data/interface.ui:301 data/preferences.ui:142
+#: data/interface.ui:240 data/preferences.ui:78
 msgid "Network"
 msgstr "Сетка"
 
-#: data/interface.ui:332 src/interface.cpp:415
+#: data/interface.ui:271 src/interface.cpp:413
 msgid "Reading"
 msgstr "Чытанне"
 
-#: data/interface.ui:342
+#: data/interface.ui:281
 msgid "Total Read"
 msgstr "Прачытана агулам"
 
-#: data/interface.ui:352 src/interface.cpp:433
+#: data/interface.ui:291 src/interface.cpp:431
 msgid "Writing"
 msgstr "Запіс"
 
-#: data/interface.ui:362
+#: data/interface.ui:301
 msgid "Total Written"
 msgstr "Запісана агулам"
 
-#: data/interface.ui:379
+#: data/interface.ui:318
 msgid "Disk"
 msgstr "Дыск"
 
-#: data/interface.ui:399
+#: data/interface.ui:338
+msgid "_Processes"
+msgstr "_Працэсы"
+
+#: data/interface.ui:356
+msgctxt "interface"
+msgid "_End Process…"
+msgstr "_Закончыць працу працэсу…"
+
+#: data/interface.ui:379
+msgid "Process Properties"
+msgstr "Уласцівасці працэсу"
+
+#: data/interface.ui:396
 msgid "_File Systems"
 msgstr "_Файлавыя сістэмы"
 
-#: data/lsof.ui:6
+#: data/lsof.ui:4
 msgctxt "Window title for Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Пошук адкрытых файлаў"
 
-#: data/lsof.ui:36
+#: data/lsof.ui:30
 msgid "Filter files by name"
 msgstr "Фільтраваць файлы па назве"
 
-#: data/lsof.ui:42
-msgid "Case insensitive"
+#: data/lsof.ui:36
+msgid "Case Insensitive"
 msgstr "Не ўлічваць рэгістр літар"
 
-#: data/memmaps.ui:8
+#: data/lsof.ui:67
+msgid "Process"
+msgstr "Працэс"
+
+#: data/lsof.ui:115
+msgid "PID"
+msgstr "PID"
+
+#: data/lsof.ui:149 data/memmaps.ui:45
+msgid "Filename"
+msgstr "Назва файла"
+
+#: data/memmaps.ui:15
 msgid "Memory Maps"
 msgstr "Карты памяці"
 
+#. virtual memory start
+#: data/memmaps.ui:83
+msgid "VM Start"
+msgstr "Пачатак ВП"
+
+#. virtual memory end
+#: data/memmaps.ui:122
+msgid "VM End"
+msgstr "Канец ВП"
+
+#. virtual memory syze
+#: data/memmaps.ui:161
+msgid "VM Size"
+msgstr "Памер ВП"
+
+#: data/memmaps.ui:198
+msgid "Flags"
+msgstr "Сцягі"
+
+#. virtual memory offset
+#: data/memmaps.ui:237
+msgid "VM Offset"
+msgstr "Зрух ВП"
+
+#. memory that has not been modified since it has been allocated
+#: data/memmaps.ui:276
+msgid "Private Clean"
+msgstr "Пр. не зм. – Прыватная, не змененая"
+
+#. memory that has been modified since it has been allocated
+#: data/memmaps.ui:313
+msgid "Private Dirty"
+msgstr "Пр. зм. – Прыватная, змененая"
+
+#. shared memory that has not been modified since it has been allocated
+#: data/memmaps.ui:350
+msgid "Shared Clean"
+msgstr "Суп. не зм. – Супольная, не змененая"
+
+#. shared memory that has been modified since it has been allocated
+#: data/memmaps.ui:387
+msgid "Shared Dirty"
+msgstr "Суп. зм. – Супольная, змененая"
+
+#: data/memmaps.ui:462
+msgid "Inode"
+msgstr "Inode"
+
 #: data/menus.ui:7 data/menus.ui:62
 msgctxt "Menu item to Open Search for Open Files dialog"
-msgid "Search for Open Files…"
-msgstr "Пошук адкрытых файлаў…"
+msgid "_Search for Open Files…"
+msgstr "_Пошук адкрытых файлаў…"
 
-#: data/menus.ui:13 data/menus.ui:68 data/preferences.ui:6
-msgid "Preferences"
-msgstr "Налады"
+#: data/menus.ui:13 data/menus.ui:68
+msgid "_Preferences"
+msgstr "_Налады"
 
 #: data/menus.ui:17 data/menus.ui:72
-msgid "Help"
-msgstr "Даведка"
+msgid "_Help"
+msgstr "_Даведка"
 
 #: data/menus.ui:21 data/menus.ui:76
-msgid "Keyboard Shortcuts"
-msgstr "Спалучэнні клавіш"
+msgid "_Keyboard Shortcuts"
+msgstr "_Спалучэнні клавіш"
 
 #: data/menus.ui:25 data/menus.ui:80
-msgid "About System Monitor"
-msgstr "Пра Сістэмны манітор"
+msgid "_About System Monitor"
+msgstr "_Аб праграме"
 
 #: data/menus.ui:33
 msgid "_Refresh"
 msgstr "Абна_віць"
 
 #: data/menus.ui:39
-msgid "_Active Processes"
+msgid "Ac_tive Processes"
 msgstr "_Актыўныя працэсы"
 
 #: data/menus.ui:44
-msgid "A_ll Processes"
+msgid "All Pro_cesses"
 msgstr "_Усе працэсы"
 
 #: data/menus.ui:49
-msgid "M_y Processes"
+msgid "_My Processes"
 msgstr "_Мае працэсы"
 
 #: data/menus.ui:56
@@ -351,60 +388,71 @@ msgstr "_Карты памяці"
 
 #. Translators: this means 'Files that are open' (open is not a verb here)
 #: data/menus.ui:98
-msgid "Open _Files"
-msgstr "Адкрытыя _файлы"
+msgid "_Open Files"
+msgstr "_Адкрытыя файлы"
 
 #: data/menus.ui:104
 msgid "_Change Priority"
 msgstr "_Змяніць прыярытэт"
 
-#: data/menus.ui:107 src/util.cpp:173
-msgid "Very High"
-msgstr "Вельмі высокі"
+#: data/menus.ui:107
+msgid "_Very High"
+msgstr "В_ельмі высокі"
 
-#: data/menus.ui:112 src/util.cpp:175
-msgid "High"
-msgstr "Высокі"
+#: data/menus.ui:112
+msgid "_High"
+msgstr "_Высокі"
 
-#: data/menus.ui:117 src/util.cpp:177
-msgid "Normal"
-msgstr "Звычайны"
+#: data/menus.ui:117
+msgid "_Normal"
+msgstr "_Звычайны"
 
-#: data/menus.ui:122 src/util.cpp:179
-msgid "Low"
-msgstr "Нізкі"
+#: data/menus.ui:122
+msgid "_Low"
+msgstr "_Нізкі"
 
-#: data/menus.ui:127 src/util.cpp:181
-msgid "Very Low"
-msgstr "Вельмі нізкі"
+#: data/menus.ui:127
+msgid "Ve_ry Low"
+msgstr "Ве_льмі нізкі"
 
 #: data/menus.ui:134
-msgid "Custom"
-msgstr "Уласны"
+msgid "Cus_tom"
+msgstr "_Адмысловы"
 
 #: data/menus.ui:141
 msgid "Set _Affinity…"
 msgstr "Задаць _прывязку да працэсараў…"
 
-#: data/menus.ui:147
+#: data/menus.ui:147 data/procproperties.ui:217
 msgid "_Stop…"
 msgstr "_Спыніць…"
 
-#: data/menus.ui:151
-msgid "_Continue"
-msgstr "_Працягнуць"
+#: data/menus.ui:151 src/procproperties.cpp:216
+msgid "_Resume"
+msgstr "_Узнавіць"
 
-#: data/menus.ui:155
+#: data/menus.ui:155 src/procproperties.cpp:213
 msgid "_Terminate…"
 msgstr "_Завяршыць…"
 
-#: data/menus.ui:159
-msgid "_Kill…"
-msgstr "За_біць…"
+#: data/menus.ui:159 data/procproperties.ui:224
+msgid "_Force Stop…"
+msgstr "_Прымусова спыніць…"
 
-#: data/openfiles.ui:4
+#: data/openfiles.ui:16
 msgid "Open Files"
 msgstr "Адкрытыя файлы"
+
+#: data/openfiles.ui:46
+msgctxt ""
+"FD here means File Descriptor. Use a short translation if possible, and at "
+"most 2-3 characters"
+msgid "FD"
+msgstr "FD"
+
+#: data/openfiles.ui:114
+msgid "Object"
+msgstr "Аб'ект"
 
 #: data/org.gnome.gnome-system-monitor.policy.in.in:11
 msgid "Kill process"
@@ -422,6 +470,50 @@ msgstr "_Змяніць прыярытэт працэсу"
 msgid "Privileges are required to change the priority of processes"
 msgstr "Для змянення прыярытэту працэсаў патрэбны адпаведны дазвол"
 
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:8
+msgid "View and manage system resources"
+msgstr "Прагляд і кіраванне сістэмнымі рэсурсамі"
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:10
+msgid ""
+"System Monitor is a process viewer and system monitor with an attractive, "
+"easy-to-use interface."
+msgstr ""
+"Сістэмны манітор — гэта праглядальнік працэсаў і сістэмны манітор з простым "
+"прыязным інтэрфейсам."
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:14
+msgid ""
+"System Monitor can help you find out what applications are using the "
+"processor or the memory of your computer, can manage the running "
+"applications, force stop processes not responding, and change the state or "
+"priority of existing processes."
+msgstr ""
+"Сістэмны манітор памагае выявіць, якія праграмы выкарыстоўваюць працэсар або "
+"памяць камп'ютара, можа кіраваць запушчанымі праграмамі, прымусова спыняць "
+"працэсы, якія не адказваюць на запыты сістэмы, а таксама змяняць стан або "
+"прыярытэт наяўных працэсаў."
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:20
+msgid ""
+"The resource graphs feature shows you a quick overview of what is going on "
+"with your computer displaying recent network, memory and processor usage."
+msgstr ""
+"Графікі выкарыстання рэсурсаў дазваляюць хутка паглядзець, што адбываецца з "
+"камп'ютарам, выводзіцца стан выкарыстання сеткі, памяці і працэсара."
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:28
+msgid "Process list view"
+msgstr "Агляд спіса працэсаў"
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:32
+msgid "Resources overview"
+msgstr "Агляд рэсурсаў"
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:36
+msgid "File Systems view"
+msgstr "Агляд файлавых сістэм"
+
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
 msgid ""
@@ -433,178 +525,232 @@ msgstr ""
 "Сетка;Сеціва;Гісторыя;Графік;Выкарыстанне;Прадукцыйнасць;Рэсурсы;Дыспетчар:"
 "Задач;"
 
-#: data/preferences.ui:13
-msgid "Processes"
-msgstr "Працэсы"
+#: data/preferences.ui:6
+msgid "Preferences"
+msgstr "Налады"
 
-#: data/preferences.ui:17 data/preferences.ui:80 data/preferences.ui:165
-msgid "Behavior"
-msgstr "Паводзіны"
-
-#: data/preferences.ui:21 data/preferences.ui:84 data/preferences.ui:169
-msgid "_Update Interval in Seconds"
-msgstr "Інтэрвал _абнаўлення ў секундах"
-
-#: data/preferences.ui:29
-msgid "Enable _Smooth Refresh"
-msgstr "Уключыць _плаўнае абнаўленне"
-
-#: data/preferences.ui:35
-msgid "Alert Before Ending or _Killing Processes"
-msgstr "Папярэджваць аб _заканчэнні ці забойстве працэсаў"
-
-#: data/preferences.ui:41
-msgid "_Divide CPU Usage by CPU Count"
-msgstr "_Дзяліць выкарыстанне працэсара па ядрах"
-
-#: data/preferences.ui:47
-msgid "Show Memory in IEC"
-msgstr "Паказваць памяць у IEC"
-
-#: data/preferences.ui:54 data/preferences.ui:184
-msgid "Information Fields"
-msgstr "Інфармацыйныя палі"
-
-#: data/preferences.ui:55
-msgid "Process information shown in list:"
-msgstr "Інфармацыя аб працэсах, якая паказваецца ў спісе:"
-
-#: data/preferences.ui:76
+#: data/preferences.ui:12
 msgid "Resources"
 msgstr "Рэсурсы"
 
-#: data/preferences.ui:92
+#: data/preferences.ui:16 data/preferences.ui:101 data/preferences.ui:150
+msgid "Behavior"
+msgstr "Паводзіны"
+
+#: data/preferences.ui:20 data/preferences.ui:105 data/preferences.ui:154
+msgid "_Update Interval in Seconds"
+msgstr "Інтэрвал _абнаўлення ў секундах"
+
+#: data/preferences.ui:28
 msgid "_Chart Data Points"
 msgstr "Пункты даных _графіка"
 
-#: data/preferences.ui:107
+#: data/preferences.ui:43
 msgid "Draw Charts as S_mooth Graphs"
 msgstr "_Згладжваць лінію графіка"
 
-#: data/preferences.ui:118
+#: data/preferences.ui:54
 msgid "_Draw CPU Chart as Stacked Area Chart"
 msgstr "_Паказваць загрузку працэсара ў выглядзе слупкоў"
 
-#: data/preferences.ui:129
+#: data/preferences.ui:65
 msgid "Show Memory and Swap in IEC"
 msgstr "Паказваць памяць і своп у IEC"
 
-#: data/preferences.ui:135
+#: data/preferences.ui:71
 msgid "Show Memory in Logarithmic Scale"
 msgstr "Паказваць памяць у лагарыфмічнай шкале"
 
-#: data/preferences.ui:146
+#: data/preferences.ui:82
 msgid "_Show Network Speed in Bits"
 msgstr "Паказваць _хуткасць сеткі ў бітах"
 
-#: data/preferences.ui:152
+#: data/preferences.ui:88
 msgid "Show Network _Totals in Bits"
 msgstr "Паказваць _агульны сеткавы трафік у бітах"
 
-#: data/preferences.ui:161
+#: data/preferences.ui:97
+msgid "Processes"
+msgstr "Працэсы"
+
+#: data/preferences.ui:113
+msgid "Enable _Smooth Refresh"
+msgstr "Уключыць _плаўнае абнаўленне"
+
+#: data/preferences.ui:119
+msgid "Alert Before Ending or _Force Stopping Processes"
+msgstr "Папярэджваць аб _заканчэнні або прымусовым спыненні працэсаў"
+
+#: data/preferences.ui:125
+msgid "_Divide CPU Usage by CPU Count"
+msgstr "_Дзяліць выкарыстанне працэсара па ядрах"
+
+#: data/preferences.ui:131
+msgid "Show Memory in IEC"
+msgstr "Паказваць памяць у IEC"
+
+#: data/preferences.ui:138 data/preferences.ui:169
+msgid "Information Fields"
+msgstr "Інфармацыйныя палі"
+
+#: data/preferences.ui:139
+msgid "Process information shown in list"
+msgstr "Інфармацыя аб працэсах, якая паказваецца ў спісе"
+
+#: data/preferences.ui:146
 msgid "File Systems"
 msgstr "Файлавыя сістэмы"
 
-#: data/preferences.ui:177
+#: data/preferences.ui:162
 msgid "Show _All File Systems"
 msgstr "Паказваць _усе файлавыя сістэмы"
 
-#: data/preferences.ui:185
+#: data/preferences.ui:170
 msgid "File system information shown in list"
 msgstr "Інфармацыя пра файлавую сістэму, якая паказваецца ў спісе"
 
-#: data/renice.ui:15 data/setaffinity.ui:17 src/procdialogs.cpp:166
+#: data/procproperties.ui:18
+msgid "Details"
+msgstr "Падрабязнасці"
+
+#: data/procproperties.ui:21
+msgid "Process ID"
+msgstr "ID працэсу"
+
+#: data/procproperties.ui:32 src/proctable.cpp:345
+msgid "User"
+msgstr "Карыстальнік"
+
+#: data/procproperties.ui:45 data/procproperties.ui:70 src/proctable.cpp:346
+msgid "Status"
+msgstr "Стан"
+
+#: data/procproperties.ui:48 src/proctable.cpp:354
+msgid "Started"
+msgstr "Запушчаны"
+
+#: data/procproperties.ui:59 src/proctable.cpp:373
+msgid "Priority"
+msgstr "Прыярытэт"
+
+#: data/procproperties.ui:83
+msgid "Usage"
+msgstr "Выкарыстанне"
+
+#: data/procproperties.ui:108 src/proctable.cpp:353
+msgid "CPU Time"
+msgstr "Працэсарны час"
+
+#: data/procproperties.ui:119 src/proctable.cpp:347
+msgid "Virtual Memory"
+msgstr "Віртуальная памяць"
+
+#: data/procproperties.ui:130 src/proctable.cpp:348
+msgid "Resident Memory"
+msgstr "Рэзідэнтная памяць"
+
+#: data/procproperties.ui:141 src/proctable.cpp:349
+msgid "Writable Memory"
+msgstr "Запісвальная памяць"
+
+#: data/procproperties.ui:152 src/proctable.cpp:350
+msgid "Shared Memory"
+msgstr "Супольная памяць"
+
+#: data/procproperties.ui:167 src/proctable.cpp:357
+msgid "Security Context"
+msgstr "Кантэкст бяспекі"
+
+#: data/procproperties.ui:175 src/proctable.cpp:358
+msgid "Command Line"
+msgstr "Камандны радок"
+
+#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
+#: data/procproperties.ui:183 src/proctable.cpp:361
+msgid "Waiting Channel"
+msgstr "Пункт чакання"
+
+#: data/procproperties.ui:191 src/proctable.cpp:362
+msgid "Control Group"
+msgstr "Кіроўная група"
+
+#: data/procproperties.ui:236
+msgid "More Actions"
+msgstr "Дадатковыя дзеянні"
+
+#: data/renice.ui:4
+msgid ""
+"The priority of a process is given by its nice value. A lower nice value "
+"corresponds to a higher priority."
+msgstr ""
+"Прыярытэт працэсу вызначаецца значэннем «Nice». Ніжэйшае значэнне «Nice» "
+"адпавядае вышэйшаму прыярытэту."
+
+#: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:189
 msgid "_Cancel"
 msgstr "_Скасаваць"
 
-#: data/renice.ui:16
+#: data/renice.ui:10
 msgid "Change _Priority"
 msgstr "_Змяніць прыярытэт"
 
-#: data/renice.ui:39
-msgid "_Nice value:"
+#: data/renice.ui:17
+msgid "_Nice Value:"
 msgstr "_Значэнне Nice:"
 
-#: data/renice.ui:69
-msgid ""
-"<small><i><b>Note:</b> The priority of a process is given by its nice value. "
-"A lower nice value corresponds to a higher priority.</i></small>"
-msgstr ""
-"<small><i><b>Увага:</b> прыярытэт працэсу вызначаецца значэннем «Nice». "
-"Ніжэйшае значэнне «Nice»адпавядае вышэйшаму прыярытэту.</i></small>"
-
-#: data/setaffinity.ui:8
+#: data/setaffinity.ui:15
 msgid "Set Affinity"
 msgstr "Задаць прывязку да працэсараў"
 
-#: data/setaffinity.ui:23
+#: data/setaffinity.ui:26
 msgid "_Apply"
 msgstr "_Ужыць"
 
-#: data/setaffinity.ui:52
-msgid "Run on all CPUs"
-msgstr "Выконваць на ўсіх працэсарах"
+#: data/setaffinity.ui:39
+msgid "Select CPUs allowed to run on"
+msgstr "Выберыце працэсары, на якіх дазволена выкананне"
 
-#: src/application.cpp:423
+#: data/setaffinity.ui:46
+msgid "_Run on all CPUs"
+msgstr "_Выконваць на ўсіх працэсарах"
+
+#: data/setaffinity.ui:68
+msgid "Apply to Child _Threads"
+msgstr "Ужыць да даччыных _патокаў"
+
+#: src/application.cpp:405
 msgid "A simple process and system monitor."
 msgstr "Зручная прылада для назірання за працэсамі і сістэмай."
 
-#: src/argv.cpp:22
+#: src/argv.cpp:20
 msgid "Show the Processes tab"
 msgstr "Паказаць укладку працэсаў"
 
-#: src/argv.cpp:28
+#: src/argv.cpp:24
 msgid "Show the Resources tab"
 msgstr "Паказаць укладку рэсурсаў"
 
-#: src/argv.cpp:34
+#: src/argv.cpp:28
 msgid "Show the File Systems tab"
 msgstr "Паказаць укладку файлавых сістэм"
 
-#: src/argv.cpp:39
+#: src/argv.cpp:31
 msgid "Show the application’s version"
 msgstr "Паказаць версію праграмы"
 
-#: src/disks.cpp:392 src/memmaps.cpp:354
-msgid "Device"
-msgstr "Прылада"
-
-#: src/disks.cpp:393
-msgid "Directory"
-msgstr "Каталог"
-
-#: src/disks.cpp:394 src/legacy/gsm_color_button.c:612 src/openfiles.cpp:268
-msgid "Type"
-msgstr "Тып"
-
-#: src/disks.cpp:395
-msgid "Total"
-msgstr "Агулам"
-
-#: src/disks.cpp:396
-msgid "Free"
-msgstr "Свабодна"
-
-#: src/disks.cpp:397
-msgid "Available"
-msgstr "Даступна"
-
-#: src/disks.cpp:398
-msgid "Used"
-msgstr "Выкарыстана"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: src/interface.cpp:247
+#: src/interface.cpp:245
 #, c-format
 msgid "Pick a Color for “%s”"
 msgstr "Выбар колеру для «%s»"
 
-#: src/interface.cpp:285
+#. Set check box label value to CPU [1..2048]
+#: src/interface.cpp:283 src/setaffinity.cpp:406
 #, c-format
 msgid "CPU%d"
 msgstr "Працэсар %d"
 
-#: src/interface.cpp:500
+#: src/interface.cpp:494
 msgid "translator-credits"
 msgstr ""
 "Vital Khilko <dojlid@mova.org>\n"
@@ -637,40 +783,40 @@ msgstr "%-d %b %H:%M"
 msgid "%b %d %Y"
 msgstr "%d.%m.%Y"
 
-#: src/legacy/gsm_color_button.c:588
+#: src/legacy/gsm_color_button.c:575
 msgid "Fraction"
 msgstr "Частка"
 
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: src/legacy/gsm_color_button.c:590
+#: src/legacy/gsm_color_button.c:577
 msgid "Percentage full for pie color pickers"
 msgstr "Працэнт запоўненасці круглай каляровай дыяграмы"
 
-#: src/legacy/gsm_color_button.c:597
+#: src/legacy/gsm_color_button.c:584
 msgid "Title"
 msgstr "Загаловак"
 
-#: src/legacy/gsm_color_button.c:598
+#: src/legacy/gsm_color_button.c:585
 msgid "The title of the color selection dialog"
 msgstr "Загаловак дыялогавага акна выбару колеру"
 
-#: src/legacy/gsm_color_button.c:599 src/legacy/gsm_color_button.c:637
+#: src/legacy/gsm_color_button.c:586 src/legacy/gsm_color_button.c:624
 msgid "Pick a Color"
 msgstr "Выбраць колер"
 
-#: src/legacy/gsm_color_button.c:605
+#: src/legacy/gsm_color_button.c:592
 msgid "Current Color"
 msgstr "Бягучы колер"
 
-#: src/legacy/gsm_color_button.c:606
+#: src/legacy/gsm_color_button.c:593
 msgid "The selected color"
 msgstr "Выбраны колер"
 
-#: src/legacy/gsm_color_button.c:613
+#: src/legacy/gsm_color_button.c:600
 msgid "Type of color picker"
 msgstr "Тып дыялогавага акна выбару колеру"
 
-#: src/legacy/gsm_color_button.c:660
+#: src/legacy/gsm_color_button.c:647
 msgid "Click to set graph colors"
 msgstr "Націсніце, каб наладзіць колеры графіка"
 
@@ -706,151 +852,72 @@ msgstr[2] "%u сек"
 
 #. Update label
 #. Translators: CPU usage percentage label: 95.7%
-#: src/load-graph.cpp:518
+#: src/load-graph.cpp:519
 #, c-format
 msgid "%.1f%%"
 msgstr "%.1f%%"
 
-#: src/load-graph.cpp:545
+#: src/load-graph.cpp:547
 msgid "not available"
 msgstr "недаступна"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:550
+#: src/load-graph.cpp:552
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) з %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:555
+#: src/load-graph.cpp:557
 #, c-format
 msgid "Cache %s"
 msgstr "Кэш %s"
 
-#: src/lsof.cpp:116
+#: src/lsof.cpp:108
 #, c-format
-msgid "%d open file"
-msgid_plural "%d open files"
+msgid "%d Open File"
+msgid_plural "%d Open Files"
 msgstr[0] "%d адкрыты файл"
-msgstr[1] "%d адкрытых файла"
+msgstr[1] "%d адкрытыя файлы"
 msgstr[2] "%d адкрытых файлаў"
 
-#: src/lsof.cpp:118
+#: src/lsof.cpp:110
 #, c-format
-msgid "%d matching open file"
-msgid_plural "%d matching open files"
+msgid "%d Matching Open File"
+msgid_plural "%d Matching Open Files"
 msgstr[0] "Знойдзены %d адкрыты файл"
 msgstr[1] "Знойдзена %d адкрытыя файлы"
 msgstr[2] "Знойдзена %d адкрытых файлаў"
 
-#: src/lsof.cpp:229
-msgid "Process"
-msgstr "Працэс"
-
-#: src/lsof.cpp:240
-msgid "PID"
-msgstr "PID"
-
-#: src/lsof.cpp:249 src/memmaps.cpp:332
-msgid "Filename"
-msgstr "Назва файла"
-
-#. xgettext: virtual memory start
-#: src/memmaps.cpp:334
-msgid "VM Start"
-msgstr "Пачатак ВП"
-
-#. xgettext: virtual memory end
-#: src/memmaps.cpp:336
-msgid "VM End"
-msgstr "Канец ВП"
-
-#. xgettext: virtual memory syze
-#: src/memmaps.cpp:338
-msgid "VM Size"
-msgstr "Памер ВП"
-
-#: src/memmaps.cpp:339
-msgid "Flags"
-msgstr "Сцягі"
-
-#. xgettext: virtual memory offset
-#: src/memmaps.cpp:341
-msgid "VM Offset"
-msgstr "Зрух ВП"
-
-#. xgettext: memory that has not been modified since
-#. it has been allocated
-#: src/memmaps.cpp:344
-msgid "Private clean"
-msgstr "Пр. не зм. – Прыватная, не змененая"
-
-#. xgettext: memory that has been modified since it
-#. has been allocated
-#: src/memmaps.cpp:347
-msgid "Private dirty"
-msgstr "Пр. зм. – Прыватная, змененая"
-
-#. xgettext: shared memory that has not been modified
-#. since it has been allocated
-#: src/memmaps.cpp:350
-msgid "Shared clean"
-msgstr "Суп. не зм. – Супольная, не змененая"
-
-#. xgettext: shared memory that has been modified
-#. since it has been allocated
-#: src/memmaps.cpp:353
-msgid "Shared dirty"
-msgstr "Суп. зм. – Супольная, змененая"
-
-#: src/memmaps.cpp:355
-msgid "Inode"
-msgstr "Inode"
-
-#: src/memmaps.cpp:484
+#. Translators: process name and id
+#: src/memmaps.cpp:408 src/openfiles.cpp:281 src/setaffinity.cpp:382
 #, c-format
-msgid "_Memory maps for process “%s” (PID %u):"
-msgstr "_Карты памяці для працэсу «%s» (PID %u):"
+msgid "%s (PID %u)"
+msgstr "%s (PID %u)"
 
-#: src/openfiles.cpp:39
+#: src/openfiles.cpp:29
 msgid "file"
 msgstr "файл"
 
-#: src/openfiles.cpp:42
+#: src/openfiles.cpp:32
 msgid "pipe"
 msgstr "канал"
 
-#: src/openfiles.cpp:45
+#: src/openfiles.cpp:35
 msgid "IPv6 network connection"
 msgstr "сеткавае злучэнне IPv6"
 
-#: src/openfiles.cpp:48
+#: src/openfiles.cpp:38
 msgid "IPv4 network connection"
 msgstr "сеткавае злучэнне IPv4"
 
-#: src/openfiles.cpp:51
+#: src/openfiles.cpp:41
 msgid "local socket"
 msgstr "лакальны сокет"
 
-#: src/openfiles.cpp:54
+#: src/openfiles.cpp:44
 msgid "unknown type"
 msgstr "невядомы тып"
-
-#. Translators: "FD" here means "File Descriptor". Please use
-#. a very short translation if possible, and at most
-#. 2-3 characters for it to be able to fit in the UI.
-#: src/openfiles.cpp:267
-msgid "FD"
-msgstr "FD"
-
-#: src/openfiles.cpp:269
-msgid "Object"
-msgstr "Аб'ект"
-
-#: src/openfiles.cpp:357
-#, c-format
-msgid "_Files opened by process “%s” (PID %u):"
-msgstr "_Файлы, адкрытыя працэсам «%s» (PID %u):"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:5
 msgid "Main window width"
@@ -1322,11 +1389,11 @@ msgstr "Слупок для сартавання ў рэжыме прагляд�
 msgid "Open files sort order"
 msgstr "Парадак сартавання ў рэжыме прагляду адкрытых файлаў"
 
-#: src/prefsdialog.cpp:145
+#: src/prefsdialog.cpp:70 src/prefsdialog.cpp:122
 msgid "Icon"
 msgstr "Значок"
 
-#: src/procactions.cpp:79
+#: src/procactions.cpp:80
 #, c-format
 msgid ""
 "Cannot change the priority of process with PID %d to %d.\n"
@@ -1335,11 +1402,11 @@ msgstr ""
 "Не ўдалося змяніць прыярытэт працэсу (PID %d) на %d.\n"
 "%s"
 
-#: src/procactions.cpp:90 src/procactions.cpp:182
+#: src/procactions.cpp:90 src/procactions.cpp:166
 msgid "_OK"
 msgstr "_ОК"
 
-#: src/procactions.cpp:171
+#: src/procactions.cpp:156
 #, c-format
 msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
@@ -1349,190 +1416,124 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:88
+#: src/procdialogs.cpp:117
 #, c-format
-msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
-msgstr "Сапраўды забіць вылучаны працэс «%s» (PID: %u)?"
+msgid "Force Stop %s?"
+msgstr "Прымусова спыніць %s?"
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:95
+#: src/procdialogs.cpp:123
 #, c-format
-msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
-msgstr "Сапраўды закончыць працу вылучанага працэсу «%s» (PID: %u)?"
+msgid "End %s?"
+msgstr "Закончыць працу %s?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:102
+#: src/procdialogs.cpp:129
 #, c-format
-msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
-msgstr "Сапраўды спыніць працу вылучанага працэсу «%s» (PID: %u)?"
+msgid "Stop %s?"
+msgstr "Спыніць працу %s?"
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:114
+#: src/procdialogs.cpp:140
 #, c-format
-msgid "Are you sure you want to kill the selected process?"
-msgid_plural "Are you sure you want to kill the %d selected processes?"
-msgstr[0] "Сапраўды забіць %0d вылучаны працэс?"
-msgstr[1] "Сапраўды забіць %d вылучаныя працэсы?"
-msgstr[2] "Сапраўды забіць %d вылучаных працэсаў?"
+msgid "Force Stop Selected Process?"
+msgid_plural "Force Stop %d Selected Processes?"
+msgstr[0] "Прымусова спыніць працу %0d выбранага працэсу?"
+msgstr[1] "Прымусова спыніць працу %d выбраных працэсаў?"
+msgstr[2] "Прымусова спыніць працу %d выбраных працэсаў?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:121
+#: src/procdialogs.cpp:147
 #, c-format
-msgid "Are you sure you want to end the selected process?"
-msgid_plural "Are you sure you want to end the %d selected processes?"
-msgstr[0] "Сапраўды закончыць працу %0d вылучанага працэсу?"
-msgstr[1] "Сапраўды закончыць працу %d вылучаных працэсаў?"
-msgstr[2] "Сапраўды закончыць працу %d вылучаных працэсаў?"
+msgid "End Selected Process?"
+msgid_plural "End %d Selected Processes?"
+msgstr[0] "Закончыць працу %0d выбранага працэсу?"
+msgstr[1] "Закончыць працу %d выбраных працэсаў?"
+msgstr[2] "Закончыць працу %0d выбраных працэсаў?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:128
+#: src/procdialogs.cpp:154
 #, c-format
-msgid "Are you sure you want to stop the selected process?"
-msgid_plural "Are you sure you want to stop the %d selected processes?"
-msgstr[0] "Сапраўды спыніць працу %0d вылучанага працэсу?"
-msgstr[1] "Сапраўды спыніць працу %d вылучаных працэсаў?"
-msgstr[2] "Сапраўды спыніць працу %d вылучаных працэсаў?"
+msgid "Stop Selected Process?"
+msgid_plural "Stop %d Selected Processes?"
+msgstr[0] "Спыніць працу %0d выбранага працэсу?"
+msgstr[1] "Спыніць працу %d выбраных працэсаў?"
+msgstr[2] "Спыніць працу %d выбраных працэсаў?"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:139
+#: src/procdialogs.cpp:165
 msgid ""
-"Killing a process may destroy data, break the session or introduce a "
-"security risk. Only unresponsive processes should be killed."
+"Force stopping processes can result in data loss, crashes, and system "
+"failures"
 msgstr ""
-"Забойства працэсу можа знішчыць даныя, пашкодзіць сеанс або стварыць рызыку "
-"небяспекі. Варта забіваць толькі тыя працэсы, якія не адказваюць на запыты."
+"Прымусовае спыненне працэсаў можа прывесці да страты даных, памылак і збояў "
+"сістэмы"
 
-#: src/procdialogs.cpp:142
-msgid "_Kill Process"
-msgid_plural "_Kill Processes"
-msgstr[0] "За_біць працэс"
-msgstr[1] "За_біць працэсы"
-msgstr[2] "За_біць працэсы"
+#: src/procdialogs.cpp:167
+msgid "_Force Stop"
+msgstr "Прымусова _спыніць"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:147
-msgid ""
-"Ending a process may destroy data, break the session or introduce a security "
-"risk. Only unresponsive processes should be ended."
+#: src/procdialogs.cpp:172
+msgid "Ending processes can result in data loss, crashes, and system failures"
 msgstr ""
-"Заканчэнне працэсу можа знішчыць даныя, пашкодзіць сеанс або стварыць рызыку "
-"небяспекі. Варта заканчваць толькі тыя працэсы, якія не адказваюць на запыты."
+"Заканчэнне працы працэсаў можа прывесці да страты даных, памылак і збояў "
+"сістэмы"
+
+#: src/procdialogs.cpp:174
+msgid "_End"
+msgstr "_Закончыць"
 
 #. SIGSTOP
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:155
+#: src/procdialogs.cpp:179
 msgid ""
-"Stopping a process may destroy data, break the session or introduce a "
-"security risk. Only unresponsive processes should be stopped."
+"Stopping processes can result in data loss, crashes, and system failures"
 msgstr ""
-"Спыненне працэсу можа знішчыць даныя, пашкодзіць сеанс або стварыць рызыку "
-"небяспекі. Варта спыняць толькі тыя працэсы, якія не адказваюць на запыты."
+"Спыненне працы працэсаў можа прывесці да страты даных, памылак і збояў "
+"сістэмы"
 
-#: src/procdialogs.cpp:158
-msgid "_Stop Process"
-msgid_plural "_Stop Processes"
-msgstr[0] "_Спыніць працу працэсу"
-msgstr[1] "_Спыніць працу працэсаў"
-msgstr[2] "_Спыніць працу працэсаў"
+#: src/procdialogs.cpp:181
+msgid "_Stop"
+msgstr "_Спыніць"
 
-#: src/procdialogs.cpp:249
+#: src/procdialogs.cpp:273
 #, c-format
-msgid "Change Priority of Process “%s” (PID: %u)"
-msgstr "Змяненне прыярытэту працэсу «%s» (PID %u)"
+msgid "Change Priority of %s (PID %u)"
+msgstr "Змяненне прыярытэту для «%s» (PID %u)"
 
-#: src/procdialogs.cpp:252
+#: src/procdialogs.cpp:276
 #, c-format
-msgid "Change Priority of the selected process"
-msgid_plural "Change Priority of %d selected processes"
+msgid "Change Priority of the Selected Process"
+msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "Змяніць прыярытэт %0d вылучанага працэсу"
 msgstr[1] "Змяніць прыярытэт %d вылучаных працэсаў"
 msgstr[2] "Змяніць прыярытэт %d вылучаных працэсаў"
 
-#: src/procproperties.cpp:50 src/procproperties.cpp:84
-#: src/procproperties.cpp:87 src/util.cpp:540 src/util.cpp:587
-msgid "N/A"
-msgstr "Невядома"
+#: src/proctable.cpp:136
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "_Закончыць працу працэсу…"
+msgstr[1] "_Закончыць працу працэсаў…"
+msgstr[2] "_Закончыць працу працэсаў…"
 
-#: src/procproperties.cpp:68 src/proctable.cpp:344
-msgid "Process Name"
-msgstr "Назва працэсу"
-
-#: src/procproperties.cpp:69 src/proctable.cpp:345
-msgid "User"
-msgstr "Карыстальнік"
-
-#: src/procproperties.cpp:70 src/proctable.cpp:346
-msgid "Status"
-msgstr "Стан"
-
-#: src/procproperties.cpp:72 src/proctable.cpp:347
-msgid "Virtual Memory"
-msgstr "Віртуальная памяць"
-
-#: src/procproperties.cpp:73 src/proctable.cpp:348
-msgid "Resident Memory"
-msgstr "Рэзідэнтная памяць"
-
-#: src/procproperties.cpp:74 src/proctable.cpp:349
-msgid "Writable Memory"
-msgstr "Запісвальная памяць"
-
-#: src/procproperties.cpp:75 src/proctable.cpp:350
-msgid "Shared Memory"
-msgstr "Супольная памяць"
-
-#: src/procproperties.cpp:79 src/proctable.cpp:353
-msgid "CPU Time"
-msgstr "Працэсарны час"
-
-#: src/procproperties.cpp:80 src/proctable.cpp:354
-msgid "Started"
-msgstr "Запушчаны"
-
-#: src/procproperties.cpp:81 src/proctable.cpp:355
-msgid "Nice"
-msgstr "Nice"
-
-#: src/procproperties.cpp:82 src/proctable.cpp:373
-msgid "Priority"
-msgstr "Прыярытэт"
-
-#: src/procproperties.cpp:83 src/proctable.cpp:356
-msgid "ID"
-msgstr "ID"
-
-#: src/procproperties.cpp:84 src/proctable.cpp:357
-msgid "Security Context"
-msgstr "Кантэкст бяспекі"
-
-#: src/procproperties.cpp:85 src/proctable.cpp:358
-msgid "Command Line"
-msgstr "Камандны радок"
-
-#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:86 src/proctable.cpp:361
-msgid "Waiting Channel"
-msgstr "Пункт чакання"
-
-#: src/procproperties.cpp:87 src/proctable.cpp:362
-msgid "Control Group"
-msgstr "Кіроўная група"
-
-#: src/procproperties.cpp:211
-#, c-format
-msgid "%s (PID %u)"
-msgstr "%s (PID %u)"
+#: src/proctable.cpp:344
+msgid "Name"
+msgstr "Назва"
 
 #: src/proctable.cpp:351
 msgid "X Server Memory"
 msgstr "Памяць X-сервера"
 
-#: src/proctable.cpp:352
-#, no-c-format
-msgid "% CPU"
-msgstr "% ЦП"
+#: src/proctable.cpp:355
+msgid "Nice"
+msgstr "Nice"
+
+#: src/proctable.cpp:356
+msgid "ID"
+msgstr "ID"
 
 #: src/proctable.cpp:363
 msgid "Unit"
@@ -1553,39 +1554,29 @@ msgid "Owner"
 msgstr "Уласнік"
 
 #: src/proctable.cpp:369
-msgid "Disk read total"
+msgid "Disk Read Total"
 msgstr "Прачытана з дыска агулам"
 
 #: src/proctable.cpp:370
-msgid "Disk write total"
+msgid "Disk Write Total"
 msgstr "Запісана на дыск агулам"
 
 #: src/proctable.cpp:371
-msgid "Disk read"
+msgid "Disk Read"
 msgstr "Чытанне з дыска"
 
 #: src/proctable.cpp:372
-msgid "Disk write"
+msgid "Disk Write"
 msgstr "Запіс на дыск"
 
-#: src/setaffinity.cpp:123
+#. Create error alert dialog
+#: src/setaffinity.cpp:126
 msgid "GNU CPU Affinity error"
 msgstr "Памылка прывязкі да GNU CPU"
 
-#: src/setaffinity.cpp:128
+#: src/setaffinity.cpp:131
 msgid "_Close"
 msgstr "_Закрыць"
-
-#: src/setaffinity.cpp:329
-#, c-format
-msgid "Select CPUs \"%s\" (PID %u) is allowed to run on:"
-msgstr "Выберыце працэсары, на якіх дазволена выконваць «%s» (PID %u):"
-
-#. Set check box label value to CPU [1..2048]
-#: src/setaffinity.cpp:348
-#, c-format
-msgid "CPU %d"
-msgstr "Працэсар %d"
 
 #: src/util.cpp:34
 msgid "Running"
@@ -1631,31 +1622,161 @@ msgstr "%u:%02u:%02u"
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: src/util.cpp:188
+#: src/util.cpp:149
+msgid "Very High"
+msgstr "Вельмі высокі"
+
+#: src/util.cpp:151
+msgid "High"
+msgstr "Высокі"
+
+#: src/util.cpp:153
+msgid "Normal"
+msgstr "Звычайны"
+
+#: src/util.cpp:155
+msgid "Low"
+msgstr "Нізкі"
+
+#: src/util.cpp:157
+msgid "Very Low"
+msgstr "Вельмі нізкі"
+
+#: src/util.cpp:164
 msgid "Very High Priority"
 msgstr "Вельмі высокі прыярытэт"
 
-#: src/util.cpp:190
+#: src/util.cpp:166
 msgid "High Priority"
 msgstr "Высокі прыярытэт"
 
-#: src/util.cpp:192
+#: src/util.cpp:168
 msgid "Normal Priority"
 msgstr "Звычайны прыярытэт"
 
-#: src/util.cpp:194
+#: src/util.cpp:170
 msgid "Low Priority"
 msgstr "Нізкі прыярытэт"
 
-#: src/util.cpp:196
+#: src/util.cpp:172
 msgid "Very Low Priority"
 msgstr "Вельмі нізкі прыярытэт"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:832
+#: src/util.cpp:765
 #, c-format
 msgid "%s/s"
 msgstr "%s/с"
+
+#~ msgid "The GNOME Project"
+#~ msgstr "Праект GNOME"
+
+#~ msgid "Help"
+#~ msgstr "Даведка"
+
+#~ msgid "Open _Files"
+#~ msgstr "Адкрытыя _файлы"
+
+#~ msgid "Custom"
+#~ msgstr "Уласны"
+
+#~ msgid "_Continue"
+#~ msgstr "_Працягнуць"
+
+#~ msgid "_Kill…"
+#~ msgstr "За_біць…"
+
+#~ msgid ""
+#~ "<small><i><b>Note:</b> The priority of a process is given by its nice "
+#~ "value. A lower nice value corresponds to a higher priority.</i></small>"
+#~ msgstr ""
+#~ "<small><i><b>Увага:</b> прыярытэт працэсу вызначаецца значэннем «Nice». "
+#~ "Ніжэйшае значэнне «Nice»адпавядае вышэйшаму прыярытэту.</i></small>"
+
+#, c-format
+#~ msgid "_Memory maps for process “%s” (PID %u):"
+#~ msgstr "_Карты памяці для працэсу «%s» (PID %u):"
+
+#, c-format
+#~ msgid "_Files opened by process “%s” (PID %u):"
+#~ msgstr "_Файлы, адкрытыя працэсам «%s» (PID %u):"
+
+#, c-format
+#~ msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
+#~ msgstr "Сапраўды забіць вылучаны працэс «%s» (PID: %u)?"
+
+#, c-format
+#~ msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
+#~ msgstr "Сапраўды закончыць працу вылучанага працэсу «%s» (PID: %u)?"
+
+#, c-format
+#~ msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
+#~ msgstr "Сапраўды спыніць працу вылучанага працэсу «%s» (PID: %u)?"
+
+#, c-format
+#~ msgid "Are you sure you want to kill the selected process?"
+#~ msgid_plural "Are you sure you want to kill the %d selected processes?"
+#~ msgstr[0] "Сапраўды забіць %0d вылучаны працэс?"
+#~ msgstr[1] "Сапраўды забіць %d вылучаныя працэсы?"
+#~ msgstr[2] "Сапраўды забіць %d вылучаных працэсаў?"
+
+#, c-format
+#~ msgid "Are you sure you want to end the selected process?"
+#~ msgid_plural "Are you sure you want to end the %d selected processes?"
+#~ msgstr[0] "Сапраўды закончыць працу %0d вылучанага працэсу?"
+#~ msgstr[1] "Сапраўды закончыць працу %d вылучаных працэсаў?"
+#~ msgstr[2] "Сапраўды закончыць працу %d вылучаных працэсаў?"
+
+#, c-format
+#~ msgid "Are you sure you want to stop the selected process?"
+#~ msgid_plural "Are you sure you want to stop the %d selected processes?"
+#~ msgstr[0] "Сапраўды спыніць працу %0d вылучанага працэсу?"
+#~ msgstr[1] "Сапраўды спыніць працу %d вылучаных працэсаў?"
+#~ msgstr[2] "Сапраўды спыніць працу %d вылучаных працэсаў?"
+
+#~ msgid ""
+#~ "Killing a process may destroy data, break the session or introduce a "
+#~ "security risk. Only unresponsive processes should be killed."
+#~ msgstr ""
+#~ "Забойства працэсу можа знішчыць даныя, пашкодзіць сеанс або стварыць "
+#~ "рызыку небяспекі. Варта забіваць толькі тыя працэсы, якія не адказваюць "
+#~ "на запыты."
+
+#~ msgid "_Kill Process"
+#~ msgid_plural "_Kill Processes"
+#~ msgstr[0] "За_біць працэс"
+#~ msgstr[1] "За_біць працэсы"
+#~ msgstr[2] "За_біць працэсы"
+
+#~ msgid ""
+#~ "Ending a process may destroy data, break the session or introduce a "
+#~ "security risk. Only unresponsive processes should be ended."
+#~ msgstr ""
+#~ "Заканчэнне працэсу можа знішчыць даныя, пашкодзіць сеанс або стварыць "
+#~ "рызыку небяспекі. Варта заканчваць толькі тыя працэсы, якія не адказваюць "
+#~ "на запыты."
+
+#~ msgid ""
+#~ "Stopping a process may destroy data, break the session or introduce a "
+#~ "security risk. Only unresponsive processes should be stopped."
+#~ msgstr ""
+#~ "Спыненне працэсу можа знішчыць даныя, пашкодзіць сеанс або стварыць "
+#~ "рызыку небяспекі. Варта спыняць толькі тыя працэсы, якія не адказваюць на "
+#~ "запыты."
+
+#~ msgid "N/A"
+#~ msgstr "Невядома"
+
+#~ msgid "Process Name"
+#~ msgstr "Назва працэсу"
+
+#, no-c-format
+#~ msgid "% CPU"
+#~ msgstr "% ЦП"
+
+#, c-format
+#~ msgid "CPU %d"
+#~ msgstr "Працэсар %d"
 
 #~ msgid "Main window size in the form (width, height)"
 #~ msgstr "Памер галоўнага акна згодна з фарматам (шырыня, вышыня)"
@@ -1678,19 +1799,9 @@ msgstr "%s/с"
 #~ msgid "Note:"
 #~ msgstr "Увага:"
 
-#~ msgid ""
-#~ "The priority of a process is given by its nice value. A lower nice value "
-#~ "corresponds to a higher priority."
-#~ msgstr ""
-#~ "Прыярытэт працэсу вызначаецца значэннем «Nice». Ніжэйшае значэнне «Nice» "
-#~ "адпавядае вышэйшаму прыярытэту."
-
 #~ msgctxt "shortcut window"
 #~ msgid "Send End signal"
 #~ msgstr "Адправіць сігнал «закончыць»"
-
-#~ msgid "_End"
-#~ msgstr "_Закончыць"
 
 #~ msgid "Graphs"
 #~ msgstr "Графікі"
@@ -1755,9 +1866,6 @@ msgstr "%s/с"
 #~ msgctxt "Menu item to Open 'Search for Open Files' dialog"
 #~ msgid "Search for Open Files"
 #~ msgstr "Пошук адкрытых файлаў"
-
-#~ msgid "_Help"
-#~ msgstr "_Дапамога"
 
 #~ msgid "Error"
 #~ msgstr "Памылка"
