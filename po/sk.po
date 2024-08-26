@@ -14,86 +14,61 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2024-05-19 21:14+0000\n"
-"PO-Revision-Date: 2024-06-07 13:39+0200\n"
-"Last-Translator: Jozef Gaal <preklady@mayday.sk>\n"
+"POT-Creation-Date: 2024-08-26 21:40+0000\n"
+"PO-Revision-Date: 2024-08-27 00:17+0200\n"
+"Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: slovenčina <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.1\n"
+
+# column title
+#: data/disks.ui:31 data/memmaps.ui:424
+msgid "Device"
+msgstr "Zariadenie"
+
+# PK: pouzivame directory v systemovych veciach, v user space je folder
+# column title
+#: data/disks.ui:85
+msgid "Directory"
+msgstr "Adresár"
+
+# column title
+#: data/disks.ui:120 data/openfiles.ui:80 src/legacy/gsm_color_button.c:599
+msgid "Type"
+msgstr "Typ"
+
+# column title
+#: data/disks.ui:155
+msgid "Total"
+msgstr "Celkom"
+
+# column title
+#: data/disks.ui:192
+msgid "Free"
+msgstr "Voľné"
+
+# column title
+#: data/disks.ui:229
+msgid "Available"
+msgstr "Dostupné"
+
+# column title
+#: data/disks.ui:266
+msgid "Used"
+msgstr "Použité"
 
 # desktop entry name
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:7 data/interface.ui:6
-#: data/org.gnome.SystemMonitor.desktop.in.in:3 src/application.cpp:396
-#: src/interface.cpp:487
-msgid "System Monitor"
-msgstr "Monitor systému"
-
-# summary
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:8
-msgid "View and manage system resources"
-msgstr "Zobrazuje a spravuje systémové prostriedky"
-
-# desc
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:10
-msgid ""
-"System Monitor is a process viewer and system monitor with an attractive, "
-"easy-to-use interface."
-msgstr ""
-"Monitor systému je zobrazovač procesov a monitor systému s atraktívnym a "
-"ľahko použiteľným rozhraním."
-
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:14
-msgid ""
-"System Monitor can help you find out what applications are using the "
-"processor or the memory of your computer, can manage the running "
-"applications, force stop processes not responding, and change the state or "
-"priority of existing processes."
-msgstr ""
-"Monitor systému vám pomôže zistiť, ktoré aplikácie používajú procesor alebo "
-"pamäť vášho počítača. Taktiež vám uľahčí správu spustených aplikácií, "
-"vynútené ukončenie neodpovedajúcich procesov a zmenu stavu alebo priority "
-"existujúcich procesov."
-
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:20
-msgid ""
-"The resource graphs feature shows you a quick overview of what is going on "
-"with your computer displaying recent network, memory and processor usage."
-msgstr ""
-"Grafy prostriedkov zobrazujú rýchly prehľad toho, čo sa deje s vaším "
-"počítačom (nedávne využitie siete, pamäte a procesora)."
-
-# summary
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:28
-msgid "Process list view"
-msgstr "Zobrazenie zoznamu procesov"
-
-# tab GtkLabel label
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:32
-msgid "Resources overview"
-msgstr "Prehľad prostriedkov"
-
-# tab GtkLabel label
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:36
-msgid "File Systems view"
-msgstr "Zobrazenie súborových systémov"
-
-#. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:46 src/interface.cpp:496
-msgid "The GNOME Project"
-msgstr "Projekt GNOME"
-
-# desktop entry name
-#: data/gnome-system-monitor-kde.desktop.in.in:3 src/application.cpp:440
+#: data/gnome-system-monitor-kde.desktop.in.in:3 src/application.cpp:433
 msgid "GNOME System Monitor"
 msgstr "GNOME monitor systému"
 
 # desktop entry comment
 #: data/gnome-system-monitor-kde.desktop.in.in:4
-#: data/org.gnome.SystemMonitor.desktop.in.in:4 src/interface.cpp:488
+#: data/org.gnome.SystemMonitor.desktop.in.in:4
 msgid "View current processes and monitor system state"
 msgstr "Zobrazuje aktuálne procesy a monitoruje stav systému"
 
@@ -142,14 +117,14 @@ msgstr "Vyhľadanie"
 # tab GtkLabel label
 #: data/help-overlay.ui:56
 msgctxt "shortcut window"
-msgid "Show Processes"
-msgstr "Zobrazenie procesov"
+msgid "Show Resources"
+msgstr "Zobrazenie prostriedkov"
 
 # tab GtkLabel label
 #: data/help-overlay.ui:62
 msgctxt "shortcut window"
-msgid "Show Resources"
-msgstr "Zobrazenie prostriedkov"
+msgid "Show Processes"
+msgstr "Zobrazenie procesov"
 
 # tab GtkLabel label
 #: data/help-overlay.ui:68
@@ -213,238 +188,239 @@ msgctxt "shortcut window"
 msgid "Send Kill signal"
 msgstr "Odoslanie signálu na zabitie"
 
-# tooltip
-#: data/interface.ui:26
-msgid "Search"
-msgstr "Vyhľadá"
+# desktop entry name
+#: data/interface.ui:6 data/org.gnome.SystemMonitor.appdata.xml.in.in:7
+#: data/org.gnome.SystemMonitor.desktop.in.in:3 src/application.cpp:404
+msgid "System Monitor"
+msgstr "Monitor systému"
 
-#: data/interface.ui:36
+#: data/interface.ui:22
+msgid "Search"
+msgstr "Hľadať"
+
+#: data/interface.ui:29
 msgid "Main Menu"
 msgstr "Hlavná ponuka"
 
-# tab GtkLabel label
-#: data/interface.ui:55
-msgid "_Processes"
-msgstr "_Procesy"
-
 # placeholder
-#: data/interface.ui:67
+#: data/interface.ui:44
 msgid "Search processes and users"
 msgstr "Vyhľadajte procesy a používateľov"
 
-# action menu entry
-#: data/interface.ui:88
-msgctxt "interface"
-msgid "_End Process"
-msgstr "_Ukončiť proces"
-
-# tooltip
-#: data/interface.ui:108
-msgid "Process Properties"
-msgstr "Vlastnosti procesu"
-
 # tab GtkLabel label
-#: data/interface.ui:130
+#: data/interface.ui:58
 msgid "_Resources"
-msgstr "P_rostriedky"
+msgstr "Pro_striedky"
 
 # zobrazuje sa, keď je len jeden; inak nasledujúci reťazec
-#: data/interface.ui:175 data/preferences.ui:99 data/procproperties.ui:86
-#: src/interface.cpp:283
+#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:86
+#: src/interface.cpp:268 src/proctable.cpp:352
+#, no-c-format
 msgid "CPU"
 msgstr "Procesor"
 
 # GtkLabel label
-#: data/interface.ui:206 data/procproperties.ui:97 src/interface.cpp:321
+#: data/interface.ui:134 data/procproperties.ui:97 src/interface.cpp:306
 #: src/proctable.cpp:359
 msgid "Memory"
 msgstr "Pamäť"
 
 # GtkLabel label
-#: data/interface.ui:217 src/interface.cpp:333
+#: data/interface.ui:145 src/interface.cpp:318
 msgid "Swap"
 msgstr "Odkladací priestor"
 
 # GtkLabel label
-#: data/interface.ui:234 data/preferences.ui:110
+#: data/interface.ui:162 data/preferences.ui:61
 msgid "Memory and Swap"
 msgstr "Pamäť a odkladací priestor"
 
 # GtkLabel label
-#: data/interface.ui:265 src/interface.cpp:362
+#: data/interface.ui:193 src/interface.cpp:347
 msgid "Receiving"
 msgstr "Prijímanie"
 
 # GtkLabel label
-#: data/interface.ui:275
+#: data/interface.ui:203
 msgid "Total Received"
 msgstr "Celkom prijatých"
 
 # Pick color for "Sending"
-#: data/interface.ui:285 src/interface.cpp:380
+#: data/interface.ui:213 src/interface.cpp:365
 msgid "Sending"
 msgstr "Odosielanie"
 
 # GtkLabel label
-#: data/interface.ui:295
+#: data/interface.ui:223
 msgid "Total Sent"
 msgstr "Celkom odoslaných"
 
 # GtkLabel label
-#: data/interface.ui:312 data/preferences.ui:127
+#: data/interface.ui:240 data/preferences.ui:78
 msgid "Network"
 msgstr "Sieť"
 
 # Pick color for "Sending"
-#: data/interface.ui:343 src/interface.cpp:415
+#: data/interface.ui:271 src/interface.cpp:400
 msgid "Reading"
 msgstr "Čítanie"
 
 # GtkLabel label
-#: data/interface.ui:353
+#: data/interface.ui:281
 msgid "Total Read"
-msgstr "Celkom prečítaných"
+msgstr "Celkom čítanie"
 
-#: data/interface.ui:363 src/interface.cpp:433
+#: data/interface.ui:291 src/interface.cpp:418
 msgid "Writing"
-msgstr "Zapisovanie"
+msgstr "Zápis"
 
 # GtkLabel label
-#: data/interface.ui:373
+#: data/interface.ui:301
 msgid "Total Written"
-msgstr "Celkom zapísaných"
+msgstr "Celkom zapísané"
 
-#: data/interface.ui:390
+#: data/interface.ui:318
 msgid "Disk"
 msgstr "Disk"
 
 # tab GtkLabel label
-#: data/interface.ui:410
+#: data/interface.ui:338
+msgid "_Processes"
+msgstr "_Procesy"
+
+# action menu entry
+#: data/interface.ui:356
+msgctxt "interface"
+msgid "_End Process…"
+msgstr "_Ukončiť proces…"
+
+# tooltip
+#: data/interface.ui:379
+msgid "Process Properties"
+msgstr "Vlastnosti procesu"
+
+# tab GtkLabel label
+#: data/interface.ui:396
 msgid "_File Systems"
-msgstr "_Súborové systémy"
+msgstr "Sú_borové systémy"
 
 # GtkWindow title
-#: data/lsof.ui:6
+#: data/lsof.ui:4
 msgctxt "Window title for Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Hľadanie otvorených súborov"
 
 # GtkSearchEntry
-#: data/lsof.ui:36
+#: data/lsof.ui:30
 msgid "Filter files by name"
 msgstr "Filtrovať súbory podľa názvu"
 
 #  GtkCheckButton label
-#: data/lsof.ui:42
-msgid "Case insensitive"
-msgstr "Rozlišovať veľkosti písmen"
+#: data/lsof.ui:36
+msgid "Case Insensitive"
+msgstr "Nerozlišovať veľkosť písmen"
 
 # column title
-#: data/lsof.ui:63
+#: data/lsof.ui:67
 msgid "Process"
 msgstr "Proces"
 
 # column title
-#: data/lsof.ui:111
+#: data/lsof.ui:115
 msgid "PID"
 msgstr "PID"
 
 # column title
-#: data/lsof.ui:145 data/memmaps.ui:37
+#: data/lsof.ui:149 data/memmaps.ui:45
 msgid "Filename"
 msgstr "Názov súboru"
 
 # dialog title
-#: data/memmaps.ui:16
+#: data/memmaps.ui:15
 msgid "Memory Maps"
 msgstr "Mapy pamäte"
 
 # column title
 #. virtual memory start
-#: data/memmaps.ui:75
+#: data/memmaps.ui:83
 msgid "VM Start"
 msgstr "Začiatok virt. pamäte"
 
 # column title
 #. virtual memory end
-#: data/memmaps.ui:116
+#: data/memmaps.ui:122
 msgid "VM End"
 msgstr "Koniec virt. pamäte"
 
 # column title
 #. virtual memory syze
-#: data/memmaps.ui:157
+#: data/memmaps.ui:161
 msgid "VM Size"
 msgstr "Veľkosť virt. pamäte"
 
 # column title
-#: data/memmaps.ui:192
+#: data/memmaps.ui:198
 msgid "Flags"
 msgstr "Príznaky"
 
 # column title
 #. virtual memory offset
-#: data/memmaps.ui:233
+#: data/memmaps.ui:237
 msgid "VM Offset"
 msgstr "Posun virt. pamäte"
 
 # column title
 #. memory that has not been modified since it has been allocated
-#: data/memmaps.ui:274
+#: data/memmaps.ui:276
 msgid "Private Clean"
 msgstr "Súkromná nepoužitá"
 
 # column title
 #. memory that has been modified since it has been allocated
-#: data/memmaps.ui:309
+#: data/memmaps.ui:313
 msgid "Private Dirty"
 msgstr "Súkromná použitá"
 
 # column title
 #. shared memory that has not been modified since it has been allocated
-#: data/memmaps.ui:344
+#: data/memmaps.ui:350
 msgid "Shared Clean"
 msgstr "Zdieľaná nepoužitá"
 
 # column title
 #. shared memory that has been modified since it has been allocated
-#: data/memmaps.ui:379
+#: data/memmaps.ui:387
 msgid "Shared Dirty"
 msgstr "Zdieľaná použitá"
-
-# column title
-#: data/memmaps.ui:414 src/disks.cpp:392
-msgid "Device"
-msgstr "Zariadenie"
 
 # i-uzol - názov dátovej štruktúry
 # http://www.fem.uniag.sk/Darina.Tothova/nove_prednasky/zps/iuzol.html
 # column title
-#: data/memmaps.ui:452
+#: data/memmaps.ui:462
 msgid "Inode"
 msgstr "I-uzol"
 
 # GtkWindow title
 #: data/menus.ui:7 data/menus.ui:62
 msgctxt "Menu item to Open Search for Open Files dialog"
-msgid "Search for Open Files…"
-msgstr "Vyhľadať otvorené súbory…"
+msgid "_Search for Open Files…"
+msgstr "Hľadať _otvorené súbory…"
 
-#: data/menus.ui:13 data/menus.ui:68 data/preferences.ui:6
-msgid "Preferences"
-msgstr "Nastavenia"
+#: data/menus.ui:13 data/menus.ui:68
+msgid "_Preferences"
+msgstr "_Nastavenia"
 
 #: data/menus.ui:17 data/menus.ui:72
-msgid "Help"
-msgstr "Pomocník"
+msgid "_Help"
+msgstr "_Pomocník"
 
 #: data/menus.ui:21 data/menus.ui:76
-msgid "Keyboard Shortcuts"
-msgstr "Klávesové skratky"
+msgid "_Keyboard Shortcuts"
+msgstr "_Klávesové skratky"
 
 # desktop entry name
 #: data/menus.ui:25 data/menus.ui:80
-msgid "About System Monitor"
+msgid "_About System Monitor"
 msgstr "_O aplikácii Monitor systému"
 
 # action menu entry
@@ -454,17 +430,17 @@ msgstr "Ob_noviť"
 
 # radio menu entry
 #: data/menus.ui:39
-msgid "_Active Processes"
+msgid "Ac_tive Processes"
 msgstr "_Aktívne procesy"
 
 # radio menu entry
 #: data/menus.ui:44
-msgid "A_ll Processes"
+msgid "All Pro_cesses"
 msgstr "_Všetky procesy"
 
 # radio menu entry
 #: data/menus.ui:49
-msgid "M_y Processes"
+msgid "_My Processes"
 msgstr "M_oje procesy"
 
 # toggle menu entry
@@ -482,11 +458,11 @@ msgstr "_Vlastnosti"
 msgid "_Memory Maps"
 msgstr "_Mapy pamäte"
 
-# action menu entry
+# GtkDialog title
 #. Translators: this means 'Files that are open' (open is not a verb here)
 #: data/menus.ui:98
-msgid "Open _Files"
-msgstr "Otvorené _súbory"
+msgid "_Open Files"
+msgstr "_Otvorené súbory"
 
 # action menu entry
 #: data/menus.ui:104
@@ -494,55 +470,53 @@ msgid "_Change Priority"
 msgstr "Zm_eniť prioritu"
 
 # radio menu entry
-#: data/menus.ui:107 src/util.cpp:173
-msgid "Very High"
-msgstr "Veľmi vysoká"
+#: data/menus.ui:107
+msgid "_Very High"
+msgstr "Veľmi vy_soká"
 
 # radio menu entry
-#: data/menus.ui:112 src/util.cpp:175
-msgid "High"
-msgstr "Vysoká"
+#: data/menus.ui:112
+msgid "_High"
+msgstr "_Vysoká"
 
 # radio menu entry
-#: data/menus.ui:117 src/util.cpp:177
-msgid "Normal"
-msgstr "Normálna"
+#: data/menus.ui:117
+msgid "_Normal"
+msgstr "_Normálna"
+
+#: data/menus.ui:122
+msgid "_Low"
+msgstr "Ní_zka"
 
 # radio menu entry
-#: data/menus.ui:122 src/util.cpp:179
-msgid "Low"
-msgstr "Nízka"
+#: data/menus.ui:127
+msgid "Ve_ry Low"
+msgstr "V_eľmi nízka"
 
-# radio menu entry
-#: data/menus.ui:127 src/util.cpp:181
-msgid "Very Low"
-msgstr "Veľmi nízka"
-
-# radio menu entry
 #: data/menus.ui:134
-msgid "Custom"
-msgstr "Vlastná"
+msgid "Cus_tom"
+msgstr "Vla_stná"
 
 #: data/menus.ui:141
 msgid "Set _Affinity…"
-msgstr "Priradiť k _procesoru…"
+msgstr "_Pripnúť k procesoru…"
 
 #: data/menus.ui:147 data/procproperties.ui:217
 msgid "_Stop…"
 msgstr "_Zastaviť…"
 
 # tab GtkLabel label
-#: data/menus.ui:151 data/procproperties.ui:265
+#: data/menus.ui:151 src/procproperties.cpp:216
 msgid "_Resume"
-msgstr "Pok_račovať"
+msgstr "_Pokračovať"
 
-#: data/menus.ui:155 data/procproperties.ui:261
+#: data/menus.ui:155 src/procproperties.cpp:213
 msgid "_Terminate…"
 msgstr "_Ukončiť…"
 
 #: data/menus.ui:159 data/procproperties.ui:224
 msgid "_Force Stop…"
-msgstr "_Vynútené zastavenie…"
+msgstr "Vynú_tiť zastavenie…"
 
 # GtkDialog title
 #: data/openfiles.ui:16
@@ -550,20 +524,15 @@ msgid "Open Files"
 msgstr "Otvorenie súborov"
 
 # column title
-#: data/openfiles.ui:37
+#: data/openfiles.ui:46
 msgctxt ""
 "FD here means File Descriptor. Use a short translation if possible, and at "
 "most 2-3 characters"
 msgid "FD"
-msgstr "PS"
+msgstr "FD"
 
 # column title
-#: data/openfiles.ui:71 src/disks.cpp:394 src/legacy/gsm_color_button.c:599
-msgid "Type"
-msgstr "Typ"
-
-# column title
-#: data/openfiles.ui:105
+#: data/openfiles.ui:114
 msgid "Object"
 msgstr "Objekt"
 
@@ -589,6 +558,55 @@ msgstr "Zmena ohľaduplnosti procesu"
 msgid "Privileges are required to change the priority of processes"
 msgstr "Na zmenenie priority procesov sú vyžadované privilégiá"
 
+# summary
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:8
+msgid "View and manage system resources"
+msgstr "Zobrazuje a spravuje systémové prostriedky"
+
+# desc
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:10
+msgid ""
+"System Monitor is a process viewer and system monitor with an attractive, "
+"easy-to-use interface."
+msgstr ""
+"Monitor systému je zobrazovač procesov a monitor systému s atraktívnym a "
+"ľahko použiteľným rozhraním."
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:14
+msgid ""
+"System Monitor can help you find out what applications are using the "
+"processor or the memory of your computer, can manage the running "
+"applications, force stop processes not responding, and change the state or "
+"priority of existing processes."
+msgstr ""
+"Monitor systému vám pomôže zistiť, ktoré aplikácie používajú procesor alebo "
+"pamäť vášho počítača. Taktiež vám uľahčí správu spustených aplikácií, "
+"vynútené ukončenie neodpovedajúcich procesov a zmenu stavu alebo priority "
+"existujúcich procesov."
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:20
+msgid ""
+"The resource graphs feature shows you a quick overview of what is going on "
+"with your computer displaying recent network, memory and processor usage."
+msgstr ""
+"Grafy prostriedkov zobrazujú rýchly prehľad toho, čo sa deje s vaším "
+"počítačom (nedávne využitie siete, pamäte a procesora)."
+
+# summary
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:28
+msgid "Process list view"
+msgstr "Zobrazenie zoznamu procesov"
+
+# tab GtkLabel label
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:32
+msgid "Resources overview"
+msgstr "Prehľad prostriedkov"
+
+# tab GtkLabel label
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:36
+msgid "File Systems view"
+msgstr "Zobrazenie súborových systémov"
+
 # desktop entry keywords
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
@@ -599,88 +617,92 @@ msgstr ""
 "Monitor;Systém;Proces;Procesor;CPU;Pamäť;Sieť;História;Využitie;Výkon;Úloha;"
 "Správca;Aktivita;"
 
+#: data/preferences.ui:6
+msgid "Preferences"
+msgstr "Nastavenia"
+
 # tab GtkLabel label
 #: data/preferences.ui:12
-msgid "Processes"
-msgstr "Procesy"
+msgid "Resources"
+msgstr "Prostriedky"
 
 # GtkLabel label
-#: data/preferences.ui:16 data/preferences.ui:65 data/preferences.ui:150
+#: data/preferences.ui:16 data/preferences.ui:101 data/preferences.ui:150
 msgid "Behavior"
 msgstr "Správanie"
 
 # GtkLabel label
-#: data/preferences.ui:20 data/preferences.ui:69 data/preferences.ui:154
+#: data/preferences.ui:20 data/preferences.ui:105 data/preferences.ui:154
 msgid "_Update Interval in Seconds"
 msgstr "_Interval aktualizácie v sekundách"
 
-# GtkCheckButton label
 #: data/preferences.ui:28
-msgid "Enable _Smooth Refresh"
-msgstr "Povoliť _vyhladené obnovovanie"
-
-# GtkCheckButton label
-#: data/preferences.ui:34
-msgid "Alert Before Ending or _Force Stopping Processes"
-msgstr "Varovať pred ukončením alebo vynúteným zastavením procesov"
-
-# GtkCheckButton label
-#: data/preferences.ui:40
-msgid "_Divide CPU Usage by CPU Count"
-msgstr "_Rozdeliť využitie procesora počtom jadier procesora"
-
-# GtkLabel label
-#: data/preferences.ui:46
-msgid "Show Memory in IEC"
-msgstr "Zobraziť pamäť v binárnych jednotkách"
-
-# GtkLabel label
-#: data/preferences.ui:53 data/preferences.ui:169
-msgid "Information Fields"
-msgstr "Polia s informáciami"
-
-# GtkLabel label
-#: data/preferences.ui:54
-msgid "Process information shown in list:"
-msgstr "I_nformácie o procesoch zobrazené v zozname:"
-
-# tab GtkLabel label
-#: data/preferences.ui:61
-msgid "Resources"
-msgstr "Prostriedky"
-
-#: data/preferences.ui:77
 msgid "_Chart Data Points"
 msgstr "Body údajov _grafu"
 
 # GtkCheckButton label
-#: data/preferences.ui:92
+#: data/preferences.ui:43
 msgid "Draw Charts as S_mooth Graphs"
 msgstr "_Vykresliť hladké grafy"
 
 # GtkCheckButton label
-#: data/preferences.ui:103
+#: data/preferences.ui:54
 msgid "_Draw CPU Chart as Stacked Area Chart"
 msgstr "_Vykresliť graf procesora ako zoskupený"
 
 # GtkLabel label
-#: data/preferences.ui:114
+#: data/preferences.ui:65
 msgid "Show Memory and Swap in IEC"
 msgstr "Zobraziť pamäť a odkladací priestor v binárnych jednotkách"
 
-#: data/preferences.ui:120
+#: data/preferences.ui:71
 msgid "Show Memory in Logarithmic Scale"
 msgstr "Zobraziť pamäť v logaritmickej mierke"
 
 # GtkLabel label
-#: data/preferences.ui:131
+#: data/preferences.ui:82
 msgid "_Show Network Speed in Bits"
 msgstr "_Zobraziť rýchlosť siete v Bitoch"
 
 # summary
-#: data/preferences.ui:137
+#: data/preferences.ui:88
 msgid "Show Network _Totals in Bits"
 msgstr "Zobraziť _sumáre siete v Bitoch"
+
+# tab GtkLabel label
+#: data/preferences.ui:97
+msgid "Processes"
+msgstr "Procesy"
+
+# GtkCheckButton label
+#: data/preferences.ui:113
+msgid "Enable _Smooth Refresh"
+msgstr "Povoliť _vyhladené obnovovanie"
+
+# GtkCheckButton label
+#: data/preferences.ui:119
+msgid "Alert Before Ending or _Force Stopping Processes"
+msgstr "Varovať pred ukončením alebo za_bitím procesov"
+
+# GtkCheckButton label
+#: data/preferences.ui:125
+msgid "_Divide CPU Usage by CPU Count"
+msgstr "_Rozdeliť využitie procesora počtom jadier procesora"
+
+# GtkLabel label
+#: data/preferences.ui:131
+msgid "Show Memory in IEC"
+msgstr "Zobraziť pamäť v binárnych jednotkách"
+
+# GtkLabel label
+#: data/preferences.ui:138 data/preferences.ui:169
+msgid "Information Fields"
+msgstr "Polia s informáciami"
+
+# GtkLabel label
+#: data/preferences.ui:139
+msgid "Process information shown in list"
+msgstr "Informácie o procesoch zobrazené v zozname"
 
 # tab GtkLabel label
 #: data/preferences.ui:146
@@ -783,109 +805,88 @@ msgstr "Kontrolná skupina"
 msgid "More Actions"
 msgstr "Ďalšie akcie"
 
-#: data/renice.ui:15 data/setaffinity.ui:17 src/procdialogs.cpp:180
+#: data/renice.ui:4
+msgid ""
+"The priority of a process is given by its nice value. A lower nice value "
+"corresponds to a higher priority."
+msgstr ""
+"Priorita procesu je určená jeho hodnotou ohľaduplnosti. Nižšia hodnota "
+"znamená vyššiu prioritu."
+
+#: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:189
 msgid "_Cancel"
 msgstr "_Zrušiť"
 
 # GtkButton
-#: data/renice.ui:16
+#: data/renice.ui:10
 msgid "Change _Priority"
 msgstr "Zmeniť _prioritu"
 
 # ohľaduplnosti
 # som za nice
-#: data/renice.ui:39
-msgid "_Nice value:"
-msgstr "Hodnota _ohľaduplnosti:"
+#: data/renice.ui:17
+msgid "_Nice Value:"
+msgstr "Hodnota _ohľaduplnosti (nice):"
 
-#: data/renice.ui:69
-msgid ""
-"<small><i><b>Note:</b> The priority of a process is given by its nice value. "
-"A lower nice value corresponds to a higher priority.</i></small>"
-msgstr ""
-"<small><i><b>Poznámka:</b> Priorita procesu je určená jeho hodnotou "
-"ohľaduplnosti. Nižšia hodnota znamená vyššiu prioritu.</i></small>"
-
-#: data/setaffinity.ui:8
+#: data/setaffinity.ui:15
 msgid "Set Affinity"
 msgstr "Priradenie k procesoru"
 
-#: data/setaffinity.ui:23
+#: data/setaffinity.ui:26
 msgid "_Apply"
 msgstr "_Použiť"
 
-#: data/setaffinity.ui:40
-msgid "Apply to child threads"
-msgstr "Použiť na podradené vlákna"
+#: data/setaffinity.ui:39
+msgid "Select CPUs allowed to run on"
+msgstr "Vyberte procesory, na ktorých je povolené spúšťanie"
 
-#: data/setaffinity.ui:58
-msgid "Run on all CPUs"
-msgstr "Spustiť na všetkých procesoroch"
+#: data/setaffinity.ui:46
+msgid "_Run on all CPUs"
+msgstr "Spúšťať na _všetkých procesoroch"
+
+#: data/setaffinity.ui:68
+#| msgid "Apply to child threads"
+msgid "Apply to Child _Threads"
+msgstr "Použiť na podradené v_lákna"
 
 # cmd context
-#: src/application.cpp:423
+#: src/application.cpp:405
 msgid "A simple process and system monitor."
 msgstr "Jednoduchý monitor procesov a systému."
 
 # cmd desc
-#: src/argv.cpp:22
+#: src/argv.cpp:20
 msgid "Show the Processes tab"
 msgstr "Zobrazí kartu „Procesy“"
 
 # cmd desc
-#: src/argv.cpp:28
+#: src/argv.cpp:24
 msgid "Show the Resources tab"
 msgstr "Zobrazí kartu „Prostriedky“"
 
 # cmd desc
-#: src/argv.cpp:34
+#: src/argv.cpp:28
 msgid "Show the File Systems tab"
 msgstr "Zobrazí kartu „Súborové systémy“"
 
-#: src/argv.cpp:39
+#: src/argv.cpp:31
 msgid "Show the application’s version"
 msgstr "Zobrazí verziu aplikácie"
 
-# PK: pouzivame directory v systemovych veciach, v user space je folder
-# column title
-#: src/disks.cpp:393
-msgid "Directory"
-msgstr "Adresár"
-
-# column title
-#: src/disks.cpp:395
-msgid "Total"
-msgstr "Celkom"
-
-# column title
-#: src/disks.cpp:396
-msgid "Free"
-msgstr "Voľné"
-
-# column title
-#: src/disks.cpp:397
-msgid "Available"
-msgstr "Dostupné"
-
-# column title
-#: src/disks.cpp:398
-msgid "Used"
-msgstr "Použité"
-
 # dialog window title
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: src/interface.cpp:247
+#: src/interface.cpp:232
 #, c-format
 msgid "Pick a Color for “%s”"
 msgstr "Výber farby pre „%s“"
 
 #. Set check box label value to CPU [1..2048]
-#: src/interface.cpp:285 src/setaffinity.cpp:428
+#: src/interface.cpp:270 src/setaffinity.cpp:406
 #, c-format
 msgid "CPU%d"
 msgstr "%d. procesor"
 
-#: src/interface.cpp:500
+#: src/interface.cpp:481
 msgid "translator-credits"
 msgstr ""
 "Stanislav Višňovský\n"
@@ -998,42 +999,48 @@ msgstr[2] "%u sekundy"
 
 #. Update label
 #. Translators: CPU usage percentage label: 95.7%
-#: src/load-graph.cpp:518
+#: src/load-graph.cpp:519
 #, c-format
 msgid "%.1f%%"
 msgstr "%.1f%%"
 
-#: src/load-graph.cpp:545
+#: src/load-graph.cpp:547
 msgid "not available"
 msgstr "nedostupné"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:550
+#: src/load-graph.cpp:552
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) z %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:555
+#: src/load-graph.cpp:557
 #, c-format
 msgid "Cache %s"
 msgstr "Vyrovnávacia pamäť %s"
 
 #: src/lsof.cpp:108
 #, c-format
-msgid "%d open file"
-msgid_plural "%d open files"
+msgid "%d Open File"
+msgid_plural "%d Open Files"
 msgstr[0] "%d otvorených súborov"
 msgstr[1] "%d otvorený súbor"
 msgstr[2] "%d otvorené súbory"
 
 #: src/lsof.cpp:110
 #, c-format
-msgid "%d matching open file"
-msgid_plural "%d matching open files"
+msgid "%d Matching Open File"
+msgid_plural "%d Matching Open Files"
 msgstr[0] "%d zodpovedajúcich otvorených súborov"
 msgstr[1] "%d zodpovedajúci otvorený súbor"
 msgstr[2] "%d zodpovedajúce otvorené súbory"
+
+#. Translators: process name and id
+#: src/memmaps.cpp:408 src/openfiles.cpp:281 src/setaffinity.cpp:382
+#, c-format
+msgid "%s (PID %u)"
+msgstr "%s (PID %u)"
 
 # file type
 #: src/openfiles.cpp:29
@@ -1645,11 +1652,11 @@ msgid "Open files sort order"
 msgstr "Poradie triedenia otvorených súborov"
 
 # column title
-#: src/prefsdialog.cpp:70
+#: src/prefsdialog.cpp:70 src/prefsdialog.cpp:122
 msgid "Icon"
 msgstr "Ikona"
 
-#: src/procactions.cpp:79
+#: src/procactions.cpp:80
 #, c-format
 msgid ""
 "Cannot change the priority of process with PID %d to %d.\n"
@@ -1658,11 +1665,11 @@ msgstr ""
 "Nedá sa zmeniť priorita procesu s PID %d na %d.\n"
 "%s"
 
-#: src/procactions.cpp:89 src/procactions.cpp:174
+#: src/procactions.cpp:90 src/procactions.cpp:166
 msgid "_OK"
 msgstr "_OK"
 
-#: src/procactions.cpp:164
+#: src/procactions.cpp:156
 #, c-format
 msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
@@ -1672,26 +1679,26 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:108
+#: src/procdialogs.cpp:117
 #, c-format
 msgid "Force Stop %s?"
 msgstr "Vynútiť zastavenie %s?"
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:114
+#: src/procdialogs.cpp:123
 #, c-format
 msgid "End %s?"
 msgstr "Ukončiť %s?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:120
+#: src/procdialogs.cpp:129
 #, c-format
 msgid "Stop %s?"
 msgstr "Zastaviť %s?"
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:131
+#: src/procdialogs.cpp:140
 #, c-format
 msgid "Force Stop Selected Process?"
 msgid_plural "Force Stop %d Selected Processes?"
@@ -1701,27 +1708,27 @@ msgstr[2] "Vynútiť zastavenie %d vybraných procesov?"
 
 # action menu entry
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:138
+#: src/procdialogs.cpp:147
 #, c-format
 msgid "End Selected Process?"
 msgid_plural "End %d Selected Processes?"
-msgstr[0] "Ukončiť %d vybraných procesov?"
-msgstr[1] "Ukončiť vybraný proces?"
-msgstr[2] "Ukončiť %d vybrané procesy?"
+msgstr[0] "_Ukončiť %d vybraných procesov?"
+msgstr[1] "_Ukončiť %d vybraný proces?"
+msgstr[2] "_Ukončiť %d vybrané procesy?"
 
 # action menu entry
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:145
+#: src/procdialogs.cpp:154
 #, c-format
 msgid "Stop Selected Process?"
 msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "Zastaviť %d vybraných procesov?"
-msgstr[1] "Zastaviť vybraný proces?"
-msgstr[2] "Zastaviť %d vybrané procesy?"
+msgstr[0] "Za_staviť %d vybraných procesov?"
+msgstr[1] "Za_staviť %d vybraný proces?"
+msgstr[2] "Za_staviť %d vybrané procesy?"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:156
+#: src/procdialogs.cpp:165
 msgid ""
 "Force stopping processes can result in data loss, crashes, and system "
 "failures"
@@ -1729,77 +1736,65 @@ msgstr ""
 "Vynútené zastavenie procesov môže mať za následok stratu údajov, pády a "
 "zlyhania systému"
 
-#: src/procdialogs.cpp:158
+#: src/procdialogs.cpp:167
 msgid "_Force Stop"
 msgstr "_Vynútiť zastavenie"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:163
+#: src/procdialogs.cpp:172
 msgid "Ending processes can result in data loss, crashes, and system failures"
 msgstr ""
 "Ukončenie procesov môže mať za následok stratu údajov, pády a zlyhania "
 "systému"
 
-#: src/procdialogs.cpp:165
+#: src/procdialogs.cpp:174
 msgid "_End"
 msgstr "_Ukončiť"
 
 #. SIGSTOP
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:170
+#: src/procdialogs.cpp:179
 msgid ""
 "Stopping processes can result in data loss, crashes, and system failures"
 msgstr ""
 "Zastavenie procesov môže mať za následok stratu údajov, pády a zlyhania "
 "systému"
 
-#: src/procdialogs.cpp:172
+#: src/procdialogs.cpp:181
 msgid "_Stop"
 msgstr "_Zastaviť"
 
 # dialog title
-#: src/procdialogs.cpp:264
+#: src/procdialogs.cpp:273
 #, c-format
-msgid "Change Priority of Process “%s” (PID: %u)"
-msgstr "Zmena prioritu procesu „%s“ (PID: %u)"
+msgid "Change Priority of %s (PID %u)"
+msgstr "Zmena priority procesu „%s“ (PID: %u)"
 
 # tooltip
-#: src/procdialogs.cpp:267
+#: src/procdialogs.cpp:276
 #, c-format
-msgid "Change Priority of the selected process"
-msgid_plural "Change Priority of %d selected processes"
-msgstr[0] "Zmeniť prioritu %d vybraných procesov"
-msgstr[1] "Zmeniť prioritu vybraného procesu"
-msgstr[2] "Zmeniť prioritu %d vybraných procesov"
-
-#: src/procproperties.cpp:43 src/procproperties.cpp:97
-#: src/procproperties.cpp:106 src/util.cpp:540 src/util.cpp:587
-msgid "N/A"
-msgstr "-"
+msgid "Change Priority of the Selected Process"
+msgid_plural "Change Priority of %d Selected Processes"
+msgstr[0] "Zmení prioritu %d vybraných procesov"
+msgstr[1] "Zmení prioritu vybraného procesu"
+msgstr[2] "Zmení prioritu %d vybraných procesov"
 
 # action menu entry
 #: src/proctable.cpp:136
-msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "_Ukončiť procesy"
-msgstr[1] "_Ukončiť proces"
-msgstr[2] "_Ukončiť procesy"
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "_Ukončiť procesy…"
+msgstr[1] "_Ukončiť proces…"
+msgstr[2] "_Ukončiť procesy…"
 
-# column title
 #: src/proctable.cpp:344
-msgid "Process Name"
-msgstr "Názov procesu"
+msgid "Name"
+msgstr "Meno"
 
 # column title
 #: src/proctable.cpp:351
 msgid "X Server Memory"
 msgstr "Pamäť X servera"
-
-# column title
-#: src/proctable.cpp:352
-#, no-c-format
-msgid "% CPU"
-msgstr "% procesora"
 
 # column title
 #: src/proctable.cpp:355
@@ -1836,34 +1831,30 @@ msgid "Owner"
 msgstr "Vlastník"
 
 #: src/proctable.cpp:369
-msgid "Disk read total"
+msgid "Disk Read Total"
 msgstr "Celkové čítanie z disku"
 
 #: src/proctable.cpp:370
-msgid "Disk write total"
+msgid "Disk Write Total"
 msgstr "Celkový zápis na disk"
 
 #: src/proctable.cpp:371
-msgid "Disk read"
+msgid "Disk Read"
 msgstr "Čítanie z disku"
 
 # gsettings summary
 #: src/proctable.cpp:372
-msgid "Disk write"
+msgid "Disk Write"
 msgstr "Zápis na disk"
 
-#: src/setaffinity.cpp:125
+#. Create error alert dialog
+#: src/setaffinity.cpp:126
 msgid "GNU CPU Affinity error"
-msgstr "GNU chyba priradenia k procesoru"
+msgstr "Chyba GNU CPU Affinity"
 
-#: src/setaffinity.cpp:130
+#: src/setaffinity.cpp:131
 msgid "_Close"
 msgstr "_Zavrieť"
-
-#: src/setaffinity.cpp:409
-#, c-format
-msgid "Select CPUs \"%s\" (PID %u) is allowed to run on:"
-msgstr "Vyberte procesory, na ktorých je možné spustiť proces „%s“ (PID %u):"
 
 # process state
 #: src/util.cpp:34
@@ -1914,36 +1905,91 @@ msgstr "%u:%02u:%02u"
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
+# radio menu entry
+#: src/util.cpp:149
+msgid "Very High"
+msgstr "Veľmi vysoká"
+
+# radio menu entry
+#: src/util.cpp:151
+msgid "High"
+msgstr "Vysoká"
+
+# radio menu entry
+#: src/util.cpp:153
+msgid "Normal"
+msgstr "Normálna"
+
+# radio menu entry
+#: src/util.cpp:155
+msgid "Low"
+msgstr "Nízka"
+
+# radio menu entry
+#: src/util.cpp:157
+msgid "Very Low"
+msgstr "Veľmi nízka"
+
 # priority level
-#: src/util.cpp:188
+#: src/util.cpp:164
 msgid "Very High Priority"
 msgstr "Veľmi vysoká priorita"
 
 # priority level
-#: src/util.cpp:190
+#: src/util.cpp:166
 msgid "High Priority"
 msgstr "Vysoká priorita"
 
 # priority level
-#: src/util.cpp:192
+#: src/util.cpp:168
 msgid "Normal Priority"
 msgstr "Normálna priorita"
 
 # priority level
-#: src/util.cpp:194
+#: src/util.cpp:170
 msgid "Low Priority"
 msgstr "Nízka priorita"
 
 # priority level
-#: src/util.cpp:196
+#: src/util.cpp:172
 msgid "Very Low Priority"
 msgstr "Veľmi nízka priorita"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:832
+#: src/util.cpp:765
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "The GNOME Project"
+#~ msgstr "Projekt GNOME"
+
+# action menu entry
+#~ msgid "Open _Files"
+#~ msgstr "Otvorené _súbory"
+
+# radio menu entry
+#~ msgid "Custom"
+#~ msgstr "Vlastná"
+
+#~ msgid ""
+#~ "<small><i><b>Note:</b> The priority of a process is given by its nice "
+#~ "value. A lower nice value corresponds to a higher priority.</i></small>"
+#~ msgstr ""
+#~ "<small><i><b>Poznámka:</b> Priorita procesu je určená jeho hodnotou "
+#~ "ohľaduplnosti. Nižšia hodnota znamená vyššiu prioritu.</i></small>"
+
+#~ msgid "N/A"
+#~ msgstr "-"
+
+# column title
+#~ msgid "Process Name"
+#~ msgstr "Názov procesu"
+
+# column title
+#, no-c-format
+#~ msgid "% CPU"
+#~ msgstr "% procesora"
 
 #~ msgid "_Continue"
 #~ msgstr "_Pokračovať"
@@ -2026,10 +2072,6 @@ msgstr "%s/s"
 #~ "byť zastavené."
 
 #, c-format
-#~ msgid "%s (PID %u)"
-#~ msgstr "%s (PID %u)"
-
-#, c-format
 #~ msgid "CPU %d"
 #~ msgstr "%d. procesor"
 
@@ -2054,13 +2096,6 @@ msgstr "%s/s"
 
 #~ msgid "Note:"
 #~ msgstr "Poznámka:"
-
-#~ msgid ""
-#~ "The priority of a process is given by its nice value. A lower nice value "
-#~ "corresponds to a higher priority."
-#~ msgstr ""
-#~ "Priorita procesu je určená jeho hodnotou ohľaduplnosti. Nižšia hodnota "
-#~ "znamená vyššiu prioritu."
 
 #~ msgctxt "shortcut window"
 #~ msgid "Send End signal"
@@ -2106,7 +2141,6 @@ msgstr "%s/s"
 #~ msgid "End _Process"
 #~ msgstr "U_končiť proces"
 
-#~| msgid "utilities-system-monitor"
 #~ msgid "gnome-system-monitor"
 #~ msgstr "gnome-system-monitor"
 
