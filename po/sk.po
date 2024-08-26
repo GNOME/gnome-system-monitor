@@ -14,9 +14,9 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2024-03-29 03:56+0000\n"
-"PO-Revision-Date: 2024-04-05 10:47+0200\n"
-"Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
+"POT-Creation-Date: 2024-05-19 21:14+0000\n"
+"PO-Revision-Date: 2024-06-07 13:39+0200\n"
+"Last-Translator: Jozef Gaal <preklady@mayday.sk>\n"
 "Language-Team: slovenčina <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
@@ -233,12 +233,10 @@ msgid "Search processes and users"
 msgstr "Vyhľadajte procesy a používateľov"
 
 # action menu entry
-#: data/interface.ui:88 src/procdialogs.cpp:150 src/proctable.cpp:136
+#: data/interface.ui:88
+msgctxt "interface"
 msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "_Ukončiť procesy"
-msgstr[1] "_Ukončiť proces"
-msgstr[2] "_Ukončiť procesy"
+msgstr "_Ukončiť proces"
 
 # tooltip
 #: data/interface.ui:108
@@ -251,13 +249,13 @@ msgid "_Resources"
 msgstr "P_rostriedky"
 
 # zobrazuje sa, keď je len jeden; inak nasledujúci reťazec
-#: data/interface.ui:175 data/preferences.ui:114 src/interface.cpp:283
-#: src/procproperties.cpp:77
+#: data/interface.ui:175 data/preferences.ui:99 data/procproperties.ui:86
+#: src/interface.cpp:283
 msgid "CPU"
 msgstr "Procesor"
 
 # GtkLabel label
-#: data/interface.ui:206 src/interface.cpp:321 src/procproperties.cpp:71
+#: data/interface.ui:206 data/procproperties.ui:97 src/interface.cpp:321
 #: src/proctable.cpp:359
 msgid "Memory"
 msgstr "Pamäť"
@@ -268,7 +266,7 @@ msgid "Swap"
 msgstr "Odkladací priestor"
 
 # GtkLabel label
-#: data/interface.ui:234 data/preferences.ui:125
+#: data/interface.ui:234 data/preferences.ui:110
 msgid "Memory and Swap"
 msgstr "Pamäť a odkladací priestor"
 
@@ -293,7 +291,7 @@ msgid "Total Sent"
 msgstr "Celkom odoslaných"
 
 # GtkLabel label
-#: data/interface.ui:312 data/preferences.ui:142
+#: data/interface.ui:312 data/preferences.ui:127
 msgid "Network"
 msgstr "Sieť"
 
@@ -317,7 +315,6 @@ msgid "Total Written"
 msgstr "Celkom zapísaných"
 
 #: data/interface.ui:390
-#| msgid "Disk read"
 msgid "Disk"
 msgstr "Disk"
 
@@ -342,10 +339,90 @@ msgstr "Filtrovať súbory podľa názvu"
 msgid "Case insensitive"
 msgstr "Rozlišovať veľkosti písmen"
 
+# column title
+#: data/lsof.ui:63
+msgid "Process"
+msgstr "Proces"
+
+# column title
+#: data/lsof.ui:111
+msgid "PID"
+msgstr "PID"
+
+# column title
+#: data/lsof.ui:145 data/memmaps.ui:37
+msgid "Filename"
+msgstr "Názov súboru"
+
 # dialog title
-#: data/memmaps.ui:8
+#: data/memmaps.ui:16
 msgid "Memory Maps"
 msgstr "Mapy pamäte"
+
+# column title
+#. virtual memory start
+#: data/memmaps.ui:75
+msgid "VM Start"
+msgstr "Začiatok virt. pamäte"
+
+# column title
+#. virtual memory end
+#: data/memmaps.ui:116
+msgid "VM End"
+msgstr "Koniec virt. pamäte"
+
+# column title
+#. virtual memory syze
+#: data/memmaps.ui:157
+msgid "VM Size"
+msgstr "Veľkosť virt. pamäte"
+
+# column title
+#: data/memmaps.ui:192
+msgid "Flags"
+msgstr "Príznaky"
+
+# column title
+#. virtual memory offset
+#: data/memmaps.ui:233
+msgid "VM Offset"
+msgstr "Posun virt. pamäte"
+
+# column title
+#. memory that has not been modified since it has been allocated
+#: data/memmaps.ui:274
+msgid "Private Clean"
+msgstr "Súkromná nepoužitá"
+
+# column title
+#. memory that has been modified since it has been allocated
+#: data/memmaps.ui:309
+msgid "Private Dirty"
+msgstr "Súkromná použitá"
+
+# column title
+#. shared memory that has not been modified since it has been allocated
+#: data/memmaps.ui:344
+msgid "Shared Clean"
+msgstr "Zdieľaná nepoužitá"
+
+# column title
+#. shared memory that has been modified since it has been allocated
+#: data/memmaps.ui:379
+msgid "Shared Dirty"
+msgstr "Zdieľaná použitá"
+
+# column title
+#: data/memmaps.ui:414 src/disks.cpp:392
+msgid "Device"
+msgstr "Zariadenie"
+
+# i-uzol - názov dátovej štruktúry
+# http://www.fem.uniag.sk/Darina.Tothova/nove_prednasky/zps/iuzol.html
+# column title
+#: data/memmaps.ui:452
+msgid "Inode"
+msgstr "I-uzol"
 
 # GtkWindow title
 #: data/menus.ui:7 data/menus.ui:62
@@ -450,26 +527,45 @@ msgstr "Vlastná"
 msgid "Set _Affinity…"
 msgstr "Priradiť k _procesoru…"
 
-#: data/menus.ui:147
+#: data/menus.ui:147 data/procproperties.ui:217
 msgid "_Stop…"
 msgstr "_Zastaviť…"
 
-#: data/menus.ui:151
-msgid "_Continue"
-msgstr "_Pokračovať"
+# tab GtkLabel label
+#: data/menus.ui:151 data/procproperties.ui:265
+msgid "_Resume"
+msgstr "Pok_račovať"
 
-#: data/menus.ui:155
+#: data/menus.ui:155 data/procproperties.ui:261
 msgid "_Terminate…"
 msgstr "_Ukončiť…"
 
-#: data/menus.ui:159
-msgid "_Kill…"
-msgstr "Za_biť…"
+#: data/menus.ui:159 data/procproperties.ui:224
+msgid "_Force Stop…"
+msgstr "_Vynútené zastavenie…"
 
 # GtkDialog title
-#: data/openfiles.ui:4
+#: data/openfiles.ui:16
 msgid "Open Files"
 msgstr "Otvorenie súborov"
+
+# column title
+#: data/openfiles.ui:37
+msgctxt ""
+"FD here means File Descriptor. Use a short translation if possible, and at "
+"most 2-3 characters"
+msgid "FD"
+msgstr "PS"
+
+# column title
+#: data/openfiles.ui:71 src/disks.cpp:394 src/legacy/gsm_color_button.c:599
+msgid "Type"
+msgstr "Typ"
+
+# column title
+#: data/openfiles.ui:105
+msgid "Object"
+msgstr "Objekt"
 
 # action description
 #: data/org.gnome.gnome-system-monitor.policy.in.in:11
@@ -504,104 +600,190 @@ msgstr ""
 "Správca;Aktivita;"
 
 # tab GtkLabel label
-#: data/preferences.ui:13
+#: data/preferences.ui:12
 msgid "Processes"
 msgstr "Procesy"
 
 # GtkLabel label
-#: data/preferences.ui:17 data/preferences.ui:80 data/preferences.ui:165
+#: data/preferences.ui:16 data/preferences.ui:65 data/preferences.ui:150
 msgid "Behavior"
 msgstr "Správanie"
 
 # GtkLabel label
-#: data/preferences.ui:21 data/preferences.ui:84 data/preferences.ui:169
+#: data/preferences.ui:20 data/preferences.ui:69 data/preferences.ui:154
 msgid "_Update Interval in Seconds"
 msgstr "_Interval aktualizácie v sekundách"
 
 # GtkCheckButton label
-#: data/preferences.ui:29
+#: data/preferences.ui:28
 msgid "Enable _Smooth Refresh"
 msgstr "Povoliť _vyhladené obnovovanie"
 
 # GtkCheckButton label
-#: data/preferences.ui:35
-msgid "Alert Before Ending or _Killing Processes"
-msgstr "Varovať pred ukončením alebo za_bitím procesov"
+#: data/preferences.ui:34
+msgid "Alert Before Ending or _Force Stopping Processes"
+msgstr "Varovať pred ukončením alebo vynúteným zastavením procesov"
 
 # GtkCheckButton label
-#: data/preferences.ui:41
+#: data/preferences.ui:40
 msgid "_Divide CPU Usage by CPU Count"
 msgstr "_Rozdeliť využitie procesora počtom jadier procesora"
 
 # GtkLabel label
-#: data/preferences.ui:47
+#: data/preferences.ui:46
 msgid "Show Memory in IEC"
 msgstr "Zobraziť pamäť v binárnych jednotkách"
 
 # GtkLabel label
-#: data/preferences.ui:54 data/preferences.ui:184
+#: data/preferences.ui:53 data/preferences.ui:169
 msgid "Information Fields"
 msgstr "Polia s informáciami"
 
 # GtkLabel label
-#: data/preferences.ui:55
+#: data/preferences.ui:54
 msgid "Process information shown in list:"
 msgstr "I_nformácie o procesoch zobrazené v zozname:"
 
 # tab GtkLabel label
-#: data/preferences.ui:76
+#: data/preferences.ui:61
 msgid "Resources"
 msgstr "Prostriedky"
 
-#: data/preferences.ui:92
+#: data/preferences.ui:77
 msgid "_Chart Data Points"
 msgstr "Body údajov _grafu"
 
 # GtkCheckButton label
-#: data/preferences.ui:107
+#: data/preferences.ui:92
 msgid "Draw Charts as S_mooth Graphs"
 msgstr "_Vykresliť hladké grafy"
 
 # GtkCheckButton label
-#: data/preferences.ui:118
+#: data/preferences.ui:103
 msgid "_Draw CPU Chart as Stacked Area Chart"
 msgstr "_Vykresliť graf procesora ako zoskupený"
 
 # GtkLabel label
-#: data/preferences.ui:129
+#: data/preferences.ui:114
 msgid "Show Memory and Swap in IEC"
 msgstr "Zobraziť pamäť a odkladací priestor v binárnych jednotkách"
 
-#: data/preferences.ui:135
+#: data/preferences.ui:120
 msgid "Show Memory in Logarithmic Scale"
 msgstr "Zobraziť pamäť v logaritmickej mierke"
 
 # GtkLabel label
-#: data/preferences.ui:146
+#: data/preferences.ui:131
 msgid "_Show Network Speed in Bits"
 msgstr "_Zobraziť rýchlosť siete v Bitoch"
 
 # summary
-#: data/preferences.ui:152
+#: data/preferences.ui:137
 msgid "Show Network _Totals in Bits"
 msgstr "Zobraziť _sumáre siete v Bitoch"
 
 # tab GtkLabel label
-#: data/preferences.ui:161
+#: data/preferences.ui:146
 msgid "File Systems"
 msgstr "Súborové systémy"
 
 # tab GtkLabel label
-#: data/preferences.ui:177
+#: data/preferences.ui:162
 msgid "Show _All File Systems"
 msgstr "Zobraziť _všetky súborové systémy"
 
 # GtkLabel label
-#: data/preferences.ui:185
+#: data/preferences.ui:170
 msgid "File system information shown in list"
 msgstr "Informácie o súborových systémoch zobrazené v zozname"
 
-#: data/renice.ui:15 data/setaffinity.ui:17 src/procdialogs.cpp:166
+#: data/procproperties.ui:18
+msgid "Details"
+msgstr "Podrobnosti"
+
+# column title
+#: data/procproperties.ui:21
+msgid "Process ID"
+msgstr "ID procesu"
+
+# column title
+#: data/procproperties.ui:32 src/proctable.cpp:345
+msgid "User"
+msgstr "Používateľ"
+
+# column title
+#: data/procproperties.ui:45 data/procproperties.ui:70 src/proctable.cpp:346
+msgid "Status"
+msgstr "Stav"
+
+# column title
+#: data/procproperties.ui:48 src/proctable.cpp:354
+msgid "Started"
+msgstr "Čas štartu"
+
+# column title
+#: data/procproperties.ui:59 src/proctable.cpp:373
+msgid "Priority"
+msgstr "Priorita"
+
+#: data/procproperties.ui:83
+msgid "Usage"
+msgstr "Využitie"
+
+# column title
+#: data/procproperties.ui:108 src/proctable.cpp:353
+msgid "CPU Time"
+msgstr "Čas procesora"
+
+# column title
+#: data/procproperties.ui:119 src/proctable.cpp:347
+msgid "Virtual Memory"
+msgstr "Virtuálna pamäť"
+
+# column title
+#: data/procproperties.ui:130 src/proctable.cpp:348
+msgid "Resident Memory"
+msgstr "Rezidentná pamäť"
+
+# column title
+#: data/procproperties.ui:141 src/proctable.cpp:349
+msgid "Writable Memory"
+msgstr "Zapisovateľná pamäť"
+
+# column title
+#: data/procproperties.ui:152 src/proctable.cpp:350
+msgid "Shared Memory"
+msgstr "Zdieľaná pamäť"
+
+# column title
+#: data/procproperties.ui:167 src/proctable.cpp:357
+msgid "Security Context"
+msgstr "Bezpečnostný kontext"
+
+# column title
+#: data/procproperties.ui:175 src/proctable.cpp:358
+msgid "Command Line"
+msgstr "Príkazový riadok"
+
+# column title
+#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
+#: data/procproperties.ui:183 src/proctable.cpp:361
+msgid "Waiting Channel"
+msgstr "Čakací kanál"
+
+# column title
+#: data/procproperties.ui:191 src/proctable.cpp:362
+msgid "Control Group"
+msgstr "Kontrolná skupina"
+
+# PK: tu neviem kde to je
+# PM: je to názov vlastnosti widgetu
+# Property nick
+#: data/procproperties.ui:236
+msgid "More Actions"
+msgstr "Ďalšie akcie"
+
+#: data/renice.ui:15 data/setaffinity.ui:17 src/procdialogs.cpp:180
 msgid "_Cancel"
 msgstr "_Zrušiť"
 
@@ -632,7 +814,11 @@ msgstr "Priradenie k procesoru"
 msgid "_Apply"
 msgstr "_Použiť"
 
-#: data/setaffinity.ui:52
+#: data/setaffinity.ui:40
+msgid "Apply to child threads"
+msgstr "Použiť na podradené vlákna"
+
+#: data/setaffinity.ui:58
 msgid "Run on all CPUs"
 msgstr "Spustiť na všetkých procesoroch"
 
@@ -660,21 +846,11 @@ msgstr "Zobrazí kartu „Súborové systémy“"
 msgid "Show the application’s version"
 msgstr "Zobrazí verziu aplikácie"
 
-# column title
-#: src/disks.cpp:392 src/memmaps.cpp:354
-msgid "Device"
-msgstr "Zariadenie"
-
 # PK: pouzivame directory v systemovych veciach, v user space je folder
 # column title
 #: src/disks.cpp:393
 msgid "Directory"
 msgstr "Adresár"
-
-# column title
-#: src/disks.cpp:394 src/legacy/gsm_color_button.c:612 src/openfiles.cpp:268
-msgid "Type"
-msgstr "Typ"
 
 # column title
 #: src/disks.cpp:395
@@ -703,7 +879,8 @@ msgstr "Použité"
 msgid "Pick a Color for “%s”"
 msgstr "Výber farby pre „%s“"
 
-#: src/interface.cpp:285
+#. Set check box label value to CPU [1..2048]
+#: src/interface.cpp:285 src/setaffinity.cpp:428
 #, c-format
 msgid "CPU%d"
 msgstr "%d. procesor"
@@ -745,47 +922,47 @@ msgstr "%d. %b %Y"
 # PK: tu neviem kde to je
 # PM: je to názov vlastnosti widgetu
 # Property nick
-#: src/legacy/gsm_color_button.c:588
+#: src/legacy/gsm_color_button.c:575
 msgid "Fraction"
 msgstr "Zlomok"
 
 # property blurb
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: src/legacy/gsm_color_button.c:590
+#: src/legacy/gsm_color_button.c:577
 msgid "Percentage full for pie color pickers"
 msgstr "Plný percentuálny podiel pre výber farby"
 
 # Property nick
-#: src/legacy/gsm_color_button.c:597
+#: src/legacy/gsm_color_button.c:584
 msgid "Title"
 msgstr "Titulok"
 
 # property blurb
-#: src/legacy/gsm_color_button.c:598
+#: src/legacy/gsm_color_button.c:585
 msgid "The title of the color selection dialog"
 msgstr "Titulok dialógového okna na výber farby"
 
 # window title
-#: src/legacy/gsm_color_button.c:599 src/legacy/gsm_color_button.c:637
+#: src/legacy/gsm_color_button.c:586 src/legacy/gsm_color_button.c:624
 msgid "Pick a Color"
 msgstr "Výber farby"
 
 # Property nick
-#: src/legacy/gsm_color_button.c:605
+#: src/legacy/gsm_color_button.c:592
 msgid "Current Color"
 msgstr "Aktuálna farba"
 
 # Property blurb
-#: src/legacy/gsm_color_button.c:606
+#: src/legacy/gsm_color_button.c:593
 msgid "The selected color"
 msgstr "Vybraná farba"
 
 # Property blurb
-#: src/legacy/gsm_color_button.c:613
+#: src/legacy/gsm_color_button.c:600
 msgid "Type of color picker"
 msgstr "Typ výberu farby"
 
-#: src/legacy/gsm_color_button.c:660
+#: src/legacy/gsm_color_button.c:647
 msgid "Click to set graph colors"
 msgstr "Kliknutím nastavíte farby grafov"
 
@@ -842,7 +1019,7 @@ msgstr "%s (%.1f %%) z %s"
 msgid "Cache %s"
 msgstr "Vyrovnávacia pamäť %s"
 
-#: src/lsof.cpp:116
+#: src/lsof.cpp:108
 #, c-format
 msgid "%d open file"
 msgid_plural "%d open files"
@@ -850,7 +1027,7 @@ msgstr[0] "%d otvorených súborov"
 msgstr[1] "%d otvorený súbor"
 msgstr[2] "%d otvorené súbory"
 
-#: src/lsof.cpp:118
+#: src/lsof.cpp:110
 #, c-format
 msgid "%d matching open file"
 msgid_plural "%d matching open files"
@@ -858,139 +1035,35 @@ msgstr[0] "%d zodpovedajúcich otvorených súborov"
 msgstr[1] "%d zodpovedajúci otvorený súbor"
 msgstr[2] "%d zodpovedajúce otvorené súbory"
 
-# column title
-#: src/lsof.cpp:229
-msgid "Process"
-msgstr "Proces"
-
-# column title
-#: src/lsof.cpp:240
-msgid "PID"
-msgstr "PID"
-
-# column title
-#: src/lsof.cpp:249 src/memmaps.cpp:332
-msgid "Filename"
-msgstr "Názov súboru"
-
-# column title
-#. xgettext: virtual memory start
-#: src/memmaps.cpp:334
-msgid "VM Start"
-msgstr "Začiatok virt. pamäte"
-
-# column title
-#. xgettext: virtual memory end
-#: src/memmaps.cpp:336
-msgid "VM End"
-msgstr "Koniec virt. pamäte"
-
-# column title
-#. xgettext: virtual memory syze
-#: src/memmaps.cpp:338
-msgid "VM Size"
-msgstr "Veľkosť virt. pamäte"
-
-# column title
-#: src/memmaps.cpp:339
-msgid "Flags"
-msgstr "Príznaky"
-
-# column title
-#. xgettext: virtual memory offset
-#: src/memmaps.cpp:341
-msgid "VM Offset"
-msgstr "Posun virt. pamäte"
-
-# column title
-#. xgettext: memory that has not been modified since
-#. it has been allocated
-#: src/memmaps.cpp:344
-msgid "Private clean"
-msgstr "Súkromná nepoužitá"
-
-# column title
-#. xgettext: memory that has been modified since it
-#. has been allocated
-#: src/memmaps.cpp:347
-msgid "Private dirty"
-msgstr "Súkromná použitá"
-
-# column title
-#. xgettext: shared memory that has not been modified
-#. since it has been allocated
-#: src/memmaps.cpp:350
-msgid "Shared clean"
-msgstr "Zdieľaná nepoužitá"
-
-# column title
-#. xgettext: shared memory that has been modified
-#. since it has been allocated
-#: src/memmaps.cpp:353
-msgid "Shared dirty"
-msgstr "Zdieľaná použitá"
-
-# i-uzol - názov dátovej štruktúry
-# http://www.fem.uniag.sk/Darina.Tothova/nove_prednasky/zps/iuzol.html
-# column title
-#: src/memmaps.cpp:355
-msgid "Inode"
-msgstr "I-uzol"
-
-# label
-#: src/memmaps.cpp:484
-#, c-format
-msgid "_Memory maps for process “%s” (PID %u):"
-msgstr "_Mapy pamäte pre proces „%s“ (PID %u):"
-
 # file type
-#: src/openfiles.cpp:39
+#: src/openfiles.cpp:29
 msgid "file"
 msgstr "súbor"
 
 # file type
-#: src/openfiles.cpp:42
+#: src/openfiles.cpp:32
 msgid "pipe"
 msgstr "zreťazenie"
 
 # file type
-#: src/openfiles.cpp:45
+#: src/openfiles.cpp:35
 msgid "IPv6 network connection"
 msgstr "sieťové pripojenie IPv6"
 
 # file type
-#: src/openfiles.cpp:48
+#: src/openfiles.cpp:38
 msgid "IPv4 network connection"
 msgstr "sieťové pripojenie IPv4"
 
 # file type
-#: src/openfiles.cpp:51
+#: src/openfiles.cpp:41
 msgid "local socket"
 msgstr "lokálny soket"
 
 # file type
-#: src/openfiles.cpp:54
+#: src/openfiles.cpp:44
 msgid "unknown type"
 msgstr "neznámy typ"
-
-# column title
-#. Translators: "FD" here means "File Descriptor". Please use
-#. a very short translation if possible, and at most
-#. 2-3 characters for it to be able to fit in the UI.
-#: src/openfiles.cpp:267
-msgid "FD"
-msgstr "FD"
-
-# column title
-#: src/openfiles.cpp:269
-msgid "Object"
-msgstr "Objekt"
-
-# label
-#: src/openfiles.cpp:357
-#, c-format
-msgid "_Files opened by process “%s” (PID %u):"
-msgstr "_Súbory otvorené procesom „%s“ (PID %u):"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:5
 msgid "Main window width"
@@ -1572,7 +1645,7 @@ msgid "Open files sort order"
 msgstr "Poradie triedenia otvorených súborov"
 
 # column title
-#: src/prefsdialog.cpp:145
+#: src/prefsdialog.cpp:70
 msgid "Icon"
 msgstr "Ikona"
 
@@ -1585,11 +1658,11 @@ msgstr ""
 "Nedá sa zmeniť priorita procesu s PID %d na %d.\n"
 "%s"
 
-#: src/procactions.cpp:90 src/procactions.cpp:182
+#: src/procactions.cpp:89 src/procactions.cpp:174
 msgid "_OK"
 msgstr "_OK"
 
-#: src/procactions.cpp:171
+#: src/procactions.cpp:164
 #, c-format
 msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
@@ -1599,203 +1672,123 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:88
+#: src/procdialogs.cpp:108
 #, c-format
-msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
-msgstr "Zabiť zvolený proces „%s“ (PID: %u)?"
+msgid "Force Stop %s?"
+msgstr "Vynútiť zastavenie %s?"
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:95
+#: src/procdialogs.cpp:114
 #, c-format
-msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
-msgstr "Naozaj chcete ukončiť zvolený proces „%s“ (PID: %u)?"
+msgid "End %s?"
+msgstr "Ukončiť %s?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:102
+#: src/procdialogs.cpp:120
 #, c-format
-msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
-msgstr "Naozaj chcete zastaviť zvolený proces „%s“ (PID: %u)?"
+msgid "Stop %s?"
+msgstr "Zastaviť %s?"
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:114
+#: src/procdialogs.cpp:131
 #, c-format
-msgid "Are you sure you want to kill the selected process?"
-msgid_plural "Are you sure you want to kill the %d selected processes?"
-msgstr[0] "Naozaj chcete zabiť %d vybraných procesov?"
-msgstr[1] "Naozaj chcete zabiť vybraný proces?"
-msgstr[2] "Naozaj chcete zabiť %d vybrané procesy?"
+msgid "Force Stop Selected Process?"
+msgid_plural "Force Stop %d Selected Processes?"
+msgstr[0] "Vynútiť zastavenie %d vybraných procesov?"
+msgstr[1] "Vynútiť zastavenie vybraného procesu?"
+msgstr[2] "Vynútiť zastavenie %d vybraných procesov?"
 
+# action menu entry
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:121
+#: src/procdialogs.cpp:138
 #, c-format
-msgid "Are you sure you want to end the selected process?"
-msgid_plural "Are you sure you want to end the %d selected processes?"
-msgstr[0] "Naozaj chcete ukončiť %d vybraných procesov?"
-msgstr[1] "Naozaj chcete ukončiť vybraný proces?"
-msgstr[2] "Naozaj chcete ukončiť %d vybrané procesy?"
+msgid "End Selected Process?"
+msgid_plural "End %d Selected Processes?"
+msgstr[0] "Ukončiť %d vybraných procesov?"
+msgstr[1] "Ukončiť vybraný proces?"
+msgstr[2] "Ukončiť %d vybrané procesy?"
 
+# action menu entry
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:128
+#: src/procdialogs.cpp:145
 #, c-format
-msgid "Are you sure you want to stop the selected process?"
-msgid_plural "Are you sure you want to stop the %d selected processes?"
-msgstr[0] "Naozaj chcete zastaviť %d vybraných procesov?"
-msgstr[1] "Naozaj chcete zastaviť vybraný proces?"
-msgstr[2] "Naozaj chcete zastaviť %d vybrané procesy?"
+msgid "Stop Selected Process?"
+msgid_plural "Stop %d Selected Processes?"
+msgstr[0] "Zastaviť %d vybraných procesov?"
+msgstr[1] "Zastaviť vybraný proces?"
+msgstr[2] "Zastaviť %d vybrané procesy?"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:139
+#: src/procdialogs.cpp:156
 msgid ""
-"Killing a process may destroy data, break the session or introduce a "
-"security risk. Only unresponsive processes should be killed."
+"Force stopping processes can result in data loss, crashes, and system "
+"failures"
 msgstr ""
-"Zabitím procesu môžete zničiť údaje, prerušiť bežiacu reláciu alebo vytvoriť "
-"bezpečnostné riziko. Len procesy, ktoré neodpovedajú, by mali byť zabité."
+"Vynútené zastavenie procesov môže mať za následok stratu údajov, pády a "
+"zlyhania systému"
 
-# action menu entry
-#: src/procdialogs.cpp:142
-msgid "_Kill Process"
-msgid_plural "_Kill Processes"
-msgstr[0] "Za_biť procesy"
-msgstr[1] "Za_biť proces"
-msgstr[2] "Za_biť procesy"
+#: src/procdialogs.cpp:158
+msgid "_Force Stop"
+msgstr "_Vynútiť zastavenie"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:147
-msgid ""
-"Ending a process may destroy data, break the session or introduce a security "
-"risk. Only unresponsive processes should be ended."
+#: src/procdialogs.cpp:163
+msgid "Ending processes can result in data loss, crashes, and system failures"
 msgstr ""
-"Ukončením procesu môžete zničiť údaje, prerušiť bežiacu reláciu alebo "
-"vytvoriť bezpečnostné riziko. Len procesy, ktoré neodpovedajú, by mali byť "
-"ukončené."
+"Ukončenie procesov môže mať za následok stratu údajov, pády a zlyhania "
+"systému"
+
+#: src/procdialogs.cpp:165
+msgid "_End"
+msgstr "_Ukončiť"
 
 #. SIGSTOP
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:155
+#: src/procdialogs.cpp:170
 msgid ""
-"Stopping a process may destroy data, break the session or introduce a "
-"security risk. Only unresponsive processes should be stopped."
+"Stopping processes can result in data loss, crashes, and system failures"
 msgstr ""
-"Zastavením procesu môžete zničiť údaje, prerušiť bežiacu reláciu alebo "
-"vytvoriť bezpečnostné riziko. Len procesy, ktoré neodpovedajú, by mali byť "
-"zastavené."
+"Zastavenie procesov môže mať za následok stratu údajov, pády a zlyhania "
+"systému"
 
-# action menu entry
-#: src/procdialogs.cpp:158
-msgid "_Stop Process"
-msgid_plural "_Stop Processes"
-msgstr[0] "Za_staviť procesy"
-msgstr[1] "Za_staviť proces"
-msgstr[2] "Za_staviť procesy"
+#: src/procdialogs.cpp:172
+msgid "_Stop"
+msgstr "_Zastaviť"
 
 # dialog title
-#: src/procdialogs.cpp:249
+#: src/procdialogs.cpp:264
 #, c-format
 msgid "Change Priority of Process “%s” (PID: %u)"
 msgstr "Zmena prioritu procesu „%s“ (PID: %u)"
 
 # tooltip
-#: src/procdialogs.cpp:252
+#: src/procdialogs.cpp:267
 #, c-format
 msgid "Change Priority of the selected process"
 msgid_plural "Change Priority of %d selected processes"
-msgstr[0] "Zmení prioritu %d vybraných procesov"
-msgstr[1] "Zmení prioritu vybraného procesu"
-msgstr[2] "Zmení prioritu %d vybraných procesov"
+msgstr[0] "Zmeniť prioritu %d vybraných procesov"
+msgstr[1] "Zmeniť prioritu vybraného procesu"
+msgstr[2] "Zmeniť prioritu %d vybraných procesov"
 
-#: src/procproperties.cpp:50 src/procproperties.cpp:84
-#: src/procproperties.cpp:87 src/util.cpp:540 src/util.cpp:587
+#: src/procproperties.cpp:43 src/procproperties.cpp:97
+#: src/procproperties.cpp:106 src/util.cpp:540 src/util.cpp:587
 msgid "N/A"
 msgstr "-"
 
+# action menu entry
+#: src/proctable.cpp:136
+msgid "_End Process"
+msgid_plural "_End Processes"
+msgstr[0] "_Ukončiť procesy"
+msgstr[1] "_Ukončiť proces"
+msgstr[2] "_Ukončiť procesy"
+
 # column title
-#: src/procproperties.cpp:68 src/proctable.cpp:344
+#: src/proctable.cpp:344
 msgid "Process Name"
 msgstr "Názov procesu"
-
-# column title
-#: src/procproperties.cpp:69 src/proctable.cpp:345
-msgid "User"
-msgstr "Používateľ"
-
-# column title
-#: src/procproperties.cpp:70 src/proctable.cpp:346
-msgid "Status"
-msgstr "Stav"
-
-# column title
-#: src/procproperties.cpp:72 src/proctable.cpp:347
-msgid "Virtual Memory"
-msgstr "Virtuálna pamäť"
-
-# column title
-#: src/procproperties.cpp:73 src/proctable.cpp:348
-msgid "Resident Memory"
-msgstr "Rezidentná pamäť"
-
-# column title
-#: src/procproperties.cpp:74 src/proctable.cpp:349
-msgid "Writable Memory"
-msgstr "Zapisovateľná pamäť"
-
-# column title
-#: src/procproperties.cpp:75 src/proctable.cpp:350
-msgid "Shared Memory"
-msgstr "Zdieľaná pamäť"
-
-# column title
-#: src/procproperties.cpp:79 src/proctable.cpp:353
-msgid "CPU Time"
-msgstr "Čas procesora"
-
-# column title
-#: src/procproperties.cpp:80 src/proctable.cpp:354
-msgid "Started"
-msgstr "Čas štartu"
-
-# column title
-#: src/procproperties.cpp:81 src/proctable.cpp:355
-msgid "Nice"
-msgstr "Ohľaduplnosť"
-
-# column title
-#: src/procproperties.cpp:82 src/proctable.cpp:373
-msgid "Priority"
-msgstr "Priorita"
-
-# column title
-#: src/procproperties.cpp:83 src/proctable.cpp:356
-msgid "ID"
-msgstr "Identifikátor"
-
-# column title
-#: src/procproperties.cpp:84 src/proctable.cpp:357
-msgid "Security Context"
-msgstr "Bezpečnostný kontext"
-
-# column title
-#: src/procproperties.cpp:85 src/proctable.cpp:358
-msgid "Command Line"
-msgstr "Príkazový riadok"
-
-# column title
-#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: src/procproperties.cpp:86 src/proctable.cpp:361
-msgid "Waiting Channel"
-msgstr "Čakací kanál"
-
-# column title
-#: src/procproperties.cpp:87 src/proctable.cpp:362
-msgid "Control Group"
-msgstr "Kontrolná skupina"
-
-#: src/procproperties.cpp:211
-#, c-format
-msgid "%s (PID %u)"
-msgstr "%s (PID %u)"
 
 # column title
 #: src/proctable.cpp:351
@@ -1807,6 +1800,16 @@ msgstr "Pamäť X servera"
 #, no-c-format
 msgid "% CPU"
 msgstr "% procesora"
+
+# column title
+#: src/proctable.cpp:355
+msgid "Nice"
+msgstr "Ohľaduplnosť"
+
+# column title
+#: src/proctable.cpp:356
+msgid "ID"
+msgstr "Identifikátor"
 
 # PK: nie som si isty
 # column title
@@ -1849,24 +1852,18 @@ msgstr "Čítanie z disku"
 msgid "Disk write"
 msgstr "Zápis na disk"
 
-#: src/setaffinity.cpp:123
+#: src/setaffinity.cpp:125
 msgid "GNU CPU Affinity error"
 msgstr "GNU chyba priradenia k procesoru"
 
-#: src/setaffinity.cpp:128
+#: src/setaffinity.cpp:130
 msgid "_Close"
 msgstr "_Zavrieť"
 
-#: src/setaffinity.cpp:336
+#: src/setaffinity.cpp:409
 #, c-format
 msgid "Select CPUs \"%s\" (PID %u) is allowed to run on:"
 msgstr "Vyberte procesory, na ktorých je možné spustiť proces „%s“ (PID %u):"
-
-#. Set check box label value to CPU [1..2048]
-#: src/setaffinity.cpp:355
-#, c-format
-msgid "CPU %d"
-msgstr "%d. procesor"
 
 # process state
 #: src/util.cpp:34
@@ -1948,6 +1945,94 @@ msgstr "Veľmi nízka priorita"
 msgid "%s/s"
 msgstr "%s/s"
 
+#~ msgid "_Continue"
+#~ msgstr "_Pokračovať"
+
+#~ msgid "_Kill…"
+#~ msgstr "Za_biť…"
+
+# label
+#, c-format
+#~ msgid "_Memory maps for process “%s” (PID %u):"
+#~ msgstr "_Mapy pamäte pre proces „%s“ (PID %u):"
+
+# label
+#, c-format
+#~ msgid "_Files opened by process “%s” (PID %u):"
+#~ msgstr "_Súbory otvorené procesom „%s“ (PID %u):"
+
+#, c-format
+#~ msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
+#~ msgstr "Zabiť zvolený proces „%s“ (PID: %u)?"
+
+#, c-format
+#~ msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
+#~ msgstr "Naozaj chcete ukončiť zvolený proces „%s“ (PID: %u)?"
+
+#, c-format
+#~ msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
+#~ msgstr "Naozaj chcete zastaviť zvolený proces „%s“ (PID: %u)?"
+
+#, c-format
+#~ msgid "Are you sure you want to kill the selected process?"
+#~ msgid_plural "Are you sure you want to kill the %d selected processes?"
+#~ msgstr[0] "Naozaj chcete zabiť %d vybraných procesov?"
+#~ msgstr[1] "Naozaj chcete zabiť vybraný proces?"
+#~ msgstr[2] "Naozaj chcete zabiť %d vybrané procesy?"
+
+#, c-format
+#~ msgid "Are you sure you want to end the selected process?"
+#~ msgid_plural "Are you sure you want to end the %d selected processes?"
+#~ msgstr[0] "Naozaj chcete ukončiť %d vybraných procesov?"
+#~ msgstr[1] "Naozaj chcete ukončiť vybraný proces?"
+#~ msgstr[2] "Naozaj chcete ukončiť %d vybrané procesy?"
+
+#, c-format
+#~ msgid "Are you sure you want to stop the selected process?"
+#~ msgid_plural "Are you sure you want to stop the %d selected processes?"
+#~ msgstr[0] "Naozaj chcete zastaviť %d vybraných procesov?"
+#~ msgstr[1] "Naozaj chcete zastaviť vybraný proces?"
+#~ msgstr[2] "Naozaj chcete zastaviť %d vybrané procesy?"
+
+#~ msgid ""
+#~ "Killing a process may destroy data, break the session or introduce a "
+#~ "security risk. Only unresponsive processes should be killed."
+#~ msgstr ""
+#~ "Zabitím procesu môžete zničiť údaje, prerušiť bežiacu reláciu alebo "
+#~ "vytvoriť bezpečnostné riziko. Len procesy, ktoré neodpovedajú, by mali "
+#~ "byť zabité."
+
+# action menu entry
+#~ msgid "_Kill Process"
+#~ msgid_plural "_Kill Processes"
+#~ msgstr[0] "Za_biť procesy"
+#~ msgstr[1] "Za_biť proces"
+#~ msgstr[2] "Za_biť procesy"
+
+#~ msgid ""
+#~ "Ending a process may destroy data, break the session or introduce a "
+#~ "security risk. Only unresponsive processes should be ended."
+#~ msgstr ""
+#~ "Ukončením procesu môžete zničiť údaje, prerušiť bežiacu reláciu alebo "
+#~ "vytvoriť bezpečnostné riziko. Len procesy, ktoré neodpovedajú, by mali "
+#~ "byť ukončené."
+
+#~ msgid ""
+#~ "Stopping a process may destroy data, break the session or introduce a "
+#~ "security risk. Only unresponsive processes should be stopped."
+#~ msgstr ""
+#~ "Zastavením procesu môžete zničiť údaje, prerušiť bežiacu reláciu alebo "
+#~ "vytvoriť bezpečnostné riziko. Len procesy, ktoré neodpovedajú, by mali "
+#~ "byť zastavené."
+
+#, c-format
+#~ msgid "%s (PID %u)"
+#~ msgstr "%s (PID %u)"
+
+#, c-format
+#~ msgid "CPU %d"
+#~ msgstr "%d. procesor"
+
 # action menu entry
 #~ msgid "_Terminate Process"
 #~ msgstr "_Ukončiť proces"
@@ -1980,9 +2065,6 @@ msgstr "%s/s"
 #~ msgctxt "shortcut window"
 #~ msgid "Send End signal"
 #~ msgstr "Odoslanie signálu na ukončenie"
-
-#~ msgid "_End"
-#~ msgstr "_Ukončiť"
 
 # GtkLabel label
 #~ msgid "Graphs"
