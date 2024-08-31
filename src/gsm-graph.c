@@ -350,12 +350,6 @@ void gsm_graph_set_data_function (GsmGraph *self, GSourceFunc function, gpointer
   }
 }
 
-static void
-_gsm_graph_run_data_function (GsmGraphPrivate *priv) {
-  g_return_if_fail ( priv != NULL && priv->data_function != NULL );
-  priv->data_function(priv->update_data);
-}
-
 void
 gsm_graph_start (GsmGraph *self)
 {
@@ -367,13 +361,9 @@ gsm_graph_start (GsmGraph *self)
     {
       // Update the data two times so the graph
       // doesn't wait one cycle to start drawing.
-      // space 2 calls with a small time interval so there's a delta for the CPU load graph
-      priv->data_function(priv->update_data);
-      g_timeout_add_once(300,
-                         (GSourceOnceFunc)_gsm_graph_run_data_function,
-                         priv
-                         );
-                         
+      priv->data_function (priv->update_data);
+      _gsm_graph_update (self);
+
       priv->redraw_timeout = g_timeout_add (priv->speed,
                                             (GSourceFunc)_gsm_graph_update,
                                             self);
