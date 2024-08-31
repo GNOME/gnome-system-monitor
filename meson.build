@@ -6,7 +6,7 @@ project('gnome-system-monitor',
     'cpp_std=gnu++20',
     'warning_level=3',
   ],
-  version: '47.beta',
+  version: '47.rc',
   meson_version: '>=0.57.0',
 )
 
