@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2024-05-07 03:15+0000\n"
-"PO-Revision-Date: 2024-05-22 17:33+0200\n"
+"POT-Creation-Date: 2024-08-29 22:38+0000\n"
+"PO-Revision-Date: 2024-09-01 09:49+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: Tot En Òc\n"
 "Language: oc\n"
@@ -23,63 +23,35 @@ msgstr ""
 "X-Project-Style: gnome\n"
 "X-Launchpad-Export-Date: 2015-05-20 16:52+0000\n"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:7 data/interface.ui:6
-#: data/org.gnome.SystemMonitor.desktop.in.in:3 src/application.cpp:396
-#: src/interface.cpp:487
-msgid "System Monitor"
-msgstr "Monitor sistèma"
+#: data/disks.ui:31 data/memmaps.ui:424
+msgid "Device"
+msgstr "Periferic"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:8
-msgid "View and manage system resources"
-msgstr "Veire e gerir las ressorsas del sistèma"
+#: data/disks.ui:85
+msgid "Directory"
+msgstr "Repertòri"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:10
-msgid ""
-"System Monitor is a process viewer and system monitor with an attractive, "
-"easy-to-use interface."
-msgstr ""
-"Lo Monitor sistèma es un visionador de procèssus e monitor sistèma amb una "
-"interfàcia conviviala e de bon utilizar."
+#: data/disks.ui:120 data/openfiles.ui:80 src/legacy/gsm_color_button.c:599
+msgid "Type"
+msgstr "Tipe"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:14
-msgid ""
-"System Monitor can help you find out what applications are using the "
-"processor or the memory of your computer, can manage the running "
-"applications, force stop processes not responding, and change the state or "
-"priority of existing processes."
-msgstr ""
-"Lo Monitor sistèma vos pòt ajudar a trobar quinas aplicacions utilizan lo "
-"processor o la memòria de vòstre ordenador, gerir las aplicacions que "
-"foncionan, forçar los procèssus que respondon pas a s'arrestar e cambiar "
-"l'estat o la prioritat de procèssus existents."
+#: data/disks.ui:155
+msgid "Total"
+msgstr "Total"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:20
-msgid ""
-"The resource graphs feature shows you a quick overview of what is going on "
-"with your computer displaying recent network, memory and processor usage."
-msgstr ""
-"Lo grafic de las ressorsas aficha una vista d'ensemble de çò que se passa "
-"sus vòstre ordenador en fasent veire l'utilizacion recenta de la ret, de la "
-"memòria e del processor."
+#: data/disks.ui:192
+msgid "Free"
+msgstr "Disponible"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:28
-msgid "Process list view"
-msgstr "Vista de la lista dels procèssus"
+#: data/disks.ui:229
+msgid "Available"
+msgstr "Disponible"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:32
-msgid "Resources overview"
-msgstr "Vista d'ensemble de las ressorsas"
+#: data/disks.ui:266
+msgid "Used"
+msgstr "Utilizat"
 
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:36
-msgid "File Systems view"
-msgstr "Vista dels sistèmas de fichièrs"
-
-#. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.SystemMonitor.appdata.xml.in.in:46 src/interface.cpp:496
-msgid "The GNOME Project"
-msgstr "Lo projècte GNOME"
-
-#: data/gnome-system-monitor-kde.desktop.in.in:3 src/application.cpp:440
+#: data/gnome-system-monitor-kde.desktop.in.in:3 src/application.cpp:433
 msgid "GNOME System Monitor"
 msgstr "Monitor sistèma GNOME"
 
@@ -87,7 +59,7 @@ msgstr "Monitor sistèma GNOME"
 # Utilizacion de l'infinitiu dins las infobullas del Burèu
 # Utilisation de l'infinitif dans les infobulles du Bureau
 #: data/gnome-system-monitor-kde.desktop.in.in:4
-#: data/org.gnome.SystemMonitor.desktop.in.in:4 src/interface.cpp:488
+#: data/org.gnome.SystemMonitor.desktop.in.in:4
 msgid "View current processes and monitor system state"
 msgstr "Afichar los procèssus en cors e susvelhar l'estat del sistèma"
 
@@ -133,13 +105,13 @@ msgstr "Recercar"
 
 #: data/help-overlay.ui:56
 msgctxt "shortcut window"
-msgid "Show Processes"
-msgstr "Afichar processús"
+msgid "Show Resources"
+msgstr "Afichar ressorsas"
 
 #: data/help-overlay.ui:62
 msgctxt "shortcut window"
-msgid "Show Resources"
-msgstr "Afichar ressorsas"
+msgid "Show Processes"
+msgstr "Afichar processús"
 
 #: data/help-overlay.ui:68
 msgctxt "shortcut window"
@@ -196,213 +168,215 @@ msgctxt "shortcut window"
 msgid "Send Kill signal"
 msgstr "Enviar senhal Tuar"
 
-#: data/interface.ui:26
+#: data/interface.ui:6 data/org.gnome.SystemMonitor.appdata.xml.in.in:7
+#: data/org.gnome.SystemMonitor.desktop.in.in:3 src/application.cpp:404
+msgid "System Monitor"
+msgstr "Monitor sistèma"
+
+#: data/interface.ui:22
 msgid "Search"
 msgstr "Recercar"
 
-#: data/interface.ui:36
+#: data/interface.ui:29
 msgid "Main Menu"
 msgstr "Menú principal"
 
-#: data/interface.ui:55
-msgid "_Processes"
-msgstr "_Processús"
-
-#: data/interface.ui:67
+#: data/interface.ui:44
 msgid "Search processes and users"
 msgstr "Recercar de processús e utilizaires"
 
-#: data/interface.ui:88
-msgctxt "interface"
-msgid "_End Process"
-msgstr "_Terminar lo procèssus"
-
-#: data/interface.ui:108
-msgid "Process Properties"
-msgstr "Proprietats del procèssus"
-
-#: data/interface.ui:130
+#: data/interface.ui:58
 msgid "_Resources"
 msgstr "_Ressorsas"
 
-#: data/interface.ui:175 data/preferences.ui:99 data/procproperties.ui:86
-#: src/interface.cpp:283
+#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:86
+#: src/interface.cpp:268 src/proctable.cpp:352
+#, no-c-format
 msgid "CPU"
 msgstr "CPU"
 
-#: data/interface.ui:206 data/procproperties.ui:97 src/interface.cpp:321
+#: data/interface.ui:134 data/procproperties.ui:97 src/interface.cpp:306
 #: src/proctable.cpp:359
 msgid "Memory"
 msgstr "Memòria"
 
-#: data/interface.ui:217 src/interface.cpp:333
+#: data/interface.ui:145 src/interface.cpp:318
 msgid "Swap"
 msgstr "Memòria d'escambi"
 
-#: data/interface.ui:234 data/preferences.ui:110
+#: data/interface.ui:162 data/preferences.ui:61
 msgid "Memory and Swap"
 msgstr "Memòria e escambi"
 
-#: data/interface.ui:265 src/interface.cpp:362
+#: data/interface.ui:193 src/interface.cpp:347
 msgid "Receiving"
 msgstr "Recepcion"
 
-#: data/interface.ui:275
+#: data/interface.ui:203
 msgid "Total Received"
 msgstr "Total recebut"
 
-#: data/interface.ui:285 src/interface.cpp:380
+#: data/interface.ui:213 src/interface.cpp:365
 msgid "Sending"
 msgstr "Mandadís"
 
-#: data/interface.ui:295
+#: data/interface.ui:223
 msgid "Total Sent"
 msgstr "Total mandat"
 
-#: data/interface.ui:312 data/preferences.ui:127
+#: data/interface.ui:240 data/preferences.ui:78
 msgid "Network"
 msgstr "Ret"
 
-#: data/interface.ui:343 src/interface.cpp:415
+#: data/interface.ui:271 src/interface.cpp:400
 msgid "Reading"
 msgstr "Lectura"
 
-#: data/interface.ui:353
+#: data/interface.ui:281
 msgid "Total Read"
 msgstr "Total legit"
 
-#: data/interface.ui:363 src/interface.cpp:433
+#: data/interface.ui:291 src/interface.cpp:418
 msgid "Writing"
 msgstr "Escritura"
 
-#: data/interface.ui:373
+#: data/interface.ui:301
 msgid "Total Written"
 msgstr "Total escrich"
 
-#: data/interface.ui:390
+#: data/interface.ui:318
 msgid "Disk"
 msgstr "Disc"
 
-#: data/interface.ui:410
+#: data/interface.ui:338
+msgid "_Processes"
+msgstr "_Processús"
+
+#: data/interface.ui:356
+msgctxt "interface"
+msgid "_End Process…"
+msgstr "_Terminar lo procèssus…"
+
+#: data/interface.ui:379
+msgid "Process Properties"
+msgstr "Proprietats del procèssus"
+
+#: data/interface.ui:396
 msgid "_File Systems"
 msgstr "_Sistèmas de fichièrs"
 
-#: data/lsof.ui:6
+#: data/lsof.ui:4
 msgctxt "Window title for Search for Open Files dialog"
 msgid "Search for Open Files"
 msgstr "Recèrca de fichièrs dobèrts"
 
-#: data/lsof.ui:36
+#: data/lsof.ui:30
 msgid "Filter files by name"
 msgstr "Filtrar los fichièrs per nom"
 
-#: data/lsof.ui:42
-msgid "Case insensitive"
+#: data/lsof.ui:36
+msgid "Case Insensitive"
 msgstr "Respectar pas la cassa"
 
-#: data/lsof.ui:63
+#: data/lsof.ui:67
 msgid "Process"
 msgstr "Procèssus"
 
-#: data/lsof.ui:111
+#: data/lsof.ui:115
 msgid "PID"
 msgstr "PID"
 
-#: data/lsof.ui:145 data/memmaps.ui:37
+#: data/lsof.ui:149 data/memmaps.ui:45
 msgid "Filename"
 msgstr "Nom de fichièr"
 
-#: data/memmaps.ui:16
+#: data/memmaps.ui:15
 msgid "Memory Maps"
 msgstr "Mapas de la memòria"
 
 #. virtual memory start
-#: data/memmaps.ui:75
+#: data/memmaps.ui:83
 msgid "VM Start"
 msgstr "Començament VM"
 
 #. virtual memory end
-#: data/memmaps.ui:116
+#: data/memmaps.ui:122
 msgid "VM End"
 msgstr "Fin VM"
 
 #. virtual memory syze
-#: data/memmaps.ui:157
+#: data/memmaps.ui:161
 msgid "VM Size"
 msgstr "Talha VM"
 
-#: data/memmaps.ui:192
+#: data/memmaps.ui:198
 msgid "Flags"
 msgstr "Atributs"
 
 #. virtual memory offset
-#: data/memmaps.ui:233
+#: data/memmaps.ui:237
 msgid "VM Offset"
 msgstr "Decalatge VM"
 
 #. memory that has not been modified since it has been allocated
-#: data/memmaps.ui:274
+#: data/memmaps.ui:276
 msgid "Private Clean"
 msgstr "Mem. privada pròpria"
 
 #. memory that has been modified since it has been allocated
-#: data/memmaps.ui:309
+#: data/memmaps.ui:313
 msgid "Private Dirty"
 msgstr "Mem. privada modificada"
 
 #. shared memory that has not been modified since it has been allocated
-#: data/memmaps.ui:344
+#: data/memmaps.ui:350
 msgid "Shared Clean"
 msgstr "Mem. partejada pròpria"
 
 #. shared memory that has been modified since it has been allocated
-#: data/memmaps.ui:379
+#: data/memmaps.ui:387
 msgid "Shared Dirty"
 msgstr "Mem. partejada modificada"
 
-#: data/memmaps.ui:414 src/disks.cpp:392
-msgid "Device"
-msgstr "Periferic"
-
-#: data/memmaps.ui:452
+#: data/memmaps.ui:462
 msgid "Inode"
 msgstr "Inosèl"
 
 #: data/menus.ui:7 data/menus.ui:62
 msgctxt "Menu item to Open Search for Open Files dialog"
-msgid "Search for Open Files…"
-msgstr "Recèrca de fichièrs dobèrts…"
+msgid "_Search for Open Files…"
+msgstr "_Recèrca de fichièrs dobèrts…"
 
-#: data/menus.ui:13 data/menus.ui:68 data/preferences.ui:6
-msgid "Preferences"
-msgstr "Preferéncias"
+#: data/menus.ui:13 data/menus.ui:68
+msgid "_Preferences"
+msgstr "_Preferéncias"
 
 #: data/menus.ui:17 data/menus.ui:72
-msgid "Help"
-msgstr "Ajuda"
+msgid "_Help"
+msgstr "A_juda"
 
 #: data/menus.ui:21 data/menus.ui:76
-msgid "Keyboard Shortcuts"
-msgstr "Acorchis de clavièr"
+msgid "_Keyboard Shortcuts"
+msgstr "_Acorchis clavièr"
 
 #: data/menus.ui:25 data/menus.ui:80
-msgid "About System Monitor"
-msgstr "A prepaus del Monitor Sistèma"
+msgid "_About System Monitor"
+msgstr "_A prepaus del Monitor Sistèma"
 
 #: data/menus.ui:33
 msgid "_Refresh"
 msgstr "A_ctualizar"
 
 #: data/menus.ui:39
-msgid "_Active Processes"
-msgstr "Procèssus _actius"
+msgid "Ac_tive Processes"
+msgstr "Procèssus ac_tius"
 
 #: data/menus.ui:44
-msgid "A_ll Processes"
-msgstr "_Totes los procèssus"
+msgid "All Pro_cesses"
+msgstr "Totes los pro_cèssus"
 
 #: data/menus.ui:49
-msgid "M_y Processes"
+msgid "_My Processes"
 msgstr "_Mos procèssus"
 
 #: data/menus.ui:56
@@ -419,36 +393,36 @@ msgstr "_Mapas de la memòria"
 
 #. Translators: this means 'Files that are open' (open is not a verb here)
 #: data/menus.ui:98
-msgid "Open _Files"
-msgstr "Fichièrs _dobèrts"
+msgid "_Open Files"
+msgstr "_Dobrir fichièrs"
 
 #: data/menus.ui:104
 msgid "_Change Priority"
 msgstr "_Modificar la prioritat"
 
-#: data/menus.ui:107 src/util.cpp:173
-msgid "Very High"
-msgstr "Fòrça elevada"
+#: data/menus.ui:107
+msgid "_Very High"
+msgstr "Fòrça ele_vada"
 
-#: data/menus.ui:112 src/util.cpp:175
-msgid "High"
-msgstr "Elevada"
+#: data/menus.ui:112
+msgid "_High"
+msgstr "_Elevada"
 
-#: data/menus.ui:117 src/util.cpp:177
-msgid "Normal"
-msgstr "Normala"
+#: data/menus.ui:117
+msgid "_Normal"
+msgstr "_Normala"
 
-#: data/menus.ui:122 src/util.cpp:179
-msgid "Low"
-msgstr "Bassa"
+#: data/menus.ui:122
+msgid "_Low"
+msgstr "_Febla"
 
-#: data/menus.ui:127 src/util.cpp:181
-msgid "Very Low"
-msgstr "Fòrça bassa"
+#: data/menus.ui:127
+msgid "Ve_ry Low"
+msgstr "Fò_rça bassa"
 
 #: data/menus.ui:134
-msgid "Custom"
-msgstr "Personalizada"
+msgid "Cus_tom"
+msgstr "Perso_nalizats"
 
 #: data/menus.ui:141
 msgid "Set _Affinity…"
@@ -458,11 +432,11 @@ msgstr "Definir _afinitat…"
 msgid "_Stop…"
 msgstr "_Arrestar…"
 
-#: data/menus.ui:151 data/procproperties.ui:265
+#: data/menus.ui:151 src/procproperties.cpp:216
 msgid "_Resume"
 msgstr "_Reprendre"
 
-#: data/menus.ui:155 data/procproperties.ui:261
+#: data/menus.ui:155 src/procproperties.cpp:213
 msgid "_Terminate…"
 msgstr "_Acabar…"
 
@@ -474,18 +448,14 @@ msgstr "_Forçar l’arrèst…"
 msgid "Open Files"
 msgstr "Fichièrs dobèrts"
 
-#: data/openfiles.ui:37
+#: data/openfiles.ui:46
 msgctxt ""
 "FD here means File Descriptor. Use a short translation if possible, and at "
 "most 2-3 characters"
 msgid "FD"
 msgstr "FD"
 
-#: data/openfiles.ui:71 src/disks.cpp:394 src/legacy/gsm_color_button.c:612
-msgid "Type"
-msgstr "Tipe"
-
-#: data/openfiles.ui:105
+#: data/openfiles.ui:114
 msgid "Object"
 msgstr "Objècte"
 
@@ -509,6 +479,51 @@ msgstr ""
 "Los dreits d'administrator son necessaris per modificar la prioritat dels "
 "procèssus"
 
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:8
+msgid "View and manage system resources"
+msgstr "Veire e gerir las ressorsas del sistèma"
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:10
+msgid ""
+"System Monitor is a process viewer and system monitor with an attractive, "
+"easy-to-use interface."
+msgstr ""
+"Lo Monitor sistèma es un visionador de procèssus e monitor sistèma amb una "
+"interfàcia conviviala e de bon utilizar."
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:14
+msgid ""
+"System Monitor can help you find out what applications are using the "
+"processor or the memory of your computer, can manage the running "
+"applications, force stop processes not responding, and change the state or "
+"priority of existing processes."
+msgstr ""
+"Lo Monitor sistèma vos pòt ajudar a trobar quinas aplicacions utilizan lo "
+"processor o la memòria de vòstre ordenador, gerir las aplicacions que "
+"foncionan, forçar los procèssus que respondon pas a s'arrestar e cambiar "
+"l'estat o la prioritat de procèssus existents."
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:20
+msgid ""
+"The resource graphs feature shows you a quick overview of what is going on "
+"with your computer displaying recent network, memory and processor usage."
+msgstr ""
+"Lo grafic de las ressorsas aficha una vista d'ensemble de çò que se passa "
+"sus vòstre ordenador en fasent veire l'utilizacion recenta de la ret, de la "
+"memòria e del processor."
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:28
+msgid "Process list view"
+msgstr "Vista de la lista dels procèssus"
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:32
+msgid "Resources overview"
+msgstr "Vista d'ensemble de las ressorsas"
+
+#: data/org.gnome.SystemMonitor.appdata.xml.in.in:36
+msgid "File Systems view"
+msgstr "Vista dels sistèmas de fichièrs"
+
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
 msgid ""
@@ -518,74 +533,78 @@ msgstr ""
 "Monitor;Sistèma;Procèssus;CPU;Memòria;Ret;Istoric;Utilizacion;Performança;"
 "Prètzfait;Performança;activitat;gestionari;malhum;processor;activitat"
 
-#: data/preferences.ui:12
-msgid "Processes"
-msgstr "Procèssus"
+#: data/preferences.ui:6
+msgid "Preferences"
+msgstr "Preferéncias"
 
-#: data/preferences.ui:16 data/preferences.ui:65 data/preferences.ui:150
+#: data/preferences.ui:12
+msgid "Resources"
+msgstr "Ressorsas"
+
+#: data/preferences.ui:16 data/preferences.ui:101 data/preferences.ui:150
 msgid "Behavior"
 msgstr "Comportament"
 
-#: data/preferences.ui:20 data/preferences.ui:69 data/preferences.ui:154
+#: data/preferences.ui:20 data/preferences.ui:105 data/preferences.ui:154
 msgid "_Update Interval in Seconds"
 msgstr "_Frequéncia de mesa a jorn en segondas"
 
 #: data/preferences.ui:28
+msgid "_Chart Data Points"
+msgstr "Punts de donadas del _grafic"
+
+#: data/preferences.ui:43
+msgid "Draw Charts as S_mooth Graphs"
+msgstr "Traçar los grafics coma grafics _lissat"
+
+#: data/preferences.ui:54
+msgid "_Draw CPU Chart as Stacked Area Chart"
+msgstr "_Traçar lo diagrama del CPU jos la forma de grafic condensat"
+
+#: data/preferences.ui:65
+msgid "Show Memory and Swap in IEC"
+msgstr "Mostrar la memòria e lo Swap en IEC"
+
+#: data/preferences.ui:71
+msgid "Show Memory in Logarithmic Scale"
+msgstr "Mostrar la memòria en escala logaritmica"
+
+#: data/preferences.ui:82
+msgid "_Show Network Speed in Bits"
+msgstr "_Afichar la velocitat de la ret en bits"
+
+#: data/preferences.ui:88
+msgid "Show Network _Totals in Bits"
+msgstr "Afichar lo trafic _total de la ret en bits"
+
+#: data/preferences.ui:97
+msgid "Processes"
+msgstr "Procèssus"
+
+#: data/preferences.ui:113
 msgid "Enable _Smooth Refresh"
 msgstr "Activar lo refrescament lisat"
 
-#: data/preferences.ui:34
+#: data/preferences.ui:119
 msgid "Alert Before Ending or _Force Stopping Processes"
 msgstr ""
 "Afichar un avertiment abans de terminar o de _forçar l’arrèst de procèssus"
 
-#: data/preferences.ui:40
+#: data/preferences.ui:125
 msgid "_Divide CPU Usage by CPU Count"
 msgstr "_Devesir l'utilizacion CPU pel nombre de CPU"
 
-#: data/preferences.ui:46
+#: data/preferences.ui:131
 msgid "Show Memory in IEC"
 msgstr "Mostrar la memòria en IEC"
 
-#: data/preferences.ui:53 data/preferences.ui:169
+#: data/preferences.ui:138 data/preferences.ui:169
 msgid "Information Fields"
 msgstr "Camps d'informacions"
 
-#: data/preferences.ui:54
-msgid "Process information shown in list:"
-msgstr "Informacions suls procèssus afichats dins la lista :"
-
-#: data/preferences.ui:61
-msgid "Resources"
-msgstr "Ressorsas"
-
-#: data/preferences.ui:77
-msgid "_Chart Data Points"
-msgstr "Punts de donadas del _grafic"
-
-#: data/preferences.ui:92
-msgid "Draw Charts as S_mooth Graphs"
-msgstr "Traçar los grafics coma grafics _lissat"
-
-#: data/preferences.ui:103
-msgid "_Draw CPU Chart as Stacked Area Chart"
-msgstr "_Traçar lo diagrama del CPU jos la forma de grafic condensat"
-
-#: data/preferences.ui:114
-msgid "Show Memory and Swap in IEC"
-msgstr "Mostrar la memòria e lo Swap en IEC"
-
-#: data/preferences.ui:120
-msgid "Show Memory in Logarithmic Scale"
-msgstr "Mostrar la memòria en escala logaritmica"
-
-#: data/preferences.ui:131
-msgid "_Show Network Speed in Bits"
-msgstr "_Afichar la velocitat de la ret en bits"
-
-#: data/preferences.ui:137
-msgid "Show Network _Totals in Bits"
-msgstr "Afichar lo trafic _total de la ret en bits"
+#: data/preferences.ui:139
+msgid "Process information shown in list"
+msgstr "Informacions suls procèssus afichats dins la lista"
 
 #: data/preferences.ui:146
 msgid "File Systems"
@@ -668,96 +687,79 @@ msgstr "Grop de contraròtle"
 msgid "More Actions"
 msgstr "Mai d’opcions"
 
-#: data/renice.ui:15 data/setaffinity.ui:17 src/procdialogs.cpp:180
+#: data/renice.ui:4
+msgid ""
+"The priority of a process is given by its nice value. A lower nice value "
+"corresponds to a higher priority."
+msgstr ""
+"La prioritat d'un processus es atribuida al moyen de sa valor « nice ». Una "
+"valor nice mai bassa correspond a una mai nauta prioritat."
+
+#: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:189
 msgid "_Cancel"
 msgstr "A_nullar"
 
-#: data/renice.ui:16
+#: data/renice.ui:10
 msgid "Change _Priority"
 msgstr "_Modificar la prioritat"
 
-#: data/renice.ui:39
-msgid "_Nice value:"
+#: data/renice.ui:17
+msgid "_Nice Value:"
 msgstr "Valor « _nice » :"
 
-#: data/renice.ui:69
-msgid ""
-"<small><i><b>Note:</b> The priority of a process is given by its nice value. "
-"A lower nice value corresponds to a higher priority.</i></small>"
-msgstr ""
-"<small><i><b>Nòta :</b> La prioritat d'un procèssus es atribuida gràcias a "
-"sa valor « nice ». Una valor nice mai bassa correspond a una prioritat mai "
-"nauta.</i></small>"
-
-#: data/setaffinity.ui:8
+#: data/setaffinity.ui:15
 msgid "Set Affinity"
 msgstr "Definir afinitat"
 
-#: data/setaffinity.ui:23
+#: data/setaffinity.ui:26
 msgid "_Apply"
 msgstr "_Aplicar"
 
-#: data/setaffinity.ui:40
-msgid "Apply to child threads"
-msgstr ""
+#: data/setaffinity.ui:39
+msgid "Select CPUs allowed to run on"
+msgstr "Seleccionar los CPU autorizats a s’executar sus"
 
-#: data/setaffinity.ui:58
-msgid "Run on all CPUs"
-msgstr "Executar sus totes los CPU"
+#: data/setaffinity.ui:46
+msgid "_Run on all CPUs"
+msgstr "_Executar sus totes los CPU"
 
-#: src/application.cpp:423
+#: data/setaffinity.ui:68
+msgid "Apply to Child _Threads"
+msgstr "Aplicar als jos _fils"
+
+#: src/application.cpp:405
 msgid "A simple process and system monitor."
 msgstr "Susvelhança simpla dels procèssus e del sistèma."
 
-#: src/argv.cpp:22
+#: src/argv.cpp:20
 msgid "Show the Processes tab"
 msgstr "Afichar l'onglet Procèssus"
 
-#: src/argv.cpp:28
+#: src/argv.cpp:24
 msgid "Show the Resources tab"
 msgstr "Afichar l'onglet Ressorsas"
 
-#: src/argv.cpp:34
+#: src/argv.cpp:28
 msgid "Show the File Systems tab"
 msgstr "Afichar l'onglet Sistèmas de fichièrs"
 
-#: src/argv.cpp:39
+#: src/argv.cpp:31
 msgid "Show the application’s version"
 msgstr "Afichar la version de l'aplicacion"
 
-#: src/disks.cpp:393
-msgid "Directory"
-msgstr "Repertòri"
-
-#: src/disks.cpp:395
-msgid "Total"
-msgstr "Total"
-
-#: src/disks.cpp:396
-msgid "Free"
-msgstr "Disponible"
-
-#: src/disks.cpp:397
-msgid "Available"
-msgstr "Disponible"
-
-#: src/disks.cpp:398
-msgid "Used"
-msgstr "Utilizat"
-
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: src/interface.cpp:247
+#: src/interface.cpp:232
 #, c-format
 msgid "Pick a Color for “%s”"
 msgstr "Causissètz una color per « %s »"
 
 #. Set check box label value to CPU [1..2048]
-#: src/interface.cpp:285 src/setaffinity.cpp:428
+#: src/interface.cpp:270 src/setaffinity.cpp:406
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: src/interface.cpp:500
+#: src/interface.cpp:481
 msgid "translator-credits"
 msgstr ""
 "Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>\n"
@@ -788,41 +790,41 @@ msgstr "%d %b %H:%M"
 msgid "%b %d %Y"
 msgstr "%d %b %Y"
 
-#: src/legacy/gsm_color_button.c:588
+#: src/legacy/gsm_color_button.c:575
 msgid "Fraction"
 msgstr "Fraccion"
 
 # Traduction de Benoît Dejean
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: src/legacy/gsm_color_button.c:590
+#: src/legacy/gsm_color_button.c:577
 msgid "Percentage full for pie color pickers"
 msgstr "Taus d'emplenatge del camembèrt del selector de color"
 
-#: src/legacy/gsm_color_button.c:597
+#: src/legacy/gsm_color_button.c:584
 msgid "Title"
 msgstr "Títol"
 
-#: src/legacy/gsm_color_button.c:598
+#: src/legacy/gsm_color_button.c:585
 msgid "The title of the color selection dialog"
 msgstr "Lo títol de la bóstia de seleccion de color"
 
-#: src/legacy/gsm_color_button.c:599 src/legacy/gsm_color_button.c:637
+#: src/legacy/gsm_color_button.c:586 src/legacy/gsm_color_button.c:624
 msgid "Pick a Color"
 msgstr "Causissètz una color"
 
-#: src/legacy/gsm_color_button.c:605
+#: src/legacy/gsm_color_button.c:592
 msgid "Current Color"
 msgstr "Color actuala"
 
-#: src/legacy/gsm_color_button.c:606
+#: src/legacy/gsm_color_button.c:593
 msgid "The selected color"
 msgstr "La color seleccionada"
 
-#: src/legacy/gsm_color_button.c:613
+#: src/legacy/gsm_color_button.c:600
 msgid "Type of color picker"
 msgstr "Tipe del selector de color"
 
-#: src/legacy/gsm_color_button.c:660
+#: src/legacy/gsm_color_button.c:647
 msgid "Click to set graph colors"
 msgstr "Clicatz per definir las colors del grafic"
 
@@ -855,40 +857,46 @@ msgstr[1] "%u segondas"
 
 #. Update label
 #. Translators: CPU usage percentage label: 95.7%
-#: src/load-graph.cpp:518
+#: src/load-graph.cpp:519
 #, c-format
 msgid "%.1f%%"
 msgstr "%.1f%%"
 
-#: src/load-graph.cpp:545
+#: src/load-graph.cpp:547
 msgid "not available"
 msgstr "pas disponible"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:550
+#: src/load-graph.cpp:552
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) sus %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:555
+#: src/load-graph.cpp:557
 #, c-format
 msgid "Cache %s"
 msgstr "Cache %s"
 
 #: src/lsof.cpp:108
 #, c-format
-msgid "%d open file"
-msgid_plural "%d open files"
+msgid "%d Open File"
+msgid_plural "%d Open Files"
 msgstr[0] "%d fichièr dobèrt"
 msgstr[1] "%d fichièrs dobèrts"
 
 #: src/lsof.cpp:110
 #, c-format
-msgid "%d matching open file"
-msgid_plural "%d matching open files"
+msgid "%d Matching Open File"
+msgid_plural "%d Matching Open Files"
 msgstr[0] "%d fichièr dobèrt correspondent"
 msgstr[1] "%d fichièrs dobèrts correspondents"
+
+#. Translators: process name and id
+#: src/memmaps.cpp:408 src/openfiles.cpp:281 src/setaffinity.cpp:382
+#, c-format
+msgid "%s (PID %u)"
+msgstr "%s (PID %u)"
 
 #: src/openfiles.cpp:29
 msgid "file"
@@ -1394,11 +1402,11 @@ msgstr "Colomna de triada dels fichièrs dobèrts"
 msgid "Open files sort order"
 msgstr "Òrdre de triada dels fichièrs dobèrts"
 
-#: src/prefsdialog.cpp:70
+#: src/prefsdialog.cpp:70 src/prefsdialog.cpp:122
 msgid "Icon"
 msgstr "Icòna"
 
-#: src/procactions.cpp:79
+#: src/procactions.cpp:80
 #, c-format
 msgid ""
 "Cannot change the priority of process with PID %d to %d.\n"
@@ -1407,11 +1415,11 @@ msgstr ""
 "Impossible de cambiar la prioritat del procèssus del PID %d cap a %d.\n"
 "%s"
 
-#: src/procactions.cpp:89 src/procactions.cpp:174
+#: src/procactions.cpp:90 src/procactions.cpp:166
 msgid "_OK"
 msgstr "_Validar"
 
-#: src/procactions.cpp:164
+#: src/procactions.cpp:156
 #, c-format
 msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
@@ -1421,26 +1429,26 @@ msgstr ""
 "%s"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:108
+#: src/procdialogs.cpp:117
 #, c-format
 msgid "Force Stop %s?"
 msgstr "Forçar l’arrèst de %s ?"
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:114
+#: src/procdialogs.cpp:123
 #, c-format
 msgid "End %s?"
 msgstr "Terminar %s ?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:120
+#: src/procdialogs.cpp:129
 #, c-format
 msgid "Stop %s?"
 msgstr "Arrestar %s ?"
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:131
+#: src/procdialogs.cpp:140
 #, c-format
 msgid "Force Stop Selected Process?"
 msgid_plural "Force Stop %d Selected Processes?"
@@ -1448,7 +1456,7 @@ msgstr[0] "Forçar a s’arrestar lo procèssus seleccionat ?"
 msgstr[1] "Forçar a s’arrestar los %d procèssus seleccionats ?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:138
+#: src/procdialogs.cpp:147
 #, c-format
 msgid "End Selected Process?"
 msgid_plural "End %d Selected Processes?"
@@ -1457,7 +1465,7 @@ msgstr[1] "_Terminar los %d procèssus seleccionats ?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:145
+#: src/procdialogs.cpp:154
 #, c-format
 msgid "Stop Selected Process?"
 msgid_plural "Stop %d Selected Processes?"
@@ -1465,7 +1473,7 @@ msgstr[0] "_Arrestar lo procèssus seleccionat ?"
 msgstr[1] "_Arrestar los %d procèssus seleccionats ?"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:156
+#: src/procdialogs.cpp:165
 msgid ""
 "Force stopping processes can result in data loss, crashes, and system "
 "failures"
@@ -1473,69 +1481,59 @@ msgstr ""
 "Un arrèst forçat de procèssus pòt menar a de pèrda de donadas, de plantatges "
 "e de fracàs sistèma"
 
-#: src/procdialogs.cpp:158
+#: src/procdialogs.cpp:167
 msgid "_Force Stop"
 msgstr "_Forçar l’arrèst"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:163
+#: src/procdialogs.cpp:172
 msgid "Ending processes can result in data loss, crashes, and system failures"
 msgstr ""
 "Terminar de procèssus pòt menar a de pèrda de donadas, de plantatges e de "
 "fracàs sistèma"
 
-#: src/procdialogs.cpp:165
+#: src/procdialogs.cpp:174
 msgid "_End"
 msgstr "_Acabar"
 
 #. SIGSTOP
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:170
+#: src/procdialogs.cpp:179
 msgid ""
 "Stopping processes can result in data loss, crashes, and system failures"
 msgstr ""
 "Arrestar de procèssus pòt menar a de pèrda de donadas, de plantatges e de "
 "fracàs sistèma"
 
-#: src/procdialogs.cpp:172
+#: src/procdialogs.cpp:181
 msgid "_Stop"
 msgstr "_Arrestar"
 
-#: src/procdialogs.cpp:264
+#: src/procdialogs.cpp:273
 #, c-format
-msgid "Change Priority of Process “%s” (PID: %u)"
-msgstr "Modificar la prioritat del procèssus « %s » (PID : %u)"
+msgid "Change Priority of %s (PID %u)"
+msgstr "Modificar la prioritat del procèssus %s (PID %u)"
 
-#: src/procdialogs.cpp:267
+#: src/procdialogs.cpp:276
 #, c-format
-msgid "Change Priority of the selected process"
-msgid_plural "Change Priority of %d selected processes"
+msgid "Change Priority of the Selected Process"
+msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "Modificar la prioritat del procèssus seleccionat"
 msgstr[1] "Modificar la prioritat dels %d procèssus seleccionats"
 
-#: src/procproperties.cpp:43 src/procproperties.cpp:97
-#: src/procproperties.cpp:106 src/util.cpp:540 src/util.cpp:587
-msgid "N/A"
-msgstr "N/D"
-
 #: src/proctable.cpp:136
-msgid "_End Process"
-msgid_plural "_End Processes"
-msgstr[0] "_Terminar lo procèssus"
-msgstr[1] "_Terminar los procèssus"
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "_Terminar lo procèssus…"
+msgstr[1] "_Terminar los procèssus…"
 
 #: src/proctable.cpp:344
-msgid "Process Name"
-msgstr "Nom del procèssus"
+msgid "Name"
+msgstr "Nom"
 
 #: src/proctable.cpp:351
 msgid "X Server Memory"
 msgstr "Mem. del servidor X"
-
-#: src/proctable.cpp:352
-#, no-c-format
-msgid "% CPU"
-msgstr "% CPU"
 
 #: src/proctable.cpp:355
 msgid "Nice"
@@ -1564,33 +1562,29 @@ msgid "Owner"
 msgstr "Proprietari"
 
 #: src/proctable.cpp:369
-msgid "Disk read total"
+msgid "Disk Read Total"
 msgstr "Total lectura disc"
 
 #: src/proctable.cpp:370
-msgid "Disk write total"
+msgid "Disk Write Total"
 msgstr "Total escritura disc"
 
 #: src/proctable.cpp:371
-msgid "Disk read"
+msgid "Disk Read"
 msgstr "Lectura disc"
 
 #: src/proctable.cpp:372
-msgid "Disk write"
+msgid "Disk Write"
 msgstr "Escritura disc"
 
-#: src/setaffinity.cpp:125
+#. Create error alert dialog
+#: src/setaffinity.cpp:126
 msgid "GNU CPU Affinity error"
 msgstr "error d’afinitat GNU CPU"
 
-#: src/setaffinity.cpp:130
+#: src/setaffinity.cpp:131
 msgid "_Close"
 msgstr "_Tampar"
-
-#: src/setaffinity.cpp:409
-#, c-format
-msgid "Select CPUs \"%s\" (PID %u) is allowed to run on:"
-msgstr "Los CPU « %s » (PID %u) seleccionats son autorizadas a executar :"
 
 #: src/util.cpp:34
 msgid "Running"
@@ -1636,31 +1630,80 @@ msgstr "%u:%02u:%02u"
 msgid "%u:%02u.%02u"
 msgstr "%u:%02u.%02u"
 
-#: src/util.cpp:188
+#: src/util.cpp:149
+msgid "Very High"
+msgstr "Fòrça elevada"
+
+#: src/util.cpp:151
+msgid "High"
+msgstr "Elevada"
+
+#: src/util.cpp:153
+msgid "Normal"
+msgstr "Normala"
+
+#: src/util.cpp:155
+msgid "Low"
+msgstr "Bassa"
+
+#: src/util.cpp:157
+msgid "Very Low"
+msgstr "Fòrça bassa"
+
+#: src/util.cpp:164
 msgid "Very High Priority"
 msgstr "Prioritat fòrça elevada"
 
-#: src/util.cpp:190
+#: src/util.cpp:166
 msgid "High Priority"
 msgstr "Prioritat elevada"
 
-#: src/util.cpp:192
+#: src/util.cpp:168
 msgid "Normal Priority"
 msgstr "Prioritat normala"
 
-#: src/util.cpp:194
+#: src/util.cpp:170
 msgid "Low Priority"
 msgstr "Prioritat bassa"
 
-#: src/util.cpp:196
+#: src/util.cpp:172
 msgid "Very Low Priority"
 msgstr "Prioritat fòrça bassa"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:832
+#: src/util.cpp:765
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "The GNOME Project"
+#~ msgstr "Lo projècte GNOME"
+
+#~ msgid "Help"
+#~ msgstr "Ajuda"
+
+#~ msgid "Open _Files"
+#~ msgstr "Fichièrs _dobèrts"
+
+#~ msgid "Custom"
+#~ msgstr "Personalizada"
+
+#~ msgid ""
+#~ "<small><i><b>Note:</b> The priority of a process is given by its nice "
+#~ "value. A lower nice value corresponds to a higher priority.</i></small>"
+#~ msgstr ""
+#~ "<small><i><b>Nòta :</b> La prioritat d'un procèssus es atribuida gràcias "
+#~ "a sa valor « nice ». Una valor nice mai bassa correspond a una prioritat "
+#~ "mai nauta.</i></small>"
+
+#~ msgid "N/A"
+#~ msgstr "N/D"
+
+#~ msgid "Process Name"
+#~ msgstr "Nom del procèssus"
+
+#~ msgid "% CPU"
+#~ msgstr "% CPU"
 
 #~ msgid "_Continue"
 #~ msgstr "_Contunhar"
@@ -1731,9 +1774,6 @@ msgstr "%s/s"
 #~ "vòstra session de trabalh o alara introduire una falha de seguretat. Sols "
 #~ "los processus que respondon pas mai deurián èsser arrestats."
 
-#~ msgid "%s (PID %u)"
-#~ msgstr "%s (PID %u)"
-
 #~ msgid "CPU %d"
 #~ msgstr "CPU %d"
 
@@ -1760,13 +1800,6 @@ msgstr "%s/s"
 
 #~ msgid "Note:"
 #~ msgstr "Nòta :"
-
-#~ msgid ""
-#~ "The priority of a process is given by its nice value. A lower nice value "
-#~ "corresponds to a higher priority."
-#~ msgstr ""
-#~ "La prioritat d'un processus es atribuida al moyen de sa valor « nice ». "
-#~ "Una valor nice mai bassa correspond a una mai nauta prioritat."
 
 #~ msgctxt "shortcut window"
 #~ msgid "Send End signal"
@@ -1859,9 +1892,6 @@ msgstr "%s/s"
 
 #~ msgid "S_earch results:"
 #~ msgstr "Resultats de la r_ecèrca :"
-
-#~ msgid "_Help"
-#~ msgstr "A_juda"
 
 #~ msgid "Properties of process \"%s\" (PID %u):"
 #~ msgstr "Proprietats del processus « %s » (PID %u) :"
