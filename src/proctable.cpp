@@ -103,7 +103,7 @@ cb_tree_button_pressed (GtkGestureClick*,
     gtk_tree_selection_select_path (selection, path);
   gtk_tree_path_free (path);
 
-  GdkRectangle rect = { x, y, 1, 1 };
+  GdkRectangle rect = { (gint)x, (gint)y, 1, 1 };
 
   gtk_popover_set_pointing_to (GTK_POPOVER (app->proc_popover_menu), &rect);
   gtk_popover_popup (GTK_POPOVER (app->proc_popover_menu));
