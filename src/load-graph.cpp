@@ -170,11 +170,13 @@ create_background (LoadGraph *graph,
 
   /* Graph length */
   const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * frames_per_unit;
+  guint scale = gtk_widget_get_scale_factor (GTK_WIDGET (graph->disp));
 
   gtk_widget_get_allocation (GTK_WIDGET (graph->disp), &allocation);
   surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
-                                        allocation.width,
-                                        allocation.height);
+                                        allocation.width * scale,
+                                        allocation.height * scale);
+  cairo_surface_set_device_scale (surface, scale, scale);
   cr = cairo_create (surface);
 
   /* Create grid label layout */
