@@ -730,10 +730,15 @@ update_page_activities (GsmApplication *app)
 }
 
 static void
-cb_change_current_page (AdwViewStack*,
+cb_change_current_page (AdwViewStack *view_stack,
                         GParamSpec*,
                         gpointer data)
 {
+  GsmApplication *app = (GsmApplication *) data;
+
+  if (g_strcmp0 (adw_view_stack_get_visible_child_name (view_stack), "processes") != 0)
+    gtk_toggle_button_set_active (app->search_button, FALSE);
+
   update_page_activities ((GsmApplication *)data);
 }
 
