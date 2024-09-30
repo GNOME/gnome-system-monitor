@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2024-08-06 18:31+0000\n"
-"PO-Revision-Date: 2024-08-30 00:36+0200\n"
+"POT-Creation-Date: 2024-09-17 22:36+0000\n"
+"PO-Revision-Date: 2024-09-30 23:54+0200\n"
 "Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Project-Style: gnome\n"
 
 #: data/disks.ui:31 data/memmaps.ui:424
@@ -193,17 +193,17 @@ msgid "_Resources"
 msgstr "P_rostředky"
 
 #: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:86
-#: src/interface.cpp:281 src/proctable.cpp:352
+#: src/interface.cpp:268 src/proctable.cpp:352
 #, no-c-format
 msgid "CPU"
 msgstr "CPU"
 
-#: data/interface.ui:134 data/procproperties.ui:97 src/interface.cpp:319
+#: data/interface.ui:134 data/procproperties.ui:97 src/interface.cpp:306
 #: src/proctable.cpp:359
 msgid "Memory"
 msgstr "Paměť"
 
-#: data/interface.ui:145 src/interface.cpp:331
+#: data/interface.ui:145 src/interface.cpp:318
 msgid "Swap"
 msgstr "Odkládací prostor"
 
@@ -211,7 +211,7 @@ msgstr "Odkládací prostor"
 msgid "Memory and Swap"
 msgstr "Paměť a odkládací prostor"
 
-#: data/interface.ui:193 src/interface.cpp:360
+#: data/interface.ui:193 src/interface.cpp:347
 msgid "Receiving"
 msgstr "Příjem"
 
@@ -219,7 +219,7 @@ msgstr "Příjem"
 msgid "Total Received"
 msgstr "Celkem přijato"
 
-#: data/interface.ui:213 src/interface.cpp:378
+#: data/interface.ui:213 src/interface.cpp:365
 msgid "Sending"
 msgstr "Odesílání"
 
@@ -231,7 +231,7 @@ msgstr "Celkem odesláno"
 msgid "Network"
 msgstr "Síť"
 
-#: data/interface.ui:271 src/interface.cpp:413
+#: data/interface.ui:271 src/interface.cpp:400
 msgid "Reading"
 msgstr "Čtení"
 
@@ -239,7 +239,7 @@ msgstr "Čtení"
 msgid "Total Read"
 msgstr "Celkem přečteno"
 
-#: data/interface.ui:291 src/interface.cpp:431
+#: data/interface.ui:291 src/interface.cpp:418
 msgid "Writing"
 msgstr "Zápis"
 
@@ -275,7 +275,7 @@ msgstr "Hledání otevřených souborů"
 
 #: data/lsof.ui:30
 msgid "Filter files by name"
-msgstr "Filtrovat soubory podle názvu"
+msgstr "filtrovat soubory podle názvu"
 
 #: data/lsof.ui:36
 msgid "Case Insensitive"
@@ -445,14 +445,13 @@ msgstr "U_končit…"
 
 #: data/menus.ui:159 data/procproperties.ui:224
 msgid "_Force Stop…"
-msgstr "_Vynutit zastavení"
+msgstr "_Vynutit zastavení…"
 
 #: data/openfiles.ui:16
 msgid "Open Files"
 msgstr "Otevřené soubory"
 
 #: data/openfiles.ui:46
-#| msgid "FD"
 msgctxt ""
 "FD here means File Descriptor. Use a short translation if possible, and at "
 "most 2-3 characters"
@@ -746,18 +745,18 @@ msgid "Show the application’s version"
 msgstr "Zobrazit verzi aplikace"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: src/interface.cpp:245
+#: src/interface.cpp:232
 #, c-format
 msgid "Pick a Color for “%s”"
 msgstr "Vybrat barvu pro „%s“"
 
 #. Set check box label value to CPU [1..2048]
-#: src/interface.cpp:283 src/setaffinity.cpp:406
+#: src/interface.cpp:270 src/setaffinity.cpp:406
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: src/interface.cpp:494
+#: src/interface.cpp:481
 msgid "translator-credits"
 msgstr ""
 "Miloslav Trmač <mitr@volny.cz>\n"
@@ -861,7 +860,7 @@ msgstr[2] "%u sekund"
 
 #. Update label
 #. Translators: CPU usage percentage label: 95.7%
-#: src/load-graph.cpp:519
+#: src/load-graph.cpp:520
 #, c-format
 msgid "%.1f%%"
 msgstr "%.1f %%"
