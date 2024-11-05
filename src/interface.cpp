@@ -754,13 +754,13 @@ cb_main_window_delete (GtkWindow*,
 }
 
 static void
-cb_main_window_suspended (GtkWindow*,
-                          gboolean        suspended,
+cb_main_window_suspended (GtkWindow      *window,
+                          GParamSpec     *pspec,
                           GsmApplication *app)
 {
   auto current_page = app->config.current_tab;
 
-  if (suspended)
+  if (gtk_window_is_suspended (window))
     {
       if (current_page == "processes")
         {
