@@ -753,9 +753,28 @@ cb_main_window_delete (GtkWindow*,
   return TRUE;
 }
 
+static gboolean
+cb_main_window_close (GtkWindow*,
+                      gpointer data)
+{
+  GsmApplication *app = (GsmApplication *) data;
+  gint default_width, default_height;
+  gboolean maximized;
+
+  g_object_get (G_OBJECT (app->main_window), "default-width", &default_width, NULL);
+  g_object_get (G_OBJECT (app->main_window), "default-height", &default_height, NULL);
+  g_object_get (G_OBJECT (app->main_window), "maximized", &maximized, NULL);
+
+  g_settings_set_int (app->settings->gobj (), GSM_SETTING_WINDOW_WIDTH, default_width);
+  g_settings_set_int (app->settings->gobj (), GSM_SETTING_WINDOW_HEIGHT, default_height);
+  g_settings_set_boolean (app->settings->gobj (), GSM_SETTING_MAXIMIZED, maximized);
+
+  return FALSE;
+}
+
 static void
 cb_main_window_suspended (GtkWindow      *window,
-                          GParamSpec     *pspec,
+                          GParamSpec     *,
                           GsmApplication *app)
 {
   auto current_page = app->config.current_tab;
@@ -876,6 +895,10 @@ create_main_window (GsmApplication *app)
                     "destroy",
                     G_CALLBACK (cb_main_window_delete),
                     app);
+  g_signal_connect (G_OBJECT (app->main_window),
+                    "close-request",
+                    G_CALLBACK (cb_main_window_close),
+                    app);
 
   GAction *action;
 
@@ -891,19 +914,22 @@ create_main_window (GsmApplication *app)
                          g_settings_get_value (app->settings->gobj (), GSM_SETTING_SHOW_WHOSE_PROCESSES));
 
   // Surface is available only after a widget has been shown
-  gtk_widget_set_visible (GTK_WIDGET (app->main_window), true);
+  gtk_window_present (GTK_WINDOW (app->main_window));
 
-  g_settings_bind (app->settings->gobj (), GSM_SETTING_WINDOW_WIDTH,
-                   app->main_window, "default-width",
-                   G_SETTINGS_BIND_DEFAULT);
+  g_object_set (GTK_WINDOW (app->main_window),
+                "default-width",
+                g_settings_get_int (app->settings->gobj (), GSM_SETTING_WINDOW_WIDTH),
+                NULL);
 
-  g_settings_bind (app->settings->gobj (), GSM_SETTING_WINDOW_HEIGHT,
-                   app->main_window, "default-height",
-                   G_SETTINGS_BIND_DEFAULT);
+  g_object_set (GTK_WINDOW (app->main_window),
+                "default-height",
+                g_settings_get_int (app->settings->gobj (), GSM_SETTING_WINDOW_HEIGHT),
+                NULL);
 
-  g_settings_bind (app->settings->gobj (), GSM_SETTING_MAXIMIZED,
-                   app->main_window, "maximized",
-                   G_SETTINGS_BIND_DEFAULT);
+  g_object_set (GTK_WINDOW (app->main_window),
+                "maximized",
+                g_settings_get_boolean (app->settings->gobj (), GSM_SETTING_MAXIMIZED),
+                NULL);
 
   update_page_activities (app);
 
