@@ -20,8 +20,8 @@ msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2024-08-06 10:14+0000\n"
-"PO-Revision-Date: 2024-08-25 11:17+0300\n"
+"POT-Creation-Date: 2024-11-08 06:25+0000\n"
+"PO-Revision-Date: 2025-01-05 13:02+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -197,17 +197,17 @@ msgid "_Resources"
 msgstr "_Resurssit"
 
 #: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:86
-#: src/interface.cpp:281 src/proctable.cpp:352
+#: src/interface.cpp:268 src/proctable.cpp:352
 #, no-c-format
 msgid "CPU"
 msgstr "CPU"
 
-#: data/interface.ui:134 data/procproperties.ui:97 src/interface.cpp:319
+#: data/interface.ui:134 data/procproperties.ui:97 src/interface.cpp:306
 #: src/proctable.cpp:359
 msgid "Memory"
 msgstr "Muisti"
 
-#: data/interface.ui:145 src/interface.cpp:331
+#: data/interface.ui:145 src/interface.cpp:318
 msgid "Swap"
 msgstr "Swap"
 
@@ -215,7 +215,7 @@ msgstr "Swap"
 msgid "Memory and Swap"
 msgstr "Muistin ja sivutus"
 
-#: data/interface.ui:193 src/interface.cpp:360
+#: data/interface.ui:193 src/interface.cpp:347
 msgid "Receiving"
 msgstr "Vastaanottaa"
 
@@ -223,7 +223,7 @@ msgstr "Vastaanottaa"
 msgid "Total Received"
 msgstr "Vastaanotettu kaikkiaan"
 
-#: data/interface.ui:213 src/interface.cpp:378
+#: data/interface.ui:213 src/interface.cpp:365
 msgid "Sending"
 msgstr "Lähettää"
 
@@ -235,7 +235,7 @@ msgstr "Lähetetty kaikkiaan"
 msgid "Network"
 msgstr "Verkko"
 
-#: data/interface.ui:271 src/interface.cpp:413
+#: data/interface.ui:271 src/interface.cpp:400
 msgid "Reading"
 msgstr "Luetaan"
 
@@ -243,7 +243,7 @@ msgstr "Luetaan"
 msgid "Total Read"
 msgstr "Luettu kaikkiaan"
 
-#: data/interface.ui:291 src/interface.cpp:431
+#: data/interface.ui:291 src/interface.cpp:418
 msgid "Writing"
 msgstr "Kirjoitetaan"
 
@@ -449,7 +449,7 @@ msgstr "_Lopeta…"
 
 #: data/menus.ui:159 data/procproperties.ui:224
 msgid "_Force Stop…"
-msgstr "_Pysäytä pakotammalla…"
+msgstr "_Pysäytä pakottamalla…"
 
 #: data/openfiles.ui:16
 msgid "Open Files"
@@ -749,21 +749,21 @@ msgid "Show the application’s version"
 msgstr "Näytä sovelluksen versio"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: src/interface.cpp:245
+#: src/interface.cpp:232
 #, c-format
 msgid "Pick a Color for “%s”"
 msgstr "Valitse väri kohteelle “%s”"
 
 #. Set check box label value to CPU [1..2048]
-#: src/interface.cpp:283 src/setaffinity.cpp:406
+#: src/interface.cpp:270 src/setaffinity.cpp:406
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
 
-#: src/interface.cpp:494
+#: src/interface.cpp:481
 msgid "translator-credits"
 msgstr ""
-"Jiri Grönroos, 2012-2024\n"
+"Jiri Grönroos, 2012-2025\n"
 "Juhani Numminen, 2014\n"
 "Timo Jyrinki, 2008\n"
 "Ilkka Tuohela, 2005-2009\n"
@@ -873,7 +873,7 @@ msgstr[1] "%u s"
 
 #. Update label
 #. Translators: CPU usage percentage label: 95.7%
-#: src/load-graph.cpp:519
+#: src/load-graph.cpp:520
 #, c-format
 msgid "%.1f%%"
 msgstr "%.1f%%"
@@ -1448,7 +1448,6 @@ msgstr "Lopetetaanko %s?"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:129
 #, c-format
-#| msgid "Stop process"
 msgid "Stop %s?"
 msgstr "Pysäytetäänkö %s?"
 
