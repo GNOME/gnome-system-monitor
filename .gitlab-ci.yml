@@ -119,6 +119,7 @@ build-release-tarball:
   before_script:
     - dnf update -y --nogpgcheck
     - dnf install -y --nogpgcheck $FEDORA_DEPENDENCIES gettext libgtop2-devel systemd-devel
+    - dnf remove -y appstream-devel
   script:
     - meson setup "${MESON_BUILD_DIR}"
     - meson dist -C "${MESON_BUILD_DIR}" --include-subprojects
