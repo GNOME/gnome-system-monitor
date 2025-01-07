@@ -114,7 +114,7 @@ build-ubuntu:
     - ninja -C "${MESON_BUILD_DIR}" install
 
 build-release-tarball:
-  image: fedora:rawhide
+  image: fedora:41
   stage: build
   before_script:
     - dnf update -y --nogpgcheck
