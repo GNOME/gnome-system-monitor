@@ -29,13 +29,13 @@ desktop_files += i18n.merge_file(
   install_dir: join_paths(get_option('datadir'), 'applications')
 )
 
-appdata_file = i18n.merge_file(
+metainfo_file = i18n.merge_file(
   input : configure_file(
   configuration: dataconf,
-  input : 'org.gnome.SystemMonitor.appdata.xml.in.in',
-  output: '@0@.appdata.xml.in'.format(app_id),
+  input : 'org.gnome.SystemMonitor.metainfo.xml.in.in',
+  output: '@0@.metainfo.xml.in'.format(app_id),
   ),
-  output: '@0@.appdata.xml'.format(app_id),
+  output: '@0@.metainfo.xml'.format(app_id),
   po_dir: '../po',
   install: true,
   install_dir: join_paths(get_option('datadir'), 'metainfo'),
@@ -60,9 +60,9 @@ i18n.merge_file(
 
 appstreamcli = find_program('appstreamcli', required: false)
 if appstreamcli.found()
-  test('validate_appdata',
+  test('validate_metainfo',
     appstreamcli,
-    args: [ 'validate', '--no-net', '--explain', appdata_file ],
+    args: [ 'validate', '--no-net', '--explain', metainfo_file ],
   )
 endif
 

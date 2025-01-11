@@ -468,7 +468,7 @@ on_activate_about (GSimpleAction *,
     NULL
   };
 
-  about_dialog = adw_about_dialog_new_from_appdata ("/org/gnome/gnome-system-monitor/appdata.xml",
+  about_dialog = adw_about_dialog_new_from_appdata ("/org/gnome/gnome-system-monitor/metainfo.xml",
                                                     VERSION);
 
   adw_about_dialog_set_copyright (ADW_ABOUT_DIALOG (about_dialog),
