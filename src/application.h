@@ -21,14 +21,6 @@ static const unsigned MIN_UPDATE_INTERVAL = 1 * 1000;
 static const unsigned MAX_UPDATE_INTERVAL = 100 * 1000;
 
 
-enum ProcmanTab
-{
-  PROCMAN_TAB_RESOURCES,
-  PROCMAN_TAB_PROCESSES,
-  PROCMAN_TAB_DISKS
-};
-
-
 struct ProcConfig
   : private procman::NonCopyable
 {
