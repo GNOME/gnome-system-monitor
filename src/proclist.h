@@ -2,7 +2,6 @@
 
 #include <map>
 #include <mutex>
-#include <tuple>
 
 #include "procinfo.h"
 
@@ -38,7 +37,7 @@ class ProcList
   ProcInfo*
   add (pid_t pid)
   {
-    return &data.emplace (std::piecewise_construct, std::forward_as_tuple (pid), std::forward_as_tuple (pid)).first->second;
+    return &data.try_emplace (pid, pid).first->second;
   }
   void
   clear ()
