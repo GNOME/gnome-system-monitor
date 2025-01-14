@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 #include "application.h"
 #include "legacy/treeview.h"
+#include "procinfo.h"
 
 enum
 {

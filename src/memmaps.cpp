@@ -14,9 +14,9 @@
 using std::string;
 
 
-#include "application.h"
 #include "memmaps.h"
 #include "memmaps-data.h"
+#include "procinfo.h"
 #include "proctable.h"
 #include "settings-keys.h"
 #include "util.h"

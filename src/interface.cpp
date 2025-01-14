@@ -31,6 +31,8 @@
 #include <math.h>
 
 #include "interface.h"
+#include "application.h"
+#include "procinfo.h"
 #include "proctable.h"
 #include "procactions.h"
 #include "procdialogs.h"

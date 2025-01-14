@@ -15,6 +15,7 @@
 #include "application.h"
 #include "lsof.h"
 #include "lsof-data.h"
+#include "procinfo.h"
 #include "util.h"
 
 

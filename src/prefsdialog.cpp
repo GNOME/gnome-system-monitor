@@ -5,12 +5,14 @@
 
 #include "prefsdialog.h"
 
+#include "application.h"
 #include "cgroups.h"
 #include "proctable.h"
 #include "selinux.h"
 #include "settings-keys.h"
 #include "systemd.h"
 #include "util.h"
+#include "update_interval.h"
 
 static AdwPreferencesDialog *prefs_dialog = NULL;
 

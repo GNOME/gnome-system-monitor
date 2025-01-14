@@ -1,6 +1,5 @@
 #include <config.h>
 
-#include "application.h"
 #include "gsm_pkexec.h"
 #include "util.h"
 

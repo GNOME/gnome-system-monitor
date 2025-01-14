@@ -5,8 +5,8 @@
 #include <systemd/sd-login.h>
 #endif
 
-#include "application.h"
 #include "systemd.h"
+#include "procinfo.h"
 
 
 bool

@@ -1,5 +1,6 @@
 #include <config.h>
 #include "cgroups.h"
+#include "procinfo.h"
 #include "util.h"
 
 #include <map>

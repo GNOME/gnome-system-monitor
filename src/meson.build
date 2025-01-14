@@ -23,12 +23,15 @@ system_monitor_sources = [
   'prettytable.cpp',
   'procactions.cpp',
   'procdialogs.cpp',
+  'procinfo.cpp',
+  'proclist.cpp',
   'procproperties.cpp',
   'proctable.cpp',
   'selinux.cpp',
   'setaffinity.cpp',
   'smooth_refresh.cpp',
   'systemd.cpp',
+  'update_interval.cpp',
   'util.cpp',
 ]
 
@@ -58,6 +61,8 @@ system_monitor_headers = [
   'prettytable.h',
   'procactions.h',
   'procdialogs.h',
+  'procinfo.h',
+  'proclist.h',
   'procproperties.h',
   'proctable.h',
   'selinux.h',
@@ -65,6 +70,7 @@ system_monitor_headers = [
   'settings-keys.h',
   'smooth_refresh.h',
   'systemd.h',
+  'update_interval.h',
   'util.h',
 ]
 

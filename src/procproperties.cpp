@@ -27,6 +27,7 @@
 #include "application.h"
 #include "procactions.h"
 #include "procproperties.h"
+#include "procinfo.h"
 #include "proctable.h"
 #include "util.h"
 #include "legacy/e_date.h"

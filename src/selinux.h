@@ -3,7 +3,7 @@
 
 #include <glib.h>
 
-#include "application.h"
+#include "procinfo.h"
 
 void
 get_process_selinux_context (ProcInfo *info);

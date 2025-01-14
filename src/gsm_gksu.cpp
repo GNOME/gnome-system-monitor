@@ -1,6 +1,5 @@
 #include <config.h>
 
-#include "application.h"
 #include "gsm_gksu.h"
 #include "util.h"
 

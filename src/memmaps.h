@@ -2,6 +2,8 @@
 
 #include <adwaita.h>
 
+#include "procinfo.h"
+
 G_BEGIN_DECLS
 
 #define GSM_TYPE_MEMMAPS_VIEW (gsm_memmaps_view_get_type ())

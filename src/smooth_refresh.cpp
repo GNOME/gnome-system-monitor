@@ -9,6 +9,7 @@
 #include "smooth_refresh.h"
 #include "application.h"
 #include "settings-keys.h"
+#include "update_interval.h"
 #include "util.h"
 
 

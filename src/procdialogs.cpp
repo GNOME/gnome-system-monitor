@@ -26,9 +26,11 @@
 #include <stdio.h>
 
 #include "procdialogs.h"
+#include "application.h"
 #include "proctable.h"
 #include "prettytable.h"
 #include "procactions.h"
+#include "procinfo.h"
 #include "util.h"
 #include "gsm_gnomesu.h"
 #include "gsm_gksu.h"

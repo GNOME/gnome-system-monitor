@@ -2,7 +2,6 @@
 
 #include <glib.h>
 
-#include "application.h"
 #include "gsm_gnomesu.h"
 #include "util.h"
 

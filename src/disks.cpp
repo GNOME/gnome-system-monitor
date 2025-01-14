@@ -8,7 +8,6 @@
 
 #include "disks.h"
 #include "disks-data.h"
-#include "application.h"
 #include "util.h"
 #include "settings-keys.h"
 

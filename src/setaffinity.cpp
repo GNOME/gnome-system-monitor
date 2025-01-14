@@ -26,8 +26,10 @@
 #include <glib/gi18n.h>
 #include <dirent.h>
 
-#include "proctable.h"
+#include "application.h"
 #include "procdialogs.h"
+#include "procinfo.h"
+#include "proctable.h"
 #include "util.h"
 #include "setaffinity.h"
 
