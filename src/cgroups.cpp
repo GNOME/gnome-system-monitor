@@ -3,22 +3,15 @@
 #include "procinfo.h"
 #include "util.h"
 
+#include <filesystem>
 #include <map>
 #include <unordered_map>
 #include <utility>
 
 bool
-cgroups_enabled (void)
+cgroups_enabled ()
 {
-  static bool initialized = false;
-  static bool has_cgroups;
-
-  if (not initialized)
-    {
-      initialized = true;
-      has_cgroups = Glib::file_test ("/proc/cgroups", Glib::FileTest::EXISTS);
-    }
-
+  static const bool has_cgroups = std::filesystem::exists ("/proc/cgroups");
   return has_cgroups;
 }
 
