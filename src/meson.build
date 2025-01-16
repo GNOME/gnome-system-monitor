@@ -1,5 +1,4 @@
 subdir('legacy')
-subdir('test')
 
 system_monitor_sources = [
   'application.cpp',
@@ -15,7 +14,6 @@ system_monitor_sources = [
   'load-graph.cpp',
   'lsof.cpp',
   'lsof-data.c',
-  'main.cpp',
   'memmaps.cpp',
   'memmaps-data.c',
   'openfiles.cpp',
@@ -118,27 +116,50 @@ gsm_gsettings = gnome.mkenums('org.gnome.gnome-system-monitor.enums.xml',
   install_dir: join_paths(get_option('datadir'), 'glib-2.0', 'schemas'),
 )
 
-
-executable(meson.project_name(),
+system_monitor_dependencies = [
+  glibmm,
+  giomm,
+  gmodule,
+  gtk,
+  gtkmm,
+  libgtop,
+  libadwaita,
+  libsystemd,
+]
+libgsm = static_library(
+  'libgsm',
   system_monitor_sources,
   include_directories: rootInclude,
-  dependencies: [
-    glibmm,
-    giomm,
-    gmodule,
-    gtk,
-    gtkmm,
-    libgtop,
-    libadwaita,
-    libsystemd,
-  ],
+  dependencies: system_monitor_dependencies,
   link_with: libgsm_legacy,
   cpp_args: [
     '-DGSM_RESOURCE_FILE="@0@"'.format(join_paths(
       get_option('prefix'), gsm_resource_dir, 'gsm.gresource')),
   ],
+)
+libgsm_dep = declare_dependency(
+  dependencies: system_monitor_dependencies,
+  include_directories: rootInclude,
+  link_with: libgsm,
+)
+
+executable(meson.project_name(),
+  ['main.cpp'],
+  dependencies: libgsm_dep,
   install: true,
 )
+
+unit_tests = executable('unit_tests',
+  [
+    'test/cgroups.cpp',
+    'test/join.cpp'
+  ],
+  dependencies: [
+    catch2,
+    libgsm_dep,
+  ],
+)
+test('unit_tests', unit_tests)
 
 gnome.post_install(
   glib_compile_schemas: true,

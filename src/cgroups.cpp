@@ -61,23 +61,14 @@ parse_cgroup_line (const std::string&line)
   return it.first->second;
 }
 
+} // namespace
 
-const std::string&
-get_process_cgroup_string (pid_t pid)
+std::string_view
+get_process_cgroup_name(std::string cgroup_file_text)
 {
-  static std::unordered_map<std::string, std::string> file_cache{ { "", "" } };
+  static std::unordered_map<std::string, std::string> file_cache;
 
-  /* read out of /proc/pid/cgroup */
-  auto path = "/proc/" + std::to_string (pid) + "/cgroup";
-  std::string text;
-
-  try {
-      text = Glib::file_get_contents (path);
-    } catch (...) {
-      return file_cache[""];
-    }
-
-  auto it = file_cache.try_emplace (std::move(text), "");
+  auto it = file_cache.try_emplace (std::move(cgroup_file_text), "");
 
   if (it.second)     // inserted new
 
@@ -88,9 +79,9 @@ get_process_cgroup_string (pid_t pid)
       std::string::size_type last = 0, eol;
 
       // for each line in the file
-      while ((eol = text.find ('\n', last)) != std::string::npos)
+      while ((eol = it.first->first.find ('\n', last)) != std::string::npos)
         {
-          auto line = text.substr (last, eol - last);
+          auto line = it.first->first.substr (last, eol - last);
           last = eol + 1;
 
           const auto& line_data = parse_cgroup_line (line);
@@ -116,6 +107,23 @@ get_process_cgroup_string (pid_t pid)
   return it.first->second;
 }
 
+namespace
+{
+
+std::string_view
+get_process_cgroup_string (pid_t pid)
+{
+  auto path = "/proc/" + std::to_string (pid) + "/cgroup";
+  std::string text;
+
+  try {
+      text = Glib::file_get_contents (path);
+    } catch (...) {
+      return ""sv;
+    }
+    return get_process_cgroup_name(std::move(text));
+}
+
 } // namespace
 
 void
@@ -124,7 +132,5 @@ get_process_cgroup_info (ProcInfo&info)
   if (not cgroups_enabled ())
     return;
 
-  const auto&cgroup_string = get_process_cgroup_string (info.pid);
-
-  info.cgroup_name = cgroup_string;
+  info.cgroup_name = std::string(get_process_cgroup_string (info.pid));
 }
