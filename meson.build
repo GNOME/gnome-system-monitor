@@ -51,6 +51,7 @@ datadir = join_paths(prefix, get_option('datadir'))
 ################################################################################
 # Dependencies
 
+catch2     = dependency('catch2-with-main')
 giomm      = dependency('giomm-2.68',  version: '>=2.68')
 glib       = dependency('glib-2.0',    version: '>=2.56.0')
 glibmm     = dependency('glibmm-2.68', version: '>=2.68')

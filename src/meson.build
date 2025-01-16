@@ -1,4 +1,5 @@
 subdir('legacy')
+subdir('test')
 
 system_monitor_sources = [
   'application.cpp',
@@ -50,6 +51,7 @@ system_monitor_headers = [
   'gsm_pkexec.h',
   'gsm-graph.h',
   'interface.h',
+  'join.h',
   'load-graph.h',
   'lsof.h',
   'lsof-data.h',

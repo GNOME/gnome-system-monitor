@@ -1,12 +1,16 @@
 #include <config.h>
 #include "cgroups.h"
+#include "join.h"
 #include "procinfo.h"
-#include "util.h"
 
 #include <filesystem>
 #include <map>
 #include <unordered_map>
+#include <string>
+#include <string_view>
 #include <utility>
+
+using namespace std::string_view_literals;
 
 bool
 cgroups_enabled ()
@@ -102,11 +106,11 @@ get_process_cgroup_string (pid_t pid)
       for (auto&i : names)
         {
           std::sort (begin (i.second), end (i.second));
-          std::string cats = procman::join (i.second, ", ");
+          std::string cats = procman::join<std::string> (i.second, ", "sv);
           groups.push_back (i.first + " (" + cats + ')');
         }
 
-      it.first->second = procman::join (groups, ", ");
+      it.first->second = procman::join<std::string> (groups, ", "sv);
     }
 
   return it.first->second;
