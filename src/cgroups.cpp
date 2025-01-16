@@ -16,11 +16,19 @@ cgroups_enabled ()
 }
 
 
+namespace
+{
 
-static const std::pair<std::string, std::string> &
+struct CGroupLineData
+{
+  std::string name;
+  std::string cat;
+};
+
+const CGroupLineData &
 parse_cgroup_line (const std::string&line)
 {
-  static std::unordered_map<std::string, std::pair<std::string, std::string> > line_cache;
+  static std::unordered_map<std::string, CGroupLineData> line_cache;
 
   auto it = line_cache.insert ({ line, { "", "" } });
 
@@ -50,7 +58,7 @@ parse_cgroup_line (const std::string&line)
 }
 
 
-static const std::string&
+const std::string&
 get_process_cgroup_string (pid_t pid)
 {
   static std::unordered_map<std::string, std::string> file_cache{ { "", "" } };
@@ -81,9 +89,9 @@ get_process_cgroup_string (pid_t pid)
           auto line = text.substr (last, eol - last);
           last = eol + 1;
 
-          const auto&p = parse_cgroup_line (line);
-          if (!p.first.empty ())
-            names[p.first].push_back (p.second);
+          const auto& line_data = parse_cgroup_line (line);
+          if (!line_data.name.empty ())
+            names[line_data.name].push_back (line_data.cat);
         }
 
 
@@ -104,6 +112,7 @@ get_process_cgroup_string (pid_t pid)
   return it.first->second;
 }
 
+} // namespace
 
 void
 get_process_cgroup_info (ProcInfo&info)
