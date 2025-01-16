@@ -21,7 +21,7 @@ std::string
 ProcInfo::lookup_user (guint uid)
 {
   static std::map<guint, std::string> users;
-  auto p = users.insert ({ uid, "" });
+  auto p = users.try_emplace (uid, "");
 
   // procman_debug("User lookup for uid %u: %s", uid, (p.second ? "MISS" : "HIT"));
 

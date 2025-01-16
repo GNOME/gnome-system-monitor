@@ -34,7 +34,7 @@ parse_cgroup_line (const std::string&line)
 {
   static std::unordered_map<std::string, CGroupLineData> line_cache;
 
-  auto it = line_cache.insert ({ line, { "", "" } });
+  auto it = line_cache.try_emplace (line, "", "");
 
   if (it.second)     // inserted new
     {
@@ -77,7 +77,7 @@ get_process_cgroup_string (pid_t pid)
       return file_cache[""];
     }
 
-  auto it = file_cache.insert ({ text, "" });
+  auto it = file_cache.try_emplace (std::move(text), "");
 
   if (it.second)     // inserted new
 
