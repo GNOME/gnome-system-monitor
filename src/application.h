@@ -72,8 +72,7 @@ struct ProcConfig
   bool network_total_in_bits;
 };
 
-class GsmApplication: public Gtk::Application, private procman::NonCopyable
-
+class GsmApplication final: public Gtk::Application, private procman::NonCopyable
 {
 private:
   void load_settings ();
@@ -85,12 +84,12 @@ private:
   void on_help_activate (const Glib::VariantBase&);
   void on_quit_activate (const Glib::VariantBase&);
   int handle_local_options (const Glib::RefPtr<Glib::VariantDict> &);
-protected:
+
   GsmApplication();
 
-  virtual void on_activate ();
-  virtual int on_command_line (const Glib::RefPtr<Gio::ApplicationCommandLine>&command_line);
-  virtual void on_startup ();
+  void on_activate () override;
+  int on_command_line (const Glib::RefPtr<Gio::ApplicationCommandLine>&command_line) override;
+  void on_startup () override;
 public:
   static GsmApplication& get ();
 
