@@ -1,14 +1,18 @@
-#include <config.h>
 #include "cgroups.h"
-#include "join.h"
-#include "procinfo.h"
 
+#include <algorithm>
 #include <filesystem>
 #include <map>
 #include <unordered_map>
 #include <string>
 #include <string_view>
 #include <utility>
+#include <vector>
+
+#include <gtkmm.h>
+
+#include "join.h"
+#include "procinfo.h"
 
 using namespace std::string_view_literals;
 
@@ -25,45 +29,48 @@ namespace
 
 struct CGroupLineData
 {
-  std::string name;
-  std::string cat;
+  std::string_view name;
+  std::string_view cat;
 };
 
 CGroupLineData
-make_parsed_cgroup_line (const std::string&line)
+make_parsed_cgroup_line (const std::string_view line)
 {
-  const std::string::size_type cat_start = line.find (':');
-  if (cat_start == std::string::npos)
+  const std::string_view::size_type cat_start = line.find (':');
+  if (cat_start == std::string_view::npos)
     {
       return CGroupLineData();
     }
   
-  const std::string::size_type name_start = line.find (':', cat_start + 1);
-  if (name_start == std::string::npos)
+  const std::string_view::size_type name_start = line.find (':', cat_start + 1);
+  if (name_start == std::string_view::npos)
+    {
+      return CGroupLineData();
+    }
+
+  const auto name = line.substr (name_start + 1);
+  if (name.empty () or name == "/"sv)
     {
       return CGroupLineData();
     }
 
   auto cat = line.substr (cat_start + 1, name_start - cat_start - 1);
-  auto name = line.substr (name_start + 1);
 
-  // strip the name= prefix
-  if (cat.find ("name=") == 0)
-    cat.erase (0, 5);
-
-  if (name.empty() or name == "/")
+  constexpr auto name_prefix = "name="sv;
+  if (cat.starts_with (name_prefix))
     {
-      return CGroupLineData();
+      cat.remove_prefix (name_prefix.size());
     }
+
   return { name, cat };
 }
 
-const CGroupLineData &
-parse_cgroup_line (const std::string&line)
+CGroupLineData
+parse_cgroup_line (const std::string_view line)
 {
-  static std::unordered_map<std::string, CGroupLineData> line_cache;
+  static std::unordered_map<std::string_view, CGroupLineData> line_cache;
 
-  const auto [it, inserted] = line_cache.try_emplace (line, "", "");
+  const auto [it, inserted] = line_cache.try_emplace (line, ""sv, ""sv);
 
   if (inserted)
     {
@@ -74,20 +81,20 @@ parse_cgroup_line (const std::string&line)
 }
 
 std::string
-make_process_cgroup_name(const std::string& cgroup_file_text)
+make_process_cgroup_name(const std::string_view cgroup_file_text)
 {
   // name -> [cat...], sorted by name;
-  std::map<std::string, std::vector<std::string> > names;
+  std::map<std::string_view, std::vector<std::string_view> > names;
 
-  std::string::size_type last = 0, eol;
+  std::string_view::size_type last = 0, eol;
 
   // for each line in the file
-  while ((eol = cgroup_file_text.find ('\n', last)) != std::string::npos)
+  while ((eol = cgroup_file_text.find ('\n', last)) != std::string_view::npos)
     {
       auto line = cgroup_file_text.substr (last, eol - last);
       last = eol + 1;
 
-      const auto& line_data = parse_cgroup_line (line);
+      const auto line_data = parse_cgroup_line (line);
       if (!line_data.name.empty ())
         names[line_data.name].push_back (line_data.cat);
     }
@@ -100,8 +107,7 @@ make_process_cgroup_name(const std::string& cgroup_file_text)
   for (auto&i : names)
     {
       std::sort (begin (i.second), end (i.second));
-      std::string cats = procman::join<std::string> (i.second, ", "sv);
-      groups.push_back (i.first + " (" + cats + ')');
+      groups.push_back (std::string(i.first) + " (" + procman::join<std::string> (i.second, ", "sv) + ')');
     }
 
   return procman::join<std::string> (groups, ", "sv);
