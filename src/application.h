@@ -76,66 +76,66 @@ class GsmApplication: public Gtk::Application, private procman::NonCopyable
 
 {
 private:
-void                                load_settings ();
-void                                load_resources ();
-void                                load_command_line_options();
+  void load_settings ();
+  void load_resources ();
+  void load_command_line_options();
 
-void                                on_preferences_activate (const Glib::VariantBase&);
-void                                on_lsof_activate (const Glib::VariantBase&);
-void                                on_help_activate (const Glib::VariantBase&);
-void                                on_quit_activate (const Glib::VariantBase&);
-int                                 handle_local_options (const Glib::RefPtr<Glib::VariantDict> &);
+  void on_preferences_activate (const Glib::VariantBase&);
+  void on_lsof_activate (const Glib::VariantBase&);
+  void on_help_activate (const Glib::VariantBase&);
+  void on_quit_activate (const Glib::VariantBase&);
+  int handle_local_options (const Glib::RefPtr<Glib::VariantDict> &);
 protected:
-GsmApplication();
+  GsmApplication();
 
-virtual void                        on_activate ();
-virtual int                         on_command_line (const Glib::RefPtr<Gio::ApplicationCommandLine>&command_line);
-virtual void                        on_startup ();
+  virtual void on_activate ();
+  virtual int on_command_line (const Glib::RefPtr<Gio::ApplicationCommandLine>&command_line);
+  virtual void on_startup ();
 public:
-static Glib::RefPtr<GsmApplication> get ();
+  static Glib::RefPtr<GsmApplication> get ();
 
-void                                save_config ();
-void                                shutdown ();
+  void save_config ();
+  void shutdown ();
 
-Glib::RefPtr<Gio::Settings> settings;
-AdwApplicationWindow *main_window;
-AdwViewStack     *stack;
-GtkMenuButton    *app_menu_button;
+  Glib::RefPtr<Gio::Settings> settings;
+  AdwApplicationWindow *main_window;
+  AdwViewStack *stack;
+  GtkMenuButton *app_menu_button;
 
-GMenuModel *generic_window_menu_model;
-GMenuModel *process_window_menu_model;
+  GMenuModel *generic_window_menu_model;
+  GMenuModel *process_window_menu_model;
 
-ProcList processes;
-ProcConfig config;
-PrettyTable      *pretty_table;
-GsmTreeView      *tree;
-GtkRevealer      *proc_actionbar_revealer;
-GtkPopover       *proc_popover_menu;
-GtkButton        *refresh_button;
-GtkButton        *end_process_button;
-GtkToggleButton  *search_button;
-GtkSearchEntry   *search_entry;
-GtkSearchBar     *search_bar;
-GtkTreePath      *top_of_tree;
+  ProcList processes;
+  ProcConfig config;
+  PrettyTable *pretty_table;
+  GsmTreeView *tree;
+  GtkRevealer *proc_actionbar_revealer;
+  GtkPopover *proc_popover_menu;
+  GtkButton *refresh_button;
+  GtkButton *end_process_button;
+  GtkToggleButton *search_button;
+  GtkSearchEntry *search_entry;
+  GtkSearchBar *search_bar;
+  GtkTreePath *top_of_tree;
 
-gdouble last_vscroll_max;
-gdouble last_vscroll_value;
-guint timeout;
-guint64 cpu_total_time;
-guint64 cpu_total_time_last;
-unsigned frequency;
+  gdouble last_vscroll_max;
+  gdouble last_vscroll_value;
+  guint timeout;
+  guint64 cpu_total_time;
+  guint64 cpu_total_time_last;
+  unsigned frequency;
 
-LoadGraph        *cpu_graph;
-LoadGraph        *mem_graph;
-LoadGraph        *net_graph;
-LoadGraph        *disk_graph;
+  LoadGraph *cpu_graph;
+  LoadGraph *mem_graph;
+  LoadGraph *net_graph;
+  LoadGraph *disk_graph;
 
-GsmDisksView     *disk_list;
+  GsmDisksView *disk_list;
 
-GtkTreeSelection *selection;
+  GtkTreeSelection *selection;
 
-SmoothRefresh    *smooth_refresh;
-procman::OptionGroup option_group;
+  SmoothRefresh *smooth_refresh;
+  procman::OptionGroup option_group;
 };
 
 #endif /* _GSM_APPLICATION_H_ */
