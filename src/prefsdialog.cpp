@@ -31,7 +31,7 @@ spin_button_value_changed (AdwSpinRow *self,
   GString *key = (GString *) data;
   int new_value = 1000 * adw_spin_row_get_value (self);
 
-  GsmApplication::get ()->settings->set_int (key->str, new_value);
+  GsmApplication::get ().settings->set_int (key->str, new_value);
 
   procman_debug ("set %s to %d", key->str, new_value);
 }
@@ -43,7 +43,7 @@ range_value_changed (GtkRange *self,
   GString *key = (GString *) data;
   int new_value = gtk_range_get_value (self);
 
-  GsmApplication::get ()->settings->set_int (key->str, new_value);
+  GsmApplication::get ().settings->set_int (key->str, new_value);
 
   procman_debug ("set %s to %d", key->str, new_value);
 }
@@ -88,7 +88,7 @@ create_field_page (GtkBuilder  *builder,
       row = adw_switch_row_new ();
       adw_preferences_row_set_title (ADW_PREFERENCES_ROW (row), title);
 
-      auto settings = GsmApplication::get ()->settings->get_child (widgetname);
+      auto settings = GsmApplication::get ().settings->get_child (widgetname);
       auto key = Glib::ustring::compose ("col-%1-visible", column_id);
 
       g_settings_bind (settings->gobj (), key.c_str (), G_OBJECT (column), "visible", G_SETTINGS_BIND_DEFAULT);
@@ -110,7 +110,7 @@ create_field_page (GtkBuilder    *builder,
 
   columns = gtk_column_view_get_columns (column_view);
   group = ADW_PREFERENCES_GROUP (gtk_builder_get_object (builder, widgetname));
-  auto settings = GsmApplication::get ()->settings->get_child (widgetname);
+  auto settings = GsmApplication::get ().settings->get_child (widgetname);
 
   for (guint i = 0; i < g_list_model_get_n_items (columns); i++)
     {
@@ -282,7 +282,7 @@ create_preferences_dialog (GsmApplication *app)
 
   switch_preferences_page (builder, app->stack);
 
-  adw_dialog_present (ADW_DIALOG (prefs_dialog), GTK_WIDGET (GsmApplication::get ()->main_window));
+  adw_dialog_present (ADW_DIALOG (prefs_dialog), GTK_WIDGET (GsmApplication::get ().main_window));
 
   g_object_unref (G_OBJECT (builder));
 }

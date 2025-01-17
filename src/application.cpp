@@ -407,13 +407,10 @@ GsmApplication::GsmApplication()
   load_command_line_options ();
 }
 
-Glib::RefPtr<GsmApplication>
+GsmApplication&
 GsmApplication::get ()
 {
-  static Glib::RefPtr<GsmApplication> singleton;
-
-  if (!singleton)
-    singleton = Glib::RefPtr<GsmApplication>(new GsmApplication ());
+  static GsmApplication singleton;
   return singleton;
 }
 

@@ -92,7 +92,7 @@ renice_single_process (GtkTreeModel *model,
 
   g_free (error_msg);
 
-  adw_dialog_present (ADW_DIALOG (dialog), GTK_WIDGET (GsmApplication::get ()->main_window));
+  adw_dialog_present (ADW_DIALOG (dialog), GTK_WIDGET (GsmApplication::get ().main_window));
 }
 
 
@@ -168,7 +168,7 @@ kill_process_action (ProcInfo                    *info,
 
   g_free (error_msg);
 
-  adw_dialog_present (ADW_DIALOG (dialog), GTK_WIDGET (GsmApplication::get ()->main_window));
+  adw_dialog_present (ADW_DIALOG (dialog), GTK_WIDGET (GsmApplication::get ().main_window));
 }
 
 static void

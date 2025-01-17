@@ -518,7 +518,7 @@ size_na_cell_data_func (GtkTreeViewColumn *,
     }
   else
     {
-      char *str = format_byte_size (size, GsmApplication::get ()->config.process_memory_in_iec);
+      char *str = format_byte_size (size, GsmApplication::get ().config.process_memory_in_iec);
       g_object_set (renderer,
                     "text", str,
                     NULL);
@@ -596,7 +596,7 @@ duration_cell_data_func (GtkTreeViewColumn *,
 
   g_value_unset (&value);
 
-  time = 100 * time / GsmApplication::get ()->frequency;
+  time = 100 * time / GsmApplication::get ().frequency;
   char *str = format_duration_for_display (time);
 
   g_object_set (renderer, "text", str, NULL);
@@ -772,14 +772,14 @@ format_rate (guint64 rate,
 std::string
 format_network (guint64 size)
 {
-  return format_volume (size, GsmApplication::get ()->config.network_total_in_bits);
+  return format_volume (size, GsmApplication::get ().config.network_total_in_bits);
 }
 
 
 std::string
 format_network_rate (guint64 rate)
 {
-  return procman::format_rate (rate, GsmApplication::get ()->config.network_in_bits);
+  return procman::format_rate (rate, GsmApplication::get ().config.network_in_bits);
 }
 }
 
@@ -828,7 +828,7 @@ load_state (GtkColumnView *column_view,
 {
   GListModel *columns;
   gchar **order;
-  auto settings = GsmApplication::get ()->settings->get_child (widgetname);
+  auto settings = GsmApplication::get ().settings->get_child (widgetname);
 
   columns = gtk_column_view_get_columns (column_view);
   order = g_settings_get_strv (settings->gobj (), "columns-order");
@@ -873,7 +873,7 @@ save_columns_state (GtkColumnView *column_view,
   gchar **order;
   GtkColumnViewColumn *column;
   guint num_columns;
-  auto settings = GsmApplication::get ()->settings->get_child (widgetname);
+  auto settings = GsmApplication::get ().settings->get_child (widgetname);
 
   columns = gtk_column_view_get_columns (column_view);
   num_columns = g_list_model_get_n_items (columns);
@@ -898,7 +898,7 @@ save_sort_state (GtkColumnView *column_view,
   GtkColumnViewColumn *column;
   GtkSorter *sorter;
   GtkSortType sort_type;
-  auto settings = GsmApplication::get ()->settings->get_child (widgetname);
+  auto settings = GsmApplication::get ().settings->get_child (widgetname);
 
   sorter = gtk_column_view_get_sorter (column_view);
   column = gtk_column_view_sorter_get_primary_sort_column (GTK_COLUMN_VIEW_SORTER (sorter));

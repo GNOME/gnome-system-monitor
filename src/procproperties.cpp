@@ -81,7 +81,7 @@ fill_proc_properties (GtkBuilder *builder,
   gtk_label_set_label (label, format_memsize (info->mem));
 
   label = GTK_LABEL (gtk_builder_get_object (builder, "cputime_label"));
-  gtk_label_set_label (label, procman::format_duration_for_display (100 * info->cpu_time / GsmApplication::get ()->frequency));
+  gtk_label_set_label (label, procman::format_duration_for_display (100 * info->cpu_time / GsmApplication::get ().frequency));
 
   label = GTK_LABEL (gtk_builder_get_object (builder, "vmemory_label"));
   gtk_label_set_label (label, format_memsize (info->vmsize));
@@ -122,7 +122,7 @@ update_procproperties_dialog (GtkBuilder *builder)
 
   pid_t pid = GPOINTER_TO_UINT (static_cast<pid_t*>(g_object_get_data (G_OBJECT (widget), "selected_info")));
 
-  info = GsmApplication::get ()->processes.find (pid);
+  info = GsmApplication::get ().processes.find (pid);
 
   fill_proc_properties (builder, info);
 }

@@ -36,7 +36,5 @@ main (int   argc,
 
   adw_init ();
 
-  Glib::RefPtr<GsmApplication> application = GsmApplication::get ();
-
-  return application->run (argc, argv);
+  return GsmApplication::get ().run (argc, argv);
 }

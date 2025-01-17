@@ -730,7 +730,7 @@ update_info_mutable_cols (ProcInfo *info)
 
   model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (
                                              gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (
-                                                                              gtk_tree_view_get_model (GTK_TREE_VIEW (GsmApplication::get ()->tree))))));
+                                                                              gtk_tree_view_get_model (GTK_TREE_VIEW (GsmApplication::get ().tree))))));
 
   using procman::tree_store_update;
 

@@ -170,7 +170,7 @@ update_openfiles_dialog (GListStore *store)
 
   pid_t pid = GPOINTER_TO_UINT (static_cast<pid_t*>(g_object_get_data (G_OBJECT (store), "selected_info")));
 
-  info = GsmApplication::get ()->processes.find (pid);
+  info = GsmApplication::get ().processes.find (pid);
 
   if (!info)
     return;

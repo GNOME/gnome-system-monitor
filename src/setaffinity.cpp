@@ -133,7 +133,7 @@ set_affinity_error (void)
   adw_alert_dialog_add_response (ADW_ALERT_DIALOG (dialog), "close", _("_Close"));
 
   /* Show the dialog */
-  adw_dialog_present (dialog, GTK_WIDGET (GsmApplication::get ()->main_window));
+  adw_dialog_present (dialog, GTK_WIDGET (GsmApplication::get ().main_window));
 }
 
 static DIR*

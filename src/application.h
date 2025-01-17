@@ -92,7 +92,7 @@ protected:
   virtual int on_command_line (const Glib::RefPtr<Gio::ApplicationCommandLine>&command_line);
   virtual void on_startup ();
 public:
-  static Glib::RefPtr<GsmApplication> get ();
+  static GsmApplication& get ();
 
   void save_config ();
   void shutdown ();

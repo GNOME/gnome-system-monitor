@@ -32,7 +32,7 @@ bool
 LoadGraph::is_logarithmic_scale () const
 {
   // logarithmic scale is used only for memory graph
-  return this->type == LOAD_GRAPH_MEM && GsmApplication::get ()->config.logarithmic_scale;
+  return this->type == LOAD_GRAPH_MEM && GsmApplication::get ().config.logarithmic_scale;
 }
 
 /*
@@ -396,8 +396,8 @@ load_graph_draw (GtkDrawingArea* area,
                    graph->real_draw_height);
   cairo_clip (cr);
 
-  bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get ()->config.draw_stacked;
-  bool drawSmooth = GsmApplication::get ()->config.draw_smooth;
+  bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get ().config.draw_stacked;
+  bool drawSmooth = GsmApplication::get ().config.draw_smooth;
   gsm_graph_set_smooth_chart (GSM_GRAPH (area), drawSmooth);
   gsm_graph_set_stacked_chart (GSM_GRAPH (area), drawStacked);
   
@@ -495,7 +495,7 @@ get_load (LoadGraph *graph)
   // that value has no meaning, we just want all the
   // graphs to be aligned, so the CPU graph needs to start
   // immediately
-  bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get ()->config.draw_stacked;
+  bool drawStacked = graph->type == LOAD_GRAPH_CPU && GsmApplication::get ().config.draw_stacked;
 
   for (i = 0; i < graph->n; i++)
     {
@@ -539,9 +539,9 @@ set_memory_label_and_picker (GtkLabel      *label,
   char*total_text;
   char*text;
 
-  used_text = format_byte_size (used, GsmApplication::get ()->config.resources_memory_in_iec);
-  cached_text = format_byte_size (cached, GsmApplication::get ()->config.resources_memory_in_iec);
-  total_text = format_byte_size (total, GsmApplication::get ()->config.resources_memory_in_iec);
+  used_text = format_byte_size (used, GsmApplication::get ().config.resources_memory_in_iec);
+  cached_text = format_byte_size (cached, GsmApplication::get ().config.resources_memory_in_iec);
+  total_text = format_byte_size (total, GsmApplication::get ().config.resources_memory_in_iec);
   if (total == 0)
     {
       text = g_strdup (_("not available"));
@@ -858,8 +858,8 @@ get_net (LoadGraph *graph)
   handle_dynamic_max_value (graph, &graph->net.values, &graph->net.max, &graph->net.last_in,
                             &graph->net.last_out, in, out, &graph->net.time,
                             hash, &graph->net.last_hash,
-                            GsmApplication::get ()->config.network_in_bits,
-                            GsmApplication::get ()->config.network_total_in_bits,
+                            GsmApplication::get ().config.network_in_bits,
+                            GsmApplication::get ().config.network_total_in_bits,
                             graph->labels.net_in, graph->labels.net_out,
                             graph->labels.net_in_total, graph->labels.net_out_total);
 }
@@ -939,8 +939,8 @@ LoadGraph::LoadGraph(guint type)
   indent (18.0),
   n (0),
   type (type),
-  speed (GsmApplication::get ()->config.graph_update_interval),
-  num_points (GsmApplication::get ()->config.graph_data_points + 2),
+  speed (GsmApplication::get ().config.graph_update_interval),
+  num_points (GsmApplication::get ().config.graph_data_points + 2),
   latest (0),
   graph_dely (0),
   num_bars (0),
@@ -966,7 +966,7 @@ LoadGraph::LoadGraph(guint type)
     {
       case LOAD_GRAPH_CPU:
         cpu = CPU {};
-        n = GsmApplication::get ()->config.num_cpus;
+        n = GsmApplication::get ().config.num_cpus;
 
         for (guint i = 0; i < G_N_ELEMENTS (labels.cpu); ++i)
           labels.cpu[i] = make_tnum_label ();
@@ -1010,14 +1010,14 @@ LoadGraph::LoadGraph(guint type)
   switch (type)
     {
       case LOAD_GRAPH_CPU:
-        memcpy (&colors[0], GsmApplication::get ()->config.cpu_color,
+        memcpy (&colors[0], GsmApplication::get ().config.cpu_color,
                 n * sizeof colors[0]);
         gsm_graph_set_max_value (disp, 100);
         break;
 
       case LOAD_GRAPH_MEM:
-        colors[0] = GsmApplication::get ()->config.mem_color;
-        colors[1] = GsmApplication::get ()->config.swap_color;
+        colors[0] = GsmApplication::get ().config.mem_color;
+        colors[1] = GsmApplication::get ().config.swap_color;
         mem_color_picker = gsm_color_button_new (&colors[0],
                                                  GSMCP_TYPE_PIE);
         swap_color_picker = gsm_color_button_new (&colors[1],
@@ -1027,15 +1027,15 @@ LoadGraph::LoadGraph(guint type)
 
       case LOAD_GRAPH_NET:
         net.values = std::vector<unsigned>(num_points);
-        colors[0] = GsmApplication::get ()->config.net_in_color;
-        colors[1] = GsmApplication::get ()->config.net_out_color;
+        colors[0] = GsmApplication::get ().config.net_in_color;
+        colors[1] = GsmApplication::get ().config.net_out_color;
         gsm_graph_set_max_value (disp, this->net.max);
         break;
 
       case LOAD_GRAPH_DISK:
         disk.values = std::vector<unsigned>(num_points);
-        colors[0] = GsmApplication::get ()->config.disk_read_color;
-        colors[1] = GsmApplication::get ()->config.disk_write_color;
+        colors[0] = GsmApplication::get ().config.disk_read_color;
+        colors[1] = GsmApplication::get ().config.disk_write_color;
         gsm_graph_set_max_value (disp, this->disk.max);
         break;
     }
