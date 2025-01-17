@@ -21,28 +21,28 @@ std::string
 ProcInfo::lookup_user (guint uid)
 {
   static std::map<guint, std::string> users;
-  auto p = users.try_emplace (uid, "");
+  const auto [it, inserted] = users.try_emplace (uid, "");
 
-  // procman_debug("User lookup for uid %u: %s", uid, (p.second ? "MISS" : "HIT"));
+  // procman_debug("User lookup for uid %u: %s", uid, (inserted ? "MISS" : "HIT"));
 
-  if (p.second)
+  if (inserted)
     {
       struct passwd*pwd;
       pwd = getpwuid (uid);
 
       if (pwd && pwd->pw_name)
         {
-          p.first->second = pwd->pw_name;
+          it->second = pwd->pw_name;
         }
       else
         {
           char username[16];
           g_sprintf (username, "%u", uid);
-          p.first->second = username;
+          it->second = username;
         }
     }
 
-  return p.first->second;
+  return it->second;
 }
 
 void
