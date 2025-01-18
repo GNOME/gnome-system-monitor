@@ -80,12 +80,18 @@ struct GUI: private procman::NonCopyable
   bool case_insensitive;
 
 
-  GUI()
-    : model (NULL),
-    entry (NULL),
-    dialog (NULL),
-    app (NULL),
-    case_insensitive ()
+  GUI(
+    GListStore *model_,
+    GtkSearchEntry *entry_,
+    GtkWindow *dialog_,
+    GsmApplication *app_,
+    bool case_insensitive_
+  )
+    : model (model_),
+    entry (entry_),
+    dialog (dialog_),
+    app (app_),
+    case_insensitive (case_insensitive_)
   {
     procman_debug ("New Lsof GUI %p", (void *)this);
   }
@@ -195,13 +201,14 @@ procman_lsof (GsmApplication *app)
   gtk_search_bar_connect_entry (search_bar, GTK_EDITABLE (search_entry));
   gtk_search_bar_set_key_capture_widget (search_bar, GTK_WIDGET (dialog));
 
-  GUI *gui = new GUI;   // wil be deleted by the close button or delete-event
-
-  gui->app = app;
-  gui->model = model;
-  gui->dialog = dialog;
-  gui->entry = search_entry;
-  gui->case_insensitive = gtk_check_button_get_active (case_button);
+  // wil be deleted by the close button or delete-event
+  GUI *gui = new GUI(
+    model,
+    search_entry,
+    dialog,
+    app,
+    gtk_check_button_get_active (case_button)
+  );
 
   g_signal_connect (G_OBJECT (search_entry), "search-changed",
                     G_CALLBACK (GUI::search_changed), gui);
