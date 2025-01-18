@@ -79,7 +79,6 @@ struct GUI: private procman::NonCopyable
   GtkLabel *count;
   GsmApplication *app;
   bool case_insensitive;
-  bool regex_error_displayed;
 
 
   GUI()
@@ -88,8 +87,7 @@ struct GUI: private procman::NonCopyable
     dialog (NULL),
     count (NULL),
     app (NULL),
-    case_insensitive (),
-    regex_error_displayed (false)
+    case_insensitive ()
   {
     procman_debug ("New Lsof GUI %p", (void *)this);
   }
@@ -125,8 +123,6 @@ struct GUI: private procman::NonCopyable
   {
     typedef std::set<string> MatchSet;
 
-    bool regex_error = false;
-
     g_list_store_remove_all (this->model);
 
     try
@@ -158,13 +154,7 @@ struct GUI: private procman::NonCopyable
       }
     catch (Glib::RegexError &error)
       {
-        regex_error = true;
       }
-
-    if (regex_error && !this->regex_error_displayed)
-      this->regex_error_displayed = true;
-    else if (!regex_error && this->regex_error_displayed)
-      this->regex_error_displayed = false;
   }
 
   static void
