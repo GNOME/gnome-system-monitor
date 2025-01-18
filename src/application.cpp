@@ -527,23 +527,17 @@ GsmApplication::on_startup ()
 
   Gtk::Window::set_default_icon_name (APP_ID);
 
-  Glib::RefPtr<Gio::SimpleAction> action;
+  using SignalFunction = void (GsmApplication::*)(const Glib::VariantBase&);
+  auto make_action = [&](const Glib::ustring& name, const SignalFunction function) {
+    auto action = Gio::SimpleAction::create (name);
+    action->signal_activate ().connect (sigc::mem_fun (*this, function));
+    return action;
+  };
 
-  action = Gio::SimpleAction::create ("quit");
-  action->signal_activate ().connect (sigc::mem_fun (*this, &GsmApplication::on_quit_activate));
-  add_action (action);
-
-  action = Gio::SimpleAction::create ("help");
-  action->signal_activate ().connect (sigc::mem_fun (*this, &GsmApplication::on_help_activate));
-  add_action (action);
-
-  action = Gio::SimpleAction::create ("lsof");
-  action->signal_activate ().connect (sigc::mem_fun (*this, &GsmApplication::on_lsof_activate));
-  add_action (action);
-
-  action = Gio::SimpleAction::create ("preferences");
-  action->signal_activate ().connect (sigc::mem_fun (*this, &GsmApplication::on_preferences_activate));
-  add_action (action);
+  add_action (make_action("quit", &GsmApplication::on_quit_activate));
+  add_action (make_action("help", &GsmApplication::on_help_activate));
+  add_action (make_action("lsof", &GsmApplication::on_lsof_activate));
+  add_action (make_action("preferences", &GsmApplication::on_preferences_activate));
 
   Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_resource ("/org/gnome/gnome-system-monitor/data/menus.ui");
 
