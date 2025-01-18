@@ -76,7 +76,6 @@ struct GUI: private procman::NonCopyable
   GListStore *model;
   GtkSearchEntry *entry;
   GtkWindow *dialog;
-  GtkLabel *count;
   GsmApplication *app;
   bool case_insensitive;
 
@@ -85,7 +84,6 @@ struct GUI: private procman::NonCopyable
     : model (NULL),
     entry (NULL),
     dialog (NULL),
-    count (NULL),
     app (NULL),
     case_insensitive ()
   {
