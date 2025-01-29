@@ -526,18 +526,19 @@ get_load (LoadGraph *graph)
 }
 
 static void
-set_memory_label_and_picker (GtkLabel      *label,
-                             GsmColorButton*picker,
-                             guint64        used,
-                             guint64        cached,
-                             guint64        total,
-                             double         percent)
+set_memory_label_and_picker (GtkLabel       *label,
+                             GsmColorButton *picker,
+                             guint64         used,
+                             guint64         cached,
+                             guint64         total,
+                             double          percent)
 {
-  char*used_text;
-  char*cached_text;
-  char*cached_label;
-  char*total_text;
-  char*text;
+  char *used_text;
+  char *cached_text;
+  char *cached_label;
+  char *total_text;
+  char *text;
+  char *tmp_text;
 
   used_text = format_byte_size (used, GsmApplication::get ()->config.resources_memory_in_iec);
   cached_text = format_byte_size (cached, GsmApplication::get ()->config.resources_memory_in_iec);
@@ -555,8 +556,10 @@ set_memory_label_and_picker (GtkLabel      *label,
         {
           // xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
           cached_label = g_strdup_printf (_("Cache %s"), cached_text);
-          text = g_strdup_printf ("%s\n%s", text, cached_label);
+          tmp_text = g_strdup_printf ("%s\n%s", text, cached_label);
           g_free (cached_label);
+          g_free (text);
+          text = tmp_text;
         }
     }
 

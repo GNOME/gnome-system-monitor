@@ -345,6 +345,8 @@ gsm_color_button_snapshot (GtkWidget   *widget,
 
         break;
     }
+
+    cairo_destroy (cr);
 }
 
 static void
