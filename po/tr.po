@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2024-08-02 10:54+0000\n"
-"PO-Revision-Date: 2024-08-04 00:47+0300\n"
+"POT-Creation-Date: 2024-11-25 09:22+0000\n"
+"PO-Revision-Date: 2024-12-01 00:17+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -27,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.3\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: data/disks.ui:31 data/memmaps.ui:424
@@ -197,17 +197,17 @@ msgid "_Resources"
 msgstr "_Kaynaklar"
 
 #: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:86
-#: src/interface.cpp:281 src/proctable.cpp:352
+#: src/interface.cpp:268 src/proctable.cpp:352
 #, no-c-format
 msgid "CPU"
 msgstr "MİB"
 
-#: data/interface.ui:134 data/procproperties.ui:97 src/interface.cpp:319
+#: data/interface.ui:134 data/procproperties.ui:97 src/interface.cpp:306
 #: src/proctable.cpp:359
 msgid "Memory"
 msgstr "Bellek"
 
-#: data/interface.ui:145 src/interface.cpp:331
+#: data/interface.ui:145 src/interface.cpp:318
 msgid "Swap"
 msgstr "Takas Alanı"
 
@@ -215,7 +215,7 @@ msgstr "Takas Alanı"
 msgid "Memory and Swap"
 msgstr "Bellek ve Takas Alanı"
 
-#: data/interface.ui:193 src/interface.cpp:360
+#: data/interface.ui:193 src/interface.cpp:347
 msgid "Receiving"
 msgstr "Alınıyor"
 
@@ -223,7 +223,7 @@ msgstr "Alınıyor"
 msgid "Total Received"
 msgstr "Toplam Alınan"
 
-#: data/interface.ui:213 src/interface.cpp:378
+#: data/interface.ui:213 src/interface.cpp:365
 msgid "Sending"
 msgstr "Gönderiliyor"
 
@@ -235,7 +235,7 @@ msgstr "Toplam Gönderilen"
 msgid "Network"
 msgstr "Ağ"
 
-#: data/interface.ui:271 src/interface.cpp:413
+#: data/interface.ui:271 src/interface.cpp:400
 msgid "Reading"
 msgstr "Okuma"
 
@@ -243,7 +243,7 @@ msgstr "Okuma"
 msgid "Total Read"
 msgstr "Toplam Okuma"
 
-#: data/interface.ui:291 src/interface.cpp:431
+#: data/interface.ui:291 src/interface.cpp:418
 msgid "Writing"
 msgstr "Yazma"
 
@@ -351,8 +351,8 @@ msgstr "Dosya indeksi"
 
 #: data/menus.ui:7 data/menus.ui:62
 msgctxt "Menu item to Open Search for Open Files dialog"
-msgid "_Search for Open Files…"
-msgstr "Açık Dosyaları _Ara…"
+msgid "_Search for Open Files"
+msgstr "Açık Dosyaları _Ara"
 
 #: data/menus.ui:13 data/menus.ui:68
 msgid "_Preferences"
@@ -750,18 +750,18 @@ msgid "Show the application’s version"
 msgstr "Uygulamanın sürümünü göster"
 
 #. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
-#: src/interface.cpp:245
+#: src/interface.cpp:232
 #, c-format
 msgid "Pick a Color for “%s”"
 msgstr "“%s” İçin Renk Seç"
 
 #. Set check box label value to CPU [1..2048]
-#: src/interface.cpp:283 src/setaffinity.cpp:406
+#: src/interface.cpp:270 src/setaffinity.cpp:406
 #, c-format
 msgid "CPU%d"
 msgstr "MİB%d"
 
-#: src/interface.cpp:494
+#: src/interface.cpp:481
 msgid "translator-credits"
 msgstr ""
 "Deniz Koçak <deniz.kocak@linux.org.tr>\n"
@@ -859,7 +859,7 @@ msgstr[0] "%u sn."
 
 #. Update label
 #. Translators: CPU usage percentage label: 95.7%
-#: src/load-graph.cpp:519
+#: src/load-graph.cpp:520
 #, c-format
 msgid "%.1f%%"
 msgstr "%%%.1f"
@@ -1465,8 +1465,8 @@ msgid ""
 "Force stopping processes can result in data loss, crashes, and system "
 "failures"
 msgstr ""
-"Süreçleri durmaya zorlamak veri yitimine, çökmeye ve sistem hatalarına "
-"neden olabilir"
+"Süreçleri durmaya zorlamak veri yitimine, çökmeye ve sistem hatalarına neden "
+"olabilir"
 
 #: src/procdialogs.cpp:167
 msgid "_Force Stop"
@@ -1476,8 +1476,8 @@ msgstr "_Durmaya Zorla"
 #: src/procdialogs.cpp:172
 msgid "Ending processes can result in data loss, crashes, and system failures"
 msgstr ""
-"Süreçlerin sonlandırılması veri yitimine, çökmeye ve sistem hatalarına "
-"neden olabilir"
+"Süreçlerin sonlandırılması veri yitimine, çökmeye ve sistem hatalarına neden "
+"olabilir"
 
 #: src/procdialogs.cpp:174
 msgid "_End"
@@ -1661,3 +1661,7 @@ msgstr "Çok Düşük Öncelik"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgctxt "Menu item to Open Search for Open Files dialog"
+#~ msgid "_Search for Open Files…"
+#~ msgstr "Açık Dosyaları _Ara…"
