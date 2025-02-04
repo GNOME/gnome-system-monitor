@@ -54,29 +54,6 @@ format_process_state (guint state)
   return status;
 }
 
-
-
-static char *
-mnemonic_safe_process_name (const char *process_name)
-{
-  const char *p;
-  GString *name;
-
-  name = g_string_new ("");
-
-  for (p = process_name; *p; ++p)
-    {
-      g_string_append_c (name, *p);
-
-      if (*p == '_')
-        g_string_append_c (name, '_');
-    }
-
-  return g_string_free (name, FALSE);
-}
-
-
-
 static inline unsigned
 divide (unsigned *q,
         unsigned *r,
