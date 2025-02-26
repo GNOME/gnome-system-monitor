@@ -238,6 +238,7 @@ create_sys_view (GsmApplication *app,
   cpu_graph_box = GTK_BOX (gtk_builder_get_object (builder, "cpu_graph_box"));
   cpu_expander = GTK_EXPANDER (gtk_builder_get_object (builder, "cpu_expander"));
   g_object_bind_property (cpu_expander, "expanded", cpu_expander, "vexpand", G_BINDING_DEFAULT);
+  g_settings_bind (app->settings->gobj (), GSM_SETTING_RESOURCES_CPU_EXPANDED, G_OBJECT (cpu_expander), "expanded", G_SETTINGS_BIND_DEFAULT);
 
   cpu_graph = new LoadGraph (LOAD_GRAPH_CPU);
   gtk_widget_set_size_request (GTK_WIDGET (load_graph_get_widget (cpu_graph)), -1, 70);
@@ -294,6 +295,7 @@ create_sys_view (GsmApplication *app,
   mem_graph_box = GTK_BOX (gtk_builder_get_object (builder, "mem_graph_box"));
   mem_expander = GTK_EXPANDER (gtk_builder_get_object (builder, "mem_expander"));
   g_object_bind_property (mem_expander, "expanded", mem_expander, "vexpand", G_BINDING_DEFAULT);
+  g_settings_bind (app->settings->gobj (), GSM_SETTING_RESOURCES_MEM_EXPANDED, G_OBJECT (mem_expander), "expanded", G_SETTINGS_BIND_DEFAULT);
 
   mem_graph = new LoadGraph (LOAD_GRAPH_MEM);
   gtk_widget_set_size_request (GTK_WIDGET (load_graph_get_widget (mem_graph)), -1, 70);
@@ -333,6 +335,7 @@ create_sys_view (GsmApplication *app,
   net_graph_box = GTK_BOX (gtk_builder_get_object (builder, "net_graph_box"));
   net_expander = GTK_EXPANDER (gtk_builder_get_object (builder, "net_expander"));
   g_object_bind_property (net_expander, "expanded", net_expander, "vexpand", G_BINDING_DEFAULT);
+  g_settings_bind (app->settings->gobj (), GSM_SETTING_RESOURCES_NET_EXPANDED, G_OBJECT (net_expander), "expanded", G_SETTINGS_BIND_DEFAULT);
 
   net_graph = new LoadGraph (LOAD_GRAPH_NET);
   gtk_widget_set_size_request (GTK_WIDGET (load_graph_get_widget (net_graph)), -1, 70);
@@ -386,6 +389,7 @@ create_sys_view (GsmApplication *app,
   disk_graph_box = GTK_BOX (gtk_builder_get_object (builder, "disk_graph_box"));
   disk_expander = GTK_EXPANDER (gtk_builder_get_object (builder, "disk_expander"));
   g_object_bind_property (disk_expander, "expanded", disk_expander, "vexpand", G_BINDING_DEFAULT);
+  g_settings_bind (app->settings->gobj (), GSM_SETTING_RESOURCES_DISK_EXPANDED, G_OBJECT (disk_expander), "expanded", G_SETTINGS_BIND_DEFAULT);
 
   disk_graph = new LoadGraph (LOAD_GRAPH_DISK);
   gtk_widget_set_size_request (GTK_WIDGET (load_graph_get_widget (disk_graph)), -1, 70);
