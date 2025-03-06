@@ -10,18 +10,18 @@ as well as the standard features that you might expect from a process viewer.
 This project is licensed under the **GNU General Public License v2.0**. [Learn more](https://choosealicense.com/licenses/gpl-2.0/)
 
 ## Building
-The steps described below show how to compile and install Gnome-System-Monitor from its source.
+The steps described below show how to compile and install _GNOME System Monitor_ from its source.
 
 ### Install required dependencies
 To build the application, the following dependencies are required:
 
-#### apt-get (Debian/Ubuntu/derivatives - deb-based package management)
+#### Apt (Debian/Ubuntu/Derivatives - Debian-Based Package Management)
 Use the following command to install dependencies:
-`sudo apt-get install meson gettext appstream-util catch2 itstool libglibmm-2.68-dev libgtkmm-4.0-dev libgtop2-dev librsvg2-dev libxml2-dev libadwaita-1-dev libsystemd-dev`
+`sudo apt install meson gettext appstream-util catch2 itstool libglibmm-2.68-dev libgtkmm-4.0-dev libgtop2-dev librsvg2-dev libxml2-dev libadwaita-1-dev libsystemd-dev uncrustify`
 
-#### dnf (Fedora/Centos/etc - rpm-based package management)
+#### DNF (Fedora/Centos/Derivatives - RPM-Based Package Management)
 Use the following command to install dependencies:
-`sudo dnf install meson gettext appstream itstool catch2-devel glibmm2.68-devel gtkmm4.0-devel libgtop2-devel librsvg2-devel libxml2-devel libadwaita-devel systemd-devel`
+`sudo dnf install meson gettext appstream itstool glibmm2.68-devel gtkmm4.0-devel libgtop2-devel librsvg2-devel libxml2-devel libadwaita-devel systemd-devel catch catch-devel uncrustify`
 
 #### Optional dependencies:
 - polkit - recommended
@@ -36,13 +36,13 @@ Use the following command to install dependencies:
 Before following the steps below, clone the repository and change to its working directory.
 
 ##### Configure and create the build directory with Meson.
-`meson build`
+`meson setup build`
 
 Where `build` is just a directory name, and is up to your chosing.
 ##### Build the application - this compiles the source.
 `ninja -C build`
  
-##### Install the application on your system - required to run Gnome-System-Monitor.
+##### Install the application on your system - required to run _GNOME System Monitor_.
 `ninja -C build install`
 
 ### Cleanup
