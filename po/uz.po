@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
 "POT-Creation-Date: 2025-03-23 17:50+0000\n"
-"PO-Revision-Date: 2025-03-31 11:02+0500\n"
+"PO-Revision-Date: 2025-03-31 11:26+0500\n"
 "Last-Translator: \n"
 "Language-Team: Uzbek (Latin) <uz@li.org>\n"
 "Language: uz\n"
@@ -1407,41 +1407,43 @@ msgid ""
 "Cannot kill process with PID %d with signal %d.\n"
 "%s"
 msgstr ""
+"%d signalli PID %d bilan jarayonni o‘chirib bo‘lmaydi.\n"
+"%s"
 
 #. xgettext: primary alert message for killing single process
 #: src/procdialogs.cpp:119
 #, c-format
 msgid "Force Stop %s?"
-msgstr ""
+msgstr "%s toʻxtatilsinmi?"
 
 #. xgettext: primary alert message for ending single process
 #: src/procdialogs.cpp:125
 #, c-format
 msgid "End %s?"
-msgstr ""
+msgstr "%s tugaydimi?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:131
 #, c-format
 msgid "Stop %s?"
-msgstr ""
+msgstr "%s toʻxtatilsinmi?"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:142
 #, c-format
 msgid "Force Stop Selected Process?"
 msgid_plural "Force Stop %d Selected Processes?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tanlangan jarayonni majburan toʻxtatish kerakmi?"
+msgstr[1] "Tanlangan %d ta jarayonni majburan toʻxtatish kerakmi?"
 
 #. xgettext: primary alert message for ending multiple processes
 #: src/procdialogs.cpp:149
 #, c-format
 msgid "End Selected Process?"
 msgid_plural "End %d Selected Processes?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tanlangan jarayon tugaydimi?"
+msgstr[1] "Tanlangan %d jarayon tugaydimi?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
@@ -1449,8 +1451,8 @@ msgstr[1] ""
 #, c-format
 msgid "Stop Selected Process?"
 msgid_plural "Stop %d Selected Processes?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tanlangan jarayon toʻxtatilsinmi?"
+msgstr[1] "%d ta tanlangan jarayon toʻxtatilsinmi?"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:167
@@ -1458,20 +1460,23 @@ msgid ""
 "Force stopping processes can result in data loss, crashes, and system "
 "failures"
 msgstr ""
+"Majburiy to’xtatish jarayonlari ma’lumotlarning yo’qolishiga, ishdan "
+"chiqishiga va tizimning ishlamay qolishiga olib kelishi mumkin"
 
 #: src/procdialogs.cpp:169
 msgid "_Force Stop"
-msgstr ""
+msgstr "_Majburiy toʻxtatish"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:174
 msgid "Ending processes can result in data loss, crashes, and system failures"
 msgstr ""
+"Jarayonlarning tugashi ma’lumotlarning yo’qolishiga, ishdan chiqishiga va "
+"tizimning ishlamay qolishiga olib kelishi mumkin"
 
 #: src/procdialogs.cpp:176
-#, fuzzy
 msgid "_End"
-msgstr "VM End"
+msgstr "_Tugatish"
 
 #. SIGSTOP
 #. xgettext: secondary alert message
@@ -1479,207 +1484,176 @@ msgstr "VM End"
 msgid ""
 "Stopping processes can result in data loss, crashes, and system failures"
 msgstr ""
+"Jarayonlarni to’xtatish ma’lumotlarning yo’qolishiga, ishdan chiqishiga va "
+"tizimning ishlamay qolishiga olib kelishi mumkin"
 
 #: src/procdialogs.cpp:183
-#, fuzzy
 msgid "_Stop"
-msgstr "_Stop…"
+msgstr "_Stop"
 
 #: src/procdialogs.cpp:275
 #, c-format
 msgid "Change Priority of %s (PID %u)"
-msgstr ""
+msgstr "%s ustuvorligini oʻzgartirish (PID %u)"
 
 #: src/procdialogs.cpp:278
 #, c-format
 msgid "Change Priority of the Selected Process"
 msgid_plural "Change Priority of %d Selected Processes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tanlangan jarayonning ustuvorligini o’zgartirish"
+msgstr[1] "%d ta tanlangan jarayonning ustuvorligini oʻzgartirish"
 
 #: src/proctable.cpp:129
-#, fuzzy
 msgid "_End Process…"
 msgid_plural "_End Processes…"
-msgstr[0] "_Jarayonni tahrirlash…"
-msgstr[1] ""
+msgstr[0] "_Jarayonni tugatish…"
+msgstr[1] "_Jarayonlarni tugatish…"
 
 #: src/proctable.cpp:337
-#, fuzzy
 msgid "Name"
 msgstr "Ism"
 
 #: src/proctable.cpp:344
 msgid "X Server Memory"
-msgstr ""
+msgstr "X Server xotirasi"
 
 #: src/proctable.cpp:348
 msgid "Nice"
-msgstr ""
+msgstr "Yaxshi"
 
 #: src/proctable.cpp:349
-#, fuzzy
 msgid "ID"
-msgstr ""
-"%s [OPTION…] BUYRUQ\n"
-"\n"
-"Ba'zi seans funksiyalarini inhibe qilgan holda COMMANDni bajaring.\n"
-"\n"
-" -h, --help Ushbu yordamni ko'rsating\n"
-" --version Dastur versiyasini ko'rsatish\n"
-" --app-id ID Foydalanish uchun ilova identifikatori\n"
-" inhibe qilganda (ixtiyoriy)\n"
-" --reason REASON Inhibe qilish sababi (ixtiyoriy)\n"
-" —inhibit ARG inhibe qilinishi kerak bo’lgan narsalar, yo’g’on ichak bilan "
-"ajratilgan ro’yxati:\n"
-" chiqish, foydalanuvchini almashtirish, to’xtatib turish, bo’sh turish, "
-"avtomatik o’rnatish\n"
-" —inhibit-only COMMAND-ni ishga tushirmang va uning o’rniga abadiy kuting\n"
-" -l, —list Mavjud taqiqlarni sanab chiqing va chiqing\n"
-"\n"
-"Agar —inhibit opsiyasi ko’rsatilmagan bo’lsa, ishlamay qolgan deb "
-"hisoblanadi.\n"
+msgstr "ID"
 
 #: src/proctable.cpp:356
-#, fuzzy
 msgid "Unit"
-msgstr "Harorat birligi"
+msgstr "Birlik"
 
 #: src/proctable.cpp:357
-#, fuzzy
 msgid "Session"
-msgstr "Seans %d"
+msgstr "Sessiya"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
 #: src/proctable.cpp:360
-#, fuzzy
 msgid "Seat"
-msgstr "Joriy joyni aniqlab bo‘lmadi."
+msgstr "O’rindiq"
 
 #: src/proctable.cpp:361
 msgid "Owner"
-msgstr ""
+msgstr "Egasi"
 
 #: src/proctable.cpp:362
 msgid "Disk Read Total"
-msgstr ""
+msgstr "Diskni o’qish jami"
 
 #: src/proctable.cpp:363
 msgid "Disk Write Total"
-msgstr ""
+msgstr "Disk yozish jami"
 
 #: src/proctable.cpp:364
 msgid "Disk Read"
-msgstr ""
+msgstr "Diskni o’qish"
 
 #: src/proctable.cpp:365
 msgid "Disk Write"
-msgstr ""
+msgstr "Disk yozish"
 
 #. Create error alert dialog
 #: src/setaffinity.cpp:128
 msgid "GNU CPU Affinity error"
-msgstr ""
+msgstr "GNU CPU yaqinligi xatosi"
 
 #: src/setaffinity.cpp:133
-#, fuzzy
 msgid "_Close"
-msgstr "Oynani yopish"
+msgstr "_Yopish"
 
 #: src/util.cpp:34
-#, fuzzy
 msgid "Running"
-msgstr "“%s” distro kancasi ishga tushirilmoqda\n"
+msgstr "Ishlayapti"
 
 #: src/util.cpp:38
 msgid "Stopped"
-msgstr ""
+msgstr "To’xtatildi"
 
 #: src/util.cpp:42
 msgid "Zombie"
-msgstr ""
+msgstr "Zombi"
 
 #: src/util.cpp:46
 msgid "Uninterruptible"
-msgstr ""
+msgstr "Uzluksiz"
 
 #: src/util.cpp:50
 msgid "Sleeping"
-msgstr ""
+msgstr "Uxlayapti"
 
 #. xgettext: weeks, days
 #: src/util.cpp:85
 #, c-format
 msgid "%uw%ud"
-msgstr ""
+msgstr "%uw%ud"
 
 #. xgettext: days, hours (0 -> 23)
 #: src/util.cpp:89
 #, c-format
 msgid "%ud%02uh"
-msgstr ""
+msgstr "%ud%02uh"
 
 #. xgettext: hours (0 -> 23), minutes, seconds
 #: src/util.cpp:93
 #, c-format
 msgid "%u:%02u:%02u"
-msgstr ""
+msgstr "%u:%02u:%02u"
 
 #. xgettext: minutes, seconds, centiseconds
 #: src/util.cpp:96
 #, c-format
 msgid "%u:%02u.%02u"
-msgstr ""
+msgstr "%u:%02u:%02u"
 
 #: src/util.cpp:126
 msgid "Very High"
-msgstr ""
+msgstr "Juda yuqori"
 
 #: src/util.cpp:128
-#, fuzzy
 msgid "High"
-msgstr ""
-"Skanerlash uchun xotira yetarli emas.\n"
-"<tt>Preferences</tt> menyusida <tt>Resolution</tt> yoki <tt>Sahifa hajmi</"
-"tt> ni kamaytirishga harakat qiling. Ba’zi skanerlar uchun yuqori aniqlikda "
-"skanerlashda skanerlash hajmi cheklangan."
+msgstr "Yuqori"
 
 #: src/util.cpp:130
 msgid "Normal"
-msgstr ""
+msgstr "Oddiy"
 
 #: src/util.cpp:132
-#, fuzzy
 msgid "Low"
-msgstr "_Past"
+msgstr "Past"
 
 #: src/util.cpp:134
 msgid "Very Low"
-msgstr ""
+msgstr "Juda past"
 
 #: src/util.cpp:141
 msgid "Very High Priority"
-msgstr ""
+msgstr "Juda yuqori ustuvorlik"
 
 #: src/util.cpp:143
 msgid "High Priority"
-msgstr ""
+msgstr "Yuqori ustuvorlik"
 
 #: src/util.cpp:145
 msgid "Normal Priority"
-msgstr ""
+msgstr "Oddiy ustuvorlik"
 
 #: src/util.cpp:147
 msgid "Low Priority"
-msgstr ""
+msgstr "Kam ustuvorlik"
 
 #: src/util.cpp:149
 msgid "Very Low Priority"
-msgstr ""
+msgstr "Juda past ustuvorlik"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
 #: src/util.cpp:742
-#, fuzzy, c-format
+#, c-format
 msgid "%s/s"
-msgstr "%s s"
+msgstr "%s/s"
