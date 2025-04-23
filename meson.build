@@ -41,6 +41,7 @@ dataconf = configuration_data()
 dataconf.set('APP_ID', app_id)
 dataconf.set('VERSION', meson.project_version())
 dataconf.set('GETTEXT_PACKAGE', gettext_package)
+dataconf.set('bindir', join_paths(get_option('prefix'),get_option('bindir')))
 dataconf.set('pkglibexecdir',
   join_paths(get_option('prefix'),get_option('libexecdir'),meson.project_name())
 )

@@ -54,6 +54,13 @@ i18n.merge_file(
   install_dir: join_paths(get_option('datadir'), 'polkit-1', 'actions'),
 )
 
+configure_file(
+  input: 'org.gnome.SystemMonitor.service.in',
+  output: '@0@.service'.format(app_id),
+  configuration: dataconf,
+  install: true,
+  install_dir: join_paths(get_option('datadir'), 'dbus-1', 'services'),
+)
 
 ################################################################################
 # Tests

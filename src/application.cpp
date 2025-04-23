@@ -421,6 +421,9 @@ GsmApplication::get ()
 void
 GsmApplication::on_activate ()
 {
+  if (main_window == NULL)
+      create_main_window (this);
+
   gtk_window_present (GTK_WINDOW (main_window));
 }
 
@@ -569,6 +572,4 @@ GsmApplication::on_startup ()
 
   pretty_table = new PrettyTable ();
   smooth_refresh = new SmoothRefresh (settings);
-  
-  create_main_window (this);
 }
