@@ -447,7 +447,7 @@ percentage_cell_data_func (GtkTreeViewColumn *,
   size = g_value_get_double (&value);
   g_value_unset (&value);
 
-  char *str = g_strdup_printf ("%.1f %%", size);
+  char *str = size < 0.1 ? g_strdup ("—") : g_strdup_printf ("%.1f %%", size);
 
   g_object_set (renderer, "text", str, NULL);
   g_free (str);
