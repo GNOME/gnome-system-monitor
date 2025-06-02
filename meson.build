@@ -5,6 +5,7 @@ project('gnome-system-monitor',
     'c_std=gnu2x',
     'cpp_std=gnu++20',
     'warning_level=3',
+    'b_lto=true',
   ],
   version: '48.1',
   meson_version: '>=0.57.0',
@@ -81,6 +82,9 @@ extra_flags = [
   '-Wmissing-declarations',
   '-Wpointer-arith',
   '-Wsign-compare',
+  '-Werror=odr',
+  '-Werror=lto-type-mismatch',
+  '-Werror=strict-aliasing',
 ]
 extra_cflags = [
   '-Wmissing-prototypes',
