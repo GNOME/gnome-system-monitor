@@ -120,7 +120,7 @@ gsm_graph_get_property (GObject    *object,
       g_value_set_double (value, gsm_graph_get_font_size (self));
       break;
     case PROP_NUM_POINTS:
-      g_value_set_double (value, gsm_graph_get_font_size (self));
+      g_value_set_uint (value, gsm_graph_get_num_points (self));
       break;
     case PROP_MAX_VALUE:
       g_value_set_uint64 (value, gsm_graph_get_max_value (self));
@@ -245,6 +245,7 @@ gsm_graph_init (GsmGraph *self)
   // on configure, frames_per_unit = graph->draw_width/num_points;
   // knock FRAMES down to 10 until cairo gets faster
   priv->frames_per_unit = 10;
+  priv->speed = 1000;
   priv->render_counter = priv->frames_per_unit - 1;
   priv->fontsize = 8.0;
   priv->num_points = 60;
@@ -318,16 +319,20 @@ void gsm_graph_set_speed (GsmGraph *self, guint speed)
 {
   g_return_if_fail (GSM_IS_GRAPH (self));
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+  guint drawing_refresh_speed = speed;
 
   if (priv->speed != speed) {
     priv->speed = speed;
     if (priv->redraw_timeout) {
       g_source_remove (priv->redraw_timeout);
-      priv->redraw_timeout = g_timeout_add (priv->speed,
+      if (priv->frames_per_unit && (priv->frames_per_unit > 0)) {
+        drawing_refresh_speed = (speed / priv->frames_per_unit);
+      }
+      priv->redraw_timeout = g_timeout_add (drawing_refresh_speed,
                                             (GSourceFunc)_gsm_graph_update,
                                             self);
-      gsm_graph_clear_background (self);
     }
+    gsm_graph_clear_background (self);
   }
 }
 
@@ -335,6 +340,7 @@ void gsm_graph_set_data_function (GsmGraph *self, GSourceFunc function, gpointer
 {
   g_return_if_fail (GSM_IS_GRAPH (self));
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+  guint drawing_refresh_speed = priv->speed;
 
   if (priv->redraw_timeout) {
     g_source_remove (priv->redraw_timeout);
@@ -344,9 +350,12 @@ void gsm_graph_set_data_function (GsmGraph *self, GSourceFunc function, gpointer
   priv->update_data = data;
   
   if (gsm_graph_is_started (self)) {
-      priv->redraw_timeout = g_timeout_add (priv->speed,
-                                            (GSourceFunc)_gsm_graph_update,
-                                            self);
+    if (priv->frames_per_unit && (priv->frames_per_unit > 0)) {
+      drawing_refresh_speed = (priv->speed / priv->frames_per_unit);
+    }
+    priv->redraw_timeout = g_timeout_add (drawing_refresh_speed,
+                                          (GSourceFunc)_gsm_graph_update,
+                                          self);
   }
 }
 
@@ -355,19 +364,25 @@ gsm_graph_start (GsmGraph *self)
 {
   _gsm_graph_set_draw (self, TRUE);
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+  guint drawing_refresh_speed = priv->speed;
   g_return_if_fail ( priv->data_function != NULL);
 
   if (priv->redraw_timeout == 0)
-    {
-      // Update the data two times so the graph
-      // doesn't wait one cycle to start drawing.
-      priv->data_function (priv->update_data);
-      _gsm_graph_update (self);
-
-      priv->redraw_timeout = g_timeout_add (priv->speed,
-                                            (GSourceFunc)_gsm_graph_update,
-                                            self);
+  {
+    // Update the data two times so the graph
+    // doesn't wait one cycle to start drawing.
+    priv->data_function (priv->update_data);
+    _gsm_graph_update (self);
   }
+  if (priv->redraw_timeout) {
+    g_source_remove (priv->redraw_timeout);
+  }
+  if (priv->frames_per_unit && (priv->frames_per_unit > 0)) {
+    drawing_refresh_speed = (priv->speed / priv->frames_per_unit);
+  }
+  priv->redraw_timeout = g_timeout_add (drawing_refresh_speed,
+                                        (GSourceFunc)_gsm_graph_update,
+                                        self);
 }
 
 void
@@ -400,6 +415,23 @@ gsm_graph_set_background (GsmGraph *self, cairo_surface_t *background)
     priv->background = background;
   }
 }
+
+/**
+ * Set this property from LoadGraph which has awareness of the width.
+ * Implementing the wish for this value to be determined by the width divided by
+ * the num_points with a suggested maximum of 10 graph drawing points
+ * per singular data point. Decreasing the frames_per_unit as the num_points
+ * increases towards its maximum range.
+ */
+void gsm_graph_set_frames_per_unit (GsmGraph *self, guint frames_per_unit)
+{
+  g_return_if_fail (GSM_IS_GRAPH (self));
+  GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
+  if (priv->frames_per_unit != frames_per_unit) {
+    priv->frames_per_unit = frames_per_unit;
+  }
+}
+
 
 void
 gsm_graph_set_logarithmic_scale (GsmGraph *self, gboolean logarithmic)
@@ -435,7 +467,7 @@ gsm_graph_set_stacked_chart (GsmGraph *self, gboolean stacked)
 void
 gsm_graph_stop (GsmGraph *self)
 {
-  _gsm_graph_set_draw (self, TRUE);
+  _gsm_graph_set_draw (self, FALSE);
 }
 
 gboolean

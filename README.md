@@ -38,7 +38,7 @@ Before following the steps below, clone the repository and change to its working
 ##### Configure and create the build directory with Meson.
 `meson setup build`
 
-Where `build` is just a directory name, and is up to your chosing.
+Where `build` is just a directory name, and is up to your choosing.
 ##### Build the application - this compiles the source.
 `ninja -C build`
  

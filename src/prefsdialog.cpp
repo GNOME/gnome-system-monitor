@@ -235,7 +235,7 @@ create_preferences_dialog (GsmApplication *app)
   spin_button = ADW_SPIN_ROW (gtk_builder_get_object (builder, "resources_interval_spinner"));
   adjustment = adw_spin_row_get_adjustment (spin_button);
   gtk_adjustment_configure (adjustment, update / 1000.0, 0.05,
-                            10.0, 0.05, 0.5, 0);
+                            100.0, 0.05, 0.5, 0);
 
   g_signal_connect (G_OBJECT (spin_button), "changed",
                     G_CALLBACK (spin_button_value_changed), g_string_new ("graph-update-interval"));

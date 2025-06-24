@@ -110,6 +110,7 @@ void                gsm_graph_set_max_value (GsmGraph*, guint64);
 // temporary exported setter methods
 void                gsm_graph_clear_background (GsmGraph*);
 void                gsm_graph_set_background (GsmGraph*, cairo_surface_t*);
+void                gsm_graph_set_frames_per_unit (GsmGraph*, guint);
 
 // public getter methods
 gboolean            gsm_graph_is_logarithmic_scale (GsmGraph*);
@@ -132,5 +133,8 @@ guint               gsm_graph_get_num_bars (GsmGraph*, gint);
 
 
 G_END_DECLS
+
+// not intended to be exported
+void                _gsm_graph_set_draw (GsmGraph*, gboolean);
 
 #endif /* _GSM_GRAPH_H_ */

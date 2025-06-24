@@ -116,6 +116,9 @@ load_graph_start (LoadGraph *g);
 void
 load_graph_stop (LoadGraph *g);
 
+int
+load_graph_update_data (LoadGraph *g);
+
 /* Change load graph speed and restart it if it has been previously started */
 void
 load_graph_change_speed (LoadGraph *g,

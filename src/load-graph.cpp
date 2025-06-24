@@ -154,13 +154,11 @@ create_background (LoadGraph *graph,
 {
   GdkRGBA fg_color;
   GdkRGBA grid_color;
-  GtkAllocation allocation;
   PangoContext *pango_context;
   PangoFontDescription *font_desc;
   PangoLayout *layout;
   cairo_t *cr;
   cairo_surface_t *surface;
-  guint frames_per_unit = gsm_graph_get_frames_per_unit (graph->disp);
   double fontsize = gsm_graph_get_font_size (graph->disp);
   double rmargin = gsm_graph_get_right_margin (graph->disp);
   guint num_bars = gsm_graph_get_num_bars (graph->disp, height);
@@ -169,13 +167,12 @@ create_background (LoadGraph *graph,
   guint indent = gsm_graph_get_indent (graph->disp);
 
   /* Graph length */
-  const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000 * frames_per_unit;
+  const unsigned total_seconds = graph->speed * (graph->num_points - 2) / 1000;
   guint scale = gtk_widget_get_scale_factor (GTK_WIDGET (graph->disp));
 
-  gtk_widget_get_allocation (GTK_WIDGET (graph->disp), &allocation);
   surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
-                                        allocation.width * scale,
-                                        allocation.height * scale);
+                                        gtk_widget_get_width (GTK_WIDGET (graph->disp)) * scale,
+                                        gtk_widget_get_height (GTK_WIDGET (graph->disp)) * scale);
   cairo_surface_set_device_scale (surface, scale, scale);
   cr = cairo_create (surface);
 
@@ -346,7 +343,7 @@ load_graph_draw (GtkDrawingArea* area,
 {
   LoadGraph * const graph = static_cast<LoadGraph*>(data_ptr);
   cairo_surface_t * background;
-  guint frames_per_unit = gsm_graph_get_frames_per_unit (GSM_GRAPH (area));
+  guint frames_per_unit;
   guint render_counter = gsm_graph_get_render_counter (GSM_GRAPH (area));
   double rmargin = gsm_graph_get_right_margin (GSM_GRAPH (area));
   guint num_points = gsm_graph_get_num_points (GSM_GRAPH (area));
@@ -356,6 +353,10 @@ load_graph_draw (GtkDrawingArea* area,
   /* Initialize graph dimensions */
   width -= 2 * FRAME_WIDTH;
   height -= 2 * FRAME_WIDTH;
+
+  frames_per_unit = width / (num_points - 2);
+  if (frames_per_unit > 10) frames_per_unit = 10;
+  gsm_graph_set_frames_per_unit(GSM_GRAPH (area), frames_per_unit);
 
   graph->graph_dely = (height - 15) / graph->num_bars;   /* round to int to avoid AA blur */
   graph->real_draw_height = graph->graph_dely * graph->num_bars;
@@ -1088,6 +1089,8 @@ load_graph_change_speed (LoadGraph *graph,
                          guint      new_speed)
 {
   gsm_graph_set_speed (GSM_GRAPH (graph->disp), new_speed);
+  // LoadGraph->speed and GsmGraph->speed are different
+  graph->speed = new_speed;
 }
 
 void
