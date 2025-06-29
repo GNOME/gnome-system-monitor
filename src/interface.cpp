@@ -496,8 +496,17 @@ on_activate_keyboard_shortcuts (GSimpleAction *,
                                 gpointer data)
 {
   GsmApplication *app = (GsmApplication *) data;
+  GtkBuilder *builder = gtk_builder_new ();
+  GError *err = NULL;
+  AdwDialog *shortcuts_dialog;
 
-  gtk_widget_set_visible (GTK_WIDGET (gtk_application_window_get_help_overlay (GTK_APPLICATION_WINDOW (app->main_window))), TRUE);
+  gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/shortcuts-dialog.ui", &err);
+  if (err != NULL)
+    g_error ("%s", err->message);
+
+  shortcuts_dialog = ADW_DIALOG (gtk_builder_get_object (builder, "shortcuts_dialog"));
+
+  adw_dialog_present (shortcuts_dialog, GTK_WIDGET (app->main_window));
 }
 
 static void
@@ -840,16 +849,10 @@ create_main_window (GsmApplication *app)
   gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/menus.ui", &err);
   if (err != NULL)
     g_error ("%s", err->message);
-  gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/gtk/help-overlay.ui", &err);
-  if (err != NULL)
-    g_error ("%s", err->message);
 
   app->main_window = ADW_APPLICATION_WINDOW (gtk_builder_get_object (builder, "main_window"));
   gtk_window_set_application (GTK_WINDOW (app->main_window), app->gobj ());
   gtk_widget_set_name (GTK_WIDGET (app->main_window), "gnome-system-monitor");
-
-  gtk_application_window_set_help_overlay (GTK_APPLICATION_WINDOW (app->main_window),
-                                           GTK_SHORTCUTS_WINDOW (gtk_builder_get_object (builder, "help_overlay")));
 
   /* create the main stack */
   app->stack = ADW_VIEW_STACK (gtk_builder_get_object (builder, "stack"));
@@ -869,7 +872,7 @@ create_main_window (GsmApplication *app)
 
   GActionEntry win_action_entries[] = {
     { "about", on_activate_about, NULL, NULL, NULL, { 0, 0, 0 } },
-    { "show-help-overlay", on_activate_keyboard_shortcuts, NULL, NULL, NULL, { 0, 0, 0 } },
+    { "shortcuts", on_activate_keyboard_shortcuts, NULL, NULL, NULL, { 0, 0, 0 } },
     { "search", on_activate_search, NULL, NULL, NULL, { 0, 0, 0 } },
     { "send-signal-stop", on_activate_send_signal, NULL, NULL, NULL, { 0, 0, 0 } },
     { "send-signal-cont", on_activate_send_signal, NULL, NULL, NULL, { 0, 0, 0 } },
