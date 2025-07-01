@@ -62,7 +62,6 @@ gtkmm      = dependency('gtkmm-4.0',   version: '>=4.0.0')
 libgtop    = dependency('libgtop-2.0', version: '>=2.41.2')
 libadwaita = dependency('libadwaita-1',version: '>=1.6.alpha')
 librsvg    = dependency('librsvg-2.0', version: '>=2.46')
-libxml     = dependency('libxml-2.0',  version: '>=2.0')
 
 if get_option('systemd')
   libsystemd = dependency('libsystemd', version: '>=44')
@@ -165,4 +164,3 @@ gnome.post_install(
   glib_compile_schemas: true,
   gtk_update_icon_cache: true,
 )
-

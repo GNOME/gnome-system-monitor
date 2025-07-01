@@ -17,11 +17,11 @@ To build the application, the following dependencies are required:
 
 #### Apt (Debian/Ubuntu/Derivatives - Debian-Based Package Management)
 Use the following command to install dependencies:
-`sudo apt install meson gettext appstream-util catch2 itstool libglibmm-2.68-dev libgtkmm-4.0-dev libgtop2-dev librsvg2-dev libxml2-dev libadwaita-1-dev libsystemd-dev uncrustify`
+`sudo apt install meson gettext appstream-util catch2 itstool libglibmm-2.68-dev libgtkmm-4.0-dev libgtop2-dev librsvg2-dev libadwaita-1-dev libsystemd-dev uncrustify`
 
 #### DNF (Fedora/Centos/Derivatives - RPM-Based Package Management)
 Use the following command to install dependencies:
-`sudo dnf install meson gettext appstream itstool glibmm2.68-devel gtkmm4.0-devel libgtop2-devel librsvg2-devel libxml2-devel libadwaita-devel systemd-devel catch catch-devel uncrustify`
+`sudo dnf install meson gettext appstream itstool glibmm2.68-devel gtkmm4.0-devel libgtop2-devel librsvg2-devel libadwaita-devel systemd-devel catch catch-devel uncrustify`
 
 #### Optional dependencies:
 - polkit - recommended
