@@ -161,7 +161,7 @@ create_background (LoadGraph *graph,
   cairo_surface_t *surface;
   double fontsize = gsm_graph_get_font_size (graph->disp);
   double rmargin = gsm_graph_get_right_margin (graph->disp);
-  guint num_bars = gsm_graph_get_num_bars (graph->disp, height);
+  guint num_bars = gsm_graph_get_num_bars (graph->disp, height + (2 * FRAME_WIDTH));
   const guint num_sections = 7;
 
   guint indent = gsm_graph_get_indent (graph->disp);
