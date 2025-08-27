@@ -14,15 +14,15 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issu"
 "es\n"
-"POT-Creation-Date: 2025-04-08 07:02+0000\n"
-"PO-Revision-Date: 2025-04-08 16:53+0200\n"
+"POT-Creation-Date: 2025-08-26 07:16+0000\n"
+"PO-Revision-Date: 2025-08-27 23:21+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.12.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/disks.ui:31 data/memmaps.ui:424
@@ -53,21 +53,21 @@ msgstr "Elérhető"
 msgid "Used"
 msgstr "Használt"
 
-#: data/gnome-system-monitor-kde.desktop.in.in:3 src/application.cpp:430
+#: data/gnome-system-monitor-kde.desktop.in.in:2 src/application.cpp:430
 msgid "GNOME System Monitor"
 msgstr "GNOME rendszerfigyelő"
 
-#: data/gnome-system-monitor-kde.desktop.in.in:4
-#: data/org.gnome.SystemMonitor.desktop.in.in:4
+#: data/gnome-system-monitor-kde.desktop.in.in:3
+#: data/org.gnome.SystemMonitor.desktop.in.in:3
 msgid "View current processes and monitor system state"
 msgstr "A jelenlegi folyamatok megtekintése és a rendszerállapot figyelése"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/gnome-system-monitor-kde.desktop.in.in:16
+#: data/gnome-system-monitor-kde.desktop.in.in:15
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr ""
-"Figyelő;Rendszer;Folyamat;CPU;Processzor;Memória;Hálózat;Előzmények;"
-"Használat;Erőforrás;Sávszélesség;"
+"Figyelő;Rendszer;Folyamat;CPU;Processzor;Memória;Hálózat;Előzmények;Használat;"
+"Erőforrás;Sávszélesség;"
 
 #: data/help-overlay.ui:12
 msgctxt "shortcut window"
@@ -170,7 +170,7 @@ msgid "Send Kill signal"
 msgstr "Kilövési szignál küldése"
 
 #: data/interface.ui:6 data/org.gnome.SystemMonitor.metainfo.xml.in.in:7
-#: data/org.gnome.SystemMonitor.desktop.in.in:3 src/application.cpp:404
+#: data/org.gnome.SystemMonitor.desktop.in.in:2 src/application.cpp:404
 msgid "System Monitor"
 msgstr "Rendszerfigyelő"
 
@@ -343,7 +343,7 @@ msgstr "Osztott piszkos"
 msgid "Inode"
 msgstr "Inode"
 
-#: data/menus.ui:7 data/menus.ui:62
+#: data/menus.ui:7
 msgctxt "Menu item to Open Search for Open Files dialog"
 msgid "_Search for Open Files"
 msgstr "Nyitott fájlok _keresése"
@@ -383,6 +383,13 @@ msgstr "_Saját folyamatok"
 #: data/menus.ui:56
 msgid "Show _Dependencies"
 msgstr "_Függőségek megjelenítése"
+
+#. Menu item to Open Search for Open Files dialog
+#: data/menus.ui:62
+#| msgctxt "Menu item to Open Search for Open Files dialog"
+#| msgid "_Search for Open Files"
+msgid "_Search for Open Files"
+msgstr "Nyitott fájlok _keresése"
 
 #: data/menus.ui:88
 msgid "_Properties"
@@ -433,11 +440,11 @@ msgstr "_Affinitás beállítása…"
 msgid "_Stop…"
 msgstr "_Leállítás…"
 
-#: data/menus.ui:151 src/procproperties.cpp:217
+#: data/menus.ui:151 src/procproperties.cpp:233
 msgid "_Resume"
 msgstr "_Folytatás"
 
-#: data/menus.ui:155 src/procproperties.cpp:214
+#: data/menus.ui:155 src/procproperties.cpp:230
 msgid "_Terminate…"
 msgstr "_Befejezés…"
 
@@ -521,13 +528,13 @@ msgid "File Systems view"
 msgstr "Fájlrendszerek nézet"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.SystemMonitor.desktop.in.in:16
+#: data/org.gnome.SystemMonitor.desktop.in.in:15
 msgid ""
-"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;"
-"Manager;Activity;"
+"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;Manag"
+"er;Activity;"
 msgstr ""
-"Figyelő;Rendszer;Folyamat;CPU;Processzor;Memória;Hálózat;Előzmények;"
-"Használat;Teljesítmény;Feladat;Kezelő;Tevékenység;"
+"Figyelő;Rendszer;Folyamat;CPU;Processzor;Memória;Hálózat;Előzmények;Használat;"
+"Teljesítmény;Feladat;Kezelő;Tevékenység;"
 
 #: data/preferences.ui:6
 msgid "Preferences"
@@ -856,23 +863,23 @@ msgstr[1] "%u mp"
 
 #. Update label
 #. Translators: CPU usage percentage label: 95.7%
-#: src/load-graph.cpp:520
+#: src/load-graph.cpp:521
 #, c-format
 msgid "%.1f%%"
 msgstr "%.1f%%"
 
-#: src/load-graph.cpp:548
+#: src/load-graph.cpp:549
 msgid "not available"
 msgstr "nem érhető el"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:553
+#: src/load-graph.cpp:554
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%), összesen %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:558
+#: src/load-graph.cpp:559
 #, c-format
 msgid "Cache %s"
 msgstr "%s gyorsítótárazása"
@@ -1700,4 +1707,3 @@ msgstr "Nagyon alacsony prioritás"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
-
