@@ -7,7 +7,7 @@ project('gnome-system-monitor',
     'warning_level=3',
     'b_lto=true',
   ],
-  version: '48.1',
+  version: '49.rc',
   meson_version: '>=0.57.0',
 )
 
