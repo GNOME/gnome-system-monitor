@@ -446,7 +446,7 @@ open_dir (GtkColumnView *,
   disksdata = DISKS_DATA (g_list_model_get_object (selection, position));
   g_object_get (disksdata, "directory", &dir, NULL);
 
-  url = g_strdup_printf ("file://%s", dir);
+  url = g_filename_to_uri (dir, NULL, NULL);
 
   GError *error = 0;
 
@@ -543,10 +543,10 @@ gsm_disks_view_init (GsmDisksView *self)
   g_settings_bind (settings, GSM_SETTING_SHOW_ALL_FS,
                    G_OBJECT (self), GSM_SETTING_SHOW_ALL_FS, G_SETTINGS_BIND_DEFAULT);
 
-  g_signal_connect (G_OBJECT (settings), g_strdup_printf ("changed::%s", GSM_SETTING_DISKS_UPDATE_INTERVAL),
+  g_signal_connect (G_OBJECT (settings), "changed::%s" GSM_SETTING_DISKS_UPDATE_INTERVAL,
                     G_CALLBACK (cb_timeout_changed), self);
 
-  g_signal_connect (G_OBJECT (settings), g_strdup_printf ("changed::%s", GSM_SETTING_SHOW_ALL_FS),
+  g_signal_connect (G_OBJECT (settings), "changed::%s" GSM_SETTING_SHOW_ALL_FS,
                     G_CALLBACK (cb_show_all_fs), self);
 
   g_object_unref (settings);
