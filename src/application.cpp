@@ -23,6 +23,10 @@
 #include "lsof.h"
 #include "disks.h"
 
+extern "C" {
+#include "gsm-resources.h"
+}
+
 static void
 cb_solaris_mode_changed (Gio::Settings& settings,
                          Glib::ustring  key,
@@ -510,11 +514,11 @@ GsmApplication::on_startup ()
   AdwStyleManager *style_manager;
   GtkCssProvider *css_provider;
 
+  g_resources_register (gsm_get_resource ());
+
   Gtk::Application::on_startup ();
 
   glibtop_init ();
-
-  load_resources ();
 
   style_manager = adw_style_manager_get_default ();
   adw_style_manager_set_color_scheme (style_manager, ADW_COLOR_SCHEME_PREFER_LIGHT);
@@ -567,12 +571,4 @@ GsmApplication::on_startup ()
   smooth_refresh = new SmoothRefresh (settings);
   
   create_main_window (this);
-}
-
-void
-GsmApplication::load_resources ()
-{
-  auto res = Gio::Resource::create_from_file (GSM_RESOURCE_FILE);
-
-  res->register_global ();
 }

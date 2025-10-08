@@ -76,7 +76,6 @@ class GsmApplication final: public Gtk::Application, private procman::NonCopyabl
 {
 private:
   void load_settings ();
-  void load_resources ();
   void load_command_line_options();
 
   void on_preferences_activate (const Glib::VariantBase&);

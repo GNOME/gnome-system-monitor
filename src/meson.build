@@ -83,15 +83,12 @@ gresource_file = configure_file(
   configuration: gresourceconf,
 )
 
-gsm_resource_dir = join_paths(get_option('datadir'), meson.project_name())
 gsm_resource = gnome.compile_resources(
-  'gsm',
+  'gsm-resources',
   gresource_file,
+  c_name: 'gsm',
   dependencies: metainfo_file,
-  gresource_bundle: true,
   source_dir: meson.project_source_root(),
-  install: true,
-  install_dir: gsm_resource_dir,
 )
 
 gsm_schemas = configure_file(
@@ -128,14 +125,10 @@ system_monitor_dependencies = [
 ]
 libgsm = static_library(
   'libgsm',
-  system_monitor_sources,
+  system_monitor_sources + [gsm_resource],
   include_directories: rootInclude,
   dependencies: system_monitor_dependencies,
   link_with: libgsm_legacy,
-  cpp_args: [
-    '-DGSM_RESOURCE_FILE="@0@"'.format(join_paths(
-      get_option('prefix'), gsm_resource_dir, 'gsm.gresource')),
-  ],
 )
 libgsm_dep = declare_dependency(
   dependencies: system_monitor_dependencies,
