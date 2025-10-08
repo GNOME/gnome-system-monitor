@@ -184,7 +184,7 @@ tree_store_update<char>(GtkTreeModel*model,
 gchar *     format_size (guint64 size,
                          bool    want_bits = false);
 
-gchar *     get_nice_level (gint nice);
+const char *get_nice_level (int nice);
 
 gchar *     get_nice_level_with_priority (gint nice);
 

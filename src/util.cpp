@@ -119,8 +119,8 @@ procman::format_size (guint64 size,
   return g_format_size_full (size, flags);
 }
 
-gchar *
-procman::get_nice_level (gint nice)
+const char *
+procman::get_nice_level (int nice)
 {
   if (nice < -7)
     return _("Very High");
