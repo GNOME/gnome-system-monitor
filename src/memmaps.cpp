@@ -26,22 +26,21 @@ namespace
 {
 class OffsetFormater
 {
-string format;
+const char *_format;
 
 public:
 
-void
-set (const glibtop_map_entry &last_map)
+OffsetFormater (const glibtop_map_entry &last_map)
 {
-  this->format = (last_map.end <= G_MAXUINT32) ? "%08" G_GINT64_MODIFIER "x" : "%016" G_GINT64_MODIFIER "x";
+  this->_format = (last_map.end <= G_MAXUINT32) ? "%08" G_GINT64_MODIFIER "x" : "%016" G_GINT64_MODIFIER "x";
 }
 
 string
-operator() (guint64 v) const
+format (guint64 v) const
 {
   char buffer[17];
 
-  g_snprintf (buffer, sizeof buffer, this->format.c_str (), v);
+  g_snprintf (buffer, sizeof buffer, this->_format, v);
   return buffer;
 }
 };
@@ -116,7 +115,6 @@ struct _GsmMemMapsView
   GListStore *list_store;
 
   ProcInfo *info;
-  OffsetFormater format;
   mutable InodeDevices devices;
 
   guint timer;
@@ -211,7 +209,8 @@ static void
 update_row (GsmMemMapsView          *self,
             guint                    position,
             gboolean                 newrow,
-            const glibtop_map_entry *memmaps)
+            const glibtop_map_entry *memmaps,
+            OffsetFormater          *formater)
 {
   guint64 size;
   string filename, device;
@@ -234,9 +233,9 @@ update_row (GsmMemMapsView          *self,
   if (memmaps->flags & (1 << GLIBTOP_MAP_ENTRY_FILENAME))
     filename = memmaps->filename;
 
-  vmstart = self->format (memmaps->start);
-  vmend = self->format (memmaps->end);
-  vmoffset = self->format (memmaps->offset);
+  vmstart = formater->format (memmaps->start);
+  vmend = formater->format (memmaps->end);
+  vmoffset = formater->format (memmaps->offset);
   device = self->devices.get (memmaps->device);
 
   MemMapsData *memmaps_data;
@@ -291,7 +290,7 @@ update_memmaps_dialog (GsmMemMapsView *self)
   if (!memmaps or procmap.number == 0)
     return;
 
-  self->format.set (memmaps[procmap.number - 1]);
+  OffsetFormater formater (memmaps[procmap.number - 1]);
 
   guint position = 0;
 
@@ -349,10 +348,10 @@ update_memmaps_dialog (GsmMemMapsView *self)
       if (it != iter_cache.end ())
         {
           position = it->second;
-          update_row (self, position, TRUE, &memmaps[i]);
+          update_row (self, position, TRUE, &memmaps[i], &formater);
         }
       else
-        update_row (self, position, FALSE, &memmaps[i]);
+        update_row (self, position, FALSE, &memmaps[i], &formater);
     }
 
   g_free (memmaps);
