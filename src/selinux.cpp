@@ -33,7 +33,7 @@ get_process_selinux_context (ProcInfo *info)
 
   if (has_selinux && !getpidcon (info->pid, &con))
     {
-      info->security_context = g_strdup (con);
+      info->security_context = con;
       freecon (con);
     }
 }
