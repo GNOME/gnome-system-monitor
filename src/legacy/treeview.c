@@ -299,6 +299,8 @@ gsm_tree_view_append_and_bind_column (GsmTreeView       *tree_view,
 
   item = g_menu_item_new (gtk_tree_view_column_get_title (column), action_name);
 
+  g_free (action_name);
+
   g_menu_append_item (priv->column_menu, item);
 
   /*g_object_bind_property (column, "visible",
