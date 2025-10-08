@@ -405,8 +405,10 @@ gsm_memmaps_view_constructed (GObject *object)
   GsmMemMapsView *self = GSM_MEMMAPS_VIEW (object);
 
   // Translators: process name and id
-  adw_window_title_set_subtitle (self->window_title, g_strdup_printf (_("%s (PID %u)"),
-                                   self->info->name.c_str (), self->info->pid));
+  char *subtitle = g_strdup_printf (_("%s (PID %u)"),
+                                    self->info->name.c_str (), self->info->pid);
+  adw_window_title_set_subtitle (self->window_title, subtitle);
+  g_free (subtitle);
 
   self->timer = g_timeout_add_seconds (5, memmaps_timer, self);
   update_memmaps_dialog (self);
