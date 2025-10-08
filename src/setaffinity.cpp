@@ -381,7 +381,9 @@ create_single_set_affinity_dialog (GtkTreeModel *model,
   affinity_data->all_threads_row = GTK_WIDGET (gtk_builder_get_object (builder, "all_threads_row"));
 
   // Translators: process name and id
-  adw_window_title_set_subtitle (window_title, g_strdup_printf (_("%s (PID %u)"), info->name.c_str (), info->pid));
+  char *subtitle = g_strdup_printf (_("%s (PID %u)"), info->name.c_str (), info->pid);
+  adw_window_title_set_subtitle (window_title, subtitle);
+  g_free (subtitle);
 
   /* Add selected process pid to affinity data */
   affinity_data->pid = info->pid;
