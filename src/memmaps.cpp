@@ -1,3 +1,7 @@
+/*
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 #include <config.h>
 
 #include <glibtop/procmap.h>
@@ -120,30 +124,27 @@ struct _GsmMemMapsView
   guint timer;
 };
 
-G_DEFINE_TYPE (GsmMemMapsView, gsm_memmaps_view, ADW_TYPE_WINDOW)
+G_DEFINE_FINAL_TYPE (GsmMemMapsView, gsm_memmaps_view, ADW_TYPE_WINDOW)
+
 
 enum {
   PROP_0,
   PROP_INFO,
-  PROP_TIMER,
   N_PROPS
 };
-
 static GParamSpec *properties [N_PROPS];
 
-GsmMemMapsView *
-gsm_memmaps_view_new (ProcInfo *info)
-{
-  return GSM_MEMMAPS_VIEW (g_object_new (GSM_TYPE_MEMMAPS_VIEW,
-                                         "info", info,
-                                         NULL));
-}
 
 static void
-gsm_memmaps_view_finalize (GObject *object)
+gsm_memmaps_view_dispose (GObject *object)
 {
-  G_OBJECT_CLASS (gsm_memmaps_view_parent_class)->finalize (object);
+  GsmMemMapsView *self = GSM_MEMMAPS_VIEW (object);
+
+  g_clear_handle_id (&self->timer, g_source_remove);
+
+  G_OBJECT_CLASS (gsm_memmaps_view_parent_class)->dispose (object);
 }
+
 
 static void
 gsm_memmaps_view_get_property (GObject    *object,
@@ -158,13 +159,11 @@ gsm_memmaps_view_get_property (GObject    *object,
     case PROP_INFO:
       g_value_set_pointer (value, self->info);
       break;
-    case PROP_TIMER:
-      g_value_set_uint (value, self->timer);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
 }
+
 
 static void
 gsm_memmaps_view_set_property (GObject      *object,
@@ -178,9 +177,6 @@ gsm_memmaps_view_set_property (GObject      *object,
     {
     case PROP_INFO:
       self->info = (ProcInfo *) g_value_get_pointer (value);
-      break;
-    case PROP_TIMER:
-      self->timer = g_value_get_uint (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -358,27 +354,6 @@ update_memmaps_dialog (GsmMemMapsView *self)
 }
 
 
-static void
-dialog_action (GSimpleAction*,
-               GVariant*,
-               GsmMemMapsView* self)
-{
-  g_source_remove (self->timer);
-
-  gtk_window_destroy (GTK_WINDOW (self));
-}
-
-
-static void
-dialog_response (GsmMemMapsView *self,
-                 gpointer)
-{
-  g_source_remove (self->timer);
-
-  gtk_window_destroy (GTK_WINDOW (self));
-}
-
-
 static gboolean
 memmaps_timer (gpointer data)
 {
@@ -388,8 +363,9 @@ memmaps_timer (gpointer data)
 
   update_memmaps_dialog (self);
 
-  return TRUE;
+  return G_SOURCE_CONTINUE;
 }
+
 
 static char *
 format_size (gpointer,
@@ -410,6 +386,7 @@ gsm_memmaps_view_constructed (GObject *object)
   g_free (subtitle);
 
   self->timer = g_timeout_add_seconds (5, memmaps_timer, self);
+  g_source_set_name_by_id (self->timer, "refresh memmaps");
   update_memmaps_dialog (self);
 
   G_OBJECT_CLASS (gsm_memmaps_view_parent_class)->constructed (object);
@@ -420,23 +397,14 @@ gsm_memmaps_view_class_init (GsmMemMapsViewClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gsm_memmaps_view_finalize;
+  object_class->dispose = gsm_memmaps_view_dispose;
   object_class->get_property = gsm_memmaps_view_get_property;
   object_class->set_property = gsm_memmaps_view_set_property;
   object_class->constructed = gsm_memmaps_view_constructed;
 
-  properties [PROP_INFO] =
-    g_param_spec_pointer ("info",
-                          "Info",
-                          "Info",
-                          (GParamFlags) (G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
-
-  properties [PROP_TIMER] =
-    g_param_spec_uint ("timer",
-                       "Timer",
-                       "Timer",
-                       0, G_MAXUINT, 0,
-                       G_PARAM_READWRITE);
+  properties[PROP_INFO] =
+    g_param_spec_pointer ("info", NULL, NULL,
+                          (GParamFlags) (G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_properties (object_class, N_PROPS, properties);
 
@@ -451,23 +419,20 @@ gsm_memmaps_view_class_init (GsmMemMapsViewClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, format_size);
 }
 
+
 static void
 gsm_memmaps_view_init (GsmMemMapsView *self)
 {
-  GSimpleActionGroup *action_group;
-
   g_type_ensure (MEMMAPS_TYPE_DATA);
 
   gtk_widget_init_template (GTK_WIDGET (self));
+}
 
-  action_group = g_simple_action_group_new ();
 
-  GSimpleAction *close_action = g_simple_action_new ("close", NULL);
-  g_signal_connect (close_action, "activate", G_CALLBACK (dialog_action), self);
-  g_action_map_add_action (G_ACTION_MAP (action_group), G_ACTION (close_action));
-
-  gtk_widget_insert_action_group (GTK_WIDGET (self), "memmaps", G_ACTION_GROUP (action_group));
-
-  g_signal_connect (G_OBJECT (self), "close-request",
-                    G_CALLBACK (dialog_response), NULL);
+GsmMemMapsView *
+gsm_memmaps_view_new (ProcInfo *info)
+{
+  return GSM_MEMMAPS_VIEW (g_object_new (GSM_TYPE_MEMMAPS_VIEW,
+                                         "info", info,
+                                         NULL));
 }
