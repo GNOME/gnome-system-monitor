@@ -119,7 +119,7 @@ struct _GsmMemMapsView
   GListStore *list_store;
 
   ProcInfo *info;
-  mutable InodeDevices devices;
+  InodeDevices *devices;
 
   guint timer;
 };
@@ -141,6 +141,10 @@ gsm_memmaps_view_dispose (GObject *object)
   GsmMemMapsView *self = GSM_MEMMAPS_VIEW (object);
 
   g_clear_handle_id (&self->timer, g_source_remove);
+  if (self->devices) {
+    delete self->devices;
+    self->devices = NULL;
+  }
 
   G_OBJECT_CLASS (gsm_memmaps_view_parent_class)->dispose (object);
 }
@@ -232,7 +236,7 @@ update_row (GsmMemMapsView          *self,
   vmstart = formater->format (memmaps->start);
   vmend = formater->format (memmaps->end);
   vmoffset = formater->format (memmaps->offset);
-  device = self->devices.get (memmaps->device);
+  device = self->devices->get (memmaps->device);
 
   MemMapsData *memmaps_data;
 
@@ -331,7 +335,7 @@ update_memmaps_dialog (GsmMemMapsView *self)
         break;
     }
 
-  self->devices.update ();
+  self->devices->update ();
 
   /*
     add the new maps
@@ -417,13 +421,15 @@ gsm_memmaps_view_class_init (GsmMemMapsViewClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GsmMemMapsView, list_store);
 
   gtk_widget_class_bind_template_callback (widget_class, format_size);
+
+  g_type_ensure (MEMMAPS_TYPE_DATA);
 }
 
 
 static void
 gsm_memmaps_view_init (GsmMemMapsView *self)
 {
-  g_type_ensure (MEMMAPS_TYPE_DATA);
+  self->devices = new InodeDevices;
 
   gtk_widget_init_template (GTK_WIDGET (self));
 }
