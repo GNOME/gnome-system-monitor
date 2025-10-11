@@ -20,7 +20,12 @@
                   <object class="AdwActionRow">
                     <property name="title" translatable="yes">Process ID</property>
                     <child>
-                      <object class="GtkLabel" id="pid_label"/>
+                      <object class="GtkLabel" id="pid_label">
+                        <property name="selectable">True</property>
+                        <style>
+                          <class name="numeric" />
+                        </style>
+                      </object>
                     </child>
                     <accessibility>
                       <relation name="described-by">pid_label</relation>
@@ -31,7 +36,12 @@
                   <object class="AdwActionRow">
                     <property name="title" translatable="yes">User</property>
                     <child>
-                      <object class="GtkLabel" id="user_label"/>
+                      <object class="GtkLabel" id="user_label">
+                        <property name="selectable">True</property>
+                        <style>
+                          <class name="numeric" />
+                        </style>
+                      </object>
                     </child>
                     <accessibility>
                       <relation name="described-by">user_label</relation>
@@ -47,7 +57,12 @@
                   <object class="AdwActionRow">
                     <property name="title" translatable="yes">Started</property>
                     <child>
-                      <object class="GtkLabel" id="started_label"/>
+                      <object class="GtkLabel" id="started_label">
+                        <property name="selectable">True</property>
+                        <style>
+                          <class name="numeric" />
+                        </style>
+                      </object>
                     </child>
                     <accessibility>
                       <relation name="described-by">started_label</relation>
@@ -58,7 +73,12 @@
                   <object class="AdwActionRow">
                     <property name="title" translatable="yes">Priority</property>
                     <child>
-                      <object class="GtkLabel" id="priority_label"/>
+                      <object class="GtkLabel" id="priority_label">
+                        <property name="selectable">True</property>
+                        <style>
+                          <class name="numeric" />
+                        </style>
+                      </object>
                     </child>
                     <accessibility>
                       <relation name="described-by">priority_label</relation>
@@ -69,7 +89,12 @@
                   <object class="AdwActionRow">
                     <property name="title" translatable="yes">Status</property>
                     <child>
-                      <object class="GtkLabel" id="status_label"/>
+                      <object class="GtkLabel" id="status_label">
+                        <property name="selectable">True</property>
+                        <style>
+                          <class name="numeric" />
+                        </style>
+                      </object>
                     </child>
                     <accessibility>
                       <relation name="described-by">status_label</relation>
@@ -85,7 +110,12 @@
                   <object class="AdwActionRow">
                     <property name="title" translatable="yes">CPU</property>
                     <child>
-                      <object class="GtkLabel" id="cpu_label"/>
+                      <object class="GtkLabel" id="cpu_label">
+                        <property name="selectable">True</property>
+                        <style>
+                          <class name="numeric" />
+                        </style>
+                      </object>
                     </child>
                     <accessibility>
                       <relation name="described-by">cpu_label</relation>
@@ -96,7 +126,12 @@
                   <object class="AdwActionRow">
                     <property name="title" translatable="yes">Memory</property>
                     <child>
-                      <object class="GtkLabel" id="memory_label"/>
+                      <object class="GtkLabel" id="memory_label">
+                        <property name="selectable">True</property>
+                        <style>
+                          <class name="numeric" />
+                        </style>
+                      </object>
                     </child>
                     <accessibility>
                       <relation name="described-by">memory_label</relation>
@@ -107,7 +142,12 @@
                   <object class="AdwActionRow">
                     <property name="title" translatable="yes">CPU Time</property>
                     <child>
-                      <object class="GtkLabel" id="cputime_label"/>
+                      <object class="GtkLabel" id="cputime_label">
+                        <property name="selectable">True</property>
+                        <style>
+                          <class name="numeric" />
+                        </style>
+                      </object>
                     </child>
                     <accessibility>
                       <relation name="described-by">cputime_label</relation>
@@ -118,7 +158,12 @@
                   <object class="AdwActionRow">
                     <property name="title" translatable="yes">Virtual Memory</property>
                     <child>
-                      <object class="GtkLabel" id="vmemory_label"/>
+                      <object class="GtkLabel" id="vmemory_label">
+                        <property name="selectable">True</property>
+                        <style>
+                          <class name="numeric" />
+                        </style>
+                      </object>
                     </child>
                     <accessibility>
                       <relation name="described-by">vmemory_label</relation>
@@ -129,7 +174,12 @@
                   <object class="AdwActionRow">
                     <property name="title" translatable="yes">Resident Memory</property>
                     <child>
-                      <object class="GtkLabel" id="rmemory_label"/>
+                      <object class="GtkLabel" id="rmemory_label">
+                        <property name="selectable">True</property>
+                        <style>
+                          <class name="numeric" />
+                        </style>
+                      </object>
                     </child>
                     <accessibility>
                       <relation name="described-by">rmemory_label</relation>
@@ -140,7 +190,12 @@
                   <object class="AdwActionRow">
                     <property name="title" translatable="yes">Writable Memory</property>
                     <child>
-                      <object class="GtkLabel" id="wmemory_label"/>
+                      <object class="GtkLabel" id="wmemory_label">
+                        <property name="selectable">True</property>
+                        <style>
+                          <class name="numeric" />
+                        </style>
+                      </object>
                     </child>
                     <accessibility>
                       <relation name="described-by">wmemory_label</relation>
@@ -151,7 +206,12 @@
                   <object class="AdwActionRow">
                     <property name="title" translatable="yes">Shared Memory</property>
                     <child>
-                      <object class="GtkLabel" id="smemory_label"/>
+                      <object class="GtkLabel" id="smemory_label">
+                        <property name="selectable">True</property>
+                        <style>
+                          <class name="numeric" />
+                        </style>
+                      </object>
                     </child>
                     <accessibility>
                       <relation name="described-by">smemory_label</relation>
@@ -165,32 +225,40 @@
                 <child>
                   <object class="AdwActionRow" id="securitycontext_row">
                     <property name="title" translatable="yes">Security Context</property>
+                    <property name="subtitle-selectable">True</property>
                     <style>
                       <class name="property"/>
+                      <class name="numeric" />
                     </style>
                   </object>
                 </child>
                 <child>
                   <object class="AdwActionRow" id="commandline_row">
                     <property name="title" translatable="yes">Command Line</property>
+                    <property name="subtitle-selectable">True</property>
                     <style>
                       <class name="property"/>
+                      <class name="numeric" />
                     </style>
                   </object>
                 </child>
                 <child>
                   <object class="AdwActionRow" id="waitingchannel_row">
                     <property name="title" translatable="yes">Waiting Channel</property>
+                    <property name="subtitle-selectable">True</property>
                     <style>
                       <class name="property"/>
+                      <class name="numeric" />
                     </style>
                   </object>
                 </child>
                 <child>
                   <object class="AdwActionRow" id="controlgroup_row">
                     <property name="title" translatable="yes">Control Group</property>
+                    <property name="subtitle-selectable">True</property>
                     <style>
                       <class name="property"/>
+                      <class name="numeric" />
                     </style>
                   </object>
                 </child>
