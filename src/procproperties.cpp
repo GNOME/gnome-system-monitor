@@ -63,71 +63,59 @@ fill_proc_properties (GtkBuilder *builder,
   label = GTK_LABEL (gtk_builder_get_object (builder, "pid_label"));
   text = g_strdup_printf ("%d", info->pid);
   gtk_label_set_label (label, text);
-  gtk_label_set_selectable (label, true);
   g_free (text);
 
   label = GTK_LABEL (gtk_builder_get_object (builder, "user_label"));
   text = g_strdup_printf ("%s (%d)", info->user.c_str (), info->uid);
   gtk_label_set_label (label, text);
-  gtk_label_set_selectable (label, true);
   g_free (text);
 
   label = GTK_LABEL (gtk_builder_get_object (builder, "started_label"));
   text = procman_format_date_for_display (info->start_time);
   gtk_label_set_label (label, text);
-  gtk_label_set_selectable (label, true);
   g_free (text);
 
   label = GTK_LABEL (gtk_builder_get_object (builder, "priority_label"));
   text = g_strdup_printf ("%s (%d)", procman::get_nice_level (info->nice), info->nice);
   gtk_label_set_label (label, text);
-  gtk_label_set_selectable (label, true);
   g_free (text);
 
   label = GTK_LABEL (gtk_builder_get_object (builder, "status_label"));
   gtk_label_set_label (label, format_process_state (info->status));
-  gtk_label_set_selectable (label, true);
 
   label = GTK_LABEL (gtk_builder_get_object (builder, "cpu_label"));
   text = g_strdup_printf ("%.2f%%", info->pcpu);
   gtk_label_set_label (label, text);
-  gtk_label_set_selectable (label, true);
   g_free (text);
 
   label = GTK_LABEL (gtk_builder_get_object (builder, "memory_label"));
   text = format_memsize (info->mem);
   gtk_label_set_label (label, text);
-  gtk_label_set_selectable (label, true);
   g_free (text);
 
   label = GTK_LABEL (gtk_builder_get_object (builder, "cputime_label"));
   text = procman::format_duration_for_display (100 * info->cpu_time / GsmApplication::get ().frequency);
   gtk_label_set_label (label, text);
-  gtk_label_set_selectable (label, true);
   g_free (text);
 
   label = GTK_LABEL (gtk_builder_get_object (builder, "vmemory_label"));
   text = format_memsize (info->vmsize);
   gtk_label_set_label (label, text);
-  gtk_label_set_selectable (label, true);
   g_free (text);
 
   label = GTK_LABEL (gtk_builder_get_object (builder, "rmemory_label"));
   text = format_memsize (info->memres);
   gtk_label_set_label (label, text);
-  gtk_label_set_selectable (label, true);
   g_free (text);
 
   label = GTK_LABEL (gtk_builder_get_object (builder, "wmemory_label"));
   text = format_memsize (info->memwritable);
   gtk_label_set_label (label, text);
-  gtk_label_set_selectable (label, true);
   g_free (text);
 
   label = GTK_LABEL (gtk_builder_get_object (builder, "smemory_label"));
   text = format_memsize (info->memshared);
   gtk_label_set_label (label, text);
-  gtk_label_set_selectable (label, true);
   g_free (text);
 
   row = ADW_ACTION_ROW (gtk_builder_get_object (builder, "securitycontext_row"));
@@ -135,19 +123,16 @@ fill_proc_properties (GtkBuilder *builder,
             ? g_strdup_printf ("%s", info->security_context.c_str ())
             : g_strdup ("—");
   adw_action_row_set_subtitle (row, text);
-  adw_action_row_set_subtitle_selectable (row, true);
   g_free (text);
 
   row = ADW_ACTION_ROW (gtk_builder_get_object (builder, "commandline_row"));
   text = g_strdup_printf ("%s", info->arguments.c_str ());
   adw_action_row_set_subtitle (row, text);
-  adw_action_row_set_subtitle_selectable (row, true);
   g_free (text);
 
   row = ADW_ACTION_ROW (gtk_builder_get_object (builder, "waitingchannel_row"));
   text = g_strdup_printf ("%s", info->wchan.c_str ());
   adw_action_row_set_subtitle (row, text);
-  adw_action_row_set_subtitle_selectable (row, true);
   g_free (text);
 
   row = ADW_ACTION_ROW (gtk_builder_get_object (builder, "controlgroup_row"));
@@ -155,7 +140,6 @@ fill_proc_properties (GtkBuilder *builder,
             ? g_strdup_printf ("%s", info->cgroup_name.c_str ())
             : g_strdup ("—");
   adw_action_row_set_subtitle (row, text);
-  adw_action_row_set_subtitle_selectable (row, true);
   g_free (text);
 }
 
