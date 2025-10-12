@@ -106,6 +106,9 @@ add_project_arguments(cx.get_supported_arguments(cxxflags),
 )
 
 conf.set('HAVE_LKSTRFTIME', cc.has_function('strftime'))
+has_sysmacros = cc.has_header_symbol('sys/sysmacros.h', 'major')
+conf.set('HAVE_DEV_IN_SYSMACROS', has_sysmacros)
+conf.set('HAVE_DEV_IN_TYPES', cc.has_header_symbol('sys/types.h', 'major', required: not has_sysmacros))
 
 configure_file(
   output: 'config.h',
