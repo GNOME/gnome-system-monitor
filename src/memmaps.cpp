@@ -16,45 +16,13 @@
 #include <sys/types.h>
 #endif
 
-#include <string>
 #include <map>
-#include <stdexcept>
 
-using std::string;
-
+#include "mem-map.h"
+#include "procinfo.h"
 
 #include "memmaps.h"
-#include "memmaps-data.h"
-#include "procinfo.h"
-#include "proctable.h"
-#include "settings-keys.h"
-#include "util.h"
 
-
-namespace
-{
-class OffsetFormater
-{
-const char *_format;
-
-public:
-
-OffsetFormater (const glibtop_map_entry &last_map)
-{
-  this->_format = (last_map.end <= G_MAXUINT32) ? "%08" G_GINT64_MODIFIER "x" : "%016" G_GINT64_MODIFIER "x";
-}
-
-string
-format (guint64 v) const
-{
-  char buffer[17];
-
-  g_snprintf (buffer, sizeof buffer, this->_format, v);
-  return buffer;
-}
-};
-
-}
 
 struct _GsmMemMapsView
 {
@@ -68,6 +36,8 @@ struct _GsmMemMapsView
   GHashTable *devices;
 
   guint timer;
+
+  gboolean format_32bit;
 };
 
 G_DEFINE_FINAL_TYPE (GsmMemMapsView, gsm_memmaps_view, ADW_TYPE_WINDOW)
@@ -181,12 +151,10 @@ static void
 update_row (GsmMemMapsView          *self,
             guint                    position,
             gboolean                 newrow,
-            const glibtop_map_entry *memmaps,
-            OffsetFormater          *formater)
+            const glibtop_map_entry *memmaps)
 {
   guint64 size;
-  string filename;
-  string vmstart, vmend, vmoffset;
+  const char *filename = NULL;
   char flags[5] = "----";
   g_autofree char *device = NULL;
 
@@ -206,45 +174,42 @@ update_row (GsmMemMapsView          *self,
   if (memmaps->flags & (1 << GLIBTOP_MAP_ENTRY_FILENAME))
     filename = memmaps->filename;
 
-  vmstart = formater->format (memmaps->start);
-  vmend = formater->format (memmaps->end);
-  vmoffset = formater->format (memmaps->offset);
   device = get_device_name (self, memmaps->device);
 
-  MemMapsData *memmaps_data;
+  GsmMemMap *memmaps_data;
 
   if (!newrow)
     {
-      memmaps_data = memmaps_data_new (filename.c_str (),
-                                       vmstart.c_str (),
-                                       vmend.c_str (),
-                                       size,
-                                       flags,
-                                       vmoffset.c_str (),
-                                       memmaps->private_clean,
-                                       memmaps->private_dirty,
-                                       memmaps->shared_clean,
-                                       memmaps->shared_dirty,
-                                       device,
-                                       memmaps->inode);
-
+      memmaps_data = gsm_mem_map_new (filename,
+                                      memmaps->start,
+                                      memmaps->end,
+                                      size,
+                                      flags,
+                                      memmaps->offset,
+                                      memmaps->private_clean,
+                                      memmaps->private_dirty,
+                                      memmaps->shared_clean,
+                                      memmaps->shared_dirty,
+                                      device,
+                                      memmaps->inode);
+    
       g_list_store_insert (self->list_store, position, memmaps_data);
     }
   else
     {
-      memmaps_data = MEMMAPS_DATA (g_list_model_get_object (G_LIST_MODEL (self->list_store), position));
+      memmaps_data = GSM_MEM_MAP (g_list_model_get_object (G_LIST_MODEL (self->list_store), position));
 
       g_object_set (memmaps_data,
-                    "filename", filename.c_str (),
-                    "vmstart", vmstart.c_str (),
-                    "vmend", vmend.c_str (),
-                    "vmsize", size,
+                    "filename", filename,
+                    "vm-start", memmaps->start,
+                    "vm-end", memmaps->end,
+                    "vm-size", size,
                     "flags", flags,
-                    "vmoffset", vmoffset.c_str (),
-                    "privateclean", memmaps->private_clean,
-                    "privatedirty", memmaps->private_dirty,
-                    "sharedclean", memmaps->shared_clean,
-                    "shareddirty", memmaps->shared_dirty,
+                    "vm-offset", memmaps->offset,
+                    "private-clean", memmaps->private_clean,
+                    "private-dirty", memmaps->private_dirty,
+                    "shared-clean", memmaps->shared_clean,
+                    "shared-dirty", memmaps->shared_dirty,
                     "device", device,
                     "inode", memmaps->inode,
                     NULL);
@@ -283,7 +248,7 @@ update_memmaps_dialog (GsmMemMapsView *self)
   if (!memmaps or procmap.number == 0)
     return;
 
-  OffsetFormater formater (memmaps[procmap.number - 1]);
+  self->format_32bit = memmaps[procmap.number - 1].end <= G_MAXUINT32;
 
   guint position = 0;
 
@@ -298,21 +263,11 @@ update_memmaps_dialog (GsmMemMapsView *self)
 
   while (position < g_list_model_get_n_items (G_LIST_MODEL (self->list_store)))
     {
-      char *vmstart;
-      guint64 start;
-      MemMapsData *memmaps_data;
+      uint64_t start;
+      GsmMemMap *memmaps_data;
 
-      memmaps_data = MEMMAPS_DATA (g_list_model_get_object (G_LIST_MODEL (self->list_store), position));
-      g_object_get (memmaps_data, "vmstart", &vmstart, NULL);
-
-      try {
-          std::istringstream (vmstart) >> std::hex >> start;
-        } catch (std::logic_error &e) {
-          g_warning ("Could not parse %s", vmstart);
-          start = 0;
-        }
-
-      g_free (vmstart);
+      memmaps_data = GSM_MEM_MAP (g_list_model_get_object (G_LIST_MODEL (self->list_store), position));
+      g_object_get (memmaps_data, "vm-start", &start, NULL);
 
       bool found = std::binary_search (memmaps, memmaps + procmap.number,
                                        start, glibtop_map_entry_cmp ());
@@ -341,10 +296,10 @@ update_memmaps_dialog (GsmMemMapsView *self)
       if (it != iter_cache.end ())
         {
           position = it->second;
-          update_row (self, position, TRUE, &memmaps[i], &formater);
+          update_row (self, position, TRUE, &memmaps[i]);
         }
       else
-        update_row (self, position, FALSE, &memmaps[i], &formater);
+        update_row (self, position, FALSE, &memmaps[i]);
     }
 
   g_free (memmaps);
@@ -365,11 +320,24 @@ memmaps_timer (gpointer data)
 
 
 static char *
-format_size (gpointer,
-             guint64 size)
+format_size (G_GNUC_UNUSED GObject *object, uint64_t size)
 {
   return g_format_size_full (size, G_FORMAT_SIZE_IEC_UNITS);
 }
+
+
+static char *
+format_offset (GObject *object, uint64_t offset)
+{
+  GsmMemMapsView *self = GSM_MEMMAPS_VIEW (object);
+
+  if (self->format_32bit) {
+    return g_strdup_printf ("%08" G_GINT64_MODIFIER "x", offset);
+  }
+
+  return g_strdup_printf ("%016" G_GINT64_MODIFIER "x", offset);
+}
+
 
 static void
 gsm_memmaps_view_constructed (GObject *object)
@@ -414,8 +382,9 @@ gsm_memmaps_view_class_init (GsmMemMapsViewClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GsmMemMapsView, list_store);
 
   gtk_widget_class_bind_template_callback (widget_class, format_size);
+  gtk_widget_class_bind_template_callback (widget_class, format_offset);
 
-  g_type_ensure (MEMMAPS_TYPE_DATA);
+  g_type_ensure (GSM_TYPE_MEM_MAP);
 }
 
 
