@@ -1,4 +1,8 @@
-#include <config.h>
+/*
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
+ #include <config.h>
 
 #include <glib/gi18n.h>
 #include <glibtop/procopenfiles.h>
@@ -6,11 +10,7 @@
 #include <sys/wait.h>
 
 #include <set>
-#include <string>
-#include <sstream>
 #include <iterator>
-
-#include <glibmm/regex.h>
 
 #include "application.h"
 #include "procinfo.h"
@@ -18,9 +18,6 @@
 #include "util.h"
 
 #include "lsof.h"
-
-
-using std::string;
 
 
 namespace
@@ -60,28 +57,8 @@ public:
 
 class Lsof
 {
-Glib::RefPtr<Glib::Regex> re;
-
-bool
-matches (const string &filename) const
-{
-  return this->re->match (filename.c_str ());
-}
 
 public:
-Lsof(const string &pattern,
-     bool          caseless)
-{
-  Glib::Regex::CompileFlags compile_flags = static_cast<Glib::Regex::CompileFlags>(0);
-  Glib::Regex::MatchFlags match_flags = static_cast<Glib::Regex::MatchFlags>(0);
-
-  if (caseless)
-    compile_flags |= Glib::Regex::CompileFlags::CASELESS;
-
-  this->re = Glib::Regex::create (pattern.c_str (), compile_flags, match_flags);
-}
-
-
 template<typename OutputIterator>
 void
 search (const ProcInfo *info,
@@ -92,13 +69,11 @@ search (const ProcInfo *info,
 
   entries = glibtop_get_proc_open_files (&buf, info->pid);
 
-  for (unsigned i = 0; i != buf.number; ++i)
-    if (entries[i].type & GLIBTOP_FILE_TYPE_FILE)
-      {
-        const string filename (entries[i].info.file.name);
-        if (this->matches (filename))
-          *out++ = entries + i;
-      }
+  for (unsigned i = 0; i != buf.number; ++i) {
+    if (entries[i].type & GLIBTOP_FILE_TYPE_FILE) {
+      *out++ = entries + i;
+    }
+  }
 
   g_free (entries);
 }
@@ -108,24 +83,18 @@ search (const ProcInfo *info,
 struct GUI: private procman::NonCopyable
 {
   GListStore *model;
-  GtkSearchEntry *entry;
   GtkWindow *dialog;
   GsmApplication *app;
-  bool case_insensitive;
 
 
   GUI(
     GListStore *model_,
-    GtkSearchEntry *entry_,
     GtkWindow *dialog_,
-    GsmApplication *app_,
-    bool case_insensitive_
+    GsmApplication *app_
   )
     : model (model_),
-    entry (entry_),
     dialog (dialog_),
-    app (app_),
-    case_insensitive (case_insensitive_)
+    app (app_)
   {
     procman_debug ("New Lsof GUI %p", (void *)this);
   }
@@ -134,27 +103,6 @@ struct GUI: private procman::NonCopyable
   {
     procman_debug ("Destroying Lsof GUI %p", (void *) this);
   }
-
-
-  void
-  update_count (unsigned count)
-  {
-    gchar *title;
-
-    if (this->pattern ().length () == 0)
-      title = g_strdup_printf (ngettext ("%d Open File", "%d Open Files", count), count);
-    else
-      title = g_strdup_printf (ngettext ("%d Matching Open File", "%d Matching Open Files", count), count);
-    gtk_window_set_title (GTK_WINDOW (this->dialog), title);
-    g_free (title);
-  }
-
-  string
-  pattern () const
-  {
-    return gtk_editable_get_text (GTK_EDITABLE (this->entry));
-  }
-
 
   void
   search ()
@@ -165,9 +113,9 @@ struct GUI: private procman::NonCopyable
 
     try
       {
-        Lsof lsof (this->pattern (), this->case_insensitive);
         g_autoptr (GPtrArray) files =
           g_ptr_array_new_null_terminated (20000, g_object_unref, TRUE);
+        Lsof lsof;
 
         for (auto&v : app->processes)
           {
@@ -188,39 +136,39 @@ struct GUI: private procman::NonCopyable
           }
 
         g_list_store_splice (this->model, 0, 0, files->pdata, files->len);
-
-        this->update_count (files->len);
       }
     catch (Glib::RegexError &error)
       {
       }
   }
-
-  static void
-  search_changed (GtkSearchEntry *,
-                  gpointer data)
-  {
-    static_cast<GUI*>(data)->search ();
-  }
-
-  static void
-  case_button_checked (GtkCheckButton *button,
-                       gpointer        data)
-  {
-    bool state = gtk_check_button_get_active (button);
-
-    static_cast<GUI*>(data)->case_insensitive = state;
-  }
 };
 }
+
+
+static char *
+format_title (G_GNUC_UNUSED GObject *object,
+              guint                  n_items,
+              const char            *search)
+{
+  if (search && search[0]) {
+    return g_strdup_printf (g_dngettext (G_LOG_DOMAIN, "%d Matching Open File", "%d Matching Open Files", n_items), n_items);
+  }
+
+  return g_strdup_printf (g_dngettext (G_LOG_DOMAIN, "%d Open File", "%d Open Files", n_items), n_items);
+}
+
 
 void
 procman_lsof (GsmApplication *app)
 {
-  GtkBuilder *builder = gtk_builder_new ();
+  g_autoptr (GtkBuilderScope) scope = gtk_builder_cscope_new ();
+  g_autoptr (GtkBuilder) builder = gtk_builder_new ();
   GError *err = NULL;
 
   g_type_ensure (LSOF_TYPE_DATA);
+
+  gtk_builder_cscope_add_callback (scope, format_title);
+  gtk_builder_set_scope (builder, scope);
 
   gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/lsof.ui", &err);
   if (err != NULL)
@@ -232,28 +180,14 @@ procman_lsof (GsmApplication *app)
 
   GtkSearchBar *search_bar = GTK_SEARCH_BAR (gtk_builder_get_object (builder, "search_bar"));
   GtkSearchEntry *search_entry = GTK_SEARCH_ENTRY (gtk_builder_get_object (builder, "search_entry"));
-  GtkCheckButton *case_button = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "case_button"));
   GListStore *model = G_LIST_STORE (gtk_builder_get_object (builder, "lsof_store"));
 
   gtk_search_bar_connect_entry (search_bar, GTK_EDITABLE (search_entry));
   gtk_search_bar_set_key_capture_widget (search_bar, GTK_WIDGET (dialog));
 
   // wil be deleted by the close button or delete-event
-  GUI *gui = new GUI(
-    model,
-    search_entry,
-    dialog,
-    app,
-    gtk_check_button_get_active (case_button)
-  );
-
-  g_signal_connect (G_OBJECT (search_entry), "search-changed",
-                    G_CALLBACK (GUI::search_changed), gui);
-  g_signal_connect (G_OBJECT (case_button), "toggled",
-                    G_CALLBACK (GUI::case_button_checked), gui);
+  GUI *gui = new GUI(model, dialog, app);
 
   gtk_widget_set_visible (GTK_WIDGET (dialog), TRUE);
   gui->search ();
-
-  g_object_unref (G_OBJECT (builder));
 }

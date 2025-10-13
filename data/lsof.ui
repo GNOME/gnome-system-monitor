@@ -5,6 +5,12 @@
     <property name="default-width">575</property>
     <property name="default-height">400</property>
     <property name="destroy-with-parent">True</property>
+    <binding name="title">
+      <closure type='gchararray' function='format_title'>
+        <lookup name="n-items">filtered_model</lookup>
+        <lookup name="text">search_entry</lookup>
+      </closure>
+    </binding>
     <property name="content">
       <object class="AdwToolbarView">
         <child type="top">
@@ -49,15 +55,34 @@
                 <child>
                   <object class="GtkColumnView" id="lsof_view">
                     <property name="model">
-                      <object class="GtkNoSelection">
+                      <object class="GtkNoSelection" id="filtered_model">
                         <property name="model">
-                          <object class="GtkSortListModel">
-                            <property name="model">
-                              <object class="GListStore" id="lsof_store"/>
+                          <object class="GtkFilterListModel">
+                            <property name="incremental">True</property>
+                            <property name="filter">
+                              <object class="GtkStringFilter">
+                                <binding name="search">
+                                  <lookup name="text">search_entry</lookup>
+                                </binding>
+                                <binding name="ignore-case">
+                                  <lookup name="active">case_button</lookup>
+                                </binding>
+                                <property name="expression">
+                                  <lookup name="filename" type="LsofData"  />
+                                </property>
+                              </object>
                             </property>
-                            <binding name="sorter">
-                              <lookup name="sorter">lsof_view</lookup>
-                            </binding>
+                            <property name="model">
+                              <object class="GtkSortListModel">
+                                <property name="incremental">True</property>
+                                <property name="model">
+                                  <object class="GListStore" id="lsof_store" />
+                                </property>
+                                <binding name="sorter">
+                                  <lookup name="sorter">lsof_view</lookup>
+                                </binding>
+                              </object>
+                            </property>
                           </object>
                         </property>
                       </object>
