@@ -63,15 +63,88 @@ load_process_files (GPtrArray *files, ProcInfo *info)
 }
 
 
+typedef struct _LoadFilesData LoadFilesData;
+struct _LoadFilesData {
+  GPtrArray *processes;
+};
+
+
 static void
-load_files (GsmLsof *self)
+load_files_data_free (gpointer data)
 {
-  guint old_length = g_list_model_get_n_items (G_LIST_MODEL (self->lsof_store));
+  LoadFilesData *self = static_cast<LoadFilesData *>(data);
+
+  g_clear_pointer (&self->processes, g_ptr_array_unref);
+
+  g_free (self);
+}
+
+
+static void
+load_files_thread (GTask        *task,
+                   gpointer      source_object,
+                   gpointer      task_data,
+                   GCancellable *cancellable)
+{
+  LoadFilesData *data = static_cast<LoadFilesData *>(task_data);
   g_autoptr (GPtrArray) files =
-    g_ptr_array_new_null_terminated (MAX (old_length, 20000), g_object_unref, TRUE);
+    g_ptr_array_new_null_terminated (data->processes->len * 10,
+                                     g_object_unref,
+                                     TRUE);
+
+  for (size_t i = 0; i < data->processes->len; i++) {
+    load_process_files (files,
+                        static_cast<ProcInfo *>(g_ptr_array_index (data->processes, i)));
+  }
+
+  g_task_return_pointer (task,
+                         g_steal_pointer (&files),
+                         (GDestroyNotify) g_ptr_array_unref);
+}
+
+
+static GPtrArray *
+load_files_finish (GsmLsof *self, GAsyncResult *result, GError **error)
+{
+  g_return_val_if_fail (g_task_is_valid (result, self), NULL);
+
+  return static_cast<GPtrArray *>(g_task_propagate_pointer (G_TASK (result), error));
+}
+
+
+static void
+load_files (GsmLsof             *self,
+            GAsyncReadyCallback  callback,
+            gpointer             callback_data)
+{
+  g_autoptr (GTask) task = g_task_new (self, NULL, callback, callback_data);
+  LoadFilesData *data = g_new0 (LoadFilesData, 1);
+
+  data->processes =
+    g_ptr_array_new_null_terminated (1000, NULL, TRUE);
+
+  g_task_set_name (task, "load_files");
+  g_task_set_task_data (task, data, load_files_data_free);
 
   for (auto &v : GsmApplication::get().processes) {
-    load_process_files (files, &v.second);
+    g_ptr_array_add (data->processes, &v.second);
+  }
+
+  g_task_run_in_thread (task, load_files_thread);
+}
+
+
+static void
+did_load (GObject *source, GAsyncResult *result, gpointer user_data)
+{
+  GsmLsof *self = GSM_LSOF (source);
+  g_autoptr (GError) error = NULL;
+  g_autoptr (GPtrArray) files = load_files_finish (self, result, &error);
+  guint old_length = g_list_model_get_n_items (G_LIST_MODEL (self->lsof_store));
+
+  if (error) {
+    g_warning ("Failed to refresh lsof: %s", error->message);
+    return;
   }
 
   g_list_store_splice (self->lsof_store,
@@ -87,7 +160,7 @@ refresh (GtkWidget                *widget,
          G_GNUC_UNUSED const char *action_name,
          G_GNUC_UNUSED GVariant   *target)
 {
-  load_files (GSM_LSOF (widget));
+  load_files (GSM_LSOF (widget), did_load, NULL);
 }
 
 
@@ -120,7 +193,7 @@ gsm_lsof_init (GsmLsof *self)
   gtk_search_bar_set_key_capture_widget (GTK_SEARCH_BAR (self->search_bar),
                                          GTK_WIDGET (self));
 
-  load_files (self);
+  gtk_widget_activate_action (GTK_WIDGET (self), "lsof.refresh", NULL);
 }
 
 
