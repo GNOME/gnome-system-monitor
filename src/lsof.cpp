@@ -10,8 +10,8 @@
 #include <sys/wait.h>
 
 #include "application.h"
+#include "open-file.h"
 #include "procinfo.h"
-#include "lsof-data.h"
 #include "util.h"
 
 #include "lsof.h"
@@ -53,11 +53,7 @@ load_process_files (GPtrArray *files, ProcInfo *info)
 
   for (unsigned i = 0; i != buf.number; ++i) {
     if (entries[i].type & GLIBTOP_FILE_TYPE_FILE) {
-      g_ptr_array_add (files,
-                       lsof_data_new (GDK_PAINTABLE (info->icon->gobj ()),
-                                      info->name.c_str (),
-                                      info->pid,
-                                      entries[i].info.file.name));
+      g_ptr_array_add (files, gsm_open_file_new (info, entries + i));
     }
   }
 }
@@ -179,7 +175,7 @@ gsm_lsof_class_init (GsmLsofClass *klass)
 
   gtk_widget_class_install_action (widget_class, "lsof.refresh", NULL, refresh);
 
-  g_type_ensure (LSOF_TYPE_DATA);
+  g_type_ensure (GSM_TYPE_OPEN_FILE);
 }
 
 

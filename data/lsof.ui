@@ -77,7 +77,7 @@
                                   <lookup name="active">case_button</lookup>
                                 </binding>
                                 <property name="expression">
-                                  <lookup name="filename" type="LsofData"  />
+                                  <lookup name="object" type="GsmOpenFile" />
                                 </property>
                               </object>
                             </property>
@@ -103,7 +103,7 @@
                         <property name="sorter">
                           <object class="GtkStringSorter">
                             <property name="expression">
-                              <lookup name="process" type="LsofData"/>
+                              <lookup name="process" type="GsmOpenFile" />
                             </property>
                           </object>
                         </property>
@@ -120,7 +120,7 @@
     <child>
       <object class="GtkImage">
         <binding name="paintable">
-          <lookup name="paintable" type="LsofData">
+          <lookup name="icon" type="GsmOpenFile">
             <lookup name="item">GtkListItem</lookup>
           </lookup>
         </binding>
@@ -129,7 +129,7 @@
     <child>
       <object class="GtkLabel">
         <binding name="label">
-          <lookup name="process" type="LsofData">
+          <lookup name="process" type="GsmOpenFile">
             <lookup name="item">GtkListItem</lookup>
           </lookup>
         </binding>
@@ -151,7 +151,7 @@
                         <property name="sorter">
                           <object class="GtkNumericSorter">
                             <property name="expression">
-                              <lookup name="pid" type="LsofData"/>
+                              <lookup name="pid" type="GsmOpenFile" />
                             </property>
                           </object>
                         </property>
@@ -165,7 +165,7 @@
   <object class="GtkLabel">
     <property name="xalign">0</property>
     <binding name="label">
-      <lookup name="pid" type="LsofData">
+      <lookup name="pid" type="GsmOpenFile">
         <lookup name="item">GtkListItem</lookup>
       </lookup>
     </binding>
@@ -185,7 +185,7 @@
                         <property name="sorter">
                           <object class="GtkStringSorter">
                             <property name="expression">
-                              <lookup name="filename" type="LsofData"/>
+                              <lookup name="object" type="GsmOpenFile" />
                             </property>
                           </object>
                         </property>
@@ -199,7 +199,7 @@
   <object class="GtkLabel">
     <property name="xalign">0</property>
     <binding name="label">
-      <lookup name="filename" type="LsofData">
+      <lookup name="object" type="GsmOpenFile">
         <lookup name="item">GtkListItem</lookup>
       </lookup>
     </binding>
