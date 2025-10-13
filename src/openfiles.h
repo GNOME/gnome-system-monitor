@@ -1,10 +1,18 @@
-#ifndef _GSM_OPENFILES_H_
-#define _GSM_OPENFILES_H_
+/*
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
 
-#include <glib.h>
+#pragma once
 
-#include "application.h"
+#include <adwaita.h>
 
-void create_openfiles_dialog (GsmApplication *app);
+#include "procinfo.h"
 
-#endif /* _GSM_OPENFILES_H_ */
+G_BEGIN_DECLS
+
+#define GSM_TYPE_OPEN_FILES (gsm_open_files_get_type ())
+G_DECLARE_FINAL_TYPE (GsmOpenFiles, gsm_open_files, GSM, OPEN_FILES, AdwWindow)
+
+GsmOpenFiles *gsm_open_files_new (GtkApplication *app, ProcInfo *info);
+
+G_END_DECLS
