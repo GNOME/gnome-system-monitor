@@ -17,6 +17,32 @@
 #include "lsof.h"
 
 
+struct _GsmLsof {
+  AdwWindow parent;
+
+  GtkWidget *search_bar;
+  GtkWidget *search_entry;
+  
+  GListStore *lsof_store;
+};
+
+
+G_DEFINE_FINAL_TYPE (GsmLsof, gsm_lsof, ADW_TYPE_WINDOW)
+
+
+static char *
+format_title (G_GNUC_UNUSED GObject *object,
+              guint                  n_items,
+              const char            *search)
+{
+  if (search && search[0]) {
+    return g_strdup_printf (g_dngettext (G_LOG_DOMAIN, "%d Matching Open File", "%d Matching Open Files", n_items), n_items);
+  }
+
+  return g_strdup_printf (g_dngettext (G_LOG_DOMAIN, "%d Open File", "%d Open Files", n_items), n_items);
+}
+
+
 static inline void
 load_process_files (GPtrArray *files, ProcInfo *info)
 {
@@ -38,61 +64,70 @@ load_process_files (GPtrArray *files, ProcInfo *info)
 
 
 static void
-load_files (GsmApplication *app, GListStore *model)
+load_files (GsmLsof *self)
 {
-  guint old_length = g_list_model_get_n_items (G_LIST_MODEL (model));
+  guint old_length = g_list_model_get_n_items (G_LIST_MODEL (self->lsof_store));
   g_autoptr (GPtrArray) files =
     g_ptr_array_new_null_terminated (MAX (old_length, 20000), g_object_unref, TRUE);
 
-  for (auto &v : app->processes) {
+  for (auto &v : GsmApplication::get().processes) {
     load_process_files (files, &v.second);
   }
 
-  g_list_store_splice (model, 0, old_length, files->pdata, files->len);
+  g_list_store_splice (self->lsof_store,
+                       0,
+                       old_length,
+                       files->pdata,
+                       files->len);
 }
 
 
-static char *
-format_title (G_GNUC_UNUSED GObject *object,
-              guint                  n_items,
-              const char            *search)
+static void
+refresh (GtkWidget                *widget,
+         G_GNUC_UNUSED const char *action_name,
+         G_GNUC_UNUSED GVariant   *target)
 {
-  if (search && search[0]) {
-    return g_strdup_printf (g_dngettext (G_LOG_DOMAIN, "%d Matching Open File", "%d Matching Open Files", n_items), n_items);
-  }
-
-  return g_strdup_printf (g_dngettext (G_LOG_DOMAIN, "%d Open File", "%d Open Files", n_items), n_items);
+  load_files (GSM_LSOF (widget));
 }
 
 
-void
-procman_lsof (GsmApplication *app)
+static void
+gsm_lsof_class_init (GsmLsofClass *klass)
 {
-  g_autoptr (GtkBuilderScope) scope = gtk_builder_cscope_new ();
-  g_autoptr (GtkBuilder) builder = gtk_builder_new ();
-  GError *err = NULL;
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/gnome-system-monitor/data/lsof.ui");
+
+  gtk_widget_class_bind_template_child (widget_class, GsmLsof, search_bar);
+  gtk_widget_class_bind_template_child (widget_class, GsmLsof, search_entry);
+  gtk_widget_class_bind_template_child (widget_class, GsmLsof, lsof_store);
+
+  gtk_widget_class_bind_template_callback (widget_class, format_title);
+
+  gtk_widget_class_install_action (widget_class, "lsof.refresh", NULL, refresh);
 
   g_type_ensure (LSOF_TYPE_DATA);
+}
 
-  gtk_builder_cscope_add_callback (scope, format_title);
-  gtk_builder_set_scope (builder, scope);
 
-  gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/lsof.ui", &err);
-  if (err != NULL)
-    g_error ("%s", err->message);
+static void
+gsm_lsof_init (GsmLsof *self)
+{
+  gtk_widget_init_template (GTK_WIDGET (self));
 
-  GtkWindow *dialog = GTK_WINDOW (gtk_builder_get_object (builder, "lsof_dialog"));
-  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->main_window));
-  gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
+  gtk_search_bar_connect_entry (GTK_SEARCH_BAR (self->search_bar),
+                                GTK_EDITABLE (self->search_entry));
+  gtk_search_bar_set_key_capture_widget (GTK_SEARCH_BAR (self->search_bar),
+                                         GTK_WIDGET (self));
 
-  GtkSearchBar *search_bar = GTK_SEARCH_BAR (gtk_builder_get_object (builder, "search_bar"));
-  GtkSearchEntry *search_entry = GTK_SEARCH_ENTRY (gtk_builder_get_object (builder, "search_entry"));
-  GListStore *model = G_LIST_STORE (gtk_builder_get_object (builder, "lsof_store"));
+  load_files (self);
+}
 
-  gtk_search_bar_connect_entry (search_bar, GTK_EDITABLE (search_entry));
-  gtk_search_bar_set_key_capture_widget (search_bar, GTK_WIDGET (dialog));
 
-  gtk_widget_set_visible (GTK_WIDGET (dialog), TRUE);
-
-  load_files (app, model);
+GsmLsof *
+gsm_lsof_new (GtkWindow *transient_for)
+{
+  return GSM_LSOF (g_object_new (GSM_TYPE_LSOF,
+                                 "transient-for", transient_for,
+                                 NULL));
 }

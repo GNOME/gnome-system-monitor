@@ -473,11 +473,15 @@ GsmApplication::on_help_activate (const Glib::VariantBase&)
     }
 }
 
+
 void
 GsmApplication::on_lsof_activate (const Glib::VariantBase&)
 {
-  procman_lsof (this);
+  GsmLsof *window = gsm_lsof_new (GTK_WINDOW (this->main_window));
+
+  gtk_window_present (GTK_WINDOW (window));
 }
+
 
 void
 GsmApplication::on_preferences_activate (const Glib::VariantBase&)
