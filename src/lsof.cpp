@@ -13,10 +13,11 @@
 #include <glibmm/regex.h>
 
 #include "application.h"
-#include "lsof.h"
-#include "lsof-data.h"
 #include "procinfo.h"
+#include "lsof-data.h"
 #include "util.h"
+
+#include "lsof.h"
 
 
 using std::string;
@@ -24,6 +25,39 @@ using std::string;
 
 namespace
 {
+
+class EntryHolder {
+  glibtop_open_files_entry *ptr;
+
+public:
+  EntryHolder (glibtop_open_files_entry *entry) : ptr(entry) {
+    this->ptr =
+      static_cast<glibtop_open_files_entry *>(g_boxed_copy (glibtop_open_files_entry_get_type (),
+                                                            static_cast<gconstpointer>(entry)));
+  }
+
+  EntryHolder(const EntryHolder &that) {
+    this->ptr =
+      static_cast<glibtop_open_files_entry *>(g_boxed_copy (glibtop_open_files_entry_get_type (),
+                                                            static_cast<gconstpointer>(that.ptr)));
+  };
+
+  EntryHolder& operator=(const EntryHolder &) = delete;
+
+  ~EntryHolder () {
+    g_free (this->ptr);
+  }
+
+  glibtop_open_files_entry *operator* () {
+    return this->ptr;
+  }
+
+  operator glibtop_open_files_entry* () const {
+    return this->ptr;
+  }
+};
+
+
 class Lsof
 {
 Glib::RefPtr<Glib::Regex> re;
@@ -50,20 +84,20 @@ Lsof(const string &pattern,
 
 template<typename OutputIterator>
 void
-search (const ProcInfo &info,
+search (const ProcInfo *info,
         OutputIterator  out) const
 {
   glibtop_open_files_entry *entries;
   glibtop_proc_open_files buf;
 
-  entries = glibtop_get_proc_open_files (&buf, info.pid);
+  entries = glibtop_get_proc_open_files (&buf, info->pid);
 
   for (unsigned i = 0; i != buf.number; ++i)
     if (entries[i].type & GLIBTOP_FILE_TYPE_FILE)
       {
         const string filename (entries[i].info.file.name);
         if (this->matches (filename))
-          *out++ = filename;
+          *out++ = entries + i;
       }
 
   g_free (entries);
@@ -125,36 +159,37 @@ struct GUI: private procman::NonCopyable
   void
   search ()
   {
-    typedef std::set<string> MatchSet;
+    typedef std::set<EntryHolder> MatchSet;
 
     g_list_store_remove_all (this->model);
 
     try
       {
         Lsof lsof (this->pattern (), this->case_insensitive);
+        g_autoptr (GPtrArray) files =
+          g_ptr_array_new_null_terminated (20000, g_object_unref, TRUE);
 
-        unsigned count = 0;
-
-        for (const auto&v : app->processes)
+        for (auto&v : app->processes)
           {
-            const auto&info = v.second;
+            auto info = &v.second;
             MatchSet matches;
             lsof.search (info, std::inserter (matches, matches.begin ()));
-            count += matches.size ();
 
-            for (const auto&match : matches)
+            for (auto entry : matches)
               {
-                LsofData *data;
+                g_autoptr (LsofData) data =
+                  lsof_data_new (GDK_PAINTABLE (info->icon->gobj ()),
+                                 info->name.c_str (),
+                                 info->pid,
+                                 (* entry)->info.file.name);
 
-                data = lsof_data_new (GDK_PAINTABLE (info.icon->gobj ()), info.name.c_str(), info.pid, match.c_str());
-
-                g_list_store_append (this->model, data);
-
-                g_object_unref (data);
+                g_ptr_array_add (files, g_steal_pointer (&data));
               }
           }
 
-        this->update_count (count);
+        g_list_store_splice (this->model, 0, 0, files->pdata, files->len);
+
+        this->update_count (files->len);
       }
     catch (Glib::RegexError &error)
       {
@@ -184,6 +219,8 @@ procman_lsof (GsmApplication *app)
 {
   GtkBuilder *builder = gtk_builder_new ();
   GError *err = NULL;
+
+  g_type_ensure (LSOF_TYPE_DATA);
 
   gtk_builder_add_from_resource (builder, "/org/gnome/gnome-system-monitor/data/lsof.ui", &err);
   if (err != NULL)
