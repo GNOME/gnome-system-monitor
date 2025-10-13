@@ -2,15 +2,12 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
- #include <config.h>
+#include <config.h>
 
 #include <glib/gi18n.h>
 #include <glibtop/procopenfiles.h>
 
 #include <sys/wait.h>
-
-#include <set>
-#include <iterator>
 
 #include "application.h"
 #include "procinfo.h"
@@ -20,128 +17,38 @@
 #include "lsof.h"
 
 
-namespace
+static inline void
+load_process_files (GPtrArray *files, ProcInfo *info)
 {
-
-class EntryHolder {
-  glibtop_open_files_entry *ptr;
-
-public:
-  EntryHolder (glibtop_open_files_entry *entry) : ptr(entry) {
-    this->ptr =
-      static_cast<glibtop_open_files_entry *>(g_boxed_copy (glibtop_open_files_entry_get_type (),
-                                                            static_cast<gconstpointer>(entry)));
-  }
-
-  EntryHolder(const EntryHolder &that) {
-    this->ptr =
-      static_cast<glibtop_open_files_entry *>(g_boxed_copy (glibtop_open_files_entry_get_type (),
-                                                            static_cast<gconstpointer>(that.ptr)));
-  };
-
-  EntryHolder& operator=(const EntryHolder &) = delete;
-
-  ~EntryHolder () {
-    g_free (this->ptr);
-  }
-
-  glibtop_open_files_entry *operator* () {
-    return this->ptr;
-  }
-
-  operator glibtop_open_files_entry* () const {
-    return this->ptr;
-  }
-};
-
-
-class Lsof
-{
-
-public:
-template<typename OutputIterator>
-void
-search (const ProcInfo *info,
-        OutputIterator  out) const
-{
-  glibtop_open_files_entry *entries;
+  g_autofree glibtop_open_files_entry *entries = NULL;
   glibtop_proc_open_files buf;
 
   entries = glibtop_get_proc_open_files (&buf, info->pid);
 
   for (unsigned i = 0; i != buf.number; ++i) {
     if (entries[i].type & GLIBTOP_FILE_TYPE_FILE) {
-      *out++ = entries + i;
+      g_ptr_array_add (files,
+                       lsof_data_new (GDK_PAINTABLE (info->icon->gobj ()),
+                                      info->name.c_str (),
+                                      info->pid,
+                                      entries[i].info.file.name));
     }
   }
-
-  g_free (entries);
 }
-};
 
 
-struct GUI: private procman::NonCopyable
+static void
+load_files (GsmApplication *app, GListStore *model)
 {
-  GListStore *model;
-  GtkWindow *dialog;
-  GsmApplication *app;
+  guint old_length = g_list_model_get_n_items (G_LIST_MODEL (model));
+  g_autoptr (GPtrArray) files =
+    g_ptr_array_new_null_terminated (MAX (old_length, 20000), g_object_unref, TRUE);
 
-
-  GUI(
-    GListStore *model_,
-    GtkWindow *dialog_,
-    GsmApplication *app_
-  )
-    : model (model_),
-    dialog (dialog_),
-    app (app_)
-  {
-    procman_debug ("New Lsof GUI %p", (void *)this);
+  for (auto &v : app->processes) {
+    load_process_files (files, &v.second);
   }
 
-  ~GUI()
-  {
-    procman_debug ("Destroying Lsof GUI %p", (void *) this);
-  }
-
-  void
-  search ()
-  {
-    typedef std::set<EntryHolder> MatchSet;
-
-    g_list_store_remove_all (this->model);
-
-    try
-      {
-        g_autoptr (GPtrArray) files =
-          g_ptr_array_new_null_terminated (20000, g_object_unref, TRUE);
-        Lsof lsof;
-
-        for (auto&v : app->processes)
-          {
-            auto info = &v.second;
-            MatchSet matches;
-            lsof.search (info, std::inserter (matches, matches.begin ()));
-
-            for (auto entry : matches)
-              {
-                g_autoptr (LsofData) data =
-                  lsof_data_new (GDK_PAINTABLE (info->icon->gobj ()),
-                                 info->name.c_str (),
-                                 info->pid,
-                                 (* entry)->info.file.name);
-
-                g_ptr_array_add (files, g_steal_pointer (&data));
-              }
-          }
-
-        g_list_store_splice (this->model, 0, 0, files->pdata, files->len);
-      }
-    catch (Glib::RegexError &error)
-      {
-      }
-  }
-};
+  g_list_store_splice (model, 0, old_length, files->pdata, files->len);
 }
 
 
@@ -185,9 +92,7 @@ procman_lsof (GsmApplication *app)
   gtk_search_bar_connect_entry (search_bar, GTK_EDITABLE (search_entry));
   gtk_search_bar_set_key_capture_widget (search_bar, GTK_WIDGET (dialog));
 
-  // wil be deleted by the close button or delete-event
-  GUI *gui = new GUI(model, dialog, app);
-
   gtk_widget_set_visible (GTK_WIDGET (dialog), TRUE);
-  gui->search ();
+
+  load_files (app, model);
 }
