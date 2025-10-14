@@ -10,9 +10,10 @@
 #include <gtk/gtk.h>
 #include <glibtop/mountlist.h>
 #include <glibtop/fsusage.h>
+#include <adwaita.h>
 
 #include "column-view-persister.h"
-#include "disks-data.h"
+#include "disk.h"
 #include "settings-keys.h"
 
 #include "disks.h"
@@ -120,110 +121,52 @@ gsm_disks_view_get_column_view (GsmDisksView *self)
 
 static void
 fsusage_stats (const glibtop_fsusage *buf,
-               guint64               *bused,
-               guint64               *bfree,
-               guint64               *bavail,
-               guint64               *btotal,
-               gint                  *percentage)
+               uint64_t              *bused,
+               uint64_t              *bfree,
+               uint64_t              *bavail,
+               uint64_t              *btotal,
+               int                   *percentage)
 {
-  guint64 total = buf->blocks * buf->block_size;
+  uint64_t total = buf->blocks * buf->block_size;
 
-  if (!total)
-    {
-      /* not a real device */
-      *btotal = *bfree = *bavail = *bused = 0ULL;
-      *percentage = 0;
-    }
-  else
-    {
-      int percent;
-      *btotal = total;
-      *bfree = buf->bfree * buf->block_size;
-      *bavail = buf->bavail * buf->block_size;
-      *bused = *btotal - *bfree;
-      /* percent = 100.0f * *bused / *btotal; */
-      percent = 100 * *bused / (*bused + *bavail);
-      *percentage = CLAMP (percent, 0, 100);
-    }
-}
-
-static const char*
-get_icon_for_path (const char*path)
-{
-  GVolumeMonitor *monitor;
-  GList *mounts;
-  uint i;
-  GMount *mount;
-  GIcon *icon;
-  const char*name = "";
-
-  monitor = g_volume_monitor_get ();
-  mounts = g_volume_monitor_get_mounts (monitor);
-
-  for (i = 0; i < g_list_length (mounts); i++)
-    {
-      mount = G_MOUNT (g_list_nth_data (mounts, i));
-      if (strcmp (g_mount_get_name (mount), path))
-        continue;
-
-      icon = g_mount_get_icon (mount);
-
-      if (!icon)
-        continue;
-      name = g_icon_to_string (icon);
-      g_object_unref (icon);
-    }
-
-  g_list_free_full (mounts, g_object_unref);
-  return name;
-}
-
-static GdkPaintable *
-get_icon_for_device (const char *mountpoint)
-{
-  GdkPaintable *icon;
-  GtkIconTheme *icon_theme;
-  const char *icon_name = get_icon_for_path (mountpoint);
-
-  // FIXME: defaults to a safe value
-  if (!strcmp (icon_name, ""))
-    icon_name = "drive-harddisk";     // get_icon_for_path("/");
-
-  icon_theme = gtk_icon_theme_get_for_display (gdk_display_get_default ());
-  icon = GDK_PAINTABLE (gtk_icon_theme_lookup_icon (icon_theme, icon_name, NULL, 32, 1, GTK_TEXT_DIR_NONE, GTK_ICON_LOOKUP_PRELOAD));
-
-  return icon;
+  if (!total) {
+    /* not a real device */
+    *btotal = *bfree = *bavail = *bused = 0ULL;
+    *percentage = 0;
+  } else {
+    int percent;
+    *btotal = total;
+    *bfree = buf->bfree * buf->block_size;
+    *bavail = buf->bavail * buf->block_size;
+    *bused = *btotal - *bfree;
+    /* percent = 100.0f * *bused / *btotal; */
+    percent = 100 * *bused / (*bused + *bavail);
+    *percentage = CLAMP (percent, 0, 100);
+  }
 }
 
 
 static gboolean
-find_disk_in_model (GListModel *model,
-                    const char *mountpoint,
-                    guint      *position)
+find_disk_in_model (GsmDisksView *self,
+                    GFile        *directory,
+                    guint        *position)
 {
-  guint pos = *position;
-  gboolean found = FALSE;
+  for (guint pos = 0;
+       pos < g_list_model_get_n_items (G_LIST_MODEL (self->list_store));
+       pos++) {
+    g_autoptr (GsmDisk) data =
+      GSM_DISK (g_list_model_get_object (G_LIST_MODEL (self->list_store), pos));
 
-  while (!found && pos < g_list_model_get_n_items (model))
-    {
-      DisksData *data;
-      gchar *dir;
+    if (gsm_disk_is_for_directory (data, directory)) {
+      *position = pos;
 
-      data = DISKS_DATA (g_list_model_get_object (model, pos));
-      g_object_get (data, "directory", &dir, NULL);
-
-      if (dir && !strcmp (dir, mountpoint))
-          found = TRUE;
-      else
-          pos++;
-
-      g_free (dir);
+      return TRUE;
     }
+  }
 
-  *position = pos;
-
-  return found;
+  return FALSE;
 }
+
 
 static void
 remove_old_disks (GListModel               *model,
@@ -232,98 +175,85 @@ remove_old_disks (GListModel               *model,
 {
   guint position = 0;
 
-  while (position < g_list_model_get_n_items (model))
-    {
-      DisksData *data;
-      char *dir;
-      guint i;
-      gboolean found = FALSE;
+  while (position < g_list_model_get_n_items (model)) {
+    g_autoptr (GsmDisk) data =
+      GSM_DISK (g_list_model_get_object (model, position));
+    gboolean found = FALSE;
 
-      data = DISKS_DATA (g_list_model_get_object (model, position));
-      g_object_get (data, "directory", &dir, NULL);
+    for (guint i = 0; i != n; ++i) {
+      g_autoptr (GFile) directory = g_file_new_for_path (entries[i].mountdir);
 
-      for (i = 0; i != n; ++i)
-        if (!strcmp (dir, entries[i].mountdir))
-          {
-            found = TRUE;
-            break;
-          }
-
-      g_free (dir);
-
-      if (!found)
-        {
-          if (g_list_store_find (G_LIST_STORE (model), G_OBJECT (data), &position))
-            g_list_store_remove (G_LIST_STORE (model), position);
-          else
-            break;
-        }
-
-      position++;
+      if (gsm_disk_is_for_directory (data, directory)) {
+        found = TRUE;
+        break;
+      }
     }
+
+    if (!found) {
+      if (g_list_store_find (G_LIST_STORE (model), G_OBJECT (data), &position)) {
+        g_list_store_remove (G_LIST_STORE (model), position);
+      } else {
+        break;
+      }
+    }
+
+    position++;
+  }
 }
 
 
-
-static void
-add_disk (GListModel               *model,
-          const glibtop_mountentry *entry,
-          bool                      show_all_fs)
+static inline void
+add_disk (GsmDisksView             *self,
+          const glibtop_mountentry *entry)
 {
-  GdkPaintable *icon;
   glibtop_fsusage usage;
-  guint64 bused, bfree, bavail, btotal;
-  gint percentage;
+  uint64_t bused, bfree, bavail, btotal;
+  int percentage;
   guint position = 0;
+  g_autoptr (GsmDisk) data = NULL;
+  g_autoptr (GFile) device = g_file_new_for_path (entry->devname);
+  g_autoptr (GFile) directory = g_file_new_for_path (entry->mountdir);
 
   glibtop_get_fsusage (&usage, entry->mountdir);
 
-  if (!show_all_fs && usage.blocks == 0)
-    {
-      if (find_disk_in_model (model, entry->mountdir, &position))
-        g_list_store_remove (G_LIST_STORE (model), position);
-      return;
+  if (!self->show_all_fs && usage.blocks == 0) {
+    if (find_disk_in_model (self, directory, &position)) {
+      g_list_store_remove (self->list_store, position);
     }
+
+    return;
+  }
 
   fsusage_stats (&usage, &bused, &bfree, &bavail, &btotal, &percentage);
-  icon = get_icon_for_device (entry->mountdir);
-
-  DisksData *data;
 
   /* if we can find a row with the same mountpoint, we get it but we
-     still need to update all the fields.
-     This makes selection persistent.
-  */
-  if (!find_disk_in_model (model, entry->mountdir, &position))
-    {
-      data = disks_data_new (icon,
-                             entry->devname,
-                             entry->mountdir,
-                             entry->type,
-                             btotal,
-                             bfree,
-                             bavail,
-                             bused,
-                             percentage);
+   * still need to update all the fields.
+   * This makes selection persistent.
+   */
+  if (!find_disk_in_model (self, directory, &position)) {
+    data = gsm_disk_new (device,
+                         directory,
+                         entry->type,
+                         btotal,
+                         bfree,
+                         bavail,
+                         bused,
+                         percentage);
+    g_list_store_insert (self->list_store, position, data);
+  } else {
+    data = GSM_DISK (g_list_model_get_object (G_LIST_MODEL (self->list_store), position));
 
-      g_list_store_insert (G_LIST_STORE (model), position, data);
-    }
-  else
-    {
-      data = DISKS_DATA (g_list_model_get_object (model, position));
-
-      g_object_set (data,
-                    "paintable", icon,
-                    "device", entry->devname,
-                    "directory", entry->mountdir,
-                    "type", entry->type,
-                    "total", btotal,
-                    "free", bfree,
-                    "available", bavail,
-                    "used", bused,
-                    "percentage", percentage,
-                    NULL);
-    }
+    gsm_disk_set_device (data, device);
+    gsm_disk_set_directory (data, directory);
+    g_object_set (data,
+                  "type", entry->type,
+                  "total", btotal,
+                  "free", bfree,
+                  "available", bavail,
+                  "used", bused,
+                  "percentage", percentage,
+                  NULL);
+  }
 }
 
 static void
@@ -357,8 +287,9 @@ disks_update (GsmDisksView *self)
 
   remove_old_disks (G_LIST_MODEL (self->list_store), entries, mountlist.number);
 
-  for (i = 0; i < mountlist.number; i++)
-    add_disk (G_LIST_MODEL (self->list_store), &entries[i], self->show_all_fs);
+  for (i = 0; i < mountlist.number; i++) {
+    add_disk (self, &entries[i]);
+  }
 
   g_free (entries);
 }
@@ -423,45 +354,60 @@ cb_timeout_changed (GSettings *,
   disks_reset_timeout (self);
 }
 
-static void
-open_dir (GtkColumnView *,
-          guint position,
-          gpointer data)
-{
-  GListModel *selection = G_LIST_MODEL (data);
-  DisksData *disksdata;
-  gchar *dir, *url;
-
-  disksdata = DISKS_DATA (g_list_model_get_object (selection, position));
-  g_object_get (disksdata, "directory", &dir, NULL);
-
-  url = g_filename_to_uri (dir, NULL, NULL);
-
-  GError *error = 0;
-
-  if (!g_app_info_launch_default_for_uri (url, NULL, &error))
-    {
-      g_warning ("Cannot open '%s' : %s\n", url, error->message);
-      g_error_free (error);
-    }
-
-  g_free (url);
-  g_free (dir);
-}
 
 static char *
-format_size (gpointer,
-             guint64 size)
+format_size (G_GNUC_UNUSED GObject *object,
+             uint64_t               size)
 {
   return g_format_size (size);
 }
 
-static char*
-format_percentage (gpointer,
-                   gint percentage)
+
+static char *
+format_percentage (G_GNUC_UNUSED GObject *object,
+                   int                    percentage)
 {
   return g_strdup_printf ("%i%%", percentage);
 }
+
+
+static void
+did_open (GObject      *source,
+          GAsyncResult *result,
+          gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+  g_autoptr (GsmDisksView) self = GSM_DISKS_VIEW (user_data);
+
+  gsm_disk_open_root_finish (GSM_DISK (source), result, &error);
+
+  if (error) {
+    AdwDialog *dialog = adw_alert_dialog_new (_("Open Failed"), error->message);
+
+    adw_alert_dialog_add_response (ADW_ALERT_DIALOG (dialog),
+                                   "close",
+                                   _("_Close"));
+
+    adw_dialog_present (dialog, GTK_WIDGET (self));
+  }
+}
+
+
+static void
+activate_disk (GtkColumnView *view, guint position, gpointer user_data)
+{
+  GsmDisksView *self = GSM_DISKS_VIEW (user_data);
+  GListModel *selection = G_LIST_MODEL (self->selection);
+  g_autoptr (GsmDisk) disk =
+    GSM_DISK (g_list_model_get_object (selection, position));
+
+  gsm_disk_open_root (disk,
+                      GTK_WINDOW (gtk_widget_get_root (GTK_WIDGET (view))),
+                      NULL,
+                      did_open,
+                      g_object_ref (self));
+}
+
 
 static void
 gsm_disks_view_class_init (GsmDisksViewClass *klass)
@@ -506,6 +452,7 @@ gsm_disks_view_class_init (GsmDisksViewClass *klass)
 
   gtk_widget_class_bind_template_callback (widget_class, format_size);
   gtk_widget_class_bind_template_callback (widget_class, format_percentage);
+  gtk_widget_class_bind_template_callback (widget_class, activate_disk);
 
   gtk_widget_class_set_layout_manager_type (widget_class, GTK_TYPE_BIN_LAYOUT);
 
@@ -537,7 +484,4 @@ gsm_disks_view_init (GsmDisksView *self)
                     G_CALLBACK (cb_show_all_fs), self);
 
   g_object_unref (settings);
-
-  g_signal_connect (G_OBJECT (self->column_view), "activate",
-                    G_CALLBACK (open_dir), self->selection);
 }

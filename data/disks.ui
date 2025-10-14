@@ -34,7 +34,7 @@
                     <property name="sorter">
                       <object class="GtkStringSorter">
                         <property name="expression">
-                          <lookup name="device" type="DisksData"/>
+                          <lookup name="display-device" type="GsmDisk"/>
                         </property>
                       </object>
                     </property>
@@ -50,9 +50,9 @@
         <property name="spacing">6</property>
         <child>
           <object class="GtkImage">
-            <property name="icon-size">large</property>
-            <binding name="paintable">
-              <lookup name="paintable" type="DisksData">
+            <property name="pixel-size">32</property>
+            <binding name="gicon">
+              <lookup name="icon" type="GsmDisk">
                 <lookup name="item">GtkListItem</lookup>
               </lookup>
             </binding>
@@ -64,7 +64,7 @@
         <child>
           <object class="GtkLabel">
             <binding name="label">
-              <lookup name="device" type="DisksData">
+              <lookup name="display-device" type="GsmDisk">
                 <lookup name="item">GtkListItem</lookup>
               </lookup>
             </binding>
@@ -87,7 +87,7 @@
                     <property name="sorter">
                       <object class="GtkStringSorter">
                         <property name="expression">
-                          <lookup name="directory" type="DisksData"/>
+                          <lookup name="display-directory" type="GsmDisk"/>
                         </property>
                       </object>
                     </property>
@@ -101,7 +101,7 @@
       <object class="GtkLabel">
         <property name="xalign">0</property>
         <binding name="label">
-          <lookup name="directory" type="DisksData">
+          <lookup name="display-directory" type="GsmDisk">
             <lookup name="item">GtkListItem</lookup>
           </lookup>
         </binding>
@@ -122,7 +122,7 @@
                     <property name="sorter">
                       <object class="GtkStringSorter">
                         <property name="expression">
-                          <lookup name="type" type="DisksData"/>
+                          <lookup name="type" type="GsmDisk"/>
                         </property>
                       </object>
                     </property>
@@ -136,7 +136,7 @@
       <object class="GtkLabel">
         <property name="xalign">0</property>
         <binding name="label">
-          <lookup name="type" type="DisksData">
+          <lookup name="type" type="GsmDisk">
             <lookup name="item">GtkListItem</lookup>
           </lookup>
         </binding>
@@ -157,7 +157,7 @@
                     <property name="sorter">
                       <object class="GtkNumericSorter">
                         <property name="expression">
-                          <lookup name="total" type="DisksData"/>
+                          <lookup name="total" type="GsmDisk"/>
                         </property>
                       </object>
                     </property>
@@ -172,7 +172,7 @@
         <property name="xalign">1</property>
         <binding name="label">
           <closure type="gchararray" function="format_size">
-            <lookup name="total" type="DisksData">
+            <lookup name="total" type="GsmDisk">
               <lookup name="item">GtkListItem</lookup>
             </lookup>
           </closure>
@@ -194,7 +194,7 @@
                     <property name="sorter">
                       <object class="GtkNumericSorter">
                         <property name="expression">
-                          <lookup name="free" type="DisksData"/>
+                          <lookup name="free" type="GsmDisk"/>
                         </property>
                       </object>
                     </property>
@@ -209,7 +209,7 @@
         <property name="xalign">1</property>
         <binding name="label">
           <closure type="gchararray" function="format_size">
-            <lookup name="free" type="DisksData">
+            <lookup name="free" type="GsmDisk">
               <lookup name="item">GtkListItem</lookup>
             </lookup>
           </closure>
@@ -231,7 +231,7 @@
                     <property name="sorter">
                       <object class="GtkNumericSorter">
                         <property name="expression">
-                          <lookup name="available" type="DisksData"/>
+                          <lookup name="available" type="GsmDisk"/>
                         </property>
                       </object>
                     </property>
@@ -246,7 +246,7 @@
         <property name="xalign">1</property>
         <binding name="label">
           <closure type="gchararray" function="format_size">
-            <lookup name="available" type="DisksData">
+            <lookup name="available" type="GsmDisk">
               <lookup name="item">GtkListItem</lookup>
             </lookup>
           </closure>
@@ -268,7 +268,7 @@
                     <property name="sorter">
                       <object class="GtkNumericSorter">
                         <property name="expression">
-                          <lookup name="used" type="DisksData"/>
+                          <lookup name="used" type="GsmDisk"/>
                         </property>
                       </object>
                     </property>
@@ -298,7 +298,7 @@
                     <property name="xalign">0</property>
                     <binding name="label">
                       <closure type="gchararray" function="format_size">
-                        <lookup name="used" type="DisksData">
+                        <lookup name="used" type="GsmDisk">
                           <lookup name="item">GtkListItem</lookup>
                         </lookup>
                       </closure>
@@ -313,7 +313,7 @@
                     <property name="xalign">1</property>
                     <binding name="label">
                       <closure type="gchararray" function="format_percentage">
-                        <lookup name="percentage" type="DisksData">
+                        <lookup name="percentage" type="GsmDisk">
                           <lookup name="item">GtkListItem</lookup>
                         </lookup>
                       </closure>
@@ -329,7 +329,7 @@
                 <property name="min-value">0</property>
                 <property name="max-value">100</property>
                 <binding name="value">
-                  <lookup name="percentage" type="DisksData">
+                  <lookup name="percentage" type="GsmDisk">
                     <lookup name="item">GtkListItem</lookup>
                   </lookup>
                 </binding>
@@ -346,6 +346,7 @@
                     </property>
                   </object>
                 </child>
+                <signal name="activate" handler="activate_disk" swapped="no" />
               </object>
             </child>
           </object>
