@@ -70,12 +70,60 @@ gsm_open_files_get_property (GObject    *object,
 }
 
 
+static inline GHashTable *
+get_current_keys (GsmOpenFiles *self)
+{
+  /* the strings in the hash set are borrowed from the hash table, so
+   * we don't need to free them */
+  g_autoptr (GHashTable) old_keys =
+    g_hash_table_new (g_str_hash, g_str_equal);
+  GHashTableIter iter;
+  const char *key;
+
+  g_hash_table_iter_init (&iter, self->known_files);
+  while (g_hash_table_iter_next (&iter, (gpointer *) &key, NULL)) {
+    g_hash_table_add (old_keys, (gpointer *) key);
+  }
+
+  return g_steal_pointer (&old_keys);
+}
+
+
+static inline void
+drop_leftover_keys (GsmOpenFiles *self, GHashTable *leftover_keys)
+{
+  GHashTableIter iter;
+  const char *key;
+
+  g_hash_table_iter_init (&iter, leftover_keys);
+  while (g_hash_table_iter_next (&iter, (gpointer *) &key, NULL)) {
+    g_autoptr (GsmOpenFile) file = NULL;
+    g_autofree char *stolen_key = NULL;
+    guint position;
+    
+    if (!g_hash_table_steal_extended (self->known_files,
+                                      key,
+                                      (gpointer *) &stolen_key,
+                                      (gpointer *) &file)) {
+      continue;
+    }
+
+    if (g_list_store_find (self->store, file, &position)) {
+      g_list_store_remove (self->store, position);
+    }
+  }
+}
+
+
 static void
 update_dialog (GsmOpenFiles *self)
 {
   g_autofree glibtop_open_files_entry *openfiles = NULL;
   glibtop_proc_open_files procmap;
-  g_autoptr (GPtrArray) old_files = NULL;
+  g_autoptr (GHashTable) leftover_keys = NULL;
+  g_autoptr (GPtrArray) new_files =
+    g_ptr_array_new_null_terminated (100, g_object_unref, TRUE);
+
 
   // Translators: process name and id
   char *subtitle = g_strdup_printf (_("%s (PID %u)"), self->info->name.c_str (), self->info->pid);
@@ -90,21 +138,18 @@ update_dialog (GsmOpenFiles *self)
     return;
   }
 
-  /* Get a copy of the files we already know about so we can
-   * derive which files closed in the mean time, and drop them */
-  old_files = g_hash_table_get_keys_as_ptr_array (self->known_files);
+  /* Get a copy of the keys we already know about so we can
+   * derive which keys closed in the mean time, and drop them */
+  leftover_keys = get_current_keys (self);
 
   /* Update or insert files */
   for (size_t i = 0; i < procmap.number; i++) {
     glibtop_open_files_entry *entry = openfiles + i;
     g_autofree char *key = g_strdup_printf ("%d#%d", entry->fd, entry->type);
-    guint index;
     GsmOpenFile *existing_file;
 
-    /* If this was already in known files, save it from being cleaned up */
-    if (g_ptr_array_find_with_equal_func (old_files, key, g_str_equal, &index)) {
-      g_ptr_array_remove_index (old_files, index);
-    }
+    /* If this was already a known key, save it from being cleaned up */
+    g_hash_table_remove (leftover_keys, key);
 
     existing_file = static_cast<GsmOpenFile *>(g_hash_table_lookup (self->known_files, key));
     if (existing_file) {
@@ -115,25 +160,14 @@ update_dialog (GsmOpenFiles *self)
       g_hash_table_insert (self->known_files,
                            g_steal_pointer (&key),
                            g_object_ref (file));
-      g_list_store_insert (self->store, 0, file);
+      g_ptr_array_add (new_files, g_steal_pointer (&file));
     }
   }
+
+  g_list_store_splice (self->store, 0, 0, new_files->pdata, new_files->len);
 
   /* Kill closed files */
-  for (size_t i = 0; i < old_files->len; i++) {
-    g_autoptr (GsmOpenFile) file = NULL;
-    g_autofree char *key = NULL;
-
-    if (g_hash_table_steal_extended (self->known_files,
-                                     g_ptr_array_index (old_files, i),
-                                     (gpointer *) &key,
-                                     (gpointer *) &file)) {
-      guint position;
-      if (g_list_store_find (self->store, file, &position)) {
-        g_list_store_remove (self->store, position);
-      }
-    }
-  }
+  drop_leftover_keys (self, leftover_keys);
 }
 
 
