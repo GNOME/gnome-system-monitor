@@ -55,6 +55,7 @@ search_text_changed (GtkEditable*,
   gtk_tree_model_filter_refilter (GTK_TREE_MODEL_FILTER (gtk_tree_model_sort_get_model (
                                                            GTK_TREE_MODEL_SORT (gtk_tree_view_get_model (
                                                                                   GTK_TREE_VIEW (app->tree))))));
+  proctable_refresh_summary_headers(app);                                                                                  
 }
 
 /*

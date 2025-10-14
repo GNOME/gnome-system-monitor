@@ -2,6 +2,7 @@
 
 #include "treeview.h"
 
+
 typedef struct
 {
   GSettings  *settings;
@@ -97,6 +98,20 @@ gsm_tree_view_save_state (GsmTreeView *tree_view)
   g_settings_apply (priv->settings);
 }
 
+
+static const gchar * get_value_label(GtkTreeViewColumn *col)
+{
+    GtkWidget *box = gtk_tree_view_column_get_widget(col);
+    if (!GTK_IS_BOX(box))
+      return nullptr;
+
+    GtkWidget *child = gtk_widget_get_first_child(box);
+    if (GTK_IS_LABEL(child))
+      return gtk_label_get_text(GTK_LABEL(child));
+
+    return nullptr;
+}
+
 GtkTreeViewColumn *
 gsm_tree_view_get_column_from_id (GsmTreeView *tree_view,
                                   gint         sort_id)
@@ -183,8 +198,8 @@ gsm_tree_view_load_state (GsmTreeView *tree_view)
               gtk_tree_view_column_set_visible (col, FALSE);
               continue;
             }
-
-          title = gtk_tree_view_column_get_title (col);
+          if(sort_id == 0) title = gtk_tree_view_column_get_title (col);
+          else title = get_value_label(col);
 
           gesture_click = gtk_gesture_click_new ();
           gtk_gesture_single_set_button (GTK_GESTURE_SINGLE (gesture_click), GDK_BUTTON_SECONDARY);
@@ -286,6 +301,7 @@ gsm_tree_view_append_and_bind_column (GsmTreeView       *tree_view,
 {
   GsmTreeViewPrivate *priv;
   GMenuItem *item;
+  const gchar *title;
 
   g_return_if_fail (GSM_IS_TREE_VIEW (tree_view));
   g_return_if_fail (GTK_IS_TREE_VIEW_COLUMN (column));
@@ -295,9 +311,12 @@ gsm_tree_view_append_and_bind_column (GsmTreeView       *tree_view,
   gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view),
                                column);
 
-  gchar *action_name = g_strdup_printf ("treeview.show-%d", gtk_tree_view_column_get_sort_column_id (column));
-
-  item = g_menu_item_new (gtk_tree_view_column_get_title (column), action_name);
+  gint sort_id = gtk_tree_view_column_get_sort_column_id (column);
+  gchar *action_name = g_strdup_printf ("treeview.show-%d",sort_id);
+  if(sort_id == 0) title = gtk_tree_view_column_get_title (column);
+  else title = get_value_label(column);
+   
+  item = g_menu_item_new (title, action_name);
 
   g_free (action_name);
 

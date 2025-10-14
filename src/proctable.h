@@ -73,5 +73,6 @@ void          get_last_selected (GtkTreeModel *model,
                                  GtkTreePath  *path,
                                  GtkTreeIter  *iter,
                                  gpointer      data);
+void          proctable_refresh_summary_headers(GsmApplication *app);                                 
 
 #endif /* _GSM_PROCTABLE_H_ */

@@ -38,6 +38,7 @@
 #include <sys/stat.h>
 #include <pwd.h>
 #include <time.h>
+#include <iomanip>
 
 #include <set>
 #include <list>
@@ -443,6 +444,9 @@ proctable_new (GsmApplication * const app)
 
   for (i = COL_USER; i <= COL_PRIORITY; i++)
     {
+      GtkWidget *box;
+      GtkWidget *title_label;
+      GtkWidget *value_label;
       GtkTreeViewColumn *col;
       GtkCellRenderer *cell;
       PangoAttrList *attrs = NULL;
@@ -453,7 +457,14 @@ proctable_new (GsmApplication * const app)
       cell = gtk_cell_renderer_text_new ();
       col = gtk_tree_view_column_new ();
       gtk_tree_view_column_pack_start (col, cell, TRUE);
-      gtk_tree_view_column_set_title (col, _(titles[i]));
+
+      box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+      title_label = gtk_label_new(_(titles[i]));
+      value_label = gtk_label_new("");
+      gtk_box_append(GTK_BOX(box), title_label);
+      gtk_box_append(GTK_BOX(box), value_label);
+      gtk_tree_view_column_set_widget(col, box);
+      
       gtk_tree_view_column_set_resizable (col, TRUE);
       gtk_tree_view_column_set_sort_column_id (col, i);
       gtk_tree_view_column_set_reorderable (col, TRUE);
@@ -939,6 +950,180 @@ update_info (GsmApplication *app,
   procman::get_process_systemd_info (info);
 }
 
+void
+proctable_refresh_summary_headers(GsmApplication * app)
+{
+  GtkTreeIter iter;
+  GList *columns, *it;
+  gfloat total_cpu = 0;
+  gfloat total_mem = 0;
+  gfloat total_memres = 0;
+  gfloat total_vmsize = 0;
+  gfloat total_memshared = 0;
+  gfloat total_memwritable = 0;
+  gfloat total_disk_read_bytes_total = 0;
+  gfloat total_disk_write_bytes_total = 0;
+  gfloat total_disk_read_bytes_current = 0;
+  gfloat total_disk_write_bytes_current = 0;
+  std::function<void(GtkTreeIter&)> calc_summary;
+  GtkTreeView *treeview = GTK_TREE_VIEW (app->tree);
+  GtkTreeModel *model = GTK_TREE_MODEL(
+    GTK_TREE_MODEL_FILTER (
+      gtk_tree_model_sort_get_model (
+        GTK_TREE_MODEL_SORT (
+          gtk_tree_view_get_model (
+            treeview
+          )
+        )
+      )
+    )
+  );
+
+  // Helper: format float to "xx.x%"
+  auto format_float = [](gfloat value, 
+                         int precision = 1, 
+                         const std::string &suffix = "%") -> std::string
+  {
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(precision) << value << suffix;
+    return oss.str();
+  };
+
+  // Helper: convert bytes to readable units
+  auto format_bytes = [](gfloat bytes) -> std::string
+  {
+    const char *units[] = {"B", "KB", "MB", "GB", "TB"};
+    int unit_index = 0;
+
+    while (bytes >= 1000 && unit_index < 4)
+    {
+      bytes /= 1000.0f;
+      ++unit_index;
+    }
+
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(1) << bytes << " " << units[unit_index];
+    return oss.str();
+  };
+
+  // Helper: get second label from column header
+  auto get_value_label = [](GtkTreeViewColumn* col) -> GtkLabel *
+  {
+    GtkWidget *box = gtk_tree_view_column_get_widget(col);
+    if (!GTK_IS_BOX(box))
+      return nullptr;
+
+    GtkWidget *child = gtk_widget_get_first_child(box);
+    if (!child)
+      return nullptr;
+
+    GtkWidget *second_child = gtk_widget_get_next_sibling(child);
+    if (GTK_IS_LABEL(second_child))
+    {
+      return GTK_LABEL(second_child);
+    }
+
+    return nullptr;
+  };
+
+  // Accumulate totals
+  calc_summary = [&model, 
+                  &total_mem, 
+                  &total_cpu,
+                  &total_vmsize,
+                  &total_memres,
+                  &total_memshared,
+                  &total_memwritable,
+                  &total_disk_read_bytes_total,
+                  &total_disk_write_bytes_total,
+                  &total_disk_read_bytes_current,
+                  &total_disk_write_bytes_current,
+                  &calc_summary](GtkTreeIter &iter) 
+  {
+    GtkTreeIter child_iter;
+    // take out value
+    gpointer node_ptr;
+    gtk_tree_model_get(model, &iter, COL_POINTER, &node_ptr, -1);
+
+    ProcInfo *proc = static_cast<ProcInfo *>(node_ptr);
+    if (!proc)
+      return;
+
+    total_mem += proc->mem;
+    total_cpu += round(proc->pcpu * 10.0f) / 10.0f;
+    total_memres += proc->memres;
+    total_vmsize += proc->vmsize;
+    total_memshared += proc->memshared;
+    total_memwritable += proc->memwritable;
+    total_disk_read_bytes_total += proc->disk_read_bytes_total;
+    total_disk_write_bytes_total += proc->disk_write_bytes_total;
+    total_disk_read_bytes_current += proc->disk_read_bytes_current;
+    total_disk_write_bytes_current += proc->disk_write_bytes_current;
+
+    // child
+    if (gtk_tree_model_iter_has_child(model, &iter)) {
+        gtk_tree_model_iter_children(model, &child_iter, &iter);
+        calc_summary(child_iter);
+    }
+
+    // next sibling
+    // recerssive check
+    gboolean valid = gtk_tree_model_iter_next(model, &iter);
+    if (!valid) return;
+    else calc_summary(iter);
+  };
+
+
+  gboolean valid = gtk_tree_model_get_iter_first(model, &iter);
+  if(valid) calc_summary(iter);
+
+  columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (treeview));
+
+  for (it = columns; it; it = it->next)
+  {
+    std::string v_str;
+    GtkTreeViewColumn *column = static_cast<GtkTreeViewColumn *>(it->data);
+    GtkLabel *label = get_value_label(column);
+    gint column_id = gtk_tree_view_column_get_sort_column_id(column);
+    switch (column_id)
+    {
+    case COL_CPU:
+      v_str = format_float(total_cpu);
+      break;
+    case COL_MEM:
+      v_str = format_bytes(total_mem);
+      break;
+    case COL_VMSIZE:
+      v_str = format_bytes(total_vmsize);
+      break;
+    case COL_MEMRES:
+      v_str = format_bytes(total_memres);
+      break;
+    case COL_MEMWRITABLE:
+      v_str = format_bytes(total_memwritable);
+      break;
+    case COL_MEMSHARED:
+      v_str = format_bytes(total_memshared);
+      break;
+    case COL_DISK_READ_TOTAL:
+      v_str = format_bytes(total_disk_read_bytes_total);
+      break;
+    case COL_DISK_WRITE_TOTAL:
+      v_str = format_bytes(total_disk_write_bytes_total);
+      break;
+    case COL_DISK_READ_CURRENT:
+      v_str = format_bytes(total_disk_read_bytes_current);
+      break;
+    case COL_DISK_WRITE_CURRENT:
+      v_str = format_bytes(total_disk_write_bytes_current);
+      break;
+    default:
+      v_str = "";
+    }
+    gtk_label_set_text(label, v_str.c_str());
+  }
+}
+
 static void
 refresh_list (GsmApplication *app,
               const pid_t    *pid_list,
@@ -1065,6 +1250,8 @@ refresh_list (GsmApplication *app,
         insert_info_to_tree (v, app);
     }
 
+  // update Header
+  proctable_refresh_summary_headers(app);
 
   for (auto&v : app->processes)
     update_info_mutable_cols (&v.second);

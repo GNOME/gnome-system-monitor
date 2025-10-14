@@ -60,6 +60,19 @@ create_field_page (GtkBuilder  *builder,
 
   columns = gtk_tree_view_get_columns (GTK_TREE_VIEW (tree));
 
+  auto get_value_label = [](GtkTreeViewColumn *col) -> const gchar *
+  {
+    GtkWidget *box = gtk_tree_view_column_get_widget(col);
+    if (!GTK_IS_BOX(box))
+      return nullptr;
+
+    GtkWidget *child = gtk_widget_get_first_child(box);
+    if (GTK_IS_LABEL(child))
+      return gtk_label_get_text(GTK_LABEL(child));
+
+    return nullptr;
+  };
+
   for (it = columns; it; it = it->next)
     {
       GtkTreeViewColumn *column = static_cast<GtkTreeViewColumn*>(it->data);
@@ -67,7 +80,8 @@ create_field_page (GtkBuilder  *builder,
       gint column_id;
       GtkWidget *row;
 
-      title = gtk_tree_view_column_get_title (column);
+      title = get_value_label(column);
+
       if (!title)
         title = _("Icon");
 
