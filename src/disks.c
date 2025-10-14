@@ -1,23 +1,32 @@
-#include <config.h>
+/*
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
+#include "config.h"
+
+#include <glib/gi18n.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gtk/gtk.h>
 #include <glibtop/mountlist.h>
 #include <glibtop/fsusage.h>
-#include <glib/gi18n.h>
 
-#include "disks.h"
+#include "column-view-persister.h"
 #include "disks-data.h"
-#include "util.h"
 #include "settings-keys.h"
 
-struct _GsmDisksView
-{
+#include "disks.h"
+
+
+struct _GsmDisksView {
   GtkWidget parent_instance;
 
   GtkColumnView *column_view;
   GtkSingleSelection *selection;
   GListStore *list_store;
+  /* We don't actually use this from C,
+   * but if we don't bind it it'll be disposed */
+  GsmColumnViewPersister *persister;
 
   int update_interval;
   gboolean show_all_fs;
@@ -108,15 +117,6 @@ gsm_disks_view_get_column_view (GsmDisksView *self)
   return self->column_view;
 }
 
-static void
-cb_sort_changed (GtkSorter *,
-                 GtkSorterChange,
-                 gpointer data)
-{
-  GtkColumnView *column_view = static_cast<GtkColumnView *>(data);
-
-  save_sort_state (column_view, GSM_SETTINGS_CHILD_DISKS);
-}
 
 static void
 fsusage_stats (const glibtop_fsusage *buf,
@@ -278,7 +278,7 @@ add_disk (GListModel               *model,
 
   glibtop_get_fsusage (&usage, entry->mountdir);
 
-  if (not show_all_fs and usage.blocks == 0)
+  if (!show_all_fs && usage.blocks == 0)
     {
       if (find_disk_in_model (model, entry->mountdir, &position))
         g_list_store_remove (G_LIST_STORE (model), position);
@@ -401,17 +401,6 @@ disks_reset_timeout (GsmDisksView *self)
   disks_thaw (self);
 }
 
-static void
-cb_disk_columns_changed (GListModel *,
-                         guint,
-                         guint,
-                         guint,
-                         gpointer data)
-{
-  GtkColumnView *column_view = static_cast<GtkColumnView *>(data);
-
-  save_columns_state (column_view, GSM_SETTINGS_CHILD_DISKS);
-}
 
 static void
 cb_show_all_fs (GSettings *,
@@ -439,7 +428,7 @@ open_dir (GtkColumnView *,
           guint position,
           gpointer data)
 {
-  GListModel *selection = static_cast<GListModel *>(data);
+  GListModel *selection = G_LIST_MODEL (data);
   DisksData *disksdata;
   gchar *dir, *url;
 
@@ -513,29 +502,27 @@ gsm_disks_view_class_init (GsmDisksViewClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GsmDisksView, column_view);
   gtk_widget_class_bind_template_child (widget_class, GsmDisksView, selection);
   gtk_widget_class_bind_template_child (widget_class, GsmDisksView, list_store);
+  gtk_widget_class_bind_template_child (widget_class, GsmDisksView, persister);
 
   gtk_widget_class_bind_template_callback (widget_class, format_size);
   gtk_widget_class_bind_template_callback (widget_class, format_percentage);
 
   gtk_widget_class_set_layout_manager_type (widget_class, GTK_TYPE_BIN_LAYOUT);
+
+  g_type_ensure (GSM_TYPE_COLUMN_VIEW_PERSISTER);
 }
+
 
 static void
 gsm_disks_view_init (GsmDisksView *self)
 {
   GSettings *settings;
-  GListModel *columns;
-  GtkSorter *sorter;
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
   settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
-  columns = gtk_column_view_get_columns (self->column_view);
-  sorter = gtk_column_view_get_sorter (self->column_view);
 
   init_volume_monitor (self);
-
-  load_state (GTK_COLUMN_VIEW (self->column_view), GSM_SETTINGS_CHILD_DISKS);
 
   g_settings_bind (settings, GSM_SETTING_DISKS_UPDATE_INTERVAL,
                    G_OBJECT (self), "update-interval", G_SETTINGS_BIND_DEFAULT);
@@ -553,10 +540,4 @@ gsm_disks_view_init (GsmDisksView *self)
 
   g_signal_connect (G_OBJECT (self->column_view), "activate",
                     G_CALLBACK (open_dir), self->selection);
-
-  g_signal_connect (G_OBJECT (columns), "items-changed",
-                    G_CALLBACK (cb_disk_columns_changed), self->column_view);
-
-  g_signal_connect (G_OBJECT (sorter), "changed",
-                    G_CALLBACK (cb_sort_changed), self->column_view);
 }
