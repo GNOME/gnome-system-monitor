@@ -38,7 +38,6 @@
 #include <sys/stat.h>
 #include <pwd.h>
 #include <time.h>
-#include <iomanip>
 
 #include <set>
 #include <list>
@@ -955,16 +954,16 @@ proctable_refresh_summary_headers(GsmApplication * app)
 {
   GtkTreeIter iter;
   GList *columns, *it;
-  gfloat total_cpu = 0;
-  gfloat total_mem = 0;
-  gfloat total_memres = 0;
-  gfloat total_vmsize = 0;
-  gfloat total_memshared = 0;
-  gfloat total_memwritable = 0;
-  gfloat total_disk_read_bytes_total = 0;
-  gfloat total_disk_write_bytes_total = 0;
-  gfloat total_disk_read_bytes_current = 0;
-  gfloat total_disk_write_bytes_current = 0;
+  double total_cpu = 0;
+  uint64_t total_mem = 0;
+  uint64_t total_memres = 0;
+  uint64_t total_vmsize = 0;
+  uint64_t total_memshared = 0;
+  uint64_t total_memwritable = 0;
+  uint64_t total_disk_read_bytes_total = 0;
+  uint64_t total_disk_write_bytes_total = 0;
+  uint64_t total_disk_read_bytes_current = 0;
+  uint64_t total_disk_write_bytes_current = 0;
   std::function<void(GtkTreeIter&)> calc_summary;
   GtkTreeView *treeview = GTK_TREE_VIEW (app->tree);
   GtkTreeModel *model = GTK_TREE_MODEL(
@@ -979,31 +978,13 @@ proctable_refresh_summary_headers(GsmApplication * app)
     )
   );
 
-  // Helper: format float to "xx.x%"
-  auto format_float = [](gfloat value, 
-                         int precision = 1, 
-                         const std::string &suffix = "%") -> std::string
-  {
-    std::ostringstream oss;
-    oss << std::fixed << std::setprecision(precision) << value << suffix;
-    return oss.str();
-  };
-
   // Helper: convert bytes to readable units
-  auto format_bytes = [](gfloat bytes) -> std::string
+  auto format_bytes = [app](uint64_t bytes) -> std::string
   {
-    const char *units[] = {"B", "KB", "MB", "GB", "TB"};
-    int unit_index = 0;
+    const GFormatSizeFlags flags =
+      app->config.process_memory_in_iec ? G_FORMAT_SIZE_IEC_UNITS : G_FORMAT_SIZE_BITS;
 
-    while (bytes >= 1000 && unit_index < 4)
-    {
-      bytes /= 1000.0f;
-      ++unit_index;
-    }
-
-    std::ostringstream oss;
-    oss << std::fixed << std::setprecision(1) << bytes << " " << units[unit_index];
-    return oss.str();
+    return make_string (g_format_size_full (bytes, flags));
   };
 
   // Helper: get second label from column header
@@ -1088,7 +1069,7 @@ proctable_refresh_summary_headers(GsmApplication * app)
     switch (column_id)
     {
     case COL_CPU:
-      v_str = format_float(total_cpu);
+      v_str = make_string (g_strdup_printf ("%.01f%%", total_cpu));
       break;
     case COL_MEM:
       v_str = format_bytes(total_mem);
