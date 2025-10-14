@@ -457,12 +457,32 @@ proctable_new (GsmApplication * const app)
       col = gtk_tree_view_column_new ();
       gtk_tree_view_column_pack_start (col, cell, TRUE);
 
-      box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-      title_label = gtk_label_new(_(titles[i]));
-      value_label = gtk_label_new("");
-      gtk_box_append(GTK_BOX(box), title_label);
-      gtk_box_append(GTK_BOX(box), value_label);
-      gtk_tree_view_column_set_widget(col, box);
+      gtk_tree_view_column_set_title (col, _(titles[i]));
+
+      switch (i) {
+        case COL_CPU:
+        case COL_MEM:
+        case COL_VMSIZE:
+        case COL_MEMRES:
+        case COL_MEMWRITABLE:
+        case COL_MEMSHARED:
+        case COL_DISK_READ_TOTAL:
+        case COL_DISK_WRITE_TOTAL:
+        case COL_DISK_READ_CURRENT:
+        case COL_DISK_WRITE_CURRENT:
+          /* Insert a ‘total’ label */
+          box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+          title_label = gtk_label_new (_(titles[i]));
+          value_label = gtk_label_new ("");
+          gtk_widget_add_css_class (value_label, "numeric");
+          gtk_box_append (GTK_BOX (box), title_label);
+          gtk_box_append (GTK_BOX (box), value_label);
+          gtk_tree_view_column_set_widget (col, box);
+          break;
+        default:
+          /* Don't insert a second label */
+          break;
+      }
       
       gtk_tree_view_column_set_resizable (col, TRUE);
       gtk_tree_view_column_set_sort_column_id (col, i);
@@ -1065,6 +1085,12 @@ proctable_refresh_summary_headers(GsmApplication * app)
     std::string v_str;
     GtkTreeViewColumn *column = static_cast<GtkTreeViewColumn *>(it->data);
     GtkLabel *label = get_value_label(column);
+
+    /* Not every column has a header */
+    if (!label) {
+      continue;
+    }
+
     gint column_id = gtk_tree_view_column_get_sort_column_id(column);
     switch (column_id)
     {
