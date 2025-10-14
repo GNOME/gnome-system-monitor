@@ -1,110 +1,28 @@
+/*
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 #include <config.h>
 
 #include <glibtop/procmap.h>
 #include <glibtop/mountlist.h>
-#include <sys/stat.h>
 #include <glib/gi18n.h>
+#include <glib/gstdio.h>
 
-#include <string>
+#ifdef HAVE_DEV_IN_SYSMACROS
+#include <sys/sysmacros.h>
+#endif
+#ifdef HAVE_DEV_IN_TYPES
+#include <sys/types.h>
+#endif
+
 #include <map>
-#include <sstream>
-#include <iomanip>
-#include <stdexcept>
 
-using std::string;
-
+#include "mem-map.h"
+#include "procinfo.h"
 
 #include "memmaps.h"
-#include "memmaps-data.h"
-#include "procinfo.h"
-#include "proctable.h"
-#include "settings-keys.h"
-#include "util.h"
 
-
-namespace
-{
-class OffsetFormater
-{
-const char *_format;
-
-public:
-
-OffsetFormater (const glibtop_map_entry &last_map)
-{
-  this->_format = (last_map.end <= G_MAXUINT32) ? "%08" G_GINT64_MODIFIER "x" : "%016" G_GINT64_MODIFIER "x";
-}
-
-string
-format (guint64 v) const
-{
-  char buffer[17];
-
-  g_snprintf (buffer, sizeof buffer, this->_format, v);
-  return buffer;
-}
-};
-
-class InodeDevices
-{
-typedef std::map<guint16, string> Map;
-Map devices;
-
-public:
-
-void
-update ()
-{
-  this->devices.clear ();
-
-  glibtop_mountlist list;
-  glibtop_mountentry *entries = glibtop_get_mountlist (&list, 1);
-
-  for (unsigned i = 0; i != list.number; ++i)
-    {
-      struct stat buf;
-
-      if (stat (entries[i].devname, &buf) != -1)
-        this->devices[buf.st_rdev] = entries[i].devname;
-    }
-
-  g_free (entries);
-}
-
-string
-get (guint64 dev64)
-{
-  if (dev64 == 0)
-    return "";
-
-  guint16 dev = dev64 & 0xffff;
-
-  if (dev != dev64)
-    g_warning ("weird device %" G_GINT64_MODIFIER "x", dev64);
-
-  Map::iterator it (this->devices.find (dev));
-
-  if (it != this->devices.end ())
-    return it->second;
-
-  guint8 major, minor;
-
-  major = dev >> 8;
-  minor = dev;
-
-  std::ostringstream out;
-
-  out << std::hex
-      << std::setfill ('0')
-      << std::setw (2) << unsigned(major)
-      << ':'
-      << std::setw (2) << unsigned(minor);
-
-  this->devices[dev] = out.str ();
-  return out.str ();
-}
-};
-}
 
 struct _GsmMemMapsView
 {
@@ -115,35 +33,35 @@ struct _GsmMemMapsView
   GListStore *list_store;
 
   ProcInfo *info;
-  mutable InodeDevices devices;
+  GHashTable *devices;
 
   guint timer;
+
+  gboolean format_32bit;
 };
 
-G_DEFINE_TYPE (GsmMemMapsView, gsm_memmaps_view, ADW_TYPE_WINDOW)
+G_DEFINE_FINAL_TYPE (GsmMemMapsView, gsm_memmaps_view, ADW_TYPE_WINDOW)
+
 
 enum {
   PROP_0,
   PROP_INFO,
-  PROP_TIMER,
   N_PROPS
 };
-
 static GParamSpec *properties [N_PROPS];
 
-GsmMemMapsView *
-gsm_memmaps_view_new (ProcInfo *info)
-{
-  return GSM_MEMMAPS_VIEW (g_object_new (GSM_TYPE_MEMMAPS_VIEW,
-                                         "info", info,
-                                         NULL));
-}
 
 static void
-gsm_memmaps_view_finalize (GObject *object)
+gsm_memmaps_view_dispose (GObject *object)
 {
-  G_OBJECT_CLASS (gsm_memmaps_view_parent_class)->finalize (object);
+  GsmMemMapsView *self = GSM_MEMMAPS_VIEW (object);
+
+  g_clear_handle_id (&self->timer, g_source_remove);
+  g_clear_pointer (&self->devices, g_hash_table_unref);
+
+  G_OBJECT_CLASS (gsm_memmaps_view_parent_class)->dispose (object);
 }
+
 
 static void
 gsm_memmaps_view_get_property (GObject    *object,
@@ -158,13 +76,11 @@ gsm_memmaps_view_get_property (GObject    *object,
     case PROP_INFO:
       g_value_set_pointer (value, self->info);
       break;
-    case PROP_TIMER:
-      g_value_set_uint (value, self->timer);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
 }
+
 
 static void
 gsm_memmaps_view_set_property (GObject      *object,
@@ -178,9 +94,6 @@ gsm_memmaps_view_set_property (GObject      *object,
     {
     case PROP_INFO:
       self->info = (ProcInfo *) g_value_get_pointer (value);
-      break;
-    case PROP_TIMER:
-      self->timer = g_value_get_uint (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -205,17 +118,45 @@ struct glibtop_map_entry_cmp
 };
 
 
+static inline char *
+dev_as_string (dev_t dev)
+{
+  return g_strdup_printf ("%02x:%02x", major (dev), minor (dev));
+}
+
+
+static char *
+get_device_name (GsmMemMapsView *self, dev_t dev)
+{
+  g_autofree char *name = NULL;
+  const char *found_name;
+
+  if (dev == 0) {
+    return NULL;
+  }
+
+  name = dev_as_string (dev);
+  found_name =
+    static_cast<const char *>(g_hash_table_lookup (self->devices, name));
+
+  if (found_name) {
+    return g_strdup (found_name);
+  }
+
+  return g_steal_pointer (&name);
+}
+
+
 static void
 update_row (GsmMemMapsView          *self,
             guint                    position,
             gboolean                 newrow,
-            const glibtop_map_entry *memmaps,
-            OffsetFormater          *formater)
+            const glibtop_map_entry *memmaps)
 {
   guint64 size;
-  string filename, device;
-  string vmstart, vmend, vmoffset;
+  const char *filename = NULL;
   char flags[5] = "----";
+  g_autofree char *device = NULL;
 
   size = memmaps->end - memmaps->start;
 
@@ -233,49 +174,66 @@ update_row (GsmMemMapsView          *self,
   if (memmaps->flags & (1 << GLIBTOP_MAP_ENTRY_FILENAME))
     filename = memmaps->filename;
 
-  vmstart = formater->format (memmaps->start);
-  vmend = formater->format (memmaps->end);
-  vmoffset = formater->format (memmaps->offset);
-  device = self->devices.get (memmaps->device);
+  device = get_device_name (self, memmaps->device);
 
-  MemMapsData *memmaps_data;
+  GsmMemMap *memmaps_data;
 
   if (!newrow)
     {
-      memmaps_data = memmaps_data_new (filename.c_str (),
-                                       vmstart.c_str (),
-                                       vmend.c_str (),
-                                       size,
-                                       flags,
-                                       vmoffset.c_str (),
-                                       memmaps->private_clean,
-                                       memmaps->private_dirty,
-                                       memmaps->shared_clean,
-                                       memmaps->shared_dirty,
-                                       device.c_str (),
-                                       memmaps->inode);
-
+      memmaps_data = gsm_mem_map_new (filename,
+                                      memmaps->start,
+                                      memmaps->end,
+                                      size,
+                                      flags,
+                                      memmaps->offset,
+                                      memmaps->private_clean,
+                                      memmaps->private_dirty,
+                                      memmaps->shared_clean,
+                                      memmaps->shared_dirty,
+                                      device,
+                                      memmaps->inode);
+    
       g_list_store_insert (self->list_store, position, memmaps_data);
     }
   else
     {
-      memmaps_data = MEMMAPS_DATA (g_list_model_get_object (G_LIST_MODEL (self->list_store), position));
+      memmaps_data = GSM_MEM_MAP (g_list_model_get_object (G_LIST_MODEL (self->list_store), position));
 
       g_object_set (memmaps_data,
-                    "filename", filename.c_str (),
-                    "vmstart", vmstart.c_str (),
-                    "vmend", vmend.c_str (),
-                    "vmsize", size,
+                    "filename", filename,
+                    "vm-start", memmaps->start,
+                    "vm-end", memmaps->end,
+                    "vm-size", size,
                     "flags", flags,
-                    "vmoffset", vmoffset.c_str (),
-                    "privateclean", memmaps->private_clean,
-                    "privatedirty", memmaps->private_dirty,
-                    "sharedclean", memmaps->shared_clean,
-                    "shareddirty", memmaps->shared_dirty,
-                    "device", device.c_str (),
+                    "vm-offset", memmaps->offset,
+                    "private-clean", memmaps->private_clean,
+                    "private-dirty", memmaps->private_dirty,
+                    "shared-clean", memmaps->shared_clean,
+                    "shared-dirty", memmaps->shared_dirty,
+                    "device", device,
                     "inode", memmaps->inode,
                     NULL);
     }
+}
+
+
+static void
+update_devices (GsmMemMapsView *self)
+{
+  g_hash_table_remove_all (self->devices);
+
+  glibtop_mountlist list;
+  g_autofree glibtop_mountentry *entries = glibtop_get_mountlist (&list, 1);
+
+  for (size_t i = 0; i != list.number; ++i) {
+    GStatBuf buf;
+
+    if (g_stat (entries[i].devname, &buf) != -1) {
+      g_hash_table_insert (self->devices,
+                           dev_as_string (buf.st_rdev),
+                           g_strdup (entries[i].devname));
+    }
+  }
 }
 
 
@@ -290,7 +248,7 @@ update_memmaps_dialog (GsmMemMapsView *self)
   if (!memmaps or procmap.number == 0)
     return;
 
-  OffsetFormater formater (memmaps[procmap.number - 1]);
+  self->format_32bit = memmaps[procmap.number - 1].end <= G_MAXUINT32;
 
   guint position = 0;
 
@@ -305,21 +263,11 @@ update_memmaps_dialog (GsmMemMapsView *self)
 
   while (position < g_list_model_get_n_items (G_LIST_MODEL (self->list_store)))
     {
-      char *vmstart;
-      guint64 start;
-      MemMapsData *memmaps_data;
+      uint64_t start;
+      GsmMemMap *memmaps_data;
 
-      memmaps_data = MEMMAPS_DATA (g_list_model_get_object (G_LIST_MODEL (self->list_store), position));
-      g_object_get (memmaps_data, "vmstart", &vmstart, NULL);
-
-      try {
-          std::istringstream (vmstart) >> std::hex >> start;
-        } catch (std::logic_error &e) {
-          g_warning ("Could not parse %s", vmstart);
-          start = 0;
-        }
-
-      g_free (vmstart);
+      memmaps_data = GSM_MEM_MAP (g_list_model_get_object (G_LIST_MODEL (self->list_store), position));
+      g_object_get (memmaps_data, "vm-start", &start, NULL);
 
       bool found = std::binary_search (memmaps, memmaps + procmap.number,
                                        start, glibtop_map_entry_cmp ());
@@ -335,7 +283,7 @@ update_memmaps_dialog (GsmMemMapsView *self)
         break;
     }
 
-  self->devices.update ();
+  update_devices (self);
 
   /*
     add the new maps
@@ -348,34 +296,13 @@ update_memmaps_dialog (GsmMemMapsView *self)
       if (it != iter_cache.end ())
         {
           position = it->second;
-          update_row (self, position, TRUE, &memmaps[i], &formater);
+          update_row (self, position, TRUE, &memmaps[i]);
         }
       else
-        update_row (self, position, FALSE, &memmaps[i], &formater);
+        update_row (self, position, FALSE, &memmaps[i]);
     }
 
   g_free (memmaps);
-}
-
-
-static void
-dialog_action (GSimpleAction*,
-               GVariant*,
-               GsmMemMapsView* self)
-{
-  g_source_remove (self->timer);
-
-  gtk_window_destroy (GTK_WINDOW (self));
-}
-
-
-static void
-dialog_response (GsmMemMapsView *self,
-                 gpointer)
-{
-  g_source_remove (self->timer);
-
-  gtk_window_destroy (GTK_WINDOW (self));
 }
 
 
@@ -388,15 +315,29 @@ memmaps_timer (gpointer data)
 
   update_memmaps_dialog (self);
 
-  return TRUE;
+  return G_SOURCE_CONTINUE;
 }
 
+
 static char *
-format_size (gpointer,
-             guint64 size)
+format_size (G_GNUC_UNUSED GObject *object, uint64_t size)
 {
   return g_format_size_full (size, G_FORMAT_SIZE_IEC_UNITS);
 }
+
+
+static char *
+format_offset (GObject *object, uint64_t offset)
+{
+  GsmMemMapsView *self = GSM_MEMMAPS_VIEW (object);
+
+  if (self->format_32bit) {
+    return g_strdup_printf ("%08" G_GINT64_MODIFIER "x", offset);
+  }
+
+  return g_strdup_printf ("%016" G_GINT64_MODIFIER "x", offset);
+}
+
 
 static void
 gsm_memmaps_view_constructed (GObject *object)
@@ -410,6 +351,7 @@ gsm_memmaps_view_constructed (GObject *object)
   g_free (subtitle);
 
   self->timer = g_timeout_add_seconds (5, memmaps_timer, self);
+  g_source_set_name_by_id (self->timer, "refresh memmaps");
   update_memmaps_dialog (self);
 
   G_OBJECT_CLASS (gsm_memmaps_view_parent_class)->constructed (object);
@@ -420,23 +362,14 @@ gsm_memmaps_view_class_init (GsmMemMapsViewClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gsm_memmaps_view_finalize;
+  object_class->dispose = gsm_memmaps_view_dispose;
   object_class->get_property = gsm_memmaps_view_get_property;
   object_class->set_property = gsm_memmaps_view_set_property;
   object_class->constructed = gsm_memmaps_view_constructed;
 
-  properties [PROP_INFO] =
-    g_param_spec_pointer ("info",
-                          "Info",
-                          "Info",
-                          (GParamFlags) (G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
-
-  properties [PROP_TIMER] =
-    g_param_spec_uint ("timer",
-                       "Timer",
-                       "Timer",
-                       0, G_MAXUINT, 0,
-                       G_PARAM_READWRITE);
+  properties[PROP_INFO] =
+    g_param_spec_pointer ("info", NULL, NULL,
+                          (GParamFlags) (G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_properties (object_class, N_PROPS, properties);
 
@@ -449,25 +382,28 @@ gsm_memmaps_view_class_init (GsmMemMapsViewClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GsmMemMapsView, list_store);
 
   gtk_widget_class_bind_template_callback (widget_class, format_size);
+  gtk_widget_class_bind_template_callback (widget_class, format_offset);
+
+  g_type_ensure (GSM_TYPE_MEM_MAP);
 }
+
 
 static void
 gsm_memmaps_view_init (GsmMemMapsView *self)
 {
-  GSimpleActionGroup *action_group;
-
-  g_type_ensure (MEMMAPS_TYPE_DATA);
+  self->devices = g_hash_table_new_full (g_str_hash,
+                                         g_str_equal,
+                                         g_free,
+                                         g_free);
 
   gtk_widget_init_template (GTK_WIDGET (self));
+}
 
-  action_group = g_simple_action_group_new ();
 
-  GSimpleAction *close_action = g_simple_action_new ("close", NULL);
-  g_signal_connect (close_action, "activate", G_CALLBACK (dialog_action), self);
-  g_action_map_add_action (G_ACTION_MAP (action_group), G_ACTION (close_action));
-
-  gtk_widget_insert_action_group (GTK_WIDGET (self), "memmaps", G_ACTION_GROUP (action_group));
-
-  g_signal_connect (G_OBJECT (self), "close-request",
-                    G_CALLBACK (dialog_response), NULL);
+GsmMemMapsView *
+gsm_memmaps_view_new (ProcInfo *info)
+{
+  return GSM_MEMMAPS_VIEW (g_object_new (GSM_TYPE_MEMMAPS_VIEW,
+                                         "info", info,
+                                         NULL));
 }
