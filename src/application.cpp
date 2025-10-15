@@ -501,11 +501,6 @@ GsmApplication::shutdown ()
   if (timeout)
     g_source_remove (timeout);
 
-  guint disks_timeout = gsm_disks_view_get_timeout (disk_list);
-
-  if (disks_timeout)
-    g_source_remove (disks_timeout);
-
   proctable_free_table (this);
   delete smooth_refresh;
   delete pretty_table;

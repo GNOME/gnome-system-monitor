@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="GsmDisksView" parent="GtkWidget">
+  <template class="GsmDisksView" parent="AdwBin">
     <child>
       <object class="GtkBox">
         <property name="orientation">vertical</property>
@@ -357,5 +357,9 @@
   <object class="GsmColumnViewPersister" id="persister">
     <property name="name">disksview</property>
     <property name="view">column_view</property>
+  </object>
+  <object class="GSignalGroup" id="root_signals">
+    <property name="target-type">GtkWindow</property>
+    <property name="target" bind-source="GsmDisksView" bind-property="root" bind-flags="sync-create" />
   </object>
 </interface>

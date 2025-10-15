@@ -55,7 +55,7 @@ search_text_changed (GtkEditable*,
   gtk_tree_model_filter_refilter (GTK_TREE_MODEL_FILTER (gtk_tree_model_sort_get_model (
                                                            GTK_TREE_MODEL_SORT (gtk_tree_view_get_model (
                                                                                   GTK_TREE_VIEW (app->tree))))));
-  proctable_refresh_summary_headers(app);                                                                                  
+  proctable_refresh_summary_headers(app);
 }
 
 /*
@@ -743,17 +743,8 @@ update_page_activities (GsmApplication *app)
       load_graph_stop (app->net_graph);
       load_graph_stop (app->disk_graph);
     }
-
-  if (strcmp (current_page, "disks") == 0)
-    {
-      disks_update (app->disk_list);
-      disks_thaw (app->disk_list);
-    }
-  else
-    {
-      disks_freeze (app->disk_list);
-    }
 }
+
 
 static void
 cb_change_current_page (AdwViewStack *view_stack,
@@ -818,10 +809,6 @@ cb_main_window_suspended (GtkWindow      *window,
           load_graph_stop (app->net_graph);
           load_graph_stop (app->disk_graph);
         }
-      else if (current_page == "disks")
-        {
-          disks_freeze (app->disk_list);
-        }
     }
   else
     {
@@ -837,13 +824,9 @@ cb_main_window_suspended (GtkWindow      *window,
           load_graph_start (app->net_graph);
           load_graph_start (app->disk_graph);
         }
-      else if (current_page == "disks")
-        {
-          disks_update (app->disk_list);
-          disks_thaw (app->disk_list);
-        }
     }
 }
+
 
 void
 create_main_window (GsmApplication *app)

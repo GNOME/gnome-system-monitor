@@ -20,7 +20,7 @@
 
 
 struct _GsmDisksView {
-  GtkWidget parent_instance;
+  AdwBin parent_instance;
 
   GtkColumnView *column_view;
   GtkSingleSelection *selection;
@@ -28,35 +28,42 @@ struct _GsmDisksView {
   /* We don't actually use this from C,
    * but if we don't bind it it'll be disposed */
   GsmColumnViewPersister *persister;
+  GSignalGroup *root_signals;
 
   int update_interval;
   gboolean show_all_fs;
   guint timeout;
 };
 
-G_DEFINE_TYPE (GsmDisksView, gsm_disks_view, GTK_TYPE_WIDGET)
+
+G_DEFINE_FINAL_TYPE (GsmDisksView, gsm_disks_view, ADW_TYPE_BIN)
+
 
 enum {
   PROP_0,
   PROP_UPDATE_INTERVAL,
   PROP_SHOW_ALL_FS,
-  PROP_TIMEOUT,
   N_PROPS
 };
+static GParamSpec *properties[N_PROPS];
 
-static GParamSpec *properties [N_PROPS];
 
-GsmDisksView *
-gsm_disks_view_new (void)
+static inline void
+clear_timeout (GsmDisksView *self)
 {
-  return GSM_DISKS_VIEW (g_object_new (GSM_TYPE_DISKS_VIEW, NULL));
+  g_debug ("disks: clear timeout");
+  g_clear_handle_id (&self->timeout, g_source_remove);
 }
+
 
 static void
-gsm_disks_view_finalize (GObject *object)
+gsm_disks_view_dispose (GObject *object)
 {
-  G_OBJECT_CLASS (gsm_disks_view_parent_class)->finalize (object);
+  clear_timeout (GSM_DISKS_VIEW (object));
+
+  G_OBJECT_CLASS (gsm_disks_view_parent_class)->dispose (object);
 }
+
 
 static void
 gsm_disks_view_get_property (GObject    *object,
@@ -66,21 +73,18 @@ gsm_disks_view_get_property (GObject    *object,
 {
   GsmDisksView *self = GSM_DISKS_VIEW (object);
 
-  switch (prop_id)
-    {
+  switch (prop_id) {
     case PROP_UPDATE_INTERVAL:
       g_value_set_int (value, self->update_interval);
       break;
     case PROP_SHOW_ALL_FS:
       g_value_set_boolean (value, self->show_all_fs);
       break;
-    case PROP_TIMEOUT:
-      g_value_set_uint (value, self->timeout);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-    }
+  }
 }
+
 
 static void
 gsm_disks_view_set_property (GObject      *object,
@@ -90,32 +94,16 @@ gsm_disks_view_set_property (GObject      *object,
 {
   GsmDisksView *self = GSM_DISKS_VIEW (object);
 
-  switch (prop_id)
-    {
+  switch (prop_id) {
     case PROP_UPDATE_INTERVAL:
       self->update_interval = g_value_get_int (value);
       break;
     case PROP_SHOW_ALL_FS:
       self->show_all_fs = g_value_get_boolean (value);
       break;
-    case PROP_TIMEOUT:
-      self->timeout = g_value_get_uint (value);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-    }
-}
-
-guint
-gsm_disks_view_get_timeout (GsmDisksView *self)
-{
-  return self->timeout;
-}
-
-GtkColumnView *
-gsm_disks_view_get_column_view (GsmDisksView *self)
-{
-  return self->column_view;
+  }
 }
 
 
@@ -256,27 +244,8 @@ add_disk (GsmDisksView             *self,
   }
 }
 
+
 static void
-mount_changed (GVolumeMonitor*,
-               GMount*,
-               gpointer data)
-{
-  GsmDisksView *self = (GsmDisksView *) data;
-
-  disks_update (self);
-}
-
-static gboolean
-cb_timeout (gpointer data)
-{
-  GsmDisksView *self = (GsmDisksView *) data;
-
-  disks_update (self);
-
-  return G_SOURCE_CONTINUE;
-}
-
-void
 disks_update (GsmDisksView *self)
 {
   glibtop_mountentry *entries;
@@ -294,6 +263,60 @@ disks_update (GsmDisksView *self)
   g_free (entries);
 }
 
+
+static gboolean
+disks_timeout (gpointer data)
+{
+  disks_update (GSM_DISKS_VIEW (data));
+
+  return G_SOURCE_CONTINUE;
+}
+
+
+static inline void
+setup_timeout (GsmDisksView *self, gboolean reset)
+{
+  if (self->timeout && !reset) {
+    return;
+  }
+
+  clear_timeout (self);
+
+  g_debug ("disks: start timeout");
+  g_clear_handle_id (&self->timeout, g_source_remove);
+  self->timeout = g_timeout_add (self->update_interval, disks_timeout, self);
+  g_source_set_name_by_id (self->timeout, "refresh disks");
+  disks_update (self);
+}
+
+
+static void
+gsm_disks_view_map (GtkWidget *widget)
+{
+  GTK_WIDGET_CLASS (gsm_disks_view_parent_class)->map (widget);
+
+  setup_timeout (GSM_DISKS_VIEW (widget), FALSE);
+}
+
+
+static void
+gsm_disks_view_unmap (GtkWidget *widget)
+{
+  GTK_WIDGET_CLASS (gsm_disks_view_parent_class)->unmap (widget);
+
+  clear_timeout (GSM_DISKS_VIEW (widget));
+}
+
+
+static void
+mount_changed (GVolumeMonitor*,
+               GMount*,
+               gpointer data)
+{
+  disks_update (GSM_DISKS_VIEW (data));
+}
+
+
 static void
 init_volume_monitor (GsmDisksView *self)
 {
@@ -304,33 +327,7 @@ init_volume_monitor (GsmDisksView *self)
   g_signal_connect (monitor, "mount-removed", G_CALLBACK (mount_changed), self);
 }
 
-void
-disks_freeze (GsmDisksView *self)
-{
-  if (self->timeout)
-    {
-      g_source_remove (self->timeout);
-      self->timeout = 0;
-    }
-}
 
-void
-disks_thaw (GsmDisksView *self)
-{
-  if (self->timeout)
-    return;
-
-  self->timeout = g_timeout_add (self->update_interval,
-                                 cb_timeout,
-                                 self);
-}
-
-void
-disks_reset_timeout (GsmDisksView *self)
-{
-  disks_freeze (self);
-  disks_thaw (self);
-}
 
 
 static void
@@ -338,20 +335,16 @@ cb_show_all_fs (GSettings *,
                 gchar     *,
                 gpointer   data)
 {
-  GsmDisksView *self = (GsmDisksView *) data;
-
-  disks_update (self);
-  disks_reset_timeout (self);
+  setup_timeout (GSM_DISKS_VIEW (data), TRUE);
 }
+
 
 static void
 cb_timeout_changed (GSettings *,
                     gchar     *,
                     gpointer   data)
 {
-  GsmDisksView *self = (GsmDisksView *) data;
-
-  disks_reset_timeout (self);
+  setup_timeout (GSM_DISKS_VIEW (data), TRUE);
 }
 
 
@@ -413,35 +406,25 @@ static void
 gsm_disks_view_class_init (GsmDisksViewClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->finalize = gsm_disks_view_finalize;
+  object_class->dispose = gsm_disks_view_dispose;
   object_class->get_property = gsm_disks_view_get_property;
   object_class->set_property = gsm_disks_view_set_property;
 
-  properties [PROP_UPDATE_INTERVAL] =
-    g_param_spec_int ("update-interval",
-                      "Update interval",
-                      "Update interval",
+  widget_class->map = gsm_disks_view_map;
+  widget_class->unmap = gsm_disks_view_unmap;
+
+  properties[PROP_UPDATE_INTERVAL] =
+    g_param_spec_int ("update-interval", NULL, NULL,
                       0, G_MAXINT32, 0,
                       G_PARAM_READWRITE);
-
-  properties [PROP_SHOW_ALL_FS] =
-    g_param_spec_boolean ("show-all-fs",
-                          "Show all fs",
-                          "Show all fs",
-                           FALSE,
-                           G_PARAM_READWRITE);
-
-  properties [PROP_TIMEOUT] =
-    g_param_spec_uint ("timeout",
-                       "Timeout",
-                       "Timeout",
-                       0, G_MAXUINT, 0,
-                       G_PARAM_READWRITE);
+  properties[PROP_SHOW_ALL_FS] =
+    g_param_spec_boolean ("show-all-fs", NULL, NULL,
+                          FALSE,
+                          G_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class, N_PROPS, properties);
-
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/gnome-system-monitor/data/disks.ui");
 
@@ -449,14 +432,28 @@ gsm_disks_view_class_init (GsmDisksViewClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GsmDisksView, selection);
   gtk_widget_class_bind_template_child (widget_class, GsmDisksView, list_store);
   gtk_widget_class_bind_template_child (widget_class, GsmDisksView, persister);
+  gtk_widget_class_bind_template_child (widget_class, GsmDisksView, root_signals);
 
   gtk_widget_class_bind_template_callback (widget_class, format_size);
   gtk_widget_class_bind_template_callback (widget_class, format_percentage);
   gtk_widget_class_bind_template_callback (widget_class, activate_disk);
 
-  gtk_widget_class_set_layout_manager_type (widget_class, GTK_TYPE_BIN_LAYOUT);
-
   g_type_ensure (GSM_TYPE_COLUMN_VIEW_PERSISTER);
+}
+
+
+static void
+suspended_notified (GtkWindow                *window,
+                    G_GNUC_UNUSED GParamSpec *pspec,
+                    gpointer                  user_data)
+{
+  GsmDisksView *self = GSM_DISKS_VIEW (user_data);
+
+  if (gtk_window_is_suspended (window)) {
+    clear_timeout (self);
+  } else if (gtk_widget_get_mapped (GTK_WIDGET (window))) {
+    setup_timeout (self, FALSE);
+  }
 }
 
 
@@ -484,4 +481,25 @@ gsm_disks_view_init (GsmDisksView *self)
                     G_CALLBACK (cb_show_all_fs), self);
 
   g_object_unref (settings);
+
+  g_signal_group_connect (self->root_signals,
+                          "notify::suspended",
+                          G_CALLBACK (suspended_notified),
+                          self);
+}
+
+
+GsmDisksView *
+gsm_disks_view_new (void)
+{
+  return g_object_new (GSM_TYPE_DISKS_VIEW, NULL);
+}
+
+
+GtkColumnView *
+gsm_disks_view_get_column_view (GsmDisksView *self)
+{
+  g_return_val_if_fail (GSM_IS_DISKS_VIEW (self), NULL);
+
+  return self->column_view;
 }
