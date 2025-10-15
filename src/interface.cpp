@@ -548,6 +548,24 @@ on_activate_memory_maps (GSimpleAction *,
                                        NULL);
 }
 
+
+static void
+create_single_openfiles_dialog (GtkTreeModel *model,
+                                GtkTreePath  *,
+                                GtkTreeIter  *iter,
+                                gpointer)
+{
+  ProcInfo *info;
+  GsmOpenFiles *open_files;
+
+  gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
+
+  open_files = gsm_open_files_new (GsmApplication::get().gobj(), info);
+
+  gtk_window_present (GTK_WINDOW (open_files));
+}
+
+
 static void
 on_activate_open_files (GSimpleAction *,
                         GVariant *,
@@ -555,7 +573,8 @@ on_activate_open_files (GSimpleAction *,
 {
   GsmApplication *app = (GsmApplication *) data;
 
-  create_openfiles_dialog (app);
+  gtk_tree_selection_selected_foreach (app->selection, create_single_openfiles_dialog,
+                                       app);
 }
 
 static void

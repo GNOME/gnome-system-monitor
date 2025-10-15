@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <object class="OpenFilesData" type-func="openfiles_data_get_type"/>
-  <object class="AdwWindow" id="openfiles_dialog">
+  <template class="GsmOpenFiles" parent="AdwWindow">
     <property name="width-request">360</property>
     <property name="height-request">294</property>
     <property name="default-width">575</property>
@@ -32,7 +31,7 @@
                         <property name="model">
                           <object class="GtkSortListModel">
                             <property name="model">
-                              <object class="GListStore" id="openfiles_store"/>
+                              <object class="GListStore" id="store"/>
                             </property>
                             <binding name="sorter">
                               <lookup name="sorter">openfiles_view</lookup>
@@ -48,7 +47,7 @@
                         <property name="sorter">
                           <object class="GtkNumericSorter">
                             <property name="expression">
-                              <lookup name="fd" type="OpenFilesData"/>
+                              <lookup name="fd" type="GsmOpenFile"/>
                             </property>
                           </object>
                         </property>
@@ -62,7 +61,7 @@
   <object class="GtkLabel">
     <property name="xalign">0</property>
     <binding name="label">
-      <lookup name="fd" type="OpenFilesData">
+      <lookup name="fd" type="GsmOpenFile">
         <lookup name="item">GtkListItem</lookup>
       </lookup>
     </binding>
@@ -82,7 +81,7 @@
                         <property name="sorter">
                           <object class="GtkStringSorter">
                             <property name="expression">
-                              <lookup name="type" type="OpenFilesData"/>
+                              <lookup name="type" type="GsmOpenFile"/>
                             </property>
                           </object>
                         </property>
@@ -96,7 +95,7 @@
   <object class="GtkLabel">
     <property name="xalign">0</property>
     <binding name="label">
-      <lookup name="type" type="OpenFilesData">
+      <lookup name="type" type="GsmOpenFile">
         <lookup name="item">GtkListItem</lookup>
       </lookup>
     </binding>
@@ -117,7 +116,7 @@
                         <property name="sorter">
                           <object class="GtkStringSorter">
                             <property name="expression">
-                              <lookup name="object" type="OpenFilesData"/>
+                              <lookup name="object" type="GsmOpenFile"/>
                             </property>
                           </object>
                         </property>
@@ -131,7 +130,7 @@
   <object class="GtkLabel">
     <property name="xalign">0</property>
     <binding name="label">
-      <lookup name="object" type="OpenFilesData">
+      <lookup name="object" type="GsmOpenFile">
         <lookup name="item">GtkListItem</lookup>
       </lookup>
     </binding>
@@ -156,9 +155,9 @@
       <object class="GtkShortcutController">
         <property name="scope">managed</property>
         <child>
-          <object class="GtkShortcut" id="shortcut">
+          <object class="GtkShortcut">
             <property name="trigger">Escape</property>
-            <property name="action">action(openfiles.close)</property>
+            <property name="action">action(window.close)</property>
           </object>
         </child>
       </object>
@@ -166,5 +165,5 @@
     <style>
       <class name="view"/>
     </style>
-  </object>
+  </template>
 </interface>
