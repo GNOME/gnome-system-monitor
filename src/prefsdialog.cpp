@@ -114,15 +114,14 @@ create_field_page (GtkBuilder  *builder,
   g_list_free (columns);
 }
 
+
 static void
-create_field_page (GtkBuilder    *builder,
-                   GtkColumnView *column_view,
-                   const gchar   *widgetname)
+create_field_page (GtkBuilder *builder,
+                   GListModel *columns,
+                   const char *widgetname)
 {
-  GListModel *columns;
   AdwPreferencesGroup *group;
 
-  columns = gtk_column_view_get_columns (column_view);
   group = ADW_PREFERENCES_GROUP (gtk_builder_get_object (builder, widgetname));
   auto settings = GsmApplication::get ().settings->get_child (widgetname);
 
@@ -288,7 +287,7 @@ create_preferences_dialog (GsmApplication *app)
                    check_switch, "active",
                    G_SETTINGS_BIND_DEFAULT);
 
-  create_field_page (builder, gsm_disks_view_get_column_view (app->disk_list),
+  create_field_page (builder, gsm_disks_view_get_columns (app->disk_list),
                      GSM_SETTINGS_CHILD_DISKS);
 
   g_signal_connect (G_OBJECT (prefs_dialog), "closed",

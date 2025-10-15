@@ -25,8 +25,6 @@ void        gsm_disk_set_device        (GsmDisk              *self,
                                         GFile                *device);
 void        gsm_disk_set_directory     (GsmDisk              *self,
                                         GFile                *directory);
-gboolean    gsm_disk_is_for_directory  (GsmDisk              *self,
-                                        GFile               *directory);
 void        gsm_disk_open_root         (GsmDisk              *self,
                                         GtkWindow            *parent,
                                         GCancellable         *cancellable,

@@ -11,7 +11,6 @@ G_BEGIN_DECLS
 #define GSM_TYPE_DISKS_VIEW (gsm_disks_view_get_type ())
 G_DECLARE_FINAL_TYPE (GsmDisksView, gsm_disks_view, GSM, DISKS_VIEW, AdwBin)
 
-GsmDisksView  *gsm_disks_view_new             (void);
-GtkColumnView *gsm_disks_view_get_column_view (GsmDisksView *self);
+GListModel    *gsm_disks_view_get_columns     (GsmDisksView *self);
 
 G_END_DECLS

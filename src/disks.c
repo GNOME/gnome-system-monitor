@@ -6,7 +6,6 @@
 
 #include <glib/gi18n.h>
 
-#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gtk/gtk.h>
 #include <glibtop/mountlist.h>
 #include <glibtop/fsusage.h>
@@ -29,10 +28,15 @@ struct _GsmDisksView {
    * but if we don't bind it it'll be disposed */
   GsmColumnViewPersister *persister;
   GSignalGroup *root_signals;
+  GSignalGroup *monitor_signals;
 
   int update_interval;
   gboolean show_all_fs;
+
   guint timeout;
+  GHashTable *known_directories;
+  GSettings *settings;
+  GVolumeMonitor *monitor;
 };
 
 
@@ -59,7 +63,12 @@ clear_timeout (GsmDisksView *self)
 static void
 gsm_disks_view_dispose (GObject *object)
 {
-  clear_timeout (GSM_DISKS_VIEW (object));
+  GsmDisksView *self = GSM_DISKS_VIEW (object);
+
+  clear_timeout (self);
+  g_clear_pointer (&self->known_directories, g_hash_table_unref);
+  g_clear_object (&self->settings);
+  g_clear_object (&self->monitor);
 
   G_OBJECT_CLASS (gsm_disks_view_parent_class)->dispose (object);
 }
@@ -79,27 +88,6 @@ gsm_disks_view_get_property (GObject    *object,
       break;
     case PROP_SHOW_ALL_FS:
       g_value_set_boolean (value, self->show_all_fs);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-  }
-}
-
-
-static void
-gsm_disks_view_set_property (GObject      *object,
-                             guint         prop_id,
-                             const GValue *value,
-                             GParamSpec   *pspec)
-{
-  GsmDisksView *self = GSM_DISKS_VIEW (object);
-
-  switch (prop_id) {
-    case PROP_UPDATE_INTERVAL:
-      self->update_interval = g_value_get_int (value);
-      break;
-    case PROP_SHOW_ALL_FS:
-      self->show_all_fs = g_value_get_boolean (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -134,81 +122,73 @@ fsusage_stats (const glibtop_fsusage *buf,
 }
 
 
-static gboolean
-find_disk_in_model (GsmDisksView *self,
-                    GFile        *directory,
-                    guint        *position)
+static inline GHashTable *
+get_current_directories (GsmDisksView *self)
 {
-  for (guint pos = 0;
-       pos < g_list_model_get_n_items (G_LIST_MODEL (self->list_store));
-       pos++) {
-    g_autoptr (GsmDisk) data =
-      GSM_DISK (g_list_model_get_object (G_LIST_MODEL (self->list_store), pos));
+  g_autoptr (GHashTable) current_directories =
+    g_hash_table_new_full (g_file_hash,
+                           (GEqualFunc) g_file_equal,
+                           g_object_unref,
+                           NULL);
+  GHashTableIter iter;
+  GFile *directory;
 
-    if (gsm_disk_is_for_directory (data, directory)) {
-      *position = pos;
-
-      return TRUE;
-    }
+  /* Produce a hashset of the current keys */
+  g_hash_table_iter_init (&iter, self->known_directories);
+  while (g_hash_table_iter_next (&iter, (gpointer *) &directory, NULL)) {
+    g_hash_table_add (current_directories, g_object_ref (directory));
   }
 
-  return FALSE;
+  return g_steal_pointer (&current_directories);
 }
 
 
-static void
-remove_old_disks (GListModel               *model,
-                  const glibtop_mountentry *entries,
-                  guint                     n)
+static inline void
+drop_leftover_directories (GsmDisksView *self,
+                           GHashTable   *leftover_directories)
 {
-  guint position = 0;
+  GHashTableIter iter;
+  GFile *directory;
 
-  while (position < g_list_model_get_n_items (model)) {
-    g_autoptr (GsmDisk) data =
-      GSM_DISK (g_list_model_get_object (model, position));
-    gboolean found = FALSE;
+  g_hash_table_iter_init (&iter, leftover_directories);
+  while (g_hash_table_iter_next (&iter, (gpointer *) &directory, NULL)) {
+    g_autoptr (GFile) stolen_key = NULL;
+    g_autoptr (GsmDisk) disk = NULL;
+    guint position;
 
-    for (guint i = 0; i != n; ++i) {
-      g_autoptr (GFile) directory = g_file_new_for_path (entries[i].mountdir);
-
-      if (gsm_disk_is_for_directory (data, directory)) {
-        found = TRUE;
-        break;
-      }
+    if (!g_hash_table_steal_extended (self->known_directories,
+                                      directory,
+                                      (gpointer *) &stolen_key,
+                                      (gpointer *) &disk)) {
+      continue;
     }
 
-    if (!found) {
-      if (g_list_store_find (G_LIST_STORE (model), G_OBJECT (data), &position)) {
-        g_list_store_remove (G_LIST_STORE (model), position);
-      } else {
-        break;
-      }
+    if (g_list_store_find (self->list_store, disk, &position)) {
+      g_list_store_remove (self->list_store, position);
     }
-
-    position++;
   }
 }
 
 
 static inline void
-add_disk (GsmDisksView             *self,
-          const glibtop_mountentry *entry)
+handle_entry (GsmDisksView             *self,
+              GPtrArray                *new_disks,
+              GHashTable               *leftover_directories,
+              const glibtop_mountentry *entry)
 {
   glibtop_fsusage usage;
   uint64_t bused, bfree, bavail, btotal;
   int percentage;
-  guint position = 0;
-  g_autoptr (GsmDisk) data = NULL;
   g_autoptr (GFile) device = g_file_new_for_path (entry->devname);
   g_autoptr (GFile) directory = g_file_new_for_path (entry->mountdir);
+  GsmDisk *existing_disk = NULL;
 
   glibtop_get_fsusage (&usage, entry->mountdir);
 
-  if (!self->show_all_fs && usage.blocks == 0) {
-    if (find_disk_in_model (self, directory, &position)) {
-      g_list_store_remove (self->list_store, position);
-    }
+  /* If this was already a known directory, save it from being cleaned up */
+  g_hash_table_remove (leftover_directories, directory);
 
+  if (!self->show_all_fs && usage.blocks == 0) {
     return;
   }
 
@@ -218,22 +198,10 @@ add_disk (GsmDisksView             *self,
    * still need to update all the fields.
    * This makes selection persistent.
    */
-  if (!find_disk_in_model (self, directory, &position)) {
-    data = gsm_disk_new (device,
-                         directory,
-                         entry->type,
-                         btotal,
-                         bfree,
-                         bavail,
-                         bused,
-                         percentage);
-    g_list_store_insert (self->list_store, position, data);
-  } else {
-    data = GSM_DISK (g_list_model_get_object (G_LIST_MODEL (self->list_store), position));
-
-    gsm_disk_set_device (data, device);
-    gsm_disk_set_directory (data, directory);
-    g_object_set (data,
+  existing_disk = g_hash_table_lookup (self->known_directories, directory);
+  if (existing_disk) {
+    gsm_disk_set_device (existing_disk, device);
+    g_object_set (existing_disk,
                   "type", entry->type,
                   "total", btotal,
                   "free", bfree,
@@ -241,6 +209,20 @@ add_disk (GsmDisksView             *self,
                   "used", bused,
                   "percentage", percentage,
                   NULL);
+  } else {
+    g_autoptr (GsmDisk) disk = gsm_disk_new (device,
+                                             directory,
+                                             entry->type,
+                                             btotal,
+                                             bfree,
+                                             bavail,
+                                             bused,
+                                             percentage);
+
+    g_hash_table_insert (self->known_directories,
+                         g_steal_pointer (&directory),
+                         g_object_ref (disk));
+    g_ptr_array_add (new_disks, g_steal_pointer (&disk));
   }
 }
 
@@ -248,19 +230,26 @@ add_disk (GsmDisksView             *self,
 static void
 disks_update (GsmDisksView *self)
 {
-  glibtop_mountentry *entries;
+  g_autoptr (GHashTable) leftover_directories =
+    get_current_directories (self);
+  g_autofree glibtop_mountentry *entries;
+  g_autoptr (GPtrArray) new_disks =
+    g_ptr_array_new_null_terminated (10, g_object_unref, TRUE);
   glibtop_mountlist mountlist;
-  guint i;
 
   entries = glibtop_get_mountlist (&mountlist, self->show_all_fs);
 
-  remove_old_disks (G_LIST_MODEL (self->list_store), entries, mountlist.number);
-
-  for (i = 0; i < mountlist.number; i++) {
-    add_disk (self, &entries[i]);
+  for (guint i = 0; i < mountlist.number; i++) {
+    handle_entry (self, new_disks, leftover_directories, &entries[i]);
   }
 
-  g_free (entries);
+  g_list_store_splice (self->list_store,
+                       0,
+                       0,
+                       new_disks->pdata,
+                       new_disks->len);
+
+  drop_leftover_directories (self, leftover_directories);
 }
 
 
@@ -291,6 +280,47 @@ setup_timeout (GsmDisksView *self, gboolean reset)
 
 
 static void
+gsm_disks_view_set_property (GObject      *object,
+                             guint         prop_id,
+                             const GValue *value,
+                             GParamSpec   *pspec)
+{
+  GsmDisksView *self = GSM_DISKS_VIEW (object);
+
+  switch (prop_id) {
+    case PROP_UPDATE_INTERVAL:
+      {
+        int new_value = g_value_get_int (value);
+
+        if (new_value == self->update_interval) {
+          return;
+        }
+
+        self->update_interval = new_value;
+        setup_timeout (self, TRUE);
+        g_object_notify_by_pspec (object, pspec);
+      }
+      break;
+    case PROP_SHOW_ALL_FS:
+      {
+        gboolean new_value = g_value_get_boolean (value);
+
+        if (new_value == self->show_all_fs) {
+          return;
+        }
+
+        self->show_all_fs = new_value;
+        disks_update (self);
+        g_object_notify_by_pspec (object, pspec);
+      }
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+  }
+}
+
+
+static void
 gsm_disks_view_map (GtkWidget *widget)
 {
   GTK_WIDGET_CLASS (gsm_disks_view_parent_class)->map (widget);
@@ -309,42 +339,11 @@ gsm_disks_view_unmap (GtkWidget *widget)
 
 
 static void
-mount_changed (GVolumeMonitor*,
-               GMount*,
-               gpointer data)
+mount_changed (G_GNUC_UNUSED GVolumeMonitor *monitor,
+               G_GNUC_UNUSED GMount         *mount,
+               gpointer                      data)
 {
   disks_update (GSM_DISKS_VIEW (data));
-}
-
-
-static void
-init_volume_monitor (GsmDisksView *self)
-{
-  GVolumeMonitor *monitor = g_volume_monitor_get ();
-
-  g_signal_connect (monitor, "mount-added", G_CALLBACK (mount_changed), self);
-  g_signal_connect (monitor, "mount-changed", G_CALLBACK (mount_changed), self);
-  g_signal_connect (monitor, "mount-removed", G_CALLBACK (mount_changed), self);
-}
-
-
-
-
-static void
-cb_show_all_fs (GSettings *,
-                gchar     *,
-                gpointer   data)
-{
-  setup_timeout (GSM_DISKS_VIEW (data), TRUE);
-}
-
-
-static void
-cb_timeout_changed (GSettings *,
-                    gchar     *,
-                    gpointer   data)
-{
-  setup_timeout (GSM_DISKS_VIEW (data), TRUE);
 }
 
 
@@ -433,6 +432,7 @@ gsm_disks_view_class_init (GsmDisksViewClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GsmDisksView, list_store);
   gtk_widget_class_bind_template_child (widget_class, GsmDisksView, persister);
   gtk_widget_class_bind_template_child (widget_class, GsmDisksView, root_signals);
+  gtk_widget_class_bind_template_child (widget_class, GsmDisksView, monitor_signals);
 
   gtk_widget_class_bind_template_callback (widget_class, format_size);
   gtk_widget_class_bind_template_callback (widget_class, format_percentage);
@@ -460,27 +460,33 @@ suspended_notified (GtkWindow                *window,
 static void
 gsm_disks_view_init (GsmDisksView *self)
 {
-  GSettings *settings;
-
   gtk_widget_init_template (GTK_WIDGET (self));
 
-  settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
+  self->known_directories = g_hash_table_new_full (g_file_hash,
+                                                   (GEqualFunc) g_file_equal,
+                                                   g_object_unref,
+                                                   g_object_unref);
 
-  init_volume_monitor (self);
+  self->settings = g_settings_new (GSM_GSETTINGS_SCHEMA);
 
-  g_settings_bind (settings, GSM_SETTING_DISKS_UPDATE_INTERVAL,
+  self->monitor = g_volume_monitor_get ();
+
+  g_signal_group_connect (self->monitor_signals,
+                          "mount-added", G_CALLBACK (mount_changed),
+                          self);
+  g_signal_group_connect (self->monitor_signals,
+                          "mount-changed", G_CALLBACK (mount_changed),
+                          self);
+  g_signal_group_connect (self->monitor_signals,
+                          "mount-removed", G_CALLBACK (mount_changed),
+                          self);
+  g_signal_group_set_target (self->monitor_signals, self->monitor);
+
+  g_settings_bind (self->settings, GSM_SETTING_DISKS_UPDATE_INTERVAL,
                    G_OBJECT (self), "update-interval", G_SETTINGS_BIND_DEFAULT);
 
-  g_settings_bind (settings, GSM_SETTING_SHOW_ALL_FS,
+  g_settings_bind (self->settings, GSM_SETTING_SHOW_ALL_FS,
                    G_OBJECT (self), GSM_SETTING_SHOW_ALL_FS, G_SETTINGS_BIND_DEFAULT);
-
-  g_signal_connect (G_OBJECT (settings), "changed::%s" GSM_SETTING_DISKS_UPDATE_INTERVAL,
-                    G_CALLBACK (cb_timeout_changed), self);
-
-  g_signal_connect (G_OBJECT (settings), "changed::%s" GSM_SETTING_SHOW_ALL_FS,
-                    G_CALLBACK (cb_show_all_fs), self);
-
-  g_object_unref (settings);
 
   g_signal_group_connect (self->root_signals,
                           "notify::suspended",
@@ -489,17 +495,10 @@ gsm_disks_view_init (GsmDisksView *self)
 }
 
 
-GsmDisksView *
-gsm_disks_view_new (void)
-{
-  return g_object_new (GSM_TYPE_DISKS_VIEW, NULL);
-}
-
-
-GtkColumnView *
-gsm_disks_view_get_column_view (GsmDisksView *self)
+GListModel *
+gsm_disks_view_get_columns (GsmDisksView *self)
 {
   g_return_val_if_fail (GSM_IS_DISKS_VIEW (self), NULL);
 
-  return self->column_view;
+  return gtk_column_view_get_columns (self->column_view);
 }

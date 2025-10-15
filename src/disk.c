@@ -164,6 +164,7 @@ gsm_disk_set_property (GObject      *object,
       break;
     case PROP_PERCENTAGE:
       self->percentage = g_value_get_int (value);
+      g_object_notify_by_pspec (object, pspec);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -358,15 +359,6 @@ gsm_disk_set_directory (GsmDisk *self, GFile *directory)
 
   g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_DIRECTORY]);
   g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_DISPLAY_DIRECTORY]);
-}
-
-
-gboolean
-gsm_disk_is_for_directory (GsmDisk *self, GFile *directory)
-{
-  g_return_val_if_fail (GSM_IS_DISK (self), FALSE);
-
-  return g_file_equal (self->directory, directory);
 }
 
 
