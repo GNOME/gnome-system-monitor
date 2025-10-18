@@ -1,9 +1,16 @@
-#ifndef _GSM_LSOF_H_
-#define _GSM_LSOF_H_
+/*
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
 
-#include <glib.h>
-#include "application.h"
+#pragma once
 
-void procman_lsof (GsmApplication *app);
+#include <adwaita.h>
 
-#endif /* _GSM_LSOF_H_ */
+G_BEGIN_DECLS
+
+#define GSM_TYPE_LSOF (gsm_lsof_get_type ())
+G_DECLARE_FINAL_TYPE (GsmLsof, gsm_lsof, GSM, LSOF, AdwWindow)
+
+GsmLsof *gsm_lsof_new (GtkWindow *transient_for);
+
+G_END_DECLS
