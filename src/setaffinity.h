@@ -1,11 +1,8 @@
-/**
- * Copyright (C) 2020 Jacob Barkdull
+/*
+ * SPDX-License-Identifier: GPL-2.0-or-later
  *
- * I, Jacob Barkdull, hereby release this work into the public domain.
- * This applies worldwide. If this is not legally possible, I grant any
- * entity the right to use this work for any purpose, without any
- * conditions, unless such conditions are required by law.
-**/
+ * SPDX-FileCopyrightText: Copyright (C) 2020 Jacob Barkdull
+ */
 
 
 #ifndef _GSM_SETAFFINITY_H_
