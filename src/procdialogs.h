@@ -15,9 +15,8 @@
  * License along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  */
-#ifndef _GSM_PROCDIALOGS_H_
-#define _GSM_PROCDIALOGS_H_
 
+#pragma once
 
 #include <glib.h>
 #include "application.h"
@@ -33,22 +32,7 @@ const int RENICE_VAL_MIN = -20;
 const int RENICE_VAL_MAX = 20;
 #endif
 
-
-typedef enum
-{
-  PROCMAN_ACTION_RENICE,
-  PROCMAN_ACTION_KILL
-} ProcmanActionType;
-
-
 void     procdialog_create_kill_dialog (GsmApplication *app,
                                         int             signal,
                                         gint32          proc);
 void     procdialog_create_renice_dialog (GsmApplication *app);
-gboolean multi_root_check (char *command);
-gboolean procdialog_create_root_password_dialog (ProcmanActionType type,
-                                                 GsmApplication   *app,
-                                                 gint              pid,
-                                                 gint              extra_value);
-
-#endif /* _GSM_PROCDIALOGS_H_ */

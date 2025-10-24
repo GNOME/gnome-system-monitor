@@ -34,10 +34,4 @@ void kill_process (GsmApplication *app,
                    int             sig,
                    gint32          proc);
 
-struct ProcActionArgs
-{
-  GsmApplication *app;
-  int arg_value;
-};
-
 #endif /* _GSM_PROCACTIONS_H_ */
