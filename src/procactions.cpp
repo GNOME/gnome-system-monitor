@@ -16,93 +16,90 @@
  *
  */
 
-
 #include "config.h"
 
 #include <glib/gi18n.h>
 
-#include <errno.h>
-#include <sys/time.h>
-
-#include "gsm-setpriority.h"
-#include "gsm-kill.h"
-
 #include "application.h"
+#include "gsm-actions.h"
+#include "procdialogs.h"
 #include "procinfo.h"
 #include "proctable.h"
-#include "procdialogs.h"
 #include "settings-keys.h"
 
 #include "procactions.h"
 
 
+typedef struct _PriorityData PriorityData;
+struct _PriorityData {
+  GPtrArray *infos;
+  int priority;
+  GtkWidget *parent;
+  GsmApplication *app;
+};
+
+
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 static void
-renice_single_process (GtkTreeModel *model,
-                       GtkTreePath*,
-                       GtkTreeIter  *iter,
-                       gpointer      data)
+build_priority_list (GtkTreeModel              *model,
+                     G_GNUC_UNUSED GtkTreePath *path,
+                     GtkTreeIter               *iter,
+                     gpointer                   user_data)
 {
-  g_autoptr (GError) error = NULL;
-  const struct ProcActionArgs * const args = static_cast<ProcActionArgs*>(data);
-  ProcInfo *info = NULL;
-  int saved_errno = 0;
-  g_autofree char *error_msg = NULL;
-  AdwAlertDialog *dialog;
+  PriorityData *data = static_cast<PriorityData *>(user_data);
+  ProcInfo *info;
 
   gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
 
-  if (!info)
-    return;
-  if (info->nice == args->arg_value)
-    return;
-
-  gsm_setpriority (info->pid, args->arg_value, &error);
-  if (!error) {
+  if (!info) {
     return;
   }
 
-  /* need to be root */
-  if (g_error_matches (error, G_FILE_ERROR, G_FILE_ERROR_PERM) ||
-      g_error_matches (error, G_FILE_ERROR, G_FILE_ERROR_ACCES)) {
-    gboolean success;
+  g_ptr_array_add (data->infos, info);
+}
+G_GNUC_END_IGNORE_DEPRECATIONS
 
-    success = procdialog_create_root_password_dialog (PROCMAN_ACTION_RENICE,
-                                                      args->app,
-                                                      info->pid,
-                                                      args->arg_value);
-    if (success) {
-      return;
-    }
 
-    if (errno) {
-      saved_errno = errno;
-    }
-  }
+static void
+did_priority (GObject *source, GAsyncResult *result, gpointer user_data)
+{
+  g_autoptr (GError) error = NULL;
+  PriorityData *data = static_cast<PriorityData *>(user_data);
 
-  /* failed */
+  gsm_actions_set_priority_finish (GSM_ACTIONS (source), result, &error);
+
   if (error) {
-    error_msg =
-      g_strdup_printf (_("Cannot change the priority of process with PID %d to %d.\n%s"),
-                       info->pid,
-                       args->arg_value,
-                       error->message);
-  } else {
-    error_msg =
-      g_strdup_printf (_("Cannot change the priority of process with PID %d to %d.\n%s"),
-                       info->pid,
-                       args->arg_value,
-                       g_strerror (saved_errno));
+    AdwDialog *dialog =
+      adw_alert_dialog_new (_("Cannot Change Priority"),
+                            error->message);
+
+    adw_alert_dialog_add_response (ADW_ALERT_DIALOG (dialog),
+                                   "close",
+                                   _("_Close"));
+
+    adw_dialog_present (dialog, data->parent);
   }
 
-  dialog = ADW_ALERT_DIALOG (adw_alert_dialog_new (
-                               NULL,
-                               NULL));
+  if (data->infos->len > 0) {
+    ProcInfo *info =
+      static_cast<ProcInfo *>(g_ptr_array_steal_index (data->infos, 0));
 
-  adw_alert_dialog_format_body (dialog, "%s", error_msg);
+    gsm_actions_set_priority (GSM_ACTIONS (source),
+                              info->pid,
+                              data->priority,
+                              NULL,
+                              did_priority,
+                              data);
 
-  adw_alert_dialog_add_response (dialog, "ok", _("_OK"));
+    return;
+  }
 
-  adw_dialog_present (ADW_DIALOG (dialog), GTK_WIDGET (GsmApplication::get ().main_window));
+  proctable_thaw (data->app);
+  proctable_update (data->app);
+
+  g_clear_pointer (&data->infos, g_ptr_array_unref);
+  g_clear_object (&data->parent);
+  g_free (data);
 }
 
 
@@ -110,7 +107,10 @@ void
 renice (GsmApplication *app,
         int             nice)
 {
-  struct ProcActionArgs args = { app, nice };
+  g_autoptr (GsmActions) actions =
+    GSM_ACTIONS (g_object_new (GSM_TYPE_ACTIONS, NULL));
+  PriorityData *data = g_new0 (PriorityData, 1);
+  ProcInfo *info = NULL;
 
   /* EEEK - ugly hack - make sure the table is not updated as a crash
   ** occurs if you first kill a process and the tree node is removed while
@@ -118,88 +118,26 @@ renice (GsmApplication *app,
   */
   proctable_freeze (app);
 
-  gtk_tree_selection_selected_foreach (app->selection, renice_single_process,
-                                       &args);
+  data->priority = nice;
+  data->infos = g_ptr_array_new_null_terminated (10, NULL, TRUE);
+  g_set_object (&data->parent, GTK_WIDGET (app->main_window));
+  data->app = app;
 
-  proctable_thaw (app);
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+  gtk_tree_selection_selected_foreach (app->selection,
+                                       build_priority_list,
+                                       data);
+G_GNUC_END_IGNORE_DEPRECATIONS
 
-  proctable_update (app);
+  info = static_cast<ProcInfo *>(g_ptr_array_steal_index (data->infos, 0));
+  gsm_actions_set_priority (actions,
+                            info->pid,
+                            nice,
+                            NULL,
+                            did_priority,
+                            data);
 }
 
-
-static void
-kill_process_action (ProcInfo                    *info,
-                     const struct ProcActionArgs *const args)
-{
-  g_autoptr (GError) error = NULL;
-  int saved_errno = 0;
-  g_autofree char *error_msg = NULL;
-  AdwAlertDialog *dialog;
-
-  if (!info)
-    return;
-
-  gsm_kill (info->pid, args->arg_value, &error);
-  if (!error) {
-    return;
-  }
-
-  /* need to be root */
-  if (g_error_matches (error, G_FILE_ERROR, G_FILE_ERROR_PERM)) {
-    gboolean success;
-
-    success = procdialog_create_root_password_dialog (PROCMAN_ACTION_KILL,
-                                                      args->app,
-                                                      info->pid,
-                                                      args->arg_value);
-    if (success) {
-      return;
-    }
-
-    if (errno) {
-      saved_errno = errno;
-    }
-  }
-
-  /* failed */
-  if (error) {
-    error_msg =
-      g_strdup_printf (_("Cannot kill process with PID %d with signal %d.\n%s"),
-                       info->pid,
-                       args->arg_value,
-                       error->message);
-  } else {
-    error_msg =
-      g_strdup_printf (_("Cannot kill process with PID %d with signal %d.\n%s"),
-                       info->pid,
-                       args->arg_value,
-                       g_strerror (saved_errno));
-  }
-
-  dialog = ADW_ALERT_DIALOG (adw_alert_dialog_new (
-                               NULL,
-                               NULL));
-
-  adw_alert_dialog_format_body (dialog, "%s", error_msg);
-
-  adw_alert_dialog_add_response (dialog, "ok", _("_OK"));
-
-  adw_dialog_present (ADW_DIALOG (dialog), GTK_WIDGET (GsmApplication::get ().main_window));
-}
-
-static void
-kill_single_process (GtkTreeModel *model,
-                     GtkTreePath*,
-                     GtkTreeIter  *iter,
-                     gpointer      data)
-{
-  const struct ProcActionArgs * const args = static_cast<ProcActionArgs*>(data);
-  ProcInfo *info;
-
-  gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
-
-  kill_process_action (info, args);
-}
 
 void
 on_activate_send_signal (GSimpleAction *action,
@@ -237,12 +175,89 @@ kill_process_with_confirmation (GsmApplication *app,
     kill_process (app, signal, proc);
 }
 
+
+typedef struct _KillData KillData;
+struct _KillData {
+  GPtrArray *infos;
+  int signal;
+  GtkWidget *parent;
+  GsmApplication *app;
+};
+
+
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+static void
+build_kill_list (GtkTreeModel              *model,
+                 G_GNUC_UNUSED GtkTreePath *path,
+                 GtkTreeIter               *iter,
+                 gpointer                   user_data)
+{
+  KillData *data = static_cast<KillData *>(user_data);
+  ProcInfo *info;
+
+  gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
+
+  if (!info) {
+    return;
+  }
+
+  g_ptr_array_add (data->infos, info);
+}
+G_GNUC_END_IGNORE_DEPRECATIONS
+
+
+static void
+did_kill (GObject *source, GAsyncResult *result, gpointer user_data)
+{
+  g_autoptr (GError) error = NULL;
+  KillData *data = static_cast<KillData *>(user_data);
+
+  gsm_actions_kill_finish (GSM_ACTIONS (source), result, &error);
+
+  if (error) {
+    AdwDialog *dialog =
+      adw_alert_dialog_new (_("Cannot Kill Process"),
+                            error->message);
+
+    adw_alert_dialog_add_response (ADW_ALERT_DIALOG (dialog),
+                                   "close",
+                                   _("_Close"));
+
+    adw_dialog_present (dialog, data->parent);
+  }
+
+  if (data->infos->len > 0) {
+    ProcInfo *info =
+      static_cast<ProcInfo *>(g_ptr_array_steal_index (data->infos, 0));
+
+    gsm_actions_kill (GSM_ACTIONS (source),
+                      info->pid,
+                      data->signal,
+                      NULL,
+                      did_kill,
+                      data);
+
+    return;
+  }
+
+  proctable_thaw (data->app);
+  proctable_update (data->app);
+
+  g_clear_pointer (&data->infos, g_ptr_array_unref);
+  g_clear_object (&data->parent);
+  g_free (data);
+}
+
+
 void
 kill_process (GsmApplication *app,
               int             sig,
               gint32          proc)
 {
-  struct ProcActionArgs args = { app, sig };
+  g_autoptr (GsmActions) actions =
+    GSM_ACTIONS (g_object_new (GSM_TYPE_ACTIONS, NULL));
+  KillData *data = g_new0 (KillData, 1);
+  ProcInfo *info = NULL;
 
   /* EEEK - ugly hack - make sure the table is not updated as a crash
   ** occurs if you first kill a process and the tree node is removed while
@@ -250,19 +265,26 @@ kill_process (GsmApplication *app,
   */
   proctable_freeze (app);
 
-  if (proc == -1)
-    {
-      gtk_tree_selection_selected_foreach (app->selection, kill_single_process,
-                                           &args);
-    }
-  else
-    {
-      ProcInfo *info = app->processes.find (proc);
+  data->signal = sig;
+  data->infos = g_ptr_array_new_null_terminated (10, NULL, TRUE);
+  g_set_object (&data->parent, GTK_WIDGET (app->main_window));
+  data->app = app;
 
-      kill_process_action (info, &args);
-    }
+  if (proc == -1) {
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+    gtk_tree_selection_selected_foreach (app->selection,
+                                         build_kill_list,
+                                         data);
+G_GNUC_END_IGNORE_DEPRECATIONS
+  } else {
+    g_ptr_array_add (data->infos, app->processes.find (proc));
+  }
 
-  proctable_thaw (app);
-
-  proctable_update (app);
+  info = static_cast<ProcInfo *>(g_ptr_array_steal_index (data->infos, 0));
+  gsm_actions_kill (actions,
+                    info->pid,
+                    sig,
+                    NULL,
+                    did_kill,
+                    data);
 }
