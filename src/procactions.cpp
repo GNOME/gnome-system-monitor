@@ -17,19 +17,23 @@
  */
 
 
-#include <config.h>
-#include <errno.h>
+#include "config.h"
 
 #include <glib/gi18n.h>
-#include <signal.h>
+
+#include <errno.h>
 #include <sys/time.h>
-#include <sys/resource.h>
-#include "procactions.h"
+
+#include "gsm-setpriority.h"
+#include "gsm-kill.h"
+
 #include "application.h"
 #include "procinfo.h"
 #include "proctable.h"
 #include "procdialogs.h"
 #include "settings-keys.h"
+
+#include "procactions.h"
 
 
 static void
@@ -38,12 +42,11 @@ renice_single_process (GtkTreeModel *model,
                        GtkTreeIter  *iter,
                        gpointer      data)
 {
+  g_autoptr (GError) error = NULL;
   const struct ProcActionArgs * const args = static_cast<ProcActionArgs*>(data);
-
   ProcInfo *info = NULL;
-  gint error;
-  int saved_errno;
-  gchar *error_msg;
+  int saved_errno = 0;
+  g_autofree char *error_msg = NULL;
   AdwAlertDialog *dialog;
 
   gtk_tree_model_get (model, iter, COL_POINTER, &info, -1);
@@ -52,35 +55,44 @@ renice_single_process (GtkTreeModel *model,
     return;
   if (info->nice == args->arg_value)
     return;
-  error = setpriority (PRIO_PROCESS, info->pid, args->arg_value);
 
-  /* success */
-  if (error != -1)
+  gsm_setpriority (info->pid, args->arg_value, &error);
+  if (!error) {
     return;
-
-  saved_errno = errno;
+  }
 
   /* need to be root */
-  if (errno == EPERM || errno == EACCES)
-    {
-      gboolean success;
+  if (g_error_matches (error, G_FILE_ERROR, G_FILE_ERROR_PERM) ||
+      g_error_matches (error, G_FILE_ERROR, G_FILE_ERROR_ACCES)) {
+    gboolean success;
 
-      success = procdialog_create_root_password_dialog (
-        PROCMAN_ACTION_RENICE, args->app, info->pid,
-        args->arg_value);
-
-      if (success)
-        return;
-
-      if (errno)
-        saved_errno = errno;
+    success = procdialog_create_root_password_dialog (PROCMAN_ACTION_RENICE,
+                                                      args->app,
+                                                      info->pid,
+                                                      args->arg_value);
+    if (success) {
+      return;
     }
 
+    if (errno) {
+      saved_errno = errno;
+    }
+  }
+
   /* failed */
-  error_msg = g_strdup_printf (
-    _("Cannot change the priority of process with PID %d to %d.\n"
-      "%s"),
-    info->pid, args->arg_value, g_strerror (saved_errno));
+  if (error) {
+    error_msg =
+      g_strdup_printf (_("Cannot change the priority of process with PID %d to %d.\n%s"),
+                       info->pid,
+                       args->arg_value,
+                       error->message);
+  } else {
+    error_msg =
+      g_strdup_printf (_("Cannot change the priority of process with PID %d to %d.\n%s"),
+                       info->pid,
+                       args->arg_value,
+                       g_strerror (saved_errno));
+  }
 
   dialog = ADW_ALERT_DIALOG (adw_alert_dialog_new (
                                NULL,
@@ -89,8 +101,6 @@ renice_single_process (GtkTreeModel *model,
   adw_alert_dialog_format_body (dialog, "%s", error_msg);
 
   adw_alert_dialog_add_response (dialog, "ok", _("_OK"));
-
-  g_free (error_msg);
 
   adw_dialog_present (ADW_DIALOG (dialog), GTK_WIDGET (GsmApplication::get ().main_window));
 }
@@ -116,47 +126,55 @@ renice (GsmApplication *app,
   proctable_update (app);
 }
 
+
 static void
 kill_process_action (ProcInfo                    *info,
                      const struct ProcActionArgs *const args)
 {
-  int error;
-  int saved_errno;
-  char *error_msg;
+  g_autoptr (GError) error = NULL;
+  int saved_errno = 0;
+  g_autofree char *error_msg = NULL;
   AdwAlertDialog *dialog;
 
   if (!info)
     return;
 
-  error = kill (info->pid, args->arg_value);
-
-  /* success */
-  if (error != -1)
+  gsm_kill (info->pid, args->arg_value, &error);
+  if (!error) {
     return;
-
-  saved_errno = errno;
+  }
 
   /* need to be root */
-  if (errno == EPERM)
-    {
-      gboolean success;
+  if (g_error_matches (error, G_FILE_ERROR, G_FILE_ERROR_PERM)) {
+    gboolean success;
 
-      success = procdialog_create_root_password_dialog (
-        PROCMAN_ACTION_KILL, args->app, info->pid,
-        args->arg_value);
-
-      if (success)
-        return;
-
-      if (errno)
-        saved_errno = errno;
+    success = procdialog_create_root_password_dialog (PROCMAN_ACTION_KILL,
+                                                      args->app,
+                                                      info->pid,
+                                                      args->arg_value);
+    if (success) {
+      return;
     }
 
+    if (errno) {
+      saved_errno = errno;
+    }
+  }
+
   /* failed */
-  error_msg = g_strdup_printf (
-    _("Cannot kill process with PID %d with signal %d.\n"
-      "%s"),
-    info->pid, args->arg_value, g_strerror (saved_errno));
+  if (error) {
+    error_msg =
+      g_strdup_printf (_("Cannot kill process with PID %d with signal %d.\n%s"),
+                       info->pid,
+                       args->arg_value,
+                       error->message);
+  } else {
+    error_msg =
+      g_strdup_printf (_("Cannot kill process with PID %d with signal %d.\n%s"),
+                       info->pid,
+                       args->arg_value,
+                       g_strerror (saved_errno));
+  }
 
   dialog = ADW_ALERT_DIALOG (adw_alert_dialog_new (
                                NULL,
@@ -165,8 +183,6 @@ kill_process_action (ProcInfo                    *info,
   adw_alert_dialog_format_body (dialog, "%s", error_msg);
 
   adw_alert_dialog_add_response (dialog, "ok", _("_OK"));
-
-  g_free (error_msg);
 
   adw_dialog_present (ADW_DIALOG (dialog), GTK_WIDGET (GsmApplication::get ().main_window));
 }

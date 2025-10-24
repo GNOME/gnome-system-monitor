@@ -4,13 +4,16 @@
  * SPDX-FileCopyrightText: Copyright (C) 2020 Jacob Barkdull
  */
 
-#include <stdio.h>
+#include "config.h"
+
+#include <glib/gi18n.h>
+
 #include <sys/types.h>
 #include <unistd.h>
 #include <glibtop/procaffinity.h>
 #include <sys/stat.h>
-#include <glib/gi18n.h>
-#include <dirent.h>
+
+#include "gsm-setaffinity.h"
 
 #include "application.h"
 #include "procdialogs.h"
@@ -105,8 +108,9 @@ affinity_toggle_all (GObject    *self,
   affinity->toggle_single_blocked = FALSE;
 }
 
+
 static void
-set_affinity_error (void)
+set_affinity_error (GError *error)
 {
   AdwDialog *dialog;
 
@@ -114,7 +118,11 @@ set_affinity_error (void)
   dialog = adw_alert_dialog_new (_("GNU CPU Affinity error"),
                                    NULL);
 
-  adw_alert_dialog_format_body (ADW_ALERT_DIALOG (dialog), "%s", g_strerror (errno));
+  if (error) {
+    adw_alert_dialog_set_body (ADW_ALERT_DIALOG (dialog), error->message);
+  } else {
+    adw_alert_dialog_format_body (ADW_ALERT_DIALOG (dialog), "%s", g_strerror (errno));
+  }
 
   adw_alert_dialog_add_response (ADW_ALERT_DIALOG (dialog), "close", _("_Close"));
 
@@ -122,96 +130,6 @@ set_affinity_error (void)
   adw_dialog_present (dialog, GTK_WIDGET (GsmApplication::get ().main_window));
 }
 
-static DIR*
-gsm_iterate_tasks_init (pid_t pid)
-{
-  gchar *path;
-
-  path = g_strdup_printf ("/proc/%d/task", pid);
-  DIR *dir = opendir (path);
-
-  g_free( path );
-  return dir;
-}
-
-// returns 0 if the end is reached
-static pid_t
-gsm_iterate_tasks_step (DIR* it)
-{
-  struct dirent* entry;
-
-  if (!it)
-  {
-    return 0;
-  }
-
-  while (true)
-  {
-    entry = readdir (it);
-
-    // no new entry
-    if (!entry)
-    {
-      return 0;
-    }
-
-    // not a directory
-    if (entry->d_type != DT_DIR)
-    {
-      continue;
-    }
-    pid_t next_task = g_ascii_strtoll (entry->d_name, nullptr, 10);
-    if (next_task)
-    {
-      return next_task;
-    }
-  }
-}
-
-static void
-gsm_iterate_tasks_free (DIR* it)
-{
-  closedir (it);
-}
-
-static guint16 *
-gsm_set_proc_affinity (glibtop_proc_affinity *buf,
-                       GArray                *cpus,
-                       pid_t                  pid,
-                       gboolean               child_threads)
-{
-#ifdef __linux__
-  guint i;
-  cpu_set_t set;
-  guint16 cpu;
-
-  CPU_ZERO (&set);
-
-  for (i = 0; i < cpus->len; i++)
-    {
-      cpu = g_array_index (cpus, guint16, i);
-      CPU_SET (cpu, &set);
-    }
-
-  if (sched_setaffinity (pid, sizeof (set), &set) != -1)
-  {
-    // set child threads if required
-    if (child_threads)
-    {
-      DIR* it = gsm_iterate_tasks_init (pid);
-      while(pid_t tid = gsm_iterate_tasks_step (it)) {
-        sched_setaffinity (tid, sizeof (set), &set); // fail silently
-      }
-
-      gsm_iterate_tasks_free (it);
-    }
-
-    return glibtop_get_proc_affinity (buf, pid);
-  }
-#endif
-
-  return NULL;
-}
 
 static void
 execute_taskset_command (gchar  **cpu_list,
@@ -230,7 +148,7 @@ execute_taskset_command (gchar  **cpu_list,
 
   /* Execute taskset command; show error on failure */
   if (!multi_root_check (command))
-    set_affinity_error ();
+    set_affinity_error (NULL);
 
   /* Free memory for taskset command */
   g_free (command);
@@ -242,10 +160,10 @@ static void
 set_affinity (GtkCheckButton*,
               gpointer data)
 {
+  g_autoptr (GError) error = NULL;
   SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
 
   glibtop_proc_affinity get_affinity;
-  glibtop_proc_affinity set_affinity;
 
   gchar   **cpu_list;
   GArray   *cpuset;
@@ -285,19 +203,22 @@ set_affinity (GtkCheckButton*,
       all_threads = adw_switch_row_get_active (ADW_SWITCH_ROW (affinity->all_threads_row));
 
       /* Set process affinity; Show message dialog upon error */
-      cpus = gsm_set_proc_affinity (&set_affinity, cpuset, affinity->pid, all_threads);
-      if (cpus == NULL)
-        {
-
-          /* If so, check whether an access error occurred */
-          if (errno == EPERM or errno == EACCES)
-            /* If so, attempt to run taskset as root, show error on failure */
-            execute_taskset_command (cpu_list, affinity->pid, all_threads);
-          else
-            /* If not, show error immediately */
-            set_affinity_error ();
+      gsm_setaffinity (affinity->pid,
+                       cpuset->len,
+                       (uint16_t *) cpuset->data,
+                       all_threads,
+                       &error);
+      if (error) {
+        /* If so, check whether an access error occurred */
+        if (g_error_matches (error, G_FILE_ERROR, G_FILE_ERROR_PERM) ||
+            g_error_matches (error, G_FILE_ERROR, G_FILE_ERROR_ACCES)) {
+          /* If so, attempt to run taskset as root, show error on failure */
+          execute_taskset_command (cpu_list, affinity->pid, all_threads);
+        } else {
+          /* If not, show error immediately */
+          set_affinity_error (error);
         }
-      g_free (cpus);
+      }
 
       /* Free memory for CPU strings */
       for (i = 0; i < affinity->cpu_count; i++)
@@ -309,7 +230,7 @@ set_affinity (GtkCheckButton*,
   else
     {
       /* If not, show error message dialog */
-      set_affinity_error ();
+      set_affinity_error (NULL);
     }
 
   /* Destroy dialog window */

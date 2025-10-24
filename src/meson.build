@@ -1,3 +1,4 @@
+subdir('action-impls')
 subdir('legacy')
 
 system_monitor_sources = [
@@ -123,6 +124,7 @@ system_monitor_dependencies = [
   libgtop,
   libadwaita,
   libsystemd,
+  libgsm_actions_impl_dep,
 ]
 libgsm = static_library(
   'libgsm',

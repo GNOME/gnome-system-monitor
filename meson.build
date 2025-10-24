@@ -112,7 +112,7 @@ has_sysmacros = cc.has_header_symbol('sys/sysmacros.h', 'major')
 conf.set('HAVE_DEV_IN_SYSMACROS', has_sysmacros)
 conf.set('HAVE_DEV_IN_TYPES', cc.has_header_symbol('sys/types.h', 'major', required: not has_sysmacros))
 
-configure_file(
+config_h = configure_file(
   output: 'config.h',
   configuration: conf,
 )
