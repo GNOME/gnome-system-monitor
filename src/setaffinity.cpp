@@ -11,15 +11,12 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <glibtop/procaffinity.h>
-#include <sys/stat.h>
-
-#include "gsm-setaffinity.h"
 
 #include "application.h"
-#include "procdialogs.h"
+#include "gsm-actions.h"
 #include "procinfo.h"
 #include "proctable.h"
-#include "util.h"
+
 #include "setaffinity.h"
 
 namespace
@@ -132,29 +129,20 @@ set_affinity_error (GError *error)
 
 
 static void
-execute_taskset_command (gchar  **cpu_list,
-                         pid_t    pid,
-                         gboolean child_threads)
+did_affinity (GObject *source, GAsyncResult *result, gpointer user_data)
 {
-#ifdef __linux__
-  gchar *pc;
-  gchar *command;
+  g_autoptr (GError) error = NULL;
+  g_autoptr (GtkWidget) dialog = GTK_WIDGET (user_data);
 
-  /* Join CPU number strings by commas for taskset command CPU list */
-  pc = g_strjoinv (",", cpu_list);
+  gsm_actions_set_affinity_finish (GSM_ACTIONS (source), result, &error);
 
-  /* Construct taskset command */
-  command = g_strdup_printf ("taskset -pc%c %s %d", child_threads ? 'a' : ' ', pc, pid);
+  if (error) {
+    set_affinity_error (error);
+  }
 
-  /* Execute taskset command; show error on failure */
-  if (!multi_root_check (command))
-    set_affinity_error (NULL);
-
-  /* Free memory for taskset command */
-  g_free (command);
-  g_free (pc);
-#endif
+  gtk_window_destroy (GTK_WINDOW (dialog));
 }
+
 
 static void
 set_affinity (GtkCheckButton*,
@@ -162,80 +150,49 @@ set_affinity (GtkCheckButton*,
 {
   g_autoptr (GError) error = NULL;
   SetAffinityData *affinity = static_cast<SetAffinityData *>(data);
-
   glibtop_proc_affinity get_affinity;
-
-  gchar   **cpu_list;
-  GArray   *cpuset;
-  guint16  *cpus;
-  guint32 i;
-  gint taskset_cpu = 0;
+  g_autoptr (GArray) cpuset = NULL;
+  g_autofree uint16_t *cpus = NULL;
   gboolean all_threads;
-
-  /* Create string array for taskset command CPU list */
-  cpu_list = g_new0 (gchar *, affinity->cpu_count);
+  g_autoptr (GsmActions) actions =
+    GSM_ACTIONS (g_object_new (GSM_TYPE_ACTIONS, NULL));
 
   /* Check whether we can get process's current affinity */
   cpus = glibtop_get_proc_affinity (&get_affinity, affinity->pid);
-  if (cpus != NULL)
-    {
-      g_free (cpus);
+  if (cpus != NULL) {
+    /* If so, create array for CPU numbers */
+    cpuset = g_array_new (FALSE, FALSE, sizeof (uint16_t));
 
-      /* If so, create array for CPU numbers */
-      cpuset = g_array_new (FALSE, FALSE, sizeof (guint16));
+    /* Run through all CPUs set for this process */
+    for (size_t i = 0; i < affinity->cpu_count; i++) {
+      /* Check if CPU check box button is active */
+      if (adw_switch_row_get_active (ADW_SWITCH_ROW (affinity->buttons[i + 1]))) {
+        /* If so, get its CPU number as 16bit integer */
+        uint16_t n = i;
 
-      /* Run through all CPUs set for this process */
-      for (i = 0; i < affinity->cpu_count; i++)
-        /* Check if CPU check box button is active */
-        if (adw_switch_row_get_active (ADW_SWITCH_ROW (affinity->buttons[i + 1])))
-          {
-            /* If so, get its CPU number as 16bit integer */
-            guint16 n = i;
-
-            /* Add its CPU for process affinity */
-            g_array_append_val (cpuset, n);
-
-            /* Store CPU number as string for taskset command CPU list */
-            cpu_list[taskset_cpu] = g_strdup_printf ("%i", i);
-            taskset_cpu++;
-          }
-
-      all_threads = adw_switch_row_get_active (ADW_SWITCH_ROW (affinity->all_threads_row));
-
-      /* Set process affinity; Show message dialog upon error */
-      gsm_setaffinity (affinity->pid,
-                       cpuset->len,
-                       (uint16_t *) cpuset->data,
-                       all_threads,
-                       &error);
-      if (error) {
-        /* If so, check whether an access error occurred */
-        if (g_error_matches (error, G_FILE_ERROR, G_FILE_ERROR_PERM) ||
-            g_error_matches (error, G_FILE_ERROR, G_FILE_ERROR_ACCES)) {
-          /* If so, attempt to run taskset as root, show error on failure */
-          execute_taskset_command (cpu_list, affinity->pid, all_threads);
-        } else {
-          /* If not, show error immediately */
-          set_affinity_error (error);
-        }
+        /* Add its CPU for process affinity */
+        g_array_append_val (cpuset, n);
       }
-
-      /* Free memory for CPU strings */
-      for (i = 0; i < affinity->cpu_count; i++)
-        g_free (cpu_list[i]);
-
-      /* Free CPU array memory */
-      g_array_free (cpuset, TRUE);
-    }
-  else
-    {
-      /* If not, show error message dialog */
-      set_affinity_error (NULL);
     }
 
-  /* Destroy dialog window */
-  gtk_window_destroy (GTK_WINDOW (affinity->dialog));
+    all_threads = adw_switch_row_get_active (ADW_SWITCH_ROW (affinity->all_threads_row));
+
+    gsm_actions_set_affinity (actions,
+                              affinity->pid,
+                              cpuset->len,
+                              (uint16_t *) cpuset->data,
+                              all_threads,
+                              NULL,
+                              did_affinity,
+                              g_object_ref (affinity->dialog));
+  } else {
+    /* If not, show error message dialog */
+    set_affinity_error (NULL);
+    /* Destroy dialog window */
+    gtk_window_destroy (GTK_WINDOW (affinity->dialog));
+  }
 }
+
 
 static void
 create_single_set_affinity_dialog (GtkTreeModel *model,

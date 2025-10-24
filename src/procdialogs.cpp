@@ -16,7 +16,6 @@
  *
  */
 
-
 #include <config.h>
 
 #include <glib/gi18n.h>
@@ -32,13 +31,17 @@
 #include "procactions.h"
 #include "procinfo.h"
 #include "util.h"
-#include "gsm_gnomesu.h"
-#include "gsm_gksu.h"
-#include "gsm_pkexec.h"
 #include "cgroups.h"
 
 static AdwAlertDialog *renice_dialog = NULL;
 static gint new_nice_value = 0;
+
+
+struct ProcActionArgs {
+  GsmApplication *app;
+  int arg_value;
+};
+
 
 static GtkWindow *
 get_active_window ()
@@ -288,67 +291,4 @@ procdialog_create_renice_dialog (GsmApplication *app)
   adw_dialog_present (ADW_DIALOG (renice_dialog), GTK_WIDGET (app->main_window));
 
   g_object_unref (G_OBJECT (builder));
-}
-
-static char *
-procman_action_to_command (ProcmanActionType type,
-                           gint              pid,
-                           gint              extra_value)
-{
-  switch (type)
-    {
-      case PROCMAN_ACTION_KILL:
-        return g_strdup_printf ("kill -s %d %d", extra_value, pid);
-
-      case PROCMAN_ACTION_RENICE:
-        return g_strdup_printf ("renice %d %d", extra_value, pid);
-
-      default:
-        g_assert_not_reached ();
-    }
-}
-
-
-gboolean
-multi_root_check (char *command)
-{
-  if (procman_has_pkexec ())
-    return gsm_pkexec_create_root_password_dialog (command);
-
-  if (procman_has_gksu ())
-    return gsm_gksu_create_root_password_dialog (command);
-
-  if (procman_has_gnomesu ())
-    return gsm_gnomesu_create_root_password_dialog (command);
-
-  return FALSE;
-}
-
-/*
- * type determines whether if dialog is for killing process or renice.
- * type == PROCMAN_ACTION_KILL,   extra_value -> signal to send
- * type == PROCMAN_ACTION_RENICE, extra_value -> new priority.
- */
-gboolean
-procdialog_create_root_password_dialog (ProcmanActionType type,
-                                        GsmApplication*,
-                                        gint              pid,
-                                        gint              extra_value)
-{
-  char *command;
-  gboolean ret = FALSE;
-
-  command = procman_action_to_command (type, pid, extra_value);
-
-  procman_debug ("Trying to run '%s' as root", command);
-
-  if (procman_has_pkexec ())
-    ret = gsm_pkexec_create_root_password_dialog (command);
-  else if (procman_has_gksu ())
-    ret = gsm_gksu_create_root_password_dialog (command);
-  else if (procman_has_gnomesu ())
-    ret = gsm_gnomesu_create_root_password_dialog (command);
-
-  g_free (command);
-  return ret;
 }
