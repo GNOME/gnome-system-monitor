@@ -6,6 +6,8 @@ libgsm_actions_sources = [
   'gsm_gnomesu.h',
   'gsm_pkexec.cpp',
   'gsm_pkexec.h',
+  'gsm-actions.c',
+  'gsm-actions.h',
 ]
 
 libgsm_actions_dependencies = [glib, gmodule, libgsm_actions_impl_dep]

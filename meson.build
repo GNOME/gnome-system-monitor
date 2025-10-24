@@ -90,6 +90,7 @@ extra_flags = [
 extra_cflags = [
   '-Wmissing-prototypes',
   '-Wnested-externs',
+  '-Wno-pedantic',
 ]
 extra_cxxflags = [
   # '-fvisibility=hidden',
